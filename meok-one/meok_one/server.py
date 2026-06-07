@@ -222,6 +222,97 @@ _COUNCIL_ROSTER = ["turbo-llama70", "turbo-llama4s", "turbo-llama8", "turbo-llam
 _COUNCIL_PROVIDER = ["Groq", "Cerebras"]
 
 
+_VISION_PROMPT = ("Reply with ONLY this, no preamble or thinking: one short sentence describing the "
+                  "screen, then ' — ' and a comma-separated list of the key UI elements.")
+
+
+def _classify_action(action: str, target: str = "", text: str = "", context: str = "") -> str:
+    """Gate a co-pilot desktop action: read (auto) / write (confirm) / prohibited (refused).
+    Observing is always safe. For ACTING (click/type/key), the danger is in the INTENT, not the
+    bare verb ("click Confirm" can be a money transfer) — so prohibited is checked over the action
+    AND the goal+scene context (anything touching money / credentials / purchases / account deletion)."""
+    if action.lower() in ("observe", "read", "screenshot", "look", "wait", "none", "done"):
+        return "read"
+    from . import tool_gateway as _gw
+    blob = f"{action} {target} {text} {context}".lower()
+    if (_gw.classify(blob.replace(" ", "_")) == "prohibited"
+            or any(k in blob for k in ("password", "credential", "payment", "credit card", "bank",
+                                       "delete account", "buy now", "purchase", "checkout", "pay ",
+                                       "wire", "transfer", "send money", "account number", "ssn",
+                                       "card number", "withdraw", "deposit", "invoice", "crypto", "wallet"))):
+        return "prohibited"
+    return "write"   # click / type / scroll / key / drag — needs explicit human confirm
+
+
+def _parse_vision(txt: str):
+    """A vision model's free text → (scene, objects). Small models ignore rigid formats, so we
+    take the description itself as the scene + loosely grab any comma list."""
+    txt = (txt or "").strip()
+    if not txt:
+        return (None, [])
+    flat = " ".join(txt.split())
+    scene = flat[:200]
+    tail = flat.split(".", 1)[1] if "." in flat else flat
+    objs = [o.strip(" .").lower()[:40] for o in tail.split(",") if 1 < len(o.strip()) < 41][:10]
+    return (scene, objs)
+
+
+def _ollama_vision(image_b64: str, model: str, timeout: int = 90):
+    """LOCAL Ollama vision (sovereign, no key). moondream (~3s CPU) / gemma3:4b·gemma4 (GPU)."""
+    import urllib.request as _u
+    host = os.environ.get("OLLAMA_HOST", "http://localhost:11434")
+    payload = {"model": model, "prompt": _VISION_PROMPT, "images": [image_b64], "stream": False,
+               "options": {"num_predict": 120, "temperature": 0.2}}
+    try:
+        req = _u.Request(host + "/api/generate", data=json.dumps(payload).encode(),
+                         headers={"Content-Type": "application/json"})
+        with _u.urlopen(req, timeout=timeout) as r:
+            return _parse_vision(json.loads(r.read().decode()).get("response", ""))
+    except Exception:
+        return (None, [])
+
+
+def _cloud_vision(image_b64: str, model: str, timeout: int = 50):
+    """CLOUD vision via OpenRouter (e.g. stepfun/step-3.7-flash — text+image+video). Reuses our key."""
+    import urllib.request as _u
+    key = os.environ.get("OPENROUTER_API_KEY", "")
+    if not key:
+        return (None, [])
+    # step3.7 is a REASONING model — give room for content + keep reasoning low, and fall back to
+    # the reasoning text if content lands null (it puts the answer there when tokens run short).
+    body = json.dumps({"model": model, "max_tokens": 400, "reasoning": {"effort": "low"}, "messages": [
+        {"role": "user", "content": [
+            {"type": "text", "text": _VISION_PROMPT},
+            {"type": "image_url", "image_url": {"url": "data:image/jpeg;base64," + image_b64}}]}]}).encode()
+    try:
+        req = _u.Request("https://openrouter.ai/api/v1/chat/completions", data=body,
+                         headers={"Authorization": f"Bearer {key}", "Content-Type": "application/json",
+                                  "HTTP-Referer": "https://meok.ai", "X-Title": "MEOK ONE"})
+        with _u.urlopen(req, timeout=timeout) as r:
+            msg = json.loads(r.read().decode())["choices"][0]["message"]
+            return _parse_vision(msg.get("content") or msg.get("reasoning") or "")
+    except Exception:
+        return (None, [])
+
+
+def _vision_describe(image_b64: str, model: str = None):
+    """Pluggable screen-vision: local Ollama by default (moondream); a "/"-slug routes to OpenRouter
+    cloud (step3.7). Same SIGIL→memory→audit pipeline downstream. Returns (scene, objects)."""
+    model = model or os.environ.get("MEOK_VISION_MODEL", "moondream")
+    return _cloud_vision(image_b64, model) if "/" in model else _ollama_vision(image_b64, model)
+
+# Deep-think council default (benchmark 2026-06-01, MEOK_COUNCIL_BENCHMARK):
+#  - code-reconcile NEVER error-corrects (votes but keeps the draft); llm-reconcile DOES (it
+#    synthesizes a corrected answer from the lens critiques — lifted a weak draft to correct).
+#  - local-Ollama lenses time out on the CPU VM, so the deployed council uses a fast CLOUD roster.
+#  TURBO (2026-06-01 research): lenses pinned to Groq (~0.5s each, verified). Use only fast
+#  NON-reasoning models — reasoning models (gpt-oss/qwen3) burn the 96-tok cap on hidden thinking
+#  and return empty. Synthesis stays on Opus (reliable quality; conditional + falls back via
+#  allow_fallbacks). Override orchestrator="turbo-llama70" for a faster (jittery) all-Groq path.
+_COUNCIL_ROSTER = ["turbo-llama70", "turbo-llama4s", "turbo-llama8", "turbo-llama4s", "turbo-llama8"]
+_COUNCIL_PROVIDER = ["Groq", "Cerebras"]
+
+
 class Handler(BaseHTTPRequestHandler):
     def log_message(self, *a):  # quiet
         pass
@@ -309,6 +400,9 @@ class Handler(BaseHTTPRequestHandler):
         path = urlparse(self.path).path
         qs = parse_qs(urlparse(self.path).query)
         reg = default()
+        if path == "/api/mcp/tools":
+            from . import mcp_bridge as _mb
+            return self._json(200, _mb.list_tools())
         if path in ("/", "/index.html"):
             return self._html(_INDEX)
         if path in ("/avatar", "/avatar.html", "/3d"):
@@ -327,6 +421,8 @@ class Handler(BaseHTTPRequestHandler):
             return self._html(os.path.join(_HERE, "web", "pricing.html"))
         if path in ("/work", "/work.html", "/services", "/hire", "/consulting"):
             return self._html(os.path.join(_HERE, "web", "work.html"))
+        if path in ("/tools", "/tools.html", "/ecosystem"):
+            return self._html(os.path.join(_HERE, "web", "tools.html"))
         if path in ("/siri", "/siri.html", "/shortcut"):
             return self._html(os.path.join(_HERE, "web", "siri.html"))
         if path in ("/widget", "/widget.html"):
@@ -353,6 +449,30 @@ class Handler(BaseHTTPRequestHandler):
                 self.send_header("Content-Length", str(len(body)))
                 self.end_headers(); self.wfile.write(body); return
             return self._json(404, {"error": "not found", "path": path})
+        # i18n layer (zero-dep): the loader + locale JSON (path-traversal safe)
+        if path == "/i18n.js":
+            fp = os.path.join(_HERE, "web", "i18n.js")
+            if os.path.isfile(fp):
+                with open(fp, "rb") as f:
+                    body = f.read()
+                self.send_response(200)
+                self.send_header("Content-Type", "application/javascript; charset=utf-8")
+                self.send_header("Access-Control-Allow-Origin", "*")
+                self.send_header("Content-Length", str(len(body)))
+                self.end_headers(); self.wfile.write(body); return
+            return self._json(404, {"error": "i18n.js not found"})
+        if path.startswith("/locales/") and path.endswith(".json"):
+            base = os.path.join(_HERE, "web", "locales")
+            fp = os.path.normpath(os.path.join(base, os.path.basename(path)))
+            if fp.startswith(base) and os.path.isfile(fp):
+                with open(fp, "rb") as f:
+                    body = f.read()
+                self.send_response(200)
+                self.send_header("Content-Type", "application/json; charset=utf-8")
+                self.send_header("Access-Control-Allow-Origin", "*")
+                self.send_header("Content-Length", str(len(body)))
+                self.end_headers(); self.wfile.write(body); return
+            return self._json(404, {"error": "locale not found", "path": path})
         if path.endswith((".vrm", ".vrma")):
             # serve any VRM model / VRMA animation under web/ (path-traversal safe)
             base = os.path.join(_HERE, "web")
@@ -633,6 +753,13 @@ class Handler(BaseHTTPRequestHandler):
                 return self._json(200, d)
             except Exception as e:
                 return self._json(200, {"error": f"{type(e).__name__}: {e}"})
+        if path == "/api/export":
+            # Free→Local seam: a signed, GDPR-Art-20 portable bundle — take your AI local.
+            try:
+                from . import portability
+                return self._json(200, portability.export_bundle(self._uid()))
+            except Exception as e:
+                return self._json(200, {"error": f"{type(e).__name__}: {e}"})
         return self._json(404, {"error": "not found", "path": path})
 
     def do_POST(self):
@@ -640,6 +767,10 @@ class Handler(BaseHTTPRequestHandler):
         b = self._body()
         uid = self._uid(b)   # cross-device identity (Bearer token → user_id; else 'web')
         try:
+            # ---- MCP bridge: OS/DOME/LAW/MAP + characters → SOV3 tools + compliance MCP catalogue ----
+            if path == "/api/mcp/call":
+                from . import mcp_bridge as _mb
+                return self._json(200, _mb.call(b))
             # ---- passwordless cross-device identity ----
             if path == "/api/auth/anon":
                 return self._json(200, auth.create_anon())           # just-start: durable account
@@ -862,6 +993,19 @@ class Handler(BaseHTTPRequestHandler):
                            user_message=b.get("message", ""), tier=b.get("tier", "pro"))
                 out["reply"] = _g["reply"]
                 out["sovereign_gate"] = {k: _g[k] for k in ("gate", "care_flagged", "held", "swappable_engine")}
+                try:   # SIGIL: record this decision on the tamper-evident ledger (the moat, made visible)
+                    from . import sigil as _sigil
+                    _gst = out.get("sovereign_gate", {})
+                    _rec = _sigil.record({"op": "S", "fields": {
+                        "char": cid, "brain": str(out.get("brain", b.get("brain", "left"))),
+                        "engine": str(out.get("engine", out.get("backend", "?"))),
+                        "care": "flagged" if _gst.get("care_flagged") else "ok",
+                        "held": _gst.get("held", False)}})
+                    if _gst.get("held"):
+                        _sigil.record({"op": "A", "level": "safety", "msg": f"{cid} reply held by the sovereign gate"})
+                    out["sigil"] = {"line": _rec["line"], "gloss": _rec["gloss"], "receipt": _rec["receipt"]}
+                except Exception:
+                    pass
                 # Stage 1 Tamagotchi: grow the bond + update mood from this interaction (per user)
                 try:
                     from . import vitals as _v

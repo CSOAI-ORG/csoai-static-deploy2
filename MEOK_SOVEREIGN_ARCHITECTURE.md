@@ -135,6 +135,14 @@ That is BFT-of-N with **N=2** — the runtime seed of the §3.2 PBFT-MoE council
 
 ---
 
+# MEOK Sovereign AI OS — Complete Architecture Rundown
+
+> **For Kimi Swarm Deep Research & Autonomous Operation**
+> Version: 2026-05-28 | Authority: JEEVES Strategic Command
+> Status: Living Document — Update on every architectural change
+
+---
+
 ## 1. EXECUTIVE SUMMARY
 
 MEOK is a **sovereign AI operating system** — not a chatbot, not an API wrapper, but a full-stack governance-native platform for running autonomous AI agents under human-aligned constitutional rule. It combines:
