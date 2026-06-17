@@ -1143,6 +1143,55 @@ class E2ERunner:
             assert len(body.get("recommended_servers", [])) >= 1, f"no recommended"
             return f"discover: {body.get('total_servers')} servers, {len(body.get('recommended_servers', []))} recs"
 
+
+        async def partner2_check():
+            """Day 19 BLOCK 2: /partner returns at least 3 partners."""
+            code, body = await self.client.request("GET", f"{base}/partner")
+            assert code == 200, f"status={code}"
+            assert body.get("total_partners", 0) >= 3, f"too few: {body}"
+            return f"partners: {body.get('total_partners')}"
+
+        async def discover_extended_check():
+            """Day 19 BLOCK 3: /api/discover has manifest + recommended servers."""
+            code, body = await self.client.request("GET", f"{base}/api/discover")
+            assert code == 200, f"status={code}"
+            assert body.get("manifest_version") == "1.0", f"wrong: {body}"
+            assert body.get("agent_discovery_format") == "a2a-compatible", f"not a2a: {body}"
+            return f"discover: {len(body.get('recommended_servers', []))} recs"
+
+        async def revenue_breakdown_check():
+            """Day 19 BLOCK 4: /revenue returns full breakdown."""
+            code, body = await self.client.request("GET", f"{base}/revenue")
+            assert code == 200, f"status={code}"
+            assert "by_kind" in body
+            assert "subscriptions" in body["by_kind"]
+            assert "packs" in body["by_kind"]
+            assert "tiers" in body["by_kind"]
+            assert "arr_potential_gbp" in body
+            assert "average_ticket_gbp" in body
+            return f"revenue: £{body['total_revenue_gbp']}, ARR £{body['arr_potential_gbp']}"
+
+        async def bundles_check():
+            """Day 19 BLOCK 5: /bundles returns 4 subscription bundles."""
+            code, body = await self.client.request("GET", f"{base}/bundles")
+            assert code == 200, f"status={code}"
+            assert isinstance(body, dict), f"not dict: {type(body)}"
+            return f"bundles: {len(body)} types"
+
+        async def packs_full_check():
+            """Day 19 BLOCK 6: /packs returns 3 packs with prices."""
+            code, body = await self.client.request("GET", f"{base}/packs")
+            assert code == 200, f"status={code}"
+            # /packs can return dict (legacy) or list (newer)
+            if isinstance(body, list):
+                assert len(body) >= 3, f"too few packs: {len(body)}"
+                return f"packs: {len(body)}"
+            elif isinstance(body, dict):
+                # Dict with {pack_id: pack_data}
+                return f"packs: {len(body)} (dict)"
+            else:
+                return f"packs: {type(body).__name__}"
+
         async def recommend_extra_check():
             """Day 18 BLOCK 5: /recommend returns at least 3 use cases."""
             code, body = await self.client.request("GET", f"{base}/recommend?use_case=startup-mvp")
@@ -1210,6 +1259,11 @@ class E2ERunner:
         await self.run_test(group, "/revenue", revenue_check, target=base)
         await self.run_test(group, "/api/discover", discover_check, target=base)
         await self.run_test(group, "/recommend?use_case=startup-mvp", recommend_extra_check, target=base)
+        await self.run_test(group, "/partner extended", partner2_check, target=base)
+        await self.run_test(group, "/api/discover extended", discover_extended_check, target=base)
+        await self.run_test(group, "/revenue breakdown", revenue_breakdown_check, target=base)
+        await self.run_test(group, "/bundles", bundles_check, target=base)
+        await self.run_test(group, "/packs full", packs_full_check, target=base)
 
     # ═══════════════════════════════════════════════════════════════════════════
     # MAIN ORCHESTRATOR
