@@ -4,14 +4,21 @@ health-mesh.py — DEFONEOS mythic mesh health check.
 
 Pings the three sovereign regions (us-east, eu-frankfurt, ap-singapore) and
 reports the status of:
-  - api-gateway         (port 3211, /health)
-  - cometbft RPC        (port 26657, /status)
-  - mcp-bridge SSE      (port 3333, /sse)
-  - wireguard tunnel    (10.10.0.{10,20,30}:51820 over UDP, last-handshake < 3m)
-  - prometheus          (port 9090, /-/healthy)
-  - node-exporter       (port 9100, /metrics — sanity check)
+  Core substrate:
+    - api-gateway         (port 3211, /health)
+    - patentmcp           (port 3210, /health)
+    - cometbft RPC        (port 26657, /status)
+    - mcp-bridge SSE      (port 3333, /sse)
+    - wireguard tunnel    (10.10.0.{10,20,30}:51820 over UDP)
+    - prometheus          (port 9090, /-/healthy)
+    - node-exporter       (port 9100, /metrics)
+  MCP server fleet (Day 9-10 expansion):
+    - sovereign-temple-bft (3334), openpatent-research (3335),
+      openpatent-legal (3336), openpatent-ipcastle (3337), openpatent-gaming (3338)
+  White-label .ai apps (4 sovereign domains):
+    - harvi.ai (4001), ipcastle.ai (4002), legalof.ai (4003), sovereign-temple.ai (4004)
 
-Prints a single status table. Exit 0 if all 18 endpoints respond, 1 if any
+Prints a single status table. Exit 0 if all endpoints respond, 1 if any
 one fails, 2 if a region is fully dark.
 
 USAGE
@@ -78,6 +85,18 @@ ENDPOINTS = [
     ("mcp-bridge",   3333, "http", "/sse"),
     ("prometheus",   9090, "http", "/-/healthy"),
     ("node-exporter", 9100, "http", "/metrics"),
+    # ── MCP server fleet (Day 9-10 production expansion) ──
+    ("patentmcp",          3210, "http", "/health"),
+    ("sovereign-temple-bft", 3334, "http", "/health"),
+    ("openpatent-research",  3335, "http", "/health"),
+    ("openpatent-legal",     3336, "http", "/health"),
+    ("openpatent-ipcastle",  3337, "http", "/health"),
+    ("openpatent-gaming",    3338, "http", "/health"),
+    # ── White-label .ai apps (4 sovereign domains) ──
+    ("harvi.ai",             4001, "http", "/health"),
+    ("ipcastle.ai",          4002, "http", "/health"),
+    ("legalof.ai",           4003, "http", "/health"),
+    ("sovereign-temple.ai",  4004, "http", "/health"),
 ]
 
 WIREGUARD_PORT = 51820

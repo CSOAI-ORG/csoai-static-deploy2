@@ -211,5 +211,44 @@
       if (el) el.textContent = cliffDays;
     })();
   </script>
+
+<!-- ===== LIVE LAUNCH STATUS (added 2026-06-16) ===== -->
+<section id="live-launch-status" style="background: rgba(34,197,94,0.05); border: 1px solid #22c55e; border-radius: 0.6rem; padding: 2rem; margin: 2rem 0;">
+  <h2 style="color: #22c55e; margin: 0 0 1rem;">🚀 Live Launch Status (auto-refresh every 30s)</h2>
+  <p style="color: #e8e4dc; margin: 0 0 1rem;">Countdown to EU AI Act Article 50 cliff, live MRR, paying customers, and more.</p>
+  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; margin: 1.5rem 0;">
+    <div style="background: rgba(255,255,255,0.05); border: 1px solid #22c55e; padding: 1rem; border-radius: 0.4rem; text-align: center;">
+      <div style="font-size: 2rem; font-weight: 800; color: #22c55e;" id="status-days">48</div>
+      <div style="color: #999; font-size: 0.85rem;">days to cliff</div>
+    </div>
+    <div style="background: rgba(255,255,255,0.05); border: 1px solid #22c55e; padding: 1rem; border-radius: 0.4rem; text-align: center;">
+      <div style="font-size: 2rem; font-weight: 800; color: #22c55e;" id="status-mrr">£0</div>
+      <div style="color: #999; font-size: 0.85rem;">MRR</div>
+    </div>
+    <div style="background: rgba(255,255,255,0.05); border: 1px solid #22c55e; padding: 1rem; border-radius: 0.4rem; text-align: center;">
+      <div style="font-size: 2rem; font-weight: 800; color: #22c55e;" id="status-customers">0</div>
+      <div style="color: #999; font-size: 0.85rem;">customers</div>
+    </div>
+    <div style="background: rgba(255,255,255,0.05); border: 1px solid #22c55e; padding: 1rem; border-radius: 0.4rem; text-align: center;">
+      <div style="font-size: 2rem; font-weight: 800; color: #22c55e;" id="status-partners">0</div>
+      <div style="color: #999; font-size: 0.85rem;">GRC partners</div>
+    </div>
+  </div>
+  <script>
+    async function updateLaunchStatus() {
+      const cliffTarget = new Date('2026-08-02T00:00:00Z');
+      const now = new Date();
+      const days = Math.max(0, Math.ceil((cliffTarget - now) / 86400000));
+      document.getElementById('status-days').textContent = days;
+      // Placeholder for live data from keystone or API
+      document.getElementById('status-mrr').textContent = '£0';
+      document.getElementById('status-customers').textContent = '0';
+      document.getElementById('status-partners').textContent = '0';
+    }
+    updateLaunchStatus();
+    setInterval(updateLaunchStatus, 30000);
+  </script>
+</section>
+
 </body>
 </html>

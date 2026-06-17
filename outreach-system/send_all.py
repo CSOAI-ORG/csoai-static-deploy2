@@ -55,8 +55,12 @@ def parse_email_file(path: Path) -> dict | None:
     body = text[body_start:].lstrip()
     # Remove common separator lines
     body = re.sub(r"^=+\n", "", body, count=1)
+    try:
+        rel_file = str(path.relative_to(ROOT))
+    except ValueError:
+        rel_file = str(path)
     return {
-        "file": str(path.relative_to(ROOT)),
+        "file": rel_file,
         "to": to,
         "subject": subject,
         "body": body.strip(),

@@ -791,27 +791,75 @@
     },
     {
       "severity": "WARN",
-      "file": "services/legalof-ai/.next/types/app/page.ts",
-      "line": "75",
-      "message": "hardcoded external URL: // https://github.com/sindresorhus/type-fest"
+      "file": "services/landing-site/next-env.d.ts",
+      "line": "5",
+      "message": "hardcoded external URL: // see https://nextjs.org/docs/basic-features/typescript for more information."
     },
     {
       "severity": "WARN",
-      "file": "services/legalof-ai/.next/types/app/layout.ts",
-      "line": "75",
-      "message": "hardcoded external URL: // https://github.com/sindresorhus/type-fest"
+      "file": "services/harvi-ai/next-env.d.ts",
+      "line": "5",
+      "message": "hardcoded external URL: // see https://nextjs.org/docs/basic-features/typescript for more information."
     },
     {
       "severity": "WARN",
-      "file": "services/openpatent-ipcastle-mcp/src/index.ts",
+      "file": "services/sovereign-temple-bft-mcp/src/index.ts",
+      "line": "307",
+      "message": "hardcoded external URL: return { content: [{ type: \"text\", text: JSON.stringify({ proposal_hash: args.pr"
+    },
+    {
+      "severity": "WARN",
+      "file": "services/openpatent-sovereign-mcp/src/index.ts",
       "line": "6",
-      "message": "hardcoded external URL: * Proxies to: https://api.openpatent.ai and https://ipcastle.ai (white-label)"
+      "message": "hardcoded external URL: * Proxies to: https://api.openpatent.ai and https://sovereign-temple.ai"
     },
     {
       "severity": "WARN",
-      "file": "services/openpatent-ipcastle-mcp/src/index.ts",
+      "file": "services/openpatent-sovereign-mcp/src/index.ts",
       "line": "33",
-      "message": "hardcoded external URL: const IPCASTLE_BASE = process.env.IPCASTLE_BASE || \"https://ipcastle.ai\";"
+      "message": "hardcoded external URL: const SOVEREIGN_BASE = process.env.SOVEREIGN_TEMPLE_BASE || \"https://sovereign-t"
+    },
+    {
+      "severity": "WARN",
+      "file": "services/harvi-ai/.next/types/app/page.ts",
+      "line": "75",
+      "message": "hardcoded external URL: // https://github.com/sindresorhus/type-fest"
+    },
+    {
+      "severity": "WARN",
+      "file": "services/harvi-ai/.next/types/app/layout.ts",
+      "line": "75",
+      "message": "hardcoded external URL: // https://github.com/sindresorhus/type-fest"
+    },
+    {
+      "severity": "WARN",
+      "file": "services/openpatent-gaming-mcp/src/index.ts",
+      "line": "6",
+      "message": "hardcoded external URL: * Proxies to: https://api.openpatent.ai and https://harvi.ai (white-label)"
+    },
+    {
+      "severity": "WARN",
+      "file": "services/openpatent-gaming-mcp/src/index.ts",
+      "line": "33",
+      "message": "hardcoded external URL: const HARVI_BASE = process.env.HARVI_BASE || \"https://harvi.ai\";"
+    },
+    {
+      "severity": "WARN",
+      "file": "services/openpatent-legal-mcp/src/index.ts",
+      "line": "7",
+      "message": "hardcoded external URL: *             https://legalof.ai (white-label landing)"
+    },
+    {
+      "severity": "WARN",
+      "file": "services/openpatent-legal-mcp/src/index.ts",
+      "line": "34",
+      "message": "hardcoded external URL: const LEGALOF_BASE = process.env.LEGALOF_BASE || \"https://legalof.ai\";"
+    },
+    {
+      "severity": "WARN",
+      "file": "services/openpatent-legal-mcp/src/index.ts",
+      "line": "293",
+      "message": "hardcoded external URL: calendar_invite_url: `https://legalof.ai/calendar/${args.disclosure_hash.slice(0"
     },
     {
       "severity": "WARN",
@@ -857,75 +905,27 @@
     },
     {
       "severity": "WARN",
-      "file": "services/landing-site/next-env.d.ts",
-      "line": "5",
-      "message": "hardcoded external URL: // see https://nextjs.org/docs/basic-features/typescript for more information."
-    },
-    {
-      "severity": "WARN",
-      "file": "services/openpatent-legal-mcp/src/index.ts",
-      "line": "7",
-      "message": "hardcoded external URL: *             https://legalof.ai (white-label landing)"
-    },
-    {
-      "severity": "WARN",
-      "file": "services/openpatent-legal-mcp/src/index.ts",
-      "line": "34",
-      "message": "hardcoded external URL: const LEGALOF_BASE = process.env.LEGALOF_BASE || \"https://legalof.ai\";"
-    },
-    {
-      "severity": "WARN",
-      "file": "services/openpatent-legal-mcp/src/index.ts",
-      "line": "293",
-      "message": "hardcoded external URL: calendar_invite_url: `https://legalof.ai/calendar/${args.disclosure_hash.slice(0"
-    },
-    {
-      "severity": "WARN",
-      "file": "services/openpatent-gaming-mcp/src/index.ts",
+      "file": "services/openpatent-ipcastle-mcp/src/index.ts",
       "line": "6",
-      "message": "hardcoded external URL: * Proxies to: https://api.openpatent.ai and https://harvi.ai (white-label)"
+      "message": "hardcoded external URL: * Proxies to: https://api.openpatent.ai and https://ipcastle.ai (white-label)"
     },
     {
       "severity": "WARN",
-      "file": "services/openpatent-gaming-mcp/src/index.ts",
+      "file": "services/openpatent-ipcastle-mcp/src/index.ts",
       "line": "33",
-      "message": "hardcoded external URL: const HARVI_BASE = process.env.HARVI_BASE || \"https://harvi.ai\";"
+      "message": "hardcoded external URL: const IPCASTLE_BASE = process.env.IPCASTLE_BASE || \"https://ipcastle.ai\";"
     },
     {
       "severity": "WARN",
-      "file": "services/harvi-ai/next-env.d.ts",
-      "line": "5",
-      "message": "hardcoded external URL: // see https://nextjs.org/docs/basic-features/typescript for more information."
-    },
-    {
-      "severity": "WARN",
-      "file": "services/harvi-ai/.next/types/app/page.ts",
+      "file": "services/legalof-ai/.next/types/app/page.ts",
       "line": "75",
       "message": "hardcoded external URL: // https://github.com/sindresorhus/type-fest"
     },
     {
       "severity": "WARN",
-      "file": "services/harvi-ai/.next/types/app/layout.ts",
+      "file": "services/legalof-ai/.next/types/app/layout.ts",
       "line": "75",
       "message": "hardcoded external URL: // https://github.com/sindresorhus/type-fest"
-    },
-    {
-      "severity": "WARN",
-      "file": "services/openpatent-sovereign-mcp/src/index.ts",
-      "line": "6",
-      "message": "hardcoded external URL: * Proxies to: https://api.openpatent.ai and https://sovereign-temple.ai"
-    },
-    {
-      "severity": "WARN",
-      "file": "services/openpatent-sovereign-mcp/src/index.ts",
-      "line": "33",
-      "message": "hardcoded external URL: const SOVEREIGN_BASE = process.env.SOVEREIGN_TEMPLE_BASE || \"https://sovereign-t"
-    },
-    {
-      "severity": "WARN",
-      "file": "services/sovereign-temple-bft-mcp/src/index.ts",
-      "line": "307",
-      "message": "hardcoded external URL: return { content: [{ type: \"text\", text: JSON.stringify({ proposal_hash: args.pr"
     }
   ]
 }

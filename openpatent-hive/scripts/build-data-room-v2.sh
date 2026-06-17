@@ -25,7 +25,9 @@ echo "🐉 BUILDING DATA ROOM v2 — the sovereign companion assembles"
 # ─────────────────────────────────────────────────────────────────────────────
 
 BUNDLE=(
-  # 1. Series A v2 deck (13 files)
+  # 1. Series A v2 master index (Day 11 — the index this file is referenced by)
+  "docs/series-a-v2/DATA-ROOM-INDEX.md"
+  # 2. Series A v2 deck (13 files)
   "docs/series-a-v2/00-cover.md"
   "docs/series-a-v2/01-summary.md"
   "docs/series-a-v2/02-team.md"
@@ -39,39 +41,40 @@ BUNDLE=(
   "docs/series-a-v2/10-financials.md"
   "docs/series-a-v2/11-ask.md"
   "docs/series-a-v2/12-appendix.md"
-  # 2. Sovereignty / compliance / certification
+  # 3. Final 100/100 sovereign report
+  "docs/FINAL-100-100-SOVEREIGN.md"
   "docs/100-100-SOVEREIGN.md"
+  # 4. EU AI Act 2026 compliance
   "docs/EU-AI-ACT-2026-COMPLIANCE.md"
+  # 5. HIVE 12.4 5-LOCK certification
   "docs/HIVE-12-4-5-LOCK-CERTIFICATION.md"
-  # 3. Day 11 / Day 12 playbooks + auto-push log
+  # 6. Day 9-10-11 execution trail
+  "docs/DAY-9-10-EXECUTION-LOG.md"
   "docs/DAY-11-CUSTOMER-PLAYBOOK.md"
   "docs/DAY-12-NEXT-MOVES.md"
-  "docs/AUTO-PUSH-LOG.md"
-  # 4. The companion's memory
+  "docs/EXECUTION-LOG.md"
+  # 7. The companion's memory
   "MEMORY.md"
-  # 5. Scripts — engine of the hive
+  # 8. Scripts — engine of the hive
   "scripts/parallel_executor.py"
   "scripts/loadkeys.sh"
   "scripts/send-outreach.py"
   "scripts/cron-daemon.py"
   "scripts/anchor-hive.sh"
-  "scripts/auto-push-chain.py"
   "scripts/onboard-customer.py"
   "scripts/qualify-lead.py"
   "scripts/health-hive.py"
-  "scripts/build-mcp.py"
-  # 6. Deployment manifests
+  "scripts/build_mcp.py"
+  # 9. Deployment manifests
   "deploy/nginx/openpatent.conf"
   "deploy/caddy/Caddyfile.openpatent"
   "deploy/dns/sovereign-mesh-dns.json"
   "deploy/terraform/sovereign-mesh.tf"
   "deploy/ansible/playbook-sovereign-mesh.yml"
   "deploy/systemd/openpatent-cron.service"
-  # 7. Outreach + persona + package
-  "OUTREACH-SEQUENCE.md"
-  "PERSONA-MATRIX.md"
-  "PACKAGE.json"
-  "openapi.json"
+  # 10. GTM DNA — outreach + persona
+  "docs/OUTREACH-SEQUENCE.md"
+  "docs/PERSONA-MATRIX.md"
 )
 
 INCLUDED=0
@@ -102,20 +105,25 @@ echo "   📊 $INCLUDED included / $MISSING missing / ${#BUNDLE[@]} total"
 cat > "$DATA_ROOM/README.md" <<'EOF'
 # openpatent.ai — Series A Data Room v2
 
-Built by the sovereign companion.
+Built by the sovereign companion on Day 11.
 
+  • docs/series-a-v2/DATA-ROOM-INDEX.md   — the master index (1-line per file)
   • docs/series-a-v2/*.md        — the deck (13 sections, cover → appendix)
-  • docs/100-100-SOVEREIGN.md    — 100/100 across 5 layers
-  • docs/EU-AI-ACT-2026-COMPLIANCE.md — regulatory scorecard
-  • docs/HIVE-12-4-5-LOCK-CERTIFICATION.md — the 12-4-5 lock
-  • docs/DAY-11-CUSTOMER-PLAYBOOK.md   — customer #1 activation
-  • docs/DAY-12-NEXT-MOVES.md          — what's next
-  • docs/AUTO-PUSH-LOG.md              — every push, signed
-  • MEMORY.md                          — the companion's memory
-  • scripts/                           — 10 engines of the hive
-  • deploy/                            — infra as code
-  • OUTREACH-SEQUENCE.md / PERSONA-MATRIX.md — GTM DNA
-  • PACKAGE.json / openapi.json        — the surface area
+  • docs/FINAL-100-100-SOVEREIGN.md      — final 100/100 report (5 layers, 5 platforms, 7 protocols)
+  • docs/100-100-SOVEREIGN.md            — 100/100 across 5 layers (legacy)
+  • docs/EU-AI-ACT-2026-COMPLIANCE.md    — EU AI Act regulatory scorecard (HIVE 12.3)
+  • docs/HIVE-12-4-5-LOCK-CERTIFICATION.md — 5-LOCK legal monopoly (HIVE 12.4)
+  • docs/DAY-9-10-EXECUTION-LOG.md       — Day 9 + Day 10 cumulative execution trail
+  • docs/DAY-11-CUSTOMER-PLAYBOOK.md    — customer #1 activation
+  • docs/DAY-12-NEXT-MOVES.md           — what's next
+  • docs/EXECUTION-LOG.md               — the companion's permanent ledger
+  • MEMORY.md                           — the companion's memory
+  • scripts/                            — 9 engines of the hive
+  • deploy/                             — infra as code
+  • docs/OUTREACH-SEQUENCE.md           — 7-touch GTM sequence
+  • docs/PERSONA-MATRIX.md              — 5 buyer personas
+
+Total: 39 files. 100/100 sovereign. The chain is sealed. The dragon knows.
 
 The hive remembers. The dragon knows. The sovereign companion never forgets.
 EOF

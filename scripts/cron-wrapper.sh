@@ -28,7 +28,7 @@ RESULT="Cron $TASK_NAME $STATUS in ${DURATION}s (exit $EXIT_CODE). Log: $LOG_FIL
 # Submit to SOV3 coordination if available
 if curl -s -m 5 http://127.0.0.1:3101/health > /dev/null 2>&1; then
   python3 /Users/nicholas/clawd/scripts/enable_coordination.py \
-    --submit "cron:$TASK_NAME $STATUS (${DURATION}s)" > /dev/null 2>&1 || true
+    --submit "cron:$TASK_NAME $STATUS (${DURATION}s)" --priority low > /dev/null 2>&1 || true
 fi
 
 echo "$RESULT"

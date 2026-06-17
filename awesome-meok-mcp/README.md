@@ -24,7 +24,6 @@ See source code for available tools and parameters.
 - [NIS2](https://meok.ai/nis2)
 - [GDPR](https://meok.ai/gdpr)
 - [ISO 42001](https://meok.ai/iso-42001)
-- [CRA](https://meok.ai/cra)
 
 ## Verify attestations
 
@@ -45,4 +44,4 @@ MIT — Copyright (c) 2026 MEOK AI Labs / CSOAI Ltd.
 
 ---
 
-*Keywords: #EUAIAct, #DORA, #NIS2, #GDPR, #ISO42001, #CRA*
+*Keywords: #EUAIAct, #DORA, #NIS2, #GDPR, #ISO42001*

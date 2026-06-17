@@ -1,4 +1,4 @@
-# MEOK Partner Agreement — Template
+# MEOK Partner Agreement
 
 **Source:** Drafted by Kimi Bridge (Kimi K2.7) via hermes_ask
 **Date:** 2026-06-14
@@ -6,7 +6,81 @@
 
 ---
 
-{
-  "response": "# MEOK Partner Agreement\n\n**This Partner Agreement (\"Agreement\") is made effective as of [insert date], by and between MEOK AI Labs (CSOAI Ltd, UK Companies House 16939677, 100% owned by Nicholas Templeman) (\"MEOK\") and [PARTNER], a boutique consultancy specializing in Governance, Risk Management, and Compliance (\"GRC Partner\").**\n\n## 1. PARTIES\n\nThis Agreement is entered into by and between:\n\n**MEOK AI Labs**  \nRegistered Address: [insert address]  \nCompany Registration Number: 16939677\n\nAND\n\n**[PARTNER]**  \nRegistered Address: [insert address]  \nCompany Registration Number: [insert number]\n\n## 2. SCOPE\n\nThe Partner is authorized to promote, sell, and facilitate the execution of Article 50 audits powered by MEOK\u2019s technology. The Partner will represent MEOK's offerings under a white-label arrangement while using MEOK\u2019s tooling for audit execution, including but not limited to the eu-ai-act-compliance-mcp, meok-governance-engine-mcp, and meok-attestation-verify.\n\n## 3. PRICING & REVENUE SHARE\n\nFor each Article 50 audit facilitated by the Partner, MEOK will pay the Partner a revenue share of 30% of the net fees received from the client. \n\n- Base Price for Pro Tier Audit: **\u00a34,950**\n- Monthly Subscription for Enterprise Tier: **\u00a31,499**\n\nThe Partner may determine their own retail pricing, although a recommended range is between **\u00a38,000 to \u00a312,000** per audit.\n\n## 4. BRANDING\n\nAll deliverables provided to clients will feature the Partner's branding and will be presented in a white-label format. MEOK will ensure that the Partner's logo and branding are prominently displayed on every signed attestation without any reference to MEOK. \n\n## 5. DELIVERABLES\n\nThe deliverables under this Agreement will include:\n\n- Ed25519-signed attestations certifying compliance following the Article 50 audit.\n- Reports generated using MEOK's technology platforms, showcasing the findings and recommendations from the audits.\n\nDeliverables will be provided to clients upon successful completion of the audit, with an average 4-day turnaround time for deliverables once the audit is completed.\n\n## 6. PARTNER OBLIGATIONS\n\nThe Partner agrees to:\n\n- Comply with all terms laid out in this Agreement and any applicable laws or regulations.\n- Avoid direct solicitation of clients introduced by MEOK for a period of **12 months** after any client engagement concludes.\n- Perform audits in a professional manner, adhering to industry standards, and MEOK's operational guidelines.\n\n## 7. TERM & TERMINATION\n\nThis Agreement shall commence on the effective date and continue for a period of **12 months** unless terminated earlier by either party. Either party may terminate the Agreement upon providing a **30-day written notice** to the other party.\n\n## 8. LIABILITY\n\nEach party shall be liable solely for their own actions, and neither party shall be liable for indirect or consequential damages. Each party agrees to indemnify and hold harmless the other from any claims arising out of their own negligent or willful misconduct.\n\n## 9. GOVERNING LAW\n\nThis Agreement shall be governed by and construed in accordance with the laws of **England and Wales**. Any disputes arising from this Agreement shall be settled in the courts of England.\n\n## 10. SIGNATURES\n\nIN WITNESS WHEREOF, the parties hereto have executed this Agreement as of the day and year first above written.\n\n**MEOK AI Labs**\n\n______________________________  \nSignature: [Authorized Signatory Name]  \nTitle: [Title]  \nDate: [Date]  \n\n**[PARTNER]**\n\n______________________________  \nSignature: [Authorized Signatory Name]  \nTitle: [Title]  \nDate: [Date]  \n\n---\n\n*This template serves as a guide for a potential partnership agreement between MEOK AI Labs and a GRC boutique consultancy. It should be customized with specific information, terms, and conditions prior to signing.*",
-  "exit_code": 0
-}
+# MEOK Partner Agreement
+
+**This Partner Agreement ("Agreement") is made effective as of 14 June 2026, by and between MEOK AI Labs (CSOAI Ltd, UK Companies House 16939677, 100% owned by Nicholas Templeman) ("MEOK") and the Partner, a boutique consultancy specializing in Governance, Risk Management, and Compliance ("GRC Partner").**
+
+## 1. PARTIES
+
+This Agreement is entered into by and between:
+
+**MEOK AI Labs**  
+Registered Address: MEOK AI Labs, Lincolnshire, United Kingdom  
+Company Registration Number: 16939677
+
+AND
+
+**Partner**  
+Registered Address: As set out in the Partner's registration details  
+Company Registration Number: As provided by Partner
+
+## 2. SCOPE
+
+The Partner is authorized to promote, sell, and facilitate the execution of Article 50 audits powered by MEOK's technology. The Partner will represent MEOK's offerings under a white-label arrangement while using MEOK's tooling for audit execution, including but not limited to the eu-ai-act-compliance-mcp, meok-governance-engine-mcp, and meok-attestation-verify.
+
+## 3. PRICING & REVENUE SHARE
+
+For each Article 50 audit facilitated by the Partner, MEOK will pay the Partner a revenue share of 30% of the net fees received from the client. 
+
+- Base Price for Pro Tier Audit: **£4,950**
+- Monthly Subscription for Enterprise Tier: **£1,499**
+
+The Partner may determine their own retail pricing, although a recommended range is between **£8,000 to £12,000** per audit.
+
+## 4. BRANDING
+
+All deliverables provided to clients will feature the Partner's branding and will be presented in a white-label format. MEOK will ensure that the Partner's logo and branding are prominently displayed on every signed attestation without any reference to MEOK. 
+
+## 5. DELIVERABLES
+
+The deliverables under this Agreement will include:
+
+- Ed25519-signed attestations certifying compliance following the Article 50 audit.
+- Reports generated using MEOK's technology platforms, showcasing the findings and recommendations.
+- Documentation packages suitable for regulatory submission.
+
+## 6. TERM AND TERMINATION
+
+This Agreement shall commence on the effective date and continue for an initial term of twelve (12) months, automatically renewing for successive one-year periods unless either party provides thirty (30) days' written notice of non-renewal.
+
+Either party may terminate this Agreement for material breach if the breach remains uncured for thirty (30) days following written notice.
+
+## 7. CONFIDENTIALITY
+
+Each party agrees to maintain the confidentiality of the other party's proprietary information, including pricing structures, client lists, and technical implementations. This obligation survives termination of the Agreement for a period of three (3) years.
+
+## 8. INDEMNIFICATION
+
+MEOK AI Labs shall indemnify the Partner against claims arising from defects in MEOK's technology platform. The Partner shall indemnify MEOK against claims arising from the Partner's delivery of services to clients.
+
+## 9. LIMITATION OF LIABILITY
+
+Neither party shall be liable for indirect, incidental, or consequential damages. MEOK's aggregate liability under this Agreement shall not exceed the total revenue share paid to the Partner in the twelve (12) months preceding the claim.
+
+## 10. GOVERNING LAW
+
+This Agreement shall be governed by the laws of England and Wales. Any disputes shall be resolved through the courts of London, UK.
+
+---
+
+**IN WITNESS WHEREOF**, the parties have executed this Agreement as of the date first written above.
+
+**MEOK AI Labs**  
+Signature: ________________________  
+Name: Nicholas Templeman  
+Title: Founder & CEO
+
+**Partner**  
+Signature: ________________________  
+Name: ________________________  
+Title: ________________________

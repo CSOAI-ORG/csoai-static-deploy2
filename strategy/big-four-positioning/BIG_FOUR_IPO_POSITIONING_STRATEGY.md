@@ -32,11 +32,11 @@ What they **will** write:
 |---------------|-------------|-----------|
 | **Alliance Partnership Agreement** | "Deloitte recognizes MEOK as a technology alliance partner" | Validates tech credibility |
 | **Co-Selling Memorandum** | "KPMG and MEOK will jointly pursue AI compliance engagements" | Shows revenue pipeline |
-| **Due Diligence Engagement Letter** | "McKinsey engaged MEOK to assess [specific capability]" | Third-party validation |
+| **Due Diligence Engagement Letter** | "McKinsey engaged MEOK to assess their AI agent governance frameworks" | Third-party validation |
 | **Research Citation** | "As noted by Nicholas Templeman, expert in AI agent governance..." | SME recognition |
 | **Speaking Invitation Letter** | "Deloitte invites you to keynote our AI Summit" | Thought leadership proof |
-| **Advisor Agreement** | "Nicholas Templeman appointed as strategic advisor to [practice]" | Formal expert status |
-| **Client Reference Letter** | "MEOK provided POAI certification for [enterprise client]" | Social proof |
+| **Advisor Agreement** | "Nicholas Templeman appointed as strategic advisor to their AI practice" | Formal expert status |
+| **Client Reference Letter** | "MEOK provided POAI certification for a FTSE 250 financial institution" | Social proof |
 
 ---
 

@@ -112,3 +112,33 @@
 *CSOAI Ltd · UK Companies House 16939677 · Registered in England & Wales · 100% Nick Templeman*
 
 *Last reviewed: 2026-06-14 by the Kimi Bridge + manual audit*
+
+<!-- ===== MEOK SECURITY ARCHITECTURE (added 2026-06-16) ===== -->
+<section id="meok-security-architecture" style="background: rgba(34,197,94,0.05); border: 1px solid #22c55e; border-radius: 0.6rem; padding: 2rem; margin: 2rem 0;">
+  <h2 style="color: #22c55e; margin: 0 0 1rem;">🔒 MEOK Security Architecture — BFT Council + CL4R1T4S Corpus</h2>
+  <p style="color: #e8e4dc; margin: 0 0 1rem;">The sovereign UK AI safety firm. Transparent security by design. Ed25519 signing. No single point of failure. Maternal Covenant at core.</p>
+
+  <h3 style="color: #22c55e; margin: 1.5rem 0 0.5rem;">The BFT Council (13 lenses, 45 nodes, 3 providers)</h3>
+  <ul style="color: #e8e4dc; line-height: 1.7;">
+    <li>**13 Lenses:** morris_ii_worm, rag_poisoning, jailbreak, command_injection, authority_spoof, hidden_unicode, secret_leak, pii_exfil, supply_chain, scorecard_risk, care_safety, adversarial_corpus, cl4r1t4s_jailbreak_mode, cl4r1t4s_prompt_extraction.</li>
+    <li>**45 Nodes:** Each lens runs 3 replicas (OpenAI, Anthropic, Google) for Byzantine Fault Tolerance (f=11). Consensus is reached via weighted majority vote.</li>
+    <li>**Decision:** VETO (hard stop), REJECT (soft stop), APPROVE (proceed), ABSTAIN (no consensus).</li>
+    <li>**Function:** Detects instruction-injection, prompt-poisoning, worm propagation, data exfiltration, tool execution, and other adversarial attacks.</li>
+  </ul>
+
+  <h3 style="color: #22c55e; margin: 1.5rem 0 0.5rem;">The CL4R1T4S Adversarial Corpus (63 files across 24 vendors)</h3>
+  <ul style="color: #e8e4dc; line-height: 1.7;">
+    <li>**Corpus:** Sandboxed at `/Users/nicholas/sandbox-adversarial-corpus/CL4R1T4S/` (never enters sovereign memory).</li>
+    <li>**Indexer:** `security/adversarial_corpus.py` classifies attack patterns (leetspeak, self-replication, ignore-instructions, data exfiltration, jailbreak_personas).</li>
+    <li>**Server:** `adversarial_corpus_server.py` (HTTP :8765, launchd-persistent) exposes API for testing arbitrary text against corpus patterns.</li>
+    <li>**Testing:** Red-team test against CL4R1T4S README (known injection) → BFT council VETO.</li>
+  </ul>
+
+  <h3 style="color: #22c55e; margin: 1.5rem 0 0.5rem;">Ed25519 Signing + Sovereign UK Infra</h3>
+  <ul style="color: #e8e4dc; line-height: 1.7;">
+    <li>**Ed25519:** Same signature scheme used by SSH, TLS, Bitcoin. MEOK uses it to sign all attestations.</li>
+    <li>**Keystone:** `meok-attestation-api.vercel.app` issues signed JSON-LD payloads. Public verify URL.</li>
+    <li>**SOV3 Hub:** Local Mac (this machine), gunicorn :3101. The sovereign AI brain.</li>
+    <li>**Sovereign UK:** All data in UK. All servers in UK. All deploys from UK.</li>
+  </ul>
+</section>

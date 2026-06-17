@@ -32,7 +32,8 @@ try:
     r = json.loads(urllib.request.urlopen(req, timeout=10).read().decode())
     content = r.get('result', {}).get('content', [{}])
     t = json.loads(content[0].get('text','{}'))
-    print(f'[sigil-cron] {t.get("digest","?")[:16]}')
+    d = t.get('digest', '?')[:16]
+    print(f'[sigil-cron] {d}')
 except Exception as e:
     print(f'[sigil-cron] err: {e}')
 "

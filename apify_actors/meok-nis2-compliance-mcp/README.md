@@ -1,41 +1,43 @@
 # MEOK NIS2 Compliance — Apify Actor
 
-**Source:** `github.com/CSOAI-ORG/nis2-compliance-mcp`
-**PyPI:** `pypi.org/project/nis2-compliance-mcp`
-**Author:** MEOK AI Labs (CSOAI Ltd, UK Companies House 16939677)
-**License:** MIT
+**Source:** `github.com/CSOAI-ORG/nis2-compliance-mcp` **PyPI:** `pypi.org/project/nis2-compliance-mcp` **Author:** MEOK AI Labs (CSOAI Ltd, UK Companies House 16939677) **License:** MIT
 
-160k entities, 18 sectors. LIVE since 18 Oct 2024.
+[![CSOAI](https://img.shields.io/badge/Built%20by-CSOAI%20%7C%20MEOK%20AI%20Labs-blue)](https://meok.ai)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
+## Why this matters
+
+**Source:** `github.com/CSOAI-ORG/nis2-compliance-mcp` **PyPI:** `pypi.org/project/nis2-compliance-mcp` **Author:** MEOK AI Labs (CSOAI Ltd, UK Companies House 16939677) **License:** MIT
+
+## Installation
+
+Add this MCP server to your Claude / Cursor / Kimi MCP config.
 
 ## Tools
 
 Sector-based classification, registration, risk management
 
-## Use
+## Compliance mapping
 
-```json
-{
-  "mcpServers": {
-    "meok-nis2-compliance-mcp": {
-      "url": "https://meok-nis2-compliance-mcp.apify.actor/mcp"
-    }
-  }
-}
-```
+- [NIS2](https://meok.ai/nis2)
 
-Or run locally:
+## Verify attestations
 
-```bash
-apify login
-apify push
-```
+When this MCP generates signed reports, they can be verified publicly at:
+https://meok-attestation-api.vercel.app/verify
 
-## Pricing
+No login required.
 
-- **Free tier:** 1,000 runs/month, $0.001/run (Apify free compute)
-- **Paid:** 10,000 runs/month, $0.005/run (with x402 USDC payment on Base)
+## Learn more
 
-## Compliance
+- CSOAI: https://csoai.org
+- MEOK AI Labs: https://meok.ai
+- Layer 0 architecture: https://meok.ai/layer0
 
-This Actor is tooling only. It does not constitute legal advice. For final
-compliance decisions, consult qualified counsel in your jurisdiction.
+## License
+
+MIT — Copyright (c) 2026 MEOK AI Labs / CSOAI Ltd.
+
+---
+
+*Keywords: #NIS2*

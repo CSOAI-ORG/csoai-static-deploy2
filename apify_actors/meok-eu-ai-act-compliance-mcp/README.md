@@ -1,41 +1,43 @@
 # MEOK EU AI Act Compliance — Apify Actor
 
-**Source:** `github.com/CSOAI-ORG/eu-ai-act-compliance-mcp`
-**PyPI:** `pypi.org/project/eu-ai-act-compliance-mcp`
-**Author:** MEOK AI Labs (CSOAI Ltd, UK Companies House 16939677)
-**License:** MIT
+**Source:** `github.com/CSOAI-ORG/eu-ai-act-compliance-mcp` **PyPI:** `pypi.org/project/eu-ai-act-compliance-mcp` **Author:** MEOK AI Labs (CSOAI Ltd, UK Companies House 16939677) **License:** MIT
 
-410 articles from EUR-Lex via FTS5 search. Instant risk scan, deterministic class detection, evidence pack export.
+[![CSOAI](https://img.shields.io/badge/Built%20by-CSOAI%20%7C%20MEOK%20AI%20Labs-blue)](https://meok.ai)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
+## Why this matters
+
+**Source:** `github.com/CSOAI-ORG/eu-ai-act-compliance-mcp` **PyPI:** `pypi.org/project/eu-ai-act-compliance-mcp` **Author:** MEOK AI Labs (CSOAI Ltd, UK Companies House 16939677) **License:** MIT
+
+## Installation
+
+Add this MCP server to your Claude / Cursor / Kimi MCP config.
 
 ## Tools
 
 AI risk classification, evidence pack generation
 
-## Use
+## Compliance mapping
 
-```json
-{
-  "mcpServers": {
-    "meok-eu-ai-act-compliance-mcp": {
-      "url": "https://meok-eu-ai-act-compliance-mcp.apify.actor/mcp"
-    }
-  }
-}
-```
+- [EU AI Act](https://csoai.org/article-50-kit)
 
-Or run locally:
+## Verify attestations
 
-```bash
-apify login
-apify push
-```
+When this MCP generates signed reports, they can be verified publicly at:
+https://meok-attestation-api.vercel.app/verify
 
-## Pricing
+No login required.
 
-- **Free tier:** 1,000 runs/month, $0.001/run (Apify free compute)
-- **Paid:** 10,000 runs/month, $0.005/run (with x402 USDC payment on Base)
+## Learn more
 
-## Compliance
+- CSOAI: https://csoai.org
+- MEOK AI Labs: https://meok.ai
+- Layer 0 architecture: https://meok.ai/layer0
 
-This Actor is tooling only. It does not constitute legal advice. For final
-compliance decisions, consult qualified counsel in your jurisdiction.
+## License
+
+MIT — Copyright (c) 2026 MEOK AI Labs / CSOAI Ltd.
+
+---
+
+*Keywords: #EUAIAct*

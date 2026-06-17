@@ -357,7 +357,7 @@ Subject: The legacy books you acquired — what's the COBOL plan?
 
 Hi there,
 
-Insurance consolidators like [Company] manage portfolios acquired over decades — each with its own COBOL policy administration system written in the 1980s.
+Insurance consolidators manage portfolios acquired over decades — each with its own COBOL policy administration system written in the 1980s.
 
 Maintaining these systems for another 20+ years with a dwindling COBOL workforce is becoming impossible.
 
@@ -403,7 +403,7 @@ Subject: Upload a COBOL file. Get Python code. No signup required.
 
 Hi there,
 
-I saw your talk at [Event] about legacy modernization — the retiring COBOL workforce point resonated.
+I saw your talk on legacy modernization — the retiring COBOL workforce point resonated.
 
 I've built a tool that's relevant: cobolbridge.ai. It's an AI-powered transpiler that converts COBOL to Python, Java, or Go. Upload a .cbl file, get production-quality code and tests back.
 
@@ -440,7 +440,7 @@ No pressure — just think it's relevant to what you're dealing with.
 ```
 Great chatting. As promised:
 
-1. Link to the demo: [URL]
+1. Link to the demo — sent separately
 2. Our 24-hour challenge: send us any COBOL file, we modernize it for free
 3. Pricing: £199/mo per seat (self-serve) or £2,499/mo (enterprise with SLA)
 
@@ -488,7 +488,7 @@ Happy to set up a call with your engineering team if there's interest. No rush.
 
 **Pre-Event Playbook:**
 1. 8 weeks before: Get attendee list (LinkedIn Sales Navigator → filter by event attendees)
-2. 6 weeks before: Send 20 personalized connection requests: "Noticed you're at [Event] — would love 10 min on COBOL modernization"
+2. 6 weeks before: Send 20 personalized connection requests: "Noticed you're attending — would love 10 min on COBOL modernization"
 3. 4 weeks before: Book 5–8 confirmed coffee meetings
 4. 1 week before: Send reminder emails with specific time/location
 5. At event: Record 30-second demos on your phone, post to LinkedIn in real-time

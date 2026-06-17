@@ -6,6 +6,7 @@ then executes the revenue-critical actions that were blocked pending credentials
 """
 from __future__ import annotations
 
+import argparse
 import json
 import os
 import subprocess
@@ -68,13 +69,25 @@ def check_env(env: dict) -> list[str]:
     return missing
 
 
-def run(cmd: list[str], cwd: Path = ROOT, env: dict | None = None) -> subprocess.CompletedProcess:
+def run(cmd: list[str], cwd: Path = ROOT, env: dict | None = None, fatal: bool = False) -> subprocess.CompletedProcess:
     print(f"\n▶ {' '.join(cmd)}")
     merged = {**os.environ, **(env or {})}
-    return subprocess.run(cmd, cwd=cwd, env=merged, text=True, capture_output=True)
+    try:
+        proc = subprocess.run(cmd, cwd=cwd, env=merged, text=True, capture_output=True, timeout=300)
+    except subprocess.TimeoutExpired as e:
+        proc = subprocess.CompletedProcess(cmd, returncode=1, stdout=e.stdout or "", stderr="TIMEOUT")
+    if fatal and proc.returncode != 0:
+        print(f"FATAL: {' '.join(cmd)} failed with {proc.returncode}")
+        print(proc.stderr[-1000:])
+        sys.exit(1)
+    return proc
 
 
 def main():
+    parser = argparse.ArgumentParser(description="One-shot credential-drop executor")
+    parser.add_argument("--check", action="store_true", help="List missing credentials and exit")
+    args = parser.parse_args()
+
     env = load_env()
     missing = check_env(env)
 
@@ -86,8 +99,15 @@ def main():
         print("\n❌ Missing or invalid environment variables:")
         for m in missing:
             print(f"  - {m}")
+        if args.check:
+            print("\n--check complete. Run without --check after credentials are dropped.")
+            sys.exit(0)
         print("\nAborting. Drop the missing credentials and re-run.")
         sys.exit(1)
+
+    if args.check:
+        print("\n✅ All required environment variables present. Ready to execute.")
+        sys.exit(0)
 
     print("\n✅ All required environment variables present.")
 

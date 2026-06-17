@@ -1,14 +1,14 @@
 # Empire Health + AEO/GEO/SEO Readiness Check — 2026-06-15
-**Generated:** 2026-06-17T06:04:59.765889Z
-**Directories scanned:** 96
+**Generated:** 2026-06-17T16:13:47.383385Z
+**Directories scanned:** 98
 
 ## Grade Distribution
 
-- **A:** 89
-- **B:** 2
-- **C:** 2
-- **D:** 1
-- **F:** 2
+- **A:** 98
+- **B:** 0
+- **C:** 0
+- **D:** 0
+- **F:** 0
 
 ## Detailed Results
 
@@ -31,6 +31,7 @@
 | care-compliance-deploy | https://meok.ai/compliance/care-homes | ✅ 200 | ✅ 200 | ✅ 200 | ✅ 200 | ✅ 200 | ✅ | A |
 | care-special-deploy | https://meok.ai/care-special | ✅ 200 | ✅ 200 | ✅ 200 | ✅ 200 | ✅ 200 | ✅ | A |
 | careers-deploy | https://meok.ai/careers | ✅ 200 | ✅ 200 | ✅ 200 | ✅ 200 | ✅ 200 | ✅ | A |
+| case-studies-deploy | https://case-studies-deploy-zeta.vercel.app/ | ✅ 200 | ✅ 200 | ✅ 200 | ✅ 200 | ✅ 200 | ✅ | A |
 | cert-lookup-deploy | https://meok.ai/cert-lookup | ✅ 200 | ✅ 200 | ✅ 200 | ✅ 200 | ✅ 200 | ✅ | A |
 | changelog-deploy | https://meok.ai/changelog | ✅ 200 | ✅ 200 | ✅ 200 | ✅ 200 | ✅ 200 | ✅ | A |
 | clock-embed-deploy | https://meok.ai/clock-embed | ✅ 200 | ✅ 200 | ✅ 200 | ✅ 200 | ✅ 200 | ✅ | A |
@@ -45,7 +46,7 @@
 | data-residency-deploy | https://meok.ai/data-residency | ✅ 200 | ✅ 200 | ✅ 200 | ✅ 200 | ✅ 200 | ✅ | A |
 | dataprivacyof-deploy | https://dataprivacyof.ai/ | ✅ 200 | ✅ 200 | ✅ 200 | ✅ 200 | 🔴 404 | ✅ | A |
 | demo-deploy | https://meok.ai/demo | ✅ 200 | ✅ 200 | ✅ 200 | ✅ 200 | ✅ 200 | ✅ | A |
-| diyhelp-deploy | https://diyhelp.ai | ✅ 200 | ✅ 200 | ✅ 200 | ✅ 200 | 🔴 404 | ✅ | A |
+| diyhelp-deploy | https://diyhelp.ai | ✅ 200 | ✅ 200 | ✅ 200 | ✅ 200 | ✅ 200 | ✅ | A |
 | empire-deploy | https://meok.ai/empire | ✅ 200 | ✅ 200 | ✅ 200 | ✅ 200 | ✅ 200 | ✅ | A |
 | ethicalgovernanceof-deploy | https://ethicalgovernanceof.ai/ | ✅ 200 | ✅ 200 | ✅ 200 | ✅ 200 | 🔴 404 | ✅ | A |
 | events-deploy | https://meok.ai/events | ✅ 200 | ✅ 200 | ✅ 200 | ✅ 200 | ✅ 200 | ✅ | A |
@@ -65,6 +66,7 @@
 | integrations-deep-deploy | https://meok.ai/integrations | ✅ 200 | ✅ 200 | ✅ 200 | ✅ 200 | ✅ 200 | ✅ | A |
 | integrations-deploy | https://meok.ai/integrations | ✅ 200 | ✅ 200 | ✅ 200 | ✅ 200 | ✅ 200 | ✅ | A |
 | investor-deploy | https://meok.ai/investor | ✅ 200 | ✅ 200 | ✅ 200 | ✅ 200 | ✅ 200 | ✅ | A |
+| keystone-deploy | https://keystone.proofof.ai/ | ✅ 200 | ✅ 200 | ✅ 200 | ✅ 200 | ✅ 200 | ✅ | A |
 | keystone-playground-deploy | https://meok.ai/playground | ✅ 200 | ✅ 200 | ✅ 200 | ✅ 200 | ✅ 200 | ✅ | A |
 | koikeeper-deploy | https://koikeeper.ai/ | ✅ 200 | ✅ 200 | ✅ 200 | ✅ 200 | 🔴 404 | ✅ | A |
 | landlaw-deploy | https://landlaw.ai/ | ✅ 200 | ✅ 200 | ✅ 200 | ✅ 200 | ✅ 200 | ✅ | A |
@@ -74,15 +76,18 @@
 | live-counter-deploy | https://meok.ai/live-counter | ✅ 200 | ✅ 200 | ✅ 200 | ✅ 200 | ✅ 200 | ✅ | A |
 | live-demo-deploy | https://meok.ai/live-demo | ✅ 200 | ✅ 200 | ✅ 200 | ✅ 200 | ✅ 200 | ✅ | A |
 | live-deploy | https://meok.ai/live | ✅ 200 | ✅ 200 | ✅ 200 | ✅ 200 | ✅ 200 | ✅ | A |
-| loopfactory-deploy | https://loopfactory.ai | ✅ 200 | ✅ 200 | ✅ 200 | ✅ 200 | 🔴 404 | ✅ | A |
+| loopfactory-deploy | https://loopfactory.ai | ✅ 200 | ✅ 200 | ✅ 200 | ✅ 200 | ✅ 200 | ✅ | A |
 | manifest-deploy | https://meok.ai/manifest | ✅ 200 | ✅ 200 | ✅ 200 | ✅ 200 | ✅ 200 | ✅ | A |
 | meme-deploy | https://meok.ai/memes | ✅ 200 | ✅ 200 | ✅ 200 | ✅ 200 | ✅ 200 | ✅ | A |
+| muckaway-deploy | https://muckaway.ai/ | ✅ 200 | ✅ 200 | ✅ 200 | ✅ 200 | ✅ 200 | ✅ | A |
+| openmoe-deploy | https://openmoe.ai/ | ✅ 200 | ✅ 200 | ✅ 200 | ✅ 200 | ✅ 200 | ✅ | A |
 | openpatent-ai-deploy | https://openpatent-ai-deploy.vercel.app | ✅ 200 | ✅ 200 | ✅ 200 | ✅ 200 | ✅ 200 | ✅ | A |
 | optimobile-deploy | https://optimobile.ai/ | ✅ 200 | ✅ 200 | ✅ 200 | ✅ 200 | ✅ 200 | ✅ | A |
 | partner-finder-deploy | https://meok.ai/partner-finder | ✅ 200 | ✅ 200 | ✅ 200 | ✅ 200 | ✅ 200 | ✅ | A |
 | partner-sign-deploy | https://meok.ai/partner-sign | ✅ 200 | ✅ 200 | ✅ 200 | ✅ 200 | ✅ 200 | ✅ | A |
 | partners-deploy | https://meok.ai/partners | ✅ 200 | ✅ 200 | ✅ 200 | ✅ 200 | ✅ 200 | ✅ | A |
 | partners-page-deploy | https://meok.ai/partners | ✅ 200 | ✅ 200 | ✅ 200 | ✅ 200 | ✅ 200 | ✅ | A |
+| planthire-deploy | https://planthire.ai/ | ✅ 200 | ✅ 200 | ✅ 200 | ✅ 200 | ✅ 200 | ✅ | A |
 | play-deploy | https://meok.ai/play | ✅ 200 | ✅ 200 | ✅ 200 | ✅ 200 | ✅ 200 | ✅ | A |
 | pokerhud-deploy | https://pokerhud.ai | ✅ 200 | ✅ 200 | ✅ 200 | ✅ 200 | 🔴 404 | ✅ | A |
 | policy-gen-deploy | https://meok.ai/policy-gen | ✅ 200 | ✅ 200 | ✅ 200 | ✅ 200 | ✅ 200 | ✅ | A |
@@ -94,8 +99,10 @@
 | privacy-deploy | https://meok.ai/privacy | ✅ 200 | ✅ 200 | ✅ 200 | ✅ 200 | ✅ 200 | ✅ | A |
 | regtech-ai-deploy | https://meok.ai/regtech | ✅ 200 | ✅ 200 | ✅ 200 | ✅ 200 | ✅ 200 | ✅ | A |
 | roadmap-deploy | https://meok.ai/roadmap | ✅ 200 | ✅ 200 | ✅ 200 | ✅ 200 | ✅ 200 | ✅ | A |
+| safetyof-deploy | https://safetyof.ai/ | ✅ 200 | ✅ 200 | ✅ 200 | ✅ 200 | ✅ 200 | ✅ | A |
 | security-deploy | https://security-deploy.vercel.app | ✅ 200 | ✅ 200 | ✅ 200 | ✅ 200 | ✅ 200 | ✅ | A |
 | sitemap-index-deploy | https://meok.ai/sitemap-index | ✅ 200 | ✅ 200 | ✅ 200 | ✅ 200 | ✅ 200 | ✅ | A |
+| socialmediamanager-deploy | https://socialmediamanager.meok.ai | ✅ 200 | ✅ 200 | ✅ 200 | ✅ 200 | ✅ 200 | ✅ | A |
 | subscribe-deploy | https://meok.ai/subscribe | ✅ 200 | ✅ 200 | ✅ 200 | ✅ 200 | ✅ 200 | ✅ | A |
 | suicidestop-deploy | https://suicidestop.ai | ✅ 200 | ✅ 200 | ✅ 200 | ✅ 200 | 🔴 404 | ✅ | A |
 | supplier-portal-deploy | https://meok.ai/supplier-portal | ✅ 200 | ✅ 200 | ✅ 200 | ✅ 200 | ✅ 200 | ✅ | A |
@@ -103,13 +110,8 @@
 | terms-deploy | https://meok.ai/terms | ✅ 200 | ✅ 200 | ✅ 200 | ✅ 200 | ✅ 200 | ✅ | A |
 | thanks-deploy | https://thanks-deploy.vercel.app | ✅ 200 | ✅ 200 | ✅ 200 | ✅ 200 | ✅ 200 | ✅ | A |
 | transparency-deploy | https://meok.ai/transparency | ✅ 200 | ✅ 200 | ✅ 200 | ✅ 200 | ✅ 200 | ✅ | A |
-| safetyof-deploy | https://safetyof.ai/ | ✅ 200 | ✅ 200 | ✅ 200 | 🔴 404 | 🔴 404 | ✅ | B |
-| transparencyof-deploy | https://transparencyof.ai/ | ✅ 200 | ✅ 200 | ✅ 200 | 🔴 404 | 🔴 404 | ✅ | B |
-| muckaway-deploy | https://muckaway.ai/ | ✅ 200 | 🔴 404 | ✅ 200 | 🔴 404 | 🔴 404 | ✅ | C |
-| planthire-deploy | https://planthire.ai/ | ✅ 200 | 🔴 404 | ✅ 200 | 🔴 404 | 🔴 404 | ✅ | C |
-| openmoe-deploy | https://openmoe.ai/ | ✅ 200 | ✅ 200 | 🔴 404 | 🔴 404 | 🔴 404 | ✅ | D |
-| socialmediamanager-deploy | https://socialmediamanager.ai | ❌ ERR | ❌ ERR | ❌ ERR | ❌ ERR | ❌ ERR | ✅ | F |
-| wowmcp-deploy | https://wowmcp.ai | ❌ ERR | ❌ ERR | ❌ ERR | ❌ ERR | ❌ ERR | ✅ | F |
+| transparencyof-deploy | https://transparencyof.ai/ | ✅ 200 | ✅ 200 | ✅ 200 | ✅ 200 | ✅ 200 | ✅ | A |
+| wowmcp-deploy | https://wowmcp.meok.ai | ✅ 200 | ✅ 200 | ✅ 200 | ✅ 200 | ✅ 200 | ✅ | A |
 
 ---
 *Generated by clawd/scripts/empire-health-check.py*

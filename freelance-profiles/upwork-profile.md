@@ -59,17 +59,17 @@ My sovereign AI stack runs 75+ MCP tools, 47 autonomous agents, and a care-based
 
 ### Template A: MCP Server Build
 
-> Hi [name],
+> Hi there,
 >
 > I've built and maintain 75+ MCP tools in production — covering memory management, web browsing, code execution, agent orchestration, and AI safety evaluation. This isn't tutorial-level work; these tools serve real workloads daily.
 >
 > For your project, I'd approach it by:
-> 1. [Specific to their requirements]
+> 1. Specific to their requirements
 > 2. Building the MCP server with proper error handling, rate limiting, and documentation
 > 3. Testing against Claude Desktop / your preferred client
 > 4. Providing a README with install instructions and usage examples
 >
-> I can start immediately and deliver a working server within [X days].
+> I can start immediately and deliver a working server within 3 days.
 >
 > Happy to share my existing MCP architecture as reference.
 >
@@ -77,14 +77,14 @@ My sovereign AI stack runs 75+ MCP tools, 47 autonomous agents, and a care-based
 
 ### Template B: AI Agent/Automation
 
-> Hi [name],
+> Hi there,
 >
 > I specialise in AI agent systems that go beyond basic chatbots. My production system runs 47 autonomous agents with Byzantine fault-tolerant consensus, persistent memory, and care-based safety guardrails.
 >
-> For your [specific need], I'd recommend:
-> 1. [Tailored to their description]
-> 2. [Architecture suggestion]
-> 3. [Timeline]
+> For your unique requirements, I'd recommend:
+> 1. Designed to their exact requirements
+> 2. A proposed architecture
+> 3. A realistic timeline
 >
 > I work with Claude API, Ollama (local models), LangGraph, n8n, and custom orchestration frameworks. Available to start this week.
 >
@@ -92,7 +92,7 @@ My sovereign AI stack runs 75+ MCP tools, 47 autonomous agents, and a care-based
 
 ### Template C: EU AI Act Compliance
 
-> Hi [name],
+> Hi there,
 >
 > The EU AI Act enforcement deadline (August 2, 2026) is approaching fast. I help organisations understand their obligations and build the documentation they need.
 >
