@@ -1319,6 +1319,37 @@ class E2ERunner:
             assert count >= 8, f"too few tiers: {count}"
             return f"tiers: {count}"
 
+        async def countdown_live_check():
+            """Day 26 BLOCK 3: /countdown page is live on csoai.org."""
+            import urllib.request as _ur
+            req = _ur.Request("https://csoai-org.vercel.app/countdown")
+            with _ur.urlopen(req, timeout=8) as r:
+                html = r.read().decode()
+            assert r.status == 200, f"status={r.status}"
+            assert "Article 50" in html, f"missing Article 50"
+            assert "countdown" in html.lower(), f"missing countdown"
+            return f"countdown: live, {len(html):,}B"
+
+        async def opengrid_live_check():
+            """Day 26 BLOCK 4: /opengrid page is live on csoai.org."""
+            import urllib.request as _ur
+            req = _ur.Request("https://csoai-org.vercel.app/opengrid")
+            with _ur.urlopen(req, timeout=8) as r:
+                html = r.read().decode()
+            assert r.status == 200, f"status={r.status}"
+            assert "OpenGrid" in html or "opengrid" in html.lower(), f"missing OpenGrid"
+            return f"opengrid: live, {len(html):,}B"
+
+        async def matrix_live_check():
+            """Day 26 BLOCK 5: /matrix page is live on csoai.org."""
+            import urllib.request as _ur
+            req = _ur.Request("https://csoai-org.vercel.app/matrix")
+            with _ur.urlopen(req, timeout=8) as r:
+                html = r.read().decode()
+            assert r.status == 200, f"status={r.status}"
+            assert "Compliance Matrix" in html or "verticals" in html.lower(), f"missing matrix"
+            return f"matrix: live, {len(html):,}B"
+
         async def admin_sigil_check():
             """Day 24 BLOCK 2: /admin includes sigil_chain summary."""
             code, body = await self.client.request("GET", f"{base}/admin")
@@ -1435,6 +1466,9 @@ class E2ERunner:
         await self.run_test(group, "/search?q=compliance", search_compliance_check, target=base)
         await self.run_test(group, "/sectors (12)", sectors_all_check, target=base)
         await self.run_test(group, "/tiers (8)", tiers_canonical_check, target=base)
+        await self.run_test(group, "/countdown (live)", countdown_live_check, target=base)
+        await self.run_test(group, "/opengrid (live)", opengrid_live_check, target=base)
+        await self.run_test(group, "/matrix (live)", matrix_live_check, target=base)
 
     # ═══════════════════════════════════════════════════════════════════════════
     # MAIN ORCHESTRATOR
