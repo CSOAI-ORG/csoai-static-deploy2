@@ -183,6 +183,20 @@ def main():
         log("no queue file")
         return
     rows = [json.loads(l) for l in QUEUE.read_text().splitlines() if l.strip()]
+    # Requeue transient send failures. A row marked "error" was almost always a
+    # transient Resend 403/5xx flap (the domain IS verified) — genuinely bad
+    # addresses are caught earlier as skipped/skipped_invalid/skipped_suppressed,
+    # never as "error". Leaving them "error" parked the whole backlog forever
+    # (root cause of the 72-email stall, 2026-06-17). Requeue up to MAX_RETRIES
+    # total attempts, then mark terminal "failed".
+    MAX_RETRIES = 5
+    _requeued = 0
+    for _r in rows:
+        if _r.get("status") == "error" and _r.get("retries", 0) < MAX_RETRIES:
+            _r["status"] = "queued"; _requeued += 1
+    if _requeued:
+        QUEUE.write_text("\n".join(json.dumps(x) for x in rows) + "\n")
+        log(f"requeued {_requeued} transiently-failed emails for retry")
     suppressed = load_suppressed()
     budget = DAILY_CAP - sent_today
     n = 0
@@ -221,8 +235,14 @@ def main():
             SENT_TODAY.write_text(str(sent_today + n))
             time.sleep(random.randint(45, 90))
         else:
-            row["status"] = "error"; row["error"] = str(r)[:150]
-            log(f"FAIL → {clean_to}: {str(r)[:120]}")
+            row["retries"] = row.get("retries", 0) + 1
+            row["error"] = str(r)[:150]
+            if row["retries"] >= MAX_RETRIES:
+                row["status"] = "failed"  # terminal — give up after MAX_RETRIES flaps
+                log(f"FAIL terminal ({row['retries']} tries) → {clean_to}: {str(r)[:110]}")
+            else:
+                row["status"] = "queued"  # transient — retry on a later run
+                log(f"FAIL retry {row['retries']}/{MAX_RETRIES} → {clean_to}: {str(r)[:110]}")
             QUEUE.write_text("\n".join(json.dumps(x) for x in rows) + "\n")
     log(f"run complete — {n} sent this run")
 

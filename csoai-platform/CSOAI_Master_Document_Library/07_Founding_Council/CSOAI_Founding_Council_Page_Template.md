@@ -46,7 +46,7 @@ Title | Organization
 ---
 
 **Stephen Tonna**
-[Title] | [Organization]
+Role | Organization
 
 Stephen brings [X years] of experience in [relevant field]. His expertise in [area] and commitment to [relevant cause] make him instrumental in shaping CSOAI's governance framework. [Additional relevant detail].
 
@@ -223,7 +223,7 @@ To complete this page, please collect from each Council member:
 
 ---
 
-Dear [Name],
+Hey — 
 
 Thank you for joining the CSOAI Founding Council!
 
@@ -243,10 +243,7 @@ Please confirm this is accurate or send revisions.
 
 If you prefer not to be listed publicly, please let me know and we'll discuss alternative arrangements.
 
-Thank you for being part of this historic initiative.
-
-Best regards,
-Nicholas
+— Nick
 
 ---
 

@@ -13,7 +13,7 @@
 
 ---
 
-Dear [Name],
+Hey — 
 
 Welcome to the CSOAI Founding Council.
 

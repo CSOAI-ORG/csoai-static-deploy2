@@ -1,14 +1,14 @@
 # Empire Health + AEO/GEO/SEO Readiness Check — 2026-06-15
-**Generated:** 2026-06-17T03:58:04.152340Z
+**Generated:** 2026-06-17T06:04:59.765889Z
 **Directories scanned:** 96
 
 ## Grade Distribution
 
-- **A:** 86
+- **A:** 89
 - **B:** 2
 - **C:** 2
-- **D:** 2
-- **F:** 4
+- **D:** 1
+- **F:** 2
 
 ## Detailed Results
 
@@ -17,6 +17,7 @@
 | about-deploy | https://meok.ai/about | ✅ 200 | ✅ 200 | ✅ 200 | ✅ 200 | ✅ 200 | ✅ | A |
 | accountabilityof-deploy | https://accountabilityof.ai/ | ✅ 200 | ✅ 200 | ✅ 200 | ✅ 200 | 🔴 404 | ✅ | A |
 | aeo-registry-deploy | https://meok.ai/aeo-registry | ✅ 200 | ✅ 200 | ✅ 200 | ✅ 200 | ✅ 200 | ✅ | A |
+| agent-network-deploy | https://agent-network-deploy.vercel.app | ✅ 200 | ✅ 200 | ✅ 200 | ✅ 200 | ✅ 200 | ✅ | A |
 | agisafe-deploy | https://agisafe.ai/ | ✅ 200 | ✅ 200 | ✅ 200 | ✅ 200 | 🔴 404 | ✅ | A |
 | annual-report-deploy | https://meok.ai/annual-report | ✅ 200 | ✅ 200 | ✅ 200 | ✅ 200 | ✅ 200 | ✅ | A |
 | app-deploy | https://meok.ai/app/ | ✅ 200 | ✅ 200 | ✅ 200 | ✅ 200 | ✅ 200 | ✅ | A |
@@ -50,6 +51,7 @@
 | events-deploy | https://meok.ai/events | ✅ 200 | ✅ 200 | ✅ 200 | ✅ 200 | ✅ 200 | ✅ | A |
 | fintech-ai-deploy | https://meok.ai/fintech | ✅ 200 | ✅ 200 | ✅ 200 | ✅ 200 | ✅ 200 | ✅ | A |
 | fishkeeper-deploy | https://fishkeeper.ai/ | ✅ 200 | ✅ 200 | ✅ 200 | ✅ 200 | 🔴 404 | ✅ | A |
+| for-regulators-deploy | https://for-regulators-deploy.vercel.app | ✅ 200 | ✅ 200 | ✅ 200 | ✅ 200 | ✅ 200 | ✅ | A |
 | free-trial-deploy | https://meok.ai/free-trial | ✅ 200 | ✅ 200 | ✅ 200 | ✅ 200 | ✅ 200 | ✅ | A |
 | govtech-ai-deploy | https://meok.ai/govtech | ✅ 200 | ✅ 200 | ✅ 200 | ✅ 200 | ✅ 200 | ✅ | A |
 | grabhire-deploy | https://grabhire.ai/ | ✅ 200 | ✅ 200 | ✅ 200 | ✅ 200 | ✅ 200 | ✅ | A |
@@ -75,6 +77,7 @@
 | loopfactory-deploy | https://loopfactory.ai | ✅ 200 | ✅ 200 | ✅ 200 | ✅ 200 | 🔴 404 | ✅ | A |
 | manifest-deploy | https://meok.ai/manifest | ✅ 200 | ✅ 200 | ✅ 200 | ✅ 200 | ✅ 200 | ✅ | A |
 | meme-deploy | https://meok.ai/memes | ✅ 200 | ✅ 200 | ✅ 200 | ✅ 200 | ✅ 200 | ✅ | A |
+| openpatent-ai-deploy | https://openpatent-ai-deploy.vercel.app | ✅ 200 | ✅ 200 | ✅ 200 | ✅ 200 | ✅ 200 | ✅ | A |
 | optimobile-deploy | https://optimobile.ai/ | ✅ 200 | ✅ 200 | ✅ 200 | ✅ 200 | ✅ 200 | ✅ | A |
 | partner-finder-deploy | https://meok.ai/partner-finder | ✅ 200 | ✅ 200 | ✅ 200 | ✅ 200 | ✅ 200 | ✅ | A |
 | partner-sign-deploy | https://meok.ai/partner-sign | ✅ 200 | ✅ 200 | ✅ 200 | ✅ 200 | ✅ 200 | ✅ | A |
@@ -104,10 +107,7 @@
 | transparencyof-deploy | https://transparencyof.ai/ | ✅ 200 | ✅ 200 | ✅ 200 | 🔴 404 | 🔴 404 | ✅ | B |
 | muckaway-deploy | https://muckaway.ai/ | ✅ 200 | 🔴 404 | ✅ 200 | 🔴 404 | 🔴 404 | ✅ | C |
 | planthire-deploy | https://planthire.ai/ | ✅ 200 | 🔴 404 | ✅ 200 | 🔴 404 | 🔴 404 | ✅ | C |
-| agent-network-deploy | https://agent-network-deploy.vercel.app | ✅ 200 | 🔴 404 | 🔴 404 | 🔴 404 | 🔴 404 | ❌ | D |
-| openpatent-ai-deploy | https://openpatent-ai-deploy.vercel.app | ✅ 200 | 🔴 404 | 🔴 404 | 🔴 404 | 🔴 404 | ❌ | D |
-| for-regulators-deploy | https://meok.ai/for-regulators | 🔴 404 | ❌ ERR | ❌ ERR | ❌ ERR | ❌ ERR | ✅ | F |
-| openmoe-deploy | https://openmoe.ai/ | 🔴 404 | ❌ ERR | ❌ ERR | ❌ ERR | ❌ ERR | ✅ | F |
+| openmoe-deploy | https://openmoe.ai/ | ✅ 200 | ✅ 200 | 🔴 404 | 🔴 404 | 🔴 404 | ✅ | D |
 | socialmediamanager-deploy | https://socialmediamanager.ai | ❌ ERR | ❌ ERR | ❌ ERR | ❌ ERR | ❌ ERR | ✅ | F |
 | wowmcp-deploy | https://wowmcp.ai | ❌ ERR | ❌ ERR | ❌ ERR | ❌ ERR | ❌ ERR | ✅ | F |
 

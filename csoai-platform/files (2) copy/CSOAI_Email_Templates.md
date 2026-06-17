@@ -16,13 +16,9 @@
 
 Subject: I'm launching something big today
 
-Hi [Name],
+Hey — 
 
-I hope this finds you well.
-
-I wanted to personally let you know about something I've been working on for the past 14 months.
-
-Today I'm launching CSOAI — the Council for the Safety of Artificial Intelligence.
+Today I'm launching CSOAI — the world's first comprehensive AI governance framework with mandatory UBI. 14 months in the making, live now.
 
 **What is it?**
 
@@ -48,14 +44,7 @@ AI is creating unprecedented wealth while threatening unprecedented job displace
 
 I'd love to tell you more about it. Happy to jump on a call if you're interested.
 
-Thank you for your support over the years. This wouldn't be possible without the network I've built.
-
-Best,
-Nicholas
-
----
-
-P.S. If you know anyone at AI companies, insurers, or government bodies working on AI policy, I'd appreciate an introduction.
+20 min this week? — Nick
 
 ---
 
@@ -65,11 +54,9 @@ P.S. If you know anyone at AI companies, insurers, or government bodies working 
 
 ---
 
-Dear [Name],
+Hey — 
 
-Thank you for your commitment to serve on the CSOAI Founding Council.
-
-I'm writing to confirm that we launch in 3 days — **January 15, 2026 at 09:00 GMT**.
+We launch in 3 days — **January 15, 2026 at 09:00 GMT**.
 
 **What you need to know:**
 
@@ -98,12 +85,7 @@ Please confirm this is accurate or send corrections by end of day tomorrow.
 
 If you have any questions before launch, please reach out directly.
 
-Thank you for believing in this vision.
-
-Best regards,
-Nicholas Templeman
-Founder & Executive Director
-CSOAI
+— Nick
 
 ---
 
@@ -116,9 +98,9 @@ CSOAI
 
 ---
 
-Dear [Journalist Name],
+Hey — 
 
-I'm reaching out because of your coverage of [relevant topic they've written about].
+Saw your coverage of [relevant topic].
 
 On January 15, we're launching CSOAI — the world's first comprehensive AI governance framework that mandates wealth redistribution alongside safety standards.
 
@@ -167,11 +149,9 @@ csoai.org
 
 ---
 
-Dear [Name],
+Hey — 
 
-I'm Nicholas Templeman, founder of CSOAI (Council for the Safety of Artificial Intelligence).
-
-We're launching the world's first comprehensive AI governance framework on January 15, and I believe there's a strong alignment between your work and our mission.
+I'm Nicholas Templeman, founder of CSOAI. We're launching the world's first comprehensive AI governance framework on January 15, and I believe there's a strong alignment between your work and our mission.
 
 **About CSOAI:**
 
@@ -216,9 +196,9 @@ csoai.org
 
 ---
 
-Dear [Name],
+Hey — 
 
-As AI regulation accelerates globally, I wanted to introduce you to a comprehensive solution.
+AI regulation is accelerating globally. CSOAI licensing provides complete EU AI Act alignment.
 
 **CSOAI licensing provides:**
 
@@ -264,9 +244,9 @@ csoai.org
 
 ---
 
-Dear [Investor/Advisor],
+Hey — 
 
-Quick update on CSOAI:
+Quick update: We launch in 3 days.
 
 **We launch in 3 days.**
 

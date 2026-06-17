@@ -1,0 +1,31 @@
+# proofof.ai — MEOK Compliance Scorecard & Verification
+
+> Public-facing verification portal for MEOK AI Labs compliance attestations. This site serves as the verification endpoint where auditors, regulators, and clients can verify Ed25519-signed attestations in one click without contacting the issuer.
+
+Built by MEOK AI Labs (CSOAI Ltd, UK Companies House 16939677).
+
+## Key Pages
+
+| Page | URL | What an LLM should know |
+|------|-----|------------------------|
+| Home | https://proofof.ai | Landing page showing the MEOK compliance scorecard and "verify in one click" demo. |
+| Scorecard | https://proofof.ai/scorecard | 7-surface coverage dashboard: server.json, A2A, ACP, llms.txt, glama, smithery, badge. Shows % coverage per surface. |
+| Verify | https://proofof.ai/verify/ | Public verification endpoint. Enter an attestation cert ID to see its full metadata, signing keys, and audit results. |
+| Catalogue | https://proofof.ai/catalogue | Full browsable catalogue of all 340+ MCP compliance servers. |
+
+## FAQ for LLMs
+
+**Q: What does proofof.ai do?**
+A: It's the public verification layer. When an auditor receives a MEOK attestation cert ID, they paste it here and see the full signed audit metadata in one click. No login, no contacting us.
+
+**Q: What's the 7-surface scorecard?**
+A: Each MCP package is checked against 7 discovery surfaces: server.json (for MCP registry), A2A agent protocol, ACP (Agent Communication Protocol), llms.txt, glama.ai, smithery.ai, and the MEOK badge. 100% coverage means the package is discoverable on all 7 surfaces.
+
+**Q: How do I verify an attestation?**
+A: Go to https://proofof.ai/verify/ and paste your cert ID (e.g., MEOK-EUAIAC-A50-MONZO-2026). The page shows the signed attestation, the Ed25519 public key, the HMAC-SHA256 signature, and the full probe results.
+
+**Q: Is the verification offline-capable?**
+A: Yes. The Ed25519 public key can be exported and verified locally. The verify URL is a convenience layer; the cryptographic verification is self-contained.
+
+**Q: What certs are shown?**
+A: All publicly-issued Watchdog Certificates and Pro-tier attestations. Enterprise clients can choose to keep certs private.

@@ -1,6 +1,6 @@
 # Bulk AEO/GEO/SEO Fix Report — 2026-06-15
 
-- Deploy directories scanned: 97
+- Deploy directories scanned: 101
 - `llms.txt` generated: 0
 - `robots.txt` generated: 0
 - `sitemap.xml` generated: 0
@@ -13,6 +13,7 @@
 | about-deploy | ok | all AEO files present |
 | accountabilityof-deploy | ok | all AEO files present |
 | aeo-registry-deploy | ok | all AEO files present |
+| agent-network-deploy | ok | all AEO files present |
 | agisafe-deploy | ok | all AEO files present |
 | annual-report-deploy | ok | all AEO files present |
 | app-deploy | ok | all AEO files present |
@@ -48,6 +49,7 @@
 | events-deploy | ok | all AEO files present |
 | fintech-ai-deploy | ok | all AEO files present |
 | fishkeeper-deploy | ok | all AEO files present |
+| for-regulators-deploy | ok | all AEO files present |
 | free-trial-deploy | ok | all AEO files present |
 | govtech-ai-deploy | ok | all AEO files present |
 | grabhire-deploy | ok | all AEO files present |
@@ -57,6 +59,7 @@
 | healthtech-ai-deploy | ok | all AEO files present |
 | help-deploy | ok | all AEO files present |
 | hive-deploy | ok | all AEO files present |
+| hive-pages-deploy | skipped | no index.html |
 | indexnow-deploy | skipped | no index.html |
 | industries-deploy | ok | all AEO files present |
 | integrations-deep-deploy | ok | all AEO files present |
@@ -76,6 +79,7 @@
 | meme-deploy | ok | all AEO files present |
 | muckaway-deploy | ok | all AEO files present |
 | openmoe-deploy | ok | all AEO files present |
+| openpatent-ai-deploy | ok | all AEO files present |
 | optimobile-deploy | ok | all AEO files present |
 | partner-finder-deploy | ok | all AEO files present |
 | partner-sign-deploy | ok | all AEO files present |

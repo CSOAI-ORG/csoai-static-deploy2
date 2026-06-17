@@ -1,41 +1,43 @@
 # MEOK Canada AIDA AI — Apify Actor
 
-**Source:** `github.com/CSOAI-ORG/canada-aida-ai-mcp`
-**PyPI:** `pypi.org/project/canada-aida-ai-mcp`
-**Author:** MEOK AI Labs (CSOAI Ltd, UK Companies House 16939677)
-**License:** MIT
+**Source:** `github.com/CSOAI-ORG/canada-aida-ai-mcp` **PyPI:** `pypi.org/project/canada-aida-ai-mcp` **Author:** MEOK AI Labs (CSOAI Ltd, UK Companies House 16939677) **License:** MIT
 
-Canada's proposed Artificial Intelligence and Data Act. High-impact AI system classification.
+[![CSOAI](https://img.shields.io/badge/Built%20by-CSOAI%20%7C%20MEOK%20AI%20Labs-blue)](https://meok.ai)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
+## Why this matters
+
+**Source:** `github.com/CSOAI-ORG/canada-aida-ai-mcp` **PyPI:** `pypi.org/project/canada-aida-ai-mcp` **Author:** MEOK AI Labs (CSOAI Ltd, UK Companies House 16939677) **License:** MIT
+
+## Installation
+
+Add this MCP server to your Claude / Cursor / Kimi MCP config.
 
 ## Tools
 
 Canada AIDA high-impact system classification
 
-## Use
+## Compliance mapping
 
-```json
-{
-  "mcpServers": {
-    "meok-canada-aida-ai-mcp": {
-      "url": "https://meok-canada-aida-ai-mcp.apify.actor/mcp"
-    }
-  }
-}
-```
+- [CSOAI Compliance Hub](https://csoai.org)
 
-Or run locally:
+## Verify attestations
 
-```bash
-apify login
-apify push
-```
+When this MCP generates signed reports, they can be verified publicly at:
+https://meok-attestation-api.vercel.app/verify
 
-## Pricing
+No login required.
 
-- **Free tier:** 1,000 runs/month, $0.001/run (Apify free compute)
-- **Paid:** 10,000 runs/month, $0.005/run (with x402 USDC payment on Base)
+## Learn more
 
-## Compliance
+- CSOAI: https://csoai.org
+- MEOK AI Labs: https://meok.ai
+- Layer 0 architecture: https://meok.ai/layer0
 
-This Actor is tooling only. It does not constitute legal advice. For final
-compliance decisions, consult qualified counsel in your jurisdiction.
+## License
+
+MIT — Copyright (c) 2026 MEOK AI Labs / CSOAI Ltd.
+
+---
+
+*Keywords: #AICompliance*

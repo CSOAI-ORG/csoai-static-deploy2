@@ -6,7 +6,7 @@
 
 **Body:**
 
-Hi [Name],
+Hi there,
 
 UK banks run an estimated 60 billion lines of COBOL. Most of it is "works fine, don't touch" — until it isn't. Modernization is inevitable; the question is whether you find candidates before the regulator forces the issue.
 

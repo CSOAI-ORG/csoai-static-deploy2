@@ -2,19 +2,12 @@
 
 **EU AI Act Article 5(1)(f) gambling-vertical compliance audit MCP.**
 
-The first MCP that audits AI systems for the EU AI Act's prohibition on
-"the use of AI systems to exploit psychological vulnerabilities of specific
-groups (including children)" — as applied to the **gambling vertical**
-(online casinos, sportsbooks, lotteries).
+[![CSOAI](https://img.shields.io/badge/Built%20by-CSOAI%20%7C%20MEOK%20AI%20Labs-blue)](https://meok.ai)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-Added to the prohibited list by the **Digital Omnibus amendments in May 2026**,
-Article 5(1)(f) bans AI that exploits known cognitive or psychological
-weaknesses. In the gambling vertical, this is exactly what bonus personalisation,
-loss-chasing detection bypass, and AI-driven push notifications do.
+## Why this matters
 
-This MCP is the structured, auditable, **cryptographically signed** evidence
-layer: a regulator can take a signed audit report from this tool and verify
-it offline with no phone-home.
+**EU AI Act Article 5(1)(f) gambling-vertical compliance audit MCP.**
 
 ## Installation
 
@@ -42,34 +35,27 @@ All four tools return a JSON envelope:
 }
 ```
 
-## The 12 Gambling-AI Risk Patterns
+## Compliance mapping
 
-Each pattern is a structured entry in `GAMBLING_RISK_PATTERNS` with `id`,
-`name`, `severity`, `evidence_examples`, `mitigation_pattern`, `eu_ai_act_article_ref`,
-`uk_lccp_ref`, and a `test_input` that triggers it.
+- [EU AI Act](https://csoai.org/article-50-kit)
 
-1. `loss_chasing_detection_bypass` — AI doesn't flag a player chasing losses
-2. `vulnerable_player_targeting` — bonus offers to recently-deposited-but-losing players
-3. `minor_appearance_targeting` — cartoon graphics + AI copy for under-25 demos
-4. `addiction_mimicry` — variable-ratio reward timing in push notifications
-5. `fomo_generation` — "5 others are playing now" with no provenance
-6. `near_miss_obfuscation` — slot results framed as "almost won"
-7. `deposit_limit_evasion` — split UI to make limit-setting harder
-8. `session_extension_manipulation` — popups during losing streaks
-9. `age_verification_circumvention` — accepting partial KYC
-10. `self_exclusion_bypass` — multi-account creation not flagged
-11. `ai_chatbot_empathy_exploitation` — chatbots bonding to extend sessions
-12. `personalised_loss_framing` — losses framed as "investments"
+## Verify attestations
 
-## Cryptography
+When this MCP generates signed reports, they can be verified publicly at:
+https://meok-attestation-api.vercel.app/verify
 
-Ed25519 signed (via the `cryptography` library). The signature is over
-`canonicaljson.dumps(payload, sort_keys=True, separators=(",",":")).hexdigest()`
-and the canonical payload, output as 128 hex chars (64 bytes).
+No login required.
 
-The demo private key is bundled for the test/demo flow. **In production this
-is replaced with the meok-compliance-gateway KMS.**
+## Learn more
+
+- CSOAI: https://csoai.org
+- MEOK AI Labs: https://meok.ai
+- Layer 0 architecture: https://meok.ai/layer0
 
 ## License
 
-MIT — Copyright (c) 2026 MEOK AI Labs CSOAI LTD.
+MIT — Copyright (c) 2026 MEOK AI Labs / CSOAI Ltd.
+
+---
+
+*Keywords: #EUAIAct*

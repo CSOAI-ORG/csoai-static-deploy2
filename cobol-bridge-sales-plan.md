@@ -325,7 +325,7 @@ Even at Enterprise pricing, you're still 97% cheaper than a boutique firm. The p
 ```
 Subject: One of your COBOL developers is retiring this year
 
-Hi [First Name],
+Hi there,
 
 Every bank has at least one COBOL developer over 60 who knows systems nobody else understands. When they leave — and they will — that institutional knowledge walks out the door.
 
@@ -342,10 +342,10 @@ No charge. No obligation. If it's not production-ready, you've lost nothing.
 
 Fair?
 
-[Full Name]
+Nicholas
 MEOK AI Labs
 nick@meok.ai
-[Calendly link]
+https://calendly.com/nick-meok/cobol-consult
 ```
 
 ---
@@ -355,7 +355,7 @@ nick@meok.ai
 ```
 Subject: The legacy books you acquired — what's the COBOL plan?
 
-Hi [First Name],
+Hi there,
 
 Insurance consolidators like [Company] manage portfolios acquired over decades — each with its own COBOL policy administration system written in the 1980s.
 
@@ -367,9 +367,9 @@ Would you be open to a 15-minute call? I'll show you how we modernized a COBOL c
 
 No pitch required — just want to understand if this solves a real problem for you.
 
-[Full Name]
+Nicholas
 MEOK AI Labs
-[Link]
+https://cobolbridge.ai
 ```
 
 ---
@@ -379,7 +379,7 @@ MEOK AI Labs
 ```
 Subject: The DWP's COBOL challenge — a £199/mo alternative to £50M rewrites
 
-Hi [First Name],
+Hi there,
 
 I've been following the Government's legacy IT transformation mandate under CDDO. The challenge is clear: critical systems running on COBOL with developers retiring and cloud mandates coming.
 
@@ -389,9 +389,9 @@ COBOL Bridge (cobolbridge.ai) offers a different path: AI-powered transpilation 
 
 I'd love 15 minutes to show you a live demo on a real government COBOL program.
 
-[Full Name]
+Nicholas
 MEOK AI Labs
-[Link]
+https://cobolbridge.ai
 ```
 
 ---
@@ -401,7 +401,7 @@ MEOK AI Labs
 ```
 Subject: Upload a COBOL file. Get Python code. No signup required.
 
-Hi [First Name],
+Hi there,
 
 I saw your talk at [Event] about legacy modernization — the retiring COBOL workforce point resonated.
 
@@ -411,9 +411,9 @@ We're not a consulting firm charging £200K. We're a tool at £199/mo per develo
 
 Would you be open to trying it on a real COBOL file from your estate? 24-hour turnaround, zero risk, zero cost. If the output isn't useful, you've lost nothing.
 
-[Full Name]
+Nicholas
 MEOK AI Labs
-[Link]
+https://cobolbridge.ai
 ```
 
 ---
@@ -422,12 +422,12 @@ MEOK AI Labs
 
 #### Connection Request (300-char limit):
 ```
-[First Name], I'm building an AI tool that transpiles COBOL into Python/Java/Go. Given your role in [bank/insurance/gov] tech, would love to connect and share what we're seeing in the COBOL modernization space.
+Hi, I'm building an AI tool that transpiles COBOL into Python/Java/Go. Given your role in banking tech, would love to connect and share what we're seeing in the COBOL modernization space.
 ```
 
 #### Follow-up Message (after connection):
 ```
-Thanks for connecting, [First Name].
+Thanks for connecting.
 
 Quick context: I run COBOL Bridge (cobolbridge.ai) — we use AI to transpile COBOL into modern code in hours, not years. 70% cheaper than rewrites, 100x faster than consulting firms.
 
@@ -438,7 +438,7 @@ No pressure — just think it's relevant to what you're dealing with.
 
 #### Post-Demo Follow-up:
 ```
-[First Name], great chatting. As promised:
+Great chatting. As promised:
 
 1. Link to the demo: [URL]
 2. Our 24-hour challenge: send us any COBOL file, we modernize it for free

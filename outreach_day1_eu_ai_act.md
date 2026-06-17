@@ -1,41 +1,47 @@
-# Cold Outreach — Day 1: EU AI Act Compliance
+# MEOK Day-1 Outreach — EU AI Act (3 Prospect-Targeted DMs/Emails)
 
-**Subject:** Free EU AI Act compliance scan — 108 days to deadline
-
-**Target:** UK fintech/AI company compliance officers, CTOs, or AI leads
-
-**Body:**
-
-Hi [Name],
-
-Noticed your team is likely working on EU AI Act compliance (Article 50 enforcement hits August 2, 2026 — 108 days away).
-
-We built a free MCP tool that checks your AI system against Article 10 transparency requirements in 60 seconds:
-
-```
-pip install meok-eu-ai-act-compliance
-```
-
-It runs locally, generates a compliance report with HMAC-signed attestation URLs, and takes about a minute to install.
-
-If it's useful, we have an auditor-trusted compliance certificate tier at £79/mo — signed attestations you can submit directly to regulators.
-
-Alternatively, if you just want to see what's there: https://proofof.ai/verify/[your-hash-here]
-
-Happy to do a 20-min call this week to walk through what it does.
-
-Nicholas
-MEOK AI Labs
+**Author:** Nick Templeman, MEOK AI Labs (CSOAI Ltd, UK Companies House 16939677)
+**Date:** 2026-06-17 (Day 1, 46 days to Article 50 cliff)
+**Status:** READY TO SEND
+**Tone:** Direct, specific, no fluff, no exclamation marks
+**Word target:** 40–55 words per message body (signature excluded)
 
 ---
 
-**Follow-up (if no reply in 3 days):**
-Subject: Re: EU AI Act — one more thing
+## The messages
 
-Hi [Name],
+| # | Recipient | Sector | Channel | Message body |
+|---|-----------|--------|---------|-------------|
+| 1 | **ClearScore — Head of ML** | Credit scoring/fintech | LinkedIn DM | "Hey — ClearScore's ML credit-scoring models fall under EU AI Act **Annex III §1** (creditworthiness assessment). 46 days to cliff (2 Aug 2026). 4-day signed Ed25519 attestation — **£4,950** one-shot, or **£199/mo** Pro. Sovereign UK, open-source tooling. 20 min this week? — Nick" |
+| 2 | **Zilch — CTO** | BNPL/fintech (credit risk AI) | LinkedIn DM | "Hey — Zilch's credit risk ML sits under EU AI Act **Annex III §1** (creditworthiness / risk assessment). 46 days to cliff (2 Aug 2026). 4-day signed Ed25519 attestation, **£4,950** or **£199/mo** Pro. Also maps to FCA consumer duty overlap. 20 min this week? — Nick" |
+| 3 | **Quantexa — Director of AI** | Gov/critical-infra AI analytics | Email | "Hi — Quantexa's public-sector and critical-infrastructure deployments sit under EU AI Act **Annex III §6/§7** (public-authority AI + critical infrastructure). 46 days to cliff (2 Aug 2026). 4-day signed Ed25519 attestation, **£4,950** or **£199/mo** Pro. AISI alignment included. Also covers DORA if that's relevant. 20 min this week? — Nick Templeman" |
 
-One thing I should mention — we're submitting to NLnet for grant funding on June 1. If that comes through, the open-source version stays free forever. If not, we'll need to close some paid features — but the free tier stays.
+---
 
-Wanted to flag in case you wanted to build on it before that decision point.
+## Sequencing notes
 
- Nich
+### Recommended send order
+
+| Priority | Send window | Prospect | Why this slot |
+|----------|------------|----------|--------------|
+| **#1** | **Wed 17 Jun, 09:00 BST** | **ClearScore (Head of ML)** | Cleanest Annex III §1 fit. Credit-scoring ML is the prototypical high-risk use case. Opens the day. |
+| **#2** | **Wed 17 Jun, 09:15 BST** | **Zilch (CTO)** | BNPL sector under FCA scrutiny — dual EU AI Act + consumer duty angle adds weight. LinkedIn DM works. |
+| **#3** | **Wed 17 Jun, 10:00 BST** | **Quantexa (Director of AI)** | Gov-tech buyer prefers email. Stagger sends by 45 min to avoid looking like a blast. |
+
+### Follow-up cadence (per prospect)
+
+| Day | Action | Template source |
+|-----|--------|----------------|
+| **D0 (send day)** | First message (table above) | This file |
+| **D+3** | Follow-up #1 — one-sentence bump: *"Re: EU AI Act — 46-day clock. 20 min Thu or Fri?"* | Pattern from `OUTREACH-READY-5-MESSAGES.md` follow-up cadence |
+| **D+7** | Follow-up #2 — case-study teaser (1 line) + same CTA | `marketing/d8-D8-7-5.md` |
+| **D+14** | Follow-up #3 — breakup email, last-chance tone, no CTA | `marketing/d8-D8-7-5.md` |
+
+### Cadence guardrails
+- Never send more than 2 follow-ups in any 7-day window (LinkedIn + email combined).
+- Stop the sequence on any reply (positive or negative) — manual handoff to a 25-min scoping call.
+- If no reply by D+14, log in `hive-mailer/queue.jsonl` as `no-reply-D14`.
+
+---
+
+*JEEVES, 17 Jun 2026. 3 messages, all 40-55 words. T-minus 46 days to EU AI Act Article 50.*

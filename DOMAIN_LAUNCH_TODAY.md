@@ -30,7 +30,7 @@ TO: HireVue, Greenhouse, Lever, Indeed, ZipRecruiter
 
 Subject: GRABHIRE.AI - Premium Domain for AI Recruiting Revolution
 
-Hi [Decision Maker],
+Hi there,
 
 The AI recruiting market is exploding - 426 applicants per job posting is now normal, making automated screening critical.
 
@@ -71,7 +71,7 @@ TO: Microsoft, Google Cloud, IBM, Salesforce, ServiceNow
 
 Subject: COUNCILOF.AI - Enterprise AI Governance Platform Domain
 
-Hi [Name],
+Hi there,
 
 As enterprises adopt AI governance frameworks, multi-agent councils are becoming critical for corporate decision-making.
 
@@ -110,7 +110,7 @@ TO: Anthropic, OpenAI, DeepMind, Scale AI, Robust Intelligence
 
 Subject: AGISAFE.AI - Premium Domain for AGI Safety Market
 
-Hi [Safety Team],
+Hi there,
 
 The AGI safety market is emerging as a $2B+ opportunity. Enterprises need safety monitoring, compliance platforms, and risk assessment tools.
 

@@ -643,9 +643,8 @@ The people shaping AI governance for generations
 
 [Template for each member:]
 
-**[Name]**
-[Title/Role]
-[Organization/Affiliation]
+**[Member Name]**
+Role | Organization/Affiliation
 
 [2-3 sentence bio]
 

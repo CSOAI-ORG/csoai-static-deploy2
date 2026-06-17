@@ -31,7 +31,8 @@ PROVIDERS: list = []
 
 
 def _register(name, env_var, base_url, model, auth_tmpl="Bearer {key}"):
-    if os.environ.get(env_var):
+    # Register if the env var is set OR if env_var is None (always register)
+    if env_var is None or os.environ.get(env_var):
         PROVIDERS.append((name, env_var, base_url, model, auth_tmpl))
 
 
@@ -47,11 +48,13 @@ def register_all():
     _register("gemini",       "GEMINI_API_KEY",    "https://generativelanguage.googleapis.com/v1beta",   "gemini-2.5-flash")
     _register("minimax",      "MINIMAX_API_KEY",   "https://api.minimax.io/anthropic",                   "minimax-m3:cloud", "X-Api-Key {key}")
     _register("minimax-flash","MINIMAX_API_KEY",   "https://api.minimax.io/anthropic",                   "minimax-flash",     "X-Api-Key {key}")
+    _register("ollama-local", None,                 "http://127.0.0.1:11434/v1",                          "qwen3:0.6b",         "")
 
 
 def call_openai_compat(name, env_var, base_url, model, auth_tmpl, prompt, system=None, max_tokens=2048, timeout=30):
     """Call any OpenAI-compatible /chat/completions endpoint."""
-    api_key = os.environ[env_var]
+    # ollama doesn't need an API key; use a placeholder if env is not set
+    api_key = os.environ.get(env_var, "ollama-local") if env_var else "ollama-local"
     body = {
         "model": model,
         "messages": [
@@ -61,13 +64,13 @@ def call_openai_compat(name, env_var, base_url, model, auth_tmpl, prompt, system
         "max_tokens": max_tokens,
     }
     data = json.dumps(body).encode()
+    headers = {"Content-Type": "application/json"}
+    if auth_tmpl and api_key:  # only add Authorization if auth is required AND key is set
+        headers["Authorization"] = auth_tmpl.format(key=api_key)
     req = urllib.request.Request(
         f"{base_url}/chat/completions",
         data=data,
-        headers={
-            "Authorization": auth_tmpl.format(key=api_key),
-            "Content-Type": "application/json",
-        },
+        headers=headers,
         method="POST",
     )
     try:

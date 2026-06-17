@@ -48,7 +48,7 @@ Duration: 7 days
 ```
 Subject: GRABHIRE.AI - Premium Domain for AI Recruiting Revolution
 
-Hi [Name],
+Hi there,
 
 The AI recruiting market is exploding - with 426+ applicants per job posting, automated screening is critical.
 
@@ -80,7 +80,7 @@ Founder, MEOK AI Labs
 ```
 Subject: COUNCILOF.AI - Enterprise AI Governance Platform
 
-Hi [Decision Maker],
+Hi there,
 
 As enterprises adopt AI governance frameworks, multi-agent councils are becoming critical for corporate decision-making.
 
@@ -104,7 +104,7 @@ Best regards, Nick
 ```
 Subject: AGISAFE.AI - Premium Domain for AGI Safety Market
 
-Hi [Safety Team],
+Hi there,
 
 The AGI safety market is emerging as $2B+ opportunity. AGISAFE.AI is the definitive domain for safety platforms.
 
