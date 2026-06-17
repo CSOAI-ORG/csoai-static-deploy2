@@ -1192,6 +1192,43 @@ class E2ERunner:
             else:
                 return f"packs: {type(body).__name__}"
 
+        async def customer_certs_check():
+            """Day 20 BLOCK 3: /customer/{email}/certificates returns customer's certs."""
+            code, body = await self.client.request("GET", f"{base}/customer/test@meok.ai/certificates")
+            assert code == 200, f"status={code}"
+            assert body.get("email") == "test@meok.ai", f"wrong email: {body}"
+            assert "total_certificates" in body, f"missing total"
+            assert "certificates" in body, f"missing certificates"
+            return f"certs: {body.get('total_certificates')}"
+
+        async def sigil_verify_check():
+            """Day 20 BLOCK 7: /sigil/{digest} cross-process to SOV3."""
+            # Use a real digest from our sigil chain
+            code, body = await self.client.request("GET", f"{base}/sigil/909c0295afb058e9")
+            assert code == 200, f"status={code}"
+            assert body.get("verified") is True, f"not verified: {body}"
+            assert body.get("digest") == "909c0295afb058e9", f"wrong digest"
+            assert body.get("source") in ("sov3_sigil_bus", "local_ledger"), f"wrong source: {body}"
+            return f"sigil: source={body.get('source')}"
+
+        async def search_tier_elite_check():
+            """Day 20 BLOCK 5: /search filters by tier=elite."""
+            code, body = await self.client.request("GET", f"{base}/search?tier=elite&limit=3")
+            assert code == 200, f"status={code}"
+            assert body.get("total", 0) >= 1, f"no elite servers"
+            for r in body.get("results", []):
+                assert r.get("tier") == "elite", f"non-elite in results: {r}"
+            return f"elite: {body.get('total')} matches"
+
+        async def search_healthcare_check():
+            """Day 20 BLOCK 6: /search filters by sector=healthcare."""
+            code, body = await self.client.request("GET", f"{base}/search?sector=healthcare&limit=5")
+            assert code == 200, f"status={code}"
+            assert body.get("total", 0) >= 1, f"no healthcare servers"
+            for r in body.get("results", []):
+                assert "healthcare" in r.get("sectors", []), f"non-healthcare: {r}"
+            return f"healthcare: {body.get('total')} matches"
+
         async def recommend_extra_check():
             """Day 18 BLOCK 5: /recommend returns at least 3 use cases."""
             code, body = await self.client.request("GET", f"{base}/recommend?use_case=startup-mvp")
@@ -1264,6 +1301,10 @@ class E2ERunner:
         await self.run_test(group, "/revenue breakdown", revenue_breakdown_check, target=base)
         await self.run_test(group, "/bundles", bundles_check, target=base)
         await self.run_test(group, "/packs full", packs_full_check, target=base)
+        await self.run_test(group, "/customer/{email}/certificates", customer_certs_check, target=base)
+        await self.run_test(group, "/sigil/{digest}", sigil_verify_check, target=base)
+        await self.run_test(group, "/search?tier=elite", search_tier_elite_check, target=base)
+        await self.run_test(group, "/search?sector=healthcare", search_healthcare_check, target=base)
 
     # ═══════════════════════════════════════════════════════════════════════════
     # MAIN ORCHESTRATOR
