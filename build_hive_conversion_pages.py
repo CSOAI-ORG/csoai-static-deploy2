@@ -326,7 +326,14 @@ SHELL_TEMPLATE = """<!doctype html>
           %%NAVLINKS%%
           <a href="/signup/" class="bg-gold text-slate-950 px-4 py-2 rounded-lg font-semibold">Get started</a>
         </div>
-        <a href="/signup/" class="md:hidden bg-gold text-slate-950 px-3 py-1.5 rounded-lg font-semibold text-sm">Start</a>
+        <button id="menu-btn" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu"
+          class="md:hidden inline-flex items-center justify-center w-10 h-10 rounded-lg border border-slate-700 text-slate-100 hover:border-gold hover:text-gold transition">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        </button>
+      </div>
+      <div id="mobile-menu" class="md:hidden hidden border-t border-slate-800 px-6 py-4 flex-col gap-3">
+        %%NAVLINKS%%
+        <a href="/signup/" class="mt-1 bg-gold text-slate-950 px-4 py-2.5 rounded-lg font-semibold text-center">Get started</a>
       </div>
     </nav>
 
@@ -368,6 +375,13 @@ SHELL_TEMPLATE = """<!doctype html>
       if (nav) addEventListener('scroll', function () {
         nav.style.boxShadow = scrollY > 8 ? '0 1px 0 rgba(255,255,255,0.06)' : 'none';
       }, { passive: true });
+      var mb = document.getElementById('menu-btn'), mm = document.getElementById('mobile-menu');
+      if (mb && mm) mb.addEventListener('click', function () {
+        var open = mm.classList.toggle('hidden') === false;
+        mm.classList.toggle('flex', open);
+        mb.setAttribute('aria-expanded', open ? 'true' : 'false');
+        mb.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+      });
     })();
   </script>
 </body>
@@ -533,11 +547,11 @@ def index_page(domain_key: str) -> str:
         # Rich demo: dropdown of curated inputs → specific simulated results.
         options = "".join(f'<option value="{inp}">{inp}</option>' for inp, _ in samples)
         results_js = ",".join(f'{json.dumps(inp)}: {json.dumps(res)}' for inp, res in samples)
-        demo_control = f"""<select id="mcp-input" class="w-full rounded-lg bg-slate-950 border border-slate-700 px-4 py-3 text-slate-100 focus:border-gold focus:outline-none">{options}</select>"""
+        demo_control = f"""<label for="mcp-input" class="sr-only">Sample input for the {demo_tool} demo</label><select id="mcp-input" aria-label="Sample input for the {demo_tool} demo" class="w-full rounded-lg bg-slate-950 border border-slate-700 px-4 py-3 text-slate-100 focus:border-gold focus:outline-none">{options}</select>"""
         demo_results = f"var RESULTS = {{{results_js}}};"
         result_expr = "RESULTS[val] || ('Scan complete — no issues flagged in demo mode.')"
     else:
-        demo_control = """<input id="mcp-input" type="text" class="w-full rounded-lg bg-slate-950 border border-slate-700 px-4 py-3 text-slate-100 focus:border-gold focus:outline-none" placeholder="Enter a sample input…">"""
+        demo_control = """<label for="mcp-input" class="sr-only">Sample input for the demo</label><input id="mcp-input" type="text" aria-label="Sample input for the demo" class="w-full rounded-lg bg-slate-950 border border-slate-700 px-4 py-3 text-slate-100 focus:border-gold focus:outline-none" placeholder="Enter a sample input…">"""
         demo_results = ""
         result_expr = f"'Scan complete — {cfg['name']} processed your input in demo mode. Sign up to run it for real against your data.'"
     demo_section = f"""
