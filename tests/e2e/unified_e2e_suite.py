@@ -1220,6 +1220,37 @@ class E2ERunner:
                 assert r.get("tier") == "elite", f"non-elite in results: {r}"
             return f"elite: {body.get('total')} matches"
 
+
+        async def search_finance_check():
+            """Day 22 BLOCK 2: /search filters by sector=finance."""
+            code, body = await self.client.request("GET", f"{base}/search?sector=finance&limit=5")
+            assert code == 200, f"status={code}"
+            assert body.get("total", 0) >= 1, f"no finance servers"
+            for r in body.get("results", []):
+                assert "finance" in r.get("sectors", []), f"non-finance: {r}"
+            return f"finance: {body.get('total')} matches"
+
+        async def search_government_check():
+            """Day 22 BLOCK 3: /search filters by sector=government."""
+            code, body = await self.client.request("GET", f"{base}/search?sector=government&limit=5")
+            assert code == 200, f"status={code}"
+            assert body.get("total", 0) >= 1, f"no gov servers"
+            return f"government: {body.get('total')} matches"
+
+        async def search_legal_check():
+            """Day 22 BLOCK 4: /search filters by sector=legal."""
+            code, body = await self.client.request("GET", f"{base}/search?sector=legal&limit=5")
+            assert code == 200, f"status={code}"
+            assert body.get("total", 0) >= 1, f"no legal servers"
+            return f"legal: {body.get('total')} matches"
+
+        async def search_tier_lvp_check():
+            """Day 22 BLOCK 5: /search filters by tier=lvp (most common)."""
+            code, body = await self.client.request("GET", f"{base}/search?tier=lvp&limit=3")
+            assert code == 200, f"status={code}"
+            assert body.get("total", 0) >= 1, f"no lvp servers"
+            return f"lvp: {body.get('total')} matches"
+
         async def search_healthcare_check():
             """Day 20 BLOCK 6: /search filters by sector=healthcare."""
             code, body = await self.client.request("GET", f"{base}/search?sector=healthcare&limit=5")
@@ -1305,6 +1336,10 @@ class E2ERunner:
         await self.run_test(group, "/sigil/{digest}", sigil_verify_check, target=base)
         await self.run_test(group, "/search?tier=elite", search_tier_elite_check, target=base)
         await self.run_test(group, "/search?sector=healthcare", search_healthcare_check, target=base)
+        await self.run_test(group, "/search?sector=finance", search_finance_check, target=base)
+        await self.run_test(group, "/search?sector=government", search_government_check, target=base)
+        await self.run_test(group, "/search?sector=legal", search_legal_check, target=base)
+        await self.run_test(group, "/search?tier=lvp", search_tier_lvp_check, target=base)
 
     # ═══════════════════════════════════════════════════════════════════════════
     # MAIN ORCHESTRATOR
