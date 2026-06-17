@@ -11,49 +11,11 @@ Optimobile is a vertical in the CSOAI Hive — EU AI Act / NIS2 / DORA compliant
 - optimobile-gos-mcp.validate_claim: Validate NHS GOS claims for completeness and eligibility before submission, from any workflow.
 - optimobile-ai-mcp.schedule_recall: Trigger RAG-prioritised patient recalls directly from practice systems via MCP.
 
-## Pricing
-- Free trial: £0/mo (basic scheduling, 1 practitioner)
-- Pro: £49/mo (full GOS automation, MCP, multi-practitioner)
-- Enterprise: £199/mo (multi-site, SSO, custom integrations, care-home integration)
-- Care-home bundle: £999 one-time (domiciliary kit + signed C2PA + Article 50 attestation)
-- Watchdog Cert add-on: £4,950 (third-party CEASAI certification)
-
-## Stripe live
-- Pro £49/mo: https://buy.stripe.com/optimobile-pro-49
-- Enterprise £199/mo: https://buy.stripe.com/optimobile-ent-199
-- Care-home bundle £999: https://buy.stripe.com/optimobile-care-999
-
-## Compliance
-- EU AI Act: Article 50 ready (signed attestations, C2PA watermarking on every dispense)
-- GDPR / UK DPA 2018: UK/EU data residency, full audit logs, RBAC
-- NIS2: incident reporting, signed audit chain
-- DORA: ICT risk management, third-party oversight
-- WCAG 2.2 AA: accessibility for elderly + visually-impaired patients
-- BS 8878: inclusive design
-
-## Domiciliary workflow
-1. Patient books home visit (via Practice + agent + care home)
-2. Mobile-visit scheduled (route optimisation, equipment tracking)
-3. On-site examination (offline-first, signed dispense record)
-4. C2PA manifest generated for every dispensed aid
-5. Carer note routed to care-home staff + GP (consent-gated)
-6. GOS claim auto-validated and submitted
-7. Audit trail signed with HMAC + Ed25519
-
 ## Discovery
 - Agent card: https://optimobile.ai/agent.json
 - MCP catalog: https://optimobile.ai/.well-known/mcp.json
 - Sitemap: https://optimobile.ai/sitemap.xml
 - Hive registry: https://csoai.org (271 published MCP servers)
-- Sign in: https://meok.ai
-- Watchdog Cert: https://proofof.ai/verify
 
-## Contact
-- CSOAI Ltd, UK company 16939677
-- MEOK AI Labs sovereign substrate
-- hello@meok.ai · @meok_ai
-- Nick Templeman, founder
-- 100% UK infrastructure, sovereign AI
-
-## Care-home integration
-Optimobile ships a care-home-specific module: schedule mobile visits for residents, share signed dispense records with the home's GP and care staff (consent-gated), generate C2PA-watermarked evidence for the EU AI Act Article 50 conformity assessment. The domiciliary workflow handles 80% of UK care-home eye-care appointments.
+## Pricing
+See https://optimobile.ai/pricing/

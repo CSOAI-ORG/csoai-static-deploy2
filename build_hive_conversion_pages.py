@@ -2,6 +2,9 @@
 """Generate conversion-page static sites for Construction + Agriculture hives."""
 import json
 import urllib.parse
+import shutil
+import subprocess
+from html import escape as _esc
 from pathlib import Path
 
 ROOT = Path("/Users/nicholas/clawd")
@@ -254,13 +257,13 @@ SHELL_TEMPLATE = """<!doctype html>
   <meta property="og:description" content="%%DESC%%">
   <meta property="og:url" content="https://%%DOMAIN%%/%%PAGE%%">
   <meta property="og:site_name" content="%%NAME%%.ai">
-  <meta property="og:image" content="https://%%DOMAIN%%/og-image.svg">
+  <meta property="og:image" content="https://%%DOMAIN%%/og-image.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="%%TITLE%%">
   <meta name="twitter:description" content="%%DESC%%">
-  <meta name="twitter:image" content="https://%%DOMAIN%%/og-image.svg">
+  <meta name="twitter:image" content="https://%%DOMAIN%%/og-image.png">
   <link rel="icon" href="data:image/svg+xml,%%FAVICON%%">
   <link rel="apple-touch-icon" href="/apple-touch-icon.svg">
   <link rel="alternate" type="application/json" href="/agent.json">
@@ -772,16 +775,18 @@ _PAGES = ["", "pricing", "signup", "partner", "enterprise"]
 
 
 def og_image_svg(cfg: dict) -> str:
-    """1200x630 branded social card (SVG; rasterise to PNG when a converter exists)."""
+    """1200x630 branded social card (SVG; rasterised to PNG in write_site)."""
     accent, accent2, _ = theme_for(cfg)
-    name, hero = cfg["name"], cfg["sub"][:90]
+    name = _esc(cfg["name"])
+    hero = _esc(cfg["hero"][:60])
+    sub = _esc(cfg["sub"][:90])
     return (
         '<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">'
         '<rect width="1200" height="630" fill="#070b14"/>'
         f'<rect width="1200" height="10" fill="{accent}"/>'
         f'<text x="80" y="250" font-family="Inter,Arial,sans-serif" font-size="84" font-weight="900" fill="{accent}">{name}.ai</text>'
-        f'<text x="80" y="330" font-family="Inter,Arial,sans-serif" font-size="34" font-weight="600" fill="#e2e8f0">{cfg["hero"][:60]}</text>'
-        f'<text x="80" y="400" font-family="Inter,Arial,sans-serif" font-size="24" fill="#94a3b8">{hero}</text>'
+        f'<text x="80" y="330" font-family="Inter,Arial,sans-serif" font-size="34" font-weight="600" fill="#e2e8f0">{hero}</text>'
+        f'<text x="80" y="400" font-family="Inter,Arial,sans-serif" font-size="24" fill="#94a3b8">{sub}</text>'
         '<text x="80" y="560" font-family="Inter,Arial,sans-serif" font-size="22" font-weight="700" fill="#64748b">Part of the CSOAI Hive — EU AI Act compliant MCP tools</text>'
         "</svg>"
     )
@@ -885,6 +890,12 @@ def write_site(key: str):
     (base / "llms.txt").write_text(llms_txt(cfg), encoding="utf-8")
     (base / "og-image.svg").write_text(og_image_svg(cfg), encoding="utf-8")
     (base / "apple-touch-icon.svg").write_text(apple_icon_svg(cfg), encoding="utf-8")
+    # Rasterise to PNG (social scrapers don't render SVG og-images) when rsvg-convert exists.
+    if shutil.which("rsvg-convert"):
+        subprocess.run(["rsvg-convert", "-w", "1200", "-h", "630",
+                        str(base / "og-image.svg"), "-o", str(base / "og-image.png")], check=False)
+        subprocess.run(["rsvg-convert", "-w", "180", "-h", "180",
+                        str(base / "apple-touch-icon.svg"), "-o", str(base / "apple-touch-icon.png")], check=False)
     wk = base / ".well-known"
     wk.mkdir(exist_ok=True)
     ac = json.dumps(agent_json(cfg), indent=2)
