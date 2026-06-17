@@ -1265,6 +1265,17 @@ class E2ERunner:
             assert isinstance(body.get("total_revenue_gbp"), (int, float)), f"not numeric: {body.get('total_revenue_gbp')}"
             return f"total: £{body['total_revenue_gbp']}, ARR: £{body.get('arr_potential_gbp', '?')}"
 
+        async def admin_sigil_check():
+            """Day 24 BLOCK 2: /admin includes sigil_chain summary."""
+            code, body = await self.client.request("GET", f"{base}/admin")
+            assert code == 200, f"status={code}"
+            assert "sigil_chain" in body, f"missing sigil_chain: {list(body.keys())}"
+            sigil = body["sigil_chain"]
+            assert "source" in sigil, f"missing sigil source: {sigil}"
+            assert "total_records" in sigil, f"missing total_records: {sigil}"
+            assert sigil["total_records"] >= 100, f"too few records: {sigil['total_records']}"
+            return f"admin: sigil={sigil['source']}, {sigil['total_records']} records"
+
         async def search_tier_lvp_check():
             """Day 22 BLOCK 5: /search filters by tier=lvp (most common)."""
             code, body = await self.client.request("GET", f"{base}/search?tier=lvp&limit=3")
@@ -1364,6 +1375,7 @@ class E2ERunner:
         await self.run_test(group, "/search?q=health", search_healthcare_full_check, target=base)
         await self.run_test(group, "/search?q=ai-act", search_ai_act_check, target=base)
         await self.run_test(group, "/revenue total", revenue_total_check, target=base)
+        await self.run_test(group, "/admin (with sigil)", admin_sigil_check, target=base)
 
     # ═══════════════════════════════════════════════════════════════════════════
     # MAIN ORCHESTRATOR
