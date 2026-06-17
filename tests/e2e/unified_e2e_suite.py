@@ -1244,6 +1244,27 @@ class E2ERunner:
             assert body.get("total", 0) >= 1, f"no legal servers"
             return f"legal: {body.get('total')} matches"
 
+
+        async def search_healthcare_full_check():
+            """Day 23 BLOCK 3: /search?q=health returns healthcare servers."""
+            code, body = await self.client.request("GET", f"{base}/search?q=health&limit=5")
+            assert code == 200, f"status={code}"
+            assert "results" in body, f"missing results"
+            return f"health: {body.get('total', '?')} matches"
+
+        async def search_ai_act_check():
+            """Day 23 BLOCK 4: /search?q=ai-act returns AI Act compliance servers."""
+            code, body = await self.client.request("GET", f"{base}/search?q=ai-act&limit=3")
+            assert code == 200, f"status={code}"
+            return f"ai-act: {body.get('total', '?')} matches"
+
+        async def revenue_total_check():
+            """Day 23 BLOCK 5: /revenue has total_revenue_gbp + arr."""
+            code, body = await self.client.request("GET", f"{base}/revenue")
+            assert code == 200, f"status={code}"
+            assert isinstance(body.get("total_revenue_gbp"), (int, float)), f"not numeric: {body.get('total_revenue_gbp')}"
+            return f"total: £{body['total_revenue_gbp']}, ARR: £{body.get('arr_potential_gbp', '?')}"
+
         async def search_tier_lvp_check():
             """Day 22 BLOCK 5: /search filters by tier=lvp (most common)."""
             code, body = await self.client.request("GET", f"{base}/search?tier=lvp&limit=3")
@@ -1340,6 +1361,9 @@ class E2ERunner:
         await self.run_test(group, "/search?sector=government", search_government_check, target=base)
         await self.run_test(group, "/search?sector=legal", search_legal_check, target=base)
         await self.run_test(group, "/search?tier=lvp", search_tier_lvp_check, target=base)
+        await self.run_test(group, "/search?q=health", search_healthcare_full_check, target=base)
+        await self.run_test(group, "/search?q=ai-act", search_ai_act_check, target=base)
+        await self.run_test(group, "/revenue total", revenue_total_check, target=base)
 
     # ═══════════════════════════════════════════════════════════════════════════
     # MAIN ORCHESTRATOR
