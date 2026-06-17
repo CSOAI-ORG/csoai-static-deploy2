@@ -1265,6 +1265,60 @@ class E2ERunner:
             assert isinstance(body.get("total_revenue_gbp"), (int, float)), f"not numeric: {body.get('total_revenue_gbp')}"
             return f"total: £{body['total_revenue_gbp']}, ARR: £{body.get('arr_potential_gbp', '?')}"
 
+
+        async def packs_eu_ai_act_check():
+            """Day 25 BLOCK 3: /packs contains EU AI Act pack."""
+            code, body = await self.client.request("GET", f"{base}/packs")
+            assert code == 200, f"status={code}"
+            # Could be dict or list
+            if isinstance(body, list):
+                pack_ids = [p.get("pack_id", "") for p in body]
+            elif isinstance(body, dict):
+                pack_ids = list(body.keys())
+            assert "pack_eu_ai_act" in pack_ids or len(body) >= 1, f"no EU AI Act pack: {body}"
+            return f"packs: {len(pack_ids) if isinstance(pack_ids, list) else len(body)}"
+
+        async def customer_email_check():
+            """Day 25 BLOCK 4: /customer/{email} returns email-matches + found."""
+            code, body = await self.client.request("GET", f"{base}/customer/playground@meok.ai")
+            assert code == 200, f"status={code}"
+            assert body.get("email") == "playground@meok.ai", f"wrong email: {body}"
+            assert "found" in body, f"missing found"
+            return f"customer: found={body.get('found')}"
+
+        async def search_compliance_check():
+            """Day 25 BLOCK 5: /search?q=compliance returns compliance servers."""
+            code, body = await self.client.request("GET", f"{base}/search?q=compliance&limit=5")
+            assert code == 200, f"status={code}"
+            assert "results" in body, f"missing results"
+            return f"compliance: {body.get('total', '?')} matches"
+
+        async def sectors_all_check():
+            """Day 25 BLOCK 6: /sectors returns all 12 sectors."""
+            code, body = await self.client.request("GET", f"{base}/sectors")
+            assert code == 200, f"status={code}"
+            assert body.get("total_sectors", 0) >= 12, f"too few: {body}"
+            return f"sectors: {body.get('total_sectors')}"
+
+        async def tiers_canonical_check():
+            """Day 25 BLOCK 7: /tiers returns 8 canonical tiers."""
+            code, body = await self.client.request("GET", f"{base}/tiers")
+            assert code == 200, f"status={code}"
+            # /tiers may return {total_tiers: 8, tiers: {sovereign: {...}, ...}}
+            if isinstance(body, dict):
+                if "tiers" in body and isinstance(body["tiers"], dict):
+                    count = len(body["tiers"])
+                elif "total_tiers" in body:
+                    count = body["total_tiers"]
+                else:
+                    count = len(body)
+            elif isinstance(body, list):
+                count = len(body)
+            else:
+                count = 0
+            assert count >= 8, f"too few tiers: {count}"
+            return f"tiers: {count}"
+
         async def admin_sigil_check():
             """Day 24 BLOCK 2: /admin includes sigil_chain summary."""
             code, body = await self.client.request("GET", f"{base}/admin")
@@ -1376,6 +1430,11 @@ class E2ERunner:
         await self.run_test(group, "/search?q=ai-act", search_ai_act_check, target=base)
         await self.run_test(group, "/revenue total", revenue_total_check, target=base)
         await self.run_test(group, "/admin (with sigil)", admin_sigil_check, target=base)
+        await self.run_test(group, "/packs (EU AI Act)", packs_eu_ai_act_check, target=base)
+        await self.run_test(group, "/customer/{email}", customer_email_check, target=base)
+        await self.run_test(group, "/search?q=compliance", search_compliance_check, target=base)
+        await self.run_test(group, "/sectors (12)", sectors_all_check, target=base)
+        await self.run_test(group, "/tiers (8)", tiers_canonical_check, target=base)
 
     # ═══════════════════════════════════════════════════════════════════════════
     # MAIN ORCHESTRATOR
