@@ -15,12 +15,24 @@ import argparse
 import json
 import os
 import re
+import json
+import os
 import smtplib
 import sys
 import time
+import urllib.error
+import urllib.request
 from datetime import datetime, timezone
 from email.mime.text import MIMEText
 from pathlib import Path
+
+# macOS Python often lacks system certs; prefer certifi if available.
+if not os.environ.get("SSL_CERT_FILE"):
+    try:
+        import certifi
+        os.environ.setdefault("SSL_CERT_FILE", certifi.where())
+    except Exception:
+        pass
 
 ROOT = Path("/Users/nicholas/clawd")
 ENV_FILE = ROOT / ".env.local"
@@ -76,10 +88,101 @@ def discover_emails() -> list[dict]:
     return emails
 
 
+def send_via_sendgrid(env: dict, email: dict) -> dict:
+    """Send via SendGrid REST API. Returns updated result dict."""
+    api_key = env.get("SENDGRID_API_KEY", "")
+    sender = env.get("EMAIL_ADDRESS", env.get("EMAIL_FROM", ""))
+    result = {
+        "file": email["file"],
+        "to": email["to"],
+        "subject": email["subject"],
+        "sent_at": datetime.now(timezone.utc).isoformat(),
+        "dry_run": False,
+    }
+    if not api_key:
+        result["error"] = "SENDGRID_API_KEY not set"
+        return result
+    payload = json.dumps({
+        "personalizations": [{"to": [{"email": email["to"]}]}],
+        "from": {"email": sender},
+        "subject": email["subject"],
+        "content": [{"type": "text/plain", "value": email["body"]}],
+    }).encode("utf-8")
+    req = urllib.request.Request(
+        "https://api.sendgrid.com/v3/mail/send",
+        data=payload,
+        headers={
+            "Authorization": f"Bearer {api_key}",
+            "Content-Type": "application/json",
+        },
+        method="POST",
+    )
+    try:
+        with urllib.request.urlopen(req, timeout=30) as resp:
+            _ = resp.read()
+        result["status"] = "sent"
+        result["provider"] = "sendgrid"
+    except urllib.error.HTTPError as e:
+        result["status"] = "failed"
+        result["provider"] = "sendgrid"
+        result["error"] = f"HTTP {e.code}: {e.read().decode('utf-8', errors='ignore')}"
+    except Exception as e:
+        result["status"] = "failed"
+        result["provider"] = "sendgrid"
+        result["error"] = str(e)
+    return result
+
+
+def send_via_resend(env: dict, email: dict) -> dict:
+    """Send via Resend REST API. Returns updated result dict."""
+    api_key = env.get("RESEND_API_KEY", "")
+    sender = env.get("EMAIL_ADDRESS", env.get("EMAIL_FROM", "onboarding@resend.dev"))
+    result = {
+        "file": email["file"],
+        "to": email["to"],
+        "subject": email["subject"],
+        "sent_at": datetime.now(timezone.utc).isoformat(),
+        "dry_run": False,
+    }
+    if not api_key:
+        result["error"] = "RESEND_API_KEY not set"
+        return result
+    payload = json.dumps({
+        "from": sender,
+        "to": [email["to"]],
+        "subject": email["subject"],
+        "text": email["body"],
+    }).encode("utf-8")
+    req = urllib.request.Request(
+        "https://api.resend.com/emails",
+        data=payload,
+        headers={
+            "Authorization": f"Bearer {api_key}",
+            "Content-Type": "application/json",
+        },
+        method="POST",
+    )
+    try:
+        with urllib.request.urlopen(req, timeout=30) as resp:
+            body = resp.read().decode("utf-8")
+        result["status"] = "sent"
+        result["provider"] = "resend"
+        result["response"] = body
+    except urllib.error.HTTPError as e:
+        result["status"] = "failed"
+        result["provider"] = "resend"
+        result["error"] = f"HTTP {e.code}: {e.read().decode('utf-8', errors='ignore')}"
+    except Exception as e:
+        result["status"] = "failed"
+        result["provider"] = "resend"
+        result["error"] = str(e)
+    return result
+
+
 def send_email(env: dict, email: dict, dry_run: bool = False) -> dict:
     smtp_host = env.get("EMAIL_SMTP_HOST", "smtp.privatemail.com")
     smtp_port = int(env.get("EMAIL_SMTP_PORT", "587"))
-    sender = env.get("EMAIL_ADDRESS", "")
+    sender = env.get("EMAIL_ADDRESS", env.get("EMAIL_FROM", ""))
     password = env.get("EMAIL_PASSWORD", "")
 
     result = {
@@ -94,8 +197,24 @@ def send_email(env: dict, email: dict, dry_run: bool = False) -> dict:
         result["status"] = "dry_run_ok"
         return result
 
+    # Prefer Resend API, then SendGrid, then SMTP.
+    if env.get("RESEND_API_KEY"):
+        res = send_via_resend(env, email)
+        res["sent_at"] = result["sent_at"]
+        if res.get("status") == "sent":
+            return res
+        result["fallback_error"] = res.get("error")
+
+    if env.get("SENDGRID_API_KEY"):
+        res = send_via_sendgrid(env, email)
+        res["sent_at"] = result["sent_at"]
+        if res.get("status") == "sent":
+            return res
+        result["fallback_error"] = res.get("error")
+
     if not sender or not password:
-        result["error"] = "EMAIL_ADDRESS or EMAIL_PASSWORD not set"
+        err = result.get("fallback_error") or "EMAIL_ADDRESS or EMAIL_PASSWORD not set"
+        result["error"] = err
         return result
 
     try:

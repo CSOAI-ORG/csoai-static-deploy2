@@ -1,32 +1,13 @@
 {
-  "schema_version": "1.0",
-  "name": "LandLaw Agent",
-  "description": "UK planning permission & land law, answered in seconds.",
-  "url": "https://landlaw.ai",
-  "provider": {
-    "organization": "Council for the Safety of AI (CSOAI)",
-    "url": "https://csoai.org"
+  "name": "landlaw (CSOAI hive)",
+  "description": "CSOAI / MEOK AI Labs \u2014 Layer 0 compliance trust infrastructure. 271 MCP servers published to PyPI, full catalog at /.well-known/mcp.json.",
+  "url": "https://csoai.org",
+  "mcp_catalog": "/.well-known/mcp.json",
+  "mcp_server": "/.well-known/mcp-server",
+  "publisher": {
+    "name": "CSOAI LTD",
+    "trading_name": "MEOK AI Labs",
+    "company_number": "16939677"
   },
-  "capabilities": {
-    "streaming": false,
-    "mcp": true,
-    "a2a": true
-  },
-  "skills": [
-    {
-      "id": "check_planning",
-      "name": "landlaw-ai-mcp.check_planning",
-      "description": "Check planning permission and permitted development rights for any UK site from an AI agent or workflow."
-    },
-    {
-      "id": "draft_letter",
-      "name": "landlaw-ai-mcp.draft_letter",
-      "description": "Generate citation-backed planning and land-law letters directly from your case-management system."
-    }
-  ],
-  "endpoints": {
-    "a2a": "https://landlaw.ai/a2a",
-    "mcp_catalog": "https://landlaw.ai/.well-known/mcp.json"
-  },
-  "sector": "legal"
+  "contact": "nicholas@meok.ai"
 }

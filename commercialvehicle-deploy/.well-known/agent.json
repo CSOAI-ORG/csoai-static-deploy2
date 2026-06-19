@@ -1,32 +1,13 @@
 {
-  "schema_version": "1.0",
-  "name": "CommercialVehicle Agent",
-  "description": "Commercial vehicles for sale & fleet management in one platform.",
-  "url": "https://commercialvehicle.ai",
-  "provider": {
-    "organization": "Council for the Safety of AI (CSOAI)",
-    "url": "https://csoai.org"
+  "name": "commercialvehicle (CSOAI hive)",
+  "description": "CSOAI / MEOK AI Labs \u2014 Layer 0 compliance trust infrastructure. 271 MCP servers published to PyPI, full catalog at /.well-known/mcp.json.",
+  "url": "https://csoai.org",
+  "mcp_catalog": "/.well-known/mcp.json",
+  "mcp_server": "/.well-known/mcp-server",
+  "publisher": {
+    "name": "CSOAI LTD",
+    "trading_name": "MEOK AI Labs",
+    "company_number": "16939677"
   },
-  "capabilities": {
-    "streaming": false,
-    "mcp": true,
-    "a2a": true
-  },
-  "skills": [
-    {
-      "id": "value_vehicle",
-      "name": "commercialvehicle-ai-mcp.value_vehicle",
-      "description": "Get instant AI valuations for any commercial vehicle from a CRM, spreadsheet or agent."
-    },
-    {
-      "id": "check_compliance",
-      "name": "commercialvehicle-ai-mcp.check_compliance",
-      "description": "Pull MOT, tacho and O-licence compliance status for a fleet directly via MCP."
-    }
-  ],
-  "endpoints": {
-    "a2a": "https://commercialvehicle.ai/a2a",
-    "mcp_catalog": "https://commercialvehicle.ai/.well-known/mcp.json"
-  },
-  "sector": "automotive"
+  "contact": "nicholas@meok.ai"
 }

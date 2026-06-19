@@ -1,32 +1,13 @@
 {
-  "schema_version": "1.0",
-  "name": "TransparencyOf Agent",
-  "description": "Prove content origin across AI agents.",
-  "url": "https://transparencyof.ai",
-  "provider": {
-    "organization": "Council for the Safety of AI (CSOAI)",
-    "url": "https://csoai.org"
+  "name": "transparencyof (CSOAI hive)",
+  "description": "CSOAI / MEOK AI Labs \u2014 Layer 0 compliance trust infrastructure. 271 MCP servers published to PyPI, full catalog at /.well-known/mcp.json.",
+  "url": "https://csoai.org",
+  "mcp_catalog": "/.well-known/mcp.json",
+  "mcp_server": "/.well-known/mcp-server",
+  "publisher": {
+    "name": "CSOAI LTD",
+    "trading_name": "MEOK AI Labs",
+    "company_number": "16939677"
   },
-  "capabilities": {
-    "streaming": false,
-    "mcp": true,
-    "a2a": true
-  },
-  "skills": [
-    {
-      "id": "sign",
-      "name": "watermarking-authenticity-mcp.sign",
-      "description": "Watermark and cryptographically sign AI-generated content directly from any agent or pipeline."
-    },
-    {
-      "id": "verify",
-      "name": "watermarking-authenticity-mcp.verify",
-      "description": "Verify content provenance and detect tampering for any signed asset."
-    }
-  ],
-  "endpoints": {
-    "a2a": "https://transparencyof.ai/a2a",
-    "mcp_catalog": "https://transparencyof.ai/.well-known/mcp.json"
-  },
-  "sector": "compliance"
+  "contact": "nicholas@meok.ai"
 }

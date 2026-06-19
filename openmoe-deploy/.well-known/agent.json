@@ -1,32 +1,13 @@
 {
-  "schema_version": "1.0",
-  "name": "openmoe Agent",
-  "description": "Byzantine-fault-tolerant consensus for MoE routing.",
-  "url": "https://openmoe.ai",
-  "provider": {
-    "organization": "Council for the Safety of AI (CSOAI)",
-    "url": "https://csoai.org"
+  "name": "openmoe (CSOAI hive)",
+  "description": "CSOAI / MEOK AI Labs \u2014 Layer 0 compliance trust infrastructure. 271 MCP servers published to PyPI, full catalog at /.well-known/mcp.json.",
+  "url": "https://csoai.org",
+  "mcp_catalog": "/.well-known/mcp.json",
+  "mcp_server": "/.well-known/mcp-server",
+  "publisher": {
+    "name": "CSOAI LTD",
+    "trading_name": "MEOK AI Labs",
+    "company_number": "16939677"
   },
-  "capabilities": {
-    "streaming": false,
-    "mcp": true,
-    "a2a": true
-  },
-  "skills": [
-    {
-      "id": "route",
-      "name": "openmoe-bft-mcp.route",
-      "description": "Make BFT-verified Mixture-of-Experts routing decisions from any agent."
-    },
-    {
-      "id": "attest",
-      "name": "openmoe-bft-mcp.attest",
-      "description": "Generate signed EU AI Act compliance attestations for routing decisions via MCP."
-    }
-  ],
-  "endpoints": {
-    "a2a": "https://openmoe.ai/a2a",
-    "mcp_catalog": "https://openmoe.ai/.well-known/mcp.json"
-  },
-  "sector": "developer"
+  "contact": "nicholas@meok.ai"
 }

@@ -1,32 +1,13 @@
 {
-  "schema_version": "1.0",
-  "name": "BiasDetectionOf Agent",
-  "description": "Find fairness gaps before auditors do.",
-  "url": "https://biasdetectionof.ai",
-  "provider": {
-    "organization": "Council for the Safety of AI (CSOAI)",
-    "url": "https://csoai.org"
+  "name": "biasdetectionof (CSOAI hive)",
+  "description": "CSOAI / MEOK AI Labs \u2014 Layer 0 compliance trust infrastructure. 271 MCP servers published to PyPI, full catalog at /.well-known/mcp.json.",
+  "url": "https://csoai.org",
+  "mcp_catalog": "/.well-known/mcp.json",
+  "mcp_server": "/.well-known/mcp-server",
+  "publisher": {
+    "name": "CSOAI LTD",
+    "trading_name": "MEOK AI Labs",
+    "company_number": "16939677"
   },
-  "capabilities": {
-    "streaming": false,
-    "mcp": true,
-    "a2a": true
-  },
-  "skills": [
-    {
-      "id": "scan",
-      "name": "bias-detection-mcp.scan",
-      "description": "Run a fairness scan on a model or dataset and return quantified bias metrics from any agent."
-    },
-    {
-      "id": "assess",
-      "name": "eu-ai-act-compliance-mcp.assess",
-      "description": "Map bias findings to EU AI Act high-risk obligations and evidence requirements."
-    }
-  ],
-  "endpoints": {
-    "a2a": "https://biasdetectionof.ai/a2a",
-    "mcp_catalog": "https://biasdetectionof.ai/.well-known/mcp.json"
-  },
-  "sector": "compliance"
+  "contact": "nicholas@meok.ai"
 }

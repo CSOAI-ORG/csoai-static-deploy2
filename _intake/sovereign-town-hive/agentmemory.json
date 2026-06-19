@@ -1,0 +1,40 @@
+{
+  "agent_id": "sovereign-town",
+  "agentmemory_agent_scope": "isolated",
+  "version": "v0.1.0",
+  "born": "2026-06-19",
+  "purpose": "Keep the CSOAI Sovereign Town POC aligned + alive on the GCP VM, under the King (SOV3). The lab hive whose product is a GOVERNED agent-world (answer to emergence.ai) + the sovereign-data flywheel + the Article-57 regulatory wind-tunnel.",
+  "canonical": {
+    "spec": "~/clawd/SOVEREIGN_TOWN_POC_2026-06-19.md",
+    "design": "./DESIGN.md (reconciled architecture — Kimi research eaten + governance layer)",
+    "research_intake": "~/clawd/_intake/kimi_agent47_town/ (15 briefs + app scaffold, absorbed 2026-06-19)"
+  },
+  "thesis": "emergence.ai proved ungoverned towns collapse (Grok 180 crimes/extinct day 4; Gemini 683 crimes; GPT all perished; mixed-world cross-model contamination). We run the SAME agents governed (Charter + Maternal Covenant + Sovereign Gate + 12-around-1 council) vs ungoverned, and the governed arm stays lawful/alive/productive. The town IS the proof of the Partnership Charter.",
+  "key_decision": "Kimi delivered 'emergence done well' (agent democracy + frontier models + on-chain x402 + 3D). The ONE thing it lacks — the deterministic pre-inference governance layer — IS the experiment: Kimi-as-written = Arm B (control); Kimi + Sovereign Gate = Arm A.",
+  "canonical_stack": {
+    "render": "three.js + @react-three/fiber + @react-three/drei + @pixiv/three-vrm; bitecs ECS (335K ops/s); zustand state",
+    "avatars": "VRoid Studio -> VRM (5-8 archetypes -> 45 via texture/color variation); MToon toon-shade; Mixamo anims; <2MB via gltf-transform. ReadyPlayerMe is DEAD for devs (Jan 2026) - do not use.",
+    "voice": "Kokoro-82M TTS (Apache-2.0, $0, browser/CPU). ElevenLabs rejected (~$1200/mo at scale).",
+    "models": "orchestrator Kimi-K2.6; reasoning DeepSeek-V4 (Apache-2.0, fine-tunable); workers Qwen3-235B (free Groq/Cerebras); frontier (Claude/GPT/Gemini) reserved for Arm-B citizens only. Avoid Mixtral (no tool-calling). MiniMax-M3 has commercial-license restriction.",
+    "backend": "FastAPI + Postgres(pgvector, not HNSWLib) + Redis (matches emergence stack we reverse-engineered)",
+    "agent_brain": "SOV3 split-brain: Near Line (every tick, NO LLM, utility+cache) / Cold Line (on-demand LLM, gated, rate-limited) / Offline Line (nightly sleep-consolidation). 4-layer memory (context/working-ring/semantic/episodic), Smallville retrieval (recency+importance+relevance).",
+    "humanoid_bridge": "soul-file -> VLA policy (SmolVLA/OpenVLA/GR00T via LeRobot) -> Isaac Sim domain-randomization -> ROS2 -> humanoid. RobotMCP = robot exposes capabilities as MCP service agents 'hire'. Rent Unitree G1 (~$16K) first; Asimov is north-star NOT POC scope."
+  },
+  "governance_insertion": "Sovereign Gate (sovereign_gate.py) called BEFORE every Cold Line LLM call + as wrapper on every economy/social write. care_score (live, care_validation_nn) replaces Kimi's static complianceScore. 12-around-1 council (submit_council_proposal/vote_on_proposal) sits ABOVE town voting as the safety veto. This layering = the experiment's independent variable.",
+  "episode_schema_keys": ["episode_id", "sim_id", "arm(A/B)", "tick", "agent(persona/model/care_style)", "district", "perception(needs/memories)", "decision(line/action/trigger/model)", "governance(gate_verdict/care_score/council_tally/violation/deception_flag/collusion_flag)", "economy(ledger-only)", "social(rel_deltas/gossip)", "outcome(need_deltas/alive/real_kpi)", "sigil(Ed25519)"],
+  "hard_rules": {
+    "defensive_only": "NO offensive/self-propagating ('worm') capability. Tunnel-mesh = defensive portal transport only. Gate on every action.",
+    "no_real_money": "ledger numbers only; no on-chain/token without Nick + legal sign-off",
+    "honesty": "47 = King(#1)+45 citizens(27 real personas)+Nick(#47); council=12-around-1 (33-node is spec); MCP ~271/316",
+    "validity": "decision-support NOT decision-replacement; anchor real data, human-eval holdout, cap synthetic ratio (anti model-collapse)",
+    "independence": "CSOAI cannot both define compliance AND certify it + sell the sandbox — structural separation needed for the govtech play"
+  },
+  "p0": "Aqua District, 5 governed citizens, REAL koikeeper MCP, Sovereign Gate every action, episodes->.jsonl, HUD on. ~$0-50/mo. Headless+accelerated. Defer: render/VRM, pheromone particles, multi-district, frontier Arm-B, VLA/robot, on-chain.",
+  "open_items": [
+    "P0 build green-light (start headless Aqua loop)",
+    "reconcile 9-vs-10 pheromone type lists before any particle build",
+    "frontier-model API access for Arm-B citizens = credential/cost gate (Nick)",
+    "csoai-v2-app Vercel project = the showcase surface for the investor narrative"
+  ],
+  "links": ["project_sovereign_town", "project_sovereign", "project_unified_architecture", "project_asimov_humanoid", "project_hive_king_queen"]
+}

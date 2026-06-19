@@ -1,0 +1,20 @@
+{
+  "name": "sovereign-town",
+  "description": "CSOAI Sovereign Town — a GOVERNED agent-world lab (answer to emergence.ai) + sovereign-data flywheel + Article-57 regulatory wind-tunnel.",
+  "url": "https://sovereign-town.csoai.org",
+  "version": "0.1.0",
+  "provider": { "organization": "CSOAI-ORG", "url": "https://csoai.org" },
+  "capabilities": { "streaming": true, "pushNotifications": false, "stateTransitionHistory": true },
+  "defaultInputModes": ["text"],
+  "defaultOutputModes": ["text", "json"],
+  "skills": [
+    { "id": "sovereign-gate-mcp", "name": "Sovereign Gate", "description": "Deterministic pre-inference governance verdict on every action (Arm A)." },
+    { "id": "council-12-around-1-mcp", "name": "12-around-1 BFT council", "description": "Safety-veto council above town voting (honest count: 12-around-1)." },
+    { "id": "care-validation-mcp", "name": "Care floor", "description": "Maternal Covenant care_score per action." },
+    { "id": "koikeeper-ai-mcp", "name": "Aqua-district work (real data)", "description": "Real koikeeper vertical MCP — the P0 work-action + KPI source." },
+    { "id": "episode-writer-mcp", "name": "Episode writer", "description": "Writes self-labelled .jsonl training fuel for the flywheel." },
+    { "id": "a2a-mesh", "name": "Cross-hive A2A call", "description": "Calls other MEOK hives via A2A (with consent)." },
+    { "id": "memoria-commit", "name": "Versioned memory commit", "description": "Commits to memoria namespace 'sovereign-town'." }
+  ],
+  "x402Pricing": { "enabled": false, "note": "ledger-only in sim; no on-chain money without Nick + legal sign-off" }
+}

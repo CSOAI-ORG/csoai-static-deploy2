@@ -1,32 +1,13 @@
 {
-  "schema_version": "1.0",
-  "name": "DataPrivacyOf Agent",
-  "description": "Privacy-grade AI from training to inference.",
-  "url": "https://dataprivacyof.ai",
-  "provider": {
-    "organization": "Council for the Safety of AI (CSOAI)",
-    "url": "https://csoai.org"
+  "name": "dataprivacyof (CSOAI hive)",
+  "description": "CSOAI / MEOK AI Labs \u2014 Layer 0 compliance trust infrastructure. 271 MCP servers published to PyPI, full catalog at /.well-known/mcp.json.",
+  "url": "https://csoai.org",
+  "mcp_catalog": "/.well-known/mcp.json",
+  "mcp_server": "/.well-known/mcp-server",
+  "publisher": {
+    "name": "CSOAI LTD",
+    "trading_name": "MEOK AI Labs",
+    "company_number": "16939677"
   },
-  "capabilities": {
-    "streaming": false,
-    "mcp": true,
-    "a2a": true
-  },
-  "skills": [
-    {
-      "id": "assess",
-      "name": "data-privacy-dpia-mcp.assess",
-      "description": "Generate or update a GDPR DPIA for an AI use case from any MCP client or workflow."
-    },
-    {
-      "id": "scan",
-      "name": "pii-detection-mcp.scan",
-      "description": "Detect personal data in prompts, datasets and outputs and suggest minimisation actions."
-    }
-  ],
-  "endpoints": {
-    "a2a": "https://dataprivacyof.ai/a2a",
-    "mcp_catalog": "https://dataprivacyof.ai/.well-known/mcp.json"
-  },
-  "sector": "compliance"
+  "contact": "nicholas@meok.ai"
 }

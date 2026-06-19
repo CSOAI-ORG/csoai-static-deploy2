@@ -1,32 +1,13 @@
 {
-  "schema_version": "1.0",
-  "name": "EthicalGovernanceOf Agent",
-  "description": "Map one policy to every framework.",
-  "url": "https://ethicalgovernanceof.ai",
-  "provider": {
-    "organization": "Council for the Safety of AI (CSOAI)",
-    "url": "https://csoai.org"
+  "name": "ethicalgovernanceof (CSOAI hive)",
+  "description": "CSOAI / MEOK AI Labs \u2014 Layer 0 compliance trust infrastructure. 271 MCP servers published to PyPI, full catalog at /.well-known/mcp.json.",
+  "url": "https://csoai.org",
+  "mcp_catalog": "/.well-known/mcp.json",
+  "mcp_server": "/.well-known/mcp-server",
+  "publisher": {
+    "name": "CSOAI LTD",
+    "trading_name": "MEOK AI Labs",
+    "company_number": "16939677"
   },
-  "capabilities": {
-    "streaming": false,
-    "mcp": true,
-    "a2a": true
-  },
-  "skills": [
-    {
-      "id": "map",
-      "name": "ai-governance-crosswalk-mcp.map",
-      "description": "Crosswalk a control or policy across ISO 42001, NIST AI RMF and the EU AI Act from any agent."
-    },
-    {
-      "id": "assess",
-      "name": "iso-42001-readiness-mcp.assess",
-      "description": "Return ISO 42001 certification readiness with gaps and required evidence."
-    }
-  ],
-  "endpoints": {
-    "a2a": "https://ethicalgovernanceof.ai/a2a",
-    "mcp_catalog": "https://ethicalgovernanceof.ai/.well-known/mcp.json"
-  },
-  "sector": "compliance"
+  "contact": "nicholas@meok.ai"
 }

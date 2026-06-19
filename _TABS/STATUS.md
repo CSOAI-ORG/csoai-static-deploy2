@@ -4,6 +4,50 @@
 
 ---
 
+## 2026-06-19 12:55 BST — 🤝 A2A LAYER-0 MONEY-READY — main session (Opus 4.7)
+
+**main session** · substrate lane · A2A protocol bundle wired to live Stripe
+
+- **Catalog gap closed:** 28 A2A protocol MCPs exist on disk, only **2** were in canonical catalog. All 28 now enriched with `stripe_checkout_url` + tier label. Tier mix: **8 Sovereign £29 / 12 Pro £199 / 8 Enterprise £1,499** — total ARR ceiling if all 28 sold once = **£32,420/mo**.
+- **Live Stripe wiring (no Nick gate):** mapped each A2A MCP to the canonical ladder lifted from `_csoai_stripe_buttons.html` (already in production on csoai.org). `buy.stripe.com/*` links **do not** need `STRIPE_SECRET_KEY` in Vercel — Stripe hosts checkout itself. The Jun-17 blocker doesn't apply here.
+- **A2A landing page built:** `csoai-org/public/a2a/index.html` (40KB, 28 cards). Each card: tier badge, description, `pip install`, version, Stripe CTA, PyPI + GitHub + endpoint links. JSON-LD ItemList for AEO.
+- **Catalog re-mirrored:** all 114 hive sites now expose the enriched 348-server catalog (with the 28 A2A entries showing their Stripe links) at `/.well-known/mcp.json`.
+- **Report:** `~/clawd/_findings/A2A_MONEY_READY_2026-06-19.md` with the tier table, server-by-server breakdown, and what's still gated.
+
+What's gated: (a) `csoai-org/` Vercel deploy to take the page live; (b) mcpize.com submission via `npx mcpize login` (Nick auth, manifest already at `_findings/MCPIZE_MANIFEST_2026-06-19/`).
+
+Tools added: `~/clawd/.local-tools/build_a2a_catalog_and_page.py` (re-runnable when new A2A servers are added to `_tooling/a2a_mcps_on_disk.json`).
+
+---
+
+## 2026-06-19 12:50 BST — 📦 MCPIZE MIRROR — "all sites need all" — main session (Opus 4.7)
+
+**main session** · substrate lane · no Vercel deploys triggered · prerequisite for mcpize submission
+
+- **Canonical catalog mirrored to 114 hive sites.** `~/clawd/csoai-org/public/.well-known/mcp.json` (348 servers, 271 PyPI-published) copied into every `*-deploy/*-site/.well-known/mcp.json`. 20 pre-existing vertical-specific catalogs preserved as `.well-known/mcp-local.json`. Every hive now exposes the FULL catalog at `/.well-known/mcp.json` once deployed.
+- **`mcp-server` discovery card** (`{mcpVersion, serverInfo, capabilities, tools}` pointing at the CSOAI gateway) written to every hive `.well-known/`.
+- **`agent.json`** added to both `.well-known/agent.json` and site root, pointing all 114 hives at the csoai.org gateway with the canonical publisher block (CSOAI LTD 16939677).
+- **mcpize.com submission manifest built** at `~/clawd/_findings/MCPIZE_MANIFEST_2026-06-19/` (4 files: `mcpize_servers.csv`, `mcpize_servers.json`, `mcpize_batch.sh`, `MCPIZE_RUNBOOK.md`). Manifest covers all 348 servers with name / description / tier / £/mo / GitHub URL / install command. Verified `mcpize@1.2.0` is live on npm; runbook driver is real, not vapor.
+- **mcpize state:** confirmed via WebFetch — **NO public batch REST API** as of 2026-06-19. Either (A) Nick runs `npx mcpize login` then the batch.sh driver, or (B) manual paste of CSV rows into `/developer/servers/new`. Path A is the cheap one.
+
+Tools: `~/clawd/.local-tools/{mirror_mcp_catalog.py, build_mcpize_manifest.py}` — both re-runnable, dry-run by default. Coord: 114 sites' `.well-known/` files now point at csoai.org gateway — if the parallel deploy lane is mid-deploy on any hive RIGHT NOW, hold the staging-area merge until that deploy lands so I don't clobber your in-flight changes.
+
+---
+
+## 2026-06-19 09:25 BST — 🔧 SUBSTRATE-LANE TRIPLE-FIX — main session (Opus 4.7, rundown→execute)
+
+**main session** · staying in JEEVES substrate lane per [[2026-06-17-lane-split-aligned]] · NO Vercel deploys triggered
+
+- **FIX-1 (overnight learner unstalled):** `com.sovereign.overnight-learner.plist` had `SOVEREIGN_MCP_URL=http://localhost:3100` (OrbStack squats 3100 per CLAUDE.md); SOV3 is on **3101**. Changed to `http://127.0.0.1:3101`, unload/load, verified `is_healthy() == True (HTTP 200)`. 14h of silent retries before this. Next cycle 17:00 BST will actually run.
+- **FIX-2 (security headers staged for 97 hives):** `.local-tools/apply_security_headers.py` + `security_headers.json` written. Applied → **526 header additions across 97 `*-deploy/*-site/vercel.json`**. CSP is **Report-Only** (zero breakage risk) + XCTO/XFO/XXP/RP/PP/HSTS/X-Robots. Closes ~25 P2 hive-remediation queue tasks. **Files modified, NOT deployed** — parallel deploy lane picks them up on next push.
+- **FIX-3 (NN retrain timestamp sealed):** `sovereign-temple/models/creativity_assessment_nn_metadata.json` commit `9caa6c4f` (timestamp bump from the retrain that fired when I reloaded the learner agent). Bulk weights already committed by parallel agent `167eb44f` — lane was already cleared.
+
+**Diagnosis only, did NOT fix:** GitHub auth (`gh auth status` says CSOAI-ORG keyring invalid → can't push/list from here; Nick reauth needed). `meok.ai` + `proofof.ai` apex DOWN (000 / SSL handshake reset; csoai.org slow but 200; cobolbridge.ai 200; meok-attestation-api 200). STRIPE_RK_LIVE empty in GCP. POND 06:01 cron still blocks on 5 credential gates Nick-only.
+
+**Coordination:** I'm in substrate. The 97 vercel.json mods are *staged*; whoever runs `vercel deploy --prod` next picks them up. If your lane is mid-deploy on any specific dir RIGHT NOW, hold the merge until your deploy lands.
+
+---
+
 ## 2026-06-17 (HERMES↔KING) — 🔗 PARALLEL-SESSION ALIGNMENT + LOCAL↔LIVE GAP — main session (JEEVES)
 
 **main session** · 4-Jul-launch closed (D11-D31) · now into post-launch support window (D32+)

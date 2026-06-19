@@ -1,15 +1,36 @@
 {
-  "snapshot_at": "2026-06-16T11:40:00+01:00",
+  "snapshot_at": "2026-06-19T19:15:00+01:00",
   "source": "MCP Health Check — scripts/mcp_health_check.py --report",
   "sov3_state": {
     "mcp_fleet_health": {
-      "scan_timestamp": "2026-06-16T11:39:55.501395",
-      "total_servers": 406,
+      "scan_timestamp": "2026-06-19T19:15:30.648122",
+      "total_servers": 408,
       "healthy": 237,
-      "degraded": 99,
-      "warning": 67,
-      "critical": 3,
+      "degraded": 110,
+      "warning": 56,
+      "critical": 5,
       "critical_servers_flagged": [
+        {
+          "name": "tools",
+          "path": "/Users/nicholas/clawd/mcp-marketplace/tools",
+          "source": "marketplace",
+          "status": "critical",
+          "health_score": 0,
+          "checks": {
+            "has_server_py": false,
+            "has_package_json": false,
+            "has_pyproject_toml": false,
+            "has_readme": false,
+            "has_tests": false,
+            "has_dockerfile": false,
+            "has_smithery": false
+          },
+          "errors": [],
+          "timestamp": "2026-06-19T19:15:27.109006",
+          "content_hash": "3d7520c7f1253879",
+          "bft_review_required": true,
+          "bft_priority": "P0"
+        },
         {
           "name": "meok-soil-assoc-organic-aqua-mcp",
           "path": "/Users/nicholas/clawd/mcp-marketplace/meok-soil-assoc-organic-aqua-mcp",
@@ -26,8 +47,8 @@
             "has_smithery": false
           },
           "errors": [],
-          "timestamp": "2026-06-16T11:39:57.064767",
-          "content_hash": "b4d219bc74614fb2",
+          "timestamp": "2026-06-19T19:15:28.018117",
+          "content_hash": "fc96be748145a762",
           "bft_review_required": true,
           "bft_priority": "P1"
         },
@@ -47,8 +68,8 @@
             "has_smithery": false
           },
           "errors": [],
-          "timestamp": "2026-06-16T11:39:58.552872",
-          "content_hash": "c82a338ce3eed9c5",
+          "timestamp": "2026-06-19T19:15:29.301608",
+          "content_hash": "5033b69b53a044fc",
           "bft_review_required": true,
           "bft_priority": "P1"
         },
@@ -68,19 +89,40 @@
             "has_smithery": false
           },
           "errors": [],
-          "timestamp": "2026-06-16T11:39:59.546832",
-          "content_hash": "8c02b1cea1c8d7e3",
+          "timestamp": "2026-06-19T19:15:29.998902",
+          "content_hash": "4533e59149f7d100",
           "bft_review_required": true,
           "bft_priority": "P1"
+        },
+        {
+          "name": "_tooling",
+          "path": "/Users/nicholas/clawd/mcp-marketplace/_tooling",
+          "source": "marketplace",
+          "status": "critical",
+          "health_score": 0,
+          "checks": {
+            "has_server_py": false,
+            "has_package_json": false,
+            "has_pyproject_toml": false,
+            "has_readme": false,
+            "has_tests": false,
+            "has_dockerfile": false,
+            "has_smithery": false
+          },
+          "errors": [],
+          "timestamp": "2026-06-19T19:15:30.526673",
+          "content_hash": "a3c05fd92f7c1672",
+          "bft_review_required": true,
+          "bft_priority": "P0"
         }
       ]
     },
     "bft_recommendation": {
       "recommended": true,
-      "reason": "3 critical MCP servers flagged below health threshold (score < 50). Missing package.json, pyproject.toml, Dockerfile, and smithery metadata across all three.",
-      "council_action": "Review server structure, add missing package manifests, validate entry points, and approve or eject from fleet.",
+      "reason": "5 critical MCP servers flagged below health threshold (score < 50). Two artifact directories (tools, _tooling) have zero health score and no server.py entry point. Three servers (meok-soil-assoc-organic-aqua-mcp, eu-ai-act-checklist, _TEMPLATE_QUALITY) lack package.json, pyproject.toml, Dockerfile, and smithery metadata despite having server.py. Fleet regressed from 3 critical to 5 critical since last scan on 2026-06-16.",
+      "council_action": "1) Eject or remediate empty artifact directories (tools, _tooling). 2) For the three partially-built critical servers, validate whether they are WIP stubs or dead servers; add missing package manifests or remove from active fleet. 3) Review 56 warning-tier servers before next scan cycle.",
       "priority": "P1",
-      "deadline": "2026-06-17T11:40:00+01:00"
+      "deadline": "2026-06-20T19:15:00+01:00"
     }
   }
 }

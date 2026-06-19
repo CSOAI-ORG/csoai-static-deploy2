@@ -1,32 +1,13 @@
 {
-  "schema_version": "1.0",
-  "name": "SafetyOf Agent",
-  "description": "Measure your AI safety posture in 5 minutes.",
-  "url": "https://safetyof.ai",
-  "provider": {
-    "organization": "Council for the Safety of AI (CSOAI)",
-    "url": "https://csoai.org"
+  "name": "safetyof (CSOAI hive)",
+  "description": "CSOAI / MEOK AI Labs \u2014 Layer 0 compliance trust infrastructure. 271 MCP servers published to PyPI, full catalog at /.well-known/mcp.json.",
+  "url": "https://csoai.org",
+  "mcp_catalog": "/.well-known/mcp.json",
+  "mcp_server": "/.well-known/mcp-server",
+  "publisher": {
+    "name": "CSOAI LTD",
+    "trading_name": "MEOK AI Labs",
+    "company_number": "16939677"
   },
-  "capabilities": {
-    "streaming": false,
-    "mcp": true,
-    "a2a": true
-  },
-  "skills": [
-    {
-      "id": "assess",
-      "name": "eu-ai-act-compliance-mcp.assess",
-      "description": "Run a full EU AI Act risk-and-control assessment from any MCP client or agent workflow."
-    },
-    {
-      "id": "score",
-      "name": "ai-safety-posture-mcp.score",
-      "description": "Return a live AI safety posture score for a given system, model or deployment."
-    }
-  ],
-  "endpoints": {
-    "a2a": "https://safetyof.ai/a2a",
-    "mcp_catalog": "https://safetyof.ai/.well-known/mcp.json"
-  },
-  "sector": "compliance"
+  "contact": "nicholas@meok.ai"
 }

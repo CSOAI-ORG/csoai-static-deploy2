@@ -1,32 +1,13 @@
 {
-  "schema_version": "1.0",
-  "name": "AccountabilityOf Agent",
-  "description": "Tamper-evident audit logs for every AI decision.",
-  "url": "https://accountabilityof.ai",
-  "provider": {
-    "organization": "Council for the Safety of AI (CSOAI)",
-    "url": "https://csoai.org"
+  "name": "accountabilityof (CSOAI hive)",
+  "description": "CSOAI / MEOK AI Labs \u2014 Layer 0 compliance trust infrastructure. 271 MCP servers published to PyPI, full catalog at /.well-known/mcp.json.",
+  "url": "https://csoai.org",
+  "mcp_catalog": "/.well-known/mcp.json",
+  "mcp_server": "/.well-known/mcp-server",
+  "publisher": {
+    "name": "CSOAI LTD",
+    "trading_name": "MEOK AI Labs",
+    "company_number": "16939677"
   },
-  "capabilities": {
-    "streaming": false,
-    "mcp": true,
-    "a2a": true
-  },
-  "skills": [
-    {
-      "id": "record",
-      "name": "agent-audit-logger-mcp.record",
-      "description": "Append a tamper-evident audit record for any AI decision from any MCP client."
-    },
-    {
-      "id": "export",
-      "name": "ai-incident-reporting-mcp.export",
-      "description": "Generate a regulator-ready incident pack from logged AI decision trails."
-    }
-  ],
-  "endpoints": {
-    "a2a": "https://accountabilityof.ai/a2a",
-    "mcp_catalog": "https://accountabilityof.ai/.well-known/mcp.json"
-  },
-  "sector": "compliance"
+  "contact": "nicholas@meok.ai"
 }

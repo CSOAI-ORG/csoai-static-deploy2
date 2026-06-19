@@ -45,3 +45,13 @@
 4. **Credits land →** run the synthetic-distillation + RL training pipeline (Unsloth/TRL) on the data the flywheel is now ingesting.
 
 **Total stackable: ~$920K free compute ≈ 200,000 H100 hours — enough to train a 70B model from scratch.** You don't rent the GPU. You claim it.
+
+---
+## ADDENDUM 2026-06-19 — the concrete "why compute" story (submit-ready)
+Since the original pitch we built a **running 24/7 governed-agent-world data engine** (Sovereign Town):
+28-hive simulation, 2.1M episodes/run, per-hive sovereign models (0.99 acc), Ed25519-attested ledger,
+free CPU harvest on GitHub Actions. **The GPU ask is now grounded:** the credits train the per-hive
+fine-tune tier (Unsloth+DoRA, KTO on self-labelled governed-behaviour signals, vLLM+S-LoRA) that turns
+the flywheel's data into a defensible model moat. This is "synthetic distillation on our own operational
+data" — now with the data engine actually producing the data. **Action for Nick: submit (forms require
+company identity/ToS — cannot be auto-submitted). Order: NVIDIA Inception → DigitalOcean Hatch → MS Founders Hub.**

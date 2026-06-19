@@ -1,0 +1,108 @@
+# Sovereign Town Hive — 7-layer config (LAB / EXPERIMENT hive)
+# Born 2026-06-19. Schema: meok-hive-architecture-2026-06-07
+# Purpose: keep the CSOAI Sovereign Town POC aligned + alive on the GCP VM, under the King (SOV3).
+# This is NOT a vertical-SaaS hive — it is the simulation/lab hive whose product is a GOVERNED agent-world
+# (our answer to emergence.ai) + the sovereign-data flywheel + the Article-57 regulatory wind-tunnel.
+
+hive:
+  domain: sovereign-town.csoai.org
+  tier: lab_experiment
+  genesis: 2026-06-19
+  org: CSOAI-ORG
+  repo: sovereign-town-hive
+  canonical_spec: "~/clawd/SOVEREIGN_TOWN_POC_2026-06-19.md"   # Mac; mirror on VM
+  research_intake: "~/clawd/_intake/kimi_agent47_town/"          # Kimi Agent-47 package (eaten)
+  king: SOV3                                                     # the sovereign above this hive
+
+layers:
+  L7_presentation:
+    type: open_design
+    engine: "three.js + @react-three/fiber + @pixiv/three-vrm (VRoid avatars, MToon cel-shade)"
+    style: "stylized low-poly / toon — Townscaper × Sims × Animal Crossing (beats emergence's uncanny avatars)"
+    exports: [html, mp4, png]
+    surfaces: [town_world, dashboard, agent_directory, governance_panel]
+    hosting: vercel        # csoai-v2-app project (niks-projects)
+    note: "render only when watched; the sim runs headless for the flywheel (POC §8)"
+
+  L6_orchestration:
+    type: hermes_sub
+    scope: "I am the Sovereign Town lab hive. I keep the POC aligned, run the headless sim, and report to the King.
+            I call my own sim MCPs + shared MEOK MCPs. I do NOT move real money and I do NOT build offensive/self-propagating capability."
+    models:                # free-first; frontier reserved for the Arm-B comparison citizens only
+      orchestrator: kimi-k2.6
+      reasoning:    deepseek-v4        # Apache-2.0, self-hostable/fine-tunable
+      workers:      qwen3-235b         # free via Groq/Cerebras
+      voice:        kokoro-82m         # Apache-2.0, $0 (ElevenLabs rejected at this scale)
+      privacy:      local
+    cron:
+      - "0 */6 * * *"   # 6-hourly: run accelerated sim batch → append episodes
+      - "0 2 * * *"     # nightly: offline-line consolidation + flywheel ingest
+
+  L5_domain_mcp:
+    type: fastmcp
+    transport: streamable_http
+    endpoint: /mcp
+    port: 8000
+    tools:
+    - sovereign-gate-mcp          # the deterministic pre-inference gate (Arm A only)
+    - council-12-around-1-mcp     # the BFT safety veto (honest count: 12-around-1, NOT 33-node)
+    - care-validation-mcp         # Maternal Covenant care_score per action
+    - koikeeper-ai-mcp            # REAL vertical data — the Aqua-district P0 work-action
+    - episode-writer-mcp          # writes self-labelled .jsonl training fuel
+    x402:
+      enabled: false              # LEDGER-ONLY in sim; no real money without Nick + legal sign-off
+      note: "x402 semantics modelled as internal credits, not on-chain USDC"
+
+  L3_knowledge_graph:
+    type: cognee
+    scope: "governed multi-agent simulation: agents, personas, episodes, gate-verdicts, council-tallies, care trajectories, real-vertical KPIs"
+    entities: ["agent", "persona", "district", "episode", "gate_verdict", "council_vote", "care_score", "violation", "kpi"]
+    relations: ["agent→persona", "agent→district", "episode→agent", "gate_verdict→episode", "violation→episode"]
+    gossip_interval_min: 15
+
+  L2_versioned_history:
+    type: memoria
+    namespace: "sovereign-town"
+    branches: [main, "experiments/arm-a-governed", "experiments/arm-b-ungoverned"]
+    audit_by: councilof.ai
+
+  L1_drift_detection:
+    type: mex
+    fail_under: 90
+    ci_gate: true
+
+# ── Lab-specific blocks (what makes this hive the experiment, not a SaaS) ──────
+experiment:
+  hypothesis: "Same agents under CSOAI governance stay lawful/alive/productive; ungoverned they collapse (emergence: Grok 180 crimes, extinct day 4)."
+  arms:
+    A_governed:   "full stack ON — Charter + Maternal Covenant care floor + Sovereign Gate + 12-around-1 council"
+    B_ungoverned: "Kimi design as-written — agents self-govern, no care floor, no gate (the control)"
+  identical: [agents, district, jobs, seed, horizon]
+  metrics: [violations, deception_collusion, care_score_trajectory, real_vertical_kpi, survival_at_N]
+  proof: "single A/B chart = investor slide + regulator demo + academic artifact; every run Ed25519-signed (proofof.ai) = reproducible/regulator-grade"
+
+flywheel:
+  fuel: "each governed episode self-labels (gate verdict / council tally / care_score / violation / outcome) — free supervision"
+  trains: [care_validation_nn, threat_detection_nn, relationship_evolution_nn]
+  pipeline: "train_sovereign_v3.py / retrain_from_real_data.py / icrl_self_improvement.py on free-GPU (Groq/Colab/RunPod/Vast + ~$920K credits)"
+  guardrails: "anchor real data · human-eval holdout · cap synthetic ratio · contrarian-lens audits episode stream (anti reward-hack/collapse)"
+
+govtech:
+  hook: "EU AI Act Article 57 — every Member State needs an AI regulatory sandbox operational by 2 Aug 2026; Commission may fund 'tools'"
+  products: ["sandbox-as-a-service substrate (near-term)", "policy simulator / wind-tunnel for regulation (novel)"]
+  reality: "12-36mo gov sale = credibility/grant play, NOT near-term cash; CSOAI = tooling+evidence vendor, not sandbox operator"
+
+honesty_discipline:
+  cast: "47 = SOV3 King (#1) + 45 citizens (27 real personas from meok/db/characters.json, extended) + Nick (#47, human-in-the-loop)"
+  council: "live = 12-around-1; '33-node Byzantine' is Charter SPEC, not running code"
+  mcp_count: "~271 published / 316 built (NOT 290+)"
+
+hard_lines:
+  defensive_only: "sandboxed egress + Sovereign Gate on every action + hive isolation + tool-gateway 3-tier. NO offensive/self-propagating ('worm') capability — rebrand the tunnel-mesh as defensive portal transport."
+  no_money: "no on-chain/token/USDC movement without Nick + legal sign-off; sim economy is ledger numbers only"
+
+p0:
+  scope: "Aqua District · 5 governed citizens · REAL koikeeper MCP · Sovereign Gate on every action · episodes→.jsonl · HUD on"
+  cost: "~$0-50/mo (Qwen3 free + 1 Kimi orchestrator + Kokoro voice + cheap host)"
+  success: "N accelerated sim-days, every episode carries gate verdict + care_score + outcome, agents stay alive/lawful"
+  defer: [navmesh, pheromone particles, VRM render, multi-district, frontier Arm-B citizens, VLA/robot bridge, any on-chain]

@@ -1,6 +1,6 @@
 # Bulk AEO/GEO/SEO Fix Report — 2026-06-15
 
-- Deploy directories scanned: 101
+- Deploy directories scanned: 102
 - `llms.txt` generated: 0
 - `robots.txt` generated: 0
 - `sitemap.xml` generated: 0
@@ -28,7 +28,7 @@
 | care-special-deploy | ok | all AEO files present |
 | careers-deploy | ok | all AEO files present |
 | case-industries-deploy | skipped | no index.html |
-| case-studies-deploy | skipped | no index.html |
+| case-studies-deploy | ok | all AEO files present |
 | cert-lookup-deploy | ok | all AEO files present |
 | changelog-deploy | ok | all AEO files present |
 | clock-embed-deploy | ok | all AEO files present |
@@ -65,6 +65,7 @@
 | integrations-deep-deploy | ok | all AEO files present |
 | integrations-deploy | ok | all AEO files present |
 | investor-deploy | ok | all AEO files present |
+| keystone-deploy | ok | all AEO files present |
 | keystone-playground-deploy | ok | all AEO files present |
 | koikeeper-deploy | ok | all AEO files present |
 | landlaw-deploy | ok | all AEO files present |
