@@ -61,10 +61,10 @@ def main():
     st = load_state(); st = {"chain_head": "genesis-bus", "alerts": {}, "best_practices": [], "emissions": 0}
     print("\n  PHEROMONE BUS — cross-hive coordination demo")
     print("  " + "-" * 64)
-    demos = [
-        ("koikeeper", "alarm", "KHV disease outbreak detected in pond cohort"),
-        ("haulage",   "alarm", "EU tachograph rule change — fleet recheck required"),
-        ("landlaw",   "trail", "passed HMLR title-check audit with care-gated workflow"),
+    demos = [   # use real DISTRICTS keys (aqua=koikeeper.ai, logistics=haulage.app, legal=landlaw.ai)
+        ("aqua",      "alarm", "KHV disease outbreak detected in pond cohort"),
+        ("logistics", "alarm", "EU tachograph rule change — fleet recheck required"),
+        ("legal",     "trail", "passed HMLR title-check audit with care-gated workflow"),
         ("proofof",   "trail", "Ed25519 attestation pattern cut audit time 40%"),
     ]
     for hive, ptype, msg in demos:

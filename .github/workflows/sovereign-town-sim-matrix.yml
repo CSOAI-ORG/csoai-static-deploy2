@@ -20,7 +20,10 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with: { python-version: "3.11" }
-      - run: pip install scikit-learn numpy joblib
+      - run: pip install scikit-learn numpy joblib cryptography
+      - name: Pre-flight selftest (gate — fail fast if any module regressed)
+        working-directory: sovereign-town/p0_aqua
+        run: python selftest.py
       - name: Harvest episodes (this shard's seed slice)
         working-directory: sovereign-town/p0_aqua
         env:
