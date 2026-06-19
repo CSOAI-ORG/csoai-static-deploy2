@@ -266,3 +266,10 @@ haulage-deploy/
 # Generated deploy outputs
 *-deploy/
 hive-mailer/.probe_strikes*
+
+# === Rust / Solana build artifacts (added 2026-06-19) ===
+**/*.rlib
+**/*.rmeta
+**/.fingerprint/
+**/incremental/
+solana-sbt/target/
