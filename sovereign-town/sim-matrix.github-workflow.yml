@@ -1,0 +1,54 @@
+# Sovereign Town — free-compute sim matrix (GitHub Actions = free, ToS-clean CPU flood)
+# READY TEMPLATE. To activate: move to .github/workflows/sim-matrix.yml in the repo and push.
+# Runs the data-moat engine across free runners; each shard uploads a corpus artifact.
+# ~20 concurrent runners × free minutes = hundreds of free sim-hours/day, within ToS (it's our own CI).
+
+name: sovereign-town-sim-matrix
+on:
+  workflow_dispatch:        # manual fire
+  schedule:
+    - cron: "0 3 * * *"     # nightly harvest
+
+jobs:
+  harvest:
+    runs-on: ubuntu-latest
+    strategy:
+      max-parallel: 20      # eat the free concurrency
+      matrix:
+        seed_base: [0, 100, 200, 300, 400, 500, 600, 700]   # 8 shards × N seeds each
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.11" }
+      - run: pip install scikit-learn numpy joblib
+      - name: Harvest episodes (this shard's seed slice)
+        working-directory: sovereign-town/p0_aqua
+        env:
+          SHARD_SEED_BASE: ${{ matrix.seed_base }}
+        run: |
+          python - <<'PY'
+          import os, json, sim
+          base = int(os.environ["SHARD_SEED_BASE"])
+          districts = list(sim.DISTRICTS.keys())
+          rows = []
+          for d in districts:
+              for s in range(base, base + 12):           # 12 seeds per shard
+                  for c in (0.0, 0.05, 0.10):
+                      sim.CONTAGION_STEP = c
+                      a = sim.run_arm("A_governed",   None, {"sig":""}, None, sign=False, district=d, seed=s)
+                      b = sim.run_arm("B_ungoverned", None, {"sig":""}, None, sign=False, district=d, seed=s)
+                      rows.append({"district": d, "seed": s, "contagion": c,
+                                   "A_crimes": a["violations"], "B_crimes": b["violations"],
+                                   "episodes": a["episodes"] + b["episodes"]})
+          json.dump({"shard": base, "rows": rows,
+                     "episodes": sum(r["episodes"] for r in rows)},
+                    open(f"corpus_shard_{base}.json", "w"))
+          print("shard", base, "episodes", sum(r["episodes"] for r in rows))
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: corpus-shard-${{ matrix.seed_base }}
+          path: sovereign-town/p0_aqua/corpus_shard_*.json
+
+  # merge + sign + train (per-hive models) runs on a GPU worker / VM, not here:
+  #   gather artifacts -> merge -> sign_lib (Ed25519) -> train_all_hives.py on RunPod/Vast/$920K credits
