@@ -6,6 +6,36 @@ import { vertical } from '@/lib/vertical';
 export default function HomePage() {
   return (
     <div className="relative">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@graph": [
+              {
+                "@type": "WebSite",
+                "@id": `${vertical.domain}/#website`,
+                url: vertical.domain,
+                name: vertical.name,
+                description: vertical.description,
+              },
+              {
+                "@type": "WebApplication",
+                name: vertical.name,
+                url: vertical.domain,
+                applicationCategory: "LifestyleApplication",
+                description: vertical.description,
+                offers: {
+                  "@type": "Offer",
+                  price: "0",
+                  priceCurrency: "GBP",
+                  availability: "https://schema.org/InStock",
+                },
+              },
+            ],
+          }),
+        }}
+      />
       <section className="relative overflow-hidden py-20">
         <div className="absolute inset-0 gradient-mesh" />
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

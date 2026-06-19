@@ -28,6 +28,31 @@ export default function Home() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   return (
     <div className="min-h-screen bg-slate-950 text-white selection:bg-emerald-500/30">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@graph": [
+              {
+                "@type": "Organization",
+                "@id": "https://csoai.org/#org",
+                name: "CSOAI",
+                url: "https://csoai.org",
+                description:
+                  "CSOAI — sovereign AI compliance and governance: EU AI Act Article 50 kits, the Council, and the MCP compliance stack.",
+              },
+              {
+                "@type": "WebSite",
+                "@id": "https://csoai.org/#website",
+                url: "https://csoai.org",
+                name: "CSOAI",
+                publisher: { "@id": "https://csoai.org/#org" },
+              },
+            ],
+          }),
+        }}
+      />
       {/* Navigation */}
       <nav className="sticky top-0 z-50 bg-slate-950/80 backdrop-blur-md border-b border-white/5">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
