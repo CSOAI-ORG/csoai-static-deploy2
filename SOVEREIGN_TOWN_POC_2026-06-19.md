@@ -393,6 +393,45 @@ where ungoverned fail. Sellable as Pillar-3 scenario testing + Art-29 concentrat
 - "We already know your move" = **"our model simulates likely outcomes,"** never "we have your data."
 - Regime enforcement calibrations (EU 1.0 / US 0.7 / UK 0.4) are **illustrative**, not legal ratings.
 
+## 16. The Governance OS for the AI economy — GRCIN / Sovereign Lens (vision + the bright lines)
+
+Three Kimi docs (`grcin`, `sovereign_lens`, `dsrb_positioning`) describe the same endgame: a **digital twin
+of the regulatory-business world** that simulates every entity, pre-computes the "platinum move," alerts the
+non-compliant, and sells intelligence to regulators — "the FICO of compliance / the OS for the AI economy."
+The engine fit is real: `jurisdiction.py` = the world layer, the 28-hive sim = the simulation layer, per-hive
+models = entity agents, Ed25519 = legal-grade attestation. **Credible v1:** ONE jurisdiction × ONE framework
+(DORA or EU AI Act) × a small **opted-in or public-listed** cohort → a per-entity Looking-Glass report
+(exposure + scenarios + one ranked move, Ed25519-signed). Buildable on what we have, in weeks.
+
+### ⛔ THE BRIGHT LINES (non-negotiable — the docs cross them; we do not)
+The maximal framing ("auto-spawn 500M firms without consent, shadow-profile them, predict named firms' failure,
+feed enforcement lists to regulators, opt-out-only") is **GDPR-illegal + defamation + ToS-breach + brand-suicide
+for a company whose entire thesis is sovereignty + safety.** What we build instead:
+- **Public data only**, and **never individual-person profiling** (no named CEOs/CISOs/directors).
+- **Every output labelled "simulation / prediction / opinion — NOT a regulatory determination."** Never assert a
+  named real firm IS non-compliant.
+- **Opt-IN** before any entity is contacted with a profile. No "shadow profiles," no opt-out-as-risk-signal.
+- **Never share a named entity's predicted-failure score with a third party (especially a regulator).** Regulators
+  get **anonymized/aggregate** sector intelligence + the *wind-tunnel* (simulate a RULE, not name-and-shame firms).
+- Respect licensed-data terms (Orbis/Crunchbase/LinkedIn are licensed/ToS-bound — no scraping/redistribution).
+- "We already know the move" = **"our model simulates likely outcomes"**, never "we have your data."
+> The defensible product simulates **anonymized cohorts + the firm's OWN opted-in data + public archetypes** — that
+> is still a category-defining wedge, and it's the only version that survives a regulator, a court, or DD.
+
+### The "know every human" idea → consent-based Sovereignty Vault (the inversion)
+Nick's "collect data on every human to help them" — built as stated (covert collection on everyone) is **mass
+surveillance, the literal opposite of sovereignty, and illegal.** The version that IS sovereignty: a
+**consent-based vault where each person OWNS and BRINGS their data**, grants the sovereign scoped access to help
+them, and can revoke it. The sovereign knows you because **you chose to be known**, not because we harvested you.
+Same outcome (personalised help without re-learning) — opposite ethics — and it's the only one that's lawful and
+on-brand. Build the vault + consent layer; never the dragnet.
+
+### Space governance lane (real, scoped)
+Real CSOAI lane = **space-data + AI governance** (satellite/EO-data provenance, ITU spectrum, space-traffic-mgmt,
+Artemis Accords, EU Space Law, orbital-debris rules) — i.e. attestation + compliance for the space economy, the
+same engine applied to a new regime set. NOT "collect from the ISS" (we can't, and don't need to). Map it as
+another jurisdiction in the looking-glass; see the new-lanes research brief.
+
 **DORA market thread (from `_intake/dsrb_positioning.md`):** real SAM = the ~2,200 underserved LSIs,
 **€5.5–55M ARR** (NOT the €110–330B "TAM" = total budgets ÷ entities — don't repeat). Wedge = the **xBRL-CSV
 Register-of-Information export** (46% of banks call it hardest; 93.5% failed the ESA dry-run) — ship first.

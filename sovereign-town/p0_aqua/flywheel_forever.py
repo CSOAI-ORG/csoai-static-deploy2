@@ -59,12 +59,13 @@ def cycle(st, priv, pool, ledger_path, status_path, state_path, host):
     entry["prev"] = st["chain_head"]; entry["sig"] = sign_lib.sign(priv, st["chain_head"] + body)
     st["chain_head"] = entry["sig"]
     with open(ledger_path, "a") as f: f.write(json.dumps(entry) + "\n")
-    if st["cycle"] % TRAIN_EVERY == 0:                  # flywheel turns: distill latest data into models
+    if st["cycle"] % TRAIN_EVERY == 0:                  # flywheel turns: distill + publish each cycle-boundary
         try:
             import subprocess
-            subprocess.run([sys.executable, os.path.join(OUT, "train_all_hives.py")],
-                           cwd=OUT, capture_output=True, timeout=900)
-            st["models_trained"] += 1
+            subprocess.run([sys.executable, os.path.join(OUT, "train_all_hives.py")], cwd=OUT, capture_output=True, timeout=900)
+            subprocess.run([sys.executable, os.path.join(OUT, "report.py")], cwd=OUT, capture_output=True, timeout=300)
+            subprocess.run([sys.executable, os.path.join(OUT, "hive_pack.py")], cwd=OUT, capture_output=True, timeout=600)
+            st["models_trained"] += 1                    # each hive: retrained + Labs report + industry pack refreshed
         except Exception:
             pass
     json.dump(st, open(state_path, "w"), indent=2)
