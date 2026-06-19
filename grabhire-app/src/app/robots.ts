@@ -1,4 +1,5 @@
 import { MetadataRoute } from 'next'
+import { vertical } from '@/lib/vertical'
 
 export default function robots(): MetadataRoute.Robots {
   return {
@@ -7,6 +8,6 @@ export default function robots(): MetadataRoute.Robots {
       allow: '/',
       disallow: '/api/',
     },
-    sitemap: 'https://councilof.ai/sitemap.xml',
+    sitemap: `${vertical.domain}/sitemap.xml`,
   }
 }

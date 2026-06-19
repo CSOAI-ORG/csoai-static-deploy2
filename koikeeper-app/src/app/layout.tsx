@@ -57,6 +57,8 @@ function Navigation() {
             <a href="/#features" className="text-muted-foreground hover:text-foreground transition-colors">Features</a>
             <a href="/pricing" className="text-muted-foreground hover:text-foreground transition-colors">Pricing</a>
             <a href="/tools" className="text-muted-foreground hover:text-foreground transition-colors">Tools</a>
+            <a href="/enterprise" className="text-muted-foreground hover:text-foreground transition-colors">Enterprise</a>
+            <a href="/partner" className="text-muted-foreground hover:text-foreground transition-colors">Partner</a>
             <a href="https://csoai.org" target="_blank" rel="noopener noreferrer" className="text-brand-400 hover:text-brand-300 transition-colors">csoai.org ↗</a>
           </nav>
           <div className="flex items-center gap-3">
@@ -81,6 +83,10 @@ function Footer() {
               <a href="/#features" className="block hover:text-foreground">Features</a>
               <a href="/pricing" className="block hover:text-foreground">Pricing</a>
               <a href="/tools" className="block hover:text-foreground">Tools</a>
+              <a href="/enterprise" className="block hover:text-foreground">Enterprise</a>
+              <a href="/partner" className="block hover:text-foreground">Partner</a>
+              <a href="/signup" className="block hover:text-foreground">Sign up</a>
+              <a href="/connect/mcp" className="block hover:text-foreground">Connect via MCP</a>
             </div>
           </div>
           <div>
