@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>CSOAI Sovereign Verifier — verify an agent passport / attestation yourself</title>
+<meta name="description" content="Offline, client-side Ed25519 verification of CSOAI agent passports and attestations. No server, no account — verify it yourself with the public key.">
+<style>
+  body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;max-width:760px;margin:0 auto;padding:1.5rem;line-height:1.6;color:#111}
+  h1{font-size:1.6rem;margin:.2rem 0}.lede{color:#666;margin:.2rem 0 1.2rem}
+  textarea{width:100%;height:200px;font-family:ui-monospace,Menlo,monospace;font-size:.8rem;padding:.6rem;border:1px solid #d1d5db;border-radius:.5rem;box-sizing:border-box}
+  button{background:#111;color:#fff;border:0;padding:.6rem 1.2rem;border-radius:.5rem;font-weight:700;cursor:pointer;margin:.6rem 0}
+  .v{padding:.8rem 1rem;border-radius:.5rem;margin:.8rem 0;font-weight:600}
+  .ok{background:#dcfce7;color:#166534}.bad{background:#fee2e2;color:#991b1b}.info{background:#f1f5f9;color:#334155}
+  table{width:100%;border-collapse:collapse;font-size:.9rem;margin:.5rem 0}td{padding:.35rem .5rem;border-bottom:1px solid #eee;vertical-align:top}
+  td:first-child{color:#666;width:130px}code{background:#f3f4f6;padding:.1rem .3rem;border-radius:3px;font-size:.8rem}
+  footer{margin-top:2rem;color:#999;font-size:.85rem;border-top:1px solid #eee;padding-top:1rem}
+</style>
+</head>
+<body>
+  <h1>CSOAI Sovereign Verifier</h1>
+  <p class="lede">Paste a CSOAI <strong>agent passport</strong> or <strong>attestation</strong> JSON. It is verified
+  <strong>in your browser</strong> with Ed25519 and the embedded public key — no server, no account, no trust in us.
+  This is what "self-sovereign + tamper-evident" actually means.</p>
+
+  <textarea id="in" placeholder='Paste the passport/attestation JSON here (must contain a "sig" and a public key)…'></textarea>
+  <button onclick="run()">Verify</button>
+  <div id="out"></div>
+
+  <footer>
+    Ed25519 over a canonical (sorted-key) payload. Trust model: verify against the issuer's published public key
+    (e.g. DNS <code>.well-known/agent-passport.json</code> / <code>proofof.ai</code>). CSOAI &middot; in-simulation P0/P1.
+  </footer>
+
+<script>
+function b64ToBytes(b){const s=atob(b.replace(/-/g,'+').replace(/_/g,'/'));const a=new Uint8Array(s.length);for(let i=0;i<s.length;i++)a[i]=s.charCodeAt(i);return a;}
+// canonical JSON matching Python json.dumps(sort_keys=True) for ASCII payloads
+function pyjson(o){
+  if(o===null)return"null";
+  if(Array.isArray(o))return"["+o.map(pyjson).join(", ")+"]";
+  if(typeof o==="object")return"{"+Object.keys(o).sort().map(k=>JSON.stringify(k)+": "+pyjson(o[k])).join(", ")+"}";
+  return JSON.stringify(o);
+}
+function show(html){document.getElementById('out').innerHTML=html;}
+async function run(){
+  let p; try{p=JSON.parse(document.getElementById('in').value);}catch(e){return show('<div class="v bad">✗ Not valid JSON.</div>');}
+  const sig=p.sig; const pub=(p.attestation&&p.attestation.pubkey)||p.pubkey||p.chain_pubkey;
+  if(!sig||!pub)return show('<div class="v bad">✗ Missing <code>sig</code> or public key in the document.</div>');
+  // reconstruct the signed body: the document minus sig (and minus prev/alg if present, matching the signer)
+  const body={...p}; delete body.sig; delete body.prev; delete body.prev_sig; delete body.alg;
+  const msg=new TextEncoder().encode(pyjson(body));
+  let verified=false, err='';
+  try{
+    const key=await crypto.subtle.importKey("raw",b64ToBytes(pub),{name:"Ed25519"},false,["verify"]);
+    verified=await crypto.subtle.verify({name:"Ed25519"},key,b64ToBytes(sig),msg);
+  }catch(e){err=e.message||String(e);}
+  let meta='';
+  if(p.agent){meta=`<table>
+    <tr><td>agent</td><td>${p.agent.name||''} <code>${p.agent.id||''}</code> (${p.agent.type||''})</td></tr>
+    <tr><td>issuer</td><td><code>${p.issuer||''}</code></td></tr>
+    <tr><td>capabilities</td><td>${(p.capabilities||[]).join(', ')}</td></tr>
+    <tr><td>frameworks</td><td>${(p.frameworks||[]).join(', ')}</td></tr>
+    <tr><td>governance</td><td>${p.governance?JSON.stringify(p.governance):''}</td></tr></table>`;}
+  if(verified)show('<div class="v ok">✓ VERIFIED — this document is authentic and untampered (Ed25519, public key only).</div>'+meta);
+  else if(err.includes('Ed25519')||err.includes('algorithm')||err.includes('not supported'))
+    show('<div class="v info">⚠ Your browser lacks WebCrypto Ed25519. Try latest Chrome/Edge, or verify with the Python verifier (verify_chain.py / agent_passport.py).</div>'+meta);
+  else show('<div class="v bad">✗ FAILED — signature does not match. Tampered, wrong key, or non-canonical payload.</div>'+meta);
+}
+</script>
+</body>
+</html>
