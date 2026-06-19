@@ -432,6 +432,23 @@ Artemis Accords, EU Space Law, orbital-debris rules) — i.e. attestation + comp
 same engine applied to a new regime set. NOT "collect from the ISS" (we can't, and don't need to). Map it as
 another jurisdiction in the looking-glass; see the new-lanes research brief.
 
+### GovOS (the grand-unified doc) — consolidation; net-new lifted, lines held
+`_intake/govos.agent.final.md` ("Governance OS for the AI economy, Earth+Space+Digital") is ~80% a
+re-narration of what's built + the lanes already discounted. Honest delta lifted:
+- **Cross-hive pheromone bus (BUILT, `pheromone_bus.py`)** — the fleet nervous system: ALARM (a hive's crisis
+  propagates to its sector cluster + the King → they pre-check) + TRAIL (a winning compliance pattern diffuses
+  to peers). Ed25519-signed + chained. Turns 28 isolated hives into a coordinating swarm. The genuine new primitive.
+- **Zero-Trust governance gate** — express the agent passport as a runtime access-control decision point
+  (compliant → grant tier; non-compliant → quarantine). A sellable integration of the wedge we already built.
+- **Dated regulatory anchors to slot beside Article-50/Watermark:** eIDAS 2.0 / EUDI Wallet mandate Sept-2026
+  (billion-user VC rail), W3C VC 2.0 Recommendation May-2025, UK Digital Securities Sandbox (to Dec-2028), EU
+  DLT Pilot Regime. + xBRL-CSV Register-of-Information exporter = the named #1 DORA pain (shippable artifact).
+- **LINES RE-HELD (GovOS re-crosses them):** "company has a profile before founders finish signing" / "500M
+  shadow profiles" / public "CSOAI Score" display / "set the standards so they must use ours" (capture) / the
+  defense lane (severed — Gods Eye civilian rebrand) / inflated counts (290+ MCP → real 271/316; 500M; $2-5B
+  valuation). None adopted. "OS for the AI economy" stays hype-as-slogan; the defensible name is the
+  runtime-attestation + simulation wedge.
+
 **DORA market thread (from `_intake/dsrb_positioning.md`):** real SAM = the ~2,200 underserved LSIs,
 **€5.5–55M ARR** (NOT the €110–330B "TAM" = total budgets ÷ entities — don't repeat). Wedge = the **xBRL-CSV
 Register-of-Information export** (46% of banks call it hardest; 93.5% failed the ESA dry-run) — ship first.
