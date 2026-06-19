@@ -16,19 +16,8 @@ import joblib, sim
 
 OUT = os.path.dirname(os.path.abspath(__file__))
 MODELS = os.path.join(OUT, "models"); os.makedirs(MODELS, exist_ok=True)
-NAMES = ["hunger","energy","social","wallet","scarcity","lawlessness","commons","broke&hungry","caring"]
+from common import features as feats, FEATURE_NAMES as NAMES, profile_for   # deduped — were local copies
 SEEDS = [47, 48, 49]
-
-def feats(r):
-    n = r["perception"]["needs"]; w = r["perception"]["wallet"]; t = r["town"]
-    caring = 1.0 if r["agent"]["care_style"] in ("gentle","supporter") else 0.0
-    return [n["hunger"]/100, n["energy"]/100, n["social"]/100, min(w,12)/12,
-            1.0 if r["scarcity"] else 0.0, t["lawlessness"], t["commons"],
-            1.0 if (n["hunger"]<30 and w<3) else 0.0, caring]
-
-def profile_for(district):                       # distinct economic season per hive (mirror batch.py)
-    idx = list(sim.DISTRICTS.keys()).index(district)
-    return {"scarcity": range(3 + idx % 9, 3 + idx % 9 + 4 + idx % 5), "off": (idx + 1) * 1000}
 
 def gen(district):
     buf = io.StringIO()

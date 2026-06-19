@@ -19,14 +19,8 @@ from sklearn.metrics import accuracy_score, precision_recall_fscore_support
 import joblib
 
 OUT = os.path.dirname(os.path.abspath(__file__))
-NAMES = ["hunger","energy","social","wallet","scarcity","lawlessness","commons","broke&hungry","caring"]
+from common import features, FEATURE_NAMES as NAMES   # deduped — was a local copy
 
-def features(r):
-    n = r["perception"]["needs"]; w = r["perception"]["wallet"]; t = r["town"]
-    caring = 1.0 if r["agent"]["care_style"] in ("gentle","supporter") else 0.0
-    return [n["hunger"]/100, n["energy"]/100, n["social"]/100, min(w,12)/12,
-            1.0 if r["scarcity"] else 0.0, t["lawlessness"], t["commons"],
-            1.0 if (n["hunger"]<30 and w<3) else 0.0, caring]
 
 X, Y = [], []
 for line in open(os.path.join(OUT, "episodes.jsonl")):

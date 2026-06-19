@@ -47,11 +47,11 @@ def cmd_ps():
     pher = _load(os.path.join(OUT, "pheromone_state.json"), {}).get("alerts", {})
     try: from hive_pack import FRAMEWORKS, DEFAULT_FW
     except Exception: FRAMEWORKS, DEFAULT_FW = {}, []
-    print(f"\n  {'HIVE (process)':<22}{'industry':<22}{'alert':>6}{'frameworks':>12}")
-    print("  " + "-" * 62)
+    print(f"\n  {'HIVE (process)':<28}{'industry':<22}{'alert':>6}{'frameworks':>12}")
+    print("  " + "-" * 68)
     for k, m in sim.DISTRICTS.items():
         fw = len(FRAMEWORKS.get(k, DEFAULT_FW))
-        print(f"  did:csoai:hive:{k:<8}{m['hive']:<22}{pher.get(k,0):>6}{fw:>12}")
+        print(f"  {('did:csoai:hive:'+k):<28}{m['hive']:<22}{pher.get(k,0):>6}{fw:>12}")
     print()
 
 def cmd_verify(path):

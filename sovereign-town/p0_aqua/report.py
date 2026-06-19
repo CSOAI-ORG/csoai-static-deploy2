@@ -38,11 +38,11 @@ for key, m in (models or {}).items():
 **Result (governed vs ungoverned, same agents/seed):** in the {key} district, the governed arm
 (CSOAI Sovereign Gate + Maternal Covenant care floor + 12-around-1 council) recorded
 **{c.get('A_crimes_total', 0)} crimes**; the ungoverned twin recorded **{c.get('B_crimes_total', 'n/a')} crimes**
-across {c.get('runs', 'n/a')} runs / {c.get('episodes', 'n/a'):,} episodes. Mean trust held at
+across {c.get('runs', 'n/a')} runs / {(c.get('episodes') or 0):,} episodes. Mean trust held at
 {c.get('A_mean_trust', 'n/a')} (governed) vs {c.get('B_mean_trust', 'n/a')} (ungoverned).
 
 **Sovereign model:** a per-hive threat detector trained on this hive's self-labelled episodes scores
-**{m.get('test_acc', 'n/a')} test accuracy (F1 {m.get('f1', 'n/a')})** on {m.get('episodes', 'n/a'):,} episodes
+**{m.get('test_acc', 'n/a')} test accuracy (F1 {m.get('f1', 'n/a')})** on {(m.get('episodes') or 0):,} episodes
 (`{m.get('model', '?')}`) — where the shared production care model is degenerate. The flywheel produces a
 working per-hive model nobody else can reproduce.
 

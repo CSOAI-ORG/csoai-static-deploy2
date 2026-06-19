@@ -21,11 +21,7 @@ SEEDS = [47 + i for i in range(N_SEEDS)]
 
 # per-hive profiles — distinct scarcity seasons + seed offsets → genuinely diverse corpora (not clones).
 # Every district (all 28) gets a unique window+offset derived from its index, so none are clones.
-def profile_for(district):
-    idx = list(sim.DISTRICTS.keys()).index(district)
-    start = 3 + (idx % 9)                      # scarcity start rotates 3..11
-    length = 4 + (idx % 5)                     # window length rotates 4..8
-    return {"scarcity": range(start, start + length), "off": (idx + 1) * 1000}
+from common import profile_for                 # deduped — was a local copy
 
 def job(spec):
     """One independent cell: run BOTH arms headless, return stats (no file IO in workers)."""

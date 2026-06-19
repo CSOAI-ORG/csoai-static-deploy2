@@ -25,9 +25,7 @@ CONTAGION = [0.0, 0.05, 0.10]
 SEEDS_PER_CYCLE = 3
 TRAIN_EVERY = 10                      # retrain per-hive models every N cycles
 
-def profile_for(district):
-    idx = list(sim.DISTRICTS.keys()).index(district)
-    return {"scarcity": range(3 + idx % 9, 3 + idx % 9 + 4 + idx % 5), "off": (idx + 1) * 1000}
+from common import profile_for                 # deduped — was a local copy
 
 def _run(spec):
     district, seed, c = spec
