@@ -55,9 +55,15 @@ services:
   - name: "FARM_VISION"
     port: 8888
     url: "http://127.0.0.1:8888/api/status"
-    restart_command: ""
-    working_dir: ""
-    env: {}
+    # NOTE: local server is healthy; 404s on loopback come from the king-vm-tunnel
+    # also forwarding 8888:127.0.0.1:8888 (com.meok.king-vm-tunnel.plist), which
+    # shadows 127.0.0.1:8888 and routes the probe to the VM (no /api/status -> 404).
+    # restart_command clears the port (kills tunnel+stray) and relaunches the local
+    # server so strikes can no longer pile up forever.
+    restart_command: "cd /Users/nicholas/clawd/meok/farm-vision && /opt/homebrew/bin/python3.11 server.py"
+    working_dir: "/Users/nicholas/clawd/meok/farm-vision"
+    env:
+      PORT: "8888"
 
   - name: "PHEROMONE_ROUTER"
     port: 3900
