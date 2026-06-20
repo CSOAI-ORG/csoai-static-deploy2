@@ -1352,6 +1352,28 @@ class E2ERunner:
             assert "OpenGrid" in html or "opengrid" in html.lower(), f"missing OpenGrid"
             return f"opengrid: live, {len(html):,}B"
 
+
+        async def examples_live_check():
+            """Day 29 BLOCK 2: /examples page is live on csoai.org."""
+            import urllib.request as _ur
+            req = _ur.Request("https://csoai-org.vercel.app/examples")
+            with _ur.urlopen(req, timeout=8) as r:
+                html = r.read().decode()
+            assert r.status == 200, f"status={r.status}"
+            assert "Examples" in html or "examples" in html.lower(), f"missing Examples"
+            assert "Boeing" in html or "Healthcare" in html, f"missing examples"
+            return f"examples: live, {len(html):,}B"
+
+        async def customer_full_check():
+            """Day 29 BLOCK 3: /customer/{email} returns proper structure."""
+            # Make a real purchase first
+            await self.client.request("POST", f"{base}/purchase/tier", {"tier_id": "sovereign", "customer_email": "day29e2e@meok.ai"})
+            code, body = await self.client.request("GET", f"{base}/customer/day29e2e@meok.ai")
+            assert code == 200, f"status={code}"
+            assert body.get("found") is True, f"not found: {body}"
+            assert body["summary"]["total_tiers"] >= 1, f"no tiers: {body['summary']}"
+            return f"day29e2e: {body['summary']}"
+
         async def matrix_live_check():
             """Day 26 BLOCK 5: /matrix page is live on csoai.org."""
             status, html = _live_get("/matrix")
@@ -1478,6 +1500,8 @@ class E2ERunner:
         await self.run_test(group, "/countdown (live)", countdown_live_check, target=base)
         await self.run_test(group, "/opengrid (live)", opengrid_live_check, target=base)
         await self.run_test(group, "/matrix (live)", matrix_live_check, target=base)
+        await self.run_test(group, "/examples (live)", examples_live_check, target=base)
+        await self.run_test(group, "/customer (day29)", customer_full_check, target=base)
 
     # ═══════════════════════════════════════════════════════════════════════════
     # MAIN ORCHESTRATOR
