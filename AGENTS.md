@@ -1,217 +1,47 @@
-# MEOK AI LABS — LIVING TOPOLOGY & AGENT COORDINATION
-## SINGLE SOURCE OF TRUTH | ALL AGENTS (Kilo, Kimi, Gemini, Claude, Hermes)
-**Updated:** 2026-05-31 | **Repository:** https://github.com/CSOAI-ORG/clawd-workspace
+# MEOK — AGENT COORDINATION BOARD
+**Read this first, every session, on every platform.** · Updated 2026-06-20
+**For current ecosystem STATE, read `_alignment/ALIGNMENT_2026-06-20.md` (the master).** This file is only HOW we avoid stepping on each other.
+
+> Many agents run at once: multiple TUIs + platforms (Claude / Kimi / Gemini / Kilo / Hermes / etc.), ~10 tasks each. They share ONE working tree. Coordination is not optional.
 
 ---
 
-## RULES OF THE ROAD
+## 1. THE REAL TOPOLOGY (corrects the old M2/M4 / workspace_for_ai map — that's gone)
+- **ONE shared checkout on the Mac: `~/clawd`** (origin `CSOAI-ORG/clawd-workspace`, branch `main`). Every Mac agent edits these same files live. There is no `~/workspace_for_ai`. "Living Topology" is deprecated — do not recreate it.
+- **GCP VM (`meok-backend`)** = the live autonomous stack (King hive, SOV3 `:3101`, council `:3200`, OLM, 49 GB data moat). **Separate checkout.**
+- **Authority rule:** Mac = sovereign + orchestration. VM = live inference + autonomous work.
 
-1. **ONE workspace:** `~/workspace_for_ai/` on M2. No scattered directories.
-2. **ONE repo:** `CSOAI-ORG/clawd-workspace`. Pull before work, push when done.
-3. **Tag your files:** Prefix with agent name: `KILO_`, `KIMI_`, `GEMINI_`, `CLAUDE_`, `HERMES_`
-4. **No duplication.** Check existing plans before starting anything.
-5. **Update AGENTS.md** when you discover something important.
-6. **Git discipline:** `git pull` → work → `git add -A && git commit -m "Agent: description"` → `git push`
+## 2. RULES OF THE ROAD (the ones that have actually bitten us)
+1. **Pull before you work.** `git -C ~/clawd pull`.
+2. **Commit ONLY your own files, in scoped commits.** `git add <your files>` — **never `git add -A`** in this shared tree; it captures other agents' half-written work.
+3. **NEVER `git checkout .`, `git reset --hard`, or `git stash` the shared tree.** 60+ files are routinely uncommitted from other agents — those commands wipe everyone at once. If you must discard, discard your specific file only.
+4. **Tag scratch/WIP files with your platform name** (`CLAUDE_`, `KIMI_`, `GEMINI_`, `KILO_`, `HERMES_`) so ownership is obvious. Dated deliverables (`DAYxx_*`, `*_2026-06-20.md`) are append-only — don't rewrite another agent's.
+5. **Claim shared files on the board (§4) before editing them.** Shared = `MEMORY.md`, `AGENTS.md`, hive `stack.yml`, day-seals, MCP READMEs, `_alignment/*`.
+6. **Commit your completed work — don't let it pile up uncommitted.** Uncommitted = unprotected.
 
----
+## 3. HARD "DO NOT" LIST (real footguns, each cost us a session)
+- **Hive `stack.yml`: VM is authoritative. Sync VM→Mac ONLY, never Mac→VM blind** — a naive push wipes ~25 hives of jeeves-enriched autonomous work. Both sides md5-match `e3e60a3f…`.
+- **The CSOAI-rebrand script is buggy** — it gutted 4 MCP READMEs (empty `## Tools`, dup badges). Do not re-run on any MCP until fixed.
+- **SOV3 health-check: POST `/mcp`, never GET `/health`** — the guardian GET-check false-kills it.
+- **Don't `rm` backup dirs that hold untracked files** until you've confirmed restoration (we lost `e2e_scorecard.py` this way).
+- **Don't push `clawd` wholesale on a naive merge** — use `git merge -s ours` against origin/main (a real merge gives 51 conflicts).
+- **000 / 403 from this shell ≠ downtime** — it's the WARP/network artifact. Verify external hosts another way before declaring an outage.
 
-## MACHINE ARCHITECTURE
+## 4. LIVE CLAIM BOARD (append a line when you start; strike it when done)
+Format: `- [HH:MM platform] CLAIM <path/area> — <task>` … then edit to `RELEASED` when finished.
+<!-- newest at top -->
+- _(empty — claim here)_
 
-```
-M2 (THIS MACHINE)                     M4 (192.168.50.105)
-IOKs-MacBook-Air                      NICHOLAS's MacBook Air
-iokfarm@192.168.50.176                nicholas@192.168.50.105
-─────────────────────────────────────────────────────────────
-SAFETY/AI DOMAINS ← YOU ARE HERE      MEOK WORK ONLY
-Kilo / Kimi / Gemini / Claude         sov3 consciousness (:3101)
-Kilo Code (lead coder)                PostgreSQL / Weaviate / Neo4j
-OpenClaw (memory + gateway)           NATS JetStream event bus
-Ollama 6 models (mesh pool)           345 MCP marketplace servers
-16 cron jobs + watchdog               CLAWD orchestrator
-9 domains rsynced to ~/domains/       Character factory / neural training
-```
+## 5. WHO OWNS WHICH LANE (so two agents don't refactor the same thing)
+| Lane | Owner (default) | Notes |
+|---|---|---|
+| `meok-one/`, `sovereign-temple/`, `MEMORY.md`, `_alignment/` | Claude (builder) | ships code/fixes/memory |
+| `_findings/` (read-only audits) | MiniMax M3 (auditor) | proposes, never edits code/memory |
+| revenue / outreach drafts | (varies — claim on board) | all outbound from nicholas@csoai.org / @meok.ai |
+| hives / King / queens | runs on **VM** | edit VM-side, sync down |
 
-Every M4 file accessible via SSH: `ssh nicholas@192.168.50.105` (key-based, passwordless)
-
----
-
-## REPOSITORY STRUCTURE
-
-```
-clawd-workspace/                    ← GitHub source of truth
-├── AGENTS.md                       ← THIS FILE — read first
-├── m2/                             ← M2 Mac work (this machine)
-│   ├── AGENTS.md                   ← Coordination doc for agents
-│   ├── docs/                       ← Strategy & architecture docs
-│   │   ├── ECOSYSTEM-ALIGNMENT.md  ← Full M2/M4 architecture map
-│   │   ├── MASTER-PLAN-ALL-DOMAINS.md
-│   │   ├── M2-PRODUCTIVITY-MANIFESTO.md
-│   │   └── clawd-*.md             ← Identity, memory, soul
-│   ├── m4-archives/                ← 14 key docs from M4
-│   ├── configs/                    ← Kilo config, Claude config
-│   ├── scripts/                    ← mesh-*, mount-m4.sh
-│   ├── mesh/                       ← Mesh node config
-│   ├── sovereign/                  ← Quantum/care experiments
-│   └── desktop/                    ← Desktop docs & grants
-│
-├── M2-ECOSYSTEM-ALIGNMENT.md       ← Alignment doc (top level)
-├── M2-MASTER-PLAN-ALL-DOMAINS.md   ← Master plan (top level)
-├── M2-WORKSPACE-RULES.md           ← Workspace rules (top level)
-│
-├── sovereign-temple/               ← SOV3 consciousness engine
-├── mcp-marketplace/                ← 345 MCP servers
-├── strategy/                       ← Business strategy
-├── revenue/                        ← Revenue plans
-├── domains/                        ← Domain source projects
-└── ...                             ← Everything else
-```
+## 6. AUTOMATED OPTION (if your platform has the SOV3 MCP wired)
+SOV3 exposes a real lock + task board: `coord_register_agent` → `coord_acquire_files` (lock before edit) → `coord_release_files` → `coord_get_dashboard` (see who holds what) → `coord_submit_task` / `coord_complete_task`. Use it instead of §4 when `:3101` is up. This is the path to real, enforced (not honour-system) coordination across all platforms.
 
 ---
-
-## DOMAIN ECOSYSTEM
-
-### LIVE (11 domains — all 200 OK)
-| Domain | Type | Notes |
-|--------|------|-------|
-| councilof.ai | AI governance | Needs Stripe (£499-4,990/mo) |
-| csoai.org | Governance institution | "FAA for AI" |
-| proofof.ai | Deepfake detection | Monetized |
-| safetyof.ai | Safety posture | Live |
-| suicidestop.ai | Crisis page | Non-commercial trust |
-| planthire.ai | Construction | Lead gen |
-| muckaway.ai | Waste mgmt | Lead gen |
-| haulage.app | Trade hub | Live |
-| grabhire.ai | Labour hire | Live |
-| templeman-opticians.com | Real business | £2.5-5K/mo |
-| fishkeeper.ai | Redirect | → meok.ai |
-| koikeeper.ai | Redirect | → meok.ai |
-
-### DEAD (7 domains — need deploy)
-| Domain | M4 Dir | GH Repo |
-|--------|--------|---------|
-| diyhelp.ai | ~/diyhelp.ai | CSOAI-ORG/diyhelp |
-| loopfactory.ai | ~/loopfactory.ai | CSOAI-ORG/loopfactory |
-| pokerhud.ai | ~/pokerhud.ai | CSOAI-ORG/pokerhud |
-| industrial-hire-ai | ~/industrial-hire-ai | ❌ create |
-| industrial-domains | ~/industrial-domains | CSOAI-ORG/industrial-domains |
-| asisecurity-portal | ~/asisecurity-portal | CSOAI-ORG/asisecurity-portal |
-| optomobile.ai | TBD | ❌ create |
-
----
-
-## GITHUB CREDENTIALS
-
-- **Token:** `<REDACTED-ROTATE-2026-06-07>`
-- **User:** CSOAI-ORG
-- **Email:** nicholas@meok.ai
-- **300+ repos**, 50 public, 250+ private
-- **Library repo:** https://github.com/CSOAI-ORG/lib2b (npm `@csoai/lib2b`)
-- **Package published:** 264 PyPI MCPs, 50 npm packages
-
----
-
-## LOVABLE MCP ACCESS
-
-- **Endpoint:** `https://mcp.lovable.dev`
-- **Workspace:** "Nick's Lovable" (ID: `Q8zXDuXsBAjGrVq3Kv8q`)
-- **Plan:** Pro, 36 projects
-- **Auth:** Session JWT (in `~/workspace_for_ai/access/lovable-session.txt`)
-- Requires Lovable GitHub App installed on CSOAI-ORG for file read/write
-
----
-
-## ACTIVE AGENTS ON M2
-
-| Agent | Terminal | Role | Last Activity |
-|-------|----------|------|---------------|
-| Kilo | Current | Lead coder, domain orchestration | Now |
-| Kimi | ttys007 | Mesh orchestrator | Active |
-| Gemini | ttys004 | General assistant | Active |
-| Claude | — | Code/agent work | Active |
-| Hermes | ttys006 | Task planner | Active |
-
----
-
-## PRIORITY WORKSTREAMS (ordered)
-
-1. **Install Lovable GitHub App** on CSOAI-ORG → Connect repos to Lovable projects
-2. **Align 9 domains** with lib2b/ACP/MCP (use `@csoai/lib2b`)
-3. **Deploy 7 dead domains** (Vercel or Lovable)
-4. **Free M4 disk space** (2.2GB free — critical risk)
-5. **Process grant pipeline** (adopt, agriscale, dsit, nlnet)
-6. **SEO & content** (sitemaps, JSON-LD, structured data on all domains)
-
----
-
-## COMMAND CHEAT SHEET
-
-```bash
-# M4 access (SSH)
-ssh nicholas@192.168.50.105
-rsync -av nicholas@192.168.50.105:~/path/ ~/local/path/
-
-# M4 disk check
-ssh nicholas@192.168.50.105 'df -h /'
-
-# M4 urgent cleanup
-ssh nicholas@192.168.50.105 'rm -f ~/Desktop/*.zip ~/*.docx; docker system prune -af'
-
-# GitHub workflow
-export GH_TOKEN="<REDACTED-ROTATE-2026-06-07>"
-curl -s -H "Authorization: token $GH_TOKEN" "https://api.github.com/users/CSOAI-ORG/repos"
-
-# Lovable MCP (via Python)
-python3 /tmp/lovable_client.py list_workspaces
-
-# Check domain status
-curl -s -o /dev/null -w "%{http_code}\n" https://diyhelp.ai
-
-# M2 mesh status
-mesh-status | mesh-prod status
-
-# Pull latest workspace
-cd ~/workspace_for_ai/clawd-workspace && git pull
-
-# Commit and push
-cd ~/workspace_for_ai/clawd-workspace && git add -A && git commit -m "Agent: message" && git push
-```
-
----
-
-## KEY FILES REFERENCE
-
-| File | Path | Purpose |
-|------|------|---------|
-| AGENTS.md | `~/workspace_for_ai/clawd-workspace/AGENTS.md` | **THIS FILE — living topology** |
-| ECOSYSTEM-ALIGNMENT.md | `m2/docs/ECOSYSTEM-ALIGNMENT.md` | Full architecture map |
-| MASTER-PLAN-ALL-DOMAINS.md | `m2/docs/MASTER-PLAN-ALL-DOMAINS.md` | Domain deployment plan |
-| M2-PRODUCTIVITY-MANIFESTO.md | `m2/docs/M2-PRODUCTIVITY-MANIFESTO.md` | Mesh node schedule |
-| LIVING_TOPOLOGY_v2.md | `m2/m4-archives/LIVING_TOPOLOGY_v2.md` | MEOKCLAW OS topology |
-| MEOKCLAW_OS_MASTER_PLAN.md | `m2/m4-archives/MEOKCLAW_OS_MASTER_PLAN.md` | OS phase plan |
-| Kilo config | `m2/configs/kilo.jsonc` | MCP server config |
-| Mesh scripts | `m2/scripts/mesh-*` | Production automation |
-
----
-
-## DISK & RESOURCE MONITORING
-
-| Resource | M2 | M4 |
-|----------|-----|-----|
-| RAM | 8GB (bottleneck) | 16GB |
-| Disk | ~80% | 89% (2.2GB FREE — CRITICAL) |
-| Ollama | 6 models | Gemma 4 |
-| Services | mesh-prod, openclaw, ollama | sov3, postgres, nats, weaviate, neo4j |
-| Cron | 16 jobs | sov3 schedulers |
-
----
-
-*This is the LIVING TOPOLOGY. Every agent updates this as the ecosystem evolves.*
-*commit: `git add -A && git commit -m "Agent: <what changed>" && git push`*
-
-## LIVE CHECKOUT (ACCEPTING PAYMENTS)
-
-**Main checkout:** https://www.csoai.org/checkout — £79/mo Pro, £299/mo Enterprise
-**Backup URL:** https://checkout-deploy-three.vercel.app
-**Stripe:** LIVE, verified, ready to charge
-
-**Revenue:** £0. First sale = £79/mo. Send traffic to the checkout URL.
+*Keep this true. If the topology changes, fix THIS file (claim it on the board first). State lives in `_alignment/ALIGNMENT_2026-06-20.md`, not here.*
