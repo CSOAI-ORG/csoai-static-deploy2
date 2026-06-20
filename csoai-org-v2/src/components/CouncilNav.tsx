@@ -39,6 +39,22 @@ export default function CouncilNav() {
             );
           })}
           <a
+            href="https://app.csoai.org/opengridworks"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="px-3 py-1.5 rounded-lg transition text-emerald-400 hover:text-emerald-300 hover:bg-emerald-500/10"
+          >
+            Atlas →
+          </a>
+          <a
+            href="https://app.csoai.org/opengridworks"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="px-3 py-1.5 rounded-lg transition text-emerald-400 hover:text-emerald-300 hover:bg-emerald-500/10"
+          >
+            Atlas →
+          </a>
+          <a
             href="https://councilof.ai"
             target="_blank"
             rel="noopener noreferrer"
