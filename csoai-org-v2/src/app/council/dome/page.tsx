@@ -1,4 +1,12 @@
+import type { Metadata } from "next";
 import { getCouncilStatus, getExpertiseNetwork } from "@/lib/meok";
+
+export const metadata: Metadata = {
+  title: "Council Dome — 12-Domain Expertise Map",
+  description:
+    "Explore the 12-domain expertise map that underpins every CSOAI certification decision. Live council node and expertise counts.",
+  alternates: { canonical: "/council/dome" },
+};
 
 export const revalidate = 60;
 

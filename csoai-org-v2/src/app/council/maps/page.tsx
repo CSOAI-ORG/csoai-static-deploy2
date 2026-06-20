@@ -1,4 +1,12 @@
+import type { Metadata } from "next";
 import { getCouncilStatus, getBridgesTopology, getHighAffinityBridges } from "@/lib/meok";
+
+export const metadata: Metadata = {
+  title: "Council Maps — 36-Node Council Graph",
+  description:
+    "Visualise the 36-node CSOAI council graph, inter-domain bridges and high-affinity agreements that power Byzantine consensus.",
+  alternates: { canonical: "/council/maps" },
+};
 
 export const revalidate = 60;
 

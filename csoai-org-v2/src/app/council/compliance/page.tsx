@@ -1,4 +1,12 @@
+import type { Metadata } from "next";
 import { getCouncilHistory, getMemoryStats } from "@/lib/meok";
+
+export const metadata: Metadata = {
+  title: "Council Compliance — Global Framework Tracker",
+  description:
+    "Track EU AI Act, DORA, NIS2, ISO 42001, CRA, CSRD, NIST AI RMF, UK AI Regulation, CMMC, SOC 2, HIPAA and GDPR deadlines and penalties.",
+  alternates: { canonical: "/council/compliance" },
+};
 
 export const revalidate = 60;
 

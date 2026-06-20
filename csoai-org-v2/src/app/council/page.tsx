@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import {
   getCouncilStatus,
@@ -10,6 +11,17 @@ import {
   getAuditLedger,
   ATTESTATION_API_BASE,
 } from "@/lib/attestation";
+
+export const metadata: Metadata = {
+  title: "Council Dome",
+  description:
+    "Real-time view of the CSOAI Council substrate: 33-node Byzantine council, 235 architecture nodes, 144 expertise specialists and 55 inter-domain bridges.",
+  openGraph: {
+    title: "CSOAI Council Dome",
+    description: "Verify the cryptographic council behind every Watchdog certificate.",
+  },
+  alternates: { canonical: "/council" },
+};
 
 export const revalidate = 60;
 

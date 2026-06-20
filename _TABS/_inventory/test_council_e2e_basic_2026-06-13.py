@@ -75,17 +75,44 @@ def test(name, fn):
 
 
 # ── Tests ────────────────────────────────────────────────────────────────
+#
+# v3.0-fractal realignment (2026-06-20):
+# The original assertions below were written against the L0G-PBFT-Council-Vote
+# spec (meok-council-substrate v0.1.0, threshold=23, with an `f` field on
+# /api/council/status). That service was rolled back; the canonical live
+# service is meok-api v3.0.0 with v3.0-fractal substrate (threshold=22,
+# no `f` field, no obsolete service string on /health).
+#
+# Canonical substrate shape (per the user's substrate-shape-check cron spec):
+#   node_count=36, domain_count=12, expertise_node_count=144,
+#   bridge_node_count=55, total_architecture_nodes=235, threshold=22.
+#
+# DO NOT re-add the v2 assertions ("meok-council-substrate", threshold==23,
+# d.get('f')) — they were OBSOLETED by the meok-api v3.0.0 rollback, not
+# "fixed". The history is in the comment header of substrate_shape_check.sh.
 def smoke_health(base):
     s, d = http("GET", f"{base}/health")
-    if s == 200 and d.get("service") == "meok-council-substrate":
-        return True, f"v={d.get('version')}"
+    if s == 200 and d.get("council_nodes") == 36:
+        return True, f"v={d.get('version')} council_nodes={d.get('council_nodes')}"
     return False, f"status={s} body={d}"
 
 
 def smoke_status(base):
     s, d = http("GET", f"{base}/api/council/status")
-    if s == 200 and d.get("node_count") == 36 and d.get("threshold") == 23:
-        return True, f"36 nodes, threshold 23, f={d.get('f')}"
+    ok = (
+        s == 200
+        and d.get("node_count") == 36
+        and d.get("domain_count") == 12
+        and d.get("expertise_node_count") == 144
+        and d.get("bridge_node_count") == 55
+        and d.get("total_architecture_nodes") == 235
+        and d.get("threshold") == 22
+    )
+    if ok:
+        return True, (
+            f"36 nodes / 12 domains / 235 architecture "
+            f"(36+144+55) / threshold 22"
+        )
     return False, f"status={s} body={d}"
 
 

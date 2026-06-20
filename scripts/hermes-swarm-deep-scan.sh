@@ -140,15 +140,17 @@ echo "" >> "$REPORT"
 
 echo "### MCP/AI Governance Competitors" >> "$REPORT"
 for repo in "Ansvar-Systems/EU_compliance_MCP" "ark-forge/mcp-eu-ai-act" "arsialabs/arsia-protocol" "upstash/context7" "PrefectHQ/fastmcp" "contentauth/c2pa-mcp" "punkpeye/awesome-mcp-servers"; do
-  data=$(curl -s "https://api.github.com/repos/$repo" 2>/dev/null | python3 -c "
-import sys, json
+  data=$(curl -s "https://api.github.com/repos/$repo" 2>/dev/null | REPO_NAME="$repo" python3 -c "
+import sys, json, os
+repo = os.environ.get('REPO_NAME', 'unknown')
 try:
     d = json.load(sys.stdin)
     stars = d.get('stargazers_count', '?')
     issues = d.get('open_issues_count', '?')
     pushed = d.get('pushed_at', '?')[:10]
-    print(f'  - {repo} ⭐{stars} | issues:{issues} | updated:{pushed}')
-except: print(f'  - {repo}: (unavailable)')
+    print(f'  - {repo} \u2b50{stars} | issues:{issues} | updated:{pushed}')
+except Exception as e:
+    print(f'  - {repo}: (unavailable)')
 ")
   echo "$data" >> "$REPORT"
 done
@@ -194,7 +196,7 @@ echo "## 7. Revenue Metrics" >> "$REPORT"
 echo "" >> "$REPORT"
 
 # Stripe event count (last 24h)
-STRIPE_KEY="${STRIPE_SECRET_KEY:-${STRIPE_LIVE_KEY}}"
+STRIPE_KEY="${STRIPE_SECRET_KEY:-${STRIPE_LIVE_KEY:-}}"
   if [ -z "$STRIPE_KEY" ]; then
     echo "  Stripe API: STRIPE_SECRET_KEY not set" >> "$REPORT"
   fi

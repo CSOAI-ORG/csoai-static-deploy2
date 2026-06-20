@@ -1,3 +1,12 @@
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Council Law — Global AI Regulation Tracker",
+  description:
+    "Compare AI regulations across the EU, UK, US, China, Singapore, Japan, Canada, Australia, Brazil, India, Korea and the UAE with deadlines and penalties.",
+  alternates: { canonical: "/council/law" },
+};
+
 export const revalidate = 3600; // laws change slowly
 
 const REGIONS = [
