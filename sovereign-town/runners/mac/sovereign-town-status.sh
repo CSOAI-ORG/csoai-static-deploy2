@@ -17,14 +17,14 @@ else
   STATE="DOWN"
 fi
 
-FLEET=$(/usr/bin/python3 - <<PY 2>/dev/null || echo '{}'
+FLEET=$(/opt/homebrew/bin/python3.11 - <<PY 2>/dev/null || echo '{}'
 import json
 with open('/Users/nicholas/clawd/sovereign-town/p0_aqua/fleet_status_mac.json') as f:
     print(json.dumps(json.load(f), indent=2))
 PY
 )
 
-LEDGER_TAIL=$(tail -1 "$P0/flywheel_ledger_mac.jsonl" 2>/dev/null | /usr/bin/python3 -c 'import json,sys; print(json.dumps(json.load(sys.stdin), indent=2))' 2>/dev/null || echo "  (no ledger)")
+LEDGER_TAIL=$(tail -1 "$P0/flywheel_ledger_mac.jsonl" 2>/dev/null | /opt/homebrew/bin/python3.11 -c 'import json,sys; print(json.dumps(json.load(sys.stdin), indent=2))' 2>/dev/null || echo "  (no ledger)")
 
 {
   echo "## Mac partition — $TS"

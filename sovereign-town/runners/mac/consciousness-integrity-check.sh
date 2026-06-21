@@ -15,7 +15,7 @@ CARE=$(curl -s -m 8 -X POST http://localhost:3101/mcp \
   -d '{"jsonrpc":"2.0","id":"1","method":"tools/call","params":{"name":"analyze_care_patterns","arguments":{}}}' 2>&1 || echo '{"error":"timeout"}')
 
 # 2. Temple-live BFT council self-test (best-effort)
-TEMPLE=$(cd /Users/nicholas/clawd/sovereign-temple-live/council-nodes 2>/dev/null && /usr/bin/python3 - <<'PY' 2>&1 || echo "temple council check unavailable"
+TEMPLE=$(cd /Users/nicholas/clawd/sovereign-temple-live/council-nodes 2>/dev/null && /opt/homebrew/bin/python3.11 - <<'PY' 2>&1 || echo "temple council check unavailable"
 import asyncio, json, sys
 try:
     from bft_council import BFTCouncil

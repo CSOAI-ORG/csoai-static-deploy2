@@ -58,7 +58,7 @@ $KING
 EOF
 
 # Record summary to SOV3 memory
-/usr/bin/python3 - "$OUT" <<'PY' >/dev/null 2>&1 || true
+/opt/homebrew/bin/python3.11 - "$OUT" <<'PY' >/dev/null 2>&1 || true
 import json, sys
 path = sys.argv[1]
 with open(path) as f: text = f.read()

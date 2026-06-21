@@ -9,7 +9,7 @@ mkdir -p "$(dirname "$OUT")"
 
 HEALTH=$(curl -s -m 5 http://localhost:3101/health 2>&1 || echo "unreachable")
 
-INSTANCE=$(/usr/bin/python3 -c '
+INSTANCE=$(/opt/homebrew/bin/python3.11 -c '
 import json, sys
 text = sys.argv[1]
 try:
@@ -19,7 +19,7 @@ except Exception:
     print("unknown")
 ' "$HEALTH")
 
-HOSTNAME=$(/usr/bin/python3 -c '
+HOSTNAME=$(/opt/homebrew/bin/python3.11 -c '
 import json, sys
 text = sys.argv[1]
 try:

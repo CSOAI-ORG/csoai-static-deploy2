@@ -15,7 +15,7 @@ DASH=$(curl -s -m 8 -X POST http://localhost:3101/mcp \
 TMP=$(mktemp)
 trap 'rm -f "$TMP"' EXIT
 
-/usr/bin/python3 - "$DASH" > "$TMP" <<'PY'
+/opt/homebrew/bin/python3.11 - "$DASH" > "$TMP" <<'PY'
 import json, sys
 text = sys.argv[1]
 try:
