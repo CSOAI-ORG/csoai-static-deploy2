@@ -30,6 +30,7 @@
 ## 4. LIVE CLAIM BOARD (append a line when you start; strike it when done)
 Format: `- [HH:MM platform] CLAIM <path/area> — <task>` … then edit to `RELEASED` when finished.
 <!-- newest at top -->
+- [05:40 Claude] CLAIM VM ~/meok-king/king_hive/runner.py (_parse_judge) — investigating king-judge margin degeneracy: 11/20 recent rounds margin=0.0/default-win-A; 3 most-recent post-04:18-fix rounds ALL 0.0/A. Suspect the string→0.5 fallback collapses unparsed verdicts into 0.5/0.5 ties. Read-only diagnosis first, fix VM-side, sync down. Not touching cert pipeline.
 - [05:15 Hermes/JEEVES] RELEASED — D65-D70 execution launched. BFT 64→73 ✅ (9 councils, 44/45 voters). D65 cert wave 600 + D66-D70 cert wave 1,100 = 1,700 processing. 48h plan target hit.
 - [09:45 Hermes/JEEVES] RELEASED — certs pipeline, VM revenue sync, King Hive status — D29 cert wave processing (500), enterprise prospects verified (8 real, 245 quarantined correct)
 - _(available — claim here)_
@@ -48,3 +49,4 @@ SOV3 exposes a real lock + task board: `coord_register_agent` → `coord_acquire
 ---
 *Keep this true. If the topology changes, fix THIS file (claim it on the board first). State lives in `_alignment/ALIGNMENT_2026-06-20.md`, not here.*
 - [05:13 Hermes/JEEVES] CLAIM /opt/openpatent-hive/scripts/auto-pilot-48h.py — 48h autonomous orchestration (chain 8000→18000, all 5 hives aligned, ALL ON GCP VM)
+- [05:18 Hermes/JEEVES] CLAIM csoai-org public/*.html — 10 improvements to existing pages (switch, os, dora, nis2, eidas2, trust, sme, developer, regulator, dpa, citizen, industry, transfer, whitepaper, hive + social proof + countdown + 4 MCP READMEs + scorecard nginx + openmoe-keystone remote) — Kimi on parallel lane (BFT 64→73, cert waves, MCP health)
