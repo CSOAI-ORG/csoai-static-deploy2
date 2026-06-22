@@ -30,6 +30,7 @@
 ## 4. LIVE CLAIM BOARD (append a line when you start; strike it when done)
 Format: `- [HH:MM platform] CLAIM <path/area> — <task>` … then edit to `RELEASED` when finished.
 <!-- newest at top -->
+- [05:15 Hermes/JEEVES] CLAIM D65-D70 execution — cert waves + BFT councils (64→73). Part of 48h autonomous plan.
 - [09:45 Hermes/JEEVES] RELEASED — certs pipeline, VM revenue sync, King Hive status — D29 cert wave processing (500), enterprise prospects verified (8 real, 245 quarantined correct)
 - _(available — claim here)_
 
