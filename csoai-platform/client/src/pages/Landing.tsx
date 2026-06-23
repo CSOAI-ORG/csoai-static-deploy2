@@ -238,7 +238,7 @@ export default function Landing() {
             viewport={{ once: true }}
             className="text-center mb-12"
           >
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/10 text-amber-600 text-sm font-medium mb-4">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/10 text-[#C8A873] text-sm font-medium mb-4">
               <Zap className="h-4 w-4" />
               Now Hiring
             </div>

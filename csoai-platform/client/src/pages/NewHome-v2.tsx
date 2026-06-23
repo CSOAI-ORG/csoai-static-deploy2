@@ -95,9 +95,9 @@ const frameworks = [
     articles: "113 Articles",
     icon: Flag,
     color: "from-blue-500 to-blue-600",
-    bgColor: "bg-blue-50",
-    borderColor: "border-blue-200",
-    textColor: "text-blue-600",
+    bgColor: "bg-[#9CA6C9]/5",
+    borderColor: "border-[#9CA6C9]/20",
+    textColor: "text-[#9CA6C9]",
   },
   {
     id: "nist-rmf",
@@ -108,9 +108,9 @@ const frameworks = [
     articles: "4 Core Functions",
     icon: Scale,
     color: "from-red-500 to-red-600",
-    bgColor: "bg-red-50",
-    borderColor: "border-red-200",
-    textColor: "text-red-600",
+    bgColor: "bg-destructive/5",
+    borderColor: "border-destructive/20",
+    textColor: "text-destructive",
   },
   {
     id: "iso-42001",
@@ -121,9 +121,9 @@ const frameworks = [
     articles: "Certification",
     icon: Award,
     color: "from-purple-500 to-purple-600",
-    bgColor: "bg-purple-50",
-    borderColor: "border-purple-200",
-    textColor: "text-purple-600",
+    bgColor: "bg-[#9CA6C9]/5",
+    borderColor: "border-[#9CA6C9]/20",
+    textColor: "text-[#9CA6C9]",
   },
   {
     id: "tc260",
@@ -136,7 +136,7 @@ const frameworks = [
     color: "from-amber-500 to-amber-600",
     bgColor: "bg-amber-50",
     borderColor: "border-amber-200",
-    textColor: "text-amber-600",
+    textColor: "text-[#C8A873]",
   },
   {
     id: "uk-aisi",
@@ -147,9 +147,9 @@ const frameworks = [
     articles: "Guidelines",
     icon: Landmark,
     color: "from-indigo-500 to-indigo-600",
-    bgColor: "bg-indigo-50",
-    borderColor: "border-indigo-200",
-    textColor: "text-indigo-600",
+    bgColor: "bg-[#9CA6C9]/5",
+    borderColor: "border-[#9CA6C9]/20",
+    textColor: "text-[#9CA6C9]",
   },
   {
     id: "singapore",
@@ -160,9 +160,9 @@ const frameworks = [
     articles: "2nd Edition",
     icon: Network,
     color: "from-teal-500 to-teal-600",
-    bgColor: "bg-teal-50",
-    borderColor: "border-teal-200",
-    textColor: "text-teal-600",
+    bgColor: "bg-primary/5",
+    borderColor: "border-primary/20",
+    textColor: "text-primary",
   },
   {
     id: "korea",
@@ -173,9 +173,9 @@ const frameworks = [
     articles: "New Framework",
     icon: Star,
     color: "from-pink-500 to-pink-600",
-    bgColor: "bg-pink-50",
-    borderColor: "border-pink-200",
-    textColor: "text-pink-600",
+    bgColor: "bg-[#D98C7E]/5",
+    borderColor: "border-[#D98C7E]/20",
+    textColor: "text-[#D98C7E]",
   },
 ];
 
@@ -231,11 +231,11 @@ const faqs = [
 
 export default function NewHomeV2() {
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-card">
       {/* ============================================ */}
       {/* SECTION 1: HERO */}
       {/* ============================================ */}
-      <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-slate-900 via-emerald-950 to-slate-900">
+      <section className="relative min-h-screen flex items-center justify-center overflow-hidden meok-gradient">
         {/* Background image overlay */}
         <div
           className="absolute inset-0 bg-cover bg-center opacity-30"
@@ -253,10 +253,10 @@ export default function NewHomeV2() {
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className="inline-flex items-center gap-2 bg-emerald-500/20 border border-emerald-400/30 rounded-full px-5 py-2.5 mb-4"
+            className="inline-flex items-center gap-2 bg-primary/20 border border-primary/30 rounded-full px-5 py-2.5 mb-4"
           >
-            <Sparkles className="h-4 w-4 text-emerald-400" />
-            <span className="text-emerald-300 text-sm font-medium">
+            <Sparkles className="h-4 w-4 text-primary" />
+            <span className="text-primary text-sm font-medium">
               Launching January 15, 2026 | Join 10,000+ Early Members
             </span>
           </motion.div>
@@ -266,10 +266,10 @@ export default function NewHomeV2() {
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.1 }}
-            className="inline-flex items-center gap-2 bg-amber-500/20 border border-amber-400/30 rounded-full px-5 py-2.5 mb-6"
+            className="inline-flex items-center gap-2 bg-[#C8A873]/20 border border-[#C8A873]/30 rounded-full px-5 py-2.5 mb-6"
           >
-            <BadgeCheck className="h-4 w-4 text-amber-400" />
-            <span className="text-amber-300 text-sm font-medium">
+            <BadgeCheck className="h-4 w-4 text-[#C8A873]" />
+            <span className="text-[#C8A873] text-sm font-medium">
               100% Free Training | Only Pay When You Earn
             </span>
           </motion.div>
@@ -293,7 +293,7 @@ export default function NewHomeV2() {
           >
             Unifying the World's
             <br />
-            <span className="bg-gradient-to-r from-emerald-400 via-green-400 to-teal-400 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-[#C8A873] via-[#D98C7E] to-[#7D8C7E] bg-clip-text text-transparent">
               Response to AI
             </span>
           </motion.h1>
@@ -303,10 +303,10 @@ export default function NewHomeV2() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.4 }}
-            className="text-xl md:text-2xl text-gray-300 mb-6 max-w-4xl mx-auto leading-relaxed"
+            className="text-xl md:text-2xl text-muted-foreground mb-6 max-w-4xl mx-auto leading-relaxed"
           >
             From fragmentation to unity. Training, licensing, monitoring, and prosperity
-            <span className="text-emerald-400 font-semibold"> — one platform</span> for
+            <span className="text-primary font-semibold"> — one platform</span> for
             humanity's AI safety future.
           </motion.p>
 
@@ -314,7 +314,7 @@ export default function NewHomeV2() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.7, delay: 0.5 }}
-            className="text-lg text-gray-400 mb-12 max-w-2xl mx-auto"
+            className="text-lg text-muted-foreground mb-12 max-w-2xl mx-auto"
           >
             The world's first relationship-based AI safety infrastructure.
             Partnership, not control. Prosperity, not fear.
@@ -327,12 +327,12 @@ export default function NewHomeV2() {
             transition={{ duration: 0.7, delay: 0.6 }}
             className="mb-16"
           >
-            <p className="text-gray-400 text-sm mb-4">Choose your path:</p>
+            <p className="text-muted-foreground text-sm mb-4">Choose your path:</p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
               <Link href="/training">
                 <Button
                   size="lg"
-                  className="bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-6 text-base font-semibold rounded-xl shadow-lg shadow-emerald-500/25 hover:shadow-xl hover:shadow-emerald-500/30 transition-all group"
+                  className="bg-primary hover:bg-primary text-white px-6 py-6 text-base font-semibold rounded-xl shadow-lg shadow-primary/25 hover:shadow-xl hover:shadow-primary/30 transition-all group"
                 >
                   <GraduationCap className="mr-2 h-5 w-5 group-hover:scale-110 transition-transform" />
                   I Want to Become an Analyst
@@ -342,7 +342,7 @@ export default function NewHomeV2() {
                 <Button
                   size="lg"
                   variant="outline"
-                  className="border-2 border-blue-400/50 text-blue-300 hover:bg-blue-500/10 hover:border-blue-400 px-6 py-6 text-base font-semibold rounded-xl transition-all"
+                  className="border-2 border-blue-400/50 text-[#9CA6C9] hover:bg-[#9CA6C9]/10 hover:border-blue-400 px-6 py-6 text-base font-semibold rounded-xl transition-all"
                 >
                   <Building className="mr-2 h-5 w-5" />
                   I'm an Enterprise / Government
@@ -352,7 +352,7 @@ export default function NewHomeV2() {
                 <Button
                   size="lg"
                   variant="outline"
-                  className="border-2 border-purple-400/50 text-purple-300 hover:bg-purple-500/10 hover:border-purple-400 px-6 py-6 text-base font-semibold rounded-xl transition-all"
+                  className="border-2 border-purple-400/50 text-[#9CA6C9] hover:bg-[#9CA6C9]/10 hover:border-purple-400 px-6 py-6 text-base font-semibold rounded-xl transition-all"
                 >
                   <Eye className="mr-2 h-5 w-5" />
                   I'm a Concerned Citizen
@@ -382,12 +382,12 @@ export default function NewHomeV2() {
                 className="relative group"
               >
                 <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/20 to-transparent rounded-2xl blur-xl group-hover:from-emerald-500/30 transition-all" />
-                <div className="relative bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-6 hover:border-emerald-500/30 transition-all">
-                  <stat.icon className="h-6 w-6 text-emerald-400 mx-auto mb-2" />
+                <div className="relative bg-card/40 backdrop-blur-sm border border-border rounded-2xl p-6 hover:border-primary/30 transition-all">
+                  <stat.icon className="h-6 w-6 text-primary mx-auto mb-2" />
                   <div className="text-3xl md:text-4xl font-bold text-white mb-1">
                     {stat.value}
                   </div>
-                  <div className="text-sm text-gray-400">{stat.label}</div>
+                  <div className="text-sm text-muted-foreground">{stat.label}</div>
                 </div>
               </motion.div>
             ))}
@@ -403,7 +403,7 @@ export default function NewHomeV2() {
             <motion.div
               animate={{ y: [0, 10, 0] }}
               transition={{ duration: 2, repeat: Infinity }}
-              className="text-gray-500"
+              className="text-muted-foreground"
             >
               <ChevronDown className="h-8 w-8" />
             </motion.div>
@@ -419,7 +419,7 @@ export default function NewHomeV2() {
       {/* ============================================ */}
       {/* SECTION 1.5: WHY AI SAFETY MATTERS NOW */}
       {/* ============================================ */}
-      <section className="py-20 bg-gradient-to-b from-slate-900 to-slate-800 text-white">
+      <section className="py-20 meok-gradient text-white">
         <div className="container mx-auto px-6 max-w-6xl">
           <motion.div
             initial="hidden"
@@ -428,13 +428,13 @@ export default function NewHomeV2() {
             variants={fadeInUp}
             className="text-center mb-12"
           >
-            <Badge className="mb-4 bg-red-500/20 text-red-300 border-red-500/30 text-sm px-4 py-1">
+            <Badge className="mb-4 bg-destructive/20 text-destructive border-destructive/30 text-sm px-4 py-1">
               The Crisis Is Real
             </Badge>
             <h2 className="text-4xl md:text-5xl font-bold mb-6">
-              Why AI Safety Matters <span className="text-red-400">Right Now</span>
+              Why AI Safety Matters <span className="text-destructive">Right Now</span>
             </h2>
-            <p className="text-xl text-gray-300 max-w-3xl mx-auto">
+            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
               Every day, AI systems make decisions affecting millions of lives—often without proper oversight.
               These aren't hypothetical risks. They're happening today.
             </p>
@@ -478,13 +478,13 @@ export default function NewHomeV2() {
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.1 }}
               >
-                <Card className="h-full bg-white/5 border-white/10 hover:bg-white/10 transition-colors">
+                <Card className="h-full bg-card/40 border-border hover:bg-card/60 transition-colors">
                   <CardContent className="p-6">
                     <div className="text-4xl mb-3">{item.icon}</div>
                     <h3 className="font-bold text-white mb-2">{item.title}</h3>
-                    <div className="text-3xl font-bold text-red-400 mb-2">{item.stat}</div>
-                    <p className="text-gray-400 text-sm mb-3">{item.desc}</p>
-                    <p className="text-red-300 text-xs font-medium">{item.impact}</p>
+                    <div className="text-3xl font-bold text-destructive mb-2">{item.stat}</div>
+                    <p className="text-muted-foreground text-sm mb-3">{item.desc}</p>
+                    <p className="text-destructive text-xs font-medium">{item.impact}</p>
                   </CardContent>
                 </Card>
               </motion.div>
@@ -497,20 +497,20 @@ export default function NewHomeV2() {
             viewport={{ once: true }}
             className="text-center"
           >
-            <p className="text-lg text-gray-300 mb-6">
+            <p className="text-lg text-muted-foreground mb-6">
               <strong className="text-white">Without proper oversight:</strong> Companies deploy AI without safety checks.
               Governments can't scale monitoring. Workers lose jobs with no support.
-              <strong className="text-emerald-400"> CSOAI fixes all three.</strong>
+              <strong className="text-primary"> CSOAI fixes all three.</strong>
             </p>
             <div className="flex flex-wrap justify-center gap-4">
               <Link href="/training">
-                <Button size="lg" className="bg-emerald-600 hover:bg-emerald-700 text-white">
+                <Button size="lg" className="bg-primary hover:bg-primary text-white">
                   <Shield className="mr-2 h-5 w-5" />
                   Become an AI Safety Analyst
                 </Button>
               </Link>
               <Link href="/about">
-                <Button size="lg" variant="outline" className="border-white/30 text-white hover:bg-white/10">
+                <Button size="lg" variant="outline" className="border-white/30 text-white hover:bg-card/60">
                   Learn How We Solve This
                 </Button>
               </Link>
@@ -522,7 +522,7 @@ export default function NewHomeV2() {
       {/* ============================================ */}
       {/* SECTION 2: ECOSYSTEM DIAGRAM */}
       {/* ============================================ */}
-      <section className="py-24 bg-gradient-to-b from-gray-50 to-white">
+      <section className="py-24 bg-background">
         <div className="container mx-auto px-6 max-w-7xl">
           <motion.div
             initial="hidden"
@@ -531,13 +531,13 @@ export default function NewHomeV2() {
             variants={fadeInUp}
             className="text-center mb-12"
           >
-            <Badge className="mb-4 bg-emerald-100 text-emerald-700 border-emerald-200 text-sm px-4 py-1">
+            <Badge className="mb-4 bg-primary/10 text-primary border-primary/20 text-sm px-4 py-1">
               Complete Integration
             </Badge>
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-              One Platform. <span className="text-emerald-600">Everything Connected.</span>
+            <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6">
+              One Platform. <span className="text-primary">Everything Connected.</span>
             </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+            <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
               See how CSOAI's systems work together — from global frameworks to local enforcement,
               from training to employment, from monitoring to prosperity.
             </p>
@@ -557,7 +557,7 @@ export default function NewHomeV2() {
       {/* ============================================ */}
       {/* SECTION 3: THE CSOAI ADVANTAGE */}
       {/* ============================================ */}
-      <section className="py-24 bg-white">
+      <section className="py-24 bg-card">
         <div className="container mx-auto px-6 max-w-6xl">
           <motion.div
             initial="hidden"
@@ -566,13 +566,13 @@ export default function NewHomeV2() {
             variants={fadeInUp}
             className="text-center mb-16"
           >
-            <Badge className="mb-4 bg-red-100 text-red-700 border-red-200 text-sm px-4 py-1">
+            <Badge className="mb-4 bg-destructive/10 text-destructive border-destructive/20 text-sm px-4 py-1">
               The Problem & Solution
             </Badge>
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-              The CSOAI <span className="text-emerald-600">Advantage</span>
+            <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6">
+              The CSOAI <span className="text-primary">Advantage</span>
             </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
               Unity from fragmentation. One operational platform integrating all global frameworks.
             </p>
           </motion.div>
@@ -585,13 +585,13 @@ export default function NewHomeV2() {
               viewport={{ once: true }}
               variants={fadeInUp}
             >
-              <Card className="h-full border-2 border-red-200 bg-red-50/50">
+              <Card className="h-full border-2 border-destructive/20 bg-destructive/5">
                 <CardHeader>
-                  <div className="w-14 h-14 bg-red-100 rounded-xl flex items-center justify-center mb-4">
-                    <AlertTriangle className="h-7 w-7 text-red-600" />
+                  <div className="w-14 h-14 bg-destructive/10 rounded-xl flex items-center justify-center mb-4">
+                    <AlertTriangle className="h-7 w-7 text-destructive" />
                   </div>
-                  <CardTitle className="text-2xl text-red-800">The Problem: Fragmentation</CardTitle>
-                  <CardDescription className="text-red-700">
+                  <CardTitle className="text-2xl text-destructive">The Problem: Fragmentation</CardTitle>
+                  <CardDescription className="text-destructive">
                     Today's AI governance landscape is chaos
                   </CardDescription>
                 </CardHeader>
@@ -616,11 +616,11 @@ export default function NewHomeV2() {
                   ].map((item, i) => (
                     <div key={i} className="flex items-start gap-3">
                       <div className="w-6 h-6 rounded-full bg-red-200 flex items-center justify-center flex-shrink-0 mt-0.5">
-                        <span className="text-red-700 text-xs font-bold">✗</span>
+                        <span className="text-destructive text-xs font-bold">✗</span>
                       </div>
                       <div>
-                        <span className="font-semibold text-red-900">{item.title}:</span>{" "}
-                        <span className="text-red-700">{item.desc}</span>
+                        <span className="font-semibold text-destructive">{item.title}:</span>{" "}
+                        <span className="text-destructive">{item.desc}</span>
                       </div>
                     </div>
                   ))}
@@ -636,13 +636,13 @@ export default function NewHomeV2() {
               variants={fadeInUp}
               transition={{ delay: 0.2 }}
             >
-              <Card className="h-full border-2 border-emerald-200 bg-emerald-50/50">
+              <Card className="h-full border-2 border-primary/20 bg-primary/5">
                 <CardHeader>
-                  <div className="w-14 h-14 bg-emerald-100 rounded-xl flex items-center justify-center mb-4">
-                    <CheckCircle className="h-7 w-7 text-emerald-600" />
+                  <div className="w-14 h-14 bg-primary/10 rounded-xl flex items-center justify-center mb-4">
+                    <CheckCircle className="h-7 w-7 text-primary" />
                   </div>
-                  <CardTitle className="text-2xl text-emerald-800">The Solution: CSOAI</CardTitle>
-                  <CardDescription className="text-emerald-700">
+                  <CardTitle className="text-2xl text-primary">The Solution: CSOAI</CardTitle>
+                  <CardDescription className="text-primary">
                     One unified platform for all AI safety needs
                   </CardDescription>
                 </CardHeader>
@@ -667,11 +667,11 @@ export default function NewHomeV2() {
                   ].map((item, i) => (
                     <div key={i} className="flex items-start gap-3">
                       <div className="w-6 h-6 rounded-full bg-emerald-200 flex items-center justify-center flex-shrink-0 mt-0.5">
-                        <span className="text-emerald-700 text-xs font-bold">✓</span>
+                        <span className="text-primary text-xs font-bold">✓</span>
                       </div>
                       <div>
                         <span className="font-semibold text-emerald-900">{item.title}:</span>{" "}
-                        <span className="text-emerald-700">{item.desc}</span>
+                        <span className="text-primary">{item.desc}</span>
                       </div>
                     </div>
                   ))}
@@ -694,13 +694,13 @@ export default function NewHomeV2() {
             variants={fadeInUp}
             className="text-center mb-12"
           >
-            <Badge className="mb-4 bg-emerald-100 text-emerald-700 border-emerald-200 text-sm px-4 py-1">
+            <Badge className="mb-4 bg-primary/10 text-primary border-primary/20 text-sm px-4 py-1">
               Why Choose CSOAI?
             </Badge>
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-              The Only Platform <span className="text-emerald-600">Solving All Four Problems</span>
+            <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6">
+              The Only Platform <span className="text-primary">Solving All Four Problems</span>
             </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
               We're not just a tool. We're building the infrastructure for safe AI governance—and creating jobs while we do it.
             </p>
           </motion.div>
@@ -712,7 +712,7 @@ export default function NewHomeV2() {
       {/* ============================================ */}
       {/* SECTION 4: FOR EVERY STAKEHOLDER */}
       {/* ============================================ */}
-      <section className="py-24 bg-gradient-to-b from-gray-50 to-white">
+      <section className="py-24 bg-background">
         <div className="container mx-auto px-6 max-w-7xl">
           <motion.div
             initial="hidden"
@@ -721,13 +721,13 @@ export default function NewHomeV2() {
             variants={fadeInUp}
             className="text-center mb-16"
           >
-            <Badge className="mb-4 bg-emerald-100 text-emerald-700 border-emerald-200 text-sm px-4 py-1">
+            <Badge className="mb-4 bg-primary/10 text-primary border-primary/20 text-sm px-4 py-1">
               Built for Everyone
             </Badge>
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-              For Every <span className="text-emerald-600">Stakeholder</span>
+            <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6">
+              For Every <span className="text-primary">Stakeholder</span>
             </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
               Whether you're a citizen, enterprise, government, or aspiring analyst —
               CSOAI has something transformative for you.
             </p>
@@ -745,7 +745,7 @@ export default function NewHomeV2() {
               <Card className="h-full border-2 hover:border-emerald-400 hover:shadow-xl transition-all duration-300 group">
                 <CardHeader>
                   <div className="w-14 h-14 bg-blue-100 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-                    <Users className="h-7 w-7 text-blue-600" />
+                    <Users className="h-7 w-7 text-[#9CA6C9]" />
                   </div>
                   <CardTitle className="text-xl">For Public Citizens</CardTitle>
                 </CardHeader>
@@ -757,13 +757,13 @@ export default function NewHomeV2() {
                     "Hold companies accountable",
                     "Access Prosperity Fund benefits",
                   ].map((item, i) => (
-                    <div key={i} className="flex items-center gap-2 text-gray-600 text-sm">
-                      <CheckCircle className="h-4 w-4 text-emerald-500 flex-shrink-0" />
+                    <div key={i} className="flex items-center gap-2 text-muted-foreground text-sm">
+                      <CheckCircle className="h-4 w-4 text-primary flex-shrink-0" />
                       <span>{item}</span>
                     </div>
                   ))}
                   <Link href="/transparency">
-                    <Button variant="outline" className="w-full mt-4 group-hover:bg-emerald-50 group-hover:border-emerald-300">
+                    <Button variant="outline" className="w-full mt-4 group-hover:bg-primary/5 group-hover:border-emerald-300">
                       Public Dashboard
                       <ArrowRight className="ml-2 h-4 w-4" />
                     </Button>
@@ -777,7 +777,7 @@ export default function NewHomeV2() {
               <Card className="h-full border-2 hover:border-emerald-400 hover:shadow-xl transition-all duration-300 group">
                 <CardHeader>
                   <div className="w-14 h-14 bg-purple-100 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-                    <Building2 className="h-7 w-7 text-purple-600" />
+                    <Building2 className="h-7 w-7 text-[#9CA6C9]" />
                   </div>
                   <CardTitle className="text-xl">For Enterprises</CardTitle>
                 </CardHeader>
@@ -789,13 +789,13 @@ export default function NewHomeV2() {
                     "Avoid fines up to €35M",
                     "Build customer trust",
                   ].map((item, i) => (
-                    <div key={i} className="flex items-center gap-2 text-gray-600 text-sm">
-                      <CheckCircle className="h-4 w-4 text-emerald-500 flex-shrink-0" />
+                    <div key={i} className="flex items-center gap-2 text-muted-foreground text-sm">
+                      <CheckCircle className="h-4 w-4 text-primary flex-shrink-0" />
                       <span>{item}</span>
                     </div>
                   ))}
                   <Link href="/enterprise">
-                    <Button variant="outline" className="w-full mt-4 group-hover:bg-emerald-50 group-hover:border-emerald-300">
+                    <Button variant="outline" className="w-full mt-4 group-hover:bg-primary/5 group-hover:border-emerald-300">
                       Enterprise Solutions
                       <ArrowRight className="ml-2 h-4 w-4" />
                     </Button>
@@ -808,8 +808,8 @@ export default function NewHomeV2() {
             <motion.div variants={fadeInUp}>
               <Card className="h-full border-2 hover:border-emerald-400 hover:shadow-xl transition-all duration-300 group">
                 <CardHeader>
-                  <div className="w-14 h-14 bg-amber-100 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-                    <Landmark className="h-7 w-7 text-amber-600" />
+                  <div className="w-14 h-14 bg-[#C8A873]/10 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                    <Landmark className="h-7 w-7 text-[#C8A873]" />
                   </div>
                   <CardTitle className="text-xl">For Governments</CardTitle>
                 </CardHeader>
@@ -821,13 +821,13 @@ export default function NewHomeV2() {
                     "Track violations and penalties",
                     "Access aggregated risk reports",
                   ].map((item, i) => (
-                    <div key={i} className="flex items-center gap-2 text-gray-600 text-sm">
-                      <CheckCircle className="h-4 w-4 text-emerald-500 flex-shrink-0" />
+                    <div key={i} className="flex items-center gap-2 text-muted-foreground text-sm">
+                      <CheckCircle className="h-4 w-4 text-primary flex-shrink-0" />
                       <span>{item}</span>
                     </div>
                   ))}
                   <Link href="/government-dashboard">
-                    <Button variant="outline" className="w-full mt-4 group-hover:bg-emerald-50 group-hover:border-emerald-300">
+                    <Button variant="outline" className="w-full mt-4 group-hover:bg-primary/5 group-hover:border-emerald-300">
                       Government Dashboard
                       <ArrowRight className="ml-2 h-4 w-4" />
                     </Button>
@@ -838,13 +838,13 @@ export default function NewHomeV2() {
 
             {/* AI Safety Analysts */}
             <motion.div variants={fadeInUp}>
-              <Card className="h-full border-2 border-emerald-300 bg-emerald-50/50 hover:shadow-xl transition-all duration-300 group relative overflow-hidden">
+              <Card className="h-full border-2 border-emerald-300 bg-primary/5 hover:shadow-xl transition-all duration-300 group relative overflow-hidden">
                 <div className="absolute top-4 right-4">
-                  <Badge className="bg-emerald-600 text-white">Most Popular</Badge>
+                  <Badge className="bg-primary text-white">Most Popular</Badge>
                 </div>
                 <CardHeader>
-                  <div className="w-14 h-14 bg-emerald-100 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-                    <UserCheck className="h-7 w-7 text-emerald-600" />
+                  <div className="w-14 h-14 bg-primary/10 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                    <UserCheck className="h-7 w-7 text-primary" />
                   </div>
                   <CardTitle className="text-xl">For AI Safety Analysts</CardTitle>
                 </CardHeader>
@@ -856,13 +856,13 @@ export default function NewHomeV2() {
                     "Earn £45-150/hour remotely",
                     "Join a growing profession",
                   ].map((item, i) => (
-                    <div key={i} className="flex items-center gap-2 text-gray-600 text-sm">
-                      <CheckCircle className="h-4 w-4 text-emerald-500 flex-shrink-0" />
+                    <div key={i} className="flex items-center gap-2 text-muted-foreground text-sm">
+                      <CheckCircle className="h-4 w-4 text-primary flex-shrink-0" />
                       <span>{item}</span>
                     </div>
                   ))}
                   <Link href="/training">
-                    <Button className="w-full mt-4 bg-emerald-600 hover:bg-emerald-700 text-white">
+                    <Button className="w-full mt-4 bg-primary hover:bg-primary text-white">
                       Start Free Training
                       <ArrowRight className="ml-2 h-4 w-4" />
                     </Button>
@@ -886,13 +886,13 @@ export default function NewHomeV2() {
             variants={fadeInUp}
             className="text-center mb-16"
           >
-            <Badge className="mb-4 bg-emerald-500/20 text-emerald-400 border-emerald-400/30 text-sm px-4 py-1">
+            <Badge className="mb-4 bg-primary/20 text-primary border-primary/30 text-sm px-4 py-1">
               Global Coverage
             </Badge>
             <h2 className="text-4xl md:text-5xl font-bold mb-6">
-              Our <span className="text-emerald-400">7 Frameworks</span>
+              Our <span className="text-primary">7 Frameworks</span>
             </h2>
-            <p className="text-xl text-gray-400 max-w-3xl mx-auto">
+            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
               Master every major AI governance framework. One platform, complete global coverage.
             </p>
           </motion.div>
@@ -906,32 +906,32 @@ export default function NewHomeV2() {
           >
             {frameworks.map((framework, index) => (
               <motion.div key={framework.id} variants={fadeInUp}>
-                <Card className="h-full bg-white/5 border-white/10 hover:bg-white/10 hover:border-emerald-500/30 transition-all duration-300 group">
+                <Card className="h-full bg-card/40 border-border hover:bg-card/60 hover:border-primary/30 transition-all duration-300 group">
                   <CardHeader className="pb-2">
                     <div className="flex items-center justify-between mb-3">
                       <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${framework.color} flex items-center justify-center group-hover:scale-110 transition-transform`}>
                         <framework.icon className="h-6 w-6 text-white" />
                       </div>
-                      <Badge variant="outline" className="text-gray-400 border-gray-600">
+                      <Badge variant="outline" className="text-muted-foreground border-gray-600">
                         {framework.year}
                       </Badge>
                     </div>
                     <CardTitle className="text-lg text-white">{framework.name}</CardTitle>
-                    <p className="text-sm text-emerald-400">{framework.region}</p>
+                    <p className="text-sm text-primary">{framework.region}</p>
                   </CardHeader>
                   <CardContent className="space-y-4">
-                    <p className="text-sm text-gray-400 leading-relaxed">{framework.description}</p>
+                    <p className="text-sm text-muted-foreground leading-relaxed">{framework.description}</p>
                     <div className="flex items-center gap-2">
-                      <Badge className="bg-white/10 text-gray-300 border-0">{framework.articles}</Badge>
+                      <Badge className="bg-card/60 text-muted-foreground border-0">{framework.articles}</Badge>
                     </div>
                     <div className="flex gap-2 pt-2">
                       <Link href={getFrameworkGuideUrl(framework.id)}>
-                        <Button variant="ghost" size="sm" className="text-gray-400 hover:text-white hover:bg-white/10">
+                        <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-white hover:bg-card/60">
                           Learn More
                         </Button>
                       </Link>
                       <Link href="/training">
-                        <Button size="sm" className="bg-emerald-600 hover:bg-emerald-700 text-white">
+                        <Button size="sm" className="bg-primary hover:bg-primary text-white">
                           Start Training
                         </Button>
                       </Link>
@@ -964,7 +964,7 @@ export default function NewHomeV2() {
             <Badge className="mb-4 bg-rose-100 text-rose-700 border-rose-200 text-sm px-4 py-1">
               Article 1: Core Innovation
             </Badge>
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+            <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6">
               The <span className="text-rose-600">Maternal Covenant</span>
             </h2>
           </motion.div>
@@ -975,7 +975,7 @@ export default function NewHomeV2() {
             viewport={{ once: true }}
             variants={scaleIn}
           >
-            <Card className="border-2 border-rose-200 bg-white shadow-xl overflow-hidden">
+            <Card className="border-2 border-rose-200 bg-card shadow-xl overflow-hidden">
               <div className="bg-gradient-to-r from-rose-500 to-pink-500 p-1" />
               <CardContent className="p-8 md:p-12">
                 {/* Quote */}
@@ -985,51 +985,51 @@ export default function NewHomeV2() {
                   </div>
                   <div>
                     <Quote className="h-8 w-8 text-rose-300 mb-2" />
-                    <p className="text-xl md:text-2xl text-gray-700 italic leading-relaxed">
+                    <p className="text-xl md:text-2xl text-foreground italic leading-relaxed">
                       AI should want to protect humans the way a mother wants to protect a child.
                     </p>
-                    <p className="text-sm text-gray-500 mt-2">— Geoffrey Hinton, 2023</p>
+                    <p className="text-sm text-muted-foreground mt-2">— Geoffrey Hinton, 2023</p>
                   </div>
                 </div>
 
                 {/* Comparison */}
                 <div className="grid md:grid-cols-2 gap-8 mb-10">
-                  <div className="p-6 bg-red-50 rounded-xl border border-red-200">
-                    <h4 className="font-bold text-red-700 mb-4 flex items-center gap-2">
+                  <div className="p-6 bg-destructive/5 rounded-xl border border-destructive/20">
+                    <h4 className="font-bold text-destructive mb-4 flex items-center gap-2">
                       <AlertTriangle className="h-5 w-5" />
                       Control Paradigm (Fails)
                     </h4>
-                    <ul className="space-y-3 text-red-700">
+                    <ul className="space-y-3 text-destructive">
                       <li className="flex items-start gap-2">
-                        <span className="text-red-500 mt-1">•</span>
+                        <span className="text-destructive mt-1">•</span>
                         <span>Adversarial: AI vs Humans</span>
                       </li>
                       <li className="flex items-start gap-2">
-                        <span className="text-red-500 mt-1">•</span>
+                        <span className="text-destructive mt-1">•</span>
                         <span>Arms race: ever-stronger constraints</span>
                       </li>
                       <li className="flex items-start gap-2">
-                        <span className="text-red-500 mt-1">•</span>
+                        <span className="text-destructive mt-1">•</span>
                         <span>Inevitable failure with superintelligence</span>
                       </li>
                     </ul>
                   </div>
-                  <div className="p-6 bg-emerald-50 rounded-xl border border-emerald-200">
-                    <h4 className="font-bold text-emerald-700 mb-4 flex items-center gap-2">
+                  <div className="p-6 bg-primary/5 rounded-xl border border-primary/20">
+                    <h4 className="font-bold text-primary mb-4 flex items-center gap-2">
                       <Heart className="h-5 w-5" />
                       Covenant Paradigm (Works)
                     </h4>
-                    <ul className="space-y-3 text-emerald-700">
+                    <ul className="space-y-3 text-primary">
                       <li className="flex items-start gap-2">
-                        <span className="text-emerald-500 mt-1">•</span>
+                        <span className="text-primary mt-1">•</span>
                         <span>Partnership: AI + Humans together</span>
                       </li>
                       <li className="flex items-start gap-2">
-                        <span className="text-emerald-500 mt-1">•</span>
+                        <span className="text-primary mt-1">•</span>
                         <span>Cooperative: mutual benefit design</span>
                       </li>
                       <li className="flex items-start gap-2">
-                        <span className="text-emerald-500 mt-1">•</span>
+                        <span className="text-primary mt-1">•</span>
                         <span>Sustainable: scales with AI growth</span>
                       </li>
                     </ul>
@@ -1072,51 +1072,51 @@ export default function NewHomeV2() {
               viewport={{ once: true }}
               variants={fadeInUp}
             >
-              <Badge className="mb-4 bg-emerald-500/20 text-emerald-400 border-emerald-400/30 text-sm px-4 py-1">
+              <Badge className="mb-4 bg-primary/20 text-primary border-primary/30 text-sm px-4 py-1">
                 Real-Time Monitoring
               </Badge>
               <h2 className="text-4xl md:text-5xl font-bold mb-6">
-                The <span className="text-emerald-400">Byzantine Council</span>
+                The <span className="text-primary">Byzantine Council</span>
               </h2>
-              <p className="text-xl text-gray-400 mb-8 leading-relaxed">
+              <p className="text-xl text-muted-foreground mb-8 leading-relaxed">
                 33 AI agents from multiple providers working together with Byzantine fault tolerance.
                 No single company can manipulate safety decisions.
               </p>
 
               <div className="space-y-6 mb-8">
                 <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 bg-emerald-500/20 rounded-xl flex items-center justify-center flex-shrink-0">
-                    <Shield className="h-6 w-6 text-emerald-400" />
+                  <div className="w-12 h-12 bg-primary/20 rounded-xl flex items-center justify-center flex-shrink-0">
+                    <Shield className="h-6 w-6 text-primary" />
                   </div>
                   <div>
                     <h4 className="font-bold text-white mb-1">23/33 Consensus Required</h4>
-                    <p className="text-gray-400">70% agreement for any safety decision. Byzantine fault tolerance ensures reliability even if agents fail or are compromised.</p>
+                    <p className="text-muted-foreground">70% agreement for any safety decision. Byzantine fault tolerance ensures reliability even if agents fail or are compromised.</p>
                   </div>
                 </div>
 
                 <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 bg-emerald-500/20 rounded-xl flex items-center justify-center flex-shrink-0">
-                    <Network className="h-6 w-6 text-emerald-400" />
+                  <div className="w-12 h-12 bg-primary/20 rounded-xl flex items-center justify-center flex-shrink-0">
+                    <Network className="h-6 w-6 text-primary" />
                   </div>
                   <div>
                     <h4 className="font-bold text-white mb-1">Multi-Provider Diversity</h4>
-                    <p className="text-gray-400">Agents span GPT-4, Claude, Gemini, Llama, and more. No single AI company has majority control.</p>
+                    <p className="text-muted-foreground">Agents span GPT-4, Claude, Gemini, Llama, and more. No single AI company has majority control.</p>
                   </div>
                 </div>
 
                 <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 bg-emerald-500/20 rounded-xl flex items-center justify-center flex-shrink-0">
-                    <Eye className="h-6 w-6 text-emerald-400" />
+                  <div className="w-12 h-12 bg-primary/20 rounded-xl flex items-center justify-center flex-shrink-0">
+                    <Eye className="h-6 w-6 text-primary" />
                   </div>
                   <div>
                     <h4 className="font-bold text-white mb-1">Human Oversight</h4>
-                    <p className="text-gray-400">Certified AI Safety Analysts review critical decisions. AI monitors AI, humans oversee all.</p>
+                    <p className="text-muted-foreground">Certified AI Safety Analysts review critical decisions. AI monitors AI, humans oversee all.</p>
                   </div>
                 </div>
               </div>
 
               <Link href="/agent-council">
-                <Button size="lg" className="bg-emerald-600 hover:bg-emerald-700 text-white">
+                <Button size="lg" className="bg-primary hover:bg-primary text-white">
                   Explore the Council
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Button>
@@ -1151,13 +1151,13 @@ export default function NewHomeV2() {
             variants={fadeInUp}
             className="text-center mb-16"
           >
-            <Badge className="mb-4 bg-amber-100 text-amber-700 border-amber-200 text-sm px-4 py-1">
+            <Badge className="mb-4 bg-[#C8A873]/10 text-amber-700 border-amber-200 text-sm px-4 py-1">
               Economic Justice
             </Badge>
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-              The <span className="text-amber-600">Prosperity Fund</span>
+            <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6">
+              The <span className="text-[#C8A873]">Prosperity Fund</span>
             </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
               AI creates unprecedented wealth. The Prosperity Fund ensures everyone benefits.
             </p>
           </motion.div>
@@ -1172,11 +1172,11 @@ export default function NewHomeV2() {
           >
             <Card className="border-2 border-amber-200 bg-gradient-to-br from-amber-100 to-amber-50 text-center p-8">
               <div className="flex items-center justify-center gap-4 mb-4">
-                <CircleDollarSign className="h-12 w-12 text-amber-600" />
+                <CircleDollarSign className="h-12 w-12 text-[#C8A873]" />
                 <span className="text-6xl md:text-7xl font-black text-amber-700">£100B+</span>
               </div>
               <p className="text-xl text-amber-800 font-medium">Prosperity Fund Goal</p>
-              <p className="text-amber-600 mt-2">Funded by AI company contributions (1-20% of revenues) - NOT by analyst fees</p>
+              <p className="text-[#C8A873] mt-2">Funded by AI company contributions (1-20% of revenues) - NOT by analyst fees</p>
             </Card>
           </motion.div>
 
@@ -1217,7 +1217,7 @@ export default function NewHomeV2() {
                     <CardTitle className="text-center">{tier.label}</CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <p className="text-gray-600 text-center text-sm">{tier.desc}</p>
+                    <p className="text-muted-foreground text-center text-sm">{tier.desc}</p>
                   </CardContent>
                 </Card>
               </motion.div>
@@ -1238,7 +1238,7 @@ export default function NewHomeV2() {
       {/* ============================================ */}
       {/* SECTION 9: TRAINING & CERTIFICATION */}
       {/* ============================================ */}
-      <section className="py-24 bg-white">
+      <section className="py-24 bg-card">
         <div className="container mx-auto px-6 max-w-6xl">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <motion.div
@@ -1247,13 +1247,13 @@ export default function NewHomeV2() {
               viewport={{ once: true }}
               variants={fadeInUp}
             >
-              <Badge className="mb-4 bg-emerald-100 text-emerald-700 border-emerald-200 text-sm px-4 py-1">
+              <Badge className="mb-4 bg-primary/10 text-primary border-primary/20 text-sm px-4 py-1">
                 Jump-Start Your Career
               </Badge>
-              <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-                ALL 33 Courses <span className="text-emerald-600">100% FREE</span>
+              <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6">
+                ALL 33 Courses <span className="text-primary">100% FREE</span>
               </h2>
-              <p className="text-xl text-gray-600 mb-8 leading-relaxed">
+              <p className="text-xl text-muted-foreground mb-8 leading-relaxed">
                 AI Safety Analyst is projected to be a top-10 profession by 2045.
                 Get ahead now with completely free training - certification exam £49, Analyst License £199/year.
               </p>
@@ -1265,13 +1265,13 @@ export default function NewHomeV2() {
                   { value: "7", label: "Frameworks", icon: Globe2 },
                   { value: "£45-150", label: "Per Hour Earnings", icon: TrendingUp },
                 ].map((stat, i) => (
-                  <div key={i} className="flex items-center gap-3 p-4 bg-gray-50 rounded-xl">
-                    <div className="w-10 h-10 bg-emerald-100 rounded-lg flex items-center justify-center">
-                      <stat.icon className="h-5 w-5 text-emerald-600" />
+                  <div key={i} className="flex items-center gap-3 p-4 bg-muted rounded-xl">
+                    <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center">
+                      <stat.icon className="h-5 w-5 text-primary" />
                     </div>
                     <div>
-                      <div className="font-bold text-gray-900">{stat.value}</div>
-                      <div className="text-sm text-gray-500">{stat.label}</div>
+                      <div className="font-bold text-foreground">{stat.value}</div>
+                      <div className="text-sm text-muted-foreground">{stat.label}</div>
                     </div>
                   </div>
                 ))}
@@ -1279,7 +1279,7 @@ export default function NewHomeV2() {
 
               <div className="flex flex-col sm:flex-row gap-4">
                 <Link href="/training">
-                  <Button size="lg" className="bg-emerald-600 hover:bg-emerald-700 text-white">
+                  <Button size="lg" className="bg-primary hover:bg-primary text-white">
                     <GraduationCap className="mr-2 h-5 w-5" />
                     Start Free Training
                   </Button>
@@ -1299,7 +1299,7 @@ export default function NewHomeV2() {
               viewport={{ once: true }}
               variants={scaleIn}
             >
-              <Card className="border-2 border-emerald-200 shadow-xl overflow-hidden">
+              <Card className="border-2 border-primary/20 shadow-xl overflow-hidden">
                 <div className="bg-gradient-to-r from-emerald-600 to-green-600 p-6 text-white">
                   <h3 className="text-2xl font-bold mb-2">Your Path to Success</h3>
                   <p className="text-emerald-100">Three steps to a new career</p>
@@ -1323,12 +1323,12 @@ export default function NewHomeV2() {
                     },
                   ].map((item, i) => (
                     <div key={i} className="flex items-start gap-4">
-                      <div className="w-10 h-10 bg-emerald-600 rounded-full flex items-center justify-center flex-shrink-0 text-white font-bold">
+                      <div className="w-10 h-10 bg-primary rounded-full flex items-center justify-center flex-shrink-0 text-white font-bold">
                         {item.step}
                       </div>
                       <div>
-                        <h4 className="font-bold text-gray-900 mb-1">{item.title}</h4>
-                        <p className="text-gray-600 text-sm">{item.desc}</p>
+                        <h4 className="font-bold text-foreground mb-1">{item.title}</h4>
+                        <p className="text-muted-foreground text-sm">{item.desc}</p>
                       </div>
                     </div>
                   ))}
@@ -1342,7 +1342,7 @@ export default function NewHomeV2() {
       {/* ============================================ */}
       {/* SECTION 10: LICENSING & COMPLIANCE */}
       {/* ============================================ */}
-      <section className="py-24 bg-gray-50">
+      <section className="py-24 bg-muted">
         <div className="container mx-auto px-6 max-w-6xl">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <motion.div
@@ -1355,12 +1355,12 @@ export default function NewHomeV2() {
               <Card className="border-2 shadow-xl">
                 <CardHeader className="bg-gradient-to-r from-slate-800 to-slate-900 text-white rounded-t-xl">
                   <div className="flex items-center gap-4">
-                    <div className="w-14 h-14 bg-white/10 rounded-xl flex items-center justify-center">
-                      <Shield className="h-7 w-7 text-emerald-400" />
+                    <div className="w-14 h-14 bg-card/60 rounded-xl flex items-center justify-center">
+                      <Shield className="h-7 w-7 text-primary" />
                     </div>
                     <div>
                       <CardTitle className="text-2xl">CSOAI Certification</CardTitle>
-                      <CardDescription className="text-gray-400">AI System Compliance Badge</CardDescription>
+                      <CardDescription className="text-muted-foreground">AI System Compliance Badge</CardDescription>
                     </div>
                   </div>
                 </CardHeader>
@@ -1372,14 +1372,14 @@ export default function NewHomeV2() {
                       { label: "ISO 42001 Readiness", score: "91%" },
                       { label: "Overall Safety Score", score: "A+" },
                     ].map((item, i) => (
-                      <div key={i} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
-                        <span className="font-medium text-gray-700">{item.label}</span>
-                        <Badge className="bg-emerald-100 text-emerald-700 border-emerald-200">{item.score}</Badge>
+                      <div key={i} className="flex items-center justify-between p-3 bg-muted rounded-lg">
+                        <span className="font-medium text-foreground">{item.label}</span>
+                        <Badge className="bg-primary/10 text-primary border-primary/20">{item.score}</Badge>
                       </div>
                     ))}
                   </div>
-                  <div className="mt-6 p-4 bg-emerald-50 rounded-lg border border-emerald-200">
-                    <div className="flex items-center gap-2 text-emerald-700">
+                  <div className="mt-6 p-4 bg-primary/5 rounded-lg border border-primary/20">
+                    <div className="flex items-center gap-2 text-primary">
                       <CheckCircle className="h-5 w-5" />
                       <span className="font-semibold">Verified by Byzantine Council</span>
                     </div>
@@ -1398,10 +1398,10 @@ export default function NewHomeV2() {
               <Badge className="mb-4 bg-slate-100 text-slate-700 border-slate-200 text-sm px-4 py-1">
                 Regulatory Body
               </Badge>
-              <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-                Licensing & <span className="text-emerald-600">Compliance</span>
+              <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6">
+                Licensing & <span className="text-primary">Compliance</span>
               </h2>
-              <p className="text-xl text-gray-600 mb-8 leading-relaxed">
+              <p className="text-xl text-muted-foreground mb-8 leading-relaxed">
                 We license AI systems for safety compliance. Ongoing monitoring.
                 Assessment against all frameworks. Global recognition.
               </p>
@@ -1415,14 +1415,14 @@ export default function NewHomeV2() {
                   "Avoid fines up to €35M (EU AI Act)",
                 ].map((item, i) => (
                   <div key={i} className="flex items-center gap-3">
-                    <CheckCircle className="h-5 w-5 text-emerald-500 flex-shrink-0" />
-                    <span className="text-gray-700">{item}</span>
+                    <CheckCircle className="h-5 w-5 text-primary flex-shrink-0" />
+                    <span className="text-foreground">{item}</span>
                   </div>
                 ))}
               </div>
 
               <Link href="/enterprise">
-                <Button size="lg" className="bg-emerald-600 hover:bg-emerald-700 text-white">
+                <Button size="lg" className="bg-primary hover:bg-primary text-white">
                   Register Your AI System
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Button>
@@ -1435,7 +1435,7 @@ export default function NewHomeV2() {
       {/* ============================================ */}
       {/* SECTION 11: TRUST SIGNALS */}
       {/* ============================================ */}
-      <section className="py-24 bg-white">
+      <section className="py-24 bg-card">
         <div className="container mx-auto px-6 max-w-6xl">
           <motion.div
             initial="hidden"
@@ -1444,11 +1444,11 @@ export default function NewHomeV2() {
             variants={fadeInUp}
             className="text-center mb-16"
           >
-            <Badge className="mb-4 bg-emerald-100 text-emerald-700 border-emerald-200 text-sm px-4 py-1">
+            <Badge className="mb-4 bg-primary/10 text-primary border-primary/20 text-sm px-4 py-1">
               Trust & Credibility
             </Badge>
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-              Built on <span className="text-emerald-600">Transparency</span>
+            <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6">
+              Built on <span className="text-primary">Transparency</span>
             </h2>
           </motion.div>
 
@@ -1468,9 +1468,9 @@ export default function NewHomeV2() {
             ].map((stat, i) => (
               <motion.div key={i} variants={fadeInUp}>
                 <Card className="text-center p-6 border-2 hover:border-emerald-300 transition-all">
-                  <div className="text-4xl font-black text-emerald-600 mb-2">{stat.value}</div>
-                  <div className="font-semibold text-gray-900 mb-1">{stat.label}</div>
-                  <div className="text-sm text-gray-500">{stat.desc}</div>
+                  <div className="text-4xl font-black text-primary mb-2">{stat.value}</div>
+                  <div className="font-semibold text-foreground mb-1">{stat.label}</div>
+                  <div className="text-sm text-muted-foreground">{stat.desc}</div>
                 </Card>
               </motion.div>
             ))}
@@ -1483,21 +1483,21 @@ export default function NewHomeV2() {
             viewport={{ once: true }}
             variants={scaleIn}
           >
-            <Card className="border-2 border-emerald-200 bg-emerald-50/50 p-8 md:p-12">
+            <Card className="border-2 border-primary/20 bg-primary/5 p-8 md:p-12">
               <div className="max-w-3xl mx-auto text-center">
-                <Quote className="h-12 w-12 text-emerald-300 mx-auto mb-6" />
-                <p className="text-xl md:text-2xl text-gray-700 italic leading-relaxed mb-6">
+                <Quote className="h-12 w-12 text-primary mx-auto mb-6" />
+                <p className="text-xl md:text-2xl text-foreground italic leading-relaxed mb-6">
                   "CSOAI represents a fundamental shift in how we think about AI governance.
                   Instead of adversarial control, they've designed a system based on partnership
                   and mutual benefit. This is the approach that will actually work."
                 </p>
                 <div className="flex items-center justify-center gap-4">
                   <div className="w-12 h-12 bg-emerald-200 rounded-full flex items-center justify-center">
-                    <Users className="h-6 w-6 text-emerald-700" />
+                    <Users className="h-6 w-6 text-primary" />
                   </div>
                   <div className="text-left">
-                    <div className="font-semibold text-gray-900">AI Safety Community</div>
-                    <div className="text-sm text-gray-500">Early Supporters</div>
+                    <div className="font-semibold text-foreground">AI Safety Community</div>
+                    <div className="text-sm text-muted-foreground">Early Supporters</div>
                   </div>
                 </div>
               </div>
@@ -1512,15 +1512,15 @@ export default function NewHomeV2() {
             variants={fadeIn}
             className="mt-16 text-center"
           >
-            <div className="inline-flex flex-col items-center gap-4 p-8 bg-gradient-to-br from-emerald-50 to-white border-2 border-emerald-200 rounded-2xl">
-              <Crown className="h-10 w-10 text-emerald-600" />
+            <div className="inline-flex flex-col items-center gap-4 p-8 bg-gradient-to-br from-emerald-50 to-white border-2 border-primary/20 rounded-2xl">
+              <Crown className="h-10 w-10 text-primary" />
               <h3 className="text-xl font-bold text-slate-900">Become a Founding Member</h3>
-              <p className="text-gray-600 max-w-md">
+              <p className="text-muted-foreground max-w-md">
                 Join the founding council and help shape the future of AI safety governance.
                 Limited to 100 founding members worldwide.
               </p>
               <Link href="/founding-council-agreement">
-                <Button className="bg-emerald-600 hover:bg-emerald-700 text-white">
+                <Button className="bg-primary hover:bg-primary text-white">
                   Apply for Founding Membership
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Button>
@@ -1538,7 +1538,7 @@ export default function NewHomeV2() {
       {/* ============================================ */}
       {/* SECTION 12: FAQ */}
       {/* ============================================ */}
-      <section className="py-24 bg-gray-50">
+      <section className="py-24 bg-muted">
         <div className="container mx-auto px-6 max-w-4xl">
           <motion.div
             initial="hidden"
@@ -1547,11 +1547,11 @@ export default function NewHomeV2() {
             variants={fadeInUp}
             className="text-center mb-16"
           >
-            <Badge className="mb-4 bg-emerald-100 text-emerald-700 border-emerald-200 text-sm px-4 py-1">
+            <Badge className="mb-4 bg-primary/10 text-primary border-primary/20 text-sm px-4 py-1">
               Got Questions?
             </Badge>
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-              Frequently Asked <span className="text-emerald-600">Questions</span>
+            <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6">
+              Frequently Asked <span className="text-primary">Questions</span>
             </h2>
           </motion.div>
 
@@ -1566,15 +1566,15 @@ export default function NewHomeV2() {
                 <AccordionItem
                   key={index}
                   value={`item-${index}`}
-                  className="bg-white border-2 border-gray-200 rounded-xl px-6 data-[state=open]:border-emerald-300 transition-all"
+                  className="bg-card border-2 border-border rounded-xl px-6 data-[state=open]:border-emerald-300 transition-all"
                 >
-                  <AccordionTrigger className="text-left font-semibold text-gray-900 hover:text-emerald-600 py-5">
+                  <AccordionTrigger className="text-left font-semibold text-foreground hover:text-primary py-5">
                     <div className="flex items-center gap-3">
-                      <HelpCircle className="h-5 w-5 text-emerald-500 flex-shrink-0" />
+                      <HelpCircle className="h-5 w-5 text-primary flex-shrink-0" />
                       {faq.question}
                     </div>
                   </AccordionTrigger>
-                  <AccordionContent className="text-gray-600 leading-relaxed pb-5">
+                  <AccordionContent className="text-muted-foreground leading-relaxed pb-5">
                     {faq.answer}
                   </AccordionContent>
                 </AccordionItem>
@@ -1642,19 +1642,19 @@ export default function NewHomeV2() {
                 <Link key={i} href={path.link}>
                   <Card className={`h-full cursor-pointer transition-all hover:scale-105 ${
                     path.primary
-                      ? "bg-white border-white shadow-xl"
-                      : "bg-white/10 border-white/20 hover:bg-white/20"
+                      ? "bg-card border-white shadow-xl"
+                      : "bg-card/60 border-border hover:bg-card/70"
                   }`}>
                     <CardContent className="p-6 text-center">
                       <div className={`w-14 h-14 rounded-xl flex items-center justify-center mx-auto mb-4 ${
-                        path.primary ? "bg-emerald-100" : "bg-white/10"
+                        path.primary ? "bg-primary/10" : "bg-card/60"
                       }`}>
-                        <path.icon className={`h-7 w-7 ${path.primary ? "text-emerald-600" : "text-white"}`} />
+                        <path.icon className={`h-7 w-7 ${path.primary ? "text-primary" : "text-white"}`} />
                       </div>
-                      <h3 className={`text-lg font-bold mb-2 ${path.primary ? "text-gray-900" : "text-white"}`}>
+                      <h3 className={`text-lg font-bold mb-2 ${path.primary ? "text-foreground" : "text-white"}`}>
                         {path.title}
                       </h3>
-                      <p className={`text-sm ${path.primary ? "text-gray-600" : "text-emerald-100"}`}>
+                      <p className={`text-sm ${path.primary ? "text-muted-foreground" : "text-emerald-100"}`}>
                         {path.desc}
                       </p>
                     </CardContent>
@@ -1665,7 +1665,7 @@ export default function NewHomeV2() {
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link href="/charter">
-                <Button size="lg" className="bg-white text-emerald-600 hover:bg-gray-100 px-8 py-6 text-lg font-semibold rounded-xl shadow-lg">
+                <Button size="lg" className="bg-card text-primary hover:bg-muted px-8 py-6 text-lg font-semibold rounded-xl shadow-lg">
                   <FileText className="mr-2 h-5 w-5" />
                   Read the Charter
                 </Button>
@@ -1674,7 +1674,7 @@ export default function NewHomeV2() {
                 <Button
                   size="lg"
                   variant="outline"
-                  className="border-2 border-white text-white hover:bg-white/10 px-8 py-6 text-lg font-semibold rounded-xl"
+                  className="border-2 border-white text-white hover:bg-card/60 px-8 py-6 text-lg font-semibold rounded-xl"
                 >
                   <Briefcase className="mr-2 h-5 w-5" />
                   Browse Jobs

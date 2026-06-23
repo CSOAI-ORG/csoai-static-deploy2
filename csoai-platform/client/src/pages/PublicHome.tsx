@@ -157,7 +157,7 @@ export default function PublicHome() {
           </div>
 
           <div className="grid md:grid-cols-4 gap-6">
-            <Card className="relative overflow-hidden border-2 border-blue-200 bg-blue-50/50">
+            <Card className="relative overflow-hidden border-2 border-[#9CA6C9]/20 bg-[#9CA6C9]/5/50">
               <CardContent className="p-6">
                 <div className="w-12 h-12 bg-blue-600 rounded-xl flex items-center justify-center mb-4">
                   <span className="text-white font-bold">P</span>
@@ -171,7 +171,7 @@ export default function PublicHome() {
 
             <Card className="relative overflow-hidden border-2 border-green-200 bg-green-50/50">
               <CardContent className="p-6">
-                <div className="w-12 h-12 bg-green-600 rounded-xl flex items-center justify-center mb-4">
+                <div className="w-12 h-12 bg-primary rounded-xl flex items-center justify-center mb-4">
                   <span className="text-white font-bold">D</span>
                 </div>
                 <h3 className="font-semibold text-lg mb-2">Do</h3>
@@ -193,7 +193,7 @@ export default function PublicHome() {
               </CardContent>
             </Card>
 
-            <Card className="relative overflow-hidden border-2 border-purple-200 bg-purple-50/50">
+            <Card className="relative overflow-hidden border-2 border-[#9CA6C9]/20 bg-[#9CA6C9]/5/50">
               <CardContent className="p-6">
                 <div className="w-12 h-12 bg-purple-600 rounded-xl flex items-center justify-center mb-4">
                   <span className="text-white font-bold">A</span>
@@ -339,15 +339,15 @@ export default function PublicHome() {
 
                 <div className="grid sm:grid-cols-3 gap-4 mb-8 max-w-xl mx-auto">
                   <div className="flex items-center gap-2 justify-center">
-                    <CheckCircle className="w-5 h-5 text-green-600" />
+                    <CheckCircle className="w-5 h-5 text-primary" />
                     <span className="text-sm">Work from home</span>
                   </div>
                   <div className="flex items-center gap-2 justify-center">
-                    <CheckCircle className="w-5 h-5 text-green-600" />
+                    <CheckCircle className="w-5 h-5 text-primary" />
                     <span className="text-sm">Flexible hours</span>
                   </div>
                   <div className="flex items-center gap-2 justify-center">
-                    <CheckCircle className="w-5 h-5 text-green-600" />
+                    <CheckCircle className="w-5 h-5 text-primary" />
                     <span className="text-sm">Free training</span>
                   </div>
                 </div>
@@ -373,7 +373,7 @@ export default function PublicHome() {
       <section className="py-20 px-4 bg-gradient-to-b from-background to-muted/30" id="mission">
         <div className="container mx-auto max-w-6xl">
           <div className="text-center mb-12">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-green-100 text-green-700 text-sm font-medium mb-6">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-green-700 text-sm font-medium mb-6">
               <Globe className="w-4 h-4" />
               Open Source & Transparent
             </div>
@@ -425,23 +425,23 @@ export default function PublicHome() {
                 </h3>
                 <ul className="space-y-3 text-muted-foreground">
                   <li className="flex items-start gap-2">
-                    <CheckCircle className="w-5 h-5 text-green-600 mt-0.5 flex-shrink-0" />
+                    <CheckCircle className="w-5 h-5 text-primary mt-0.5 flex-shrink-0" />
                     <span><strong className="text-foreground">100% Open Source</strong> - All code on GitHub, MIT licensed</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <CheckCircle className="w-5 h-5 text-green-600 mt-0.5 flex-shrink-0" />
+                    <CheckCircle className="w-5 h-5 text-primary mt-0.5 flex-shrink-0" />
                     <span><strong className="text-foreground">Community-Driven</strong> - Watchdog Analysts are real people, not bots</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <CheckCircle className="w-5 h-5 text-green-600 mt-0.5 flex-shrink-0" />
+                    <CheckCircle className="w-5 h-5 text-primary mt-0.5 flex-shrink-0" />
                     <span><strong className="text-foreground">Transparent Governance</strong> - All council votes are public</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <CheckCircle className="w-5 h-5 text-green-600 mt-0.5 flex-shrink-0" />
+                    <CheckCircle className="w-5 h-5 text-primary mt-0.5 flex-shrink-0" />
                     <span><strong className="text-foreground">Job Creation</strong> - We're creating real jobs in AI safety</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <CheckCircle className="w-5 h-5 text-green-600 mt-0.5 flex-shrink-0" />
+                    <CheckCircle className="w-5 h-5 text-primary mt-0.5 flex-shrink-0" />
                     <span><strong className="text-foreground">For Humanity</strong> - Not just for profit, but for protection</span>
                   </li>
                 </ul>
@@ -478,7 +478,7 @@ export default function PublicHome() {
           <div className="grid md:grid-cols-3 gap-8">
             <div className="text-center">
               <div className="w-16 h-16 bg-blue-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                <Building2 className="w-8 h-8 text-blue-600" />
+                <Building2 className="w-8 h-8 text-[#9CA6C9]" />
               </div>
               <h3 className="font-semibold text-lg mb-2">AI Companies (B2B)</h3>
               <p className="text-sm text-muted-foreground mb-4">
@@ -492,7 +492,7 @@ export default function PublicHome() {
 
             <div className="text-center">
               <div className="w-16 h-16 bg-purple-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                <Scale className="w-8 h-8 text-purple-600" />
+                <Scale className="w-8 h-8 text-[#9CA6C9]" />
               </div>
               <h3 className="font-semibold text-lg mb-2">Regulators (B2G)</h3>
               <p className="text-sm text-muted-foreground mb-4">
@@ -505,8 +505,8 @@ export default function PublicHome() {
             </div>
 
             <div className="text-center">
-              <div className="w-16 h-16 bg-green-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                <Users className="w-8 h-8 text-green-600" />
+              <div className="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                <Users className="w-8 h-8 text-primary" />
               </div>
               <h3 className="font-semibold text-lg mb-2">Citizens (B2C)</h3>
               <p className="text-sm text-muted-foreground mb-4">

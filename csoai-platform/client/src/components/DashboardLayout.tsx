@@ -100,11 +100,9 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
               variant="ghost"
               className="flex items-center gap-2 w-full justify-start px-3 py-2 text-sm font-medium hover:bg-accent"
             >
-              <img
-                src="/csoai-icon.svg.png"
-                alt="CSOAI"
-                className="w-8 h-8 rounded-lg"
-              />
+              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#c8a873] to-[#e8b4a8] flex items-center justify-center text-white font-bold text-xs">
+                C
+              </div>
               <span className="font-semibold">CSOAI Dashboard</span>
             </Button>
           </Link>
@@ -160,7 +158,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
             variant="ghost"
             className="w-full justify-start gap-3 px-3 py-2 text-sm hover:bg-accent"
           >
-            <div className="flex items-center justify-center w-7 h-7 rounded-full bg-amber-500 text-white font-medium text-xs">
+            <div className="flex items-center justify-center w-7 h-7 rounded-full bg-primary text-primary-foreground font-medium text-xs">
               AD
             </div>
             <span className="truncate">Admin User</span>

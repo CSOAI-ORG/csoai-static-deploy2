@@ -68,8 +68,8 @@ export default function Dashboard() {
       change: "+5% this week",
       changeType: "positive",
       icon: Shield,
-      color: "text-emerald-600",
-      bgColor: "bg-emerald-50",
+      color: "text-primary",
+      bgColor: "bg-primary/5",
       description: "Overall compliance across frameworks",
     },
     {
@@ -78,8 +78,8 @@ export default function Dashboard() {
       change: `${dashboardStats?.pendingReviews || 0} pending review`,
       changeType: "neutral",
       icon: Activity,
-      color: "text-blue-600",
-      bgColor: "bg-blue-50",
+      color: "text-[#9CA6C9]",
+      bgColor: "bg-[#9CA6C9]/5",
       description: "Registered systems in your organization",
     },
     {
@@ -88,7 +88,7 @@ export default function Dashboard() {
       change: "Public database",
       changeType: "neutral",
       icon: Eye,
-      color: "text-amber-600",
+      color: "text-[#C8A873]",
       bgColor: "bg-amber-50",
       description: "Public AI safety incidents",
     },
@@ -98,8 +98,8 @@ export default function Dashboard() {
       change: `${councilStats?.pendingReview || 0} pending votes`,
       changeType: "positive",
       icon: Users,
-      color: "text-purple-600",
-      bgColor: "bg-purple-50",
+      color: "text-[#9CA6C9]",
+      bgColor: "bg-[#9CA6C9]/5",
       description: "33-Agent Council decisions",
     },
   ];
@@ -187,16 +187,16 @@ export default function Dashboard() {
                         </p>
                         <div className="flex items-center gap-1 mt-2">
                           {metric.changeType === "positive" ? (
-                            <ArrowUpRight className="h-3 w-3 text-emerald-600" />
+                            <ArrowUpRight className="h-3 w-3 text-primary" />
                           ) : metric.changeType === "negative" ? (
-                            <ArrowDownRight className="h-3 w-3 text-red-600" />
+                            <ArrowDownRight className="h-3 w-3 text-destructive" />
                           ) : null}
                           <p
                             className={`text-xs ${
                               metric.changeType === "positive"
-                                ? "text-emerald-600"
+                                ? "text-primary"
                                 : metric.changeType === "negative"
-                                ? "text-red-600"
+                                ? "text-destructive"
                                 : "text-muted-foreground"
                             }`}
                           >
@@ -302,10 +302,10 @@ export default function Dashboard() {
                   ].map((item, idx) => {
                     const Icon = item.icon;
                     const colorClasses = {
-                      blue: { bg: "bg-blue-500", light: "bg-blue-50", text: "text-blue-600", border: "border-blue-200" },
-                      emerald: { bg: "bg-emerald-500", light: "bg-emerald-50", text: "text-emerald-600", border: "border-emerald-200" },
-                      amber: { bg: "bg-amber-500", light: "bg-amber-50", text: "text-amber-600", border: "border-amber-200" },
-                      purple: { bg: "bg-purple-500", light: "bg-purple-50", text: "text-purple-600", border: "border-purple-200" },
+                      blue: { bg: "bg-blue-500", light: "bg-[#9CA6C9]/5", text: "text-[#9CA6C9]", border: "border-[#9CA6C9]/20" },
+                      emerald: { bg: "bg-emerald-500", light: "bg-primary/5", text: "text-primary", border: "border-primary/20" },
+                      amber: { bg: "bg-amber-500", light: "bg-amber-50", text: "text-[#C8A873]", border: "border-amber-200" },
+                      purple: { bg: "bg-purple-500", light: "bg-[#9CA6C9]/5", text: "text-[#9CA6C9]", border: "border-[#9CA6C9]/20" },
                     }[item.color];
                     
                     return (
@@ -372,8 +372,8 @@ export default function Dashboard() {
                   </div>
                   {pdcaStats && (
                     <div className="flex items-center gap-4 text-xs">
-                      <span className="text-blue-600 font-medium">{pdcaStats.activeCycles} active</span>
-                      <span className="text-emerald-600 font-medium">{pdcaStats.completedCycles} completed</span>
+                      <span className="text-[#9CA6C9] font-medium">{pdcaStats.activeCycles} active</span>
+                      <span className="text-primary font-medium">{pdcaStats.completedCycles} completed</span>
                       <span className="text-muted-foreground">{pdcaStats.totalCycles} total cycles</span>
                     </div>
                   )}
@@ -443,8 +443,8 @@ export default function Dashboard() {
                         <span
                           className={`text-xs px-2 py-0.5 rounded-full font-medium ${
                             framework.status === "Compliant"
-                              ? "bg-emerald-100 text-emerald-700"
-                              : "bg-amber-100 text-amber-700"
+                              ? "bg-primary/10 text-primary"
+                              : "bg-[#C8A873]/10 text-amber-700"
                           }`}
                         >
                           {framework.status}
@@ -496,10 +496,10 @@ export default function Dashboard() {
                         <div
                           className={`mt-0.5 p-1.5 rounded-full ${
                             activity.status === "success"
-                              ? "bg-emerald-100 text-emerald-600"
+                              ? "bg-primary/10 text-primary"
                               : activity.status === "warning"
-                              ? "bg-amber-100 text-amber-600"
-                              : "bg-red-100 text-red-600"
+                              ? "bg-[#C8A873]/10 text-[#C8A873]"
+                              : "bg-destructive/10 text-destructive"
                           }`}
                         >
                           <Icon className="h-3 w-3" />
@@ -543,20 +543,20 @@ export default function Dashboard() {
               </CardHeader>
               <CardContent>
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                  <div className="text-center p-4 rounded-lg bg-blue-50 dark:bg-blue-950">
-                    <div className="text-2xl font-bold text-blue-600">{(pdcaStats.phaseDistribution.plan as any)?.count ?? pdcaStats.phaseDistribution.plan}</div>
+                  <div className="text-center p-4 rounded-lg bg-[#9CA6C9]/5 dark:bg-blue-950">
+                    <div className="text-2xl font-bold text-[#9CA6C9]">{(pdcaStats.phaseDistribution.plan as any)?.count ?? pdcaStats.phaseDistribution.plan}</div>
                     <div className="text-xs text-muted-foreground">Plan Phase</div>
                   </div>
                   <div className="text-center p-4 rounded-lg bg-green-50 dark:bg-green-950">
-                    <div className="text-2xl font-bold text-green-600">{(pdcaStats.phaseDistribution.do as any)?.count ?? pdcaStats.phaseDistribution.do}</div>
+                    <div className="text-2xl font-bold text-primary">{(pdcaStats.phaseDistribution.do as any)?.count ?? pdcaStats.phaseDistribution.do}</div>
                     <div className="text-xs text-muted-foreground">Do Phase</div>
                   </div>
                   <div className="text-center p-4 rounded-lg bg-amber-50 dark:bg-amber-950">
-                    <div className="text-2xl font-bold text-amber-600">{(pdcaStats.phaseDistribution.check as any)?.count ?? pdcaStats.phaseDistribution.check}</div>
+                    <div className="text-2xl font-bold text-[#C8A873]">{(pdcaStats.phaseDistribution.check as any)?.count ?? pdcaStats.phaseDistribution.check}</div>
                     <div className="text-xs text-muted-foreground">Check Phase</div>
                   </div>
-                  <div className="text-center p-4 rounded-lg bg-purple-50 dark:bg-purple-950">
-                    <div className="text-2xl font-bold text-purple-600">{(pdcaStats.phaseDistribution.act as any)?.count ?? pdcaStats.phaseDistribution.act}</div>
+                  <div className="text-center p-4 rounded-lg bg-[#9CA6C9]/5 dark:bg-purple-950">
+                    <div className="text-2xl font-bold text-[#9CA6C9]">{(pdcaStats.phaseDistribution.act as any)?.count ?? pdcaStats.phaseDistribution.act}</div>
                     <div className="text-xs text-muted-foreground">Act Phase</div>
                   </div>
                 </div>

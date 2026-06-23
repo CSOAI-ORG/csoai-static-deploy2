@@ -25,8 +25,8 @@ const agentGroups = [
     description: "Safety, Security, Privacy",
     icon: Shield,
     count: 11,
-    color: "text-blue-500",
-    bgColor: "bg-blue-500/10",
+    color: "text-[#9CA6C9]",
+    bgColor: "bg-[#9CA6C9]/10",
     providers: ["OpenAI (3)", "Anthropic (2)", "Google (2)", "Kimi (2)", "DeepSeek (2)"],
   },
   {
@@ -34,8 +34,8 @@ const agentGroups = [
     description: "Fairness, Transparency, Accountability",
     icon: Scale,
     count: 11,
-    color: "text-purple-500",
-    bgColor: "bg-purple-500/10",
+    color: "text-[#9CA6C9]",
+    bgColor: "bg-[#9CA6C9]/10",
     providers: ["OpenAI (3)", "Anthropic (2)", "Google (2)", "Kimi (2)", "DeepSeek (2)"],
   },
   {
@@ -43,8 +43,8 @@ const agentGroups = [
     description: "Documentation, Compliance, Reporting",
     icon: FileText,
     count: 11,
-    color: "text-emerald-500",
-    bgColor: "bg-emerald-500/10",
+    color: "text-primary",
+    bgColor: "bg-primary/10",
     providers: ["OpenAI (3)", "Anthropic (2)", "Google (2)", "Kimi (2)", "DeepSeek (2)"],
   },
 ];
@@ -53,28 +53,28 @@ const getResultBadge = (result: string | null) => {
   switch (result) {
     case "approved":
       return (
-        <Badge className="bg-emerald-500/10 text-emerald-500 border-emerald-500/30">
+        <Badge className="bg-primary/10 text-primary border-primary/30">
           <CheckCircle2 className="h-3 w-3 mr-1" />
           Approved
         </Badge>
       );
     case "rejected":
       return (
-        <Badge className="bg-red-500/10 text-red-500 border-red-500/30">
+        <Badge className="bg-red-500/10 text-destructive border-destructive/30">
           <XCircle className="h-3 w-3 mr-1" />
           Rejected
         </Badge>
       );
     case "escalated":
       return (
-        <Badge className="bg-amber-500/10 text-amber-500 border-amber-500/30">
+        <Badge className="bg-amber-500/10 text-[#C8A873] border-[#C8A873]/30">
           <AlertTriangle className="h-3 w-3 mr-1" />
           Escalated to Human
         </Badge>
       );
     default:
       return (
-        <Badge className="bg-gray-500/10 text-gray-500 border-gray-500/30">
+        <Badge className="bg-gray-500/10 text-muted-foreground border-gray-500/30">
           <Clock className="h-3 w-3 mr-1" />
           Voting
         </Badge>
@@ -196,7 +196,7 @@ export default function AgentCouncil() {
                 </DialogTitle>
               </DialogHeader>
               <div className="space-y-4 py-4">
-                <div className="bg-blue-500/10 border border-blue-500/30 rounded-lg p-3 text-sm">
+                <div className="bg-[#9CA6C9]/10 border border-[#9CA6C9]/30 rounded-lg p-3 text-sm">
                   <strong>⚡ Real LLM Voting:</strong> This will trigger all 33 agents (OpenAI, Anthropic, Google) 
                   to vote on your proposal using Byzantine fault-tolerant consensus.
                 </div>
@@ -238,27 +238,27 @@ export default function AgentCouncil() {
         </div>
 
         {/* Simple Explanation */}
-        <Card className="bg-gradient-to-r from-emerald-50 to-blue-50 border-emerald-200">
+        <Card className="bg-muted/40 border-primary/20">
           <CardContent className="p-6">
-            <h3 className="font-bold text-lg mb-4 text-emerald-800">🤔 How Does This Work? (Simple Version)</h3>
+            <h3 className="font-bold text-lg mb-4 text-primary">🤔 How Does This Work? (Simple Version)</h3>
             <div className="grid md:grid-cols-3 gap-6 text-sm">
               <div>
-                <div className="font-semibold text-emerald-700 mb-2">1. Diverse AI Jury</div>
-                <p className="text-gray-600">
+                <div className="font-semibold text-primary mb-2">1. Diverse AI Jury</div>
+                <p className="text-muted-foreground">
                   33 AI systems from 5 competing companies (OpenAI, Anthropic, Google, DeepSeek, Kimi)
                   each independently review your AI system.
                 </p>
               </div>
               <div>
-                <div className="font-semibold text-emerald-700 mb-2">2. Consensus Required</div>
-                <p className="text-gray-600">
+                <div className="font-semibold text-primary mb-2">2. Consensus Required</div>
+                <p className="text-muted-foreground">
                   At least 22 out of 33 must agree for a decision. This prevents any single company
                   from manipulating results — like needing a supermajority jury verdict.
                 </p>
               </div>
               <div>
-                <div className="font-semibold text-emerald-700 mb-2">3. Human Escalation</div>
-                <p className="text-gray-600">
+                <div className="font-semibold text-primary mb-2">3. Human Escalation</div>
+                <p className="text-muted-foreground">
                   If AIs disagree or detect something complex, it gets escalated to certified
                   human analysts for final review. AI assists, humans decide.
                 </p>
@@ -270,10 +270,10 @@ export default function AgentCouncil() {
         {/* Stats */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
           {[
-            { label: "Total Sessions", value: stats?.totalSessions || 0, color: "text-blue-600" },
-            { label: "Consensus Reached", value: stats?.consensusReached || 0, color: "text-emerald-600" },
-            { label: "Escalated to Human", value: stats?.escalatedToHuman || 0, color: "text-amber-600" },
-            { label: "Pending Review", value: stats?.pendingReview || 0, color: "text-purple-600" },
+            { label: "Total Sessions", value: stats?.totalSessions || 0, color: "text-[#9CA6C9]" },
+            { label: "Consensus Reached", value: stats?.consensusReached || 0, color: "text-primary" },
+            { label: "Escalated to Human", value: stats?.escalatedToHuman || 0, color: "text-[#C8A873]" },
+            { label: "Pending Review", value: stats?.pendingReview || 0, color: "text-[#9CA6C9]" },
           ].map((stat, idx) => (
             <motion.div
               key={stat.label}
@@ -354,8 +354,8 @@ export default function AgentCouncil() {
                     key={key}
                     className={`flex items-center gap-2 p-2 rounded-lg border ${
                       healthy
-                        ? "bg-emerald-500/10 border-emerald-500/30 text-emerald-700"
-                        : "bg-gray-500/10 border-gray-500/30 text-gray-600"
+                        ? "bg-primary/10 border-primary/30 text-primary"
+                        : "bg-gray-500/10 border-gray-500/30 text-muted-foreground"
                     }`}
                   >
                     <div
@@ -492,7 +492,7 @@ export default function AgentCouncil() {
                     {/* Vote Distribution */}
                     <div className="space-y-2">
                       <div className="flex items-center gap-2 text-xs">
-                        <span className="w-16 text-emerald-600 font-medium">Approve</span>
+                        <span className="w-16 text-primary font-medium">Approve</span>
                         <Progress 
                           value={(session.approveVotes / 33) * 100} 
                           className="h-2 flex-1" 
@@ -500,7 +500,7 @@ export default function AgentCouncil() {
                         <span className="w-8 text-right font-medium">{session.approveVotes}</span>
                       </div>
                       <div className="flex items-center gap-2 text-xs">
-                        <span className="w-16 text-red-600 font-medium">Reject</span>
+                        <span className="w-16 text-destructive font-medium">Reject</span>
                         <Progress 
                           value={(session.rejectVotes / 33) * 100} 
                           className="h-2 flex-1" 
@@ -508,7 +508,7 @@ export default function AgentCouncil() {
                         <span className="w-8 text-right font-medium">{session.rejectVotes}</span>
                       </div>
                       <div className="flex items-center gap-2 text-xs">
-                        <span className="w-16 text-amber-600 font-medium">Escalate</span>
+                        <span className="w-16 text-[#C8A873] font-medium">Escalate</span>
                         <Progress 
                           value={(session.escalateVotes / 33) * 100} 
                           className="h-2 flex-1" 

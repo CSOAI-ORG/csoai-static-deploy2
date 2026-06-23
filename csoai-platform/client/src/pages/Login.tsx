@@ -63,57 +63,61 @@ export default function Login() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <Loader2 className="h-8 w-8 animate-spin text-green-600" />
+      <div className="min-h-screen flex items-center justify-center bg-background">
+        <Loader2 className="h-8 w-8 animate-spin text-primary" />
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white flex items-center justify-center py-12 px-4">
-      <div className="max-w-6xl w-full grid md:grid-cols-2 gap-12 items-center">
+    <div className="min-h-screen meok-gradient flex items-center justify-center py-12 px-4 relative overflow-hidden">
+      {/* Decorative orb */}
+      <div className="meok-orb absolute -right-32 top-1/4 opacity-40 pointer-events-none" aria-hidden="true" />
+      <div className="max-w-6xl w-full grid md:grid-cols-2 gap-12 items-center relative z-10">
         {/* Left Side - Branding */}
         <div className="hidden md:block">
           <div className="flex items-center gap-3 mb-8">
-            <Shield className="h-12 w-12 text-green-600" />
-            <span className="text-3xl font-bold text-gray-900">CSOAI</span>
+            <div className="h-12 w-12 rounded-xl bg-gradient-to-br from-[#c8a873] to-[#e8b4a8] flex items-center justify-center text-white shadow-lg">
+              <Shield className="h-7 w-7" />
+            </div>
+            <span className="text-3xl font-bold text-foreground">CSOAI</span>
           </div>
 
-          <h1 className="text-4xl font-bold text-gray-900 mb-4">
+          <h1 className="text-4xl font-bold text-foreground mb-4">
             Welcome Back to the Future of AI Safety
           </h1>
 
-          <p className="text-lg text-gray-600 mb-8">
+          <p className="text-lg text-muted-foreground mb-8">
             Join certified AI Safety Analysts protecting humanity from AI risks while
             building rewarding careers.
           </p>
 
           <div className="space-y-4">
             <div className="flex items-start gap-3">
-              <CheckCircle2 className="h-6 w-6 text-green-600 flex-shrink-0 mt-0.5" />
+              <CheckCircle2 className="h-6 w-6 text-primary flex-shrink-0 mt-0.5" />
               <div>
-                <h3 className="font-semibold text-gray-900">Access Your Training</h3>
-                <p className="text-sm text-gray-600">
+                <h3 className="font-semibold text-foreground">Access Your Training</h3>
+                <p className="text-sm text-muted-foreground">
                   Continue your courses and track progress toward certification
                 </p>
               </div>
             </div>
 
             <div className="flex items-start gap-3">
-              <CheckCircle2 className="h-6 w-6 text-green-600 flex-shrink-0 mt-0.5" />
+              <CheckCircle2 className="h-6 w-6 text-primary flex-shrink-0 mt-0.5" />
               <div>
-                <h3 className="font-semibold text-gray-900">Manage AI Systems</h3>
-                <p className="text-sm text-gray-600">
+                <h3 className="font-semibold text-foreground">Manage AI Systems</h3>
+                <p className="text-sm text-muted-foreground">
                   Monitor compliance and run assessments with our 33-Agent Council
                 </p>
               </div>
             </div>
 
             <div className="flex items-start gap-3">
-              <CheckCircle2 className="h-6 w-6 text-green-600 flex-shrink-0 mt-0.5" />
+              <CheckCircle2 className="h-6 w-6 text-primary flex-shrink-0 mt-0.5" />
               <div>
-                <h3 className="font-semibold text-gray-900">Earn Certifications</h3>
-                <p className="text-sm text-gray-600">
+                <h3 className="font-semibold text-foreground">Earn Certifications</h3>
+                <p className="text-sm text-muted-foreground">
                   Get recognized credentials that employers worldwide trust
                 </p>
               </div>
@@ -122,10 +126,10 @@ export default function Login() {
         </div>
 
         {/* Right Side - Login Card */}
-        <Card className="shadow-xl">
+        <Card className="shadow-xl meok-glass">
           <CardHeader className="text-center">
-            <div className="mx-auto mb-4 h-16 w-16 bg-green-100 rounded-full flex items-center justify-center">
-              <Shield className="h-8 w-8 text-green-600" />
+            <div className="mx-auto mb-4 h-16 w-16 bg-primary/10 rounded-full flex items-center justify-center">
+              <Shield className="h-8 w-8 text-primary" />
             </div>
             <CardTitle className="text-2xl">Sign In to CSOAI</CardTitle>
             <CardDescription>
@@ -162,7 +166,7 @@ export default function Login() {
               <Button
                 type="submit"
                 size="lg"
-                className="w-full bg-green-600 hover:bg-green-700 text-white"
+                className="w-full"
                 disabled={isSubmitting}
               >
                 {isSubmitting ? (
@@ -181,10 +185,10 @@ export default function Login() {
 
             <div className="relative">
               <div className="absolute inset-0 flex items-center">
-                <div className="w-full border-t border-gray-300" />
+                <div className="w-full border-t border-border" />
               </div>
               <div className="relative flex justify-center text-sm">
-                <span className="px-4 bg-white text-gray-500">Or try the demo</span>
+                <span className="px-4 bg-card text-muted-foreground">Or try the demo</span>
               </div>
             </div>
 
@@ -200,10 +204,10 @@ export default function Login() {
 
             <div className="relative">
               <div className="absolute inset-0 flex items-center">
-                <div className="w-full border-t border-gray-300" />
+                <div className="w-full border-t border-border" />
               </div>
               <div className="relative flex justify-center text-sm">
-                <span className="px-4 bg-white text-gray-500">New to CSOAI?</span>
+                <span className="px-4 bg-card text-muted-foreground">New to CSOAI?</span>
               </div>
             </div>
 
@@ -217,13 +221,13 @@ export default function Login() {
               Create Free Account
             </Button>
 
-            <p className="text-xs text-center text-gray-500">
+            <p className="text-xs text-center text-muted-foreground">
               By signing in, you agree to our{' '}
-              <a href="/terms" className="text-green-600 hover:underline">
+              <a href="/terms" className="text-primary hover:underline">
                 Terms of Service
               </a>{' '}
               and{' '}
-              <a href="/privacy" className="text-green-600 hover:underline">
+              <a href="/privacy" className="text-primary hover:underline">
                 Privacy Policy
               </a>
             </p>
