@@ -16,6 +16,7 @@ import AISystems from "./pages/AISystems";
 import RiskAssessment from "./pages/RiskAssessment";
 import Compliance from "./pages/Compliance";
 import AgentCouncil from "./pages/AgentCouncil";
+import Protocol0 from "./pages/Protocol0";
 import Watchdog from "./pages/Watchdog";
 import Reports from "./pages/Reports";
 import Settings from "./pages/Settings";
@@ -252,6 +253,7 @@ function App() {
                   <Route path="/risk-assessment" component={RiskAssessment} />
                   <Route path="/compliance" component={Compliance} />
                   <Route path="/agent-council" component={AgentCouncil} />
+                  <Route path="/protocol0" component={Protocol0} />
                   <Route path="/watchdog" component={Watchdog} />
                   <Route path="/reports" component={Reports} />
                   <Route path="/settings" component={Settings} />

@@ -18,6 +18,7 @@ import superjson from 'superjson';
 import type { Context } from '../db/context';
 import { authenticateUser, registerUser, getDemoAccounts } from '../services/auth';
 import { generateAgentCouncil, getCouncilStats, getMockVotingSessions, executeSimulatedVoting } from '../services/council';
+import { protocol0Router } from './protocol0';
 
 // Initialize tRPC with context and superjson transformer
 const t = initTRPC.context<Context>().create({
@@ -699,6 +700,60 @@ const councilRouter = router({
         { type: 'rejected', count: 678 },
         { type: 'escalated', count: 246 },
       ],
+    };
+  }),
+
+  // Bridge a message to the SOV3 mesh via the Sovereign Town dashboard.
+  sov3Think: protectedProcedure
+    .input(z.object({
+      message: z.string().min(1),
+      character: z.string().optional(),
+      profile: z.enum(['local_only', 'balanced', 'power', 'council']).optional(),
+    }))
+    .mutation(async ({ input }) => {
+      const SOV_TOWN_URL = process.env.SOV_TOWN_URL || 'http://127.0.0.1:3940';
+      const apiToken = process.env.SOV_TOWN_API_TOKEN;
+      try {
+        const res = await fetch(`${SOV_TOWN_URL}/api/sov3/think`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            ...(apiToken ? { Authorization: `Bearer ${apiToken}` } : {}),
+          },
+          body: JSON.stringify({
+            message: input.message,
+            character: input.character || 'sage',
+            profile: input.profile || 'balanced',
+          }),
+        });
+        if (!res.ok) {
+          return { success: false, error: `SOV3 returned ${res.status}` };
+        }
+        const data = await res.json();
+        return { success: true, result: data };
+      } catch (error) {
+        const message = error instanceof Error ? error.message : String(error);
+        console.error('[council.sov3Think] bridge error:', message);
+        return { success: false, error: message };
+      }
+    }),
+
+  // Health check for configured LLM providers.
+  providersHealth: publicProcedure.query(() => {
+    return {
+      providers: {
+        openai: !!process.env.OPENAI_API_KEY,
+        anthropic: !!process.env.ANTHROPIC_API_KEY,
+        google: !!process.env.GOOGLE_AI_API_KEY,
+        glm: !!process.env.GLM_API_KEY,
+        hermes: true, // local Ollama, no cloud key required
+      },
+      totalConfigured: [
+        process.env.OPENAI_API_KEY,
+        process.env.ANTHROPIC_API_KEY,
+        process.env.GOOGLE_AI_API_KEY,
+        process.env.GLM_API_KEY,
+      ].filter(Boolean).length + 1,
     };
   }),
 });
@@ -3662,6 +3717,7 @@ export const appRouter = router({
   fileUpload: fileUploadRouter,
   progress: progressRouter,
   workbench: workbenchRouter,
+  protocol0: protocol0Router,
 });
 
 export type AppRouter = typeof appRouter;
