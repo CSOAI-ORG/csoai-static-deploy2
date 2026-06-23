@@ -1,0 +1,155 @@
+#!/bin/bash
+# SOV3 Daily Federation Refresh
+# Syncs Mac → VM marketplace, rebuilds catalog, retrains OLM router, restarts SOV3
+# Run via cron: 0 3 * * * /Users/nicholas/clawd/bin/sov3-daily-federation-refresh.sh
+
+set -e
+LOG="/Users/nicholas/clawd/logs/sov3-daily-federation.log"
+mkdir -p "$(dirname "$LOG")"
+
+echo "=== SOV3 DAILY FEDERATION REFRESH $(date) ===" >> "$LOG"
+
+# 1. Rsync marketplace to VM
+echo "[1/5] Rsync marketplace to VM..." >> "$LOG"
+rsync -az --include="*.py" --include="requirements.txt" --include="pyproject.toml" \
+  --include="*/" --exclude="*" --prune-empty-dirs \
+  /Users/nicholas/clawd/mcp-marketplace/ nicholas@meok-backend:/home/nicholas/clawd/mcp-marketplace/ 2>&1 | tail -3 >> "$LOG"
+
+# 2. Rebuild catalog on Mac
+echo "[2/5] Rebuild catalog on Mac..." >> "$LOG"
+python3 << 'EOF' >> "$LOG" 2>&1
+import ast, json
+from pathlib import Path
+import re
+
+MARKETPLACE = Path("/Users/nicholas/clawd/mcp-marketplace")
+catalog = []
+for srv_dir in sorted(MARKETPLACE.iterdir()):
+    if not srv_dir.is_dir() or srv_dir.name.startswith(('.', '_')): continue
+    sp = srv_dir / "server.py"
+    tools = []
+    if sp.exists():
+        try:
+            tree = ast.parse(sp.read_text(errors='replace'))
+            for n in ast.walk(tree):
+                if isinstance(n, ast.FunctionDef):
+                    for d in n.decorator_list:
+                        is_tool = False
+                        if isinstance(d, ast.Call):
+                            f = getattr(d, 'func', None)
+                            if isinstance(f, ast.Attribute) and f.attr == 'tool': is_tool = True
+                        elif isinstance(d, ast.Attribute) and d.attr == 'tool': is_tool = True
+                        if is_tool:
+                            docstring = ast.get_docstring(n) or ""
+                            tools.append({"name": n.name, "params": [a.arg for a in n.args.args if a.arg != 'self'], "doc": docstring.split('\n')[0] if docstring else ""})
+                            break
+        except: pass
+    if not tools:
+        for ext in ['*.ts', '*.js']:
+            for f in srv_dir.rglob(ext):
+                if 'node_modules' in str(f) or 'dist' in str(f) or '.next' in str(f): continue
+                try:
+                    txt = f.read_text(errors='replace')
+                    for m in re.finditer(r'\.tool\(\s*["\']([a-zA-Z_][a-zA-Z0-9_]*)["\']', txt):
+                        tools.append({"name": m.group(1), "params": [], "doc": ""})
+                    if tools: break
+                except: pass
+    if tools:
+        catalog.append({"server": srv_dir.name, "path": str(sp), "tool_count": len(tools), "tools": tools[:30]})
+with open("/Users/nicholas/clawd/sovereign-temple/data/sovereign_mcp_catalog.json", 'w') as f:
+    json.dump(catalog, f, indent=2)
+print(f"  cataloged {len(catalog)} servers")
+
+# ALSO rebuild the vault index
+print("  rebuilding vault index...")
+import os
+SKIP_DIRS = {'.git', 'node_modules', '.venv', 'venv', '.next', 'dist', 'build', '__pycache__', '.pack', 'site-packages', 'migrations'}
+SKIP_EXTS = {'.so', '.pyc', '.whl', '.egg-info', '.lock', '.log', '.db', '.sqlite', '.bin', '.png', '.jpg', '.jpeg', '.gif', '.pdf', '.zip', '.tar', '.gz'}
+SCAN_EXTS = {'.md', '.py', '.json', '.yaml', '.yml', '.txt', '.ts', '.js', '.sh'}
+ROOTS = [
+    "/Users/nicholas/clawd/_TABS/_inventory",
+    "/Users/nicholas/clawd/_alignment",
+    "/Users/nicholas/clawd/SOV3-Launch",
+    "/Users/nicholas/clawd/empire_mirror",
+    "/Users/nicholas/clawd/meok_king_hive",
+    "/Users/nicholas/clawd/policy-lab",
+    "/Users/nicholas/clawd/meok-labs-engine",
+    "/Users/nicholas/clawd/ralph-mode-overnight-2026-06-12",
+    "/Users/nicholas/clawd/mcp-marketplace",
+]
+vault_index = []
+for root in ROOTS:
+    if not Path(root).exists(): continue
+    for fp in Path(root).rglob('*'):
+        if not fp.is_file(): continue
+        if any(s in fp.parts for s in SKIP_DIRS): continue
+        if fp.suffix.lower() in SKIP_EXTS: continue
+        if 'mcp-marketplace' in str(fp) and fp.name not in ['pyproject.toml', 'README.md', 'package.json', '.mcp.json', 'AGENTS.md', '.cursorrules']: continue
+        if fp.suffix.lower() not in SCAN_EXTS: continue
+        try:
+            size = fp.stat().st_size
+            if size > 500_000: continue
+            content = fp.read_text(errors='replace')
+            title = fp.stem
+            desc = ""
+            if fp.suffix == '.py':
+                m = re.search(r'^\s*"""(.+?)"""', content, re.DOTALL)
+                if m: desc = m.group(1).strip().split('\n')[0][:200]
+            elif fp.suffix == '.json':
+                try:
+                    d = json.loads(content)
+                    title = d.get('name', fp.stem)
+                    desc = d.get('description', '')
+                except: pass
+            elif fp.suffix in {'.md', '.markdown'}:
+                for line in content.split('\n')[:10]:
+                    if line.startswith('# '): title = line[2:].strip(); break
+                for line in content.split('\n'):
+                    line = line.strip()
+                    if line and not line.startswith('#') and len(line) > 30:
+                        desc = line[:200]; break
+            tokens = re.findall(r'[a-z][a-z0-9_-]+', content.lower())
+            tokens = [t for t in tokens if len(t) > 2][:200]
+            rel_path = str(fp).replace('/Users/nicholas/clawd/', '')
+            vault_index.append({"path": rel_path, "ext": fp.suffix, "size": size, "title": title[:120], "description": desc[:200], "tokens": tokens, "first_500_chars": content[:500]})
+        except: pass
+with open("/Users/nicholas/clawd/sovereign-temple/data/sovereign_vault_index.json", 'w') as f:
+    json.dump(vault_index, f)
+print(f"  vault indexed {len(vault_index)} files")
+EOF
+EOF
+
+# 3. Ship catalog to VM
+echo "[3/5] Ship catalog to VM..." >> "$LOG"
+scp -o StrictHostKeyChecking=no \
+  /Users/nicholas/clawd/sovereign-temple/data/sovereign_mcp_catalog.json \
+  nicholas@meok-backend:/home/nicholas/sov3/data/sovereign_mcp_catalog.json 2>&1 | tail -1 >> "$LOG"
+
+# 4. Retrain OLM router + ship corpus
+echo "[4/5] Retrain OLM router (with curated v3 corpus)..." >> "$LOG"
+# Ship the curated corpus to VM
+scp -o StrictHostKeyChecking=no /Users/nicholas/clawd/sovereign-temple/data/curated_olm_corpus.txt \
+  nicholas@meok-backend:/home/nicholas/sov3/data/curated_olm_corpus.txt 2>&1 | tail -1 >> "$LOG"
+# Train locally
+python3 /Users/nicholas/clawd/sovereign-temple/sov3_olm_router.py train >> "$LOG" 2>&1
+# Ship the trained model
+scp /Users/nicholas/clawd/sovereign-temple/data/olm_router_model.json \
+  nicholas@meok-backend:/home/nicholas/sov3/data/olm_router_model.json 2>&1 | tail -1 >> "$LOG"
+
+# 5. Restart SOV3
+echo "[5/5] Restart SOV3 + tunnel..." >> "$LOG"
+ssh -o StrictHostKeyChecking=no nicholas@meok-backend 'sudo systemctl restart sov3.service' 2>&1 | tail -1 >> "$LOG"
+sleep 8
+launchctl kickstart -k gui/$(id -u)/com.meok.sov3-vm-tunnel 2>&1 | tail -1 >> "$LOG"
+sleep 3
+
+# 6. Verify
+echo "[6/6] Verify..." >> "$LOG"
+TOOLS=$(curl -s -m 8 -X POST http://localhost:3101/mcp -H "Content-Type: application/json" -d '{"jsonrpc":"2.0","id":"1","method":"tools/list","params":{}}' | python3 -c "import json,sys; print(len(json.load(sys.stdin)['result']['tools']))" 2>/dev/null)
+SERVERS=$(curl -s -m 8 -X POST http://localhost:3101/mcp -H "Content-Type: application/json" -d '{"jsonrpc":"2.0","id":"1","method":"tools/call","params":{"name":"mcp_federation_catalog","arguments":{"category":"all"}}}' | python3 -c "import json,sys; d=json.loads(json.load(sys.stdin)['result']['content'][0]['text']); print(d['total_servers'])" 2>/dev/null)
+echo "  SOV3 tools: $TOOLS, federation servers: $SERVERS" >> "$LOG"
+
+# Emit sigil
+curl -s -m 8 -X POST http://localhost:3101/mcp -H "Content-Type: application/json" -d "{\"jsonrpc\":\"2.0\",\"id\":\"1\",\"method\":\"tools/call\",\"params\":{\"name\":\"sigil_emit\",\"arguments\":{\"line\":\"S|date:$(date +%d-%b-%Y)|author:sovereign-cron|state:DAILY_FEDERATION_REFRESH:tools=$TOOLS servers=$SERVERS|tags:cron,federation,refresh\"}}}" >> "$LOG" 2>&1
+
+echo "=== DONE $(date) ===" >> "$LOG"

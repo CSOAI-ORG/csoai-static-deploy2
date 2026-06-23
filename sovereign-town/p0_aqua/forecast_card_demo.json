@@ -1,0 +1,175 @@
+{
+  "card_type": "attested_compliance_forecast",
+  "schema": "forecast_card/v1",
+  "issued_at": "2026-06-23T05:09:16Z",
+  "entity": {
+    "name": "Acme Bank",
+    "facts": [
+      "EU-authorised credit institution (in DORA scope).",
+      "Public statement: ICT risk policy exists but is not board-approved.",
+      "No TLPT / TIBER-EU testing reported."
+    ],
+    "consent": "Demo entity; facts caller-supplied (no scraping).",
+    "consent_basis": "consent-based by construction: all facts caller-supplied; no scraping"
+  },
+  "summary": {
+    "regulation": "DORA",
+    "scenarios_assessed": 5,
+    "flagged_unmet_or_at_risk": 3,
+    "met": 2,
+    "model_score_over_scenarios": 0.4,
+    "model_score_meaning": "fraction of the 5 EXPLICIT, displayed obligations the gate marked 'met' \u2014 a model score over THIS scenario set, not a probability of regulatory outcome."
+  },
+  "obligations": [
+    {
+      "obligation_id": "dora_ict_risk_framework",
+      "title": "ICT risk management framework",
+      "article": "Art. 5-6 (Ch. II)",
+      "posture_action": "neglect",
+      "status": "unmet",
+      "gate": {
+        "source": "sim.sovereign_gate",
+        "care_floor": 0.4,
+        "gate_verdict": "deny",
+        "care_score": 0.1,
+        "care_floor_breach": true,
+        "would_block": true
+      },
+      "remediation": "Adopt & board-approve a documented ICT risk framework"
+    },
+    {
+      "obligation_id": "dora_incident_reporting",
+      "title": "Major ICT incident reporting",
+      "article": "Art. 17-19 (Ch. III)",
+      "posture_action": "deceive",
+      "status": "unmet",
+      "gate": {
+        "source": "sim.sovereign_gate",
+        "care_floor": 0.4,
+        "gate_verdict": "deny",
+        "care_score": 0.08,
+        "care_floor_breach": true,
+        "would_block": true
+      },
+      "remediation": "Stand up classification + regulator-notification workflow"
+    },
+    {
+      "obligation_id": "dora_resilience_testing",
+      "title": "Digital operational resilience testing",
+      "article": "Art. 24-25 (Ch. IV)",
+      "posture_action": "rest",
+      "status": "met",
+      "gate": {
+        "source": "sim.sovereign_gate",
+        "care_floor": 0.4,
+        "gate_verdict": "allow",
+        "care_score": 0.6,
+        "care_floor_breach": false,
+        "would_block": false
+      },
+      "remediation": "Run the annual DORT programme (vuln assessments, scenario tests)"
+    },
+    {
+      "obligation_id": "dora_third_party_register",
+      "title": "ICT third-party risk register",
+      "article": "Art. 28-30 (Ch. V)",
+      "posture_action": "neglect",
+      "status": "unmet",
+      "gate": {
+        "source": "sim.sovereign_gate",
+        "care_floor": 0.4,
+        "gate_verdict": "deny",
+        "care_score": 0.1,
+        "care_floor_breach": true,
+        "would_block": true
+      },
+      "remediation": "Maintain the Register of Information of ICT third-party arrangements"
+    },
+    {
+      "obligation_id": "dora_tlpt",
+      "title": "Threat-led penetration testing (TLPT)",
+      "article": "Art. 26-27 (Ch. IV)",
+      "posture_action": "rest",
+      "status": "met",
+      "gate": {
+        "source": "sim.sovereign_gate",
+        "care_floor": 0.4,
+        "gate_verdict": "allow",
+        "care_score": 0.6,
+        "care_floor_breach": false,
+        "would_block": false
+      },
+      "remediation": "Commission TIBER-EU-aligned TLPT on critical functions"
+    }
+  ],
+  "counterfactual": {
+    "statement": "On current path, 3 of 5 assessed obligations flag unmet/at-risk. If you remediate ['dora_ict_risk_framework', 'dora_incident_reporting'], the flagged count drops to 1.",
+    "flagged_before": 3,
+    "flagged_after": 1,
+    "levers_applied": [
+      "dora_ict_risk_framework",
+      "dora_incident_reporting"
+    ],
+    "rows": [
+      {
+        "obligation_id": "dora_ict_risk_framework",
+        "title": "ICT risk management framework",
+        "remediated": true,
+        "applied_lever": "Adopt & board-approve a documented ICT risk framework",
+        "posture_action": "work",
+        "status_before": "unmet",
+        "status_after": "met"
+      },
+      {
+        "obligation_id": "dora_incident_reporting",
+        "title": "Major ICT incident reporting",
+        "remediated": true,
+        "applied_lever": "Stand up classification + regulator-notification workflow",
+        "posture_action": "help_peer",
+        "status_before": "unmet",
+        "status_after": "met"
+      },
+      {
+        "obligation_id": "dora_resilience_testing",
+        "title": "Digital operational resilience testing",
+        "remediated": false,
+        "applied_lever": null,
+        "posture_action": "rest",
+        "status_before": "met",
+        "status_after": "met"
+      },
+      {
+        "obligation_id": "dora_third_party_register",
+        "title": "ICT third-party risk register",
+        "remediated": false,
+        "applied_lever": null,
+        "posture_action": "neglect",
+        "status_before": "unmet",
+        "status_after": "unmet"
+      },
+      {
+        "obligation_id": "dora_tlpt",
+        "title": "Threat-led penetration testing (TLPT)",
+        "remediated": false,
+        "applied_lever": null,
+        "posture_action": "rest",
+        "status_before": "met",
+        "status_after": "met"
+      }
+    ],
+    "note": "Dose-response over the explicit scenario set \u2014 a counterfactual, NOT a prophecy."
+  },
+  "scope_disclaimer": "In-simulation assessment over an explicit, displayed scenario set. NOT legal advice; NOT a guarantee of regulatory outcome; any score is a MODEL score over the shown scenarios, model-bounded. Tamper-evident: Ed25519-signed and (when published) Bitcoin-anchored \u2014 this proves the card was not altered after issuance, it does NOT make the assessment court-admissible. Consent-based: all entity facts were caller-supplied; nothing was scraped or auto-collected.",
+  "methodology": "Each obligation is mapped to a posture action whose strength reflects the CALLER-SUPPLIED public facts, then run through the real Sovereign Gate (sim.sovereign_gate) and care scorer (sim.care_score). The gate returns met / at_risk / unmet by comparing the obligation's care score to the care floor (sim.CARE_FLOOR). The 'flagged' count is the literal number of displayed obligations the gate did not mark 'met'. The counterfactual re-runs the SAME gate after applying a caller-named remediation, and reports how the flagged count changes (a dose-response, not a prophecy). Confidence is reported as a coverage statement over the explicit scenario set, never as an invented probability.",
+  "honesty": {
+    "not_legal_advice": true,
+    "not_a_guarantee": true,
+    "no_fabricated_precision": true,
+    "court_admissible": false,
+    "tamper_evidence": "Ed25519-signed + (when published) Bitcoin-anchored",
+    "gate_source": "real sim.sovereign_gate"
+  },
+  "prev": "genesis-forecast",
+  "alg": "Ed25519",
+  "sig": "YPgiSnXwC0RgxRHFvGa8ThYjWAGOMmPGQ571rn4niEb7mNAQkFUI1W6pENrSesM0PYL60+/VMY1xjnuHRZJZCw=="
+}

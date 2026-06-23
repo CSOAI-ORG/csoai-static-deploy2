@@ -200,8 +200,9 @@ def _canonical_bytes(sigil_without_signature: dict) -> bytes:
     backward compatibility.
     """
     pruned = {k: sigil_without_signature.get(k) for k in CANONICAL_FIELDS}
+    # SPACED canonical (CANONICAL.md)
     return json.dumps(
-        pruned, sort_keys=True, separators=(",", ":"), ensure_ascii=False
+        pruned, sort_keys=True, ensure_ascii=False
     ).encode("utf-8")
 
 
@@ -213,8 +214,9 @@ def _payload_sha256(payload: Any) -> str:
     inputs. The result is lowercase hex, 64 chars.
     """
     if isinstance(payload, (dict, list)):
+        # SPACED canonical (CANONICAL.md)
         body = json.dumps(
-            payload, sort_keys=True, separators=(",", ":"), ensure_ascii=False,
+            payload, sort_keys=True, ensure_ascii=False,
             default=str,
         ).encode("utf-8")
     elif isinstance(payload, (bytes, bytearray)):
@@ -222,8 +224,9 @@ def _payload_sha256(payload: Any) -> str:
     elif isinstance(payload, str):
         body = payload.encode("utf-8")
     else:
+        # SPACED canonical (CANONICAL.md)
         body = json.dumps(
-            payload, sort_keys=True, separators=(",", ":"), default=str
+            payload, sort_keys=True, default=str
         ).encode("utf-8")
     return hashlib.sha256(body).hexdigest()
 

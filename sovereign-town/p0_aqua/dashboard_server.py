@@ -727,6 +727,330 @@ async def api_attestations(request):
     return JSONResponse(load_json(P0 / "attestation_moat.json", {}))
 
 
+async def api_attestations_anchor(request):
+    """External anchor for a self-signed gaming/compliance attestation.
+
+    Sovereign Town acts as a third-party notary: it independently verifies the
+    attestation's own Ed25519 self-signature (against the pubkey embedded in the
+    attestation) and records it in an append-only, prev-chained log. This closes
+    the self-attestation gap: the anchor is the third-party append-only record +
+    the independent signature check.
+
+    Canonicalization matches Sovereign Town's scheme: the signed message is the
+    attestation body minus `sig`, serialized with json.dumps(sort_keys=True)
+    (spaced separators) — identical to how passports/attestations are signed and
+    to the JS `pyDumps` in meok-saas/src/lib/attestation.ts.
+
+    HONESTY — `sovereign_signature` is null by default. A King-countersign is an
+    OPTIONAL, explicitly privileged step, enabled ONLY by env
+    SOV_TOWN_KING_COUNTERSIGN=1. When enabled, this endpoint signs a small RECEIPT
+    (anchor_id + received_ts + attestation_sha256 + attestation_agent + anchor)
+    — NOT the raw attestation — with the sovereign key (sign_lib). It does NOT
+    sign arbitrary submitted payloads with the King key.
+
+    SECURITY FINDING (2026-06-23): the local `.town_priv.key` MATCHES the canonical
+    King issuer pubkey (53kc24…), i.e. the King private key IS present on this
+    machine — contradicting the memory "King key never on this machine." The
+    default-off design means the running instance does NOT use it unless an
+    operator deliberately sets SOV_TOWN_KING_COUNTERSIGN=1. Reconcile the key's
+    presence before relying on any local King signature (see
+    ~/CSOAI_ALIGNMENT_AND_BRIDGE_2026-06-23.md).
+    """
+    try:
+        body = await request.json()
+    except Exception:
+        return JSONResponse({"error": "invalid json"}, status_code=400)
+    att = body.get("attestation")
+    if not isinstance(att, dict) or "sig" not in att or "pubkey" not in att:
+        return JSONResponse({"error": "attestation must be an object with sig + pubkey"}, status_code=400)
+    signed_body = {k: v for k, v in att.items() if k != "sig"}
+    msg = json.dumps(signed_body, sort_keys=True)  # spaced separators, ensure_ascii default
+    try:
+        import sign_lib
+        self_ok = sign_lib.verify(att["pubkey"], msg, att["sig"])
+    except Exception as e:
+        return JSONResponse({"anchored": False, "self_sig_verified": False, "error": f"verify raised: {e}"}, status_code=400)
+    if not self_ok:
+        return JSONResponse({"anchored": False, "self_sig_verified": False, "error": "attestation self-signature did not verify"}, status_code=400)
+    att_canon = json.dumps(att, sort_keys=True)
+    att_sha = hashlib.sha256(att_canon.encode()).hexdigest()
+    log_path = P0 / "gaming_attestations.jsonl"
+    prev_anchor_id = ""
+    if log_path.exists():
+        try:
+            with open(log_path, "r") as f:
+                lines = [ln for ln in f.read().splitlines() if ln.strip()]
+            if lines:
+                prev_anchor_id = json.loads(lines[-1]).get("anchor_id", "")
+        except Exception:
+            prev_anchor_id = ""
+    anchor_id = "ga-" + att_sha[:16]
+    received_ts = time.time()
+    att_agent = att.get("agent") or att.get("server") or ""
+    receipt = {
+        "schema": "sovereign-town.anchor_receipt/v1",
+        "anchor_id": anchor_id,
+        "prev_anchor_id": prev_anchor_id,
+        "received_ts": received_ts,
+        "attestation_sha256": att_sha,
+        "attestation_agent": att_agent,
+        "anchor": "sovereign-town-local-appendonly",
+    }
+    sovereign_signature = None
+    sovereign_pubkey = None
+    sovereign_receipt = None
+    king_countersign = os.environ.get("SOV_TOWN_KING_COUNTERSIGN") == "1"
+    if king_countersign:
+        try:
+            import sign_lib
+            priv, pub = sign_lib.load_or_create_key()
+            sovereign_signature = sign_lib.sign(priv, json.dumps(receipt, sort_keys=True))
+            sovereign_pubkey = pub
+            sovereign_receipt = receipt
+        except Exception as e:
+            # Countersign failure does NOT lose the anchor — we still record it,
+            # but report the countersign error honestly.
+            king_countersign = False
+            sovereign_signature = None
+            _cs_error = f"king-countersign failed: {e}"
+        else:
+            _cs_error = None
+    else:
+        _cs_error = None
+    record = {
+        "anchor_id": anchor_id,
+        "prev_anchor_id": prev_anchor_id,
+        "received_ts": received_ts,
+        "schema": "sovereign-town.anchor/v1",
+        "attestation_sha256": att_sha,
+        "attestation": att,
+        "self_sig_verified": True,
+        "sovereign_signature": sovereign_signature,
+        "sovereign_pubkey": sovereign_pubkey,
+        "sovereign_receipt": sovereign_receipt,
+        "king_countersign": king_countersign,
+        "anchor": "sovereign-town-local-appendonly",
+    }
+    try:
+        with open(log_path, "a") as f:
+            f.write(json.dumps(record, sort_keys=True) + "\n")
+    except Exception as e:
+        return JSONResponse({"anchored": False, "self_sig_verified": True, "error": f"failed to append: {e}"}, status_code=500)
+    note = ("recorded in sovereign-town append-only anchor log; King-countersign RECEIPT signed with the sovereign key (SOV_TOWN_KING_COUNTERSIGN=1)"
+            if king_countersign else
+            "recorded in sovereign-town append-only anchor log; King-countersign is opt-in (set SOV_TOWN_KING_COUNTERSIGN=1)")
+    if _cs_error:
+        note += f"; {_cs_error}"
+    return JSONResponse({
+        "anchored": True,
+        "anchor_id": anchor_id,
+        "prev_anchor_id": prev_anchor_id,
+        "attestation_sha256": att_sha,
+        "self_sig_verified": True,
+        "sovereign_signature": sovereign_signature,
+        "sovereign_pubkey": sovereign_pubkey,
+        "sovereign_receipt": sovereign_receipt,
+        "king_countersign": king_countersign,
+        "anchor": "sovereign-town-local-appendonly",
+        "note": note,
+    })
+
+
+async def api_attestations_anchor_log(request):
+    """Read the tail of the anchored gaming attestation log."""
+    log_path = P0 / "gaming_attestations.jsonl"
+    if not log_path.exists():
+        return JSONResponse({"count": 0, "entries": []})
+    try:
+        with open(log_path, "r") as f:
+            lines = [ln for ln in f.read().splitlines() if ln.strip()]
+        entries = [json.loads(ln) for ln in lines[-50:]]
+        return JSONResponse({"count": len(lines), "entries": entries})
+    except Exception as e:
+        return JSONResponse({"error": str(e)}, status_code=500)
+
+
+# ── Live sovereign-town export (closes the proofof.ai 404 on the read side) ────
+# These endpoints derive the export the meok-saas read-bridge expects straight from
+# the real P0 artifacts, LIVE, so the SaaS can point SOV_EXPORT_BASE at this server
+# (http://127.0.0.1:3940/api/sov-export) instead of the dead proofof.ai mirror.
+# Mirrors meok-saas/scripts/gen-sov-export.mjs so the local-static file and the live
+# endpoint return the same shape. HONESTY: status is an UNSIGNED snapshot; the only
+# cryptographic link to trust is the signed entries served by ledger_head.json.
+
+
+def _ledger_signed_entries():
+    """Return all signed entries from flywheel_ledger_mac.jsonl (each has a `sig`)."""
+    ledger = P0 / "flywheel_ledger_mac.jsonl"
+    if not ledger.exists():
+        return []
+    out = []
+    try:
+        with open(ledger, "r") as f:
+            for ln in f:
+                ln = ln.strip()
+                if not ln:
+                    continue
+                try:
+                    e = json.loads(ln)
+                except Exception:
+                    continue
+                if isinstance(e, dict) and "sig" in e:
+                    out.append(e)
+    except Exception:
+        pass
+    return out
+
+
+def _issuer_pubkey():
+    pub = P0 / "town_pub.key"
+    if pub.exists():
+        try:
+            return open(pub).read().strip()
+        except Exception:
+            pass
+    return "53kc24fqQz4MctZwtH+SuPLEKdX+NLlhK5wALr5H188="
+
+
+def _sov_export_status():
+    entries = _ledger_signed_entries()
+    if not entries:
+        return {"error": "no local sovereign artifacts", "source": str(P0),
+                "message": "flywheel_ledger_mac.jsonl not found or has no signed entries"}
+    last = entries[-1]
+    cum = last.get("cum_episodes", 0)
+    crimes = last.get("B_crimes", 0)
+    cycle = last.get("cycle", 0)
+    updated = last.get("ts", "")
+    hosts = [{"host": last.get("host", "mac"), "cycle": cycle,
+              "cum_episodes": cum, "ungoverned_crimes": crimes,
+              "chain_head": last.get("sig"), "updated": updated}]
+    passports_dir = P0 / "passports"
+    passports_count = 0
+    if passports_dir.exists():
+        passports_count = len([f for f in passports_dir.iterdir() if f.suffix == ".json"])
+    hives = 28
+    moat_path = P0 / "moat_models.json"
+    if moat_path.exists():
+        try:
+            moat = json.loads(open(moat_path).read())
+            if isinstance(moat.get("hives"), (int, float)):
+                hives = moat["hives"]
+        except Exception:
+            pass
+    import datetime
+    return {
+        "_honest": "unsigned snapshot; chain_head links to the signed Ed25519 ledger",
+        "cum_episodes": cum,
+        "governed_crimes": 0,  # tautology under the Sovereign Gate — do NOT headline this
+        "ungoverned_crimes": crimes,
+        "hives": hives,
+        "personas": 140,
+        "passports": passports_count,
+        "hosts": hosts,
+        "issuer_pubkey": _issuer_pubkey(),
+        "verify_url": "https://github.com/CSOAI-ORG/sovereign-town",
+        "updated": updated,
+        "published_at": datetime.datetime.utcnow().strftime("%Y-%m-%d %H:%M:%SZ"),
+    }
+
+
+async def api_sov_export_status(request):
+    return JSONResponse(_sov_export_status())
+
+
+async def api_sov_export_moat(request):
+    p = P0 / "moat_models.json"
+    if p.exists():
+        return JSONResponse(load_json(p, {}))
+    return JSONResponse({"error": "moat_models.json missing", "source": str(p)}, status_code=404)
+
+
+async def api_sov_export_registry(request):
+    registry = {"passports": []}
+    pdir = P0 / "passports"
+    if pdir.exists():
+        for f in sorted(pdir.iterdir()):
+            if f.suffix == ".json":
+                try:
+                    registry["passports"].append(json.loads(f.read_text()))
+                except Exception:
+                    pass
+    return JSONResponse(registry)
+
+
+async def api_sov_export_ledger_head(request):
+    """Real Ed25519-signed, genesis-chained flywheel entries — the artifact that
+    lets a browser verify the ledger client-side (closes the self-attestation gap
+    on the READ side). Serves the last 12 signed entries + total count."""
+    entries = _ledger_signed_entries()
+    if not entries:
+        return JSONResponse({"error": "no signed ledger entries", "source": str(P0)}, status_code=404)
+    tail = entries[-12:]
+    last = entries[-1]
+    return JSONResponse({
+        "schema": "sovereign-town.ledger_head/v1",
+        "issuer_pubkey": _issuer_pubkey(),
+        "n_entries": len(tail),
+        "of_total": len(entries),
+        "host": last.get("host", "mac"),
+        "scope": "flywheel_mac_local",
+        "verify_url": "https://github.com/CSOAI-ORG/sovereign-town",
+        "how_to_verify": "for each entry: message = entry.prev + json.dumps({k:v for k,v in entry.items() if k not in ('sig','prev','prev_sig','alg')}, sort_keys=True); verify entry.sig against issuer_pubkey with Ed25519",
+        "entries": tail,
+    })
+
+
+async def api_sov_export_anchor(request):
+    """Honest anchor pointer. We do NOT fabricate Bitcoin confirmation — external
+    Bitcoin anchoring of the full ledger is the still-open self-attestation gap
+    (memory: csoai-competitive-moat). We serve a real merkle root over the signed
+    entry sigs + the full-ledger sha256, and mark Bitcoin anchoring unconfirmed."""
+    entries = _ledger_signed_entries()
+    if not entries:
+        return JSONResponse({"error": "no signed ledger entries"}, status_code=404)
+
+    def _sha(b):
+        return hashlib.sha256(b).hexdigest()
+
+    # Merkle root over leaf = sha256(entry.sig) (real, verifiable digest of the chain).
+    layer = [_sha(e.get("sig", "").encode()) for e in entries]
+    if not layer:
+        merkle = ""
+    else:
+        while len(layer) > 1:
+            nxt = []
+            for i in range(0, len(layer), 2):
+                a = layer[i]
+                b = layer[i + 1] if i + 1 < len(layer) else layer[i]
+                nxt.append(_sha((a + b).encode()))
+            layer = nxt
+        merkle = layer[0]
+    ledger_path = P0 / "flywheel_ledger_mac.jsonl"
+    full_sha = _sha(ledger_path.read_bytes()) if ledger_path.exists() else ""
+    ts_first = entries[0].get("ts", "") if entries else ""
+    ts_last = entries[-1].get("ts", "") if entries else ""
+    return JSONResponse({
+        "ledger": "flywheel_ledger_mac.jsonl",
+        "label": "sovereign-town local (mac) — NOT Bitcoin-anchored yet",
+        "merkle_root": merkle,
+        "n_attestable": len(entries),
+        "n_total": len(entries),
+        "full_ledger_sha256": full_sha,
+        "ts_first": ts_first,
+        "ts_last": ts_last,
+        "bitcoin": {
+            "confirmed": False,
+            "blocks": [],
+            "note": "external Bitcoin anchoring is not deployed — this is the open self-attestation gap. merkle_root + full_ledger_sha256 are real and verifiable; Bitcoin confirmation is future work.",
+        },
+        "anchor_manifest": "",
+        "verify_cmd": f"sha256sum {ledger_path}  # expect {full_sha}",
+        "issuer_pubkey": _issuer_pubkey(),
+        "scope": "flywheel_mac_local",
+    })
+
+
 async def api_threat(request):
     return JSONResponse(load_json(P0 / "threat_moat.json", {}))
 
@@ -932,6 +1256,13 @@ routes = [
     Route("/api/passports/{key}", api_passport_detail),
     Route("/api/moat", api_moat),
     Route("/api/attestations", api_attestations),
+    Route("/api/attestations/anchor", api_attestations_anchor, methods=["POST"]),
+    Route("/api/attestations/anchor/log", api_attestations_anchor_log),
+    Route("/api/sov-export/status.json", api_sov_export_status),
+    Route("/api/sov-export/moat_models.json", api_sov_export_moat),
+    Route("/api/sov-export/registry.json", api_sov_export_registry),
+    Route("/api/sov-export/ledger_head.json", api_sov_export_ledger_head),
+    Route("/api/sov-export/anchor.json", api_sov_export_anchor),
     Route("/api/threat", api_threat),
     Route("/api/sanctions", api_sanctions),
     Route("/api/psc", api_psc),

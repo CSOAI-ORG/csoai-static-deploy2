@@ -75,9 +75,10 @@ def _load_pub(pub_b64=None):
 def _canonical(line: str, kid: str) -> bytes:
     """Deterministic bytes signed/verified. Bound to the PARSED thought (not the
     raw string) so semantically-identical thoughts sign identically, plus kid."""
+    # SPACED canonical (CANONICAL.md)
     return json.dumps(
         {"thought": parse(line), "digest": digest(line), "alg": ALG, "kid": kid},
-        sort_keys=True, separators=(",", ":")).encode()
+        sort_keys=True).encode()
 
 
 # ---- sign / verify ---------------------------------------------------------

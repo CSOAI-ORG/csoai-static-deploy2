@@ -253,6 +253,79 @@ except ImportError as _e:
     MCP_BRIDGE_AVAILABLE = False
     BRIDGE_TOOL_DEFINITIONS = []
 
+# SOV3 Sovereign MCP Federation — natural-language discovery + SIGIL-signed execution
+# Replaces manual "find the right MCP" with one search → one call across 310+ servers
+try:
+    from sov3_federation import (
+        handle_federation_search,
+        handle_federation_call,
+        handle_federation_catalog,
+        handle_federation_stats,
+        FEDERATION_TOOL_DEFINITIONS,
+    )
+    FEDERATION_AVAILABLE = True
+    print("[startup] SOV3 Federation loaded — 310+ MCPs discoverable")
+except ImportError as _e:
+    print(f"[startup] SOV3 Federation import failed: {_e}")
+    FEDERATION_AVAILABLE = False
+    FEDERATION_TOOL_DEFINITIONS = []
+
+# SOV3 OLM Router — learns from call patterns
+try:
+    from sov3_olm_router import (
+        handle_olm_train_router,
+        handle_olm_route_query,
+        handle_olm_router_stats,
+        OLM_TOOL_DEFINITIONS,
+    )
+    OLM_ROUTER_AVAILABLE = True
+    print("[startup] SOV3 OLM Router loaded — pattern learning active")
+except ImportError as _e:
+    print(f"[startup] SOV3 OLM Router import failed: {_e}")
+    OLM_ROUTER_AVAILABLE = False
+    OLM_TOOL_DEFINITIONS = []
+
+# SOV3 Next-Best-Action — workflow templates
+try:
+    from sov3_nba import (
+        handle_next_best_action,
+        NBA_TOOL_DEFINITIONS,
+    )
+    NBA_AVAILABLE = True
+    print("[startup] SOV3 NBA loaded — 8 workflow templates")
+except ImportError as _e:
+    print(f"[startup] SOV3 NBA import failed: {_e}")
+    NBA_AVAILABLE = False
+    NBA_TOOL_DEFINITIONS = []
+
+# SOV3 King × Federation Bridge — combined hive + 310-MCP routing
+try:
+    from sov3_king_federation import (
+        handle_king_federation_ask,
+        KING_FEDERATION_TOOL_DEFINITIONS,
+    )
+    KING_FEDERATION_AVAILABLE = True
+    print("[startup] SOV3 King × Federation bridge loaded")
+except ImportError as _e:
+    print(f"[startup] SOV3 King × Federation bridge import failed: {_e}")
+    KING_FEDERATION_AVAILABLE = False
+    KING_FEDERATION_TOOL_DEFINITIONS = []
+
+# SOV3 Sovereign Vault — federated retrieval over ALL empire files
+try:
+    from sov3_vault import (
+        handle_vault_search,
+        handle_vault_get,
+        handle_vault_stats,
+        VAULT_TOOL_DEFINITIONS,
+    )
+    VAULT_AVAILABLE = True
+    print("[startup] SOV3 Vault loaded — 22GB empire indexed")
+except ImportError as _e:
+    print(f"[startup] SOV3 Vault import failed: {_e}")
+    VAULT_AVAILABLE = False
+    VAULT_TOOL_DEFINITIONS = []
+
 
 # MCP Models
 class ToolCall(BaseModel):
@@ -383,8 +456,7 @@ MCP_TOOLS = [
             "required": ["image_path"],
         },
     },
-] + (BRIDGE_TOOL_DEFINITIONS if MCP_BRIDGE_AVAILABLE else []) + [
-    # Neural Tools
+] + (BRIDGE_TOOL_DEFINITIONS if MCP_BRIDGE_AVAILABLE else []) + (FEDERATION_TOOL_DEFINITIONS if FEDERATION_AVAILABLE else []) + (OLM_TOOL_DEFINITIONS if OLM_ROUTER_AVAILABLE else []) + (NBA_TOOL_DEFINITIONS if NBA_AVAILABLE else []) + (KING_FEDERATION_TOOL_DEFINITIONS if KING_FEDERATION_AVAILABLE else []) + (VAULT_TOOL_DEFINITIONS if VAULT_AVAILABLE else []) + [
     {
         "name": "validate_care",
         "description": "Validate text against care-centered principles using neural network",
@@ -4664,6 +4736,40 @@ async def execute_tool(name: str, arguments: Dict[str, Any]) -> Dict[str, Any]:
             return handle_mcp_bridge_stats(arguments)
         elif name == "mcp_bridge_learn" and MCP_BRIDGE_AVAILABLE:
             return handle_mcp_bridge_learn(arguments)
+
+        # ── SOV3 Sovereign MCP Federation ──────────────────────────
+        elif name == "mcp_federation_search" and FEDERATION_AVAILABLE:
+            return handle_federation_search(arguments)
+        elif name == "mcp_federation_call" and FEDERATION_AVAILABLE:
+            return handle_federation_call(arguments)
+        elif name == "mcp_federation_catalog" and FEDERATION_AVAILABLE:
+            return handle_federation_catalog(arguments)
+        elif name == "mcp_federation_stats" and FEDERATION_AVAILABLE:
+            return handle_federation_stats(arguments)
+
+        # ── SOV3 OLM Router ────────────────────────────────────────
+        elif name == "olm_train_router" and OLM_ROUTER_AVAILABLE:
+            return handle_olm_train_router(arguments)
+        elif name == "olm_route_query" and OLM_ROUTER_AVAILABLE:
+            return handle_olm_route_query(arguments)
+        elif name == "olm_router_stats" and OLM_ROUTER_AVAILABLE:
+            return handle_olm_router_stats(arguments)
+
+        # ── SOV3 Next-Best-Action ──────────────────────────────────
+        elif name == "next_best_action" and NBA_AVAILABLE:
+            return handle_next_best_action(arguments)
+
+        # ── SOV3 King × Federation Bridge ──────────────────────────
+        elif name == "king_federation_ask" and KING_FEDERATION_AVAILABLE:
+            return handle_king_federation_ask(arguments)
+
+        # ── SOV3 Sovereign Vault ────────────────────────────────────
+        elif name == "vault_search" and VAULT_AVAILABLE:
+            return handle_vault_search(arguments)
+        elif name == "vault_get" and VAULT_AVAILABLE:
+            return handle_vault_get(arguments)
+        elif name == "vault_stats" and VAULT_AVAILABLE:
+            return handle_vault_stats(arguments)
 
         elif name == "tier_query":
             try:

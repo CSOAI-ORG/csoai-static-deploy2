@@ -107,6 +107,70 @@ pre code{background:none;padding:0;color:#b0a8c0}
   ]
 }
 </script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is Article 50 of the EU AI Act?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Article 50 of the EU AI Act requires deployers of AI systems that generate or manipulate content (image, audio, video, text) to ensure that output is clearly labelled as AI-generated or AI-manipulated. This includes both visible human-readable labels and embedded machine-readable markers such as C2PA, XMP, and W3C metadata formats."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What marking formats are required for AI-generated content under Article 50?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Article 50 does not mandate a single technical standard. The recognised compliant formats include C2PA (Coalition for Content Provenance and Authenticity) for tamper-evident provenance metadata, XMP (Extensible Metadata Platform) for embedded metadata in images and PDFs, IPTC for news and publishing metadata, W3C Web Annotation for HTML and EPUB content, cryptographic digital signatures (Ed25519 or ECDSA P-384), and frequency-domain audio watermarking."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is C2PA and why is it the recommended standard?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "C2PA (Coalition for Content Provenance and Authenticity) is a W3C-standardised technical framework for asserting content provenance and AI generation status. It is recommended because it provides tamper-evident cryptographically signed assertions embedded directly in file formats, is portable across JPEG, PNG, AVIF, MP4 and WAV, and allows verification of content origin via public key infrastructure without requiring special viewers for backwards compatibility."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is the compliance deadline for AI output marking?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "All deployers of AI systems that generate or manipulate content must implement both visible and machine-readable marking layers by 2 August 2026. MEOK Pro provides automated compliance tooling including C2PA integration, W3C metadata embedding, digital signature generation, visible labelling automation, and audit-ready compliance reporting."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How does visible watermarking differ from machine-readable metadata?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Visible watermarking is a human-readable overlay label applied directly to the content surface, such as an 'AI-Generated' badge in a corner of an image or a verbal disclosure at the start of audio. Machine-readable metadata is embedded data invisible to end users, stored in formats like C2PA manifests, XMP fields, or digital signatures, which can be read programmatically by tools and platforms to verify content provenance without affecting the user experience."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What content types require AI labelling under Article 50?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Article 50 applies to text and articles (requiring an 'AI-Generated Content' banner plus XMP and JSON-LD metadata), images (watermark overlay and C2PA manifest), video (start-of-content label plus C2PA and SEI messages), audio (verbal disclosure and frequency watermark), chatbots and conversational AI (persistent 'AI Assistant' label), and code (comment header block with SPDX AI-generated flag). Each content type has specific visible and machine-readable marking requirements."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What does MEOK Pro include for Article 50 compliance?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "MEOK Pro (£199 per workspace per month) includes C2PA provenance metadata generation and embedding, W3C and XMP machine-readable marker injection, digital signature generation (Ed25519 and ECDSA), visible AI label automation (watermark, overlay, banner), audio frequency-domain watermarking, compliance audit log with tamper-evident storage, REST API for CI/CD pipeline integration, custom labelling policy engine, and priority support with a dedicated compliance engineer."
+      }
+    }
+  ]
+}
+</script>
 </head>
 <body>
 <header class="header">

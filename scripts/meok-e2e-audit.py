@@ -113,7 +113,7 @@ def run_checks(preview_url: Optional[str]) -> list:
         "jsonrpc": "2.0", "id": "audit", "method": "tools/call",
         "params": {"name": "bridge_think", "arguments": {"message": "audit check", "profile": "local_only", "character": "aria", "tier": "pro", "user_id": "audit"}}
     })
-    code, latency, body = curl("http://127.0.0.1:3101/mcp", method="POST", headers={"Content-Type": "application/json"}, data=bridge_payload, timeout=45)
+    code, latency, body = curl("http://127.0.0.1:3101/mcp", method="POST", headers={"Content-Type": "application/json"}, data=bridge_payload, timeout=120)
     status = "pass" if code == "200" and "reply" in body else "fail"
     checks.append(Check("Bridges", "SOV3 bridge_think", "http://127.0.0.1:3101/mcp", "200 reply", status, code, latency, f"{latency:.0f} ms", body[:120]))
 

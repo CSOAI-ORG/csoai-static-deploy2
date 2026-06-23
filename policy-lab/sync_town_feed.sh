@@ -21,7 +21,11 @@ fi
 
 echo "[town-feed] Regenerating feed..."
 cd "$POLICY_LAB"
-python3 town_feed.py
+# Source sovereign proofs from anchors-sov/ (the mac-sovereign, non-clobbered,
+# 8/8 Bitcoin-verified set) — NOT anchors/, which the rsync above clobbers with the
+# VM's king_hive proofs. king_hive verdicts still come from the scp'd jsonl above.
+# The sweep dose-response headline is sourced from the local signed sweep ledger.
+PL_ANCHORS=anchors-sov PL_SWEEP=sweep_dose_response.jsonl python3 town_feed.py
 
 echo "[town-feed] Copying to MEOK UI..."
 cp "$POLICY_LAB/town_feed.json" "$PUBLIC_TOWN/town_feed.json"
