@@ -43,15 +43,13 @@ const staggerContainer = {
   },
 };
 
-// AI Agent providers
+// AI Agent providers — must stay in sync with server/services/council.ts
 const agentProviders = [
+  { name: "Claude 3.5", provider: "Anthropic", count: 7, color: "bg-orange-500" },
+  { name: "Gemini Pro", provider: "Google", count: 7, color: "bg-blue-500" },
+  { name: "GLM-4 Flash", provider: "GLM", count: 7, color: "bg-emerald-500" },
   { name: "GPT-4o", provider: "OpenAI", count: 6, color: "bg-green-500" },
-  { name: "Claude 3.5", provider: "Anthropic", count: 6, color: "bg-orange-500" },
-  { name: "Gemini Pro", provider: "Google", count: 5, color: "bg-blue-500" },
-  { name: "Llama 3", provider: "Meta", count: 5, color: "bg-purple-500" },
-  { name: "Mistral Large", provider: "Mistral", count: 4, color: "bg-cyan-500" },
-  { name: "Command R+", provider: "Cohere", count: 4, color: "bg-pink-500" },
-  { name: "Qwen 2", provider: "Alibaba", count: 3, color: "bg-red-500" },
+  { name: "Hermes (Ollama)", provider: "Hermes", count: 6, color: "bg-purple-500" },
 ];
 
 // Council roles

@@ -24,14 +24,14 @@ export interface Agent {
   id: string;
   name: string;
   type: 'guardian' | 'arbiter' | 'scribe';
-  provider: 'openai' | 'anthropic' | 'google';
+  provider: 'openai' | 'anthropic' | 'google' | 'glm' | 'hermes';
   icon: string;
 }
 
 export interface AgentVote {
   agentId: string;
   agentType: 'guardian' | 'arbiter' | 'scribe';
-  agentProvider: 'openai' | 'anthropic' | 'google';
+  agentProvider: 'openai' | 'anthropic' | 'google' | 'glm' | 'hermes';
   vote: 'approve' | 'reject' | 'escalate';
   confidence: number;
   reasoning: string;
@@ -57,13 +57,13 @@ export interface VotingSession {
 export function generateAgentCouncil(): Agent[] {
   const agents: Agent[] = [];
   const types: Array<'guardian' | 'arbiter' | 'scribe'> = ['guardian', 'arbiter', 'scribe'];
-  const providers: Array<'openai' | 'anthropic' | 'google'> = ['openai', 'anthropic', 'google'];
+  const providers: Array<'openai' | 'anthropic' | 'google' | 'glm' | 'hermes'> = ['openai', 'anthropic', 'google', 'glm', 'hermes'];
   const icons = { guardian: '🛡️', arbiter: '⚖️', scribe: '📄' };
 
   let agentNum = 1;
   for (const type of types) {
     for (let i = 0; i < 11; i++) {
-      const provider = providers[i % 3];
+      const provider = providers[agentNum % providers.length];
       agents.push({
         id: `agent_${agentNum}`,
         name: `${type.charAt(0).toUpperCase() + type.slice(1)} Agent ${i + 1}`,
@@ -269,6 +269,137 @@ Respond with JSON only.`;
   }
 }
 
+// Vote using GLM (Zhipu AI) via OpenAI-compatible endpoint
+async function voteWithGLM(
+  agent: Agent,
+  subject: { title: string; description: string; type: string }
+): Promise<AgentVote> {
+  const apiKey = process.env.GLM_API_KEY || process.env.ZHIPU_API_KEY;
+  if (!apiKey) {
+    console.warn(`[Council] GLM agent ${agent.id} skipped: GLM_API_KEY not configured`);
+    return {
+      agentId: agent.id,
+      agentType: agent.type,
+      agentProvider: agent.provider,
+      vote: 'escalate',
+      confidence: 0.5,
+      reasoning: 'GLM API key not configured; defaulted to escalation.',
+    };
+  }
+
+  const openai = new OpenAI({ apiKey, baseURL: 'https://open.bigmodel.cn/api/paas/v4/' });
+
+  try {
+    const response = await openai.chat.completions.create({
+      model: 'glm-4-flash',
+      messages: [
+        {
+          role: 'system',
+          content: `${AGENT_PROMPTS[agent.type]}
+
+You must respond with a JSON object containing:
+- vote: "approve", "reject", or "escalate"
+- confidence: a number between 0 and 1
+- reasoning: a brief explanation (2-3 sentences)`,
+        },
+        {
+          role: 'user',
+          content: `Please evaluate this ${subject.type} and cast your vote:
+
+Title: ${subject.title}
+Description: ${subject.description}
+
+Respond with JSON only.`,
+        },
+      ],
+      response_format: { type: 'json_object' },
+      temperature: 0.7,
+    });
+
+    const content = response.choices[0]?.message?.content;
+    if (!content) throw new Error('No response from GLM');
+
+    const parsed = JSON.parse(content);
+    return {
+      agentId: agent.id,
+      agentType: agent.type,
+      agentProvider: agent.provider,
+      vote: parsed.vote,
+      confidence: parsed.confidence,
+      reasoning: parsed.reasoning,
+    };
+  } catch (error) {
+    console.error(`[Council] GLM agent ${agent.id} failed:`, error);
+    return {
+      agentId: agent.id,
+      agentType: agent.type,
+      agentProvider: agent.provider,
+      vote: 'escalate',
+      confidence: 0.5,
+      reasoning: 'Agent encountered an error and defaulted to escalation.',
+    };
+  }
+}
+
+// Vote using Hermes via local Ollama (sovereign/on-prem path)
+async function voteWithHermes(
+  agent: Agent,
+  subject: { title: string; description: string; type: string }
+): Promise<AgentVote> {
+  const baseURL = process.env.HERMES_BASE_URL || 'http://127.0.0.1:11434/v1/';
+  const openai = new OpenAI({ apiKey: 'ollama', baseURL });
+
+  try {
+    const response = await openai.chat.completions.create({
+      model: process.env.HERMES_MODEL || 'qwen3:0.6b',
+      messages: [
+        {
+          role: 'system',
+          content: `${AGENT_PROMPTS[agent.type]}
+
+You must respond with a JSON object containing:
+- vote: "approve", "reject", or "escalate"
+- confidence: a number between 0 and 1
+- reasoning: a brief explanation (2-3 sentences)`,
+        },
+        {
+          role: 'user',
+          content: `Please evaluate this ${subject.type} and cast your vote:
+
+Title: ${subject.title}
+Description: ${subject.description}
+
+Respond with JSON only.`,
+        },
+      ],
+      temperature: 0.7,
+    });
+
+    const content = response.choices[0]?.message?.content;
+    if (!content) throw new Error('No response from Hermes/Ollama');
+
+    const parsed = JSON.parse(content);
+    return {
+      agentId: agent.id,
+      agentType: agent.type,
+      agentProvider: agent.provider,
+      vote: parsed.vote,
+      confidence: parsed.confidence,
+      reasoning: parsed.reasoning,
+    };
+  } catch (error) {
+    console.error(`[Council] Hermes agent ${agent.id} failed:`, error);
+    return {
+      agentId: agent.id,
+      agentType: agent.type,
+      agentProvider: agent.provider,
+      vote: 'escalate',
+      confidence: 0.5,
+      reasoning: 'Agent encountered an error and defaulted to escalation.',
+    };
+  }
+}
+
 // Main voting function
 async function getAgentVote(
   agent: Agent,
@@ -281,6 +412,10 @@ async function getAgentVote(
       return voteWithAnthropic(agent, subject);
     case 'google':
       return voteWithGoogle(agent, subject);
+    case 'glm':
+      return voteWithGLM(agent, subject);
+    case 'hermes':
+      return voteWithHermes(agent, subject);
   }
 }
 
@@ -515,6 +650,8 @@ export function getCouncilStats() {
       openai: agents.filter(a => a.provider === 'openai').length,
       anthropic: agents.filter(a => a.provider === 'anthropic').length,
       google: agents.filter(a => a.provider === 'google').length,
+      glm: agents.filter(a => a.provider === 'glm').length,
+      hermes: agents.filter(a => a.provider === 'hermes').length,
     },
     consensusThreshold: 22,
     faultTolerance: 10,
