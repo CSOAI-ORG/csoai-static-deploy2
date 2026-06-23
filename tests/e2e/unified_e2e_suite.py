@@ -1374,6 +1374,21 @@ class E2ERunner:
             assert body["summary"]["total_tiers"] >= 1, f"no tiers: {body['summary']}"
             return f"day29e2e: {body['summary']}"
 
+
+        async def town_live_check():
+            """Day 32 BLOCK 5: /town returns live signed King verdicts + Policy-Lab + anchors."""
+            code, body = await self.client.request("GET", f"{base}/town")
+            assert code == 200, f"status={code}"
+            assert body.get("source") == "policy-lab/town_feed.json", f"wrong source: {body.get('source')}"
+            summary = body.get("summary", {})
+            kh = summary.get("king_hive", {})
+            assert kh.get("total_rounds", 0) >= 500, f"too few rounds: {kh.get('total_rounds')}"
+            assert kh.get("attestable", 0) >= 50, f"too few attestable: {kh.get('attestable')}"
+            anchors = summary.get("anchors", {})
+            assert anchors.get("count", 0) >= 3, f"too few anchors: {anchors.get('count')}"
+            assert len(body.get("recent_verdicts", [])) >= 1, "no recent verdicts"
+            return f"/town: {kh.get('total_rounds')} rounds, {kh.get('attestable')} attestable, {anchors.get('count')} anchors"
+
         async def matrix_live_check():
             """Day 26 BLOCK 5: /matrix page is live on csoai.org."""
             status, html = _live_get("/matrix")
@@ -1500,6 +1515,7 @@ class E2ERunner:
         await self.run_test(group, "/countdown (live)", countdown_live_check, target=base)
         await self.run_test(group, "/opengrid (live)", opengrid_live_check, target=base)
         await self.run_test(group, "/matrix (live)", matrix_live_check, target=base)
+        await self.run_test(group, "/town (live)", town_live_check, target=base)
         await self.run_test(group, "/examples (live)", examples_live_check, target=base)
         await self.run_test(group, "/customer (day29)", customer_full_check, target=base)
 
