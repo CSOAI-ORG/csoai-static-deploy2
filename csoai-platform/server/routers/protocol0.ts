@@ -1,65 +1,124 @@
 /**
  * Protocol 0 Router — MEOK agent-native infrastructure endpoints.
  *
- * Exposes the six Protocol 0 layers as tRPC procedures:
- *  - Layer 0 Identity (Sigil)
- *  - Layer 1 Discovery (Agent Card)
- *  - Layer 2 Communication (envelope send/verify)
- *  - Layer 3 Trust (reputation stubs)
- *  - Layer 4 Transaction (payment intent stubs)
- *  - Layer 5 Governance (signed votes)
+ * Hardened implementation:
+ *  - Layer 0 Identity: Ed25519 Sigil registry with persistent public metadata.
+ *  - Layer 1 Discovery: A2A Agent Card.
+ *  - Layer 2 Communication: signed envelope validation + immutable message log.
+ *  - Layer 3 Trust: reputation + persisted attestations.
+ *  - Layer 4 Transaction: Stripe x402-style payment intents.
+ *  - Layer 5 Governance: signed votes with live session tally.
+ *  - System: snapshot/restore of Protocol 0 state.
  */
 
 import { z } from "zod";
 import crypto from "crypto";
+import Stripe from "stripe";
 import {
   router,
   publicProcedure,
   protectedProcedure,
   adminProcedure,
 } from "../db/trpc";
+import {
+  registerIdentity,
+  getIdentityBySigil,
+  getIdentityByPublicKey,
+  logMessage,
+  getMessages,
+  getOrCreateSession,
+  addVoteToSession,
+  recordAttestation,
+  recordPayment,
+  updatePayment,
+  getPayment,
+  getSessions,
+  exportSnapshot,
+  importSnapshot,
+  type P0Vote,
+  type P0Identity,
+} from "../services/protocol0Store";
 
 const SOV_TOWN_URL = process.env.SOV_TOWN_URL || "http://127.0.0.1:3940";
 
+const stripe = process.env.STRIPE_SECRET_KEY
+  ? new Stripe(process.env.STRIPE_SECRET_KEY, { apiVersion: "2025-06-30.acacia" as any })
+  : null;
+
 // ============================================================================
-// LAYER 0 — IDENTITY (Sigil)
+// CRYPTO HELPERS
 // ============================================================================
+
+function rawPublicKeyToSpki(raw: Buffer) {
+  const algoOid = Buffer.from([0x30, 0x05, 0x06, 0x03, 0x2b, 0x65, 0x70]);
+  const bitString = Buffer.concat([Buffer.from([0x03, 0x21, 0x00]), raw]);
+  return Buffer.concat([Buffer.from([0x30, 0x2a]), algoOid, bitString]);
+}
+
+function didFromPublicKey(publicKeyBase64: string) {
+  const raw = Buffer.from(publicKeyBase64, "base64url");
+  const hash = crypto.createHash("sha3-256").update(raw).digest();
+  const id = hash.slice(0, 20).toString("base64url").replace(/=/g, "");
+  return `did:sigil:${id}`;
+}
 
 function shortForm(id: string) {
   if (id.length <= 12) return id;
   return `${id.slice(0, 6)}...${id.slice(-4)}`;
 }
 
-function didFromPublicKey(publicKeyBase64: string) {
-  const raw = Buffer.from(publicKeyBase64, "base64");
-  const hash = crypto.createHash("sha3-256").update(raw).digest();
-  // Truncate to 20 bytes and base58-ish encode using base64url for simplicity.
-  const truncated = hash.slice(0, 20);
-  const id = truncated.toString("base64url").replace(/=/g, "");
-  return `did:sigil:${id}`;
+async function verifyEd25519(
+  message: string,
+  signatureBase64url: string,
+  publicKeyBase64url: string,
+): Promise<boolean> {
+  try {
+    const pub = Buffer.from(publicKeyBase64url, "base64url");
+    if (pub.length !== 32) return false;
+    const keyObj = crypto.createPublicKey({
+      key: rawPublicKeyToSpki(pub),
+      format: "der",
+      type: "spki",
+    });
+    const sig = Buffer.from(signatureBase64url, "base64url");
+    return crypto.verify(null, Buffer.from(message), keyObj, sig);
+  } catch {
+    return false;
+  }
 }
 
+// ============================================================================
+// LAYER 0 — IDENTITY
+// ============================================================================
+
 const identityRouter = router({
-  // Generate a new Ed25519 Sigil identity.
   createSigil: publicProcedure
     .input(z.object({ alias: z.string().optional() }))
-    .mutation(() => {
+    .mutation(async ({ input }) => {
       const { publicKey, privateKey } = crypto.generateKeyPairSync("ed25519", {
         publicKeyEncoding: { type: "spki", format: "pem" },
         privateKeyEncoding: { type: "pkcs8", format: "pem" },
       });
 
-      // Derive raw public key bytes for the DID.
       const pubDer = crypto.createPublicKey(publicKey).export({ type: "spki", format: "der" });
-      // Ed25519 SPKI DER is 12-byte header + 32-byte raw key.
       const rawPub = pubDer.slice(-32);
       const publicKeyBase64 = rawPub.toString("base64url");
       const sigil = didFromPublicKey(publicKeyBase64);
 
-      return {
+      const identity: P0Identity = {
         sigil,
         did: sigil,
         shortForm: shortForm(sigil.replace("did:sigil:", "")),
+        publicKey: publicKeyBase64,
+        alias: input.alias,
+        createdAt: new Date().toISOString(),
+      };
+      await registerIdentity(identity);
+
+      return {
+        sigil,
+        did: sigil,
+        shortForm: identity.shortForm,
         publicKey: publicKeyBase64,
         privateKey: Buffer.from(privateKey).toString("base64url"),
         algorithm: "Ed25519",
@@ -68,11 +127,12 @@ const identityRouter = router({
       };
     }),
 
-  // Resolve a did:sigil to a DID document.
   resolveDid: publicProcedure
     .input(z.object({ did: z.string().startsWith("did:sigil:") }))
-    .query(({ input }) => {
+    .query(async ({ input }) => {
       const id = input.did.replace("did:sigil:", "");
+      const identity = await getIdentityBySigil(input.did);
+      const publicKeyMultibase = identity?.publicKey ? `z${identity.publicKey}` : `z${id}`;
       return {
         "@context": ["https://www.w3.org/ns/did/v1"],
         id: input.did,
@@ -81,7 +141,7 @@ const identityRouter = router({
             id: `${input.did}#key-1`,
             type: "Ed25519VerificationKey2020",
             controller: input.did,
-            publicKeyMultibase: `z${id}`,
+            publicKeyMultibase,
           },
         ],
         authentication: [`${input.did}#key-1`],
@@ -103,52 +163,21 @@ const identityRouter = router({
       };
     }),
 
-  // Verify an Ed25519 signature.
   verifySignature: publicProcedure
     .input(
       z.object({
         message: z.string(),
-        signature: z.string(), // base64url
-        publicKey: z.string(), // base64url raw 32-byte Ed25519 public key
+        signature: z.string(),
+        publicKey: z.string(),
       }),
     )
-    .mutation(({ input }) => {
-      try {
-        const pub = Buffer.from(input.publicKey, "base64url");
-        // Build a minimal SPKI wrapper for Ed25519 public key.
-        // OID 1.3.101.112 (Ed25519) wrapped in AlgorithmIdentifier + BIT STRING.
-        const algoOid = Buffer.from([0x30, 0x05, 0x06, 0x03, 0x2b, 0x65, 0x70]);
-        const bitString = Buffer.concat([
-          Buffer.from([0x03, 0x21, 0x00]),
-          pub,
-        ]);
-        const spki = Buffer.concat([
-          Buffer.from([0x30, 0x2a]),
-          algoOid,
-          bitString,
-        ]);
-        const keyObj = crypto.createPublicKey({
-          key: spki,
-          format: "der",
-          type: "spki",
-        });
-        const sig = Buffer.from(input.signature, "base64url");
-        const valid = crypto.verify(null, Buffer.from(input.message), keyObj, sig);
-        return { valid };
-      } catch (error) {
-        const message = error instanceof Error ? error.message : String(error);
-        return { valid: false, error: message };
-      }
+    .mutation(async ({ input }) => {
+      const valid = await verifyEd25519(input.message, input.signature, input.publicKey);
+      return { valid };
     }),
 
-  // Sign a message with a provided PEM private key (dev/test only).
   signMessage: protectedProcedure
-    .input(
-      z.object({
-        message: z.string(),
-        privateKeyPem: z.string(),
-      }),
-    )
+    .input(z.object({ message: z.string(), privateKeyPem: z.string() }))
     .mutation(({ input }) => {
       try {
         const key = crypto.createPrivateKey(input.privateKeyPem);
@@ -159,14 +188,18 @@ const identityRouter = router({
         return { error: message };
       }
     }),
+
+  listIdentities: publicProcedure.query(async () => {
+    const { identities } = await exportSnapshot();
+    return identities.map(({ privateKey: _, ...rest }) => rest);
+  }),
 });
 
 // ============================================================================
-// LAYER 1 — DISCOVERY (A2A Agent Card)
+// LAYER 1 — DISCOVERY
 // ============================================================================
 
 const discoveryRouter = router({
-  // Return the platform's A2A Agent Card.
   agentCard: publicProcedure.query(() => ({
     name: "CSOAI Protocol 0 Gateway",
     description: "Layer 0 trust infrastructure for the agentic economy.",
@@ -205,12 +238,12 @@ const discoveryRouter = router({
 });
 
 // ============================================================================
-// LAYER 2 — COMMUNICATION (Protocol 0 Envelope)
+// LAYER 2 — COMMUNICATION
 // ============================================================================
 
 const envelopeSchema = z.object({
   version: z.string().default("0.1.0"),
-  messageId: z.string().uuid(),
+  messageId: z.string(),
   sender: z.string().startsWith("did:sigil:"),
   recipient: z.string().startsWith("did:sigil:"),
   timestamp: z.string().datetime(),
@@ -236,53 +269,89 @@ const envelopeSchema = z.object({
 });
 
 const communicationRouter = router({
-  // Accept and validate a signed Protocol 0 envelope.
   sendEnvelope: publicProcedure
-    .input(
-      z.object({
-        envelope: envelopeSchema,
-        signature: z.string(),
-      }),
-    )
+    .input(z.object({ envelope: envelopeSchema, signature: z.string() }))
     .mutation(async ({ input }) => {
-      // In production this would verify the signature, route to the recipient,
-      // and persist to an immutable log. For now we validate structure.
+      const identity = await getIdentityBySigil(input.envelope.sender);
+      let signatureValid = false;
+      if (identity) {
+        const canonical = JSON.stringify(input.envelope);
+        signatureValid = await verifyEd25519(canonical, input.signature, identity.publicKey);
+      }
+
+      const message = await logMessage({
+        id: input.envelope.messageId,
+        envelope: input.envelope,
+        signature: input.signature,
+        accepted: true,
+        signatureValid,
+        storedAt: new Date().toISOString(),
+      });
+
+      // Route VOTE envelopes into governance.
+      if (signatureValid && input.envelope.type === "VOTE" && input.envelope.payload?.proposalId) {
+        const vote: P0Vote = {
+          voteId: `vote-${Date.now()}`,
+          proposalId: input.envelope.payload.proposalId,
+          vote: input.envelope.payload.vote,
+          voter: input.envelope.sender,
+          signature: input.signature,
+          signatureValid: true,
+          timestamp: new Date().toISOString(),
+        };
+        await addVoteToSession(input.envelope.payload.proposalId, vote);
+      }
+
       return {
         accepted: true,
-        messageId: input.envelope.messageId,
+        signatureValid,
+        messageId: message.id,
         routing: {
           sender: input.envelope.sender,
           recipient: input.envelope.recipient,
           type: input.envelope.type,
         },
-        timestamp: new Date().toISOString(),
+        timestamp: message.storedAt,
       };
     }),
 
-  // Return the 16 supported message types.
   messageTypes: publicProcedure.query(() => ({
     types: envelopeSchema.shape.type.options,
   })),
+
+  listMessages: publicProcedure
+    .input(z.object({ limit: z.number().default(50) }))
+    .query(async ({ input }) => {
+      const messages = await getMessages();
+      return messages.slice(-input.limit);
+    }),
 });
 
 // ============================================================================
-// LAYER 3 — TRUST (Reputation)
+// LAYER 3 — TRUST
 // ============================================================================
 
 const trustRouter = router({
-  // Simple reputation lookup (stub).
   getReputation: publicProcedure
     .input(z.object({ sigil: z.string().startsWith("did:sigil:") }))
-    .query(({ input }) => ({
-      sigil: input.sigil,
-      score: 0.847,
-      level: "TRUSTED",
-      attestationCount: 247,
-      stakedAmount: "0",
-      joinedAt: "2025-01-01T00:00:00Z",
-    })),
+    .query(async ({ input }) => {
+      const state = await exportSnapshot();
+      const attestations = state.attestations.filter(
+        (a) => a.subject === input.sigil || a.attester === input.sigil,
+      ).length;
+      const messages = state.messages.filter(
+        (m) => m.envelope.sender === input.sigil && m.signatureValid,
+      ).length;
+      const score = Math.min(0.99, 0.5 + attestations * 0.02 + messages * 0.005);
+      return {
+        sigil: input.sigil,
+        score,
+        level: score > 0.8 ? "TRUSTED" : score > 0.5 ? "OBSERVED" : "UNTRUSTED",
+        attestationCount: attestations,
+        validMessages: messages,
+      };
+    }),
 
-  // Record an attestation (stub).
   attest: protectedProcedure
     .input(
       z.object({
@@ -291,21 +360,41 @@ const trustRouter = router({
         evidence: z.record(z.any()).optional(),
       }),
     )
-    .mutation(({ input, ctx }) => ({
-      attestationId: `att-${Date.now()}`,
-      attester: ctx.user ? `user:${ctx.user.id}` : "anonymous",
-      subject: input.subject,
-      claim: input.claim,
-      timestamp: new Date().toISOString(),
-    })),
+    .mutation(async ({ input, ctx }) => {
+      const attestation = await recordAttestation({
+        attestationId: `att-${Date.now()}`,
+        attester: ctx.user ? `user:${ctx.user.id}` : "anonymous",
+        subject: input.subject,
+        claim: input.claim,
+        evidence: input.evidence,
+        timestamp: new Date().toISOString(),
+      });
+      return attestation;
+    }),
+
+  listAttestations: publicProcedure
+    .input(z.object({ subject: z.string().startsWith("did:sigil:").optional() }))
+    .query(async ({ input }) => {
+      const state = await exportSnapshot();
+      if (input.subject) {
+        return state.attestations.filter((a) => a.subject === input.subject);
+      }
+      return state.attestations.slice(-100);
+    }),
 });
 
 // ============================================================================
-// LAYER 4 — TRANSACTION (x402-style payments)
+// LAYER 4 — TRANSACTION
 // ============================================================================
 
+function amountToCents(amount: string, currency: string): number {
+  const value = parseFloat(amount);
+  if (Number.isNaN(value) || value <= 0) return 0;
+  // Stripe uses smallest currency unit; for USD/GBP/EUR that is cents.
+  return Math.round(value * 100);
+}
+
 const transactionRouter = router({
-  // Create a payment request (stub — integrate Stripe for real flow).
   createPayment: protectedProcedure
     .input(
       z.object({
@@ -316,33 +405,87 @@ const transactionRouter = router({
         purpose: z.string(),
       }),
     )
-    .mutation(({ input }) => ({
-      paymentId: `pmt-${Date.now()}`,
-      status: "pending",
-      protocol: "x402",
-      amount: input.amount,
-      currency: input.currency,
-      payer: input.payer,
-      payee: input.payee,
-      purpose: input.purpose,
-      createdAt: new Date().toISOString(),
-    })),
+    .mutation(async ({ input }) => {
+      const paymentId = `pmt-${Date.now()}`;
+      let stripePaymentIntentId: string | undefined;
+      let status: P0Payment["status"] = "pending";
 
-  // Verify a payment (stub).
+      if (stripe) {
+        try {
+          const intent = await stripe.paymentIntents.create({
+            amount: amountToCents(input.amount, input.currency),
+            currency: input.currency.toLowerCase(),
+            metadata: {
+              paymentId,
+              payer: input.payer,
+              payee: input.payee,
+              purpose: input.purpose,
+            },
+          });
+          stripePaymentIntentId = intent.id;
+          status = intent.status === "succeeded" ? "succeeded" : "pending";
+        } catch (error) {
+          const message = error instanceof Error ? error.message : String(error);
+          return {
+            paymentId,
+            status: "failed" as const,
+            error: message,
+            amount: input.amount,
+            currency: input.currency,
+            payer: input.payer,
+            payee: input.payee,
+            purpose: input.purpose,
+            createdAt: new Date().toISOString(),
+          };
+        }
+      }
+
+      const payment = await recordPayment({
+        paymentId,
+        status,
+        protocol: "x402",
+        amount: input.amount,
+        currency: input.currency,
+        payer: input.payer,
+        payee: input.payee,
+        purpose: input.purpose,
+        stripePaymentIntentId,
+        createdAt: new Date().toISOString(),
+      });
+
+      return payment;
+    }),
+
   verifyPayment: protectedProcedure
     .input(z.object({ paymentId: z.string() }))
-    .query(() => ({
-      verified: true,
-      settledAt: new Date().toISOString(),
-    })),
+    .query(async ({ input }) => {
+      const payment = await getPayment(input.paymentId);
+      if (!payment) return { found: false as const };
+
+      if (stripe && payment.stripePaymentIntentId) {
+        const intent = await stripe.paymentIntents.retrieve(payment.stripePaymentIntentId);
+        const status: P0Payment["status"] =
+          intent.status === "succeeded"
+            ? "succeeded"
+            : intent.status === "canceled"
+              ? "canceled"
+              : "pending";
+        await updatePayment(input.paymentId, {
+          status,
+          settledAt: status === "succeeded" ? new Date().toISOString() : undefined,
+        });
+        return { found: true as const, status, intentStatus: intent.status };
+      }
+
+      return { found: true as const, status: payment.status };
+    }),
 });
 
 // ============================================================================
-// LAYER 5 — GOVERNANCE (Signed votes)
+// LAYER 5 — GOVERNANCE
 // ============================================================================
 
 const governanceRouter = router({
-  // Submit a signed vote to a proposal.
   submitVote: protectedProcedure
     .input(
       z.object({
@@ -352,59 +495,93 @@ const governanceRouter = router({
         sigil: z.string().startsWith("did:sigil:"),
       }),
     )
-    .mutation(({ input }) => ({
-      accepted: true,
-      proposalId: input.proposalId,
-      vote: input.vote,
-      voter: input.sigil,
-      voteId: `vote-${Date.now()}`,
-      timestamp: new Date().toISOString(),
-    })),
+    .mutation(async ({ input }) => {
+      const identity = await getIdentityBySigil(input.sigil);
+      let signatureValid = false;
+      if (identity) {
+        const canonical = `${input.proposalId}:${input.vote}:${input.sigil}`;
+        signatureValid = await verifyEd25519(canonical, input.signature, identity.publicKey);
+      }
 
-  // Query governance state (stub).
+      const vote: P0Vote = {
+        voteId: `vote-${Date.now()}`,
+        proposalId: input.proposalId,
+        vote: input.vote,
+        voter: input.sigil,
+        signature: input.signature,
+        signatureValid,
+        timestamp: new Date().toISOString(),
+      };
+
+      const session = await addVoteToSession(input.proposalId, vote);
+
+      return {
+        accepted: true,
+        signatureValid,
+        voteId: vote.voteId,
+        proposalId: input.proposalId,
+        vote: input.vote,
+        voter: input.sigil,
+        sessionId: session.sessionId,
+        status: session.status,
+        tally: session.tally,
+        timestamp: vote.timestamp,
+      };
+    }),
+
   getState: publicProcedure
-    .input(
-      z.object({
-        scope: z.enum(["town", "civilization", "network"]).default("town"),
-      }),
-    )
-    .query(({ input }) => ({
-      scope: input.scope,
-      activeProposals: 12,
-      closedProposals: 2847,
-      averageParticipation: 0.91,
-      lastConsensusAt: new Date().toISOString(),
-    })),
+    .input(z.object({ scope: z.enum(["town", "civilization", "network"]).default("town") }))
+    .query(async ({ input }) => {
+      const sessions = await getSessions();
+      return {
+        scope: input.scope,
+        activeSessions: sessions.filter((s) => s.status === "voting").length,
+        consensusReached: sessions.filter((s) => s.status === "consensus_reached").length,
+        escalated: sessions.filter((s) => s.status === "escalated").length,
+        totalVotes: sessions.reduce((acc, s) => acc + s.votes.length, 0),
+        sessions: sessions.slice(-20),
+      };
+    }),
+
+  getSession: publicProcedure
+    .input(z.object({ proposalId: z.string() }))
+    .query(async ({ input }) => {
+      const session = await getOrCreateSession(input.proposalId);
+      return session;
+    }),
 });
 
 // ============================================================================
-// SYSTEM CALLS — World snapshot / restore
+// SYSTEM — Snapshot / restore
 // ============================================================================
 
 const systemRouterP0 = router({
-  // Export a snapshot of Protocol 0 state.
-  snapshot: adminProcedure.query(() => ({
-    version: "0.1.0",
-    exportedAt: new Date().toISOString(),
-    agents: 47,
-    towns: 1,
-    civilizations: 1,
-    activeProposals: 12,
-    signaturesVerified: 2847,
-  })),
+  snapshot: adminProcedure.query(async () => {
+    const state = await exportSnapshot();
+    return {
+      ...state,
+      exportedAt: new Date().toISOString(),
+      stats: {
+        identities: state.identities.length,
+        messages: state.messages.length,
+        sessions: state.sessions.length,
+        votes: state.votes.length,
+        attestations: state.attestations.length,
+        payments: state.payments.length,
+      },
+    };
+  }),
 
-  // Import a snapshot (stub).
   restore: adminProcedure
     .input(z.object({ snapshot: z.record(z.any()) }))
-    .mutation(({ input }) => ({
-      restored: true,
-      version: input.snapshot.version || "unknown",
-      restoredAt: new Date().toISOString(),
-    })),
+    .mutation(async ({ input }) => {
+      await importSnapshot(input.snapshot as any);
+      return { restored: true, restoredAt: new Date().toISOString() };
+    }),
 });
 
 // ============================================================================
-// COMBINED PROTOCOL 0 ROUTER
+// COMBINED ROUTER
 // ============================================================================
 export const protocol0Router = router({
   identity: identityRouter,
