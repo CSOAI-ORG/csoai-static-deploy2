@@ -17,7 +17,7 @@ const REGIONS = [
     primary: "EU AI Act (Reg 2024/1689)",
     deadline: "2 Aug 2026 (Art 50), 2 Dec 2026 (legacy generative), 2 Dec 2027 (Annex III)",
     key_articles: ["Art 9 (risk mgmt)", "Art 13 (transparency)", "Art 14 (human oversight)", "Art 50 (AI content labelling)"],
-    penalty: "€35M or 7% of global turnover",
+    penalty: "€35M / 7% (prohibited practices); €15M / 3% (Article 50 transparency)",
     color: "blue",
   },
   {
@@ -99,7 +99,7 @@ export default function LawPage() {
       <div className="mb-12 p-6 rounded-2xl bg-gradient-to-r from-emerald-500/10 to-cyan-500/5 border border-emerald-500/30">
         <h2 className="text-2xl font-bold mb-2">The 52-Article Partnership Charter</h2>
         <p className="text-sm text-slate-300">
-          The hub that connects all 6 regions. CSOAI's Charter is the
+          The hub that connects all 6 regions. CSOAI&apos;s Charter is the
           pivot — 22 articles shared between EU AI Act and NIST AI RMF,
           18 between EU and UK, 15 between EU and APAC, 8 between
           every region. When in doubt, default to the Charter.

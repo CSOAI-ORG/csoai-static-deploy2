@@ -1,0 +1,97 @@
+{
+  "status": "sample",
+  "derived_from": {
+    "source": "provided",
+    "event_count": 2,
+    "api_meta": null,
+    "note": "Aggregate pass rates and scores per regime/hive. No entity identifiers emitted."
+  },
+  "regimes": {
+    "EU AI Act": {
+      "events": 1,
+      "pass": 1,
+      "fail": 0,
+      "pass_rate": 1.0,
+      "avg_score": 0.9
+    },
+    "DORA": {
+      "events": 1,
+      "pass": 0,
+      "fail": 1,
+      "pass_rate": 0.0,
+      "avg_score": 0.3
+    }
+  },
+  "hives": {
+    "ethicalgovernanceof": {
+      "events": 1,
+      "pass": 1,
+      "fail": 0,
+      "pass_rate": 1.0,
+      "avg_score": 0.9,
+      "regimes": [
+        "EU AI Act"
+      ]
+    },
+    "biasdetectionof": {
+      "events": 1,
+      "pass": 1,
+      "fail": 0,
+      "pass_rate": 1.0,
+      "avg_score": 0.9,
+      "regimes": [
+        "EU AI Act"
+      ]
+    },
+    "transparencyof": {
+      "events": 1,
+      "pass": 1,
+      "fail": 0,
+      "pass_rate": 1.0,
+      "avg_score": 0.9,
+      "regimes": [
+        "EU AI Act"
+      ]
+    },
+    "accountabilityof": {
+      "events": 1,
+      "pass": 1,
+      "fail": 0,
+      "pass_rate": 1.0,
+      "avg_score": 0.9,
+      "regimes": [
+        "EU AI Act"
+      ]
+    },
+    "dataprivacyof": {
+      "events": 1,
+      "pass": 0,
+      "fail": 1,
+      "pass_rate": 0.0,
+      "avg_score": 0.3,
+      "regimes": [
+        "DORA"
+      ]
+    },
+    "councilof": {
+      "events": 1,
+      "pass": 0,
+      "fail": 1,
+      "pass_rate": 0.0,
+      "avg_score": 0.3,
+      "regimes": [
+        "DORA"
+      ]
+    },
+    "agisafe": {
+      "events": 1,
+      "pass": 0,
+      "fail": 1,
+      "pass_rate": 0.0,
+      "avg_score": 0.3,
+      "regimes": [
+        "DORA"
+      ]
+    }
+  }
+}

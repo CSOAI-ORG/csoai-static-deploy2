@@ -1,0 +1,143 @@
+{
+  "status": "live_aggregate",
+  "derived_from": {
+    "source": "UK Companies House PSC snapshot (OGL-UK-3.0)",
+    "snapshot_path": "/data/hive-data/.hive/data/government/companies_house_psc/persons-with-significant-control-snapshot-2026-06-16.txt",
+    "total_records": 15623198,
+    "note": "Aggregate statistics only. No names, full DOBs, full addresses, or postcodes emitted."
+  },
+  "psc_summary": {
+    "source": "UK Companies House PSC snapshot",
+    "snapshot_path": "/data/hive-data/.hive/data/government/companies_house_psc/persons-with-significant-control-snapshot-2026-06-16.txt",
+    "total_records": 15623198,
+    "kind_counts": {
+      "individual": 13596099,
+      "corporate": 1048643,
+      "persons-with-significant-control-statement": 909676,
+      "individual-beneficial-owner": 34369,
+      "legal_person": 17641,
+      "corporate-entity-beneficial-owner": 15553,
+      "legal-person-beneficial-owner": 582,
+      "super_secure": 371,
+      "super-secure-beneficial-owner": 158,
+      "exemptions": 105
+    },
+    "nature_counts": {
+      "ownership-of-shares-75-to-100-percent": 7938997,
+      "right-to-appoint-and-remove-directors": 7717106,
+      "voting-rights-75-to-100-percent": 6260086,
+      "ownership-of-shares-25-to-50-percent": 4563952,
+      "voting-rights-25-to-50-percent": 3665386,
+      "significant-influence-or-control": 1071241,
+      "ownership-of-shares-50-to-75-percent": 552285,
+      "voting-rights-50-to-75-percent": 394567,
+      "right-to-appoint-and-remove-directors-as-firm": 238531,
+      "significant-influence-or-control-as-firm": 234074,
+      "ownership-of-shares-75-to-100-percent-as-firm": 171098,
+      "right-to-appoint-and-remove-directors-as-trust": 167304,
+      "voting-rights-75-to-100-percent-as-firm": 156822,
+      "significant-influence-or-control-as-trust": 137993,
+      "ownership-of-shares-75-to-100-percent-as-trust": 134099
+    },
+    "country_counts": {
+      "England": 7177303,
+      "United Kingdom": 4354202,
+      "unknown": 2027306,
+      "Scotland": 520225,
+      "Wales": 248844,
+      "Northern Ireland": 153239,
+      "China": 135181,
+      "Philippines": 85283,
+      "Pakistan": 61795,
+      "United States": 55263,
+      "India": 51673,
+      "Turkey": 48998,
+      "France": 45619,
+      "Germany": 38113,
+      "Italy": 32781
+    },
+    "nationality_counts": {
+      "British": 9789434,
+      "unknown": 1992793,
+      "English": 395573,
+      "Romanian": 248025,
+      "Indian": 233079,
+      "Pakistani": 229411,
+      "Chinese": 222914,
+      "Irish": 170093,
+      "Polish": 159687,
+      "Italian": 129710,
+      "Nigerian": 108403,
+      "French": 95197,
+      "Filipino": 92188,
+      "Turkish": 89458,
+      "Scottish": 87446
+    },
+    "decade_counts": {
+      "1900": 37,
+      "1910": 251,
+      "1920": 7227,
+      "1930": 62872,
+      "1940": 385396,
+      "1950": 1140334,
+      "1960": 2485043,
+      "1970": 3175778,
+      "1980": 3569084,
+      "1990": 2303471,
+      "2000": 485424,
+      "2010": 10041,
+      "2020": 5067
+    },
+    "postcode_area_counts": {
+      "N1": 187835,
+      "WC2H": 186617,
+      "EC1V": 168401,
+      "CF14": 98431,
+      "EC2A": 92962,
+      "W1W": 81595,
+      "WC1N": 57326,
+      "E14": 55668,
+      "CR0": 50727,
+      "SE1": 47500,
+      "E1": 47142,
+      "E6": 39922,
+      "NW10": 38490,
+      "HA1": 36780,
+      "N3": 35407,
+      "IG1": 34577,
+      "E17": 33522,
+      "BN1": 33446,
+      "WA1": 32560,
+      "G2": 32373
+    },
+    "identity_verification": {
+      "unverified": 8865141,
+      "verified": 6758057
+    },
+    "company_stats": {
+      "companies_with_psc": 10711733,
+      "companies_with_multiple_psc": 3412469,
+      "avg_psc_per_company": 1.459
+    },
+    "indices": {
+      "transparency_pressure": 0.719,
+      "ownership_concentration": 0.508,
+      "unverified_ratio": 0.567
+    }
+  },
+  "hives": [
+    "landlaw",
+    "commercialvehicle",
+    "loopfactory",
+    "councilof",
+    "transparencyof",
+    "accountabilityof"
+  ],
+  "indices": {
+    "transparency_pressure": 0.719
+  },
+  "sim_params": {
+    "regime_enforcement_boost": 1.216,
+    "scarcity_food_mult": 4.216
+  }
+}

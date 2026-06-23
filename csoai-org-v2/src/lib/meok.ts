@@ -16,23 +16,23 @@ export interface CouncilStatus {
   threshold: number;
   domains: string[];
   domain_count: number;
-  nodes_by_domain: Record<string, any[]>;
+  nodes_by_domain: Record<string, unknown[]>;
 }
 
 export interface ExpertiseNetwork {
   total_expertise_nodes: number;
   active_nodes: number;
   total_rings: number;
-  domain_stats: Record<string, any>;
-  expertise_types: any[];
+  domain_stats: Record<string, unknown>;
+  expertise_types: unknown[];
   domains: string[];
   version: string;
 }
 
 export interface BridgesTopology {
-  bridges: any[];
+  bridges: unknown[];
   total: number;
-  high_affinity_pairs: any[];
+  high_affinity_pairs: unknown[];
 }
 
 export interface MemoryItem {
@@ -70,16 +70,16 @@ export async function getBridgesTopology(): Promise<BridgesTopology | null> {
   return fetchJSON<BridgesTopology | null>("/api/bridges/topology", null);
 }
 
-export async function getCouncilHistory(): Promise<any[] | null> {
-  return fetchJSON<any[] | null>("/api/council/history", null);
+export async function getCouncilHistory(): Promise<Record<string, unknown>[] | null> {
+  return fetchJSON<Record<string, unknown>[] | null>("/api/council/history", null);
 }
 
-export async function getDreams(): Promise<any[] | null> {
-  return fetchJSON<any[] | null>("/api/dreams", null);
+export async function getDreams(): Promise<Record<string, unknown>[] | null> {
+  return fetchJSON<Record<string, unknown>[] | null>("/api/dreams", null);
 }
 
-export async function getMemoryStats(): Promise<any | null> {
-  return fetchJSON<any | null>("/api/memory/status", null);
+export async function getMemoryStats(): Promise<Record<string, unknown> | null> {
+  return fetchJSON<Record<string, unknown> | null>("/api/memory/status", null);
 }
 
 export async function searchMemory(q: string): Promise<MemoryItem[] | null> {
@@ -91,13 +91,13 @@ export async function searchMemory(q: string): Promise<MemoryItem[] | null> {
 
 export async function getExpertiseByDomain(
   domain: string,
-): Promise<any | null> {
-  return fetchJSON<any | null>(
+): Promise<Record<string, unknown> | null> {
+  return fetchJSON<Record<string, unknown> | null>(
     `/api/expertise/domain/${encodeURIComponent(domain)}`,
     null,
   );
 }
 
-export async function getHighAffinityBridges(): Promise<any[] | null> {
-  return fetchJSON<any[] | null>("/api/bridges/high-affinity", null);
+export async function getHighAffinityBridges(): Promise<Record<string, unknown>[] | null> {
+  return fetchJSON<Record<string, unknown>[] | null>("/api/bridges/high-affinity", null);
 }

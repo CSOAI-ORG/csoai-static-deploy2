@@ -1,0 +1,89 @@
+{
+  "derived_from": {
+    "sources": [
+      "US Treasury OFAC SDN"
+    ],
+    "catalog_ref": "~/Downloads/csoai_free_data_catalog.md",
+    "note": "Public sanctions data only. Aggregate counts; no individual PII emitted."
+  },
+  "ofac_sdn": {
+    "source": "US Treasury OFAC SDN",
+    "url": "https://www.treasury.gov/ofac/downloads/sdn.csv",
+    "total_entries": 19073,
+    "program_counts": {
+      "RUSSIA-EO14024": 5702,
+      "SDGT": 2158,
+      "SDNTK": 1369,
+      "IRAN-EO13902": 778,
+      "GLOMAG": 726,
+      "NPWMD] [IFSR": 608,
+      "UKRAINE-EO13662] [RUSSIA-EO14024": 507,
+      "IRAN": 473,
+      "IRAN-EO13846": 464,
+      "ILLICIT-DRUGS-EO14059": 455,
+      "SDGT] [IFSR": 416,
+      "TCO": 349,
+      "NPWMD": 210,
+      "IRAQ2": 190,
+      "DPRK4": 188,
+      "BELARUS-EO14038": 179,
+      "PAARSSR-EO13894": 173,
+      "VENEZUELA-EO13850": 171,
+      "VENEZUELA": 165,
+      "BALKANS": 164,
+      "IRAN-HR": 153,
+      "SDGT] [ILLICIT-DRUGS-EO14059": 148,
+      "CYBER2": 147,
+      "DPRK3": 145,
+      "SDNT": 143,
+      "IRAN] [NPWMD] [IFSR": 135,
+      "UKRAINE-EO13660": 133,
+      "SDGT] [IRGC] [IFSR": 128,
+      "BURMA-EO14014": 128,
+      "DPRK2": 118,
+      "IRAN-EO13876": 98,
+      "UKRAINE-EO13661": 95,
+      "UKRAINE-EO13685": 95,
+      "DRCONGO": 93,
+      "CUBA": 75,
+      "FTO] [SDGT": 75,
+      "BELARUS": 72,
+      "NICARAGUA": 72,
+      "SDGT] [NPWMD] [IFSR": 71,
+      "VENEZUELA-EO13884": 67,
+      "DPRK": 64,
+      "MAGNIT": 57,
+      "UKRAINE-EO13661] [RUSSIA-EO14024": 52,
+      "CYBER4": 51,
+      "LIBYA3": 50,
+      "HK-EO13936": 48,
+      "SUDAN-EO14098": 48,
+      "IRAN-EO13871": 46,
+      "ELECTION-EO13848": 41,
+      "SDGT] [NPWMD] [IRGC] [IFSR": 35
+    },
+    "entity_types": {
+      "individual": 7484,
+      "vessel": 1499,
+      "aircraft": 344
+    },
+    "cyber_sanctions_count": 147,
+    "compliance_pressure": 0.91,
+    "hive_hits": {
+      "councilof": 18716,
+      "ethicalgovernanceof": 10055,
+      "transparencyof": 8706,
+      "asisecurity": 4078,
+      "dataprivacyof": 3426,
+      "agisafe": 357,
+      "commercialvehicle": 349
+    }
+  },
+  "indices": {
+    "compliance_pressure": 0.91
+  },
+  "sim_params": {
+    "regime_enforcement_boost": 1.455,
+    "ungoverned_penalty_mult": 1.273
+  }
+}

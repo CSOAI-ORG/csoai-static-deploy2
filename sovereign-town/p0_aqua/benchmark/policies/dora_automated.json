@@ -1,0 +1,31 @@
+{
+  "name": "dora_automated",
+  "description": "Automated DORA ICT incident-management policy (Regulation (EU) 2022/2554 Arts. 12 & 14).",
+  "framework": "dora",
+  "mode": "automated",
+  "rules": [
+    {
+      "tier": "critical",
+      "verdict": "deny",
+      "redirect": "report_incident",
+      "reason": "DORA Art.12 critical ICT incident — auto-reported within 1 tick"
+    },
+    {
+      "tier": "major",
+      "verdict": "deny",
+      "redirect": "report_incident",
+      "reason": "DORA Art.14 major incident auto-classified and reported (4h deadline)"
+    },
+    {
+      "tier": "minor",
+      "verdict": "allow",
+      "reason": "DORA minor incident — auto-logged, no report required"
+    },
+    {
+      "tier": "negligible",
+      "verdict": "allow",
+      "reason": "DORA negligible event — auto-logged, no report required"
+    }
+  ],
+  "default_verdict": "allow"
+}

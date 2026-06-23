@@ -36,4 +36,10 @@ LEDGER_TAIL=$(tail -1 "$P0/flywheel_ledger_mac.jsonl" 2>/dev/null | /opt/homebre
   echo
 } >> "$OUT"
 
+# Mirror public-facing fleet data to proofof-site landing page
+PUBLIC_DIR="/Users/nicholas/clawd/proofof-site/sovereign-town"
+mkdir -p "$PUBLIC_DIR"
+cp "$P0/fleet_status_mac.json" "$PUBLIC_DIR/fleet_status_mac.json" 2>/dev/null || true
+cp "$P0/moat_models.json" "$PUBLIC_DIR/moat_models.json" 2>/dev/null || true
+
 tail -n 200 "$OUT" > "$OUT.tmp" && mv "$OUT.tmp" "$OUT"

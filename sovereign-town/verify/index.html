@@ -3,69 +3,230 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>CSOAI Sovereign Verifier — verify an agent passport / attestation yourself</title>
-<meta name="description" content="Offline, client-side Ed25519 verification of CSOAI agent passports and attestations. No server, no account — verify it yourself with the public key.">
+<title>Sovereign Verifier — verify an agent passport / attestation yourself</title>
+<meta name="description" content="Offline, client-side Ed25519 verification of CSOAI agent passports, attestations and flywheel ledgers. No server, no account.">
 <style>
-  body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;max-width:760px;margin:0 auto;padding:1.5rem;line-height:1.6;color:#111}
-  h1{font-size:1.6rem;margin:.2rem 0}.lede{color:#666;margin:.2rem 0 1.2rem}
-  textarea{width:100%;height:200px;font-family:ui-monospace,Menlo,monospace;font-size:.8rem;padding:.6rem;border:1px solid #d1d5db;border-radius:.5rem;box-sizing:border-box}
-  button{background:#111;color:#fff;border:0;padding:.6rem 1.2rem;border-radius:.5rem;font-weight:700;cursor:pointer;margin:.6rem 0}
-  .v{padding:.8rem 1rem;border-radius:.5rem;margin:.8rem 0;font-weight:600}
-  .ok{background:#dcfce7;color:#166534}.bad{background:#fee2e2;color:#991b1b}.info{background:#f1f5f9;color:#334155}
-  table{width:100%;border-collapse:collapse;font-size:.9rem;margin:.5rem 0}td{padding:.35rem .5rem;border-bottom:1px solid #eee;vertical-align:top}
-  td:first-child{color:#666;width:130px}code{background:#f3f4f6;padding:.1rem .3rem;border-radius:3px;font-size:.8rem}
-  footer{margin-top:2rem;color:#999;font-size:.85rem;border-top:1px solid #eee;padding-top:1rem}
+  :root{--brand:#D4A843;--brand-dark:#B88D2E;--ink:#0D0B21;--muted:#9C99AD;--bg:#0D0B21;--card:rgba(255,255,255,0.05);--border:rgba(255,255,255,0.1);--ok:#10b981;--bad:#ef4444;--info:#6366f1}
+  *{box-sizing:border-box}
+  body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;margin:0;padding:0;line-height:1.6;color:#E8E4F0;background:var(--bg)}
+  .wrap{max-width:900px;margin:0 auto;padding:0 1.25rem}
+  header{border-bottom:1px solid var(--border);padding:1rem 0;position:sticky;top:0;background:rgba(13,11,33,0.96);backdrop-filter:blur(10px);z-index:100}
+  header .wrap{display:flex;justify-content:space-between;align-items:center}
+  .logo{font-weight:800;font-size:1.2rem;color:var(--brand);text-decoration:none}
+  header nav{display:flex;gap:1.25rem;font-size:.95rem}
+  header nav a{color:rgba(255,255,255,0.8);text-decoration:none}
+  header nav a:hover{color:var(--brand)}
+  .hero{padding:3rem 0 2rem;text-align:center;background:radial-gradient(circle at 30% 20%,rgba(212,168,67,0.12) 0%,transparent 40%)}
+  .hero h1{font-size:clamp(1.6rem,4vw,2.4rem);margin:0 0 .5rem;background:linear-gradient(135deg,var(--brand) 0%,#fff 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+  .hero p{color:var(--muted);max-width:620px;margin:0 auto}
+  section{padding:2rem 0;border-top:1px solid var(--border)}
+  h2{font-size:1.3rem;margin:0 0 .75rem}
+  p.lede{color:var(--muted);margin:0 0 1rem}
+  .tabs{display:flex;gap:.5rem;margin-bottom:1rem;flex-wrap:wrap}
+  .tab{padding:.5rem 1rem;border-radius:8px;background:var(--card);border:1px solid var(--border);color:#d8d4e8;cursor:pointer;font-size:.9rem}
+  .tab.active{background:var(--brand);color:var(--ink);font-weight:700}
+  textarea{width:100%;height:180px;font-family:ui-monospace,Menlo,monospace;font-size:.85rem;padding:.75rem;border:1px solid var(--border);border-radius:8px;background:rgba(255,255,255,0.04);color:#fff;resize:vertical}
+  textarea:focus{outline:none;border-color:var(--brand)}
+  .row{display:flex;gap:.75rem;flex-wrap:wrap;margin:.75rem 0}
+  button,.btn{display:inline-flex;align-items:center;gap:.4rem;padding:.65rem 1.1rem;border-radius:8px;font-weight:600;font-size:.95rem;border:1px solid transparent;cursor:pointer;transition:all .15s;background:none;color:#fff;font-family:inherit}
+  button.primary,.btn.primary{background:var(--brand);color:var(--ink)}
+  button.primary:hover,.btn.primary:hover{background:var(--brand-dark);color:#fff}
+  button.secondary,.btn.secondary{background:var(--card);border-color:var(--border);color:#fff}
+  .v{padding:1rem;border-radius:10px;margin:1rem 0;font-weight:600}
+  .v.ok{background:rgba(16,185,129,0.12);color:#6ee7b7;border:1px solid rgba(16,185,129,0.3)}
+  .v.bad{background:rgba(239,68,68,0.12);color:#fca5a5;border:1px solid rgba(239,68,68,0.3)}
+  .v.info{background:rgba(99,102,241,0.12);color:#a5b4fc;border:1px solid rgba(99,102,241,0.3)}
+  table{width:100%;border-collapse:collapse;font-size:.9rem;margin:.5rem 0}
+  td{padding:.45rem .5rem;border-bottom:1px solid var(--border);vertical-align:top}
+  td:first-child{color:var(--muted);width:130px}
+  code{background:rgba(255,255,255,0.08);padding:.15rem .35rem;border-radius:4px;font-size:.8rem}
+  .chain-step{padding:.6rem;border:1px solid var(--border);border-radius:8px;margin:.4rem 0;background:var(--card)}
+  .chain-step.ok{border-color:rgba(16,185,129,0.4)}
+  .chain-step.bad{border-color:rgba(239,68,68,0.4)}
+  footer{border-top:1px solid var(--border);padding:2rem 0;margin-top:2rem;color:var(--muted);font-size:.9rem}
+  .hidden{display:none}
+  @media(max-width:640px){.row{flex-direction:column}.row button{width:100%;justify-content:center}}
 </style>
 </head>
 <body>
-  <h1>CSOAI Sovereign Verifier</h1>
-  <p class="lede">Paste a CSOAI <strong>agent passport</strong> or <strong>attestation</strong> JSON. It is verified
-  <strong>in your browser</strong> with Ed25519 and the embedded public key — no server, no account, no trust in us.
-  This is what "self-sovereign + tamper-evident" actually means.</p>
 
-  <textarea id="in" placeholder='Paste the passport/attestation JSON here (must contain a "sig" and a public key)…'></textarea>
-  <button onclick="run()">Verify</button>
-  <div id="out"></div>
+<header>
+  <div class="wrap">
+    <a class="logo" href="https://proofof.ai" data-testid="verify-logo">ProofOf.ai · Sovereign Verifier</a>
+    <nav>
+      <a href="https://proofof.ai/sovereign-town">Sovereign Town</a>
+      <a href="https://proofof.ai/sovereign-town/dashboard">Dashboard</a>
+      <a href="https://meok.ai" target="_blank">MEOK.ai</a>
+    </nav>
+  </div>
+</header>
 
-  <footer>
+<div class="hero">
+  <div class="wrap">
+    <h1>Verify any CSOAI passport, attestation or ledger yourself</h1>
+    <p>Client-side Ed25519 verification in your browser. No server, no account, no trust required. This is what self-sovereign + tamper-evident means.</p>
+  </div>
+</div>
+
+<section id="verify">
+  <div class="wrap">
+    <div class="tabs">
+      <div class="tab active" data-testid="tab-passport" onclick="setMode('passport')">Passport / Attestation</div>
+      <div class="tab" data-testid="tab-chain" onclick="setMode('chain')">Flywheel ledger chain</div>
+    </div>
+
+    <p class="lede" id="mode-desc">Paste a CSOAI agent passport or attestation JSON. It must contain a <code>sig</code> and a public key.</p>
+
+    <div class="row">
+      <button class="primary" data-testid="verify-btn" onclick="run()">Verify</button>
+      <button class="secondary" data-testid="load-demo-btn" onclick="loadDemo()">Load demo passport</button>
+      <button class="secondary" onclick="fetchWellKnown()">Fetch .well-known</button>
+      <button class="secondary" onclick="clearAll()">Clear</button>
+    </div>
+
+    <textarea id="in" data-testid="verify-input" placeholder='Paste JSON here…'></textarea>
+    <div id="out" data-testid="verify-output"></div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
     Ed25519 over a canonical (sorted-key) payload. Trust model: verify against the issuer's published public key
     (e.g. DNS <code>.well-known/agent-passport.json</code> / <code>proofof.ai</code>). CSOAI &middot; in-simulation P0/P1.
-  </footer>
+  </div>
+</footer>
 
 <script>
+function escapeHtml(str){ return String(str).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+
+let mode = 'passport';
+function setMode(m){
+  mode = m;
+  document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.textContent.toLowerCase().includes(mode)));
+  document.getElementById('mode-desc').innerHTML = mode === 'passport'
+    ? 'Paste a CSOAI agent passport or attestation JSON. It must contain a <code>sig</code> and a public key.'
+    : 'Paste a flywheel ledger as a JSON array of entries. Each entry must link to the previous signature via <code>prev</code>.';
+}
 function b64ToBytes(b){const s=atob(b.replace(/-/g,'+').replace(/_/g,'/'));const a=new Uint8Array(s.length);for(let i=0;i<s.length;i++)a[i]=s.charCodeAt(i);return a;}
-// canonical JSON matching Python json.dumps(sort_keys=True) for ASCII payloads
-function pyjson(o){
+// pyStr/pyDumps: byte-for-byte port of Python's json.dumps(obj, sort_keys=True)
+// (DEFAULT spaced separators ", "/": ", ensure_ascii). Verified against the real
+// chained ledger — see meok-saas/src/components/SovereignVerifier.tsx for the
+// canonical React port. The old pyjson here used JSON.stringify (no ensure_ascii,
+// no prev-prepend) and falsely rejected genuine ledger entries.
+function pyStr(s){
+  let out='"';
+  for(const ch of s){
+    const c=ch.codePointAt(0);
+    if(ch==='"')out+='\\"';
+    else if(ch==='\\')out+='\\\\';
+    else if(ch==='\n')out+='\\n';
+    else if(ch==='\r')out+='\\r';
+    else if(ch==='\t')out+='\\t';
+    else if(c<0x20)out+='\\u'+c.toString(16).padStart(4,'0');
+    else if(c<0x7f)out+=ch;
+    else if(c<=0xffff)out+='\\u'+c.toString(16).padStart(4,'0');
+    else{const h=c-0x10000;out+='\\u'+(0xd800+(h>>10)).toString(16).padStart(4,'0')+'\\u'+(0xdc00+(h&0x3ff)).toString(16).padStart(4,'0');}
+  }
+  return out+'"';
+}
+function pyDumps(o){
   if(o===null)return"null";
-  if(Array.isArray(o))return"["+o.map(pyjson).join(", ")+"]";
-  if(typeof o==="object")return"{"+Object.keys(o).sort().map(k=>JSON.stringify(k)+": "+pyjson(o[k])).join(", ")+"}";
-  return JSON.stringify(o);
+  if(typeof o==="boolean")return o?"true":"false";
+  if(typeof o==="number")return String(o);
+  if(typeof o==="string")return pyStr(o);
+  if(Array.isArray(o))return"["+o.map(pyDumps).join(", ")+"]";
+  return"{"+Object.keys(o).sort().map(k=>pyStr(k)+": "+pyDumps(o[k])).join(", ")+"}";
 }
 function show(html){document.getElementById('out').innerHTML=html;}
-async function run(){
-  let p; try{p=JSON.parse(document.getElementById('in').value);}catch(e){return show('<div class="v bad">✗ Not valid JSON.</div>');}
+function clearAll(){document.getElementById('in').value='';show('');}
+
+// usePrev=true  -> ledger entry: message = entry.prev + pyDumps(body)  (chain link)
+// usePrev=false -> passport/attestation: message = pyDumps(body)         (self-contained)
+async function verifyEntry(p, usePrev){
   const sig=p.sig; const pub=(p.attestation&&p.attestation.pubkey)||p.pubkey||p.chain_pubkey;
-  if(!sig||!pub)return show('<div class="v bad">✗ Missing <code>sig</code> or public key in the document.</div>');
-  // reconstruct the signed body: the document minus sig (and minus prev/alg if present, matching the signer)
+  if(!sig) return {ok:false, err:'missing sig'};
+  if(!pub) return {ok:false, err:'missing pubkey'};
   const body={...p}; delete body.sig; delete body.prev; delete body.prev_sig; delete body.alg;
-  const msg=new TextEncoder().encode(pyjson(body));
-  let verified=false, err='';
+  const msg=new TextEncoder().encode((usePrev ? (p.prev||'') : '') + pyDumps(body));
   try{
     const key=await crypto.subtle.importKey("raw",b64ToBytes(pub),{name:"Ed25519"},false,["verify"]);
-    verified=await crypto.subtle.verify({name:"Ed25519"},key,b64ToBytes(sig),msg);
-  }catch(e){err=e.message||String(e);}
+    const ok=await crypto.subtle.verify({name:"Ed25519"},key,b64ToBytes(sig),msg);
+    return {ok, err: ok?'':'signature mismatch'};
+  }catch(e){
+    return {ok:false, err:e.message||String(e)};
+  }
+}
+
+async function runPassport(){
+  let p; try{p=JSON.parse(document.getElementById('in').value);}catch(e){return show('<div class="v bad">✗ Not valid JSON.</div>');}
+  const r=await verifyEntry(p, false);
   let meta='';
   if(p.agent){meta=`<table>
-    <tr><td>agent</td><td>${p.agent.name||''} <code>${p.agent.id||''}</code> (${p.agent.type||''})</td></tr>
-    <tr><td>issuer</td><td><code>${p.issuer||''}</code></td></tr>
-    <tr><td>capabilities</td><td>${(p.capabilities||[]).join(', ')}</td></tr>
-    <tr><td>frameworks</td><td>${(p.frameworks||[]).join(', ')}</td></tr>
-    <tr><td>governance</td><td>${p.governance?JSON.stringify(p.governance):''}</td></tr></table>`;}
-  if(verified)show('<div class="v ok">✓ VERIFIED — this document is authentic and untampered (Ed25519, public key only).</div>'+meta);
-  else if(err.includes('Ed25519')||err.includes('algorithm')||err.includes('not supported'))
-    show('<div class="v info">⚠ Your browser lacks WebCrypto Ed25519. Try latest Chrome/Edge, or verify with the Python verifier (verify_chain.py / agent_passport.py).</div>'+meta);
-  else show('<div class="v bad">✗ FAILED — signature does not match. Tampered, wrong key, or non-canonical payload.</div>'+meta);
+    <tr><td>agent</td><td>${escapeHtml(p.agent.name||'')} <code>${escapeHtml(p.agent.id||'')}</code> (${escapeHtml(p.agent.type||'')})</td></tr>
+    <tr><td>issuer</td><td><code>${escapeHtml(p.issuer||'')}</code></td></tr>
+    <tr><td>capabilities</td><td>${(p.capabilities||[]).map(escapeHtml).join(', ')}</td></tr>
+    <tr><td>frameworks</td><td>${(p.frameworks||[]).map(escapeHtml).join(', ')}</td></tr>
+    <tr><td>governance</td><td>${p.governance?escapeHtml(JSON.stringify(p.governance)):''}</td></tr></table>`;}
+  if(r.ok) show('<div class="v ok">✓ VERIFIED — authentic and untampered.</div>'+meta);
+  else if(r.err.includes('Ed25519')||r.err.includes('algorithm')||r.err.includes('not supported'))
+    show('<div class="v info">⚠ Your browser lacks WebCrypto Ed25519. Try latest Chrome/Edge, or use Python verify_chain.py.</div>'+meta);
+  else show('<div class="v bad">✗ FAILED — '+escapeHtml(r.err)+'</div>'+meta);
 }
+
+async function runChain(){
+  let entries; try{entries=JSON.parse(document.getElementById('in').value);}catch(e){return show('<div class="v bad">✗ Not valid JSON array.</div>');}
+  if(!Array.isArray(entries)) return show('<div class="v bad">✗ Ledger must be a JSON array.</div>');
+  let html='<div class="v info">Verifying '+entries.length+' chain entries…</div>';
+  let prevSig = 'genesis';
+  for(let i=0;i<entries.length;i++){
+    const e=entries[i];
+    const expectedPrev = i===0 ? 'genesis-'+e.host : prevSig;
+    const prevOk = (e.prev === expectedPrev);
+    const sigOk = (await verifyEntry(e, true)).ok;
+    const cls = prevOk && sigOk ? 'ok' : 'bad';
+    html += `<div class="chain-step ${cls}">
+      <strong>Entry ${i+1}</strong> — cycle ${escapeHtml(e.cycle||'?')} @ ${escapeHtml(e.ts||'?')}
+      <br>prev link: ${prevOk?'✓':'✗'} (expected ${escapeHtml(expectedPrev.slice(0,24))}…)
+      <br>signature: ${sigOk?'✓':'✗'}
+    </div>`;
+    if(!sigOk) break;
+    prevSig = e.sig;
+  }
+  show(html);
+}
+
+async function run(){ mode==='passport' ? await runPassport() : await runChain(); }
+
+async function loadDemo(){
+  try{
+    const demo = await (await fetch('/sovereign-town/registry.json')).json();
+    const passport = demo.passports && demo.passports[0];
+    if(!passport) throw new Error('no demo passport');
+    document.getElementById('in').value = JSON.stringify(passport, null, 2);
+    setMode('passport');
+  }catch(e){
+    show('<div class="v info">Demo not available offline. Paste a passport from registry.json.</div>');
+  }
+}
+
+async function fetchWellKnown(){
+  try{
+    const url = prompt('Enter .well-known passport URL:', 'https://proofof.ai/.well-known/agent-passport.json');
+    if(!url) return;
+    const data = await (await fetch(url)).json();
+    document.getElementById('in').value = JSON.stringify(data, null, 2);
+    setMode('passport');
+  }catch(e){
+    show('<div class="v bad">✗ Could not fetch: '+escapeHtml(e.message)+'</div>');
+  }
+}
+
+// Auto-run if ?passport= URL param provided
+(function(){
+  const params = new URLSearchParams(location.search);
+  const p = params.get('passport');
+  if(p){ document.getElementById('in').value = p; run(); }
+})();
 </script>
 </body>
 </html>

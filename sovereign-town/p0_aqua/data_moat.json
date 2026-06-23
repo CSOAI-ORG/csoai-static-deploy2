@@ -1,0 +1,237 @@
+{
+  "derived_from": {
+    "eu_data_dir": "/Users/nicholas/clawd/eu_data",
+    "datasets": [
+      "eurostat_employment_tesem010",
+      "eurostat_energy_balance_nrg_bal_s?freq=A&nrg_bal=G3000&unit=KTOE&geo=EU27_2020",
+      "eurostat_gdp_tec00114",
+      "eurostat_population_tps00001",
+      "sparql_eea_environment"
+    ],
+    "note": "Aggregate EU27 indicators only. No personal data."
+  },
+  "raw": {
+    "employment_rate": 74.96,
+    "gdp_per_capita_pps": 100.0,
+    "population_thousands": 450647.0,
+    "energy_gross_inland_ktoe": 1300000,
+    "energy_per_capita_ktoe": 2.8847
+  },
+  "indices": {
+    "eu_resilience_index": 0.748,
+    "eu_prosperity_index": 0.5,
+    "eu_scarcity_pressure": 0.462,
+    "eu_economic_stability": 0.624
+  },
+  "sim_params": {
+    "scarcity_food_mult": 2.451,
+    "contagion_step": 0.058,
+    "eu_regime_enforcement": 0.962
+  },
+  "jurisdiction_regimes": {
+    "EU  \u2014 AI Act + DORA (data-grounded)": 0.962,
+    "US  \u2014 NIST RMF (risk-based)": 0.7,
+    "UK  \u2014 light-touch / sandbox": 0.4,
+    "\u2014   \u2014 ungoverned (no regime)": 0.0
+  },
+  "datasets_detail": {
+    "eurostat_employment_tesem010": {
+      "label": "Employment by sex, age and NACE Rev. 2 (Eurostat tesem010)",
+      "latest_year": "2025",
+      "latest_value": 76.1,
+      "recent_5yr_avg": 74.96,
+      "series": [
+        [
+          "2009",
+          67.3
+        ],
+        [
+          "2010",
+          67.0
+        ],
+        [
+          "2011",
+          67.1
+        ],
+        [
+          "2012",
+          66.9
+        ],
+        [
+          "2013",
+          66.8
+        ],
+        [
+          "2014",
+          67.6
+        ],
+        [
+          "2015",
+          68.5
+        ],
+        [
+          "2016",
+          69.7
+        ],
+        [
+          "2017",
+          70.9
+        ],
+        [
+          "2018",
+          71.9
+        ],
+        [
+          "2019",
+          72.7
+        ],
+        [
+          "2020",
+          71.7
+        ],
+        [
+          "2021",
+          73.1
+        ],
+        [
+          "2022",
+          74.6
+        ],
+        [
+          "2023",
+          75.3
+        ],
+        [
+          "2024",
+          75.7
+        ],
+        [
+          "2025",
+          76.1
+        ]
+      ]
+    },
+    "eurostat_energy_balance_nrg_bal_s?freq=A&nrg_bal=G3000&unit=KTOE&geo=EU27_2020": {
+      "label": "Energy balance - primary production, EU27 (Eurostat nrg_bal_s)",
+      "latest_year": null,
+      "latest_value": null,
+      "recent_5yr_avg": null,
+      "series": []
+    },
+    "eurostat_gdp_tec00114": {
+      "label": "GDP and main components - current prices (Eurostat tec00114)",
+      "latest_year": "2025",
+      "latest_value": 100.0,
+      "recent_5yr_avg": 100.0,
+      "series": [
+        [
+          "2014",
+          100.0
+        ],
+        [
+          "2015",
+          100.0
+        ],
+        [
+          "2016",
+          100.0
+        ],
+        [
+          "2017",
+          100.0
+        ],
+        [
+          "2018",
+          100.0
+        ],
+        [
+          "2019",
+          100.0
+        ],
+        [
+          "2020",
+          100.0
+        ],
+        [
+          "2021",
+          100.0
+        ],
+        [
+          "2022",
+          100.0
+        ],
+        [
+          "2023",
+          100.0
+        ],
+        [
+          "2024",
+          100.0
+        ],
+        [
+          "2025",
+          100.0
+        ]
+      ]
+    },
+    "eurostat_population_tps00001": {
+      "label": "EU Population on 1 January (Eurostat tps00001)",
+      "latest_year": "2025",
+      "latest_value": 450646971.0,
+      "recent_5yr_avg": 447941962.4,
+      "series": [
+        [
+          "2014",
+          442235565.0
+        ],
+        [
+          "2015",
+          442883289.0
+        ],
+        [
+          "2016",
+          443954935.0
+        ],
+        [
+          "2017",
+          444609939.0
+        ],
+        [
+          "2018",
+          445227547.0
+        ],
+        [
+          "2019",
+          446060538.0
+        ],
+        [
+          "2020",
+          446923963.0
+        ],
+        [
+          "2021",
+          445767723.0
+        ],
+        [
+          "2022",
+          445999571.0
+        ],
+        [
+          "2023",
+          447805685.0
+        ],
+        [
+          "2024",
+          449489862.0
+        ],
+        [
+          "2025",
+          450646971.0
+        ]
+      ]
+    },
+    "sparql_eea_environment": {
+      "error": "no dimensions"
+    }
+  }
+}

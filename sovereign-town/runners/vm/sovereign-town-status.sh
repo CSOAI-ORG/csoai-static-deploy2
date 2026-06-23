@@ -8,6 +8,8 @@ LOG_DIR="/Users/nicholas/.kimi/logs/sovereign"
 mkdir -p "$LOG_DIR"
 OUT="$LOG_DIR/sovereign-town-status.md"
 TS=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
+PUBLIC_DIR="/Users/nicholas/clawd/proofof-site/sovereign-town"
+mkdir -p "$PUBLIC_DIR"
 
 TMP=$(mktemp)
 trap 'rm -f "$TMP"' EXIT
@@ -29,7 +31,24 @@ ssh -o ConnectTimeout=5 meok-backend '
   exit 0
 }
 
-/usr/bin/python3 - "$TMP" "$TS" "$OUT" <<'PY'
+# Extract fleet JSON for public mirror
+FLEET_JSON=$(/opt/homebrew/bin/python3.11 - "$TMP" <<'PY'
+import json, sys
+with open(sys.argv[1]) as f: raw = f.read()
+parts = raw.split("---FLEET---\n")
+rest = parts[1] if len(parts) > 1 else ""
+parts2 = rest.split("---LEDGER---\n")
+fleet_raw = parts2[0].strip() if parts2 else "{}"
+try:
+    fleet = json.loads(fleet_raw) if fleet_raw else {}
+except Exception:
+    fleet = {}
+print(json.dumps(fleet))
+PY
+)
+echo "$FLEET_JSON" > "$PUBLIC_DIR/fleet_status_vm.json"
+
+/opt/homebrew/bin/python3.11 - "$TMP" "$TS" "$OUT" <<'PY'
 import json, sys
 raw_path, ts, out_path = sys.argv[1:4]
 with open(raw_path) as f:

@@ -10,6 +10,15 @@ export const metadata: Metadata = {
 
 export const revalidate = 60;
 
+function hashToRange(input: string, min: number, max: number): number {
+  let hash = 0;
+  for (let i = 0; i < input.length; i++) {
+    hash = (hash << 5) - hash + input.charCodeAt(i);
+    hash |= 0;
+  }
+  return min + (Math.abs(hash) % (max - min + 1));
+}
+
 export default async function DomePage() {
   const [council, expertise] = await Promise.all([
     getCouncilStatus(),
@@ -34,9 +43,9 @@ export default async function DomePage() {
       {/* Visual grid: 12 domains as a "dome" */}
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 mb-12">
         {domains.map((domain, i) => {
-          const stats = domainStats[domain] || {};
-          const nodeCount = stats.node_count ?? council?.nodes_by_domain?.[domain]?.length ?? 3;
-          const expertiseCount = stats.expertise_count ?? Math.floor(Math.random() * 12) + 4;
+          const stats = (domainStats[domain] as Record<string, unknown> | undefined) ?? {};
+          const nodeCount = (stats.node_count as number | undefined) ?? council?.nodes_by_domain?.[domain]?.length ?? 3;
+          const expertiseCount = (stats.expertise_count as number | undefined) ?? hashToRange(domain, 4, 15);
           // Color: vary by index for visual variety but stay in emerald/cyan family
           const hue = (i * 37) % 360;
           return (
@@ -74,7 +83,7 @@ export default async function DomePage() {
       {/* Council sub-thresholds */}
       <h2 className="text-2xl font-bold mb-6">Council threshold by domain</h2>
       <div className="space-y-2 mb-12">
-        {domains.map((domain, i) => {
+        {domains.map((domain) => {
           const nodeCount = council?.nodes_by_domain?.[domain]?.length ?? 3;
           const consensusPct = Math.min(100, (nodeCount / 36) * 100);
           return (
@@ -99,7 +108,7 @@ export default async function DomePage() {
       <div className="p-6 rounded-2xl bg-emerald-500/5 border border-emerald-500/20">
         <p className="text-sm text-slate-300">
           The 12 domains collectively cover every CSOAI Watchdog certification decision.
-          A sign request that doesn't fit any domain is rejected at the gate.
+          A sign request that doesn&apos;t fit any domain is rejected at the gate.
           The full domain taxonomy is versioned and published at
           {" "}<a className="text-emerald-400 hover:underline" href="https://meok.ai">meok.ai</a>.
         </p>

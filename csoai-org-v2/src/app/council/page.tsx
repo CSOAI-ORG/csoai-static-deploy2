@@ -15,7 +15,7 @@ import {
 export const metadata: Metadata = {
   title: "Council Dome",
   description:
-    "Real-time view of the CSOAI Council substrate: 33-node Byzantine council, 235 architecture nodes, 144 expertise specialists and 55 inter-domain bridges.",
+    "Real-time view of the CSOAI Council substrate: 36-node Byzantine-style council, 235 architecture nodes, 144 expertise specialists and 55 inter-domain bridges.",
   openGraph: {
     title: "CSOAI Council Dome",
     description: "Verify the cryptographic council behind every Watchdog certificate.",
@@ -55,7 +55,7 @@ export default async function CouncilPage() {
         </h1>
         <p className="text-slate-400 text-lg max-w-3xl leading-relaxed">
           A real-time view of the substrate behind every CSOAI Watchdog
-          certificate. 33-node Byzantine council, 235 architecture nodes,
+          certificate. 36-node Byzantine-style council, 235 architecture nodes,
           144 expertise specialists, 55 inter-domain bridges. All
           cryptographic, all verifiable, all open source.
         </p>
@@ -87,7 +87,7 @@ export default async function CouncilPage() {
         <SubCard
           href="/council/maps"
           title="Maps"
-          desc="The 33-node council graph with inter-domain bridges. Visualize who agrees with whom on what."
+          desc="The 36-node council graph with inter-domain bridges. Visualize who agrees with whom on what."
           meta={`${bridges?.total ?? 55} bridges`}
         />
         <SubCard
@@ -117,7 +117,7 @@ export default async function CouncilPage() {
         <div className="p-6 rounded-2xl bg-white/5 border border-white/10">
           <h3 className="text-xs font-bold text-slate-500 uppercase tracking-widest mb-3">Council</h3>
           <p className="text-3xl font-black text-emerald-400">{council?.version ?? "3.0-fractal"}</p>
-          <p className="text-xs text-slate-500 mt-1">threshold: {council?.threshold ?? 22}/36</p>
+          <p className="text-xs text-slate-500 mt-1">threshold: {council?.threshold ?? 25}/36</p>
         </div>
         <div className="p-6 rounded-2xl bg-white/5 border border-white/10">
           <h3 className="text-xs font-bold text-slate-500 uppercase tracking-widest mb-3">Expertise</h3>
@@ -126,7 +126,7 @@ export default async function CouncilPage() {
         </div>
         <div className="p-6 rounded-2xl bg-white/5 border border-white/10">
           <h3 className="text-xs font-bold text-slate-500 uppercase tracking-widest mb-3">Memory</h3>
-          <p className="text-3xl font-black text-amber-400">{memory?.episodes ?? 1400}+</p>
+          <p className="text-3xl font-black text-amber-400">{Number(memory?.episodes ?? 1400)}+</p>
           <p className="text-xs text-slate-500 mt-1">episodes</p>
         </div>
       </div>
@@ -155,7 +155,7 @@ export default async function CouncilPage() {
           <p className="text-3xl font-black text-emerald-400">kid: {sigilKid}</p>
           <p className="text-xs text-slate-500 mt-1">
             v{attest?.version ?? "1.2.0"} ·{" "}
-            <a className="text-emerald-400 hover:underline" href={`${ATTESTATION_API_BASE}/v1/health`} target="_blank" rel="noreferrer">
+            <a className="text-emerald-400 hover:underline" href={`${ATTESTATION_API_BASE}/v1/health`} target="_blank" rel="noopener noreferrer">
               /v1/health ↗
             </a>
           </p>
@@ -179,7 +179,7 @@ export default async function CouncilPage() {
             className="inline-block mt-3 text-xs text-emerald-400 hover:underline"
             href={`${ATTESTATION_API_BASE}/api/audit`}
             target="_blank"
-            rel="noreferrer"
+            rel="noopener noreferrer"
           >
             /api/audit ↗
           </a>

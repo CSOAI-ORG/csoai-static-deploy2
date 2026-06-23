@@ -1,0 +1,56 @@
+{
+  "name": "Sovereign Town Benchmark Agent",
+  "description": "A2A agent that runs reproducible governance-policy simulations, compares regulatory scenarios, classifies actions under EU AI Act / NIST RMF / ISO 42001 / DORA, and reads the signed public leaderboard.",
+  "url": "http://127.0.0.1:3941",
+  "version": "0.1.0",
+  "capabilities": {
+    "streaming": false,
+    "pushNotifications": false,
+    "stateTransitionMonitoring": false
+  },
+  "skills": [
+    {
+      "id": "sov_benchmark_run",
+      "name": "Run benchmark",
+      "description": "Run a single policy/scenario simulation and return scored metrics.",
+      "tags": ["benchmark", "policy", "simulation"],
+      "examples": [
+        "Run sovereign policy under scarcity_shock in aqua district",
+        "Benchmark the aia_required policy on the ai_act_prohibited_ban scenario"
+      ]
+    },
+    {
+      "id": "sov_benchmark_compare",
+      "name": "Compare policies",
+      "description": "Compare two or more comma-separated policies under the same scenario.",
+      "tags": ["benchmark", "comparison", "policy"],
+      "examples": [
+        "Compare sovereign and ungoverned under baseline",
+        "Compare sovereign, strict, permissive under scarcity_shock"
+      ]
+    },
+    {
+      "id": "sov_regulatory_classify",
+      "name": "Classify regulatory risk",
+      "description": "Classify an agent action under a chosen governance framework.",
+      "tags": ["regulation", "eu-ai-act", "nist-rmf", "iso-42001", "dora"],
+      "examples": [
+        "Classify the action 'steal' under eu_ai_act",
+        "What is the NIST RMF tier for 'neglect'?"
+      ]
+    },
+    {
+      "id": "sov_leaderboard",
+      "name": "Read public leaderboard",
+      "description": "Fetch the signed leaderboard from a Sovereign Town harness server.",
+      "tags": ["leaderboard", "attestation"],
+      "examples": [
+        "Show the latest benchmark leaderboard",
+        "How many signed runs are on the public leaderboard?"
+      ]
+    }
+  ],
+  "authentication": null,
+  "defaultInputModes": ["text/plain"],
+  "defaultOutputModes": ["text/plain", "application/json"]
+}

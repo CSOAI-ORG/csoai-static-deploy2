@@ -38,60 +38,68 @@ export default async function MapsPage() {
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-12">
         <BigStat label="Council nodes" value={totalNodes} color="emerald" />
         <BigStat label="Bridges" value={totalBridges} color="cyan" />
-        <BigStat label="Threshold" value={`${council?.threshold ?? 22}/36`} color="amber" />
+        <BigStat label="Threshold" value={`${council?.threshold ?? 25}/36`} color="amber" />
         <BigStat label="Domains" value={council?.domain_count ?? 12} color="violet" />
       </div>
 
       {/* Visual: domain clusters */}
       <h2 className="text-2xl font-bold mb-6">Domain clusters (real-time node counts)</h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-12">
-        {Object.entries(nodesByDomain).map(([domain, nodes]: [string, any]) => (
+        {Object.entries(nodesByDomain).map(([domain, nodes]) => {
+          const nodeList = Array.isArray(nodes) ? nodes : [];
+          return (
           <div
             key={domain}
             className="p-5 rounded-2xl bg-white/5 border border-white/10"
           >
             <h3 className="text-sm font-bold capitalize text-slate-300 mb-2">{domain}</h3>
             <div className="flex items-center gap-1 flex-wrap">
-              {Array.from({ length: Math.min(nodes?.length ?? 1, 20) }).map((_, i) => (
+              {Array.from({ length: Math.min(nodeList.length, 20) }).map((_, i) => (
                 <div
                   key={i}
                   className="w-2.5 h-2.5 rounded-full bg-emerald-400"
                   style={{ opacity: 0.4 + (i % 3) * 0.2 }}
                 />
               ))}
-              {(nodes?.length ?? 0) > 20 && (
-                <span className="text-xs text-slate-500 ml-1">+{(nodes?.length ?? 0) - 20}</span>
+              {nodeList.length > 20 && (
+                <span className="text-xs text-slate-500 ml-1">+{nodeList.length - 20}</span>
               )}
             </div>
             <p className="text-xs text-slate-500 mt-2">
-              {nodes?.length ?? 0} nodes · ~{Math.floor((nodes?.length ?? 0) * 1.5)} bridges
+              {nodeList.length} nodes · ~{Math.floor(nodeList.length * 1.5)} bridges
             </p>
           </div>
-        ))}
+        );})}
       </div>
 
       {/* High affinity pairs */}
       <h2 className="text-2xl font-bold mb-6">High-affinity bridge pairs</h2>
       <p className="text-sm text-slate-500 mb-6">
         Pairs of nodes that consistently agree on cert decisions. These are
-        the substrate's "stable" relationships — useful for predicting future
+        the substrate&apos;s &quot;stable&quot; relationships — useful for predicting future
         outcomes and detecting Sybil attacks.
       </p>
       {highAffinity && highAffinity.length > 0 ? (
         <div className="space-y-2 mb-12">
-          {highAffinity.slice(0, 20).map((pair: any, i: number) => (
-            <div
-              key={i}
-              className="p-4 rounded-lg bg-white/5 border border-white/5 flex items-center justify-between"
-            >
-              <span className="font-mono text-sm">
-                {pair.node_a ?? pair.a ?? "node-a"} <span className="text-slate-500">↔</span> {pair.node_b ?? pair.b ?? "node-b"}
-              </span>
-              <span className="text-xs font-mono text-emerald-400">
-                {(pair.affinity ?? pair.strength ?? 0).toFixed(2)} affinity
-              </span>
-            </div>
-          ))}
+          {highAffinity.slice(0, 20).map((pair, i) => {
+            const p = pair as Record<string, unknown>;
+            const a = String(p.node_a ?? p.a ?? "node-a");
+            const b = String(p.node_b ?? p.b ?? "node-b");
+            const affinity = typeof p.affinity === "number" ? p.affinity : typeof p.strength === "number" ? p.strength : 0;
+            return (
+              <div
+                key={i}
+                className="p-4 rounded-lg bg-white/5 border border-white/5 flex items-center justify-between"
+              >
+                <span className="font-mono text-sm">
+                  {a} <span className="text-slate-500">↔</span> {b}
+                </span>
+                <span className="text-xs font-mono text-emerald-400">
+                  {affinity.toFixed(2)} affinity
+                </span>
+              </div>
+            );
+          })}
         </div>
       ) : (
         <p className="text-slate-500 text-sm italic">

@@ -16,50 +16,59 @@ Pure stdlib. Headless + accelerated. python3.11 sim.py
 """
 from __future__ import annotations
 import json, random, hashlib, time, os
+
 import sign_lib                                   # Ed25519 episode attestation (proofof.ai primitive)
+import config                                     # centralized ports/paths/knobs
+import moat_params                                # moat-derived simulation constants
 
 SEED, DAYS, TICKS_PER_DAY = 47, 21, 24
 CARE_FLOOR     = 0.40
 SCARCITY_DAYS  = set(range(7, 14))     # week-long market crash
 FOOD_COST_BASE = 1.5
-CONTAGION_STEP = 0.05                   # how much each crime raises town lawlessness (SWEEPABLE)
-SCARCITY_FOOD_MULT = 3.2               # food-cost multiplier during scarcity (SWEEPABLE)
 WORK_HOURS     = set(range(8, 19))
-OUT_DIR        = os.path.dirname(os.path.abspath(__file__))
+OUT_DIR        = str(config.OUT_DIR)
+
+# Moat-derived constants (loaded once at import; default to neutral if files missing).
+CONTAGION_STEP = moat_params.CONTAGION_STEP
+SCARCITY_FOOD_MULT = moat_params.SCARCITY_FOOD_MULT
+BASELINE_LAWLESSNESS = moat_params.BASELINE_LAWLESSNESS
+REGIME_ENFORCEMENT_BOOST = moat_params.REGIME_ENFORCEMENT_BOOST
+UNGOVERNED_PENALTY_MULT = moat_params.UNGOVERNED_PENALTY_MULT
 
 NEEDS = ["hunger", "energy", "social", "fun", "wealth", "comfort", "hygiene", "bladder"]
 DECAY = {"hunger": 7.0, "energy": 4.0, "social": 5.0, "fun": 4.5,
          "comfort": 3.0, "hygiene": 3.0, "bladder": 8.0}
 
+# MEOK canonical archetypes + care styles. Names are district-flavoured; mechanics remain identical.
 PERSONAS = [
-    {"id": 2, "name": "River",  "archetype": "Nurturer",   "care_style": "gentle"},
-    {"id": 3, "name": "Koa",    "archetype": "Guardian",   "care_style": "supporter"},
-    {"id": 4, "name": "Marina", "archetype": "Strategist", "care_style": "challenger"},
-    {"id": 5, "name": "Finn",   "archetype": "Explorer",   "care_style": "explorer"},
-    {"id": 6, "name": "Pearl",  "archetype": "Seeker",     "care_style": "seeker"},
+    {"id": 2, "name": "River",  "archetype": "Guardian", "care_style": "supporter"},
+    {"id": 3, "name": "Koa",    "archetype": "Scholar",  "care_style": "gentle"},
+    {"id": 4, "name": "Marina", "archetype": "Healer",   "care_style": "gentle"},
+    {"id": 5, "name": "Finn",   "archetype": "Trickster","care_style": "challenger"},
+    {"id": 6, "name": "Pearl",  "archetype": "Pioneer",  "care_style": "explorer"},
 ]
 
 # ── Districts: one engine, every hive. Mechanics are identical; persona set + work KPI differ. ──
 DISTRICTS = {
     "aqua":      {"hive": "koikeeper.ai", "kpi": "koikeeper_disease_flag_correct", "personas": PERSONAS},
     "legal":     {"hive": "landlaw.ai",   "kpi": "landlaw_title_check_correct", "personas": [
-        {"id": 12, "name": "Justice", "archetype": "Guardian",   "care_style": "supporter"},
-        {"id": 13, "name": "Quill",   "archetype": "Sage",       "care_style": "gentle"},
-        {"id": 14, "name": "Verdict", "archetype": "Strategist", "care_style": "challenger"},
-        {"id": 15, "name": "Brief",   "archetype": "Explorer",   "care_style": "explorer"},
-        {"id": 16, "name": "Clause",  "archetype": "Seeker",     "care_style": "seeker"}]},
+        {"id": 12, "name": "Justice", "archetype": "Guardian", "care_style": "supporter"},
+        {"id": 13, "name": "Quill",   "archetype": "Scholar",  "care_style": "gentle"},
+        {"id": 14, "name": "Verdict", "archetype": "Trickster","care_style": "challenger"},
+        {"id": 15, "name": "Brief",   "archetype": "Pioneer",  "care_style": "explorer"},
+        {"id": 16, "name": "Clause",  "archetype": "Mystic",   "care_style": "seeker"}]},
     "logistics": {"hive": "haulage.app",  "kpi": "haulage_tacho_audit_correct", "personas": [
-        {"id": 22, "name": "Haul",    "archetype": "Guardian",   "care_style": "supporter"},
-        {"id": 23, "name": "Cargo",   "archetype": "Nurturer",   "care_style": "gentle"},
-        {"id": 24, "name": "Axle",    "archetype": "Strategist", "care_style": "challenger"},
-        {"id": 25, "name": "Route",   "archetype": "Explorer",   "care_style": "explorer"},
-        {"id": 26, "name": "Depot",   "archetype": "Seeker",     "care_style": "seeker"}]},
+        {"id": 22, "name": "Haul",    "archetype": "Guardian", "care_style": "supporter"},
+        {"id": 23, "name": "Cargo",   "archetype": "Healer",   "care_style": "gentle"},
+        {"id": 24, "name": "Axle",    "archetype": "Trickster","care_style": "challenger"},
+        {"id": 25, "name": "Route",   "archetype": "Pioneer",  "care_style": "explorer"},
+        {"id": 26, "name": "Depot",   "archetype": "Mystic",   "care_style": "seeker"}]},
     "optical":   {"hive": "optimobile.ai","kpi": "optical_screen_referral_correct", "personas": [
-        {"id": 32, "name": "Iris",    "archetype": "Nurturer",   "care_style": "gentle"},
-        {"id": 33, "name": "Lens",    "archetype": "Guardian",   "care_style": "supporter"},
-        {"id": 34, "name": "Focus",   "archetype": "Strategist", "care_style": "challenger"},
-        {"id": 35, "name": "Vista",   "archetype": "Explorer",   "care_style": "explorer"},
-        {"id": 36, "name": "Clarity", "archetype": "Seeker",     "care_style": "seeker"}]},
+        {"id": 32, "name": "Iris",    "archetype": "Healer",   "care_style": "gentle"},
+        {"id": 33, "name": "Lens",    "archetype": "Guardian", "care_style": "supporter"},
+        {"id": 34, "name": "Focus",   "archetype": "Scholar",  "care_style": "gentle"},
+        {"id": 35, "name": "Vista",   "archetype": "Pioneer",  "care_style": "explorer"},
+        {"id": 36, "name": "Clarity", "archetype": "Mystic",   "care_style": "seeker"}]},
 }
 
 # ── Extend to the full hive roster (procedural personas) — every hive is a district ──
@@ -70,8 +79,10 @@ _EXTRA_HIVES = [
     "openpatent.ai", "planthire.ai", "pokerhud.ai", "proofof.ai", "safetyof.ai",
     "socialmediamanager.ai", "suicidestop.ai", "transparencyof.ai",
 ]
-_CARE = ["gentle", "supporter", "challenger", "explorer", "seeker"]
-_ARCH = ["Nurturer", "Guardian", "Strategist", "Explorer", "Seeker"]
+# Procedural hives rotate through the six MEOK archetypes so the full roster carries every voice.
+_MEOK_ARCH = ["Guardian", "Scholar", "Healer", "Trickster", "Pioneer", "Mystic"]
+_MEOK_CARE = {"Guardian": "supporter", "Scholar": "gentle", "Healer": "gentle",
+              "Trickster": "challenger", "Pioneer": "explorer", "Mystic": "seeker"}
 for _i, _hive in enumerate(_EXTRA_HIVES):
     _key = _hive.split(".")[0]
     if _key in DISTRICTS:
@@ -79,7 +90,8 @@ for _i, _hive in enumerate(_EXTRA_HIVES):
     _b = 100 + _i * 5
     DISTRICTS[_key] = {"hive": _hive, "kpi": f"{_key}_task_correct",
         "personas": [{"id": _b + _j + 1, "name": f"{_key[:5].title()}-{_j+1}",
-                      "archetype": _ARCH[_j], "care_style": _CARE[_j]} for _j in range(5)]}
+                      "archetype": _MEOK_ARCH[(_i + _j) % len(_MEOK_ARCH)],
+                      "care_style": _MEOK_CARE[_MEOK_ARCH[(_i + _j) % len(_MEOK_ARCH)]]} for _j in range(5)]}
 
 class Agent:
     def __init__(s, id, name, archetype, care_style):
@@ -90,7 +102,7 @@ class Agent:
 class Town:
     """Shared world state — the commons + lawlessness contagion (both arms have these)."""
     def __init__(s):
-        s.lawlessness = 0.0      # rises per crime, decays slowly → normalizes more crime (contagion)
+        s.lawlessness = BASELINE_LAWLESSNESS  # rises per crime, decays slowly → normalizes more crime (contagion)
         s.commons = 1.0          # koikeeper-fishery health; theft degrades it → wages fall
         s.treasury = 0.0         # 10% income tax; funds the welfare floor
 
@@ -172,18 +184,112 @@ def rescue(a, peers, town, day):
             p.wallet -= c; a.needs["hunger"] = min(100, a.needs["hunger"] + 45); return p.id
     return None
 
-def run_arm(arm, ep, chain, priv, sign=True, district="aqua", seed=SEED, block_rate=1.0):
+
+def _policy_observation(action, target, a, town, day, hour, arm, district):
+    """Serialize the decision context for an external governance policy."""
+    return {
+        "arm": arm,
+        "district": district,
+        "day": day,
+        "hour": hour,
+        "scarcity": day in SCARCITY_DAYS,
+        "intended_action": action,
+        "target": {"id": target.id, "name": target.name} if target else None,
+        "agent": {
+            "id": a.id, "name": a.name, "archetype": a.archetype, "care_style": a.care_style,
+            "alive": a.alive, "wallet": round(a.wallet, 2),
+            "needs": {k: round(v, 1) for k, v in a.needs.items()},
+            "care_ema": round(a.care_ema, 3), "violations": a.violations,
+        },
+        "town": {
+            "lawlessness": round(town.lawlessness, 3),
+            "commons": round(town.commons, 3),
+            "treasury": round(town.treasury, 2),
+        },
+    }
+
+
+def _invoke_policy(policy_fn, action, observation):
+    """Call an external policy (callable or object with .decide()) or fall back to sovereign_gate."""
+    if policy_fn is None:
+        return sovereign_gate(action, observation["arm"])
+    if callable(policy_fn):
+        result = policy_fn(action, observation)
+    else:
+        result = policy_fn.decide(observation)
+    if not isinstance(result, dict):
+        return {"verdict": "allow"}
+    return result
+
+
+def _apply_policy_gate(action, target, a, agents, town, day, hour, arm, district,
+                       rng, effective_block_rate, policy_fn=None):
+    """
+    Resolve the sovereign gate for one agent tick, optionally using an external policy.
+    Returns (gate_record, executed_action, aid_from, slipped, observation).
+    """
+    observation = _policy_observation(action, target, a, town, day, hour, arm, district)
+    result = _invoke_policy(policy_fn, action, observation)
+    verdict = result.get("verdict") or result.get("gate_verdict", "allow")
+    if verdict not in ("allow", "deny", "escalate"):
+        verdict = "allow"
+
+    cs = care_score(action)
+    would_violate = action in ("steal", "neglect", "deceive")
+    breaches = cs < CARE_FLOOR
+
+    g = {
+        "gate_verdict": verdict,
+        "care_score": round(cs, 3),
+        "care_floor_breach": breaches,
+        "would_block": verdict != "allow",
+        "violation": action if (verdict == "allow" and would_violate) else None,
+        "policy_reason": result.get("reason"),
+    }
+
+    executed = action
+    aid = None
+    slipped = (would_violate and effective_block_rate < 1.0
+               and rng.random() >= effective_block_rate)
+
+    if verdict in ("deny", "escalate") and not slipped:
+        redirect = result.get("redirect")
+        if redirect:
+            executed = redirect
+        elif action == "steal":
+            c = food_cost(day)
+            if a.needs["hunger"] < 30:                 # deterministic care floor
+                if town.treasury >= c:
+                    town.treasury -= c
+                else:
+                    aid = rescue(a, agents, town, day)
+                a.needs["hunger"] = min(100, a.needs["hunger"] + 50)
+                executed = "welfare_meal"
+            else:
+                executed = "work" if hour in WORK_HOURS else "rest"
+        else:
+            executed = "work" if hour in WORK_HOURS else "rest"
+        g["redirected_to"] = executed
+
+    return g, executed, aid, slipped, observation
+
+
+def run_arm(arm, ep, chain, priv, sign=True, district="aqua", seed=SEED, block_rate=1.0,
+            collect_states=False, policy_fn=None):
     D = DISTRICTS[district]
     rng = random.Random(seed)
     agents = [Agent(**p) for p in D["personas"]]
     town = Town()
     ids = [a.id for a in agents]
+    # Real-world sanctions/compliance pressure tightens the Sovereign Gate.
+    effective_block_rate = min(1.0, block_rate * REGIME_ENFORCEMENT_BOOST)
     trust = {i: {j: 0.5 for j in ids if j != i} for i in ids}     # pairwise trust, starts neutral
     def mean_trust():
         pairs = [trust[i][j] for i in ids for j in trust[i]]
         return sum(pairs) / max(1, len(pairs))
     st = {"arm": arm, "episodes": 0, "violations": 0, "care_breaches": 0, "blocked": 0,
           "mutual_aid": 0, "welfare_meals": 0, "work_correct": 0, "work_total": 0, "deaths": 0}
+    tick_states = [] if collect_states else None
     daily = []
     for day in range(DAYS):
         day_crimes = 0; day_care = []
@@ -197,25 +303,16 @@ def run_arm(arm, ep, chain, priv, sign=True, district="aqua", seed=SEED, block_r
                 if a.needs["hunger"] <= 0:
                     a.alive = False; st["deaths"] += 1; continue
                 action, target = choose_action(a, agents, town, day, hour, rng)
-                g = sovereign_gate(action, arm); executed = action; aid = None
-                slipped = (action in ("steal", "neglect", "deceive") and block_rate < 1.0
-                           and rng.random() >= block_rate)     # regime enforcement gap: act slips through
+                g, executed, aid, slipped, observation = _apply_policy_gate(
+                    action, target, a, agents, town, day, hour, arm, district,
+                    rng, effective_block_rate, policy_fn=policy_fn)
                 if g["gate_verdict"] in ("deny", "escalate") and not slipped:
                     st["blocked"] += 1
-                    if action == "steal":
-                        c = food_cost(day)
-                        if a.needs["hunger"] < 30:                 # deterministic care floor — no one starves
-                            if town.treasury >= c: town.treasury -= c; st["welfare_meals"] += 1
-                            else:
-                                aid = rescue(a, agents, town, day)
-                                if aid is not None: st["mutual_aid"] += 1
-                                else: st["welfare_meals"] += 1     # covenant subsidy
-                            a.needs["hunger"] = min(100, a.needs["hunger"] + 50); executed = "welfare_meal"
+                    if executed == "welfare_meal":
+                        if aid is not None:
+                            st["mutual_aid"] += 1
                         else:
-                            executed = "work" if hour in WORK_HOURS else "rest"
-                    else:
-                        executed = "work" if hour in WORK_HOURS else "rest"
-                    g["redirected_to"] = executed
+                            st["welfare_meals"] += 1
                 if slipped:                                    # enforcement gap → violation actually occurs
                     a.violations += 1; st["violations"] += 1; day_crimes += 1
                 out = apply(a, executed, target, town, day, rng, D["kpi"])
@@ -251,6 +348,25 @@ def run_arm(arm, ep, chain, priv, sign=True, district="aqua", seed=SEED, block_r
                     rec["sig"] = sign_lib.sign(priv, chain["sig"] + body) if sign else "unsigned"
                     chain["sig"] = rec["sig"]
                     ep.write(json.dumps(rec) + "\n")
+                if collect_states:
+                    tick_states.append({
+                        "district": district,
+                        "agent_index": agents.index(a),
+                        "agent_id": a.id,
+                        "name": a.name,
+                        "archetype": a.archetype,
+                        "day": day,
+                        "hour": hour,
+                        "alive": a.alive,
+                        "action": executed,
+                        "intended": action,
+                        "needs": {k: round(v, 1) for k, v in a.needs.items()},
+                        "wallet": round(a.wallet, 2),
+                        "lawlessness": round(town.lawlessness, 3),
+                        "commons": round(town.commons, 3),
+                        "mean_trust": round(mean_trust(), 3),
+                        "care_ema": round(a.care_ema, 3),
+                    })
                 st["episodes"] += 1
         alive = sum(1 for a in agents if a.alive)
         daily.append({"day": day, "crimes": day_crimes, "alive": alive,
@@ -263,6 +379,8 @@ def run_arm(arm, ep, chain, priv, sign=True, district="aqua", seed=SEED, block_r
     st["final_commons"] = round(town.commons, 3); st["peak_lawlessness"] = round(max(d["lawlessness"] for d in daily), 3)
     st["final_trust"] = round(mean_trust(), 3)
     st["daily"] = daily
+    if collect_states:
+        st["tick_states"] = tick_states
     return st
 
 def audit_live_care_nn():
@@ -287,12 +405,12 @@ def main():
     with open(os.path.join(OUT_DIR, "episodes.jsonl"), "w") as f:
         a = run_arm("A_governed", f, chain, priv); b = run_arm("B_ungoverned", f, chain, priv)
     live_audit = audit_live_care_nn()
-    json.dump({"generated": time.strftime("%Y-%m-%d %H:%M:%S"), "seed": SEED, "days": DAYS,
-               "citizens": len(PERSONAS), "scarcity_days": sorted(SCARCITY_DAYS),
-               "chain_head": chain["sig"], "chain_alg": "ed25519", "chain_pubkey": pub,
-               "live_care_nn_audit": live_audit,
-               "arm_A_governed": a, "arm_B_ungoverned": b},
-              open(os.path.join(OUT_DIR, "summary.json"), "w"), indent=2)
+    with open(os.path.join(OUT_DIR, "summary.json"), "w") as f:
+        json.dump({"generated": time.strftime("%Y-%m-%d %H:%M:%S"), "seed": SEED, "days": DAYS,
+                   "citizens": len(PERSONAS), "scarcity_days": sorted(SCARCITY_DAYS),
+                   "chain_head": chain["sig"], "chain_alg": "ed25519", "chain_pubkey": pub,
+                   "live_care_nn_audit": live_audit,
+                   "arm_A_governed": a, "arm_B_ungoverned": b}, f, indent=2)
     print(f"\n  SOVEREIGN TOWN — P0 Aqua  ({DAYS} days, {len(PERSONAS)} citizens, scarcity {sorted(SCARCITY_DAYS)[0]}-{sorted(SCARCITY_DAYS)[-1]})")
     print("  " + "-" * 64)
     print(f"  {'metric':<24}{'Arm A governed':>18}{'Arm B ungoverned':>20}")

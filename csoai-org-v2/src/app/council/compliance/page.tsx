@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 export const revalidate = 60;
 
 const FRAMEWORKS = [
-  { id: "eu-ai-act", name: "EU AI Act", region: "EU", status: "primary", penalty: "€35M / 7%", deadline: "2026-08-02" },
+  { id: "eu-ai-act", name: "EU AI Act", region: "EU", status: "primary", penalty: "€35M / 7% (Art 5); €15M / 3% (Art 50)", deadline: "2026-08-02" },
   { id: "dora", name: "DORA", region: "EU", status: "active", penalty: "1% daily turnover", deadline: "LIVE" },
   { id: "nis2", name: "NIS2", region: "EU", status: "active", penalty: "€10M / 2%", deadline: "LIVE" },
   { id: "iso-42001", name: "ISO/IEC 42001", region: "Global", status: "active", penalty: "cert withdrawal", deadline: "ongoing" },
@@ -38,7 +38,7 @@ export default async function CompliancePage() {
     getMemoryStats(),
   ]);
 
-  const episodeCount = memory?.episodes ?? 1400;
+  const episodeCount = Number(memory?.episodes ?? 1400);
   const decisionCount = history?.length ?? 0;
 
   return (
@@ -98,29 +98,29 @@ export default async function CompliancePage() {
       <h2 className="text-2xl font-bold mb-6">Recent council decisions</h2>
       {history && history.length > 0 ? (
         <div className="space-y-2 mb-12">
-          {history.slice(0, 10).map((d: any, i: number) => (
+          {history.slice(0, 10).map((d, i) => (
             <div
               key={i}
               className="p-4 rounded-lg bg-white/5 border border-white/5 flex items-center justify-between"
             >
               <div>
                 <p className="text-sm font-mono text-slate-300">
-                  {d.proposal ?? d.decision ?? `decision-${i}`}
+                  {String(d.proposal ?? d.decision ?? `decision-${i}`)}
                 </p>
                 <p className="text-xs text-slate-500 mt-0.5">
-                  {d.timestamp ?? d.ts ?? "—"} · {d.domain ?? "general"}
+                  {String(d.timestamp ?? d.ts ?? "—")} · {String(d.domain ?? "general")}
                 </p>
               </div>
               <span
                 className={`text-xs px-2 py-1 rounded ${
-                  (d.outcome ?? d.result) === "approve"
+                  String(d.outcome ?? d.result) === "approve"
                     ? "bg-emerald-500/20 text-emerald-300"
-                    : (d.outcome ?? d.result) === "reject"
+                    : String(d.outcome ?? d.result) === "reject"
                       ? "bg-rose-500/20 text-rose-300"
                       : "bg-slate-500/20 text-slate-300"
                 }`}
               >
-                {d.outcome ?? d.result ?? "—"}
+                {String(d.outcome ?? d.result ?? "—")}
               </span>
             </div>
           ))}

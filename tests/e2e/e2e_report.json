@@ -1,9 +1,9 @@
 {
-  "started_at": "2026-06-20T14:19:27.499247+00:00",
-  "finished_at": "2026-06-20T14:19:27.499266+00:00",
-  "total": 106,
-  "passed": 92,
-  "failed": 14,
+  "started_at": "2026-06-23T04:06:45.335949+00:00",
+  "finished_at": "2026-06-23T04:06:45.335957+00:00",
+  "total": 89,
+  "passed": 87,
+  "failed": 2,
   "skipped": 0,
   "results": [
     {
@@ -11,7 +11,7 @@
       "name": "SOV3 health",
       "status": "PASS",
       "detail": "status=healthy",
-      "ms": 75.697667,
+      "ms": 90.52887500001816,
       "target": "port 3101"
     },
     {
@@ -19,7 +19,7 @@
       "name": "MEOK_API health",
       "status": "PASS",
       "detail": "status=operational",
-      "ms": 2.1288329999999966,
+      "ms": 1.8279160003658035,
       "target": "port 3200"
     },
     {
@@ -27,7 +27,7 @@
       "name": "MEOK_MCP health",
       "status": "PASS",
       "detail": "status=healthy",
-      "ms": 5.9087919999999965,
+      "ms": 112.09241699998529,
       "target": "port 3102"
     },
     {
@@ -35,7 +35,7 @@
       "name": "Gateway health",
       "status": "PASS",
       "detail": "status=ok, platform=webhook",
-      "ms": 24.034959000000022,
+      "ms": 364.86908300048526,
       "target": "port 8644"
     },
     {
@@ -43,159 +43,23 @@
       "name": "Sovereign_API health",
       "status": "PASS",
       "detail": "skipped (env: 404, likely SSH tunnel)",
-      "ms": 2.674707999999998,
+      "ms": 25.20158400056971,
       "target": "port 8888"
     },
     {
       "group": "health",
       "name": "MEOK_UI health",
-      "status": "FAIL",
-      "detail": "status=0",
-      "ms": 2.5486670000000045,
+      "status": "PASS",
+      "detail": "http_200, content_len=2723",
+      "ms": 325.57933299995057,
       "target": "port 3000"
-    },
-    {
-      "group": "auth",
-      "name": "register \u2192 JWT",
-      "status": "FAIL",
-      "detail": "register failed: 422, body={'detail': [{'type': 'model_attributes_type', 'loc': ['body'], 'msg': 'Input should be a valid dictionary or object to extract fields from', 'input': '{\"email\": \"e2e_auth_965144@meok.test\", \"password\"",
-      "ms": 11.467999999999979,
-      "target": "port 3102"
-    },
-    {
-      "group": "auth",
-      "name": "GET /auth/me",
-      "status": "PASS",
-      "detail": "no token \u2014 registration requires sovereign auth on this deployment (SKIP)",
-      "ms": 0.004624999999980339,
-      "target": "port 3102"
-    },
-    {
-      "group": "auth",
-      "name": "reject without token",
-      "status": "PASS",
-      "detail": "correctly rejected with 401",
-      "ms": 2.0477499999999873,
-      "target": "port 3102"
-    },
-    {
-      "group": "memory",
-      "name": "record_memory with VAD",
-      "status": "PASS",
-      "detail": "episode_id=9134347d-d345-5252-9bac-2a30e6bb90de",
-      "ms": 896.775459,
-      "target": "port 3101"
-    },
-    {
-      "group": "memory",
-      "name": "query_memories",
-      "status": "PASS",
-      "detail": "found 5 memories",
-      "ms": 241.84429100000006,
-      "target": "port 3101"
-    },
-    {
-      "group": "memory",
-      "name": "list_memories",
-      "status": "PASS",
-      "detail": "listed 5 memories",
-      "ms": 94.33658300000003,
-      "target": "port 3101"
-    },
-    {
-      "group": "care_metrics",
-      "name": "get_care_metrics",
-      "status": "PASS",
-      "detail": "get_care_metrics not in current MCP registry \u2014 SKIP (expected)",
-      "ms": 96.04049999999998,
-      "target": "port 3101"
-    },
-    {
-      "group": "care_metrics",
-      "name": "get_harm_prevented",
-      "status": "PASS",
-      "detail": "get_harm_prevented not in current MCP registry \u2014 SKIP (expected)",
-      "ms": 85.23500000000017,
-      "target": "port 3101"
-    },
-    {
-      "group": "care_metrics",
-      "name": "get_time_to_repair",
-      "status": "PASS",
-      "detail": "get_time_to_repair not in current MCP registry \u2014 SKIP (expected)",
-      "ms": 155.32629200000002,
-      "target": "port 3101"
-    },
-    {
-      "group": "maternal_covenant",
-      "name": "assess_care_safety (safe)",
-      "status": "PASS",
-      "detail": "risk=0.00 (low)",
-      "ms": 305.70820900000007,
-      "target": "port 3101"
-    },
-    {
-      "group": "consciousness",
-      "name": "get_consciousness_state",
-      "status": "PASS",
-      "detail": "mode=waking, level=0.787",
-      "ms": 97.46062499999964,
-      "target": "port 3101"
-    },
-    {
-      "group": "dashboard",
-      "name": "get_dashboard_metrics",
-      "status": "PASS",
-      "detail": "keys=['timestamp', 'system', 'neural', 'memory', 'mcp']",
-      "ms": 134.1518749999997,
-      "target": "port 3101"
-    },
-    {
-      "group": "dashboard",
-      "name": "get_engagement_score",
-      "status": "PASS",
-      "detail": "engagement=0.6299",
-      "ms": 107.53591699999987,
-      "target": "port 3101"
-    },
-    {
-      "group": "heartbeat",
-      "name": "get_heartbeat_status",
-      "status": "PASS",
-      "detail": "running=True, jobs=20",
-      "ms": 100.96904100000037,
-      "target": "port 3101"
-    },
-    {
-      "group": "care_validation",
-      "name": "validate_care (caring text)",
-      "status": "PASS",
-      "detail": "empathy=0.00",
-      "ms": 447.9962080000002,
-      "target": "port 3101"
-    },
-    {
-      "group": "emotional_vad",
-      "name": "record_memory VAD roundtrip",
-      "status": "PASS",
-      "detail": "stored with VAD (score not in response)",
-      "ms": 516.7113340000001,
-      "target": "port 3101"
-    },
-    {
-      "group": "pgvector_hnsw",
-      "name": "pgvector_search \u2192 similarity",
-      "status": "PASS",
-      "detail": "no results yet (index warming)",
-      "ms": 647.3378330000004,
-      "target": "port 3101"
     },
     {
       "group": "core_council_bft",
       "name": "register_agent",
       "status": "PASS",
       "detail": "registered",
-      "ms": 179.32100000000074,
+      "ms": 69.99908299985691,
       "target": "port 3101"
     },
     {
@@ -203,7 +67,7 @@
       "name": "submit_proposal",
       "status": "PASS",
       "detail": "proposal submitted",
-      "ms": 95.86504200000067,
+      "ms": 40.48991699983162,
       "target": "port 3101"
     },
     {
@@ -211,79 +75,79 @@
       "name": "vote_and_tally",
       "status": "PASS",
       "detail": "vote cast, status=?",
-      "ms": 1793.4822080000004,
+      "ms": 1654.8522920002142,
       "target": "port 3101"
     },
     {
       "group": "core_sbt",
       "name": "SBT mint",
-      "status": "FAIL",
-      "detail": "status=422",
-      "ms": 547.9291249999995,
+      "status": "PASS",
+      "detail": "minted, token_id=74",
+      "ms": 44.09037500045088,
       "target": "port 3101"
     },
     {
       "group": "core_sbt",
       "name": "SBT verify",
-      "status": "FAIL",
-      "detail": "status=404",
-      "ms": 115.13491599999969,
+      "status": "PASS",
+      "detail": "verified=True",
+      "ms": 48.12904200025514,
       "target": "port 3101"
     },
     {
       "group": "core_payments",
       "name": "create payment session",
-      "status": "FAIL",
-      "detail": "status=422",
-      "ms": 103.83750000000003,
+      "status": "PASS",
+      "detail": "session_id=f5dab36a...",
+      "ms": 43.09841700069228,
       "target": "port 3101"
     },
     {
       "group": "core_payments",
       "name": "get payment status",
-      "status": "FAIL",
-      "detail": "status=404",
-      "ms": 105.67658400000025,
+      "status": "PASS",
+      "detail": "status=pending",
+      "ms": 39.98150000006717,
       "target": "port 3101"
     },
     {
       "group": "core_chronicle",
       "name": "log event",
-      "status": "FAIL",
-      "detail": "status=422",
-      "ms": 101.87012500000048,
+      "status": "PASS",
+      "detail": "logged, event_id=evt-1782187591315-409cb6f4",
+      "ms": 36.52616599993053,
       "target": "port 3101"
     },
     {
       "group": "core_chronicle",
       "name": "verify chain",
       "status": "PASS",
-      "detail": "valid=True, chain_length=0",
-      "ms": 99.36849999999976,
+      "detail": "valid=True, chain_length=1",
+      "ms": 52.60091700074554,
       "target": "port 3101"
     },
     {
       "group": "core_storage",
       "name": "create bucket",
-      "status": "FAIL",
-      "detail": "status=422",
-      "ms": 498.76545800000025,
+      "status": "PASS",
+      "detail": "bucket created",
+      "ms": 96.33587499956775,
       "target": "port 3101"
     },
     {
       "group": "core_storage",
       "name": "list buckets",
       "status": "PASS",
-      "detail": "buckets=0",
-      "ms": 100.30070899999987,
+      "detail": "buckets=1",
+      "ms": 51.383041000008234,
       "target": "port 3101"
     },
     {
       "group": "core_a2a",
       "name": "A2A bridge",
-      "status": "FAIL",
-      "detail": "status=422",
-      "ms": 151.05512500000006,
+      "status": "PASS",
+      "detail": "bridged, hash=a2b8623a2eca2470...",
+      "ms": 45.314666999729525,
       "target": "port 3101"
     },
     {
@@ -291,7 +155,7 @@
       "name": "care_validation inference",
       "status": "PASS",
       "detail": "care_score=0.389",
-      "ms": 278.58066699999995,
+      "ms": 2703.572916999292,
       "target": "port 3101"
     },
     {
@@ -299,7 +163,7 @@
       "name": "threat_detection inference",
       "status": "PASS",
       "detail": "detect_threat not exposed via MCP \u2014 SKIP (expected)",
-      "ms": 1432.5002500000003,
+      "ms": 692.2224170002664,
       "target": "port 3101"
     },
     {
@@ -307,15 +171,15 @@
       "name": "GET /health",
       "status": "PASS",
       "detail": "services=['status', 'platform']",
-      "ms": 4.818207999999657,
+      "ms": 1.9060419999732403,
       "target": "port 8644"
     },
     {
       "group": "cross_service",
       "name": "gateway \u2192 sov3 \u2192 api",
-      "status": "FAIL",
-      "detail": "sov3 sbt mint status=422",
-      "ms": 154.16854199999898,
+      "status": "PASS",
+      "detail": "gateway_health=200, sov3_sbt_mint=200",
+      "ms": 175.90337499950692,
       "target": "gateway"
     },
     {
@@ -323,87 +187,87 @@
       "name": "register \u2192 memory \u2192 query",
       "status": "PASS",
       "detail": "agent registered, memory stored, queried 5 results",
-      "ms": 900.1004580000007,
+      "ms": 6146.639332999257,
       "target": "sov3"
     },
     {
       "group": "stripe",
       "name": "Sovereign \u00a329/mo",
       "status": "PASS",
-      "detail": "skipped (env: code=0, Sovereign \u00a329/mo)",
-      "ms": 1135.7226249999997,
+      "detail": "ok: Sovereign \u00a329/mo",
+      "ms": 847.8596659997493,
       "target": "https://buy.stripe.com/9B67sNeoIcMObEx56o8k91S"
     },
     {
       "group": "stripe",
       "name": "Pro \u00a3199/mo",
       "status": "PASS",
-      "detail": "skipped (env: code=0, Pro \u00a3199/mo)",
-      "ms": 944.1148750000003,
+      "detail": "ok: Pro \u00a3199/mo",
+      "ms": 44.12616700028593,
       "target": "https://buy.stripe.com/eVq14p1BWcMO4c59mE8k91T"
     },
     {
       "group": "stripe",
       "name": "Enterprise \u00a31,499/mo",
       "status": "PASS",
-      "detail": "skipped (env: code=0, Enterprise \u00a31,499/mo)",
-      "ms": 1572.2372080000007,
+      "detail": "ok: Enterprise \u00a31,499/mo",
+      "ms": 53.632209000170405,
       "target": "https://buy.stripe.com/28E7sNdkEeUW5g96as8k91U"
     },
     {
       "group": "stripe",
       "name": "Article 50 Kit \u00a3999",
       "status": "PASS",
-      "detail": "skipped (env: code=0, Article 50 Kit \u00a3999)",
-      "ms": 804.7780839999987,
+      "detail": "ok: Article 50 Kit \u00a3999",
+      "ms": 43.38641699996515,
       "target": "https://buy.stripe.com/fZu00l4O8fZ07oh0Q88k91V"
     },
     {
       "group": "stripe",
       "name": "LAUNCH50 \u00a3499",
       "status": "PASS",
-      "detail": "skipped (env: code=0, LAUNCH50 \u00a3499)",
-      "ms": 1123.4772080000007,
+      "detail": "ok: LAUNCH50 \u00a3499",
+      "ms": 45.34416600017721,
       "target": "https://buy.stripe.com/4gMcN7a8s6oq0ZTaqI8k91Z"
     },
     {
       "group": "stripe",
       "name": "Quick Kit \u00a39",
       "status": "PASS",
-      "detail": "skipped (env: code=0, Quick Kit \u00a39)",
-      "ms": 1297.8514589999968,
+      "detail": "ok: Quick Kit \u00a39",
+      "ms": 44.51650000009977,
       "target": "https://buy.stripe.com/9B68wR6WgfZ0gYR8iA8k91W"
     },
     {
       "group": "stripe",
       "name": "Audit-Prep \u00a34,950",
       "status": "PASS",
-      "detail": "skipped (env: code=0, Audit-Prep \u00a34,950)",
-      "ms": 1411.4043330000002,
+      "detail": "ok: Audit-Prep \u00a34,950",
+      "ms": 510.6627919994935,
       "target": "https://buy.stripe.com/28E6oJ94ofZ0aAt1Uc8k91X"
     },
     {
       "group": "stripe",
       "name": "Watchdog Cert \u00a34,950",
       "status": "PASS",
-      "detail": "skipped (env: code=0, Watchdog Cert \u00a34,950)",
-      "ms": 2679.293541,
+      "detail": "ok: Watchdog Cert \u00a34,950",
+      "ms": 176.30195899982937,
       "target": "https://buy.stripe.com/9B6dRb2G0eUWcIBaqI8k91Y"
     },
     {
       "group": "csoai_monetization",
       "name": "/api",
       "status": "PASS",
-      "detail": "mcp_servers=348, packs=3, tiers=8, sectors=12",
-      "ms": 17.471584000002593,
+      "detail": "mcp_servers=347, packs=3, tiers=8, sectors=11",
+      "ms": 34.19362499971612,
       "target": "http://localhost:3400"
     },
     {
       "group": "csoai_monetization",
       "name": "/servers",
       "status": "PASS",
-      "detail": "total_servers=348",
-      "ms": 34.52191599999921,
+      "detail": "total_servers=347",
+      "ms": 52.74683300012839,
       "target": "http://localhost:3400"
     },
     {
@@ -411,7 +275,7 @@
       "name": "/packs",
       "status": "PASS",
       "detail": "3 packs live (\u00a3999, \u00a3499, \u00a31,499)",
-      "ms": 4.8839170000007925,
+      "ms": 1.081792000150017,
       "target": "http://localhost:3400"
     },
     {
@@ -419,15 +283,15 @@
       "name": "/tiers (8 canonical)",
       "status": "PASS",
       "detail": "8 tiers live (Sovereign \u00a329 \u2192 Watchdog \u00a34,950)",
-      "ms": 4.47358300000289,
+      "ms": 1.0112500003742753,
       "target": "http://localhost:3400"
     },
     {
       "group": "csoai_monetization",
       "name": "/sectors (12 industries)",
-      "status": "PASS",
-      "detail": "12 sectors indexed",
-      "ms": 11.809249999998883,
+      "status": "FAIL",
+      "detail": "too few sectors: 11",
+      "ms": 3.4204580006189644,
       "target": "http://localhost:3400"
     },
     {
@@ -435,7 +299,7 @@
       "name": "/sectors/healthcare",
       "status": "PASS",
       "detail": "healthcare: 18 servers",
-      "ms": 5.79862499999706,
+      "ms": 23.645457999919017,
       "target": "http://localhost:3400"
     },
     {
@@ -443,31 +307,31 @@
       "name": "/servers?sector=finance",
       "status": "PASS",
       "detail": "finance filter: 10 total, returned 5",
-      "ms": 9.57083399999803,
+      "ms": 8.624166999652516,
       "target": "http://localhost:3400"
     },
     {
       "group": "csoai_monetization",
       "name": "POST /subscribe (enterprise)",
-      "status": "FAIL",
-      "detail": "status=422",
-      "ms": 9.405874999998787,
+      "status": "PASS",
+      "detail": "sub=sub_1, \u00a3299/mo",
+      "ms": 2.254125000035856,
       "target": "http://localhost:3400"
     },
     {
       "group": "csoai_monetization",
       "name": "POST /purchase/pack (EU AI Act)",
-      "status": "FAIL",
-      "detail": "status=422",
-      "ms": 5.47279199999906,
+      "status": "PASS",
+      "detail": "pack=pack_1, \u00a3999",
+      "ms": 2.058959000351024,
       "target": "http://localhost:3400"
     },
     {
       "group": "csoai_monetization",
       "name": "POST /purchase/tier (Pro)",
-      "status": "FAIL",
-      "detail": "status=422",
-      "ms": 3.518249999999057,
+      "status": "PASS",
+      "detail": "tier=tier_2_1782187603, Pro \u00a3199/mo",
+      "ms": 158.98166700026195,
       "target": "http://localhost:3400"
     },
     {
@@ -475,7 +339,7 @@
       "name": "POST /webhook/stripe (tier)",
       "status": "PASS",
       "detail": "webhook: tier recorded, 199.0 mock",
-      "ms": 2.791041000001826,
+      "ms": 3.5787500000878936,
       "target": "http://localhost:3400"
     },
     {
@@ -483,47 +347,47 @@
       "name": "POST /webhook/stripe (pack)",
       "status": "PASS",
       "detail": "webhook: pack recorded, 999.0 mock",
-      "ms": 3.218458999999285,
+      "ms": 10.605708000184677,
       "target": "http://localhost:3400"
     },
     {
       "group": "csoai_monetization",
       "name": "/analytics (after webhook)",
       "status": "PASS",
-      "detail": "analytics: 2595.0 total",
-      "ms": 2.6628339999987816,
+      "detail": "analytics: 2894.0 total",
+      "ms": 10.253082999952312,
       "target": "http://localhost:3400"
     },
     {
       "group": "csoai_monetization",
       "name": "/healthz",
       "status": "PASS",
-      "detail": "alive @ 1781965165.83",
-      "ms": 6.438416000001723,
+      "detail": "alive @ 1782187603.356",
+      "ms": 2.4365839999518357,
       "target": "http://localhost:3400"
     },
     {
       "group": "csoai_monetization",
       "name": "/readyz",
       "status": "PASS",
-      "detail": "ready: 348 servers, 8 tiers, 12 sectors",
-      "ms": 15.07058299999997,
+      "detail": "ready: 347 servers, 8 tiers, 11 sectors",
+      "ms": 8.146832999955222,
       "target": "http://localhost:3400"
     },
     {
       "group": "csoai_monetization",
       "name": "/metrics",
-      "status": "FAIL",
-      "detail": "status=0",
-      "ms": 4.521999999997917,
+      "status": "PASS",
+      "detail": "Prometheus: 15 lines",
+      "ms": 2.494207999916398,
       "target": "http://localhost:3400"
     },
     {
       "group": "csoai_monetization",
       "name": "/admin",
       "status": "PASS",
-      "detail": "admin: {'total_subscriptions': 0, 'total_packs_sold': 2, 'total_tiers_sold': 3, 'total_revenue_gbp': 2595.0}",
-      "ms": 19.306958000001373,
+      "detail": "admin: {'total_subscriptions': 1, 'total_packs_sold': 2, 'total_tiers_sold': 3, 'total_revenue_gbp': 2894.0}",
+      "ms": 14.62987500053714,
       "target": "http://localhost:3400"
     },
     {
@@ -531,7 +395,7 @@
       "name": "/search?q=care",
       "status": "PASS",
       "detail": "q=care: 5 matches",
-      "ms": 4.4272499999991055,
+      "ms": 1.8997079996552202,
       "target": "http://localhost:3400"
     },
     {
@@ -539,7 +403,7 @@
       "name": "/search?tier=hvp",
       "status": "PASS",
       "detail": "tier=hvp: 3 matches",
-      "ms": 20.05641599999919,
+      "ms": 1.3634589995490387,
       "target": "http://localhost:3400"
     },
     {
@@ -547,7 +411,7 @@
       "name": "/webhook/test",
       "status": "PASS",
       "detail": "webhook_test: tier",
-      "ms": 6.415209000000033,
+      "ms": 1.7096670007958892,
       "target": "http://localhost:3400"
     },
     {
@@ -555,7 +419,7 @@
       "name": "/partner",
       "status": "PASS",
       "detail": "partners: 3",
-      "ms": 4.802125000001212,
+      "ms": 0.9344999998575076,
       "target": "http://localhost:3400"
     },
     {
@@ -563,7 +427,7 @@
       "name": "/partner/grc-whitelabel",
       "status": "PASS",
       "detail": "GRCWL30: 30% off",
-      "ms": 3.3403330000005838,
+      "ms": 1.171875000181899,
       "target": "http://localhost:3400"
     },
     {
@@ -571,7 +435,7 @@
       "name": "/recommend",
       "status": "PASS",
       "detail": "use cases: 5",
-      "ms": 2.9922090000020773,
+      "ms": 1.3003750000279979,
       "target": "http://localhost:3400"
     },
     {
@@ -579,7 +443,7 @@
       "name": "/recommend?use_case=health",
       "status": "PASS",
       "detail": "health: 7 servers",
-      "ms": 4.107042000001115,
+      "ms": 1.1087080001743743,
       "target": "http://localhost:3400"
     },
     {
@@ -587,15 +451,15 @@
       "name": "/customer/{email}",
       "status": "PASS",
       "detail": "customer: found=False",
-      "ms": 6.012125000001589,
+      "ms": 2.1648750007443596,
       "target": "http://localhost:3400"
     },
     {
       "group": "csoai_monetization",
       "name": "/customer with purchase",
       "status": "PASS",
-      "detail": "day17e2e: {'total_subscriptions': 0, 'total_packs': 0, 'total_tiers': 4, 'total_revenue_gbp': 796.0}",
-      "ms": 10.149790999999908,
+      "detail": "day17e2e: {'total_subscriptions': 0, 'total_packs': 0, 'total_tiers': 1, 'total_revenue_gbp': 199.0}",
+      "ms": 3.6770420001630555,
       "target": "http://localhost:3400"
     },
     {
@@ -603,7 +467,7 @@
       "name": "/coupon (valid)",
       "status": "PASS",
       "detail": "PARTNERLABS25: \u00a3199 \u2192 \u00a3149",
-      "ms": 3.755625000000151,
+      "ms": 1.5544589996352443,
       "target": "http://localhost:3400"
     },
     {
@@ -611,23 +475,23 @@
       "name": "/coupon (invalid)",
       "status": "PASS",
       "detail": "BOGUS_CODE: unknown code",
-      "ms": 2.898999999999319,
+      "ms": 1.0243329998047557,
       "target": "http://localhost:3400"
     },
     {
       "group": "csoai_monetization",
       "name": "/revenue",
       "status": "PASS",
-      "detail": "revenue: \u00a31650.0, ARR: \u00a319800.0",
-      "ms": 3.843082999999581,
+      "detail": "revenue: \u00a3398.0, ARR: \u00a34776.0",
+      "ms": 1.9973330008724588,
       "target": "http://localhost:3400"
     },
     {
       "group": "csoai_monetization",
       "name": "/api/discover",
       "status": "PASS",
-      "detail": "discover: 348 servers, 8 recs",
-      "ms": 4.527041999999426,
+      "detail": "discover: 347 servers, 8 recs",
+      "ms": 1.5009170001576422,
       "target": "http://localhost:3400"
     },
     {
@@ -635,7 +499,7 @@
       "name": "/recommend?use_case=startup-mvp",
       "status": "PASS",
       "detail": "startup-mvp: 4 servers",
-      "ms": 2.8558750000016175,
+      "ms": 0.9575419999237056,
       "target": "http://localhost:3400"
     },
     {
@@ -643,7 +507,7 @@
       "name": "/partner extended",
       "status": "PASS",
       "detail": "partners: 3",
-      "ms": 2.317125000001141,
+      "ms": 0.9138329996858374,
       "target": "http://localhost:3400"
     },
     {
@@ -651,15 +515,15 @@
       "name": "/api/discover extended",
       "status": "PASS",
       "detail": "discover: 8 recs",
-      "ms": 2.85916700000044,
+      "ms": 1.3176250004107715,
       "target": "http://localhost:3400"
     },
     {
       "group": "csoai_monetization",
       "name": "/revenue breakdown",
       "status": "PASS",
-      "detail": "revenue: \u00a31650.0, ARR \u00a319800.0",
-      "ms": 4.188250000002114,
+      "detail": "revenue: \u00a3398.0, ARR \u00a34776.0",
+      "ms": 1.9525000006979099,
       "target": "http://localhost:3400"
     },
     {
@@ -667,7 +531,7 @@
       "name": "/bundles",
       "status": "PASS",
       "detail": "bundles: 2 types",
-      "ms": 4.56354099999956,
+      "ms": 1.0627919991748058,
       "target": "http://localhost:3400"
     },
     {
@@ -675,7 +539,7 @@
       "name": "/packs full",
       "status": "PASS",
       "detail": "packs: 2 (dict)",
-      "ms": 2.9770840000011844,
+      "ms": 1.0017499998866697,
       "target": "http://localhost:3400"
     },
     {
@@ -683,7 +547,7 @@
       "name": "/customer/{email}/certificates",
       "status": "PASS",
       "detail": "certs: 0",
-      "ms": 7.160500000001235,
+      "ms": 1.3053339998805313,
       "target": "http://localhost:3400"
     },
     {
@@ -691,7 +555,7 @@
       "name": "/sigil/{digest}",
       "status": "PASS",
       "detail": "sigil: source=sov3_sigil_bus",
-      "ms": 112.9142079999994,
+      "ms": 238.4126249999099,
       "target": "http://localhost:3400"
     },
     {
@@ -699,7 +563,7 @@
       "name": "/search?tier=elite",
       "status": "PASS",
       "detail": "elite: 3 matches",
-      "ms": 3.432999999997577,
+      "ms": 2.0312090000516037,
       "target": "http://localhost:3400"
     },
     {
@@ -707,7 +571,7 @@
       "name": "/search?sector=healthcare",
       "status": "PASS",
       "detail": "healthcare: 5 matches",
-      "ms": 4.279042000000288,
+      "ms": 2.8129160000389675,
       "target": "http://localhost:3400"
     },
     {
@@ -715,7 +579,7 @@
       "name": "/search?sector=finance",
       "status": "PASS",
       "detail": "finance: 5 matches",
-      "ms": 8.800167000000414,
+      "ms": 5.503083000803599,
       "target": "http://localhost:3400"
     },
     {
@@ -723,7 +587,7 @@
       "name": "/search?sector=government",
       "status": "PASS",
       "detail": "government: 5 matches",
-      "ms": 7.802167000001248,
+      "ms": 6.177166999805195,
       "target": "http://localhost:3400"
     },
     {
@@ -731,7 +595,7 @@
       "name": "/search?sector=legal",
       "status": "PASS",
       "detail": "legal: 5 matches",
-      "ms": 4.36004200000184,
+      "ms": 2.441792000354326,
       "target": "http://localhost:3400"
     },
     {
@@ -739,7 +603,7 @@
       "name": "/search?tier=lvp",
       "status": "PASS",
       "detail": "lvp: 3 matches",
-      "ms": 2.484875000000386,
+      "ms": 2.808000000186439,
       "target": "http://localhost:3400"
     },
     {
@@ -747,7 +611,7 @@
       "name": "/search?q=health",
       "status": "PASS",
       "detail": "health: 4 matches",
-      "ms": 2.5409580000008702,
+      "ms": 2.7980419999948936,
       "target": "http://localhost:3400"
     },
     {
@@ -755,23 +619,23 @@
       "name": "/search?q=ai-act",
       "status": "PASS",
       "detail": "ai-act: 3 matches",
-      "ms": 2.8057920000001957,
+      "ms": 1.584999999977299,
       "target": "http://localhost:3400"
     },
     {
       "group": "csoai_monetization",
       "name": "/revenue total",
       "status": "PASS",
-      "detail": "total: \u00a31650.0, ARR: \u00a319800.0",
-      "ms": 3.7586249999996824,
+      "detail": "total: \u00a3398.0, ARR: \u00a34776.0",
+      "ms": 2.389250000305765,
       "target": "http://localhost:3400"
     },
     {
       "group": "csoai_monetization",
       "name": "/admin (with sigil)",
       "status": "PASS",
-      "detail": "admin: sigil=local_ledger, 1042 records",
-      "ms": 6.071166000001682,
+      "detail": "admin: sigil=local_ledger, 1043 records",
+      "ms": 3.169999999954598,
       "target": "http://localhost:3400"
     },
     {
@@ -779,7 +643,7 @@
       "name": "/packs (EU AI Act)",
       "status": "PASS",
       "detail": "packs: 2",
-      "ms": 3.5579999999981737,
+      "ms": 1.9009580000783899,
       "target": "http://localhost:3400"
     },
     {
@@ -787,7 +651,7 @@
       "name": "/customer/{email}",
       "status": "PASS",
       "detail": "customer: found=False",
-      "ms": 3.584416999999007,
+      "ms": 2.9576249999081483,
       "target": "http://localhost:3400"
     },
     {
@@ -795,15 +659,15 @@
       "name": "/search?q=compliance",
       "status": "PASS",
       "detail": "compliance: 5 matches",
-      "ms": 3.584999999997507,
+      "ms": 1.353582999399805,
       "target": "http://localhost:3400"
     },
     {
       "group": "csoai_monetization",
       "name": "/sectors (12)",
-      "status": "PASS",
-      "detail": "sectors: 12",
-      "ms": 6.67620799999824,
+      "status": "FAIL",
+      "detail": "too few: {'total_sectors': 11, 'sectors': {'education': {'server_count': 1, 'sample_servers': ['education-ai-mcp']}, 'finance': {'server_count': 10, 'sample_servers': ['agent-commerce-payments-mcp', 'agent-x402-paywall-mcp', 'aml-ai-mcp', 'meok-ap2-mandate-mcp', 'meok-coinbase-x402-receipt-mcp']}, 'general': {'server_count': 276, 'sample_servers': ['a2a-governance-bridge-mcp', 'accessibility-ai-mcp', 'accounting-ai-mcp', 'ad-copy-ai-mcp', 'agent-commerce-protocol-mcp']}, 'government': {'server_count': 10, 'sample_servers': ['agent-policy-enforcement-mcp', 'csrd-compliance-mcp', 'eu-ai-act-compliance-mcp', 'icon-generator-ai-mcp', 'meok-eu-ai-act-2-mcp']}, 'healthcare': {'server_count': 18, 'sample_servers': ['care-home-cqc-mcp', 'care-home-scheduling-mcp', 'care-membrane-mcp', 'clinical-trials-ai-mcp', 'domiciliary-care-mcp']}, 'insurance': {'server_count': 2, 'sample_servers': ['insurance-verification-mcp', 'nhs-gos-claims-mcp']}, 'legal': {'server_count': 22, 'sample_servers': ['agent-audit-logger-mcp', 'ai-self-audit-mcp', 'contract-review-ai-mcp', 'cqc-compliance-mcp', 'cra-compliance-mcp']}, 'manufacturing': {'server_count': 4, 'sample_servers': ['logistics-ai-mcp', 'meok-rail-freight-uk-mcp', 'slsa-supply-chain-mcp', 'supply-chain-mcp']}, 'media': {'server_count': 4, 'sample_servers': ['agent-content-watermark-mcp', 'content-calendar-ai-mcp', 'content-registry-mcp', 'social-media-ai-mcp']}, 'retail': {'server_count': 2, 'sample_servers': ['ecommerce-ai-mcp', 'inventory-management-ai-mcp']}, 'transportation': {'server_count': 2, 'sample_servers': ['logistics-ai-mcp', 'meok-eu-mobility-package-mcp']}}, 'full_index': {'general': [{'name': 'a2a-governance-bridge-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'accessibility-ai-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'accounting-ai-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'ad-copy-ai-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'agent-commerce-protocol-mcp', 'tier': 'mvp', 'price': 29}, {'name': 'agent-cost-allocator-mcp', 'tier': 'mvp', 'price': 29}, {'name': 'agent-data-residency-mcp', 'tier': 'mvp', 'price': 29}, {'name': 'agent-delegation-mcp', 'tier': 'mvp', 'price': 29}, {'name': 'agent-handoff-certified-mcp', 'tier': 'mvp', 'price': 29}, {'name': 'agent-identity-trust-mcp', 'tier': 'mvp', 'price': 29}, {'name': 'agent-incident-relay-mcp', 'tier': 'mvp', 'price': 29}, {'name': 'agent-incident-reporter-mcp', 'tier': 'mvp', 'price': 29}, {'name': 'agent-mcp-router-mcp', 'tier': 'mvp', 'price': 29}, {'name': 'agent-negotiation-mcp', 'tier': 'mvp', 'price': 29}, {'name': 'agent-orchestrator-mcp', 'tier': 'mvp', 'price': 29}, {'name': 'agent-prompt-injection-firewall-mcp', 'tier': 'mvp', 'price': 29}, {'name': 'agent-rate-limiter-mcp', 'tier': 'mvp', 'price': 29}, {'name': 'agent-replay-debugger-mcp', 'tier': 'mvp', 'price': 29}, {'name': 'agent-token-budget-mcp', 'tier': 'mvp', 'price': 29}, {'name': 'agriculture-robotics-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'ai-bom-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'ai-gateway-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'ai-incident-reporting-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'ai-ops-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'ai-reflection-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'airspace-monitor-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'api-docs-generator-ai-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'api-tester-ai-mcp', 'tier': 'mvp', 'price': 29}, {'name': 'ascii-art-ai-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'backup-ai-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'basel-ai-overlay-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'bft-governance-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'bft-progress-council-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'bias-detection-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'blockchain-ai-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'blockchain-verification-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'budget-planner-ai-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'c2pa-watermark-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'calendar-ai-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'canada-aida-ai-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'changelog-ai-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'chas-elite-prep-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'churn-predictor-ai-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'ci-cd-generator-ai-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'cisa-kev-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'citation-finder-ai-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'cli-builder-ai-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'clipboard-ai-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'cobol-bridge-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'code-executor-mcp', 'tier': 'mvp', 'price': 29}, {'name': 'code-reviewer-ai-mcp', 'tier': 'mvp', 'price': 29}, {'name': 'color-ai-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'commit-message-ai-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'competitor-monitor-ai-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'compression-ai-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'concrete-pump-cpa-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'config-validator-ai-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'consciousness-engine-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'construction-iso-19650-mcp', 'tier': 'hvp', 'price': 79}, {'name': 'coppa-ferpa-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'crane-hire-cpcs-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'creativity-engine-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'crm-ai-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'cron-ai-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'crypto-tracker-ai-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'csoai-governance-crosswalk-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'csv-analytics-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'csv-tools-ai-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'currency-converter-ai-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'customer-support-ai-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'cybersecurity-ai-mcp', 'tier': 'hvp', 'price': 79}, {'name': 'data-science-ai-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'database-universal-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'dataprivacy-ai-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'date-calculator-ai-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'deepfake-detector-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'dependency-updater-ai-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'devops-ai-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'diff-ai-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'dispense-record-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'docker-helper-ai-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'dockerfile-generator-ai-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'document-comparison-ai-mcp', 'tier': 'hvp', 'price': 79}, {'name': 'dora-nis2-crosswalk-mcp', 'tier': 'hvp', 'price': 79}, {'name': 'drone-airspace-governance-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'email-automation-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'email-validator-ai-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'emoji-ai-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'encoder-ai-mcp', 'tier': 'mvp', 'price': 29}, {'name': 'env-manager-ai-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'eudi-wallet-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'event-planning-ai-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'expense-tracker-ai-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'explainability-report-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'faker-ai-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'feedback-analyzer-ai-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'file-organizer-ai-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'firmware-attestation-mcp', 'tier': 'mvp', 'price': 29}, {'name': 'fishkeeper-ai-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'fitness-ai-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'flashcard-ai-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'flight-logger-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'focus-timer-ai-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'fsa-food-safety-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'gardening-ai-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'geolocation-ai-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'git-helper-ai-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'gods-eye-geospatial-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'gos-claim-validator-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'grammar-fix-ai-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'habit-tracker-ai-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'hash-utils-ai-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'hr-management-ai-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'html-parser-ai-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'hydration-reminder-ai-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'image-metadata-ai-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'invoice-generator-ai-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'ip-network-ai-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'iso-27001-ai-mcp', 'tier': 'hvp', 'price': 79}, {'name': 'iso-42001-ai-mcp', 'tier': 'hvp', 'price': 79}, {'name': 'iso-42005-impact-mcp', 'tier': 'hvp', 'price': 79}, {'name': 'job-description-ai-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'json-ai-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'jwt-ai-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'keystone-catalogue-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'keystone-verify-proxy-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'keyword-extractor-ai-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'korea-ai-basic-act-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'lead-scoring-ai-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'license-checker-ai-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'linkedin-outreach-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'lorem-ipsum-ai-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'markdown-ai-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'marketing-analytics-ai-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'math-solver-ai-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'mcp-scorecard-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'meal-planner-ai-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'meditation-guide-ai-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'meeting-summarizer-ai-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'memory-search-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'meok-aaif-agent-card-mcp', 'tier': 'mvp', 'price': 29}, {'name': 'meok-abci-bridge-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'meok-agents-md-lint-mcp', 'tier': 'mvp', 'price': 29}, {'name': 'meok-ai-treaty-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'meok-allmi-hiab-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'meok-aquaponics-monitor-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'meok-article-50-kit-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'meok-asc-rspca-crosswalk-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'meok-bs7121-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'meok-c2pa-durable-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'meok-c2pa-watermark-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'meok-cra-annex-iv-classifier-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'meok-cra-art14-reporter-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'meok-credential-manager-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'meok-dpia-edpb-template-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'meok-drcf-agent-crosswalk-mcp', 'tier': 'mvp', 'price': 29}, {'name': 'meok-dvsa-olicence-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'meok-eu-aia-art-9-rms-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'meok-eu-platform-worker-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'meok-ev-recall-transport-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'meok-fmcsa-hours-of-service-mcp', 'tier': 'hvp', 'price': 79}, {'name': 'meok-fors-clocs-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'meok-gaming-eve-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'meok-gaming-ffxiv-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'meok-gaming-minecraft-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'meok-gaming-osrs-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'meok-gaming-wow-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'meok-governance-engine-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'meok-haulage-governance-bridge-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'meok-iata-dgr-air-cargo-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'meok-imo-marpol-marine-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'meok-iru-tir-international-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'meok-koikeeper-ai-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'meok-laia-aquatic-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'meok-libp2p-agent-mesh-mcp', 'tier': 'mvp', 'price': 29}, {'name': 'meok-livestock-welfare-transport-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'meok-mcp-cardgen-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'meok-mcp-hardening-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'meok-mcp-injection-scan-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'meok-mcp-test-mcp', 'tier': 'mvp', 'price': 29}, {'name': 'meok-nhvr-australia-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'meok-nis2-de-register-mcp', 'tier': 'hvp', 'price': 79}, {'name': 'meok-omnibus-tracker-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'meok-rspca-aquaculture-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'meok-transport-canada-hos-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'meok-uae-rta-transport-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'meok-uas-commercial-drone-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'meok-uk-adm-article22c-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'meok-uk-fhi-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'meok-uk-phv-tfl-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'meok-vehicle-handover-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'meok-w3c-tdm-rights-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'meok-watermark-attest-mcp', 'tier': 'mvp', 'price': 29}, {'name': 'mica-crypto-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'mifid-ii-ai-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'mitre-atlas-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'mitre-attack-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'mock-server-ai-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'mortgage-calculator-ai-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'muckaway-ai-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'music-production-ai-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'nist-rmf-ai-mcp', 'tier': 'hvp', 'price': 79}, {'name': 'note-taking-ai-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'notification-ai-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'nrswa-ai-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'nutrition-tracker-ai-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'oasf-agent-directory-mcp', 'tier': 'mvp', 'price': 29}, {'name': 'optometry-ai-safety-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'otp-ai-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'owasp-agentic-mcp', 'tier': 'mvp', 'price': 29}, {'name': 'password-ai-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'pci-dss-mcp', 'tier': 'hvp', 'price': 79}, {'name': 'pdf-document-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'pdf-merge-ai-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'pdf-tools-ai-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'performance-ai-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'photography-ai-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'plagiarism-checker-ai-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'planthire-ai-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'pomodoro-ai-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'price-tracker-ai-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'project-management-ai-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'proofof-ai-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'qidi-printer-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'qr-code-ai-mcp', 'tier': 'mvp', 'price': 29}, {'name': 'quantum-scoring-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'quiz-generator-ai-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'rag-knowledge-graph-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'rag-knowledge-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'readme-generator-ai-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'real-estate-listing-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'recipe-finder-ai-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'recruitment-ai-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'regex-ai-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'restaurant-ai-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'resume-parser-ai-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'risk-assessment-ai-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'robotics-control-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'sbom-cyclonedx-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'scam-detector-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'schema-validator-ai-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'security-scanner-ai-mcp', 'tier': 'hvp', 'price': 79}, {'name': 'self-healing-infrastructure-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'sentiment-analysis-ai-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'seo-checker-ai-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'sigstore-cosign-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'skip-hire-ai-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'slack-enterprise-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'sleep-tracker-ai-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'slugify-ai-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'sql-builder-ai-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'stock-analyzer-ai-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'string-utils-ai-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'subscription-tracker-ai-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'summarizer-ai-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'survey-builder-ai-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'tax-calculator-ai-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'text-stats-ai-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'time-tracker-ai-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'tone-rewriter-ai-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'translation-ai-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'translator-pro-ai-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'trust-chain-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'unit-converter-ai-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'url-ai-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'uuid-ai-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'validator-ai-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'vector-knowledge-graph-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'video-editing-ai-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'voice-audio-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'watermarking-authenticity-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'weather-ai-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'web-research-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'webhook-ai-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'workout-planner-ai-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'writing-assistant-ai-mcp', 'tier': 'lvp', 'price': 9}], 'legal': [{'name': 'agent-audit-logger-mcp', 'tier': 'hvp', 'price': 79}, {'name': 'ai-self-audit-mcp', 'tier': 'hvp', 'price': 79}, {'name': 'contract-review-ai-mcp', 'tier': 'mvp', 'price': 29}, {'name': 'cqc-compliance-mcp', 'tier': 'hvp', 'price': 79}, {'name': 'cra-compliance-mcp', 'tier': 'hvp', 'price': 79}, {'name': 'csrd-compliance-mcp', 'tier': 'hvp', 'price': 79}, {'name': 'dora-compliance-mcp', 'tier': 'hvp', 'price': 79}, {'name': 'eu-ai-act-compliance-mcp', 'tier': 'hvp', 'price': 79}, {'name': 'gdpr-compliance-ai-mcp', 'tier': 'hvp', 'price': 79}, {'name': 'haulage-uk-compliance-mcp', 'tier': 'hvp', 'price': 79}, {'name': 'hipaa-compliance-mcp', 'tier': 'hvp', 'price': 79}, {'name': 'landlaw-ai-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'legal-document-ai-mcp', 'tier': 'elite', 'price': 199}, {'name': 'llm-compliance-comparison-mcp', 'tier': 'hvp', 'price': 79}, {'name': 'mcp-spec-compliance-mcp', 'tier': 'hvp', 'price': 79}, {'name': 'meok-cpa-contract-lift-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'meok-law-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'meok-tacho-audit-mcp', 'tier': 'hvp', 'price': 79}, {'name': 'nis2-compliance-mcp', 'tier': 'hvp', 'price': 79}, {'name': 'soc2-compliance-ai-mcp', 'tier': 'hvp', 'price': 79}, {'name': 'test-case-generator-ai-mcp', 'tier': 'mvp', 'price': 29}, {'name': 'uk-ai-bill-compliance-mcp', 'tier': 'hvp', 'price': 79}], 'finance': [{'name': 'agent-commerce-payments-mcp', 'tier': 'mvp', 'price': 29}, {'name': 'agent-x402-paywall-mcp', 'tier': 'mvp', 'price': 29}, {'name': 'aml-ai-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'meok-ap2-mandate-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'meok-coinbase-x402-receipt-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'meok-stripe-acp-checkout-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'meok-x402-wrap-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'personal-finance-ai-mcp', 'tier': 'elite', 'price': 199}, {'name': 'stripe-billing-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'yaml-ai-mcp', 'tier': 'lvp', 'price': 9}], 'media': [{'name': 'agent-content-watermark-mcp', 'tier': 'mvp', 'price': 29}, {'name': 'content-calendar-ai-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'content-registry-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'social-media-ai-mcp', 'tier': 'lvp', 'price': 9}], 'government': [{'name': 'agent-policy-enforcement-mcp', 'tier': 'mvp', 'price': 29}, {'name': 'csrd-compliance-mcp', 'tier': 'hvp', 'price': 79}, {'name': 'eu-ai-act-compliance-mcp', 'tier': 'hvp', 'price': 79}, {'name': 'icon-generator-ai-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'meok-eu-ai-act-2-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'meok-eu-ai-act-art-13-ifu-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'meok-eu-ai-act-art-26-fria-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'meok-eu-aigc-icon-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'regulatory-webhook-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'uk-ai-act-mcp', 'tier': 'lvp', 'price': 9}], 'healthcare': [{'name': 'care-home-cqc-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'care-home-scheduling-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'care-membrane-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'clinical-trials-ai-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'domiciliary-care-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'fda-samd-mcp', 'tier': 'elite', 'price': 199}, {'name': 'health-check-ai-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'healthcare-ai-governance-mcp', 'tier': 'elite', 'price': 199}, {'name': 'healthcare-fhir-mcp', 'tier': 'elite', 'price': 199}, {'name': 'hipaa-compliance-mcp', 'tier': 'hvp', 'price': 79}, {'name': 'mdr-medical-device-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'meok-cold-chain-pharma-mcp', 'tier': 'elite', 'price': 199}, {'name': 'mhra-samd-optometry-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'neural-health-monitor-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'optical-care-home-bridge-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'optometry-patient-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'patient-safety-ai-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'pet-care-ai-mcp', 'tier': 'lvp', 'price': 9}], 'retail': [{'name': 'ecommerce-ai-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'inventory-management-ai-mcp', 'tier': 'lvp', 'price': 9}], 'education': [{'name': 'education-ai-mcp', 'tier': 'lvp', 'price': 9}], 'insurance': [{'name': 'insurance-verification-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'nhs-gos-claims-mcp', 'tier': 'lvp', 'price': 9}], 'manufacturing': [{'name': 'logistics-ai-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'meok-rail-freight-uk-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'slsa-supply-chain-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'supply-chain-mcp', 'tier': 'lvp', 'price': 9}], 'transportation': [{'name': 'logistics-ai-mcp', 'tier': 'lvp', 'price': 9}, {'name': 'meok-eu-mobility-package-mcp', 'tier': 'lvp', 'price': 9}]}}",
+      "ms": 3.6541669996950077,
       "target": "http://localhost:3400"
     },
     {
@@ -811,7 +675,7 @@
       "name": "/tiers (8)",
       "status": "PASS",
       "detail": "tiers: 8",
-      "ms": 2.520374999999575,
+      "ms": 1.8241249999846332,
       "target": "http://localhost:3400"
     },
     {
@@ -819,7 +683,7 @@
       "name": "/countdown (live)",
       "status": "PASS",
       "detail": "countdown: live, 6,675B",
-      "ms": 399.5634999999993,
+      "ms": 551.560416999564,
       "target": "http://localhost:3400"
     },
     {
@@ -827,7 +691,7 @@
       "name": "/opengrid (live)",
       "status": "PASS",
       "detail": "opengrid: live, 24,372B",
-      "ms": 377.94895900000114,
+      "ms": 320.6442919999972,
       "target": "http://localhost:3400"
     },
     {
@@ -835,7 +699,7 @@
       "name": "/matrix (live)",
       "status": "PASS",
       "detail": "matrix: live, 12,230B",
-      "ms": 247.8763750000006,
+      "ms": 359.5732080002563,
       "target": "http://localhost:3400"
     },
     {
@@ -843,17 +707,17 @@
       "name": "/examples (live)",
       "status": "PASS",
       "detail": "examples: live, 11,329B",
-      "ms": 277.8432909999999,
+      "ms": 402.69845799957693,
       "target": "http://localhost:3400"
     },
     {
       "group": "csoai_monetization",
       "name": "/customer (day29)",
       "status": "PASS",
-      "detail": "day29e2e: {'total_subscriptions': 0, 'total_packs': 0, 'total_tiers': 2, 'total_revenue_gbp': 58.0}",
-      "ms": 40.468041000000454,
+      "detail": "day29e2e: {'total_subscriptions': 0, 'total_packs': 0, 'total_tiers': 1, 'total_revenue_gbp': 29.0}",
+      "ms": 6.951666000531986,
       "target": "http://localhost:3400"
     }
   ],
-  "summary": "92/106 passed, 14 failed, 0 skipped"
+  "summary": "87/89 passed, 2 failed, 0 skipped"
 }

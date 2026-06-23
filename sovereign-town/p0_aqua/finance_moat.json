@@ -1,0 +1,121 @@
+{
+  "derived_from": {
+    "sources": [
+      "FRED \u2014 Federal Reserve Economic Data"
+    ],
+    "catalog_ref": "~/Downloads/csoai_free_data_catalog.md",
+    "note": "Public US macroeconomic time series only. No proprietary data."
+  },
+  "series": {
+    "GDP": {
+      "series_id": "GDP",
+      "label": "Gross Domestic Product",
+      "freq": "quarterly",
+      "unit": "Billions USD",
+      "latest": {
+        "date": null,
+        "value": null
+      },
+      "yoy_change": null,
+      "volatility_5y": null,
+      "observations": 0
+    },
+    "UNRATE": {
+      "series_id": "UNRATE",
+      "label": "Unemployment Rate",
+      "freq": "monthly",
+      "unit": "%",
+      "latest": {
+        "date": null,
+        "value": null
+      },
+      "yoy_change": null,
+      "volatility_5y": null,
+      "observations": 0
+    },
+    "CPIAUCSL": {
+      "series_id": "CPIAUCSL",
+      "label": "Consumer Price Index",
+      "freq": "monthly",
+      "unit": "Index",
+      "latest": {
+        "date": null,
+        "value": null
+      },
+      "yoy_change": null,
+      "volatility_5y": null,
+      "observations": 0
+    },
+    "VIXCLS": {
+      "series_id": "VIXCLS",
+      "label": "CBOE Volatility Index",
+      "freq": "daily",
+      "unit": "Index",
+      "latest": {
+        "date": null,
+        "value": null
+      },
+      "yoy_change": null,
+      "volatility_5y": null,
+      "observations": 0
+    },
+    "T10Y2Y": {
+      "series_id": "T10Y2Y",
+      "label": "10Y minus 2Y Treasury Spread",
+      "freq": "daily",
+      "unit": "%",
+      "latest": {
+        "date": null,
+        "value": null
+      },
+      "yoy_change": null,
+      "volatility_5y": null,
+      "observations": 0
+    },
+    "DGS10": {
+      "series_id": "DGS10",
+      "label": "10-Year Treasury Yield",
+      "freq": "daily",
+      "unit": "%",
+      "latest": {
+        "date": null,
+        "value": null
+      },
+      "yoy_change": null,
+      "volatility_5y": null,
+      "observations": 0
+    },
+    "FEDFUNDS": {
+      "series_id": "FEDFUNDS",
+      "label": "Federal Funds Effective Rate",
+      "freq": "monthly",
+      "unit": "%",
+      "latest": {
+        "date": null,
+        "value": null
+      },
+      "yoy_change": null,
+      "volatility_5y": null,
+      "observations": 0
+    }
+  },
+  "indices": {
+    "financial_stress": 0.0,
+    "inflation_pressure": 0.0,
+    "growth_health": 0.0,
+    "economic_stability": 0.5
+  },
+  "sim_params": {
+    "baseline_lawlessness": 0.02,
+    "contagion_step_boost": 1.0,
+    "scarcity_food_mult": 3.2
+  },
+  "hives": [
+    "loopfactory",
+    "commercialvehicle",
+    "councilof",
+    "accountabilityof",
+    "dataprivacyof",
+    "landlaw"
+  ]
+}

@@ -1,6 +1,7 @@
 "use client";
 
-import { Suspense, useEffect, useState } from "react";
+import { Suspense } from "react";
+import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 
 export default function CheckoutSuccess() {
@@ -12,13 +13,8 @@ export default function CheckoutSuccess() {
 }
 
 function SuccessInner() {
-  const [sessionId, setSessionId] = useState<string | null>(null);
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      const url = new URL(window.location.href);
-      setSessionId(url.searchParams.get("session_id"));
-    }
-  }, []);
+  const searchParams = useSearchParams();
+  const sessionId = searchParams.get("session_id");
   return (
     <div className="min-h-screen bg-slate-950 text-white flex items-center justify-center p-8">
       <div className="max-w-xl w-full text-center">
@@ -41,7 +37,7 @@ function SuccessInner() {
             Back to CSOAI
           </Link>
           <Link
-            href="/open-source"
+            href="https://github.com/CSOAI-ORG"
             className="px-6 py-3 rounded-xl bg-white/5 hover:bg-white/10 text-white font-bold transition border border-white/10"
           >
             Browse Open Source

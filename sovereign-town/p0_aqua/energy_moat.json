@@ -1,0 +1,70 @@
+{
+  "derived_from": {
+    "sources": [
+      "FRED \u2014 Federal Reserve Economic Data"
+    ],
+    "catalog_ref": "~/Downloads/csoai_free_data_catalog.md",
+    "note": "Public US energy price series only. No proprietary data."
+  },
+  "series": {
+    "DCOILWTICO": {
+      "series_id": "DCOILWTICO",
+      "label": "Crude Oil (WTI)",
+      "unit": "USD per barrel",
+      "latest": {
+        "date": "2026-06-15",
+        "value": 84.65
+      },
+      "yoy_change": 0.1464,
+      "observations": 10182
+    },
+    "DHHNGSP": {
+      "series_id": "DHHNGSP",
+      "label": "Natural Gas (Henry Hub)",
+      "unit": "USD per MMBtu",
+      "latest": {
+        "date": "2026-06-15",
+        "value": 3.06
+      },
+      "yoy_change": 0.1547,
+      "observations": 7392
+    },
+    "GASREGM": {
+      "series_id": "GASREGM",
+      "label": "US Regular Gasoline",
+      "unit": "USD per gallon",
+      "latest": {
+        "date": "2026-05-01",
+        "value": 4.479
+      },
+      "yoy_change": 0.4219,
+      "observations": 427
+    },
+    "CUSR0000SETB01": {
+      "series_id": "CUSR0000SETB01",
+      "label": "Electricity CPI",
+      "unit": "Index",
+      "latest": {
+        "date": "2026-05-01",
+        "value": 378.66
+      },
+      "yoy_change": 0.4046,
+      "observations": 713
+    }
+  },
+  "indices": {
+    "energy_stress": 0.578
+  },
+  "sim_params": {
+    "scarcity_food_mult": 4.067,
+    "contagion_step_boost": 1.231,
+    "baseline_lawlessness": 0.066
+  },
+  "hives": [
+    "loopfactory",
+    "commercialvehicle",
+    "muckaway",
+    "councilof",
+    "agriculture"
+  ]
+}

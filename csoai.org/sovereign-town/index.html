@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sovereign Town — Live Governed AI World · CSOAI</title>
+<meta name="description" content="A governed-vs-ungoverned agent-world simulation that proves why governance architecture determines whether multi-agent AI systems thrive or collapse.">
+<style>
+body{font:16px/1.6 -apple-system,sans-serif;background:#0d0b21;color:#e8e4f0;margin:0;padding:0}
+.container{max-width:920px;margin:0 auto;padding:48px 32px}
+h1{font-size:42px;margin:0 0 16px;color:#fff}
+h2{margin-top:32px;color:#d4a843}
+a{color:#10b981;text-decoration:none}
+a:hover{text-decoration:underline}
+.stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:16px;margin:32px 0}
+.stat{border:1px solid rgba(255,255,255,0.1);border-radius:12px;padding:16px;text-align:center;background:rgba(255,255,255,0.03)}
+.stat .value{font-size:32px;font-weight:800;color:#10b981}
+.stat .label{font-size:11px;text-transform:uppercase;letter-spacing:0.05em;color:#8b879d}
+.cta{display:inline-block;margin-top:8px;margin-right:8px;padding:12px 20px;background:#10b981;color:#0d0b21;border-radius:8px;font-weight:700}
+.cta.secondary{background:transparent;border:1px solid #10b981;color:#10b981}
+.disclaimer{font-size:12px;color:#8b879d;margin-top:32px}
+</style>
+</head>
+<body>
+<div class="container">
+
+<p><a href="/">← CSOAI</a></p>
+
+<h1>Sovereign Town</h1>
+<p style="font-size:18px;color:#a9a5bd">The live argument for governed AI.</p>
+
+<p>Sovereign Town is a governed-vs-ungoverned agent-world that proves—visually and cryptographically—why governance architecture determines whether multi-agent AI systems thrive or collapse.</p>
+
+<div class="stat-grid">
+  <div class="stat"><div class="value" id="s-episodes">1.44B+</div><div class="label">Cumulative episodes</div></div>
+  <div class="stat"><div class="value" id="s-hives">28</div><div class="label">Autonomous hives</div></div>
+  <div class="stat"><div class="value" id="s-personas">140</div><div class="label">Personas</div></div>
+  <div class="stat"><div class="value" id="s-governed">0</div><div class="label">Governed crimes</div></div>
+  <div class="stat"><div class="value" id="s-ungoverned">120M+</div><div class="label">Ungoverned crimes</div></div>
+  <div class="stat"><div class="value" id="s-passports">29</div><div class="label">Issued passports</div></div>
+</div>
+<p id="s-asof" style="font-size:12px;color:#8b879d;margin:-12px 0 16px">Figures from the signed flywheel ledger · <a href="/sovereign-town/status.json">status.json</a> · <a href="https://proofof.ai/sovereign-town" target="_blank" rel="noopener">verify the chain →</a></p>
+
+<a class="cta" href="https://proofof.ai/sovereign-town" target="_blank" rel="noopener">Open the live demo →</a>
+<a class="cta secondary" href="mailto:nicholas@csoai.org?subject=Sovereign%20Town%20design-partner%20pilot">Request pilot</a>
+
+<h2>Same agents. Two futures.</h2>
+<p>Toggle governance on or off and watch the identical population of 140 agents diverge. One side maintains commons, trust and legal boundaries. The other collapses into crime, scarcity and contagion.</p>
+
+<h2>8 live public-data moats</h2>
+<p>The simulation ingests live public data so stress events reflect the real economy, climate, threats and regulatory environment: EU economic aggregates, CISA KEV, OFAC SDN, UK Companies House PSC, FRED, FAOSTAT, EIA and NOAA.</p>
+
+<h2>29 Ed25519 passports. Verify offline.</h2>
+<p>Every hive and the King node carry a sovereign passport signed by the CSOAI root of trust. Regulators, auditors and customers can verify any passport without calling a central API.</p>
+<p><a href="https://proofof.ai/passport" target="_blank" rel="noopener">Verify a passport →</a></p>
+
+<h2>Who it is for</h2>
+<ul>
+<li><strong>Regulators & Policymakers</strong> — wind-tunnel a rule across archetypal firms before it is finalised.</li>
+<li><strong>Enterprise AI Buyers</strong> — evaluate vendor “safe agent” claims against a reproducible baseline.</li>
+<li><strong>AI Labs</strong> — add a governed-world training distribution to alignment research.</li>
+<li><strong>Insurers & Vertical SaaS</strong> — demonstrate or price compliance posture with live, signed output.</li>
+</ul>
+
+<p class="disclaimer">Simulation output is research-grade and predictive only. No named-firm assertions. Public data sources are cited and OGL-UK-3.0 / public-domain where applicable.</p>
+
+</div>
+<script>
+// Pull live, signed-ledger-backed figures from status.json (published by the
+// flywheel). The HTML above carries truthful current fallbacks for no-JS / offline.
+(function(){
+  var fmt = function(n){
+    if(n>=1e9) return (n/1e9).toFixed(2).replace(/\.?0+$/,'')+'B';
+    if(n>=1e6) return Math.round(n/1e6)+'M';
+    if(n>=1e3) return Math.round(n/1e3)+'k';
+    return String(n);
+  };
+  var set = function(id,v){ var el=document.getElementById(id); if(el) el.textContent=v; };
+  fetch('/sovereign-town/status.json',{cache:'no-store'}).then(function(r){return r.json();}).then(function(d){
+    if(typeof d.cum_episodes==='number') set('s-episodes', fmt(d.cum_episodes)+'+');
+    if(typeof d.hives==='number') set('s-hives', d.hives);
+    if(typeof d.personas==='number') set('s-personas', d.personas);
+    if(typeof d.governed_crimes==='number') set('s-governed', d.governed_crimes);
+    if(typeof d.ungoverned_crimes==='number') set('s-ungoverned', fmt(d.ungoverned_crimes)+'+');
+    if(typeof d.passports==='number') set('s-passports', d.passports);
+    var asof=document.getElementById('s-asof');
+    if(asof && d.updated){
+      asof.innerHTML='Live from the signed flywheel ledger · updated '+d.updated.slice(0,10)+
+        ' · <a href="/sovereign-town/status.json">status.json</a> · '+
+        '<a href="https://proofof.ai/sovereign-town" target="_blank" rel="noopener">verify the chain &rarr;</a>';
+    }
+  }).catch(function(){/* keep truthful fallbacks */});
+})();
+</script>
+</body>
+</html>

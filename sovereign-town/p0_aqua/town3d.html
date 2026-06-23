@@ -1,0 +1,628 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Sovereign Town 3D | Live Demo</title>
+<meta name="description" content="Live 3D demo of the governed-vs-ungoverned Sovereign Town simulation. The Python sim is the engine; this page is a thin viewer.">
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+  }
+}
+</script>
+<style>
+  :root{--brand:#D4A843;--ink:#0D0B21;--muted:#9C99AD;--bg:#050508;--card:rgba(13,11,33,0.88);--border:rgba(255,255,255,0.12);--ok:#10b981;--bad:#ef4444;--warn:#f59e0b}
+  *{box-sizing:border-box}
+  body{margin:0;padding:0;overflow:hidden;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:#E8E4F0}
+  #canvas{position:fixed;inset:0}
+  header{position:fixed;top:0;left:0;right:0;z-index:10;padding:.8rem 1.25rem;background:var(--card);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;gap:1rem}
+  .logo{font-weight:800;font-size:1.1rem;color:var(--brand);text-decoration:none;white-space:nowrap}
+  nav{display:flex;gap:1rem;font-size:.9rem;align-items:center}
+  nav a{color:rgba(255,255,255,.75);text-decoration:none}
+  nav a:hover{color:var(--brand)}
+  .hud{position:fixed;z-index:10;display:flex;flex-direction:column;gap:.5rem}
+  .hud.top-right{top:70px;right:1rem;align-items:flex-end}
+  .hud.bottom-left{bottom:1rem;left:1rem;max-width:320px}
+  .panel{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:.75rem 1rem;backdrop-filter:blur(10px);min-width:180px}
+  .panel h3{margin:0 0 .4rem;font-size:.85rem;color:var(--brand);text-transform:uppercase;letter-spacing:.05em}
+  .stat{display:flex;justify-content:space-between;font-size:.85rem;margin:.15rem 0}
+  .stat .num{font-weight:700;color:#fff}
+  #minimap{width:180px;height:180px;border-radius:12px;border:1px solid var(--border);background:rgba(5,5,8,.85)}
+  .badge{font-size:.7rem;padding:.15rem .45rem;border-radius:99px;background:rgba(255,255,255,.08);border:1px solid var(--border);white-space:nowrap}
+  #tooltip{position:fixed;pointer-events:none;background:rgba(10,10,15,.92);border:1px solid var(--border);border-radius:8px;padding:.5rem .75rem;font-size:.8rem;z-index:20;display:none;max-width:260px}
+  #tooltip .name{font-weight:700;color:var(--brand);margin-bottom:.2rem}
+  #loading{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:var(--bg);z-index:50;flex-direction:column;gap:.75rem}
+  .spinner{width:40px;height:40px;border:3px solid rgba(212,168,67,.2);border-top-color:var(--brand);border-radius:50%;animation:spin 1s linear infinite}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  .controls-hint{position:fixed;bottom:1rem;right:1rem;z-index:10;font-size:.75rem;color:var(--muted);background:var(--card);padding:.4rem .7rem;border-radius:8px;border:1px solid var(--border)}
+  .regime-switch{display:flex;gap:.25rem;background:rgba(0,0,0,.35);padding:.25rem;border-radius:8px;border:1px solid var(--border)}
+  .regime-switch button{border:none;background:transparent;color:var(--muted);padding:.35rem .7rem;border-radius:6px;font-size:.85rem;cursor:pointer}
+  .regime-switch button.active{background:rgba(212,168,67,.2);color:var(--brand);font-weight:700}
+  .conn-dot{width:8px;height:8px;border-radius:50%;background:var(--muted);display:inline-block;margin-right:.35rem}
+  .conn-dot.connected{background:var(--ok);box-shadow:0 0 6px var(--ok)}
+  .conn-dot.connecting{background:var(--warn);animation:pulse 1s infinite}
+  .conn-dot.error{background:var(--bad)}
+  .viewer-controls{display:flex;gap:.5rem;align-items:center;margin-top:.5rem}
+  .viewer-controls button{border:1px solid var(--border);background:rgba(255,255,255,.08);color:#fff;padding:.25rem .6rem;border-radius:6px;font-size:.75rem;cursor:pointer}
+  .viewer-controls button:hover{border-color:var(--brand);color:var(--brand)}
+  .live-dot{width:8px;height:8px;border-radius:50%;background:var(--ok);display:inline-block;margin-right:.35rem;animation:pulse 1.5s infinite}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+  .action-log{max-height:160px;overflow-y:auto;font-size:.78rem;line-height:1.35}
+  .action-log .row{display:flex;gap:.5rem;align-items:baseline;padding:.15rem 0;border-bottom:1px solid rgba(255,255,255,.05)}
+  .action-log .time{color:var(--muted);font-variant-numeric:tabular-nums;min-width:3.2rem}
+  .action-log .name{color:var(--brand);min-width:5.5rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .action-log .act{text-transform:uppercase;font-size:.65rem;padding:.05rem .35rem;border-radius:4px;background:rgba(255,255,255,.1)}
+  .action-log .act.crime{background:rgba(239,68,68,.25);color:#fca5a5}
+  .scarcity-banner{position:fixed;top:64px;left:50%;transform:translateX(-50%);z-index:9;background:rgba(180,83,9,.85);color:#fff;padding:.35rem 1rem;border-radius:0 0 8px 8px;font-size:.85rem;font-weight:700;display:none;backdrop-filter:blur(6px)}
+  @media(max-width:640px){.hud.top-right{top:62px;right:.5rem}.hud.bottom-left{bottom:.5rem;left:.5rem;max-width:260px}#minimap{width:140px;height:140px}}
+  *:focus-visible { outline: 2px solid var(--accent, #2dd4bf); outline-offset: 2px; }
+  .skip-link { position: absolute; left: -999px; top: auto; width: 1px; height: 1px; overflow: hidden; z-index: 9999; }
+  .skip-link:focus { position: fixed; top: .5rem; left: .5rem; width: auto; height: auto; padding: .5rem 1rem; background: var(--accent, #2dd4bf); color: #000; font-weight: 600; border-radius: 4px; }
+</style>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to main content</a>
+
+<header>
+  <a class="logo" href="/">ProofOf<span style="color:#fff">.ai</span> · Sovereign Town 3D</a>
+  <nav>
+    <div class="regime-switch" id="regime-switch">
+      <button data-regime="governed" class="active">Governed</button>
+      <button data-regime="ungoverned">Ungoverned</button>
+    </div>
+    <a href="/dashboard">Dashboard</a>
+    <a href="/passport">Verifier</a>
+    <a href="https://meok.ai" target="_blank">MEOK.ai</a>
+  </nav>
+</header>
+
+<div class="scarcity-banner" id="scarcity-banner">⚠ SCARCITY WEEK — food costs spike, commons under pressure</div>
+
+<div id="loading"><div class="spinner"></div><div>Loading 28 hives and 140 personas…</div></div>
+
+<div class="hud top-right">
+  <div class="panel">
+    <h3><span class="live-dot"></span>Live Sim · <span id="conn-label" style="font-size:.7rem;color:var(--muted)"><span class="conn-dot" id="conn-dot"></span><span id="conn-text">connecting…</span></span></h3>
+    <div class="stat"><span>Regime</span><span class="num" id="st-regime">—</span></div>
+    <div class="stat"><span>Day</span><span class="num" id="st-day">—</span></div>
+    <div class="stat"><span>Hour</span><span class="num" id="st-hour">—</span></div>
+    <div class="stat"><span>Crimes</span><span class="num" id="st-crimes">—</span></div>
+    <div class="stat"><span>Lawlessness</span><span class="num" id="st-law">—</span></div>
+    <div class="stat"><span>Commons</span><span class="num" id="st-commons">—</span></div>
+    <div class="stat"><span>Trust</span><span class="num" id="st-trust">—</span></div>
+    <div class="viewer-controls">
+      <button id="btn-pause">Pause</button>
+      <button id="btn-step">Step +1</button>
+      <span style="color:var(--muted);font-size:.7rem">keys: G/U regime · P pause</span>
+    </div>
+  </div>
+  <div class="panel">
+    <h3>Fleet</h3>
+    <div class="stat"><span>Hives</span><span class="num" id="h-hives">—</span></div>
+    <div class="stat"><span>Passports</span><span class="num" id="h-passports">—</span></div>
+    <div class="stat"><span>Episodes</span><span class="num" id="h-eps">—</span></div>
+    <div class="stat"><span>Mac cycle</span><span class="num" id="h-mac">—</span></div>
+    <div class="stat"><span>VM cycle</span><span class="num" id="h-vm">—</span></div>
+  </div>
+  <canvas id="minimap" width="360" height="360"></canvas>
+</div>
+
+<div class="hud bottom-left">
+  <div class="panel" id="selection-panel" style="display:none">
+    <h3 id="sel-title">Selection</h3>
+    <div id="sel-body"></div>
+  </div>
+  <div class="panel" id="log-panel" style="margin-top:.5rem">
+    <h3>Action Log</h3>
+    <div class="action-log" id="action-log"></div>
+  </div>
+</div>
+
+<div class="controls-hint">Left-drag orbit · Scroll zoom · Right-drag pan · Click agents/buildings · Toggle regime to compare</div>
+<div id="tooltip"></div>
+
+<script type="module">
+import * as THREE from 'three';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+
+const fmt = n => (n === undefined || n === null) ? '—' : Number(n).toLocaleString();
+const archetypeColors = { Scholar:'#6366f1', Guardian:'#94a3b8', Healer:'#14b8a6', Trickster:'#f59e0b', Pioneer:'#f97316', Mystic:'#8b5cf6' };
+const districtPalette = ['#D4A843','#6366f1','#14b8a6','#f59e0b','#f97316','#8b5cf6','#ef4444','#10b981','#ec4899','#06b6d4'];
+
+const actionColors = {
+  work:'#10b981', eat:'#f59e0b', sleep:'#6366f1', socialize:'#ec4899',
+  help_peer:'#06b6d4', rest:'#9C99AD', steal:'#ef4444', neglect:'#f97316',
+  deceive:'#b91c1c', welfare_meal:'#D4A843', hygiene:'#8b5cf6', bladder:'#a78bfa'
+};
+const crimeActions = new Set(['steal','neglect','deceive']);
+
+const scene = new THREE.Scene();
+scene.background = new THREE.Color('#050508');
+scene.fog = new THREE.FogExp2('#050508', 0.0035);
+
+const camera = new THREE.PerspectiveCamera(55, window.innerWidth / window.innerHeight, 0.1, 2000);
+camera.position.set(0, 140, 300);
+
+const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: false });
+renderer.setSize(window.innerWidth, window.innerHeight);
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+renderer.shadowMap.enabled = true;
+renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+document.body.appendChild(renderer.domElement);
+
+const controls = new OrbitControls(camera, renderer.domElement);
+controls.enableDamping = true;
+controls.dampingFactor = 0.05;
+controls.maxPolarAngle = Math.PI / 2.05;
+controls.minDistance = 40;
+controls.maxDistance = 600;
+
+// Lights
+scene.add(new THREE.AmbientLight('#4c4c6a', 0.6));
+const sun = new THREE.DirectionalLight('#fff5d6', 1.1);
+sun.position.set(150, 200, 100);
+sun.castShadow = true;
+sun.shadow.mapSize.set(2048, 2048);
+sun.shadow.camera.left = -300; sun.shadow.camera.right = 300;
+sun.shadow.camera.top = 300; sun.shadow.camera.bottom = -300;
+scene.add(sun);
+scene.add(new THREE.HemisphereLight('#2a2a40', '#050508', 0.4));
+
+// Ground grid
+const gridHelper = new THREE.GridHelper(600, 60, '#1a1a2e', '#11111a');
+scene.add(gridHelper);
+const groundGeo = new THREE.PlaneGeometry(1200, 1200);
+const groundMat = new THREE.MeshStandardMaterial({ color: '#08080c', roughness: 0.9, metalness: 0.1 });
+const ground = new THREE.Mesh(groundGeo, groundMat);
+ground.rotation.x = -Math.PI / 2;
+ground.position.y = -0.5;
+ground.receiveShadow = true;
+scene.add(ground);
+
+// Stars
+const starGeo = new THREE.BufferGeometry();
+const starPos = new Float32Array(2000 * 3);
+for(let i=0;i<2000;i++){
+  starPos[i*3] = (Math.random()-0.5)*1200;
+  starPos[i*3+1] = Math.random()*600 + 50;
+  starPos[i*3+2] = (Math.random()-0.5)*1200;
+}
+starGeo.setAttribute('position', new THREE.BufferAttribute(starPos, 3));
+const starMat = new THREE.PointsMaterial({ color: '#D4A843', size: 1.2, transparent: true, opacity: 0.6 });
+scene.add(new THREE.Points(starGeo, starMat));
+
+const raycaster = new THREE.Raycaster();
+const mouse = new THREE.Vector2();
+let hovered = null, selected = null;
+const interactables = [];
+const agentOrbs = [];
+const districtGroups = [];
+const orbByKey = new Map(); // "district:index" -> orb wrapper
+
+function makeLabel(text, color='#D4A843', size=3){
+  const canvas = document.createElement('canvas');
+  const ctx = canvas.getContext('2d');
+  canvas.width = 512; canvas.height = 128;
+  ctx.fillStyle = 'rgba(5,5,8,0.7)';
+  ctx.fillRect(0,0,512,128);
+  ctx.strokeStyle = color; ctx.lineWidth = 4; ctx.strokeRect(2,2,508,124);
+  ctx.font = 'bold 60px -apple-system, BlinkMacSystemFont, sans-serif';
+  ctx.fillStyle = color; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+  ctx.fillText(text, 256, 64);
+  const tex = new THREE.CanvasTexture(canvas);
+  const mat = new THREE.SpriteMaterial({ map: tex, transparent: true });
+  const sprite = new THREE.Sprite(mat);
+  sprite.scale.set(size * 4, size, 1);
+  return sprite;
+}
+
+function targetOffsetForAction(action, idx, total){
+  const angle = (idx / Math.max(total,1)) * Math.PI * 2;
+  if(action === 'sleep') return {r:3, a:angle, y:0.6};
+  if(action === 'work') return {r:4.5, a:angle, y:1.8};
+  if(action === 'eat') return {r:7, a:angle + 0.8, y:1.6};
+  if(action === 'socialize') return {r:8.5, a:angle + 1.2, y:1.7};
+  if(action === 'help_peer') return {r:6, a:angle + 2.0, y:2.0};
+  if(action === 'rest') return {r:5.5, a:angle + 0.3, y:2.2};
+  if(crimeActions.has(action)) return {r:9 + Math.random()*2, a:angle + Math.PI, y:2.8};
+  return {r:6, a:angle, y:2.0};
+}
+
+function createDistrict(index, total, hive, characters){
+  const angle = (index / total) * Math.PI * 2;
+  const radius = 150;
+  const x = Math.cos(angle) * radius;
+  const z = Math.sin(angle) * radius;
+  const color = districtPalette[index % districtPalette.length];
+  const group = new THREE.Group();
+  group.position.set(x, 0, z);
+
+  // Platform
+  const padGeo = new THREE.CylinderGeometry(16, 17, 0.8, 8);
+  const padMat = new THREE.MeshStandardMaterial({ color, transparent: true, opacity: 0.18, roughness: 0.5, metalness: 0.4 });
+  const pad = new THREE.Mesh(padGeo, padMat);
+  pad.position.y = 0.4; pad.receiveShadow = true;
+  group.add(pad);
+
+  // Building
+  const h = 12 + (hive.model?.test_acc || 0) * 20;
+  const bGeo = new THREE.BoxGeometry(8, h, 8);
+  const bMat = new THREE.MeshStandardMaterial({ color, emissive: color, emissiveIntensity: 0.25, roughness: 0.4, metalness: 0.6, transparent: true, opacity: 0.92 });
+  const building = new THREE.Mesh(bGeo, bMat);
+  building.position.y = h / 2; building.castShadow = true; building.receiveShadow = true;
+  building.userData = { type: 'district', hive };
+  group.add(building);
+  interactables.push(building);
+
+  // LED ring
+  const ringGeo = new THREE.BoxGeometry(9, 0.6, 9);
+  const ringMat = new THREE.MeshStandardMaterial({ color, emissive: color, emissiveIntensity: 1.2 });
+  const ring = new THREE.Mesh(ringGeo, ringMat);
+  ring.position.y = h * 0.65;
+  group.add(ring);
+
+  // Label
+  const label = makeLabel(hive.name || hive.key, color, 5);
+  label.position.set(0, h + 6, 0);
+  group.add(label);
+
+  // Agents (personas)
+  const personas = (characters && characters.personas) || [];
+  personas.forEach((p, i) => {
+    const off = targetOffsetForAction('rest', i, personas.length);
+    const ax = Math.cos(off.a) * off.r;
+    const az = Math.sin(off.a) * off.r;
+    const ac = archetypeColors[p.archetype] || '#9C99AD';
+    const orbGeo = new THREE.SphereGeometry(0.9, 16, 16);
+    const orbMat = new THREE.MeshStandardMaterial({ color: ac, emissive: ac, emissiveIntensity: 0.6, roughness: 0.3, metalness: 0.7 });
+    const orb = new THREE.Mesh(orbGeo, orbMat);
+    orb.position.set(ax, off.y, az);
+    orb.userData = { type: 'agent', persona: p, hive: hive.name, district: hive.key, index: i };
+    orb.castShadow = true;
+    group.add(orb);
+    interactables.push(orb);
+    const wrap = { mesh: orb, baseY: off.y, speed: 0.8 + Math.random()*0.8, phase: Math.random()*Math.PI*2, group,
+                   targetPos: new THREE.Vector3(ax, off.y, az), targetColor: new THREE.Color(ac),
+                   action: 'rest', lastAction: 'rest', crimeFlash: 0 };
+    agentOrbs.push(wrap);
+    orbByKey.set(`${hive.key}:${i}`, wrap);
+  });
+
+  scene.add(group);
+  districtGroups.push(group);
+}
+
+// Agent 47 — the sovereign human player at the centre
+const agent47Group = new THREE.Group();
+const crownGeo = new THREE.ConeGeometry(1.2, 1.6, 5);
+const crownMat = new THREE.MeshStandardMaterial({ color: '#FFD700', emissive: '#FFD700', emissiveIntensity: 1.5, metalness: 1, roughness: 0.1 });
+const crown = new THREE.Mesh(crownGeo, crownMat);
+crown.position.y = 2.4;
+const bodyGeo = new THREE.SphereGeometry(1.4, 24, 24);
+const bodyMat = new THREE.MeshStandardMaterial({ color: '#FFD700', emissive: '#FFD700', emissiveIntensity: 0.8, roughness: 0.2, metalness: 0.9 });
+const body = new THREE.Mesh(bodyGeo, bodyMat);
+body.userData = { type: 'agent47', name: 'Agent 47', role: 'Sovereign human player' };
+agent47Group.add(body, crown);
+agent47Group.position.set(0, 2, 0);
+agent47Group.castShadow = true;
+scene.add(agent47Group);
+interactables.push(body);
+
+// Minimap
+const minimap = document.getElementById('minimap');
+const mmCtx = minimap.getContext('2d');
+const MAP_RANGE = 220;
+function drawMinimap(){
+  const w = minimap.width, h = minimap.height, cx = w/2, cy = h/2, scale = w/(MAP_RANGE*2);
+  mmCtx.fillStyle = 'rgba(5,5,8,0.92)';
+  mmCtx.fillRect(0,0,w,h);
+  mmCtx.strokeStyle = 'rgba(40,40,55,0.6)'; mmCtx.lineWidth = 1;
+  for(let i=0;i<w;i+=30){ mmCtx.beginPath(); mmCtx.moveTo(i,0); mmCtx.lineTo(i,h); mmCtx.stroke(); mmCtx.beginPath(); mmCtx.moveTo(0,i); mmCtx.lineTo(w,i); mmCtx.stroke(); }
+  districtGroups.forEach((g,i)=>{
+    const x = cx + g.position.x * scale;
+    const y = cy + g.position.z * scale;
+    const c = districtPalette[i % districtPalette.length];
+    mmCtx.fillStyle = c; mmCtx.globalAlpha = 0.5;
+    mmCtx.fillRect(x-6,y-6,12,12);
+    mmCtx.globalAlpha = 1;
+  });
+  agentOrbs.forEach(a=>{
+    const wp = new THREE.Vector3();
+    a.mesh.getWorldPosition(wp);
+    const x = cx + wp.x * scale;
+    const y = cy + wp.z * scale;
+    const c = a.mesh.material.color.getStyle();
+    mmCtx.fillStyle = c;
+    mmCtx.beginPath(); mmCtx.arc(x,y,2.5,0,Math.PI*2); mmCtx.fill();
+  });
+  const wp47 = new THREE.Vector3(); agent47Group.getWorldPosition(wp47);
+  mmCtx.fillStyle = '#FFD700';
+  mmCtx.beginPath(); mmCtx.arc(cx+wp47.x*scale, cy+wp47.z*scale, 5, 0, Math.PI*2); mmCtx.fill();
+  mmCtx.strokeStyle = '#FFD700'; mmCtx.globalAlpha = 0.4; mmCtx.lineWidth = 2;
+  mmCtx.beginPath(); mmCtx.arc(cx+wp47.x*scale, cy+wp47.z*scale, 8, 0, Math.PI*2); mmCtx.stroke(); mmCtx.globalAlpha = 1;
+}
+
+// Tooltip & selection
+const tooltip = document.getElementById('tooltip');
+function showTooltip(obj, clientX, clientY){
+  let html = '';
+  if(obj.userData.type === 'district'){
+    const h = obj.userData.hive;
+    html = `<div class="name">${h.name}</div><div class="small">${h.key} · ${(h.frameworks||[]).slice(0,3).join(', ')}</div>`;
+  } else if(obj.userData.type === 'agent'){
+    const p = obj.userData.persona;
+    const wrap = orbByKey.get(`${obj.userData.district}:${obj.userData.index}`);
+    const action = wrap ? wrap.action : 'rest';
+    html = `<div class="name">${p.name}</div><div class="small">${p.archetype} · action: <b>${action}</b> · ${obj.userData.hive}</div>`;
+  } else if(obj.userData.type === 'agent47'){
+    html = `<div class="name">${escapeHtml(obj.userData.name)}</div><div class="small">${escapeHtml(obj.userData.role)}</div>`;
+  }
+  tooltip.innerHTML = html;
+  tooltip.style.display = 'block';
+  tooltip.style.left = Math.min(clientX + 15, window.innerWidth - 270) + 'px';
+  tooltip.style.top = Math.min(clientY + 15, window.innerHeight - 100) + 'px';
+}
+function hideTooltip(){ tooltip.style.display = 'none'; }
+function selectObject(obj){
+  selected = obj;
+  const panel = document.getElementById('selection-panel');
+  const body = document.getElementById('sel-body');
+  panel.style.display = 'block';
+  if(obj.userData.type === 'district'){
+    const h = obj.userData.hive;
+    document.getElementById('sel-title').textContent = h.name;
+    const m = h.model || {};
+    body.innerHTML = `
+      <div class="stat"><span>ID</span><span class="num">${escapeHtml(h.key)}</span></div>
+      <div class="stat"><span>Accuracy</span><span class="num">${m.test_acc !== undefined ? (m.test_acc*100).toFixed(1)+'%' : '—'}</span></div>
+      <div class="stat"><span>F1</span><span class="num">${m.f1 !== undefined ? m.f1.toFixed(3) : '—'}</span></div>
+      <div class="stat"><span>Personas</span><span class="num">${(h.personas||[]).length}</span></div>
+      <div style="margin-top:.5rem">${(h.frameworks||[]).map(f=>`<span class="badge">${f}</span>`).join(' ')}</div>
+      <div style="margin-top:.5rem"><a class="badge" style="color:var(--brand)" href="/api/hives/${h.key}" target="_blank">Open API ↗</a></div>`;
+  } else if(obj.userData.type === 'agent'){
+    const p = obj.userData.persona;
+    const wrap = orbByKey.get(`${obj.userData.district}:${obj.userData.index}`);
+    const action = wrap ? wrap.action : 'rest';
+    document.getElementById('sel-title').textContent = p.name;
+    body.innerHTML = `
+      <div class="stat"><span>Hive</span><span class="num">${escapeHtml(obj.userData.hive)}</span></div>
+      <div class="stat"><span>Archetype</span><span class="num">${escapeHtml(p.archetype)}</span></div>
+      <div class="stat"><span>Action</span><span class="num">${action}</span></div>
+      <div class="stat"><span>Stage</span><span class="num">${p.evolution_stage}</span></div>
+      <div class="stat"><span>Care style</span><span class="num">${p.care_style}</span></div>
+      <div style="margin-top:.5rem;font-size:.8rem;color:var(--muted);font-style:italic">“${p.meok_voice}”</div>
+      <div style="margin-top:.4rem;font-size:.75rem;line-height:1.4">${p.backstory}</div>`;
+  } else if(obj.userData.type === 'agent47'){
+    document.getElementById('sel-title').textContent = 'Agent 47';
+    body.innerHTML = `<div style="font-size:.85rem">${escapeHtml(obj.userData.role)}. The 47th participant in every Sovereign Town simulation.</div>`;
+  }
+}
+
+window.addEventListener('mousemove', e=>{
+  mouse.x = (e.clientX / window.innerWidth) * 2 - 1;
+  mouse.y = -(e.clientY / window.innerHeight) * 2 + 1;
+  raycaster.setFromCamera(mouse, camera);
+  const hits = raycaster.intersectObjects(interactables, false);
+  if(hits.length){
+    document.body.style.cursor = 'pointer';
+    hovered = hits[0].object;
+    showTooltip(hovered, e.clientX, e.clientY);
+  } else {
+    document.body.style.cursor = 'default';
+    hovered = null;
+    hideTooltip();
+  }
+});
+window.addEventListener('click', ()=>{ if(hovered) selectObject(hovered); });
+window.addEventListener('resize', ()=>{
+  camera.aspect = window.innerWidth / window.innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(window.innerWidth, window.innerHeight);
+});
+
+// Live state plumbing
+let wsConn = null;
+let currentRegime = 'governed';
+let liveTick = null;
+let isPaused = false;
+let queuedTick = null;
+let reconnectDelay = 1000;
+const maxReconnectDelay = 30000;
+const actionLog = document.getElementById('action-log');
+const maxLogRows = 40;
+
+function setConnState(state, text){
+  const dot = document.getElementById('conn-dot');
+  const label = document.getElementById('conn-text');
+  dot.className = 'conn-dot ' + state;
+  if(text) label.textContent = text;
+}
+
+function logAction(day, hour, name, action, district){
+  const row = document.createElement('div');
+  row.className = 'row';
+  const isCrime = crimeActions.has(action);
+  row.innerHTML = `<span class="time">D${escapeHtml(day)} H${escapeHtml(hour)}</span><span class="name" title="${escapeHtml(name)}">${escapeHtml(name)}</span><span class="act ${isCrime?'crime':''}">${escapeHtml(action)}</span>`;
+  actionLog.prepend(row);
+  while(actionLog.children.length > maxLogRows) actionLog.lastChild.remove();
+}
+
+function updateStats(payload){
+  document.getElementById('st-regime').textContent = payload.regime || '—';
+  document.getElementById('st-day').textContent = payload.day !== undefined ? payload.day : '—';
+  document.getElementById('st-hour').textContent = payload.hour !== undefined ? payload.hour : '—';
+  document.getElementById('st-crimes').textContent = payload.crimes !== undefined ? payload.crimes : '—';
+  document.getElementById('st-law').textContent = payload.lawlessness !== undefined ? payload.lawlessness.toFixed(3) : '—';
+  document.getElementById('st-commons').textContent = payload.commons !== undefined ? payload.commons.toFixed(3) : '—';
+  document.getElementById('st-trust').textContent = payload.mean_trust !== undefined ? payload.mean_trust.toFixed(3) : '—';
+  const sb = document.getElementById('scarcity-banner');
+  if(payload.scarcity) sb.style.display = 'block';
+  else sb.style.display = 'none';
+}
+
+function applyTick(payload){
+  liveTick = payload;
+  updateStats(payload);
+  const seen = new Set();
+  (payload.agents || []).forEach(a=>{
+    const key = `${a.district}:${a.agent_index}`;
+    seen.add(key);
+    const wrap = orbByKey.get(key);
+    if(!wrap) return;
+    wrap.action = a.action;
+    const off = targetOffsetForAction(a.action, a.agent_index, 5);
+    // Position in local district space
+    wrap.targetPos.set(Math.cos(off.a) * off.r, off.y, Math.sin(off.a) * off.r);
+    const c = new THREE.Color(actionColors[a.action] || archetypeColors[a.archetype] || '#9C99AD');
+    wrap.targetColor.copy(c);
+    if(crimeActions.has(a.action)) wrap.crimeFlash = 1.0;
+    // Log only action changes, throttled to reduce noise
+    if(a.action !== wrap.lastAction && (crimeActions.has(a.action) || ['work','eat','sleep','help_peer'].includes(a.action))){
+      logAction(payload.day, payload.hour, a.name, a.action, a.district);
+    }
+    wrap.lastAction = a.action;
+  });
+}
+
+function setRegime(regime){
+  currentRegime = regime;
+  document.querySelectorAll('#regime-switch button').forEach(b=>{
+    b.classList.toggle('active', b.dataset.regime === regime);
+  });
+  if(wsConn && wsConn.readyState === WebSocket.OPEN){
+    wsConn.send(JSON.stringify({regime}));
+  }
+}
+
+document.getElementById('regime-switch').addEventListener('click', e=>{
+  if(e.target.dataset.regime) setRegime(e.target.dataset.regime);
+});
+
+function connectWs(){
+  setConnState('connecting', 'connecting…');
+  const proto = location.protocol === 'https:' ? 'wss:' : 'ws:';
+  const url = `${proto}//${location.host}/ws/feed`;
+  wsConn = new WebSocket(url);
+  wsConn.onopen = ()=>{
+    setConnState('connected', 'live');
+    reconnectDelay = 1000;
+    wsConn.send(JSON.stringify({regime: currentRegime}));
+  };
+  wsConn.onmessage = (ev)=>{
+    let msg;
+    try{ msg = JSON.parse(ev.data); }catch(e){ return; }
+    if(msg.topic === 'town_tick'){
+      if(isPaused){
+        queuedTick = msg.payload || msg;
+      } else {
+        applyTick(msg.payload || msg);
+      }
+    }
+    if(msg.topic === 'status'){
+      const s = msg.payload || msg;
+      document.getElementById('h-hives').textContent = s.hives || 28;
+      document.getElementById('h-passports').textContent = s.passports || 0;
+      document.getElementById('h-eps').textContent = fmt(s.cum_episodes);
+      document.getElementById('h-mac').textContent = s.mac && s.mac.cycle !== undefined ? s.mac.cycle : '—';
+      document.getElementById('h-vm').textContent = s.vm && s.vm.cycle !== undefined ? s.vm.cycle : '—';
+    }
+  };
+  wsConn.onclose = ()=>{
+    setConnState('error', 'reconnecting…');
+    setTimeout(connectWs, reconnectDelay);
+    reconnectDelay = Math.min(reconnectDelay * 2, maxReconnectDelay);
+  };
+  wsConn.onerror = ()=>{
+    setConnState('error', 'connection error');
+    wsConn.close();
+  };
+}
+
+// Animation loop
+const clock = new THREE.Clock();
+const tmpColor = new THREE.Color();
+function animate(){
+  requestAnimationFrame(animate);
+  const t = clock.getElapsedTime();
+  const dt = clock.getDelta();
+  agentOrbs.forEach(a=>{
+    // Lerp toward target position
+    a.mesh.position.lerp(a.targetPos, 0.08);
+    // Lerp color
+    a.mesh.material.color.lerp(a.targetColor, 0.12);
+    a.mesh.material.emissive.lerp(a.targetColor, 0.12);
+    // Crime flash decay
+    if(a.crimeFlash > 0){
+      a.mesh.material.emissiveIntensity = 0.6 + a.crimeFlash * 2.0;
+      a.crimeFlash = Math.max(0, a.crimeFlash - 0.02);
+    } else {
+      a.mesh.material.emissiveIntensity = 0.5 + Math.sin(t * a.speed + a.phase) * 0.15;
+    }
+    // Hover bob on top of lerp
+    a.mesh.position.y += Math.sin(t * a.speed + a.phase) * 0.003;
+  });
+  agent47Group.position.y = 2 + Math.sin(t * 1.5) * 0.4;
+  agent47Group.rotation.y = t * 0.2;
+  districtGroups.forEach((g,i)=>{
+    g.rotation.y = Math.sin(t * 0.05 + i) * 0.03;
+  });
+  controls.update();
+  renderer.render(scene, camera);
+  drawMinimap();
+}
+
+// Pause / step controls
+const btnPause = document.getElementById('btn-pause');
+const btnStep = document.getElementById('btn-step');
+function togglePause(){
+  isPaused = !isPaused;
+  btnPause.textContent = isPaused ? 'Resume' : 'Pause';
+  if(!isPaused && queuedTick){
+    applyTick(queuedTick);
+    queuedTick = null;
+  }
+}
+function stepOne(){
+  if(queuedTick){
+    applyTick(queuedTick);
+    queuedTick = null;
+  }
+}
+btnPause.addEventListener('click', togglePause);
+btnStep.addEventListener('click', stepOne);
+
+window.addEventListener('keydown', e=>{
+  if(e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+  if(e.key === 'g' || e.key === 'G') setRegime('governed');
+  if(e.key === 'u' || e.key === 'U') setRegime('ungoverned');
+  if(e.key === 'p' || e.key === 'P') togglePause();
+});
+
+// Load data
+async function get(url){ try{return await (await fetch(url)).json();}catch(e){return null;} }
+async function boot(){
+  const [hives, chars, status] = await Promise.all([get('/api/hives'), get('/api/characters'), get('/api/status')]);
+  if(hives){
+    hives.filter(h => h.type !== 'king').forEach((h,i)=> createDistrict(i, hives.filter(x=>x.type!=='king').length, h, chars && chars[h.key]));
+  }
+  if(status){
+    document.getElementById('h-hives').textContent = status.hives || 28;
+    document.getElementById('h-passports').textContent = status.passports || 0;
+    document.getElementById('h-eps').textContent = fmt(status.cum_episodes);
+    document.getElementById('h-mac').textContent = status.mac && status.mac.cycle !== undefined ? status.mac.cycle : '—';
+    document.getElementById('h-vm').textContent = status.vm && status.vm.cycle !== undefined ? status.vm.cycle : '—';
+  }
+  // Prime the live generator with a polling fallback, then open WebSocket.
+  const prime = await get(`/api/town-state?regime=${currentRegime}`);
+  if(prime) applyTick(prime);
+  connectWs();
+  document.getElementById('loading').style.display = 'none';
+  animate();
+}
+boot();
+</script>
+</body>
+</html>

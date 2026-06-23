@@ -2,6 +2,9 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import CouncilNav from "@/components/CouncilNav";
+import FooterWrapper from "@/components/FooterWrapper";
+import CookieBanner from "@/components/CookieBanner";
+import { Analytics } from "@vercel/analytics/react";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -59,6 +62,24 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "/",
   },
+  icons: {
+    icon: "/assets/favicon.svg",
+    apple: "/assets/apple-touch-icon.svg",
+  },
+};
+
+const websiteSchema = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "@id": "https://csoai.org/#website",
+  url: "https://csoai.org",
+  name: "CSOAI",
+  publisher: { "@id": "https://csoai.org/#org" },
+  potentialAction: {
+    "@type": "SearchAction",
+    target: "https://csoai.org/?q={search_term_string}",
+    "query-input": "required name=search_term_string",
+  },
 };
 
 export default function RootLayout({
@@ -68,9 +89,28 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased bg-slate-950 text-white`}>
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}
+        />
+      </head>
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} flex min-h-screen flex-col bg-slate-950 text-white antialiased`}
+      >
+        <a
+          href="#main-content"
+          className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-lg focus:bg-emerald-500 focus:px-4 focus:py-2 focus:text-slate-950"
+        >
+          Skip to content
+        </a>
         <CouncilNav />
-        {children}
+        <main id="main-content" className="flex-1">
+          {children}
+        </main>
+        <FooterWrapper />
+        <CookieBanner />
+        <Analytics />
       </body>
     </html>
   );

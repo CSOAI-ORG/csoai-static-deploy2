@@ -1,0 +1,48 @@
+{
+  "derived_from": {
+    "sources": [
+      "CISA KEV",
+      "MITRE ATT&CK Enterprise"
+    ],
+    "catalog_ref": "~/Downloads/csoai_free_data_catalog.md",
+    "note": "Public threat-intel only. No proprietary data."
+  },
+  "cisa_kev": {
+    "source": "CISA KEV",
+    "url": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+    "total_entries": 1623,
+    "recent_90d": 72,
+    "ransomware_linked": 327,
+    "threat_pressure": 1.0,
+    "hive_hits": {
+      "asisecurity": 749,
+      "transparencyof": 66,
+      "agisafe": 61,
+      "safetyof": 39,
+      "councilof": 33,
+      "openmcp": 7,
+      "dataprivacyof": 5
+    },
+    "recent_hive_hits": {
+      "asisecurity": 49,
+      "councilof": 7,
+      "safetyof": 6,
+      "agisafe": 6,
+      "openmcp": 2,
+      "transparencyof": 1,
+      "dataprivacyof": 1
+    }
+  },
+  "mitre_attack": {
+    "source": "MITRE ATT&CK Enterprise",
+    "skipped": true,
+    "note": "set THREAT_MOAT_INCLUDE_MITRE=1 to fetch (~50MB)"
+  },
+  "indices": {
+    "threat_pressure": 1.0
+  },
+  "sim_params": {
+    "baseline_lawlessness": 0.12,
+    "contagion_step_boost": 1.5
+  }
+}

@@ -6,7 +6,7 @@ export const dynamic = "force-dynamic";
 
 // Server-side Stripe secret key. Set in Vercel env (NEVER prefix with NEXT_PUBLIC_).
 const stripeSecret = process.env.STRIPE_SECRET_KEY;
-const stripe = stripeSecret ? new Stripe(stripeSecret, { apiVersion: "2024-12-18.acacia" as any }) : null;
+const stripe = stripeSecret ? new Stripe(stripeSecret, { apiVersion: "2026-05-27.dahlia" }) : null;
 
 // Map product slug → Stripe Price ID. Set these in Vercel env to match your
 // Stripe dashboard. The fallback (no env) returns a 503 so the UI can show
@@ -43,10 +43,7 @@ export async function POST(request: NextRequest) {
     const config = PRICE_MAP[productId];
     const priceId = process.env[config.envVar];
 
-    const origin =
-      request.headers.get("origin") ||
-      request.headers.get("referer")?.replace(/\/$/, "") ||
-      "https://csoai-v2-app.vercel.app";
+    const origin = process.env.NEXT_PUBLIC_SITE_URL || "https://csoai.org";
 
     // If we have a Stripe Price ID, use it directly. Otherwise fall back to
     // inline price_data so dev/sandbox flows work without dashboard setup.
@@ -82,10 +79,11 @@ export async function POST(request: NextRequest) {
     });
 
     return NextResponse.json({ url: session.url, id: session.id });
-  } catch (err: any) {
+  } catch (err: unknown) {
     console.error("[/api/checkout] error:", err);
+    const message = err instanceof Error ? err.message : "Unknown error";
     return NextResponse.json(
-      { error: "checkout_creation_failed", message: err?.message || "Unknown error" },
+      { error: "checkout_creation_failed", message },
       { status: 500 },
     );
   }
