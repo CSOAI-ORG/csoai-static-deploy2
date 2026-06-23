@@ -258,7 +258,7 @@ const councilRouter = router({
 
       // Define the 33 agents
       const agents = generateAgentCouncil();
-      const votes: { agentId: string; agentType: "guardian" | "arbiter" | "scribe"; agentProvider: "openai" | "anthropic" | "google" | "kimi" | "deepseek"; vote: "approve" | "reject" | "escalate"; confidence: number; reasoning: string }[] = [];
+      const votes: { agentId: string; agentType: "guardian" | "arbiter" | "scribe"; agentProvider: "openai" | "anthropic" | "google" | "kimi" | "deepseek" | "glm" | "hermes"; vote: "approve" | "reject" | "escalate"; confidence: number; reasoning: string }[] = [];
 
       // Simulate voting (in production, each would call different LLM endpoints)
       for (const agent of agents) {
@@ -305,7 +305,7 @@ Respond with JSON only: {"vote": "approve|reject|escalate", "confidence": 0.0-1.
             votes.push({
               agentId: agent.id,
               agentType: agent.type as "guardian" | "arbiter" | "scribe",
-              agentProvider: agent.provider as "openai" | "anthropic" | "google" | "kimi" | "deepseek",
+              agentProvider: agent.provider as "openai" | "anthropic" | "google" | "kimi" | "deepseek" | "glm" | "hermes",
               vote: parsed.vote,
               confidence: parsed.confidence,
               reasoning: parsed.reasoning
@@ -393,6 +393,73 @@ Respond with JSON only: {"vote": "approve|reject|escalate", "confidence": 0.0-1.
       consensusReached: sessions.filter(s => s.status === "consensus_reached").length,
       escalatedToHuman: sessions.filter(s => s.status === "escalated_to_human").length,
       pendingReview: sessions.filter(s => s.status === "voting").length
+    };
+  }),
+
+  // Proxy a thought through the Sovereign Town SOV3 bridge
+  sov3Think: publicProcedure
+    .input(z.object({
+      message: z.string().min(1).max(4000),
+      character: z.string().default("sage"),
+      profile: z.enum(["local_only", "balanced", "power", "council"]).default("balanced"),
+    }))
+    .mutation(async ({ input }) => {
+      const sovTownUrl = process.env.SOV_TOWN_URL || "http://127.0.0.1:3940";
+      const url = `${sovTownUrl}/api/sov3/think`;
+
+      try {
+        const response = await fetch(url, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            character: input.character,
+            message: input.message,
+            profile: input.profile,
+          }),
+        });
+
+        if (!response.ok) {
+          const text = await response.text().catch(() => "unknown error");
+          throw new Error(`Sovereign Town bridge returned ${response.status}: ${text}`);
+        }
+
+        const data = await response.json();
+        return {
+          success: true,
+          bridge: data,
+        };
+      } catch (error: any) {
+        console.error("[council.sov3Think] bridge error:", error);
+        return {
+          success: false,
+          error: error.message || "Failed to reach Sovereign Town bridge",
+        };
+      }
+    }),
+
+  // Health/status of the AI providers available to the 33-Agent Council
+  providersHealth: publicProcedure.query(async () => {
+    const checks = {
+      openai: !!process.env.OPENAI_API_KEY,
+      anthropic: !!process.env.ANTHROPIC_API_KEY,
+      google: !!process.env.GOOGLE_AI_API_KEY,
+      glm: !!(process.env.GLM_API_KEY || process.env.ZHIPU_API_KEY),
+      hermes: false,
+    };
+
+    // Probe Hermes / Ollama
+    try {
+      const ollamaUrl = process.env.HERMES_BASE_URL || "http://127.0.0.1:11434";
+      const res = await fetch(`${ollamaUrl}/api/tags`, { method: "GET" });
+      checks.hermes = res.ok;
+    } catch {
+      checks.hermes = false;
+    }
+
+    return {
+      providers: checks,
+      totalConfigured: Object.values(checks).filter(Boolean).length,
+      sovTownUrl: process.env.SOV_TOWN_URL || "http://127.0.0.1:3940",
     };
   }),
 });
