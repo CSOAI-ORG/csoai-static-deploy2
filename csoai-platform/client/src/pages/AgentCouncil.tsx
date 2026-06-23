@@ -6,7 +6,7 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Users, Shield, Scale, FileText, CheckCircle2, XCircle, AlertTriangle, Clock, Play, Loader2, Zap } from "lucide-react";
+import { Users, Shield, Scale, FileText, CheckCircle2, XCircle, AlertTriangle, Clock, Play, Loader2, Zap, Radio, MessageSquare, Brain } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
@@ -14,6 +14,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { toast } from "sonner";
 import DashboardLayout from "@/components/DashboardLayout";
 import { trpc } from "@/lib/trpc";
@@ -96,9 +97,15 @@ export default function AgentCouncil() {
   const [isVoteDialogOpen, setIsVoteDialogOpen] = useState(false);
   const [voteSubject, setVoteSubject] = useState({ title: "", description: "" });
 
+  // SOV3 bridge state
+  const [sov3Message, setSov3Message] = useState("");
+  const [sov3Character, setSov3Character] = useState("sage");
+  const [sov3Profile, setSov3Profile] = useState<"local_only" | "balanced" | "power" | "council">("balanced");
+
   // Real API data
   const { data: sessions, isLoading, refetch } = trpc.council.list.useQuery();
   const { data: stats } = trpc.council.getStats.useQuery();
+  const { data: providersHealth } = trpc.council.providersHealth.useQuery();
 
   // Voting mutation
   const triggerVotingMutation = trpc.council.triggerVoting.useMutation({
@@ -116,6 +123,35 @@ export default function AgentCouncil() {
       });
     },
   });
+
+  // SOV3 bridge mutation
+  const sov3ThinkMutation = trpc.council.sov3Think.useMutation({
+    onSuccess: (result) => {
+      if (result.success) {
+        toast.success("SOV3 bridge replied");
+      } else {
+        toast.error("SOV3 bridge error", { description: result.error || "Unknown error" });
+      }
+    },
+    onError: (error) => {
+      toast.error("SOV3 bridge failed", { description: error.message || "Please try again later" });
+    },
+  });
+
+  const handleSov3Think = () => {
+    if (!sov3Message.trim()) {
+      toast.error("Please enter a message");
+      return;
+    }
+    sov3ThinkMutation.mutate({
+      message: sov3Message,
+      character: sov3Character,
+      profile: sov3Profile,
+    });
+  };
+
+  const providerStatus = providersHealth?.providers || {};
+  const configuredCount = providersHealth?.totalConfigured || 0;
 
   const handleTriggerVote = async () => {
     if (!voteSubject.title || !voteSubject.description) {
@@ -291,6 +327,132 @@ export default function AgentCouncil() {
             );
           })}
         </div>
+
+        {/* Provider Health */}
+        <Card className="bg-card border-border">
+          <CardHeader className="pb-3">
+            <CardTitle className="text-base font-medium flex items-center gap-2">
+              <Radio className="h-4 w-4" />
+              AI Provider Health
+              <span className="text-xs font-normal text-muted-foreground ml-2">
+                {configuredCount}/5 configured
+              </span>
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
+              {[
+                { key: "openai", label: "OpenAI" },
+                { key: "anthropic", label: "Anthropic" },
+                { key: "google", label: "Google" },
+                { key: "glm", label: "GLM" },
+                { key: "hermes", label: "Hermes" },
+              ].map(({ key, label }) => {
+                const healthy = !!providerStatus[key as keyof typeof providerStatus];
+                return (
+                  <div
+                    key={key}
+                    className={`flex items-center gap-2 p-2 rounded-lg border ${
+                      healthy
+                        ? "bg-emerald-500/10 border-emerald-500/30 text-emerald-700"
+                        : "bg-gray-500/10 border-gray-500/30 text-gray-600"
+                    }`}
+                  >
+                    <div
+                      className={`h-2 w-2 rounded-full ${
+                        healthy ? "bg-emerald-500" : "bg-gray-400"
+                      }`}
+                    />
+                    <span className="text-sm font-medium">{label}</span>
+                  </div>
+                );
+              })}
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* SOV3 Town Bridge */}
+        <Card className="bg-card border-border">
+          <CardHeader className="pb-3">
+            <CardTitle className="text-base font-medium flex items-center gap-2">
+              <Brain className="h-4 w-4" />
+              Sovereign Town Bridge
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="space-y-2">
+                <label className="text-sm font-medium">Character</label>
+                <Input
+                  value={sov3Character}
+                  onChange={(e) => setSov3Character(e.target.value)}
+                  placeholder="e.g. sage"
+                />
+              </div>
+              <div className="space-y-2">
+                <label className="text-sm font-medium">Profile</label>
+                <Select
+                  value={sov3Profile}
+                  onValueChange={(v) =>
+                    setSov3Profile(v as "local_only" | "balanced" | "power" | "council")
+                  }
+                >
+                  <SelectTrigger>
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="local_only">Local only</SelectItem>
+                    <SelectItem value="balanced">Balanced</SelectItem>
+                    <SelectItem value="power">Power</SelectItem>
+                    <SelectItem value="council">Council</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              <div className="flex items-end">
+                <Button
+                  onClick={handleSov3Think}
+                  disabled={sov3ThinkMutation.isPending}
+                  className="w-full gap-2"
+                >
+                  {sov3ThinkMutation.isPending ? (
+                    <Loader2 className="h-4 w-4 animate-spin" />
+                  ) : (
+                    <MessageSquare className="h-4 w-4" />
+                  )}
+                  Ask SOV3
+                </Button>
+              </div>
+            </div>
+            <div className="space-y-2">
+              <label className="text-sm font-medium">Message</label>
+              <Textarea
+                value={sov3Message}
+                onChange={(e) => setSov3Message(e.target.value)}
+                placeholder="Ask the Sovereign Town council a question..."
+                rows={3}
+              />
+            </div>
+            {sov3ThinkMutation.data?.success && (
+              <div className="p-4 rounded-lg bg-secondary/50 space-y-2">
+                <h4 className="text-sm font-medium text-muted-foreground">Reply</h4>
+                <p className="text-sm whitespace-pre-wrap">
+                  {(() => {
+                    const content = sov3ThinkMutation.data.bridge?.result?.content;
+                    if (Array.isArray(content) && content[0]?.text) {
+                      try {
+                        const parsed = JSON.parse(content[0].text);
+                        return parsed.reply || parsed.text || content[0].text;
+                      } catch {
+                        return content[0].text;
+                      }
+                    }
+                    return JSON.stringify(sov3ThinkMutation.data.bridge, null, 2);
+                  })()}
+                </p>
+              </div>
+            )}
+          </CardContent>
+        </Card>
 
         {/* Recent Votes */}
         <Card className="bg-card border-border">
