@@ -65,3 +65,4 @@ SOV3 exposes a real lock + task board: `coord_register_agent` → `coord_acquire
 - [07:35 Hermes/JEEVES] CLAIM 5 more tasks: (1) sync CSOAI-CORP treasure to clawd, (2) wire SOV Town proxy with tsx, (3) write Series A pitch deck, (4) 5 prospect emails queued, (5) full session archive
 - [08:20 Hermes/JEEVES] CLAIM 5 more: (1) configure SOV Town bearer token, (2) spawn 5 Finance agents, (3) build 47-agent personalities JSON, (4) test agent conversation, (5) record SOV Town readiness video
 - [08:35 Hermes/JEEVES] CLAIM 4 gates: (1) set env vars on csoai-v2-app, (2) vercel --prod, (3) move csoai.org domain, (4) retire old projects
+- [16:55 Hermes/JEEVES] CLAIM 5 Layer 0 upgrades: (1) fix attestation API, (2) live did:csoai registry, (3) run BFT audit, (4) deploy Layer 0 compliance MCP via Docker, (5) enable x402

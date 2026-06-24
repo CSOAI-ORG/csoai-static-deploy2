@@ -1,7 +1,9 @@
 # MEOK MASTER — Consolidated Source of Truth
 **Date:** 2026-06-23 · **T-11 to July 4 2026 (23:59 BST)** · **Machine:** this one = MEOK build host (CSOAI work lives on the M2)
 
-> This is the **index that ties the scattered masters together** — not a replacement for them. When a section says "see X", X is the canonical detail doc. Point other agents/tabs at THIS file first.
+> 🧬 **Layer-0 front door = `MEOK_LAYER0_TRUE_ONE_2026-06-24.md`** — read that first for the whole stack (L0 moat → L4 raise) at a glance. This file is the engineering detail beneath it.
+>
+> **SINGLE SOURCE OF TRUTH for the MEOK build host.** There were 7 competing "master" docs (6 in Cowork's iCloud `SOV3-Launch/` + this one) — that sprawl is collapsed (see §0.7). Canon = TWO halves: **this file** (engineering/topology, live-verified from the host) + Cowork's `MEOK_MASTER_CONSOLIDATION_2026-06-23.md` (product/GTM/live-state). Everything else is superseded. Point all agents/tabs here first.
 
 ---
 
@@ -9,6 +11,62 @@
 - **This machine (here)** = **MEOK** build/run host. Flywheel, hives, gaming, Hermes, sovereign-town all run here.
 - **M2 MacBook** = **CSOAI** (site, compliance, GTM). Hand-off doc: `CSOAI_M2_HANDOFF_2026-06-23.md` (pushed to `CSOAI-ORG/clawd-workspace`).
 - Coordination across machines is via the **`CSOAI-ORG/clawd-workspace` git repo** + the **swarm ledger** (`/api/swarm/emit` → sovereign-town).
+
+## 0.5 LIVE-VERIFIED STATE — measured from THIS host (2026-06-24 04:36 UTC)
+Cross-confirmed Cowork's bridge reads by hitting the substrate directly from the build host:
+| Surface | Endpoint | Result |
+|---|---|---|
+| **MEOK API** | `127.0.0.1:3200` | 🟢 `200 operational v3.0.0` — **235 nodes** (36 council / 144 expertise / 55 bridge), 12 domains |
+| **MEOK MCP** | `127.0.0.1:3102` | 🟢 healthy — **7 neural models trained** (care_validation, threat_detection, relationship_evolution, care_pattern, dependency, partnership, creativity r²=0.91), memory connected, consciousness 0.575 |
+| **SOV3** | `127.0.0.1:3101` | 🟢 healthy — **127 tools** |
+| **Sovereign-town flywheel** | `meok-backend` VM | 🟢 `flywheel_ledger_vm.jsonl` growing live; dashboard + anchor/sov-export deployed (this session) |
+
+⚠️ **All three bind `localhost`** (local/tunnelled), not public. So **MEOK OS renders LIVE only when opened on this machine**; deployed to a public URL it shows the static 23-Jun snapshot until these get a public endpoint + OAuth. The brain is real and trained — it is *not* yet publicly reachable.
+
+## 0.6 PRODUCT REGISTER — every MEOK product + MEOK OS coverage (the audit)
+| Product | On disk | Status | MEOK OS app |
+|---|---|---|---|
+| Sovereign Town (flywheel/ledger — THE MOAT) | `clawd/sovereign-town` | 🟢 live on VM, ledger growing | Hive Mesh / King Console |
+| SOV3 King + neural brain | VM `:3101/:3200/:3102` | 🟢 **VERIFIED** (235 nodes, 7 NN, 127 tools) | King Console / Aethelgard / Consciousness |
+| meok-compliance-gateway (keystone, ~294 MCP fleet) | `~/meok-compliance-gateway` (136 entries) | 🟢 real FastMCP gateway + x402 | Compliance Fleet |
+| Gaming BIG 3 (blizzard/fortnite/gta) | `~/meok-gaming/mcp-gaming-empress` | 🟢 3/3 verified, emit attested | Characters / Gaming |
+| MEOK ONE (Guardian / Family OS / OLM) | `~/meok-os` | 🟢 VM-live; `one.meok.ai` DNS pending | MEOK ONE |
+| meok-saas (dashboard / billing / swarm emit) | `~/meok-saas` | 🟡 built, Vercel-targeted | Revenue |
+| meok-ai (marketing flagship) | `~/meok-ai` | 🟢 meok.ai live | *(website, not an OS app)* |
+| Watchdog cert / Article 50 / watermark-attest | various | 🟡 built | Watchdog / Article 50 kit |
+| **meok-protocol-0** (zero-barrier seam) | `~/meok-protocol-0` | 🟡 reference seam | 🔴 **NOT in OS (gap)** |
+| **MEOK-AI-Labs** (robotics/humanoid: Berkeley/Asimov) | `~/MEOK-AI-Labs` | 🟡 hardware program | 🔴 **NOT in OS (gap)** |
+| proofof.ai (public verify mirror) | Vercel `team_4Ik` | 🔴 stuck on wrong Vercel account | Drift/Truth (flags it) |
+
+**MEOK OS coverage = 11 / 11** — verified against the live file 2026-06-24 (`MEOK_OS/index.html` now has **18 apps** — added `🌍 MEOK Earth` (embeds the live globe) + `🐉 Character Archetypes` (decks: evolution stages + 4 archetype families + learning paths + EI3 trust-SBT) — incl. `protocol0` + `labs`; JS syntax-clean). The "9/11 gap" in an earlier draft was stale. Live data binds localhost → renders live only on the build host (see §0.5). Per-product detail: Cowork's `_inbox/wave4-claude-actionables/08_MEOK_PRODUCT_MASTER_ALIGNMENT` + `09_GITHUB_LIVE_SCAN`.
+
+**MEOK Earth (3D-globe UI) — 🟢 Week-1 WOW BUILT + verified 2026-06-24.** In `~/meok-town-view` (`src/MeokEarth.tsx`, behind a `🌍 Earth | 🏙️ Town` toggle): zero-token CesiumJS globe (no ion/Google tiles — `baseLayer:false` + dark globe + atmosphere + EllipsoidTerrainProvider), 12 hive-civilization regions + labels, governed/flagged agent markers, King→hive governance arcs, layer-toggle panel, animated `proofof` compliance ring. **Proof:** `npm run build` green (tsc+vite), `dist/cesium` assets copied, renders live (screenshot), **0 console errors / 0 ion 401s**. Spec: `MEOK_OS_UI_BUILD_SPEC_2026-06-24.md`.
+- 🟢 **Real ledger feed wired** (`src/ledgerFeed.ts` + `scripts/export-ledger.mjs` → `public/ledger-snapshot.json`): reads the REAL signed flywheel ledger — **0 governed vs 48.8M ungoverned crimes over 583M episodes, Ed25519-signed, chain 458/458 verified**. Surfaced as a "Sovereign Flywheel" card + governed-integrity ring (=100). Live `VITE_LEDGER_URL` override supported.
+- 🟢 **Labels decluttered** (Cesium CustomDataSource clustering) — EU pile-up fixed.
+- 🟢 **Embedded in MEOK OS** as the 17th app (`🌍 MEOK Earth`, iframe → `MEOK_EARTH_URL` default :5173); verified rendering live inside the OS window.
+- 🟢 **PUSHED + hardened** → `github.com/CSOAI-ORG/meok-town-view` (private, `main`, HEAD `b6474cf`). M2 can pull. Includes: real OSM map toggle, left side-menu, click-to-fly hives, Policies layer, gold theme, clean build (no chunk warning), `vercel.json` (Vite SPA), `.github/workflows/ci.yml` (build + ledger-integrity assert), full README.
+- Owner-gated finals: `vercel` deploy (then set MEOK OS `MEOK_EARTH_URL` to the URL); run the Colab notebook to replace SAMPLE policies; deck.gl-over-Cesium heatmap (deferred — not a clean integration).
+
+## 0.7 The 7-master sprawl — collapsed to 2
+| Doc | Verdict |
+|---|---|
+| `clawd/MEOK_MASTER_2026-06-23.md` (this) | ✅ CANON — engineering/topology, host-verified |
+| `SOV3-Launch/MEOK_MASTER_CONSOLIDATION_2026-06-23.md` (Cowork) | ✅ CANON — product/GTM/live-state |
+| `MEOK_MASTER_REGISTER` · `MASTER_33_WEEK_PLAN` · `MEOK_33WEEK_MASTER_PLAN` · `LAUNCH_RUNWAY_T-11` · `EXECUTE_NOW_T-11` | 🟡 superseded — historical/reference only |
+A pointer (`_READ_FIRST_SINGLE_SOURCE.md`) is dropped in the iCloud `SOV3-Launch/` folder so M2/Cowork converge here.
+
+## 0.8 Distribution truth — VERIFIED 2026-06-24 (kills stale claims)
+Measured live (gh + PyPI + npm), not from memory:
+| Channel | Reality | Was claimed |
+|---|---|---|
+| **GitHub** | **300 repos** (292 public / 8 private) · **233 `*-mcp`** · 36 `*-hive` · **15 total stars** | "200 repos" |
+| **PyPI** | 🟢 **fleet LIVE + versioned** (sampled 8: memory-search 1.0.8, consciousness-engine 1.0.12, blockchain-verification 1.0.11, web-research, crm-ai, pdf-tools, openchronicle dev0) | "26" (undercount) |
+| **gateway (keystone)** | 🟡 packaged v0.2.0, **wheel builds clean** → **publish-ready**, NOT yet on PyPI. Publish: `cd ~/meok-compliance-gateway && twine upload dist/*` (needs Nick's PyPI token) | "shipped" |
+| **npm** | 🔴 **EMPTY** — `npm whoami`=E401 (not logged in), 0 packages under @csgaglobal/@meok/@csoai/@sovereign | **"51 npm" — FALSE, killed** |
+
+**The lever, now quantified: supply ≫ distribution — 233 MCPs, 15 stars.** Don't build more MCPs; publish + get discovered. npm is an empty, un-needed channel (fleet is Python/PyPI) — stop citing it. (Supersedes the `SOV3-Launch/CLAUDE.md` §9 "npm 51 / PyPI 26" numbers.)
+
+**Series A + distribution plan (2026-06-24):** `SERIES_A_2026-06-24.md` (honest, moat-grounded narrative — verify-don't-trust, comps Vijil/Braintrust/Credo, use-of-funds, risks said out loud) + `DISTRIBUTION_PLAN_2026-06-24.md` (gateway twine release checklist + registry/marketplace discovery plan). Both surfaced in MEOK OS as `💰 Series A / Investor` + `📦 Distribution` apps (OS now **20 apps**). Robotics research fully absorbed → `_findings/CROWN_JEWELS_ABSORBED_2026-06-24.md` (tendon-drive + sim-backed dual-motor twin-turbo; e-scooter hub motor = 208 Nm/$85; actuator floor ~$1,800).
 
 ## 1. Architecture (layered — the one true stack)
 ```
