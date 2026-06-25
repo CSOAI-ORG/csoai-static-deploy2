@@ -7,7 +7,7 @@
 |---|---|---|
 | **Federation bus** (MCP↔MCP calls) | ✅ SIGIL | `data/federation_sigil.log` (hash-chained, live) |
 | **Model scoreboard / ralph votes** | ✅ SIGIL (just wired) | `scoreboard_sigil.log` (or shared via `SIGIL_LOG`) |
-| **OS self-improve loop** (queen→King→OS) | 🟡 signed, but **separate chain** | `data/os_directives_ledger.jsonl` (Ed25519) — not SIGIL |
+| **OS self-improve loop** (queen→King→OS) | ✅ SIGIL (folded 2026-06-25) | attest() emits 'D' hop onto the federation chain + keeps its own Ed25519 ledger |
 | **King council verdicts** | 🟡 signed, separate | king ledger |
 | **The 18 bridges** (govern actions) | ✅ SIGIL (wired 2026-06-25) | every `govern_*` emits a chained hop; `SIGIL_LOG` to share the chain |
 | **OS dock interactions** | ❌ | — gap |
