@@ -13,6 +13,8 @@ twine upload dist/*                   # NEEDS Nick's PyPI token (owner-gated)
 Then verify: `pip install meok-compliance-gateway` from a clean venv.
 
 ## B. Get the live fleet DISCOVERED (the real lever)
+> 🐝 **The distribution hive already EXISTS — don't build, FIRE it.** `clawd/registry-publish` (bulk MCP-registry publisher, `bulk_publish.sh` + server.json manifests), `CSOAI-CORP/mcp-packages/mcp-distributor` (TS distributor), `.hermes/skills/mcp-publisher`, and `DISTRIBUTION_LAUNCH_PACKAGE.md` are built and target **Smithery (323 refs) · Glama (39) · PulseMCP (15) · mcp.so (8) · PyPI · npm**. Status: **PyPI partially fired** (satellites live; 10 more token-gated), **Glama "ready," Smithery "next," npm empty.** The 15-stars gap = the hive is staged but **not fully fired** (token + marketplace-account gates). Upgrade = activate the connectors, king-hive-style (on a loop), not write a new publisher.
+
 The packages exist; almost nothing points to them. Per-channel:
 1. **Official MCP registry** — ensure every published `*-mcp` has `server.json` + `.mcp.json` + `llms.txt` (memory: ~70 repos need only `.mcp.json`). Submit/refresh registry entries.
 2. **PyPI hygiene** — each package needs a real README long-description, keywords (`mcp`, `ai-governance`, `compliance`, `eu-ai-act`), classifiers, and a project URL back to GitHub + meok.ai. Right now discovery dies on empty metadata.

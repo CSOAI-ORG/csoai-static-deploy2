@@ -35,7 +35,7 @@ Watchdog Certification ("ISO for AI Safety", Ed25519 certs) · SOV3 Cloud · com
 ---
 
 ## The honest register (carry these — do NOT bury)
-0. 🟢 **GOVERNANCE-KILLER — FIXED in source + verified 2026-06-25 (pending publish):** `eu-ai-act-compliance-mcp` was false-clearing hospital ER-triage + cancer-radiology AI as `minimal`. Added a Medical-Devices high-risk area (Article 6(1)+Annex I); now flags all 3 medical cases high-risk, control stays minimal, compiles. ⚠️ **The maintainer must publish/redeploy** — the live MCP is still stale. Fix record: `_findings/EU_AI_ACT_MEDICAL_FIX_2026-06-25.md`.
+0. 🟢 **GOVERNANCE-KILLER — FIXED in source + verified 2026-06-25 (pending publish):** `eu-ai-act-compliance-mcp` was false-clearing hospital ER-triage + cancer-radiology AI as `minimal`. Added triage keywords (Area 5) + a Medical-Devices high-risk area (Article 6(1)+Annex I); all 3 medical cases now high-risk, control stays minimal, compiles. **PR open on the canonical repo → `CSOAI-ORG/eu-ai-act-compliance-mcp#25`.** ⚠️ Maintainer must review/merge + republish (the live MCP is still stale). Fix record: `_findings/EU_AI_ACT_MEDICAL_FIX_2026-06-25.md`.
 1. **Distribution, not product, is the binding constraint** (15 stars).
 2. **Self-attestation gap** — we sign our own claims until external anchoring lands.
 3. **Brain is localhost-only** — not yet a public demo.

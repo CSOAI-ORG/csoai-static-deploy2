@@ -14,7 +14,7 @@ Customer subscribes to one specific MCP (e.g. EU AI Act Compliance).
 | Tier    | Price       | Notes                                                            |
 |---------|-------------|------------------------------------------------------------------|
 | **Starter** | £29/mo  | Unlimited audits for that one MCP. HMAC-signed attestations. Email support. |
-| **Pro**     | £79/mo  | Adds priority email support, monthly regulatory brief, custom-domain signing endpoint, 24h SLA on attestation requests. |
+| **Pro**     | **£99/mo** (RATIFIED 2026-06-25) | Adds priority email support, monthly regulatory brief, custom-domain signing endpoint, 24h SLA on attestation requests. ⚠️ Stripe price object must be set to **£99** — the £79 price ID below is now STALE; wire a distinct £99 Payment Link (owner). Aligned to live proofof + `COMPETITIVE_PRICING_STRATEGY_2026-06-25.md`. |
 
 **Stripe price IDs (representative — same per-MCP across 38 MCPs):**
 - EU AI Act Starter: `price_1TXaHqQvIueK5XpbcBjOjGyx` (£29) → product `prod_UWdV7ruC0v1vav`

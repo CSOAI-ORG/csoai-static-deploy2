@@ -5632,6 +5632,46 @@ async def push_app_event(request: Request):
     return {"ok": True}
 
 
+@app.post("/telemetry")
+async def push_os_telemetry(request: Request):
+    """Per-feature interaction telemetry from the MEOK OS — the learning signal each feature's hive (its inner queen) consumes."""
+    import json as _json, os as _os, time as _time
+    try:
+        body = await request.json()
+    except Exception:
+        body = {}
+    events = body.get("events", [])
+    if not isinstance(events, list):
+        events = []
+    path = _os.path.join(_os.path.dirname(__file__), "data", "os_telemetry.jsonl")
+    counts = {}
+    try:
+        _os.makedirs(_os.path.dirname(path), exist_ok=True)
+        with open(path, "a") as f:
+            for ev in events[:200]:
+                if not isinstance(ev, dict):
+                    continue
+                ev["_ingested"] = _time.time()
+                f.write(_json.dumps(ev) + "\n")
+                feat = str(ev.get("f", "unknown"))
+                counts[feat] = counts.get(feat, 0) + 1
+    except Exception as e:
+        return {"ok": False, "error": str(e)}
+    return {"ok": True, "ingested": sum(counts.values()), "by_feature": counts}
+
+
+@app.get("/os/directives")
+async def get_os_directives():
+    """King-ratified directives the MEOK OS self-applies (e.g., pin the most-used feature). Closes the self-improve loop."""
+    import json as _json, os as _os
+    path = _os.path.join(_os.path.dirname(__file__), "data", "os_directives.json")
+    try:
+        with open(path) as f:
+            return _json.load(f)
+    except Exception:
+        return {"ratified": []}
+
+
 @app.get("/context/unified")
 async def get_unified_context_endpoint():
     """Full unified context snapshot (no screen pixel data)."""
