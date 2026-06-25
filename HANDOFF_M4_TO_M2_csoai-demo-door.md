@@ -22,4 +22,19 @@ Location: `~/clawd/csoai-demo-engine/` (pushed to private clawd-workspace — no
 ## Context
 This closes **Gap #1 (30-sec demo) + #3 (lead magnet)** from `THE_5_MISSING_THINGS.md` (in `csoai-demo-engine/`). The engine + API are the hard part and they're done + tested. Only the skin/flow is left — and that's the master, which is yours.
 
+## FULL CSOAI inventory from this session (so nothing's orphaned)
+Ownership split — **CSOAI front-end / brand / strategy = M2 (master); backend MCPs = M4 lane but CSOAI-ORG, flagged for M2 registry/brand alignment.**
+
+**→ M2 (CSOAI master lane — review/own):**
+- `csoai-demo-engine/demo_landing_page.html` — ⚠️ placeholder brand, re-skin to master + OS flow.
+- `csoai-demo-engine/*.md` strategy docs: `THE_5_MISSING_THINGS`, `CSOAI_POSITIONING_ONE_PAGER`, `NICK_12WEEK_BATTLE_PLAN`, `DEMO_ENGINE_ARCHITECTURE`, `DEMO_INDUSTRY_USE_CASES`, `DEMO_LEARNING_LOOP`, `FINAL_GOLD_MINE`, `demo_scripts_library` — CSOAI GTM/strategy, align to master.
+- `~/clawd/CSOAI_BACKEND_MASTER_2026-06-25.md` — CSOAI backend strategy doc (347-MCP fleet + bridge family); confirm against master positioning.
+- CSOAI references inside MEOK OS (`index.html`): "Powered by CSOAI" badge, "CSOAI core", "CSOAI mode", "CSOAI-governed" — cross-lane; confirm they match master brand or tell M4 to adjust.
+
+**M4 lane (backend; FYI for M2 alignment, not rework):**
+- 9 legacy-bridge MCPs on CSOAI-ORG (cobol[public] + iso20022/hl7-fhir/as400/sap/oracle/scada/edi/fix[private]) — working + registry-ready (server.json). Backend, but they carry CSOAI-ORG + "io.github.CSOAI-ORG/*" naming → M2 confirm naming/brand fits master before any public push.
+- Engine: `eu_ai_act_compliance_checker.py` + `app.py` (the `/api/audit` the demo uses) — keep as-is.
+
+**Working engine + API are done/tested. Everything CSOAI-branded is M2's to skin/approve. M4 stays in MEOK OS / town-view / bridges / SOV3.**
+
 — M4
