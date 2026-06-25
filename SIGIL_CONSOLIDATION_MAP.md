@@ -13,7 +13,7 @@
 | **OS dock interactions** | ❌ | — gap |
 | **meok-town-view globe / M2 OS** | ❌ | — gap |
 
-**So:** three+ separate signed logs, not one chain. SIGIL is *meant* to be the universal connective tissue; today only the federation bus (+ now the scoreboard) emit to it.
+**So (updated 2026-06-25):** the one chain now spans **federation + scoreboard + 18 bridges + the OS self-improve loop** — the majority of governed activity. Remaining gaps: King council verdicts (separate ledger) + OS dock/globe UI hops (step 4) — mostly want the runtime / M2's surfaces. SIGIL has gone from "1 layer" → "4 layers on one chain."
 
 ## How to connect ALL (the bridge-the-gap plan)
 1. **One env, one chain:** every emitter reads `SIGIL_LOG` (the scoreboard now does). Point all layers at the same file/bus → one tamper-evident chain across the whole estate. *(Lowest-effort unification.)*
