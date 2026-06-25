@@ -3,7 +3,7 @@
 ## 1. The fleet — RECONCILED (kills the drift)
 `~/clawd/mcp-marketplace`: **347** `*-mcp` dirs · **347 have pyproject** (publishable) · **335 have server.json** (registry-ready).
 - ⚠️ Drift killed: old notes said "233 / 294 / 300." Reality: **347 built-publishable, 335 registry-ready.** Gap = **built ≫ published.**
-- Canonical: "347 governance/compliance MCPs built (335 registry-ready); **live-PyPI count = VERIFY** before any deck — distribution is the lever, not build."
+- Canonical (reconciled 2026-06-25 via `_alignment/MCP_19_PUBLISHED_v1.md`): **19 MCPs PUBLISHED (live)** · ~347–371 built in the marketplace (count varies by scan date — don't assert false precision) · 335 registry-ready. So: **"19 published live + ~350 built; distribution is the lever, not build."** built ≫ published remains the truth.
 
 ## 2. COBOL Bridge — the enterprise wedge (lead product)
 - **cobol-bridge-mcp** — "COBOL Bridge (Legacy Modernization) MCP", `io.github.CSOAI-ORG/cobol-bridge-mcp`, **scorecard 86/100**, PyPI `cobol_bridge_mcp`, full prod kit (server.py/json, cosign-sign, codeql, tests, smithery).
