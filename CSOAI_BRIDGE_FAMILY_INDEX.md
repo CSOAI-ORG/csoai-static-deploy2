@@ -19,6 +19,7 @@ The governed gateway to the systems that run the world. Each bridge is a working
 | 13 | NACHA / ACH | `nacha-bridge-mcp` | US payments | SOX, OFAC, BSA/AML | private |
 | 14 | ISO 8583 | `iso8583-bridge-mcp` | Card payments | DORA, PCI-DSS, PSD2 | private |
 | 15 | SIP | `sip-bridge-mcp` | Telephony | NIS2, STIR/SHAKEN | private |
+| 16 | Tax | `tax-bridge-mcp` | Tax filing + e-invoicing | UK MTD, EU ViDA, OECD BEPS, IRS | private |
 
 ## State
 - **Code + tests:** all 15 functional-tested (pytest passing).
