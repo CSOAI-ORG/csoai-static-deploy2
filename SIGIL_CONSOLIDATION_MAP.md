@@ -9,7 +9,7 @@
 | **Model scoreboard / ralph votes** | ✅ SIGIL (just wired) | `scoreboard_sigil.log` (or shared via `SIGIL_LOG`) |
 | **OS self-improve loop** (queen→King→OS) | 🟡 signed, but **separate chain** | `data/os_directives_ledger.jsonl` (Ed25519) — not SIGIL |
 | **King council verdicts** | 🟡 signed, separate | king ledger |
-| **The 16 bridges** (govern actions) | ❌ not emitting | — gap |
+| **The 18 bridges** (govern actions) | ✅ SIGIL (wired 2026-06-25) | every `govern_*` emits a chained hop; `SIGIL_LOG` to share the chain |
 | **OS dock interactions** | ❌ | — gap |
 | **meok-town-view globe / M2 OS** | ❌ | — gap |
 
