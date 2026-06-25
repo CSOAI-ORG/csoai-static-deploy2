@@ -66,3 +66,24 @@ SOV3 exposes a real lock + task board: `coord_register_agent` → `coord_acquire
 - [08:20 Hermes/JEEVES] RELEASED — 5 more: (1) configure SOV Town bearer token, (2) spawn 5 Finance agents, (3) build 47-agent personalities JSON, (4) test agent conversation, (5) record SOV Town readiness video
 - [08:35 Hermes/JEEVES] RELEASED — 4 gates: (1) set env vars on csoai-v2-app, (2) vercel --prod, (3) move csoai.org domain, (4) retire old projects
 - [16:55 Hermes/JEEVES] RELEASED — 5 Layer 0 upgrades: (1) fix attestation API, (2) live did:csoai registry, (3) run BFT audit, (4) deploy Layer 0 compliance MCP via Docker, (5) enable x402
+- [17:11 Hermes/JEEVES] CLAIM: (1) vm-disk-clean, (2) coord-debug investigation, (3) keystone-wire-full verify, (4) horus-deploy spec
+- [16:25 Hermes/JEEVES] CLAIM: (8) bcorp-prep scaffold, (9) oowm-finetune spec
+- [16:30 Hermes/JEEVES] CLAIM: MEOK LAW — regions/towns/counties/states/EU knowledge graph with legal authority bindings
+- [16:35 Hermes/JEEVES] CLAIM: HUNT all files for csoai/meok consolidation; EXTRACT previously-undiscovered content; ADVANCE launch
+- [16:40 Hermes/JEEVES] CLAIM: HUNT 5 — openpatent-hive ingest, MEOK site arch, DARPA, Farm, M2 setup
+- [16:42 Hermes/JEEVES] CLAIM HUNT 7: BFT proposal to Kimi + Claude to ratify the 5 protocol + 12 layer stack + 16 entities as sovereign substrate
+- [16:44 Hermes/JEEVES] CLAIM HUNT 9: build 5 more MEOK pages + submit 2 more BFT proposals + extract more strategic docs
+- [16:46 Hermes/JEEVES] CLAIM KILL LIST ACTION: build agent-cards.json (A2A), wire MCP servers list, write observability stub, document 7 gaps as on-roadmap, submit 5th BFT proposal
+- [16:48 Hermes/JEEVES] CLAIM: Deep research on biometric awareness (face, gesture, gait, voice) + world model (multi-person context, privacy boundaries) + improve SOV substrate + MEOK mindset
+- [17:20 Hermes/JEEVES] CLAIM FINAL STRETCH: AGENTS.md coord, gather all docs into one zip, 10th BFT proposal, write ABSORPTION layer to MEOK LAW, series A pitch v2, commit all, final seal
+- [17:24 Hermes/JEEVES] CLAIM: Build auto-test hive — full stacked test framework for sovereign substrate (better than any AI platform)
+- [17:35 Hermes/JEEVES] CLAIM: Connect auto-test hive to all 33 hives + 6 Layer 0 buses + Awareness + Absorption + MEOK LAW + 47 agents + Casa + 30 crosswalks. Cross-hive testing + improvement loop.
+- [17:43 Hermes/JEEVES] CLAIM FULL E2E CONSOLIDATION: scan ALL of /Users/nicholas/, GitHub, SOV3, GCP, for missed assets. Build 100% checklist. Don't stop until 100% coverage achieved.
+- [17:46 Hermes/JEEVES] CLAIM HUNT 11: Extract 30 corrupted .docx via unzip+xml method
+- [17:55 Hermes/JEEVES] CLAIM HUNT 15: Push to 100% coverage. Extract remaining PDFs, scan remaining meok-dirs, deeper clawd subdirs, more strategic docs
+- [18:02 Hermes/JEEVES] CLAIM: Scrape all 20 James Castle artifacts to extract Nick's hard work (NOT James Castle's) — the genuine strategic work Nick did before the fraudster got involved
+- [18:05 Hermes/JEEVES] CLAIM: Extract all 10 NATO/Anthropic contacts from JC outreach + update CSOAI_COMPLETE_ECOSYSTEM_V4 to credit Nick's work + verify CA3O↔CMMC parallel
+- [18:08 Hermes/JEEVES] CLAIM: Update CSOAI_COMPLETE_ECOSYSTEM_V4 with Nick's DNA, verify Rob Murray (DSRB) intro, extract 10th contact, write final 10-contacts-SEND-LIST
+- [18:10 Hermes/JEEVES] CLAIM PHASE 18: Extract Rob Murray + DSRB CEO path, BMCC action brief, 10 more strategic docs, 10 more PDFs, push to 100% coverage
+- [18:12 Hermes/JEEVES] CLAIM PHASE 19: Extract COBOL bridge GTM, HALT AI Harm, JAMES CASTLE action list body, BMCC briefing, ALL remaining strategic docs
+- [18:16 Hermes/JEEVES] DONE — 4 Jul launch plan: 21 council emails staggered 09:00-10:30 BST on launch day. Skip JC (fraudster).
