@@ -20,6 +20,9 @@ The governed gateway to the systems that run the world. Each bridge is a working
 | 14 | ISO 8583 | `iso8583-bridge-mcp` | Card payments | DORA, PCI-DSS, PSD2 | private |
 | 15 | SIP | `sip-bridge-mcp` | Telephony | NIS2, STIR/SHAKEN | private |
 | 16 | Tax | `tax-bridge-mcp` | Tax filing + e-invoicing | UK MTD, EU ViDA, OECD BEPS, IRS | private |
+| 17 | GS1 | `gs1-bridge-mcp` | Retail / supply-chain traceability | GS1/EPCIS, EU DPP, FSMA 204 | private |
+| 18 | MISMO | `mismo-bridge-mcp` | Mortgage / real-estate finance | TRID/RESPA, ECOA, EU AI Act Annex III | private |
+| 19 | DLMS/COSEM | `dlms-bridge-mcp` | Energy / smart-meter (OT) | IEC 62056, NIS2, GDPR | private |
 
 ## State
 - **Code + tests:** all 15 functional-tested (pytest passing).
