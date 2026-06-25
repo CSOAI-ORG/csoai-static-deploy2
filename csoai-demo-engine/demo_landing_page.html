@@ -1146,14 +1146,38 @@
             document.getElementById('results').classList.remove('visible');
             document.getElementById('submitBtn').disabled = true;
 
-            // Simulate processing
-            setTimeout(() => {
-                const result = buildAssessment(companyName, industry, useCase);
-                displayResults(result);
-                document.getElementById('loading').classList.remove('visible');
-                document.getElementById('submitBtn').disabled = false;
-                showToast('Assessment complete! See your results below.');
-            }, 1500);
+            // Build the client result, then ask the REAL CSOAI engine to classify (graceful fallback if offline)
+            const result = buildAssessment(companyName, industry, useCase);
+            fetch('/api/audit', {
+                method: 'POST', headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({useCase: useCase, industry: industry})
+            }).then(r => r.json()).then(eng => {
+                if (eng && eng.engine) {
+                    result.riskLevel = eng.riskLevel;
+                    result.riskScore = eng.riskScore;
+                    result.engine = eng;
+                }
+                finishAssessment(result);
+            }).catch(() => finishAssessment(result));
+        }
+
+        function finishAssessment(result) {
+            displayResults(result);
+            if (result.engine) {
+                const e = result.engine;
+                const extra = document.createElement('div');
+                extra.className = 'result-card';
+                extra.style.marginTop = '16px';
+                extra.innerHTML = '<div class="result-header"><div class="result-company">✓ Verified by the CSOAI engine</div>'
+                    + '<span class="risk-badge risk-' + result.riskLevel.toLowerCase() + '">' + e.rawLevel + ' · conf ' + e.confidence + '</span></div>'
+                    + (e.frameworks && e.frameworks.length ? '<p style="margin:8px 0"><strong>Matched signals:</strong> ' + e.frameworks.join(' · ') + '</p>' : '')
+                    + (e.checklist && e.checklist.length ? '<p style="margin:8px 0"><strong>Your compliance checklist:</strong></p><ul>' + e.checklist.map(c => '<li>' + c + '</li>').join('') + '</ul>' : '')
+                    + '<p style="margin:8px 0;opacity:.75">' + (e.council || '') + '</p>';
+                document.getElementById('results').appendChild(extra);
+            }
+            document.getElementById('loading').classList.remove('visible');
+            document.getElementById('submitBtn').disabled = false;
+            showToast('Assessment complete — see your results below.');
         }
 
         function buildAssessment(company, industryKey, useCase) {
