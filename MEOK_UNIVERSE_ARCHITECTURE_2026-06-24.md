@@ -1,5 +1,6 @@
 # 🌐 MEOK Universe — immersive architecture (2026-06-24)
 **Vision:** any end user creates their **sovereign AI** and navigates a **real-world-mapped MEOK dome/universe**.
+> 🌐 **It already has a live home: `meok.ai/dome`** (browser-verified 2026-06-24) — "The Sovereign World Simulation, five layers, claim your plot, explore the map, 47+ agents, 1,240/10,000 pioneer plots." My MEOK Earth globe = its missing **"Explore the Map"**; create-AI = **"Claim Your Plot"**. Full finding: `_findings/MEOK_DOME_LIVE_CONSOLIDATION_2026-06-24.md`. **Don't build the dome from scratch — wire MEOK Earth INTO /dome.**
 **Binding rule (unchanged):** the society sim stays headless; every renderer/engine READS the Layer-0 ledger, **never** runs the sim (`sovereign-town/ARCHITECTURE_GUARDRAIL.md`).
 
 ## The honest engine verdict (read before anyone buys an Unreal license)

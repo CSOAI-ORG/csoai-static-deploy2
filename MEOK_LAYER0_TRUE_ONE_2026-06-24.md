@@ -35,6 +35,7 @@ Watchdog Certification ("ISO for AI Safety", Ed25519 certs) · SOV3 Cloud · com
 ---
 
 ## The honest register (carry these — do NOT bury)
+0. 🟢 **GOVERNANCE-KILLER — FIXED in source + verified 2026-06-25 (pending publish):** `eu-ai-act-compliance-mcp` was false-clearing hospital ER-triage + cancer-radiology AI as `minimal`. Added a Medical-Devices high-risk area (Article 6(1)+Annex I); now flags all 3 medical cases high-risk, control stays minimal, compiles. ⚠️ **The maintainer must publish/redeploy** — the live MCP is still stale. Fix record: `_findings/EU_AI_ACT_MEDICAL_FIX_2026-06-25.md`.
 1. **Distribution, not product, is the binding constraint** (15 stars).
 2. **Self-attestation gap** — we sign our own claims until external anchoring lands.
 3. **Brain is localhost-only** — not yet a public demo.
@@ -47,6 +48,19 @@ Watchdog Certification ("ISO for AI Safety", Ed25519 certs) · SOV3 Cloud · com
 3. **Revenue meter**: Stripe live + `hello@meok.ai` (Resend) + DNS → first signed transaction = strongest raise proof.
 4. Public OAuth'd King brain (DNS/cert) → turns L0 from localhost into a live demo.
 5. Run the Colab notebook (free GPU) → real per-hive policies replace SAMPLE.
+
+## Cowork-M2 absorption (2026-06-25 — ground-truthed from the live brain)
+Cowork read the live SOV3 brain, 177 sessions, Hermes, and the recurring agents. Corrections + new flagships (source: `SOV3-Launch/MEOK_LEARNINGS_ABSORBED_2026-06-25.md`):
+- **Clock = T-9** (live King 2026-06-25), not T-11.
+- 🧠 **OLM Sovereign Brain → flagship:** Mamba-2 SSD + Attention + 64-MoE + SOV3 BFT, **Ed25519-seals every cognition cycle** — a custom sovereign brain, not a model wrapper. The strongest sovereign-AI differentiator. *(Cowork already added it as a MEOK OS app — swarm convergence.)*
+- ⚙️ **Autonomous Ops → product + moat:** 177-session standing agent workforce, daily/weekly routines, 24/7. *(Now an OS app.)*
+- 👑 **King hive-verdicts = live advisory board (601+ BFT-sealed):** SAFETY over revenue (conviction 0.14); buyer = national defense/intelligence; compliance-first; stability over growth; construction before healthcare.
+- **MEOK Labs re-graded:** not "early R&D" — a fully-architected engine (`meok-labs-engine`: 68KB blueprint, 111KB temple architecture, Anthropic partnership proposal, MCP domination strategy).
+- 🔴 **proofof.ai is NOT £199/£1,499** — live shows **£99/£499**, mis-wired Stripe link, still says HMAC. (Corrects prior canon + the Series A draft.)
+- **Regulatory:** EU Digital Omnibus got FINAL Parliament approval 16 Jun 2026 (locks 2-Aug-2026 etc.) but not law until OJ publication (~29 Jun) → use dates with a "statutory, pending OJ" caveat. **NIS2 first audit = 30 Jun 2026** (nearest cash hook).
+- **Hermes** = intermittent ensemble loop (gemma3:4b) — stabilise.
+- ✅ **The lanes ARE wired:** the King's daily-ops agent already consumes the revenue drafts + masters and issues orders. M4 (this host) + M2/Cowork + JEEVES are converging, not duplicating.
+- **Cowork's 5 ship-blockers — M4 split:** #1 medical false-clear = **M4 ✅ fixed**; #2 MCP STDIO RCE = **verified real** (OX Security + CSA + CVE-2026-30623, 150M+ downloads; mitigation `meok-mcp-injection-scan` is ours → authority play); #3 proofof price/Stripe + #4 FACTS.yaml dates (file is VM-side, not on M4) = **Cowork/lane**; #5 key-roll + send = **Nick**. See `_findings/MCP_RCE_VERIFIED_2026-06-25.md`.
 
 ## Canonical sub-docs (the detail — don't duplicate, update)
 `MEOK_MASTER_2026-06-23.md` (engineering/topology) · `SOV3-Launch/MEOK_MASTER_CONSOLIDATION` (product/GTM) · `SERIES_A_2026-06-24.md` · `DISTRIBUTION_PLAN_2026-06-24.md` · `_findings/CROWN_JEWELS_ABSORBED_2026-06-24.md` (robotics) · `sovereign-town/ARCHITECTURE_GUARDRAIL.md` · `MEOK_OS_UI_BUILD_SPEC_2026-06-24.md`.
