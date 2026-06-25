@@ -10,6 +10,12 @@
 - Product surface: `cobolbridge/`, `-deploy`, `-site`, landing, **sales plan**, press release, brand guidelines, Terranova/CSGA deck.
 - Why: banks/insurers/gov run COBOL → a *governed* legacy→AI bridge = enterprise wedge nobody sovereign-grade offers. Pair with DORA/NIS2 + audit/attestation MCPs.
 
+## 2b. Layer-0 Legacy Bridge FAMILY (COBOL Bridge is the first of ~10) — from SOCIAL_LEGACY_COMPLETE.zip
+COBOL Bridge isn't a one-off — it's the lead of a **legacy-bridge family** that connects ONE OS to the systems running critical infrastructure (banks/gov/utilities/healthcare/airlines: ~$3T/day, Aadhaar 1.4B identities, UPI 12B+ tx/mo — real industry stats, not hype):
+- **Mainframe/COBOL** (✅ cobol-bridge-mcp) · **IBM AS/400 (IBM i / RPG)** · **SAP** · **Oracle** · **Healthcare HL7/FHIR** · **Financial ISO 20022 / SWIFT** · **Industrial SCADA/Modbus/OPC-UA**.
+- The win = a **governed** Layer-0 gateway: legacy system → CSOAI attestation/compliance → ONE OS, "without disruption." Nobody sovereign-grade bridges legacy + governs it.
+- → Build the next bridges as MCPs in the same pattern as cobol-bridge-mcp; ties to Protocol 0. Spec: SOCIAL_LEGACY `legacy_os_02_layer0_protocol_design`.
+
 ## 3. Governance core (the CSOAI moat)
 eu-ai-act · gdpr · csoai-governance-crosswalk · bft-governance · agent-audit-logger · ai-self-audit · firmware-attestation · a2a-governance-bridge · dora · dora-nis2-crosswalk · cra · csrd · healthcare-ai · hipaa · cqc · insurance-verification · construction-iso-19650 · haulage-uk · drone-airspace.
 → The backend the OS/SOV3 calls; every governed action (incl. the OS self-modifications, Ed25519-signed) routes here.

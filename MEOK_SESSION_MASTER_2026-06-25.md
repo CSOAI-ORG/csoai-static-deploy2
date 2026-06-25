@@ -24,5 +24,16 @@ DAILY EAT fixed + live (arXiv/HF, SSL fix) · A2A substrate verified (£499/mo) 
 ## Owner-gated (NOT mine — flagged, never faked)
 ANTHROPIC_API_KEY on SOV3 (→ full LLM dock) · HF `invoke` flag (→ real art gen) · per-platform social OAuth · Stripe roll + email send · domains (.wiki/.mom + sovereign.*) · per-user VM provisioning · publish keys/twine · patent filings (counsel) · Google 3D billing key.
 
+## CONVERGED STATE — late 2026-06-25 (the full current picture, nothing lost)
+Everything below is built + verified + pushed since the sections above. Master registry = `MEOK_MESH_INDEX.md`.
+- **MEOK OS = 40 apps** (single-file iCloud `MEOK_OS/index.html`), JS clean, both modes cover all, **zero stubs**. New/late: `bridges` · `leaderboard` (Model Board) · `map` (governance topology) · `temples` · `law` (jurisdiction engine + cross-jurisdiction) · `aware` (presence/awareness) · `wifi` · enriched `guardian`/`family`/`smb`. **UX:** "MEOK" prefix dropped from titles, hover captions (slide-up), sovereign orb pulses on hover + speaks on ~0.9s dwell.
+- **Legacy-bridge family = 18 governed MCPs** (cobol public + 17 private CSOAI-ORG): cobol·iso20022·hl7-fhir·as400·sap·oracle·scada·edi·fix·cics·mqtt·acord·nacha·iso8583·sip (+ abci·haulage·optical). All tested+CI+CodeQL+Scorecard+registry-valid+**SIGIL-emitting on govern()**. Index: `CSOAI_BRIDGE_FAMILY_INDEX.md`.
+- **Track-record hive** = `model-scoreboard-mcp` (rank/route/BFT-vote models; LMArena/OpenRouter ingest). **Ralph loop** spec = `RALPH_LOOP_SPEC.md`.
+- **meok-town-view globe** = hives + 15 bridges + 13 framework temples + Protocol-0 arcs + bridge→framework relevance arcs, all clickable (bridge↔temple cards). Canonical data = `csoai-governance-map.json`.
+- **SIGIL chain** = ONE hash-chained signed audit now spanning **4 layers** (federation + scoreboard + 18 bridges + OS self-improve loop). Plan/status: `SIGIL_CONSOLIDATION_MAP.md`. Remaining: King verdicts + dock/globe UI hops (step 4, want runtime).
+- **MEOK Presence & Awareness** (`MEOK_PRESENCE_AWARENESS.md` + OS `aware`): on-device biometrics/gesture/gaze/world-model, governed by Law(Art.9/BIPA)+Guardian+Council+SIGIL; consent-gated social/learn = the moat.
+- **M2 alignment**: M2 owns the live CSOAI OS (`csoai-v2-app`); M4 owns bridges/globe/reg-feed/backend. Handoffs pushed: demo-door · relevance-maps · bridge-family-15 · csoai-os · alignment · capstone. My `csoai-os` single-file = superseded by M2's live OS.
+- **Honest gaps (unchanged owner levers):** Vercel-connect meok-town-view (globe live) · GCP VM `api-server` (live runtime → queens learn, SIGIL fully unified, scoreboard live) · cosign+PyPI for bridges · Stripe. Nothing faked; all flagged.
+
 ## ONE SENTENCE
 A sovereign AI OS anyone can use, that drops you into your real-world region in your language, gives you a chosen character that talks and reasons through the live SOV3 brain, remembers you, watches how it's used, proposes improvements, has the King ratify and **sign** them, and **verifies those signatures on your device** before reshaping itself — backed by a 347-MCP CSOAI compliance fleet led by the COBOL Bridge — every step real and verified, owner-gated bits honestly flagged.
