@@ -11,19 +11,24 @@ mkdir -p "$CORPUS" ~/.hermes/logs
 [ -f "$CUR" ] || { echo "no curriculum at $CUR" >> "$LOG"; exit 0; }
 
 python3 - "$CUR" "$CORPUS" "$LOG" <<'PY'
-import sys, json, time, datetime, urllib.request, re, os, hashlib
+import sys, json, datetime, urllib.request, re, os, ssl
 cur, corpus, log = sys.argv[1], sys.argv[2], sys.argv[3]
+try:
+    import certifi; _ctx = ssl.create_default_context(cafile=certifi.where())
+except Exception:
+    _ctx = ssl.create_default_context(); _ctx.check_hostname = False; _ctx.verify_mode = ssl.CERT_NONE
 doms = json.load(open(cur))["domains"]
-doy = int(datetime.datetime.utcnow().strftime("%j"))
+now = datetime.datetime.now(datetime.timezone.utc)
+doy = int(now.strftime("%j"))
 d = doms[doy % len(doms)]
 dom, feeds, prompt = d["domain"], d.get("feeds", []), d.get("prompt", "")
-ts = datetime.datetime.utcnow().isoformat() + "Z"
+ts = now.isoformat()
 lines = [f"===== {ts} — Knowledge: {dom} ====="]
 items = []
 for url in feeds:
     try:
         req = urllib.request.Request(url, headers={"User-Agent": "MEOK-Hermes/1.0"})
-        txt = urllib.request.urlopen(req, timeout=12).read().decode("utf-8", "ignore")
+        txt = urllib.request.urlopen(req, timeout=12, context=_ctx).read().decode("utf-8", "ignore")
         titles = re.findall(r"<title[^>]*>(?:<!\[CDATA\[)?([^<\]]+)", txt)[1:7]
         for t in titles:
             t = t.strip()
