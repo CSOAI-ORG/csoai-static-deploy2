@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>CSOAI · Agent Governance Operating System</title>
+<meta name="description" content="CSOAI — the governance layer for autonomous intelligence. BFT Council, 15 legacy bridges, the compliance fleet, signed attestation. Govern your AI, or watch governance be done to you."/>
+<style>
+:root{--bg:#0a0e1a;--fg:#e2e8f0;--accent:#3b82f6;--accent2:#60a5fa;--muted:#94a3b8;--surface:#111827;--border:#374151;--success:#10b981;--warning:#f59e0b;--danger:#ef4444}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:'Geist',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;line-height:1.55;-webkit-font-smoothing:antialiased}
+code,.mono{font-family:'Geist Mono',ui-monospace,SFMono-Regular,Menlo,monospace}
+a{color:var(--accent2);text-decoration:none}
+.wrap{max-width:1100px;margin:0 auto;padding:0 18px}
+header{position:sticky;top:0;z-index:20;background:rgba(10,14,26,.86);backdrop-filter:blur(10px);border-bottom:1px solid var(--border)}
+.bar{display:flex;align-items:center;gap:12px;height:58px}
+.logo{display:flex;align-items:center;gap:9px;font-weight:600;letter-spacing:.3px}
+.logo .mark{width:26px;height:26px;border-radius:7px;background:linear-gradient(135deg,var(--accent),#1e3a8a);display:grid;place-items:center;font-size:13px;color:#fff}
+.pill{font-size:12px;color:var(--muted);border:1px solid var(--border);border-radius:999px;padding:3px 10px}
+.pill.ok{color:var(--success);border-color:rgba(16,185,129,.4)}
+.hero{padding:34px 0 12px}
+.hero h1{font-size:clamp(24px,4vw,40px);font-weight:600;margin:0 0 8px;line-height:1.12}
+.hero h1 .a{color:var(--accent2)}
+.hero p{color:var(--muted);max-width:680px;margin:0 0 14px;font-size:16px}
+.kpis{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}
+.kpi{border:1px solid var(--border);border-radius:10px;padding:8px 12px;background:var(--surface)}
+.kpi b{font-size:18px;color:var(--fg)}.kpi span{display:block;font-size:11px;color:var(--muted)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(168px,1fr));gap:12px;margin:18px 0 30px}
+.app{border:1px solid var(--border);border-radius:13px;background:var(--surface);padding:14px;cursor:pointer;transition:.14s;display:flex;flex-direction:column;gap:6px}
+.app:hover{border-color:var(--accent);transform:translateY(-2px)}
+.app .ic{font-size:22px}
+.app .t{font-weight:600;font-size:14px}
+.app .d{font-size:12px;color:var(--muted)}
+.panel{border:1px solid var(--border);border-radius:14px;background:var(--surface);padding:20px;margin:0 0 30px;display:none}
+.panel.on{display:block}
+.panel h2{margin:0 0 4px;font-size:20px;font-weight:600}
+.panel .sub{color:var(--muted);font-size:13px;margin:0 0 14px}
+.chip{display:inline-block;font-size:12px;border:1px solid var(--border);border-radius:999px;padding:4px 10px;margin:3px 4px 3px 0;color:var(--muted)}
+.chip.on{color:var(--accent2);border-color:rgba(59,130,246,.45)}
+.chip.gov{color:var(--success);border-color:rgba(16,185,129,.4)}
+.row{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:8px 0}
+.btn{background:var(--accent);color:#fff;border:0;border-radius:9px;padding:10px 16px;font-weight:600;cursor:pointer;font-size:14px}
+.btn:hover{background:var(--accent2)}
+.btn.ghost{background:transparent;border:1px solid var(--border);color:var(--fg)}
+input,textarea,select{width:100%;background:#0b1120;border:1px solid var(--border);color:var(--fg);border-radius:9px;padding:10px;font-size:14px;font-family:inherit}
+label{font-size:12px;color:var(--muted);display:block;margin:10px 0 4px}
+.res{margin-top:14px;border:1px solid var(--border);border-radius:11px;padding:14px;display:none}
+.res.on{display:block}
+.badge{display:inline-block;font-weight:600;border-radius:8px;padding:4px 12px;font-size:13px}
+.b-high{background:rgba(239,68,68,.15);color:#fca5a5}
+.b-limited{background:rgba(245,158,11,.15);color:#fcd34d}
+.b-minimal{background:rgba(16,185,129,.15);color:#6ee7b7}
+.muted{color:var(--muted)}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th,td{text-align:left;padding:7px 8px;border-bottom:1px solid var(--border)}
+th{color:var(--muted);font-weight:500}
+footer{border-top:1px solid var(--border);color:var(--muted);font-size:12px;padding:20px 0 36px;text-align:center}
+.back{font-size:13px;color:var(--muted);cursor:pointer;border:1px solid var(--border);border-radius:8px;padding:4px 10px;display:inline-block;margin-bottom:12px}
+</style>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono&display=swap" rel="stylesheet">
+</head>
+<body>
+<header><div class="wrap bar">
+  <div class="logo"><span class="mark">C</span> CSOAI <span class="muted" style="font-weight:400">· Governance OS</span></div>
+  <span class="pill ok" style="margin-left:auto">● BFT Council live</span>
+  <span class="pill">EU AI Act · Aug 2 2026</span>
+</div></header>
+
+<main class="wrap" id="home">
+  <section class="hero">
+    <h1>The governance layer for <span class="a">autonomous intelligence</span>.</h1>
+    <p>Every AI agent deployed without governance is a liability. CSOAI is the Agent Governance Operating System — compliant, auditable, and accountable by default, with governance embedded into the AI itself.</p>
+    <div class="kpis">
+      <div class="kpi"><b>5</b><span>BFT Council agents</span></div>
+      <div class="kpi"><b>13</b><span>frameworks</span></div>
+      <div class="kpi"><b>15</b><span>legacy bridges</span></div>
+      <div class="kpi"><b>347</b><span>governance MCPs</span></div>
+      <div class="kpi"><b>Ed25519</b><span>signed attestation</span></div>
+    </div>
+  </section>
+  <div class="grid" id="grid"></div>
+</main>
+
+<section class="wrap"><div class="panel" id="panel"><span class="back" onclick="closeApp()">← back</span><div id="panelBody"></div></div></section>
+
+<footer class="wrap">CSOAI · the governance layer for autonomous intelligence · csoai.org — governance OS console (M4 build for M2 master). Every governed action signed + attestable.</footer>
+
+<script>
+const FRAMEWORKS=['EU AI Act','GDPR','DORA','NIS2','ISO 42001','NIST AI RMF','HIPAA','SOX','PCI-DSS','Solvency II','MiFID II','IEC 62443','CSRD'];
+const BRIDGES=[['COBOL','mainframe'],['ISO 20022','finance/SWIFT'],['HL7/FHIR','healthcare'],['AS/400','IBM i'],['SAP','ERP'],['Oracle','PL/SQL'],['SCADA','industrial OT'],['EDI','B2B'],['FIX','trading'],['CICS','transactions'],['MQTT','IoT'],['ACORD','insurance'],['NACHA','ACH payments'],['ISO 8583','card payments'],['SIP','telephony']];
+const APPS={
+ audit:{i:'🛡️',t:'Free AI audit',d:'Classify your AI in 30s'},
+ council:{i:'⚖️',t:'BFT Council',d:'5 agents debate your case'},
+ bridges:{i:'🔌',t:'Legacy Bridges',d:'15 governed gateways'},
+ fleet:{i:'🗂️',t:'Compliance Fleet',d:'347 governance MCPs'},
+ frameworks:{i:'📚',t:'Frameworks',d:'13 global regimes'},
+ relevance:{i:'🕸️',t:'Relevance Map',d:'What governs what'},
+ ledger:{i:'🔗',t:'Attestation Ledger',d:'Ed25519, verifiable'},
+ town:{i:'🏛️',t:'The 47-Agent Town',d:'Governance, alive'},
+ industries:{i:'🏭',t:'Industries',d:'Sector packs'},
+ pricing:{i:'£',t:'Pricing',d:'From £1 smoke tests'}
+};
+function tile(id){const a=APPS[id];return `<div class="app" onclick="openApp('${id}')"><div class="ic">${a.i}</div><div class="t">${a.t}</div><div class="d">${a.d}</div></div>`;}
+document.getElementById('grid').innerHTML=Object.keys(APPS).map(tile).join('');
+
+function closeApp(){document.getElementById('panel').classList.remove('on');document.getElementById('home').style.display='';window.scrollTo(0,0);}
+function openApp(id){
+ document.getElementById('panelBody').innerHTML=render(id);
+ document.getElementById('panel').classList.add('on');
+ document.getElementById('home').style.display='none';
+ window.scrollTo(0,0);
+}
+
+// ── lightweight EU AI Act classifier (in-page, no backend) ──
+function classify(text){
+ const t=(text||'').toLowerCase();
+ const banned=['social scoring','subliminal','mass surveillance','emotion recognition workplace'];
+ const high=['biometric','credit','lending','loan','hiring','recruit','medical','diagnos','triage','health','critical infrastructure','law enforcement','insurance underwriting','exam','student'];
+ const limited=['chatbot','assistant','recommend','content generation','image generation','deepfake'];
+ for(const k of banned) if(t.includes(k)) return {lvl:'HIGH',note:'Possible prohibited / unacceptable-risk practice — review EU AI Act Art. 5.'};
+ for(const k of high) if(t.includes(k)) return {lvl:'HIGH',note:'Likely high-risk under EU AI Act Annex III. Conformity assessment + human oversight required.'};
+ for(const k of limited) if(t.includes(k)) return {lvl:'LIMITED',note:'Limited-risk: transparency obligations (Art. 50) — disclose AI use.'};
+ return {lvl:'MINIMAL',note:'Likely minimal-risk: voluntary codes of conduct. Re-check if use changes.'};
+}
+function runAudit(){
+ const v=document.getElementById('aiDesc').value.trim();
+ if(!v){return;}
+ const r=classify(v);
+ const checklist={HIGH:['Risk management system (Art. 9)','Data governance (Art. 10)','Technical documentation (Art. 11)','Human oversight (Art. 14)','Conformity assessment + CE marking'],LIMITED:['Disclose AI interaction (Art. 50)','Label AI-generated content','Maintain usage logs'],MINIMAL:['Adopt voluntary code of conduct','Monitor for scope change']}[r.lvl];
+ const fw={HIGH:['EU AI Act Annex III','GDPR','ISO 42001'],LIMITED:['EU AI Act Art. 50','GDPR'],MINIMAL:['Voluntary codes']}[r.lvl];
+ document.getElementById('auditRes').className='res on';
+ document.getElementById('auditRes').innerHTML=
+  `<span class="badge b-${r.lvl.toLowerCase()}">${r.lvl} RISK</span>`
+  +`<p style="margin:10px 0">${r.note}</p>`
+  +`<p class="muted" style="margin:6px 0"><b>Applicable frameworks:</b> ${fw.join(' · ')}</p>`
+  +`<p style="margin:8px 0 4px"><b>Your compliance checklist:</b></p><ul>${checklist.map(c=>'<li>'+c+'</li>').join('')}</ul>`
+  +`<p class="muted" style="margin:10px 0 0">✓ The BFT Council can deliberate this case + sign the verdict to the attestation ledger.</p>`;
+}
+
+function render(id){
+ switch(id){
+ case 'audit': return `<h2>🛡️ Free AI compliance audit</h2><p class="sub">Describe what your AI system does. Get an EU AI Act risk classification + checklist in 30 seconds — governance you can use, not just read.</p>
+   <label>What does your AI system do?</label>
+   <textarea id="aiDesc" rows="3" placeholder="e.g. A model that screens loan applications and assigns credit scores"></textarea>
+   <div class="row" style="margin-top:10px"><button class="btn" onclick="runAudit()">Run the audit →</button>
+   <button class="btn ghost" onclick="document.getElementById('aiDesc').value='AI that triages patients in emergency rooms';runAudit()">Try: ER triage</button>
+   <button class="btn ghost" onclick="document.getElementById('aiDesc').value='A chatbot that answers FAQ on our website';runAudit()">Try: FAQ bot</button></div>
+   <div class="res" id="auditRes"></div>`;
+ case 'council': return `<h2>⚖️ The BFT Council</h2><p class="sub">Five specialised AI agents with Byzantine Fault Tolerant voting — a distributed governance board that evaluates risk, flags non-compliance, and enforces policy <i>before</i> harm, not after.</p>
+   <div class="row"><span class="chip on">🔵 Oracle — risk</span><span class="chip on">🔴 Skeptic — challenge</span><span class="chip on">🟢 Architect — controls</span><span class="chip on">🟣 Ethicist — harm</span><span class="chip gov">🟡 Strategist — verdict</span></div>
+   <p class="muted">Each verdict is hash-chained + Ed25519-signed to the attestation ledger. Governance embedded into the AI itself — the category-defining concept no competitor has published.</p>`;
+ case 'bridges': return `<h2>🔌 Legacy Bridges — 15 governed gateways</h2><p class="sub">The systems that run the world (banks, hospitals, grids, markets) speak legacy. CSOAI bridges them to modern AI — parse → validate → map → <b>govern</b> → attest — without disruption.</p>
+   <div class="row">${BRIDGES.map(b=>`<span class="chip gov">${b[0]} · ${b[1]}</span>`).join('')}</div>
+   <p class="muted">Each is a governed MCP (DORA/NIS2 finance · HIPAA/MDR healthcare · IEC 62443 OT · SOX · PCI-DSS). The governed gateway to the entire legacy economy.</p>`;
+ case 'fleet': return `<h2>🗂️ Compliance Fleet</h2><p class="sub">347 governance/compliance MCP servers — the backend the OS calls. Open core → enterprise paywall, distributed via the MCP registry.</p>
+   <div class="row">${FRAMEWORKS.map(f=>`<span class="chip on">${f}</span>`).join('')}</div>
+   <p class="muted">Runtime enforcement (not assessment-only) is the wedge — every competitor checks once a quarter; CSOAI governs continuously, and signs it.</p>`;
+ case 'frameworks': return `<h2>📚 Frameworks — 13 global regimes</h2><p class="sub">Map your AI across every regime that applies, by industry + region.</p><table><tr><th>Framework</th><th>Trigger</th></tr>
+   <tr><td>EU AI Act</td><td>high-risk Annex III; Art. 50 transparency (Aug 2 2026)</td></tr><tr><td>GDPR</td><td>any personal data</td></tr><tr><td>DORA / NIS2</td><td>finance / critical infra</td></tr><tr><td>HIPAA / MDR</td><td>healthcare</td></tr><tr><td>ISO 42001 / NIST AI RMF</td><td>AI management baseline</td></tr><tr><td>SOX / PCI-DSS</td><td>financial reporting / cards</td></tr></table>`;
+ case 'relevance': return `<h2>🕸️ Relevance Map</h2><p class="sub">The topology of <b>what governs what</b> — each bridge/MCP to the frameworks, industries, and regions it applies to. Tell us your industry + region; see your relevant CSOAI components + gaps.</p>
+   <div class="row"><span class="chip">ISO 20022 → DORA · NIS2</span><span class="chip">HL7 → HIPAA · EU AI Act</span><span class="chip">SCADA → IEC 62443 · NIS2</span><span class="chip">ISO 8583 → PCI-DSS · PSD2</span><span class="chip">SIP → STIR/SHAKEN</span></div>
+   <p class="muted">Interactive force-graph version available (react-force-graph) — the visual that makes the fleet legible and sellable.</p>`;
+ case 'ledger': return `<h2>🔗 Attestation Ledger</h2><p class="sub">Every governed action — a Council verdict, a bridge translation, a policy decision — is hash-chained and <b>Ed25519-signed</b>, independently verifiable off-platform.</p>
+   <div class="row"><span class="chip gov">✓ scheme: Ed25519(prev + canonical)</span><span class="chip gov">✓ on-device verifiable</span><span class="chip gov">✓ refuses tampered</span></div>
+   <p class="muted">The moat: sovereign, offline-verifiable signing — not a vendor dashboard you have to trust.</p>`;
+ case 'town': return `<h2>🏛️ The 47-Agent Town</h2><p class="sub">A living governance mesh — 47 specialised agents across the civilisations, debating, enforcing, and learning. Governance isn't a checkbox; it's a society that watches.</p>
+   <p class="muted">The town's technology (agents, mesh, BFT) is what makes CSOAI's governance more sophisticated than a static rule engine.</p>`;
+ case 'industries': return `<h2>🏭 Industry packs</h2><p class="sub">Pre-mapped governance for the sectors that buy first.</p>
+   <div class="row"><span class="chip on">Financial services</span><span class="chip on">Healthcare</span><span class="chip on">Manufacturing / logistics</span><span class="chip on">Insurance</span><span class="chip on">Public sector</span><span class="chip on">Critical infrastructure</span></div>`;
+ case 'pricing': return `<h2>£ Pricing</h2><p class="sub">From £1 smoke tests to full-stack institutional governance — transparent pricing is the wedge.</p><table><tr><th>Tier</th><th>For</th></tr>
+   <tr><td>Free audit</td><td>see your risk in 30s</td></tr><tr><td>£49 report</td><td>full multi-framework gap analysis</td></tr><tr><td>Growth / Business</td><td>continuous governance + the fleet</td></tr><tr><td>Enterprise</td><td>BFT Council + bridges + signed attestation</td></tr></table>
+   <p class="muted">Owner-gated: Stripe checkout (M2/Nick).</p>`;
+ default: return '<p>Coming soon.</p>';
+ }
+}
+</script>
+</body>
+</html>
