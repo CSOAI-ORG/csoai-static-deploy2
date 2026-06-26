@@ -44,7 +44,7 @@ Article-level granularity, not just framework names: `meok-dora-tlpt-planner` (D
 ---
 ## DEPTH-AUDIT RESULT (2026-06-26) — the 352 is REAL
 Swept 369 local `*-mcp` dirs in `mcp-marketplace` for tools + tests + packaging:
-- **358 (97%) REAL** (tools + test files + pyproject) · **10 (2%) SOLID** (tools + pyproject) · **0 partial** · **1 STUB** (`agent-incident-reporter-mcp`)
+- **358 (97%) REAL** (tools + test files + pyproject) · **10 (2%) SOLID** (tools + pyproject) · **0 partial** · **0 true stubs** (the flagged `agent-incident-reporter-mcp` is real — low-level SDK, 4 Ed25519 tools)
 - **368/369 (99%) ship-ready** · **1,987 total tool functions** across the estate
 - Heavyweights: eu-ai-act-compliance (18) · dora-compliance · csoai-governance-crosswalk · risk-assessment (12 each)
 
