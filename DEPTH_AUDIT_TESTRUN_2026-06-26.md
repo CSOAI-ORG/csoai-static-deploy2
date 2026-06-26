@@ -26,3 +26,11 @@ The governance **logic** holds: 26/35 fully green + the 7 config failures are MC
 
 ## Method / caveat
 35-MCP **sample** (not all 369) — too slow to run the full estate inline; the sample is the high-value set (A2A substrate + lead framework MCPs). "pass" = `pytest -q` exit 0. Run on macOS Python 3.x, no per-test isolation beyond pytest defaults.
+
+## The 2 genuine failures — diagnosed (2026-06-26 follow-up)
+After the 212-file conflict-marker cleanup unblocked the suites (eu-ai-act 0→59 passing; mifid/nis2/gdpr/agent-identity/cra now green), the 2 remaining real failures were investigated:
+
+- **`csoai-governance-crosswalk-mcp`** (11 fail): NOT a conflict issue. Two layered causes — (1) **multi-layer persistent freemium rate-limiter** (`_rl()` + a deeper gate returning "10/day" + Stripe upgrade URL) that blocks its own tests and resists monkeypatch; (2) **stale tests** expect a pydantic model (`res.framework`) but the current `query_crosswalk` returns a **dict**. Fix needs a server-side `MEOK_TEST_MODE` bypass **and** a test rewrite to the dict API. Real but **low-leverage (1 of 369)** — flagged, not faked.
+- **`dora-nis2-crosswalk-mcp`** (10 error): pytest **import-mode quirk** on collection (`import server` triggers a relative-import error in the harness). Likely fixed by a `conftest.py` + `pythonpath` setting; needs a careful per-repo check.
+
+**Honest call:** I will not guess-rewrite assertions or fabricate green. These 2 need a dedicated per-repo pass. The systemic win (212 conflict markers → 5+ MCPs flipped to passing) is the high-leverage fix and is done.
