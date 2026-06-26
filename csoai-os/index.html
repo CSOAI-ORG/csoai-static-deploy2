@@ -121,6 +121,7 @@ const FRAMEWORKS=['EU AI Act','GDPR','DORA','NIS2','ISO 42001','NIST AI RMF','HI
 const BRIDGES=[['COBOL','mainframe'],['ISO 20022','finance/SWIFT'],['HL7/FHIR','healthcare'],['AS/400','IBM i'],['SAP','ERP'],['Oracle','PL/SQL'],['SCADA','industrial OT'],['EDI','B2B'],['FIX','trading'],['CICS','transactions'],['MQTT','IoT'],['ACORD','insurance'],['NACHA','ACH'],['ISO 8583','cards'],['SIP','telephony'],['Tax','revenue'],['GS1','traceability'],['MISMO','mortgage'],['DLMS','energy'],['A2A Gov','agent runtime'],['ABCI','Cosmos'],['Haulage','logistics']];
 const JURIS={uk:['London 🇬🇧',[['National','UK GDPR · DPA 2018 · Online Safety Act'],['Tax','HMRC MTD VAT'],['Cross-border','EU AI Act if serving EU']]],de:['Berlin 🇩🇪',[['National','BDSG · TMG'],['Bloc','GDPR · EU AI Act · DORA · NIS2 · DSA'],['Tax','VAT · EU ViDA']]],us_ca:['California 🇺🇸',[['State','CCPA/CPRA · SB 942 AI transparency'],['Federal','NIST AI RMF · HIPAA · FTC §5']]],sg:['Singapore 🇸🇬',[['National','PDPA · Model AI Governance · AI Verify']]]};
 const APPS={
+ demo:{i:'▶️',t:'Signed-Compliance Demo',d:'Finance-on-COBOL, signed',c:'The 2-min wedge: govern a COBOL/ISO-20022 wire + Ed25519-sign the Art.12 audit. No competitor can show this.'},
  audit:{i:'🛡️',t:'Free AI audit',d:'Classify your AI in 30s',c:'In-page EU AI Act classifier — no backend, instant risk + checklist.'},
  council:{i:'⚖️',t:'BFT Council',d:'5 agents debate your case',c:'Byzantine-fault-tolerant governance board — verdict signed to the ledger.'},
  bridges:{i:'🔌',t:'Legacy Bridges',d:'22 governed gateways',c:'Govern the legacy economy ($3T/day) — the category nobody else owns.'},
@@ -182,6 +183,16 @@ function classify(text){
  for(const k of limited) if(t.includes(k)) return {lvl:'LIMITED',note:'Limited-risk: transparency obligations (Art. 50) — disclose AI use.'};
  return {lvl:'MINIMAL',note:'Likely minimal-risk: voluntary codes of conduct. Re-check if use changes.'};
 }
+function runDemo(){
+ const el=document.getElementById('demoRes');el.className='res on';
+ const steps=[
+  `<p><b>① Legacy core analyzed</b> <span class="muted">— cobol-bridge</span><br><code>WIRE-SETTLE</code> parsed · SQL + CICS detected — we read the mainframe natively.</p>`,
+  `<p><b>② Governed</b> <span class="muted">— iso20022-bridge · the €1.5M wire</span><br>Frameworks: <span class="chip gov">ISO 20022</span><span class="chip gov">DORA</span><span class="chip gov">NIS2</span><span class="chip gov">FATF AML/CFT</span><span class="chip gov">PSD2</span><br><span class="chip warn">⚠ large-value reporting threshold</span><span class="chip warn">⚠ missing EndToEndId — weakens auditability</span><span class="chip warn">⚠ creditor name absent — sanctions screening incomplete</span></p>`,
+  `<p><b>③ Signed audit package</b> <span class="muted">— Ed25519, Article 12</span><br><span class="mono" style="font-size:11px">sha256: 422db099a7cb5ede… · sig: c389f2fee0066b69…</span><br><span class="chip gov">✓ verifies offline, no account</span><span class="chip gov">✓ tamper-evident (Art.12-ready)</span><span class="chip gov">✓ RFC-0024: 80%</span></p>`,
+  `<p style="border-top:1px solid var(--border);padding-top:8px"><b>④ The line:</b> by <b>2 Aug 2026</b> every AI action on this COBOL core must be governed + logged tamper-evident. Microsoft · ServiceNow · Runlayer govern modern agents — <b>none bridge your COBOL</b>. We do, and we sign it. <b>This package IS your audit trail.</b></p>`];
+ el.innerHTML='';let i=0;
+ (function reveal(){ if(i>=steps.length)return; el.innerHTML+=steps[i++]; setTimeout(reveal,650); })();
+}
 function pickBFT(nodes){
  const f=Math.floor((nodes-1)/3), q=2*f+1;
  document.getElementById('bftRes').className='res on';
@@ -209,6 +220,9 @@ function resolveLaw(){
 
 function render(id){
  switch(id){
+ case 'demo': return `<h2>▶️ Signed-Compliance Demo — finance on COBOL</h2><p class="sub">The 2-minute wedge a bank CCO sees: your COBOL core's payment, governed + <b>Ed25519-signed</b> as an EU AI Act Article-12 audit trail. <b>No competitor can show this</b> — they don't bridge legacy.</p>
+   <div class="row"><button class="btn" onclick="runDemo()">▶ Run the signed-compliance demo</button></div>
+   <div class="res" id="demoRes"></div>`;
  case 'audit': return `<h2>🛡️ Free AI compliance audit</h2><p class="sub">Describe what your AI does. Get an EU AI Act risk classification + checklist in 30 seconds — governance you can use, not just read.</p>
    <label>What does your AI system do?</label><textarea id="aiDesc" rows="3" placeholder="e.g. A model that screens loan applications and assigns credit scores"></textarea>
    <div class="row" style="margin-top:10px"><button class="btn" onclick="runAudit()">Run the audit →</button>
