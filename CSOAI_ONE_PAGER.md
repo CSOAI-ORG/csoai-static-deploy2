@@ -1,6 +1,8 @@
-# CSOAI — the governance layer for the AI economy (one-pager, 2026-06-25)
+# CSOAI — the signed bridge between AI and the legacy economy (one-pager, rev. 2026-06-26)
 
-**The governed bridge between AI and the systems that run the world — and the only one that signs every action so you can prove it.**
+**By 2 Aug 2026, every AI action touching a bank's COBOL core, a hospital's HL7 feed, or a grid's SCADA must be governed (high-risk) and logged tamper-evident (EU AI Act Art. 12). Microsoft, ServiceNow, Obot, Runlayer govern modern agents — none bridge the legacy systems. CSOAI does, and Ed25519-signs every action. The systems the giants can't touch.**
+
+> *Pivot rev (2026 research): agent/MCP governance is now a contested, funded market ($1B by 2030; Runlayer $30M, MS + ServiceNow shipping Ed25519 + kill-switches). Our durable edge is NOT "MCP governance" — it's governing the LEGACY economy + signed breadth + sovereign. Lead there.*
 
 ## The problem (now, not hypothetical)
 From **2 Aug 2026**, EU AI Act high-risk obligations bite (up to **7% of global revenue**). The Act was written for *models* — but the risk is in the *action layer*: when an AI agent touches a bank's COBOL core, a hospital's HL7 feed, a grid's SCADA, a tax filing. That layer is now in scope (logging + cybersecurity mandates), and almost nothing governs it.

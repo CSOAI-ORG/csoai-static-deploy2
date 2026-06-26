@@ -4,7 +4,7 @@
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
 <title>CSOAI — The Council for the Safety of AI · Governance OS</title>
-<meta name="description" content="CSOAI — the governance layer for autonomous intelligence. BFT Council, 22 governed legacy bridges, the 369-MCP compliance fleet, jurisdiction engine, model track-record, and Ed25519 signed attestation. Govern your AI, or watch governance be done to you."/>
+<meta name="description" content="CSOAI — the only governed, signed bridge between AI and the legacy economy (COBOL/SAP/SCADA/HL7). EU AI Act Article 12 tamper-evident audit + 22 legacy bridges + Ed25519, before the Aug 2 2026 high-risk deadline. The systems the giants cannot touch."/>
 <style>
 /* tokens match csoai-org-v2 globals.css (CSOAI master) exactly */
 :root{--bg:#0a0e1a;--background:#0a0e1a;--fg:#e2e8f0;--foreground:#e2e8f0;--accent:#3b82f6;--accent-light:#60a5fa;--muted:#94a3b8;--surface:#111827;--surface-2:#1f2937;--border:#374151;--success:#10b981;--warning:#f59e0b;--danger:#ef4444}
@@ -84,8 +84,8 @@ footer{border-top:1px solid var(--border);color:var(--muted);font-size:12px;padd
 
 <main class="wrap" id="home">
   <section class="hero">
-    <h1>The governance layer for <span class="a">autonomous intelligence</span>.</h1>
-    <p>Everyone governs your AI agents. CSOAI governs the <b>legacy economy your agents touch</b> — banks, hospitals, grids, markets — and <b>signs every action</b> so compliance is provable, not promised. Governance embedded in the AI itself, accountable by default.</p>
+    <h1>The signed bridge between AI and the <span class="a">legacy economy</span>.</h1>
+    <p>By <b>2 Aug 2026</b>, every AI action touching your COBOL core, HL7 feed, or SCADA must be governed (high-risk) and logged <b>tamper-evident</b> (EU AI Act Art. 12). Microsoft, ServiceNow & co. govern modern agents — <b>none bridge your legacy systems</b>. CSOAI does, and <b>signs every action</b> (Ed25519). Provable compliance, on the systems the giants can't touch.</p>
     <div class="kpis">
       <div class="kpi"><b>5–37</b><span>BFT council (selectable)</span></div>
       <div class="kpi"><b>13+</b><span>frameworks</span></div>
@@ -282,9 +282,10 @@ function render(id){
  case 'distribution': return `<h2>🚀 Distribution</h2><p class="sub">The #1 lever: <b>built ≫ published</b>. 21 packages (19 bridges + scoreboard + OSCAL generator) build clean to wheel+sdist + are registry-valid. One owner token ships them all.</p>
    <div class="row"><span class="chip gov">✓ 20/20 build clean</span><span class="chip gov">✓ 19/19 server.json valid</span><span class="chip warn">⧗ PyPI token (owner)</span><span class="chip warn">⧗ MCP registry login (owner)</span></div>
    <p class="muted"><code>export PYPI_TOKEN=… &amp;&amp; bash publish-all-bridges.sh</code> → public. Then <code>SUBMIT=1 submit-all-registry.sh</code> → MCP registry.</p>`;
- case 'compete': return `<h2>🎯 Where We Stand</h2><p class="sub">The market converged on CSOAI's thesis — <i>"the EU AI Act was written for models; your agents need runtime compliance."</i> Validation, not threat.</p>
-   <table><tr><th>Cluster</th><th>Players</th></tr><tr><td>Incumbents (extend GRC)</td><td>IBM watsonx · OneTrust · Collibra</td></tr><tr><td>Dedicated AI-gov</td><td>Credo AI · Holistic AI · Vanta</td></tr><tr><td>Agent/MCP-runtime</td><td>Obot · Straiker · Speakeasy</td></tr></table>
-   <p class="muted"><b>Moat (category of one):</b> govern the <i>legacy</i> economy · SIGIL signed attestation · sovereign/on-device. <b>Honest #1 risk:</b> distribution — ship before mindshare goes elsewhere.</p>`;
+ case 'compete': return `<h2>🎯 Where We Stand (honest)</h2><p class="sub">2026 research: the agent-governance market is <b>real, growing ($492M→$1B+, Gartner), and now contested + funded</b>. We don't fight the giants on their turf — we own the turf they can't reach.</p>
+   <table><tr><th>Player</th><th>Ships</th><th>Bridges legacy?</th></tr>
+   <tr><td>Microsoft Agent Gov Toolkit</td><td>Ed25519 + gating</td><td class="muted">no</td></tr><tr><td>ServiceNow Control Tower</td><td>kill-switch + audit</td><td class="muted">no</td></tr><tr><td>Runlayer ($30M) · Obot</td><td>MCP governance</td><td class="muted">no</td></tr><tr><td><b>CSOAI</b></td><td><b>all the above + signed</b></td><td><b>✓ 22 bridges</b></td></tr></table>
+   <p class="muted"><b>The moat, narrowed honestly:</b> agent/MCP governance is now table-stakes (MS/ServiceNow own it). Our <b>category of one</b> = govern the <i>legacy economy</i> (COBOL/SAP/SCADA/HL7) + signed protocol breadth + sovereign. <b>The wedge:</b> EU AI Act Art. 12 (tamper-evident logging) × Aug 2026 × regulated sectors on legacy. Lead there, not "MCP governance."</p>`;
  case 'industries': return `<h2>🏭 Industry packs</h2><p class="sub">Pre-mapped governance for the sectors that buy first.</p>
    <div class="row"><span class="chip on">Financial services</span><span class="chip on">Healthcare</span><span class="chip on">Manufacturing / logistics</span><span class="chip on">Insurance</span><span class="chip on">Public sector</span><span class="chip on">Critical infrastructure</span><span class="chip on">Energy</span><span class="chip on">Mortgage / real-estate</span></div>`;
  case 'pricing': return `<h2>£ Pricing</h2><p class="sub">From £1 smoke tests to full-stack institutional governance — transparent pricing is the wedge.</p><table><tr><th>Tier</th><th>For</th></tr>
