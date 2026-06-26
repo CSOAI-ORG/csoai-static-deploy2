@@ -26,7 +26,7 @@ The master map of the whole estate so we **eat all into one without losing track
 - absorb/archive: `sovereign-temple-public` 99M · `~/meok-sovereign-memory` 759M · `~/.sov3` · `clawd/sov3-deploy` · `clawd/meok-agent-zero` 76M · `~/sovereign-consciousness-system`.
 
 ## 4. BRIDGES / BACKEND — governance MCPs (the moat)
-- ★ **clawd/mcp-marketplace** — 347 MCPs incl. the **19 governed bridges** + **model-scoreboard-mcp** + **oscal-generator-mcp** (Ed25519-signed OSCAL, RFC-0024 wedge) + **compliance-passport** (lead SKU); 21-pkg publish kit. Index: `CSOAI_BRIDGE_FAMILY_INDEX.md`.
+- ★ **clawd/mcp-marketplace** — **369 MCPs / 1,987 tools, depth-audited 99% ship-ready (tools+pkg)** — the real estate (was tracked as ~23). Incl. **22 governed bridges** + **20-MCP A2A agent-governance substrate** (the runtime competitors race for — already built) + **27 article-level reg MCPs** (DORA-TLPT/FRIA/CRA-Annex-IV/NIS2-registers/Basel/MiFID) + **oscal-generator** (Ed25519 OSCAL, RFC-0024) + **nist-iso42001-crosswalk** + **ll144-bias-audit** + **compliance-passport** (lead SKU). 23-pkg publish kit. Whole protocol = **one 55-component Ed25519-signed OSCAL package**. Catalog: `csoai-mcp-catalog.json`; scan: `CSOAI_MCP_ESTATE_SCAN_2026-06-26.md`; index: `CSOAI_BRIDGE_FAMILY_INDEX.md`.
 - ★ **meok-compliance-gateway** (the keystone gateway).
 - absorb: `~/meok-eat-mcp` · `clawd/csoai-mcp-monetization` · `~/meok-api-gateway-tmp` · `clawd/meok-attestation-api` · `~/meok-cross-post` (openmcp).
 
