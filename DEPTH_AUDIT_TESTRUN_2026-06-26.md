@@ -34,3 +34,17 @@ After the 212-file conflict-marker cleanup unblocked the suites (eu-ai-act 0→5
 - **`dora-nis2-crosswalk-mcp`** (10 error): pytest **import-mode quirk** on collection (`import server` triggers a relative-import error in the harness). Likely fixed by a `conftest.py` + `pythonpath` setting; needs a careful per-repo check.
 
 **Honest call:** I will not guess-rewrite assertions or fabricate green. These 2 need a dedicated per-repo pass. The systemic win (212 conflict markers → 5+ MCPs flipped to passing) is the high-leverage fix and is done.
+
+
+## FINAL — "all phases" follow-up (2026-06-26)
+Systemic root cause found + fixed: **3 repos had a root `__init__.py` with a broken `from . import mcp_promo`** (a promo injection) that killed pytest collection. One guarded-import fix flipped all 3:
+- **agent-prompt-injection-firewall-mcp** → 12 passed ✅
+- **bias-detection-mcp** → 5 passed ✅
+- **dora-nis2-crosswalk-mcp** → 10 passed ✅ (also fixed a rate-limit test hardcoding `10` → now uses `server.FREE_DAILY_LIMIT`)
+
+All 3 committed + pushed.
+
+**Remaining: `csoai-governance-crosswalk-mcp` (1 of 369) — needs a dedicated rewrite, not a quick fix.** Definitive diagnosis: the 4000-line server was **fully rebuilt** to return **gated markdown strings** behind a **two-layer persistent freemium gate** (`check_access` + `_rl`), while its 11 tests remained for the **old pydantic-model API** (`res.framework`). A correct fix = (a) a conftest that bypasses both gates without breaking the `TestAuthMiddleware` tests, and (b) rewrite all 11 assertions to the markdown API. Real but low-leverage; flagged honestly, **not faked**.
+
+### Net test-fidelity result
+Of the original 9 "failures": **7 fixed** (5 via conflict-marker cleanup + 2 via the mcp_promo fix... actually 6 via promo/conflict + dora-nis2 rate-limit), leaving **1 genuine API-redesign drift** (csoai-governance-crosswalk) for a dedicated pass. The estate's test health is materially up.
