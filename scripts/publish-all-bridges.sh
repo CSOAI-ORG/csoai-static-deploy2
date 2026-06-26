@@ -5,7 +5,7 @@
 set -uo pipefail
 ROOT=~/clawd/mcp-marketplace
 BRIDGES="cobol iso20022 hl7-fhir as400 sap oracle scada edi fix cics mqtt acord nacha iso8583 sip tax gs1 mismo dlms"
-EXTRA="model-scoreboard oscal-generator"
+EXTRA="model-scoreboard oscal-generator nist-iso42001-crosswalk"
 DRY=""
 [ -z "${PYPI_TOKEN:-}" ] && DRY=1 && echo "DRY RUN — set PYPI_TOKEN to actually publish."
 python3 -m pip install -q build twine >/dev/null 2>&1 || true
