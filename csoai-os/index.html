@@ -4,7 +4,7 @@
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
 <title>CSOAI · Agent Governance Operating System</title>
-<meta name="description" content="CSOAI — the governance layer for autonomous intelligence. BFT Council, 15 legacy bridges, the compliance fleet, signed attestation. Govern your AI, or watch governance be done to you."/>
+<meta name="description" content="CSOAI — the governance layer for autonomous intelligence. BFT Council, 19 governed legacy bridges, the 347-MCP compliance fleet, jurisdiction engine, model track-record, and Ed25519 signed attestation. Govern your AI, or watch governance be done to you."/>
 <style>
 :root{--bg:#0a0e1a;--fg:#e2e8f0;--accent:#3b82f6;--accent2:#60a5fa;--muted:#94a3b8;--surface:#111827;--border:#374151;--success:#10b981;--warning:#f59e0b;--danger:#ef4444}
 *{box-sizing:border-box}
@@ -21,16 +21,18 @@ header{position:sticky;top:0;z-index:20;background:rgba(10,14,26,.86);backdrop-f
 .hero{padding:34px 0 12px}
 .hero h1{font-size:clamp(24px,4vw,40px);font-weight:600;margin:0 0 8px;line-height:1.12}
 .hero h1 .a{color:var(--accent2)}
-.hero p{color:var(--muted);max-width:680px;margin:0 0 14px;font-size:16px}
+.hero p{color:var(--muted);max-width:700px;margin:0 0 14px;font-size:16px}
 .kpis{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}
 .kpi{border:1px solid var(--border);border-radius:10px;padding:8px 12px;background:var(--surface)}
 .kpi b{font-size:18px;color:var(--fg)}.kpi span{display:block;font-size:11px;color:var(--muted)}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(168px,1fr));gap:12px;margin:18px 0 30px}
-.app{border:1px solid var(--border);border-radius:13px;background:var(--surface);padding:14px;cursor:pointer;transition:.14s;display:flex;flex-direction:column;gap:6px}
+.app{position:relative;border:1px solid var(--border);border-radius:13px;background:var(--surface);padding:14px;cursor:pointer;transition:.14s;display:flex;flex-direction:column;gap:6px;overflow:hidden}
 .app:hover{border-color:var(--accent);transform:translateY(-2px)}
 .app .ic{font-size:22px}
 .app .t{font-weight:600;font-size:14px}
 .app .d{font-size:12px;color:var(--muted)}
+.app .cap{position:absolute;left:0;right:0;bottom:0;transform:translateY(100%);transition:.18s;background:linear-gradient(0deg,rgba(59,130,246,.16),rgba(17,24,39,.96));border-top:1px solid rgba(59,130,246,.35);padding:8px 12px;font-size:11px;color:var(--accent2)}
+.app:hover .cap{transform:translateY(0)}
 .panel{border:1px solid var(--border);border-radius:14px;background:var(--surface);padding:20px;margin:0 0 30px;display:none}
 .panel.on{display:block}
 .panel h2{margin:0 0 4px;font-size:20px;font-weight:600}
@@ -38,6 +40,7 @@ header{position:sticky;top:0;z-index:20;background:rgba(10,14,26,.86);backdrop-f
 .chip{display:inline-block;font-size:12px;border:1px solid var(--border);border-radius:999px;padding:4px 10px;margin:3px 4px 3px 0;color:var(--muted)}
 .chip.on{color:var(--accent2);border-color:rgba(59,130,246,.45)}
 .chip.gov{color:var(--success);border-color:rgba(16,185,129,.4)}
+.chip.warn{color:var(--warning);border-color:rgba(245,158,11,.4)}
 .row{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:8px 0}
 .btn{background:var(--accent);color:#fff;border:0;border-radius:9px;padding:10px 16px;font-weight:600;cursor:pointer;font-size:14px}
 .btn:hover{background:var(--accent2)}
@@ -56,6 +59,17 @@ th,td{text-align:left;padding:7px 8px;border-bottom:1px solid var(--border)}
 th{color:var(--muted);font-weight:500}
 footer{border-top:1px solid var(--border);color:var(--muted);font-size:12px;padding:20px 0 36px;text-align:center}
 .back{font-size:13px;color:var(--muted);cursor:pointer;border:1px solid var(--border);border-radius:8px;padding:4px 10px;display:inline-block;margin-bottom:12px}
+/* governance dock */
+.dock{position:fixed;right:16px;bottom:16px;z-index:30;width:min(360px,calc(100vw - 32px))}
+.dock .head{display:flex;align-items:center;gap:8px;background:var(--surface);border:1px solid var(--border);border-radius:12px 12px 0 0;padding:9px 12px;font-size:13px;font-weight:600;cursor:pointer}
+.dock .head .dot{width:8px;height:8px;border-radius:50%;background:var(--success)}
+.dock .body{display:none;background:#0b1120;border:1px solid var(--border);border-top:0;border-radius:0 0 12px 12px;padding:12px}
+.dock.open .body{display:block}
+.dock .log{max-height:220px;overflow:auto;font-size:13px;margin-bottom:8px}
+.dock .msg{margin:6px 0;padding:8px 10px;border-radius:9px}
+.dock .me{background:rgba(59,130,246,.14);color:var(--fg)}
+.dock .ai{background:var(--surface);color:var(--fg);border:1px solid var(--border)}
+.dock .ai b{color:var(--accent2)}
 </style>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono&display=swap" rel="stylesheet">
@@ -70,11 +84,11 @@ footer{border-top:1px solid var(--border);color:var(--muted);font-size:12px;padd
 <main class="wrap" id="home">
   <section class="hero">
     <h1>The governance layer for <span class="a">autonomous intelligence</span>.</h1>
-    <p>Every AI agent deployed without governance is a liability. CSOAI is the Agent Governance Operating System — compliant, auditable, and accountable by default, with governance embedded into the AI itself.</p>
+    <p>Everyone governs your AI agents. CSOAI governs the <b>legacy economy your agents touch</b> — banks, hospitals, grids, markets — and <b>signs every action</b> so compliance is provable, not promised. Governance embedded in the AI itself, accountable by default.</p>
     <div class="kpis">
       <div class="kpi"><b>5</b><span>BFT Council agents</span></div>
-      <div class="kpi"><b>13</b><span>frameworks</span></div>
-      <div class="kpi"><b>15</b><span>legacy bridges</span></div>
+      <div class="kpi"><b>13+</b><span>frameworks</span></div>
+      <div class="kpi"><b>19</b><span>governed bridges</span></div>
       <div class="kpi"><b>347</b><span>governance MCPs</span></div>
       <div class="kpi"><b>Ed25519</b><span>signed attestation</span></div>
     </div>
@@ -84,39 +98,67 @@ footer{border-top:1px solid var(--border);color:var(--muted);font-size:12px;padd
 
 <section class="wrap"><div class="panel" id="panel"><span class="back" onclick="closeApp()">← back</span><div id="panelBody"></div></div></section>
 
-<footer class="wrap">CSOAI · the governance layer for autonomous intelligence · csoai.org — governance OS console (M4 build for M2 master). Every governed action signed + attestable.</footer>
+<!-- governance dock -->
+<div class="dock" id="dock">
+  <div class="head" onclick="toggleDock()"><span class="dot"></span> Ask CSOAI <span class="muted" style="font-weight:400;margin-left:auto">governance ▾</span></div>
+  <div class="body">
+    <div class="log" id="docklog"><div class="msg ai"><b>CSOAI</b> — ask me what governs you. Try “loan approval AI”, “what governs SCADA”, or “publish status”.</div></div>
+    <div class="row" style="gap:4px"><input id="dockin" placeholder="what governs my…?" onkeydown="if(event.key==='Enter')dockAsk()"/><button class="btn" onclick="dockAsk()">→</button></div>
+  </div>
+</div>
+
+<footer class="wrap">CSOAI · the governance layer for autonomous intelligence · csoai.org — governance OS console (M4 reference build for M2 master). Every governed action signed + attestable.</footer>
 
 <script>
 const FRAMEWORKS=['EU AI Act','GDPR','DORA','NIS2','ISO 42001','NIST AI RMF','HIPAA','SOX','PCI-DSS','Solvency II','MiFID II','IEC 62443','CSRD'];
-const BRIDGES=[['COBOL','mainframe'],['ISO 20022','finance/SWIFT'],['HL7/FHIR','healthcare'],['AS/400','IBM i'],['SAP','ERP'],['Oracle','PL/SQL'],['SCADA','industrial OT'],['EDI','B2B'],['FIX','trading'],['CICS','transactions'],['MQTT','IoT'],['ACORD','insurance'],['NACHA','ACH payments'],['ISO 8583','card payments'],['SIP','telephony']];
+const BRIDGES=[['COBOL','mainframe'],['ISO 20022','finance/SWIFT'],['HL7/FHIR','healthcare'],['AS/400','IBM i'],['SAP','ERP'],['Oracle','PL/SQL'],['SCADA','industrial OT'],['EDI','B2B'],['FIX','trading'],['CICS','transactions'],['MQTT','IoT'],['ACORD','insurance'],['NACHA','ACH'],['ISO 8583','cards'],['SIP','telephony'],['Tax','revenue'],['GS1','traceability'],['MISMO','mortgage'],['DLMS','energy']];
+const JURIS={uk:['London 🇬🇧',[['National','UK GDPR · DPA 2018 · Online Safety Act'],['Tax','HMRC MTD VAT'],['Cross-border','EU AI Act if serving EU']]],de:['Berlin 🇩🇪',[['National','BDSG · TMG'],['Bloc','GDPR · EU AI Act · DORA · NIS2 · DSA'],['Tax','VAT · EU ViDA']]],us_ca:['California 🇺🇸',[['State','CCPA/CPRA · SB 942 AI transparency'],['Federal','NIST AI RMF · HIPAA · FTC §5']]],sg:['Singapore 🇸🇬',[['National','PDPA · Model AI Governance · AI Verify']]]};
 const APPS={
- audit:{i:'🛡️',t:'Free AI audit',d:'Classify your AI in 30s'},
- council:{i:'⚖️',t:'BFT Council',d:'5 agents debate your case'},
- bridges:{i:'🔌',t:'Legacy Bridges',d:'15 governed gateways'},
- fleet:{i:'🗂️',t:'Compliance Fleet',d:'347 governance MCPs'},
- frameworks:{i:'📚',t:'Frameworks',d:'13 global regimes'},
- relevance:{i:'🕸️',t:'Relevance Map',d:'What governs what'},
- ledger:{i:'🔗',t:'Attestation Ledger',d:'Ed25519, verifiable'},
- town:{i:'🏛️',t:'The 47-Agent Town',d:'Governance, alive'},
- industries:{i:'🏭',t:'Industries',d:'Sector packs'},
- pricing:{i:'£',t:'Pricing',d:'From £1 smoke tests'}
+ audit:{i:'🛡️',t:'Free AI audit',d:'Classify your AI in 30s',c:'In-page EU AI Act classifier — no backend, instant risk + checklist.'},
+ council:{i:'⚖️',t:'BFT Council',d:'5 agents debate your case',c:'Byzantine-fault-tolerant governance board — verdict signed to the ledger.'},
+ bridges:{i:'🔌',t:'Legacy Bridges',d:'19 governed gateways',c:'Govern the legacy economy ($3T/day) — the category nobody else owns.'},
+ fleet:{i:'🗂️',t:'Compliance Fleet',d:'347 governance MCPs',c:'Runtime enforcement, not quarterly assessment — and signed.'},
+ frameworks:{i:'📚',t:'Frameworks',d:'13 global regimes',c:'Map your AI across every regime that applies, by sector + region.'},
+ law:{i:'⚖',t:'Jurisdiction Engine',d:'Local→national→bloc',c:'Resolve the full stack of law for a place + cross-border overlap.'},
+ board:{i:'🏆',t:'Model-Board',d:'Track record of models',c:'Evidence-based "which model wins which task" — the router signal.'},
+ knowledge:{i:'📚',t:'Knowledge Hives',d:'17 governed domains',c:'Neutral, source-cited, attestable — serving anyone, any belief.'},
+ aware:{i:'👁️',t:'Presence',d:'Consent-first awareness',c:'On-device world-model — GDPR Art.9/BIPA, off by default, Guardian-gated.'},
+ relevance:{i:'🕸️',t:'Relevance Map',d:'What governs what',c:'The topology — each bridge/MCP to its frameworks, sectors, regions.'},
+ ledger:{i:'🔗',t:'SIGIL Ledger',d:'Ed25519, verifiable',c:'Sovereign offline-verifiable signing — not a dashboard you must trust.'},
+ distribution:{i:'🚀',t:'Distribution',d:'20 packages, 1 token to live',c:'Built ≫ published — the #1 lever; one PyPI token ships them all.'},
+ compete:{i:'🎯',t:'Where We Stand',d:'The competitive map',c:'Market validated our thesis; moat = legacy + SIGIL + sovereign.'},
+ industries:{i:'🏭',t:'Industries',d:'Sector packs',c:'Pre-mapped governance for the sectors that buy first.'},
+ pricing:{i:'£',t:'Pricing',d:'From £1 smoke tests',c:'Transparent pricing is the wedge — free audit → enterprise.'},
+ town:{i:'🏛️',t:'Agent Town',d:'Governance, alive',c:'A living mesh of specialised agents — governance as a society that watches.'}
 };
-function tile(id){const a=APPS[id];return `<div class="app" onclick="openApp('${id}')"><div class="ic">${a.i}</div><div class="t">${a.t}</div><div class="d">${a.d}</div></div>`;}
+function tile(id){const a=APPS[id];return `<div class="app" onclick="openApp('${id}')"><div class="ic">${a.i}</div><div class="t">${a.t}</div><div class="d">${a.d}</div><div class="cap">${a.c}</div></div>`;}
 document.getElementById('grid').innerHTML=Object.keys(APPS).map(tile).join('');
 
 function closeApp(){document.getElementById('panel').classList.remove('on');document.getElementById('home').style.display='';window.scrollTo(0,0);}
-function openApp(id){
- document.getElementById('panelBody').innerHTML=render(id);
- document.getElementById('panel').classList.add('on');
- document.getElementById('home').style.display='none';
- window.scrollTo(0,0);
+function openApp(id){document.getElementById('panelBody').innerHTML=render(id);document.getElementById('panel').classList.add('on');document.getElementById('home').style.display='none';window.scrollTo(0,0);}
+
+// ── governance dock (the MEOK-learnt "ask" surface, CSOAI-framed) ──
+function toggleDock(){document.getElementById('dock').classList.toggle('open');}
+function dockSay(who,html){const l=document.getElementById('docklog');l.innerHTML+=`<div class="msg ${who}">${html}</div>`;l.scrollTop=l.scrollHeight;}
+function dockAsk(){
+ const i=document.getElementById('dockin');const q=i.value.trim();if(!q)return;i.value='';dockSay('me',q);
+ const t=q.toLowerCase();let a;
+ if(/publish|distribut|pypi|ship/.test(t)) a=`<b>Distribution</b> — 20 packages (19 bridges + scoreboard) build clean + registry-valid. One <code>PYPI_TOKEN</code> ships them all (built ≫ published = the #1 lever).`;
+ else if(/scada|ot|industrial|grid|energy/.test(t)) a=`<b>SCADA/OT</b> → IEC 62443 · NIS2. The SCADA + DLMS bridges parse→govern→sign; control-point writes require auth + audit.`;
+ else if(/loan|credit|lending|mortgage/.test(t)) a=`<b>Lending/mortgage</b> → EU AI Act Annex III (high-risk) · ECOA fair-lending · the MISMO bridge. Human oversight + conformity assessment required.`;
+ else if(/health|hospital|patient|hl7|hipaa/.test(t)) a=`<b>Healthcare</b> → HIPAA · EU MDR · GDPR Art.9. The HL7/FHIR bridge governs PHI; every translation attestable.`;
+ else if(/card|payment|pci|iso ?8583|swift|iso ?20022/.test(t)) a=`<b>Payments</b> → PCI-DSS · PSD2 SCA · DORA. Bridges: ISO 20022, ISO 8583, NACHA, FIX — never log full PAN.`;
+ else if(/jurisdic|country|region|law|gdpr/.test(t)) a=`<b>Jurisdiction</b> — open the Jurisdiction Engine: it stacks local→national→bloc + tax + cross-border, and shows the overlap between two regimes.`;
+ else if(/sign|attest|sigil|ledger|verif/.test(t)) a=`<b>SIGIL</b> — every governed action is hash-chained + Ed25519-signed, verifiable offline with no account. The moat.`;
+ else a=`I govern across <b>19 bridges</b>, <b>347 MCPs</b>, <b>13+ frameworks</b>, a jurisdiction engine + signed attestation. Tell me your <i>industry</i>, <i>region</i>, or what your AI <i>does</i>.`;
+ dockSay('ai',`<b>CSOAI</b> · ${a}`);
 }
 
-// ── lightweight EU AI Act classifier (in-page, no backend) ──
+// ── EU AI Act classifier (in-page, no backend) ──
 function classify(text){
  const t=(text||'').toLowerCase();
  const banned=['social scoring','subliminal','mass surveillance','emotion recognition workplace'];
- const high=['biometric','credit','lending','loan','hiring','recruit','medical','diagnos','triage','health','critical infrastructure','law enforcement','insurance underwriting','exam','student'];
+ const high=['biometric','credit','lending','loan','mortgage','hiring','recruit','medical','diagnos','triage','health','critical infrastructure','law enforcement','insurance underwriting','exam','student'];
  const limited=['chatbot','assistant','recommend','content generation','image generation','deepfake'];
  for(const k of banned) if(t.includes(k)) return {lvl:'HIGH',note:'Possible prohibited / unacceptable-risk practice — review EU AI Act Art. 5.'};
  for(const k of high) if(t.includes(k)) return {lvl:'HIGH',note:'Likely high-risk under EU AI Act Annex III. Conformity assessment + human oversight required.'};
@@ -124,53 +166,73 @@ function classify(text){
  return {lvl:'MINIMAL',note:'Likely minimal-risk: voluntary codes of conduct. Re-check if use changes.'};
 }
 function runAudit(){
- const v=document.getElementById('aiDesc').value.trim();
- if(!v){return;}
+ const v=document.getElementById('aiDesc').value.trim();if(!v){return;}
  const r=classify(v);
  const checklist={HIGH:['Risk management system (Art. 9)','Data governance (Art. 10)','Technical documentation (Art. 11)','Human oversight (Art. 14)','Conformity assessment + CE marking'],LIMITED:['Disclose AI interaction (Art. 50)','Label AI-generated content','Maintain usage logs'],MINIMAL:['Adopt voluntary code of conduct','Monitor for scope change']}[r.lvl];
  const fw={HIGH:['EU AI Act Annex III','GDPR','ISO 42001'],LIMITED:['EU AI Act Art. 50','GDPR'],MINIMAL:['Voluntary codes']}[r.lvl];
  document.getElementById('auditRes').className='res on';
  document.getElementById('auditRes').innerHTML=
-  `<span class="badge b-${r.lvl.toLowerCase()}">${r.lvl} RISK</span>`
-  +`<p style="margin:10px 0">${r.note}</p>`
+  `<span class="badge b-${r.lvl.toLowerCase()}">${r.lvl} RISK</span><p style="margin:10px 0">${r.note}</p>`
   +`<p class="muted" style="margin:6px 0"><b>Applicable frameworks:</b> ${fw.join(' · ')}</p>`
   +`<p style="margin:8px 0 4px"><b>Your compliance checklist:</b></p><ul>${checklist.map(c=>'<li>'+c+'</li>').join('')}</ul>`
-  +`<p class="muted" style="margin:10px 0 0">✓ The BFT Council can deliberate this case + sign the verdict to the attestation ledger.</p>`;
+  +`<p class="muted" style="margin:10px 0 0">✓ The BFT Council can deliberate this case + sign the verdict to the SIGIL ledger.</p>`;
+}
+function resolveLaw(){
+ const j=document.getElementById('jsel').value;const [place,tiers]=JURIS[j];
+ document.getElementById('lawRes').className='res on';
+ document.getElementById('lawRes').innerHTML=`<b>${place}</b> — the stack that governs you:<table><tr><th>Tier</th><th>Frameworks</th></tr>${tiers.map(t=>`<tr><td>${t[0]}</td><td>${t[1]}</td></tr>`).join('')}</table><p class="muted" style="margin:8px 0 0">Operating across regimes? CSOAI merges the superset + flags the overlap.</p>`;
 }
 
 function render(id){
  switch(id){
- case 'audit': return `<h2>🛡️ Free AI compliance audit</h2><p class="sub">Describe what your AI system does. Get an EU AI Act risk classification + checklist in 30 seconds — governance you can use, not just read.</p>
-   <label>What does your AI system do?</label>
-   <textarea id="aiDesc" rows="3" placeholder="e.g. A model that screens loan applications and assigns credit scores"></textarea>
+ case 'audit': return `<h2>🛡️ Free AI compliance audit</h2><p class="sub">Describe what your AI does. Get an EU AI Act risk classification + checklist in 30 seconds — governance you can use, not just read.</p>
+   <label>What does your AI system do?</label><textarea id="aiDesc" rows="3" placeholder="e.g. A model that screens loan applications and assigns credit scores"></textarea>
    <div class="row" style="margin-top:10px"><button class="btn" onclick="runAudit()">Run the audit →</button>
    <button class="btn ghost" onclick="document.getElementById('aiDesc').value='AI that triages patients in emergency rooms';runAudit()">Try: ER triage</button>
    <button class="btn ghost" onclick="document.getElementById('aiDesc').value='A chatbot that answers FAQ on our website';runAudit()">Try: FAQ bot</button></div>
    <div class="res" id="auditRes"></div>`;
  case 'council': return `<h2>⚖️ The BFT Council</h2><p class="sub">Five specialised AI agents with Byzantine Fault Tolerant voting — a distributed governance board that evaluates risk, flags non-compliance, and enforces policy <i>before</i> harm, not after.</p>
    <div class="row"><span class="chip on">🔵 Oracle — risk</span><span class="chip on">🔴 Skeptic — challenge</span><span class="chip on">🟢 Architect — controls</span><span class="chip on">🟣 Ethicist — harm</span><span class="chip gov">🟡 Strategist — verdict</span></div>
-   <p class="muted">Each verdict is hash-chained + Ed25519-signed to the attestation ledger. Governance embedded into the AI itself — the category-defining concept no competitor has published.</p>`;
- case 'bridges': return `<h2>🔌 Legacy Bridges — 15 governed gateways</h2><p class="sub">The systems that run the world (banks, hospitals, grids, markets) speak legacy. CSOAI bridges them to modern AI — parse → validate → map → <b>govern</b> → attest — without disruption.</p>
+   <p class="muted">Each verdict is hash-chained + Ed25519-signed to the SIGIL ledger. Governance embedded into the AI itself — the category-defining concept no competitor has published.</p>`;
+ case 'bridges': return `<h2>🔌 Legacy Bridges — 19 governed gateways</h2><p class="sub">The systems that run the world speak legacy. CSOAI bridges them to modern AI — parse → validate → map → <b>govern</b> → <b>SIGIL-sign</b> — without disruption. The category nobody else owns.</p>
    <div class="row">${BRIDGES.map(b=>`<span class="chip gov">${b[0]} · ${b[1]}</span>`).join('')}</div>
-   <p class="muted">Each is a governed MCP (DORA/NIS2 finance · HIPAA/MDR healthcare · IEC 62443 OT · SOX · PCI-DSS). The governed gateway to the entire legacy economy.</p>`;
+   <p class="muted">Each is a governed MCP (DORA/NIS2 finance · HIPAA/MDR healthcare · IEC 62443 OT · SOX · PCI-DSS). Now callable from the production MCP server. The governed gateway to the entire legacy economy (~$3T/day).</p>`;
  case 'fleet': return `<h2>🗂️ Compliance Fleet</h2><p class="sub">347 governance/compliance MCP servers — the backend the OS calls. Open core → enterprise paywall, distributed via the MCP registry.</p>
    <div class="row">${FRAMEWORKS.map(f=>`<span class="chip on">${f}</span>`).join('')}</div>
-   <p class="muted">Runtime enforcement (not assessment-only) is the wedge — every competitor checks once a quarter; CSOAI governs continuously, and signs it.</p>`;
+   <p class="muted">Runtime enforcement (not assessment-only) is the wedge — competitors check once a quarter; CSOAI governs continuously, and signs it.</p>`;
  case 'frameworks': return `<h2>📚 Frameworks — 13 global regimes</h2><p class="sub">Map your AI across every regime that applies, by industry + region.</p><table><tr><th>Framework</th><th>Trigger</th></tr>
    <tr><td>EU AI Act</td><td>high-risk Annex III; Art. 50 transparency (Aug 2 2026)</td></tr><tr><td>GDPR</td><td>any personal data</td></tr><tr><td>DORA / NIS2</td><td>finance / critical infra</td></tr><tr><td>HIPAA / MDR</td><td>healthcare</td></tr><tr><td>ISO 42001 / NIST AI RMF</td><td>AI management baseline</td></tr><tr><td>SOX / PCI-DSS</td><td>financial reporting / cards</td></tr></table>`;
- case 'relevance': return `<h2>🕸️ Relevance Map</h2><p class="sub">The topology of <b>what governs what</b> — each bridge/MCP to the frameworks, industries, and regions it applies to. Tell us your industry + region; see your relevant CSOAI components + gaps.</p>
-   <div class="row"><span class="chip">ISO 20022 → DORA · NIS2</span><span class="chip">HL7 → HIPAA · EU AI Act</span><span class="chip">SCADA → IEC 62443 · NIS2</span><span class="chip">ISO 8583 → PCI-DSS · PSD2</span><span class="chip">SIP → STIR/SHAKEN</span></div>
-   <p class="muted">Interactive force-graph version available (react-force-graph) — the visual that makes the fleet legible and sellable.</p>`;
- case 'ledger': return `<h2>🔗 Attestation Ledger</h2><p class="sub">Every governed action — a Council verdict, a bridge translation, a policy decision — is hash-chained and <b>Ed25519-signed</b>, independently verifiable off-platform.</p>
+ case 'law': return `<h2>⚖ Jurisdiction Engine</h2><p class="sub">The law that applies isn't one rule — it's a <b>stack</b>: local → regional → national → bloc, plus tax + cross-border. Pick a jurisdiction; see your stack.</p>
+   <label>Jurisdiction</label><select id="jsel">${Object.keys(JURIS).map(k=>`<option value="${k}">${JURIS[k][0]}</option>`).join('')}</select>
+   <div class="row" style="margin-top:10px"><button class="btn" onclick="resolveLaw()">Resolve my stack →</button></div><div class="res" id="lawRes"></div>`;
+ case 'board': return `<h2>🏆 Model-Board</h2><p class="sub">An evidence-based track record — which model/agent wins which task, ranked by mean score. The signal behind smart routing, kept durable + attestable.</p>
+   <table><tr><th>Model</th><th>Type</th><th>Best at</th></tr><tr><td>claude-opus-4-8</td><td>LLM</td><td>code · reasoning · governance</td></tr><tr><td>specialised SLM</td><td>SLM</td><td>on-device · low-latency</td></tr><tr><td>world model</td><td>world</td><td>simulation · planning</td></tr></table>
+   <p class="muted">register_model · record_result · leaderboard · best_for — now live as MCP tools on the production server.</p>`;
+ case 'knowledge': return `<h2>📚 Sovereign Knowledge Hives</h2><p class="sub">17 governed domains the sovereign absorbs — science → arts. Multi-faith-<b>NEUTRAL</b>, source-cited, bias-checked, attestable. Serving anyone, any belief, requires neutrality.</p>
+   <div class="row">${['science','research','technology','news','economy','health','ecosystems','law','tax','history','religion (neutral)','ethics','society','commerce','biodiversity','media','arts'].map(d=>`<span class="chip on">${d}</span>`).join('')}</div>
+   <p class="muted">Contested topics → the Council adjudicates; every learning is SIGIL-signed.</p>`;
+ case 'aware': return `<h2>👁️ Presence (governed)</h2><p class="sub">The sovereign's sense of who's here: you-alone → full · stranger → <b>Guardian locks data</b> · known group → social. Senses run on-device (no video leaves the device).</p>
+   <div class="row"><span class="chip warn">GDPR Art.9 special-category</span><span class="chip warn">US BIPA</span><span class="chip gov">consent-first · off by default</span><span class="chip gov">every event SIGIL-attestable</span></div>
+   <p class="muted">Consent is explicit + revocable. Biometric governance done right is itself the differentiator.</p>`;
+ case 'relevance': return `<h2>🕸️ Relevance Map</h2><p class="sub">The topology of <b>what governs what</b> — each bridge/MCP to the frameworks, industries, and regions it applies to.</p>
+   <div class="row"><span class="chip">ISO 20022 → DORA · NIS2</span><span class="chip">HL7 → HIPAA · EU AI Act</span><span class="chip">SCADA → IEC 62443 · NIS2</span><span class="chip">ISO 8583 → PCI-DSS · PSD2</span><span class="chip">MISMO → ECOA · Annex III</span><span class="chip">DLMS → IEC 62056 · NIS2</span></div>
+   <p class="muted">Interactive force-graph version available — the visual that makes the fleet legible and sellable.</p>`;
+ case 'ledger': return `<h2>🔗 SIGIL Attestation Ledger</h2><p class="sub">Every governed action — a Council verdict, a bridge translation, a policy decision — is hash-chained and <b>Ed25519-signed</b>, independently verifiable off-platform.</p>
    <div class="row"><span class="chip gov">✓ scheme: Ed25519(prev + canonical)</span><span class="chip gov">✓ on-device verifiable</span><span class="chip gov">✓ refuses tampered</span></div>
    <p class="muted">The moat: sovereign, offline-verifiable signing — not a vendor dashboard you have to trust.</p>`;
- case 'town': return `<h2>🏛️ The 47-Agent Town</h2><p class="sub">A living governance mesh — 47 specialised agents across the civilisations, debating, enforcing, and learning. Governance isn't a checkbox; it's a society that watches.</p>
-   <p class="muted">The town's technology (agents, mesh, BFT) is what makes CSOAI's governance more sophisticated than a static rule engine.</p>`;
+ case 'distribution': return `<h2>🚀 Distribution</h2><p class="sub">The #1 lever: <b>built ≫ published</b>. 20 packages (19 bridges + the scoreboard) build clean to wheel+sdist + are 19/19 registry-valid. One owner token ships them all.</p>
+   <div class="row"><span class="chip gov">✓ 20/20 build clean</span><span class="chip gov">✓ 19/19 server.json valid</span><span class="chip warn">⧗ PyPI token (owner)</span><span class="chip warn">⧗ MCP registry login (owner)</span></div>
+   <p class="muted"><code>export PYPI_TOKEN=… &amp;&amp; bash publish-all-bridges.sh</code> → public. Then <code>SUBMIT=1 submit-all-registry.sh</code> → MCP registry.</p>`;
+ case 'compete': return `<h2>🎯 Where We Stand</h2><p class="sub">The market converged on CSOAI's thesis — <i>"the EU AI Act was written for models; your agents need runtime compliance."</i> Validation, not threat.</p>
+   <table><tr><th>Cluster</th><th>Players</th></tr><tr><td>Incumbents (extend GRC)</td><td>IBM watsonx · OneTrust · Collibra</td></tr><tr><td>Dedicated AI-gov</td><td>Credo AI · Holistic AI · Vanta</td></tr><tr><td>Agent/MCP-runtime</td><td>Obot · Straiker · Speakeasy</td></tr></table>
+   <p class="muted"><b>Moat (category of one):</b> govern the <i>legacy</i> economy · SIGIL signed attestation · sovereign/on-device. <b>Honest #1 risk:</b> distribution — ship before mindshare goes elsewhere.</p>`;
  case 'industries': return `<h2>🏭 Industry packs</h2><p class="sub">Pre-mapped governance for the sectors that buy first.</p>
-   <div class="row"><span class="chip on">Financial services</span><span class="chip on">Healthcare</span><span class="chip on">Manufacturing / logistics</span><span class="chip on">Insurance</span><span class="chip on">Public sector</span><span class="chip on">Critical infrastructure</span></div>`;
+   <div class="row"><span class="chip on">Financial services</span><span class="chip on">Healthcare</span><span class="chip on">Manufacturing / logistics</span><span class="chip on">Insurance</span><span class="chip on">Public sector</span><span class="chip on">Critical infrastructure</span><span class="chip on">Energy</span><span class="chip on">Mortgage / real-estate</span></div>`;
  case 'pricing': return `<h2>£ Pricing</h2><p class="sub">From £1 smoke tests to full-stack institutional governance — transparent pricing is the wedge.</p><table><tr><th>Tier</th><th>For</th></tr>
-   <tr><td>Free audit</td><td>see your risk in 30s</td></tr><tr><td>£49 report</td><td>full multi-framework gap analysis</td></tr><tr><td>Growth / Business</td><td>continuous governance + the fleet</td></tr><tr><td>Enterprise</td><td>BFT Council + bridges + signed attestation</td></tr></table>
+   <tr><td>Free audit</td><td>see your risk in 30s</td></tr><tr><td>£49 report</td><td>full multi-framework gap analysis</td></tr><tr><td>Growth / Business</td><td>continuous governance + the fleet</td></tr><tr><td>Enterprise</td><td>BFT Council + 19 bridges + signed attestation</td></tr></table>
    <p class="muted">Owner-gated: Stripe checkout (M2/Nick).</p>`;
+ case 'town': return `<h2>🏛️ The Agent Town</h2><p class="sub">A living governance mesh — specialised agents across the civilisations, debating, enforcing, and learning. Governance isn't a checkbox; it's a society that watches.</p>
+   <p class="muted">The town's technology (agents, mesh, BFT) is what makes CSOAI's governance more sophisticated than a static rule engine.</p>`;
  default: return '<p>Coming soon.</p>';
  }
 }
