@@ -326,6 +326,16 @@ except ImportError as _e:
     VAULT_AVAILABLE = False
     VAULT_TOOL_DEFINITIONS = []
 
+# SOV3 Sovereign Ingest — pulls from state.db, _alignment, handoffs, etc.
+try:
+    from sovereign_ingest import handle_sovereign_ingest, run_ingest, SOVEREIGN_INGEST_TOOL_DEFINITIONS
+    SOVEREIGN_INGEST_AVAILABLE = True
+    print("[startup] SOV3 Sovereign Ingest loaded — pulls from state.db + handoffs + alignment")
+except ImportError as _e:
+    print(f"[startup] SOV3 Sovereign Ingest import failed: {_e}")
+    SOVEREIGN_INGEST_AVAILABLE = False
+    SOVEREIGN_INGEST_TOOL_DEFINITIONS = []
+
 
 # MCP Models
 class ToolCall(BaseModel):
@@ -456,7 +466,7 @@ MCP_TOOLS = [
             "required": ["image_path"],
         },
     },
-] + (BRIDGE_TOOL_DEFINITIONS if MCP_BRIDGE_AVAILABLE else []) + (FEDERATION_TOOL_DEFINITIONS if FEDERATION_AVAILABLE else []) + (OLM_TOOL_DEFINITIONS if OLM_ROUTER_AVAILABLE else []) + (NBA_TOOL_DEFINITIONS if NBA_AVAILABLE else []) + (KING_FEDERATION_TOOL_DEFINITIONS if KING_FEDERATION_AVAILABLE else []) + (VAULT_TOOL_DEFINITIONS if VAULT_AVAILABLE else []) + [
+] + (BRIDGE_TOOL_DEFINITIONS if MCP_BRIDGE_AVAILABLE else []) + (FEDERATION_TOOL_DEFINITIONS if FEDERATION_AVAILABLE else []) + (OLM_TOOL_DEFINITIONS if OLM_ROUTER_AVAILABLE else []) + (NBA_TOOL_DEFINITIONS if NBA_AVAILABLE else []) + (KING_FEDERATION_TOOL_DEFINITIONS if KING_FEDERATION_AVAILABLE else []) + (VAULT_TOOL_DEFINITIONS if VAULT_AVAILABLE else []) + (SOVEREIGN_INGEST_TOOL_DEFINITIONS if SOVEREIGN_INGEST_AVAILABLE else []) + [
     {
         "name": "validate_care",
         "description": "Validate text against care-centered principles using neural network",
@@ -4770,6 +4780,10 @@ async def execute_tool(name: str, arguments: Dict[str, Any]) -> Dict[str, Any]:
             return handle_vault_get(arguments)
         elif name == "vault_stats" and VAULT_AVAILABLE:
             return handle_vault_stats(arguments)
+
+        # ── SOV3 Sovereign Ingest ──────────────────────────────────
+        elif name == "sovereign_ingest_run" and SOVEREIGN_INGEST_AVAILABLE:
+            return handle_sovereign_ingest(arguments)
 
         elif name == "tier_query":
             try:

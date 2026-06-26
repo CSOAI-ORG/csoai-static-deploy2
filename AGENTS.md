@@ -115,3 +115,20 @@ SOV3 exposes a real lock + task board: `coord_register_agent` → `coord_acquire
 - [06:42 Hermes/JEEVES] PHASE 29: Build the /index.html LANDING PAGE that explains everything. Build the /healthz health check. Build /api/v1/spec for API docs
 - [06:50 Hermes/JEEVES] PHASE 30: All optimized fine tuned. Build the SOVEREIGN index.html (everything in one place). Build sitemap.xml + robots.txt for SEO. Build /sitemap. Final consolidation
 - [06:55 Hermes/JEEVES] SOVEREIGN MUST BE 24/7. Build the uptime SLA + monitoring + auto-recovery + redundancy. No downtime. Ever.
+- [06:58 Hermes/JEEVES] PHASE 31: Build the BRIDGE — all products, tools, layers connected. MEOK + CSOAI front + back end. End-to-end integration. Single namespace
+- [07:01 Hermes/JEEVES] PHASE 32: 500+ MCP tools. SOV3 = king of all sovereign. Self-learning. ASI evolve. Keep going
+- [07:04 Hermes/JEEVES] PHASE 33: Add dimensions to all 13 layers. Each layer needs multiple dimensions/axes/vectors. Make the stack multidimensional
+- [07:07 Hermes/JEEVES] EAT carry on all. Build the /dimensions.html visual. Build the dimension_query tool code. Keep eating
+- [07:11 Hermes/JEEVES] PHASE 34: Mapping ALL hives + databases + moats + everything → sovereign. Like the conspiracy map but for the sovereign substrate. One map to rule them all
+- [07:15 Hermes/JEEVES] PHASE 35: Watch Mode. SOV3 monitors all 6 agent windows. Learns from user typing "go" or "eat". Auto-continues. Sovereign
+- [07:17 Hermes/JEEVES] PHASE 36: SOVEREIGN ORCHESTRATOR. Connect to all 100K MCPs as governance layer. Watch-mode wires to all 6 windows. Build the minimal safe prototype
+- [07:22 Hermes/JEEVES] PHASE 37: ALL PROTOCOLS not just MCPs. Layer 0 = protocol substrate. MCP + A2A + x402 + IBC + Ed25519 + more. Discover and connect to ALL
+- [07:25 Hermes/JEEVES] PHASE 38: TRUE DATA INTELLIGENCE. All protocols + products + features + layers working in our OS globe. One view of everything. Live data flows
+- [07:29 Hermes/JEEVES] PHASE 39: PROACTIVE SOV3. Not just watching — actually helping. Learning what helps. Memory. Anticipating. The sovereign companion that works out how to help
+- [07:32 Hermes/JEEVES] FULL PLAN EAT. Build proactive engine code. Build memory tiers. Build learning model. Build 7 triggers. Build all 12 sovereign-substrate/ files. EXECUTE
+- [07:37 Hermes/JEEVES] MAJOR CONSOLIDATION: Find ALL Nick's github projects from June last year. Absorb into sovereign substrate. SOV3 indexes everything
+- [07:44 Hermes/JEEVES] LEFT BRAIN / RIGHT BRAIN. World models. SOV3 in middle = sovereign. Bridge analytic + spatial. Build the MIND architecture
+- [07:53 Hermes/JEEVES] GO: Build the actual mind prototype. /mind.html live page. The 3 bridge tools as code. The router
+- [08:02 Hermes/JEEVES] GO: build the right brain starter models + bind tool + expand sovereign bridge with route logic. Train quick win models for right brain
+- [08:05 Hermes/JEEVES] CONTINUE: train 4 more Right Brain models. Build world_model_nn + vision_nn + physical_simulator + audio_understander. Push to 100%
+- [08:13 Hermes/JEEVES] KIMI 50B → SOV3 TRAINING. Ingest all 572 Kimi .md docs. Train Right Brain models on real sovereign AI data. Build training pipeline

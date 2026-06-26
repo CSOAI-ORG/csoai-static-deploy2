@@ -11,9 +11,16 @@ echo "=== SOV3 DAILY FEDERATION REFRESH $(date) ===" >> "$LOG"
 
 # 1. Rsync marketplace to VM
 echo "[1/5] Rsync marketplace to VM..." >> "$LOG"
-rsync -az --include="*.py" --include="requirements.txt" --include="pyproject.toml" \
-  --include="*/" --exclude="*" --prune-empty-dirs \
+rsync -az -e "ssh -o StrictHostKeyChecking=no" \
+  --exclude='.git' --exclude='node_modules' --exclude='.venv' --exclude='__pycache__' \
   /Users/nicholas/clawd/mcp-marketplace/ nicholas@meok-backend:/home/nicholas/clawd/mcp-marketplace/ 2>&1 | tail -3 >> "$LOG"
+
+# 1b. Run the sovereign ingest (NEW — pull from state.db, _alignment, handoffs, etc.)
+echo "[1b/5] Sovereign ingest from Mac..." >> "$LOG"
+python3 /Users/nicholas/clawd/sovereign-temple/sovereign_ingest.py >> "$LOG" 2>&1
+INGEST_SOURCES=$(python3 -c "import json; d=json.load(open('/Users/nicholas/clawd/sovereign-temple/data/sovereign_ingest_sources.json')); print(d['total_sources'])" 2>/dev/null || echo "?")
+INGEST_BYTES=$(python3 -c "import json; d=json.load(open('/Users/nicholas/clawd/sovereign-temple/data/sovereign_ingest_sources.json')); print(f\"{d['total_bytes']/1024/1024:.1f}\")" 2>/dev/null || echo "?")
+echo "  ingested $INGEST_SOURCES sources, ${INGEST_BYTES}MB" >> "$LOG"
 
 # 2. Rebuild catalog on Mac
 echo "[2/5] Rebuild catalog on Mac..." >> "$LOG"
