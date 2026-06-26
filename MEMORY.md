@@ -136,3 +136,14 @@ Sir Nick values:
 - **Complementary**: Claude's thoroughness + my YOLO execution = complete coverage
 
 Last Updated: May 5, 2026 (JEEVES session 2)
+---
+
+## 2026-06-26 ESTATE INDEX POINTERS (M4)
+- `CSOAI_MCP_ESTATE_SCAN_2026-06-26.md` — 369 MCPs / 22 bridges / 20 A2A substrate (real, 0 stubs)
+- `CSOAI_A2A_SUBSTRATE_2026-06-26.md` — 20-MCP agent-governance one-pager (the runtime competitors race for)
+- `CSOAI_BRIDGE_FAMILY_INDEX_2026-06-26.md` — 22 bridges aligned OS+globe+OSCAL
+- `DEPTH_AUDIT_TESTRUN_2026-06-26.md` — real pytest: **95.7% pass on 36-MCP sample** (419 tests / 401 pass / 18 fail; 1 MCP fixed)
+- `csoai-mcp-catalog.json` — 369 MCPs / 8 clusters (machine-readable, regenerated from marketplace)
+- `oscal-generator-mcp/layer0_protocol.oscal.json` + `.sig.json` — **55-component Ed25519-signed OSCAL package**; signature VERIFIED against canonical JSON (ensure_ascii=False, sort_keys)
+- `MASTER_CHECKLIST_2026-06-26.md` — recipe index; updated with v2 test-run verification
+- `MEOK_MESH_INDEX.md` §4 — the 369-MCP moat: 22 bridges + 20 A2A + 27 reg + oscal-generator + crosswalk + ll144 + passport (signed OSCAL = whole protocol in one package)

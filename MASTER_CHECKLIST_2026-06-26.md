@@ -17,11 +17,14 @@ Single source for everything in flight. **Legend:** ✅ done · 🔄 in progress
 ## 1. 📦 ESTATE AUDIT — the 352-MCP reality (we tracked ~6%)
 - ✅ Full scan: 584 repos / 352 MCPs / 22 bridges (`CSOAI_MCP_ESTATE_SCAN_2026-06-26.md`)
 - ✅ **Depth-audit** done: 368/369 ship-ready (97% REAL, 1 stub, 1,987 tools) — the 352 is verified real
+- ✅ **Verified v2 test execution** (`DEPTH_AUDIT_TESTRUN_2026-06-26.md`): 36-MCP high-value sample, **419 tests / 401 pass / 18 fail = 95.7% pass rate**. 33/36 MCPs fully green; 3 with failures investigated (env / API-drift / SDK-API-mismatch), **1 fixed** (agent-incident-reporter-mcp, 60% → 100%).
+- ✅ OSCAL signature VERIFIED: 55-component `layer0_protocol.oscal.json` Ed25519-signed, signature valid against canonical JSON (`ensure_ascii=False`, sort_keys).
 - ✅ Surfaced the **20-MCP A2A substrate** (CSOAI OS a2a app + one-pager) as a named product line (OS + deck) — the runtime competitors race for, already built
 - ✅ Added the 3 missed bridges → family = 22 (index + globe + OS)
 - ✅ Mapped the article-level reg MCPs into the frameworks surface
 - ✅ Catalog: csoai-mcp-catalog.json (369 MCPs) + CSOAI OS MCP-Estate app
 - ⬜ Migrate CSOAI-ORG from a **user account → real GitHub Org** (team/asset mgmt)
+- ⬜ Fix the remaining 2 MCPs with failures: `eu-ai-act-compliance-mcp` (5 env failures: `pip install x402` + sqlite fixture + classification threshold), `csoai-governance-crosswalk-mcp` (11 dict-vs-object API drift) — est. 1.5–2h
 
 ## 2. 🚀 DISTRIBUTION (built ≫ published = #1 lever)
 - ✅ Publish kit: 23 pkgs build clean, registry-valid (`publish-all-bridges.sh`)
@@ -34,8 +37,8 @@ Single source for everything in flight. **Legend:** ✅ done · 🔄 in progress
 ## 3. 🔐 LAYER-0 SIGNING BACKBONE (Ed25519 end-to-end)
 - ✅ SIGIL hash-chain (every governed action)
 - ✅ Compliance Passport — Ed25519 agent credentials (3 tools, 14 tests, builds v1.0.1)
-- ✅ OSCAL generator — 7 tools, **Ed25519 sign/verify** (12 tests)
-- ✅ **Whole Layer-0 = ONE signed OSCAL package** (23 components, verified, tamper-detected)
+- ✅ OSCAL generator — 7 tools, **Ed25519 sign/verify** (12 tests pass)
+- ✅ **Whole Layer-0 = ONE signed OSCAL package** (55 components, signature VERIFIED via canonical JSON re-computation)
 - ✅ 19 per-bridge signed SSPs (all verified)
 - ⬜ Expand framework→NIST-control crosswalk beyond representative subset
 - ⬜ Per-component full SSPs for the A2A substrate + reg MCPs
@@ -50,7 +53,7 @@ Single source for everything in flight. **Legend:** ✅ done · 🔄 in progress
 ## 5. 🖥️ CSOAI OS (M4 reference → M2 absorbs)
 - ✅ 20 apps, **csoai-org-v2 master brand exactly**, JS clean, all reachable
 - ✅ Governance core + OSCAL/FedRAMP + Layer-0 Proof + crosswalk + LL144 + dock + captions
-- ⬜ Add A2A-substrate app + true "352 MCPs" + 22-bridge count
+- ✅ A2A-substrate app + true "369 MCPs" + 22-bridge count surfaced (CSOAI OS apps + `CSOAI_A2A_SUBSTRATE_2026-06-26.md`)
 - 🤝 M2 absorbs the surfaces into live `councilof-ai` (their lane)
 
 ## 6. 📱 MEOK OS (production-ready)
@@ -72,9 +75,9 @@ Single source for everything in flight. **Legend:** ✅ done · 🔄 in progress
 - ⬜ Broaden governance-learn → full domain curriculum; emit each learning as SIGIL hop
 
 ## 9. 🗺️ CONSOLIDATION (never lose track)
-- ✅ MESH index current (§0 meok-ai, §1 OSes, §4 21→23-pkg fleet)
+- ✅ MESH index current (§0 meok-ai, §1 OSes, §4 369-MCP estate + 22 bridges + A2A substrate)
 - ✅ Competitive consolidation + one-pager + production-readiness audit
-- ⬜ Update MESH §4 with the true 352-MCP estate + A2A substrate cluster
+- ✅ MESH §4 updated with verified counts: 369 MCPs / 1,987 tools / 22 bridges / 55-component signed OSCAL / 95.7% test pass on 36-MCP sample
 - ⬜ Fold this checklist into MEMORY.md index (one line)
 
 ## 10. 📉 DEFERRED (documented, not dropped)
