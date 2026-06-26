@@ -85,3 +85,12 @@ Single source for everything in flight. **Legend:** ✅ done · 🔄 in progress
 ---
 ### The one-line truth
 **Engineering is ~15× deeper than tracked and genuinely ahead of incumbents (A2A runtime · OSCAL/Ed25519 · 19 legacy bridges · signed protocol). The whole remaining gap is the 6 owner-keys in §0 — distribution + deploy, not code.** Load the sling.
+
+## 11. 🐉 SOVEREIGN ORCHESTRATOR + LAYER-0 FEDERATION (2026-06-26, operational)
+- ✅ **Orchestrator** — watch→classify(routine/judgment)→auto-continue(signed,dry-run)/escalate, kill-switch + rate-limit. `sovereign_orchestrator.py` (11 tests green).
+- ✅ **Memory + proactive** — sov learns per-window patterns + proactively proposes help (offer-autopilot / pre-stage), feeds SOV3 /telemetry queen loop. `sovereign_memory.py`.
+- ✅ **Cockpit** — `sovctl.py` (status/approve/deny/learn/stop/start), reads live queues, decisions feed memory. Live-demoed.
+- ✅ **Layer-0 federation** — `layer0_federation.py` routes any intent across all 8 protocol layers (MCP/bridges/A2A/x402/SIGIL/OSCAL/council/passport). `layer0_protocol_catalog.json` + CSOAI OS "Layer 0" app.
+- ✅ **E2E audit** — 13/13 systems live-green (`E2E_AUDIT_2026-06-26.md`).
+- ⧗ Owner-gated to LIVE: arm `ACT=1` (real keyboard via computer-use) · deploy SOV3 on GCP VM (24/7) · the standing cron (orchestrator + Hermes shifts).
+- 🔬 Deep-research workflow running — market/competitive/ramp validation (cited).
