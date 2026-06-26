@@ -1,50 +1,102 @@
-# Depth-audit — REAL test-run fidelity (2026-06-26)
+# CSOAI MCP Depth-Audit Test Run — 2026-06-26
 
-The static depth-audit checked "test file present." This is the next tier: **actually running `pytest`** on a curated **35-MCP high-value sample** (the 20 A2A substrate + 15 framework/safety MCPs). Honest results.
+> Upgrades the depth-audit fidelity from **'tests file present'** to **'tests collected + pass rate'** on a curated high-value sample.
+> Source: `DEPTH_AUDIT_TESTRUN_2026-06-26.json` (raw pytest output per-MCP).
+> Re-run: `cd ~/clawd && python3 _m4/_depth_audit_testrun.py`
 
-## Headline
-- **26 / 35 pass clean** out-of-the-box — **301 test cases green**
-- **9 "fail"** — but **7 of the 9 are packaging/harness hygiene, not broken governance logic**; only **2 have genuine assertion failures**
+## Aggregate
 
-## Failure breakdown (honest)
-| Cause | Count | MCPs | Real bug? |
+- **Sample size:** 67 MCPs (curated: A2A substrate + reg MCPs + signing backbone + bridges + top by tool count).
+- **Tests collected:** 686
+- **Passing:** 640 (93.3%)
+- **Failing:** 23 (3.4%)
+- **Skipped:** 23
+- **Errors:** 0
+- **Wall clock:** 40.2s
+
+## Status breakdown
+
+| Status | MCPs |
+|---|---|
+| pass | 58 |
+| fail | 5 |
+| missing | 4 |
+
+## Failing MCPs (real — needs attention)
+
+| MCP | Pass | Fail | Skip |
 |---|---|---|---|
-| `pyproject.toml` malformed (pytest config read chokes at line 8) | 5 | eu-ai-act-compliance, mifid-ii-ai, nis2-compliance, gdpr-compliance-ai, agent-identity-trust | ❌ no — packaging fix |
-| relative-import test-harness (`ImportError: relative import with no known parent`) | 2 | agent-prompt-injection-firewall, bias-detection | ❌ no — test-config fix |
-| **genuine assertion failures** | 2 | agent-incident-reporter (2 failed), csoai-governance-crosswalk (11 failed) | ✅ yes — worth a fix pass |
+| `agent-incident-reporter-mcp` | 3 | 2 | 0 |
+| `eu-ai-act-compliance-mcp` | 59 | 5 | 1 |
+| `csoai-governance-crosswalk-mcp` | 3 | 11 | 1 |
+| `healthcare-ai-governance-mcp` | 28 | 1 | 1 |
+| `c2pa-watermark-mcp` | 1 | 4 | 0 |
 
-## Honest read
-The governance **logic** holds: 26/35 fully green + the 7 config failures are MCPs whose tests don't even run due to a malformed `pyproject.toml` or import path — not failing assertions. The 5 `pyproject` errors share the same line-8 defect → a **single batch fix** likely flips all 5 green. Only **2 MCPs have real failing tests** and need attention.
+## Top 10 by test count
 
-## Corrections to the static audit
-- The "1 STUB" (`agent-incident-reporter-mcp`) was a **false positive** — it uses the low-level MCP SDK (4 real Ed25519 tools + tests), so the estate is **369/369 real**, not 368. (Its tests do have 2 genuine failures, tracked above.)
+| MCP | Total | Pass | Fail |
+|---|---|---|---|
+| `eu-ai-act-compliance-mcp` | 65 | 59 | 5 |
+| `dora-compliance-mcp` | 56 | 56 | 0 |
+| `hipaa-compliance-mcp` | 36 | 36 | 0 |
+| `healthcare-ai-governance-mcp` | 30 | 28 | 1 |
+| `meok-haulage-governance-bridge-mcp` | 23 | 23 | 0 |
+| `meok-abci-bridge-mcp` | 19 | 19 | 0 |
+| `meok-eu-ai-act-art-26-fria-mcp` | 18 | 18 | 0 |
+| `agent-incident-relay-mcp` | 16 | 16 | 0 |
+| `agent-replay-debugger-mcp` | 16 | 16 | 0 |
+| `meok-cra-art14-reporter-mcp` | 16 | 16 | 0 |
 
-## Follow-ups (no owner keys)
-- [ ] Batch-fix the 5 `pyproject.toml` line-8 defects → re-run → expect 31/35 green
-- [ ] Fix the 2 relative-import test harnesses (add conftest/`__init__` or `-p no:cacheprovider`)
-- [ ] Investigate the 2 real failures (agent-incident-reporter, csoai-governance-crosswalk)
+## A2A substrate detail (the strategic prize — 20 MCPs)
 
-## Method / caveat
-35-MCP **sample** (not all 369) — too slow to run the full estate inline; the sample is the high-value set (A2A substrate + lead framework MCPs). "pass" = `pytest -q` exit 0. Run on macOS Python 3.x, no per-test isolation beyond pytest defaults.
+| MCP | Total | Pass | Fail | Skip |
+|---|---|---|---|---|
+| `agent-orchestrator-mcp` | 5 | 4 | 0 | 1 |
+| `agent-identity-trust-mcp` | 5 | 4 | 0 | 1 |
+| `agent-x402-paywall-mcp` | 14 | 14 | 0 | 0 |
+| `agent-prompt-injection-firewall-mcp` | 13 | 12 | 0 | 1 |
+| `agent-policy-enforcement-mcp` | 4 | 4 | 0 | 0 |
+| `agent-incident-relay-mcp` | 16 | 16 | 0 | 0 |
+| `agent-handoff-certified-mcp` | 4 | 4 | 0 | 0 |
+| `agent-audit-logger-mcp` | 4 | 4 | 0 | 0 |
+| `agent-rate-limiter-mcp` | 4 | 4 | 0 | 0 |
+| `agent-mcp-router-mcp` | 15 | 15 | 0 | 0 |
+| `agent-data-residency-mcp` | 5 | 5 | 0 | 0 |
+| `agent-cost-allocator-mcp` | 14 | 14 | 0 | 0 |
+| `agent-token-budget-mcp` | 15 | 15 | 0 | 0 |
+| `agent-content-watermark-mcp` | 15 | 15 | 0 | 0 |
+| `agent-replay-debugger-mcp` | 16 | 16 | 0 | 0 |
+| `agent-delegation-mcp` | 5 | 4 | 0 | 1 |
+| `agent-negotiation-mcp` | 5 | 4 | 0 | 1 |
+| `agent-incident-reporter-mcp` | 5 | 3 | 2 | 0 |
+| `bft-progress-council-mcp` | 15 | 15 | 0 | 0 |
+| `agent-commerce-protocol-mcp` | 14 | 14 | 0 | 0 |
 
-## The 2 genuine failures — diagnosed (2026-06-26 follow-up)
-After the 212-file conflict-marker cleanup unblocked the suites (eu-ai-act 0→59 passing; mifid/nis2/gdpr/agent-identity/cra now green), the 2 remaining real failures were investigated:
+## Bridges detail (22 governed legacy gateways)
 
-- **`csoai-governance-crosswalk-mcp`** (11 fail): NOT a conflict issue. Two layered causes — (1) **multi-layer persistent freemium rate-limiter** (`_rl()` + a deeper gate returning "10/day" + Stripe upgrade URL) that blocks its own tests and resists monkeypatch; (2) **stale tests** expect a pydantic model (`res.framework`) but the current `query_crosswalk` returns a **dict**. Fix needs a server-side `MEOK_TEST_MODE` bypass **and** a test rewrite to the dict API. Real but **low-leverage (1 of 369)** — flagged, not faked.
-- **`dora-nis2-crosswalk-mcp`** (10 error): pytest **import-mode quirk** on collection (`import server` triggers a relative-import error in the harness). Likely fixed by a `conftest.py` + `pythonpath` setting; needs a careful per-repo check.
+| MCP | Total | Pass | Fail | Skip |
+|---|---|---|---|---|
+| `cobol-bridge-mcp` | 5 | 5 | 0 | 0 |
+| `as400-bridge-mcp` | 2 | 2 | 0 | 0 |
+| `cics-bridge-mcp` | 2 | 2 | 0 | 0 |
+| `acord-bridge-mcp` | 3 | 3 | 0 | 0 |
+| `a2a-governance-bridge-mcp` | 5 | 4 | 0 | 1 |
+| `meok-abci-bridge-mcp` | 19 | 19 | 0 | 0 |
+| `meok-haulage-governance-bridge-mcp` | 23 | 23 | 0 | 0 |
 
-**Honest call:** I will not guess-rewrite assertions or fabricate green. These 2 need a dedicated per-repo pass. The systemic win (212 conflict markers → 5+ MCPs flipped to passing) is the high-leverage fix and is done.
+## Missing MCPs (in the sample list but not in this checkout)
 
+| MCP | Note |
+|---|---|
+| `meok-dora-tlpt-planner-mcp` | exists in CSOAI-ORG but not in local `mcp-marketplace` clone |
+| `meok-nis2-nl-register-mcp` | exists in CSOAI-ORG but not in local `mcp-marketplace` clone |
+| `risk-assessment-mcp` | exists in CSOAI-ORG but not in local `mcp-marketplace` clone |
+| `compliance-passport-mcp` | exists in CSOAI-ORG but not in local `mcp-marketplace` clone (rebranded to meok-compliance-passport-mcp) |
 
-## FINAL — "all phases" follow-up (2026-06-26)
-Systemic root cause found + fixed: **3 repos had a root `__init__.py` with a broken `from . import mcp_promo`** (a promo injection) that killed pytest collection. One guarded-import fix flipped all 3:
-- **agent-prompt-injection-firewall-mcp** → 12 passed ✅
-- **bias-detection-mcp** → 5 passed ✅
-- **dora-nis2-crosswalk-mcp** → 10 passed ✅ (also fixed a rate-limit test hardcoding `10` → now uses `server.FREE_DAILY_LIMIT`)
+## Honesty caveats
 
-All 3 committed + pushed.
-
-**Remaining: `csoai-governance-crosswalk-mcp` (1 of 369) — needs a dedicated rewrite, not a quick fix.** Definitive diagnosis: the 4000-line server was **fully rebuilt** to return **gated markdown strings** behind a **two-layer persistent freemium gate** (`check_access` + `_rl`), while its 11 tests remained for the **old pydantic-model API** (`res.framework`). A correct fix = (a) a conftest that bypasses both gates without breaking the `TestAuthMiddleware` tests, and (b) rewrite all 11 assertions to the markdown API. Real but low-leverage; flagged honestly, **not faked**.
-
-### Net test-fidelity result
-Of the original 9 "failures": **7 fixed** (5 via conflict-marker cleanup + 2 via the mcp_promo fix... actually 6 via promo/conflict + dora-nis2 rate-limit), leaving **1 genuine API-redesign drift** (csoai-governance-crosswalk) for a dedicated pass. The estate's test health is materially up.
+- **Sample, not census.** 67 of 369 MCPs. The remaining ~302 may pass at a similar rate, or not — this audit does not claim otherwise.
+- **'Missing'** = the MCPs we named in the SAMPLE list that are NOT in the local `mcp-marketplace` clone. They exist in the CSOAI-ORG account but not in this checkout.
+- **Per-test verification:** the 5 failing MCPs are **real failures**, not parsing artifacts. Investigating them is the next step (not done in Phase A).
+- **Skipped tests** are likely platform/optional-dep guards (e.g. 'skip if no API key') — they are not failures.
+- **Headline:** 640/686 = **93.3% pass rate** on the curated sample. The earlier '99% ship-ready' claim (from the file-presence audit) is **downgraded** to '93.3% tests pass on a 67-MCP sample, with 5 MCPs needing fixes'.
