@@ -38,3 +38,17 @@ Microsoft's toolkit (April) and ServiceNow (May) have been in-market; they don't
 ## Honest correction log
 - ❌ Earlier (today): "MS commoditized signing → moat narrows to legacy only." **Overcorrection.**
 - ✅ Correct: MS commoditized *Layer-A plumbing*; CSOAI's moat is *Layer B* (legacy + reg-content + signed artifacts + BFT + sovereign) — broader + more defensible than "legacy only," and complementary to (not beaten by) the free toolkit.
+
+## Reconciliation with Kimi's prior research (June 8 + 16) — they CONVERGE
+Cross-checked against Kimi's competitor audits (`KIMI_COMPETITOR_VISUAL_AUDIT_BRIEF_v2.md`, `COMPETITIVE_MATRIX_CAI_vs_CSOAI_2026-06-16.md`). Today's deep-research independently arrived at the **same core conclusion Kimi reached on June 16** — strong convergent validation:
+- **Kimi (Jun 16), verbatim:** *"When the model layer is commoditized… the compliance layer is the moat. CSOAI is the moat."* + the explicit **layer distinction** ("CAI protects systems from hackers; CSOAI protects AI from misuse/bias/non-compliance — different layers"). That is exactly today's **Layer A (plumbing) vs Layer B (compliance)** finding. Two independent research streams, same answer.
+- **Kimi (Jun 16) also independently named the moat:** *"Ed25519 sigil-based, offline-verifiable, EU AI Act Article 12 audit trail."* Identical to today's wedge.
+
+### What Kimi found that today's matrix MISSED (now folded in)
+1. **🔑 The GRC giants have ZERO presence on the MCP official registry** — OneTrust / Credo AI / Holistic AI / Vanta / Drata / Secureframe are **not on the registry at all**. CSOAI ships a **76-server MCP fleet** there. So our MCP distribution is **not table-stakes — it's an open-field distribution moat** vs the GRC incumbents (only the *agent-runtime* players MS/Runlayer are on MCP turf, and they don't do compliance content). *I under-weighted this.*
+2. **Pricing undercut:** CSOAI's 4-tier pricing undercuts OneTrust/Credo/Holistic/Vanta/Drata/Secureframe by **2–15× (SMB)** and **2–8× (enterprise)** — verified in the Jun 8 audit.
+3. **Real PyPI traction exists:** eu-ai-act-compliance-mcp ~136/day, bias-detection-mcp ~258/day, ai-bom-mcp ~246/day — *not zero downloads; there's live pull.*
+4. **The one true direct competitor:** `ark-forge/mcp-eu-ai-act` (8★, MIT, arkforge.fr) — a *single* EU AI Act MCP. Tiny. CSOAI's breadth (369) dwarfs it.
+
+### The fully-reconciled picture
+Two research streams (Kimi Jun 8/16 + deep-research Jun 26) **agree**: CSOAI's moat is the **compliance layer** (Layer B) — and it's **broader than I corrected to**: legacy bridges + article-level reg content + signed Art.12 artifacts + BFT + sovereign **+ a real MCP-registry distribution moat the GRC giants haven't even entered + a 2–15× price advantage + live PyPI pull.** The agent-runtime players (MS/ServiceNow/Runlayer) are on a *different layer* and the GRC players aren't on the rails at all. *That's a stronger position than either single analysis showed.*
