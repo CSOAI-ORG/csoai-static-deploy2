@@ -26,7 +26,7 @@ The master map of the whole estate so we **eat all into one without losing track
 - absorb/archive: `sovereign-temple-public` 99M · `~/meok-sovereign-memory` 759M · `~/.sov3` · `clawd/sov3-deploy` · `clawd/meok-agent-zero` 76M · `~/sovereign-consciousness-system`.
 
 ## 4. BRIDGES / BACKEND — governance MCPs (the moat)
-- ★ **clawd/mcp-marketplace** — 347 MCPs incl. the **16 governed bridges** + **model-scoreboard-mcp**. Index: `CSOAI_BRIDGE_FAMILY_INDEX.md`.
+- ★ **clawd/mcp-marketplace** — 347 MCPs incl. the **19 governed bridges** + **model-scoreboard-mcp** + **oscal-generator-mcp** (Ed25519-signed OSCAL, RFC-0024 wedge) + **compliance-passport** (lead SKU); 21-pkg publish kit. Index: `CSOAI_BRIDGE_FAMILY_INDEX.md`.
 - ★ **meok-compliance-gateway** (the keystone gateway).
 - absorb: `~/meok-eat-mcp` · `clawd/csoai-mcp-monetization` · `~/meok-api-gateway-tmp` · `clawd/meok-attestation-api` · `~/meok-cross-post` (openmcp).
 
