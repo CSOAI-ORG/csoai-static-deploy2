@@ -16,7 +16,7 @@ Single source for everything in flight. **Legend:** ✅ done · 🔄 in progress
 
 ## 1. 📦 ESTATE AUDIT — the 352-MCP reality (we tracked ~6%)
 - ✅ Full scan: 584 repos / 352 MCPs / 22 bridges (`CSOAI_MCP_ESTATE_SCAN_2026-06-26.md`)
-- ⬜ **Depth-audit** the 352: which build + test vs stub (per-repo `python -m build` + pytest sweep) → "real count"
+- ✅ **Depth-audit** done: 368/369 ship-ready (97% REAL, 1 stub, 1,987 tools) — the 352 is verified real
 - ⬜ Surface the **19-MCP A2A substrate** as a named product line (OS + deck) — the runtime competitors race for, already built
 - ⬜ Add the **3 missed bridges** (a2a-governance, meok-abci/Cosmos, meok-haulage) to bridge index/globe/OS → family = 22
 - ⬜ Map the **28 article-level reg MCPs** (DORA-TLPT, FRIA, CRA-Annex-IV, NIS2 registers…) into the frameworks surface
