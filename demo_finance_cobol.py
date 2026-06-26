@@ -69,7 +69,7 @@ def main():
     verified = oscal.verify_oscal_signature(ssp.document, sig.signature, sig.public_key)["valid"]
     rdy = oscal.rfc0024_readiness(has_ssp=True, machine_readable=True, signed=True, automated_pipeline=True)
 
-    print("\n② SIGNED AUDIT PACKAGE (oscal-generator, Ed25519):")
+    print("\n③ SIGNED AUDIT PACKAGE (oscal-generator, Ed25519):")
     print("   OSCAL SSP:", ssp.uuid)
     print("   sha256(canonical):", sig.canonical_sha256[:32], "…")
     print("   Ed25519 signature:", sig.signature[:32], "…")
@@ -77,7 +77,7 @@ def main():
     print("   tamper-evident (Art.12-ready):", "✅")
     print(f"   RFC-0024 / FedRAMP readiness: {rdy.score}%")
 
-    print("\n③ THE PITCH:")
+    print("\n④ THE PITCH:")
     print("   By 2 Aug 2026 every AI action on this COBOL core must be governed")
     print("   (high-risk) + logged tamper-evident (Art. 12). Microsoft, ServiceNow,")
     print("   Runlayer govern modern agents — none bridge your COBOL. We do, and we")
