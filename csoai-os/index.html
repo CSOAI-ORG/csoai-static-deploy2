@@ -3,14 +3,15 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>CSOAI · Agent Governance Operating System</title>
+<title>CSOAI — The Council for the Safety of AI · Governance OS</title>
 <meta name="description" content="CSOAI — the governance layer for autonomous intelligence. BFT Council, 19 governed legacy bridges, the 347-MCP compliance fleet, jurisdiction engine, model track-record, and Ed25519 signed attestation. Govern your AI, or watch governance be done to you."/>
 <style>
-:root{--bg:#0a0e1a;--fg:#e2e8f0;--accent:#3b82f6;--accent2:#60a5fa;--muted:#94a3b8;--surface:#111827;--border:#374151;--success:#10b981;--warning:#f59e0b;--danger:#ef4444}
+/* tokens match csoai-org-v2 globals.css (CSOAI master) exactly */
+:root{--bg:#0a0e1a;--background:#0a0e1a;--fg:#e2e8f0;--foreground:#e2e8f0;--accent:#3b82f6;--accent-light:#60a5fa;--muted:#94a3b8;--surface:#111827;--surface-2:#1f2937;--border:#374151;--success:#10b981;--warning:#f59e0b;--danger:#ef4444}
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--fg);font-family:'Geist',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;line-height:1.55;-webkit-font-smoothing:antialiased}
 code,.mono{font-family:'Geist Mono',ui-monospace,SFMono-Regular,Menlo,monospace}
-a{color:var(--accent2);text-decoration:none}
+a{color:var(--accent-light);text-decoration:none}
 .wrap{max-width:1100px;margin:0 auto;padding:0 18px}
 header{position:sticky;top:0;z-index:20;background:rgba(10,14,26,.86);backdrop-filter:blur(10px);border-bottom:1px solid var(--border)}
 .bar{display:flex;align-items:center;gap:12px;height:58px}
@@ -20,7 +21,7 @@ header{position:sticky;top:0;z-index:20;background:rgba(10,14,26,.86);backdrop-f
 .pill.ok{color:var(--success);border-color:rgba(16,185,129,.4)}
 .hero{padding:34px 0 12px}
 .hero h1{font-size:clamp(24px,4vw,40px);font-weight:600;margin:0 0 8px;line-height:1.12}
-.hero h1 .a{color:var(--accent2)}
+.hero h1 .a{color:var(--accent-light)}
 .hero p{color:var(--muted);max-width:700px;margin:0 0 14px;font-size:16px}
 .kpis{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}
 .kpi{border:1px solid var(--border);border-radius:10px;padding:8px 12px;background:var(--surface)}
@@ -31,19 +32,19 @@ header{position:sticky;top:0;z-index:20;background:rgba(10,14,26,.86);backdrop-f
 .app .ic{font-size:22px}
 .app .t{font-weight:600;font-size:14px}
 .app .d{font-size:12px;color:var(--muted)}
-.app .cap{position:absolute;left:0;right:0;bottom:0;transform:translateY(100%);transition:.18s;background:linear-gradient(0deg,rgba(59,130,246,.16),rgba(17,24,39,.96));border-top:1px solid rgba(59,130,246,.35);padding:8px 12px;font-size:11px;color:var(--accent2)}
+.app .cap{position:absolute;left:0;right:0;bottom:0;transform:translateY(100%);transition:.18s;background:linear-gradient(0deg,rgba(59,130,246,.16),rgba(17,24,39,.96));border-top:1px solid rgba(59,130,246,.35);padding:8px 12px;font-size:11px;color:var(--accent-light)}
 .app:hover .cap{transform:translateY(0)}
 .panel{border:1px solid var(--border);border-radius:14px;background:var(--surface);padding:20px;margin:0 0 30px;display:none}
 .panel.on{display:block}
 .panel h2{margin:0 0 4px;font-size:20px;font-weight:600}
 .panel .sub{color:var(--muted);font-size:13px;margin:0 0 14px}
 .chip{display:inline-block;font-size:12px;border:1px solid var(--border);border-radius:999px;padding:4px 10px;margin:3px 4px 3px 0;color:var(--muted)}
-.chip.on{color:var(--accent2);border-color:rgba(59,130,246,.45)}
+.chip.on{color:var(--accent-light);border-color:rgba(59,130,246,.45)}
 .chip.gov{color:var(--success);border-color:rgba(16,185,129,.4)}
 .chip.warn{color:var(--warning);border-color:rgba(245,158,11,.4)}
 .row{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:8px 0}
 .btn{background:var(--accent);color:#fff;border:0;border-radius:9px;padding:10px 16px;font-weight:600;cursor:pointer;font-size:14px}
-.btn:hover{background:var(--accent2)}
+.btn:hover{background:var(--accent-light)}
 .btn.ghost{background:transparent;border:1px solid var(--border);color:var(--fg)}
 input,textarea,select{width:100%;background:#0b1120;border:1px solid var(--border);color:var(--fg);border-radius:9px;padding:10px;font-size:14px;font-family:inherit}
 label{font-size:12px;color:var(--muted);display:block;margin:10px 0 4px}
@@ -69,7 +70,7 @@ footer{border-top:1px solid var(--border);color:var(--muted);font-size:12px;padd
 .dock .msg{margin:6px 0;padding:8px 10px;border-radius:9px}
 .dock .me{background:rgba(59,130,246,.14);color:var(--fg)}
 .dock .ai{background:var(--surface);color:var(--fg);border:1px solid var(--border)}
-.dock .ai b{color:var(--accent2)}
+.dock .ai b{color:var(--accent-light)}
 </style>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono&display=swap" rel="stylesheet">
@@ -107,7 +108,7 @@ footer{border-top:1px solid var(--border);color:var(--muted);font-size:12px;padd
   </div>
 </div>
 
-<footer class="wrap">CSOAI · the governance layer for autonomous intelligence · csoai.org — governance OS console (M4 reference build for M2 master). Every governed action signed + attestable.</footer>
+<footer class="wrap">CSOAI — The Council for the Safety of AI · csoai.org — governance OS console (M4 reference build for M2 master). Every governed action signed + attestable.</footer>
 
 <script>
 const FRAMEWORKS=['EU AI Act','GDPR','DORA','NIS2','ISO 42001','NIST AI RMF','HIPAA','SOX','PCI-DSS','Solvency II','MiFID II','IEC 62443','CSRD'];
