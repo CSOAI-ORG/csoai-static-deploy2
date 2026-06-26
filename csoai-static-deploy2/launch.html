@@ -1,0 +1,51 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="UTF-8"><title>CSOAI 4 July 2026 Launch — Countdown</title>
+<meta name="description" content="CSOAI sovereign AI governance substrate launches 4 July 2026, 09:00 BST. Live countdown timer.">
+<style>
+body{font-family:'Inter',sans-serif;background:linear-gradient(135deg,#0a0a0f,#1a1a2e);color:#f8fafc;margin:0;padding:0;min-height:100vh;display:flex;align-items:center;justify-content:center}
+.container{text-align:center;max-width:900px;padding:2rem}
+h1{font-family:'Space Grotesk',sans-serif;font-size:clamp(2.5rem,6vw,4.5rem);background:linear-gradient(135deg,#c9a84c,#8b5cf6);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:1rem}
+.tagline{color:#94a3b8;font-size:1.25rem;margin-bottom:3rem}
+.countdown{display:grid;grid-template-columns:repeat(4,1fr);gap:1.5rem;margin:2rem 0}
+.unit{background:rgba(255,255,255,.05);border:1px solid rgba(201,168,76,.3);border-radius:12px;padding:1.5rem}
+.num{font-family:'Space Grotesk',sans-serif;font-size:3.5rem;font-weight:800;background:linear-gradient(135deg,#c9a84c,#8b5cf6);-webkit-background-clip:text;-webkit-text-fill-color:transparent;line-height:1}
+.lbl{color:#94a3b8;font-size:.85rem;text-transform:uppercase;letter-spacing:2px;margin-top:.5rem}
+.btn{display:inline-block;background:linear-gradient(135deg,#c9a84c,#8b5cf6);color:#0a0a0f;padding:1rem 2.5rem;border-radius:8px;text-decoration:none;font-weight:700;margin-top:2rem;text-transform:uppercase;letter-spacing:1px}
+.features{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem;margin:3rem 0;text-align:left}
+.feat{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.1);border-radius:8px;padding:1rem}
+.feat h3{color:#c9a84c;font-size:1rem;margin:0 0 .5rem}
+.feat p{color:#94a3b8;font-size:.85rem;margin:0}
+</style></head><body>
+<div class="container">
+<h1>CSOAI Goes Live 4 July 2026</h1>
+<p class="tagline">Sovereign AI governance substrate. Cryptographic proof. Independent UK standards body. London, United Kingdom.</p>
+<div class="countdown">
+<div class="unit"><div class="num" id="days">--</div><div class="lbl">Days</div></div>
+<div class="unit"><div class="num" id="hours">--</div><div class="lbl">Hours</div></div>
+<div class="unit"><div class="num" id="minutes">--</div><div class="lbl">Minutes</div></div>
+<div class="unit"><div class="num" id="seconds">--</div><div class="lbl">Seconds</div></div>
+</div>
+<a href="https://csoai.org" class="btn">csoai.org</a>
+<div class="features">
+<div class="feat"><h3>30 Crosswalks</h3><p>EU AI Act + 29 more</p></div>
+<div class="feat"><h3>12 Patents</h3><p>$12.5M IP moat</p></div>
+<div class="feat"><h3>33 Hives</h3><p>All apex .ai domains live</p></div>
+<div class="feat"><h3>19 MCPs</h3><p>+ 367 in marketplace</p></div>
+<div class="feat"><h3>47-Agent Town</h3><p>Awareness v2 + Absorption v3</p></div>
+<div class="feat"><h3>BFT Council</h3><p>60+ councils, 300+ voters</p></div>
+</div>
+</div>
+<script>
+const target = new Date('2026-07-04T09:00:00+01:00').getTime();
+function tick() {
+  const now = Date.now();
+  const diff = Math.max(0, target - now);
+  document.getElementById('days').textContent = Math.floor(diff / 86400000);
+  document.getElementById('hours').textContent = Math.floor((diff % 86400000) / 3600000);
+  document.getElementById('minutes').textContent = Math.floor((diff % 3600000) / 60000);
+  document.getElementById('seconds').textContent = Math.floor((diff % 60000) / 1000);
+}
+setInterval(tick, 1000);
+tick();
+</script>
+</body></html>

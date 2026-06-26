@@ -87,3 +87,6 @@ SOV3 exposes a real lock + task board: `coord_register_agent` → `coord_acquire
 - [18:10 Hermes/JEEVES] CLAIM PHASE 18: Extract Rob Murray + DSRB CEO path, BMCC action brief, 10 more strategic docs, 10 more PDFs, push to 100% coverage
 - [18:12 Hermes/JEEVES] CLAIM PHASE 19: Extract COBOL bridge GTM, HALT AI Harm, JAMES CASTLE action list body, BMCC briefing, ALL remaining strategic docs
 - [18:16 Hermes/JEEVES] DONE — 4 Jul launch plan: 21 council emails staggered 09:00-10:30 BST on launch day. Skip JC (fraudster).
+- [06:00 Hermes/JEEVES] EAT MODE 26JUN — claim for the day: build 4 Jul sequence runbook, finalize council email templates, write the 7-day final prep plan, build Series A outreach sequence, prep the certification tracker
+- [EAT MODE DAY 2] Sir asked for AUDIT OVERVIEW + INSPECT + CHECK + TEST + AD + MOVE FORWARD. Day 2 + onwards full force.
+- [EAT MODE DAY 3 27JUN] Full force: build more MEOK pages, Series A outreach pre-staging, council reply tracking, sovereign town video script, MCP cert demo

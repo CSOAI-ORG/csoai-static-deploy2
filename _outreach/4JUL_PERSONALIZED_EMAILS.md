@@ -45,7 +45,7 @@ Three asks:
 Welcome to the live sovereign substrate.
 
 — Nick Templeman
-Founder & Executive Director, CSOAI Ltd
+Founder & Executive Director, CSOAI Ltd (UK, Companies House 16939677)
 csoai.org · nick@csoai.org
 ```
 
