@@ -4,7 +4,7 @@
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
 <title>CSOAI — The Council for the Safety of AI · Governance OS</title>
-<meta name="description" content="CSOAI — the governance layer for autonomous intelligence. BFT Council, 22 governed legacy bridges, the 347-MCP compliance fleet, jurisdiction engine, model track-record, and Ed25519 signed attestation. Govern your AI, or watch governance be done to you."/>
+<meta name="description" content="CSOAI — the governance layer for autonomous intelligence. BFT Council, 22 governed legacy bridges, the 369-MCP compliance fleet, jurisdiction engine, model track-record, and Ed25519 signed attestation. Govern your AI, or watch governance be done to you."/>
 <style>
 /* tokens match csoai-org-v2 globals.css (CSOAI master) exactly */
 :root{--bg:#0a0e1a;--background:#0a0e1a;--fg:#e2e8f0;--foreground:#e2e8f0;--accent:#3b82f6;--accent-light:#60a5fa;--muted:#94a3b8;--surface:#111827;--surface-2:#1f2937;--border:#374151;--success:#10b981;--warning:#f59e0b;--danger:#ef4444}
@@ -90,7 +90,7 @@ footer{border-top:1px solid var(--border);color:var(--muted);font-size:12px;padd
       <div class="kpi"><b>5</b><span>BFT Council agents</span></div>
       <div class="kpi"><b>13+</b><span>frameworks</span></div>
       <div class="kpi"><b>22</b><span>governed bridges</span></div>
-      <div class="kpi"><b>347</b><span>governance MCPs</span></div>
+      <div class="kpi"><b>369</b><span>governance MCPs</span></div>
       <div class="kpi"><b>Ed25519</b><span>signed attestation</span></div>
     </div>
   </section>
@@ -122,7 +122,7 @@ const APPS={
  audit:{i:'🛡️',t:'Free AI audit',d:'Classify your AI in 30s',c:'In-page EU AI Act classifier — no backend, instant risk + checklist.'},
  council:{i:'⚖️',t:'BFT Council',d:'5 agents debate your case',c:'Byzantine-fault-tolerant governance board — verdict signed to the ledger.'},
  bridges:{i:'🔌',t:'Legacy Bridges',d:'22 governed gateways',c:'Govern the legacy economy ($3T/day) — the category nobody else owns.'},
- fleet:{i:'🗂️',t:'Compliance Fleet',d:'347 governance MCPs',c:'Runtime enforcement, not quarterly assessment — and signed.'},
+ fleet:{i:'🗂️',t:'Compliance Fleet',d:'369 governance MCPs',c:'Runtime enforcement, not quarterly assessment — and signed.'},
  frameworks:{i:'📚',t:'Frameworks',d:'13 global regimes',c:'Map your AI across every regime that applies, by sector + region.'},
  law:{i:'⚖',t:'Jurisdiction Engine',d:'Local→national→bloc',c:'Resolve the full stack of law for a place + cross-border overlap.'},
  board:{i:'🏆',t:'Model-Board',d:'Track record of models',c:'Evidence-based "which model wins which task" — the router signal.'},
@@ -162,7 +162,7 @@ function dockAsk(){
  else if(/card|payment|pci|iso ?8583|swift|iso ?20022/.test(t)) a=`<b>Payments</b> → PCI-DSS · PSD2 SCA · DORA. Bridges: ISO 20022, ISO 8583, NACHA, FIX — never log full PAN.`;
  else if(/jurisdic|country|region|law|gdpr/.test(t)) a=`<b>Jurisdiction</b> — open the Jurisdiction Engine: it stacks local→national→bloc + tax + cross-border, and shows the overlap between two regimes.`;
  else if(/sign|attest|sigil|ledger|verif/.test(t)) a=`<b>SIGIL</b> — every governed action is hash-chained + Ed25519-signed, verifiable offline with no account. The moat.`;
- else a=`I govern across <b>19 bridges</b>, <b>347 MCPs</b>, <b>13+ frameworks</b>, a jurisdiction engine + signed attestation. Tell me your <i>industry</i>, <i>region</i>, or what your AI <i>does</i>.`;
+ else a=`I govern across <b>22 bridges</b>, <b>369 MCPs</b>, <b>13+ frameworks</b>, a jurisdiction engine + signed attestation. Tell me your <i>industry</i>, <i>region</i>, or what your AI <i>does</i>.`;
  dockSay('ai',`<b>CSOAI</b> · ${a}`);
 }
 
@@ -209,11 +209,13 @@ function render(id){
  case 'bridges': return `<h2>🔌 Legacy Bridges — 22 governed gateways</h2><p class="sub">The systems that run the world speak legacy. CSOAI bridges them to modern AI — parse → validate → map → <b>govern</b> → <b>SIGIL-sign</b> — without disruption. The category nobody else owns.</p>
    <div class="row">${BRIDGES.map(b=>`<span class="chip gov">${b[0]} · ${b[1]}</span>`).join('')}</div>
    <p class="muted">Each is a governed MCP (DORA/NIS2 finance · HIPAA/MDR healthcare · IEC 62443 OT · SOX · PCI-DSS). Now callable from the production MCP server. The governed gateway to the entire legacy economy (~$3T/day).</p>`;
- case 'fleet': return `<h2>🗂️ Compliance Fleet</h2><p class="sub">347 governance/compliance MCP servers — the backend the OS calls. Open core → enterprise paywall, distributed via the MCP registry.</p>
+ case 'fleet': return `<h2>🗂️ Compliance Fleet</h2><p class="sub">369 governance/compliance MCP servers (verified: tools+pkg) — the backend the OS calls. Open core → enterprise paywall, distributed via the MCP registry.</p>
    <div class="row">${FRAMEWORKS.map(f=>`<span class="chip on">${f}</span>`).join('')}</div>
    <p class="muted">Runtime enforcement (not assessment-only) is the wedge — competitors check once a quarter; CSOAI governs continuously, and signs it.</p>`;
  case 'frameworks': return `<h2>📚 Frameworks — 13 global regimes</h2><p class="sub">Map your AI across every regime that applies, by industry + region.</p><table><tr><th>Framework</th><th>Trigger</th></tr>
-   <tr><td>EU AI Act</td><td>high-risk Annex III; Art. 50 transparency (Aug 2 2026)</td></tr><tr><td>GDPR</td><td>any personal data</td></tr><tr><td>DORA / NIS2</td><td>finance / critical infra</td></tr><tr><td>HIPAA / MDR</td><td>healthcare</td></tr><tr><td>ISO 42001 / NIST AI RMF</td><td>AI management baseline</td></tr><tr><td>SOX / PCI-DSS</td><td>financial reporting / cards</td></tr></table>`;
+   <tr><td>EU AI Act</td><td>high-risk Annex III; Art. 50 transparency (Aug 2 2026)</td></tr><tr><td>GDPR</td><td>any personal data</td></tr><tr><td>DORA / NIS2</td><td>finance / critical infra</td></tr><tr><td>HIPAA / MDR</td><td>healthcare</td></tr><tr><td>ISO 42001 / NIST AI RMF</td><td>AI management baseline</td></tr><tr><td>SOX / PCI-DSS</td><td>financial reporting / cards</td></tr></table>
+   <p class="sub" style="margin-top:14px"><b>Article-level depth:</b> 28 reg MCPs go beyond framework names to specific articles/annexes — each a governed, tested tool:</p>
+   <div class="row">${['DORA Art.26 TLPT planner','EU AI Act Art.26 FRIA','EU AI Act Art.13 IFU','CRA Annex IV classifier','CRA Art.14 reporter','NIS2 DE register','NIS2 NL register','Basel III + SR 11-7','MiFID II Art.17','6AMLD AML','DORA×NIS2 crosswalk','EU AI Act Art.50 watermark','PIPL','CSRD','COPPA/FERPA','SOC2 Type II','ISO 27001','ISO 42005 impact'].map(f=>`<span class="chip gov">${f}</span>`).join('')}</div>`;
  case 'law': return `<h2>⚖ Jurisdiction Engine</h2><p class="sub">The law that applies isn't one rule — it's a <b>stack</b>: local → regional → national → bloc, plus tax + cross-border. Pick a jurisdiction; see your stack.</p>
    <label>Jurisdiction</label><select id="jsel">${Object.keys(JURIS).map(k=>`<option value="${k}">${JURIS[k][0]}</option>`).join('')}</select>
    <div class="row" style="margin-top:10px"><button class="btn" onclick="resolveLaw()">Resolve my stack →</button></div><div class="res" id="lawRes"></div>`;
