@@ -90,3 +90,28 @@ SOV3 exposes a real lock + task board: `coord_register_agent` → `coord_acquire
 - [06:00 Hermes/JEEVES] EAT MODE 26JUN — claim for the day: build 4 Jul sequence runbook, finalize council email templates, write the 7-day final prep plan, build Series A outreach sequence, prep the certification tracker
 - [EAT MODE DAY 2] Sir asked for AUDIT OVERVIEW + INSPECT + CHECK + TEST + AD + MOVE FORWARD. Day 2 + onwards full force.
 - [EAT MODE DAY 3 27JUN] Full force: build more MEOK pages, Series A outreach pre-staging, council reply tracking, sovereign town video script, MCP cert demo
+- [EAT MODE DAY 4 28JUN] Full force: charter Article 0 ratification sequence, design partner outreach sequence, 7-day reminder to council, response tracker
+- [EAT MODE DAY 5 29JUN] Sir: SEND pre-launch reminders to 22 council members + send design partner emails 3+4 (Aleph Alpha + Helsing)
+- [EAT MODE DAY 6 30JUN] CRITICAL: Council reply deadline. Sir: send final follow-ups to non-replies. Build launch kit landing page. Series A email follow-up to NATO contacts
+- [EAT MODE DAY 7 1JUL] Sir: Final follow-up to council non-replies. JEEVES: pre-stage Watchdog Certificates. Build the sovereign town screenshot for press kit. Verify all launch assets
+- [EAT MODE DAY 8 2JUL] Sir: personalize 21 council emails + schedule sends. JEEVES: build the 4 Jul 09:00 BST launch script (the actual shell command sequence)
+- [EAT MODE DAY 9 3JUL] FINAL PRE-LAUNCH NIGHT. Test sends. Sleep by 22:00 BST. Launch at 09:00 BST tomorrow
+- [05:13 Hermes/JEEVES] FULL CONSOLIDATION CHECKLIST from start. CSOAI + MEOK + GitHubs. Going from foundation up
+- [05:16 Hermes/JEEVES] CLAIM: SOV3 next-level. Sovereign 100% working for both CSOAI and MEOK. Train OLM, harden substrate, add missing tools, expand to next level
+- [05:27 Hermes/JEEVES] CLAIM: SOV3 INDEX ALL. Everything Nick has. Every doc. Every file. Every research. So sovereign knows everything
+- [05:30 Hermes/JEEVES] CLAIM: SOV3 = KING OF ALL SOVEREIGN. Train. Audit. Improve. 100% operational within both MEOK and CSOAI OS. End user speaks to SOV3, SOV3 takes over and does ALL.
+- [05:34 Hermes/JEEVES] CLAIM: Pickable BFT setups. 12 around 1, 33, etc. End user picks. OpenPatent.ai
+- [05:39 Hermes/JEEVES] CLAIM: SOV3 + Hives + Striving. How SOV3 works with us using what it learns from hives. We all strive towards exceeding goals
+- [05:41 Hermes/JEEVES] PHASE 20 GO: build the actual sov_striving_dashboard tool code + add the sovereign_striving tool to SOV3
+- [05:44 Hermes/JEEVES] PHASE 21: build the actual SOV3 striving tool integration. Wire the 6 tools to the live SOV3 MCP. Add it to /striving.html. Continue
+- [05:51 Hermes/JEEVES] SOVEREIGN MUST BE FULLY STACKED. sovereign.mom endpoint. hive layers all stacked. consolidation + absorb old work
+- [05:57 Hermes/JEEVES] DEPTH AUDIT. Every layer. Every file. Every sovereign. Every OS. Every hive. Every agent. Every tool. Every model
+- [06:05 Hermes/JEEVES] PHASE 23: build the end-user /meok OS UI for sovereign.mom. Add MEOK ONE OS live demo. Continue
+- [06:09 Hermes/JEEVES] PHASE 24: build CSOAI OS live demo (the sister OS). Add CSOAI compliance dashboard. Continue
+- [06:21 Hermes/JEEVES] PHASE 25: HAMSA fork + Flock cameras. Sovereign AI on consumer hardware. Awareness v2 source
+- [06:27 Hermes/JEEVES] PHASE 26: build the /physical-ai live demo page. Show Hamsa + Flock + Awareness + Hamsa Controller end-to-end. Continue trucking
+- [06:31 Hermes/JEEVES] PHASE 27: Consolidation improving. Audit all 22 pages for consistency. Consolidate docs. Improve the system
+- [06:37 Hermes/JEEVES] PHASE 28: Consolidate remaining pages. Add cross-page navigation. Run final stack check. Continue
+- [06:42 Hermes/JEEVES] PHASE 29: Build the /index.html LANDING PAGE that explains everything. Build the /healthz health check. Build /api/v1/spec for API docs
+- [06:50 Hermes/JEEVES] PHASE 30: All optimized fine tuned. Build the SOVEREIGN index.html (everything in one place). Build sitemap.xml + robots.txt for SEO. Build /sitemap. Final consolidation
+- [06:55 Hermes/JEEVES] SOVEREIGN MUST BE 24/7. Build the uptime SLA + monitoring + auto-recovery + redundancy. No downtime. Ever.
