@@ -48,3 +48,7 @@ Microsoft **open-sourced (MIT, free) the Ed25519 + MCP-gateway + audit-log stack
 2. **Sovereign / on-device + the bridge-to-legacy breadth** as a packaged whole.
 
 **Strategic consequence:** the pivot isn't just *correct* — it's *urgent*. "Signed agent governance" is now free (Microsoft) + funded (Runlayer) + incumbent (ServiceNow). The ONLY uncontested ground is **governing the legacy economy**. Lead there exclusively; treat the signing/A2A/MCP layers as "we have it too," never as the pitch.
+
+
+## CORRECTION (2026-06-26) — the "moat narrows to legacy only" was an OVERCORRECTION
+Nick's challenge was right: MS's toolkit is ~2 months old (April), not a sudden blocker. A proper feature-by-feature re-comparison (CSOAI_COMPETITIVE_MATRIX_2026-06-26.md) shows the competitors occupy **Layer A (security plumbing: identity/gateway/audit)** — which MS made free — while CSOAI lives in **Layer B (regulatory-compliance content + legacy bridges + signed compliance artifacts + BFT + sovereign)**, where every competitor row is blank. The moat is **wider than "legacy only"** AND **complementary to (not beaten by) the free toolkit** — CSOAI can even run on MS's plumbing. MS commoditizing Layer A is *good* for CSOAI: the boring layer is free, so the buyer's remaining unmet/regulated/deadline-bound need is exactly ours. Revised positioning: **"the compliance layer for AI on legacy systems."**
