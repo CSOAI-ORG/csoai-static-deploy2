@@ -2,6 +2,14 @@
 
 The master map of the whole estate so we **eat all into one without losing track**. ~75 MEOK/sovereign/CSOAI dirs across `~` and `~/clawd`, clustered. **★ = canonical per cluster** (the one to keep building); the rest are absorb-into-canonical or archive. **Nothing is deleted here — this is the map + plan.** Builds on (doesn't replace): `SOVEREIGN_CONSOLIDATION_MAP_2026-06-25.md`, `MEOK_SESSION_MASTER_2026-06-25.md`, `CSOAI_BACKEND_MASTER`, `memory/meok-master-consolidation-2026-06-23`.
 
+## 0. ⚠️ meok-ai — the PRODUCTION app (reconciled 2026-06-25, was under-tracked)
+`~/meok-ai` (1.4G, CSOAI-ORG/meok-ai, **private, actively developed — commit 3 days ago**) is the real production meok.ai: **Next.js UI** (home · sovereign-widget/dock · family-os-dashboard · guardian-alerts · warm-content-page · vs-comp-ai · demo · waitlist · research) + **agent platform** (`a2a/gateway.py` · `council/` BFT · `consciousness-core` · `consensus` · `agents` · `discord-guardian-bot`) + **MCP server (SOV3, 99 tools)** + **`town-3d`** (React-Three-Fiber 3D town).
+- **NOT missing — but it changes the canonical picture:**
+  - **Dedup (like csoai-os→csoai-v2-app):** my single-file `MEOK_OS/index.html` is the **prototype/spec**; meok-ai's UI is the **production** for the overlapping surfaces (Guardian/Family/Gaming/sovereign-widget). meok-ai wins for those.
+  - **Two 3D worlds:** `meok-town-view` (Cesium globe, M4 worked) **vs** `meok-ai/town-3d` (R3F town) — reconcile which is canonical (globe = governance world; town-3d = consumer town? owner call).
+  - **Flow-IN, not duplicate:** the NEW concepts I prototyped in MEOK_OS (the 19-bridge governance map · Model Board · MEOK Law · Aware · Knowledge · SIGIL viz) should feed INTO meok-ai's production UI — like I route CSOAI to M2.
+  - **Integration:** the **19 bridge MCPs + scoreboard should register into meok-ai's MCP server / `a2a/gateway.py`** so they're callable by the production platform (not just standalone repos).
+
 ## 1. OS — the front floor
 - ★ **MEOK OS** = `~/Library/.../SOV3-Launch/MEOK_OS/index.html` (single-file, 37 apps, iCloud-synced) — the MEOK-side OS.
 - ★ **CSOAI OS** = M2's `csoai-v2-app` / `councilof-ai` (live React OS, 14+ pages) — M2's lane.
