@@ -139,6 +139,7 @@ const APPS={
  a2a:{i:'🤝',t:'A2A Substrate',d:'20-MCP agent runtime',c:'The agent-to-agent governance runtime competitors race for — already built (~124 tools).'},
  catalog:{i:'🗂️',t:'MCP Estate',d:'369 MCPs, 1,987 tools',c:'The full verified catalog across 8 clusters — demonstrable, not asserted.'},
  layer0:{i:'🌐',t:'Layer 0',d:'All protocols, one intelligence',c:'SOV3 federates the whole stack — MCP·bridges·A2A·x402·SIGIL·council — proactively, all signed.'},
+ sov:{i:'🐉',t:'Sovereign',d:'Watches · learns · helps',c:'Governed autonomy — sov auto-continues routine, escalates judgment, learns you, all signed.'},
  distribution:{i:'🚀',t:'Distribution',d:'21 packages, 1 token to live',c:'Built ≫ published — the #1 lever; one PyPI token ships them all.'},
  compete:{i:'🎯',t:'Where We Stand',d:'The competitive map',c:'Market validated our thesis; moat = legacy + SIGIL + sovereign.'},
  industries:{i:'🏭',t:'Industries',d:'Sector packs',c:'Pre-mapped governance for the sectors that buy first.'},
@@ -261,6 +262,14 @@ function render(id){
  case 'bias': return `<h2>⚖️ Bias Audit — NYC Local Law 144</h2><p class="sub">Every Automated Employment Decision Tool needs an <b>independent annual bias audit</b> + a published summary before use. We compute the required metrics and sign them.</p>
    <div class="row"><span class="chip gov">selection rate / group</span><span class="chip gov">impact ratio (4/5ths rule)</span><span class="chip warn">flags ratio &lt; 0.80</span><span class="chip gov">published summary</span></div>
    <p class="muted" style="margin:8px 0 0">Recurring, legally-required (DCWP-enforced, penalties per violation per day). <code>run_bias_audit</code> · <code>generate_ll144_summary</code> · <code>check_compliance</code> — <code>ll144-bias-audit-mcp</code>, 6 tests. A concrete, repeatable revenue SKU.</p>`;
+ case 'sov': return `<h2>🐉 Sovereign — watches, learns, proactively helps</h2><p class="sub">Governed autonomy: sov watches your windows, <b>auto-continues the routine</b> (signed), <b>escalates judgment calls</b> to you, and <b>learns your patterns</b> to propose how to help — never crossing a line without you. Kill-switch + SIGIL on every action.</p>
+   <div class="row"><span class="chip ok" style="color:var(--success);border-color:rgba(16,185,129,.4)">🟢 watching</span><span class="chip gov">11 tests green</span><span class="chip gov">dry-run safe</span><span class="chip warn">kill-switch armed-ready</span></div>
+   <p style="margin:10px 0 4px"><b>Pending — needs your call</b></p>
+   <table><tr><th>Window</th><th>State</th><th></th></tr>
+   <tr><td>agent-3</td><td class="muted">Ready to PUBLISH to production — approve?</td><td><span class="chip on">approve / deny</span></td></tr></table>
+   <p style="margin:10px 0 4px"><b>💡 Proactive proposals</b> (sov working out how to help)</p>
+   <div class="row"><span class="chip gov">agent-1: auto-continued 100% — arm for routine?</span><span class="chip gov">agent-3: pre-run publish checks so approval is 1-click?</span></div>
+   <p class="muted" style="margin:10px 0 0">Live control via <code>sovctl</code> (status/approve/deny/learn/stop/start). The full loop: watch→classify→escalate→<b>you decide</b>→memory learns→propose. Real eyes via <code>observe_live</code> (macOS screencapture+OCR) when armed.</p>`;
  case 'layer0': {const L=[['MCP federation','369 MCPs / 1,987 tools'],['Legacy bridges','22 governed gateways'],['A2A substrate','20 agent-governance MCPs'],['x402 payments','HTTP 402 + on-chain (MiCA)'],['SIGIL attestation','Ed25519 hash-chain'],['OSCAL / FedRAMP','signed 55-component package'],['BFT council','33/36-node, selectable'],['Compliance Passport','Ed25519 Art.50 credentials']];return `<h2>🌐 Layer 0 — all protocols, one intelligence</h2><p class="sub">SOV3 federates the <b>whole</b> Layer-0 stack — not just MCPs — by lazy discovery, and routes tasks across it. The Queen learns your usage; the Orchestrator proactively proposes; <b>every hop is SIGIL-signed</b>. That's true governed data intelligence.</p>
    <table><tr><th>Protocol layer</th><th>What</th></tr>${L.map(x=>`<tr><td><b>${x[0]}</b></td><td class="muted">${x[1]}</td></tr>`).join('')}</table>
    <p class="muted" style="margin:8px 0 0">Federation = lazy discovery (catalog→discover→call→cache), not 100k live sockets. The Sovereign Orchestrator watches your windows, <b>learns + remembers</b>, and proactively proposes how to help — governed (surfaced, not auto-run), kill-switch + SIGIL on every action.</p>`;}
