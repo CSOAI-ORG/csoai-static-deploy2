@@ -126,7 +126,8 @@ const APPS={
  aware:{i:'👁️',t:'Presence',d:'Consent-first awareness',c:'On-device world-model — GDPR Art.9/BIPA, off by default, Guardian-gated.'},
  relevance:{i:'🕸️',t:'Relevance Map',d:'What governs what',c:'The topology — each bridge/MCP to its frameworks, sectors, regions.'},
  ledger:{i:'🔗',t:'SIGIL Ledger',d:'Ed25519, verifiable',c:'Sovereign offline-verifiable signing — not a dashboard you must trust.'},
- distribution:{i:'🚀',t:'Distribution',d:'20 packages, 1 token to live',c:'Built ≫ published — the #1 lever; one PyPI token ships them all.'},
+ fedramp:{i:'🇺🇸',t:'OSCAL / FedRAMP',d:'Signed machine-readable packages',c:'RFC-0024 wedge: generate Ed25519-signed OSCAL — the thing 0/100 authorizations produced.'},
+ distribution:{i:'🚀',t:'Distribution',d:'21 packages, 1 token to live',c:'Built ≫ published — the #1 lever; one PyPI token ships them all.'},
  compete:{i:'🎯',t:'Where We Stand',d:'The competitive map',c:'Market validated our thesis; moat = legacy + SIGIL + sovereign.'},
  industries:{i:'🏭',t:'Industries',d:'Sector packs',c:'Pre-mapped governance for the sectors that buy first.'},
  pricing:{i:'£',t:'Pricing',d:'From £1 smoke tests',c:'Transparent pricing is the wedge — free audit → enterprise.'},
@@ -144,7 +145,8 @@ function dockSay(who,html){const l=document.getElementById('docklog');l.innerHTM
 function dockAsk(){
  const i=document.getElementById('dockin');const q=i.value.trim();if(!q)return;i.value='';dockSay('me',q);
  const t=q.toLowerCase();let a;
- if(/publish|distribut|pypi|ship/.test(t)) a=`<b>Distribution</b> — 20 packages (19 bridges + scoreboard) build clean + registry-valid. One <code>PYPI_TOKEN</code> ships them all (built ≫ published = the #1 lever).`;
+ if(/oscal|fedramp|rfc.?0024|ssp/.test(t)) a=`<b>OSCAL / FedRAMP</b> — we generate machine-readable NIST OSCAL (SSP + component-def) and <b>Ed25519-sign</b> it. RFC-0024 mandates this by 30 Sep 2026; ~0 of 100+ authorizations produced OSCAL. Open the OSCAL / FedRAMP app.`;
+ else if(/publish|distribut|pypi|ship/.test(t)) a=`<b>Distribution</b> — 21 packages (19 bridges + scoreboard + OSCAL) build clean + registry-valid. One <code>PYPI_TOKEN</code> ships them all (built ≫ published = the #1 lever).`;
  else if(/scada|ot|industrial|grid|energy/.test(t)) a=`<b>SCADA/OT</b> → IEC 62443 · NIS2. The SCADA + DLMS bridges parse→govern→sign; control-point writes require auth + audit.`;
  else if(/loan|credit|lending|mortgage/.test(t)) a=`<b>Lending/mortgage</b> → EU AI Act Annex III (high-risk) · ECOA fair-lending · the MISMO bridge. Human oversight + conformity assessment required.`;
  else if(/health|hospital|patient|hl7|hipaa/.test(t)) a=`<b>Healthcare</b> → HIPAA · EU MDR · GDPR Art.9. The HL7/FHIR bridge governs PHI; every translation attestable.`;
@@ -221,7 +223,10 @@ function render(id){
  case 'ledger': return `<h2>🔗 SIGIL Attestation Ledger</h2><p class="sub">Every governed action — a Council verdict, a bridge translation, a policy decision — is hash-chained and <b>Ed25519-signed</b>, independently verifiable off-platform.</p>
    <div class="row"><span class="chip gov">✓ scheme: Ed25519(prev + canonical)</span><span class="chip gov">✓ on-device verifiable</span><span class="chip gov">✓ refuses tampered</span></div>
    <p class="muted">The moat: sovereign, offline-verifiable signing — not a vendor dashboard you have to trust.</p>`;
- case 'distribution': return `<h2>🚀 Distribution</h2><p class="sub">The #1 lever: <b>built ≫ published</b>. 20 packages (19 bridges + the scoreboard) build clean to wheel+sdist + are 19/19 registry-valid. One owner token ships them all.</p>
+ case 'fedramp': return `<h2>🇺🇸 OSCAL / FedRAMP — the RFC-0024 wedge</h2><p class="sub">FedRAMP RFC-0024 mandates <b>machine-readable OSCAL</b> packages by <b>30 Sep 2026</b> — yet ~0 of 100+ 2025 authorizations actually produced OSCAL. CSOAI generates it, and <b>Ed25519-signs</b> it.</p>
+   <div class="row"><span class="chip gov">generate_ssp</span><span class="chip gov">generate_component_definition</span><span class="chip gov">validate_oscal</span><span class="chip gov">sign_oscal · Ed25519</span><span class="chip gov">verify_oscal_signature</span><span class="chip gov">rfc0024_readiness</span></div>
+   <p class="muted">System description in → valid NIST OSCAL JSON out, cryptographically signed (same scheme as the Compliance Passport), offline-verifiable. No incumbent ships this. (oscal-generator-mcp · 10 tests.)</p>`;
+ case 'distribution': return `<h2>🚀 Distribution</h2><p class="sub">The #1 lever: <b>built ≫ published</b>. 21 packages (19 bridges + scoreboard + OSCAL generator) build clean to wheel+sdist + are registry-valid. One owner token ships them all.</p>
    <div class="row"><span class="chip gov">✓ 20/20 build clean</span><span class="chip gov">✓ 19/19 server.json valid</span><span class="chip warn">⧗ PyPI token (owner)</span><span class="chip warn">⧗ MCP registry login (owner)</span></div>
    <p class="muted"><code>export PYPI_TOKEN=… &amp;&amp; bash publish-all-bridges.sh</code> → public. Then <code>SUBMIT=1 submit-all-registry.sh</code> → MCP registry.</p>`;
  case 'compete': return `<h2>🎯 Where We Stand</h2><p class="sub">The market converged on CSOAI's thesis — <i>"the EU AI Act was written for models; your agents need runtime compliance."</i> Validation, not threat.</p>
