@@ -11,8 +11,10 @@ The master map of the whole estate so we **eat all into one without losing track
   - **Integration:** the **19 bridge MCPs + scoreboard should register into meok-ai's MCP server / `a2a/gateway.py`** so they're callable by the production platform (not just standalone repos).
 
 ## 1. OS — the front floor
-- ★ **MEOK OS** = `~/Library/.../SOV3-Launch/MEOK_OS/index.html` (single-file, 37 apps, iCloud-synced) — the MEOK-side OS.
-- ★ **CSOAI OS** = M2's `csoai-v2-app` / `councilof-ai` (live React OS, 14+ pages) — M2's lane.
+- ★ **MEOK OS** = `~/Library/.../SOV3-Launch/MEOK_OS/index.html` (single-file, 41 apps, iCloud-synced) — the MEOK-side OS.
+- ★ **CSOAI OS (live)** = M2's `csoai-v2-app` / `councilof-ai` (live React OS) — M2's lane, canonical.
+- **CSOAI OS (M4 reference)** = `clawd/csoai-os/index.html` — 2026-06-26 LEVELED UP to MEOK-quality+ (16 governance apps incl. Jurisdiction Engine · Model-Board · Knowledge · Presence · SIGIL ledger · Distribution · Where-We-Stand + 'Ask CSOAI' dock + hover captions; JS clean, all tiles reachable). Reference for M2 to absorb into csoai-v2-app — NOT a competing live app.
+- **Governance core convergence** = meok-ai PR #4 — the prototype governance core is now 15 production MCP tools (bridges·law·model-board·knowledge·aware, 28 tests). Both OSes call the same governed backend.
 - absorb/retire: `~/meok-os` 1.5G · `clawd/meok-oneos` 554M · `clawd/meok-one` 130M · `clawd/meok-platform` 268M · `clawd/meok-desktop` · `~/MEOK-AI-Labs` 923M · my superseded `clawd/csoai-os`.
 
 ## 2. TOWN / GLOBE — the world
