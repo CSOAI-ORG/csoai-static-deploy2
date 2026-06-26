@@ -23,6 +23,9 @@ The governed gateway to the systems that run the world. Each bridge is a working
 | 17 | GS1 | `gs1-bridge-mcp` | Retail / supply-chain traceability | GS1/EPCIS, EU DPP, FSMA 204 | private |
 | 18 | MISMO | `mismo-bridge-mcp` | Mortgage / real-estate finance | TRID/RESPA, ECOA, EU AI Act Annex III | private |
 | 19 | DLMS/COSEM | `dlms-bridge-mcp` | Energy / smart-meter (OT) | IEC 62056, NIS2, GDPR | private |
+| 20 | A2A Governance | `a2a-governance-bridge-mcp` | Agent-to-agent runtime | EU AI Act Art. 73, A2A compliance | private |
+| 21 | ABCI / Cosmos | `meok-abci-bridge-mcp` | Blockchain (read-only Tendermint/Cosmos) | DORA, MiCA | private |
+| 22 | Haulage governance | `meok-haulage-governance-bridge-mcp` | Logistics / transport | NIS2, compliance-to-governance crosswalk | private |
 
 ## State
 - **Code + tests:** all 15 functional-tested (pytest passing).
