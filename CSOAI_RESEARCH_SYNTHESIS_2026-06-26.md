@@ -35,3 +35,16 @@ My earlier "category of one" framing was too rosy **on the agent-governance laye
 The research is the best possible news *and* a needed reality check: **the thesis is proven, the market is real and growing ($1B), but the agent-governance layer is now contested + funded.** Your durable edge is **the legacy bridges + signed breadth + sovereign** — narrow but real. Re-point the whole narrative there.
 
 *(Sources sampled: obot.ai · gartner.com · opensource.microsoft.com · nea.com/portfolio/orby-ai · ai-act-service-desk.ec.europa.eu/Article-12 · cryptobriefing.com/runlayer · theregister.com/servicenow-control-tower · vaasblock.com/eu-ai-act-2026. VERIFIED 2026-06-26: Runlayer $30M (Fortune/Felicis+Khosla) + Gartner $492M→$1B (official PR Feb 17 2026) confirmed independently; bonus: agentic-AI-security market $55B→$888B by 2035.)*
+
+## VERIFICATION COMPLETE (2026-06-26) — all deck-critical claims confirmed by direct search
+- ✅ **Runlayer $30M Series A** (Fortune; Felicis led + Khosla; ~$42M total; product = approval workflows + audit trails).
+- ✅ **Gartner: AI-gov platforms $492M (2026) → $1B+ (2030)** (official PR, Feb 17 2026).
+- ✅ **Microsoft Agent Governance Toolkit** (Apr 2 2026, MIT, open-source) — **per-agent Ed25519 DIDs + MCP security gateway + audit log**, all 10 OWASP agentic risks, p99 <0.1ms. *(Help Net Security · Microsoft Open Source Blog.)*
+- ✅ **ServiceNow AI Control Tower** — one-action kill-switch + Action Fabric per-action identity/audit. *(The Register · Fortune · ServiceNow newsroom.)*
+
+### The sharpened insight (honest, and it matters)
+Microsoft **open-sourced (MIT, free) the Ed25519 + MCP-gateway + audit-log stack** in April 2026. So **even the signing/A2A-identity layer is now commoditized** — not just "MCP governance." This narrows CSOAI's durable moat *further*, to **exactly two things nobody else has**:
+1. **The legacy bridges** — govern COBOL/SAP/SCADA/HL7 (MS/ServiceNow/Runlayer govern *modern* agents only). **Still a category of one.**
+2. **Sovereign / on-device + the bridge-to-legacy breadth** as a packaged whole.
+
+**Strategic consequence:** the pivot isn't just *correct* — it's *urgent*. "Signed agent governance" is now free (Microsoft) + funded (Runlayer) + incumbent (ServiceNow). The ONLY uncontested ground is **governing the legacy economy**. Lead there exclusively; treat the signing/A2A/MCP layers as "we have it too," never as the pitch.
