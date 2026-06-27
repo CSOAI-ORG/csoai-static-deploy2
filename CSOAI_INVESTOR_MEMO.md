@@ -26,6 +26,9 @@ And there's a clock with teeth: **EU AI Act, 2 Aug 2026** — high-risk AI (crit
 - **~10M lines** across the GitHub estate (~850K hand-authored after de-duping the shared MCP scaffold).
 - **Real distribution, zero marketing:** **~10,400 PyPI downloads/month** across the published compliance MCPs — `eu-ai-act` 3,156 · `dora` 2,862 · `iso-42001` 2,423 · `nist-rmf` 1,731/mo — and **1,580 repo clones / 14 days** on the gateway (automated/agent pull, not human browsing). The full fleet is being published now; ~19 packages already drove that pull.
 
+## Why the breadth IS the moat (Ashby's Law — the size is the point)
+The estate is governed by **Stafford Beer's Viable System Model** (recursive self-governance) — and defended by **Ashby's Law of Requisite Variety**: *only variety can absorb variety; a regulator must have at least as many states as what it regulates.* The regulated environment (EU AI Act + DORA + NIS2 + HIPAA + MiFID + Basel + COBOL/SAP/SCADA/HL7, article by article) has enormous variety — so **CSOAI's 369-MCP, 1,987-tool, article-level depth is not sprawl, it's the requisite variety mathematically required to govern it.** A thin "single EU-AI-Act gateway" *structurally cannot* regulate a complex regulated enterprise — insufficient variety. We are the only governance layer with requisite variety, and the architecture is a textbook viable system (S1 operations=the MCPs · S2=SIGIL · S3=council · S4=Hermes · S5=SOV3). *(Spec: `MEOK_VSM_GOVERNANCE_SPEC_2026-06-27.md`.)*
+
 ## Traction & honest gaps
 - **Built + verified:** the bridges, the signing, the demo, the OS — all real, tested, e2e-green.
 - **Pre-revenue, 0 logos yet** — the immediate plan is **one regulated design partner (finance-on-COBOL) before the deadline** (free single-flow pilot → signed Art-12 trail → reference).
