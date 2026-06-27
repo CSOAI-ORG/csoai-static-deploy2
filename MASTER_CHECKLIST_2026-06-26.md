@@ -77,8 +77,9 @@ Single source for everything in flight. **Legend:** ✅ done · 🔄 in progress
 ## 9. 🗺️ CONSOLIDATION (never lose track)
 - ✅ MESH index current (§0 meok-ai, §1 OSes, §4 369-MCP estate + 22 bridges + A2A substrate)
 - ✅ Competitive consolidation + one-pager + production-readiness audit
-- ✅ MESH §4 updated with verified counts: 369 MCPs / 1,987 tools / 22 bridges / 55-component signed OSCAL / 100.0% test pass on 37-MCP sample
+- ✅ MESH §4 updated with verified counts: 369 MCPs / 1,987 tools / 22 bridges / 79-component signed OSCAL / 100.0% test pass on 37-MCP sample
 - ✅ **CI parity audit** (`CI_PARITY_AUDIT_2026-06-27.md`): 374/374 MCPs now have local CI workflow (push gated on repo topology)
+- ✅ **MCP security response** (`MCP_SECURITY_BRIEF_2026-06-27.md`): 2 HIGH Python SDK CVEs identified; **302 MCP pyproject.toml files bumped to `mcp>=1.28.0`**; locally installed 1.28.1, full 37-MCP test sample still passes (419/419, 100%). Migration plan for spec v2 stateless documented.
 - ⬜ Fold this checklist into MEMORY.md index (one line)
 
 ## 10. 📉 DEFERRED (documented, not dropped)
