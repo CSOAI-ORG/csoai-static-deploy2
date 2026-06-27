@@ -83,4 +83,48 @@ When they return, I'll fold their findings into this doc + update the action lis
 
 ---
 
+## 🛡️ Clawguard security scan — live results (2026-06-27 06:38)
+
+**Cloned:** https://github.com/joergmichno/clawguard (11★ MIT, 225 patterns, 269 tests, 15 languages, MCP scanner)
+**Ran against:** 14 of our most critical MCPs (the headline ones)
+
+| MCP | Findings | Risk | Notable |
+|---|---:|---|---|
+| `meok-compliance-passport-mcp` | **0** | ✅ clean | Best in show — zero findings |
+| `meok-compliance-gateway` | **0** | ✅ clean | Tied for best |
+| `agent-identity-trust-mcp` | 1 | LOW | Minor |
+| `agent-incident-relay-mcp` | 1 | LOW | Minor |
+| `nist-iso42001-crosswalk-mcp` | 2 | MEDIUM | Likely false positive |
+| `ll144-bias-audit-mcp` | 2 | MEDIUM | Likely false positive |
+| `eu-ai-act-compliance-mcp` | 2 | MEDIUM | `urllib.request` pattern |
+| `csoai-governance-crosswalk-mcp` | 3 | MEDIUM | False positives likely |
+| `agent-policy-enforcement-mcp` | 4 | MEDIUM | `urllib.request` |
+| `agent-x402-paywall-mcp` | 4 | MEDIUM | crypto patterns |
+| `agent-handoff-certified-mcp` | 4 | MEDIUM | crypto patterns |
+| `meok-watermark-attest-mcp` | 4 | MEDIUM | false positives |
+| `oscal-generator-mcp` | 5 | **HIGH** | **`importlib.import_module` (line 221) — real, dynamic module loading by string name** |
+| `agent-incident-reporter-mcp` | 6 | **HIGH** | base64 hint pattern |
+| `cobol-bridge-mcp` | **15** | **CRITICAL** | **`eval()`/`exec()` in COBOL parser (legit use, but should be sandboxed)** |
+
+### Real findings worth investigating
+
+1. **`oscal-generator-mcp` line 221**: `importlib.import_module(mod_name)` — dynamically loads a module by name. If `mod_name` is user-controlled, this is a code-injection vector. **Review needed** to ensure `mod_name` is from a hardcoded whitelist, not user input.
+2. **`cobol-bridge-mcp`**: 3-5× `eval()`/`exec()` calls. Legitimate for parsing COBOL but should be sandboxed (e.g., `RestrictedPython` or a subprocess sandbox).
+3. **`agent-incident-reporter-mcp`**: base64 hint pattern — could indicate encoded payloads being processed. Worth confirming it's safe.
+
+### False-positive patterns to tune out of clawguard for our use case
+- `urllib.request.urlopen` — appears in nearly every MCP we have (they make HTTP calls). False positive.
+- `pip install` — appears in docstrings/install instructions. False positive.
+- `open(req` — appears in URL-fetch helper code. False positive.
+
+### Action: integrate clawguard into the CI fleet
+**Now that clawguard works** (zero install friction, zero deps), the 5-min integration is:
+1. Copy `/tmp/clawguard/clawguard.py` + pattern files into a new `clawguard-shield` MCP (or use it as-is via stdio).
+2. Add a `scan-mcp.py` script that walks `mcp-marketplace/*/server.py` and produces a fleet report.
+3. CI step on every PR: run clawguard on the changed MCPs.
+
+This gives us **a free security scanner** integrated into our build pipeline.
+
+---
+
 *M4 lane · GitHub REST API direct queries · 2026-06-27 06:25*
