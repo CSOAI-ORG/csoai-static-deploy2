@@ -1,110 +1,146 @@
-# 🖨️ PRINT QUEUE — Weekend to Monday Night
-## MEOK Labs (FORGE) · Qidi Max4 · ordered, profiled, ready
+# 🖨️ PRINTS QUEUE — Qidi Max4 (REAL files verified on printer)
+*2026-06-27 · MEOK Labs (FORGE) tab · ready to fire*
 
-**Purpose:** Nick can hit "Start print" on the Qidi touchscreen and each part fires in order. All STLs pre-sliced, all profiles saved, all estimates calculated.
-
-**Last calibration:** 2026-06-24 · New extruder end installed · PID tuned · Z-offset calibrated · Bed mesh captured · Input shaper calibrated
-
----
-
-## 🎯 What to print — in order
-
-| # | Part | Material | Layer | Time | Why this order |
-|---|---|---|---|---|---|
-| 0 | **Calibration cube** | PLA | 0.20mm | 30min | **DO THIS FIRST** — proves everything works after recal |
-| 1 | **WOLF test cube** | PLA | 0.20mm | 1h | Validates printer before committing expensive CF |
-| 2 | **WOLF actuator — front plate** | PA12-CF | 0.16mm | 5h | Real test of the new end + CF nylon workflow |
-| 3 | **WOLF actuator — back plate** | PA12-CF | 0.16mm | 7h | If #2 prints clean, full speed ahead |
-| 4 | **WOLF internal ring gear A** | PA6-CF | 0.16mm | 4h | First PA6-CF part (needs anneal after) |
-| 5 | **WOLF internal ring gear B** | PA6-CF | 0.16mm | 5h | |
-| 6 | **WOLF sun gear** | PA6-CF | 0.16mm | 3h | |
-| 7 | **WOLF planet gears ×12** | PA6-CF | 0.16mm | 10h | One STL with 12 gears, duplicate in slicer |
-| 8 | **WOLF outer ring A + B** | PA12-CF | 0.16mm | 6h + 5h | |
-| 9 | **WOLF encoder housing** | PA12-CF | 0.16mm | 4h | |
-| 10 | **WOLF encoder magnet holder** | PA12-CF | 0.16mm | 1h | Tiny, fast |
-| 11 | **WOLF alignment tool** | PLA | 0.20mm | 1h | Cheap PLA, just for assembly |
-| 12 | **WOLF load arm 2020** | PA12-CF | 0.16mm | 5h | Optional mounting |
-| 13 | **WOLF shop crane bracket A** | PA12-CF | 0.16mm | 6h | Optional |
-| 14 | **WOLF shop crane bracket B** | PA12-CF | 0.16mm | 3h | Optional |
-| 15 | **Anneal PA6-CF parts** (oven 130°C × 2hr) | — | — | 4h + cool | Strengthens all PA6-CF |
-
-**Plate 7 GATE: Assemble WOLF #1, verify meshing, all 5-gate test pass.**
-
-After that:
-- 16-27: Asimov V8 parts per build guide (120h = 14 days if serial, but you have 7 days = select highest-priority structural parts first)
-- 28+: Pond dragon/waterfall parts
+**Printer:** Qidi Max4 @ 192.168.50.21:7125 (Moonraker)
+**Status:** ✅ Ready, calibrated, 16 gcode + 50+ STL files on the printer
+**Calibration done:** PID (extruder + bed), PROBE_CALIBRATE, BED_MESH_CALIBRATE (81 points, 0.85mm spread, default profile), SAVE_CONFIG persisted
 
 ---
 
-## ⚙️ Qidi Max4 — calibration settings saved
+## 📂 Files ACTUALLY on the printer (verified 2026-06-27)
 
-| Setting | Value | Where in Qidi Studio |
+### Pre-sliced gcode/3mf (ready to start immediately)
+| File | Size | Purpose |
 |---|---|---|
-| Nozzle diameter | 0.6mm (or 0.4 if you changed it) | Printer → Nozzle |
-| Max volumetric flow | 12 mm³/s | Filament → Max volumetric speed |
-| PA12-CF profile | 280°C / 100°C / 55°C / 0.16mm / 30% gyroid | Filaments → PA12-CF |
-| PA6-CF profile | 300°C / 110°C / 60°C / 0.16mm / 40% gyroid | Filaments → PA6-CF |
-| TPU 95A profile | 225°C / 50°C / 0.20mm / 20% gyroid | Filaments → TPU |
-| PLA profile | 210°C / 60°C / 0.20mm / 30% grid | Filaments → PLA |
+| `test_cube_pa12cf.gcode` | 408KB | **Test cube — PLA, ~20min** — fire this first |
+| `01_accuracy_cube_20mm.gcode.3mf` | 33MB | Detailed accuracy test |
+| `MEOK-001_hip_pitch_wolf_mount_FIXED.gcode.3mf` | 1.7MB | WOLF hip mount — first real part |
+| `housing_Use Actuator Housing Profile.gcode.3mf` | 4.1MB | Actuator housing (PA12-CF) |
+| `full-robot_Upper Body 1.gcode.3mf` | 27MB | Upper body — **140h print** |
+| `Motor Shell - Motor Shell.gcode.3mf` | 10.4MB | Motor housing |
+| `3DBenchy.gcode.3mf` | 692KB | Test boat |
+| `Corn.gcode.3mf` | 4.5MB | Decorative |
+| `Box 9x10x5.gcode.3mf` | 262KB | Box test |
+| `Claw3.gcode.3mf` | 1.4MB | Gripper test |
+| `Voron Cube.gcode.3mf` | 379KB | Cube test |
+| `Phone holder.gcode.3mf` | 366KB | Holder test |
+| `Hot bed nut wrench.gcode.3mf` | 440KB | Wrench |
+| `Thicker Filament holder.gcode.3mf` | 1.7MB | Spool holder |
+| `carrot.gcode.3mf` | 2.4MB | Carrot shape |
+| `switch fidget.gcode.3mf` | 314KB | Fidget |
 
-**Z-offset:** saved in printer.cfg (last calibrated 2026-06-24)
-**Bed mesh:** saved (39-point grid, ~0.08mm variance)
-**PID:** saved (extruder + bed)
-**Input shaper:** saved (X = 35Hz @ 0.05 damping, Y = 38Hz @ 0.05 damping)
+### Raw STLs (need to slice before printing)
+| Part | STL file | Material | Use |
+|---|---|---|---|
+| Front plate | `front-plate.stl` | PA12-CF | WOLF gearbox |
+| Back plate | `back-plate.stl` | PA12-CF | WOLF gearbox |
+| Internal ring A | `internal-ring-gear-A.stl` | PA6-CF | WOLF ring gear |
+| Internal ring B | `internal-ring-gear-B.stl` | PA6-CF | WOLF ring gear |
+| Sun gear | `sun-gear.stl` | PA6-CF | WOLF center |
+| Planet gears | `planet-gears.stl` | PA6-CF | 12 WOLF planet gears |
+| Outer ring A | `outer-ring-A.stl` | PA12-CF | WOLF housing |
+| Outer ring B | `outer-ring-B.stl` | PA12-CF | WOLF housing |
+| Encoder housing | `encoder-housing-as5047.stl` | PA12-CF | WOLF encoder |
+| Encoder magnet holder | `encoder-magnet-holder.stl` | PA12-CF | AS5047 magnet |
+| Pelvis link | `pelvis_link.STL` | PA6-CF | Asimov V8 |
+| Hip yaw links (L+R) | `left/right_hip_yaw_link.STL` | PA6-CF | Asimov V8 |
+| Hip pitch links (L+R) | `left/right_hip_pitch_link.STL` | PA6-CF | Asimov V8 |
+| Hip roll links (L+R) | `left/right_hip_roll_link.STL` | PA6-CF | Asimov V8 |
+| Knee links (L+R) | `left/right_knee_link.STL` | PA6-CF | Asimov V8 |
+| Ankle pitch links (L+R) | `left/right_ankle_pitch_link.STL` | PA6-CF | Asimov V8 |
+| Ankle roll links (L+R) | `left/right_ankle_roll_link.STL` | PA6-CF | Asimov V8 |
+| Ankle connecting rod | `ankle_connecting_rod.stl` | PA6-CF | Asimov V8 |
+| Toe links (L+R) | `left/right_toe_link.STL` | PA6-CF | Asimov V8 |
+| Ankle crossbar | `ankle_crossbar.stl` | PA6-CF | Asimov V8 |
+| Ankle crank arm | `ankle_crank_arm.stl` | PA6-CF | Asimov V8 |
+| Hip linkage A/B/C | `hip_linkage_A/B/C.stl` | PA6-CF | Asimov V8 |
+| Hip connector | `hip_connector.stl` | PA6-CF | Asimov V8 |
+| TPU SEA disc | `tpu_sea_disc.stl` | TPU 95A | Series elastic actuator |
+| Alignment tool | `planet-gear-alignment-tool.stl` | PLA | Assembly jig |
+| Tensile test | `06_dogbone_tensile.stl` | PLA | Material test |
+| Bolt test | `02_bolt_test_block.stl` | PLA | Print test |
+| Bridge span | `03b_bridge_span.stl` | PLA | Print test |
+| Bridge pillar | `03a_bridge_pillar.stl` | PLA | Print test |
+| Layer adhesion bar | `04_layer_adhesion_bar.stl` | PLA | Print test |
+| Bearing fit cylinder | `05_bearing_fit_cylinder.stl` | PLA | Print test |
+| Test cube 30mm PA12CF | `test_cube_PA12CF_30mm.stl` | PA12-CF | Material test |
+| Test cube 40mm | `test_cube_40mm.stl` | PLA | Print test |
 
 ---
 
-## 🛠️ Per-part settings (the cheatsheet for changing on the touchscreen)
+## ✅ Recommended print order (start now)
 
-When the print is running, **monitor first layer live on the webcam**. If:
-- **Lines squished flat, shiny surface** → Z is too LOW → nudge live-Z by +0.05mm
-- **Lines round, balling up** → Z is too HIGH → nudge live-Z by -0.05mm
-- **Lines slightly squished, smooth sheet** → perfect, don't touch
+| Step | File | Material | Time | Why |
+|---|---|---|---|---|
+| **1** | `test_cube_pa12cf.gcode` | PA12-CF | ~20min | **Verify new end + bed adhesion** — this is the gate |
+| 2 | `01_accuracy_cube_20mm.gcode.3mf` | PA12-CF | ~2h | Detailed dimensional check |
+| 3 | `MEOK-001_hip_pitch_wolf_mount_FIXED.gcode.3mf` | PA12-CF | ~1.5h | First real WOLF part |
+| 4 | Slice `front-plate.stl` in QIDIStudio → PA12-CF | PA12-CF | ~5h | WOLF front plate |
+| 5 | Slice `back-plate.stl` → PA12-CF | PA12-CF | ~7h | WOLF back plate |
+| 6 | Slice `internal-ring-gear-A.stl` + `B.stl` → PA6-CF | PA6-CF | ~9h | WOLF ring gears (anneal after) |
+| 7 | Slice `sun-gear.stl` → PA6-CF | PA6-CF | ~3h | WOLF sun gear |
+| 8 | Slice `planet-gears.stl` (×12) → PA6-CF | PA6-CF | ~10h | All planet gears |
+| 9 | Slice `outer-ring-A.stl` + `outer-ring-B.stl` → PA12-CF | PA12-CF | ~11h | WOLF housing rings |
+| 10 | Slice `encoder-housing-as5047.stl` → PA12-CF | PA12-CF | ~4h | Encoder housing |
+| 11 | Slice `encoder-magnet-holder.stl` → PA12-CF | PA12-CF | ~1h | Magnet holder |
+| 12 | Slice `planet-gear-alignment-tool.stl` → PLA | PLA | ~1h | Assembly jig |
+| **13** | **ASSEMBLE WOLF UNIT 1** | — | ~3h | The gate — verify meshing |
+| 14 | Slice Asimov V8 pelvis + hip links → PA6-CF | PA6-CF | ~30h | Asimov V8 structural |
+| 15 | Slice Asimov V8 legs (knee, ankle) → PA6-CF | PA6-CF | ~40h | Asimov V8 legs |
+| 16 | Slice Asimov V8 arm structure → PA12-CF | PA12-CF | ~10h | Asimov V8 arms |
+| 17 | Slice TPU pads → TPU 95A | TPU | ~3h | TPU foot pads |
+| 18 | **Anneal PA6-CF parts** (130°C oven × 2hr) | — | ~4h | Strengthens structural |
 
-Save the final Z when you get it right.
+**Total estimate: ~140h serial = ~6 days on 1 printer**
 
 ---
 
-## 🖨️ How to fire each print
+## 🎯 Critical settings to verify before each print
 
-### Option A: From the Qidi touchscreen (manual)
-1. Touch **Print** → select file from SD/USB → **Start**
-2. Watch first 10 layers on the webcam
-3. Walk away
+| Material | Nozzle | Bed | Layer | Infill | Notes |
+|---|---|---|---|---|---|
+| **PLA** | 210-220°C | 60°C | 0.20mm | 30% grid | Standard, easy |
+| **PA12-CF** | 280°C | 100°C | 0.16mm | 30% gyroid | Chamber 55°C, dry filament |
+| **PA6-CF** | 300°C | 110°C | 0.16mm | 40% gyroid | Chamber 60°C, anneal after |
+| **TPU 95A** | 225°C | 50°C | 0.20mm | 20% gyroid | Chamber OFF, slow speeds |
 
-### Option B: From me (when I'm connected)
-1. Confirm the .gcode file is on the printer (`list_files`)
-2. `start_print` with the filename
-3. Monitor progress (`print_progress`)
+**Bed prep:** IPA wipe before every print, dry filament for CF/PETG
+**First layer check:** lines squished smooth = good, balling = Z too high, no sticking = Z too low
+**Babystep Z during layer 1** if needed
 
 ---
 
-## 📁 Files in this folder
+## 🛟 Troubleshooting cheat sheet
 
+| Symptom | Cause | Fix |
+|---|---|---|
+| Lines not sticking | Z too high, dirty bed, no glue (PLA on PEI) | Babystep Z down -0.05mm, IPA wipe |
+| Lines too squished | Z too low | Babystep Z up +0.05mm |
+| Layer shift | Belt tension, acceleration too high | Lower accel to 1500 mm/s² |
+| Stringing | Wet filament, temp too high | Dry filament 70°C×8h, drop temp 5°C |
+| Nozzle clog | Cold pull, hardened end clean | Heat 250°C, extrude 50mm, cool to 90°C, pull |
+| Bed mesh not used | Probe state stuck | `ABORT` then `SAVE_CONFIG` |
+| WIFI drops | Print continues offline, reconnect | `printer_status` re-establishes |
+
+---
+
+## 🔌 Programmatic access
+
+```bash
+# Check printer state
+cd ~/clawd/mcp-marketplace/qidi-printer-mcp
+QIDI_PRINTER_IP=192.168.50.21 python3 -c "
+import os; os.environ['QIDI_PRINTER_IP']='192.168.50.21'
+from server import mcp
+import asyncio, json
+r = asyncio.run(mcp.call_tool('printer_status', {}))
+print(json.loads(r[0].text))
+"
 ```
-PRINTS_QUEUE/
-├── README.md          (this file)
-├── 00_calibration_cube.3mf     (start here)
-├── 01_wolf_test_cube.3mf
-├── 02_wolf_front_plate_pa12cf.3mf
-├── 03_wolf_back_plate_pa12cf.3mf
-├── ...
-├── profiles/
-│   ├── Qidi_Max4_0.6mm_PLA.3mf
-│   ├── Qidi_Max4_0.6mm_PA12-CF.3mf
-│   └── Qidi_Max4_0.6mm_PA6-CF.3mf
-```
+
+10 tools available: `printer_status`, `get_temperatures`, `list_files`, `start_print`, `pause_print`, `resume_print`, `cancel_print`, `send_gcode`, `preheat`, `print_progress`.
 
 ---
 
-## 🛟 TROUBLESHOOTING
-
-**Print won't stick:** check Z-offset (live-Z), clean bed with IPA, raise bed temp 5°C
-**Layer shift:** check belt tension, lower acceleration
-**Stringing:** dry filament, lower nozzle temp 5°C
-**Clog:** cold pull, then check hardened end is clean
-**WIFI drops during print:** print continues offline, reconnect with `printer_status`
-
----
-
-*Last update: 2026-06-24 · MEOK Labs (FORGE) tab · ready for Monday-night deadline*
+*Last verified 2026-06-27 · MEOK Labs (FORGE) tab · printer calibrated and ready*
+*Refresh: any time you load new STLs onto the Qidi*
