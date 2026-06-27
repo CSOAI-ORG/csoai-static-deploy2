@@ -146,6 +146,7 @@ const APPS={
  distribution:{i:'🚀',t:'Distribution',d:'21 packages, 1 token to live',c:'Built ≫ published — the #1 lever; one PyPI token ships them all.'},
  compete:{i:'🎯',t:'Where We Stand',d:'The competitive map',c:'Market validated our thesis; moat = legacy + SIGIL + sovereign.'},
  industries:{i:'🏭',t:'Industries',d:'Sector packs',c:'Pre-mapped governance for the sectors that buy first.'},
+ survival:{i:'🆘',t:'Aug 2nd Survival Kit',d:'28 days to EU AI Act',c:'Auto-scan your code for Art. 9-15 violations; generate Ed25519-signed OSCAL; certify via CSOAI. Don\'t get fined by the EU.'},
  pricing:{i:'£',t:'Pricing',d:'From £1 smoke tests',c:'Transparent pricing is the wedge — free audit → enterprise.'},
  town:{i:'🏛️',t:'Agent Town',d:'Governance, alive',c:'A living mesh of specialised agents — governance as a society that watches.'}
 };
@@ -304,9 +305,42 @@ function render(id){
    <p class="muted"><b>The moat, narrowed honestly:</b> agent/MCP governance is now table-stakes (MS/ServiceNow own it). Our <b>category of one</b> = govern the <i>legacy economy</i> (COBOL/SAP/SCADA/HL7) + signed protocol breadth + sovereign. <b>The wedge:</b> EU AI Act Art. 12 (tamper-evident logging) × Aug 2026 × regulated sectors on legacy. Lead there, not "MCP governance."</p>`;
  case 'industries': return `<h2>🏭 Industry packs</h2><p class="sub">Pre-mapped governance for the sectors that buy first.</p>
    <div class="row"><span class="chip on">Financial services</span><span class="chip on">Healthcare</span><span class="chip on">Manufacturing / logistics</span><span class="chip on">Insurance</span><span class="chip on">Public sector</span><span class="chip on">Critical infrastructure</span><span class="chip on">Energy</span><span class="chip on">Mortgage / real-estate</span></div>`;
- case 'pricing': return `<h2>£ Pricing</h2><p class="sub">From £1 smoke tests to full-stack institutional governance — transparent pricing is the wedge.</p><table><tr><th>Tier</th><th>For</th></tr>
-   <tr><td>Free audit</td><td>see your risk in 30s</td></tr><tr><td>£49 report</td><td>full multi-framework gap analysis</td></tr><tr><td>Growth / Business</td><td>continuous governance + the fleet</td></tr><tr><td>Enterprise</td><td>BFT Council + 19 bridges + signed attestation</td></tr></table>
-   <p class="muted">Owner-gated: Stripe checkout (M2/Nick).</p>`;
+ case 'pricing': return `<h2>£ Pricing</h2>
+   <p class="sub">From £1 smoke tests to full-stack institutional governance — transparent pricing is the wedge.</p>
+   <table><tr><th>Tier</th><th>For</th></tr>
+   <tr><td>Free audit</td><td>3 scans/day — see your EU AI Act risk in 30s</td></tr>
+   <tr><td>£49 report</td><td>one-off multi-framework gap analysis</td></tr>
+   <tr><td>Aug 2nd Survival £499/mo</td><td><b>EU AI Act Art. 9-15 scanner + Ed25519-signed OSCAL + PROOFOF.AI blockchain anchor</b> — the 28-day deadline wedge</td></tr>
+   <tr><td>Growth / Business</td><td>continuous governance + the fleet + Council</td></tr>
+   <tr><td>Enterprise</td><td>BFT Council + 22 bridges + signed attestation + certification</td></tr>
+   </table>
+   <p class="muted" style="margin-top:8px">The <b>Aug 2nd Survival</b> tier is the wedge: 28 days from our 4 Jul launch until EU AI Act high-risk enforcement lands. Every CCO in the EU is suddenly non-compliant on 2 Aug 2026. <b>Don't get fined by the EU.</b> Owner-gated: Stripe checkout (M2/Nick).</p>`;
+ case 'survival': return `<h2>🆘 Aug 2nd Survival Kit — 28 days to EU AI Act</h2>
+   <p class="sub">EU AI Act high-risk enforcement lands <b>2 August 2026</b>. Every CCO is suddenly non-compliant. <b>This is your panic button.</b></p>
+   <p>CSOAI assembles the only end-to-end EU AI Act compliance stack in open source:</p>
+   <div class="row">
+     <span class="chip on">📋 <b>AirBlackbox</b> — auto-scan Python AI code for Art. 9-15</span>
+     <span class="chip on">📊 <b>Venturalitica</b> — OSCAL policies + CycloneDX ML BOM + bias audits</span>
+     <span class="chip on">🔐 <b>Giskard</b> — LLM red-teaming + vulnerability scanning</span>
+     <span class="chip on">🛡️ <b>OSCAL generator</b> — Ed25519-signed Component Definition (RFC-0024)</span>
+     <span class="chip on">🔗 <b>PROOFOF.AI</b> — blockchain-anchored audit trail</span>
+     <span class="chip on">🤖 <b>SIGIL</b> — every action signed, hash-chained</span>
+   </div>
+   <h3 style="margin-top:14px">The 5-step survival</h3>
+   <ol>
+     <li><b>Scan</b> your Python AI repo with AirBlackbox → get Art. 9-15 violations in 30s</li>
+     <li><b>Generate</b> an OSCAL Component Definition via our generator (Ed25519-signed)</li>
+     <li><b>Compile</b> Annex IV technical documentation via the eu-ai-act-compliance-mcp</li>
+     <li><b>Anchor</b> the audit pack to PROOFOF.AI blockchain (offline-verifiable)</li>
+     <li><b>Certify</b> your team via CSOAI\'s "Watchdog Analyst" certification (£199/person)</li>
+   </ol>
+   <div class="row" style="margin-top:14px">
+     <button class="btn" onclick="alert(\'Live scan requires npx air-blackbox; CSOAI dashboard integration: Q3 2026.\')">▶ Run sample scan (demo)</button>
+     <button class="btn ghost" onclick="alert(\'Coming soon: e2e integration with Venturalitica SDK + OSCAL generator.\')">📊 Generate OSCAL pack</button>
+     <button class="btn ghost" onclick="alert(\'Watchdog Analyst certification: 28-day curriculum, £199/person, July 2026.\')">🎓 Get certified</button>
+   </div>
+   <p class="muted" style="margin-top:12px"><b>Pricing:</b> Free tier (3 scans/day) · Aug 2nd Survival £499/mo · Enterprise custom. <b>First 100 paying customers get lifetime lock-in at £299/mo.</b> Owner-gated Stripe checkout (M2/Nick).</p>
+   <p class="muted">Built on the same 89-component Ed25519-signed OSCAL package that powers the rest of the CSOAI OS. Same signing keys, same audit ledger, same PROOFOF.AI anchor.</p>`;
  case 'town': return `<h2>🏛️ The Agent Town</h2><p class="sub">A living governance mesh — specialised agents across the civilisations, debating, enforcing, and learning. Governance isn't a checkbox; it's a society that watches.</p>
    <p class="muted">The town's technology (agents, mesh, BFT) is what makes CSOAI's governance more sophisticated than a static rule engine.</p>`;
  default: return '<p>Coming soon.</p>';
