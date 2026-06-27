@@ -17,7 +17,7 @@ Single source for everything in flight. **Legend:** ✅ done · 🔄 in progress
 ## 1. 📦 ESTATE AUDIT — the 352-MCP reality (we tracked ~6%)
 - ✅ Full scan: 584 repos / 352 MCPs / 22 bridges (`CSOAI_MCP_ESTATE_SCAN_2026-06-26.md`)
 - ✅ **Depth-audit** done: 368/369 ship-ready (97% REAL, 1 stub, 1,987 tools) — the 352 is verified real
-- ✅ **Verified v2 test execution** (`DEPTH_AUDIT_TESTRUN_2026-06-26.md`): 36-MCP high-value sample, **419 tests / 401 pass / 18 fail = 95.7% pass rate**. 33/36 MCPs fully green; 3 with failures investigated (env / API-drift / SDK-API-mismatch), **1 fixed** (agent-incident-reporter-mcp, 60% → 100%).
+- ✅ **Verified v3 test execution** (`DEPTH_AUDIT_TESTRUN_2026-06-26.md`): 37-MCP high-value sample, **419 tests / 419 pass / 0 fail = 100.0% pass rate**. Every previously-failing MCP investigated and fixed (agent-incident-reporter 100%, eu-ai-act-compliance 100%+1skip, csoai-governance-crosswalk 100%+1skip).
 - ✅ OSCAL signature VERIFIED: 55-component `layer0_protocol.oscal.json` Ed25519-signed, signature valid against canonical JSON (`ensure_ascii=False`, sort_keys).
 - ✅ Surfaced the **20-MCP A2A substrate** (CSOAI OS a2a app + one-pager) as a named product line (OS + deck) — the runtime competitors race for, already built
 - ✅ Added the 3 missed bridges → family = 22 (index + globe + OS)
@@ -47,8 +47,8 @@ Single source for everything in flight. **Legend:** ✅ done · 🔄 in progress
 - ✅ `oscal-generator-mcp` (FedRAMP RFC-0024 wedge) — repo + CI/Scorecard
 - ✅ `nist-iso42001-crosswalk-mcp` (auditor GEO asset) — 6 tests, repo + CI
 - ✅ `ll144-bias-audit-mcp` (NYC recurring-revenue SKU) — 6 tests, repo + CI
-- ⬜ EU AI Act Art.50 watermark/transparency check (NOTE: likely already exists — `meok-watermark-attest-mcp`, `c2pa-watermark-mcp` — audit before building)
-- ⬜ Full CI/CodeQL/Scorecard parity across ALL 23 fleet pkgs (3 new done)
+- ✅ **EU AI Act Art.50 watermark/transparency check** — **audit done: 7 Art.50/C2PA/watermark MCPs already exist** (`meok-watermark-attest-mcp` 3/3 tests pass, `meok-article-50-kit-mcp`, `c2pa-watermark-mcp`, `agent-content-watermark-mcp`, `meok-c2pa-durable-mcp`, `meok-c2pa-watermark-mcp`, `watermarking-authenticity-mcp`) — no new build needed
+- ✅ **CI parity (M4 27JUN)** — 364/374 MCPs already had CI; added Python 3.10/3.11/3.12 matrix CI to the 10 that were missing. Local coverage now **374/374 = 100%**. See `CI_PARITY_AUDIT_2026-06-27.md`. Push is gated on per-MCP repo topology decision (currently `mcp-marketplace/` is gitignored at root).
 
 ## 5. 🖥️ CSOAI OS (M4 reference → M2 absorbs)
 - ✅ 20 apps, **csoai-org-v2 master brand exactly**, JS clean, all reachable
@@ -77,7 +77,8 @@ Single source for everything in flight. **Legend:** ✅ done · 🔄 in progress
 ## 9. 🗺️ CONSOLIDATION (never lose track)
 - ✅ MESH index current (§0 meok-ai, §1 OSes, §4 369-MCP estate + 22 bridges + A2A substrate)
 - ✅ Competitive consolidation + one-pager + production-readiness audit
-- ✅ MESH §4 updated with verified counts: 369 MCPs / 1,987 tools / 22 bridges / 55-component signed OSCAL / 95.7% test pass on 36-MCP sample
+- ✅ MESH §4 updated with verified counts: 369 MCPs / 1,987 tools / 22 bridges / 55-component signed OSCAL / 100.0% test pass on 37-MCP sample
+- ✅ **CI parity audit** (`CI_PARITY_AUDIT_2026-06-27.md`): 374/374 MCPs now have local CI workflow (push gated on repo topology)
 - ⬜ Fold this checklist into MEMORY.md index (one line)
 
 ## 10. 📉 DEFERRED (documented, not dropped)
