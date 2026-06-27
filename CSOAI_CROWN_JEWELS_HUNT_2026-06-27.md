@@ -81,4 +81,48 @@ The deep-research on the buyer side strengthens the wedge with hard 2026 numbers
 ## Honest bottom line
 The hunt paid off **both ways**: real diamonds to absorb (**compliance-trestle, oscal-cli, the Azure COBOL-understanding agent, four awesome-list distribution surfaces**) *and* a sobering, useful finding — **the Article-12 signed-audit space we thought was ours is now OSS-contested** (local-first, hash-chained, EU-jurisdiction tools shipping). The silver lining is sharp: every new entrant governs *modern* agents, so the **legacy bridges are now the cleanest, most defensible moat in the whole estate** — and the buyer (bank/insurer CCO) has a growing budget, a hard date, and personal accountability. **Lead with legacy. Stand on trestle. Validate with NIST's own tools. Ship a public verify page. Get on the awesome-lists.**
 
+---
+
+# 🔬 KIMI CROSS-CHECK (2026-06-27) — verified Kimi's wall-notes + intel brief
+
+Nick supplied a large Kimi compilation (wall notes + a deep-research "crown jewels" brief). Kimi has a habit of **renaming real tools** (e.g. "OpenClaw"/"ClawTeam"/"OpenFang"/"MiroFish"/"Kimodo"/"Inkog") — so I verified the decision-relevant claims directly before absorbing. **Verdict: the core is real and accurate** (the naming quirks aside). Honest real-vs-unverified split below.
+
+## ✅ VERIFIED REAL — absorb these (I confirmed each via direct search)
+
+| Tool | What it is (verified) | License | Why it matters to CSOAI |
+|---|---|---|---|
+| **COMPL-AI** (ETH Zurich + INSAIT + LatticeFlow) | First EU-AI-Act technical-interpretation framework: **27 benchmarks** mapping the Act to measurable LLM tests | open-source, compl-ai.org | **Validate models before we attest them.** Pair with our reg-MCPs: COMPL-AI scores the model, CSOAI signs the result. |
+| **VerifyWise** (`bluewave-labs/verifywise`) | Open AI-governance platform, **24+ frameworks** (EU AI Act/NIST/ISO 42001/GDPR/SOC2), immutable audit logs, on-prem | BSL 1.1 (source-available) | **Direct architecture reference + competitor** for a governance dashboard. On-prem + audit-log overlaps us — but no legacy bridges. |
+| **Giskard** (`Giskard-AI/giskard-oss`) | LLM **red-teaming + vuln scanner**, 40+ probes, OWASP LLM Top-10, prompt-injection | Apache-2.0 | **Red-team our own MCPs + a SKU** for SafetyOf.AI. Feeds the "AI safety/assurance" cluster (8 MCPs). |
+| **Venturalitica SDK** (`pip install venturalitica`) | **Generates OSCAL Assessment Results + CycloneDX ML-BOM + Annex-IV docs as a byproduct of training**; extends OSCAL with **16 AI-lifecycle properties**; arXiv "Making AI Compliance Evidence Machine-Readable" (2604.13767) | Apache-2.0 | 🔑 **Closest thing to our exact moat in OSS.** Align our OSCAL extension with its 16 properties for interoperability; absorb its ML-BOM generation under oscal-generator. |
+| **NVIDIA ACE Game Agent SDK** | On-device AI-companion framework (Agent/Chat/RAG APIs + UE5 plugins: ASR/SLM/TTS/Audio2Face); ships **C++ + Python source under MIT**; proven in PUBG "Ally" + Total War: PHARAOH; launched **Unreal Fest, 16–18 June 2026** | MIT | **The MEOK gaming / Dragon-Companion infra** — production-ready, white-label-able. Kimi's facts check out exactly. |
+| **AIR Blackbox · Sentinel Kernel · Microsoft Agent Gov Toolkit** | (already in Tier-2 above) | — | Confirmed; Kimi independently surfaced the same set → cross-validates my competitor read. |
+
+## 🚨 BIGGEST FINDING — the MCP security crisis is REAL (and it's a CSOAI opening, not just a risk)
+Kimi's "OpenClaw CVE-2026-25253" specific is **a confabulation** (no such project/CVE), BUT the underlying threat is **real and worse than Kimi framed**, confirmed across OX Security, The Hacker News, Tom's Hardware, Check Point:
+- A **systemic "by-design" RCE weakness in Anthropic's MCP SDK** (Python/TS/Java/Rust) — **7,000+ public servers, 150M+ downloads, up to 200,000 vulnerable instances**.
+- **30 CVEs filed in 60 days.** `CVE-2025-6514` (CVSS **9.6**, mcp-remote, 437k downloads). 9 of 11 MCP **registries** poisoned with a test payload in research; 6 live production platforms confirmed exploitable.
+- Scan of **2,614 MCPs:** **82%** of file-handling MCPs vulnerable to path traversal, **67%** code-injection risk, **38–41%** of officially-registered servers had **no meaningful auth**. **1,184 malicious agent skills** documented.
+
+### Why this is the sharpest strategic item in the whole hunt
+1. **RISK — our 369 MCPs are part of this surface.** Before we publish/deploy, we must **security-audit the fleet** (path traversal, command injection, auth). Use **Giskard scan + Inkog-style SARIF** on every server. This is now a publish-gate, not optional.
+2. **OPENING — this crisis is *exactly* what CSOAI's A2A substrate answers.** `agent-policy-enforcement` (per-action IAM), `agent-prompt-injection-firewall` (OWASP LLM01), `agent-audit-logger` (hash-chained), `agent-handoff-certified` (signed), `agent-mcp-router` (one governed gateway) — that 20-MCP substrate is the *remediation* for a 30-CVE headline crisis. **Reframe the A2A substrate from "table-stakes" → "the governed-MCP answer to the MCP security crisis."** That's a sharper, more urgent wedge than I had, and it's *already built*.
+
+## ⚠️ UNVERIFIED — likely Kimi renaming; verify before chasing (don't absorb yet)
+- **OpenFang** (Rust agent OS, "137K LOC/16.8K stars") · **ClawTeam** (`HKUDS` — HKUDS is a real lab, but the repo name is unconfirmed) · **MoltBook/Molt Dynamics** (arXiv 2603.03555, "770k agents") · **MiroFish** (swarm sim) · **NVIDIA Kimodo** (human-motion). These *sound* like real things under other names (OpenFang≈an agent-OS; Kimodo≈NVIDIA's real motion model) but I did **not** confirm the exact repos. **Action: treat as leads, not facts — verify the repo before any `git clone`.**
+- **Humanoid hardware** (OpenLoong / RoboParty Roboto-Origin / Open-X-Humanoid + RoboMIND): plausible and matches the open-humanoid-hardware trend, but **out of scope for the CSOAI legacy-compliance lane** — park under the MEOK-robotics research thread, don't let it pull focus from the Aug-2026 compliance wedge.
+- **Regulus / Inkog / "Watchdog Analyst"**: named compliance/security tools I couldn't confirm by exact name — likely real-under-another-name; check the awesome-eu-ai-act list (where Kimi sourced them) for the true names.
+
+## Net adds to the absorb list (verified only)
+7. **Venturalitica SDK** — align our OSCAL extension to its 16 AI-lifecycle properties + absorb ML-BOM generation. *(Highest-relevance new jewel — it's our moat, in OSS.)*
+8. **COMPL-AI** — model-compliance scoring upstream of our attestation.
+9. **Giskard** — red-team the MCP fleet (publish-gate) + a SafetyOf.AI SKU.
+10. **VerifyWise** — reference architecture for a CSOAI governance dashboard (study, don't fork — BSL license).
+11. **NVIDIA ACE SDK** — MEOK gaming companion infra (MEOK lane, not CSOAI).
+12. **🚨 Security-audit all 369 MCPs** (Giskard + path-traversal/injection/auth checks) **before publish** — and **reframe the A2A substrate as the answer to the MCP security crisis** in the deck + memo.
+
+*Kimi-verified sources: [COMPL-AI / LatticeFlow](https://latticeflow.ai/news/eth-zurich-insait-and-latticeflow-ai-launch-the-first-eu-ai-act-compliance-evaluation-framework-for-generative-ai) · [VerifyWise](https://github.com/bluewave-labs/verifywise) · [Giskard OSS](https://github.com/Giskard-AI/giskard-oss) · [Venturalitica (PyPI)](https://pypi.org/project/venturalitica/) · ["Making AI Compliance Evidence Machine-Readable" (arXiv 2604.13767)](https://arxiv.org/html/2604.13767) · [NVIDIA ACE SDK (NVIDIA blog)](https://developer.nvidia.com/blog/build-on-device-ai-companions-with-the-nvidia-ace-game-agent-sdk-and-unreal-engine-5-plugins/) · [MCP RCE advisory (OX Security)](https://www.ox.security/blog/the-mother-of-all-ai-supply-chains-critical-systemic-vulnerability-at-the-core-of-the-mcp/) · [MCP RCE (Tom's Hardware)](https://www.tomshardware.com/tech-industry/artificial-intelligence/anthropics-model-context-protocol-has-critical-security-flaw-exposed)*
+
+---
+
 *Sources (code): [Azure Legacy-Modernization-Agents](https://github.com/Azure-Samples/Legacy-Modernization-Agents) · [compliance-trestle](https://github.com/oscal-compass/compliance-trestle) · [oscal-cli](https://github.com/usnistgov/oscal-cli) · [usnistgov/OSCAL](https://github.com/usnistgov/OSCAL) · [airblackbox/gateway](https://github.com/airblackbox/gateway) · [sentinel-kernel](https://github.com/sebastianweiss83/sentinel-kernel) · [ark-forge/mcp-eu-ai-act](https://github.com/ark-forge/mcp-eu-ai-act) · [microsoft/agent-governance-toolkit](https://github.com/microsoft/agent-governance-toolkit) · [awesome-eu-ai-act (morganrcu)](https://github.com/morganrcu/awesome-eu-ai-act) · [awesome-eu-ai-act (GenAI-Gurus)](https://github.com/GenAI-Gurus/awesome-eu-ai-act) · [awesome-compliance](https://github.com/theopenlane/awesome-compliance) · [awesome-legaltech](https://github.com/Vaquill-AI/awesome-legaltech)*
