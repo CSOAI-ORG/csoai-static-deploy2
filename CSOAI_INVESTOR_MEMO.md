@@ -4,18 +4,20 @@
 
 ## The market (verified 2026)
 - **AI governance platforms: $492M (2026) → $1B+ (2030)** — Gartner, official PR Feb 17 2026. Driver: AI regulation reaching 75% of world economies by 2030.
+- **Broader AI governance + compliance spend: $2.54B (2026) → $8.23B (2034)**; corporate GRC-tooling investment **+50% in 2026**; AI-risk consulting demand **+40% in 2026**. The budget line is real, named, and growing.
 - **Agentic-AI security (broader): $55B (2026) → $888B (2035).**
-- It's hot and funded: **Runlayer $30M Series A** (June 2026, Felicis + Khosla), Obot, plus Microsoft + ServiceNow shipping runtime agent governance.
+- It's hot and funded: **Runlayer $30M Series A** (June 2026, Felicis + Khosla), Obot, plus Microsoft + ServiceNow shipping runtime agent governance — and now a wave of OSS Article-12 tools (AIR Blackbox, Sentinel Kernel, Vaara). **All of it governs *modern* agents.** None of it touches legacy.
 
 ## The wedge (why us, why now)
-The funded players (Microsoft, ServiceNow, Runlayer) govern **modern** AI agents. **None bridge the legacy systems** — COBOL cores, SAP, SCADA, HL7 — that banks, hospitals and grids actually run on. That's structural (they're cloud control planes; legacy is on-prem mainframe).
+The funded players (Microsoft, ServiceNow, Runlayer) — and a new wave of OSS Article-12 tools — govern **modern** AI agents. **None bridge the legacy systems** — COBOL cores, SAP, SCADA, HL7, ISO-20022 — that banks, hospitals and grids actually run on. That's structural (they're cloud control planes; legacy is on-prem mainframe). *We lead with legacy exclusively — we never pitch "agent security," which is now free (Microsoft) and OSS-contested.*
 
-And there's a clock: **EU AI Act, 2 Aug 2026** — high-risk AI (critical infra, credit/insurance, biometrics) must be governed **and** logged **tamper-evident** (Article 12). That's exactly what we do, on exactly the layer no one else covers.
+And there's a clock with teeth: **EU AI Act, 2 Aug 2026** — high-risk AI (critical infra, credit/insurance, biometrics) must be governed **and** logged **tamper-evident** (Article 12). Fines to **€15M or 3% of global turnover.** Banks' AML/credit/fraud systems are high-risk *by definition* (Annex III 5b/5c); **the ECB's 2025-26 supervisory priorities already cite AI governance**, and the **CCO is personally accountable**. That's exactly what we do, on exactly the layer — the legacy core — no one else covers.
 
 ## What we've built (verified, not slideware)
 - **22 governed legacy bridges** (COBOL · ISO 20022 · HL7 · SAP · SCADA · …) — parse → govern → **Ed25519-sign**. *Category of one.*
 - **369 published, governed MCP servers / 1,987 tools** — depth-audited 99% ship-ready; the credibility base + the largest governed-MCP fleet on GitHub.
-- **Signed protocol breadth** — a 55-component Ed25519-signed OSCAL/Layer-0 package; the Article-12 audit trail, verifiable offline.
+- **Signed protocol breadth** — a 79-component Ed25519-signed OSCAL/Layer-0 package; the Article-12 audit trail, verifiable offline. **It validates under the standard NIST OSCAL toolchain (compliance-trestle)** — not just our own checks — and anyone can confirm it at a **public, offline, in-browser verify page** (no account, no callback). Cryptographic proof a "trust-me" GRC dashboard can't match.
+- **The MCP-security answer, already built** — the year's biggest agent-security story is the systemic MCP RCE crisis (30 CVEs/60 days, ~200k vulnerable instances). Our **20-MCP A2A substrate** (per-action policy, prompt-injection firewall, hash-chained signed audit, certified handoff, governed router) **is the remediation** — shipped, tested, signed.
 - **Live demo** — `demo_finance_cobol.py`: a COBOL wire-settlement → governed against DORA/NIS2/AML/PSD2 (with real sanctions/audit flags) → signed audit package that verifies with no account. Competitors can't replicate it.
 - **Governance core** — BFT council (selectable 5/13/33), a sovereign orchestrator (governed autonomy), all SIGIL-signed.
 

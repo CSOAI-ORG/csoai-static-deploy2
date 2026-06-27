@@ -6,14 +6,14 @@ Goal: land **ONE referenceable regulated design partner** before the EU AI Act A
 
 ## The CCO/CISO one-pager (paste into an email or a single slide)
 
-**Your AI now touches your COBOL core and ISO-20022 payments. By 2 Aug 2026, every one of those actions must be governed as high-risk AND logged tamper-evident (EU AI Act Article 12).**
+**Your AI now touches your COBOL core and ISO-20022 payments. By 2 Aug 2026, every one of those actions must be governed as high-risk AND logged tamper-evident (EU AI Act Article 12) — fines to €15M or 3% of global turnover, and the CCO is personally accountable.**
 
-- **The gap:** Microsoft, ServiceNow, Runlayer ($30M) govern *modern* AI agents. **None bridge your legacy mainframe.** Your COBOL/SAP/SCADA layer is exactly where the regulated risk lives — and it's uncovered.
-- **CSOAI:** the only governed, **signed** bridge between AI and your legacy systems. We parse your COBOL, govern the ISO-20022 wire against DORA/NIS2/AML/PSD2, and emit an **Ed25519-signed, offline-verifiable OSCAL audit package** — your Article-12 trail.
-- **The proof:** a 2-minute live demo on a real COBOL wire-settlement program → 5 frameworks flagged (incl. AML/sanctions gaps) → signed audit package that verifies with no account. Competitors literally cannot show this.
+- **The gap:** Microsoft, ServiceNow, Runlayer ($30M) — and every new OSS compliance tool — govern *modern* AI agents. **None bridge your legacy mainframe.** Your COBOL/SAP/SCADA layer is exactly where the regulated, ECB-supervised risk lives — and it's uncovered.
+- **CSOAI:** the only governed, **signed** bridge between AI and your legacy systems. We parse your COBOL, govern the ISO-20022 wire against DORA/NIS2/AML/PSD2, and emit an **Ed25519-signed, offline-verifiable OSCAL audit package** — your Article-12 trail. It **validates under the standard NIST OSCAL toolchain (compliance-trestle)**, not just our say-so.
+- **The proof (two ways, both self-serve):** (1) a 2-minute live demo on a real COBOL wire-settlement → 5 frameworks flagged (incl. AML/sanctions gaps) → signed audit package; (2) **verify one of our signed packages yourself** at our public verify page — in your own browser, offline, no account, watch zero network calls. Competitors' "trust-me" dashboards cannot show either.
 - **The ask:** be our design partner. Free pilot on one payment flow; you get a signed Art-12 audit trail before the deadline; we get a reference. 30-minute call.
 
-*Behind the wedge: 22 legacy bridges · 369 governed MCP servers · a BFT governance council · sovereign/on-device. Market: AI governance $492M→$1B by 2030 (Gartner).*
+*Behind the wedge: 22 legacy bridges · 369 governed MCP servers · a 79-component trestle-validated signed OSCAL package · a BFT governance council · sovereign/on-device. Market: AI governance + compliance spend $2.54B (2026) → $8.23B (2034).*
 
 ---
 
