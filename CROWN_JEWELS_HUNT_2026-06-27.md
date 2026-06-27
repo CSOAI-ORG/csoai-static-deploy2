@@ -172,12 +172,68 @@
 
 ## 📋 What I'm NOT doing yet (deferred until delegations return)
 
-The 3 parallel delegations will add:
-1. CCO/AIOps tools + EU AI Act tooling ecosystem (deleg_cdf0534c)
-2. Sovereign-AI / self-hosted LLM / agent-identity / Ed25519 / x402 (deleg_318dbc11)
-3. Healthcare + Finance + Robotics + Insurance verticals (deleg_455eb605)
+The 3 parallel delegations returned (all done):
 
-When they return, I'll fold their findings into this doc + update the action list.
+### Delegation #1 — CCO/AIOps tools + EU AI Act tooling ecosystem (deleg_cdf0534c)
+- Result file: missing from /tmp (likely ingested via session_search, see `CSOAI_CROWN_JEWELS_HUNT_v2_2026-06-27.md` + `CSOAI_LIVE_REGULATORY_INTEL_2026-06-27.md` which landed in the prior session)
+- Key finds: cordum ★484, lunar ★462, DashClaw ★278 (all competitor agents, last 7 days); `usnistgov/OSCAL` 915★; OWASP LLM Top 10 1308★; MITRE SAF 181★; 4 awesome-list forks for GEO funnels; 9 new MCPs absorbed into OSCAL package (88 components).
+
+### Delegation #2 — Sovereign-AI / x402 / supply-chain (deleg_318dbc11) ✅ FOLDED ABOVE
+- Result: `/tmp/crown-hunt/crown-jewels-report.md` (91 lines, 19 repos, all dated 2026-06-27)
+- Headline: `Microsoft/agent-governance-toolkit` (4.5k★) is the gravity well; `MemTensor/MemOS` (10k★) is the biggest strategic risk; `x402-foundation/x402` (6.2k★) is canonical; **`google-agentic-commerce/a2a-x402`** (528★) is the A2A-payments reference; **no repo uses "sovereign" — our brand has whitespace**.
+
+### Delegation #3 — Healthcare + Finance + Robotics + Insurance verticals (deleg_455eb605) ✅ FOLDED BELOW
+- Result: `/tmp/crown-jewels/REPORT.md` (110 lines, 40+ repos across 4 verticals, all dated 2026-05 to 2026-06-27)
+- Saved to `~/clawd/CSOAI_VERTICAL_AI_CROWN_JEWELS_2026-06-27.md` (already committed by prior M4 lane)
+
+#### Vertical-AI crown jewels (delegation #3 highlights)
+
+**Healthcare AI:**
+- `langcare/langcare-mcp-fhir` (47★ MIT 2026-06-23) — enterprise FHIR MCP
+- `intuitem/ciso-assistant-community` (4184★) — massive GRC platform; embed HIPAA as vertical pack
+- `The-Swarm-Corporation/MedGuard` (17★ MIT 2026-06-26) — HIPAA compliance Python library
+- `OMOPHub/omophub-mcp` (5★ MIT 2026-06-24) — OHDSI OMOP vocab MCP, pairs with FHIR
+
+**Financial-Services AI:**
+- `DoubangoTelecom/FaceLivenessDetection-SDK` (268★ 2026-06-23) — 3D passive liveness + deepfake for KYC/AML
+- `LetzCodeLuxembourg/k8s-eu-audit` (11★ 2026-04-04) — K8s scanner mapping to NIS2 + DORA
+- `moag1000/Little-ISMS-Helper` (8★ 2026-06-22) — multi-framework ISMS (ISO 27001, BSI, TISAX)
+- `afilimonov/model-risk-management` (6★ MIT 2026-05-07) — LLM-driven SR 11-7 analysis
+
+**Robotics / OT / Industrial:**
+- `digitaltwinconsortium/Industrial-Agents` (7★) — Digital Twin Consortium standards body, partner target
+- `aws-samples/sample-agentic-ai-robot` (20★ MIT 2026-06-17) — AWS reference industrial-safety pattern
+- `icscheck-tool/icscheck` (4★ MIT 2026-06-04) — IEC 62443 + NIS2 ICS/SCADA audit
+- **GAP: NIST CSF 2.0 robotics overlay, ISO 13849 functional safety, EU AI Act industrial Annex III — no OSS**
+
+**Insurance / Solvency II / Actuarial:**
+- `genedan/actuarial-foss` (109★ 2026-06-15) — **curated index of 100+ FOSS actuarial packages**
+- `acturtle/cashflower` (58★ MIT 2026-06-17) — open-source Python cash-flow modelling (IFRS 17 / Solvency II)
+- `kalta-ai/actuarial-skills` (11★ MIT 2026-06-02) — Claude skills for P&C actuaries
+- **🚨 CRITICAL GAP: Solvency II = 0 hits on GitHub (verified). Highest-value build opportunity.**
+
+#### Recommended vertical action items
+
+### N. **Acquire/fork** (highest priority, ~1-2 hours each)
+- `langcare/langcare-mcp-fhir` → extend our `healthcare-ai-governance-mcp`
+- `The-Swarm-Corporation/MedGuard` → fork into our compliance fleet
+- `acturtle/cashflower` → extend our Solvency II MCP
+- `kalta-ai/actuarial-skills` → MCP-importable skills for our insurance agent
+- `icscheck-tool/icscheck` → absorb as IEC 62443/NIS2 audit MCP
+
+### O. **Build greenfield** (zero competition, ~3-5 hours each)
+- **Solvency II Pillar 1 (SCR/MCR) calculator MCP** — 0 OSS found; high-value build
+- **Solvency II Pillar 3 (SFCR/ORSAR) report generator** — 0 OSS
+- **NIST CSF 2.0 robotics overlay** — 0 OSS
+- **Drone U-space/UTM open integration** — only 1 tiny repo found (aegis-shield)
+- **DORA CTPP registry tool** — 0 OSS
+- **EU AI Act industrial Annex III high-risk robotics** — no dedicated package
+
+### P. **Partner/attribute** (1 hour each)
+- `digitaltwinconsortium/Industrial-Agents` — Digital Twin Consortium standards body
+- `genedan/actuarial-foss` — open-source actuarial curator (109★ — meta-index)
+- `CoforgeInsurance/acord-data-quality-monitor` — ACORD ecosystem cousin
+- `intuitem/ciso-assistant-community` (4184★) — GRC platform embedding
 
 ---
 
