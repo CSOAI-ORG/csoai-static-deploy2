@@ -83,6 +83,7 @@ ROOTS = [
     "/Users/nicholas/clawd/meok-labs-engine",
     "/Users/nicholas/clawd/ralph-mode-overnight-2026-06-12",
     "/Users/nicholas/clawd/mcp-marketplace",
+    "/Users/nicholas/clawd/_intake/alchemy_corpus",   # NEW 27 Jun: hermetic canon, see CORPUS_INDEX.md
 ]
 vault_index = []
 for root in ROOTS:
