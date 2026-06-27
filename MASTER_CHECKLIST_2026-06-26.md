@@ -18,7 +18,7 @@ Single source for everything in flight. **Legend:** ✅ done · 🔄 in progress
 - ✅ Full scan: 584 repos / 352 MCPs / 22 bridges (`CSOAI_MCP_ESTATE_SCAN_2026-06-26.md`)
 - ✅ **Depth-audit** done: 368/369 ship-ready (97% REAL, 1 stub, 1,987 tools) — the 352 is verified real
 - ✅ **Verified v3 test execution** (`DEPTH_AUDIT_TESTRUN_2026-06-26.md`): 37-MCP high-value sample, **419 tests / 419 pass / 0 fail = 100.0% pass rate**. Every previously-failing MCP investigated and fixed (agent-incident-reporter 100%, eu-ai-act-compliance 100%+1skip, csoai-governance-crosswalk 100%+1skip).
-- ✅ OSCAL signature VERIFIED: 55-component `layer0_protocol.oscal.json` Ed25519-signed, signature valid against canonical JSON (`ensure_ascii=False`, sort_keys).
+- ✅ OSCAL signature VERIFIED: **79-component** `layer0_protocol.oscal.json` Ed25519-signed, signature valid against canonical JSON (`ensure_ascii=False`, sort_keys). **OSCAL strict-validated** by `compliance-trestle` ComponentDefinition model (NIST OSCAL 1.1.2).
 - ✅ Surfaced the **20-MCP A2A substrate** (CSOAI OS a2a app + one-pager) as a named product line (OS + deck) — the runtime competitors race for, already built
 - ✅ Added the 3 missed bridges → family = 22 (index + globe + OS)
 - ✅ Mapped the article-level reg MCPs into the frameworks surface
