@@ -2,16 +2,17 @@
   "aggregate": {
     "sample_size": 67,
     "by_status": {
-      "pass": 58,
-      "fail": 5,
-      "missing": 4
+      "pass": 61,
+      "fail": 1,
+      "missing": 4,
+      "no-tests": 1
     },
-    "total_tests_collected": 686,
-    "total_passed": 640,
-    "total_failed": 23,
+    "total_tests_collected": 681,
+    "total_passed": 657,
+    "total_failed": 1,
     "total_errors": 0,
     "total_skipped": 23,
-    "wall_clock_s": 40.2,
+    "wall_clock_s": 61.6,
     "honesty_note": "Sample = 67 high-value MCPs (A2A substrate + reg MCPs + signing backbone + bridges + top by tool count). NOT all 369. Sourced from mcp-marketplace local clone. The earlier 'tests = file present' claim is now upgraded to 'tests collected + pass rate' on this sample."
   },
   "results": [
@@ -23,9 +24,9 @@
       "failed": 0,
       "errors": 0,
       "skipped": 1,
-      "duration_s": 0.73,
+      "duration_s": 0.55,
       "label": "tests/",
-      "summary": "4 passed, 1 skipped in 0.39s"
+      "summary": "4 passed, 1 skipped in 0.22s"
     },
     {
       "slug": "agent-identity-trust-mcp",
@@ -35,9 +36,9 @@
       "failed": 0,
       "errors": 0,
       "skipped": 1,
-      "duration_s": 0.57,
+      "duration_s": 0.54,
       "label": "tests/",
-      "summary": "4 passed, 1 skipped in 0.31s"
+      "summary": "4 passed, 1 skipped in 0.21s"
     },
     {
       "slug": "agent-x402-paywall-mcp",
@@ -47,9 +48,9 @@
       "failed": 0,
       "errors": 0,
       "skipped": 0,
-      "duration_s": 0.57,
+      "duration_s": 0.52,
       "label": "tests/",
-      "summary": "14 passed, 1 warning in 0.31s"
+      "summary": "14 passed, 1 warning in 0.20s"
     },
     {
       "slug": "agent-prompt-injection-firewall-mcp",
@@ -59,9 +60,9 @@
       "failed": 0,
       "errors": 0,
       "skipped": 1,
-      "duration_s": 1.75,
+      "duration_s": 1.77,
       "label": "tests/",
-      "summary": "12 passed, 1 skipped, 1 warning in 1.49s"
+      "summary": "12 passed, 1 skipped, 1 warning in 1.40s"
     },
     {
       "slug": "agent-policy-enforcement-mcp",
@@ -71,9 +72,9 @@
       "failed": 0,
       "errors": 0,
       "skipped": 0,
-      "duration_s": 0.59,
+      "duration_s": 0.67,
       "label": "tests/",
-      "summary": "4 passed, 1 warning in 0.31s"
+      "summary": "4 passed, 1 warning in 0.26s"
     },
     {
       "slug": "agent-incident-relay-mcp",
@@ -83,9 +84,9 @@
       "failed": 0,
       "errors": 0,
       "skipped": 0,
-      "duration_s": 0.58,
+      "duration_s": 0.57,
       "label": "tests/",
-      "summary": "16 passed, 1 warning in 0.31s"
+      "summary": "16 passed, 1 warning in 0.20s"
     },
     {
       "slug": "agent-handoff-certified-mcp",
@@ -95,9 +96,9 @@
       "failed": 0,
       "errors": 0,
       "skipped": 0,
-      "duration_s": 0.58,
+      "duration_s": 0.51,
       "label": "tests/",
-      "summary": "4 passed, 1 warning in 0.31s"
+      "summary": "4 passed, 1 warning in 0.20s"
     },
     {
       "slug": "agent-audit-logger-mcp",
@@ -109,7 +110,7 @@
       "skipped": 0,
       "duration_s": 0.57,
       "label": "tests/",
-      "summary": "4 passed, 1 warning in 0.31s"
+      "summary": "4 passed, 1 warning in 0.21s"
     },
     {
       "slug": "agent-rate-limiter-mcp",
@@ -119,9 +120,9 @@
       "failed": 0,
       "errors": 0,
       "skipped": 0,
-      "duration_s": 0.58,
+      "duration_s": 0.54,
       "label": "tests/",
-      "summary": "4 passed, 1 warning in 0.31s"
+      "summary": "4 passed, 1 warning in 0.20s"
     },
     {
       "slug": "agent-mcp-router-mcp",
@@ -131,9 +132,9 @@
       "failed": 0,
       "errors": 0,
       "skipped": 0,
-      "duration_s": 0.59,
+      "duration_s": 0.51,
       "label": "tests/",
-      "summary": "15 passed, 1 warning in 0.31s"
+      "summary": "15 passed, 1 warning in 0.20s"
     },
     {
       "slug": "agent-data-residency-mcp",
@@ -143,9 +144,9 @@
       "failed": 0,
       "errors": 0,
       "skipped": 0,
-      "duration_s": 0.58,
+      "duration_s": 0.55,
       "label": "tests/",
-      "summary": "5 passed, 1 warning in 0.31s"
+      "summary": "5 passed, 1 warning in 0.22s"
     },
     {
       "slug": "agent-cost-allocator-mcp",
@@ -155,9 +156,9 @@
       "failed": 0,
       "errors": 0,
       "skipped": 0,
-      "duration_s": 0.53,
+      "duration_s": 0.56,
       "label": "tests/",
-      "summary": "14 passed, 1 warning in 0.30s"
+      "summary": "14 passed, 1 warning in 0.22s"
     },
     {
       "slug": "agent-token-budget-mcp",
@@ -167,9 +168,9 @@
       "failed": 0,
       "errors": 0,
       "skipped": 0,
-      "duration_s": 0.43,
+      "duration_s": 0.54,
       "label": "tests/",
-      "summary": "15 passed, 1 warning in 0.24s"
+      "summary": "15 passed, 1 warning in 0.20s"
     },
     {
       "slug": "agent-content-watermark-mcp",
@@ -179,7 +180,7 @@
       "failed": 0,
       "errors": 0,
       "skipped": 0,
-      "duration_s": 0.4,
+      "duration_s": 0.54,
       "label": "tests/",
       "summary": "15 passed, 1 warning in 0.21s"
     },
@@ -191,9 +192,9 @@
       "failed": 0,
       "errors": 0,
       "skipped": 0,
-      "duration_s": 0.36,
+      "duration_s": 0.57,
       "label": "tests/",
-      "summary": "16 passed, 1 warning in 0.20s"
+      "summary": "16 passed, 1 warning in 0.21s"
     },
     {
       "slug": "agent-delegation-mcp",
@@ -203,9 +204,9 @@
       "failed": 0,
       "errors": 0,
       "skipped": 1,
-      "duration_s": 0.34,
+      "duration_s": 0.6,
       "label": "tests/",
-      "summary": "4 passed, 1 skipped in 0.18s"
+      "summary": "4 passed, 1 skipped in 0.24s"
     },
     {
       "slug": "agent-negotiation-mcp",
@@ -215,21 +216,21 @@
       "failed": 0,
       "errors": 0,
       "skipped": 1,
-      "duration_s": 0.34,
+      "duration_s": 0.56,
       "label": "tests/",
-      "summary": "4 passed, 1 skipped in 0.19s"
+      "summary": "4 passed, 1 skipped in 0.22s"
     },
     {
       "slug": "agent-incident-reporter-mcp",
-      "status": "fail",
+      "status": "pass",
       "tests": 5,
-      "passed": 3,
-      "failed": 2,
+      "passed": 5,
+      "failed": 0,
       "errors": 0,
       "skipped": 0,
-      "duration_s": 0.13,
+      "duration_s": 0.27,
       "label": "tests/",
-      "summary": "2 failed, 3 passed, 1 warning in 0.02s"
+      "summary": "5 passed, 1 warning in 0.04s"
     },
     {
       "slug": "bft-progress-council-mcp",
@@ -239,9 +240,9 @@
       "failed": 0,
       "errors": 0,
       "skipped": 0,
-      "duration_s": 0.32,
+      "duration_s": 0.8,
       "label": "tests/",
-      "summary": "15 passed, 1 warning in 0.17s"
+      "summary": "15 passed, 1 warning in 0.24s"
     },
     {
       "slug": "agent-commerce-protocol-mcp",
@@ -251,21 +252,21 @@
       "failed": 0,
       "errors": 0,
       "skipped": 0,
-      "duration_s": 0.32,
+      "duration_s": 0.59,
       "label": "tests/",
-      "summary": "14 passed, 1 warning in 0.17s"
+      "summary": "14 passed, 1 warning in 0.21s"
     },
     {
       "slug": "eu-ai-act-compliance-mcp",
       "status": "fail",
       "tests": 65,
-      "passed": 59,
-      "failed": 5,
+      "passed": 63,
+      "failed": 1,
       "errors": 0,
       "skipped": 1,
-      "duration_s": 5.81,
+      "duration_s": 7.58,
       "label": "tests/",
-      "summary": "5 failed, 59 passed, 1 skipped, 5 warnings in 5.65s"
+      "summary": "1 failed, 63 passed, 1 skipped, 70 warnings in 7.22s"
     },
     {
       "slug": "meok-eu-ai-act-art-26-fria-mcp",
@@ -275,9 +276,9 @@
       "failed": 0,
       "errors": 0,
       "skipped": 0,
-      "duration_s": 0.33,
+      "duration_s": 0.54,
       "label": "tests/",
-      "summary": "18 passed, 1 warning in 0.18s"
+      "summary": "18 passed, 1 warning in 0.20s"
     },
     {
       "slug": "meok-eu-ai-act-art-13-ifu-mcp",
@@ -287,9 +288,9 @@
       "failed": 0,
       "errors": 0,
       "skipped": 0,
-      "duration_s": 0.32,
+      "duration_s": 0.53,
       "label": "tests/",
-      "summary": "15 passed, 1 warning in 0.17s"
+      "summary": "15 passed, 1 warning in 0.21s"
     },
     {
       "slug": "meok-cra-annex-iv-classifier-mcp",
@@ -299,9 +300,9 @@
       "failed": 0,
       "errors": 0,
       "skipped": 0,
-      "duration_s": 0.32,
+      "duration_s": 0.58,
       "label": "tests/",
-      "summary": "3 passed, 1 warning in 0.17s"
+      "summary": "3 passed, 1 warning in 0.22s"
     },
     {
       "slug": "meok-cra-art14-reporter-mcp",
@@ -311,9 +312,9 @@
       "failed": 0,
       "errors": 0,
       "skipped": 0,
-      "duration_s": 0.32,
+      "duration_s": 0.55,
       "label": "tests/",
-      "summary": "16 passed, 1 warning in 0.17s"
+      "summary": "16 passed, 1 warning in 0.21s"
     },
     {
       "slug": "meok-dora-tlpt-planner-mcp",
@@ -333,9 +334,9 @@
       "failed": 0,
       "errors": 0,
       "skipped": 0,
-      "duration_s": 0.32,
+      "duration_s": 0.55,
       "label": "tests/",
-      "summary": "3 passed, 1 warning in 0.17s"
+      "summary": "3 passed, 1 warning in 0.21s"
     },
     {
       "slug": "meok-nis2-nl-register-mcp",
@@ -355,9 +356,9 @@
       "failed": 0,
       "errors": 0,
       "skipped": 0,
-      "duration_s": 0.31,
+      "duration_s": 0.53,
       "label": "tests/",
-      "summary": "5 passed, 1 warning in 0.17s"
+      "summary": "5 passed, 1 warning in 0.20s"
     },
     {
       "slug": "mifid-ii-ai-mcp",
@@ -367,9 +368,9 @@
       "failed": 0,
       "errors": 0,
       "skipped": 0,
-      "duration_s": 0.31,
+      "duration_s": 0.55,
       "label": "tests/",
-      "summary": "5 passed, 1 warning in 0.17s"
+      "summary": "5 passed, 1 warning in 0.22s"
     },
     {
       "slug": "aml-ai-mcp",
@@ -379,9 +380,9 @@
       "failed": 0,
       "errors": 0,
       "skipped": 0,
-      "duration_s": 0.31,
+      "duration_s": 0.55,
       "label": "tests/",
-      "summary": "5 passed, 1 warning in 0.17s"
+      "summary": "5 passed, 1 warning in 0.21s"
     },
     {
       "slug": "dora-nis2-crosswalk-mcp",
@@ -391,9 +392,9 @@
       "failed": 0,
       "errors": 0,
       "skipped": 0,
-      "duration_s": 0.33,
+      "duration_s": 0.62,
       "label": "tests/",
-      "summary": "10 passed, 1 warning in 0.18s"
+      "summary": "10 passed, 1 warning in 0.22s"
     },
     {
       "slug": "dora-compliance-mcp",
@@ -403,9 +404,9 @@
       "failed": 0,
       "errors": 0,
       "skipped": 0,
-      "duration_s": 7.3,
+      "duration_s": 8.8,
       "label": "tests/",
-      "summary": "56 passed, 1 warning in 7.17s"
+      "summary": "56 passed, 1 warning in 8.52s"
     },
     {
       "slug": "nis2-compliance-mcp",
@@ -415,9 +416,9 @@
       "failed": 0,
       "errors": 0,
       "skipped": 1,
-      "duration_s": 1.38,
+      "duration_s": 1.89,
       "label": "tests/",
-      "summary": "13 passed, 1 skipped, 1 warning in 1.21s"
+      "summary": "13 passed, 1 skipped, 1 warning in 1.48s"
     },
     {
       "slug": "gdpr-compliance-ai-mcp",
@@ -427,9 +428,9 @@
       "failed": 0,
       "errors": 0,
       "skipped": 1,
-      "duration_s": 0.33,
+      "duration_s": 0.83,
       "label": "tests/",
-      "summary": "4 passed, 1 skipped in 0.18s"
+      "summary": "4 passed, 1 skipped in 0.34s"
     },
     {
       "slug": "iso-42001-ai-mcp",
@@ -439,9 +440,9 @@
       "failed": 0,
       "errors": 0,
       "skipped": 1,
-      "duration_s": 0.32,
+      "duration_s": 0.77,
       "label": "tests/",
-      "summary": "4 passed, 1 skipped in 0.18s"
+      "summary": "4 passed, 1 skipped in 0.30s"
     },
     {
       "slug": "hipaa-compliance-mcp",
@@ -451,9 +452,9 @@
       "failed": 0,
       "errors": 0,
       "skipped": 0,
-      "duration_s": 0.83,
+      "duration_s": 1.1,
       "label": "tests/",
-      "summary": "36 passed, 1 warning in 0.70s"
+      "summary": "36 passed, 1 warning in 0.78s"
     },
     {
       "slug": "soc2-compliance-ai-mcp",
@@ -463,9 +464,9 @@
       "failed": 0,
       "errors": 0,
       "skipped": 1,
-      "duration_s": 0.32,
+      "duration_s": 0.76,
       "label": "tests/",
-      "summary": "4 passed, 1 skipped in 0.18s"
+      "summary": "4 passed, 1 skipped in 0.29s"
     },
     {
       "slug": "pci-dss-mcp",
@@ -475,9 +476,9 @@
       "failed": 0,
       "errors": 0,
       "skipped": 0,
-      "duration_s": 0.31,
+      "duration_s": 0.75,
       "label": "tests/",
-      "summary": "4 passed in 0.17s"
+      "summary": "4 passed in 0.30s"
     },
     {
       "slug": "nist-rmf-ai-mcp",
@@ -487,9 +488,9 @@
       "failed": 0,
       "errors": 0,
       "skipped": 1,
-      "duration_s": 0.34,
+      "duration_s": 0.75,
       "label": "tests/",
-      "summary": "4 passed, 1 skipped in 0.19s"
+      "summary": "4 passed, 1 skipped in 0.28s"
     },
     {
       "slug": "coppa-ferpa-mcp",
@@ -499,9 +500,9 @@
       "failed": 0,
       "errors": 0,
       "skipped": 0,
-      "duration_s": 0.33,
+      "duration_s": 0.72,
       "label": "tests/",
-      "summary": "5 passed, 1 warning in 0.18s"
+      "summary": "5 passed, 1 warning in 0.28s"
     },
     {
       "slug": "owasp-agentic-mcp",
@@ -511,9 +512,9 @@
       "failed": 0,
       "errors": 0,
       "skipped": 0,
-      "duration_s": 0.32,
+      "duration_s": 0.72,
       "label": "tests/",
-      "summary": "12 passed in 0.18s"
+      "summary": "12 passed in 0.28s"
     },
     {
       "slug": "meok-governance-engine-mcp",
@@ -523,21 +524,21 @@
       "failed": 0,
       "errors": 0,
       "skipped": 1,
-      "duration_s": 0.32,
+      "duration_s": 0.72,
       "label": "tests/",
-      "summary": "4 passed, 1 skipped in 0.18s"
+      "summary": "4 passed, 1 skipped in 0.29s"
     },
     {
       "slug": "csoai-governance-crosswalk-mcp",
-      "status": "fail",
+      "status": "pass",
       "tests": 15,
-      "passed": 3,
-      "failed": 11,
+      "passed": 14,
+      "failed": 0,
       "errors": 0,
       "skipped": 1,
-      "duration_s": 0.34,
+      "duration_s": 0.85,
       "label": "tests/",
-      "summary": "11 failed, 3 passed, 1 skipped in 0.19s"
+      "summary": "14 passed, 1 skipped in 0.08s"
     },
     {
       "slug": "risk-assessment-mcp",
@@ -551,15 +552,15 @@
     },
     {
       "slug": "healthcare-ai-governance-mcp",
-      "status": "fail",
+      "status": "pass",
       "tests": 30,
-      "passed": 28,
-      "failed": 1,
+      "passed": 29,
+      "failed": 0,
       "errors": 0,
       "skipped": 1,
-      "duration_s": 0.14,
+      "duration_s": 0.39,
       "label": "tests/",
-      "summary": "1 failed, 28 passed, 1 skipped in 0.03s"
+      "summary": "29 passed, 1 skipped in 0.08s"
     },
     {
       "slug": "compliance-passport-mcp",
@@ -579,9 +580,9 @@
       "failed": 0,
       "errors": 0,
       "skipped": 0,
-      "duration_s": 0.34,
+      "duration_s": 1.01,
       "label": "tests/",
-      "summary": "12 passed in 0.19s"
+      "summary": "12 passed in 0.38s"
     },
     {
       "slug": "ai-bom-mcp",
@@ -591,9 +592,9 @@
       "failed": 0,
       "errors": 0,
       "skipped": 1,
-      "duration_s": 1.87,
+      "duration_s": 2.08,
       "label": "tests/",
-      "summary": "13 passed, 1 skipped, 1 warning in 1.69s"
+      "summary": "13 passed, 1 skipped, 1 warning in 1.51s"
     },
     {
       "slug": "bias-detection-mcp",
@@ -603,21 +604,21 @@
       "failed": 0,
       "errors": 0,
       "skipped": 0,
-      "duration_s": 0.37,
+      "duration_s": 0.76,
       "label": "tests/",
-      "summary": "5 passed, 1 warning in 0.20s"
+      "summary": "5 passed, 1 warning in 0.29s"
     },
     {
       "slug": "c2pa-watermark-mcp",
-      "status": "fail",
-      "tests": 5,
-      "passed": 1,
-      "failed": 4,
+      "status": "no-tests",
+      "tests": 0,
+      "passed": 0,
+      "failed": 0,
       "errors": 0,
       "skipped": 0,
-      "duration_s": 0.32,
+      "duration_s": 0.3,
       "label": "tests/",
-      "summary": "4 failed, 1 passed, 1 warning in 0.17s"
+      "summary": ""
     },
     {
       "slug": "meok-coinbase-x402-receipt-mcp",
@@ -627,9 +628,9 @@
       "failed": 0,
       "errors": 0,
       "skipped": 0,
-      "duration_s": 0.33,
+      "duration_s": 0.81,
       "label": "tests/",
-      "summary": "16 passed, 1 warning in 0.18s"
+      "summary": "16 passed, 1 warning in 0.30s"
     },
     {
       "slug": "firmware-attestation-mcp",
@@ -639,9 +640,9 @@
       "failed": 0,
       "errors": 0,
       "skipped": 0,
-      "duration_s": 0.32,
+      "duration_s": 0.81,
       "label": "tests/",
-      "summary": "5 passed, 1 warning in 0.17s"
+      "summary": "5 passed, 1 warning in 0.29s"
     },
     {
       "slug": "blockchain-verification-mcp",
@@ -651,9 +652,9 @@
       "failed": 0,
       "errors": 0,
       "skipped": 1,
-      "duration_s": 0.32,
+      "duration_s": 0.96,
       "label": "tests/",
-      "summary": "4 passed, 1 skipped in 0.17s"
+      "summary": "4 passed, 1 skipped in 0.37s"
     },
     {
       "slug": "blockchain-ai-mcp",
@@ -663,9 +664,9 @@
       "failed": 0,
       "errors": 0,
       "skipped": 1,
-      "duration_s": 0.32,
+      "duration_s": 0.88,
       "label": "tests/",
-      "summary": "4 passed, 1 skipped in 0.17s"
+      "summary": "4 passed, 1 skipped in 0.34s"
     },
     {
       "slug": "cobol-bridge-mcp",
@@ -675,9 +676,9 @@
       "failed": 0,
       "errors": 0,
       "skipped": 0,
-      "duration_s": 0.32,
+      "duration_s": 1.02,
       "label": "tests/",
-      "summary": "5 passed, 1 warning in 0.17s"
+      "summary": "5 passed, 1 warning in 0.43s"
     },
     {
       "slug": "as400-bridge-mcp",
@@ -687,9 +688,9 @@
       "failed": 0,
       "errors": 0,
       "skipped": 0,
-      "duration_s": 0.31,
+      "duration_s": 1.09,
       "label": "tests/",
-      "summary": "2 passed in 0.17s"
+      "summary": "2 passed in 0.43s"
     },
     {
       "slug": "cics-bridge-mcp",
@@ -699,9 +700,9 @@
       "failed": 0,
       "errors": 0,
       "skipped": 0,
-      "duration_s": 0.32,
+      "duration_s": 0.9,
       "label": "tests/",
-      "summary": "2 passed in 0.17s"
+      "summary": "2 passed in 0.35s"
     },
     {
       "slug": "acord-bridge-mcp",
@@ -711,9 +712,9 @@
       "failed": 0,
       "errors": 0,
       "skipped": 0,
-      "duration_s": 0.32,
+      "duration_s": 0.84,
       "label": "tests/",
-      "summary": "3 passed in 0.17s"
+      "summary": "3 passed in 0.35s"
     },
     {
       "slug": "a2a-governance-bridge-mcp",
@@ -723,9 +724,9 @@
       "failed": 0,
       "errors": 0,
       "skipped": 1,
-      "duration_s": 0.32,
+      "duration_s": 0.79,
       "label": "tests/",
-      "summary": "4 passed, 1 skipped in 0.17s"
+      "summary": "4 passed, 1 skipped in 0.31s"
     },
     {
       "slug": "meok-abci-bridge-mcp",
@@ -735,9 +736,9 @@
       "failed": 0,
       "errors": 0,
       "skipped": 0,
-      "duration_s": 0.33,
+      "duration_s": 0.86,
       "label": "tests/",
-      "summary": "19 passed, 1 warning in 0.18s"
+      "summary": "19 passed, 1 warning in 0.32s"
     },
     {
       "slug": "meok-haulage-governance-bridge-mcp",
@@ -747,9 +748,9 @@
       "failed": 0,
       "errors": 0,
       "skipped": 0,
-      "duration_s": 0.32,
+      "duration_s": 0.68,
       "label": "tests/",
-      "summary": "23 passed, 1 warning in 0.18s"
+      "summary": "23 passed, 1 warning in 0.25s"
     },
     {
       "slug": "budget-planner-ai-mcp",
@@ -759,9 +760,9 @@
       "failed": 0,
       "errors": 0,
       "skipped": 1,
-      "duration_s": 0.33,
+      "duration_s": 0.81,
       "label": "tests/",
-      "summary": "4 passed, 1 skipped in 0.18s"
+      "summary": "4 passed, 1 skipped in 0.31s"
     },
     {
       "slug": "churn-predictor-ai-mcp",
@@ -771,9 +772,9 @@
       "failed": 0,
       "errors": 0,
       "skipped": 1,
-      "duration_s": 0.33,
+      "duration_s": 0.73,
       "label": "tests/",
-      "summary": "4 passed, 1 skipped in 0.18s"
+      "summary": "4 passed, 1 skipped in 0.28s"
     },
     {
       "slug": "competitor-monitor-ai-mcp",
@@ -783,9 +784,9 @@
       "failed": 0,
       "errors": 0,
       "skipped": 1,
-      "duration_s": 0.32,
+      "duration_s": 0.7,
       "label": "tests/",
-      "summary": "4 passed, 1 skipped in 0.18s"
+      "summary": "4 passed, 1 skipped in 0.29s"
     },
     {
       "slug": "content-calendar-ai-mcp",
@@ -795,9 +796,9 @@
       "failed": 0,
       "errors": 0,
       "skipped": 1,
-      "duration_s": 0.33,
+      "duration_s": 0.79,
       "label": "tests/",
-      "summary": "4 passed, 1 skipped in 0.18s"
+      "summary": "4 passed, 1 skipped in 0.31s"
     },
     {
       "slug": "care-membrane-mcp",
@@ -807,9 +808,9 @@
       "failed": 0,
       "errors": 0,
       "skipped": 1,
-      "duration_s": 0.33,
+      "duration_s": 0.76,
       "label": "tests/",
-      "summary": "4 passed, 1 skipped in 0.18s"
+      "summary": "4 passed, 1 skipped in 0.32s"
     }
   ]
 }
