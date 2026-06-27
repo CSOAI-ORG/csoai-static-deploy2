@@ -96,7 +96,7 @@ for root in ROOTS:
         if fp.suffix.lower() not in SCAN_EXTS: continue
         try:
             size = fp.stat().st_size
-            if size > 500_000: continue
+            if size > 2_000_000: continue   # NEW 27 Jun: bumped from 500KB → 2MB so Waite + Roob primary texts index
             content = fp.read_text(errors='replace')
             title = fp.stem
             desc = ""
@@ -117,7 +117,12 @@ for root in ROOTS:
                     if line and not line.startswith('#') and len(line) > 30:
                         desc = line[:200]; break
             tokens = re.findall(r'[a-z][a-z0-9_-]+', content.lower())
-            tokens = [t for t in tokens if len(t) > 2][:200]
+            tokens = [t for t in tokens if len(t) > 2]
+            # NEW 27 Jun: for .txt files, index ALL tokens (was capped at 200 which made primary texts invisible to BM25)
+            if fp.suffix.lower() == '.txt':
+                tokens = tokens[:5000]
+            else:
+                tokens = tokens[:200]
             rel_path = str(fp).replace('/Users/nicholas/clawd/', '')
             vault_index.append({"path": rel_path, "ext": fp.suffix, "size": size, "title": title[:120], "description": desc[:200], "tokens": tokens, "first_500_chars": content[:500]})
         except: pass
