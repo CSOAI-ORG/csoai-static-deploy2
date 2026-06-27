@@ -13,6 +13,12 @@ Measured, not estimated. **GitHub ground truth** = GitHub's own per-language byt
 
 **Local on-disk corroboration:** `cloc ~/clawd` alone = **6,314,065 code lines / 35,231 files** (excludes blanks/comments; includes the local 4GB SOV3 brain + the 369-repo mirror + JSON data).
 
+## ✅ TIGHTENED — exact `cloc` on the local MCP fleet (not bytes÷32)
+Ran `cloc` per-repo across the 375 locally-cloned `mcp-marketplace` repos + a content-hash dedup:
+- **516,522 exact code lines** (blanks + comments excluded) · median **1,313 LOC/repo** · biggest: agent-negotiation 11.4K, oscal-generator 8.7K, eu-ai-act 5.8K.
+- **True boilerplate split (Python, content-hash):** 1,477 `.py` files → **613 unique** (41% of files are distinct; 59% are the copied SIGIL/FastMCP scaffold). But at the **line** level: 284,012 `.py` lines → **213,288 unique (75%) / 25% exact-duplicate**. *The copied files are the small scaffolds; the bulk of lines is genuine per-MCP logic.*
+- **Takeaway:** the fleet is **~75% unique meaningful code**, not the ~35% I'd earlier guessed — the estate is more real than the "all boilerplate" worry suggested. Exact fleet figure: **~517K lines** (vs the ~3.0M bytes÷32 over-estimate, which counted vendored deps + data).
+
 ## By language (GitHub, non-fork)
 | Language | LOC-equiv | Share |
 |---|---|---|

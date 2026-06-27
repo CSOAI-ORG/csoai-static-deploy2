@@ -21,6 +21,11 @@ And there's a clock with teeth: **EU AI Act, 2 Aug 2026** — high-risk AI (crit
 - **Live demo** — `demo_finance_cobol.py`: a COBOL wire-settlement → governed against DORA/NIS2/AML/PSD2 (with real sanctions/audit flags) → signed audit package that verifies with no account. Competitors can't replicate it.
 - **Governance core** — BFT council (selectable 5/13/33), a sovereign orchestrator (governed autonomy), all SIGIL-signed.
 
+## By the numbers (measured live, 2026-06-27)
+- **568 repos** (542 public) · **1,987 tools** · **22 signed legacy bridges** · **79-component Ed25519 Layer-0 package**, NIST-toolchain-validated (compliance-trestle) + offline-verifiable.
+- **~10M lines** across the GitHub estate (~850K hand-authored after de-duping the shared MCP scaffold).
+- **Real distribution, zero marketing:** **~10,400 PyPI downloads/month** across the published compliance MCPs — `eu-ai-act` 3,156 · `dora` 2,862 · `iso-42001` 2,423 · `nist-rmf` 1,731/mo — and **1,580 repo clones / 14 days** on the gateway (automated/agent pull, not human browsing). The full fleet is being published now; ~19 packages already drove that pull.
+
 ## Traction & honest gaps
 - **Built + verified:** the bridges, the signing, the demo, the OS — all real, tested, e2e-green.
 - **Pre-revenue, 0 logos yet** — the immediate plan is **one regulated design partner (finance-on-COBOL) before the deadline** (free single-flow pilot → signed Art-12 trail → reference).
