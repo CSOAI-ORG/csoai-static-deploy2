@@ -33,6 +33,104 @@
 
 ---
 
+## 🎯 Strategic-grade crown jewels (delegation #2: sovereign-AI / x402 / supply-chain)
+
+**Source:** `/tmp/crown-hunt/crown-jewels-report.md` — 16 GitHub REST API queries, 19 distinct repos, all dated 2026-06-27.
+
+### Category 1 — Self-hosted AI agent platforms (top 7)
+
+| # | Repo | ★ | Pushed | License | Strategic relevance |
+|---|---|---:|---|---|---|
+| 1 | `vxcontrol/pentagi` | 17.9k | 2026-06-25 | MIT | **Fully autonomous pentest-agent system** — competing orchestration model. Absorb as `sovereign-pentest-mcp`. https://github.com/vxcontrol/pentagi |
+| 2 | `aden-hive/hive` | 10.6k | 2026-06-26 | Apache-2.0 | **"Multi-Agent Harness for Production AI"** — closest competitor to our orchestrator. https://github.com/aden-hive/hive |
+| 3 | **`MemTensor/MemOS`** | 10.0k | 2026-06-27 | Apache-2.0 | **Self-evolving memory OS — directly competes with our `federated_rag` + `quantum_memory_search`** — biggest strategic risk. https://github.com/MemTensor/MemOS |
+| 4 | `builderz-labs/mission-control` | 5.4k | 2026-06-22 | MIT | "Self-hosted AI agent orchestration platform" — almost a clone pitch. https://github.com/builderz-labs/mission-control |
+| 5 | **`google/ax`** | 1.8k | 2026-06-27 | Apache-2.0 | **Google's distributed agent runtime** — credible big-tech entrant. https://github.com/google/ax |
+| 6 | `SmythOS/sre` | 1.3k | 2026-04-03 | MIT | Cloud-native runtime for agentic systems — reference impl. https://github.com/SmythOS/sre |
+| 7 | `swarmclawai/swarmclaw` | 591 | 2026-06-11 | MIT | Newer self-hosted multi-agent runtime — monitor. https://github.com/swarmclawai/swarmclaw |
+
+### Category 2 — Agent identity / credentials (top 5)
+
+| # | Repo | ★ | Pushed | License | Strategic relevance |
+|---|---|---:|---|---|---|
+| 1 | **`GetBindu/Bindu`** | 7.1k | 2026-06-22 | NOASSERTION | "Identity + communication + payments layer for AI agents" — directly adjacent to our A2A substrate. **Fusion partner for `agent-identity-trust-mcp`.** https://github.com/GetBindu/Bindu |
+| 2 | `unicity-sphere/sphere-sdk` | 5.4k | 2026-06-26 | MIT | SDK for autonomous economic agents (identity + wallet + payment) — competes on agent wallet UX. https://github.com/unicity-sphere/sphere-sdk |
+| 3 | **`microsoft/agent-governance-toolkit`** | 4.5k | 2026-06-26 | MIT | **Microsoft's official "Policy enforcement, zero-trust identity, execution sandboxing" — the EU AI Act gravity well. Must review before audit.** https://github.com/microsoft/agent-governance-toolkit |
+| 4 | `digitalbazaar/agent-credential-server` | 0 | 2026-06-08 | NOASSERTION | Chain-agnostic MCP server using W3C VCs for AI-agent authz — same problem `agent-identity-trust-mcp` solves. https://github.com/digitalbazaar/agent-credential-server |
+| 5 | `agent-network-protocol/anp` | 325 | 2026-06-13 | Apache-2.0 | "DID-flavoured A2A network protocol" — aligned with our A2A substrate. https://github.com/agent-network-protocol/anp |
+
+### Category 3 — Ed25519 / Sigstore / Supply-chain crypto (top 5)
+
+| # | Repo | ★ | Pushed | License | Strategic relevance |
+|---|---|---:|---|---|---|
+| 1 | **`sigstore/sigstore-python`** | 324 | 2026-06-26 | Apache-2.0 | **Official Python Sigstore client — direct dependency candidate for SIGIL's signed OSCAL packages.** https://github.com/sigstore/sigstore-python |
+| 2 | `chainloop-dev/chainloop` | 558 | 2026-06-26 | Apache-2.0 | "SDLC evidence store and policy engine" — production-grade in-toto pipeline. https://github.com/chainloop-dev/chainloop |
+| 3 | `in-toto/attestation` | 342 | 2026-06-27 | Apache-2.0 | in-toto Attestation Framework spec — canonical reference for OSCAL-signing. https://github.com/in-toto/attestation |
+| 4 | `oracle/macaron` | 207 | 2026-06-26 | UPL-1.0 | Oracle's supply-chain security framework — audit baseline. https://github.com/oracle/macaron |
+| 5 | **`Prismer-AI/signet`** | 37 | 2026-05-28 | Apache-2.0 | **"Proof layer for AI agents" — exact design space as SIGIL.** Idea-source for Ed25519-per-action receipts. https://github.com/Prismer-AI/signet |
+
+### Category 4 — x402 / HTTP 402 / agent payments (top 5)
+
+| # | Repo | ★ | Pushed | License | Strategic relevance |
+|---|---|---:|---|---|---|
+| 1 | **`x402-foundation/x402`** | 6.2k | 2026-06-26 | Apache-2.0 | **Canonical x402 spec.** 9 chain SDKs, Python `pip install x402`, MCP extension `@x402/mcp`. **Our `meok-x402-paywall-mcp` should migrate upstream.** https://github.com/x402-foundation/x402 |
+| 2 | `BlockRunAI/ClawRouter` | 6.6k | 2026-06-26 | MIT | "Agent-native LLM router with USDC payments on Base" — commercial-grade x402 router. https://github.com/BlockRunAI/ClawRouter |
+| 3 | **`google-agentic-commerce/a2a-x402`** | 528 | 2026-06-22 | Apache-2.0 | **Google's official A2A x402 Extension — brings payments to A2A. The reference. Aligning our A2A substrate with this avoids divergence.** https://github.com/google-agentic-commerce/a2a-x402 |
+| 4 | `BlockRunAI/Franklin` | 623 | 2026-06-25 | Apache-2.0 | "AI agent with a wallet — spends USDC autonomously" — full-stack reference. https://github.com/BlockRunAI/Franklin |
+| 5 | **`wienerlabs/aperture`** | 5 | 2026-05-21 | MIT | **"ZK-compliance receipts for AI agent payments on Solana"** — ZK privacy for our `meok-coinbase-x402-receipt-mcp`. https://github.com/wienerlabs/aperture |
+
+### Cross-cutting strategic findings (delegation #2)
+
+1. **Microsoft + Google both shipped agent-identity/governance kits in Q1-Q2 2026** (`agent-governance-toolkit`, `a2a-x402`). Compliance positioning has become table-stakes. **We should ship an EU AI Act-aligned agent-governance MCP this quarter.**
+2. **"Self-hosted AI agent" is now a first-class GitHub topic** with 2.9k+ repos — peak market window. Ship a public MCP catalog before the field consolidates.
+3. **x402 is consolidating under `x402-foundation/x402`** — our `meok-x402-paywall-mcp` should switch from bespoke spec to upstream `@x402/core` SDKs.
+4. **Supply-chain crypto is mature but AI-action attestation is open territory** — `Prismer-AI/signet` is closest to SIGIL's design space; we can credibly publish a SIGIL reference implementation that incorporates their ideas + in-toto attestations + our MCP governance layer.
+5. **🥇 NO repo in categories 1-4 uses "sovereign"** — only `tseLha00/sovereign-ai-agent` (1★ demo). **Our brand has whitespace.**
+
+### New action items (delegation #2 follow-ups)
+
+### H. **Diff `MemTensor/MemOS` vs our `federated_rag` + `quantum_memory_search`**
+- **Why:** 10k★ competitor pushing self-evolving memory OS. They may have a design we should absorb or outcompete.
+- **How:** Clone + analyze architecture + identify gap.
+- **Estimated effort:** 2-3 hours.
+
+### I. **Migrate `meok-x402-paywall-mcp` to upstream `x402-foundation/x402` Python SDK**
+- **Why:** We have a bespoke x402 implementation; the canonical spec at `x402-foundation/x402` has 9 chain SDKs + MCP extension. Migrating saves maintenance + gains network effects.
+- **How:** Refactor our MCP to use `from x402 import ...` instead of our custom types.
+- **Estimated effort:** 1-2 hours.
+
+### J. **Adopt `sigstore/sigstore-python` for SIGIL's OSCAL signing**
+- **Why:** Our Ed25519-signed OSCAL currently uses Python `cryptography` directly. Sigstore-python gives us cosign/keyless/Rekor integration for free.
+- **How:** Layer sigstore-python on top of our `sign_oscal()` in `oscal-generator-mcp`.
+- **Estimated effort:** 1-2 hours.
+
+### K. **Review `microsoft/agent-governance-toolkit` before EU AI Act audit** [STARTED — 2026-06-27]
+- **Why:** Microsoft's legal heft + this toolkit's 4.5k★ in <4 months = it WILL become the compliance reference. We must know it cold.
+- **Status:** Cloned to `/tmp/agent-governance-toolkit`. **Real, deep, shippable product**:
+  - `pip install agent-governance-toolkit[full]` (Python) + npm + NuGet + Rust crates
+  - **`from agentmesh.governance import govern` — 2-line wrap** to govern any tool call with YAML policy
+  - **OWASP Agentic Top 10: 10/10 covered** (we have no OWASP coverage claim)
+  - **AARM Extended R1-R9** + Agentic Trust Framework all 5 elements
+  - **MCP integration is in Rust** (`policy-engine/integrations/mcp/`) — different stack from us but credible
+  - Policy engine with **formal verification** (`tests/formal/`) — way ahead of our YAML-driven approach
+  - Integrations: MCP, OTel, RIG, OpenAI
+- **What to do:** Compare their `govern()` decorator to our `agent-policy-enforcement-mcp`. **Either adopt theirs, fork-and-improve, or position our A2A substrate as the multi-agent complement** (their `govern()` is per-call; ours is per-agent-pair + per-action).
+- **Estimated effort:** 2-3 hours to read + decide.
+
+### L. **Align our A2A substrate with `google-agentic-commerce/a2a-x402`**
+- **Why:** Google's official A2A x402 extension is the canonical reference for payments over A2A. Aligning = interoperability.
+- **How:** Add `@x402/mcp` dependency, refactor `agent-handoff-certified-mcp` to support x402 handshake.
+- **Estimated effort:** 2-3 hours.
+
+### M. **Trial `digitalbazaar/agent-credential-server` as alternative to `agent-identity-trust-mcp`**
+- **Why:** They use W3C VCs the standard way; we may have reinvented it.
+- **How:** Compare feature parity, decide merge/fork/ignore.
+- **Estimated effort:** 1 hour.
+
+---
+
+---
+
 ## 🔬 Tactical action items (M4 lane, no owner keys)
 
 ### A. Run `Janix-ai/mcp-validator` against our 369 MCPs [STARTED — 2026-06-27]
