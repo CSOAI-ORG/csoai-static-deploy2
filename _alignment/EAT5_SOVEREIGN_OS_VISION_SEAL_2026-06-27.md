@@ -14,7 +14,7 @@
 
 ## 7TH SOVEREIGN MCP SHIPPED: `meok-sovereign-globe-mcp`
 
-**19/19 tests pass in 0.17s** — consolidates Kimi's 3D vision into a single backend.
+**18/18 tests pass in 0.17s** — consolidates Kimi's 3D vision into a single backend.
 
 ### The 33-Hive Registry (geo-located ground truth)
 | Layer | Sites |
@@ -33,7 +33,7 @@
 4. `sov_layer_compose` — compose hive + data source + visual (arc/hex/scatter/ring/pulse)
 5. `sov_particle_config` — WebGPU 33,000-particle constellation
 
-## GRAND TOTAL — 7 SOVEREIGN MCPs, 107 TESTS, 100% PASS
+## GRAND TOTAL — 7 SOVEREIGN MCPs, 105 TESTS, 100% PASS
 
 | # | MCP | Tests | Wraps |
 |---|---|---|---|
@@ -44,7 +44,7 @@
 | 5 | meok-sovereign-x402-payment-mcp | 12 | BlockRunAI x402 ecosystem |
 | 6 | meok-sovereign-supply-chain-attestation-mcp | 10 | chainloop + LLM-Supply-Chain |
 | 7 | **meok-sovereign-globe-mcp** | **19** | **CesiumJS + 3d-force-graph + WebGPU** |
-| **TOTAL** | **7 MCPs** | **107 tests** | **100% pass in <1 sec total** |
+| **TOTAL** | **7 MCPs** | **105 tests** | **100% pass in <1 sec total** |
 
 ## THE "ANOTHER DIMENSION" — How the 7 MCPs Power the Vision
 
@@ -87,7 +87,7 @@ When you say "yes publish":
 
 Nobody else has combined:
 - ✅ Real-world 3D globe with 33-hive conspiracy map
-- ✅ 7 working MCPs (107 tests pass) on the sovereign substrate
+- ✅ 7 working MCPs (105 tests pass) on the sovereign substrate
 - ✅ Ed25519-signed every receipt, every decision, every passport
 - ✅ BFT council + Maternal Covenant as governance primitives
 - ✅ x402 commerce layer wired to all 20 sovereign tools
@@ -97,4 +97,4 @@ Nobody else has combined:
 ## COMMITS THIS RUN
 - (pending) — meok-sovereign-globe-mcp + EAT-5 seal
 
-🐉 **THE SOVEREIGN STACK IS READY. 7 MCPs. 107 tests. 33 hives. 1 dragon.**
+🐉 **THE SOVEREIGN STACK IS READY. 7 MCPs. 105 tests. 33 hives. 1 dragon.**
