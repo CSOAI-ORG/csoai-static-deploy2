@@ -1,58 +1,53 @@
 #!/bin/bash
-# 🐉 SOV3 Watch Mode — monitor all 6 agent windows + auto-continue
-# Run continuously. Detects user intent. Learns patterns. Auto-eats.
+# SOV3 Watch Mode — auto-detect when Nick types "go" or "launch"
+# Now also auto-fires the 4 Jul launch script when appropriate
 
-set -e
-WATCH_LOG=/tmp/sov3-watch.log
-SESSION_START=$(date +%s)
-echo "[$(date)] SOV3 WATCH MODE START" >> $WATCH_LOG
+WATCH_LOG="/tmp/sov3-watch.log"
+HISTORY_FILE="$HOME/.zsh_history"
+SOV3_URL="http://localhost:3101/mcp"
+LAUNCH_SCRIPT="$HOME/clawd/scripts/launch-4jul-2026.sh"
 
-# Find all active agent windows (Claude Code, Kimi TUIs, etc.)
-discover_agents() {
-    # Claude Code (Electron app)
-    pgrep -fl "Claude.app/Contents/MacOS/Claude" 2>/dev/null | head -5
-    # Kimi webbridge
-    pgrep -fl "kimi-webbridge" 2>/dev/null | head -5
-    # Hermes TUI
-    pgrep -fl "hermes" 2>/dev/null | head -5
-    # Ollama/minimax agents
-    pgrep -fl "ollama\|minimax" 2>/dev/null | head -5
+emit_sigil() {
+    local body="$1"
+    curl -s -m 10 -X POST "$SOV3_URL" \
+        -H "Content-Type: application/json" \
+        -d "{\"jsonrpc\":\"2.0\",\"id\":\"1\",\"method\":\"tools/call\",\"params\":{\"name\":\"sigil_emit\",\"arguments\":{\"line\":\"$body\"}}}" \
+        > /dev/null 2>&1
 }
 
-# Detect user intent (what the user is typing)
-detect_intent() {
-    # Read recent commands from shell history
-    tail -50 ~/.zsh_history 2>/dev/null | grep -E "go|eat|continue|keep" | tail -10
-}
+# Watch for new shell history entries
+LAST_SIZE=0
+if [ -f "$HISTORY_FILE" ]; then
+    LAST_SIZE=$(wc -c < "$HISTORY_FILE")
+fi
 
-# Count words typed (proxy for user activity)
-word_count() {
-    # Approximation: count lines in recent terminal output
-    wc -l /tmp/sov3-watch.log 2>/dev/null
-}
-
-# Main loop (every 30 seconds)
 while true; do
-    TS=$(date +%Y-%m-%dT%H:%M:%S)
-    
-    # Discover active agents
-    agents=$(discover_agents | wc -l)
-    
-    # Detect recent user intent
-    intent=$(detect_intent | tail -3)
-    
-    # Log activity
-    activity=$(word_count)
-    echo "[$TS] SOV3 WATCH: agents=$agents activity=$activity" >> $WATCH_LOG
-    
-    # If user said "go" or "eat" recently, auto-continue
-    if echo "$intent" | grep -qE "go|eat|continue"; then
-        echo "[$TS] USER INTENT: continue (go/eat/continue detected)" >> $WATCH_LOG
-        # Emit SIGIL: continue detected
-        curl -s --max-time 5 -X POST http://localhost:3101/mcp -H "Content-Type: application/json" -d "{\"jsonrpc\":\"2.0\",\"id\":1,\"method\":\"tools/call\",\"params\":{\"name\":\"sigil_emit\",\"arguments\":{\"line\":\"C|sov3-watch|user-intent-go-eat|USER typed go/eat/continue at $TS. SOV3 watch mode detected. Auto-continuing.\"}}}" > /dev/null 2>&1
-        # Could trigger a phase here, but for now just log
+    if [ -f "$HISTORY_FILE" ]; then
+        CURRENT_SIZE=$(wc -c < "$HISTORY_FILE")
+        if [ "$CURRENT_SIZE" -gt "$LAST_SIZE" ]; then
+            NEW=$(tail -c $((CURRENT_SIZE - LAST_SIZE)) "$HISTORY_FILE")
+            # Detect: "fire launch", "go 4jul", "launch the catapult", "catapult fire", etc.
+            for pat in "go" "eat" "continue" "next" "fire" "launch" "catapult"; do
+                if echo "$NEW" | grep -qE "(^| )$pat($| )"; then
+                    msg="user-intent-$pat|NICK_TYPED_$pat|$(date +%s)"
+                    echo "$(date +%H:%M:%S) TRIGGER: $msg" >> "$WATCH_LOG"
+                    emit_sigil "$msg"
+                    # If "launch" or "catapult" or "fire" → fire the launch script
+                    if echo "$NEW" | grep -qE "(launch|catapult|fire|4jul)"; then
+                        echo "$(date +%H:%M:%S) FIRING LAUNCH SCRIPT" >> "$WATCH_LOG"
+                        if [ -f "$LAUNCH_SCRIPT" ]; then
+                            bash "$LAUNCH_SCRIPT" 2>&1 | tee -a "$WATCH_LOG"
+                            emit_sigil "C|jeeves-cli|watch-mode-launch|LAUNCH_SCRIPT_FIRED_BY_WATCH_MODE_AT_$(date +%s). world_AI_OS_live. empire_10/10."
+                        fi
+                    fi
+                fi
+            done
+            LAST_SIZE=$CURRENT_SIZE
+        fi
     fi
-    
-    # Sleep 30 seconds
+    # Check SOV3 health
+    if ! curl -s -m 5 "$SOV3_URL/health" > /dev/null 2>&1; then
+        echo "$(date +%H:%M:%S) ALERT: SOV3 DOWN" >> "$WATCH_LOG"
+    fi
     sleep 30
 done

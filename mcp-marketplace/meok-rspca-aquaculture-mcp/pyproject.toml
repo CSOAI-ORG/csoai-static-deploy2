@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "meok-rspca-aquaculture-mcp"
-version = "1.0.5"
+version = "1.0.6"
 readme = "README.md"
 description = "MCP server wrapping RSPCA Assured farmed trout (2025.07) and salmon (2024.05) welfare standards. Gap analysis, compliance scoring, audit-ready evidence pack generation, signed welfare attestations. From MEOK AI Labs."
 license = {file = "LICENSE"}
@@ -18,7 +18,7 @@ classifiers = [
     "Topic :: Software Development :: Libraries",
     "Topic :: Scientific/Engineering",
 ]
-dependencies = ["mcp>=1.0.0"]
+dependencies = ["mcp>=1.28.0"]
 
 [project.urls]
 Homepage = "https://meok.ai/aquaculture"

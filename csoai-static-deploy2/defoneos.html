@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="DEFONEOS — UK Sovereign Defence AI Operating System. Open-source, JSP 936 compliant, 1/40th the cost of Palantir. Built for MOD, Police, Fire, NHS.">
+<meta name="author" content="CSOAI LTD (16939677)">
+<meta property="og:title" content="DEFONEOS — UK Sovereign Defence AI OS">
+<meta property="og:type" content="website">
+<meta property="og:description" content="The UK's first open-source sovereign Defence AI Operating System. 29 MCP servers, 53+ live pages, JSP 936 built in.">
+<title>DEFONEOS — UK Sovereign Defence AI Operating System</title>
+<style>
+  :root{--bg:#0a0e14;--surface:#131a24;--border:#1e2a3a;--text:#c9d1d9;--accent:#00d4aa;--accent2:#4fc3f7;--warn:#ffb74d;--danger:#ef5350;--muted:#667788;--accent3:#b388ff}
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{background:var(--bg);color:var(--text);font-family:'Inter','SF Pro Display',system-ui,sans-serif;line-height:1.6;min-height:100vh}
+  nav{background:var(--surface);border-bottom:1px solid var(--border);padding:1rem 2rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem}
+  nav .logo{font-family:'Space Grotesk',monospace;font-size:1.5rem;font-weight:700;background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+  nav .links{display:flex;gap:1.5rem;flex-wrap:wrap}
+  nav a{color:var(--text);text-decoration:none;font-size:.9rem;transition:color .2s}
+  nav a:hover{color:var(--accent)}
+  .hero{background:linear-gradient(135deg,var(--surface) 0%,var(--bg) 100%);border-bottom:1px solid var(--border);padding:6rem 2rem 4rem;text-align:center;position:relative;overflow:hidden}
+  .hero::before{content:'';position:absolute;top:0;left:0;right:0;bottom:0;background:radial-gradient(ellipse at 50% 50%,rgba(0,212,170,.05) 0%,transparent 70%);pointer-events:none}
+  .hero h1{font-family:'Space Grotesk',monospace;font-size:clamp(2.5rem,6vw,4.5rem);background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:1rem;position:relative}
+  .hero .tagline{font-size:1.3rem;color:var(--muted);max-width:700px;margin:0 auto 2rem}
+  .hero .stats{display:flex;gap:2rem;justify-content:center;flex-wrap:wrap;margin-top:2rem}
+  .hero .stat{text-align:center}
+  .hero .stat .num{font-size:2.5rem;font-weight:700;color:var(--accent);font-family:'Space Grotesk',monospace}
+  .hero .stat .lbl{font-size:.85rem;color:var(--muted)}
+  .container{max-width:1400px;margin:0 auto;padding:2rem}
+  section{padding:3rem 0}
+  section h2{font-family:'Space Grotesk',monospace;font-size:2rem;color:var(--accent2);margin-bottom:1.5rem}
+  .moat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.5rem}
+  .moat-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1.75rem;transition:all .2s}
+  .moat-card:hover{border-color:var(--accent);transform:translateY(-2px)}
+  .moat-card h3{font-family:'Space Grotesk',monospace;font-size:1.1rem;color:var(--accent);margin-bottom:.5rem}
+  .moat-card p{color:var(--muted);font-size:.9rem}
+  .use-case-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:1.25rem}
+  .use-case-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.5rem}
+  .use-case-card .num{font-family:'Space Grotesk',monospace;font-size:.85rem;color:var(--accent);margin-bottom:.5rem}
+  .use-case-card h4{color:var(--accent2);margin-bottom:.5rem;font-size:1.05rem}
+  .use-case-card .stack{color:var(--muted);font-size:.8rem;font-family:'JetBrains Mono',monospace}
+  .cta{background:linear-gradient(135deg,var(--surface),var(--bg));border:1px solid var(--border);border-radius:16px;padding:3rem 2rem;text-align:center;margin:2rem 0}
+  .cta h2{color:var(--accent)}
+  .cta p{color:var(--muted);margin-bottom:1.5rem;max-width:600px;margin-left:auto;margin-right:auto}
+  .btn{display:inline-block;padding:.75rem 2rem;border-radius:8px;font-weight:600;text-decoration:none;transition:all .2s;font-family:'Space Grotesk',monospace}
+  .btn-primary{background:var(--accent);color:var(--bg)}
+  .btn-primary:hover{background:var(--accent2);transform:translateY(-1px)}
+  .btn-outline{border:1px solid var(--accent);color:var(--accent)}
+  .btn-outline:hover{background:rgba(0,212,170,.1)}
+  .versus{overflow-x:auto;margin:2rem 0}
+  .versus table{width:100%;border-collapse:collapse;font-size:.9rem}
+  .versus th{background:var(--surface);padding:.75rem 1rem;text-align:left;font-family:'Space Grotesk',monospace;color:var(--accent2);border-bottom:2px solid var(--border)}
+  .versus td{padding:.75rem 1rem;border-bottom:1px solid var(--border)}
+  .versus tr:hover td{background:rgba(0,212,170,.03)}
+  .yes{color:var(--accent);font-weight:700}
+  .no{color:var(--danger)}
+  footer{background:var(--surface);border-top:1px solid var(--border);padding:2rem;text-align:center;color:var(--muted);font-size:.85rem}
+  .badge{display:inline-block;padding:.25rem .75rem;border-radius:999px;font-size:.75rem;font-weight:600;margin:.25rem}
+  .badge-live{background:rgba(0,212,170,.15);color:var(--accent)}
+  .badge-uk{background:rgba(79,195,247,.15);color:var(--accent2)}
+  .badge-mil{background:rgba(255,183,77,.15);color:var(--warn)}
+  @media(max-width:768px){.hero h1{font-size:2rem}.hero .stats{gap:1rem}.hero .stat .num{font-size:1.8rem}}
+</style>
+</head>
+<body>
+
+<nav>
+  <span class="logo">🐉 DEFONEOS</span>
+  <div class="links">
+    <a href="/defoneos.html">Home</a>
+    <a href="/defoneos-sensor-layer.html">Sensor Layer</a>
+    <a href="/defoneos-civil-services.html">Civil Services</a>
+    <a href="/defoneos-demo.html">Live Demo</a>
+    <a href="/defoneos-swarm.html">Swarm Engine</a>
+    <a href="/defoneos-grants.html">Funding</a>
+    <a href="/defoneos-partners.html">Partners</a>
+    <a href="/defoneos-roadmap-v2.html">Roadmap</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <h1>DEFONEOS</h1>
+  <p class="tagline">The UK's first open-source Sovereign Defence AI Operating System. JSP 936 compliant. 1/40th the cost of Palantir. Built for MOD, Police, Fire, NHS, and Government.</p>
+  <div class="stats">
+    <div class="stat"><div class="num">29</div><div class="lbl">MCP Servers</div></div>
+    <div class="stat"><div class="num">53+</div><div class="lbl">Live Pages</div></div>
+    <div class="stat"><div class="num">15</div><div class="lbl">P0 Repos</div></div>
+    <div class="stat"><div class="num">198</div><div class="lbl">Free Data Sources</div></div>
+    <div class="stat"><div class="num">£0</div><div class="lbl">Cost to MOD</div></div>
+  </div>
+  <div style="margin-top:1.5rem">
+    <span class="badge badge-live">LIVE</span>
+    <span class="badge badge-uk">UK SOVEREIGN</span>
+    <span class="badge badge-mil">DEFENCE AI OS</span>
+    <span class="badge" style="background:rgba(179,136,255,.15);color:var(--accent3)">JSP 936</span>
+  </div>
+</section>
+
+<div class="container">
+
+<section>
+  <h2>🛡️ The 10-Point Moat</h2>
+  <p style="color:var(--muted);margin-bottom:1.5rem">How DEFONEOS competes against $400B of defence AI incumbents.</p>
+  <div class="versus">
+  <table>
+    <thead><tr><th>#</th><th>Moat</th><th>Palantir<br><small>$308B</small></th><th>Anduril<br><small>$61B</small></th><th>Helsing<br><small>$18B</small></th><th>DEFONEOS</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td>Open Source</td><td class="no">No</td><td class="no">Partial</td><td class="no">No</td><td class="yes">Yes</td></tr>
+      <tr><td>2</td><td>UK Sovereign</td><td class="no">No (US)</td><td class="no">No (US)</td><td class="no">EU only</td><td class="yes">Yes</td></tr>
+      <tr><td>3</td><td>JSP 936 Built In</td><td class="no">No</td><td class="no">No</td><td class="no">No</td><td class="yes">Yes</td></tr>
+      <tr><td>4</td><td>33-Hive Architecture</td><td class="no">No</td><td class="no">No</td><td class="no">No</td><td class="yes">Yes</td></tr>
+      <tr><td>5</td><td>Hardware-Agnostic</td><td class="no">No</td><td class="no">No</td><td class="no">No</td><td class="yes">Yes</td></tr>
+      <tr><td>6</td><td>1/40th Price</td><td class="no">No</td><td class="no">No</td><td class="no">No</td><td class="yes">Yes</td></tr>
+      <tr><td>7</td><td>Integration Hub</td><td class="no">No</td><td class="no">No</td><td class="no">No</td><td class="yes">Yes</td></tr>
+      <tr><td>8</td><td>MCP Ecosystem 275+</td><td class="no">No</td><td class="no">No</td><td class="no">No</td><td class="yes">Yes</td></tr>
+      <tr><td>9</td><td>BFT Council</td><td class="no">No</td><td class="no">No</td><td class="no">No</td><td class="yes">Yes</td></tr>
+      <tr><td>10</td><td>Watchdog Certs</td><td class="no">No</td><td class="no">No</td><td class="no">No</td><td class="yes">Yes</td></tr>
+    </tbody>
+  </table>
+  </div>
+</section>
+
+<section>
+  <h2>⚔️ 12 Defence Use Cases</h2>
+  <div class="use-case-grid">
+    <div class="use-case-card"><div class="num">01</div><h4>Cyber Defence Operations</h4><div class="stack">DEFENCES + Tracecat + OpenCTI + PyRIT + garak</div></div>
+    <div class="use-case-card"><div class="num">02</div><h4>Battlefield Intelligence</h4><div class="stack">Cesium + ISR Pipeline + OpenAthena + FreeTAKServer</div></div>
+    <div class="use-case-card"><div class="num">03</div><h4>Virtual Training Environment</h4><div class="stack">UE5 SOV SPACE + Panopticon AI + AFSIM</div></div>
+    <div class="use-case-card"><div class="num">04</div><h4>ROE AI Governance</h4><div class="stack">LAW + NeMo Guardrails + JSP 936 + Watchdog Certs</div></div>
+    <div class="use-case-card"><div class="num">05</div><h4>Force Protection</h4><div class="stack">DOME + GUARDIAN + Counter-Drone + HIVES</div></div>
+    <div class="use-case-card"><div class="num">06</div><h4>MEDEVAC Routing</h4><div class="stack">MAP + Cesium + SOV3 + FreeTAKServer</div></div>
+    <div class="use-case-card"><div class="num">07</div><h4>Autonomous Logistics</h4><div class="stack">OpenFang + Autoware + MAVSDK + SCOREBOARD</div></div>
+    <div class="use-case-card"><div class="num">08</div><h4>SIGINT Processing</h4><div class="stack">SOV3 + OpenCTI + MISP + chat-to-cop</div></div>
+    <div class="use-case-card"><div class="num">09</div><h4>Counter-Drone Swarm</h4><div class="stack">Mava + PX4 + Crazyswarm2 + Batear + Counterdrone MCP</div></div>
+    <div class="use-case-card"><div class="num">10</div><h4>EW Training</h4><div class="stack">vCEW + GNU Radio + UE5 SOV SPACE sim</div></div>
+    <div class="use-case-card"><div class="num">11</div><h4>Homeland Security</h4><div class="stack">DOME + ISR + HIVES + SCOREBOARD</div></div>
+    <div class="use-case-card"><div class="num">12</div><h4>AI Governance for Defence</h4><div class="stack">LAW + BFT Council + JSP 936 + C2PA</div></div>
+  </div>
+</section>
+
+<section>
+  <h2>🏗️ The 10-Layer Architecture</h2>
+  <div style="display:flex;flex-direction:column;gap:.5rem;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1.5rem;font-family:'JetBrains Mono',monospace;font-size:.85rem">
+    <div style="color:var(--accent2)">LAYER 10:</div><div style="color:var(--text);margin-bottom:.75rem">XR/Spatial — UE5 SOV SPACE + Cesium globe + TAK overlays</div>
+    <div style="color:var(--accent2)">LAYER 9:</div><div style="color:var(--text);margin-bottom:.75rem">Interface — Liquid Glass Sovereign + NASA OpenMCT</div>
+    <div style="color:var(--accent2)">LAYER 8:</div><div style="color:var(--text);margin-bottom:.75rem">Simulation — AFSIM + Panopticon AI + WarMatrix</div>
+    <div style="color:var(--accent2)">LAYER 7:</div><div style="color:var(--text);margin-bottom:.75rem">AG-UI + TAK — Agent-to-user via ATAK + FreeTAKServer</div>
+    <div style="color:var(--accent2)">LAYER 6:</div><div style="color:var(--text);margin-bottom:.75rem">A2A + MCP — Secure inter-agent + 275+ tool servers</div>
+    <div style="color:var(--accent2)">LAYER 5:</div><div style="color:var(--text);margin-bottom:.75rem">Council AI (12) — JSP 936 + NeMo Guardrails + ROE</div>
+    <div style="color:var(--accent2)">LAYER 4:</div><div style="color:var(--text);margin-bottom:.75rem">Disciples (33) — DEFENCES, DOME, HIVES, TUNNELS, SCOREBOARD</div>
+    <div style="color:var(--accent2)">LAYER 3:</div><div style="color:var(--text);margin-bottom:.75rem">OpenFang + E2B — Hardened agent OS + microVM sandbox</div>
+    <div style="color:var(--accent2)">LAYER 2:</div><div style="color:var(--text);margin-bottom:.75rem">Secure Compute — TEE (Intel TDX / NVIDIA CC) + PQC crypto</div>
+    <div style="color:var(--accent2)">LAYER 1:</div><div style="color:var(--text);margin-bottom:.75rem">Northflank/K8s — Infrastructure + Kata Containers</div>
+    <div style="color:var(--accent)">LAYER 0:</div><div style="color:var(--text)">Mem0 + Redis — Persistent secure memory</div>
+  </div>
+</section>
+
+<div class="cta">
+  <h2>Ready for First MOD Contact</h2>
+  <p>DEFONEOS is 70% built on the existing MEOK/CSOAI stack. 10-day sprint to MOD-readiness. Open source. UK sovereign. Zero vendor lock-in.</p>
+  <a href="/defoneos-demo.html" class="btn btn-primary">See Live Demo</a>
+  <a href="/defoneos-partners.html" class="btn btn-outline" style="margin-left:1rem">Partner With Us</a>
+</div>
+
+</div>
+
+<footer>
+  <p>🐉 DEFONEOS — UK Sovereign Defence AI Operating System</p>
+  <p>Built by Nicholas Templeman / CSOAI LTD (16939677). Crown use permitted under UK MOD terms.</p>
+  <p>SIGIL: DEFONEOS|main|0.1.0|sovereign|british|forever</p>
+</footer>
+
+</body>
+</html>

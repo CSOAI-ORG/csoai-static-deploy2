@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>DEFONEOS — Live Status Dashboard — Sprint Day 1</title>
+<meta name="description" content="DEFONEOS sprint status dashboard — live counter tracking. MCPs built, pages deployed, repos cloned. 10-day sprint to first MOD contact.">
+<style>
+body{font-family:'Inter',sans-serif;background:linear-gradient(135deg,#0a0a0f,#1a0a2e);color:#f8fafc;margin:0;padding:0;line-height:1.6}
+.wrap{max-width:1200px;margin:0 auto;padding:2rem}
+h1{font-family:'Space Grotesk',sans-serif;font-size:2.5rem;background:linear-gradient(135deg,#8b5cf6,#3b82f6);-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-align:center;margin-bottom:.5rem}
+.tagline{color:#94a3b8;text-align:center;margin-bottom:2rem;font-size:1.1rem}
+.counters{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;margin:1.5rem 0}
+.counter{background:rgba(255,255,255,.04);border:1px solid rgba(139,92,246,.3);border-radius:12px;padding:1.5rem;text-align:center}
+.counter .num{font-size:3rem;font-weight:900;background:linear-gradient(135deg,#8b5cf6,#3b82f6);-webkit-background-clip:text;-webkit-text-fill-color:transparent;display:block}
+.counter .label{color:#94a3b8;font-size:.85rem;margin-top:.5rem}
+.counter .target{color:#475569;font-size:.75rem}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(350px,1fr));gap:1.5rem;margin:1.5rem 0}
+.card{background:rgba(255,255,255,.03);border:1px solid rgba(139,92,246,.2);border-radius:12px;padding:1.5rem}
+.card h3{color:#8b5cf6;margin:0 0 .75rem;font-size:1.05rem}
+.card p{color:#94a3b8;font-size:.85rem;margin:0}
+.btn{display:inline-block;background:linear-gradient(135deg,#8b5cf6,#3b82f6);color:#f8fafc;padding:.75rem 1.5rem;border:none;border-radius:8px;font-weight:700;cursor:pointer;margin:.5rem .5rem 0 0;text-transform:uppercase;font-size:.85rem;text-decoration:none}
+.nav{text-align:center;margin-bottom:1.5rem}
+.nav a{color:#94a3b8;text-decoration:none;margin:0 .75rem;font-size:.85rem;transition:color .2s}
+.nav a:hover{color:#8b5cf6}
+.progress-bar{height:24px;background:rgba(255,255,255,.1);border-radius:12px;overflow:hidden;margin:.75rem 0}
+.progress-fill{height:100%;background:linear-gradient(90deg,#8b5cf6,#3b82f6);text-align:center;color:#f8fafc;font-weight:700;font-size:.75rem;line-height:24px;transition:width .5s}
+table{width:100%;border-collapse:collapse;margin:.5rem 0}
+th{text-align:left;padding:.5rem;background:rgba(139,92,246,.15);color:#8b5cf6;font-size:.8rem;border-bottom:2px solid rgba(139,92,246,.3)}
+td{padding:.5rem;border-bottom:1px solid rgba(255,255,255,.05);font-size:.8rem;color:#cbd5e1}
+.status-done{color:#22c55e;font-weight:700}
+.status-progress{color:#f59e0b}
+.status-pending{color:#ef4444}
+.status-blocked{color:#94a3b8}
+.status-gate{color:#3b82f6}
+.sigil{text-align:center;color:#475569;font-size:.75rem;margin-top:2rem;font-family:monospace}
+.phase-marker{display:inline-block;padding:4px 12px;background:rgba(139,92,246,.2);border:1px solid rgba(139,92,246,.4);border-radius:20px;font-size:.8rem;color:#8b5cf6}
+.tick-info{background:rgba(0,0,0,.3);border:1px solid rgba(255,255,255,.05);border-radius:8px;padding:1rem;margin:1rem 0;font-family:monospace;font-size:.8rem}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div class="nav">
+  <a href="defoneos.html">🏠 DEFONEOS</a>
+  <a href="defoneos-sprint.html">📋 Sprint</a>
+  <a href="defoneos-build.html">🔨 Build</a>
+  <a href="defoneos-status.html" style="color:#8b5cf6;font-weight:700">📊 Status</a>
+</div>
+
+<h1>📊 Sprint Status</h1>
+<p class="tagline">DEFONEOS 10-Day Sprint — Day 1 (4 Jul 2026). Phase: <span class="phase-marker">FOUNDATION</span></p>
+
+<!-- Counter Grid -->
+<div class="counters">
+  <div class="counter">
+    <span class="num">27</span>
+    <div class="label">DEFONEOS Pages</div>
+    <div class="target">Target: 50+</div>
+    <div class="progress-bar"><div class="progress-fill" style="width:54%">54%</div></div>
+  </div>
+  <div class="counter">
+    <span class="num">23</span>
+    <div class="label">MCP Servers</div>
+    <div class="target">Target: 30</div>
+    <div class="progress-bar"><div class="progress-fill" style="width:77%">77%</div></div>
+  </div>
+  <div class="counter">
+    <span class="num">9</span>
+    <div class="label">Repos Cloned</div>
+    <div class="target">Target: 15</div>
+    <div class="progress-bar"><div class="progress-fill" style="width:60%">60%</div></div>
+  </div>
+  <div class="counter">
+    <span class="num">0</span>
+    <div class="label">Grants Applied</div>
+    <div class="target">Target: 3</div>
+    <div class="progress-bar"><div class="progress-fill" style="width:0%">0%</div></div>
+  </div>
+</div>
+
+<!-- Phase Progress -->
+<h2 style="color:#8b5cf6;margin-top:2rem">📍 Sprint Phases</h2>
+<table>
+  <tr><th>Phase</th><th>Days</th><th>Status</th><th>Key Deliverables</th></tr>
+  <tr><td><b>FOUNDATION</b></td><td>1-3</td><td><span class="status-progress">🔄 IN PROGRESS</span></td><td>DSP Registration, Cyber Essentials, SC, defoneos-mcp, C2 demo</td></tr>
+  <tr><td><b>SENSOR BLITZ</b></td><td>4-6</td><td><span class="status-pending">⏳ PENDING</span></td><td>10 sensor MCPs, Digital Twin, ISR Pipeline</td></tr>
+  <tr><td><b>CORE DEMO</b></td><td>7-9</td><td><span class="status-pending">⏳ PENDING</span></td><td>Swarm engine, JSP 936 v0.1, 10 MCPs to PyPI</td></tr>
+  <tr><td><b>GTM</b></td><td>10</td><td><span class="status-pending">⏳ PENDING</span></td><td>DASA, DIANA, UKDI, first MOD contact</td></tr>
+</table>
+
+<!-- MCP Build Status -->
+<h2 style="color:#8b5cf6;margin-top:2rem">🔧 MCP Build Status</h2>
+<div class="grid">
+  <div class="card">
+    <h3>✅ Sensor Layer (10/10)</h3>
+    <table>
+      <tr><td>sentinel-hub-mcp</td><td class="status-done">✓</td></tr>
+      <tr><td>os-opendata-mcp</td><td class="status-done">✓</td></tr>
+      <tr><td>data-gov-uk-mcp</td><td class="status-done">✓</td></tr>
+      <tr><td>companies-house-mcp</td><td class="status-done">✓</td></tr>
+      <tr><td>ons-statistics-mcp</td><td class="status-done">✓</td></tr>
+      <tr><td>gdelt-news-mcp</td><td class="status-done">✓</td></tr>
+      <tr><td>openaq-air-mcp</td><td class="status-done">✓</td></tr>
+      <tr><td>aisstream-maritime-mcp</td><td class="status-done">✓</td></tr>
+      <tr><td>rtsp-camera-mcp</td><td class="status-done">✓</td></tr>
+      <tr><td>mqtt-bridge-mcp</td><td class="status-done">✓</td></tr>
+    </table>
+  </div>
+  <div class="card">
+    <h3>✅ Core DEFONEOS (3/3)</h3>
+    <table>
+      <tr><td>defoneos-mcp</td><td class="status-done">✓</td></tr>
+      <tr><td>defoneos-isr-mcp</td><td class="status-done">✓ NEW</td></tr>
+      <tr><td>defoneos-swarm-mcp</td><td class="status-done">✓ NEW</td></tr>
+      <tr style="opacity:.5"><td>defoneos-cesium-mcp</td><td class="status-done">✓ NEW</td></tr>
+    </table>
+  </div>
+  <div class="card">
+    <h3>🔐 Defence-Relevant (10+)</h3>
+    <table>
+      <tr><td>drone-airspace-governance</td><td class="status-done">✓</td></tr>
+      <tr><td>scada-bridge-mcp</td><td class="status-done">✓</td></tr>
+      <tr><td>cisa-kev-mcp</td><td class="status-done">✓</td></tr>
+      <tr><td>mitre-atlas-mcp</td><td class="status-done">✓</td></tr>
+      <tr><td>mitre-attack-mcp</td><td class="status-done">✓</td></tr>
+      <tr><td>sbom-cyclonedx-mcp</td><td class="status-done">✓</td></tr>
+      <tr><td>slsa-supply-chain-mcp</td><td class="status-done">✓</td></tr>
+      <tr><td>firmware-attestation-mcp</td><td class="status-done">✓</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- Human Gates -->
+<h2 style="color:#8b5cf6;margin-top:2rem">🚪 Human Gates (Awaiting Nick)</h2>
+<div class="grid">
+  <div class="card"><h3>🔴 Defence Sourcing Portal</h3><p>Register as supplier. Needs: Nick's email, company details, DUNS number. Action: Visit <a href="https://www.contracts.mod.uk/" style="color:#3b82f6">contracts.mod.uk</a></p><span class="status-gate">⏸️ AWAITING NICK</span></div>
+  <div class="card"><h3>🔴 Cyber Essentials (IASME)</h3><p>£320-600. Mandatory for MOD bidding. 1-2 week process. Action: Apply at <a href="https://iasme.co.uk/cyber-essentials/" style="color:#3b82f6">iasme.co.uk</a></p><span class="status-gate">⏸️ AWAITING NICK</span></div>
+  <div class="card"><h3>🔴 UK SC Clearance</h3><p>4-6 week process. Needs personal details. Action: Via sponsoring organisation.</p><span class="status-gate">⏸️ AWAITING NICK</span></div>
+  <div class="card"><h3>🟡 NATO STO + DSRB Outreach</h3><p>Emails drafted. Nick must review and press send.</p><span class="status-gate">⏸️ AWAITING NICK</span></div>
+</div>
+
+<!-- Latest Tick -->
+<h2 style="color:#8b5cf6;margin-top:2rem">🕐 Latest Tick</h2>
+<div class="tick-info">
+<b>Tick:</b> Day 1 — 4 Jul 2026 ~19:00 BST<br>
+<b>Built This Tick:</b> MCPs 21-23 (defoneos-isr-mcp, defoneos-swarm-mcp, defoneos-cesium-mcp) + 3 pages (defoneos-swarm.html, defoneos-grants.html, defoneos-status.html)<br>
+<b>Deployed:</b> csoai-static-deploy2 (Vercel) — all assets live<br>
+<b>Vercel Health:</b> csoai.org <span class="status-done">200 OK</span> | defoneos.com <span class="status-done">200 OK</span><br>
+<b>Next:</b> Build MCP 24-26 + 3 more pages on next tick (21:00 BST)
+</div>
+
+<div class="sigil">🐉 DEFONEOS STATUS DASHBOARD v1.0.0 | Sprint Day 1 | Phase: FOUNDATION | Auto-pilot ACTIVE | SIGIL: 5747-u5-d45h-b04rd</div>
+
+</div>
+</body>
+</html>
