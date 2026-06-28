@@ -1,28 +1,30 @@
 # councilof-mcp
 
-**CouncilOf.AI MCP — the UK sovereign defence BFT council orchestrator.**
+**councilof.ai — the 33-agent BFT council for the meok substrate + DEFONEOS wedge.**
 
-For AI governance, BFT decision-making, and any high-stakes decision that requires a sovereign, care-ethics-certified verdict. UK sovereign only. NOT for global / consumer / non-defence use.
+For AI governance, BFT decision-making, and any high-stakes decision that requires a sovereign, care-ethics-certified verdict. Part of the meok substrate (meok.ai / csoai.org) + the DEFONEOS wedge (UK defence).
 
 [![MCP](https://img.shields.io/badge/MCP-server-667eea)](https://modelcontextprotocol.io)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![CSOAI LTD](https://img.shields.io/badge/CSOAI-LTD%2016939677-00CCFF)](https://csoai.org)
-[![UK Sovereign](https://img.shields.io/badge/UK-sovereign-00247d)](https://meok.ai/defoneos)
-[![UK MOD / AUKUS](https://img.shields.io/badge/UK%20MOD%20%2F%20AUKUS-22c55e)](https://csoai.org/defoneos)
+[![meok.ai / csoai.org](https://img.shields.io/badge/meok.ai%20%2F%20csoai.org-00247d)](https://meok.ai/os)
+[![DEFONEOS wedge](https://img.shields.io/badge/DEFONEOS%20wedge-UK%20defence-22c55e)](https://meok.ai/defoneos)
 [![Care](https://img.shields.io/badge/care_score-0.95+-5b21b6)](https://councilof.ai)
 
-## ⚠️ UK SOVEREIGN ONLY
+## The council for the meok substrate
 
-> CouncilOf.AI is the UK sovereign 33-agent BFT council orchestrator. UK MOD + AUKUS Pillar 2 procurement-grade. NOT for consumer / non-defence / non-UK use.
+> **councilof-mcp is the 33-agent BFT council orchestrator for the meok substrate (meok.ai / csoai.org) + the DEFONEOS wedge (UK defence procurement).**
+>
+> - **meok.ai** uses the council to issue every meok decision
+> - **csoai.org** uses the council to issue every DEFONEOS-SEAL credential
+> - **DEFONEOS wedge** uses the council for procurement-grade decisions
 
-## The 33-agent council (UK sovereign)
-
-The 33-agent BFT council composition for UK defence procurement:
+## The 33-agent council composition
 
 | Group | Count | Weight | Veto |
 |---|---:|---:|:---:|
 | King (consensus orchestrator) | 1 | 3.0 | – |
-| Queens (one per UK sovereign domain) | 12 | 1.0 | – |
+| Queens (one per meok sovereign domain) | 12 | 1.0 | – |
 | PBFT nodes (safety veto layer) | 12 | 1.0 | – |
 | Vanguards (bias / care / sovereignty / honesty) | 4 | 2.0 | ✅ (can VETO) |
 | Specials (companion / dreamer / chronicler / cultivator) | 4 | 1.5 | – |
@@ -30,15 +32,15 @@ The 33-agent BFT council composition for UK defence procurement:
 
 **Quorum: 23/33 (2f+1).**
 
-The 12 Queens cover UK sovereign domains: UK MOD, GCHQ, NCSC, DAIC, Dstl, DASA, and other UK defence agencies.
+The 12 Queens cover meok sovereign domains: meok.ai, csoai.org, DEFONEOS, openpatent, article-50-kit, and other meok wedges.
 
 ## The 4 care principles (the Maternal Covenant)
 
 The BFT council enforces 4 care principles at the 0.95 threshold:
 - **Dignity** — the AI respects the human, the data, the physical world it operates in
-- **Agency** — UK sovereign AI, not platform AI; the UK MOD remains in control
+- **Agency** — sovereign AI, not platform AI; the meok owner remains in control
 - **Safety** — the law is enforced, not bypassed; no kinetic targeting, no personal surveillance
-- **Solidarity** — the IP is verifiable, the credit is attributable, the UK defence community trusts the system
+- **Solidarity** — the IP is verifiable, the credit is attributable
 
 ## The 6 tools
 
@@ -56,7 +58,7 @@ The BannedTermGate refuses 3 categories of query at pre-processing:
 2. **Kinetic targeting patterns** — strike package, find-fix-finish, kill order, bounty, hit list, assassination
 3. **Personal surveillance patterns** — track individual, follow person, locate phone, track phone, face-rec
 
-No override path. All refusals logged to the SOV3 audit chain on UK soil.
+No override path. All refusals logged to SOV3 with `source_agent: "councilof-mcp"`.
 
 ## 📄 License
 
@@ -64,6 +66,6 @@ MIT (open-source, UK sovereign).
 
 ---
 
-*— MEOK AI Labs, 2026. The dragon serves the UK sovereign. The dragon is sovereign.*
+*— MEOK AI Labs, 2026. The dragon is meok. The dragon is sovereign.*
 
 JEEVES → DEFONEOS. 🐉
