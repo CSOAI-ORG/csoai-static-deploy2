@@ -51,6 +51,23 @@ BANNED_TERMS = re.compile(
     re.IGNORECASE,
 )
 
+# The 3 hard stops (the care-membrane for the DEFONEOS dominion).
+# In addition to the standard severed-brand block (above), the
+# geospatial domain extension refuses:
+KINETIC_BLOCK_PATTERNS = re.compile(
+    r"\b(strike package|find-fix-finish|target elimination|kill order|"
+    r"bounty|hit list|kill list|assassination|lethal strike|"
+    r"kinetic target|kinetic option|designate for destruction|"
+    r"enemy combatant)\b",
+    re.IGNORECASE,
+)
+SURVEILLANCE_BLOCK_PATTERNS = re.compile(
+    r"\b(track individual|follow person|locate phone|track phone|"
+    r"identify person|recognise face|face-rec|face_rec|"
+    r"surveil <name>|find <name> location|track <name>|locate <name>)\b",
+    re.IGNORECASE,
+)
+
 # The 7-layer Global Dome registry
 GLOBAL_DOME_LAYERS = {
     "L0": {
@@ -121,17 +138,30 @@ class BannedTermGate:
 
     @staticmethod
     def check(prompt: str) -> tuple[bool, str]:
-        """Returns (allowed, reason). If allowed=True, reason is empty."""
+        """Returns (allowed, reason). If allowed=True, reason is empty.
+
+        The 3 hard stops (the care-membrane):
+        1. Standard severed-brand block (James Castle, CSGA, Terranova, etc.)
+        2. Kinetic targeting patterns (strike package, find-fix-finish, etc.)
+        3. Personal surveillance patterns (track individual, face-rec, etc.)
+        """
         if not prompt:
             return True, ""
         match = BANNED_TERMS.search(prompt)
         if match:
             term = match.group(0)
-            reason = (
-                f"Refused: '{term}' is a severed brand or phantom "
-                f"(see MEOK_DEFONEOS_ALIGNMENT_2026-06-27.md v3.0 §①)."
-            )
-            return False, reason
+            return False, f"Refused: '{term}' is a severed brand or phantom (v3.0 §①)."
+
+        match = KINETIC_BLOCK_PATTERNS.search(prompt)
+        if match:
+            pattern = match.group(0)
+            return False, f"Refused: '{pattern}' is a kinetic targeting pattern. The DEFONEOS care-membrane refuses strike packages, find-fix-finish, kill orders, and any lethal targeting query. UK MOD operational command chain is the proper channel."
+
+        match = SURVEILLANCE_BLOCK_PATTERNS.search(prompt)
+        if match:
+            pattern = match.group(0)
+            return False, f"Refused: '{pattern}' is a personal surveillance pattern. The DEFONEOS care-membrane refuses individual-tracking, face-recognition, and person-locating queries. Aggregate situational awareness only."
+
         return True, ""
 
     @staticmethod

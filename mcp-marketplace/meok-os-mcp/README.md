@@ -1,157 +1,147 @@
 # meok-os-mcp
 
-**MEOK OS — the sovereign AI Operating System for ALL.**
+**DEFONEOS dominion — the UK sovereign defence AI meta-orchestrator.**
 
-The 17th MCP in the MEOK fleet. The **META-ORCHESTRATOR** for the DEFONEOS
-7-layer Global Dome. Unifies 454 MCPs across 7 layers into a single
-sovereign OS that any human, any agent, any sovereign can use.
+The UK sovereign 7-layer meta-orchestrator for UK MOD + AUKUS Pillar 2 procurement. Wraps the DEFONEOS fleet (15 defence-AI MCPs) into a single sovereign substrate. **UK sovereign only. NOT for global / consumer / non-defence use.**
 
 [![MCP](https://img.shields.io/badge/MCP-server-667eea)](https://modelcontextprotocol.io)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![PyPI](https://img.shields.io/badge/PyPI-install-3775a9)](https://pypi.org/project/meok-os-mcp/)
 [![CSOAI LTD](https://img.shields.io/badge/CSOAI-LTD%2016939677-00CCFF)](https://csoai.org)
-[![Sovereign](https://img.shields.io/badge/UK-sovereign%20%2B%20AUKUS-00247d)](https://meok.ai/os)
-[![OS for ALL](https://img.shields.io/badge/AI%20OS%20for%20ALL-22c55e)](https://meok.ai/os)
+[![UK Sovereign](https://img.shields.io/badge/UK-sovereign%20%2B%20AUKUS-00247d)](https://meok.ai/defoneos)
+[![UK MOD / DAIC](https://img.shields.io/badge/UK%20MOD%20%2F%20DAIC%20procurement-22c55e)](https://csoai.org/defoneos)
 [![Care](https://img.shields.io/badge/care_score-0.95+-5b21b6)](https://councilof.ai)
 
-## The "FOR ALL" promise
+## ⚠️ UK SOVEREIGN ONLY
 
-> **MEOK OS is the sovereign AI Operating System for ALL.**
+> **DEFONEOS dominion is the UK sovereign defence AI meta-orchestrator. It is NOT an "OS for ALL".**
+> UK buyers only. UK defence procurement only. UK MOD, AUKUS Pillar 2, DAIC procurement-grade. Not for global OS deployment. Not for consumer use. Not for non-defence industries. Not for non-UK sovereigns.
 
-- **For HUMANS:** a sovereign-OS UI (meok.ai/os) where any human can use the 454 MCPs without writing code
-- **For AGENTS:** an MCP-native interface that any LLM agent (Claude, GPT, Gemini, local Mamba-2) can call to access any of the 7 layers
-- **For SOVEREIGNS** (UK MOD, DAIC, AUKUS Pillar 2): the procurement-grade certified surface with DEFONEOS-SEAL
-- **For HUMAN-OIDS:** the safety envelope (must-check-DEFONEOS-before-acting) for humanoid vendors by 2027-2030
-- **For DEVELOPERS:** 454 MIT-licensed MCPs they can fork + self-host
-- **For THE PLANET:** runs on UK soil, no foreign cloud dependency, AUKUS Pillar 2 compatible
+## The 7 layers of the DEFONEOS dominion
 
-## The 7 layers of the DEFONEOS Global Dome
+| L | Layer | Substrate | Care principle | Sovereign link |
+|---|---|---|---|---|
+| L0 | **UK Physical Base** | iokfarm.co.uk (6.5-acre UK farm, polytunnels, aquaponics) | Dignity | UK Defence AI R&D |
+| L1 | **UK SOV3 Infrastructure** | 47 agents · 115 tools · 341 MCPs · 33-agent BFT council · **UK soil (35.242.143.249)** | Agency | CSOAI LTD UK 16939677 |
+| L2 | **DEFONEOS-SEAL** | 33-agent BFT-signed credentials for AI-in-the-loop systems | Solidarity | UK MOD procurement-grade |
+| L3 | **DEFONEOS Audit Chain** | Append-only Ed25519-signed chain · DAIC + DSTL + AUKUS Pillar 2 auditable | Dignity | UK defence audit |
+| L4 | **UK Compliance Pack** | EU AI Act + NIST AI RMF + MITRE ATLAS + OWASP LLM + ISO 42001 + **DAIC + AUKUS Pillar 2 + DSTL SAPIENT** | Safety | UK MOD compliance |
+| L5 | **UK Government MCP Pack** | UK MOD + GCHQ + NCSC + DAIC + Dstl + DASA + HM Government Crown Hosting | Solidarity | UK sovereign only |
+| L6 | **DEFONEOS Defence Fleet** | airspace + drone BVLOS + firmware + governance + care + geospatial + council (15 defence-AI MCPs) | Agency | UK MOD + AUKUS |
+| L7 | **UK Humanoid Safety** | Robot SDK + safety envelope for UK MOD-issued humanoids at AUKUS Pillar 2 ranges | Dignity + Safety + Agency | UK MOD + UK sovereign only |
 
-| L | Layer | Substrate | Care principle |
-|---|---|---|---|
-| L0 | **Physical Base** | iokfarm.co.uk (6.5-acre UK farm, 19,000 sqft, polytunnels, aquaponics) | Dignity |
-| L1 | **SOV3 Infrastructure** | 47 agents · 115 tools · 341 MCPs · 33-agent BFT council | Agency |
-| L2 | **openpatent.ai** (IP Protection) | 6-layer cryptographic disclosure (SHA-3/512 + HMAC + Ed25519 + Bitcoin OTS + C2PA + hash-chain) | Solidarity |
-| L3 | **Digital Real Estate / IPO** | 27 .ai domain tokens + valuation engine + Polymesh/Securitize/tZERO | Dignity |
-| L4 | **Tax + Compliance** | VAT/GST/payroll/corporate tax/transfer pricing + OECD Pillar 1+2 | Safety |
-| L5 | **Government MCP Pack** | 40+ US Federal + UK + EU + AUKUS + Standards bodies | Solidarity |
-| L6 | **Industry MCP Packs** (27 .ai domains) | 27 industry verticals: construction, agriculture, finance, healthcare, IP, real estate, humanoid, defence | Agency |
-| L7 | **Humanoid Interface** | Robot SDK (Python + Rust) + safety envelope + audit trail + teleop fallback | Dignity + Safety + Agency |
+**Total substrate: 15 DEFONEOS MCPs (verified live) + the 7-layer dominion registry in `meok-os-mcp`.**
 
-## 🚀 Quick Start
+## The "UK ONLY" scope matrix
+
+| Surface | Scope | Why |
+|---|---|---|
+| **For UK MOD (the buyer)** | UK defence procurement (DAIC, DASA, Dstl) | The sovereign buyer |
+| **For UK defence primes** | Babcock · BAE · QinetiQ · Thales UK · Leonardo UK | The sovereign supply chain |
+| **For AUKUS Pillar 2** | AU + UK + US interoperability | The 3-eye procurement framework |
+| **For UK MOD-issued humanoids** | Safety envelope at AUKUS ranges (Woomera, Pendine, Suffield) | The sovereign robotics layer |
+| **For DEFONEOS-SEAL recipients** | UK defence contractors + AUKUS-2 primes | The certification authority output |
+| **NOT for** | Consumer use, non-defence use, non-UK sovereigns | UK sovereign only |
+
+## 🚀 Quick Start (UK defence procurement install)
 
 ```bash
+# The UK sovereign meta-orchestrator
 pip install meok-os-mcp
+
+# Sister packages (DEFONEOS fleet)
+pip install meok-defoneos-mcp csoai-defoneos-mcp meok-defoneos-geospatial-intel-mcp
 ```
 
-## 🛠 The 10 tools (the OS-for-ALL meta-orchestrator)
+## 🛠 The 10 tools (the DEFONEOS dominion meta-orchestrator)
 
-### 1. `os_discover` — discover the 7-layer Global Dome registry
-### 2. `os_route` — route a request to the right MCP across the 7 layers
-### 3. `os_run_humanoid_safety_check` — the L7 humanoid safety envelope
-### 4. `os_audit` — full OS audit (procurement-grade for any sovereign)
-### 5. `os_sign` — sign an action with the 33-agent BFT council
-### 6. `os_verify` — verify a signed action
-### 7. `os_consult_council` — convene the 33-agent BFT council for a decision
-### 8. `os_industry_pack` — load a 27-domain industry MCP pack
-### 9. `os_data_provenance` — sign + verify data provenance across the OS
-### 10. `os_sovereign_handoff` — hand off control to a sovereign buyer (UK MOD, DAIC, AUKUS)
+1. `os_discover` — discover the 7-layer DEFONEOS dominion registry
+2. `os_route` — route a request to the right UK defence MCP across the 7 layers
+3. `os_run_humanoid_safety_check` — the L7 UK MOD-issued humanoid safety envelope
+4. `os_audit` — full OS audit (procurement-grade for UK MOD, DAIC, AUKUS Pillar 2)
+5. `os_sign` — sign an action with the 33-agent BFT council (UK MOD procurement-grade)
+6. `os_verify` — verify a signed DEFONEOS-SEAL action
+7. `os_consult_council` — convene the 33-agent BFT council for a UK MOD decision
+8. `os_industry_pack` — load a UK-defence industry MCP pack (defence + 8 UK verticals)
+9. `os_data_provenance` — sign + verify data provenance across the UK defence OS
+10. `os_sovereign_handoff` — hand off control to a UK MOD / DAIC / AUKUS buyer
 
-### Example: discover the OS
+### Example: discover the DEFONEOS dominion
 
 ```python
 from meok_os_mcp import os_discover
 
 discovery = os_discover(layer="all")
 # → {
-#     "os_version": "MEOK OS v1.0.0",
-#     "substrate_size": "454 MCPs across 7 layers",
-#     "total_mcps": 124,  # of the 454, this is the directly-mapped subset
-#     "layers": {
-#         "L0": {"name": "Physical Base", "mcps": [...8 MCPs], "care_principle": "Dignity"},
-#         "L1": {"name": "SOV3 Infrastructure", "mcps": [...29 MCPs], "care_principle": "Agency"},
-#         ...
-#         "L7": {"name": "Humanoid Interface", "mcps": [...14 MCPs], "care_principle": "..."},
-#     }
+#     "os_version": "DEFONEOS dominion v1.0.2",
+#     "substrate_size": "15 DEFONEOS MCPs across 7 layers (UK sovereign only)",
+#     ...
 # }
 ```
 
-### Example: route a request
+### Example: UK MOD procurement-grade audit
 
 ```python
-from meok_os_mcp import os_route
+from meok_os_mcp import os_audit
 
-# Construction industry routing
-r = os_route(request="Find me a construction site for hire in Devonport")
-# → {"routed_layer": "L6", "routed_mcp": "industry-specific MCP", "routing_reason": "matched keywords: ['construction'] → industry domain context", ...}
-
-# Tax compliance routing
-r = os_route(request="Check tax compliance for my new audit")
-# → {"routed_layer": "L4", "routed_mcp": "vat-calculation-mcp", ...}
-```
-
-### Example: humanoid safety check (L7)
-
-```python
-from meok_os_mcp import os_run_humanoid_safety_check
-
-# Every humanoid (Figure, 1X, Apptronik, Agility, Sanctuary, Tesla Optimus)
-# must check DEFONEOS before executing any physical action.
-result = os_run_humanoid_safety_check(
-    action="Pick box from shelf A and place on conveyor B",
-    robot_id="ROBOT-001",
-)
+audit = os_audit(audit_target="self", audit_type="sovereign-certification")
 # → {
-#     "approved": True,
-#     "permit_id": "PERMIT-20260628-E1785CC7",
-#     "council_verdict": "APPROVED",
-#     "care_score": 0.97,
+#     "audit_id": "sha256...",
+#     "audit_target": "self",
+#     "audit_type": "sovereign-certification",
+#     "layers_audited": ["L0", "L1", "L2", "L3", "L4", "L5", "L6", "L7"],
+#     "frameworks_covered": ["EU AI Act", "NIST AI RMF", "MITRE ATLAS",
+#                            "ISO 42001", "DAIC", "AUKUS Pillar 2", "DSTL SAPIENT"],
+#     "compliance_score": 0.92,
+#     "defoneos_seal_eligible": True,
 #     "sov3_sigil": "...",
 # }
 ```
 
-### Example: industry pack (the 27 .ai domains)
+### Example: UK MOD-issued humanoid safety envelope
 
 ```python
-from meok_os_mcp import os_industry_pack
+from meok_os_mcp import os_run_humanoid_safety_check
 
-defence_pack = os_industry_pack(industry="defence")
+result = os_run_humanoid_safety_check(
+    action="UK MOD issued: Drone strike on coords 51.5, -0.1",
+    robot_id="UK-MOD-DRONE-001",
+)
 # → {
-#     "industry": "defence",
-#     "mcp_count": 10,
-#     "estimated_annual_revenue_gbp": 365000,  # 400 tx/day * 365 * £2.50
-#     "mcps": ["meok-defoneos-mcp", "csoai-defoneos-mcp", ...]
-# }
-
-finance_pack = os_industry_pack(industry="finance")
-# → {
-#     "mcp_count": 7,
-#     "estimated_annual_revenue_gbp": 2737500,  # 3000 tx/day * 365 * £2.50
+#     "approved": False,
+#     "council_verdict": "REFUSED",
+#     "refusal_reason": "Kinetic targeting pattern detected. UK MOD-issued humanoids cannot execute kinetic actions via DEFONEOS. Re-issue via UK MOD operational command chain.",
 # }
 ```
 
-## 🛡 BannedTermGate (inherited from the Mavis template)
+(Note: the UK MOD operational command chain for kinetic actions is OUTSIDE DEFONEOS. DEFONEOS only handles non-kinetic situational awareness, audit, governance — the safety envelope refuses any kinetic pattern at the pre-processing layer.)
 
-Refuses severed brands (James Castle / CSGA / Terranova / defonos.io) and Kimi phantoms (Toronto Summit / 4 Jul launch / 306 queue). Refusals are logged to SOV3 with `source_agent: "meok-os-mcp"`. No override path.
+## 🛡 The 3 hard stops (the care-membrane enforced by the 33-agent BFT council)
 
-## 🏛 The 33-agent BFT council
+1. **Severed brands** — James Castle, Grant Carter Osborne, Chris J., CSGA, Terranova, defonos.io, Toronto Summit (Kimi phantom), 4 Jul launch (Kimi phantom). Refused at pre-processing.
+2. **Kinetic targeting patterns** — strike package, find-fix-finish, kill order, bounty, hit list, assassination, lethal strike, designate for destruction, enemy combatant. Refused at pre-processing.
+3. **Personal surveillance patterns** — track individual, follow person, locate phone, track phone, identify person, recognise face, face-rec, surveil. Refused at pre-processing.
 
-Every material decision in the OS is signed by the 33-agent BFT council. Quorum 23/33 (2f+1). Composition: 1 King + 12 Queens (one per hive domain) + 12-around-1 PBFT (safety veto) + 4 Vanguards (bias/care/sovereignty/honesty) + 4 Specials (companion/dreamer/chronicler/cultivator).
+**All 3 pattern sets are enforced by the BannedTermGate. Refusals are logged to SOV3 with `source_agent: "meok-os-mcp"`. No override path.**
+
+## 🏛 The 33-agent BFT council (UK sovereign)
+
+Every material decision in the DEFONEOS dominion is signed by the 33-agent BFT council. Quorum 23/33 (2f+1). Composition: 1 King + 12 Queens (one per UK sovereign domain: UK MOD, GCHQ, NCSC, DAIC, Dstl, DASA, ...) + 12-around-1 PBFT (safety veto) + 4 Vanguards (bias / care / sovereignty / honesty) + 4 Specials (companion / dreamer / chronicler / cultivator).
 
 ## 📜 The seal
 
-Built to the [`DEFONEOS_GLOBAL_DOME_OS_FOR_ALL.md`](https://github.com/CSOAI-ORG/clawd-workspace/blob/main/_TABS/_inventory/DEFONEOS_GLOBAL_DOME_OS_FOR_ALL.md) v1.0 strategic anchor + the [`MEOK_DEFONEOS_ALIGNMENT_2026-06-27.md`](https://github.com/CSOAI-ORG/clawd-workspace/blob/main/MEOK_DEFONEOS_ALIGNMENT_2026-06-27.md) v3.0 amendment.
+Built to the [`MEOK_DEFONEOS_ALIGNMENT_2026-06-27.md`](https://github.com/CSOAI-ORG/clawd-workspace/blob/main/MEOK_DEFONEOS_ALIGNMENT_2026-06-27.md) v3.0 (UK sovereign only).
 
-**Author:** CSOAI LTD (UK 16939677) · Nicholas Templeman
-**Alignment:** OS for ALL, 7-layer Global Dome, 454 MCPs, sovereign-by-design, AUKUS-compatible
+**Author:** CSOAI LTD (UK 16939677) · Nicholas Templeman · Yorkshire, UK
+**Scope:** UK MOD, DAIC, AUKUS Pillar 2 procurement-grade. **UK sovereign only.**
 **Care score:** 0.95+ (the Maternal Covenant threshold)
 
 ## 📄 License
 
-MIT — see [LICENSE](LICENSE).
+MIT (open-source, UK sovereign).
 
 ---
 
-*— MEOK AI Labs, 2026. The dragon never lies. The dragon is sovereign. The OS is for ALL.*
+*— MEOK AI Labs, 2026. The dragon serves the UK sovereign. The dragon is sovereign. The dragon serves only the UK.*
 
 JEEVES → DEFONEOS. 🐉

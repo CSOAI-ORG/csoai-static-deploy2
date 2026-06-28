@@ -1,41 +1,38 @@
-"""MEOK OS — the sovereign AI Operating System for ALL.
+"""MEOK OS — the UK sovereign defence AI meta-orchestrator (the DEFONEOS dominion).
 
-The 17th MCP in the MEOK fleet. The META-ORCHESTRATOR for the DEFONEOS
-7-layer Global Dome. Unifies 454 MCPs across the 7 layers into a single
-sovereign OS that any human, any agent, any sovereign can use.
+The DEFONEOS dominion meta-orchestrator MCP for the 7-layer Global Dome
+(15 DEFONEOS MCPs across 7 layers). UK sovereign only. NOT for global /
+consumer / non-defence use.
 
-7 LAYERS:
-  L0: Physical base (iokfarm.co.uk — 6.5-acre UK farm, the only sovereign
-      AI lab with a physical proof-of-concept layer)
-  L1: SOV3 infrastructure (47 agents, 115 tools, 341 MCPs in the bridge)
-  L2: openpatent.ai IP protection (6-layer cryptographic disclosure)
-  L3: Digital real estate / IPO (27 .ai domain tokens + valuation engine)
-  L4: Tax + compliance MCP pack (VAT/GST/payroll/corporate tax)
-  L5: Government MCP pack (40+ US Federal + UK + EU + AUKUS)
-  L6: Industry MCP packs (27 .ai sectors + DEFONEOS 15/16/17th MCPs)
-  L7: Human-oid interface (robots + wearables + agents query the OS
-      before acting — permits, hires, safety, compliance)
+7 LAYERS (DEFONEOS DOMINION):
+  L0: UK Physical base (iokfarm.co.uk — 6.5-acre UK farm)
+  L1: UK SOV3 infrastructure (47 agents, 115 tools, 341 MCPs, 33-agent BFT)
+  L2: DEFONEOS-SEAL (33-agent BFT-signed credentials)
+  L3: DEFONEOS Audit Chain (Ed25519-signed on UK soil)
+  L4: UK Compliance Pack (DAIC + AUKUS Pillar 2 + DSTL SAPIENT + EU AI Act
+      + NIST AI RMF + MITRE ATLAS + OWASP LLM + ISO 42001)
+  L5: UK Government MCP Pack (UK MOD + GCHQ + NCSC + DAIC + Dstl + DASA)
+  L6: DEFONEOS Defence Fleet (15 defence-AI MCPs: airspace + drone BVLOS
+      + firmware + governance + care + geospatial + council + DEFONEOS-SEAL)
+  L7: UK MOD-issued humanoid safety envelope (NOT for kinetic actions)
 
-THE "FOR ALL" PROMISE:
-  - For HUMANS: a sovereign-OS UI (meok.ai/os) where any human can
-    use the 454 MCPs without writing code
-  - For AGENTS: an MCP-native interface that any LLM agent (Claude,
-    GPT, Gemini, local Mamba-2) can call to access any of the 7 layers
-  - For SOVEREIGNS (UK MOD, DAIC, AUKUS Pillar 2, etc.): the
-    procurement-grade certified surface with DEFONEOS-SEAL
-  - For HUMAN-OIDS: the safety-envelope (must-check-DEFONEOS-before-acting)
-    that humanoid vendors will need by 2027-2030
-  - For DEVELOPERS: 454 MIT-licensed MCPs they can fork + self-host
-  - For THE PLANET: runs on UK soil, no foreign cloud dependency, AUKUS
-    Pillar 2 compatible
+THE UK-ONLY SCOPE:
+  - For UK MOD (the buyer)
+  - For UK defence primes (Babcock, BAE, QinetiQ, Thales UK, Leonardo UK)
+  - For AUKUS Pillar 2 (AU + UK + US interoperability)
+  - For UK MOD-issued humanoids at AUKUS ranges (Woomera, Pendine, Suffield)
+  - NOT for: consumer use, non-defence use, non-UK sovereigns
 
-Authority: DEFONEOS_GLOBAL_DOME_OS_FOR_ALL.md (the new strategic anchor)
-Inherits: MEOK_DEFONEOS_ALIGNMENT_2026-06-27.md v2.1 (post-amendment v3.0)
+Authority: MEOK_DEFONEOS_ALIGNMENT_2026-06-27.md v3.0
+Inherits: the original DEFONEOS Global Dome spec
 """
+import re
 
 from meok_os_mcp.server import (
     GLOBAL_DOME_LAYERS,
     BANNED_TERMS,
+    KINETIC_BLOCK_PATTERNS,
+    SURVEILLANCE_BLOCK_PATTERNS,
     BannedTermGate,
     os_discover,
     os_route,
@@ -49,8 +46,9 @@ from meok_os_mcp.server import (
     os_sovereign_handoff,
 )
 
-__version__ = "1.0.0"
-__alignment__ = "DEFONEOS_GLOBAL_DOME_OS_FOR_ALL.md v1.0 + MEOK_DEFONEOS_ALIGNMENT_2026-06-27.md v3.0"
-__substrate_size__ = "454 MCPs across 7 layers"
+__version__ = "1.0.2"
+__alignment__ = "MEOK_DEFONEOS_ALIGNMENT_2026-06-27.md v3.0 (UK sovereign only)"
+__substrate_size__ = "15 DEFONEOS MCPs across 7 layers (UK sovereign only)"
 __care_score_threshold__ = 0.95
 __council_quorum__ = 23
+__scope__ = "UK MOD + AUKUS Pillar 2 + DAIC procurement-grade. UK sovereign only. NOT for global / consumer / non-defence."
