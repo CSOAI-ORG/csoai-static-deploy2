@@ -1,5 +1,4 @@
-"""
-UE5 → SOV3 bridge: serves the 33 hives data + calls all 12 sovereign MCPs.
+"""UE5 → SOV3 bridge: serves the 33 hives data + calls all 13 sovereign MCPs.
 Runs on M2 Mac at :8765. UE5 (on M4 or any UE5 client) calls this.
 
 Endpoints:
@@ -10,7 +9,10 @@ Endpoints:
   GET  /ollama/tags                     → list M2 Ollama models
   POST /ollama/chat                     → M2 Ollama chat (SOV3 dragon)
   POST /avatar/say                      → sovereign dragon avatar speak
-  GET  /avatar/log                      → dragon speech history
+  GET  /worm/status                     → MEOK WORM doctrine status
+  POST /worm/scan                       → Morris-II defensive scan
+  GET  /worm/tunnels                    → 6 canonical protocol tunnels
+  GET  /worm/audit                      → recent audit events
   GET  /health                          → health check
 """
 import json
@@ -34,8 +36,7 @@ SOVEREIGN_MCPS_DIR = Path("/Users/nicholas/clawd/mcp-marketplace")
 SOV3_DIR = Path("/Users/nicholas/clawd/sovereign-town")
 OLLAMA_URL = "http://localhost:11434"
 
-# === Bearer token (HMAC-signed, matches UE5 client) ===
-BRIDGE_SECRET = os.environ.get("SOV_BRIDGE_SECRET", "sovereign-bridge-2026-csoai-uk-16939677")
+BRIDGE_SECRET = "sovereign-bridge-2026-csoai-uk-16939677"
 VALID_TOKENS = {hmac.new(BRIDGE_SECRET.encode(), b"ue5-client", hashlib.sha256).hexdigest()[:32]}
 
 
@@ -84,6 +85,7 @@ async def call_mcp(mcp_name: str, tool_name: str, request: Request):
         "avatar": "meok_sovereign_avatar_mcp",
         "skills": "meok_sovereign_skills_mcp",
         "eu-ai-act-kit": "meok_sovereign_eu_ai_act_kit_mcp",
+        "worm": "meok_sovereign_worm_mcp",
     }
     pkg = pkg_map.get(mcp_name)
     if not pkg:
@@ -118,7 +120,7 @@ async def update_pond(request: Request):
     return {"ok": True, "state": IOT_POND_STATE}
 
 
-# === Ollama (M2 local sovereign models) ===
+# === Ollama ===
 @app.get("/ollama/tags")
 async def ollama_tags():
     async with httpx.AsyncClient() as client:
@@ -193,6 +195,92 @@ async def dragon_log():
     return {"count": len(SOV3_SPEECH_LOG), "speeches": SOV3_SPEECH_LOG[-50:]}
 
 
+# === MEOK WORM (defensive) ===
+@app.get("/worm/status")
+async def worm_status():
+    """MEOK WORM doctrine status (what's deployed, what's defensive)."""
+    try:
+        from meok_sovereign_worm_mcp import sov_worm_status
+        return sov_worm_status()
+    except Exception as e:
+        return {"error": str(e)}
+
+
+@app.post("/worm/scan")
+async def worm_scan(data: dict):
+    """Scan text for Morris-II self-replicating-prompt patterns (defensive)."""
+    text = data.get("text", "")
+    source = data.get("source", "ue5")
+    try:
+        from meok_sovereign_worm_mcp import sov_worm_scan
+        return sov_worm_scan(text, source=source)
+    except Exception as e:
+        return {"error": str(e)}
+
+
+@app.get("/worm/tunnels")
+async def worm_tunnels():
+    """List all registered + canonical known protocol tunnels."""
+    try:
+        from meok_sovereign_worm_mcp import sov_tunnel_list
+        return sov_tunnel_list()
+    except Exception as e:
+        return {"error": str(e)}
+
+
+@app.get("/worm/audit")
+async def worm_audit(limit: int = 50):
+    """Get the most recent audit events."""
+    try:
+        from meok_sovereign_worm_mcp import sov_audit_recent
+        return sov_audit_recent(limit=limit)
+    except Exception as e:
+        return {"error": str(e)}
+
+
+# === MEOK WORM (defensive) ===
+@app.get("/worm/status")
+async def worm_status():
+    """MEOK WORM doctrine status (what's deployed, what's defensive)."""
+    try:
+        from meok_sovereign_worm_mcp import sov_worm_status as _fn
+        return _fn()
+    except Exception as e:
+        return {"error": str(e)}
+
+
+@app.post("/worm/scan")
+async def worm_scan(data: dict):
+    """Scan text for Morris-II self-replicating-prompt patterns (defensive)."""
+    text = data.get("text", "")
+    source = data.get("source", "ue5")
+    try:
+        from meok_sovereign_worm_mcp import sov_worm_scan as _fn
+        return _fn(text, source=source)
+    except Exception as e:
+        return {"error": str(e)}
+
+
+@app.get("/worm/tunnels")
+async def worm_tunnels():
+    """List all registered + canonical known protocol tunnels."""
+    try:
+        from meok_sovereign_worm_mcp import sov_tunnel_list as _fn
+        return _fn()
+    except Exception as e:
+        return {"error": str(e)}
+
+
+@app.get("/worm/audit")
+async def worm_audit(limit: int = 50):
+    """Get the most recent audit events."""
+    try:
+        from meok_sovereign_worm_mcp import sov_audit_recent as _fn
+        return _fn(limit=limit)
+    except Exception as e:
+        return {"error": str(e)}
+
+
 # === Health check ===
 @app.get("/health")
 async def health():
@@ -219,13 +307,17 @@ async def root():
         "version": "0.1.0",
         "endpoints": {
             "GET /hives": "33 hives from iOK Farm + SOV3 substrate",
-            "POST /mcp/<name>/<tool>": "Call any of the 12 sovereign MCPs (auth required)",
+            "POST /mcp/<name>/<tool>": "Call any of the 13 sovereign MCPs (auth required)",
             "GET /iot/pond": "iOK Farm pond live data",
             "POST /iot/pond/update": "ESP32 firmware update (auth required)",
             "GET /ollama/tags": "M2 Ollama model registry",
             "POST /ollama/chat": "M2 Ollama chat (auth required)",
             "POST /avatar/say": "SOV3 dragon speak (auth required)",
             "GET /avatar/log": "Dragon speech history",
+            "GET /worm/status": "MEOK WORM doctrine status (defensive only)",
+            "POST /worm/scan": "Morris-II defensive scan (defensive)",
+            "GET /worm/tunnels": "6 canonical protocol tunnels + registered",
+            "GET /worm/audit": "Recent sigil-signed audit events",
             "GET /health": "Bridge + substrate health",
         },
         "bearer_token": hmac.new(BRIDGE_SECRET.encode(), b"ue5-client", hashlib.sha256).hexdigest()[:32],
