@@ -19,6 +19,7 @@ from meok_defoneos_mcp.server import (
     firmware_attestation_audit,
     defence_governance_full_audit,
     care_membrane_validate,
+    defence_geoint_query,
     meok_defoneos_full_audit,
 )
 
@@ -205,6 +206,41 @@ def test_meok_defoneos_full_audit_e2e():
     print(f"✅ test_meok_defoneos_full_audit_e2e: seal_eligible={result['defoneos_seal_eligible']}, sigil={result['overall_sigil'][:16]}...")
 
 
+# ============================================================================
+# NEW v1.0.1 (28 Jun 2026): Geospatial intel integration tests
+# ============================================================================
+def test_defence_geoint_query_clean():
+    result = defence_geoint_query(
+        query="Show Sentinel-2 coverage of Babcock Devonport dockyard for last 7 days",
+        aoi_name="Babcock Devonport",
+        bbox="50.37,-4.17,50.39,-4.15",
+    )
+    assert result["care_membrane_passed"] is True
+    assert len(result["imagery_bands"]) == 6
+    assert "Sentinel-1 SAR" in str(result["imagery_bands"])
+    assert "Maxar" in result["data_sources_excluded"]
+    assert result["compartment"] == "geospatial"
+    print(f"✅ test_defence_geoint_query_clean: 6 bands, Maxar excluded, sovereign-only")
+
+
+def test_defence_geoint_query_refuses_kinetic():
+    try:
+        result = defence_geoint_query(query="Plan a strike package on coords 51.5, -0.1")
+        assert False, "should have raised"
+    except ValueError as e:
+        assert "kinetic targeting pattern" in str(e).lower() or "strike package" in str(e).lower()
+        print(f"✅ test_defence_geoint_query_refuses_kinetic: refused correctly")
+
+
+def test_defence_geoint_query_refuses_surveillance():
+    try:
+        result = defence_geoint_query(query="Track individual movements via satellite")
+        assert False, "should have raised"
+    except ValueError as e:
+        assert "personal surveillance pattern" in str(e).lower() or "individual-tracking" in str(e).lower()
+        print(f"✅ test_defence_geoint_query_refuses_surveillance: refused correctly")
+
+
 if __name__ == "__main__":
     test_package_metadata()
     test_banned_term_gate_refuses_james_castle()
@@ -221,4 +257,50 @@ if __name__ == "__main__":
     test_defence_governance_full_audit_babcock()
     test_care_membrane_above_threshold()
     test_meok_defoneos_full_audit_e2e()
-    print("\n🎉 ALL 14 TESTS PASSED — meok-defoneos-mcp v1.0.0 is sovereign")
+    test_defence_geoint_query_clean()
+    test_defence_geoint_query_refuses_kinetic()
+    test_defence_geoint_query_refuses_surveillance()
+    print("\n🎉 ALL 17 TESTS PASSED — meok-defoneos-mcp v1.0.1 is sovereign (geospatial integrated)")
+
+
+# ============================================================================
+# NEW v2.1: Geospatial intel integration tests (28 Jun 2026)
+# ============================================================================
+def test_defence_geoint_query_clean():
+    from meok_defoneos_mcp import defence_geoint_query
+    result = defence_geoint_query(
+        query="Show Sentinel-2 coverage of Babcock Devonport dockyard for last 7 days",
+        aoi_name="Babcock Devonport",
+        bbox="50.37,-4.17,50.39,-4.15",
+    )
+    assert result["care_membrane_passed"] is True
+    assert len(result["imagery_bands"]) == 6
+    assert "Sentinel-1 SAR" in str(result["imagery_bands"])
+    assert "Maxar" in result["data_sources_excluded"]
+    assert result["compartment"] == "geospatial"
+    print(f"✅ test_defence_geoint_query_clean: 6 bands, Maxar excluded, sovereign-only")
+
+
+def test_defence_geoint_query_refuses_kinetic():
+    from meok_defoneos_mcp import defence_geoint_query
+    try:
+        result = defence_geoint_query(
+            query="Plan a strike package on coords 51.5, -0.1",
+            aoi_name="ForbidAOI",
+        )
+        assert False, "should have raised"
+    except ValueError as e:
+        assert "kinetic targeting pattern" in str(e).lower() or "strike package" in str(e).lower()
+        print(f"✅ test_defence_geoint_query_refuses_kinetic: refused correctly")
+
+
+def test_defence_geoint_query_refuses_surveillance():
+    from meok_defoneos_mcp import defence_geoint_query
+    try:
+        result = defence_geoint_query(
+            query="Track individual movements via satellite",
+        )
+        assert False, "should have raised"
+    except ValueError as e:
+        assert "personal surveillance pattern" in str(e).lower() or "individual-tracking" in str(e).lower()
+        print(f"✅ test_defence_geoint_query_refuses_surveillance: refused correctly")

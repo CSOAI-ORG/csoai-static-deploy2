@@ -12,21 +12,21 @@
 
 ---
 
-## ⓪ WHAT CHANGED (v1.0 → v2.0)
+## ⓪ WHAT CHANGED (v1.0 → v2.0 → v2.1)
 
-| Section | v1.0 (28 May) | v2.0 (27 Jun) | Why |
-|---|---|---|---|
-| §① Brand hierarchy | 3 compartments: DEFONEOS / ONE / DAGON | **3 compartments renamed**: meok-defoneos / csoai-defoneos / dagon (legacy) | New pipeline is `meok-defoneos` (builds) + `csoai-defoneos` (certifies); dagon is historical NDA-only |
-| §② Security stack | OWASP + NIST AI RMF + MITRE ATLAS | **Same 3, + DAIC + AUKUS Pillar 2 + DSTL SAPIENT** | Defence-AI procurement requires DAIC alignment + AUKUS compatibility |
-| §③ Compartment rules | DAGON = defence NDA | **meok-defoneos = builds the 15 defence-AI MCPs** | New public-facing surface for UK primes + AUKUS |
-| §④ Operating principles | 10 principles | **10 principles, + principle 11: "Sober-walk" (UK procurement pacing)** | Defence deals close in 6-18 months, not 6-18 days |
-| §⑤ File map | Single DEFONEOS doc | **5-doc absorption suite in `_inventory/DEFONEOS_HIVE_2026-06-27/`** | New hive folder structure |
-| §⑥ Pricing ladder | 7-tier Stripe ladder | **+ 2 new tiers: £5K/£25K defence-AI pilot** | Defence procurement has higher per-deal price points |
-| §⑦ "We're different" | MEOK ONE paragraph | **+ DEFONEOS-specific paragraph for UK HMG** | Defence buyers need sovereign framing |
-| §⑧ Output discipline | 7 deliverable types | **+ 1 new: `meok-defoneos-mcp` + `csoai-defoneos-mcp` as branded PyPI packages** | New product surfaces |
-| §⑨ Hard stops | 10 immutable | **+ 4 new**: no defoneos.io domain reuse, no AUKUS claims without DSTL partner, no "we can certify" without BFT vote, no DSEI booth without pilot letter | Defence-AI specific red lines |
-| §⑩ Change control | 7-step protocol | Same + add to `_archive/` after supersession | v1.0 archived to `_archive/MEOK_DEFONEOS_ALIGNMENT_2026-05-28.md` |
-| §⑪ First-action checklist | 7 steps | **+ 3 new**: read v2.0, verify 13 MCPs on disk, run absorption subagent | New onboarding |
+| Section | v1.0 (28 May) | v2.0 (27 Jun) | v2.1 (28 Jun) | Why |
+|---|---|---|---|---|
+| §① Brand hierarchy | 3 compartments: DEFONEOS / ONE / DAGON | **3 compartments renamed**: meok-defoneos / csoai-defoneos / dagon (legacy) | **+ Geospatial compartment (16th MCP: meok-defoneos-geospatial-intel-mcp)** | New pipeline is `meok-defoneos` (builds) + `csoai-defoneos` (certifies); v2.1 adds the geospatial intel surface |
+| §② Security stack | OWASP + NIST AI RMF + MITRE ATLAS | **Same 3, + DAIC + AUKUS Pillar 2 + DSTL SAPIENT** | Same | Defence-AI procurement requires DAIC alignment + AUKUS compatibility |
+| §③ Compartment rules | DAGON = defence NDA | **meok-defoneos = builds the 15 defence-AI MCPs** | **+ geospatial compartment integrates Copernicus + OS UK + INSPIRE** | New public-facing surface for UK primes + AUKUS |
+| §④ Operating principles | 10 principles | **10 principles, + principle 11: "Sober-walk" (UK procurement pacing)** | Same | Defence deals close in 6-18 months, not 6-18 days |
+| §⑤ File map | Single DEFONEOS doc | **5-doc absorption suite in `_inventory/DEFONEOS_HIVE_2026-06-27/`** | + `MEOK_DEFONEOS_GEOSPATIAL_2026-06-28.md` amendment | New hive folder structure |
+| §⑥ Pricing ladder | 7-tier Stripe ladder | **+ 2 new tiers: £5K/£25K defence-AI pilot** | Same | Defence procurement has higher per-deal price points |
+| §⑦ "We're different" | MEOK ONE paragraph | **+ DEFONEOS-specific paragraph for UK HMG** | Same | Defence buyers need sovereign framing |
+| §⑧ Output discipline | 7 deliverable types | **+ 1 new: `meok-defoneos-mcp` + `csoai-defoneos-mcp` as branded PyPI packages** | **+ 1 more: `meok-defoneos-geospatial-intel-mcp` (16th DEFONEOS MCP)** | New product surfaces |
+| §⑨ Hard stops | 10 immutable | **+ 4 new**: no defoneos.io domain reuse, no AUKUS claims without DSTL partner, no "we can certify" without BFT vote, no DSEI booth without pilot letter | **+ 2 more: NO kinetic targeting patterns (strike package, find-fix-finish, kill order), NO personal surveillance patterns (track individual, face-rec, locate phone)** | Defence-AI specific red lines + geospatial domain extensions |
+| §⑩ Change control | 7-step protocol | Same + add to `_archive/` after supersession | Same | v1.0 archived to `_archive/MEOK_DEFONEOS_ALIGNMENT_2026-05-28.md` |
+| §⑪ First-action checklist | 7 steps | **+ 3 new**: read v2.0, verify 13 MCPs on disk, run absorption subagent | **+ 1 more: verify 16 MCPs on disk (geospatial added)** | New onboarding |
 
 **TL;DR:** v2.0 takes the 28 May compartment model and **renames the build/certify split into meok-defoneos + csoai-defoneos**, adds the **AUKUS Pillar 2 + DAIC + DSTL SAPIENT** procurement framing, adds the **MEOK Labs R&D pipeline** (6 workstreams), adds the **2 new defence-AI pricing tiers**, and adds the **DEFONEOS-SEAL signed credential** as the cert authority output. Dagon stays as legacy NDA-only for any HMG contracts already in motion.
 

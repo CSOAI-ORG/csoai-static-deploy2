@@ -54,6 +54,22 @@ BANNED_TERMS = re.compile(
     re.IGNORECASE,
 )
 
+# Geospatial domain extension (inherited from meok-defoneos-geospatial-intel-mcp v1.0.0)
+# These extend the BannedTermGate for the geospatial intel surface
+KINETIC_BLOCK_PATTERNS = re.compile(
+    r"\b(strike package|find-fix-finish|target elimination|kill order|"
+    r"bounty|hit list|kill list|assassination|lethal strike|"
+    r"kinetic target|kinetic option|designate for destruction|"
+    r"enemy combatant)\b",
+    re.IGNORECASE,
+)
+SURVEILLANCE_BLOCK_PATTERNS = re.compile(
+    r"\b(track individual|follow person|locate phone|track phone|"
+    r"identify person|recognise face|face-rec|face_rec|"
+    r"surveil <name>|find <name> location|track <name>|locate <name>)\b",
+    re.IGNORECASE,
+)
+
 
 class BannedTermGate:
     """Pre-inference gate that refuses prompts containing severed brands.
@@ -80,6 +96,29 @@ class BannedTermGate:
             )
             _log_refusal_to_sov3(term, reason)
             return False, reason
+
+        # Geospatial domain extension: kinetic blocks
+        match = KINETIC_BLOCK_PATTERNS.search(prompt)
+        if match:
+            pattern = match.group(0)
+            reason = (
+                f"Refused: '{pattern}' is a kinetic targeting pattern. "
+                f"See MEOK_DEFONEOS_GEOSPATIAL_2026-06-28.md amendment."
+            )
+            _log_refusal_to_sov3(pattern, reason)
+            return False, reason
+
+        # Geospatial domain extension: surveillance blocks
+        match = SURVEILLANCE_BLOCK_PATTERNS.search(prompt)
+        if match:
+            pattern = match.group(0)
+            reason = (
+                f"Refused: '{pattern}' is a personal surveillance pattern. "
+                f"See MEOK_DEFONEOS_GEOSPATIAL_2026-06-28.md amendment."
+            )
+            _log_refusal_to_sov3(pattern, reason)
+            return False, reason
+
         return True, ""
 
     @staticmethod
