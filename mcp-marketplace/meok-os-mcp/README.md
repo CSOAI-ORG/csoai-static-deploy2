@@ -2,7 +2,7 @@
 
 **meok — the sovereign AI substrate for ALL. DEFONEOS is the upper wedge on top.**
 
-The meta-orchestrator MCP for the 7-layer meok substrate (SOV3 backbone that any human / agent / industry can use). The DEFONEOS upper wedge uses L1 + L2 + L4 + L6 to add UK MOD procurement-grade capabilities on top.
+The meta-orchestrator MCP for the 7-layer meok substrate (SOV3 backbone that any human / agent / industry can use). The DEFONEOS upper wedge uses L1 + L2 + L4 + L6 to add UK MOD procurement-grade capabilities on top — including the **DEFONEOS Legacy Bridge** (13 MCPs that connect COBOL/CICS/AS400/EDI/ISO/MQTT/HL7/A2A to the sovereign AI OS).
 
 [![MCP](https://img.shields.io/badge/MCP-server-667eea)](https://modelcontextprotocol.io)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
@@ -26,7 +26,7 @@ The meta-orchestrator MCP for the 7-layer meok substrate (SOV3 backbone that any
 
 | L | Layer | Substrate | Care principle | Used by DEFONEOS? |
 |---|---|---|---|---|
-| L0 | **meok Physical Base** | iokfarm.co.uk (6.5-acre UK farm) | Dignity | – |
+| L0 | **meok Physical Base + Legacy Bridges** | iokfarm.co.uk (6.5-acre UK farm) + **the CSOAI Layer-0 legacy-bridge family (13 MCPs: cobol, as400, cics, dlms, edi, iso20022, iso8583, acord, hl7-fhir, gs1, mismo, mqtt, a2a)** | Dignity | (DEFONEOS uses a2a) |
 | L1 | **meok SOV3 Infrastructure** | 47 agents · 115 tools · 341 MCPs · 33-agent BFT · UK soil | Agency | ✅ |
 | L2 | **meok openpatent + DEFONEOS-SEAL** | 6-layer crypto disclosure + 33-agent BFT-signed credentials | Solidarity | ✅ |
 | L3 | **meok Audit Chain** | Append-only Ed25519-signed chain on UK soil | Dignity | (implicit) |
@@ -63,6 +63,25 @@ The upper wedge **adds** (vs the base meok substrate):
 - Care-membrane enforcement at 0.95 threshold
 - 3 hard stops (severed brands + kinetic + surveillance)
 - 14-framework procurement audit (EU AI Act + NIST AI RMF + MITRE ATLAS + ISO 42001 + DAIC + AUKUS Pillar 2 + DSTL SAPIENT, etc.)
+
+### The DEFONEOS Legacy Bridge (the missing wedge for military + defence)
+
+For military + defence companies that need to connect legacy systems to the meok substrate:
+
+```
+COBOL (1959) → CICS (1968) → AS400 RPG (1988) → EDI X12 (1992) →
+ISO20022 (2004) → MQTT/IoT (1999) → HL7 FHIR (2014) → A2A (2026) →
+DEFONEOS-SEAL signed credential
+```
+
+**4 steps:**
+1. **Discover** — parse COBOL, AS400, CICS, EDI files (using the 13 legacy-bridge MCPs)
+2. **Map** — identify business rules + generate migration plan
+3. **Connect** — MQTT + HL7/FHIR + A2A bridges to the meok substrate
+4. **Certify** — 33-agent BFT council issues DEFONEOS-SEAL signed credential
+
+**Annual market:** £25M-£170M+/yr (just for the legacy bridge wedge within DEFONEOS).
+**Pilot price:** £25K one-off (90 days). Enterprise: £100K-£500K/yr per legacy system. AUKUS-wide: £1M+/yr.
 
 ## 🚀 Quick Start
 
