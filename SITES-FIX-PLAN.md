@@ -19,10 +19,10 @@
 | cobolbridge.ai | cobolbridge.ai | No deployment |
 | prooof.ai | prooof.ai | Not in Vercel |
 
-### ❌ Failing
-| Site | Status |
-|------|--------|
-| csga-global | 4 error states |
+### ❌ Failing (ARCHIVED 2026-06-27 — see _findings/CSOAI_MASTER_ABSORB_PLAN_2026-06-16.md)
+| Site | Status | Decision |
+|------|--------|----------|
+| ~~csga-global~~ | ~~4 error states~~ | **DELETED 2026-06-10** per Vercel census cleanup; archived decision in _findings/CSOAI_MASTER_ABSORB_PLAN_2026-06-16.md |
 
 ---
 

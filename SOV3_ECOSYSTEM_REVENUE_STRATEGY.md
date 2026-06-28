@@ -76,7 +76,7 @@
 
 #### 2. PyPI/NPM Packages
 **Already have:**
-- csga-global-mcp (v1.1.0)
+- csga-global-mcp (v1.1.0, publisher=csga_global — flagged for republish under csoai-cobol-bridge-mcp scope)
 
 **Publish:**
 - sov3-core (pip install sov3)

@@ -10,12 +10,12 @@
 
 ### Issue: Token Expires May 27, 2026 (7 days!)
 **Token ID:** a2c4968d-b08f-4e4c-ba0c-16aa122ad23c  
-**Account:** csga_global  
-**Package:** csga-global-mcp
+**Account:** ~~csga_global~~ (severed) → migrate to **meok-ai-labs**  
+**Package:** csga-global-mcp (deprecate; replace with csoai-cobol-bridge-mcp)
 
 ### Fix Steps:
 1. Login: https://www.npmjs.com/login
-2. Username: csga_global
+2. Username: meok-ai-labs  *(was csga_global — severed 2026-01-31, login migrated)*
 3. Go to: Settings → Access Tokens
 4. Find token: a2c4968d-b08f-4e4c-ba0c-16aa122ad23c
 5. Click "Regenerate" or "Delete + Create New"
@@ -24,7 +24,7 @@
 
 ### Also Fix:
 - [ ] Update payment method (failed payments £5.38, £5.35, £5.45)
-- [ ] Link: https://www.npmjs.com/settings/csga_global/billing
+- [ ] Link: https://www.npmjs.com/settings/meok-ai-labs/billing
 
 **Impact:** Can't publish csga-global-mcp updates  
 **Time:** 10 minutes  

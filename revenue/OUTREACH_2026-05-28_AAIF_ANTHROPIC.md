@@ -1,7 +1,7 @@
 # Outreach Drafts — AAIF + Anthropic Connectors + 5 Cold Email Templates + 25 Backlink Seeds
 
 **Date:** 2026-05-28
-**Author:** Nick Templeman, founder, CSOAI LTD (MEOK AI Labs)
+**Author:** Nick Templeman, founder, MEOK AI Labs (CSOAI LTD 16939677)
 **Sender email:** nicholas@csoai.org (NOT nicholas@meok.ai — Vercel blocks)
 **Reply-to:** nicholas@csoai.org
 

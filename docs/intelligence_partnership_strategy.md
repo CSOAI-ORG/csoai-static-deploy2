@@ -25,7 +25,7 @@ MEOK does not need to build everything. We need to **own the map** and **partner
 **Why:** 3.5B+ downloads of Unity-made games. No AI character compliance layer.
 **Value Prop:** "Unity Asset Store package for compliant AI characters"
 **Approach:**
-- Submit `com.csgaglobal.csoai` to Unity Asset Store
+- Submit `com.meok-ai-labs.csoai` to Unity Asset Store
 - Partner with Unity AI team for native integration
 - Hook: "First AI SDK with built-in GDPR-K and COPPA compliance"
 - Revenue: $0.10/interaction via Unity runtime fee model

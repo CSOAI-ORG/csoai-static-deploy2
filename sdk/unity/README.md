@@ -1,6 +1,6 @@
 # CSOAI Unity SDK
 
-MEOK Protocol Nexus SDK for Unity games and simulations.
+MEOK Protocol Nexus SDK for Unity games and simulations. (CSOAI-LTD 16939677)
 
 ## Installation
 
@@ -8,7 +8,7 @@ MEOK Protocol Nexus SDK for Unity games and simulations.
 
 1. Open **Window → Package Manager**
 2. Click **+ → Add package from git URL**
-3. Enter: `https://github.com/csgaglobal/clawd.git?path=sdk/unity`
+3. Enter: `https://github.com/CSOAI-ORG/clawd-workspace.git?path=sdk/unity`
 
 ### Manual
 

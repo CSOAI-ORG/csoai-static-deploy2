@@ -21,7 +21,7 @@ CLONE_ROOTS = [
     Path("/Users/nicholas/meok-ai"),
     Path("/Users/nicholas"),
     Path("/Users/nicholas/csoai"),
-    Path("/Users/nicholas/csga"),
+    # /Users/nicholas/csga — REMOVED 2026-06-27 (severed brand, no CSGA clones permitted)
 ]
 
 def is_git_repo(p: Path) -> bool:

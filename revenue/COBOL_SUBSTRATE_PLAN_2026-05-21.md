@@ -1,6 +1,6 @@
 # COBOL Substrate — IP Reclaim + Substrate Play
 
-**Discovery 2026-05-21:** Nick (CSOAI-ORG) is **sole contributor across 91 commits** to `CSGA-GLOBAL/cobol-bridge`. No James Castle, no shared authorship. UK copyright defaults to Nick. The CSGA-GLOBAL org just hosts the repo — the work is his.
+**Discovery 2026-05-21 [RE-VERIFIED 2026-06-27]:** Nick (CSOAI-ORG) is **sole contributor across 91 commits** to `CSGA-GLOBAL/cobol-bridge` (PRIVATE, awaiting Nick sign-off for transfer per Option A). **No James Castle, no shared authorship.** UK copyright defaults to Nick. The CSGA-GLOBAL org just hosts the repo — the work is his. The brand is severed; the IP reverts to Nick.
 
 ## What we have
 
@@ -154,7 +154,7 @@ The "220B lines of COBOL" is **the** hook — it's a number every HN regular has
 
 ## Sources
 
-- CSGA-GLOBAL/cobol-bridge repo (public): https://github.com/CSGA-GLOBAL/cobol-bridge
+- CSGA-GLOBAL/cobol-bridge repo (private, 2026-03-08 — pre-severance): https://github.com/CSGA-GLOBAL/cobol-bridge [ARCHIVED-PENDING-NICK-SIGNOFF per csga_global_org_decision.md]
 - FPT-Software COBOL-Coder-14B model: https://huggingface.co/FPT-Software/COBOL-Coder-14B
 - 220B-line COBOL figure: Reuters / Reuters 2022 COBOL survey
 - COBOL-Coder benchmark (73.95%): FPT-Software paper 2024

@@ -405,7 +405,7 @@ def patch_a2a_gateway(vertical: dict):
         "name": "{vertical["agent_name"]}",
         "description": "{vertical["description"]}",
         "url": "https://{vertical["name"]}/a2a",
-        "provider": {{"organization": "CSOAI Global", "url": "https://csoai.org"}},
+        "provider": {{"organization": "MEOK AI Labs (CSOAI LTD 16939677)", "url": "https://csoai.org"}},
         "version": "1.0.0",
         "authentication": {{"schemes": ["a2a-jwt", "api-key"]}},
         "defaultInputModes": ["text", "file"],
@@ -472,7 +472,7 @@ def generate_frontend_lib(vertical: dict) -> str:
     return f'''/**
  * CSOAI Client — {vertical["name"]} Vertical Integration
  */
-import {{ CSOAI }} from '@csgaglobal/ai-sdk';
+import {{ MEOK }} from '@meok-ai-labs/sdk';
 
 const API_BASE = process.env.NEXT_PUBLIC_CSOAI_API_URL || 'https://api.csoai.org';
 

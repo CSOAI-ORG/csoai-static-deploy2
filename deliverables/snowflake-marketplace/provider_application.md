@@ -5,10 +5,10 @@
 
 ## Provider Information
 
-**Company Name:** CSGA Global  
-**Company Website:** https://csgaglobal.org  
+**Company Name:** MEOK AI Labs (CSOAI LTD 16939677)  
+**Company Website:** https://meok.ai  
 **Contact Email:** protocols@meok.ai  
-**Company Description:** CSGA Global operates the MEOK Protocol Nexus, the world's first regulatory geospatial intelligence platform for AI systems. We map AI regulations across 50+ jurisdictions and provide real-time compliance data to enterprises, governments, and defense organizations.
+**Company Description:** MEOK AI Labs (CSOAI LTD 16939677) operates the MEOK Protocol Nexus, the world's first regulatory geospatial intelligence platform for AI systems. We map AI regulations across 50+ jurisdictions and provide real-time compliance data to enterprises, governments, and defense organizations.
 
 **Dataset Name:** RegGeoInt Global AI Compliance Dataset  
 **Dataset Version:** 3.0.0-phase3  

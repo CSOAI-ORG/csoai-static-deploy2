@@ -136,7 +136,7 @@ gh auth login
 
 ### 3. PyPI Packages
 Already published:
-- csga-global-mcp (v1.1.0)
+- csga-global-mcp (v1.1.0, publisher=csga_global — flagged for republish under csoai-cobol-bridge-mcp scope)
 - More on PyPI
 
 ### 4. Social Media Push
