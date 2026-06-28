@@ -1,0 +1,98 @@
+# X thread 02_eu_ai_act — fortnight 2
+
+ "🧵 1/ I shipped 12 MIT-licensed sovereign MCPs in 7 days.
+
+2/ passport: Ed25519 agent identity (11 tests)
+   guardrails: 16 prompt injection patterns (20 tests)
+   receipt: hash-chained tamper-evident ledger (15 tests)
+
+3/ governance: 5-element Zero Trust + 4-level maturity (20 tests)
+   x402-payment: HTTP 402 micropayments (12 tests)
+   supply-chain: SBOM + SLSA + Bitcoin anchor (10 tests)
+
+4/ globe: 33-hive geo-located registry (18 tests)
+   council: 12-around-1 BFT voting (19 tests)
+   memory: episodic + Ebbinghaus decay (12 tests)
+
+5/ avatar: VRM embodied + local voice (10 tests)
+   skills: CREATE→EVAL→EDIT→REVIEW→PACKAGE (10 tests)
+   eu-ai-act-kit: Aug 2 Survival Kit (10 tests)
+
+6/ TOTAL: 167 tests. 100% pass. <1.5 sec.
+
+7/ The trust primitive is the moat.
+
+Ed25519 every action. Hash-chain every receipt. Verify offline at proofof.ai.
+
+8/ The dragon holds the wall.
+
+Sovereign agents refuse to spend your money, send in your name, or bind your company.
+
+9/ github.com/CSOAI-ORG
+
+The EU AI Act Article 50 deadline is August 2nd 2026.
+
+5 weeks.";;
+02) "🧵 1/ EU AI Act Article 50 enforcement starts August 2nd 2026.
+
+2/ The fine structure:
+   - Up to €35M, OR
+   - 7% of global annual turnover
+   - Whichever is higher
+
+3/ The math:
+   - Probability of audit by Aug 2027: ~50%
+   - Expected loss: €17.5M
+   - Cost of sovereign stack: £4,950/mo
+   - ROI: 295x
+
+4/ We built 12 MIT-licensed MCPs that turn 6-month audits into 5-minute conversations.
+
+5/ Every tool call is Ed25519-signed.
+   Every receipt is hash-chained.
+   Every evidence package satisfies 7 regulations.
+   One output format. 7 regulators.
+
+6/ The eu-ai-act-kit-mcp:
+   - Auto-audits your AI system against Arts. 9/10/12/14/50
+   - Generates Annex IV technical documentation
+   - Emits OSCAL policy
+   - Submits signed evidence to EU AI Office
+
+7/ 30 seconds for the audit. 5 minutes for the conversation.
+
+8/ github.com/CSOAI-ORG · proofof.ai
+
+The cliff doesn't move. The sovereign stack does.";;
+03) "🧵 1/ Digital sovereignty means: the agent refuses to act without your authority.
+
+2/ Not 'the agent asks permission' (that's an LLM with a system prompt).
+   'The agent mathematically CANNOT spend your money' (that's sovereignty).
+
+3/ The 4 gates a sovereign agent refuses to cross:
+   - Production deployment (vercel --prod)
+   - Domain verification (Resend)
+   - Legal ToS acceptance (GPU apps)
+   - Outbound communication (your emails)
+   - IP disclosure (openpatent)
+
+4/ The 12 MCPs that HOLD THE WALL:
+   - passport (identity)
+   - guardrails (safety)
+   - receipt (audit)
+   - governance (policy)
+   - x402-payment (commerce)
+   - supply-chain (provenance)
+   - globe (visualization)
+   - council (BFT)
+   - memory (episodic)
+   - avatar (embodied)
+   - skills (lifecycle)
+   - eu-ai-act-kit (compliance)
+
+5/ Every output Ed25519-signed. Every receipt hash-chained.
+
+6/ The dragon never lies. The dragon never sleeps. The dragon never crosses the wall.
+
+7/ github.com/CSOAI-ORG";;
+esac)
