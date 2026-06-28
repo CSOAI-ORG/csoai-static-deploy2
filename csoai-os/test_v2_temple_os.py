@@ -161,6 +161,57 @@ def test_metadata_complete():
     assert "Regulation Temples" in content
 
 
+def test_link_to_signup_wizard():
+    """The OS should link to the signup wizard for new users."""
+    content = PAGE_PATH.read_text()
+    assert "v2-signup-wizard.html" in content
+
+
+def test_ichar_integration():
+    """The OS must read meok_ichar from localStorage + apply it to the UI."""
+    content = PAGE_PATH.read_text()
+    assert "loadIchar" in content
+    assert "meok_ichar" in content
+    assert "applyIcharToUI" in content
+    assert "localStorage" in content
+    # Must use all 13 queen emojis
+    queen_emojis = {
+        "queen-king": "👑", "queen-strategy": "♑", "queen-care": "💗",
+        "queen-compliance": "⚖", "queen-finance": "⭐", "queen-domain": "🛞",
+        "queen-arcana": "✨", "queen-brain": "🧠", "queen-proactive": "⚡",
+        "queen-bridge": "🌉", "queen-distribution": "☀️", "queen-council": "🦁",
+        "queen-watch": "🗼",
+    }
+    for q, e in queen_emojis.items():
+        assert q in content, f"missing {q} in ichar integration"
+        assert e in content, f"missing emoji {e} for {q}"
+
+
+def test_ichar_personalizes_greeting():
+    """The ichar's name must replace the generic greeting."""
+    content = PAGE_PATH.read_text()
+    # The boot function should use ichar.name in the greeting
+    assert "ichar.name" in content
+    assert "Welcome," in content
+
+
+def test_no_ichar_shows_signup_link():
+    """If no ichar, the OS should link to the signup wizard."""
+    content = PAGE_PATH.read_text()
+    # The boot must check for ichar + show signup link if missing
+    assert "v2-signup-wizard.html" in content
+    assert "Create your i-character" in content or "create_ichar" in content.lower()
+
+
+def test_ichar_in_breadcrumbs():
+    """The ichar name must appear in the topbar breadcrumbs."""
+    content = PAGE_PATH.read_text()
+    # The breadcrumb area gets ichar.name appended
+    assert "ichar.name" in content
+    # And in the apply function, we update the breadcrumb innerHTML
+    assert "bc.innerHTML" in content or "breadcrumbs" in content
+
+
 if __name__ == "__main__":
     import sys
     import subprocess

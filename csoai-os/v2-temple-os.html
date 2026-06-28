@@ -1330,14 +1330,57 @@ function installPWA() {
   }
 }
 
-// ─── Boot ───
+// i-character integration: read user ichar from localStorage
+function loadIchar() {
+  try {
+    const ichar = JSON.parse(localStorage.getItem('meok_ichar') || 'null');
+    return ichar;
+  } catch (e) { return null; }
+}
+
+function applyIcharToUI(ichar) {
+  if (!ichar) return;
+  const charEl = document.querySelector('.sov-character');
+  if (charEl) {
+    const queenEmojis = {
+      'queen-king': '👑', 'queen-strategy': '♑', 'queen-care': '💗',
+      'queen-compliance': '⚖', 'queen-finance': '⭐', 'queen-domain': '🛞',
+      'queen-arcana': '✨', 'queen-brain': '🧠', 'queen-proactive': '⚡',
+      'queen-bridge': '🌉', 'queen-distribution': '☀️', 'queen-council': '🦁',
+      'queen-watch': '🗼',
+    };
+    const emoji = queenEmojis[ichar.queen_model] || '🐉';
+    charEl.textContent = emoji;
+  }
+  const greetingEl = document.getElementById('greeting');
+  if (greetingEl && ichar.name) {
+    greetingEl.innerHTML = 'Welcome, <span class="accent">' + ichar.name + '</span>';
+  }
+  const sovLineEl = document.getElementById('sovLine');
+  if (sovLineEl && ichar.arcana_lens) {
+    sovLineEl.innerHTML = 'i-character: <span class="accent">' + (ichar.archetype || 'Sovereign') + '</span> · ' + (ichar.arcana_lens.name || '') + '. ' + (ichar.initial_message || 'Ready when you are.');
+  }
+  const bc = document.querySelector('.breadcrumbs');
+  if (bc && ichar.name) {
+    bc.innerHTML = '<span class="crumb">World</span><span class="sep">/</span><span class="crumb" id="bcRegion">—</span><span class="sep">/</span><span class="crumb" id="bcTemple">—</span><span class="sep">/</span><span class="crumb" style="color:var(--gold)">' + ichar.name + '</span>';
+  }
+}
+
+// Boot
 (async function boot() {
   const userRegion = await detectUserRegion();
   renderTemples(userRegion);
-  // Greet
-  setTimeout(() => {
-    document.getElementById('greeting').innerHTML = `Welcome, sovereign <span class="accent">${userRegion.name}</span>`;
-  }, 500);
+  const ichar = loadIchar();
+  if (ichar) {
+    applyIcharToUI(ichar);
+  } else {
+    setTimeout(() => {
+      document.getElementById('sovLine').innerHTML = 'Sovereign here. I can see you\'re connecting from <span id="userRegion">' + userRegion.name + '</span>. <a href="v2-signup-wizard.html" style="color:var(--gold)">Create your i-character</a> to unlock your digital twin. Click any temple to enter.';
+    }, 500);
+    setTimeout(() => {
+      document.getElementById('greeting').innerHTML = 'Welcome, sovereign <span class="accent">' + userRegion.name + '</span>';
+    }, 500);
+  }
 })();
 
 // ─── Update live status (stub) ───
