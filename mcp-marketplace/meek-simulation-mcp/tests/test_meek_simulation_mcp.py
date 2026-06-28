@@ -19,8 +19,8 @@ from meek_simulation_mcp.server import (
     basilisk_microfluidic,
     freefem_fem,
     calculix_fem,
-    run_capillary_cooling_sim,
-    run_dna_orb_electrochemistry_sim,
+    run_heat_pipe_cooling_sim,
+    run_dry_dna_synthesis_sim,
     run_gold_spiral_optics_sim,
     run_orb_thermal_routing_sim,
     list_available_engines,
@@ -94,23 +94,21 @@ def test_calculix_fem():
     print(f"✅ test_calculix_fem: sim_id={result['sim_id']}")
 
 
-def test_run_capillary_cooling_sim():
-    result = run_capillary_cooling_sim(channel_diameter=0.5e-3, heat_flux_w_per_cm2=10.0)
-    assert result["sim"] == "capillary_cooling"
+def test_run_heat_pipe_cooling_sim():
+    result = run_heat_pipe_cooling_sim(chip_power_w=5.0, num_heat_pipes=4, ambient_temp_c=25.0)
+    assert result["sim"] == "heat_pipe_cooling"
     assert result["verdict"] in ("PASS", "MARGINAL", "FAIL")
-    assert result["cop_coefficient_of_performance"] == 100.0
-    assert result["max_heat_removal_w"] > 0
-    print(f"✅ test_run_capillary_cooling_sim: {result['verdict']} ({result['max_heat_removal_w']:.2e} W)")
+    assert result["total_heat_capacity_w"] > 0
+    print(f"✅ test_run_heat_pipe_cooling_sim: {result['verdict']} ({result['chip_temp_c']:.1f}°C chip)")
 
 
-def test_run_dna_orb_electrochemistry_sim():
-    result = run_dna_orb_electrochemistry_sim(electrode_diameter=100e-6, voltage=0.5, temperature=25.0)
-    assert result["sim"] == "dna_orb_electrochemistry"
-    assert result["synthesis_rate"] == "STANDARD"
-    assert result["dna_stability"] == "STABLE"
-    assert result["verdict"] == "PASS"
-    assert result["max_dna_strands"] > 0
-    print(f"✅ test_run_dna_orb_electrochemistry_sim: {result['max_dna_strands']:.0f} strands")
+def test_run_dry_dna_synthesis_sim():
+    result = run_dry_dna_synthesis_sim(substrate_area_cm2=25.0)
+    assert result["sim"] == "dry_dna_synthesis"
+    assert result["water_required"] is False
+    assert result["total_sequences"] > 0
+    assert result["longevity_years_at_rt"] == 500
+    print(f"✅ test_run_dry_dna_synthesis_sim: {result['total_sequences']:.2e} sequences, 500yr longevity")
 
 
 def test_run_gold_spiral_optics_sim():
@@ -150,8 +148,8 @@ if __name__ == "__main__":
     test_basilisk_microfluidic()
     test_freefem_fem()
     test_calculix_fem()
-    test_run_capillary_cooling_sim()
-    test_run_dna_orb_electrochemistry_sim()
+    test_run_heat_pipe_cooling_sim()
+    test_run_dry_dna_synthesis_sim()
     test_run_gold_spiral_optics_sim()
     test_run_orb_thermal_routing_sim()
     test_list_available_engines()
