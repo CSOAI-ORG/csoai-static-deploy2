@@ -1,5 +1,27 @@
 ---
 
+# 🐉 DEFONEOS W5 — meok substrate + DEFONEOS upper wedge shipped (per user "meok is for all - defoneos is for upper")
+
+**Author:** CSOAI LTD (UK 16939677) · Nicholas Templeman · Yorkshire, UK
+**Date:** 2026-06-28
+**Status:** W5 SEAL — meok substrate + DEFONEOS upper wedge correctly framed
+
+---
+
+## 0. THE CORRECT FRAMING (per user "meok is for all - defoneos is for upper")
+
+> **meok = the substrate for ALL. DEFONEOS = the upper wedge on top.**
+
+The W5 sprint correctly shipped:
+- The meok substrate (5 MCPs, 77/77 tests, the 7-layer Global Dome, the 33-agent BFT council)
+- The DEFONEOS upper wedge (UK MOD, DAIC, AUKUS Pillar 2 procurement-grade)
+
+What was wrong: the W5 seal initially framed DEFONEOS as "OS for ALL". The user corrected this with "not for all" → "thats meok" → "meok is for all - defoneos is for upper". The corrected framing is: **meok = substrate for ALL, DEFONEOS = upper wedge on top**.
+
+---
+
+---
+
 # 🔄 RE-FRAMING NOTE — 2026-06-28 (after user correction: "thats meok")
 
 **The strategic anchor was incorrectly framed as "AI OS for ALL" by the dragon. The user corrected this with "not for all" then "thats meok". This document is RE-FRAMED to the correct meok substrate framing.**

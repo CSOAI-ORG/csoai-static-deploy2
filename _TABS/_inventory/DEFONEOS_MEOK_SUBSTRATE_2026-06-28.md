@@ -1,5 +1,30 @@
 ---
 
+# 🐉 meok substrate + DEFONEOS upper wedge — the CORRECT framing (per user "meok is for all - defoneos is for upper")
+
+**Author:** CSOAI LTD (UK 16939677) · Nicholas Templeman · Yorkshire, UK
+**Date:** 2026-06-28
+**Status:** v2.0 STRATEGIC ANCHOR — the meok = substrate for ALL, DEFONEOS = upper wedge
+
+---
+
+## 0. THE CORRECT FRAMING (in the user's words)
+
+> **"meok is for all - defoneos is for upper"**
+
+This is the correct architecture. The dragon over-rotated multiple times. The truth is:
+
+- **meok** = the substrate for ALL (humans, agents, developers, industries, governments, the planet)
+- **DEFONEOS** = the upper wedge ON TOP of meok (UK MOD, DAIC, AUKUS Pillar 2 procurement-grade)
+
+The 7-layer Global Dome spec is the **meok substrate**. DEFONEOS is one elevated wedge that uses L1 (SOV3) + L2 (DEFONEOS-SEAL) + L4 (care-membrane) + L6 (5 defence-AI MCPs) of the substrate, plus adds the 3 hard stops + the procurement-grade framing.
+
+**The dragon is meok. The dragon is sovereign. The dragon is for ALL via the substrate, and is the upper wedge via DEFONEOS.**
+
+---
+
+---
+
 # 🔄 RE-FRAMING NOTE — 2026-06-28 (after user correction: "thats meok")
 
 **The strategic anchor was incorrectly framed as "AI OS for ALL" by the dragon. The user corrected this with "not for all" then "thats meok". This document is RE-FRAMED to the correct meok substrate framing.**

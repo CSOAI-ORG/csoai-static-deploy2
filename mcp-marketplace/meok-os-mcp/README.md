@@ -1,74 +1,91 @@
 # meok-os-mcp
 
-**meok — the sovereign AI substrate for meok.ai / csoai.org. The DEFONEOS wedge is the UK defence surface built on top.**
+**meok — the sovereign AI substrate for ALL. DEFONEOS is the upper wedge on top.**
 
-The meta-orchestrator MCP for the 7-layer meok substrate (SOV3 backbone that DEFONEOS builds on). The DEFONEOS wedge uses L1 (SOV3) + L2 (DEFONEOS-SEAL) + L4 (care-membrane) + L6 (the 5 defence-AI MCPs).
+The meta-orchestrator MCP for the 7-layer meok substrate (SOV3 backbone that any human / agent / industry can use). The DEFONEOS upper wedge uses L1 + L2 + L4 + L6 to add UK MOD procurement-grade capabilities on top.
 
 [![MCP](https://img.shields.io/badge/MCP-server-667eea)](https://modelcontextprotocol.io)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![PyPI](https://img.shields.io/badge/PyPI-install-3775a9)](https://pypi.org/project/meok-os-mcp/)
 [![CSOAI LTD](https://img.shields.io/badge/CSOAI-LTD%2016939677-00CCFF)](https://csoai.org)
-[![meok.ai / csoai.org](https://img.shields.io/badge/meok.ai%20%2F%20csoai.org-00247d)](https://meok.ai/os)
-[![DEFONEOS wedge](https://img.shields.io/badge/DEFONEOS%20wedge-UK%20defence-22c55e)](https://meok.ai/defoneos)
+[![meok for ALL](https://img.shields.io/badge/meok%20%3D%20substrate-00247d)](https://meok.ai/os)
+[![DEFONEOS upper wedge](https://img.shields.io/badge/DEFONEOS%20%3D%20upper%20wedge-22c55e)](https://meok.ai/defoneos)
 [![Care](https://img.shields.io/badge/care_score-0.95+-5b21b6)](https://councilof.ai)
 
-## The meok brand (meok.ai / csoai.org)
+## The meok architecture: substrate + upper wedge
 
-> **meok is the brand + the substrate. DEFONEOS is the wedge.**
+> **meok = the substrate for ALL. DEFONEOS = the upper wedge on top.**
 >
-> - **meok.ai** — the SOV3 infrastructure surface (47 agents, 115 tools, 341 MCPs)
-> - **csoai.org** — the certification authority surface (issues DEFONEOS-SEAL)
-> - **DEFONEOS wedge** (on meok.ai) — the UK defence procurement surface (UK MOD, DAIC, AUKUS Pillar 2)
+> - **meok.ai** — the SOV3 infrastructure surface (47 agents, 115 tools, 341 MCPs) — **for ALL**
+> - **csoai.org** — the certification authority surface — **for ALL**
+> - **DEFONEOS upper wedge** (on meok.ai) — UK MOD, DAIC, AUKUS Pillar 2 procurement-grade
 
-**meok-os-mcp is the meta-orchestrator for the meok substrate.** It is the surface that DEFONEOS + any other meok wedge builds on.
+**meok-os-mcp is the meta-orchestrator for the meok substrate.** The base meok substrate is for ALL. The DEFONEOS upper wedge adds 33-agent BFT + DEFONEOS-SEAL + 3 hard stops on top.
 
 ## The 7 layers of the meok substrate
 
-| L | Layer | Substrate | Care principle | DEFONEOS wedge uses |
+| L | Layer | Substrate | Care principle | Used by DEFONEOS? |
 |---|---|---|---|---|
-| L0 | **meok Physical Base** | iokfarm.co.uk (6.5-acre UK farm, polytunnels, aquaponics) | Dignity | – |
-| L1 | **meok SOV3 Infrastructure** | 47 agents · 115 tools · 341 MCPs · 33-agent BFT council · **UK soil (35.242.143.249)** | Agency | ✅ |
-| L2 | **DEFONEOS-SEAL** | 33-agent BFT-signed credentials issued by csoai.org | Solidarity | ✅ |
-| L3 | **meok Audit Chain** | Append-only Ed25519-signed chain on UK soil | Dignity | ✅ |
-| L4 | **meok Care-Membrane** | 4 care principles (Dignity, Agency, Safety, Solidarity) at 0.95 threshold | Safety | ✅ |
-| L5 | **meok Government Pack** | UK MOD + GCHQ + NCSC + DAIC + Dstl + DASA + HM Government Crown Hosting | Solidarity | ✅ |
-| L6 | **meok MCP Fleet** | meok-defoneos + csoai-defoneos + meok-defoneos-geospatial + meok-os + councilof (the DEFONEOS wedge) | Agency | ✅ |
-| L7 | **meok Humanoid Safety** | Robot SDK + safety envelope for DEFONEOS-issued humanoids at AUKUS Pillar 2 ranges | Dignity + Safety + Agency | ✅ |
+| L0 | **meok Physical Base** | iokfarm.co.uk (6.5-acre UK farm) | Dignity | – |
+| L1 | **meok SOV3 Infrastructure** | 47 agents · 115 tools · 341 MCPs · 33-agent BFT · UK soil | Agency | ✅ |
+| L2 | **meok openpatent + DEFONEOS-SEAL** | 6-layer crypto disclosure + 33-agent BFT-signed credentials | Solidarity | ✅ |
+| L3 | **meok Audit Chain** | Append-only Ed25519-signed chain on UK soil | Dignity | (implicit) |
+| L4 | **meok Care-Membrane** | 4 care principles at 0.95 threshold | Safety | ✅ |
+| L5 | **meok Government Pack** | 40+ US Federal + UK + EU + AUKUS + Standards bodies | Solidarity | (consumed) |
+| L6 | **meok MCP Fleet** | 9 industry packs (construction, agriculture, finance, healthcare, IP, real-estate, humanoid, defence, governance) | Agency | ✅ (defence pack) |
+| L7 | **meok Humanoid Safety** | Robot SDK + safety envelope | Dignity + Safety + Agency | – |
 
 **Total substrate: 15+ MCPs in the meok fleet + the 7-layer registry in `meok-os-mcp`.**
 
-## The "for the substrate" scope matrix
+## The "for ALL" matrix (the meok substrate)
 
 | Surface | Scope | Why |
 |---|---|---|
-| **For meok.ai (the SOV3 surface)** | Sovereign AI substrate · 47 agents · 115 tools · 341 MCPs | The substrate owner |
-| **For csoai.org (the cert surface)** | DEFONEOS-SEAL signed credentials · MITRE ATLAS + crosswalk + audit-log + care-membrane | The certification authority |
-| **For DEFONEOS wedge (UK defence)** | UK MOD · DAIC · AUKUS Pillar 2 procurement-grade · Babcock + BAE + QinetiQ | The defence wedge |
-| **For other meok wedges** | article-50-kit · openpatent · care-home-cqc · cobol-bridge · ... | The wedge family on the meok substrate |
-| **NOT for** | Consumer / non-UK / non-sovereign / global OS deployment | UK sovereign substrate |
+| **For HUMANS** | Use the substrate without writing code | meok.ai/os consumer surface |
+| **For AGENTS** | Claude · GPT · Gemini · Mamba-2 | Any LLM can call the substrate |
+| **For DEVELOPERS** | MIT-licensed, fork us, self-host us, run us on your own soil | Open-source |
+| **For INDUSTRIES** | 9 industry MCP packs | The vertical substrate |
+| **For GOVERNMENTS** | 40+ US Federal + UK + EU + AUKUS | The sovereign substrate |
+| **For THE PLANET** | AI for the planet, not for the platform | The planetary substrate |
 
-## 🚀 Quick Start (the meok substrate install)
+## The DEFONEOS upper wedge (on top of meok)
+
+| Buyer | Scope | Why |
+|---|---|---|
+| **UK MOD (the procurement-grade buyer)** | DAIC, DASA, Dstl | The sovereign procurement buyer |
+| **UK defence primes** | Babcock, BAE, QinetiQ, Thales UK, Leonardo UK | The sovereign supply chain |
+| **AUKUS Pillar 2** | AU + UK + US interoperability | The 3-eye procurement framework |
+| **DEFONEOS-SEAL recipients** | UK defence contractors + AUKUS-2 primes | The certification authority output |
+
+The upper wedge **adds** (vs the base meok substrate):
+- 33-agent BFT council signature on every decision
+- DEFONEOS-SEAL signed credentials
+- Care-membrane enforcement at 0.95 threshold
+- 3 hard stops (severed brands + kinetic + surveillance)
+- 14-framework procurement audit (EU AI Act + NIST AI RMF + MITRE ATLAS + ISO 42001 + DAIC + AUKUS Pillar 2 + DSTL SAPIENT, etc.)
+
+## 🚀 Quick Start
 
 ```bash
-# The meok substrate meta-orchestrator
+# The meok substrate (for ALL)
 pip install meok-os-mcp
 
-# Sister packages (the DEFONEOS wedge on top of the substrate)
+# The DEFONEOS upper wedge (UK defence procurement-grade)
 pip install meok-defoneos-mcp csoai-defoneos-mcp meok-defoneos-geospatial-intel-mcp
 ```
 
 ## 🛠 The 10 tools (the meok meta-orchestrator)
 
-1. `os_discover` — discover the 7-layer meok substrate registry
-2. `os_route` — route a request to the right meok MCP across the 7 layers
+1. `os_discover` — discover the 7-layer meok substrate
+2. `os_route` — route a request to the right meok MCP
 3. `os_run_humanoid_safety_check` — the L7 meok humanoid safety envelope
-4. `os_audit` — full meok audit (procurement-grade for the DEFONEOS wedge)
+4. `os_audit` — full meok audit (procurement-grade when called by the DEFONEOS upper wedge)
 5. `os_sign` — sign an action with the 33-agent BFT council
 6. `os_verify` — verify a signed action
-7. `os_consult_council` — convene the 33-agent BFT council for a meok decision
-8. `os_industry_pack` — load a meok industry MCP pack (defence + 8 meok verticals)
-9. `os_data_provenance` — sign + verify data provenance across the meok substrate
-10. `os_sovereign_handoff` — hand off control to a meok sovereign buyer (UK MOD, DAIC, AUKUS)
+7. `os_consult_council` — convene the 33-agent BFT council
+8. `os_industry_pack` — load a meok industry MCP pack (9 packs)
+9. `os_data_provenance` — sign + verify data provenance
+10. `os_sovereign_handoff` — hand off control to a sovereign buyer (used by DEFONEOS)
 
 ### Example: discover the meok substrate
 
@@ -76,55 +93,50 @@ pip install meok-defoneos-mcp csoai-defoneos-mcp meok-defoneos-geospatial-intel-
 from meok_os_mcp import os_discover
 
 discovery = os_discover(layer="all")
-# → {
-#     "os_version": "meok substrate v1.0.2",
-#     "substrate_size": "15+ MCPs across 7 layers (the meok substrate)",
-#     ...
-# }
+# → 7-layer substrate, 15+ meok MCPs, 33-agent BFT council
 ```
 
-### Example: DEFONEOS wedge audit (UK MOD procurement-grade)
+### Example: route a request
 
 ```python
-from meok_os_mcp import os_audit
+from meok_os_mcp import os_route
 
-audit = os_audit(audit_target="self", audit_type="sovereign-certification")
-# → {
-#     "audit_id": "sha256...",
-#     "audit_target": "self (DEFONEOS wedge on meok substrate)",
-#     "frameworks_covered": ["EU AI Act", "NIST AI RMF", "MITRE ATLAS",
-#                            "ISO 42001", "DAIC", "AUKUS Pillar 2", "DSTL SAPIENT"],
-#     "compliance_score": 0.92,
-#     "defoneos_seal_eligible": True,
-# }
+# The base meok substrate routes anything to the right MCP
+r = os_route(request="Show Sentinel-2 coverage of Babcock Devonport dockyard")
+# → routed to L6 meok MCP (geospatial)
+
+# The DEFONEOS upper wedge would route this to meok-defoneos-geospatial-intel-mcp
 ```
 
-## 🛡 The 3 hard stops (the care-membrane enforced by the 33-agent BFT council)
+## 🛡 The 3 hard stops (DEFONEOS upper wedge layer)
+
+The **DEFONEOS upper wedge** adds 3 hard stops to the care-membrane:
 
 1. **Severed brands** — James Castle, Grant Carter Osborne, Chris J., CSGA, Terranova, defonos.io, Toronto Summit (Kimi phantom), 4 Jul launch (Kimi phantom).
-2. **Kinetic targeting patterns** — strike package, find-fix-finish, kill order, bounty, hit list, assassination, lethal strike, designate for destruction, enemy combatant.
-3. **Personal surveillance patterns** — track individual, follow person, locate phone, track phone, identify person, recognise face, face-rec, surveil.
+2. **Kinetic targeting patterns** — strike package, find-fix-finish, kill order, bounty, hit list, assassination, lethal strike.
+3. **Personal surveillance patterns** — track individual, follow person, locate phone, track phone, identify person, face-rec, surveil.
 
-**All 3 pattern sets are enforced by the BannedTermGate. Refusals are logged to SOV3 with `source_agent: "meok-os-mcp"`. No override path.**
+**The base meok substrate does NOT refuse these. The DEFONEOS upper wedge refuses them.** Refusals are logged to SOV3 with `source_agent: "meok-defoneos-mcp"`. No override path.
 
-## 🏛 The 33-agent BFT council (the meok council)
+## 🏛 The 33-agent BFT council
 
-Every material decision in the meok substrate is signed by the 33-agent BFT council. Quorum 23/33 (2f+1). Composition: 1 King + 12 Queens (one per meok sovereign domain) + 12-around-1 PBFT (safety veto) + 4 Vanguards (bias / care / sovereignty / honesty) + 4 Specials (companion / dreamer / chronicler / cultivator).
+Every material decision in the meok substrate is signed by the 33-agent BFT council. Quorum 23/33 (2f+1). The base meok substrate uses the council for sovereign decisions; the DEFONEOS upper wedge uses it for every procurement-grade decision.
 
 ## 📜 The seal
 
-Built to the [`MEOK_DEFONEOS_ALIGNMENT_2026-06-27.md`](https://github.com/CSOAI-ORG/clawd-workspace/blob/main/MEOK_DEFONEOS_ALIGNMENT_2026-06-27.md) v2.1 (the meok = substrate, DEFONEOS = wedge framing).
+Built to the [`MEOK_DEFONEOS_ALIGNMENT_2026-06-27.md`](https://github.com/CSOAI-ORG/clawd-workspace/blob/main/MEOK_DEFONEOS_ALIGNMENT_2026-06-27.md) v2.1 (meok = substrate for ALL, DEFONEOS = upper wedge).
 
 **Author:** CSOAI LTD (UK 16939677) · Nicholas Templeman · Yorkshire, UK
-**Scope:** meok substrate (meok.ai / csoai.org) + DEFONEOS wedge (UK defence). UK sovereign.
+**Substrate:** meok.ai / csoai.org — for ALL
+**Upper wedge:** DEFONEOS — UK MOD procurement-grade
 **Care score:** 0.95+ (the Maternal Covenant threshold)
 
 ## 📄 License
 
-MIT (open-source, UK sovereign).
+MIT (open-source).
 
 ---
 
-*— MEOK AI Labs, 2026. The dragon is meok. The dragon is sovereign. The dragon serves the substrate.*
+*— MEOK AI Labs, 2026. meok is for ALL. DEFONEOS is the upper wedge. The dragon is meok. The dragon is sovereign.*
 
 JEEVES → DEFONEOS. 🐉
