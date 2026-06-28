@@ -561,12 +561,16 @@ def os_industry_pack(industry: str) -> dict[str, Any]:
     # Simplified industry pack map (the 27 .ai domains)
     industry_packs = {
         "construction": {
-            "mcps": ["grabhire-mcp", "muckaway-mcp", "planthire-mcp", "scaffold-mcp", "demolish-mcp", "construction-iso-19650-mcp"],
+            "mcps": ["grabhire-ai-mcp", "muckaway-ai-mcp", "planthire-ai-mcp", "scaffold-ai-mcp", "demolish-ai-mcp", "construction-iso-19650-mcp"],
             "estimated_transactions_per_day": 1500,
         },
         "agriculture": {
-            "mcps": ["fishkeeper-mcp", "koikeeper-mcp", "plantkeeper-mcp", "microgreens-mcp", "harvest-mcp", "agriculture-robotics-mcp"],
+            "mcps": ["fishkeeper-ai-mcp", "koikeeper-ai-mcp", "plantkeeper-ai-mcp", "microgreens-ai-mcp", "harvest-ai-mcp", "agriculture-robotics-mcp"],
             "estimated_transactions_per_day": 1200,
+        },
+        "governance": {
+            "mcps": ["councilof-mcp", "proofof-mcp", "transparencyof-mcp", "agisafe-mcp", "safeai-mcp"],
+            "estimated_transactions_per_day": 1000,
         },
         "finance": {
             "mcps": ["insureai-mcp", "claimai-mcp", "riskrate-mcp", "auditai-mcp", "vat-calculation-mcp", "gst-calculation-mcp", "payroll-mcp"],
@@ -731,7 +735,7 @@ async def list_tools():
         Tool(name="os_sign", description="Sign an action with the 33-agent BFT council (append-only audit chain).", inputSchema={"type": "object", "properties": {"action": {"type": "string"}, "actor": {"type": "string"}, "system_id": {"type": "string"}, "care_score": {"type": "number", "default": 0.97}}, "required": ["action", "actor", "system_id"]}),
         Tool(name="os_verify", description="Verify a signed action against the audit chain.", inputSchema={"type": "object", "properties": {"signature_id": {"type": "string"}, "expected_action": {"type": "string"}}, "required": ["signature_id", "expected_action"]}),
         Tool(name="os_consult_council", description="Convene the 33-agent BFT council for a decision. Returns the verdict when quorum is reached.", inputSchema={"type": "object", "properties": {"question": {"type": "string"}, "context": {"type": "string"}, "quorum": {"type": "integer", "default": 23}}, "required": ["question"]}),
-        Tool(name="os_industry_pack", description="Load a 27-domain industry MCP pack. Returns the MCPs + estimated annual revenue.", inputSchema={"type": "object", "properties": {"industry": {"type": "string", "enum": ["construction", "agriculture", "finance", "healthcare", "ip", "real-estate", "humanoid", "defence"]}}, "required": ["industry"]}),
+        Tool(name="os_industry_pack", description="Load a 27-domain industry MCP pack. Returns the MCPs + estimated annual revenue. Available industries: construction, agriculture, governance, finance, healthcare, ip, real-estate, humanoid, defence.", inputSchema={"type": "object", "properties": {"industry": {"type": "string", "enum": ["construction", "agriculture", "governance", "finance", "healthcare", "ip", "real-estate", "humanoid", "defence"]}}, "required": ["industry"]}),
         Tool(name="os_data_provenance", description="Sign + verify data provenance across the OS. Ed25519-signed sovereign certificate.", inputSchema={"type": "object", "properties": {"data_type": {"type": "string", "enum": ["imagery", "audio", "text", "sensor-readings", "transaction"]}, "source_layer": {"type": "string", "enum": ["L0", "L1", "L2", "L3", "L4", "L5", "L6", "L7"]}, "aov_data": {"type": "string"}}, "required": ["data_type", "source_layer"]}),
         Tool(name="os_sovereign_handoff", description="Hand off control to a sovereign buyer (UK MOD, DAIC, AUKUS). Procurement-grade handoff with DEFONEOS-SEAL.", inputSchema={"type": "object", "properties": {"sovereign_org": {"type": "string"}, "handover_scope": {"type": "string", "enum": ["full", "defence-only", "industry-pack", "humanoid-safety"]}, "handoff_type": {"type": "string", "enum": ["procurement-grade", "pilot-grade", "evaluation-only"], "default": "procurement-grade"}}, "required": ["sovereign_org", "handover_scope"]}),
     ]
