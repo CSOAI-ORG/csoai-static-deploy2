@@ -40,11 +40,19 @@ def run_one(slug: str, timeout: int = PER_MCP_TIMEOUT) -> dict:
         return {"slug": slug, "status": "no-tests", "tests": 0, "passed": 0, "failed": 0, "errors": 0, "skipped": 0, "duration_s": 0.0, "label": label}
     started = time.time()
     try:
+        # Use a fresh env for each subprocess to prevent env-var leakage
+        # between MCPs (this was the source of the oscal-generator test-pollution
+        # in census v2 — passing the parent's env leaked MEOK_API_KEY etc. into
+        # later subprocesses). We keep PATH, HOME, LANG, LC_ALL so the subprocess
+        # can find binaries and the user's locale, but reset the rest.
+        import os
+        clean_env = {k: v for k, v in os.environ.items() if k in ("PATH", "HOME", "LANG", "LC_ALL", "USER", "SHELL", "TMPDIR")}
         proc = subprocess.run(
             [sys.executable, "-m", "pytest", "--tb=line", "-q", "--no-header",
              "-p", "no:cacheprovider",
              *[str(path / t) for t in targets]],
             capture_output=True, text=True, timeout=timeout, cwd=str(path),
+            env=clean_env,
         )
         duration = time.time() - started
         out = (proc.stdout or "") + "\n" + (proc.stderr or "")
