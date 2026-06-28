@@ -1,0 +1,74 @@
+[build-system]
+requires = ["hatchling"]
+
+[project]
+name = "meok_os_mcp"
+version = "1.0.0"
+description = "MEOK OS — the sovereign AI Operating System for ALL. Meta-orchestrator MCP that unifies the DEFONEOS 7-layer Global Dome (454 MCPs, 27 industries, 33-agent BFT council, 7-layer architecture) for any human, any agent, any sovereign."
+readme = "README.md"
+requires-python = ">=3.10"
+license = {text = "MIT"}
+authors = [
+    {name = "MEOK AI Labs", email = "nicholas@csoai.org"},
+]
+keywords = [
+    "mcp", "sovereign", "ai-os", "operating-system", "open-source",
+    "defoneos", "global-dome", "humanoid", "robotics", "agent-orchestration",
+    "7-layer", "bft-council", "care-membrane", "33-agent",
+    "for-all", "for-humans", "for-agents", "for-sovereigns",
+    "babcock", "bae", "qinetiq", "uk", "us", "eu", "au", "aukus",
+    "ai-governance", "compliance", "audit", "audit-chain",
+    "meok-labs", "csoai", "16939677",
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Humans + AI Agents + Sovereign Buyers",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Sovereign AI OS :: Meta-Orchestrator",
+    "Topic :: Robotics :: Humanoid Safety",
+]
+dependencies = [
+    "mcp>=1.0.0",
+    # L1: SOV3 infrastructure
+    "bft-governance-mcp",
+    "a2a-governance-bridge-mcp",
+    "agent-orchestrator-mcp",
+    "agent-mcp-router-mcp",
+    # L2: openpatent IP
+    "openpatent-mcp",
+    # L4: tax + compliance
+    "care-membrane-mcp",
+    "ai-self-audit-mcp",
+    "meok-governance-engine-mcp",
+    # L5: government
+    "cqc-compliance-mcp",
+    "cra-compliance-mcp",
+    "csrd-compliance-mcp",
+    "defoneos-compliance-mcp",
+    # L6: industry domains
+    "meok-defoneos-mcp>=1.0.1",
+    "csoai-defoneos-mcp>=1.0.0",
+    "meok-defoneos-geospatial-intel-mcp>=1.0.0",
+    "gods-eye-geospatial-mcp",
+    "dagon-geospatial-intel",
+    # L7: human-oid
+    "care-membrane-mcp",
+]
+
+[project.urls]
+Homepage = "https://meok.ai/os"
+Repository = "https://github.com/CSOAI-ORG/meok-os-mcp"
+Documentation = "https://docs.meok.ai/os"
+"DEFONEOS Global Dome" = "https://meok.ai/defoneos"
+"Sovereign Backbone" = "https://sov3.meok.ai"
+"33-agent BFT Council" = "https://councilof.ai"
+
+[project.scripts]
+meok-os-mcp = "meok_os_mcp.server:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["meok_os_mcp"]
