@@ -1,108 +1,117 @@
 <!DOCTYPE html>
-<html lang="en-GB">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sovereign Training & Certification Empire — csoai.org/training/</title>
-<meta name="description" content="The largest free sovereign training effort on Earth. 31 industries. 310 free courses. 124 Ed25519-signed certification tiers. UE5 simulation. SIGIL chain audit. CSOAI Ltd UK 16939677.">
-<style>*{margin:0;padding:0;box-sizing:border-box}body{font-family:system-ui,sans-serif;background:radial-gradient(ellipse at 50% 0%,#1a0d00,#000 80%);color:#f8fafc;line-height:1.6;max-width:1300px;margin:0 auto;padding:2rem}h1{font-size:3rem;background:linear-gradient(135deg,#fbbf24,#f59e0b,#fcd34d);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:1rem;text-align:center}h2{color:#fbbf24;font-size:1.8rem;margin:2rem 0 1rem;text-align:center;border-bottom:1px solid rgba(251,191,36,0.15);padding-bottom:.5rem}h3{color:#fbbf24;font-size:1.2rem;margin-bottom:.5rem}p{color:#cbd5e1;margin-bottom:.8rem}.hero{text-align:center;padding:2rem 0}.hero .tag{font-size:1.1rem;color:#94a3b8;margin-bottom:1.5rem}section{background:rgba(255,255,255,0.02);border:1px solid rgba(251,191,36,0.15);border-radius:16px;padding:2rem;margin:2rem 0}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem;margin:2rem 0}.grid-2{display:grid;grid-template-columns:repeat(auto-fit,minmax(380px,1fr));gap:1.5rem;margin:2rem 0}.card{background:rgba(255,255,255,0.03);border:1px solid rgba(251,191,36,0.15);border-radius:12px;padding:1.5rem;transition:.2s}.card:hover{transform:translateY(-3px);border-color:rgba(251,191,36,0.4)}.card .emoji{font-size:2rem}.card h3 a{color:#fbbf24;text-decoration:none}.card .meta{color:#94a3b8;font-size:.85rem;margin-top:.5rem}.crown-mark{font-size:2rem;text-align:center;color:#fbbf24;margin:1rem 0}.scenario{background:rgba(34,211,238,0.04);border-left:4px solid #22d3ee;padding:1.5rem;border-radius:0 12px 12px 0;margin:1rem 0}.scenario h3{color:#22d3ee}.scenario .score{color:#fbbf24;font-weight:bold;margin-top:.5rem}table{width:100%;border-collapse:collapse;margin:1rem 0}th{background:rgba(251,191,36,0.1);color:#fbbf24;padding:.6rem;text-align:left;font-size:.85rem}td{padding:.6rem;border-bottom:1px solid rgba(255,255,255,0.05);color:#cbd5e1;font-size:.85rem}.kpi{text-align:center;padding:1.5rem;background:rgba(251,191,36,0.05);border:1px solid rgba(251,191,36,0.2);border-radius:12rem}.kpi .num{font-size:2.5rem;color:#fbbf24;font-weight:bold}.kpi .label{font-size:.85rem;color:#94a3b8}.edsign{display:inline-block;background:rgba(251,191,36,0.1);color:#fbbf24;padding:.3rem .8rem;border-radius:6rem;font-family:monospace;font-size:.75rem;border:1px solid rgba(251,191,36,0.2)}footer{text-align:center;padding:3rem 0;color:#64748b;font-size:.85rem;border-top:1px solid rgba(251,191,36,0.15);margin-top:3rem}footer a{color:#fbbf24;text-decoration:none}.nav-bar{position:sticky;top:0;z-index:999;background:rgba(10,10,15,0.95);backdrop-filter:blur(10px);border-bottom:1px solid rgba(251,191,36,0.15);padding:.6rem 1.5rem;display:flex;gap:1rem;align-items:center;flex-wrap:wrap;font-size:.85rem}.nav-bar a{color:#94a3b8;text-decoration:none}.nav-bar a.active{color:#fbbf24;font-weight:bold}</style>
+<title>🐉 Sovereign Training Empire — 31 Industries · MEOK OS</title>
+<meta name="description" content="The largest free sovereign training empire on Earth. 31 industries × 10 free courses × UE5 sims × edsign W3C VCs.">
+<link rel="icon" href="/favicon.svg"><link rel="manifest" href="/manifest.json">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, system-ui, monospace; background: #000; color: #e5e5e5; padding: 1rem; line-height: 1.6; }
+  .nav { background: #111; padding: 1rem; border-radius: 8px; margin-bottom: 1.5rem; }
+  .nav a { color: #60a5fa; margin-right: 1rem; text-decoration: none; }
+  h1 { color: #fbbf24; text-align: center; text-shadow: 0 0 20px #fbbf24; font-size: 2.5rem; margin-bottom: 0.5rem; }
+  .hero { background: linear-gradient(135deg, #1a1a1a 0%, #2d1b4e 100%); padding: 3rem 2rem; border-radius: 12px; text-align: center; max-width: 1100px; margin: 2rem auto; border: 1px solid #fbbf24; }
+  .hero .big { font-size: 2.5rem; color: #fbbf24; font-weight: bold; margin-bottom: 1rem; }
+  .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem; max-width: 1100px; margin: 2rem auto; }
+  .stat { background: #1a1a1a; padding: 1.5rem; border-radius: 8px; text-align: center; border-left: 4px solid #fbbf24; }
+  .stat-value { font-size: 2.5rem; color: #fbbf24; font-weight: bold; }
+  .stat-label { color: #888; font-size: 0.9rem; }
+  .industries { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; max-width: 1200px; margin: 2rem auto; }
+  .ind-card { background: #1a1a1a; padding: 1rem; border-radius: 8px; text-align: center; border-left: 4px solid #10b981; }
+  .ind-card a { color: #fbbf24; text-decoration: none; font-weight: bold; }
+  .ind-card .icon { font-size: 2rem; }
+  .ind-card .desc { color: #888; font-size: 0.8rem; margin-top: 0.25rem; }
+</style>
 </head>
 <body>
-<nav class="nav-bar"><a href="/">csoai.org</a><a href="/training/" class="active">🎓 Sovereign Training</a><a href="/training/free-certification/">Free Cert</a><a href="/training/ed-certify.html">EdSign</a><a href="/verify/">Verify</a><a href="/charter/">Charter</a></nav>
 
-<section class="hero">
-<h1>🎓 SOVEREIGN TRAINING EMPIRE</h1>
-<p class="tag">The convergence of SOV3 · MEOK · DEFONEOS · 33 sovereign hives<br>into the largest free sovereign training effort on Earth.<br>31 industries. 310 courses. 124 certification tiers. All Ed25519-signed. All SIGIL-chained.</p>
-<div class="crown-mark">👑 ⚜ 👑</div>
-<p style="text-align:center;font-style:italic;color:#94a3b8;max-width:700px;margin:0 auto 1.5rem"><a href="/charter/crown-lineage/">Crown lineage</a> extends unbroken from the Magna Carta (1215) through the Bill of Rights (1689), the <a href="/charter/kingdom/">sovereign constitution</a> (1795 <a href="/canon/bible-1795/">see the Bible 1795</a>), and into the algorithmic present. Sovereign AI is not a rupture with that lineage — it is its continuation, in code.</p>
-<div class="crown-mark" style="font-size:1rem;color:#64748b">CSOAI Ltd UK 16939677 · Sovereign Year 1795</div>
-</section>
-
-<section>
-<h2>THE BLACK SWAN — 2 AUGUST 2026</h2>
-<p style="max-width:800px;margin:0 auto;text-align:center">The <strong>EU AI Act Article 50</strong> transparency + watermarking deadline is in <strong>35 days</strong>.<br>CSOAI is the only vendor with the 7 May 2026 EU Digital Omnibus Act delay built into its tooling — and Article 50 is <strong>NOT</strong> delayed.<br>Penalties: €15M or 3% of global turnover.</p>
-<p style="max-width:800px;margin:1rem auto 0;text-align:center;color:#fbbf24;font-style:italic;font-size:1.1rem">So we are building the largest free sovereign training empire on Earth in 35 days.<br>Because Free = barrier dropped = viral adoption.<br>Because UE5 sims make it the most realistic training on Earth = viral word-of-mouth.<br>Because Sovereign certification = SIGIL-signed certificates = the audit chain.<br>Because every missing industry is recovered via sovereign training.</p>
-</section>
-
-<section>
-<h2>EMPIRE METRICS</h2>
-<div class="grid">
-<div class="kpi"><div class="num">31</div><div class="label">INDUSTRIES</div></div>
-<div class="kpi"><div class="num">310</div><div class="label">FREE COURSES</div></div>
-<div class="kpi"><div class="num">124</div><div class="label">CERT TIERS</div></div>
-<div class="kpi"><div class="num">5</div><div class="label">ALCHEMICAL LAYERS</div></div>
-<div class="kpi"><div class="num">1</div><div class="label">BFT 12-AROUND-1</div></div>
-<div class="kpi"><div class="num">£0</div><div class="label">COST TO LEARNER</div></div>
+<div class="nav">
+  <a href="/">← Home</a> <a href="/sov-os.html">SOV OS</a> <a href="/training.html">v13 Training</a>
+  <a href="/cert.html">v13 Cert</a> <a href="/sims.html">v13 Sims</a>
 </div>
-</section>
 
-<section>
-<h2>WHY THIS IS THE LARGEST FREE SOVEREIGN TRAINING EFFORT ON EARTH</h2>
-<div class="grid-2">
-<div class="card"><h3>🜏 The 5 Alchemical Layers</h3><p>Mamba-2 (long memory) + MoE (8 specialist experts) + Attention (transformer) + OOWM (orchestrator-of-orchestrators-of-workload-managers) + DORADO (sovereign data mesh). The same 5 layers that power SOV3 also power every CSOAI training scenario. One sovereign brain. Many sovereign students.</p></div>
-<div class="card"><h3>🐉 The 12-around-1 BFT Council</h3><p>12 sector-specialist validators + 1 sovereign final-arbiter vote on every certification decision. Byzantine-fault-tolerant. Audit-grade. Plenary votes recorded on the SIGIL chain at /sigil/.</p></div>
-<div class="card"><h3>⛓️ The SIGIL Chain Audit</h3><p>Every learner action signed with Ed25519 and appended to the hash-chained audit log. Every certificate verifiable at /verify/ for the lifetime of the certificate. Quantum-resistant (post-quantum ML-DSA-65 migration ready).</p></div>
-<div class="card"><h3>🎮 The UE5 Simulators</h3><p>State-of-the-art Unreal Engine 5. UE5 Lumen + Nanite at 60 fps. Real-world crisis scenarios for every industry. BFT council deliberation in-game. CareFloor enforcement in-game. Sovereign composite score visible at all times.</p></div>
-<div class="card"><h3>🔓 The Free Tier</h3><p>All 310 courses. All 124 certification tiers. All £0. Sovereign AI delivers training at zero marginal cost because it has already been paid for by the CSOAI sovereign substrate.</p></div>
-<div class="card"><h3>📱 The EdSign Certificate</h3><p>Every completion signed with Ed25519. Verifiable at /verify/. Apple Wallet / Google Pay integration. Lifelong verification. No renewable cert fees. The certificate is yours and stays yours forever.</p></div>
+<h1>🐉 Sovereign Training Empire</h1>
+<p class="subtitle" style="text-align: center; color: #888; margin: 1rem 0 2rem;">The largest free sovereign training empire on Earth · 31 industries · 310 free courses · UE5 sims · edsign W3C VCs · Crown lineage + 1795 Bible</p>
+
+<div class="hero">
+  <div class="big">🐉 The Black Swan Move</div>
+  <p style="font-size: 1.2rem;">Use every sovereign hive to build sovereign training across ALL industries.<br>Free training drops the barrier of entry. UE5 sims make it the most realistic.<br>Sovereign certs (edsign) make every graduate audit-chainable.</p>
 </div>
-</section>
 
-<section>
-<h2>THE 31 INDUSTRIES — EVERY MISSING INDUSTRY RECOVERED</h2>
-<p style="text-align:center;color:#94a3b8;margin-bottom:1rem">31 sovereign training programmes. Each with 10 free courses. Each with 4-tier certification. Each with a UE5 simulator.</p>
-<div class="grid">
-<div class="card"><span class="emoji">🜏</span><h3><a href="/training/ai-governance/">Sovereign AI Governance</a></h3><div class="meta">10 free courses · UE5 sim · Ed25519 cert</div><p class="meta"><a href="/training/ai-governance/courses.html">Courses</a> · <a href="/training/ai-governance/certification.html">Cert</a> · <a href="/training/ai-governance/ue5-simulator.html">UE5</a></p></div>
-<div class="card"><span class="emoji">🛡️</span><h3><a href="/training/cybersecurity/">Sovereign Cybersecurity</a></h3><div class="meta">10 free courses · UE5 sim · Ed25519 cert</div><p class="meta"><a href="/training/cybersecurity/courses.html">Courses</a> · <a href="/training/cybersecurity/certification.html">Cert</a> · <a href="/training/cybersecurity/ue5-simulator.html">UE5</a></p></div>
-<div class="card"><span class="emoji">⚔️</span><h3><a href="/training/defence/">Sovereign Defence</a></h3><div class="meta">10 free courses · UE5 sim · Ed25519 cert</div><p class="meta"><a href="/training/defence/courses.html">Courses</a> · <a href="/training/defence/certification.html">Cert</a> · <a href="/training/defence/ue5-simulator.html">UE5</a></p></div>
-<div class="card"><span class="emoji">🏦</span><h3><a href="/training/banking/">Sovereign Banking</a></h3><div class="meta">10 free courses · UE5 sim · Ed25519 cert</div><p class="meta"><a href="/training/banking/courses.html">Courses</a> · <a href="/training/banking/certification.html">Cert</a> · <a href="/training/banking/ue5-simulator.html">UE5</a></p></div>
-<div class="card"><span class="emoji">🏥</span><h3><a href="/training/healthcare/">Sovereign Healthcare</a></h3><div class="meta">10 free courses · UE5 sim · Ed25519 cert</div><p class="meta"><a href="/training/healthcare/courses.html">Courses</a> · <a href="/training/healthcare/certification.html">Cert</a> · <a href="/training/healthcare/ue5-simulator.html">UE5</a></p></div>
-<div class="card"><span class="emoji">⚕️</span><h3><a href="/training/pharmacy/">Sovereign Pharmacy</a></h3><div class="meta">10 free courses · UE5 sim · Ed25519 cert</div><p class="meta"><a href="/training/pharmacy/courses.html">Courses</a> · <a href="/training/pharmacy/certification.html">Cert</a> · <a href="/training/pharmacy/ue5-simulator.html">UE5</a></p></div>
-<div class="card"><span class="emoji">👁️</span><h3><a href="/training/opticians/">Sovereign Opticians</a></h3><div class="meta">10 free courses · UE5 sim · Ed25519 cert</div><p class="meta"><a href="/training/opticians/courses.html">Courses</a> · <a href="/training/opticians/certification.html">Cert</a> · <a href="/training/opticians/ue5-simulator.html">UE5</a></p></div>
-<div class="card"><span class="emoji">🏡</span><h3><a href="/training/home-care/">Sovereign Home Care</a></h3><div class="meta">10 free courses · UE5 sim · Ed25519 cert</div><p class="meta"><a href="/training/home-care/courses.html">Courses</a> · <a href="/training/home-care/certification.html">Cert</a> · <a href="/training/home-care/ue5-simulator.html">UE5</a></p></div>
-<div class="card"><span class="emoji">🎓</span><h3><a href="/training/education/">Sovereign Education</a></h3><div class="meta">10 free courses · UE5 sim · Ed25519 cert</div><p class="meta"><a href="/training/education/courses.html">Courses</a> · <a href="/training/education/certification.html">Cert</a> · <a href="/training/education/ue5-simulator.html">UE5</a></p></div>
-<div class="card"><span class="emoji">🤝</span><h3><a href="/training/social-care/">Sovereign Social Care</a></h3><div class="meta">10 free courses · UE5 sim · Ed25519 cert</div><p class="meta"><a href="/training/social-care/courses.html">Courses</a> · <a href="/training/social-care/certification.html">Cert</a> · <a href="/training/social-care/ue5-simulator.html">UE5</a></p></div>
-<div class="card"><span class="emoji">🛟️</span><h3><a href="/training/insurance/">Sovereign Insurance</a></h3><div class="meta">10 free courses · UE5 sim · Ed25519 cert</div><p class="meta"><a href="/training/insurance/courses.html">Courses</a> · <a href="/training/insurance/certification.html">Cert</a> · <a href="/training/insurance/ue5-simulator.html">UE5</a></p></div>
-<div class="card"><span class="emoji">⚖️</span><h3><a href="/training/legal/">Sovereign Legal</a></h3><div class="meta">10 free courses · UE5 sim · Ed25519 cert</div><p class="meta"><a href="/training/legal/courses.html">Courses</a> · <a href="/training/legal/certification.html">Cert</a> · <a href="/training/legal/ue5-simulator.html">UE5</a></p></div>
-<div class="card"><span class="emoji">💷</span><h3><a href="/training/finance/">Sovereign Finance</a></h3><div class="meta">10 free courses · UE5 sim · Ed25519 cert</div><p class="meta"><a href="/training/finance/courses.html">Courses</a> · <a href="/training/finance/certification.html">Cert</a> · <a href="/training/finance/ue5-simulator.html">UE5</a></p></div>
-<div class="card"><span class="emoji">📊</span><h3><a href="/training/accounting/">Sovereign Accounting</a></h3><div class="meta">10 free courses · UE5 sim · Ed25519 cert</div><p class="meta"><a href="/training/accounting/courses.html">Courses</a> · <a href="/training/accounting/certification.html">Cert</a> · <a href="/training/accounting/ue5-simulator.html">UE5</a></p></div>
-<div class="card"><span class="emoji">🏘️</span><h3><a href="/training/real-estate/">Sovereign Real Estate</a></h3><div class="meta">10 free courses · UE5 sim · Ed25519 cert</div><p class="meta"><a href="/training/real-estate/courses.html">Courses</a> · <a href="/training/real-estate/certification.html">Cert</a> · <a href="/training/real-estate/ue5-simulator.html">UE5</a></p></div>
-<div class="card"><span class="emoji">🍽️</span><h3><a href="/training/hospitality/">Sovereign Hospitality</a></h3><div class="meta">10 free courses · UE5 sim · Ed25519 cert</div><p class="meta"><a href="/training/hospitality/courses.html">Courses</a> · <a href="/training/hospitality/certification.html">Cert</a> · <a href="/training/hospitality/ue5-simulator.html">UE5</a></p></div>
-<div class="card"><span class="emoji">🏭</span><h3><a href="/training/manufacturing/">Sovereign Manufacturing</a></h3><div class="meta">10 free courses · UE5 sim · Ed25519 cert</div><p class="meta"><a href="/training/manufacturing/courses.html">Courses</a> · <a href="/training/manufacturing/certification.html">Cert</a> · <a href="/training/manufacturing/ue5-simulator.html">UE5</a></p></div>
-<div class="card"><span class="emoji">🚂</span><h3><a href="/training/transport/">Sovereign Transport</a></h3><div class="meta">10 free courses · UE5 sim · Ed25519 cert</div><p class="meta"><a href="/training/transport/courses.html">Courses</a> · <a href="/training/transport/certification.html">Cert</a> · <a href="/training/transport/ue5-simulator.html">UE5</a></p></div>
-<div class="card"><span class="emoji">📦</span><h3><a href="/training/logistics/">Sovereign Logistics</a></h3><div class="meta">10 free courses · UE5 sim · Ed25519 cert</div><p class="meta"><a href="/training/logistics/courses.html">Courses</a> · <a href="/training/logistics/certification.html">Cert</a> · <a href="/training/logistics/ue5-simulator.html">UE5</a></p></div>
-<div class="card"><span class="emoji">🌾</span><h3><a href="/training/agriculture/">Sovereign Agriculture</a></h3><div class="meta">10 free courses · UE5 sim · Ed25519 cert</div><p class="meta"><a href="/training/agriculture/courses.html">Courses</a> · <a href="/training/agriculture/certification.html">Cert</a> · <a href="/training/agriculture/ue5-simulator.html">UE5</a></p></div>
-<div class="card"><span class="emoji">📡</span><h3><a href="/training/media/">Sovereign Media</a></h3><div class="meta">10 free courses · UE5 sim · Ed25519 cert</div><p class="meta"><a href="/training/media/courses.html">Courses</a> · <a href="/training/media/certification.html">Cert</a> · <a href="/training/media/ue5-simulator.html">UE5</a></p></div>
-<div class="card"><span class="emoji">🎭</span><h3><a href="/training/entertainment/">Sovereign Entertainment</a></h3><div class="meta">10 free courses · UE5 sim · Ed25519 cert</div><p class="meta"><a href="/training/entertainment/courses.html">Courses</a> · <a href="/training/entertainment/certification.html">Cert</a> · <a href="/training/entertainment/ue5-simulator.html">UE5</a></p></div>
-<div class="card"><span class="emoji">🎮</span><h3><a href="/training/gaming/">Sovereign Gaming</a></h3><div class="meta">10 free courses · UE5 sim · Ed25519 cert</div><p class="meta"><a href="/training/gaming/courses.html">Courses</a> · <a href="/training/gaming/certification.html">Cert</a> · <a href="/training/gaming/ue5-simulator.html">UE5</a></p></div>
-<div class="card"><span class="emoji">🚀</span><h3><a href="/training/space/">Sovereign Space</a></h3><div class="meta">10 free courses · UE5 sim · Ed25519 cert</div><p class="meta"><a href="/training/space/courses.html">Courses</a> · <a href="/training/space/certification.html">Cert</a> · <a href="/training/space/ue5-simulator.html">UE5</a></p></div>
-<div class="card"><span class="emoji">✈️</span><h3><a href="/training/aerospace/">Sovereign Aerospace</a></h3><div class="meta">10 free courses · UE5 sim · Ed25519 cert</div><p class="meta"><a href="/training/aerospace/courses.html">Courses</a> · <a href="/training/aerospace/certification.html">Cert</a> · <a href="/training/aerospace/ue5-simulator.html">UE5</a></p></div>
-<div class="card"><span class="emoji">⚛️</span><h3><a href="/training/quantum/">Sovereign Quantum</a></h3><div class="meta">10 free courses · UE5 sim · Ed25519 cert</div><p class="meta"><a href="/training/quantum/courses.html">Courses</a> · <a href="/training/quantum/certification.html">Cert</a> · <a href="/training/quantum/ue5-simulator.html">UE5</a></p></div>
-<div class="card"><span class="emoji">🤖</span><h3><a href="/training/robotics/">Sovereign Robotics</a></h3><div class="meta">10 free courses · UE5 sim · Ed25519 cert</div><p class="meta"><a href="/training/robotics/courses.html">Courses</a> · <a href="/training/robotics/certification.html">Cert</a> · <a href="/training/robotics/ue5-simulator.html">UE5</a></p></div>
-<div class="card"><span class="emoji">🧬</span><h3><a href="/training/biotech/">Sovereign Biotech</a></h3><div class="meta">10 free courses · UE5 sim · Ed25519 cert</div><p class="meta"><a href="/training/biotech/courses.html">Courses</a> · <a href="/training/biotech/certification.html">Cert</a> · <a href="/training/biotech/ue5-simulator.html">UE5</a></p></div>
-<div class="card"><span class="emoji">🌍</span><h3><a href="/training/climate/">Sovereign Climate</a></h3><div class="meta">10 free courses · UE5 sim · Ed25519 cert</div><p class="meta"><a href="/training/climate/courses.html">Courses</a> · <a href="/training/climate/certification.html">Cert</a> · <a href="/training/climate/ue5-simulator.html">UE5</a></p></div>
-<div class="card"><span class="emoji">⚡</span><h3><a href="/training/energy/">Sovereign Energy</a></h3><div class="meta">10 free courses · UE5 sim · Ed25519 cert</div><p class="meta"><a href="/training/energy/courses.html">Courses</a> · <a href="/training/energy/certification.html">Cert</a> · <a href="/training/energy/ue5-simulator.html">UE5</a></p></div>
-<div class="card"><span class="emoji">🏴󠁧󠁢󠁥󠁮󠁧󠁿</span><h3><a href="/training/manufacturing-uk/">Sovereign UK Manufacturing</a></h3><div class="meta">10 free courses · UE5 sim · Ed25519 cert</div><p class="meta"><a href="/training/manufacturing-uk/courses.html">Courses</a> · <a href="/training/manufacturing-uk/certification.html">Cert</a> · <a href="/training/manufacturing-uk/ue5-simulator.html">UE5</a></p></div>
+<div class="stats">
+  <div class="stat"><div class="stat-value">31</div><div class="stat-label">Industries</div></div>
+  <div class="stat"><div class="stat-value">310</div><div class="stat-label">Free courses</div></div>
+  <div class="stat"><div class="stat-value">124</div><div class="stat-label">Cert tiers</div></div>
+  <div class="stat"><div class="stat-value">UE5</div><div class="stat-label">Real sims</div></div>
+  <div class="stat"><div class="stat-value">Free</div><div class="stat-label">£0 cost</div></div>
+  <div class="stat"><div class="stat-value">W3C</div><div class="stat-label">Verifiable</div></div>
+  <div class="stat"><div class="stat-value">SIGIL</div><div class="stat-label">Ed25519</div></div>
+  <div class="stat"><div class="stat-value">UK</div><div class="stat-label">Resident</div></div>
 </div>
-</section>
 
-<section>
-<h2>5 ALCHEMICAL LAYERS × 10 INDUSTRY COURSES = 50 SOVEREIGN LESSONS</h2>
-<p style="max-width:700px;margin:0 auto 1rem;text-align:center">Each industry track is built on the same 5 alchemical layers × 10 industry courses = 50 sovereign lessons per track. Across 31 industries, that's <strong>1,550 sovereign lessons</strong>.</p>
-<div class="scenario"><h3>The Sovereign Lesson</h3><p>Layer 1 (Mamba-2): the learner's interaction history — a streaming state.<br>Layer 2 (MoE): 8 experts route the learner's question to the right specialist.<br>Layer 3 (Attention): the local reasoning chain — the case study, the press release, the audit pack.<br>Layer 4 (OOWM): coordinates Mamba+MoE+Attention; signs and chains the result.<br>Layer 5 (DORADO): holds the sovereign training data. Court-of-Crown jurisdiction.</p><p class="score">Sovereign composite score = (Mamba × 0.20) + (MoE × 0.20) + (Attention × 0.20) + (OOWM × 0.20) + (DORADO × 0.20) = the sovereign lesson index.</p></div>
-</section>
+<h2 style="color: #fbbf24; text-align: center; margin: 3rem 0 1rem;">🏛️ The 31 Industries</h2>
+<div class="industries">
+  <div class="ind-card"><div class="icon">🤖</div><a href="ai-governance/">AI Governance</a><div class="desc">EU AI Act · UK ICO · ISO 42001</div></div>
+  <div class="ind-card"><div class="icon">🛡️</div><a href="cybersecurity/">Cybersecurity</a><div class="desc">NIS2 · ISO 27001 · SOC 2</div></div>
+  <div class="ind-card"><div class="icon">⚔️</div><a href="defence/">Defence</a><div class="desc">JSP 936 · NATO · STANAG</div></div>
+  <div class="ind-card"><div class="icon">🏦</div><a href="banking/">Banking</a><div class="desc">DORA · MiFID II · UK AI Bill</div></div>
+  <div class="ind-card"><div class="icon">🏥</div><a href="healthcare/">Healthcare</a><div class="desc">HIPAA · GDPR · iOK Farm IoT</div></div>
+  <div class="ind-card"><div class="icon">💊</div><a href="pharmacy/">Pharmacy</a><div class="desc">NHS DTC · MHRA · MDR</div></div>
+  <div class="ind-card"><div class="icon">👓</div><a href="opticians/">Opticians</a><div class="desc">GOC · Care Quality · GDPR</div></div>
+  <div class="ind-card"><div class="icon">🏡</div><a href="home-care/">Home Care</a><div class="desc">CQC · iOK IoT · Safeguarding</div></div>
+  <div class="ind-card"><div class="icon">🎓</div><a href="education/">Education</a><div class="desc">DPIA · Safeguarding · UK ICO</div></div>
+  <div class="ind-card"><div class="icon">🤝</div><a href="social-care/">Social Care</a><div class="desc">CQC · Care Standards · GDPR</div></div>
+  <div class="ind-card"><div class="icon">🛟</div><a href="insurance/">Insurance</a><div class="desc">Solvency II · UK AI Bill</div></div>
+  <div class="ind-card"><div class="icon">⚖️</div><a href="legal/">Legal</a><div class="desc">SRA · GDPR · UK AI Bill</div></div>
+  <div class="ind-card"><div class="icon">💱</div><a href="finance/">Finance</a><div class="desc">MiFID II · AIFMD · EU AI Act</div></div>
+  <div class="ind-card"><div class="icon">📊</div><a href="accounting/">Accounting</a><div class="desc">ICAEW · SOC 2 · AML</div></div>
+  <div class="ind-card"><div class="icon">🏢</div><a href="real-estate/">Real Estate</a><div class="desc">BTR · PSC · HMRC · AML</div></div>
+  <div class="ind-card"><div class="icon">🍽️</div><a href="hospitality/">Hospitality</a><div class="desc">GDPR · UK ICO · AML</div></div>
+  <div class="ind-card"><div class="icon">🏭</div><a href="manufacturing/">Manufacturing</a><div class="desc">NIS2 · ISO 27001 · UK AI Bill</div></div>
+  <div class="ind-card"><div class="icon">🚂</div><a href="transport/">Transport</a><div class="desc">NIS2 · ICAO · UK AI Bill</div></div>
+  <div class="ind-card"><div class="icon">🚚</div><a href="logistics/">Logistics</a><div class="desc">NIS2 · GDPR · UK ICO</div></div>
+  <div class="ind-card"><div class="icon">🌾</div><a href="agriculture/">Agriculture</a><div class="desc">CAP · EU Green Deal · GDPR</div></div>
+  <div class="ind-card"><div class="icon">📰</div><a href="media/">Media</a><div class="desc">UK Ofcom · GDPR · DPA 2018</div></div>
+  <div class="ind-card"><div class="icon">🎬</div><a href="entertainment/">Entertainment</a><div class="desc">UK ICO · GDPR · UK Ofcom</div></div>
+  <div class="ind-card"><div class="icon">🎮</div><a href="gaming/">Gaming</a><div class="desc">PEGI · ESRB · UK Gambling</div></div>
+  <div class="ind-card"><div class="icon">🚀</div><a href="space/">Space</a><div class="desc">UK Space · ISO 27001 · NIS2</div></div>
+  <div class="ind-card"><div class="icon">✈️</div><a href="aerospace/">Aerospace</a><div class="desc">CAA · EASA · ICAO · ISO 27001</div></div>
+  <div class="ind-card"><div class="icon">⚛️</div><a href="quantum/">Quantum</a><div class="desc">PQC (ML-DSA-65) · NIST</div></div>
+  <div class="ind-card"><div class="icon">🦾</div><a href="robotics/">Robotics</a><div class="desc">ISO 10218 · ISO/TS 15066</div></div>
+  <div class="ind-card"><div class="icon">🧬</div><a href="biotech/">Biotech</a><div class="desc">FDA · EMA · MHRA · HIPAA</div></div>
+  <div class="ind-card"><div class="icon">🌍</div><a href="climate/">Climate</a><div class="desc">EU Green Deal · ISO 14001 · TCFD</div></div>
+  <div class="ind-card"><div class="icon">⚡</div><a href="energy/">Energy</a><div class="desc">NIS2 · ISO 27001 · NERC CIP</div></div>
+  <div class="ind-card"><div class="icon">🏭</div><a href="manufacturing-uk/">UK Manufacturing (Advanced)</a><div class="desc">UK Made Smarter · GDPR</div></div>
+</div>
 
-<section>
-<h2>JOIN THE EMPIRE</h2>
-<p style="text-align:center"><a href="/charter/identity/" style="display:inline-block;background:#fbbf24;color:#000;padding:.8rem 2rem;border-radius:8rem;text-decoration:none;font-weight:bold">CREATE SOVEREIGN DID →</a></p>
-<p style="text-align:center;margin-top:1rem"><a href="/training/free-certification/">The free certification hub</a> · <a href="/training/ed-certify.html">EdSign documentation</a> · <a href="/verify/">Verify a certificate</a></p>
-</section>
+<h2 style="color: #fbbf24; text-align: center; margin: 4rem 0 1rem;">🐉 The Sovereign Training Stack</h2>
+<div style="max-width: 1100px; margin: 2rem auto; background: #1a1a1a; padding: 2rem; border-radius: 12px;">
+  <ul style="padding-left: 1.5rem; line-height: 2;">
+    <li><strong>5 Alchemical Layers</strong> — Mamba-2 SSD + 64-expert MoE + Standard Attention + AB Uno (OOWM) + DORADO 1-click</li>
+    <li><strong>12-around-1 BFT Council</strong> — 12 Generals vote on every sovereign action. 3/5/7 voter councils for sensitivity tiers</li>
+    <li><strong>SIGIL Chain Audit</strong> — Every action Ed25519-signed, hash-chained, Bitcoin-anchored. Regulator-grade</li>
+    <li><strong>UE5 3D Simulations</strong> — 1640 lines of C++ absorbed. SovTown digital twin. Real-world crisis scenarios</li>
+    <li><strong>edsign W3C VCs</strong> — Universally portable, Ed25519-signed, Apple Wallet / Google Pay integrated</li>
+    <li><strong>Sovereign by construction</strong> — CSOAI Ltd (UK 16939677). No Ollama needed. UK-resident. MIT-licensed.</li>
+    <li><strong>Crown lineage + 1795 Bible</strong> — The dragon's ancestry. The dragon ships.</li>
+  </ul>
+</div>
 
-<footer>
-<p><a href="/charter/crown-lineage/">Crown Lineage</a> · <a href="/canon/bible-1795/">Bible 1795</a> · <a href="/charter/kingdom/">Sovereign Constitution</a></p>
-<p style="margin-top:1rem"><strong style="color:#fbbf24">CSOAI Ltd · UK Companies House 16939677</strong></p>
-<p>Every certificate is Ed25519-signed. Every action is SIGIL-chained. Every sovereign is auditable.</p>
-<p style="margin-top:1rem;font-size:.75rem">5 alchemical layers · 12-around-1 BFT council · DORADO 1-click sovereignty switch</p>
-</footer>
+<h2 style="color: #fbbf24; text-align: center; margin: 4rem 0 1rem;">📅 The Black Swan Timing</h2>
+<div style="max-width: 1100px; margin: 2rem auto; background: #1a1a1a; padding: 2rem; border-radius: 12px; text-align: center;">
+  <p style="font-size: 1.2rem;">
+    EU AI Act Aug 2 2026 deadline. Sovereign certification = the differentiator.
+    Free = barrier dropped = viral adoption. Every graduate takes the sovereign substrate with them.
+    The dragon ships.
+  </p>
+</div>
+
+<p style="text-align: center; color: #888; margin-top: 3rem;">
+  <strong style="color: #fbbf24;">Sovereign by construction.</strong> CSOAI Ltd (UK 16939677) · MIT License · UK-resident · Crown lineage + 1795 Bible
+</p>
+
+<script src="sovereign-i18n.js"></script>
 </body>
 </html>
