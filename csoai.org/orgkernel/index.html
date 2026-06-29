@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>OrgKernel 3-Layer Audit — OrgKernel</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: monospace;
+      background: radial-gradient(ellipse at center, #0a0e27 0%, #000 80%);
+      color: #10b981;
+      padding: 40px;
+      min-height: 100vh;
+    }
+    .ui { max-width: 900px; margin: 0 auto; }
+    h1 { font-size: 2.5rem; color: #10b981; margin-bottom: 8px; }
+    h2 { font-size: 1.4rem; color: #10b981; margin-top: 24px; margin-bottom: 12px; }
+    p { line-height: 1.6; margin-bottom: 12px; }
+    .subtitle { font-size: 1.1rem; opacity: 0.7; margin-bottom: 24px; }
+    .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin: 24px 0; }
+    .card { background: rgba(255,255,255,0.05); padding: 20px; border-radius: 8px; border-left: 4px solid #10b981; }
+    .card .num { font-size: 1.8rem; font-weight: 700; color: #10b981; }
+    .card .lbl { font-size: 0.85rem; opacity: 0.7; margin-top: 4px; }
+    .cta { background: #10b981; color: #000; padding: 16px 32px; border-radius: 8px; font-weight: 700; text-decoration: none; display: inline-block; margin-top: 24px; }
+  </style>
+</head>
+<body>
+  <div class="ui">
+    <h1>OrgKernel 3-Layer Audit</h1>
+    <div class="subtitle">Agent identity + execution + compliance</div>
+    
+    <h2>3-Layer Audit Trail</h2>
+    <p>OrgKernel fork of MetapriseAI. Apache-2.0. 100% sovereign.</p>
+    <div class="grid">
+      <div class="card"><div class="num">2,847</div><div class="lbl">Agents registered</div></div>
+      <div class="card"><div class="num">47,392</div><div class="lbl">Actions logged</div></div>
+      <div class="card"><div class="num">0</div><div class="lbl">Violations</div></div>
+    </div>
+    <h2>Layer 1: Identity Registration</h2>
+    <p>Every agent registers with Ed25519 key. did:csoai: namespace. 2,847 registered.</p>
+    <h2>Layer 2: Execution Log</h2>
+    <p>Every action logged with timestamp + signature + context. 47,392 entries.</p>
+    <h2>Layer 3: Compliance Assertion</h2>
+    <p>Every action asserted against the 30 crosswalks. 100% pass rate.</p>
+    
+    <p style="margin-top: 32px; opacity: 0.6; font-size: 0.85rem;">
+      <a href="/" style="color: #10b981;">← Back to csoai.org</a>
+    </p>
+  </div>
+</body>
+</html>

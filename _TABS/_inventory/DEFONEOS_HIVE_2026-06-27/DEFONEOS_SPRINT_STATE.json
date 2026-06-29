@@ -1,32 +1,44 @@
 {
   "started_at": "2026-07-04T17:12:00",
   "sprint": "DEFONEOS_10_DAY",
-  "day": 1,
-  "phase": "FOUNDATION",
+  "day": 2,
+  "phase": "CORE_DEMO",
   "counters": {
-    "mcps_built": 29,
+    "mcps_built": 30,
     "mcps_target": 30,
-    "pages_live": 53,
+    "pages_live": 58,
     "pages_target": 50,
+    "pages_full_content": 43,
+    "pages_stubs_remaining": 14,
     "repos_cloned": 15,
     "repos_target": 15,
     "grants_applied": 0,
     "contacts_made": 0
   },
-  "last_action": "TICK 3 ~23:30 BST — Built MCP 27-29 (defoneos-cyber-mcp 14/14, defoneos-counterdrone-mcp 14/14, defoneos-jsp936-mcp 14/14 — 42/42 tests pass). 3 content pages replaced (defoneos.html 13.7KB, defoneos-sensor-layer.html 13.7KB, defoneos-civil-services.html 12.2KB). P0 repos 13-15 cloned (garak, mavsdk, chat-to-cop). REPOS TARGET HIT (15/15). Deployed Vercel + verified HTTP 200. 29 MCPs = 1 remaining to hit 30 target.",
+  "last_action": "TICK 6 ~05:15 BST — Built 4 full content pages: defoneos-freetak.html (14.3KB, 5 tabs: Architecture, TAK Protocol, Cursor-on-Target, MCP Integration, Deployment — C2 backbone with FreeTAKServer/ATAK/CoT deep dive), defoneos-drones.html (13.6KB, 5 tabs: PX4 Fleet, Mava Swarm, OpenAthena Geo, Batear Acoustic, MCP Tools — swarm RL + acoustic counter-detection), defoneos-bft.html (13.6KB, 5 tabs: Architecture, 33-Agent Council, JSP 936 Audit, Attack Vectors, MCP Tools — BFT governance with 6 model families across 5 nodes), defoneos-deploy.html (15.3KB, 5 tabs: Architecture, Edge Nodes, Cloud Tier, Security, MCP Tools — 4-tier Edge→Fog→Cloud→Sovereign with JSP 440 compliance). All 4 replaced prior stubs. Vercel deployed + verified HTTP 200 on all 4. 14 stubs remain. Phase: CORE DEMO. Next: ISR pipeline live demo → swarm engine demo → digital twin video → PyPI batch publish.",
   "next_actions": [
-    "Build MCP 30: 1 more MCP to hit target",
-    "Replace 24 remaining stub pages with full content (defoneos-cyber, defoneos-counterdrone, defoneos-jsp936, defoneos-digital-twin, defoneos-protocols, defoneos-sov-town, etc.)",
-    "Build defoneos-cyber.html, defoneos-counterdrone.html, defoneos-jsp936.html content pages",
-    "Deploy all + SIGIL",
-    "Move to DAY 4-6 Sensor Blitz phase"
+    "Replace 14 remaining stub pages with full content (batch of 3-4 per tick)",
+    "Build ISR Pipeline live demo (YOLOv8 + OpenAthena → Cesium)",
+    "Build Swarm engine demo (Mava + PX4 → drone simulation)",
+    "Build Digital Twin of Yorkshire demo video",
+    "Publish MCPs to PyPI (batch publish)",
+    "DASA grant application (needs Nick's input)",
+    "NATO DIANA application (needs Nick's input)",
+    "UKDI Regional Engagement Team email (needs Nick to press send)"
   ],
   "human_gates": [
     "Register Defence Sourcing Portal (needs Nick's email/company details)",
     "Apply Cyber Essentials (needs Nick's company info)",
     "Apply UK SC clearance (needs Nick's personal details)",
-    "Send NATO STO + DSRB outreach emails (Nick must press send)"
+    "Send NATO STO + DSRB outreach emails (Nick must press send)",
+    "DASA open call application (needs Nick's input)",
+    "NATO DIANA application (needs Nick's input)"
   ],
-  "last_tick": "2026-07-04T23:30:00",
-  "ticks_completed": 3
+  "last_tick": "2026-07-05T05:15:00",
+  "ticks_completed": 6,
+  "milestones": {
+    "mcps_30_target": "2026-07-05T01:45:00",
+    "pages_50_target": "2026-07-04T19:00:00",
+    "repos_15_target": "2026-07-04T23:30:00"
+  }
 }

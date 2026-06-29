@@ -525,6 +525,265 @@ except ImportError as _e:
     RIGHT_BRAIN_AVAILABLE = False
     _RIGHT_BRAIN_TOOL_DEFS = []
 
+# SOV3 OOWM — The 1 central sovereign substrate (Mamba + MoE + MOM + Sigil + sandwich)
+try:
+    from sov3_oowm import (
+        handle_oowm_status as _handle_oowm_status,
+        handle_oowm_think as _handle_oowm_think,
+        handle_oowm_evolve as _handle_oowm_evolve,
+        handle_oowm_test as _handle_oowm_test,
+        OOWM_TOOL_DEFINITIONS as _OOWM_TOOL_DEFS,
+    )
+    OOWM_AVAILABLE = True
+    print("[startup] SOV3 OOWM loaded — Mamba + MoE + MOM + Sigil sandwich")
+except ImportError as _e:
+    print(f"[startup] SOV3 OOWM import failed: {_e}")
+    OOWM_AVAILABLE = False
+    _OOWM_TOOL_DEFS = []
+
+# SOV3small × 3 — the sovereign subgraph tuner (3 configs across 3 GCP VMs)
+try:
+    from sov3small import (
+        handle_sov3small_setup_all as _handle_sov3small_setup_all,
+        handle_sov3small_benchmark_all as _handle_sov3small_benchmark_all,
+        handle_sov3small_status as _handle_sov3small_status,
+        SOV3SMALL_TOOL_DEFINITIONS as _SOV3SMALL_TOOL_DEFS,
+    )
+    SOV3SMALL_AVAILABLE = True
+    print("[startup] SOV3small × 3 loaded — speed / balanced / quality across 3 VMs")
+except ImportError as _e:
+    print(f"[startup] SOV3small import failed: {_e}")
+    SOV3SMALL_AVAILABLE = False
+    _SOV3SMALL_TOOL_DEFS = []
+
+# SOV3small3 MASTER — the 4-tier cascade + speculative decoding (per Kimi DEFONEOS)
+# This is the master version that supersedes the original sov3small.py for new
+# deployments. The 33-VM fleet + 4-tier cascade + 8.6x speculative speedup
+# is the runtime substrate for the whole empire.
+try:
+    from sov3small3 import (
+        handle_sov3small3_master_status as _handle_sov3small3_master_status,
+        handle_sov3small3_master_benchmark as _handle_sov3small3_master_benchmark,
+        handle_sov3small3_speculative_demo as _handle_sov3small3_speculative_demo,
+        SOV3SMALL3_TOOL_DEFINITIONS as _SOV3SMALL3_TOOL_DEFS,
+    )
+    SOV3SMALL3_AVAILABLE = True
+    print("[startup] SOV3small3 MASTER loaded — 4-tier cascade + speculative decoding + 34-VM fleet")
+except ImportError as _e:
+    print(f"[startup] SOV3small3 import failed: {_e}")
+    SOV3SMALL3_AVAILABLE = False
+    _SOV3SMALL3_TOOL_DEFS = []
+
+# SOV3 BIG BRAIM — the 8 category-winning models wrapped in SIGIL into one sovereign brain
+try:
+    from sov3_big_braim import (
+        big_braim_status as _big_braim_status,
+        big_braim_route as _big_braim_route,
+        big_braim_invoke as _big_braim_invoke,
+        big_braim_benchmark as _big_braim_benchmark,
+        BIG_BRAIM_TOOL_DEFINITIONS as _BIG_BRAIM_TOOL_DEFS,
+    )
+    BIG_BRAIM_AVAILABLE = True
+    print("[startup] SOV3 BIG BRAIM loaded — 8 category winners (coding/reasoning/long_context/multilingual/edge/tts/embedding/router)")
+except ImportError as _e:
+    print(f"[startup] SOV3 BIG BRAIM import failed: {_e}")
+    BIG_BRAIM_AVAILABLE = False
+    _BIG_BRAIM_TOOL_DEFS = []
+
+# SOV3 Intuition Engine — turns high-frequency noise into low-frequency wisdom
+try:
+    from sov3_intuition import (
+        handle_intuition_status as _handle_intuition_status,
+        handle_intuition_ingest as _handle_intuition_ingest,
+        handle_intuition_burst as _handle_intuition_burst,
+        handle_intuition_explain as _handle_intuition_explain,
+        INTUITION_TOOL_DEFINITIONS as _INTUITION_TOOL_DEFS,
+    )
+    INTUITION_AVAILABLE = True
+    print("[startup] SOV3 Intuition Engine loaded — Mamba 16-dim state + pattern detection + wisdom broadcast")
+except ImportError as _e:
+    print(f"[startup] SOV3 Intuition import failed: {_e}")
+    INTUITION_AVAILABLE = False
+    _INTUITION_TOOL_DEFS = []
+
+# SOV3 Intuition History Database — grows over months (SQLite-backed)
+try:
+    from sov3_intuition_history import (
+        handle_intuition_history_status as _handle_intuition_history_status,
+        handle_intuition_history_log as _handle_intuition_history_log,
+        handle_intuition_history_daily as _handle_intuition_history_daily,
+        handle_intuition_history_query as _handle_intuition_history_query,
+        INTUITION_HISTORY_TOOL_DEFINITIONS as _INTUITION_HISTORY_TOOL_DEFS,
+    )
+    INTUITION_HISTORY_AVAILABLE = True
+    print("[startup] SOV3 Intuition History loaded — SQLite-backed, grows over months")
+except ImportError as _e:
+    print(f"[startup] SOV3 Intuition History import failed: {_e}")
+    INTUITION_HISTORY_AVAILABLE = False
+    _INTUITION_HISTORY_TOOL_DEFS = []
+
+# SOV3 Bleeding-Edge Research — 15 categories, 100+ findings, 90-day integration plan
+try:
+    from sov3_bleeding_edge import (
+        handle_bleeding_edge_status as _handle_bleeding_edge_status,
+        handle_bleeding_edge_get as _handle_bleeding_edge_get,
+        handle_bleeding_edge_query as _handle_bleeding_edge_query,
+        handle_bleeding_edge_priority as _handle_bleeding_edge_priority,
+        handle_bleeding_edge_integration_plan as _handle_bleeding_edge_integration_plan,
+        BLEEDING_EDGE_TOOL_DEFINITIONS as _BLEEDING_EDGE_TOOL_DEFS,
+    )
+    BLEEDING_EDGE_AVAILABLE = True
+    print("[startup] SOV3 Bleeding-Edge Research loaded — 15 categories, 100+ findings, 90-day plan")
+except ImportError as _e:
+    print(f"[startup] SOV3 Bleeding-Edge import failed: {_e}")
+    BLEEDING_EDGE_AVAILABLE = False
+    _BLEEDING_EDGE_TOOL_DEFS = []
+
+# SOV3 DORADO — The Western counterpart to CCP DORADO. Sovereign. Auditable. Public.
+try:
+    from sov3_dorado import (
+        handle_dorado_status as _handle_dorado_status,
+        handle_dorado_prove_sovereignty as _handle_dorado_prove_sovereignty,
+        handle_dorado_audit as _handle_dorado_audit,
+        handle_dorado_switch as _handle_dorado_switch,
+        handle_dorado_explain as _handle_dorado_explain,
+        handle_dorado_horus_realtime as _handle_dorado_horus_realtime,
+        DORADO_TOOL_DEFINITIONS as _DORADO_TOOL_DEFS,
+    )
+    DORADO_AVAILABLE = True
+    print("[startup] SOV3 DORADO loaded — the Western counterpart. SIGIL + HORUS + sovereign switch.")
+except ImportError as _e:
+    print(f"[startup] SOV3 DORADO import failed: {_e}")
+    DORADO_AVAILABLE = False
+    _DORADO_TOOL_DEFS = []
+
+# SOV3 DORADO A/B/C — Public Explorer + Detector + PQC + Replay + Customer Reports
+try:
+    from sov3_dorado_abc import (
+        handle_sigil_explorer as _handle_sigil_explorer,
+        handle_dorado_detect as _handle_dorado_detect,
+        handle_dorado_pqc_status as _handle_dorado_pqc_status,
+        handle_dorado_replay as _handle_dorado_replay,
+        handle_dorado_customer_report as _handle_dorado_customer_report,
+        DORADO_A_BC_TOOL_DEFINITIONS as _DORADO_ABC_TOOL_DEFS,
+    )
+    DORADO_ABC_AVAILABLE = True
+    print("[startup] SOV3 DORADO A/B/C loaded — explorer + detector + PQC + replay + customer reports")
+except ImportError as _e:
+    print(f"[startup] SOV3 DORADO A/B/C import failed: {_e}")
+    DORADO_ABC_AVAILABLE = False
+    _DORADO_ABC_TOOL_DEFS = []
+
+# SOV3 DORADO PHASE 111-115 — Public surface for SIGIL exploration
+try:
+    from sov3_dorado_111_115 import (
+        handle_sigil_api_query as _handle_sigil_api_query,
+        handle_dorado_ciso_dashboard as _handle_dorado_ciso_dashboard,
+        handle_sigil_analyst as _handle_sigil_analyst,
+        handle_soc_bot_detector as _handle_soc_bot_detector,
+        handle_dorado_key_rotation as _handle_dorado_key_rotation,
+        PHASE_111_115_TOOL_DEFINITIONS as _PHASE_111_115_TOOL_DEFS,
+    )
+    PHASE_111_115_AVAILABLE = True
+    print("[startup] SOV3 DORADO PHASE 111-115 loaded — API + CISO + analyst + SOC + key rotation")
+except ImportError as _e:
+    print(f"[startup] SOV3 DORADO PHASE 111-115 import failed: {_e}")
+    PHASE_111_115_AVAILABLE = False
+    _PHASE_111_115_TOOL_DEFS = []
+
+# SOV3 DORADO PHASE 116-120 — DORADO suite completion
+try:
+    from sov3_dorado_116_120 import (
+        handle_sigil_rest_api as _handle_sigil_rest_api,
+        handle_soc_shift_handoff as _handle_soc_shift_handoff,
+        handle_ciso_escalation_matrix as _handle_ciso_escalation_matrix,
+        handle_dorado_training_export as _handle_dorado_training_export,
+        handle_dorado_whitelabel_product as _handle_dorado_whitelabel_product,
+        PHASE_116_120_TOOL_DEFINITIONS as _PHASE_116_120_TOOL_DEFS,
+    )
+    PHASE_116_120_AVAILABLE = True
+    print("[startup] SOV3 DORADO PHASE 116-120 loaded — REST API + SOC handoff + CISO escalation + training export + white-label")
+except ImportError as _e:
+    print(f"[startup] SOV3 DORADO PHASE 116-120 import failed: {_e}")
+    PHASE_116_120_AVAILABLE = False
+    _PHASE_116_120_TOOL_DEFS = []
+
+# SOV3 DORADO PHASE 121-125 — Enterprise hardening
+try:
+    from sov3_dorado_121_125 import (
+        handle_dorado_api_auth as _handle_dorado_api_auth,
+        handle_dorado_multi_region as _handle_dorado_multi_region,
+        handle_dorado_multi_tenant as _handle_dorado_multi_tenant,
+        handle_dorado_certifications as _handle_dorado_certifications,
+        handle_dorado_enterprise_sla as _handle_dorado_enterprise_sla,
+        PHASE_121_125_TOOL_DEFINITIONS as _PHASE_121_125_TOOL_DEFS,
+    )
+    PHASE_121_125_AVAILABLE = True
+    print("[startup] SOV3 DORADO PHASE 121-125 loaded — API auth + multi-region + multi-tenant + certs + SLA")
+except ImportError as _e:
+    print(f"[startup] SOV3 DORADO PHASE 121-125 import failed: {_e}")
+    PHASE_121_125_AVAILABLE = False
+    _PHASE_121_125_TOOL_DEFS = []
+
+# SOV3 OPEN HANDS OS — The Sovereign AI OS (R H Bar + L H Side + Center + Layer 0)
+try:
+    from sov3_open_hands import (
+        handle_open_hands_status as _handle_open_hands_status,
+        handle_open_hands_zoom_to_user as _handle_open_hands_zoom_to_user,
+        handle_open_hands_dorodo_switch as _handle_open_hands_dorodo_switch,
+        handle_open_hands_digital_twin as _handle_open_hands_digital_twin,
+        handle_open_hands_regulation_map as _handle_open_hands_regulation_map,
+        handle_open_hands_protocols as _handle_open_hands_protocols,
+        handle_open_hands_overlays as _handle_open_hands_overlays,
+        handle_open_hands_tunnels as _handle_open_hands_tunnels,
+        handle_open_hands_business as _handle_open_hands_business,
+        OPEN_HANDS_TOOL_DEFINITIONS as _OPEN_HANDS_TOOL_DEFS,
+    )
+    OPEN_HANDS_AVAILABLE = True
+    print("[startup] SOV3 OPEN HANDS OS loaded — R H Bar sovereign + L H Side UI + Center chat + Layer 0")
+except ImportError as _e:
+    print(f"[startup] SOV3 OPEN HANDS import failed: {_e}")
+    OPEN_HANDS_AVAILABLE = False
+    _OPEN_HANDS_TOOL_DEFS = []
+
+# SOV3 OPEN HANDS FULL — PHASE 131-135 (i-character + TwinStore + browser + gimification + TUI + mobile)
+try:
+    from sov3_open_hands_full import (
+        handle_icharacter_generate as _handle_icharacter_generate,
+        handle_twinstore_marketplace as _handle_twinstore_marketplace,
+        handle_inside_browser as _handle_inside_browser,
+        handle_gimification_award as _handle_gimification_award,
+        handle_leaderboard_get as _handle_leaderboard_get,
+        handle_tui_native as _handle_tui_native,
+        handle_mobile_native as _handle_mobile_native,
+        PHASE_131_135_TOOL_DEFINITIONS as _PHASE_131_135_TOOL_DEFS,
+    )
+    PHASE_131_135_AVAILABLE = True
+    print("[startup] SOV3 OPEN HANDS FULL loaded — i-character + TwinStore + browser + gimification + TUI + mobile")
+except ImportError as _e:
+    print(f"[startup] SOV3 OPEN HANDS FULL import failed: {_e}")
+    PHASE_131_135_AVAILABLE = False
+    _PHASE_131_135_TOOL_DEFS = []
+
+# SOV3 OPEN HANDS REAL — PHASE 136-140 (make it real: twin training + TwinStore UI + wisdom economy + TUI install + App Store)
+try:
+    from sov3_open_hands_real import (
+        handle_twin_train as _handle_twin_train,
+        handle_twin_knowledge_get as _handle_twin_knowledge_get,
+        handle_twinstore_ui as _handle_twinstore_ui,
+        handle_wisdom_transfer as _handle_wisdom_transfer,
+        handle_wisdom_economy_status as _handle_wisdom_economy_status,
+        handle_tui_install as _handle_tui_install,
+        handle_appstore_submit as _handle_appstore_submit,
+        PHASE_136_140_TOOL_DEFINITIONS as _PHASE_136_140_TOOL_DEFS,
+    )
+    PHASE_136_140_AVAILABLE = True
+    print("[startup] SOV3 OPEN HANDS REAL loaded — twin training + TwinStore UI + wisdom economy + TUI install + App Store")
+except ImportError as _e:
+    print(f"[startup] SOV3 OPEN HANDS REAL import failed: {_e}")
+    PHASE_136_140_AVAILABLE = False
+    _PHASE_136_140_TOOL_DEFS = []
+
 # SOV3 Alchemical Lapis Dashboard — Salt/Sulfur/Mercury balance
 try:
     from sov3_lapis import (
@@ -668,7 +927,7 @@ MCP_TOOLS = [
             "required": ["image_path"],
         },
     },
-] + (BRIDGE_TOOL_DEFINITIONS if MCP_BRIDGE_AVAILABLE else []) + (FEDERATION_TOOL_DEFINITIONS if FEDERATION_AVAILABLE else []) + (OLM_TOOL_DEFINITIONS if OLM_ROUTER_AVAILABLE else []) + (NBA_TOOL_DEFINITIONS if NBA_AVAILABLE else []) + (KING_FEDERATION_TOOL_DEFINITIONS if KING_FEDERATION_AVAILABLE else []) + (VAULT_TOOL_DEFINITIONS if VAULT_AVAILABLE else []) + (SOVEREIGN_INGEST_TOOL_DEFINITIONS if SOVEREIGN_INGEST_AVAILABLE else []) + (FEDERATED_RAG_TOOL_DEFINITIONS if FEDERATED_RAG_AVAILABLE else []) + (ARTICLE50_TOOL_DEFINITIONS if ARTICLE50_AVAILABLE else []) + (ORGKERNEL_TOOL_DEFINITIONS if ORGKERNEL_AVAILABLE else []) + (PROACTIVE_TOOL_DEFINITIONS if PROACTIVE_AVAILABLE else []) + (LAPIS_TOOL_DEFINITIONS if LAPIS_AVAILABLE else []) + (DISTRIBUTION_TOOL_DEFINITIONS if (locals().get("DISTRIBUTION_AVAILABLE") or globals().get("DISTRIBUTION_AVAILABLE", False)) else []) + (ARCANA_TOOL_DEFINITIONS if (locals().get("ARCANA_AVAILABLE") or globals().get("ARCANA_AVAILABLE", False)) else []) + ((_MIND_TOOL_DEFS if MIND_AVAILABLE else []) if (locals().get("MIND_AVAILABLE") or globals().get("MIND_AVAILABLE", False)) else []) + ((_ROUTER_TOOL_DEFS if ROUTER_AVAILABLE else []) if (locals().get("ROUTER_AVAILABLE") or globals().get("ROUTER_AVAILABLE", False)) else []) + ((_ZAMBA_TOOL_DEFS if ZAMBA_AVAILABLE else []) if (locals().get("ZAMBA_AVAILABLE") or globals().get("ZAMBA_AVAILABLE", False)) else []) + ((_STRIVING_TOOL_DEFS if STRIVING_AVAILABLE else []) if (locals().get("STRIVING_AVAILABLE") or globals().get("STRIVING_AVAILABLE", False)) else []) + ((_A2A_TOOL_DEFS if A2A_AVAILABLE else []) if (locals().get("A2A_AVAILABLE") or globals().get("A2A_AVAILABLE", False)) else []) + ((_X402_TOOL_DEFS if X402_AVAILABLE else []) if (locals().get("X402_AVAILABLE") or globals().get("X402_AVAILABLE", False)) else []) + ((_DID_JWT_TOOL_DEFS if DID_JWT_AVAILABLE else []) if (locals().get("DID_JWT_AVAILABLE") or globals().get("DID_JWT_AVAILABLE", False)) else []) + ((_RIGHT_BRAIN_TOOL_DEFS if RIGHT_BRAIN_AVAILABLE else []) if (locals().get("RIGHT_BRAIN_AVAILABLE") or globals().get("RIGHT_BRAIN_AVAILABLE", False)) else []) + [
+] + (BRIDGE_TOOL_DEFINITIONS if MCP_BRIDGE_AVAILABLE else []) + (FEDERATION_TOOL_DEFINITIONS if FEDERATION_AVAILABLE else []) + (OLM_TOOL_DEFINITIONS if OLM_ROUTER_AVAILABLE else []) + (NBA_TOOL_DEFINITIONS if NBA_AVAILABLE else []) + (KING_FEDERATION_TOOL_DEFINITIONS if KING_FEDERATION_AVAILABLE else []) + (VAULT_TOOL_DEFINITIONS if VAULT_AVAILABLE else []) + (SOVEREIGN_INGEST_TOOL_DEFINITIONS if SOVEREIGN_INGEST_AVAILABLE else []) + (FEDERATED_RAG_TOOL_DEFINITIONS if FEDERATED_RAG_AVAILABLE else []) + (ARTICLE50_TOOL_DEFINITIONS if ARTICLE50_AVAILABLE else []) + (ORGKERNEL_TOOL_DEFINITIONS if ORGKERNEL_AVAILABLE else []) + (PROACTIVE_TOOL_DEFINITIONS if PROACTIVE_AVAILABLE else []) + (LAPIS_TOOL_DEFINITIONS if LAPIS_AVAILABLE else []) + (DISTRIBUTION_TOOL_DEFINITIONS if (locals().get("DISTRIBUTION_AVAILABLE") or globals().get("DISTRIBUTION_AVAILABLE", False)) else []) + (ARCANA_TOOL_DEFINITIONS if (locals().get("ARCANA_AVAILABLE") or globals().get("ARCANA_AVAILABLE", False)) else []) + ((_MIND_TOOL_DEFS if MIND_AVAILABLE else []) if (locals().get("MIND_AVAILABLE") or globals().get("MIND_AVAILABLE", False)) else []) + ((_ROUTER_TOOL_DEFS if ROUTER_AVAILABLE else []) if (locals().get("ROUTER_AVAILABLE") or globals().get("ROUTER_AVAILABLE", False)) else []) + ((_ZAMBA_TOOL_DEFS if ZAMBA_AVAILABLE else []) if (locals().get("ZAMBA_AVAILABLE") or globals().get("ZAMBA_AVAILABLE", False)) else []) + ((_STRIVING_TOOL_DEFS if STRIVING_AVAILABLE else []) if (locals().get("STRIVING_AVAILABLE") or globals().get("STRIVING_AVAILABLE", False)) else []) + ((_A2A_TOOL_DEFS if A2A_AVAILABLE else []) if (locals().get("A2A_AVAILABLE") or globals().get("A2A_AVAILABLE", False)) else []) + ((_X402_TOOL_DEFS if X402_AVAILABLE else []) if (locals().get("X402_AVAILABLE") or globals().get("X402_AVAILABLE", False)) else []) + ((_DID_JWT_TOOL_DEFS if DID_JWT_AVAILABLE else []) if (locals().get("DID_JWT_AVAILABLE") or globals().get("DID_JWT_AVAILABLE", False)) else []) + ((_RIGHT_BRAIN_TOOL_DEFS if RIGHT_BRAIN_AVAILABLE else []) if (locals().get("RIGHT_BRAIN_AVAILABLE") or globals().get("RIGHT_BRAIN_AVAILABLE", False)) else []) + ((_OOWM_TOOL_DEFS if OOWM_AVAILABLE else []) if (locals().get("OOWM_AVAILABLE") or globals().get("OOWM_AVAILABLE", False)) else []) + ((_SOV3SMALL_TOOL_DEFS if SOV3SMALL_AVAILABLE else []) if (locals().get("SOV3SMALL_AVAILABLE") or globals().get("SOV3SMALL_AVAILABLE", False)) else []) + ((_SOV3SMALL3_TOOL_DEFS if SOV3SMALL3_AVAILABLE else []) if (locals().get("SOV3SMALL3_AVAILABLE") or globals().get("SOV3SMALL3_AVAILABLE", False)) else []) + ((_BIG_BRAIM_TOOL_DEFS if BIG_BRAIM_AVAILABLE else []) if (locals().get("BIG_BRAIM_AVAILABLE") or globals().get("BIG_BRAIM_AVAILABLE", False)) else []) + ((_INTUITION_TOOL_DEFS if INTUITION_AVAILABLE else []) if (locals().get("INTUITION_AVAILABLE") or globals().get("INTUITION_AVAILABLE", False)) else []) + ((_INTUITION_HISTORY_TOOL_DEFS if INTUITION_HISTORY_AVAILABLE else []) if (locals().get("INTUITION_HISTORY_AVAILABLE") or globals().get("INTUITION_HISTORY_AVAILABLE", False)) else []) + ((_BLEEDING_EDGE_TOOL_DEFS if BLEEDING_EDGE_AVAILABLE else []) if (locals().get("BLEEDING_EDGE_AVAILABLE") or globals().get("BLEEDING_EDGE_AVAILABLE", False)) else []) + ((_DORADO_TOOL_DEFS if DORADO_AVAILABLE else []) if (locals().get("DORADO_AVAILABLE") or globals().get("DORADO_AVAILABLE", False)) else []) + ((_DORADO_ABC_TOOL_DEFS if DORADO_ABC_AVAILABLE else []) if (locals().get("DORADO_ABC_AVAILABLE") or globals().get("DORADO_ABC_AVAILABLE", False)) else []) + ((_PHASE_111_115_TOOL_DEFS if PHASE_111_115_AVAILABLE else []) if (locals().get("PHASE_111_115_AVAILABLE") or globals().get("PHASE_111_115_AVAILABLE", False)) else []) + ((_PHASE_116_120_TOOL_DEFS if PHASE_116_120_AVAILABLE else []) if (locals().get("PHASE_116_120_AVAILABLE") or globals().get("PHASE_116_120_AVAILABLE", False)) else []) + ((_PHASE_121_125_TOOL_DEFS if PHASE_121_125_AVAILABLE else []) if (locals().get("PHASE_121_125_AVAILABLE") or globals().get("PHASE_121_125_AVAILABLE", False)) else []) + ((_OPEN_HANDS_TOOL_DEFS if OPEN_HANDS_AVAILABLE else []) if (locals().get("OPEN_HANDS_AVAILABLE") or globals().get("OPEN_HANDS_AVAILABLE", False)) else []) + ((_PHASE_131_135_TOOL_DEFS if PHASE_131_135_AVAILABLE else []) if (locals().get("PHASE_131_135_AVAILABLE") or globals().get("PHASE_131_135_AVAILABLE", False)) else []) + ((_PHASE_136_140_TOOL_DEFS if PHASE_136_140_AVAILABLE else []) if (locals().get("PHASE_136_140_AVAILABLE") or globals().get("PHASE_136_140_AVAILABLE", False)) else []) + [
     {
         "name": "validate_care",
         "description": "Validate text against care-centered principles using neural network",
@@ -5156,6 +5415,188 @@ async def execute_tool(name: str, arguments: Dict[str, Any]) -> Dict[str, Any]:
             return _handle_right_brain_fusion(arguments)
         elif name == "sov_right_brain_describe" and RIGHT_BRAIN_AVAILABLE:
             return _handle_right_brain_describe(arguments)
+
+        # ── SOV3 OOWM (1 central sovereign sandwich) ─────────
+        elif name == "sov_oowm_status" and OOWM_AVAILABLE:
+            return _handle_oowm_status(arguments)
+        elif name == "sov_oowm_think" and OOWM_AVAILABLE:
+            return _handle_oowm_think(arguments)
+        elif name == "sov_oowm_evolve" and OOWM_AVAILABLE:
+            return _handle_oowm_evolve(arguments)
+        elif name == "sov_oowm_test" and OOWM_AVAILABLE:
+            return _handle_oowm_test(arguments)
+
+        # ── SOV3small × 3 (the sovereign subgraph tuner) ─────────
+        elif name == "sov3small_setup_all" and SOV3SMALL_AVAILABLE:
+            return _handle_sov3small_setup_all(arguments)
+        elif name == "sov3small_benchmark_all" and SOV3SMALL_AVAILABLE:
+            return _handle_sov3small_benchmark_all(arguments)
+        elif name == "sov3small_status" and SOV3SMALL_AVAILABLE:
+            return _handle_sov3small_status(arguments)
+
+        # ── SOV3small3 MASTER (4-tier cascade + speculative decode) ─────
+        elif name == "sov3small3_master_status" and SOV3SMALL3_AVAILABLE:
+            return _handle_sov3small3_master_status(arguments)
+        elif name == "sov3small3_master_benchmark" and SOV3SMALL3_AVAILABLE:
+            return _handle_sov3small3_master_benchmark(arguments)
+        elif name == "sov3small3_speculative_demo" and SOV3SMALL3_AVAILABLE:
+            return _handle_sov3small3_speculative_demo(arguments)
+
+        # ── SOV3 BIG BRAIM (8 category winners wrapped in SIGIL) ─────────
+        elif name == "sov_big_braim_status" and BIG_BRAIM_AVAILABLE:
+            return _big_braim_status(arguments)
+        elif name == "sov_big_braim_route" and BIG_BRAIM_AVAILABLE:
+            return _big_braim_route(arguments)
+        elif name == "sov_big_braim_invoke" and BIG_BRAIM_AVAILABLE:
+            return _big_braim_invoke(arguments)
+        elif name == "sov_big_braim_benchmark" and BIG_BRAIM_AVAILABLE:
+            return _big_braim_benchmark(arguments)
+
+        # ── SOV3 Intuition Engine (noise → wisdom) ─────────
+        elif name == "sov_intuition_status" and INTUITION_AVAILABLE:
+            return _handle_intuition_status(arguments)
+        elif name == "sov_intuition_ingest" and INTUITION_AVAILABLE:
+            return _handle_intuition_ingest(arguments)
+        elif name == "sov_intuition_burst" and INTUITION_AVAILABLE:
+            return _handle_intuition_burst(arguments)
+        elif name == "sov_intuition_explain" and INTUITION_AVAILABLE:
+            return _handle_intuition_explain(arguments)
+
+        # ── SOV3 Intuition History Database (grows over months) ─────────
+        elif name == "sov_intuition_history_status" and INTUITION_HISTORY_AVAILABLE:
+            return _handle_intuition_history_status(arguments)
+        elif name == "sov_intuition_history_log" and INTUITION_HISTORY_AVAILABLE:
+            return _handle_intuition_history_log(arguments)
+        elif name == "sov_intuition_history_daily" and INTUITION_HISTORY_AVAILABLE:
+            return _handle_intuition_history_daily(arguments)
+        elif name == "sov_intuition_history_query" and INTUITION_HISTORY_AVAILABLE:
+            return _handle_intuition_history_query(arguments)
+
+        # ── SOV3 Bleeding-Edge Research ─────────
+        elif name == "sov_bleeding_edge_status" and BLEEDING_EDGE_AVAILABLE:
+            return _handle_bleeding_edge_status(arguments)
+        elif name == "sov_bleeding_edge_get" and BLEEDING_EDGE_AVAILABLE:
+            return _handle_bleeding_edge_get(arguments)
+        elif name == "sov_bleeding_edge_query" and BLEEDING_EDGE_AVAILABLE:
+            return _handle_bleeding_edge_query(arguments)
+        elif name == "sov_bleeding_edge_priority" and BLEEDING_EDGE_AVAILABLE:
+            return _handle_bleeding_edge_priority(arguments)
+        elif name == "sov_bleeding_edge_integration_plan" and BLEEDING_EDGE_AVAILABLE:
+            return _handle_bleeding_edge_integration_plan(arguments)
+
+        # ── SOV3 DORADO (Western counterpart to CCP DORADO) ─────────
+        elif name == "sov_dorado_status" and DORADO_AVAILABLE:
+            return _handle_dorado_status(arguments)
+        elif name == "sov_dorado_prove_sovereignty" and DORADO_AVAILABLE:
+            return _handle_dorado_prove_sovereignty(arguments)
+        elif name == "sov_dorado_audit" and DORADO_AVAILABLE:
+            return _handle_dorado_audit(arguments)
+        elif name == "sov_dorado_switch" and DORADO_AVAILABLE:
+            return _handle_dorado_switch(arguments)
+        elif name == "sov_dorado_explain" and DORADO_AVAILABLE:
+            return _handle_dorado_explain(arguments)
+        elif name == "sov_dorado_horus_realtime" and DORADO_AVAILABLE:
+            return _handle_dorado_horus_realtime(arguments)
+
+        # ── SOV3 DORADO A/B/C (5 new tools) ─────────
+        elif name == "sov_sigil_explorer" and DORADO_ABC_AVAILABLE:
+            return _handle_sigil_explorer(arguments)
+        elif name == "sov_dorado_detect" and DORADO_ABC_AVAILABLE:
+            return _handle_dorado_detect(arguments)
+        elif name == "sov_dorado_pqc_status" and DORADO_ABC_AVAILABLE:
+            return _handle_dorado_pqc_status(arguments)
+        elif name == "sov_dorado_replay" and DORADO_ABC_AVAILABLE:
+            return _handle_dorado_replay(arguments)
+        elif name == "sov_dorado_customer_report" and DORADO_ABC_AVAILABLE:
+            return _handle_dorado_customer_report(arguments)
+
+        # ── SOV3 DORADO PHASE 111-115 ─────────
+        elif name == "sov_sigil_api_query" and PHASE_111_115_AVAILABLE:
+            return _handle_sigil_api_query(arguments)
+        elif name == "sov_dorado_ciso_dashboard" and PHASE_111_115_AVAILABLE:
+            return _handle_dorado_ciso_dashboard(arguments)
+        elif name == "sov_sigil_analyst" and PHASE_111_115_AVAILABLE:
+            return _handle_sigil_analyst(arguments)
+        elif name == "sov_soc_bot_detector" and PHASE_111_115_AVAILABLE:
+            return _handle_soc_bot_detector(arguments)
+        elif name == "sov_dorado_key_rotation" and PHASE_111_115_AVAILABLE:
+            return _handle_dorado_key_rotation(arguments)
+
+        # ── SOV3 DORADO PHASE 116-120 ─────────
+        elif name == "sov_sigil_rest_api" and PHASE_116_120_AVAILABLE:
+            return _handle_sigil_rest_api(arguments)
+        elif name == "sov_soc_shift_handoff" and PHASE_116_120_AVAILABLE:
+            return _handle_soc_shift_handoff(arguments)
+        elif name == "sov_ciso_escalation_matrix" and PHASE_116_120_AVAILABLE:
+            return _handle_ciso_escalation_matrix(arguments)
+        elif name == "sov_dorado_training_export" and PHASE_116_120_AVAILABLE:
+            return _handle_dorado_training_export(arguments)
+        elif name == "sov_dorado_whitelabel_product" and PHASE_116_120_AVAILABLE:
+            return _handle_dorado_whitelabel_product(arguments)
+
+        # ── SOV3 DORADO PHASE 121-125 ─────────
+        elif name == "sov_dorado_api_auth" and PHASE_121_125_AVAILABLE:
+            return _handle_dorado_api_auth(arguments)
+        elif name == "sov_dorado_multi_region" and PHASE_121_125_AVAILABLE:
+            return _handle_dorado_multi_region(arguments)
+        elif name == "sov_dorado_multi_tenant" and PHASE_121_125_AVAILABLE:
+            return _handle_dorado_multi_tenant(arguments)
+        elif name == "sov_dorado_certifications" and PHASE_121_125_AVAILABLE:
+            return _handle_dorado_certifications(arguments)
+        elif name == "sov_dorado_enterprise_sla" and PHASE_121_125_AVAILABLE:
+            return _handle_dorado_enterprise_sla(arguments)
+
+        # ── SOV3 OPEN HANDS OS (R H Bar + L H Side + Center + Layer 0) ─────────
+        elif name == "sov_open_hands_status" and OPEN_HANDS_AVAILABLE:
+            return _handle_open_hands_status(arguments)
+        elif name == "sov_open_hands_zoom_to_user" and OPEN_HANDS_AVAILABLE:
+            return _handle_open_hands_zoom_to_user(arguments)
+        elif name == "sov_open_hands_dorodo_switch" and OPEN_HANDS_AVAILABLE:
+            return _handle_open_hands_dorodo_switch(arguments)
+        elif name == "sov_open_hands_digital_twin" and OPEN_HANDS_AVAILABLE:
+            return _handle_open_hands_digital_twin(arguments)
+        elif name == "sov_open_hands_regulation_map" and OPEN_HANDS_AVAILABLE:
+            return _handle_open_hands_regulation_map(arguments)
+        elif name == "sov_open_hands_protocols" and OPEN_HANDS_AVAILABLE:
+            return _handle_open_hands_protocols(arguments)
+        elif name == "sov_open_hands_overlays" and OPEN_HANDS_AVAILABLE:
+            return _handle_open_hands_overlays(arguments)
+        elif name == "sov_open_hands_tunnels" and OPEN_HANDS_AVAILABLE:
+            return _handle_open_hands_tunnels(arguments)
+        elif name == "sov_open_hands_business" and OPEN_HANDS_AVAILABLE:
+            return _handle_open_hands_business(arguments)
+
+        # ── SOV3 OPEN HANDS FULL PHASE 131-135 ─────────
+        elif name == "sov_icharacter_generate" and PHASE_131_135_AVAILABLE:
+            return _handle_icharacter_generate(arguments)
+        elif name == "sov_twinstore_marketplace" and PHASE_131_135_AVAILABLE:
+            return _handle_twinstore_marketplace(arguments)
+        elif name == "sov_inside_browser" and PHASE_131_135_AVAILABLE:
+            return _handle_inside_browser(arguments)
+        elif name == "sov_gimification_award" and PHASE_131_135_AVAILABLE:
+            return _handle_gimification_award(arguments)
+        elif name == "sov_leaderboard_get" and PHASE_131_135_AVAILABLE:
+            return _handle_leaderboard_get(arguments)
+        elif name == "sov_tui_native" and PHASE_131_135_AVAILABLE:
+            return _handle_tui_native(arguments)
+        elif name == "sov_mobile_native" and PHASE_131_135_AVAILABLE:
+            return _handle_mobile_native(arguments)
+
+        # ── SOV3 OPEN HANDS REAL PHASE 136-140 ─────────
+        elif name == "sov_twin_train" and PHASE_136_140_AVAILABLE:
+            return _handle_twin_train(arguments)
+        elif name == "sov_twin_knowledge_get" and PHASE_136_140_AVAILABLE:
+            return _handle_twin_knowledge_get(arguments)
+        elif name == "sov_twinstore_ui" and PHASE_136_140_AVAILABLE:
+            return _handle_twinstore_ui(arguments)
+        elif name == "sov_wisdom_transfer" and PHASE_136_140_AVAILABLE:
+            return _handle_wisdom_transfer(arguments)
+        elif name == "sov_wisdom_economy_status" and PHASE_136_140_AVAILABLE:
+            return _handle_wisdom_economy_status(arguments)
+        elif name == "sov_tui_install" and PHASE_136_140_AVAILABLE:
+            return _handle_tui_install(arguments)
+        elif name == "sov_appstore_submit" and PHASE_136_140_AVAILABLE:
+            return _handle_appstore_submit(arguments)
 
         elif name == "tier_query":
             try:

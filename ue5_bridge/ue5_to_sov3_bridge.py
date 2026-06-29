@@ -86,6 +86,15 @@ async def call_mcp(mcp_name: str, tool_name: str, request: Request):
         "skills": "meok_sovereign_skills_mcp",
         "eu-ai-act-kit": "meok_sovereign_eu_ai_act_kit_mcp",
         "worm": "meok_sovereign_worm_mcp",
+        "defence": "meok_sovereign_defence_mcp",
+        "satellite": "meok_sovereign_satellite_mcp",
+        "honour": "meok_sovereign_honour_mcp",
+        "immortal": "meok_sovereign_immortal_mcp",
+        "dora": "meok_sovereign_dora_mcp",
+        "iso42001": "meok_sovereign_iso42001_mcp",
+        "iot": "meok_sovereign_iot_mcp",
+        "pond": "meok_sovereign_pond_mcp",
+        "intuition": "meok_sovereign_intuition_mcp",
     }
     pkg = pkg_map.get(mcp_name)
     if not pkg:

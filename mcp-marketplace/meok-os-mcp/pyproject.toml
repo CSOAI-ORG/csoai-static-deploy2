@@ -22,35 +22,27 @@ keywords = [
 ]
 classifiers = [
     "Development Status :: 4 - Beta",
-    "Intended Audience :: Humans + AI Agents + Sovereign Buyers",
+    "Intended Audience :: Developers",
     "License :: OSI Approved :: MIT License",
     "Operating System :: OS Independent",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
-    "Topic :: Sovereign AI OS :: Meta-Orchestrator",
-    "Topic :: Robotics :: Humanoid Safety",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
 ]
 dependencies = [
     "mcp>=1.0.0",
     # L1: SOV3 infrastructure
-    "bft-governance-mcp",
-    "a2a-governance-bridge-mcp",
-    "agent-orchestrator-mcp",
-    "agent-mcp-router-mcp",
+    "meok-bft-governance-mcp",
+    "a2a-governance-bridge-mcp>=1.0.0",
     # L2: openpatent IP
-    "openpatent-mcp",
     # L4: tax + compliance
     "care-membrane-mcp",
-    "ai-self-audit-mcp",
     "meok-governance-engine-mcp",
     # L5: government
-    "cqc-compliance-mcp",
-    "cra-compliance-mcp",
-    "csrd-compliance-mcp",
-    "defoneos-compliance-mcp",
     # L6: industry domains
-    "meok-defoneos-mcp>=1.0.1",
+    "meok-defoneos-mcp>=1.0.0",
     "csoai-defoneos-mcp>=1.0.0",
     "meok-defoneos-geospatial-intel-mcp>=1.0.0",
     "gods-eye-geospatial-mcp",

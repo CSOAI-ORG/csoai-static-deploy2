@@ -5,14 +5,17 @@ import sys
 import hashlib
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
-
 from meok_os_mcp import (
     GLOBAL_DOME_LAYERS,
+    BANNED_TERMS,
+    KINETIC_BLOCK_PATTERNS,
+    SURVEILLANCE_BLOCK_PATTERNS,
     BannedTermGate,
     __version__,
     __alignment__,
     __substrate_size__,
     __council_quorum__,
+    __scope__,
 )
 from meok_os_mcp.server import (
     os_discover,
@@ -32,12 +35,15 @@ from meok_os_mcp.server import (
 # Test 1: Package metadata
 # ============================================================================
 def test_package_metadata():
-    assert __version__ == "1.0.0"
-    assert "DEFONEOS_GLOBAL_DOME_OS_FOR_ALL" in __alignment__
-    assert "454 MCPs" in __substrate_size__
+    assert __version__ == "1.0.2"
+    assert "MEOK_DEFONEOS_ALIGNMENT_2026-06-27" in __alignment__
+    assert "v3.0" in __alignment__
+    assert "UK sovereign only" in __alignment__
+    assert "15 DEFONEOS MCPs" in __substrate_size__
+    assert "UK sovereign" in __substrate_size__
     assert __council_quorum__ == 23
-    assert len(GLOBAL_DOME_LAYERS) == 8  # L0, L1, L2, L3, L4, L5, L6, L7
-    print(f"✅ test_package_metadata: __version__={__version__}, 8 layers (L0-L7), {__substrate_size__}")
+    assert __scope__ == "UK MOD + AUKUS Pillar 2 + DAIC procurement-grade. UK sovereign only. NOT for global / consumer / non-defence."
+    print(f"✅ test_package_metadata: __version__={__version__}, scope='{__scope__[:40]}...'")
 
 
 # ============================================================================
@@ -231,4 +237,4 @@ if __name__ == "__main__":
     test_os_industry_pack_unknown()
     test_os_data_provenance()
     test_os_sovereign_handoff()
-    print("\n🎉 ALL 16 TESTS PASSED — meok-os-mcp v1.0.0 is sovereign. The AI OS for ALL is live.")
+    print(f"\n🎉 ALL 16 TESTS PASSED — meok-os-mcp v1.0.2 is sovereign. The DEFONEOS dominion is live (UK sovereign only).")

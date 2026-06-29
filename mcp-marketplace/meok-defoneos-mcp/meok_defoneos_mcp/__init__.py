@@ -21,13 +21,14 @@ __version__ = "1.0.0"
 __alignment__ = "MEOK_DEFONEOS_ALIGNMENT_2026-06-27.md v2.0"
 __care_score_threshold__ = 0.95
 
-from meok_defoneos_mcp.server import mcp, main, BannedTermGate, BANNED_TERMS
+from meok_defoneos_mcp.server import mcp, main, BannedTermGate, BANNED_TERMS, defence_geoint_query
 
 __all__ = [
     "mcp",
     "main",
     "BannedTermGate",
     "BANNED_TERMS",
+    "defence_geoint_query",
     "__version__",
     "__alignment__",
     "__care_score_threshold__",
