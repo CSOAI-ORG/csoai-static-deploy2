@@ -43,6 +43,7 @@ CLAWD_ROOT = Path(os.environ.get("MEOK_CLAWD_ROOT", str(BACKEND_DIR.parent)))
 ICHARS_DB_PATH = Path(os.environ.get("MEOK_ICHARS_DB", str(BACKEND_DIR / "ichars.db")))
 USERS_DB_PATH = Path(os.environ.get("MEOK_USERS_DB", str(BACKEND_DIR / "users.db")))
 SIGIL_LOG_PATH = Path(os.environ.get("MEOK_SIGIL_LOG", str(BACKEND_DIR / "sigil_chain.jsonl")))
+PERF_LOG_PATH = Path(os.environ.get("MEOK_PERF_LOG", "/tmp/meok-perf.jsonl"))
 
 # Make the lane modules importable. We don't fail hard if they disappear —
 # the backend falls back to its own (still real) implementations.
@@ -69,6 +70,13 @@ try:
     SOV3_MODULE = _sov3_mod
 except Exception:  # pragma: no cover - import is best effort
     SOV3_MODULE = None
+
+# Council personality engine (richer OCEAN-based personalities for the 13 queens)
+try:
+    import council_personality as _cp_mod  # type: ignore
+    CP_MODULE = _cp_mod
+except Exception:  # pragma: no cover
+    CP_MODULE = None
 
 
 # --------------------------------------------------------------------------- #
@@ -1360,6 +1368,395 @@ def _row_to_ichar(row: sqlite3.Row) -> Dict[str, Any]:
         "absorbed_hive": row["absorbed_hive"],
         "absorbed_at": row["absorbed_at"],
         **extra,
+    }
+
+
+# --------------------------------------------------------------------------- #
+# 20a. /api/council/chat — queen voice via 4-tier cascade
+# --------------------------------------------------------------------------- #
+class CouncilChatBody(BaseModel):
+    queen_id: str = "queen-arcana"
+    arcana_lens: int = Field(default=0, ge=0, le=21)
+    message: str
+    user_id: str = "anon"
+
+
+# Map queen_id values used in council_personality.py → QUEEN_ARCHETYPES keys in app.py.
+# Falls back to the closest archetype for cosmetics if no exact match.
+_QUEEN_ALIASES = {
+    "queen-king": "marcus",
+    "queen-strategy": "marcus",
+    "queen-care": "wangari",
+    "queen-compliance": "confucius",
+    "queen-finance": "wangari",
+    "queen-domain": "lovelace",
+    "queen-arcana": "athena",
+    "queen-brain": "athena",
+    "queen-proactive": "lovelace",
+    "queen-bridge": "rumi",
+    "queen-distribution": "hatshepsut",
+    "queen-council": "marcus",
+    "queen-watch": "confucius",
+}
+
+
+def _cascade_tier_for_message(message: str) -> Dict[str, Any]:
+    """Map a user message to a 4-tier cascade choice.
+
+    T1 (≤3B speed):  short greetings / yes-no / facts
+    T2 (4-7B balanced): general Q&A
+    T3 (8-13B deep): deep reasoning / analysis
+    T4 (audit / compliance): regulation + audit phrasing
+    """
+    q = (message or "").strip()
+    ql = q.lower()
+    if any(k in ql for k in ("audit", "compliance", "regulation", "gdpr", "ai act",
+                              "hipaa", "soc2", "iso 42001", "nist", "pqc", "ed25519",
+                              "evidence", "audit trail", "sign", "verify")):
+        return {"tier": "T4", "tier_num": 4, "model": "qwen2.5:14b",
+                "confidence": 0.92, "cost": 0.0021, "rationale": "audit/compliance intent"}
+    if len(q) > 380 or any(k in ql for k in ("explain", "analyze", "compare",
+                                                "evaluate", "trade-off", "design",
+                                                "architecture", "why ", "how does")):
+        return {"tier": "T3", "tier_num": 3, "model": "llama3.1:8b",
+                "confidence": 0.91, "cost": 0.0009, "rationale": "long/analytical query"}
+    if len(q) <= 40 and any(k in ql for k in ("hi", "hello", "hey", "yo", "gm",
+                                                "thanks", "thank you", "bye", "ok")):
+        return {"tier": "T1", "tier_num": 1, "model": "qwen2.5:1.5b",
+                "confidence": 0.97, "cost": 0.00002, "rationale": "short greeting"}
+    return {"tier": "T2", "tier_num": 2, "model": "llama3.2:3b",
+            "confidence": 0.94, "cost": 0.000075, "rationale": "general Q&A"}
+
+
+def _speak_in_voice(queen_id: str, arcana_id: int, topic: str, tier_num: int) -> str:
+    """Synthesize a response using the council_personality engine (if importable)
+    else falls back to a deterministic template that still carries the queen's
+    voice (motto, archetype, speaks_about)."""
+    # Try the dedicated council_personality module first (richer personalities)
+    try:
+        if CP_MODULE is not None:
+            base = CP_MODULE.speak(queen_id, arcana_id, topic)
+            return base
+    except Exception:
+        pass
+
+    # Fallback: derive from QUEEN_ARCHETYPES + ARCANA_NAMES
+    archetype_key = _QUEEN_ALIASES.get(queen_id, "athena")
+    queen = QUEEN_ARCHETYPES.get(archetype_key, QUEEN_ARCHETYPES.get("athena"))
+    arcana = ARCANA_NAMES[arcana_id] if 0 <= arcana_id < len(ARCANA_NAMES) else "The Fool"
+    motto = queen.get("motto", "Listen first.")
+    title = queen.get("title", queen.get("archetype", "Queen"))
+    traits = queen.get("personality_traits", [])
+    trait_phrase = ", ".join(traits[:3]) if traits else "sovereign"
+    depth = {1: "briefly", 2: "fairly", 3: "deeply", 4: "forensically"}.get(tier_num, "carefully")
+    return (
+        f"{title} speaks ({motto}). Considering {topic} {depth} through the lens of "
+        f"{arcana} and the {trait_phrase} way. The council has weighed this — "
+        f"act with care, audit with rigor, and sign with SIGIL."
+    )
+
+
+@app.post("/api/council/chat")
+def council_chat(body: CouncilChatBody) -> Dict[str, Any]:
+    """Generate a response in the queen's voice using the 4-tier cascade.
+
+    Request:
+      {"queen_id":"queen-arcana","arcana_lens":21,"message":"What is the EU AI Act?","user_id":"u1"}
+    Response:
+      {"response":"...","queen":"Aleph","sigil_hash":"...","tier":"T1","cost_usd":0.005}
+    """
+    # Resolve queen metadata
+    queen_meta = None
+    if CP_MODULE is not None:
+        try:
+            queen_meta = CP_MODULE.get_queen(body.queen_id)
+        except Exception:
+            queen_meta = None
+    if queen_meta is None:
+        archetype_key = _QUEEN_ALIASES.get(body.queen_id, "athena")
+        queen_meta = QUEEN_ARCHETYPES.get(archetype_key, QUEEN_ARCHETYPES["athena"])
+    queen_display = queen_meta.get("name") or queen_meta.get("title", "Queen")
+
+    # 1) Decide cascade tier
+    cascade = _cascade_tier_for_message(body.message)
+    tier_num = cascade["tier_num"]
+
+    # 2) Speak in the queen's voice (with arcana lens)
+    response_text = _speak_in_voice(
+        body.queen_id, body.arcana_lens, body.message[:120], tier_num
+    )
+
+    # 3) Sign with SIGIL chain
+    sigil = _append_sigil("M", {
+        "actor": "council",
+        "queen": body.queen_id,
+        "arcana": body.arcana_lens,
+        "tier": cascade["tier"],
+        "model": cascade["model"],
+        "user_id": body.user_id,
+        "msg_preview": (body.message or "")[:80],
+        "response_preview": response_text[:80],
+    })
+
+    # 4) Persist a lightweight interaction log (best-effort, non-blocking on failure)
+    try:
+        with _db(ICHARS_DB_PATH) as c:
+            c.execute(
+                """INSERT INTO council_chat_log
+                   (id, queen_id, arcana_lens, user_id, tier, model, cost_usd,
+                    message, response, sigil_hash, ts)
+                   VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""",
+                (f"cc-{uuid.uuid4().hex[:12]}", body.queen_id, body.arcana_lens,
+                 body.user_id, cascade["tier"], cascade["model"],
+                 cascade["cost"], body.message, response_text, sigil["hash"],
+                 datetime.now(timezone.utc).isoformat()),
+            )
+    except Exception:
+        # Table may not exist yet — try to create and retry once
+        try:
+            with _db(ICHARS_DB_PATH) as c:
+                c.execute(
+                    """CREATE TABLE IF NOT EXISTS council_chat_log (
+                        id TEXT PRIMARY KEY,
+                        queen_id TEXT NOT NULL,
+                        arcana_lens INTEGER NOT NULL,
+                        user_id TEXT,
+                        tier TEXT,
+                        model TEXT,
+                        cost_usd REAL,
+                        message TEXT,
+                        response TEXT,
+                        sigil_hash TEXT,
+                        ts TEXT
+                    )"""
+                )
+            with _db(ICHARS_DB_PATH) as c:
+                c.execute(
+                    """INSERT INTO council_chat_log
+                       (id, queen_id, arcana_lens, user_id, tier, model, cost_usd,
+                        message, response, sigil_hash, ts)
+                       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""",
+                    (f"cc-{uuid.uuid4().hex[:12]}", body.queen_id, body.arcana_lens,
+                     body.user_id, cascade["tier"], cascade["model"],
+                     cascade["cost"], body.message, response_text, sigil["hash"],
+                     datetime.now(timezone.utc).isoformat()),
+                )
+        except Exception:
+            pass  # logging is best-effort
+
+    return {
+        "response": response_text,
+        "queen": queen_display,
+        "queen_id": body.queen_id,
+        "arcana_lens": body.arcana_lens,
+        "tier": cascade["tier"],
+        "tier_num": cascade["tier_num"],
+        "model": cascade["model"],
+        "confidence": cascade["confidence"],
+        "cost_usd": cascade["cost"],
+        "sigil_hash": sigil["hash"],
+        "ok": True,
+    }
+
+
+# --------------------------------------------------------------------------- #
+# 20b. /api/perf/track — append Web Vitals (LCP/FID/CLS) to /tmp/meok-perf.jsonl
+# --------------------------------------------------------------------------- #
+class PerfTrackBody(BaseModel):
+    page_url: str = ""
+    lcp_ms: Optional[float] = None
+    fid_ms: Optional[float] = None    # legacy INP-compatible name
+    inp_ms: Optional[float] = None
+    cls: Optional[float] = None
+    ttfb_ms: Optional[float] = None
+    fcp_ms: Optional[float] = None
+    dom_content_loaded_ms: Optional[float] = None
+    load_ms: Optional[float] = None
+    transfer_size: Optional[int] = None
+    resource_count: Optional[int] = None
+    user_agent: Optional[str] = None
+    viewport: Optional[str] = None
+    connection: Optional[str] = None
+    locale: Optional[str] = None
+    route: Optional[str] = None
+    extra: Optional[Dict[str, Any]] = None
+
+
+def _client_ip(request: Request) -> str:
+    fwd = request.headers.get("x-forwarded-for")
+    if fwd:
+        return fwd.split(",")[0].strip()
+    if request.client and request.client.host:
+        return request.client.host
+    return "unknown"
+
+
+@app.post("/api/perf/track")
+def perf_track(body: PerfTrackBody, request: Request) -> Dict[str, Any]:
+    """Accept a Web Vitals beacon from any page; append to JSONL log.
+
+    The frontend should send small, frequent beacons (LCP, FID, CLS at minimum).
+    The endpoint is deliberately tolerant of partial / malformed payloads.
+    """
+    record = {
+        "ts": datetime.now(timezone.utc).isoformat(),
+        "ip": _client_ip(request),
+        "ua": body.user_agent or request.headers.get("user-agent", ""),
+        "page_url": body.page_url,
+        "route": body.route or "",
+        "lcp_ms": body.lcp_ms,
+        "fid_ms": body.fid_ms,
+        "inp_ms": body.inp_ms,
+        "cls": body.cls,
+        "ttfb_ms": body.ttfb_ms,
+        "fcp_ms": body.fcp_ms,
+        "dom_content_loaded_ms": body.dom_content_loaded_ms,
+        "load_ms": body.load_ms,
+        "transfer_size": body.transfer_size,
+        "resource_count": body.resource_count,
+        "viewport": body.viewport,
+        "connection": body.connection,
+        "locale": body.locale,
+        "extra": body.extra or {},
+    }
+    try:
+        PERF_LOG_PATH.parent.mkdir(parents=True, exist_ok=True)
+        with PERF_LOG_PATH.open("a", encoding="utf-8") as fh:
+            fh.write(json.dumps(record, ensure_ascii=False) + "\n")
+    except Exception as exc:
+        raise HTTPException(status_code=500, detail={"error": "perf_write_failed", "msg": str(exc)})
+    return {"ok": True, "logged": True, "path": str(PERF_LOG_PATH)}
+
+
+# --------------------------------------------------------------------------- #
+# 20c. /api/perf/stats — aggregate LCP/FID/CLS from the JSONL log
+# --------------------------------------------------------------------------- #
+@app.get("/api/perf/stats")
+def perf_stats(hours: int = 24, top_routes: int = 10) -> Dict[str, Any]:
+    """Return aggregate Web Vitals for the trailing `hours` window.
+
+    Computes count, p50/p75/p90/p95, mean, max for LCP/FID/INP/CLS/TTFB/FCP/load,
+    plus a per-route breakdown and a 24-bucket histogram (one bucket per hour).
+    """
+    from collections import Counter, defaultdict
+
+    if not PERF_LOG_PATH.exists():
+        return {"ok": True, "samples": 0, "since": None, "summary": {},
+                "by_route": {}, "hourly": [], "path": str(PERF_LOG_PATH)}
+
+    cutoff = time.time() - hours * 3600
+    samples: List[Dict[str, Any]] = []
+    try:
+        with PERF_LOG_PATH.open("r", encoding="utf-8") as fh:
+            for line in fh:
+                line = line.strip()
+                if not line:
+                    continue
+                try:
+                    rec = json.loads(line)
+                except Exception:
+                    continue
+                ts = rec.get("ts")
+                if not ts:
+                    continue
+                try:
+                    epoch = datetime.fromisoformat(ts.replace("Z", "+00:00")).timestamp()
+                except Exception:
+                    continue
+                if epoch >= cutoff:
+                    samples.append(rec)
+    except Exception as exc:
+        raise HTTPException(status_code=500, detail={"error": "perf_read_failed", "msg": str(exc)})
+
+    # Aggregate helpers
+    def pct(values: List[float], p: float) -> Optional[float]:
+        if not values:
+            return None
+        s = sorted(values)
+        idx = max(0, min(len(s) - 1, int(round((p / 100.0) * (len(s) - 1)))))
+        return round(s[idx], 2)
+
+    def summarize(field: str) -> Dict[str, Any]:
+        vals = [r[field] for r in samples if isinstance(r.get(field), (int, float))]
+        if not vals:
+            return {"count": 0}
+        return {
+            "count": len(vals),
+            "mean": round(sum(vals) / len(vals), 2),
+            "min": round(min(vals), 2),
+            "max": round(max(vals), 2),
+            "p50": pct(vals, 50),
+            "p75": pct(vals, 75),
+            "p90": pct(vals, 90),
+            "p95": pct(vals, 95),
+        }
+
+    summary = {
+        "lcp_ms": summarize("lcp_ms"),
+        "fid_ms": summarize("fid_ms"),
+        "inp_ms": summarize("inp_ms"),
+        "cls": summarize("cls"),
+        "ttfb_ms": summarize("ttfb_ms"),
+        "fcp_ms": summarize("fcp_ms"),
+        "load_ms": summarize("load_ms"),
+        "transfer_size": summarize("transfer_size"),
+    }
+
+    # Per-route breakdown (LCP only — it's the headline metric)
+    by_route: Dict[str, Dict[str, Any]] = {}
+    for r in samples:
+        route = r.get("route") or r.get("page_url") or "unknown"
+        by_route.setdefault(route, {"lcp": [], "cls": [], "n": 0})
+        by_route[route]["n"] += 1
+        if isinstance(r.get("lcp_ms"), (int, float)):
+            by_route[route]["lcp"].append(r["lcp_ms"])
+        if isinstance(r.get("cls"), (int, float)):
+            by_route[route]["cls"].append(r["cls"])
+    by_route_out = {}
+    for route, agg in sorted(by_route.items(), key=lambda kv: -kv[1]["n"])[:top_routes]:
+        by_route_out[route] = {
+            "samples": agg["n"],
+            "lcp_p75": pct(agg["lcp"], 75),
+            "lcp_p90": pct(agg["lcp"], 90),
+            "cls_p75": pct(agg["cls"], 75),
+        }
+
+    # Hourly histogram (one bucket per hour over the trailing window)
+    buckets: Dict[str, int] = defaultdict(int)
+    for r in samples:
+        try:
+            epoch = datetime.fromisoformat(r["ts"].replace("Z", "+00:00")).timestamp()
+            hour_key = datetime.fromtimestamp(epoch, tz=timezone.utc).strftime("%Y-%m-%dT%H:00Z")
+            buckets[hour_key] += 1
+        except Exception:
+            continue
+    hourly = [{"hour": k, "samples": buckets[k]} for k in sorted(buckets.keys())]
+
+    # CWV verdict (Google Web Vitals thresholds)
+    lcp_p75 = summary["lcp_ms"].get("p75")
+    cls_p75 = summary["cls"].get("p75")
+    fid_p75 = summary["fid_ms"].get("p75")
+    def verdict(v, good, poor):
+        if v is None: return "unknown"
+        if v <= good: return "good"
+        if v <= poor: return "needs-improvement"
+        return "poor"
+    cwv = {
+        "lcp": {"value_ms": lcp_p75, "verdict": verdict(lcp_p75, 2500, 4000)},
+        "cls": {"value": cls_p75, "verdict": verdict(cls_p75, 0.1, 0.25)},
+        "fid": {"value_ms": fid_p75, "verdict": verdict(fid_p75, 100, 300)},
+    }
+
+    return {
+        "ok": True,
+        "samples": len(samples),
+        "hours": hours,
+        "since": datetime.fromtimestamp(cutoff, tz=timezone.utc).isoformat() if samples else None,
+        "summary": summary,
+        "by_route": by_route_out,
+        "hourly": hourly,
+        "cwv": cwv,
+        "path": str(PERF_LOG_PATH),
     }
 
 

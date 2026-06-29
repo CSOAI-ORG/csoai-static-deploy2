@@ -25,6 +25,45 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>__STYLES__</style>
+<style>
+/* i18n locale switcher */
+.locale-switcher { position: relative; display: inline-block; margin-right: 12px; }
+.locale-btn {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(201,168,76,0.3);
+  color: var(--text, #e4e4e7);
+  padding: 6px 10px;
+  border-radius: 6px;
+  font: 500 12px/1 'Space Grotesk', system-ui, sans-serif;
+  cursor: pointer;
+  display: inline-flex; align-items: center; gap: 6px;
+  transition: background .15s ease, border-color .15s ease;
+}
+.locale-btn:hover { background: rgba(201,168,76,0.12); border-color: rgba(201,168,76,0.55); }
+.locale-caret { font-size: 10px; opacity: .8; }
+.locale-menu {
+  position: absolute; right: 0; top: calc(100% + 6px);
+  margin: 0; padding: 4px;
+  list-style: none;
+  background: rgba(20,20,28,0.96);
+  border: 1px solid rgba(201,168,76,0.35);
+  border-radius: 8px;
+  min-width: 168px;
+  box-shadow: 0 12px 32px rgba(0,0,0,.45), 0 0 0 1px rgba(255,255,255,0.02) inset;
+  z-index: 9999;
+  backdrop-filter: blur(8px);
+}
+.locale-menu[hidden] { display: none; }
+.locale-menu li {
+  padding: 8px 10px; border-radius: 6px;
+  font: 500 13px/1.2 'Space Grotesk', system-ui, sans-serif;
+  color: #e4e4e7; cursor: pointer;
+  display: flex; align-items: center; gap: 10px;
+}
+.locale-menu li:hover { background: rgba(201,168,76,0.18); color: var(--gold, #c9a84c); }
+.locale-menu li[aria-selected="true"] { background: rgba(201,168,76,0.22); color: var(--gold, #c9a84c); }
+@media (max-width: 720px) { .locale-switcher { display: none; } }
+</style>
 </head>
 <body>
 
@@ -46,8 +85,23 @@
       <a href="/about" __ABOUT_ACTIVE__>About</a>
     </nav>
     <div class="cta">
-      <a class="login" href="/login">Log in</a>
-      <a class="start" href="/csoai-os/v2-signup-wizard.html">Start free →</a>
+      <!-- i18n locale switcher (desktop) -->
+      <div class="locale-switcher" id="localeSwitcher" aria-label="Change language">
+        <button class="locale-btn" id="localeBtn" type="button" aria-haspopup="listbox" aria-expanded="false">
+          <span id="localeBtnLabel">🌐 EN</span>
+          <span class="locale-caret">▾</span>
+        </button>
+        <ul class="locale-menu" id="localeMenu" role="listbox" hidden>
+          <li role="option" data-locale="en"><span>🇬🇧</span> English</li>
+          <li role="option" data-locale="es"><span>🇪🇸</span> Español</li>
+          <li role="option" data-locale="fr"><span>🇫🇷</span> Français</li>
+          <li role="option" data-locale="de"><span>🇩🇪</span> Deutsch</li>
+          <li role="option" data-locale="ja"><span>🇯🇵</span> 日本語</li>
+          <li role="option" data-locale="zh"><span>🇨🇳</span> 中文</li>
+        </ul>
+      </div>
+      <a class="login" href="/login" data-i18n="nav.login">Log in</a>
+      <a class="start" href="/csoai-os/v2-signup-wizard.html" data-i18n="nav.start_free">Start free →</a>
     </div>
   </div>
 </header>
@@ -154,6 +208,136 @@ if ("serviceWorker" in navigator) {
     navigator.serviceWorker.register("/sw.js").catch(() => {});
   });
 }
+</script>
+
+<!-- i18n: locale loader + switcher -->
+<script>
+(function(){
+  var SUPPORTED = ["en","es","fr","de","ja","zh"];
+  var DEFAULT = "en";
+  var FLAG = {en:"🇬🇧",es:"🇪🇸",fr:"🇫🇷",de:"🇩🇪",ja:"🇯🇵",zh:"🇨🇳"};
+  var STORAGE_KEY = "meok_locale";
+
+  // Resolve locale: URL ?lang=xx > localStorage > browser > default
+  function resolveLocale(){
+    try {
+      var q = new URLSearchParams(window.location.search).get("lang");
+      if (q && SUPPORTED.indexOf(q) >= 0) return q;
+    } catch(e) {}
+    try {
+      var s = localStorage.getItem(STORAGE_KEY);
+      if (s && SUPPORTED.indexOf(s) >= 0) return s;
+    } catch(e) {}
+    var nav = (navigator.language || "en").toLowerCase().slice(0,2);
+    return SUPPORTED.indexOf(nav) >= 0 ? nav : DEFAULT;
+  }
+
+  // Walk dotted path "nav.login" inside a nested object
+  function get(obj, path){
+    return path.split(".").reduce(function(o,k){
+      return (o && o[k] !== undefined) ? o[k] : null;
+    }, obj);
+  }
+
+  function applyTranslations(strings){
+    if (!strings) return;
+    var nodes = document.querySelectorAll("[data-i18n]");
+    nodes.forEach(function(n){
+      var key = n.getAttribute("data-i18n");
+      var val = get(strings, key);
+      if (typeof val === "string") n.textContent = val;
+    });
+    // Also translate elements by data-i18n-attr (e.g., data-i18n-attr="placeholder:nav.start_free")
+    var attrNodes = document.querySelectorAll("[data-i18n-attr]");
+    attrNodes.forEach(function(n){
+      n.getAttribute("data-i18n-attr").split(";").forEach(function(pair){
+        var p = pair.split(":");
+        if (p.length === 2) {
+          var v = get(strings, p[1]);
+          if (typeof v === "string") n.setAttribute(p[0], v);
+        }
+      });
+    });
+    // Update <html lang>
+    var meta = strings._meta || {};
+    if (meta.locale) document.documentElement.setAttribute("lang", meta.locale);
+    if (meta.dir) document.documentElement.setAttribute("dir", meta.dir);
+  }
+
+  function setButton(loc){
+    var btn = document.getElementById("localeBtnLabel");
+    if (btn) btn.textContent = (FLAG[loc] || "🌐") + " " + loc.toUpperCase();
+    var items = document.querySelectorAll("#localeMenu li");
+    items.forEach(function(li){
+      li.setAttribute("aria-selected", li.getAttribute("data-locale") === loc ? "true" : "false");
+    });
+  }
+
+  function loadLocale(loc, cb){
+    var url = "/csoai-os/i18n/" + loc + ".json";
+    fetch(url, {cache: "no-cache"})
+      .then(function(r){ if (!r.ok) throw new Error("locale load failed " + loc); return r.json(); })
+      .then(function(strings){
+        try { localStorage.setItem(STORAGE_KEY, loc); } catch(e) {}
+        applyTranslations(strings);
+        setButton(loc);
+        if (cb) cb(loc, strings);
+        // Notify other in-page i18n consumers
+        window.dispatchEvent(new CustomEvent("meok:locale", {detail: {locale: loc, strings: strings}}));
+      })
+      .catch(function(err){
+        console.warn("[i18n] could not load", loc, err);
+        if (loc !== DEFAULT) loadLocale(DEFAULT, cb);
+      });
+  }
+
+  function wireSwitcher(loc){
+    var btn = document.getElementById("localeBtn");
+    var menu = document.getElementById("localeMenu");
+    if (!btn || !menu) return;
+    btn.addEventListener("click", function(e){
+      e.stopPropagation();
+      var open = menu.hasAttribute("hidden");
+      if (open) { menu.removeAttribute("hidden"); btn.setAttribute("aria-expanded","true"); }
+      else { menu.setAttribute("hidden",""); btn.setAttribute("aria-expanded","false"); }
+    });
+    document.addEventListener("click", function(){
+      if (!menu.hasAttribute("hidden")) {
+        menu.setAttribute("hidden","");
+        btn.setAttribute("aria-expanded","false");
+      }
+    });
+    menu.querySelectorAll("li[data-locale]").forEach(function(li){
+      li.addEventListener("click", function(e){
+        e.stopPropagation();
+        var next = li.getAttribute("data-locale");
+        loadLocale(next);
+        menu.setAttribute("hidden","");
+        btn.setAttribute("aria-expanded","false");
+      });
+    });
+    setButton(loc);
+  }
+
+  // Boot
+  var loc = resolveLocale();
+  // Expose for any in-page consumers (wizard, chat, etc.)
+  window.MEOK_I18N = {
+    locale: function(){ return loc; },
+    setLocale: function(next){ if (SUPPORTED.indexOf(next) >= 0) loadLocale(next); },
+    t: function(path, fallback){
+      var s = (window.MEOK_I18N._strings) || {};
+      return get(s, path) || fallback || path;
+    },
+    supported: SUPPORTED.slice()
+  };
+  loadLocale(loc, function(l, s){ window.MEOK_I18N._strings = s; });
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", function(){ wireSwitcher(loc); });
+  } else {
+    wireSwitcher(loc);
+  }
+})();
 </script>
 </body>
 </html>

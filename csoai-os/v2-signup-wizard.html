@@ -175,6 +175,36 @@ body {
   justify-content: space-between;
   background: var(--surface-2);
 }
+.save-status {
+  margin: 16px auto;
+  text-align: center;
+  font: 500 13px/1.4 'Space Grotesk', system-ui, sans-serif;
+  padding: 10px 16px;
+  border-radius: 8px;
+  max-width: 480px;
+  transition: opacity 0.6s ease;
+}
+.save-status--saving {
+  background: rgba(201, 168, 76, 0.08);
+  border: 1px solid rgba(201, 168, 76, 0.3);
+  color: var(--gold, #c9a84c);
+}
+.save-status--success {
+  background: rgba(16, 185, 129, 0.12);
+  border: 1px solid rgba(16, 185, 129, 0.4);
+  color: #10b981;
+}
+.save-status--warning {
+  background: rgba(245, 158, 11, 0.12);
+  border: 1px solid rgba(245, 158, 11, 0.4);
+  color: #fbbf24;
+}
+.save-status--error {
+  background: rgba(239, 68, 68, 0.12);
+  border: 1px solid rgba(239, 68, 68, 0.4);
+  color: #ef4444;
+}
+.save-status--fade { opacity: 0.3; }
 
 .btn {
   padding: 10px 20px;
@@ -326,17 +356,18 @@ body {
 
     <!-- Step 5: Confirmation -->
     <div class="wizard-step" data-step="4">
-      <h2>Step 5 · i-character Created</h2>
-      <p>Your digital twin is live. The globe is auto-zoomed to your region.</p>
+      <h2 data-i18n="wizard.step_5_title">Step 5 · i-character Created</h2>
+      <p data-i18n="wizard.step_5_subtitle">Your digital twin is live. The globe is auto-zoomed to your region.</p>
       <div class="ichar-card" id="icharCard">
-        <div class="ichar-emoji">🐉</div>
+        <div class="ichar-emoji" id="cardEmoji">🐉</div>
         <div class="ichar-name" id="cardName">—</div>
         <div class="ichar-archetype" id="cardArchetype">—</div>
         <div class="ichar-motto" id="cardMotto">—</div>
         <div class="ichar-sigil" id="cardSigil">—</div>
       </div>
+      <div id="saveStatus" class="save-status" role="status" aria-live="polite"></div>
       <p style="text-align: center; color: var(--gold);">
-        Next: open <a href="v2-temple-os.html" style="color: var(--gold); text-decoration: underline;">MEOK OS</a> to enter your sovereign world.
+        Next: open <a href="v2-temple-os.html" style="color: var(--gold); text-decoration: underline;" data-i18n="wizard.enter_os">Enter the OS →</a> to enter your sovereign world.
       </p>
     </div>
   </div>
@@ -530,10 +561,25 @@ function renderArcanas() {
 }
 
 // ─── Step 5: Create i-character ───
+const BACKEND_BASE = (window.location.hostname === 'localhost' || window.location.hostname.startsWith('127.'))
+  ? ''  // same-origin on dev
+  : ''; // same-origin on production; swap to absolute URL if backend is on a different host
+
+function setSaveStatus(state, msg) {
+  const el = document.getElementById('saveStatus');
+  if (!el) return;
+  el.className = 'save-status save-status--' + state;
+  el.textContent = msg || '';
+  if (state === 'success') {
+    setTimeout(() => { el.classList.add('save-status--fade'); }, 4000);
+  } else {
+    el.classList.remove('save-status--fade');
+  }
+}
+
 async function createIchar() {
-  // In production: POST /api/ichar/create
-  // For demo: simulate
-  const ichar = {
+  // Build the optimistic preview from local state (so the UI feels instant)
+  const local = {
     ichar_id: 'ich-' + Math.random().toString(36).slice(2, 14),
     name: state.name,
     queen_model: state.queen_model,
@@ -544,19 +590,82 @@ async function createIchar() {
     initial_message: state.initial_message,
     sigil_hash: Math.random().toString(36).slice(2, 18),
     created_at: new Date().toISOString(),
+    _status: 'saving',
   };
-  state.ichar = ichar;
+  state.ichar = local;
 
-  // Render the confirmation card
-  document.querySelector('.ichar-emoji').textContent = QUEEN_ARCHETYPES[state.queen_model].emoji;
-  document.getElementById('cardName').textContent = ichar.name;
-  document.getElementById('cardArchetype').textContent = `${ichar.archetype} · ${ichar.arcana_lens.name}`;
-  document.getElementById('cardMotto').textContent = state.initial_message || `"${ichar.motto}"`;
-  document.getElementById('cardSigil').textContent = `sigil: ${ichar.sigil_hash} · ${ichar.ichar_id}`;
+  // Render the confirmation card immediately (so the user sees progress)
+  document.getElementById('cardEmoji').textContent = QUEEN_ARCHETYPES[state.queen_model].emoji;
+  document.getElementById('cardName').textContent = local.name;
+  document.getElementById('cardArchetype').textContent = `${local.archetype} · ${local.arcana_lens.name}`;
+  document.getElementById('cardMotto').textContent = state.initial_message || `"${local.motto}"`;
+  document.getElementById('cardSigil').textContent = `sigil: ${local.sigil_hash} · ${local.ichar_id} · saving…`;
+  setSaveStatus('saving', '⏳ Sealing your i-character in the sovereign registry…');
 
-  // Persist to localStorage so the OS can pick it up
-  localStorage.setItem('meok_ichar', JSON.stringify(ichar));
+  // Persist locally so the OS can pick it up immediately (offline-safe)
+  localStorage.setItem('meok_ichar', JSON.stringify(local));
   localStorage.setItem('meok_region', JSON.stringify(state.region));
+
+  // POST to the real backend
+  const payload = {
+    user_id: state.user_id,
+    name: state.name,
+    queen_model: state.queen_model,
+    arcana_lens: state.arcana_lens,
+    voice: state.voice,
+    cognition: state.cognition,
+    initial_message: state.initial_message,
+  };
+
+  let saved = null;
+  let lastErr = null;
+  for (let attempt = 0; attempt < 2; attempt++) {
+    try {
+      const ctrl = new AbortController();
+      const timeoutId = setTimeout(() => ctrl.abort(), 8000);
+      const r = await fetch(BACKEND_BASE + '/api/ichar/create', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+        signal: ctrl.signal,
+      });
+      clearTimeout(timeoutId);
+      if (!r.ok) {
+        const text = await r.text().catch(() => '');
+        lastErr = `HTTP ${r.status} ${text.slice(0, 120)}`;
+        continue;
+      }
+      saved = await r.json();
+      break;
+    } catch (err) {
+      lastErr = err && err.message ? err.message : String(err);
+    }
+  }
+
+  if (saved && saved.ichar_id) {
+    // Upgrade the local copy with the real IDs the server minted
+    local.ichar_id = saved.ichar_id;
+    local.sigil_hash = saved.sigil_hash || local.sigil_hash;
+    local._status = 'saved';
+    state.ichar = local;
+    localStorage.setItem('meok_ichar', JSON.stringify(local));
+    document.getElementById('cardSigil').textContent =
+      `sigil: ${local.sigil_hash} · ${local.ichar_id} · ✓ saved`;
+    setSaveStatus('success', (window.MEOK_I18N && window.MEOK_I18N.t)
+      ? window.MEOK_I18N.t('wizard.saved_success', '✓ Your i-character is saved')
+      : '✓ Your i-character is saved');
+  } else {
+    // Backend unreachable — keep the local copy but mark it as unsynced so the
+    // OS can offer a retry when it next has connectivity.
+    local._status = 'unsynced';
+    local._save_error = lastErr;
+    state.ichar = local;
+    localStorage.setItem('meok_ichar', JSON.stringify(local));
+    document.getElementById('cardSigil').textContent =
+      `sigil: ${local.sigil_hash} · ${local.ichar_id} · ⚠ saved locally (offline)`;
+    setSaveStatus('warning',
+      `⚠ Saved locally — backend unreachable (${(lastErr || 'unknown').slice(0, 80)}). Will retry when online.`);
+  }
 }
 
 // ─── Boot ───
