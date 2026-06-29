@@ -36,8 +36,13 @@ def build_one(slug: str, timeout: int = PER_MCP_TIMEOUT) -> dict:
             if egg.is_dir():
                 import shutil
                 shutil.rmtree(egg, ignore_errors=True)
+        # --no-isolation: skip the per-package venv. The meek-* MCPs declare
+        # `requires = ["hatchling"]` but venv build isolation falls back to
+        # setuptools.build_meta which isn't installed in the build env.
+        # With --no-isolation we use the parent Python's packages (hatchling
+        # is installed globally) and the build succeeds.
         proc = subprocess.run(
-            [sys.executable, "-m", "build"],
+            [sys.executable, "-m", "build", "--no-isolation"],
             capture_output=True, text=True, timeout=timeout, cwd=str(path),
         )
         duration = time.time() - started

@@ -1,14 +1,14 @@
 {
   "aggregate": {
-    "census_size": 502,
+    "census_size": 512,
     "by_status": {
-      "pass": 394,
+      "pass": 455,
       "no-pyproject": 33,
-      "build-fail": 75
+      "build-fail": 24
     },
-    "wheels_built": 394,
-    "sdists_built": 394,
-    "wall_clock_s": 996.2,
+    "wheels_built": 455,
+    "sdists_built": 455,
+    "wall_clock_s": 251.4,
     "honesty_note": "Batch build of all *-mcp in the local mirror via `python -m build`. No PYPI_TOKEN needed. Pre-flight for the owner-gated `twine upload` step."
   },
   "results": [
@@ -17,21 +17,21 @@
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.29
+      "duration_s": 0.38
     },
     {
       "slug": "accessibility-ai-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 1.8
+      "duration_s": 0.32
     },
     {
       "slug": "accounting-ai-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 1.97
+      "duration_s": 0.32
     },
     {
       "slug": "acled-conflict-mcp",
@@ -45,14 +45,14 @@
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 1.77
+      "duration_s": 0.31
     },
     {
       "slug": "ad-copy-ai-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 1.89
+      "duration_s": 0.32
     },
     {
       "slug": "ads-b-exchange-mcp",
@@ -66,196 +66,204 @@
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 1.76
+      "duration_s": 0.33
     },
     {
       "slug": "agent-commerce-payments-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 1.84
+      "duration_s": 0.37
     },
     {
       "slug": "agent-commerce-protocol-mcp",
-      "status": "pass",
-      "wheel": true,
-      "sdist": true,
-      "duration_s": 2.39
+      "status": "build-fail",
+      "wheel": false,
+      "sdist": false,
+      "duration_s": 0.25,
+      "stderr_tail": "roject-toml/#license for details.\n        ********************************************************************************\n\n!!\n  self._finalize_license_expression()\nERROR Missing dependencies:\n\twheel\n"
     },
     {
       "slug": "agent-content-watermark-mcp",
-      "status": "pass",
-      "wheel": true,
-      "sdist": true,
-      "duration_s": 2.2
+      "status": "build-fail",
+      "wheel": false,
+      "sdist": false,
+      "duration_s": 0.25,
+      "stderr_tail": "roject-toml/#license for details.\n        ********************************************************************************\n\n!!\n  self._finalize_license_expression()\nERROR Missing dependencies:\n\twheel\n"
     },
     {
       "slug": "agent-cost-allocator-mcp",
-      "status": "pass",
-      "wheel": true,
-      "sdist": true,
-      "duration_s": 2.13
+      "status": "build-fail",
+      "wheel": false,
+      "sdist": false,
+      "duration_s": 0.28,
+      "stderr_tail": "roject-toml/#license for details.\n        ********************************************************************************\n\n!!\n  self._finalize_license_expression()\nERROR Missing dependencies:\n\twheel\n"
     },
     {
       "slug": "agent-data-residency-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 1.95
+      "duration_s": 0.38
     },
     {
       "slug": "agent-delegation-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 1.94
+      "duration_s": 0.37
     },
     {
       "slug": "agent-handoff-certified-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 1.92
+      "duration_s": 0.34
     },
     {
       "slug": "agent-identity-trust-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.09
+      "duration_s": 0.34
     },
     {
       "slug": "agent-incident-relay-mcp",
-      "status": "pass",
-      "wheel": true,
-      "sdist": true,
-      "duration_s": 2.11
+      "status": "build-fail",
+      "wheel": false,
+      "sdist": false,
+      "duration_s": 0.25,
+      "stderr_tail": "roject-toml/#license for details.\n        ********************************************************************************\n\n!!\n  self._finalize_license_expression()\nERROR Missing dependencies:\n\twheel\n"
     },
     {
       "slug": "agent-incident-reporter-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 1.8
+      "duration_s": 0.33
     },
     {
       "slug": "agent-mcp-router-mcp",
-      "status": "pass",
-      "wheel": true,
-      "sdist": true,
-      "duration_s": 2.27
+      "status": "build-fail",
+      "wheel": false,
+      "sdist": false,
+      "duration_s": 0.25,
+      "stderr_tail": "roject-toml/#license for details.\n        ********************************************************************************\n\n!!\n  self._finalize_license_expression()\nERROR Missing dependencies:\n\twheel\n"
     },
     {
       "slug": "agent-negotiation-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.02
+      "duration_s": 0.37
     },
     {
       "slug": "agent-orchestrator-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.24
+      "duration_s": 0.42
     },
     {
       "slug": "agent-policy-enforcement-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 1.84
+      "duration_s": 0.35
     },
     {
       "slug": "agent-prompt-injection-firewall-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.12
+      "duration_s": 0.34
     },
     {
       "slug": "agent-rate-limiter-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.11
+      "duration_s": 0.37
     },
     {
       "slug": "agent-replay-debugger-mcp",
-      "status": "pass",
-      "wheel": true,
-      "sdist": true,
-      "duration_s": 2.25
+      "status": "build-fail",
+      "wheel": false,
+      "sdist": false,
+      "duration_s": 0.31,
+      "stderr_tail": "roject-toml/#license for details.\n        ********************************************************************************\n\n!!\n  self._finalize_license_expression()\nERROR Missing dependencies:\n\twheel\n"
     },
     {
       "slug": "agent-token-budget-mcp",
-      "status": "pass",
-      "wheel": true,
-      "sdist": true,
-      "duration_s": 2.1
+      "status": "build-fail",
+      "wheel": false,
+      "sdist": false,
+      "duration_s": 0.27,
+      "stderr_tail": "roject-toml/#license for details.\n        ********************************************************************************\n\n!!\n  self._finalize_license_expression()\nERROR Missing dependencies:\n\twheel\n"
     },
     {
       "slug": "agent-x402-paywall-mcp",
-      "status": "pass",
-      "wheel": true,
-      "sdist": true,
-      "duration_s": 2.09
+      "status": "build-fail",
+      "wheel": false,
+      "sdist": false,
+      "duration_s": 0.27,
+      "stderr_tail": "roject-toml/#license for details.\n        ********************************************************************************\n\n!!\n  self._finalize_license_expression()\nERROR Missing dependencies:\n\twheel\n"
     },
     {
       "slug": "agriculture-robotics-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 1.82
+      "duration_s": 0.36
     },
     {
       "slug": "ai-bom-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 1.94
+      "duration_s": 0.37
     },
     {
       "slug": "ai-gateway-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 1.85
+      "duration_s": 0.36
     },
     {
       "slug": "ai-incident-reporting-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 1.92
+      "duration_s": 0.36
     },
     {
       "slug": "ai-ops-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 1.81
+      "duration_s": 0.33
     },
     {
       "slug": "ai-reflection-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 1.95
+      "duration_s": 0.33
     },
     {
       "slug": "ai-self-audit-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 1.88
+      "duration_s": 0.34
     },
     {
       "slug": "airspace-monitor-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 1.75
+      "duration_s": 0.34
     },
     {
       "slug": "aisstream-maritime-mcp",
@@ -269,238 +277,239 @@
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 1.94
+      "duration_s": 0.33
     },
     {
       "slug": "api-docs-generator-ai-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 1.85
+      "duration_s": 0.33
     },
     {
       "slug": "api-tester-ai-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 1.95
+      "duration_s": 0.33
     },
     {
       "slug": "as400-bridge-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 1.75
+      "duration_s": 0.34
     },
     {
       "slug": "ascii-art-ai-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 1.87
+      "duration_s": 0.36
     },
     {
       "slug": "backup-ai-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 1.85
+      "duration_s": 0.34
     },
     {
       "slug": "basel-ai-overlay-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.04
+      "duration_s": 0.34
     },
     {
       "slug": "bft-governance-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.0
+      "duration_s": 0.34
     },
     {
       "slug": "bft-progress-council-mcp",
-      "status": "pass",
-      "wheel": true,
-      "sdist": true,
-      "duration_s": 2.36
+      "status": "build-fail",
+      "wheel": false,
+      "sdist": false,
+      "duration_s": 0.25,
+      "stderr_tail": "roject-toml/#license for details.\n        ********************************************************************************\n\n!!\n  self._finalize_license_expression()\nERROR Missing dependencies:\n\twheel\n"
     },
     {
       "slug": "bias-detection-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 1.88
+      "duration_s": 0.42
     },
     {
       "slug": "blockchain-ai-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.04
+      "duration_s": 0.41
     },
     {
       "slug": "blockchain-verification-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.15
+      "duration_s": 0.35
     },
     {
       "slug": "budget-planner-ai-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 1.89
+      "duration_s": 0.34
     },
     {
       "slug": "c2pa-watermark-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.54
+      "duration_s": 0.34
     },
     {
       "slug": "calendar-ai-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 1.86
+      "duration_s": 0.35
     },
     {
       "slug": "canada-aida-ai-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 1.9
+      "duration_s": 0.35
     },
     {
       "slug": "care-home-cqc-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 1.78
+      "duration_s": 0.37
     },
     {
       "slug": "care-home-scheduling-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 1.99
+      "duration_s": 0.35
     },
     {
       "slug": "care-membrane-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 1.85
+      "duration_s": 0.36
     },
     {
       "slug": "changelog-ai-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 1.84
+      "duration_s": 0.39
     },
     {
       "slug": "chas-elite-prep-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.0
+      "duration_s": 0.36
     },
     {
       "slug": "churn-predictor-ai-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 1.73
+      "duration_s": 0.36
     },
     {
       "slug": "ci-cd-generator-ai-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.06
+      "duration_s": 0.35
     },
     {
       "slug": "cics-bridge-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 1.91
+      "duration_s": 0.33
     },
     {
       "slug": "cisa-kev-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 1.84
+      "duration_s": 0.36
     },
     {
       "slug": "citation-finder-ai-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 1.95
+      "duration_s": 0.38
     },
     {
       "slug": "cli-builder-ai-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 1.83
+      "duration_s": 0.37
     },
     {
       "slug": "clinical-trials-ai-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 1.96
+      "duration_s": 0.35
     },
     {
       "slug": "clipboard-ai-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.01
+      "duration_s": 0.34
     },
     {
       "slug": "cobol-bridge-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.08
+      "duration_s": 0.36
     },
     {
       "slug": "code-executor-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.03
+      "duration_s": 0.36
     },
     {
       "slug": "code-reviewer-ai-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 1.85
+      "duration_s": 0.35
     },
     {
       "slug": "color-ai-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.04
+      "duration_s": 0.37
     },
     {
       "slug": "commit-message-ai-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.1
+      "duration_s": 0.35
     },
     {
       "slug": "companies-house-mcp",
@@ -514,184 +523,182 @@
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.01
+      "duration_s": 0.34
     },
     {
       "slug": "compression-ai-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.01
+      "duration_s": 0.33
     },
     {
       "slug": "concrete-pump-cpa-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.01
+      "duration_s": 0.33
     },
     {
       "slug": "config-validator-ai-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 1.76
+      "duration_s": 0.35
     },
     {
       "slug": "consciousness-engine-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 1.82
+      "duration_s": 0.33
     },
     {
       "slug": "construction-iso-19650-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 1.87
+      "duration_s": 0.32
     },
     {
       "slug": "content-calendar-ai-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 1.98
+      "duration_s": 0.34
     },
     {
       "slug": "content-registry-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 1.83
+      "duration_s": 0.34
     },
     {
       "slug": "contract-review-ai-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 1.87
+      "duration_s": 0.33
     },
     {
       "slug": "coppa-ferpa-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 1.79
+      "duration_s": 0.34
     },
     {
       "slug": "councilof-mcp",
-      "status": "build-fail",
-      "wheel": false,
-      "sdist": false,
-      "duration_s": 0.87,
-      "stderr_tail": "ated environment: venv+pip...\n* Installing packages in isolated environment:\n  - hatchling\n* Getting build dependencies for sdist...\nERROR Backend 'setuptools.build_meta:__legacy__' is not available.\n"
+      "status": "pass",
+      "wheel": true,
+      "sdist": true,
+      "duration_s": 0.92
     },
     {
       "slug": "cqc-compliance-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 1.99
+      "duration_s": 0.37
     },
     {
       "slug": "cra-compliance-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 1.95
+      "duration_s": 0.35
     },
     {
       "slug": "crane-hire-cpcs-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.65
+      "duration_s": 0.33
     },
     {
       "slug": "creativity-engine-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 1.89
+      "duration_s": 0.33
     },
     {
       "slug": "crm-ai-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 1.95
+      "duration_s": 0.33
     },
     {
       "slug": "cron-ai-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.15
+      "duration_s": 0.33
     },
     {
       "slug": "crypto-tracker-ai-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.04
+      "duration_s": 0.34
     },
     {
       "slug": "csoai-defoneos-mcp",
-      "status": "build-fail",
-      "wheel": false,
-      "sdist": false,
-      "duration_s": 0.83,
-      "stderr_tail": "ated environment: venv+pip...\n* Installing packages in isolated environment:\n  - hatchling\n* Getting build dependencies for sdist...\nERROR Backend 'setuptools.build_meta:__legacy__' is not available.\n"
+      "status": "pass",
+      "wheel": true,
+      "sdist": true,
+      "duration_s": 0.87
     },
     {
       "slug": "csoai-governance-crosswalk-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.03
+      "duration_s": 0.36
     },
     {
       "slug": "csrd-compliance-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 1.99
+      "duration_s": 0.34
     },
     {
       "slug": "csv-analytics-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 1.87
+      "duration_s": 0.34
     },
     {
       "slug": "csv-tools-ai-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 1.95
+      "duration_s": 0.34
     },
     {
       "slug": "currency-converter-ai-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 1.9
+      "duration_s": 0.34
     },
     {
       "slug": "customer-support-ai-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.08
+      "duration_s": 0.35
     },
     {
       "slug": "cybersecurity-ai-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 1.98
+      "duration_s": 0.36
     },
     {
       "slug": "data-gov-uk-mcp",
@@ -705,113 +712,123 @@
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.05
+      "duration_s": 0.34
     },
     {
       "slug": "database-universal-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 1.96
+      "duration_s": 0.34
     },
     {
       "slug": "dataprivacy-ai-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 1.94
+      "duration_s": 0.34
     },
     {
       "slug": "date-calculator-ai-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.03
+      "duration_s": 0.33
     },
     {
       "slug": "deepfake-detector-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.03
+      "duration_s": 0.33
     },
     {
       "slug": "defoneos-cesium-mcp",
-      "status": "pass",
-      "wheel": true,
-      "sdist": true,
-      "duration_s": 2.47
+      "status": "build-fail",
+      "wheel": false,
+      "sdist": false,
+      "duration_s": 0.25,
+      "stderr_tail": "g-pyproject-toml/#license for details.\n        ********************************************************************************\n\n!!\n  corresp(dist, value, root_dir)\nERROR Missing dependencies:\n\twheel\n"
     },
     {
       "slug": "defoneos-compliance-mcp",
-      "status": "pass",
-      "wheel": true,
-      "sdist": true,
-      "duration_s": 2.45
+      "status": "build-fail",
+      "wheel": false,
+      "sdist": false,
+      "duration_s": 0.25,
+      "stderr_tail": "g-pyproject-toml/#license for details.\n        ********************************************************************************\n\n!!\n  corresp(dist, value, root_dir)\nERROR Missing dependencies:\n\twheel\n"
     },
     {
       "slug": "defoneos-counterdrone-mcp",
-      "status": "pass",
-      "wheel": true,
-      "sdist": true,
-      "duration_s": 2.37
+      "status": "build-fail",
+      "wheel": false,
+      "sdist": false,
+      "duration_s": 0.26,
+      "stderr_tail": "* Getting build dependencies for sdist...\nERROR Missing dependencies:\n\twheel\n"
     },
     {
       "slug": "defoneos-cyber-mcp",
-      "status": "pass",
-      "wheel": true,
-      "sdist": true,
-      "duration_s": 2.28
+      "status": "build-fail",
+      "wheel": false,
+      "sdist": false,
+      "duration_s": 0.26,
+      "stderr_tail": "* Getting build dependencies for sdist...\nERROR Missing dependencies:\n\twheel\n"
     },
     {
       "slug": "defoneos-isr-mcp",
-      "status": "pass",
-      "wheel": true,
-      "sdist": true,
-      "duration_s": 2.35
+      "status": "build-fail",
+      "wheel": false,
+      "sdist": false,
+      "duration_s": 0.25,
+      "stderr_tail": "g-pyproject-toml/#license for details.\n        ********************************************************************************\n\n!!\n  corresp(dist, value, root_dir)\nERROR Missing dependencies:\n\twheel\n"
     },
     {
       "slug": "defoneos-jsp936-mcp",
-      "status": "pass",
-      "wheel": true,
-      "sdist": true,
-      "duration_s": 2.21
+      "status": "build-fail",
+      "wheel": false,
+      "sdist": false,
+      "duration_s": 0.26,
+      "stderr_tail": "* Getting build dependencies for sdist...\nERROR Missing dependencies:\n\twheel\n"
     },
     {
       "slug": "defoneos-mcp",
       "status": "build-fail",
       "wheel": false,
       "sdist": false,
-      "duration_s": 0.84,
-      "stderr_tail": "nment: venv+pip...\n* Installing packages in isolated environment:\n  - setuptools>=61.0\n* Getting build dependencies for sdist...\nERROR Backend 'setuptools.backends._legacy:_Backend' is not available.\n"
+      "duration_s": 0.14,
+      "stderr_tail": "* Getting build dependencies for sdist...\nERROR Backend 'setuptools.backends._legacy:_Backend' is not available.\n"
     },
     {
       "slug": "defoneos-medevac-mcp",
-      "status": "pass",
-      "wheel": true,
-      "sdist": true,
-      "duration_s": 2.24
+      "status": "build-fail",
+      "wheel": false,
+      "sdist": false,
+      "duration_s": 0.25,
+      "stderr_tail": "* Getting build dependencies for sdist...\nERROR Missing dependencies:\n\twheel\n"
     },
     {
       "slug": "defoneos-ospd-mcp",
-      "status": "pass",
-      "wheel": true,
-      "sdist": true,
-      "duration_s": 2.23
+      "status": "build-fail",
+      "wheel": false,
+      "sdist": false,
+      "duration_s": 0.25,
+      "stderr_tail": "g-pyproject-toml/#license for details.\n        ********************************************************************************\n\n!!\n  corresp(dist, value, root_dir)\nERROR Missing dependencies:\n\twheel\n"
     },
     {
       "slug": "defoneos-swarm-mcp",
-      "status": "pass",
-      "wheel": true,
-      "sdist": true,
-      "duration_s": 2.47
+      "status": "build-fail",
+      "wheel": false,
+      "sdist": false,
+      "duration_s": 0.25,
+      "stderr_tail": "g-pyproject-toml/#license for details.\n        ********************************************************************************\n\n!!\n  corresp(dist, value, root_dir)\nERROR Missing dependencies:\n\twheel\n"
     },
     {
       "slug": "defoneos-tak-mcp",
-      "status": "pass",
-      "wheel": true,
-      "sdist": true,
-      "duration_s": 2.55
+      "status": "build-fail",
+      "wheel": false,
+      "sdist": false,
+      "duration_s": 0.25,
+      "stderr_tail": "g-pyproject-toml/#license for details.\n        ********************************************************************************\n\n!!\n  corresp(dist, value, root_dir)\nERROR Missing dependencies:\n\twheel\n"
     },
     {
       "slug": "defra-air-quality-mcp",
@@ -825,84 +842,84 @@
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.05
+      "duration_s": 0.34
     },
     {
       "slug": "devops-ai-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.1
+      "duration_s": 0.38
     },
     {
       "slug": "diff-ai-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 1.98
+      "duration_s": 0.35
     },
     {
       "slug": "dispense-record-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.01
+      "duration_s": 0.34
     },
     {
       "slug": "dlms-bridge-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.2
+      "duration_s": 0.32
     },
     {
       "slug": "docker-helper-ai-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.11
+      "duration_s": 0.35
     },
     {
       "slug": "dockerfile-generator-ai-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 1.95
+      "duration_s": 0.34
     },
     {
       "slug": "document-comparison-ai-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.04
+      "duration_s": 0.34
     },
     {
       "slug": "domiciliary-care-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.0
+      "duration_s": 0.34
     },
     {
       "slug": "dora-compliance-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 1.96
+      "duration_s": 0.36
     },
     {
       "slug": "dora-nis2-crosswalk-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 1.86
+      "duration_s": 0.39
     },
     {
       "slug": "drone-airspace-governance-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 1.98
+      "duration_s": 0.35
     },
     {
       "slug": "ea-flood-mcp",
@@ -916,182 +933,183 @@
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.08
+      "duration_s": 0.35
     },
     {
       "slug": "edi-bridge-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 1.84
+      "duration_s": 0.33
     },
     {
       "slug": "education-ai-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 1.99
+      "duration_s": 0.35
     },
     {
       "slug": "email-automation-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.0
+      "duration_s": 0.36
     },
     {
       "slug": "email-validator-ai-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 1.94
+      "duration_s": 0.36
     },
     {
       "slug": "emoji-ai-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 1.94
+      "duration_s": 0.35
     },
     {
       "slug": "encoder-ai-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.32
+      "duration_s": 0.34
     },
     {
       "slug": "env-manager-ai-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 1.84
+      "duration_s": 0.33
     },
     {
       "slug": "eu-ai-act-compliance-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.22
+      "duration_s": 0.53
     },
     {
       "slug": "eudi-wallet-mcp",
-      "status": "pass",
-      "wheel": true,
-      "sdist": true,
-      "duration_s": 2.41
+      "status": "build-fail",
+      "wheel": false,
+      "sdist": false,
+      "duration_s": 0.25,
+      "stderr_tail": "roject-toml/#license for details.\n        ********************************************************************************\n\n!!\n  self._finalize_license_expression()\nERROR Missing dependencies:\n\twheel\n"
     },
     {
       "slug": "event-planning-ai-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 1.97
+      "duration_s": 0.34
     },
     {
       "slug": "expense-tracker-ai-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 1.87
+      "duration_s": 0.34
     },
     {
       "slug": "explainability-report-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 1.88
+      "duration_s": 0.34
     },
     {
       "slug": "faker-ai-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.03
+      "duration_s": 0.34
     },
     {
       "slug": "fda-samd-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 1.93
+      "duration_s": 0.34
     },
     {
       "slug": "feedback-analyzer-ai-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 1.99
+      "duration_s": 0.33
     },
     {
       "slug": "file-organizer-ai-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.04
+      "duration_s": 0.33
     },
     {
       "slug": "firmware-attestation-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.0
+      "duration_s": 0.37
     },
     {
       "slug": "fishkeeper-ai-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.07
+      "duration_s": 0.36
     },
     {
       "slug": "fitness-ai-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.06
+      "duration_s": 0.37
     },
     {
       "slug": "fix-bridge-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.14
+      "duration_s": 0.36
     },
     {
       "slug": "flashcard-ai-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.05
+      "duration_s": 0.34
     },
     {
       "slug": "flight-logger-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.07
+      "duration_s": 0.35
     },
     {
       "slug": "focus-timer-ai-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.06
+      "duration_s": 0.34
     },
     {
       "slug": "fsa-food-safety-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 1.94
+      "duration_s": 0.34
     },
     {
       "slug": "gardening-ai-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.03
+      "duration_s": 0.34
     },
     {
       "slug": "gdelt-news-mcp",
@@ -1105,21 +1123,21 @@
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.02
+      "duration_s": 0.34
     },
     {
       "slug": "geolocation-ai-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.03
+      "duration_s": 0.34
     },
     {
       "slug": "git-helper-ai-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.05
+      "duration_s": 0.35
     },
     {
       "slug": "global-fishing-watch-mcp",
@@ -1133,77 +1151,77 @@
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.15
+      "duration_s": 0.37
     },
     {
       "slug": "gos-claim-validator-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.16
+      "duration_s": 0.35
     },
     {
       "slug": "grabhire-ai-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.1
+      "duration_s": 0.33
     },
     {
       "slug": "grammar-fix-ai-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.13
+      "duration_s": 0.35
     },
     {
       "slug": "gs1-bridge-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.13
+      "duration_s": 0.33
     },
     {
       "slug": "habit-tracker-ai-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.04
+      "duration_s": 0.35
     },
     {
       "slug": "hash-utils-ai-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.22
+      "duration_s": 0.34
     },
     {
       "slug": "haulage-uk-compliance-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.05
+      "duration_s": 0.33
     },
     {
       "slug": "health-check-ai-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.06
+      "duration_s": 0.34
     },
     {
       "slug": "healthcare-ai-governance-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.0
+      "duration_s": 0.34
     },
     {
       "slug": "healthcare-fhir-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.03
+      "duration_s": 0.34
     },
     {
       "slug": "highways-england-traffic-mcp",
@@ -1217,182 +1235,183 @@
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.15
+      "duration_s": 0.34
     },
     {
       "slug": "hl7-fhir-bridge-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.2
+      "duration_s": 0.32
     },
     {
       "slug": "hr-management-ai-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.1
+      "duration_s": 0.34
     },
     {
       "slug": "html-parser-ai-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.05
+      "duration_s": 0.34
     },
     {
       "slug": "hydration-reminder-ai-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.21
+      "duration_s": 0.34
     },
     {
       "slug": "icon-generator-ai-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.06
+      "duration_s": 0.43
     },
     {
       "slug": "image-metadata-ai-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.14
+      "duration_s": 0.44
     },
     {
       "slug": "insurance-verification-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.35
+      "duration_s": 0.35
     },
     {
       "slug": "inventory-management-ai-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.23
+      "duration_s": 0.37
     },
     {
       "slug": "invoice-generator-ai-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.16
+      "duration_s": 0.36
     },
     {
       "slug": "ip-network-ai-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.15
+      "duration_s": 0.37
     },
     {
       "slug": "iso-27001-ai-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.35
+      "duration_s": 0.37
     },
     {
       "slug": "iso-42001-ai-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.21
+      "duration_s": 0.4
     },
     {
       "slug": "iso-42005-impact-mcp",
-      "status": "pass",
-      "wheel": true,
-      "sdist": true,
-      "duration_s": 3.03
+      "status": "build-fail",
+      "wheel": false,
+      "sdist": false,
+      "duration_s": 0.26,
+      "stderr_tail": "roject-toml/#license for details.\n        ********************************************************************************\n\n!!\n  self._finalize_license_expression()\nERROR Missing dependencies:\n\twheel\n"
     },
     {
       "slug": "iso20022-bridge-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.54
+      "duration_s": 0.38
     },
     {
       "slug": "iso8583-bridge-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.86
+      "duration_s": 0.36
     },
     {
       "slug": "job-description-ai-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.2
+      "duration_s": 0.4
     },
     {
       "slug": "json-ai-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.17
+      "duration_s": 0.45
     },
     {
       "slug": "jwt-ai-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.37
+      "duration_s": 0.48
     },
     {
       "slug": "keystone-catalogue-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 3.33
+      "duration_s": 0.95
     },
     {
       "slug": "keystone-verify-proxy-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.8
+      "duration_s": 0.87
     },
     {
       "slug": "keyword-extractor-ai-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.39
+      "duration_s": 0.34
     },
     {
       "slug": "korea-ai-basic-act-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.88
+      "duration_s": 0.85
     },
     {
       "slug": "landlaw-ai-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.53
+      "duration_s": 0.35
     },
     {
       "slug": "lead-scoring-ai-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.37
+      "duration_s": 0.35
     },
     {
       "slug": "legal-document-ai-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.38
+      "duration_s": 0.35
     },
     {
       "slug": "lfb-fire-data-mcp",
@@ -1406,1070 +1425,1072 @@
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.51
+      "duration_s": 0.34
     },
     {
       "slug": "linkedin-outreach-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.51
+      "duration_s": 0.34
     },
     {
       "slug": "ll144-bias-audit-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.85
+      "duration_s": 0.86
     },
     {
       "slug": "llm-compliance-comparison-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.17
+      "duration_s": 0.37
     },
     {
       "slug": "logistics-ai-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 1.95
+      "duration_s": 0.34
     },
     {
       "slug": "lorem-ipsum-ai-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 1.96
+      "duration_s": 0.34
     },
     {
       "slug": "markdown-ai-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.17
+      "duration_s": 0.35
     },
     {
       "slug": "marketing-analytics-ai-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.02
+      "duration_s": 0.35
     },
     {
       "slug": "math-solver-ai-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.07
+      "duration_s": 0.36
     },
     {
       "slug": "mcp-scorecard-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.31
+      "duration_s": 0.93
     },
     {
       "slug": "mcp-spec-compliance-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.6
+      "duration_s": 0.89
     },
     {
       "slug": "mdr-medical-device-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.26
+      "duration_s": 0.34
     },
     {
       "slug": "meal-planner-ai-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.11
+      "duration_s": 0.36
     },
     {
       "slug": "meditation-guide-ai-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.28
+      "duration_s": 0.34
     },
     {
       "slug": "meek-3-and-sov3-connection-mcp",
-      "status": "build-fail",
-      "wheel": false,
-      "sdist": false,
-      "duration_s": 1.01,
-      "stderr_tail": "ated environment: venv+pip...\n* Installing packages in isolated environment:\n  - hatchling\n* Getting build dependencies for sdist...\nERROR Backend 'setuptools.build_meta:__legacy__' is not available.\n"
+      "status": "pass",
+      "wheel": true,
+      "sdist": true,
+      "duration_s": 0.87
     },
     {
       "slug": "meek-3d-print-toolchain-mcp",
-      "status": "build-fail",
-      "wheel": false,
-      "sdist": false,
-      "duration_s": 1.24,
-      "stderr_tail": "ated environment: venv+pip...\n* Installing packages in isolated environment:\n  - hatchling\n* Getting build dependencies for sdist...\nERROR Backend 'setuptools.build_meta:__legacy__' is not available.\n"
+      "status": "pass",
+      "wheel": true,
+      "sdist": true,
+      "duration_s": 0.86
     },
     {
       "slug": "meek-4vf-data-transport-mcp",
-      "status": "build-fail",
-      "wheel": false,
-      "sdist": false,
-      "duration_s": 1.19,
-      "stderr_tail": "ated environment: venv+pip...\n* Installing packages in isolated environment:\n  - hatchling\n* Getting build dependencies for sdist...\nERROR Backend 'setuptools.build_meta:__legacy__' is not available.\n"
+      "status": "pass",
+      "wheel": true,
+      "sdist": true,
+      "duration_s": 0.86
     },
     {
       "slug": "meek-antenna-triangle-mcp",
-      "status": "build-fail",
-      "wheel": false,
-      "sdist": false,
-      "duration_s": 1.2,
-      "stderr_tail": "ated environment: venv+pip...\n* Installing packages in isolated environment:\n  - hatchling\n* Getting build dependencies for sdist...\nERROR Backend 'setuptools.build_meta:__legacy__' is not available.\n"
+      "status": "pass",
+      "wheel": true,
+      "sdist": true,
+      "duration_s": 0.89
     },
     {
       "slug": "meek-brand-architecture-mcp",
-      "status": "build-fail",
-      "wheel": false,
-      "sdist": false,
-      "duration_s": 1.08,
-      "stderr_tail": "ated environment: venv+pip...\n* Installing packages in isolated environment:\n  - hatchling\n* Getting build dependencies for sdist...\nERROR Backend 'setuptools.build_meta:__legacy__' is not available.\n"
+      "status": "pass",
+      "wheel": true,
+      "sdist": true,
+      "duration_s": 0.86
     },
     {
       "slug": "meek-capillary-actuator-mcp",
-      "status": "build-fail",
-      "wheel": false,
-      "sdist": false,
-      "duration_s": 1.04,
-      "stderr_tail": "ated environment: venv+pip...\n* Installing packages in isolated environment:\n  - hatchling\n* Getting build dependencies for sdist...\nERROR Backend 'setuptools.build_meta:__legacy__' is not available.\n"
+      "status": "pass",
+      "wheel": true,
+      "sdist": true,
+      "duration_s": 0.89
     },
     {
       "slug": "meek-cesium-overlay-mcp",
-      "status": "build-fail",
-      "wheel": false,
-      "sdist": false,
-      "duration_s": 1.07,
-      "stderr_tail": "ated environment: venv+pip...\n* Installing packages in isolated environment:\n  - hatchling\n* Getting build dependencies for sdist...\nERROR Backend 'setuptools.build_meta:__legacy__' is not available.\n"
+      "status": "pass",
+      "wheel": true,
+      "sdist": true,
+      "duration_s": 0.94
     },
     {
       "slug": "meek-cfd-thermal-mcp",
-      "status": "build-fail",
-      "wheel": false,
-      "sdist": false,
-      "duration_s": 1.17,
-      "stderr_tail": "ated environment: venv+pip...\n* Installing packages in isolated environment:\n  - hatchling\n* Getting build dependencies for sdist...\nERROR Backend 'setuptools.build_meta:__legacy__' is not available.\n"
+      "status": "pass",
+      "wheel": true,
+      "sdist": true,
+      "duration_s": 0.92
     },
     {
       "slug": "meek-circulatory-capillary-mcp",
-      "status": "build-fail",
-      "wheel": false,
-      "sdist": false,
-      "duration_s": 1.12,
-      "stderr_tail": "ated environment: venv+pip...\n* Installing packages in isolated environment:\n  - hatchling\n* Getting build dependencies for sdist...\nERROR Backend 'setuptools.build_meta:__legacy__' is not available.\n"
+      "status": "pass",
+      "wheel": true,
+      "sdist": true,
+      "duration_s": 0.94
     },
     {
       "slug": "meek-consolidation-absorption-mcp",
-      "status": "build-fail",
-      "wheel": false,
-      "sdist": false,
-      "duration_s": 1.19,
-      "stderr_tail": "ated environment: venv+pip...\n* Installing packages in isolated environment:\n  - hatchling\n* Getting build dependencies for sdist...\nERROR Backend 'setuptools.build_meta:__legacy__' is not available.\n"
+      "status": "pass",
+      "wheel": true,
+      "sdist": true,
+      "duration_s": 0.91
     },
     {
       "slug": "meek-daily-plan-mcp",
-      "status": "build-fail",
-      "wheel": false,
-      "sdist": false,
-      "duration_s": 1.11,
-      "stderr_tail": "ated environment: venv+pip...\n* Installing packages in isolated environment:\n  - hatchling\n* Getting build dependencies for sdist...\nERROR Backend 'setuptools.build_meta:__legacy__' is not available.\n"
+      "status": "pass",
+      "wheel": true,
+      "sdist": true,
+      "duration_s": 0.89
+    },
+    {
+      "slug": "meek-defoneos-audit-logging-mcp",
+      "status": "pass",
+      "wheel": true,
+      "sdist": true,
+      "duration_s": 0.86
+    },
+    {
+      "slug": "meek-defoneos-backup-restore-mcp",
+      "status": "pass",
+      "wheel": true,
+      "sdist": true,
+      "duration_s": 0.86
+    },
+    {
+      "slug": "meek-defoneos-cdn-edge-mcp",
+      "status": "pass",
+      "wheel": true,
+      "sdist": true,
+      "duration_s": 0.86
     },
     {
       "slug": "meek-defoneos-cold-email-mcp",
-      "status": "build-fail",
-      "wheel": false,
-      "sdist": false,
-      "duration_s": 1.08,
-      "stderr_tail": "ated environment: venv+pip...\n* Installing packages in isolated environment:\n  - hatchling\n* Getting build dependencies for sdist...\nERROR Backend 'setuptools.build_meta:__legacy__' is not available.\n"
+      "status": "pass",
+      "wheel": true,
+      "sdist": true,
+      "duration_s": 0.86
     },
     {
       "slug": "meek-defoneos-knowledge-pack-mcp",
-      "status": "build-fail",
-      "wheel": false,
-      "sdist": false,
-      "duration_s": 1.23,
-      "stderr_tail": "ated environment: venv+pip...\n* Installing packages in isolated environment:\n  - hatchling\n* Getting build dependencies for sdist...\nERROR Backend 'setuptools.build_meta:__legacy__' is not available.\n"
+      "status": "pass",
+      "wheel": true,
+      "sdist": true,
+      "duration_s": 0.92
+    },
+    {
+      "slug": "meek-defoneos-load-balancer-mcp",
+      "status": "pass",
+      "wheel": true,
+      "sdist": true,
+      "duration_s": 0.9
+    },
+    {
+      "slug": "meek-defoneos-monitoring-mcp",
+      "status": "pass",
+      "wheel": true,
+      "sdist": true,
+      "duration_s": 0.9
+    },
+    {
+      "slug": "meek-defoneos-pagerduty-mcp",
+      "status": "pass",
+      "wheel": true,
+      "sdist": true,
+      "duration_s": 0.87
     },
     {
       "slug": "meek-defoneos-pricing-mcp",
-      "status": "build-fail",
-      "wheel": false,
-      "sdist": false,
-      "duration_s": 1.24,
-      "stderr_tail": "ated environment: venv+pip...\n* Installing packages in isolated environment:\n  - hatchling\n* Getting build dependencies for sdist...\nERROR Backend 'setuptools.build_meta:__legacy__' is not available.\n"
+      "status": "pass",
+      "wheel": true,
+      "sdist": true,
+      "duration_s": 0.87
+    },
+    {
+      "slug": "meek-defoneos-pypi-publish-mcp",
+      "status": "pass",
+      "wheel": true,
+      "sdist": true,
+      "duration_s": 0.97
     },
     {
       "slug": "meek-defoneos-seal-card-mcp",
-      "status": "build-fail",
-      "wheel": false,
-      "sdist": false,
-      "duration_s": 1.12,
-      "stderr_tail": "ated environment: venv+pip...\n* Installing packages in isolated environment:\n  - hatchling\n* Getting build dependencies for sdist...\nERROR Backend 'setuptools.build_meta:__legacy__' is not available.\n"
+      "status": "pass",
+      "wheel": true,
+      "sdist": true,
+      "duration_s": 0.88
+    },
+    {
+      "slug": "meek-defoneos-secret-rotation-mcp",
+      "status": "pass",
+      "wheel": true,
+      "sdist": true,
+      "duration_s": 0.91
+    },
+    {
+      "slug": "meek-defoneos-smithery-mcp",
+      "status": "pass",
+      "wheel": true,
+      "sdist": true,
+      "duration_s": 0.86
     },
     {
       "slug": "meek-defoneos-ue5-mcp",
-      "status": "build-fail",
-      "wheel": false,
-      "sdist": false,
-      "duration_s": 1.12,
-      "stderr_tail": "ated environment: venv+pip...\n* Installing packages in isolated environment:\n  - hatchling\n* Getting build dependencies for sdist...\nERROR Backend 'setuptools.build_meta:__legacy__' is not available.\n"
+      "status": "pass",
+      "wheel": true,
+      "sdist": true,
+      "duration_s": 0.87
     },
     {
       "slug": "meek-defoneos-uk-pilots-tracker-mcp",
-      "status": "build-fail",
-      "wheel": false,
-      "sdist": false,
-      "duration_s": 1.12,
-      "stderr_tail": "ated environment: venv+pip...\n* Installing packages in isolated environment:\n  - hatchling\n* Getting build dependencies for sdist...\nERROR Backend 'setuptools.build_meta:__legacy__' is not available.\n"
+      "status": "pass",
+      "wheel": true,
+      "sdist": true,
+      "duration_s": 0.86
+    },
+    {
+      "slug": "meek-defoneos-vercel-deploy-mcp",
+      "status": "pass",
+      "wheel": true,
+      "sdist": true,
+      "duration_s": 0.91
     },
     {
       "slug": "meek-design-bom-mcp",
-      "status": "build-fail",
-      "wheel": false,
-      "sdist": false,
-      "duration_s": 1.24,
-      "stderr_tail": "ated environment: venv+pip...\n* Installing packages in isolated environment:\n  - hatchling\n* Getting build dependencies for sdist...\nERROR Backend 'setuptools.build_meta:__legacy__' is not available.\n"
+      "status": "pass",
+      "wheel": true,
+      "sdist": true,
+      "duration_s": 1.17
     },
     {
       "slug": "meek-design-tool-orchestrator-mcp",
-      "status": "build-fail",
-      "wheel": false,
-      "sdist": false,
-      "duration_s": 0.92,
-      "stderr_tail": "ated environment: venv+pip...\n* Installing packages in isolated environment:\n  - hatchling\n* Getting build dependencies for sdist...\nERROR Backend 'setuptools.build_meta:__legacy__' is not available.\n"
+      "status": "pass",
+      "wheel": true,
+      "sdist": true,
+      "duration_s": 0.89
     },
     {
       "slug": "meek-digital-twin-mcp",
-      "status": "build-fail",
-      "wheel": false,
-      "sdist": false,
-      "duration_s": 0.95,
-      "stderr_tail": "ated environment: venv+pip...\n* Installing packages in isolated environment:\n  - hatchling\n* Getting build dependencies for sdist...\nERROR Backend 'setuptools.build_meta:__legacy__' is not available.\n"
+      "status": "pass",
+      "wheel": true,
+      "sdist": true,
+      "duration_s": 0.87
     },
     {
       "slug": "meek-dorado-west-mcp",
-      "status": "build-fail",
-      "wheel": false,
-      "sdist": false,
-      "duration_s": 1.01,
-      "stderr_tail": "ated environment: venv+pip...\n* Installing packages in isolated environment:\n  - hatchling\n* Getting build dependencies for sdist...\nERROR Backend 'setuptools.build_meta:__legacy__' is not available.\n"
+      "status": "pass",
+      "wheel": true,
+      "sdist": true,
+      "duration_s": 0.87
     },
     {
       "slug": "meek-dual-brain-mcp",
-      "status": "build-fail",
-      "wheel": false,
-      "sdist": false,
-      "duration_s": 0.99,
-      "stderr_tail": "ated environment: venv+pip...\n* Installing packages in isolated environment:\n  - hatchling\n* Getting build dependencies for sdist...\nERROR Backend 'setuptools.build_meta:__legacy__' is not available.\n"
+      "status": "pass",
+      "wheel": true,
+      "sdist": true,
+      "duration_s": 0.9
     },
     {
       "slug": "meek-energy-harvester-mcp",
-      "status": "build-fail",
-      "wheel": false,
-      "sdist": false,
-      "duration_s": 0.99,
-      "stderr_tail": "ated environment: venv+pip...\n* Installing packages in isolated environment:\n  - hatchling\n* Getting build dependencies for sdist...\nERROR Backend 'setuptools.build_meta:__legacy__' is not available.\n"
+      "status": "pass",
+      "wheel": true,
+      "sdist": true,
+      "duration_s": 1.04
     },
     {
       "slug": "meek-gaming-research-mcp",
-      "status": "build-fail",
-      "wheel": false,
-      "sdist": false,
-      "duration_s": 1.15,
-      "stderr_tail": "ated environment: venv+pip...\n* Installing packages in isolated environment:\n  - hatchling\n* Getting build dependencies for sdist...\nERROR Backend 'setuptools.build_meta:__legacy__' is not available.\n"
+      "status": "pass",
+      "wheel": true,
+      "sdist": true,
+      "duration_s": 0.87
     },
     {
       "slug": "meek-google-free-mcp",
-      "status": "build-fail",
-      "wheel": false,
-      "sdist": false,
-      "duration_s": 1.09,
-      "stderr_tail": "ated environment: venv+pip...\n* Installing packages in isolated environment:\n  - hatchling\n* Getting build dependencies for sdist...\nERROR Backend 'setuptools.build_meta:__legacy__' is not available.\n"
+      "status": "pass",
+      "wheel": true,
+      "sdist": true,
+      "duration_s": 0.89
     },
     {
       "slug": "meek-human-orb-resonance-mcp",
-      "status": "build-fail",
-      "wheel": false,
-      "sdist": false,
-      "duration_s": 1.07,
-      "stderr_tail": "ated environment: venv+pip...\n* Installing packages in isolated environment:\n  - hatchling\n* Getting build dependencies for sdist...\nERROR Backend 'setuptools.build_meta:__legacy__' is not available.\n"
+      "status": "pass",
+      "wheel": true,
+      "sdist": true,
+      "duration_s": 0.98
     },
     {
       "slug": "meek-humanoid-mcp",
-      "status": "build-fail",
-      "wheel": false,
-      "sdist": false,
-      "duration_s": 0.99,
-      "stderr_tail": "ated environment: venv+pip...\n* Installing packages in isolated environment:\n  - hatchling\n* Getting build dependencies for sdist...\nERROR Backend 'setuptools.build_meta:__legacy__' is not available.\n"
+      "status": "pass",
+      "wheel": true,
+      "sdist": true,
+      "duration_s": 0.99
     },
     {
       "slug": "meek-hybrid-roadmap-mcp",
-      "status": "build-fail",
-      "wheel": false,
-      "sdist": false,
-      "duration_s": 0.98,
-      "stderr_tail": "ated environment: venv+pip...\n* Installing packages in isolated environment:\n  - hatchling\n* Getting build dependencies for sdist...\nERROR Backend 'setuptools.build_meta:__legacy__' is not available.\n"
+      "status": "pass",
+      "wheel": true,
+      "sdist": true,
+      "duration_s": 0.89
     },
     {
       "slug": "meek-intuitive-frequency-mcp",
-      "status": "build-fail",
-      "wheel": false,
-      "sdist": false,
-      "duration_s": 1.0,
-      "stderr_tail": "ated environment: venv+pip...\n* Installing packages in isolated environment:\n  - hatchling\n* Getting build dependencies for sdist...\nERROR Backend 'setuptools.build_meta:__legacy__' is not available.\n"
+      "status": "pass",
+      "wheel": true,
+      "sdist": true,
+      "duration_s": 0.89
     },
     {
       "slug": "meek-ki-cad-mcp",
-      "status": "build-fail",
-      "wheel": false,
-      "sdist": false,
-      "duration_s": 1.0,
-      "stderr_tail": "ated environment: venv+pip...\n* Installing packages in isolated environment:\n  - hatchling\n* Getting build dependencies for sdist...\nERROR Backend 'setuptools.build_meta:__legacy__' is not available.\n"
+      "status": "pass",
+      "wheel": true,
+      "sdist": true,
+      "duration_s": 0.88
     },
     {
       "slug": "meek-leanstral-mcp",
-      "status": "build-fail",
-      "wheel": false,
-      "sdist": false,
-      "duration_s": 0.97,
-      "stderr_tail": "ated environment: venv+pip...\n* Installing packages in isolated environment:\n  - hatchling\n* Getting build dependencies for sdist...\nERROR Backend 'setuptools.build_meta:__legacy__' is not available.\n"
+      "status": "pass",
+      "wheel": true,
+      "sdist": true,
+      "duration_s": 0.89
     },
     {
       "slug": "meek-lora-radar-mcp",
-      "status": "build-fail",
-      "wheel": false,
-      "sdist": false,
-      "duration_s": 0.91,
-      "stderr_tail": "ated environment: venv+pip...\n* Installing packages in isolated environment:\n  - hatchling\n* Getting build dependencies for sdist...\nERROR Backend 'setuptools.build_meta:__legacy__' is not available.\n"
+      "status": "pass",
+      "wheel": true,
+      "sdist": true,
+      "duration_s": 0.88
     },
     {
       "slug": "meek-materials-mcp",
-      "status": "build-fail",
-      "wheel": false,
-      "sdist": false,
-      "duration_s": 0.96,
-      "stderr_tail": "ated environment: venv+pip...\n* Installing packages in isolated environment:\n  - hatchling\n* Getting build dependencies for sdist...\nERROR Backend 'setuptools.build_meta:__legacy__' is not available.\n"
+      "status": "pass",
+      "wheel": true,
+      "sdist": true,
+      "duration_s": 0.9
     },
     {
       "slug": "meek-onboarding-mcp",
-      "status": "build-fail",
-      "wheel": false,
-      "sdist": false,
-      "duration_s": 1.35,
-      "stderr_tail": "ated environment: venv+pip...\n* Installing packages in isolated environment:\n  - hatchling\n* Getting build dependencies for sdist...\nERROR Backend 'setuptools.build_meta:__legacy__' is not available.\n"
+      "status": "pass",
+      "wheel": true,
+      "sdist": true,
+      "duration_s": 0.92
     },
     {
       "slug": "meek-optics-mcp",
-      "status": "build-fail",
-      "wheel": false,
-      "sdist": false,
-      "duration_s": 1.05,
-      "stderr_tail": "ated environment: venv+pip...\n* Installing packages in isolated environment:\n  - hatchling\n* Getting build dependencies for sdist...\nERROR Backend 'setuptools.build_meta:__legacy__' is not available.\n"
+      "status": "pass",
+      "wheel": true,
+      "sdist": true,
+      "duration_s": 0.92
     },
     {
       "slug": "meek-orb-mesh-mcp",
-      "status": "build-fail",
-      "wheel": false,
-      "sdist": false,
-      "duration_s": 0.88,
-      "stderr_tail": "ated environment: venv+pip...\n* Installing packages in isolated environment:\n  - hatchling\n* Getting build dependencies for sdist...\nERROR Backend 'setuptools.build_meta:__legacy__' is not available.\n"
+      "status": "pass",
+      "wheel": true,
+      "sdist": true,
+      "duration_s": 0.88
     },
     {
       "slug": "meek-pdca-planning-mcp",
-      "status": "build-fail",
-      "wheel": false,
-      "sdist": false,
-      "duration_s": 1.02,
-      "stderr_tail": "ated environment: venv+pip...\n* Installing packages in isolated environment:\n  - hatchling\n* Getting build dependencies for sdist...\nERROR Backend 'setuptools.build_meta:__legacy__' is not available.\n"
+      "status": "pass",
+      "wheel": true,
+      "sdist": true,
+      "duration_s": 0.91
     },
     {
       "slug": "meek-pixelbuddy-integration-mcp",
-      "status": "build-fail",
-      "wheel": false,
-      "sdist": false,
-      "duration_s": 0.99,
-      "stderr_tail": "ated environment: venv+pip...\n* Installing packages in isolated environment:\n  - hatchling\n* Getting build dependencies for sdist...\nERROR Backend 'setuptools.build_meta:__legacy__' is not available.\n"
+      "status": "pass",
+      "wheel": true,
+      "sdist": true,
+      "duration_s": 0.85
     },
     {
       "slug": "meek-poc-prioritizer-mcp",
-      "status": "build-fail",
-      "wheel": false,
-      "sdist": false,
-      "duration_s": 0.97,
-      "stderr_tail": "ated environment: venv+pip...\n* Installing packages in isolated environment:\n  - hatchling\n* Getting build dependencies for sdist...\nERROR Backend 'setuptools.build_meta:__legacy__' is not available.\n"
+      "status": "pass",
+      "wheel": true,
+      "sdist": true,
+      "duration_s": 0.91
     },
     {
       "slug": "meek-quantum-dream-mcp",
-      "status": "build-fail",
-      "wheel": false,
-      "sdist": false,
-      "duration_s": 1.05,
-      "stderr_tail": "ated environment: venv+pip...\n* Installing packages in isolated environment:\n  - hatchling\n* Getting build dependencies for sdist...\nERROR Backend 'setuptools.build_meta:__legacy__' is not available.\n"
+      "status": "pass",
+      "wheel": true,
+      "sdist": true,
+      "duration_s": 0.89
     },
     {
       "slug": "meek-regulation-temple-mcp",
-      "status": "build-fail",
-      "wheel": false,
-      "sdist": false,
-      "duration_s": 1.75,
-      "stderr_tail": "ated environment: venv+pip...\n* Installing packages in isolated environment:\n  - hatchling\n* Getting build dependencies for sdist...\nERROR Backend 'setuptools.build_meta:__legacy__' is not available.\n"
+      "status": "pass",
+      "wheel": true,
+      "sdist": true,
+      "duration_s": 0.94
     },
     {
       "slug": "meek-sacred-geometry-mcp",
-      "status": "build-fail",
-      "wheel": false,
-      "sdist": false,
-      "duration_s": 1.79,
-      "stderr_tail": "ated environment: venv+pip...\n* Installing packages in isolated environment:\n  - hatchling\n* Getting build dependencies for sdist...\nERROR Backend 'setuptools.build_meta:__legacy__' is not available.\n"
+      "status": "pass",
+      "wheel": true,
+      "sdist": true,
+      "duration_s": 0.98
     },
     {
       "slug": "meek-screen-reader-mcp",
-      "status": "build-fail",
-      "wheel": false,
-      "sdist": false,
-      "duration_s": 1.67,
-      "stderr_tail": "ated environment: venv+pip...\n* Installing packages in isolated environment:\n  - hatchling\n* Getting build dependencies for sdist...\nERROR Backend 'setuptools.build_meta:__legacy__' is not available.\n"
+      "status": "pass",
+      "wheel": true,
+      "sdist": true,
+      "duration_s": 0.86
     },
     {
       "slug": "meek-sessions-tasks-mcp",
-      "status": "build-fail",
-      "wheel": false,
-      "sdist": false,
-      "duration_s": 1.01,
-      "stderr_tail": "ated environment: venv+pip...\n* Installing packages in isolated environment:\n  - hatchling\n* Getting build dependencies for sdist...\nERROR Backend 'setuptools.build_meta:__legacy__' is not available.\n"
+      "status": "pass",
+      "wheel": true,
+      "sdist": true,
+      "duration_s": 0.89
     },
     {
       "slug": "meek-shipped-status-mcp",
-      "status": "build-fail",
-      "wheel": false,
-      "sdist": false,
-      "duration_s": 0.95,
-      "stderr_tail": "ated environment: venv+pip...\n* Installing packages in isolated environment:\n  - hatchling\n* Getting build dependencies for sdist...\nERROR Backend 'setuptools.build_meta:__legacy__' is not available.\n"
+      "status": "pass",
+      "wheel": true,
+      "sdist": true,
+      "duration_s": 0.87
     },
     {
       "slug": "meek-silica-memory-mcp",
-      "status": "build-fail",
-      "wheel": false,
-      "sdist": false,
-      "duration_s": 1.02,
-      "stderr_tail": "ated environment: venv+pip...\n* Installing packages in isolated environment:\n  - hatchling\n* Getting build dependencies for sdist...\nERROR Backend 'setuptools.build_meta:__legacy__' is not available.\n"
+      "status": "pass",
+      "wheel": true,
+      "sdist": true,
+      "duration_s": 0.91
     },
     {
       "slug": "meek-simulation-mcp",
-      "status": "build-fail",
-      "wheel": false,
-      "sdist": false,
-      "duration_s": 1.01,
-      "stderr_tail": "ated environment: venv+pip...\n* Installing packages in isolated environment:\n  - hatchling\n* Getting build dependencies for sdist...\nERROR Backend 'setuptools.build_meta:__legacy__' is not available.\n"
+      "status": "pass",
+      "wheel": true,
+      "sdist": true,
+      "duration_s": 0.89
     },
     {
       "slug": "meek-sov-os-frontend-mcp",
-      "status": "build-fail",
-      "wheel": false,
-      "sdist": false,
-      "duration_s": 0.92,
-      "stderr_tail": "ated environment: venv+pip...\n* Installing packages in isolated environment:\n  - hatchling\n* Getting build dependencies for sdist...\nERROR Backend 'setuptools.build_meta:__legacy__' is not available.\n"
+      "status": "pass",
+      "wheel": true,
+      "sdist": true,
+      "duration_s": 0.9
     },
     {
       "slug": "meek-sov-os-gamification-mcp",
-      "status": "build-fail",
-      "wheel": false,
-      "sdist": false,
-      "duration_s": 0.95,
-      "stderr_tail": "ated environment: venv+pip...\n* Installing packages in isolated environment:\n  - hatchling\n* Getting build dependencies for sdist...\nERROR Backend 'setuptools.build_meta:__legacy__' is not available.\n"
+      "status": "pass",
+      "wheel": true,
+      "sdist": true,
+      "duration_s": 0.88
     },
     {
       "slug": "meek-sov-os-permissions-mcp",
-      "status": "build-fail",
-      "wheel": false,
-      "sdist": false,
-      "duration_s": 0.98,
-      "stderr_tail": "ated environment: venv+pip...\n* Installing packages in isolated environment:\n  - hatchling\n* Getting build dependencies for sdist...\nERROR Backend 'setuptools.build_meta:__legacy__' is not available.\n"
+      "status": "pass",
+      "wheel": true,
+      "sdist": true,
+      "duration_s": 0.91
     },
     {
       "slug": "meek-sov-os-tui-mcp",
-      "status": "build-fail",
-      "wheel": false,
-      "sdist": false,
-      "duration_s": 0.99,
-      "stderr_tail": "ated environment: venv+pip...\n* Installing packages in isolated environment:\n  - hatchling\n* Getting build dependencies for sdist...\nERROR Backend 'setuptools.build_meta:__legacy__' is not available.\n"
+      "status": "pass",
+      "wheel": true,
+      "sdist": true,
+      "duration_s": 0.92
     },
     {
       "slug": "meek-sov-os-workflow-engine-mcp",
-      "status": "build-fail",
-      "wheel": false,
-      "sdist": false,
-      "duration_s": 1.11,
-      "stderr_tail": "ated environment: venv+pip...\n* Installing packages in isolated environment:\n  - hatchling\n* Getting build dependencies for sdist...\nERROR Backend 'setuptools.build_meta:__legacy__' is not available.\n"
+      "status": "pass",
+      "wheel": true,
+      "sdist": true,
+      "duration_s": 0.88
     },
     {
       "slug": "meek-sov-os-world-mcp",
-      "status": "build-fail",
-      "wheel": false,
-      "sdist": false,
-      "duration_s": 1.13,
-      "stderr_tail": "ated environment: venv+pip...\n* Installing packages in isolated environment:\n  - hatchling\n* Getting build dependencies for sdist...\nERROR Backend 'setuptools.build_meta:__legacy__' is not available.\n"
+      "status": "pass",
+      "wheel": true,
+      "sdist": true,
+      "duration_s": 0.9
     },
     {
       "slug": "meek-sov-space-mcp",
-      "status": "build-fail",
-      "wheel": false,
-      "sdist": false,
-      "duration_s": 0.99,
-      "stderr_tail": "ated environment: venv+pip...\n* Installing packages in isolated environment:\n  - hatchling\n* Getting build dependencies for sdist...\nERROR Backend 'setuptools.build_meta:__legacy__' is not available.\n"
+      "status": "pass",
+      "wheel": true,
+      "sdist": true,
+      "duration_s": 0.93
     },
     {
       "slug": "meek-sov3-cube-synthesis-mcp",
-      "status": "build-fail",
-      "wheel": false,
-      "sdist": false,
-      "duration_s": 1.04,
-      "stderr_tail": "ated environment: venv+pip...\n* Installing packages in isolated environment:\n  - hatchling\n* Getting build dependencies for sdist...\nERROR Backend 'setuptools.build_meta:__legacy__' is not available.\n"
+      "status": "pass",
+      "wheel": true,
+      "sdist": true,
+      "duration_s": 0.91
     },
     {
       "slug": "meek-sov3-oowm-mcp",
-      "status": "build-fail",
-      "wheel": false,
-      "sdist": false,
-      "duration_s": 1.04,
-      "stderr_tail": "ated environment: venv+pip...\n* Installing packages in isolated environment:\n  - hatchling\n* Getting build dependencies for sdist...\nERROR Backend 'setuptools.build_meta:__legacy__' is not available.\n"
+      "status": "pass",
+      "wheel": true,
+      "sdist": true,
+      "duration_s": 0.88
     },
     {
       "slug": "meek-sov3-orchestrator-mcp",
-      "status": "build-fail",
-      "wheel": false,
-      "sdist": false,
-      "duration_s": 1.04,
-      "stderr_tail": "ated environment: venv+pip...\n* Installing packages in isolated environment:\n  - hatchling\n* Getting build dependencies for sdist...\nERROR Backend 'setuptools.build_meta:__legacy__' is not available.\n"
+      "status": "pass",
+      "wheel": true,
+      "sdist": true,
+      "duration_s": 0.86
     },
     {
       "slug": "meek-sovereign-body-mcp",
-      "status": "build-fail",
-      "wheel": false,
-      "sdist": false,
-      "duration_s": 1.07,
-      "stderr_tail": "ated environment: venv+pip...\n* Installing packages in isolated environment:\n  - hatchling\n* Getting build dependencies for sdist...\nERROR Backend 'setuptools.build_meta:__legacy__' is not available.\n"
+      "status": "pass",
+      "wheel": true,
+      "sdist": true,
+      "duration_s": 0.92
     },
     {
       "slug": "meek-stacked-overview-mcp",
-      "status": "build-fail",
-      "wheel": false,
-      "sdist": false,
-      "duration_s": 1.03,
-      "stderr_tail": "ated environment: venv+pip...\n* Installing packages in isolated environment:\n  - hatchling\n* Getting build dependencies for sdist...\nERROR Backend 'setuptools.build_meta:__legacy__' is not available.\n"
+      "status": "pass",
+      "wheel": true,
+      "sdist": true,
+      "duration_s": 0.86
     },
     {
       "slug": "meek-stone-soup-mcp",
-      "status": "build-fail",
-      "wheel": false,
-      "sdist": false,
-      "duration_s": 1.02,
-      "stderr_tail": "ated environment: venv+pip...\n* Installing packages in isolated environment:\n  - hatchling\n* Getting build dependencies for sdist...\nERROR Backend 'setuptools.build_meta:__legacy__' is not available.\n"
+      "status": "pass",
+      "wheel": true,
+      "sdist": true,
+      "duration_s": 0.89
     },
     {
       "slug": "meek-tracecat-mcp",
-      "status": "build-fail",
-      "wheel": false,
-      "sdist": false,
-      "duration_s": 1.03,
-      "stderr_tail": "ated environment: venv+pip...\n* Installing packages in isolated environment:\n  - hatchling\n* Getting build dependencies for sdist...\nERROR Backend 'setuptools.build_meta:__legacy__' is not available.\n"
+      "status": "pass",
+      "wheel": true,
+      "sdist": true,
+      "duration_s": 0.92
     },
     {
       "slug": "meek-transcendent-emergence-mcp",
-      "status": "build-fail",
-      "wheel": false,
-      "sdist": false,
-      "duration_s": 1.03,
-      "stderr_tail": "ated environment: venv+pip...\n* Installing packages in isolated environment:\n  - hatchling\n* Getting build dependencies for sdist...\nERROR Backend 'setuptools.build_meta:__legacy__' is not available.\n"
+      "status": "pass",
+      "wheel": true,
+      "sdist": true,
+      "duration_s": 0.92
     },
     {
       "slug": "meek-truth-check-mcp",
-      "status": "build-fail",
-      "wheel": false,
-      "sdist": false,
-      "duration_s": 1.14,
-      "stderr_tail": "ated environment: venv+pip...\n* Installing packages in isolated environment:\n  - hatchling\n* Getting build dependencies for sdist...\nERROR Backend 'setuptools.build_meta:__legacy__' is not available.\n"
+      "status": "pass",
+      "wheel": true,
+      "sdist": true,
+      "duration_s": 0.94
     },
     {
       "slug": "meek-wifi-csi-mcp",
-      "status": "build-fail",
-      "wheel": false,
-      "sdist": false,
-      "duration_s": 1.09,
-      "stderr_tail": "ated environment: venv+pip...\n* Installing packages in isolated environment:\n  - hatchling\n* Getting build dependencies for sdist...\nERROR Backend 'setuptools.build_meta:__legacy__' is not available.\n"
+      "status": "pass",
+      "wheel": true,
+      "sdist": true,
+      "duration_s": 0.9
     },
     {
       "slug": "meek-world-data-mcp",
-      "status": "build-fail",
-      "wheel": false,
-      "sdist": false,
-      "duration_s": 0.98,
-      "stderr_tail": "ated environment: venv+pip...\n* Installing packages in isolated environment:\n  - hatchling\n* Getting build dependencies for sdist...\nERROR Backend 'setuptools.build_meta:__legacy__' is not available.\n"
+      "status": "pass",
+      "wheel": true,
+      "sdist": true,
+      "duration_s": 0.86
     },
     {
       "slug": "meek-wow-bot-mcp",
-      "status": "build-fail",
-      "wheel": false,
-      "sdist": false,
-      "duration_s": 1.04,
-      "stderr_tail": "ated environment: venv+pip...\n* Installing packages in isolated environment:\n  - hatchling\n* Getting build dependencies for sdist...\nERROR Backend 'setuptools.build_meta:__legacy__' is not available.\n"
+      "status": "pass",
+      "wheel": true,
+      "sdist": true,
+      "duration_s": 0.86
     },
     {
       "slug": "meeting-summarizer-ai-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.58
+      "duration_s": 0.35
     },
     {
       "slug": "memory-search-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.42
+      "duration_s": 0.34
     },
     {
       "slug": "meok-aaif-agent-card-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 3.06
+      "duration_s": 0.87
     },
     {
       "slug": "meok-abci-bridge-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 3.12
+      "duration_s": 0.88
     },
     {
       "slug": "meok-agents-md-lint-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.98
+      "duration_s": 0.91
     },
     {
       "slug": "meok-ai-treaty-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 3.03
+      "duration_s": 0.88
     },
     {
       "slug": "meok-allmi-hiab-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 3.45
+      "duration_s": 0.87
     },
     {
       "slug": "meok-ap2-mandate-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 3.03
+      "duration_s": 0.86
     },
     {
       "slug": "meok-aquaponics-monitor-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.29
+      "duration_s": 0.33
     },
     {
       "slug": "meok-article-50-kit-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 3.18
+      "duration_s": 0.86
     },
     {
       "slug": "meok-asc-rspca-crosswalk-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.33
+      "duration_s": 0.35
     },
     {
       "slug": "meok-bs7121-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.97
+      "duration_s": 0.88
     },
     {
       "slug": "meok-c2pa-durable-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 3.1
+      "duration_s": 0.91
     },
     {
       "slug": "meok-c2pa-watermark-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 3.16
+      "duration_s": 0.88
     },
     {
       "slug": "meok-coinbase-x402-receipt-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.93
+      "duration_s": 0.88
     },
     {
       "slug": "meok-cold-chain-pharma-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 3.07
+      "duration_s": 0.92
     },
     {
       "slug": "meok-cpa-contract-lift-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 3.16
+      "duration_s": 0.9
     },
     {
       "slug": "meok-cra-annex-iv-classifier-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.33
+      "duration_s": 0.37
     },
     {
       "slug": "meok-cra-art14-reporter-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 3.1
+      "duration_s": 1.04
     },
     {
       "slug": "meok-credential-manager-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.36
+      "duration_s": 0.52
     },
     {
       "slug": "meok-defoneos-geospatial-intel-mcp",
-      "status": "build-fail",
-      "wheel": false,
-      "sdist": false,
-      "duration_s": 0.98,
-      "stderr_tail": "ated environment: venv+pip...\n* Installing packages in isolated environment:\n  - hatchling\n* Getting build dependencies for sdist...\nERROR Backend 'setuptools.build_meta:__legacy__' is not available.\n"
+      "status": "pass",
+      "wheel": true,
+      "sdist": true,
+      "duration_s": 0.98
     },
     {
       "slug": "meok-defoneos-mcp",
-      "status": "build-fail",
-      "wheel": false,
-      "sdist": false,
-      "duration_s": 1.11,
-      "stderr_tail": "ated environment: venv+pip...\n* Installing packages in isolated environment:\n  - hatchling\n* Getting build dependencies for sdist...\nERROR Backend 'setuptools.build_meta:__legacy__' is not available.\n"
+      "status": "pass",
+      "wheel": true,
+      "sdist": true,
+      "duration_s": 1.0
     },
     {
       "slug": "meok-dpia-edpb-template-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.33
+      "duration_s": 0.36
     },
     {
       "slug": "meok-drcf-agent-crosswalk-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.16
+      "duration_s": 0.34
     },
     {
       "slug": "meok-dvsa-olicence-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.87
+      "duration_s": 0.88
     },
     {
       "slug": "meok-emerald-tablet-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.41
+      "duration_s": 0.37
     },
     {
       "slug": "meok-eu-ai-act-2-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.94
+      "duration_s": 1.11
     },
     {
       "slug": "meok-eu-ai-act-art-13-ifu-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.9
+      "duration_s": 1.05
     },
     {
       "slug": "meok-eu-ai-act-art-26-fria-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.9
+      "duration_s": 0.88
     },
     {
       "slug": "meok-eu-aia-art-9-rms-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 3.6
+      "duration_s": 0.87
     },
     {
       "slug": "meok-eu-aigc-icon-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.85
+      "duration_s": 0.89
     },
     {
       "slug": "meok-eu-mobility-package-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.87
+      "duration_s": 0.86
     },
     {
       "slug": "meok-eu-platform-worker-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 3.18
+      "duration_s": 0.95
     },
     {
       "slug": "meok-ev-recall-transport-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.98
+      "duration_s": 0.87
     },
     {
       "slug": "meok-fmcsa-hours-of-service-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.83
+      "duration_s": 0.88
     },
     {
       "slug": "meok-fors-clocs-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 3.03
+      "duration_s": 0.91
     },
     {
       "slug": "meok-gaming-eve-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 3.06
+      "duration_s": 0.9
     },
     {
       "slug": "meok-gaming-ffxiv-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.87
+      "duration_s": 0.87
     },
     {
       "slug": "meok-gaming-minecraft-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.94
+      "duration_s": 1.03
     },
     {
       "slug": "meok-gaming-osrs-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.94
+      "duration_s": 1.0
     },
     {
       "slug": "meok-gaming-wow-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 3.59
+      "duration_s": 0.91
     },
     {
       "slug": "meok-governance-engine-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.5
+      "duration_s": 0.36
     },
     {
       "slug": "meok-haulage-governance-bridge-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.9
+      "duration_s": 0.87
     },
     {
       "slug": "meok-iata-dgr-air-cargo-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 3.55
+      "duration_s": 0.93
     },
     {
       "slug": "meok-imo-marpol-marine-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 3.05
+      "duration_s": 0.95
     },
     {
       "slug": "meok-iru-tir-international-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 3.04
+      "duration_s": 0.91
     },
     {
       "slug": "meok-koikeeper-ai-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.82
+      "duration_s": 0.36
     },
     {
       "slug": "meok-laia-aquatic-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.56
+      "duration_s": 0.34
     },
     {
       "slug": "meok-law-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.33
+      "duration_s": 0.35
     },
     {
       "slug": "meok-libp2p-agent-mesh-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 3.38
+      "duration_s": 0.88
     },
     {
       "slug": "meok-livestock-welfare-transport-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 3.18
+      "duration_s": 0.88
     },
     {
       "slug": "meok-mcp-cardgen-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 3.01
+      "duration_s": 0.87
     },
     {
       "slug": "meok-mcp-hardening-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 3.19
+      "duration_s": 0.89
     },
     {
       "slug": "meok-mcp-injection-scan-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.4
+      "duration_s": 0.4
     },
     {
       "slug": "meok-mcp-test-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 3.58
+      "duration_s": 0.87
     },
     {
       "slug": "meok-nhvr-australia-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.96
+      "duration_s": 0.88
     },
     {
       "slug": "meok-nis2-de-register-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.23
+      "duration_s": 0.36
     },
     {
       "slug": "meok-omnibus-tracker-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.33
+      "duration_s": 0.34
     },
     {
       "slug": "meok-os-mcp",
-      "status": "build-fail",
-      "wheel": false,
-      "sdist": false,
-      "duration_s": 1.13,
-      "stderr_tail": "ated environment: venv+pip...\n* Installing packages in isolated environment:\n  - hatchling\n* Getting build dependencies for sdist...\nERROR Backend 'setuptools.build_meta:__legacy__' is not available.\n"
+      "status": "pass",
+      "wheel": true,
+      "sdist": true,
+      "duration_s": 0.9
     },
     {
       "slug": "meok-rail-freight-uk-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.99
+      "duration_s": 0.96
     },
     {
       "slug": "meok-rspca-aquaculture-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.31
+      "duration_s": 0.4
     },
     {
       "slug": "meok-sovereign-avatar-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.72
+      "duration_s": 0.98
     },
     {
       "slug": "meok-sovereign-council-mcp",
-      "status": "pass",
-      "wheel": true,
-      "sdist": true,
-      "duration_s": 2.92
+      "status": "build-fail",
+      "wheel": false,
+      "sdist": false,
+      "duration_s": 0.17,
+      "stderr_tail": "roject.toml config: `project.classifiers[3]`.\nconfiguration error: `project.classifiers[3]` must be trove-classifier\nERROR Backend subprocess exited when trying to invoke get_requires_for_build_sdist\n"
     },
     {
       "slug": "meok-sovereign-defence-mcp",
@@ -2490,28 +2511,28 @@
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.78
+      "duration_s": 0.88
     },
     {
       "slug": "meok-sovereign-globe-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.95
+      "duration_s": 0.91
     },
     {
       "slug": "meok-sovereign-governance-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.85
+      "duration_s": 0.9
     },
     {
       "slug": "meok-sovereign-guardrails-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.67
+      "duration_s": 0.89
     },
     {
       "slug": "meok-sovereign-honour-mcp",
@@ -2560,14 +2581,14 @@
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.68
+      "duration_s": 0.9
     },
     {
       "slug": "meok-sovereign-passport-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.57
+      "duration_s": 1.05
     },
     {
       "slug": "meok-sovereign-pond-mcp",
@@ -2581,7 +2602,7 @@
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.92
+      "duration_s": 1.05
     },
     {
       "slug": "meok-sovereign-satellite-mcp",
@@ -2595,211 +2616,211 @@
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.72
+      "duration_s": 0.97
     },
     {
       "slug": "meok-sovereign-worm-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.7
+      "duration_s": 1.05
     },
     {
       "slug": "meok-sovereign-x402-payment-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.64
+      "duration_s": 1.38
     },
     {
       "slug": "meok-stripe-acp-checkout-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 3.03
+      "duration_s": 1.27
     },
     {
       "slug": "meok-supply-chain-attestation-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.69
+      "duration_s": 1.03
     },
     {
       "slug": "meok-tacho-audit-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.96
+      "duration_s": 1.07
     },
     {
       "slug": "meok-transport-canada-hos-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 3.33
+      "duration_s": 0.94
     },
     {
       "slug": "meok-uae-rta-transport-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 3.0
+      "duration_s": 0.89
     },
     {
       "slug": "meok-uas-commercial-drone-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 3.01
+      "duration_s": 0.89
     },
     {
       "slug": "meok-uk-adm-article22c-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.4
+      "duration_s": 0.36
     },
     {
       "slug": "meok-uk-fhi-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.44
+      "duration_s": 0.34
     },
     {
       "slug": "meok-uk-phv-tfl-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.94
+      "duration_s": 0.9
     },
     {
       "slug": "meok-vehicle-handover-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.96
+      "duration_s": 0.9
     },
     {
       "slug": "meok-w3c-tdm-rights-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.95
+      "duration_s": 0.92
     },
     {
       "slug": "meok-watermark-attest-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.52
+      "duration_s": 0.38
     },
     {
       "slug": "meok-x402-wrap-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.91
+      "duration_s": 0.89
     },
     {
       "slug": "metoffice-weather-mcp",
       "status": "build-fail",
       "wheel": false,
       "sdist": false,
-      "duration_s": 1.08,
-      "stderr_tail": "environment: venv+pip...\n* Installing packages in isolated environment:\n  - setuptools\n* Getting build dependencies for sdist...\nERROR Backend 'setuptools.backends._legacy:_Backend' is not available.\n"
+      "duration_s": 0.14,
+      "stderr_tail": "* Getting build dependencies for sdist...\nERROR Backend 'setuptools.backends._legacy:_Backend' is not available.\n"
     },
     {
       "slug": "mhra-samd-optometry-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.22
+      "duration_s": 0.34
     },
     {
       "slug": "mica-crypto-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.21
+      "duration_s": 0.33
     },
     {
       "slug": "mifid-ii-ai-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.64
+      "duration_s": 0.33
     },
     {
       "slug": "mismo-bridge-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.2
+      "duration_s": 0.33
     },
     {
       "slug": "mitre-atlas-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.22
+      "duration_s": 0.34
     },
     {
       "slug": "mitre-attack-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.25
+      "duration_s": 0.35
     },
     {
       "slug": "mock-server-ai-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.38
+      "duration_s": 0.37
     },
     {
       "slug": "model-scoreboard-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.22
+      "duration_s": 0.36
     },
     {
       "slug": "mortgage-calculator-ai-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.22
+      "duration_s": 0.36
     },
     {
       "slug": "mqtt-bridge-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.2
+      "duration_s": 0.32
     },
     {
       "slug": "muckaway-ai-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.43
+      "duration_s": 0.35
     },
     {
       "slug": "music-production-ai-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.54
+      "duration_s": 0.35
     },
     {
       "slug": "nacha-bridge-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.27
+      "duration_s": 0.32
     },
     {
       "slug": "national-rail-darwin-mcp",
@@ -2813,7 +2834,7 @@
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.18
+      "duration_s": 0.36
     },
     {
       "slug": "nhs-digital-mcp",
@@ -2827,63 +2848,63 @@
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.24
+      "duration_s": 0.33
     },
     {
       "slug": "nis2-compliance-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 4.19
+      "duration_s": 0.35
     },
     {
       "slug": "nist-iso42001-crosswalk-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.83
+      "duration_s": 0.9
     },
     {
       "slug": "nist-rmf-ai-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.15
+      "duration_s": 0.36
     },
     {
       "slug": "note-taking-ai-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.12
+      "duration_s": 0.34
     },
     {
       "slug": "notification-ai-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.2
+      "duration_s": 0.34
     },
     {
       "slug": "nrswa-ai-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.12
+      "duration_s": 0.34
     },
     {
       "slug": "nutrition-tracker-ai-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.06
+      "duration_s": 0.34
     },
     {
       "slug": "oasf-agent-directory-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.73
+      "duration_s": 0.9
     },
     {
       "slug": "ons-statistics-mcp",
@@ -2911,28 +2932,28 @@
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.32
+      "duration_s": 0.35
     },
     {
       "slug": "optometry-ai-safety-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.52
+      "duration_s": 0.37
     },
     {
       "slug": "optometry-patient-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.28
+      "duration_s": 0.34
     },
     {
       "slug": "oracle-bridge-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.13
+      "duration_s": 0.32
     },
     {
       "slug": "os-opendata-mcp",
@@ -2946,245 +2967,245 @@
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.37
+      "duration_s": 0.87
     },
     {
       "slug": "otp-ai-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.4
+      "duration_s": 0.36
     },
     {
       "slug": "owasp-agentic-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.3
+      "duration_s": 0.34
     },
     {
       "slug": "password-ai-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.22
+      "duration_s": 0.34
     },
     {
       "slug": "patient-safety-ai-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.23
+      "duration_s": 0.35
     },
     {
       "slug": "pci-dss-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.15
+      "duration_s": 0.33
     },
     {
       "slug": "pdf-document-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.33
+      "duration_s": 0.34
     },
     {
       "slug": "pdf-merge-ai-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.22
+      "duration_s": 0.34
     },
     {
       "slug": "pdf-tools-ai-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.54
+      "duration_s": 0.34
     },
     {
       "slug": "performance-ai-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.31
+      "duration_s": 0.39
     },
     {
       "slug": "personal-finance-ai-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.16
+      "duration_s": 0.33
     },
     {
       "slug": "pet-care-ai-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.48
+      "duration_s": 0.34
     },
     {
       "slug": "photography-ai-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.16
+      "duration_s": 0.33
     },
     {
       "slug": "plagiarism-checker-ai-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.21
+      "duration_s": 0.34
     },
     {
       "slug": "planthire-ai-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.27
+      "duration_s": 0.33
     },
     {
       "slug": "pomodoro-ai-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.38
+      "duration_s": 0.34
     },
     {
       "slug": "price-tracker-ai-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.34
+      "duration_s": 0.34
     },
     {
       "slug": "project-management-ai-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.29
+      "duration_s": 0.34
     },
     {
       "slug": "proofof-ai-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.24
+      "duration_s": 0.35
     },
     {
       "slug": "qidi-printer-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.14
+      "duration_s": 0.33
     },
     {
       "slug": "qr-code-ai-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.39
+      "duration_s": 0.35
     },
     {
       "slug": "quantum-scoring-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.24
+      "duration_s": 0.37
     },
     {
       "slug": "quiz-generator-ai-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.07
+      "duration_s": 0.36
     },
     {
       "slug": "rag-knowledge-graph-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.2
+      "duration_s": 0.35
     },
     {
       "slug": "rag-knowledge-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.03
+      "duration_s": 0.33
     },
     {
       "slug": "readme-generator-ai-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.35
+      "duration_s": 0.34
     },
     {
       "slug": "real-estate-listing-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.36
+      "duration_s": 0.37
     },
     {
       "slug": "recipe-finder-ai-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.36
+      "duration_s": 0.37
     },
     {
       "slug": "recruitment-ai-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.23
+      "duration_s": 0.34
     },
     {
       "slug": "regex-ai-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.17
+      "duration_s": 0.34
     },
     {
       "slug": "regulatory-webhook-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.55
+      "duration_s": 0.36
     },
     {
       "slug": "restaurant-ai-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.19
+      "duration_s": 0.37
     },
     {
       "slug": "resume-parser-ai-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.12
+      "duration_s": 0.34
     },
     {
       "slug": "risk-assessment-ai-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.16
+      "duration_s": 0.33
     },
     {
       "slug": "robotics-control-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.33
+      "duration_s": 0.33
     },
     {
       "slug": "rtsp-camera-mcp",
@@ -3198,50 +3219,49 @@
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.65
+      "duration_s": 0.32
     },
     {
       "slug": "sbom-cyclonedx-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 3.84
+      "duration_s": 0.34
     },
     {
       "slug": "scada-bridge-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 3.56
+      "duration_s": 0.32
     },
     {
       "slug": "scam-detector-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 3.67
+      "duration_s": 0.33
     },
     {
       "slug": "schema-validator-ai-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.68
+      "duration_s": 0.33
     },
     {
       "slug": "security-scanner-ai-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.45
+      "duration_s": 0.34
     },
     {
       "slug": "self-healing-infrastructure-mcp",
-      "status": "build-fail",
-      "wheel": false,
-      "sdist": false,
-      "duration_s": 0.09,
-      "stderr_tail": "* Creating isolated environment: venv+pip...\nERROR Failed to parse /Users/nicholas/clawd/mcp-marketplace/self-healing-infrastructure-mcp/pyproject.toml: Invalid statement (at line 29, column 1) \n"
+      "status": "pass",
+      "wheel": true,
+      "sdist": true,
+      "duration_s": 0.33
     },
     {
       "slug": "sensor-community-mcp",
@@ -3255,7 +3275,7 @@
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.5
+      "duration_s": 0.33
     },
     {
       "slug": "sentinel-hub-mcp",
@@ -3269,169 +3289,168 @@
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.44
+      "duration_s": 0.33
     },
     {
       "slug": "sigstore-cosign-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.36
+      "duration_s": 0.33
     },
     {
       "slug": "sip-bridge-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.23
+      "duration_s": 0.31
     },
     {
       "slug": "skip-hire-ai-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.19
+      "duration_s": 0.33
     },
     {
       "slug": "slack-enterprise-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.48
+      "duration_s": 0.33
     },
     {
       "slug": "sleep-tracker-ai-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.24
+      "duration_s": 0.34
     },
     {
       "slug": "slsa-supply-chain-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.18
+      "duration_s": 0.33
     },
     {
       "slug": "slugify-ai-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.34
+      "duration_s": 0.33
     },
     {
       "slug": "soc2-compliance-ai-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.37
+      "duration_s": 0.35
     },
     {
       "slug": "social-media-ai-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.42
+      "duration_s": 0.33
     },
     {
       "slug": "solvency-ii-mcp",
-      "status": "build-fail",
-      "wheel": false,
-      "sdist": false,
-      "duration_s": 1.17,
-      "stderr_tail": "pyproject.toml config: `project.authors[0].email`.\nconfiguration error: `project.authors[0].email` must be idn-email\nERROR Backend subprocess exited when trying to invoke get_requires_for_build_sdist\n"
+      "status": "pass",
+      "wheel": true,
+      "sdist": true,
+      "duration_s": 0.88
     },
     {
       "slug": "sov-model-router-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.16
+      "duration_s": 0.32
     },
     {
       "slug": "sov-model-router-paywalled-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.29
+      "duration_s": 0.33
     },
     {
       "slug": "sql-builder-ai-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.41
+      "duration_s": 0.36
     },
     {
       "slug": "stock-analyzer-ai-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.44
+      "duration_s": 0.34
     },
     {
       "slug": "string-utils-ai-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.31
+      "duration_s": 0.33
     },
     {
       "slug": "stripe-billing-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.29
+      "duration_s": 0.34
     },
     {
       "slug": "subscription-tracker-ai-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.28
+      "duration_s": 0.33
     },
     {
       "slug": "summarizer-ai-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.32
+      "duration_s": 0.33
     },
     {
       "slug": "survey-builder-ai-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.27
+      "duration_s": 0.35
     },
     {
       "slug": "tax-bridge-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.17
+      "duration_s": 0.34
     },
     {
       "slug": "tax-calculator-ai-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.14
+      "duration_s": 0.37
     },
     {
       "slug": "test-case-generator-ai-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.17
+      "duration_s": 0.33
     },
     {
       "slug": "text-stats-ai-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.43
+      "duration_s": 0.33
     },
     {
       "slug": "tfl-unified-mcp",
@@ -3445,49 +3464,49 @@
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.22
+      "duration_s": 0.33
     },
     {
       "slug": "tone-rewriter-ai-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.05
+      "duration_s": 0.33
     },
     {
       "slug": "translation-ai-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.18
+      "duration_s": 0.33
     },
     {
       "slug": "translator-pro-ai-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.18
+      "duration_s": 0.33
     },
     {
       "slug": "trust-chain-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.43
+      "duration_s": 0.34
     },
     {
       "slug": "uk-ai-act-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.17
+      "duration_s": 0.32
     },
     {
       "slug": "uk-ai-bill-compliance-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.11
+      "duration_s": 0.34
     },
     {
       "slug": "uk-police-data-mcp",
@@ -3508,98 +3527,98 @@
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.12
+      "duration_s": 0.37
     },
     {
       "slug": "url-ai-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.1
+      "duration_s": 0.36
     },
     {
       "slug": "uuid-ai-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.24
+      "duration_s": 0.33
     },
     {
       "slug": "validator-ai-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.21
+      "duration_s": 0.32
     },
     {
       "slug": "vector-knowledge-graph-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.18
+      "duration_s": 0.34
     },
     {
       "slug": "video-editing-ai-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.21
+      "duration_s": 0.34
     },
     {
       "slug": "voice-audio-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.17
+      "duration_s": 0.34
     },
     {
       "slug": "watermarking-authenticity-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.63
+      "duration_s": 0.35
     },
     {
       "slug": "weather-ai-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.34
+      "duration_s": 0.34
     },
     {
       "slug": "web-research-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.33
+      "duration_s": 0.34
     },
     {
       "slug": "webhook-ai-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.07
+      "duration_s": 0.35
     },
     {
       "slug": "workout-planner-ai-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.31
+      "duration_s": 0.35
     },
     {
       "slug": "writing-assistant-ai-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.5
+      "duration_s": 0.35
     },
     {
       "slug": "yaml-ai-mcp",
       "status": "pass",
       "wheel": true,
       "sdist": true,
-      "duration_s": 2.68
+      "duration_s": 0.37
     }
   ]
 }
