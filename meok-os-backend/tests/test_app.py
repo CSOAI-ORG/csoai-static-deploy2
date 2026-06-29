@@ -174,7 +174,7 @@ def test_dashboard_metrics():
     r = client.get("/v1/dashboard/metrics")
     assert r.status_code == 200
     d = r.json()
-    assert d["tests_pass"] == 467
+    assert d["tests_pass"] == 566  # Updated 2026-06-29 (EAT-26 seal)
     assert d["hives"] == 33
     assert d["generals"] == 12
 
