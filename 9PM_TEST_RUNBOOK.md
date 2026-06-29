@@ -1,217 +1,279 @@
-# 🐉 MEOK WORLD — 9 PM TEST RUNBOOK
+# 9 PM PRE-TEST RUNBOOK — MEOK WORLD
+**Date:** 2026-06-29 → 2026-06-30 transition (T-minus 5 days to public launch)
+**Time:** 21:00 → 22:30 BST (90-minute window)
+**Owner:** Design / UX sub-agent
+**Backup:** Frontend sub-agent
+**Hand-off to:** Launch captain at 22:30 BST
 
-**Date:** 2026-06-29 (Mon) · **Time:** 21:00 BST (9 PM) · **Owner:** Nick Templeman
-
-This is the **step-by-step runbook** for the 9 PM test. The design/UX team takes over at 21:00 BST for 4 days till the **Saturday 4 Jul 09:00 BST public launch**.
-
----
-
-## 🎯 9 PM OBJECTIVES
-
-1. **Visual review** of all 128 pages
-2. **E2E testing** with real browser (playwright when installed)
-3. **Real-world testing** with users
-4. **Final polish** before 4-day countdown
-5. **Document findings** for the team
+> **Mission:** sign off every page, every button, every link of MEOK WORLD using the 50-check design review at `~/clawd/MEOK_DESIGN_REVIEW_2026-06-29.md`, escalate any blocking findings to the launch team, and feed the SAT 4 JUL 09:00 BST launch checklist with a green report.
 
 ---
 
-## 🛠 WHAT YOU'LL NEED
+## 0. Pre-flight (do this BEFORE 21:00)
 
-- **Mac** with `~/clawd` checked out
-- **Browser** (Chrome / Firefox / Safari)
-- **Backend** running on `:8000` (start with `./launch.sh`)
-- **MEOK account** (if you want to test i-character flow)
+Run these in order. Anything failing → call the sub-agent listed; do not improvise.
 
----
-
-## 📋 STEP-BY-STEP
-
-### Step 1: Launch the system (5 min)
 ```bash
-cd ~/clawd
-./launch.sh all
+# 0.1 — Boot the static preview server (you'll need it for visual checks)
+cd /Users/nicholas/clawd/csoai-os
+nohup python3 -m http.server 8765 --bind 0.0.0.0 \
+    > /tmp/meok-static.log 2>&1 &
+echo "Static server PID $! — listening on :8765"
+
+# 0.2 — Confirm the live backend is reachable on :8000
+curl -s -o /dev/null -w "BACKEND HTTP %{http_code}\n" http://127.0.0.1:8000/api/healthz
+# Expected: HTTP 200
+
+# 0.3 — Confirm Vercel deployments of meok.ai + csoai.org are live
+curl -sL -o /dev/null -w "MEOK.AI HTTP %{http_code}\n" https://meok.ai
+curl -sL -o /dev/null -w "CSOAI.ORG HTTP %{http_code}\n" https://csoai.org
+# Expected: HTTP 200 each
+
+# 0.4 — Warm the SIGIL chain — make 1 request to ensure cache is hot
+curl -s -o /dev/null -w "SIGIL %{http_code}\n" http://127.0.0.1:8000/api/sigl/chain
+
+# 0.5 — Open the design checklist
+cat ~/clawd/MEOK_DESIGN_REVIEW_2026-06-29.md
 ```
 
-**Verify the output says "ALL SYSTEMS GO"**. This runs all 175+ tests + starts the backend.
+If any of 0.2/0.3/0.4 returns non-200, **stop**. Ping the relevant sub-agent:
 
-### Step 2: Open the home page (5 min)
-```bash
-open ~/clawd/csoai-os/meok-home/index.html
-```
-
-**Check**:
-- [ ] Hero shows "The world is at your feet. Sovereign AI, live."
-- [ ] Live backend status bar polls every 30s (look for "SOV3 13/13" + "MCPs 218")
-- [ ] 11 temples with proper colors
-- [ ] 13-Queen + King council with 2 VETO (Care, Watch) in red
-- [ ] "See the emergence" CTA in bottom-right corner
-- [ ] Service worker registers (DevTools → Application → Service Workers)
-- [ ] PWA installable (DevTools → Application → Manifest)
-
-### Step 3: Open the character emergence page (10 min)
-```bash
-open ~/clawd/csoai-os/meok-home/meok-character-emergence.html
-```
-
-**Check**:
-- [ ] 7 parent archetypes appear with translucent eggs
-- [ ] Each egg has its own color + pattern
-- [ ] Hover cracks the egg (CSS animation)
-- [ ] Click plays procedural sound (Web Audio API)
-- [ ] 13-Queen + King council grid renders
-- [ ] 5-step i-character wizard works end-to-end
-- [ ] Step 1: region auto-detect (ipapi.co)
-- [ ] Step 2: name input
-- [ ] Step 3: 13-queen archetype picker
-- [ ] Step 4: 22-arcana lens picker
-- [ ] Step 5: i-character created + saved to localStorage
-
-### Step 4: Open the temple OS (10 min)
-```bash
-open ~/clawd/csoai-os/v2-temple-os.html
-```
-
-**Check**:
-- [ ] Globe with 11 temples at real lat/lon
-- [ ] UK user-marker shown
-- [ ] LHS: 16 tool tiles
-- [ ] Center: sovereign character + chat
-- [ ] RHS: SOV3 + 12-Queen council + BFT + sessions
-- [ ] DORADO bar: west → globe → temple → east
-- [ ] i-character greeting shows (if signed up)
-- [ ] Sovereign character has crown label
-- [ ] Click any temple → expands with details
-
-### Step 5: Test the i-character wizard (5 min)
-```bash
-open ~/clawd/csoai-os/v2-signup-wizard.html
-```
-
-**Check**:
-- [ ] Step 1: Region auto-detected
-- [ ] Step 2: Name input works
-- [ ] Step 3: 13 queens visible + selectable
-- [ ] Step 4: 22 arcanas visible + selectable
-- [ ] Step 5: Confirmation card
-- [ ] localStorage saves the i-character
-- [ ] Link to v2-temple-os.html works
-
-### Step 6: Test the API (5 min)
-```bash
-curl -s http://127.0.0.1:8000/api/backend/status | head -c 300
-curl -s -X POST http://127.0.0.1:8000/api/ichar/create \
-  -H 'Content-Type: application/json' \
-  -d '{"user_id":"test","name":"E2E","queen_model":"queen-arcana","arcana_lens":21}' | head -c 200
-curl -s -X POST http://127.0.0.1:8000/api/cascade/route_query \
-  -H 'Content-Type: application/json' \
-  -d '{"query":"What is the EU AI Act?","task_type":"chat"}' | head -c 200
-```
-
-**Check**:
-- [ ] All 3 return 200 OK
-- [ ] Response has expected fields
-- [ ] SIGIL chain shows new hash
-
-### Step 7: Visual review of all 128 pages (60 min)
-
-Use the **MEOK_DESIGN_REVIEW_2026-06-29.md** checklist (50 design/UX checks). For each section:
-
-| Section | Pages | Time |
-|---|---:|---|
-| Universe | 7 | 5 min |
-| OS | 7 | 5 min |
-| Characters | 9 | 5 min |
-| Queens | 12 | 5 min |
-| Work | 5 | 5 min |
-| Gaming | 6 | 5 min |
-| Guardian | 5 | 5 min |
-| Temples | 11 | 5 min |
-| MCP/Empire | 10 | 5 min |
-| Compliance | 12 | 5 min |
-| Company | 18 | 5 min |
-| Defoneos | 19 | 5 min |
-| Legal | 5 | 5 min |
-
-**For each page, check**:
-- [ ] Topbar with 8 nav items + active page highlighted
-- [ ] Page-specific hero (tag + h1 + description)
-- [ ] Real content (not Lorem ipsum, not TODO)
-- [ ] 3-12 stat/feature cards
-- [ ] CTA box at bottom
-- [ ] Footer with 5 columns
-- [ ] Live status bar (12 rows)
-- [ ] Responsive on mobile (test at 320px, 768px, 1024px)
-- [ ] PWA manifest link + SW registration
-- [ ] No console errors
-
-### Step 8: Document findings (30 min)
-
-Create a `FINDINGS_2026-06-29.md` with:
-- ✅ What works
-- ⚠️ What needs polish
-- ❌ What's broken
-- 💡 Ideas for v2
+| Sub-agent          | Channel                | Owns                              |
+|--------------------|------------------------|-----------------------------------|
+| Backend sub-agent  | `agent://backend`      | `meok-backend` (FastAPI, :8000)   |
+| Substrate SOV3     | `agent://sov3`         | SOV3 substrate, 330 tools         |
+| Frontend sub-agent | `agent://frontend`     | `meok-deploy`, Vercel, PWA        |
+| Security sub-agent | `agent://security`     | CSP, CORS, SIGIL audit            |
+| Integration sub-agent | `agent://integration` | `meok-e2e/` test suite          |
 
 ---
 
-## 📞 WHO TO CALL IF SOMETHING BREAKS
+## 1. 21:00 → 21:10 — Synchronise the team (10 min)
 
-| Issue | Escalate to |
-|---|---|
-| Backend down | M4 (sovereign-orchestrator) |
-| Frontend bug | M4 |
-| M2 live app bug | M2 (councilof-ai) |
-| DEFONEOS sprint | Hermes/JEEVES |
-| DNS / domain | Nick |
-| PyPI / Smithery / Glama | Nick |
-| Stripe / payment | Nick |
-| Vercel deploy | M2 |
-| GCP VM | Nick + VM ssh |
+Open the design review doc + the launch room (Slack `#meok-launch-29jun`). Post:
 
----
+```
+🜏 MEOK 9 PM pre-test STARTING — design/UX on deck.
+Scope: 128 sovereign pages + 2 v2 apps + 1 character-emergence page.
+Checklist: ~/clawd/MEOK_DESIGN_REVIEW_2026-06-29.md
+Backup if I fall over: @frontend-agent
+Next status: 21:30 BST
+```
 
-## 🚀 4-DAY COUNTDOWN (Tue → Sat)
-
-| Day | Date | Focus |
-|---|---|---|
-| Mon (today) | 29 Jun | 9 PM test + absorb + launch script |
-| Tue | 30 Jun | PyPI publish + MCP registry |
-| Wed | 1 Jul | Apple/Windows icon + a11y + 404/500 |
-| Thu | 2 Jul | Performance + load test + monitoring |
-| Fri | 3 Jul | Final E2E + smoke + dress rehearsal |
-| **Sat** | **4 Jul** | **PUBLIC LAUNCH 09:00 BST** |
+Then open Chrome (1280×800), Safari (375×812 iPhone SE), and Firefox (for STG parity). All three will be used tonight.
 
 ---
 
-## 🎯 LAUNCH CHECKLIST (Sat 4 Jul 09:00 BST)
+## 2. 21:10 → 21:35 — Hero / fold checks on the 12 highest-traffic pages (25 min)
 
-- [ ] Vercel deploy: `cd meok-deploy && vercel --prod`
-- [ ] DNS: meok.ai apex → Vercel
-- [ ] Stripe live keys wired
-- [ ] SMTP wired for email
-- [ ] OAuth (GitHub, Google) wired
-- [ ] 218 MCPs published to PyPI
-- [ ] 218 MCPs on Smithery
-- [ ] Apple/Windows icons packaged
-- [ ] Final E2E green
-- [ ] All 128 pages deployed
-- [ ] Live smoke 5/5
-- [ ] Public launch! 🚀
+Pages (in priority order). For each one, knock off **all 50 checks**, mark pass / conditional / fail in the design review doc.
+
+| # | Page | Priority |
+|---|------|----------|
+| 1 | `/` (home)                        | P0 |
+| 2 | `/csoai-os/v2-temple-os.html`     | P0 |
+| 3 | `/csoai-os/v2-signup-wizard.html` | P0 |
+| 4 | `/csoai-os/meok-character-emergence.html` | P0 |
+| 5 | `/council`                        | P1 |
+| 6 | `/temples_eu`                     | P1 |
+| 7 | `/characters`                     | P1 |
+| 8 | `/pricing`                        | P1 |
+| 9 | `/about`                          | P2 |
+| 10 | `/privacy`                       | P2 |
+| 11 | `/terms`                         | P2 |
+| 12 | `/accessibility`                 | P2 |
+
+For each page, the procedural checklist:
+1. Open on Chrome 1280×800 → capture above-the-fold screenshot
+2. Open on Safari iPhone SE 375×812 → capture above-the-fold screenshot
+3. Run tab-key walk → confirm focus ring (A4)
+4. Open DevTools → "Accessibility" tab → Lighthouse run
+5. Curl `/sw.js` + `/manifest.webmanifest` if not already verified
+6. Check the 4 sub-axes that are unique to the page (e.g., wizard = N4, council = B3)
+
+**Output:** Append a one-line entry to section 11 ("Findings log") per page.
 
 ---
 
-## 📚 REFERENCES
+## 3. 21:35 → 22:05 — Sweep the remaining 116 pages (30 min)
 
-- `MEOK_WORLD_9PM_CHECKLIST.md` — original 9 PM checklist
-- `MEOK_WORLD_9PM_FINAL_STATE.md` — final state doc
-- `MEOK_DESIGN_REVIEW_2026-06-29.md` — 50 design/UX checks
-- `LAUNCH_REPORT_20260629_153251.md` — last launch report
-- `launch.sh` — 9-step pre-launch script
-- `FACT_CHECK_REPORT.md` — 50/60 claims verified
-- `MASTER_REVISION.md` — 8 layers, 367 dirs, 33 hives
-- `DEDUPLICATION_REPORT.md` — 95% DRY
+Strategy: 1 page per 15 seconds. Use `grep` across the directory to spot anomalies first:
+
+```bash
+# Auto-spot checks (run BEFORE manual sweep)
+cd /Users/nicholas/clawd/csoai-os/meok-home/pages
+
+# 1. Find any missing viewport meta (M1)
+grep -L 'name="viewport"' *.html | wc -l
+
+# 2. Find pages missing lang=en-GB (A1)
+grep -L 'lang="en-GB"' *.html | wc -l
+
+# 3. Find pages with `#000` background (C4 violation)
+grep -l '#000000\|background:#000\|background:#000000' *.html | wc -l
+
+# 4. Find pages with "Click here" / "Submit" CTAs (V5 violation)
+grep -l -E '>\s*Click here\s*<|>\s*Submit\s*<' *.html | wc -l
+
+# 5. Find pages missing H1 (V1 violation)
+python3 -c "
+import re, glob
+for f in glob.glob('*.html'):
+    src = open(f).read()
+    if not re.search(r'<h1[^>]*>', src, re.I):
+        print(f)
+" | head
+
+# 6. Find pages where contrast likely fails (C2 warning — body text on near-black bg)
+# Use Lighthouse-style check
+```
+
+Any number > 0 above is a **blocker** for that axis. Open every flagged page and document. The remaining pages get a fast visual sweep:
+
+1. Load each page on Chrome
+2. Glance for: visual breakage, missing CSS, broken images, console errors
+3. If clean, mark `[x]` for visual-hierarchy / color / typography / spacing axes
+4. If suspect, escalate in #meok-launch-29jun with @mention + screenshot
 
 ---
 
-*Generated 2026-06-29 15:35 BST. The dragon flies sovereign. The empire is 100% master. 🐉🔥*
+## 4. 22:05 → 22:20 — Run the integration test suite (15 min)
+
+```bash
+cd /Users/nicholas/clawd/meok-e2e
+/Users/nicholas/clawd/meok-backend/.venv/bin/python -m pytest tests/test_integration.py -v \
+    --no-header -p no:cacheprovider --tb=short --maxfail=3
+```
+
+Expected: **6 collected**, 1+ passing live (sigstore), the others skip-with-reason unless playwright is installed. Any UNEXPECTED skip or failure → investigate.
+
+Also run:
+
+```bash
+/Users/nicholas/clawd/meok-backend/.venv/bin/python -m pytest tests/ -v \
+    --no-header -p no:cacheprovider -m smoke --tb=line
+```
+
+Smoke tests should be 5/5 green per `meok-backend/smoke.sh`.
+
+If failures → copy stack + command into Slack `#meok-launch-29jun`, tag `@integration-agent`.
+
+---
+
+## 5. 22:20 → 22:30 — Compile the report (10 min)
+
+Open `~/clawd/MEOK_DESIGN_REVIEW_2026-06-29.md` §11 (Findings log) and write the headline summary:
+
+```markdown
+### 9 PM BST Report — 2026-06-29
+- **Pages reviewed:** 128/128 (100%)
+- **Checks scoreboard:** 47/50 pass, 3/50 conditional, 0/50 failing
+- **Open P0/P1:** (list, or "none")
+- **Integration suite:** 6 collected, 4 passed, 2 skipped (intent), 0 failed
+- **Smoke flows:** 5/5 green
+- **Backend health:** HTTP 200 on /api/healthz
+- **PWA install:** confirmed in Chrome + Safari
+- **Recommended action:** GO  for SAT 4 JUL 09:00 BST launch.
+```
+
+Then post to `#meok-launch-29jun`:
+
+```
+🜏 9 PM REPORT — meok 128/128 reviewed
+Pass rate: 47/50 / 3 conditional / 0 failing
+Integration suite: 6/6 collected, 4 pass, 2 skip-with-reason, 0 fail
+Smoke: 5/5 green
+Backend: HTTP 200
+Recommendation: GO for SAT 4 JUL 09:00 BST launch.
+Next check-in: 09:00 BST WED 1 JUL (3-day countdown).
+```
+
+If anything is **failing** (not just conditional):
+
+```
+🜏 9 PM REPORT — BLOCKER
+<magnitude> critical issues:
+- …
+Halt pending: <sub-agent> @ <reason>
+Re-test scheduled: 23:00 BST
+```
+
+---
+
+## 6. Sub-agent escalation matrix
+
+When a check fails on an axis you don't own, this is who you call:
+
+| Failing check axis | Owner sub-agent | What to send them |
+|--------------------|-----------------|--------------------|
+| V (visual)         | @frontend-agent | page URL + screenshot + which check (V1-V5) |
+| T (typography)     | @design-agent   | screenshot + computed font-size + line-height |
+| C (color)          | @brand-agent    | hex codes + screenshot + which page |
+| S (spacing)        | @frontend-agent | URL + which value is wrong + the rule violated |
+| N (navigation)     | @frontend-agent | URL + step-by-step click trace |
+| A (accessibility)  | @a11y-agent     | Lighthouse JSON export + axe-core report |
+| P (PWA)            | @pwa-agent      | `chrome://serviceworker-internals` + manifest JSON |
+| M (mobile)         | @frontend-agent | device + viewport + which fold + screenshot |
+| E (error states)   | @integration-agent | reproducible steps + curl trace |
+| B (brand)          | @brand-agent    | screenshot + wordmark/logo file expected |
+
+Always include the **page URL**, the **exact check number** that failed (e.g., "C2 body contrast 3.8:1"), and **one-line repro**.
+
+---
+
+## 7. People & channels
+
+| Role | Person |
+|------|--------|
+| Launch captain | Nicholas |
+| Design / UX lead | (you — design/UX sub-agent) |
+| Backend on-call | backend-agent |
+| Frontend on-call | frontend-agent |
+| Security on-call | security-agent |
+| Pager rotation | #meok-launch-29jun |
+
+If a page literally won't load, or worse, the backend is dead, **page the launch captain** — do not improvise fixes on sovereign paths.
+
+---
+
+## 8. SAT 4 JUL 09:00 BST — Launch checklist (preview)
+
+> This is a preview of the launch-day checklist. Use this tonight to confirm the test paths on Friday. The launch-day file lives at `~/clawd/meok-deploy/LAUNCH_DAY_2026_07_04.md`.
+
+| T- | Time BST   | Action                                                       | Owner             |
+|---:|------------|--------------------------------------------------------------|-------------------|
+| T-72h | WED 1 JUL 09:00 | 3-day countdown: re-verify 50-check scoreboard       | design/UX         |
+| T-48h | THU 2 JUL 09:00 | 2-day: integration suite + smoke 5/5                   | integration       |
+| T-24h | FRI 3 JUL 09:00 | 1-day: full rehearsal of launch.sh 9-step sequence       | launch-captain    |
+| T-12h | FRI 3 JUL 21:00 | half-day: SIGIL chain snapshot + freeze all changes       | backend           |
+| T-1h  | SAT 4 JUL 08:00 | 1-hour: final health, alert "GO"                          | launch-captain    |
+| T-15m | SAT 4 JUL 08:45 | 15-min: CDN warm + DNS pre-flight                        | frontend          |
+| **T-0** | **SAT 4 JUL 09:00** | **LAUNCH.**  Launch.sh runs.  128 pages go live.  Council convenes.  The world hears the 13th queen. | **ALL HANDS** |
+
+🜏 **Tonight: 9 PM run. Saturday: 9 AM lift-off.**
+
+---
+
+## 9. Things that will probably break — and how to recover
+
+* **Backend dies mid-test.** Restart with `cd /Users/nicholas/clawd/meok-backend && nohup .venv/bin/python -m uvicorn app:app --host 0.0.0.0 --port 8000 > /tmp/meok-backend.log 2>&1 &`. If it won't come up, call `@backend-agent`.
+
+* **A page returns 502 from Vercel.** Open the Vercel dashboard → Functions tab → check the logs → if it's a cold start, just refresh. If it's persistent, rollback the deploy via `vercel rollback` (`@frontend-agent`).
+
+* **The i-character wizard hangs.** Likely the `region` detector is timing out — Vercel edge cold. Refresh; if it persists, `@frontend-agent`.
+
+* **SIGIL chain isn't growing.** Inspect `tail -f /Users/nicholas/clawd/meok-backend/sigil_chain.jsonl`. If empty for >60s, check that the file is writable. If the chain is corrupt, `@security-agent`.
+
+* **Mobile rendering looks broken.** Open Safari → Develop → enter Responsive Design Mode → 375 × 667 → diagnose. Don't trust Chrome's mobile emulator alone — every other Friday phone-tests have caught real bugs.
+
+* **Logo / wordmark differs.** `@brand-agent`. Do NOT edit the wordmark yourself.
+
+---
+
+## 10. After-action items (Sat 5 Jul 09:00 BST — the morning after)
+
+* Append all findings (open + resolved) to the design review doc §11.
+* Write `~/clawd/9PM_TEST_RECAP_2026-06-29.md` — what worked, what didn't, calibration for the 4-day countdown.
+* Sync with `@frontend-agent` to ship any P0/P1 fixes before T-72h recheck (WED 1 JUL 09:00 BST).
+
+🜏 **End of runbook.  See you at 21:00 BST.**

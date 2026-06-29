@@ -32,7 +32,7 @@ from typing import Any, Dict, List, Optional
 
 from fastapi import FastAPI, HTTPException, Request, status
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import JSONResponse
+from fastapi.responses import JSONResponse, Response
 from pydantic import BaseModel, Field
 
 # --------------------------------------------------------------------------- #
@@ -874,6 +874,234 @@ def ichars_for_user(user_id: str) -> Dict[str, Any]:
             (user_id,),
         ).fetchall()
     return {"user_id": user_id, "count": len(rows), "ichars": [_row_to_ichar(r) for r in rows]}
+
+
+# --------------------------------------------------------------------------- #
+# 6b. /api/ichar/{ichar_id}/avatar — SVG avatar (translucent egg + golden core)
+# --------------------------------------------------------------------------- #
+# 7 parent archetype colors — must stay in sync with
+# csoai-os/meok-home/meok-character-emergence.html (lines 19-26)
+ARCHETYPE_COLORS: Dict[str, str] = {
+    "Sovereign":   "#6ba8d4",
+    "Guardian":    "#1a3a5a",
+    "Scout":       "#d47a5a",
+    "Strategist":  "#2a5a3a",
+    "Creator":     "#d4a55a",
+    "Companion":   "#5aa89a",
+    "Sage":        "#d4c45a",
+}
+
+
+def _resolve_archetype(queen_model: str, extra_blob: Optional[str]) -> str:
+    """Pick a key from ARCHETYPE_COLORS. Queen model wins, otherwise we fall
+    back to the ``archetype`` written into the ichar's ``extra`` JSON at
+    create time, otherwise we hash the id to a deterministic archetype so
+    avatars are stable per ichar.
+    """
+    if extra_blob:
+        try:
+            extra = json.loads(extra_blob)
+            arch = (extra.get("archetype") or "").strip().title()
+            if arch in ARCHETYPE_COLORS:
+                return arch
+        except Exception:
+            pass
+    # Map queen_model name -> one of the 7 archetypes (best-effort)
+    q = (queen_model or "").lower()
+    if "sovereign" in q or "king" in q or "queen-king" in q:
+        return "Sovereign"
+    if "guardian" in q or "wangari" in q or "miriam" in q or "watch" in q:
+        return "Guardian"
+    if "scout" in q or "sacagawea" in q or "explorer" in q:
+        return "Scout"
+    if "strateg" in q or "marcus" in q or "aurelius" in q or "confucius" in q:
+        return "Strategist"
+    if "creat" in q or "maker" in q or "leonardo" in q or "lovelace" in q:
+        return "Creator"
+    if "companion" in q or "care" in q or "hildegard" in q or "rumi" in q:
+        return "Companion"
+    if "sage" in q or "athena" in q or "hatshepsut" in q or "brain" in q:
+        return "Sage"
+    # Final deterministic fallback by queen_model name
+    archetypes = list(ARCHETYPE_COLORS.keys())
+    idx = (sum(ord(c) for c in q) if q else 0) % len(archetypes)
+    return archetypes[idx]
+
+
+# 7 parent archetype emojis — centered on the egg, behind the golden core glow
+ARCHETYPE_EMOJI: Dict[str, str] = {
+    "Sovereign":  "👑",
+    "Guardian":   "🛡️",
+    "Scout":      "🧭",
+    "Strategist": "♟️",
+    "Creator":    "🎨",
+    "Companion":  "💞",
+    "Sage":       "🦉",
+}
+
+
+def _avatar_svg(ichar_id: str, name: str, archetype: str, size: int = 256) -> str:
+    """Render the translucent-egg avatar SVG.
+
+    Design system mirrors csoai-os/meok-home/meok-character-emergence.html
+    * Egg: vertical ellipse with the archetype shell gradient (viewBox 200×300)
+    * Core: golden radial glow at the centre of the egg
+    * Queen emoji: centred inside the egg (the archetype's glyph)
+    * Sigil: 14-pt gold "M" mark above the egg
+    * Outer ring: faint gold halo
+    * Safe to embed inline in HTML — no external assets
+    """
+    color = ARCHETYPE_COLORS.get(archetype, "#d4c45a")
+    emoji = ARCHETYPE_EMOJI.get(archetype, "✨")
+
+    # 200 × 300 viewBox (per spec) — egg-shaped portrait, slightly taller than wide
+    vb_w, vb_h = 200, 300
+    cx = vb_w // 2                # 100
+    # Egg dimensions (vertical 1.5:1) within the 200×300 viewBox
+    rx = 78.0
+    ry = 110.0
+    cy = 165.0                    # egg centre
+
+    # A short label that won't collide with archetype names
+    display_name = (name or "").strip() or "i-character"
+    safe_name = (display_name[:18] + "…") if len(display_name) > 18 else display_name
+    # Scale emoji font roughly to viewBox height
+    emoji_font_px = 72
+
+    return (
+        f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {vb_w} {vb_h}" '
+        f'width="{size}" height="{int(size * vb_h / vb_w)}" '
+        f'preserveAspectRatio="xMidYMid meet" role="img" '
+        f'aria-label="i-character avatar for {_xml_escape(safe_name)} — {archetype} archetype">'
+        '<defs>'
+        # Outer halo — golden
+        f'<radialGradient id="halo-{ichar_id}" cx="50%" cy="55%" r="55%">'
+        '<stop offset="0%" stop-color="#ffd700" stop-opacity="0.55"/>'
+        '<stop offset="60%" stop-color="#ffd700" stop-opacity="0.12"/>'
+        '<stop offset="100%" stop-color="#ffd700" stop-opacity="0"/>'
+        '</radialGradient>'
+        # Egg shell gradient — archetype color
+        f'<radialGradient id="shell-{ichar_id}" cx="40%" cy="35%" r="65%">'
+        f'<stop offset="0%" stop-color="{color}" stop-opacity="0.92"/>'
+        f'<stop offset="55%" stop-color="{color}" stop-opacity="0.55"/>'
+        f'<stop offset="100%" stop-color="{color}" stop-opacity="0.18"/>'
+        '</radialGradient>'
+        # Specular highlight — top-left
+        f'<radialGradient id="hl-{ichar_id}" cx="35%" cy="28%" r="28%">'
+        '<stop offset="0%" stop-color="#ffffff" stop-opacity="0.65"/>'
+        '<stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>'
+        '</radialGradient>'
+        # Golden core glow — strongest at centre
+        f'<radialGradient id="core-{ichar_id}" cx="50%" cy="50%" r="50%">'
+        '<stop offset="0%" stop-color="#fff6c2" stop-opacity="1"/>'
+        '<stop offset="35%" stop-color="#ffd700" stop-opacity="0.85"/>'
+        '<stop offset="100%" stop-color="#ffb800" stop-opacity="0"/>'
+        '</radialGradient>'
+        # Soft filter for the egg — drop shadow + inner glow
+        f'<filter id="eggGlow-{ichar_id}" x="-20%" y="-20%" width="140%" height="140%">'
+        '<feGaussianBlur in="SourceGraphic" stdDeviation="3" result="blur"/>'
+        '<feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>'
+        '</filter>'
+        '</defs>'
+        # Background — transparent so the egg floats on whatever the page has
+        # Outer halo
+        f'<circle cx="{cx}" cy="{cy}" r="105" fill="url(#halo-{ichar_id})"/>'
+        # Sigil M — gold, centred above the egg
+        f'<text x="{cx}" y="58" text-anchor="middle" '
+        f'fill="#ffd700" font-family="Georgia, serif" font-weight="700" '
+        f'font-size="22" opacity="0.9">M</text>'
+        # Egg body — translucent shell
+        f'<ellipse cx="{cx}" cy="{cy}" rx="{rx}" ry="{ry}" '
+        f'fill="url(#shell-{ichar_id})" stroke="{color}" stroke-opacity="0.7" stroke-width="1.2" '
+        f'filter="url(#eggGlow-{ichar_id})"/>'
+        # Golden core — sits behind the emoji so the glyph is readable
+        f'<circle cx="{cx}" cy="{cy}" r="{ry*0.55:.1f}" fill="url(#core-{ichar_id})"/>'
+        # Specular highlight — top-left of the egg
+        f'<ellipse cx="{cx*0.78:.1f}" cy="{cy*0.82:.1f}" rx="{rx*0.45:.1f}" ry="{ry*0.32:.1f}" '
+        f'fill="url(#hl-{ichar_id})"/>'
+        # Queen emoji — centered inside the egg
+        f'<text x="{cx}" y="{cy + emoji_font_px * 0.34:.1f}" text-anchor="middle" '
+        f'font-family="Apple Color Emoji, Segoe UI Emoji, Noto Color Emoji, EmojiOne Color, sans-serif" '
+        f'font-size="{emoji_font_px}" opacity="0.95">{emoji}</text>'
+        # Name label below the egg
+        f'<text x="{cx}" y="290" text-anchor="middle" '
+        f'fill="#ffd700" font-family="Inter, system-ui, sans-serif" font-size="14" '
+        f'opacity="0.9">{_xml_escape(safe_name)}</text>'
+        '</svg>'
+    )
+
+
+def _xml_escape(s: str) -> str:
+    return (
+        (s or "")
+        .replace("&", "&amp;")
+        .replace("<", "&lt;")
+        .replace(">", "&gt;")
+        .replace('"', "&quot;")
+        .replace("'", "&#39;")
+    )
+
+
+@app.get("/api/ichar/{ichar_id}/avatar")
+def ichar_avatar(ichar_id: str, size: Optional[str] = "256"):
+    """Return an SVG avatar for the given i-character.
+
+    * Reads the i-character row from ichars.db
+    * Picks an archetype (from the row's ``extra`` JSON, falling back to a
+      deterministic hash of the queen_model name)
+    * Renders a translucent egg + golden core + 14-pt gold "M" sigil +
+      queen emoji centred inside the egg
+    * ViewBox is 200×300 (the spec'd portrait ratio) — ``size`` controls the
+      outer raster dimensions, the SVG itself scales perfectly.
+    * Returns ``image/svg+xml`` — embeddable as ``<img src>`` or inline SVG
+    """
+    # size is a free-form query param so we can degrade gracefully on garbage
+    try:
+        s = int(size) if size not in (None, "") else 256
+    except (TypeError, ValueError):
+        s = 256
+    s = max(32, min(1024, s))
+    with _db(ICHARS_DB_PATH) as c:
+        row = c.execute(
+            "SELECT id, name, queen_model, extra FROM ichars WHERE id = ?",
+            (ichar_id,),
+        ).fetchone()
+    if not row:
+        # 404 — still emit a placeholder egg (200×300) so the front-end never blanks
+        placeholder = (
+            '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 300" width="200" height="300" '
+            'preserveAspectRatio="xMidYMid meet" role="img" aria-label="i-character not found">'
+            '<ellipse cx="100" cy="165" rx="78" ry="110" fill="#2a2a2a" stroke="#555" stroke-width="1.2"/>'
+            '<text x="100" y="172" text-anchor="middle" fill="#888" '
+            'font-family="Inter, system-ui, sans-serif" font-size="14">not found</text>'
+            '</svg>'
+        )
+        return Response(
+            content=placeholder,
+            media_type="image/svg+xml",
+            status_code=404,
+            headers={"Cache-Control": "public, max-age=60"},
+        )
+    archetype = _resolve_archetype(row["queen_model"], row["extra"])
+    svg = _avatar_svg(row["id"], row["name"] or "", archetype, s)
+    _append_sigil(
+        "V",
+        {
+            "actor": "ichar.avatar",
+            "ichar_id": ichar_id,
+            "archetype": archetype,
+            "size": s,
+        },
+    )
+    return Response(
+        content=svg,
+        media_type="image/svg+xml",
+        headers={
+            "Cache-Control": "public, max-age=3600, immutable",
+            "X-Ichar-Id": ichar_id,
+            "X-Ichar-Archetype": archetype,
+        },
+    )
 
 
 # --------------------------------------------------------------------------- #
