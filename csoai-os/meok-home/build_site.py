@@ -429,7 +429,7 @@ def page_about() -> str:
 <section class="section">
   <div class="section-tag">▸ The founder</div>
   <h2>Nicholas Templeman.</h2>
-  <p>Background in optometry (Templeman Opticians) turned AI safety and compliance tooling. Building the personal sovereign AI OS + the CSOAI AI-governance fleet. MEOK AI Labs is the new world for AI economy and governance.</p>
+  <p>Background in SOV3 sovereign runtime turned AI safety and compliance tooling. Building the personal sovereign AI OS + the CSOAI AI-governance fleet. MEOK AI Labs is the new world for AI economy and governance.</p>
 </section>
 """
 

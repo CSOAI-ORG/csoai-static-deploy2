@@ -183,7 +183,7 @@ def test_about_page_has_company_house():
     p = (PAGES_DIR / "about.html").read_text()
     assert "16939677" in p
     assert "Nicholas Templeman" in p
-    assert "Templeman Opticians" in p
+    assert "SOV3" in p
 
 
 def test_roadmap_page_has_quarters():
