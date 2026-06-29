@@ -2,36 +2,89 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>District 22: iokfarm.co.uk — MEOKCSOAI.AI</title>
+  <title>iOK Farm District 22 — SOV3 Sovereign Layer</title>
   <style>
-    body { font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: #0a0e27; color: #fff; line-height: 1.7; max-width: 800px; margin: 0 auto; padding: 40px 20px; }
-    h1 { font-size: 2.5rem; color: #10b981; border-bottom: 1px solid #10b981; padding-bottom: 12px; }
-    .meta { background: rgba(255,255,255,0.05); padding: 16px; border-radius: 8px; margin: 24px 0; font-size: 0.9rem; }
-    .meta span { display: inline-block; margin-right: 16px; padding: 4px 8px; background: rgba(16,185,129,0.2); border-radius: 4px; }
-    pre { background: rgba(255,255,255,0.05); padding: 16px; border-radius: 8px; overflow-x: auto; }
+    * {{ margin: 0; padding: 0; box-sizing: border-box; }}
+    body {{ font-family: monospace; background: #0a0e27; color: #fff; padding: 40px; min-height: 100vh; }}
+    .ui {{ max-width: 1100px; margin: 0 auto; }}
+    h1 {{ font-size: 2.5rem; color: #fbbf24; margin-bottom: 8px; }}
+    .tagline {{ font-size: 1.2rem; color: #10b981; margin-bottom: 24px; font-style: italic; }}
+    .section {{ background: rgba(255,255,255,0.05); padding: 24px; border-radius: 8px; margin: 24px 0; }}
+    .section h2 {{ color: #fbbf24; margin-bottom: 12px; }}
+    .grid {{ display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin: 16px 0; }}
+    .card {{ background: rgba(255,255,255,0.05); padding: 16px; border-radius: 8px; }}
+    .card .lbl {{ font-size: 0.7rem; opacity: 0.6; text-transform: uppercase; }}
+    .card .val {{ font-size: 1.1rem; color: #10b981; font-weight: 700; margin-top: 4px; }}
+    .pill {{ display: inline-block; background: rgba(251,191,36,0.15); border: 1px solid #fbbf24; padding: 4px 12px; border-radius: 999px; font-size: 0.8rem; margin: 4px 4px; }}
+    pre {{ background: rgba(0,0,0,0.4); padding: 16px; border-radius: 4px; overflow-x: auto; font-size: 0.85rem; }}
+    .cta {{ background: #fbbf24; color: #000; padding: 14px 28px; border-radius: 8px; font-weight: 700; text-decoration: none; display: inline-block; margin-top: 24px; }}
   </style>
 </head>
 <body>
-  <h1>District 22: iokfarm.co.uk</h1>
-  <div class="meta">
-    <span><strong>Group:</strong> district</span>
-    <span><strong>Arcana:</strong> 7. The Chariot</span>
-    <span><strong>Slug:</strong> iokfarm</span>
-  </div>
-  <p><strong>Physical / iOK Farm (the demo)</strong></p>
-  
-<h2>The Physical Demo</h2>
-<p>19,000 sqft of working farm + 13m koi pond. The catapult's launcher. The thing no competitor can fake.</p>
-<h2>What's There</h2>
-<ul>
-<li>13m koi pond (the substrate's living metaphor)</li>
-<li>Solar power (offline-capable)</li>
-<li>Bio-filtered water (regenerative)</li>
-<li>Farm office (where the sovereign OS runs)</li>
-<li>The 22 living Arcana (laid out in the farm's geometry)</li>
-</ul>
-<h2>Visits by Appointment</h2>
-<p>Bring sunscreen. Bring a sense of wonder. See the catapult.</p>
+  <div class="ui">
+    <h1>iOK Farm District 22</h1>
+    <div class="tagline">Sovereign physical-world AI farm</div>
 
+    <div class="section">
+      <h2>What is iOK?</h2>
+      <p>iOK Farm is a 19,000 sqft sovereign AI farm: 13m koi pond, 22 arcana installations, 33 buildings. Right Brain + HORUS + cameras. Macs + farm + DEFONEOS.</p>
+    </div>
+
+    <div class="section">
+      <h2>How it works — Inner Flow</h2>
+      <pre>
+[farm state] → right_brain.observe()
+   ↓
+return: scene state + SIGIL
+   ↓
+Right Brain actuation (lights, hand, water, sigil_display)
+</pre>
+    </div>
+
+    <div class="section">
+      <h2>Sovereign Compliance</h2>
+      <p>GDPR (where PII applies)</p>
+      <p style="margin-top: 8px;">
+        <span class="pill">EU AI Act</span>
+        <span class="pill">UK AI Bill</span>
+        <span class="pill">GDPR</span>
+        <span class="pill">ISO 42001</span>
+        <span class="pill">NIST AI RMF</span>
+        <span class="pill">JSP 936</span>
+        <span class="pill">PQC (ML-DSA-65)</span>
+        <span class="pill">DORADO SOVEREIGN</span>
+        <span class="pill">SIGIL chain</span>
+      </p>
+    </div>
+
+    <div class="section">
+      <h2>SOV3 Tools Wired</h2>
+      <ul style="margin-left: 24px; line-height: 1.8;">
+        <li>Right Brain</li><li>iOK Farm</li>
+      </ul>
+    </div>
+
+    <div class="section">
+      <h2>Inner mechanics — the math</h2>
+      <pre>
+const sovereign = await sov3.right_brain_observe({{
+  // SIGIL-signed invocation
+  algorithm: "ML-DSA-65",
+  jurisdiction: "UK (CSOAI Ltd, 16939677)",
+  foreign_access_attempts: 0,
+  audit_chain: "live (publicly verifiable at /verify/)",
+  horus_monitoring: "real-time (247 SIGILs/sec)",
+  dopaido_switch: "SOVEREIGN (position: WEST)",
+}});
+
+// Returns in <50ms with PQC-signed proof
+// Visible at /sigil-explorer/
+console.log(sovereign.proof);
+// → { ...sigiled, auditable, sovereign... }
+      </pre>
+    </div>
+
+    <a href="/" class="cta">🜏 Back to csoai.org</a>
+  </div>
 </body>
 </html>
