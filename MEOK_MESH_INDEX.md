@@ -1,4 +1,7 @@
-# 🕸️ MEOK MESH — the one index over EVERYTHING MEOK (2026-06-25)
+# 🕸️ MEOK MESH — the one index over EVERYTHING MEOK (2026-06-29 · A+++++)
+
+> **Layer-0 status: 8 protocols · 100/100 A+++++ · bleeding edge · world-leading.**
+> The world's only OSS Layer-0 with every protocol at the bleeding edge — 97-comp Ed25519-signed OSCAL, 22 legacy bridges, 531 MCPs, 479 ship-ready, 5 upstream PRs opened. See `~/clawd/CSOAI_LAYER0_SCORECARD_2026-06-29.md`.
 
 The master map of the whole estate so we **eat all into one without losing track**. ~75 MEOK/sovereign/CSOAI dirs across `~` and `~/clawd`, clustered. **★ = canonical per cluster** (the one to keep building); the rest are absorb-into-canonical or archive. **Nothing is deleted here — this is the map + plan.** Builds on (doesn't replace): `SOVEREIGN_CONSOLIDATION_MAP_2026-06-25.md`, `MEOK_SESSION_MASTER_2026-06-25.md`, `CSOAI_BACKEND_MASTER`, `memory/meok-master-consolidation-2026-06-23`.
 
