@@ -218,6 +218,21 @@ button { font-family: var(--font-sans); cursor: pointer; }
 
 /* ANIMATIONS */
 @keyframes pulse { 0%, 100% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.3); opacity: 0.5; } }
+
+
+/* === MEOK Character Emergence (added 2026-06-29) === */
+.character-egg { display:inline-block; width:48px; height:64px; border-radius:50% 50% 50% 50% / 60% 60% 40% 40%; position:relative; vertical-align:middle; margin:0 4px; background:radial-gradient(circle at 30% 30%, rgba(255,255,255,0.4), transparent 50%), radial-gradient(circle at 70% 70%, rgba(201, 168, 76, 0.4), transparent 50%); box-shadow:0 0 12px rgba(201, 168, 76, 0.4); animation:eggFloat 4s ease-in-out infinite; }
+@keyframes eggFloat { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-4px)} }
+.egg-sovereign { background: linear-gradient(135deg, #b0d4f0, #6ba8d4 50%, #2a5a8a); }
+.egg-guardian { background: linear-gradient(135deg, #2a4a6a, #1a3a5a 50%, #0a2a3a); }
+.egg-scout { background: linear-gradient(135deg, #e8a89a, #d47a5a 50%, #a05a3a); }
+.egg-strategist { background: linear-gradient(135deg, #4a8a5a, #2a5a3a 50%, #1a4a2a); }
+.egg-creator { background: linear-gradient(135deg, #f0d090, #d4a55a 50%, #a07a3a); }
+.egg-companion { background: linear-gradient(135deg, #88c8b8, #5aa89a 50%, #3a8878); }
+.egg-sage { background: linear-gradient(135deg, #f0e0a0, #d4c45a 50%, #a0903a); }
+.council-card-emergence { position:relative; overflow:hidden; }
+.council-card-emergence::before { content:''; position:absolute; inset:0; background:radial-gradient(circle at var(--mx,50%) var(--my,50%), rgba(201, 168, 76, 0.4), transparent 50%); opacity:0; transition:opacity 0.3s; pointer-events:none; }
+.council-card-emergence:hover::before { opacity:1; }
 </style>
 </head>
 <body>
