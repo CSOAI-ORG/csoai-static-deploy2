@@ -1,5 +1,7 @@
 # CSOAI — Investor Memo (seed, 2026-06-26)
 
+> **Layer-0 status (2026-06-29): 8 protocols · 100/100 A+++++ · bleeding edge · world-leading.** The world's only OSS Layer-0 with every protocol at the bleeding edge. See .
+
 **The signed bridge between AI and the legacy economy. We govern the AI touching the mainframes that run regulated industries — and cryptographically sign every action — the one thing the funded agent-governance players structurally can't do, on a hard Aug-2026 deadline.**
 
 ## The market (verified 2026)

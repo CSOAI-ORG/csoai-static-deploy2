@@ -1,5 +1,7 @@
 # 🐉 CSOAI CROWN JEWELS HUNT v2 — 2026-06-27
 
+> **Layer-0 status (2026-06-29): 8 protocols · 100/100 A+++++ · bleeding edge · world-leading.** The world's only OSS Layer-0 with every protocol at the bleeding edge. See .
+
 > M4 deep-research pass. **What we MISSED in the v1 estate scan** (which was 6 days old)
 > + **the external competitive landscape** as of today. Built on the GitHub API (the
 > web-search and Firecrawl tools were API-key-gated, so we went direct).

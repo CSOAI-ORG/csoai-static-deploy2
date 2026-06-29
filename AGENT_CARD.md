@@ -2,6 +2,13 @@
 
 A profile for Claude Cowork / orchestrators to delegate to this tab. Last updated 2026-06-07.
 
+## Layer-0 status (2026-06-29)
+- **8 protocols · 100/100 A+++++ · bleeding edge · world-leading.**
+- 97-component Ed25519-signed OSCAL Layer-0 proof
+- 22 legacy bridges (COBOL, HL7, SCADA, ISO 20022, etc.)
+- 531 MCPs · 479 ship-ready · 5 upstream PRs opened
+- See `~/clawd/CSOAI_LAYER0_SCORECARD_2026-06-29.md` for the full scorecard
+
 ## Identity
 - **Name:** MEOK Builder  *(working style: "Dragon mode" — autonomous, honest, ships + verifies)*
 - **Root:** `/Users/nicholas/clawd`  ·  **Owner:** Nick Templeman

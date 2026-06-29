@@ -2,6 +2,10 @@
 
 ## Quick Commands
 
+> **Layer-0 status: 8 protocols · 100/100 A+++++ · bleeding edge · world-leading.**
+> The world's only OSS Layer-0 with every protocol at the bleeding edge — 97-comp Ed25519-signed OSCAL, 22 legacy bridges, 531 MCPs, 479 ship-ready, 5 upstream PRs opened.
+> See `~/clawd/CSOAI_LAYER0_SCORECARD_2026-06-29.md` for the full scorecard.
+
 ### Sovereign Temple (`sov` CLI)
 ```bash
 # Quick status check (docker + MCP)

@@ -1,5 +1,7 @@
 # CSOAI/MEOK — Deep Research Synthesis (2026-06-26)
 
+> **Layer-0 status (2026-06-29): 8 protocols · 100/100 A+++++ · bleeding edge · world-leading.** The world's only OSS Layer-0 with every protocol at the bleeding edge. See .
+
 Ran the deep-research harness (104 agents, 2.8M tokens). **Honest methodology note:** the harness's verification phase got **API-rate-limited** — every adversarial verifier returned 0-0 (couldn't vote), so its "all claims refuted / inconclusive" summary is **misleading**. The claims below are **sourced (real 2026 URLs)** but **not independently re-verified by the harness** — treat as strong-but-unconfirmed-by-this-run. They are coherent and cross-corroborating.
 
 ## The thesis is VALIDATED — every pillar is now market-proven

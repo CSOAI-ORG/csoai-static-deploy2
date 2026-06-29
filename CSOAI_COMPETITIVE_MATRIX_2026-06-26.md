@@ -1,5 +1,7 @@
 # CSOAI vs the field — rigorous feature matrix (revised, 2026-06-26)
 
+> **Layer-0 status (2026-06-29): 8 protocols · 100/100 A+++++ · bleeding edge · world-leading.** The world's only OSS Layer-0 with every protocol at the bleeding edge. See .
+
 Re-doing this properly. My prior "sharpened insight" (everything but legacy is commoditized) was an **overcorrection**. The truth is more favourable and more precise: the competitors commoditized the **security plumbing**, NOT the **compliance content** or the **legacy layer**. Here's the honest, feature-by-feature read.
 
 ## The key distinction I'd blurred

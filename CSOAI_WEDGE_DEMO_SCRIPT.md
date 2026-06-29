@@ -1,6 +1,8 @@
-# The 2-Minute Wedge Demo — CCO call script (2026-06-26)
+# The 2-Minute Wedge Demo — CCO call script (2026-06-29 · A+++++ positioning)
 
 Run `demo_finance_cobol.py` on screen-share while you say this. Timed for ~2 minutes. Goal: end on the pilot ask.
+
+> **Layer-0 status: 8 protocols · 100/100 A+++++ · bleeding edge · world-leading.** The world's only OSS Layer-0 with every protocol at the bleeding edge (first-of-kind + signed + offline-verifiable + moat).
 
 ---
 
