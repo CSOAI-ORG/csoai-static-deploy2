@@ -7962,6 +7962,68 @@
     ]
   },
   {
+    "server": "grabhire-ai-mcp",
+    "path": "/Users/nicholas/clawd/mcp-marketplace/grabhire-ai-mcp/server.py",
+    "tool_count": 5,
+    "tools": [
+      {
+        "name": "estimate_load_volume",
+        "params": [
+          "material",
+          "length_m",
+          "width_m",
+          "height_m"
+        ],
+        "doc": "Estimate the volume of a material pile in cubic meters (m\u00b3)."
+      },
+      {
+        "name": "get_grab_lorry_pricing",
+        "params": [
+          "postcode_from",
+          "postcode_to",
+          "lorry_size",
+          "loads"
+        ],
+        "doc": "Get grab lorry pricing for a job (collection + delivery + disposal)."
+      },
+      {
+        "name": "check_vehicle_availability",
+        "params": [
+          "postcode",
+          "date_iso",
+          "lorry_size"
+        ],
+        "doc": "Check vehicle availability for a given postcode + date."
+      },
+      {
+        "name": "generate_waste_transfer_note",
+        "params": [
+          "job_id",
+          "ewc_code",
+          "carrier_licence",
+          "consignment_notes"
+        ],
+        "doc": "Generate a UK Waste Transfer Note (WTN) for the job."
+      },
+      {
+        "name": "hire_grab_lorry",
+        "params": [
+          "collection_postcode",
+          "disposal_postcode",
+          "material",
+          "length_m",
+          "width_m",
+          "height_m",
+          "requested_date_iso",
+          "ewc_code",
+          "carrier_licence",
+          "api_key"
+        ],
+        "doc": "AGENT-CALLABLE END-TO-END WORKFLOW."
+      }
+    ]
+  },
+  {
     "server": "grammar-fix-ai-mcp",
     "path": "/Users/nicholas/clawd/mcp-marketplace/grammar-fix-ai-mcp/server.py",
     "tool_count": 4,
@@ -15848,7 +15910,7 @@
   {
     "server": "muckaway-ai-mcp",
     "path": "/Users/nicholas/clawd/mcp-marketplace/muckaway-ai-mcp/server.py",
-    "tool_count": 6,
+    "tool_count": 7,
     "tools": [
       {
         "name": "estimate_waste_volume",
@@ -15923,6 +15985,19 @@
           "api_key"
         ],
         "doc": "Generate a Waste Transfer Note with all legally mandatory fields."
+      },
+      {
+        "name": "hire_skip",
+        "params": [
+          "collection_postcode",
+          "waste_type",
+          "volume_m3",
+          "requested_date_iso",
+          "ewc_code",
+          "carrier_licence",
+          "api_key"
+        ],
+        "doc": "AGENT-CALLABLE END-TO-END SKIP HIRE."
       }
     ]
   },
@@ -17577,7 +17652,7 @@
   {
     "server": "planthire-ai-mcp",
     "path": "/Users/nicholas/clawd/mcp-marketplace/planthire-ai-mcp/server.py",
-    "tool_count": 6,
+    "tool_count": 7,
     "tools": [
       {
         "name": "search_equipment",
@@ -17650,6 +17725,18 @@
           "api_key"
         ],
         "doc": "Estimate transport costs for equipment delivery/collection."
+      },
+      {
+        "name": "rent_equipment",
+        "params": [
+          "equipment_type",
+          "postcode",
+          "hire_days",
+          "include_operator",
+          "requested_start_date_iso",
+          "api_key"
+        ],
+        "doc": "AGENT-CALLABLE END-TO-END PLANT HIRE."
       }
     ]
   },
@@ -19076,7 +19163,7 @@
   {
     "server": "self-healing-infrastructure-mcp",
     "path": "/Users/nicholas/clawd/mcp-marketplace/self-healing-infrastructure-mcp/server.py",
-    "tool_count": 7,
+    "tool_count": 13,
     "tools": [
       {
         "name": "node_health_check",
@@ -19138,6 +19225,61 @@
           "api_key"
         ],
         "doc": "Determine failover action for a failed node in the cluster."
+      },
+      {
+        "name": "compliance_check",
+        "params": [
+          "issue",
+          "domain",
+          "api_key"
+        ],
+        "doc": "Check if an infrastructure issue is auto-remediable per 28-domain compliance rules."
+      },
+      {
+        "name": "council_propose",
+        "params": [
+          "action",
+          "domain",
+          "severity",
+          "api_key"
+        ],
+        "doc": "Propose a critical infrastructure action to the BFT Council for consensus."
+      },
+      {
+        "name": "council_vote",
+        "params": [
+          "proposal_id",
+          "approve",
+          "node_id",
+          "api_key"
+        ],
+        "doc": "Cast a vote on a pending BFT Council proposal."
+      },
+      {
+        "name": "council_status",
+        "params": [
+          "proposal_id",
+          "api_key"
+        ],
+        "doc": "Get the status of a BFT Council proposal."
+      },
+      {
+        "name": "verify_attestation",
+        "params": [
+          "bundle",
+          "api_key"
+        ],
+        "doc": "Verify an Ed25519 sigil attestation bundle."
+      },
+      {
+        "name": "auto_remediate",
+        "params": [
+          "issue",
+          "node_name",
+          "domain",
+          "api_key"
+        ],
+        "doc": "Automatically remediate an infrastructure issue WITH 28-domain compliance check."
       }
     ]
   },
@@ -19701,6 +19843,97 @@
           "api_key"
         ],
         "doc": "Generate audience insights and growth recommendations."
+      }
+    ]
+  },
+  {
+    "server": "sov-model-router-mcp",
+    "path": "/Users/nicholas/clawd/mcp-marketplace/sov-model-router-mcp/server.py",
+    "tool_count": 5,
+    "tools": [
+      {
+        "name": "route_query",
+        "params": [
+          "query",
+          "config",
+          "task_type",
+          "api_key"
+        ],
+        "doc": "AGENT-CALLABLE \u2014 route a query through the 4-tier cascade."
+      },
+      {
+        "name": "get_fleet_status",
+        "params": [
+          "api_key"
+        ],
+        "doc": "AGENT-CALLABLE \u2014 status of the entire 34-VM sovereign fleet."
+      },
+      {
+        "name": "benchmark_all_configs",
+        "params": [
+          "api_key"
+        ],
+        "doc": "AGENT-CALLABLE \u2014 run the master benchmark on all 3 configs."
+      },
+      {
+        "name": "speculative_decoding_demo",
+        "params": [
+          "api_key"
+        ],
+        "doc": "AGENT-CALLABLE \u2014 demonstrate Tier 4 speculative decoding."
+      },
+      {
+        "name": "infer_complexity",
+        "params": [
+          "query"
+        ],
+        "doc": "AGENT-CALLABLE \u2014 predict which tier a query will need (without running)."
+      }
+    ]
+  },
+  {
+    "server": "sov-model-router-paywalled-mcp",
+    "path": "/Users/nicholas/clawd/mcp-marketplace/sov-model-router-paywalled-mcp/server.py",
+    "tool_count": 5,
+    "tools": [
+      {
+        "name": "route_query",
+        "params": [
+          "query",
+          "config",
+          "task_type",
+          "payment_proof",
+          "api_key"
+        ],
+        "doc": "AGENT-CALLABLE (x402-paid) \u2014 route a query through the cascade."
+      },
+      {
+        "name": "get_pricing",
+        "params": [
+          "api_key"
+        ],
+        "doc": "AGENT-CALLABLE \u2014 the tier-based pricing table."
+      },
+      {
+        "name": "get_fleet_status",
+        "params": [
+          "api_key"
+        ],
+        "doc": "AGENT-CALLABLE \u2014 passthrough to sov-model-router's fleet status."
+      },
+      {
+        "name": "benchmark_all_configs",
+        "params": [
+          "api_key"
+        ],
+        "doc": "AGENT-CALLABLE \u2014 passthrough to sov-model-router's master benchmark."
+      },
+      {
+        "name": "infer_complexity",
+        "params": [
+          "query"
+        ],
+        "doc": "AGENT-CALLABLE \u2014 passthrough to sov-model-router's complexity inference."
       }
     ]
   },

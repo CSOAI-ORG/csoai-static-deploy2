@@ -2,6 +2,7 @@
 // MeokFactoryActor.cpp — Implementation
 
 #include "MeokFactoryActor.h"
+#include "MeokCharacter3D.h"
 #include "Components/StaticMeshComponent.h"
 #include "Components/SkeletalMeshComponent.h"
 #include "Components/ParticleSystemComponent.h"
@@ -51,6 +52,10 @@ AMeokFactoryActor::AMeokFactoryActor()
     CoreLight->SetupAttachment(RootComponent);
     CoreLight->SetIntensity(5000.f);
     CoreLight->SetAttenuationRadius(500.f);
+
+    // ── The 13-queen + king mesh registry (MOSSING step) ─────────
+    CharacterRegistry = CreateDefaultSubobject<UMeokCharacter3D>(TEXT("CharacterRegistry"));
+    CharacterRegistry->InitQueenArchetypeRegistry();
 }
 
 void AMeokFactoryActor::BeginPlay()
@@ -219,4 +224,81 @@ void AMeokFactoryActor::Tick(float DeltaTime)
         float Scale = 1.0f + 0.1f * FMath::Sin(GetWorld()->GetTimeSeconds() * 2.0f);
         CoreGlowMesh->SetRelativeScale3D(FVector(0.4f, 0.4f, 0.4f) * Scale);
     }
+    // Tick the bound character registry (loads + animates real glTF meshes)
+    if (CharacterRegistry) {
+        // CharacterRegistry->TickComponent is auto-called via the component
+        // system, so we just refresh the egg material + light per-frame.
+        if (!CurrentIcharId.IsEmpty() && !CurrentQueenId.IsEmpty()) {
+            // Mirror the registry's queen color into the egg shell light
+            FMeokQueenArchetypeMesh Arch = CharacterRegistry->GetArchetype(CurrentQueenId);
+            if (CoreLight) CoreLight->SetLightColor(Arch.QueenColor);
+        }
+    }
+}
+
+AActor* AMeokFactoryActor::SpawnIcharWithMesh(const FString& IcharId, const FString& QueenId)
+{
+    // 1. Bind in the registry (triggers async load of the real glTF)
+    if (!CharacterRegistry) {
+        UE_LOG(LogTemp, Error, TEXT("[MeokFactoryActor] No CharacterRegistry bound"));
+        return nullptr;
+    }
+    FString Bound = CharacterRegistry->BindIcharToQueen(IcharId, QueenId);
+    if (Bound.IsEmpty()) {
+        UE_LOG(LogTemp, Error, TEXT("[MeokFactoryActor] Failed to bind ichar=%s queen=%s"),
+               *IcharId, *QueenId);
+        return nullptr;
+    }
+    CurrentIcharId = IcharId;
+    CurrentQueenId = QueenId;
+
+    // 2. Look up the queen's color/pattern + override the egg material
+    FMeokQueenArchetypeMesh Arch = CharacterRegistry->GetArchetype(QueenId);
+    TargetDNA.ShellColor = Arch.ShellColor;
+    TargetDNA.CoreColor = Arch.QueenColor;
+    TargetDNA.Pattern = Arch.Pattern;
+    TargetDNA.Name = Arch.QueenId;
+    TargetDNA.DisplayName = Arch.DisplayName;
+    TargetDNA.Emoji = Arch.Emoji;
+
+    BuildEggMaterial();
+    BuildCoreMaterial();
+    if (CoreLight) CoreLight->SetLightColor(Arch.QueenColor);
+
+    UE_LOG(LogTemp, Log, TEXT("[MeokFactoryActor] Spawned ichar=%s bound to queen=%s (%s)"),
+           *IcharId, *QueenId, *Arch.DisplayName);
+    return this;
+}
+
+void AMeokFactoryActor::RunEmergeSequence(const FString& IcharId, const FString& QueenId, float TotalSeconds)
+{
+    // 3-phase emergence: EGG (40%) -> CRACK (30%) -> EMERGE (30%)
+    float Phase1 = TotalSeconds * 0.4f;
+    float Phase2 = TotalSeconds * 0.3f;
+    float Phase3 = TotalSeconds * 0.3f;
+
+    // Phase 1: bind + show egg
+    SpawnIcharWithMesh(IcharId, QueenId);
+    SetActorTickEnabled(true);
+
+    FTimerHandle H1;
+    GetWorldTimerManager().SetTimer(H1, [this, Phase2]() {
+        // Phase 2: crack the egg
+        CrackOpen(Phase2);
+    }, Phase1, false);
+
+    FTimerHandle H2;
+    GetWorldTimerManager().SetTimer(H2, [this, IcharId, Phase3]() {
+        // Phase 3: emerge + spawn the real mesh
+        if (CharacterRegistry) {
+            CharacterRegistry->SpawnEggSequence(IcharId, Phase3);
+        }
+        Emerge(Phase3);
+    }, Phase1 + Phase2, false);
+}
+
+int32 AMeokFactoryActor::GetLoadedCharacterCount() const
+{
+    if (CharacterRegistry) return CharacterRegistry->GetLoadedCharacterCount();
+    return 0;
 }

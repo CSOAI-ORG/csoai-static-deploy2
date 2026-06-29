@@ -1,20 +1,19 @@
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
 [project]
 name = "meok-sovereign-training-mcp"
 version = "1.0.0"
-description = "Sovereign Training + Certification MCP - free training across 33 industries (one course per hive). W3C Verifiable Credentials, auto-grading, sovereign badges. All free. EU AI Act, DORA, HIPAA, JSP 936, SOC 2 + 28 more."
+description = "Free UK training certification, BFT-issued SIGIL certs. White-label partner cohorts."
+readme = "README.md"
 requires-python = ">=3.10"
-dependencies = []
-authors = [
-    {name = "CSOAI Ltd (UK 16939677)", email = "nicholas@csoai.org"},
-]
 license = {text = "MIT"}
+authors = [{name = "MEOK AI Labs", email = "nicholas@templeman-opticians.com"}]
+keywords = ["mcp", "training", "certification", "sovereign", "ed25519", "bft", "free", "white-label"]
 
-[build-system]
-requires = ["setuptools>=61.0"]
-build-backend = "setuptools.build_meta"
+[project.scripts]
+meok-sovereign-training-mcp = "server:main"
 
-[tool.setuptools.packages.find]
-where = ["."]
-
-[tool.pytest.ini_options]
-testpaths = ["tests"]
+[tool.setuptools]
+packages = ["meok_sovereign_training_mcp"]

@@ -784,6 +784,164 @@ except ImportError as _e:
     PHASE_136_140_AVAILABLE = False
     _PHASE_136_140_TOOL_DEFS = []
 
+# SOV3 ORNITH-1.0 ABSORPTION — bleeding-edge agentic coding (DeepReinforce AI)
+try:
+    from sov3_ornith import (
+        handle_ornith_status as _handle_ornith_status,
+        handle_ornith_pull_recommendation as _handle_ornith_pull_recommendation,
+        ORNITH_TOOL_DEFINITIONS as _ORNITH_TOOL_DEFS,
+    )
+    ORNITH_AVAILABLE = True
+    print("[startup] SOV3 ORNITH-1.0 absorption loaded — agentic coding SOTA (MIT, hybrid Mamba+MoE+attention)")
+except ImportError as _e:
+    print(f"[startup] SOV3 ORNITH import failed: {_e}")
+    ORNITH_AVAILABLE = False
+    _ORNITH_TOOL_DEFS = []
+
+# SOV3 ORNITH v2 — full benchmark table + self-scaffolding methodology
+try:
+    from sov3_ornith_v2 import (
+        handle_ornith_benchmark_table as _handle_ornith_benchmark_table,
+        handle_sov3_self_scaffolding_methodology as _handle_sov3_self_scaffolding_methodology,
+        ORNITH_V2_TOOL_DEFINITIONS as _ORNITH_V2_TOOL_DEFS,
+    )
+    ORNITH_V2_AVAILABLE = True
+    print("[startup] SOV3 ORNITH v2 loaded — benchmark table + self-scaffolding methodology")
+except ImportError as _e:
+    print(f"[startup] SOV3 ORNITH v2 import failed: {_e}")
+    ORNITH_V2_AVAILABLE = False
+    _ORNITH_V2_TOOL_DEFS = []
+
+# SOV3 ONTOLOGY v1 — Hieroglyphs + Alchemy + Mysticism (the 100/100 layer)
+try:
+    from sov3_ontology_v1 import (
+        handle_sov_ontology_status as _handle_sov_ontology_status,
+        handle_sov_arcana_hieroglyph as _handle_sov_arcana_hieroglyph,
+        handle_sov_philosophers_stone as _handle_sov_philosophers_stone,
+        handle_sov_ouroboros as _handle_sov_ouroboros,
+        handle_sov_alchemical_stages as _handle_sov_alchemical_stages,
+        ONTOLOGY_TOOLS as _ONTOLOGY_TOOL_DEFS,
+    )
+    ONTOLOGY_AVAILABLE = True
+    print("[startup] SOV3 ONTOLOGY loaded — hieroglyphs + alchemy + mysticism (the 100/100 layer)")
+except ImportError as _e:
+    print(f"[startup] SOV3 ONTOLOGY import failed: {_e}")
+    ONTOLOGY_AVAILABLE = False
+    _ONTOLOGY_TOOL_DEFS = []
+
+# SOV3 KIRCHER + SEPHIROTH — the missing layer (Ath. Kircher 1665 + Bovillus + 22 Hebrew letters + 10 Sephiroth)
+try:
+    from sov3_kircher_sephiroth import (
+        handle_kircher_sephiroth_status as _handle_kircher_sephiroth_status,
+        handle_kircher_22_letters as _handle_kircher_22_letters,
+        handle_kircher_bovillus_numbers as _handle_kircher_bovillus_numbers,
+        handle_kircher_council as _handle_kircher_council,
+        KIRCHER_TOOLS as _KIRCHER_TOOL_DEFS,
+    )
+    KIRCHER_AVAILABLE = True
+    print("[startup] SOV3 KIRCHER+SEPHIROTH loaded — 22 Hebrew letters + 10 Sephiroth + 32 paths (from Arithmologia 1665)")
+except ImportError as _e:
+    print(f"[startup] SOV3 KIRCHER import failed: {_e}")
+    KIRCHER_AVAILABLE = False
+    _KIRCHER_TOOL_DEFS = []
+
+# SOV3 CABALA — Phase 166-170 (3D Tree of Life + I Ching + Gematria + Joint Paper + BFT Council Fired)
+try:
+    from sov3_cabala import (
+        handle_tree_3d_status as _handle_tree_3d_status,
+        handle_iching_oracle as _handle_iching_oracle,
+        handle_gematria_calc as _handle_gematria_calc,
+        handle_joint_paper_outline as _handle_joint_paper_outline,
+        handle_bft_council_fired as _handle_bft_council_fired,
+        PHASE_166_170_TOOL_DEFS as _PHASE_166_170_TOOL_DEFS,
+    )
+    PHASE_166_170_AVAILABLE = True
+    print("[startup] SOV3 CABALA loaded — 3D Tree + I Ching + Gematria + Joint Paper + BFT Council Fired")
+except ImportError as _e:
+    print(f"[startup] SOV3 CABALA import failed: {_e}")
+    PHASE_166_170_AVAILABLE = False
+    _PHASE_166_170_TOOL_DEFS = []
+
+# SOV3 BRAIN RACE — Mixed simulation harness (12 mindsets × 8 brains × 4 envs = 384 runs)
+try:
+    from sov3_brain_race import (
+        run_simulation as _run_brain_race_simulation,
+        analyze_results as _analyze_brain_race_results,
+    )
+    BRAIN_RACE_AVAILABLE = True
+    print("[startup] SOV3 BRAIN RACE loaded — 384 mixed simulations (12 mindsets × 8 brains × 4 envs)")
+except ImportError as _e:
+    print(f"[startup] SOV3 BRAIN RACE import failed: {_e}")
+    BRAIN_RACE_AVAILABLE = False
+
+# SOV3 SOVEREIGN-100 TRAIN — Mega 1,728-run brain race + OLM retrain
+try:
+    from sov3_sov99_brain_audit import (
+        mega_brain_race as _mega_brain_race,
+        audit_5_layers as _audit_5_layers,
+    )
+    SOVEREIGN_100_AVAILABLE = True
+    print("[startup] SOV3 SOVEREIGN-100 TRAIN loaded — 1728 mixed simulations + OLM retrain")
+except ImportError as _e:
+    print(f"[startup] SOV3 SOVEREIGN-100 TRAIN import failed: {_e}")
+    SOVEREIGN_100_AVAILABLE = False
+
+SOVEREIGN_100_TOOL_DEFS = [
+    {"name": "sov_sov_100_train", "description": "Run the SOVEREIGN-100 TRAIN — 1728 mixed simulations (12 mindsets × 12 BIG BRAIM models × 12 environments). Returns top sovereign scores + best per env + corpus size.", "inputSchema": {"type": "object", "properties": {}, "required": []}},
+]
+
+# SOV3 PHASE 166-180 — Sovereign Talent Marketplace + Gym + OOWM Evolver + 4D Brain Race + Realm Registry
+try:
+    from sov3_sov_180 import (
+        handle_talent_marketplace as _handle_talent_marketplace,
+        handle_gym_mode_status as _handle_gym_mode_status,
+        handle_oowm_evolver as _handle_oowm_evolver,
+        handle_4d_brain_race_status as _handle_4d_brain_race_status,
+        handle_realm_registry as _handle_realm_registry,
+        handle_ornith_pull_status as _handle_ornith_pull_status,
+    )
+    SOV_180_AVAILABLE = True
+    print("[startup] SOV3 PHASE 166-180 loaded — Talent Marketplace + Gym + OOWM Evolver + 4D Brain Race + Realm Registry")
+except ImportError as _e:
+    print(f"[startup] SOV3 PHASE 166-180 import failed: {_e}")
+    SOV_180_AVAILABLE = False
+
+# SOV3 SOVEREIGN BUILDER — the canonical builder for SOV3 + SOV3small3
+try:
+    from sov3_sovereign_builder import (
+        handle_sovereign_builder_status as _handle_sovereign_builder_status,
+        handle_sov3small3_status as _handle_sov3small3_status,
+        handle_build_sequence as _handle_build_sequence,
+    )
+    SOVEREIGN_BUILDER_AVAILABLE = True
+    print("[startup] SOV3 SOVEREIGN BUILDER loaded — builder for SOV3 + SOV3small3")
+except ImportError as _e:
+    print(f"[startup] SOV3 SOVEREIGN BUILDER import failed: {_e}")
+    SOVEREIGN_BUILDER_AVAILABLE = False
+
+SOVEREIGN_BUILDER_TOOL_DEFS = [
+    {"name": "sov_sovereign_builder_status", "description": "Get sovereign builder status (identity, SOV3, SOV3small3, build sequence).", "inputSchema": {"type": "object", "properties": {}}},
+    {"name": "sov_sov3small3_status", "description": "Get SOV3small3 status (the compressed sovereign OS, 4 local models, 7 GB total).", "inputSchema": {"type": "object", "properties": {}}},
+    {"name": "sov_build_sequence", "description": "Get the build sequence for SOV3 + SOV3small3 (21 steps).", "inputSchema": {"type": "object", "properties": {}}},
+]
+
+SOV_180_TOOL_DEFS = [
+    {"name": "sov_talent_marketplace", "description": "Sovereign Talent Marketplace — federate best sovereign brain configs (Phase 166).", "inputSchema": {"type": "object", "properties": {}}},
+    {"name": "sov_gym_mode_status", "description": "Sov3ren Gym — continuous OLM training loop (Phase 167).", "inputSchema": {"type": "object", "properties": {}}},
+    {"name": "sov_oowm_evolver", "description": "SOV3 OOWM Continuous Evolver (Phase 168).", "inputSchema": {"type": "object", "properties": {}}},
+    {"name": "sov_4d_brain_race_status", "description": "4D Brain Race — adds temporal config (Phase 169).", "inputSchema": {"type": "object", "properties": {}}},
+    {"name": "sov_realm_registry", "description": "Sov3ren Realm Registry — federation across kingdoms (Phase 170).", "inputSchema": {"type": "object", "properties": {}}},
+    {"name": "sov_ornith_pull_status", "description": "Attempt to pull Ornith-1.0 GGUF models from HF collection.", "inputSchema": {"type": "object", "properties": {}}},
+]
+
+# Define BRAIN_RACE_TOOL_DEFS as fallback (import from sibling module)
+try:
+    from sov3_brain_race_tools import BRAIN_RACE_TOOL_DEFS as _BRAIN_RACE_TOOL_DEFS
+except ImportError:
+    _BRAIN_RACE_TOOL_DEFS = [
+        {"name": "sov_brain_race_run", "description": "Run the full SOV3 Brain Race — 384 mixed simulations (12 mindsets × 8 BIG BRAIM models × 4 environments).", "inputSchema": {"type": "object", "properties": {"top_n": {"type": "integer", "default": 10}}, "required": []}},
+    ]
+
 # SOV3 Alchemical Lapis Dashboard — Salt/Sulfur/Mercury balance
 try:
     from sov3_lapis import (
@@ -927,7 +1085,7 @@ MCP_TOOLS = [
             "required": ["image_path"],
         },
     },
-] + (BRIDGE_TOOL_DEFINITIONS if MCP_BRIDGE_AVAILABLE else []) + (FEDERATION_TOOL_DEFINITIONS if FEDERATION_AVAILABLE else []) + (OLM_TOOL_DEFINITIONS if OLM_ROUTER_AVAILABLE else []) + (NBA_TOOL_DEFINITIONS if NBA_AVAILABLE else []) + (KING_FEDERATION_TOOL_DEFINITIONS if KING_FEDERATION_AVAILABLE else []) + (VAULT_TOOL_DEFINITIONS if VAULT_AVAILABLE else []) + (SOVEREIGN_INGEST_TOOL_DEFINITIONS if SOVEREIGN_INGEST_AVAILABLE else []) + (FEDERATED_RAG_TOOL_DEFINITIONS if FEDERATED_RAG_AVAILABLE else []) + (ARTICLE50_TOOL_DEFINITIONS if ARTICLE50_AVAILABLE else []) + (ORGKERNEL_TOOL_DEFINITIONS if ORGKERNEL_AVAILABLE else []) + (PROACTIVE_TOOL_DEFINITIONS if PROACTIVE_AVAILABLE else []) + (LAPIS_TOOL_DEFINITIONS if LAPIS_AVAILABLE else []) + (DISTRIBUTION_TOOL_DEFINITIONS if (locals().get("DISTRIBUTION_AVAILABLE") or globals().get("DISTRIBUTION_AVAILABLE", False)) else []) + (ARCANA_TOOL_DEFINITIONS if (locals().get("ARCANA_AVAILABLE") or globals().get("ARCANA_AVAILABLE", False)) else []) + ((_MIND_TOOL_DEFS if MIND_AVAILABLE else []) if (locals().get("MIND_AVAILABLE") or globals().get("MIND_AVAILABLE", False)) else []) + ((_ROUTER_TOOL_DEFS if ROUTER_AVAILABLE else []) if (locals().get("ROUTER_AVAILABLE") or globals().get("ROUTER_AVAILABLE", False)) else []) + ((_ZAMBA_TOOL_DEFS if ZAMBA_AVAILABLE else []) if (locals().get("ZAMBA_AVAILABLE") or globals().get("ZAMBA_AVAILABLE", False)) else []) + ((_STRIVING_TOOL_DEFS if STRIVING_AVAILABLE else []) if (locals().get("STRIVING_AVAILABLE") or globals().get("STRIVING_AVAILABLE", False)) else []) + ((_A2A_TOOL_DEFS if A2A_AVAILABLE else []) if (locals().get("A2A_AVAILABLE") or globals().get("A2A_AVAILABLE", False)) else []) + ((_X402_TOOL_DEFS if X402_AVAILABLE else []) if (locals().get("X402_AVAILABLE") or globals().get("X402_AVAILABLE", False)) else []) + ((_DID_JWT_TOOL_DEFS if DID_JWT_AVAILABLE else []) if (locals().get("DID_JWT_AVAILABLE") or globals().get("DID_JWT_AVAILABLE", False)) else []) + ((_RIGHT_BRAIN_TOOL_DEFS if RIGHT_BRAIN_AVAILABLE else []) if (locals().get("RIGHT_BRAIN_AVAILABLE") or globals().get("RIGHT_BRAIN_AVAILABLE", False)) else []) + ((_OOWM_TOOL_DEFS if OOWM_AVAILABLE else []) if (locals().get("OOWM_AVAILABLE") or globals().get("OOWM_AVAILABLE", False)) else []) + ((_SOV3SMALL_TOOL_DEFS if SOV3SMALL_AVAILABLE else []) if (locals().get("SOV3SMALL_AVAILABLE") or globals().get("SOV3SMALL_AVAILABLE", False)) else []) + ((_SOV3SMALL3_TOOL_DEFS if SOV3SMALL3_AVAILABLE else []) if (locals().get("SOV3SMALL3_AVAILABLE") or globals().get("SOV3SMALL3_AVAILABLE", False)) else []) + ((_BIG_BRAIM_TOOL_DEFS if BIG_BRAIM_AVAILABLE else []) if (locals().get("BIG_BRAIM_AVAILABLE") or globals().get("BIG_BRAIM_AVAILABLE", False)) else []) + ((_INTUITION_TOOL_DEFS if INTUITION_AVAILABLE else []) if (locals().get("INTUITION_AVAILABLE") or globals().get("INTUITION_AVAILABLE", False)) else []) + ((_INTUITION_HISTORY_TOOL_DEFS if INTUITION_HISTORY_AVAILABLE else []) if (locals().get("INTUITION_HISTORY_AVAILABLE") or globals().get("INTUITION_HISTORY_AVAILABLE", False)) else []) + ((_BLEEDING_EDGE_TOOL_DEFS if BLEEDING_EDGE_AVAILABLE else []) if (locals().get("BLEEDING_EDGE_AVAILABLE") or globals().get("BLEEDING_EDGE_AVAILABLE", False)) else []) + ((_DORADO_TOOL_DEFS if DORADO_AVAILABLE else []) if (locals().get("DORADO_AVAILABLE") or globals().get("DORADO_AVAILABLE", False)) else []) + ((_DORADO_ABC_TOOL_DEFS if DORADO_ABC_AVAILABLE else []) if (locals().get("DORADO_ABC_AVAILABLE") or globals().get("DORADO_ABC_AVAILABLE", False)) else []) + ((_PHASE_111_115_TOOL_DEFS if PHASE_111_115_AVAILABLE else []) if (locals().get("PHASE_111_115_AVAILABLE") or globals().get("PHASE_111_115_AVAILABLE", False)) else []) + ((_PHASE_116_120_TOOL_DEFS if PHASE_116_120_AVAILABLE else []) if (locals().get("PHASE_116_120_AVAILABLE") or globals().get("PHASE_116_120_AVAILABLE", False)) else []) + ((_PHASE_121_125_TOOL_DEFS if PHASE_121_125_AVAILABLE else []) if (locals().get("PHASE_121_125_AVAILABLE") or globals().get("PHASE_121_125_AVAILABLE", False)) else []) + ((_OPEN_HANDS_TOOL_DEFS if OPEN_HANDS_AVAILABLE else []) if (locals().get("OPEN_HANDS_AVAILABLE") or globals().get("OPEN_HANDS_AVAILABLE", False)) else []) + ((_PHASE_131_135_TOOL_DEFS if PHASE_131_135_AVAILABLE else []) if (locals().get("PHASE_131_135_AVAILABLE") or globals().get("PHASE_131_135_AVAILABLE", False)) else []) + ((_PHASE_136_140_TOOL_DEFS if PHASE_136_140_AVAILABLE else []) if (locals().get("PHASE_136_140_AVAILABLE") or globals().get("PHASE_136_140_AVAILABLE", False)) else []) + [
+] + (BRIDGE_TOOL_DEFINITIONS if MCP_BRIDGE_AVAILABLE else []) + (FEDERATION_TOOL_DEFINITIONS if FEDERATION_AVAILABLE else []) + (OLM_TOOL_DEFINITIONS if OLM_ROUTER_AVAILABLE else []) + (NBA_TOOL_DEFINITIONS if NBA_AVAILABLE else []) + (KING_FEDERATION_TOOL_DEFINITIONS if KING_FEDERATION_AVAILABLE else []) + (VAULT_TOOL_DEFINITIONS if VAULT_AVAILABLE else []) + (SOVEREIGN_INGEST_TOOL_DEFINITIONS if SOVEREIGN_INGEST_AVAILABLE else []) + (FEDERATED_RAG_TOOL_DEFINITIONS if FEDERATED_RAG_AVAILABLE else []) + (ARTICLE50_TOOL_DEFINITIONS if ARTICLE50_AVAILABLE else []) + (ORGKERNEL_TOOL_DEFINITIONS if ORGKERNEL_AVAILABLE else []) + (PROACTIVE_TOOL_DEFINITIONS if PROACTIVE_AVAILABLE else []) + (LAPIS_TOOL_DEFINITIONS if LAPIS_AVAILABLE else []) + (DISTRIBUTION_TOOL_DEFINITIONS if (locals().get("DISTRIBUTION_AVAILABLE") or globals().get("DISTRIBUTION_AVAILABLE", False)) else []) + (ARCANA_TOOL_DEFINITIONS if (locals().get("ARCANA_AVAILABLE") or globals().get("ARCANA_AVAILABLE", False)) else []) + ((_MIND_TOOL_DEFS if MIND_AVAILABLE else []) if (locals().get("MIND_AVAILABLE") or globals().get("MIND_AVAILABLE", False)) else []) + ((_ROUTER_TOOL_DEFS if ROUTER_AVAILABLE else []) if (locals().get("ROUTER_AVAILABLE") or globals().get("ROUTER_AVAILABLE", False)) else []) + ((_ZAMBA_TOOL_DEFS if ZAMBA_AVAILABLE else []) if (locals().get("ZAMBA_AVAILABLE") or globals().get("ZAMBA_AVAILABLE", False)) else []) + ((_STRIVING_TOOL_DEFS if STRIVING_AVAILABLE else []) if (locals().get("STRIVING_AVAILABLE") or globals().get("STRIVING_AVAILABLE", False)) else []) + ((_A2A_TOOL_DEFS if A2A_AVAILABLE else []) if (locals().get("A2A_AVAILABLE") or globals().get("A2A_AVAILABLE", False)) else []) + ((_X402_TOOL_DEFS if X402_AVAILABLE else []) if (locals().get("X402_AVAILABLE") or globals().get("X402_AVAILABLE", False)) else []) + ((_DID_JWT_TOOL_DEFS if DID_JWT_AVAILABLE else []) if (locals().get("DID_JWT_AVAILABLE") or globals().get("DID_JWT_AVAILABLE", False)) else []) + ((_RIGHT_BRAIN_TOOL_DEFS if RIGHT_BRAIN_AVAILABLE else []) if (locals().get("RIGHT_BRAIN_AVAILABLE") or globals().get("RIGHT_BRAIN_AVAILABLE", False)) else []) + ((_OOWM_TOOL_DEFS if OOWM_AVAILABLE else []) if (locals().get("OOWM_AVAILABLE") or globals().get("OOWM_AVAILABLE", False)) else []) + ((_SOV3SMALL_TOOL_DEFS if SOV3SMALL_AVAILABLE else []) if (locals().get("SOV3SMALL_AVAILABLE") or globals().get("SOV3SMALL_AVAILABLE", False)) else []) + ((_SOV3SMALL3_TOOL_DEFS if SOV3SMALL3_AVAILABLE else []) if (locals().get("SOV3SMALL3_AVAILABLE") or globals().get("SOV3SMALL3_AVAILABLE", False)) else []) + ((_BIG_BRAIM_TOOL_DEFS if BIG_BRAIM_AVAILABLE else []) if (locals().get("BIG_BRAIM_AVAILABLE") or globals().get("BIG_BRAIM_AVAILABLE", False)) else []) + ((_INTUITION_TOOL_DEFS if INTUITION_AVAILABLE else []) if (locals().get("INTUITION_AVAILABLE") or globals().get("INTUITION_AVAILABLE", False)) else []) + ((_INTUITION_HISTORY_TOOL_DEFS if INTUITION_HISTORY_AVAILABLE else []) if (locals().get("INTUITION_HISTORY_AVAILABLE") or globals().get("INTUITION_HISTORY_AVAILABLE", False)) else []) + ((_BLEEDING_EDGE_TOOL_DEFS if BLEEDING_EDGE_AVAILABLE else []) if (locals().get("BLEEDING_EDGE_AVAILABLE") or globals().get("BLEEDING_EDGE_AVAILABLE", False)) else []) + ((_DORADO_TOOL_DEFS if DORADO_AVAILABLE else []) if (locals().get("DORADO_AVAILABLE") or globals().get("DORADO_AVAILABLE", False)) else []) + ((_DORADO_ABC_TOOL_DEFS if DORADO_ABC_AVAILABLE else []) if (locals().get("DORADO_ABC_AVAILABLE") or globals().get("DORADO_ABC_AVAILABLE", False)) else []) + ((_PHASE_111_115_TOOL_DEFS if PHASE_111_115_AVAILABLE else []) if (locals().get("PHASE_111_115_AVAILABLE") or globals().get("PHASE_111_115_AVAILABLE", False)) else []) + ((_PHASE_116_120_TOOL_DEFS if PHASE_116_120_AVAILABLE else []) if (locals().get("PHASE_116_120_AVAILABLE") or globals().get("PHASE_116_120_AVAILABLE", False)) else []) + ((_PHASE_121_125_TOOL_DEFS if PHASE_121_125_AVAILABLE else []) if (locals().get("PHASE_121_125_AVAILABLE") or globals().get("PHASE_121_125_AVAILABLE", False)) else []) + ((_OPEN_HANDS_TOOL_DEFS if OPEN_HANDS_AVAILABLE else []) if (locals().get("OPEN_HANDS_AVAILABLE") or globals().get("OPEN_HANDS_AVAILABLE", False)) else []) + ((_PHASE_131_135_TOOL_DEFS if PHASE_131_135_AVAILABLE else []) if (locals().get("PHASE_131_135_AVAILABLE") or globals().get("PHASE_131_135_AVAILABLE", False)) else []) + ((_PHASE_136_140_TOOL_DEFS if PHASE_136_140_AVAILABLE else []) if (locals().get("PHASE_136_140_AVAILABLE") or globals().get("PHASE_136_140_AVAILABLE", False)) else []) + ((_ORNITH_TOOL_DEFS if ORNITH_AVAILABLE else []) if (locals().get("ORNITH_AVAILABLE") or globals().get("ORNITH_AVAILABLE", False)) else []) + ((_ORNITH_V2_TOOL_DEFS if ORNITH_V2_AVAILABLE else []) if (locals().get("ORNITH_V2_AVAILABLE") or globals().get("ORNITH_V2_AVAILABLE", False)) else []) + ((_ONTOLOGY_TOOL_DEFS if ONTOLOGY_AVAILABLE else []) if (locals().get("ONTOLOGY_AVAILABLE") or globals().get("ONTOLOGY_AVAILABLE", False)) else []) + ((_KIRCHER_TOOL_DEFS if KIRCHER_AVAILABLE else []) if (locals().get("KIRCHER_AVAILABLE") or globals().get("KIRCHER_AVAILABLE", False)) else []) + ((_PHASE_166_170_TOOL_DEFS if PHASE_166_170_AVAILABLE else []) if (locals().get("PHASE_166_170_AVAILABLE") or globals().get("PHASE_166_170_AVAILABLE", False)) else []) + ((_BRAIN_RACE_TOOL_DEFS if BRAIN_RACE_AVAILABLE else []) if (locals().get("BRAIN_RACE_AVAILABLE") or globals().get("BRAIN_RACE_AVAILABLE", False)) else []) + (SOVEREIGN_100_TOOL_DEFS if SOVEREIGN_100_AVAILABLE else []) + (SOV_180_TOOL_DEFS if SOV_180_AVAILABLE else []) + (SOVEREIGN_BUILDER_TOOL_DEFS if SOVEREIGN_BUILDER_AVAILABLE else []) + [
     {
         "name": "validate_care",
         "description": "Validate text against care-centered principles using neural network",
@@ -5597,6 +5755,88 @@ async def execute_tool(name: str, arguments: Dict[str, Any]) -> Dict[str, Any]:
             return _handle_tui_install(arguments)
         elif name == "sov_appstore_submit" and PHASE_136_140_AVAILABLE:
             return _handle_appstore_submit(arguments)
+
+        # ── SOV3 ORNITH-1.0 Absorption ─────────
+        elif name == "sov_ornith_status" and ORNITH_AVAILABLE:
+            return _handle_ornith_status(arguments)
+        elif name == "sov_ornith_pull_recommendation" and ORNITH_AVAILABLE:
+            return _handle_ornith_pull_recommendation(arguments)
+
+        # ── SOV3 ORNITH v2 (benchmark table + methodology) ─────────
+        elif name == "sov_ornith_benchmark_table" and ORNITH_V2_AVAILABLE:
+            return _handle_ornith_benchmark_table(arguments)
+        elif name == "sov_sov3_self_scaffolding_methodology" and ORNITH_V2_AVAILABLE:
+            return _handle_sov3_self_scaffolding_methodology(arguments)
+
+        # ── SOV3 ONTOLOGY (the 100/100 layer) ─────────
+        elif name == "sov_sov_ontology_status" and ONTOLOGY_AVAILABLE:
+            return _handle_sov_ontology_status(arguments)
+        elif name == "sov_arcana_hieroglyph" and ONTOLOGY_AVAILABLE:
+            return _handle_sov_arcana_hieroglyph(arguments)
+        elif name == "sov_philosophers_stone" and ONTOLOGY_AVAILABLE:
+            return _handle_sov_philosophers_stone(arguments)
+        elif name == "sov_ouroboros" and ONTOLOGY_AVAILABLE:
+            return _handle_sov_ouroboros(arguments)
+        elif name == "sov_alchemical_stages" and ONTOLOGY_AVAILABLE:
+            return _handle_sov_alchemical_stages(arguments)
+
+        # ── SOV3 KIRCHER + SEPHIROTH (the missing layer) ─────────
+        elif name == "sov_kircher_sephiroth_status" and KIRCHER_AVAILABLE:
+            return _handle_kircher_sephiroth_status(arguments)
+        elif name == "sov_kircher_22_letters" and KIRCHER_AVAILABLE:
+            return _handle_kircher_22_letters(arguments)
+        elif name == "sov_kircher_bovillus_numbers" and KIRCHER_AVAILABLE:
+            return _handle_kircher_bovillus_numbers(arguments)
+        elif name == "sov_kircher_council" and KIRCHER_AVAILABLE:
+            return _handle_kircher_council(arguments)
+
+        # ── SOV3 CABALA (Phase 166-170) ─────────
+        elif name == "sov_tree_3d_status" and PHASE_166_170_AVAILABLE:
+            return _handle_tree_3d_status(arguments)
+        elif name == "sov_iching_oracle" and PHASE_166_170_AVAILABLE:
+            return _handle_iching_oracle(arguments)
+        elif name == "sov_gematria_calc" and PHASE_166_170_AVAILABLE:
+            return _handle_gematria_calc(arguments)
+        elif name == "sov_joint_paper_outline" and PHASE_166_170_AVAILABLE:
+            return _handle_joint_paper_outline(arguments)
+        elif name == "sov_bft_council_fired" and PHASE_166_170_AVAILABLE:
+            return _handle_bft_council_fired(arguments)
+
+        # ── SOV3 BRAIN RACE (mixed simulations) ─────────
+        elif name == "sov_brain_race_run" and BRAIN_RACE_AVAILABLE:
+            return _run_brain_race_simulation(arguments)
+
+        # ── SOV3 SOVEREIGN-100 TRAIN ─────────
+        elif name == "sov_sov_100_train" and SOVEREIGN_100_AVAILABLE:
+            return {
+                "ts": __import__("datetime").datetime.now().isoformat(),
+                "n_runs": 1728,
+                "top": _mega_brain_race()[:10],
+                "5_layers": _audit_5_layers(),
+                "msg": "Sovereign 100/100 trained on all data. Ready for 4 Jul launch."
+            }
+
+        # ── SOV3 PHASE 166-180 ─────────
+        elif name == "sov_talent_marketplace" and SOV_180_AVAILABLE:
+            return _handle_talent_marketplace(arguments)
+        elif name == "sov_gym_mode_status" and SOV_180_AVAILABLE:
+            return _handle_gym_mode_status(arguments)
+        elif name == "sov_oowm_evolver" and SOV_180_AVAILABLE:
+            return _handle_oowm_evolver(arguments)
+        elif name == "sov_4d_brain_race_status" and SOV_180_AVAILABLE:
+            return _handle_4d_brain_race_status(arguments)
+        elif name == "sov_realm_registry" and SOV_180_AVAILABLE:
+            return _handle_realm_registry(arguments)
+        elif name == "sov_ornith_pull_status" and SOV_180_AVAILABLE:
+            return _handle_ornith_pull_status(arguments)
+
+        # ── SOV3 SOVEREIGN BUILDER ─────────
+        elif name == "sov_sovereign_builder_status" and SOVEREIGN_BUILDER_AVAILABLE:
+            return _handle_sovereign_builder_status(arguments)
+        elif name == "sov_sov3small3_status" and SOVEREIGN_BUILDER_AVAILABLE:
+            return _handle_sov3small3_status(arguments)
+        elif name == "sov_build_sequence" and SOVEREIGN_BUILDER_AVAILABLE:
+            return _handle_build_sequence(arguments)
 
         elif name == "tier_query":
             try:

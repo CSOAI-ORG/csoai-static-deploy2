@@ -99,6 +99,21 @@ public:
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "MEOK")
     class UPointLightComponent* CoreLight;
 
+    // ── Bound to MeokCharacter3D for real glTF/GLB mesh loading ─────
+    // The 13-Queen + King mesh registry is owned by this component.
+    // The factory actor now reads from it instead of generating a
+    // procedural egg+character from scratch.
+    UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "MEOK")
+    class UMeokCharacter3D* CharacterRegistry;
+
+    // The i-character id currently bound (e.g. "ich-abc123")
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "MEOK")
+    FString CurrentIcharId;
+
+    // The queen id currently bound (e.g. "queen-king")
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "MEOK")
+    FString CurrentQueenId;
+
     // ── API ──
 
     // Spawn a 3D character procedurally from a JSON config
@@ -132,6 +147,20 @@ public:
     // Get all 7 archetype names
     UFUNCTION(BlueprintCallable, Category = "MEOK")
     TArray<FString> GetAllArchetypes() const;
+
+    // ── New: bind an i-character to a real glTF mesh via MeokCharacter3D ──
+    // This is the MOSSING step: old agentshire glTF models are now
+    // loaded by the factory when the user creates an i-character.
+    UFUNCTION(BlueprintCallable, Category = "MEOK")
+    AActor* SpawnIcharWithMesh(const FString& IcharId, const FString& QueenId);
+
+    // Trigger the full egg -> crack -> emerge -> bind -> animate sequence
+    UFUNCTION(BlueprintCallable, Category = "MEOK")
+    void RunEmergeSequence(const FString& IcharId, const FString& QueenId, float TotalSeconds = 8.f);
+
+    // Get the loaded character count from the bound registry
+    UFUNCTION(BlueprintCallable, Category = "MEOK")
+    int32 GetLoadedCharacterCount() const;
 
     // Tick
     virtual void Tick(float DeltaTime) override;

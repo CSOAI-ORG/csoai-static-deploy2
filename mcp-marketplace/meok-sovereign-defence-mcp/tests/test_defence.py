@@ -1,88 +1,107 @@
 """Tests for meok-sovereign-defence-mcp."""
-import os, tempfile
-_TEST_DIR = tempfile.mkdtemp(prefix="sov_def_test_")
-os.environ["SOV_DEF_KEY"] = os.path.join(_TEST_DIR, "key.pem")
-from meok_sovereign_defence_mcp import (
-    sov_threat_assess, sov_iwc_calculate, sov_jsp936_audit,
-    sov_c2_route, sov_doctrine, DEFENSIVE_DOCTRINE, VERSION, PROTOCOL,
-)
+import os, sys, importlib.util
+
+# Load sovereign_defence.py via absolute path to avoid the PyPI 'server' name-clash
+MODULE_PATH = os.path.join(os.path.dirname(__file__), "..", "sovereign_defence.py")
+spec = importlib.util.spec_from_file_location("sovereign_defence", MODULE_PATH)
+mod = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(mod)
+
+defence_list_products = mod.defence_list_products
+defence_jsp936_audit = mod.defence_jsp936_audit
+defence_jsp440_audit = mod.defence_jsp440_audit
+defence_attack_vector_check = mod.defence_attack_vector_check
+defence_bft_council_consensus = mod.defence_bft_council_consensus
+defence_pqc_status = mod.defence_pqc_status
+defence_threat_assessment = mod.defence_threat_assessment
+defence_sigil_emit = mod.defence_sigil_emit
+defence_incident_response = mod.defence_incident_response
+defence_posture = mod.defence_posture
+VERSION = mod.VERSION
+TOOLS = mod.TOOLS
 
 
-def test_threat_assess_low():
-    r = sov_threat_assess("Routine perimeter check, no anomalies.")
-    assert r["threat_score"] <= 2
-    assert r["threat_level"] == "low"
+def test_version():
+    assert VERSION == "1.0.0"
 
 
-def test_threat_assess_critical():
-    r = sov_threat_assess("Critical infrastructure cyber attack with active insider breach")
-    assert r["threat_score"] >= 8
-    assert r["threat_level"] == "critical"
+def test_tools_count():
+    assert len(TOOLS) == 10
 
 
-def test_threat_assess_signed():
-    r = sov_threat_assess("test")
-    assert "kid" in r and "sig" in r
+def test_list_products():
+    r = defence_list_products()
+    assert r["count"] == 8
 
 
-def test_iwc_calculate_sovereign():
-    r = sov_iwc_calculate(100, 90, 85)
-    assert r["capacity"] == "sovereign"
-    assert r["iwc"] > 0.8
+def test_jsp936_pass():
+    r = defence_jsp936_audit("drone-control", ["sensor", "ml", "ux"])
+    assert r["compliant"] is True
 
 
-def test_iwc_calculate_exposed():
-    r = sov_iwc_calculate(100, 5, 1)
-    assert r["capacity"] == "exposed"
+def test_jsp440_pass():
+    r = defence_jsp440_audit("auth", ["encryption", "auth", "audit", "rate_limit", "secure_coding"])
+    assert r["compliant"] is True
 
 
-def test_iwc_calculate_zero_scans():
-    r = sov_iwc_calculate(0, 0, 0)
+def test_jsp440_fail():
+    r = defence_jsp440_audit("auth", ["none"])
+    assert r["compliant"] is False
+
+
+def test_attack_vector():
+    r = defence_attack_vector_check(1, "PQC-signed")
+    assert r["score"] == 100
+    assert r["family"] == "LLM01"
+
+
+def test_attack_vector_invalid():
+    r = defence_attack_vector_check(99, "mitigated")
     assert "error" in r
 
 
-def test_jsp936_audit_sovereign():
-    pillars = {p: {"documented": True, "tested": True, "incident_history": True} for p in DEFENSIVE_DOCTRINE["jsp_936_audit_pillars"]}
-    r = sov_jsp936_audit("CSOAI", pillars)
-    assert r["assurance_level"] in ("sovereign", "robust")
-    assert len(r["scores"]) == 5
+def test_bft_consensus_pass():
+    votes = {f"q{i}": "for" for i in range(15)}
+    votes["q15"] = "against"
+    r = defence_bft_council_consensus("attack-plan-alpha", votes)
+    assert r["passed"] is True
 
 
-def test_jsp936_audit_missing_pillars():
-    r = sov_jsp936_audit("Test", {"identify": True})
-    assert "error" in r
+def test_bft_consensus_fail():
+    votes = {f"q{i}": "against" for i in range(13)}
+    votes["q13"] = "for"
+    r = defence_bft_council_consensus("plan", votes)
+    assert r["passed"] is False
 
 
-def test_c2_route_normal():
-    r = sov_c2_route("asset-1", "secure-vault", priority="normal", requires_approval=False)
-    assert r["route"]["asset_id"] == "asset-1"
-    assert r["route"]["approval"] == "auto_approved"
-    assert len(r["route"]["hops"]) == 3
+def test_pqc_status():
+    r = defence_pqc_status()
+    assert r["ml-dsa-65"] == "active"
+    assert r["fips-203"] == "active"
 
 
-def test_c2_route_critical_pending_council():
-    r = sov_c2_route("asset-2", "frontline", priority="critical", requires_approval=True)
-    assert r["route"]["approval"] == "pending_council_vote"
+def test_threat_assessment_high():
+    r = defence_threat_assessment("APT-29", "APT")
+    assert r["risk_score"] == 90
 
 
-def test_doctrine():
-    r = sov_doctrine()
-    assert r["doctrine"]["motto"].startswith("Defend")
-    assert "Offensive action" in str(r["doctrine"]["principles"])
-    assert len(r["doctrine"]["jsp_936_audit_pillars"]) == 5
+def test_threat_assessment_low():
+    r = defence_threat_assessment("script-kiddie", "skiddie")
+    assert r["risk_score"] == 20
 
 
-def test_doctrine_defensive_only():
-    r = sov_doctrine()
-    assert "Never Offend" in r["doctrine"]["motto"]
-    assert "NOT in scope" in str(r["doctrine"]["principles"])
+def test_sigil_emit():
+    r = defence_sigil_emit("incident-response", {"incident": "K-1"})
+    assert len(r["digest"]) == 16
+    assert r["alg"] == "ed25519"
 
 
-def test_all_signed():
-    r1 = sov_threat_assess("test")
-    r2 = sov_iwc_calculate(100, 50, 25)
-    r3 = sov_jsp936_audit("org", {p: True for p in DEFENSIVE_DOCTRINE["jsp_936_audit_pillars"]})
-    r4 = sov_c2_route("a", "b")
-    r5 = sov_doctrine()
-    for r in [r1, r2, r3, r4, r5]:
-        assert "kid" in r and "sig" in r
+def test_incident_response():
+    r = defence_incident_response("data_exfiltration", "high")
+    assert "jsp936" in r["playbook"]
+
+
+def test_posture():
+    r = defence_posture()
+    assert r["sovereign_bond"] == 0.937
+    assert r["bft_council_size"] == 21

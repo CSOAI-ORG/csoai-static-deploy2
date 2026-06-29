@@ -24,7 +24,8 @@ public class MeokWorld : ModuleRules
             "Slate",
             "SlateCore",
             "RenderCore",
-            "RHI"
+            "RHI",
+            "AssetManager"  // FStreamableManager for async glTF/GLB load
         });
 
         PrivateDependencyModuleNames.AddRange(new string[] {

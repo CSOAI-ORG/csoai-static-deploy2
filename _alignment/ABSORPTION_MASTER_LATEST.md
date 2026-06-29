@@ -1,28 +1,28 @@
 # 🜏 ABSORPTION + CONSOLIDATION MASTER SWEEP
 
-_Generated: 2026-06-29T09:53:16.447437+00:00Z_
+_Generated: 2026-06-29T10:21:39.248546+00:00Z_
 
 ## Summary
 
 | Metric | Value |
 |---|---|
 | MCPs scanned | 532 |
-| Passing | 484 |
-| Failing | 15 |
+| Passing | 498 |
+| Failing | 1 |
 | Skipped | 33 |
-| Tests passing | 2915 |
-| Tests failing | 5 |
-| LAYER 0 entries | 484 |
+| Tests passing | 3041 |
+| Tests failing | 3 |
+| LAYER 0 entries | 498 |
 | Frameworks | 12 |
-| Duplicates | 431 |
+| Duplicates | 444 |
 
 ## Frameworks
 
-- **Sovereign MCP**: 431 MCPs
+- **Sovereign MCP**: 444 MCPs
 - **Zero Trust**: 13 MCPs
 - **SOV3 Substrate**: 11 MCPs
+- **EU Compliance**: 9 MCPs
 - **Sovereign AI**: 8 MCPs
-- **EU Compliance**: 8 MCPs
 - **Micropayments**: 4 MCPs
 - **Planning**: 3 MCPs
 - **SOV3 OOWM**: 3 MCPs
@@ -81,444 +81,458 @@ _Generated: 2026-06-29T09:53:16.447437+00:00Z_
 | 44 | blockchain-ai | Sovereign MCP | 0 |
 | 45 | blockchain-verification | Sovereign MCP | 0 |
 | 46 | budget-planner-ai | Sovereign MCP | 0 |
-| 47 | calendar-ai | Sovereign MCP | 0 |
-| 48 | canada-aida-ai | Sovereign MCP | 0 |
-| 49 | care-home-cqc | Sovereign MCP | 5 |
-| 50 | care-home-scheduling | Sovereign MCP | 5 |
-| 51 | care-membrane | Sovereign MCP | 0 |
-| 52 | changelog-ai | Sovereign MCP | 0 |
-| 53 | chas-elite-prep | Sovereign MCP | 5 |
-| 54 | churn-predictor-ai | Sovereign MCP | 0 |
-| 55 | ci-cd-generator-ai | Sovereign MCP | 0 |
-| 56 | cics-bridge | Sovereign MCP | 2 |
-| 57 | cisa-kev | Sovereign MCP | 5 |
-| 58 | citation-finder-ai | Sovereign MCP | 0 |
-| 59 | cli-builder-ai | Sovereign MCP | 0 |
-| 60 | clinical-trials-ai | Sovereign MCP | 0 |
-| 61 | clipboard-ai | Sovereign MCP | 0 |
-| 62 | cobol-bridge | Sovereign MCP | 5 |
-| 63 | code-executor | Sovereign MCP | 0 |
-| 64 | code-reviewer-ai | Sovereign MCP | 0 |
-| 65 | color-ai | Sovereign MCP | 0 |
-| 66 | commit-message-ai | Sovereign MCP | 0 |
-| 67 | competitor-monitor-ai | Sovereign MCP | 0 |
-| 68 | compression-ai | Sovereign MCP | 0 |
-| 69 | concrete-pump-cpa | Sovereign MCP | 5 |
-| 70 | config-validator-ai | Sovereign MCP | 0 |
-| 71 | consciousness-engine | Sovereign MCP | 0 |
-| 72 | construction-iso-19650 | Sovereign MCP | 5 |
-| 73 | content-calendar-ai | Sovereign MCP | 0 |
-| 74 | content-registry | Sovereign MCP | 0 |
-| 75 | contract-review-ai | Sovereign MCP | 0 |
-| 76 | coppa-ferpa | Sovereign MCP | 5 |
-| 77 | councilof | Sovereign AI | 14 |
-| 78 | cqc-compliance | Sovereign MCP | 5 |
-| 79 | cra-compliance | Sovereign MCP | 3 |
-| 80 | crane-hire-cpcs | Sovereign MCP | 5 |
-| 81 | creativity-engine | Sovereign MCP | 0 |
-| 82 | crm-ai | Sovereign MCP | 0 |
-| 83 | cron-ai | Sovereign MCP | 0 |
-| 84 | crypto-tracker-ai | Sovereign MCP | 0 |
-| 85 | csoai-defoneos | Sovereign MCP | 14 |
-| 86 | csoai-governance-crosswalk | Zero Trust | 0 |
-| 87 | csrd-compliance | Sovereign MCP | 5 |
-| 88 | csv-analytics | Sovereign MCP | 0 |
-| 89 | csv-tools-ai | Sovereign MCP | 0 |
-| 90 | currency-converter-ai | Sovereign MCP | 0 |
-| 91 | customer-support-ai | Sovereign MCP | 0 |
-| 92 | cybersecurity-ai | Sovereign MCP | 0 |
-| 93 | data-science-ai | Sovereign MCP | 0 |
-| 94 | database-universal | Sovereign MCP | 0 |
-| 95 | dataprivacy-ai | Sovereign MCP | 0 |
-| 96 | date-calculator-ai | Sovereign MCP | 0 |
-| 97 | deepfake-detector | Sovereign MCP | 0 |
-| 98 | defoneos-cesium | Sovereign MCP | 9 |
-| 99 | defoneos-compliance | Sovereign MCP | 10 |
-| 100 | defoneos-counterdrone | Sovereign MCP | 14 |
-| 101 | defoneos-cyber | Sovereign MCP | 14 |
-| 102 | defoneos-isr | Sovereign MCP | 13 |
-| 103 | defoneos-jsp936 | Sovereign MCP | 14 |
-| 104 | defoneos-medevac | Sovereign MCP | 23 |
-| 105 | defoneos-ospd | Sovereign MCP | 10 |
-| 106 | defoneos-swarm | Sovereign MCP | 10 |
-| 107 | defoneos-tak | Sovereign MCP | 10 |
-| 108 | dependency-updater-ai | Sovereign MCP | 0 |
-| 109 | devops-ai | Sovereign MCP | 0 |
-| 110 | diff-ai | Sovereign MCP | 0 |
-| 111 | dispense-record | Sovereign MCP | 5 |
-| 112 | dlms-bridge | Sovereign MCP | 2 |
-| 113 | docker-helper-ai | Sovereign MCP | 0 |
-| 114 | dockerfile-generator-ai | Sovereign MCP | 0 |
-| 115 | document-comparison-ai | Sovereign MCP | 0 |
-| 116 | domiciliary-care | Sovereign MCP | 5 |
-| 117 | dora-compliance | EU Compliance | 56 |
-| 118 | dora-nis2-crosswalk | EU Compliance | 10 |
-| 119 | drone-airspace-governance | Zero Trust | 0 |
-| 120 | ecommerce-ai | Sovereign MCP | 0 |
-| 121 | edi-bridge | Sovereign MCP | 2 |
-| 122 | education-ai | Sovereign MCP | 0 |
-| 123 | email-automation | Sovereign MCP | 0 |
-| 124 | email-validator-ai | Sovereign MCP | 0 |
-| 125 | emoji-ai | Sovereign MCP | 0 |
-| 126 | encoder-ai | Sovereign MCP | 0 |
-| 127 | env-manager-ai | Sovereign MCP | 0 |
-| 128 | eu-ai-act-compliance | EU Compliance | 0 |
-| 129 | eudi-wallet | Sovereign MCP | 15 |
-| 130 | event-planning-ai | Planning | 0 |
-| 131 | expense-tracker-ai | Sovereign MCP | 0 |
-| 132 | explainability-report | Sovereign MCP | 5 |
-| 133 | faker-ai | Sovereign MCP | 0 |
-| 134 | fda-samd | Sovereign MCP | 5 |
-| 135 | feedback-analyzer-ai | Sovereign MCP | 0 |
-| 136 | file-organizer-ai | Sovereign MCP | 0 |
-| 137 | firmware-attestation | Sovereign MCP | 5 |
-| 138 | fishkeeper-ai | Sovereign MCP | 0 |
-| 139 | fitness-ai | Sovereign MCP | 0 |
-| 140 | fix-bridge | Sovereign MCP | 2 |
-| 141 | flashcard-ai | Sovereign MCP | 0 |
-| 142 | flight-logger | Sovereign MCP | 0 |
-| 143 | focus-timer-ai | Sovereign MCP | 0 |
-| 144 | fsa-food-safety | Sovereign MCP | 5 |
-| 145 | gardening-ai | Sovereign MCP | 0 |
-| 146 | gdpr-compliance-ai | Sovereign MCP | 0 |
-| 147 | geolocation-ai | Sovereign MCP | 0 |
-| 148 | git-helper-ai | Sovereign MCP | 0 |
-| 149 | gods-eye-geospatial | Sovereign MCP | 3 |
-| 150 | gos-claim-validator | Sovereign MCP | 5 |
-| 151 | grabhire-ai | Sovereign MCP | 15 |
-| 152 | grammar-fix-ai | Sovereign MCP | 0 |
-| 153 | gs1-bridge | Sovereign MCP | 2 |
-| 154 | habit-tracker-ai | Sovereign MCP | 0 |
-| 155 | hash-utils-ai | Sovereign MCP | 0 |
-| 156 | health-check-ai | Sovereign MCP | 0 |
-| 157 | healthcare-ai-governance | Zero Trust | 0 |
-| 158 | healthcare-fhir | Sovereign MCP | 0 |
-| 159 | hipaa-compliance | Sovereign MCP | 36 |
-| 160 | hl7-fhir-bridge | Sovereign MCP | 3 |
-| 161 | hr-management-ai | Sovereign MCP | 0 |
-| 162 | html-parser-ai | Sovereign MCP | 0 |
-| 163 | hydration-reminder-ai | Sovereign MCP | 0 |
-| 164 | icon-generator-ai | Sovereign MCP | 0 |
-| 165 | image-metadata-ai | Sovereign MCP | 0 |
-| 166 | insurance-verification | Sovereign MCP | 0 |
-| 167 | inventory-management-ai | Sovereign MCP | 0 |
-| 168 | invoice-generator-ai | Sovereign MCP | 0 |
-| 169 | ip-network-ai | Sovereign MCP | 0 |
-| 170 | iso-27001-ai | Sovereign MCP | 31 |
-| 171 | iso-42001-ai | Sovereign MCP | 0 |
-| 172 | iso-42005-impact | Sovereign MCP | 14 |
-| 173 | iso20022-bridge | Sovereign MCP | 3 |
-| 174 | iso8583-bridge | Sovereign MCP | 2 |
-| 175 | job-description-ai | Sovereign MCP | 0 |
-| 176 | json-ai | Sovereign MCP | 0 |
-| 177 | jwt-ai | Sovereign MCP | 0 |
-| 178 | keyword-extractor-ai | Sovereign MCP | 0 |
-| 179 | korea-ai-basic-act | Sovereign MCP | 16 |
-| 180 | landlaw-ai | Sovereign MCP | 0 |
-| 181 | lead-scoring-ai | Sovereign MCP | 0 |
-| 182 | legal-document-ai | Sovereign MCP | 0 |
-| 183 | license-checker-ai | Sovereign MCP | 0 |
-| 184 | linkedin-outreach | Sovereign MCP | 0 |
-| 185 | ll144-bias-audit | Sovereign MCP | 6 |
-| 186 | llm-compliance-comparison | Sovereign MCP | 0 |
-| 187 | logistics-ai | Sovereign MCP | 0 |
-| 188 | lorem-ipsum-ai | Sovereign MCP | 0 |
-| 189 | markdown-ai | Sovereign MCP | 0 |
-| 190 | marketing-analytics-ai | Sovereign MCP | 0 |
-| 191 | math-solver-ai | Sovereign MCP | 0 |
-| 192 | mcp-scorecard | Sovereign MCP | 6 |
-| 193 | mcp-spec-compliance | Sovereign MCP | 15 |
-| 194 | mdr-medical-device | Sovereign MCP | 10 |
-| 195 | meal-planner-ai | Sovereign MCP | 0 |
-| 196 | meditation-guide-ai | Sovereign MCP | 0 |
-| 197 | meek-3-and-sov3-connection | Sovereign MCP | 5 |
-| 198 | meek-3d-print-toolchain | Sovereign MCP | 5 |
-| 199 | meek-4vf-data-transport | Sovereign MCP | 5 |
-| 200 | meek-antenna-triangle | Sovereign MCP | 5 |
-| 201 | meek-brand-architecture | Sovereign MCP | 5 |
-| 202 | meek-capillary-actuator | Sovereign MCP | 6 |
-| 203 | meek-cesium-overlay | Sovereign MCP | 8 |
-| 204 | meek-cfd-thermal | Sovereign MCP | 5 |
-| 205 | meek-circulatory-capillary | Sovereign MCP | 6 |
-| 206 | meek-consolidation-absorption | Sovereign MCP | 5 |
-| 207 | meek-daily-plan | Sovereign MCP | 5 |
-| 208 | meek-defoneos-audit-logging | Sovereign MCP | 5 |
-| 209 | meek-defoneos-backup-restore | Sovereign MCP | 5 |
-| 210 | meek-defoneos-cdn-edge | Sovereign MCP | 5 |
-| 211 | meek-defoneos-cold-email | Sovereign MCP | 5 |
-| 212 | meek-defoneos-knowledge-pack | Sovereign MCP | 5 |
-| 213 | meek-defoneos-load-balancer | Sovereign MCP | 5 |
-| 214 | meek-defoneos-monitoring | Sovereign MCP | 5 |
-| 215 | meek-defoneos-pagerduty | Sovereign MCP | 6 |
-| 216 | meek-defoneos-pricing | Sovereign MCP | 5 |
-| 217 | meek-defoneos-pypi-publish | Sovereign MCP | 4 |
-| 218 | meek-defoneos-seal-card | Sovereign MCP | 5 |
-| 219 | meek-defoneos-secret-rotation | Sovereign MCP | 5 |
-| 220 | meek-defoneos-smithery | Sovereign MCP | 4 |
-| 221 | meek-defoneos-ue5 | Sovereign MCP | 8 |
-| 222 | meek-defoneos-uk-pilots-tracker | Sovereign MCP | 5 |
-| 223 | meek-defoneos-vercel-deploy | Sovereign MCP | 5 |
-| 224 | meek-design-bom | Sovereign MCP | 5 |
-| 225 | meek-design-tool-orchestrator | SOV3 Substrate | 5 |
-| 226 | meek-digital-twin | Sovereign MCP | 5 |
-| 227 | meek-dorado-west | EU Compliance | 5 |
-| 228 | meek-dual-brain | Sovereign MCP | 6 |
-| 229 | meek-energy-harvester | Sovereign MCP | 10 |
-| 230 | meek-gaming-research | Sovereign MCP | 7 |
-| 231 | meek-google-free | Sovereign MCP | 5 |
-| 232 | meek-human-orb-resonance | Sovereign MCP | 5 |
-| 233 | meek-humanoid | Sovereign MCP | 5 |
-| 234 | meek-hybrid-roadmap | Sovereign MCP | 8 |
-| 235 | meek-intuitive-frequency | Sovereign MCP | 6 |
-| 236 | meek-ki-cad | Sovereign MCP | 6 |
-| 237 | meek-leanstral | Sovereign MCP | 3 |
-| 238 | meek-lora-radar | Sovereign MCP | 2 |
-| 239 | meek-materials | Sovereign MCP | 4 |
-| 240 | meek-onboarding | Sovereign MCP | 5 |
-| 241 | meek-optics | Sovereign MCP | 5 |
-| 242 | meek-orb-mesh | Sovereign MCP | 6 |
-| 243 | meek-pdca-planning | Planning | 5 |
-| 244 | meek-pixelbuddy-integration | Sovereign MCP | 8 |
-| 245 | meek-poc-prioritizer | Sovereign MCP | 6 |
-| 246 | meek-quantum-dream | Sovereign MCP | 6 |
-| 247 | meek-regulation-temple | Sovereign MCP | 5 |
-| 248 | meek-sacred-geometry | Sovereign MCP | 6 |
-| 249 | meek-screen-reader | Sovereign MCP | 10 |
-| 250 | meek-sessions-tasks | Sovereign MCP | 5 |
-| 251 | meek-shipped-status | Sovereign MCP | 5 |
-| 252 | meek-silica-memory | Sovereign AI | 15 |
-| 253 | meek-simulation | Sovereign MCP | 14 |
-| 254 | meek-sov-live-screen-view | Sovereign MCP | 7 |
-| 255 | meek-sov-multi-world-dashboard | Sovereign MCP | 6 |
-| 256 | meek-sov-os-3d-right-brain | Sovereign MCP | 9 |
-| 257 | meek-sov-os-cuboid | Sovereign MCP | 8 |
-| 258 | meek-sov-os-frontend | Sovereign MCP | 9 |
-| 259 | meek-sov-os-gamification | Sovereign MCP | 6 |
-| 260 | meek-sov-os-iokfarm | Sovereign MCP | 8 |
-| 261 | meek-sov-os-permissions | Sovereign MCP | 7 |
-| 262 | meek-sov-os-tui | Sovereign MCP | 5 |
-| 263 | meek-sov-os-ue5-dome | Sovereign MCP | 8 |
-| 264 | meek-sov-os-workflow-engine | Sovereign MCP | 8 |
-| 265 | meek-sov-os-world | Sovereign MCP | 6 |
-| 266 | meek-sov-pixel-painter | Sovereign MCP | 8 |
-| 267 | meek-sov-space | Sovereign MCP | 6 |
-| 268 | meek-sov-work-trace | Sovereign MCP | 6 |
-| 269 | meek-sov27-vertex-sovereign-grid | Sovereign MCP | 8 |
-| 270 | meek-sov3-best-config-api | SOV3 Substrate | 9 |
-| 271 | meek-sov3-cube-synthesis | SOV3 Substrate | 5 |
-| 272 | meek-sov3-geometic-resonance-tuning | SOV3 Substrate | 10 |
-| 273 | meek-sov3-mixed-simulation | SOV3 Substrate | 10 |
-| 274 | meek-sov3-oowm | SOV3 OOWM | 6 |
-| 275 | meek-sov3-orchestrator | SOV3 Substrate | 5 |
-| 276 | meek-sov3-organic-visual-world | SOV3 Substrate | 6 |
-| 277 | meek-sov3-pixelwow-pixelbot | SOV3 Substrate | 7 |
-| 278 | meek-sov3-world-livestream | SOV3 Substrate | 6 |
-| 279 | meek-sov33-trinity-council | Sovereign AI, SOV3 Substrate | 9 |
-| 280 | meek-sovereign-body | Sovereign MCP | 4 |
-| 281 | meek-stone-soup | Sovereign MCP | 3 |
-| 282 | meek-tracecat | Sovereign MCP | 2 |
-| 283 | meek-transcendent-emergence | Sovereign MCP | 6 |
-| 284 | meek-truth-check | Sovereign MCP | 5 |
-| 285 | meek-wifi-csi | Sovereign MCP | 3 |
-| 286 | meek-world-data | Sovereign MCP | 8 |
-| 287 | meek-wow-bot | Sovereign MCP | 8 |
-| 288 | meeting-summarizer-ai | Sovereign MCP | 0 |
-| 289 | memory-search | Sovereign AI | 0 |
-| 290 | meok-aaif-agent-card | Sovereign MCP | 15 |
-| 291 | meok-abci-bridge | Sovereign MCP | 19 |
-| 292 | meok-agents-md-lint | Sovereign MCP | 17 |
-| 293 | meok-allmi-hiab | Sovereign MCP | 33 |
-| 294 | meok-ap2-mandate | Sovereign MCP | 20 |
-| 295 | meok-aquaponics-monitor | Sovereign MCP | 5 |
-| 296 | meok-asc-rspca-crosswalk | Sovereign MCP | 5 |
-| 297 | meok-bs7121 | Sovereign MCP | 22 |
-| 298 | meok-c2pa-durable | Sovereign MCP | 14 |
-| 299 | meok-c2pa-watermark | Sovereign MCP | 5 |
-| 300 | meok-coinbase-x402-receipt | Zero Trust, Micropayments | 16 |
-| 301 | meok-cold-chain-pharma | Sovereign MCP | 29 |
-| 302 | meok-cpa-contract-lift | Sovereign MCP | 23 |
-| 303 | meok-cra-annex-iv-classifier | Sovereign MCP | 3 |
-| 304 | meok-cra-art14-reporter | Sovereign MCP | 16 |
-| 305 | meok-credential-manager | Sovereign MCP | 0 |
-| 306 | meok-defoneos-geospatial-intel | Sovereign MCP | 18 |
-| 307 | meok-defoneos | Sovereign MCP | 18 |
-| 308 | meok-dpia-edpb-template | Sovereign MCP | 3 |
-| 309 | meok-drcf-agent-crosswalk | Sovereign MCP | 5 |
-| 310 | meok-dvsa-olicence | Sovereign MCP | 32 |
-| 311 | meok-emerald-tablet | Sovereign MCP | 22 |
-| 312 | meok-eu-ai-act-art-13-ifu | EU Compliance | 15 |
-| 313 | meok-eu-ai-act-art-26-fria | EU Compliance | 18 |
-| 314 | meok-eu-aia-art-9-rms | Sovereign MCP | 18 |
-| 315 | meok-eu-aigc-icon | Sovereign MCP | 14 |
-| 316 | meok-eu-mobility-package | Sovereign MCP | 22 |
-| 317 | meok-eu-platform-worker | Sovereign MCP | 32 |
-| 318 | meok-ev-recall-transport | Sovereign MCP | 18 |
-| 319 | meok-fmcsa-hours-of-service | Sovereign MCP | 31 |
-| 320 | meok-fors-clocs | Sovereign MCP | 30 |
-| 321 | meok-gaming-wow | Sovereign MCP | 5 |
-| 322 | meok-governance-engine | Zero Trust | 0 |
-| 323 | meok-haulage-governance-bridge | Zero Trust | 23 |
-| 324 | meok-iata-dgr-air-cargo | Sovereign MCP | 30 |
-| 325 | meok-imo-marpol-marine | Sovereign MCP | 31 |
-| 326 | meok-iru-tir-international | Sovereign MCP | 27 |
-| 327 | meok-koikeeper-ai | Sovereign MCP | 5 |
-| 328 | meok-laia-aquatic | Sovereign MCP | 5 |
-| 329 | meok-law | Sovereign MCP | 5 |
-| 330 | meok-libp2p-agent-mesh | Sovereign MCP | 27 |
-| 331 | meok-livestock-welfare-transport | Sovereign MCP | 32 |
-| 332 | meok-cardgen | Sovereign MCP | 14 |
-| 333 | meok-hardening | Sovereign MCP | 21 |
-| 334 | meok-injection-scan | Sovereign MCP | 3 |
-| 335 | meok-test | Sovereign MCP | 27 |
-| 336 | meok-nhvr-australia | Sovereign MCP | 29 |
-| 337 | meok-nis2-de-register | Sovereign MCP | 3 |
-| 338 | meok-omnibus-tracker | Sovereign MCP | 3 |
-| 339 | meok-os | Sovereign MCP | 17 |
-| 340 | meok-rail-freight-uk | Sovereign MCP | 21 |
-| 341 | meok-rspca-aquaculture | Sovereign MCP | 5 |
-| 342 | meok-sovereign-avatar | Multi-modal | 10 |
-| 343 | meok-sovereign-council | Sovereign AI | 19 |
-| 344 | meok-sovereign-eu-ai-act-kit | EU Compliance | 10 |
-| 345 | meok-sovereign-federation | SOV3 OOWM | 18 |
-| 346 | meok-sovereign-globe | Geospatial, Multi-modal | 18 |
-| 347 | meok-sovereign-governance | Zero Trust | 20 |
-| 348 | meok-sovereign-guardrails | Zero Trust | 20 |
-| 349 | meok-sovereign-memory | Sovereign AI | 12 |
-| 350 | meok-sovereign-native | Sovereign Runtime | 34 |
-| 351 | meok-sovereign-oowm | SOV3 OOWM | 33 |
-| 352 | meok-sovereign-passport | Zero Trust | 11 |
-| 353 | meok-sovereign-planning | Planning | 19 |
-| 354 | meok-sovereign-receipt | Zero Trust | 15 |
-| 355 | meok-sovereign-skills | Sovereign AI | 10 |
-| 356 | meok-sovereign-worm | Zero Trust | 26 |
-| 357 | meok-sovereign-x402-payment | Micropayments | 12 |
-| 358 | meok-stripe-acp-checkout | Sovereign MCP | 15 |
-| 359 | meok-supply-chain-attestation | Supply Chain | 10 |
-| 360 | meok-tacho-audit | Sovereign MCP | 16 |
-| 361 | meok-transport-canada-hos | Sovereign MCP | 33 |
-| 362 | meok-uae-rta-transport | Sovereign MCP | 41 |
-| 363 | meok-uas-commercial-drone | Sovereign MCP | 38 |
-| 364 | meok-uk-adm-article22c | Sovereign MCP | 5 |
-| 365 | meok-uk-fhi | Sovereign MCP | 5 |
-| 366 | meok-uk-phv-tfl | Sovereign MCP | 23 |
-| 367 | meok-vehicle-handover | Sovereign MCP | 40 |
-| 368 | meok-w3c-tdm-rights | Sovereign MCP | 15 |
-| 369 | meok-watermark-attest | Sovereign MCP | 3 |
-| 370 | meok-x402-wrap | Micropayments | 15 |
-| 371 | mhra-samd-optometry | Sovereign MCP | 5 |
-| 372 | mica-crypto | Sovereign MCP | 5 |
-| 373 | mifid-ii-ai | Sovereign MCP | 5 |
-| 374 | mismo-bridge | Sovereign MCP | 3 |
-| 375 | mitre-atlas | Sovereign MCP | 5 |
-| 376 | mitre-attack | Sovereign MCP | 5 |
-| 377 | mock-server-ai | Sovereign MCP | 0 |
-| 378 | model-scoreboard | Sovereign MCP | 3 |
-| 379 | mortgage-calculator-ai | Sovereign MCP | 0 |
-| 380 | mqtt-bridge | Sovereign MCP | 2 |
-| 381 | muckaway-ai | Sovereign MCP | 14 |
-| 382 | music-production-ai | Sovereign MCP | 0 |
-| 383 | nacha-bridge | Sovereign MCP | 3 |
-| 384 | neural-health-monitor | Sovereign MCP | 3 |
-| 385 | nhs-gos-claims | Sovereign MCP | 5 |
-| 386 | nis2-compliance | Sovereign MCP | 0 |
-| 387 | nist-iso42001-crosswalk | EU Compliance | 6 |
-| 388 | nist-rmf-ai | Sovereign MCP | 0 |
-| 389 | note-taking-ai | Sovereign MCP | 0 |
-| 390 | notification-ai | Sovereign MCP | 0 |
-| 391 | nrswa-ai | Sovereign MCP | 5 |
-| 392 | nutrition-tracker-ai | Sovereign MCP | 0 |
-| 393 | oasf-agent-directory | Sovereign MCP | 14 |
-| 394 | optical-care-home-bridge | Sovereign MCP | 5 |
-| 395 | optometry-ai-safety | Sovereign MCP | 0 |
-| 396 | optometry-patient | Sovereign MCP | 5 |
-| 397 | oracle-bridge | Sovereign MCP | 2 |
-| 398 | otp-ai | Sovereign MCP | 0 |
-| 399 | owasp-agentic | Sovereign MCP | 12 |
-| 400 | password-ai | Sovereign MCP | 0 |
-| 401 | patient-safety-ai | Sovereign MCP | 0 |
-| 402 | pci-dss | Sovereign MCP | 4 |
-| 403 | pdf-document | Sovereign MCP | 0 |
-| 404 | pdf-merge-ai | Sovereign MCP | 0 |
-| 405 | pdf-tools-ai | Sovereign MCP | 0 |
-| 406 | performance-ai | Sovereign MCP | 0 |
-| 407 | personal-finance-ai | Sovereign MCP | 0 |
-| 408 | pet-care-ai | Sovereign MCP | 0 |
-| 409 | photography-ai | Sovereign MCP | 0 |
-| 410 | plagiarism-checker-ai | Sovereign MCP | 0 |
-| 411 | planthire-ai | Sovereign MCP | 0 |
-| 412 | pomodoro-ai | Sovereign MCP | 0 |
-| 413 | price-tracker-ai | Sovereign MCP | 0 |
-| 414 | project-management-ai | Sovereign MCP | 0 |
-| 415 | proofof-ai | Sovereign MCP | 12 |
-| 416 | qidi-printer | Sovereign MCP | 3 |
-| 417 | qr-code-ai | Sovereign MCP | 0 |
-| 418 | quantum-scoring | Sovereign MCP | 3 |
-| 419 | quiz-generator-ai | Sovereign MCP | 0 |
-| 420 | rag-knowledge-graph | Sovereign MCP | 0 |
-| 421 | rag-knowledge | Sovereign MCP | 0 |
-| 422 | readme-generator-ai | Sovereign MCP | 0 |
-| 423 | real-estate-listing | Sovereign MCP | 0 |
-| 424 | recipe-finder-ai | Sovereign MCP | 0 |
-| 425 | recruitment-ai | Sovereign MCP | 0 |
-| 426 | regex-ai | Sovereign MCP | 0 |
-| 427 | regulatory-webhook | Sovereign MCP | 0 |
-| 428 | restaurant-ai | Sovereign MCP | 0 |
-| 429 | resume-parser-ai | Sovereign MCP | 0 |
-| 430 | risk-assessment-ai | Sovereign MCP | 0 |
-| 431 | robotics-control | Sovereign MCP | 0 |
-| 432 | sap-bridge | Sovereign MCP | 2 |
-| 433 | sbom-cyclonedx | Sovereign MCP | 5 |
-| 434 | scada-bridge | Sovereign MCP | 3 |
-| 435 | scam-detector | Sovereign MCP | 3 |
-| 436 | schema-validator-ai | Sovereign MCP | 0 |
-| 437 | security-scanner-ai | Sovereign MCP | 0 |
-| 438 | self-healing-infrastructure | Sovereign MCP | 0 |
-| 439 | sentiment-analysis-ai | Sovereign MCP | 0 |
-| 440 | seo-checker-ai | Sovereign MCP | 0 |
-| 441 | sigstore-cosign | Sovereign MCP | 5 |
-| 442 | sip-bridge | Sovereign MCP | 2 |
-| 443 | skip-hire-ai | Sovereign MCP | 5 |
-| 444 | slack-enterprise | Sovereign MCP | 0 |
-| 445 | sleep-tracker-ai | Sovereign MCP | 0 |
-| 446 | slsa-supply-chain | Supply Chain | 5 |
-| 447 | slugify-ai | Sovereign MCP | 0 |
-| 448 | soc2-compliance-ai | Sovereign MCP | 0 |
-| 449 | social-media-ai | Sovereign MCP | 0 |
-| 450 | solvency-ii | Sovereign MCP | 15 |
-| 451 | sov-model-router | Sovereign MCP | 19 |
-| 452 | sov-model-router-paywalled | Sovereign MCP | 17 |
-| 453 | sql-builder-ai | Sovereign MCP | 0 |
-| 454 | stock-analyzer-ai | Sovereign MCP | 0 |
-| 455 | string-utils-ai | Sovereign MCP | 0 |
-| 456 | stripe-billing | Sovereign MCP | 12 |
-| 457 | subscription-tracker-ai | Sovereign MCP | 0 |
-| 458 | summarizer-ai | Sovereign MCP | 0 |
-| 459 | survey-builder-ai | Sovereign MCP | 0 |
-| 460 | tax-bridge | Sovereign MCP | 3 |
-| 461 | tax-calculator-ai | Sovereign MCP | 0 |
-| 462 | test-case-generator-ai | Sovereign MCP | 0 |
-| 463 | text-stats-ai | Sovereign MCP | 0 |
-| 464 | time-tracker-ai | Sovereign MCP | 0 |
-| 465 | tone-rewriter-ai | Sovereign MCP | 0 |
-| 466 | translation-ai | Sovereign MCP | 0 |
-| 467 | translator-pro-ai | Sovereign MCP | 0 |
-| 468 | trust-chain | Sovereign MCP | 0 |
-| 469 | uk-ai-act | Sovereign MCP | 4 |
-| 470 | uk-ai-bill-compliance | Sovereign MCP | 3 |
-| 471 | unit-converter-ai | Sovereign MCP | 0 |
-| 472 | url-ai | Sovereign MCP | 0 |
-| 473 | uuid-ai | Sovereign MCP | 0 |
-| 474 | validator-ai | Sovereign MCP | 0 |
-| 475 | vector-knowledge-graph | Sovereign MCP | 0 |
-| 476 | video-editing-ai | Sovereign MCP | 0 |
-| 477 | voice-audio | Sovereign MCP | 0 |
-| 478 | watermarking-authenticity | Sovereign MCP | 0 |
-| 479 | weather-ai | Sovereign MCP | 0 |
-| 480 | web-research | Sovereign MCP | 0 |
-| 481 | webhook-ai | Sovereign MCP | 0 |
-| 482 | workout-planner-ai | Sovereign MCP | 0 |
-| 483 | writing-assistant-ai | Sovereign MCP | 0 |
-| 484 | yaml-ai | Sovereign MCP | 0 |
+| 47 | c2pa-watermark | Sovereign MCP | 0 |
+| 48 | calendar-ai | Sovereign MCP | 0 |
+| 49 | canada-aida-ai | Sovereign MCP | 0 |
+| 50 | care-home-cqc | Sovereign MCP | 5 |
+| 51 | care-home-scheduling | Sovereign MCP | 5 |
+| 52 | care-membrane | Sovereign MCP | 0 |
+| 53 | changelog-ai | Sovereign MCP | 0 |
+| 54 | chas-elite-prep | Sovereign MCP | 5 |
+| 55 | churn-predictor-ai | Sovereign MCP | 0 |
+| 56 | ci-cd-generator-ai | Sovereign MCP | 0 |
+| 57 | cics-bridge | Sovereign MCP | 2 |
+| 58 | cisa-kev | Sovereign MCP | 5 |
+| 59 | citation-finder-ai | Sovereign MCP | 0 |
+| 60 | cli-builder-ai | Sovereign MCP | 0 |
+| 61 | clinical-trials-ai | Sovereign MCP | 0 |
+| 62 | clipboard-ai | Sovereign MCP | 0 |
+| 63 | cobol-bridge | Sovereign MCP | 5 |
+| 64 | code-executor | Sovereign MCP | 0 |
+| 65 | code-reviewer-ai | Sovereign MCP | 0 |
+| 66 | color-ai | Sovereign MCP | 0 |
+| 67 | commit-message-ai | Sovereign MCP | 0 |
+| 68 | competitor-monitor-ai | Sovereign MCP | 0 |
+| 69 | compression-ai | Sovereign MCP | 0 |
+| 70 | concrete-pump-cpa | Sovereign MCP | 5 |
+| 71 | config-validator-ai | Sovereign MCP | 0 |
+| 72 | consciousness-engine | Sovereign MCP | 0 |
+| 73 | construction-iso-19650 | Sovereign MCP | 5 |
+| 74 | content-calendar-ai | Sovereign MCP | 0 |
+| 75 | content-registry | Sovereign MCP | 0 |
+| 76 | contract-review-ai | Sovereign MCP | 0 |
+| 77 | coppa-ferpa | Sovereign MCP | 5 |
+| 78 | councilof | Sovereign AI | 14 |
+| 79 | cqc-compliance | Sovereign MCP | 5 |
+| 80 | cra-compliance | Sovereign MCP | 3 |
+| 81 | crane-hire-cpcs | Sovereign MCP | 5 |
+| 82 | creativity-engine | Sovereign MCP | 0 |
+| 83 | crm-ai | Sovereign MCP | 0 |
+| 84 | cron-ai | Sovereign MCP | 0 |
+| 85 | crypto-tracker-ai | Sovereign MCP | 0 |
+| 86 | csoai-defoneos | Sovereign MCP | 14 |
+| 87 | csoai-governance-crosswalk | Zero Trust | 0 |
+| 88 | csrd-compliance | Sovereign MCP | 5 |
+| 89 | csv-analytics | Sovereign MCP | 0 |
+| 90 | csv-tools-ai | Sovereign MCP | 0 |
+| 91 | currency-converter-ai | Sovereign MCP | 0 |
+| 92 | customer-support-ai | Sovereign MCP | 0 |
+| 93 | cybersecurity-ai | Sovereign MCP | 0 |
+| 94 | data-science-ai | Sovereign MCP | 0 |
+| 95 | database-universal | Sovereign MCP | 0 |
+| 96 | dataprivacy-ai | Sovereign MCP | 0 |
+| 97 | date-calculator-ai | Sovereign MCP | 0 |
+| 98 | deepfake-detector | Sovereign MCP | 0 |
+| 99 | defoneos-cesium | Sovereign MCP | 9 |
+| 100 | defoneos-compliance | Sovereign MCP | 10 |
+| 101 | defoneos-counterdrone | Sovereign MCP | 14 |
+| 102 | defoneos-cyber | Sovereign MCP | 14 |
+| 103 | defoneos-isr | Sovereign MCP | 13 |
+| 104 | defoneos-jsp936 | Sovereign MCP | 14 |
+| 105 | defoneos | Sovereign MCP | 10 |
+| 106 | defoneos-medevac | Sovereign MCP | 23 |
+| 107 | defoneos-ospd | Sovereign MCP | 10 |
+| 108 | defoneos-swarm | Sovereign MCP | 10 |
+| 109 | defoneos-tak | Sovereign MCP | 10 |
+| 110 | dependency-updater-ai | Sovereign MCP | 0 |
+| 111 | devops-ai | Sovereign MCP | 0 |
+| 112 | diff-ai | Sovereign MCP | 0 |
+| 113 | dispense-record | Sovereign MCP | 5 |
+| 114 | dlms-bridge | Sovereign MCP | 2 |
+| 115 | docker-helper-ai | Sovereign MCP | 0 |
+| 116 | dockerfile-generator-ai | Sovereign MCP | 0 |
+| 117 | document-comparison-ai | Sovereign MCP | 0 |
+| 118 | domiciliary-care | Sovereign MCP | 5 |
+| 119 | dora-compliance | EU Compliance | 56 |
+| 120 | dora-nis2-crosswalk | EU Compliance | 10 |
+| 121 | drone-airspace-governance | Zero Trust | 0 |
+| 122 | ecommerce-ai | Sovereign MCP | 0 |
+| 123 | edi-bridge | Sovereign MCP | 2 |
+| 124 | education-ai | Sovereign MCP | 0 |
+| 125 | email-automation | Sovereign MCP | 0 |
+| 126 | email-validator-ai | Sovereign MCP | 0 |
+| 127 | emoji-ai | Sovereign MCP | 0 |
+| 128 | encoder-ai | Sovereign MCP | 0 |
+| 129 | env-manager-ai | Sovereign MCP | 0 |
+| 130 | eu-ai-act-compliance | EU Compliance | 0 |
+| 131 | eudi-wallet | Sovereign MCP | 15 |
+| 132 | event-planning-ai | Planning | 0 |
+| 133 | expense-tracker-ai | Sovereign MCP | 0 |
+| 134 | explainability-report | Sovereign MCP | 5 |
+| 135 | faker-ai | Sovereign MCP | 0 |
+| 136 | fda-samd | Sovereign MCP | 5 |
+| 137 | feedback-analyzer-ai | Sovereign MCP | 0 |
+| 138 | file-organizer-ai | Sovereign MCP | 0 |
+| 139 | firmware-attestation | Sovereign MCP | 5 |
+| 140 | fishkeeper-ai | Sovereign MCP | 0 |
+| 141 | fitness-ai | Sovereign MCP | 0 |
+| 142 | fix-bridge | Sovereign MCP | 2 |
+| 143 | flashcard-ai | Sovereign MCP | 0 |
+| 144 | flight-logger | Sovereign MCP | 0 |
+| 145 | focus-timer-ai | Sovereign MCP | 0 |
+| 146 | fsa-food-safety | Sovereign MCP | 5 |
+| 147 | gardening-ai | Sovereign MCP | 0 |
+| 148 | gdpr-compliance-ai | Sovereign MCP | 0 |
+| 149 | geolocation-ai | Sovereign MCP | 0 |
+| 150 | git-helper-ai | Sovereign MCP | 0 |
+| 151 | gods-eye-geospatial | Sovereign MCP | 3 |
+| 152 | gos-claim-validator | Sovereign MCP | 5 |
+| 153 | grabhire-ai | Sovereign MCP | 15 |
+| 154 | grammar-fix-ai | Sovereign MCP | 0 |
+| 155 | gs1-bridge | Sovereign MCP | 2 |
+| 156 | habit-tracker-ai | Sovereign MCP | 0 |
+| 157 | hash-utils-ai | Sovereign MCP | 0 |
+| 158 | haulage-uk-compliance | Sovereign MCP | 10 |
+| 159 | health-check-ai | Sovereign MCP | 0 |
+| 160 | healthcare-ai-governance | Zero Trust | 0 |
+| 161 | healthcare-fhir | Sovereign MCP | 0 |
+| 162 | hipaa-compliance | Sovereign MCP | 36 |
+| 163 | hl7-fhir-bridge | Sovereign MCP | 3 |
+| 164 | hr-management-ai | Sovereign MCP | 0 |
+| 165 | html-parser-ai | Sovereign MCP | 0 |
+| 166 | hydration-reminder-ai | Sovereign MCP | 0 |
+| 167 | icon-generator-ai | Sovereign MCP | 0 |
+| 168 | image-metadata-ai | Sovereign MCP | 0 |
+| 169 | insurance-verification | Sovereign MCP | 0 |
+| 170 | inventory-management-ai | Sovereign MCP | 0 |
+| 171 | invoice-generator-ai | Sovereign MCP | 0 |
+| 172 | ip-network-ai | Sovereign MCP | 0 |
+| 173 | iso-27001-ai | Sovereign MCP | 31 |
+| 174 | iso-42001-ai | Sovereign MCP | 0 |
+| 175 | iso-42005-impact | Sovereign MCP | 14 |
+| 176 | iso20022-bridge | Sovereign MCP | 3 |
+| 177 | iso8583-bridge | Sovereign MCP | 2 |
+| 178 | job-description-ai | Sovereign MCP | 0 |
+| 179 | json-ai | Sovereign MCP | 0 |
+| 180 | jwt-ai | Sovereign MCP | 0 |
+| 181 | keystone-catalogue | Sovereign MCP | 10 |
+| 182 | keystone-verify-proxy | Sovereign MCP | 10 |
+| 183 | keyword-extractor-ai | Sovereign MCP | 0 |
+| 184 | korea-ai-basic-act | Sovereign MCP | 16 |
+| 185 | landlaw-ai | Sovereign MCP | 0 |
+| 186 | lead-scoring-ai | Sovereign MCP | 0 |
+| 187 | legal-document-ai | Sovereign MCP | 0 |
+| 188 | license-checker-ai | Sovereign MCP | 0 |
+| 189 | linkedin-outreach | Sovereign MCP | 0 |
+| 190 | ll144-bias-audit | Sovereign MCP | 6 |
+| 191 | llm-compliance-comparison | Sovereign MCP | 0 |
+| 192 | logistics-ai | Sovereign MCP | 0 |
+| 193 | lorem-ipsum-ai | Sovereign MCP | 0 |
+| 194 | markdown-ai | Sovereign MCP | 0 |
+| 195 | marketing-analytics-ai | Sovereign MCP | 0 |
+| 196 | math-solver-ai | Sovereign MCP | 0 |
+| 197 | mcp-scorecard | Sovereign MCP | 6 |
+| 198 | mcp-spec-compliance | Sovereign MCP | 15 |
+| 199 | mdr-medical-device | Sovereign MCP | 10 |
+| 200 | meal-planner-ai | Sovereign MCP | 0 |
+| 201 | meditation-guide-ai | Sovereign MCP | 0 |
+| 202 | meek-3-and-sov3-connection | Sovereign MCP | 5 |
+| 203 | meek-3d-print-toolchain | Sovereign MCP | 5 |
+| 204 | meek-4vf-data-transport | Sovereign MCP | 5 |
+| 205 | meek-antenna-triangle | Sovereign MCP | 5 |
+| 206 | meek-brand-architecture | Sovereign MCP | 5 |
+| 207 | meek-capillary-actuator | Sovereign MCP | 6 |
+| 208 | meek-cesium-overlay | Sovereign MCP | 8 |
+| 209 | meek-cfd-thermal | Sovereign MCP | 5 |
+| 210 | meek-circulatory-capillary | Sovereign MCP | 6 |
+| 211 | meek-consolidation-absorption | Sovereign MCP | 5 |
+| 212 | meek-daily-plan | Sovereign MCP | 5 |
+| 213 | meek-defoneos-audit-logging | Sovereign MCP | 5 |
+| 214 | meek-defoneos-backup-restore | Sovereign MCP | 5 |
+| 215 | meek-defoneos-cdn-edge | Sovereign MCP | 5 |
+| 216 | meek-defoneos-cold-email | Sovereign MCP | 5 |
+| 217 | meek-defoneos-knowledge-pack | Sovereign MCP | 5 |
+| 218 | meek-defoneos-load-balancer | Sovereign MCP | 5 |
+| 219 | meek-defoneos-monitoring | Sovereign MCP | 5 |
+| 220 | meek-defoneos-pagerduty | Sovereign MCP | 6 |
+| 221 | meek-defoneos-pricing | Sovereign MCP | 5 |
+| 222 | meek-defoneos-pypi-publish | Sovereign MCP | 4 |
+| 223 | meek-defoneos-seal-card | Sovereign MCP | 5 |
+| 224 | meek-defoneos-secret-rotation | Sovereign MCP | 5 |
+| 225 | meek-defoneos-smithery | Sovereign MCP | 4 |
+| 226 | meek-defoneos-ue5 | Sovereign MCP | 8 |
+| 227 | meek-defoneos-uk-pilots-tracker | Sovereign MCP | 5 |
+| 228 | meek-defoneos-vercel-deploy | Sovereign MCP | 5 |
+| 229 | meek-design-bom | Sovereign MCP | 5 |
+| 230 | meek-design-tool-orchestrator | SOV3 Substrate | 5 |
+| 231 | meek-digital-twin | Sovereign MCP | 5 |
+| 232 | meek-dorado-west | EU Compliance | 5 |
+| 233 | meek-dual-brain | Sovereign MCP | 6 |
+| 234 | meek-energy-harvester | Sovereign MCP | 10 |
+| 235 | meek-gaming-research | Sovereign MCP | 7 |
+| 236 | meek-google-free | Sovereign MCP | 5 |
+| 237 | meek-human-orb-resonance | Sovereign MCP | 5 |
+| 238 | meek-humanoid | Sovereign MCP | 5 |
+| 239 | meek-hybrid-roadmap | Sovereign MCP | 8 |
+| 240 | meek-intuitive-frequency | Sovereign MCP | 6 |
+| 241 | meek-ki-cad | Sovereign MCP | 6 |
+| 242 | meek-leanstral | Sovereign MCP | 3 |
+| 243 | meek-lora-radar | Sovereign MCP | 2 |
+| 244 | meek-materials | Sovereign MCP | 4 |
+| 245 | meek-onboarding | Sovereign MCP | 5 |
+| 246 | meek-optics | Sovereign MCP | 5 |
+| 247 | meek-orb-mesh | Sovereign MCP | 6 |
+| 248 | meek-pdca-planning | Planning | 5 |
+| 249 | meek-pixelbuddy-integration | Sovereign MCP | 8 |
+| 250 | meek-poc-prioritizer | Sovereign MCP | 6 |
+| 251 | meek-quantum-dream | Sovereign MCP | 6 |
+| 252 | meek-regulation-temple | Sovereign MCP | 5 |
+| 253 | meek-sacred-geometry | Sovereign MCP | 6 |
+| 254 | meek-screen-reader | Sovereign MCP | 10 |
+| 255 | meek-sessions-tasks | Sovereign MCP | 5 |
+| 256 | meek-shipped-status | Sovereign MCP | 5 |
+| 257 | meek-silica-memory | Sovereign AI | 15 |
+| 258 | meek-simulation | Sovereign MCP | 14 |
+| 259 | meek-sov-live-screen-view | Sovereign MCP | 7 |
+| 260 | meek-sov-multi-world-dashboard | Sovereign MCP | 6 |
+| 261 | meek-sov-os-3d-right-brain | Sovereign MCP | 9 |
+| 262 | meek-sov-os-cuboid | Sovereign MCP | 8 |
+| 263 | meek-sov-os-frontend | Sovereign MCP | 9 |
+| 264 | meek-sov-os-gamification | Sovereign MCP | 6 |
+| 265 | meek-sov-os-iokfarm | Sovereign MCP | 8 |
+| 266 | meek-sov-os-permissions | Sovereign MCP | 7 |
+| 267 | meek-sov-os-tui | Sovereign MCP | 5 |
+| 268 | meek-sov-os-ue5-dome | Sovereign MCP | 8 |
+| 269 | meek-sov-os-workflow-engine | Sovereign MCP | 8 |
+| 270 | meek-sov-os-world | Sovereign MCP | 6 |
+| 271 | meek-sov-pixel-painter | Sovereign MCP | 8 |
+| 272 | meek-sov-space | Sovereign MCP | 6 |
+| 273 | meek-sov-work-trace | Sovereign MCP | 6 |
+| 274 | meek-sov27-vertex-sovereign-grid | Sovereign MCP | 8 |
+| 275 | meek-sov3-best-config-api | SOV3 Substrate | 9 |
+| 276 | meek-sov3-cube-synthesis | SOV3 Substrate | 5 |
+| 277 | meek-sov3-geometic-resonance-tuning | SOV3 Substrate | 10 |
+| 278 | meek-sov3-mixed-simulation | SOV3 Substrate | 10 |
+| 279 | meek-sov3-oowm | SOV3 OOWM | 6 |
+| 280 | meek-sov3-orchestrator | SOV3 Substrate | 5 |
+| 281 | meek-sov3-organic-visual-world | SOV3 Substrate | 6 |
+| 282 | meek-sov3-pixelwow-pixelbot | SOV3 Substrate | 7 |
+| 283 | meek-sov3-world-livestream | SOV3 Substrate | 6 |
+| 284 | meek-sov33-trinity-council | Sovereign AI, SOV3 Substrate | 9 |
+| 285 | meek-sovereign-body | Sovereign MCP | 4 |
+| 286 | meek-stacked-overview | Sovereign MCP | 6 |
+| 287 | meek-stone-soup | Sovereign MCP | 3 |
+| 288 | meek-tracecat | Sovereign MCP | 2 |
+| 289 | meek-transcendent-emergence | Sovereign MCP | 6 |
+| 290 | meek-truth-check | Sovereign MCP | 5 |
+| 291 | meek-wifi-csi | Sovereign MCP | 3 |
+| 292 | meek-world-data | Sovereign MCP | 8 |
+| 293 | meek-wow-bot | Sovereign MCP | 8 |
+| 294 | meeting-summarizer-ai | Sovereign MCP | 0 |
+| 295 | memory-search | Sovereign AI | 0 |
+| 296 | meok-aaif-agent-card | Sovereign MCP | 15 |
+| 297 | meok-abci-bridge | Sovereign MCP | 19 |
+| 298 | meok-agents-md-lint | Sovereign MCP | 17 |
+| 299 | meok-ai-treaty | Sovereign MCP | 10 |
+| 300 | meok-allmi-hiab | Sovereign MCP | 33 |
+| 301 | meok-ap2-mandate | Sovereign MCP | 20 |
+| 302 | meok-aquaponics-monitor | Sovereign MCP | 5 |
+| 303 | meok-article-50-kit | Sovereign MCP | 10 |
+| 304 | meok-asc-rspca-crosswalk | Sovereign MCP | 5 |
+| 305 | meok-bs7121 | Sovereign MCP | 22 |
+| 306 | meok-c2pa-durable | Sovereign MCP | 14 |
+| 307 | meok-c2pa-watermark | Sovereign MCP | 5 |
+| 308 | meok-coinbase-x402-receipt | Zero Trust, Micropayments | 16 |
+| 309 | meok-cold-chain-pharma | Sovereign MCP | 29 |
+| 310 | meok-cpa-contract-lift | Sovereign MCP | 23 |
+| 311 | meok-cra-annex-iv-classifier | Sovereign MCP | 3 |
+| 312 | meok-cra-art14-reporter | Sovereign MCP | 16 |
+| 313 | meok-credential-manager | Sovereign MCP | 0 |
+| 314 | meok-defoneos-geospatial-intel | Sovereign MCP | 18 |
+| 315 | meok-defoneos | Sovereign MCP | 18 |
+| 316 | meok-dpia-edpb-template | Sovereign MCP | 3 |
+| 317 | meok-drcf-agent-crosswalk | Sovereign MCP | 5 |
+| 318 | meok-dvsa-olicence | Sovereign MCP | 32 |
+| 319 | meok-emerald-tablet | Sovereign MCP | 22 |
+| 320 | meok-eu-ai-act-2 | EU Compliance | 10 |
+| 321 | meok-eu-ai-act-art-13-ifu | EU Compliance | 15 |
+| 322 | meok-eu-ai-act-art-26-fria | EU Compliance | 18 |
+| 323 | meok-eu-aia-art-9-rms | Sovereign MCP | 18 |
+| 324 | meok-eu-aigc-icon | Sovereign MCP | 14 |
+| 325 | meok-eu-mobility-package | Sovereign MCP | 22 |
+| 326 | meok-eu-platform-worker | Sovereign MCP | 32 |
+| 327 | meok-ev-recall-transport | Sovereign MCP | 18 |
+| 328 | meok-fmcsa-hours-of-service | Sovereign MCP | 31 |
+| 329 | meok-fors-clocs | Sovereign MCP | 30 |
+| 330 | meok-gaming-eve | Sovereign MCP | 10 |
+| 331 | meok-gaming-ffxiv | Sovereign MCP | 10 |
+| 332 | meok-gaming-minecraft | Sovereign MCP | 10 |
+| 333 | meok-gaming-osrs | Sovereign MCP | 10 |
+| 334 | meok-gaming-wow | Sovereign MCP | 5 |
+| 335 | meok-governance-engine | Zero Trust | 0 |
+| 336 | meok-haulage-governance-bridge | Zero Trust | 23 |
+| 337 | meok-iata-dgr-air-cargo | Sovereign MCP | 30 |
+| 338 | meok-imo-marpol-marine | Sovereign MCP | 31 |
+| 339 | meok-iru-tir-international | Sovereign MCP | 27 |
+| 340 | meok-koikeeper-ai | Sovereign MCP | 5 |
+| 341 | meok-laia-aquatic | Sovereign MCP | 5 |
+| 342 | meok-law | Sovereign MCP | 5 |
+| 343 | meok-libp2p-agent-mesh | Sovereign MCP | 27 |
+| 344 | meok-livestock-welfare-transport | Sovereign MCP | 32 |
+| 345 | meok-cardgen | Sovereign MCP | 14 |
+| 346 | meok-hardening | Sovereign MCP | 21 |
+| 347 | meok-injection-scan | Sovereign MCP | 3 |
+| 348 | meok-test | Sovereign MCP | 27 |
+| 349 | meok-nhvr-australia | Sovereign MCP | 29 |
+| 350 | meok-nis2-de-register | Sovereign MCP | 3 |
+| 351 | meok-omnibus-tracker | Sovereign MCP | 3 |
+| 352 | meok-os | Sovereign MCP | 17 |
+| 353 | meok-rail-freight-uk | Sovereign MCP | 21 |
+| 354 | meok-rspca-aquaculture | Sovereign MCP | 5 |
+| 355 | meok-sovereign-avatar | Multi-modal | 10 |
+| 356 | meok-sovereign-council | Sovereign AI | 19 |
+| 357 | meok-sovereign-eu-ai-act-kit | EU Compliance | 10 |
+| 358 | meok-sovereign-federation | SOV3 OOWM | 18 |
+| 359 | meok-sovereign-globe | Geospatial, Multi-modal | 18 |
+| 360 | meok-sovereign-governance | Zero Trust | 20 |
+| 361 | meok-sovereign-guardrails | Zero Trust | 20 |
+| 362 | meok-sovereign-memory | Sovereign AI | 12 |
+| 363 | meok-sovereign-native | Sovereign Runtime | 34 |
+| 364 | meok-sovereign-oowm | SOV3 OOWM | 33 |
+| 365 | meok-sovereign-passport | Zero Trust | 11 |
+| 366 | meok-sovereign-planning | Planning | 19 |
+| 367 | meok-sovereign-receipt | Zero Trust | 15 |
+| 368 | meok-sovereign-skills | Sovereign AI | 10 |
+| 369 | meok-sovereign-worm | Zero Trust | 26 |
+| 370 | meok-sovereign-x402-payment | Micropayments | 12 |
+| 371 | meok-stripe-acp-checkout | Sovereign MCP | 15 |
+| 372 | meok-supply-chain-attestation | Supply Chain | 10 |
+| 373 | meok-tacho-audit | Sovereign MCP | 16 |
+| 374 | meok-transport-canada-hos | Sovereign MCP | 33 |
+| 375 | meok-uae-rta-transport | Sovereign MCP | 41 |
+| 376 | meok-uas-commercial-drone | Sovereign MCP | 38 |
+| 377 | meok-uk-adm-article22c | Sovereign MCP | 5 |
+| 378 | meok-uk-fhi | Sovereign MCP | 5 |
+| 379 | meok-uk-phv-tfl | Sovereign MCP | 23 |
+| 380 | meok-vehicle-handover | Sovereign MCP | 40 |
+| 381 | meok-w3c-tdm-rights | Sovereign MCP | 15 |
+| 382 | meok-watermark-attest | Sovereign MCP | 3 |
+| 383 | meok-x402-wrap | Micropayments | 15 |
+| 384 | metoffice-weather | Sovereign MCP | 10 |
+| 385 | mhra-samd-optometry | Sovereign MCP | 5 |
+| 386 | mica-crypto | Sovereign MCP | 5 |
+| 387 | mifid-ii-ai | Sovereign MCP | 5 |
+| 388 | mismo-bridge | Sovereign MCP | 3 |
+| 389 | mitre-atlas | Sovereign MCP | 5 |
+| 390 | mitre-attack | Sovereign MCP | 5 |
+| 391 | mock-server-ai | Sovereign MCP | 0 |
+| 392 | model-scoreboard | Sovereign MCP | 3 |
+| 393 | mortgage-calculator-ai | Sovereign MCP | 0 |
+| 394 | mqtt-bridge | Sovereign MCP | 2 |
+| 395 | muckaway-ai | Sovereign MCP | 14 |
+| 396 | music-production-ai | Sovereign MCP | 0 |
+| 397 | nacha-bridge | Sovereign MCP | 3 |
+| 398 | neural-health-monitor | Sovereign MCP | 3 |
+| 399 | nhs-gos-claims | Sovereign MCP | 5 |
+| 400 | nis2-compliance | Sovereign MCP | 0 |
+| 401 | nist-iso42001-crosswalk | EU Compliance | 6 |
+| 402 | nist-rmf-ai | Sovereign MCP | 0 |
+| 403 | note-taking-ai | Sovereign MCP | 0 |
+| 404 | notification-ai | Sovereign MCP | 0 |
+| 405 | nrswa-ai | Sovereign MCP | 5 |
+| 406 | nutrition-tracker-ai | Sovereign MCP | 0 |
+| 407 | oasf-agent-directory | Sovereign MCP | 14 |
+| 408 | optical-care-home-bridge | Sovereign MCP | 5 |
+| 409 | optometry-ai-safety | Sovereign MCP | 0 |
+| 410 | optometry-patient | Sovereign MCP | 5 |
+| 411 | oracle-bridge | Sovereign MCP | 2 |
+| 412 | otp-ai | Sovereign MCP | 0 |
+| 413 | owasp-agentic | Sovereign MCP | 12 |
+| 414 | password-ai | Sovereign MCP | 0 |
+| 415 | patient-safety-ai | Sovereign MCP | 0 |
+| 416 | pci-dss | Sovereign MCP | 4 |
+| 417 | pdf-document | Sovereign MCP | 0 |
+| 418 | pdf-merge-ai | Sovereign MCP | 0 |
+| 419 | pdf-tools-ai | Sovereign MCP | 0 |
+| 420 | performance-ai | Sovereign MCP | 0 |
+| 421 | personal-finance-ai | Sovereign MCP | 0 |
+| 422 | pet-care-ai | Sovereign MCP | 0 |
+| 423 | photography-ai | Sovereign MCP | 0 |
+| 424 | plagiarism-checker-ai | Sovereign MCP | 0 |
+| 425 | planthire-ai | Sovereign MCP | 0 |
+| 426 | pomodoro-ai | Sovereign MCP | 0 |
+| 427 | price-tracker-ai | Sovereign MCP | 0 |
+| 428 | project-management-ai | Sovereign MCP | 0 |
+| 429 | proofof-ai | Sovereign MCP | 12 |
+| 430 | qidi-printer | Sovereign MCP | 3 |
+| 431 | qr-code-ai | Sovereign MCP | 0 |
+| 432 | quantum-scoring | Sovereign MCP | 3 |
+| 433 | quiz-generator-ai | Sovereign MCP | 0 |
+| 434 | rag-knowledge-graph | Sovereign MCP | 0 |
+| 435 | rag-knowledge | Sovereign MCP | 0 |
+| 436 | readme-generator-ai | Sovereign MCP | 0 |
+| 437 | real-estate-listing | Sovereign MCP | 0 |
+| 438 | recipe-finder-ai | Sovereign MCP | 0 |
+| 439 | recruitment-ai | Sovereign MCP | 0 |
+| 440 | regex-ai | Sovereign MCP | 0 |
+| 441 | regulatory-webhook | Sovereign MCP | 0 |
+| 442 | restaurant-ai | Sovereign MCP | 0 |
+| 443 | resume-parser-ai | Sovereign MCP | 0 |
+| 444 | risk-assessment-ai | Sovereign MCP | 0 |
+| 445 | robotics-control | Sovereign MCP | 0 |
+| 446 | sap-bridge | Sovereign MCP | 2 |
+| 447 | sbom-cyclonedx | Sovereign MCP | 5 |
+| 448 | scada-bridge | Sovereign MCP | 3 |
+| 449 | scam-detector | Sovereign MCP | 3 |
+| 450 | schema-validator-ai | Sovereign MCP | 0 |
+| 451 | security-scanner-ai | Sovereign MCP | 0 |
+| 452 | self-healing-infrastructure | Sovereign MCP | 0 |
+| 453 | sentiment-analysis-ai | Sovereign MCP | 0 |
+| 454 | seo-checker-ai | Sovereign MCP | 0 |
+| 455 | sigstore-cosign | Sovereign MCP | 5 |
+| 456 | sip-bridge | Sovereign MCP | 2 |
+| 457 | skip-hire-ai | Sovereign MCP | 5 |
+| 458 | slack-enterprise | Sovereign MCP | 0 |
+| 459 | sleep-tracker-ai | Sovereign MCP | 0 |
+| 460 | slsa-supply-chain | Supply Chain | 5 |
+| 461 | slugify-ai | Sovereign MCP | 0 |
+| 462 | soc2-compliance-ai | Sovereign MCP | 0 |
+| 463 | social-media-ai | Sovereign MCP | 0 |
+| 464 | solvency-ii | Sovereign MCP | 15 |
+| 465 | sov-model-router | Sovereign MCP | 19 |
+| 466 | sov-model-router-paywalled | Sovereign MCP | 17 |
+| 467 | sql-builder-ai | Sovereign MCP | 0 |
+| 468 | stock-analyzer-ai | Sovereign MCP | 0 |
+| 469 | string-utils-ai | Sovereign MCP | 0 |
+| 470 | stripe-billing | Sovereign MCP | 12 |
+| 471 | subscription-tracker-ai | Sovereign MCP | 0 |
+| 472 | summarizer-ai | Sovereign MCP | 0 |
+| 473 | survey-builder-ai | Sovereign MCP | 0 |
+| 474 | tax-bridge | Sovereign MCP | 3 |
+| 475 | tax-calculator-ai | Sovereign MCP | 0 |
+| 476 | test-case-generator-ai | Sovereign MCP | 0 |
+| 477 | text-stats-ai | Sovereign MCP | 0 |
+| 478 | time-tracker-ai | Sovereign MCP | 0 |
+| 479 | tone-rewriter-ai | Sovereign MCP | 0 |
+| 480 | translation-ai | Sovereign MCP | 0 |
+| 481 | translator-pro-ai | Sovereign MCP | 0 |
+| 482 | trust-chain | Sovereign MCP | 0 |
+| 483 | uk-ai-act | Sovereign MCP | 4 |
+| 484 | uk-ai-bill-compliance | Sovereign MCP | 3 |
+| 485 | unit-converter-ai | Sovereign MCP | 0 |
+| 486 | url-ai | Sovereign MCP | 0 |
+| 487 | uuid-ai | Sovereign MCP | 0 |
+| 488 | validator-ai | Sovereign MCP | 0 |
+| 489 | vector-knowledge-graph | Sovereign MCP | 0 |
+| 490 | video-editing-ai | Sovereign MCP | 0 |
+| 491 | voice-audio | Sovereign MCP | 0 |
+| 492 | watermarking-authenticity | Sovereign MCP | 0 |
+| 493 | weather-ai | Sovereign MCP | 0 |
+| 494 | web-research | Sovereign MCP | 0 |
+| 495 | webhook-ai | Sovereign MCP | 0 |
+| 496 | workout-planner-ai | Sovereign MCP | 0 |
+| 497 | writing-assistant-ai | Sovereign MCP | 0 |
+| 498 | yaml-ai | Sovereign MCP | 0 |
 
 ## Duplicates (potential consolidation targets)
 
@@ -622,6 +636,7 @@ _Generated: 2026-06-29T09:53:16.447437+00:00Z_
 - a2a-governance-bridge-mcp ↔ dockerfile-generator-ai-mcp
 - a2a-governance-bridge-mcp ↔ document-comparison-ai-mcp
 - agent-data-residency-mcp ↔ domiciliary-care-mcp
+- defoneos-mcp ↔ dora-nis2-crosswalk-mcp
 - a2a-governance-bridge-mcp ↔ drone-airspace-governance-mcp
 - a2a-governance-bridge-mcp ↔ ecommerce-ai-mcp
 - as400-bridge-mcp ↔ edi-bridge-mcp
@@ -659,6 +674,7 @@ _Generated: 2026-06-29T09:53:16.447437+00:00Z_
 - as400-bridge-mcp ↔ gs1-bridge-mcp
 - a2a-governance-bridge-mcp ↔ habit-tracker-ai-mcp
 - a2a-governance-bridge-mcp ↔ hash-utils-ai-mcp
+- defoneos-mcp ↔ haulage-uk-compliance-mcp
 - a2a-governance-bridge-mcp ↔ health-check-ai-mcp
 - a2a-governance-bridge-mcp ↔ healthcare-ai-governance-mcp
 - a2a-governance-bridge-mcp ↔ healthcare-fhir-mcp
@@ -679,6 +695,8 @@ _Generated: 2026-06-29T09:53:16.447437+00:00Z_
 - a2a-governance-bridge-mcp ↔ job-description-ai-mcp
 - a2a-governance-bridge-mcp ↔ json-ai-mcp
 - a2a-governance-bridge-mcp ↔ jwt-ai-mcp
+- defoneos-mcp ↔ keystone-catalogue-mcp
+- defoneos-mcp ↔ keystone-verify-proxy-mcp
 - a2a-governance-bridge-mcp ↔ keyword-extractor-ai-mcp
 - agent-incident-relay-mcp ↔ korea-ai-basic-act-mcp
 - a2a-governance-bridge-mcp ↔ landlaw-ai-mcp
@@ -694,7 +712,7 @@ _Generated: 2026-06-29T09:53:16.447437+00:00Z_
 - a2a-governance-bridge-mcp ↔ math-solver-ai-mcp
 - ll144-bias-audit-mcp ↔ mcp-scorecard-mcp
 - agent-content-watermark-mcp ↔ mcp-spec-compliance-mcp
-- dora-nis2-crosswalk-mcp ↔ mdr-medical-device-mcp
+- defoneos-mcp ↔ mdr-medical-device-mcp
 - a2a-governance-bridge-mcp ↔ meal-planner-ai-mcp
 - a2a-governance-bridge-mcp ↔ meditation-guide-ai-mcp
 - agent-data-residency-mcp ↔ meek-3-and-sov3-connection-mcp
@@ -728,7 +746,7 @@ _Generated: 2026-06-29T09:53:16.447437+00:00Z_
 - agent-data-residency-mcp ↔ meek-digital-twin-mcp
 - agent-data-residency-mcp ↔ meek-dorado-west-mcp
 - ll144-bias-audit-mcp ↔ meek-dual-brain-mcp
-- dora-nis2-crosswalk-mcp ↔ meek-energy-harvester-mcp
+- defoneos-mcp ↔ meek-energy-harvester-mcp
 - agent-data-residency-mcp ↔ meek-google-free-mcp
 - agent-data-residency-mcp ↔ meek-human-orb-resonance-mcp
 - agent-data-residency-mcp ↔ meek-humanoid-mcp
@@ -747,7 +765,7 @@ _Generated: 2026-06-29T09:53:16.447437+00:00Z_
 - ll144-bias-audit-mcp ↔ meek-quantum-dream-mcp
 - agent-data-residency-mcp ↔ meek-regulation-temple-mcp
 - ll144-bias-audit-mcp ↔ meek-sacred-geometry-mcp
-- dora-nis2-crosswalk-mcp ↔ meek-screen-reader-mcp
+- defoneos-mcp ↔ meek-screen-reader-mcp
 - agent-data-residency-mcp ↔ meek-sessions-tasks-mcp
 - agent-data-residency-mcp ↔ meek-shipped-status-mcp
 - councilof-mcp ↔ meek-simulation-mcp
@@ -768,8 +786,8 @@ _Generated: 2026-06-29T09:53:16.447437+00:00Z_
 - meek-cesium-overlay-mcp ↔ meek-sov27-vertex-sovereign-grid-mcp
 - meek-sov-os-3d-right-brain-mcp ↔ meek-sov3-best-config-api-mcp
 - agent-data-residency-mcp ↔ meek-sov3-cube-synthesis-mcp
-- dora-nis2-crosswalk-mcp ↔ meek-sov3-geometic-resonance-tuning-mcp
-- dora-nis2-crosswalk-mcp ↔ meek-sov3-mixed-simulation-mcp
+- defoneos-mcp ↔ meek-sov3-geometic-resonance-tuning-mcp
+- defoneos-mcp ↔ meek-sov3-mixed-simulation-mcp
 - ll144-bias-audit-mcp ↔ meek-sov3-oowm-mcp
 - agent-data-residency-mcp ↔ meek-sov3-orchestrator-mcp
 - ll144-bias-audit-mcp ↔ meek-sov3-organic-visual-world-mcp
@@ -777,6 +795,7 @@ _Generated: 2026-06-29T09:53:16.447437+00:00Z_
 - ll144-bias-audit-mcp ↔ meek-sov3-world-livestream-mcp
 - meek-sov-os-3d-right-brain-mcp ↔ meek-sov33-trinity-council-mcp
 - agent-audit-logger-mcp ↔ meek-sovereign-body-mcp
+- ll144-bias-audit-mcp ↔ meek-stacked-overview-mcp
 - acord-bridge-mcp ↔ meek-stone-soup-mcp
 - as400-bridge-mcp ↔ meek-tracecat-mcp
 - ll144-bias-audit-mcp ↔ meek-transcendent-emergence-mcp
@@ -787,7 +806,9 @@ _Generated: 2026-06-29T09:53:16.447437+00:00Z_
 - a2a-governance-bridge-mcp ↔ meeting-summarizer-ai-mcp
 - a2a-governance-bridge-mcp ↔ memory-search-mcp
 - agent-content-watermark-mcp ↔ meok-aaif-agent-card-mcp
+- defoneos-mcp ↔ meok-ai-treaty-mcp
 - agent-data-residency-mcp ↔ meok-aquaponics-monitor-mcp
+- defoneos-mcp ↔ meok-article-50-kit-mcp
 - agent-data-residency-mcp ↔ meok-asc-rspca-crosswalk-mcp
 - agent-commerce-payments-mcp ↔ meok-c2pa-durable-mcp
 - agent-data-residency-mcp ↔ meok-c2pa-watermark-mcp
@@ -799,6 +820,7 @@ _Generated: 2026-06-29T09:53:16.447437+00:00Z_
 - acord-bridge-mcp ↔ meok-dpia-edpb-template-mcp
 - agent-data-residency-mcp ↔ meok-drcf-agent-crosswalk-mcp
 - meok-bs7121-mcp ↔ meok-emerald-tablet-mcp
+- defoneos-mcp ↔ meok-eu-ai-act-2-mcp
 - agent-content-watermark-mcp ↔ meok-eu-ai-act-art-13-ifu-mcp
 - meok-eu-ai-act-art-26-fria-mcp ↔ meok-eu-aia-art-9-rms-mcp
 - agent-commerce-payments-mcp ↔ meok-eu-aigc-icon-mcp
@@ -806,6 +828,10 @@ _Generated: 2026-06-29T09:53:16.447437+00:00Z_
 - meok-dvsa-olicence-mcp ↔ meok-eu-platform-worker-mcp
 - meok-eu-ai-act-art-26-fria-mcp ↔ meok-ev-recall-transport-mcp
 - iso-27001-ai-mcp ↔ meok-fmcsa-hours-of-service-mcp
+- defoneos-mcp ↔ meok-gaming-eve-mcp
+- defoneos-mcp ↔ meok-gaming-ffxiv-mcp
+- defoneos-mcp ↔ meok-gaming-minecraft-mcp
+- defoneos-mcp ↔ meok-gaming-osrs-mcp
 - agent-data-residency-mcp ↔ meok-gaming-wow-mcp
 - a2a-governance-bridge-mcp ↔ meok-governance-engine-mcp
 - defoneos-medevac-mcp ↔ meok-haulage-governance-bridge-mcp
@@ -841,6 +867,7 @@ _Generated: 2026-06-29T09:53:16.447437+00:00Z_
 - agent-content-watermark-mcp ↔ meok-w3c-tdm-rights-mcp
 - acord-bridge-mcp ↔ meok-watermark-attest-mcp
 - agent-content-watermark-mcp ↔ meok-x402-wrap-mcp
+- defoneos-mcp ↔ metoffice-weather-mcp
 - agent-data-residency-mcp ↔ mhra-samd-optometry-mcp
 - agent-data-residency-mcp ↔ mica-crypto-mcp
 - agent-data-residency-mcp ↔ mifid-ii-ai-mcp

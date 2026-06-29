@@ -39,7 +39,7 @@ HOME_INDEX = ROOT / "csoai-os" / "meok-home" / "index.html"
 BACKEND_DIR = ROOT / "meok-backend"          # built by parallel agent
 BACKEND_APP = BACKEND_DIR / "app.py"
 
-STATIC_PORT = 8765  # ephemeral, only used for the duration of the test run
+STATIC_PORT = 8766  # ephemeral, only used for the duration of the test run
 BACKEND_PORT = 8000
 
 PAGES = sorted([p for p in PAGES_DIR.glob("*.html")])
