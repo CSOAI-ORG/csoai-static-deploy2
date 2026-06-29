@@ -31,7 +31,7 @@ MoE (Coding, Reasoning, LongCtx, Multilingual, Edge, TTS, Embed, Router)
 Sigil → proofof.ai
 ```
 
-## Tools (5)
+## Tools (7)
 
 | Tool | What |
 |---|---|
@@ -40,6 +40,8 @@ Sigil → proofof.ai
 | `oowm_route` | Predict best General for a query (keyword routing) |
 | `oowm_score` | Score a General's output against care floor + sovereign |
 | `oowm_status` | Full OOWM status |
+| `oowm_5d_hive` | 12 Generals × 5D × 1 GCP VM each × QOwm + Sephiroth |
+| `oowm_sephiroth` | 10 emanations + 2 auxiliary mapped to Generals |
 
 ## The 12 Generals (from hive.yaml)
 
@@ -83,13 +85,14 @@ print(f"MoE used: {[m['name'] for m in result['moe_used']]}")
 ## Tests
 
 ```
-26/26 tests pass in 0.10s
+33/33 tests pass in 0.11s
 ```
 
 - 12 generals counted
 - 3 BFT modes defined
 - 4 MOM experts sum to 1.0 weight
 - 8 MoE experts with correct sizes
+- 5D Hive: 12 GCP VMs × 5 dimensions × QOwm + Sephiroth
 - Routing: compliance → Scribe, sovereign → Dragon, gibberish → sovereign
 - Stakes-override: kill/deploy → secure, monitor/watch → fast
 - Every output Ed25519-signed

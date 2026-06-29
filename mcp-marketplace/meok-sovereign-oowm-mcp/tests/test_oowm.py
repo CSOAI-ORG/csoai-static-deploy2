@@ -4,6 +4,7 @@ _TEST_DIR = tempfile.mkdtemp(prefix="sov_oowm_test_")
 os.environ["SOV_OOWM_KEY"] = os.path.join(_TEST_DIR, "key.pem")
 from meok_sovereign_oowm_mcp import (
     oowm_council, oowm_route, oowm_think, oowm_score, oowm_status,
+    oowm_5d_hive, oowm_sephiroth,
     GENERALS, BFT_MODES, MOM_EXPERTS, MOE_EXPERTS,
 )
 
@@ -169,3 +170,60 @@ def test_general_default_bft_mode_distributed():
     defaults = [g["bft_default"] for g in GENERALS]
     for mode in ["fast", "balanced", "secure"]:
         assert defaults.count(mode) >= 2, f"{mode} used by only {defaults.count(mode)} generals"
+
+def test_5d_hive_full():
+    r = oowm_5d_hive()
+    assert "dimensions" in r
+    assert r["hive_size"] == 12
+    assert len(r["generals"]) == 12
+    assert "spatial" in r["dimensions"]
+    assert "temporal" in r["dimensions"]
+    assert "logical" in r["dimensions"]
+    assert "wavelet" in r["dimensions"]
+    assert "quantum" in r["dimensions"]
+
+
+def test_5d_hive_single_general():
+    r = oowm_5d_hive("Dragon")
+    assert r["general"]["name"] == "Dragon"
+    assert r["gcp_vm"] == "gen-12-dragon"
+    assert "qowm" in r
+    assert "sovereign-meta-quantum" in r["qowm"]["qowm_arch"]
+
+
+def test_5d_hive_unknown_general():
+    r = oowm_5d_hive("Hacker")
+    assert "error" in r
+    assert "Hacker" in r["error"]
+
+
+def test_sephiroth_count():
+    r = oowm_sephiroth()
+    assert r["sephiroth_count"] == 12
+    # First 10 are the canonical Sephiroth
+    names = [s["name"] for s in r["sephiroth"]]
+    assert "Keter" in names
+    assert "Malkuth" in names
+    assert "Da'at" in names  # The hidden 11th
+
+
+def test_gcp_vm_per_general():
+    r = oowm_5d_hive()
+    for entry in r["generals"]:
+        gen_id = entry["general"]["id"]
+        gen_name = entry["general"]["name"].lower()
+        assert entry["gcp_vm"] == f"gen-{gen_id}-{gen_name}"
+
+
+def test_qowm_specialisation():
+    """Each General has a unique QOwm architecture."""
+    r = oowm_5d_hive()
+    archs = set()
+    for entry in r["generals"]:
+        archs.add(entry["qowm"]["qowm_arch"])
+    assert len(archs) == 12  # All 12 unique QOwm architectures
+
+
+def test_total_cost_12_vms():
+    r = oowm_5d_hive()
+    assert r["total_monthly_cost_usd"] == 1200  # 12 × $100

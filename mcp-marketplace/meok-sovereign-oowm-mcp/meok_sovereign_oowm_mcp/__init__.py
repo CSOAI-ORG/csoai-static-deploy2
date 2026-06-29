@@ -233,3 +233,98 @@ def oowm_status() -> dict:
         "verify_url": "https://proofof.ai/oowm",
         "ts": datetime.now(timezone.utc).isoformat(),
     })
+
+# === 5D HIVE: 5 dimensions × 12 Generals × 1 GCP VM each ===
+
+DIMENSIONS = ["spatial", "temporal", "logical", "wavelet", "quantum"]
+GCP_VM_SPEC = {
+    "machine_type": "n2-standard-8",  # 8 vCPU, 32GB RAM
+    "region": "europe-west2-a",        # UK sovereign
+    "disk_gb": 200,
+    "monthly_cost_usd": 100,            # ~$100/mo per VM × 12 = $1200/mo
+}
+
+# 5D QOwm architecture per General (the specialisation)
+GENERAL_5D_QOWM = {
+    "Argus":   {"qowm_arch": "vision-spatial-wavelet",   "input_modalities": ["camera", "3d-pointcloud", "sensor"],  "specialised_for": "anomaly detection, threat perception"},
+    "Scribe":  {"qowm_arch": "text-logical-wavelet",      "input_modalities": ["document", "code", "policy", "audit-log"], "specialised_for": "EU AI Act, GDPR, DORA, ISO 42001"},
+    "Shield":  {"qowm_arch": "reasoning-safety-quantum",  "input_modalities": ["threat-stream", "CVE-feed", "Morris-II-probe"],  "specialised_for": "JSP 936, BFT, Morris-II defense"},
+    "Builder": {"qowm_arch": "longctx-architectural",     "input_modalities": ["spec", "blueprint", "schema", "code"],  "specialised_for": "Cesium, 3d-force-graph, SOV SPACE"},
+    "Abacus":  {"qowm_arch": "quant-temporal-wavelet",    "input_modalities": ["math", "forecast", "monte-carlo", "telemetry"], "specialised_for": "Mamba-2 SSD, Zamba, real-time quant"},
+    "Lex":     {"qowm_arch": "longctx-legal-quantum",      "input_modalities": ["contract", "law", "regulation", "license"],  "specialised_for": "OpenPatent, USPTO, contract review"},
+    "Scale":   {"qowm_arch": "multilingual-care-wavelet",  "input_modalities": ["policy", "consent", "harm-probe"],  "specialised_for": "Maternal Covenant, 16 care probes"},
+    "Crow":    {"qowm_arch": "fast-prediction-temporal",   "input_modalities": ["risk-stream", "anomaly", "exposure"],  "specialised_for": "OpenFang, WORM, fast triage"},
+    "Gear":    {"qowm_arch": "operational-temporal-quantum","input_modalities": ["cron", "health", "log", "metric"],  "specialised_for": "cron + Ansible + Terraform"},
+    "Voice":   {"qowm_arch": "audio-temporal-wavelet",    "input_modalities": ["speech", "translation", "TTS"],  "specialised_for": "Kokoro TTS, ESPnet, whisper.cpp"},
+    "Owl":     {"qowm_arch": "longctx-research-quantum",  "input_modalities": ["paper", "arxiv", "study"],  "specialised_for": "Cognee, LlamaIndex, ColBERT"},
+    "Dragon":  {"qowm_arch": "sovereign-meta-quantum",     "input_modalities": ["ALL"],  "specialised_for": "the substrate itself"},
+}
+
+# Sephiroth mapping (10 emanations to the 12 Generals)
+SEPHIROTH = [
+    {"id": 1, "name": "Keter",     "meaning": "Crown",         "general": "Dragon",  "role": "substrate"},
+    {"id": 2, "name": "Chokhmah",  "meaning": "Wisdom",        "general": "Owl",     "role": "research"},
+    {"id": 3, "name": "Binah",     "meaning": "Understanding", "general": "Argus",   "role": "watchdog"},
+    {"id": 4, "name": "Chesed",    "meaning": "Mercy",         "general": "Builder", "role": "architecture"},
+    {"id": 5, "name": "Gevurah",   "meaning": "Severity",      "general": "Shield",  "role": "safety"},
+    {"id": 6, "name": "Tiferet",   "meaning": "Balance",       "general": "Scale",   "role": "ethics"},
+    {"id": 7, "name": "Netzach",   "meaning": "Endurance",     "general": "Voice",   "role": "communication"},
+    {"id": 8, "name": "Hod",       "meaning": "Intellect",     "general": "Lex",     "role": "legal"},
+    {"id": 9, "name": "Yesod",     "meaning": "Foundation",    "general": "Gear",    "role": "operations"},
+    {"id": 10, "name": "Malkuth",  "meaning": "Material",      "general": "Abacus",  "role": "quant"},
+    # Above the 10: Da'at (hidden) + auxiliary
+    {"id": 11, "name": "Da'at",     "meaning": "Knowledge",     "general": "Crow",    "role": "risk"},
+    {"id": 12, "name": "Auxiliary", "meaning": "Bridge",        "general": "Scribe",  "role": "compliance"},
+]
+
+
+def oowm_5d_hive(general_name: str = None) -> dict:
+    """Show the 5D Hive for one or all Generals.
+
+    Each General = 1 GCP VM with specialised QOwm + 5D coord + Sephiroth.
+    """
+    if general_name:
+        gen = next((g for g in GENERALS if g["name"] == general_name), None)
+        if not gen:
+            return _sign({"error": f"unknown general: {general_name}", "available": [g["name"] for g in GENERALS]})
+        qowm = GENERAL_5D_QOWM.get(gen["name"], {})
+        seph = next((s for s in SEPHIROTH if s["general"] == gen["name"]), None)
+        return _sign({
+            "protocol": PROTOCOL, "version": VERSION,
+            "general": gen, "qowm": qowm, "sephiroth": seph,
+            "gcp_vm": f"gen-{gen['id']}-{gen['name'].lower()}",
+            "gcp_spec": GCP_VM_SPEC,
+            "monthly_cost_usd": GCP_VM_SPEC["monthly_cost_usd"],
+            "topology": "1 General = 1 GCP VM = 1 QOwm = 1 specialised tech stack",
+        })
+    # All 12
+    hive = []
+    for gen in GENERALS:
+        qowm = GENERAL_5D_QOWM.get(gen["name"], {})
+        seph = next((s for s in SEPHIROTH if s["general"] == gen["name"]), None)
+        hive.append({
+            "general": gen, "qowm": qowm, "sephiroth": seph,
+            "gcp_vm": f"gen-{gen['id']}-{gen['name'].lower()}",
+        })
+    return _sign({
+        "protocol": PROTOCOL, "version": VERSION,
+        "dimensions": DIMENSIONS,
+        "generals": hive, "hive_size": len(hive),
+        "gcp_vm_spec": GCP_VM_SPEC,
+        "total_monthly_cost_usd": GCP_VM_SPEC["monthly_cost_usd"] * 12,
+        "sephiroth_count": len(SEPHIROTH),
+        "ab_uno": "SOV3 OOWM substrate (the 1 origin)",
+        "topology": "12 Generals × 5D × 1 GCP VM each × AB Uno × Sephiroth",
+        "doctrine": "5D Hive = sovereign by construction. Each General = its own VM = its own QOwm = its own evolution.",
+    })
+
+
+def oowm_sephiroth() -> dict:
+    """Show the 10 Sephiroth + 2 auxiliary (the 12 General tree)."""
+    return _sign({
+        "protocol": PROTOCOL, "version": VERSION,
+        "sephiroth": SEPHIROTH,
+        "sephiroth_count": len(SEPHIROTH),
+        "ab_uno": "the SOV3 OOWM substrate (1 origin)",
+        "doctrine": "10 emanations from the 1 origin. Each maps to a sovereign General.",
+    })
