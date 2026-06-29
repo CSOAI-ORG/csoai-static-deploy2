@@ -124,7 +124,7 @@ def sov_intuition_observe(state: list, *, source: str = "sovereign", context: st
     return signed
 
 
-def sov_intuition_match(query_state: list, *, limit: int = 5, threshold: float = 0.7) -> dict:
+def sov_intuition_match(query_state: list, *, limit: int = 5, threshold: float = 0.65) -> dict:
     """Find similar past states (cosine similarity)."""
     if not _validate_state(query_state):
         return {"error": "query_state must be 16-dim"}
@@ -156,7 +156,7 @@ def sov_intuition_match(query_state: list, *, limit: int = 5, threshold: float =
     return signed
 
 
-def sov_intuition_hunch(query_state: list, *, threshold: float = 0.7, min_matches: int = 3) -> dict:
+def sov_intuition_hunch(query_state: list, *, threshold: float = 0.65, min_matches: int = 3) -> dict:
     """Get a natural-language hunch (3+ matches = confirmed)."""
     if not _validate_state(query_state):
         return {"error": "query_state must be 16-dim"}

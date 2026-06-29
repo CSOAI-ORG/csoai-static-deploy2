@@ -67,7 +67,7 @@ def oowm_traibgle_vote(
     neutral_voters: int = 5,
     good_weight: float = 1.0,
     bad_weight: float = 1.0,
-    neutral_weight: float = 0.5,
+    neutral_weight: float = 0.3,
     total_voter_weight: float = 37.0,
 ) -> dict:
     """Vote on the prediction (GOOD/BAD/NEUTRAL)."""

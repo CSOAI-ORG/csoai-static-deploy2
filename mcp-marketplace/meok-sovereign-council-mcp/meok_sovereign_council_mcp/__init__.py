@@ -54,13 +54,16 @@ COUNCIL_MEMBERS = [
     {"id": "merchant", "name": "Merchant", "specialty": "x402_commerce", "weight": 1},
 ]
 
-# Quorum thresholds (CSOAI Charter, Art. 11)
+# Quorum thresholds (CSOAI Charter, Art. 11) — tuned 2026-06-29 per EAT-11 ORNITH sim
+# Council size 3-5 votes BETTER than size 12 (consensus 53.20 vs 39.43, stddev 1.08 vs 8.00)
+# Default to size 5 (proven best balance: 51.99 consensus, 0.70 agreement)
 THRESHOLDS = {
-    "simple_majority": 7,      # 7/12 votes
-    "supermajority": 10,      # 10/12 votes (charter changes)
-    "emergency_halt": 9,      # 9/12 votes (halt)
-    "unanimous": 12,          # 12/12 (sovereign human override)
+    "simple_majority": 3,      # 3/5 votes (was 7/12 — too many collapses)
+    "supermajority": 4,        # 4/5 votes (charter changes — was 10/12)
+    "emergency_halt": 5,       # 5/5 votes (halt — was 9/12)
+    "unanimous": 5,            # 5/5 (sovereign human override)
 }
+DEFAULT_COUNCIL_SIZE = 5
 
 
 def _load_key():
