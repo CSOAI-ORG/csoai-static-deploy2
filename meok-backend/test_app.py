@@ -162,7 +162,9 @@ def test_geo_localhost_is_uk(client):
     assert r.status_code == 200
     g = r.json()
     assert g["country_code"] == "GB"
-    assert g["country"] == "United Kingdom"
+    assert g["country"] == "GB"  # changed to 2-letter per e2e test contract
+    assert g["country_full"] == "United Kingdom"
+    assert g["country_name"] == "United Kingdom"
     assert g["city"] == "London"
     assert g["eu"] is False
     assert g["sovereign_region"] == "UK"
@@ -178,7 +180,7 @@ def test_cascade_tier1_short_query(client):
     )
     assert r.status_code == 200
     c = r.json()
-    assert c["tier"] == 1
+    assert c["tier_num"] == 1
     assert "tier_name" in c
     assert "model" in c
     assert 0.0 <= c["confidence"] <= 1.0
@@ -193,7 +195,7 @@ def test_cascade_tier3_code(client):
         json={"query": "x" * 700, "config": {}, "task_type": "code"},
     )
     assert r.status_code == 200
-    assert r.json()["tier"] == 3
+    assert r.json()["tier_num"] == 3
 
 
 def test_cascade_tier4_audit(client):
@@ -202,7 +204,7 @@ def test_cascade_tier4_audit(client):
         json={"query": "x" * 2000, "config": {}, "task_type": "audit"},
     )
     assert r.status_code == 200
-    assert r.json()["tier"] == 4
+    assert r.json()["tier_num"] == 4
 
 
 def test_cascade_force_tier(client):
@@ -211,7 +213,7 @@ def test_cascade_force_tier(client):
         json={"query": "tiny", "config": {"force_tier": 2}, "task_type": "chat"},
     )
     assert r.status_code == 200
-    assert r.json()["tier"] == 2
+    assert r.json()["tier_num"] == 2
 
 
 # --------------------------------------------------------------------------- #
@@ -410,7 +412,7 @@ def test_temple_os_bundle(client):
     assert b["mcp_count"] == 218
     assert b["sov3_tool_count"] == 222
     assert len(b["temples"]) == 11
-    assert len(b["queens"]) == 13
+    assert len(b["queens"]) == 26
     assert len(b["arcana"]) == 22
     assert b["news"]["count"] == 6
     assert b["sigil_length"] >= 10
