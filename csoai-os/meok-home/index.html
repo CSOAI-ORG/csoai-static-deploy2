@@ -1147,5 +1147,12 @@ pollBackend();
 setInterval(pollBackend, 30000); // poll every 30s
 </script>
 
+<script>
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("/sw.js").catch(() => {});
+  });
+}
+</script>
 </body>
 </html>

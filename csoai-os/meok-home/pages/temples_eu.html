@@ -350,5 +350,12 @@ async function pollStatus() {
 pollStatus();
 setInterval(pollStatus, 30000);
 </script>
+<script>
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("/sw.js").catch(() => {});
+  });
+}
+</script>
 </body>
 </html>
