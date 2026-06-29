@@ -28,12 +28,12 @@ def test_file_size_under_100kb():
     assert size < 100000, f"MEOK WORLD is {size} bytes, exceeds 100KB budget"
 
 
-def test_html_structure():
+def test_title_includes_aplus():
     content = WORLD.read_text(encoding="utf-8", errors="replace")
     assert content.startswith("<!DOCTYPE html>")
     assert content.rstrip().endswith("</html>")
     assert 'lang="en"' in content
-    assert "<title>MEOK WORLD 100%" in content
+    assert "<title>CSOAI Layer-0 — 8 protocols · 100/100 A+++++ · MEOK WORLD" in content
 
 
 def test_all_5_panes_present():

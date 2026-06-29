@@ -65,7 +65,7 @@ unified = """<!DOCTYPE html>
 <meta name="theme-color" content="#08060c">
 <meta name="description" content="MEOK WORLD 100% — the sovereign AI operating system. Every regulation is a temple. The world is at your feet.">
 <meta name="keywords" content="MEOK, CSOAI, SOV3, sovereign AI, EU AI Act, GDPR, NIS2, BFT, council of AI, regulation temples">
-<title>MEOK WORLD 100% — Sovereign AI Operating System</title>
+<title>CSOAI Layer-0 — 8 protocols · 100/100 A+++++ · MEOK WORLD</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">

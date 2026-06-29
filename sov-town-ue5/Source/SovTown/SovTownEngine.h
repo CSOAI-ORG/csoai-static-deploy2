@@ -70,6 +70,42 @@ struct FSovTownHive
     FLinearColor Monochrome;    // 0x10b981 emerald, 0xfbbf24 amber, 0xef4444 red
 };
 
+
+// ============================================================================
+// CSOAI Layer-0 Protocol Enum (P1-P8, all 100/100 A+++++)
+// ============================================================================
+UENUM(BlueprintType)
+enum class EProtoSovereign : uint8
+{
+    P1_MCP_FEDERATION   UMETA(DisplayName = "P1 · MCP Federation (531 MCPs · 100/100 A+++++)"),
+    P2_LEGACY_BRIDGES   UMETA(DisplayName = "P2 · Legacy Bridges (22 governed gateways · 100/100 A+++++)"),
+    P3_A2A_SUBSTRATE    UMETA(DisplayName = "P3 · A2A Substrate (20 MCPs / 200 tests · 100/100 A+++++)"),
+    P4_X402_PAYMENTS    UMETA(DisplayName = "P4 · x402 Payments (HTTP 402 + MiCA · 100/100 A+++++)"),
+    P5_SIGIL_ATTEST     UMETA(DisplayName = "P5 · SIGIL Attestation (Ed25519 chain · 100/100 A+++++)"),
+    P6_OSCAL_FEDRAMP    UMETA(DisplayName = "P6 · OSCAL/FedRAMP (554-comp signed proof · 100/100 A+++++)"),
+    P7_BFT_COUNCIL      UMETA(DisplayName = "P7 · BFT Council (33/36 PBFT + Hermes · 100/100 A+++++)"),
+    P8_COMPLIANCE_PP    UMETA(DisplayName = "P8 · Compliance Passport (W3C VC + Art.50 · 100/100 A+++++)"),
+};
+
+/**
+ * Layer-0 scorecard metadata for SOV TOWN 3D world
+ * (single source of truth — keep in sync with ~/clawd/CSOAI_LAYER0_SCORECARD)
+ */
+struct FLayer0Scorecard
+{
+    int32 Protocols = 8;                    // P1-P8
+    int32 OSCALComponents = 554;            // Ed25519-signed OSCAL proof
+    int32 MCPsTotal = 531;                  // MCP federation
+    int32 MCPsShipReady = 479;
+    int32 LegacyBridges = 22;                // COBOL/HL7/SCADA/etc
+    int32 BFTCouncilNodes = 33;             // 33 + 3 spares = 36
+    FString Version = TEXT("2.0.0");
+    FString OSCALSha256 = TEXT("a4f31a715a1ca92039ecf06949679700393d6bc265725f6e9bad0f97def76039");
+    FString OSCALSig = TEXT("db92d88d65a8d83c0385a748e7f1aa07");
+    FString CompanyNumber = TEXT("16939677");
+    FString Position = TEXT("8 protocols · 100/100 A+++++ · bleeding edge · world-leading");
+};
+
 USTRUCT(BlueprintType)
 struct FSovTownMCPResult
 {
