@@ -26,6 +26,10 @@
 
 set -euo pipefail
 
+# W50.2: Set PYTHONPATH=. to ensure MCP tests use the local module path
+# (not the broken venv at /Users/nicholas/.hermes/hermes-agent/venv/)
+export PYTHONPATH="."
+
 SOV3_ENDPOINT="http://localhost:3101/mcp"
 RESEND_API_KEY="$(keystone get RESEND_API_KEY 2>/dev/null || echo '')"
 PYPI_TOKEN="$(keystone get PYPI_TOKEN 2>/dev/null || echo '')"
