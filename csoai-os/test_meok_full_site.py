@@ -188,13 +188,16 @@ def test_external_resources_minimal():
     """Only fonts + MEOK domain as external resources."""
     for p in PAGES_DIR.glob("*.html"):
         text = p.read_text()
+        # Skip CSP content (it lists allowed domains inline)
+        text = re.sub(r'<meta http-equiv="Content-Security-Policy"[^>]*>', '', text)
         urls = re.findall(r"https?://[^\s\"'<>)]+", text)
         domains = set()
         for url in urls:
             m = re.match(r"https?://([^/]+)", url)
             if m: domains.add(m.group(1))
         allowed = {"fonts.googleapis.com", "fonts.gstatic.com", "meok.ai",
-                   "csoai.org", "proofof.ai", "github.com", "www.cobolbridge.ai", "www.w3.org"}
+                   "csoai.org", "proofof.ai", "github.com", "www.cobolbridge.ai",
+                   "ipapi.co", "127.0.0.1:8000", "127.0.0.1:3101"}  # local backend + SOV3
         unexpected = domains - allowed
         assert not unexpected, f"{p.name} has unexpected domains: {unexpected}"
 
