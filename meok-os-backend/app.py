@@ -404,7 +404,7 @@ if FASTAPI:
     @app.get("/v1/dashboard/metrics")
     async def dashboard_metrics():
         return {
-            "tests_pass": 467,
+            "tests_pass": 566,
             "sovereign_mcps": 24,
             "hives": 33,
             "generals": 12,
@@ -412,6 +412,9 @@ if FASTAPI:
             "bft_modes": ["fast", "balanced", "secure"],
             "mindsets": 12,
             "doctrine": "The dragon runs itself. No Ollama for the 5 sovereign tasks.",
+            "endpoints": 30,
+            "backend_status": "live",
+            "backend_port": 8765,
         }
 
     @app.get("/v1/dashboard/health")
