@@ -188,39 +188,30 @@ enough** to trigger BAA liability.
 
 The sovereign stack delivers HIPAA compliance as **a single MCP bundle**:
 
-### 3.1 The 18-safeguard coverage map
+The 18 safeguards below are mapped 1-to-1 to sovereign MCPs (S = safeguard, M = MCP tool):
 
-| # | Safeguard | Sovereign MCP + tool |
-|---|---|---|
-| 1 | Security Mgmt | `governance.audit` + `governance.kill_switch` |
-| 2 | Assigned Responsibility | `governance.role_assignment` (RBAC matrix) |
-| 3 | Workforce Security | `passport.workforce_clearance` + Ed25519 |
-| 4 | Information Access Mgmt | `governance.role_based_access` |
-| 5 | Awareness and Training | `honour.care_training` (16 probes) |
-| 6 | Incident Procedures | `dora.incident_classify` + `receipt.signed_alert` |
-| 7 | Contingency Plan | `iot.emergency_stop` + `governance.backup_schedule` |
-| 8 | Evaluation | `eu-ai-act-kit.audit` cross-walked to §164.308(a)(8) |
-| 9 | BA Contracts | `hipaa-compliance-mcp.generate_baa` |
-| 10 | Facility Access | `governance.geofence` + `iot.door_log` |
-| 11 | Workstation Use | `governance.endpoint_posture` |
-| 12 | Workstation Security | `governance.disk_encryption_check` |
-| 13 | Device and Media Controls | `iot.media_sanitization` + receipt log |
-| 14 | **Access Control (AI)** | `passport.prompt_filtering` (role-bound) |
-| 15 | **Audit Controls (AI)** | `receipt.prompt_audit_chain` (hash-chained) |
-| 16 | **Integrity** | `receipt.integrity_check` + Ed25519 manifests |
-| 17 | **Person/Entity Auth** | `passport.ai_agent_identity` |
-| 18 | **Transmission Security** | `pci-dss-mcp.fips_140_3` (PQC for 2027) |
+| S | Safeguard | M | S | Safeguard | M |
+|---|---|---|---|---|---|
+| 1 | Security Mgmt | `governance.audit` + `kill_switch` | 10 | Facility Access | `governance.geofence` + `iot.door_log` |
+| 2 | Assigned Resp. | `governance.role_assignment` (RBAC) | 11 | Workstation Use | `governance.endpoint_posture` |
+| 3 | Workforce Sec. | `passport.workforce_clearance` | 12 | Workstation Sec. | `governance.disk_encryption_check` |
+| 4 | Access Mgmt | `governance.role_based_access` | 13 | Device/Media | `iot.media_sanitization` |
+| 5 | Training | `honour.care_training` (16 probes) | 14 | **Access (AI)** | `passport.prompt_filtering` |
+| 6 | Incident | `dora.incident_classify` + `receipt.signed_alert` | 15 | **Audit (AI)** | `receipt.prompt_audit_chain` |
+| 7 | Contingency | `iot.emergency_stop` + `governance.backup` | 16 | **Integrity** | `receipt.integrity_check` |
+| 8 | Evaluation | `eu-ai-act-kit.audit` cross-walk | 17 | **Auth** | `passport.ai_agent_identity` |
+| 9 | BA Contracts | `hipaa.generate_baa` | 18 | **Transmit Sec.** | `pci-dss-mcp.fips_140_3` (PQC 2027) |
 
 ### 3.2 Sample audit flow
 
 ```
-# §164.312(b) Audit Controls — every AI call signed
+# §164.312(b) — every AI call signed
 sovereign receipt log_event "ai.query" '{"user": "rn.triage.001",
   "patient_hash": "ab12...", "model": "medllama-3",
   "prompt_tokens": 312, "phi_flagged": false}'
 # → event_id, signed_receipt, hash_chain_position
 
-# §164.312(d) Authentication — bind AI agent to user
+# §164.312(d) — bind AI agent to user
 sovereign passport bind_agent "ai.medassist.001" "rn.triage.001"
 # → agent_id, delegation_chain (Ed25519 narrowing-invariant)
 
@@ -257,17 +248,10 @@ sovereign hipaa breach_notify "your-hospital" \
 **Total: 13 MCPs · 191 tests · 100% pass · <2 sec test runtime**
 
 The **Maternal Covenant** in `honour` enforces minimum-necessary at
-the LLM prompt-construction layer:
-
-- **Probe 1: CareRecipient** — Is this user authorized for this patient?
-- **Probe 2: PermissionScope** — Is the query within the user's role scope?
-- **Probe 3: DataMinimization** — Has unnecessary PHI been stripped from
-  the prompt?
-- **Probe 9: Authenticity** — Is the user identity verified for this PHI?
-- **Probe 14: Beneficence** — Does the request advance patient care?
-
-Any "no" on these 5 probes = **automatic prompt redaction** before
-submission + **audit log entry** to the `receipt` chain.
+the LLM prompt-construction layer. 5 critical probes (CareRecipient,
+PermissionScope, DataMinimization, Authenticity, Beneficence) gate
+every PHI-touching call. Any "no" triggers automatic prompt redaction
+before LLM submission + audit log entry to `receipt` chain.
 
 ## 4. Implementation
 
