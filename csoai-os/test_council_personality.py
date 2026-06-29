@@ -28,9 +28,9 @@ def test_13_queens():
 def test_2_veto_queens():
     """Sophia Care + Watch must be VETO queens."""
     from council_personality import QUEEN_PERSONALITIES
-    assert QUEEN_PERSONALITIES["queen-care"]["veto"] is True
-    assert QUEEN_PERSONALITIES["queen-watch"]["veto"] is True
-    assert QUEEN_PERSONALITIES["queen-king"]["veto"] is False
+    assert QUEEN_PERSONALITIES["queen-care"].veto is True
+    assert QUEEN_PERSONALITIES["queen-watch"].veto is True
+    assert QUEEN_PERSONALITIES["queen-king"].veto is False
 
 
 def test_all_22_arcanas():
@@ -71,9 +71,9 @@ def test_get_queen():
     """get_queen returns the queen profile or None."""
     from council_personality import get_queen
     q = get_queen("queen-king")
-    assert q["name"] == "Sovereign King"
-    assert q["emoji"] == "👑"
-    assert q["color"] == "#c9a84c"
+    assert q.name == "Sovereign King"
+    assert q.emoji == "👑"
+    assert q.color == "#c9a84c"
     assert get_queen("nonexistent") is None
 
 
@@ -89,19 +89,20 @@ def test_long_form_quotes():
     """Every queen must have a meaningful long_form bio."""
     from council_personality import QUEEN_PERSONALITIES
     for q_id, q in QUEEN_PERSONALITIES.items():
-        assert len(q["long_form"]) > 50, f"{q_id} long_form too short"
+        assert len(q.long_form) > 50, f"{q_id} long_form too short"
 
 
 def test_personality_bounds():
     """All personality scores must be in [0, 1]."""
     from council_personality import QUEEN_PERSONALITIES, synthesize_personality
     for q_id, q in QUEEN_PERSONALITIES.items():
-        for trait, score in q["personality"].items():
+        for trait, score in q.personality.as_dict().items():
             assert 0 <= score <= 1, f"{q_id}.{trait} = {score} out of bounds"
-    # Also check synthesized
+    # Also check synthesized (the personality section is still a dict here for backward compat)
     for queen in ["queen-king", "queen-arcana", "queen-watch"]:
         for arcana in [0, 11, 21]:
             p = synthesize_personality(queen, arcana)
+            assert p["synthesized"] is True
             for trait, score in p["personality"].items():
                 assert 0 <= score <= 1, f"synth {queen}/{arcana}.{trait} = {score}"
 
