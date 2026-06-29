@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="manifest" href="/manifest.json">
+<title>🌍 33 Hives — Sovereign Network · MEOK OS</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, system-ui, monospace; background: #000;
+         color: #e5e5e5; line-height: 1.6; padding: 1rem; }
+  .nav { background: #111; padding: 1rem; border-radius: 8px; margin-bottom: 1.5rem; }
+  .nav a { color: #60a5fa; margin-right: 1rem; text-decoration: none; }
+  h1 { color: #fbbf24; text-align: center; text-shadow: 0 0 20px #fbbf24; font-size: 2.5rem;
+       margin-bottom: 0.5rem; }
+  .subtitle { text-align: center; color: #888; margin-bottom: 2rem; }
+  .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+           gap: 1rem; max-width: 1000px; margin: 0 auto 2rem; }
+  .stat { background: #1a1a1a; padding: 1.5rem; border-radius: 8px; text-align: center;
+          border-left: 4px solid #fbbf24; }
+  .stat-value { font-size: 2rem; color: #fbbf24; font-weight: bold; }
+  .stat-label { color: #888; font-size: 0.9rem; }
+  .filter { max-width: 1000px; margin: 0 auto 1rem; text-align: center; }
+  .filter button { background: #1a1a1a; color: #fbbf24; border: 1px solid #fbbf24;
+                  padding: 0.5rem 1rem; margin: 0.25rem; border-radius: 4px;
+                  cursor: pointer; font-family: monospace; }
+  .filter button:hover, .filter button.active { background: #fbbf24; color: #000; }
+  .hive-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+               gap: 1rem; max-width: 1200px; margin: 0 auto; }
+  .hive { background: #1a1a1a; padding: 1rem; border-radius: 8px;
+          border-left: 4px solid #60a5fa; }
+  .hive.sovereign { border-left-color: #fbbf24; }
+  .hive.enterprise { border-left-color: #60a5fa; }
+  .hive.smb { border-left-color: #888; }
+  .hive h3 { color: #fbbf24; margin-bottom: 0.5rem; }
+  .hive p { color: #aaa; font-size: 0.9rem; margin: 0.25rem 0; }
+  .hive .general { color: #10b981; font-weight: bold; }
+  .hive .tier { display: inline-block; padding: 2px 6px; border-radius: 4px;
+                font-size: 0.7rem; text-transform: uppercase; }
+  .hive .tier.sovereign { background: #fbbf24; color: #000; }
+  .hive .tier.enterprise { background: #60a5fa; color: #000; }
+  .hive .tier.smb { background: #444; color: #fff; }
+  .hive .coords { color: #666; font-size: 0.8rem; }
+  .hive .sigil { color: #ec4899; font-size: 0.7rem; font-family: monospace; }
+</style>
+</head>
+<body>
+
+<div class="nav" role="navigation" aria-label="Main">
+  <a href="/">← Home</a>
+  <a href="/sovereign-town/5d-hive.html">5D Hive</a>
+  <a href="/cesium-globe.html">3D Globe</a>
+  <a href="/dashboards/">Dashboards</a>
+  <a href="/sov-os.html">SOV OS</a>
+</div>
+
+<h1>🌍 33 Hives — Sovereign Network</h1>
+<p class="subtitle">5 continents · 12 Generals · 8 BIG BRAIM · 1.39 TB</p>
+
+<div class="stats">
+  <div class="stat"><div class="stat-value">33</div><div class="stat-label">Hives</div></div>
+  <div class="stat"><div class="stat-value">12</div><div class="stat-label">Generals</div></div>
+  <div class="stat"><div class="stat-value">2</div><div class="stat-label">Sovereign</div></div>
+  <div class="stat"><div class="stat-value">10</div><div class="stat-label">Enterprise</div></div>
+  <div class="stat"><div class="stat-value">21</div><div class="stat-label">SMB</div></div>
+  <div class="stat"><div class="stat-value">5</div><div class="stat-label">Continents</div></div>
+</div>
+
+<div class="filter">
+  <strong>Filter by tier:</strong>
+  <button class="active" onclick="filter('all')">All (33)</button>
+  <button onclick="filter('sovereign')">Sovereign (2)</button>
+  <button onclick="filter('enterprise')">Enterprise (10)</button>
+  <button onclick="filter('smb')">SMB (21)</button>
+  <strong style="margin-left:1rem">By general:</strong>
+  <button onclick="filterDragon()">Dragon (2)</button>
+  <button onclick="filterScribe()">Scribe (3)</button>
+</div>
+
+<div class="hive-grid" id="hive-grid"></div>
+
+<script>
+const HIVES = [
+  // Sovereign
+  {id: 1,  name: "London",      lat: 51.5074, lng: -0.1278,  general: "Dragon", tier: "sovereign",  region: "UK",  lat_lng: "51.51°N, -0.13°E"},
+  {id: 21, name: "Tokyo",       lat: 35.6762, lng: 139.6503, general: "Dragon", tier: "sovereign",  region: "JP",  lat_lng: "35.68°N, 139.65°E"},
+
+  // Enterprise
+  {id: 2,  name: "Cambridge",  lat: 52.2053, lng: 0.1218,   general: "Scribe", tier: "enterprise", region: "UK",  lat_lng: "52.21°N, 0.12°E"},
+  {id: 3,  name: "Edinburgh",   lat: 55.9533, lng: -3.1883,  general: "Builder", tier: "enterprise", region: "UK",  lat_lng: "55.95°N, -3.19°E"},
+  {id: 5,  name: "Paris",       lat: 48.8566, lng: 2.3522,   general: "Lex",    tier: "enterprise", region: "FR",  lat_lng: "48.86°N, 2.35°E"},
+  {id: 6,  name: "Berlin",      lat: 52.5200, lng: 13.4050,  general: "Shield", tier: "enterprise", region: "DE",  lat_lng: "52.52°N, 13.41°E"},
+  {id: 10, name: "Madrid",      lat: 40.4168, lng: -3.7038,  general: "Scale",  tier: "enterprise", region: "ES",  lat_lng: "40.42°N, -3.70°E"},
+  {id: 13, name: "NYC",         lat: 40.7128, lng: -74.0060, general: "Scribe", tier: "enterprise", region: "US",  lat_lng: "40.71°N, -74.01°W"},
+  {id: 14, name: "SF",          lat: 37.7749, lng: -122.4194,general: "Owl",    tier: "enterprise", region: "US",  lat_lng: "37.77°N, -122.42°W"},
+  {id: 15, name: "Toronto",     lat: 43.6532, lng: -79.3832, general: "Builder",tier: "enterprise", region: "CA",  lat_lng: "43.65°N, -79.38°W"},
+  {id: 22, name: "Singapore",   lat: 1.3521,  lng: 103.8198, general: "Shield", tier: "enterprise", region: "SG",  lat_lng: "1.35°N, 103.82°E"},
+  {id: 23, name: "Sydney",      lat: -33.8688, lng: 151.2093, general: "Builder",tier: "enterprise", region: "AU",  lat_lng: "-33.87°S, 151.21°E"},
+  {id: 24, name: "Mumbai",      lat: 19.0760, lng: 72.8777,  general: "Abacus", tier: "enterprise", region: "IN",  lat_lng: "19.08°N, 72.88°E"},
+  {id: 25, name: "Dubai",       lat: 25.2048, lng: 55.2708,  general: "Voice",  tier: "enterprise", region: "AE",  lat_lng: "25.20°N, 55.27°E"},
+  {id: 26, name: "HongKong",    lat: 22.3193, lng: 114.1694, general: "Scribe", tier: "enterprise", region: "HK",  lat_lng: "22.32°N, 114.17°E"},
+
+  // SMB
+  {id: 4,  name: "Dublin",      lat: 53.3498, lng: -6.2603,  general: "Voice",  tier: "smb",        region: "IE",  lat_lng: "53.35°N, -6.26°W"},
+  {id: 7,  name: "Amsterdam",   lat: 52.3676, lng: 4.9041,   general: "Crow",   tier: "smb",        region: "NL",  lat_lng: "52.37°N, 4.90°E"},
+  {id: 8,  name: "Stockholm",   lat: 59.3293, lng: 18.0686,  general: "Argus",  tier: "smb",        region: "SE",  lat_lng: "59.33°N, 18.07°E"},
+  {id: 9,  name: "Helsinki",    lat: 60.1699, lng: 24.9384,  general: "Abacus", tier: "smb",        region: "FI",  lat_lng: "60.17°N, 24.94°E"},
+  {id: 11, name: "Rome",        lat: 41.9028, lng: 12.4964,  general: "Gear",   tier: "smb",        region: "IT",  lat_lng: "41.90°N, 12.50°E"},
+  {id: 12, name: "Vienna",      lat: 48.2082, lng: 16.3738,  general: "Owl",    tier: "smb",        region: "AT",  lat_lng: "48.21°N, 16.37°E"},
+  {id: 16, name: "Mexico",      lat: 19.4326, lng: -99.1332, general: "Crow",   tier: "smb",        region: "MX",  lat_lng: "19.43°N, -99.13°W"},
+  {id: 17, name: "Bogota",      lat: 4.7110,  lng: -74.0721, general: "Voice",  tier: "smb",        region: "CO",  lat_lng: "4.71°N, -74.07°W"},
+  {id: 18, name: "Lima",        lat: -12.0464, lng: -77.0428, general: "Lex",    tier: "smb",        region: "PE",  lat_lng: "-12.05°S, -77.04°W"},
+  {id: 19, name: "Santiago",    lat: -33.4489, lng: -70.6693, general: "Abacus", tier: "smb",        region: "CL",  lat_lng: "-33.45°S, -70.67°W"},
+  {id: 20, name: "Buenos",      lat: -34.6037, lng: -58.3816, general: "Scale",  tier: "smb",        region: "AR",  lat_lng: "-34.60°S, -58.38°W"},
+  {id: 27, name: "Seoul",       lat: 37.5665, lng: 126.9780, general: "Lex",    tier: "smb",        region: "KR",  lat_lng: "37.57°N, 126.98°E"},
+  {id: 28, name: "Jakarta",     lat: -6.2088, lng: 106.8456, general: "Crow",   tier: "smb",        region: "ID",  lat_lng: "-6.21°S, 106.85°E"},
+  {id: 29, name: "CapeTown",    lat: -33.9249, lng: 18.4241,  general: "Scale",  tier: "smb",        region: "ZA",  lat_lng: "-33.92°S, 18.42°E"},
+  {id: 30, name: "Nairobi",     lat: -1.2921, lng: 36.8219,  general: "Gear",   tier: "smb",        region: "KE",  lat_lng: "-1.29°S, 36.82°E"},
+  {id: 31, name: "Cairo",       lat: 30.0444, lng: 31.2357,  general: "Shield", tier: "smb",        region: "EG",  lat_lng: "30.04°N, 31.24°E"},
+  {id: 32, name: "Lagos",       lat: 6.5244,  lng: 3.3792,   general: "Argus",  tier: "smb",        region: "NG",  lat_lng: "6.52°N, 3.38°E"},
+  {id: 33, name: "Reykjavik",   lat: 64.1466, lng: -21.9426, general: "Owl",    tier: "smb",        region: "IS",  lat_lng: "64.15°N, -21.94°W"},
+];
+
+let currentFilter = "all";
+
+function renderHives(filter) {
+  const grid = document.getElementById("hive-grid");
+  let filtered = HIVES;
+  if (filter !== "all") {
+    filtered = HIVES.filter(h => h.tier === filter || h.general === filter);
+  }
+  grid.innerHTML = filtered.map(h => `
+    <div class="hive ${h.tier}" data-tier="${h.tier}" data-general="${h.general}">
+      <h3>#${h.id} ${h.name}</h3>
+      <p><span class="tier ${h.tier}">${h.tier}</span> · <span class="general">${h.general}</span></p>
+      <p class="coords">${h.lat_lng} · ${h.region}</p>
+      <p class="sigil">sigil: hive-${h.id.toString().padStart(2, '0')}-${h.name.toLowerCase()}-${h.general.toLowerCase()}</p>
+    </div>
+  `).join("");
+}
+
+function filter(t) {
+  currentFilter = t;
+  document.querySelectorAll(".filter button").forEach(b => b.classList.remove("active"));
+  event.target.classList.add("active");
+  renderHives(t);
+}
+
+function filterDragon() { currentFilter = "Dragon"; document.querySelectorAll(".filter button").forEach(b => b.classList.remove("active")); renderHives("Dragon"); }
+function filterScribe() { currentFilter = "Scribe"; document.querySelectorAll(".filter button").forEach(b => b.classList.remove("active")); renderHives("Scribe"); }
+
+renderHives(currentFilter);
+</script>
+
+</body>
+</html>
