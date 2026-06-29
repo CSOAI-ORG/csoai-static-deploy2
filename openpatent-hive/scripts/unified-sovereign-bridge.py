@@ -130,10 +130,12 @@ def bridge_email(to_email, subject, html_body, from_email="noreply@openpatent.ai
         "delivered": False,
         "note": "Queued — will send when Resend key is restored. Attested to MEOK sovereign substrate.",
     }
-    # Write to a mail queue file
+    # Write to a mail queue file. Prefer the production path; fall back to the
+    # Mac checkout if /opt isn't mounted (this Mac lives at ~/clawd/openpatent-hive).
+    _hive_root = "/opt/openpatent-hive" if os.path.isdir("/opt/openpatent-hive") else "/Users/nicholas/clawd/openpatent-hive"
     try:
-        os.makedirs("/opt/openpatent-hive/vault/mail-queue", exist_ok=True)
-        fp = f"/opt/openpatent-hive/vault/mail-queue/{int(time.time()*1000)}-{to_email.replace('@','_at_')}.json"
+        os.makedirs(f"{_hive_root}/vault/mail-queue", exist_ok=True)
+        fp = f"{_hive_root}/vault/mail-queue/{int(time.time()*1000)}-{to_email.replace('@','_at_')}.json"
         with open(fp, "w") as f:
             json.dump(out, f, indent=2)
         log(f"  email queued to {to_email}: {subject[:50]}")
