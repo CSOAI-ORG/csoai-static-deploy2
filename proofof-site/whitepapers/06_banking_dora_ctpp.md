@@ -59,17 +59,18 @@ The CTPP regime is the only piece of DORA that **reaches non-EU
 providers** without a physical presence. A US-headquartered hyperscaler
 serving an EU bank can be directly designated by the ESAs, must appoint
 an EU liaison, must submit to the full Register of Information, and is
-subject to ESA fines of up to **EUR 5 million or 1% of average daily
+subject to ESA fines of up to **EUR 5M or 1% of average daily
 worldwide turnover** per day of non-compliance (Art. 50).
 
-ESAs published their first CTPP designations on **5 January 2025**:
-Amazon Web Services (AWS), Microsoft Azure, Google Cloud (GCP), IBM
-Cloud, Oracle Cloud, and Salesforce are confirmed candidates in the
-first designation wave per public JC statements. Banks and insurers
-that route transactions or store regulated data through these
-providers face direct, attributable concentration risk.
+ESAs designated their first CTPP wave on **5 January 2025**: AWS,
+Microsoft Azure, Google Cloud (GCP), IBM Cloud, Oracle Cloud, and
+Salesforce are confirmed candidates in the first designation wave
+per public JC statements. Banks and insurers that route transactions
+or store regulated data through these providers face direct,
+attributable concentration risk.
 
-The **methodology** the ESAs apply (JC/2023/56) scores providers on:
+The **methodology** the ESAs apply (JC/2023/56) scores providers on
+6 criteria:
 
 1. Number of in-scope financial clients served (≥10 = trigger)
 2. Criticality of services (settlement, fraud detection, AML, core banking)
@@ -78,15 +79,12 @@ The **methodology** the ESAs apply (JC/2023/56) scores providers on:
 5. Operational complexity (sub-contractors, fourth parties)
 6. ICT concentration (systemic importance if disrupted)
 
-A provider scoring above the threshold on **at least 3 of 6** criteria is
-designated. Once designated, the provider must:
-
-- Maintain a **Register of Information** (Art. 28(3)) updated annually
-- Submit to **pooled pentesting** at least every 3 years (Art. 26)
-- Notify the ESAs of **major ICT-related incidents** within **4 hours**
-  (Art. 19(4)(a))
-- Cooperate with the Joint Examination Framework (Art. 35)
-- Bear the cost of ESA supervision (Art. 33(5))
+A provider scoring above the threshold on ≥3 of 6 criteria is
+designated. Once designated, the provider must maintain a Register of
+Information (Art. 28(3)) updated annually; submit to pooled pentesting
+every 3 years (Art. 26); notify ESAs of major ICT incidents within
+**4 hours** (Art. 19(4)(a)); cooperate with the Joint Examination
+Framework (Art. 35); and bear the cost of ESA supervision (Art. 33(5)).
 
 ## 2. The Challenge
 
@@ -94,39 +92,35 @@ EU financial entities face a **3-tier compliance burden**:
 
 ### Tier 1: Direct compliance (Art. 5–27)
 
-Every in-scope entity must operate an ICT risk-management framework,
-maintain an incident-classification procedure, conduct resilience
-testing (vulnerability scans, penetration tests at least annually, plus
-**TLPT** threat-led penetration testing for significant entities per
-Art. 26–27 + Commission Delegated Regulation 2024/1772), and report
-major ICT incidents to its NCA within the prescribed window.
-
-The penalty for failure: **EUR 5M or 1% of daily turnover/day** (Art. 50).
+Every in-scope entity operates an ICT risk-management framework,
+maintains an incident-classification procedure, conducts resilience
+testing (vulnerability + penetration at minimum annually, plus **TLPT**
+threat-led penetration testing for significant entities per Art. 26–27
++ Commission Delegated Regulation 2024/1772), and reports major ICT
+incidents within the prescribed window. Penalty: **EUR 5M or 1% of
+daily turnover/day** (Art. 50).
 
 ### Tier 2: Third-party register + due diligence (Art. 28–30)
 
-Every financial entity must maintain a **Register of Information** of
-all ICT third-party arrangements, in a prescribed format
-(Commission Implementing Regulation (EU) 2024/2956 of 29 November 2024).
-The register runs to **~180 columns** (XBRL taxonomy v1.0.0, published
-by the ESAs 31 December 2024) and must be refreshed at minimum
-**annually** and on every **material change**.
-
-The penalty for an out-of-date register: **EUR 500K** + direct NCA
-supervisory action.
+Every financial entity maintains a **Register of Information** of
+all ICT third-party arrangements, in a prescribed format (Commission
+Implementing Regulation (EU) 2024/2956 of 29 November 2024). The
+register runs to **~180 columns** (XBRL taxonomy v1.0.0 published by
+the ESAs 31 December 2024) and is refreshed annually and on every
+material change. Penalty: **EUR 500K** + NCA action.
 
 ### Tier 3: Critical-asset designation (Art. 31–44)
 
 Any ICT service supporting critical or important functions (CIFs) —
 payment processing, fraud detection, regulatory reporting, AML/CFT,
-customer onboarding, portfolio valuation — is automatically a **critical
-ICT third-party service provider** triggering enhanced due diligence
-including:
+customer onboarding, portfolio valuation — is automatically a
+**critical ICT third-party service provider** triggering enhanced
+due diligence:
 
 - Pre-contractual assessment (Art. 28(5))
-- Multi-vendor strategy OR documented justification of single-vendor (Art. 28(8))
-- Right of audit (Art. 30(2)) OR independent assurance report (ISAE 3402
-  / SOC 2 Type II / ISO 27001 + 27017)
+- Multi-vendor strategy OR documented single-vendor justification (Art. 28(8))
+- Right of audit (Art. 30(2)) OR independent assurance (ISAE 3402 /
+  SOC 2 Type II / ISO 27001 + 27017)
 - Exit strategy with documented recovery time **≤2 hours** (Art. 28(8))
 - Sub-contractor chain transparency (Art. 30(7))
 
@@ -137,11 +131,11 @@ register maintenance alone is a 4–6 FTE programme.
 ### The 4-hour incident-report clock
 
 DORA Art. 19(4)(a) sets the **initial incident notification window at
-4 hours** from classification as "major" — measured from the moment the
-entity becomes aware, not from service restoration. The intermediate
-report is at **24 hours**, the final report at **1 month**. Missing the
-4-hour window — even by 30 minutes — exposes the entity to administrative
-measures and a public statement by the NCA.
+4 hours** from classification as "major" — measured from awareness,
+not from service restoration. The intermediate report is at **24 hours**,
+the final report at **1 month**. Missing the 4-hour window by even
+30 minutes exposes the entity to administrative measures and a public
+statement by the NCA.
 
 ## 3. The MEOK OS Solution
 
@@ -384,24 +378,19 @@ attestation challenge to date.
 
 ## References
 
-1. **Regulation (EU) 2022/2554** — Digital Operational Resilience Act
-   (DORA), 14 December 2022, OJ L 333/1.
+1. **Regulation (EU) 2022/2554** — DORA, 14 Dec 2022, OJ L 333/1.
 2. **Commission Delegated Regulation (EU) 2024/1772** — RTS on ICT
-   risk-management tools and further specifications.
-3. **Commission Delegated Regulation (EU) 2024/1774** — RTS on
-   classification of ICT-related incidents.
+   risk-management.
+3. **Commission Delegated Regulation (EU) 2024/1774** — RTS on ICT
+   incident classification.
 4. **Commission Implementing Regulation (EU) 2024/2956** — ITS on the
    Register of Information.
 5. **JC/2023/56** — ESA Joint Committee Methodology on CTPP
    designation.
-6. **NIS2 Directive (EU) 2022/2555** — interplays with DORA on
-   essential entities.
-7. **PSD2 (Directive (EU) 2015/2366)** — payment-services overlay for
-   operational incidents.
-8. **BIS / FSB Guidance on Third-Party Risk Management** (Dec 2023).
-9. **FS-ISAC / E-ISAC** — Information Sharing Arrangements (Pillar 5).
-10. **TIBER-EU Framework** — ECB, threat-led penetration testing for
-    significant entities.
+6. **NIS2 Directive (EU) 2022/2555**, **PSD2 (Directive (EU) 2015/2366)**,
+   **BIS / FSB Guidance on Third-Party Risk Management (Dec 2023)**,
+   **FS-ISAC / E-ISAC** (Pillar 5 sharing), **TIBER-EU Framework** (ECB
+   TLPT for significant entities).
 
 ---
 

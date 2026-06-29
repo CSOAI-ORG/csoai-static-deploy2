@@ -12,7 +12,8 @@ implements an AI model processing Protected Health Information (PHI)
 must satisfy the **HIPAA Security Rule** (45 CFR Part 164 Subpart C),
 **HIPAA Privacy Rule** (Subpart E), and **HIPAA Breach Notification
 Rule** (Subpart D) — all under the **HITECH Act** enforcement
-amendments of the **2025 NPRM** that became effective in **March 2026**.
+amendments of the **2025 NPRM** that became effective in **March
+2026**.
 
 The **HIPAA Security Rule** mandates **18 safeguards** across
 **3 categories** (administrative, physical, technical). The **HIPAA
@@ -24,7 +25,7 @@ per identical-provision violation per year** (2026 inflation-adjusted
 amounts, 89 Fed. Reg. 64890).
 
 This white paper describes how the **MEOK OS sovereign stack** —
-specifically the **hipaa-compliance-mcp** plus 11 supporting sovereign
+specifically the **hipaa-compliance-mcp** plus supporting sovereign
 MCPs — delivers evidence-ready HIPAA compliance in days rather than
 months, with **Ed25519-signed** attestations that any OCR investigator
 can verify offline.
@@ -108,12 +109,11 @@ natively and supports the 9 administrative safeguards through the
 Any CE that engages a BA must execute a **Business Associate Agreement**
 (§164.502(e)) before PHI is shared. The 2026 BAA template the OCR
 endorsed requires explicit provisions for AI sub-contractors, AI
-inference handling, and inference-disclosure accounting.
-
-The **minimum necessary** rule (§164.502(b)) — historically a focus
-on records and disclosures — now applies to **AI prompts and embeddings**.
-An AI clinical-decision-support (CDS) tool that retrieves broader
-patient context than the diagnostic question requires is in violation.
+inference handling, and inference-disclosure accounting. The
+**minimum necessary** rule (§164.502(b)) — historically focused on
+records and disclosures — now applies to **AI prompts and embeddings**.
+An AI CDS tool that retrieves broader patient context than the
+diagnostic question requires is in violation.
 
 ## 2. The Challenge
 
@@ -155,34 +155,34 @@ The OCR's 2025 BAA template has **22 mandatory clauses** for AI
 business associates. The average BAA negotiation takes 6 weeks and
 involves legal/privacy/security/AI/ML stakeholders. Each
 sub-contractor adds another sub-BAA (§164.504(e)(1)(ii)). A typical
-AI stack has 5–8 sub-contractors (model provider, vector DB,
-cloud GPU, observability, labelers, data warehouse, etc.) — each
-requiring its own BAA chain.
+AI stack has 5–8 sub-contractors (model provider, vector DB, cloud
+GPU, observability, labelers, data warehouse) — each requiring its
+own BAA chain.
 
 ### 2.4 Breach notification windows
 
 The Breach Notification Rule (§164.404) sets a **60-day clock** from
 date of discovery. For a "large breach" (affecting 500+ individuals),
-HHS must be notified **simultaneously with affected individuals**, and
-**prominent media notice** is required in the affected
+HHS must be notified **simultaneously with affected individuals**,
+and **prominent media notice** is required in the affected
 state/jurisdiction. Missing this deadline triggers automatic OCR
 investigation under §160.310(c).
 
-A single AI model that's been leaking PHI through prompt-injection
-can affect **thousands of records in minutes**. The OCR's **Wall of
-Shame** (public breach portal) lists 300+ breaches/year, with
-median size of 1,500 records. **OCR penalties** are not bounded
-by the breach size but **by the dollar-amount tables** in 89 Fed.
-Reg. 64890.
+A single AI model leaking PHI through prompt-injection can affect
+**thousands of records in minutes**. The OCR's **Wall of Shame**
+(public breach portal) lists 300+ breaches/year with median size of
+1,500 records. **OCR penalties** are not bounded by breach size but
+**by the dollar-amount tables** in 89 Fed. Reg. 64890.
 
 ### 2.5 The "AI-derived PHI" double-jeopardy
 
 The 2025 NPRM creates **double-liability**: a developer whose AI
-output is "AI-derived PHI" can be simultaneously liable as a CE
-(if the developer is a healthcare provider) **and** as a BA (if the
-developer processes PHI on behalf of a CE). The OCR's 2024 enforcement
-on the platform "Hey, Doctor" (USD 650K settlement) established the
-precedent that **"providing a model trained on PHI"** alone is enough.
+output is "AI-derived PHI" can be simultaneously liable as a CE (if
+the developer is a healthcare provider) **and** as a BA (if the
+developer processes PHI on behalf of a CE). The OCR's 2024
+enforcement on the platform "Hey, Doctor" (USD 650K settlement)
+established that **"providing a model trained on PHI" alone is
+enough** to trigger BAA liability.
 
 ## 3. The MEOK OS Solution
 
@@ -256,8 +256,6 @@ sovereign hipaa breach_notify "your-hospital" \
 
 **Total: 13 MCPs · 191 tests · 100% pass · <2 sec test runtime**
 
-### 3.4 The Minimum-Necessary filter (MNF) engine
-
 The **Maternal Covenant** in `honour` enforces minimum-necessary at
 the LLM prompt-construction layer:
 
@@ -284,7 +282,7 @@ submission + **audit log entry** to the `receipt` chain.
 | 11 | Workforce training attestation | `honour.care_training` |
 | 12 | Contingency plan validation | `iot.emergency_stop` drill |
 | 13 | Breach-notification runbook | `hipaa.breach_notify` (drill mode) |
-| 14 | Executive attestation + signed Evidence Pack | `receipt.attest` |
+| 14 | Executive attestation + Evidence Pack | `receipt.attest` |
 
 ### 4.2 PHI-flow architecture
 
@@ -417,20 +415,15 @@ they can verify offline.** The MEOK OS stack produces exactly that.
    and Enforcement Rules (HHS).
 2. **HITECH Act**, Public Law 111-5 §13401+ (17 Feb 2009).
 3. **89 Fed. Reg. 64792** — HIPAA Security Rule NPRM on AI in
-   Healthcare (proposed 27 Dec 2024; effective 7 March 2026).
+   Healthcare (effective 7 March 2026).
 4. **89 Fed. Reg. 64890** — HIPAA civil monetary penalty annual
    inflation adjustment (2026 figures effective 23 Jan 2026).
-5. **HHS OCR Enforcement Highlights** — published annually, latest
-   edition FY 2025.
-6. **NIST SP 800-66 Rev. 2** — Implementing the HIPAA Security Rule.
-7. **ONC §170.315(g)(10)** — Standardized API for patient/health
-   apps (interoperability overlay).
-8. **FDA AI/ML SaMD Action Plan** — Jan 2024 update; SaMD
-   classification guidance.
-9. **EU AI Act** (Regulation (EU) 2024/1689) — healthcare Annex III
-   high-risk category overlap (compliance bridge via EU AI Act MCP).
-10. **GDPR (Regulation (EU) 2016/679) Art. 9** — health data as a
-    special category.
+5. **HHS OCR Enforcement Highlights (FY 2025)**, **NIST SP 800-66
+   Rev. 2** (HIPAA Security Rule implementation),
+   **ONC §170.315(g)(10)** (patient/health apps), **FDA AI/ML SaMD
+   Action Plan** (Jan 2024).
+6. **EU AI Act** (Regulation (EU) 2024/1689) for healthcare Annex III
+   overlap, and **GDPR Art. 9** (health special category).
 
 ---
 
