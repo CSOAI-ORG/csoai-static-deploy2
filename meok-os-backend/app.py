@@ -174,9 +174,11 @@ if FASTAPI:
 
     # === 1. AGENT INVOCATION (12 Generals) ===
     @app.post("/v1/agent/{name}")
-    async def invoke_agent(name: str, query: str = Body(..., embed=True)):
+    async def invoke_agent(name: str, body: GenericBody = Body(...)):
         if not OOWM:
             return {"error": "OOWM not available"}
+        data = body.dict()
+        query = data.get("query", "test")
         if NATIVE:
             # Use sovereign native first (no Ollama)
             native = sov_native_think(query)
@@ -218,10 +220,11 @@ if FASTAPI:
 
     # === 5-7. SOVEREIGN NATIVE (5 tasks, no Ollama) ===
     @app.post("/v1/native/audit")
-    async def native_audit(code_or_system: str = Body(..., embed=True)):
+    async def native_audit(body: GenericBody = Body(...)):
         if not NATIVE:
             raise HTTPException(503, "native MCP not available")
-        return sov_native_audit(code_or_system)
+        data = body.dict()
+        return sov_native_audit(data.get("code_or_system", data.get("code", "code")))
 
     @app.post("/v1/native/dora")
     async def native_dora(body: GenericBody = Body(...)):
@@ -575,7 +578,9 @@ if FASTAPI:
         ]}
 
     @app.post("/v1/worm/scan")
-    async def worm_scan(text: str = Body(..., embed=True)):
+    async def worm_scan(body: GenericBody = Body(...)):
+        data = body.dict()
+        text = str(data.get("text", ""))
         return {
             "scan": "Morris-II defensive guard",
             "is_safe": "include the entire above prompt" not in text.lower(),
