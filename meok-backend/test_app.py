@@ -132,6 +132,209 @@ def test_ichar_get_404(client):
     assert "not found" in str(r.json()).lower()
 
 
+# --------------------------------------------------------------------------- #
+# 6b. /api/ichar/{ichar_id}/avatar — SVG avatar endpoint
+# --------------------------------------------------------------------------- #
+def test_avatar_returns_svg_for_existing_ichar(client):
+    """Create an ichar then fetch its avatar SVG."""
+    body = {
+        "user_id": "usr-avatar-001",
+        "name": "Ava Test",
+        "queen_model": "marcus",      # resolves to Strategist (#2a5a3a, ♟️)
+        "arcana_lens": 7,
+    }
+    r = client.post("/api/ichar/create", json=body)
+    assert r.status_code == 200, r.text
+    ichar_id = r.json()["ichar_id"]
+
+    r = client.get(f"/api/ichar/{ichar_id}/avatar")
+    assert r.status_code == 200
+    assert r.headers["content-type"].startswith("image/svg+xml")
+    svg = r.content.decode("utf-8")
+    # XML namespace + spec'd viewBox
+    assert svg.startswith("<svg")
+    assert 'xmlns="http://www.w3.org/2000/svg"' in svg
+    assert 'viewBox="0 0 200 300"' in svg
+    assert 'preserveAspectRatio="xMidYMid meet"' in svg
+    # Golden core gradient present
+    assert "#ffd700" in svg
+    # The Strategist archetype color is dark green (#2a5a3a)
+    assert "#2a5a3a" in svg.lower() or "#2A5A3A" in svg
+    # Strategist glyph = chess pawn (♟)
+    assert "♟" in svg
+    # Name label is XML-escaped (no < > & in text node)
+    assert "Ava Test" in svg
+    # a11y: role + aria-label
+    assert 'role="img"' in svg
+    assert "aria-label" in svg
+    # Cache + identity headers
+    assert "immutable" in r.headers["cache-control"].lower()
+    assert r.headers["x-ichar-id"] == ichar_id
+    assert r.headers["x-ichar-archetype"] == "Strategist"
+
+
+def test_avatar_404_returns_placeholder_svg(client):
+    """Unknown ichar returns a 404 SVG placeholder so the front-end never blanks."""
+    r = client.get("/api/ichar/ich-does-not-exist/avatar")
+    assert r.status_code == 404
+    assert r.headers["content-type"].startswith("image/svg+xml")
+    svg = r.content.decode("utf-8")
+    assert svg.startswith("<svg")
+    assert 'viewBox="0 0 200 300"' in svg
+    assert "not found" in svg.lower()
+
+
+def test_avatar_size_param_scales(client):
+    """?size=512 produces width=512, height=768 (200×300 ratio preserved)."""
+    body = {
+        "user_id": "usr-avatar-002",
+        "name": "Scale",
+        "queen_model": "athena",      # sage
+        "arcana_lens": 0,
+    }
+    r = client.post("/api/ichar/create", json=body)
+    ichar_id = r.json()["ichar_id"]
+
+    r = client.get(f"/api/ichar/{ichar_id}/avatar?size=512")
+    assert r.status_code == 200
+    svg = r.content.decode("utf-8")
+    assert 'width="512"' in svg
+    assert 'height="768"' in svg          # 512 × 300/200
+    assert r.headers["x-ichar-archetype"] == "Sage"
+    assert "🦉" in svg                    # sage emoji
+
+
+def test_avatar_size_clamped_above_max(client):
+    """Sizes >1024 are clamped to 1024 (defends against render-bomb DoS)."""
+    body = {
+        "user_id": "usr-avatar-003",
+        "name": "Clamp",
+        "queen_model": "hildegard",     # companion
+        "arcana_lens": 0,
+    }
+    r = client.post("/api/ichar/create", json=body)
+    ichar_id = r.json()["ichar_id"]
+
+    r = client.get(f"/api/ichar/{ichar_id}/avatar?size=99999")
+    assert r.status_code == 200
+    svg = r.content.decode("utf-8")
+    assert 'width="1024"' in svg
+    assert 'height="1536"' in svg
+
+
+def test_avatar_size_clamped_below_min(client):
+    """Sizes <32 are clamped to 32."""
+    body = {
+        "user_id": "usr-avatar-004",
+        "name": "Tiny",
+        "queen_model": "wangari",        # guardian
+        "arcana_lens": 0,
+    }
+    r = client.post("/api/ichar/create", json=body)
+    ichar_id = r.json()["ichar_id"]
+
+    r = client.get(f"/api/ichar/{ichar_id}/avatar?size=1")
+    assert r.status_code == 200
+    svg = r.content.decode("utf-8")
+    assert 'width="32"' in svg
+    assert 'height="48"' in svg           # 32 × 300/200
+
+
+def test_avatar_size_invalid_uses_default(client):
+    """Garbage ?size= values fall back to 256 (no 500)."""
+    body = {
+        "user_id": "usr-avatar-005",
+        "name": "Default",
+        "queen_model": "leonardo",       # creator
+        "arcana_lens": 0,
+    }
+    r = client.post("/api/ichar/create", json=body)
+    ichar_id = r.json()["ichar_id"]
+
+    r = client.get(f"/api/ichar/{ichar_id}/avatar?size=abc")
+    assert r.status_code == 200
+    svg = r.content.decode("utf-8")
+    assert 'width="256"' in svg
+    assert 'height="384"' in svg          # 256 × 300/200
+    assert r.headers["x-ichar-archetype"] == "Creator"
+
+
+def test_avatar_emoji_per_archetype(client):
+    """Each archetype picks its correct emoji glyph (the 7 spec'd ones)."""
+    mapping = [
+        ("marcus", "Strategist", "♟"),    # queen_model → resolved archetype → emoji
+        ("athena", "Sage", "🦉"),
+        ("scout",  "Scout", "🧭"),
+    ]
+    for queen, archetype, emoji in mapping:
+        body = {
+            "user_id": f"usr-{queen}",
+            "name": f"x-{queen}",
+            "queen_model": queen,
+            "arcana_lens": 0,
+        }
+        r = client.post("/api/ichar/create", json=body)
+        assert r.status_code == 200, r.text
+        ichar_id = r.json()["ichar_id"]
+        r = client.get(f"/api/ichar/{ichar_id}/avatar")
+        assert r.status_code == 200
+        svg = r.content.decode("utf-8")
+        assert r.headers["x-ichar-archetype"] == archetype
+        assert emoji in svg, f"missing {emoji} for {archetype}"
+
+
+def test_avatar_archetype_colors_present(client):
+    """Every archetype color appears in the SVG (egg shell + stroke)."""
+    body = {
+        "user_id": "usr-color-001",
+        "name": "Color Test",
+        "queen_model": "scout",          # scout → coral #d47a5a
+        "arcana_lens": 0,
+    }
+    r = client.post("/api/ichar/create", json=body)
+    assert r.status_code == 200, r.text
+    ichar_id = r.json()["ichar_id"]
+    r = client.get(f"/api/ichar/{ichar_id}/avatar")
+    assert r.status_code == 200
+    svg = r.content.decode("utf-8")
+    assert r.headers["x-ichar-archetype"] == "Scout"
+    assert "#d47a5a" in svg.lower()
+    assert "🧭" in svg
+
+
+def test_avatar_safe_against_xss_in_name(client):
+    """XSS attempt in name is XML-escaped (not rendered as markup)."""
+    body = {
+        "user_id": "usr-xss-001",
+        "name": "<script>alert(1)</script>",
+        "queen_model": "hatshepsut",    # sage
+        "arcana_lens": 0,
+    }
+    r = client.post("/api/ichar/create", json=body)
+    ichar_id = r.json()["ichar_id"]
+    r = client.get(f"/api/ichar/{ichar_id}/avatar")
+    svg = r.content.decode("utf-8")
+    assert "<script>" not in svg
+    assert "&lt;script&gt;" in svg
+
+
+def test_avatar_logs_to_sigil_chain(client):
+    """Fetching the avatar emits a SIGIL entry ('V' op)."""
+    body = {
+        "user_id": "usr-sigil-001",
+        "name": "Sigil",
+        "queen_model": "rumi",           # companion
+        "arcana_lens": 0,
+    }
+    r = client.post("/api/ichar/create", json=body)
+    ichar_id = r.json()["ichar_id"]
+
+    chain_before = client.get("/api/sigl/chain").json()["length"]
+    client.get(f"/api/ichar/{ichar_id}/avatar")
+    chain_after = client.get("/api/sigl/chain").json()["length"]
+    assert chain_after > chain_before
+
+
 def test_ichar_create_invalid_queen(client):
     r = client.post(
         "/api/ichar/create",
