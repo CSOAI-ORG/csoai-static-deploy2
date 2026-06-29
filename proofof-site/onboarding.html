@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🐉 Birth Ceremony — Sovereign Onboarding · MEOK OS</title>
+<meta name="description" content="7-step birth ceremony: pick a General, name your empire, set your sovereign goal. Hatch your sovereign AI companion.">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="canonical" href="https://proofof.ai/onboarding.html">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, system-ui, monospace; background: #000; color: #e5e5e5; padding: 1rem; min-height: 100vh; }
+  .nav { background: #111; padding: 1rem; border-radius: 8px; margin-bottom: 1.5rem; }
+  .nav a { color: #60a5fa; margin-right: 1rem; text-decoration: none; }
+  h1 { color: #fbbf24; text-align: center; text-shadow: 0 0 20px #fbbf24; font-size: 2.5rem; margin-bottom: 0.5rem; }
+  .subtitle { text-align: center; color: #888; margin-bottom: 2rem; font-size: 1.1rem; }
+  .wizard { max-width: 700px; margin: 0 auto; background: #1a1a1a; padding: 2rem; border-radius: 16px; min-height: 500px; }
+  .progress { display: flex; gap: 0.5rem; margin-bottom: 2rem; }
+  .progress-step { flex: 1; height: 8px; background: #333; border-radius: 4px; }
+  .progress-step.active { background: #fbbf24; }
+  .step-num { color: #fbbf24; font-weight: bold; font-size: 0.9rem; margin-bottom: 0.5rem; }
+  .step-title { color: #fbbf24; font-size: 1.5rem; margin-bottom: 1rem; }
+  .step-desc { color: #aaa; margin-bottom: 1.5rem; line-height: 1.6; }
+  .options { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 1rem; margin-bottom: 1.5rem; }
+  .option { background: #0a0a0a; padding: 1rem; border-radius: 8px; border: 2px solid #333; cursor: pointer; transition: all 0.2s; text-align: center; }
+  .option:hover { border-color: #fbbf24; transform: translateY(-2px); }
+  .option.selected { border-color: #fbbf24; background: #1a1a1a; }
+  .option-icon { font-size: 2rem; margin-bottom: 0.5rem; }
+  .option-name { color: #fbbf24; font-weight: bold; }
+  .option-desc { color: #888; font-size: 0.8rem; margin-top: 0.3rem; }
+  .input { width: 100%; padding: 0.75rem; background: #0a0a0a; border: 2px solid #333; border-radius: 8px; color: #e5e5e5; font-family: monospace; font-size: 1rem; margin-bottom: 1rem; }
+  .input:focus { outline: none; border-color: #fbbf24; }
+  .btn { background: #fbbf24; color: #000; padding: 1rem 2rem; border: none; border-radius: 8px; font-weight: bold; font-size: 1rem; cursor: pointer; font-family: inherit; }
+  .btn:hover { background: #f59e0b; }
+  .btn-secondary { background: #333; color: #fff; }
+  .btn-row { display: flex; gap: 1rem; margin-top: 1rem; }
+  .summary { background: #0a0a0a; padding: 1.5rem; border-radius: 8px; margin: 1rem 0; }
+  .summary-row { display: flex; justify-content: space-between; padding: 0.5rem 0; border-bottom: 1px solid #333; }
+  .summary-row:last-child { border-bottom: none; }
+  .summary-label { color: #888; }
+  .summary-value { color: #fbbf24; font-weight: bold; }
+  .hidden { display: none; }
+  .egg { width: 200px; height: 250px; margin: 2rem auto; background: radial-gradient(ellipse at center, #fbbf24 0%, #92400e 50%, #000 100%); border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%; display: flex; align-items: center; justify-content: center; font-size: 4rem; animation: hatch 3s ease-out; position: relative; }
+  @keyframes hatch {
+    0% { transform: scale(0.5); opacity: 0; }
+    50% { transform: scale(1.2); opacity: 1; }
+    100% { transform: scale(1); opacity: 1; }
+  }
+  .cracks { position: absolute; top: 0; left: 0; right: 0; bottom: 0; }
+  .crack { position: absolute; background: #fbbf24; transform-origin: center; }
+  .crack:nth-child(1) { width: 2px; height: 60%; top: 20%; left: 30%; transform: rotate(45deg); }
+  .crack:nth-child(2) { width: 2px; height: 60%; top: 20%; right: 30%; transform: rotate(-45deg); }
+  .crack:nth-child(3) { width: 50%; height: 2px; top: 40%; left: 25%; transform: rotate(30deg); }
+</style>
+</head>
+<body>
+
+<div class="nav">
+  <a href="/">← Home</a>
+  <a href="/sov-os.html">SOV OS</a>
+  <a href="/signup.html">Sign up</a>
+</div>
+
+<h1>🐉 Birth Ceremony</h1>
+<p class="subtitle">7 steps to hatch your sovereign AI companion</p>
+
+<div class="wizard">
+  <div class="progress" id="progress">
+    <div class="progress-step active" data-step="1"></div>
+    <div class="progress-step" data-step="2"></div>
+    <div class="progress-step" data-step="3"></div>
+    <div class="progress-step" data-step="4"></div>
+    <div class="progress-step" data-step="5"></div>
+    <div class="progress-step" data-step="6"></div>
+    <div class="progress-step" data-step="7"></div>
+  </div>
+
+  <!-- Step 1: Welcome -->
+  <div class="step" id="step-1">
+    <div class="step-num">Step 1 of 7</div>
+    <div class="step-title">Welcome to the Sovereign Empire</div>
+    <div class="step-desc">
+      You are about to hatch your sovereign AI companion. The dragon runs itself.
+      <br><br>
+      <strong>This ceremony takes ~2 minutes.</strong> At the end, your sovereign substrate will be live.
+    </div>
+    <div class="btn-row">
+      <button class="btn" onclick="next()">Begin the ceremony →</button>
+    </div>
+  </div>
+
+  <!-- Step 2: Pick a General -->
+  <div class="step hidden" id="step-2">
+    <div class="step-num">Step 2 of 7</div>
+    <div class="step-title">Pick your primary General</div>
+    <div class="step-desc">Each General is a sovereign AI mind with unique voice, role, and substrate.</div>
+    <div class="options" id="generals-options">
+      <div class="option" data-value="argus" onclick="selectOption(this, 'general')">
+        <div class="option-icon">👁️</div>
+        <div class="option-name">Argus</div>
+        <div class="option-desc">watchdog</div>
+      </div>
+      <div class="option" data-value="scribe" onclick="selectOption(this, 'general')">
+        <div class="option-icon">📜</div>
+        <div class="option-name">Scribe</div>
+        <div class="option-desc">compliance</div>
+      </div>
+      <div class="option" data-value="shield" onclick="selectOption(this, 'general')">
+        <div class="option-icon">🛡️</div>
+        <div class="option-name">Shield</div>
+        <div class="option-desc">safety</div>
+      </div>
+      <div class="option" data-value="builder" onclick="selectOption(this, 'general')">
+        <div class="option-icon">🔨</div>
+        <div class="option-name">Builder</div>
+        <div class="option-desc">architect</div>
+      </div>
+      <div class="option" data-value="abacus" onclick="selectOption(this, 'general')">
+        <div class="option-icon">🔢</div>
+        <div class="option-name">Abacus</div>
+        <div class="option-desc">quant</div>
+      </div>
+      <div class="option" data-value="lex" onclick="selectOption(this, 'general')">
+        <div class="option-icon">⚖️</div>
+        <div class="option-name">Lex</div>
+        <div class="option-desc">legal</div>
+      </div>
+      <div class="option" data-value="scale" onclick="selectOption(this, 'general')">
+        <div class="option-icon">📏</div>
+        <div class="option-name">Scale</div>
+        <div class="option-desc">ethics</div>
+      </div>
+      <div class="option" data-value="crow" onclick="selectOption(this, 'general')">
+        <div class="option-icon">🐦‍⬛</div>
+        <div class="option-name">Crow</div>
+        <div class="option-desc">risk</div>
+      </div>
+      <div class="option" data-value="gear" onclick="selectOption(this, 'general')">
+        <div class="option-icon">⚙️</div>
+        <div class="option-name">Gear</div>
+        <div class="option-desc">operations</div>
+      </div>
+      <div class="option" data-value="voice" onclick="selectOption(this, 'general')">
+        <div class="option-icon">🎤</div>
+        <div class="option-name">Voice</div>
+        <div class="option-desc">comms</div>
+      </div>
+      <div class="option" data-value="owl" onclick="selectOption(this, 'general')">
+        <div class="option-icon">🦉</div>
+        <div class="option-name">Owl</div>
+        <div class="option-desc">research</div>
+      </div>
+      <div class="option" data-value="dragon" onclick="selectOption(this, 'general')">
+        <div class="option-icon">🐉</div>
+        <div class="option-name">Dragon</div>
+        <div class="option-desc">sovereign</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Step 3: Name your empire -->
+  <div class="step hidden" id="step-3">
+    <div class="step-num">Step 3 of 7</div>
+    <div class="step-title">Name your empire</div>
+    <div class="step-desc">Your sovereign substrate needs a name. Pick something meaningful.</div>
+    <input type="text" class="input" id="empire-name" placeholder="e.g. Acme Sovereign Substrate">
+    <div class="step-desc" style="margin-top: 1rem;">Choose your region:</div>
+    <div class="options">
+      <div class="option" data-value="UK" onclick="selectOption(this, 'region')">
+        <div class="option-icon">🇬🇧</div>
+        <div class="option-name">UK</div>
+      </div>
+      <div class="option" data-value="EU" onclick="selectOption(this, 'region')">
+        <div class="option-icon">🇪🇺</div>
+        <div class="option-name">EU</div>
+      </div>
+      <div class="option" data-value="US" onclick="selectOption(this, 'region')">
+        <div class="option-icon">🇺🇸</div>
+        <div class="option-name">US</div>
+      </div>
+      <div class="option" data-value="APAC" onclick="selectOption(this, 'region')">
+        <div class="option-icon">🌏</div>
+        <div class="option-name">APAC</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Step 4: Choose compliance frameworks -->
+  <div class="step hidden" id="step-4">
+    <div class="step-num">Step 4 of 7</div>
+    <div class="step-title">Choose compliance frameworks</div>
+    <div class="step-desc">Select all frameworks you need to comply with. You can change this later.</div>
+    <div class="options">
+      <div class="option" data-value="eu_ai_act" onclick="toggleOption(this, 'frameworks')">
+        <div class="option-icon">🇪🇺</div>
+        <div class="option-name">EU AI Act</div>
+      </div>
+      <div class="option" data-value="dora" onclick="toggleOption(this, 'frameworks')">
+        <div class="option-icon">🏦</div>
+        <div class="option-name">DORA</div>
+      </div>
+      <div class="option" data-value="gdpr" onclick="toggleOption(this, 'frameworks')">
+        <div class="option-icon">🔒</div>
+        <div class="option-name">GDPR</div>
+      </div>
+      <div class="option" data-value="nis2" onclick="toggleOption(this, 'frameworks')">
+        <div class="option-icon">🛡️</div>
+        <div class="option-name">NIS2</div>
+      </div>
+      <div class="option" data-value="iso_42001" onclick="toggleOption(this, 'frameworks')">
+        <div class="option-icon">📋</div>
+        <div class="option-name">ISO 42001</div>
+      </div>
+      <div class="option" data-value="soc2" onclick="toggleOption(this, 'frameworks')">
+        <div class="option-icon">🔐</div>
+        <div class="option-name">SOC 2</div>
+      </div>
+      <div class="option" data-value="hipaa" onclick="toggleOption(this, 'frameworks')">
+        <div class="option-icon">🏥</div>
+        <div class="option-name">HIPAA</div>
+      </div>
+      <div class="option" data-value="jsp936" onclick="toggleOption(this, 'frameworks')">
+        <div class="option-icon">⚔️</div>
+        <div class="option-name">JSP 936</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Step 5: Set sovereign goal -->
+  <div class="step hidden" id="step-5">
+    <div class="step-num">Step 5 of 7</div>
+    <div class="step-title">Set your sovereign goal</div>
+    <div class="step-desc">What's the primary thing you want to achieve with the sovereign substrate?</div>
+    <textarea class="input" id="sovereign-goal" rows="4"
+              placeholder="e.g. Achieve EU AI Act compliance by Aug 2, 2026 deadline"></textarea>
+  </div>
+
+  <!-- Step 6: Review -->
+  <div class="step hidden" id="step-6">
+    <div class="step-num">Step 6 of 7</div>
+    <div class="step-title">Review your sovereign substrate</div>
+    <div class="step-desc">Confirm before the birth ceremony hatches your sovereign AI.</div>
+    <div class="summary" id="review-summary">
+      <!-- populated by JS -->
+    </div>
+  </div>
+
+  <!-- Step 7: Hatching -->
+  <div class="step hidden" id="step-7">
+    <div class="step-num">Step 7 of 7</div>
+    <div class="step-title">The dragon hatches</div>
+    <div class="step-desc">Your sovereign substrate is being initialized...</div>
+    <div class="egg" id="egg">
+      <div class="cracks">
+        <div class="crack"></div>
+        <div class="crack"></div>
+        <div class="crack"></div>
+      </div>
+      🐉
+    </div>
+    <p style="text-align: center; color: #fbbf24; font-size: 1.2rem; margin-top: 1rem;">
+      Welcome to the sovereign empire.
+    </p>
+    <div class="btn-row" style="justify-content: center; margin-top: 2rem;">
+      <button class="btn" onclick="window.location='/sov-os.html'">Enter the sovereign substrate →</button>
+    </div>
+  </div>
+
+  <div class="btn-row" id="nav-buttons" style="display: none;">
+    <button class="btn btn-secondary" onclick="prev()">← Back</button>
+    <button class="btn" onclick="next()">Next →</button>
+  </div>
+</div>
+
+<script>
+let currentStep = 1;
+const totalSteps = 7;
+const selections = {
+  general: null,
+  region: null,
+  empire_name: '',
+  frameworks: [],
+  sovereign_goal: '',
+};
+
+function showStep(n) {
+  document.querySelectorAll('.step').forEach(s => s.classList.add('hidden'));
+  document.getElementById(`step-${n}`).classList.remove('hidden');
+  document.querySelectorAll('.progress-step').forEach((p, i) => {
+    p.classList.toggle('active', i < n);
+  });
+  if (n >= 6) {
+    document.getElementById('nav-buttons').style.display = 'flex';
+  } else {
+    document.getElementById('nav-buttons').style.display = 'none';
+  }
+  currentStep = n;
+  // Build review on step 6
+  if (n === 6) {
+    const summary = document.getElementById('review-summary');
+    summary.innerHTML = `
+      <div class="summary-row"><span class="summary-label">Primary General:</span><span class="summary-value">${selections.general || 'Not selected'}</span></div>
+      <div class="summary-row"><span class="summary-label">Empire name:</span><span class="summary-value">${selections.empire_name || 'Not set'}</span></div>
+      <div class="summary-row"><span class="summary-label">Region:</span><span class="summary-value">${selections.region || 'Not set'}</span></div>
+      <div class="summary-row"><span class="summary-label">Frameworks:</span><span class="summary-value">${selections.frameworks.join(', ') || 'None'}</span></div>
+      <div class="summary-row"><span class="summary-label">Sovereign goal:</span><span class="summary-value">${selections.sovereign_goal || 'Not set'}</span></div>
+    `;
+  }
+  // Persist sigil
+  const sigil = `sov-birth-${n}-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
+  try { sessionStorage.setItem('sov.last_sigil', sigil); } catch(e) {}
+}
+
+function next() {
+  // Capture values
+  if (currentStep === 3) {
+    selections.empire_name = document.getElementById('empire-name').value;
+  }
+  if (currentStep === 5) {
+    selections.sovereign_goal = document.getElementById('sovereign-goal').value;
+  }
+  // Validate required fields
+  if (currentStep === 2 && !selections.general) {
+    alert('Please pick a General first.');
+    return;
+  }
+  if (currentStep === 3 && (!selections.empire_name || !selections.region)) {
+    alert('Please name your empire and pick a region.');
+    return;
+  }
+  if (currentStep === 4 && selections.frameworks.length === 0) {
+    alert('Please select at least one framework.');
+    return;
+  }
+  if (currentStep === 5 && !selections.sovereign_goal) {
+    alert('Please set your sovereign goal.');
+    return;
+  }
+  if (currentStep < totalSteps) {
+    showStep(currentStep + 1);
+  }
+}
+
+function prev() {
+  if (currentStep > 1) {
+    showStep(currentStep - 1);
+  }
+}
+
+function selectOption(el, category) {
+  document.querySelectorAll(`[data-step="${currentStep}"] .option`).forEach(o => o.classList.remove('selected'));
+  el.classList.add('selected');
+  selections[category] = el.dataset.value;
+  // Auto-advance after a short delay
+  setTimeout(() => next(), 300);
+}
+
+function toggleOption(el, category) {
+  el.classList.toggle('selected');
+  const val = el.dataset.value;
+  if (selections[category].includes(val)) {
+    selections[category] = selections[category].filter(x => x !== val);
+  } else {
+    selections[category].push(val);
+  }
+}
+</script>
+
+</body>
+</html>
