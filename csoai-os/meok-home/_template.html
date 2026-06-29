@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="#c9a84c">
+<meta name="description" content="MEOK WORLD — Sovereign AI Operating System. 218 MCPs, 33 sovereign VMs, 12-Queen council, 4-tier cascade. The world is at your feet.">
+<meta name="keywords" content="MEOK, CSOAI, SOV3, sovereign AI, MCP servers, EU AI Act, regulation temples, 12-Queen council, BFT">
+<title>__TITLE__ · MEOK WORLD</title>
+<meta property="og:title" content="__TITLE__ · MEOK WORLD">
+<meta property="og:description" content="__DESCRIPTION__">
+<meta property="og:image" content="https://meok.ai/api/og">
+<meta property="og:url" content="https://meok.ai/__SLUG__">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@meok_ai">
+<link rel="manifest" href="/manifest.webmanifest">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="MEOK WORLD">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>__STYLES__</style>
+</head>
+<body>
+
+<!-- TOPBAR (shared) -->
+<header class="topbar">
+  <div class="topbar-inner">
+    <a href="/" class="logo">
+      <span class="dot"></span>
+      <span>MEOK<span class="accent">.WORLD</span></span>
+    </a>
+    <nav>
+      <a href="/" __HOME_ACTIVE__>Home</a>
+      <a href="/csoai-os/v2-temple-os.html" __OS_ACTIVE__>OS</a>
+      <a href="/council" __COUNCIL_ACTIVE__>Council</a>
+      <a href="/mcp" __MCP_ACTIVE__>MCPs</a>
+      <a href="/temples" __TEMPLES_ACTIVE__>Temples</a>
+      <a href="/research" __RESEARCH_ACTIVE__>Research</a>
+      <a href="/blog" __BLOG_ACTIVE__>Blog</a>
+      <a href="/about" __ABOUT_ACTIVE__>About</a>
+    </nav>
+    <div class="cta">
+      <a class="login" href="/login">Log in</a>
+      <a class="start" href="/csoai-os/v2-signup-wizard.html">Start free →</a>
+    </div>
+  </div>
+</header>
+
+<!-- PAGE CONTENT -->
+<main class="page">
+__CONTENT__
+</main>
+
+<!-- FOOTER (shared) -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <div class="logo">
+        <span class="dot"></span>
+        <span>MEOK<span class="accent">.WORLD</span></span>
+      </div>
+      <p>MEOK AI Labs · CSOAI Ltd · UK Companies House 16939677. Built with care. Sovereign, auditable, public.</p>
+    </div>
+    <div>
+      <h4>Universe</h4>
+      <ul>
+        <li><a href="/universe">MEOK Universe</a></li>
+        <li><a href="/town">Town</a></li>
+        <li><a href="/dome">DOME</a></li>
+        <li><a href="/go">MEOK GO</a></li>
+        <li><a href="/ar">MEOK AR</a></li>
+        <li><a href="/characters">Characters</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>OS</h4>
+      <ul>
+        <li><a href="/csoai-os/v2-temple-os.html">Sovereign OS</a></li>
+        <li><a href="/csoai-os/v2-signup-wizard.html">i-character</a></li>
+        <li><a href="/council">Council</a></li>
+        <li><a href="/research">Research</a></li>
+        <li><a href="/os/any-llm">Any LLM</a></li>
+        <li><a href="/guardian">Guardian</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Company</h4>
+      <ul>
+        <li><a href="/about">About</a></li>
+        <li><a href="/pricing">Pricing</a></li>
+        <li><a href="/blog">Blog</a></li>
+        <li><a href="/press">Press</a></li>
+        <li><a href="/roadmap">Roadmap</a></li>
+        <li><a href="/careers">Careers</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Portfolio</h4>
+      <ul>
+        <li><a href="https://csoai.org">CSOAI</a></li>
+        <li><a href="https://www.cobolbridge.ai">COBOL Bridge</a></li>
+        <li><a href="https://proofof.ai">ProofOf.AI</a></li>
+        <li><a href="/ai-act">Compliance Centre</a></li>
+        <li><a href="https://github.com/CSOAI-ORG">GitHub</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 MEOK AI LABS · CSOAI LTD · UK Companies House <strong style="color: var(--gold);">16939677</strong> · Registered in England & Wales.</span>
+    <div class="legal">
+      <a href="/privacy">Privacy</a>
+      <a href="/terms">Terms</a>
+      <a href="/cookies">Cookies</a>
+    </div>
+  </div>
+</footer>
+
+<!-- LIVE STATUS BAR (shared) -->
+<div class="status-bar" id="statusBar">
+  <div class="status-bar-inner">
+    <div class="status-item"><span class="dot"></span><span>SOV3</span><span class="v">200 OK</span></div>
+    <div class="status-item"><span>Hive</span><span class="v" id="statusHive">34/34</span></div>
+    <div class="status-item"><span>Council</span><span class="v">13/13</span></div>
+    <div class="status-item"><span>BFT</span><span class="v">9/13</span></div>
+    <div class="status-item"><span>MCPs</span><span class="v" id="statusMcps">218</span></div>
+    <div class="status-item"><span>EU AI Act</span><span class="v">T-37</span></div>
+  </div>
+</div>
+
+<script>
+// Live backend polling (shared across all pages)
+async function pollStatus() {
+  try {
+    const r = await fetch('/api/backend/status').catch(() => null);
+    if (r && r.ok) {
+      const j = await r.json();
+      if (j.hive) document.getElementById('statusHive').textContent = j.hive;
+      if (j.mcps) document.getElementById('statusMcps').textContent = j.mcps;
+    }
+  } catch (e) {}
+}
+pollStatus();
+setInterval(pollStatus, 30000);
+</script>
+</body>
+</html>
