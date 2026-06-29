@@ -155,8 +155,13 @@ def oowm_route(query: str) -> dict:
 
 
 def oowm_think(query: str, *, general_id: Optional[int] = None,
-               bft_mode: Optional[str] = None) -> dict:
-    """Route a query through the OOWM (General + Council + MOM + MoE)."""
+               bft_mode: Optional[str] = None,
+               use_native: bool = True) -> dict:
+    """Route a query through the OOWM (General + Council + MOM + MoE).
+
+    If use_native=True (default), tries SOV3 Native Runtime first for
+    the 5 sovereign task families (NO Ollama, 100% in-process).
+    """
     # Route if no general specified
     if general_id is None:
         route = oowm_route(query)
@@ -186,6 +191,15 @@ def oowm_think(query: str, *, general_id: Optional[int] = None,
     # Compute consensus (per BFT mode)
     consensus = base_score + (0.5 if care_floor_pass else 0.0) + (0.3 if sovereign_pass else 0.0)
     consensus = round(min(consensus, 1.0), 2)
+    # EAT-21: Try SOV3 Native Runtime first (NO Ollama)
+    native_result = None
+    if use_native:
+        try:
+            # Lazy import to avoid circular deps
+            from meok_sovereign_native_mcp import sov_native_think
+            native_result = sov_native_think(query)
+        except (ImportError, Exception) as e:
+            native_result = {"error": f"native_unavailable: {e}"}
     return _sign({
         "protocol": PROTOCOL, "version": VERSION,
         "query": query[:500],
@@ -198,6 +212,8 @@ def oowm_think(query: str, *, general_id: Optional[int] = None,
         "care_floor_pass": care_floor_pass,
         "sovereign_pass": sovereign_pass,
         "doctrine": "Every query: General → Council(BFT) → MOM → MoE → Sigil.",
+        "native_result": native_result,
+        "native_used": use_native,
     })
 
 
