@@ -1166,5 +1166,21 @@ if ("serviceWorker" in navigator) {
     <span style="opacity:0.6;">→</span>
   </a>
 </div>
+<script>
+// Show the i-character avatar if one exists
+(async () => {
+  try {
+    const ichar = JSON.parse(localStorage.getItem("meok_ichar") || "null");
+    if (ichar && ichar.ichar_id) {
+      const img = document.createElement("img");
+      img.src = "/api/ichar/" + ichar.ichar_id + "/avatar?size=200";
+      img.alt = "Your i-character avatar";
+      img.style.cssText = "position:fixed;top:24px;right:24px;z-index:200;width:96px;height:144px;border-radius:12px;border:2px solid #c9a84c;box-shadow:0 0 24px rgba(201,168,76,0.3);background:#FAF7F0;";
+      document.body.appendChild(img);
+      img.onerror = () => { img.style.display = "none"; };
+    }
+  } catch (e) {}
+})();
+</script>
 </body>
 </html>

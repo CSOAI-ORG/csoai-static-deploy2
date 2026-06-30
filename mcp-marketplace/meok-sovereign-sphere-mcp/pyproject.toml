@@ -1,18 +1,26 @@
 [project]
 name = "meok-sovereign-sphere-mcp"
-version = "1.0.0"
-description = "Sovereign Sphere MCP - Cesium 3D globe renderer for sovereign substrate. 33 hives."
-requires-python = ">=3.10"
-dependencies = []
-authors = [{name = "CSOAI Ltd (UK 16939677)", email = "nicholas@csoai.org"}]
-license = {text = "MIT"}
+version = "0.1.0"
+description = "MCP for rendering a sovereign globe with hive data"
+authors = ["Your Name <your.email@example.com>"]
+dependencies = [
+    "pydantic",
+    "fastapi",
+    "uvicorn",
+    "numpy",
+]
+requires-python = ">=3.9"
+readme = "README.md"
+license = { text = "MIT" }
+
+[tool.pdm]
+distribution = false
 
 [build-system]
-requires = ["setuptools>=61.0"]
-build-backend = "setuptools.build_meta"
+requires = ["pdm-backend"]
+build-backend = "pdm.backend"
 
-[tool.setuptools.packages.find]
-where = ["."]
-
-[tool.pytest.ini_options]
-testpaths = ["tests"]
+[tool.pdm.dev-dependencies]
+dev = [
+    "pytest",
+]
