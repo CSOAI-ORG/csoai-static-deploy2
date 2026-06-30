@@ -20,14 +20,17 @@ async function groqChat(key, system, message) {
   return null;
 }
 
+const PLAIN = "Answer in plain, warm, practical English — clear, concise, and directly useful. Do NOT use flowery, poetic, mystical, or archaic language; no metaphors about tides/oaths/seals. Sound like a sharp, kind human helping a friend.";
+
 function buildSystem(body) {
   const persona = (body && body.persona ? String(body.persona) : '').slice(0, 600);
   const qid = body && (body.queen_id || body.queenId);
   const arc = body && (body.arcana_lens ?? body.arcanaLens);
+  const plain = !!(body && body.register === 'plain');   // utility surfaces (OS dock) want practical, not purple
   if (qid && council.queens && council.queens[qid]) {
     const q = council.queens[qid];
-    const lens = (arc != null && council.arcana) ? (council.arcana[String(arc)] || '') : '';
-    return `You are ${q.name} ${q.emoji || ''} — the ${q.archetype} of the MEOK sovereign council. Motto: "${q.motto}". ${q.long_form || ''} ${lens ? ('You see this through ' + lens + '.') : ''} ${q.veto ? 'You will refuse, kindly but firmly, anything that would cause harm.' : ''} ${persona ? persona : ''} Stay fully in character. ${SYSTEM}`.slice(0, 1600);
+    const lens = (!plain && arc != null && council.arcana) ? (council.arcana[String(arc)] || '') : '';
+    return `You are ${q.name} ${q.emoji || ''} — the ${q.archetype} of the MEOK sovereign council. ${plain ? '' : ('Motto: "' + q.motto + '". ' + (q.long_form || '') + ' ')}${lens ? ('You see this through ' + lens + '.') : ''} ${q.veto ? 'You will refuse, kindly but firmly, anything that would cause harm.' : ''} ${persona ? persona : ''} ${plain ? PLAIN : 'Stay fully in character.'} ${SYSTEM}`.slice(0, 1600);
   }
   if (persona) return (persona + ' ' + SYSTEM).slice(0, 1500);
   return 'You are the MEOK Sovereign — a calm, remembering companion. ' + SYSTEM;

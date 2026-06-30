@@ -88,7 +88,7 @@
     const t = say("ai", "…");
     try {
       const r = await fetch(API + "/api/chat", { method: "POST", headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message: v, queen_id: charQ, persona: "The user is on " + location.hostname + ". Help in context." }) });
+        body: JSON.stringify({ message: v, queen_id: charQ, register: "plain", persona: "The user is on " + location.hostname + ". Help in context." }) });
       const d = await r.json(); const ans = d.response || "…"; t.innerHTML = ans.replace(/</g, "&lt;"); speak(ans);
       const tr = await (await fetch(API + "/api/tools?q=" + encodeURIComponent(v) + "&limit=3")).json();
       if (tr.matches && tr.matches.length) { const b = say("ai", "🧰 <b>Tools for this:</b><br>"); b.innerHTML += tr.matches.map(m => `<a href="${API}/sovspace.html?q=${encodeURIComponent(m.name)}" target="_blank" style="display:inline-block;margin:4px 4px 0 0;padding:2px 9px;border:1px solid ${GOLD};border-radius:999px;color:#8a6f2e;text-decoration:none;font-size:12px">${m.name}</a>`).join(""); }

@@ -964,7 +964,7 @@ async function sovAsk(text){
   const log=document.getElementById('sovlog'); let think=null;
   if(log){ think=document.createElement('div'); think.className='sovmsg ai'; think.textContent='…'; log.appendChild(think); log.scrollTop=log.scrollHeight; }
   try{
-    const r=await fetch(SOV3_CHAT,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:text, queen_id:'queen-king', arcana_lens:21})});
+    const r=await fetch(SOV3_CHAT,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:text, queen_id:'queen-king', register:'plain'})});
     const d=await r.json(); const ans=((d&&(d.response||d.answer||d.text))||'').trim();
     if(think) think.remove();
     if(ans) sovSay(esc(ans)); else throw 0;
