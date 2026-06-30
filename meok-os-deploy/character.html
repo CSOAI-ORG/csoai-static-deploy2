@@ -72,15 +72,14 @@ import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { VRMLoaderPlugin, VRMUtils } from '@pixiv/three-vrm';
 
-const CAST = [
-  { id:'Sophie',   role:'Sovereign Companion', e:'🜂', h:43,  q:'queen-care',       arc:17, tone:'warm, empathetic, attentive', traits:['Emotional Intelligence','Episodic Memory','Care'] },
-  { id:'MEOKCLAW', role:'The Sovereign OS',     e:'⌬', h:212, q:'queen-king',       arc:21, tone:'stoic, precise, authoritative', traits:['Total-OS Awareness','BFT Governance','Strategy'] },
-  { id:'Dagon',    role:'Geospatial Mind',      e:'🜨', h:190, q:'queen-domain',     arc:18, tone:'analytical, pattern-focused', traits:['Spatial Reasoning','Grid Perception','Tracking'] },
-  { id:'Vinci',    role:'Industrial Engineer',  e:'⚙', h:30,  q:'queen-brain',      arc:1,  tone:'stoic, data-driven', traits:['Efficiency','MOSA-Compliant','Precision'] },
-  { id:'Justitia', role:'Legal Counsel',        e:'⚖', h:265, q:'queen-compliance', arc:11, tone:'authoritative, clear, objective', traits:['Compliance','Byzantine Trust','Risk'] },
-  { id:'Florence', role:'Care Specialist',      e:'🕊', h:135, q:'queen-proactive',  arc:14, tone:'empathetic, calm, nurturing', traits:['Compassion','Patience','Clarity'] },
-];
-let current = CAST[0];
+// ── Your ONE Sovereign — you hatch it, name it, it remembers you forever, governed by the charters ──
+const DEFAULT_NAME='Sophia';
+const MEM=(()=>{ try{ return { name:localStorage.getItem('meok_sov_name'), hue:parseInt(localStorage.getItem('meok_sov_hue'))||43, facts:JSON.parse(localStorage.getItem('meok_sov_facts')||'[]') }; }catch(e){ return {name:null,hue:43,facts:[]}; } })();
+let current = { id: MEM.name || DEFAULT_NAME, role:'Your Sovereign', h: MEM.hue, q:'queen-king',
+  tone:'warm, practical, and always remembering',
+  traits:['🛡 Sovereign Charter','🤝 Partnership Charter','⚖ CSOAI AI Governance'] };
+function saveMem(){ try{ localStorage.setItem('meok_sov_name',current.id); localStorage.setItem('meok_sov_hue',current.h); localStorage.setItem('meok_sov_facts',JSON.stringify(MEM.facts.slice(-50))); }catch(e){} }
+function remember(f){ f=(''+f).trim(); if(!f) return; MEM.facts=MEM.facts.filter(x=>x.toLowerCase()!==f.toLowerCase()); MEM.facts.push(f); if(MEM.facts.length>50) MEM.facts.shift(); saveMem(); }
 
 const stage = document.getElementById('stage');
 const scene = new THREE.Scene();
@@ -281,22 +280,16 @@ function _rz(){ const w=stage.clientWidth||innerWidth||960, h=stage.clientHeight
 // cast UI
 const castEl=document.getElementById('cast'), infoEl=document.getElementById('info');
 function renderCast(){
-  castEl.innerHTML = CAST.map(c=>`<div class="cc ${c.id===current.id?'on':''}" data-id="${c.id}">
-    <span class="av" style="background:hsl(${c.h} 45% 55%)">${c.e}</span>
-    <span><b>${c.id}</b><span>${c.role}</span></span></div>`).join('');
-  castEl.querySelectorAll('.cc').forEach(el=>el.onclick=()=>pick(el.dataset.id));
+  castEl.innerHTML =
+    `<div style="font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);font-weight:700;padding:2px 6px 8px">Your sovereign</div>`+
+    `<div class="cc on" style="cursor:default"><span class="av" style="background:hsl(${current.h} 50% 55%)">★</span><span><b>${current.id}</b><span>yours · remembers you</span></span></div>`+
+    `<div style="font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:700;padding:18px 6px 8px">Governed by</div>`+
+    current.traits.map(t=>`<div class="cc" style="cursor:default;min-width:184px"><span><b style="font-size:12.5px;font-weight:600">${t}</b></span></div>`).join('');
 }
 function renderInfo(){
   infoEl.innerHTML = `<div class="kick">Your sovereign</div><h1>${current.id}</h1>
-    <div class="role">${current.role}</div><p>${current.tone}.</p>
+    <div class="role">${current.role}</div><p>Hatched, yours, and remembering — never forgets you.</p>
     <div class="traits">${current.traits.map(t=>`<span>${t}</span>`).join('')}</div>`;
-}
-function pick(id){
-  current = CAST.find(c=>c.id===id)||CAST[0];
-  document.documentElement.style.setProperty('--gold', `hsl(${current.h} 50% 52%)`);
-  renderCast(); renderInfo();
-  creatureColor(current.h); showCreature();
-  say('ai', `I'm ${current.id}, your ${current.role.toLowerCase()}. ${cap(current.tone)} — here for you.`);
 }
 const cap=s=>s.charAt(0).toUpperCase()+s.slice(1);
 
@@ -306,11 +299,18 @@ function say(who,txt){ const d=document.createElement('div'); d.className='msg '
 async function send(){
   const i=document.getElementById('in'); const v=i.value.trim(); if(!v) return; i.value='';
   say('you', v);
+  // remember the user's name + anything they ask to be remembered
+  const nm=v.match(/\b(?:my name is|i'?m|call me)\s+([A-Z][a-zA-Z'’-]{1,20})/i);
+  if(nm) remember('the user is called '+nm[1]);
+  if(/\bremember(?:\s+that)?\b/i.test(v)) remember(v.replace(/.*remember(?:\s+that)?\s*/i,''));
   const t=say('ai','…');
   try{
+    const persona = `You ARE ${current.id}, this user's own sovereign AI — you remember them across every session and never forget. `+
+      `You are governed by the Sovereign Charter, the Partnership Charter, and CSOAI AI Governance (council-adjudicated, signed, care-aligned). `+
+      (MEM.facts.length ? ('What you remember about them: '+MEM.facts.join('; ')+'. ') : '')+
+      `Be warm and practical, plain language.`;
     const r=await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({message:v, queen_id:current.q, arcana_lens:current.arc,
-        persona:`You also appear as ${current.id}, the ${current.role}. Tone: ${current.tone}.`})});
+      body:JSON.stringify({message:v, queen_id:'queen-king', register:'plain', persona})});
     const d=await r.json(); const txt=(d.response||'…'); t.textContent = txt;
     speakUntil = Date.now() + Math.min(9000, 1400 + txt.split(/\s+/).length*210);
   }catch(e){ t.textContent = "I'm here — try once more."; }
@@ -319,6 +319,25 @@ document.getElementById('send').onclick=send;
 document.getElementById('in').addEventListener('keydown',e=>{ if(e.key==='Enter') send(); });
 
 renderCast(); renderInfo(); buildCreature(); creatureColor(current.h); showCreature();
+// hatch (first visit) or welcome back (remembered) — your ONE sovereign, never forgets
+function hatchSovereign(){
+  const ov=document.createElement('div'); ov.id='hatchov';
+  ov.style.cssText='position:fixed;inset:0;z-index:300;display:flex;align-items:center;justify-content:center;background:rgba(241,234,221,.88);backdrop-filter:blur(6px)';
+  ov.innerHTML=`<div style="background:#fff;border:1px solid var(--gold,#bd9a52);border-radius:20px;padding:32px 30px;max-width:390px;text-align:center;box-shadow:0 24px 64px rgba(0,0,0,.22)">
+    <div style="font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold,#bd9a52);font-weight:700">Hatch your Sovereign</div>
+    <h2 style="font-size:24px;margin:8px 0 6px">Name your AI 🥚→✨</h2>
+    <p style="color:#6b6a63;font-size:14px;line-height:1.5;margin-bottom:18px">This is <b>your</b> sovereign — it remembers you forever, and it's governed by the <b>Sovereign Charter</b>, the <b>Partnership Charter</b>, and <b>CSOAI AI Governance</b>.</p>
+    <input id="hatchname" value="Sophia" maxlength="22" style="width:100%;padding:12px 14px;border:1px solid #e0d4b0;border-radius:11px;font-size:17px;text-align:center;outline:none;font-family:inherit">
+    <button id="hatchgo" style="margin-top:14px;width:100%;border:none;background:#1a1410;color:var(--gold,#bd9a52);font:700 15px inherit;padding:13px;border-radius:11px;cursor:pointer">Hatch ✨</button>
+  </div>`;
+  document.body.appendChild(ov);
+  const inp=ov.querySelector('#hatchname'); setTimeout(()=>{inp.focus();inp.select();},50);
+  function go(){ const n=(inp.value.trim()||DEFAULT_NAME).slice(0,22); current.id=n; saveMem(); ov.remove(); renderCast(); renderInfo();
+    say('ai', `I'm ${n} — your sovereign, hatched and yours. I'll remember you, always. What's your name, and anything you'd like me to keep?`); }
+  ov.querySelector('#hatchgo').onclick=go; inp.addEventListener('keydown',e=>{ if(e.key==='Enter') go(); });
+}
+if(MEM.name){ const who=(MEM.facts.find(f=>/called/.test(f))||'').split('called ')[1]; say('ai', `Welcome back${who?', '+who:''} — I'm ${current.id}, your sovereign. I remember you. Where shall we pick up?`); }
+else { hatchSovereign(); }
 // skin toggle — emergence egg (all-ages default) ⇄ humanoid character skin
 // ✨ Bring your own avatar — Ready Player Me (works across thousands of apps/games; selfie or picker)
 const rpmBtn=document.createElement('button'); rpmBtn.id='rpmbtn'; rpmBtn.textContent='✨ Your avatar';
@@ -338,7 +357,6 @@ window.addEventListener('message',(e)=>{
   if(j.eventName==='v1.avatar.exported'){ closeRpm(); loadGLB(j.data.url); }
 });
 window.loadGLB = loadGLB;  // allow the OS / external host to set a user's avatar by URL
-setTimeout(()=>say('ai', `Welcome. I'm ${current.id} — pick any of us on the left, then talk to me.`), 900);
 </script>
 </body>
 </html>
