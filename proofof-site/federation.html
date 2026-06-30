@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>🌐 Sovereign Federation — 33-Hive Network · CSOAI</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:-apple-system,system-ui,monospace;background:#02060f;color:#e5e5e5;padding:0;margin:0;overflow:hidden}
+  .nav{position:fixed;top:0;left:0;right:0;background:rgba(2,6,15,0.95);padding:0.75rem 1rem;z-index:20;display:flex;gap:1rem;align-items:center;border-bottom:1px solid rgba(251,191,36,0.3)}
+  .nav a{color:#fbbf24;text-decoration:none;font-size:.85rem}
+  .nav .brand{color:#fbbf24;font-weight:bold;font-size:1.1rem;text-shadow:0 0 20px #fbbf24}
+  .controls{position:fixed;top:60px;left:0;background:rgba(17,17,17,0.95);padding:1rem;z-index:15;width:280px;max-height:calc(100vh - 60px);overflow-y:auto;border-right:1px solid #fbbf24}
+  .controls h2{color:#fbbf24;margin-bottom:0.5rem;font-size:1rem}
+  .ctrl-row{display:flex;gap:0.5rem;margin-bottom:0.5rem;align-items:center}
+  .ctrl-row select,.ctrl-row input{flex:1;padding:0.4rem;background:#0a0a0a;border:1px solid #333;border-radius:4px;color:#e5e5e5;font-family:inherit;font-size:.85rem}
+  .ctrl-row button{background:#fbbf24;color:#000;padding:0.4rem 0.7rem;border:none;border-radius:4px;font-weight:bold;cursor:pointer;font-size:.75rem;font-family:inherit}
+  .stats-bar{position:fixed;bottom:0;left:0;right:0;background:rgba(2,6,15,0.95);padding:0.5rem;z-index:12;display:flex;gap:1.5rem;justify-content:center}
+  .stat{text-align:center}
+  .stat-value{color:#fbbf24;font-size:1.1rem;font-weight:bold}
+  .stat-label{color:#888;font-size:.7rem}
+  .info-panel{position:fixed;right:0;top:60px;bottom:0;width:340px;background:rgba(17,17,17,0.95);padding:1rem;overflow-y:auto;border-left:1px solid #fbbf24;z-index:15}
+  .info-panel h3{color:#fbbf24;margin-bottom:0.5rem;font-size:1rem}
+  #canvas3d{position:fixed;inset:0;z-index:0}
+  .route-info{background:#0a0a0a;padding:0.75rem;border-radius:6px;margin-top:0.5rem;font-size:.8rem}
+  .route-info .hop{padding:0.3rem 0;border-bottom:1px solid #222}
+  .legend-tier{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:4px;vertical-align:middle}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a class="brand">🌐 Sovereign Federation</a>
+  <a href="/">← Home</a>
+  <a href="/solar-sovereign.html">Solar</a>
+  <a href="/hive-integration.html">Integration</a>
+  <span class="spacer"></span>
+  <span style="color:#10b981">● 33 hives · 96 sovereign routes · 12 Generals</span>
+</nav>
+
+<aside class="controls">
+  <h2>🌍 Route a Request</h2>
+  <div class="ctrl-row">
+    <select id="srcSel"><option value="">From hive...</option></select>
+    <select id="destSel"><option value="">To hive...</option></select>
+  </div>
+  <div class="ctrl-row">
+    <input type="text" id="serviceInput" placeholder="Service (dora, jsp936, robotics...)" />
+  </div>
+  <div class="ctrl-row">
+    <button onclick="doRoute()">🌍 Route</button>
+  </div>
+
+  <h2>🗳️ BFT Council</h2>
+  <div class="ctrl-row">
+    <select id="generalSel">
+      <option>Argus</option><option>Scribe</option><option>Shield</option>
+      <option>Builder</option><option>Abacus</option><option>Lex</option>
+      <option>Scale</option><option>Crow</option><option>Gear</option>
+      <option>Voice</option><option>Owl</option><option>Dragon</option>
+    </select>
+  </div>
+  <div class="ctrl-row">
+    <input type="text" id="proposalInput" placeholder="Proposal..." value="Adopt sovereign composite 7.305" />
+    <button onclick="doCouncil()">🗳 Council</button>
+  </div>
+
+  <h2>📊 Federation Health</h2>
+  <div id="healthBox" style="background:#0a0a0a;padding:0.75rem;border-radius:6px;font-size:.85rem">
+    <p>Loading...</p>
+  </div>
+</aside>
+
+<aside class="info-panel">
+  <h3 id="routeTitle">🌐 Route Details</h3>
+  <div id="routeDetail">
+    <p style="color:#888">Select source + destination to route. The federation picks the sovereign path.</p>
+  </div>
+
+  <h3 style="margin-top:1rem">🪐 The 33 Hives</h3>
+  <div id="hiveList" style="font-size:.75rem;max-height:50vh;overflow-y:auto"></div>
+</aside>
+
+<canvas id="canvas3d"></canvas>
+
+<div class="stats-bar">
+  <div class="stat"><div class="stat-value">33</div><div class="stat-label">Hives</div></div>
+  <div class="stat"><div class="stat-value">96</div><div class="stat-label">Routes</div></div>
+  <div class="stat"><div class="stat-value">12</div><div class="stat-label">Generals</div></div>
+  <div class="stat"><div class="stat-value" id="onlineCount">--</div><div class="stat-label">Online</div></div>
+  <div class="stat"><div class="stat-value" id="avgScore">--</div><div class="stat-label">Avg Score</div></div>
+  <div class="stat"><div class="stat-value">7.305</div><div class="stat-label">Composite</div></div>
+</div>
+
+<script>
+const HIVES = [
+  {id:1,name:"London",lat:51.5074,lng:-0.1278,region:"EU",sov:7.305,general:"Argus"},
+  {id:2,name:"Cambridge",lat:52.2053,lng:0.1218,region:"EU",sov:6.8,general:"Owl"},
+  {id:3,name:"Edinburgh",lat:55.9533,lng:-3.1883,region:"EU",sov:6.5,general:"Shield"},
+  {id:4,name:"York",lat:53.96,lng:-1.0873,region:"EU",sov:5.8,general:"Crow"},
+  {id:5,name:"Cardiff",lat:51.4816,lng:-3.1791,region:"EU",sov:5.5,general:"Voice"},
+  {id:6,name:"Belfast",lat:54.5973,lng:-5.9301,region:"EU",sov:5.5,general:"Scale"},
+  {id:7,name:"Dublin",lat:53.3498,lng:-6.2603,region:"EU",sov:6.5,general:"Lex"},
+  {id:8,name:"Paris",lat:48.8566,lng:2.3522,region:"EU",sov:6.7,general:"Owl"},
+  {id:9,name:"Berlin",lat:52.52,lng:13.405,region:"EU",sov:6.5,general:"Shield"},
+  {id:10,name:"Amsterdam",lat:52.3676,lng:4.9041,region:"EU",sov:6.7,general:"Abacus"},
+  {id:11,name:"Stockholm",lat:59.3293,lng:18.0686,region:"EU",sov:6.6,general:"Scale"},
+  {id:12,name:"Helsinki",lat:60.1699,lng:24.9384,region:"EU",sov:6.0,general:"Owl"},
+  {id:13,name:"Madrid",lat:40.4168,lng:-3.7038,region:"EU",sov:5.8,general:"Voice"},
+  {id:14,name:"Rome",lat:41.9028,lng:12.4964,region:"EU",sov:5.9,general:"Gear"},
+  {id:15,name:"Vienna",lat:48.2082,lng:16.3738,region:"EU",sov:5.7,general:"Voice"},
+  {id:16,name:"Copenhagen",lat:55.6761,lng:12.5683,region:"EU",sov:6.0,general:"Scale"},
+  {id:17,name:"Brussels",lat:50.8503,lng:4.3517,region:"EU",sov:6.4,general:"Lex"},
+  {id:18,name:"Warsaw",lat:52.2297,lng:21.0122,region:"EU",sov:5.5,general:"Shield"},
+  {id:19,name:"New York",lat:40.7128,lng:-74.006,region:"NA",sov:5.5,general:"Scribe"},
+  {id:20,name:"SF",lat:37.7749,lng:-122.4194,region:"NA",sov:5.8,general:"Builder"},
+  {id:21,name:"Tokyo",lat:35.6762,lng:139.6503,region:"AS",sov:6.5,general:"Builder"},
+  {id:22,name:"Singapore",lat:1.3521,lng:103.8198,region:"AS",sov:6.8,general:"Abacus"},
+  {id:23,name:"Sydney",lat:-33.8688,lng:151.2093,region:"OC",sov:5.8,general:"Gear"},
+  {id:24,name:"Mumbai",lat:19.076,lng:72.8777,region:"AS",sov:4.5,general:"Crow"},
+  {id:25,name:"Dubai",lat:25.2048,lng:55.2708,region:"AS",sov:5.5,general:"Gear"},
+  {id:26,name:"Sao Paulo",lat:-23.5505,lng:-46.6333,region:"SA",sov:4.5,general:"Crow"},
+  {id:27,name:"Toronto",lat:43.6532,lng:-79.3832,region:"NA",sov:6.0,general:"Scribe"},
+  {id:28,name:"Cape Town",lat:-33.9249,lng:18.4241,region:"AF",sov:4.5,general:"Crow"},
+  {id:29,name:"Reykjavik",lat:64.1466,lng:-21.9426,region:"EU",sov:6.0,general:"Scale"},
+  {id:30,name:"Cairo",lat:30.0444,lng:31.2357,region:"AF",sov:3.5,general:"Scribe"},
+  {id:31,name:"Nairobi",lat:-1.2921,lng:36.8219,region:"AF",sov:3.5,general:"Abacus"},
+  {id:32,name:"Bogota",lat:4.711,lng:-74.0721,region:"SA",sov:4.5,general:"Scale"},
+  {id:33,name:"Lagos",lat:6.5244,lng:3.3792,region:"AF",sov:3.0,general:"Abacus"},
+];
+
+const GEN_COLORS = {
+  Argus:"#60a5fa", Scribe:"#fbbf24", Shield:"#10b981", Builder:"#8b5cf6",
+  Abacus:"#f59e0b", Lex:"#ef4444", Scale:"#06b6d4", Crow:"#a3e635",
+  Gear:"#ec4899", Voice:"#14b8a6", Owl:"#84cc16", Dragon:"#fbbf24"
+};
+
+let camX = 0, camY = 100, camZ = -50;
+let camRotX = 0, camRotY = 0;
+let activeRoute = null;
+
+const canvas = document.getElementById('canvas3d');
+const ctx = canvas.getContext('2d');
+function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+window.addEventListener('resize', resize); resize();
+
+function project3D(lat, lng, z) {
+  // Map lat/lng to 3D sphere coords (radius 200)
+  const phi = (90 - lat) * Math.PI / 180;
+  const theta = (lng + 180) * Math.PI / 180;
+  const r = 200;
+  let x = r * Math.sin(phi) * Math.cos(theta);
+  let y = r * Math.cos(phi);
+  let zz = r * Math.sin(phi) * Math.sin(theta);
+  // Camera rotate
+  const cosY = Math.cos(camRotY), sinY = Math.sin(camRotY);
+  const x2 = x * cosY + zz * sinY;
+  const z2 = -x * sinY + zz * cosY;
+  const cosX = Math.cos(camRotX), sinX = Math.sin(camRotX);
+  const y2 = y * cosX - z2 * sinX;
+  const z3 = y * sinX + z2 * cosX;
+  const fov = 500;
+  const camDist = 400;
+  const totalZ = z3 + camDist + camZ;
+  if (totalZ < 1) return null;
+  const scale = fov / totalZ;
+  return { x: canvas.width / 2 + x2 * scale, y: canvas.height / 2 - y2 * scale, z: totalZ, scale };
+}
+
+function render() {
+  ctx.fillStyle = '#02060f';
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  // Starfield
+  ctx.fillStyle = '#fff';
+  for (let i = 0; i < 200; i++) {
+    const x = (i * 12345) % canvas.width;
+    const y = (i * 67890) % canvas.height;
+    const r = ((i * 17) % 3) * 0.5;
+    ctx.fillRect(x, y, r, r);
+  }
+  // Edges
+  for (let i = 0; i < HIVES.length; i++) {
+    for (let j = i + 1; j < HIVES.length; j++) {
+      const a = HIVES[i], b = HIVES[j];
+      if (a.general !== b.general && a.region !== b.region) continue;
+      const pa = project3D(a.lat, a.lng, 0);
+      const pb = project3D(b.lat, b.lng, 0);
+      if (!pa || !pb) continue;
+      ctx.strokeStyle = a.general === b.general ? 'rgba(251,191,36,0.3)' : 'rgba(96,165,250,0.15)';
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.moveTo(pa.x, pa.y);
+      ctx.lineTo(pb.x, pb.y);
+      ctx.stroke();
+    }
+  }
+  // Hives
+  HIVES.forEach(h => {
+    const p = project3D(h.lat, h.lng, 0);
+    if (!p) return;
+    const color = GEN_COLORS[h.general] || "#fbbf24";
+    ctx.fillStyle = color;
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, 4 * p.scale, 0, 2 * Math.PI);
+    ctx.fill();
+    ctx.fillStyle = "#fff";
+    ctx.font = "10px monospace";
+    ctx.textAlign = "center";
+    ctx.fillText(h.name, p.x, p.y - 12 * p.scale);
+  });
+  // Active route
+  if (activeRoute) {
+    activeRoute.forEach((h, idx) => {
+      const p = project3D(h.lat, h.lng, 0);
+      if (!p) return;
+      ctx.fillStyle = "#fbbf24";
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, 8 * p.scale, 0, 2 * Math.PI);
+      ctx.fill();
+      ctx.strokeStyle = "#fbbf24";
+      ctx.lineWidth = 2;
+      ctx.stroke();
+    });
+  }
+  camRotY += 0.0008;
+  requestAnimationFrame(render);
+}
+render();
+
+// Populate selects
+const srcSel = document.getElementById('srcSel');
+const destSel = document.getElementById('destSel');
+HIVES.forEach(h => {
+  const opt1 = document.createElement('option');
+  opt1.value = h.id; opt1.textContent = `${h.name} (${h.general})`;
+  srcSel.appendChild(opt1);
+  const opt2 = document.createElement('option');
+  opt2.value = h.id; opt2.textContent = `${h.name} (${h.general})`;
+  destSel.appendChild(opt2);
+});
+srcSel.value = 1; destSel.value = 21;
+
+// Hive list
+const hiveList = document.getElementById('hiveList');
+HIVES.forEach(h => {
+  const color = GEN_COLORS[h.general];
+  const div = document.createElement('div');
+  div.style.cssText = `padding:0.4rem;margin-bottom:0.2rem;border-radius:4px;border-left:3px solid ${color};background:#0a0a0a`;
+  div.innerHTML = `<strong>${h.name}</strong> <span style="color:#888">${h.region}</span> · <span style="color:${color}">${h.general}</span> · <span style="color:#fbbf24">${h.sov}</span>`;
+  hiveList.appendChild(div);
+});
+
+// Health
+let online = 0, total = 0, sumScore = 0;
+HIVES.forEach(h => {
+  total++; sumScore += h.sov;
+  if (h.sov >= 4.0) online++;
+});
+document.getElementById('onlineCount').textContent = `${online}/${total}`;
+document.getElementById('avgScore').textContent = (sumScore / total).toFixed(2);
+document.getElementById('healthBox').innerHTML = `
+  <p>Total hives: <strong style="color:#fbbf24">${total}</strong></p>
+  <p>Online (≥4.0): <strong style="color:#10b981">${online}</strong></p>
+  <p>Avg sovereign: <strong style="color:#fbbf24">${(sumScore/total).toFixed(2)}</strong></p>
+  <p>Regions: <strong>${[...new Set(HIVES.map(h=>h.region))].length}</strong></p>
+`;
+
+// Routing simulation
+function doRoute() {
+  const src = parseInt(srcSel.value);
+  const dest = parseInt(destSel.value);
+  const svc = document.getElementById('serviceInput').value;
+  // Simple BFS path through strong integration
+  const path = [HIVES.find(h => h.id === src)];
+  const visited = new Set([src]);
+  let cur = src;
+  while (cur !== dest) {
+    let best = null, bestScore = -1;
+    HIVES.forEach(h => {
+      if (visited.has(h.id)) return;
+      const curH = HIVES.find(x => x.id === cur);
+      let score = 0;
+      if (curH.general === h.general) score += 100;
+      if (curH.region === h.region) score += 50;
+      // Prefer moving toward dest
+      const curDist = Math.abs(curH.lat - HIVES.find(x=>x.id===dest).lat) + Math.abs(curH.lng - HIVES.find(x=>x.id===dest).lng);
+      const newDist = Math.abs(h.lat - HIVES.find(x=>x.id===dest).lat) + Math.abs(h.lng - HIVES.find(x=>x.id===dest).lng);
+      if (newDist < curDist) score += 30;
+      if (score > bestScore) { bestScore = score; best = h; }
+    });
+    if (!best) break;
+    path.push(best);
+    visited.add(best.id);
+    cur = best.id;
+  }
+  activeRoute = path;
+  document.getElementById('routeTitle').textContent = `🌐 Route: ${path[0].name} → ${path[path.length-1].name}`;
+  document.getElementById('routeDetail').innerHTML = `
+    <p style="margin-bottom:0.5rem"><strong>Service:</strong> ${svc || 'general'}</p>
+    <p style="margin-bottom:0.5rem"><strong>Hops:</strong> ${path.length - 1}</p>
+    <p style="margin-bottom:0.5rem"><strong>Path:</strong></p>
+    <div class="route-info">
+      ${path.map((h, idx) => `<div class="hop">${idx === 0 ? '🟢' : idx === path.length - 1 ? '🎯' : '→'} ${h.name} <span style="color:${GEN_COLORS[h.general]}">(${h.general})</span> · ${h.sov}</div>`).join('')}
+    </div>
+  `;
+}
+
+function doCouncil() {
+  const general = document.getElementById('generalSel').value;
+  const proposal = document.getElementById('proposalInput').value;
+  const hives = HIVES.filter(h => h.general === general);
+  const voters = hives.slice(0, 12);
+  document.getElementById('routeTitle').textContent = `🗳 BFT Council: ${general}`;
+  document.getElementById('routeDetail').innerHTML = `
+    <p style="margin-bottom:0.5rem"><strong>Proposal:</strong> ${proposal}</p>
+    <p style="margin-bottom:0.5rem"><strong>General:</strong> <span style="color:${GEN_COLORS[general]}">${general}</span></p>
+    <p style="margin-bottom:0.5rem"><strong>Hives led by ${general}:</strong> ${hives.length}</p>
+    <p style="margin-bottom:0.5rem"><strong>Voters (12-around-1):</strong> ${voters.length}</p>
+    <div class="route-info">
+      ${voters.map((h, idx) => `<div class="hop">${idx + 1}. ${h.name} <strong style="color:#10b981">YES</strong> (${h.sov})</div>`).join('')}
+    </div>
+    <p style="margin-top:1rem;color:#10b981;font-weight:bold">✓ Council ratified. Sovereign.</p>
+  `;
+}
+</script>
+</body>
+</html>
