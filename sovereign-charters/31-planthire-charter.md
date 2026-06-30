@@ -21,6 +21,30 @@ UK plant hire covers: excavators (0.8T micro to 50T heavy), dumpers (forward tip
 
 ### Black Swan: UK construction digitalisation mandate (2026-2028) — Building Safety Act requires digital records. HS2, Sizewell C, and Lower Thames Crossing create £100B+ plant demand.
 
+### CPCS Category Reference (Key Categories)
+| Code | Category | Typical Machine | Typical Day Rate |
+|---|---|---|---|
+| A09 | Forward Tipping Dumper | 6T-10T dumper | £120-£180 |
+| A10 | Excavator 180° | 1.5T-5T mini | £150-£250 |
+| A11 | Excavator 360° (<10T) | 5T-8T midi | £200-£350 |
+| A12 | Excavator 360° (>10T) | 13T-50T heavy | £350-£800 |
+| A17 | Telescopic Handler | 6m-20m reach | £250-£500 |
+| A31 | Ride-on Roller | 2.5T-12T | £150-£300 |
+| A40 | Slinger Signaller | Banksman | £200-£300 |
+| A42/A43 | Crusher/Screener | Mobile plant | £400-£800 |
+| A56 | Dump Truck (articulated) | 25T-40T ADT | £350-£600 |
+| A58 | Excavator 360° Wheeled | 14T-22T | £300-£500 |
+
+### LOLER/PUWER Compliance Schedule
+| Equipment Type | LOLER Thorough Exam | PUWER Inspection | Key Checks |
+|---|---|---|---|
+| Excavator (lifting) | 6 months | Weekly | Hook, pins, bushes, hoses, ROPS/FOPS |
+| Telehandler | 6 months | Weekly | Forks, chains, load chart, stabilisers |
+| Crane (tower/mobile) | 6 months | Daily before use | Hoist rope, slew ring, OLP, foundations |
+| Excavator (digging only) | N/A (not lifting) | Weekly | Bucket, teeth, track tension, grease |
+| Dumper | N/A (not lifting) | Weekly | Skip pins, seat belt, brakes, lights |
+| Lifting accessories | 6 months | Each use | Slings, shackles, chains — tagged/dated |
+
 ## ARTICLE III — FREE TRAINING
 
 | Tier | Name | Modules | Duration | Cert |

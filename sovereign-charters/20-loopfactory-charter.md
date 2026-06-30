@@ -28,6 +28,24 @@ LoopFactory provides sovereign automation infrastructure: cron job scheduling, w
 - **Cloud sovereignty movement (2026+)**: EU data residency laws tightening. UK GDPR post-Brexit divergence. Organisations seeking sovereign automation alternatives.
 - **AI agent orchestration (2026-2027)**: As AI agents proliferate, the need for sovereign, verifiable agent-to-agent automation infrastructure becomes critical.
 
+### II.D — Technical Architecture
+- **Cron Engine**: Full 5-field (minute, hour, day, month, weekday) and 7-field (second, minute, hour, day, month, weekday, year) support. Special strings: @yearly, @monthly, @weekly, @daily, @hourly, @reboot. Timezone-aware scheduling with DST handling.
+- **Webhook Engine**: HMAC-SHA256 signing, replay protection via nonce+timestamp, IP whitelisting, rate limiting (token bucket algorithm), payload validation (JSON Schema), dead letter queue for failed deliveries.
+- **Workflow Patterns**: Fan-out (one trigger → N parallel actions), Saga (compensating transactions for rollback), Circuit Breaker (stop cascade failures), Retry with Exponential Backoff (1s, 2s, 4s, 8s, 16s, max 5 retries), Idempotency Keys for at-least-once delivery.
+- **Enterprise Architecture**: Multi-tenant isolation, per-tenant rate limits, queue depth monitoring (alert at >1,000 pending), SLA tracking (p95/p99 latency), Ed25519-signed execution logs per workflow run.
+
+### II.E — Comparison With Existing Tools
+| Feature | LoopFactory | Zapier | Make (Integromat) | IFTTT |
+|---|---|---|---|---|
+| **Cost** | FREE | £20-£800/mo | £9-£29/mo | Free (limited) |
+| **Hosting** | Self-hosted | US Cloud | US Cloud | US Cloud |
+| **Sovereign** | ✅ UK | ❌ | ❌ | ❌ |
+| **Ed25519 Audit** | ✅ | ❌ | ❌ | ❌ |
+| **BFT Governance** | ✅ | ❌ | ❌ | ❌ |
+| **Air-Gap Deploy** | ✅ | ❌ | ❌ | ❌ |
+| **Open Source** | ✅ MIT | ❌ | ❌ | ❌ |
+| **Multi-Step** | ✅ Unlimited | ✅ (paid tiers) | ✅ | ❌ (1 action) |
+
 ## ARTICLE III — FREE TRAINING PATHWAY
 
 | Tier | Name | Modules | Duration | Cert |
