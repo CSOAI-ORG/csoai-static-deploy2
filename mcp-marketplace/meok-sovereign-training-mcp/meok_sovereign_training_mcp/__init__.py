@@ -1,5 +1,5 @@
 """meok-sovereign-training-mcp."""
-from ..sovereign_training import (
+from .sovereign_training import (
     VERSION, TOOLS,
     training_list_tracks, training_get_track, training_enroll, training_progress,
     training_issue_cert, training_verify, training_list_user_certs,

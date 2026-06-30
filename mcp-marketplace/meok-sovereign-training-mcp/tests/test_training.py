@@ -2,7 +2,7 @@
 import os, sys, importlib.util
 
 # Load sovereign_training.py via absolute path (avoids the PyPI 'server' name-clash)
-MODULE_PATH = os.path.join(os.path.dirname(__file__), "..", "sovereign_training.py")
+MODULE_PATH = os.path.join(os.path.dirname(__file__), "..", "meok_sovereign_training_mcp", "sovereign_training.py")
 spec = importlib.util.spec_from_file_location("sovereign_training", MODULE_PATH)
 mod = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(mod)
