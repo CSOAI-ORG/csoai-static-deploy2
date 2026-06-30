@@ -1288,12 +1288,15 @@ function enterWorld(ev){ try{ if(ev){ev.stopPropagation&&ev.stopPropagation();} 
   // REAL connector nodes — the actual cities of the MEOK universe (legacy bridges, temples,
   // hives are geo-placed at these hubs in MEOK Earth). The lit points sit on their true
   // countries and rotate with the globe, so the avatar and the full world are one map.
-  const nodes=[
+  let nodes=[
     {n:'London',lat:51.5,lon:-0.1},{n:'New York',lat:40.7,lon:-74.0},{n:'Frankfurt',lat:50.1,lon:8.7},
     {n:'Tokyo',lat:35.7,lon:139.7},{n:'Singapore',lat:1.35,lon:103.8},{n:'Sydney',lat:-33.9,lon:151.2},
     {n:'São Paulo',lat:-23.5,lon:-46.6},{n:'Mumbai',lat:19.1,lon:72.9},{n:'Dubai',lat:25.2,lon:55.3},
     {n:'Toronto',lat:43.7,lon:-79.4},{n:'Hong Kong',lat:22.3,lon:114.2},{n:'Cape Town',lat:-33.9,lon:18.4}
-  ].map((d,i)=>({...d,ph:i*0.7}));
+  ].map((d,i)=>({...d,ph:i*0.7,status:'governed'}));
+  // EAT: read the ONE canonical sovereign node graph (same source MEOK Earth + the
+  // force-graph + the extension read). Add a node there → it lights up everywhere.
+  fetch('/api/nodes').then(r=>r.json()).then(d=>{ if(d&&d.nodes&&d.nodes.length){ nodes=d.nodes.map((x,i)=>({n:x.name,lat:x.lat,lon:x.lon,status:x.status||'governed',ph:i*0.7})); } }).catch(function(){});
   let rot=0, t=0;
   // REAL satellite Earth from space — today's NASA MODIS true-colour mosaic (clouds = real
   // weather, no key needed). Progressive enhancement: if it loads we paint the real planet;
@@ -1354,11 +1357,12 @@ function enterWorld(ev){ try{ if(ev){ev.stopPropagation&&ev.stopPropagation();} 
       const y=(cy-R)+((90-n.lat)/180)*th;                   // latitude → screen
       const dx=(x-cx)/R, dy=(y-cy)/R; const onDisc=(dx*dx+dy*dy)<0.94;
       const edge=1-Math.min(1,Math.abs(x-cx)/R);            // fade near the limb (sphere feel)
-      return {x,y,ph:n.ph,vis:onDisc,edge};
+      const sh=n.status==='flagged'?0:(n.status==='watch'?38:hue);   // red / amber / signature-gold
+      return {x,y,ph:n.ph,vis:onDisc,edge,sh};
     });
     const vis=pts.filter(p=>p.vis);
     ctx.lineWidth=1; for(let i=0;i<vis.length;i++){ const A=vis[i],B=vis[(i+2)%vis.length]; if(B===A)continue; ctx.strokeStyle='hsla('+hue+',85%,72%,'+(0.12*Math.min(A.edge,B.edge))+')'; ctx.beginPath(); ctx.moveTo(A.x,A.y); ctx.quadraticCurveTo(cx,cy,B.x,B.y); ctx.stroke(); }
-    vis.forEach(p=>{ const a=0.5+0.5*Math.sin(t*3+p.ph); const al=(0.45+0.4*a)*(0.35+0.65*p.edge); ctx.fillStyle='hsla('+hue+',90%,68%,'+al+')'; ctx.shadowColor='hsla('+hue+',90%,70%,.9)'; ctx.shadowBlur=6; ctx.beginPath(); ctx.arc(p.x,p.y,(1.6+a)*(0.6+0.4*p.edge),0,6.2832); ctx.fill(); ctx.shadowBlur=0; });
+    vis.forEach(p=>{ const a=0.5+0.5*Math.sin(t*3+p.ph); const al=(0.45+0.4*a)*(0.35+0.65*p.edge); ctx.fillStyle='hsla('+p.sh+',90%,68%,'+al+')'; ctx.shadowColor='hsla('+p.sh+',90%,70%,.9)'; ctx.shadowBlur=6; ctx.beginPath(); ctx.arc(p.x,p.y,(1.6+a)*(0.6+0.4*p.edge),0,6.2832); ctx.fill(); ctx.shadowBlur=0; });
     // glassy egg specular + gold emergence breath
     const hl=ctx.createRadialGradient(cx-30,cy-34,4,cx-30,cy-34,60); hl.addColorStop(0,'rgba(255,255,255,.4)'); hl.addColorStop(1,'rgba(255,255,255,0)'); ctx.fillStyle=hl; ctx.fillRect(0,0,S,S);
     const breath=(window._sovHatching?0.42:0.06)+0.05*Math.sin(t*2); ctx.fillStyle='hsla(45,90%,62%,'+breath+')'; ctx.fillRect(0,0,S,S);
