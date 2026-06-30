@@ -1281,7 +1281,17 @@ function enterWorld(ev){ try{ if(ev){ev.stopPropagation&&ev.stopPropagation();} 
   // connector nodes (lit points of the universe) at fixed positions on the sphere
   const nodes=Array.from({length:9},(_,i)=>({a:i*0.698, r:0.28+((i*0.17)%0.6)*0.9, ph:i*0.8}));
   let rot=0, t=0;
-  function landAt(lon,lat){ // crude but recognisable continents via layered sines
+  // REAL satellite Earth from space — today's NASA MODIS true-colour mosaic (clouds = real
+  // weather, no key needed). Progressive enhancement: if it loads we paint the real planet;
+  // if not (offline/blocked) we keep the procedural globe. Yesterday's date = always processed.
+  let earthImg=null;
+  (function loadEarth(){ try{
+    const y=new Date(Date.now()-86400000).toISOString().slice(0,10);
+    const url='https://wvs.earthdata.nasa.gov/api/v1/snapshot?REQUEST=GetSnapshot&LAYERS=MODIS_Terra_CorrectedReflectance_TrueColor&CRS=EPSG:4326&TIME='+y+'&BBOX=-90,-180,90,180&WIDTH=720&HEIGHT=360&FORMAT=image/jpeg';
+    const im=new Image(); im.crossOrigin='anonymous';
+    im.onload=function(){ earthImg=im; }; im.onerror=function(){ earthImg=null; }; im.src=url;
+  }catch(e){} })();
+  function landAt(lon,lat){ // crude but recognisable continents via layered sines (fallback)
     const v=Math.sin(lon*1.7+lat*0.8)+0.7*Math.sin(lon*0.6-lat*1.9)+0.5*Math.sin(lon*3.1+2.0);
     return v>0.55; }
   (function loop(){ rot+=0.0024; t+=0.03;
@@ -1295,13 +1305,22 @@ function enterWorld(ev){ try{ if(ev){ev.stopPropagation&&ev.stopPropagation();} 
     const decl=0.409*Math.sin(6.2832*(doy-80)/365);        // seasonal tilt (±23.4°)
     ctx.clearRect(0,0,S,S);
     ctx.save(); ctx.beginPath(); ctx.arc(cx,cy,R,0,6.2832); ctx.clip();
-    // ocean
-    const og=ctx.createRadialGradient(cx-22,cy-26,8,cx,cy,R); og.addColorStop(0,'#1d3a6b'); og.addColorStop(.7,'#0e2148'); og.addColorStop(1,'#081427');
-    ctx.fillStyle=og; ctx.fillRect(0,0,S,S);
-    // land — sample a sphere-ish grid, scroll with rotation
-    for(let py=-R;py<R;py+=4){ const lat=(py/R)*1.45; const w=Math.cos(Math.asin(py/R))*R;
-      for(let px=-w;px<w;px+=4){ const lon=(px/(w||1))*1.8+rot;
-        if(landAt(lon,lat)){ const sh=0.5+0.5*Math.sin(lat*2+lon); ctx.fillStyle='rgba('+Math.round(70+40*sh)+','+Math.round(120+50*sh)+','+Math.round(70+20*sh)+',.9)'; ctx.fillRect(cx+px,cy+py,4,4); } } }
+    if(earthImg){
+      // REAL Earth from space (today's satellite mosaic, real clouds). Wrap horizontally so
+      // it rotates; clipped to the circle reads as the planet. Vignette gives it spherical depth.
+      const tw=R*2, th=R*2, scroll=((rot*26)%tw+tw)%tw;
+      ctx.drawImage(earthImg, cx-R-scroll, cy-R, tw, th);
+      ctx.drawImage(earthImg, cx-R-scroll+tw, cy-R, tw, th);
+      const vg=ctx.createRadialGradient(cx-20,cy-22,R*0.2,cx,cy,R); vg.addColorStop(0,'rgba(255,255,255,.08)'); vg.addColorStop(.75,'rgba(0,0,0,0)'); vg.addColorStop(1,'rgba(0,8,22,.55)');
+      ctx.fillStyle=vg; ctx.fillRect(0,0,S,S);
+    } else {
+      // procedural fallback (offline / image blocked)
+      const og=ctx.createRadialGradient(cx-22,cy-26,8,cx,cy,R); og.addColorStop(0,'#1d3a6b'); og.addColorStop(.7,'#0e2148'); og.addColorStop(1,'#081427');
+      ctx.fillStyle=og; ctx.fillRect(0,0,S,S);
+      for(let py=-R;py<R;py+=4){ const lat=(py/R)*1.45; const w=Math.cos(Math.asin(py/R))*R;
+        for(let px=-w;px<w;px+=4){ const lon=(px/(w||1))*1.8+rot;
+          if(landAt(lon,lat)){ const sh=0.5+0.5*Math.sin(lat*2+lon); ctx.fillStyle='rgba('+Math.round(70+40*sh)+','+Math.round(120+50*sh)+','+Math.round(70+20*sh)+',.9)'; ctx.fillRect(cx+px,cy+py,4,4); } } }
+    }
     // day / night terminator — anchored to the real subsolar point (clock + season)
     const sx=Math.cos(dayAngle), sy=Math.sin(dayAngle)*0.30 + Math.sin(decl)*0.5;
     const ng=ctx.createLinearGradient(cx-sx*R,cy-sy*R,cx+sx*R,cy+sy*R);
