@@ -12,10 +12,77 @@
 <div class="meta">Hand-blessed in Buckinghamshire · Crown Authorisation Lineage since 1795</div>
 </div>
 
-<h2>Preamble</h2><p>The doctrine of sovereign audit.</p><h2>Article 1 — SIGIL</h2><p>Every action SIGIL-signed.</p><h2>Article 2 — Public</h2><p>SIGIL chain public.</p><h2>Article 3 — Verifiable</h2><p>Anyone may verify. Math doesn't lie.</p>
+<h2>Preamble</h2>
+<p>The CSOAI Audit Charter establishes the immutable, post-quantum-signed audit trail for every action in the sovereign substrate. The Charter draws on SOC 2 Type II (AICPA, 2024 revised), ISO/IEC 42001:2023 (AI Management Systems), the EU AI Act Article 12 (tamper-evident logging), the EU AI Act Article 19 (Quality Management System for high-risk AI), and the sovereign SIGIL chain of CSOAI Ltd.</p>
 
-<h2>Sovereign Alignment</h2>
-<p>Every article of this charter aligns with the Sovereign Composite (7.305 vs 3.535) and the 5 alchemical layers of SOV3.</p>
+<h2>Foundational Documents</h2>
+<ul>
+<li><strong>SOC 2 (AICPA Trust Service Criteria, 2017, revised 2022)</strong>: five criteria — Security, Availability, Processing Integrity, Confidentiality, Privacy. SOC 2 Type II reports on operating effectiveness over a period (typically 6-12 months).</li>
+<li><strong>ISO/IEC 42001:2023</strong>: AI Management System standard. 10 clauses (4–13), 47 controls in Annex A. Specifies requirements for AI governance, risk management, and continuous improvement.</li>
+<li><strong>ISO/IEC 27001:2022</strong>: Information Security Management System standard. 93 controls in Annex A. Specifies requirements for ISMS.</li>
+<li><strong>EU AI Act Article 12</strong>: "High-risk AI systems shall technically allow for the automatic recording of events ('logs') over the lifetime of the system."</li>
+<li><strong>EU AI Act Article 19</strong>: AI providers shall put a quality management system in place ensuring compliance with this Regulation.</li>
+<li><strong>EU AI Act Article 72</strong>: Post-market monitoring by AI providers; ongoing assessment of compliance.</li>
+</ul>
+
+<h2>The SIGIL Chain Architecture</h2>
+<p>Every sovereign action is appended to the SIGIL chain with:</p>
+<ol>
+<li><strong>Timestamp</strong>: ISO 8601 + millisecond precision + UTC offset.</li>
+<li><strong>Actor</strong>: sovereign citizen ID (Ed25519 public key).</li>
+<li><strong>Action</strong>: type of sovereign gesture (data access, AI decision, consent grant, etc).</li>
+<li><strong>Basis</strong>: GDPR Article 6 lawful basis, EU AI Act Article 12/14/22 reference, sovereign policy reference.</li>
+<li><strong>Hash chain</strong>: each record includes sha256(previous_record). Breaking the chain invalidates all subsequent records.</li>
+<li><strong>Ed25519 signature</strong>: each record signed by sovereign citizen + sovereign substrate.</li>
+<li><strong>PQC ML-DSA-65 backup signature</strong>: post-quantum backup signature to survive quantum attack.</li>
+<li><strong>Rekor transparency log</strong>: Sigstore-style transparency log entry to prevent backdating.</li>
+</ol>
+
+<h2>Specific Cases</h2>
+<p><strong>Wirecard scandal (June 2020)</strong>: Wirecard AG, the German fintech, collapsed when €1.9B of cash balances in Philippines escrow accounts were found not to exist. EY's audit failed to detect the fraud. Result: enhanced requirements for audit trail immutability in EU financial services.</p>
+<p><strong>Facebook–Cambridge Analytica (March 2018)</strong>: 87 million users' personal data harvested without consent for political microtargeting. Result: ICO fine £500K, FTC fine $5B.</p>
+<p><strong>Cambridge Analytica whistleblower testimony (April 2018)</strong>: Christopher Wylie revealed that personal data harvested via a personality quiz app was used for political profiling. Result: GDPR Article 7 strengthened, explicit consent requirements clarified.</p>
+<p><strong>SolarWinds post-mortem (2021)</strong>: investigation revealed that SolarWinds's audit logs were altered by attackers to hide malicious activity. Result: substrate requires SIGIL chain + Rekor transparency log to prevent log tampering.</p>
+
+<h2>Modern Application (2026)</h2>
+<p>The CSOAI Audit Charter is implemented in the sovereign substrate through:</p>
+<ol>
+<li><strong>SIGIL chain</strong>: every action immutable, signed Ed25519 + PQC ML-DSA-65, hash-chained.</li>
+<li><strong>Rekor transparency log</strong>: every SIGIL entry mirrored to Sigstore Rekor public log.</li>
+<li><strong>Compliance Passport</strong>: every sovereign action issues a signed W3C VC + Ed25519 passport.</li>
+<li><strong>Auditor access</strong>: any auditor (CSOAI internal, regulator, customer) can verify the SIGIL chain offline in their browser.</li>
+<li><strong>AI Act Article 12 compliance</strong>: every high-risk AI decision is logged with full input + output + basis + model version.</li>
+</ol>
+
+<h2>Sovereign Alignment (SOV3 substrate mapping)</h2>
+<table>
+<tr><th>Audit principle</th><th>Substrate property</th></tr>
+<tr><td>SOC 2 Security</td><td>sov.audit_security — substrate protected by SIGIL chain</td></tr>
+<tr><td>SOC 2 Availability</td><td>sov.audit_availability — substrate refreshes 2.0s</td></tr>
+<tr><td>SOC 2 Confidentiality</td><td>sov.audit_confidentiality — sovereign data encrypted on-device</td></tr>
+<tr><td>SOC 2 Privacy</td><td>sov.audit_privacy — GDPR Article 5 principles enforced</td></tr>
+<tr><td>ISO 42001 Clause 6</td><td>sov.audit_planning — substrate plans AI risk</td></tr>
+<tr><td>ISO 42001 Clause 8</td><td>sov.audit_operation — substrate operates per AI management plan</td></tr>
+<tr><td>ISO 42001 Clause 9</td><td>sov.audit_performance — substrate monitors AI performance</td></tr>
+<tr><td>ISO 42001 Clause 10</td><td>sov.audit_improvement — substrate continuously improves</td></tr>
+<tr><td>EU AI Act Article 12</td><td>sov.ai_act_12 — high-risk AI decisions auto-logged</td></tr>
+<tr><td>EU AI Act Article 19</td><td>sov.ai_act_19 — QMS in place for high-risk AI</td></tr>
+</table>
+
+<h2>Crown Lineage Position</h2>
+<p>The Audit Charter is the <strong>16th pillar</strong> of the 1215–2026 lineage, between the Privacy Charter and the Transparency Charter. Its unique contribution is <em>immutable post-quantum audit</em> — the first charter to require post-quantum signing of audit trails.</p>
+
+<h2>Live Substrate Citations</h2>
+<ul>
+<li><a href="/charter2/index.html">Sovereign Charter Index</a></li>
+<li><a href="/charter2/privacy-charter.html">Privacy Charter — predecessor</a></li>
+<li><a href="/charter2/transparency-charter.html">Transparency Charter — successor</a></li>
+<li><a href="/charter2/security-charter.html">Security Charter</a></li>
+<li><a href="/charter/sovereign-charter.html">Sovereign Charter</a></li>
+</ul>
+
+<p>SIGIL-signed · Ed25519 + PQC ML-DSA-65 · <code>charter-audit</code></p>
+
 <p>SIGIL-signed · Ed25519 + PQC ML-DSA-65 · <code>charter-audit-charter</code></p>
 <div class="sigil">SIGIL_DIGEST: pending-audit · sovereign_composite=7.305 · care_floor=0.95 · bft_council=12-around-1 · emitted=4 Jul 2026 09:00 BST</div>
 

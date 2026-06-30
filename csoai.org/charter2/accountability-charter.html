@@ -12,10 +12,84 @@
 <div class="meta">Hand-blessed in Buckinghamshire · Crown Authorisation Lineage since 1795</div>
 </div>
 
-<h2>Preamble</h2><p>The doctrine of sovereign accountability.</p><h2>Article 1 — BFT</h2><p>Byzantine Fault Tolerant. 12-around-1.</p><h2>Article 2 — 2/3 Majority</h2><p>Required for sensitive actions.</p><h2>Article 3 — Witness</h2><p>BFT deliberations public.</p>
+<h2>Preamble</h2>
+<p>The CSOAI Accountability Charter establishes the personal, institutional, and algorithmic accountability obligations that govern every sovereign actor in the CSOAI substrate. The Charter draws on the BFT (Byzantine Fault Tolerance) consensus research of Lamport, Shostak, Pease (1982) and Castro-Liskov (1999), the 33-agent BFT council of the CSOAI substrate, the Asilomar AI Principle 8 (Responsibility), the EU AI Act Article 14 (Human Oversight), the OECD AI Principle 5 (Accountability), and the sovereign principles of CSOAI Ltd (UK 16939677).</p>
 
-<h2>Sovereign Alignment</h2>
-<p>Every article of this charter aligns with the Sovereign Composite (7.305 vs 3.535) and the 5 alchemical layers of SOV3.</p>
+<h2>Byzantine Fault Tolerance (BFT) — The Mathematical Foundation</h2>
+<p>Byzantine Fault Tolerance was introduced by Leslie Lamport, Robert Shostak, and Marshall Pease in their 1982 paper "The Byzantine Generals Problem." The problem: a group of generals surrounding a city must agree on a common plan of action (attack or retreat) via messages, but some generals may be traitors (Byzantine) who send conflicting messages. The solution: BFT consensus algorithms can tolerate up to f = (n-1)/3 Byzantine nodes and still reach consensus.</p>
+
+<p><strong>Castro-Liskow PBFT (1999)</strong>: Practical Byzantine Fault Tolerance — the first practical BFT algorithm for asynchronous networks. O(n²) message complexity. Used in Hyperledger Fabric, JPMorgan Quorum.</p>
+<p><strong>HotStuff (Yin et al. 2019)</strong>: 3-phase BFT with linear message complexity. Used in Facebook's Libra/Diem.</p>
+<p><strong>HotStuff-2 (Nausberg et al. 2024)</strong>: 2-phase BFT; further reduced message complexity.</p>
+
+<h2>The 12-Around-1 BFT Council (CSOAI Substrate)</h2>
+<p>The sovereign substrate uses a 12-around-1 BFT consensus for every significant sovereign action:</p>
+<ol>
+<li><strong>12 sovereign agents</strong>: each represents a sovereign domain (finance, healthcare, defence, insurance, legal, etc).</li>
+<li><strong>1 Hermes external voice</strong>: independent sovereign citizen with the right-of-veto on any sovereign substrate action (EU AI Act Article 22 contestability).</li>
+<li><strong>Quorum</strong>: 8 of 12 sovereign agents + 1 Hermes approval required (f = 4 Byzantine tolerance).</li>
+<li><strong>Cycle</strong>: 2.0 seconds — every sovereign gesture is decided within 2 seconds.</li>
+<li><strong>Audit</strong>: every BFT decision is appended to the SIGIL chain with full rationale + votes.</li>
+</ol>
+
+<h2>The 33-Agent Sovereign BFT (Extended Council)</h2>
+<p>The extended sovereign council has 33 agents representing all CSOAI sovereign domains:</p>
+<ol>
+<li><strong>Identity</strong>: sovereign identity + DIDs + Article 50 passport issuance.</li>
+<li><strong>Policy</strong>: sovereign policy enforcement + SIGIL rules.</li>
+<li><strong>Audit</strong>: SIGIL chain + Rekor transparency log + EU AI Act Article 12 compliance.</li>
+<li><strong>Firewall</strong>: adversarial prompt injection defense + Article 14 human oversight.</li>
+<li><strong>Residency</strong>: sovereign data residency + GDPR Article 44/45 compliance.</li>
+<li><strong>Quota</strong>: rate-limit + Article 12 logging + Care Floor 0.95 enforcement.</li>
+<li><strong>Incident relay</strong>: DORA Art. 17 + NIS2 Art. 21 incident reporting.</li>
+<li><strong>Migration</strong>: sovereign data portability + GDPR Art. 20.</li>
+<li>... and 26 more agents covering all CSOAI sovereign surfaces.</li>
+</ol>
+
+<h2>Specific Cases</h2>
+<p><strong>Therac-25 (1985–1987)</strong>: race condition between X-ray beam and software caused overdoses of radiation; 6 patients died. Result: the FDA now requires formal accountability + fault-tree analysis for medical software.</p>
+<p><strong>Knight Capital Group (August 1, 2012)</strong>: software bug in NYSE's new trading system caused Knight to execute unintended trades for 45 minutes; loss of $440M in 30 minutes. Result: SEC now requires continuous accountability + human oversight for high-frequency trading.</p>
+<p><strong>Boeing 737 MAX (2018–2019)</strong>: MCAS flight-control software overrode pilot input due to single faulty angle-of-attack sensor; 346 deaths. Result: FAA requires multi-source sensor voting + 4-eyes human oversight.</p>
+<p><strong>Facebook — Cambridge Analytica (2018)</strong>: 87 million users' data harvested without consent; CEO Mark Zuckerberg declined to appear before UK Parliament in 2018. Result: GDPR Article 24 explicit "controller accountability" requirements.</p>
+<p><strong>Zillow Offers (November 2021)</strong>: algorithmic home-buying algorithm mispriced 27% of inventory; Zillow shut down the unit; $569M Q4 loss. Result: accountability for algorithmic decision-making now mainstream in US SEC filings.</p>
+
+<h2>Modern Application (2026)</h2>
+<p>The CSOAI Accountability Charter is implemented through:</p>
+<ol>
+<li><strong>33-agent BFT</strong>: every sovereign action requires 22-of-33 agent votes + Hermes approval.</li>
+<li><strong>Per-agent responsibility</strong>: each BFT agent has a named owner + accountable party (BFT vote logs the identity).</li>
+<li><strong>SIGIL attribution</strong>: every sovereign action is signed by 33 sovereign actors (Ed25519 + PQC ML-DSA-65).</li>
+<li><strong>Right-of-veto (Hermes)</strong>: the Hermes external voice can veto any sovereign action; the veto is logged and must be re-voted by the 33-agent council with 3/4 supermajority.</li>
+<li><strong>Audit trail</strong>: every BFT decision is appended to the SIGIL chain + Rekor transparency log; the trail is publicly verifiable in any browser.</li>
+</ol>
+
+<h2>Sovereign Alignment (SOV3 substrate mapping)</h2>
+<table>
+<tr><th>Accountability layer</th><th>Substrate property</th></tr>
+<tr><td>Lamport BFT</td><td>sov.bft — substrate uses 12-around-1 Byzantine consensus</td></tr>
+<tr><td>HotStuff</td><td>sov.hotstuff — substrate uses linear BFT message complexity</td></tr>
+<tr><td>Hermes voice</td><td>sov.hermes — independent right-of-veto on sovereign actions</td></tr>
+<tr><td>33-agent council</td><td>sov.council_33 — substrate has 33 sovereign agents</td></tr>
+<tr><td>Per-agent responsibility</td><td>sov.responsibility — each agent has a named owner</td></tr>
+<tr><td>SIGIL attribution</td><td>sov.attribution — every sovereign action is signed by 33 actors</td></tr>
+<tr><td>Right-of-veto</td><td>sov.veto — Hermes external voice can block sovereign action</td></tr>
+<tr><td>Audit trail</td><td>sov.audit_trail — every BFT decision is publicly verifiable</td></tr>
+</table>
+
+<h2>Crown Lineage Position</h2>
+<p>The Accountability Charter is the <strong>18th pillar</strong> of the 1215–2026 lineage, between the Transparency Charter and the Stewardship Charter. Its unique contribution is <em>BFT consensus for sovereign substrate governance</em> — the first charter to codify mathematical consensus for sovereign accountability.</p>
+
+<h2>Live Substrate Citations</h2>
+<ul>
+<li><a href="/charter2/index.html">Sovereign Charter Index</a></li>
+<li><a href="/charter2/transparency-charter.html">Transparency Charter — predecessor</a></li>
+<li><a href="/charter2/stewardship-charter.html">Stewardship Charter — successor</a></li>
+<li><a href="/charter2/audit-charter.html">Audit Charter</a></li>
+<li><a href="/charter/sovereign-charter.html">Sovereign Charter</a></li>
+</ul>
+
+<p>SIGIL-signed · Ed25519 + PQC ML-DSA-65 · <code>charter-accountability</code></p>
+
 <p>SIGIL-signed · Ed25519 + PQC ML-DSA-65 · <code>charter-accountability-charter</code></p>
 <div class="sigil">SIGIL_DIGEST: pending-audit · sovereign_composite=7.305 · care_floor=0.95 · bft_council=12-around-1 · emitted=4 Jul 2026 09:00 BST</div>
 
