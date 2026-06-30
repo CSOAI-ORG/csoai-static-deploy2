@@ -22,14 +22,7 @@ from pathlib import Path
 
 OUT = Path.home() / "clawd" / "UPSTREAM_PR_STATUS.json"
 
-PRS = [
-    # Self-target: the upstream is OUR fork (awesome-mcp-servers-csoai) — PR #1
-    ("CSOAI-ORG/awesome-mcp-servers-csoai", "csoai-mcp-servers", "main"),
-    ("morganrcu/awesome-eu-ai-act", "csoai-mcp-servers", "master"),
-    ("theopenlane/awesome-compliance", "csoai-mcp-servers", "main"),
-    ("GenAI-Gurus/awesome-eu-ai-act", "csoai-mcp-servers", "main"),
-    ("Vaquill-AI/awesome-legaltech", "csoai-mcp-servers", "main"),
-]  # PRS list — the 5 upstream-PR repos
+[('morganrcu/awesome-eu-ai-act', 'Add CSOAI OSCAL Generator + Layer-0 to Developer Tools & SDKs', 'main'), ('GenAI-Gurus/awesome-eu-ai-act', 'Add CSOAI Layer-0 to Open-Source Projects > AI Agent Governance', 'main'), ('Vaquill-AI/awesome-legaltech', 'Add CSOAI Legacy Bridges to MCP Servers for Legal', 'main'), ('theopenlane/awesome-compliance', 'Add CSOAI/MEOK Labs MCP servers (531 MIT MCPs, OSCAL-signed)', 'main'), ('CSOAI-ORG/awesome-mcp-servers-csoai', 'Self-PIN: CSOAI curated MCP servers list', 'main')]  # PRS list — the 5 upstream-PR repos
 
 
 def get_pr_state(repo: str, head_branch: str, base_branch: str) -> dict:
@@ -78,6 +71,18 @@ def get_pr_state(repo: str, head_branch: str, base_branch: str) -> dict:
         "lastReviewState": (last_review or {}).get("state"),
         "lastReviewAuthor": ((last_review or {}).get("user") or {}).get("login"),
     }
+
+
+# Active upstream PRs (sibling-shipped versions supersede the M4 originals)
+# Sibling closed M4's #20/#45/#50 as dupes; the new PRs are #19/#43/#49 + #42 theopenlane
+PRS = [
+    ("morganrcu/awesome-eu-ai-act", "add-csoai-signed-legacy-compliance", "main"),
+    ("GenAI-Gurus/awesome-eu-ai-act", "add-csoai-signed-legacy-compliance", "main"),
+    ("Vaquill-AI/awesome-legaltech", "add-csoai-signed-legacy-compliance", "main"),
+    ("theopenlane/awesome-compliance", "add-csoai-mcp-servers", "main"),
+    # Self-PIN
+    ("CSOAI-ORG/awesome-mcp-servers-csoai", "main", "main"),
+]
 
 
 def main():
