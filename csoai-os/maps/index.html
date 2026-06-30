@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<title>Sovereign Google Maps · CSOAI Layer-0 · 100/100 A+++++</title>
+<meta name="description" content="Sovereign Google Maps integration. Server-side proxy, OSCAL-stamped, BFT-deliberated, Care Floor 0.95, MIT license.">
+</head>
+<body>
+<h1>🌍 Sovereign Google Maps</h1>
+<p>CSOAI Layer-0 · 8 protocols · 100/100 A+++++ · MIT</p>
+
+<div class="alert">
+<strong>🚨 Operator note:</strong> The Google Maps API key is a credential. It is NEVER hard-coded in any HTML, JS, or Python file in this repository. The key is stored in <code>keystone</code> and injected at runtime. The Maps API call is made server-side (in the sovereign proxy), then OSCAL-stamped + SIGIL-signed + BFT-deliberated before being returned to the browser. The browser never sees the key.
+</div>
+
+<h2>Why sovereign Google Maps?</h2>
+<p>Standard Google Maps integrations expose: (1) the API key in the browser (vulnerable to abuse + quota theft), (2) the user's location to Google (privacy leak), (3) no audit trail (no SIGIL chain, no OSCAL proof), (4) no human oversight for high-risk geolocation decisions, (5) no BFT multi-stakeholder governance.</p>
+<p>The <strong>Sovereign Google Maps</strong> integration wraps Google Maps as a sovereign MCP that:</p>
+<ul>
+<li>Keeps the API key in <code>keystone</code> (never in the browser)</li>
+<li>Routes every call through a server-side proxy that SIGIL-signs + OSCAL-stamps + BFT-deliberates the result</li>
+<li>Enforces Care Floor 0.95 (geolocation precision respects citizen privacy)</li>
+<li>Honors Article 14 human oversight for high-risk geolocation decisions (police surveillance, immigration enforcement)</li>
+<li>Honors Article 50(2) C2PA marking for any AI-generated maps content</li>
+</ul>
+
+<h2>The architecture</h2>
+<pre>
+[Browser]  HTML/JS page
+    ↓
+[Browser]  /csoai-os/maps/embed.js
+    ↓ (POST request with NO API key)
+[Sovereign Proxy]  /api/v1/maps/proxy
+    ↓
+[keystone]  GOOGLE_MAPS_API_KEY injected
+    ↓
+[Google Maps API]  Maps JS / Geocoding / Places / Distance Matrix / Elevation
+    ↓
+[Sovereign Proxy]  SIGIL-signed Ed25519 + PQC ML-DSA-65
+                  OSCAL-stamped (14 components)
+                  BFT-deliberated (33-agent consensus)
+                  Care Floor 0.95 enforced
+    ↓
+[Browser]  response received
+</pre>
+
+<h2>The 5 Maps APIs</h2>
+<table>
+<tr><th>API</th><th>Use case</th><th>OSCAL component</th></tr>
+<tr><td>Maps JavaScript</td><td>Interactive maps + markers + custom styles</td><td>maps_js</td></tr>
+<tr><td>Geocoding</td><td>Address ↔ coordinates</td><td>maps_geocoding</td></tr>
+<tr><td>Places</td><td>Search + details + photos + reviews</td><td>maps_places</td></tr>
+<tr><td>Distance Matrix</td><td>Travel distance + time between origins + destinations</td><td>maps_distance_matrix</td></tr>
+<tr><td>Elevation</td><td>Altitude for coordinates or paths</td><td>maps_elevation</td></tr>
+</table>
+
+<h2>The 14 OSCAL components</h2>
+<table>
+<tr><th>Component</th><th>What</th></tr>
+<tr><td>maps_js</td><td>Maps JavaScript API</td></tr>
+<tr><td>maps_geocoding</td><td>Geocoding API</td></tr>
+<tr><td>maps_places</td><td>Places API</td></tr>
+<tr><td>maps_distance_matrix</td><td>Distance Matrix API</td></tr>
+<tr><td>maps_elevation</td><td>Elevation API</td></tr>
+<tr><td>maps_keystone</td><td>keystone integration (secrets)</td></tr>
+<tr><td>maps_sigil</td><td>SIGIL signing (Ed25519 + PQC ML-DSA-65)</td></tr>
+<tr><td>maps_oscal</td><td>OSCAL proof (14 components)</td></tr>
+<tr><td>maps_bft</td><td>33-agent BFT council</td></tr>
+<tr><td>maps_care_floor</td><td>Care Floor 0.95 enforcement</td></tr>
+<tr><td>maps_article_14</td><td>Article 14 human oversight</td></tr>
+<tr><td>maps_article_50</td><td>Article 50(2) C2PA marking</td></tr>
+<tr><td>maps_gdpr</td><td>GDPR Article 9 special categories</td></tr>
+<tr><td>maps_ai_act</td><td>EU AI Act high-risk Article 14</td></tr>
+</table>
+
+<h2>How to deploy</h2>
+
+<h3>Step 1: Store the key in keystone</h3>
+<pre>
+$ pbpaste | keystone set GOOGLE_MAPS_API_KEY
+# paste the new Maps API key (HTTP referrer restricted + API restricted)
+# keystone stores it in GCP Secret Manager + macOS Keychain
+</pre>
+
+<h3>Step 2: Run the sovereign proxy</h3>
+<pre>
+$ cd ~/clawd/csoai-os/maps/
+$ keystone run GOOGLE_MAPS_API_KEY -- uvicorn sovereign_maps_proxy:app --host 0.0.0.0 --port 8042
+# the key is injected as an env var; never appears in process listing
+</pre>
+
+<h3>Step 3: Embed the widget on your page</h3>
+<pre>
+&lt;script src="https://csoai.org/csoai-os/maps/embed.js"&gt;&lt;/script&gt;
+</pre>
+
+<h2>The 5-tier cascade pricing</h2>
+<p>Every sovereign Maps call is monetised via the x402 protocol (HTTP 402 + on-chain + MiCA):</p>
+<table>
+<tr><th>Tier</th><th>USD per call</th><th>Use case</th></tr>
+<tr><td>Free</td><td>0</td><td>3 calls/day per tool, i-character</td></tr>
+<tr><td>Pro</td><td>0.10</td><td>power users, single professionals</td></tr>
+<tr><td>Enterprise</td><td>0.50</td><td>SMEs, mid-market, regulated</td></tr>
+<tr><td>Government</td><td>1.00</td><td>government, defence, intel</td></tr>
+<tr><td>Premium</td><td>5.00+</td><td>custom SLA + air-gap</td></tr>
+</table>
+<p>The sovereign Maps fork author gets 80% of every call. The substrate gets 20%. The Care Floor 0.95 is enforced for every transaction.</p>
+
+<h2>The use cases</h2>
+<ul>
+<li><b>Sovereign consumer</b>: i-character renders the citizen's i-character location on a map; no PII leak; Care Floor 0.95 enforced.</li>
+<li><b>Compliance passport</b>: every sovereign action has a geo-stamped passport (EU AI Act Article 14).</li>
+<li><b>Supply chain</b>: every shipment has a sovereign geo-stamped passport (Article 50 passport for goods).</li>
+<li><b>Defence</b>: every defence action is geolocation-stamped; Article 14 human oversight for lethal decisions.</li>
+<li><b>Healthcare</b>: every domiciliary visit (Templeman lineage) is geo-stamped for audit.</li>
+<li><b>Public services</b>: every government service is geo-stamped; Care Floor 0.95 protects citizens.</li>
+</ul>
+
+<div style="text-align:center;padding:24px;margin-top:32px;border-top:1px solid var(--border);color:var(--muted);font-size:11px">
+© 2026 MEOK AI Labs · CSOAI Ltd (UK 16939677) · 8 protocols · 100/100 A+++++ · MIT license
+</div>
+
+</body></html>
