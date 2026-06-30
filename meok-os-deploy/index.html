@@ -225,6 +225,13 @@ table.mini td:last-child{text-align:right;font-variant-numeric:tabular-nums}
 .sovchar.hatched .sovspirit{opacity:1}
 .soventer{position:absolute;bottom:-3px;left:50%;transform:translateX(-50%);z-index:3;font-size:9px;font-weight:800;letter-spacing:.05em;color:#1a1410;background:var(--gold,#c9a84c);padding:2px 8px;border-radius:999px;box-shadow:0 2px 7px rgba(0,0,0,.25);opacity:0;transition:opacity .25s;white-space:nowrap}
 .sovchar:hover .soventer{opacity:1}
+/* the hatch ceremony — gold bloom, a burst, and the spirit resolving from the egg into the character */
+@keyframes hatchBloom{0%{transform:scale(1);opacity:.6}35%{transform:scale(1.55);opacity:1;filter:blur(16px) saturate(1.7)}100%{transform:scale(1);opacity:.6}}
+@keyframes hatchSpark{0%{opacity:0;transform:scale(.35)}22%{opacity:1}100%{opacity:0;transform:scale(2.5)}}
+@keyframes hatchSpiritIn{0%{opacity:.38;transform:scale(.7)}55%{opacity:1;transform:scale(1.28)}100%{opacity:1;transform:scale(1)}}
+.sovchar.hatching .sovaura{animation:hatchBloom 1.8s ease-out}
+.sovchar.hatching .sovspirit{animation:hatchSpiritIn 1.8s ease-out forwards}
+.hatchflash{position:absolute;inset:-16px;border-radius:50%;pointer-events:none;z-index:5;background:radial-gradient(circle,rgba(255,240,190,.95),rgba(201,168,76,.55) 42%,transparent 70%);animation:hatchSpark 1.6s ease-out forwards}
 /* ── Mobile: Sovereign dock becomes a tap-to-expand bottom sheet; tiles go full-width ── */
 @media (max-width:760px){
   .sovdock{ top:auto !important; bottom:0 !important; left:0 !important; right:0 !important; width:auto !important; height:72vh !important; max-height:72vh !important;
@@ -1169,7 +1176,7 @@ function sovHandle(raw){
   if((/\b(personal|meok|home)\b/.test(t)&&/\b(mode|current|switch)\b/.test(t))||t==='meok'){ setMode('meok'); sovSyncHue(); return sovSay("Switched to the <b>MEOK personal current</b> — your world leads."); }
   const m=t.match(/\b(?:open|show|launch|go to|take me to)\s+(.+)/);
   if(m){ const opened=sovOpenByName(m[1].replace(/\b(app|the|my)\b/g,'').trim()); return sovSay(opened?("Opening <b>"+opened+"</b>."):("I couldn't find '"+m[1].trim()+"'. Try 'revenue', 'earth', 'guardian', 'delboy'.")); }
-  if(arch && /\b(become|be|signature|turn into|make me)\b/.test(t)){ setSignature(arch.h,arch.n); sovSyncHue(); const f=document.getElementById('sovface'),n=document.getElementById('sovname'),fab=document.querySelector('.sovfab'); if(f)f.textContent=arch.e; if(n)n.textContent=arch.n; if(fab)fab.textContent=arch.e; try{localStorage.setItem('meok_archetype',arch.n);localStorage.setItem('meok_face',arch.e);}catch(e){} if(typeof sovApplyHatch==='function')sovApplyHatch(); return sovSay("Your world has hatched — you are now a <b>"+arch.e+" "+arch.n+"</b>, and the whole OS ripples in your colour."); }
+  if(arch && /\b(become|be|signature|turn into|make me)\b/.test(t)){ setSignature(arch.h,arch.n); sovSyncHue(); const f=document.getElementById('sovface'),n=document.getElementById('sovname'),fab=document.querySelector('.sovfab'); if(f)f.textContent=arch.e; if(n)n.textContent=arch.n; if(fab)fab.textContent=arch.e; try{localStorage.setItem('meok_archetype',arch.n);localStorage.setItem('meok_face',arch.e);}catch(e){} if(typeof sovHatchCeremony==='function')sovHatchCeremony(); else if(typeof sovApplyHatch==='function')sovApplyHatch(); return sovSay("✨ Your world is hatching — the Earth resolves into a <b>"+arch.e+" "+arch.n+"</b>, and the whole OS ripples in your colour."); }
   if(/\b(earth|world|globe|map|town)\b/.test(t)){ openByName_meokearth(); return; }
   if(/\b(help|what can you|who are you|hello|hi)\b/.test(t)){ return sovSay("I'm your <b>sovereign</b> — I remember you across any model or protocol. I can <b>open apps</b> ('open revenue'), <b>switch your current</b> ('work mode'), <b>change your signature</b> ('become a guardian'), or take you into <b>MEOK Earth</b>. Tap 🎤 to just speak."); }
   sovAsk(raw); // unmatched → ask the real SOV3 brain (graceful fallback if offline)
@@ -1278,8 +1285,15 @@ function enterWorld(ev){ try{ if(ev){ev.stopPropagation&&ev.stopPropagation();} 
 // AI character's translucent emergent form floating over it (the egg before the hatch).
 (function sovGlobe(){ const c=document.getElementById('sovglobe'); if(!c||!c.getContext) return; const ctx=c.getContext('2d');
   const S=188, R=90, cx=S/2, cy=S/2;
-  // connector nodes (lit points of the universe) at fixed positions on the sphere
-  const nodes=Array.from({length:9},(_,i)=>({a:i*0.698, r:0.28+((i*0.17)%0.6)*0.9, ph:i*0.8}));
+  // REAL connector nodes — the actual cities of the MEOK universe (legacy bridges, temples,
+  // hives are geo-placed at these hubs in MEOK Earth). The lit points sit on their true
+  // countries and rotate with the globe, so the avatar and the full world are one map.
+  const nodes=[
+    {n:'London',lat:51.5,lon:-0.1},{n:'New York',lat:40.7,lon:-74.0},{n:'Frankfurt',lat:50.1,lon:8.7},
+    {n:'Tokyo',lat:35.7,lon:139.7},{n:'Singapore',lat:1.35,lon:103.8},{n:'Sydney',lat:-33.9,lon:151.2},
+    {n:'São Paulo',lat:-23.5,lon:-46.6},{n:'Mumbai',lat:19.1,lon:72.9},{n:'Dubai',lat:25.2,lon:55.3},
+    {n:'Toronto',lat:43.7,lon:-79.4},{n:'Hong Kong',lat:22.3,lon:114.2},{n:'Cape Town',lat:-33.9,lon:18.4}
+  ].map((d,i)=>({...d,ph:i*0.7}));
   let rot=0, t=0;
   // REAL satellite Earth from space — today's NASA MODIS true-colour mosaic (clouds = real
   // weather, no key needed). Progressive enhancement: if it loads we paint the real planet;
@@ -1303,12 +1317,12 @@ function enterWorld(ev){ try{ if(ev){ev.stopPropagation&&ev.stopPropagation();} 
     const dayAngle=(utch/24)*6.2832;                       // one real turn per 24h
     const doy=Math.floor((Date.UTC(now.getUTCFullYear(),now.getUTCMonth(),now.getUTCDate())-Date.UTC(now.getUTCFullYear(),0,0))/86400000);
     const decl=0.409*Math.sin(6.2832*(doy-80)/365);        // seasonal tilt (±23.4°)
+    const tw=R*2, th=R*2, scroll=((rot*26)%tw+tw)%tw;   // shared by texture + node projection
     ctx.clearRect(0,0,S,S);
     ctx.save(); ctx.beginPath(); ctx.arc(cx,cy,R,0,6.2832); ctx.clip();
     if(earthImg){
       // REAL Earth from space (today's satellite mosaic, real clouds). Wrap horizontally so
       // it rotates; clipped to the circle reads as the planet. Vignette gives it spherical depth.
-      const tw=R*2, th=R*2, scroll=((rot*26)%tw+tw)%tw;
       ctx.drawImage(earthImg, cx-R-scroll, cy-R, tw, th);
       ctx.drawImage(earthImg, cx-R-scroll+tw, cy-R, tw, th);
       const vg=ctx.createRadialGradient(cx-20,cy-22,R*0.2,cx,cy,R); vg.addColorStop(0,'rgba(255,255,255,.08)'); vg.addColorStop(.75,'rgba(0,0,0,0)'); vg.addColorStop(1,'rgba(0,8,22,.55)');
@@ -1332,13 +1346,22 @@ function enterWorld(ev){ try{ if(ev){ev.stopPropagation&&ev.stopPropagation();} 
     // atmosphere rim
     const ag=ctx.createRadialGradient(cx,cy,R*0.82,cx,cy,R); ag.addColorStop(0,'rgba(120,180,255,0)'); ag.addColorStop(1,'hsla('+hue+',80%,70%,.5)');
     ctx.fillStyle=ag; ctx.fillRect(0,0,S,S);
-    // lit connectors (the universe coming alive) + faint arcs
-    const pts=nodes.map(n=>{ const ang=n.a+rot*0.6; return {x:cx+Math.cos(ang)*n.r*R, y:cy+Math.sin(ang)*n.r*R*0.92, ph:n.ph}; });
-    ctx.lineWidth=1; for(let i=0;i<pts.length;i++){ const A=pts[i],B=pts[(i+3)%pts.length]; ctx.strokeStyle='hsla('+hue+',85%,72%,.16)'; ctx.beginPath(); ctx.moveTo(A.x,A.y); ctx.quadraticCurveTo(cx,cy,B.x,B.y); ctx.stroke(); }
-    pts.forEach(p=>{ const a=0.5+0.5*Math.sin(t*3+p.ph); ctx.fillStyle='hsla('+hue+',90%,68%,'+(0.5+0.4*a)+')'; ctx.shadowColor='hsla('+hue+',90%,70%,.9)'; ctx.shadowBlur=6; ctx.beginPath(); ctx.arc(p.x,p.y,1.8+a,0,6.2832); ctx.fill(); ctx.shadowBlur=0; });
+    // lit connectors at their REAL cities — same flat-wrap mapping as the satellite texture,
+    // so each gold node sits on its true country and rotates with the globe.
+    const pts=nodes.map(n=>{
+      const baseX=(cx-R-scroll)+((n.lon+180)/360)*tw;       // longitude → screen (texture-aligned)
+      let x=baseX; if(x<cx-R) x+=tw; if(x>cx+R) x-=tw;       // wrap into the visible disc
+      const y=(cy-R)+((90-n.lat)/180)*th;                   // latitude → screen
+      const dx=(x-cx)/R, dy=(y-cy)/R; const onDisc=(dx*dx+dy*dy)<0.94;
+      const edge=1-Math.min(1,Math.abs(x-cx)/R);            // fade near the limb (sphere feel)
+      return {x,y,ph:n.ph,vis:onDisc,edge};
+    });
+    const vis=pts.filter(p=>p.vis);
+    ctx.lineWidth=1; for(let i=0;i<vis.length;i++){ const A=vis[i],B=vis[(i+2)%vis.length]; if(B===A)continue; ctx.strokeStyle='hsla('+hue+',85%,72%,'+(0.12*Math.min(A.edge,B.edge))+')'; ctx.beginPath(); ctx.moveTo(A.x,A.y); ctx.quadraticCurveTo(cx,cy,B.x,B.y); ctx.stroke(); }
+    vis.forEach(p=>{ const a=0.5+0.5*Math.sin(t*3+p.ph); const al=(0.45+0.4*a)*(0.35+0.65*p.edge); ctx.fillStyle='hsla('+hue+',90%,68%,'+al+')'; ctx.shadowColor='hsla('+hue+',90%,70%,.9)'; ctx.shadowBlur=6; ctx.beginPath(); ctx.arc(p.x,p.y,(1.6+a)*(0.6+0.4*p.edge),0,6.2832); ctx.fill(); ctx.shadowBlur=0; });
     // glassy egg specular + gold emergence breath
     const hl=ctx.createRadialGradient(cx-30,cy-34,4,cx-30,cy-34,60); hl.addColorStop(0,'rgba(255,255,255,.4)'); hl.addColorStop(1,'rgba(255,255,255,0)'); ctx.fillStyle=hl; ctx.fillRect(0,0,S,S);
-    const breath=0.06+0.05*Math.sin(t*2); ctx.fillStyle='hsla('+hue+',85%,62%,'+breath+')'; ctx.fillRect(0,0,S,S);
+    const breath=(window._sovHatching?0.42:0.06)+0.05*Math.sin(t*2); ctx.fillStyle='hsla(45,90%,62%,'+breath+')'; ctx.fillRect(0,0,S,S);
     ctx.restore();
     requestAnimationFrame(loop); })();
 })();
@@ -1347,6 +1370,15 @@ function enterWorld(ev){ try{ if(ev){ev.stopPropagation&&ev.stopPropagation();} 
 function sovApplyHatch(){ try{ const sc=document.getElementById('sovchar'); if(!sc) return;
   const named=localStorage.getItem('meok_sov_name'); const arch=localStorage.getItem('meok_archetype');
   if(named||arch){ sc.classList.add('hatched'); const sub=document.getElementById('sovsub'); if(sub&&named) sub.textContent='hatched from your world · '+named; const f=document.getElementById('sovface'); if(f&&localStorage.getItem('meok_face')) f.textContent=localStorage.getItem('meok_face'); } }catch(e){} }
+// The hatch CEREMONY — the one-time becoming: gold breath swells, the egg bursts, and the
+// living Earth resolves into the user's character. Plays once, then it's solid forever.
+function sovHatchCeremony(){ const sc=document.getElementById('sovchar'); if(!sc){ return; }
+  try{ if(localStorage.getItem('meok_hatched_anim')){ sovApplyHatch(); return; } localStorage.setItem('meok_hatched_anim','1'); }catch(e){}
+  try{ if(typeof sovToggle==='function') sovToggle(true); }catch(e){}
+  window._sovHatching=true; sc.classList.add('hatching');
+  const flash=document.createElement('div'); flash.className='hatchflash'; sc.appendChild(flash);
+  setTimeout(function(){ try{ flash.remove(); sc.classList.remove('hatching'); window._sovHatching=false; sovApplyHatch(); }catch(e){} }, 1850);
+}
 sovApplyHatch();
 refreshLive();
 // first-time users get the dead-simple visual welcome (anyone can tap through), not the internal King console
