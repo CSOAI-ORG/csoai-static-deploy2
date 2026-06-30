@@ -307,11 +307,11 @@ table.mini td:last-child{text-align:right;font-variant-numeric:tabular-nums}
       <span class="sgg" onclick="sovHandle('what can you do')">❓ Help</span>
     </div>
     <div class="sovbar">
-      <span class="sovbtn sovmic" id="sovmic" onclick="sovVoice()" title="Speak to me">🎤</span>
-      <span class="sovbtn" id="sovspk" onclick="sovSpeakToggle()" title="Voice replies (off)">🔇</span>
-      <input class="sovin" id="sovin" placeholder="Speak or type… 'open revenue'" onkeydown="if(event.key==='Enter')sovSend()">
-      <span class="sovbtn" onclick="sovSend()" title="Send">➤</span>
-      <span class="sovbtn" onclick="sovToggle(false)" title="Minimise">▸</span>
+      <span class="sovbtn sovmic" id="sovmic" role="button" tabindex="0" aria-label="Speak to your Sovereign" onclick="sovVoice()" title="Speak to me">🎤</span>
+      <span class="sovbtn" id="sovspk" role="button" tabindex="0" aria-label="Toggle voice replies" onclick="sovSpeakToggle()" title="Voice replies (off)">🔇</span>
+      <input class="sovin" id="sovin" aria-label="Message your Sovereign" placeholder="Speak or type… 'open revenue'" onkeydown="if(event.key==='Enter')sovSend()">
+      <span class="sovbtn" role="button" tabindex="0" aria-label="Send message" onclick="sovSend()" title="Send">➤</span>
+      <span class="sovbtn" role="button" tabindex="0" aria-label="Minimise the Sovereign dock" onclick="sovToggle(false)" title="Minimise">▸</span>
     </div>
   </div>
 
@@ -1214,7 +1214,8 @@ try{ const _sh=document.querySelector('.sovhead'); if(_sh) _sh.addEventListener(
   if(document.getElementById('sovbottombar')) return;
   const bar=document.createElement('div'); bar.id='sovbottombar';
   bar.style.cssText='position:fixed;left:50%;bottom:14px;transform:translateX(-50%);z-index:5000;display:flex;align-items:center;gap:8px;width:min(540px,92vw);background:rgba(26,20,16,.93);border:1px solid var(--gold,#c9a84c);border-radius:999px;padding:6px 6px 6px 15px;box-shadow:0 12px 36px rgba(0,0,0,.34);backdrop-filter:blur(8px)';
-  bar.innerHTML='<span style="font-size:16px">🐉</span><input id="sovbbin" placeholder="Ask your Sovereign anything…" autocomplete="off" style="flex:1;border:0;background:transparent;outline:none;color:#f5f0e6;font:14px Space Grotesk,sans-serif"><span id="sovbbmic" title="Speak" style="color:var(--gold,#c9a84c);font-size:16px;cursor:pointer;padding:0 4px">🎤</span><button id="sovbbsend" style="border:0;background:var(--gold,#c9a84c);color:#1a1410;width:34px;height:34px;border-radius:50%;font-weight:800;cursor:pointer;flex:none">➤</button>';
+  bar.setAttribute('role','search'); bar.setAttribute('aria-label','Talk to your Sovereign');
+  bar.innerHTML='<span style="font-size:16px" aria-hidden="true">🐉</span><input id="sovbbin" aria-label="Ask your Sovereign anything" placeholder="Ask your Sovereign anything…" autocomplete="off" style="flex:1;border:0;background:transparent;outline:none;color:#f5f0e6;font:14px Space Grotesk,sans-serif"><span id="sovbbmic" role="button" tabindex="0" aria-label="Speak" title="Speak" style="color:var(--gold,#c9a84c);font-size:16px;cursor:pointer;padding:0 4px">🎤</span><button id="sovbbsend" aria-label="Send" style="border:0;background:var(--gold,#c9a84c);color:#1a1410;width:34px;height:34px;border-radius:50%;font-weight:800;cursor:pointer;flex:none">➤</button>';
   document.body.appendChild(bar);
   function go(){ const i=document.getElementById('sovbbin'); const v=i.value.trim(); if(!v) return; i.value=''; try{ if(innerWidth<=760) document.body.classList.add('sov-open'); }catch(e){} if(typeof sovHandle==='function') sovHandle(v); }
   document.getElementById('sovbbsend').onclick=go;
