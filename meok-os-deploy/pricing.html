@@ -96,5 +96,14 @@ footer{margin-top:34px;text-align:center;color:var(--dim);font-size:12.5px}
 <script>
 const P={mo:{px:'£12.99',unit:'/mo'},yr:{px:'£129',unit:'/yr'}};
 function setBill(b){ document.getElementById('bMo').classList.toggle('on',b==='mo'); document.getElementById('bYr').classList.toggle('on',b==='yr'); document.getElementById('proPx').textContent=P[b].px; document.getElementById('proUnit').textContent=P[b].unit; window._bill=b; }
-function go(plan){ alert('Checkout opens here.\n\nPro ('+(window._bill==='yr'?'£129/yr':'£12.99/mo')+') / PAYG run through Stripe — being wired in test mode first. For now, Start Free and explore the full OS.'); location.href='/'; }
+async function go(plan){
+  const p = plan==='payg' ? 'payg' : (window._bill==='yr' ? 'pro-yr' : 'pro-mo');
+  try{
+    const r = await fetch('/api/checkout?plan='+p);
+    const d = await r.json();
+    if(d.ok && d.url){ location.href = d.url; return; }   // → Stripe Checkout (when configured)
+    alert('Checkout isn’t live yet — Pro/PAYG go through Stripe (being wired in test mode first). Start Free and explore the full OS now.');
+  }catch(e){ alert('Start Free and explore — paid plans are being wired.'); }
+  location.href='/';
+}
 </script></body></html>

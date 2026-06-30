@@ -901,7 +901,30 @@ function _tourNext(){ _tourI++; if(_tourI>=TOUR_STEPS.length)_tourFinish(); else
 function _tourExit(){ ['tourSpot','tourBub'].forEach(id=>{const e=document.getElementById(id);if(e)e.remove();}); }
 function _tourFinish(){ _tourExit(); askLearn(); }
 function askLearn(){ const w=document.getElementById('welcome'); if(!w)return; w.classList.add('show'); wRender('<h1>Can I learn about you? 🌱</h1><p>The more I know, the better I set up <b>your</b> world. Everything stays <b>on your device</b> — yours, never uploaded, never sold.</p><div class="wcards"><div class="wcard" onclick="learnYes()"><span class="we">💬</span><b>Yes — let\'s talk</b><small>tell me about you</small></div><div class="wcard" onclick="welcomeDone()"><span class="we">🔒</span><b>Maybe later</b><small>just explore</small></div></div><p style="font-size:11.5px;color:var(--dim);margin-top:10px">Optional, only with your explicit OK each time: camera presence &amp; on-device photo learning — it never leaves your device.</p>'); }
-function learnYes(){ welcomeDone(); try{ const i=document.getElementById('sovin'); if(i)i.focus(); }catch(e){} sovSay("Lovely — tell me your <b>name</b> to start, then anything you'd like me to remember. The more I learn, the more I set up for you. <span style='color:var(--dim)'>(All on your device.)</span>"); }
+function learnYes(){ welcomeDone(); try{ const i=document.getElementById('sovin'); if(i)i.focus(); }catch(e){} sovSay("Lovely — tell me your <b>name</b> to start, then anything you'd like me to remember. The more I learn, the more I set up for you. <span style='color:var(--dim)'>(All on your device.)</span>"); sovSay("Want me to <b>see</b> you too? <a onclick='awareStart()' style='color:var(--gold);cursor:pointer;text-decoration:underline'>Turn on presence 👁️</a> — camera stays on your device, never uploaded. Optional, stop anytime."); }
+// ── Presence & gesture awareness — OPT-IN, on-device, nothing uploaded ──
+let _aware=null, _awareVid=null, _awareRAF=0, _lastGest='', _lastReact=0;
+async function awareStart(){
+  if(_aware){ return; }
+  if(!confirm("Turn on presence? Your camera runs ON YOUR DEVICE only — frames never leave it, nothing is recorded or uploaded. I'll just notice you're here and respond to a wave 👋. Stop anytime.")) return;
+  let stream; try{ stream=await navigator.mediaDevices.getUserMedia({video:{width:320,height:240},audio:false}); }
+  catch(e){ sovSay("I couldn't open the camera — that's okay, presence is optional. <span style='color:var(--dim)'>("+ (e.name||'denied') +")</span>"); return; }
+  _aware=stream; const v=document.createElement('video'); v.autoplay=true;v.muted=true;v.playsInline=true;v.srcObject=stream; _awareVid=v;
+  // floating "camera on • Stop"
+  const ind=document.createElement('div'); ind.id='awareInd'; ind.style.cssText='position:fixed;bottom:18px;left:18px;z-index:9000;background:rgba(26,20,16,.92);color:#c9a84c;font:600 12px Space Grotesk,sans-serif;padding:7px 12px;border-radius:999px;display:flex;align-items:center;gap:8px;box-shadow:0 6px 20px rgba(0,0,0,.3)';
+  ind.innerHTML='<span style="width:8px;height:8px;border-radius:50%;background:#10b981;box-shadow:0 0 8px #10b981"></span> presence on · on-device <span id="awareStop" style="cursor:pointer;text-decoration:underline;margin-left:4px">stop</span>';
+  document.body.appendChild(ind); document.getElementById('awareStop').onclick=awareStop;
+  sovSay("👁️ I can see you now — all on your device. Give me a wave 👋 anytime.");
+  try{
+    const vision=await import('https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.14/vision_bundle.mjs');
+    const files=await vision.FilesetResolver.forVisionTasks('https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.14/wasm');
+    const gr=await vision.GestureRecognizer.createFromOptions(files,{baseOptions:{modelAssetPath:'https://storage.googleapis.com/mediapipe-models/gesture_recognizer/gesture_recognizer/float16/1/gesture_recognizer.task'},runningMode:'VIDEO',numHands:1});
+    const REACT={Open_Palm:"👋 Hi! Good to see you.",Thumb_Up:"👍 On it.",Victory:"✌️ Love the energy.",ILoveYou:"🤟 Right back at you.",Pointing_Up:"☝️ Tell me what you need.",Closed_Fist:"✊ Ready when you are."};
+    const loop=()=>{ if(!_aware) return; try{ const r=gr.recognizeForVideo(v,performance.now()); const g=r.gestures&&r.gestures[0]&&r.gestures[0][0]; if(g&&g.categoryName!=='None'&&g.score>0.6){ const now=Date.now(); if(g.categoryName!==_lastGest||now-_lastReact>4000){ _lastGest=g.categoryName;_lastReact=now; if(REACT[g.categoryName]) sovSay(REACT[g.categoryName]); } } }catch(e){} _awareRAF=requestAnimationFrame(loop); };
+    loop();
+  }catch(e){ /* model/CDN unavailable → presence still on (camera lit), gestures degrade gracefully */ }
+}
+function awareStop(){ if(_awareRAF)cancelAnimationFrame(_awareRAF); try{ _aware&&_aware.getTracks().forEach(t=>t.stop()); }catch(e){} _aware=null;_awareVid=null; const i=document.getElementById('awareInd'); if(i)i.remove(); sovSay("Camera off. Presence is always your choice."); }
 function sovSyncHue(){ const h=String(window.MEOK_POND_HUE||43); document.documentElement.style.setProperty('--sh',h); const d=document.getElementById('sovdock'); if(d) d.style.setProperty('--sh',h); }
 // sovereign memory — your forever AI remembers you across sessions (local, sovereign: your data stays yours)
 let SOV_FACTS=[], SOV_LOG=[];
