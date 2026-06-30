@@ -1280,12 +1280,19 @@ function enterWorld(ev){ try{ if(ev){ev.stopPropagation&&ev.stopPropagation();} 
   const S=188, R=90, cx=S/2, cy=S/2;
   // connector nodes (lit points of the universe) at fixed positions on the sphere
   const nodes=Array.from({length:9},(_,i)=>({a:i*0.698, r:0.28+((i*0.17)%0.6)*0.9, ph:i*0.8}));
-  let rot=0, day=0;
+  let rot=0, t=0;
   function landAt(lon,lat){ // crude but recognisable continents via layered sines
     const v=Math.sin(lon*1.7+lat*0.8)+0.7*Math.sin(lon*0.6-lat*1.9)+0.5*Math.sin(lon*3.1+2.0);
     return v>0.55; }
-  (function loop(){ rot+=0.0024; day+=0.0017;
+  (function loop(){ rot+=0.0024; t+=0.03;
     const hue=window.MEOK_POND_HUE||43;
+    // REAL day/night: the sun's position from the actual clock, so the dark side of the
+    // Sovereign's globe is genuinely where it's night on Earth right now (a true mirror).
+    const now=new Date();
+    const utch=now.getUTCHours()+now.getUTCMinutes()/60+now.getUTCSeconds()/3600;
+    const dayAngle=(utch/24)*6.2832;                       // one real turn per 24h
+    const doy=Math.floor((Date.UTC(now.getUTCFullYear(),now.getUTCMonth(),now.getUTCDate())-Date.UTC(now.getUTCFullYear(),0,0))/86400000);
+    const decl=0.409*Math.sin(6.2832*(doy-80)/365);        // seasonal tilt (±23.4°)
     ctx.clearRect(0,0,S,S);
     ctx.save(); ctx.beginPath(); ctx.arc(cx,cy,R,0,6.2832); ctx.clip();
     // ocean
@@ -1295,21 +1302,24 @@ function enterWorld(ev){ try{ if(ev){ev.stopPropagation&&ev.stopPropagation();} 
     for(let py=-R;py<R;py+=4){ const lat=(py/R)*1.45; const w=Math.cos(Math.asin(py/R))*R;
       for(let px=-w;px<w;px+=4){ const lon=(px/(w||1))*1.8+rot;
         if(landAt(lon,lat)){ const sh=0.5+0.5*Math.sin(lat*2+lon); ctx.fillStyle='rgba('+Math.round(70+40*sh)+','+Math.round(120+50*sh)+','+Math.round(70+20*sh)+',.9)'; ctx.fillRect(cx+px,cy+py,4,4); } } }
-    // day / night terminator — darken the night hemisphere + twinkle city lights
-    const sx=Math.cos(day), sy=Math.sin(day)*0.35;
+    // day / night terminator — anchored to the real subsolar point (clock + season)
+    const sx=Math.cos(dayAngle), sy=Math.sin(dayAngle)*0.30 + Math.sin(decl)*0.5;
     const ng=ctx.createLinearGradient(cx-sx*R,cy-sy*R,cx+sx*R,cy+sy*R);
-    ng.addColorStop(0,'rgba(2,4,14,0)'); ng.addColorStop(.5,'rgba(2,4,14,.15)'); ng.addColorStop(1,'rgba(2,4,14,.66)');
+    ng.addColorStop(0,'rgba(2,4,14,0)'); ng.addColorStop(.5,'rgba(2,4,14,.15)'); ng.addColorStop(1,'rgba(2,4,14,.7)');
     ctx.fillStyle=ng; ctx.fillRect(0,0,S,S);
+    // city lights on the night side (gold sparks where humanity sleeps)
+    for(let i=0;i<10;i++){ const aa=i*0.63+rot*2; const rr=(0.3+(i%5)*0.13)*R; const lx=cx+Math.cos(aa)*rr, ly=cy+Math.sin(aa)*rr*0.9;
+      const nightness=((lx-cx)*sx+(ly-cy)*sy)/R; if(nightness>0.15){ ctx.fillStyle='hsla(45,90%,70%,'+(0.25+0.35*Math.abs(Math.sin(t*1.3+i)))+')'; ctx.fillRect(lx,ly,1.4,1.4); } }
     // atmosphere rim
     const ag=ctx.createRadialGradient(cx,cy,R*0.82,cx,cy,R); ag.addColorStop(0,'rgba(120,180,255,0)'); ag.addColorStop(1,'hsla('+hue+',80%,70%,.5)');
     ctx.fillStyle=ag; ctx.fillRect(0,0,S,S);
     // lit connectors (the universe coming alive) + faint arcs
     const pts=nodes.map(n=>{ const ang=n.a+rot*0.6; return {x:cx+Math.cos(ang)*n.r*R, y:cy+Math.sin(ang)*n.r*R*0.92, ph:n.ph}; });
     ctx.lineWidth=1; for(let i=0;i<pts.length;i++){ const A=pts[i],B=pts[(i+3)%pts.length]; ctx.strokeStyle='hsla('+hue+',85%,72%,.16)'; ctx.beginPath(); ctx.moveTo(A.x,A.y); ctx.quadraticCurveTo(cx,cy,B.x,B.y); ctx.stroke(); }
-    pts.forEach(p=>{ const a=0.5+0.5*Math.sin(day*3+p.ph); ctx.fillStyle='hsla('+hue+',90%,68%,'+(0.5+0.4*a)+')'; ctx.shadowColor='hsla('+hue+',90%,70%,.9)'; ctx.shadowBlur=6; ctx.beginPath(); ctx.arc(p.x,p.y,1.8+a,0,6.2832); ctx.fill(); ctx.shadowBlur=0; });
+    pts.forEach(p=>{ const a=0.5+0.5*Math.sin(t*3+p.ph); ctx.fillStyle='hsla('+hue+',90%,68%,'+(0.5+0.4*a)+')'; ctx.shadowColor='hsla('+hue+',90%,70%,.9)'; ctx.shadowBlur=6; ctx.beginPath(); ctx.arc(p.x,p.y,1.8+a,0,6.2832); ctx.fill(); ctx.shadowBlur=0; });
     // glassy egg specular + gold emergence breath
     const hl=ctx.createRadialGradient(cx-30,cy-34,4,cx-30,cy-34,60); hl.addColorStop(0,'rgba(255,255,255,.4)'); hl.addColorStop(1,'rgba(255,255,255,0)'); ctx.fillStyle=hl; ctx.fillRect(0,0,S,S);
-    const breath=0.06+0.05*Math.sin(day*2); ctx.fillStyle='hsla('+hue+',85%,62%,'+breath+')'; ctx.fillRect(0,0,S,S);
+    const breath=0.06+0.05*Math.sin(t*2); ctx.fillStyle='hsla('+hue+',85%,62%,'+breath+')'; ctx.fillRect(0,0,S,S);
     ctx.restore();
     requestAnimationFrame(loop); })();
 })();
