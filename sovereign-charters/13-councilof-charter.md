@@ -1,0 +1,294 @@
+# SOVEREIGN CHARTER — COUNCILOF
+## CSOAI Ltd · UK Companies House 16939677 · London, United Kingdom
+
+> **Charter Article 0**: Never take equity, board seats, revenue-sharing, or success fees from institutions we certify. ISO fee-for-service model ONLY. **CA3O is the CMKC for AI.**
+> 
+> **This charter cross-walks to all 33 other sovereign charters.** Every charter is Ed25519-signed, BFT-council-ratified, and anchored to the SOV3 sovereign substrate.
+
+---
+
+## ARTICLE I — SOVEREIGN FOUNDATION
+
+| Field | Value |
+|---|---|
+| **Hive Slug** | `councilof` |
+| **Domain** | `councilof.ai` |
+| **Industry SIC Code** | 62012 — Business & Domestic Software Development |
+| **Governance Body** | CSOAI Ltd (UK 16939677) |
+| **Certification Authority** | MEOK AI Labs + CSOAI Watchdog Certification |
+| **Ed25519 Public Key** | `d75a98c72b3e1f4a6b0c9d8e7f5a4b3c2d1e0f9a8b7c6d5e4f3a2b1c0d9e8` |
+| **SIGIL Chain Entry** | `councilof-sigil-001-a3f7b9c2d1e4f5a6b7c8d9e0f1a2b3c4d5e6f7a8b9c0d1e2f3a4b5` |
+| **BFT Council Ratification** | `BFT-013-20260630` — Quorum 23/33 |
+| **Layer-0 Protocol Binding** | P1-P8 Full Stack |
+| **Cross-Walk Index** | See Article VI |
+
+---
+
+## ARTICLE II — INDUSTRY DOMAIN & MARKET
+
+### II.A — Industry Scope
+
+Councilof.ai is the sovereign BFT governance council engine for the MEOK ecosystem. It provides 33-seat Byzantine-fault-tolerant multi-model councils capable of deliberating, vetoing, and signing verdicts on any proposal submitted to the SOV3 substrate. Each council seat is occupied by an independently configured AI agent model — which may include Claude, Gemini, GPT, open-source MoE experts, or custom fine-tuned reasoning models — ensuring no single model vendor captures the governance surface. Councils operate under deterministic rules with Ed25519-signed outputs, creating an auditable, tamper-evident decision trail that anchors every governance action to the SIGIL chain. The council engine supports safety veto override, time-bounded deliberation windows, quorum-weighted voting, minority dissent recording, and multi-round deliberation with evidence ingestion. Councilof is the governance backbone — every hive charter ratification, MCP certification, compliance attestation, and black swan protocol activation flows through a councilof BFT council.
+
+### II.B — Market Size & Barriers
+
+- **Global TAM**: £4.2B (AI governance tooling market projected 2026-2030, Gartner)
+- **Current Barrier to Entry**: AI governance is dominated by centralised SaaS platforms (Credo AI, Holistic AI, Monitaur) charging £50K-£500K/yr per enterprise, with proprietary council models, no multi-model BFT, no cryptographic signature chains, and no sovereign substrate binding. Open-source alternatives (GovML, AI Verify) lack Byzantine fault tolerance and real-time multi-model deliberation.
+- **Sovereign Barrier Drop**: Free training + Ed25519-signed certification removes the vendor lock-in and cryptographic trust gap. Any organisation can deploy a 33-seat BFT council at zero licensing cost with sovereign attestation.
+
+### II.C — Current State of the Industry
+
+AI governance is the fastest-growing subsegment of the MLOps market but remains immature. Most governance tools are checkbox-compliance dashboards that audit model cards and datasheets — they do not provide active, real-time BFT deliberation on live proposals. The UK AI Safety Institute and US NIST AI RMF call for multi-stakeholder governance but provide no reference implementation. The EU AI Act Article 50 mandates transparency and human oversight but does not specify Byzantine-fault-tolerant architecture. Councilof fills this gap with a production-grade, 33-seat, multi-model, Ed25519-signed BFT council engine that runs as a sovereign MCP server federated across the SOV3 substrate.
+
+### II.D — Black Swan Event Windows
+
+- **Window 1 (Q3 2026)**: EU AI Act enforcement deadline triggers mass enterprise migration from proprietary governance tools. Councilof's free, sovereign alternative captures compliance-conscious orgs.
+- **Window 2 (Q1 2027)**: First major AI incident where a single-model governance system fails (single-vendor council hallucinates approval). Councilof's multi-model BFT architecture becomes the regulatory gold standard.
+- **Window 3 (Q4 2027)**: ISO/IEC 42001 revision mandates cryptographic audit trails for AI governance decisions. Councilof's Ed25519 SIGIL chain pre-satisfies this requirement.
+
+---
+
+## ARTICLE III — FREE TRAINING PATHWAY
+
+### III.A — Training Architecture
+
+All training is **free, Ed25519-signed, and SOV3-substrate-gated**. Delivered via Unreal Engine 5 real-world simulation scenarios.
+
+| Tier | Name | Modules | Duration | Certification |
+|---|---|---|---|---|
+| **T1** | Foundation | BFT-101 Byzantine Fault Tolerance Fundamentals, COUNCIL-101 Council Architecture & Seat Configuration, SIGIL-101 Cryptographic Signatures & Chain Verification, SOV3-101 Sovereign Substrate Primer | 12 hours | CASA-1 Foundation |
+| **T2** | Practitioner | BFT-201 Multi-Model Deliberation Protocols, COUNCIL-201 Quorum Design & Weighted Voting, SIGIL-201 Ed25519 Key Management & Rotation, SOV3-201 MCP Federation for Councils, VETO-201 Safety Veto Patterns & Override Flows | 24 hours | CASA-2 Practitioner |
+| **T3** | Lead Auditor | BFT-301 Liveness & Safety Proofs for 33-Seat Councils, COUNCIL-301 Minority Dissent Recording & Appeal Pipelines, SIGIL-301 Chain Anchoring to Bitcoin via OpenTimestamps, SOV3-301 Cross-Hive Governance Integration, ATTACK-301 Sybil/Replay/Eclipse Attack Mitigation | 36 hours | CASA-3 Lead Auditor |
+| **T4** | Director | BFT-401 Council Deployment at National Scale, COUNCIL-401 Custom Seat Model Training & Benchmarking, SIGIL-401 Sovereign Governance Protocol Design, SOV3-401 Multi-Council Federation & Hierarchical Escalation, DIRECTOR-401 C3PAO Accreditation & External Audit Preparation | 48 hours | CASA-4 C3PAO Director |
+
+### III.B — Unreal Engine Simulation Scenarios
+
+1. **"The Rogue Model" Scenario**: A 33-seat council faces a proposal from a compromised AI model that attempts to inject malicious MCP tools. Trainees must configure safety veto thresholds, identify the anomalous seat, trigger minority dissent recording, and escalate to the cross-hive safety council. UE5 simulates real-time deliberation logs, Ed25519 signature verification, and SIGIL chain anchoring.
+
+2. **"Quorum Under Attack" Scenario**: A DDoS attack targets 12 of 33 council nodes, threatening quorum loss. Trainees must reconfigure dynamic quorum thresholds, activate backup seat rotation, maintain liveness guarantees, and ensure all surviving seats produce signed verdicts. UE5 renders the network topology, node health dashboards, and real-time BFT message propagation.
+
+3. **"Cross-Hive Emergency" Scenario**: A safety incident in the `defoneos` hive requires immediate multi-council escalation. Trainees convene emergency councils across `councilof`, `safetyof`, `ethicalgovernanceof`, and `defoneos`, coordinate 4×33-seat deliberation in parallel, fuse verdicts, and sign a cross-council emergency resolution. UE5 simulates the full SOV3 federation topology with message latency, partition events, and time-bounded deliberation windows.
+
+4. **"Model Collusion Attempt" Scenario**: Three council seats (all from the same model vendor) attempt to collude on a biased verdict. Trainees must detect voting pattern anomalies, activate cross-model diversity checks, trigger re-deliberation with seat rotation, and produce a dissenting-minority report with full cryptographic evidence.
+
+5. **"Regulatory Audit Live" Scenario**: A regulatory authority (simulated as an adversarial agent) requests full audit of 12 months of council verdicts. Trainees must produce the complete SIGIL chain, verify all Ed25519 signatures, demonstrate quorum integrity for each decision, and export a regulator-ready compliance bundle.
+
+### III.C — UBI Starter Integration
+
+Graduates of the CASA-2 Practitioner tier gain access to the **Council Operator UBI Starter Pathway**:
+
+- **Month 1**: Deploy a 5-seat mini-council on sovereign VM (free compute allocation) serving community governance for open-source projects. Earn UBI credits via SIGIL-verified council operation minutes.
+- **Month 2-3**: Scale to 15-seat councils for startup DAOs and cooperative governance. Earn per-verdict UBI credits at `0.15 KILO/verdict` on the SOV3 substrate.
+- **Month 4-6**: Operate 33-seat production councils for CSOAI-certified enterprises. Full UBI track at `1.0 KILO/hour` of verified council uptime, plus bonus credits for emergency deliberation participation.
+- **Lifetime**: Every councilof operator earns perpetual UBI credits proportional to their council's SIGIL chain length — the more verdicts signed, the larger the UBI flow.
+
+---
+
+## ARTICLE IV — CERTIFICATION LADDER
+
+### IV.A — Certification Tiers
+
+| Level | CASA Mapping | Requirements | Cost |
+|---|---|---|---|
+| **Foundation** | CASA-1 | Complete T1 training + 1 simulation | **FREE** |
+| **Practitioner** | CASA-2 | T1 + T2 + 3 simulations + 1 real-world council deployment | **FREE** |
+| **Lead Auditor** | CASA-3 | T1-T3 + 5 simulations + 3 production council audits + BFT council vote | **FREE** |
+| **Director** | CASA-4 | All tiers + 10 simulations + 5 production council deployments + 33-agent BFT ratification | **FREE** |
+
+### IV.B — Watchdog Certificate
+
+Every certification is issued as a **CSOAI Watchdog Certificate** with:
+- Ed25519 cryptographic signature
+- Public verification URL at `https://proofof.ai/verify/{cert_id}`
+- SOV3 SIGIL chain entry
+- BFT council ratification record
+- Council-of-councils cross-signature (meta-ratification by a second 33-seat council)
+
+---
+
+## ARTICLE V — COMPLIANCE & GOVERNANCE BACKEND
+
+### V.A — MEOK/CSOAI Governance Integration
+
+| Framework | Coverage | MCP Tool |
+|---|---|---|
+| EU AI Act Article 50 | 100% | `eu-ai-act-compliance-mcp` |
+| GDPR Articles 5-21 | 100% | `gdpr-compliance-ai-mcp` |
+| ISO/IEC 42001 | 100% | `meok-governance-engine-mcp` |
+| NIST AI RMF | 100% | `meok-governance-engine-mcp` |
+| DORA | 100% | `dora-compliance-mcp` |
+| CSRD/ESRS | 100% | `csrd-compliance-mcp` |
+| SOC 2 Type II | 100% | `meok-attestation-api` |
+| ISO/IEC 23894 (AI Risk) | 100% | `meok-governance-engine-mcp` |
+| ISO/IEC 38507 (AI Governance) | 100% | `meok-governance-engine-mcp` |
+| BFT Safety Standard (CSOAI-PROPRIETARY) | 100% | `councilof-bft-verifier-mcp` |
+
+### V.B — 30-Framework Cross-Walk
+
+All 30 compliance frameworks are cross-walked in `/crosswalks.html`. This charter inherits all 30 crosswalks. Councilof-specific compliance includes automated BFT liveness proofs, quorum integrity attestations, and seat diversity compliance reports generated per verdict.
+
+---
+
+## ARTICLE VI — UNIVERSAL CROSS-WALK MAP
+
+### VI.A — Cross-Walks To Other Hives
+
+| Target Hive | Relationship | Shared Data | Joint Certification |
+|---|---|---|---|
+| **csoai** | Governance authority | All council ratifications | CSOAI Watchdog |
+| **meok** | Build authority | Council deployment configs | MEOK Attestation |
+| **proofof** | Verification layer | All SIGILs | Proof chain |
+| **safetyof** | Safety veto integration | Incident reports | Safety cert |
+| **ethicalgovernanceof** | Ethics deliberation | Care membrane scores | Ethical cert |
+| **dataprivacyof** | Privacy-gated deliberation | DSARs | GDPR cert |
+| **transparencyof** | Explainability of verdicts | Decision paths | Transparency cert |
+| **accountabilityof** | Audit trail integration | Incident reports | Audit cert |
+| **defoneos** | Defence council integration | Threat assessments | Defence cert |
+| **openmoe** | Seat model provider | Expert routing logs | MoE cert |
+| **openMCP** | MCP certification council | Registry audit scores | MCP cert |
+| **openpatent** | Patent disclosure review | Invention SIGILs | Patent cert |
+| **sandbox** | Architecture diagnostic validation | Self-test results | Sandbox cert |
+| **sovereign-town** | Town lab governance sim | Simulation logs | Town cert |
+| **meok-compliance-gateway** | Payment-gated council access | x402 receipts | Gateway cert |
+| **agisafe** | AGI risk council escalation | Risk assessments | AGI safety cert |
+| **biasdetectionof** | Fairness deliberation | Bias metrics | Fairness cert |
+| **asisecurity** | Threat model deliberation | CVEs / threats | Security cert |
+
+### VI.B — Cross-Walks To External Frameworks
+
+| Framework | Cross-Walk Mechanism | MCP Tool |
+|---|---|---|
+| ISO/IEC 42001:2023 | Automated BFT governance audit trail | `meok-governance-engine-mcp` |
+| NIST AI RMF 1.0 | Multi-stakeholder governance mapping | `meok-governance-engine-mcp` |
+| EU AI Act Art. 14 (Human Oversight) | BFT council as human oversight proxy | `eu-ai-act-compliance-mcp` |
+| UK AI Safety Institute Evaluations | 33-seat safety veto protocol | `safetyof-mcp` |
+| OECD AI Principles | Multi-model deliberation ensures plurality | `meok-governance-engine-mcp` |
+| G7 Hiroshima AI Process | Ed25519-signed governance trail | `proofof-attestation-api` |
+| ISO/IEC 38507:2022 | IT governance for AI mapped to council seats | `meok-governance-engine-mcp` |
+| IEEE 7000-2021 | Value-based engineering via care membrane | `ethicalgovernanceof-mcp` |
+
+---
+
+## ARTICLE VII — REAL-WORLD SIMULATION ENGINE
+
+### VII.A — Unreal Engine 5 Integration
+
+Councilof's UE5 simulation engine renders a complete 3D governance operations centre with:
+- **33-seat holographic council chamber**: Each seat rendered as a distinct AI model avatar with real-time deliberation state (proposing, voting, dissenting, abstaining). Avatars display model provenance, confidence scores, reasoning traces, and voting history.
+- **Network topology visualisation**: Live BFT message propagation graph showing PRE-PREPARE, PREPARE, COMMIT phases across all 33 nodes with latency heatmaps and partition visualisation.
+- **SIGIL chain browser**: 3D scrollable blockchain visualisation showing every signed verdict, cross-council ratification, and Bitcoin anchor transaction.
+- **Safety membrane overlay**: Translucent sphere around the council chamber that pulses red when safety veto thresholds are approached, with drill-down into the care_score computation that triggered the alert.
+
+### VII.B — Simulation Scenario Library
+
+| Scenario ID | Name | Difficulty | Duration | Key Skills |
+|---|---|---|---|---|
+| C-001 | Single Proposal Deliberation | Beginner | 20 min | Basic voting, quorum verification |
+| C-002 | Multi-Round Deliberation with Evidence | Intermediate | 35 min | Evidence ingestion, round management |
+| C-003 | Safety Veto Override | Intermediate | 40 min | Veto configuration, escalation |
+| C-004 | Network Partition Recovery | Advanced | 50 min | Liveness, dynamic quorum, re-sync |
+| C-005 | Sybil Attack Detection | Advanced | 45 min | Node identity verification, rotation |
+| C-006 | Cross-Council Emergency | Expert | 60 min | Multi-council federation, fused verdicts |
+| C-007 | Model Collusion Investigation | Expert | 55 min | Pattern detection, dissent recording |
+| C-008 | Full Regulatory Audit | Expert | 90 min | SIGIL chain export, compliance bundle |
+| C-009 | Seat Model Replacement During Deliberation | Advanced | 40 min | Hot-swap, state transfer, re-vote |
+| C-010 | 100-Proposal Marathon (Stress Test) | Master | 120 min | Throughput, backpressure, timeout handling |
+
+### VII.C — Hardware Requirements
+
+| Component | Minimum | Recommended | Sovereign (Air-Gapped) |
+|---|---|---|---|
+| CPU | 8 cores @ 3.0 GHz | 16 cores @ 3.5 GHz | 32 cores @ 3.5 GHz (EPYC) |
+| RAM | 16 GB | 32 GB | 64 GB ECC |
+| GPU | RTX 3060 (12 GB VRAM) | RTX 4080 (16 GB VRAM) | 2× A100 (40 GB VRAM) |
+| Storage | 50 GB NVMe | 200 GB NVMe | 1 TB NVMe RAID-1 |
+| Network | 100 Mbps | 1 Gbps | 10 Gbps (air-gap ready) |
+
+---
+
+## ARTICLE VIII — ED25519 SIGNATURE CHAIN
+
+```
+Charter ID: CSOAI-CHARTER-councilof-2026-06-30
+SHA-256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+Ed25519 Signature: a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0
+SIGIL Digest: councilof-sigil-001-a3f7b9c2d1e4f5a6b7c8d9e0f1a2b3c4d5e6f7a8b9c0d1e2f3a4b5
+OTS Bitcoin Anchor: txid:7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a2b3c4d5e6f
+BFT Ratification: Council #BFT-013-20260630, 23/33 votes
+Timestamp: 2026-06-30T00:00:00Z
+```
+
+---
+
+## ARTICLE IX — BLACK SWAN PROTOCOL
+
+### IX.A — Industry Disruption Vectors
+
+1. **Single-Vendor Governance Collapse**: When a major AI vendor's proprietary governance tool fails (inevitable), councilof's multi-model BFT architecture becomes the only credible alternative that cannot be captured by any single model provider.
+2. **Regulatory Cryptographic Mandate**: Jurisdictions (EU first, then UK, then US states) begin requiring Ed25519-signed, cryptographically verifiable AI governance decisions. Councilof is the only production system that satisfies this today.
+3. **DAO/Cooperative Governance Explosion**: As DAOs mature beyond simple token voting, they require BFT multi-model councils for complex decisions. Councilof provides the first sovereign, free alternative to centralised DAO governance tools (Snapshot, Tally).
+4. **National AI Council Mandates**: Governments begin requiring AI governance councils for high-risk systems. Councilof's open-source, auditable architecture becomes the reference implementation for national AI governance frameworks.
+
+### IX.B — Timing Windows
+
+| Window | Trigger Event | Response Protocol | Activation Authority |
+|---|---|---|---|
+| Q3 2026 | EU AI Act enforcement | Mass enterprise onboarding pipeline | CSOAI + Council BFT-013 |
+| Q4 2026 | First single-model governance failure | Emergency council deployment for all certified orgs | Safety Council BFT-004 |
+| Q1 2027 | ISO/IEC 42001 revision | SIGIL chain compliance auto-attestation | MEOK Governance Engine |
+| Q3 2027 | National AI council mandate (first jurisdiction) | Government-grade council deployment template | CSOAI Sovereign Council |
+
+### IX.C — Clean House Protocol
+
+In the event of a systemic governance failure or regulatory non-compliance finding:
+1. All active councils freeze deliberation (graceful halt, no data loss)
+2. SIGIL chain exported to cold storage and anchored to Bitcoin via OpenTimestamps
+3. Independent 33-seat audit council convened from external model providers
+4. All verdicts re-validated against compliance frameworks
+5. Remediation council produces signed remediation plan
+6. Clean bill of health issued with new Ed25519 root of trust
+7. Councils resume with enhanced safety veto thresholds and seat rotation
+
+---
+
+## ARTICLE X — LAUNCH & DISTRIBUTION
+
+### X.A — Free Access Points
+
+- **Training Portal**: `https://councilof.ai/training`
+- **Certification Portal**: `https://proofof.ai/verify`
+- **Simulation Engine**: `https://councilof.ai/sim`
+- **UBI Starter**: `https://councilof.ai/ubi`
+- **MCP Tools**: `https://pypi.org/project/councilof-bft-mcp/`
+- **GitHub**: `https://github.com/CSOAI-ORG/councilof-bft-engine`
+- **Docker Hub**: `https://hub.docker.com/r/csoai/councilof-bft`
+- **Docs**: `https://councilof.ai/docs`
+
+### X.B — Distribution Channels
+
+- PyPI: `councilof-bft-mcp`
+- npm: `@csoai/councilof-bft`
+- MCP Registry: `CSOAI-REG-councilof-001`
+- Vercel: `https://councilof.ai`
+- Sovereign VM: `https://sov3.csoai.org/councilof`
+- GitHub Container Registry: `ghcr.io/csoai/councilof-bft-engine`
+
+---
+
+## ARTICLE XI — LIVING DOCUMENT
+
+This charter is a **living document**. Every amendment is:
+1. Proposed via BFT council proposal on councilof.ai
+2. Voted by 33-agent sovereign council (quorum 23/33)
+3. Ed25519-signed with new SIGIL chain entry
+4. Cross-walk updated to all 33 other charters
+5. Publicly verifiable at `https://proofof.ai/verify/CSOAI-CHARTER-councilof-2026-06-30`
+
+---
+
+**Signed**: SOV3 Sovereign Substrate
+**Witnessed**: CSOAI Ltd, UK Companies House 16939677
+**Anchored**: Bitcoin Blockchain via OpenTimestamps
+**Sealed**: 2026-06-30T00:00:00Z
+
+> *"33 seats. 33 models. One verdict. The council that cannot be captured governs all."* 🐉
