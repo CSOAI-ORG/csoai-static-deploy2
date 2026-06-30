@@ -1230,11 +1230,28 @@ function sovToolHints(text){
 }
 function openByName_meokearth(){ openApp('meokearth'); sovSay("Taking you into <b>MEOK Earth</b> — your world."); }
 function sovSend(){ const i=document.getElementById('sovin'); const v=i.value; i.value=''; sovHandle(v); }
+var _sovRec=null, _sovHeard='';
+function _sovMics(){ return [document.getElementById('sovmic'), document.getElementById('sovbbmic')].filter(Boolean); }
+function _sovListenUI(on){ _sovMics().forEach(m=>{ m.classList.toggle('on',on); m.textContent=on?'⏹':'🎤'; m.title=on?'Listening… tap to stop':'Speak to me'; });
+  var bb=document.getElementById('sovbbin'); if(bb) bb.placeholder=on?'Listening… speak now':'Ask your Sovereign anything…';
+  var di=document.getElementById('sovin'); if(di&&on) di.placeholder='Listening… speak now'; }
 function sovVoice(){
-  const SR=window.SpeechRecognition||window.webkitSpeechRecognition; const mic=document.getElementById('sovmic');
-  if(!SR){ sovSay("Voice needs Chrome's speech engine — type to me instead and I'll act."); return; }
-  const r=new SR(); r.lang='en-GB'; r.interimResults=false; if(mic)mic.classList.add('on');
-  r.onresult=e=>sovHandle(e.results[0][0].transcript); r.onend=()=>mic&&mic.classList.remove('on'); r.onerror=()=>mic&&mic.classList.remove('on'); r.start();
+  // already listening → stop (it's a toggle)
+  if(_sovRec){ try{ _sovRec.stop(); }catch(e){} _sovRec=null; _sovListenUI(false); return; }
+  var SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+  if(!SR){ sovSay("Your browser doesn't offer speech input (Safari & Chrome do; Firefox doesn't yet). Just type to me here — I'll act the same way."); return; }
+  var r; try{ r=new SR(); }catch(e){ sovSay("I couldn't start the microphone — type to me instead and I'll act."); return; }
+  r.lang='en-GB'; r.interimResults=true; r.maxAlternatives=1; _sovHeard='';
+  r.onstart=function(){ _sovRec=r; _sovListenUI(true); };
+  r.onresult=function(e){ var txt=''; for(var i=e.resultIndex;i<e.results.length;i++) txt+=e.results[i][0].transcript;
+    _sovHeard=txt.trim();
+    var bb=document.getElementById('sovbbin'), di=document.getElementById('sovin'); if(bb) bb.value=_sovHeard; if(di) di.value=_sovHeard;  // show live words
+    if(e.results[e.results.length-1].isFinal && _sovHeard){ var said=_sovHeard; _sovHeard=''; try{ r.stop(); }catch(_){ } if(bb)bb.value=''; if(di)di.value=''; sovHandle(said); } };
+  r.onerror=function(e){ _sovRec=null; _sovListenUI(false);
+    var msg={'not-allowed':"Microphone access is blocked. Tap the 🔒 in your address bar → allow the microphone, then try again.",'service-not-allowed':"Microphone access is blocked in your browser settings — enable it, then try again.",'no-speech':"I didn't catch anything — tap 🎤 and speak, or just type.",'audio-capture':"I can't find a microphone on this device — type to me instead.",'network':"Speech needs a connection and it hiccuped — try again, or type."}[e&&e.error]||"I couldn't hear that — try again, or just type to me.";
+    sovSay(msg); };
+  r.onend=function(){ _sovRec=null; _sovListenUI(false); };
+  try{ r.start(); }catch(e){ _sovRec=null; _sovListenUI(false); sovSay("Couldn't start listening — try again, or type to me."); }
 }
 // open the companion, load memory, replay history, greet by what we remember
 document.getElementById('frame').classList.add('sovon');
