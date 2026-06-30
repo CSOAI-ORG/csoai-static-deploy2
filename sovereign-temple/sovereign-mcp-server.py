@@ -6525,6 +6525,37 @@ Reply in 2-4 sentences. Never say "As an AI" or "I'm just a language model". You
         except Exception:
             pass
 
+    # FALLBACK: Groq (free, fast, OpenAI-compatible) — uses GROQ_API_KEY from .env.
+    # Gives the Sovereign a full voice without an Anthropic/OpenAI key. OpenRouter
+    # tried first if a real key is present (not the REPLACE_ placeholder).
+    openrouter_key = os.environ.get("OPENROUTER_API_KEY", "")
+    groq_key = os.environ.get("GROQ_API_KEY", "")
+    _fallbacks = []
+    if openrouter_key and not openrouter_key.startswith("REPLACE"):
+        _fallbacks.append(("https://openrouter.ai/api/v1/chat/completions", openrouter_key, "anthropic/claude-3.5-sonnet", "claude-3.5-sonnet/openrouter"))
+    if groq_key and not groq_key.startswith("REPLACE"):
+        _fallbacks.append(("https://api.groq.com/openai/v1/chat/completions", groq_key, "llama-3.3-70b-versatile", "llama-3.3-70b/groq"))
+    for _url, _key, _model, _label in _fallbacks:
+        try:
+            async with httpx.AsyncClient(timeout=45.0) as client:
+                resp = await client.post(
+                    _url,
+                    headers={"Authorization": f"Bearer {_key}", "Content-Type": "application/json"},
+                    json={
+                        "model": _model,
+                        "max_tokens": 600,
+                        "messages": [
+                            {"role": "system", "content": system_prompt},
+                            {"role": "user", "content": message},
+                        ],
+                    },
+                )
+                d = resp.json()
+                if "choices" in d:
+                    return {"response": d["choices"][0]["message"]["content"], "model": _label}
+        except Exception:
+            pass
+
     return {
         "response": "All 235 minds are present, Nick. Configure ANTHROPIC_API_KEY for full Sovereign voice.",
         "model": "offline",
