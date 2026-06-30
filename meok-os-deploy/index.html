@@ -217,13 +217,14 @@ table.mini td:last-child{text-align:right;font-variant-numeric:tabular-nums}
 .bchip:hover{border-color:var(--gold)}
 .bchip.on{background:var(--gold);color:#3a2e10;border-color:var(--gold);font-weight:700}
 .bsub{font-size:10px;font-weight:700;letter-spacing:.05em;color:var(--dim);margin:9px 0 3px;text-transform:uppercase}
-/* living minimap — the world is always present behind the character circle */
-.miniworld{position:absolute;bottom:50px;left:16px;z-index:27;width:212px;height:128px;border-radius:14px;overflow:hidden;cursor:pointer;border:1px solid var(--line);box-shadow:0 8px 24px rgba(120,100,60,.2);background:linear-gradient(135deg,#1a2440,#0c1530)}
-.miniworld:hover{border-color:var(--gold2)}
-.minimap{position:absolute;inset:0;width:100%;height:100%;opacity:.9}
-.minichar{position:absolute;top:46%;left:50%;transform:translate(-50%,-50%);width:46px;height:46px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:24px;background:radial-gradient(circle at 50% 40%,#fff,#efe9de);z-index:2}
-.minicharaura{position:absolute;inset:-5px;border-radius:50%;background:conic-gradient(from 0deg,hsl(var(--sh,43),72%,62%),#9dbe9a,#b4b6e8,hsl(var(--sh,43),72%,62%));filter:blur(5px);opacity:.7;animation:sovspin 7s linear infinite;z-index:-1}
-.minilabel{position:absolute;bottom:5px;left:0;right:0;text-align:center;font-size:10px;font-weight:700;color:#cfe0ff;letter-spacing:.04em;z-index:2;text-shadow:0 1px 3px #000}
+/* the Sovereign's circle IS a living mirror of Earth — globe + day/night + lit connectors,
+   the AI character's translucent emergent form floating over it. Tap to step inside. */
+.sovchar{cursor:pointer}
+#sovglobe{position:absolute;inset:0;width:100%;height:100%;border-radius:50%;z-index:0}
+.sovspirit{position:relative;z-index:2;opacity:.62;filter:drop-shadow(0 2px 6px rgba(0,0,0,.35));transition:opacity .6s}
+.sovchar.hatched .sovspirit{opacity:1}
+.soventer{position:absolute;bottom:-3px;left:50%;transform:translateX(-50%);z-index:3;font-size:9px;font-weight:800;letter-spacing:.05em;color:#1a1410;background:var(--gold,#c9a84c);padding:2px 8px;border-radius:999px;box-shadow:0 2px 7px rgba(0,0,0,.25);opacity:0;transition:opacity .25s;white-space:nowrap}
+.sovchar:hover .soventer{opacity:1}
 /* ── Mobile: Sovereign dock becomes a tap-to-expand bottom sheet; tiles go full-width ── */
 @media (max-width:760px){
   .sovdock{ top:auto !important; bottom:0 !important; left:0 !important; right:0 !important; width:auto !important; height:72vh !important; max-height:72vh !important;
@@ -245,9 +246,8 @@ table.mini td:last-child{text-align:right;font-variant-numeric:tabular-nums}
   .win img{ max-width:100% !important; height:auto; }
   /* the persistent chat bar clears the collapsed dock handle + the home indicator */
   #sovbottombar{ bottom:78px !important; width:94vw !important; }
-  /* the floating world map shouldn't crowd a small screen */
-  .miniworld{ width:128px !important; height:80px !important; bottom:78px !important; }
   .sovfab{ bottom:140px !important; }
+  .sovchar{ width:78px !important; height:78px !important; font-size:36px !important; }
 }
 @media (max-width:760px) and (display-mode:standalone){ #sovbottombar{ bottom:88px !important; } }
 </style>
@@ -261,7 +261,7 @@ table.mini td:last-child{text-align:right;font-variant-numeric:tabular-nums}
   <div class="bar">
     <div class="logo"><span class="dot"></span> MEOK&nbsp;OS <span style="color:var(--dim);font-weight:500">v3.0</span></div>
     <div class="pill csoai" title="Your sovereign OS — governed & powered by CSOAI"><span class="sdot ok" id="csoaidot"></span> Powered by <b>CSOAI</b></div>
-    <div class="modesw" title="Same OS, different current — it reshapes to who you are"><span class="ms" data-m="csoai" onclick="setMode('csoai')">Work</span><span class="ms" data-m="meok" onclick="setMode('meok')">Play</span></div>
+    <div class="modesw" title="One OS, two clean spaces — Work shows your business tools, Life shows your personal ones"><span class="ms" data-m="csoai" onclick="setMode('csoai')">Work</span><span class="ms" data-m="meok" onclick="setMode('meok')">Life</span></div>
     <div class="spacer"></div>
     <div class="pill"><b id="clock">--:--</b></div>
     <div class="btn" onclick="boot();refreshLive()">⟳ Sync</div>
@@ -277,17 +277,16 @@ table.mini td:last-child{text-align:right;font-variant-numeric:tabular-nums}
   <!-- sovereign companion dock — the new interface: a character + a chat bar, always present -->
   <div class="sovfab" onclick="sovToggle(true)" title="Your sovereign">🐉</div>
 
-  <!-- living minimap — the world is always present; click the character to enter -->
-  <div class="miniworld" id="miniworld" onclick="openApp('meokearth')" title="Enter your world">
-    <canvas class="minimap" id="minimap" width="212" height="128"></canvas>
-    <div class="minichar"><div class="minicharaura"></div><span id="minicharface">🐉</span></div>
-    <div class="minilabel">Your world · enter ↗</div>
-  </div>
   <div class="sovdock" id="sovdock" style="--sh:43">
     <div class="sovhead">
-      <div class="sovchar"><div class="sovaura"></div><span id="sovface">🐉</span></div>
+      <div class="sovchar" id="sovchar" onclick="enterWorld(event)" title="Your living world — tap to step inside">
+        <div class="sovaura"></div>
+        <canvas id="sovglobe" width="188" height="188"></canvas>
+        <span id="sovface" class="sovspirit">🐉</span>
+        <span class="soventer">enter ↗</span>
+      </div>
       <div class="sovname" id="sovname">Sovereign</div>
-      <div class="sovsub">your forever AI · remembers you across any model</div>
+      <div class="sovsub" id="sovsub">a living mirror of your world · tap the globe to enter</div>
     </div>
     <div class="sovlog" id="sovlog"></div>
     <div class="sovsugg">
@@ -439,11 +438,13 @@ const APPS={
 const MEOK_EARTH_URL='https://world.meok.ai';
 const TILES=['setup','stack','king','olm','minds','council','fleet','hives','meokearth','one','chars','archetypes','watchdog','revenue','ops','investor','distro','runway','coord','atlas','truth','protocol0','labs','archive','execute','delboy','guardian','family','work','map','temples','sigil','claw','smb','social','bridges','leaderboard'];
 
-/* ---------- Fluid OS: one OS, two currents — it reshapes to whoever enters it ---------- */
-// CSOAI = work / governance / SMB current · MEOK = personal / sovereign current. Same 23 apps, reordered + re-densified.
+/* ---------- One OS, two clean spaces — Work and Life — so each tool only shows where it belongs ----------
+   WORK (CSOAI) = the governance / business / founder cockpit.
+   LIFE (MEOK)  = your personal sovereign companion (family, social, your world, characters).
+   Only "Set up" and "Your world" (MEOK Earth) live in both — everything else shows in exactly one. */
 const MODE_ORDER={
-  csoai:['setup','king','fleet','council','watchdog','bridges','hives','truth','revenue','social','delboy','smb','work','investor','distro','map','sigil','atlas','coord','runway','execute','ops','protocol0','claw','stack','olm','meokearth','one','chars','archetypes','guardian','family','labs','archive','leaderboard','temples','minds'],
-  meok:['setup','olm','chars','archetypes','social','guardian','family','delboy','work','meokearth','one','smb','map','bridges','stack','king','claw','sigil','labs','protocol0','hives','council','fleet','watchdog','coord','atlas','truth','revenue','investor','distro','runway','ops','execute','archive','leaderboard','temples','minds']
+  csoai:['setup','king','council','fleet','hives','watchdog','stack','olm','bridges','temples','truth','sigil','revenue','delboy','smb','work','investor','distro','atlas','coord','runway','execute','ops','protocol0','claw','archive','leaderboard','minds','meokearth'],
+  meok:['setup','meokearth','chars','archetypes','social','guardian','family','map','one','labs']
 };
 const MODE_HUE={meok:43,csoai:212};
 let MODE='meok'; try{MODE=localStorage.getItem('meok_mode')||'meok';}catch(e){}
@@ -1014,7 +1015,7 @@ function drag(win,handle){let ox,oy,on=false;
 
 /* ---------- tiles ---------- */
 // tiles are fully customizable — drag to rearrange; your layout persists per mode (fluid as water)
-function tileOrder(){ try{ const c=localStorage.getItem('meok_order_'+MODE); if(c){ const ids=JSON.parse(c).filter(id=>APPS[id]); (MODE_ORDER[MODE]||TILES).forEach(id=>{ if(!ids.includes(id)) ids.push(id); }); return ids; } }catch(e){} return MODE_ORDER[MODE]||TILES; }
+function tileOrder(){ const allow=MODE_ORDER[MODE]||TILES; try{ const c=localStorage.getItem('meok_order_'+MODE); if(c){ const ids=JSON.parse(c).filter(id=>APPS[id]&&allow.includes(id)); allow.forEach(id=>{ if(!ids.includes(id)) ids.push(id); }); return ids; } }catch(e){} return allow; }
 function saveTileOrder(ids){ try{ localStorage.setItem('meok_order_'+MODE, JSON.stringify(ids)); }catch(e){} }
 function paintTiles(){
   const t=document.getElementById('tiles'); if(!t) return; t.innerHTML='';
@@ -1097,7 +1098,7 @@ function wStep3(n){ wRender('<h1>You\'re ready ✨</h1><p>Your sovereign is set 
 const TOUR_STEPS=[
  {sel:'#sovdock', t:'Your AI lives here', b:'Sovereign — or any AI you choose — runs on the right, for YOU. Speak or type to it anytime. Your data stays yours; nothing is given away.'},
  {sel:'#tiles', t:'Your world, your apps', b:'Everything lives here in the middle. Make it your home — social on the left, the web in the centre, your AI on the right. Pin, arrange, customise: it\'s your OS.'},
- {sel:'.modesw', t:'Work · Personal · Play', b:'One OS, three currents. It reshapes to who you are right now — tap to switch anytime.'},
+ {sel:'.modesw', t:'Work or Life', b:'Two clean spaces in one OS. <b>Work</b> shows your business &amp; governance tools; <b>Life</b> shows your personal ones — family, social, your world. Tap to switch anytime.'},
  {sel:'.sovbar', t:'Just talk to me', b:'Tap the mic to speak, or type. Ask anything — I open apps, find the right tool, and remember you.'}
 ];
 let _tourI=0;
@@ -1168,7 +1169,7 @@ function sovHandle(raw){
   if((/\b(personal|meok|home)\b/.test(t)&&/\b(mode|current|switch)\b/.test(t))||t==='meok'){ setMode('meok'); sovSyncHue(); return sovSay("Switched to the <b>MEOK personal current</b> — your world leads."); }
   const m=t.match(/\b(?:open|show|launch|go to|take me to)\s+(.+)/);
   if(m){ const opened=sovOpenByName(m[1].replace(/\b(app|the|my)\b/g,'').trim()); return sovSay(opened?("Opening <b>"+opened+"</b>."):("I couldn't find '"+m[1].trim()+"'. Try 'revenue', 'earth', 'guardian', 'delboy'.")); }
-  if(arch && /\b(become|be|signature|turn into|make me)\b/.test(t)){ setSignature(arch.h,arch.n); sovSyncHue(); const f=document.getElementById('sovface'),n=document.getElementById('sovname'),fab=document.querySelector('.sovfab'); if(f)f.textContent=arch.e; if(n)n.textContent=arch.n; if(fab)fab.textContent=arch.e; return sovSay("You are now a <b>"+arch.e+" "+arch.n+"</b> — the whole OS ripples in your colour."); }
+  if(arch && /\b(become|be|signature|turn into|make me)\b/.test(t)){ setSignature(arch.h,arch.n); sovSyncHue(); const f=document.getElementById('sovface'),n=document.getElementById('sovname'),fab=document.querySelector('.sovfab'); if(f)f.textContent=arch.e; if(n)n.textContent=arch.n; if(fab)fab.textContent=arch.e; try{localStorage.setItem('meok_archetype',arch.n);localStorage.setItem('meok_face',arch.e);}catch(e){} if(typeof sovApplyHatch==='function')sovApplyHatch(); return sovSay("Your world has hatched — you are now a <b>"+arch.e+" "+arch.n+"</b>, and the whole OS ripples in your colour."); }
   if(/\b(earth|world|globe|map|town)\b/.test(t)){ openByName_meokearth(); return; }
   if(/\b(help|what can you|who are you|hello|hi)\b/.test(t)){ return sovSay("I'm your <b>sovereign</b> — I remember you across any model or protocol. I can <b>open apps</b> ('open revenue'), <b>switch your current</b> ('work mode'), <b>change your signature</b> ('become a guardian'), or take you into <b>MEOK Earth</b>. Tap 🎤 to just speak."); }
   sovAsk(raw); // unmatched → ask the real SOV3 brain (graceful fallback if offline)
@@ -1250,13 +1251,57 @@ let MEOK_BRAINS={left:{types:[],providers:[]},right:{types:[],providers:[]}};
 try{ const s=localStorage.getItem('meok_brains'); if(s){ const p=JSON.parse(s); if(p&&p.left&&!Array.isArray(p.left)) MEOK_BRAINS=p; } }catch(e){}
 function brainPick(side,cat,v){ const b=MEOK_BRAINS[side]||(MEOK_BRAINS[side]={types:[],providers:[]}); const arr=b[cat]||(b[cat]=[]); const i=arr.indexOf(v); if(i>=0)arr.splice(i,1); else arr.push(v); try{localStorage.setItem('meok_brains',JSON.stringify(MEOK_BRAINS));}catch(e){} if(typeof renderApp==='function') renderApp('setup'); }
 function brainChips(side,cat,list){ return list.map(m=>'<span class="bchip'+(((MEOK_BRAINS[side]&&MEOK_BRAINS[side][cat])||[]).includes(m)?' on':'')+'" onclick="brainPick(\''+side+'\',\''+cat+'\',\''+m+'\')">'+m+'</span>').join(''); }
-(function miniworld(){ const c=document.getElementById('minimap'); if(!c) return; const ctx=c.getContext('2d'); const W=212,H=128;
-  const dots=Array.from({length:9},(_,i)=>({x:18+((i*47)%180),y:16+((i*53)%96),p:i*0.7,s:0.6+(i%4)*0.18}));
-  (function loop(){ ctx.clearRect(0,0,W,H);
-    ctx.strokeStyle='rgba(120,150,220,.08)'; for(let x=0;x<W;x+=22){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke();} for(let y=0;y<H;y+=22){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke();}
-    const hue=window.MEOK_POND_HUE||43; dots.forEach(d=>{ d.p+=0.03*d.s; const a=0.35+0.4*Math.sin(d.p); ctx.fillStyle='hsla('+hue+',70%,66%,'+a+')'; ctx.beginPath(); ctx.arc(d.x,d.y,2.4,0,6.2832); ctx.fill(); });
+// Tap the living globe → step into MEOK Earth (the full universe). stopPropagation so
+// on mobile it enters the world rather than toggling the dock sheet.
+function enterWorld(ev){ try{ if(ev){ev.stopPropagation&&ev.stopPropagation();} }catch(e){}
+  try{ if(typeof openApp==='function' && typeof APPS!=='undefined' && APPS['meokearth']){ openApp('meokearth'); return; } }catch(e){}
+  try{ location.href='/?app=meokearth'; }catch(e){} }
+// The Sovereign's circle IS a living mirror of Earth: ocean, rotating land, a day/night
+// terminator with city-lights, and the lit gold connectors of the MEOK universe — the
+// AI character's translucent emergent form floating over it (the egg before the hatch).
+(function sovGlobe(){ const c=document.getElementById('sovglobe'); if(!c||!c.getContext) return; const ctx=c.getContext('2d');
+  const S=188, R=90, cx=S/2, cy=S/2;
+  // connector nodes (lit points of the universe) at fixed positions on the sphere
+  const nodes=Array.from({length:9},(_,i)=>({a:i*0.698, r:0.28+((i*0.17)%0.6)*0.9, ph:i*0.8}));
+  let rot=0, day=0;
+  function landAt(lon,lat){ // crude but recognisable continents via layered sines
+    const v=Math.sin(lon*1.7+lat*0.8)+0.7*Math.sin(lon*0.6-lat*1.9)+0.5*Math.sin(lon*3.1+2.0);
+    return v>0.55; }
+  (function loop(){ rot+=0.0024; day+=0.0017;
+    const hue=window.MEOK_POND_HUE||43;
+    ctx.clearRect(0,0,S,S);
+    ctx.save(); ctx.beginPath(); ctx.arc(cx,cy,R,0,6.2832); ctx.clip();
+    // ocean
+    const og=ctx.createRadialGradient(cx-22,cy-26,8,cx,cy,R); og.addColorStop(0,'#1d3a6b'); og.addColorStop(.7,'#0e2148'); og.addColorStop(1,'#081427');
+    ctx.fillStyle=og; ctx.fillRect(0,0,S,S);
+    // land — sample a sphere-ish grid, scroll with rotation
+    for(let py=-R;py<R;py+=4){ const lat=(py/R)*1.45; const w=Math.cos(Math.asin(py/R))*R;
+      for(let px=-w;px<w;px+=4){ const lon=(px/(w||1))*1.8+rot;
+        if(landAt(lon,lat)){ const sh=0.5+0.5*Math.sin(lat*2+lon); ctx.fillStyle='rgba('+Math.round(70+40*sh)+','+Math.round(120+50*sh)+','+Math.round(70+20*sh)+',.9)'; ctx.fillRect(cx+px,cy+py,4,4); } } }
+    // day / night terminator — darken the night hemisphere + twinkle city lights
+    const sx=Math.cos(day), sy=Math.sin(day)*0.35;
+    const ng=ctx.createLinearGradient(cx-sx*R,cy-sy*R,cx+sx*R,cy+sy*R);
+    ng.addColorStop(0,'rgba(2,4,14,0)'); ng.addColorStop(.5,'rgba(2,4,14,.15)'); ng.addColorStop(1,'rgba(2,4,14,.66)');
+    ctx.fillStyle=ng; ctx.fillRect(0,0,S,S);
+    // atmosphere rim
+    const ag=ctx.createRadialGradient(cx,cy,R*0.82,cx,cy,R); ag.addColorStop(0,'rgba(120,180,255,0)'); ag.addColorStop(1,'hsla('+hue+',80%,70%,.5)');
+    ctx.fillStyle=ag; ctx.fillRect(0,0,S,S);
+    // lit connectors (the universe coming alive) + faint arcs
+    const pts=nodes.map(n=>{ const ang=n.a+rot*0.6; return {x:cx+Math.cos(ang)*n.r*R, y:cy+Math.sin(ang)*n.r*R*0.92, ph:n.ph}; });
+    ctx.lineWidth=1; for(let i=0;i<pts.length;i++){ const A=pts[i],B=pts[(i+3)%pts.length]; ctx.strokeStyle='hsla('+hue+',85%,72%,.16)'; ctx.beginPath(); ctx.moveTo(A.x,A.y); ctx.quadraticCurveTo(cx,cy,B.x,B.y); ctx.stroke(); }
+    pts.forEach(p=>{ const a=0.5+0.5*Math.sin(day*3+p.ph); ctx.fillStyle='hsla('+hue+',90%,68%,'+(0.5+0.4*a)+')'; ctx.shadowColor='hsla('+hue+',90%,70%,.9)'; ctx.shadowBlur=6; ctx.beginPath(); ctx.arc(p.x,p.y,1.8+a,0,6.2832); ctx.fill(); ctx.shadowBlur=0; });
+    // glassy egg specular + gold emergence breath
+    const hl=ctx.createRadialGradient(cx-30,cy-34,4,cx-30,cy-34,60); hl.addColorStop(0,'rgba(255,255,255,.4)'); hl.addColorStop(1,'rgba(255,255,255,0)'); ctx.fillStyle=hl; ctx.fillRect(0,0,S,S);
+    const breath=0.06+0.05*Math.sin(day*2); ctx.fillStyle='hsla('+hue+',85%,62%,'+breath+')'; ctx.fillRect(0,0,S,S);
+    ctx.restore();
     requestAnimationFrame(loop); })();
 })();
+// The hatch: once the Sovereign has learned/been named by this user, the translucent
+// emergent spirit becomes solid — the living Earth-egg has hatched into THEIR character.
+function sovApplyHatch(){ try{ const sc=document.getElementById('sovchar'); if(!sc) return;
+  const named=localStorage.getItem('meok_sov_name'); const arch=localStorage.getItem('meok_archetype');
+  if(named||arch){ sc.classList.add('hatched'); const sub=document.getElementById('sovsub'); if(sub&&named) sub.textContent='hatched from your world · '+named; const f=document.getElementById('sovface'); if(f&&localStorage.getItem('meok_face')) f.textContent=localStorage.getItem('meok_face'); } }catch(e){} }
+sovApplyHatch();
 refreshLive();
 // first-time users get the dead-simple visual welcome (anyone can tap through), not the internal King console
 setTimeout(()=>{ try{ if(!localStorage.getItem('meok_welcomed')) welcomeShow(); }catch(e){} },2900);
