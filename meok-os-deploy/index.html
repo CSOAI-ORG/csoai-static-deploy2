@@ -21,8 +21,16 @@
 <html lang="en">
 <head>
 <meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
 <title>MEOK OS — Sovereign AI Operating World</title>
+<meta name="description" content="Build your own AI. Own your data. Free & safe. Your sovereign OS — a companion that finds the right tool, governed and signed, that runs for you."/>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%231a1410'/%3E%3Ctext x='16' y='23' font-family='Arial' font-size='20' font-weight='800' fill='%23c9a84c' text-anchor='middle'%3EM%3C/text%3E%3C/svg%3E"/>
+<meta property="og:title" content="MEOK OS — your own sovereign AI"/>
+<meta property="og:description" content="Build your own AI. Own your data. Free & safe. A companion that finds the right tool — governed, signed, and yours."/>
+<meta property="og:type" content="website"/>
+<meta property="og:url" content="https://os.meok.ai/"/>
+<meta property="og:image" content="https://os.meok.ai/api/avatar?queen_id=queen-care&size=600"/>
+<meta name="twitter:card" content="summary_large_image"/>
 <style>
 :root{color-scheme:light;
  --paper:#ece7dd; --cream:#faf7f1; --ink:#1d1d22; --dim:#6f6a61;
@@ -210,6 +218,18 @@ table.mini td:last-child{text-align:right;font-variant-numeric:tabular-nums}
 .minichar{position:absolute;top:46%;left:50%;transform:translate(-50%,-50%);width:46px;height:46px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:24px;background:radial-gradient(circle at 50% 40%,#fff,#efe9de);z-index:2}
 .minicharaura{position:absolute;inset:-5px;border-radius:50%;background:conic-gradient(from 0deg,hsl(var(--sh,43),72%,62%),#9dbe9a,#b4b6e8,hsl(var(--sh,43),72%,62%));filter:blur(5px);opacity:.7;animation:sovspin 7s linear infinite;z-index:-1}
 .minilabel{position:absolute;bottom:5px;left:0;right:0;text-align:center;font-size:10px;font-weight:700;color:#cfe0ff;letter-spacing:.04em;z-index:2;text-shadow:0 1px 3px #000}
+/* ── Mobile: Sovereign dock becomes a tap-to-expand bottom sheet; tiles go full-width ── */
+@media (max-width:760px){
+  .sovdock{ top:auto !important; bottom:0 !important; left:0 !important; right:0 !important; width:auto !important; height:72vh !important; max-height:72vh !important;
+    border-radius:18px 18px 0 0; box-shadow:0 -8px 34px rgba(0,0,0,.24); z-index:600;
+    transform:translateY(calc(100% - 66px)); transition:transform .34s cubic-bezier(.4,0,.2,1); }
+  body.sov-open .sovdock{ transform:translateY(0); }
+  .sovhead{ cursor:pointer; position:relative; }
+  .sovhead::after{ content:'⌃ tap to chat'; position:absolute; top:8px; right:14px; font-size:10px; font-weight:700; color:var(--gold); opacity:.8; }
+  body.sov-open .sovhead::after{ content:'⌄ close'; }
+  .tiles{ grid-template-columns:repeat(auto-fill,minmax(96px,1fr)) !important; padding-bottom:86px !important; }
+  .modesw{ flex-wrap:wrap; }
+}
 </style>
 </head>
 <body>
@@ -960,6 +980,8 @@ function sovHandle(raw){
 }
 // the canonical brain: POST to live SOV3 /chat; falls back to the command layer if unreachable
 const SOV3_CHAT = "/api/chat";
+// mobile: tap the dock header to expand/collapse the bottom sheet
+try{ const _sh=document.querySelector('.sovhead'); if(_sh) _sh.addEventListener('click',function(){ if(innerWidth<=760) document.body.classList.toggle('sov-open'); }); }catch(e){}
 async function sovAsk(text){
   const log=document.getElementById('sovlog'); let think=null;
   if(log){ think=document.createElement('div'); think.className='sovmsg ai'; think.textContent='…'; log.appendChild(think); log.scrollTop=log.scrollHeight; }
