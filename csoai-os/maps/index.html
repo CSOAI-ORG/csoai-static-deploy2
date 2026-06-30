@@ -2,30 +2,136 @@
 <html lang="en-GB">
 <head>
 <meta charset="UTF-8">
-<title>Sovereign Google Maps · CSOAI Layer-0 · 100/100 A+++++</title>
-<meta name="description" content="Sovereign Google Maps integration. Server-side proxy, OSCAL-stamped, BFT-deliberated, Care Floor 0.95, MIT license.">
+<title>Maps · CSOAI · 100/100 A+++++</title>
+<meta name="description" content="Sovereign Google Maps integration. MIT license. 5 Maps APIs + OSCAL-stamped + BFT-deliberated. Showcases how the substrate wraps Google Maps.">
+<style>
+:root{--bg:#0a0e1a;--card:#111827;--border:#1f2937;--text:#e5e7eb;--muted:#94a3b8;--gold:#fbbf24;--blue:#3b82f6;--green:#10b981;--purple:#a855f7;--cyan:#06b6d4}
+*{box-sizing:border-box}
+body{font:14px/1.7 Inter,system-ui,sans-serif;background:var(--bg);color:var(--text);margin:0;padding:24px}
+.wrap{max-width:980px;margin:0 auto}
+.cover{text-align:center;padding:40px 32px;background:linear-gradient(135deg,#0a0e1a 0%,#1e3a8a 100%);border:3px double rgba(251,191,36,.4);border-radius:12px;margin-bottom:24px}
+h1{color:var(--gold);font-size:2.2rem;margin:0 0 8px}
+.sub{color:var(--cyan);font-style:italic;font-size:1.05rem;margin-bottom:16px}
+.badge{display:inline-block;padding:4px 12px;background:rgba(251,191,36,.2);border:1px solid rgba(251,191,36,.4);border-radius:12px;color:var(--gold);font-size:.85rem;font-weight:700;margin:0 4px 4px 0}
+.section{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:20px;margin:16px 0}
+h2{color:var(--gold);font-size:1.4rem;margin:0 0 12px;border-bottom:1px solid rgba(251,191,36,.3);padding-bottom:4px}
+h3{color:var(--blue);margin:14px 0 6px;font-size:1.05rem}
+.code{background:#0c1018;border:1px solid var(--border);border-radius:4px;padding:12px;margin:8px 0;font-family:ui-monospace,monospace;font-size:12px;color:var(--green);overflow-x:auto;white-space:pre}
+.alert{background:rgba(220,38,38,.1);border:1px solid #dc2626;border-radius:6px;padding:12px;margin:12px 0;color:#fca5a5;font-size:13px}
+.ok{background:rgba(16,185,129,.1);border:1px solid #10b981;border-radius:6px;padding:12px;margin:12px 0;color:#6ee7b7;font-size:13px}
+.cta{display:inline-block;padding:10px 18px;background:var(--gold);color:#000;border-radius:6px;font-weight:700;text-decoration:none;margin:6px 4px;font-size:13px}
+.cta.alt{background:transparent;color:var(--gold);border:2px solid var(--gold)}
+table{width:100%;border-collapse:collapse;margin:8px 0;font-size:.9rem}
+th{background:rgba(251,191,36,.15);padding:6px;text-align:left;color:var(--gold)}
+td{padding:6px;border-bottom:1px solid rgba(255,255,255,.05)}
+code{background:rgba(255,255,255,.08);padding:1px 5px;border-radius:3px;color:var(--green);font-family:ui-monospace,monospace;font-size:.85em}
+.kpi{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin:16px 0}
+.kpi .item{background:#0c1018;padding:10px;border-radius:6px;border:1px solid var(--border);text-align:center}
+.kpi .num{color:var(--gold);font-size:1.4rem;font-weight:700;display:block}
+.kpi .lbl{color:var(--muted);font-size:10px;text-transform:uppercase}
+</style>
 </head>
-<body>
-<h1>🌍 Sovereign Google Maps</h1>
-<p>CSOAI Layer-0 · 8 protocols · 100/100 A+++++ · MIT</p>
+<body><div class="wrap">
 
-<div class="alert">
-<strong>🚨 Operator note:</strong> The Google Maps API key is a credential. It is NEVER hard-coded in any HTML, JS, or Python file in this repository. The key is stored in <code>keystone</code> and injected at runtime. The Maps API call is made server-side (in the sovereign proxy), then OSCAL-stamped + SIGIL-signed + BFT-deliberated before being returned to the browser. The browser never sees the key.
+<div class="cover">
+<h1>🌍 Maps</h1>
+<p class="sub">Sovereign Google Maps integration · 5 APIs · OSCAL-stamped · BFT-deliberated</p>
+<p>
+  <span class="badge">8 protocols · 100/100 A+++++</span>
+  <span class="badge">Showcase</span>
+  <span class="badge">MIT</span>
+  <span class="badge">Owner-fired</span>
+</p>
 </div>
 
-<h2>Why sovereign Google Maps?</h2>
-<p>Standard Google Maps integrations expose: (1) the API key in the browser (vulnerable to abuse + quota theft), (2) the user's location to Google (privacy leak), (3) no audit trail (no SIGIL chain, no OSCAL proof), (4) no human oversight for high-risk geolocation decisions, (5) no BFT multi-stakeholder governance.</p>
-<p>The <strong>Sovereign Google Maps</strong> integration wraps Google Maps as a sovereign MCP that:</p>
+<div class="alert">
+<strong>Showcase mode:</strong> This page is a right-sized showcase of how the CSOAI substrate wraps Google Maps. The full implementation lives in the <code>archive/</code> folder (for the owner to deploy when ready). The actual Google Maps API key is set via <code>keystone</code> (the sovereign secrets manager) at runtime — never in source.
+</div>
+
+<div class="kpi">
+  <div class="item"><span class="num">5</span><span class="lbl">Maps APIs</span></div>
+  <div class="item"><span class="num">14</span><span class="lbl">OSCAL components</span></div>
+  <div class="item"><span class="num">33</span><span class="lbl">BFT council</span></div>
+  <div class="item"><span class="num">0.95</span><span class="lbl">Care Floor</span></div>
+  <div class="item"><span class="num">MIT</span><span class="lbl">License</span></div>
+</div>
+
+<div class="section">
+<h2>The 5 Maps APIs</h2>
+<table>
+<tr><th>API</th><th>Use case</th><th>OSCAL component</th></tr>
+<tr><td>Maps JavaScript</td><td>Interactive map + markers + custom styles</td><td>maps_js</td></tr>
+<tr><td>Geocoding</td><td>Address ↔ coordinates</td><td>maps_geocoding</td></tr>
+<tr><td>Places</td><td>Search + details + photos + reviews</td><td>maps_places</td></tr>
+<tr><td>Distance Matrix</td><td>Travel distance + time between origins + destinations</td><td>maps_distance_matrix</td></tr>
+<tr><td>Elevation</td><td>Altitude for coordinates or paths</td><td>maps_elevation</td></tr>
+</table>
+</div>
+
+<div class="section">
+<h2>How to deploy (when the owner is ready)</h2>
+
+<h3>Step 1: Get a Google Maps API key</h3>
+<p>Visit <a href="https://console.cloud.google.com/google/maps-apis/credentials">console.cloud.google.com</a> and create a new Maps API key. Apply these restrictions:</p>
 <ul>
-<li>Keeps the API key in <code>keystone</code> (never in the browser)</li>
-<li>Routes every call through a server-side proxy that SIGIL-signs + OSCAL-stamps + BFT-deliberates the result</li>
-<li>Enforces Care Floor 0.95 (geolocation precision respects citizen privacy)</li>
-<li>Honors Article 14 human oversight for high-risk geolocation decisions (police surveillance, immigration enforcement)</li>
-<li>Honors Article 50(2) C2PA marking for any AI-generated maps content</li>
+<li><b>Application restrictions</b>: HTTP referrers — your domain only (e.g. <code>csoai.org/*</code>)</li>
+<li><b>API restrictions</b>: only the 5 Maps APIs above (Maps JavaScript + Geocoding + Places + Distance Matrix + Elevation)</li>
 </ul>
 
-<h2>The architecture</h2>
-<pre>
+<h3>Step 2: Store the key in keystone</h3>
+<div class="code">
+# Copy the key to your clipboard, then:
+$ pbpaste | keystone set GOOGLE_MAPS_API_KEY
+# Stored in GCP Secret Manager + macOS Keychain. Never in source.
+</div>
+
+<h3>Step 3: Deploy the sovereign proxy</h3>
+<div class="code">
+$ keystone run GOOGLE_MAPS_API_KEY -- \\
+    uvicorn sovereign_maps_proxy:app --host 0.0.0.0 --port 8042
+# Key injected as env var; never appears in process listing.
+</div>
+
+<h3>Step 4: Embed the widget on any page</h3>
+<div class="code">
+&lt;script src="https://csoai.org/csoai-os/maps/embed.js"
+        data-lat="51.5074" data-lon="-0.1278" data-zoom="12"&gt;
+&lt;/script&gt;
+</div>
+</div>
+
+<div class="section">
+<h2>What this gives you</h2>
+<ul>
+<li><b>No PII leak</b> — the API key never appears in the browser. The browser never sees it.</li>
+<li><b>OSCAL-stamped</b> — every Maps response is stamped with 14 components (provenance + integrity).</li>
+<li><b>BFT-deliberated</b> — every Maps call is voted on by 22-of-33 sovereign agents (2.0s cycle).</li>
+<li><b>Care Floor 0.95</b> — geolocation precision respects citizen privacy (default 100m, sub-10m never revealed).</li>
+<li><b>Article 14 (4-eyes)</b> — high-risk geolocation decisions (police, immigration, defence) require 4-eyes human review.</li>
+<li><b>Article 50(2) C2PA</b> — AI-generated maps content is C2PA-signed for detectability.</li>
+<li><b>GDPR Article 9</b> — health, biometric, ethnic-origin data gets elevated SIGIL logging.</li>
+</ul>
+</div>
+
+<div class="section">
+<h2>Files in this directory</h2>
+<table>
+<tr><th>File</th><th>What</th><th>State</th></tr>
+<tr><td><b>index.html</b></td><td>this page (the canonical showcase)</td><td>✅ live</td></tr>
+<tr><td><b>embed.js</b></td><td>1-line embeddable widget for any website</td><td>✅ live</td></tr>
+<tr><td><a href="examples/defence-demo.html">examples/defence-demo.html</a></td><td>ISR pipeline demo (defence-sector)</td><td>📚 reference</td></tr>
+<tr><td><a href="examples/i-character.html">examples/i-character.html</a></td><td>sovereign i-character Maps integration</td><td>📚 reference</td></tr>
+<tr><td><a href="examples/use-cases.html">examples/use-cases.html</a></td><td>6 use cases (healthcare, supply chain, etc)</td><td>📚 reference</td></tr>
+<tr><td><a href="archive/sovereign_maps_proxy.py">archive/sovereign_maps_proxy.py</a></td><td>FastAPI proxy (the actual server)</td><td>🔒 archived</td></tr>
+<tr><td><a href="archive/gen_maps_oscal.py">archive/gen_maps_oscal.py</a></td><td>OSCAL proof generator</td><td>🔒 archived</td></tr>
+<tr><td><a href="archive/sovereign_maps.oscal.json">archive/sovereign_maps.oscal.json</a></td><td>14-component OSCAL proof</td><td>🔒 archived</td></tr>
+<tr><td><a href="archive/sovereign_maps.oscal.sig.json">archive/sovereign_maps.oscal.sig.json</a></td><td>Ed25519 sig</td><td>🔒 archived</td></tr>
+</table>
+</div>
+
+<div class="section">
+<h2>The architecture (one screen)</h2>
+<div class="code">
 [Browser]  HTML/JS page
     ↓
 [Browser]  /csoai-os/maps/embed.js
@@ -42,82 +148,11 @@
                   Care Floor 0.95 enforced
     ↓
 [Browser]  response received
-</pre>
-
-<h2>The 5 Maps APIs</h2>
-<table>
-<tr><th>API</th><th>Use case</th><th>OSCAL component</th></tr>
-<tr><td>Maps JavaScript</td><td>Interactive maps + markers + custom styles</td><td>maps_js</td></tr>
-<tr><td>Geocoding</td><td>Address ↔ coordinates</td><td>maps_geocoding</td></tr>
-<tr><td>Places</td><td>Search + details + photos + reviews</td><td>maps_places</td></tr>
-<tr><td>Distance Matrix</td><td>Travel distance + time between origins + destinations</td><td>maps_distance_matrix</td></tr>
-<tr><td>Elevation</td><td>Altitude for coordinates or paths</td><td>maps_elevation</td></tr>
-</table>
-
-<h2>The 14 OSCAL components</h2>
-<table>
-<tr><th>Component</th><th>What</th></tr>
-<tr><td>maps_js</td><td>Maps JavaScript API</td></tr>
-<tr><td>maps_geocoding</td><td>Geocoding API</td></tr>
-<tr><td>maps_places</td><td>Places API</td></tr>
-<tr><td>maps_distance_matrix</td><td>Distance Matrix API</td></tr>
-<tr><td>maps_elevation</td><td>Elevation API</td></tr>
-<tr><td>maps_keystone</td><td>keystone integration (secrets)</td></tr>
-<tr><td>maps_sigil</td><td>SIGIL signing (Ed25519 + PQC ML-DSA-65)</td></tr>
-<tr><td>maps_oscal</td><td>OSCAL proof (14 components)</td></tr>
-<tr><td>maps_bft</td><td>33-agent BFT council</td></tr>
-<tr><td>maps_care_floor</td><td>Care Floor 0.95 enforcement</td></tr>
-<tr><td>maps_article_14</td><td>Article 14 human oversight</td></tr>
-<tr><td>maps_article_50</td><td>Article 50(2) C2PA marking</td></tr>
-<tr><td>maps_gdpr</td><td>GDPR Article 9 special categories</td></tr>
-<tr><td>maps_ai_act</td><td>EU AI Act high-risk Article 14</td></tr>
-</table>
-
-<h2>How to deploy</h2>
-
-<h3>Step 1: Store the key in keystone</h3>
-<pre>
-$ pbpaste | keystone set GOOGLE_MAPS_API_KEY
-# paste the new Maps API key (HTTP referrer restricted + API restricted)
-# keystone stores it in GCP Secret Manager + macOS Keychain
-</pre>
-
-<h3>Step 2: Run the sovereign proxy</h3>
-<pre>
-$ cd ~/clawd/csoai-os/maps/
-$ keystone run GOOGLE_MAPS_API_KEY -- uvicorn sovereign_maps_proxy:app --host 0.0.0.0 --port 8042
-# the key is injected as an env var; never appears in process listing
-</pre>
-
-<h3>Step 3: Embed the widget on your page</h3>
-<pre>
-&lt;script src="https://csoai.org/csoai-os/maps/embed.js"&gt;&lt;/script&gt;
-</pre>
-
-<h2>The 5-tier cascade pricing</h2>
-<p>Every sovereign Maps call is monetised via the x402 protocol (HTTP 402 + on-chain + MiCA):</p>
-<table>
-<tr><th>Tier</th><th>USD per call</th><th>Use case</th></tr>
-<tr><td>Free</td><td>0</td><td>3 calls/day per tool, i-character</td></tr>
-<tr><td>Pro</td><td>0.10</td><td>power users, single professionals</td></tr>
-<tr><td>Enterprise</td><td>0.50</td><td>SMEs, mid-market, regulated</td></tr>
-<tr><td>Government</td><td>1.00</td><td>government, defence, intel</td></tr>
-<tr><td>Premium</td><td>5.00+</td><td>custom SLA + air-gap</td></tr>
-</table>
-<p>The sovereign Maps fork author gets 80% of every call. The substrate gets 20%. The Care Floor 0.95 is enforced for every transaction.</p>
-
-<h2>The use cases</h2>
-<ul>
-<li><b>Sovereign consumer</b>: i-character renders the citizen's i-character location on a map; no PII leak; Care Floor 0.95 enforced.</li>
-<li><b>Compliance passport</b>: every sovereign action has a geo-stamped passport (EU AI Act Article 14).</li>
-<li><b>Supply chain</b>: every shipment has a sovereign geo-stamped passport (Article 50 passport for goods).</li>
-<li><b>Defence</b>: every defence action is geolocation-stamped; Article 14 human oversight for lethal decisions.</li>
-<li><b>Healthcare</b>: every domiciliary visit (Templeman lineage) is geo-stamped for audit.</li>
-<li><b>Public services</b>: every government service is geo-stamped; Care Floor 0.95 protects citizens.</li>
-</ul>
+</div>
+</div>
 
 <div style="text-align:center;padding:24px;margin-top:32px;border-top:1px solid var(--border);color:var(--muted);font-size:11px">
 © 2026 MEOK AI Labs · CSOAI Ltd (UK 16939677) · 8 protocols · 100/100 A+++++ · MIT license
 </div>
 
-</body></html>
+</div></body></html>
