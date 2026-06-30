@@ -103,6 +103,17 @@
           k.innerHTML += h;
         }
       } catch (e) {}
+      // the ONE canonical sovereign network (same /api/nodes the OS globe + MEOK Earth read)
+      if (/\b(network|nodes?|map|globe|hubs?|governance|sovereign|where)\b/i.test(v)) {
+        try { const nd = await (await fetch(API + "/api/nodes")).json();
+          if (nd && nd.nodes && nd.nodes.length) {
+            const dot = s => s === "flagged" ? "🔴" : (s === "watch" ? "🟠" : "🟡");
+            const n = say("ai", "🌍 <b>Your sovereign network</b> · " + nd.count + " governed hubs<br>");
+            n.innerHTML += nd.nodes.slice(0, 6).map(h => dot(h.status) + " <b>" + h.name + "</b> <span style='color:#8a6f2e'>" + (h.role || "") + "</span>").join("<br>") +
+              "<br><a href='" + API + "/?app=meokearth' target='_blank' style='color:#8a6f2e'>↗ open MEOK Earth</a>";
+          }
+        } catch (e) {}
+      }
     } catch (e) { t.innerHTML = "I'm here — try once more."; }
   }
   $("#meok-send").onclick = () => send();

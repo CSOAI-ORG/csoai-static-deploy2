@@ -1042,18 +1042,28 @@ function paintTiles(){
 /* ---------- boot ---------- */
 const BLINES=["initializing sovereign kernel…","mounting MEOK API v3.0.0 …  235 nodes / 12 domains","waking King … 224 agents · 6 neural models","loading 341-MCP federation …","SIGIL Ed25519 trust anchor … ok","syncing live bridge …","desktop ready."];
 var _fgLoaded=false;
+var _canonNodes=null; // the ONE canonical node graph (/api/nodes), shared with the dock globe
+function _statusColor(s){ return s==='flagged'?'#d9756a':(s==='watch'?'#e9a93c':'#c9a84c'); }
 function _meokGraphData(){
  var N=[{id:'core',name:'CSOAI · SOV3 core',group:'core',color:'#d4a017',val:24,app:'king'}];
+ // canonical city hubs (same source the avatar globe reads) — coloured by governance status
+ if(_canonNodes&&_canonNodes.nodes){ _canonNodes.nodes.forEach(function(h){ N.push({id:'hub_'+h.id,name:h.name+' · '+(h.role||''),group:'hub',color:_statusColor(h.status),val:9,app:'meokearth'}); }); }
  [['cobol','COBOL'],['iso20022','ISO 20022'],['hl7','HL7/FHIR'],['as400','AS/400'],['sap','SAP'],['oracle','Oracle'],['scada','SCADA'],['edi','EDI'],['fix','FIX'],['cics','CICS'],['mqtt','MQTT/IoT'],['acord','ACORD'],['nacha','NACHA'],['iso8583','ISO 8583'],['sip','SIP']].forEach(function(b){N.push({id:'b_'+b[0],name:'Bridge · '+b[1],group:'bridge',color:'#378ADD',val:8,app:'bridges'});});
  [['euaiact','EU AI Act'],['gdpr','GDPR'],['dora','DORA'],['nis2','NIS2'],['hipaa','HIPAA'],['sox','SOX'],['solvency','Solvency II']].forEach(function(c){N.push({id:'c_'+c[0],name:'Framework · '+c[1],group:'compliance',color:'#1D9E75',val:7,app:'fleet'});});
  [['fin','Finance hive'],['health','Health hive'],['ind','Industrial hive'],['pub','Public hive']].forEach(function(h){N.push({id:'h_'+h[0],name:h[1],group:'hive',color:'#e76f51',val:7,app:'hives'});});
  [['ch','Companies House 5.6M'],['eat','DAILY EAT'],['ledger','Signed ledger']].forEach(function(d){N.push({id:'d_'+d[0],name:d[1],group:'data',color:'#639922',val:7,app:'truth'});});
  var L=[];N.forEach(function(n){if(n.id!=='core')L.push({source:'core',target:n.id});});
  [['iso20022','dora'],['iso20022','nis2'],['fix','dora'],['hl7','hipaa'],['hl7','euaiact'],['scada','nis2'],['cobol','sox'],['as400','sox'],['sap','sox'],['oracle','gdpr'],['edi','sox'],['cics','sox'],['mqtt','nis2'],['acord','solvency'],['acord','gdpr'],['nacha','sox'],['iso8583','dora'],['sip','nis2']].forEach(function(r){L.push({source:'b_'+r[0],target:'c_'+r[1],rel:true});});
+ if(_canonNodes&&_canonNodes.links){ var ids={}; N.forEach(function(n){ids[n.id]=1;}); _canonNodes.links.forEach(function(p){ var a='hub_'+p[0],b='hub_'+p[1]; if(ids[a]&&ids[b]) L.push({source:a,target:b,rel:true}); }); }
  return {nodes:N,links:L};
 }
 function _meokDrawGraph(el){
  var w=el.clientWidth||560;el.style.height='430px';
+ // pull the ONE canonical node graph first (same source as the avatar globe), then draw
+ if(!_canonNodes){ fetch('/api/nodes').then(function(r){return r.json();}).then(function(d){ _canonNodes=d; }).catch(function(){ _canonNodes={nodes:[],links:[]}; }).finally(function(){ _meokRender(el,w); }); return; }
+ _meokRender(el,w);
+}
+function _meokRender(el,w){
  try{ForceGraph()(el).width(w).height(430).backgroundColor('rgba(0,0,0,0)').graphData(_meokGraphData())
   .nodeLabel('name').nodeVal('val').nodeColor(function(n){return n.color;})
   .linkColor(function(l){return l.rel?'#e9c46a':'rgba(255,255,255,.18)';})

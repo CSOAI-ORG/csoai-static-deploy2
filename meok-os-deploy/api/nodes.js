@@ -29,17 +29,48 @@ const LINKS = [
   ['tokyo', 'sydney'], ['london', 'capetown'], ['hongkong', 'tokyo'],
 ];
 
-export default function handler(req, res) {
+// Owner-editable WITHOUT a redeploy: set env NODES_URL to any JSON you control
+// (a gist raw URL, a blob, an Edge Config endpoint) shaped { nodes:[...], links:[...] }.
+// We fetch it at request time (5-min CDN cache), validate, and serve it instead of the
+// baked-in base. Edit that file → it goes live on the next cache window. No deploy.
+async function loadOverride() {
+  const url = process.env.NODES_URL;
+  if (!url || String(url).startsWith('REPLACE')) return null;
+  try {
+    const r = await fetch(url, { headers: { 'User-Agent': 'MEOK-nodes/1.0' } });
+    if (!r.ok) return null;
+    const d = await r.json();
+    if (d && Array.isArray(d.nodes) && d.nodes.length) return d;
+  } catch (e) { /* fall back to base */ }
+  return null;
+}
+
+// Optional live flywheel snapshot (governed vs ungoverned) so the UI can colour the
+// posture from real numbers. Owner sets FLYWHEEL_URL to a JSON the ingest engine writes.
+async function loadFlywheel() {
+  const url = process.env.FLYWHEEL_URL;
+  if (!url || String(url).startsWith('REPLACE')) return null;
+  try { const r = await fetch(url); if (r.ok) return await r.json(); } catch (e) {}
+  return null;
+}
+
+export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
   res.setHeader('Cache-Control', 'public, max-age=300');
   if (req.method === 'OPTIONS') return res.status(204).end();
+  const override = await loadOverride();
+  const flywheel = await loadFlywheel();
+  const nodes = override ? override.nodes : NODES;
+  const links = override ? (override.links || LINKS) : LINKS;
   return res.status(200).json({
     version: '1.0',
     source: 'os.meok.ai/api/nodes — canonical sovereign node graph',
+    editable: !!process.env.NODES_URL,            // true once an owner override is wired
     legend: { governed: 'signed & council-adjudicated', watch: 'monitored', flagged: 'action required' },
-    count: NODES.length,
-    nodes: NODES,
-    links: LINKS,
+    flywheel: flywheel || null,                   // live posture when FLYWHEEL_URL is set
+    count: nodes.length,
+    nodes,
+    links,
   });
 }
