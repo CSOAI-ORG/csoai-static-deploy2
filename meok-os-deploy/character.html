@@ -73,12 +73,12 @@ import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { VRMLoaderPlugin, VRMUtils } from '@pixiv/three-vrm';
 
 const CAST = [
-  { id:'Sophie',   role:'Sovereign Companion', e:'🜂', h:43,  vrm:'AvatarSample_A.vrm',  q:'queen-care',       arc:17, tone:'warm, empathetic, attentive', traits:['Emotional Intelligence','Episodic Memory','Care'] },
-  { id:'MEOKCLAW', role:'The Sovereign OS',     e:'⌬', h:212, vrm:'AvatarSample_B.vrm',  q:'queen-king',       arc:21, tone:'stoic, precise, authoritative', traits:['Total-OS Awareness','BFT Governance','Strategy'] },
-  { id:'Dagon',    role:'Geospatial Mind',      e:'🜨', h:190, vrm:'AvatarSample_C.vrm',  q:'queen-domain',     arc:18, tone:'analytical, pattern-focused', traits:['Spatial Reasoning','Grid Perception','Tracking'] },
-  { id:'Vinci',    role:'Industrial Engineer',  e:'⚙', h:30,  vrm:'AvatarSample_D.vrm',  q:'queen-brain',      arc:1,  tone:'stoic, data-driven', traits:['Efficiency','MOSA-Compliant','Precision'] },
-  { id:'Justitia', role:'Legal Counsel',        e:'⚖', h:265, vrm:'AvatarSample_A.vrm',  q:'queen-compliance', arc:11, tone:'authoritative, clear, objective', traits:['Compliance','Byzantine Trust','Risk'] },
-  { id:'Florence', role:'Care Specialist',      e:'🕊', h:135, vrm:'AvatarSample_C.vrm',  q:'queen-proactive',  arc:14, tone:'empathetic, calm, nurturing', traits:['Compassion','Patience','Clarity'] },
+  { id:'Sophie',   role:'Sovereign Companion', e:'🜂', h:43,  q:'queen-care',       arc:17, tone:'warm, empathetic, attentive', traits:['Emotional Intelligence','Episodic Memory','Care'] },
+  { id:'MEOKCLAW', role:'The Sovereign OS',     e:'⌬', h:212, q:'queen-king',       arc:21, tone:'stoic, precise, authoritative', traits:['Total-OS Awareness','BFT Governance','Strategy'] },
+  { id:'Dagon',    role:'Geospatial Mind',      e:'🜨', h:190, q:'queen-domain',     arc:18, tone:'analytical, pattern-focused', traits:['Spatial Reasoning','Grid Perception','Tracking'] },
+  { id:'Vinci',    role:'Industrial Engineer',  e:'⚙', h:30,  q:'queen-brain',      arc:1,  tone:'stoic, data-driven', traits:['Efficiency','MOSA-Compliant','Precision'] },
+  { id:'Justitia', role:'Legal Counsel',        e:'⚖', h:265, q:'queen-compliance', arc:11, tone:'authoritative, clear, objective', traits:['Compliance','Byzantine Trust','Risk'] },
+  { id:'Florence', role:'Care Specialist',      e:'🕊', h:135, q:'queen-proactive',  arc:14, tone:'empathetic, calm, nurturing', traits:['Compassion','Patience','Clarity'] },
 ];
 let current = CAST[0];
 
@@ -243,8 +243,7 @@ function pick(id){
   current = CAST.find(c=>c.id===id)||CAST[0];
   document.documentElement.style.setProperty('--gold', `hsl(${current.h} 50% 52%)`);
   renderCast(); renderInfo();
-  if(skin==='emergence'){ orbColor(current.h); }
-  else { if(currentVRM){ scene.remove(currentVRM.scene); currentVRM=null; } loadVRM(current.vrm); }
+  showEmergence(); orbColor(current.h);
   say('ai', `I'm ${current.id}, your ${current.role.toLowerCase()}. ${cap(current.tone)} — here for you.`);
 }
 const cap=s=>s.charAt(0).toUpperCase()+s.slice(1);
@@ -269,10 +268,6 @@ document.getElementById('in').addEventListener('keydown',e=>{ if(e.key==='Enter'
 
 renderCast(); renderInfo(); buildOrb(); showEmergence();
 // skin toggle — emergence egg (all-ages default) ⇄ humanoid character skin
-const tog=document.createElement('button'); tog.id='skintog'; tog.textContent='🧍 Show character';
-tog.style.cssText='position:fixed;top:18px;left:50%;transform:translateX(-50%);z-index:60;border:1px solid var(--gold,#c9a84c);background:rgba(255,252,245,.85);color:#2a1a14;font:600 13px Space Grotesk,sans-serif;padding:8px 16px;border-radius:999px;cursor:pointer;backdrop-filter:blur(6px)';
-tog.onclick=()=>{ if(skin!=='emergence'){ showEmergence(); tog.textContent='🧍 Show character'; } else { showVRM(); tog.textContent='✦ Show emergence'; } };
-document.body.appendChild(tog);
 // ✨ Bring your own avatar — Ready Player Me (works across thousands of apps/games; selfie or picker)
 const rpmBtn=document.createElement('button'); rpmBtn.id='rpmbtn'; rpmBtn.textContent='✨ Your avatar';
 rpmBtn.style.cssText='position:fixed;top:18px;left:calc(50% + 132px);z-index:60;border:1px solid var(--gold,#c9a84c);background:rgba(255,252,245,.85);color:#2a1a14;font:600 13px Space Grotesk,sans-serif;padding:8px 16px;border-radius:999px;cursor:pointer;backdrop-filter:blur(6px)';
@@ -288,7 +283,7 @@ window.addEventListener('message',(e)=>{
   let j; try{ j = typeof e.data==='string'?JSON.parse(e.data):e.data; }catch(_){ return; }
   if(!j || j.source!=='readyplayerme') return;
   if(j.eventName==='v1.frame.ready'){ document.getElementById('rpmframe').contentWindow.postMessage(JSON.stringify({target:'readyplayerme',type:'subscribe',eventName:'v1.**'}),'*'); }
-  if(j.eventName==='v1.avatar.exported'){ closeRpm(); loadGLB(j.data.url); tog.textContent='✦ Show emergence'; }
+  if(j.eventName==='v1.avatar.exported'){ closeRpm(); loadGLB(j.data.url); }
 });
 window.loadGLB = loadGLB;  // allow the OS / external host to set a user's avatar by URL
 setTimeout(()=>say('ai', `Welcome. I'm ${current.id} — pick any of us on the left, then talk to me.`), 900);
