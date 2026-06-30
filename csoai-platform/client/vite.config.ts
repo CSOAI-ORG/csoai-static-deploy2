@@ -43,5 +43,37 @@ export default defineConfig({
     outDir: '../dist/client',
     emptyOutDir: true,
     sourcemap: true,
+    // EAT-LAZY: vendor chunking + dynamic-import chunking.
+    // Each route's code is now its own chunk (loaded on demand).
+    // Heavy vendors (recharts, radix) split into their own cached chunks.
+    chunkSizeWarningLimit: 1200,
+    rollupOptions: {
+      output: {
+        manualChunks: (id) => {
+          if (id.includes('node_modules')) {
+            if (id.includes('recharts') || id.includes('d3-') || id.includes('d3.')) {
+              return 'vendor-charts';
+            }
+            if (id.includes('@radix-ui')) {
+              return 'vendor-radix';
+            }
+            if (id.includes('lucide-react') || id.includes('react-icons')) {
+              return 'vendor-icons';
+            }
+            if (id.includes('framer-motion') || id.includes('react-spring')) {
+              return 'vendor-motion';
+            }
+            if (id.includes('@tanstack')) {
+              return 'vendor-tanstack';
+            }
+            if (id.includes('react') || id.includes('scheduler') || id.includes('react-dom')) {
+              return 'vendor-react';
+            }
+            return 'vendor';
+          }
+          return undefined;
+        },
+      },
+    },
   },
 });
