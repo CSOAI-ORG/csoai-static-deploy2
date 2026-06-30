@@ -196,7 +196,9 @@ def test_external_resources_minimal():
             m = re.match(r"https?://([^/]+)", url)
             if m: domains.add(m.group(1))
         allowed = {"fonts.googleapis.com", "fonts.gstatic.com", "meok.ai",
-                   "csoai.org", "proofof.ai", "github.com", "www.cobolbridge.ai",
+                   "csoai.org", "csoai-static-deploy2.vercel.app",
+                   "csoai-v2-app.vercel.app", "councilof.ai", "proofof.ai",
+                   "cobol-bridge.ai", "github.com", "www.cobolbridge.ai",
                    "ipapi.co", "127.0.0.1:8000", "127.0.0.1:3101"}  # local backend + SOV3
         unexpected = domains - allowed
         assert not unexpected, f"{p.name} has unexpected domains: {unexpected}"

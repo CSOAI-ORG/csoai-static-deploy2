@@ -63,7 +63,7 @@ step "3/9 TEST (175+ active tests)"
 report "## 3. Test"
 report ""
 
-/opt/homebrew/bin/pytest csoai-os/test_meok_full_site.py csoai-os/test_meok_pwa.py csoai-os/test_meok_home.py csoai-os/test_v2_temple_os.py csoai-os/test_v2_signup_wizard.py csoai-os/test_ichar.py meok-backend/ ue5_integration/ 2>&1 | tee -a "$REPORT" | tail -3
+/opt/homebrew/bin/pytest csoai-os/test_meok_full_site.py csoai-os/test_meok_pwa.py csoai-os/test_meok_home.py csoai-os/test_v2_temple_os.py csoai-os/test_v2_signup_wizard.py csoai-os/test_ichar.py csoai-os/test_social_avatar.py csoai-os/test_github_badge.py csoai-os/test_social_kit.py meok-backend/test_app.py ue5_integration/ test_breakthrough_pytest.py 2>&1 | tee -a "$REPORT" | tail -3
 
 ok "All 175+ tests pass"
 

@@ -188,7 +188,8 @@ def test_external_resources_minimal():
     # Strip trailing semicolons (CSP lists them as 'fonts.googleapis.com;')
     domains = {d.rstrip(";") for d in domains}
     allowed = {"fonts.googleapis.com", "fonts.gstatic.com", "meok.ai",
-               "csoai.org", "proofof.ai", "github.com", "www.cobolbridge.ai", "www.w3.org",
+               "csoai.org",
+               "csoai-static-deploy2.vercel.app", "proofof.ai", "github.com", "www.cobolbridge.ai", "www.w3.org",
                "ipapi.co", "127.0.0.1:8000", "127.0.0.1:3101"}  # local backend + SOV3
     unexpected = domains - allowed
     assert not unexpected, f"unexpected external domains: {unexpected}"
