@@ -991,7 +991,21 @@ async function sovAsk(text){
     if(think) think.remove();
     if(ans) sovSay(esc(ans)); else throw 0;
     sovToolHints(text);   // orchestrator: surface matching tools from the 377-fleet → SOV Space
-  }catch(e){ if(think) think.remove(); sovSay("I hear you — I can open apps, switch your current (work / personal), change your signature, or take you into MEOK Earth. <span style='color:var(--dim)'>(My deeper SOV3 brain isn't reachable right now.)</span>"); sovToolHints(text); }
+    sovKnowledge(text);   // federate the world's open knowledge (Wikipedia/Wikidata + Data Commons)
+  }catch(e){ if(think) think.remove(); sovSay("I hear you — I can open apps, switch your current (work / personal), change your signature, or take you into MEOK Earth. <span style='color:var(--dim)'>(My deeper SOV3 brain isn't reachable right now.)</span>"); sovToolHints(text); sovKnowledge(text); }
+}
+// Federated world-knowledge — the "governed super-Google" layer (grounds the answer in open data)
+function sovKnowledge(text){
+  fetch('/api/knowledge?q='+encodeURIComponent(text)).then(r=>r.json()).then(d=>{
+    const top=(d&&d.results||[]).find(r=>r.source==='wikipedia'&&(r.excerpt||r.desc)); if(!top) return;
+    const log=document.getElementById('sovlog'); if(!log) return;
+    const box=document.createElement('div'); box.className='sovmsg ai'; box.style.cssText='font-size:12px;line-height:1.55;border-left:2px solid var(--gold,#c9a84c);padding-left:9px';
+    box.innerHTML='📚 <b>From the world\'s knowledge</b> <span style="color:var(--dim)">· federated, governed</span><br>'+
+      '<b>'+esc(top.title)+'</b>'+(top.desc?' <span style="color:var(--dim)">— '+esc(top.desc)+'</span>':'')+'<br>'+
+      esc((top.excerpt||'').slice(0,220))+(top.excerpt&&top.excerpt.length>220?'…':'')+
+      ' <a href="'+top.url+'" target="_blank" style="color:var(--gold,#c9a84c)">source ↗</a>';
+    log.appendChild(box); log.scrollTop=log.scrollHeight;
+  }).catch(function(){});
 }
 // Sovereign-as-orchestrator: route the request to the right open-source tool(s) in SOV Space
 function sovToolHints(text){
