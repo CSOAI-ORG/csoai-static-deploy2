@@ -31,6 +31,12 @@
 <meta property="og:url" content="https://os.meok.ai/"/>
 <meta property="og:image" content="https://os.meok.ai/api/avatar?queen_id=queen-care&size=600"/>
 <meta name="twitter:card" content="summary_large_image"/>
+<link rel="manifest" href="/manifest.webmanifest"/>
+<meta name="theme-color" content="#1a1410"/>
+<link rel="apple-touch-icon" href="/apple-touch-icon.png"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+<meta name="apple-mobile-web-app-title" content="MEOK OS"/>
 <style>
 :root{color-scheme:light;
  --paper:#ece7dd; --cream:#faf7f1; --ink:#1d1d22; --dim:#6f6a61;
@@ -1277,6 +1283,8 @@ setTimeout(()=>{ try{ if(!localStorage.getItem('meok_welcomed')) welcomeShow(); 
     requestAnimationFrame(loop);
   })();
 })();
+// ── PWA: install the offline app-shell so MEOK OS works as an installable app ──
+if('serviceWorker' in navigator){ window.addEventListener('load',function(){ navigator.serviceWorker.register('/sw.js').catch(function(){}); }); }
 </script>
 </body>
 </html>
