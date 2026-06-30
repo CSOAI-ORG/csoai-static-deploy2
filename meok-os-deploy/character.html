@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MEOK — Your Sovereign Character</title>
+<style>
+  :root{--cream:#f1eadd;--ink:#1f1c17;--muted:#6b6a63;--gold:#bd9a52;--line:rgba(31,28,23,.1)}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--cream);color:var(--ink);font-family:"Geist","Inter",-apple-system,system-ui,sans-serif;height:100vh;overflow:hidden;-webkit-font-smoothing:antialiased}
+  #stage{position:absolute;inset:0}
+  canvas{display:block}
+  .top{position:absolute;top:0;left:0;right:0;padding:18px 24px;display:flex;align-items:center;justify-content:space-between;z-index:5}
+  .logo{display:flex;align-items:center;gap:9px;font-weight:600;font-size:17px}
+  .m{width:28px;height:28px;border-radius:8px;background:linear-gradient(135deg,#2a2722,#4d473d);display:grid;place-items:center;color:#f4eee1;font-weight:700;font-size:15px}
+  .kick{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);font-weight:600}
+  .cast{position:absolute;left:0;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:8px;padding:14px;z-index:5}
+  .cc{display:flex;align-items:center;gap:10px;background:rgba(255,255,255,.55);border:1px solid var(--line);border-radius:14px;padding:9px 13px;cursor:pointer;transition:.18s;backdrop-filter:blur(6px);min-width:184px}
+  .cc:hover{background:rgba(255,255,255,.85);transform:translateX(3px)}
+  .cc.on{border-color:var(--gold);background:#fff}
+  .cc .av{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;font-size:17px;color:#fff;flex:none}
+  .cc b{font-size:14px;display:block;line-height:1.2}.cc span{font-size:11.5px;color:var(--muted)}
+  .info{position:absolute;right:24px;top:84px;max-width:240px;text-align:right;z-index:5}
+  .info h1{font-size:28px;font-weight:600;letter-spacing:-.02em;line-height:1.05}
+  .info .role{color:var(--gold);font-weight:600;font-size:13px;margin-top:4px}
+  .info p{color:var(--muted);font-size:13.5px;margin-top:8px}
+  .traits{display:flex;flex-wrap:wrap;gap:6px;justify-content:flex-end;margin-top:10px}
+  .traits span{font-size:11px;background:rgba(255,255,255,.6);border:1px solid var(--line);border-radius:999px;padding:3px 9px}
+  .dock{position:absolute;bottom:18px;left:50%;transform:translateX(-50%);width:min(620px,92vw);z-index:6}
+  .log{max-height:34vh;overflow-y:auto;display:flex;flex-direction:column;gap:8px;margin-bottom:10px;padding:0 4px}
+  .msg{padding:9px 14px;border-radius:14px;font-size:14.5px;max-width:82%;line-height:1.5}
+  .msg.you{align-self:flex-end;background:var(--ink);color:#f4eee1;border-bottom-right-radius:5px}
+  .msg.ai{align-self:flex-start;background:rgba(255,255,255,.85);border:1px solid var(--line);border-bottom-left-radius:5px}
+  .bar{display:flex;gap:8px;align-items:center;background:rgba(255,255,255,.9);border:1px solid var(--line);border-radius:999px;padding:6px 6px 6px 18px;box-shadow:0 10px 30px -16px rgba(31,28,23,.5)}
+  .bar input{flex:1;border:0;background:transparent;font-size:15px;outline:none;color:var(--ink);font-family:inherit}
+  .send{width:40px;height:40px;border-radius:50%;border:0;background:var(--ink);color:#f4eee1;font-size:16px;cursor:pointer;flex:none}
+  .loading{position:absolute;inset:0;display:grid;place-items:center;background:var(--cream);z-index:9;transition:opacity .6s}
+  .loading.hide{opacity:0;pointer-events:none}
+  .egg{width:70px;height:90px;border-radius:50% 50% 48% 48%;background:radial-gradient(circle at 38% 32%,#fff8ec,#e6dcc8);box-shadow:0 0 40px rgba(201,184,232,.6);animation:pulse 1.6s ease-in-out infinite}
+  @keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.06)}}
+  .loading p{position:absolute;bottom:38%;color:var(--muted);font-size:14px}
+  @media(max-width:720px){.cast{flex-direction:row;top:auto;bottom:96px;transform:none;left:0;right:0;overflow-x:auto;flex-wrap:nowrap}.cc{min-width:auto}.cc b,.cc span{display:none}.info{display:none}}
+</style>
+</head>
+<body>
+<div id="stage"></div>
+<div class="loading" id="loading"><div class="egg"></div><p>Your sovereign is emerging…</p></div>
+<div class="top">
+  <div class="logo"><span class="m">M</span> MEOK</div>
+  <div class="kick">Your Sovereign Character</div>
+</div>
+<div class="cast" id="cast"></div>
+<div class="info" id="info"></div>
+<div class="dock">
+  <div class="log" id="log"></div>
+  <div class="bar">
+    <input id="in" placeholder="Speak to your sovereign…" autocomplete="off">
+    <button class="send" id="send">➤</button>
+  </div>
+</div>
+
+<script type="importmap">
+{ "imports": {
+  "three": "https://esm.sh/three@0.169.0",
+  "three/addons/": "https://esm.sh/three@0.169.0/examples/jsm/",
+  "@pixiv/three-vrm": "https://esm.sh/@pixiv/three-vrm@3.1.6?external=three"
+}}
+</script>
+<script type="module">
+import * as THREE from 'three';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import { VRMLoaderPlugin, VRMUtils } from '@pixiv/three-vrm';
+
+const CAST = [
+  { id:'Sophie',   role:'Sovereign Companion', e:'🜂', h:43,  vrm:'AvatarSample_A.vrm',  q:'queen-care',       arc:17, tone:'warm, empathetic, attentive', traits:['Emotional Intelligence','Episodic Memory','Care'] },
+  { id:'MEOKCLAW', role:'The Sovereign OS',     e:'⌬', h:212, vrm:'AvatarSample_B.vrm',  q:'queen-king',       arc:21, tone:'stoic, precise, authoritative', traits:['Total-OS Awareness','BFT Governance','Strategy'] },
+  { id:'Dagon',    role:'Geospatial Mind',      e:'🜨', h:190, vrm:'AvatarSample_C.vrm',  q:'queen-domain',     arc:18, tone:'analytical, pattern-focused', traits:['Spatial Reasoning','Grid Perception','Tracking'] },
+  { id:'Vinci',    role:'Industrial Engineer',  e:'⚙', h:30,  vrm:'AvatarSample_D.vrm',  q:'queen-brain',      arc:1,  tone:'stoic, data-driven', traits:['Efficiency','MOSA-Compliant','Precision'] },
+  { id:'Justitia', role:'Legal Counsel',        e:'⚖', h:265, vrm:'AvatarSample_A.vrm',  q:'queen-compliance', arc:11, tone:'authoritative, clear, objective', traits:['Compliance','Byzantine Trust','Risk'] },
+  { id:'Florence', role:'Care Specialist',      e:'🕊', h:135, vrm:'AvatarSample_C.vrm',  q:'queen-proactive',  arc:14, tone:'empathetic, calm, nurturing', traits:['Compassion','Patience','Clarity'] },
+];
+let current = CAST[0];
+
+const stage = document.getElementById('stage');
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(28, innerWidth/innerHeight, 0.1, 50);
+camera.position.set(0, 1.32, 2.1);
+const renderer = new THREE.WebGLRenderer({ antialias:true, alpha:true });
+renderer.setPixelRatio(Math.min(devicePixelRatio,2));
+stage.appendChild(renderer.domElement);
+const controls = new OrbitControls(camera, renderer.domElement);
+controls.target.set(0,1.28,0); controls.enablePan=false; controls.minDistance=1.1; controls.maxDistance=4; controls.update();
+scene.add(new THREE.AmbientLight(0xffffff,2.1));
+const key=new THREE.DirectionalLight(0xfff4e0,1.6); key.position.set(1,2,2); scene.add(key);
+const rim=new THREE.DirectionalLight(0xc9b8e8,0.7); rim.position.set(-2,1,-1); scene.add(rim);
+
+const loader = new GLTFLoader();
+loader.register(p => new VRMLoaderPlugin(p));
+let currentVRM = null;
+const clock = new THREE.Clock();
+
+// ── Emergence being: an egg of light (all-ages default, no anime) ──
+let skin = 'emergence';   // 'emergence' | 'vrm'
+let orb = null;
+function buildOrb(){
+  orb = new THREE.Group();
+  const core  = new THREE.Mesh(new THREE.SphereGeometry(0.15,32,32), new THREE.MeshStandardMaterial({color:0x111111, emissive:0xffffff, emissiveIntensity:1.8, roughness:0.4}));
+  const shell = new THREE.Mesh(new THREE.SphereGeometry(0.34,64,64), new THREE.MeshPhysicalMaterial({color:0xffffff, emissive:0xffffff, emissiveIntensity:0.35, transparent:true, opacity:0.55, roughness:0.12, metalness:0, clearcoat:1, transmission:0.6}));
+  shell.scale.set(1,1.35,1);
+  const aura  = new THREE.Mesh(new THREE.SphereGeometry(0.52,32,32), new THREE.MeshBasicMaterial({color:0xffffff, transparent:true, opacity:0.12, blending:THREE.AdditiveBlending, side:THREE.BackSide}));
+  aura.scale.set(1,1.3,1);
+  const light = new THREE.PointLight(0xffffff, 2.2, 5); light.position.set(0,0,0.15);
+  // soft sparkle motes around the egg
+  const mN=70, mp=new Float32Array(mN*3);
+  for(let i=0;i<mN;i++){ const a=Math.random()*6.28, r=0.42+Math.random()*0.3, y=(Math.random()-0.5)*1.0; mp[i*3]=Math.cos(a)*r; mp[i*3+1]=y; mp[i*3+2]=Math.sin(a)*r; }
+  const motes=new THREE.Points(new THREE.BufferGeometry().setAttribute('position',new THREE.BufferAttribute(mp,3)), new THREE.PointsMaterial({color:0xffffff, size:0.022, transparent:true, opacity:0.7, blending:THREE.AdditiveBlending, depthWrite:false}));
+  orb.add(aura, shell, core, light, motes);
+  orb.position.set(0,1.30,0);
+  orb.scale.setScalar(0.52);
+  orb.userData={core,shell,aura,light,motes};
+  scene.add(orb);
+}
+function orbColor(h){
+  if(!orb) return; const c=new THREE.Color(`hsl(${h},72%,62%)`), u=orb.userData;
+  u.core.material.emissive=c; u.shell.material.color=c; u.shell.material.emissive=c;
+  u.aura.material.color=c.clone().lerp(new THREE.Color(0xffffff),0.3); u.light.color=c; u.motes.material.color=c.clone().lerp(new THREE.Color(0xffffff),0.5);
+}
+function showEmergence(){ skin='emergence'; if(orb) orb.visible=true; if(currentVRM) currentVRM.scene.visible=false; orbColor(current.h); document.getElementById('loading').classList.add('hide'); }
+function showVRM(){ skin='vrm'; if(rpmObj) rpmObj.visible=false; if(orb) orb.visible=false; if(currentVRM){ currentVRM.scene.visible=true; } else { loadVRM(current.vrm); } }
+// ── Bring your own avatar (Ready Player Me — the cross-app/game avatar standard, plain glTF) ──
+let rpmObj=null;
+function loadGLB(url){
+  const L=document.getElementById('loading'); L.classList.remove('hide');
+  loader.load(url, (gltf)=>{
+    if(rpmObj){ scene.remove(rpmObj); }
+    rpmObj = gltf.scene; rpmObj.position.set(0,0,0); rpmObj.rotation.y=0;
+    scene.add(rpmObj);
+    if(orb) orb.visible=false; if(currentVRM) currentVRM.scene.visible=false; rpmObj.visible=true;
+    skin='rpm'; try{ localStorage.setItem('meok_rpm', url); }catch(e){}
+    L.classList.add('hide');
+    say('ai', `That's you — your own avatar, brought into MEOK. I'm still ${current.id}, here with you.`);
+  }, undefined, ()=>{ L.classList.add('hide'); say('ai',"Couldn't load that avatar — try again?"); });
+}
+let blinkTimer = 2, blinkPhase = 0, speakUntil = 0;
+const bone = (vrm,n)=>{ try{ return vrm.humanoid && vrm.humanoid.getNormalizedBoneNode(n); }catch(e){ return null; } };
+
+function restPose(vrm){
+  // bring arms down out of the T-pose; this runs once on load
+  const lA=bone(vrm,'leftUpperArm'), rA=bone(vrm,'rightUpperArm');
+  const lL=bone(vrm,'leftLowerArm'), rL=bone(vrm,'rightLowerArm');
+  if(lA) lA.rotation.set(0.05,0,1.22); if(rA) rA.rotation.set(0.05,0,-1.22);
+  if(lL) lL.rotation.set(0,-0.18,0.12); if(rL) rL.rotation.set(0,0.18,-0.12);
+}
+
+function loadVRM(file, first){
+  const L=document.getElementById('loading'); if(!first) L.classList.remove('hide');
+  loader.load('/characters/'+file, (gltf)=>{
+    if(currentVRM){ scene.remove(currentVRM.scene); try{VRMUtils.deepDispose&&VRMUtils.deepDispose(currentVRM.scene);}catch(e){} }
+    const vrm = gltf.userData.vrm;
+    try{ VRMUtils.removeUnnecessaryJoints && VRMUtils.removeUnnecessaryJoints(gltf.scene); }catch(e){}
+    vrm.scene.rotation.y = Math.PI;
+    scene.add(vrm.scene);
+    vrm.scene.visible = (skin==='vrm');
+    try{ vrm.springBoneManager=null; }catch(e){}
+    restPose(vrm);
+    currentVRM = vrm; clock.getDelta();
+    setTimeout(()=>L.classList.add('hide'), 250);
+  }, undefined, ()=>document.getElementById('loading').classList.add('hide'));
+}
+
+const POSE = { uaZ:1.62, uaX:0.10, shZ:0.20, laZ:0.32, laY:0.12 };
+function idle(vrm, t, dt){
+  // breathing + gentle sway on top of the rest pose
+  const spine=bone(vrm,'spine'), chest=bone(vrm,'chest'), head=bone(vrm,'head');
+  const lA=bone(vrm,'leftUpperArm'), rA=bone(vrm,'rightUpperArm');
+  const lS=bone(vrm,'leftShoulder'), rS=bone(vrm,'rightShoulder');
+  const lL=bone(vrm,'leftLowerArm'), rL=bone(vrm,'rightLowerArm');
+  const br=Math.sin(t*1.4);
+  if(spine) spine.rotation.x = br*0.018;
+  if(chest) chest.rotation.x = br*0.012;
+  if(lS) lS.rotation.z = POSE.shZ; if(rS) rS.rotation.z = -POSE.shZ;
+  const sway=Math.sin(t*1.1)*0.035;
+  if(lA) lA.rotation.set(POSE.uaX, 0, POSE.uaZ + sway);
+  if(rA) rA.rotation.set(POSE.uaX, 0, -(POSE.uaZ + sway));
+  if(lL) lL.rotation.set(0, -POSE.laY, POSE.laZ);
+  if(rL) rL.rotation.set(0, POSE.laY, -POSE.laZ);
+  if(head){ head.rotation.y = Math.sin(t*0.55)*0.07; head.rotation.x = Math.sin(t*0.8)*0.035; }
+  const em=vrm.expressionManager; if(!em) return;
+  // blink
+  blinkTimer -= dt;
+  if(blinkTimer<=0 && blinkPhase<=0){ blinkPhase=0.0001; blinkTimer=2.5+Math.random()*3.5; }
+  if(blinkPhase>0){ blinkPhase+=dt*7; const v=blinkPhase<1?Math.sin(blinkPhase*Math.PI):0; try{em.setValue('blink',Math.max(0,Math.min(1,v)));}catch(e){} if(blinkPhase>=1) blinkPhase=0; }
+  // lip-sync while speaking
+  const sp = Date.now()<speakUntil;
+  try{ em.setValue('aa', sp ? (Math.sin(t*15)*0.5+0.5)*0.65 : 0); }catch(e){}
+  if(!sp){ try{ em.setValue('happy', 0.12); }catch(e){} }
+}
+
+function animate(){
+  requestAnimationFrame(animate);
+  const dt=Math.min(clock.getDelta(),0.033);
+  const t=Date.now()/1000, sp=Date.now()<speakUntil;
+  if(skin==='emergence' && orb){
+    const u=orb.userData;
+    orb.position.y = 1.28 + Math.sin(t*1.1)*0.03;
+    orb.rotation.y += dt*0.25;
+    const pulse = 1 + Math.sin(t*(sp?9:2.0))*(sp?0.06:0.025);
+    u.shell.scale.set(pulse, pulse*1.35, pulse);
+    u.core.material.emissiveIntensity = sp ? 2.6+Math.sin(t*16)*1.3 : 1.6+Math.sin(t*2)*0.3;
+    u.aura.material.opacity = sp ? 0.24 : 0.12+Math.sin(t*2)*0.03;
+    u.light.intensity = sp ? 3.4 : 2.2;
+    u.motes.rotation.y -= dt*0.4;
+  }
+  if(skin==='vrm' && currentVRM){
+    idle(currentVRM, t, dt);
+    currentVRM.update(dt);
+    currentVRM.scene.rotation.y = Math.PI + Math.sin(Date.now()/3200)*0.12;
+  }
+  if(skin==='rpm' && rpmObj){
+    rpmObj.position.y = Math.sin(t*1.1)*0.02;
+    rpmObj.rotation.y = Math.sin(Date.now()/3600)*0.16;
+  }
+  controls.update(); renderer.render(scene, camera);
+}
+animate();
+function _rz(){ const w=stage.clientWidth||innerWidth||960, h=stage.clientHeight||innerHeight||640; camera.aspect=w/h; camera.updateProjectionMatrix(); renderer.setSize(w,h); } new ResizeObserver(_rz).observe(stage); addEventListener('resize',_rz); _rz();
+
+// cast UI
+const castEl=document.getElementById('cast'), infoEl=document.getElementById('info');
+function renderCast(){
+  castEl.innerHTML = CAST.map(c=>`<div class="cc ${c.id===current.id?'on':''}" data-id="${c.id}">
+    <span class="av" style="background:hsl(${c.h} 45% 55%)">${c.e}</span>
+    <span><b>${c.id}</b><span>${c.role}</span></span></div>`).join('');
+  castEl.querySelectorAll('.cc').forEach(el=>el.onclick=()=>pick(el.dataset.id));
+}
+function renderInfo(){
+  infoEl.innerHTML = `<div class="kick">Your sovereign</div><h1>${current.id}</h1>
+    <div class="role">${current.role}</div><p>${current.tone}.</p>
+    <div class="traits">${current.traits.map(t=>`<span>${t}</span>`).join('')}</div>`;
+}
+function pick(id){
+  current = CAST.find(c=>c.id===id)||CAST[0];
+  document.documentElement.style.setProperty('--gold', `hsl(${current.h} 50% 52%)`);
+  renderCast(); renderInfo();
+  if(skin==='emergence'){ orbColor(current.h); }
+  else { if(currentVRM){ scene.remove(currentVRM.scene); currentVRM=null; } loadVRM(current.vrm); }
+  say('ai', `I'm ${current.id}, your ${current.role.toLowerCase()}. ${cap(current.tone)} — here for you.`);
+}
+const cap=s=>s.charAt(0).toUpperCase()+s.slice(1);
+
+// chat
+const log=document.getElementById('log');
+function say(who,txt){ const d=document.createElement('div'); d.className='msg '+who; d.textContent=txt; log.appendChild(d); log.scrollTop=log.scrollHeight; return d; }
+async function send(){
+  const i=document.getElementById('in'); const v=i.value.trim(); if(!v) return; i.value='';
+  say('you', v);
+  const t=say('ai','…');
+  try{
+    const r=await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({message:v, queen_id:current.q, arcana_lens:current.arc,
+        persona:`You also appear as ${current.id}, the ${current.role}. Tone: ${current.tone}.`})});
+    const d=await r.json(); const txt=(d.response||'…'); t.textContent = txt;
+    speakUntil = Date.now() + Math.min(9000, 1400 + txt.split(/\s+/).length*210);
+  }catch(e){ t.textContent = "I'm here — try once more."; }
+}
+document.getElementById('send').onclick=send;
+document.getElementById('in').addEventListener('keydown',e=>{ if(e.key==='Enter') send(); });
+
+renderCast(); renderInfo(); buildOrb(); showEmergence();
+// skin toggle — emergence egg (all-ages default) ⇄ humanoid character skin
+const tog=document.createElement('button'); tog.id='skintog'; tog.textContent='🧍 Show character';
+tog.style.cssText='position:fixed;top:18px;left:50%;transform:translateX(-50%);z-index:60;border:1px solid var(--gold,#c9a84c);background:rgba(255,252,245,.85);color:#2a1a14;font:600 13px Space Grotesk,sans-serif;padding:8px 16px;border-radius:999px;cursor:pointer;backdrop-filter:blur(6px)';
+tog.onclick=()=>{ if(skin!=='emergence'){ showEmergence(); tog.textContent='🧍 Show character'; } else { showVRM(); tog.textContent='✦ Show emergence'; } };
+document.body.appendChild(tog);
+// ✨ Bring your own avatar — Ready Player Me (works across thousands of apps/games; selfie or picker)
+const rpmBtn=document.createElement('button'); rpmBtn.id='rpmbtn'; rpmBtn.textContent='✨ Your avatar';
+rpmBtn.style.cssText='position:fixed;top:18px;left:calc(50% + 132px);z-index:60;border:1px solid var(--gold,#c9a84c);background:rgba(255,252,245,.85);color:#2a1a14;font:600 13px Space Grotesk,sans-serif;padding:8px 16px;border-radius:999px;cursor:pointer;backdrop-filter:blur(6px)';
+document.body.appendChild(rpmBtn);
+const rpmModal=document.createElement('div'); rpmModal.id='rpmmodal';
+rpmModal.style.cssText='position:fixed;inset:0;z-index:200;background:rgba(20,16,10,.78);display:none;align-items:center;justify-content:center;backdrop-filter:blur(4px)';
+rpmModal.innerHTML='<div style="position:relative;width:min(900px,92vw);height:min(640px,86vh);background:#0e0c14;border-radius:18px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.5)"><button id="rpmclose" style="position:absolute;top:10px;right:12px;z-index:2;border:none;background:rgba(255,255,255,.18);color:#fff;font-size:18px;width:34px;height:34px;border-radius:50%;cursor:pointer">×</button><iframe id="rpmframe" allow="camera *; microphone *" style="width:100%;height:100%;border:0"></iframe></div>';
+document.body.appendChild(rpmModal);
+function openRpm(){ document.getElementById('rpmframe').src='https://demo.readyplayer.me/avatar?frameApi&clearCache'; rpmModal.style.display='flex'; }
+function closeRpm(){ rpmModal.style.display='none'; document.getElementById('rpmframe').src=''; }
+rpmBtn.onclick=openRpm; document.getElementById('rpmclose').onclick=closeRpm;
+window.addEventListener('message',(e)=>{
+  let j; try{ j = typeof e.data==='string'?JSON.parse(e.data):e.data; }catch(_){ return; }
+  if(!j || j.source!=='readyplayerme') return;
+  if(j.eventName==='v1.frame.ready'){ document.getElementById('rpmframe').contentWindow.postMessage(JSON.stringify({target:'readyplayerme',type:'subscribe',eventName:'v1.**'}),'*'); }
+  if(j.eventName==='v1.avatar.exported'){ closeRpm(); loadGLB(j.data.url); tog.textContent='✦ Show emergence'; }
+});
+window.loadGLB = loadGLB;  // allow the OS / external host to set a user's avatar by URL
+setTimeout(()=>say('ai', `Welcome. I'm ${current.id} — pick any of us on the left, then talk to me.`), 900);
+</script>
+</body>
+</html>
