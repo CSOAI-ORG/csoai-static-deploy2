@@ -227,9 +227,23 @@ table.mini td:last-child{text-align:right;font-variant-numeric:tabular-nums}
   .sovhead{ cursor:pointer; position:relative; }
   .sovhead::after{ content:'⌃ tap to chat'; position:absolute; top:8px; right:14px; font-size:10px; font-weight:700; color:var(--gold); opacity:.8; }
   body.sov-open .sovhead::after{ content:'⌄ close'; }
-  .tiles{ grid-template-columns:repeat(auto-fill,minmax(96px,1fr)) !important; padding-bottom:86px !important; }
+  .tiles{ grid-template-columns:repeat(auto-fill,minmax(88px,1fr)) !important; padding-bottom:150px !important; }
   .modesw{ flex-wrap:wrap; }
+  /* App windows: drop the desktop free-float; become a near-full-width sheet that fits the phone */
+  .win{ position:fixed !important; left:3vw !important; right:3vw !important; top:64px !important; width:auto !important; max-width:none !important; max-height:74vh !important; }
+  .win .body{ max-height:64vh !important; padding:13px 14px !important; -webkit-overflow-scrolling:touch; }
+  .win .wb{ padding:13px 14px !important; }            /* bigger drag/close target */
+  .win .x{ width:30px !important; height:30px !important; font-size:16px !important; }
+  /* never let inputs/media spill the sheet */
+  .win input, .win textarea, .win select{ max-width:100% !important; box-sizing:border-box; }
+  .win img{ max-width:100% !important; height:auto; }
+  /* the persistent chat bar clears the collapsed dock handle + the home indicator */
+  #sovbottombar{ bottom:78px !important; width:94vw !important; }
+  /* the floating world map shouldn't crowd a small screen */
+  .miniworld{ width:128px !important; height:80px !important; bottom:78px !important; }
+  .sovfab{ bottom:140px !important; }
 }
+@media (max-width:760px) and (display-mode:standalone){ #sovbottombar{ bottom:88px !important; } }
 </style>
 </head>
 <body>
@@ -840,25 +854,67 @@ function awareHTML(){ const on=!!(typeof _aware!=='undefined'&&_aware);
 }
 
 // ── Social Hub — compose once, free CC media, drafts local; live posting = OAuth-gated ──
-const SOCNETS=['𝕏 Twitter','Instagram','LinkedIn','Facebook','TikTok','Threads','Bluesky'];
-function socLoad(){ try{ return JSON.parse(localStorage.getItem('meok_social'))||{drafts:[],nets:{}}; }catch(e){ return {drafts:[],nets:{}}; } }
+// SOC = { drafts:[], nets:{}, conn:{ mastodon:{instance,token,handle}, bluesky:{handle,appPassword} } }
+function socLoad(){ try{ const s=JSON.parse(localStorage.getItem('meok_social'))||{}; s.drafts=s.drafts||[]; s.nets=s.nets||{}; s.conn=s.conn||{}; return s; }catch(e){ return {drafts:[],nets:{},conn:{}}; } }
 let SOC=socLoad();
 function socSave(){ try{ localStorage.setItem('meok_social',JSON.stringify(SOC)); }catch(e){} }
 function socR(){ const b=document.getElementById('b-social'); if(b) b.innerHTML=socialHTML(); }
 function socToggleNet(n){ SOC.nets[n]=!SOC.nets[n]; socSave(); socR(); }
-function socSaveDraft(){ const t=document.getElementById('soc-text'); if(!t)return; const txt=(t.value||'').trim(); if(!txt)return; const nets=Object.keys(SOC.nets).filter(n=>SOC.nets[n]); SOC.drafts.unshift({id:Date.now(),text:txt.slice(0,500),nets,img:window._socImg||null}); window._socImg=null; socSave(); socR(); }
+function socToast(msg,ok){ const t=document.getElementById('soc-toast'); if(t){ t.textContent=msg; t.style.color=ok?'var(--gold)':'var(--dim)'; } }
+// ── Connect a network with the user's OWN token (sovereign — no platform keys) ──
+async function socConnectMastodon(){
+  const ins=document.getElementById('soc-mi'), tok=document.getElementById('soc-mt');
+  const instance=(ins&&ins.value||'').trim().replace(/^https?:\/\//,'').replace(/\/+$/,''); const token=(tok&&tok.value||'').trim();
+  if(!instance||!token){ socToast('Enter your instance + access token.'); return; }
+  socToast('verifying…',true);
+  try{ const d=await(await fetch('/api/social?action=verify',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({net:'mastodon',instance,token})})).json();
+    if(d.ok){ SOC.conn.mastodon={instance,token,handle:d.account.handle}; SOC.nets['mastodon']=true; socSave(); socR(); }
+    else socToast(d.error||'could not verify'); }catch(e){ socToast('connection failed'); }
+}
+function socConnectBluesky(){
+  const h=document.getElementById('soc-bh'), p=document.getElementById('soc-bp');
+  const handle=(h&&h.value||'').trim().replace(/^@/,''); const appPassword=(p&&p.value||'').trim();
+  if(!handle||!appPassword){ socToast('Enter your handle + app password.'); return; }
+  SOC.conn.bluesky={handle,appPassword}; SOC.nets['bluesky']=true; socSave(); socR(); socToast('Bluesky connected — will verify on first post.',true);
+}
+function socDisconnect(net){ delete SOC.conn[net]; SOC.nets[net]=false; socSave(); socR(); }
 function socDelDraft(id){ SOC.drafts=SOC.drafts.filter(d=>d.id!==id); socSave(); socR(); }
 async function socFindImg(){ const t=document.getElementById('soc-text'); const q=(t&&t.value||'').trim()||'nature'; const box=document.getElementById('soc-imgs'); if(box) box.innerHTML='<span style="color:var(--dim)">finding free images…</span>';
   try{ const d=await(await fetch('/api/media?q='+encodeURIComponent(q)+'&n=6')).json(); if(box) box.innerHTML=(d.results||[]).map(r=>`<img src="${r.thumbnail}" title="${esc(r.attribution||'')}" onclick="window._socImg='${r.thumbnail}';document.querySelectorAll('#soc-imgs img').forEach(i=>i.style.outline='none');this.style.outline='3px solid var(--gold)'" style="width:60px;height:60px;object-fit:cover;border-radius:8px;cursor:pointer;margin:3px">`).join('')||'<span style="color:var(--dim)">none found</span>'; }catch(e){ if(box)box.innerHTML='<span style="color:var(--dim)">media unavailable</span>'; } }
+// ── Publish: live-post to every CONNECTED selected network; draft the rest ──
+async function socPublish(){
+  const t=document.getElementById('soc-text'); if(!t)return; const txt=(t.value||'').trim(); if(!txt){ socToast('Write something first.'); return; }
+  const selected=Object.keys(SOC.nets).filter(n=>SOC.nets[n]);
+  const posted=[], drafted=[];
+  for(const net of selected){
+    const c=SOC.conn[net];
+    if(net==='mastodon'&&c){ try{ const d=await(await fetch('/api/social?action=post',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({net,text:txt,instance:c.instance,token:c.token})})).json(); if(d.ok){ posted.push('Mastodon'); continue; } }catch(e){} }
+    if(net==='bluesky'&&c){ try{ const d=await(await fetch('/api/social?action=post',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({net,text:txt,handle:c.handle,appPassword:c.appPassword})})).json(); if(d.ok){ posted.push('Bluesky'); continue; } }catch(e){} }
+    drafted.push(net);
+  }
+  if(drafted.length||!selected.length) SOC.drafts.unshift({id:Date.now(),text:txt.slice(0,500),nets:drafted.length?drafted:['(no network)'],img:window._socImg||null});
+  window._socImg=null; if(posted.length){ t.value=''; } socSave(); socR();
+  socToast((posted.length?('✅ Posted live to '+posted.join(', ')+'. '):'')+(drafted.length?('Saved draft for '+drafted.join(', ')+' (connect to go live).'):''), posted.length>0);
+}
 function socialHTML(){
-  const nets=SOCNETS.map(n=>`<span onclick="socToggleNet('${n}')" style="cursor:pointer;padding:5px 11px;border-radius:999px;font-size:12px;border:1px solid ${SOC.nets[n]?'var(--gold)':'var(--line)'};background:${SOC.nets[n]?'var(--gold)':'var(--cream)'};color:#1a1410">${n}</span>`).join('');
-  const drafts=SOC.drafts.length?SOC.drafts.map(d=>`<div style="background:var(--cream);border:1px solid var(--line);border-radius:9px;padding:9px 11px;margin-bottom:6px"><div style="display:flex;justify-content:space-between"><b style="font-size:11px;color:var(--dim)">${d.nets.join(', ')||'no network'}</b><span onclick="socDelDraft(${d.id})" style="cursor:pointer;color:var(--dim)">×</span></div>${d.img?`<img src="${d.img}" style="width:46px;height:46px;object-fit:cover;border-radius:6px;float:right;margin-left:8px">`:''}<div style="font-size:13px;margin-top:3px">${esc(d.text)}</div></div>`).join(''):'<span style="color:var(--dim)">No drafts yet.</span>';
+  const C=SOC.conn||{};
+  const connRow=(id,label,connected,detail,formHTML)=> connected
+    ? `<div style="display:flex;align-items:center;gap:8px;background:var(--cream);border:1px solid var(--gold);border-radius:9px;padding:8px 11px"><span style="font-size:14px">🔗</span><div style="flex:1"><b>${label}</b> <span style="color:#10b981">connected</span><br><span style="color:var(--dim);font-size:11px">${esc(detail||'')}</span></div><span onclick="socDisconnect('${id}')" style="cursor:pointer;color:var(--dim);font-size:12px">disconnect</span></div>`
+    : formHTML;
+  const masto=connRow('mastodon','Mastodon',!!C.mastodon,C.mastodon&&C.mastodon.handle,
+    `<div style="background:var(--cream);border:1px solid var(--line);border-radius:9px;padding:9px 11px"><b>🐘 Connect Mastodon</b> <span style="color:var(--dim);font-size:11px">your instance, your token</span><div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:7px"><input id="soc-mi" placeholder="instance e.g. mastodon.social" style="flex:1;min-width:120px;${APPIN}"><input id="soc-mt" placeholder="access token" style="flex:1;min-width:120px;${APPIN}"><button onclick="socConnectMastodon()" style="${APPBTN}">Connect</button></div><div style="color:var(--dim);font-size:10.5px;margin-top:5px">Preferences → Development → New application → copy the access token. Posts go live immediately.</div></div>`);
+  const bsky=connRow('bluesky','Bluesky',!!C.bluesky,C.bluesky&&('@'+C.bluesky.handle),
+    `<div style="background:var(--cream);border:1px solid var(--line);border-radius:9px;padding:9px 11px"><b>🦋 Connect Bluesky</b> <span style="color:var(--dim);font-size:11px">app password</span><div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:7px"><input id="soc-bh" placeholder="handle.bsky.social" style="flex:1;min-width:120px;${APPIN}"><input id="soc-bp" placeholder="app password" type="password" style="flex:1;min-width:120px;${APPIN}"><button onclick="socConnectBluesky()" style="${APPBTN}">Connect</button></div><div style="color:var(--dim);font-size:10.5px;margin-top:5px">Settings → App Passwords → create one. Posts go live immediately.</div></div>`);
+  const oauthNets=['𝕏 (Twitter)','LinkedIn','Facebook','Threads','Instagram','TikTok'].map(n=>`<span title="Needs an OAuth app (owner setup)" style="padding:5px 11px;border-radius:999px;font-size:12px;border:1px dashed var(--line);background:var(--cream);color:var(--dim)">${n} · soon</span>`).join('');
+  const selChips=['mastodon','bluesky'].filter(n=>SOC.conn[n]).map(n=>`<span onclick="socToggleNet('${n}')" style="cursor:pointer;padding:5px 11px;border-radius:999px;font-size:12px;border:1px solid ${SOC.nets[n]?'var(--gold)':'var(--line)'};background:${SOC.nets[n]?'var(--gold)':'var(--cream)'};color:#1a1410">${n==='mastodon'?'🐘 Mastodon':'🦋 Bluesky'}</span>`).join('')||'<span style="color:var(--dim);font-size:12px">Connect a network above to post live.</span>';
+  const drafts=SOC.drafts.length?SOC.drafts.map(d=>`<div style="background:var(--cream);border:1px solid var(--line);border-radius:9px;padding:9px 11px;margin-bottom:6px"><div style="display:flex;justify-content:space-between"><b style="font-size:11px;color:var(--dim)">${(d.nets||[]).join(', ')||'no network'}</b><span onclick="socDelDraft(${d.id})" style="cursor:pointer;color:var(--dim)">×</span></div>${d.img?`<img src="${d.img}" style="width:46px;height:46px;object-fit:cover;border-radius:6px;float:right;margin-left:8px">`:''}<div style="font-size:13px;margin-top:3px">${esc(d.text)}</div></div>`).join(''):'<span style="color:var(--dim)">No drafts yet.</span>';
   return `<div style="display:flex;flex-direction:column;gap:13px;font-size:13px">
-   <p style="color:var(--dim)">Compose once → everywhere. Pick networks, write, add a <b>free Creative-Commons image</b>. Drafts save on-device; live posting needs each network connected.</p>
-   <div><b>Networks</b><div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:6px">${nets}</div></div>
+   <p style="color:var(--dim)">Compose once → post everywhere. Connect with <b>your own tokens</b> — sovereign, no middle-man. Mastodon &amp; Bluesky post <b>live now</b>; the rest land as drafts until their app is set up.</p>
+   <div style="display:flex;flex-direction:column;gap:8px">${masto}${bsky}<div style="display:flex;flex-wrap:wrap;gap:6px">${oauthNets}</div></div>
+   <div><b>Post to</b><div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:6px">${selChips}</div></div>
    <textarea id="soc-text" placeholder="What's happening?" style="${APPIN};width:100%;min-height:68px;resize:vertical"></textarea>
    <div><button onclick="socFindImg()" style="${APPIN};cursor:pointer">🖼️ Find free image</button><div id="soc-imgs" style="display:flex;flex-wrap:wrap;margin-top:6px"></div></div>
-   <div style="display:flex;gap:8px"><button onclick="socSaveDraft()" style="${APPBTN}">Save draft</button><button onclick="alert('Live posting needs this network connected via OAuth — a one-time owner setup. Your draft is saved now.')" style="${APPIN};cursor:pointer">Post (connect first)</button></div>
+   <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap"><button onclick="socPublish()" style="${APPBTN}">Post / Save</button><span id="soc-toast" style="font-size:12px;color:var(--dim)"></span></div>
    <div><b>Drafts</b><div style="margin-top:6px">${drafts}</div></div>
   </div>`;
 }
@@ -873,6 +929,18 @@ function gdnLimit(id,delta){ const k=GDN.kids.find(x=>x.id===id); if(k){ k.limit
 function gdnDel(id){ GDN.kids=GDN.kids.filter(x=>x.id!==id); gdnSave(); gdnR(); }
 async function gdnModerate(){ const t=document.getElementById('gdn-mod'),o=document.getElementById('gdn-modout'); if(!t)return; const txt=(t.value||'').trim(); if(!txt)return; if(o)o.textContent='checking…';
   try{ const d=await(await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:'You are a child-safety moderator. Is this message safe for a child? Reply in ONE short sentence starting SAFE or FLAG. Message: "'+txt.slice(0,300)+'"',register:'plain'})})).json(); if(o)o.textContent=d.response||'—'; }catch(e){ if(o)o.textContent='moderation unavailable'; } }
+const GDN_AGENT='http://127.0.0.1:7777';
+async function gdnScan(){ const o=document.getElementById('gdn-scan'); if(!o)return; o.innerHTML='<span style="color:var(--dim)">contacting your MEOK Home Agent…</span>';
+  try{ const ctl=new AbortController(); const tm=setTimeout(()=>ctl.abort(),2500);
+    const d=await(await fetch(GDN_AGENT+'/scan',{signal:ctl.signal})).json(); clearTimeout(tm);
+    const col=d.safety_score>=90?'#10b981':d.safety_score>=70?'var(--gold)':'var(--bad)';
+    const devs=(d.devices||[]).slice(0,12).map(x=>`<div style="display:flex;gap:8px;align-items:center;font-size:12px;padding:3px 0"><span>📟</span><span style="flex:1">${esc(x.ip)}</span><span style="color:var(--dim)">${esc(x.mac||'')}</span>${(x.open_ports||[]).length?`<span style="color:var(--bad)">${x.open_ports.length} risky port(s)</span>`:''}</div>`).join('');
+    const finds=(d.findings||[]).length?'<div style="margin-top:6px">'+d.findings.map(f=>`<div style="color:var(--bad);font-size:12px">⚠ ${esc(f.ip)}:${f.port} — ${esc(f.issue)}</div>`).join('')+'</div>':'';
+    o.innerHTML=`<div style="background:var(--cream);border:1px solid var(--line);border-radius:9px;padding:11px"><div style="display:flex;align-items:center;gap:10px"><div style="font-size:26px;font-weight:800;color:${col}">${d.safety_score}</div><div><b>${esc(d.safety_grade)}</b> · ${d.device_count} devices<br><span style="color:var(--dim);font-size:12px">${esc(d.advice||'')}</span></div></div><div style="margin-top:8px">${devs}</div>${finds}<div style="color:var(--dim);font-size:10.5px;margin-top:7px">🔒 Scanned locally on ${esc(d.host||'your machine')} · signed · stays on your device.</div></div>`;
+  }catch(e){
+    o.innerHTML=`<div style="background:rgba(189,154,82,.1);border:1px solid var(--line);border-radius:9px;padding:11px;font-size:12px"><b>Home Agent not running.</b> The scan needs the tiny local MEOK Home Agent (a browser can't see your LAN). It's one file, pure Python, localhost-only:<pre style="white-space:pre-wrap;background:#1a1410;color:#f5e9c8;padding:8px;border-radius:7px;margin:7px 0;font-size:11px">curl -O https://os.meok.ai/agent/meok-home-agent.py
+python3 meok-home-agent.py</pre><a href="/agent/meok-home-agent.py" download style="color:var(--gold);font-weight:700">⬇ Download the agent</a> · <a href="/agent/" style="color:var(--gold)">setup guide</a><div style="color:var(--dim);margin-top:5px">Then tap Scan again. It binds to 127.0.0.1 only and never phones home.</div></div>`;
+  } }
 function guardianHTML(){
   const kids=GDN.kids.length?GDN.kids.map(k=>`<div style="background:var(--cream);border:1px solid var(--line);border-radius:9px;padding:9px 11px;margin-bottom:6px;display:flex;align-items:center;gap:8px"><span style="font-size:18px">🧒</span><div style="flex:1"><b>${esc(k.name)}</b> <span style="color:var(--dim)">· age ${k.age}</span><br><span style="color:var(--dim);font-size:12px">screen limit: <b>${k.limit} min/day</b></span></div><button onclick="gdnLimit(${k.id},-15)" style="${APPIN};cursor:pointer">−15</button><button onclick="gdnLimit(${k.id},15)" style="${APPIN};cursor:pointer">+15</button><span onclick="gdnDel(${k.id})" style="cursor:pointer;color:var(--dim)">×</span></div>`).join(''):'<span style="color:var(--dim)">No child profiles yet.</span>';
   return `<div style="display:flex;flex-direction:column;gap:14px;font-size:13px">
@@ -881,7 +949,9 @@ function guardianHTML(){
    <div><b>🛡 Chat moderation</b> <span style="color:var(--dim);font-size:11px">AI-checked, governed</span>
      <textarea id="gdn-mod" placeholder="Paste a message to check if it's safe for a child…" style="${APPIN};width:100%;min-height:52px;margin-top:6px;resize:vertical"></textarea>
      <button onclick="gdnModerate()" style="${APPBTN};margin-top:6px">Check it</button><div id="gdn-modout" style="margin-top:8px"></div></div>
-   <div style="background:rgba(189,154,82,.1);border:1px solid var(--line);border-radius:9px;padding:11px;font-size:12px;color:var(--dim)">📡 <b>WiFi / network scan</b> needs the <b>MEOK home agent</b> — a browser can't scan your LAN. Install the local agent to enable live network &amp; device safety scanning.</div>
+   <div><b>📡 WiFi / network safety</b> <span style="color:var(--dim);font-size:11px">via your local Home Agent</span>
+     <div style="margin-top:6px"><button onclick="gdnScan()" style="${APPBTN}">Scan my network</button></div>
+     <div id="gdn-scan" style="margin-top:9px"></div></div>
   </div>`;
 }
 
