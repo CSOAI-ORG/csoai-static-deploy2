@@ -299,6 +299,7 @@ table.mini td:last-child{text-align:right;font-variant-numeric:tabular-nums}
     <div class="sovsugg">
       <span class="sgg" onclick="sovHandle('open MEOK Earth')">🌍 My world</span>
       <span class="sgg" onclick="sovHandle('work mode')">💼 Work</span>
+      <span class="sgg" onclick="sovHandle('what governs my industry')">🏛 What governs me?</span>
       <span class="sgg" onclick="sovHandle('open setup')">🧩 Set up</span>
       <span class="sgg" onclick="location.href='/sovspace.html'">🧰 SOV Space</span>
       <span class="sgg" onclick="location.href='/badges.html'">🏷️ Badges</span>
@@ -1187,9 +1188,22 @@ function sovHandle(raw){
   const m=t.match(/\b(?:open|show|launch|go to|take me to)\s+(.+)/);
   if(m){ const opened=sovOpenByName(m[1].replace(/\b(app|the|my)\b/g,'').trim()); return sovSay(opened?("Opening <b>"+opened+"</b>."):("I couldn't find '"+m[1].trim()+"'. Try 'revenue', 'earth', 'guardian', 'delboy'.")); }
   if(arch && /\b(become|be|signature|turn into|make me)\b/.test(t)){ setSignature(arch.h,arch.n); sovSyncHue(); const f=document.getElementById('sovface'),n=document.getElementById('sovname'),fab=document.querySelector('.sovfab'); if(f)f.textContent=arch.e; if(n)n.textContent=arch.n; if(fab)fab.textContent=arch.e; try{localStorage.setItem('meok_archetype',arch.n);localStorage.setItem('meok_face',arch.e);}catch(e){} if(typeof sovHatchCeremony==='function')sovHatchCeremony(); else if(typeof sovApplyHatch==='function')sovApplyHatch(); return sovSay("✨ Your world is hatching — the Earth resolves into a <b>"+arch.e+" "+arch.n+"</b>, and the whole OS ripples in your colour."); }
+  if(/\b(govern|regulat|compl(?:y|iance|iant)|which (?:law|rule|framework)|what (?:governs|applies)|i run an?\b|my (?:business|company|industry|sector)\b|i work in)\b/.test(t)){ sovGovern(raw); return; }
   if(/\b(earth|world|globe|map|town)\b/.test(t)){ openByName_meokearth(); return; }
-  if(/\b(help|what can you|who are you|hello|hi)\b/.test(t)){ return sovSay("I'm your <b>sovereign</b> — I remember you across any model or protocol. I can <b>open apps</b> ('open revenue'), <b>switch your current</b> ('work mode'), <b>change your signature</b> ('become a guardian'), or take you into <b>MEOK Earth</b>. Tap 🎤 to just speak."); }
+  if(/\b(help|what can you|who are you|hello|hi)\b/.test(t)){ return sovSay("I'm your <b>sovereign</b> — I remember you across any model or protocol. I can <b>open apps</b> ('open revenue'), <b>switch your current</b> ('work mode'), <b>change your signature</b> ('become a guardian'), tell you <b>what governs your industry</b>, or take you into <b>MEOK Earth</b>. Tap 🎤 to just speak."); }
   sovAsk(raw); // unmatched → ask the real SOV3 brain (graceful fallback if offline)
+}
+// "What governs my industry?" — real frameworks + the legacy bridges MEOK connects.
+async function sovGovern(raw){
+  sovSay("🏛 Looking up what governs that…");
+  try{
+    const d=await(await fetch('/api/govern?q='+encodeURIComponent((raw||'').slice(0,120)))).json();
+    if(d&&d.frameworks&&d.frameworks.length){
+      const fws=d.frameworks.map(f=>'• <b>'+esc(f.name)+'</b> <span style="color:var(--dim)">— '+esc(f.why)+'</span>').join('<br>');
+      const br=(d.bridges&&d.bridges.length)?('<br><span style="color:var(--dim)">Legacy systems MEOK bridges &amp; signs: </span>'+d.bridges.map(esc).join(', ')):'';
+      sovSay('🏛 <b>What governs '+(d.matched?('a '+esc(d.industry)+' business'):'you')+'</b><br>'+fws+br+'<br><span style="color:var(--dim)">'+esc(d.advice||'')+'</span> <span class="sgg" style="cursor:pointer" onclick="openApp(\'fleet\')">→ Compliance Fleet</span>');
+    } else sovSay((d&&d.advice)?esc(d.advice):"Tell me your sector — e.g. 'I run a bank' or 'healthcare' — and I'll show exactly what governs it.");
+  }catch(e){ sovSay("Tell me your sector — e.g. <b>'I run a bank'</b> — and I'll show what governs it and which legacy systems we bridge."); }
 }
 // the canonical brain: POST to live SOV3 /chat; falls back to the command layer if unreachable
 const SOV3_CHAT = "/api/chat";
