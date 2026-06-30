@@ -649,7 +649,7 @@ function content(id){const L=LIVE;const liveBadge=LIVEMODE?'<span class="chip li
  case 'guardian': return `<p><b>MEOK Guardian — 24/7 family & child safety.</b> Game-content checks, network scanning, chat moderation and play-schedule limits: a sovereign guardian for the home.</p>
    <h4>Live tools</h4><div class="row"><span class="chip on">scan_network</span><span class="chip on">check_game_content</span><span class="chip on">moderate_chat</span><span class="chip on">set_game_limit</span></div>
    <div class="row"><span class="chip">family-guardian-mcp</span><span class="chip on">SOV3 guardian_* tools</span></div>`;
- case 'family': return `<p><b>MEOK Family — the family OS.</b> Members, chores, events and shared care in one calm surface. The personal-mode heart of MEOK.</p>
+ case 'family': return familyHTML(); case '_family_old': return `<p><b>MEOK Family — the family OS.</b> Members, chores, events and shared care in one calm surface. The personal-mode heart of MEOK.</p>
    <h4>Live tools</h4><div class="row"><span class="chip on">family_add_member</span><span class="chip on">family_add_chore</span><span class="chip on">family_add_event</span><span class="chip on">family_get_dashboard</span></div>
    <div class="row"><span class="chip warnc">building</span><span class="chip">meok-family</span></div>`;
  case 'work': return `<p><b>MEOK Work — your standing agent crew.</b> <b>Orion</b> hunts & captures tasks · <b>Riri</b> builds the tools · <b>Hourman</b> runs the sprints. The work three that never clock off.</p>
@@ -803,6 +803,38 @@ async function applyDirectives(){
   }catch(e){}
 }
 setTimeout(applyDirectives, 3600);
+// ── MEOK Family — a REAL working family OS (members · chores w/ points · events), saved on-device ──
+function famLoad(){ try{ return JSON.parse(localStorage.getItem('meok_family')) || {members:[],chores:[],events:[]}; }catch(e){ return {members:[],chores:[],events:[]}; } }
+let FAM=famLoad();
+function famSave(){ try{ localStorage.setItem('meok_family',JSON.stringify(FAM)); }catch(e){} }
+function famR(){ const b=document.getElementById('b-family'); if(b) b.innerHTML=familyHTML(); }
+const FAM_EMO=['🦊','🐻','🐼','🐨','🦁','🐯','🐸','🐵','🐧','🦉','🐰','🐱'];
+const FAMBTN='border:0;background:var(--gold);color:#1a1410;font-weight:700;padding:7px 13px;border-radius:8px;cursor:pointer;font-family:inherit';
+const FAMIN='padding:7px 10px;border:1px solid var(--line);border-radius:8px;background:var(--cream);color:var(--ink);font-family:inherit';
+function famAddMember(){ const i=document.getElementById('fam-mn'); if(!i)return; const n=(i.value||'').trim(); if(!n)return; FAM.members.push({id:Date.now(),name:n.slice(0,20),points:0,emoji:FAM_EMO[FAM.members.length%FAM_EMO.length]}); i.value=''; famSave(); famR(); }
+function famAddChore(){ const t=document.getElementById('fam-ct'),a=document.getElementById('fam-ca'),p=document.getElementById('fam-cp'); if(!t)return; const task=(t.value||'').trim(); if(!task)return; FAM.chores.push({id:Date.now(),task:task.slice(0,40),who:a?a.value:'',pts:Math.max(1,parseInt(p&&p.value)||5),done:false}); t.value=''; famSave(); famR(); }
+function famDone(id){ const c=FAM.chores.find(x=>x.id===id); if(!c)return; c.done=!c.done; const m=FAM.members.find(x=>x.name===c.who); if(m) m.points=Math.max(0,(m.points||0)+(c.done?c.pts:-c.pts)); famSave(); famR(); }
+function famAddEvent(){ const t=document.getElementById('fam-et'),d=document.getElementById('fam-ed'); if(!t)return; const title=(t.value||'').trim(); if(!title)return; FAM.events.push({id:Date.now(),title:title.slice(0,40),date:d?d.value:''}); t.value=''; famSave(); famR(); }
+function famDel(kind,id){ FAM[kind]=FAM[kind].filter(x=>x.id!==id); famSave(); famR(); }
+function familyHTML(){
+  const mem=FAM.members, ch=FAM.chores, ev=FAM.events;
+  const opts='<option value="">— who? —</option>'+mem.map(m=>`<option value="${esc(m.name)}">${m.emoji} ${esc(m.name)}</option>`).join('');
+  return `<div style="display:flex;flex-direction:column;gap:15px;font-size:13px">
+   <div><b>👨‍👩‍👧 Members</b>
+     <div style="display:flex;flex-wrap:wrap;gap:8px;margin:8px 0">${mem.length?mem.map(m=>`<span style="background:var(--cream);border:1px solid var(--line);border-radius:999px;padding:5px 11px;display:inline-flex;gap:6px;align-items:center">${m.emoji} <b>${esc(m.name)}</b> <span style="color:var(--gold)">${m.points||0}★</span> <span onclick="famDel('members',${m.id})" style="cursor:pointer;color:var(--dim)">×</span></span>`).join(''):'<span style="color:var(--dim)">No members yet — add your family below.</span>'}</div>
+     <div style="display:flex;gap:6px"><input id="fam-mn" placeholder="Add a family member…" style="flex:1;${FAMIN}" onkeydown="if(event.key==='Enter')famAddMember()"><button onclick="famAddMember()" style="${FAMBTN}">Add</button></div>
+   </div>
+   <div><b>🧹 Chores</b> <span style="color:var(--dim);font-size:11px">tap the box to complete → points awarded</span>
+     <div style="display:flex;flex-direction:column;gap:6px;margin:8px 0">${ch.length?ch.map(c=>`<div style="display:flex;align-items:center;gap:8px;background:var(--cream);border:1px solid var(--line);border-radius:9px;padding:7px 10px;${c.done?'opacity:.55':''}"><span onclick="famDone(${c.id})" style="cursor:pointer;font-size:16px">${c.done?'✅':'⬜'}</span><span style="flex:1;${c.done?'text-decoration:line-through':''}">${esc(c.task)}</span>${c.who?`<span style="color:var(--dim)">${esc(c.who)}</span>`:''}<span style="color:var(--gold)">${c.pts}★</span><span onclick="famDel('chores',${c.id})" style="cursor:pointer;color:var(--dim)">×</span></div>`).join(''):'<span style="color:var(--dim)">No chores yet.</span>'}</div>
+     <div style="display:flex;gap:6px;flex-wrap:wrap"><input id="fam-ct" placeholder="New chore…" style="flex:2;min-width:110px;${FAMIN}" onkeydown="if(event.key==='Enter')famAddChore()"><select id="fam-ca" style="${FAMIN}">${opts}</select><input id="fam-cp" type="number" value="5" min="1" style="width:54px;${FAMIN}"><button onclick="famAddChore()" style="${FAMBTN}">Add</button></div>
+   </div>
+   <div><b>📅 Events</b>
+     <div style="display:flex;flex-direction:column;gap:6px;margin:8px 0">${ev.length?ev.map(e=>`<div style="display:flex;align-items:center;gap:8px;background:var(--cream);border:1px solid var(--line);border-radius:9px;padding:7px 10px"><span>📌</span><span style="flex:1">${esc(e.title)}</span>${e.date?`<span style="color:var(--dim)">${esc(e.date)}</span>`:''}<span onclick="famDel('events',${e.id})" style="cursor:pointer;color:var(--dim)">×</span></div>`).join(''):'<span style="color:var(--dim)">No events yet.</span>'}</div>
+     <div style="display:flex;gap:6px"><input id="fam-et" placeholder="New event…" style="flex:1;${FAMIN}" onkeydown="if(event.key==='Enter')famAddEvent()"><input id="fam-ed" type="date" style="${FAMIN}"><button onclick="famAddEvent()" style="${FAMBTN}">Add</button></div>
+   </div>
+   <div style="color:var(--dim);font-size:11px">💚 Saved on your device · your family, your data — never uploaded.</div>
+  </div>`;
+}
 function openApp(id){ track('app:'+id,'open');
  if(open[id]){focus(id);return;}
  const a=APPS[id];const d=document.getElementById('frame');
@@ -982,6 +1014,18 @@ function sovHandle(raw){
 const SOV3_CHAT = "/api/chat";
 // mobile: tap the dock header to expand/collapse the bottom sheet
 try{ const _sh=document.querySelector('.sovhead'); if(_sh) _sh.addEventListener('click',function(){ if(innerWidth<=760) document.body.classList.toggle('sov-open'); }); }catch(e){}
+// ── Persistent bottom chat bar — talk to Sovereign from ANY screen / any app ──
+(function(){
+  if(document.getElementById('sovbottombar')) return;
+  const bar=document.createElement('div'); bar.id='sovbottombar';
+  bar.style.cssText='position:fixed;left:50%;bottom:14px;transform:translateX(-50%);z-index:5000;display:flex;align-items:center;gap:8px;width:min(540px,92vw);background:rgba(26,20,16,.93);border:1px solid var(--gold,#c9a84c);border-radius:999px;padding:6px 6px 6px 15px;box-shadow:0 12px 36px rgba(0,0,0,.34);backdrop-filter:blur(8px)';
+  bar.innerHTML='<span style="font-size:16px">🐉</span><input id="sovbbin" placeholder="Ask your Sovereign anything…" autocomplete="off" style="flex:1;border:0;background:transparent;outline:none;color:#f5f0e6;font:14px Space Grotesk,sans-serif"><span id="sovbbmic" title="Speak" style="color:var(--gold,#c9a84c);font-size:16px;cursor:pointer;padding:0 4px">🎤</span><button id="sovbbsend" style="border:0;background:var(--gold,#c9a84c);color:#1a1410;width:34px;height:34px;border-radius:50%;font-weight:800;cursor:pointer;flex:none">➤</button>';
+  document.body.appendChild(bar);
+  function go(){ const i=document.getElementById('sovbbin'); const v=i.value.trim(); if(!v) return; i.value=''; try{ if(innerWidth<=760) document.body.classList.add('sov-open'); }catch(e){} if(typeof sovHandle==='function') sovHandle(v); }
+  document.getElementById('sovbbsend').onclick=go;
+  document.getElementById('sovbbin').addEventListener('keydown',function(e){ if(e.key==='Enter') go(); });
+  document.getElementById('sovbbmic').onclick=function(){ try{ if(typeof sovVoice==='function') sovVoice(); }catch(e){} };
+})();
 async function sovAsk(text){
   const log=document.getElementById('sovlog'); let think=null;
   if(log){ think=document.createElement('div'); think.className='sovmsg ai'; think.textContent='…'; log.appendChild(think); log.scrollTop=log.scrollHeight; }
