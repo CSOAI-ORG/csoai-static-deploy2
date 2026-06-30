@@ -92,6 +92,17 @@
       const d = await r.json(); const ans = d.response || "…"; t.innerHTML = ans.replace(/</g, "&lt;"); speak(ans);
       const tr = await (await fetch(API + "/api/tools?q=" + encodeURIComponent(v) + "&limit=3")).json();
       if (tr.matches && tr.matches.length) { const b = say("ai", "🧰 <b>Tools for this:</b><br>"); b.innerHTML += tr.matches.map(m => `<a href="${API}/sovspace.html?q=${encodeURIComponent(m.name)}" target="_blank" style="display:inline-block;margin:4px 4px 0 0;padding:2px 9px;border:1px solid ${GOLD};border-radius:999px;color:#8a6f2e;text-decoration:none;font-size:12px">${m.name}</a>`).join(""); }
+      // federated world knowledge (Wikipedia/Wikidata + stats)
+      try { const kn = await (await fetch(API + "/api/knowledge?q=" + encodeURIComponent(v))).json();
+        const f = kn.facts, top = (kn.results || []).find(x => x.source === "wikipedia" && (x.excerpt || x.desc));
+        if ((f && (f.population != null || f.founded)) || top) {
+          const k = say("ai", "📚 <b>From the world's knowledge</b> · governed<br>");
+          let h = "";
+          if (f && (f.population != null || f.founded)) { const bits = []; if (f.population != null) bits.push("👥 pop. <b>" + Number(f.population).toLocaleString() + "</b>"); if (f.founded) bits.push("📅 " + f.founded); h += "<b>" + (f.label || "") + "</b> <span style='color:#8a6f2e'>" + bits.join(" · ") + "</span><br>"; }
+          if (top) h += (top.excerpt || top.desc || "").slice(0, 160) + " <a href='" + top.url + "' target='_blank' style='color:#8a6f2e'>↗</a>";
+          k.innerHTML += h;
+        }
+      } catch (e) {}
     } catch (e) { t.innerHTML = "I'm here — try once more."; }
   }
   $("#meok-send").onclick = () => send();
