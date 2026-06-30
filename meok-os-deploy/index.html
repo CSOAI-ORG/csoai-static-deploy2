@@ -73,6 +73,48 @@ body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Seg
 /* top bar */
 .bar{position:relative;z-index:30;display:flex;align-items:center;gap:10px;padding:10px 15px;background:rgba(255,255,255,.55);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
 .logo{font-weight:800;letter-spacing:.3px;font-size:14px;display:flex;align-items:center;gap:9px;color:var(--ink)}
+/* left hamburger + nav drawer */
+.hb{cursor:pointer;font-size:17px;line-height:1;color:var(--ink);background:rgba(255,255,255,.65);border:1px solid var(--line);width:34px;height:32px;display:flex;align-items:center;justify-content:center;border-radius:9px;transition:.15s;flex:none}
+.hb:hover{border-color:var(--gold);background:rgba(255,255,255,.9)}
+.navscrim{position:fixed;inset:0;z-index:700;background:rgba(26,20,16,.32);backdrop-filter:blur(2px);opacity:0;pointer-events:none;transition:opacity .28s}
+body.nav-open .navscrim{opacity:1;pointer-events:auto}
+.navdrawer{position:fixed;top:0;left:0;bottom:0;z-index:701;width:288px;max-width:86vw;background:linear-gradient(180deg,#fffdf8,#f4efe4);border-right:1px solid var(--gold2,#d8c79a);box-shadow:14px 0 40px rgba(60,48,26,.18);transform:translateX(-104%);transition:transform .3s cubic-bezier(.4,0,.2,1);overflow-y:auto;padding:0 0 18px;display:flex;flex-direction:column}
+body.nav-open .navdrawer{transform:translateX(0)}
+.ndhead{display:flex;align-items:center;gap:11px;padding:17px 16px 14px;border-bottom:1px solid var(--line)}
+.ndlogo{width:34px;height:34px;border-radius:9px;background:linear-gradient(135deg,#1a1410,#3a2e1a);color:var(--gold);display:grid;place-items:center;font-weight:900;flex:none}
+.ndx{margin-left:auto;cursor:pointer;color:var(--dim);font-size:15px;width:26px;height:26px;display:grid;place-items:center;border-radius:7px}
+.ndx:hover{background:rgba(217,117,106,.14);color:var(--bad)}
+.ndsec{font-size:10px;font-weight:800;letter-spacing:.07em;text-transform:uppercase;color:var(--dim);padding:14px 18px 5px}
+.ndi{display:flex;align-items:center;gap:12px;padding:10px 18px;font-size:14px;font-weight:600;color:var(--ink);cursor:pointer;text-decoration:none;transition:.12s}
+.ndi span{font-size:17px;width:22px;text-align:center;flex:none}
+.ndi:hover{background:rgba(201,168,76,.13);padding-left:22px}
+.ndfoot{margin-top:auto;padding:16px 18px 4px;font-size:11px;color:var(--ink);line-height:1.5;border-top:1px solid var(--line)}
+@media (max-width:760px){ .navdrawer{width:82vw} }
+/* MEOK Earth — military-grade C2 HUD + cinematic dive */
+.hud{position:relative;border-radius:11px;overflow:hidden;background:#04060d;border:1px solid #1c2b4d;box-shadow:inset 0 0 60px rgba(8,20,48,.7)}
+.hud iframe{display:block}
+.hudtop{display:flex;align-items:center;gap:10px;padding:7px 11px;background:linear-gradient(90deg,#0a1020,#0c1733);border-bottom:1px solid #1c2b4d;font:11px ui-monospace,Menlo,monospace;color:#8fb6ff;letter-spacing:.05em}
+.live-dot{width:8px;height:8px;border-radius:50%;background:#39d98a;box-shadow:0 0 8px #39d98a;animation:livepulse 1.4s infinite}
+@keyframes livepulse{0%,100%{opacity:1}50%{opacity:.35}}
+.hudtag{margin-left:auto;color:#c9a84c;border:1px solid #6b5a2e;padding:1px 7px;border-radius:4px;font-size:9.5px;letter-spacing:.12em}
+.hudcoord{color:#5f7fb5}
+.hudbtn{cursor:pointer;font:10px ui-monospace,monospace;color:#cfe0ff;background:rgba(40,70,140,.35);border:1px solid #2c4a86;padding:3px 9px;border-radius:5px;letter-spacing:.06em}
+.hudbtn:hover{background:rgba(60,100,190,.5);color:#fff}
+.hudcorner{position:absolute;width:18px;height:18px;border:2px solid rgba(143,182,255,.55);pointer-events:none;z-index:3}
+.hudcorner.tl{top:34px;left:6px;border-right:0;border-bottom:0}
+.hudcorner.tr{top:34px;right:6px;border-left:0;border-bottom:0}
+.hudcorner.bl{bottom:6px;left:6px;border-right:0;border-top:0}
+.hudcorner.br{bottom:6px;right:6px;border-left:0;border-top:0}
+.hudscan{position:absolute;left:0;right:0;top:28px;bottom:0;pointer-events:none;z-index:2;background:repeating-linear-gradient(0deg,rgba(80,140,255,.04) 0 2px,transparent 2px 4px)}
+/* cinematic dive overlay (tap the globe → fly into your world) */
+.dive{position:fixed;inset:0;z-index:9000;display:none;align-items:center;justify-content:center;background:radial-gradient(circle at 50% 50%,#0a1430,#02040a);overflow:hidden}
+.dive.on{display:flex;animation:divein 1.15s ease-in forwards}
+@keyframes divein{0%{opacity:0}12%{opacity:1}100%{opacity:1}}
+.diveorb{width:120px;height:120px;border-radius:50%;background:radial-gradient(circle at 42% 38%,#2a5c9e,#0a1530);box-shadow:0 0 60px rgba(80,140,255,.5),inset -10px -10px 30px rgba(0,0,0,.6);animation:divezoom 1.15s cubic-bezier(.6,0,.9,1) forwards}
+@keyframes divezoom{0%{transform:scale(.4);filter:blur(0)}100%{transform:scale(14);filter:blur(3px);opacity:.2}}
+.divetext{position:absolute;bottom:16%;left:0;right:0;text-align:center;color:#8fb6ff;font:13px ui-monospace,monospace;letter-spacing:.22em;animation:divepulse 1.15s infinite}
+@keyframes divepulse{0%,100%{opacity:.5}50%{opacity:1}}
+.divegrid{position:absolute;inset:0;background:repeating-linear-gradient(0deg,rgba(80,140,255,.06) 0 1px,transparent 1px 40px),repeating-linear-gradient(90deg,rgba(80,140,255,.06) 0 1px,transparent 1px 40px);animation:divezoom 1.15s cubic-bezier(.6,0,.9,1) forwards}
 .logo .dot{width:21px;height:21px;border-radius:7px;background:linear-gradient(150deg,#2a2a31,#15151a);box-shadow:0 3px 9px rgba(0,0,0,.28);position:relative}
 .logo .dot::after{content:"M";position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;color:#f3ede0}
 .pill{font-size:11px;color:var(--dim);background:rgba(255,255,255,.5);border:1px solid var(--line);padding:4px 10px;border-radius:20px;display:flex;align-items:center;gap:6px;white-space:nowrap}
@@ -266,6 +308,7 @@ table.mini td:last-child{text-align:right;font-variant-numeric:tabular-nums}
 
   <!-- top bar -->
   <div class="bar">
+    <div class="hb" id="hb" role="button" tabindex="0" aria-label="Open menu" title="Menu" onclick="navToggle(true)">☰</div>
     <div class="logo"><span class="dot"></span> MEOK&nbsp;OS <span style="color:var(--dim);font-weight:500">v3.0</span></div>
     <div class="pill csoai" title="Your sovereign OS — governed & powered by CSOAI"><span class="sdot ok" id="csoaidot"></span> Powered by <b>CSOAI</b></div>
     <div class="modesw" title="One OS, two clean spaces — Work shows your business tools, Life shows your personal ones"><span class="ms" data-m="csoai" onclick="setMode('csoai')">Work</span><span class="ms" data-m="meok" onclick="setMode('meok')">Life</span></div>
@@ -273,6 +316,31 @@ table.mini td:last-child{text-align:right;font-variant-numeric:tabular-nums}
     <div class="pill"><b id="clock">--:--</b></div>
     <div class="btn" onclick="boot();refreshLive()">⟳ Sync</div>
   </div>
+
+  <!-- cinematic dive: tap the globe → fly into your world -->
+  <div class="dive" id="dive"><div class="divegrid"></div><div class="diveorb"></div><div class="divetext">ENTERING YOUR WORLD…</div></div>
+
+  <!-- left navigation drawer — all the pages people need, one tap away -->
+  <div class="navscrim" id="navscrim" onclick="navToggle(false)"></div>
+  <nav class="navdrawer" id="navdrawer" aria-label="Main menu">
+    <div class="ndhead"><span class="ndlogo">M</span><div><b>MEOK OS</b><br><span style="color:var(--dim);font-size:11px">your sovereign world</span></div><span class="ndx" onclick="navToggle(false)" role="button" aria-label="Close menu">✕</span></div>
+    <div class="ndsec">Your AI</div>
+    <a class="ndi" onclick="navTo('sov')"><span>🐉</span> Talk to your Sovereign</a>
+    <a class="ndi" onclick="navTo('app:setup')"><span>🧩</span> Set up your Sovereign</a>
+    <a class="ndi" onclick="navTo('page:/character.html')"><span>✨</span> Your character</a>
+    <div class="ndsec">Explore</div>
+    <a class="ndi" onclick="navTo('app:meokearth')"><span>🌍</span> MEOK Earth — your world</a>
+    <a class="ndi" onclick="navTo('page:/sovspace.html')"><span>🧰</span> SOV Space — the tools</a>
+    <a class="ndi" onclick="navTo('govern')"><span>🏛</span> What governs my industry?</a>
+    <div class="ndsec">Spaces</div>
+    <a class="ndi" onclick="navTo('mode:csoai')"><span>💼</span> Work — business &amp; governance</a>
+    <a class="ndi" onclick="navTo('mode:meok')"><span>🏠</span> Life — personal &amp; family</a>
+    <div class="ndsec">Get MEOK</div>
+    <a class="ndi" onclick="navTo('page:/pricing.html')"><span>💎</span> Plans &amp; pricing</a>
+    <a class="ndi" onclick="navTo('page:/badges.html')"><span>🏷️</span> Authority badges</a>
+    <a class="ndi" onclick="navTo('page:/verify.html')"><span>✓</span> Verify a badge</a>
+    <div class="ndfoot">Build your own AI · own your data · free &amp; safe<br><span style="color:var(--dim)">governed &amp; signed by CSOAI</span></div>
+  </nav>
 
   <!-- desktop -->
   <div class="desktop">
@@ -623,9 +691,14 @@ function content(id){const L=LIVE;const liveBadge=LIVEMODE?'<span class="chip li
    <h4>State</h4><div class="row"><span class="chip warnc">early / R&D</span><span class="chip">PyPI scope: MEOK_AI_Labs (26)</span></div>
    <p style="color:var(--dim)">Surfaced for 11/11 product coverage; park until post-launch.</p>`;
   case 'meokearth': return `<div class="row"><span class="chip on">0 governed</span><span class="chip warnc">48.8M ungoverned</span><span class="chip">583M episodes</span><span class="chip on">Ed25519 ✓ 458/458</span></div>
-   <p>The sovereign globe — 12 hive-civilizations + the signed <b>flywheel</b> (governed vs ungoverned crimes), zero-token CesiumJS (no ion / Google tiles). Reads the ledger; never runs the sim.</p>
-   <iframe src="${MEOK_EARTH_URL}" style="width:100%;height:440px;border:1px solid #22305c;border-radius:10px;background:#04060d" loading="lazy" title="MEOK Earth"></iframe>
-   <p style="color:var(--dim);font-size:12px">Live globe = repo <code>meok-town-view</code>. If the panel is blank: run <code>npm run dev</code> in it (serves :5173) or point <code>MEOK_EARTH_URL</code> at the deployed URL. Stats above are from the real signed flywheel ledger snapshot.</p>`;
+   <p>The sovereign globe — 12 hive-civilizations + the signed <b>flywheel</b>. Zoom in to your world; <b>dive to photoreal 3D</b> when Google tiles are enabled.</p>
+   <div class="hud">
+     <div class="hudtop"><span class="live-dot"></span> MEOK&nbsp;EARTH · LIVE C2 <span class="hudcoord" id="hudcoord">51.50°N 0.12°W</span> <span class="hudbtn" onclick="meokDive3D(this)">⛶ DIVE TO 3D</span> <span class="hudtag">SOVEREIGN · UNCLASSIFIED</span></div>
+     <div class="hudcorner tl"></div><div class="hudcorner tr"></div><div class="hudcorner bl"></div><div class="hudcorner br"></div>
+     <div class="hudscan"></div>
+     <iframe id="meokearth-frame" src="${MEOK_EARTH_URL}" style="width:100%;height:430px;border:0;background:#04060d" loading="lazy" title="MEOK Earth"></iframe>
+   </div>
+   <p style="color:var(--dim);font-size:12px">Tactical C2 view over the live sovereign globe (<code>meok-town-view</code>). <b>Dive to 3D</b> streams Google Photorealistic 3D Tiles (cinematic roads/buildings) — owner enables Maps billing + sets the tiles key; until then it flies you over the signed globe.</p>`;
   case 'archetypes': return `<p><b>Your character learns what you learn.</b> A living companion that reflects your intellectual journey, creative expression, and sovereign self — appearance, abilities & personality evolve from your MEOK.ai learning patterns.</p>
    <h4>Choose your sovereign signature</h4>
    <div class="arow">${ARCHE.map(a=>`<span class="achip" style="--ah:${a.h}" onclick="setSignature(${a.h},'${a.n}')">${a.e} ${a.n}</span>`).join('')}</div>
@@ -1099,6 +1172,17 @@ setMode(MODE);paintBar();tick();boot();
 /* ---------- sovereign companion dock — talk or type, it acts on the OS ----------
    The new interface: no menus to hunt — tell your sovereign what you want. */
 function sovToggle(on){ document.getElementById('frame').classList.toggle('sovon', on); }
+// left nav drawer — one tap to every page people need
+function navToggle(on){ document.body.classList.toggle('nav-open', on); }
+function navTo(dest){ navToggle(false);
+  try{
+    if(dest==='sov'){ sovToggle(true); if(innerWidth<=760) document.body.classList.add('sov-open'); var i=document.getElementById('sovbbin'); if(i) i.focus(); return; }
+    if(dest==='govern'){ sovToggle(true); if(typeof sovHandle==='function') sovHandle('what governs my industry'); return; }
+    if(dest.indexOf('app:')===0){ openApp(dest.slice(4)); return; }
+    if(dest.indexOf('mode:')===0){ setMode(dest.slice(5)); if(typeof sovSyncHue==='function') sovSyncHue(); return; }
+    if(dest.indexOf('page:')===0){ location.href=dest.slice(5); return; }
+  }catch(e){}
+}
 /* dead-simple guided welcome — 2 taps, visual, plain words; advanced setup still available */
 function wRender(html){ const s=document.getElementById('wstep'); if(s) s.innerHTML=html; }
 function welcomeShow(){ const w=document.getElementById('welcome'); if(!w) return; w.classList.add('show'); wStep0(); }
@@ -1303,8 +1387,26 @@ function brainChips(side,cat,list){ return list.map(m=>'<span class="bchip'+(((M
 // Tap the living globe → step into MEOK Earth (the full universe). stopPropagation so
 // on mobile it enters the world rather than toggling the dock sheet.
 function enterWorld(ev){ try{ if(ev){ev.stopPropagation&&ev.stopPropagation();} }catch(e){}
-  try{ if(typeof openApp==='function' && typeof APPS!=='undefined' && APPS['meokearth']){ openApp('meokearth'); return; } }catch(e){}
-  try{ location.href='/?app=meokearth'; }catch(e){} }
+  meokDive(); }
+// cinematic dive — fly from the avatar orb into the full world (then open MEOK Earth)
+function meokDive(){
+  const d=document.getElementById('dive');
+  const open=function(){ try{ if(typeof openApp==='function'&&APPS['meokearth']){ openApp('meokearth'); } else location.href='/?app=meokearth'; }catch(e){ try{location.href='/?app=meokearth';}catch(_){} } };
+  if(!d){ open(); return; }
+  d.classList.add('on');
+  setTimeout(open, 900);
+  setTimeout(function(){ d.classList.remove('on'); }, 1300);
+}
+// DIVE TO 3D — Google Photorealistic 3D Tiles (cinematic roads/buildings) when the owner
+// has enabled Maps billing + set the tiles key; otherwise fly over the signed globe honestly.
+function meokDive3D(btn){
+  const key=window.MEOK_MAPS_KEY||(document.querySelector('meta[name="meok-maps-key"]')||{}).content;
+  const fr=document.getElementById('meokearth-frame');
+  if(key && fr){ fr.src='https://tile.googleapis.com/v1/3dtiles/root.json?key='+encodeURIComponent(key); if(btn)btn.textContent='⛶ 3D LIVE'; return; }
+  if(btn){ btn.textContent='3D needs Maps billing'; setTimeout(function(){ btn.textContent='⛶ DIVE TO 3D'; }, 2600); }
+  // still give the cinematic fly-in over the sovereign globe
+  meokDive();
+}
 // The Sovereign's circle IS a living mirror of Earth: ocean, rotating land, a day/night
 // terminator with city-lights, and the lit gold connectors of the MEOK universe — the
 // AI character's translucent emergent form floating over it (the egg before the hatch).
