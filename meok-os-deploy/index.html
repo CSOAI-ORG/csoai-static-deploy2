@@ -1071,6 +1071,11 @@ function boot(){const b=document.getElementById('boot'),log=document.getElementB
 
 /* ---------- start ---------- */
 setMode(MODE);paintBar();tick();boot();
+// PWA / share deep-links — manifest shortcuts and links can open an app or the dock directly
+(function(){ try{ var q=new URLSearchParams(location.search);
+  var app=q.get('app'); if(app){ setTimeout(function(){ try{ if(typeof APPS!=='undefined'&&APPS[app]) openApp(app); }catch(e){} }, 1200); }
+  if(q.get('talk')){ setTimeout(function(){ try{ sovToggle(true); if(innerWidth<=760) document.body.classList.add('sov-open'); var i=document.getElementById('sovbbin'); if(i) i.focus(); }catch(e){} }, 1200); }
+}catch(e){} })();
 
 /* ---------- sovereign companion dock — talk or type, it acts on the OS ----------
    The new interface: no menus to hunt — tell your sovereign what you want. */
