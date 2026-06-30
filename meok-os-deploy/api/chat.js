@@ -16,8 +16,8 @@ async function groqChat(key, system, message, prefer) {
         body: JSON.stringify({ model, max_tokens: 600, temperature: 0.8, messages: [{ role: 'system', content: system }, { role: 'user', content: message }] })
       });
       const d = await r.json();
-      const ans = d && d.choices && d.choices[0] && d.choices[0].message && d.choices[0].message.content;
-      if (ans) return { ans, model: model.split('/').pop() + '/groq' };
+      let ans = d && d.choices && d.choices[0] && d.choices[0].message && d.choices[0].message.content;
+      if (ans) { ans = ans.replace(/<think>[\s\S]*?<\/think>/gi, '').replace(/^\s+/, ''); if (ans) return { ans, model: model.split('/').pop() + '/groq' }; }
     } catch (e) { /* try next model */ }
   }
   return null;
