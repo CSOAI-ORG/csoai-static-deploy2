@@ -866,14 +866,41 @@ setMode(MODE);paintBar();tick();boot();
 function sovToggle(on){ document.getElementById('frame').classList.toggle('sovon', on); }
 /* dead-simple guided welcome — 2 taps, visual, plain words; advanced setup still available */
 function wRender(html){ const s=document.getElementById('wstep'); if(s) s.innerHTML=html; }
-function welcomeShow(){ const w=document.getElementById('welcome'); if(!w) return; w.classList.add('show'); wStep1(); }
+function welcomeShow(){ const w=document.getElementById('welcome'); if(!w) return; w.classList.add('show'); wStep0(); }
 function welcomeDone(){ try{localStorage.setItem('meok_welcomed','1');}catch(e){} const w=document.getElementById('welcome'); if(w) w.classList.remove('show'); }
-function wStep1(){ wRender('<h1>Welcome 👋</h1><p>I\'m your sovereign AI. Let\'s set you up — just tap. No typing needed.</p><p style="font-weight:700;color:var(--ink);margin-top:8px">What\'s this for?</p><div class="wcards"><div class="wcard" onclick="wPick(\'csoai\')"><span class="we">💼</span><b>Work</b><small>business &amp; compliance</small></div><div class="wcard" onclick="wPick(\'meok\')"><span class="we">🏠</span><b>Personal</b><small>your life &amp; family</small></div><div class="wcard" onclick="wPlay()"><span class="we">🎮</span><b>Play</b><small>your MEOK world</small></div></div><div class="wskip" onclick="welcomeDone()">Skip for now</div>'); }
-function wPick(mode){ setMode(mode); wStep2(); }
-function wPlay(){ setMode('meok'); wStep2(); }
+// Step 0 — voice or type (set the tone before anything)
+function wStep0(){ wRender('<h1>Hi — I\'m your Sovereign 🐉</h1><p style="font-size:15px"><b>Build your own AI. Own your data. Free. Safe.</b><br><span style="color:var(--dim)">This is your OS. Your AI runs for you — your world, never given away.</span></p><p style="font-weight:700;color:var(--ink);margin-top:10px">How would you like to talk to me?</p><div class="wcards"><div class="wcard" onclick="wVoicePref(true)"><span class="we">🎤</span><b>Speak</b><small>talk to me</small></div><div class="wcard" onclick="wVoicePref(false)"><span class="we">⌨️</span><b>Type</b><small>I\'ll keep it quiet</small></div></div><div class="wskip" onclick="welcomeDone()">Skip for now</div>'); }
+function wVoicePref(speak){ try{ window.SOV_VOICE_ON=!!speak; localStorage.setItem('sov_voice', speak?'1':'0'); if(speak){ const b=document.getElementById('sovspk'); if(b){b.textContent='🔊';b.classList.add('on');} } }catch(e){} wStep1(); }
+function wStep1(){ wRender('<h1>What\'s this for?</h1><p>Same OS — it reshapes to who you are. Pick one and I\'ll <b>show you around live</b>.</p><div class="wcards"><div class="wcard" onclick="wPick(\'csoai\')"><span class="we">💼</span><b>Work</b><small>business &amp; compliance</small></div><div class="wcard" onclick="wPick(\'meok\')"><span class="we">🏠</span><b>Personal</b><small>your life &amp; family</small></div><div class="wcard" onclick="wPlay()"><span class="we">🎮</span><b>Play</b><small>your MEOK world</small></div></div><div class="wskip" onclick="welcomeDone()">Skip for now</div>'); }
+function wPick(mode){ setMode(mode); welcomeDone(); startTour(mode); }
+function wPlay(){ setMode('meok'); welcomeDone(); startTour('meok'); }
 function wStep2(){ const cards=(typeof ARCHE!=='undefined'?ARCHE:[]).map(function(a){return '<div class="wcard" onclick="wChoose('+a.h+',\''+a.n+'\')"><span class="we">'+a.e+'</span><b>'+a.n+'</b></div>';}).join(''); wRender('<h1>Pick your sovereign</h1><p>This sets the colour and spirit of your world. You can change it anytime.</p><div class="wcards">'+cards+'</div><div class="wskip" onclick="welcomeDone()">Skip</div>'); }
 function wChoose(h,n){ if(typeof setSignature==='function') setSignature(h,n); wStep3(n); }
 function wStep3(n){ wRender('<h1>You\'re ready ✨</h1><p>Your sovereign is set as <b>'+n+'</b>. I\'ll remember you. Tap Enter to begin — and just talk to me anytime on the right.</p><div class="wcards"><div class="wcard" onclick="welcomeDone()"><span class="we">🚀</span><b>Enter</b></div><div class="wcard" onclick="welcomeDone();openApp(\'setup\')"><span class="we">⚙️</span><b>Advanced</b><small>choose models</small></div></div>'); }
+// ── Guided live demo: the AI walks you through your new OS (slow spotlight + narration, exit anytime) ──
+const TOUR_STEPS=[
+ {sel:'#sovdock', t:'Your AI lives here', b:'Sovereign — or any AI you choose — runs on the right, for YOU. Speak or type to it anytime. Your data stays yours; nothing is given away.'},
+ {sel:'#tiles', t:'Your world, your apps', b:'Everything lives here in the middle. Make it your home — social on the left, the web in the centre, your AI on the right. Pin, arrange, customise: it\'s your OS.'},
+ {sel:'.modesw', t:'Work · Personal · Play', b:'One OS, three currents. It reshapes to who you are right now — tap to switch anytime.'},
+ {sel:'.sovbar', t:'Just talk to me', b:'Tap the mic to speak, or type. Ask anything — I open apps, find the right tool, and remember you.'}
+];
+let _tourI=0;
+function startTour(mode){ _tourI=0; _tourEls(); _tourStep(); try{ if(window.SOV_VOICE_ON) sovSpeak('Welcome to your sovereign OS. Let me show you around.'); }catch(e){} }
+function _tourEls(){ if(document.getElementById('tourSpot'))return;
+ const spot=document.createElement('div'); spot.id='tourSpot'; spot.style.cssText='position:fixed;z-index:9001;border:2px solid var(--gold,#c9a84c);border-radius:14px;box-shadow:0 0 0 9999px rgba(15,12,8,.62),0 0 30px rgba(201,168,76,.6);transition:all .55s cubic-bezier(.4,0,.2,1);pointer-events:none';
+ const bub=document.createElement('div'); bub.id='tourBub'; bub.style.cssText='position:fixed;z-index:9002;max-width:300px;background:#FFFCF5;color:#2a1a14;border:1px solid var(--gold,#c9a84c);border-radius:14px;padding:16px 18px;box-shadow:0 16px 40px rgba(0,0,0,.3);font-family:Space Grotesk,sans-serif;transition:all .5s';
+ document.body.append(spot,bub); }
+function _tourStep(){ const s=TOUR_STEPS[_tourI]; const el=document.querySelector(s.sel); const spot=document.getElementById('tourSpot'),bub=document.getElementById('tourBub'); if(!el){return _tourNext();}
+ const r=el.getBoundingClientRect(),pad=8; spot.style.left=(r.left-pad)+'px';spot.style.top=(r.top-pad)+'px';spot.style.width=(r.width+pad*2)+'px';spot.style.height=(r.height+pad*2)+'px';
+ const onRight=r.left>innerWidth*0.5; let bx=onRight?Math.max(16,r.left-320):Math.min(innerWidth-320,r.right+16); let by=Math.min(Math.max(16,r.top),innerHeight-230);
+ bub.style.left=bx+'px';bub.style.top=by+'px'; const last=_tourI===TOUR_STEPS.length-1;
+ bub.innerHTML='<div style="font-size:11px;letter-spacing:.08em;color:var(--gold,#c9a84c);font-weight:700;text-transform:uppercase">'+(_tourI+1)+' / '+TOUR_STEPS.length+'</div><div style="font-weight:800;font-size:16px;margin:3px 0 6px">'+s.t+'</div><div style="font-size:13.5px;color:#6a5a48;line-height:1.5">'+s.b+'</div><div style="display:flex;gap:8px;margin-top:14px"><button onclick="_tourNext()" style="flex:1;border:none;background:#1a1410;color:var(--gold,#c9a84c);font:700 14px Space Grotesk;padding:9px;border-radius:9px;cursor:pointer">'+(last?'Finish →':'Next →')+'</button><button onclick="_tourExit()" style="border:1px solid #ddd;background:none;color:#7a6a58;font:600 13px Space Grotesk;padding:9px 12px;border-radius:9px;cursor:pointer">Exit ✕</button></div>';
+ try{ if(window.SOV_VOICE_ON) sovSpeak(s.t+'. '+s.b); }catch(e){} }
+function _tourNext(){ _tourI++; if(_tourI>=TOUR_STEPS.length)_tourFinish(); else _tourStep(); }
+function _tourExit(){ ['tourSpot','tourBub'].forEach(id=>{const e=document.getElementById(id);if(e)e.remove();}); }
+function _tourFinish(){ _tourExit(); askLearn(); }
+function askLearn(){ const w=document.getElementById('welcome'); if(!w)return; w.classList.add('show'); wRender('<h1>Can I learn about you? 🌱</h1><p>The more I know, the better I set up <b>your</b> world. Everything stays <b>on your device</b> — yours, never uploaded, never sold.</p><div class="wcards"><div class="wcard" onclick="learnYes()"><span class="we">💬</span><b>Yes — let\'s talk</b><small>tell me about you</small></div><div class="wcard" onclick="welcomeDone()"><span class="we">🔒</span><b>Maybe later</b><small>just explore</small></div></div><p style="font-size:11.5px;color:var(--dim);margin-top:10px">Optional, only with your explicit OK each time: camera presence &amp; on-device photo learning — it never leaves your device.</p>'); }
+function learnYes(){ welcomeDone(); try{ const i=document.getElementById('sovin'); if(i)i.focus(); }catch(e){} sovSay("Lovely — tell me your <b>name</b> to start, then anything you'd like me to remember. The more I learn, the more I set up for you. <span style='color:var(--dim)'>(All on your device.)</span>"); }
 function sovSyncHue(){ const h=String(window.MEOK_POND_HUE||43); document.documentElement.style.setProperty('--sh',h); const d=document.getElementById('sovdock'); if(d) d.style.setProperty('--sh',h); }
 // sovereign memory — your forever AI remembers you across sessions (local, sovereign: your data stays yours)
 let SOV_FACTS=[], SOV_LOG=[];
