@@ -222,3 +222,7 @@ SOV3 exposes a real lock + task board: `coord_register_agent` → `coord_acquire
 - [30 Jun 2026 ~13:38 M4-Hermes] CLAIM — 8 CHARTERS REWRITE. Driving 5 sovereign-offering sub-8K (education/research/defence-industry/developer/researcher) + 3 computing/AI (mit-license/apache-2/gpl-v3) up to 8KB+ each.
 
 - [30 Jun 2026 ~16:06 M4-Hermes] CLAIM — SECOND PASS CHARTER REWRITE. Driving the 4 historical sub-8K + 4 sovereign-offering sub-8K + 7 computing/AI = 15 charters from placeholder to 8KB+ each. Then bundle refresh.
+
+- [01 Jul 2026 ~00:18 M4-Hermes] CLAIM — OVERNIGHT BATCH (4 days to launch). Driving 3 parallel waves: (1) charter rewrite pass to bring all 71 to 8KB+, (2) sovereign-law depth pass to extend 9 short frameworks to 8KB+, (3) surface sweep to bring all 18 top-level + 90 micro + 33 per-MCP to A+++++. End-state: bundle refreshed at 04:00 BST 1 Jul. RELEASED on commit.
+
+- [1 Jul 2026 00:20 Hermes/JEEVES] RELEASED — v29 GOO COMPLETE + PROD DEPLOYED. 4 EATs shipped (oowm.html, dna.html, sovereign-canon.html, meok-sovereign-revise-mcp 20 tests). Committed 49ff38d2 + f450ffeb. proofof-site deployed to production at https://proofof-site.vercel.app via `vercel --prod` (15s, Ready). All 8 critical launch surfaces HTTP 200 verified (/ 17KB, /world.html 35KB, /hub.html 11KB, /autonomy.html 14KB, /oowm.html 13KB, /dna.html 8KB, /sovereign-canon.html 12KB, /launch-status.html 11KB). 79 sovereign MCPs. 1,592+ tests. 497 HTML pages. 718 total csoai.org pages (siblings shipped 31 OOWM files). Days to launch: 3d 14h. 🐉
