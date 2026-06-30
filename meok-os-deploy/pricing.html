@@ -102,8 +102,12 @@ async function go(plan){
     const r = await fetch('/api/checkout?plan='+p);
     const d = await r.json();
     if(d.ok && d.url){ location.href = d.url; return; }   // → Stripe Checkout (when configured)
-    alert('Checkout isn’t live yet — Pro/PAYG go through Stripe (being wired in test mode first). Start Free and explore the full OS now.');
-  }catch(e){ alert('Start Free and explore — paid plans are being wired.'); }
-  location.href='/';
+    toast('Paid plans are being wired (Stripe, test-mode first). <b>Start Free</b> and explore the full OS now →');
+  }catch(e){ toast('<b>Start Free</b> and explore — paid plans are being wired →'); }
+}
+function toast(html){
+  let t=document.getElementById('meok-toast');
+  if(!t){ t=document.createElement('div'); t.id='meok-toast'; t.style.cssText='position:fixed;left:50%;bottom:28px;transform:translateX(-50%);z-index:99;background:#1a1410;color:#f5f0e6;padding:14px 20px;border-radius:13px;box-shadow:0 16px 40px rgba(0,0,0,.3);font:14px Space Grotesk,sans-serif;max-width:90vw;display:flex;align-items:center;gap:14px'; document.body.appendChild(t); }
+  t.innerHTML=html+' <a href="/" style="color:var(--gold);font-weight:800;text-decoration:none;white-space:nowrap">Start free</a>';
 }
 </script></body></html>

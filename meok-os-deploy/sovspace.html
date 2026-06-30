@@ -82,7 +82,7 @@ function connect(t){
     "${slug}": { "command": "${slug}", "args": [] }
   }
 }</pre>
-   <p style="font-size:12.5px">Governed via the Sovereign council · verify signatures at <b>meok.ai/verify</b></p>`;
+   <p style="font-size:12.5px">Governed via the Sovereign council · <a href="/verify.html" target="_blank" style="color:${clCol(t.cluster)};font-weight:700">verify the signature ↗</a></p>`;
   el('dlg').showModal();
 }
 fetch('/sovspace-catalog.json').then(r=>r.json()).then(d=>{

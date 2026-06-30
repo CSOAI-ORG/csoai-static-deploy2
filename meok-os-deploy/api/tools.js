@@ -7,7 +7,7 @@ const CLLABEL = { 'domain-ai':'Domain AI','other':'Tools','framework-regulation'
 
 // light synonym map so natural language hits the right cluster
 const HINT = {
-  'legacy':'bridges','mainframe':'bridges','cobol':'bridges','sap':'bridges','hl7':'bridges','fhir':'bridges','health':'bridges','bank':'bridges','payment':'bridges','iso20022':'bridges','scada':'bridges',
+  'legacy':'bridges','mainframe':'bridges','cobol':'bridges','sap':'bridges','hl7':'bridges','fhir':'bridges','health':'bridges','patient':'bridges','medical':'bridges','clinical':'bridges','nhs':'bridges','bank':'bridges','payment':'bridges','iso20022':'bridges','scada':'bridges',
   'comply':'framework-regulation','compliance':'framework-regulation','gdpr':'framework-regulation','regulation':'framework-regulation','dora':'framework-regulation','nis2':'framework-regulation','audit':'framework-regulation','eu ai act':'framework-regulation',
   'agent':'a2a-substrate','identity':'a2a-substrate','policy':'a2a-substrate','firewall':'a2a-substrate','router':'a2a-substrate','orchestrat':'a2a-substrate',
   'sign':'crypto-attestation','attest':'crypto-attestation','verify':'crypto-attestation','sigil':'crypto-attestation','ledger':'crypto-attestation',
@@ -19,7 +19,7 @@ function score(tool, q, clusterHint) {
   const name = String(tool.name||'').toLowerCase().replace(/^\./,'');
   let s = 0;
   for (const w of q) { if (!w) continue; if (name.includes(w)) s += 10; if (name.split(/[-_.]/).some(p=>p===w)) s += 6; }
-  if (clusterHint && tool.cluster === clusterHint) s += 5;
+  if (clusterHint && tool.cluster === clusterHint) s += 9;
   s += Math.min(tool.tools || 0, 8) * 0.2; // gently favour richer servers
   return s;
 }
