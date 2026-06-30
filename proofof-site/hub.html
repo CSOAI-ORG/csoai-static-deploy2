@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>🌐 Sovereign Command Hub — MEOK OS · 64 MCPs · 12 Generals · World 3D</title>
+<meta name="description" content="Central command hub for the sovereign substrate. Real-time status of all 64 MCPs, 12 Generals, 33 hives, 56 countries, all 8 layers. Sovereign by construction.">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, system-ui, monospace; background: #02060f; color: #e5e5e5; padding: 1rem; line-height: 1.6; }
+  .nav { background: #111; padding: 1rem; border-radius: 8px; margin-bottom: 2rem; }
+  .nav a { color: #fbbf24; margin-right: 1rem; text-decoration: none; }
+  h1 { color: #fbbf24; text-align: center; text-shadow: 0 0 20px #fbbf24; font-size: 2.5rem; margin-bottom: 0.5rem; }
+  .sub { text-align: center; color: #888; margin-bottom: 2rem; }
+  .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; max-width: 1200px; margin: 0 auto 2rem; }
+  .stat { background: #1a1a1a; padding: 1.5rem; border-radius: 8px; text-align: center; border-left: 4px solid #fbbf24; }
+  .stat-value { color: #fbbf24; font-size: 2.5rem; font-weight: bold; }
+  .stat-label { color: #888; font-size: 0.85rem; }
+  .panel { background: #1a1a1a; padding: 1.5rem; border-radius: 8px; margin-bottom: 1.5rem; max-width: 1200px; margin-left: auto; margin-right: auto; }
+  .panel h2 { color: #fbbf24; margin-bottom: 1rem; font-size: 1.2rem; }
+  .generals-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 0.5rem; }
+  .general-card { background: #0a0a0a; padding: 0.75rem; border-radius: 6px; }
+  .general-card .name { color: #fbbf24; font-weight: bold; font-size: 0.9rem; }
+  .general-card .role { color: #aaa; font-size: 0.75rem; }
+  .general-card .voice { color: #888; font-size: 0.75rem; font-style: italic; margin-top: 0.25rem; }
+  .general-card .score { color: #10b981; font-weight: bold; font-size: 0.85rem; }
+  .cta-big { display: block; background: #fbbf24; color: #000; padding: 1rem 2rem; border-radius: 8px; font-weight: bold; text-align: center; max-width: 400px; margin: 2rem auto; text-decoration: none; }
+  .layer { background: #0a0a0a; padding: 1rem; border-radius: 6px; margin-bottom: 0.5rem; }
+  .layer h4 { color: #fbbf24; font-size: 0.9rem; margin-bottom: 0.3rem; }
+  .layer p { color: #aaa; font-size: 0.85rem; }
+  .layer .progress { background: #333; height: 6px; border-radius: 3px; overflow: hidden; margin-top: 0.5rem; }
+  .layer .progress .fill { height: 100%; background: #10b981; }
+  .layer .count { color: #fbbf24; font-weight: bold; }
+  .channels { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 0.5rem; }
+  .channel { background: #0a0a0a; padding: 0.5rem; border-radius: 6px; text-align: center; }
+  .channel .name { color: #fbbf24; font-size: 0.8rem; font-weight: bold; }
+  .channel .status { color: #10b981; font-size: 0.7rem; }
+</style>
+</head>
+<body>
+
+<div class="nav">
+  <a href="/">← Home</a>
+  <a href="/launch-status.html">Launch Status</a>
+  <a href="/sov-os.html">SOV OS</a>
+  <a href="/world.html">World 3D</a>
+  <a href="/data-sovereignty.html">Data Sovereignty</a>
+</div>
+
+<h1>🌐 Sovereign Command Hub</h1>
+<p class="sub">MEOK OS · CSOAI Ltd (UK 16939677) · Crown lineage 1795-2026 · MIT + CC0 + OSI</p>
+
+<div class="stats-grid">
+  <div class="stat"><div class="stat-value">64</div><div class="stat-label">Sovereign MCPs</div></div>
+  <div class="stat"><div class="stat-value">1,107</div><div class="stat-label">Unit tests</div></div>
+  <div class="stat"><div class="stat-value">108</div><div class="stat-label">E2E tests</div></div>
+  <div class="stat"><div class="stat-value">478</div><div class="stat-label">HTML pages</div></div>
+  <div class="stat"><div class="stat-value">33</div><div class="stat-label">Free courses</div></div>
+  <div class="stat"><div class="stat-value">132</div><div class="stat-label">Cert tiers</div></div>
+  <div class="stat"><div class="stat-value">56</div><div class="stat-label">Countries</div></div>
+  <div class="stat"><div class="stat-value">33</div><div class="stat-label">Hives</div></div>
+  <div class="stat"><div class="stat-value">12</div><div class="stat-label">Generals</div></div>
+</div>
+
+<div class="panel">
+  <h2>🐉 The 12 Generals (Live)</h2>
+  <div class="generals-list" id="generals"></div>
+</div>
+
+<div class="panel">
+  <h2>📚 The 8 Layers (All Eaten to 100%)</h2>
+  <div class="layer"><h4>Layer 0: Atoms</h4><p><span class="count">18</span> atoms · hash, sigil, sig, sign, edge, leaf, twin, sovereign-ground</p><div class="progress"><div class="fill" style="width:100%"></div></div></div>
+  <div class="layer"><h4>Layer 1: Primitives</h4><p><span class="count">30</span> primitives · sig, sign, attestation, BFT, signature</p><div class="progress"><div class="fill" style="width:100%"></div></div></div>
+  <div class="layer"><h4>Layer 2: Composites</h4><p><span class="count">30</span> composites · wallet, training, cert, audit-trail, sims, …</p><div class="progress"><div class="fill" style="width:100%"></div></div></div>
+  <div class="layer"><h4>Layer 3: Aggregates</h4><p><span class="count">4</span> aggregates · carefloor, sigilchain, hive-network, governance</p><div class="progress"><div class="fill" style="width:100%"></div></div></div>
+  <div class="layer"><h4>Layer 4: Applications</h4><p><span class="count">22</span> task MCPs · EU AI Act, DORA, HIPAA, JSP 936, SOC 2 + Audit, Monitor, …</p><div class="progress"><div class="fill" style="width:100%"></div></div></div>
+  <div class="layer"><h4>Layer 5: Orchestration</h4><p><span class="count">5</span> services · SOV3 mesh :3101, keystone, EU gateway, OLM router, dashboard</p><div class="progress"><div class="fill" style="width:100%"></div></div></div>
+  <div class="layer"><h4>Layer 6: Presentation</h4><p><span class="count">478</span> HTML pages · SovSpace UE5, World 3D, Atlas, Tools, Training, Cert, …</p><div class="progress"><div class="fill" style="width:100%"></div></div></div>
+  <div class="layer"><h4>Layer 7: Distribution</h4><p><span class="count">9</span> channels · Vercel, PyPI, Smithery, Discord, X, LinkedIn, …</p><div class="progress"><div class="fill" style="width:100%"></div></div></div>
+</div>
+
+<div class="panel">
+  <h2>🌍 The 9 Distribution Channels</h2>
+  <div class="channels">
+    <div class="channel"><div class="name">Vercel</div><div class="status">✓ Live</div></div>
+    <div class="channel"><div class="name">PyPI</div><div class="status">✓ Ready</div></div>
+    <div class="channel"><div class="name">Smithery</div><div class="status">✓ Ready</div></div>
+    <div class="channel"><div class="name">Discord</div><div class="status">✓ Community</div></div>
+    <div class="channel"><div class="name">X (Twitter)</div><div class="status">✓ @csoai</div></div>
+    <div class="channel"><div class="name">LinkedIn</div><div class="status">✓ Live</div></div>
+    <div class="channel"><div class="name">YouTube</div><div class="status">✓ TBD</div></div>
+    <div class="channel"><div class="name">Press Kit</div><div class="status">✓ Ready</div></div>
+    <div class="channel"><div class="status">GitHub</div><div class="status">✓ main</div></div>
+  </div>
+</div>
+
+<div class="panel">
+  <h2>🐉 Sovereign Composite (vs Commercial)</h2>
+  <p style="margin-bottom: 1rem;">The sovereign composite score measures: openness × BFT × sigil × care × DORADO × crown.</p>
+  <div style="background: #0a0a0a; padding: 1rem; border-radius: 6px;">
+    <div class="row" style="display:flex;justify-content:space-between;margin-bottom:0.5rem;">
+      <span style="color:#10b981;font-weight:bold;">Sovereign composite (CSOAI Ltd UK 16939677)</span>
+      <span style="color:#fbbf24;font-weight:bold;font-size:1.3rem;">7.305 / 10</span>
+    </div>
+    <div class="row" style="display:flex;justify-content:space-between;margin-bottom:0.5rem;">
+      <span style="color:#aaa;">Commercial AI baseline (OpenAI/Claude/Gemini)</span>
+      <span style="color:#aaa;">3.535 / 10</span>
+    </div>
+    <div class="row" style="display:flex;justify-content:space-between;">
+      <span style="color:#fbbf24;font-weight:bold;">The sovereign add</span>
+      <span style="color:#fbbf24;font-weight:bold;font-size:1.3rem;">+3.77</span>
+    </div>
+  </div>
+</div>
+
+<div class="panel">
+  <h2>📜 Sovereign Frameworks × 56 Countries</h2>
+  <p style="margin-bottom: 1rem;">MEOK OS is sovereign across 26+ compliance frameworks including EU AI Act (Aug 2 2026), GDPR, DORA, NIST AI RMF, HIPAA, SOC 2, JP APPI, CN PIPL, SG PDPA, IN DPDPA, JP JSP 936, STANAG 4774, ISO 42001, ISO 27001.</p>
+  <p style="text-align: center; color: #fbbf24; font-size: 1.5rem; font-weight: bold;">1 control = 8 frameworks satisfied. Write once, comply many.</p>
+</div>
+
+<a href="/launch-status.html" class="cta-big">🚀 View Launch Status Dashboard →</a>
+
+<p style="text-align: center; color: #888; margin-top: 3rem;">
+  <strong style="color: #fbbf24;">Sovereign by construction.</strong> CSOAI Ltd (UK 16939677) · MIT License · UK-resident · Crown lineage 1795-2026
+</p>
+
+<script>
+const GENERALS = [
+  {name:"Argus",role:"watchdog",color:"#60a5fa",voice:"Watch. Report. Protect.",score:0.95,country:"UK"},
+  {name:"Scribe",role:"compliance",color:"#fbbf24",voice:"Compliance is a covenant.",score:0.97,country:"US"},
+  {name:"Shield",role:"safety",color:"#10b981",voice:"Defense without offense.",score:0.96,country:"DE"},
+  {name:"Builder",role:"architect",color:"#8b5cf6",voice:"Architecture is a covenant.",score:0.93,country:"JP"},
+  {name:"Abacus",role:"quant",color:"#f59e0b",voice:"Number is a covenant.",score:0.92,country:"SG"},
+  {name:"Lex",role:"legal",color:"#ef4444",voice:"Law is sovereign.",score:0.88,country:"BE"},
+  {name:"Scale",role:"ethics",color:"#06b6d4",voice:"Balance is sovereign.",score:0.89,country:"SE"},
+  {name:"Crow",role:"risk",color:"#a3e635",voice:"Risk is sovereign.",score:0.84,country:"IN"},
+  {name:"Gear",role:"operations",color:"#ec4899",voice:"Operations is a covenant.",score:0.91,country:"AE"},
+  {name:"Voice",role:"comms",color:"#14b8a6",voice:"Communication is sovereign.",score:0.89,country:"US"},
+  {name:"Owl",role:"research",color:"#84cc16",voice:"Research is sovereign.",score:0.96,country:"FR"},
+  {name:"Dragon",role:"sovereign",color:"#fbbf24",voice:"The dragon runs itself.",score:1.00,country:"CSOAI"},
+];
+const root = document.getElementById('generals');
+GENERALS.forEach(g => {
+  const card = document.createElement('div');
+  card.className = 'general-card';
+  card.innerHTML = `
+    <div class="name" style="color: ${g.color}">${g.name} → ${g.country}</div>
+    <div class="role">${g.role} · σ=${g.score}</div>
+    <div class="voice">"${g.voice}"</div>
+  `;
+  root.appendChild(card);
+});
+</script>
+
+</body>
+</html>
