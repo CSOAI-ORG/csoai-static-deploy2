@@ -646,7 +646,7 @@ function content(id){const L=LIVE;const liveBadge=LIVEMODE?'<span class="chip li
    <h4>Corpus · 8 books</h4><div class="row"><span class="chip">Art of the Deal</span><span class="chip">SPIN Selling</span><span class="chip">Challenger Sale</span><span class="chip">Influence</span><span class="chip">Sales Bible</span><span class="chip">Psych. of Selling</span><span class="chip">Win Friends</span><span class="chip">+1</span></div>
    <div class="row"><span class="chip on">built</span><span class="chip">meok-delboy-sales-engine</span></div>
    <p style="color:var(--dim)">Feeds Delboy (sales) + MEOK Work agents — each profession becomes a trained expert.</p>`;
- case 'guardian': return `<p><b>MEOK Guardian — 24/7 family & child safety.</b> Game-content checks, network scanning, chat moderation and play-schedule limits: a sovereign guardian for the home.</p>
+ case 'guardian': return guardianHTML(); case '_guardian_old': return `<p><b>MEOK Guardian — 24/7 family & child safety.</b> Game-content checks, network scanning, chat moderation and play-schedule limits: a sovereign guardian for the home.</p>
    <h4>Live tools</h4><div class="row"><span class="chip on">scan_network</span><span class="chip on">check_game_content</span><span class="chip on">moderate_chat</span><span class="chip on">set_game_limit</span></div>
    <div class="row"><span class="chip">family-guardian-mcp</span><span class="chip on">SOV3 guardian_* tools</span></div>`;
  case 'family': return familyHTML(); case '_family_old': return `<p><b>MEOK Family — the family OS.</b> Members, chores, events and shared care in one calm surface. The personal-mode heart of MEOK.</p>
@@ -708,7 +708,7 @@ function content(id){const L=LIVE;const liveBadge=LIVEMODE?'<span class="chip li
  case 'smb': return `<p><b>MEOK SMB — the small-business OS.</b> The small-business skill suite: the everyday tools a small firm needs, governed and signed.</p>
    <div class="row"><span class="chip warnc">building</span><span class="chip">meok-smb</span></div>
    <p style="color:var(--dim)">The CSOAI-mode consumer of Delboy (sales) + Work (agents) + Guardian/Family.</p>`;
- case 'setup': return `<p><b>Let's get set up.</b> Your sovereign runs on a <b>left brain</b> (reasoning & analysis) and a <b>right brain</b> (creativity & vision) — each a <i>mixture of the models you choose</i>. Above both sits the <b>Sovereign OLM (Mamba-2 SSD) + SOV3</b>: it orchestrates, reconciles the two, and is the one that actually talks to you.</p>
+ case 'setup': return setupHTML(); case 'aware': return awareHTML(); case '_setup_old': return `<p><b>Let's get set up.</b> Your sovereign runs on a <b>left brain</b> (reasoning & analysis) and a <b>right brain</b> (creativity & vision) — each a <i>mixture of the models you choose</i>. Above both sits the <b>Sovereign OLM (Mamba-2 SSD) + SOV3</b>: it orchestrates, reconciles the two, and is the one that actually talks to you.</p>
    <div style="text-align:center;margin:11px 0"><span class="chip on" style="font-size:12px">🧬 Sovereign OLM · SOV3 Mamba — orchestrator, always above</span></div>
    <div class="brains">
      <div class="bcol"><h4>🧠 Left brain — reasoning</h4>
@@ -729,7 +729,7 @@ function content(id){const L=LIVE;const liveBadge=LIVEMODE?'<span class="chip li
    <p style="color:var(--dim)">Honest: these are the connection points. Live indexing + auth run through the bridge + Hermes <code>computer-use</code> (already on the machine) with a human-confirm gate — owner-gated to switch on.</p>
    <p style="margin-top:8px">Your mixture → <b>Left</b>: ${(MEOK_BRAINS.left.types.concat(MEOK_BRAINS.left.providers)).join(', ')||'—'} · <b>Right</b>: ${(MEOK_BRAINS.right.types.concat(MEOK_BRAINS.right.providers)).join(', ')||'—'}</p>
    <p style="color:var(--dim)">Honest: model picks persist locally now; live routing runs through the <code>meok-one</code> bridge (left/right/council) + SOV3 — wiring the auth is owner-gated.</p>`;
- case 'social': return (function(){ var rg=userRegion(); var reg=SOCIAL_REGION[rg]||SOCIAL_REGION.GB; return `<p><b>Your social, everywhere — one hub.</b> Connect every network, post once, region-aware. <b>MEOK</b> posts your personal world; <b>CSOAI</b> posts governed brand &amp; compliance content — every post signed/attestable.</p>
+ case 'social': return socialHTML(); case '_social_old': return (function(){ var rg=userRegion(); var reg=SOCIAL_REGION[rg]||SOCIAL_REGION.GB; return `<p><b>Your social, everywhere — one hub.</b> Connect every network, post once, region-aware. <b>MEOK</b> posts your personal world; <b>CSOAI</b> posts governed brand &amp; compliance content — every post signed/attestable.</p>
    <h4>📍 Your region · ${rg}</h4><div class="row">${socialChips(reg)}</div>
    <h4>🌍 Global</h4><div class="row">${socialChips(SOCIAL_GLOBAL)}</div>
    <h4>🗺 Every region covered</h4>
@@ -803,6 +803,88 @@ async function applyDirectives(){
   }catch(e){}
 }
 setTimeout(applyDirectives, 3600);
+// shared app styles
+const APPBTN='border:0;background:var(--gold);color:#1a1410;font-weight:700;padding:7px 14px;border-radius:8px;cursor:pointer;font-family:inherit';
+const APPIN='padding:7px 10px;border:1px solid var(--line);border-radius:8px;background:var(--cream);color:var(--ink);font-family:inherit';
+
+// ── Set up — Create your Sovereign (choose brains/models + voice; the dock honors it) ──
+const BRAINS={'gpt-oss-120b':'GPT-OSS 120B · deep reasoning','llama-3.3-70b-versatile':'Llama 3.3 70B · balanced','qwen/qwen3-32b':'Qwen3 32B · analytical','meta-llama/llama-4-scout-17b-16e-instruct':'Llama 4 Scout · fast & creative'};
+function setupLoad(){ try{ return JSON.parse(localStorage.getItem('meok_brain'))||{left:'gpt-oss-120b',right:'meta-llama/llama-4-scout-17b-16e-instruct',voice:false}; }catch(e){ return {left:'gpt-oss-120b',right:'meta-llama/llama-4-scout-17b-16e-instruct',voice:false}; } }
+let BRAIN=setupLoad(); window.MEOK_MODEL=BRAIN.left;
+function setupSave(){ try{ localStorage.setItem('meok_brain',JSON.stringify(BRAIN)); }catch(e){} window.MEOK_MODEL=BRAIN.left; }
+function setupPick(side,val){ BRAIN[side]=val; setupSave(); setupR(); }
+function setupR(){ const b=document.getElementById('b-setup'); if(b) b.innerHTML=setupHTML(); }
+function setupHTML(){
+  const opt=sel=>Object.entries(BRAINS).map(([k,v])=>`<option value="${k}" ${k===sel?'selected':''}>${v}</option>`).join('');
+  return `<div style="display:flex;flex-direction:column;gap:14px;font-size:13px">
+   <p style="color:var(--dim)">Your sovereign runs on a <b>left brain</b> (reasoning) + a <b>right brain</b> (creativity). Choose the models — the OLM orchestrates and talks to you.</p>
+   <div><label style="font-weight:700">🧠 Left brain — reasoning</label><br><select onchange="setupPick('left',this.value)" style="${APPIN};width:100%;margin-top:5px">${opt(BRAIN.left)}</select></div>
+   <div><label style="font-weight:700">🎨 Right brain — creativity</label><br><select onchange="setupPick('right',this.value)" style="${APPIN};width:100%;margin-top:5px">${opt(BRAIN.right)}</select></div>
+   <label style="display:flex;align-items:center;gap:8px;cursor:pointer"><input type="checkbox" ${BRAIN.voice?'checked':''} onchange="BRAIN.voice=this.checked;setupSave();window.SOV_VOICE_ON=this.checked"> Voice replies</label>
+   <div style="background:var(--cream);border:1px solid var(--line);border-radius:9px;padding:11px;color:var(--dim);font-size:12px">✅ Saved — your dock now thinks with <b>${(BRAINS[BRAIN.left]||'').split(' · ')[0]}</b>. Free open models; Claude/GPT unlock on Pro.</div>
+  </div>`;
+}
+
+// ── Aware — presence & gesture (wires the on-device camera engine to a real surface) ──
+function awareR(){ const b=document.getElementById('b-aware'); if(b) b.innerHTML=awareHTML(); }
+function awareHTML(){ const on=!!(typeof _aware!=='undefined'&&_aware);
+  return `<div style="display:flex;flex-direction:column;gap:14px;font-size:13px">
+   <p style="color:var(--dim)">Presence lets your sovereign <b>see you</b> — <b>on your device only</b>. The camera feed never leaves it; nothing is recorded or uploaded.</p>
+   <div style="display:flex;align-items:center;gap:12px;background:var(--cream);border:1px solid var(--line);border-radius:11px;padding:14px">
+     <span style="font-size:28px">${on?'👁️':'🙈'}</span>
+     <div style="flex:1"><b>${on?'Presence is on':'Presence is off'}</b><br><span style="color:var(--dim)">${on?'I can see you · wave 👋 or 👍':'Tap Start — your browser will ask camera permission'}</span></div>
+     <button onclick="(${on?'awareStop':'awareStart'})();setTimeout(awareR,500)" style="${APPBTN}">${on?'Stop':'Start'}</button>
+   </div>
+   <div style="font-size:12px;color:var(--dim)"><b>Detects:</b> presence (here / away) + friendly gestures (wave, 👍, ✌️, ☝️) via on-device MediaPipe. <b>Privacy:</b> biometric data = GDPR Art.9 — explicit opt-in each time, on-device, SIGIL-signed.</div>
+  </div>`;
+}
+
+// ── Social Hub — compose once, free CC media, drafts local; live posting = OAuth-gated ──
+const SOCNETS=['𝕏 Twitter','Instagram','LinkedIn','Facebook','TikTok','Threads','Bluesky'];
+function socLoad(){ try{ return JSON.parse(localStorage.getItem('meok_social'))||{drafts:[],nets:{}}; }catch(e){ return {drafts:[],nets:{}}; } }
+let SOC=socLoad();
+function socSave(){ try{ localStorage.setItem('meok_social',JSON.stringify(SOC)); }catch(e){} }
+function socR(){ const b=document.getElementById('b-social'); if(b) b.innerHTML=socialHTML(); }
+function socToggleNet(n){ SOC.nets[n]=!SOC.nets[n]; socSave(); socR(); }
+function socSaveDraft(){ const t=document.getElementById('soc-text'); if(!t)return; const txt=(t.value||'').trim(); if(!txt)return; const nets=Object.keys(SOC.nets).filter(n=>SOC.nets[n]); SOC.drafts.unshift({id:Date.now(),text:txt.slice(0,500),nets,img:window._socImg||null}); window._socImg=null; socSave(); socR(); }
+function socDelDraft(id){ SOC.drafts=SOC.drafts.filter(d=>d.id!==id); socSave(); socR(); }
+async function socFindImg(){ const t=document.getElementById('soc-text'); const q=(t&&t.value||'').trim()||'nature'; const box=document.getElementById('soc-imgs'); if(box) box.innerHTML='<span style="color:var(--dim)">finding free images…</span>';
+  try{ const d=await(await fetch('/api/media?q='+encodeURIComponent(q)+'&n=6')).json(); if(box) box.innerHTML=(d.results||[]).map(r=>`<img src="${r.thumbnail}" title="${esc(r.attribution||'')}" onclick="window._socImg='${r.thumbnail}';document.querySelectorAll('#soc-imgs img').forEach(i=>i.style.outline='none');this.style.outline='3px solid var(--gold)'" style="width:60px;height:60px;object-fit:cover;border-radius:8px;cursor:pointer;margin:3px">`).join('')||'<span style="color:var(--dim)">none found</span>'; }catch(e){ if(box)box.innerHTML='<span style="color:var(--dim)">media unavailable</span>'; } }
+function socialHTML(){
+  const nets=SOCNETS.map(n=>`<span onclick="socToggleNet('${n}')" style="cursor:pointer;padding:5px 11px;border-radius:999px;font-size:12px;border:1px solid ${SOC.nets[n]?'var(--gold)':'var(--line)'};background:${SOC.nets[n]?'var(--gold)':'var(--cream)'};color:#1a1410">${n}</span>`).join('');
+  const drafts=SOC.drafts.length?SOC.drafts.map(d=>`<div style="background:var(--cream);border:1px solid var(--line);border-radius:9px;padding:9px 11px;margin-bottom:6px"><div style="display:flex;justify-content:space-between"><b style="font-size:11px;color:var(--dim)">${d.nets.join(', ')||'no network'}</b><span onclick="socDelDraft(${d.id})" style="cursor:pointer;color:var(--dim)">×</span></div>${d.img?`<img src="${d.img}" style="width:46px;height:46px;object-fit:cover;border-radius:6px;float:right;margin-left:8px">`:''}<div style="font-size:13px;margin-top:3px">${esc(d.text)}</div></div>`).join(''):'<span style="color:var(--dim)">No drafts yet.</span>';
+  return `<div style="display:flex;flex-direction:column;gap:13px;font-size:13px">
+   <p style="color:var(--dim)">Compose once → everywhere. Pick networks, write, add a <b>free Creative-Commons image</b>. Drafts save on-device; live posting needs each network connected.</p>
+   <div><b>Networks</b><div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:6px">${nets}</div></div>
+   <textarea id="soc-text" placeholder="What's happening?" style="${APPIN};width:100%;min-height:68px;resize:vertical"></textarea>
+   <div><button onclick="socFindImg()" style="${APPIN};cursor:pointer">🖼️ Find free image</button><div id="soc-imgs" style="display:flex;flex-wrap:wrap;margin-top:6px"></div></div>
+   <div style="display:flex;gap:8px"><button onclick="socSaveDraft()" style="${APPBTN}">Save draft</button><button onclick="alert('Live posting needs this network connected via OAuth — a one-time owner setup. Your draft is saved now.')" style="${APPIN};cursor:pointer">Post (connect first)</button></div>
+   <div><b>Drafts</b><div style="margin-top:6px">${drafts}</div></div>
+  </div>`;
+}
+
+// ── Guardian — child profiles + screen limits + AI chat moderation (real); WiFi-scan = local agent ──
+function gdnLoad(){ try{ return JSON.parse(localStorage.getItem('meok_guardian'))||{kids:[]}; }catch(e){ return {kids:[]}; } }
+let GDN=gdnLoad();
+function gdnSave(){ try{ localStorage.setItem('meok_guardian',JSON.stringify(GDN)); }catch(e){} }
+function gdnR(){ const b=document.getElementById('b-guardian'); if(b) b.innerHTML=guardianHTML(); }
+function gdnAddKid(){ const n=document.getElementById('gdn-n'),a=document.getElementById('gdn-a'); if(!n)return; const name=(n.value||'').trim(); if(!name)return; GDN.kids.push({id:Date.now(),name:name.slice(0,20),age:parseInt(a&&a.value)||10,limit:120}); n.value=''; gdnSave(); gdnR(); }
+function gdnLimit(id,delta){ const k=GDN.kids.find(x=>x.id===id); if(k){ k.limit=Math.max(0,k.limit+delta); gdnSave(); gdnR(); } }
+function gdnDel(id){ GDN.kids=GDN.kids.filter(x=>x.id!==id); gdnSave(); gdnR(); }
+async function gdnModerate(){ const t=document.getElementById('gdn-mod'),o=document.getElementById('gdn-modout'); if(!t)return; const txt=(t.value||'').trim(); if(!txt)return; if(o)o.textContent='checking…';
+  try{ const d=await(await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:'You are a child-safety moderator. Is this message safe for a child? Reply in ONE short sentence starting SAFE or FLAG. Message: "'+txt.slice(0,300)+'"',register:'plain'})})).json(); if(o)o.textContent=d.response||'—'; }catch(e){ if(o)o.textContent='moderation unavailable'; } }
+function guardianHTML(){
+  const kids=GDN.kids.length?GDN.kids.map(k=>`<div style="background:var(--cream);border:1px solid var(--line);border-radius:9px;padding:9px 11px;margin-bottom:6px;display:flex;align-items:center;gap:8px"><span style="font-size:18px">🧒</span><div style="flex:1"><b>${esc(k.name)}</b> <span style="color:var(--dim)">· age ${k.age}</span><br><span style="color:var(--dim);font-size:12px">screen limit: <b>${k.limit} min/day</b></span></div><button onclick="gdnLimit(${k.id},-15)" style="${APPIN};cursor:pointer">−15</button><button onclick="gdnLimit(${k.id},15)" style="${APPIN};cursor:pointer">+15</button><span onclick="gdnDel(${k.id})" style="cursor:pointer;color:var(--dim)">×</span></div>`).join(''):'<span style="color:var(--dim)">No child profiles yet.</span>';
+  return `<div style="display:flex;flex-direction:column;gap:14px;font-size:13px">
+   <div><b>🧒 Child profiles &amp; screen limits</b><div style="margin:8px 0">${kids}</div>
+     <div style="display:flex;gap:6px"><input id="gdn-n" placeholder="Child's name…" style="flex:1;${APPIN}"><input id="gdn-a" type="number" placeholder="age" value="10" min="1" style="width:58px;${APPIN}"><button onclick="gdnAddKid()" style="${APPBTN}">Add</button></div></div>
+   <div><b>🛡 Chat moderation</b> <span style="color:var(--dim);font-size:11px">AI-checked, governed</span>
+     <textarea id="gdn-mod" placeholder="Paste a message to check if it's safe for a child…" style="${APPIN};width:100%;min-height:52px;margin-top:6px;resize:vertical"></textarea>
+     <button onclick="gdnModerate()" style="${APPBTN};margin-top:6px">Check it</button><div id="gdn-modout" style="margin-top:8px"></div></div>
+   <div style="background:rgba(189,154,82,.1);border:1px solid var(--line);border-radius:9px;padding:11px;font-size:12px;color:var(--dim)">📡 <b>WiFi / network scan</b> needs the <b>MEOK home agent</b> — a browser can't scan your LAN. Install the local agent to enable live network &amp; device safety scanning.</div>
+  </div>`;
+}
+
 // ── MEOK Family — a REAL working family OS (members · chores w/ points · events), saved on-device ──
 function famLoad(){ try{ return JSON.parse(localStorage.getItem('meok_family')) || {members:[],chores:[],events:[]}; }catch(e){ return {members:[],chores:[],events:[]}; } }
 let FAM=famLoad();
@@ -1030,7 +1112,7 @@ async function sovAsk(text){
   const log=document.getElementById('sovlog'); let think=null;
   if(log){ think=document.createElement('div'); think.className='sovmsg ai'; think.textContent='…'; log.appendChild(think); log.scrollTop=log.scrollHeight; }
   try{
-    const r=await fetch(SOV3_CHAT,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:text, queen_id:'queen-king', register:'plain'})});
+    const r=await fetch(SOV3_CHAT,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:text, queen_id:'queen-king', register:'plain', model:window.MEOK_MODEL})});
     const d=await r.json(); const ans=((d&&(d.response||d.answer||d.text))||'').trim();
     if(think) think.remove();
     if(ans) sovSay(esc(ans)); else throw 0;

@@ -3,9 +3,12 @@ import council from './_data/council.json' with { type: 'json' };
 const SYSTEM = "You belong to the user inside their own sovereign OS (their world, their data, never given away). Reply in 1-3 warm sentences of flowing prose — never bullet points or numbered lists. Human, warm, kind. Never corporate, never a disclaimer-bot.";
 
 const GROQ_MODELS = ['openai/gpt-oss-120b', 'llama-3.3-70b-versatile'];
+const GROQ_ALLOWED = ['openai/gpt-oss-120b', 'llama-3.3-70b-versatile', 'qwen/qwen3-32b', 'meta-llama/llama-4-scout-17b-16e-instruct'];
 
-async function groqChat(key, system, message) {
-  for (const model of GROQ_MODELS) {
+async function groqChat(key, system, message, prefer) {
+  // honor the user's chosen brain (Set up) first, then fall back through the fleet
+  const models = (prefer && GROQ_ALLOWED.includes(prefer)) ? [prefer, ...GROQ_MODELS.filter(m => m !== prefer)] : GROQ_MODELS;
+  for (const model of models) {
     try {
       const r = await fetch('https://api.groq.com/openai/v1/chat/completions', {
         method: 'POST',
@@ -64,7 +67,7 @@ export default async function handler(req, res) {
   }
   const groq = process.env.GROQ_API_KEY;
   if (groq && !groq.startsWith('REPLACE')) {
-    const g = await groqChat(groq, system, message);
+    const g = await groqChat(groq, system, message, body && body.model);
     if (g) return res.status(200).json({ response: g.ans, model: g.model, speaker });
   }
   return res.status(200).json({ response: 'I’m here — my deeper voice hiccuped, try once more.', model: 'offline', speaker });
