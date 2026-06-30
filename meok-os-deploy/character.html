@@ -128,6 +128,44 @@ function orbColor(h){
 }
 function showEmergence(){ skin='emergence'; if(orb) orb.visible=true; if(currentVRM) currentVRM.scene.visible=false; orbColor(current.h); document.getElementById('loading').classList.add('hide'); }
 function showVRM(){ skin='vrm'; if(rpmObj) rpmObj.visible=false; if(orb) orb.visible=false; if(currentVRM){ currentVRM.scene.visible=true; } else { loadVRM(current.vrm); } }
+
+// ── Friendly companion creature — cute, all-ages, procedural (no anime, no external assets) ──
+let creature=null;
+function buildCreature(){
+  creature=new THREE.Group();
+  const bodyMat=new THREE.MeshStandardMaterial({color:0xffffff, roughness:0.5, metalness:0});
+  const body=new THREE.Mesh(new THREE.SphereGeometry(0.42,48,48), bodyMat); body.scale.set(1,1.05,0.96);
+  const bunMat=bodyMat.clone();
+  const bunL=new THREE.Mesh(new THREE.SphereGeometry(0.085,24,24),bunMat); bunL.position.set(-0.2,0.4,-0.02);
+  const bunR=bunL.clone(); bunR.position.x=0.2;
+  // big friendly eyes (white + dark pupil + sparkle)
+  const eyeW=new THREE.MeshStandardMaterial({color:0xffffff,roughness:0.25});
+  const pupM=new THREE.MeshStandardMaterial({color:0x241c14,roughness:0.4});
+  function eye(x){ const g=new THREE.Group();
+    g.add(new THREE.Mesh(new THREE.SphereGeometry(0.115,24,24),eyeW));
+    const p=new THREE.Mesh(new THREE.SphereGeometry(0.06,20,20),pupM); p.position.set(0,0,0.08); g.add(p);
+    const s=new THREE.Mesh(new THREE.SphereGeometry(0.022,12,12),new THREE.MeshBasicMaterial({color:0xffffff})); s.position.set(0.03,0.035,0.13); g.add(s);
+    g.position.set(x,0.07,0.355); return g; }
+  const eL=eye(-0.155), eR=eye(0.155);
+  // smile (lower half-torus = ∪) + rosy cheeks
+  const smile=new THREE.Mesh(new THREE.TorusGeometry(0.085,0.02,14,32,Math.PI), new THREE.MeshStandardMaterial({color:0x4a3526,roughness:0.5}));
+  smile.rotation.z=Math.PI; smile.position.set(0,-0.07,0.42);
+  const cheekMat=new THREE.MeshBasicMaterial({color:0xff9aa2,transparent:true,opacity:0.5});
+  const chL=new THREE.Mesh(new THREE.CircleGeometry(0.052,18),cheekMat); chL.position.set(-0.25,-0.04,0.345);
+  const chR=chL.clone(); chR.position.x=0.25;
+  const aura=new THREE.Mesh(new THREE.SphereGeometry(0.62,28,28), new THREE.MeshBasicMaterial({color:0xffffff,transparent:true,opacity:0.13,blending:THREE.AdditiveBlending,side:THREE.BackSide}));
+  const light=new THREE.PointLight(0xffffff,0.85,6); light.position.set(0.3,0.7,1.4);
+  creature.add(aura,light,body,bunL,bunR,chL,chR,smile,eL,eR);
+  creature.position.set(0,1.24,0); creature.scale.setScalar(0.62);
+  creature.userData={body,bunL,bunR,aura,light,eL,eR};
+  scene.add(creature);
+}
+function creatureColor(h){
+  if(!creature) return; const c=new THREE.Color(`hsl(${h},56%,64%)`), u=creature.userData;
+  u.body.material.color=c; u.bunL.material.color=c; u.bunR.material.color=c;
+  u.aura.material.color=c.clone().lerp(new THREE.Color(0xffffff),0.4); u.light.color=c.clone().lerp(new THREE.Color(0xffffff),0.35);
+}
+function showCreature(){ skin='creature'; if(creature) creature.visible=true; if(orb) orb.visible=false; if(currentVRM) currentVRM.scene.visible=false; if(rpmObj) rpmObj.visible=false; document.getElementById('loading').classList.add('hide'); }
 // ── Bring your own avatar (Ready Player Me — the cross-app/game avatar standard, plain glTF) ──
 let rpmObj=null;
 function loadGLB(url){
@@ -136,7 +174,7 @@ function loadGLB(url){
     if(rpmObj){ scene.remove(rpmObj); }
     rpmObj = gltf.scene; rpmObj.position.set(0,0,0); rpmObj.rotation.y=0;
     scene.add(rpmObj);
-    if(orb) orb.visible=false; if(currentVRM) currentVRM.scene.visible=false; rpmObj.visible=true;
+    if(orb) orb.visible=false; if(creature) creature.visible=false; if(currentVRM) currentVRM.scene.visible=false; rpmObj.visible=true;
     skin='rpm'; try{ localStorage.setItem('meok_rpm', url); }catch(e){}
     L.classList.add('hide');
     say('ai', `That's you — your own avatar, brought into MEOK. I'm still ${current.id}, here with you.`);
@@ -221,6 +259,20 @@ function animate(){
     rpmObj.position.y = Math.sin(t*1.1)*0.02;
     rpmObj.rotation.y = Math.sin(Date.now()/3600)*0.16;
   }
+  if(skin==='creature' && creature){
+    const u=creature.userData;
+    creature.position.y = 1.24 + Math.sin(t*1.5)*0.025;            // gentle float
+    creature.rotation.y = Math.sin(t*0.5)*0.16;                     // look side to side
+    creature.scale.setScalar(0.62*(sp ? 1+Math.sin(t*13)*0.022 : 1)); // happy bounce when talking
+    // blink
+    blinkTimer-=dt; if(blinkTimer<=0 && blinkPhase<=0){ blinkPhase=0.0001; blinkTimer=2.4+Math.random()*3; }
+    let ey=1; if(blinkPhase>0){ blinkPhase+=dt*7; const v=blinkPhase<1?Math.sin(blinkPhase*Math.PI):0; ey=1-Math.max(0,Math.min(1,v)); if(blinkPhase>=1) blinkPhase=0; }
+    u.eL.scale.y=ey; u.eR.scale.y=ey;
+    // pupils wander
+    const lx=Math.sin(t*0.7)*0.022, ly=Math.cos(t*0.9)*0.014;
+    u.eL.children[1].position.set(lx,ly,0.08); u.eR.children[1].position.set(lx,ly,0.08);
+    u.light.intensity = sp ? 2.3 : 1.5;
+  }
   controls.update(); renderer.render(scene, camera);
 }
 animate();
@@ -243,7 +295,7 @@ function pick(id){
   current = CAST.find(c=>c.id===id)||CAST[0];
   document.documentElement.style.setProperty('--gold', `hsl(${current.h} 50% 52%)`);
   renderCast(); renderInfo();
-  showEmergence(); orbColor(current.h);
+  creatureColor(current.h); showCreature();
   say('ai', `I'm ${current.id}, your ${current.role.toLowerCase()}. ${cap(current.tone)} — here for you.`);
 }
 const cap=s=>s.charAt(0).toUpperCase()+s.slice(1);
@@ -266,7 +318,7 @@ async function send(){
 document.getElementById('send').onclick=send;
 document.getElementById('in').addEventListener('keydown',e=>{ if(e.key==='Enter') send(); });
 
-renderCast(); renderInfo(); buildOrb(); showEmergence();
+renderCast(); renderInfo(); buildCreature(); creatureColor(current.h); showCreature();
 // skin toggle — emergence egg (all-ages default) ⇄ humanoid character skin
 // ✨ Bring your own avatar — Ready Player Me (works across thousands of apps/games; selfie or picker)
 const rpmBtn=document.createElement('button'); rpmBtn.id='rpmbtn'; rpmBtn.textContent='✨ Your avatar';
