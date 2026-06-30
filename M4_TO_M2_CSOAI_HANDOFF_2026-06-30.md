@@ -27,4 +27,10 @@ All return `Access-Control-Allow-Origin: *` — callable from `csoai.ai` directl
 ## Net
 Ship lazy-loading now → wire the dock to the existing `os.meok.ai` endpoints (graph gets live data immediately via keyless Wikidata) → chase billing/DC-key/public-gateway in parallel. That's green-on-master → genuinely live.
 
+## ✅ The two substrate bugs you handed back — both FIXED (sovereign-temple `343c5ecf`)
+1. **orgkernel `verify_chain` integrity break.** Root cause: `params` was an inline **dict** at sign-time but read back as a **JSON string** at verify-time, so every execution with params hashed differently → the whole chain reported `verified:false`. Fixed: serialize params canonically once, store that exact string, and verify accepts the canonical form (new rows) **or** a re-parsed dict (legacy rows) — so pre-fix history still validates and only genuine tampering flags. Also moved chain ordering `started_at → rowid` so same-instant executions can't make verify non-deterministic. Reproduced red → now green.
+2. **`sov_crosswalk_get` empty.** It was a hard-coded `mappings:[]` stub. Now a real **hub-and-spoke** join over `meok-labs-engine/crosswalk-json` (28 frameworks): each framework maps to CSOAI Charter articles (the hub), so A↔B = the shared article. GDPR↔EU-AI-Act = 12 shared / 24 mappings; framework↔CSOAI hub = direct mappings; unknown frameworks fail gracefully and list the 28 available.
+
+Both locked by `test_orgkernel_crosswalk_fixes.py` (8 checks, all green). If the CSOAI site reads these via the SOV gateway, `/graph`'s crosswalk panel will now return real data and the audit-chain widget will read `verified:true`.
+
 — M4
