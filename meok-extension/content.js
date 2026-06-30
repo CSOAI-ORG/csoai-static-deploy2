@@ -98,7 +98,7 @@
         if ((f && (f.population != null || f.founded)) || top) {
           const k = say("ai", "📚 <b>From the world's knowledge</b> · governed<br>");
           let h = "";
-          if (f && (f.population != null || f.founded)) { const bits = []; if (f.population != null) bits.push("👥 pop. <b>" + Number(f.population).toLocaleString() + "</b>"); if (f.founded) bits.push("📅 " + f.founded); h += "<b>" + (f.label || "") + "</b> <span style='color:#8a6f2e'>" + bits.join(" · ") + "</span><br>"; }
+          if (f && (f.population != null || f.founded)) { const bits = []; if (f.population != null) bits.push("👥 pop. <b>" + Number(f.population).toLocaleString() + "</b>"); if (f.founded) bits.push("📅 " + (f.founded < 0 ? (Math.abs(f.founded) + " BC") : f.founded)); h += "<b>" + (f.label || "") + "</b> <span style='color:#8a6f2e'>" + bits.join(" · ") + "</span><br>"; }
           if (top) h += (top.excerpt || top.desc || "").slice(0, 160) + " <a href='" + top.url + "' target='_blank' style='color:#8a6f2e'>↗</a>";
           k.innerHTML += h;
         }

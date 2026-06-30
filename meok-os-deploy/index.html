@@ -1003,7 +1003,7 @@ function sovKnowledge(text){
     const log=document.getElementById('sovlog'); if(!log) return;
     const box=document.createElement('div'); box.className='sovmsg ai'; box.style.cssText='font-size:12px;line-height:1.55;border-left:2px solid var(--gold,#c9a84c);padding-left:9px';
     let html='📚 <b>From the world\'s knowledge</b> <span style="color:var(--dim)">· federated, governed</span><br>';
-    if(hasFacts){ const bits=[]; if(f.population!=null) bits.push('👥 pop. <b>'+Number(f.population).toLocaleString()+'</b>'); if(f.founded) bits.push('📅 founded <b>'+f.founded+'</b>'); if(f.website) bits.push('🔗 <a href="'+esc(f.website)+'" target="_blank" style="color:var(--gold,#c9a84c)">site</a>');
+    if(hasFacts){ const bits=[]; if(f.population!=null) bits.push('👥 pop. <b>'+Number(f.population).toLocaleString()+'</b>'); if(f.founded) bits.push('📅 founded <b>'+(f.founded<0?(Math.abs(f.founded)+' BC'):f.founded)+'</b>'); if(f.website) bits.push('🔗 <a href="'+esc(f.website)+'" target="_blank" style="color:var(--gold,#c9a84c)">site</a>');
       html+='<b>'+esc(f.label||top&&top.title||'')+'</b>'+(f.desc?' <span style="color:var(--dim)">— '+esc(f.desc)+'</span>':'')+'<br><span style="color:var(--gold,#c9a84c)">'+bits.join(' · ')+'</span><br>'; }
     if(top){ if(!hasFacts) html+='<b>'+esc(top.title)+'</b>'+(top.desc?' <span style="color:var(--dim)">— '+esc(top.desc)+'</span>':'')+'<br>'; html+=esc((top.excerpt||'').slice(0,200))+(top.excerpt&&top.excerpt.length>200?'…':'')+' <a href="'+top.url+'" target="_blank" style="color:var(--gold,#c9a84c)">source ↗</a>'; }
     box.innerHTML=html; log.appendChild(box); log.scrollTop=log.scrollHeight;
