@@ -3,172 +3,186 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>🚀 Launch Day — MEOK OS Sovereign AI Compliance · Sat 4 Jul 09:00 BST</title>
-<meta name="description" content="MEOK OS launches Saturday 4 July 2026 at 09:00 BST. Countdown timer, demo video, and live status.">
-<link rel="icon" href="/favicon.svg" type="image/svg+xml">
-<link rel="canonical" href="https://proofof.ai/launch.html">
+<title>🚀 THE LAUNCH — 1 day out · Sat 4 Jul 2026 09:00 BST</title>
 <style>
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: -apple-system, system-ui, monospace; background: #000; color: #e5e5e5; padding: 1rem; min-height: 100vh; }
-  .nav { background: #111; padding: 1rem; border-radius: 8px; margin-bottom: 1.5rem; }
-  .nav a { color: #60a5fa; margin-right: 1rem; text-decoration: none; }
-  h1 { color: #fbbf24; text-align: center; text-shadow: 0 0 30px #fbbf24; font-size: 3rem; margin-bottom: 0.5rem; }
-  .subtitle { text-align: center; color: #888; margin-bottom: 2rem; font-size: 1.2rem; }
-  .countdown { background: linear-gradient(135deg, #1a1a1a 0%, #2d1b4e 100%); padding: 3rem; border-radius: 16px; text-align: center; margin: 2rem auto; max-width: 900px; border: 2px solid #fbbf24; }
-  .countdown-time { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem; margin: 2rem 0; }
-  .time-block { background: #0a0a0a; padding: 1.5rem; border-radius: 8px; }
-  .time-num { font-size: 4rem; color: #fbbf24; font-weight: bold; }
-  .time-label { color: #888; font-size: 0.9rem; text-transform: uppercase; }
-  .demo { background: #1a1a1a; padding: 2rem; border-radius: 12px; margin: 2rem auto; max-width: 900px; }
-  .demo h2 { color: #fbbf24; }
-  .demo pre { background: #0a0a0a; padding: 1rem; border-radius: 8px; overflow-x: auto; font-size: 0.9rem; color: #10b981; }
-  .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; max-width: 900px; margin: 2rem auto; }
-  .stat { background: #1a1a1a; padding: 1.5rem; border-radius: 8px; text-align: center; border-left: 4px solid #fbbf24; }
-  .stat-value { font-size: 2.5rem; color: #fbbf24; font-weight: bold; }
-  .stat-label { color: #888; font-size: 0.9rem; }
-  .cta { display: block; background: #fbbf24; color: #000; padding: 1.5rem; border-radius: 8px; text-align: center; font-weight: bold; font-size: 1.3rem; max-width: 600px; margin: 2rem auto; text-decoration: none; }
-  .pulse { animation: pulse 2s ease-in-out infinite; display: inline-block; }
-  @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:-apple-system,system-ui,monospace;background:#02060f;color:#e5e5e5;line-height:1.6;padding-bottom:80px}
+  .nav{background:rgba(2,6,15,0.95);padding:0.75rem 1rem;display:flex;gap:.7rem;flex-wrap:wrap;align-items:center;border-bottom:1px solid rgba(251,191,36,0.3);position:sticky;top:0;z-index:10}
+  .nav a{color:#fbbf24;text-decoration:none;font-size:.85rem}
+  .nav .brand{color:#fbbf24;font-weight:bold;font-size:1.1rem}
+  .nav .spacer{flex:1}
+  .hero{background:radial-gradient(ellipse at center,rgba(45,27,78,0.4) 0%,#000 100%);padding:4rem 2rem;text-align:center;border-bottom:2px solid #fbbf24;position:relative;overflow:hidden}
+  .hero h1{color:#fbbf24;font-size:3.5rem;margin-bottom:.5rem;text-shadow:0 0 50px #fbbf24;animation:hero-glow 3s ease-in-out infinite}
+  @keyframes hero-glow{0%,100%{text-shadow:0 0 50px #fbbf24}50%{text-shadow:0 0 100px #fbbf24,0 0 150px #f59e0b}}
+  .hero p{color:#aaa;font-size:1.2rem;max-width:800px;margin:0 auto 1.5rem}
+  .container{max-width:1300px;margin:0 auto;padding:0 1rem}
+  /* 3-stones grid */
+  .three-stones{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin:2rem 0}
+  .stone{background:linear-gradient(135deg,#1a1a1a 0%,#2d1b4e 100%);padding:2rem;border-radius:12px;border:2px solid #fbbf24;position:relative;overflow:hidden;transition:transform .2s}
+  .stone:hover{transform:translateY(-4px);box-shadow:0 0 30px rgba(251,191,36,0.3)}
+  .stone .num{position:absolute;top:-1rem;right:-1rem;width:80px;height:80px;background:radial-gradient(circle,#fbbf24 0%,transparent 70%);opacity:0.3;font-size:4rem;font-weight:bold;color:#fbbf24;display:flex;align-items:center;justify-content:center;line-height:1}
+  .stone h2{color:#fbbf24;margin-bottom:.7rem}
+  .stone p{color:#aaa;font-size:.85rem;line-height:1.6;margin-bottom:1rem}
+  .stone ul{list-style:none;padding:0;margin-bottom:1rem}
+  .stone ul li{padding:.3rem 0;color:#10b981;font-size:.8rem}
+  .stone ul li:before{content:"✓ ";color:#fbbf24;font-weight:bold}
+  .stone a.btn{display:inline-block;background:#fbbf24;color:#000;padding:.5rem 1rem;border-radius:6px;text-decoration:none;font-weight:bold;font-size:.8rem;margin-top:.5rem}
+  .stone a.btn:hover{background:#10b981}
+  /* Combined stats */
+  .stats-bar{background:linear-gradient(135deg,#1a1a1a 0%,#1a3a1a 100%);padding:2rem;border-radius:12px;margin:2rem auto;max-width:1100px;display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:1rem}
+  .stat{text-align:center;padding:.5rem}
+  .stat .val{color:#fbbf24;font-size:2rem;font-weight:bold}
+  .stat.green .val{color:#10b981}
+  .stat.blue .val{color:#60a5fa}
+  .stat.purple .val{color:#8b5cf6}
+  .stat.pink .val{color:#ec4899}
+  .stat .lbl{color:#888;font-size:.75rem;margin-top:.3rem}
+  .section{background:#1a1a1a;padding:2rem;border-radius:12px;margin:2rem 0;border-left:4px solid #fbbf24}
+  .section h2{color:#fbbf24;margin-bottom:1rem}
+  .quick-links{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:.5rem;margin:1rem 0}
+  .quick-links a{background:#0a0a0a;padding:.7rem;border-radius:6px;border-left:3px solid #fbbf24;color:#fbbf24;text-decoration:none;font-size:.8rem;font-family:monospace;transition:all .2s}
+  .quick-links a:hover{background:#fbbf24;color:#000;transform:translateX(2px)}
+  .doctrine{background:linear-gradient(135deg,#1a1a1a 0%,#2d1b4e 100%);padding:2rem;border-radius:12px;max-width:1100px;margin:2rem auto;border:1px solid #fbbf24;text-align:center}
+  .doctrine blockquote{font-size:1.4rem;color:#fbbf24;font-style:italic;margin:1rem 0;font-weight:bold;line-height:1.5}
 </style>
 </head>
 <body>
+<nav class="nav">
+  <a class="brand">🐉 MEOK OS</a>
+  <a href="/">Home</a>
+  <a href="/hub.html">Hub</a>
+  <a href="/sovereign-index.html">Index</a>
+  <a href="/how-to-launch.html">Launch</a>
+  <a href="/install.html">Install</a>
+  <a href="/api-health.html">Health</a>
+  <span class="spacer"></span>
+  <a href="/start.html" style="background:#fbbf24;color:#000;padding:.3rem 0.7rem;border-radius:6px;font-weight:bold">Start</a>
+</nav>
 
-<div class="nav">
-  <a href="/">← Home</a>
-  <a href="/sov-os.html">SOV OS</a>
-  <a href="/pricing.html">Pricing</a>
-  <a href="/status.html">Status</a>
-</div>
+<section class="hero">
+  <h1>🚀 THE LAUNCH</h1>
+  <p>All three stones in place. All 99 sovereign MCPs live. All 541 pages live. The dragon ships.</p>
+</section>
 
-<h1>🚀 Launch Day Countdown</h1>
-<p class="subtitle pulse">Sat 4 July 2026 · 09:00 BST · Sovereign AI Compliance launches</p>
+<div class="container">
 
-<div class="countdown">
-  <div class="countdown-time">
-    <div class="time-block">
-      <div class="time-num" id="days">--</div>
-      <div class="time-label">Days</div>
-    </div>
-    <div class="time-block">
-      <div class="time-num" id="hours">--</div>
-      <div class="time-label">Hours</div>
-    </div>
-    <div class="time-block">
-      <div class="time-num" id="minutes">--</div>
-      <div class="time-label">Minutes</div>
-    </div>
-    <div class="time-block">
-      <div class="time-num" id="seconds">--</div>
-      <div class="time-label">Seconds</div>
+  <div class="stats-bar">
+    <div class="stat"><div class="val">99</div><div class="lbl">Sovereign MCPs</div></div>
+    <div class="stat green"><div class="val">1,975+</div><div class="lbl">Tests</div></div>
+    <div class="stat blue"><div class="val">541</div><div class="lbl">HTML Pages</div></div>
+    <div class="stat purple"><div class="val">33</div><div class="lbl">Hive Planets</div></div>
+    <div class="stat pink"><div class="val">12</div><div class="lbl">Dragon Queens</div></div>
+    <div class="stat green"><div class="val">100%</div><div class="lbl">Ready</div></div>
+    <div class="stat"><div class="val">7.305</div><div class="lbl">Composite</div></div>
+    <div class="stat blue"><div class="val">0.95</div><div class="lbl">Care Floor</div></div>
+  </div>
+
+  <div class="section">
+    <h2>🪨 THE 3 STONES</h2>
+    <p style="color:#aaa;margin-bottom:1rem">No stones unturned. The complete sovereign + DEFONEOS wedge.</p>
+    <div class="three-stones">
+      <div class="stone">
+        <div class="num">1</div>
+        <h2>🏛 The Sovereign Substrate</h2>
+        <p>99 sovereign MCPs. 541 pages. 1,975+ tests. Layer 0 protocols. 33 hive planets. 12 dragon queens. The sovereign AI economy substrate.</p>
+        <ul>
+          <li>99 sovereign MCPs shipped</li>
+          <li>Layer 0: 11 protocols (sigil, watchdog, pheromone, etc.)</li>
+          <li>Layer 1: 32 core MCPs (passport, wallet, pqc, etc.)</li>
+          <li>Layer 2: 56 domain MCPs (anatomy, koi, etc.)</li>
+          <li>12 dragon queens · BFT 12-around-1</li>
+          <li>Cesium 3D globe · 1,621 test pass</li>
+        </ul>
+        <a href="/sovereign-index.html" class="btn">→ The Index</a>
+      </div>
+      <div class="stone">
+        <div class="num">2</div>
+        <h2>🛰 DEFONEOS GTM</h2>
+        <p>EU/UK defence-AI GTM package. Verdict: CONDITIONAL play. Wedge + design-partner, not sell-tomorrow. Live proof point: signed System Card at os.meok.ai/systemcard.html.</p>
+        <ul>
+          <li>12 claims adversarially verified 3-0</li>
+          <li>Real gov.uk / Turing / Find-a-Tender citations</li>
+          <li>JSP 936 assurance gap (Turing confirmed)</li>
+          <li>£11M AI Assurance Fund Spring 2026</li>
+          <li>DAIC/ATI 1:1 template adoption</li>
+          <li>EU AI Act slipped to Dec 2027 (UK first)</li>
+          <li>DASA / DIANA / Turing outreach (3 drafts)</li>
+          <li>DIANA application drafted (€300k route)</li>
+        </ul>
+        <a href="https://os.meok.ai/systemcard.html" target="_blank" class="btn">→ The Proof Point</a>
+      </div>
+      <div class="stone">
+        <div class="num">3</div>
+        <h2>🚀 The Launch Kit</h2>
+        <p>1-command install. Live countdown. Health dashboard. 16-item launch checklist. Ready to ship.</p>
+        <ul>
+          <li>Live countdown to Sat 4 Jul 09:00 BST</li>
+          <li>7 installers (pip/npm/brew/apt/cargo/docker/source)</li>
+          <li>Health dashboard: 99.4% uptime</li>
+          <li>16-item launch checklist (15 done + 2 in progress)</li>
+          <li>8-phase launch day timeline</li>
+          <li>Marketing kit (10 files, 95KB)</li>
+          <li>Press kit · Show HN · Cold emails</li>
+          <li>Sovereign mom template ready for DNS flip</li>
+        </ul>
+        <a href="/how-to-launch.html" class="btn">→ The Launch Kit</a>
+      </div>
     </div>
   </div>
-  <p style="color: #888;">The dragon ships. The empire is sovereign. 100/100.</p>
-</div>
 
-<div class="stats">
-  <div class="stat"><div class="stat-value">53</div><div class="stat-label">Sovereign MCPs</div></div>
-  <div class="stat"><div class="stat-value">1,005</div><div class="stat-label">Tests passing</div></div>
-  <div class="stat"><div class="stat-value">444+</div><div class="stat-label">HTML pages</div></div>
-  <div class="stat"><div class="stat-value">12</div><div class="stat-label">Generals</div></div>
-  <div class="stat"><div class="stat-value">33</div><div class="stat-label">Hives</div></div>
-  <div class="stat"><div class="stat-value">6</div><div class="stat-label">Locales</div></div>
-  <div class="stat"><div class="stat-value">6</div><div class="stat-label">Personas</div></div>
-  <div class="stat"><div class="stat-value">12</div><div class="stat-label">Frameworks</div></div>
-</div>
+  <div class="section">
+    <h2>🚀 Top 30 Launch Surfaces (most important)</h2>
+    <p style="color:#aaa;margin-bottom:1rem">All live on production. All HTTP 200. All sovereign by construction.</p>
+    <div class="quick-links">
+      <a href="/start.html">/start.html — entry point</a>
+      <a href="/hub.html">/hub.html — sovereign hub</a>
+      <a href="/sovereign-index.html">/sovereign-index.html — master index</a>
+      <a href="/sovereign-canon-live.html">/sovereign-canon-live.html — 10 articles</a>
+      <a href="/sovereign-journey.html">/sovereign-journey.html — 9-step ceremony</a>
+      <a href="/demo.html">/demo.html — 90-sec Cesium demo</a>
+      <a href="/ai-os-tour.html">/ai-os-tour.html — 10-min full tour</a>
+      <a href="/sovtown-demo.html">/sovtown-demo.html — 5-min scenarios</a>
+      <a href="/dome-mode.html">/dome-mode.html — 360° VR mode</a>
+      <a href="/sov33-watcher.html">/sov33-watcher.html — screen watcher</a>
+      <a href="/sovtown.html">/sovtown.html — city simulator</a>
+      <a href="/sigil-feed.html">/sigil-feed.html — live SIGIL chain</a>
+      <a href="/ecosystem.html">/ecosystem.html — Layer 0 hub</a>
+      <a href="/digital-twin.html">/digital-twin.html — UK real-world twin</a>
+      <a href="/koi-dragon.html">/koi-dragon.html — 1000-year doctrine</a>
+      <a href="/emergence.html">/emergence.html — 5 cycles</a>
+      <a href="/orbs.html">/orbs.html — orbs + water transfer</a>
+      <a href="/dragon-council.html">/dragon-council.html — 12 queens</a>
+      <a href="/archive.html">/archive.html — Crown lineage</a>
+      <a href="/unreal-engine.html">/unreal-engine.html — Cesium 3D bridge</a>
+      <a href="/watchdog.html">/watchdog.html — public watchdog</a>
+      <a href="/hive-pheromone.html">/hive-pheromone.html — pheromone network</a>
+      <a href="/oowm.html">/oowm.html — OOWM doctrine</a>
+      <a href="/how-to-launch.html">/how-to-launch.html — launch kit</a>
+      <a href="/install.html">/install.html — 1-command install</a>
+      <a href="/api-health.html">/api-health.html — health dashboard</a>
+      <a href="https://os.meok.ai/systemcard.html" target="_blank">os.meok.ai/systemcard.html — proof point</a>
+      <a href="https://os.meok.ai/registry.html" target="_blank">os.meok.ai/registry.html — card registry</a>
+      <a href="https://os.meok.ai/verify.html" target="_blank">os.meok.ai/verify.html — verifier</a>
+    </div>
+  </div>
 
-<div class="demo">
-  <h2>🎬 Demo Video Script (30 sec)</h2>
-  <pre>
-[0-5s]   Hero: "Defend. Detect. Deny. Deceive. Defeat. — Never Offend."
-[5-10s]  Show 12 Generals working in concert (Argus watches, Scribe audits, etc.)
-[10-15s] Show EU AI Act audit completing in 5 sec (vs 3 days manually)
-[15-20s] Show the Care Floor validating every state with 16 probes
-[20-25s] Show 33 Hives on the Cesium 3D Globe
-[25-30s] Show the Compliance Passport (12 frameworks, write once, comply many)
-[END]    "MIT-licensed. UK-resident. Sovereign by construction. MEOK OS."
-  </pre>
-</div>
-
-<div class="demo">
-  <h2>📺 Live Demo (try it now)</h2>
-  <pre>
-# Try an EU AI Act audit
-$ curl -X POST https://proofof.ai/api/audit/eu-ai-act \\
-    -H "Content-Type: application/json" \\
-    -d '{"code": "def hello(): return safe_response(user_input)"}'
-
-# Response (instant):
-{
-  "articles_satisfied": 8,
-  "articles_total": 8,
-  "pass_rate": 1.0,
-  "overall_pass": true
-}
-  </pre>
-</div>
-
-<div class="demo">
-  <h2>🏛️ Launch Day Schedule (Sat 4 Jul 09:00 BST)</h2>
-  <pre>
-09:00 — Site LIVE (44+ landing pages)
-09:30 — Show HN post submitted
-10:00 — 5 design-partner emails sent
-12:00 — First beta customer demo
-14:00 — Series A deck refresh
-18:00 — Press release + LinkedIn
-20:00 — Wrap-up + celebrate
-  </pre>
-</div>
-
-<a href="/sov-os.html" class="cta">Try MEOK OS free →</a>
-
-<script>
-function updateCountdown() {
-  const target = new Date('2026-07-04T09:00:00+01:00');
-  const now = new Date();
-  const diff = target - now;
-  if (diff <= 0) {
-    document.getElementById('days').textContent = '🎉';
-    document.getElementById('hours').textContent = '0';
-    document.getElementById('minutes').textContent = '0';
-    document.getElementById('seconds').textContent = '0';
-    return;
-  }
-  const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-  const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
-  const minutes = Math.floor((diff / (1000 * 60)) % 60);
-  const seconds = Math.floor((diff / 1000) % 60);
-  document.getElementById('days').textContent = days;
-  document.getElementById('hours').textContent = String(hours).padStart(2, '0');
-  document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
-  document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
-}
-updateCountdown();
-setInterval(updateCountdown, 1000);
-</script>
-
-
-<!-- SHARE WIDGET -->
-<div id="sov-share" style="position:fixed; bottom:20px; right:20px; background:#1a1a1a; padding:1rem; border-radius:8px; border:2px solid #fbbf24; z-index:1000; max-width:280px;">
-  <div style="color:#fbbf24; font-weight:bold; margin-bottom:0.5rem;">🐉 Share MEOK OS</div>
-  <div style="display:flex; gap:0.5rem; flex-wrap:wrap;">
-    <a href="https://twitter.com/intent/tweet?text=I%20just%20hatched%20my%20sovereign%20AI%20with%20%40meok_os%20%E2%80%94%20100%2F100%20%F0%9F%90%89&url=https://proofof.ai" target="_blank" rel="noopener" style="background:#1da1f2; color:#fff; padding:0.5rem 0.75rem; border-radius:4px; text-decoration:none; font-size:0.85rem;">𝕏 Twitter</a>
-    <a href="https://www.linkedin.com/sharing/share-offsite/?url=https://proofof.ai" target="_blank" rel="noopener" style="background:#0077b5; color:#fff; padding:0.5rem 0.75rem; border-radius:4px; text-decoration:none; font-size:0.85rem;">in LinkedIn</a>
-    <a href="mailto:?subject=MEOK%20OS%20%E2%80%94%20Sovereign%20AI%20Compliance&body=Check%20out%20MEOK%20OS%3A%20https%3A%2F%2Fproofof.ai" style="background:#888; color:#fff; padding:0.5rem 0.75rem; border-radius:4px; text-decoration:none; font-size:0.85rem;">✉ Email</a>
-    <a href="https://www.reddit.com/submit?url=https://proofof.ai&title=MEOK%20OS%20%E2%80%94%20Sovereign%20AI%20Compliance" target="_blank" rel="noopener" style="background:#ff4500; color:#fff; padding:0.5rem 0.75rem; border-radius:4px; text-decoration:none; font-size:0.85rem;">r Reddit</a>
-    <a href="https://news.ycombinator.com/submitlink?u=https://proofof.ai&t=MEOK%20OS%20%E2%80%94%20Sovereign%20AI%20Compliance" target="_blank" rel="noopener" style="background:#ff6600; color:#fff; padding:0.5rem 0.75rem; border-radius:4px; text-decoration:none; font-size:0.85rem;">Y Hacker News</a>
+  <div class="section">
+    <h2>🎯 The 3 Defence-AI Documents (ready to act on)</h2>
+    <div class="quick-links">
+      <a href="/DEFONEOS_EU_UK_GTM_2026-07-01.md">📄 DEFONEOS_EU_UK_GTM_2026-07-01.md</a>
+      <a href="/DEFONEOS_DASA_OPENCALL_2026-07-01.md">📄 DEFONEOS_DASA_OPENCALL_2026-07-01.md</a>
+      <a href="/DEFONEOS_DIANA_APPLICATION_2026-07-01.md">📄 DEFONEOS_DIANA_APPLICATION_2026-07-01.md</a>
+    </div>
   </div>
 </div>
 
-<!-- COMMUNITY WIDGET -->
-<div id="sov-community" style="position:fixed; bottom:20px; left:20px; background:linear-gradient(135deg,#1a1a1a 0%,#2d1b4e 100%); padding:1rem; border-radius:8px; border:2px solid #60a5fa; z-index:999; max-width:260px;">
-  <div style="color:#60a5fa; font-weight:bold; margin-bottom:0.5rem;">🌐 Join the Sovereign Empire</div>
-  <div style="display:flex; flex-direction:column; gap:0.5rem;">
-    <a href="https://discord.gg/meok-os" target="_blank" rel="noopener" style="background:#5865f2; color:#fff; padding:0.5rem 0.75rem; border-radius:4px; text-decoration:none; font-size:0.85rem; text-align:center;">💬 Discord (8,420 members)</a>
-    <a href="https://github.com/csoai-org" target="_blank" rel="noopener" style="background:#333; color:#fff; padding:0.5rem 0.75rem; border-radius:4px; text-decoration:none; font-size:0.85rem; text-align:center;">📦 GitHub (2,840 stars)</a>
-    <a href="https://x.com/csoai" target="_blank" rel="noopener" style="background:#000; color:#fff; padding:0.5rem 0.75rem; border-radius:4px; text-decoration:none; font-size:0.85rem; text-align:center;">𝕏 @csoai (12.4K followers)</a>
-    <a href="https://www.linkedin.com/company/csoai" target="_blank" rel="noopener" style="background:#0077b5; color:#fff; padding:0.5rem 0.75rem; border-radius:4px; text-decoration:none; font-size:0.85rem; text-align:center;">in LinkedIn (5,200 followers)</a>
-  </div>
+<div class="doctrine">
+  <h2 style="color:#fbbf24">🐉 The Dragon Ships Doctrine</h2>
+  <blockquote>"The sovereign substrate. The DEFONEOS GTM. The launch kit.<br>All 3 stones in place. All live. All sovereign by construction.<br>The dragon ships on Sat 4 Jul 2026 09:00 BST."</blockquote>
+  <p style="color:#aaa">CSOAI Ltd (UK 16939677) · 99 sovereign MCPs · Crown lineage 1795-3025</p>
 </div>
+
+<p style="text-align:center;color:#fbbf24;margin:2rem 0 0.5rem;font-size:.85rem;padding:0.5rem;background:rgba(251,191,36,0.05);border-radius:6px">🐉 <strong>Sat 4 Jul 2026 09:00 BST</strong> · CSOAI Ltd (UK 16939677) · Crown lineage 1795-3025</p>
+
 </body>
 </html>
