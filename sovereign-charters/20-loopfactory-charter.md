@@ -34,8 +34,16 @@ LoopFactory provides sovereign automation infrastructure: cron job scheduling, w
 - **Workflow Patterns**: Fan-out (one trigger → N parallel actions), Saga (compensating transactions for rollback), Circuit Breaker (stop cascade failures), Retry with Exponential Backoff (1s, 2s, 4s, 8s, 16s, max 5 retries), Idempotency Keys for at-least-once delivery.
 - **Enterprise Architecture**: Multi-tenant isolation, per-tenant rate limits, queue depth monitoring (alert at >1,000 pending), SLA tracking (p95/p99 latency), Ed25519-signed execution logs per workflow run.
 
-### II.E — Comparison With Existing Tools
-| Feature | LoopFactory | Zapier | Make (Integromat) | IFTTT |
+### II.E — Enterprise SLA Tiers
+| Tier | Uptime SLA | Support | Price |
+|---|---|---|---|
+| **Community** | None | Community forum | Free |
+| **Pro** | 99.5% (4.4 hrs downtime/month) | Email (24h response) | £49/mo per 100K executions |
+| **Business** | 99.9% (43.8 min/month) | Email (4h response) + Slack | £499/mo per 1M executions |
+| **Enterprise** | 99.99% (4.4 min/month) | Dedicated CSM + on-call | £4,999/mo per 10M executions |
+
+### II.F — Comparison With Existing Tools
+| Feature | LoopFactory | Zapier | Make | IFTTT |
 |---|---|---|---|---|
 | **Cost** | FREE | £20-£800/mo | £9-£29/mo | Free (limited) |
 | **Hosting** | Self-hosted | US Cloud | US Cloud | US Cloud |
@@ -44,7 +52,16 @@ LoopFactory provides sovereign automation infrastructure: cron job scheduling, w
 | **BFT Governance** | ✅ | ❌ | ❌ | ❌ |
 | **Air-Gap Deploy** | ✅ | ❌ | ❌ | ❌ |
 | **Open Source** | ✅ MIT | ❌ | ❌ | ❌ |
-| **Multi-Step** | ✅ Unlimited | ✅ (paid tiers) | ✅ | ❌ (1 action) |
+
+### II.G — Workflow Versioning & A/B Testing
+- **Version Control**: Every workflow is Git-versioned. YAML-defined. Roll back any execution to any prior version.
+- **A/B Testing**: Route 10% of executions to workflow v2, 90% to v1. Compare success rate, latency, cost. Promote winner.
+- **Canary Deployments**: Deploy new workflow version to 1% of triggers, monitor for 24h, auto-rollback on error rate spike.
+
+### II.H — Audit Trail Immutability
+- **Hash-chain**: Every execution creates a hash-chained SIGIL record. Modifying any historical record breaks the chain → instantly detectable.
+- **Merkle anchoring**: Every 1,000 executions are Merkle-rooted and the root is OTS-anchored to Bitcoin.
+- **Multi-region replication**: Execution logs replicated across 3 sovereign regions (UK-EU-US). Each region signs its own copy.
 
 ## ARTICLE III — FREE TRAINING PATHWAY
 

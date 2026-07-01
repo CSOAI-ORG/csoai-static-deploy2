@@ -6,6 +6,10 @@
 >
 > **Coigndaltion Doctrine**: The Coigndaltion is the L4 cornerstone cognition layer that binds L1 SOV3³ (DEFONEOS), L2 SOV3 (meok), and L3 CSOAI (csoai.org). It is OWNED by CSOAI but OPERATED by all 3. It never competes with any brand — it serves all three. Its first duty is to make cross-layer coordination trivial, auditable, and SIGIL-anchored.
 
+> **Three Pillars of Coigndaltion**: (1) **Cognition** — the Mamba-2 state-space compression that turns 1Hz hive noise into 16-dim intuition. (2) **Integration** — the cross-walk engine that maps 34 hives × 30 frameworks = 1,020+ mappings. (3) **Cornerstone** — the foundation that the other three layers (L1 SOV3³, L2 SOV3, L3 CSOAI) depend on. Remove the Coigndaltion and the empire loses its centre.
+
+> **The Coigndaltion Master Pattern**: every action emits a SIGIL → every SIGIL updates the Mamba-2 intuition state → every state change proposes a BFT council vote → every vote becomes a Charter amendment. This is the sovereign loop.
+
 ---
 
 ## ARTICLE I — SOVEREIGN FOUNDATION
@@ -166,11 +170,66 @@ The Coigndaltion cross-walks to every charter in the empire:
 - **Audit Chain**: SIGIL Ed25519 + PQC ML-DSA-65 (post-quantum safe)
 
 ### VII.C — Performance
-
+### VII.C — Performance
 - **Latency**: <1ms per `cog_route` (in-process hash chain)
 - **Throughput**: 10K+ ops/sec on M2 MacBook Air
 - **Memory**: <50MB resident
 - **Storage**: hash-chain only — no PII stored
+
+### VII.D — 8 MCP Tools Exposed
+
+| Tool | Purpose | Care Score |
+|---|---|---|
+| `cog_route` | Route a cognition request across the 3 layers | 1.0 |
+| `cog_unify` | Unify cross-hive cognition (Mamba-2 state merging) | 1.0 |
+| `cog_audit` | Audit a cross-layer decision for compliance | 1.0 |
+| `cog_anchor` | Anchor a SIGIL across all 3 layers simultaneously | 1.0 |
+| `cog_bridge` | Bridge two sovereign sub-systems (e.g. meok→defoneos) | 1.0 |
+| `cog_summon` | Convene the 33-agent BFT council for ratification | 1.0 |
+| `cog_inquire` | Inquire across the sovereign substrate in natural language | 1.0 |
+| `cog_seal` | Apply the Coigndaltion SEAL to any cross-layer action | 1.0 |
+
+### VII.E — Integration with SOV3 OOWM (Organic Open World Model)
+The Coigndaltion operates as the **central nervous system** of the SOV3 OOWM:
+- **Input**: 100+ live data feeds → 1Hz SIGIL capture
+- **Compression**: Mamba-2 SSM compresses to 16-dim state vector
+- **Storage**: SQLite history DB (intuitions + patterns + broadcasts + daily reports)
+- **Output**: 8 tools × 24/7 availability → any agent can inquire, audit, or seal
+
+---
+
+## ARTICLE X — UE5 SIMULATION SCENARIOS
+
+The Coigndaltion integrates with the UE5 Simulation Engine for high-stakes cross-layer training:
+
+1. **The Cross-Layer Crisis**: A sensor anomaly in DEFONEOS requires real-time cross-layer governance. L1 emits SIGIL → L4 Coigndaltion routes to L2 SOV3 → L2 convenes BFT council → L3 CSOAI issues Article 50 passport → all 3 layers sign. Pass if action ratified in <30 seconds with full audit chain intact.
+
+2. **The Sovereign Memory Test**: Compress 24 hours of 1Hz SIGILs (~86,400 records) into a 16-dim Mamba-2 state vector. Reconstruct the state at 3 random timepoints. Compare reconstruction accuracy. Pass if cosine similarity > 0.92 at all 3 checkpoints.
+
+3. **The Pattern Detection**: Run 3 different hive scenarios through the Coigndaltion. Detect emergent patterns (cosine similarity > 0.85 across contexts). Emit intuition broadcast to all agents. Pass if pattern is correctly identified and broadcast reaches all 3 layers.
+
+4. **The 33-Agent Convening**: Trigger the BFT council on a proposed Charter amendment. All 33 agents receive the proposal simultaneously via the Coigndaltion. Each casts a vote. Quorum verification. Pass if 23/33 votes received and ratified within 72 hours.
+
+5. **The Audit Trail Reconstruction**: Given a single SIGIL digest, reconstruct the complete chain back to genesis. Verify every hash, every signature, every council vote in the lineage. Pass if chain validates end-to-end with zero breaks.
+
+---
+
+## ARTICLE XI — COMPLIANCE & GOVERNANCE
+
+The Coigndaltion inherits the 30-framework universal cross-walk from the Charter of Charters. Specifically:
+
+| Framework | Application |
+|---|---|
+| EU AI Act Article 50 | Transparency of cross-layer decisions |
+| GDPR Articles 5-21 | Data minimisation in cognition compression |
+| ISO/IEC 42001:2023 | AI management system for cross-layer governance |
+| NIST AI RMF 1.0 | Risk management across sovereign substrates |
+| SOC 2 Type II | Audit trails, access control, change management |
+| UK Data Protection Act 2018 | UK data residency, DSAR handling |
+| NIST SP 800-171 | CUI protection in DEFONEOS integration |
+| NCSC Cloud Security Principles | UK sovereign cloud compliance |
+| JSP 936 | Defence AI safety in DEFONEOS cross-layer ops |
+| ISO 27001 | Information security management |
 
 ---
 
