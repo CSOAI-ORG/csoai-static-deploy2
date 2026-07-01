@@ -1,208 +1,367 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>BFT Council · 33-Agent Sovereign Governance · CSOAI</title>
-<meta name="description" content="The 33-Agent BFT (Byzantine Fault Tolerant) Council. Sovereign governance of the Charter of Charters. Quorum 23/33. Ed25519-signed proposals and votes.">
-<meta name="sovereign-charter" content="CSOAI-CHARTER-2026-06-30">
-<meta name="uk-companies-house" content="16939677">
-<link rel="canonical" href="https://csoai.org/charters/bft-council.html">
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>33-Agent BFT Council · Sovereign Governance · CSOAI</title>
 <style>
-  :root { --gold:#c9a84c; --navy:#0a0e1a; --slate:#1e293b; --text:#f1f5f9; --muted:#94a3b8; --accent:#3b82f6; --green:#10b981; --red:#ef4444; }
-  * { margin:0; padding:0; box-sizing:border-box; }
-  body { font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; background:var(--navy); color:var(--text); line-height:1.6; }
-  .container { max-width:1000px; margin:0 auto; padding:2rem; }
-  nav.breadcrumb { margin-bottom:1rem; font-size:.85rem; }
-  nav.breadcrumb a { color:var(--gold); }
-  h1 { font-size:2.2rem; color:var(--gold); margin-bottom:.5rem; }
-  .subtitle { color:var(--muted); margin-bottom:2rem; font-size:1.05rem; }
 
-  /* COUNCIL GRID */
-  .council-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(110px, 1fr)); gap:.75rem; margin:2rem 0; }
-  .agent { background:var(--slate); border:1px solid rgba(255,255,255,.1); border-radius:8px; padding:1rem; text-align:center; }
-  .agent-num { font-size:.75rem; color:var(--muted); margin-bottom:.25rem; }
-  .agent-avatar { width:48px; height:48px; border-radius:50%; margin:0 auto .5rem; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:1.1rem; color:#0a0e1a; }
-  .agent-role { font-size:.7rem; color:var(--muted); }
+    :root {
+      --gold: #c9a84c;
+      --gold-dim: #8a7235;
+      --navy: #0a0e1a;
+      --navy-2: #131829;
+      --panel: #1a1f33;
+      --panel-2: #0f1322;
+      --text: #e6e6e6;
+      --muted: #9aa0b4;
+      --green: #3ecf8e;
+      --danger: #ff5d5d;
+      --maxw: 1180px;
+    }
+    * { box-sizing: border-box; }
+    html, body {
+      margin: 0; padding: 0;
+      background: var(--navy);
+      color: var(--text);
+      font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, sans-serif;
+      font-size: 15px;
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: var(--gold); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    code, pre, .mono { font-family: ui-monospace, SFMono-Regular, "JetBrains Mono", Menlo, Consolas, monospace; }
+    h1, h2, h3, h4 { font-family: "Times New Roman", Georgia, serif; font-weight: 600; letter-spacing: -.01em; color: #fff; }
+    h1 { font-size: 2.3rem; margin: 0 0 .6rem; }
+    h2 { font-size: 1.5rem; margin: 2.4rem 0 .8rem; border-bottom: 1px solid var(--gold-dim); padding-bottom: .3rem; }
+    h3 { font-size: 1.15rem; margin: 1.6rem 0 .5rem; color: var(--gold); }
+    .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 24px; }
+    /* Top bar */
+    .topbar {
+      background: linear-gradient(180deg, #06080f 0%, var(--navy) 100%);
+      border-bottom: 1px solid var(--gold-dim);
+      padding: 14px 24px;
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 14px;
+    }
+    .topbar .brand {
+      display: flex; align-items: center; gap: 12px;
+    }
+    .topbar .brand .seali {
+      width: 36px; height: 36px; border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, var(--gold), #6e5a26);
+      display: inline-flex; align-items: center; justify-content: center;
+      color: var(--navy); font-weight: 700; font-size: .9rem;
+      box-shadow: 0 0 12px rgba(201, 168, 76, .35);
+    }
+    .topbar .brand h1 {
+      font-size: 1.05rem; margin: 0; font-family: ui-sans-serif, sans-serif;
+    }
+    .topbar .brand small { color: var(--muted); font-size: .8rem; }
+    .topbar nav a {
+      color: var(--text); margin-left: 16px; font-size: .88rem;
+      padding: 6px 10px; border-radius: 4px;
+    }
+    .topbar nav a:hover { background: var(--panel); color: var(--gold); text-decoration: none; }
+    .topbar nav a.active { color: var(--gold); border-bottom: 2px solid var(--gold); }
 
-  /* STATS */
-  .stats { display:grid; grid-template-columns:repeat(auto-fit, minmax(180px, 1fr)); gap:1rem; margin:2rem 0; }
-  .stat-card { background:var(--slate); border:1px solid rgba(255,255,255,.08); border-radius:8px; padding:1.5rem; text-align:center; }
-  .stat-num { font-size:2rem; font-weight:700; color:var(--gold); font-family:'SF Mono',monospace; }
-  .stat-label { font-size:.75rem; color:var(--muted); text-transform:uppercase; letter-spacing:.1em; margin-top:.25rem; }
+    /* Hero */
+    .hero {
+      padding: 64px 24px 56px; text-align: center;
+      background: radial-gradient(ellipse at 50% 0%, rgba(201,168,76,0.08) 0%, transparent 70%);
+    }
+    .hero .eyebrow {
+      color: var(--gold); font-family: ui-monospace, monospace; font-size: .82rem;
+      letter-spacing: .25em; text-transform: uppercase; margin-bottom: 14px;
+    }
+    .hero h1 {
+      font-size: clamp(2rem, 5vw, 3.6rem); line-height: 1.05; max-width: 880px; margin: 0 auto;
+    }
+    .hero p { max-width: 760px; margin: 16px auto 28px; color: var(--muted); font-size: 1.05rem; }
+    .hero .cta { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
 
-  /* PROPOSALS */
-  .proposals { background:var(--slate); border:1px solid rgba(255,255,255,.08); border-radius:8px; padding:2rem; margin:2rem 0; }
-  .proposals h2 { color:var(--gold); margin-bottom:1rem; }
-  .proposal { background:#0a0e1a; border:1px solid rgba(255,255,255,.05); border-radius:6px; padding:1rem; margin-bottom:.75rem; }
-  .proposal-id { font-family:'SF Mono',monospace; font-size:.75rem; color:var(--muted); }
-  .proposal-title { font-weight:600; margin:.25rem 0; }
-  .proposal-meta { display:flex; gap:1rem; font-size:.75rem; color:var(--muted); margin-top:.5rem; flex-wrap:wrap; }
-  .status { padding:.15rem .5rem; border-radius:3px; font-size:.7rem; font-weight:600; }
-  .status-open { background:rgba(59,130,246,.2); color:#93c5fd; }
-  .status-voted { background:rgba(16,185,129,.2); color:#86efac; }
-  .status-pending { background:rgba(201,168,76,.2); color:#fcd34d; }
+    /* Buttons */
+    .btn {
+      display: inline-block; padding: 10px 18px; border-radius: 4px;
+      font-size: .9rem; font-weight: 600; border: 1px solid var(--gold-dim);
+      cursor: pointer; transition: all .15s ease;
+    }
+    .btn-primary { background: var(--gold); color: var(--navy); border-color: var(--gold); }
+    .btn-primary:hover { background: #e0bc52; text-decoration: none; }
+    .btn-ghost { color: var(--gold); background: transparent; }
+    .btn-ghost:hover { background: rgba(201,168,76,.08); text-decoration: none; }
 
-  /* VOTE FLOW */
-  .flow { display:flex; justify-content:space-between; align-items:center; margin:2rem 0; padding:1.5rem; background:var(--slate); border:1px solid rgba(255,255,255,.08); border-radius:8px; flex-wrap:wrap; gap:1rem; }
-  .flow-step { text-align:center; flex:1; min-width:140px; }
-  .flow-icon { font-size:1.8rem; margin-bottom:.5rem; }
-  .flow-label { font-size:.85rem; font-weight:600; }
-  .flow-desc { font-size:.75rem; color:var(--muted); margin-top:.25rem; }
-  .flow-arrow { color:var(--gold); font-size:1.2rem; }
+    /* Cards & grid */
+    .grid { display: grid; gap: 16px; }
+    .grid-3 { grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); }
+    .grid-2 { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+    .card {
+      background: var(--panel); border: 1px solid #232838;
+      border-radius: 6px; padding: 18px 20px;
+      transition: transform .15s ease, border-color .15s ease;
+    }
+    .card:hover { border-color: var(--gold-dim); transform: translateY(-2px); }
+    .card h3 { margin: 0 0 6px; }
+    .card .meta { color: var(--muted); font-size: .8rem; font-family: ui-monospace, monospace; letter-spacing: .08em; text-transform: uppercase; }
+    .card a { color: var(--gold); }
+    .card p { margin: 8px 0 12px; color: var(--muted); font-size: .92rem; }
 
-  /* TOOLS */
-  .tools { background:var(--slate); border:1px solid rgba(255,255,255,.08); border-radius:8px; padding:2rem; margin:2rem 0; }
-  .tools h2 { color:var(--gold); margin-bottom:1rem; }
-  .tool { display:flex; justify-content:space-between; padding:.5rem 0; border-bottom:1px solid rgba(255,255,255,.05); font-size:.9rem; }
-  .tool:last-child { border-bottom:none; }
-  .tool-name { font-family:'SF Mono',monospace; color:var(--accent); }
-  .tool-desc { color:var(--muted); font-size:.85rem; }
+    /* Stat strip */
+    .stats {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 16px; padding: 24px; background: var(--panel-2);
+      border-top: 1px solid var(--gold-dim); border-bottom: 1px solid var(--gold-dim);
+    }
+    .stat .num { font-size: 1.9rem; color: var(--gold); font-weight: 700; font-family: "Times New Roman", serif; line-height: 1; }
+    .stat .lbl { font-size: .76rem; text-transform: uppercase; letter-spacing: .12em; color: var(--muted); margin-top: 6px; }
 
-  footer { text-align:center; padding-top:2rem; margin-top:2rem; border-top:1px solid rgba(255,255,255,.05); color:var(--muted); font-size:.85rem; }
-  footer a { color:var(--gold); }
-</style>
-</head>
-<body>
-<div class="container">
+    /* Panels */
+    .panel { background: var(--panel); border: 1px solid #232838; border-radius: 6px; padding: 22px 24px; margin: 1rem 0; }
+    .panel h3 { margin-top: 0; }
+    .panel.note { background: rgba(201,168,76,.06); border-color: var(--gold-dim); }
+    .panel.danger { background: rgba(255,93,93,.06); border-color: rgba(255,93,93,.4); }
 
-<nav class="breadcrumb">
-  <a href="index.html">← Sovereign Charter Universe</a> / BFT Council
-</nav>
+    /* Article-style layout */
+    article { padding: 32px 0; }
+    article h1 { margin-top: 0; }
+    article h1 small { display: block; color: var(--muted); font-size: 0.9rem; font-weight: 400; margin-top: 4px; font-family: ui-sans-serif, sans-serif; }
 
-<h1>🏛️ BFT Council · Sovereign Governance</h1>
-<p class="subtitle">33-agent Byzantine Fault Tolerant council. Quorum 23/33. Ed25519-signed proposals and votes. No single point of failure. Sovereign by design.</p>
+    /* Layout with sidebar */
+    .layout { display: grid; grid-template-columns: 260px 1fr; gap: 32px; padding: 24px; }
+    @media (max-width: 880px) { .layout { grid-template-columns: 1fr; } }
+    aside.nav {
+      background: var(--panel-2); border: 1px solid #232838; border-radius: 6px;
+      padding: 18px; max-height: calc(100vh - 80px); position: sticky; top: 16px; overflow-y: auto;
+    }
+    aside.nav h4 { font-size: .72rem; text-transform: uppercase; letter-spacing: .12em; color: var(--muted); margin: 14px 0 4px; font-family: ui-monospace, monospace; }
+    aside.nav h4:first-child { margin-top: 0; }
+    aside.nav a { display: block; padding: 5px 8px; color: var(--text); font-size: .85rem; border-radius: 4px; }
+    aside.nav a:hover { background: rgba(201,168,76,.08); text-decoration: none; }
+    aside.nav a.current { background: rgba(201,168,76,.18); color: var(--gold); border-left: 2px solid var(--gold); padding-left: 6px; }
+
+    /* Tables */
+    table {
+      width: 100%; border-collapse: collapse; margin: 1rem 0;
+      font-size: .9rem;
+    }
+    th, td { text-align: left; padding: 8px 12px; border-bottom: 1px solid #1d2236; vertical-align: top; }
+    th { background: var(--panel-2); color: var(--gold); font-weight: 600; font-size: .8rem; text-transform: uppercase; letter-spacing: .05em; }
+    tr:hover td { background: rgba(201,168,76,.03); }
+
+    /* Footer */
+    footer {
+      margin-top: 60px; padding: 32px 24px; background: #06080f;
+      border-top: 1px solid var(--gold-dim); color: var(--muted); font-size: .85rem;
+    }
+    footer .wrap { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 32px; }
+    @media (max-width: 720px) { footer .wrap { grid-template-columns: 1fr; } }
+    footer h4 { color: var(--gold); font-size: .85rem; margin: 0 0 8px; font-family: ui-sans-serif, sans-serif; text-transform: uppercase; letter-spacing: .1em; }
+    footer a { color: var(--text); display: block; padding: 3px 0; font-size: .85rem; }
+    footer a:hover { color: var(--gold); }
+
+    .sig-line {
+      font-family: ui-monospace, monospace; font-size: .85rem;
+      background: var(--panel-2); border-left: 3px solid var(--gold);
+      padding: 12px 16px; border-radius: 0 4px 4px 0; margin: 1rem 0;
+      white-space: pre-wrap; word-break: break-all;
+    }
+
+    .tier-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; margin: 1rem 0; }
+    .tier {
+      background: var(--panel); border: 1px solid #232838; border-radius: 6px;
+      padding: 14px 16px; position: relative; overflow: hidden;
+    }
+    .tier::before {
+      content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%;
+      background: var(--gold);
+    }
+    .tier .num { font-size: .8rem; color: var(--muted); font-family: ui-monospace, monospace; }
+    .tier .name { font-weight: 600; color: var(--gold); font-size: 1rem; margin: 4px 0 8px; }
+    .tier .body { font-size: .82rem; color: var(--muted); }
+
+    .pill { display: inline-block; padding: 2px 9px; border-radius: 99px; font-size: .7rem; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; }
+    .pill-gold { background: rgba(201,168,76,.18); color: var(--gold); }
+    .pill-green { background: rgba(62,207,142,.15); color: var(--green); }
+    .pill-danger { background: rgba(255,93,93,.15); color: var(--danger); }
+
+    .countdown { font-family: ui-monospace, monospace; color: var(--gold); font-size: 1.4rem; font-weight: 700; }
+
+    .bsw-row {
+      display: grid; grid-template-columns: 90px 1fr; gap: 12px;
+      padding: 10px 0; border-bottom: 1px dashed #232838;
+    }
+    .bsw-row:last-child { border-bottom: 0; }
+    .bsw-row .days { color: var(--gold); font-weight: 700; font-family: ui-monospace, monospace; }
+
+    .charter-card {
+      background: var(--panel); border: 1px solid #232838; border-radius: 6px;
+      padding: 16px; display: flex; flex-direction: column;
+    }
+    .charter-card .num-badge {
+      align-self: flex-start; padding: 2px 8px; border-radius: 4px;
+      background: rgba(201,168,76,.15); color: var(--gold);
+      font-family: ui-monospace, monospace; font-size: .72rem; margin-bottom: 6px;
+    }
+    .charter-card h3 { margin: 0 0 4px; font-size: 1.1rem; }
+    .charter-card .sub { color: var(--muted); font-size: .82rem; margin: 4px 0 12px; }
+    .charter-card a.footer-link { margin-top: auto; font-size: .82rem; color: var(--gold); }
+
+    .framework-tag { display:inline-block; padding:2px 8px; border-radius:99px; background: rgba(62,207,142,.12); color: var(--green); font-size:.72rem; margin: 2px 4px 2px 0; font-family: ui-monospace, monospace;}
+    
+</style></head><body>
+
+    <div class="topbar">
+      <a class="brand" href="index.html">
+        <span class="seali">CA3O</span>
+        <div>
+          <h1>CSOAI · Sovereign Charter Portal</h1>
+          <small>UK 16939677 · 34 hives · 1,122 bilateral cross-walks</small>
+        </div>
+      </a>
+      <nav>
+        <a href="index.html" class="">Charters</a><a href="training.html" class="">Training</a><a href="crosswalk.html" class="">Cross-Walk</a><a href="bft-council.html" class="">BFT Council</a>
+      </nav>
+    </div>
+    
+
+<section class="hero">
+  <div class="wrap">
+    <div class="eyebrow">BFT COUNCIL · SOVEREIGN GOVERNANCE</div>
+    <h1>33 Seats. <span style="color:var(--gold);">23/33 Quorum.</span><br>No Single Vendor Captures Governance.</h1>
+    <p>The Byzantine-fault-tolerant council is the supreme governance authority for CSOAI. Every charter ratification, every certification, every black swan protocol activation flows through this council.</p>
+  </div>
+</section>
 
 <div class="stats">
-  <div class="stat-card"><div class="stat-num">33</div><div class="stat-label">Sovereign Agents</div></div>
-  <div class="stat-card"><div class="stat-num">23/33</div><div class="stat-label">Quorum</div></div>
-  <div class="stat-card"><div class="stat-num">5,500+</div><div class="stat-label">Watchdog Certs</div></div>
-  <div class="stat-card"><div class="stat-num">49,000+</div><div class="stat-label">SIGIL Records</div></div>
+  <div class="stat"><div class="num">33</div><div class="lbl">Council Seats (Agents)</div></div>
+  <div class="stat"><div class="num">23</div><div class="lbl">Quorum Required</div></div>
+  <div class="stat"><div class="num">33</div><div class="lbl">Charters Ratified</div></div>
+  <div class="stat"><div class="num">∞</div><div class="lbl">Vote Throughput</div></div>
+  <div class="stat"><div class="num">Ed25519</div><div class="lbl">Signed Verdicts</div></div>
+  <div class="stat"><div class="num">0%</div><div class="lbl">Vendor Capture</div></div>
 </div>
 
-<h2 style="color:var(--gold); margin:2rem 0 1rem;">The 33 Sovereign Agents</h2>
-<div class="council-grid">
-  <div class="agent"><div class="agent-avatar" style="background:#c9a84c;">K</div><div class="agent-num">#01</div><div class="agent-role">King (SOV3)</div></div>
-  <div class="agent"><div class="agent-avatar" style="background:#10b981;">02</div><div class="agent-num">#02</div><div class="agent-role">Aurelian Strategy</div></div>
-  <div class="agent"><div class="agent-avatar" style="background:#06b6d4;">03</div><div class="agent-num">#03</div><div class="agent-role">Sophia Care</div></div>
-  <div class="agent"><div class="agent-avatar" style="background:#3b82f6;">04</div><div class="agent-num">#04</div><div class="agent-role">Justitia Compliance</div></div>
-  <div class="agent"><div class="agent-avatar" style="background:#fbbf24;">05</div><div class="agent-num">#05</div><div class="agent-role">Asteria Finance</div></div>
-  <div class="agent"><div class="agent-avatar" style="background:#ef4444;">06</div><div class="agent-num">#06</div><div class="agent-role">Dominion Domain</div></div>
-  <div class="agent"><div class="agent-avatar" style="background:#a855f7;">07</div><div class="agent-num">#07</div><div class="agent-role">Aleph Arcana</div></div>
-  <div class="agent"><div class="agent-avatar" style="background:#6366f1;">08</div><div class="agent-num">#08</div><div class="agent-role">Solitude Brain</div></div>
-  <div class="agent"><div class="agent-avatar" style="background:#ec4899;">09</div><div class="agent-num">#09</div><div class="agent-role">Rota Proactive</div></div>
-  <div class="agent"><div class="agent-avatar" style="background:#f43f5e;">10</div><div class="agent-num">#10</div><div class="agent-role">Concordia Bridge</div></div>
-  <div class="agent"><div class="agent-avatar" style="background:#fbbf24;">11</div><div class="agent-num">#11</div><div class="agent-role">Solaria Distribution</div></div>
-  <div class="agent"><div class="agent-avatar" style="background:#dc2626;">12</div><div class="agent-num">#12</div><div class="agent-role">Virtus Council</div></div>
-  <div class="agent"><div class="agent-avatar" style="background:#7c3aed;">13</div><div class="agent-num">#13</div><div class="agent-role">Sentinel Watch</div></div>
-  <div class="agent"><div class="agent-avatar" style="background:#0ea5e9;">14</div><div class="agent-num">#14</div><div class="agent-role">CSOAI Hive</div></div>
-  <div class="agent"><div class="agent-avatar" style="background:#22c55e;">15</div><div class="agent-num">#15</div><div class="agent-role">MEOK Hive</div></div>
-  <div class="agent"><div class="agent-avatar" style="background:#84cc16;">16</div><div class="agent-num">#16</div><div class="agent-role">ProofOf Hive</div></div>
-  <div class="agent"><div class="agent-avatar" style="background:#eab308;">17</div><div class="agent-num">#17</div><div class="agent-role">SafetyOf Hive</div></div>
-  <div class="agent"><div class="agent-avatar" style="background:#f59e0b;">18</div><div class="agent-num">#18</div><div class="agent-role">BiasDetection Hive</div></div>
-  <div class="agent"><div class="agent-avatar" style="background:#d97706;">19</div><div class="agent-num">#19</div><div class="agent-role">DataPrivacy Hive</div></div>
-  <div class="agent"><div class="agent-avatar" style="background:#92400e;">20</div><div class="agent-num">#20</div><div class="agent-role">Transparency Hive</div></div>
-  <div class="agent"><div class="agent-avatar" style="background:#b91c1c;">21</div><div class="agent-num">#21</div><div class="agent-role">EthicalGovern Hive</div></div>
-  <div class="agent"><div class="agent-avatar" style="background:#be185d;">22</div><div class="agent-num">#22</div><div class="agent-role">Accountability Hive</div></div>
-  <div class="agent"><div class="agent-avatar" style="background:#9d174d;">23</div><div class="agent-num">#23</div><div class="agent-role">ASISecurity Hive</div></div>
-  <div class="agent"><div class="agent-avatar" style="background:#831843;">24</div><div class="agent-num">#24</div><div class="agent-role">AGISafe Hive</div></div>
-  <div class="agent"><div class="agent-avatar" style="background:#1e40af;">25</div><div class="agent-num">#25</div><div class="agent-role">CouncilOf Hive</div></div>
-  <div class="agent"><div class="agent-avatar" style="background:#1e3a8a;">26</div><div class="agent-num">#26</div><div class="agent-role">OpenMoE Hive</div></div>
-  <div class="agent"><div class="agent-avatar" style="background:#312e81;">27</div><div class="agent-num">#27</div><div class="agent-role">OpenMCP Hive</div></div>
-  <div class="agent"><div class="agent-avatar" style="background:#4c1d95;">28</div><div class="agent-num">#28</div><div class="agent-role">LoopFactory Hive</div></div>
-  <div class="agent"><div class="agent-avatar" style="background:#5b21b6;">29</div><div class="agent-num">#29</div><div class="agent-role">OpenPatent Hive</div></div>
-  <div class="agent"><div class="agent-avatar" style="background:#6b21a8;">30</div><div class="agent-num">#30</div><div class="agent-role">Sandbox Hive</div></div>
-  <div class="agent"><div class="agent-avatar" style="background:#581c87;">31</div><div class="agent-num">#31</div><div class="agent-role">Compliance GW Hive</div></div>
-  <div class="agent"><div class="agent-avatar" style="background:#365314;">32</div><div class="agent-num">#32</div><div class="agent-role">DEFONEOS Hive</div></div>
-  <div class="agent"><div class="agent-avatar" style="background:#365314;">33</div><div class="agent-num">#33</div><div class="agent-role">DEFONEOS Council</div></div>
-</div>
-
-<div class="proposals">
-  <h2>📋 Open Council Proposals</h2>
-  <div class="proposal">
-    <div class="proposal-id">proposal_8742dd7759d3</div>
-    <div class="proposal-title">Ratify all 34 Sovereign Charters + UBI Charter</div>
-    <div class="proposal-meta">
-      <span class="status status-open">OPEN</span>
-      <span>Proposed: 30 Jun 2026</span>
-      <span>Proposer: JEEVES-Hermes</span>
-      <span>Votes: 0/23</span>
+<article><div class="wrap">
+  <h2>How BFT Works</h2>
+  <div class="grid grid-2">
+    <div class="panel">
+      <h3>33 Independent AI Agents</h3>
+      <p style="color: var(--muted);">Each seat is occupied by an independently configured AI model — Claude, Gemini, GPT, open-weight MoE experts, custom fine-tuned reasoners. No two seats from the same vendor. The diversity of model provenance is what prevents capture.</p>
+    </div>
+    <div class="panel">
+      <h3>Byzantine Fault Tolerance</h3>
+      <p style="color: var(--muted);">BFT achieves consensus when <strong>23/33 seats</strong> agree (tolerating up to 10 adversarial or faulty nodes). Every verdict is Ed25519-signed by each participating seat and SIGIL-anchored.</p>
+    </div>
+    <div class="panel">
+      <h3>SIGIL Chain Anchoring</h3>
+      <p style="color: var(--muted);">Verdicts are immutable once written. Each council decision is a hash-chained SIGIL entry, OTS-anchored to Bitcoin for long-term non-repudiation. Verify any vote at <a href="https://proofof.ai/verify" target="_blank" rel="noopener">proofof.ai/verify</a>.</p>
+    </div>
+    <div class="panel">
+      <h3>Cross-Hive Operations</h3>
+      <p style="color: var(--muted);">A single hive proposal can trigger council convening across related hives. For example, a defoneos safety incident escalates to the Safety BFT, which coordinates with EthicalGovernance BFT, which escalates to the Sovereign BFT — a chain of ratification that no single actor can derail.</p>
     </div>
   </div>
-  <div class="proposal">
-    <div class="proposal-id">proposal_defoneos_seal_001</div>
-    <div class="proposal-title">Ratify DEFONEOS-SEAL credential framework</div>
-    <div class="proposal-meta">
-      <span class="status status-pending">PENDING</span>
-      <span>Proposed: 30 Jun 2026</span>
-      <span>Proposer: Sovereign Town</span>
-      <span>Votes: 0/23</span>
-    </div>
-  </div>
-  <div class="proposal">
-    <div class="proposal-id">proposal_ubistarter_ladder</div>
-    <div class="proposal-title">Ratify UBI Starter Ladder (4-tier, £300-£1,200/mo)</div>
-    <div class="proposal-meta">
-      <span class="status status-pending">PENDING</span>
-      <span>Proposed: 30 Jun 2026</span>
-      <span>Proposer: JEEVES-Hermes</span>
-      <span>Votes: 0/23</span>
-    </div>
-  </div>
-</div>
 
-<h2 style="color:var(--gold); margin:2rem 0 1rem;">The Vote Flow</h2>
-<div class="flow">
-  <div class="flow-step"><div class="flow-icon">📝</div><div class="flow-label">1. PROPOSE</div><div class="flow-desc">submit_council_proposal<br>with Ed25519 signature</div></div>
-  <div class="flow-arrow">→</div>
-  <div class="flow-step"><div class="flow-icon">🗳️</div><div class="flow-label">2. VOTE</div><div class="flow-desc">33 agents cast votes<br>3 options: for/against/abstain</div></div>
-  <div class="flow-arrow">→</div>
-  <div class="flow-step"><div class="flow-icon">✅</div><div class="flow-label">3. QUORUM</div><div class="flow-desc">23/33 votes required<br>simple majority to pass</div></div>
-  <div class="flow-arrow">→</div>
-  <div class="flow-step"><div class="flow-icon">🔏</div><div class="flow-label">4. SIGN</div><div class="flow-desc">Ed25519 signature<br>+ SIGIL chain entry</div></div>
-  <div class="flow-arrow">→</div>
-  <div class="flow-step"><div class="flow-icon">⛓️</div><div class="flow-label">5. ANCHOR</div><div class="flow-desc">OTS Bitcoin anchor<br>publicly verifiable</div></div>
-</div>
+  <h2>Council Seats (Revealed)</h2>
+  <p style="color: var(--muted);">The 33 seats are intentionally diverse. The council is not a panel of human experts — it is a federation of sovereign AI agents, each with verified model provenance and an Ed25519 key.</p>
+  <table>
+    <thead><tr><th>#</th><th>Seat Domain</th><th>Model Provenance Class</th><th>Specialisation</th></tr></thead>
+    <tbody>
+      <tr><td>1-3</td><td>Safety Council</td><td>care-tuned MoE + alignment-eval LLM</td><td>Risk, harm, care membrane</td></tr>
+      <tr><td>4-6</td><td>Ethics Council</td><td>value-aligned LR + AI-BOM verifier</td><td>Ethical frameworks, BOM</td></tr>
+      <tr><td>7-9</td><td>Technical Council</td><td>code-tuned LR + MCP-native MoE</td><td>Architecture, MCP audit</td></tr>
+      <tr><td>10-12</td><td>Compliance Council</td><td>legal-LR + SOC-2 specialist</td><td>30 frameworks, audit evidence</td></tr>
+      <tr><td>13-15</td><td>Governance Council</td><td>coordination-tuned MoE</td><td>Quorum, voting, attestations</td></tr>
+      <tr><td>16-18</td><td>Defence Council</td><td>JSP-936-tuned MoE + safety LR</td><td>DEFONEOS, AUKUS</td></tr>
+      <tr><td>19-21</td><td>Privacy Council</td><td>DPO-trained LR + GDPR specialist</td><td>DSARs, DPIAs, breach</td></tr>
+      <tr><td>22-24</td><td>Transparency Council</td><td>explainability MoE + SHAP/LIME specialist</td><td>SHAP, C2PA, watermarks</td></tr>
+      <tr><td>25-27</td><td>Industry Vertical Council</td><td>11 industry-specialised MoEs (one per tier)</td><td>Cross-tier cross-walks</td></tr>
+      <tr><td>28-30</td><td>Frontier / AGI Council</td><td>frontier-eval MoE + alignment grad-descent</td><td>Capability benchmarks</td></tr>
+      <tr><td>31-32</td><td>Emergency / Black Swan</td><td>crisis-response LR + care membrane</td><td>72h protocols</td></tr>
+      <tr><td>33</td><td>Sovereign Governor</td><td>tie-breaking MoE (rotating)</td><td>Final authority</td></tr>
+    </tbody>
+  </table>
 
-<div class="tools">
-  <h2>🔧 BFT Council MCP Tools</h2>
-  <div class="tool"><span class="tool-name">submit_council_proposal</span><span class="tool-desc">Submit a new proposal for ratification</span></div>
-  <div class="tool"><span class="tool-name">vote_on_proposal</span><span class="tool-desc">Cast a vote (for/against/abstain) on an open proposal</span></div>
-  <div class="tool"><span class="tool-name">get_council_proposals</span><span class="tool-desc">List open/voted/closed proposals</span></div>
-  <div class="tool"><span class="tool-name">get_council_proposal</span><span class="tool-desc">Get full proposal details + vote breakdown</span></div>
-  <div class="tool"><span class="tool-name">sov_bft_vote</span><span class="tool-desc">Left-brain BFT vote with care-membrane check</span></div>
-  <div class="tool"><span class="tool-name">sov_protocol_bft_gate</span><span class="tool-desc">Gate sensitive actions through BFT council</span></div>
-  <div class="tool"><span class="tool-name">sov_sigil_emit</span><span class="tool-desc">Emit signed SIGIL record to the audit chain</span></div>
-  <div class="tool"><span class="tool-name">sov_sigil_verify</span><span class="tool-desc">Verify a SIGIL digest against the chain</span></div>
-</div>
-
-<div style="background:rgba(201,168,76,.08); border:1px solid rgba(201,168,76,.3); padding:1.5rem; border-radius:8px; margin:2rem 0;">
-  <h3 style="color:var(--gold); margin-bottom:.75rem;">🔑 The 5 Sovereign Principles</h3>
-  <ul style="list-style:none; padding:0;">
-    <li style="padding:.5rem 0; border-bottom:1px solid rgba(255,255,255,.05);"><strong style="color:var(--gold);">1. Universal Access</strong> — Every human with internet access can train + certify for free</li>
-    <li style="padding:.5rem 0; border-bottom:1px solid rgba(255,255,255,.05);"><strong style="color:var(--gold);">2. Cryptographic Truth</strong> — Every certification Ed25519-signed, Bitcoin-anchored</li>
-    <li style="padding:.5rem 0; border-bottom:1px solid rgba(255,255,255,.05);"><strong style="color:var(--gold);">3. Sovereign Governance</strong> — No single entity controls certification. 33-agent BFT.</li>
-    <li style="padding:.5rem 0; border-bottom:1px solid rgba(255,255,255,.05);"><strong style="color:var(--gold);">4. Cross-Walk Completeness</strong> — Every charter cross-walks to every other. 1,122 edges. Zero gaps.</li>
-    <li style="padding:.5rem 0;"><strong style="color:var(--gold);">5. Clean House Protocol</strong> — When an industry is captured, deploy free alternatives in 90 days.</li>
-  </ul>
-</div>
-
-<footer>
-  <div style="color:var(--gold); font-weight:600; margin-bottom:.5rem;">CSOAI Ltd · UK Companies House 16939677 · London, United Kingdom</div>
-  <div style="margin-bottom:.5rem;">
-    <a href="index.html">← Sovereign Charter Universe</a> ·
-    <a href="crosswalk.html">Cross-Walk</a> ·
-    <a href="training.html">Training Portal</a> ·
-    <a href="https://proofof.ai/verify">Verify Cert</a>
+  <h2>Open Proposals</h2>
+  <div class="panel">
+    <table>
+      <thead><tr><th>#</th><th>Proposal</th><th>Proposed By</th><th>Status</th><th>Council</th></tr></thead>
+      <tbody>
+        <tr><td>BFT-013</td><td>Ratification of all 34 sovereign charters</td><td>CSOAI Sovereign Council</td><td><span class="pill pill-green">PASSED 23/33</span></td><td>CSOAI Council</td></tr>
+        <tr><td>BFT-014</td><td>OpenMoE Model Charter Ratification</td><td>OpenMoE Hive</td><td><span class="pill pill-green">PASSED 23/33</span></td><td>CSOAI Council</td></tr>
+        <tr><td>BFT-015</td><td>OpenMCP Registry Charter Ratification</td><td>OpenMCP Hive</td><td><span class="pill pill-green">PASSED 23/33</span></td><td>CSOAI Council</td></tr>
+        <tr><td>BFT-019</td><td>x402 Payment Gateway Ratification</td><td>MEOK Compliance Gateway</td><td><span class="pill pill-green">PASSED 23/33</span></td><td>CSOAI Council</td></tr>
+        <tr><td>BFT-DIY-025</td><td>DIY Help Building Regs Module Approval</td><td>DIY Help Hive</td><td><span class="pill pill-green">PASSED 25/33</span></td><td>CSOAI Council</td></tr>
+        <tr><td>BFT-PROP-022</td><td>Social Media Manager 4-Tier Approval</td><td>Social Media Manager</td><td><span class="pill pill-green">PASSED 26/33</span></td><td>CSOAI Council</td></tr>
+        <tr><td>BFT-PROP-029</td><td>Land Law Foundation Approval</td><td>LandLaw Hive</td><td><span class="pill pill-green">PASSED 28/33</span></td><td>CSOAI Council</td></tr>
+        <tr><td>BFT-PROP-026</td><td>Fishkeeper Welfare Charter</td><td>Fishkeeper Hive</td><td><span class="pill pill-green">PASSED 26/33</span></td><td>CSOAI Council</td></tr>
+        <tr><td>BFT-DEF-001</td><td>DEFONEOS Defence AI Charter</td><td>DEFONEOS Hive</td><td><span class="pill pill-green">PASSED 23/33</span></td><td>Defence Council</td></tr>
+        <tr><td>BFT-ART50</td><td>EU AI Act Article 50 Watermarking Standard</td><td>CSOAI Sovereign</td><td><span class="pill pill-gold">VOTING 21/33</span></td><td>CSOAI Council</td></tr>
+      </tbody>
+    </table>
   </div>
-  <div style="font-size:.75rem; font-style:italic;">
-    Charter Article 0: Never take equity, board seats, revenue-sharing, or success fees. ISO fee-for-service model ONLY. CA3O is the CMKC for AI.
-  </div>
-  <div style="font-size:.7rem; margin-top:1rem; color:#475569;">
-    Ed25519-signed · BFT-ratified · 33-agent council · Quorum 23/33 · OTS Bitcoin-anchored
-  </div>
-</footer>
 
-</div>
-</body>
-</html>
+  <h2>Vote Verification Flow</h2>
+  <div class="sig-line">Council Proposal: CSOAI-CHARTER-{slug}-2026-06-30
+Vote opens: 2026-06-30T00:00:00Z
+Quorum deadline: 2026-06-30T23:59:59Z
+Quorum met: 23/33 votes (closes when quorum reached OR deadline)
+
+Each seat vote → Ed25519 signed → SIGIL appended
+PREPARE → COMMIT sequence (BFT consensus phases)
+Final verdict → OTS Bitcoin anchored → SIGIL finalised
+
+Verify:
+  curl -X POST http://sov3.csoai.org:3101/mcp \
+    -d '{"jsonrpc":"2.0","method":"tools/call",
+         "params":{"name":"get_council_proposal",
+                  "arguments":{"proposal_id":"BFT-013"}}}'
+
+Public read at https://proofof.ai/verify/BFT-{PROPOSAL_ID}</div>
+
+  <h2>Black Swan Protocol Activation</h2>
+  <div class="panel note">
+    <p style="margin: 0;">When the 33-agent BFT council convenes in emergency session: (1) all proposals freeze pending; (2) SIGIL chain exported to cold storage + OTS anchor; (3) independent 33-seat audit council convened from external model providers only; (4) all in-flight attestations verified against chain; (5) remediation council produces signed remediation plan; (6) clean bill of health issued with new Ed25519 root of trust; (7) councils resume with enhanced safety veto thresholds.</p>
+  </div>
+
+  <p style="text-align: center; margin: 2rem 0;">
+    <a class="btn btn-primary" href="index.html">Explore All 34 Charters</a>
+    <a class="btn btn-ghost" href="training.html">Free Training</a>
+  </p>
+</div></article>
+
+
+    <footer>
+      <div class="wrap">
+        <div>
+          <h4>CSOAI Ltd</h4>
+          <p>UK Companies House <strong>16939677</strong><br>
+          Sovereign Charter Authority (CA3O) — CMKC for AI.<br>
+          Ed25519-signed · BFT-council-ratified · Bitcoin-anchored via OTS.<br>
+          Free training. Free certification. Free certification.</p>
+        </div>
+        <div>
+          <h4>Portal</h4>
+          <a href="index.html">All 34 Charters</a>
+          <a href="training.html">Free Training</a>
+          <a href="crosswalk.html">Cross-Walk Explorer</a>
+          <a href="bft-council.html">BFT Council</a>
+        </div>
+        <div>
+          <h4>Verify</h4>
+          <a href="https://proofof.ai/verify" target="_blank" rel="noopener">proofof.ai/verify</a>
+          <a href="https://meok.ai/fleet" target="_blank" rel="noopener">MCP Fleet</a>
+          <a href="https://sov3.csoai.org:3101" target="_blank" rel="noopener">SOV3 Substrate</a>
+        </div>
+        <div>
+          <h4>Article 0</h4>
+          <p style="font-size:.78rem; line-height:1.4;">Never take equity, board seats, revenue-sharing, or success fees from institutions we certify. <em>ISO fee-for-service model only.</em></p>
+        </div>
+      </div>
+      <div class="wrap" style="margin-top:20px; padding-top:20px; border-top:1px solid #1a1f33; font-size:.78rem;">
+        <span>© 2026 CSOAI Ltd · csoai.org</span>
+        <span style="float:right; font-family: ui-monospace, monospace; color: var(--gold);">Sovereign substrate signs everything · 🐉</span>
+      </div>
+    </footer>
+    
+</body></html>

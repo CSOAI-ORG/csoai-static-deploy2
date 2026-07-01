@@ -441,6 +441,10 @@ def render_topbar(active=""):
         ("crosswalk.html","Cross-Walk"),
         ("bft-council.html","BFT Council"),
     ]
+    nav_html = []
+    for u, label in items:
+        cls = "active" if u == active or u.rsplit(".",1)[0] == active else ""
+        nav_html.append(f'<a href="{u}" class="{cls}">{label}</a>')
     return f"""
     <div class="topbar">
       <a class="brand" href="index.html">
@@ -451,7 +455,7 @@ def render_topbar(active=""):
         </div>
       </a>
       <nav>
-        {''.join(f'<a href="{u}" class="{"active" if a == active else ""}">{label}</a>' for u, label in items)}
+        {''.join(nav_html)}
       </nav>
     </div>
     """

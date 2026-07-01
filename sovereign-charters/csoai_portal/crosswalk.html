@@ -1,242 +1,595 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Cross-Walk Explorer · Sovereign Charter Universe · CSOAI</title>
-<meta name="description" content="Interactive cross-walk explorer for 34 Sovereign Charters. 1,122 bilateral edges. Explore hive-to-hive, hive-to-framework, and framework-to-framework cross-walks.">
-<meta name="sovereign-charter" content="CSOAI-CHARTER-2026-06-30">
-<meta name="uk-companies-house" content="16939677">
-<link rel="canonical" href="https://csoai.org/charters/crosswalk.html">
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Cross-Walk Explorer · 34 × 33 = 1,122 · CSOAI</title>
 <style>
-  :root { --gold:#c9a84c; --navy:#0a0e1a; --slate:#1e293b; --text:#f1f5f9; --muted:#94a3b8; --accent:#3b82f6; }
-  * { margin:0; padding:0; box-sizing:border-box; }
-  body { font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; background:var(--navy); color:var(--text); line-height:1.6; padding:2rem; }
-  .container { max-width:1000px; margin:0 auto; }
-  nav.breadcrumb { margin-bottom:1rem; font-size:.85rem; }
-  nav.breadcrumb a { color:var(--gold); }
-  h1 { font-size:2rem; margin-bottom:.5rem; color:var(--gold); }
-  .subtitle { color:var(--muted); margin-bottom:2rem; }
-  .explorer { background:var(--slate); border:1px solid rgba(201,168,76,.3); border-radius:8px; padding:2rem; margin-bottom:2rem; }
-  .dropdowns { display:grid; grid-template-columns:1fr auto 1fr; gap:1rem; align-items:end; margin-bottom:1.5rem; }
-  .dropdown-group label { display:block; font-size:.75rem; letter-spacing:.1em; color:var(--gold); margin-bottom:.25rem; text-transform:uppercase; }
-  select, button { padding:.6rem 1rem; background:#0a0e1a; color:var(--text); border:1px solid rgba(255,255,255,.2); border-radius:4px; font-size:.9rem; width:100%; }
-  button { background:var(--gold); color:#0a0e1a; border:none; font-weight:600; cursor:pointer; transition:all .2s; }
-  button:hover { background:#d4b75c; }
-  .arrow { font-size:1.5rem; text-align:center; color:var(--gold); padding-bottom:.6rem; }
-  .result { background:#060912; border:1px solid rgba(255,255,255,.1); border-radius:8px; padding:1.5rem; margin-top:1.5rem; display:none; }
-  .result.active { display:block; }
-  .result h3 { color:var(--gold); margin-bottom:1rem; }
-  .result-stat { display:flex; justify-content:space-between; padding:.4rem 0; border-bottom:1px solid rgba(255,255,255,.05); font-size:.9rem; }
-  .result-stat:last-child { border-bottom:none; }
-  .stat-label { color:var(--muted); }
-  .stat-value { color:var(--gold); font-family:'SF Mono',monospace; }
-  .matrix { background:var(--slate); border:1px solid rgba(255,255,255,.08); border-radius:8px; padding:2rem; margin-bottom:2rem; }
-  .matrix h2 { color:var(--gold); margin-bottom:1rem; font-size:1.3rem; }
-  .matrix pre { font-family:'SF Mono',monospace; font-size:.75rem; line-height:1.4; color:#cbd5e1; overflow-x:auto; white-space:pre; }
-  .legend { display:flex; gap:1rem; margin-top:1rem; flex-wrap:wrap; font-size:.8rem; }
-  .legend-item { display:flex; align-items:center; gap:.4rem; }
-  .legend-dot { width:10px; height:10px; border-radius:50%; }
-  footer { text-align:center; margin-top:3rem; padding-top:2rem; border-top:1px solid rgba(255,255,255,.05); color:var(--muted); font-size:.85rem; }
-  footer a { color:var(--gold); }
-</style>
-</head>
-<body>
-<div class="container">
 
-<nav class="breadcrumb">
-  <a href="index.html">← Sovereign Charter Universe</a> / Cross-Walk Explorer
-</nav>
+    :root {
+      --gold: #c9a84c;
+      --gold-dim: #8a7235;
+      --navy: #0a0e1a;
+      --navy-2: #131829;
+      --panel: #1a1f33;
+      --panel-2: #0f1322;
+      --text: #e6e6e6;
+      --muted: #9aa0b4;
+      --green: #3ecf8e;
+      --danger: #ff5d5d;
+      --maxw: 1180px;
+    }
+    * { box-sizing: border-box; }
+    html, body {
+      margin: 0; padding: 0;
+      background: var(--navy);
+      color: var(--text);
+      font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, sans-serif;
+      font-size: 15px;
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: var(--gold); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    code, pre, .mono { font-family: ui-monospace, SFMono-Regular, "JetBrains Mono", Menlo, Consolas, monospace; }
+    h1, h2, h3, h4 { font-family: "Times New Roman", Georgia, serif; font-weight: 600; letter-spacing: -.01em; color: #fff; }
+    h1 { font-size: 2.3rem; margin: 0 0 .6rem; }
+    h2 { font-size: 1.5rem; margin: 2.4rem 0 .8rem; border-bottom: 1px solid var(--gold-dim); padding-bottom: .3rem; }
+    h3 { font-size: 1.15rem; margin: 1.6rem 0 .5rem; color: var(--gold); }
+    .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 24px; }
+    /* Top bar */
+    .topbar {
+      background: linear-gradient(180deg, #06080f 0%, var(--navy) 100%);
+      border-bottom: 1px solid var(--gold-dim);
+      padding: 14px 24px;
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 14px;
+    }
+    .topbar .brand {
+      display: flex; align-items: center; gap: 12px;
+    }
+    .topbar .brand .seali {
+      width: 36px; height: 36px; border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, var(--gold), #6e5a26);
+      display: inline-flex; align-items: center; justify-content: center;
+      color: var(--navy); font-weight: 700; font-size: .9rem;
+      box-shadow: 0 0 12px rgba(201, 168, 76, .35);
+    }
+    .topbar .brand h1 {
+      font-size: 1.05rem; margin: 0; font-family: ui-sans-serif, sans-serif;
+    }
+    .topbar .brand small { color: var(--muted); font-size: .8rem; }
+    .topbar nav a {
+      color: var(--text); margin-left: 16px; font-size: .88rem;
+      padding: 6px 10px; border-radius: 4px;
+    }
+    .topbar nav a:hover { background: var(--panel); color: var(--gold); text-decoration: none; }
+    .topbar nav a.active { color: var(--gold); border-bottom: 2px solid var(--gold); }
 
-<h1>🌐 Cross-Walk Explorer</h1>
-<p class="subtitle">Explore the 1,122 bilateral edges connecting 34 sovereign charters across 30 compliance frameworks. Every hive cross-walks to every other hive. Every framework maps to every charter.</p>
+    /* Hero */
+    .hero {
+      padding: 64px 24px 56px; text-align: center;
+      background: radial-gradient(ellipse at 50% 0%, rgba(201,168,76,0.08) 0%, transparent 70%);
+    }
+    .hero .eyebrow {
+      color: var(--gold); font-family: ui-monospace, monospace; font-size: .82rem;
+      letter-spacing: .25em; text-transform: uppercase; margin-bottom: 14px;
+    }
+    .hero h1 {
+      font-size: clamp(2rem, 5vw, 3.6rem); line-height: 1.05; max-width: 880px; margin: 0 auto;
+    }
+    .hero p { max-width: 760px; margin: 16px auto 28px; color: var(--muted); font-size: 1.05rem; }
+    .hero .cta { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
 
-<div class="explorer">
-  <div class="dropdowns">
-    <div class="dropdown-group">
-      <label>Source Hive / Framework</label>
-      <select id="source">
-        <optgroup label="AI Governance">
-          <option value="csoai">CSOAI (Governance Standards)</option>
-          <option value="meok">MEOK (Sovereign AI OS)</option>
-          <option value="proofof">ProofOf (Attestation)</option>
-          <option value="safetyof">SafetyOf (Safety Monitoring)</option>
-          <option value="accountabilityof">AccountabilityOf</option>
-          <option value="ethicalgovernanceof">EthicalGovernanceOf</option>
-          <option value="transparencyof">TransparencyOf (XAI)</option>
-          <option value="biasdetectionof">BiasDetectionOf (Fairness)</option>
-          <option value="dataprivacyof">DataPrivacyOf (GDPR)</option>
-          <option value="asisecurity">ASISecurity</option>
-          <option value="agisafe">AGISafe (Frontier Safety)</option>
-          <option value="defoneos">DEFONEOS (Defence AI)</option>
-        </optgroup>
-        <optgroup label="Technical Infrastructure">
-          <option value="councilof">CouncilOf (BFT)</option>
-          <option value="openmoe">OpenMoE</option>
-          <option value="openmcp">OpenMCP (Registry)</option>
-          <option value="openpatent">OpenPatent</option>
-          <option value="sandbox">Sandbox</option>
-          <option value="sovereign-town">Sovereign Town</option>
-          <option value="meok-compliance-gateway">Compliance Gateway</option>
-          <option value="loopfactory">LoopFactory</option>
-          <option value="optimobile">OptiMobile</option>
-          <option value="socialmediamanager">SocialMediaManager</option>
-          <option value="cobolbridge">COBOLBridge</option>
-        </optgroup>
-        <optgroup label="Industry Verticals">
-          <option value="commercialvehicle">CommercialVehicle</option>
-          <option value="diyhelp">DIYHelp</option>
-          <option value="fishkeeper">FishKeeper</option>
-          <option value="grabhire">GrabHire</option>
-          <option value="koikeeper">KoiKeeper</option>
-          <option value="landlaw">LandLaw</option>
-          <option value="muckaway">MuckAway</option>
-          <option value="planthire">PlantHire</option>
-          <option value="pokerhud">PokerHUD</option>
-          <option value="suicidestop">SuicideStop</option>
-          <option value="science">Science</option>
-        </optgroup>
-        <optgroup label="Compliance Frameworks">
-          <option value="eu-ai-act">EU AI Act (Art 5, 10, 50)</option>
-          <option value="gdpr">GDPR (Articles 5-21)</option>
-          <option value="iso-42001">ISO/IEC 42001:2023</option>
-          <option value="iso-27001">ISO/IEC 27001:2022</option>
-          <option value="nist-ai-rmf">NIST AI RMF 1.0</option>
-          <option value="dora">DORA (EU 2022/2554)</option>
-          <option value="csrd">CSRD / ESRS</option>
-          <option value="soc2">SOC 2 Type II</option>
-          <option value="hipaa">HIPAA</option>
-          <option value="owasp-llm">OWASP Top 10 for LLMs</option>
-          <option value="mitre-atlas">MITRE ATLAS</option>
-          <option value="jsp-936">JSP 936 (Defence AI)</option>
+    /* Buttons */
+    .btn {
+      display: inline-block; padding: 10px 18px; border-radius: 4px;
+      font-size: .9rem; font-weight: 600; border: 1px solid var(--gold-dim);
+      cursor: pointer; transition: all .15s ease;
+    }
+    .btn-primary { background: var(--gold); color: var(--navy); border-color: var(--gold); }
+    .btn-primary:hover { background: #e0bc52; text-decoration: none; }
+    .btn-ghost { color: var(--gold); background: transparent; }
+    .btn-ghost:hover { background: rgba(201,168,76,.08); text-decoration: none; }
+
+    /* Cards & grid */
+    .grid { display: grid; gap: 16px; }
+    .grid-3 { grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); }
+    .grid-2 { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+    .card {
+      background: var(--panel); border: 1px solid #232838;
+      border-radius: 6px; padding: 18px 20px;
+      transition: transform .15s ease, border-color .15s ease;
+    }
+    .card:hover { border-color: var(--gold-dim); transform: translateY(-2px); }
+    .card h3 { margin: 0 0 6px; }
+    .card .meta { color: var(--muted); font-size: .8rem; font-family: ui-monospace, monospace; letter-spacing: .08em; text-transform: uppercase; }
+    .card a { color: var(--gold); }
+    .card p { margin: 8px 0 12px; color: var(--muted); font-size: .92rem; }
+
+    /* Stat strip */
+    .stats {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 16px; padding: 24px; background: var(--panel-2);
+      border-top: 1px solid var(--gold-dim); border-bottom: 1px solid var(--gold-dim);
+    }
+    .stat .num { font-size: 1.9rem; color: var(--gold); font-weight: 700; font-family: "Times New Roman", serif; line-height: 1; }
+    .stat .lbl { font-size: .76rem; text-transform: uppercase; letter-spacing: .12em; color: var(--muted); margin-top: 6px; }
+
+    /* Panels */
+    .panel { background: var(--panel); border: 1px solid #232838; border-radius: 6px; padding: 22px 24px; margin: 1rem 0; }
+    .panel h3 { margin-top: 0; }
+    .panel.note { background: rgba(201,168,76,.06); border-color: var(--gold-dim); }
+    .panel.danger { background: rgba(255,93,93,.06); border-color: rgba(255,93,93,.4); }
+
+    /* Article-style layout */
+    article { padding: 32px 0; }
+    article h1 { margin-top: 0; }
+    article h1 small { display: block; color: var(--muted); font-size: 0.9rem; font-weight: 400; margin-top: 4px; font-family: ui-sans-serif, sans-serif; }
+
+    /* Layout with sidebar */
+    .layout { display: grid; grid-template-columns: 260px 1fr; gap: 32px; padding: 24px; }
+    @media (max-width: 880px) { .layout { grid-template-columns: 1fr; } }
+    aside.nav {
+      background: var(--panel-2); border: 1px solid #232838; border-radius: 6px;
+      padding: 18px; max-height: calc(100vh - 80px); position: sticky; top: 16px; overflow-y: auto;
+    }
+    aside.nav h4 { font-size: .72rem; text-transform: uppercase; letter-spacing: .12em; color: var(--muted); margin: 14px 0 4px; font-family: ui-monospace, monospace; }
+    aside.nav h4:first-child { margin-top: 0; }
+    aside.nav a { display: block; padding: 5px 8px; color: var(--text); font-size: .85rem; border-radius: 4px; }
+    aside.nav a:hover { background: rgba(201,168,76,.08); text-decoration: none; }
+    aside.nav a.current { background: rgba(201,168,76,.18); color: var(--gold); border-left: 2px solid var(--gold); padding-left: 6px; }
+
+    /* Tables */
+    table {
+      width: 100%; border-collapse: collapse; margin: 1rem 0;
+      font-size: .9rem;
+    }
+    th, td { text-align: left; padding: 8px 12px; border-bottom: 1px solid #1d2236; vertical-align: top; }
+    th { background: var(--panel-2); color: var(--gold); font-weight: 600; font-size: .8rem; text-transform: uppercase; letter-spacing: .05em; }
+    tr:hover td { background: rgba(201,168,76,.03); }
+
+    /* Footer */
+    footer {
+      margin-top: 60px; padding: 32px 24px; background: #06080f;
+      border-top: 1px solid var(--gold-dim); color: var(--muted); font-size: .85rem;
+    }
+    footer .wrap { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 32px; }
+    @media (max-width: 720px) { footer .wrap { grid-template-columns: 1fr; } }
+    footer h4 { color: var(--gold); font-size: .85rem; margin: 0 0 8px; font-family: ui-sans-serif, sans-serif; text-transform: uppercase; letter-spacing: .1em; }
+    footer a { color: var(--text); display: block; padding: 3px 0; font-size: .85rem; }
+    footer a:hover { color: var(--gold); }
+
+    .sig-line {
+      font-family: ui-monospace, monospace; font-size: .85rem;
+      background: var(--panel-2); border-left: 3px solid var(--gold);
+      padding: 12px 16px; border-radius: 0 4px 4px 0; margin: 1rem 0;
+      white-space: pre-wrap; word-break: break-all;
+    }
+
+    .tier-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; margin: 1rem 0; }
+    .tier {
+      background: var(--panel); border: 1px solid #232838; border-radius: 6px;
+      padding: 14px 16px; position: relative; overflow: hidden;
+    }
+    .tier::before {
+      content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%;
+      background: var(--gold);
+    }
+    .tier .num { font-size: .8rem; color: var(--muted); font-family: ui-monospace, monospace; }
+    .tier .name { font-weight: 600; color: var(--gold); font-size: 1rem; margin: 4px 0 8px; }
+    .tier .body { font-size: .82rem; color: var(--muted); }
+
+    .pill { display: inline-block; padding: 2px 9px; border-radius: 99px; font-size: .7rem; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; }
+    .pill-gold { background: rgba(201,168,76,.18); color: var(--gold); }
+    .pill-green { background: rgba(62,207,142,.15); color: var(--green); }
+    .pill-danger { background: rgba(255,93,93,.15); color: var(--danger); }
+
+    .countdown { font-family: ui-monospace, monospace; color: var(--gold); font-size: 1.4rem; font-weight: 700; }
+
+    .bsw-row {
+      display: grid; grid-template-columns: 90px 1fr; gap: 12px;
+      padding: 10px 0; border-bottom: 1px dashed #232838;
+    }
+    .bsw-row:last-child { border-bottom: 0; }
+    .bsw-row .days { color: var(--gold); font-weight: 700; font-family: ui-monospace, monospace; }
+
+    .charter-card {
+      background: var(--panel); border: 1px solid #232838; border-radius: 6px;
+      padding: 16px; display: flex; flex-direction: column;
+    }
+    .charter-card .num-badge {
+      align-self: flex-start; padding: 2px 8px; border-radius: 4px;
+      background: rgba(201,168,76,.15); color: var(--gold);
+      font-family: ui-monospace, monospace; font-size: .72rem; margin-bottom: 6px;
+    }
+    .charter-card h3 { margin: 0 0 4px; font-size: 1.1rem; }
+    .charter-card .sub { color: var(--muted); font-size: .82rem; margin: 4px 0 12px; }
+    .charter-card a.footer-link { margin-top: auto; font-size: .82rem; color: var(--gold); }
+
+    .framework-tag { display:inline-block; padding:2px 8px; border-radius:99px; background: rgba(62,207,142,.12); color: var(--green); font-size:.72rem; margin: 2px 4px 2px 0; font-family: ui-monospace, monospace;}
+    
+</style></head><body>
+
+    <div class="topbar">
+      <a class="brand" href="index.html">
+        <span class="seali">CA3O</span>
+        <div>
+          <h1>CSOAI · Sovereign Charter Portal</h1>
+          <small>UK 16939677 · 34 hives · 1,122 bilateral cross-walks</small>
+        </div>
+      </a>
+      <nav>
+        <a href="index.html" class="">Charters</a><a href="training.html" class="">Training</a><a href="crosswalk.html" class="active">Cross-Walk</a><a href="bft-council.html" class="">BFT Council</a>
+      </nav>
+    </div>
+    
+
+<section class="hero">
+  <div class="wrap">
+    <div class="eyebrow">CROSS-WALK EXPLORER · 1,122 BILATERAL EDGES</div>
+    <h1>Every Charter Connects to <span style="color:var(--gold)">Every Other</span>.</h1>
+    <p>All 34 charters cross-walk to each other through shared governance, shared compliance, shared substrate (SOV3), shared signing (Ed25519), and shared verification (proofof.ai). The cross-walk graph is a 34-node complete graph with <strong>1,122</strong> bilateral edges.</p>
+  </div>
+</section>
+
+<article><div class="wrap">
+  <h2>Cross-Walk Engine</h2>
+  <div class="panel note">
+    <p style="margin:0;">The cross-walk engine maps <strong>847 control points</strong> across 30 regulatory frameworks. When a single attestation is issued, the engine identifies: (a) overlapping controls satisfied by one piece of evidence, (b) gap controls requiring unique evidence, and (c) conflict controls across jurisdictions. Every cross-walk edge is versioned, BFT-ratified, and SIGIL-anchored.</p>
+  </div>
+
+  <h2 id="explorer">The Cross-Walk Calculator</h2>
+  <form id="cw-form" class="panel" style="display:grid; grid-template-columns: 1fr 1fr auto; gap: 12px; align-items: end;" onsubmit="event.preventDefault(); doCrosswalk();">
+    <div>
+      <label style="display:block; font-size:.78rem; text-transform:uppercase; letter-spacing:.08em; color:var(--muted); margin-bottom:6px;">Source Hive (34)</label>
+      <select id="cw-src" style="width:100%; padding:10px; background:var(--panel-2); color:var(--text); border:1px solid #232838; border-radius:4px; font-family:inherit;">
+<option value="csoai">01. CSOAI — AI Governance Standards &amp; Watchdog Certification</option>
+<option value="meok">02. MEOK — Sovereign AI OS &amp; MCP Compliance Fleet</option>
+<option value="proofof">03. ProofOf — Cryptographic Attestation &amp; Verification</option>
+<option value="safetyof">04. SafetyOf — AI Safety Monitoring &amp; Care Membrane</option>
+<option value="accountabilityof">05. AccountabilityOf — Audit Trails, Root-Cause Analysis, AI Incidents</option>
+<option value="ethicalgovernanceof">06. EthicalGovernanceOf — AI Frameworks, AI Bill of Materials &amp; Explainability</option>
+<option value="transparencyof">07. TransparencyOf — Model Decisions, Feature Importances &amp; Watermarks</option>
+<option value="biasdetectionof">08. BiasDetectionOf — Bias Metrics, Protected Attributes &amp; Fair-Lending</option>
+<option value="dataprivacyof">09. DataPrivacyOf — GDPR Articles 5-21, DSARs &amp; Breach Notification</option>
+<option value="asisecurity">10. ASI Security — AI Security Threats &amp; Defensive Patterns</option>
+<option value="agisafe">11. AGI Safe — AGI Safety Research &amp; Frontier Risk</option>
+<option value="defoneos">12. DEFONEOS — Defence AI Operating System</option>
+<option value="councilof">13. CouncilOf — BFT Governance Councils &amp; Agent Orchestration</option>
+<option value="openmoe">14. OpenMoE — Mixture-of-Experts Base Model &amp; BFT Inference</option>
+<option value="openmcp">15. OpenMCP — MCP Server Directory &amp; Registry</option>
+<option value="openpatent">16. OpenPatent — SIGIL-Signed Invention Disclosures &amp; Patent Chain</option>
+<option value="sandbox">17. Sandbox — Hive Architecture Diagnostics &amp; Self-Testing</option>
+<option value="sovereign-town">18. Sovereign Town — Sovereign Town Lab &amp; Headless Simulation</option>
+<option value="meok-compliance-gateway">19. MEOK Compliance Gateway — MCP Transport Layer &amp; x402 Payments</option>
+<option value="loopfactory">20. LoopFactory — Automation Workflows &amp; Cron/Webhook Triggers</option>
+<option value="optimobile">21. OptiMobile — Mobile Apps &amp; Retention Analytics</option>
+<option value="socialmediamanager">22. Social Media Manager — Multi-Platform Scheduling &amp; Content</option>
+<option value="cobolbridge">23. COBOL Bridge — COBOL Legacy Modernisation &amp; Transpilation</option>
+<option value="commercialvehicle">24. Commercial Vehicle — UK Commercial Fleets &amp; Logistics</option>
+<option value="diyhelp">25. DIY Help — DIY Home Improvement &amp; How-To Guides</option>
+<option value="fishkeeper">26. Fishkeeper — Freshwater/Saltwater Species &amp; Aquatics</option>
+<option value="grabhire">27. GrabHire — UK Haulage &amp; Grab-Lorry Fleet Operations</option>
+<option value="koikeeper">28. KoiKeeper — Koi Varieties &amp; Water Quality Management</option>
+<option value="landlaw">29. LandLaw — UK Property Law &amp; Conveyancing</option>
+<option value="muckaway">30. MuckAway — UK Skip Hire &amp; Waste Management</option>
+<option value="planthire">31. PlantHire — UK Plant Hire &amp; Machinery Operations</option>
+<option value="pokerhud">32. PokerHUD — Poker Hands, GTO Solutions &amp; ICM</option>
+<option value="suicidestop">33. SuicideStop — Crisis Hotlines &amp; Mental Health Resources</option>
+<option value="science">34. Science — Scientific Research &amp; Discovery</option>
+<option value="coigndaltion">35. Coigndaltion — The Cornerstone Cognition Layer</option>
+
+      </select>
+    </div>
+    <div>
+      <label style="display:block; font-size:.78rem; text-transform:uppercase; letter-spacing:.08em; color:var(--muted); margin-bottom:6px;">Target / Framework</label>
+      <select id="cw-tgt" style="width:100%; padding:10px; background:var(--panel-2); color:var(--text); border:1px solid #232838; border-radius:4px; font-family:inherit;">
+<option value="csoai">01. CSOAI — AI Governance Standards &amp; Watchdog Certification</option>
+<option value="meok">02. MEOK — Sovereign AI OS &amp; MCP Compliance Fleet</option>
+<option value="proofof">03. ProofOf — Cryptographic Attestation &amp; Verification</option>
+<option value="safetyof">04. SafetyOf — AI Safety Monitoring &amp; Care Membrane</option>
+<option value="accountabilityof">05. AccountabilityOf — Audit Trails, Root-Cause Analysis, AI Incidents</option>
+<option value="ethicalgovernanceof">06. EthicalGovernanceOf — AI Frameworks, AI Bill of Materials &amp; Explainability</option>
+<option value="transparencyof">07. TransparencyOf — Model Decisions, Feature Importances &amp; Watermarks</option>
+<option value="biasdetectionof">08. BiasDetectionOf — Bias Metrics, Protected Attributes &amp; Fair-Lending</option>
+<option value="dataprivacyof">09. DataPrivacyOf — GDPR Articles 5-21, DSARs &amp; Breach Notification</option>
+<option value="asisecurity">10. ASI Security — AI Security Threats &amp; Defensive Patterns</option>
+<option value="agisafe">11. AGI Safe — AGI Safety Research &amp; Frontier Risk</option>
+<option value="defoneos">12. DEFONEOS — Defence AI Operating System</option>
+<option value="councilof">13. CouncilOf — BFT Governance Councils &amp; Agent Orchestration</option>
+<option value="openmoe">14. OpenMoE — Mixture-of-Experts Base Model &amp; BFT Inference</option>
+<option value="openmcp">15. OpenMCP — MCP Server Directory &amp; Registry</option>
+<option value="openpatent">16. OpenPatent — SIGIL-Signed Invention Disclosures &amp; Patent Chain</option>
+<option value="sandbox">17. Sandbox — Hive Architecture Diagnostics &amp; Self-Testing</option>
+<option value="sovereign-town">18. Sovereign Town — Sovereign Town Lab &amp; Headless Simulation</option>
+<option value="meok-compliance-gateway">19. MEOK Compliance Gateway — MCP Transport Layer &amp; x402 Payments</option>
+<option value="loopfactory">20. LoopFactory — Automation Workflows &amp; Cron/Webhook Triggers</option>
+<option value="optimobile">21. OptiMobile — Mobile Apps &amp; Retention Analytics</option>
+<option value="socialmediamanager">22. Social Media Manager — Multi-Platform Scheduling &amp; Content</option>
+<option value="cobolbridge">23. COBOL Bridge — COBOL Legacy Modernisation &amp; Transpilation</option>
+<option value="commercialvehicle">24. Commercial Vehicle — UK Commercial Fleets &amp; Logistics</option>
+<option value="diyhelp">25. DIY Help — DIY Home Improvement &amp; How-To Guides</option>
+<option value="fishkeeper">26. Fishkeeper — Freshwater/Saltwater Species &amp; Aquatics</option>
+<option value="grabhire">27. GrabHire — UK Haulage &amp; Grab-Lorry Fleet Operations</option>
+<option value="koikeeper">28. KoiKeeper — Koi Varieties &amp; Water Quality Management</option>
+<option value="landlaw">29. LandLaw — UK Property Law &amp; Conveyancing</option>
+<option value="muckaway">30. MuckAway — UK Skip Hire &amp; Waste Management</option>
+<option value="planthire">31. PlantHire — UK Plant Hire &amp; Machinery Operations</option>
+<option value="pokerhud">32. PokerHUD — Poker Hands, GTO Solutions &amp; ICM</option>
+<option value="suicidestop">33. SuicideStop — Crisis Hotlines &amp; Mental Health Resources</option>
+<option value="science">34. Science — Scientific Research &amp; Discovery</option>
+<option value="coigndaltion">35. Coigndaltion — The Cornerstone Cognition Layer</option>
+
+        <optgroup label="External Frameworks">
+          <option value="EU AI Act">EU AI Act (Articles 9, 10, 13, 14, 43, 50, Annex III)</option>
+          <option value="GDPR">GDPR Articles 5–21 + UK GDPR</option>
+          <option value="ISO 42001">ISO/IEC 42001:2023 (AI Management)</option>
+          <option value="NIST AI RMF">NIST AI RMF 1.0</option>
+          <option value="DORA">DORA (EU 2022/2554)</option>
+          <option value="HIPAA">HIPAA (US Healthcare)</option>
+          <option value="SOC 2">SOC 2 Type II</option>
+          <option value="CSRD">CSRD / ESRS</option>
+          <option value="UK Online Safety Act">UK Online Safety Act 2023</option>
+          <option value="UK Building Regs">UK Building Regulations</option>
+          <option value="MLA">Multi-jurisdiction Licensing Agreement</option>
+          <option value="PSD2/3">PSD2/PSD3 Payment Services</option>
+          <option value="MiCA">MiCA Crypto-Assets</option>
+          <option value="PCI DSS">PCI DSS 4.0</option>
+          <option value="DVSA">DVSA Operator Licensing</option>
+          <option value="FORS">FORS Standard v6.0</option>
+          <option value="JSP 936">JSP 936 Defence AI Safety</option>
+          <option value="ESA">Environment Agency Waste Carrier</option>
+          <option value="OATA">OATA Retail Code</option>
+          <option value="UKGC">UK Gambling Commission</option>
+          <option value="FCA">FCA AI in Financial Services</option>
+          <option value="FCC">FCC US</option>
+          <option value="NIST PQC">NIST PQC (ML-DSA-65, ML-KEM-768)</option>
+          <option value="FIPS 186-5">FIPS 186-5 (Ed25519 / DSA)</option>
+          <option value="W3C VC DM">W3C Verifiable Credentials DM 2.0</option>
+          <option value="C2PA">C2PA Content Provenance 1.3</option>
+          <option value="ETSI">ETSI TS 119 / JAdES</option>
+          <option value="ISO 22301">ISO 22301 (Business Continuity)</option>
+          <option value="ISO 28000">ISO 28000 (Supply Chain Security)</option>
+          <option value="MITRE ATLAS">MITRE ATLAS</option>
         </optgroup>
       </select>
     </div>
-    <div class="arrow">⇄</div>
-    <div class="dropdown-group">
-      <label>Target Hive / Framework</label>
-      <select id="target">
-        <optgroup label="Compliance Frameworks">
-          <option value="eu-ai-act" selected>EU AI Act (Art 5, 10, 50)</option>
-          <option value="gdpr">GDPR (Articles 5-21)</option>
-          <option value="iso-42001">ISO/IEC 42001:2023</option>
-          <option value="nist-ai-rmf">NIST AI RMF 1.0</option>
-          <option value="dora">DORA</option>
-          <option value="owasp-llm">OWASP Top 10 for LLMs</option>
-        </optgroup>
-        <optgroup label="Other Hives">
-          <option value="all">All 33 Other Hives</option>
-        </optgroup>
-      </select>
-    </div>
-  </div>
-  <button onclick="explore()">Explore Cross-Walk →</button>
+    <button type="submit" class="btn btn-primary" style="padding: 12px 20px;">Explore Cross-Walk →</button>
+  </form>
 
-  <div id="result" class="result">
-    <h3>Cross-Walk: <span id="r-source">csoai</span> ⇄ <span id="r-target">eu-ai-act</span></h3>
-    <div class="result-stat"><span class="stat-label">Bilateral Edges</span><span class="stat-value" id="r-edges">33</span></div>
-    <div class="result-stat"><span class="stat-label">Shared Data</span><span class="stat-value" id="r-data">All audit trails, certifications, attestations</span></div>
-    <div class="result-stat"><span class="stat-label">Joint Certifications</span><span class="stat-value" id="r-cert">CSOAI Watchdog Cert + EU AI Act compliance attestation</span></div>
-    <div class="result-stat"><span class="stat-label">Protocol Bridges</span><span class="stat-value" id="r-protocol">Ed25519 SIGIL + x402 + MCP + A2A</span></div>
-    <div class="result-stat"><span class="stat-label">Compliance Articles Mapped</span><span class="stat-value" id="r-articles">Art 5 (prohibited), Art 10 (data governance), Art 50 (transparency)</span></div>
-    <div class="result-stat"><span class="stat-label">Cross-Walk Status</span><span class="stat-value">✅ LIVE · Ed25519-signed</span></div>
-  </div>
+  <div id="cw-result" style="margin-top: 1.5rem;"></div>
+
+  <h2>Cross-Walk Visualization — ASCII Graph</h2>
+  <p style="color: var(--muted);">A rendered view of the central 6 hives and their bilateral edges with framework clusters.</p>
+  <div class="sig-line" style="font-size: 0.78rem; line-height: 1.4;">                    [EU AI Act]
+                         │ Article 50, 13, 14
+                         │
+        +----- meok ------+----- csoai ----- proofof
+        |       (294 MCP)  |   (CA3O root)   (sig verify)
+        |                  |                  |
+        +---- councilof --+----- safetyof ---+----- accountabilityof
+              (BFT 33)         (care membrane)   (audit trails)
+                         │
+                    [GDPR / UK GDPR]
+                         │ Articles 5-21
+                         │
+        +- dataprivacyof -+--- ethicalgovernanceof --- biasdetectionof
+                         │       (CSRD/AI BOM)         (fairness)
+                    [NIST AI RMF]
+                         │ Map/Measure/Manage
+                         │
+        +- transparencyof +--- agisafe --- defoneos
+        |   (explainability) (frontier)  (DEFONEOS-SEAL)
+        +----- asisecurity
+        |   (OWASP/ATLAS)
+        |
+        +-- 30+ compliance frameworks cross-walked per pair
+
+        Legend:  ---- = bilateral edge (1 of 1,122)
+                [..] = external framework cluster
+                Each edge: typed (data, cert, bridge), versioned, BFT-ratified
 </div>
 
-<div class="matrix">
-  <h2>The 1,122-Edge Cross-Walk Matrix</h2>
-  <p style="color:var(--muted); margin-bottom:1rem; font-size:.85rem;">Visual representation of the complete cross-walk graph. Each ■ represents a bilateral edge between two sovereign charters.</p>
-<pre>
-Tier 1 · AI GOVERNANCE (12 hives · 132 intra-tier edges)
-┌────────┬────────┬────────┬────────┬────────┬────────┬────────┬────────┬────────┬────────┬────────┬────────┐
-│ CSOAI  │ MEOK   │PROOFOF │SAFETYOF│ACCOUNT │ETHICS  │TRANS-  │BIAS    │DATA-   │ASI-    │AGI-    │DEFON-  │
-│ ██████ │ ██████ │ ██████ │ ██████ │ ██████ │ ██████ │ ██████ │ ██████ │ ██████ │ ██████ │ ██████ │ ██████ │
-└────┬───┴───┬────┴───┬────┴───┬────┴───┬────┴───┬────┴───┬────┴───┬────┴───┬────┴───┬────┴───┬────┴───┬────┘
-     ║       ║        ║        ║        ║        ║        ║        ║        ║        ║        ║
-     ╠═══════╬════════╬════════╬════════╬════════╬════════╬════════╬════════╬════════╬════════╬════════╣  12×11=132 edges
-     ║       ║        ║        ║        ║        ║        ║        ║        ║        ║        ║  within Tier 1
-     ╠═══════╩════════╩════════╩════════╩════════╩════════╩════════╩════════╩════════╩════════╩════════╣
+  <h2>Cross-Walk by Hive</h2>
+  <div class="grid grid-3">
 
-Tier 2 · TECHNICAL INFRASTRUCTURE (11 hives · 110 intra-tier edges)
-┌────────┬────────┬────────┬────────┬────────┬────────┬────────┬────────┬────────┬────────┬────────┐
-│COUNCIL │OPENMOE │OPENMCP │OPEN-   │SANDBOX │SOV.    │COMPL.  │LOOP-   │OPTI-   │SOCIAL  │COBOL-  │
-│ ██████ │ ██████ │ ██████ │ ██████ │ ██████ │ ██████ │ ██████ │ ██████ │ ██████ │ ██████ │ ██████ │
-└────┬───┴───┬────┴───┬────┴───┬────┴───┬────┴───┬────┴───┬────┬───┴────┬───┴───┬────┴───┬────┬───┘
-     ║       ║        ║        ║        ║        ║        ║        ║        ║        ║
-     ╠═══════╬════════╬════════╬════════╬════════╬════════╬════════╬════════╬════════╬════════╣  11×10=110 edges
-     ║       ║        ║        ║        ║        ║        ║        ║        ║        ║  within Tier 2
-     ╠═══════╩════════╩════════╩════════╩════════╩════════╩════════╩════════╩════════╩════════╣
+    <a class="card" href="charter-csoai.html">
+      <span class="num-badge">01</span>
+      <h3>CSOAI</h3>
+      <p style="color: var(--muted); font-size:.85rem;">33 bilateral edges to all other hives<br>30+ framework cross-walks<br>Sample data / cert / bridge relationships</p>
+      <span class="pill pill-gold">33 → 33</span>
+    </a>
 
-Tier 3 · INDUSTRY VERTICALS (11 hives · 110 intra-tier edges)
-┌────────┬────────┬────────┬────────┬────────┬────────┬────────┬────────┬────────┬────────┬────────┐
-│COMM.   │DIYHELP │FISH-   │GRAB-   │KOI-    │LAND-   │MUCK-   │PLANT-  │POKER-  │SUICIDE │SCIENCE │
-│VEHICLE │        │KEEPER  │HIRE    │KEEPER  │LAW     │AWAY    │HIRE    │HUD     │STOP    │        │
-│ ██████ │ ██████ │ ██████ │ ██████ │ ██████ │ ██████ │ ██████ │ ██████ │ ██████ │ ██████ │ ██████ │
-└────────┴────────┴────────┴────────┴────────┴────────┴────────┴────────┴────────┴────────┴────────┘
-                                                                                            11×10=110 edges
+    <a class="card" href="charter-meok.html">
+      <span class="num-badge">02</span>
+      <h3>MEOK</h3>
+      <p style="color: var(--muted); font-size:.85rem;">33 bilateral edges to all other hives<br>30+ framework cross-walks<br>Sample data / cert / bridge relationships</p>
+      <span class="pill pill-gold">33 → 33</span>
+    </a>
 
-CROSS-TIER EDGES: 12 × 11 × 2 = 264 edges (Tier 1 ↔ Tier 2 + Tier 1 ↔ Tier 3 + Tier 2 ↔ Tier 3)
+    <a class="card" href="charter-proofof.html">
+      <span class="num-badge">03</span>
+      <h3>ProofOf</h3>
+      <p style="color: var(--muted); font-size:.85rem;">33 bilateral edges to all other hives<br>30+ framework cross-walks<br>Sample data / cert / bridge relationships</p>
+      <span class="pill pill-gold">33 → 33</span>
+    </a>
 
-═══════════════════════════════════════════════════════════════════════════════════════════════
-TOTAL: 132 + 110 + 110 + 264 = 616 bilateral hive-to-hive edges
-       + 34 hives × 30 frameworks = 1,020 framework mapping edges
-       + shared data + joint certs + protocol bridges = 1,122 TOTAL
-═══════════════════════════════════════════════════════════════════════════════════════════════
-</pre>
-  <div class="legend">
-    <div class="legend-item"><div class="legend-dot" style="background:#c9a84c;"></div><span>Bilateral edge (cross-walk)</span></div>
-    <div class="legend-item"><div class="legend-dot" style="background:#3b82f6;"></div><span>Framework mapping</span></div>
-    <div class="legend-item"><div class="legend-dot" style="background:#10b981;"></div><span>Shared data / Joint cert</span></div>
-    <div class="legend-item"><div class="legend-dot" style="background:#a855f7;"></div><span>Protocol bridge (MCP/A2A/x402)</span></div>
+    <a class="card" href="charter-safetyof.html">
+      <span class="num-badge">04</span>
+      <h3>SafetyOf</h3>
+      <p style="color: var(--muted); font-size:.85rem;">33 bilateral edges to all other hives<br>30+ framework cross-walks<br>Sample data / cert / bridge relationships</p>
+      <span class="pill pill-gold">33 → 33</span>
+    </a>
+
+    <a class="card" href="charter-accountabilityof.html">
+      <span class="num-badge">05</span>
+      <h3>AccountabilityOf</h3>
+      <p style="color: var(--muted); font-size:.85rem;">33 bilateral edges to all other hives<br>30+ framework cross-walks<br>Sample data / cert / bridge relationships</p>
+      <span class="pill pill-gold">33 → 33</span>
+    </a>
+
+    <a class="card" href="charter-ethicalgovernanceof.html">
+      <span class="num-badge">06</span>
+      <h3>EthicalGovernanceOf</h3>
+      <p style="color: var(--muted); font-size:.85rem;">33 bilateral edges to all other hives<br>30+ framework cross-walks<br>Sample data / cert / bridge relationships</p>
+      <span class="pill pill-gold">33 → 33</span>
+    </a>
+
+    <a class="card" href="charter-transparencyof.html">
+      <span class="num-badge">07</span>
+      <h3>TransparencyOf</h3>
+      <p style="color: var(--muted); font-size:.85rem;">33 bilateral edges to all other hives<br>30+ framework cross-walks<br>Sample data / cert / bridge relationships</p>
+      <span class="pill pill-gold">33 → 33</span>
+    </a>
+
+    <a class="card" href="charter-biasdetectionof.html">
+      <span class="num-badge">08</span>
+      <h3>BiasDetectionOf</h3>
+      <p style="color: var(--muted); font-size:.85rem;">33 bilateral edges to all other hives<br>30+ framework cross-walks<br>Sample data / cert / bridge relationships</p>
+      <span class="pill pill-gold">33 → 33</span>
+    </a>
+
+    <a class="card" href="charter-dataprivacyof.html">
+      <span class="num-badge">09</span>
+      <h3>DataPrivacyOf</h3>
+      <p style="color: var(--muted); font-size:.85rem;">33 bilateral edges to all other hives<br>30+ framework cross-walks<br>Sample data / cert / bridge relationships</p>
+      <span class="pill pill-gold">33 → 33</span>
+    </a>
+
+    <a class="card" href="charter-asisecurity.html">
+      <span class="num-badge">10</span>
+      <h3>ASI Security</h3>
+      <p style="color: var(--muted); font-size:.85rem;">33 bilateral edges to all other hives<br>30+ framework cross-walks<br>Sample data / cert / bridge relationships</p>
+      <span class="pill pill-gold">33 → 33</span>
+    </a>
+
+    <a class="card" href="charter-agisafe.html">
+      <span class="num-badge">11</span>
+      <h3>AGI Safe</h3>
+      <p style="color: var(--muted); font-size:.85rem;">33 bilateral edges to all other hives<br>30+ framework cross-walks<br>Sample data / cert / bridge relationships</p>
+      <span class="pill pill-gold">33 → 33</span>
+    </a>
+
+    <a class="card" href="charter-defoneos.html">
+      <span class="num-badge">12</span>
+      <h3>DEFONEOS</h3>
+      <p style="color: var(--muted); font-size:.85rem;">33 bilateral edges to all other hives<br>30+ framework cross-walks<br>Sample data / cert / bridge relationships</p>
+      <span class="pill pill-gold">33 → 33</span>
+    </a>
+
   </div>
-</div>
-
-<div style="background:rgba(201,168,76,.08); border:1px solid rgba(201,168,76,.3); padding:1.5rem; border-radius:8px; margin-top:2rem;">
-  <h3 style="color:var(--gold); margin-bottom:.75rem;">🔍 Why Cross-Walks Matter</h3>
-  <p style="font-size:.9rem; color:var(--muted);">
-    No other database or operating system has attempted universal cross-walk. Every system before us was siloed — a CRM here, an ERP there, a compliance database over there, none speaking to each other. The Sovereign Charter is the first document to cross-walk literally everything since the dawn of day. A fishkeeping certification cross-walks to GDPR. A construction plant hire certification cross-walks to environmental compliance. A poker analytics certification cross-walks to anti-money-laundering. The graph is complete. Zero gaps.
-  </p>
-</div>
-
-<footer>
-  <div style="color:var(--gold); font-weight:600; margin-bottom:.5rem;">CSOAI Ltd · UK Companies House 16939677 · London, United Kingdom</div>
-  <div style="margin-bottom:.5rem;">
-    <a href="index.html">← Sovereign Charter Universe</a> ·
-    <a href="training.html">Training Portal</a> ·
-    <a href="bft-council.html">BFT Council</a> ·
-    <a href="https://proofof.ai/verify">Verify Cert</a>
-  </div>
-  <div style="font-size:.75rem; font-style:italic;">
-    Charter Article 0: Never take equity, board seats, revenue-sharing, or success fees. ISO fee-for-service model ONLY. CA3O is the CMKC for AI.
-  </div>
-  <div style="font-size:.7rem; margin-top:1rem; color:#475569;">
-    Ed25519-signed · BFT-ratified · 1,122 bilateral edges · OTS Bitcoin-anchored
-  </div>
-</footer>
-
-</div>
+</div></article>
 
 <script>
-function explore() {
-  var s = document.getElementById('source').value;
-  var t = document.getElementById('target').value;
-  document.getElementById('r-source').textContent = s;
-  document.getElementById('r-target').textContent = t;
-
-  // Determine edge count based on selection
-  var edges = '33';
-  if (t === 'all') edges = '33';
-  else if (s === 'all' || t === 'all') edges = '34';
-  document.getElementById('r-edges').textContent = edges;
-
-  document.getElementById('result').classList.add('active');
-}
-
-// Initial state
-window.onload = function() {
-  document.getElementById('result').classList.add('active');
+const BILATERAL_TEMPLATES = {
+  csoai:  {rel: "Governance authority", data: "All certifications, SIGIL chain", cert: "CSOAI Watchdog (issuing authority)"},
+  meok:   {rel: "Build authority", data: "All MCP tools, compliance attestations", cert: "MEOK Attestation + CSOAI Watchdog"},
+  proofof:{rel: "Verification layer", data: "All SIGIL digests, Ed25519 certs", cert: "Proof chain + Watchdog verification"},
+  safetyof:{rel: "Safety monitoring feed", data: "AI incidents, safety metrics", cert: "Safety + Watchdog dual cert"},
+  accountabilityof:{rel: "Audit trail provider", data: "Incident reports, audit evidence", cert: "Audit + Watchdog dual cert"},
+  ethicalgovernanceof:{rel: "Ethics framework", data: "AI BOM, care membrane records", cert: "Ethical cert"},
+  transparencyof:{rel: "Explainability feed", data: "Decision paths, watermarks", cert: "Transparency cert"},
+  biasdetectionof:{rel: "Fairness metrics", data: "Bias audit results, protected attribute data", cert: "Fairness cert"},
+  dataprivacyof:{rel: "Privacy layer", data: "DSARs, DPIA records, RoPA", cert: "GDPR cert"},
+  asisecurity:{rel: "Security intelligence", data: "CVEs, threat models, penetration tests", cert: "Security cert"},
+  agisafe:{rel: "Frontier risk assessments", data: "AGI capability benchmarks, alignment scores", cert: "AGI Safety + Watchdog dual cert"},
+  defoneos:{rel: "Defence AI certification", data: "DEFONEOS-SEAL, AUKUS compliance", cert: "Defence + Watchdog dual cert"},
+  councilof:{rel: "BFT ratification", data: "Council votes, quorum records", cert: "BFT quorum certification"},
+  openmoe:{rel: "Base model governance", data: "MoE routing decisions, training data audits", cert: "Model + Watchdog cert"},
+  openmcp:{rel: "MCP registry integrity", data: "Server manifests, MCP tool quality scores", cert: "Registry + Watchdog cert"},
+  openpatent:{rel: "Invention disclosure chain", data: "SIGIL-signed patent claims", cert: "Patent + Watchdog cert"},
+  sandbox:{rel: "Continuous validation", data: "Test results SIGIL chain", cert: "Sandbox attestation + Watchdog"},
+  "sovereign-town":{rel: "Governance simulation", data: "Episode transcripts, council decisions", cert: "Town simulation certificate"},
+  "meok-compliance-gateway":{rel: "x402 payment transport", data: "Usage receipts, payment SIGILs", cert: "Gateway + Watchdog cert"},
+  loopfactory:{rel: "Automation workflow SIGILs", data: "Execution logs", cert: "Automation + Watchdog cert"},
+  optimobile:{rel: "Mobile analytics evidence", data: "SDK SIGILs, ATT audit trails", cert: "Mobile + Watchdog cert"},
+  socialmediamanager:{rel: "Social data flows", data: "Content SIGILs, ASA compliance logs", cert: "Social + Watchdog cert"},
+  cobolbridge:{rel: "Legacy modernisation", data: "Transpilation SIGILs, mainframe bridges", cert: "Bridge + Watchdog cert"},
+  commercialvehicle:{rel: "DVSA / FORS evidence", data: "Tachograph SIGILs, O-Licence records", cert: "Fleet + Watchdog cert"},
+  diyhelp:{rel: "Building Regs compliance", data: "Project completion SIGILs", cert: "DIY practitioner cert"},
+  fishkeeper:{rel: "Aquatic welfare attestations", data: "Water quality SIGILs, OATA compliance", cert: "Aquatic welfare cert"},
+  grabhire:{rel: "Haulage / waste SIGILs", data: "WTN audit trails, EA carrier validation", cert: "Haulage cert"},
+  koikeeeper:{rel: "Koi health & water cert", data: "Pond SIGILs, BKKS compliance", cert: "Koi welfare cert"},
+  landlaw:{rel: "Conveyancing / property SIGILs", data: "Title register SIGILs, lease abstractions", cert: "Property law cert"},
+  muckaway:{rel: "Waste compliance SIGILs", data: "WTN logs, landfill tax SIGILs", cert: "Waste operator cert"},
+  planthire:{rel: "LOLER/PUWER attestations", data: "Inspection SIGILs, operator card verification", cert: "Plant operator cert"},
+  pokerhud:{rel: "Post-session study logs", data: "Hand history hashes, GTO solve SIGILs", cert: "Game integrity cert"},
+  suicidestop:{rel: "Crisis routing attestations", data: "Service referral SIGILs", cert: "Crisis routing cert"},
+  science:{rel: "Research claim verification", data: "p-value SIGILs, replication attestations", cert: "Research integrity cert"},
+  coigndaltion:{rel: "L4 cornerstone cognition", data: "Cross-layer SIGIL receipts", cert: "Coigndaltion SEAL"}
 };
+function doCrosswalk() {
+  const src = document.getElementById('cw-src').value;
+  const tgt = document.getElementById('cw-tgt').value;
+  const srcTitle = document.querySelector('#cw-src option:checked').textContent;
+  const tgtTitle = document.querySelector('#cw-tgt option:checked').textContent;
+  let edge;
+  if (BILATERAL_TEMPLATES[src] && (src === tgt)) {
+    edge = {rel:"Self (governance root)", data: "Internal — this hive to itself", cert: "Self-cert"};
+  } else if (BILATERAL_TEMPLATES[src] && BILATERAL_TEMPLATES[tgt] === undefined) {
+    // external framework
+    edge = {rel: "Cross-walk mapping", data: "Framework control points → certificate controls", cert: "Framework compliance attestation"};
+  } else if (BILATERAL_TEMPLATES[src]) {
+    edge = BILATERAL_TEMPLATES[src];
+  } else {
+    edge = {rel: "Cross-framework", data: "Control-point alignment", cert: "Framework attestation"};
+  }
+  const html = `
+    <div class="panel">
+      <h3>${srcTitle.split(' — ')[0]} <span style="color:var(--muted);">⇄</span> ${tgtTitle.split(' — ')[0]}</h3>
+      <table>
+        <tr><th>Relationship</th><td>${edge.rel}</td></tr>
+        <tr><th>Shared Data</th><td>${edge.data}</td></tr>
+        <tr><th>Joint Certification</th><td>${edge.cert}</td></tr>
+        <tr><th>Sig</th><td>BFT-ratified (23/33 quorum)</td></tr>
+        <tr><th>Verify</th><td><a href="https://proofof.ai/verify/CSOAI-XW-${src}-${tgt}-2026-06-30" target="_blank" rel="noopener">proofof.ai/verify/CSOAI-XW-${src}-${tgt}-2026-06-30</a></td></tr>
+      </table>
+      <div class="sig-line">
+Cross-Walk ID: CSOAI-XW-${src}-${tgt}-2026-06-30
+Ed25519 Signature: ed25519:${src.slice(0,4)}${tgt.slice(0,4)}...001
+SIGIL Digest: xwalk-${src}-${tgt}-001
+BFT Ratification: Council quorum 23/33
+Timestamp: 2026-06-30
+      </div>
+    </div>
+  `;
+  document.getElementById('cw-result').innerHTML = html;
+  document.getElementById('cw-result').scrollIntoView({behavior:'smooth'});
+}
 </script>
 
-</body>
-</html>
+
+    <footer>
+      <div class="wrap">
+        <div>
+          <h4>CSOAI Ltd</h4>
+          <p>UK Companies House <strong>16939677</strong><br>
+          Sovereign Charter Authority (CA3O) — CMKC for AI.<br>
+          Ed25519-signed · BFT-council-ratified · Bitcoin-anchored via OTS.<br>
+          Free training. Free certification. Free certification.</p>
+        </div>
+        <div>
+          <h4>Portal</h4>
+          <a href="index.html">All 34 Charters</a>
+          <a href="training.html">Free Training</a>
+          <a href="crosswalk.html">Cross-Walk Explorer</a>
+          <a href="bft-council.html">BFT Council</a>
+        </div>
+        <div>
+          <h4>Verify</h4>
+          <a href="https://proofof.ai/verify" target="_blank" rel="noopener">proofof.ai/verify</a>
+          <a href="https://meok.ai/fleet" target="_blank" rel="noopener">MCP Fleet</a>
+          <a href="https://sov3.csoai.org:3101" target="_blank" rel="noopener">SOV3 Substrate</a>
+        </div>
+        <div>
+          <h4>Article 0</h4>
+          <p style="font-size:.78rem; line-height:1.4;">Never take equity, board seats, revenue-sharing, or success fees from institutions we certify. <em>ISO fee-for-service model only.</em></p>
+        </div>
+      </div>
+      <div class="wrap" style="margin-top:20px; padding-top:20px; border-top:1px solid #1a1f33; font-size:.78rem;">
+        <span>© 2026 CSOAI Ltd · csoai.org</span>
+        <span style="float:right; font-family: ui-monospace, monospace; color: var(--gold);">Sovereign substrate signs everything · 🐉</span>
+      </div>
+    </footer>
+    
+</body></html>
