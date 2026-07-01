@@ -30,6 +30,16 @@
   .steps{counter-reset:s;padding:0;list-style:none;margin:8px 0 0}
   .steps li{counter-increment:s;position:relative;padding:4px 0 4px 30px;font-size:13.5px}
   .steps li::before{content:counter(s);position:absolute;left:0;top:3px;width:20px;height:20px;background:var(--gold);color:#fff;border-radius:50%;font:700 11px system-ui;display:flex;align-items:center;justify-content:center}
+  @media print{
+    body{background:#fff}
+    .wrap{max-width:100%;padding:0}
+    .row,#result,#ownResult,#ownSig,button,textarea{display:none!important}
+    .card{box-shadow:none;border:1px solid #999;break-inside:avoid;margin-top:12px}
+    .card:nth-of-type(2),.card:nth-of-type(3){display:none}   /* hide 'issue your own' + 'how to verify' in the PDF */
+    h1{font-size:20px}
+    .sig{background:#f3f3f3}
+    body::after{content:"Independently verifiable — os.meok.ai/verify.html — DEFONEOS sovereign assurance";display:block;font:10px monospace;color:#666;margin-top:12px}
+  }
 </style></head>
 <body><div class="wrap">
   <div class="kick">DEFONEOS · Sovereign Assurance</div>
@@ -41,6 +51,7 @@
   <div class="row">
     <button class="primary" onclick="verifyCard(false)">✅ Verify this card offline</button>
     <button class="ghost" onclick="verifyCard(true)">🧪 Tamper test (flip one byte → must fail)</button>
+    <button class="ghost" onclick="window.print()">🖨️ Download signed PDF</button>
     <button class="ghost" onclick="location.href='/verify.html'">Open the public verifier ↗</button>
   </div>
   <div id="result" class="result"></div>
@@ -91,7 +102,7 @@ function rowsFromCard(d){
   if(c.iterative_requirements){ h+=sect('Iterative requirements')+kv('Change control', c.iterative_requirements.change_control)+kv('Review cadence', c.iterative_requirements.review_cadence)+kv('Incident route', c.iterative_requirements.incident_route); }
   if(c.decision_logs){ h+=sect('Decision log')+li(c.decision_logs.map(x=>x.date+' — '+x.decision+' ('+x.by+')')); }
   if(c.jsp936){ h+=sect('JSP 936')+'<div class="kv">'+esc(c.jsp936)+'</div>'; }
-  h+=sect('Signature · Ed25519')+'<div class="sig">sig: '+esc((d.signature||'').slice(0,64))+'…<br>sha256(card): '+esc(d.sha256||'')+'<br>public key: '+esc((d.publicKey||'').slice(0,64))+'…</div>';
+  h+=sect('Signature · Ed25519')+'<div class="sig"><b>Signed by DEFONEOS sovereign key</b><br>'+esc(d.fingerprint||'')+'  '+(d.seeded?'· owner-seeded ✓':'· demo key (set SIGIL_SEED to pin)')+'<br>sig: '+esc((d.signature||'').slice(0,64))+'…<br>sha256(card): '+esc(d.sha256||'')+'<br>verify: '+location.origin+'/verify.html?card='+(d.cardType||'system')+'</div>';
   document.getElementById('card').innerHTML=h;
 }
 async function load(){ try{ const r=await fetch('/api/systemcard'); DATA=await r.json(); if(DATA&&DATA.card) rowsFromCard(DATA); else document.getElementById('card').textContent='Could not load card.'; }catch(e){ document.getElementById('card').textContent='Offline — try again.'; } }

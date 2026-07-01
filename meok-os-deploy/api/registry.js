@@ -34,9 +34,10 @@ export default function handler(req, res) {
     const message = canonical(manifest).slice(0, 8000);
     const signature = crypto.sign(null, Buffer.from(message), priv).toString('hex');
     const sha256 = crypto.createHash('sha256').update(message).digest('hex');
+    const fingerprint = 'SOV:' + crypto.createHash('sha256').update(pubHex).digest('hex').slice(0, 32).match(/.{1,4}/g).join('-').toUpperCase();
     return res.status(200).json({
       ok: true, alg: 'ed25519', manifest, canonical: message, sha256, signature, publicKey: pubHex,
-      seeded: !!process.env.SIGIL_SEED,
+      fingerprint, seeded: !!process.env.SIGIL_SEED,
       note: 'The registry manifest is Ed25519-signed (verify at /api/verify). Each entry links to its own independently-verifiable signed card. Data is SYNTHETIC.',
     });
   } catch (e) { return res.status(500).json({ ok: false, error: String(e.message || e) }); }

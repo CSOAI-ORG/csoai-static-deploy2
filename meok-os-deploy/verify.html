@@ -60,5 +60,12 @@ document.getElementById('ttl').textContent=s[0];
 const ent=p.get('entity');
 document.getElementById('ent').innerHTML = ent ? ('<b>'+ent.replace(/[<>&]/g,'')+'</b> is '+s[1]+'.') : ('This surface is '+s[1]+'.');
 (function(){var d=document.createElement('div');d.style.cssText='margin-top:18px;font-size:13.5px';d.innerHTML='Defence / high-risk AI? See a <a href="/systemcard.html" style="color:#b8922f;font-weight:700">signed System Card</a> or the <a href="/registry.html" style="color:#b8922f;font-weight:700">signed card registry</a> — the JSP 936 assurance primitives you can verify offline yourself.';var e=document.getElementById('ent');if(e&&e.parentNode)e.parentNode.appendChild(d);})();
+// Shareable auto-verify: /verify.html?card=system|model fetches the signed card and verifies it live.
+(async function(){ var ct=p.get('card'); if(!ct) return; var box=document.createElement('div'); box.style.cssText='margin-top:20px;padding:14px 16px;border:1px solid #e6ddcd;border-radius:12px;background:#fffdf8;font-size:13.5px'; box.innerHTML='Verifying signed <b>'+ct.replace(/[<>&]/g,'')+'</b> card…'; var e=document.getElementById('ent'); if(e&&e.parentNode) e.parentNode.appendChild(box);
+  try{ var c=await (await fetch('/api/systemcard?type='+encodeURIComponent(ct))).json(); var v=await (await fetch('/api/verify',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:c.canonical,signature:c.signature,publicKey:c.publicKey})})).json();
+    box.style.borderColor=v.valid?'#b7e0c6':'#f0c3bd'; box.style.background=v.valid?'#e7f4ec':'#fbeae8';
+    box.innerHTML=(v.valid?'✅ <b>VALID</b> — this '+ct+' card is authentic &amp; untampered.':'❌ <b>REJECTED</b> — signature does not match.')+'<br><span style="font:11.5px ui-monospace;color:#4a4234">'+(c.card&&c.card.overview?c.card.overview.name:(c.card&&c.card.model_details?c.card.model_details.name:''))+'<br>Signed by '+(c.fingerprint||'')+' '+(c.seeded?'· owner-seeded':'· demo key')+'<br>sha256: '+(c.sha256||'')+'</span><br><a href="/systemcard.html" style="color:#b8922f;font-weight:700">Open full card ↗</a>';
+  }catch(err){ box.innerHTML='Could not reach the verifier — try again.'; }
+})();
 </script><a id="meok-tour-pill" href="/?tour=demo" style="position:fixed;right:16px;bottom:16px;z-index:9999;background:#1a1410;color:#c9a84c;border:1px solid #c9a84c;border-radius:999px;padding:9px 16px;font:700 13px system-ui,sans-serif;text-decoration:none;box-shadow:0 8px 24px rgba(0,0,0,.3)">🎬 Take the tour</a>
 </body></html>

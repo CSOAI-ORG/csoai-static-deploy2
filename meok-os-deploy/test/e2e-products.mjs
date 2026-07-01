@@ -174,6 +174,12 @@ for (const [n, u] of [['social networks', '/api/social?action=networks'], ['medi
   const t = await gj('/api/verify', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ message: (rg.j.canonical || '').slice(0, -2) + 'ZZ', signature: rg.j.signature, publicKey: rg.j.publicKey }) });
   ck('registry: tampered manifest rejected', t.j.valid === false);
   const rr = await fetch(BASE + '/registry.html'); ck('registry: page reachable', rr.status === 200); }
+// Sovereign key fingerprint on signed artifacts + shareable auto-verify + printable PDF
+{ const sc = await gj('/api/systemcard'); ck('fingerprint: SOV: key id on card', /^SOV:/.test(sc.j.fingerprint || '') && typeof sc.j.seeded === 'boolean');
+  const sg = await gj('/api/sign', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ action: 'x' }) });
+  ck('fingerprint: on /api/sign too', /^SOV:/.test(sg.j.fingerprint || ''));
+  const vh = await fetch(BASE + '/verify.html'); const h = await vh.text(); ck('verify.html: shareable ?card auto-verify', /card=system/.test(h) && /api\/systemcard\?type=/.test(h));
+  const sh = await fetch(BASE + '/systemcard.html'); const s = await sh.text(); ck('systemcard.html: printable PDF + fingerprint line', /window\.print\(\)/.test(s) && /@media print/.test(s) && /sovereign key/.test(s)); }
 { const rr = await fetch(BASE + '/earth3d-photoreal.html'); const t = await rr.text(); ck('photoreal: Google + Cesium ion (OSM buildings) tiers + msg API', rr.status === 200 && /createGooglePhotorealistic3DTileset/.test(t) && /createOsmBuildingsAsync/.test(t) && /meok_cesium_token/.test(t) && /meok-cmd/.test(t)); }
 { const rr = await fetch(BASE + '/'); const t = await rr.text(); ck('OS: speech-paced + scrub + 3D setup + tiered switch', /function tourSpeak/.test(t) && /function tourSeekEvent/.test(t) && /function meokEarth3DUrl/.test(t) && /function sov3DSetup/.test(t) && /function meokCesiumToken/.test(t)); }
 { const rr = await fetch(BASE + '/'); const t = await rr.text(); ck('OS: tour UX (keyboard + deep-link + reduced-motion + completed)', /function _tourKey/.test(t) && /q\.get\('tour'\)/.test(t) && /prefers-reduced-motion/.test(t) && /meok_toured/.test(t)); }

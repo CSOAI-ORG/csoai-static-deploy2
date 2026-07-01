@@ -105,9 +105,10 @@ export default function handler(req, res) {
     const message = canonical(card).slice(0, 8000);
     const signature = crypto.sign(null, Buffer.from(message), priv).toString('hex');
     const digest = crypto.createHash('sha256').update(message).digest('hex');
+    const fingerprint = 'SOV:' + crypto.createHash('sha256').update(pubHex).digest('hex').slice(0, 32).match(/.{1,4}/g).join('-').toUpperCase();
     return res.status(200).json({
       ok: true, cardType: type, alg: 'ed25519', card, canonical: message, sha256: digest, signature, publicKey: pubHex,
-      seeded: !!process.env.SIGIL_SEED,
+      fingerprint, seeded: !!process.env.SIGIL_SEED,
       verify: { endpoint: '/api/verify', body: { message, signature, publicKey: pubHex }, page: '/verify.html' },
       note: 'Independently verifiable offline — POST {message, signature, publicKey} to /api/verify. Tampering with any field invalidates the signature. Card data is SYNTHETIC.',
     });

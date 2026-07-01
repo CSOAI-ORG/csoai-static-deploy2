@@ -30,8 +30,9 @@ export default function handler(req, res) {
     const { priv, pubHex } = keypair();
     const msg = canonical(payload).slice(0, 8000);   // bound the signed payload
     const signature = crypto.sign(null, Buffer.from(msg), priv).toString('hex');
+    const fingerprint = 'SOV:' + crypto.createHash('sha256').update(pubHex).digest('hex').slice(0, 32).match(/.{1,4}/g).join('-').toUpperCase();
     return res.status(200).json({
-      ok: true, alg: 'ed25519', canonical: msg, signature, publicKey: pubHex,
+      ok: true, alg: 'ed25519', canonical: msg, signature, publicKey: pubHex, fingerprint,
       note: 'Verify offline at /api/verify with {message, signature, publicKey} — no account needed. (PQC ML-DSA-65 is provided by the SOV33 substrate.)',
       seeded: !!process.env.SIGIL_SEED,
     });
