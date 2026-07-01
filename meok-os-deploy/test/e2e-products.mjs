@@ -189,6 +189,7 @@ for (const [n, u] of [['social networks', '/api/social?action=networks'], ['medi
 { const rr = await fetch(BASE + '/'); const t = await rr.text(); ck('OS: speech-paced + scrub + 3D setup + tiered switch', /function tourSpeak/.test(t) && /function tourSeekEvent/.test(t) && /function meokEarth3DUrl/.test(t) && /function sov3DSetup/.test(t) && /function meokCesiumToken/.test(t)); }
 { const rr = await fetch(BASE + '/'); const t = await rr.text(); ck('OS: tour UX (keyboard + deep-link + reduced-motion + completed)', /function _tourKey/.test(t) && /q\.get\('tour'\)/.test(t) && /prefers-reduced-motion/.test(t) && /meok_toured/.test(t)); }
 { const rr = await fetch(BASE + '/'); const t = await rr.text(); ck('OS: Signed Assurance app wired in', /assurance:\{i:/.test(t) && /case 'assurance'/.test(t) && /function assIssue/.test(t) && /Signed AI Assurance/.test(t)); }
+{ const rr = await fetch(BASE + '/'); const t = await rr.text(); ck('OS: ambient watch (idle → quiet self-run)', /function sovAmbientStart/.test(t) && /SOV_VOICE_VOL/.test(t) && /_sovUnanswered/.test(t) && /Ambient watch/.test(t)); }
 // site-wide alignment: every public page surfaces the tour + is reachable
 for (const p of ['pricing.html','badges.html','verify.html','sovspace.html','character.html']) {
   const rr = await fetch(BASE + '/' + p); const t = await rr.text();
