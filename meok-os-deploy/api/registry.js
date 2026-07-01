@@ -19,8 +19,9 @@ function keypair() {
 }
 
 const ENTRIES = [
-  { id: 'sc-isr-triage-1.4.0', type: 'system', name: 'ISR Image-Triage Decision Support', supplier: 'Illustrative Prime Ltd (synthetic)', jsp936: true, issued: '2026-07-01', source: '/api/systemcard?type=system', view: '/systemcard.html' },
-  { id: 'mc-isr-classifier-1.4.0', type: 'model', name: 'ISR-Triage Vision Classifier', supplier: 'Illustrative Prime Ltd (synthetic)', jsp936: true, issued: '2026-07-01', source: '/api/systemcard?type=model', view: '/registry.html?card=model' },
+  { id: 'sc-isr-triage-1.4.0', type: 'system', framework: 'JSP 936 (defence)', name: 'ISR Image-Triage Decision Support', supplier: 'Illustrative Prime Ltd (synthetic)', issued: '2026-07-01', source: '/api/systemcard?type=system', view: '/systemcard.html' },
+  { id: 'sc-credit-risk-2.1.0', type: 'system', framework: 'EU AI Act · ISO 42001 (civilian)', name: 'Credit-Risk Decisioning Assistant', supplier: 'Illustrative Ltd (synthetic)', issued: '2026-07-01', source: '/api/systemcard?framework=eu-ai-act', view: '/systemcard.html?framework=eu-ai-act' },
+  { id: 'mc-isr-classifier-1.4.0', type: 'model', framework: 'DAIC model card', name: 'ISR-Triage Vision Classifier', supplier: 'Illustrative Prime Ltd (synthetic)', issued: '2026-07-01', source: '/api/systemcard?type=model', view: '/registry.html?card=model' },
 ];
 
 export default function handler(req, res) {

@@ -46,6 +46,10 @@
   <h1>A signed Defence-AI System Card you can verify yourself</h1>
   <p class="sub">Built <b>1:1 to the UK Defence AI Centre / Alan Turing Institute System Card template</b> (Overview · Concept of use · System detail · Security · Safety · Iterative requirements). JSP 936 mandates AI assurance — but there is <b>no formal way to independently validate</b> a supplier's claim, and <b>no central store</b> for cards. This closes both: an <b>Ed25519-signed</b>, <b>offline-verifiable</b>, shareable card. Don't trust a dashboard — <b>verify it below.</b></p>
 
+  <div class="row" style="margin-top:14px">
+    <button class="ghost" id="fwDef" onclick="setFw('jsp936')">🛡️ Defence · JSP 936</button>
+    <button class="ghost" id="fwEu" onclick="setFw('eu-ai-act')">🏛️ Civilian · EU AI Act / ISO 42001</button>
+  </div>
   <div class="card" id="card"><div style="color:var(--dim)">Loading signed card…</div></div>
 
   <div class="row">
@@ -85,27 +89,22 @@ console.log(ok ? 'AUTHENTIC & UNTAMPERED' : 'REJECT');</pre>
 </div>
 
 <script>
-let DATA=null, OWN=null;
+let DATA=null, OWN=null, FW='jsp936';
 function esc(s){return (''+s).replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));}
-function kv(k,v){return '<div class="kv"><b>'+esc(k)+':</b> '+esc(v)+'</div>';}
-function li(a){return '<ul>'+(a||[]).map(x=>'<li>'+esc(typeof x==='object'?JSON.stringify(x):x)+'</li>').join('')+'</ul>';}
-function sect(t){return '<h3>'+esc(t)+'</h3>';}
-function rowsFromCard(d){
-  const c=d.card||{};
-  let h='<span class="badge">'+esc(c.classification||'')+'</span>';
-  h+=kv('SRO', c.senior_responsible_owner||'')+kv('Version', (c.version||'')+' · issued '+(c.issued||''));
-  if(c.overview){ h+=sect('Overview')+kv('System', c.overview.name)+kv('Supplier', c.overview.supplier)+kv('Summary', c.overview.summary)+kv('Mission risk', c.overview.mission_risk); }
-  if(c.concept_of_use){ h+=sect('Concept of use')+kv('Intended use', c.concept_of_use.intended_use)+kv('Human oversight', c.concept_of_use.human_oversight)+'<div class="kv"><b>Out of scope:</b></div>'+li(c.concept_of_use.out_of_scope); }
-  if(c.system_detail){ h+=sect('System detail')+kv('Model', c.system_detail.model)+kv('Data', c.system_detail.data_provenance)+kv('Evaluation', JSON.stringify(c.system_detail.evaluation))+'<div class="kv"><b>Limitations:</b></div>'+li(c.system_detail.limitations); }
-  if(c.security){ h+=sect('Security')+kv('PII', c.security.pii)+kv('Residency', c.security.data_residency)+kv('Supply chain', c.security.supply_chain)+kv('Integrity', c.security.integrity); }
-  if(c.safety){ h+=sect('Safety')+'<div class="kv"><b>Hard stops:</b></div>'+li(c.safety.hard_stops)+kv('Care floor', c.safety.care_floor)+kv('Council', c.safety.council); }
-  if(c.iterative_requirements){ h+=sect('Iterative requirements')+kv('Change control', c.iterative_requirements.change_control)+kv('Review cadence', c.iterative_requirements.review_cadence)+kv('Incident route', c.iterative_requirements.incident_route); }
-  if(c.decision_logs){ h+=sect('Decision log')+li(c.decision_logs.map(x=>x.date+' — '+x.decision+' ('+x.by+')')); }
-  if(c.jsp936){ h+=sect('JSP 936')+'<div class="kv">'+esc(c.jsp936)+'</div>'; }
-  h+=sect('Signature · Ed25519')+'<div class="sig"><b>Signed by DEFONEOS sovereign key</b><br>'+esc(d.fingerprint||'')+'  '+(d.seeded?'· owner-seeded ✓':'· demo key (set SIGIL_SEED to pin)')+'<br>sig: '+esc((d.signature||'').slice(0,64))+'…<br>sha256(card): '+esc(d.sha256||'')+'<br>verify: '+location.origin+'/verify.html?card='+(d.cardType||'system')+'</div>';
+function sect(t){return '<h3>'+esc(t.replace(/_/g,' '))+'</h3>';}
+// generic renderer — handles ANY card shape (defence JSP 936 or civilian EU AI Act)
+function renderNode(v){ if(Array.isArray(v)) return '<ul>'+v.map(x=>'<li>'+esc(typeof x==='object'?JSON.stringify(x):x)+'</li>').join('')+'</ul>';
+  if(v&&typeof v==='object') return Object.keys(v).map(k=>'<div class="kv"><b>'+esc(k.replace(/_/g,' '))+':</b> '+(typeof v[k]==='object'?renderNode(v[k]):esc(v[k]))+'</div>').join('');
+  return esc(v); }
+function rowsFromCard(d){ const c=d.card||{}; let h='<span class="badge">'+esc(c.classification||'')+'</span>';
+  Object.keys(c).forEach(k=>{ if(k==='schema'||k==='classification') return; h+=sect(k)+renderNode(c[k]); });
+  const auth=(d.framework==='eu-ai-act')?'CSOAI sovereign key':'DEFONEOS sovereign key';
+  h+=sect('Signature · Ed25519')+'<div class="sig"><b>Signed by '+auth+'</b><br>'+esc(d.fingerprint||'')+'  '+(d.seeded?'· owner-seeded ✓':'· demo key (set SIGIL_SEED to pin)')+'<br>sig: '+esc((d.signature||'').slice(0,64))+'…<br>sha256(card): '+esc(d.sha256||'')+'<br>verify: '+location.origin+'/verify.html?card='+(d.cardType||'system')+(d.framework==='eu-ai-act'?'&framework=eu-ai-act':'')+'</div>';
   document.getElementById('card').innerHTML=h;
+  const de=document.getElementById('fwDef'), eu=document.getElementById('fwEu'); if(de&&eu){ de.className='ghost'+(FW==='jsp936'?' primary':''); eu.className='ghost'+(FW==='eu-ai-act'?' primary':''); }
 }
-async function load(){ try{ const r=await fetch('/api/systemcard'); DATA=await r.json(); if(DATA&&DATA.card) rowsFromCard(DATA); else document.getElementById('card').textContent='Could not load card.'; }catch(e){ document.getElementById('card').textContent='Offline — try again.'; } }
+function setFw(fw){ FW=fw; load(); }
+async function load(){ try{ const r=await fetch('/api/systemcard'+(FW==='eu-ai-act'?'?framework=eu-ai-act':'')); DATA=await r.json(); if(DATA&&DATA.card) rowsFromCard(DATA); else document.getElementById('card').textContent='Could not load card.'; }catch(e){ document.getElementById('card').textContent='Offline — try again.'; } }
 async function doVerify(message,signature,publicKey){ const r=await fetch('/api/verify',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message,signature,publicKey})}); return r.json(); }
 async function verifyCard(tamper){
   const el=document.getElementById('result'); el.className='result'; el.textContent='Verifying…'; el.style.display='block';
@@ -130,5 +129,6 @@ async function verifyOwn(){
     el.className='result '+(v.valid?'ok':'bad'); el.textContent=v.valid?'✅ VALID — your card is authentic & untampered.':'❌ REJECTED.';
   }catch(e){ el.className='result bad'; el.textContent='Verifier unreachable.'; }
 }
+try{ if(new URLSearchParams(location.search).get('framework')==='eu-ai-act') FW='eu-ai-act'; }catch(e){}
 load();
 </script></body></html>

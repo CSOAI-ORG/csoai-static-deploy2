@@ -167,6 +167,11 @@ for (const [n, u] of [['social networks', '/api/social?action=networks'], ['medi
 { const mc = await gj('/api/systemcard?type=model'); ck('modelcard: issues signed model card', mc.s === 200 && mc.j.ok === true && mc.j.cardType === 'model' && !!mc.j.card.model_details && !!mc.j.card.quantitative_analysis);
   const v = await gj('/api/verify', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ message: mc.j.canonical, signature: mc.j.signature, publicKey: mc.j.publicKey }) });
   ck('modelcard: verifies VALID', v.j.valid === true); }
+// CSOAI civilian System Card — EU AI Act / ISO 42001 framework variant on the same signing rails
+{ const eu = await gj('/api/systemcard?framework=eu-ai-act'); ck('civilian: EU AI Act card (Annex IV)', eu.s === 200 && eu.j.ok === true && eu.j.framework === 'eu-ai-act' && !!eu.j.card.general_description && Array.isArray(eu.j.card.frameworks) && /Annex IV/.test(eu.j.card.schema));
+  const v = await gj('/api/verify', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ message: eu.j.canonical, signature: eu.j.signature, publicKey: eu.j.publicKey }) });
+  ck('civilian: EU card verifies VALID', v.j.valid === true);
+  const sh = await fetch(BASE + '/systemcard.html'); const s = await sh.text(); ck('systemcard.html: defence↔civilian toggle', /setFw\('eu-ai-act'\)/.test(s) && /EU AI Act/.test(s)); }
 // Signed Card Registry — signed manifest + verifiable + entries link to cards
 { const rg = await gj('/api/registry'); ck('registry: signed manifest + entries', rg.s === 200 && rg.j.ok === true && Array.isArray(rg.j.manifest.entries) && rg.j.manifest.entries.length >= 2 && !!rg.j.signature);
   const v = await gj('/api/verify', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ message: rg.j.canonical, signature: rg.j.signature, publicKey: rg.j.publicKey }) });

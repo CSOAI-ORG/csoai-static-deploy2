@@ -43,7 +43,7 @@
     </div>
     <div id="manResult" class="result"></div>
     <input type="search" id="q" placeholder="Search cards by name, type, supplier…" oninput="draw()" style="margin-top:12px">
-    <table><thead><tr><th>Type</th><th>Card</th><th>Supplier</th><th>JSP 936</th><th>Issued</th><th></th></tr></thead><tbody id="rows"></tbody></table>
+    <table><thead><tr><th>Type</th><th>Card</th><th>Framework</th><th>Supplier</th><th>Issued</th><th></th></tr></thead><tbody id="rows"></tbody></table>
   </div>
 
   <div class="card" id="view">
@@ -67,7 +67,7 @@ async function load(){ try{ const r=await fetch('/api/registry'); REG=await r.js
 function draw(){ if(!REG) return; const q=(document.getElementById('q').value||'').toLowerCase(); const rows=document.getElementById('rows'); rows.innerHTML='';
   (REG.manifest.entries||[]).filter(e=>!q||JSON.stringify(e).toLowerCase().includes(q)).forEach(e=>{
     const tr=document.createElement('tr');
-    tr.innerHTML='<td><span class="tag '+e.type+'">'+e.type+'</span></td><td><b>'+esc(e.name)+'</b><br><span class="muted">'+esc(e.id)+'</span></td><td>'+esc(e.supplier||'')+'</td><td>'+(e.jsp936?'✓':'—')+'</td><td>'+esc(e.issued||'')+'</td><td><button class="ghost">View &amp; verify</button></td>';
+    tr.innerHTML='<td><span class="tag '+e.type+'">'+e.type+'</span></td><td><b>'+esc(e.name)+'</b><br><span class="muted">'+esc(e.id)+'</span></td><td>'+esc(e.framework||'')+'</td><td>'+esc(e.supplier||'')+'</td><td>'+esc(e.issued||'')+'</td><td><button class="ghost">View &amp; verify</button></td>';
     tr.querySelector('button').onclick=()=>openCard(e); rows.appendChild(tr);
   });
 }
