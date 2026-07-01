@@ -11,11 +11,11 @@ const RUNDOWN = {
   author: 'Claude Opus 4.8 (M4)',
   live: 'https://os.meok.ai',
   repo: 'github.com/CSOAI-ORG/clawd-workspace (path: meok-os-deploy/)',
-  e2e: { file: 'test/e2e-products.mjs', passing: 86, failing: 0, run: 'node test/e2e-products.mjs https://os.meok.ai' },
+  e2e: { file: 'test/e2e-products.mjs', passing: 89, failing: 0, run: 'node test/e2e-products.mjs https://os.meok.ai' },
   how_to_audit: [
     'Fetch this endpoint; POST {message:canonical, signature, publicKey} to /api/verify → must be valid.',
     'Open /systemcard.html and /registry.html; click Verify (green) then Tamper test (red).',
-    'Run the E2E suite against os.meok.ai (86 functional checks).',
+    'Run the E2E suite against os.meok.ai (89 functional checks).',
     'Read the docs in the repo (see docs[]).',
   ],
   surfaces: {
@@ -58,7 +58,7 @@ const RUNDOWN = {
     'Photoreal 3D (Google tiles) + Maps billing are owner-gated; Cesium ion needs a free owner token; without either, free raster globe.',
     'Two concurrent-chat edits broke prod mid-session (ESM require() 500; <div> in <head>); both caught by E2E and fixed. Repo shared by multiple agents — coordinate writes to meok-os-deploy/index.html.',
     'WebGL/mic/voice not screenshot-verifiable in this automation env; verified via DOM + node harness + curl + E2E.',
-    'GCP VM hive: not reachable/deployable from this session (owner SSH/creds). This rundown is recorded to sovereign memory via MCP where reachable, and committed to GitHub.',
+    'GCP VM hive (/home/nicholas/sov3): CONFIRMED healthy + reachable via MCP (sovereign_health_check ok); its record_memory write is currently blocked by a remote bridge arg-mapping bug, so the hive should ingest the signed /api/rundown URL. Repo push to GitHub CSOAI-ORG (PRIVATE) succeeded.',
   ],
   owner_gated: ['Set SIGIL_SEED (pin sovereign identity)', 'Cesium ion token or Google Maps key (HQ/photoreal 3D)', 'OAuth client IDs (social)', 'Anthropic credits', 'Stripe key', 'git push to CSOAI-ORG (token)', 'Send outreach (Turing/DASA/DIANA)'],
 };
