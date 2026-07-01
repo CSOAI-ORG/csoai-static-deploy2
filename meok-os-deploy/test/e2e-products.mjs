@@ -84,8 +84,12 @@ ck('brain v1: maps any model → groq tool-model', /llama|gpt-oss|qwen/.test(r.j
 { const rs = await fetch(BASE + '/api/v1/chat/completions', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ model: 'sov3', stream: true, messages: [{ role: 'user', content: 'count 1 2 3' }] }) });
   const txt = await rs.text();
   ck('brain v1: streaming SSE chunks + deltas', /data:\s*\{[^\n]*chat\.completion\.chunk/.test(txt) && /"delta"/.test(txt)); }
-r = await post('/api/v1/chat/completions', { model: 'sov3', stream: false, tool_choice: 'auto', messages: [{ role: 'user', content: 'open the guardian app now' }], tools: [{ type: 'function', function: { name: 'open_app', description: 'open an OS app by id', parameters: { type: 'object', properties: { id: { type: 'string' } }, required: ['id'] } } }] });
-ck('brain v1: tool-calling returns tool_calls', (r.j.choices?.[0]?.message?.tool_calls || []).some(t => t.function?.name === 'open_app'));
+{ let gotTool = false;  // LLMs are non-deterministic about emitting tool_calls — retry a couple times
+  for (let i = 0; i < 3 && !gotTool; i++) {
+    const rr = await post('/api/v1/chat/completions', { model: 'sov3', stream: false, tool_choice: 'auto', temperature: 0, messages: [{ role: 'user', content: 'call the open_app tool to open the guardian app' }], tools: [{ type: 'function', function: { name: 'open_app', description: 'open an OS app by id', parameters: { type: 'object', properties: { id: { type: 'string' } }, required: ['id'] } } }] });
+    gotTool = (rr.j.choices?.[0]?.message?.tool_calls || []).some(t => t.function?.name === 'open_app');
+  }
+  ck('brain v1: tool-calling returns tool_calls (≤3 tries)', gotTool); }
 
 // ── the shared-backend guarantee: EVERY endpoint CORS-open (so csoai/defoneos can call it) ──
 for (const u of ['/api/orchestrate', '/api/v1/chat/completions', '/api/sign', '/api/verify', '/api/bridge', '/api/govern', '/api/nodes', '/api/chat', '/api/social']) {

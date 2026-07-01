@@ -367,6 +367,7 @@ table.mini td:last-child{text-align:right;font-variant-numeric:tabular-nums}
     <div class="sovsugg">
       <span class="sgg" onclick="sovHandle('open MEOK Earth')">🌍 My world</span>
       <span class="sgg" onclick="sovHandle('work mode')">💼 Work</span>
+      <span class="sgg" onclick="sovHandle('my reminders')">⏰ Reminders</span>
       <span class="sgg" onclick="sovHandle('what governs my industry')">🏛 What governs me?</span>
       <span class="sgg" onclick="sovHandle('open setup')">🧩 Set up</span>
       <span class="sgg" onclick="location.href='/sovspace.html'">🧰 SOV Space</span>
@@ -1269,6 +1270,15 @@ function esc(s){return (''+s).replace(/[<>&]/g,c=>({'<':'&lt;','>':'&gt;','&':'&
 function sovSaveMem(){ try{ localStorage.setItem('sov_facts',JSON.stringify(SOV_FACTS)); localStorage.setItem('sov_log',JSON.stringify(SOV_LOG.slice(-40))); }catch(e){} }
 function sovRemember(fact){ fact=(''+fact).trim(); if(!fact) return; if(/^name:/i.test(fact)) SOV_FACTS=SOV_FACTS.filter(f=>!/^name:/i.test(f)); SOV_FACTS=SOV_FACTS.filter(f=>f.toLowerCase()!==fact.toLowerCase()); SOV_FACTS.push(fact); if(SOV_FACTS.length>40) SOV_FACTS.shift(); sovSaveMem(); }
 function sovUserName(){ const f=SOV_FACTS.find(f=>/^name:/i.test(f)); return f? f.replace(/^name:\s*/i,'').trim() : null; }
+// ── everyday reminders — the "forever AI that remembers you", made useful daily (on-device) ──
+let REMIND=[]; try{ REMIND=JSON.parse(localStorage.getItem('meok_reminders')||'[]'); }catch(e){ REMIND=[]; }
+function remSave(){ try{ localStorage.setItem('meok_reminders',JSON.stringify(REMIND.slice(-60))); }catch(e){} }
+function remList(){ return REMIND.filter(r=>!r.done); }
+function remAdd(text,when){ const t=(text||'').trim(); if(!t) return null; const r={id:Date.now(),text:t.slice(0,140),when:(when||'').slice(0,40),done:false}; REMIND.push(r); remSave(); return r; }
+function remDoneClick(id){ const r=REMIND.find(x=>x.id===id); if(r){ r.done=true; remSave(); } sovSay("Done ✓ — crossed it off."); }
+function remClear(){ REMIND=REMIND.filter(r=>r.done); remSave(); }
+function remShow(){ const o=remList(); sovSay(o.length ? ("⏰ <b>Your reminders</b><br>"+o.map(r=>'• '+esc(r.text)+(r.when?(' <span style="color:var(--dim)">'+esc(r.when)+'</span>'):'')+' <a onclick="remDoneClick('+r.id+')" style="color:var(--gold);cursor:pointer">✓</a>').join('<br>')) : "No reminders yet — just say <b>“remind me to call mum at 6pm”</b> and I'll hold it for you (on your device)."); }
+function sovTimeGreet(){ const h=new Date().getHours(); return h<5?'Still up':h<12?'Good morning':h<18?'Good afternoon':'Good evening'; }
 function sovSay(text, who, replay){ const log=document.getElementById('sovlog'); if(!log) return; const m=document.createElement('div'); m.className='sovmsg '+(who||'ai'); m.innerHTML=text; log.appendChild(m); log.scrollTop=log.scrollHeight; if((who||'ai')!=='me' && !replay && window.SOV_VOICE_ON) sovSpeak(text); if(!replay){ SOV_LOG.push({t:text,w:who||'ai'}); if(SOV_LOG.length>40) SOV_LOG.shift(); sovSaveMem(); } }
 // voice OUT — browser speech now; upgrades to Chatterbox (HF MCP, via the bridge) when invoke is enabled
 window.SOV_VOICE_ON=false;
@@ -1280,6 +1290,9 @@ function sovHandle(raw){
   // --- memory (highest priority — the forever-AI that remembers you) ---
   let mm;
   if(mm=raw.match(/\b(?:my name is|call me)\s+([A-Za-z][\w .'-]{1,30})/i)){ const nm=mm[1].trim().replace(/[.?!]+$/,''); sovRemember('name: '+nm); const sub=document.querySelector('.sovsub'); if(sub) sub.textContent='companion to '+nm+' · remembers you'; return sovSay("Lovely to meet you, <b>"+esc(nm)+"</b>. I'll remember you — across any model, forever."); }
+  if(mm=raw.match(/\bremind me (?:to |that |about )?(.+)/i)){ let bodyt=mm[1].trim().replace(/[.?!]+$/,''); let when=''; const wm=bodyt.match(/\s+(at .+|tomorrow.*|tonight|this (?:evening|afternoon|morning)|on \w+day.*|in \d+ \w+|next \w+)$/i); if(wm){ when=wm[1].trim(); bodyt=bodyt.slice(0,wm.index).trim(); } const r=remAdd(bodyt,when); return sovSay(r? ("Got it — I'll remind you to <b>"+esc(bodyt)+"</b>"+(when?(" <span style='color:var(--dim)'>"+esc(when)+"</span>"):"")+". Say <b>“my reminders”</b> anytime.") : "Tell me what to remind you about — e.g. “remind me to call mum at 6pm”."); }
+  if(/\b(my reminders|show reminders|reminder list|remind list|what (?:do i|have i got) (?:to|need to) do|what.?s on my list)\b/.test(t)){ remShow(); return; }
+  if(/\b(clear|forget) (?:my |all )?reminders\b/.test(t)){ remClear(); return sovSay("Cleared. Clean slate — say “remind me to …” whenever."); }
   if(mm=raw.match(/\bremember(?:\s+that)?\s+(.+)/i)){ const f=mm[1].trim().replace(/[.?!]+$/,''); sovRemember(f); return sovSay("Remembered: <b>"+esc(f)+"</b>. I'll hold that for you."); }
   if(/\b(?:what do you (?:know|remember) about me|what do you remember|who am i)\b/.test(t)){ return sovSay(SOV_FACTS.length? ("Here's what I remember about you:<br>• "+SOV_FACTS.map(esc).join("<br>• ")) : "We're just getting started — say <b>'my name is …'</b> or <b>'remember …'</b> and I'll keep it forever."); }
   if(/\bforget (?:everything|me|it all|all)\b/.test(t)){ SOV_FACTS=[]; SOV_LOG=[]; sovSaveMem(); return sovSay("Forgotten — clean slate. You stay sovereign: your data, your call."); }
@@ -1292,7 +1305,7 @@ function sovHandle(raw){
   { const nn=sovFindNode(t); if(nn && /\b(tell|about|explain|what|who|governs?|node|hub|show)\b/.test(t)){ sovExplainNode(nn); return; } }
   if(/\b(govern|regulat|compl(?:y|iance|iant)|which (?:law|rule|framework)|what (?:governs|applies)|i run an?\b|my (?:business|company|industry|sector)\b|i work in)\b/.test(t)){ sovGovern(raw); return; }
   if(/\b(earth|world|globe|map|town)\b/.test(t)){ openByName_meokearth(); return; }
-  if(/\b(help|what can you|who are you|hello|hi)\b/.test(t)){ return sovSay("I'm your <b>sovereign</b> — I remember you across any model or protocol. I can <b>open apps</b> ('open revenue'), <b>switch your current</b> ('work mode'), <b>change your signature</b> ('become a guardian'), tell you <b>what governs your industry</b>, or take you into <b>MEOK Earth</b>. Tap 🎤 to just speak."); }
+  if(/\b(help|what can you|who are you|hello|hi)\b/.test(t)){ return sovSay("I'm your <b>sovereign</b> — I remember you, on your device, forever. I can <b>hold reminders</b> ('remind me to call mum at 6pm'), <b>open apps</b>, <b>switch Work/Life</b>, <b>change your signature</b> ('become a guardian'), tell you <b>what governs your industry</b>, or fly you into <b>MEOK Earth</b>. Tap 🎤 to just speak."); }
   sovOrchestrate(raw); // unmatched → the shared Sovereign brain: speaks + takes real OS actions (falls back to sovAsk)
 }
 // "What governs my industry?" — real frameworks + the legacy bridges MEOK connects.
@@ -1446,7 +1459,8 @@ function sovVoice(){
 document.getElementById('frame').classList.add('sovon');
 try{ SOV_FACTS=JSON.parse(localStorage.getItem('sov_facts')||'[]'); SOV_LOG=JSON.parse(localStorage.getItem('sov_log')||'[]'); }catch(e){ SOV_FACTS=[]; SOV_LOG=[]; }
 sovSyncHue();
-if(SOV_LOG.length){ SOV_LOG.forEach(m=>sovSay(m.t,m.w,true)); const nm=sovUserName(); sovSay(nm? ("Welcome back, <b>"+esc(nm)+"</b> — I remember you. Where to?") : "Welcome back — I remember our last session. Where to?", 'ai', true); }
+if(SOV_LOG.length){ SOV_LOG.forEach(m=>sovSay(m.t,m.w,true)); const nm=sovUserName(); const rc=remList().length;
+  sovSay(sovTimeGreet()+(nm?(', <b>'+esc(nm)+'</b>'):'')+' — welcome back. '+(rc?('You asked me to remember <b>'+rc+'</b> thing'+(rc>1?'s':'')+' — say <b>“my reminders”</b>.'):'Where to?'), 'ai', true); }
 else { sovSay("Hello — I'm your <b>sovereign</b>. First, let's get set up: tap 🧩 <b>Set up your Sovereign</b> to choose your left + right brains. Then tell me <b>'my name is …'</b> and I'll remember you forever.", 'ai', true); }
 
 /* ---------- brain setup (left/right mixture) + living minimap ---------- */
