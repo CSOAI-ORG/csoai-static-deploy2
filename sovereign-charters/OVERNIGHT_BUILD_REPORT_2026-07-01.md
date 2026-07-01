@@ -1,15 +1,15 @@
 # SOVEREIGN CHARTERS — OVERNIGHT BUILD REPORT
-**Generated**: 2026-07-01 06:00 UTC
+**Generated**: 2026-07-01 12:00 UTC
 
 ## Build Status
 
 | Metric | Value |
 |---|---|
-| Charter files built | 35 / 34 |
-| Missing | -1 |
-| Total directory size | 1.2M |
+| Charter files built | 36 / 34 |
+| Missing | -2 |
+| Total directory size | 2.9M |
 | Charter of Charters |    18984 bytes |
-| Master Index |     6006 bytes |
+| Master Index |     6424 bytes |
 | Master Template |     6734 bytes |
 
 ## Charter Inventory
@@ -27,7 +27,7 @@
 | | 09-dataprivacyof-charter.md | 40625 bytes |
 | | 10-asisecurity-charter.md | 46328 bytes |
 | | 11-agisafe-charter.md | 52417 bytes |
-| | 12-defoneos-charter.md | 15372 bytes |
+| | 12-defoneos-charter.md | 35164 bytes |
 | | 13-councilof-charter.md | 20130 bytes |
 | | 14-openmoe-charter.md | 20279 bytes |
 | | 15-openmcp-charter.md | 20274 bytes |
@@ -35,7 +35,7 @@
 | | 17-sandbox-charter.md | 24755 bytes |
 | | 18-sovereign-town-charter.md | 25881 bytes |
 | | 19-meok-compliance-gateway-charter.md | 24814 bytes |
-| | 20-loopfactory-charter.md | 8906 bytes |
+| | 20-loopfactory-charter.md | 14627 bytes |
 | | 21-optimobile-charter.md | 28981 bytes |
 | | 22-socialmediamanager-charter.md | 30677 bytes |
 | | 23-cobolbridge-charter.md | 36607 bytes |
@@ -46,11 +46,12 @@
 | | 28-koikeeper-charter.md | 41074 bytes |
 | | 29-landlaw-charter.md | 38762 bytes |
 | | 30-muckaway-charter.md | 47955 bytes |
-| | 31-planthire-charter.md | 8839 bytes |
-| | 32-pokerhud-charter.md | 12440 bytes |
-| | 33-suicidestop-charter.md | 9314 bytes |
-| | 34-science-charter.md | 8623 bytes |
-| | 35-coigndaltion-charter.md | 8942 bytes |
+| | 31-planthire-charter.md | 20949 bytes |
+| | 32-pokerhud-charter.md | 30074 bytes |
+| | 33-suicidestop-charter.md | 38183 bytes |
+| | 34-science-charter.md | 33839 bytes |
+| | 35-coigndaltion-charter.md | 34699 bytes |
+| | 36-publicwatchdog-charter.md | 22890 bytes |
 
 ## ✅ ALL 34 CHARTERS BUILT
 
