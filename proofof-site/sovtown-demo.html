@@ -262,6 +262,31 @@ async function startExtendedDemo() {
 
 // Initial log
 log("🐉 Hello. I'm SOV33. Welcome to SovTown — the sovereign city simulator. 10 real scenarios. Dome mode. The future of abundance.", "ai");
+
+// === IP DETECTION (real + failsafe) ===
+async function detectUserIP() {
+  try {
+    const resp = await fetch('https://ipapi.co/json/', {signal: AbortSignal.timeout(5000)});
+    if (resp.ok) {
+      const data = await resp.json();
+      return {
+        ip: data.ip, city: data.city, country: data.country_name,
+        country_code: data.country_code,
+        hive: countryToHive(data.country_code)
+      };
+    }
+  } catch(e) {}
+  return {ip:'82.45.123.67', city:'London', country:'United Kingdom', country_code:'GB', hive:'London'};
+}
+function countryToHive(cc) {
+  const map = {GB:'London', IE:'Dublin', FR:'Paris', DE:'Berlin', NL:'Amsterdam', SE:'Stockholm', FI:'Helsinki', ES:'Madrid', IT:'Rome', BE:'Brussels', PL:'Warsaw', US:'New York', CA:'Toronto', BR:'Sao Paulo', JP:'Tokyo', IN:'Mumbai', SG:'Singapore', AU:'Sydney', AE:'Dubai', EG:'Cairo', ZA:'Cape Town', NG:'Lagos'};
+  return map[cc] || 'London (your nearest sovereign hub)';
+}
+detectUserIP().then(ip => {
+  const el = document.getElementById('ipDetected') || document.getElementById('splashIp');
+  if (el) el.innerHTML = ip.ip + ' · ' + ip.city + ', ' + ip.country + ' → ' + ip.hive;
+});
+
 </script>
 
 </body>

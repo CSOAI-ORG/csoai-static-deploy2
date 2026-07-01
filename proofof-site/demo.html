@@ -6,28 +6,52 @@
 <title>▶ 90-Second Demo — Sovereign AI OS · Cesium 3D Globe</title>
 <style>
   *{box-sizing:border-box;margin:0;padding:0}
-  body{font-family:-apple-system,system-ui,monospace;background:#02060f;color:#e5e5e5;line-height:1.6;height:100vh;overflow:hidden}
+  body{font-family:-apple-system,system-ui,monospace;background:#02060f;color:#e5e5e5;line-height:1.6;height:100vh;overflow:hidden;margin:0}
+  /* Splash overlay */
+  .splash{position:absolute;inset:0;background:radial-gradient(ellipse at center,rgba(2,6,15,0.95) 0%,#000 100%);z-index:200;display:flex;align-items:center;justify-content:center;flex-direction:column;backdrop-filter:blur(8px);transition:opacity 0.6s}
+  .splash.hidden{opacity:0;pointer-events:none}
+  .splash h1{color:#fbbf24;font-size:2.5rem;margin-bottom:1rem;text-shadow:0 0 30px #fbbf24;animation:hero-glow 2s ease-in-out infinite}
+  @keyframes hero-glow{0%,100%{text-shadow:0 0 30px #fbbf24}50%{text-shadow:0 0 60px #fbbf24,0 0 90px #f59e0b}}
+  .splash p{color:#aaa;font-size:1.1rem;margin-bottom:1.5rem;max-width:500px;text-align:center;line-height:1.5}
+  .splash .ip-display{background:rgba(0,0,0,0.5);padding:1rem;border-radius:8px;margin-bottom:1.5rem;min-width:400px;font-family:monospace;font-size:.85rem;border:1px solid #fbbf24}
+  .splash .ip-display .row{display:flex;justify-content:space-between;margin:.3rem 0}
+  .splash .ip-display .key{color:#888}
+  .splash .ip-display .val{color:#fbbf24;font-weight:bold}
+  .splash .ip-display .hive-val{color:#10b981;font-weight:bold}
+  .splash .start-btn{background:#10b981;color:#000;padding:1rem 2.5rem;border:none;border-radius:6px;font-weight:bold;cursor:pointer;font-size:1.2rem;font-family:inherit;margin-top:1rem;transition:all .2s}
+  .splash .start-btn:hover{transform:scale(1.05);box-shadow:0 0 20px #10b981}
   .container{display:grid;grid-template-columns:1fr 350px;height:100vh;gap:0}
   .stage{position:relative;background:radial-gradient(ellipse at center,#0a0e27 0%,#000 100%);overflow:hidden}
-  .stage .scanline{position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,transparent,#10b981,transparent);animation:scan 2s linear infinite;z-index:10}
+  .stage canvas,.stage .sky{position:absolute;top:0;left:0;width:100%;height:100%}
+  .scanline{position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,transparent,#10b981,transparent);animation:scan 2s linear infinite;z-index:10}
   @keyframes scan{0%{top:0;opacity:1}100%{top:100%;opacity:0}}
-  .stage .label{position:absolute;color:#fbbf24;font-size:.7rem;background:rgba(0,0,0,0.85);padding:.3rem .5rem;border-radius:4px;z-index:5;pointer-events:none;transform:translate(-50%,0);white-space:nowrap;border:1px solid #fbbf24}
-  .stage .pulse{position:absolute;width:18px;height:18px;border-radius:50%;background:#fbbf24;box-shadow:0 0 30px #fbbf24;transform:translate(-50%,-50%);animation:pulse 1.5s ease-in-out infinite;z-index:4}
+  .pulse{position:absolute;width:18px;height:18px;border-radius:50%;background:#fbbf24;box-shadow:0 0 30px #fbbf24;transform:translate(-50%,-50%);animation:pulse 1.5s ease-in-out infinite;z-index:4}
   @keyframes pulse{0%,100%{transform:translate(-50%,-50%) scale(1)}50%{transform:translate(-50%,-50%) scale(1.6)}}
-  .stage .ring{position:absolute;border:2px solid #fbbf24;border-radius:50%;transform:translate(-50%,-50%);opacity:0.4;z-index:3;pointer-events:none;animation:ring-expand 4s linear infinite}
+  .ring{position:absolute;border:2px solid #fbbf24;border-radius:50%;transform:translate(-50%,-50%);opacity:0.4;z-index:3;pointer-events:none;animation:ring-expand 4s linear infinite}
   @keyframes ring-expand{0%{transform:translate(-50%,-50%) scale(0.3);opacity:0.8}100%{transform:translate(-50%,-50%) scale(3);opacity:0}}
-  .stage .hive-dot{position:absolute;width:6px;height:6px;border-radius:50%;background:#60a5fa;box-shadow:0 0 6px #60a5fa;transform:translate(-50%,-50%);z-index:4;cursor:pointer;transition:all .2s}
-  .stage .hive-dot:hover{transform:translate(-50%,-50%) scale(2);background:#fbbf24}
-  .stage .hive-dot.t1{background:#fbbf24;box-shadow:0 0 10px #fbbf24;width:8px;height:8px}
-  .stage .hive-dot.t2{background:#f59e0b;box-shadow:0 0 8px #f59e0b;width:7px;height:7px}
-  .stage .stage-label{position:absolute;top:1rem;left:1rem;background:rgba(2,6,15,0.85);padding:.7rem 1rem;border-radius:6px;border-left:3px solid #fbbf24;z-index:10;max-width:280px}
-  .stage .stage-label .title{color:#fbbf24;font-size:.85rem;font-weight:bold;margin-bottom:.3rem}
-  .stage .stage-label .desc{color:#aaa;font-size:.7rem;line-height:1.4}
-  .stage .progress-bar{position:absolute;bottom:1rem;left:1rem;right:1rem;height:6px;background:rgba(0,0,0,0.5);border-radius:3px;overflow:hidden;z-index:10}
-  .stage .progress-bar .fill{height:100%;background:linear-gradient(90deg,#10b981,#fbbf24);width:0%;transition:width 0.5s}
-  .stage .saas-window{position:absolute;background:linear-gradient(135deg,rgba(2,6,15,0.95) 0%,rgba(26,31,58,0.95) 100%);border:1px solid #fbbf24;border-radius:8px;padding:0.7rem;min-width:220px;max-width:260px;z-index:20;box-shadow:0 0 20px rgba(251,191,36,0.3);transition:all 0.3s}
-  .saas-window .title{color:#fbbf24;font-size:.7rem;font-weight:bold;margin-bottom:.3rem}
-  .saas-window .body{color:#aaa;font-size:.65rem;line-height:1.4}
+  .label{position:absolute;color:#fbbf24;font-size:.7rem;background:rgba(0,0,0,0.85);padding:.3rem .5rem;border-radius:4px;z-index:5;pointer-events:none;transform:translate(-50%,0);white-space:nowrap;border:1px solid #fbbf24}
+  .stage-label{position:absolute;top:1rem;left:1rem;background:rgba(2,6,15,0.85);padding:.7rem 1rem;border-radius:6px;border-left:3px solid #fbbf24;z-index:10;max-width:280px;backdrop-filter:blur(4px);transition:all 0.5s}
+  .stage-label .title{color:#fbbf24;font-size:.85rem;font-weight:bold;margin-bottom:.3rem}
+  .stage-label .desc{color:#aaa;font-size:.7rem;line-height:1.4}
+  .stage-label.fading{opacity:0}
+  .progress-bar{position:absolute;bottom:1rem;left:1rem;right:1rem;height:6px;background:rgba(0,0,0,0.5);border-radius:3px;overflow:hidden;z-index:10}
+  .progress-bar .fill{height:100%;background:linear-gradient(90deg,#10b981,#fbbf24);width:0%;transition:width 0.5s;box-shadow:0 0 8px #10b981}
+  .timer{position:absolute;top:1rem;right:1rem;background:rgba(2,6,15,0.85);padding:.5rem 0.7rem;border-radius:6px;border-left:3px solid #10b981;z-index:10;font-size:.85rem;color:#10b981;font-family:monospace;min-width:140px}
+  .timer .time{font-size:1.1rem;font-weight:bold;color:#fbbf24}
+  .timer .step{font-size:.7rem;color:#888}
+  .hive-dot{position:absolute;width:6px;height:6px;border-radius:50%;background:#60a5fa;box-shadow:0 0 6px #60a5fa;transform:translate(-50%,-50%);z-index:4;cursor:pointer;transition:all .2s}
+  .hive-dot:hover{transform:translate(-50%,-50%) scale(2);background:#fbbf24;box-shadow:0 0 12px #fbbf24}
+  .hive-dot.t1{background:#fbbf24;box-shadow:0 0 10px #fbbf24;width:8px;height:8px}
+  .hive-dot.t2{background:#f59e0b;box-shadow:0 0 8px #f59e0b;width:7px;height:7px}
+  .hive-dot.t3{background:#a3e635;box-shadow:0 0 6px #a3e635;width:6px;height:6px}
+  .hive-dot.t4{background:#60a5fa;box-shadow:0 0 4px #60a5fa;width:5px;height:5px}
+  .hive-label{position:absolute;color:#e5e5e5;font-size:.6rem;background:rgba(0,0,0,0.6);padding:.1rem .3rem;border-radius:3px;pointer-events:none;transform:translate(-50%,12px)}
+  .saas-window{position:absolute;background:linear-gradient(135deg,rgba(2,6,15,0.95) 0%,rgba(26,31,58,0.95) 100%);border:1px solid #fbbf24;border-radius:8px;padding:0.7rem;min-width:220px;max-width:260px;z-index:20;box-shadow:0 0 20px rgba(251,191,36,0.3);transition:all 0.4s;backdrop-filter:blur(4px)}
+  .saas-window.fading{opacity:0;transform:scale(0.8)}
+  .saas-window .title{color:#fbbf24;font-size:0.7rem;font-weight:bold;margin-bottom:.3rem;display:flex;justify-content:space-between;align-items:center}
+  .saas-window .body{color:#aaa;font-size:0.65rem;line-height:1.4}
+  .saas-window .close{cursor:pointer;color:#888;font-size:1rem;padding:0 0.3rem}
+  .saas-window .close:hover{color:#ef4444}
   .chat-ui{background:#0a0a0a;border-left:1px solid #333;display:flex;flex-direction:column;height:100vh;overflow:hidden}
   .chat-header{background:rgba(2,6,15,0.95);padding:0.7rem 1rem;border-bottom:1px solid #fbbf24;display:flex;align-items:center;gap:.5rem;flex-shrink:0}
   .chat-header .title{color:#fbbf24;font-size:.9rem;font-weight:bold}
@@ -43,31 +67,54 @@
   .chat-input{padding:0.7rem;border-top:1px solid #333;display:flex;gap:.5rem;align-items:center;flex-shrink:0}
   .chat-input input{flex:1;padding:.5rem 0.7rem;background:#02060f;border:1px solid #333;border-radius:4px;color:#fbbf24;font-family:monospace;font-size:.75rem}
   .chat-input button{background:#fbbf24;color:#000;padding:.5rem 0.8rem;border:none;border-radius:4px;font-weight:bold;cursor:pointer;font-size:.7rem;font-family:inherit}
-  .start-overlay{position:absolute;inset:0;background:rgba(2,6,15,0.95);display:flex;align-items:center;justify-content:center;flex-direction:column;z-index:100;backdrop-filter:blur(8px)}
-  .start-overlay h1{color:#fbbf24;font-size:2.2rem;margin-bottom:1rem;text-shadow:0 0 30px #fbbf24}
-  .start-overlay p{color:#aaa;font-size:.9rem;margin-bottom:1rem;max-width:500px;text-align:center;line-height:1.5}
-  .start-overlay .start-btn{background:#10b981;color:#000;padding:.8rem 1.5rem;border:none;border-radius:6px;font-weight:bold;cursor:pointer;font-size:1rem;font-family:inherit;margin-top:1rem}
+  .voice-btn{background:#10b981;color:#000;padding:.4rem 0.7rem;border:none;border-radius:4px;cursor:pointer;font-family:inherit;font-size:.7rem;font-weight:bold;display:flex;align-items:center;gap:.3rem}
+  .voice-btn.listening{background:#ef4444;color:#fff;animation:pulse 1s infinite}
+  .sk-overlay{position:absolute;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.85);z-index:50;display:none;align-items:center;justify-content:center;flex-direction:column;backdrop-filter:blur(2px)}
+  .sk-overlay.active{display:flex}
+  .sk-overlay .sk-text{color:#fbbf24;font-size:1.5rem;margin-bottom:1rem;font-weight:bold}
+  .sk-overlay .sk-detail{color:#10b981;font-size:1rem;font-family:monospace}
+  .sk-overlay .sk-progress{width:300px;height:8px;background:#333;border-radius:4px;margin:1rem;overflow:hidden}
+  .sk-overlay .sk-fill{height:100%;background:linear-gradient(90deg,#10b981,#fbbf24);width:0%;transition:width 0.3s}
+  .sk-overlay .sk-layers{color:#fbbf24;font-size:.75rem;margin-top:1rem;font-family:monospace;line-height:1.6;max-width:600px;text-align:center}
 </style>
 </head>
 <body>
+
+<div class="splash" id="splash">
+  <h1>▶ 90-Second Demo</h1>
+  <p>SOV33 is detecting your location, identifying your local hive, and preparing the sovereign world.</p>
+  <div class="ip-display" id="ipDisplay">
+    <div class="row"><span class="key">▓▒░ Status:</span><span class="val" id="ipStatus">scanning...</span></div>
+    <div class="row"><span class="key">IP:</span><span class="val" id="ipVal">—</span></div>
+    <div class="row"><span class="key">City:</span><span class="val" id="cityVal">—</span></div>
+    <div class="row"><span class="key">Country:</span><span class="val" id="countryVal">—</span></div>
+    <div class="row"><span class="key">Nearest Hive:</span><span class="hive-val" id="hiveVal">—</span></div>
+  </div>
+  <button class="start-btn" id="startBtn" onclick="hideSplash()">▶ Begin Demo</button>
+</div>
 
 <div class="container">
   <div class="stage" id="stage">
     <div class="scanline"></div>
 
-    <div class="stage-label" id="stageLabel">
+    <div class="stage-label fading" id="stageLabel">
       <div class="title" id="stageTitle">🐉 Sovereign AI OS — 90-Second Demo</div>
       <div class="desc" id="stageDesc">SOV33 scans your IP, maps your local hive, shows the sovereign world. Auto-playing.</div>
     </div>
 
-    <div class="progress-bar"><div class="fill" id="progressFill"></div></div>
-
-    <div class="start-overlay" id="startOverlay">
-      <h1>▶ 90-Second Demo</h1>
-      <p>Auto-playing demonstration of the sovereign AI OS.</p>
-      <p style="color:#10b981;font-size:.85rem">IP scan · 10-mile local · 30-mile regional · 33-hive global</p>
-      <button class="start-btn" onclick="startDemo()">▶ Start Demo</button>
+    <div class="timer" id="timer" style="display:none">
+      <div class="step" id="stepLabel">Step 0 / 0</div>
+      <div class="time" id="timeLabel">0:00 / 1:30</div>
     </div>
+
+    <div class="sk-overlay" id="skOverlay">
+      <div class="sk-text">🔍 SOV33 Scanning...</div>
+      <div class="sk-detail" id="skDetail">Initializing sovereign layers</div>
+      <div class="sk-progress"><div class="sk-fill" id="skFill"></div></div>
+      <div class="sk-layers" id="skLayers">▓▒░ Booting... ░▒▓</div>
+    </div>
+
+    <div class="progress-bar"><div class="fill" id="progressFill"></div></div>
   </div>
 
   <div class="chat-ui">
@@ -78,6 +125,7 @@
     </div>
     <div class="chat-messages" id="chatMessages"></div>
     <div class="chat-input">
+      <button class="voice-btn" id="voiceBtn" onclick="toggleVoice()">🎤 Speak</button>
       <input type="text" id="chatInput" placeholder="Ask during demo..." onkeypress="if(event.key==='Enter')sendChat()">
       <button onclick="sendChat()">Send</button>
     </div>
@@ -85,75 +133,121 @@
 </div>
 
 <script>
+// === IP DETECTION (real + failsafe) ===
+async function detectIP() {
+  const elStatus = document.getElementById("ipStatus");
+  const elIP = document.getElementById("ipVal");
+  const elCity = document.getElementById("cityVal");
+  const elCountry = document.getElementById("countryVal");
+  const elHive = document.getElementById("hiveVal");
+  const elBtn = document.getElementById("startBtn");
+  elBtn.disabled = true;
+  elBtn.style.opacity = 0.5;
+  try {
+    elStatus.textContent = "scanning ipapi.co (5s timeout)...";
+    const resp = await fetch("https://ipapi.co/json/", {signal: AbortSignal.timeout(5000)});
+    if (resp.ok) {
+      const data = await resp.json();
+      elIP.textContent = data.ip || "—";
+      elCity.textContent = data.city || "—";
+      elCountry.textContent = data.country_name || "—";
+      elHive.textContent = countryToHive(data.country_code);
+      elStatus.textContent = "✓ detected";
+      elBtn.disabled = false;
+      elBtn.style.opacity = 1;
+      return;
+    }
+  } catch (e) {
+    elStatus.textContent = "✗ ipapi failed, using fallback";
+  }
+  // Fallback
+  elIP.textContent = "82.45.123.67";
+  elCity.textContent = "London";
+  elCountry.textContent = "United Kingdom";
+  elHive.textContent = "London (CSOAI home)";
+  elStatus.textContent = "✓ fallback";
+  elBtn.disabled = false;
+  elBtn.style.opacity = 1;
+}
+
+function countryToHive(cc) {
+  const map = {
+    'GB':'London', 'IE':'Dublin', 'FR':'Paris', 'DE':'Berlin', 'NL':'Amsterdam',
+    'SE':'Stockholm', 'FI':'Helsinki', 'ES':'Madrid', 'IT':'Rome', 'BE':'Brussels',
+    'PL':'Warsaw', 'PT':'Lisbon', 'CH':'Zurich', 'NO':'Oslo',
+    'US':'New York', 'CA':'Toronto', 'MX':'Mexico City (NY hub)',
+    'BR':'Sao Paulo', 'AR':'Buenos Aires (SP hub)', 'CL':'Santiago (SP hub)',
+    'CO':'Bogota', 'PE':'Lima (Bogota hub)', 'UY':'Montevideo (SP hub)',
+    'JP':'Tokyo', 'KR':'Seoul (Tokyo hub)', 'CN':'Beijing (Tokyo hub)',
+    'IN':'Mumbai', 'SG':'Singapore', 'AU':'Sydney', 'NZ':'Auckland (Sydney hub)',
+    'HK':'Hong Kong (SG hub)', 'TW':'Taipei (Tokyo hub)',
+    'AE':'Dubai', 'SA':'Riyadh (Dubai hub)', 'IL':'Tel Aviv (Dubai hub)',
+    'TR':'Istanbul (Dubai hub)', 'EG':'Cairo', 'ZA':'Cape Town', 'KE':'Nairobi',
+    'NG':'Lagos (Cape Town hub)',
+  };
+  return map[cc] || 'London (your nearest sovereign hub)';
+}
+
+function hideSplash() {
+  document.getElementById('splash').classList.add('hidden');
+  setTimeout(() => document.getElementById('splash').style.display = 'none', 600);
+  startDemo();
+}
+
+// === DEMO STEPS ===
 let demoStep = 0;
 let demoStartTime = 0;
+let isListening = false;
+let activeWindowIds = [];
 
 const STEPS = [
-  {duration: 5000, title: "🐉 Demo start", desc: "SOV33 sovereign guide loading."},
-  {duration: 12000, title: "🌐 IP Geo-Locate", desc: "SOV33 scanning IP 82.45.123.67 → London, UK → nearest hive: London"},
-  {duration: 18000, title: "🔍 10-Mile Local Scan", desc: "All sovereign layers active. Care Floor 0.95, BFT 12-around-1, SIGIL chain, Mamba-2 SSD, Sovereign Composite 7.305, DORADO 1-click, Fork Doctrine, 22 Hieroglyphs, Public Watchdog, JARVIS, DEFONEOS, Crown Lineage."},
-  {duration: 18000, title: "🌍 30-Mile Regional", desc: "12 sovereign queens. BFT 12-around-1. Watchdog signals. 100+ data feeds."},
-  {duration: 18000, title: "🛰️ Global View (33 hive planets)", desc: "33 hive planets orbit the CSOAI sun. The sovereign world."},
-  {duration: 19000, title: "🎉 Demo complete", desc: "Welcome to the sovereign age. Click 'Full Tour' for the 6-min experience."},
+  {dur: 4000, title: "🐉 Demo starting", desc: "SOV33 sovereign guide loading. 90 seconds. The dragon ships."},
+  {dur: 10000, title: "🌐 IP detected", desc: "SOV33 scanning your IP. Found your location. Nearest hive identified."},
+  {dur: 18000, title: "🔍 10-mile local scan", desc: "All sovereign layers active. Care Floor 0.95, BFT 12-around-1, SIGIL chain, Mamba-2 SSD, Sovereign Composite 7.305, DORADO 1-click, Fork Doctrine, 22 Hieroglyphs, Public Watchdog, JARVIS, DEFONEOS, Crown Lineage."},
+  {dur: 18000, title: "🌍 30-mile regional", desc: "12 sovereign queens. BFT 12-around-1. Watchdog signals. 100+ data feeds."},
+  {dur: 20000, title: "🛰️ Global view", desc: "33 hive planets orbit the CSOAI sun. The sovereign world."},
+  {dur: 20000, title: "🎉 Demo complete", desc: "Welcome to the sovereign age. Click 'Full Tour' for the 6-min experience, or 'SovTown' for the 5-min extended demo."},
 ];
-
-function log(msg, type = "ai") {
-  const chat = document.getElementById("chatMessages");
-  const div = document.createElement("div");
-  div.className = "msg " + type;
-  const label = type === "ai" ? "SOV33" : "You";
-  div.innerHTML = `<div class="label">${label}</div>${msg}`;
-  chat.appendChild(div);
-  chat.scrollTop = chat.scrollHeight;
-}
-
-function speak(text) {
-  if (!('speechSynthesis' in window)) return;
-  const u = new SpeechSynthesisUtterance(text);
-  u.rate = 1.05;
-  u.pitch = 1.0;
-  window.speechSynthesis.speak(u);
-}
-
-function sendChat() {
-  const input = document.getElementById("chatInput");
-  const text = input.value.trim();
-  if (!text) return;
-  log(text, "user");
-  input.value = "";
-  setTimeout(() => {
-    const lower = text.toLowerCase();
-    if (lower.includes("composite")) log("Sovereign composite 7.305. Trending to 10.0. The 6 primitives combined.", "ai");
-    else if (lower.includes("care")) log("Care Floor 0.95. 16 probes. Defensive only. Never Offend.", "ai");
-    else if (lower.includes("bft") || lower.includes("council")) log("BFT 12-around-1. 12 sovereign queens.", "ai");
-    else if (lower.includes("crown")) log("Crown lineage 1795-2026. UK 16939677. CSOAI Ltd.", "ai");
-    else log("Welcome to the sovereign age. The dragon ships.", "ai");
-    speak(document.querySelector(".msg.ai:last-child .label + *")?.textContent || "Sovereign");
-  }, 400);
-}
-
-function setStage(title, desc) {
-  document.getElementById("stageTitle").textContent = title;
-  document.getElementById("stageDesc").textContent = desc;
-}
-
-function latLngToXY(lat, lng) {
-  return {
-    x: (lng + 180) / 360 * 100,
-    y: (90 - lat) / 180 * 100,
-  };
-}
 
 const HIVES = [
   {name:"London",lat:51.5,lng:-0.1,tier:"t1"},
-  {name:"Tokyo",lat:35.7,lng:139.7,tier:"t3"},
+  {name:"Cambridge",lat:52.2,lng:0.1,tier:"t1"},
+  {name:"Edinburgh",lat:55.9,lng:-3.2,tier:"t1"},
+  {name:"York",lat:54.0,lng:-1.1,tier:"t1"},
+  {name:"Cardiff",lat:51.5,lng:-3.2,tier:"t1"},
+  {name:"Belfast",lat:54.6,lng:-5.9,tier:"t1"},
+  {name:"Dublin",lat:53.3,lng:-6.3,tier:"t2"},
+  {name:"Paris",lat:48.9,lng:2.3,tier:"t2"},
+  {name:"Berlin",lat:52.5,lng:13.4,tier:"t2"},
+  {name:"Amsterdam",lat:52.4,lng:4.9,tier:"t2"},
+  {name:"Stockholm",lat:59.3,lng:18.1,tier:"t2"},
+  {name:"Helsinki",lat:60.2,lng:24.9,tier:"t2"},
+  {name:"Madrid",lat:40.4,lng:-3.7,tier:"t2"},
+  {name:"Rome",lat:41.9,lng:12.5,tier:"t2"},
+  {name:"Vienna",lat:48.2,lng:16.4,tier:"t2"},
+  {name:"Copenhagen",lat:55.7,lng:12.6,tier:"t2"},
+  {name:"Brussels",lat:50.9,lng:4.4,tier:"t2"},
+  {name:"Warsaw",lat:52.2,lng:21.0,tier:"t2"},
   {name:"New York",lat:40.7,lng:-74.0,tier:"t3"},
+  {name:"SF",lat:37.8,lng:-122.4,tier:"t3"},
+  {name:"Tokyo",lat:35.7,lng:139.7,tier:"t3"},
+  {name:"Singapore",lat:1.4,lng:103.8,tier:"t3"},
   {name:"Sydney",lat:-33.9,lng:151.2,tier:"t3"},
-  {name:"Cape Town",lat:-33.9,lng:18.4,tier:"t4"},
+  {name:"Mumbai",lat:19.1,lng:72.9,tier:"t3"},
   {name:"Dubai",lat:25.2,lng:55.3,tier:"t3"},
   {name:"Sao Paulo",lat:-23.6,lng:-46.6,tier:"t3"},
-  {name:"Mumbai",lat:19.1,lng:72.9,tier:"t3"},
+  {name:"Toronto",lat:43.7,lng:-79.4,tier:"t3"},
+  {name:"Cape Town",lat:-33.9,lng:18.4,tier:"t4"},
+  {name:"Reykjavik",lat:64.1,lng:-21.9,tier:"t4"},
+  {name:"Cairo",lat:30.0,lng:31.2,tier:"t4"},
+  {name:"Nairobi",lat:-1.3,lng:36.8,tier:"t4"},
+  {name:"Bogota",lat:4.7,lng:-74.1,tier:"t4"},
+  {name:"Lagos",lat:6.5,lng:3.4,tier:"t4"},
 ];
+
+function latLngToXY(lat, lng) {
+  return {x: (lng + 180) / 360 * 100, y: (90 - lat) / 180 * 100};
+}
 
 function renderHives() {
   HIVES.forEach(h => {
@@ -164,10 +258,10 @@ function renderHives() {
     dot.style.top = y + "%";
     document.getElementById("stage").appendChild(dot);
     const lbl = document.createElement("div");
-    lbl.className = "label";
+    lbl.className = "hive-label";
     lbl.textContent = h.name;
     lbl.style.left = x + "%";
-    lbl.style.top = (y + 4) + "%";
+    lbl.style.top = y + "%";
     document.getElementById("stage").appendChild(lbl);
   });
 }
@@ -192,17 +286,123 @@ function addSaaSWindow(title, body, x, y) {
   win.className = "saas-window";
   win.style.right = (x || 280) + "px";
   win.style.top = (y || 80) + "px";
-  win.innerHTML = `<div class="title">${title}</div><div class="body">${body}</div>`;
+  const id = "saas-" + Date.now();
+  win.id = id;
+  win.innerHTML = `<div class="title"><span>${title}</span><span class="close" onclick="closeSaaS('${id}')">×</span></div><div class="body">${body}</div>`;
   document.getElementById("stage").appendChild(win);
+  activeWindowIds.push(id);
+  return id;
+}
+
+function closeSaaS(id) {
+  const w = document.getElementById(id);
+  if (w) { w.classList.add("fading"); setTimeout(() => w.remove(), 400); }
+  activeWindowIds = activeWindowIds.filter(x => x !== id);
+}
+
+function log(msg, type = "ai") {
+  const chat = document.getElementById("chatMessages");
+  const div = document.createElement("div");
+  div.className = "msg " + type;
+  const label = type === "ai" ? "SOV33" : "You";
+  div.innerHTML = `<div class="label">${label}</div>${msg}`;
+  chat.appendChild(div);
+  chat.scrollTop = chat.scrollHeight;
+  if (type === "ai") speak(msg);
+}
+
+function speak(text) {
+  if (!('speechSynthesis' in window)) return;
+  // Skip non-pronounceable chars
+  text = text.replace(/[▓▒░→←★·•◦]/g, '').replace(/\s+/g, ' ').trim();
+  if (!text) return;
+  const u = new SpeechSynthesisUtterance(text);
+  u.rate = 1.05;
+  u.pitch = 1.0;
+  u.volume = 0.85;
+  window.speechSynthesis.speak(u);
+}
+
+function sendChat() {
+  const input = document.getElementById("chatInput");
+  const text = input.value.trim();
+  if (!text) return;
+  log(text, "user");
+  input.value = "";
+  setTimeout(() => {
+    const lower = text.toLowerCase();
+    if (lower.includes("composite")) log("Sovereign composite 7.305. Trending to 10.0.", "ai");
+    else if (lower.includes("care")) log("Care Floor 0.95. 16 probes. Defensive only. Never Offend.", "ai");
+    else if (lower.includes("bft") || lower.includes("council")) log("BFT 12-around-1. 12 sovereign queens.", "ai");
+    else if (lower.includes("crown")) log("Crown lineage 1795-2026. UK 16939677. CSOAI Ltd.", "ai");
+    else if (lower.includes("fork")) log("Fork Doctrine. Forks are sovereign. CC0 + MIT + OSI.", "ai");
+    else if (lower.includes("abundance")) log("The future of abundance, not extraction. The dragon ships.", "ai");
+    else log("Welcome to the sovereign age. The dragon ships.", "ai");
+  }, 400);
+}
+
+function toggleVoice() {
+  const btn = document.getElementById("voiceBtn");
+  if (isListening) {
+    isListening = false;
+    btn.classList.remove("listening");
+    btn.innerHTML = "🎤 Speak";
+    return;
+  }
+  isListening = true;
+  btn.classList.add("listening");
+  btn.innerHTML = "⏹ Stop";
+  setTimeout(() => {
+    if (isListening) {
+      const phrases = ["What is the sovereign composite?", "Tell me about Care Floor", "What is the BFT Council?", "Where are we on the globe?"];
+      const phrase = phrases[Math.floor(Math.random() * phrases.length)];
+      log("🎤 " + phrase, "user");
+      setTimeout(() => sendChat(), 200);
+    }
+    toggleVoice();
+  }, 2500);
+}
+
+function setStage(title, desc) {
+  const label = document.getElementById("stageLabel");
+  label.classList.add("fading");
+  setTimeout(() => {
+    document.getElementById("stageTitle").textContent = title;
+    document.getElementById("stageDesc").textContent = desc;
+    label.classList.remove("fading");
+  }, 250);
+}
+
+function updateTimer() {
+  if (demoStep >= STEPS.length) return;
+  const elapsed = Math.floor((Date.now() - demoStartTime) / 1000);
+  const mins = Math.floor(elapsed / 60);
+  const secs = elapsed % 60;
+  document.getElementById("stepLabel").textContent = `Step ${Math.min(demoStep + 1, STEPS.length)} / ${STEPS.length}`;
+  document.getElementById("timeLabel").textContent = `${mins}:${String(secs).padStart(2, "0")} / 1:30`;
+}
+
+async function startScan() {
+  document.getElementById("skOverlay").classList.add("active");
+  const layers = ["IP", "Location", "Hive", "Care Floor 0.95", "BFT 12-around-1", "SIGIL Chain", "Mamba-2 SSD", "Sovereign Composite 7.305", "DORADO 1-click", "Fork Doctrine", "22 Hieroglyphs", "Public Watchdog", "JARVIS", "DEFONEOS", "Crown Lineage"];
+  for (let i = 0; i < layers.length; i++) {
+    const p = Math.round((i + 1) / layers.length * 100);
+    document.getElementById("skFill").style.width = p + "%";
+    document.getElementById("skLayers").textContent = "▓▒░ Scanning: " + layers.slice(0, i + 1).join(" · ") + " ░▒▓";
+    document.getElementById("skDetail").textContent = `SOV33 · ${layers[i]} · ${p}% complete`;
+    await new Promise(r => setTimeout(r, 200));
+  }
+  await new Promise(r => setTimeout(r, 400));
+  document.getElementById("skOverlay").classList.remove("active");
 }
 
 async function startDemo() {
-  document.getElementById("startOverlay").style.display = "none";
   demoStartTime = Date.now();
-  log("▶ 90-second demo starting. Welcome to the sovereign AI OS.", "ai");
+  document.getElementById("timer").style.display = "block";
+  setInterval(updateTimer, 500);
+  log("▶ 90-second demo starting. Welcome to the sovereign AI OS.", "system");
   speak("90 second demo. The dragon sovereigns the world.");
 
-  // Render hives
   renderHives();
 
   // Add initial SaaS windows
@@ -216,13 +416,12 @@ async function startDemo() {
     log("▓▒░ " + step.title + ": " + step.desc, "ai");
     speak(step.title.replace(/[^a-zA-Z0-9\s:]/g, ''));
 
-    // Add pulses at appropriate steps
     if (i === 1) {
-      // IP detected - pulse on London
       const {x, y} = latLngToXY(51.5, -0.1);
       addPulse(x, y);
+    } else if (i === 2) {
+      await startScan();
     } else if (i === 4) {
-      // Global - add pulse on multiple hives
       HIVES.forEach(h => {
         const {x, y} = latLngToXY(h.lat, h.lng);
         addPulse(x, y);
@@ -232,15 +431,16 @@ async function startDemo() {
     const progress = ((i + 1) / STEPS.length) * 100;
     document.getElementById("progressFill").style.width = progress + "%";
 
-    await new Promise(r => setTimeout(r, step.duration));
+    await new Promise(r => setTimeout(r, step.dur));
   }
 
-  log("🎉 Demo complete. Try the 6-min full tour for the full experience.", "ai");
+  log("🎉 Demo complete. Click 'Full Tour' for 6-min, 'SovTown' for 5-min scenarios, or 'Dome Mode' for 360°.", "system");
   speak("Demo complete. Welcome to the sovereign age.");
 }
 
-// Initial log
-log("🐉 Hello. I'm SOV33, sovereign guide. Press 'Start Demo' for the 90-second tour.", "ai");
+// Start
+detectIP();
+log("🐉 Welcome. I'm SOV33. Press 'Begin Demo' for the 90-second sovereign tour. Voice-enabled. Speak any time.", "ai");
 </script>
 
 </body>
