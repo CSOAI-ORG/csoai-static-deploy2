@@ -56,8 +56,34 @@ ck('orchestrate: NL → set_space action', typeof r.j.say === 'string' && (r.j.a
 r = await post('/api/orchestrate', { message: 'what governs a hospital', context: {} });
 ck('orchestrate: NL → govern action', (r.j.actions || []).some(a => a.command === 'govern'));
 
+// ── OpenAI-compat drop-in brain (DEFONEOS points sov3-llm-brain.js here) ──
+r = await post('/api/v1/chat/completions', { model: 'sov3-sovereign-v2', stream: false, messages: [{ role: 'user', content: 'say hi in one word' }] });
+ck('brain v1: OpenAI non-stream shape', !!(r.j.choices && r.j.choices[0]?.message && typeof r.j.choices[0].message.content === 'string'));
+ck('brain v1: maps any model → groq tool-model', /llama|gpt-oss|qwen/.test(r.j.model || ''), r.j.model);
+{ const rs = await fetch(BASE + '/api/v1/chat/completions', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ model: 'sov3', stream: true, messages: [{ role: 'user', content: 'count 1 2 3' }] }) });
+  const txt = await rs.text();
+  ck('brain v1: streaming SSE chunks + deltas', /data:\s*\{[^\n]*chat\.completion\.chunk/.test(txt) && /"delta"/.test(txt)); }
+r = await post('/api/v1/chat/completions', { model: 'sov3', stream: false, tool_choice: 'auto', messages: [{ role: 'user', content: 'open the guardian app now' }], tools: [{ type: 'function', function: { name: 'open_app', description: 'open an OS app by id', parameters: { type: 'object', properties: { id: { type: 'string' } }, required: ['id'] } } }] });
+ck('brain v1: tool-calling returns tool_calls', (r.j.choices?.[0]?.message?.tool_calls || []).some(t => t.function?.name === 'open_app'));
+
+// ── the shared-backend guarantee: EVERY endpoint CORS-open (so csoai/defoneos can call it) ──
+for (const u of ['/api/orchestrate', '/api/v1/chat/completions', '/api/sign', '/api/verify', '/api/bridge', '/api/govern', '/api/nodes', '/api/chat', '/api/social']) {
+  const rr = await fetch(BASE + u, { method: 'OPTIONS' }); const acao = rr.headers.get('access-control-allow-origin');
+  ck('CORS open: ' + u, acao === '*', 'acao=' + acao);
+}
+
+// ── inner correctness: signing is deterministic (seed-stable → ONE SIGIL identity everywhere) ──
+{ const s1 = await post('/api/sign', { action: { x: 1, y: 'z' } }); const s2 = await post('/api/sign', { action: { y: 'z', x: 1 } });
+  ck('sign: deterministic + canonical (order-independent)', s1.j.signature === s2.j.signature && s1.j.publicKey === s2.j.publicKey); }
+r = await gj('/api/bridge?sample=iso8583');
+ck('bridge: ISO 8583 MTI parses', /^\d{4}$/.test(r.j.result?.mti || ''));
+
+// ── the drop-in kit is served + exports the shared contract ──
+{ const rr = await fetch(BASE + '/sovereign-embed.js'); const t = await rr.text();
+  ck('kit: sovereign-embed.js served + shared contract', rr.status === 200 && /sovereignOSCommands/.test(t) && /getScreenContext/.test(t) && /window\.sovereign/.test(t)); }
+
 // ── supporting product endpoints ──
-for (const [n, u] of [['social networks', '/api/social?action=networks'], ['media (CC)', '/api/media?q=sea&n=1'], ['badge svg', '/api/badge'], ['avatar svg', '/api/avatar?queen_id=queen-care']]) {
+for (const [n, u] of [['social networks', '/api/social?action=networks'], ['media (CC)', '/api/media?q=sea&n=1'], ['badge svg', '/api/badge'], ['avatar svg', '/api/avatar?queen_id=queen-care'], ['3D world', '/earth3d.html']]) {
   const rr = await fetch(BASE + u); ck('reachable: ' + n, rr.status === 200);
 }
 
