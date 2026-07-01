@@ -1610,21 +1610,36 @@ function tourSpot(sel){ let el=sel&&document.querySelector(sel); let r=document.
 function tourSpotClear(){ const r=document.getElementById('tourRing'); if(r) r.style.opacity='0'; }
 // --- HUD (progress + controls) ---
 function tourHud(on){ let h=document.getElementById('tourhud'); if(on){ if(!h){ h=document.createElement('div'); h.id='tourhud'; h.style.cssText='position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:8700;display:flex;align-items:center;gap:10px;background:rgba(20,15,11,.94);color:#efe6d4;border:1px solid var(--gold,#c9a84c);border-radius:999px;padding:8px 12px;box-shadow:0 12px 34px rgba(0,0,0,.4);font:600 12.5px Space Grotesk,sans-serif'; document.body.appendChild(h); }
-    h.innerHTML='<span id="tourlbl" style="letter-spacing:.02em"></span><span id="tourbar" style="display:inline-block;width:120px;height:5px;background:rgba(255,255,255,.14);border-radius:3px;overflow:hidden"><span id="tourfill" style="display:block;height:100%;width:0;background:var(--gold,#c9a84c);transition:width .5s"></span></span><span onclick="tourAsk()" title="Ask a question — I\'ll pause &amp; listen" style="cursor:pointer;padding:2px 6px">✋ Ask</span><span id="tourpp" onclick="tourToggle()" title="Pause/Play" style="cursor:pointer;padding:2px 6px">⏸</span><span onclick="tourNext()" title="Skip" style="cursor:pointer;padding:2px 6px">⏭</span><span onclick="sovTourEnd()" title="End tour" style="cursor:pointer;padding:2px 6px;opacity:.7">✕</span>'; }
+    h.innerHTML='<span id="tourlbl" style="letter-spacing:.02em"></span><span id="tourbar" onclick="tourSeekEvent(event)" title="Jump to any moment" style="display:inline-block;width:130px;height:7px;background:rgba(255,255,255,.14);border-radius:4px;overflow:hidden;cursor:pointer"><span id="tourfill" style="display:block;height:100%;width:0;background:var(--gold,#c9a84c);transition:width .5s"></span></span><span onclick="tourAsk()" title="Ask a question — I\'ll pause &amp; listen" style="cursor:pointer;padding:2px 5px">✋</span><span onclick="tourPrev()" title="Previous" style="cursor:pointer;padding:2px 5px">⏮</span><span id="tourpp" onclick="tourToggle()" title="Pause/Play" style="cursor:pointer;padding:2px 5px">⏸</span><span onclick="tourNext()" title="Skip" style="cursor:pointer;padding:2px 5px">⏭</span><span onclick="tourReplay()" title="Replay from start" style="cursor:pointer;padding:2px 5px">⟲</span><span onclick="sovTourEnd()" title="End tour" style="cursor:pointer;padding:2px 5px;opacity:.7">✕</span>'; }
   else if(h){ h.remove(); } }
 function tourProgress(){ const f=document.getElementById('tourfill'),l=document.getElementById('tourlbl'); if(f&&TOUR) f.style.width=Math.round((_tI/TOUR.length)*100)+'%'; if(l) l.textContent=(_tKind==='demo'?'Demo':'Tour')+' '+Math.min(_tI+1,TOUR?TOUR.length:1)+'/'+(TOUR?TOUR.length:0); }
 function tourToggle(){ if(_tPaused) sovTourResume(); else sovTourPause(); }
 function sovTourStart(kind){ if(TOUR) sovTourEnd(); _tKind=kind; TOUR=tourScript(kind); _tI=0; _tPaused=false; _tTrace=[]; try{ welcomeDone(); }catch(e){} sovToggle(true); const lg=document.getElementById('sovlog'); if(lg) lg.innerHTML=''; window.SOV_VOICE_ON=true; try{ const b=document.getElementById('sovspk'); if(b){b.textContent='🔊';b.classList.add('on');} }catch(e){} try{ document.body.classList.add('touring'); }catch(e){} tourHud(true); tourLog('start',kind); tourListen(); _tRun(); }
-function _tRun(){ if(!TOUR||_tPaused) return; if(_tI>=TOUR.length){ return sovTourEnd(); } const s=TOUR[_tI]; tourProgress();
+let _tTok=0;
+// speak with a real completion signal (onend/onerror) + duration-estimate fallback
+function tourSpeak(html, done){ let called=false; const fin=function(){ if(called)return; called=true; _tSpeaking=false; done&&done(); };
+  try{ if(!window.speechSynthesis){ return fin(); } const txt=(''+html).replace(/<[^>]+>/g,'').replace(/&[a-z]+;/g,' ').replace(/\s+/g,' ').trim(); if(!txt){ return fin(); }
+    const u=new SpeechSynthesisUtterance(txt); u.rate=1.02; const vs=speechSynthesis.getVoices(); const gb=vs.find(v=>/en-GB/i.test(v.lang))||vs.find(v=>/^en/i.test(v.lang)); if(gb)u.voice=gb; u.onend=fin; u.onerror=fin; _tSpeaking=true; speechSynthesis.cancel(); speechSynthesis.speak(u);
+    setTimeout(fin, Math.min(32000, Math.max(3000, txt.length*58))+1500); // fallback if onend never fires
+  }catch(e){ fin(); } }
+function _tRun(){ if(!TOUR||_tPaused) return; if(_tI>=TOUR.length){ return sovTourEnd(); } const s=TOUR[_tI]; const tok=++_tTok; tourProgress();
   try{ if(s.act) s.act(); }catch(e){}
   if(s.spot) tourSpot(s.spot); else tourSpotClear();
   if(s.narr){ try{ sovSay(s.narr); }catch(e){} }
-  if(s.narr && s.voice!==false){ _tSpeaking=true; try{ sovSpeak(s.voice||s.narr); }catch(e){} setTimeout(function(){ _tSpeaking=false; }, 2600); }
   tourLog('step', s.key||('#'+_tI));
-  _tTimer=setTimeout(function(){ _tI++; _tRun(); }, s.ms||6500); }
+  // Advance only when BOTH the visual floor (step.ms) has elapsed AND narration has finished
+  // speaking — so it never talks over itself, never cuts off, never rushes ahead.
+  let floorDone=false, speechDone=(!s.narr || s.voice===false || !window.SOV_VOICE_ON || !window.speechSynthesis);
+  const tryAdvance=function(){ if(tok!==_tTok||_tPaused||!TOUR) return; if(floorDone&&speechDone){ _tI++; _tRun(); } };
+  _tTimer=setTimeout(function(){ if(tok!==_tTok)return; floorDone=true; tryAdvance(); }, s.ms||6500);
+  if(!speechDone){ tourSpeak(s.voice||s.narr, function(){ if(tok!==_tTok)return; speechDone=true; setTimeout(tryAdvance, 800); }); } }
 function sovTourPause(){ if(!TOUR)return; _tPaused=true; clearTimeout(_tTimer); try{ speechSynthesis.cancel(); }catch(e){} const p=document.getElementById('tourpp'); if(p)p.textContent='▶'; }
 function sovTourResume(){ if(!TOUR)return; _tPaused=false; const p=document.getElementById('tourpp'); if(p)p.textContent='⏸'; _tRun(); }
 function tourNext(){ if(!TOUR)return; clearTimeout(_tTimer); try{ speechSynthesis.cancel(); }catch(e){} _tPaused=false; _tI++; _tRun(); }
+function tourPrev(){ if(!TOUR)return; clearTimeout(_tTimer); try{ speechSynthesis.cancel(); }catch(e){} _tPaused=false; _tI=Math.max(0,_tI-1); _tRun(); }
+function tourGoto(i){ if(!TOUR)return; clearTimeout(_tTimer); try{ speechSynthesis.cancel(); domeMode(false); closeAllApps(); }catch(e){} _tPaused=false; _tI=Math.max(0,Math.min(TOUR.length-1,i)); _tRun(); }
+function tourSeekEvent(ev){ if(!TOUR)return; const bar=document.getElementById('tourbar'); if(!bar)return; const r=bar.getBoundingClientRect(); const f=Math.max(0,Math.min(1,(ev.clientX-r.left)/r.width)); tourGoto(Math.round(f*(TOUR.length-1))); }
+function tourReplay(){ const k=_tKind||'demo'; sovTourEnd(); setTimeout(function(){ sovTourStart(k); }, 200); }
 function sovTourEnd(){ clearTimeout(_tTimer); tourSpotClear(); tourHud(false); tourStopListen(); try{ domeMode(false); document.body.classList.remove('touring'); }catch(e){} if(TOUR){ tourLog('end',_tKind); tourTrainPush(); } TOUR=null; _tPaused=false; try{ sovSay("That's the tour ✨ — now it's <b>yours</b>. Ask me anything, tap <b>📋 My stuff</b>, or fly into your world."); }catch(e){} }
 // --- interruptible: ✋ Ask (reliable) + guarded continuous voice-interrupt ---
 function tourAsk(){ if(!TOUR)return; sovTourPause(); sovSay("<span style='color:var(--dim)'>👂 I'm listening — ask away, then I'll carry on.</span>"); try{ if(typeof sovVoice==='function'){ window._tourAskMode=true; sovVoice(); } }catch(e){} }
@@ -1672,7 +1687,7 @@ function tourScenario(){ tourOpen('meokearth'); try{ if(typeof meokDive3D==='fun
 // The two founding charters — the promise the whole OS is built on
 function sovCharter(){ sovToggle(true); sovSay("📜 <b>Two charters hold everything together:</b><br>• <b>Sovereignty Charter</b> — your data, your AI, your world. On your device, never sold, always verifiable.<br>• <b>Partnership Charter</b> — we build <b>with</b> you, not on you: value is shared, redirected to where it helps. A future of <b>abundance, not extraction</b>."); }
 // DOME MODE — full-viewport immersive world (the AI OS as a living dome)
-function domeMode(on){ let d=document.getElementById('domeov'); if(on){ if(!d){ d=document.createElement('div'); d.id='domeov'; d.style.cssText='position:fixed;inset:0;z-index:8500;background:#04060d;opacity:0;transition:opacity .8s'; d.innerHTML='<iframe id="domeframe" src="/earth3d.html" style="width:100%;height:100%;border:0"></iframe><div style="position:absolute;top:16px;left:50%;transform:translateX(-50%);color:#f0e6cf;font:700 12px ui-monospace;letter-spacing:.18em;background:rgba(12,10,7,.7);padding:6px 16px;border-radius:999px;border:1px solid rgba(201,168,76,.5)">◉ DOME MODE · SOVEREIGN WORLD</div><div onclick="domeMode(false)" style="position:absolute;top:14px;right:16px;cursor:pointer;color:#efe6d4;background:rgba(20,15,11,.9);border:1px solid rgba(201,168,76,.5);border-radius:999px;padding:6px 12px;font:600 12px Space Grotesk">✕ Exit dome</div>'; document.body.appendChild(d); const dfr=d.querySelector('#domeframe'); setTimeout(function(){ try{ if(dfr&&dfr.contentWindow) dfr.contentWindow.postMessage({type:'meok-cmd',cmd:'orbit'},'*'); }catch(e){} }, 4500); } requestAnimationFrame(()=>{ d.style.opacity='1'; }); }
+function domeMode(on){ let d=document.getElementById('domeov'); if(on){ if(!d){ d=document.createElement('div'); d.id='domeov'; d.style.cssText='position:fixed;inset:0;z-index:8500;background:#04060d;opacity:0;transition:opacity .8s'; d.innerHTML='<iframe id="domeframe" src="'+meokEarth3DUrl()+'" style="width:100%;height:100%;border:0"></iframe><div style="position:absolute;top:16px;left:50%;transform:translateX(-50%);color:#f0e6cf;font:700 12px ui-monospace;letter-spacing:.18em;background:rgba(12,10,7,.7);padding:6px 16px;border-radius:999px;border:1px solid rgba(201,168,76,.5)">◉ DOME MODE · SOVEREIGN WORLD</div><div onclick="domeMode(false)" style="position:absolute;top:14px;right:16px;cursor:pointer;color:#efe6d4;background:rgba(20,15,11,.9);border:1px solid rgba(201,168,76,.5);border-radius:999px;padding:6px 12px;font:600 12px Space Grotesk">✕ Exit dome</div>'; document.body.appendChild(d); const dfr=d.querySelector('#domeframe'); setTimeout(function(){ try{ if(dfr&&dfr.contentWindow) dfr.contentWindow.postMessage({type:'meok-cmd',cmd:'orbit'},'*'); }catch(e){} }, 4500); } requestAnimationFrame(()=>{ d.style.opacity='1'; }); }
   else if(d){ d.style.opacity='0'; setTimeout(()=>{ if(d)d.remove(); },800); } }
 // The two scripts. Each step: {key, narr(chat html), voice?(spoken), act?, spot?, ms}
 // Demo ≈ 90s (7 steps); full tour ≈ 6 min (16 steps). The AI drives its own windows,
@@ -1759,10 +1774,12 @@ function meokDive(){
 }
 // DIVE TO 3D — Google Photorealistic 3D Tiles (cinematic roads/buildings) when the owner
 // has enabled Maps billing + set the tiles key; otherwise fly over the signed globe honestly.
+// Photoreal (Google 3D Tiles) when the owner has set a Maps key; else the free raster globe.
+function meokMapsKey(){ try{ const m=document.querySelector('meta[name="meok-maps-key"]'); if(m&&m.content) return m.content; }catch(e){} try{ if(window.MEOK_MAPS_KEY) return window.MEOK_MAPS_KEY; }catch(e){} try{ return localStorage.getItem('meok_maps_key')||''; }catch(e){} return ''; }
+function meokEarth3DUrl(){ const k=meokMapsKey(); return k ? ('/earth3d-photoreal.html?k='+encodeURIComponent(k)) : '/earth3d.html'; }
 function meokDive3D(btn){
-  // FREE photoreal-style 3D — OpenFreeMap vector tiles + building extrusions, no key/billing.
   const fr=document.getElementById('meokearth-frame');
-  if(fr){ fr.src='/earth3d.html'; if(btn)btn.textContent='⛶ 3D LIVE'; }
+  if(fr){ fr.src=meokEarth3DUrl(); if(btn)btn.textContent=meokMapsKey()?'⛶ PHOTOREAL':'⛶ 3D LIVE'; }
 }
 // toggle the orbital globe ↔ street-level 3D
 function meokOrbit(btn){ const fr=document.getElementById('meokearth-frame'); if(fr){ fr.src=MEOK_EARTH_URL; const b=document.querySelector('.hudbtn'); if(b&&b!==btn)b.textContent='⛶ DIVE TO 3D'; } }
