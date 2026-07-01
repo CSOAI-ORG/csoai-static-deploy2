@@ -136,6 +136,14 @@ ck('bridge: ISO 8583 MTI parses', /^\d{4}$/.test(r.j.result?.mti || ''));
 { const rr = await fetch(BASE + '/sovereign-embed.js'); const t = await rr.text();
   ck('kit: sovereign-embed.js served + shared contract', rr.status === 200 && /sovereignOSCommands/.test(t) && /getScreenContext/.test(t) && /window\.sovereign/.test(t)); }
 
+// ── live everyday services (free, no key, via shared backend) ──
+r = await gj('/api/weather?q=London');
+ck('weather: live London temp + desc', typeof r.j.temp === 'number' && typeof r.j.desc === 'string' && r.j.desc.length > 0, r.j.desc);
+r = await gj('/api/fx?amount=100&from=USD&to=GBP');
+ck('fx: live 100 USD→GBP conversion', typeof r.j.result === 'number' && r.j.result > 0 && r.j.from === 'USD', r.j.result);
+r = await gj('/api/fx?amount=10&from=EUR&to=EUR');
+ck('fx: same-currency = identity', r.j.result === 10 && r.j.rate === 1);
+
 // ── supporting product endpoints ──
 for (const [n, u] of [['social networks', '/api/social?action=networks'], ['media (CC)', '/api/media?q=sea&n=1'], ['badge svg', '/api/badge'], ['avatar svg', '/api/avatar?queen_id=queen-care'], ['3D world', '/earth3d.html']]) {
   const rr = await fetch(BASE + u); ck('reachable: ' + n, rr.status === 200);
