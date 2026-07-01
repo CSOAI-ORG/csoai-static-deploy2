@@ -68,19 +68,22 @@ Each charter is a self-contained sovereign document that:
 | 32 | pokerhud | Poker Hands, GTO Solutions & ICM Analysis | `32-pokerhud-charter.md` |
 | 33 | suicidestop | Crisis Hotlines & Mental Health Resources | `33-suicidestop-charter.md` |
 | 34 | science | Scientific Research & Discovery | `34-science-charter.md` |
+| 35 | coigndaltion | L4 Cornerstone (Cognition + Integration) | `35-coigndaltion-charter.md` |
+| 36 | publicwatchdog | Global Signal Substrate (Heat-Map) | `36-publicwatchdog-charter.md` |
 
 ---
 
 ## CROSS-WALK MATRIX
 
-All 34 charters cross-walk to each other through:
+All 36 charters cross-walk to each other through:
 - **Shared governance**: CSOAI Watchdog Certification
 - **Shared compliance**: 30-framework crosswalk engine
 - **Shared substrate**: SOV3 sovereign MCP federation
 - **Shared signing**: Ed25519 SIGIL chain
 - **Shared verification**: `proofof.ai/verify/{charter_id}`
+- **Public Watchdog**: Global signal substrate for every charter's industry
 
-**Total cross-walk edges**: 34 × 33 = **1,122 bilateral cross-walks**
+**Total cross-walk edges**: 36 × 35 = **1,260 bilateral cross-walks**
 
 ---
 
@@ -108,14 +111,19 @@ curl -X POST http://localhost:3101/mcp \
 
 | Metric | Count |
 |---|---|
-| Total Charters | 34 |
-| Total Industries Covered | 34 |
-| Free Training Tiers | 4 per charter (136 total) |
-| UE5 Simulation Scenarios | 3+ per charter (102+ total) |
-| Cross-Walk Edges | 1,122 |
-| Ed25519 Signatures | 34 |
-| BFT Council Ratifications | 34 |
-| Compliance Frameworks Cross-Walked | 30 per charter (1,020 total) |
+| Total Charters | 36 |
+| Total Industries Covered | 36 |
+| Free Training Tiers | 4 per charter (144 total) |
+| UE5 Simulation Scenarios | 3+ per charter (108+ total) |
+| Cross-Walk Edges | 1,260 |
+| Ed25519 Signatures | 36 |
+| BFT Council Ratifications | 36 |
+| Compliance Frameworks Cross-Walked | 30 per charter (1,080 total) |
+| Watchdog Signal Categories | 12 |
+| Watchdog Severity Levels | 5 |
+| Watchdog Source Types | 4 |
+| Watchdog Layers | 8 |
+| Watchdog Zoom Levels | 4 |
 
 ---
 
