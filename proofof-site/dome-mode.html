@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🌐 Dome Mode — 360° Sovereign Space</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:-apple-system,system-ui,monospace;background:radial-gradient(ellipse at center,rgba(45,27,78,0.3) 0%,#000 90%);color:#e5e5e5;height:100vh;overflow:hidden}
+  .dome-stage{position:relative;width:100%;height:100vh;overflow:hidden}
+  /* Dome overlay: simulated 360° warp */
+  .dome-stage::before{content:"";position:absolute;top:0;left:0;right:0;bottom:0;background:radial-gradient(ellipse at center,transparent 25%,rgba(0,0,0,0.7) 80%);z-index:5;pointer-events:none}
+  .dome-stage::after{content:"🌐";position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:8rem;opacity:0.15;z-index:1;animation:rotate 30s linear infinite}
+  @keyframes rotate{0%{transform:translate(-50%,-50%) rotate(0deg)}100%{transform:translate(-50%,-50%) rotate(360deg)}}
+  .layer{position:absolute;border-radius:50%;border:1px solid #fbbf24;opacity:0.3;transform:translate(-50%,-50%);animation:orbit 20s linear infinite;z-index:2}
+  .layer-1{width:300px;height:300px;border-color:#fbbf24}
+  .layer-2{width:500px;height:500px;border-color:#60a5fa;animation-duration:30s;animation-direction:reverse}
+  .layer-3{width:700px;height:700px;border-color:#10b981;animation-duration:45s}
+  .layer-4{width:900px;height:900px;border-color:#8b5cf6;animation-duration:60s;animation-direction:reverse}
+  .layer-5{width:1100px;height:1100px;border-color:#ec4899;animation-duration:80s}
+  @keyframes orbit{0%{transform:translate(-50%,-50%) rotate(0deg)}100%{transform:translate(-50%,-50%) rotate(360deg)}}
+  .node{position:absolute;width:10px;height:10px;border-radius:50%;background:#fbbf24;box-shadow:0 0 10px #fbbf24;z-index:3;animation:node-pulse 3s ease-in-out infinite}
+  @keyframes node-pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.5)}}
+  .ui{position:fixed;bottom:1rem;left:50%;transform:translateX(-50%);background:rgba(2,6,15,0.95);border:2px solid #fbbf24;border-radius:12px;padding:1rem;z-index:20;min-width:500px;max-width:700px;backdrop-filter:blur(8px)}
+  .ui h1{color:#fbbf24;font-size:1.3rem;margin-bottom:.5rem;text-align:center;text-shadow:0 0 20px #fbbf24}
+  .ui .subtitle{color:#aaa;font-size:.85rem;text-align:center;margin-bottom:1rem;font-style:italic}
+  .ui .controls{display:grid;grid-template-columns:repeat(3,1fr);gap:.5rem;margin-bottom:1rem}
+  .ui .ctrl{background:rgba(251,191,36,0.1);padding:.5rem;border-radius:6px;text-align:center;border:1px solid #fbbf24;cursor:pointer;color:#fbbf24;font-size:.7rem;font-family:inherit;transition:all .2s}
+  .ui .ctrl:hover{background:#fbbf24;color:#000}
+  .ui .chat-box{background:#0a0a0a;padding:.5rem;border-radius:6px;display:flex;gap:.5rem;margin-bottom:.5rem}
+  .ui .chat-box input{flex:1;padding:.4rem;background:#02060f;border:1px solid #333;border-radius:4px;color:#fbbf24;font-family:monospace;font-size:.75rem}
+  .ui .chat-box button{background:#fbbf24;color:#000;padding:.4rem 0.7rem;border:none;border-radius:4px;font-weight:bold;cursor:pointer;font-family:inherit;font-size:.7rem}
+  .ui .messages{max-height:120px;overflow-y:auto;font-family:monospace;font-size:.7rem;color:#10b981;background:#02060f;padding:.3rem;border-radius:4px;margin-top:.3rem}
+  .ui .msg-line{padding:.15rem 0;border-bottom:1px solid #222}
+  .ui .msg-line.user{color:#60a5fa}
+  .info-card{position:absolute;top:1rem;left:1rem;background:rgba(2,6,15,0.85);padding:1rem;border-radius:8px;border-left:3px solid #fbbf24;z-index:10;max-width:280px}
+  .info-card h3{color:#fbbf24;font-size:.95rem;margin-bottom:.3rem}
+  .info-card p{color:#aaa;font-size:.75rem;line-height:1.4}
+  .info-card .kv{display:flex;justify-content:space-between;margin:.2rem 0;font-size:.7rem}
+  .info-card .kv .k{color:#888}
+  .info-card .kv .v{color:#10b981}
+  .nav{position:absolute;top:1rem;right:1rem;background:rgba(2,6,15,0.85);padding:.5rem 0.7rem;border-radius:6px;border-left:3px solid #fbbf24;z-index:10;display:flex;gap:.5rem}
+  .nav a{color:#fbbf24;text-decoration:none;font-size:.8rem}
+</style>
+</head>
+<body>
+
+<div class="dome-stage" id="domeStage">
+  <!-- 5 concentric orbiting layers -->
+  <div class="layer layer-1" style="top:50%;left:50%"></div>
+  <div class="layer layer-2" style="top:50%;left:50%"></div>
+  <div class="layer layer-3" style="top:50%;left:50%"></div>
+  <div class="layer layer-4" style="top:50%;left:50%"></div>
+  <div class="layer layer-5" style="top:50%;left:50%"></div>
+
+  <!-- 33 hive nodes orbiting -->
+  <script>
+  for (let i = 0; i < 33; i++) {
+    const angle = (i / 33) * Math.PI * 2;
+    const radius = 150 + (i % 5) * 80;
+    const x = 50 + Math.cos(angle) * radius / 5;
+    const y = 50 + Math.sin(angle) * radius / 5;
+    const node = document.createElement("div");
+    node.className = "node";
+    node.style.left = x + "%";
+    node.style.top = y + "%";
+    node.style.animationDelay = (i * 0.1) + "s";
+    document.body.appendChild(node);
+  }
+  </script>
+
+  <div class="nav">
+    <a href="/">Home</a>
+    <a href="/hub.html">Hub</a>
+    <a href="/sovtown-demo.html">SovTown</a>
+    <a href="/autonomy.html">Autonomy</a>
+  </div>
+
+  <div class="info-card">
+    <h3>🌐 Dome Mode</h3>
+    <p>360° sovereign space. VR-style cognition. The dragon sovereigns the dome.</p>
+    <div class="kv"><span class="k">Hives orbiting:</span><span class="v">33</span></div>
+    <div class="kv"><span class="k">Generals:</span><span class="v">12</span></div>
+    <div class="kv"><span class="k">Sovereign composite:</span><span class="v">7.305</span></div>
+    <div class="kv"><span class="k">Care Floor:</span><span class="v">0.95</span></div>
+    <div class="kv"><span class="k">BFT Council:</span><span class="v">12/12</span></div>
+    <div class="kv"><span class="k">Protocols:</span><span class="v">22</span></div>
+    <div class="kv"><span class="k">Hieroglyphs:</span><span class="v">22</span></div>
+    <div class="kv"><span class="k">Crown lineage:</span><span class="v">1795-2026</span></div>
+  </div>
+
+  <div class="ui">
+    <h1>🌐 SOV33 Dome Mode</h1>
+    <div class="subtitle">"Sovereignty is not a destination. It is a direction."</div>
+    <div class="controls">
+      <button class="ctrl" onclick="sov33Say('Drone rescue: 47 saved in 8 minutes.')">🚁 Drone Rescue</button>
+      <button class="ctrl" onclick="sov33Say('Fire response: 47 people evacuated.')">🔥 Fire Response</button>
+      <button class="ctrl" onclick="sov33Say('Flood: 200+ people evacuated.')">🌊 Flood</button>
+      <button class="ctrl" onclick="sov33Say('Missing person: found in 47 minutes.')">🔍 Search</button>
+      <button class="ctrl" onclick="sov33Say('Medical: stabilized in 6 minutes.')">🏥 Medical</button>
+      <button class="ctrl" onclick="sov33Say('Crime: prevented before escalation.')">👁 Crime</button>
+      <button class="ctrl" onclick="sov33Say('Traffic: ambulance in 3 minutes.')">🚑 Traffic</button>
+      <button class="ctrl" onclick="sov33Say('Weather: 500+ people sheltered.')">🌪 Weather</button>
+      <button class="ctrl" onclick="sov33Say('Power: restored in 22 minutes.')">⚡ Power</button>
+      <button class="ctrl" onclick="sov33Say('Supply chain: 1000+ packages.')">📦 Supply</button>
+      <button class="ctrl" onclick="sov33Say('BFT 12-around-1. Smaller wins. 7-voter amendment.')">🗳 BFT</button>
+      <button class="ctrl" onclick="sov33Say('Sovereign composite 7.305. Trending to 10.0.')">⚡ Composite</button>
+    </div>
+    <div class="chat-box">
+      <input type="text" id="chatInput" placeholder="Ask SOV33 in Dome Mode..." onkeypress="if(event.key==='Enter')sendChat()">
+      <button onclick="sendChat()">Send</button>
+    </div>
+    <div class="messages" id="messages"></div>
+  </div>
+</div>
+
+<script>
+function log(msg, type = "ai") {
+  const messages = document.getElementById("messages");
+  const div = document.createElement("div");
+  div.className = "msg-line" + (type === "user" ? " user" : "");
+  div.textContent = (type === "ai" ? "🐉 SOV33: " : "You: ") + msg;
+  messages.appendChild(div);
+  messages.scrollTop = messages.scrollHeight;
+  if (type === "ai") speak(msg);
+}
+
+function speak(text) {
+  if (!('speechSynthesis' in window)) return;
+  const u = new SpeechSynthesisUtterance(text);
+  u.rate = 1.0;
+  window.speechSynthesis.speak(u);
+}
+
+function sov33Say(msg) { log(msg, "ai"); speak(msg); }
+
+function sendChat() {
+  const input = document.getElementById("chatInput");
+  const text = input.value.trim();
+  if (!text) return;
+  log(text, "user");
+  input.value = "";
+  setTimeout(() => {
+    const lower = text.toLowerCase();
+    if (lower.includes("abundance")) sov33Say("The future of abundance, not extraction. Sovereign by construction.");
+    else if (lower.includes("dome")) sov33Say("360° sovereign space. The dragon sovereigns the dome.");
+    else if (lower.includes("rescue")) sov33Say("Drone rescue. 8 minutes. Thermal + lidar + camera. Sovereign intelligence.");
+    else if (lower.includes("scenarios") || lower.includes("scenarios")) sov33Say("10 scenarios. Drone rescue, fire, flood, missing person, medical, crime, traffic, weather, power, supply chain.");
+    else if (lower.includes("partnership")) sov33Say("Partnership Charter + Sovereignty Charter. The future of abundance is built on these.");
+    else if (lower.includes("crown")) sov33Say("Crown lineage 1795-2026. 230+ years. UK 16939677. CSOAI Ltd.");
+    else sov33Say("The sovereign substrate sovereigns everything. The future of abundance.");
+  }, 400);
+}
+
+// Initial
+log("🌐 Dome Mode active. 360° sovereign space. 33 hive planets orbiting. The future of abundance, not extraction. The dragon sovereigns the dome.", "ai");
+speak("Dome Mode. The future of abundance.");
+</script>
+
+</body>
+</html>
