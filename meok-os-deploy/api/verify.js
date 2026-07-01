@@ -2,7 +2,7 @@
 // key. This is the "don't trust our dashboard, verify it yourself" moat, working. CORS-open.
 import crypto from 'crypto';
 
-export default function handler(req, res) {
+export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
   if (req.method === 'OPTIONS') return res.status(204).end();

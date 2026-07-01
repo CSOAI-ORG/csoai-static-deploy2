@@ -32,7 +32,7 @@ export default function handler(req, res) {
     const signature = crypto.sign(null, Buffer.from(msg), priv).toString('hex');
     return res.status(200).json({
       ok: true, alg: 'ed25519', canonical: msg, signature, publicKey: pubHex,
-      note: 'Verify offline at /api/verify with {message: canonical, signature, publicKey} — no account needed.',
+      note: 'Verify offline at /api/verify with {message, signature, publicKey} — no account needed. (PQC ML-DSA-65 is provided by the SOV33 substrate.)',
       seeded: !!process.env.SIGIL_SEED,
     });
   } catch (e) { return res.status(500).json({ ok: false, error: String(e.message || e) }); }
