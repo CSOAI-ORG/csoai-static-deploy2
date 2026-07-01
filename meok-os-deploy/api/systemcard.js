@@ -11,6 +11,15 @@ function canonical(v) {
     : (x && typeof x === 'object') ? Object.keys(x).sort().reduce((o, k) => (o[k] = sort(x[k]), o), {}) : x;
   return JSON.stringify(sort(v));
 }
+// Public key fingerprint (first 8 hex of SIGIL_SEED if available, else 'DEMO').
+// Buyers see this stamped on every card so they can pin to a sovereign source.
+function sovereignFP() {
+  const seed = (process.env.SIGIL_SEED || 'meok-sovereign-demo-key-2026');
+  const seedHex = crypto.createHash('sha256').update(seed).digest('hex'); // ESM: use imported crypto, not require()
+  return seedHex.slice(0, 16);
+}
+const SIGNER_FP = sovereignFP();
+
 function keypair() {
   const seed = crypto.createHash('sha256').update(process.env.SIGIL_SEED || 'meok-sovereign-demo-key-2026').digest();
   const pkcs8 = Buffer.concat([Buffer.from('302e020100300506032b657004220420', 'hex'), seed]);
@@ -70,6 +79,27 @@ const CARD = {
   assurance_statement: 'Recorded per a JSP 936-aligned lifecycle. Independently verifiable OFFLINE with the public key — no account, no trusting our dashboard. Any change to any field invalidates the signature.',
 };
 
+// SYNTHETIC civilian System Card — structured to EU AI Act Annex IV (technical documentation for
+// high-risk AI) + ISO/IEC 42001 (AI management system) + NIST AI RMF. Same signing; this is the
+// CSOAI (commercial/civilian) face of the identical assurance primitive. Synthetic demo data.
+const EU_CARD = {
+  schema: 'csoai.systemcard.v1 · EU AI Act Annex IV',
+  classification: 'PUBLIC · SYNTHETIC DEMONSTRATION',
+  frameworks: ['EU AI Act (high-risk, Annex IV)', 'ISO/IEC 42001', 'NIST AI RMF 1.0'],
+  provider: { name: 'Illustrative Ltd (synthetic)', role: 'provider', contact: 'assurance@example (demo)', issued: '2026-07-01', version: '2.1.0' },
+  general_description: { system: 'Credit-risk decisioning assistant (SYNTHETIC)', intended_purpose: 'Support (not replace) a human credit officer', risk_class: 'high-risk (Annex III · access to essential private services)', deployers: 'regulated lender (demo)' },
+  development_process: { methodology: 'documented dev lifecycle', data_governance: 'representative, bias-tested; provenance recorded', human_oversight: 'Art. 14 — human-in-the-loop; officer overrides; stop control', design_specs: 'thresholds documented; explainability available' },
+  monitoring_control: { accuracy: { auc_synthetic: 0.88 }, robustness: 'stress + drift tested (demo)', limitations: ['not for automated adverse action without review'], foreseeable_misuse: 'sole automated rejection — prohibited by config' },
+  risk_management: { system: 'EU AI Act Art. 9 — iterative risk management', mitigations: ['human review', 'bias monitoring', 'appeal route'], residual_risk: 'documented + accepted by owner' },
+  data_governance: { training_data: 'synthetic (demo)', pii: 'GDPR Art. 9 special-category excluded', dpia: 'referenced (demo)' },
+  lifecycle_changes: 'each material change re-issues a signed card; version history kept',
+  standards_applied: ['ISO/IEC 42001', 'ISO/IEC 23894 (AI risk)', 'NIST AI RMF'],
+  post_market_monitoring: 'plan in place; incidents logged and trigger re-assessment',
+  conformity: 'demonstrates the technical-documentation evidence an EU declaration of conformity relies on (Art. 47 / Annex IV).',
+  governance: { care_floor: 0.95, council: 'BFT quorum recorded' },
+  assurance_statement: 'Independently verifiable OFFLINE with the public key. Any change to any field invalidates the signature.',
+};
+
 // SYNTHETIC Model Card — structured to the DAIC Model Card template (40+ fields / 10 sections).
 // The finer-grained companion to the System Card: documents the MODEL, not the whole system.
 const MODEL = {
@@ -99,7 +129,8 @@ export default function handler(req, res) {
     // ?type=model (or POST {type:'model'}) returns the signed Model Card instead.
     let body = req.body; if (typeof body === 'string') { try { body = JSON.parse(body); } catch { body = {}; } }
     const type = ((req.query && req.query.type) || (body && body.type) || 'system').toString().toLowerCase();
-    const base = type === 'model' ? MODEL : CARD;
+    const fw = ((req.query && req.query.framework) || (body && body.framework) || 'jsp936').toString().toLowerCase();
+    const base = type === 'model' ? MODEL : (fw === 'eu-ai-act' || fw === 'eu' || fw === 'civilian' ? EU_CARD : CARD);
     const card = (body && body.card && typeof body.card === 'object') ? body.card : base;
     const { priv, pubHex } = keypair();
     const message = canonical(card).slice(0, 8000);
@@ -107,7 +138,9 @@ export default function handler(req, res) {
     const digest = crypto.createHash('sha256').update(message).digest('hex');
     const fingerprint = 'SOV:' + crypto.createHash('sha256').update(pubHex).digest('hex').slice(0, 32).match(/.{1,4}/g).join('-').toUpperCase();
     return res.status(200).json({
-      ok: true, cardType: type, alg: 'ed25519', card, canonical: message, sha256: digest, signature, publicKey: pubHex,
+      ok: true, cardType: type, framework: (type === 'model' ? 'jsp936' : fw), alg: 'ed25519',
+      signer_fingerprint: SIGNER_FP,
+      signed_at: new Date().toISOString(), card, canonical: message, sha256: digest, signature, publicKey: pubHex,
       fingerprint, seeded: !!process.env.SIGIL_SEED,
       verify: { endpoint: '/api/verify', body: { message, signature, publicKey: pubHex }, page: '/verify.html' },
       note: 'Independently verifiable offline — POST {message, signature, publicKey} to /api/verify. Tampering with any field invalidates the signature. Card data is SYNTHETIC.',
