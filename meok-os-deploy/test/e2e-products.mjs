@@ -156,8 +156,8 @@ for (const [n, u] of [['social networks', '/api/social?action=networks'], ['medi
 { const rr = await fetch(BASE + '/earth3d.html'); const t = await rr.text(); ck('earth3d: fly/scan/arc/card commands', /meok-cmd/.test(t) && /MEOK\.scan/.test(t) && /MEOK\.arc/.test(t) && /MEOK\.card/.test(t)); }
 { const rr = await fetch(BASE + '/'); const t = await rr.text(); ck('OS: tour engine + town/charter/scenario/dome', /function sovTourStart/.test(t) && /function tourScript/.test(t) && /function tourScenario/.test(t) && /function domeMode/.test(t) && /SOV Town Space/.test(t)); }
 { const rr = await fetch(BASE + '/sovspace.html'); ck('reachable: SOV Town Space', rr.status === 200); }
-{ const rr = await fetch(BASE + '/earth3d-photoreal.html'); const t = await rr.text(); ck('photoreal: Cesium + Google 3D tiles + msg API', rr.status === 200 && /createGooglePhotorealistic3DTileset/.test(t) && /meok-cmd/.test(t) && /meok-maps-key/.test(t)); }
-{ const rr = await fetch(BASE + '/'); const t = await rr.text(); ck('OS: speech-paced + scrub + photoreal switch', /function tourSpeak/.test(t) && /function tourSeekEvent/.test(t) && /function meokEarth3DUrl/.test(t)); }
+{ const rr = await fetch(BASE + '/earth3d-photoreal.html'); const t = await rr.text(); ck('photoreal: Google + Cesium ion (OSM buildings) tiers + msg API', rr.status === 200 && /createGooglePhotorealistic3DTileset/.test(t) && /createOsmBuildingsAsync/.test(t) && /meok_cesium_token/.test(t) && /meok-cmd/.test(t)); }
+{ const rr = await fetch(BASE + '/'); const t = await rr.text(); ck('OS: speech-paced + scrub + 3D setup + tiered switch', /function tourSpeak/.test(t) && /function tourSeekEvent/.test(t) && /function meokEarth3DUrl/.test(t) && /function sov3DSetup/.test(t) && /function meokCesiumToken/.test(t)); }
 
 console.log('\n' + (fail === 0 ? '✅ PASS' : '❌ FAIL') + ' — ' + pass + ' passed, ' + fail + ' failed' + (fails.length ? '  [' + fails.join(', ') + ']' : ''));
 process.exit(fail ? 1 : 0);

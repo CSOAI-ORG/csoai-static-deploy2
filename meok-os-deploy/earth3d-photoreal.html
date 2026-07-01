@@ -1,8 +1,10 @@
 <!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>MEOK Earth — Photoreal 3D</title>
-<!-- Owner sets the Google Maps key (Map Tiles API) here or via ?k= / window.MEOK_MAPS_KEY.
-     With a key: Google Photorealistic 3D Tiles (real buildings/terrain). Without: honest
-     fallback to the free OSM globe so it is never blank. Same postMessage API as earth3d.html. -->
+<title>MEOK Earth — Photoreal / High-Quality 3D</title>
+<!-- Tiered 3D, best token wins — all read from same-origin localStorage (nothing leaves device):
+       1. Google Maps key (meok_maps_key)   → Google Photorealistic 3D Tiles (photo-real buildings, needs Maps billing)
+       2. Cesium ion token (meok_cesium_token) → World Terrain + World Imagery + Cesium OSM Buildings (FREE tier, GitHub sign-in, NO Google billing)
+       3. no token                            → free OSM globe (never blank)
+     Same postMessage API as earth3d.html (fly/scan/top/card/orbit/arc). -->
 <link href="https://unpkg.com/cesium@1.123/Build/Cesium/Widgets/widgets.css" rel="stylesheet">
 <style>
   html,body,#c{margin:0;height:100%;width:100%;background:#04060d;overflow:hidden;font-family:ui-monospace,monospace}
@@ -16,42 +18,50 @@
 </style></head>
 <body>
 <div id="c"></div>
-<div id="banner">◉ PHOTOREAL 3D · initialising…</div>
+<div id="banner">◉ 3D · initialising…</div>
 <div id="scanfx"><div class="scanring"></div><div class="scanlbl"></div></div>
 <div id="loccard"></div>
 <script>window.CESIUM_BASE_URL='https://unpkg.com/cesium@1.123/Build/Cesium/';</script>
 <script src="https://unpkg.com/cesium@1.123/Build/Cesium/Cesium.js"></script>
 <script>
-function keyFromEnv(){ try{ const u=new URLSearchParams(location.search); if(u.get('k')) return u.get('k'); }catch(e){}
-  try{ const m=document.querySelector('meta[name="meok-maps-key"]'); if(m&&m.content) return m.content; }catch(e){}
-  try{ if(window.MEOK_MAPS_KEY) return window.MEOK_MAPS_KEY; }catch(e){}
-  try{ const k=localStorage.getItem('meok_maps_key'); if(k) return k; }catch(e){}
+function pick(name, q){ try{ const u=new URLSearchParams(location.search); if(u.get(q)) return u.get(q); }catch(e){}
+  try{ const m=document.querySelector('meta[name="'+name.replace(/_/g,'-')+'"]'); if(m&&m.content) return m.content; }catch(e){}
+  try{ const v=window[name.toUpperCase()]; if(v) return v; }catch(e){}
+  try{ const k=localStorage.getItem(name); if(k) return k; }catch(e){}
   return ''; }
+const googleKey = pick('meok_maps_key','k');
+const ionToken  = pick('meok_cesium_token','ion');
 const banner=document.getElementById('banner');
-let viewer, _orbitOn=false, _photoreal=false;
-try{ Cesium.Ion.defaultAccessToken=''; }catch(e){}
+let viewer;
 (async function(){
-  try{
-    viewer=new Cesium.Viewer('c',{ baseLayerPicker:false, geocoder:false, homeButton:false, sceneModePicker:false, navigationHelpButton:false, animation:false, timeline:false, fullscreenButton:false, infoBox:false, selectionIndicator:false, baseLayer:false });
-  }catch(e){ // older signature
-    viewer=new Cesium.Viewer('c',{ baseLayerPicker:false, geocoder:false, homeButton:false, sceneModePicker:false, navigationHelpButton:false, animation:false, timeline:false, fullscreenButton:false, infoBox:false, selectionIndicator:false, imageryProvider:false });
-  }
+  try{ if(ionToken) Cesium.Ion.defaultAccessToken=ionToken; else Cesium.Ion.defaultAccessToken=''; }catch(e){}
+  // If we have neither a Google key nor an ion token, avoid ion base imagery (needs token) → OSM.
+  const opts={ baseLayerPicker:false, geocoder:false, homeButton:false, sceneModePicker:false, navigationHelpButton:false, animation:false, timeline:false, fullscreenButton:false, infoBox:false, selectionIndicator:false };
+  if(!ionToken){ opts.baseLayer=false; }
+  try{ viewer=new Cesium.Viewer('c', opts); }catch(e){ opts.imageryProvider=false; viewer=new Cesium.Viewer('c', opts); }
   try{ viewer.scene.skyAtmosphere.show=true; viewer.scene.globe.enableLighting=true; }catch(e){}
-  const key=keyFromEnv();
-  if(key){
-    try{ Cesium.GoogleMaps.defaultApiKey=key; const ts=await Cesium.createGooglePhotorealistic3DTileset(); viewer.scene.primitives.add(ts); viewer.scene.globe.show=false; _photoreal=true; banner.textContent='◉ PHOTOREAL 3D · Google 3D Tiles'; }
-    catch(e){ banner.textContent='◉ Photoreal key error — free globe'; addOSM(); }
-  } else { banner.textContent='◉ Free globe (add a Maps key for photoreal)'; addOSM(); }
-  // gentle default fly-in
+  try{
+    if(googleKey){
+      Cesium.GoogleMaps.defaultApiKey=googleKey; const ts=await Cesium.createGooglePhotorealistic3DTileset();
+      viewer.scene.primitives.add(ts); viewer.scene.globe.show=false; banner.textContent='◉ PHOTOREAL 3D · Google 3D Tiles';
+    } else if(ionToken){
+      try{ viewer.scene.setTerrain(new Cesium.Terrain(Cesium.CesiumTerrainProvider.fromIonAssetId(1))); }catch(e){ try{ viewer.terrainProvider=await Cesium.createWorldTerrainAsync(); }catch(_){} }
+      try{ const osm=await Cesium.createOsmBuildingsAsync(); viewer.scene.primitives.add(osm); }catch(e){}
+      banner.textContent='◉ HIGH-QUALITY 3D · Cesium ion (terrain + 3D buildings)';
+    } else {
+      addOSM(); banner.textContent='◉ Free globe — add a Cesium ion token (free, GitHub) for 3D buildings';
+    }
+  }catch(e){ addOSM(); banner.textContent='◉ 3D token error — free globe'; }
   fly(51.5072,-0.1276,13.5);
   setTimeout(()=>{ banner.style.opacity='.55'; }, 3500);
 })();
 function addOSM(){ try{ viewer.imageryLayers.addImageryProvider(new Cesium.OpenStreetMapImageryProvider({url:'https://tile.openstreetmap.org/'})); }catch(e){} }
 function altForZoom(z){ return Math.max(180, 40000000/Math.pow(2, (z||11))); }
+let _orbitOn=false;
 function fly(lat,lon,zoom){ try{ _orbitOn=false; viewer.camera.flyTo({ destination:Cesium.Cartesian3.fromDegrees(lon,lat,altForZoom(zoom)), orientation:{ heading:0, pitch:Cesium.Math.toRadians(zoom>13?-45:-70), roll:0 }, duration:3.6 }); }catch(e){} }
 function top(){ try{ _orbitOn=false; const c=viewer.camera.positionCartographic; viewer.camera.flyTo({ destination:Cesium.Cartesian3.fromRadians(c.longitude,c.latitude, altForZoom(3.2)), orientation:{heading:0,pitch:Cesium.Math.toRadians(-89),roll:0}, duration:1.8 }); }catch(e){} }
-function orbit(){ try{ _orbitOn=!_orbitOn; if(_orbitOn){ viewer.clock.onTick.addEventListener(_spin); } else { viewer.clock.onTick.removeEventListener(_spin); } }catch(e){} }
 function _spin(){ try{ viewer.scene.camera.rotate(Cesium.Cartesian3.UNIT_Z, -0.0009); }catch(e){} }
+function orbit(){ try{ _orbitOn=!_orbitOn; if(_orbitOn) viewer.clock.onTick.addEventListener(_spin); else viewer.clock.onTick.removeEventListener(_spin); }catch(e){} }
 function scan(mi){ const s=document.getElementById('scanfx'); s.style.display='flex'; const ring=s.querySelector('.scanring'); ring.style.animation='none'; void ring.offsetWidth; ring.style.animation='scanpulse 2.6s ease-out'; s.querySelector('.scanlbl').textContent='◎ SCANNING '+(mi||10)+'-MILE RADIUS · ALL LAYERS'; clearTimeout(window._st); window._st=setTimeout(()=>{ s.style.display='none'; },2800); }
 function card(html){ const c=document.getElementById('loccard'); c.innerHTML=html; c.style.display='block'; }
 function arc(from,to,label){ try{ viewer.entities.add({ polyline:{ positions:Cesium.Cartesian3.fromDegreesArray([from[1],from[0],to[1],to[0]]), width:3, arcType:Cesium.ArcType.GEODESIC, material:new Cesium.PolylineGlowMaterialProperty({glowPower:0.25,color:Cesium.Color.fromCssColorString('#c9a84c')}) } }); if(label){ viewer.entities.add({ position:Cesium.Cartesian3.fromDegrees((from[1]+to[1])/2,(from[0]+to[0])/2, 30000), label:{ text:label, font:'11px monospace', fillColor:Cesium.Color.fromCssColorString('#f0e6cf'), showBackground:true, backgroundColor:Cesium.Color.fromCssColorString('rgba(12,10,7,0.82)'), scale:0.9 } }); } }catch(e){} }

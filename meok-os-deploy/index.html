@@ -1467,6 +1467,7 @@ function sovHandle(raw){
   if(/\b(earth|world|globe|map|town)\b/.test(t)){ openByName_meokearth(); return; }
   if(/\b(full tour|the tour|take the tour|show me around|show me everything|guide me)\b/.test(t)){ sovTourStart('full'); return; }
   if(/\b(demo|quick tour|90.?sec|show me quickly)\b/.test(t)){ sovTourStart('demo'); return; }
+  if(/\b(3d quality|photoreal|cesium|maps key|upgrade 3d|better 3d|3d world quality)\b/.test(t)){ sov3DSetup(); return; }
   if(/\b(help|what can you|who are you|hello|hi)\b/.test(t)){ return sovSay("I'm your <b>sovereign</b> — I remember you, on your device, forever. Try:<br>• ⏰ <b>“remind me to call mum at 6pm”</b> — I'll ping &amp; speak it (🔁 <b>“…every day at 8am”</b>; <b>“snooze 15 min”</b>; <b>“change/delete the mum reminder”</b>)<br>• 📝 <b>“note: gate code 4590”</b> — jot &amp; ask it back later<br>• 📋 tap <b>My stuff</b> to see reminders &amp; notes at a glance<br>• 🧮 quick maths — <b>“15% of 240”</b>, <b>“5km in miles”</b>, <b>“$50 + $30”</b><br>• 🌦️ <b>“weather”</b>, 💱 <b>“100 usd to gbp”</b>, 🕑 <b>“time in Tokyo”</b>, 📅 <b>“days until Christmas”</b>, ☀️ <b>“my day”</b><br>• 🏛 <b>“what governs a bank”</b>, 💼 <b>“work mode”</b> / 🏠 <b>“life mode”</b>, 🌍 fly into <b>MEOK Earth</b><br>Tap 🎤 to just speak."); }
   if(/\b(what|where|which|whats|do you (?:know|remember)|my)\b/i.test(t)){ const n=noteFind(t); if(n){ return sovSay("📝 From your notes: <b>"+esc(n.t)+"</b>"); } }
   sovOrchestrate(raw); // unmatched → the shared Sovereign brain: speaks + takes real OS actions (falls back to sovAsk)
@@ -1774,13 +1775,27 @@ function meokDive(){
 }
 // DIVE TO 3D — Google Photorealistic 3D Tiles (cinematic roads/buildings) when the owner
 // has enabled Maps billing + set the tiles key; otherwise fly over the signed globe honestly.
-// Photoreal (Google 3D Tiles) when the owner has set a Maps key; else the free raster globe.
-function meokMapsKey(){ try{ const m=document.querySelector('meta[name="meok-maps-key"]'); if(m&&m.content) return m.content; }catch(e){} try{ if(window.MEOK_MAPS_KEY) return window.MEOK_MAPS_KEY; }catch(e){} try{ return localStorage.getItem('meok_maps_key')||''; }catch(e){} return ''; }
-function meokEarth3DUrl(){ const k=meokMapsKey(); return k ? ('/earth3d-photoreal.html?k='+encodeURIComponent(k)) : '/earth3d.html'; }
+// High-quality 3D when the owner has a token, else the free raster globe. Best token wins:
+//   Google Maps key = photoreal buildings (needs Maps billing) · Cesium ion token = terrain +
+//   3D buildings (FREE tier, GitHub sign-in, no Google billing). Tokens live in localStorage
+//   (on-device); we mirror any meta/window value there so the same-origin 3D iframe reads it.
+function _readKey(name, metaName){ try{ const v=localStorage.getItem(name); if(v) return v; }catch(e){} try{ const m=document.querySelector('meta[name="'+metaName+'"]'); if(m&&m.content){ try{localStorage.setItem(name,m.content);}catch(_){} return m.content; } }catch(e){} try{ const w=window[name.toUpperCase()]; if(w){ try{localStorage.setItem(name,w);}catch(_){} return w; } }catch(e){} return ''; }
+function meokMapsKey(){ return _readKey('meok_maps_key','meok-maps-key'); }
+function meokCesiumToken(){ return _readKey('meok_cesium_token','meok-cesium-token'); }
+function meok3DMode(){ return meokMapsKey()?'photoreal':(meokCesiumToken()?'hq':'free'); }
+function meokEarth3DUrl(){ return (meokMapsKey()||meokCesiumToken()) ? '/earth3d-photoreal.html' : '/earth3d.html'; }
 function meokDive3D(btn){
   const fr=document.getElementById('meokearth-frame');
-  if(fr){ fr.src=meokEarth3DUrl(); if(btn)btn.textContent=meokMapsKey()?'⛶ PHOTOREAL':'⛶ 3D LIVE'; }
+  if(fr){ fr.src=meokEarth3DUrl(); if(btn){ const m=meok3DMode(); btn.textContent=m==='photoreal'?'⛶ PHOTOREAL':(m==='hq'?'⛶ HQ 3D':'⛶ 3D LIVE'); } }
 }
+// Owner-only, on-device: paste a Cesium ion token (free, GitHub sign-in) or a Google Maps key.
+function sov3DSetup(){ let d=document.getElementById('d3dset'); if(d){ d.remove(); return; } d=document.createElement('div'); d.id='d3dset'; d.style.cssText='position:fixed;inset:0;z-index:9200;display:flex;align-items:center;justify-content:center;background:rgba(8,6,4,.55)'; const ist='width:100%;margin-top:4px;padding:9px 11px;border:1px solid var(--line);border-radius:9px;background:rgba(0,0,0,.15);color:var(--ink);font:500 13px Space Grotesk,sans-serif;box-sizing:border-box';
+  d.innerHTML='<div style="max-width:440px;background:var(--card,#181310);border:1px solid var(--gold,#c9a84c);border-radius:16px;padding:20px 22px;color:var(--ink);box-shadow:0 20px 60px rgba(0,0,0,.5)"><div style="font:800 17px Space Grotesk">🌍 3D world quality</div><p style="font-size:12.5px;color:var(--dim);line-height:1.5;margin:8px 0 12px">Best free path: a <b>Cesium ion</b> token — sign in with <b>GitHub</b> at <b>cesium.com/ion</b> (free tier), copy your default token, paste below. You get real terrain + global 3D buildings, <b>no Google billing</b>. Google Maps key is optional (photo-real buildings, needs Maps billing). <b>Stays on your device — never sent anywhere.</b></p>'
+   +'<label style="font:700 11px Space Grotesk;color:var(--dim);letter-spacing:.04em">CESIUM ION TOKEN (free · GitHub)<input id="d3dIon" placeholder="paste ion token" style="'+ist+'"></label>'
+   +'<label style="display:block;margin-top:10px;font:700 11px Space Grotesk;color:var(--dim);letter-spacing:.04em">GOOGLE MAPS KEY (optional · billing)<input id="d3dGoo" placeholder="paste Maps key" style="'+ist+'"></label>'
+   +'<div style="display:flex;gap:8px;margin-top:16px"><button onclick="sov3DSave()" style="flex:1;border:none;background:var(--gold,#c9a84c);color:#1a1410;font:800 14px Space Grotesk;padding:10px;border-radius:10px;cursor:pointer">Save &amp; go 3D</button><button onclick="sov3DSetup()" style="border:1px solid var(--line);background:none;color:var(--dim);font:600 13px Space Grotesk;padding:10px 14px;border-radius:10px;cursor:pointer">Close</button></div></div>';
+  document.body.appendChild(d); try{ const i=document.getElementById('d3dIon'); if(i){ i.value=meokCesiumToken(); document.getElementById('d3dGoo').value=meokMapsKey(); i.focus(); } }catch(e){} }
+function sov3DSave(){ try{ const ion=(document.getElementById('d3dIon').value||'').trim(); const goo=(document.getElementById('d3dGoo').value||'').trim(); if(ion) localStorage.setItem('meok_cesium_token',ion); else localStorage.removeItem('meok_cesium_token'); if(goo) localStorage.setItem('meok_maps_key',goo); else localStorage.removeItem('meok_maps_key'); }catch(e){} sov3DSetup(); const m=meok3DMode(); sovToggle(true); sovSay(m==='free'?"No token saved — using the free globe. Add a <b>Cesium ion</b> token (free, GitHub) anytime for 3D buildings.":("✅ Saved on-device. 3D is now <b>"+(m==='photoreal'?'photoreal (Google)':'high-quality (Cesium ion — terrain + 3D buildings)')+"</b>. Fly into your world to see it.")); }
 // toggle the orbital globe ↔ street-level 3D
 function meokOrbit(btn){ const fr=document.getElementById('meokearth-frame'); if(fr){ fr.src=MEOK_EARTH_URL; const b=document.querySelector('.hudbtn'); if(b&&b!==btn)b.textContent='⛶ DIVE TO 3D'; } }
 // The Sovereign's circle IS a living mirror of Earth: ocean, rotating land, a day/night
