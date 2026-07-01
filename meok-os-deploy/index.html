@@ -239,6 +239,8 @@ table.mini td:last-child{text-align:right;font-variant-numeric:tabular-nums}
 @keyframes sovMsgIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
 #tourRing{will-change:left,top,width,height}
 body.touring #tourhud{animation:sovMsgIn .5s ease}
+@media (max-width:640px){#tourhud{flex-wrap:wrap;max-width:94vw;justify-content:center;bottom:10px}#tourbar{width:96px!important}}
+@media (prefers-reduced-motion:reduce){.sovmsg{animation:none}#tourRing{transition:none}#tourhud{animation:none}.dive,.divegrid,.diveorb{animation:none!important}}
 .sovmsg.ai{background:rgba(189,157,84,.15);border:1px solid rgba(189,157,84,.3);color:#5a4a1e;align-self:flex-start;border-bottom-left-radius:3px}
 .sovmsg.me{background:rgba(40,34,24,.07);align-self:flex-end;border-bottom-right-radius:3px;color:var(--ink)}
 .sovbar{padding:10px 12px;border-top:1px solid var(--line);display:flex;gap:7px;align-items:center}
@@ -1208,6 +1210,7 @@ setMode(MODE);paintBar();tick();boot();
 (function(){ try{ var q=new URLSearchParams(location.search);
   var app=q.get('app'); if(app){ setTimeout(function(){ try{ if(typeof APPS!=='undefined'&&APPS[app]) openApp(app); }catch(e){} }, 1200); }
   if(q.get('talk')){ setTimeout(function(){ try{ sovToggle(true); if(innerWidth<=760) document.body.classList.add('sov-open'); var i=document.getElementById('sovbbin'); if(i) i.focus(); }catch(e){} }, 1200); }
+  var tr=q.get('tour'); if(tr){ setTimeout(function(){ try{ if(typeof sovTourStart==='function') sovTourStart(tr==='full'?'full':'demo'); }catch(e){} }, 1600); }
 }catch(e){} })();
 
 /* ---------- sovereign companion dock — talk or type, it acts on the OS ----------
@@ -1615,7 +1618,9 @@ function tourHud(on){ let h=document.getElementById('tourhud'); if(on){ if(!h){ 
   else if(h){ h.remove(); } }
 function tourProgress(){ const f=document.getElementById('tourfill'),l=document.getElementById('tourlbl'); if(f&&TOUR) f.style.width=Math.round((_tI/TOUR.length)*100)+'%'; if(l) l.textContent=(_tKind==='demo'?'Demo':'Tour')+' '+Math.min(_tI+1,TOUR?TOUR.length:1)+'/'+(TOUR?TOUR.length:0); }
 function tourToggle(){ if(_tPaused) sovTourResume(); else sovTourPause(); }
-function sovTourStart(kind){ if(TOUR) sovTourEnd(); _tKind=kind; TOUR=tourScript(kind); _tI=0; _tPaused=false; _tTrace=[]; try{ welcomeDone(); }catch(e){} sovToggle(true); const lg=document.getElementById('sovlog'); if(lg) lg.innerHTML=''; window.SOV_VOICE_ON=true; try{ const b=document.getElementById('sovspk'); if(b){b.textContent='🔊';b.classList.add('on');} }catch(e){} try{ document.body.classList.add('touring'); }catch(e){} tourHud(true); tourLog('start',kind); tourListen(); _tRun(); }
+function sovTourStart(kind){ if(TOUR) sovTourEnd(); _tKind=kind; TOUR=tourScript(kind); _tI=0; _tPaused=false; _tTrace=[]; try{ welcomeDone(); }catch(e){} sovToggle(true); const lg=document.getElementById('sovlog'); if(lg) lg.innerHTML=''; window.SOV_VOICE_ON=true; try{ const b=document.getElementById('sovspk'); if(b){b.textContent='🔊';b.classList.add('on');} }catch(e){} try{ document.body.classList.add('touring'); }catch(e){} try{ document.addEventListener('keydown', _tourKey, true); }catch(e){} tourHud(true); tourLog('start',kind); tourListen(); _tRun(); }
+function _reduceMotion(){ try{ return window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches; }catch(e){ return false; } }
+function _tourKey(e){ if(!TOUR) return; const k=e.key; if(k==='Escape'){ e.preventDefault(); sovTourEnd(); } else if(k==='ArrowRight'){ e.preventDefault(); tourNext(); } else if(k==='ArrowLeft'){ e.preventDefault(); tourPrev(); } else if(k===' '||k==='Spacebar'){ e.preventDefault(); tourToggle(); } }
 let _tTok=0;
 // speak with a real completion signal (onend/onerror) + duration-estimate fallback
 function tourSpeak(html, done){ let called=false; const fin=function(){ if(called)return; called=true; _tSpeaking=false; done&&done(); };
@@ -1641,7 +1646,7 @@ function tourPrev(){ if(!TOUR)return; clearTimeout(_tTimer); try{ speechSynthesi
 function tourGoto(i){ if(!TOUR)return; clearTimeout(_tTimer); try{ speechSynthesis.cancel(); domeMode(false); closeAllApps(); }catch(e){} _tPaused=false; _tI=Math.max(0,Math.min(TOUR.length-1,i)); _tRun(); }
 function tourSeekEvent(ev){ if(!TOUR)return; const bar=document.getElementById('tourbar'); if(!bar)return; const r=bar.getBoundingClientRect(); const f=Math.max(0,Math.min(1,(ev.clientX-r.left)/r.width)); tourGoto(Math.round(f*(TOUR.length-1))); }
 function tourReplay(){ const k=_tKind||'demo'; sovTourEnd(); setTimeout(function(){ sovTourStart(k); }, 200); }
-function sovTourEnd(){ clearTimeout(_tTimer); tourSpotClear(); tourHud(false); tourStopListen(); try{ domeMode(false); document.body.classList.remove('touring'); }catch(e){} if(TOUR){ tourLog('end',_tKind); tourTrainPush(); } TOUR=null; _tPaused=false; try{ sovSay("That's the tour ✨ — now it's <b>yours</b>. Ask me anything, tap <b>📋 My stuff</b>, or fly into your world."); }catch(e){} }
+function sovTourEnd(){ clearTimeout(_tTimer); tourSpotClear(); tourHud(false); tourStopListen(); try{ domeMode(false); document.body.classList.remove('touring'); document.removeEventListener('keydown', _tourKey, true); localStorage.setItem('meok_toured','1'); }catch(e){} if(TOUR){ tourLog('end',_tKind); tourTrainPush(); } TOUR=null; _tPaused=false; try{ sovSay("That's the tour ✨ — now it's <b>yours</b>. Ask me anything, tap <b>📋 My stuff</b>, or fly into your world."); }catch(e){} }
 // --- interruptible: ✋ Ask (reliable) + guarded continuous voice-interrupt ---
 function tourAsk(){ if(!TOUR)return; sovTourPause(); sovSay("<span style='color:var(--dim)'>👂 I'm listening — ask away, then I'll carry on.</span>"); try{ if(typeof sovVoice==='function'){ window._tourAskMode=true; sovVoice(); } }catch(e){} }
 function tourListen(){ const SR=window.SpeechRecognition||window.webkitSpeechRecognition; if(!SR) return; try{ _tRec=new SR(); _tRec.continuous=true; _tRec.interimResults=true; _tRec.lang='en-GB';
@@ -1654,9 +1659,9 @@ function tourOfferResume(){ if(!TOUR)return; setTimeout(function(){ if(TOUR&&_tP
 // --- training trace: hand SOV33 a clean record of how the OS is driven ---
 function tourTrainPush(){ try{ const body=JSON.stringify({kind:_tKind,trace:_tTrace,ua:navigator.userAgent,at:Date.now()}); fetch('/api/train',{method:'POST',headers:{'Content-Type':'application/json'},body:body,keepalive:true}).catch(function(){}); }catch(e){} }
 // dive into the 3D world and fly to (roughly) where the viewer is, scanning outward
-function tourDive3D(){ try{ const dv=document.getElementById('dive'); if(dv){ dv.classList.add('on'); setTimeout(function(){ dv.classList.remove('on'); }, 1500); } }catch(e){}
-  setTimeout(function(){ tourOpen('meokearth'); try{ if(typeof meokDive3D==='function'){ const fr=document.getElementById('meokearth-frame'); if(fr){ meokDive3D(); } } }catch(e){} }, 700);
-  setTimeout(tourGeoFly, 2100); }
+function tourDive3D(){ const rm=_reduceMotion(); if(!rm){ try{ const dv=document.getElementById('dive'); if(dv){ dv.classList.add('on'); setTimeout(function(){ dv.classList.remove('on'); }, 1500); } }catch(e){} }
+  setTimeout(function(){ tourOpen('meokearth'); try{ if(typeof meokDive3D==='function'){ const fr=document.getElementById('meokearth-frame'); if(fr){ meokDive3D(); } } }catch(e){} }, rm?100:700);
+  setTimeout(tourGeoFly, rm?900:2100); }
 function _earthSend(msg){ try{ const fr=document.getElementById('meokearth-frame'); if(fr&&fr.contentWindow) fr.contentWindow.postMessage(msg,'*'); }catch(e){} }
 function _haversine(a,b,c,d){ const R=6371,r=x=>x*Math.PI/180,dLat=r(c-a),dLon=r(d-b); const h=Math.sin(dLat/2)**2+Math.cos(r(a))*Math.cos(r(c))*Math.sin(dLon/2)**2; return 2*R*Math.asin(Math.sqrt(h)); }
 function tourGeoFly(){ fetch('/api/geo').then(r=>r.json()).then(function(g){ if(!(g&&g.lat!=null&&g.lon!=null)){ sovSay("This is your living world — every bridge, hive and node on the real globe."); return; }

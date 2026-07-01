@@ -158,6 +158,12 @@ for (const [n, u] of [['social networks', '/api/social?action=networks'], ['medi
 { const rr = await fetch(BASE + '/sovspace.html'); ck('reachable: SOV Town Space', rr.status === 200); }
 { const rr = await fetch(BASE + '/earth3d-photoreal.html'); const t = await rr.text(); ck('photoreal: Google + Cesium ion (OSM buildings) tiers + msg API', rr.status === 200 && /createGooglePhotorealistic3DTileset/.test(t) && /createOsmBuildingsAsync/.test(t) && /meok_cesium_token/.test(t) && /meok-cmd/.test(t)); }
 { const rr = await fetch(BASE + '/'); const t = await rr.text(); ck('OS: speech-paced + scrub + 3D setup + tiered switch', /function tourSpeak/.test(t) && /function tourSeekEvent/.test(t) && /function meokEarth3DUrl/.test(t) && /function sov3DSetup/.test(t) && /function meokCesiumToken/.test(t)); }
+{ const rr = await fetch(BASE + '/'); const t = await rr.text(); ck('OS: tour UX (keyboard + deep-link + reduced-motion + completed)', /function _tourKey/.test(t) && /q\.get\('tour'\)/.test(t) && /prefers-reduced-motion/.test(t) && /meok_toured/.test(t)); }
+// site-wide alignment: every public page surfaces the tour + is reachable
+for (const p of ['pricing.html','badges.html','verify.html','sovspace.html','character.html']) {
+  const rr = await fetch(BASE + '/' + p); const t = await rr.text();
+  ck('align: ' + p + ' reachable + tour pill', rr.status === 200 && /meok-tour-pill/.test(t) && /tour=demo/.test(t));
+}
 
 console.log('\n' + (fail === 0 ? '✅ PASS' : '❌ FAIL') + ' — ' + pass + ' passed, ' + fail + ' failed' + (fails.length ? '  [' + fails.join(', ') + ']' : ''));
 process.exit(fail ? 1 : 0);
