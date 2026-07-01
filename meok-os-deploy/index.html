@@ -520,6 +520,7 @@ const APPS={
  work:{i:'🧑‍💼',t:'MEOK Work · Orion/Riri/Hourman',w:560},
  map:{i:'🧭',t:'MEOK Map',w:560},
  sigil:{i:'🔏',t:'MEOK Sigil',w:540},
+ assurance:{i:'📜',t:'Signed Assurance',w:620},
  claw:{i:'🐾',t:'MEOK Claw · TUI',w:520},
  smb:{i:'🏪',t:'MEOK SMB',w:540},
  setup:{i:'🧩',t:'Set up your Sovereign',w:680},
@@ -539,7 +540,7 @@ const TILES=['setup','stack','king','olm','minds','council','fleet','hives','meo
    LIFE (MEOK)  = your personal sovereign companion (family, social, your world, characters).
    Only "Set up" and "Your world" (MEOK Earth) live in both — everything else shows in exactly one. */
 const MODE_ORDER={
-  csoai:['setup','king','council','fleet','hives','watchdog','stack','olm','bridges','temples','truth','sigil','revenue','delboy','smb','work','investor','distro','atlas','coord','runway','execute','ops','protocol0','claw','archive','leaderboard','minds','meokearth'],
+  csoai:['setup','king','council','fleet','assurance','hives','watchdog','stack','olm','bridges','temples','truth','sigil','revenue','delboy','smb','work','investor','distro','atlas','coord','runway','execute','ops','protocol0','claw','archive','leaderboard','minds','meokearth'],
   meok:['setup','meokearth','chars','archetypes','social','guardian','family','map','one','labs']
 };
 const MODE_HUE={meok:43,csoai:212};
@@ -822,6 +823,20 @@ function content(id){const L=LIVE;const liveBadge=LIVEMODE?'<span class="chip li
    <div class="row" style="margin:8px 0"><span class="chip" onclick="meokGraphInit()">⚡ Interactive force-graph — drag · zoom · relevance links</span></div>
    <div id="govgraph" style="width:100%;height:0;overflow:hidden;border-radius:12px;background:rgba(255,255,255,.02)"></div>
    <p style="color:var(--dim)">Every connection is a Protocol-0 tunnel — agent-to-agent + Ed25519 signed-attestation. The gold links are <b>relevance edges</b> (which bridge is governed by which framework) — the same topology CSOAI uses for relevance maps. Every action across the map is signed.</p>`;
+ case 'assurance': return `<p><b>Signed AI Assurance.</b> The primitive JSP 936 &amp; the EU AI Act need and nobody ships: a <b>cryptographically-signed</b>, <b>offline-verifiable</b> System Card. Prove an AI system was governed — and let anyone verify it without trusting a dashboard. Tampering breaks the signature.</p>
+   <div class="row"><span class="chip on">Ed25519 signed</span><span class="chip on">offline-verifiable</span><span class="chip on">DAIC/Turing 1:1</span><span class="chip on">EU AI Act Annex IV</span><span class="chip on">tamper-evident</span></div>
+   <h4>🔧 Issue &amp; verify a signed card — live</h4>
+   <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:6px">
+     <button onclick="assIssue('jsp936')" style="${APPBTN}">🛡️ Issue Defence card (JSP 936)</button>
+     <button onclick="assIssue('eu-ai-act')" style="${APPBTN}">🏛️ Issue Civilian card (EU AI Act)</button></div>
+   <div id="ass-card" style="font-size:12px;color:var(--dim);margin-top:4px">Pick a framework to sign a card…</div>
+   <div id="ass-actions" style="display:none;gap:8px;margin-top:8px" class="row">
+     <button onclick="assVerify(false)" style="${APPBTN}">✅ Verify offline</button>
+     <button onclick="assVerify(true)" style="${APPIN};cursor:pointer">🧪 Tamper test</button></div>
+   <div id="ass-res" style="margin-top:8px;font-weight:700"></div>
+   <h4>Full surfaces</h4>
+   <div class="row"><span onclick="openTab('/systemcard.html')" style="cursor:pointer;padding:4px 10px;border-radius:999px;border:1px solid var(--line);background:var(--cream);font-size:12px">📜 System Card + PDF</span><span onclick="openTab('/registry.html')" style="cursor:pointer;padding:4px 10px;border-radius:999px;border:1px solid var(--line);background:var(--cream);font-size:12px">🗂️ Signed registry</span><span onclick="openTab('/verify.html')" style="cursor:pointer;padding:4px 10px;border-radius:999px;border:1px solid var(--line);background:var(--cream);font-size:12px">🔎 Public verifier</span></div>
+   <p style="color:var(--dim)">Same sovereign key signs Defence (JSP 936) &amp; Civilian (EU AI Act / ISO 42001) — set <code>SIGIL_SEED</code> to pin your identity. Card data is synthetic; signing is real.</p>`;
  case 'sigil': return `<p><b>MEOK Sigil — the sovereign wire format.</b> 2.4× denser than JSON and Ed25519/HMAC-signed: every agent-to-agent hop is logged as one signed SIGIL line. The audit trail <i>is</i> the protocol.</p>
    <div class="row"><span class="chip on">built</span><span class="chip">meok-sigil</span><span class="chip on">Ed25519 spaced+prev</span></div>
    <p style="color:var(--dim)">The signing scheme beneath Protocol 0, the ledger and the flywheel.</p>`;
@@ -1101,6 +1116,18 @@ function familyHTML(){
   </div>`;
 }
 // ── Legacy-bridge live validator (real /api/bridge) + sign the governed result (/api/sign) ──
+function openTab(u){ try{ window.open(u,'_blank'); }catch(e){ location.href=u; } }
+let _assCard=null;
+async function assIssue(fw){ const c=document.getElementById('ass-card'),a=document.getElementById('ass-actions'),r=document.getElementById('ass-res'); if(r)r.textContent=''; if(c)c.textContent='signing…';
+  try{ _assCard=await(await fetch('/api/systemcard'+(fw==='eu-ai-act'?'?framework=eu-ai-act':''))).json(); const cd=_assCard.card||{}; const nm=(cd.overview&&cd.overview.name)||(cd.general_description&&cd.general_description.system)||'card';
+    if(c)c.innerHTML='📜 <b>'+esc(nm)+'</b> — '+esc(_assCard.framework==='eu-ai-act'?'EU AI Act / ISO 42001':'JSP 936')+'<br><span style="font-family:ui-monospace;font-size:11px">Signed by '+esc(_assCard.fingerprint||'')+' '+(_assCard.seeded?'· owner-seeded':'· demo key')+'<br>sha256: '+esc((_assCard.sha256||'').slice(0,32))+'…</span>';
+    if(a)a.style.display='flex';
+  }catch(e){ if(c)c.textContent='signer unreachable — try again'; } }
+async function assVerify(tamper){ const r=document.getElementById('ass-res'); if(!_assCard){ return; } if(r){r.textContent='verifying…';r.style.color='var(--dim)';}
+  let m=_assCard.canonical; if(tamper) m=m.slice(0,-2)+'ZZ';
+  try{ const v=await(await fetch('/api/verify',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:m,signature:_assCard.signature,publicKey:_assCard.publicKey})})).json();
+    if(r){ r.style.color=v.valid?'var(--ok,#137a4b)':'var(--bad,#b3261e)'; r.textContent=v.valid?'✅ VALID — authentic & untampered (verify it yourself, offline, anytime).':(tamper?'🧪 As expected — TAMPERED card REJECTED (one flipped byte).':'❌ REJECTED.'); }
+  }catch(e){ if(r)r.textContent='verifier unreachable'; } }
 async function brdSample(s){ try{ const d=await(await fetch('/api/bridge?samples=1')).json(); const i=document.getElementById('brd-in'); if(i&&d.samples&&d.samples[s]) i.value=d.samples[s]; }catch(e){} }
 async function brdValidate(){ const i=document.getElementById('brd-in'),o=document.getElementById('brd-out'),res=document.getElementById('brd-res'); if(!i)return; const msg=(i.value||'').trim(); if(!msg){ if(o)o.textContent='paste a message or pick a sample'; return; } if(o)o.textContent='validating…'; if(res)res.innerHTML='';
   try{ const d=await(await fetch('/api/bridge',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:msg})})).json();
@@ -1471,6 +1498,7 @@ function sovHandle(raw){
   if(/\b(full tour|the tour|take the tour|show me around|show me everything|guide me)\b/.test(t)){ sovTourStart('full'); return; }
   if(/\b(demo|quick tour|90.?sec|show me quickly)\b/.test(t)){ sovTourStart('demo'); return; }
   if(/\b(3d quality|photoreal|cesium|maps key|upgrade 3d|better 3d|3d world quality)\b/.test(t)){ sov3DSetup(); return; }
+  if(/\b(assurance|system card|sign a card|signed card|jsp ?936|eu ai act card|prove.*governed)\b/.test(t)){ setMode('csoai'); openApp('assurance'); return sovSay("📜 Opened <b>Signed Assurance</b> — issue a Defence (JSP 936) or Civilian (EU AI Act) card, then verify it offline. Full surfaces: <span class='sgg' onclick=\"openTab('/systemcard.html')\">System Card</span> · <span class='sgg' onclick=\"openTab('/registry.html')\">Registry</span>."); }
   if(/\b(help|what can you|who are you|hello|hi)\b/.test(t)){ return sovSay("I'm your <b>sovereign</b> — I remember you, on your device, forever. Try:<br>• ⏰ <b>“remind me to call mum at 6pm”</b> — I'll ping &amp; speak it (🔁 <b>“…every day at 8am”</b>; <b>“snooze 15 min”</b>; <b>“change/delete the mum reminder”</b>)<br>• 📝 <b>“note: gate code 4590”</b> — jot &amp; ask it back later<br>• 📋 tap <b>My stuff</b> to see reminders &amp; notes at a glance<br>• 🧮 quick maths — <b>“15% of 240”</b>, <b>“5km in miles”</b>, <b>“$50 + $30”</b><br>• 🌦️ <b>“weather”</b>, 💱 <b>“100 usd to gbp”</b>, 🕑 <b>“time in Tokyo”</b>, 📅 <b>“days until Christmas”</b>, ☀️ <b>“my day”</b><br>• 🏛 <b>“what governs a bank”</b>, 💼 <b>“work mode”</b> / 🏠 <b>“life mode”</b>, 🌍 fly into <b>MEOK Earth</b><br>Tap 🎤 to just speak."); }
   if(/\b(what|where|which|whats|do you (?:know|remember)|my)\b/i.test(t)){ const n=noteFind(t); if(n){ return sovSay("📝 From your notes: <b>"+esc(n.t)+"</b>"); } }
   sovOrchestrate(raw); // unmatched → the shared Sovereign brain: speaks + takes real OS actions (falls back to sovAsk)
