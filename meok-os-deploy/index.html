@@ -225,6 +225,15 @@ table.mini td:last-child{text-align:right;font-variant-numeric:tabular-nums}
 @keyframes sovspin{to{transform:rotate(360deg)}}
 .sovname{font-weight:800;font-size:15px;color:var(--ink)}
 .sovsub{font-size:10.5px;color:var(--dim);letter-spacing:.03em;margin-top:1px}
+.sovboard{margin:0 12px 8px;max-height:190px;overflow:auto;border:1px solid var(--line);border-radius:12px;background:rgba(0,0,0,.14);padding:6px 8px;font-size:12px}
+.sovboard .sbh{font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--dim);margin:4px 2px 2px;font-weight:700}
+.sovboard .sbrow{display:flex;align-items:flex-start;gap:6px;padding:4px 3px;border-radius:8px}
+.sovboard .sbrow:hover{background:rgba(255,255,255,.04)}
+.sovboard .sbt{flex:1;line-height:1.3;word-break:break-word}
+.sovboard .sbw{color:var(--dim);font-size:10.5px}
+.sovboard .sba{cursor:pointer;opacity:.7;padding:0 3px;font-size:12px;user-select:none}
+.sovboard .sba:hover{opacity:1}
+.sovboard .sbempty{color:var(--dim);padding:6px 3px;line-height:1.4}
 .sovlog{flex:1;overflow:auto;padding:14px;display:flex;flex-direction:column;gap:9px}
 .sovmsg{font-size:12.5px;line-height:1.5;padding:8px 11px;border-radius:12px;max-width:88%}
 .sovmsg.ai{background:rgba(189,157,84,.15);border:1px solid rgba(189,157,84,.3);color:#5a4a1e;align-self:flex-start;border-bottom-left-radius:3px}
@@ -364,7 +373,9 @@ table.mini td:last-child{text-align:right;font-variant-numeric:tabular-nums}
       <div class="sovsub" id="sovsub">a living mirror of your world · tap the globe to enter</div>
     </div>
     <div class="sovlog" id="sovlog"></div>
+    <div class="sovboard" id="sovboard" hidden></div>
     <div class="sovsugg">
+      <span class="sgg" onclick="sovBoardToggle()">📋 My stuff</span>
       <span class="sgg" onclick="sovHandle('open MEOK Earth')">🌍 My world</span>
       <span class="sgg" onclick="sovHandle('work mode')">💼 Work</span>
       <span class="sgg" onclick="sovHandle('my day')">☀️ My day</span>
@@ -1273,7 +1284,7 @@ function sovRemember(fact){ fact=(''+fact).trim(); if(!fact) return; if(/^name:/
 function sovUserName(){ const f=SOV_FACTS.find(f=>/^name:/i.test(f)); return f? f.replace(/^name:\s*/i,'').trim() : null; }
 // ── everyday reminders — the "forever AI that remembers you", made useful daily (on-device) ──
 let REMIND=[]; try{ REMIND=JSON.parse(localStorage.getItem('meok_reminders')||'[]'); }catch(e){ REMIND=[]; }
-function remSave(){ try{ localStorage.setItem('meok_reminders',JSON.stringify(REMIND.slice(-60))); }catch(e){} }
+function remSave(){ try{ localStorage.setItem('meok_reminders',JSON.stringify(REMIND.slice(-60))); }catch(e){} try{ boardRefresh(); }catch(e){} }
 function remList(){ return REMIND.filter(r=>!r.done); }
 function remParseWhen(s){ s=(''+s).toLowerCase().trim(); const now=new Date(); let m,d=null;
   if(m=s.match(/\bin\s+([\d.]+)\s*(sec|second|min|minute|hour|hr|h)s?\b/)){ const n=parseFloat(m[1]),u=m[2][0]; d=new Date(now.getTime()+(u==='s'?n*1000:(u==='h'?n*3600000:n*60000))); }
@@ -1290,7 +1301,7 @@ function remShow(){ const o=remList(); sovSay(o.length ? ("⏰ <b>Your reminders
 function sovTimeGreet(){ const h=new Date().getHours(); return h<5?'Still up':h<12?'Good morning':h<18?'Good afternoon':'Good evening'; }
 // ── quick notes — jot anything, ask it back later (on-device) ──
 let NOTES=[]; try{ NOTES=JSON.parse(localStorage.getItem('meok_notes')||'[]'); }catch(e){ NOTES=[]; }
-function noteSaveAll(){ try{ localStorage.setItem('meok_notes',JSON.stringify(NOTES.slice(-80))); }catch(e){} }
+function noteSaveAll(){ try{ localStorage.setItem('meok_notes',JSON.stringify(NOTES.slice(-80))); }catch(e){} try{ boardRefresh(); }catch(e){} }
 function noteAdd(txt){ txt=(''+txt).trim(); if(!txt) return null; NOTES.push({id:Date.now(),t:txt.slice(0,200)}); noteSaveAll(); return txt.slice(0,200); }
 const NOTE_STOP=['what','whats','where','which','the','your','my','me','is','are','was','of','and','for','a','an','tell','know','remember','do','you','again','please','how','much'];
 function noteFind(q){ const words=(''+q).toLowerCase().replace(/[^\w\s]/g,' ').split(/\s+/).filter(w=>w.length>2 && NOTE_STOP.indexOf(w)<0); if(!words.length) return null; let best=null,bs=0; NOTES.forEach(n=>{ const nl=n.t.toLowerCase(); let s=0; words.forEach(w=>{ if(nl.indexOf(w)>=0) s++; }); if(s>bs){bs=s;best=n;} }); return bs>=1?best:null; }
@@ -1319,6 +1330,17 @@ function sovInstant(raw){ const t=(''+raw).trim(); let m;
 const SOV_TIPS=["Tip: say <b>“remind me to …”</b> and I'll hold it — even the time.","Tip: <b>“note: …”</b> jots anything; ask it back later (“what's my wifi password”).","Tip: ask me <b>“what governs a bank”</b> — real frameworks, instantly.","Tip: tap the <b>globe</b> above to fly into your living world.","Tip: I do quick maths too — <b>“15% of 240”</b> or <b>“5km in miles”</b>."];
 function sovTip(){ try{ if(sessionStorage.getItem('sov_tip')) return null; sessionStorage.setItem('sov_tip','1'); }catch(e){} return SOV_TIPS[new Date().getMinutes()%SOV_TIPS.length]; }
 function noteDel(id){ NOTES=NOTES.filter(n=>n.id!==id); noteSaveAll(); sovSay("Note deleted."); }
+// ── at-a-glance board — reminders + notes, live, with quick actions (on-device) ──
+function remDel(id){ REMIND=REMIND.filter(r=>r.id!==id); remSave(); }
+function sovBoardToggle(){ const b=document.getElementById('sovboard'); if(!b) return; if(b.hasAttribute('hidden')){ b.removeAttribute('hidden'); sovBoardRender(); } else { b.setAttribute('hidden',''); } }
+function boardRefresh(){ const b=document.getElementById('sovboard'); if(b && !b.hasAttribute('hidden')) sovBoardRender(); }
+function sovBoardRender(){ const b=document.getElementById('sovboard'); if(!b) return; const rs=remList(); const ns=NOTES.slice().reverse(); let h='';
+  h+='<div class="sbh">⏰ Reminders'+(rs.length?(' · '+rs.length):'')+'</div>';
+  h+= rs.length ? rs.map(function(r){ const w=r.when?esc(r.when):(r.fireAt&&r.fireAt>Date.now()?new Date(r.fireAt).toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}):''); return '<div class="sbrow"><span class="sba" title="Mark done" onclick="remDoneClick('+r.id+')">✓</span><span class="sbt">'+esc(r.text)+(w?' <span class="sbw">'+w+'</span>':'')+'</span><span class="sba" title="Delete" onclick="remDel('+r.id+')">✕</span></div>'; }).join('') : '<div class="sbempty">Nothing yet — say <b>“remind me to …”</b>.</div>';
+  h+='<div class="sbh">📝 Notes'+(ns.length?(' · '+ns.length):'')+'</div>';
+  h+= ns.length ? ns.map(function(n){ return '<div class="sbrow"><span class="sbt">'+esc(n.t)+'</span><span class="sba" title="Delete" onclick="noteDel('+n.id+')">✕</span></div>'; }).join('') : '<div class="sbempty">Jot anything — <b>“note: gate code 4590”</b>.</div>';
+  b.innerHTML=h;
+}
 // ── live weather + currency (free, no key, via the shared backend) ──
 async function sovWeather(city){ const t=sovSay('🌦️ checking the weather…'); try{ const d=await(await fetch('/api/weather?q='+encodeURIComponent(city))).json(); if(t)t.remove(); if(d.error||d.temp==null){ sovSay("I couldn't find the weather for “"+esc(city)+"”. Try a city name."); return; } sovSay((d.emoji||'🌡️')+' <b>'+esc(d.city)+(d.country?', '+esc(d.country):'')+'</b> — <b>'+Math.round(d.temp)+'°C</b>, '+esc(d.desc||'')+'. <span style="color:var(--dim)">wind '+Math.round(d.wind)+' km/h'+(d.humidity!=null?(' · humidity '+d.humidity+'%'):'')+'</span>'); }catch(e){ if(t)t.remove(); sovSay('Weather is unreachable right now — try again in a moment.'); } }
 async function sovCurrency(amount,from,to){ try{ const d=await(await fetch('/api/fx?amount='+amount+'&from='+from+'&to='+to)).json(); if(d.error||d.result==null){ sovSay("I couldn't convert "+esc(from)+"→"+esc(to)+" — check the currency codes."); return; } sovSay('💱 <b>'+amount+' '+esc(from)+' = '+d.result+' '+esc(to)+'</b> <span style="color:var(--dim)">(1 '+esc(from)+' = '+d.rate+' '+esc(to)+(d.date?' · '+esc(d.date):'')+')</span>'); }catch(e){ sovSay('Currency rates unreachable right now — try again.'); } }
