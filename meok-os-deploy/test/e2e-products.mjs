@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 // MEOK products E2E — functional assertions against the LIVE estate (not just HTTP 200).
 // Run: node test/e2e-products.mjs [baseURL]   (default https://os.meok.ai)
+import crypto from 'node:crypto';
 const BASE = process.argv[2] || 'https://os.meok.ai';
 let pass = 0, fail = 0; const fails = [];
 const ck = (name, cond, extra = '') => { if (cond) { pass++; console.log('  ok   ' + name); } else { fail++; fails.push(name); console.log('  FAIL ' + name + (extra ? '  → ' + extra : '')); } };
@@ -97,6 +98,17 @@ for (const u of ['/api/orchestrate', '/api/v1/chat/completions', '/api/sign', '/
   ck('sign: deterministic + canonical (order-independent)', s1.j.signature === s2.j.signature && s1.j.publicKey === s2.j.publicKey); }
 r = await gj('/api/bridge?sample=iso8583');
 ck('bridge: ISO 8583 MTI parses', /^\d{4}$/.test(r.j.result?.mti || ''));
+
+// ── SIGIL security (the moat must actually hold) ──
+{ const s = await post('/api/sign', { action: { secure: 1 } });
+  const kp = crypto.generateKeyPairSync('ed25519');
+  const wrongPub = kp.publicKey.export({ type: 'spki', format: 'der' }).toString('hex');
+  const v = await post('/api/verify', { message: s.j.canonical, signature: s.j.signature, publicKey: wrongPub });
+  ck('security: signature REJECTED under a different public key', v.j.valid === false);
+  const v2 = await post('/api/verify', { message: s.j.canonical, signature: s.j.signature.slice(0, -4) + 'dead', publicKey: s.j.publicKey });
+  ck('security: forged/altered signature rejected', v2.j.valid === false);
+  const v3 = await post('/api/verify', { message: 'x', signature: 'deadbeef', publicKey: '00' });
+  ck('security: garbage sig/key → valid:false (no crash)', v3.j.valid === false && v3.s === 200); }
 
 // ── fuzz / robustness (malformed, oversized) — must degrade gracefully, never 500 ──
 { // text/plain so the body reaches OUR handler (Vercel 400s malformed application/json at the edge — also fine).
