@@ -163,6 +163,17 @@ for (const [n, u] of [['social networks', '/api/social?action=networks'], ['medi
   const t = await gj('/api/verify', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ message: (sc.j.canonical || '').slice(0, -3) + 'ZZZ', signature: sc.j.signature, publicKey: sc.j.publicKey }) });
   ck('systemcard: TAMPERED card rejected', t.j.valid === false);
   const rr = await fetch(BASE + '/systemcard.html'); const h = await rr.text(); ck('systemcard: demo page + JSP 936 framing', rr.status === 200 && /JSP 936/.test(h) && /verifyCard/.test(h)); }
+// Signed Model Card (DAIC 10-section) — issue + verify + tamper
+{ const mc = await gj('/api/systemcard?type=model'); ck('modelcard: issues signed model card', mc.s === 200 && mc.j.ok === true && mc.j.cardType === 'model' && !!mc.j.card.model_details && !!mc.j.card.quantitative_analysis);
+  const v = await gj('/api/verify', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ message: mc.j.canonical, signature: mc.j.signature, publicKey: mc.j.publicKey }) });
+  ck('modelcard: verifies VALID', v.j.valid === true); }
+// Signed Card Registry — signed manifest + verifiable + entries link to cards
+{ const rg = await gj('/api/registry'); ck('registry: signed manifest + entries', rg.s === 200 && rg.j.ok === true && Array.isArray(rg.j.manifest.entries) && rg.j.manifest.entries.length >= 2 && !!rg.j.signature);
+  const v = await gj('/api/verify', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ message: rg.j.canonical, signature: rg.j.signature, publicKey: rg.j.publicKey }) });
+  ck('registry: manifest verifies VALID', v.j.valid === true);
+  const t = await gj('/api/verify', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ message: (rg.j.canonical || '').slice(0, -2) + 'ZZ', signature: rg.j.signature, publicKey: rg.j.publicKey }) });
+  ck('registry: tampered manifest rejected', t.j.valid === false);
+  const rr = await fetch(BASE + '/registry.html'); ck('registry: page reachable', rr.status === 200); }
 { const rr = await fetch(BASE + '/earth3d-photoreal.html'); const t = await rr.text(); ck('photoreal: Google + Cesium ion (OSM buildings) tiers + msg API', rr.status === 200 && /createGooglePhotorealistic3DTileset/.test(t) && /createOsmBuildingsAsync/.test(t) && /meok_cesium_token/.test(t) && /meok-cmd/.test(t)); }
 { const rr = await fetch(BASE + '/'); const t = await rr.text(); ck('OS: speech-paced + scrub + 3D setup + tiered switch', /function tourSpeak/.test(t) && /function tourSeekEvent/.test(t) && /function meokEarth3DUrl/.test(t) && /function sov3DSetup/.test(t) && /function meokCesiumToken/.test(t)); }
 { const rr = await fetch(BASE + '/'); const t = await rr.text(); ck('OS: tour UX (keyboard + deep-link + reduced-motion + completed)', /function _tourKey/.test(t) && /q\.get\('tour'\)/.test(t) && /prefers-reduced-motion/.test(t) && /meok_toured/.test(t)); }
