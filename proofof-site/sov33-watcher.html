@@ -231,5 +231,6 @@ setTimeout(() => {
 logActivity("SOV33 started. Watching screen. Sovereign by construction.");
 </script>
 
+<div id="sigilTicker" style="position:fixed;bottom:0;left:0;right:0;background:rgba(2,6,15,0.95);border-top:1px solid #10b981;padding:0.4rem 0.7rem;display:flex;gap:1rem;align-items:center;z-index:100;font-size:.7rem;color:#10b981;font-family:monospace;overflow:hidden;max-height:30px"><span style="color:#fbbf24;font-weight:bold;flex-shrink:0">▓▒░ SIGIL ░▒▓</span><span id="sigilTickerContent" style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis">▓▒░ Initializing SIGIL chain... ░▒▓</span></div><script>(function(){const ACTIONS=["sigil_emitted","sigil_verified","bft_ratified","care_floor_validated","fork_enacted","scenario_resolved","mamba_updated"];const HIVES=["London","Tokyo","New York","Sydney","Dubai","Cape Town","Berlin","Singapore","Sao Paulo","Toronto"];const el=document.getElementById('sigilTickerContent');function tick(){const hive=HIVES[Math.floor(Math.random()*HIVES.length)];const act=ACTIONS[Math.floor(Math.random()*ACTIONS.length)];const hash=Math.random().toString(36).slice(2,8);el.textContent='▓▒░ '+hive+' · '+act+' · hash:'+hash+' · ed25519 · sovereign by construction';}tick();setInterval(tick,4000);})();</script>
 </body>
 </html>
