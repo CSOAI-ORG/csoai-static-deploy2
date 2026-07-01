@@ -1247,7 +1247,32 @@ function _tourStep(){ const s=TOUR_STEPS[_tourI]; const el=document.querySelecto
  try{ if(window.SOV_VOICE_ON) sovSpeak(s.t+'. '+s.b); }catch(e){} }
 function _tourNext(){ _tourI++; if(_tourI>=TOUR_STEPS.length)_tourFinish(); else _tourStep(); }
 function _tourExit(){ ['tourSpot','tourBub'].forEach(id=>{const e=document.getElementById(id);if(e)e.remove();}); }
-function _tourFinish(){ _tourExit(); askLearn(); }
+function _tourFinish(){ _tourExit(); wQuickStart(); }
+function wQuickStart(){ const w=document.getElementById('welcome'); if(!w)return; w.classList.add('show'); const ist='width:100%;margin-top:4px;padding:9px 11px;border:1px solid var(--line);border-radius:9px;background:rgba(0,0,0,.12);color:var(--ink);font:500 14px Space Grotesk,sans-serif;box-sizing:border-box';
+  wRender('<h1>3 taps and you\'re set ✨</h1><p>Fill what you like — skip the rest. It all stays <b>on your device</b>.</p>'
+   +'<div style="display:flex;flex-direction:column;gap:11px;margin:10px 0 6px;text-align:left">'
+   +'<label style="font:700 11.5px Space Grotesk;color:var(--dim);letter-spacing:.04em">YOUR NAME<input id="qsName" placeholder="e.g. Nick" style="'+ist+'"></label>'
+   +'<label style="font:700 11.5px Space Grotesk;color:var(--dim);letter-spacing:.04em">HOME CITY<input id="qsCity" placeholder="e.g. London — for instant weather" style="'+ist+'"></label>'
+   +'<label style="font:700 11.5px Space Grotesk;color:var(--dim);letter-spacing:.04em">FIRST REMINDER<input id="qsRem" placeholder="e.g. call mum at 6pm" style="'+ist+'" onkeydown="if(event.key===\'Enter\')wQuickDone()"></label>'
+   +'</div>'
+   +'<div class="wcards"><div class="wcard" onclick="wQuickDone()"><span class="we">🚀</span><b>Done — enter</b></div></div>'
+   +'<div class="wskip" onclick="askConnect()">Connect my apps →</div><div class="wskip" onclick="welcomeDone()">Skip for now</div>');
+  try{ const n=document.getElementById('qsName'); if(n) n.focus(); }catch(e){} }
+function wQuickDone(){ let nm='',city='',rem=''; try{
+    nm=((document.getElementById('qsName')||{}).value||'').trim();
+    city=((document.getElementById('qsCity')||{}).value||'').trim();
+    rem=((document.getElementById('qsRem')||{}).value||'').trim();
+    if(nm){ sovRemember('name: '+nm); const sub=document.querySelector('.sovsub'); if(sub) sub.textContent='companion to '+nm+' · remembers you'; }
+    if(city){ try{ localStorage.setItem('meok_home_city',city); }catch(e){} }
+    if(rem){ let when='',body=rem; const wm=body.match(/\s+(at .+|tonight|tomorrow.*|this (?:evening|afternoon|morning)|in \d+ \w+|next \w+)$/i); if(wm){ when=wm[1].trim(); body=body.slice(0,wm.index).trim(); } body=body.replace(/^remind me (?:to |that |about )?/i,'').trim(); if(body) remAdd(body,when); }
+  }catch(e){}
+  welcomeDone();
+  let g='Welcome'+(nm?', <b>'+esc(nm)+'</b>':'')+' ✨ — you\'re set up. I\'ll remember you.';
+  if(rem) g+=' Your first reminder is saved.';
+  g+=' Tap <b>📋 My stuff</b> or just talk to me anytime.';
+  sovSay(g);
+  if(city) try{ sovWeather(city); }catch(e){}
+}
 function askLearn(){ const w=document.getElementById('welcome'); if(!w)return; w.classList.add('show'); wRender('<h1>Can I learn about you? 🌱</h1><p>The more I know, the better I set up <b>your</b> world. Everything stays <b>on your device</b> — yours, never uploaded, never sold.</p><div class="wcards"><div class="wcard" onclick="learnYes()"><span class="we">💬</span><b>Yes — let\'s talk</b><small>tell me about you</small></div><div class="wcard" onclick="askConnect()"><span class="we">🔗</span><b>Connect my apps</b><small>calendar · email · files</small></div><div class="wcard" onclick="welcomeDone()"><span class="we">🔒</span><b>Maybe later</b><small>just explore</small></div></div><p style="font-size:11.5px;color:var(--dim);margin-top:10px">Optional, only with your explicit OK each time: camera presence &amp; on-device photo learning — it never leaves your device.</p>'); }
 function askConnect(){ const w=document.getElementById('welcome'); if(!w)return; w.classList.add('show'); wRender('<h1>Connect your world 🔗</h1><p>Bring your apps so I can actually help — calendar, email, files. <b>Start with one, add more anytime.</b> Your tokens stay in your sovereign vault, never shared.</p><div class="wcards"><div class="wcard" onclick="connectProv(\'Google\')"><span class="we">🟦</span><b>Google</b><small>Gmail · Drive · Calendar</small></div><div class="wcard" onclick="connectProv(\'Apple\')"><span class="we">🍎</span><b>Apple</b><small>iCloud · Calendar</small></div><div class="wcard" onclick="connectProv(\'Microsoft\')"><span class="we">🟧</span><b>Microsoft</b><small>Outlook · 365 · OneDrive</small></div></div><p style="font-size:11.5px;color:var(--dim);margin-top:10px">Google + Apple + Microsoft cover ~80% of what people use. Slack, GitHub &amp; more later.</p><div class="wskip" onclick="welcomeDone()">Skip — explore first</div>'); }
 function connectProv(p){ welcomeDone(); sovSay("To connect <b>"+esc(p)+"</b> I need its sign-in set up once (an OAuth client + redirect) in your sovereign config — a one-time owner step. After that it\'s <b>one tap</b>, and your access tokens stay in <b>your</b> vault, never given away. <span style=\'color:var(--dim)\'>(Progressive: connect one now, add the rest when you need them.)</span>"); }
@@ -1293,7 +1318,7 @@ function remParseWhen(s){ s=(''+s).toLowerCase().trim(); const now=new Date(); l
   else if(/tomorrow/.test(s)){ d=new Date(now); d.setDate(d.getDate()+1); d.setHours(9,0,0,0); }
   return d?d.getTime():0; }
 function remSchedule(r){ if(!r.fireAt||r.done||r.fired) return; const delay=r.fireAt-Date.now(); if(delay>2*86400000) return; if(delay<=0){ remFire(r); return; } setTimeout(function(){ remFire(r); }, delay); }
-function remFire(r){ const cur=REMIND.find(x=>x.id===r.id); if(!cur||cur.done||cur.fired) return; cur.fired=true; remSave(); try{ if(typeof sovToggle==='function') sovToggle(true); }catch(e){} sovSay("⏰ <b>Reminder:</b> "+esc(cur.text)); try{ sovBeep(); }catch(e){} try{ if(window.Notification&&Notification.permission==='granted') new Notification('MEOK reminder',{body:cur.text}); }catch(e){} }
+function remFire(r){ const cur=REMIND.find(x=>x.id===r.id); if(!cur||cur.done||cur.fired) return; cur.fired=true; remSave(); try{ if(typeof sovToggle==='function') sovToggle(true); }catch(e){} sovSay("⏰ <b>Reminder:</b> "+esc(cur.text)); try{ sovBeep(); }catch(e){} try{ if(!window.SOV_VOICE_ON) setTimeout(function(){ sovSpeak('Reminder: '+cur.text); },420); }catch(e){} try{ if(window.Notification&&Notification.permission==='granted') new Notification('MEOK reminder',{body:cur.text}); }catch(e){} }
 function remAdd(text,when){ const t=(text||'').trim(); if(!t) return null; const fireAt=remParseWhen(when); const r={id:Date.now(),text:t.slice(0,140),when:(when||'').slice(0,40),fireAt:fireAt,done:false,fired:false}; REMIND.push(r); remSave(); if(fireAt){ try{ if(window.Notification&&Notification.permission==='default') Notification.requestPermission(); }catch(e){} remSchedule(r); } return r; }
 function remDoneClick(id){ const r=REMIND.find(x=>x.id===id); if(r){ r.done=true; remSave(); } sovSay("Done ✓ — crossed it off."); }
 function remClear(){ REMIND=REMIND.filter(r=>r.done); remSave(); }
