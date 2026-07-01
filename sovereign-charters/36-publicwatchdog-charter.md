@@ -2,7 +2,7 @@
 ## watchdog.csoai.org · Global Signal Substrate
 ## CSOAI Ltd · UK Companies House 16939677 · London, United Kingdom
 
-> **Charter Article 0**: Never take equity, board seats, revenue-sharing, or success fees from institutions we investigate. ISO fee-for-service model ONLY. **CA3O is the CMKC for AI.**
+> **Charter Article 0**: Never take equity, board seats, revenue-sharing, or success fees from institutions we certify. ISO fee-for-service model ONLY. **CA3O is the CMKC for AI.**
 >
 > **Watchdog Doctrine**: The Public Watchdog is the **bidirectional signal substrate** of the sovereign empire. It is not just a verification tool — it is the **ears, eyes, and nervous system** of the global AI governance ecosystem. Where other regulators operate in silos, the Watchdog operates in **heat-maps**. Where other watchdogs react, the Watchdog **anticipates**.
 
