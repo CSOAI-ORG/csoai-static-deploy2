@@ -84,11 +84,13 @@ function ready(){ if(_ready)return; _ready=true;
   document.getElementById('boot').classList.add('off');
   map.flyTo({center:[-0.1276,51.5072],zoom:15.6,pitch:72,bearing:28,duration:6000,essential:true});
   fetch('/api/nodes').then(r=>r.json()).then(d=>{ const rows=document.getElementById('nrows'); rows.innerHTML='';
+    // pick a node → fly the camera AND tell the parent OS so the Sovereign explains it in chat
+    const pick=(n)=>{ MEOK.flyTo(n.lon,n.lat,n.name); try{ if(window.parent&&window.parent!==window) window.parent.postMessage({type:'meok-node',node:n},'*'); }catch(e){} };
     (d.nodes||[]).forEach(n=>{ const col=STATUS_COLOR[n.status]||'#c9a84c';
       const el=document.createElement('div'); el.className='marker'; el.style.color=col; el.style.background=col;
-      el.title=n.name+' — '+(n.role||''); el.onclick=()=>MEOK.flyTo(n.lon,n.lat,n.name);
+      el.title=n.name+' — '+(n.role||''); el.onclick=()=>pick(n);
       new maplibregl.Marker({element:el}).setLngLat([n.lon,n.lat]).addTo(map);
-      const rr=document.createElement('div'); rr.className='nrow'; rr.onclick=()=>MEOK.flyTo(n.lon,n.lat,n.name);
+      const rr=document.createElement('div'); rr.className='nrow'; rr.onclick=()=>pick(n);
       rr.innerHTML='<span class="sdot" style="background:'+col+'"></span><b>'+n.name+'</b>'; rows.appendChild(rr); });
   }).catch(()=>{ document.getElementById('nrows').textContent='network offline'; });
 }

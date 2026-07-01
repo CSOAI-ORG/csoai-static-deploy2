@@ -524,7 +524,7 @@ const MODE_ORDER={
 };
 const MODE_HUE={meok:43,csoai:212};
 let MODE='meok'; try{MODE=localStorage.getItem('meok_mode')||'meok';}catch(e){}
-function setMode(m){ MODE=(m==='csoai'?'csoai':'meok'); try{localStorage.setItem('meok_mode',MODE);}catch(e){}
+function setMode(m){ MODE=(m==='csoai'?'csoai':'meok'); try{localStorage.setItem('meok_mode',MODE);}catch(e){} try{ if(window.MEOK_CTX) window.MEOK_CTX.mode=MODE; }catch(e){}
   const f=document.getElementById('frame'); if(f){f.classList.remove('mode-meok','mode-csoai'); f.classList.add('mode-'+MODE);}
   let sig=null; try{sig=localStorage.getItem('meok_pond_hue');}catch(e){}
   if(sig==null) window.MEOK_POND_HUE=MODE_HUE[MODE]; // water follows the mode until a personal archetype is chosen
@@ -1092,7 +1092,7 @@ async function brdValidate(){ const i=document.getElementById('brd-in'),o=docume
 async function brdSign(encMsg){ const out=document.getElementById('brd-sig'); if(out)out.textContent='signing…';
   try{ const msg=decodeURIComponent(encMsg); const d=await(await fetch('/api/sign',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:{bridge_parse:msg.slice(0,120)}})})).json();
     if(out&&d.signature) out.innerHTML='🔏 Ed25519 signed · sig <b>'+esc(d.signature.slice(0,32))+'…</b><br>verify offline at <a href="/verify.html" style="color:var(--gold)">/verify</a> with the public key — no account, no vendor.'; }catch(e){ if(out)out.textContent='sign unreachable'; } }
-function openApp(id){ track('app:'+id,'open');
+function openApp(id){ track('app:'+id,'open'); try{ if(window.MEOK_CTX) window.MEOK_CTX.app=(APPS[id]&&APPS[id].t)||id; }catch(e){}
  if(open[id]){focus(id);return;}
  const a=APPS[id];const d=document.getElementById('frame');
  const n=document.createElement('div');n.className='win';n.style.width=(a.w||520)+'px';
@@ -1159,7 +1159,7 @@ function _meokRender(el,w){
   .nodeLabel('name').nodeVal('val').nodeColor(function(n){return n.color;})
   .linkColor(function(l){return l.rel?'#e9c46a':'rgba(255,255,255,.18)';})
   .linkDirectionalParticles(2).linkDirectionalParticleSpeed(0.006)
-  .onNodeClick(function(n){if(n.app&&typeof openApp==='function'){openApp(n.app);}});}
+  .onNodeClick(function(n){ if(String(n.id||'').indexOf('hub_')===0 && _canonNodes && typeof sovExplainNode==='function'){ var hn=(_canonNodes.nodes||[]).find(function(x){return 'hub_'+x.id===n.id;}); if(hn){ sovExplainNode(hn); return; } } if(n.app&&typeof openApp==='function'){openApp(n.app);} });}
  catch(e){el.innerHTML='<div style="padding:18px;color:var(--dim)">Graph render error: '+e.message+'</div>';}
 }
 function meokGraphInit(){
@@ -1323,11 +1323,20 @@ try{ const _sh=document.querySelector('.sovhead'); if(_sh) _sh.addEventListener(
   document.getElementById('sovbbin').addEventListener('keydown',function(e){ if(e.key==='Enter') go(); });
   document.getElementById('sovbbmic').onclick=function(){ try{ if(typeof sovVoice==='function') sovVoice(); }catch(e){} };
 })();
+// ── Sovereign IS the AI OS: it knows what's on screen, so it answers in sync ──
+window.MEOK_CTX={mode:'meok',app:null,node:null};
+function sovContext(){ const c=window.MEOK_CTX||{}; const bits=[];
+  bits.push('The user is inside MEOK OS (a sovereign AI operating system you, the Sovereign, run and can control).');
+  bits.push('Current space: '+(c.mode==='csoai'?'Work (business & governance)':'Life (personal)')+'.');
+  if(c.app) bits.push('Open app: '+c.app+'.');
+  if(c.node) bits.push('The user is looking at the world node '+c.node.name+' ('+(c.node.role||'')+', status '+(c.node.status||'')+').');
+  bits.push('You can open apps, switch space, sign/verify actions, validate legacy messages, and explain the live map. Answer as the OS itself — grounded, practical, in sync with what they see.');
+  return bits.join(' '); }
 async function sovAsk(text){
   const log=document.getElementById('sovlog'); let think=null;
   if(log){ think=document.createElement('div'); think.className='sovmsg ai'; think.textContent='…'; log.appendChild(think); log.scrollTop=log.scrollHeight; }
   try{
-    const r=await fetch(SOV3_CHAT,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:text, queen_id:'queen-king', register:'plain', model:window.MEOK_MODEL})});
+    const r=await fetch(SOV3_CHAT,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:text, queen_id:'queen-king', register:'plain', persona:sovContext(), model:window.MEOK_MODEL})});
     const d=await r.json(); const ans=((d&&(d.response||d.answer||d.text))||'').trim();
     if(think) think.remove();
     if(ans) sovSay(esc(ans)); else throw 0;
@@ -1335,6 +1344,21 @@ async function sovAsk(text){
     sovKnowledge(text);   // federate the world's open knowledge (Wikipedia/Wikidata + Data Commons)
   }catch(e){ if(think) think.remove(); sovSay("I hear you — I can open apps, switch your current (work / personal), change your signature, or take you into MEOK Earth. <span style='color:var(--dim)'>(My deeper SOV3 brain isn't reachable right now.)</span>"); sovToolHints(text); sovKnowledge(text); }
 }
+// ── Select a node on the map → the Sovereign explains it IN the chat (the OS narrates itself) ──
+async function sovExplainNode(node){ if(!node) return; window.MEOK_CTX.node=node; sovToggle(true); if(innerWidth<=760) document.body.classList.add('sov-open');
+  sovSay('📍 '+esc(node.name)+(node.role?(' · '+esc(node.role)):''),'me');
+  const log=document.getElementById('sovlog'); let think=null; if(log){ think=document.createElement('div'); think.className='sovmsg ai'; think.textContent='…'; log.appendChild(think); log.scrollTop=log.scrollHeight; }
+  const q='Explain the sovereign network node '+node.name+' ('+(node.role||'')+', governance status '+(node.status||'governed')+'). In 2-3 practical sentences: what it is, what legacy systems + frameworks it governs, and why it matters. Speak as the OS.';
+  try{ const r=await fetch(SOV3_CHAT,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:q, queen_id:'queen-king', register:'plain', persona:sovContext(), model:window.MEOK_MODEL})});
+    const d=await r.json(); const ans=((d&&(d.response||d.answer||d.text))||'').trim(); if(think)think.remove();
+    const dot=node.status==='flagged'?'🔴':(node.status==='watch'?'🟠':'🟡');
+    if(ans) sovSay(dot+' <b>'+esc(node.name)+'</b> — '+esc(ans)); else throw 0;
+  }catch(e){ if(think)think.remove(); const dot=node.status==='flagged'?'🔴':(node.status==='watch'?'🟠':'🟡');
+    sovSay(dot+' <b>'+esc(node.name)+'</b> — a '+esc(node.status||'governed')+' hub in your sovereign network'+(node.role?(', running '+esc(node.role)):'')+'. Every action here is Ed25519-signed &amp; attestable.'); }
+  try{ if(node.role&&/bridge|iso|hl7|fix|swift|cobol|sap|scada/i.test(node.role)) sovToolHints(node.role); }catch(_){}
+}
+// the live map (earth3d iframe / globe) posts node selections → the Sovereign speaks
+window.addEventListener('message',function(ev){ try{ const d=ev.data; if(d&&d.type==='meok-node'&&d.node) sovExplainNode(d.node); }catch(e){} });
 // Federated world-knowledge — the "governed super-Google" layer (grounds the answer in open data)
 function sovKnowledge(text){
   fetch('/api/knowledge?q='+encodeURIComponent(text)).then(r=>r.json()).then(d=>{
