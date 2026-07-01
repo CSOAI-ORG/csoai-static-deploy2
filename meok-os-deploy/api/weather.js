@@ -12,8 +12,10 @@ export default async function handler(req, res) {
     const g = await (await fetch('https://geocoding-api.open-meteo.com/v1/search?count=1&language=en&name=' + encodeURIComponent(q))).json();
     const loc = g.results && g.results[0];
     if (!loc) return res.status(200).json({ error: 'city not found', q });
-    const f = await (await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${loc.latitude}&longitude=${loc.longitude}&current=temperature_2m,weather_code,wind_speed_10m,relative_humidity_2m`)).json();
+    const f = await (await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${loc.latitude}&longitude=${loc.longitude}&current=temperature_2m,weather_code,wind_speed_10m,relative_humidity_2m,apparent_temperature&daily=sunrise,sunset,temperature_2m_max,temperature_2m_min&timezone=auto&forecast_days=1`)).json();
     const c = (f && f.current) || {};
-    return res.status(200).json({ city: loc.name, country: loc.country, temp: c.temperature_2m, code: c.weather_code, desc: WMO[c.weather_code] || '', wind: c.wind_speed_10m, humidity: c.relative_humidity_2m, emoji: emoji(c.weather_code) });
+    const d = (f && f.daily) || {};
+    const hm = (s) => (typeof s === 'string' && s.length >= 16) ? s.slice(11, 16) : null;
+    return res.status(200).json({ city: loc.name, country: loc.country, temp: c.temperature_2m, feels: c.apparent_temperature, code: c.weather_code, desc: WMO[c.weather_code] || '', wind: c.wind_speed_10m, humidity: c.relative_humidity_2m, emoji: emoji(c.weather_code), hi: d.temperature_2m_max && d.temperature_2m_max[0], lo: d.temperature_2m_min && d.temperature_2m_min[0], sunrise: hm(d.sunrise && d.sunrise[0]), sunset: hm(d.sunset && d.sunset[0]) });
   } catch (e) { return res.status(200).json({ error: String(e && e.message || e) }); }
 }
