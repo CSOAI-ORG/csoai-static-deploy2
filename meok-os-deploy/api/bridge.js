@@ -65,7 +65,7 @@ export default function handler(req, res) {
   let body = req.body; if (typeof body === 'string') { try { body = JSON.parse(body); } catch { body = {}; } }
   const q = (req.query || {});
   if (q.samples !== undefined) return res.status(200).json({ samples: SAMPLES });
-  const msg = (body && body.message) || q.message || (q.sample && SAMPLES[q.sample]) || '';
+  const msg = (((body && body.message) || q.message || (q.sample && SAMPLES[q.sample]) || '') + '').slice(0, 20000);
   if (!msg) return res.status(200).json({ error: 'pass {message} or ?sample=iban|hl7|iso20022|iso8583|swift-mt', samples: Object.keys(SAMPLES) });
   const type = (body && body.type) || q.type || detect(String(msg));
   const result = validate(type, String(msg));

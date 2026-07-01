@@ -98,6 +98,24 @@ for (const u of ['/api/orchestrate', '/api/v1/chat/completions', '/api/sign', '/
 r = await gj('/api/bridge?sample=iso8583');
 ck('bridge: ISO 8583 MTI parses', /^\d{4}$/.test(r.j.result?.mti || ''));
 
+// ── fuzz / robustness (malformed, oversized) — must degrade gracefully, never 500 ──
+{ // text/plain so the body reaches OUR handler (Vercel 400s malformed application/json at the edge — also fine).
+  const rr = await fetch(BASE + '/api/orchestrate', { method: 'POST', headers: { 'Content-Type': 'text/plain' }, body: '{ this is : not valid json' });
+  const jj = await rr.json().catch(() => ({}));
+  ck('fuzz: handler parses malformed body → graceful (not 500)', rr.status === 200 && typeof jj.say === 'string'); }
+{ const big = 'a'.repeat(200000);
+  const rr = await fetch(BASE + '/api/sign', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ action: big }) });
+  const jj = await rr.json().catch(() => ({}));
+  ck('fuzz: 200KB payload → bounded + signed (not crash)', rr.status === 200 && jj.ok === true && (jj.canonical || '').length <= 8002); }
+{ const rr = await fetch(BASE + '/api/bridge', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ message: 'x'.repeat(100000) }) });
+  ck('fuzz: oversized bridge msg → no crash', rr.status === 200); }
+
+// ── cross-origin offline verify (the shared-backend promise: any site can verify a MEOK signature) ──
+{ const s = await post('/api/sign', { action: { cross: 'origin', n: 1 } });
+  const rr = await fetch(BASE + '/api/verify', { method: 'POST', headers: { 'Content-Type': 'application/json', 'Origin': 'https://csoai.org' }, body: JSON.stringify({ message: s.j.canonical, signature: s.j.signature, publicKey: s.j.publicKey }) });
+  const jj = await rr.json().catch(() => ({}));
+  ck('cross-origin: csoai.org can verify a MEOK signature', jj.valid === true && rr.headers.get('access-control-allow-origin') === '*'); }
+
 // ── the drop-in kit is served + exports the shared contract ──
 { const rr = await fetch(BASE + '/sovereign-embed.js'); const t = await rr.text();
   ck('kit: sovereign-embed.js served + shared contract', rr.status === 200 && /sovereignOSCommands/.test(t) && /getScreenContext/.test(t) && /window\.sovereign/.test(t)); }

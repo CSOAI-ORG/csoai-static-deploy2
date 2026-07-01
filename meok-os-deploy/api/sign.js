@@ -28,7 +28,7 @@ export default function handler(req, res) {
   if (payload == null) return res.status(400).json({ error: 'pass {action} or {payload} to sign' });
   try {
     const { priv, pubHex } = keypair();
-    const msg = canonical(payload);
+    const msg = canonical(payload).slice(0, 8000);   // bound the signed payload
     const signature = crypto.sign(null, Buffer.from(msg), priv).toString('hex');
     return res.status(200).json({
       ok: true, alg: 'ed25519', canonical: msg, signature, publicKey: pubHex,
