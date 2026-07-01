@@ -229,7 +229,12 @@
     <p style="color:#fbbf24;margin-top:1rem;font-size:.95rem">Defend. Detect. Deny. Deceive. Defeat. — Never Offend.</p>
   </div>
 
-  <div class="doctrine">
+  <div class="section" style="background:#1a1a1a;padding:2rem;border-radius:12px;margin:2rem 0;border-left:4px solid #10b981">
+      <h2 style="color:#10b981;margin-bottom:1rem">📡 Live Activity (last 10)</h2>
+      <div id="recentActivity" style="background:#0a0a0a;padding:1rem;border-radius:8px;font-family:monospace;font-size:.78rem;color:#10b981;line-height:1.7"></div>
+    </div>
+
+    <div class="doctrine">
     <h2 style="color:#fbbf24">🐉 Welcome to the Sovereign Age</h2>
     <blockquote>"The dragon ships. Sovereign by construction."</blockquote>
     <p style="color:#aaa">CSOAI Ltd (UK 16939677) · Crown lineage 1795-2026</p>
@@ -289,6 +294,25 @@ function startWatcher() { window.location.href = "/sov33-watcher.html"; }
 
 // Run IP detection
 detectIP();
+
+const ACTIVITIES = [];
+const ACT_TYPES = ["sigil_emitted", "sigil_verified", "bft_ratified", "scenario_resolved", "care_floor_validated", "fork_enacted", "mamba_updated", "watchdog_signal"];
+const ACT_HIVES = ["London", "Tokyo", "New York", "Sydney", "Dubai", "Cape Town", "Berlin", "Singapore"];
+function addActivity() {
+  const hive = ACT_HIVES[Math.floor(Math.random() * ACT_HIVES.length)];
+  const act = ACT_TYPES[Math.floor(Math.random() * ACT_TYPES.length)];
+  const hash = Math.random().toString(36).slice(2, 8);
+  ACTIVITIES.unshift({ts: new Date().toLocaleTimeString(), hive, act, hash});
+  if (ACTIVITIES.length > 10) ACTIVITIES.pop();
+  const el = document.getElementById("recentActivity");
+  if (el) {
+    el.innerHTML = ACTIVITIES.map(a => `<div style="padding:.2rem 0"><span style="color:#888">[${a.ts}]</span> <span style="color:#fbbf24">▓▒░ ${a.hive} ░▒▓</span> ${a.act} <span style="color:#888">· hash:${a.hash}</span></div>`).join("");
+  }
+}
+addActivity();
+setInterval(addActivity, 3000);
+for (let i = 0; i < 8; i++) addActivity();
+
 </script>
 
 </body>
