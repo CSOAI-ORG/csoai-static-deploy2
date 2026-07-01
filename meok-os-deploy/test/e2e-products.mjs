@@ -196,5 +196,10 @@ for (const p of ['pricing.html','badges.html','verify.html','sovspace.html','cha
   ck('align: ' + p + ' reachable + tour pill', rr.status === 200 && /meok-tour-pill/.test(t) && /tour=demo/.test(t));
 }
 
+{ const rd = await gj('/api/rundown'); ck('rundown: signed session manifest', rd.s === 200 && rd.j.ok === true && !!rd.j.rundown && rd.j.rundown.e2e && !!rd.j.signature);
+  const v = await gj('/api/verify', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ message: rd.j.canonical, signature: rd.j.signature, publicKey: rd.j.publicKey }) });
+  ck('rundown: manifest verifies VALID (auditable)', v.j.valid === true);
+  const rr = await fetch(BASE + '/RUNDOWN_2026-07-01.md'); ck('rundown: human doc served', rr.status === 200); }
+
 console.log('\n' + (fail === 0 ? '✅ PASS' : '❌ FAIL') + ' — ' + pass + ' passed, ' + fail + ' failed' + (fails.length ? '  [' + fails.join(', ') + ']' : ''));
 process.exit(fail ? 1 : 0);
