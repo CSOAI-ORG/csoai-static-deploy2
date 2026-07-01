@@ -17,7 +17,12 @@ export default async function handler(req, res) {
     food:     ['["amenity"~"restaurant|cafe|fast_food|bar|pub"]', '["shop"~"supermarket|convenience|bakery"]'],
     transport:['["amenity"~"bus_station|ferry_terminal|taxi"]', '["railway"="station"]', '["aeroway"="aerodrome"]'],
     finance:  ['["amenity"~"bank|bureau_de_change|atm"]'],
-    government:['["amenity"~"townhall|courthouse|police|fire_station|embassy"]', '["office"="government"]']
+    // ── critical infrastructure & signals (all keyless OSM) ──
+    comms:    ['["man_made"~"mast|tower|antenna|communications_tower"]["tower:type"~"communication|radio|broadcast"]', '["man_made"="mast"]', '["man_made"="antenna"]', '["telecom"="exchange"]', '["communication:mobile_phone"="yes"]'],
+    wifi:     ['["internet_access"="wlan"]["name"]', '["amenity"="wifi"]'],
+    power:    ['["power"~"tower|substation|transformer"]', '["power"="generator"]'],
+    water:    ['["man_made"~"water_tower|water_works|reservoir_covered|storage_tank"]', '["man_made"="water_well"]'],
+    government:['["amenity"~"townhall|courthouse|police|fire_station|embassy"]', '["office"="government"]', '["military"="office"]']
   };
   const cat = (CATS[(q.cat || 'business')] ? q.cat : 'business');
   const oq = '[out:json][timeout:18];(' + CATS[cat].map(f => 'node' + f + '(' + bbox + ');').join('') + ');out 160;';

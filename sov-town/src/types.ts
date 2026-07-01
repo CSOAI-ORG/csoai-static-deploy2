@@ -92,6 +92,7 @@ export interface Attestation {
   agentId: string;
   framework: string;
   status: "compliant" | "non-compliant";
+  evidence?: string;
   evidenceHash: string;
   signature: string;
   publicKey: string;

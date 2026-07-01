@@ -1,57 +1,59 @@
 # SOVEREIGN CHARTERS — OVERNIGHT BUILD REPORT
-**Generated**: 2026-07-01 12:00 UTC
+**Generated**: 2026-07-01 22:00 UTC
 
 ## Build Status
 
 | Metric | Value |
 |---|---|
-| Charter files built | 36 / 34 |
-| Missing | -2 |
-| Total directory size | 2.9M |
-| Charter of Charters |    18984 bytes |
-| Master Index |     6424 bytes |
+| Charter files built | 38 / 34 |
+| Missing | -4 |
+| Total directory size | 3.2M |
+| Charter of Charters |    21568 bytes |
+| Master Index |     9487 bytes |
 | Master Template |     6734 bytes |
 
 ## Charter Inventory
 
 | # | File | Size |
 |---|---|---|
-| | 01-csoai-charter.md | 27249 bytes |
-| | 02-meok-charter.md | 28052 bytes |
-| | 03-proofof-charter.md | 28298 bytes |
-| | 04-safetyof-charter.md | 27541 bytes |
-| | 05-accountabilityof-charter.md | 24320 bytes |
-| | 06-ethicalgovernanceof-charter.md | 32977 bytes |
-| | 07-transparencyof-charter.md | 36056 bytes |
-| | 08-biasdetectionof-charter.md | 41990 bytes |
-| | 09-dataprivacyof-charter.md | 40625 bytes |
-| | 10-asisecurity-charter.md | 46328 bytes |
-| | 11-agisafe-charter.md | 52417 bytes |
-| | 12-defoneos-charter.md | 35164 bytes |
-| | 13-councilof-charter.md | 20130 bytes |
-| | 14-openmoe-charter.md | 20279 bytes |
-| | 15-openmcp-charter.md | 20274 bytes |
-| | 16-openpatent-charter.md | 22265 bytes |
-| | 17-sandbox-charter.md | 24755 bytes |
-| | 18-sovereign-town-charter.md | 25881 bytes |
-| | 19-meok-compliance-gateway-charter.md | 24814 bytes |
-| | 20-loopfactory-charter.md | 14627 bytes |
-| | 21-optimobile-charter.md | 28981 bytes |
-| | 22-socialmediamanager-charter.md | 30677 bytes |
-| | 23-cobolbridge-charter.md | 36607 bytes |
-| | 24-commercialvehicle-charter.md | 24618 bytes |
-| | 25-diyhelp-charter.md | 25882 bytes |
-| | 26-fishkeeper-charter.md | 33061 bytes |
-| | 27-grabhire-charter.md | 33239 bytes |
-| | 28-koikeeper-charter.md | 41074 bytes |
-| | 29-landlaw-charter.md | 38762 bytes |
-| | 30-muckaway-charter.md | 47955 bytes |
-| | 31-planthire-charter.md | 20949 bytes |
-| | 32-pokerhud-charter.md | 30074 bytes |
-| | 33-suicidestop-charter.md | 38183 bytes |
-| | 34-science-charter.md | 33839 bytes |
-| | 35-coigndaltion-charter.md | 34699 bytes |
-| | 36-publicwatchdog-charter.md | 22890 bytes |
+| | 00-partners-charter.md | 16139 bytes |
+| | 00-sovereign-root-charter.md | 17046 bytes |
+| | 01-csoai-charter.md | 31691 bytes |
+| | 02-meok-charter.md | 32494 bytes |
+| | 03-proofof-charter.md | 32740 bytes |
+| | 04-safetyof-charter.md | 31983 bytes |
+| | 05-accountabilityof-charter.md | 28762 bytes |
+| | 06-ethicalgovernanceof-charter.md | 37419 bytes |
+| | 07-transparencyof-charter.md | 40498 bytes |
+| | 08-biasdetectionof-charter.md | 46432 bytes |
+| | 09-dataprivacyof-charter.md | 45067 bytes |
+| | 10-asisecurity-charter.md | 50770 bytes |
+| | 11-agisafe-charter.md | 56859 bytes |
+| | 12-defoneos-charter.md | 39606 bytes |
+| | 13-councilof-charter.md | 24572 bytes |
+| | 14-openmoe-charter.md | 24721 bytes |
+| | 15-openmcp-charter.md | 24716 bytes |
+| | 16-openpatent-charter.md | 26707 bytes |
+| | 17-sandbox-charter.md | 29197 bytes |
+| | 18-sovereign-town-charter.md | 30323 bytes |
+| | 19-meok-compliance-gateway-charter.md | 29256 bytes |
+| | 20-loopfactory-charter.md | 22691 bytes |
+| | 21-optimobile-charter.md | 33423 bytes |
+| | 22-socialmediamanager-charter.md | 35119 bytes |
+| | 23-cobolbridge-charter.md | 41049 bytes |
+| | 24-commercialvehicle-charter.md | 29060 bytes |
+| | 25-diyhelp-charter.md | 30324 bytes |
+| | 26-fishkeeper-charter.md | 37503 bytes |
+| | 27-grabhire-charter.md | 37681 bytes |
+| | 28-koikeeper-charter.md | 45516 bytes |
+| | 29-landlaw-charter.md | 43204 bytes |
+| | 30-muckaway-charter.md | 52396 bytes |
+| | 31-planthire-charter.md | 25390 bytes |
+| | 32-pokerhud-charter.md | 34515 bytes |
+| | 33-suicidestop-charter.md | 42624 bytes |
+| | 34-science-charter.md | 38280 bytes |
+| | 35-coigndaltion-charter.md | 37336 bytes |
+| | 36-publicwatchdog-charter.md | 27328 bytes |
 
 ## ✅ ALL 34 CHARTERS BUILT
 

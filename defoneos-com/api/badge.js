@@ -6,7 +6,7 @@ function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').rep
 export default function handler(req, res) {
   const q = req.query || {};
   const label = String(q.label || 'DEFONEOS').slice(0, 40);
-  const message = String(q.message || 'SEAL · verified').slice(0, 48);
+  const message = String(q.message || 'SEAL · verifiable').slice(0, 48);
   const color = String(q.color || 'c9a84c').replace(/[^0-9a-fA-F]/g, '').slice(0, 8) || 'c9a84c';
   const dark = String(q.dark || '1a1d26').replace(/[^0-9a-fA-F]/g, '').slice(0, 8) || '1a1d26';
   // light text on dark label, dark text on the (gold/light) message chip

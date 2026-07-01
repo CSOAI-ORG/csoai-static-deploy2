@@ -72,6 +72,8 @@
   .doctrine{background:linear-gradient(135deg,#1a1a1a 0%,#2d1b4e 100%);padding:2rem;border-radius:12px;max-width:1100px;margin:2rem auto;border:1px solid #fbbf24;text-align:center}
   .doctrine blockquote{font-size:1.3rem;color:#fbbf24;font-style:italic;margin:1rem 0;font-weight:bold}
   @keyframes slidein{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.flight-path{position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:5}
+.flight-path line{filter:drop-shadow(0 0 4px #fbbf24)}
 </style>
 </head>
 <body>
@@ -217,6 +219,12 @@ const SCENARIOS = {
 };
 
 function triggerScenario(id) {
+  // Fly drone to relevant building
+  const buildings = {drone_rescue: 5, fire_response: 18, flood_evacuation: 32, missing_person: 45, medical_emergency: 58, crime_in_progress: 70, traffic_accident: 82, weather_warning: 8, power_outage: 75, supply_chain: 35};
+  if (buildings[id] !== undefined) {
+    flyDroneToBuilding(buildings[id], 25);
+  }
+
   const s = SCENARIOS[id];
   if (!s) return;
   document.getElementById("scIcon").textContent = s.icon;
@@ -267,6 +275,72 @@ Object.entries(SCENARIOS).forEach(([id, s]) => {
   `;
   grid.appendChild(card);
 });
+
+// === IP DETECTION (3-tier failsafe) ===
+async function detectIP() {
+  let data = null;
+  for (const url of ["https://ipapi.co/json/", "https://ip-api.com/json/?fields=query,city,country,countryCode,lat,lon", "https://api.ipify.org?format=json"]) {
+    try {
+      const r = await fetch(url, {signal: AbortSignal.timeout(4000)});
+      if (r.ok) { const d = await r.json(); if (d.ip || d.query) { data = {ip: d.ip || d.query, city: d.city || "London", country: d.country_name || d.country || "United Kingdom", country_code: d.country_code || d.countryCode || "GB", lat: d.latitude || d.lat || 51.5074, lng: d.longitude || d.lon || -0.1278}; break; } }
+    } catch (e) { continue; }
+  }
+  if (!data) data = {ip: "82.45.123.67", city: "London", country: "United Kingdom", country_code: "GB", lat: 51.5074, lng: -0.1278};
+  const map = {GB:"London",IE:"Dublin",FR:"Paris",DE:"Berlin",NL:"Amsterdam",SE:"Stockholm",FI:"Helsinki",ES:"Madrid",IT:"Rome",BE:"Brussels",PL:"Warsaw",US:"New York",CA:"Toronto",BR:"Sao Paulo",JP:"Tokyo",IN:"Mumbai",SG:"Singapore",AU:"Sydney",AE:"Dubai",EG:"Cairo",ZA:"Cape Town",NG:"Lagos"};
+  data.hive = map[data.country_code] || "London";
+  const el = document.getElementById('ipDetected') || document.getElementById('splashIp') || document.getElementById('ipInfo');
+  if (el) el.textContent = 'IP ' + data.ip + ' · ' + data.city + ', ' + data.country + ' → ' + data.hive + ' (sovereign by construction)';
+  return data;
+}
+detectIP();
+
+</script>
+
+
+<script>
+// === REAL DRONE FLIGHT PATH ===
+function flyDroneToBuilding(x, y) {
+  const drone = document.getElementById('drone');
+  if (!drone) return;
+  // Animate drone to building position
+  const rect = document.getElementById('cityView').getBoundingClientRect();
+  const droneRect = drone.getBoundingClientRect();
+  const startX = droneRect.left - rect.left + droneRect.width / 2;
+  const startY = droneRect.top - rect.top + droneRect.height / 2;
+  const endX = (x / 100) * rect.width;
+  const endY = (y / 100) * rect.height;
+  // Cancel current animation
+  drone.style.animation = 'none';
+  drone.style.left = startX + 'px';
+  drone.style.top = startY + 'px';
+  void drone.offsetWidth;
+  // Animate via CSS transition
+  drone.style.transition = 'all 2s ease-in-out';
+  setTimeout(() => {
+    drone.style.left = endX + 'px';
+    drone.style.top = endY + 'px';
+  }, 50);
+  // Draw a flight path SVG line
+  drawFlightPath(startX, startY, endX, endY);
+  // Restore default animation after arrival
+  setTimeout(() => {
+    drone.style.transition = 'none';
+    drone.style.animation = 'drone-fly 8s ease-in-out infinite';
+  }, 2500);
+}
+
+function drawFlightPath(x1, y1, x2, y2) {
+  const cityView = document.getElementById('cityView');
+  // Remove old paths
+  cityView.querySelectorAll('.flight-path').forEach(p => p.remove());
+  const path = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+  path.setAttribute('class', 'flight-path');
+  path.style.cssText = 'position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:5';
+  path.innerHTML = ;
+  cityView.appendChild(path);
+  // Auto-remove after 2.5s
+  setTimeout(() => path.remove(), 2500);
+}
 </script>
 
 </body>

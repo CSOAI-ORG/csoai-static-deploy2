@@ -46,6 +46,7 @@
     <div class="status" id="lstatus"><span class="dot"></span> <span id="lstatusText">reading on-device action ledger…</span></div>
     <div class="k">Live SIGIL ledger — actions signed on your device by the dome</div>
     <p class="note" style="margin-top:6px">This verifier re-checks each Ed25519 signature <b>independently, in your browser</b> — no server is asked, nothing is trusted. The dome's public key and signed actions are read from this origin's local store; paste an exported ledger below to verify one from elsewhere.</p>
+    <p class="note" style="margin-top:6px">🛡 Defence / high-risk AI? See a <a href="systemcard.html"><b>signed AI System Card</b></a> — the JSP 936 assurance primitive, verifiable offline.</p>
     <div id="lbody" style="margin-top:12px;font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--muted);max-height:240px;overflow:auto"></div>
     <div class="k">Verify an exported ledger</div>
     <textarea id="lpaste" placeholder="paste a copied SIGIL ledger JSON…" style="width:100%;min-height:70px;margin-top:6px;font-family:'JetBrains Mono',monospace;font-size:.7rem;border:1px solid var(--line);border-radius:8px;padding:8px;background:var(--cream)"></textarea>

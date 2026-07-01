@@ -8,6 +8,12 @@ warm Vercel container invocations; cold starts reload from JSONL.
 
 On Vercel: /tmp is writable so we use /tmp/watchdog/reports.jsonl
 Local dev: falls back to repo path reports.jsonl
+
+Risk model integration (Phase 500): the simulate endpoint uses the
+REAL risk_model (open-meteo + USGS + AQI) when reachable, and falls
+back to the cached simulation table in data_lake.py — which is the
+SQLite fallback the user asked for. Demos never 500 because every
+simulate result is cached and re-served on cache hit.
 """
 import hashlib
 import json
@@ -180,6 +186,32 @@ class SovereignDataLake:
             self.reports.append(r)
             self._persist(r)
             self._update_stats(r)
+            # Persist to the production sovereign data lake (best-effort).
+            # This is the write-through to Postgres when DATABASE_URL is set,
+            # with SQLite as the always-on primary. Demos never lose data.
+            try:
+                _HERE = os.path.dirname(os.path.abspath(__file__))
+                _API = os.path.dirname(_HERE)
+                _ROOT = os.path.dirname(_API)
+                if _ROOT not in sys.path:
+                    sys.path.insert(0, _ROOT)
+                from data_lake import persist_report
+                persist_report(
+                    reporter_type=kwargs.get("reporter", {}).get("type", "unknown"),
+                    location=loc,
+                    type_=typ,
+                    subtype=kwargs.get("subtype", "unspecified"),
+                    severity=sev,
+                    confidence=conf,
+                    evidence={"description": kwargs.get("description", ""),
+                              "reporter": kwargs.get("reporter", {})},
+                    sigil=sigil,
+                    status="active",
+                    bft_care_score=conf * sev,
+                )
+            except Exception:
+                # Data lake unreachable — JSONL is still durable.
+                pass
             # Fan out to live subscribers (warm containers only)
             self._broadcast(asdict(r))
             return r, True, "BFT 12-around-1 voted: PASS"
@@ -300,19 +332,181 @@ class SovereignDataLake:
         return out
 
     def simulate(self, start: dict, end: dict, mode: str = "balanced") -> dict:
-        """Pre-departure route simulation. Returns 3 candidate routes."""
-        reports_near = self.query(last="7d", limit=500)
-        candidates = []
-        local_risks = []
-        for r in reports_near:
-            lat1, lng1 = start.get("lat", 51.5), start.get("lng", -0.1)
-            lat2, lng2 = end.get("lat", 51.5), end.get("lng", -0.1)
-            dlat = abs((r["location"]["lat"] - (lat1 + lat2) / 2))
-            dlng = abs((r["location"]["lng"] - (lng1 + lng2) / 2))
-            if dlat < 0.05 and dlng < 0.05:
-                local_risks.append(r["severity"] * r["confidence"])
-        avg_local_risk = sum(local_risks) / len(local_risks) if local_risks else 0.2
+        """Pre-departure route simulation. Returns 3 candidate routes.
 
+        Phase 500: real risk_model.compute_all_routes with REAL data
+        (open-meteo + USGS + air-quality). On any failure (network, import,
+        compute), the cached simulation table in data_lake.py is consulted.
+        If even that fails, the synthetic baseline below is returned.
+        Demos NEVER 500.
+        """
+        cache_key = hashlib.sha256(
+            json.dumps(
+                {"s": [start.get("lat"), start.get("lng")],
+                 "e": [end.get("lat"), end.get("lng")],
+                 "m": mode},
+                sort_keys=True,
+            ).encode()
+        ).hexdigest()[:32]
+
+        # 1) Try the REAL risk model (open-meteo + USGS + AQI).
+        real_routes, real_summary, real_err, degraded = self._try_real_risk_model(
+            start, end, mode
+        )
+
+        if real_routes is not None:
+            # Persist to data lake (best-effort, never raises)
+            try:
+                from data_lake import persist_risk_simulation
+                persist_risk_simulation(
+                    start, end, mode,
+                    best_route=real_summary.get("best_route_name", "unknown"),
+                    best_risk=real_summary.get("best_risk", 0.0),
+                    best_confidence=real_summary.get("best_confidence", 0.0),
+                    routes=[asdict(r) if hasattr(r, "__dataclass_fields__")
+                            else r for r in real_routes],
+                    data_sources=real_summary,
+                    sigil=sign(f"simulate|{cache_key}|real"),
+                    degraded=degraded,
+                )
+            except Exception:
+                pass
+            return {
+                "agent_id": "pre-departure-simulator-real",
+                "scope": "navigation",
+                "start": start,
+                "end": end,
+                "mode": mode,
+                "candidate_routes": real_routes,
+                "best_route": real_summary.get("best_route", real_routes[0]),
+                "data_sources": real_summary.get("data_sources", {}),
+                "n_routes": len(real_routes),
+                "n_passing": real_summary.get("n_passing", 0),
+                "real_data": True,
+                "degraded": degraded,
+                "degraded_reason": real_err,
+                "sigil": sign(f"route_decision:{cache_key}"),
+                "timestamp": datetime.now(timezone.utc).isoformat(),
+                "cache_key": cache_key,
+            }
+
+        # 2) Try cached simulation from data lake (the SQLite fallback the
+        #    user asked for). Identical request within last hour returns
+        #    the persisted result instantly — no external API call needed.
+        try:
+            from data_lake import get_cached_simulation
+            cached = get_cached_simulation(start, end, mode)
+            if cached is not None:
+                return {
+                    "agent_id": "pre-departure-simulator-cached",
+                    "scope": "navigation",
+                    "start": start,
+                    "end": end,
+                    "mode": mode,
+                    "candidate_routes": cached.get("routes", []),
+                    "best_route": {
+                        "id": "cached",
+                        "name": cached.get("best_route"),
+                        "risk_score": cached.get("best_risk"),
+                        "confidence": cached.get("best_confidence"),
+                    },
+                    "data_sources": cached.get("data_sources", {}),
+                    "real_data": False,
+                    "degraded": True,
+                    "degraded_reason": real_err or "served from cache",
+                    "cached_at": cached.get("ts"),
+                    "sigil": cached.get("sigil"),
+                    "timestamp": datetime.now(timezone.utc).isoformat(),
+                    "cache_key": cache_key,
+                }
+        except Exception:
+            pass
+
+        # 3) Last-ditch fallback: synthetic baseline (always works).
+        return self._synthetic_simulate(start, end, mode, cache_key, real_err)
+
+    def _try_real_risk_model(self, start: dict, end: dict, mode: str):
+        """Attempt to use the real risk_model. Returns (routes, summary, err, degraded)."""
+        try:
+            # Walk up to watchdog/risk_model.py
+            _HERE = os.path.dirname(os.path.abspath(__file__))
+            _API = os.path.dirname(_HERE)        # sovereign-os/api
+            _ROOT = os.path.dirname(_API)        # sovereign-os
+            for p in (_HERE, _API, _ROOT):
+                if p not in sys.path:
+                    sys.path.insert(0, p)
+            from watchdog.risk_model import compute_all_routes  # type: ignore
+
+            # Pull recent local reports from the in-memory lake (best-effort)
+            try:
+                local_reports = [asdict(r) for r in list(self.reports)[-50:]]
+            except Exception:
+                local_reports = []
+
+            routes, summary = compute_all_routes(start, end, local_reports)
+            # Build a best_route dict for the response
+            best = None
+            for r in routes:
+                if hasattr(r, "bft_pass") and r.bft_pass:
+                    if best is None or getattr(r, "risk_score", 1.0) < getattr(best, "risk_score", 1.0):
+                        best = r
+            if best is None and routes:
+                best = min(routes, key=lambda r: getattr(r, "risk_score", 1.0))
+
+            # Convert dataclass to dict
+            route_dicts = []
+            for r in routes:
+                if hasattr(r, "__dataclass_fields__"):
+                    d = asdict(r)
+                else:
+                    d = dict(r)
+                route_dicts.append(d)
+
+            best_dict = None
+            if best is not None:
+                if hasattr(best, "__dataclass_fields__"):
+                    best_dict = asdict(best)
+                else:
+                    best_dict = dict(best)
+                best_dict = {
+                    "id": best_dict.get("route_id", "best"),
+                    "name": best_dict.get("name"),
+                    "risk_score": best_dict.get("risk_score"),
+                    "confidence": best_dict.get("confidence"),
+                    "bft_pass": best_dict.get("bft_pass"),
+                    "sigil": best_dict.get("sigil"),
+                }
+            return route_dicts, {**summary, "best_route": best_dict}, None, False
+        except Exception as e:
+            return None, None, f"real_risk_unavailable: {type(e).__name__}: {str(e)[:120]}", True
+
+    def _synthetic_simulate(self, start: dict, end: dict, mode: str,
+                             cache_key: str, real_err: Optional[str]) -> dict:
+        """Last-resort synthetic 3-route baseline. Always returns 200."""
+        local_risks = []
+        # Defensive coercion — accept None or missing keys.
+        def _f(d, k, default):
+            try:
+                v = d.get(k, default) if hasattr(d, "get") else default
+                if v is None:
+                    return default
+                return float(v)
+            except Exception:
+                return default
+        lat1 = _f(start, "lat", 51.5)
+        lng1 = _f(start, "lng", -0.1)
+        lat2 = _f(end, "lat", 51.5)
+        lng2 = _f(end, "lng", -0.1)
+        for r in self.reports:
+            try:
+                dlat = abs((r.location["lat"] - (lat1 + lat2) / 2))
+                dlng = abs((r.location["lng"] - (lng1 + lng2) / 2))
+            except Exception:
+                continue
+            if dlat < 0.05 and dlng < 0.05:
+                local_risks.append(r.severity * r.confidence)
+        avg_local_risk = sum(local_risks) / len(local_risks) if local_risks else 0.2
+        candidates = []
         for i, (name, base_risk_mult, time_min, battery_pct, pred) in enumerate([
             ("Route A · direct",        1.0, 11, 96,
              ["High crowd density near arrival", "Public camera coverage good",
@@ -345,7 +539,7 @@ class SovereignDataLake:
         else:
             best = min(candidates, key=lambda r2: r2["risk_score"] * 1.5 - r2["confidence"])
         return {
-            "agent_id": "pre-departure-simulator",
+            "agent_id": "pre-departure-simulator-synthetic",
             "scope": "navigation",
             "start": start,
             "end": end,
@@ -353,7 +547,7 @@ class SovereignDataLake:
             "candidate_routes": candidates,
             "best_route": best,
             "data_sources": {
-                "watchdog_reports": len(reports_near),
+                "watchdog_reports": len(self.reports),
                 "local_reports_used": len(local_risks),
                 "cameras": "12 (default, fetch via /api/cameras)",
                 "wifi_spectrum": "234 networks (default)",
@@ -362,8 +556,12 @@ class SovereignDataLake:
                 "air_quality": "AQI 42",
                 "other_humanoids": "3 within 500m",
             },
+            "real_data": False,
+            "degraded": True,
+            "degraded_reason": real_err or "all backends unreachable",
             "sigil": sign(f"route_decision:{best['id']}"),
             "timestamp": datetime.now(timezone.utc).isoformat(),
+            "cache_key": cache_key,
         }
 
     def get_stats(self) -> dict:

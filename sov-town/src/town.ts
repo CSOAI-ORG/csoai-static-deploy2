@@ -113,13 +113,16 @@ export class Town {
         });
         const hash = crypto.createHash("sha256").update(payload).digest("hex");
         const privateKey = crypto.createPrivateKey(this.privateKeyPem);
-        const signature = crypto.sign(null, Buffer.from(hash, "hex"), privateKey).toString("base64");
+        // Ed25519 signs the RAW message — never a pre-hashed digest. Sign `payload`, keep the sha256 as a
+        // fingerprint, and store `evidence` so anyone can verify: crypto.verify(null, Buffer.from(evidence,"utf8"), pub, sig).
+        const signature = crypto.sign(null, Buffer.from(payload, "utf8"), privateKey).toString("base64");
 
         const attestation: Attestation = {
           id: `att-${agent.id}-${framework}`,
           agentId: agent.id,
           framework,
           status,
+          evidence: payload,
           evidenceHash: hash,
           signature,
           publicKey: this.publicKeyPem,

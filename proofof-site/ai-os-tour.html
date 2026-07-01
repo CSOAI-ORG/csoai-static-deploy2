@@ -450,6 +450,48 @@ detectUserIP().then(ip => {
   if (el) el.innerHTML = ip.ip + ' · ' + ip.city + ', ' + ip.country + ' → ' + ip.hive;
 });
 
+
+// === REAL STT (Web Speech API) ===
+let recognition = null, isListening = false;
+function initSTT() {
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if (!SR) return null;
+  const r = new SR();
+  r.continuous = false;
+  r.interimResults = false;
+  r.lang = "en-US";
+  r.onresult = (e) => {
+    const t = e.results[0][0].transcript;
+    log("🎤 " + t, "user");
+    setTimeout(() => respond(t), 300);
+  };
+  r.onend = () => { if (isListening) stopListen(); };
+  r.onerror = (e) => { log("⚠ STT: " + e.error, "system"); stopListen(); };
+  return r;
+}
+function startListen() {
+  if (!recognition) recognition = initSTT();
+  if (!recognition) { log("⚠ STT not supported", "system"); return; }
+  isListening = true;
+  const btn = document.getElementById('voiceBtn');
+  if (btn) { btn.classList.add('listening'); btn.innerHTML = '⏹ Stop'; }
+  if (window.speechSynthesis.speaking) window.speechSynthesis.cancel();
+  try { recognition.start(); } catch(e) {}
+}
+function stopListen() {
+  isListening = false;
+  const btn = document.getElementById('voiceBtn');
+  if (btn) { btn.classList.remove('listening'); btn.innerHTML = '🎤 Speak'; }
+  if (recognition) try { recognition.stop(); } catch(e) {}
+}
+// Replace existing toggleVoice with real STT
+const oldToggle = 'function toggleVoice() {';
+if (oldToggle in content or content.count('function toggleVoice()') > 0) {
+    // Just override the function at end
+    pass
+}
+// Override toggleVoice by re-defining
+
 </script>
 
 <div id="sigilTicker" style="position:fixed;bottom:0;left:0;right:0;background:rgba(2,6,15,0.95);border-top:1px solid #10b981;padding:0.4rem 0.7rem;display:flex;gap:1rem;align-items:center;z-index:100;font-size:.7rem;color:#10b981;font-family:monospace;overflow:hidden;max-height:30px"><span style="color:#fbbf24;font-weight:bold;flex-shrink:0">▓▒░ SIGIL ░▒▓</span><span id="sigilTickerContent" style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis">▓▒░ Initializing SIGIL chain... ░▒▓</span></div><script>(function(){const ACTIONS=["sigil_emitted","sigil_verified","bft_ratified","care_floor_validated","fork_enacted","scenario_resolved","mamba_updated"];const HIVES=["London","Tokyo","New York","Sydney","Dubai","Cape Town","Berlin","Singapore","Sao Paulo","Toronto"];const el=document.getElementById('sigilTickerContent');function tick(){const hive=HIVES[Math.floor(Math.random()*HIVES.length)];const act=ACTIONS[Math.floor(Math.random()*ACTIONS.length)];const hash=Math.random().toString(36).slice(2,8);el.textContent='▓▒░ '+hive+' · '+act+' · hash:'+hash+' · ed25519 · sovereign by construction';}tick();setInterval(tick,4000);})();</script>

@@ -85,7 +85,7 @@ export default function handler(req, res) {
     { stage: 'sense', detail: 'ingest: ' + s.sensors.join(' · ') + ' (' + entities + ' entities)' },
     { stage: 'fuse', detail: 'normalise → CZML · plot on twin' },
     { stage: 'detect', detail: s.detect },
-    { stage: 'gate', detail: '33-agent BFT council vote → ' + forVotes + '/33 for (quorum ' + (quorumMet ? 'MET' : 'NOT MET') + ')' },
+    { stage: 'gate', detail: '33-agent BFT council (illustrative model) → ' + forVotes + '/33 for (quorum ' + (quorumMet ? 'MET' : 'NOT MET') + ')' },
     { stage: 'act', detail: quorumMet ? s.action : 'action withheld — quorum not met' },
     { stage: 'care', detail: s.care },
     { stage: 'sign', detail: 'outcome SIGIL-signed → audit chain' }
@@ -100,7 +100,7 @@ export default function handler(req, res) {
     entities,
     governed: true,
     steps,
-    council: { for: forVotes, against, quorum: 23, quorum_met: quorumMet },
+    council: { for: forVotes, against, quorum: 23, quorum_met: quorumMet, model: 'deterministic illustrative vote (seeded) — not a live council instance' },
     hard_stops_enforced: ['no kinetic-targeting', 'no personal-surveillance', 'care-floor >= 0.3'],
     verdict: quorumMet ? 'authorised · council-gated · governed' : 'refused · quorum not met',
     sigil: sigil,

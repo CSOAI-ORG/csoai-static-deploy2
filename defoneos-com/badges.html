@@ -43,7 +43,7 @@
   <h2>🛡 The verifiable seal — embed this everywhere</h2>
   <p class="h-note">The flagship. Renders live from our endpoint; clicking it opens a real verification page backed by <code style="display:inline;padding:2px 6px">/api/verify-seal</code>.</p>
   <div class="row feat">
-    <div class="top"><a href="verify.html"><img id="b-seal" src="/api/badge?label=DEFONEOS&message=SEAL%20%C2%B7%20verified&color=c9a84c" alt="Verified by DEFONEOS-SEAL"></a><span class="nm">Verified by DEFONEOS-SEAL → links to /verify.html</span></div>
+    <div class="top"><a href="verify.html"><img id="b-seal" src="/api/badge?label=DEFONEOS&message=SEAL%20%C2%B7%20verifiable&color=c9a84c" alt="Verifiable DEFONEOS-SEAL"></a><span class="nm">Verifiable DEFONEOS-SEAL → links to /verify.html</span></div>
     <div class="embed">
       <div><div class="lbl">HTML</div><div class="codeline"><code id="c-seal-html"></code><button onclick="cp('c-seal-html')">Copy</button></div></div>
       <div><div class="lbl">Markdown</div><div class="codeline"><code id="c-seal-md"></code><button onclick="cp('c-seal-md')">Copy</button></div></div>
@@ -71,8 +71,8 @@ const ORIGIN = location.origin;
 function badgeUrl(label,message,color){ return ORIGIN+'/api/badge?label='+encodeURIComponent(label)+'&message='+encodeURIComponent(message)+'&color='+color; }
 function chip(label,message,color){ return '<img src="'+badgeUrl(label,message,color)+'" alt="'+label+' '+message+'" style="height:20px">'; }
 // featured seal embeds
-document.getElementById('c-seal-html').textContent = '<a href="'+ORIGIN+'/verify.html"><img src="'+ORIGIN+'/api/badge?label=DEFONEOS&message=SEAL%20%C2%B7%20verified&color=c9a84c" alt="Verified by DEFONEOS-SEAL"></a>';
-document.getElementById('c-seal-md').textContent = '[![Verified by DEFONEOS-SEAL]('+ORIGIN+'/api/badge?label=DEFONEOS&message=SEAL%20%C2%B7%20verified&color=c9a84c)]('+ORIGIN+'/verify.html)';
+document.getElementById('c-seal-html').textContent = '<a href="'+ORIGIN+'/verify.html"><img src="'+ORIGIN+'/api/badge?label=DEFONEOS&message=SEAL%20%C2%B7%20verifiable&color=c9a84c" alt="Verifiable DEFONEOS-SEAL"></a>';
+document.getElementById('c-seal-md').textContent = '[![Verifiable DEFONEOS-SEAL]('+ORIGIN+'/api/badge?label=DEFONEOS&message=SEAL%20%C2%B7%20verifiable&color=c9a84c)]('+ORIGIN+'/verify.html)';
 // galleries
 const PROTO=[['MCP','compatible','2a9df4'],['A2A','enabled','8b8ce0'],['x402','payments','00e07a'],['Ed25519','signed','c9a84c'],['SIGIL','audit chain','d9b676'],['Layer-0','8 protocols','06b6d4'],['Apache-2.0','license','5f8a5e']];
 const PROOF=[['PyPI','313 live','c9a84c'],['MCP registry','listed','2a9df4'],['legacy bridges','22','d9b676'],['open source','public','5f8a5e']];
