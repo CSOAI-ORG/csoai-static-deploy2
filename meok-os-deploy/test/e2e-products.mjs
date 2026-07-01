@@ -156,6 +156,13 @@ for (const [n, u] of [['social networks', '/api/social?action=networks'], ['medi
 { const rr = await fetch(BASE + '/earth3d.html'); const t = await rr.text(); ck('earth3d: fly/scan/arc/card commands', /meok-cmd/.test(t) && /MEOK\.scan/.test(t) && /MEOK\.arc/.test(t) && /MEOK\.card/.test(t)); }
 { const rr = await fetch(BASE + '/'); const t = await rr.text(); ck('OS: tour engine + town/charter/scenario/dome', /function sovTourStart/.test(t) && /function tourScript/.test(t) && /function tourScenario/.test(t) && /function domeMode/.test(t) && /SOV Town Space/.test(t)); }
 { const rr = await fetch(BASE + '/sovspace.html'); ck('reachable: SOV Town Space', rr.status === 200); }
+// DEFONEOS signed System Card — the JSP 936 assurance proof point: issue → verify → tamper-reject
+{ const sc = await gj('/api/systemcard'); ck('systemcard: issues signed card', sc.s === 200 && sc.j.ok === true && sc.j.alg === 'ed25519' && !!sc.j.canonical && !!sc.j.signature && !!sc.j.publicKey && !!sc.j.sha256);
+  const v = await gj('/api/verify', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ message: sc.j.canonical, signature: sc.j.signature, publicKey: sc.j.publicKey }) });
+  ck('systemcard: verifies VALID offline', v.j.valid === true);
+  const t = await gj('/api/verify', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ message: (sc.j.canonical || '').slice(0, -3) + 'ZZZ', signature: sc.j.signature, publicKey: sc.j.publicKey }) });
+  ck('systemcard: TAMPERED card rejected', t.j.valid === false);
+  const rr = await fetch(BASE + '/systemcard.html'); const h = await rr.text(); ck('systemcard: demo page + JSP 936 framing', rr.status === 200 && /JSP 936/.test(h) && /verifyCard/.test(h)); }
 { const rr = await fetch(BASE + '/earth3d-photoreal.html'); const t = await rr.text(); ck('photoreal: Google + Cesium ion (OSM buildings) tiers + msg API', rr.status === 200 && /createGooglePhotorealistic3DTileset/.test(t) && /createOsmBuildingsAsync/.test(t) && /meok_cesium_token/.test(t) && /meok-cmd/.test(t)); }
 { const rr = await fetch(BASE + '/'); const t = await rr.text(); ck('OS: speech-paced + scrub + 3D setup + tiered switch', /function tourSpeak/.test(t) && /function tourSeekEvent/.test(t) && /function meokEarth3DUrl/.test(t) && /function sov3DSetup/.test(t) && /function meokCesiumToken/.test(t)); }
 { const rr = await fetch(BASE + '/'); const t = await rr.text(); ck('OS: tour UX (keyboard + deep-link + reduced-motion + completed)', /function _tourKey/.test(t) && /q\.get\('tour'\)/.test(t) && /prefers-reduced-motion/.test(t) && /meok_toured/.test(t)); }

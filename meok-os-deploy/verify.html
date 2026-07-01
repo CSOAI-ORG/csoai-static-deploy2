@@ -59,5 +59,6 @@ const s=STYLE[(p.get('style')||'governed').toLowerCase()]||STYLE.governed;
 document.getElementById('ttl').textContent=s[0];
 const ent=p.get('entity');
 document.getElementById('ent').innerHTML = ent ? ('<b>'+ent.replace(/[<>&]/g,'')+'</b> is '+s[1]+'.') : ('This surface is '+s[1]+'.');
+(function(){var d=document.createElement('div');d.style.cssText='margin-top:18px;font-size:13.5px';d.innerHTML='Defence / high-risk AI? See a <a href="/systemcard.html" style="color:#b8922f;font-weight:700">signed AI System Card</a> — the JSP 936 assurance primitive you can verify offline yourself.';var e=document.getElementById('ent');if(e&&e.parentNode)e.parentNode.appendChild(d);})();
 </script><a id="meok-tour-pill" href="/?tour=demo" style="position:fixed;right:16px;bottom:16px;z-index:9999;background:#1a1410;color:#c9a84c;border:1px solid #c9a84c;border-radius:999px;padding:9px 16px;font:700 13px system-ui,sans-serif;text-decoration:none;box-shadow:0 8px 24px rgba(0,0,0,.3)">🎬 Take the tour</a>
 </body></html>
