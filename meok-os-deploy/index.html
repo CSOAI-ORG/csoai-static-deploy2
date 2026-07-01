@@ -375,6 +375,8 @@ table.mini td:last-child{text-align:right;font-variant-numeric:tabular-nums}
     <div class="sovlog" id="sovlog"></div>
     <div class="sovboard" id="sovboard" hidden></div>
     <div class="sovsugg">
+      <span class="sgg" onclick="sovTourStart('demo')">🎬 Demo</span>
+      <span class="sgg" onclick="sovTourStart('full')">🎓 Full tour</span>
       <span class="sgg" onclick="sovBoardToggle()">📋 My stuff</span>
       <span class="sgg" onclick="sovHandle('open MEOK Earth')">🌍 My world</span>
       <span class="sgg" onclick="sovHandle('work mode')">💼 Work</span>
@@ -1112,11 +1114,15 @@ function openApp(id){ track('app:'+id,'open'); try{ if(window.MEOK_CTX) window.M
  const idx=Object.keys(open).length; n.style.left=(60+idx*26)+'px'; n.style.top=(60+idx*22)+'px'; n.style.zIndex=++zTop;
  n.innerHTML=`<div class="wb"><span class="wt"><span class="wi">${a.i}</span>${a.t}</span><span class="x">✕</span></div><div class="body" id="b-${id}">${content(id)}</div>`;
  d.appendChild(n);open[id]=n;curApp=id;
- n.querySelector('.x').onclick=()=>{n.remove();delete open[id];paintTb();if(curApp===id)curApp=null;};
+ n.querySelector('.x').onclick=()=>closeApp(id);
  n.addEventListener('mousedown',()=>focus(id));
  drag(n,n.querySelector('.wb'));paintTb();
 }
+function closeApp(id){ const n=open[id]; if(!n) return; n.remove(); delete open[id]; paintTb(); if(curApp===id) curApp=null; }
+function closeAllApps(){ Object.keys(open).slice().forEach(closeApp); }
 function focus(id){if(open[id]){open[id].style.zIndex=++zTop;curApp=id;}}
+// screen-aware: if any open window overlaps a target the Sovereign wants to show, move it aside
+function sovClearView(sel, quiet){ const target=sel?document.querySelector(sel):null; const tr=target?target.getBoundingClientRect():null; let moved=0; Object.keys(open).slice().forEach(function(id){ const w=open[id]; if(!w) return; const wr=w.getBoundingClientRect(); const overlap = !tr || !(wr.right<tr.left||wr.left>tr.right||wr.bottom<tr.top||wr.top>tr.bottom); if(overlap){ closeApp(id); moved++; } }); if(moved&&!quiet){ try{ sovSay("<span style='color:var(--dim)'>Let me move that out of the way for you…</span>"); }catch(e){} } return moved; }
 function renderApp(id,quiet){if(open[id]){const b=open[id].querySelector('.body');if(b)b.innerHTML=content(id);}}
 function paintTb(){const t=document.getElementById('tbOpen');t.innerHTML='';Object.keys(open).forEach(id=>{const p=document.createElement('div');p.className='tb-pill active';p.innerHTML=APPS[id].i+' '+APPS[id].t;p.onclick=()=>focus(id);t.appendChild(p);});}
 function drag(win,handle){let ox,oy,on=false;
@@ -1215,7 +1221,8 @@ function navTo(dest){ navToggle(false);
 }
 /* dead-simple guided welcome — 2 taps, visual, plain words; advanced setup still available */
 function wRender(html){ const s=document.getElementById('wstep'); if(s) s.innerHTML=html; }
-function welcomeShow(){ const w=document.getElementById('welcome'); if(!w) return; w.classList.add('show'); wStep0(); }
+function welcomeShow(){ const w=document.getElementById('welcome'); if(!w) return; w.classList.add('show'); wIntro(); }
+function wIntro(){ const w=document.getElementById('welcome'); if(!w)return; w.classList.add('show'); wRender('<h1>Meet MEOK OS 🐉</h1><p style="font-size:14.5px">Your own <b>AI operating world</b> — an OS with a real AI inside it. New here? Let me <b>show you</b>, out loud, hands-free.</p><div class="wcards"><div class="wcard" onclick="welcomeDone();sovTourStart(\'demo\')"><span class="we">▶️</span><b>90-sec demo</b><small>the quick tour</small></div><div class="wcard" onclick="welcomeDone();sovTourStart(\'full\')"><span class="we">🎓</span><b>Full tour</b><small>~6 min, everything</small></div><div class="wcard" onclick="wStep0()"><span class="we">✋</span><b>Explore myself</b><small>set up &amp; go</small></div></div><p style="font-size:11.5px;color:var(--dim);margin-top:10px">During the tour just <b>speak</b> — I\'ll pause, answer, then carry on. Everything stays on your device.</p>'); }
 function welcomeDone(){ try{localStorage.setItem('meok_welcomed','1');}catch(e){} const w=document.getElementById('welcome'); if(w) w.classList.remove('show'); }
 // Step 0 — voice or type (set the tone before anything)
 function wStep0(){ wRender('<h1>Hi — I\'m your Sovereign 🐉</h1><p style="font-size:15px"><b>Build your own AI. Own your data. Free. Safe.</b><br><span style="color:var(--dim)">This is your OS. Your AI runs for you — your world, never given away.</span></p><p style="font-weight:700;color:var(--ink);margin-top:10px">How would you like to talk to me?</p><div class="wcards"><div class="wcard" onclick="wVoicePref(true)"><span class="we">🎤</span><b>Speak</b><small>talk to me</small></div><div class="wcard" onclick="wVoicePref(false)"><span class="we">⌨️</span><b>Type</b><small>I\'ll keep it quiet</small></div></div><div class="wskip" onclick="welcomeDone()">Skip for now</div>'); }
@@ -1453,6 +1460,8 @@ function sovHandle(raw){
   { const nn=sovFindNode(t); if(nn && /\b(tell|about|explain|what|who|governs?|node|hub|show)\b/.test(t)){ sovExplainNode(nn); return; } }
   if(/\b(govern|regulat|compl(?:y|iance|iant)|which (?:law|rule|framework)|what (?:governs|applies)|i run an?\b|my (?:business|company|industry|sector)\b|i work in)\b/.test(t)){ sovGovern(raw); return; }
   if(/\b(earth|world|globe|map|town)\b/.test(t)){ openByName_meokearth(); return; }
+  if(/\b(full tour|the tour|take the tour|show me around|show me everything|guide me)\b/.test(t)){ sovTourStart('full'); return; }
+  if(/\b(demo|quick tour|90.?sec|show me quickly)\b/.test(t)){ sovTourStart('demo'); return; }
   if(/\b(help|what can you|who are you|hello|hi)\b/.test(t)){ return sovSay("I'm your <b>sovereign</b> — I remember you, on your device, forever. Try:<br>• ⏰ <b>“remind me to call mum at 6pm”</b> — I'll ping &amp; speak it (🔁 <b>“…every day at 8am”</b>; <b>“snooze 15 min”</b>; <b>“change/delete the mum reminder”</b>)<br>• 📝 <b>“note: gate code 4590”</b> — jot &amp; ask it back later<br>• 📋 tap <b>My stuff</b> to see reminders &amp; notes at a glance<br>• 🧮 quick maths — <b>“15% of 240”</b>, <b>“5km in miles”</b>, <b>“$50 + $30”</b><br>• 🌦️ <b>“weather”</b>, 💱 <b>“100 usd to gbp”</b>, 🕑 <b>“time in Tokyo”</b>, 📅 <b>“days until Christmas”</b>, ☀️ <b>“my day”</b><br>• 🏛 <b>“what governs a bank”</b>, 💼 <b>“work mode”</b> / 🏠 <b>“life mode”</b>, 🌍 fly into <b>MEOK Earth</b><br>Tap 🎤 to just speak."); }
   if(/\b(what|where|which|whats|do you (?:know|remember)|my)\b/i.test(t)){ const n=noteFind(t); if(n){ return sovSay("📝 From your notes: <b>"+esc(n.t)+"</b>"); } }
   sovOrchestrate(raw); // unmatched → the shared Sovereign brain: speaks + takes real OS actions (falls back to sovAsk)
@@ -1582,6 +1591,82 @@ function sovToolHints(text){
 function openByName_meokearth(){ openApp('meokearth'); sovSay("Taking you into <b>MEOK Earth</b> — your world."); }
 function sovSend(){ const i=document.getElementById('sovin'); const v=i.value; i.value=''; sovHandle(v); }
 var _sovRec=null, _sovHeard='';
+/* ============================================================================
+   GUIDED DEMO + FULL TOUR — the AI OS narrates itself, drives its own windows,
+   flies into the 3D world, and PAUSES to listen if you speak (rear-nav style).
+   Every action is logged as a training trace so SOV33 learns to use the OS.
+   ============================================================================ */
+let TOUR=null, _tI=0, _tTimer=0, _tPaused=false, _tRec=null, _tKind='', _tTrace=[], _tSpeaking=false;
+function tourLog(kind,detail){ _tTrace.push({t:Date.now(),step:_tI,kind:kind,detail:(''+(detail||'')).slice(0,120)}); try{ track('tour',kind,{d:(''+(detail||'')).slice(0,80)}); }catch(e){} }
+function tourOpen(id){ try{ if(typeof APPS!=='undefined'&&APPS[id]) openApp(id); }catch(e){} }
+// --- spotlight ring (narration lives in the chat UI, so no bubble) ---
+function tourSpot(sel){ let el=sel&&document.querySelector(sel); let r=document.getElementById('tourRing'); if(!r){ r=document.createElement('div'); r.id='tourRing'; r.style.cssText='position:fixed;z-index:8600;border:2px solid var(--gold,#c9a84c);border-radius:16px;box-shadow:0 0 0 9999px rgba(12,10,7,.45),0 0 34px rgba(201,168,76,.55);transition:all .6s cubic-bezier(.4,0,.2,1);pointer-events:none;opacity:0'; document.body.appendChild(r); }
+  if(!el){ r.style.opacity='0'; return; } const b=el.getBoundingClientRect(),p=8; r.style.left=(b.left-p)+'px'; r.style.top=(b.top-p)+'px'; r.style.width=(b.width+p*2)+'px'; r.style.height=(b.height+p*2)+'px'; r.style.opacity='1'; }
+function tourSpotClear(){ const r=document.getElementById('tourRing'); if(r) r.style.opacity='0'; }
+// --- HUD (progress + controls) ---
+function tourHud(on){ let h=document.getElementById('tourhud'); if(on){ if(!h){ h=document.createElement('div'); h.id='tourhud'; h.style.cssText='position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:8700;display:flex;align-items:center;gap:10px;background:rgba(20,15,11,.94);color:#efe6d4;border:1px solid var(--gold,#c9a84c);border-radius:999px;padding:8px 12px;box-shadow:0 12px 34px rgba(0,0,0,.4);font:600 12.5px Space Grotesk,sans-serif'; document.body.appendChild(h); }
+    h.innerHTML='<span id="tourlbl" style="letter-spacing:.02em"></span><span id="tourbar" style="display:inline-block;width:120px;height:5px;background:rgba(255,255,255,.14);border-radius:3px;overflow:hidden"><span id="tourfill" style="display:block;height:100%;width:0;background:var(--gold,#c9a84c);transition:width .5s"></span></span><span onclick="tourAsk()" title="Ask a question — I\'ll pause &amp; listen" style="cursor:pointer;padding:2px 6px">✋ Ask</span><span id="tourpp" onclick="tourToggle()" title="Pause/Play" style="cursor:pointer;padding:2px 6px">⏸</span><span onclick="tourNext()" title="Skip" style="cursor:pointer;padding:2px 6px">⏭</span><span onclick="sovTourEnd()" title="End tour" style="cursor:pointer;padding:2px 6px;opacity:.7">✕</span>'; }
+  else if(h){ h.remove(); } }
+function tourProgress(){ const f=document.getElementById('tourfill'),l=document.getElementById('tourlbl'); if(f&&TOUR) f.style.width=Math.round((_tI/TOUR.length)*100)+'%'; if(l) l.textContent=(_tKind==='demo'?'Demo':'Tour')+' '+Math.min(_tI+1,TOUR?TOUR.length:1)+'/'+(TOUR?TOUR.length:0); }
+function tourToggle(){ if(_tPaused) sovTourResume(); else sovTourPause(); }
+function sovTourStart(kind){ if(TOUR) sovTourEnd(); _tKind=kind; TOUR=tourScript(kind); _tI=0; _tPaused=false; _tTrace=[]; try{ welcomeDone(); }catch(e){} sovToggle(true); const lg=document.getElementById('sovlog'); if(lg) lg.innerHTML=''; window.SOV_VOICE_ON=true; try{ const b=document.getElementById('sovspk'); if(b){b.textContent='🔊';b.classList.add('on');} }catch(e){} tourHud(true); tourLog('start',kind); tourListen(); _tRun(); }
+function _tRun(){ if(!TOUR||_tPaused) return; if(_tI>=TOUR.length){ return sovTourEnd(); } const s=TOUR[_tI]; tourProgress();
+  try{ if(s.act) s.act(); }catch(e){}
+  if(s.spot) tourSpot(s.spot); else tourSpotClear();
+  if(s.narr){ try{ sovSay(s.narr); }catch(e){} }
+  if(s.narr && s.voice!==false){ _tSpeaking=true; try{ sovSpeak(s.voice||s.narr); }catch(e){} setTimeout(function(){ _tSpeaking=false; }, 2600); }
+  tourLog('step', s.key||('#'+_tI));
+  _tTimer=setTimeout(function(){ _tI++; _tRun(); }, s.ms||6500); }
+function sovTourPause(){ if(!TOUR)return; _tPaused=true; clearTimeout(_tTimer); try{ speechSynthesis.cancel(); }catch(e){} const p=document.getElementById('tourpp'); if(p)p.textContent='▶'; }
+function sovTourResume(){ if(!TOUR)return; _tPaused=false; const p=document.getElementById('tourpp'); if(p)p.textContent='⏸'; _tRun(); }
+function tourNext(){ if(!TOUR)return; clearTimeout(_tTimer); try{ speechSynthesis.cancel(); }catch(e){} _tPaused=false; _tI++; _tRun(); }
+function sovTourEnd(){ clearTimeout(_tTimer); tourSpotClear(); tourHud(false); tourStopListen(); if(TOUR){ tourLog('end',_tKind); tourTrainPush(); } TOUR=null; _tPaused=false; try{ sovSay("That's the tour ✨ — now it's <b>yours</b>. Ask me anything, tap <b>📋 My stuff</b>, or fly into your world."); }catch(e){} }
+// --- interruptible: ✋ Ask (reliable) + guarded continuous voice-interrupt ---
+function tourAsk(){ if(!TOUR)return; sovTourPause(); sovSay("<span style='color:var(--dim)'>👂 I'm listening — ask away, then I'll carry on.</span>"); try{ if(typeof sovVoice==='function'){ window._tourAskMode=true; sovVoice(); } }catch(e){} }
+function tourListen(){ const SR=window.SpeechRecognition||window.webkitSpeechRecognition; if(!SR) return; try{ _tRec=new SR(); _tRec.continuous=true; _tRec.interimResults=true; _tRec.lang='en-GB';
+  _tRec.onresult=function(e){ if(_tSpeaking||!TOUR) return; /* ignore our own TTS */ let fin=''; for(let i=e.resultIndex;i<e.results.length;i++){ if(e.results[i].isFinal) fin+=e.results[i][0].transcript; }
+    if(fin.trim().length>3){ const q=fin.trim(); if(!_tPaused){ sovTourPause(); sovSay("<span style='color:var(--dim)'>You spoke — pausing to listen 👂</span>"); } tourLog('interrupt',q); try{ sovHandle(q); }catch(e){} tourOfferResume(); } };
+  _tRec.onend=function(){ if(TOUR){ try{ _tRec.start(); }catch(e){} } };
+  _tRec.start(); }catch(e){} }
+function tourStopListen(){ try{ if(_tRec){ _tRec.onend=null; _tRec.stop(); _tRec=null; } }catch(e){} }
+function tourOfferResume(){ if(!TOUR)return; setTimeout(function(){ if(TOUR&&_tPaused) sovSay("<span class='sgg' style='cursor:pointer' onclick='sovTourResume()'>▶ Resume tour</span> &nbsp; <span class='sgg' style='cursor:pointer' onclick='sovTourEnd()'>✕ I'm good</span>"); }, 400); }
+// --- training trace: hand SOV33 a clean record of how the OS is driven ---
+function tourTrainPush(){ try{ const body=JSON.stringify({kind:_tKind,trace:_tTrace,ua:navigator.userAgent,at:Date.now()}); fetch('/api/train',{method:'POST',headers:{'Content-Type':'application/json'},body:body,keepalive:true}).catch(function(){}); }catch(e){} }
+// dive into the 3D world and fly to (roughly) where the viewer is, scanning outward
+function tourDive3D(){ tourOpen('meokearth'); try{ if(typeof meokDive3D==='function'){ const fr=document.getElementById('meokearth-frame'); if(fr){ meokDive3D(); } } }catch(e){} setTimeout(tourGeoFly, 1400); }
+function tourGeoFly(){ const fr=document.getElementById('meokearth-frame'); const send=function(msg){ try{ if(fr&&fr.contentWindow) fr.contentWindow.postMessage(msg,'*'); }catch(e){} };
+  fetch('/api/geo').then(r=>r.json()).then(function(g){ if(g&&g.lat!=null&&g.lon!=null){ const where=[g.city,g.region,g.country].filter(Boolean).join(', ')||'your area'; sovSay("📍 I've placed us over <b>"+esc(where)+"</b> — scanning your <b>10-mile</b> radius for every layer…");
+      send({type:'meok-cmd',cmd:'fly',lat:g.lat,lon:g.lon,zoom:11.4}); send({type:'meok-cmd',cmd:'scan',radiusMi:10});
+      setTimeout(function(){ sovSay("Now the <b>30-mile</b> region — bridges, hives and governance around you."); send({type:'meok-cmd',cmd:'fly',lat:g.lat,lon:g.lon,zoom:9.2}); send({type:'meok-cmd',cmd:'scan',radiusMi:30}); }, 4200);
+      setTimeout(function(){ sovSay("…and back out — your world's ready for work. 🌍"); send({type:'meok-cmd',cmd:'top'}); }, 8200);
+    } else { sovSay("This is your living world — every bridge, hive and node on the real globe."); }
+  }).catch(function(){ sovSay("This is your living world — every bridge, hive and node on the real globe."); }); }
+// The two scripts. Each step: {key, narr(chat html), voice?(spoken), act?, spot?, ms}
+// Demo ≈ 90s (7 steps); full tour ≈ 6 min (16 steps). The AI drives its own windows,
+// tidies up after itself, and flies into the 3D world — narrating in chat + out loud.
+function tourScript(kind){
+  const intro={key:'intro', narr:"👋 Welcome — this is <b>MEOK OS</b>, your own AI operating world. I'm your Sovereign, and I'll drive while I explain. <b>Speak anytime</b> and I'll pause to listen, then carry on.", voice:"Welcome. This is MEOK OS, your own AI operating world. I'll drive while I explain — speak anytime and I'll pause to listen, then carry on.", spot:'#sovdock', ms:13000};
+  const dockS={key:'dock', narr:"🐉 I live here on the right — your Sovereign. I remember you <b>on your device</b>, open your apps, and run the whole OS for you.", voice:"I live here on the right, your Sovereign. I remember you on your device, open your apps, and run the whole OS for you.", spot:'#sovdock', ms:12000};
+  const tilesS={key:'tiles', narr:"🧩 Everything is an app in the middle — your world, your apps. Drag to arrange; your layout is yours.", voice:"Everything is an app in the middle — your world, your apps. Drag to arrange them; your layout is yours.", act:function(){ sovClearView('#tiles',true); }, spot:'#tiles', ms:13000};
+  const remS={key:'reminders', narr:"⏰ Watch — I'll set a reminder: <b>“remind me to call mum at 6pm”</b>. I can repeat it <b>every day</b>, and I'll <b>speak it aloud</b> when it fires. Tap <b>📋 My stuff</b> to see it.", voice:"Watch — I'll set a reminder to call mum at six p.m. I can repeat it every day, and I'll speak it aloud when it fires.", act:function(){ try{ remAdd('call mum','at 6pm'); const b=document.getElementById('sovboard'); if(b&&b.hasAttribute('hidden')) sovBoardToggle(); }catch(e){} }, spot:'#sovboard', ms:demoLong(kind,20000)};
+  const notesS={key:'notes', narr:"📝 Jot anything — <b>“note: gate code is 4590”</b> — and ask it back later. It stays on your device, forever yours.", voice:"Jot anything — note, gate code is 4590 — and ask it back later. It stays on your device, forever yours.", act:function(){ try{ noteAdd('gate code is 4590'); }catch(e){} }, spot:'#sovboard', ms:22000};
+  const askS={key:'ask', narr:"🧮 Ask me in plain words — maths, currency, world time, days-until. Like <b>“$50 + $30”</b>, <b>“time in Tokyo”</b>, <b>“days until Christmas”</b>. All instant, on device.", voice:"Ask me in plain words — maths, currency, world time, days until. Fifty dollars plus thirty. Time in Tokyo. Days until Christmas. All instant, on device.", act:function(){ try{ sovSay('= <b>$80</b>.'); sovSay(sovInstant('time in tokyo')||''); sovSay(sovInstant('days until christmas')||''); }catch(e){} }, ms:26000};
+  const modeS={key:'modes', narr:"💼🏠 Two clean spaces in one OS — <b>Work</b> for business &amp; governance, <b>Life</b> for you &amp; family. I'll switch us to Work.", voice:"Two clean spaces in one OS — Work for business and governance, Life for you and family. I'll switch us to Work now.", act:function(){ try{ setMode('csoai'); }catch(e){} }, spot:'.modesw', ms:14000};
+  const governS={key:'govern', narr:"🏛 Tell me your trade and I'll show the <b>real rules</b> that govern it — EU AI Act, DORA, GDPR, Basel — and the signed bridges I hold for it.", voice:"Tell me your trade and I'll show the real rules that govern it — the E.U. A.I. Act, DORA, G.D.P.R., Basel — and the signed bridges I hold for it.", act:function(){ try{ closeAllApps(); sovHandle('what governs a bank'); }catch(e){} }, ms:30000};
+  const bridgeS={key:'bridges', narr:"🔌 Here's the moat: I speak the <b>old machines</b> — COBOL, SWIFT, HL7, ISO 20022. Paste a legacy message and I <b>validate + sign</b> it. Opening Legacy Bridges…", voice:"Here's the moat: I speak the old machines — COBOL, SWIFT, H.L.7, ISO 20022. Paste a legacy message and I validate and sign it.", act:function(){ try{ closeAllApps(); tourOpen('bridges'); }catch(e){} }, ms:30000};
+  const signS={key:'sign', narr:"🔏 Everything I do can be <b>signed</b> — a sovereign Ed25519 seal anyone can verify <b>offline</b>, even under a different key it rejects tampering. That's the trust layer.", voice:"Everything I do can be signed — a sovereign seal anyone can verify offline. Tamper with it and it's rejected. That's the trust layer under it all.", act:function(){ try{ closeAllApps(); tourOpen('sigil'); }catch(e){} }, ms:28000};
+  const charS={key:'character', narr:"🐉 Your Sovereign has a <b>face</b> — pick an archetype and it hatches into your character, evolving as it learns you.", voice:"Your Sovereign has a face — pick an archetype and it hatches into your character, evolving as it learns you.", act:function(){ try{ closeAllApps(); tourOpen('archetypes'); }catch(e){} }, ms:24000};
+  const guardianS={key:'life', narr:"🏠 Switching to <b>Life</b> — this is where your family, guardian and home live. On-device safety for the people you love.", voice:"Switching to Life — this is where your family, guardian and home live. On-device safety for the people you love.", act:function(){ try{ closeAllApps(); setMode('meok'); tourOpen('guardian'); }catch(e){} }, spot:'.modesw', ms:20000};
+  const privacyS={key:'privacy', narr:"🔒 One promise underneath it all: <b>your data is yours</b>. It lives on your device, never sold, never given away — and you can verify that.", voice:"One promise underneath it all: your data is yours. It lives on your device, never sold, never given away — and you can verify that.", act:function(){ try{ closeAllApps(); }catch(e){} }, ms:16000};
+  const connectS={key:'connect', narr:"🔗 Bring your world — calendar, email, files. Your tokens stay in <b>your</b> vault, never shared. Start with one, add more anytime.", voice:"Bring your world — calendar, email, files. Your tokens stay in your vault, never shared. Start with one, add more anytime.", act:function(){ try{ closeAllApps(); }catch(e){} }, ms:22000};
+  const tidyS={key:'tidy', narr:"🧹 Notice how I <b>tidy up after myself</b> — closing what we're done with, opening what's next. Every move teaches my back-end to use the OS better.", voice:"Notice how I tidy up after myself — closing what we're done with, opening what's next. Every move teaches my back-end to use the OS better.", act:function(){ try{ closeAllApps(); }catch(e){} }, ms:14000};
+  const diveS={key:'dive', narr:"🌍 And this is your <b>living world</b> — let me dive into the 3D globe and fly to <b>you</b>, scanning your area for every layer.", voice:"And this is your living world — let me dive into the 3D globe and fly to you, scanning your area for every layer.", act:function(){ tourDive3D(); }, spot:'#sovchar', ms:kind==='demo'?22000:28000};
+  const outroDemo={key:'outro', narr:"✨ That's 90 seconds. Now it's <b>yours</b> — just talk to me. Want the full 6-minute tour? Say <b>“full tour”</b>.", voice:"That's ninety seconds. Now it's yours — just talk to me. Want the full tour? Just say, full tour.", act:function(){ try{ closeAllApps(); }catch(e){} }, ms:11000};
+  const outroFull={key:'outro', narr:"✨ That's the tour — reminders, apps, Work &amp; Life, governance, the legacy bridges, signing, your character, and your living world. Now it's <b>yours</b>. Just talk to me.", voice:"That's the tour. Reminders, apps, Work and Life, governance, the legacy bridges, signing, your character, and your living world. Now it's yours — just talk to me.", act:function(){ try{ closeAllApps(); }catch(e){} }, ms:13000};
+  if(kind==='demo') return [intro, dockS, tilesS, remS, modeS, diveS, outroDemo];
+  return [intro, dockS, tilesS, remS, notesS, askS, modeS, governS, bridgeS, signS, charS, guardianS, connectS, privacyS, tidyS, diveS, outroFull];
+}
+function demoLong(kind,v){ return kind==='demo'?13000:v; }
 function _sovMics(){ return [document.getElementById('sovmic'), document.getElementById('sovbbmic')].filter(Boolean); }
 function _sovListenUI(on){ _sovMics().forEach(m=>{ m.classList.toggle('on',on); m.textContent=on?'⏹':'🎤'; m.title=on?'Listening… tap to stop':'Speak to me'; });
   var bb=document.getElementById('sovbbin'); if(bb) bb.placeholder=on?'Listening… speak now':'Ask your Sovereign anything…';

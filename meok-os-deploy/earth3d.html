@@ -70,6 +70,11 @@ const MEOK={
   flyTo(lon,lat,name){ if(_orbit){cancelAnimationFrame(_orbit);_orbit=null;} map.flyTo({center:[lon,lat],zoom:15.5,pitch:70,bearing:Math.random()*60-30,duration:4200,essential:true}); }
 };
 window.MEOK=MEOK; window._map=map;
+// Commands from the parent OS (the guided tour): fly to a point, scan a radius, zoom out.
+MEOK.flyC=function(lat,lon,zoom){ if(_orbit){cancelAnimationFrame(_orbit);_orbit=null;} map.flyTo({center:[lon,lat],zoom:zoom||11,pitch:55,bearing:0,duration:3600,essential:true}); };
+MEOK.scan=function(mi){ let s=document.getElementById('scanfx'); if(!s){ s=document.createElement('div'); s.id='scanfx'; s.innerHTML='<div class="scanring"></div><div class="scanlbl"></div>'; document.body.appendChild(s); const st=document.createElement('style'); st.textContent='#scanfx{position:fixed;inset:0;pointer-events:none;z-index:50;display:flex;align-items:center;justify-content:center}.scanring{width:40px;height:40px;border:2px solid rgba(201,168,76,.9);border-radius:50%;animation:scanpulse 2.6s ease-out}.scanlbl{position:absolute;bottom:14%;color:#f0e6cf;font:700 12px ui-monospace,monospace;letter-spacing:.12em;background:rgba(12,10,7,.7);padding:5px 12px;border-radius:999px;border:1px solid rgba(201,168,76,.5)}@keyframes scanpulse{0%{width:20px;height:20px;opacity:.95}100%{width:78vmin;height:78vmin;opacity:0}}'; document.head.appendChild(st); }
+  s.style.display='flex'; const ring=s.querySelector('.scanring'); ring.style.animation='none'; void ring.offsetWidth; ring.style.animation='scanpulse 2.6s ease-out'; s.querySelector('.scanlbl').textContent='◎ SCANNING '+(mi||10)+'-MILE RADIUS · ALL LAYERS'; clearTimeout(MEOK._st); MEOK._st=setTimeout(function(){ if(s) s.style.display='none'; },2800); };
+window.addEventListener('message',function(ev){ var d=ev.data||{}; if(d.type!=='meok-cmd') return; try{ if(d.cmd==='fly') MEOK.flyC(d.lat,d.lon,d.zoom); else if(d.cmd==='scan') MEOK.scan(d.radiusMi); else if(d.cmd==='top') MEOK.top(); }catch(e){} });
 function readout(){ const c=map.getCenter();
   document.getElementById('coord').textContent=Math.abs(c.lat).toFixed(4)+'°'+(c.lat>=0?'N':'S')+' '+Math.abs(c.lng).toFixed(4)+'°'+(c.lng>=0?'E':'W');
   document.getElementById('alt').textContent='Z'+map.getZoom().toFixed(1);

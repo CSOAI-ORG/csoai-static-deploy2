@@ -149,5 +149,12 @@ for (const [n, u] of [['social networks', '/api/social?action=networks'], ['medi
   const rr = await fetch(BASE + u); ck('reachable: ' + n, rr.status === 200);
 }
 
+// --- guided tour infra: IP-geo + SOV33 training sink ---
+{ const g = await gj('/api/geo'); ck('geo: returns coords or graceful', g.s === 200 && (typeof g.j.lat === 'number' || 'error' in g.j)); }
+{ const t = await gj('/api/train', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ kind: 'demo', trace: [{ kind: 'start' }, { kind: 'step', detail: 'dock' }, { kind: 'end' }] }) });
+  ck('train: accepts trace + summarises', t.s === 200 && t.j.ok === true && t.j.received === 3 && t.j.breakdown && t.j.breakdown.step === 1); }
+{ const rr = await fetch(BASE + '/earth3d.html'); const t = await rr.text(); ck('earth3d: accepts tour fly/scan commands', /meok-cmd/.test(t) && /MEOK\.scan/.test(t)); }
+{ const rr = await fetch(BASE + '/'); const t = await rr.text(); ck('OS: guided tour engine present', /function sovTourStart/.test(t) && /function tourScript/.test(t)); }
+
 console.log('\n' + (fail === 0 ? '✅ PASS' : '❌ FAIL') + ' — ' + pass + ' passed, ' + fail + ' failed' + (fails.length ? '  [' + fails.join(', ') + ']' : ''));
 process.exit(fail ? 1 : 0);
