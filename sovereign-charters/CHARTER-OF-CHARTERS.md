@@ -39,45 +39,70 @@ When an industry is captured by rent-seekers, gatekeepers, or credential cartels
 
 ---
 
-## ARTICLE I — THE 34-INDUSTRY MAP
+## ARTICLE I — THE 40-CHARTER L0/L0+/L1/L2/L3/L4 ARCHITECTURE
+
+The Sovereign Federation is organized in 6 layers (L0 / L0+ / L1 / L2 / L3 / L4), binding 40 charters total:
 
 ```
-                    SOVEREIGN CHARTER UNIVERSE
-    ┌──────────────────────────────────────────────────────────────┐
-    │                     LAYER 0: ROOT CHARTER                     │
-    │              (This Document — The Charter of Charters)         │
-    └──────────────────────────┬───────────────────────────────────┘
+═══════════════════════════════════════════════════════════════════════════════
+                        SOVEREIGN FEDERATION ARCHITECTURE
+═══════════════════════════════════════════════════════════════════════════════
+
+    ┌──────────────────────────────────────────────────────────────────┐
+    │  L0 — SOVEREIGN ROOT                                              │
+    │  ├─ 00-sovereign-root-charter.md (constitutional substrate)        │
+    │  ├─ CHARTER-OF-CHARTERS.md (the universal cross-walk root)        │
+    │  └─ 00-partners-charter.md (L0+ partner federation)                │
+    │       (3 root charters · 1,443 cross-walks · 30 frameworks)        │
+    └──────────────────────────┬───────────────────────────────────────┘
                                │
             ┌──────────────────┼──────────────────┐
+            │                  │                  │
+    ┌───────▼────────┐ ┌──────▼───────┐ ┌───────▼────────┐
+    │ L1 — SOV3³      │ │ L2 — SOV3   │ │ L3 — CSOAI    │
+    │ (DEFONEOS)      │ │ (meok)       │ │ (csoai.org)   │
+    │ Defence AI OS   │ │ Build Layer  │ │ Trust Layer   │
+    │ 15 defence MCPs │ │ 294-server  │ │ 33-agent BFT  │
+    │ 12-defoneos.md  │ │ MCP fleet    │ │ Watchdog       │
+    │                 │ │ 02-meok.md   │ │ 01-csoai.md    │
+    └───────┬────────┘ └──────┬───────┘ └───────┬────────┘
             │                  │                  │
     ┌───────▼────────┐ ┌──────▼───────┐ ┌───────▼────────┐
     │ TIER 1:        │ │ TIER 2:      │ │ TIER 3:        │
     │ AI GOVERNANCE  │ │ TECHNICAL    │ │ INDUSTRY       │
     │ & STANDARDS    │ │ INFRASTRUCT. │ │ VERTICALS      │
-    │ (12 Charters)  │ │ (11 Charters)│ │ (11 Charters)  │
+    │ (11 Charters)  │ │ (11 Charters)│ │ (11 Charters)  │
+    │ 03-12, 36      │ │ 13-23        │ │ 24-34          │
     └───────┬────────┘ └──────┬───────┘ └───────┬────────┘
             │                  │                  │
     ┌───────▼────────┐ ┌──────▼───────┐ ┌───────▼────────┐
-    │ csoai          │ │ councilof    │ │ commercialveh  │
-    │ meok           │ │ openmoe      │ │ diyhelp        │
-    │ proofof        │ │ openMCP      │ │ fishkeeper     │
-    │ safetyof       │ │ openpatent   │ │ grabhire       │
-    │ accountability │ │ sandbox      │ │ koikeeper      │
-    │ ethicalgov     │ │ sov-town     │ │ landlaw        │
-    │ transparency   │ │ meok-comp-gw │ │ muckaway       │
-    │ biasdetection  │ │ loopfactory  │ │ planthire      │
-    │ dataprivacy    │ │ optimobile   │ │ pokerhud       │
-    │ asisecurity    │ │ socialmedia  │ │ suicidestop    │
-    │ agisafe        │ │ cobolbridge  │ │ science        │
-    │ defoneos       │ │              │ │                │
-    └────────────────┘ └──────────────┘ └────────────────┘
+    │ proofof        │ │ councilof    │ │ commercialveh  │
+    │ safetyof       │ │ openmoe      │ │ diyhelp        │
+    │ accountability │ │ openMCP      │ │ fishkeeper     │
+    │ ethicalgov     │ │ openpatent   │ │ grabhire       │
+    │ transparency   │ │ sandbox      │ │ koikeeper      │
+    │ biasdetection  │ │ sov-town     │ │ landlaw        │
+    │ dataprivacy    │ │ meok-comp-gw │ │ muckaway       │
+    │ asisecurity    │ │ loopfactory  │ │ planthire      │
+    │ agisafe        │ │ optimobile   │ │ pokerhud       │
+    └────────────────┘ │ socialmedia  │ │ suicidestop    │
+                        │ cobolbridge  │ │ science        │
+                        └──────────────┘ └────────────────┘
+            ┌──────────────────┼──────────────────┐
+            │                  │                  │
+    ┌───────▼────────┐ ┌──────▼───────┐ ┌───────▼────────┐
+    │ L4 — COIGNDALTION  │ │ L0+ — PARTNERS  │ │ 36 — PUBLIC     │
+    │ Cornerstone        │ │ Alliance         │ │ WATCHDOG        │
+    │ 35-coigndaltion.md │ │ 00-partners.md   │ │ 36-publicwdg.md │
+    └────────────────────┘ └──────────────────┘ └──────────────────┘
 ```
 
-**Total**: 34 industries × 4 training tiers = **136 certification pathways**
-**Cross-walks**: 34 × 33 = **1,122 bilateral edges**
-**Compliance frameworks**: 30 per charter = **1,020 framework mappings**
-**UE5 simulations**: 3+ per charter = **102+ real-world scenarios**
-**UBI starter pathways**: 1 per charter = **34 income-onramps**
+**Total**: 40 charters (3 root + 1 cornerstone + 1 watchdog + 35 industry)
+**Cross-walks**: 40 × 39 = **1,560 bilateral edges** (L0 + L0+ + L1-L4)
+**Compliance frameworks**: 30 + 7 partner-specific = **37 cross-walks per charter**
+**UE5 simulations**: 3+ per charter = **120+ real-world scenarios**
+**UBI starter pathways**: 1 per charter = **40 income-onramps**
+**Data sources**: 198 feeds + 49GB sovereign moat
 
 ---
 
