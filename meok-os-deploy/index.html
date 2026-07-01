@@ -853,8 +853,13 @@ function content(id){const L=LIVE;const liveBadge=LIVEMODE?'<span class="chip li
  case 'bridges': return `<p><b>Layer-0 Legacy Bridges.</b> Connect the systems that run the world — banks, hospitals, governments, utilities — to ONE OS, <b>governed</b>. Every legacy message → CSOAI attestation → modern stack, without disruption. Critical infra moves ~$3T/day through these.</p>
    <h4>🟢 Built &amp; working — 15 governed bridge MCPs</h4>
    <div class="row"><span class="chip on">COBOL / Mainframe · 86/100</span><span class="chip on">ISO 20022 / SWIFT · finance</span><span class="chip on">HL7 / FHIR · healthcare</span><span class="chip on">IBM AS/400 · RPG</span><span class="chip on">SAP · IDoc</span><span class="chip on">Oracle · PL/SQL</span><span class="chip on">SCADA / Modbus · OT</span><span class="chip on">EDI X12 / EDIFACT · B2B</span><span class="chip on">FIX · trading</span><span class="chip on">CICS · transactions</span><span class="chip on">MQTT / IoT · devices</span><span class="chip on">ACORD · insurance</span><span class="chip on">NACHA / ACH · payments</span><span class="chip on">ISO 8583 · cards</span><span class="chip on">SIP · telephony</span></div>
+   <h4>🔧 Try it live — paste a real message, get a real parse</h4>
+   <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:6px">${['iban','iso20022','hl7','iso8583','swift-mt'].map(s=>`<span onclick="brdSample('${s}')" style="cursor:pointer;padding:4px 10px;border-radius:999px;border:1px solid var(--line);background:var(--cream);font-size:12px">${s}</span>`).join('')}</div>
+   <textarea id="brd-in" placeholder="Paste an IBAN / ISO 20022 XML / HL7 v2 / ISO 8583 / SWIFT MT…" style="${APPIN};width:100%;min-height:56px;resize:vertical;font-family:ui-monospace,monospace;font-size:12px"></textarea>
+   <div style="display:flex;gap:8px;margin-top:6px"><button onclick="brdValidate()" style="${APPBTN}">Validate + govern</button><span id="brd-out" style="font-size:12px;color:var(--dim)"></span></div>
+   <div id="brd-res" style="margin-top:8px"></div>
    <h4>The pattern (every bridge)</h4>
-   <p style="color:var(--dim)">parse legacy → validate → map to modern → <b>govern</b> (the sector's frameworks: DORA/NIS2 finance · HIPAA/MDR healthcare · IEC 62443 OT · SOX) → <b>attestable on the ledger</b>. The governed gateway to legacy — nobody sovereign-grade does this. All 7 functional-tested, each its own private CSOAI-ORG repo.</p>`;
+   <p style="color:var(--dim)">parse legacy → validate → map to modern → <b>govern</b> (the sector's frameworks: DORA/NIS2 finance · HIPAA/MDR healthcare · IEC 62443 OT · SOX) → <b>attestable on the ledger</b>. The governed gateway to legacy — nobody sovereign-grade does this.</p>`;
  }
  return '';
 }
@@ -1075,6 +1080,18 @@ function familyHTML(){
    <div style="color:var(--dim);font-size:11px">💚 Saved on your device · your family, your data — never uploaded.</div>
   </div>`;
 }
+// ── Legacy-bridge live validator (real /api/bridge) + sign the governed result (/api/sign) ──
+async function brdSample(s){ try{ const d=await(await fetch('/api/bridge?samples=1')).json(); const i=document.getElementById('brd-in'); if(i&&d.samples&&d.samples[s]) i.value=d.samples[s]; }catch(e){} }
+async function brdValidate(){ const i=document.getElementById('brd-in'),o=document.getElementById('brd-out'),res=document.getElementById('brd-res'); if(!i)return; const msg=(i.value||'').trim(); if(!msg){ if(o)o.textContent='paste a message or pick a sample'; return; } if(o)o.textContent='validating…'; if(res)res.innerHTML='';
+  try{ const d=await(await fetch('/api/bridge',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:msg})})).json();
+    const r=d.result||{}; const ok=r.valid; const col=ok?'#10b981':'var(--bad)';
+    let rows=Object.keys(r).filter(k=>k!=='type').map(k=>`<div style="display:flex;gap:8px;font-size:12px"><span style="color:var(--dim);min-width:110px">${esc(k)}</span><b>${esc(String(r[k]))}</b></div>`).join('');
+    if(o)o.textContent='';
+    if(res)res.innerHTML=`<div style="background:var(--cream);border:1px solid var(--line);border-left:3px solid ${col};border-radius:9px;padding:10px 12px"><div style="font-weight:800;color:${col}">${ok?'✓ VALID':'✗ INVALID'} · <span style="color:var(--ink)">${esc((d.detected||'').toUpperCase())}</span></div><div style="margin-top:5px">${rows}</div><button onclick="brdSign('${encodeURIComponent(msg).replace(/'/g,'%27')}')" style="${APPIN};cursor:pointer;margin-top:8px">🔏 Sign this governed parse</button><div id="brd-sig" style="margin-top:6px;font-size:11px;color:var(--dim);word-break:break-all"></div></div>`;
+  }catch(e){ if(o)o.textContent='bridge unreachable'; } }
+async function brdSign(encMsg){ const out=document.getElementById('brd-sig'); if(out)out.textContent='signing…';
+  try{ const msg=decodeURIComponent(encMsg); const d=await(await fetch('/api/sign',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:{bridge_parse:msg.slice(0,120)}})})).json();
+    if(out&&d.signature) out.innerHTML='🔏 Ed25519 signed · sig <b>'+esc(d.signature.slice(0,32))+'…</b><br>verify offline at <a href="/verify.html" style="color:var(--gold)">/verify</a> with the public key — no account, no vendor.'; }catch(e){ if(out)out.textContent='sign unreachable'; } }
 function openApp(id){ track('app:'+id,'open');
  if(open[id]){focus(id);return;}
  const a=APPS[id];const d=document.getElementById('frame');
