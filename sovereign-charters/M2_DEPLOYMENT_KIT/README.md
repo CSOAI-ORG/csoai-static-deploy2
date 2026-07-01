@@ -53,18 +53,35 @@ ln -s /Users/nicholas/clawd/sovereign-charters /usr/share/csoai/charters
 ```bash
 cd /usr/share/csoai/charters/M2_DEPLOYMENT_KIT
 
-# Install sovereign sidebar/footer on every HTML page
+# OPTION A: Full deploy (recommended) — copies portal + injects sidebar/footer
+python3 m2_sovereign_integrate.py deploy-portal /path/to/csoai-org/public
+
+# OPTION B: Just inject sidebar/footer on existing pages
 python3 m2_sovereign_integrate.py install /path/to/csoai-org/public
 
 # Example: if csoai-org is at /opt/csoai/csoai-org/public
-python3 m2_sovereign_integrate.py install /opt/csoai/csoai-org/public
+python3 m2_sovereign_integrate.py deploy-portal /opt/csoai/csoai-org/public
 ```
 
-Expected output:
+Expected output (deploy-portal):
 ```
+[OK] Copied 39 portal HTML files to /opt/csoai/csoai-org/public/charters
+[INFO] Running sovereign install on target...
 [INFO] Found 142 HTML pages in /opt/csoai/csoai-org/public
 [OK] Injected sovereign sidebar + footer + meta into 142/142 pages
 [INFO] 34 industries · 1,122 cross-walks · UK 16939677 · Charter Article 0 binding
+
+[DEPLOY COMPLETE]
+  - Portal files at: /opt/csoai/csoai-org/public/charters
+  - Sidebar/footer/meta injected on all pages of /opt/csoai/csoai-org/public
+  - Charter Article 0 binding active
+  - UK Companies House 16939677 displayed
+
+[NEXT STEPS]
+  1. cd /opt/csoai/csoai-org
+  2. git add . && git commit -m 'feat: sovereign charter universe'
+  3. vercel --prod --yes  (or your deploy command)
+  4. python3 m2_sovereign_integrate.py ratify
 ```
 
 ### Step 3 — Verify the injection

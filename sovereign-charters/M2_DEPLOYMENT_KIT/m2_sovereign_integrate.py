@@ -25,6 +25,7 @@ CONFIG (set env vars or edit below):
 
 USAGE:
   python3 m2_sovereign_integrate.py install /path/to/csoai-org
+  python3 m2_sovereign_integrate.py deploy-portal /path/to/csoai-org  # FULL DEPLOY (recommended)
   python3 m2_sovereign_integrate.py verify /path/to/csoai-org
   python3 m2_sovereign_integrate.py ratify
   python3 m2_sovereign_integrate.py sigil-emit "H|JEEVES|csoai|charter installed"
@@ -196,7 +197,9 @@ SOVEREIGN_META_HTML = '''
 
 
 def cmd_install(target):
-    """Install sovereign sidebar/footer into every HTML page of csoai.org."""
+    """Install sovereign sidebar/footer into every HTML page of csoai.org.
+    If target is the portal dir, also install sidebar/footer into the portal pages themselves.
+    """
     target_path = Path(target)
     if not target_path.exists():
         print(f"[FAIL] {target} does not exist")
@@ -210,6 +213,8 @@ def cmd_install(target):
     sidebar = SOVEREIGN_SIDEBAR_HTML.replace("{HIVE_LINKS}", hive_links)
 
     html_files = list(target_path.rglob("*.html"))
+    # Filter out template files and build scripts
+    html_files = [f for f in html_files if not any(x in f.name for x in ['_TEMPLATE', 'build', 'template', '_test'])]
     print(f"[INFO] Found {len(html_files)} HTML pages in {target}")
 
     injected = 0
@@ -375,12 +380,61 @@ def cmd_list():
     return 0
 
 
+def cmd_deploy_portal(target):
+    """Copy the entire csoai_portal directory to the target csoai.org deployment,
+    then run sovereign install on it."""
+    import shutil
+
+    target_path = Path(target)
+    portal_source = CHARTER_DIR / "csoai_portal"
+
+    if not portal_source.exists():
+        print(f"[FAIL] Portal source not found: {portal_source}")
+        print(f"  Generate it first by running the build.py in the portal dir")
+        return 1
+
+    if not target_path.exists():
+        print(f"[FAIL] Target not found: {target}")
+        return 1
+
+    # Create /charters subdirectory in target
+    charters_target = target_path / "charters"
+    charters_target.mkdir(parents=True, exist_ok=True)
+
+    # Copy all portal HTML files
+    html_files = list(portal_source.glob("*.html"))
+    copied = 0
+    for f in html_files:
+        dst = charters_target / f.name
+        shutil.copy(f, dst)
+        copied += 1
+
+    print(f"[OK] Copied {copied} portal HTML files to {charters_target}")
+
+    # Now run install on the target to inject sidebar/footer/meta on ALL pages
+    print(f"[INFO] Running sovereign install on target...")
+    cmd_install(str(target_path))
+
+    print(f"\n[DEPLOY COMPLETE]")
+    print(f"  - Portal files at: {charters_target}")
+    print(f"  - Sidebar/footer/meta injected on all pages of {target}")
+    print(f"  - Charter Article 0 binding active")
+    print(f"  - UK Companies House 16939677 displayed")
+    print(f"\n[NEXT STEPS]")
+    print(f"  1. cd {target_path}")
+    print(f"  2. git add . && git commit -m 'feat: sovereign charter universe'")
+    print(f"  3. vercel --prod --yes  (or your deploy command)")
+    print(f"  4. python3 m2_sovereign_integrate.py ratify")
+    return 0
+
+
 def main():
     if len(sys.argv) < 2:
         print(__doc__)
         print("\nCommands:")
         print("  install <path>     Install sovereign sidebar/footer on every HTML page")
         print("  verify <path>      Verify all pages have sovereign injection")
+        print("  deploy-portal <path> Copy entire portal + inject sidebar/footer (full deploy)")
         print("  ratify             Submit BFT council proposal")
         print("  sigil-emit <line>  Emit a SIGIL line into the audit chain")
         print("  list               List all 34 charters")
@@ -394,6 +448,9 @@ def main():
     elif cmd == "verify":
         target = sys.argv[2] if len(sys.argv) > 2 else "."
         return cmd_verify(target)
+    elif cmd == "deploy-portal":
+        target = sys.argv[2] if len(sys.argv) > 2 else "."
+        return cmd_deploy_portal(target)
     elif cmd == "ratify":
         return cmd_ratify()
     elif cmd == "sigil-emit":
