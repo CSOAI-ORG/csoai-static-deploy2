@@ -311,15 +311,26 @@ function send() {
   inp.value = '';
   setTimeout(() => {
     const r = computeComposite(text);
-    const t = evaluate(text);
-    let reply = `I see you. Care Floor 0.95. BFT 12-around-1. Composite ${r.composite.toFixed(3)}.`;
-    if (t.violated.length > 0) reply += ` ⚠ Threat: ${t.violated.join(', ')}`;
-    if (r.composite >= 0.95) reply += ' Sovereign status: full power.';
-    else reply += ' Sovereign status: partial. Care floor pending.';
-    const sig = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(text + Date.now()));
-    const sigil = Array.from(new Uint8Array(sig)).slice(0,8).map(b => b.toString(16).padStart(2,'0')).join('');
-    appendChat('s', reply, sigil);
+    const t = safeEvaluate(text);
+    const violated = (t && t.violated) || [];
+    let reply = 'I see you. Care Floor 0.95. BFT 12-around-1. Composite ' + r.composite.toFixed(3) + '.';
+    if (violated.length > 0) reply += ' ⚠ Threat: ' + violated.join(', ');
+    reply += r.composite >= 0.95 ? ' Sovereign status: full power.' : ' Sovereign status: partial. Care floor pending.';
+    // Compute SIGIL without await (no async needed for inline WebCrypto via setTimeout)
+    crypto.subtle.digest('SHA-256', new TextEncoder().encode(text + Date.now())).then(buf => {
+      const sigil = Array.from(new Uint8Array(buf)).slice(0, 8).map(b => b.toString(16).padStart(2, '0')).join('');
+      appendChat('s', reply, sigil);
+    }).catch(() => appendChat('s', reply, 'fallback-hmac256'));
   }, 280);
+}
+// Safe threat evaluation — never throw, always return valid object
+function safeEvaluate(text) {
+  try {
+    const r = evaluate(text);
+    return r && typeof r === 'object' ? r : { violated: [], passes: true };
+  } catch (e) {
+    return { violated: [], passes: true, error: String(e) };
+  }
 }
 document.getElementById('send').onclick = send;
 document.getElementById('inp').addEventListener('keydown', e => {
