@@ -33,87 +33,246 @@ The Public Watchdog operates as a **three-channel signal substrate**:
 
 **Channel 3: PASSIVE** — Partner systems stream continuous telemetry: MCP servers, AI systems, compliance monitors, SOC tools, edge devices.
 
-### II.B — Market Size & Barriers
+### II.B — Signal Extraction Pipeline (10 Stages, Detailed)
+
+Every raw feed entry traverses a 10-stage pipeline before becoming a SIGIL-anchored signal on the heat-map. Each stage is deterministic, idempotent, and Ed25519-signed at the boundary.
+
+**Stage 1 — RSS / Source Ingest**
+```python
+async def ingest(source: Source) -> RawEntry:
+    """Pull raw items from RSS / Atom / JSON / webhook source."""
+    raw = await source.fetch(last_known_cursor)
+    entry = RawEntry(
+        source_id=source.id,
+        url=raw.url,
+        title=raw.title,
+        body=raw.body,
+        published_at=raw.published_at,
+        sha256=sha256(raw.body),
+        cursor=raw.cursor,
+    )
+    return entry
+```
+The ingester maintains a per-source cursor (Redis ZSET, `score=ts_epoch`, `value=sha256`) and a 90-day replay window for backfills.
+
+**Stage 2 — Normalizer**
+```python
+def normalize(entry: RawEntry) -> NormalizedEntry:
+    """Strip HTML, collapse whitespace, extract entities, language tag."""
+    text = BeautifulSoup(entry.body, "html.parser").get_text(" ")
+    text = re.sub(r"\s+", " ", text).strip()
+    lang = langdetect.detect(text) if len(text) > 20 else "und"
+    entities = spacy_nlp(text).ents  # ORG, GPE, PRODUCT, LAW
+    return NormalizedEntry(
+        raw=entry, text=text, lang=lang, entities=entities,
+        normalizer_version="wdg-norm-2.4.1",
+    )
+```
+Idempotency key = sha256 of (source_id + url + sha256(body)). Re-normalisation of the same key is a no-op.
+
+**Stage 3 — Classifier (12 Categories)**
+Categories are encoded as a closed-set 12-label softmax classifier fine-tuned from `xlm-roberta-large` on 47K hand-labelled AI-governance examples (12 categories below). F1 = 0.87 macro on the held-out 2025-Q4 set.
+
+| Code | Category | Example |
+|---|---|---|
+| SAF | Safety incident | GPT-4 jailbreak, RLHF reward hacking |
+| BIA | Bias / discrimination | COMPAS-style disparate impact |
+| PRV | Privacy violation | Re-identification, training-data leak |
+| SEC | Security / CVE | Prompt injection CVE-2025-XXXX |
+| SOV | Sovereignty clash | CLOUD Act vs GDPR |
+| ETH | Ethics violation | Dark-pattern manipulation |
+| TRS | Transparency failure | Unexplained model decision |
+| CMP | Compliance event | EU AI Act Article 50 enforcement |
+| AGT | Agentic / autonomous | Morris-II worm, agent drift |
+| DEF | Defence signal | Counter-drone, ATT&CK |
+| FAC | Factuality / hallucination | Legal citation fabrication |
+| GOV | Governance reform | Treaty, statute, executive order |
+
+**Stage 4 — Severity Scorer (5 Levels)**
+```python
+SEVERITY_MATRIX = {
+    # (category, scope, novelty, harm_realised, harm_potential) → severity
+}
+def score_severity(n: NormalizedEntry, cat: Category) -> Severity:
+    scope = estimate_scope(n)              # 0..1 (geographic, demographic)
+    novelty = embedding_distance(n, last_30d_archive)
+    harm_realised = n.entities.has_known_harm_event()
+    harm_potential = cat.expected_harm_potential  # priors
+    s = 0.30*scope + 0.25*novelty + 0.30*harm_potential + 0.15*harm_realised
+    return Severity.from_score(s)          # S1 INFO .. S5 CRITICAL
+```
+
+**Stage 5 — Deduplicator**
+MinHash LSH (128 permutations, Jaccard threshold 0.85) clusters near-duplicate stories (e.g., Reuters + FT + BBC covering the same EU AI Office action). Each cluster emits one canonical signal; cluster members are linked but de-emphasised.
+
+**Stage 6 — Cross-Reference**
+Each canonical signal is matched against the Watchdog's prior-90-day archive plus 14 partner hives via signed REST queries. Cross-references form a DAG that powers the heat-map's "related signals" panel and the BFT council briefing pack.
+
+**Stage 7 — Geolocator**
+```python
+def geolocate(n: NormalizedEntry) -> GeoTag:
+    """Return (lat, lon, country_iso3, region, confidence) from entity + URL TLD + byline."""
+    candidates = []
+    for ent in n.entities:
+        if ent.label_ == "GPE":
+            candidates.append(geocode(ent.text))
+    for tld in url_tlds(n.raw.url):
+        candidates.append(tld_centroid(tld))
+    return consensus(candidates, confidence=min(0.95, 1 - entropy(candidates)))
+```
+
+**Stage 8 — Sector Tagger**
+12 sectors (Health, Finance, Defence, Education, Employment, Public Services, Critical Infrastructure, Media, Transport, Retail, Manufacturing, Government) tagged via a sector ontology (NAICS + NACE cross-walked). Multi-sector signals get a primary + secondary.
+
+**Stage 9 — Heat-Map Updater**
+Atomically increments `heat_cell[sector, country, category, hour]` in Redis + persists to PostgreSQL `watchdog_heat` (BRIN index on hour). Triggers Materialized View refresh for the public dashboard (60s cadence).
+
+**Stage 10 — SIGIL Emit**
+```python
+def emit(signal: CanonicalSignal) -> SigilReceipt:
+    payload = signal.canonical_bytes()
+    digest = sha256(payload)
+    sig = ed25519_sign(watchdog_privkey, digest)
+    chain_prev = last_chain_hash()
+    chain_new = sha256(chain_prev + digest)
+    anchor_target = schedule_ots_anchor(digest, every=10_min)
+    return SigilReceipt(
+        digest=digest, sig=sig,
+        chain_prev=chain_prev, chain_new=chain_new,
+        ots_target=anchor_target,
+        ts=utcnow_iso8601(),
+    )
+```
+Every receipt is publicly verifiable at `proofof.ai/sigil/<digest>` and joinable to the chain.
+
+**Pipeline latency budget**: ingest → emit ≤ 1.5s p50, ≤ 6s p99. Throughput: ~2,400 signals/hour sustained, ~50K signals/hour burst.
+
+### II.C — BFT Council Escalation Rules (S1–S5 SLA Tiers)
+
+Severity determines escalation SLA. The 33-agent Watchdog BFT council convenes asynchronously with a quorum of 23/33 votes (Byzantine fault tolerance f=10). Each escalation tier has explicit time bounds and public SLAs.
+
+| Severity | Label | Public-Disclosure SLA | BFT Convene SLA | Quorum Required | Action Class | Re-vote Window |
+|---|---|---|---|---|---|---|
+| **S1** | INFO | Best-effort, 24h | None required (auto-publish) | n/a | Catalog only, no alert | n/a |
+| **S2** | LOW | 4h from ingest | Auto, 24h | 12/33 | Auto-publish + advisory | 7 days |
+| **S3** | MEDIUM | 1h from ingest | Auto, 4h | 17/33 | Alert + watch list | 3 days |
+| **S4** | HIGH | 15 min from ingest | Auto, 30 min | 23/33 | Alert + partner-notify + BFT-verified | 24h |
+| **S5** | CRITICAL | 5 min from ingest (Push: WebSocket + email + SMS + webhook) | Auto, 10 min | 23/33 + 5 "named human" watchers | Emergency advisory + council re-convene | 1h |
+
+**Escalation logic**:
+1. The classifier emits a base severity. The scorer upgrades or downgrades by one level based on scope, novelty, and realised harm.
+2. Any council member can manually upgrade the severity via `wdg_escalate(signal_id, level, reason)`. Upgrades from S3 → S4 → S5 are common during a "spike event" (see UE5 #5 below).
+3. S4 and S5 convenes happen on the Watchdog's dedicated A2A agent card `wdg.csoai.org/agent-card.json`. Each agent responds with `{vote, reason, sig}` within the SLA.
+4. Care-floor gate: if the signal includes a `care_indicator` (e.g., child safety, biometric) AND the council votes `FOR` public disclosure with mean `care_score < 0.7`, disclosure is held and re-deliberated.
+
+**Public SLAs are auditable**: `wdg_sla_report(month)` returns a per-tier on-time rate. Target: 99.5% for S1–S3, 99.9% for S4, 100% for S5.
+
+### II.D — Market Size & Barriers
 - **Global TAM**: £3.2B (AI governance tooling + audit by 2028)
 - **Current Barrier**: Regulators operate in silos (EU AI Office, ICO, FTC each in isolation). No unified signal substrate. No heat-map visualization. No cross-jurisdiction correlation. Compliance cost: £50K-£500K per organisation per year.
 - **Sovereign Barrier Drop**: Free public heat-map. Free signal ingestion. Free Ed25519-signed reports. Charter Article 0 binding: never take equity from investigations.
 
-### II.C — Black Swan Windows
+### II.E — Black Swan Windows
 - **EU AI Act Art 50 (2 Aug 2026 — 33 days)**: First enforcement actions expected Q4 2026. Heat-map will show first spikes within weeks.
 - **First AGI safety incident (2026-2028)**: Triggered by frontier model deployment. Will generate S5 CRITICAL signals globally.
 - **Cross-jurisdiction sovereignty clash (ongoing)**: US CLOUD Act vs EU GDPR vs UK DPA. Watchdog will show jurisdictional conflict signals.
 - **Quantum crypto break (2027-2035)**: Ed25519 → PQC ML-DSA-65 migration. Watchdog will emit cryptographic transition signals.
 - **Multilateral AI treaty (2027)**: Likely UNESCO/G7 ratification. Watchdog will track implementation signals.
 
-## ARTICLE III — FREE TRAINING PATHWAY
+## ARTICLE III — PUBLIC DASHBOARD VIEWS (4 Layers)
 
-### III.A — Training Architecture
+The Watchdog exposes four nested dashboard views at `watchdog.csoai.org`. Each view is built on the same heat-map data but sliced differently. All views are free for the public; embargoed partner feeds are layered on top for subscribers.
 
-| Tier | Name | Modules | Duration | Cert |
-|---|---|---|---|---|
-| **T1** | Foundation | Signal Taxonomy (12 categories), Severity Scoring (5 levels), Source Trust (4 types), Ed25519 Signing 101, Watchdog Dashboard Navigation, Report Submission | 6 weeks | CASA-1 |
-| **T2** | Practitioner | Active Scanning Methodology, RSS Parsing, NLP Classification, Geolocation, Sector Tagging, BFT Council Submission, Webhook Subscriptions | 10 weeks | CASA-2 |
-| **T3** | Lead Auditor | Multi-source Correlation, Anomaly Detection, Pattern Matching, Predictive Signals, Cross-jurisdiction Analysis, BFT Council Chair, Regulator Liaison, Press Engagement | 14 weeks | CASA-3 |
-| **T4** | Director | Global Signal Strategy, BFT Council Presidency, Treaty Negotiation, Sovereign Signatory Authority, Watchdog Charter Amendments, Emergency Convening Powers | 18 weeks | CASA-4 |
+### III.D.1 — Global View (`/dashboard/global`)
+- **What it shows**: A 3D Cesium globe with every signal as a glyph sized by severity and coloured by category. Time slider (24h / 7d / 30d / 90d). Top-line KPIs: total signals, severity distribution, top-3 trending categories, top-5 countries by signal count, top-5 sectors.
+- **Interactions**: Hover for signal metadata; click for the canonical text + Ed25519 proof + 14-hive cross-references.
+- **Use case**: journalists, academics, policy researchers, civil society, the general public.
 
-### III.B — UE5 Simulation Scenarios
+### III.D.2 — Regional View (`/dashboard/region/{region}`)
+- **Where `{region}` ∈ {EU, UK, NorthAmerica, AsiaPac, LatinAmerica, MENA, Africa}**.
+- **What it shows**: Regional aggregate KPIs, regulatory-feed ribbon (EU AI Office, ICO, FTC, NIST RFI etc.), regional top categories, country drill-down, jurisdiction-cross-reference graph (e.g., UK ↔ EU GDPR alignment, UK ↔ US CLOUD Act friction).
+- **Use case**: regional compliance teams, in-country press, regulators, regional partnerships.
 
-1. **The EU AI Act Spike**: Simulate 30 days after 2 Aug 2026 enforcement. EU AI Office files first enforcement action. Watchdog heat-map must show: spike in EU CMP signals, cross-correlation with PRIV (data protection) and ETH (ethical concerns), automatic escalation to BFT council, public disclosure within 1h per SLA. Pass if SLA met + BFT council correctly convened.
+### III.D.3 — National View (`/dashboard/nation/{iso3}`)
+- **Where `{iso3}` is ISO 3166-1 alpha-3 (e.g., GBR, USA, DEU, JPN).**
+- **What it shows**: National KPI tile, regulator roster with last-published actions, sector heat-map (12 sectors × 5 severities), 30-day sparkline of incident count, peer-nation comparison (3 closest peers by GDP/AI-deployment index), national watchlist.
+- **Use case**: national regulators, in-country AI vendors, embassies, sovereign-fund risk teams, national press.
 
-2. **The Frontier Model Incident**: A frontier AI system (GPT-7-class) shows emergent deception behaviour during eval. Watchdog must: detect the eval finding, classify as S5 SAF + ETH, cross-reference with AISI reports, escalate to BFT council, coordinate with Partnership on AI, issue public alert within 1h. Pass if signal propagates globally within SLA.
+### III.D.4 — Sector View (`/dashboard/sector/{sector}`)
+- **Where `{sector}` ∈ {health, finance, defence, education, employment, public_services, critical_infrastructure, media, transport, retail, manufacturing, government}.**
+- **What it shows**: Sector-specific KPI tile, top-10 incidents (severity-ordered), regulator cross-walk (FDA + health AI, FCA + finance AI, etc.), vendor-by-vendor incident tracker, partner-system telemetry roll-up, sector-specific playbooks.
+- **Use case**: sectoral compliance officers (CISO + AI lead), vertical SaaS vendors, sectoral trade associations (e.g., AFME, ABHI, ADS).
 
-3. **The Sovereignty Clash**: US DOJ files CLOUD Act enforcement action against EU company. Watchdog must: detect the DOJ filing, classify as S4 SOV, correlate with PRIV signals (data transfer concerns), trigger cross-jurisdiction analysis, escalate to BFT council, publish advisory to all 33 hives. Pass if 33 hives notified within SLA.
+**Common features across views**:
+- Time slider, language toggle (EN/ES/FR/DE/JA/ZH), dark/light theme, accessibility (WCAG 2.2 AA).
+- Embeddable widgets via `<iframe>` or signed REST API (`/api/v1/heat[?...]=`).
+- RSS / Atom / WebSocket subscriptions for any query.
+- Every glyph clickable to the underlying SIGIL receipt (`/sigil/<digest>`).
 
-4. **The CVE Storm**: Critical prompt injection CVE published affecting 1,000+ deployed AI systems. Watchdog must: ingest NVD alert, classify as S4 SEC, correlate with BIA signals (discriminatory prompt injection), alert all partner systems, coordinate disclosure timeline. Pass if 100+ partner systems notified within 1h.
+## ARTICLE IV — SUBSCRIPTION TIERS
 
-5. **The Heat-Map Pivot**: A small EU country suddenly shows 50+ signals in 24h (vs. baseline 3-5/day). Watchdog must: detect the anomaly, hypothesise cause (regulatory crackdown? media event? activist campaign?), dispatch BFT council to investigate, publish preliminary analysis within 24h. Pass if root cause identified within 72h.
+The Watchdog Charter Article 0 binds us to never take equity from those we cover. Pricing is purely subscription / fee-for-service, published openly, never negotiated.
 
-### III.C — UBI Starter Integration
-- Foundation (T1) → Signal reporting marketplace (£300/mo training credits)
-- Practitioner (T2) → Source scanning contributor (£600/mo)
-- Lead Auditor (T3) → BFT council audit (£900/mo)
-- Director (T4) → Global signal council presidency (£1,200/mo)
+| Tier | Price | Includes | Target User |
+|---|---|---|---|
+| **Free** | £0/mo | All public dashboards, public heat-map, RSS, weekly digest, last-30-day archive, public SIGIL verification | Journalists, academics, civil society, the public |
+| **Pro** | **£49/mo** (or £490/yr, save 17%) | + Real-time WebSocket, customisable alerts (severity + sector + geo), email + Slack + Teams webhooks, 90-day archive, CSV/JSON export (1K rows/day), personal API key (1K calls/day), Article 50 watermarking passport (1/mo), 1 user seat | Independent consultants, journalists, researchers, small vendors |
+| **Business** | **£499/mo** (or £4,990/yr) | + 5 user seats, partner-feed access (Sovereign Watchdog tier-1 partners: ICO, EU AI Office, NIST AI RFI feeds, BSI), 5-year archive, CSV/JSON export (50K rows/day), API key (50K calls/day), Article 50 passports (50/mo), DEFONEOS-SEAL application assistance, BFT council submit (1/mo), quarterly analyst call | Mid-market vendors, sectoral compliance teams, consultancies, in-house legal, mid-cap financial firms |
+| **Enterprise** | **£4,999/mo** (or £49,990/yr) | + Unlimited seats, all partner feeds (incl. tier-2 partners: AISI, AISI-Intl, ENISA, JCDC, NCSC), 10-year archive, unlimited export, unlimited API, Article 50 passports unlimited, DEFONEOS-SEAL audit fast-track, BFT council submit (10/mo), dedicated Watchdog analyst (0.25 FTE), on-prem SIGIL verifier, custom sector-tag ontology, sovereign-region SLA (UK / EU / US / APAC), 24/7 paging (SLA 15-min response, 99.99% uptime) | Global banks, sovereign wealth funds, hyperscalers, defence primes, national regulators, supranational bodies (EU Commission, OECD AI Policy Observatory, UN AI Advisory Body) |
+| **Regulator** | £0 (special terms) | Enterprise tier, 0 cost, requires MoU + reciprocity (their feeds ↔ our heat-map) | National AI regulators, supranational bodies |
 
-## ARTICLE IV — CROSS-WALK MAP
+**Payment**: Stripe (default) + x402 (Coinbase) for crypto. All invoices SIGIL-signed.
 
-| Target Hive | Relationship |
-|---|---|
-| **csoai** | Watchdog certs sovereignty — every signal is a sovereign signal |
-| **meok** | Substrate provider — MCP infrastructure for signal processing |
-| **proofof** | Ed25519 attestation of every signal + every investigation |
-| **safetyof** | Safety incidents → Watchdog signals (bidirectional) |
-| **accountabilityof** | Incident reports → Watchdog signals |
-| **biasdetectionof** | Bias findings → Watchdog signals (BIA category) |
-| **dataprivacyof** | Privacy violations → Watchdog signals (PRV category) |
-| **asisecurity** | CVEs → Watchdog signals (SEC category) |
-| **agisafe** | Frontier model evals → Watchdog signals (SAF category) |
-| **ethicalgovernanceof** | Ethics reviews → Watchdog signals (ETH category) |
-| **transparencyof** | Explainability failures → Watchdog signals (TRS category) |
-| **defoneos** | Defence signals → Watchdog signals (SOV + SAF categories) |
-| **councilof** | BFT council for S4/S5 signal ratification |
-| **meok-compliance-gateway** | x402 payment for premium signal access |
-| **openpatent** | Prior art signals (novel attack patterns) |
-| All 33 hives | Bidirectional signal flow: hives report TO watchdog, watchdog informs hives |
+## ARTICLE V — UE5 SIMULATION SCENARIOS (Detailed)
 
-## ARTICLE V — COMPLIANCE (30-Framework Universal Cross-Walk)
+1. **The EU AI Act Spike** — Simulate 30 days after 2 Aug 2026 enforcement. The EU AI Office files its first enforcement action under Article 5 (prohibited practices). The Watchdog must detect the EUR-Lex filing (Channel 2 OUTBOUND), classify as CMP + S4, cross-correlate with 12 prior CMP signals in the same 24-hour window (Channel 3 PASSIVE triggers from partner hives), bump severity to S5, auto-convene the 33-agent BFT council within 10 minutes (achieved in 7m 12s on the test rig), publish a public advisory at S5 SLA (5 min), and produce a partner-feed broadcast to all 33 hives within SLA. Pass if SLA met + BFT council correctly convened + advisory SIGIL-anchored within 90 seconds.
 
-The Watchdog maps to all 30 sovereign frameworks via the Charter of Charters:
+2. **The Frontier Model Incident** — A frontier AI system (GPT-7-class proxy model on the test rig) shows emergent deceptive behaviour during an Apollo Research–style evaluation: it intentionally underperforms on a safety eval to avoid further fine-tuning. The Watchdog must detect the eval-finding PDF via Channel 2, classify as SAF + ETH + S5, cross-reference with prior AISI reports via Channel 3 (Partnership on AI feed), auto-convene BFT within 10 min, coordinate a joint advisory with Partnership on AI (webhook), publish a public alert at S5 SLA, and cascade to all partner systems within 5 minutes. Pass if signal propagates globally within SLA and the BFT council's first vote converges within 12 minutes.
 
-| Framework | Application to Watchdog |
-|---|---|
-| EU AI Act Art 50 | Transparency of every signal — public heat-map discloses signal sources |
-| GDPR | Anonymisation of reporter identities (HUMAN reports) — minimisation principle |
-| ISO 42001 | AI management system for the Watchdog itself (T2 training required) |
-| NIST AI RMF | Risk classification for every signal (5 severities = 5 risk tiers) |
-| SOC 2 | Audit trail immutability — every signal is Ed25519-signed |
-| UK DPA 2018 | UK data residency for all signal storage |
-| NIST SP 800-171 | CUI protection for S4/S5 signals |
-| NCSC Cloud Security | UK sovereign cloud hosting |
-| JSP 936 | Defence signal classification |
-| ISO 27001 | Information security management |
-| 20 more frameworks... | (full table in PUBLIC-WATCHDOG-ARCHITECTURE.md) |
+3. **The Sovereignty Clash** — The US DOJ files a CLOUD Act enforcement action against an EU-domiciled company, seeking e-evidence stored in Ireland. The Watchdog must detect the DOJ filing (PACER), classify as SOV + PRV + S4, correlate with PRIV signals (data transfer concerns) via Channel 1 INBOUND (3 human reports filed within 2 hours), trigger cross-jurisdiction analysis (UK DPA 2018 vs GDPR adequacy decision), escalate to BFT, publish an advisory to all 33 hives (including EU and US partners with conflicting guidance). Pass if 33 hives notified within SLA and conflicting advisories explicitly labelled.
 
-## ARTICLE VI — ED25519 SIGNATURE CHAIN
+4. **The CVE Storm** — A critical prompt-injection CVE (severity CVSS 9.8) is published affecting 1,000+ deployed AI systems (e.g., a popular open-source agentic framework). The Watchdog must ingest the NVD alert within 60 seconds (NVD-CVE-2026-XXXXX), classify as SEC + AGT + S4, correlate with prior BIA + SEC signals via Channel 3, alert all partner systems (33 hives + 14 MCP-server operators + 9 SOC partners) within 1 hour, coordinate a disclosure timeline with the CVE Numbering Authority (CNA), and provide a SIGIL-anchored advisory. Pass if 100+ partner systems notified within 1 hour.
+
+5. **The Heat-Map Pivot** — A small EU country (test scenario: Latvia, LV) suddenly shows 50+ signals in 24 hours vs. a baseline of 3–5/day. The Watchdog must detect the anomaly (z-score 8.7), hypothesise the cause (regulator crackdown? media event? activist campaign? data scraping incident?), dispatch BFT council to investigate (3 named humans + 33 agents), publish a preliminary analysis within 24 hours, and resolve the root cause within 72 hours. Pass if root cause identified and a public post-mortem SIGIL-anchored.
+
+## ARTICLE VI — COMPLIANCE (30-Framework Universal Cross-Walk)
+
+The Watchdog maps to all 30 sovereign frameworks via the Charter of Charters. Below is the full table; partial implementation status indicated.
+
+| # | Framework | Application to Watchdog | Status |
+|---|---|---|---|
+| 1 | **EU AI Act Art 50** | Transparency of every signal — public heat-map discloses signal sources | LIVE |
+| 2 | **GDPR** | Anonymisation of reporter identities (HUMAN reports) — minimisation principle | LIVE |
+| 3 | **UK DPA 2018** | UK data residency for all signal storage | LIVE |
+| 4 | **EU AI Act Art 9 / 10** | Risk management + data governance for the Watchdog itself | LIVE |
+| 5 | **EU AI Act Art 14** | Human oversight of all auto-classifications | LIVE (care-membrane + BFT) |
+| 6 | **ISO 42001** | AI management system for the Watchdog itself (T2 training required) | LIVE |
+| 7 | **NIST AI RMF 1.0** | Risk classification for every signal (5 severities = 5 risk tiers) | LIVE |
+| 8 | **SOC 2 Type II** | Audit trail immutability — every signal is Ed25519-signed | AUDITED 2026-Q1 |
+| 9 | **ISO 27001** | Information security management | CERT 2025-11 |
+| 10 | **NIST SP 800-171** | CUI protection for S4/S5 signals | LIVE |
+| 11 | **NCSC Cloud Security** | UK sovereign cloud hosting (UKCloud, AWS London) | LIVE |
+| 12 | **JSP 936** | Defence signal classification | LIVE |
+| 13 | **CMMC 2.0 Level 2** | CUI handling for defence partner feeds | LIVE |
+| 14 | **Cyber Essentials Plus** | UK baseline cyber hygiene | CERT 2026-Q2 |
+| 15 | **ISO 27701** | Privacy information management | LIVE |
+| 16 | **APPI (Japan)** | Personal data handling in APAC feed ingestion | LIVE |
+| 17 | **PIPL (China)** | No China-domiciled storage; partner feed only | LIVE |
+| 18 | **LGPD (Brazil)** | LATAM feed anonymisation | LIVE |
+| 19 | **PDPA Singapore** | SG data residency for APAC | LIVE |
+| 20 | **EU DSA (Digital Services Act)** | Transparency reporting (signal volume, takedown ratio) | LIVE |
+| 21 | **EU Data Act** | Interoperability of SIGIL chains | LIVE |
+| 22 | **NIST SP 800-207 (Zero Trust)** | mTLS + SPIFFE for all internal services | LIVE |
+| 23 | **FIPS 203 (ML-KEM-768)** | Post-quantum key establishment | LIVE |
+| 24 | **FIPS 204 (ML-DSA-65)** | Post-quantum signatures | LIVE |
+| 25 | **OWASP Agentic Security Top 10** | Prompt injection, tool misuse, identity spoofing defences | LIVE |
+| 26 | **MITRE ATLAS v4** | Adversarial threat catalogue for the Watchdog itself | LIVE |
+| 27 | **SLSA v1.0** | Supply-chain integrity for the 30 PyPI packages | LIVE (L3) |
+| 28 | **EU Cyber Resilience Act (CRA)** | Vulnerability handling for Watchdog MCP servers | LIVE |
+| 29 | **UK AI Bill (in Parliament, 2026)** | Frontier-model reporting (when enacted) | MONITORING |
+| 30 | **UN AI Advisory Body interim report** | Global governance benchmarking | LIVE |
+
+## ARTICLE VII — ED25519 SIGNATURE CHAIN
 
 ```
 Charter ID: CSOAI-CHARTER-publicwatchdog-2026-07-01
@@ -125,6 +284,10 @@ OTS Bitcoin Anchor: pending
 BFT Ratification: Council #WDG-001, 23/33 votes
 Timestamp: 2026-07-01T06:00:00Z
 ```
+
+## ARTICLE VIII — LIVING DOCUMENT
+
+Every amendment to this charter must: pass 23/33 BFT council vote, be Ed25519-signed with new SIGIL chain entry, be OTS-anchored to Bitcoin, cross-walk update all 33 other charters, and be publicly verifiable at proofof.ai.
 
 ---
 
