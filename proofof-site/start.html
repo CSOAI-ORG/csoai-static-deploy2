@@ -244,37 +244,36 @@
 <script>
 // Real IP detection via free IP API
 async function detectIP() {
-  const elem = document.getElementById("ipDetected");
+  // Tier 1: ipapi.co
   try {
-    // Try ipapi.co (free, no key, 1k req/day)
-    const resp = await fetch("https://ipapi.co/json/", {signal: AbortSignal.timeout(5000)});
-    if (resp.ok) {
-      const data = await resp.json();
-      const ip = data.ip || "82.45.123.67";
-      const city = data.city || "London";
-      const country = data.country_name || data.country || "UK";
-      const countryCode = data.country_code || "GB";
-      // Find nearest sovereign hive by country
-      const hiveMap = {
-        "GB":"London", "IE":"Dublin", "FR":"Paris", "DE":"Berlin", "NL":"Amsterdam",
-        "SE":"Stockholm", "FI":"Helsinki", "ES":"Madrid", "IT":"Rome", "AT":"Vienna",
-        "DK":"Copenhagen", "BE":"Brussels", "PL":"Warsaw", "PT":"Lisbon", "IS":"Reykjavik",
-        "CH":"Zurich (London hub)", "NO":"Oslo (Stockholm hub)",
-        "US":"New York", "CA":"Toronto", "MX":"Mexico City (NY hub)",
-        "BR":"Sao Paulo", "AR":"Buenos Aires (SP hub)", "CL":"Santiago (SP hub)",
-        "CO":"Bogota", "PE":"Lima (Bogota hub)", "UY":"Montevideo (SP hub)",
-        "JP":"Tokyo", "KR":"Seoul (Tokyo hub)", "CN":"Beijing (Tokyo hub)",
-        "IN":"Mumbai", "SG":"Singapore", "AU":"Sydney", "NZ":"Auckland (Sydney hub)",
-        "HK":"Hong Kong (Singapore hub)", "TW":"Taipei (Tokyo hub)",
-        "AE":"Dubai", "SA":"Riyadh (Dubai hub)", "IL":"Tel Aviv (Dubai hub)",
-        "TR":"Istanbul (Dubai hub)", "EG":"Cairo", "ZA":"Cape Town", "KE":"Nairobi",
-        "NG":"Lagos (Cape Town hub)",
-      };
-      const hive = hiveMap[countryCode] || "London (your nearest sovereign hub)";
-      elem.innerHTML = `<span class="ip">▓▒░ ${ip} ░▒▓</span> · <span>${city}, ${country}</span> · <span class="hive">→ ${hive}</span> · <span style="color:#fbbf24">Sovereign by construction</span>`;
-      return;
+    const r1 = await fetch('https://ipapi.co/json/', {signal: AbortSignal.timeout(4000)});
+    if (r1.ok) {
+      const d = await r1.json();
+      return {ip: d.ip, city: d.city, country: d.country_name, country_code: d.country_code, hive: countryToHive(d.country_code)};
     }
-  } catch (e) {
+  } catch(e) {}
+  // Tier 2: ip-api.com (45 req/min, no key)
+  try {
+    const r2 = await fetch('https://ip-api.com/json/?fields=query,city,country,countryCode', {signal: AbortSignal.timeout(4000)});
+    if (r2.ok) {
+      const d = await r2.json();
+      return {ip: d.query, city: d.city, country: d.country, country_code: d.countryCode, hive: countryToHive(d.countryCode)};
+    }
+  } catch(e) {}
+  // Tier 3: ipify + London fallback
+  try {
+    const r3 = await fetch('https://api.ipify.org?format=json', {signal: AbortSignal.timeout(4000)});
+    if (r3.ok) {
+      const d = await r3.json();
+      return {ip: d.ip, city: 'London', country: 'United Kingdom', country_code: 'GB', hive: 'London'};
+    }
+  } catch(e) {}
+  return {ip:'82.45.123.67', city:'London', country:'United Kingdom', country_code:'GB', hive:'London'};
+}
+function countryToHive(cc) {
+  const map = {GB:'London', IE:'Dublin', FR:'Paris', DE:'Berlin', NL:'Amsterdam', SE:'Stockholm', FI:'Helsinki', ES:'Madrid', IT:'Rome', BE:'Brussels', PL:'Warsaw', US:'New York', CA:'Toronto', BR:'Sao Paulo', JP:'Tokyo', IN:'Mumbai', SG:'Singapore', AU:'Sydney', AE:'Dubai', EG:'Cairo', ZA:'Cape Town', NG:'Lagos'};
+  return map[cc] || 'London (your nearest sovereign hub)';
+} catch (e) {
     // Fallback
   }
   // Fallback if API fails
