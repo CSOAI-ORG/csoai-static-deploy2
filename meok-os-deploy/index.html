@@ -1293,7 +1293,7 @@ function sovHandle(raw){
   if(/\b(govern|regulat|compl(?:y|iance|iant)|which (?:law|rule|framework)|what (?:governs|applies)|i run an?\b|my (?:business|company|industry|sector)\b|i work in)\b/.test(t)){ sovGovern(raw); return; }
   if(/\b(earth|world|globe|map|town)\b/.test(t)){ openByName_meokearth(); return; }
   if(/\b(help|what can you|who are you|hello|hi)\b/.test(t)){ return sovSay("I'm your <b>sovereign</b> — I remember you across any model or protocol. I can <b>open apps</b> ('open revenue'), <b>switch your current</b> ('work mode'), <b>change your signature</b> ('become a guardian'), tell you <b>what governs your industry</b>, or take you into <b>MEOK Earth</b>. Tap 🎤 to just speak."); }
-  sovAsk(raw); // unmatched → ask the real SOV3 brain (graceful fallback if offline)
+  sovOrchestrate(raw); // unmatched → the shared Sovereign brain: speaks + takes real OS actions (falls back to sovAsk)
 }
 // "What governs my industry?" — real frameworks + the legacy bridges MEOK connects.
 async function sovGovern(raw){
@@ -1362,6 +1362,35 @@ async function sovExplainNode(node){ if(!node) return; window.MEOK_CTX.node=node
 }
 // the live map (earth3d iframe / globe) posts node selections → the Sovereign speaks
 window.addEventListener('message',function(ev){ try{ const d=ev.data; if(d&&d.type==='meok-node'&&d.node) sovExplainNode(d.node); }catch(e){} });
+// ── SHARED SOVEREIGN CONTRACT (same as DEFONEOS/CSOAI): the OS exposes what it SEES + what it can DO,
+//    so ONE brain (os.meok.ai/api/orchestrate) drives every surface. JEEVES's sov3-llm-brain.js works here too. ──
+window.getScreenContext=function(){ const c=window.MEOK_CTX||{}; return {
+  surface:'meok-os', space:c.mode, doctrine:'sovereign', brain:'sandwich', care_floor:0.95,
+  open_windows:Object.keys(open||{}).map(id=>(APPS[id]&&APPS[id].t)||id),
+  active_layers:[], last_inspected_node:c.node?c.node.name:null, selected_node:c.node||null,
+  nodes:(window._MEOK_NODES||[]).map(n=>n.name) }; };
+window.sovereignOSCommands={
+  utter:(a)=>{ sovSay(esc((a&&a.text)||'')); return {ok:1}; },
+  open_app:(a)=>{ const id=(a&&(a.id||a.app))||''; if(APPS[id]){openApp(id);return{ok:1,app:APPS[id].t};} const t=sovOpenByName(id); return{ok:!!t,app:t}; },
+  set_space:(a)=>{ const sp=(a&&a.space)||''; setMode(sp==='csoai'||sp==='work'?'csoai':'meok'); if(typeof sovSyncHue==='function')sovSyncHue(); return{ok:1,space:MODE}; },
+  explain_node:(a)=>{ const nm=(a&&a.name)||''; const n=sovFindNode(nm)||{name:nm||'?',role:'',status:'governed'}; sovExplainNode(n); return{ok:1}; },
+  observe_focus:(a)=>{ if(a&&a.title) sovExplainNode({name:a.title,role:a.summary||'',status:'governed'}); return{ok:1}; },
+  govern:(a)=>{ sovGovern((a&&(a.query||a.industry||a.name))||''); return{ok:1}; },
+  fly_to:(a)=>{ const n=sovFindNode((a&&a.name)||''); if(n)window.MEOK_CTX.node=n; openApp('meokearth'); return{ok:1}; },
+  sign:async(a)=>{ try{ const d=await(await fetch('/api/sign',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:(a&&a.action)||a||{}})})).json(); sovSay('🔏 Ed25519 signed · sig <b>'+esc((d.signature||'').slice(0,28))+'…</b> — verify offline at <a href="/verify.html" style="color:var(--gold)">/verify</a>.'); }catch(e){} return{ok:1}; },
+  validate_bridge:async(a)=>{ try{ const d=await(await fetch('/api/bridge',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:(a&&a.message)||''})})).json(); const r=d.result||{}; sovSay((r.valid?'✓':'✗')+' <b>'+esc((d.detected||'').toUpperCase())+'</b> — '+(r.valid?'valid &amp; governed':'invalid')+'. Opening Bridges.'); openApp('bridges'); }catch(e){} return{ok:1}; }
+};
+// the Sovereign brain: speak + take real OS actions (one shared backend for meok/csoai/defoneos)
+async function sovOrchestrate(text){
+  const log=document.getElementById('sovlog'); let think=null; if(log){ think=document.createElement('div'); think.className='sovmsg ai'; think.textContent='…'; log.appendChild(think); log.scrollTop=log.scrollHeight; }
+  try{
+    const r=await fetch('/api/orchestrate',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:text, context:(typeof getScreenContext==='function'?getScreenContext():{}), model:window.MEOK_MODEL})});
+    const d=await r.json(); if(think)think.remove();
+    if(d&&d.say) sovSay(esc(d.say));
+    if(d&&Array.isArray(d.actions)&&d.actions.length){ for(const act of d.actions){ try{ const fn=window.sovereignOSCommands[act.command]; if(fn) await fn(act.args||{}); }catch(e){} } }
+    sovToolHints(text); sovKnowledge(text);
+  }catch(e){ if(think)think.remove(); sovAsk(text); }
+}
 // Federated world-knowledge — the "governed super-Google" layer (grounds the answer in open data)
 function sovKnowledge(text){
   fetch('/api/knowledge?q='+encodeURIComponent(text)).then(r=>r.json()).then(d=>{

@@ -50,6 +50,12 @@ ck('knowledge: live population fact', r.j.facts && r.j.facts.population > 100000
 r = await post('/api/chat', { message: 'say ok', register: 'plain' });
 ck('chat: governed brain replies', typeof r.j.response === 'string' && r.j.response.length > 0, r.j.model);
 
+// ── shared Sovereign brain (the AI-OS orchestrator, one backend for meok/csoai/defoneos) ──
+r = await post('/api/orchestrate', { message: 'switch me to work mode', context: { space: 'meok' } });
+ck('orchestrate: NL → set_space action', typeof r.j.say === 'string' && (r.j.actions || []).some(a => a.command === 'set_space'));
+r = await post('/api/orchestrate', { message: 'what governs a hospital', context: {} });
+ck('orchestrate: NL → govern action', (r.j.actions || []).some(a => a.command === 'govern'));
+
 // ── supporting product endpoints ──
 for (const [n, u] of [['social networks', '/api/social?action=networks'], ['media (CC)', '/api/media?q=sea&n=1'], ['badge svg', '/api/badge'], ['avatar svg', '/api/avatar?queen_id=queen-care']]) {
   const rr = await fetch(BASE + u); ck('reachable: ' + n, rr.status === 200);
