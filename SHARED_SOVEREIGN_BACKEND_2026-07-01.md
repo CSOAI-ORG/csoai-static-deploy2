@@ -42,11 +42,19 @@ Every surface exposes two globals; ONE brain drives them all:
 - DEFONEOS adds **PQC ML-DSA-65** on top — fold that into `/api/sign` as a second signature field
   when ready (Ed25519 stays the interop baseline all three verify).
 
-## One honest note
-`/api/orchestrate` returns `{say, actions}` (simple, model-agnostic, reliable). JEEVES's bridge
-speaks OpenAI `/chat/completions` streaming + `tool_calls`. To make os.meok.ai a *drop-in* for that
-bridge unchanged, add an OpenAI-compat streaming shim later; for now the `{say, actions}` contract is
-the clean shared standard and DEFONEOS needs a ~10-line adapter. The **tools** (sign/verify/bridge/
-govern/nodes) are already 100% shared, today.
+## ✅ DEFONEOS drop-in — DONE (zero code change)
+`os.meok.ai/api/v1/chat/completions` is now a full **OpenAI-compatible** endpoint (Edge, true SSE):
+- non-stream JSON, **streaming SSE** (`chat.completion.chunk` deltas), and **tool-calling**
+  (`tool_calls` + `finish_reason:tool_calls`) — all verified live.
+- Care-Floor 0.95 system guard injected; any `model` (e.g. `sov3-sovereign-v2`) → a Groq
+  tool-capable model.
+
+JEEVES's `sov3-llm-brain.js` works **unchanged** — just set:
+```js
+window.SOV3_BRAIN_ENDPOINT = 'https://os.meok.ai/api/v1';   // it calls /chat/completions
+```
+Now the brain, the tools (sign/verify/bridge/govern/nodes) AND the orchestrator are one shared
+backend across MEOK, CSOAI and DEFONEOS. (`/api/orchestrate`'s simple `{say, actions}` contract
+remains available for lightweight clients like the embed kit.)
 
 — M4
