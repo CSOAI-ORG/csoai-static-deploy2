@@ -1289,6 +1289,7 @@ function sovHandle(raw){
   const m=t.match(/\b(?:open|show|launch|go to|take me to)\s+(.+)/);
   if(m){ const opened=sovOpenByName(m[1].replace(/\b(app|the|my)\b/g,'').trim()); return sovSay(opened?("Opening <b>"+opened+"</b>."):("I couldn't find '"+m[1].trim()+"'. Try 'revenue', 'earth', 'guardian', 'delboy'.")); }
   if(arch && /\b(become|be|signature|turn into|make me)\b/.test(t)){ setSignature(arch.h,arch.n); sovSyncHue(); const f=document.getElementById('sovface'),n=document.getElementById('sovname'),fab=document.querySelector('.sovfab'); if(f)f.textContent=arch.e; if(n)n.textContent=arch.n; if(fab)fab.textContent=arch.e; try{localStorage.setItem('meok_archetype',arch.n);localStorage.setItem('meok_face',arch.e);}catch(e){} if(typeof sovHatchCeremony==='function')sovHatchCeremony(); else if(typeof sovApplyHatch==='function')sovApplyHatch(); return sovSay("✨ Your world is hatching — the Earth resolves into a <b>"+arch.e+" "+arch.n+"</b>, and the whole OS ripples in your colour."); }
+  { const nn=sovFindNode(t); if(nn && /\b(tell|about|explain|what|who|governs?|node|hub|show)\b/.test(t)){ sovExplainNode(nn); return; } }
   if(/\b(govern|regulat|compl(?:y|iance|iant)|which (?:law|rule|framework)|what (?:governs|applies)|i run an?\b|my (?:business|company|industry|sector)\b|i work in)\b/.test(t)){ sovGovern(raw); return; }
   if(/\b(earth|world|globe|map|town)\b/.test(t)){ openByName_meokearth(); return; }
   if(/\b(help|what can you|who are you|hello|hi)\b/.test(t)){ return sovSay("I'm your <b>sovereign</b> — I remember you across any model or protocol. I can <b>open apps</b> ('open revenue'), <b>switch your current</b> ('work mode'), <b>change your signature</b> ('become a guardian'), tell you <b>what governs your industry</b>, or take you into <b>MEOK Earth</b>. Tap 🎤 to just speak."); }
@@ -1325,6 +1326,8 @@ try{ const _sh=document.querySelector('.sovhead'); if(_sh) _sh.addEventListener(
 })();
 // ── Sovereign IS the AI OS: it knows what's on screen, so it answers in sync ──
 window.MEOK_CTX={mode:'meok',app:null,node:null};
+window._MEOK_NODES=[]; try{ fetch('/api/nodes').then(r=>r.json()).then(d=>{ window._MEOK_NODES=d.nodes||[]; }).catch(function(){}); }catch(e){}
+function sovFindNode(t){ const s=(t||'').toLowerCase(); return (window._MEOK_NODES||[]).find(n=>s.includes(n.name.toLowerCase())); }
 function sovContext(){ const c=window.MEOK_CTX||{}; const bits=[];
   bits.push('The user is inside MEOK OS (a sovereign AI operating system you, the Sovereign, run and can control).');
   bits.push('Current space: '+(c.mode==='csoai'?'Work (business & governance)':'Life (personal)')+'.');
