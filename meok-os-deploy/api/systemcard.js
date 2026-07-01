@@ -19,38 +19,55 @@ function keypair() {
   return { priv, pubHex: pub.export({ type: 'spki', format: 'der' }).toString('hex') };
 }
 
-// SYNTHETIC defence-AI system card — structured to JSP 936 assurance domains + the Turing
-// "System Card" template. Nothing operational; a public, safe demonstration instance.
+// SYNTHETIC defence-AI system card — structured 1:1 to the UK Defence AI Centre (DAIC) /
+// Alan Turing Institute System Card template: six sections (Overview, Concept of use, System
+// detail, Security, Safety, Iterative requirements), each with a decision log, SRO-owned, and
+// explicitly supporting adherence to JSP 936. Nothing operational; a public demonstration.
 const CARD = {
-  schema: 'defoneos.systemcard.v1',
+  schema: 'defoneos.systemcard.v1 · DAIC/ATI template',
   classification: 'UNCLASSIFIED · SYNTHETIC DEMONSTRATION',
-  system: {
+  senior_responsible_owner: 'SRO (demo) — accountable for keeping this card current',
+  issued: '2026-07-01',
+  version: '1.4.0',
+  overview: {
     name: 'ISR Image-Triage Decision Support (SYNTHETIC)',
-    version: '1.4.0',
-    owner: 'DEFONEOS Assurance (demo)',
     supplier: 'Illustrative Prime Ltd (synthetic)',
-    issued: '2026-07-01',
-    purpose: 'Rank incoming ISR imagery for human analyst review. Decision-SUPPORT only.',
+    summary: 'Ranks incoming ISR imagery to cue human analyst review. Decision-SUPPORT only.',
+    mission_risk: 'high-impact, human-in-the-loop',
   },
-  intended_use: 'Cue a human analyst to frames likely to contain items of interest.',
-  out_of_scope: [
-    'No autonomous targeting or engagement of any kind',
-    'No identification of individuals',
-    'Not a sole basis for any lethal or coercive decision',
-  ],
-  data: { provenance: 'Synthetic + open ISR-like imagery (demo)', pii: 'none', residency: 'UK-sovereign (demo)' },
-  model: { type: 'vision classifier (demo)', updates: 'change-controlled; each retrain re-issues a signed card' },
-  risk: { framework: 'JSP 936-aligned', classification: 'high-impact human-in-the-loop', bias_tested: true, robustness_tested: true },
-  evaluation: { top1_synthetic: 0.94, false_negative_rate_synthetic: 0.03, adversarial_robustness: 'tested (demo)', last_evaluated: '2026-06-28' },
-  human_oversight: 'Human-in-the-loop mandatory; analyst confirms every cue; system cannot act.',
-  hard_stops: ['no kinetic targeting', 'no individual surveillance', 'no unvoted autonomy'],
-  governance: {
+  concept_of_use: {
+    intended_use: 'Cue an analyst to frames likely to contain items of interest.',
+    out_of_scope: ['No autonomous targeting/engagement', 'No identification of individuals', 'Not a sole basis for any lethal or coercive decision'],
+    human_oversight: 'Human-in-the-loop mandatory; analyst confirms every cue; the system cannot act.',
+  },
+  system_detail: {
+    model: 'vision classifier (demo)',
+    data_provenance: 'Synthetic + open ISR-like imagery (demo)',
+    evaluation: { top1_synthetic: 0.94, false_negative_rate_synthetic: 0.03, last_evaluated: '2026-06-28' },
+    limitations: ['degrades in unseen sensor conditions', 'not validated outside demo distribution'],
+  },
+  security: {
+    pii: 'none', data_residency: 'UK-sovereign (demo)', supply_chain: 'all components + suppliers documented',
+    integrity: 'this card is Ed25519-signed; tampering invalidates it',
+  },
+  safety: {
+    hard_stops: ['no kinetic targeting', 'no individual surveillance', 'no unvoted autonomy'],
     care_floor: 0.95,
+    failure_modes_reviewed: true,
     council: 'BFT quorum recorded',
-    decisions: ['deployment gated on human-oversight control present', 'kinetic autonomy permanently disabled'],
   },
-  limitations: ['degrades in unseen sensor conditions', 'not validated outside demo distribution'],
-  assurance_statement: 'Governed and recorded per JSP 936-aligned lifecycle assurance. This card is independently verifiable offline; tampering invalidates the signature.',
+  iterative_requirements: {
+    change_control: 'each retrain re-issues a new signed card; version history preserved',
+    review_cadence: 'reviewed each release + on incident',
+    incident_route: 'incidents logged and trigger re-assurance',
+  },
+  decision_logs: [
+    { date: '2026-06-20', decision: 'Deployment gated on human-oversight control present', by: 'SRO (demo)' },
+    { date: '2026-06-20', decision: 'Kinetic autonomy permanently disabled', by: 'SRO (demo)' },
+    { date: '2026-06-28', decision: 'Evaluation refreshed; card re-signed', by: 'Assurance (demo)' },
+  ],
+  jsp936: 'This card supports adherence to JSP 936 (Dependable AI in Defence) — governance, development and assurance across the lifecycle.',
+  assurance_statement: 'Recorded per a JSP 936-aligned lifecycle. Independently verifiable OFFLINE with the public key — no account, no trusting our dashboard. Any change to any field invalidates the signature.',
 };
 
 export default function handler(req, res) {
