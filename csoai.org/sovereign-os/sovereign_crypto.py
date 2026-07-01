@@ -94,7 +94,8 @@ class SovereignSigner:
 
     def __init__(self):
         self.ed25519_priv = None
-        self.pqc_priv = None
+        self.pqc_signer = None  # oqs.Signature instance, or None
+        self.pqc_pub = None     # public key bytes
 
         if HAS_ED25519 and os.path.exists(_ED25519_KEY_PATH):
             with open(_ED25519_KEY_PATH, "rb") as f:
@@ -103,13 +104,12 @@ class SovereignSigner:
 
         if HAS_PQC:
             try:
-                self.pqc_sig = oqs.Signature("ML-DSA-65")
-                self.pqc_pub = self.pqc_sig.generate_keypair()
-                self.pqc_priv = self.pqc_pub
+                self.pqc_signer = oqs.Signature("ML-DSA-65")
+                self.pqc_pub = self.pqc_signer.generate_keypair()
                 print(f"  ✓ PQC ML-DSA-65 key generated (liboqs)")
             except Exception as e:
                 print(f"  ⚠ PQC ML-DSA-65 init failed: {e}")
-                self.pqc_sig = None
+                self.pqc_signer = None
 
     def sign(self, content: str, citizen_id: str = "anonymous",
              care_floor: float = 0.95, bft_pass: bool = False) -> SigilBundle:
@@ -123,21 +123,19 @@ class SovereignSigner:
             ed_sig = self.ed25519_priv.sign(line.encode())
         else:
             # Fallback: HMAC-SHA256 (still cryptographically strong, not pretending to be Ed25519)
-            import hmac
-            key = hashlib.sha256(b"sovereign-fallback").digest()
-            ed_sig = hmac.new(key, line.encode(), hashlib.sha256).digest()[:64]
-            ed_sig = b"FALLBACK-HMAC256:" + ed_sig
+            import hmac as _hmac
+            _key = hashlib.sha256(b"sovereign-fallback").digest()
+            ed_sig = b"FALLBACK-HMAC256:" + _hmac.new(_key, line.encode(), hashlib.sha256).digest()[:64]
 
         # PQC ML-DSA-65 signature
-        if self.pqc_sig:
+        if self.pqc_signer:
             try:
-                pqc_sig = self.pqc_sig.sign(line.encode())
+                pqc_sig = self.pqc_signer.sign(line.encode())
             except Exception:
                 pqc_sig = b""
         else:
             # Fallback: SHAKE256 (still cryptographically strong, not pretending to be ML-DSA-65)
             try:
-                import hashlib
                 pqc_sig = hashlib.shake_256(line.encode()).digest(2420)  # ML-DSA-65 sig size
             except Exception:
                 pqc_sig = hashlib.sha256(line.encode()).digest() * 75  # pad to 2420 bytes
@@ -163,9 +161,9 @@ class SovereignSigner:
             except Exception:
                 return False
         # PQC ML-DSA-65 verify
-        if self.pqc_sig:
+        if self.pqc_signer:
             try:
-                if not self.pqc_sig.verify(bundle.line.encode(), bundle.pqc_sig, self.pqc_pub):
+                if not self.pqc_signer.verify(bundle.line.encode(), bundle.pqc_sig, self.pqc_pub):
                     return False
             except Exception:
                 pass
