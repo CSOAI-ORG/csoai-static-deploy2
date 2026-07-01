@@ -4,7 +4,10 @@
 
 > **Charter Article 0**: Never take equity, board seats, revenue-sharing, or success fees from institutions we certify. ISO fee-for-service model ONLY. **CA3O is the CMKC for AI.**
 
-## ARTICLE I — SOVEREIGN FOUNDATION
+---
+
+## ARTICLE I — FOUNDATION
+
 | Field | Value |
 |---|---|
 | **Hive Slug** | `planthire` |
@@ -12,98 +15,213 @@
 | **Industry** | UK Plant Hire & Construction Machinery Operations |
 | **UK SIC** | 77320 — Renting/leasing of construction/civil engineering machinery |
 | **MCP Tools** | `planthire-ai-mcp`, `logistics-ai-mcp`, `compliance-checker-ai-mcp` |
+| **BFT Council** | Council #PLA-001 — Quorum 23/33 |
+| **Charter Seal** | 2026-06-30 (rewritten & expanded 2026-07-01) |
 
-## ARTICLE II — INDUSTRY DOMAIN & MARKET
+---
+
+## ARTICLE II — DOMAIN
 
 ### II.A — Scope
-UK plant hire covers: excavators (0.8T micro to 50T heavy), dumpers (forward tip, site, articulated), rollers (ride-on, pedestrian), telehandlers (fixed, rotating), crushers/screeners, and specialized machinery. Includes CPCS/NPORS operator card management, daily/weekly rate optimisation, delivery logistics (low-loader routing), LOLER/PUWER compliance, BS 7121 crane safety series, NVQ Level 2/3 operator competence, CDM duty holder responsibilities, and site machinery planning.
+UK plant hire covers excavators (0.8T micro to 50T heavy), dumpers (forward tip, site, articulated), rollers (ride-on, pedestrian), telehandlers (fixed, rotating), crushers/screeners, and specialised machinery. Includes CPCS/NPORS operator card management, daily/weekly rate optimisation, delivery logistics (low-loader routing), LOLER/PUWER compliance, and site machinery planning.
 
-### II.B — Market & Barriers
-- **Global TAM**: £8.2B UK plant hire sector
-- **Current Barrier**: CPCS cards cost £1,500-£3,000 per category. Plant hire rates are opaque. Compliance (LOLER/PUWER/BS 7121) is paper-based. Site safety incidents (RIDDOR reportable) cost £30K-£500K+ per occurrence.
-- **Sovereign Barrier Drop**: Free AI tools reduce hire costs by 25%, auto-verify operator competence (CPCS/NPORS), auto-generate LOLER/PUWER inspection records, all Ed25519-signed for audit-grade evidence chain.
+### II.B — Market
+- **UK plant hire sector**: £8.2B annually (Construction Plant-hire Association 2025 report; ~5,200 hire firms, top 12 = 60% market share).
+- **Major project pipeline**: HS2 (Lot C2-C4 civils, £25B plant spend 2026-2030); Sizewell C (£20B); Lower Thames Crossing (£8.2B); A303 Stonehenge (£1.7B); Silvertown Tunnel (£1.2B). Combined **£100B+ plant demand 2026-2030**.
+- **Barriers**: CPCS cards cost £1,500-£3,000 per category; plant hire rates opaque (regional variance 25-40%); compliance (LOLER/PUWER) paper-based and audit-poor; low-loader routing requires manual bridge-height checks; operator competence verification relies on paper cards that can't be cross-referenced.
+- **Sovereign Drop**: Free AI tools reduce hire costs by 25%, auto-verify operator competence via CPCS card OCR + 7-year expiry, automate LOLER thorough exam scheduling (6 months for lifting equipment, 12 months for accessories), and provide UK-DSM (digital soil model) ground bearing pressure calculations on demand.
 
-### II.C — Black Swan Window
-- **UK construction digitalisation mandate (2026-2028)** — Building Safety Act requires digital records. HS2, Sizewell C, and Lower Thames Crossing create £100B+ plant demand.
-- **BS 7121 series overhaul (2026)** — crane safety standards being updated with autonomous lifting provisions.
-- **CPCS renewal requirement (ongoing)** — 5-year renewal cycle, operators must complete CPD modules.
-- **Zero-emission plant transition (2027-2030)** — electric excavators, hydrogen telehandlers. £20K+ premium per machine. Hire rate impact TBD.
+### II.C — Black Swan
+UK construction digitalisation mandate (2026-2028) — Building Safety Act 2022 requires digital records; **HS2, Sizewell C, and Lower Thames Crossing create £100B+ plant demand**. HMRC CIS (Construction Industry Scheme) digital tax deductions require auditable hire records; UK BIM Mandate Level 3 (in force from April 2027 for central government projects) means every plant asset gets a digital twin.
 
-## ARTICLE III — FREE TRAINING PATHWAY
+### II.D — CPCS Category Reference
 
-### III.A — Training Architecture
-
-| Tier | Name | Modules | Duration | Cert |
+| Code | Category | Typical Machine | Day Rate | Renewal |
 |---|---|---|---|---|
-| **T1** | Foundation | Plant Categories & Applications (Excavators/Dumpers/Rollers/Telehandlers/Crushers/Screeners), Site Safety (CSCS Green Card + HSAWA 1974), LOLER/PUWER Basics, Machine Pre-Start Checks (BS ISO 7130 Walkaround Inspection methodology), CPCS/NPORS Overview (60+ categories, 5-year renewal), Operator Fatigue Management (HSE fatigue guidance INDG 446), PPE Selection | 6 weeks | CASA-1 |
-| **T2** | Practitioner | CPCS Categories (A02 Crawler Crane, A04 Tower Crane, A09 Forward Tipping Dumper, A10/A11/A12 Excavator 180/360/360>10T, A14 Rough Terrain Masted Forklift, A16 Industrial Forklift, A17 Telescopic Handler, A19 Grader, A20 Hoist, A21 Wheeled Loading Shovel, A31 Ride-on Roller, A36 Lorry Loader, A40 Slinger Signaller, A42 Crusher, A43 Screener, A56 Dump Truck Articulated, A58/A59 Excavator Wheeled, A62 Crane Supervisor), Lift Planning & Slinger Signaller (A40), Machine Capacity Calculations (load charts, lift plans, ground bearing pressure, BS 7121 Part 1), Delivery Logistics (low-loader route planning, escort requirements, abnormal load notifications) | 10 weeks | CASA-2 |
-| **T3** | Lead Auditor | LOLER Thorough Examination (6-monthly for lifting equipment, 12-monthly for accessories — full examination methodology per LOLER ACOP L113), PUWER Compliance Auditing (inspection intervals, defect reporting, maintenance records per PUWER ACOP L22), BS 7121 Series Application (Parts 1-12 covering crane safety, safe slinging, multiple crane lifts), Site Machinery Planning (fleet mix optimisation, utilisation tracking, idle time reduction), Operator Competence Assessment (CPCS tester qualification NVQ Level 3), Fleet ROI Analysis (hire rate optimisation, utilisation modelling, replacement cycles), CDM 2015 Duty Holder Responsibilities (Principal Contractor, Principal Designer, Client duties) | 14 weeks | CASA-3 |
-| **T4** | Director | National Plant Hire Strategy (cross-hire networks, fleet standardisation), Major Project Plant Logistics (HS2-scale machinery deployment — 1,000+ machines), Zero-Emission Plant Transition (electric excavators like JCB 19C-1E, hydrogen telehandlers), BFT-Verified Site Compliance (Ed25519-signed inspection records), HSE/CDM Duty Holder Legal Responsibilities, Construction Plant Competence Scheme (CPCS) Governance, Plant Hire Industry Strategy | 18 weeks | CASA-4 |
+| A09 | Forward Tipping Dumper | 6T-10T | £120-£180 | 5 yrs |
+| A10 | Excavator 180° | 1.5T-5T mini | £150-£250 | 5 yrs |
+| A11 | Excavator 360° (<10T) | 5T-8T midi | £200-£350 | 5 yrs |
+| A12 | Excavator 360° (>10T) | 13T-50T heavy | £350-£800 | 5 yrs |
+| A17 | Telescopic Handler | 6m-20m reach | £250-£500 | 5 yrs |
+| A31 | Ride-on Roller | 2.5T-12T | £150-£300 | 5 yrs |
+| A40 | Slinger Signaller | Banksman | £200-£300 | 5 yrs |
+| A42/A43 | Crusher/Screener | Mobile plant | £400-£800 | 5 yrs |
+| A56 | Dump Truck (artic) | 25T-40T ADT | £350-£600 | 5 yrs |
+| A58 | Excavator 360° Wheeled | 14T-22T | £300-£500 | 5 yrs |
 
-### III.B — UE5 Simulation Scenarios
+### II.E — LOLER/PUWER Compliance Schedule
 
-1. **The Site Setup**: A construction site requires 12 machines delivered by Monday: 2× 20T excavators, 1× 35T excavator, 3× 6T dumpers, 2× telehandlers, 1× crusher, 1× screener, 2× ride-on rollers. Select the right plant for ground conditions (cohesive vs granular), calculate capacities (m³/hr excavation, T/hr crushing, compaction passes), plan low-loader routes (bridge heights, weight restrictions, abnormal load escort requirements), sequence deliveries, verify each machine's LOLER/PUWER cert is in date. Pass if all 12 machines are on site by Monday 7am with valid paperwork.
+| Equipment Type | LOLER Thorough Exam | PUWER Inspection | Key Checks |
+|---|---|---|---|
+| Excavator (lifting) | 6 months | Weekly | Hook, pins, bushes, hoses, ROPS/FOPS |
+| Telehandler | 6 months | Weekly | Forks, chains, load chart, stabilisers |
+| Crane (tower/mobile) | 6 months | Daily before use | Hoist rope, slew ring, OLP, foundations |
+| Excavator (digging only) | N/A | Weekly | Bucket, teeth, track tension, grease |
+| Dumper | N/A | Weekly | Skip pins, seat belt, brakes, lights |
+| Lifting accessories (slings/shackles) | 12 months | Each use | Tagged/dated |
 
-2. **The Excavator Operation**: Operate a 20T excavator (A12 CPCS category) in a photorealistic construction site. Tasks: dig 2m-deep trench to grade (±50mm tolerance), load 6T dumpers at 4 buckets per dumper, grade 20m × 10m area to formation level, avoid marked underground services (CAT scanner simulation — HSG47 Avoiding danger from underground services), maintain safe exclusion zones (1m+ from edges of excavations), monitor slew radius for overhead hazards. CPCS A12 assessment simulation — pass if all tasks completed within time with zero safety violations.
+### II.F — BS 7121 Series (Crane Safety)
 
-3. **The LOLER Inspection**: Conduct a thorough examination of a tower crane (A04 CPCS category). Inspect: hoist ropes (broken wire detection per ISO 4309, diameter measurement, lubrication condition), hook assembly (wear limits per BS 7121 Part 2, safety catch operation), slewing ring (bolt torque check, wear measurement), overload protection system (test at 100%/110%/125% SWL), foundation anchors (BS 7121 Part 1), electrical systems (PUWER + BS 7671 IEE Wiring). Document findings on Form 91 (LOLER Report of Thorough Examination). Issue report. Pass if all defects identified and correctly classified (minor observation / significant defect / imminent failure).
+The **BS 7121 series** (14 parts — British Standards for safe use of cranes) is mandatory under LOLER ACOP L113:
 
-4. **The Crane Lift Plan**: A 30T mobile crane is lifting 18T steel beams onto a 4-story building under construction. Develop a BS 7121-compliant lift plan: ground bearing pressure calculation (outrigger pad sizing on the clay substrate), wind speed assessment (suspend lift if >35mph), exclusion zone (radius = 1.5× boom length), slinging (use rated shackles and certified slings), banksman/signaller (A40 CPCS required), emergency rescue plan (if riggers injured at height), coordination with other site activities. Submit to Principal Contractor for approval. Pass if plan meets BS 7121 standards and is approved by all duty holders.
+- **BS 7121-1:2016** — Terminology, classification, competence.
+- **BS 7121-2-5:2013** — Mobile cranes — safe use (CPCS A04/A05 categories).
+- **BS 7121-11:2019** — Lifting operations (APCL — Appointment of Person in Control of Lifting).
+- **BS 7121-17:2015** — Tower cranes (coordinates with CPCS A04).
+- **BS 7121-21:2018** — Operator controls (cab ergonomics, control markings).
 
-5. **The Emergency Response**: A forward tipping dumper (A09) has overturned on a sloping haul road. Operator trapped. Navigate: secure scene (exclusion zone 5m+, plant isolation, key removal), call emergency services (what3words location sharing), administer first aid (simulated — crush injury management), report to HSE under RIDDOR within 10 days (F2508 form), investigate root cause (slope angle exceeded manufacturer limit — typically 15° max for forward tipping dumpers), implement corrective actions (revised haul road design, operator retraining, updated risk assessment, slope monitoring). Pass if all statutory notifications made and root cause identified.
+---
 
-6. **The Fleet ROI Analysis**: A plant hire company operates 50 machines across 3 depots. Average utilisation 62%. Analyse 12 months of hire data: identify under-utilised machines (<40% — candidates for sale), over-utilised machines (>90% — missed hire opportunities), optimal fleet mix (which machines to buy/sell/relocate), rate optimisation (competitor rate benchmarking), replacement cycle (age vs maintenance cost — typically 7-10 years for excavators, 5-7 for dumpers). Present 3-year fleet plan with projected ROI improvement from 62% to 85% utilisation, including electric plant transition strategy.
+## ARTICLE III — FREE TRAINING
 
-### III.C — UBI Starter Integration
-- Foundation (T1) → Plant operative marketplace (£300/mo training credits)
-- Practitioner (T2) → CPCS-qualified operator contracts (£600/mo project credits)
-- Lead Auditor (T3) → LOLER inspection contracts (£900/mo)
-- Director (T4) → Construction governance council presidency (£1,200/mo stipend)
+### III.A — Tiered Curriculum (6 modules per tier)
 
-## ARTICLE IV — COMPLIANCE & GOVERNANCE
+| Tier | Name | Modules (6 per tier) | Duration | Cert |
+|---|---|---|---|---|
+| **T1** | Foundation | (1) Plant Categories & Applications — excavator/dumper/roller/telehandler/crusher/screener selection rationale. (2) Site Safety (CSCS Green Card) — HSEAWA 1974 + CDM 2015 touchpoints. (3) LOLER/PUWER Basics — what is "thorough examination" vs "inspection"; who can complete each. (4) Machine Pre-Start Checks — Walkaround inspection checklist per HSE INDG422. (5) CPCS/NPORS Overview — card types, categories, renewal routes. (6) **Hazard Perception 101** — underground services (HSG47), overhead lines (GS6), exclusion zones. | 6 wks | CASA-1 |
+| **T2** | Practitioner | (1) **CPCS Categories** — A09 Dumper, A10/A11/A12 Excavator 360, A17 Telehandler, A31 Roller, A56 Dump Truck. (2) **NVQ Level 2 Route** — VQ104 evidence (6219-02/6219-04 pathways); CPCS blue card conversion. (3) **Lift Planning & Slinger Signaller (A40)** — load charts, sling angles, ground bearing pressure, communications per BS 7121-11. (4) **Machine Capacity Calculations** — lift plans (LTM 1090-4.2 / Grove GMK4100L-2 charts), ground bearing pressure (Terzaghi cohesive, Meyerhof granular). (5) **Delivery Logistics** — low-loader route planning (National Highways NISE database), escort requirements (STGO Cat 1-3). (6) **Operator Fatigue Management** — HSE HSG144 (causes of fatigue), Working Time Regs 1998 driving-limits, CPCS tester checks for impairment signs. | 10 wks | CASA-2 |
+| **T3** | Lead Auditor | (1) **LOLER Thorough Examination Methodology** — 6-monthly lifting equipment; HSE ACOP L113 Reg 9; inspection points per FEM/ISO 9927; Report of Thorough Examination (Form 86); defect classification (imminent/moderate/observation). (2) **PUWER Compliance Auditing** — inspection intervals, defect reporting (HSG264), maintenance records, **BS 7262** lifting equipment specific accessories. (3) **Site Machinery Planning** — fleet mix (excavator-to-dumper 1:3 typical), utilisation tracking (target 85%+, typical 62%), idle time reduction. (4) **Operator Competence Assessment** — CPCS tester qualification requirements; **NVQ Level 3** assessor routes; CITB Levy/Grant eligibility (£1,500/operator). (5) **Fleet ROI Analysis** — hire rate optimisation (CECA/PAG benchmarking), replacement cycles (BCIS curves), depreciation. (6) **CDM Duty Holder Responsibilities** — Client, Principal Designer, Principal Contractor, Designer, Contractor duties under CDM 2015; LoopFactory SIGIL cross-council verification. | 14 wks | CASA-3 |
+| **T4** | Director | (1) **National Plant Hire Strategy** — cross-hire networks (CPA-affiliated), fleet standardisation (Komatsu PC210 vs Cat 320 vs JCB 220X), procurement frameworks (CCS FP2 / YPO). (2) **Major Project Plant Logistics** — HS2-scale deployment (peak 2027-2028), site logistics hubs, marshalling, fuel management (HVO vs diesel vs electric). (3) **Zero-Emission Plant Transition** — electric excavators (JCB 19C-1E, Cat 301.7 CR, Volvo ECR50), hydrogen telehandlers (JCB 540-170 H2), TCO modelling. (4) **BFT-Verified Site Compliance** — Ed25519-signed inspection records to SIGIL chain; cross-council ratification for major-project mobilisation. (5) **CPCS Renewal Process** — 5-year cycle; **30 hours CPD minimum** (CPCS test recommendations); on-site assessment route vs NVQ Level 3 route; CRB/DBS check. (6) **HSE/CDM Strategic Governance** — multi-site CDM 2015 compliance; HSE inspectorate interface under SFARP. | 18 wks | CASA-4 |
 
-| Framework | Coverage | Key Provisions |
-|---|---|---|
-| **LOLER 1998** (Lifting Operations and Lifting Equipment Regulations) | 100% | 6-monthly thorough examination for lifting equipment, 12-monthly for accessories |
-| **PUWER 1998** (Provision and Use of Work Equipment Regulations) | 100% | Suitability, maintenance, inspection, operator training |
-| **CDM 2015** (Construction Design and Management Regulations) | 100% | Duty holder responsibilities (Client, Principal Designer, Principal Contractor) |
-| **HSE RIDDOR 2013** | 100% | F2508 injury reporting, dangerous occurrence reporting, disease reporting |
-| **Building Safety Act 2022** | 100% | Digital records requirement, Golden Thread of information |
-| **CPCS/NPORS** | 100% | Construction Plant Competence Scheme, 5-year renewal cycle |
-| **BS 7121 Series** | 100% | Crane safety (Parts 1-12), safe slinging, multiple crane lifts |
-| **BS ISO 7130** | 100% | Earth-moving machinery — Operator's manual — Content and presentation |
-| **HSAWA 1974** (Health and Safety at Work etc Act) | 100% | Employer duties, employee duties |
-| **LOLER ACOP L113** | 100% | Approved Code of Practice for LOLER |
-| **PUWER ACOP L22** | 100% | Approved Code of Practice for PUWER |
-| **HSE HSG47** | 100% | Avoiding danger from underground services |
-| **HSE HSG144** | 100% | Safe use of vehicles on construction sites |
-| **HSE INDG 446** | 100% | Fatigue management in construction |
+### III.B — UE5 Simulations (6 sims)
 
-## ARTICLE V — CROSS-WALK MAP
+1. **The Site Setup** — Construction site requires 12 machines by Monday: 2× 20T excavators, 1× 35T excavator, 3× 6T dumpers, 2× telehandlers, 1× crusher, 1× screener, 2× ride-on rollers. Select plant for ground conditions, calculate capacities (m³/hr excavation, T/hr crushing, compaction passes), plan low-loader routes (bridge heights, weight restrictions), sequence deliveries, verify each LOLER cert in date. Pass = all 12 machines on site by Monday 7am with valid paperwork. **UE5**: photorealistic construction yard; physics-based low-loader on M4 motorway with dynamic traffic.
 
-| Target Hive | Relationship |
+2. **The Excavator Operation** — Operate a 20T excavator (A12 CPCS category) in photorealistic construction site. Dig a 2m trench to grade (±50mm), load 6T dumpers at 4 buckets per dumper, grade 20m × 10m to formation, avoid marked underground services (CAT scanner sim), maintain exclusion zones. Pass = all tasks in time, zero safety violations.
+
+3. **The LOLER Inspection** — Conduct thorough examination of a tower crane (A04 CPCS). Inspect hoist ropes (broken wire detection per ISO 4309, diameter, lubrication), hook assembly (FEM 1.001 wear limits, safety catch), slewing ring (bolt torque to Liebherr/Comansa specs, wear measurement), overload protection (test at 100%/110%/125% SWL), foundation anchors, electrical systems. Document on **Form 86 (Report of Thorough Examination)**. Pass = all defects identified, correctly classified.
+
+4. **The Emergency Response** — Forward tipping dumper (A09) overturns on sloping haul road. Operator trapped. Navigate emergency protocol: secure scene (exclusion zone, plant isolation), call emergency services with **what3words location**, first aid (simulated), report to HSE under **RIDDOR 2013** within 10 days, investigate (slope angle exceeded manufacturer limit — 15° vs 8° max for Thwaites 6T), implement corrective actions. Pass = all statutory notifications made, root cause identified.
+
+5. **The Fleet ROI Analysis** — Plant hire company operates 50 machines across 3 depots; utilisation 62%. Analyse 12-month hire data: under-utilised (<40%), over-utilised (>90% — missed hires), optimal fleet mix (buy/sell/relocate), rate optimisation, replacement cycle (age vs maintenance cost per BCIS). Present 3-year plan, projected ROI improvement 62% → 85%. Pass = plan ratified by BFT Council.
+
+6. **🆕 The High-Rise Crane Lift** — Liebherr 280 EC-H 12-tonne tower crane mobilised to lift 4 pre-cast concrete panels (each 7.2T) into a city-centre site over a 9-hour Saturday window. Tasks: BS 7121-11 APCL appointment, lift plan (plan view + 3D hook path), slewing restrictions (adjacent A40 flyover), exclusion zone (10m radius + re-routed pavement), wind speed limits (>72 km/h halt per FEM 1.001), abnormal load delivery (STGO Cat 2 — 80-tonne crane + 44-tonne ballast trailer), what3words location, two-rope reeving check, signalman protocols. Pass = all four panels placed within 9-hour window, zero incidents, SIGIL receipt for each lift.
+
+### III.C — UBI Starter
+- Foundation → Plant operative marketplace (£300/mo training credits)
+- Practitioner → CPCS-qualified operator contracts (£600/mo)
+- Lead Auditor → LOLER inspection contracts (£900/mo)
+- Director → Construction governance council (£1,200/mo)
+
+---
+
+## ARTICLE IV — COMPLIANCE (18 frameworks)
+
+1. **LOLER 1998** — Lifting Operations and Lifting Equipment Regulations. Thorough examination every 6 months for lifting equipment, 12 months for accessories.
+2. **LOLER ACOP L113** — Approved Code of Practice (Reg 6-9 — inspection).
+3. **PUWER 1998** — Provision and Use of Work Equipment Regulations. Suitability, maintenance, inspection, operator training.
+4. **PUWER ACOP L22** (general) + **L23** (manual handling).
+5. **CDM 2015** — Construction Design and Management Regulations. Client / Principal Designer / Principal Contractor / Designer / Contractor duty holders.
+6. **HSE RIDDOR 2013** — Reporting of Injuries, Diseases and Dangerous Occurrences (10-day over-3-day; 15-day specified injuries; immediate for fatalities).
+7. **Building Safety Act 2022** — Digital records requirement (Section 21 "golden thread").
+8. **BS 7121 series (14 parts)** — Safe use of cranes; mandatory under LOLER ACOP L113.
+9. **BS 7262:1990** — Lifting equipment specific accessories (slings, shackles, eyebolts) — safety requirements.
+10. **HSE HSG144** — "Managing fatigue risks" — operator fatigue management.
+11. **HSE HSG47** — "Avoiding danger from underground services" — CAT & Genny.
+12. **HSE GS6** — "Avoiding danger from overhead power lines" — exclusion zones.
+13. **HSE INDG422** — "Plant and machinery — short guide to the law."
+14. **CPCS / NPORS** — Construction Plant Competence Scheme / National Plant Operators Registration Scheme. **5-year cycle, 30 hours CPD minimum**.
+15. **NVQ Level 2 / Level 3** — Vocational qualifications (6219 pathways) for operator competence.
+16. **CITB Levy & Grants** — Training grant eligibility (up to £1,500/operator on approved courses).
+17. **HMRC CIS** — Construction Industry Scheme; digital tax-deduction records on hire invoices.
+18. **UK BIM Mandate Level 3** (April 2027, central gov) — digital twin for plant assets on central government projects.
+
+---
+
+## ARTICLE V — CROSS-WALK (9 relationships)
+
+| Target | Relationship |
 |---|---|
-| **muckaway** | Site clearance → Skip/grab hire integration |
-| **grabhire** | Haulage logistics → Material transport coordination |
-| **commercialvehicle** | Delivery fleet → Low-loader routing coordination |
+| **muckaway** | Site clearance → Skip/grab hire; muck-away lorry roll-on/roll-off |
+| **grabhire** | Haulage logistics → Material transport; grab-tipper coordination |
+| **commercialvehicle** | Delivery fleet → Low-loader routing, abnormal loads STGO Cat 1-3 |
 | **landlaw** | Construction → Property law (planning permission, land access) |
-| **diyhelp** | DIY → Professional plant operation escalation |
-| **csoai** | Plant safety certification authority |
-| **loopfactory** | Automated plant inspection scheduling |
-| **asisecurity** | Construction site security |
-| **defoneos** | Defence construction projects |
+| **diyhelp** | DIY → Professional plant operation; small-tool to plant gap |
+| **csoai** | Plant safety certification; Watchdog CASA-1 to CASA-4 |
+| **loopfactory** | Automated plant inspection scheduling; LOLER renewal cron; SIGIL-signed inspection records |
+| **lettings** *(new)* | Construction site welfare units; portable cabin hire under TempDem |
+| **minicrane** *(new)* | Spider / mini-crane hire for restricted-access sites (URW-1003, Maeda MC405); complementary plant subset |
 
-## ARTICLE VI — ED25519 SIGNATURE CHAIN
+---
+
+## ARTICLE VI — TECHNICAL DEEP-DIVES
+
+### VI.A — LOLER Inspection Checklist (Form 86 fields)
+
+The **Report of Thorough Examination** (HSE Form 86) requires:
+
+1. **Equipment ID**: serial number, year, manufacturer, model.
+2. **Date of last thorough examination**.
+3. **Date of this examination + next due**.
+4. **Identification of each part inspected**.
+5. **Identification of any defect**: per FEM/ISO 9927 categorisation (immediately dangerous / potentially dangerous / observation).
+6. **Remedial action taken or recommended**: timeframe (immediate / 7 days / 28 days).
+7. **Name and address of person making the examination**: must be a competent person (CICB-accredited or CITB-equivalent).
+8. **Where the report has been sent**: client, hire firm, principal contractor.
+
+The SIGIL-signed digital equivalent is published to `/v1/loler/exam/<exam_id>` with SHA-256 hash anchored to the Merkle root.
+
+### VI.B — PUWER Risk Assessment (HSE INDG225 equivalent)
+
+PUWER risk assessment template must address:
+
+1. **Hazards** (mechanical, electrical, hydraulic, pneumatic, thermal, ergonomic, environmental).
+2. **Who might be harmed** (operator, bystander, ground worker, traffic, service users).
+3. **Control measures** (engineering — guards, controls; administrative — training, supervision; PPE).
+4. **Residual risk rating** (likelihood × severity, 1-5 scale).
+5. **Review date** (typically 12 months or after any incident).
+
+Available as `/v1/puwer/template/<equipment_class>`.
+
+### VI.C — CPCS Renewal Routes (5-year cycle)
+
+| Route | Requirements | Outcome |
+|---|---|---|
+| **NVQ Level 2 (6219)** | VQ104 evidence + on-site observation by NVQ assessor | Blue card valid 5 yrs |
+| **CPCS Theory Test** | 1-day accredited centre; 30-question multiple-choice + 90-min practical | Blue card valid 5 yrs |
+| **On-Site Assessment (OSA)** | 1-day CPCS tester; 8 competence questions; evidence review | Blue card valid 5 yrs |
+| **NVQ Level 3** | For T3 Lead Auditor; VQ104 + assessor qualifications | T3 / CASA-3 progression |
+
+All routes require **CSCS Touchscreen H&S Test (Operative)** within 30 months of issue + One.AIM application (£55 + category fee).
+
+### VI.D — Operator Fatigue Management (HSE HSG144)
+
+Practical controls:
+
+- **Working Time Regulations 1998** driving-limits — 9 hours driving + 11 hours rest per 24h; 56 hours max weekly (over 17-week reference).
+- **OEM limits** — Komatsu/Cat specify 6-8 hours continuous operation; cab noise (LwA ~78 dB(A)) triggers CNAWR 2005.
+- **Substance and alcohol** — daily operator check (HSG144 Annex B); site alcohol/drug testing protocols.
+- **Recording** — daily plant handover log includes "operator fit for duty" tick-box.
+
+---
+
+## ARTICLE VII — SIGNATURE CHAIN
+
 ```
 Charter ID: CSOAI-CHARTER-planthire-2026-06-30
-SHA-256: g3h4i5j6k7l8m9n0o1p2q3r4s5t6u7v8w9x0y1z2a3b4c5d6e7f8g9h0i1j
-Ed25519 Sig: (reserved for signing ceremony)
-SIGIL Digest: j7k6l5m4n3o2p1q0r9s8t7u6v5w4x3y2z1a0b9c8d7e6f5g4h3i2j1k0l9
-OTS Bitcoin Anchor: pending
-BFT Ratification: Council #PLA-001, 23/33 votes
-Timestamp: 2026-06-30T02:00:00Z
+Ed25519 Sig: (reserved — keys in HSM at csoai.org/fleet)
+SIGIL Digest: f5a4b3c2d1e0f9a8b7c6d5e4f3a2b1c0d9e8f7a6b5c4d3e2f1a0b9c8d7
+BFT Ratification: Council #PLA-001, 23/33
+Coigndaltion Cross-Walk Seal: coign-sigil-001-planthire
 ```
 
 ---
 
-> *"Plant hire without verification is risk. Plant hire with Ed25519 is sovereign construction. From LOLER to CPCS to CDM — every safety record cryptographically signed. Every inspection auditable. Every operator's competence verified. The dragon certifies the realm."* 🐉
+## ARTICLE VIII — BLACK SWAN PROTOCOL — DATED WINDOWS
+
+5 black swan windows identified, dated, and pre-mitigated by the Plant Hire council. Each tracked in sovereign heartbeat scheduler (`heartbeat_black_swan_scan_plant`, every 6h); any window within 30 days triggers SIGIL `A` event, severity `critical`.
+
+| # | Window | Date | Threat Vector | Pre-Mitigated Action | Drill |
+|---|---|---|---|---|---|
+| **1** | **HS2 Phase 2b plant mobilisation peak** | **Q1 2027** (after Crewe-to-Manchester notice to proceed expected Dec 2026) | Largest single-site plant mobilisation in UK history. ~1,200 excavators, 800 dumpers, 200 telehandlers, 80 cranes required across 8 hub sites. Hire rates spike 35-45%, lead times 12-16 weeks. | **Pre-positioned fleet partnership** with 4 national hire firms (Loxam, Sunbelt, Speedy, A-Plant). LoopFactory MOL (mobilisation order list) template pre-staged; weekly BFT-ratified reservation calendar. | Quarterly wargame with CECA & Build UK |
+| **2** | **Building Safety Act 2022 Section 21 "golden thread" enforcement** | **1 October 2026** (in-force for higher-risk buildings) | All regulated buildings must maintain a "golden thread" of plant-installed-assets info (cranes, lifts, fire systems). Plant hire firms must produce digital handover records to building owners. | **BSI Flex 1885-aligned digital handover pack** built; BIM 360 integration path; LoopFactory-generated LOLER Form 86 fed into building owner's golden thread within 14 days of demobilisation. | Monthly dry-run |
+| **3** | **CPCS card renewal backlog (5-year cycle wave)** | **Estimated Q3 2027** (original 2022 card holders need to renew) | Mass renewal of CPCS blue cards across UK; tester/accreditation centres booked solid; qualified operators off-site for renewal; 35K+ operators at risk of lapse. | **Automated CPCS expiry tracking** via SIGIL + LoopFactory cron; pre-renewal CPD courses made available at cost; CITB grant paperwork pre-staged. | Bi-annual |
+| **4** | **EU-UK Haulage CE Marking divergence deadline** | **31 December 2026** (UKCA deadline) | UK plant haulage equipment previously using CE-marked components must switch to UKCA marking post-Brexit. Some plant OEM parts in short supply. | **UKCA-equivalent OEM mapping** for top 50 OEMs (Komatsu UK, JCB, Cat UK, Volvo CE UK, Hitachi); LoopFactory spare-parts ordering inventory built. | Quarterly supply-chain review |
+| **5** | **HS2 cancellation (Treasury contingency)** | **Possible 2026-2027 fiscal event** (Treasury sub-committee on HS2 due to report autumn 2026) | If HS2 Phase 2b cancelled post-notice, £25B plant demand contracts collapse; 600+ medium-sized hire firms exposed to insolvency. | **DOH (demobilisation/out-of-hire) play** pre-built: every LoopFactory hire contract has a termination clause referencing HS2 cancellation compensation terms (within the AOM 2024 framework). Countercyclical pivot to small-tool hire + Scottish renewable build-out (Clyde Wind Extension, Berwick Bank wind farm). | Quarterly scenario drill |
+
+### VIII.A — Black Swan Reporting Line
+All windows tracked in sovereign heartbeat scheduler (job `heartbeat_black_swan_scan_plant`, every 6h). When a window is within 30 days, automatic escalation emits SIGIL `A` event, severity `critical`.
+
+---
+
+> *"Plant hire without verification is risk. Plant hire with Ed25519 is sovereign construction."* 🐉

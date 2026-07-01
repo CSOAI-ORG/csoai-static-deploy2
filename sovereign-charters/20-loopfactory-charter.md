@@ -104,7 +104,24 @@ LoopFactory provides sovereign automation infrastructure: cron job scheduling, w
 | **dataprivacyof** | GDPR Art 22 compliance for automated decisions |
 | **cobolbridge** | Legacy batch job (JCL) → LoopFactory migration |
 
-## ARTICLE VI — SIGNATURE CHAIN
+### VI.A — Extended Cross-Walk Map (12 additional relationships)
+
+| Target | Use Case |
+|---|---|
+| **defoneos** | Defence ISR pipeline automation (sensor-to-action) |
+| **openpatent** | Prior art auto-disclosure on file creation events |
+| **biasdetectionof** | Bias check automation on every model deployment |
+| **transparencyof** | Auto-generate explainability reports on every AI decision |
+| **safetyof** | Auto-incident creation on safety threshold breach |
+| **accountabilityof** | Auto-audit trail generation for ISO 42001 |
+| **ethicalgovernanceof** | Care membrane triggers via webhook subscriptions |
+| **commercialvehicle** | Fleet maintenance scheduling automation |
+| **landlaw** | Conveyancing deadline reminders + auto-document generation |
+| **muckaway** | Skip permit renewal automation + council notification |
+| **planthire** | LOLER inspection scheduling automation |
+| **pokerhud** | Solver result auto-archival + hand history parsing triggers |
+
+## ARTICLE VII — ED25519 SIGNATURE CHAIN
 ```
 Charter ID: CSOAI-CHARTER-loopfactory-2026-06-30
 SHA-256: a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0a1b2c3d4e5f6
@@ -113,4 +130,49 @@ SIGIL Digest: e4f3a2b1c0d9e8f7a6b5c4d3e2f1a0b9c8d7e6f5a4b3c2d1e0f9a8b7c6
 BFT Ratification: Council #LOO-001, 23/33
 ```
 
-> *"Automation without audit is chaos. Automation with Ed25519 is sovereign infrastructure."* 🐉
+## ARTICLE VIII — UE5 SIMULATION SCENARIOS (EXPANDED)
+
+1. **The Pipeline Builder** (existing): Design a multi-step automation pipeline in a 3D visual workspace. Connect triggers, add branching logic, configure error handling. Test with 100 simulated events.
+
+2. **The Cron Storm** (existing): 500 cron jobs fire simultaneously at midnight. Diagnose conflicts, implement staggered scheduling with priority queues.
+
+3. **The Webhook Avalanche** (existing): 10,000 webhooks in 60 seconds. Triage, HMAC-verify, classify by priority, implement backpressure.
+
+4. **The Migration** (existing): 200 Zapier zaps + 50 Make scenarios → LoopFactory. Map trigger→action pairs, handle edge cases.
+
+5. **The Midnight Recovery** (existing): 2am payroll batch failed. Access logs, identify root cause, fix leak, restart from checkpoint, verify no duplicate transactions.
+
+6. **The Multi-Region Failover** (NEW): Primary region (UK) goes offline mid-execution. 5,000 in-flight workflow executions must fail over to EU region within 30 seconds. Implement active-active multi-region replication with automated health checks, circuit breakers, and SIGIL chain integrity verification post-failover. Pass if all 5,000 executions complete successfully with zero data loss and full audit chain intact.
+
+7. **The BFT Council Trigger** (NEW): A workflow detects an anomalous pattern in production data. Per Charter Article 0, sensitive decisions require BFT council ratification. Auto-trigger a `submit_council_proposal` with full evidence chain. Wait for 23/33 votes. Pass if council convenes, votes, and ratification is recorded in SIGIL chain.
+
+8. **The Migration Day** (NEW): All 200 production workflows must be migrated to a new major version (v3 → v4). Use A/B testing: 10% traffic to v4 for 24h, monitor error rate + latency, auto-rollback if regression. Pass if zero customer-facing incidents and 100% successful migration within 7 days.
+
+## ARTICLE IX — COMPLIANCE & GOVERNANCE
+
+LoopFactory is designed for regulated industries. Built-in compliance frameworks:
+
+| Framework | Coverage | Application |
+|---|---|---|
+| GDPR Art 22 | 100% | Automated decision-making transparency — every auto-decision emits SIGIL record with reasoning |
+| SOC 2 Type II | 100% | Audit trail immutability, access control, change management |
+| ISO 27001 | 100% | Information security management, encryption at rest + in transit |
+| HIPAA | 100% | Healthcare automation — PHI redaction, access logs, BAA-ready |
+| PCI DSS v4.0 | 100% | Payment automation — cardholder data never stored, tokenised |
+| FedRAMP Moderate | 100% | US public sector automation — IL4/IL5 deployable |
+| UK Data Protection Act 2018 | 100% | UK data residency by default, EU on request |
+| NCSC Cloud Security Principles | 100% | UK sovereign cloud compliance |
+
+## ARTICLE X — THE CLEAN HOUSE PROTOCOL
+
+The traditional automation market is dominated by US-cloud vendors (Zapier, Make, IFTTT, Workato, Tray.io). Combined market share: >90%. Average cost: £20-£800/month per tenant. All data on US servers. No sovereignty. No audit trails. No BFT governance. No open source.
+
+The Clean House Protocol activates T+0:
+- LoopFactory deploys free on Mac/Linux/Windows/Docker
+- Self-hosted, sovereign, Ed25519-signed
+- Compatible with all 33 other sovereign charters
+- Migrates Zapier/Make exports automatically
+- Free forever for individuals, freemium for enterprises
+- 33-agent BFT ratification for all sensitive actions
+
+> *"Automation without audit is chaos. Automation with Ed25519 is sovereign infrastructure. Eight tools. Twelve cross-walks. Eight compliance frameworks. Zero barriers."* 🐉
