@@ -235,7 +235,10 @@ table.mini td:last-child{text-align:right;font-variant-numeric:tabular-nums}
 .sovboard .sba:hover{opacity:1}
 .sovboard .sbempty{color:var(--dim);padding:6px 3px;line-height:1.4}
 .sovlog{flex:1;overflow:auto;padding:14px;display:flex;flex-direction:column;gap:9px}
-.sovmsg{font-size:12.5px;line-height:1.5;padding:8px 11px;border-radius:12px;max-width:88%}
+.sovmsg{font-size:12.5px;line-height:1.5;padding:8px 11px;border-radius:12px;max-width:88%;animation:sovMsgIn .42s cubic-bezier(.2,.7,.3,1)}
+@keyframes sovMsgIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+#tourRing{will-change:left,top,width,height}
+body.touring #tourhud{animation:sovMsgIn .5s ease}
 .sovmsg.ai{background:rgba(189,157,84,.15);border:1px solid rgba(189,157,84,.3);color:#5a4a1e;align-self:flex-start;border-bottom-left-radius:3px}
 .sovmsg.me{background:rgba(40,34,24,.07);align-self:flex-end;border-bottom-right-radius:3px;color:var(--ink)}
 .sovbar{padding:10px 12px;border-top:1px solid var(--line);display:flex;gap:7px;align-items:center}
@@ -1611,7 +1614,7 @@ function tourHud(on){ let h=document.getElementById('tourhud'); if(on){ if(!h){ 
   else if(h){ h.remove(); } }
 function tourProgress(){ const f=document.getElementById('tourfill'),l=document.getElementById('tourlbl'); if(f&&TOUR) f.style.width=Math.round((_tI/TOUR.length)*100)+'%'; if(l) l.textContent=(_tKind==='demo'?'Demo':'Tour')+' '+Math.min(_tI+1,TOUR?TOUR.length:1)+'/'+(TOUR?TOUR.length:0); }
 function tourToggle(){ if(_tPaused) sovTourResume(); else sovTourPause(); }
-function sovTourStart(kind){ if(TOUR) sovTourEnd(); _tKind=kind; TOUR=tourScript(kind); _tI=0; _tPaused=false; _tTrace=[]; try{ welcomeDone(); }catch(e){} sovToggle(true); const lg=document.getElementById('sovlog'); if(lg) lg.innerHTML=''; window.SOV_VOICE_ON=true; try{ const b=document.getElementById('sovspk'); if(b){b.textContent='🔊';b.classList.add('on');} }catch(e){} tourHud(true); tourLog('start',kind); tourListen(); _tRun(); }
+function sovTourStart(kind){ if(TOUR) sovTourEnd(); _tKind=kind; TOUR=tourScript(kind); _tI=0; _tPaused=false; _tTrace=[]; try{ welcomeDone(); }catch(e){} sovToggle(true); const lg=document.getElementById('sovlog'); if(lg) lg.innerHTML=''; window.SOV_VOICE_ON=true; try{ const b=document.getElementById('sovspk'); if(b){b.textContent='🔊';b.classList.add('on');} }catch(e){} try{ document.body.classList.add('touring'); }catch(e){} tourHud(true); tourLog('start',kind); tourListen(); _tRun(); }
 function _tRun(){ if(!TOUR||_tPaused) return; if(_tI>=TOUR.length){ return sovTourEnd(); } const s=TOUR[_tI]; tourProgress();
   try{ if(s.act) s.act(); }catch(e){}
   if(s.spot) tourSpot(s.spot); else tourSpotClear();
@@ -1622,7 +1625,7 @@ function _tRun(){ if(!TOUR||_tPaused) return; if(_tI>=TOUR.length){ return sovTo
 function sovTourPause(){ if(!TOUR)return; _tPaused=true; clearTimeout(_tTimer); try{ speechSynthesis.cancel(); }catch(e){} const p=document.getElementById('tourpp'); if(p)p.textContent='▶'; }
 function sovTourResume(){ if(!TOUR)return; _tPaused=false; const p=document.getElementById('tourpp'); if(p)p.textContent='⏸'; _tRun(); }
 function tourNext(){ if(!TOUR)return; clearTimeout(_tTimer); try{ speechSynthesis.cancel(); }catch(e){} _tPaused=false; _tI++; _tRun(); }
-function sovTourEnd(){ clearTimeout(_tTimer); tourSpotClear(); tourHud(false); tourStopListen(); try{ domeMode(false); }catch(e){} if(TOUR){ tourLog('end',_tKind); tourTrainPush(); } TOUR=null; _tPaused=false; try{ sovSay("That's the tour ✨ — now it's <b>yours</b>. Ask me anything, tap <b>📋 My stuff</b>, or fly into your world."); }catch(e){} }
+function sovTourEnd(){ clearTimeout(_tTimer); tourSpotClear(); tourHud(false); tourStopListen(); try{ domeMode(false); document.body.classList.remove('touring'); }catch(e){} if(TOUR){ tourLog('end',_tKind); tourTrainPush(); } TOUR=null; _tPaused=false; try{ sovSay("That's the tour ✨ — now it's <b>yours</b>. Ask me anything, tap <b>📋 My stuff</b>, or fly into your world."); }catch(e){} }
 // --- interruptible: ✋ Ask (reliable) + guarded continuous voice-interrupt ---
 function tourAsk(){ if(!TOUR)return; sovTourPause(); sovSay("<span style='color:var(--dim)'>👂 I'm listening — ask away, then I'll carry on.</span>"); try{ if(typeof sovVoice==='function'){ window._tourAskMode=true; sovVoice(); } }catch(e){} }
 function tourListen(){ const SR=window.SpeechRecognition||window.webkitSpeechRecognition; if(!SR) return; try{ _tRec=new SR(); _tRec.continuous=true; _tRec.interimResults=true; _tRec.lang='en-GB';
@@ -1635,7 +1638,9 @@ function tourOfferResume(){ if(!TOUR)return; setTimeout(function(){ if(TOUR&&_tP
 // --- training trace: hand SOV33 a clean record of how the OS is driven ---
 function tourTrainPush(){ try{ const body=JSON.stringify({kind:_tKind,trace:_tTrace,ua:navigator.userAgent,at:Date.now()}); fetch('/api/train',{method:'POST',headers:{'Content-Type':'application/json'},body:body,keepalive:true}).catch(function(){}); }catch(e){} }
 // dive into the 3D world and fly to (roughly) where the viewer is, scanning outward
-function tourDive3D(){ tourOpen('meokearth'); try{ if(typeof meokDive3D==='function'){ const fr=document.getElementById('meokearth-frame'); if(fr){ meokDive3D(); } } }catch(e){} setTimeout(tourGeoFly, 1400); }
+function tourDive3D(){ try{ const dv=document.getElementById('dive'); if(dv){ dv.classList.add('on'); setTimeout(function(){ dv.classList.remove('on'); }, 1500); } }catch(e){}
+  setTimeout(function(){ tourOpen('meokearth'); try{ if(typeof meokDive3D==='function'){ const fr=document.getElementById('meokearth-frame'); if(fr){ meokDive3D(); } } }catch(e){} }, 700);
+  setTimeout(tourGeoFly, 2100); }
 function _earthSend(msg){ try{ const fr=document.getElementById('meokearth-frame'); if(fr&&fr.contentWindow) fr.contentWindow.postMessage(msg,'*'); }catch(e){} }
 function _haversine(a,b,c,d){ const R=6371,r=x=>x*Math.PI/180,dLat=r(c-a),dLon=r(d-b); const h=Math.sin(dLat/2)**2+Math.cos(r(a))*Math.cos(r(c))*Math.sin(dLon/2)**2; return 2*R*Math.asin(Math.sqrt(h)); }
 function tourGeoFly(){ fetch('/api/geo').then(r=>r.json()).then(function(g){ if(!(g&&g.lat!=null&&g.lon!=null)){ sovSay("This is your living world — every bridge, hive and node on the real globe."); return; }
@@ -1644,10 +1649,11 @@ function tourGeoFly(){ fetch('/api/geo').then(r=>r.json()).then(function(g){ if(
     _earthSend({type:'meok-cmd',cmd:'fly',lat:g.lat,lon:g.lon,zoom:11.4}); _earthSend({type:'meok-cmd',cmd:'scan',radiusMi:10});
     // location-aware card: real local weather + the nearest sovereign node + what governs the region
     Promise.all([ fetch('/api/weather?q='+encodeURIComponent(g.city||where)).then(r=>r.json()).catch(()=>({})), fetch('/api/nodes').then(r=>r.json()).catch(()=>({nodes:[]})) ]).then(function(res){ const w=res[0]||{}, nd=(res[1]&&res[1].nodes)||[];
-      let near=null,best=1e9; nd.forEach(function(n){ const dkm=_haversine(g.lat,g.lon,n.lat,n.lon); if(dkm<best){best=dkm;near=n;} });
+      let near=null,best=1e9,within=0; nd.forEach(function(n){ const dkm=_haversine(g.lat,g.lon,n.lat,n.lon); if(dkm<best){best=dkm;near=n;} if(dkm<=1500) within++; });
       let card='<div style="font:700 11px ui-monospace;letter-spacing:.1em;color:#c9a84c">◎ '+esc((g.city||where).toUpperCase())+'</div>';
       if(w&&w.temp!=null) card+='<div style="margin-top:4px">'+(w.emoji||'🌡️')+' <b>'+Math.round(w.temp)+'°C</b> '+esc(w.desc||'')+(w.sunset?(' · 🌙 '+w.sunset):'')+'</div>';
       if(near) card+='<div style="margin-top:5px;color:#cdbf9c">Nearest sovereign hub: <b>'+esc(near.name)+'</b> · '+Math.round(best)+' km<br><span style="color:#8c8168">'+esc(near.role||'governed node')+'</span></div>';
+      if(within) card+='<div style="margin-top:5px;color:#cdbf9c"><b>'+within+'</b> sovereign hub'+(within>1?'s':'')+' within 1500 km</div>';
       card+='<div style="margin-top:6px;font-size:11px;color:#8c8168">Layers here: bridges · hives · governance · care-floor — all signed.</div>';
       _earthSend({type:'meok-cmd',cmd:'card',html:card});
       sovSay("Right here I can already see <b>"+esc(where)+"</b>"+(w&&w.temp!=null?(" — "+(w.emoji||'')+" "+Math.round(w.temp)+"°C"):"")+(near?(", nearest sovereign hub <b>"+esc(near.name)+"</b> ("+Math.round(best)+" km)"):"")+". Everything local, layered, and signed.");
