@@ -6,6 +6,8 @@
 >
 > **Coigndaltion Doctrine**: The Coigndaltion is the L4 cornerstone cognition layer that binds L1 SOV3³ (DEFONEOS), L2 SOV3 (meok), and L3 CSOAI (csoai.org). It is OWNED by CSOAI but OPERATED by all 3. It never competes with any brand — it serves all three. Its first duty is to make cross-layer coordination trivial, auditable, and SIGIL-anchored.
 >
+> **The 6-Layer Architecture**: The Coigndaltion is the L4 cornerstone of the 6-layer sovereign federation. **L0 Sovereign Root** (constitutional substrate) → **L0+ Partners Alliance** (federation) → **L1 SOV3³/DEFONEOS** (defence) → **L2 SOV3/meok** (build) → **L3 CSOAI** (trust + 35 industry hives) → **L4 Coigndaltion** (cornerstone). Every Coigndaltion action emits a SIGIL that traces back to L0.
+>
 > **Three Pillars of Coigndaltion**: (1) **Cognition** — the Mamba-2 state-space compression that turns 1Hz hive noise into 16-dim intuition. (2) **Integration** — the cross-walk engine that maps 33 hives × 30 frameworks = 990+ mappings. (3) **Cornerstone** — the foundation that the other three layers (L1 SOV3³, L2 SOV3, L3 CSOAI) depend on. Remove the Coigndaltion and the empire loses its centre.
 >
 > **The Coigndaltion Master Pattern**: every action emits a SIGIL → every SIGIL updates the Mamba-2 intuition state → every state change proposes a BFT council vote → every vote becomes a Charter amendment. This is the sovereign loop.
