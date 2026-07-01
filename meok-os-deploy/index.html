@@ -1622,11 +1622,11 @@ function _tRun(){ if(!TOUR||_tPaused) return; if(_tI>=TOUR.length){ return sovTo
 function sovTourPause(){ if(!TOUR)return; _tPaused=true; clearTimeout(_tTimer); try{ speechSynthesis.cancel(); }catch(e){} const p=document.getElementById('tourpp'); if(p)p.textContent='▶'; }
 function sovTourResume(){ if(!TOUR)return; _tPaused=false; const p=document.getElementById('tourpp'); if(p)p.textContent='⏸'; _tRun(); }
 function tourNext(){ if(!TOUR)return; clearTimeout(_tTimer); try{ speechSynthesis.cancel(); }catch(e){} _tPaused=false; _tI++; _tRun(); }
-function sovTourEnd(){ clearTimeout(_tTimer); tourSpotClear(); tourHud(false); tourStopListen(); if(TOUR){ tourLog('end',_tKind); tourTrainPush(); } TOUR=null; _tPaused=false; try{ sovSay("That's the tour ✨ — now it's <b>yours</b>. Ask me anything, tap <b>📋 My stuff</b>, or fly into your world."); }catch(e){} }
+function sovTourEnd(){ clearTimeout(_tTimer); tourSpotClear(); tourHud(false); tourStopListen(); try{ domeMode(false); }catch(e){} if(TOUR){ tourLog('end',_tKind); tourTrainPush(); } TOUR=null; _tPaused=false; try{ sovSay("That's the tour ✨ — now it's <b>yours</b>. Ask me anything, tap <b>📋 My stuff</b>, or fly into your world."); }catch(e){} }
 // --- interruptible: ✋ Ask (reliable) + guarded continuous voice-interrupt ---
 function tourAsk(){ if(!TOUR)return; sovTourPause(); sovSay("<span style='color:var(--dim)'>👂 I'm listening — ask away, then I'll carry on.</span>"); try{ if(typeof sovVoice==='function'){ window._tourAskMode=true; sovVoice(); } }catch(e){} }
 function tourListen(){ const SR=window.SpeechRecognition||window.webkitSpeechRecognition; if(!SR) return; try{ _tRec=new SR(); _tRec.continuous=true; _tRec.interimResults=true; _tRec.lang='en-GB';
-  _tRec.onresult=function(e){ if(_tSpeaking||!TOUR) return; /* ignore our own TTS */ let fin=''; for(let i=e.resultIndex;i<e.results.length;i++){ if(e.results[i].isFinal) fin+=e.results[i][0].transcript; }
+  _tRec.onresult=function(e){ if(!TOUR) return; try{ if(window.speechSynthesis&&speechSynthesis.speaking) return; }catch(_){} if(_tSpeaking) return; /* never react to our own narration */ let fin=''; for(let i=e.resultIndex;i<e.results.length;i++){ if(e.results[i].isFinal) fin+=e.results[i][0].transcript; }
     if(fin.trim().length>3){ const q=fin.trim(); if(!_tPaused){ sovTourPause(); sovSay("<span style='color:var(--dim)'>You spoke — pausing to listen 👂</span>"); } tourLog('interrupt',q); try{ sovHandle(q); }catch(e){} tourOfferResume(); } };
   _tRec.onend=function(){ if(TOUR){ try{ _tRec.start(); }catch(e){} } };
   _tRec.start(); }catch(e){} }
