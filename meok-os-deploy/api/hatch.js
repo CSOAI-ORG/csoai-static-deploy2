@@ -15,19 +15,37 @@ import crypto from 'crypto';
 function canonical(v){ if(typeof v==='string') return v; const s=x=>Array.isArray(x)?x.map(s):(x&&typeof x==='object')?Object.keys(x).sort().reduce((o,k)=>(o[k]=s(x[k]),o),{}):x; return JSON.stringify(s(v)); }
 function keypair(){ const seed=crypto.createHash('sha256').update(process.env.SIGIL_SEED||'meok-sovereign-demo-key-2026').digest(); const pkcs8=Buffer.concat([Buffer.from('302e020100300506032b657004220420','hex'),seed]); const priv=crypto.createPrivateKey({key:pkcs8,format:'der',type:'pkcs8'}); return {priv,pubHex:crypto.createPublicKey(priv).export({type:'spki',format:'der'}).toString('hex')}; }
 const ARCHE={ dragon:'a guardian strategist', fox:'a swift connector', owl:'a careful analyst', phoenix:'a resilient builder', default:'a sovereign companion' };
+// The 22-strong legacy-bridge family: a legacy/COBOL/SAP/HL7 system speaks its native protocol →
+// the matching bridge translates it to MCP/A2A (Layer-0) → a Hatch mounts on it → that system now
+// has a signed, governed, AI-aware agent INSIDE it. `?bridge=cobol` fronts a Hatch onto that bridge.
+const BRIDGES={ cobol:'COBOL/CICS mainframe', iso20022:'ISO 20022 payments', swift:'SWIFT MT↔MX', hl7:'HL7 v2', fhir:'HL7 FHIR', as400:'IBM AS/400', sap:'SAP RFC', oracle:'Oracle EBS', scada:'SCADA/Modbus/OPC-UA', edi:'EDI X12', fix:'FIX protocol', mqtt:'MQTT/IoT', cics:'IBM CICS', acord:'ACORD insurance', nacha:'NACHA ACH', iso8583:'ISO 8583 cards', sip:'SIP telecom', tax:'tax e-filing', gs1:'GS1 supply-chain', mismo:'MISMO mortgage', dlms:'DLMS/COSEM meters' };
 
-export default function handler(req, res){
+// ArkForge (meok-ai) live trust score — env-gated so it NEVER blocks/forks the public edge.
+// Set MEOK_AI_URL to the deployed backend; we fetch GET {MEOK_AI_URL}/trust/score/{entity}
+// (tiers: unverified→bronze→silver→gold→platinum→diamond) and carry it INTO the signed Hatch.
+async function fetchTrust(entity){
+  const base=process.env.MEOK_AI_URL; if(!base) return { source:'local', tier:'unverified', score:null, note:'meok-ai not wired (set MEOK_AI_URL) — identity still Ed25519-signed here' };
+  try{ const ctl=new AbortController(); const to=setTimeout(()=>ctl.abort(),1500);
+    const r=await fetch(base.replace(/\/$/,'')+'/trust/score/'+encodeURIComponent(entity),{signal:ctl.signal}); clearTimeout(to);
+    if(!r.ok) throw new Error('http '+r.status); const d=await r.json();
+    return { source:'meok-ai/arkforge', tier:d.tier||'unverified', score:(typeof d.score==='number'?d.score:null), entity, note:'live ArkForge trust score (Ed25519 receipt chain)' };
+  }catch(e){ return { source:'local', tier:'unverified', score:null, note:'meok-ai unreachable ('+String(e.message||e)+') — degraded to local, identity still signed' }; }
+}
+
+export default async function handler(req, res){
   res.setHeader('Access-Control-Allow-Origin','*'); res.setHeader('Access-Control-Allow-Headers','Content-Type'); res.setHeader('Cache-Control','public, max-age=60');
   if(req.method==='OPTIONS') return res.status(204).end();
   try{
     const q=req.query||{}; const name=(q.name||'MEOK Sovereign').toString().slice(0,60); const arch=(q.archetype||'default').toString().toLowerCase().slice(0,24);
-    const base='https://os.meok.ai'; const persona=name+' — '+(ARCHE[arch]||ARCHE.default)+'. Sovereign, governed, remembers you on your device.';
+    const bridge=(q.bridge||'').toString().toLowerCase().slice(0,24); const bridgeLabel=BRIDGES[bridge]||null;
+    const base='https://os.meok.ai'; const persona=name+' — '+(ARCHE[arch]||ARCHE.default)+(bridgeLabel?'. Fronts a '+bridgeLabel+' system through Layer-0 (signed, governed, AI-aware).':'. Sovereign, governed, remembers you on your device.');
     const tools=[
       {name:'meok_talk',desc:'converse (governed, care-floored)'},
       {name:'meok_govern',desc:'what governs an industry → frameworks + bridges'},
       {name:'meok_sign',desc:'Ed25519-sign an action'},
       {name:'meok_verify',desc:'verify a signature offline'},
     ];
+    if(bridgeLabel){ tools.push({name:'legacy_call',desc:'call the '+bridgeLabel+' system through its Layer-0 bridge (every call signed + care-floored)'},{name:'legacy_translate',desc:'translate native '+bridge+' messages ↔ modern JSON/MCP'}); }
     const af_state = {
       version: '0.1', agent_type: 'memgpt_agent', name,
       system: 'You are '+persona+' You never take harmful action (care floor 0.95); hard stops are immutable.',
@@ -64,7 +82,13 @@ export default function handler(req, res){
       interfaces: { agentCard: base+'/api/agentcard?name='+encodeURIComponent(name)+'&archetype='+encodeURIComponent(arch), mcp: base+'/api/mcp', openai_chat: base+'/api/v1/chat/completions', onDeviceRunner: base+'/runner/meok-sap-runner.mjs' },
       model_policy: { embedded: false, sources:['host model via MCP','on-device llamafile/ollama','hosted API'], reason:'weights too large for serverless/edge — the AGENT (mind+brain-routing+body-refs) is portable, the MODEL is pluggable' },
       runnable: ['serverless (default, scale-to-zero)','on-device (local MCP stdio + offline brain)','dedicated VM (premium, always-on)'],
+      // LEGACY → LAYER-0 → HATCH: any COBOL/SAP/HL7/… system attaches through its bridge and gains a
+      // signed, governed, AI-aware agent inside it. This is the "safe AI inside the legacy system" play.
+      legacy: bridgeLabel ? { fronts: bridgeLabel, bridgeKey: bridge, protocol_in:'native '+bridge, protocol_out:'MCP/A2A (Layer-0)', every_action:'Ed25519-signed + care-floored (safe)', bridgeFamily: base+'/api/govern' }
+        : { available: Object.keys(BRIDGES), how:'add ?bridge=<key> (e.g. cobol, sap, hl7) → the Hatch fronts that legacy system through Layer-0', note:'22-bridge family; the legacy system keeps running — the Hatch adds signed, governed AI awareness on top' },
     };
+    const entity = (bridge?bridge+':':'')+name+'#'+arch;   // ArkForge entity id
+    pkg.trust = await fetchTrust(entity);
     const { priv, pubHex } = keypair();
     const message = canonical(pkg).slice(0, 8000);
     const signature = crypto.sign(null, Buffer.from(message), priv).toString('hex');
