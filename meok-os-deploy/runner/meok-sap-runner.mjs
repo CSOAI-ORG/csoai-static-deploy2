@@ -11,7 +11,7 @@ import crypto from 'node:crypto';
 import readline from 'node:readline';
 
 const arg = (k, d) => { const i = process.argv.indexOf(k); return i >= 0 ? process.argv[i + 1] : d; };
-const SAP_SRC = arg('--sap', 'https://os.meok.ai/api/sap?name=MEOK%20Sovereign');
+const SAP_SRC = arg('--hatch', arg('--sap', 'https://os.meok.ai/api/hatch?name=MEOK%20Sovereign'));  // --hatch (or legacy --sap)
 const OLLAMA = arg('--ollama', 'http://localhost:11434');
 const MODEL_GGUF = arg('--model', '');   // optional: a .gguf path → zero-daemon embedded brain via node-llama-cpp
 const log = (...a) => process.stderr.write('[meok-runner] ' + a.join(' ') + '\n');  // logs to stderr (stdout is the MCP channel)

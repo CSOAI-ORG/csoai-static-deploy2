@@ -212,7 +212,7 @@ for (const p of ['pricing.html','badges.html','verify.html','sovspace.html','cha
   const callr = await gj('/api/mcp', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({jsonrpc:'2.0',id:3,method:'tools/call',params:{name:'meok_govern',arguments:{industry:'a bank'}}}) });
   ck('mcp: tools/call runs (govern → frameworks)', /DORA|framework|finance|Governs/i.test(callr.j.result?.content?.[0]?.text||'')); }
 
-{ const sp = await gj('/api/sap?name=Aria&archetype=owl'); ck('SAP: signed pkg fuses a2a+mcp+af+layer0 + dual-brain + bootable body', sp.s === 200 && sp.j.ok === true && sp.j.package?.spec === 'meok.sap.v1' && sp.j.package?.state?.memory && sp.j.package?.governance?.careFloor === 0.95 && sp.j.package?.model_policy?.embedded === false && sp.j.package?.brain?.left && sp.j.package?.brain?.right && Array.isArray(sp.j.package?.brain?.modes) && sp.j.package?.boot?.world3d && sp.j.signature?.signature);
+{ const sp = await gj('/api/sap?name=Aria&archetype=owl'); ck('SAP: signed pkg fuses a2a+mcp+af+layer0 + dual-brain + bootable body', sp.s === 200 && sp.j.ok === true && (sp.j.package?.spec === 'meok.hatch.v1' || sp.j.hatch?.spec === 'meok.hatch.v1') && sp.j.package?.state?.memory && sp.j.package?.governance?.careFloor === 0.95 && sp.j.package?.model_policy?.embedded === false && sp.j.package?.brain?.left && sp.j.package?.brain?.right && Array.isArray(sp.j.package?.brain?.modes) && sp.j.package?.boot?.world3d && sp.j.signature?.signature);
   const v = await gj('/api/verify', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ message: sp.j.signature.canonical, signature: sp.j.signature.signature, publicKey: sp.j.signature.publicKey }) });
   ck('SAP: package signature verifies offline', v.j.valid === true);
   const af = await gj('/api/sap?name=Aria&format=af'); ck('SAP: exports Letta .af-compatible state (interop)', af.j.agent_type === 'memgpt_agent' && Array.isArray(af.j.memory?.blocks) && Array.isArray(af.j.tools)); }
@@ -220,6 +220,10 @@ for (const p of ['pricing.html','badges.html','verify.html','sovspace.html','cha
 { const rr = await fetch(BASE + '/runner/meok-sap-runner.mjs'); const t = await rr.text(); ck('SAP runner: on-device MCP runner served + offline-verify', rr.status === 200 && /verifySAP/.test(t) && /crypto\.verify/.test(t) && /ollama/i.test(t)); }
 
 { const o = await gj('/api/sap?name=Aria&format=oasf'); ck('SAP: OASF-shaped export + sovereign-governance extension', o.s === 200 && o.j.schema_version && Array.isArray(o.j.locators) && (o.j.extensions||[]).some(e=>e.name==='meok.sovereign-governance.v1' && e.data?.signature)); }
+
+{ const h = await gj('/api/hatch?name=Aria&archetype=dragon'); ck('MEOK Hatch: renamed spec meok.hatch.v1 + signed + brain + boot', h.s === 200 && h.j.ok === true && h.j.hatch?.spec === 'meok.hatch.v1' && h.j.hatch?.brain?.left && h.j.hatch?.boot?.world3d && h.j.signature?.signature);
+  const alias = await gj('/api/sap?name=Aria'); ck('MEOK Hatch: /api/sap legacy alias still works', alias.s === 200 && (alias.j.hatch?.spec === 'meok.hatch.v1' || alias.j.package?.spec === 'meok.hatch.v1'));
+  const l = await fetch(BASE + '/llms.txt'); const lt = await l.text(); ck('agentic-web: llms.txt served + points to Hatch', l.status === 200 && /api\/hatch/.test(lt) && /MEOK Hatch/.test(lt)); }
 
 console.log('\n' + (fail === 0 ? '✅ PASS' : '❌ FAIL') + ' — ' + pass + ' passed, ' + fail + ' failed' + (fails.length ? '  [' + fails.join(', ') + ']' : ''));
 process.exit(fail ? 1 : 0);
