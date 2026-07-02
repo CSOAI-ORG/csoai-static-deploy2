@@ -977,8 +977,8 @@ async function sovSignContact(title, lon, lat){ title=(title||window._lastInspec
   var ll=(lon!=null&&lat!=null)?[+lon,+lat]:(window._lastEnt?_entLL(window._lastEnt):null);
   var det=title+(ll?(' @ '+(+ll[1]).toFixed(3)+','+(+ll[0]).toFixed(3)):'');
   if(window.openHorus) openHorus();
-  if(window.sigilSign){ try{ var s=await sigilSign('contact', det);
-    if(window.horusReply) horusReply('Signed <b>'+_hcx(title)+'</b> to your on-device ledger — Ed25519 <code>'+(((s&&s.sig)||'').slice(0,18))+'…</code>. Tamper-evident, offline-verifiable, no server. <a class="bg-link" onclick="if(window.sigilPanel)sigilPanel()">open ledger ›</a>'); return;
+  if(window.sigilSign){ try{ var s=await sigilSign('contact', det); window._lastReceipt=s;
+    if(window.horusReply) horusReply('Signed <b>'+_hcx(title)+'</b> to your on-device ledger — Ed25519 <code>'+(((s&&s.sig)||'').slice(0,18))+'…</code>. Tamper-evident, offline-verifiable, no server. <a class="bg-link" onclick="if(window.sigilPanel)sigilPanel()">open ledger ›</a> · <a class="bg-link" onclick="sovDownloadReceipt()">⤓ download receipt</a>'); return;
   }catch(e){} }
   if(window.sigilLog) sigilLog('contact', det);
   if(window.horusReply) horusReply('Logged <b>'+_hcx(title)+'</b> to the SIGIL ledger — signed on this device.');
@@ -1006,14 +1006,25 @@ async function sovSignAllInView(){ if(!viewer) return;
   if(window.openHorus) openHorus();
   if(!total){ if(window.horusReply) horusReply('Nothing positioned in view yet — say “light it up” or turn on a layer, then I’ll sign the whole picture.'); return; }
   var summary=Object.keys(counts).map(function(k){return counts[k]+' '+k;}).join(' · ');
-  if(window.sigilSign){ try{ var s=await sigilSign('batch-contacts', total+' contacts · '+summary);
-    if(window.horusReply) horusReply('Signed the whole live picture — <b>'+total+'</b> contacts ('+summary+') — as one batch receipt. Ed25519 <code>'+(((s&&s.sig)||'').slice(0,18))+'…</code>, hash-chained on this device. <a class="bg-link" onclick="if(window.sigilPanel)sigilPanel()">open ledger ›</a>');
+  if(window.sigilSign){ try{ var s=await sigilSign('batch-contacts', total+' contacts · '+summary); window._lastReceipt=s;
+    if(window.horusReply) horusReply('Signed the whole live picture — <b>'+total+'</b> contacts ('+summary+') — as one batch receipt. Ed25519 <code>'+(((s&&s.sig)||'').slice(0,18))+'…</code>, hash-chained on this device. <a class="bg-link" onclick="if(window.sigilPanel)sigilPanel()">open ledger ›</a> · <a class="bg-link" onclick="sovDownloadReceipt()">⤓ download receipt</a>');
     if(window.pushFeed) pushFeed('SIGNED · '+total+' live contacts batch-signed to the ledger'); return;
   }catch(e){} }
   if(window.sigilLog) sigilLog('batch-contacts', total+' · '+summary);
   if(window.horusReply) horusReply('Logged <b>'+total+'</b> contacts to the ledger.');
 }
 window.sovSignAllInView=sovSignAllInView;
+// ── DOWNLOAD SIGNED RECEIPT · export a signed contact as a self-verifying Ed25519 JSON file (no server needed) ──
+function sovDownloadReceipt(e){ e=e||window._lastReceipt; if(!e){ if(window.horusReply) horusReply('Sign a contact first, then I can hand you its receipt.'); return; }
+  var msg={ i:e.i, ts:e.ts, action:e.action, detail:e.detail, prev:e.prev };
+  var pkg={ defoneos_signed_contact:{ message:msg, signature_ed25519:e.sig, public_key_ed25519:e.pub,
+    algorithm:'Ed25519 (RFC 8032) over utf8(JSON.stringify(message))',
+    verify:'Recompute utf8(JSON.stringify(message)), then Ed25519-verify signature_ed25519 with public_key_ed25519 — or paste your ledger into defoneos.vercel.app/verify.html.',
+    issued_by:'DEFONEOS · on-device SIGIL ledger', note:'No server involved — this receipt is self-verifying, offline, forever.' } };
+  try{ var blob=new Blob([JSON.stringify(pkg,null,2)],{type:'application/json'}); var url=URL.createObjectURL(blob); var a=document.createElement('a'); a.href=url; a.download='defoneos-receipt-'+e.i+'.json'; document.body.appendChild(a); a.click(); setTimeout(function(){ try{ document.body.removeChild(a); URL.revokeObjectURL(url); }catch(_){} },250);
+    if(window.pushFeed) pushFeed('RECEIPT · signed contact #'+e.i+' downloaded — Ed25519, self-verifying');
+  }catch(_){ if(window.horusReply) horusReply('Couldn’t start the download — your browser may block file exports in this view.'); } }
+window.sovDownloadReceipt=sovDownloadReceipt;
 // ── CoT TRAY · a live chip showing exported tracks · clear / export .cot ──
 function _cotTray(){ var n=(window._cotDataSrc&&window._cotDataSrc.show)?window._cotDataSrc.entities.values.length:0; var el=document.getElementById('cotTray');
   if(!n){ if(el) el.remove(); return; }
@@ -1145,7 +1156,8 @@ function _marineCard(v){ window._marineFocusV=v; var id='marineCard'; var old=do
   var nm=v.name||('MMSI '+v.mmsi);
   w.innerHTML='<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px"><b style="color:#7af9d0;letter-spacing:.3px">⚓ '+_hcx(nm)+'</b><span onclick="var e=document.getElementById(\''+id+'\');if(e)e.remove()" style="cursor:pointer;color:#8a97b4;font-weight:700;padding:0 5px">✕</span></div>'+
     '<div style="display:grid;grid-template-columns:auto 1fr;gap:3px 10px;font-size:11.5px"><span style="color:#7fae9f">MMSI</span><span>'+_hcx(v.mmsi)+'</span><span style="color:#7fae9f">Course</span><span>'+(v.cog!=null?Math.round(v.cog)+'°':'—')+'</span><span style="color:#7fae9f">Speed</span><span>'+(v.sog!=null?v.sog.toFixed(1)+' kt':'—')+'</span><span style="color:#7fae9f">Position</span><span>'+Math.abs(v.lat).toFixed(3)+(v.lat>=0?'°N':'°S')+' '+Math.abs(v.lon).toFixed(3)+(v.lon>=0?'°E':'°W')+'</span><span style="color:#7fae9f">Source</span><span>live AIS · aisstream.io</span></div>'+
-    '<div style="display:flex;gap:6px;margin-top:9px"><button onclick="if(window.sovVesselResearch)sovVesselResearch()" style="flex:1;cursor:pointer;background:linear-gradient(90deg,#0bd,#7af9d0);color:#04121a;border:none;border-radius:8px;padding:8px;font-weight:700;font-family:ui-monospace">🔎 Deep research</button><a href="https://www.marinetraffic.com/en/ais/details/ships/mmsi:'+v.mmsi+'" target="_blank" rel="noopener" style="flex:1;text-align:center;text-decoration:none;color:#7af9d0;border:1px solid rgba(122,249,208,.3);border-radius:8px;padding:8px">MarineTraffic ↗</a></div>';
+    '<div style="display:flex;gap:6px;margin-top:9px"><button onclick="if(window.sovVesselResearch)sovVesselResearch()" style="flex:1;cursor:pointer;background:linear-gradient(90deg,#0bd,#7af9d0);color:#04121a;border:none;border-radius:8px;padding:8px;font-weight:700;font-family:ui-monospace">🔎 Deep research</button><a href="https://www.marinetraffic.com/en/ais/details/ships/mmsi:'+v.mmsi+'" target="_blank" rel="noopener" style="flex:1;text-align:center;text-decoration:none;color:#7af9d0;border:1px solid rgba(122,249,208,.3);border-radius:8px;padding:8px">MarineTraffic ↗</a></div>'+
+    '<div class="intro-cta" style="margin-top:7px">'+_sovActs('⚓ '+nm, v.lon, v.lat)+'</div>';
   document.body.appendChild(w);
   if(window.horusReply) horusReply('That’s <b>'+_hcx(nm)+'</b>, live on AIS — course '+(v.cog!=null?Math.round(v.cog)+'°':'—')+', '+(v.sog!=null?v.sog.toFixed(1)+' knots':'stationary')+'. I can <b>deep-research</b> her — registry, flag, operator, history. Want me to?'); }
 window._marineCard=_marineCard;
