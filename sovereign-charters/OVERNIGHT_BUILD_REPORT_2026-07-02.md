@@ -1,59 +1,62 @@
 # SOVEREIGN CHARTERS — OVERNIGHT BUILD REPORT
-**Generated**: 2026-07-02 02:00 UTC
+**Generated**: 2026-07-02 04:00 UTC
 
 ## Build Status
 
 | Metric | Value |
 |---|---|
-| Charter files built | 38 / 34 |
-| Missing | -4 |
-| Total directory size | 3.3M |
+| Charter files built | 41 / 34 |
+| Missing | -7 |
+| Total directory size |  16M |
 | Charter of Charters |    21568 bytes |
-| Master Index |     9487 bytes |
+| Master Index |     8480 bytes |
 | Master Template |     6734 bytes |
 
 ## Charter Inventory
 
 | # | File | Size |
 |---|---|---|
-| | 00-partners-charter.md | 16139 bytes |
-| | 00-sovereign-root-charter.md | 17046 bytes |
-| | 01-csoai-charter.md | 31691 bytes |
-| | 02-meok-charter.md | 32494 bytes |
-| | 03-proofof-charter.md | 32740 bytes |
-| | 04-safetyof-charter.md | 31983 bytes |
-| | 05-accountabilityof-charter.md | 28762 bytes |
-| | 06-ethicalgovernanceof-charter.md | 37419 bytes |
-| | 07-transparencyof-charter.md | 40498 bytes |
-| | 08-biasdetectionof-charter.md | 46432 bytes |
-| | 09-dataprivacyof-charter.md | 45067 bytes |
-| | 10-asisecurity-charter.md | 50770 bytes |
-| | 11-agisafe-charter.md | 56859 bytes |
-| | 12-defoneos-charter.md | 39606 bytes |
-| | 13-councilof-charter.md | 24572 bytes |
-| | 14-openmoe-charter.md | 24721 bytes |
-| | 15-openmcp-charter.md | 24716 bytes |
-| | 16-openpatent-charter.md | 26707 bytes |
-| | 17-sandbox-charter.md | 29197 bytes |
-| | 18-sovereign-town-charter.md | 30323 bytes |
-| | 19-meok-compliance-gateway-charter.md | 29256 bytes |
-| | 20-loopfactory-charter.md | 22691 bytes |
-| | 21-optimobile-charter.md | 33423 bytes |
-| | 22-socialmediamanager-charter.md | 35119 bytes |
-| | 23-cobolbridge-charter.md | 41049 bytes |
-| | 24-commercialvehicle-charter.md | 29060 bytes |
-| | 25-diyhelp-charter.md | 30324 bytes |
-| | 26-fishkeeper-charter.md | 37503 bytes |
-| | 27-grabhire-charter.md | 37681 bytes |
-| | 28-koikeeper-charter.md | 45516 bytes |
-| | 29-landlaw-charter.md | 43204 bytes |
-| | 30-muckaway-charter.md | 52396 bytes |
-| | 31-planthire-charter.md | 25390 bytes |
-| | 32-pokerhud-charter.md | 34515 bytes |
-| | 33-suicidestop-charter.md | 42624 bytes |
-| | 34-science-charter.md | 38280 bytes |
-| | 35-coigndaltion-charter.md | 37336 bytes |
-| | 36-publicwatchdog-charter.md | 27328 bytes |
+| | 00-partners-charter.md | 19987 bytes |
+| | 00-sovereign-root-charter.md | 23006 bytes |
+| | 01-csoai-charter.md | 33628 bytes |
+| | 02-meok-charter.md | 34427 bytes |
+| | 03-proofof-charter.md | 34681 bytes |
+| | 04-safetyof-charter.md | 33927 bytes |
+| | 05-accountabilityof-charter.md | 30730 bytes |
+| | 06-ethicalgovernanceof-charter.md | 39396 bytes |
+| | 07-transparencyof-charter.md | 42460 bytes |
+| | 08-biasdetectionof-charter.md | 48397 bytes |
+| | 09-dataprivacyof-charter.md | 47026 bytes |
+| | 10-asisecurity-charter.md | 52723 bytes |
+| | 11-agisafe-charter.md | 58800 bytes |
+| | 12-defoneos-charter.md | 43793 bytes |
+| | 13-councilof-charter.md | 26519 bytes |
+| | 14-openmoe-charter.md | 26662 bytes |
+| | 15-openmcp-charter.md | 26658 bytes |
+| | 16-openpatent-charter.md | 28657 bytes |
+| | 17-sandbox-charter.md | 31138 bytes |
+| | 18-sovereign-town-charter.md | 32285 bytes |
+| | 19-meok-compliance-gateway-charter.md | 31245 bytes |
+| | 20-loopfactory-charter.md | 24732 bytes |
+| | 21-optimobile-charter.md | 35373 bytes |
+| | 22-socialmediamanager-charter.md | 37093 bytes |
+| | 23-cobolbridge-charter.md | 43002 bytes |
+| | 24-commercialvehicle-charter.md | 31031 bytes |
+| | 25-diyhelp-charter.md | 32265 bytes |
+| | 26-fishkeeper-charter.md | 39453 bytes |
+| | 27-grabhire-charter.md | 39625 bytes |
+| | 28-koikeeper-charter.md | 47463 bytes |
+| | 29-landlaw-charter.md | 45145 bytes |
+| | 30-muckaway-charter.md | 57234 bytes |
+| | 31-planthire-charter.md | 28726 bytes |
+| | 32-pokerhud-charter.md | 38179 bytes |
+| | 33-suicidestop-charter.md | 47838 bytes |
+| | 34-science-charter.md | 42462 bytes |
+| | 35-coigndaltion-charter.md | 48554 bytes |
+| | 36-publicwatchdog-charter.md | 30674 bytes |
+| | 37-sovereigncourt-charter.md | 30146 bytes |
+| | 38-sovereignstandards-charter.md | 30284 bytes |
+| | 39-sovereignledger-charter.md | 29573 bytes |
 
 ## ✅ ALL 34 CHARTERS BUILT
 
