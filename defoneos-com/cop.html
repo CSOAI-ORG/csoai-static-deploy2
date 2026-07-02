@@ -1064,6 +1064,40 @@ async function sovSystemCard(name, purpose){
   }catch(err){ if(window.horusReply) horusReply('Couldn’t sign the System Card — '+err.message); }
 }
 window.sovSystemCard=sovSystemCard;
+// ── OSCAL EXPORT · the auditor's lingua-franca (NIST OSCAL) — signed component-definition an OSCAL tool ingests directly ──
+async function _sha256hex(str){ try{ var b=await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str)); return Array.from(new Uint8Array(b)).map(function(x){return x.toString(16).padStart(2,'0');}).join(''); }catch(_){ return ''; } }
+window._sha256hex=_sha256hex;
+async function sovOscal(){
+  if(!window._sigil||!window._sigil.ready||!window._ed){ if(window.horusReply) horusReply('Signing key still minting — try “export oscal” again in a moment.'); return; }
+  var now=new Date().toISOString(); var uuid=function(){ try{ return crypto.randomUUID(); }catch(_){ return 'uuid-'+Date.now().toString(16)+Math.floor(Math.random()*1e6).toString(16); } };
+  var CTRLS=[
+    ['eu-ai-act/art-14','Human oversight — a human confirms high-risk actions before they proceed (33-agent BFT + care-floor).'],
+    ['eu-ai-act/art-50','Transparency — AI-generated outputs are marked; users are informed they interact with AI.'],
+    ['eu-ai-act/art-12','Record-keeping — every governed action is Ed25519-signed to an on-device, offline-verifiable ledger.'],
+    ['iso-42001/A.9','AI risk management — documented risk classification + care-floor 0.95 minimum on every action.'],
+    ['nist-ai-rmf/GOVERN','Govern — BFT council (quorum 23/33) gates sensitive actions; hard-stops on kinetic/surveillance.'],
+    ['jsp-936/assurance','Deployment assurance — signed, offline-verifiable System Card + action ledger (the independent assurance primitive).']
+  ];
+  var oscal={ 'component-definition':{ uuid:uuid(),
+    metadata:{ title:'DEFONEOS — Sovereign Governance Posture (declared)', 'last-modified':now, version:'1.0.0', 'oscal-version':'1.1.2', remarks:'Declared posture, cryptographically signed. Attestation — NOT a passed assessment or certification.' },
+    components:[ { uuid:uuid(), type:'software', title:'DEFONEOS Sovereign Governance Layer', description:'Signed, offline-verifiable situational-awareness + AI-governance layer (CSOAI Ltd · UK 16939677).',
+      'control-implementations':[ { uuid:uuid(), source:'https://defoneos.vercel.app/#frameworks', description:'Alignment to EU AI Act, ISO 42001, NIST AI RMF, JSP 936.',
+        'implemented-requirements': CTRLS.map(function(c){ return { uuid:uuid(), 'control-id':c[0], description:c[1] }; }) } ] } ] } };
+  var docStr=JSON.stringify(oscal), hash=await _sha256hex(docStr);
+  var L=window._sigil.ledger, prev=L.length?L[L.length-1].sig:'';
+  var message={ i:L.length, ts:now, action:'oscal-export', detail:'OSCAL component-definition · '+CTRLS.length+' controls · sha256:'+hash, prev:prev };
+  try{ var sig=await window._ed.signAsync(new TextEncoder().encode(JSON.stringify(message)), window._sigil.priv); var sh=_hex(sig);
+    var e={ i:message.i, ts:message.ts, action:message.action, detail:message.detail, prev:message.prev, sig:sh, pub:window._sigil.pubHex };
+    L.push(e); if(L.length>300) L.splice(0,L.length-300); try{ localStorage.setItem('def_sigil_ledger',JSON.stringify(L)); }catch(_){} if(document.getElementById('sigilBody')) sigilRender(); if(window.sigilBadge) sigilBadge();
+    window._lastReceipt=e;
+    var bundle={ defoneos_signed_contact:{ message:message, signature_ed25519:sh, public_key_ed25519:window._sigil.pubHex, doc_sha256:hash, oscal:oscal, algorithm:'Ed25519 (RFC 8032) over utf8(JSON.stringify(message)); OSCAL bound by doc_sha256', verify:'Drop into verify.html (checks the signature). The OSCAL component-definition is under .oscal — ingest into any OSCAL tool.', note:'Declared posture — attestation, not certification.' } };
+    try{ var blob=new Blob([JSON.stringify(bundle,null,2)],{type:'application/json'}); var url=URL.createObjectURL(blob); var a=document.createElement('a'); a.href=url; a.download='defoneos-oscal-'+e.i+'.json'; document.body.appendChild(a); a.click(); setTimeout(function(){ try{ document.body.removeChild(a); URL.revokeObjectURL(url); }catch(_){} },250); }catch(_){}
+    if(window.openHorus) openHorus();
+    if(window.horusReply) horusReply('Exported a signed <b>NIST OSCAL</b> component-definition — <b>'+CTRLS.length+'</b> control implementations across EU AI Act · ISO 42001 · NIST AI RMF · JSP 936. This is the <b>auditor’s lingua-franca</b> (the compliance-world CoT): an OSCAL tool ingests it directly, and the Ed25519 signature verifies offline. <a class="bg-link" onclick="sovDownloadReceipt()">⤓ signature</a> · <a class="bg-link" href="verify.html" target="_blank">verify ›</a><br><span style="opacity:.72;font-size:11px">Declared posture — attestation, <b>not</b> a passed assessment.</span>');
+    if(window.pushFeed) pushFeed('OSCAL · signed component-definition · '+CTRLS.length+' controls · exported');
+  }catch(err){ if(window.horusReply) horusReply('Couldn’t sign the OSCAL export — '+err.message); }
+}
+window.sovOscal=sovOscal;
 // ── CoT TRAY · a live chip showing exported tracks · clear / export .cot ──
 function _cotTray(){ var n=(window._cotDataSrc&&window._cotDataSrc.show)?window._cotDataSrc.entities.values.length:0; var el=document.getElementById('cotTray');
   if(!n){ if(el) el.remove(); return; }
@@ -1659,7 +1693,7 @@ function sovNewsFocus(region){ var sigs=window._newsSignals||[]; var pick=null;
 window.sovNewsFocus=sovNewsFocus;
 
 let FEED=[];
-var SUGG=[['✨','light it up'],['📍','scan my area'],['📷','cameras in london'],['🌧️','weather radar'],['🚆','rail network'],['💹','financial centres'],['🏬','local businesses'],['🗂','domains ontology'],['🛬','global airports'],['⚡','power plants'],['🌫️','air quality'],['🔥','show wildfires'],['🛰','satellites'],['🏙','street view in london'],['🛡️','AI governance'],['⚖️','compare doctrines'],['🔏','SIGIL ledger'],['▶','run demo'],['🗂','set up my workspace'],['✈️','open aircraft'],['⚓','marine vessels'],['📰','news in ukraine'],['🧭','what is near gibraltar'],['🌍','world view'],['🪶','lite mode'],['🛰','what am I looking at'],['⚡','convergence'],['⚓','maritime chokepoints'],['⛽','pipelines'],['🎯','military symbology'],['🛰','export cot'],['🔏','sign all in view'],['◎','watch box'],['📄','system card'],['📋','export brief'],['🖨','print brief'],['🔄','retry feeds'],['🛡️','protect the ai space'],['◆','why defoneos'],['🗓','next dates'],['🧬','the moat in 3d'],['🌐','submarine cables'],['📡','comms masts'],['❓','what can you do']];
+var SUGG=[['✨','light it up'],['📍','scan my area'],['📷','cameras in london'],['🌧️','weather radar'],['🚆','rail network'],['💹','financial centres'],['🏬','local businesses'],['🗂','domains ontology'],['🛬','global airports'],['⚡','power plants'],['🌫️','air quality'],['🔥','show wildfires'],['🛰','satellites'],['🏙','street view in london'],['🛡️','AI governance'],['⚖️','compare doctrines'],['🔏','SIGIL ledger'],['▶','run demo'],['🗂','set up my workspace'],['✈️','open aircraft'],['⚓','marine vessels'],['📰','news in ukraine'],['🧭','what is near gibraltar'],['🌍','world view'],['🪶','lite mode'],['🛰','what am I looking at'],['⚡','convergence'],['⚓','maritime chokepoints'],['⛽','pipelines'],['🎯','military symbology'],['🛰','export cot'],['🔏','sign all in view'],['◎','watch box'],['📄','system card'],['🧾','export oscal'],['📋','export brief'],['🖨','print brief'],['🔄','retry feeds'],['🛡️','protect the ai space'],['◆','why defoneos'],['🗓','next dates'],['🧬','the moat in 3d'],['🌐','submarine cables'],['📡','comms masts'],['❓','what can you do']];
 function _runSugg(t){ var el=document.getElementById('cmd'); if(el) el.value=t; var b=document.getElementById('cmdSugg'); if(b) b.classList.remove('open'); command(); }
 function cmdSuggest(v){ var box=document.getElementById('cmdSugg'); if(!box) return; v=(''+(v||'')).toLowerCase().trim();
   if(v.length<2){ box.classList.remove('open'); box.innerHTML=''; return; }
@@ -3512,6 +3546,7 @@ function command(){
   if(/(retry (the )?feeds|refresh (the )?feeds|retry (throttled|failed|quiet)|re.?pull|reload feeds|refresh (the )?(data|layers)|feeds? health|feed status)/.test(q)){ if(window.sovRetryFeeds) sovRetryFeeds(); return res('re-pulling any throttled or quiet feeds'); }
   if(/(print brief|printable brief|brief pdf|pdf brief|print (the )?(report|sitrep|situation)|report pdf|brief report)/.test(q)){ if(window.sovBriefPrint) sovBriefPrint(); return res('opening a one-page printable situational report — signed'); }
   if(/(export brief|signed brief|download brief|situation(al)? report|situation(al)? brief|export sitrep|sitrep export|brief export|save (the )?(brief|picture))/.test(q)){ if(window.sovBrief) sovBrief(); return res('exporting a signed situational brief — verifiable offline'); }
+  if(/(oscal|export oscal|component.?definition|nist oscal|compliance export)/.test(q)){ if(window.sovOscal) sovOscal(); return res('signed NIST OSCAL component-definition · auditor-ingestible'); }
   if(/(system ?card|jsp ?936 card|assurance card)/.test(q)){ var cm=q.match(/(?:system ?card|card)\s+(?:for|of|on)\s+(.+)/); if(window.sovSystemCard) sovSystemCard(cm&&cm[1]); return res('signed AI System Card · JSP 936 / EU AI Act · offline-verifiable'); }
   if(/(watch box|watch this area|watch here|monitor (this )?area|monitor here|alert me|set (a )?watch|early.?warning here)/.test(q)){ var wm=q.match(/(\d{2,5})\s*km/); if(window.sovWatchBox) sovWatchBox(wm?+wm[1]:undefined); return res('watch box armed — signed alert when ≥2 live streams converge'); }
   if(/(sign all|sign everything|sign the (view|board|picture|contacts)|batch.?sign|sign (all )?contacts)/.test(q)){ if(window.sovSignAllInView) sovSignAllInView(); return res('signing every live contact in view — one batch receipt'); }
