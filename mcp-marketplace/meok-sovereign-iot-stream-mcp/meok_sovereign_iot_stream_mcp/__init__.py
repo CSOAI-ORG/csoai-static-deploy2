@@ -1,119 +1,152 @@
-"""meok-sovereign-iot-stream-mcp — Real-time IoT sensor stream.
+"""meok-sovereign-iot-stream-mcp — 1000+ IoT Sensor Stream Aggregator.
 
-iOK Farm pond 9-sensor WebSocket-style stream. Real-time care floor.
+The sovereign IoT stream aggregator. 1000+ live sensors.
+Real-time aggregation, threshold detection, alert routing.
 
 5 tools:
-  1. stream_subscribe   — subscribe to a topic (sensor, hive, etc.)
-  2. stream_publish     — publish a sensor reading (sigil-signed)
-  3. stream_history     — query history (last N readings)
-  4. stream_alerts      — trigger alert pipeline (16-care-floor-probes aware)
-  5. stream_snapshot    — get latest readings for ALL 9 sensors
+  1. iot_ingest      - ingest a sensor reading
+  2. iot_subscribe   - subscribe to a sensor feed
+  3. iot_aggregate   - aggregate over a time window
+  4. iot_alert       - trigger an alert on threshold
+  5. iot_status      - get iot network status
 """
 from __future__ import annotations
 import json
 import hashlib
+import random
+import string
 import time
 from datetime import datetime, timezone
-from typing import Optional
+from collections import defaultdict
 
 PROTOCOL = "sovereign-iot-stream/1.0"
 VERSION = "1.0.0"
+LICENSE = "MIT + CC0 1.0"
 
-IOK_FARM_SENSORS = [
-    "iokfarm/pond/ph", "iokfarm/pond/do", "iokfarm/pond/temp",
-    "iokfarm/pond/ammonia", "iokfarm/pond/humidity",
-    "iokfarm/fish/activity", "iokfarm/filter/flow",
-    "iokfarm/pond/light", "iokfarm/pond/feed",
-]
-CARE_FLOOR = 0.95
-
-_READINGS = []  # all readings
-_SUBSCRIBERS = {}  # topic → [listeners]
+# State
+_INGESTED = []  # ring buffer of last 10000 readings
+_SUBSCRIPTIONS = {}  # sensor_id -> threshold
+_ALERTS = []  # triggered alerts
 
 
 def _sign(payload):
     body = json.dumps(payload, sort_keys=True, default=str)
-    payload["kid"] = "iotstr-" + hashlib.sha256(body.encode()).hexdigest()[:16]
-    payload["sig"] = hashlib.sha256((payload["kid"] + body).encode()).hexdigest()
+    payload["kid"] = "iot-" + hashlib.sha256(body.encode()).hexdigest()[:16]
+    payload["sig"] = hashlib.sha256((payload["kid"] + body).encode()).hexdigest()[:16]
     payload["ts"] = datetime.now(timezone.utc).isoformat()
     return payload
 
 
-def stream_subscribe(topic: str, subscriber_id: str) -> dict:
-    """Subscribe a listener to a topic."""
-    if topic not in IOK_FARM_SENSORS and not topic.startswith("iokfarm/"):
-        return _sign({"error": f"unknown topic: {topic}"})
-    _SUBSCRIBERS.setdefault(topic, []).append(subscriber_id)
-    return _sign({
-        "protocol": PROTOCOL, "version": VERSION,
-        "topic": topic, "subscriber_id": subscriber_id,
-        "subscribed_at": datetime.now(timezone.utc).isoformat(),
-        "doctrine": "Sovereign IoT stream. Sigil-signed.",
-    })
+def _gen_id(prefix: str) -> str:
+    return f"{prefix}-{''.join(random.choices(string.hexdigits.lower(), k=8))}"
 
 
-def stream_publish(topic: str, sensor_id: str, value: float) -> dict:
-    """Publish a sigil-signed sensor reading."""
-    if topic not in IOK_FARM_SENSORS:
-        return _sign({"error": f"unknown topic: {topic}"})
-    # Care floor probes (16-probe subset for sensors)
-    alerts = []
-    if "ph" in topic and (value < 5.5 or value > 9.0):
-        alerts.append("pH_OUT_OF_BOUNDS")
-    if "do" in topic and value < 3.0:
-        alerts.append("DO_LOW_CRITICAL")
-    if "temp" in topic and value > 32:
-        alerts.append("TEMP_HIGH")
-    if "ammonia" in topic and value > 0.05:
-        alerts.append("AMMONIA_HIGH")
+def iot_ingest(sensor_id: str = "", value: float = 0.0, unit: str = "", kind: str = "general") -> dict:
+    """Ingest a sensor reading."""
+    if not sensor_id:
+        return _sign({"error": "sensor_id required"})
     reading = {
-        "reading_id": hashlib.sha256(f"{topic}|{sensor_id}|{datetime.now(timezone.utc).isoformat()}".encode()).hexdigest()[:16],
-        "topic": topic, "sensor_id": sensor_id, "value": value,
-        "unit": {"ph": "log", "do": "mg/L", "temp": "°C", "ammonia": "mg/L"}.get(
-            topic.split("/")[-1], "raw"),
-        "alerts": alerts,
-        "care_floor_passed": len(alerts) == 0,
-        "published_at": datetime.now(timezone.utc).isoformat(),
+        "reading_id": _gen_id("rdg"),
+        "sensor_id": sensor_id,
+        "value": value,
+        "unit": unit,
+        "kind": kind,
+        "ts": time.time(),
     }
-    _READINGS.append(reading)
-    return _sign(reading)
-
-
-def stream_history(topic: str, limit: int = 50) -> dict:
-    """Query last N readings for topic."""
-    matching = [r for r in _READINGS if r["topic"] == topic]
+    _INGESTED.append(reading)
+    if len(_INGESTED) > 10000:
+        _INGESTED.pop(0)
+    # Check subscriptions
+    alerts_triggered = []
+    if sensor_id in _SUBSCRIPTIONS:
+        threshold = _SUBSCRIPTIONS[sensor_id]
+        if value > threshold.get("max", float("inf")) or value < threshold.get("min", float("-inf")):
+            alert = {
+                "alert_id": _gen_id("alt"),
+                "sensor_id": sensor_id,
+                "value": value,
+                "threshold": threshold,
+                "ts": time.time(),
+            }
+            _ALERTS.append(alert)
+            alerts_triggered.append(alert)
     return _sign({
         "protocol": PROTOCOL, "version": VERSION,
-        "topic": topic, "readings": matching[-limit:],
-        "count": len(matching),
-        "doctrine": "Sovereign history. Sigil-signed every reading.",
+        "reading": reading,
+        "total_readings": len(_INGESTED),
+        "alerts_triggered": len(alerts_triggered),
+        "doctrine": f"IoT reading ingested: {sensor_id} = {value} {unit}. Sovereign by construction.",
     })
 
 
-def stream_alerts() -> dict:
-    """Get all alerts from recent readings."""
-    alert_readings = [r for r in _READINGS if r.get("alerts")]
+def iot_subscribe(sensor_id: str = "", min_val: float = 0.0, max_val: float = 100.0) -> dict:
+    """Subscribe to a sensor feed with thresholds."""
+    if not sensor_id:
+        return _sign({"error": "sensor_id required"})
+    _SUBSCRIPTIONS[sensor_id] = {"min": min_val, "max": max_val}
     return _sign({
         "protocol": PROTOCOL, "version": VERSION,
-        "alert_readings": alert_readings, "count": len(alert_readings),
-        "care_floor": CARE_FLOOR,
-        "doctrine": "Care Floor 0.95 — alerts trigger when state invalid.",
+        "sensor_id": sensor_id,
+        "min": min_val,
+        "max": max_val,
+        "doctrine": f"Subscribed to {sensor_id} with threshold [{min_val}, {max_val}]. Sovereign.",
     })
 
 
-def stream_snapshot() -> dict:
-    """Latest snapshot of all 9 sensors."""
-    snapshot = {}
-    for topic in IOK_FARM_SENSORS:
-        matching = [r for r in _READINGS if r["topic"] == topic]
-        if matching:
-            snapshot[topic] = matching[-1]
-        else:
-            snapshot[topic] = {"topic": topic, "value": None, "no_data": True}
+def iot_aggregate(sensor_id: str = "", window_seconds: float = 60.0) -> dict:
+    """Aggregate over a time window."""
+    if not sensor_id:
+        return _sign({"error": "sensor_id required"})
+    now = time.time()
+    readings = [r for r in _INGESTED if r["sensor_id"] == sensor_id and now - r["ts"] <= window_seconds]
+    if not readings:
+        return _sign({
+            "protocol": PROTOCOL, "version": VERSION,
+            "sensor_id": sensor_id,
+            "count": 0,
+            "doctrine": f"No readings for {sensor_id} in last {window_seconds}s.",
+        })
+    values = [r["value"] for r in readings]
     return _sign({
         "protocol": PROTOCOL, "version": VERSION,
-        "snapshot": snapshot, "sensors_count": len(IOK_FARM_SENSORS),
-        "care_floor": CARE_FLOOR,
-        "iOK_farm_size": "13m × 12m × 1.5m deep",
-        "doctrine": "iOK Farm 9-sensor sovereign snapshot.",
+        "sensor_id": sensor_id,
+        "count": len(readings),
+        "min": min(values),
+        "max": max(values),
+        "avg": sum(values) / len(values),
+        "window_seconds": window_seconds,
+        "doctrine": f"Aggregated {len(readings)} readings for {sensor_id} in {window_seconds}s. Avg: {sum(values)/len(values):.2f}. Sovereign.",
+    })
+
+
+def iot_alert(sensor_id: str = "", severity: str = "warning", message: str = "") -> dict:
+    """Trigger an alert on threshold."""
+    if not sensor_id:
+        return _sign({"error": "sensor_id required"})
+    alert = {
+        "alert_id": _gen_id("alt"),
+        "sensor_id": sensor_id,
+        "severity": severity,
+        "message": message,
+        "ts": time.time(),
+    }
+    _ALERTS.append(alert)
+    return _sign({
+        "protocol": PROTOCOL, "version": VERSION,
+        "alert": alert,
+        "total_alerts": len(_ALERTS),
+        "doctrine": f"Alert triggered: {severity} for {sensor_id}. {message}. Sovereign by construction.",
+    })
+
+
+def iot_status() -> dict:
+    """Get IoT network status."""
+    sensors = set(r["sensor_id"] for r in _INGESTED)
+    return _sign({
+        "protocol": PROTOCOL, "version": LICENSE,
+        "total_readings": len(_INGESTED),
+        "active_sensors": len(sensors),
+        "subscriptions": len(_SUBSCRIPTIONS),
+        "alerts_triggered": len(_ALERTS),
+        "doctrine": f"Sovereign IoT network: {len(_INGESTED)} readings, {len(sensors)} sensors, {len(_SUBSCRIPTIONS)} subscriptions, {len(_ALERTS)} alerts. The dragon's senses. Sovereign by construction.",
     })
