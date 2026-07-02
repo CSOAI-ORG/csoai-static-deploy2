@@ -219,5 +219,7 @@ for (const p of ['pricing.html','badges.html','verify.html','sovspace.html','cha
 
 { const rr = await fetch(BASE + '/runner/meok-sap-runner.mjs'); const t = await rr.text(); ck('SAP runner: on-device MCP runner served + offline-verify', rr.status === 200 && /verifySAP/.test(t) && /crypto\.verify/.test(t) && /ollama/i.test(t)); }
 
+{ const o = await gj('/api/sap?name=Aria&format=oasf'); ck('SAP: OASF-shaped export + sovereign-governance extension', o.s === 200 && o.j.schema_version && Array.isArray(o.j.locators) && (o.j.extensions||[]).some(e=>e.name==='meok.sovereign-governance.v1' && e.data?.signature)); }
+
 console.log('\n' + (fail === 0 ? '✅ PASS' : '❌ FAIL') + ' — ' + pass + ' passed, ' + fail + ' failed' + (fails.length ? '  [' + fails.join(', ') + ']' : ''));
 process.exit(fail ? 1 : 0);

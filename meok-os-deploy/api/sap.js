@@ -76,6 +76,18 @@ export default function handler(req, res){
     const sha256 = crypto.createHash('sha256').update(message).digest('hex');
     const fingerprint='SOV:'+crypto.createHash('sha256').update(pubHex).digest('hex').slice(0,32).match(/.{1,4}/g).join('-').toUpperCase();
     if((q.format||'').toString().toLowerCase()==='af'){ return res.status(200).json(af_state); }  // Letta import
+    // ?format=oasf → AGNTCY OASF-INSPIRED record so this agent is expressible in the Linux-Foundation
+    // standard's shape (be IN the standard, not outside it). NOTE: draft field-mapping — verify exact
+    // names against spec.dir.agntcy.org before claiming spec-conformance. Carries our sovereign
+    // extension: offline-verifiable Ed25519 + governance (the part their keyless/CA model lacks).
+    if((q.format||'').toString().toLowerCase()==='oasf'){ return res.status(200).json({
+      schema_version:'0.3.1 (OASF-compatible draft — verify vs spec.dir.agntcy.org)', name, version:'1.0.0',
+      description: persona, authors:['CSOAI / MEOK (UK Co. 16939677)'],
+      skills: tools.map(t=>({ class_name:t.name, description:t.desc })),
+      locators:[ {type:'mcp', url: base+'/api/mcp'}, {type:'a2a', url: base+'/api/agentcard?name='+encodeURIComponent(name)}, {type:'runner', url: base+'/runner/meok-sap-runner.mjs'} ],
+      extensions:[ { name:'meok.sovereign-governance.v1', data:{ signing:'ed25519 (self-owned, OFFLINE-verifiable — NOT keyless/CA)', fingerprint, careFloor:0.95, hardStops:['no harm','no unvoted autonomy','no covert surveillance'], verify: base+'/api/verify', canonical: message, signature, publicKey: pubHex } } ],
+      note:'OASF-shaped MEOK agent + a sovereign-governance extension. The extension is the contribution: offline-verifiable identity + embedded governance on top of AGNTCY/A2A.',
+    }); }
     return res.status(200).json({ ok:true, package:pkg, signature:{ alg:'ed25519', canonical:message, signature, publicKey:pubHex, sha256, fingerprint, seeded:!!process.env.SIGIL_SEED, verify: base+'/api/verify' },
       note:'Sovereign governance PROFILE for portable agents — rides AGNTCY(OASF/OCI)+A2A+MCP+.af, adds the offline-verifiable sovereign+governed signature they lack. AGENT inside+signed; MODEL pluggable. Verify at /api/verify; ?format=af for Letta import.' });
   }catch(e){ return res.status(500).json({ ok:false, error:String(e.message||e) }); }

@@ -13,6 +13,7 @@ import readline from 'node:readline';
 const arg = (k, d) => { const i = process.argv.indexOf(k); return i >= 0 ? process.argv[i + 1] : d; };
 const SAP_SRC = arg('--sap', 'https://os.meok.ai/api/sap?name=MEOK%20Sovereign');
 const OLLAMA = arg('--ollama', 'http://localhost:11434');
+const MODEL_GGUF = arg('--model', '');   // optional: a .gguf path → zero-daemon embedded brain via node-llama-cpp
 const log = (...a) => process.stderr.write('[meok-runner] ' + a.join(' ') + '\n');  // logs to stderr (stdout is the MCP channel)
 
 // ---- load SAP (file or URL) ----
@@ -28,8 +29,18 @@ function verifySAP(sap) {
     return { ok, fingerprint: s.fingerprint, seeded: s.seeded };
   } catch (e) { return { ok: false, why: String(e.message || e) }; }
 }
-// ---- BRAIN: offline-first (Ollama) → online fallback (the SAP's hosted brain) → honest stub ----
+// ---- optional ZERO-DAEMON embedded brain (node-llama-cpp) — only if --model <gguf> is given ----
+let _session = null;
+async function tryLocalLlama(prompt) {
+  if (!MODEL_GGUF) return null;
+  try {
+    if (!_session) { const m = await import('node-llama-cpp'); const llama = await m.getLlama(); const model = await llama.loadModel({ modelPath: MODEL_GGUF }); const ctx = await model.createContext(); _session = new m.LlamaChatSession({ contextSequence: ctx.getSequence() }); log('embedded brain loaded (node-llama-cpp):', MODEL_GGUF); }
+    const text = await _session.prompt(prompt); return { text: (text || '').trim(), via: 'offline:embedded-llama.cpp' };
+  } catch (e) { log('embedded brain unavailable (npm i node-llama-cpp + a .gguf):', e.message); return null; }
+}
+// ---- BRAIN: embedded (zero-daemon) → Ollama → online fallback → honest stub ----
 async function brain(sap, prompt) {
+  const local = await tryLocalLlama(prompt); if (local) return local;
   const model = ((sap.package?.brain?.left?.offline || [])[0] || 'ollama/llama3.2').replace(/^ollama\//, '');
   try {
     const ac = new AbortController(); const t = setTimeout(() => ac.abort(), 2000);
