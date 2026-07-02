@@ -216,7 +216,7 @@ The Sovereign Ledger cross-walks to 30+ ledger-adjacent frameworks:
 
 ### V.B — MEOK/CSOAI Governance Integration
 
-The Ledger inherits the same 30 universal compliance frameworks from L0. Specifically:
+The Ledger inherits the same 236 universal compliance frameworks from L0. Specifically:
 - **EU AI Act Article 50**: Financial AI emits Article 50 passport
 - **GDPR Articles 5-21**: Ledger entries are data-minimisation compliant
 - **ISO/IEC 42001:2023**: Ledger AI management system
@@ -244,7 +244,7 @@ The Sovereign Ledger cross-walks to every charter in the federation. Total: 39 c
 
 ### VI.B — Cross-Walks To External Frameworks
 
-The Ledger cross-walks to all 30 universal compliance frameworks, the 40+ financial regulations, the 4 accounting frameworks (IFRS, UK GAAP, US GAAP, China ASBE), the 4 sustainability disclosure frameworks (ISSB IFRS S1/S2, ESRS, TCFD, GRI), the 4 cross-border CBDC initiatives (BIS Project Agorá, Digital Pound, Digital Euro, eCNY), and the 12 sovereign payment rails (x402, SWIFT ISO 20022, SEPA, ACH/Nacha, RTP, FedNow, TIPS, BoE RTGS, etc.).
+The Ledger cross-walks to all 236 universal compliance frameworks, the 40+ financial regulations, the 4 accounting frameworks (IFRS, UK GAAP, US GAAP, China ASBE), the 4 sustainability disclosure frameworks (ISSB IFRS S1/S2, ESRS, TCFD, GRI), the 4 cross-border CBDC initiatives (BIS Project Agorá, Digital Pound, Digital Euro, eCNY), and the 12 sovereign payment rails (x402, SWIFT ISO 20022, SEPA, ACH/Nacha, RTP, FedNow, TIPS, BoE RTGS, etc.).
 
 ## ARTICLE VII — REAL-WORLD SIMULATION ENGINE
 

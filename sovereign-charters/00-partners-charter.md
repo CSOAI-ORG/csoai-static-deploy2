@@ -91,7 +91,7 @@ This binding is **constitutional** — only amendable by 33/33 BFT + 5 human sig
 
 **Step 3: BFT Council Approval** — Proposal submitted to BFT council. Quorum 23/33. SLA: 30-180 days depending on partner category.
 
-**Step 4: 4-Tier Certification** — Partner's operators complete Foundation → Practitioner → Lead Auditor → Director certifications. Each cert is Ed25519-signed and cross-walked to all 30 frameworks.
+**Step 4: 4-Tier Certification** — Partner's operators complete Foundation → Practitioner → Lead Auditor → Director certifications. Each cert is Ed25519-signed and cross-walked to all 236 frameworks.
 
 **Step 5: Partner Onboarded** — Partner receives:
 - Sovereign brand license
@@ -192,7 +192,7 @@ The Partners Alliance cross-walks to:
 | 38 | partners | L0+ (this charter) |
 
 ### VI.B — Compliance Frameworks (30)
-All 30 frameworks from the Charter of Charters are inherited. The Partners Alliance additionally maps to:
+All 236 frameworks from the Charter of Charters are inherited. The Partners Alliance additionally maps to:
 - **ISAE 3402** (international assurance standard for service organisations)
 - **ISO 27017** (cloud-specific security controls)
 - **ISO 27018** (cloud-specific privacy controls)
@@ -340,7 +340,7 @@ Inherits from: L0 Sovereign Root (00-sovereign-root-charter.md)
 **Anchored**: Bitcoin Blockchain via OpenTimestamps (pending)
 **Sealed**: 2026-06-30T00:00:00Z
 
-> *"The Partners Alliance. Where 6 partner categories, 4 partner tiers, 38 cross-walked charters, 30 frameworks, and 1 sovereign root become 1,443 binding edges. The dragon scales by certifying partners who carry the sovereign brand — never through equity, never through capture, only through Charter Article 0 binding."* 🐉
+> *"The Partners Alliance. Where 6 partner categories, 4 partner tiers, 38 cross-walked charters, 236 frameworks, and 1 sovereign root become 1,443 binding edges. The dragon scales by certifying partners who carry the sovereign brand — never through equity, never through capture, only through Charter Article 0 binding."* 🐉
 
 
 ## CLEAN HOUSE PROTOCOL BINDING

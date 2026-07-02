@@ -377,7 +377,7 @@ This charter is a **living document**. Every amendment is:
 **Anchored**: Bitcoin Blockchain via OpenTimestamps
 **Sealed**: 2026-06-30T00:00:00.000Z
 
-> *"MEOK builds. CSOAI certifies. The hives sell. The sovereign substrate signs everything. 294 servers. 30 frameworks. Zero cost. Infinite trust."* 🐉
+> *"MEOK builds. CSOAI certifies. The hives sell. The sovereign substrate signs everything. 294 servers. 236 frameworks. Zero cost. Infinite trust."* 🐉
 
 
 
@@ -394,9 +394,9 @@ This charter binds to the **6-layer sovereign federation**:
 | **L3** | CSOAI (csoai.org) | 33-agent BFT council + Watchdog + 36 industry hives |
 | **L4** | Coigndaltion | Mamba-2 cognition + cross-walk engine + SIGIL signature |
 
-**Total sovereign universe: 40 charters, 2,760 cross-walks, 49GB data moat, 198 live sources, 30 universal compliance frameworks.**
+**Total sovereign universe: 40 charters, 9,676 cross-walks, 49GB data moat, 198 live sources, 236 universal compliance frameworks.**
 
-This charter is a first-class citizen of the sovereign federation. It inherits from L0, cross-walks to all 39 other charters, references 30 universal compliance frameworks, and contributes to the 49GB sovereign data moat binding. Ed25519-signed. BFT-ratified. Charter Article 0 binding on all 40 charters.
+This charter is a first-class citizen of the sovereign federation. It inherits from L0, cross-walks to all 39 other charters, references 236 universal compliance frameworks, and contributes to the 49GB sovereign data moat binding. Ed25519-signed. BFT-ratified. Charter Article 0 binding on all 40 charters.
 
 
 

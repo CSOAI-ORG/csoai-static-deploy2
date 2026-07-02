@@ -227,7 +227,7 @@ The Sovereign Standards cross-walks to 30+ standards-adjacent frameworks:
 
 ### V.B — MEOK/CSOAI Governance Integration
 
-The Standards inherits the same 30 universal compliance frameworks from L0. Specifically:
+The Standards inherits the same 236 universal compliance frameworks from L0. Specifically:
 - **EU AI Act Article 50**: Standards conformance emits Article 50 passport
 - **GDPR Articles 5-21**: Standards metadata is data-minimisation compliant
 - **ISO/IEC 42001:2023**: Standards body AI management system
@@ -255,7 +255,7 @@ The Sovereign Standards cross-walks to every charter in the federation. Total: 3
 
 ### VI.B — Cross-Walks To External Frameworks
 
-The Standards cross-walks to all 30 universal compliance frameworks, the 70+ standards bodies, the 10,000+ ISO standards, the 10,000+ IEC standards, the 4,000+ ITU recommendations, the 50,000+ ETSI standards, the 5,000+ IEEE standards, the 6,000+ NIST publications, the 30,000+ BSI standards, and the principal harmonisation instruments (ISO/IEC JTC 1, CEN-CENELEC-ETSI, PASC, COPANT, ARSO, WTO TBT, ILAC, IAF, APAC, EA, NADCAP).
+The Standards cross-walks to all 236 universal compliance frameworks, the 70+ standards bodies, the 10,000+ ISO standards, the 10,000+ IEC standards, the 4,000+ ITU recommendations, the 50,000+ ETSI standards, the 5,000+ IEEE standards, the 6,000+ NIST publications, the 30,000+ BSI standards, and the principal harmonisation instruments (ISO/IEC JTC 1, CEN-CENELEC-ETSI, PASC, COPANT, ARSO, WTO TBT, ILAC, IAF, APAC, EA, NADCAP).
 
 ## ARTICLE VII — REAL-WORLD SIMULATION ENGINE
 

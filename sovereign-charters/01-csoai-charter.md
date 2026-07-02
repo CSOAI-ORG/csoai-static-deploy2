@@ -58,7 +58,7 @@ The CSOAI MCP Registry maintains 294 live compliance servers, each exposing a st
 
 - **Global TAM**: £48.2B — AI governance, risk, and compliance (GRC) market by 2027, driven by EU AI Act enforcement, global AI safety institutes, and enterprise AI adoption mandates
 - **Current Barrier to Entry**: Proprietary certification bodies charge £15,000-£120,000 per audit cycle; ISO 42001 certification requires £40,000+ in consultancy fees; no unified cross-walk exists between AI-specific regulations (EU AI Act, China AI regulations, US Executive Order 14110) and traditional GRC frameworks (SOC 2, ISO 27001). Training costs alone block 95% of AI practitioners from entering the governance field.
-- **Sovereign Barrier Drop**: Free training + Ed25519-signed certification removes the £40,000+ certification cost barrier entirely. The 294-server MCP Registry provides automated compliance evidence generation, reducing audit cycles from 12 weeks to 4 hours. Cross-walk engine maps all 30 frameworks simultaneously, eliminating the need for separate audits per regulation.
+- **Sovereign Barrier Drop**: Free training + Ed25519-signed certification removes the £40,000+ certification cost barrier entirely. The 294-server MCP Registry provides automated compliance evidence generation, reducing audit cycles from 12 weeks to 4 hours. Cross-walk engine maps all 236 frameworks simultaneously, eliminating the need for separate audits per regulation.
 
 ### II.C — Current State of the Industry
 
@@ -351,7 +351,7 @@ In the event of a catastrophic AI incident (fatality, systemic discrimination, i
 
 - PyPI: `csoai-mcp` v2.1.0 (294 compliance servers, unified client SDK)
 - npm: `@csoai/watchdog-verify` v1.3.0 (browser-side Ed25519 verification)
-- MCP Registry: 294 active servers across 30 frameworks, all with standardised manifests
+- MCP Registry: 294 active servers across 236 frameworks, all with standardised manifests
 - Vercel: `https://csoai.org` (Next.js 14, ISR, Edge Functions)
 - Sovereign VM: `https://sov3.csoai.org:3101` — SOV3 substrate with MCP transport
 - Docker Hub: `csoai/watchdog:latest` (containerised certification engine)
@@ -395,9 +395,9 @@ This charter binds to the **6-layer sovereign federation**:
 | **L3** | CSOAI (csoai.org) | 33-agent BFT council + Watchdog + 36 industry hives |
 | **L4** | Coigndaltion | Mamba-2 cognition + cross-walk engine + SIGIL signature |
 
-**Total sovereign universe: 40 charters, 2,760 cross-walks, 49GB data moat, 198 live sources, 30 universal compliance frameworks.**
+**Total sovereign universe: 40 charters, 9,676 cross-walks, 49GB data moat, 198 live sources, 236 universal compliance frameworks.**
 
-This charter is a first-class citizen of the sovereign federation. It inherits from L0, cross-walks to all 39 other charters, references 30 universal compliance frameworks, and contributes to the 49GB sovereign data moat binding. Ed25519-signed. BFT-ratified. Charter Article 0 binding on all 40 charters.
+This charter is a first-class citizen of the sovereign federation. It inherits from L0, cross-walks to all 39 other charters, references 236 universal compliance frameworks, and contributes to the 49GB sovereign data moat binding. Ed25519-signed. BFT-ratified. Charter Article 0 binding on all 40 charters.
 
 
 

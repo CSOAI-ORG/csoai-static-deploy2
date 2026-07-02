@@ -47,7 +47,7 @@ This charter inherits the L0 Sovereign Root binding to the sovereign data moat: 
 
 ### II.A — Industry Scope
 
-OpenMCP is the sovereign MCP (Model Context Protocol) server directory, registry, and audit engine for the entire MEOK ecosystem. It serves as the canonical listing for all 30+ MCP servers across all 34 hives, maintaining live registry entries with versioned API surfaces, security audit scores, cross-post run results, dependency graphs, and compliance attestations. Every MCP server listed in the OpenMCP registry undergoes automated security scanning (dependency audit, input fuzzing, tool surface analysis), performance benchmarking (latency p50/p95/p99, throughput, concurrency), and compliance cross-walk mapping against 30 frameworks. The registry supports federated search, semantic tool discovery via embedding-based similarity, and automated cross-post runs where MCP tools are tested against real workloads from other hives. OpenMCP's own MCP server (`openmcp-registry-mcp`) exposes the full registry API for programmatic tool discovery, audit score retrieval, and dependency resolution — enabling AI agents to dynamically discover and invoke the right MCP tool for any task.
+OpenMCP is the sovereign MCP (Model Context Protocol) server directory, registry, and audit engine for the entire MEOK ecosystem. It serves as the canonical listing for all 30+ MCP servers across all 34 hives, maintaining live registry entries with versioned API surfaces, security audit scores, cross-post run results, dependency graphs, and compliance attestations. Every MCP server listed in the OpenMCP registry undergoes automated security scanning (dependency audit, input fuzzing, tool surface analysis), performance benchmarking (latency p50/p95/p99, throughput, concurrency), and compliance cross-walk mapping against 236 frameworks. The registry supports federated search, semantic tool discovery via embedding-based similarity, and automated cross-post runs where MCP tools are tested against real workloads from other hives. OpenMCP's own MCP server (`openmcp-registry-mcp`) exposes the full registry API for programmatic tool discovery, audit score retrieval, and dependency resolution — enabling AI agents to dynamically discover and invoke the right MCP tool for any task.
 
 ### II.B — Market Size & Barriers
 
@@ -341,9 +341,9 @@ This charter binds to the **6-layer sovereign federation**:
 | **L3** | CSOAI (csoai.org) | 33-agent BFT council + Watchdog + 36 industry hives |
 | **L4** | Coigndaltion | Mamba-2 cognition + cross-walk engine + SIGIL signature |
 
-**Total sovereign universe: 40 charters, 2,760 cross-walks, 49GB data moat, 198 live sources, 30 universal compliance frameworks.**
+**Total sovereign universe: 40 charters, 9,676 cross-walks, 49GB data moat, 198 live sources, 236 universal compliance frameworks.**
 
-This charter is a first-class citizen of the sovereign federation. It inherits from L0, cross-walks to all 39 other charters, references 30 universal compliance frameworks, and contributes to the 49GB sovereign data moat binding. Ed25519-signed. BFT-ratified. Charter Article 0 binding on all 40 charters.
+This charter is a first-class citizen of the sovereign federation. It inherits from L0, cross-walks to all 39 other charters, references 236 universal compliance frameworks, and contributes to the 49GB sovereign data moat binding. Ed25519-signed. BFT-ratified. Charter Article 0 binding on all 40 charters.
 
 
 

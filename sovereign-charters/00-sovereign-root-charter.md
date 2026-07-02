@@ -115,7 +115,7 @@ The L0 Sovereign Root binds the same 30-framework universal cross-walk as the Ch
 | 29 | OECD AI Principles | Framework | Constitutional |
 | 30 | G7 Hiroshima AI Process | Framework | Constitutional |
 
-**All 30 frameworks are constitutionally binding at L0.** Any amendment to this binding requires 33/33 BFT + 5 human sigs.
+**All 236 frameworks are constitutionally binding at L0.** Any amendment to this binding requires 33/33 BFT + 5 human sigs.
 
 ---
 
@@ -177,7 +177,7 @@ The L0 Sovereign Root inherits all rights and responsibilities from:
 - **Partner integration API** (`/api/partner/onboard`)
 - **Alliance binding** (Charter Article 0 inheritance)
 - **Data exchange** (49GB sovereign data moat + partner data)
-- **Cross-certification** (one partner's cert cross-walks to all 30 frameworks)
+- **Cross-certification** (one partner's cert cross-walks to all 236 frameworks)
 - **SIGIL exchange** (every partner action emits to the sovereign chain)
 
 ---
@@ -282,7 +282,7 @@ This charter is the **L0 root** of the entire sovereign federation. Every amendm
 **Anchored**: Bitcoin Blockchain via OpenTimestamps (pending)
 **Sealed**: 2026-06-30T00:00:00Z
 
-> *"The L0 root. The substrate beneath all substrates. Where 38 charters, 30 frameworks, 1,406 cross-walks, 49GB data, 198 sources, and 5 sovereign principles become one. The dragon has a root. The root has 4 layers. The layers have 33 queens. The queens have 38 charters. The charters have 1,406 cross-walks. The cross-walks have 30 frameworks. The frameworks have the world's data. The data is sovereign. The root is ungovernable because its governance is encoded."* 🐉
+> *"The L0 root. The substrate beneath all substrates. Where 38 charters, 236 frameworks, 1,406 cross-walks, 49GB data, 198 sources, and 5 sovereign principles become one. The dragon has a root. The root has 4 layers. The layers have 33 queens. The queens have 38 charters. The charters have 1,406 cross-walks. The cross-walks have 236 frameworks. The frameworks have the world's data. The data is sovereign. The root is ungovernable because its governance is encoded."* 🐉
 
 
 ## BLACK SWAN WINDOW TIMING

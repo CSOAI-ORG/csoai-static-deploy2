@@ -190,7 +190,7 @@ The Sovereign Court cross-walks to 30+ court-procedure frameworks in 4 categorie
 
 ### V.B — MEOK/CSOAI Governance Integration
 
-The Court inherits the same 30 universal compliance frameworks from L0. Specifically:
+The Court inherits the same 236 universal compliance frameworks from L0. Specifically:
 - **EU AI Act Article 50**: Court rulings on AI admissibility are SIGIL-anchored with watermarking.
 - **GDPR Articles 5-21**: Court records are data-minimisation compliant; DSARs processed via Coigndaltion `cog_route`.
 - **ISO/IEC 42001:2023**: AI management system for AI-judge pattern.
@@ -216,7 +216,7 @@ The Sovereign Court cross-walks to every charter in the federation. Total: 39 cr
 
 ### VI.B — Cross-Walks To External Frameworks
 
-The Court cross-walks to all 30 universal compliance frameworks, the 32 international court systems, the 250+ legal doctrines, and the principal harmonisation instruments (Rome I, Rome II, Hague 2005, Hague 2019, Luxembourg 1988, New York 1958, Cape Town 2001, UNIDROIT 2016, UNCITRAL 1985/2006, CISG 1980, Brussels Ia).
+The Court cross-walks to all 236 universal compliance frameworks, the 32 international court systems, the 250+ legal doctrines, and the principal harmonisation instruments (Rome I, Rome II, Hague 2005, Hague 2019, Luxembourg 1988, New York 1958, Cape Town 2001, UNIDROIT 2016, UNCITRAL 1985/2006, CISG 1980, Brussels Ia).
 
 ## ARTICLE VII — REAL-WORLD SIMULATION ENGINE
 

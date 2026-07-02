@@ -8,7 +8,7 @@
 >
 > **The 6-Layer Architecture**: The Coigndaltion is the L4 cornerstone of the 6-layer sovereign federation. **L0 Sovereign Root** (constitutional substrate) → **L0+ Partners Alliance** (federation) → **L1 SOV3³/DEFONEOS** (defence) → **L2 SOV3/meok** (build) → **L3 CSOAI** (trust + 35 industry hives) → **L4 Coigndaltion** (cornerstone). Every Coigndaltion action emits a SIGIL that traces back to L0.
 >
-> **Three Pillars of Coigndaltion**: (1) **Cognition** — the Mamba-2 state-space compression that turns 1Hz hive noise into 16-dim intuition. (2) **Integration** — the cross-walk engine that maps 33 hives × 30 frameworks = 990+ mappings. (3) **Cornerstone** — the foundation that the other three layers (L1 SOV3³, L2 SOV3, L3 CSOAI) depend on. Remove the Coigndaltion and the empire loses its centre.
+> **Three Pillars of Coigndaltion**: (1) **Cognition** — the Mamba-2 state-space compression that turns 1Hz hive noise into 16-dim intuition. (2) **Integration** — the cross-walk engine that maps 33 hives × 236 frameworks = 990+ mappings. (3) **Cornerstone** — the foundation that the other three layers (L1 SOV3³, L2 SOV3, L3 CSOAI) depend on. Remove the Coigndaltion and the empire loses its centre.
 >
 > **The Coigndaltion Master Pattern**: every action emits a SIGIL → every SIGIL updates the Mamba-2 intuition state → every state change proposes a BFT council vote → every vote becomes a Charter amendment. This is the sovereign loop.
 
@@ -130,7 +130,7 @@ The Mamba-2 block is also augmented with **a tanh squashing layer** on the outpu
 
 ### IV.B — Pillar 2: Integration (Cross-Walk Engine with BFS/DFS Traversal)
 
-The Coigndaltion maintains a **complete bipartite mapping** between all 33 sovereign charters and all known regulatory frameworks (currently 30 frameworks, growing). The mapping is stored as an Apollo GraphQL schema in the `cognition.cross_walk` package and traversed via:
+The Coigndaltion maintains a **complete bipartite mapping** between all 33 sovereign charters and all known regulatory frameworks (currently 236 frameworks, growing). The mapping is stored as an Apollo GraphQL schema in the `cognition.cross_walk` package and traversed via:
 
 **BFS** for *breadth-first question answering*: "what frameworks apply to UK MOD defence contracts?"
 
