@@ -226,6 +226,7 @@ for (const p of ['pricing.html','badges.html','verify.html','sovspace.html','cha
   const l = await fetch(BASE + '/llms.txt'); const lt = await l.text(); ck('agentic-web: llms.txt served + points to Hatch', l.status === 200 && /api\/hatch/.test(lt) && /MEOK Hatch/.test(lt)); }
 
 { const e = await fetch(BASE + '/sovereign-embed.js'); const t = await e.text(); ck('P3 embed: Hatch loader + client-side Ed25519 verify + badge', e.status === 200 && /verifyHatch/.test(t) && /crypto\.subtle\.verify/.test(t) && /Sovereign-verified/.test(t) && /CFG\.hatch/.test(t)); }
+{ const e = await fetch(BASE + '/sovereign-embed.js'); const t = await e.text(); ck('P3 overlay-runtime: see + do(PDCA) + online/offline brain + memory-across-surfaces', e.status === 200 && /sovereign\.pdca\b/.test(t) && /sovereign\.brain\b/.test(t) && /Plan → Do → Check → Act/.test(t) && /localhost:11434/.test(t) && /sovereign\.remember\b/.test(t) && /memKey/.test(t) && /navigator\.onLine/.test(t)); }
 { const h = await gj('/api/hatch'); ck('Hatch governance aligned to meok-ai council (22-of-33)', h.j.hatch?.governance?.council?.size === 33 && h.j.hatch?.governance?.council?.voteThreshold === 22); }
 
 console.log('\n' + (fail === 0 ? '✅ PASS' : '❌ FAIL') + ' — ' + pass + ' passed, ' + fail + ' failed' + (fails.length ? '  [' + fails.join(', ') + ']' : ''));
