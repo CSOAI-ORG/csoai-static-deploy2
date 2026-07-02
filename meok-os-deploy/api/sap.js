@@ -38,7 +38,7 @@ export default function handler(req, res){
     };
     const pkg = {
       spec: 'meok.sap.v1',
-      type: 'sovereign-governance-profile',
+      type: 'sovereign-agent-package · portable mini-OS (governance profile)',
       // HONEST positioning: NOT a new protocol. Portable signed agent packages are already being
       // standardized (AGNTCY/Linux Foundation: OASF records as OCI artifacts, Sigstore-signed, DID/VC
       // identity, A2A+MCP interop, draft 2026-01-12). We do NOT compete with that. Our uncontested edge:
@@ -49,10 +49,26 @@ export default function handler(req, res){
       differs_from: { 'AGNTCY/Sigstore': 'they sign keyless via a CA/OIDC (Fulcio) — online trust root; we self-own an offline Ed25519 key', 'Letta .af': 'we add a signature + governance', 'AIP/arxiv proposals': 'shipped, not a paper' },
       agent: { name, archetype: arch, description: persona, version:'1.0.0', provider:'CSOAI / MEOK (UK Co. 16939677)' },
       state: af_state,                                   // the MIND, portable (Letta-.af shape)
+      // DUAL BRAIN — left (reason) + right (vision), each with OFFLINE + ONLINE model options.
+      // Offline-first when a local model is present; online fallback. Weights referenced, not embedded.
+      brain: {
+        orchestrator: 'Sovereign OLM (Mamba-2 SSD) + SOV3 — reconciles the two brains, talks to the user',
+        left: { role:'reasoning · analysis · tools · governance', online:['groq/llama-3.3-70b','anthropic/claude','openai/gpt'], offline:['ollama/llama3.1','llamafile/qwen2.5'], default:'online, offline-capable' },
+        right:{ role:'creativity · vision · voice · the world', online:['anthropic/claude','image/voice APIs'], offline:['on-device VLM','local TTS (Piper/Kokoro)'], default:'hybrid' },
+        modes:['offline (on-device only)','online (hosted)','hybrid (offline-first, online fallback)'],
+        note:'the package carries the ROUTING + model choices (the "which brain, online or offline"); the weights are pluggable per host.',
+      },
+      // BOOTABLE BODY — the package is a signed mini-OS IMAGE: open it → it boots into this shell +
+      // 3D world + character. The heavy renderer/engine is REFERENCED (fetched), never embedded.
+      boot: {
+        os: base+'/', world3d: base+'/earth3d.html', photoreal: base+'/earth3d-photoreal.html',
+        character: base+'/character.html', renderer:'Cesium / MapLibre (body)', shell:'MEOK OS (Sovereign dock + apps + globe)',
+        note:'a portable sovereign mini-OS: identity+brain+governance travel signed; the OS/3D body is fetched + rendered by the host (browser/desktop/VM).',
+      },
       governance: { careFloor: 0.95, hardStops:['no harm','no unvoted autonomy','no covert surveillance'], frameworks:['EU AI Act','ISO 42001','JSP 936 (defence variant)'] },
       interfaces: { agentCard: base+'/api/agentcard?name='+encodeURIComponent(name)+'&archetype='+encodeURIComponent(arch), mcp: base+'/api/mcp', openai_chat: base+'/api/v1/chat/completions' },
-      model_policy: { embedded: false, sources:['host model via MCP','on-device llamafile/ollama','hosted API'], reason:'weights too large for serverless/edge — the AGENT is portable, the MODEL is pluggable' },
-      runnable: ['serverless (default, scale-to-zero)','on-device (local MCP stdio)','dedicated VM (premium)'],
+      model_policy: { embedded: false, sources:['host model via MCP','on-device llamafile/ollama','hosted API'], reason:'weights too large for serverless/edge — the AGENT (mind+brain-routing+body-refs) is portable, the MODEL is pluggable' },
+      runnable: ['serverless (default, scale-to-zero)','on-device (local MCP stdio + offline brain)','dedicated VM (premium, always-on)'],
     };
     const { priv, pubHex } = keypair();
     const message = canonical(pkg).slice(0, 8000);
