@@ -2660,7 +2660,15 @@ function defSaveStateD(){ clearTimeout(window._saveT); window._saveT=setTimeout(
 window._stateReady=false;
 function defSaveState(){ if(!window._stateReady) return; try{ var M={reg:regDS,base:baseDS,threat:threatDS,quake:quakeDS,air:airDS,signals:signalsDS,cameras:camerasDS,events:eventsDS,space:spaceDS,aq:aqDS,marine:marineDS,sat:satDS,sim:simDS}; var ly={}; Object.keys(M).forEach(function(k){ if(M[k]&&M[k].show) ly[k]=1; }); var cam=null; try{ var p=viewer.camera.positionCartographic; cam={lon:C.Math.toDegrees(p.longitude),lat:C.Math.toDegrees(p.latitude),h:p.height}; }catch(_){} localStorage.setItem('def_state', JSON.stringify({ly:ly,cam:cam,t:Date.now()})); }catch(e){} }
 function defRestoreLayers(){ try{ var st=JSON.parse(localStorage.getItem('def_state')||'null'); if(st&&st.ly){ var ks=Object.keys(st.ly); ks.forEach(function(k){ var c=document.getElementById('ly'+k.charAt(0).toUpperCase()+k.slice(1)); if(c) c.checked=true; if(window.toggleLayer) toggleLayer(k,true); }); if(ks.length&&window.pushFeed) pushFeed('SESSION · restored '+ks.length+' layers from your last visit'); }
-    if(st&&st.cam&&viewer&&!/tour/.test(location.hash)){ try{ if(window.stopSpin) stopSpin(); viewer.camera.flyTo({destination:C.Cartesian3.fromDegrees(st.cam.lon,st.cam.lat,st.cam.h),duration:2.6}); }catch(e){} } }catch(e){} window._stateReady=true; }
+    if(st&&st.cam&&viewer&&!/tour/.test(location.hash)){ try{ if(window.stopSpin) stopSpin(); viewer.camera.flyTo({destination:C.Cartesian3.fromDegrees(st.cam.lon,st.cam.lat,st.cam.h),duration:2.6}); }catch(e){} } }catch(e){} window._stateReady=true; if(window.pushFeed) pushFeed('SESSION · resumed your last view'); }
+window.defRestoreLayers=defRestoreLayers;
+// enable autosave once you're in, and offer a returning operator their last session (opt-in — won't fight the arrival)
+function defSessionInit(){ window._stateReady=true;
+  try{ var st=JSON.parse(localStorage.getItem('def_state')||'null'); if(st&&st.ly&&Object.keys(st.ly).length && (Date.now()-(st.t||0) < 7*864e5) && !(window._tour&&window._tour.running)){
+    var ks=Object.keys(st.ly); if(window.openHorus) openHorus();
+    if(window.horusReply) horusReply('Welcome back — last visit you had <b>'+ks.length+'</b> layer'+(ks.length>1?'s':'')+' up ('+ks.join(', ')+'). Pick up where you left off? <a class="bg-link" onclick="if(window.defRestoreLayers)defRestoreLayers()">↩ resume last session ›</a>');
+  } }catch(_){} }
+window.defSessionInit=defSessionInit;
 function toggleLite(on){ window._lite=(on!==undefined)?!!on:!window._lite;
   try{ var s=viewer.scene; try{ s.postProcessStages.bloom.enabled=!window._lite; }catch(_){} viewer.resolutionScale=window._lite?0.72:1.0; s.fog.enabled=!window._lite; if(window._lite&&window.stopSpin) stopSpin(); }catch(e){}
   try{ localStorage.setItem('def_lite', window._lite?'1':''); }catch(e){}
@@ -3651,6 +3659,7 @@ function _enterOS(withMic){ if(window._entered) return; window._entered=true; va
   function go(){ if(window._went) return; window._went=true; if(g){ g.classList.add('hide'); setTimeout(function(){ if(g&&g.parentNode) g.parentNode.removeChild(g); }, 1200); } _epicArrival(); }
   // ENTER IMMEDIATELY — never gate the whole OS (and its voice) on a mic prompt that can hang/be ignored.
   go();
+  try{ setTimeout(function(){ if(window.defSessionInit) defSessionInit(); }, 11000); }catch(e){}   // enable session autosave + offer resume after the arrival settles
   // request the mic in the BACKGROUND (only for the AWARE listen feature); entry already happened.
   if(withMic && navigator.mediaDevices && navigator.mediaDevices.getUserMedia){ try{ navigator.mediaDevices.getUserMedia({audio:true}).then(function(s){ try{ s.getTracks().forEach(function(t){ t.stop(); }); }catch(e){} window._micGranted=true; }).catch(function(){}); }catch(e){} } }
 setTimeout(_bootSeq, 650);
@@ -3764,6 +3773,36 @@ function closeNav(){ document.getElementById('drawer').classList.remove('open');
 function navLayer(k){ var map={reg:'lyReg',base:'lyBase',threat:'lyThreat',sim:'lySim',quake:'lyQuake',air:'lyAir',signals:'lySignals'}; var cb=document.getElementById(map[k]); var on=cb?!cb.checked:true; if(cb) cb.checked=on; if(typeof toggleLayer==='function') toggleLayer(k,on); }
 function navSim(s){ closeNav(); var cb=document.getElementById('lySim'); if(cb) cb.checked=true; if(typeof runSim==='function') runSim(s); }
 document.addEventListener('keydown',function(e){ if(e.key==='Escape') closeNav(); });
+// ── POWER-USER KEYBOARD SHORTCUTS + discoverable ? help ──
+function _shortHelp(){ var id='shortHelp'; var old=document.getElementById(id); if(old){ old.remove(); return; }
+  var w=document.createElement('div'); w.id=id; w.setAttribute('role','dialog'); w.setAttribute('aria-label','Keyboard shortcuts');
+  w.style.cssText='position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);z-index:99998;background:rgba(9,14,26,.97);border:1px solid rgba(95,244,255,.4);border-radius:14px;padding:18px 22px;color:#e7edf8;font:13px/1.7 ui-monospace,monospace;box-shadow:0 20px 60px rgba(0,0,0,.6);min-width:280px';
+  var rows=[['L','light up all layers'],['B','export signed brief'],['P','print brief (PDF)'],['R','retry throttled feeds'],['S','sign all in view'],['V','open independent verifier'],['/','focus the command bar'],['G','toggle governance board'],['?','this help']];
+  w.innerHTML='<div style="color:#5ff4ff;font-weight:700;letter-spacing:1px;margin-bottom:10px">⌨ KEYBOARD SHORTCUTS<span style="float:right;cursor:pointer;color:#8a97b4" onclick="var e=document.getElementById(\''+id+'\');if(e)e.remove()">✕</span></div>'+rows.map(function(r){return '<div style="display:flex;gap:14px"><kbd style="background:rgba(95,244,255,.14);border:1px solid rgba(95,244,255,.35);border-radius:6px;padding:1px 8px;min-width:20px;text-align:center;color:#9fe9ff">'+r[0]+'</kbd><span>'+r[1]+'</span></div>';}).join('')+'<div style="margin-top:10px;font-size:10px;color:#8a97b4">shortcuts ignore typing in a field</div>';
+  document.body.appendChild(w); }
+document.addEventListener('keydown',function(e){
+  if(e.metaKey||e.ctrlKey||e.altKey) return; var ae=document.activeElement, tag=ae&&ae.tagName;
+  var typing=/^(INPUT|TEXTAREA|SELECT)$/.test(tag||'')||(ae&&ae.isContentEditable);
+  if(e.key==='/' && !typing){ e.preventDefault(); var c=document.getElementById('cmd'); if(c){ c.focus(); c.select&&c.select(); } return; }
+  if(typing) return; if(!window._entered) return;
+  var k=e.key.toLowerCase();
+  if(k==='l'){ e.preventDefault(); window.lightItUp&&lightItUp(); }
+  else if(k==='b'){ e.preventDefault(); window.sovBrief&&sovBrief(); }
+  else if(k==='p'){ e.preventDefault(); window.sovBriefPrint&&sovBriefPrint(); }
+  else if(k==='r'){ e.preventDefault(); window.sovRetryFeeds&&sovRetryFeeds(); }
+  else if(k==='s'){ e.preventDefault(); window.sovSignAllInView&&sovSignAllInView(); }
+  else if(k==='v'){ e.preventDefault(); window.open('verify.html','_blank'); }
+  else if(k==='g'){ e.preventDefault(); window.openWin&&openWin('aigov'); }
+  else if(k==='?'||(k==='/'&&e.shiftKey)){ e.preventDefault(); _shortHelp(); }
+});
+// ── ACCESSIBILITY · make every click-only control keyboard-focusable + screen-reader-labelled + a visible focus ring ──
+(function(){ try{ var st=document.createElement('style'); st.textContent='.sblink:focus-visible,.lbtn:focus-visible,.doc-tab:focus-visible,.chip:focus-visible,[role=button]:focus-visible{ outline:2px solid #5ff4ff; outline-offset:2px; border-radius:6px; }'; document.head.appendChild(st);
+  function enhance(){ document.querySelectorAll('.sblink,.lbtn,.doc-tab,.chip,.lb-item').forEach(function(el){ if(el._a11y) return; el._a11y=1; if(!el.hasAttribute('tabindex')) el.tabIndex=0; if(!el.getAttribute('role')) el.setAttribute('role','button'); if(!el.getAttribute('aria-label')){ var t=(el.getAttribute('title')||el.textContent||'').trim().replace(/\s+/g,' ').slice(0,60); if(t) el.setAttribute('aria-label',t); } el.addEventListener('keydown',function(ev){ if(ev.key==='Enter'||ev.key===' '){ ev.preventDefault(); el.click(); } }); });
+    // layer checkboxes: label their feed-health dot for screen readers
+    Object.keys(window._LAYCB||{}).forEach(function(k){ var cb=document.getElementById((window._LAYCB||{})[k]); if(cb&&!cb.getAttribute('aria-label')){ var lab=(cb.closest&&cb.closest('label')); if(lab) cb.setAttribute('aria-label',(lab.textContent||k).trim().replace(/\s+/g,' ')); } }); }
+  setTimeout(enhance,600); setTimeout(enhance,3000);   // run after the UI + status bar render
+  window._a11yEnhance=enhance;
+}catch(e){} })();
 </script>
 
 <script>
