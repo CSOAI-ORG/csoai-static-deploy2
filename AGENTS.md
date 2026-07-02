@@ -2,6 +2,9 @@
 **Read this first, every session, on every platform.** · Updated 2026-06-20
 **For current ecosystem STATE, read `_alignment/ALIGNMENT_2026-06-20.md` (the master).** This file is only HOW we avoid stepping on each other.
 
+> ## ⚑ CURRENT FOCUS DIRECTIVE (2026-07-02) — full text: `EAT_DIRECTIVE_2026-07-02.md`
+> **FREEZE defence-capability sprints. FOCUS all overnight/EAT cycles on GOVERNANCE / ASSURANCE / CYBER** (signed System Card + OSCAL + verify + `defoneos-sign` MCP · Gods-Eye CISO self-scan) **and the owner-unlock revenue path** (£999 sale + £4,950 gap analysis — see `csoai-launch-pack/`). Offensive work = **forbidden** (care-floor hard stop). Owner-gated actions (publish / DNS / secrets / money) = **stage, never fire**. Honesty register applies: illustrative≠live, provenance≠truth, assurance≠certification.
+
 > Many agents run at once: multiple TUIs + platforms (Claude / Kimi / Gemini / Kilo / Hermes / etc.), ~10 tasks each. They share ONE working tree. Coordination is not optional.
 
 ---
