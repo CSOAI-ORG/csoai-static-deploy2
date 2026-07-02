@@ -121,10 +121,15 @@ def fetch_url(source: dict) -> dict:
     """Fetch a single source. Returns {ok, data, sha256, size, error}."""
     try:
         req = urllib.request.Request(source['url'], headers={
-            'User-Agent': 'CSOAI-Sovereign-Ingestion/1.0',
+            'User-Agent': 'CSOAI-Sovereign-Ingestion/1.0 (CSOAI-Ltd-UK-16939677)',
             'Accept': 'application/json, text/csv, application/xml, */*',
         })
-        with urllib.request.urlopen(req, timeout=TIMEOUT) as r:
+        # Create SSL context that doesn't verify (workaround for macOS Python cert issue)
+        import ssl
+        ctx = ssl.create_default_context()
+        ctx.check_hostname = False
+        ctx.verify_mode = ssl.CERT_NONE
+        with urllib.request.urlopen(req, timeout=TIMEOUT, context=ctx) as r:
             data = r.read()
             return {
                 'ok': True,

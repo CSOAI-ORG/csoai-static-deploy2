@@ -187,3 +187,75 @@ This charter inherits the L0 Sovereign Root binding to the sovereign data moat: 
 **Data Sovereignty Guarantees**: All data UK-resident. No cross-border transfer without Charter Article 0 binding. GDPR-compliant (data subject rights, DSAR support, right to erasure). Open data only. OTS-anchored. Synthetic augmentation (532K records). Every charter inherits this binding.
 
 **The 30 Universal Compliance Frameworks** (cross-walked at L0): EU AI Act (Art 5, 10, 50, Annex III) · GDPR (Art 5-21) · ISO/IEC 42001:2023 · ISO/IEC 27001:2022 · ISO/IEC 23894:2023 · NIST AI RMF 1.0 · NIST CSF 2.0 · SOC 2 Type II · HIPAA · DORA (EU 2022/2554) · CSRD/ESRS · UK AI Regulation · UK DPA 2018 · Colorado AI Act · California CPPA AI · NIST SP 800-53 Rev 5 · NIST SP 800-171 Rev 3 · FedRAMP · PCI DSS v4.0 · CMMC 2.0 · MITRE ATLAS · OWASP Top 10 for LLMs · IEEE 7000-2021 · ISO/IEC 38507:2022 · BSI PAS 1880:2020 · Singapore AI Verify · Canada AIDA · UNESCO AI Ethics · OECD AI Principles · G7 Hiroshima AI Process.
+
+
+
+## VERIFICATION
+
+This charter can be publicly verified at:
+
+**`https://proofof.ai/verify/CSOAI-CHARTER-34-science-2026-06-30`**
+
+The verification page shows:
+- **SHA-256**: the canonical hash of this charter document
+- **Ed25519 Public Key**: the sovereign substrate's signing key
+- **Ed25519 Signature**: the cryptographic signature over the SHA-256 hash
+- **BFT Council Ratification**: which council members voted FOR/AGAINST/ABSTAIN
+- **OTS Bitcoin Anchor**: the Bitcoin blockchain transaction proving the timestamp
+- **SIGIL Chain Entry**: the canonical entry in the sovereign SIGIL audit chain
+- **2,760 Cross-Walks**: every charter cross-walk + every framework cross-walk
+- **Charter Article 0 Verification**: constitutional consistency check
+
+Anyone in the world can verify this charter without trusting CSOAI. No one — not even CSOAI — can forge a charter's Ed25519 signature. The sovereign substrate is mathematically verifiable.
+
+
+
+## CLEAN HOUSE PROTOCOL BINDING
+
+This charter inherits the **Clean House Protocol** from the L0 Sovereign Root:
+
+> *"When an industry is captured by rent-seekers, gatekeepers, or credential cartels, the Sovereign Charter activates the **Clean House Protocol**: deploy free training + free certification + UE5 simulation + UBI starter to that industry within 90 days. Drop the barrier to zero. Let competence, not credentials, determine who works."*
+
+The protocol activates when 2+ of these conditions are met:
+1. **Credential Cartel**: >50% of hiring requires credentials from ≤3 institutions
+2. **Paywall Barrier**: Entry-level certification costs >£1,000
+3. **Gatekeeper Capture**: ≤5 organizations control >80% of industry accreditation
+4. **Demographic Exclusion**: <20% of practitioners come from bottom-quartile income backgrounds
+5. **AI Displacement Risk**: >30% of current roles automatable within 5 years
+
+When triggered, the protocol fires within 90 days: free Foundation training (T+7) → free Practitioner (T+14) → free Lead Auditor (T+30) → free Director (T+60) → disruption assessment (T+90).
+
+This charter's `34-science` industry is on the Clean House tracking list. See `CHARTER-OF-CHARTERS.md` Article IV for the master protocol and current Clean House targets.
+
+
+
+## SOVEREIGN FEDERATION BINDING
+
+This charter binds to the **6-layer sovereign federation**:
+
+| Layer | Brand | This Charter Inherits |
+|---|---|---|
+| **L0** | Sovereign Root | The constitutional substrate + Charter Article 0 |
+| **L0+** | Partners Alliance | Charter Article 0 inheritance + partner framework |
+| **L1** | SOV3³ / DEFONEOS | 15 defence MCPs + JSP 936/440/604 + PQC ML-DSA-65 |
+| **L2** | SOV3 / meok | 294-server MCP fleet + x402 payments + 49GB data moat |
+| **L3** | CSOAI (csoai.org) | 33-agent BFT council + Watchdog + 36 industry hives |
+| **L4** | Coigndaltion | Mamba-2 cognition + cross-walk engine + SIGIL signature |
+
+**Total sovereign universe: 40 charters, 2,760 cross-walks, 49GB data moat, 198 live sources, 30 universal compliance frameworks.**
+
+This charter is a first-class citizen of the sovereign federation. It inherits from L0, cross-walks to all 39 other charters, references 30 universal compliance frameworks, and contributes to the 49GB sovereign data moat binding. Ed25519-signed. BFT-ratified. Charter Article 0 binding on all 40 charters.
+
+
+
+## BLACK SWAN WINDOWS — THIS CHARTER'S TIMELINE
+
+| Trigger Event | T-Minus | T-Zero | T-Plus | Window Status |
+|---|---|---|---|---|
+| EU AI Act Art 50 enforcement | T-33 days | 2 Aug 2026 | T+0 | IMMINENT |
+| Initial sovereign cert issued | TBD | TBD | T+0 | AWAITING |
+| First challenge to credential cartel | TBD | TBD | T+14 | PENDING |
+| Clean House Protocol activation | TBD | TBD | T+90 | PENDING |
+| Industry disruption assessment | TBD | TBD | T+90 | PENDING |
+
+**Black Swan Window = the moment when the old order is vulnerable and the new order can be established.** For this charter's `34-science` industry, the window is tracked live at `sovereign.csoai.org/charters/34-science/black-swan` and `watchdog.csoai.org/?layer=34-science`. The universal equation: `Industry Capture × Regulatory Cliff × Free Alternative = Forced Reset`.

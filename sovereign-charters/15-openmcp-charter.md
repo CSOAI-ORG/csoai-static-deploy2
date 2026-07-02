@@ -325,3 +325,36 @@ This charter is a **living document**. Every amendment is:
 **Sealed**: 2026-06-30T00:00:00Z
 
 > *"One registry. 30+ MCPs. Every tool audited. The sovereign directory that knows what every tool can do."* 🐉
+
+
+
+## SOVEREIGN FEDERATION BINDING
+
+This charter binds to the **6-layer sovereign federation**:
+
+| Layer | Brand | This Charter Inherits |
+|---|---|---|
+| **L0** | Sovereign Root | The constitutional substrate + Charter Article 0 |
+| **L0+** | Partners Alliance | Charter Article 0 inheritance + partner framework |
+| **L1** | SOV3³ / DEFONEOS | 15 defence MCPs + JSP 936/440/604 + PQC ML-DSA-65 |
+| **L2** | SOV3 / meok | 294-server MCP fleet + x402 payments + 49GB data moat |
+| **L3** | CSOAI (csoai.org) | 33-agent BFT council + Watchdog + 36 industry hives |
+| **L4** | Coigndaltion | Mamba-2 cognition + cross-walk engine + SIGIL signature |
+
+**Total sovereign universe: 40 charters, 2,760 cross-walks, 49GB data moat, 198 live sources, 30 universal compliance frameworks.**
+
+This charter is a first-class citizen of the sovereign federation. It inherits from L0, cross-walks to all 39 other charters, references 30 universal compliance frameworks, and contributes to the 49GB sovereign data moat binding. Ed25519-signed. BFT-ratified. Charter Article 0 binding on all 40 charters.
+
+
+
+## BLACK SWAN WINDOWS — THIS CHARTER'S TIMELINE
+
+| Trigger Event | T-Minus | T-Zero | T-Plus | Window Status |
+|---|---|---|---|---|
+| EU AI Act Art 50 enforcement | T-33 days | 2 Aug 2026 | T+0 | IMMINENT |
+| Initial sovereign cert issued | TBD | TBD | T+0 | AWAITING |
+| First challenge to credential cartel | TBD | TBD | T+14 | PENDING |
+| Clean House Protocol activation | TBD | TBD | T+90 | PENDING |
+| Industry disruption assessment | TBD | TBD | T+90 | PENDING |
+
+**Black Swan Window = the moment when the old order is vulnerable and the new order can be established.** For this charter's `15-openmcp` industry, the window is tracked live at `sovereign.csoai.org/charters/15-openmcp/black-swan` and `watchdog.csoai.org/?layer=15-openmcp`. The universal equation: `Industry Capture × Regulatory Cliff × Free Alternative = Forced Reset`.

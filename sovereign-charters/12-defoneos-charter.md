@@ -407,3 +407,75 @@ Every amendment to this charter must: pass 23/33 BFT council vote, be Ed25519-si
 **Sealed**: 2026-06-30T01:00:00Z
 
 > *"Sovereign by design. Audit-grade. Ed25519-signed. BFT-ratified. PQC-ready. Air-gap deployable. UK-sovereign. AUKUS-compatible. Never Brexit AI. Fifteen MCPs. Six simulations. Four tiers. Zero barriers. The dragon defends the realm."* 🐉
+
+
+
+## VERIFICATION
+
+This charter can be publicly verified at:
+
+**`https://proofof.ai/verify/CSOAI-CHARTER-12-defoneos-2026-06-30`**
+
+The verification page shows:
+- **SHA-256**: the canonical hash of this charter document
+- **Ed25519 Public Key**: the sovereign substrate's signing key
+- **Ed25519 Signature**: the cryptographic signature over the SHA-256 hash
+- **BFT Council Ratification**: which council members voted FOR/AGAINST/ABSTAIN
+- **OTS Bitcoin Anchor**: the Bitcoin blockchain transaction proving the timestamp
+- **SIGIL Chain Entry**: the canonical entry in the sovereign SIGIL audit chain
+- **2,760 Cross-Walks**: every charter cross-walk + every framework cross-walk
+- **Charter Article 0 Verification**: constitutional consistency check
+
+Anyone in the world can verify this charter without trusting CSOAI. No one — not even CSOAI — can forge a charter's Ed25519 signature. The sovereign substrate is mathematically verifiable.
+
+
+
+## CLEAN HOUSE PROTOCOL BINDING
+
+This charter inherits the **Clean House Protocol** from the L0 Sovereign Root:
+
+> *"When an industry is captured by rent-seekers, gatekeepers, or credential cartels, the Sovereign Charter activates the **Clean House Protocol**: deploy free training + free certification + UE5 simulation + UBI starter to that industry within 90 days. Drop the barrier to zero. Let competence, not credentials, determine who works."*
+
+The protocol activates when 2+ of these conditions are met:
+1. **Credential Cartel**: >50% of hiring requires credentials from ≤3 institutions
+2. **Paywall Barrier**: Entry-level certification costs >£1,000
+3. **Gatekeeper Capture**: ≤5 organizations control >80% of industry accreditation
+4. **Demographic Exclusion**: <20% of practitioners come from bottom-quartile income backgrounds
+5. **AI Displacement Risk**: >30% of current roles automatable within 5 years
+
+When triggered, the protocol fires within 90 days: free Foundation training (T+7) → free Practitioner (T+14) → free Lead Auditor (T+30) → free Director (T+60) → disruption assessment (T+90).
+
+This charter's `12-defoneos` industry is on the Clean House tracking list. See `CHARTER-OF-CHARTERS.md` Article IV for the master protocol and current Clean House targets.
+
+
+
+## SOVEREIGN FEDERATION BINDING
+
+This charter binds to the **6-layer sovereign federation**:
+
+| Layer | Brand | This Charter Inherits |
+|---|---|---|
+| **L0** | Sovereign Root | The constitutional substrate + Charter Article 0 |
+| **L0+** | Partners Alliance | Charter Article 0 inheritance + partner framework |
+| **L1** | SOV3³ / DEFONEOS | 15 defence MCPs + JSP 936/440/604 + PQC ML-DSA-65 |
+| **L2** | SOV3 / meok | 294-server MCP fleet + x402 payments + 49GB data moat |
+| **L3** | CSOAI (csoai.org) | 33-agent BFT council + Watchdog + 36 industry hives |
+| **L4** | Coigndaltion | Mamba-2 cognition + cross-walk engine + SIGIL signature |
+
+**Total sovereign universe: 40 charters, 2,760 cross-walks, 49GB data moat, 198 live sources, 30 universal compliance frameworks.**
+
+This charter is a first-class citizen of the sovereign federation. It inherits from L0, cross-walks to all 39 other charters, references 30 universal compliance frameworks, and contributes to the 49GB sovereign data moat binding. Ed25519-signed. BFT-ratified. Charter Article 0 binding on all 40 charters.
+
+
+
+## BLACK SWAN WINDOWS — THIS CHARTER'S TIMELINE
+
+| Trigger Event | T-Minus | T-Zero | T-Plus | Window Status |
+|---|---|---|---|---|
+| EU AI Act Art 50 enforcement | T-33 days | 2 Aug 2026 | T+0 | IMMINENT |
+| Initial sovereign cert issued | TBD | TBD | T+0 | AWAITING |
+| First challenge to credential cartel | TBD | TBD | T+14 | PENDING |
+| Clean House Protocol activation | TBD | TBD | T+90 | PENDING |
+| Industry disruption assessment | TBD | TBD | T+90 | PENDING |
+
+**Black Swan Window = the moment when the old order is vulnerable and the new order can be established.** For this charter's `12-defoneos` industry, the window is tracked live at `sovereign.csoai.org/charters/12-defoneos/black-swan` and `watchdog.csoai.org/?layer=12-defoneos`. The universal equation: `Industry Capture × Regulatory Cliff × Free Alternative = Forced Reset`.

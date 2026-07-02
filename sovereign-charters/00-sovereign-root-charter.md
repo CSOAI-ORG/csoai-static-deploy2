@@ -283,3 +283,25 @@ This charter is the **L0 root** of the entire sovereign federation. Every amendm
 **Sealed**: 2026-06-30T00:00:00Z
 
 > *"The L0 root. The substrate beneath all substrates. Where 38 charters, 30 frameworks, 1,406 cross-walks, 49GB data, 198 sources, and 5 sovereign principles become one. The dragon has a root. The root has 4 layers. The layers have 33 queens. The queens have 38 charters. The charters have 1,406 cross-walks. The cross-walks have 30 frameworks. The frameworks have the world's data. The data is sovereign. The root is ungovernable because its governance is encoded."* 🐉
+
+
+## BLACK SWAN WINDOW TIMING
+
+This charter tracks the **Black Swan Window** for industry disruption. The sovereign federation identifies the specific moment when the old order is vulnerable and the new order can be established — usually when a regulatory cliff forces change AND a free sovereign alternative exists.
+
+**Universal formula**: `Industry Capture × Regulatory Cliff × Free Alternative = Forced Reset`
+
+**This charter's Black Swan Window** is tracked in Article IX of the Charter of Charters. Industry-specific timing:
+- **T+90 days** — Universal disruption assessment published (the `disruption_assessment_sovereign_root_2026.pdf`)
+- **T+60 days** — Director-tier certification free path activated (UBI ladder Tier 4)
+- **T+30 days** — Lead Auditor certification free path + UBI Tier 3
+- **T+14 days** — Practitioner certification free path + UBI Tier 2
+- **T+7 days** — Foundation certification free path + UBI Tier 1
+
+When the **Clean House Protocol** activates for `sovereign_root`, these T+ milestones fire in sequence. The window closes when the legacy credential cartel capitulates or 18 months pass (whichever comes first).
+
+## ADDITIONAL SOVEREIGN DECLARATION
+
+*Ed25519-signed, BFT-ratified, Charter Article 0 binding on all 40 charters.*
+
+This charter is Ed25519-signed AND BFT-ratified. As the L0 root, the BFT ratification requires 33/33 + 5 human signatures. Upon completion, the Ed25519 signature is applied to the canonical SHA-256, and the new SIGIL digest is OTS-anchored to Bitcoin. Charter Article 0 is constitutionally protected — only amendable by 33/33 BFT + 5 human sigs + 14-day voting window + 90% supermajority.

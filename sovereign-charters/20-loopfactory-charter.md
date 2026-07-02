@@ -302,3 +302,42 @@ The Clean House Protocol activates T+0:
 - **Mentor Earnings**: 30% of mentee subscription goes to mentor
 - **Mentor Verification**: Must be at Pro tier for 6+ months, complete mentor training (4 hours)
 - **Mentee Outcomes**: Track career impact, certification pass rates, project completion
+
+
+
+## VERIFICATION
+
+This charter can be publicly verified at:
+
+**`https://proofof.ai/verify/CSOAI-CHARTER-20-loopfactory-2026-06-30`**
+
+The verification page shows:
+- **SHA-256**: the canonical hash of this charter document
+- **Ed25519 Public Key**: the sovereign substrate's signing key
+- **Ed25519 Signature**: the cryptographic signature over the SHA-256 hash
+- **BFT Council Ratification**: which council members voted FOR/AGAINST/ABSTAIN
+- **OTS Bitcoin Anchor**: the Bitcoin blockchain transaction proving the timestamp
+- **SIGIL Chain Entry**: the canonical entry in the sovereign SIGIL audit chain
+- **2,760 Cross-Walks**: every charter cross-walk + every framework cross-walk
+- **Charter Article 0 Verification**: constitutional consistency check
+
+Anyone in the world can verify this charter without trusting CSOAI. No one — not even CSOAI — can forge a charter's Ed25519 signature. The sovereign substrate is mathematically verifiable.
+
+
+
+## SOVEREIGN FEDERATION BINDING
+
+This charter binds to the **6-layer sovereign federation**:
+
+| Layer | Brand | This Charter Inherits |
+|---|---|---|
+| **L0** | Sovereign Root | The constitutional substrate + Charter Article 0 |
+| **L0+** | Partners Alliance | Charter Article 0 inheritance + partner framework |
+| **L1** | SOV3³ / DEFONEOS | 15 defence MCPs + JSP 936/440/604 + PQC ML-DSA-65 |
+| **L2** | SOV3 / meok | 294-server MCP fleet + x402 payments + 49GB data moat |
+| **L3** | CSOAI (csoai.org) | 33-agent BFT council + Watchdog + 36 industry hives |
+| **L4** | Coigndaltion | Mamba-2 cognition + cross-walk engine + SIGIL signature |
+
+**Total sovereign universe: 40 charters, 2,760 cross-walks, 49GB data moat, 198 live sources, 30 universal compliance frameworks.**
+
+This charter is a first-class citizen of the sovereign federation. It inherits from L0, cross-walks to all 39 other charters, references 30 universal compliance frameworks, and contributes to the 49GB sovereign data moat binding. Ed25519-signed. BFT-ratified. Charter Article 0 binding on all 40 charters.
