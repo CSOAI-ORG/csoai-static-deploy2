@@ -19,10 +19,42 @@ The biggest labs now ship "auditable / reproducible" AI outputs (e.g. Claude Sci
 node server.js          # MCP stdio server
 npm test                # 12/12 sign→verify→tamper→content-rebind
 ```
-Add to an MCP host (Claude Desktop / Claude Code) config:
-```json
-{ "mcpServers": { "defoneos-sign": { "command": "node", "args": ["/path/to/defoneos-sign-mcp/server.js"] } } }
+
+## Install into a Claude host (copy-paste)
+
+**Claude Code** (one command):
+```bash
+claude mcp add defoneos-sign -- node /ABSOLUTE/PATH/TO/defoneos-sign-mcp/server.js
+# then in any session:  /mcp   → confirm "defoneos-sign" is connected
 ```
+
+**Claude Desktop** — edit `claude_desktop_config.json`
+(macOS: `~/Library/Application Support/Claude/claude_desktop_config.json` · Windows: `%APPDATA%\Claude\claude_desktop_config.json`), then restart Claude:
+```json
+{
+  "mcpServers": {
+    "defoneos-sign": {
+      "command": "node",
+      "args": ["/ABSOLUTE/PATH/TO/defoneos-sign-mcp/server.js"]
+    }
+  }
+}
+```
+
+**Any MCP host / SDK** — stdio transport, command `node server.js`. Optional env:
+`DEFONEOS_KEY_DIR` (default `~/.defoneos`), `DEFONEOS_VERIFY_URL` (default the hosted verifier).
+
+## Worked example — sign a Claude Science / Claude Code output
+Once connected, ask the agent in plain language:
+
+> *"Sign this finding via DEFONEOS: **ΔG = −9.4 kcal/mol for ligand X on target Y**. Method: Boltz-2 via BioNeMo, seed 42, boltz@2.1. Inputs: PDB:1ABC, SMILES:CC(=O)O."*
+
+The agent calls `defoneos_sign`, and you get a receipt. Verify it three ways, all offline:
+1. paste it into `verify.html`, or
+2. drop the downloaded `defoneos-receipt-*.json`, or
+3. open `verify.html?receipt=<base64url>` — auto-verifies on load.
+
+Result: **✓ signature cryptographically valid — sovereign, offline, no server.** The output now carries a signed record of *what it is, how it was made, and from which inputs* — the assurance layer on top of the workbench.
 
 ## What a receipt looks like
 ```json

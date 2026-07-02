@@ -1388,7 +1388,14 @@ function _fhUpdate(){ try{ var H=window._feedHealth||{}; var live=0,quiet=0,down
       if(!d) return; var col= st==='live'?'#00e07a':(st==='empty'||st==='throttled')?'#eab308':st==='error'?'#ff6b6b':(on?'#5ff4ff':'#4a5568'); d.style.background=col; d.style.boxShadow='0 0 6px '+(col==='#4a5568'?'rgba(0,0,0,.4)':col); d.title='feed '+(st||(on?'on':'off')); });
     var el=document.getElementById('sbFeedSum'); if(el){ if(!(live||quiet||down)){ el.style.display='none'; } else { el.style.display=''; el.innerHTML='📡 '+live+' live'+(quiet?(' · <span style="color:#eab308">'+quiet+' quiet</span>'):'')+(down?(' · <span style="color:#ff6b6b">'+down+' down</span>'):''); } }
   }catch(_){} }
+var _FEED_SRC={air:'OpenSky ADS-B',marine:'aisstream.io AIS',signals:'GDELT 2.0',quake:'USGS',cameras:'TfL JamCams',events:'NASA EONET + GDACS',aq:'WAQI',space:'wheretheiss.at + Launch Library',sat:'CelesTrak TLE'};
+var _FEED_DS={air:'airDS',marine:'marineDS',signals:'signalsDS',quake:'quakeDS',cameras:'camerasDS',events:'eventsDS',aq:'aqDS',space:'spaceDS',sat:'satDS'};
+window._provSigned=window._provSigned||{};
+function _feedProv(k){ try{ if(window._provSigned[k]) return; var src=_FEED_SRC[k]; if(!src) return; var ds=window[_FEED_DS[k]]; var n=(ds&&ds.entities)?ds.entities.values.filter(function(e){return e.position;}).length:0;
+  window._provSigned[k]=1; if(window.sigilLog) sigilLog('feed-provenance', k+' · '+n+' features · '+src+' · '+new Date().toISOString());   // signs the INPUT lineage (source·count·time) once per feed — the moat extends from actions to data
+}catch(_){} }
 function _fhSet(k,st){ window._feedHealth[k]=st; _fhUpdate();
+  if(st==='live'||st==='empty') _feedProv(k);   // record signed provenance of this feed's data (once per session)
   // auto-heal: a feed that errors gets ONE quiet retry after ~8s (transient rate-limits self-clear); success resets so future errors retry again
   try{ window._fhRetry=window._fhRetry||{};
     if(st==='live'||st==='empty'){ delete window._fhRetry[k]; }
