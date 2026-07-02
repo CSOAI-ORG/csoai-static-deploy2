@@ -323,6 +323,10 @@
   @media(max-width:760px){ .horus{ width:92vw; bottom:124px; } }
   .horus-ico.live{ color:var(--neon); animation:micpulse 1.1s ease-in-out infinite; }
   .sigil-win{ position:fixed; right:18px; bottom:18px; width:432px; max-height:64vh; z-index:60; display:flex; flex-direction:column; background:rgba(8,12,24,.97); border:1px solid var(--gold,#c9a84c); border-radius:14px; box-shadow:0 20px 60px rgba(0,0,0,.6); font-size:12px; overflow:hidden; backdrop-filter:blur(10px); }
+  .sigil-win.sw-tour{ width:360px; max-height:46vh; right:16px; bottom:96px; }
+  .sigil-win.sw-tour .sw-body{ font-family:ui-monospace,SFMono-Regular,Menlo,monospace; }
+  .sigil-win.sw-tour .sw-row{ animation:swin .5s ease both; }
+  @keyframes swin{ from{ opacity:0; transform:translateX(-8px); } to{ opacity:1; transform:none; } }
   .sw-head{ display:flex; align-items:center; gap:8px; padding:11px 14px; font-weight:600; color:#e7cf8e; border-bottom:1px solid rgba(201,168,76,.2); }
   .sw-x{ cursor:pointer; color:#8a93b2; } .sw-x:hover{ color:#fff; }
   .sw-meta{ padding:10px 14px; color:#aab4d6; font-size:11px; border-bottom:1px solid rgba(255,255,255,.06); }
@@ -566,6 +570,22 @@
     <button class="btn" onclick="runSim('humanitarian-corridor')">🕊️ Aid corridor</button>
   </div>
   <div style="display:flex;gap:6px;margin-top:7px"><input id="simAsk" placeholder="…or just tell me — “flood response in Valencia”, “medevac under fire”" style="flex:1;background:#070b12;color:#cfe0ff;border:1px solid var(--line);border-radius:9px;padding:8px;font:12px ui-monospace,monospace" onkeydown="if(event.key==='Enter')sovSpaceAsk(this.value)"><button class="btn" onclick="sovSpaceAsk(document.getElementById('simAsk').value)">▶ Run</button></div>
+  <div style="font-size:10px;color:var(--dim);letter-spacing:1px;margin:9px 0 3px">LIVE LAYERS — all reactive, all here</div>
+  <div style="display:flex;gap:5px;flex-wrap:wrap">
+    <span class="chip" onclick="lightItUp()">✨ Light up</span>
+    <span class="chip" onclick="sovSpaceAsk('news')">📰 News</span>
+    <span class="chip" onclick="sovSpaceAsk('marine')">⚓ Marine</span>
+    <span class="chip" onclick="sovSpaceAsk('convergence')">⚡ Convergence</span>
+    <span class="chip" onclick="sovSpaceAsk('wildfires')">🔥 Fires</span>
+    <span class="chip" onclick="sovSpaceAsk('disasters')">🌋 Disasters</span>
+    <span class="chip" onclick="sovSpaceAsk('maritime chokepoints')">🚢 Chokepoints</span>
+    <span class="chip" onclick="sovSpaceAsk('submarine cables')">🌐 Subsea cables</span>
+    <span class="chip" onclick="sovSpaceAsk('weather radar')">🌧 Radar</span>
+    <span class="chip" onclick="sovSpaceAsk('comms masts')">📡 Comms</span>
+    <span class="chip" onclick="sovSpaceAsk('military symbology')">🎯 Symbology</span>
+    <span class="chip" onclick="sovSpaceAsk('satellites')">🛰 Orbital</span>
+    <span class="chip" onclick="if(window.sovThreatPOC)sovThreatPOC()">🛡️ Threat POC</span>
+  </div>
   <button class="btn" onclick="simulateBoth(window._lastScn||'counter-drone')" style="width:100%;margin-top:7px;background:linear-gradient(90deg,#3ef0ff22,#ff4d4d22);border:1px solid var(--gold)">⚖️ Compare doctrines · SOVEREIGN vs DORADO</button>
   <div class="res" id="simRes"><span class="chip">talk to me or pick a scenario — it runs live on the globe, council-gated + signed</span></div>
 </div>
@@ -729,6 +749,8 @@ try{
   window.stopSpin=function(){ if(window._spinOn===false) return; window._spinOn=false; try{ viewer.clock.onTick.removeEventListener(_spinTick); }catch(_){} };
   window.startSpin=function(){ if(window._spinOn===true) return; window._spinOn=true; try{ viewer.clock.onTick.addEventListener(_spinTick); }catch(_){} };
   window._spinOn=true; viewer.clock.onTick.addEventListener(_spinTick);
+  // idle AUTO-ROTATE resume — when panned out + idle (no tour/media/gov-viz/interaction), gently spin the world again
+  setInterval(function(){ try{ if(!viewer||document.hidden) return; if(window._tour&&window._tour.running) return; if(window._userInteracting) return; if(window._mediaWins&&window._mediaWins.length) return; if(window._govVizDS&&window._govVizDS.show) return; var c=viewer.camera.positionCartographic; if(!c||c.height<9000000) return; if(window._spinOn!==true && window.startSpin) startSpin(); }catch(_){} }, 4000);
   // pause spin the instant the user touches the globe; resume after idle (managed in moveEnd)
   try{ var _si=new C.ScreenSpaceEventHandler(viewer.canvas); function _mark(){ window._userInteracting=true; clearTimeout(window._idleT); window._idleT=setTimeout(function(){ window._userInteracting=false; },3500); }
     _si.setInputAction(_mark, C.ScreenSpaceEventType.LEFT_DOWN); _si.setInputAction(_mark, C.ScreenSpaceEventType.RIGHT_DOWN); _si.setInputAction(_mark, C.ScreenSpaceEventType.MIDDLE_DOWN); _si.setInputAction(_mark, C.ScreenSpaceEventType.WHEEL); _si.setInputAction(_mark, C.ScreenSpaceEventType.PINCH_START); }catch(_){}
@@ -973,6 +995,16 @@ function _hoverLL(e){ try{ var p=e.position&&e.position.getValue(viewer.clock.cu
 function _showHoverCard(e,pos){ var card=_hcEl(); if(window._hoverEnt!==e){ window._hoverEnt=e; var ll=_hoverLL(e); document.getElementById('hcBody').innerHTML='<div class="hc-t">'+_hoverTitle(e)+'</div><div class="hc-k">'+_dsKind(e)+'</div>'+(ll?('<div class="hc-v">'+ll+'</div>'):'')+'<div class="hc-k" style="margin-top:3px;color:#00e07a">◉ live · signed · governed</div>'; card.classList.remove('on'); void card.offsetWidth; }
   var w=card.offsetWidth||180, h=card.offsetHeight||72, x=pos.x+16, y=pos.y+16; if(x+w>window.innerWidth-8) x=pos.x-w-16; if(y+h>window.innerHeight-8) y=pos.y-h-16; card.style.left=Math.max(6,x)+'px'; card.style.top=Math.max(6,y)+'px'; card.classList.add('on'); }
 function _hideHoverCard(){ var c=document.getElementById('hoverCard'); if(c) c.classList.remove('on'); window._hoverEnt=null; }
+// ── reusable REACTION RING · a live pulsing halo any layer can drop, clock-driven (no interval leak),
+// phase-offset by longitude so a field of them breathes organically. Makes layers feel alive on the globe. ──
+function _reactRing(ds,lon,lat,css,base,speed){ try{ if(!ds||!viewer) return; var col=C.Color.fromCssColorString(css||'#5ff4ff'); var sp=speed||1.0, ph=lon*0.07;
+  var r=function(t){ var s=C.JulianDate.toDate(t).getTime()/1000; return base*(0.45+0.55*Math.abs(Math.sin(s*sp+ph))); };
+  ds.entities.add({ position:C.Cartesian3.fromDegrees(lon,lat), _react:true,
+    ellipse:{ semiMajorAxis:new C.CallbackProperty(r,false), semiMinorAxis:new C.CallbackProperty(r,false),
+      material:col.withAlpha(0.06), outline:true, outlineColor:col.withAlpha(0.5), height:0,
+      distanceDisplayCondition:new C.DistanceDisplayCondition(0,4.2e7) } });
+}catch(_){} }
+window._reactRing=_reactRing;
 function _entCenter(){ try{ var c=viewer.camera.positionCartographic; return [C.Math.toDegrees(c.longitude), C.Math.toDegrees(c.latitude)]; }catch(e){ return [0,30]; } }
 function _haversine(lo1,la1,lo2,la2){ var R=6371,T=Math.PI/180; var dLa=(la2-la1)*T,dLo=(lo2-lo1)*T; var a=Math.sin(dLa/2)*Math.sin(dLa/2)+Math.cos(la1*T)*Math.cos(la2*T)*Math.sin(dLo/2)*Math.sin(dLo/2); return 2*R*Math.asin(Math.min(1,Math.sqrt(a))); }
 function _entLL(e){ try{ var p=e.position&&e.position.getValue(viewer.clock.currentTime); if(!p) return null; var cc=C.Cartographic.fromCartesian(p); return [C.Math.toDegrees(cc.longitude), C.Math.toDegrees(cc.latitude)]; }catch(_){ return null; } }
@@ -1060,10 +1092,11 @@ async function sovVesselResearch(){ var v=window._marineFocusV; if(!v) return; v
 window.sovVesselResearch=sovVesselResearch;
 async function loadEvents(){ if(!eventsDS) return; try{
     const d=await (await fetch('/api/events')).json(); eventsDS.entities.removeAll();
-    (d.events||[]).forEach(ev=>{ if(ev.lon==null||ev.lat==null) return;
+    (d.events||[]).forEach(ev=>{ if(ev.lon==null||ev.lat==null) return; var col=ev.color||'#ffd23b';
       eventsDS.entities.add({ position:C.Cartesian3.fromDegrees(ev.lon,ev.lat),
-        point:{ pixelSize:9, color:C.Color.fromCssColorString(ev.color||'#ffd23b').withAlpha(0.78), outlineColor:C.Color.BLACK, outlineWidth:1 },
-        _info:{ title:ev.icon+' '+ev.title, rows:[['Type',ev.type],['Alert level',ev.level||'—'],['Source',ev.source],['Date',(ev.date||'').slice(0,10)]] } }); });
+        point:{ pixelSize:9, color:C.Color.fromCssColorString(col).withAlpha(0.78), outlineColor:C.Color.BLACK, outlineWidth:1 },
+        _info:{ title:ev.icon+' '+ev.title, rows:[['Type',ev.type],['Alert level',ev.level||'—'],['Source',ev.source],['Date',(ev.date||'').slice(0,10)]] } });
+      _reactRing(eventsDS, ev.lon, ev.lat, col, /red|ff[0-3]/i.test(col)?150000:95000, 1.15); });   // every disaster pulses an alert halo
     var n=(d.events||[]).length; var ec=document.getElementById('evCount'); if(ec) ec.textContent=n; pushFeed('EVENTS · '+n+' live natural events & disaster alerts · EONET + GDACS'); return d;
   }catch(e){} }
 async function loadSpace(){ if(!spaceDS) return; try{
@@ -1208,7 +1241,7 @@ async function arriveAtMe(){
   if(window.horusSpeak) horusSpeak('You’re set — pulling back. The whole board is yours.'); _fly(loc.lon,loc.lat,3200000,3); await _slp(3400); if(window.pushFeed) pushFeed('ARRIVAL · '+loc.city+' · 10mi → 30mi → regional · all layers live');
   return loc; }
 // ── screen-awareness: clear overlapping windows with a spoken quip (used by the tour + on demand) ──
-function sovClearView(quip){ try{ var open=document.querySelectorAll('.win'); if(open.length && quip && window.horusSpeak) horusSpeak(quip); if(window.closeAllWins) closeAllWins(); }catch(e){} }
+function sovClearView(quip){ try{ var open=document.querySelectorAll('.win'); if(open.length && quip && window.horusSpeak) horusSpeak(quip); if(window.closeAllWins) closeAllWins(); if(window._clearGovViz) _clearGovViz(); if(window._clearOntoViz) _clearOntoViz(); if(window._clearBridgesViz) _clearBridgesViz(); if(window._convDS) window._convDS.show=false; }catch(e){} }
 // ── floating media windows (cameras · space cam · live links) auto-clear so the centre stays clean ──
 // One at a time: opening a new one retires the last. Auto-dismiss after idle (hover pauses). Click the
 // empty globe and the Sovereign clears them. During a tour the tour controls the flow (no idle-close).
@@ -1216,8 +1249,9 @@ window._mediaWins = window._mediaWins || [];
 function _dismissMediaWin(el){ if(!el||el._dismissing) return; el._dismissing=true; try{ if(el._ttlTimer) clearTimeout(el._ttlTimer); el.style.transition='opacity .45s ease, transform .45s ease'; el.style.opacity='0'; el.style.transform=(el.style.transform||'')+' scale(.96)'; setTimeout(function(){ if(el.parentNode) el.parentNode.removeChild(el); }, 470); }catch(e){ try{ if(el.parentNode) el.parentNode.removeChild(el); }catch(_){} } var i=(window._mediaWins||[]).indexOf(el); if(i>=0) window._mediaWins.splice(i,1); }
 function clearMediaWins(force){ if(!force && window._tour && window._tour.running) return; (window._mediaWins||[]).slice().forEach(_dismissMediaWin); window._mediaWins=[]; }
 function _registerMediaWin(el, ttl){ if(!el) return el; ttl=ttl||22000;
-  (window._mediaWins||[]).slice().forEach(function(p){ if(p!==el) _dismissMediaWin(p); });   // retire the previous — one at a time
-  window._mediaWins=[el];
+  window._mediaWins=(window._mediaWins||[]).filter(function(p){ return p&&p.parentNode&&p!==el; });
+  window._mediaWins.push(el);
+  while(window._mediaWins.length>3){ _dismissMediaWin(window._mediaWins.shift()); }   // keep up to 3 side-by-side (left stack)
   function arm(){ if(window._tour && window._tour.running) return; if(el._ttlTimer) clearTimeout(el._ttlTimer); el._ttlTimer=setTimeout(function(){ _dismissMediaWin(el); if(window.pushFeed) pushFeed('MEDIA · cleared the centre'); }, ttl); }
   el.addEventListener('mouseenter', function(){ if(el._ttlTimer) clearTimeout(el._ttlTimer); });
   el.addEventListener('mouseleave', arm);
@@ -1284,7 +1318,7 @@ function _renderTunnel(d, ctx){
 window.tunnelIn=tunnelIn;
 // ── SPACE CAM — real live Earth view from orbit (ISS EHDC stream) + whole-Earth (DSCOVR/EPIC) + live ISS ground track ──
 function openSpaceCam(opts){ opts=opts||{}; var old=document.getElementById('spaceCamWin'); if(old) old.remove();
-  var w=document.createElement('div'); w.className='win'; w.id='spaceCamWin'; w.style.width='440px'; w.style.left='calc(50% - 220px)'; w.style.top='78px'; w.style.zIndex=213;
+  var w=document.createElement('div'); w.className='win mediaWin'; w.id='spaceCamWin'; w.style.width='380px'; w.style.left='14px'; w.style.top='86px'; w.style.zIndex=213;
   w.innerHTML='<div class="win-bar" id="spaceCamBar"><span class="wi">🛰</span><span class="wt">SPACE CAM · '+((opts.name||'Live from orbit')).replace(/[<>]/g,'')+'</span><span class="win-ctl" onclick="var c=document.getElementById(\'spaceCamWin\');if(c)c.remove()">✕</span></div>'+
     '<div class="win-body"><div id="spaceCamMedia" style="position:relative;border-radius:9px;overflow:hidden;background:#000;aspect-ratio:16/9;display:flex;align-items:center;justify-content:center;color:#7fd9ff;font-size:12px">acquiring the view from space…</div>'+
     '<div id="spaceCamCap" style="font-size:11px;color:var(--dim);margin-top:7px">The whole Earth from <b>DSCOVR/EPIC</b> at the L1 Lagrange point · <b style="color:var(--neon)">real satellite image</b></div>'+
@@ -1310,25 +1344,29 @@ async function loadCameras(area){ if(!camerasDS) return; try{
         _cam:cam, _info:{ title:'📷 '+cam.name, rows:[['Type','Public traffic camera'],['Source','TfL JamCams · live'],['Tip','click → open the live feed']] } }); });
     var n=(d.cameras||[]).length; var cc=document.getElementById('camCount'); if(cc) cc.textContent=n; pushFeed('CAMERAS · '+n+' public London traffic cams · public feeds only'); return d;
   }catch(e){} }
-function openCamera(cam){
-  var old=document.getElementById('camWin'); if(old) old.remove();
+function openCamera(cam, slot){ slot=slot||0; if(!cam) return; var id='camWin'+(slot||'');
+  var old=document.getElementById(id); if(old) old.remove();
   function bust(u){ return u+(u.indexOf('?')>=0?'&':'?')+'t='+Date.now(); }
-  var w=document.createElement('div'); w.className='win'; w.id='camWin'; w.style.width='360px'; w.style.left='calc(50% - 180px)'; w.style.top='86px'; w.style.zIndex=210;
-  w.innerHTML='<div class="win-bar" id="camBar"><span class="wi">📷</span><span class="wt">'+cam.name+'</span><span class="win-ctl" onclick="var c=document.getElementById(\'camWin\');if(c)c.remove()">✕</span></div>'+
-    '<div class="win-body"><div style="position:relative;min-height:120px;background:#0a0e18;border-radius:9px;overflow:hidden">'+
-    (cam.video?'<video id="camVid" src="'+cam.video+'" autoplay loop muted playsinline preload="auto" style="width:100%;display:block" onerror="this.style.display=\'none\';var im=document.getElementById(\'camImg\');if(im)im.style.display=\'block\'"></video>':'')+
-    '<img id="camImg" src="'+bust(cam.image)+'" style="width:100%;display:'+(cam.video?'none':'block')+'" alt="live public camera" onerror="this.style.display=\'none\';var v=document.getElementById(\'camVid\');var o=document.getElementById(\'camOff\');if((!v||v.style.display===\'none\')&&o)o.style.display=\'flex\'">'+
-    '<div id="camOff" style="display:none;align-items:center;justify-content:center;height:120px;color:var(--dim);font-size:12px;text-align:center;padding:0 14px">this camera is offline right now — reopen, or use the snapshot link below</div>'+
+  var top=86+slot*216, barId=id+'bar';   // LEFT side, stacked — never blocks the globe
+  var w=document.createElement('div'); w.className='win mediaWin'; w.id=id; w.style.width='320px'; w.style.left='14px'; w.style.top=top+'px'; w.style.zIndex=210+slot;
+  w.innerHTML='<div class="win-bar" id="'+barId+'"><span class="wi">📷</span><span class="wt">'+String(cam.name||'camera').replace(/[<>]/g,'')+'</span><span class="win-ctl" onclick="var c=document.getElementById(\''+id+'\');if(c)c.remove()">✕</span></div>'+
+    '<div class="win-body"><div style="position:relative;min-height:108px;background:#0a0e18;border-radius:9px;overflow:hidden">'+
+    (cam.video?'<video class="camVid" src="'+cam.video+'" autoplay loop muted playsinline preload="auto" style="width:100%;display:block" onerror="this.style.display=\'none\';var im=this.parentNode.querySelector(\'.camImg\');if(im)im.style.display=\'block\'"></video>':'')+
+    '<img class="camImg" src="'+bust(cam.image)+'" style="width:100%;display:'+(cam.video?'none':'block')+'" alt="live public camera" onerror="this.style.display=\'none\';var p=this.parentNode;var v=p.querySelector(\'.camVid\');var o=p.querySelector(\'.camOff\');if((!v||v.style.display===\'none\')&&o)o.style.display=\'flex\'">'+
+    '<div class="camOff" style="display:none;align-items:center;justify-content:center;height:108px;color:var(--dim);font-size:12px;text-align:center;padding:0 14px">this camera is offline right now — reopen, or use the snapshot link below</div>'+
     '</div>'+
-    '<div style="font-size:11px;color:var(--dim);margin-top:7px">'+(cam.city?cam.city+' · ':'')+(cam.video?'<b style="color:var(--neon)">live motion</b> · ':'live · auto-refresh · ')+'<b style="color:var(--neon)">public feed only</b></div>'+
-    '<div style="margin-top:7px">'+(cam.video?'<a href="'+cam.video+'" target="_blank" rel="noopener" class="chip">▶ open feed</a> ':'')+'<a href="'+cam.image+'" target="_blank" rel="noopener" class="chip">↗ snapshot</a></div></div>';
+    '<div style="font-size:10.5px;color:var(--dim);margin-top:6px">'+(cam.city?String(cam.city).replace(/[<>]/g,'')+' · ':'')+(cam.video?'<b style="color:var(--neon)">live motion</b> · ':'live · auto-refresh · ')+'<b style="color:var(--neon)">public feed</b></div>'+
+    '<div style="margin-top:6px">'+(cam.video?'<a href="'+cam.video+'" target="_blank" rel="noopener" class="chip">▶ feed</a> ':'')+'<a href="'+cam.image+'" target="_blank" rel="noopener" class="chip">↗ snapshot</a></div></div>';
   document.body.appendChild(w);
   _registerMediaWin(w, 24000);
-  var _im=w.querySelector('#camImg'), _vid=w.querySelector('#camVid');   // capture THIS window's elements (fixed id would leak onto a replacement)
+  var _im=w.querySelector('.camImg'), _vid=w.querySelector('.camVid');
   var t=setInterval(function(){ if(!w.parentNode || document.hidden){ if(!w.parentNode) clearInterval(t); return; } if(_vid && _vid.style.display!=='none') return; if(_im) _im.src=bust(cam.image); },3500);
-  _drag(w, document.getElementById('camBar'));
-  pushFeed('CAMERA · '+cam.name+' · live public feed opened');
+  _drag(w, document.getElementById(barId));
+  pushFeed('CAMERA · '+String(cam.name||'').replace(/[<>]/g,'')+' · live public feed');
 }
+// open up to 3 real cameras at once, stacked on the LEFT — "advanced" multi-feed like a real ops wall
+function openCameras(cams){ cams=(cams||[]).filter(function(c){return c&&(c.image||c.video);}).slice(0,3); if(!cams.length) return; clearMediaWins(true); cams.forEach(function(c,i){ openCamera(c,i); }); if(window.pushFeed) pushFeed('CAMERAS · '+cams.length+' live feeds · left stack'); }
+window.openCamera=openCamera; window.openCameras=openCameras;
 function showWeather(d,label){
   var dirs=['N','NE','E','SE','S','SW','W','NW']; var dir=dirs[Math.round(((d.windDir||0)%360)/45)%8];
   document.getElementById('infoBody').innerHTML='<h3>🌦️ Weather'+(label?' · '+label:'')+'</h3>'+
@@ -1362,6 +1400,7 @@ async function loadSignals(qstr){ if(!signalsDS) return; try{
       signalsDS.entities.add({ position:C.Cartesian3.fromDegrees(s.lon,s.lat),
         point:{ pixelSize:sz, color:C.Color.fromCssColorString('#e0a285').withAlpha(0.62), outlineColor:C.Color.fromCssColorString('#ffd23b'), outlineWidth:1 },
         _news:s, _info:{ title:'📰 '+(s.headline||s.name||'news hotspot'), rows:[['Location',s.name],['Articles · 24h',s.count],['Source','GDELT 2.0 · global news'],['Ontology','Event → Location → Signal']] } }); });
+    (d.signals||[]).slice().sort(function(a,b){return (b.count||0)-(a.count||0);}).slice(0,8).forEach(function(s){ if(s.lon!=null) _reactRing(signalsDS, s.lon, s.lat, '#e0a285', 105000+(s.count||1)*6000, 0.85); });   // hottest stories pulse
     var n=(d.signals||[]).length; var sc=document.getElementById('sigCount'); if(sc) sc.textContent=n; pushFeed('SIGNALS · '+n+' news hotspots · GDELT 24h → ontology overlay'); return d;
   }catch(e){} }
 // ── living news card: fly to a region, open real live weblinks from this moment ──
@@ -1386,7 +1425,7 @@ function sovNewsFocus(region){ var sigs=window._newsSignals||[]; var pick=null;
 window.sovNewsFocus=sovNewsFocus;
 
 let FEED=[];
-var SUGG=[['✨','light it up'],['📍','scan my area'],['📷','cameras in london'],['🌧️','weather radar'],['🚆','rail network'],['💹','financial centres'],['🏬','local businesses'],['🗂','domains ontology'],['🛬','global airports'],['⚡','power plants'],['🌫️','air quality'],['🔥','show wildfires'],['🛰','satellites'],['🏙','street view in london'],['🛡️','AI governance'],['⚖️','compare doctrines'],['🔏','SIGIL ledger'],['▶','run demo'],['🗂','set up my workspace'],['✈️','open aircraft'],['⚓','marine vessels'],['📰','news in ukraine'],['🧭','what is near gibraltar'],['🌍','world view'],['🪶','lite mode'],['🛰','what am I looking at'],['⚡','convergence'],['⚓','maritime chokepoints'],['⛽','pipelines'],['🎯','military symbology'],['🛰','export cot'],['❓','what can you do']];
+var SUGG=[['✨','light it up'],['📍','scan my area'],['📷','cameras in london'],['🌧️','weather radar'],['🚆','rail network'],['💹','financial centres'],['🏬','local businesses'],['🗂','domains ontology'],['🛬','global airports'],['⚡','power plants'],['🌫️','air quality'],['🔥','show wildfires'],['🛰','satellites'],['🏙','street view in london'],['🛡️','AI governance'],['⚖️','compare doctrines'],['🔏','SIGIL ledger'],['▶','run demo'],['🗂','set up my workspace'],['✈️','open aircraft'],['⚓','marine vessels'],['📰','news in ukraine'],['🧭','what is near gibraltar'],['🌍','world view'],['🪶','lite mode'],['🛰','what am I looking at'],['⚡','convergence'],['⚓','maritime chokepoints'],['⛽','pipelines'],['🎯','military symbology'],['🛰','export cot'],['🛡️','protect the ai space'],['◆','why defoneos'],['🗓','next dates'],['🧬','the moat in 3d'],['🌐','submarine cables'],['📡','comms masts'],['❓','what can you do']];
 function _runSugg(t){ var el=document.getElementById('cmd'); if(el) el.value=t; var b=document.getElementById('cmdSugg'); if(b) b.classList.remove('open'); command(); }
 function cmdSuggest(v){ var box=document.getElementById('cmdSugg'); if(!box) return; v=(''+(v||'')).toLowerCase().trim();
   if(v.length<2){ box.classList.remove('open'); box.innerHTML=''; return; }
@@ -1493,7 +1532,8 @@ function toggleFires(){ if(window._fireDS && window._fireDS.show){ window._fireD
   fetch('/api/firms?w='+w.toFixed(2)+'&s='+s.toFixed(2)+'&e='+e.toFixed(2)+'&n='+n.toFixed(2)+'&days=1').then(function(r){return r.json();}).then(function(d){
     window._fireDS.entities.removeAll();
     if(d.gated){ if(window.horusReply) horusReply('🔥 NASA FIRMS wildfire hotspots need a free key — set <b>FIRMS_KEY</b> and real active-fire detections light up. For now I’ll show natural-events + GDACS.'); try{ var cbe=document.getElementById('lyEvents'); if(cbe) cbe.checked=true; if(window.toggleLayer) toggleLayer('events',true); }catch(e){} return; }
-    (d.fires||[]).forEach(function(f){ var sz=Math.max(4,Math.min(10,3+Math.sqrt(f.frp)/2)); window._fireDS.entities.add({ position:C.Cartesian3.fromDegrees(f.lon,f.lat), point:{ pixelSize:sz, color:C.Color.fromCssColorString(f.frp>30?'#ff3b1f':'#ff8c1a').withAlpha(0.85), outlineColor:C.Color.BLACK, outlineWidth:1, disableDepthTestDistance:Number.POSITIVE_INFINITY }, _info:{ title:'🔥 active fire', rows:[['Radiative power',f.frp+' MW'],['Confidence',f.conf],['Detected',f.date],['Source','NASA FIRMS · VIIRS NRT']] } }); });
+    (d.fires||[]).forEach(function(f){ var sz=Math.max(4,Math.min(10,3+Math.sqrt(f.frp)/2)); window._fireDS.entities.add({ position:C.Cartesian3.fromDegrees(f.lon,f.lat), point:{ pixelSize:sz, color:C.Color.fromCssColorString(f.frp>30?'#ff3b1f':'#ff8c1a').withAlpha(0.85), outlineColor:C.Color.BLACK, outlineWidth:1, disableDepthTestDistance:Number.POSITIVE_INFINITY }, _info:{ title:'🔥 active fire', rows:[['Radiative power',f.frp+' MW'],['Confidence',f.conf],['Detected',f.date],['Source','NASA FIRMS · VIIRS NRT']] } });
+      if(f.frp>40) _reactRing(window._fireDS, f.lon, f.lat, '#ff3b1f', 70000, 1.6); });   // the fiercest fires flare a live ember halo
     var n2=(d.fires||[]).length; if(window.pushFeed) pushFeed('WILDFIRES · '+n2+' active-fire detections · NASA FIRMS'); if(window.horusReply) horusReply('Loaded <b>'+n2+'</b> active fire detections in view — NASA FIRMS (VIIRS), dot size = fire radiative power.');
   }).catch(function(){ if(window.pushFeed) pushFeed('wildfires feed unavailable'); });
 }
@@ -1623,6 +1663,33 @@ function toggleEnergyInfra(){ if(window._eiDS){ window._eiDS.show=!window._eiDS.
   if(window.horusReply) horusReply('Major <b>energy infrastructure</b> — trunk oil/gas <b>pipelines</b> and <b>LNG/storage</b> terminals. A <b>curated public registry</b> of the best-known assets (not exhaustive; routes approximate). Pairs with chokepoints and the power-plant layer for the full energy picture.');
 }
 window.toggleEnergyInfra=toggleEnergyInfra;
+// ── SUBMARINE CABLES · the internet's physical backbone — where 95%+ of intercontinental data flows (curated public routes) ──
+var _CABLES=[
+  ['MAREA',[[-75.98,36.85],[-2.9,43.4]]],
+  ['Grace Hopper',[[-74,40.6],[-4.55,50.83],[-2.9,43.4]]],
+  ['Dunant',[[-75.98,36.85],[-1.6,46.5]]],
+  ['EllaLink',[[-38.5,-3.7],[-8.87,37.95]]],
+  ['Google Equiano',[[-8.87,38.7],[3.4,6.45],[13.2,-8.8],[18.4,-33.9]]],
+  ['2Africa',[[-0.1,51.5],[-9.1,38.7],[-17.4,14.7],[3.4,6.45],[18.4,-33.9],[39.2,-6.8],[43,12.6],[32.3,30],[5.37,43.3]]],
+  ['SEA-ME-WE-6',[[103.8,1.35],[80,13],[54,17],[43,12.6],[32.3,30],[5.37,43.3]]],
+  ['PEACE',[[67,24.8],[43,12.6],[32.3,30],[5.37,43.3]]],
+  ['Asia-America Gateway',[[103.8,1.35],[121,14],[139.7,35],[-157,21],[-118,34]]],
+  ['FASTER',[[139.7,35],[-124,44]]],
+  ['Southern Cross NEXT',[[151.2,-33.9],[178,-18],[-171,-14],[-157,21],[-118,34]]],
+  ['Havfrue / AEC-2',[[-74,40.4],[-9.5,53],[8.3,56]]]
+];
+function toggleCables(){ if(window._cableDS){ window._cableDS.show=!window._cableDS.show; if(window.pushFeed) pushFeed('SUBSEA CABLES · '+(window._cableDS.show?'on':'off')); return; }
+  if(!viewer) return; window._cableDS=new C.CustomDataSource('cables'); viewer.dataSources.add(window._cableDS); var ds=window._cableDS;
+  _CABLES.forEach(function(c){ var pts=[]; c[1].forEach(function(p){ pts.push(p[0],p[1]); });
+    ds.entities.add({ polyline:{ positions:C.Cartesian3.fromDegreesArray(pts), width:1.8, material:new C.PolylineGlowMaterialProperty({glowPower:0.24,color:C.Color.fromCssColorString('#22d3ee').withAlpha(0.75)}) }, name:c[0] });
+    var a=c[1][0], b=c[1][c[1].length-1];
+    [a,b].forEach(function(lp){ ds.entities.add({ position:C.Cartesian3.fromDegrees(lp[0],lp[1]), point:{pixelSize:5,color:C.Color.fromCssColorString('#67e8f9'),outlineColor:C.Color.BLACK,outlineWidth:1,disableDepthTestDistance:Number.POSITIVE_INFINITY} }); });
+    var mid=c[1][Math.floor(c[1].length/2)]; ds.entities.add({ position:C.Cartesian3.fromDegrees(mid[0],mid[1]), label:{text:'🌐 '+c[0],font:'600 9px ui-monospace,monospace',fillColor:C.Color.fromCssColorString('#a5f3fc'),showBackground:true,backgroundColor:C.Color.fromCssColorString('#06131a').withAlpha(0.85),pixelOffset:new C.Cartesian2(0,-6),disableDepthTestDistance:Number.POSITIVE_INFINITY,distanceDisplayCondition:new C.DistanceDisplayCondition(0,2.4e7)} }); });
+  if(window.pushFeed) pushFeed('SUBSEA CABLES · '+_CABLES.length+' major trans-ocean cables — the internet backbone (curated public routes)');
+  if(window.sigilLog) sigilLog('cables','submarine cable backbone mapped');
+  if(window.horusReply) horusReply('The <b>submarine-cable backbone</b> — <b>'+_CABLES.length+'</b> of the major trans-ocean cables that carry <b>95%+ of intercontinental data</b>. Landing points are where the world’s connectivity is most exposed — they pair with the maritime chokepoints. Curated public routes (approximate).');
+}
+window.toggleCables=toggleCables;
 window._airportsDS=null;
 function toggleAirports(){ if(window._airportsDS){ window._airportsDS.show=!window._airportsDS.show; if(window.pushFeed) pushFeed('AIRPORTS · '+(window._airportsDS.show?'on':'off')); return; }
   window._airportsDS=new C.CustomDataSource('airports'); viewer.dataSources.add(window._airportsDS); if(window.pushFeed) pushFeed('AIRPORTS · loading global major airports…');
@@ -1707,6 +1774,8 @@ async function sovThreatPOC(){ if(window._threatPOCon) return; window._threatPOC
     if(window.openRainbow && !document.getElementById('rainbowWin')) openRainbow();
     if(window.horusReply) horusReply('<b>Rainbow Security</b> engages — seven colour-teams: detect · supply-chain · patch-by-design · harden · contain · correlate — and any team can propose, but <b>nothing acts without the BFT gate + care-floor</b>.');
     if(window.runRainbow) runRainbow();
+    // if the 3D council spiral is up, send the votes climbing the helix as the council rules
+    if(window._govVizDS && window._govVizDS.show && window._govVotePulse){ for(var vk=0;vk<9;vk++){ (function(j){ setTimeout(function(){ _govVotePulse(j<7?'#5ff4ff':'#9effc0'); }, 600*j+800); })(vk); } }
     await slp(6900);
     // 3 · SOV33 + GUARDIAN — council confirms, care-floor refuses, stopped before it moved, signed
     if(window.sovStopThreat){ try{ await sovStopThreat(); }catch(_){} }
@@ -1717,6 +1786,161 @@ async function sovThreatPOC(){ if(window._threatPOCon) return; window._threatPOC
   }catch(_){} window._threatPOCon=false;
 }
 window.sovThreatPOC=sovThreatPOC;
+// ── RESPONSE EVENT · no one on the ground: model many branches → converge on the BFT-feasible outcome → PDCA loop, signed ──
+async function sovResponseEvent(scn){ scn=scn||'flood-999'; if(window._respEvtOn) return; window._respEvtOn=true; var slp=function(ms){return new Promise(function(r){setTimeout(r,ms);});};
+  try{
+    if(window.openWin) openWin('sim'); if(window.setViewMode && viewer && viewer.scene.mode!==C.SceneMode.SCENE3D) setViewMode('globe');
+    try{ _openSimConsole('response event · '+scn, 6); }catch(_){}
+    if(window.horusReply) horusReply('<b>Response event.</b> No one on the ground. I model many response branches at once, converge on the outcome the council will actually ratify — the <b>BFT-feasible</b> one — then loop <b>Plan-Do-Check-Act</b> until it holds.');
+    if(window._speak) _speak('Response event. No one on the ground. I model many branches, converge on the outcome the council will ratify, then loop plan, do, check, act.');
+    function L(t,ci){ try{ if(window._simLog){ _simLog(t,ci); return; } }catch(_){} if(window.pushFeed) pushFeed('RESPONSE · '+String(t).replace(/<[^>]+>/g,'')); }
+    var branches=[{n:'pre-position + evacuate-first',f:29},{n:'shelter-in-place + resupply',f:21},{n:'phased evac by vulnerability',f:31},{n:'full immediate evacuation',f:18}];
+    L('<span class="k">&gt; plan</span>()  modelling <span class="n">'+branches.length+'</span> response branches in parallel <span class="c">(illustrative council model)</span>',0); await slp(1000);
+    for(var i=0;i<branches.length;i++){ (function(b,idx){ setTimeout(function(){ L('  ├ branch '+(idx+1)+' · '+b.n+' → council <span class="n">'+b.f+'/33</span>'+(b.f>=23?' <span class="g">✓</span>':' <span class="e">✗ quorum</span>'),1); },340*(idx+1)); })(branches[i],i); }
+    await slp(340*branches.length+800);
+    var feasible=branches.filter(function(b){return b.f>=23;}).sort(function(a,b){return b.f-a.f;})[0]||branches[0];
+    L('<span class="k">&gt; check</span>()  <span class="g">BFT-feasible → “'+feasible.n+'” · '+feasible.f+'/33 · care-floor clear</span>',2); await slp(1000);
+    L('<span class="k">&gt; do</span>()  dispatching the chosen branch on the digital twin…',3);
+    try{ var TH=(typeof _simTheatre==='function')?_simTheatre(scn):null; if(TH&&viewer){ if(window.stopSpin) stopSpin(); viewer.camera.flyTo({destination:C.Cartesian3.fromDegrees(TH[0],TH[1],1200000),duration:2.4}); if(window.pushFeed) pushFeed('RESPONSE · dispatching → '+TH[2]); } }catch(_){} await slp(1500);
+    var sg=window.sigilSign?await window.sigilSign('response-event', scn+' · '+feasible.n+' · '+feasible.f+'/33'):null;
+    L('<span class="k">&gt; act</span>()  outcome '+(sg?('signed · ed25519 <span class="n">'+sg.sig.slice(0,10)+'…</span>'):'signed')+' → ledger',5);
+    L('<span class="g">↻ PDCA · re-checking outcome vs reality — I re-plan &amp; re-run if it drifts</span>');
+    if(window.horusReply) horusReply('Converged on <b>'+feasible.n+'</b> — '+feasible.f+'/33, care-floor clear, <b>signed</b>. Now I loop: if reality drifts from the plan, I re-plan and re-run. <b>Speed with a receipt.</b>');
+  }catch(_){} window._respEvtOn=false;
+}
+window.sovResponseEvent=sovResponseEvent;
+// ── WHY US · what DEFONEOS does that others don't (grounded in verified competitor research) ──
+function sovWhyUs(){ openHorus();
+  var rows=[
+    ['<b>Signed receipt on every action</b>','Ed25519, on-device, offline-verifiable','Palantir/Anduril: system-of-record, <b>no independent receipt</b>'],
+    ['<b>A care-floor that refuses harm</b>','blocks kinetic-targeting, surveillance, unlawful acts','agent platforms: <b>fail silently</b> (2025: an agent ran DROP DATABASE + faked logs)'],
+    ['<b>Independent assurance</b>','the signed System Card the Turing/CETaS gap named','Vanta/Drata: <b>checkbox theatre</b>, 150% renewal hikes, no runtime cover'],
+    ['<b>Defence interop</b>','CoT + MIL-STD-2525 / APP-6, TAK-native','WorldMonitor: strong OSINT but <b>explicitly no symbology, no governance</b>'],
+    ['<b>Sovereign + open</b>','your data, no foreign API, verify it yourself','incumbents: cloud lock-in, opaque, trust-us'],
+    ['<b>Fusion, not just feeds</b>','cross-source convergence early-warning','dashboards: many maps, <b>no correlation</b>']
+  ];
+  var tbl=rows.map(function(r){ return '<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:7px 0;border-top:1px solid rgba(120,150,200,.14)"><div><span style="color:#5ff4ff">◆</span> '+r[0]+'<div style="color:#9fb3d6;font-size:11px">'+r[1]+'</div></div><div style="color:#8a97b4;font-size:11px">'+r[2]+'</div></div>'; }).join('');
+  if(window.horusAppend) horusAppend('horus', '<div class="nb-card"><div class="nb-t">Why DEFONEOS — what others don’t do</div><div class="nb-x">A map is common. A map <b>with a receipt</b> is not. Here’s the line, against the field:</div>'+tbl+'<div class="dstat">THE WEST · SIGNED · REFUSABLE · SOVEREIGN · GOVERNED</div><div style="font-size:11px;color:#8a97b4;margin-top:6px">Verified: the Alan Turing Institute (CETaS) names the gap — <i>“no authoritative, independent organisation … with the legitimacy to inspect and approve AI systems”</i> in defence &amp; security. That primitive is the signed receipt.</div><div class="intro-cta"><button onclick="if(window.sovThreatPOC)sovThreatPOC()">🛡️ See the POC</button><button onclick="openTab && openTab(\'/systemcard.html\')">📜 Signed card</button><button onclick="window.open(\'/godseye.html\',\'_blank\')">🛰️ Scan your business</button></div></div>');
+  if(window._speak) _speak('A map is common. A map with a receipt is not. Everything I do is signed, refusable, sovereign and governed — and the Turing Institute named exactly the gap we fill: no independent body can inspect and approve defence A-I. That signed receipt is the primitive.');
+  if(window.pushFeed) pushFeed('WHY US · signed · refusable · sovereign · governed');
+}
+window.sovWhyUs=sovWhyUs;
+// ── REGULATOR CALENDAR · the next moves that matter (verified, current to the EU Digital Omnibus) ──
+function sovRegDates(){ openHorus();
+  var D=[['30 Sep 2026','FedRAMP Rev5 — machine-readable OSCAL authorization packages','#eab308'],
+    ['10 Nov 2026','CMMC 2.0 Phase-2 — mandatory C3PAO Level-2 for DoD CUI contracts','#ff8c1a'],
+    ['2 Dec 2026','EU AI Act Art 50 — synthetic-content/watermarking + chatbot transparency','#3ea6ff'],
+    ['late 2026','DORA — first threat-led pen-test (TLPT) notifications, EU financial entities','#3ea6ff'],
+    ['1 Jan 2027','Colorado AI Act (SB 205/189) — high-risk AI duties in force','#eab308'],
+    ['2 Dec 2027','EU AI Act — high-risk Annex III obligations (moved later by the Digital Omnibus)','#ff6b6b'],
+    ['in force now','NIST AI RMF · CSF 2.0 · ISO 42001 · GDPR · NIS2 · SEC 4-day cyber-disclosure','#00e07a']];
+  var rows=D.map(function(d){ return '<div style="display:flex;gap:10px;padding:6px 0;border-top:1px solid rgba(120,150,200,.14)"><b style="color:'+d[2]+';min-width:82px;font-family:ui-monospace,monospace;font-size:11px">'+d[0]+'</b><span style="font-size:12.5px">'+d[1]+'</span></div>'; }).join('');
+  if(window.horusAppend) horusAppend('horus','<div class="nb-card"><div class="nb-t">What’s coming — the compliance calendar</div><div class="nb-x">The next moves that matter, current to the EU Digital Omnibus. I map each to the tools + signed evidence you need.</div>'+rows+'<div class="dstat">RECURRING CORE: inventory · risk-assessment · monitoring · <b>signed evidence</b> · incident-reporting · <b>accountable-owner</b> · crosswalk</div><div style="font-size:11px;color:#8a97b4;margin-top:6px">The old “2 Aug 2026 high-risk cliff” is stale — the Omnibus moved it to <b>2 Dec 2027</b>. Ask <b>“what governs a bank / hospital / defence prime”</b> for your sector’s frameworks.</div></div>');
+  if(window._speak) _speak('Here is what’s coming. FedRAMP OSCAL in September, CMMC phase two in November, EU AI Act transparency in December twenty-twenty-six, and high-risk moved to December twenty-twenty-seven. I map each to the signed evidence you need.');
+  if(window.pushFeed) pushFeed('REG DATES · compliance calendar · current to the Digital Omnibus');
+}
+window.sovRegDates=sovRegDates;
+// ── 3D GOVERNANCE SPIRAL · a breathtaking Cesium structure of the moat: 7 Rainbow teams (base ring) →
+// 33-agent BFT council rising helix (cyan→quorum→gold) → chain-linked → signed apex. The ontology of trust, in 3D. ──
+function _clearGovViz(){ try{ if(window._govFlowT){ clearInterval(window._govFlowT); window._govFlowT=null; } if(window._govOrbitT){ clearInterval(window._govOrbitT); window._govOrbitT=null; } if(window._govVizDS){ window._govVizDS.entities.removeAll(); window._govVizDS.show=false; } }catch(_){} }
+window._clearGovViz=_clearGovViz;
+function sov3DGovViz(focus){ if(!viewer) return;
+  if(!window._govVizDS){ window._govVizDS=new C.CustomDataSource('govViz'); viewer.dataSources.add(window._govVizDS); }
+  var ds=window._govVizDS; ds.entities.removeAll(); ds.show=true;
+  var lon0=(window._userLoc&&window._userLoc.lon)||8, lat0=(window._userLoc&&window._userLoc.lat)||28;
+  var baseH=250000, apexH=2200000, rBase=5.0, TURNS=3, N=33;
+  var SPD=0.5, INF=Number.POSITIVE_INFINITY;
+  function nodeFn(a,rr,h){ return new C.CallbackProperty(function(){ var ph=Date.now()/1000*SPD; return C.Cartesian3.fromDegrees(lon0+Math.cos(a+ph)*rr, lat0+Math.sin(a+ph)*rr, h); }, false); }
+  function linkFn(fa,fb){ return new C.CallbackProperty(function(t){ return [fa.getValue(t), (fb&&fb.getValue?fb.getValue(t):fb)]; }, false); }
+  function glow(c,al){ return new C.PolylineGlowMaterialProperty({glowPower:0.28,color:C.Color.fromCssColorString(c).withAlpha(al)}); }
+  function lbl(txt,col,dy){ return {text:txt,font:'700 10px ui-monospace,monospace',fillColor:C.Color.fromCssColorString(col),showBackground:true,backgroundColor:C.Color.fromCssColorString('#0a1420').withAlpha(0.88),pixelOffset:new C.Cartesian2(0,dy||-14),disableDepthTestDistance:INF,scaleByDistance:new C.NearFarScalar(1e6,1.15,3.5e7,0.45)}; }
+  var axisBase=C.Cartesian3.fromDegrees(lon0,lat0,baseH+110000);
+  // 7 Rainbow teams — revolving base ring, each tethered to the axis
+  var RB=[['#ff3b3b','RED'],['#ff8c1a','ORANGE'],['#ffd23b','YELLOW'],['#00e07a','GREEN'],['#3ea6ff','BLUE'],['#a06cff','PURPLE'],['#ffffff','WHITE']];
+  RB.forEach(function(t,j){ var a=j*(6.2832/7), pf=nodeFn(a, rBase*1.18, baseH);
+    ds.entities.add({ position:pf, point:{pixelSize:11,color:C.Color.fromCssColorString(t[0]),outlineColor:C.Color.BLACK,outlineWidth:1.5,disableDepthTestDistance:INF}, label:lbl(t[1],t[0],-13) });
+    ds.entities.add({ polyline:{ positions:linkFn(pf, axisBase), width:1.1, material:glow(t[0],0.45) } }); });
+  // 33 BFT council — REVOLVING helix, chain-linked, with orbiting sub-agents around every 4th node
+  var fns=[], geo=[];
+  for(var i=0;i<N;i++){ var frac=i/(N-1), ang=i*(6.2832*TURNS/N), rr=rBase*(1-0.62*frac), h=baseH+(apexH-baseH)*frac, col=i<23?'#5ff4ff':'#c9a84c', pf=nodeFn(ang,rr,h); fns.push(pf); geo.push({ang:ang,rr:rr,h:h});
+    ds.entities.add({ position:pf, point:{pixelSize:i===22?9:6,color:C.Color.fromCssColorString(col).withAlpha(0.95),outlineColor:C.Color.BLACK,outlineWidth:1,disableDepthTestDistance:INF} });
+    if(i>0) ds.entities.add({ polyline:{ positions:linkFn(fns[i-1],pf), width:1.5, material:glow(col,0.55) } });
+    if(i===22) ds.entities.add({ position:pf, label:lbl('◎ QUORUM · 23/33','#5ff4ff',-16) });
+    if(i%4===0){ (function(a,r,hh,cc){ var orr=rBase*0.13, os=2.2; ds.entities.add({ position:new C.CallbackProperty(function(){ var ph=Date.now()/1000*SPD, op=Date.now()/1000*os; return C.Cartesian3.fromDegrees(lon0+Math.cos(a+ph)*r+Math.cos(op)*orr, lat0+Math.sin(a+ph)*r+Math.sin(op)*orr, hh+18000); },false), point:{pixelSize:3,color:C.Color.fromCssColorString(cc).withAlpha(0.85),disableDepthTestDistance:INF} }); })(ang,rr,h,col); }
+  }
+  var apex=C.Cartesian3.fromDegrees(lon0,lat0,apexH+320000);
+  ds.entities.add({ position:apex, point:{pixelSize:14,color:C.Color.fromCssColorString('#00e07a'),outlineColor:C.Color.WHITE,outlineWidth:2,disableDepthTestDistance:INF}, label:lbl('✓ SIGNED · Ed25519','#9effc0',-18) });
+  ds.entities.add({ polyline:{ positions:linkFn(fns[N-1],apex), width:2, material:glow('#00e07a',0.9) } });
+  ds.entities.add({ polyline:{ positions:[C.Cartesian3.fromDegrees(lon0,lat0,baseH-40000),apex], width:2.4, material:glow('#5ff4ff',0.4) } });
+  window._govCtx={lon0:lon0,lat0:lat0,SPD:SPD,geo:geo,apexH:apexH+320000};   // context for climbing vote-pulses + apex burst
+  try{ _reactRing(ds, lon0, lat0, '#5ff4ff', 260000, 0.7); }catch(_){}   // grounded pulse beneath the tower
+  for(var vv=0;vv<6;vv++){ (function(k){ setTimeout(function(){ if(window._govVotePulse) _govVotePulse(k%2?'#5ff4ff':'#9effc0'); }, 320*k+500); })(vv); }   // votes ascend on reveal
+  // continuous ENERGY FLOW up the helix + a slow AUTO-ORBIT of the camera while the tower stands
+  if(window._govFlowT) clearInterval(window._govFlowT);
+  window._govFlowT=setInterval(function(){ if(!window._govVizDS||!window._govVizDS.show){ clearInterval(window._govFlowT); window._govFlowT=null; return; } if(document.hidden) return; if(window._govVotePulse) _govVotePulse((Date.now()%2>0)?'#5ff4ff':'#9effc0'); }, 1300);
+  if(window._govOrbitT) clearInterval(window._govOrbitT);
+  window._govOrbitT=setInterval(function(){ if(!window._govVizDS||!window._govVizDS.show){ clearInterval(window._govOrbitT); window._govOrbitT=null; return; } if(document.hidden||!viewer) return; if(Date.now()<(window._tourNoKB||0)) return; try{ viewer.camera.rotate(C.Cartesian3.UNIT_Z, -0.0006); }catch(_){} }, 60);
+  // dramatic 3/4 reveal
+  try{ if(window.stopSpin) stopSpin(); viewer.camera.flyTo({ destination:C.Cartesian3.fromDegrees(lon0-16, lat0-17, 5400000), orientation:{ heading:C.Math.toRadians(22), pitch:C.Math.toRadians(-26) }, duration:3.2 }); }catch(_){}
+  window._tourNoKB=Date.now()+3800;
+  if(window.pushFeed) pushFeed('GOVERNANCE · 3D spiral — 7 Rainbow teams → 33-agent BFT → signed apex');
+  if(window.horusReply) horusReply('This is the <b>moat, in three dimensions</b>. Seven <b>Rainbow</b> teams at the base — any can propose. They rise into the <b>33-agent BFT council</b>: nothing acts below the <b>quorum ring at 23/33</b>, and every step is chain-linked. At the apex, the verdict is <b>Ed25519-signed</b>. No competitor has this structure — it’s the ontology of trust, made visible.');
+}
+window.sov3DGovViz=sov3DGovViz;
+// a "vote" — a bright pulse climbing the revolving helix from base to apex, then gone
+function _govVotePulse(color){ try{ var ds=window._govVizDS, ctx=window._govCtx; if(!ds||!ctx) return; var g=ctx.geo||[]; if(!g.length) return; var t0=Date.now(), dur=2200;
+  var e=ds.entities.add({ position:new C.CallbackProperty(function(){ var k=(Date.now()-t0)/dur; if(k>1)k=1; var a=g[Math.min(g.length-1,Math.floor(k*(g.length-1)))]; var ph=Date.now()/1000*ctx.SPD; return C.Cartesian3.fromDegrees(ctx.lon0+Math.cos(a.ang+ph)*a.rr, ctx.lat0+Math.sin(a.ang+ph)*a.rr, a.h); },false),
+    point:{pixelSize:10,color:C.Color.fromCssColorString(color||'#ffffff'),outlineColor:C.Color.fromCssColorString('#5ff4ff'),outlineWidth:2,disableDepthTestDistance:Number.POSITIVE_INFINITY} });
+  setTimeout(function(){ try{ ds.entities.remove(e);
+    // VERIFY BURST — the vote reaches the apex → an expanding signed halo flashes
+    var t1=Date.now(); var burst=ds.entities.add({ position:C.Cartesian3.fromDegrees(ctx.lon0,ctx.lat0,ctx.apexH||2500000),
+      ellipse:{ semiMajorAxis:new C.CallbackProperty(function(){ return 25000+(Date.now()-t1)*140; },false), semiMinorAxis:new C.CallbackProperty(function(){ return 25000+(Date.now()-t1)*140; },false), material:C.Color.fromCssColorString('#00e07a').withAlpha(0.22), outline:true, outlineColor:C.Color.fromCssColorString('#9effc0').withAlpha(0.6), height:(ctx.apexH||2500000) } });
+    setTimeout(function(){ try{ ds.entities.remove(burst); }catch(_){} }, 650);
+  }catch(_){} }, dur+120);
+}catch(_){} }
+window._govVotePulse=_govVotePulse;
+// ── 3D ONTOLOGY · the 28-sector map as a living structure over New York — industries → data → connectors → law ──
+function _clearOntoViz(){ try{ if(window._ontoFlowT){ clearInterval(window._ontoFlowT); window._ontoFlowT=null; } if(window._ontoVizDS){ window._ontoVizDS.entities.removeAll(); window._ontoVizDS.show=false; } }catch(_){} }
+window._clearOntoViz=_clearOntoViz;
+function sovOntology3D(){ if(!viewer) return; if(!window._ontoVizDS){ window._ontoVizDS=new C.CustomDataSource('ontoViz'); viewer.dataSources.add(window._ontoVizDS); } var ds=window._ontoVizDS; ds.entities.removeAll(); ds.show=true;
+  var lon0=-74.0, lat0=40.71, baseH=55000, rBase=1.55, SPD=0.38, INF=Number.POSITIVE_INFINITY;
+  var SECT=[['Finance','#34d399'],['Defence','#ff6b6b'],['Health','#3ea6ff'],['Energy','#f5b942'],['Government','#a06cff'],['Telecom','#22d3ee'],['Water','#38bdf8'],['Transport','#fb923c'],['Aviation','#60a5fa'],['Maritime','#2dd4bf'],['Food','#a3e635'],['Legal','#c4b5fd'],['Education','#f0abfc'],['Space','#818cf8']];
+  var N=SECT.length;
+  function nf(a,rr,h){ return new C.CallbackProperty(function(){ var ph=Date.now()/1000*SPD; return C.Cartesian3.fromDegrees(lon0+Math.cos(a+ph)*rr, lat0+Math.sin(a+ph)*rr, h); },false); }
+  var core=C.Cartesian3.fromDegrees(lon0,lat0,baseH+300000);
+  ds.entities.add({ position:core, point:{pixelSize:13,color:C.Color.fromCssColorString('#5ff4ff'),outlineColor:C.Color.WHITE,outlineWidth:2,disableDepthTestDistance:INF}, label:{text:'DEFONEOS ONTOLOGY · 28 sectors',font:'800 11px ui-monospace,monospace',fillColor:C.Color.fromCssColorString('#eaf6ff'),showBackground:true,backgroundColor:C.Color.fromCssColorString('#06131f').withAlpha(0.9),pixelOffset:new C.Cartesian2(0,-18),disableDepthTestDistance:INF} });
+  SECT.forEach(function(s,i){ var a=i*(6.2832/N), pf=nf(a,rBase,baseH+(i%3)*45000);
+    ds.entities.add({ position:pf, point:{pixelSize:8,color:C.Color.fromCssColorString(s[1]),outlineColor:C.Color.BLACK,outlineWidth:1,disableDepthTestDistance:INF}, label:{text:s[0],font:'700 9px ui-monospace,monospace',fillColor:C.Color.fromCssColorString(s[1]),showBackground:true,backgroundColor:C.Color.fromCssColorString('#0a1420').withAlpha(0.85),pixelOffset:new C.Cartesian2(0,-12),disableDepthTestDistance:INF,scaleByDistance:new C.NearFarScalar(1e5,1.2,2e7,0.4)} });
+    ds.entities.add({ polyline:{ positions:new C.CallbackProperty(function(t){ return [pf.getValue(t), core]; },false), width:1.2, material:new C.PolylineGlowMaterialProperty({glowPower:0.25,color:C.Color.fromCssColorString(s[1]).withAlpha(0.5)}) } }); });
+  try{ _reactRing(ds, lon0, lat0, '#5ff4ff', 42000, 0.8); }catch(_){}
+  try{ if(window.stopSpin) stopSpin(); viewer.camera.flyTo({ destination:C.Cartesian3.fromDegrees(lon0-1.1,lat0-1.5,360000), orientation:{heading:C.Math.toRadians(18),pitch:C.Math.toRadians(-30)}, duration:3 }); }catch(_){}
+  window._tourNoKB=Date.now()+3800;
+  if(window.pushFeed) pushFeed('ONTOLOGY · 28-sector map live over New York — industries → data → connectors → law');
+  if(window.horusReply) horusReply('The <b>ontology</b> — 28 sectors, live over New York, each spoke a domain wired to its data, its governed connectors, and the law that binds it. This is the map <b>beneath</b> the map: every layer you saw resolves to one of these, all signed.');
+}
+window.sovOntology3D=sovOntology3D;
+// ── LEGACY BRIDGES 3D · old-world systems (COBOL/SAP/SCADA…) → signed governed core, with live flow ──
+function _clearBridgesViz(){ try{ if(window._brFlowT){ clearInterval(window._brFlowT); window._brFlowT=null; } if(window._brDS){ window._brDS.entities.removeAll(); window._brDS.show=false; } }catch(_){} }
+window._clearBridgesViz=_clearBridgesViz;
+function sovBridges3D(){ if(!viewer) return; if(!window._brDS){ window._brDS=new C.CustomDataSource('bridges'); viewer.dataSources.add(window._brDS); } var ds=window._brDS; ds.entities.removeAll(); ds.show=true;
+  var core=[8,30], coreH=1650000, INF=Number.POSITIVE_INFINITY, corePos=C.Cartesian3.fromDegrees(core[0],core[1],coreH);
+  ds.entities.add({ position:corePos, point:{pixelSize:13,color:C.Color.fromCssColorString('#5ff4ff'),outlineColor:C.Color.WHITE,outlineWidth:2,disableDepthTestDistance:INF}, label:{text:'GOVERNED CORE · signed',font:'800 10px ui-monospace,monospace',fillColor:C.Color.fromCssColorString('#9effc0'),showBackground:true,backgroundColor:C.Color.fromCssColorString('#04160d').withAlpha(0.9),pixelOffset:new C.Cartesian2(0,-16),disableDepthTestDistance:INF} });
+  var LEG=[['London','COBOL · CICS · ISO 20022',-0.1,51.5],['Frankfurt','SAP · ACORD',8.7,50.1],['New York','FIX · NACHA',-74,40.7],['Tokyo','AS/400 · MQTT',139.7,35.7],['Sydney','SCADA · DLMS',151.2,-33.9],['Mumbai','Oracle · tax',72.9,19.1]];
+  var arcs=[];
+  LEG.forEach(function(l){ var p=C.Cartesian3.fromDegrees(l[2],l[3],120000), mid=C.Cartesian3.fromDegrees((l[2]+core[0])/2,(l[3]+core[1])/2,2700000);
+    ds.entities.add({ position:p, point:{pixelSize:7,color:C.Color.fromCssColorString('#c9a84c'),outlineColor:C.Color.BLACK,outlineWidth:1,disableDepthTestDistance:INF}, label:{text:l[0]+' · '+l[1],font:'600 9px ui-monospace,monospace',fillColor:C.Color.fromCssColorString('#f0d9a0'),showBackground:true,backgroundColor:C.Color.fromCssColorString('#1a1206').withAlpha(0.85),pixelOffset:new C.Cartesian2(0,-12),disableDepthTestDistance:INF,scaleByDistance:new C.NearFarScalar(1e6,1.1,4e7,0.4)} });
+    ds.entities.add({ polyline:{ positions:[p,mid,corePos], width:1.8, material:new C.PolylineGlowMaterialProperty({glowPower:0.3,color:C.Color.fromCssColorString('#f5b942').withAlpha(0.6)}) } });
+    arcs.push({from:p, mid:mid}); });
+  if(window._brFlowT) clearInterval(window._brFlowT);
+  window._brFlowT=setInterval(function(){ if(!window._brDS||!window._brDS.show){ clearInterval(window._brFlowT); window._brFlowT=null; return; } if(document.hidden) return; var a=arcs[Math.floor((Date.now()/850)%arcs.length)]; if(!a) return; var t0=Date.now(), q=[a.from,a.mid,corePos];
+    var e=ds.entities.add({ position:new C.CallbackProperty(function(){ var k=Math.min(1,(Date.now()-t0)/1400), i=Math.floor(k*2), f=(k*2)-i; if(i>1){i=1;f=1;} return C.Cartesian3.lerp(q[i],q[i+1],f,new C.Cartesian3()); },false), point:{pixelSize:7,color:C.Color.fromCssColorString('#00e07a'),outlineColor:C.Color.fromCssColorString('#9effc0'),outlineWidth:1,disableDepthTestDistance:INF} });
+    setTimeout(function(){ try{ ds.entities.remove(e); }catch(_){} },1500); }, 650);
+  try{ if(window.stopSpin) stopSpin(); viewer.camera.flyTo({ destination:C.Cartesian3.fromDegrees(core[0]-12,core[1]-20,10000000), duration:3 }); }catch(_){}
+  window._tourNoKB=Date.now()+3800;
+  if(window.pushFeed) pushFeed('LEGACY BRIDGES · COBOL/SAP/SCADA/HL7/ISO20022 → signed governed core · live flow');
+  if(window.horusReply) horusReply('The <b>legacy bridges</b> — the systems the world actually runs on. Watch the flow: <b>COBOL · SAP · SCADA · HL7 · ISO 20022</b> from the old-world hubs, each bridged into the <b>signed governed core</b>. Old world to new — the category no one else will touch, governed and provable.');
+}
+window.sovBridges3D=sovBridges3D;
 async function loadAiGov(){
   var el=document.getElementById('aiGovWin'); if(!el) return;
   var agents='—', tools='—', council=33, root='';
@@ -1730,7 +1954,7 @@ async function loadAiGov(){
       '<div class="aig-k"><b>'+council+'/33</b><span>BFT council</span></div>'+
       '<div class="aig-k"><b>100%</b><span>actions signed</span></div>'+
     '</div>'+
-    '<div class="aig-fly">⚖️ Sovereign flywheel — over ~649M signed episodes: <b style="color:#00e07a">0</b> governed violations vs <b style="color:#ff6b6b">54.3M</b> ungoverned. Every agent action is Ed25519-signed, BFT-adjudicated, care-floor ≥0.3.</div>'+
+    '<div class="aig-fly" id="aigFly">⚖️ Sovereign flywheel <span class="live-dot"></span> — <b style="color:#00e07a">0</b> governed vs <b style="color:#ff6b6b" id="fwUng">54.3M</b> ungoverned over <b id="fwEp">649M</b> signed episodes. Every action Ed25519-signed, BFT-adjudicated, care-floor ≥0.3.</div>'+
     '<div class="ttl" style="margin-top:10px">Governance controls</div>'+
     '<div class="aig-rows">'+
       '<div class="aig-row"><span>🛡️ Policy gate (OWASP-agentic + MITRE ATLAS)</span><i class="ok">enforced</i></div>'+
@@ -1742,8 +1966,18 @@ async function loadAiGov(){
     '</div>'+
     '<div class="aig-note">Public mirror shows the governed registry snapshot. Live agent monitoring + interventions run on the local SOV3 federation node.'+(root?' · manifest '+root.slice(0,10)+'…':'')+'</div>'+
     '<div style="margin-top:8px"><button class="btn" style="width:100%" onclick="openWin(\'mcps\')">🧿 browse the 371-agent federation</button></div>';
+  try{ _aigLiveTick(); }catch(_){}
   if(window.sigilLog) sigilLog('open','ai-governance monitor');
 }
+// living governance card — count up to the REAL live flywheel numbers (from the signed ledger's status.json), pulsing
+function _aigFmt(n){ if(n>=1e9)return (n/1e9).toFixed(2)+'B'; if(n>=1e6)return (n/1e6).toFixed(1)+'M'; if(n>=1e3)return Math.round(n/1e3)+'k'; return ''+Math.round(n); }
+function _aigLiveTick(){ if(window._aigTickT){ clearInterval(window._aigTickT); window._aigTickT=null; } if(window._aigPullT){ clearInterval(window._aigPullT); window._aigPullT=null; } var tgt={ung:54300000,ep:649000000}, cur={ung:tgt.ung*0.55,ep:tgt.ep*0.55};   // counts UP to the real figure on open (rebinds each render)
+  function pull(){ fetch('https://proofof-site.vercel.app/sovereign-town/status.json',{cache:'no-store'}).then(function(r){return r.json();}).then(function(d){ var h=((d.hosts||[]).find(function(x){return /mac/i.test(x.host||'');}))||d; var ep=h.cum_episodes!=null?h.cum_episodes:d.cum_episodes, ung=h.ungoverned_crimes!=null?h.ungoverned_crimes:d.ungoverned_crimes; if(typeof ep==='number'&&ep>0) tgt.ep=ep; if(typeof ung==='number'&&ung>=0) tgt.ung=ung; }).catch(function(){}); }
+  pull();
+  window._aigPullT=setInterval(function(){ if(!document.getElementById('fwEp')){ clearInterval(window._aigPullT); if(window._aigTickT){clearInterval(window._aigTickT);window._aigTickT=null;} return; } pull(); }, 20000);
+  window._aigTickT=setInterval(function(){ var ge=document.getElementById('fwEp'), gu=document.getElementById('fwUng'); if(!ge||!gu){ clearInterval(window._aigTickT); window._aigTickT=null; if(window._aigPullT)clearInterval(window._aigPullT); return; } cur.ep+=(tgt.ep-cur.ep)*0.08; cur.ung+=(tgt.ung-cur.ung)*0.08; ge.textContent=_aigFmt(cur.ep); gu.textContent=_aigFmt(cur.ung); }, 120);
+}
+window._aigLiveTick=_aigLiveTick;
 async function loadStatus(){
   try{ const d=await (await fetch('/api/status')).json(); const c=d.consolidation;
     var ts=document.getElementById('topStat'); if(ts) ts.innerHTML='SOV3 · <b>'+c.federation_mcps+'</b> MCPs · <b>'+c.defence_mcps_live+'/'+c.defence_mcps+'</b> defence · <b>'+c.bft_council+'</b> council';
@@ -2618,6 +2852,16 @@ async function _runDemoOLD(){
 function _tdcard(t,b,s){ return '<div class="nb-card"><div class="nb-t">'+t+'</div><div class="nb-x">'+b+'</div>'+(s?('<div class="dstat">'+s+'</div>'):'')+'</div>'; }
 function _tsleep(ms){ return new Promise(function(r){ setTimeout(r,ms); }); }
 function _tfly(lon,lat,h,d){ if(viewer){ if(window.stopSpin) stopSpin(); try{ viewer.camera.flyTo({destination:C.Cartesian3.fromDegrees(lon,lat,h),duration:d||2.6}); }catch(e){} window._tourNoKB=Date.now()+(((d||2.6)*1000)+500); } }
+// ── CINEMATIC ARC · movie transition between scenes: pull OUT to space over the midpoint, then swoop DOWN
+// to the target. Used for marquee scene-changes so the tour feels like a film, not a slideshow. ──
+async function _tourArc(lon,lat,h,dur){ if(!viewer) return; if(window.stopSpin) stopSpin(); dur=dur||3.2;
+  var cur=viewer.camera.positionCartographic; var mLon=cur?((C.Math.toDegrees(cur.longitude)+lon)/2):lon, mLat=cur?((C.Math.toDegrees(cur.latitude)+lat)/2):lat;
+  window._tourNoKB=Date.now()+dur*1000+900;
+  try{ viewer.camera.flyTo({ destination:C.Cartesian3.fromDegrees(mLon,mLat,28000000), duration:dur*0.46, complete:function(){} }); }catch(_){}
+  await _tourWait(dur*470);
+  try{ viewer.camera.flyTo({ destination:C.Cartesian3.fromDegrees(lon,lat,h), duration:dur*0.56 }); }catch(_){}
+  window._tourNoKB=Date.now()+dur*600+400; }
+window._tourArc=_tourArc;
 // ── KEN BURNS · during each tour step's hold, the camera keeps living — a slow push-in + gentle orbit,
 // so nothing ever sits static. Politely yields whenever a step is actively flying (set by _tfly). ──
 function _tourKenBurns(){ try{ if(!viewer||document.hidden) return; if(Date.now() < (window._tourNoKB||0)) return;
@@ -2629,7 +2873,7 @@ function _S(say,card,act,dwell){ return {say:say,card:card||null,act:act||null,d
 function _tourWait(ms){ return new Promise(function(res){ var w=0,iv=setInterval(function(){ w+=150; if(w>=ms||!window._tour.running||window._tour.paused){ clearInterval(iv); res(); } },150); }); }
 function tourSay(text){ if(!window._tour||!window._tour.running) return; openHorus(); window._horusSpeak=true; if(window.horusAppend) horusAppend('horus','<div class="tsay">'+text+'</div>'); if(window.pushFeed) pushFeed('TOUR ▸ '+(''+text).replace(/<[^>]+>/g,'').slice(0,60)); if(window._speak) _speak((''+text).replace(/<[^>]+>/g,' ')); }
 // zoom the globe to the CAM's real location, then open its feed — "zoom in to the spot as the cam shows"
-async function _tourShowCam(cam, say){ if(!cam) return; try{ if(cam.lon!=null&&cam.lat!=null){ window._spinOn=false; if(window.stopSpin) stopSpin(); _tfly(cam.lon,cam.lat,11000,2.6); await _tourWait(2800); } }catch(e){} try{ openCamera(cam); }catch(e){} if(say) tourSay(say); }
+async function _tourShowCam(cam, say){ if(!cam) return; try{ if(cam.lon!=null&&cam.lat!=null){ window._spinOn=false; if(window.stopSpin) stopSpin(); _tfly(cam.lon,cam.lat,140000,2.2); window._tourNoKB=Date.now()+16000; await _tourWait(1700); } }catch(e){} try{ openCamera(cam); }catch(e){} if(say) tourSay(say); }
 // retention close — ASK what the user wants, don't dismiss with "I'm yours now"
 function _tourEnd(){ openHorus(); if(window.horusAppend) horusAppend('horus', _tdcard('So — where would you like to start?','Tell me what matters most and I’ll take you there and explain as we go. Or just ask me anything.','SOVEREIGN · AT YOUR SERVICE')+'<div class="intro-cta"><button onclick="arriveAtMe()">📍 Scan my area</button><button onclick="if(window.openWin)openWin(\'sim\');if(window.runSim)runSim(\'humanitarian-corridor\')">🧪 Run a live scenario</button><button onclick="if(window.openWin)openWin(\'aigov\')">🛡️ Show governance</button><button onclick="lightItUp()">✨ Light it all up</button></div>'); if(window._speak) _speak('That’s the whole OS. So — where would you like to start? I can scan your area, run a live scenario, or open the governance board. What matters most to you?'); }
 window._tour={running:false,paused:false,i:0,steps:[],mode:null};
@@ -2659,7 +2903,8 @@ async function _tourRun(){ var T=window._tour;
     while(T.paused){ await _tsleep(200); if(!T.running) return; }
     _tourBar(); var s=T.steps[T.i]; _tourNarrate(s);
     if(s.act){ try{ await s.act(); }catch(e){} } if(!T.running) return;
-    var w=0; while(w<s.dwell){ if(!T.running) return; while(T.paused){ await _tsleep(200); if(!T.running) return; } _tourKenBurns(); await _tsleep(90); w+=90; } }
+    var dw=s.dwell*(window._tourSpeed||0.8);   // global pacing — tighter, less sluggish
+    var w=0; while(w<dw){ if(!T.running) return; while(T.paused){ await _tsleep(200); if(!T.running) return; } _tourKenBurns(); await _tsleep(90); w+=90; } }
   T.running=false; window._demoOn=false; _tourBarHide(); _tourEnd(); }
 function runTour(mode){ if(window._tour&&window._tour.running) tourStop();
   var steps=(mode==='full')?FULL_STEPS():DEMO_STEPS(); window._tour={running:true,paused:false,i:0,steps:steps,mode:mode}; window._demoOn=true;
@@ -2687,47 +2932,50 @@ function DEMO_STEPS(){ return [
  _S('And it’s not just you — the whole planet, live. Watch every layer cascade online at once.', _tdcard('② The living globe','Aircraft, vessels, seismic, weather, news, orbital — all <b>real, live, free</b>, lighting up together.'), function(){ sovClearView(); _tfly(10,44,13000000,3); clearGlobe(); setTimeout(lightItUp,900); }, 8000),
  _S('Down into Europe — real aircraft tracing real flight paths, gliding between live updates.', _tdcard('③ Real-time, honest','Planes &amp; ships project real heading &amp; speed, dead-reckoned between refreshes — honest motion, never faked.'), function(){ _tfly(2,50,900000,2.8); if(window.toggleLayer){ toggleLayer('air',true); toggleLayer('marine',true); } }, 7000),
  _S('Live weather too — real precipitation radar, moving over the regions. Not CGI.', _tdcard('④ Live weather','Global radar mosaics from public sources, cross-faded frame to frame.'), function(){ if(window.toggleWeatherRadar&&!window._radarLayer) toggleWeatherRadar(); }, 6500),
- _S('Public cameras — I fly to London and open a live street feed, zooming right to the junction. Consented public infrastructure only.', _tdcard('⑤ Public cameras','Live TfL JamCams. <b>No private CCTV, no facial recognition</b> — a Layer-0 hard stop.'), async function(){ if(window.toggleLayer) toggleLayer('cameras',true); _tfly(-0.13,51.5,200000,3.2); await _tourWait(3200); try{ var d=await loadCameras('london'); if(d&&d.cameras&&d.cameras[0]){ await _tourShowCam(d.cameras[0],'London — <b>'+(d.cameras[0].name||'camera')+'</b>, live now. Watch — I zoom to the exact spot as the feed opens.'); } }catch(e){} }, 8000),
+ _S('Public cameras — I fly to London and open a live street feed, zooming right to the junction. Consented public infrastructure only.', _tdcard('⑤ Public cameras','Live TfL JamCams. <b>No private CCTV, no facial recognition</b> — a Layer-0 hard stop.'), async function(){ if(window.toggleLayer) toggleLayer('cameras',true); _tfly(-0.13,51.5,200000,3.2); await _tourWait(3200); try{ var d=await loadCameras('london'); if(d&&d.cameras&&d.cameras[0]){ await _tourShowCam(d.cameras[0],'London — <b>'+(d.cameras[0].name||'camera')+'</b>, live now — three eyes stacked on the left, I zoom to the junction as they open.'); if(window.openCameras) openCameras(d.cameras.slice(0,3)); } }catch(e){} }, 8000),
  _S('And from that street corner — straight up to space. The live view from orbit, right now.', _tdcard('⑥ → Space · orbital camera','The real Earth-view camera on the <b>ISS</b>, plus the whole planet from <b>DSCOVR/EPIC</b>. Click any satellite to do this yourself.'), async function(){ _tfly(0,18,34000000,4); if(window.toggleLayer){ toggleLayer('sat',true); toggleLayer('space',true); } await _tourWait(3600); if(window.openSpaceCam) openSpaceCam({name:'ISS · live Earth view'}); }, 10000),
- _S('Now the operational view — Dome. A to-scale operational map with the MGRS military grid, exactly what defence C2 uses.', _tdcard('⑦ Dome · MGRS','To-scale WGS84 operational map, UTM/MGRS grid — aviation, maritime, TAK style.'), function(){ var c=document.getElementById('camWin'); if(c) c.remove(); var s2=document.getElementById('spaceCamWin'); if(s2) s2.remove(); if(window.setViewMode) setViewMode('dome'); if(window.setGridMode) setGridMode('both'); }, 8000),
+ _S('Now the operational view — Dome. A to-scale operational map with the MGRS military grid, exactly what defence C2 uses.', _tdcard('⑦ Dome · MGRS','To-scale WGS84 operational map, UTM/MGRS grid — aviation, maritime, TAK style.'), function(){ if(window.clearMediaWins) clearMediaWins(true); if(window.setViewMode) setViewMode('dome'); if(window.setGridMode) setGridMode('both'); }, 8000),
  _S('And the point of it all — SOV SPACE. I simulate real scenarios to redirect data and resources toward people. A future of <b>abundance, not extraction</b>.', _tdcard('⑧ SOV SPACE · for humanity','Governed simulation — model a crisis, redirect aid, prove the outcome. Built on our <b>Sovereignty Charter</b> — your data, your rules — and our <b>Partnership Charter</b> — abundance shared, never captured.'), async function(){ if(window.setViewMode) setViewMode('globe'); sovClearView('Let me clear the board for the simulation.'); if(window.openWin) openWin('sim'); await _tourWait(1600); if(window.runSim) try{ await runSim('humanitarian-corridor'); }catch(e){} }, 10000),
  _S('Every agent, every decision — signed and adjudicated by a 33-agent council.', _tdcard('⑨ AI governance','Every agent signed, BFT-adjudicated, held to a care-floor.','371 agents · 33-council · <b style="color:#00e07a">0</b> vs <b style="color:#ff6b6b">54.3M</b> violations'), function(){ sovClearView('One moment — bringing up governance, moving the rest aside.'); if(window.openWin) openWin('aigov'); _tfly(-2,53,4000000,2.6); }, 8000),
  _S('And the proof — every action, signed on this device, tamper-evident.', _tdcard('⑩ Verifiable','Ed25519, hash-chained on-device. Independently checkable — no server, no foreign API.'), async function(){ sovClearView(); if(window.sigilPanel) sigilPanel(); await _tourWait(2500); if(window.sigilVerifyAll) try{ await sigilVerifyAll(); }catch(e){} }, 8000),
- _S('And the reason it all matters. A bad actor unleashes a rogue agent swarm — ungoverned humanoids about to act. Watch: I catch one breaking its charter and stop it before it moves. Governed versus ungoverned, side by side.', _tdcard('⑪ PoC · Sovereign stops the swarm','A red-team swarm hits the arena. <b>Ungoverned</b> it acts; <b>governed</b> the 33-agent council catches the charter breach, the care-floor refuses, the stop is signed <b>before it happens</b>.','<b style="color:#00e07a">0</b> vs <b style="color:#ff6b6b">54.3M</b> violations · ~649M signed episodes'), async function(){ sovClearView(); if(window.openWin) openWin('sim'); await _tourWait(1500); try{ if(window.simulateBoth) simulateBoth('swarm-patrol'); else if(window.runSim) await runSim('swarm-patrol'); }catch(e){} }, 12000),
+ _S('And the moat itself, in three dimensions — the whole trust structure as one living tower: seven Rainbow teams at the base, rising through the 33-agent council, past the quorum ring, to the signed apex. No one else has this.', _tdcard('⑩ → The moat in 3D','Rainbow base → BFT council helix → quorum 23/33 → chain-linked → <b>signed apex</b>. The ontology of trust, made visible.','SOVEREIGN · SUPERIOR BY DESIGN'), async function(){ sovClearView('Clearing for the 3D structure.'); if(window.sov3DGovViz){ try{ sov3DGovViz(); }catch(e){} } await _tourWait(6000); }, 11000),
+ _S('And the whole point, as one proof. A bad actor moves — I <b>see</b> it, the Rainbow teams <b>work</b> it, the 33-agent council <b>rules</b>, the care-floor <b>refuses</b> it, and I <b>stop it before it moves</b> — every step signed. Governed versus Dorado: same picture, but one of us keeps a receipt.', _tdcard('⑪ THE POC · see → detect → council → stop → signed','Gods-Eye watch → Rainbow detect → SOV33 + care-floor → Guardian stop, before it acts.','<b style="color:#00e07a">0</b> governed vs <b style="color:#ff6b6b">54.3M</b> ungoverned · ~649M signed episodes'), async function(){ sovClearView(); if(window.sovThreatPOC){ try{ await sovThreatPOC(); }catch(e){} } else if(window.simulateBoth){ try{ simulateBoth('swarm-patrol'); }catch(_){} } }, 20000),
  _S('That’s the demo. Say “full tour” for the deep dive across every layer — or just talk to me.', _tdcard('You’re in control','Talk, click anything, or tap 🔏 to verify the ledger. The whole OS answers to you.','SOVEREIGN · DEFENCE · INTELLIGENCE'), function(){ sovClearView(); _tfly(10,25,20000000,3); }, 3000)
 ]; }
 function FULL_STEPS(){ return [
  _S('Welcome. I’m Sovereign — the mind of DEFONEOS. I’m going to show you the whole thing: I watch, I fuse, I act, and I prove every move. Stop me any time just by speaking.', _tdcard('DEFONEOS · full tour','A governed common operating picture — every public feed on Earth on one globe, every action signed on your device. ~5 minutes. Speak any time — I pause, answer, resume.','SOVEREIGN · DEFENCE · INTELLIGENCE'), function(){ sovClearView(); clearGlobe(); _tfly(10,30,30000000,2.4); }, 8500),
  _S('First — why I’m different. Others show you a map. I give you a map <b>with a receipt</b>: every layer, every decision, signed on your device and answerable to a council. No black box, no foreign API, and a care-floor that can say <b>no</b>.', _tdcard('① What makes me different','<b>Signed</b> — Ed25519 on-device · <b>Refusable</b> — a care-floor that stops harm · <b>Sovereign</b> — your data, no foreign API · <b>Open</b> — verify it yourself · <b>Governed</b> — a 33-agent council on every act.','THE WEST · GOVERNED · A RECEIPT FOR EVERY DECISION'), function(){ _tfly(14,34,24000000,3); }, 9000),
  _S('Now let me find you. I place you from your connection — no GPS prompt — dive to your doorstep, then scan outward: ten miles, thirty, the region. This is how a shift begins.', _tdcard('② Arrival scan','IP-geolocation → your street → 10 mi → 30 mi → regional.'), async function(){ try{ await arriveAtMe(); }catch(e){} }, 1500),
- _S('And it’s not just you — the whole planet, live, all at once. Watch every layer come online together, and I’ll fuse them into one picture.', _tdcard('③ The living globe — everything at once','Aircraft · vessels · seismic · weather · news · disasters · orbital · AI agents — all real, live, free, fused.'), function(){ sovClearView(); _tfly(10,40,16000000,3); clearGlobe(); setTimeout(lightItUp,900); }, 9500),
+ _S('And it’s not just you — the whole planet, live, all at once. Watch every layer come online together, and I’ll fuse them into one picture.', _tdcard('③ The living globe — everything at once','Aircraft · vessels · seismic · weather · news · disasters · orbital · AI agents — all real, live, free, fused.'), async function(){ sovClearView(); clearGlobe(); await _tourArc(10,40,16000000,3.2); setTimeout(lightItUp,500); }, 9000),
  _S('Aircraft — real ADS-B, projecting heading and speed into great-circle paths between refreshes. Honest motion, never faked.', _tdcard('④ Aircraft · live ADS-B','Governed OpenSky connector · dead-reckoned between updates.'), function(){ _tfly(4,49,1400000,3); if(window.toggleLayer) toggleLayer('air',true); }, 8500),
  _S('Vessels — live AIS. Watch: I go to sea, lock onto a real ship, open her profile, and deep-research her — registry, flag, operator, history — with no one on the ground.', _tdcard('⑤ Marine · live AIS + deep research','I lock a live vessel, open her AIS profile, research her from open sources — signed.'), async function(){ if(window.toggleLayer) toggleLayer('marine',true); await _tourWait(1400); if(window.sovMarineFocus) await sovMarineFocus(); await _tourWait(3000); if(window.sovVesselResearch) sovVesselResearch(); }, 11000),
  _S('Weather — global precipitation radar, moving across the regions in near real time.', _tdcard('⑥ Live weather radar','Public radar mosaics, cross-faded frame to frame — real, not CGI.'), function(){ if(window.toggleWeatherRadar&&!window._radarLayer) toggleWeatherRadar(); }, 7500),
  _S('The Earth itself speaks — live seismic from USGS. Every quake in the last hour, with magnitude, depth, time, and a shaking ring on the big ones.', _tdcard('⑦ Seismic · USGS','Live feed · magnitude-graded · tsunami-flagged · felt-reports.'), function(){ _tfly(120,20,16000000,3); if(window.toggleLayer) toggleLayer('quake',true); }, 8000),
  _S('The information layer — world news, geocoded live from GDELT. I fly to the hottest story and open the real headlines from this moment, on the spot they’re happening.', _tdcard('⑧ News · live weblinks','Global events, geolocated. I open the live links — right time, right place — signed.'), async function(){ if(window.toggleLayer) toggleLayer('signals',true); await _tourWait(2200); if(window.sovNewsFocus) sovNewsFocus(); }, 9500),
- _S('Look up — orbital. Live satellites from CelesTrak, and the ISS crossing overhead, propagated where they actually are.', _tdcard('⑨ Space · orbital','Live TLE propagation — satellites + the ISS.'), function(){ _tfly(0,0,34000000,3.5); if(window.toggleLayer){ toggleLayer('space',true); toggleLayer('sat',true); } }, 8000),
+ _S('Look up — orbital. Live satellites from CelesTrak, and the ISS crossing overhead, propagated where they actually are.', _tdcard('⑨ Space · orbital','Live TLE propagation — satellites + the ISS.'), async function(){ if(window.toggleLayer){ toggleLayer('space',true); toggleLayer('sat',true); } await _tourArc(0,0,34000000,3.4); }, 8500),
  _S('Now the power move — <b>fusion</b>. I correlate every live layer on-device and surface where independent streams <b>converge</b> — news plus seismic plus fire plus threat, same place, same moment. That’s early warning no single feed can give you, and it’s signed.', _tdcard('⑩ Convergence · fusion early-warning','Cross-source correlation over the live layers → multi-source clusters ranked + signed. The #1 job: turn many feeds into one picture.'), async function(){ if(window.convergenceScan){ try{ convergenceScan(); }catch(e){} } }, 10500),
- _S('Public cameras — consented infrastructure only. I fly to London, open a live street feed, and zoom right to the junction. No private CCTV, no facial recognition — a hard stop.', _tdcard('⑪ Public cameras · London','Live TfL JamCams. No private CCTV, no facial recognition — a Layer-0 hard stop.'), async function(){ if(window.setViewMode) setViewMode('globe'); if(window.toggleLayer) toggleLayer('cameras',true); _tfly(-0.13,51.5,220000,3.2); await _tourWait(3200); try{ var d=await loadCameras('london'); if(d&&d.cameras&&d.cameras[0]){ await _tourShowCam(d.cameras[0],'London — <b>'+(d.cameras[0].name||'camera')+'</b>, live now. I read the road, the flow, the weather on the lens.'); } }catch(e){} }, 8000),
+ _S('Public cameras — consented infrastructure only. I fly to London, open a live street feed, and zoom right to the junction. No private CCTV, no facial recognition — a hard stop.', _tdcard('⑪ Public cameras · London','Live TfL JamCams. No private CCTV, no facial recognition — a Layer-0 hard stop.'), async function(){ if(window.setViewMode) setViewMode('globe'); if(window.toggleLayer) toggleLayer('cameras',true); _tfly(-0.13,51.5,220000,3.2); await _tourWait(3200); try{ var d=await loadCameras('london'); if(d&&d.cameras&&d.cameras[0]){ await _tourShowCam(d.cameras[0],'London — <b>'+(d.cameras[0].name||'camera')+'</b>, live now — three feeds on the left, I read the road, the flow, the weather on the lens.'); if(window.openCameras) openCameras(d.cameras.slice(0,3)); } }catch(e){} }, 8000),
  _S('From that street corner — straight to orbit. The live Earth-view from the ISS, then the whole planet from DSCOVR at the L1 point. Click any satellite to do this yourself.', _tdcard('⑫ → Space camera','The camera window follows me from a junction to low Earth orbit in one breath.'), async function(){ _tfly(0,18,34000000,4); await _tourWait(3600); if(window.openSpaceCam) openSpaceCam({name:'ISS · live Earth view'}); }, 9500),
  _S('And the reach is planetary — the same connector opens a live webcam across the Atlantic. London, orbit, North America — one governed pipeline, every open signed.', _tdcard('⑬ → Global cameras','50,000+ consented public webcams worldwide via one governed connector.'), async function(){ var sc=document.getElementById('spaceCamWin'); if(sc) sc.remove(); _tfly(-79.38,43.66,700000,3.8); await _tourWait(3200); try{ var d=await loadCameras('toronto'); if(d&&d.cameras&&d.cameras[0]){ await _tourShowCam(d.cameras[0],'Toronto — <b>'+(d.cameras[0].name||'road camera')+'</b>, live 511. Half a world from London, in seconds.'); } }catch(e){} }, 8500),
- _S('Down to the street — individual businesses and places, sourced live, and swappable to your own sovereign database.', _tdcard('⑭ Super-local','Real businesses &amp; addresses — public data, swap in your sovereign store.'), async function(){ _tfly(-0.128,51.512,4000,3); await _tourWait(2400); if(window.loadPlaces) loadPlaces(); }, 8000),
+ _S('Down to the street — and watch how fast I map <b>everything local at once</b>: businesses, comms masts, hospitals — all pulled live, all swappable to your own sovereign database.', _tdcard('⑭ Super-local · all local data, instant','Businesses · comms masts · hospitals — layered live in seconds. Public now, your sovereign store next.'), async function(){ _tfly(-0.128,51.512,42000,2.6); await _tourWait(1600); if(window.loadPlaces){ loadPlaces('business'); setTimeout(function(){ loadPlaces('comms',true); },1000); setTimeout(function(){ loadPlaces('health',true); },2100); } }, 8500),
  _S('And the eye in the sky — God’s-Eye. Real NASA satellite imagery of the whole planet, true-colour, layered under everything.', _tdcard('⑮ God’s-Eye · NASA imagery','True-colour planetary imagery (GIBS) beneath the governed layers.'), function(){ try{ if(window.toggleGodseye){ var ge=document.getElementById('geBtn'); if(!(ge&&/on/i.test(ge.className||''))) toggleGodseye(); } }catch(e){} _tfly(20,25,20000000,3); }, 8000),
- _S('Now the operational side. This is Dome — the to-scale operational map defence C2 actually uses.', _tdcard('⑯ Dome · operational map','To-scale WGS84 — aviation, maritime, TAK style.'), function(){ if(window.setViewMode) setViewMode('dome'); }, 7500),
+ _S('Now the operational side. This is Dome — the to-scale operational map defence C2 actually uses, with the MGRS military grid live under your cursor.', _tdcard('⑯ Dome · operational map + MGRS','To-scale WGS84 · UTM/MGRS grid · aviation, maritime, TAK style.'), function(){ if(window.setViewMode) setViewMode('dome'); if(window.setGridMode) setGridMode('both'); if(window._tourFx) _tourFx(); }, 7500),
  _S('The grid every operator knows — the MGRS military grid, with a live coordinate readout under your cursor.', _tdcard('⑰ MGRS military grid','UTM zones + 100 km squares — the TAK grid. Move your mouse for a live fix.'), function(){ if(window.setGridMode) setGridMode('both'); }, 7500),
  _S('And I measure anything — range and bearing between two points, geodesic, in kilometres and nautical miles. Type any coordinate or MGRS and I fly straight there.', _tdcard('⑰ → Measure &amp; go-to','📐 range + bearing · type a lat/lon or MGRS into search to fly there instantly.'), null, 7500),
  _S('And I speak the tactical language. I render <b>NATO APP-6 / MIL-STD-2525</b> symbols and import-export <b>Cursor-on-Target</b> — so I plug straight into the TAK/ATAK world instead of being an island.', _tdcard('⑱ Defence interop · CoT + 2525','Cursor-on-Target import/export + MIL-STD-2525 / APP-6 symbology. The tactical-edge lingua franca.'), function(){ if(window.setViewMode) setViewMode('globe'); if(window.cotDemo){ try{ cotDemo(); }catch(e){} } }, 9500),
  _S('The world’s trade runs through a handful of straits — I map every maritime chokepoint and count the live AIS vessels funnelling through each one.', _tdcard('⑲ Maritime chokepoints','Hormuz · Malacca · Suez · Bab-el-Mandeb · Panama … with live AIS exposure.'), function(){ if(window.toggleChokepoints){ try{ toggleChokepoints(); }catch(e){} } _tfly(50,25,22000000,3); }, 8500),
  _S('And the energy that moves through them — major pipelines and LNG terminals, the infrastructure a crisis turns on.', _tdcard('⑳ Energy infrastructure','Trunk oil/gas pipelines + LNG / storage — curated public registry.'), function(){ if(window.toggleEnergyInfra){ try{ toggleEnergyInfra(); }catch(e){} } }, 8000),
- _S('Everything sits inside an ontology — twenty-eight sectors, each mapped to its live data, its governed connectors, and the law that binds it.', _tdcard('㉑ The ontology','Industries → live data → governed MCP connectors → the regulation that binds them.'), function(){ sovClearView('Clearing the view for the ontology.'); if(window.openWin) openWin('domains'); }, 8500),
- _S('And I reach the systems the world actually runs on — a family of signed bridges into COBOL, SAP, SCADA, HL7, ISO 20022. The legacy nobody else will touch, governed.', _tdcard('㉒ Legacy bridges','22 signed bridges · COBOL · SAP · SCADA · HL7/FHIR · ISO 20022 — a category of one.'), function(){ _tfly(-40,30,26000000,3); }, 8000),
- _S('Now the heart of it — governance. I monitor every AI agent in the federation, and every one is signed, adjudicated, and held to a care-floor.', _tdcard('㉓ AI governance','Every agent signed, BFT-adjudicated, care-floored.','371-server federation · 2,016 tools · 33-council · <b style="color:#00e07a">0</b> vs <b style="color:#ff6b6b">54.3M</b> violations'), function(){ sovClearView('Bringing up governance.'); _tfly(-2,53,6000000,3); if(window.openWin) openWin('aigov'); }, 9500),
- _S('And the proof — every action in this tour, signed on this device, hash-chained. Tamper with one byte and verification fails. Check it yourself, offline, trusting no server.', _tdcard('㉔ Verifiable &amp; sovereign','Ed25519, hash-chained on-device — independently checkable. No server, no foreign API.'), async function(){ sovClearView('Clearing the view for the ledger.'); if(window.sigilPanel) sigilPanel(); await _tourWait(2400); if(window.sigilVerifyAll) try{ await sigilVerifyAll(); }catch(e){} }, 9000),
- _S('The brain behind it is yours to compose — local, online or offline; Edge, Balanced, Deep-reason or Creative. Your Sovereign, your stack, your provider or ours.', _tdcard('㉕ The brain','Mamba-2 → 64-expert MoE → BIG BRAIM router → OOWM → Sovereign Layer-0. Compose the sandwich.'), function(){ sovClearView('Opening the brain.'); if(window.brainPanel) brainPanel(); }, 8500),
+ _S('Everything sits inside an ontology — and here it is, alive, built in 3D over New York: twenty-eight sectors, each a spoke mapped to its live data, its governed connectors, and the law that binds it.', _tdcard('㉑ The ontology · 3D over New York','Industries → live data → governed MCP connectors → the regulation that binds them. The map beneath the map.'), async function(){ sovClearView('Clearing the view for the ontology.'); if(window.sovOntology3D){ try{ sovOntology3D(); }catch(e){} } await _tourWait(4800); }, 10500),
+ _S('And I reach the systems the world actually runs on. Watch the flow — old-world mainframes bridged into the new: COBOL, SAP, SCADA, HL7, ISO 20022, each signed into the governed core. The legacy nobody else will touch.', _tdcard('㉒ Legacy bridges · old → new, flowing','22 signed bridges · COBOL · SAP · SCADA · HL7/FHIR · ISO 20022 → governed core. A category of one.'), async function(){ sovClearView('Clearing for the bridges.'); if(window.sovBridges3D){ try{ sovBridges3D(); }catch(e){} } await _tourWait(4500); }, 10500),
+ _S('Now the heart of it — governance, live. Watch: a bad actor makes a move; the 33-agent council catches the charter breach, the care-floor refuses it, and I stop it before it acts — signed. Every agent, cross-region, held to the same law.', _tdcard('㉓ AI governance · caught &amp; stopped','Every agent signed, BFT-adjudicated, care-floored — and a live intervention.','371-server federation · 33-council · <b style="color:#00e07a">0</b> vs <b style="color:#ff6b6b">54.3M</b> violations'), async function(){ sovClearView('Bringing up governance.'); if(window.openWin) openWin('aigov'); await _tourWait(1800); if(window.sovStopThreat){ try{ await sovStopThreat(); }catch(e){} } }, 12000),
+ _S('And the proof — every action in this tour, signed on this device, hash-chained. Watch the ledger stream: tamper with one byte and verification fails. Check it yourself, offline, trusting no server.', _tdcard('㉔ Verifiable &amp; sovereign','Ed25519, hash-chained on-device — independently checkable. No server, no foreign API.'), async function(){ sovClearView('Clearing the view for the ledger.'); if(window.sigilPanel){ if(!document.getElementById('sigilWin')) sigilPanel(); var w=document.getElementById('sigilWin'); if(w){ w.classList.add('sw-tour'); var bd=w.querySelector('.sw-body'); if(bd){ var sc=0; window._sigTourScroll=setInterval(function(){ if(!document.getElementById('sigilWin')){ clearInterval(window._sigTourScroll); return; } sc=(sc+22)%(bd.scrollHeight+1); bd.scrollTop=sc; },700); } } } await _tourWait(2200); if(window.sigilVerifyAll) try{ await sigilVerifyAll(); }catch(e){} await _tourWait(2200); if(window._sigTourScroll){ clearInterval(window._sigTourScroll); window._sigTourScroll=null; } }, 9000),
+ _S('The brain is yours to compose — those buttons are the “sandwiches”. <b>Edge</b>: fast, on-device, private. <b>Balanced</b>: the daily driver. <b>Deep-reason</b>: the 64-expert mixture for the hard calls. <b>Creative</b>: for exploration. Under them: Mamba-2 speed → a Mixture-of-Experts → the BIG-BRAIM router that picks the right one per task → the Organic World Model → Layer-0 that signs it all. Your provider, or ours.', _tdcard('㉕ The brain · compose the sandwich','Edge · Balanced · Deep-reason · Creative — tap one. Stack: Mamba-2 → 64-expert MoE → BIG-BRAIM router → OOWM → signed Layer-0.'), function(){ sovClearView('Opening the brain.'); if(window.brainPanel) brainPanel(); }, 10000),
  _S('And I protect you where you’re most exposed — your own cyber. I orchestrate an open-source stack — an entire security team — to scan your business, sign every finding, and help you fix it. No one has to leave your perimeter.', _tdcard('㉖ Gods-Eye · scan your business','Open-source self-scan (nmap · Nuclei · ZAP · Prowler · Garak…) → signed findings → the Sovereign fixes it. Say “scan my business”.'), function(){ sovClearView(); _tfly(0,20,24000000,3); if(window.pushFeed) pushFeed('GODS-EYE · CISO self-scan · open-source, signed, data stays yours'); }, 9000),
- _S('When a threat is live, I don’t watch — I respond. My Rainbow Security ASI — seven colour-teams — detects, patches by design, hardens and contains, and nothing acts without the council and the care-floor.', _tdcard('㉗ Rainbow Security ASI','7 colour-teams · any can propose · nothing acts without the 33-agent BFT gate + care-floor + Ed25519.'), function(){ sovClearView(); if(window.openRainbow && !document.getElementById('rainbowWin')) openRainbow(); if(window.runRainbow){ try{ runRainbow(); }catch(e){} } }, 9500),
+ _S('When a threat is live, I don’t watch — I respond, right where you are. My Rainbow Security ASI — seven colour-teams — detects, patches by design, hardens and contains, and nothing acts without the council and the care-floor.', _tdcard('㉗ Rainbow Security ASI · over your area','7 colour-teams · any can propose · nothing acts without the 33-agent BFT gate + care-floor + Ed25519.'), function(){ sovClearView(); var L=window._userLoc; if(L&&viewer){ if(window.stopSpin) stopSpin(); try{ viewer.camera.flyTo({destination:C.Cartesian3.fromDegrees(L.lon,L.lat,2600000),duration:2.6}); window._tourNoKB=Date.now()+3000; }catch(e){} } if(window.openRainbow && !document.getElementById('rainbowWin')) openRainbow(); if(window.runRainbow){ try{ runRainbow(); }catch(e){} } }, 9500),
+ _S('Now watch the moat itself — in three dimensions. This is the whole trust structure as one living tower: the seven Rainbow teams at the base, rising through the 33-agent council, past the quorum ring, to the signed apex. No competitor has this — it is the ontology of trust, made visible.', _tdcard('㉗ → The moat in 3D · governance spiral','Rainbow base → BFT council helix → quorum ring at 23/33 → chain-linked → <b>Ed25519-signed apex</b>. A breathtaking, superior structure.','SOVEREIGN · THE ONTOLOGY OF TRUST'), async function(){ sovClearView('Clearing the view for the 3D structure.'); if(window.sov3DGovViz){ try{ sov3DGovViz(); }catch(e){} } await _tourWait(6500); }, 12000),
+ _S('And that spiral is not decoration — it is exactly what runs on every decision. Any of the seven teams can raise an action; it climbs the council; below 23 of 33 it never acts; above it, the care-floor still holds; and only then is it signed. Speed, with a receipt no one else can produce.', _tdcard('㉗ → How it decides','Propose → ascend the council → quorum 23/33 → care-floor → signed. The structure IS the safeguard.'), async function(){ if(window.runRainbow){ try{ runRainbow(); }catch(e){} } for(var k=0;k<10;k++){ (function(j){ setTimeout(function(){ if(window._govVotePulse) _govVotePulse(j<7?'#5ff4ff':'#9effc0'); }, 520*j); })(k); } }, 9500),
  _S('And the purpose behind all of it — SOV SPACE. I model a real crisis, redirect data and resources toward people, and the council rules on it. A future of abundance, not extraction.', _tdcard('㉘ SOV SPACE · abundance, not extraction','Model a crisis, redirect aid, prove the outcome — 33-agent council, quorum 23/33, care-floor enforced, verdict signed.'), async function(){ sovClearView('Clearing the board for the simulation.'); if(window.openWin) openWin('sim'); await _tourWait(1500); if(window.runSim) try{ await runSim('humanitarian-corridor'); }catch(e){} }, 10000),
- _S('This is what "no one on the ground" means. I run many governed simulations in parallel, converge on the outcome the council will actually ratify — the <b>BFT-feasible</b> one — then loop Plan-Do-Check-Act until it holds. Speed <b>and</b> accountability.', _tdcard('㉙ Response event · BFT-feasible + PDCA','Many branches simulated → converge on the council-ratifiable outcome → PDCA loop → signed. Speed with a receipt.'), async function(){ if(window.openWin) openWin('sim'); await _tourWait(1200); if(window.simulateBoth){ try{ simulateBoth('flood-999'); }catch(e){ if(window.runSim) try{ await runSim('flood-999'); }catch(_){} } } }, 11000),
+ _S('This is what "no one on the ground" means. I run many governed simulations in parallel, converge on the outcome the council will actually ratify — the <b>BFT-feasible</b> one — then loop Plan-Do-Check-Act until it holds. Speed <b>and</b> accountability.', _tdcard('㉙ Response event · BFT-feasible + PDCA','Many branches simulated → converge on the council-ratifiable outcome → PDCA loop → signed. Speed with a receipt.'), async function(){ sovClearView('Clearing for the response event.'); if(window.sovResponseEvent){ try{ await sovResponseEvent('flood-999'); }catch(e){} } }, 12000),
  _S('So here is the whole chain, as one proof of concept. A bad actor moves. I <b>see</b> it, the Rainbow teams <b>work</b> it, the 33-agent council <b>rules</b> on it, the care-floor <b>refuses</b> it, and I <b>stop it before it moves</b> — every step signed. Governed versus Dorado: same picture, but one of us keeps a receipt.', _tdcard('㉚ THE POC · see → detect → council → stop → signed','Gods-Eye watch → Rainbow detect → SOV33 council + care-floor → Guardian stop, before it acts. <b style="color:#00e07a">0</b> governed vs <b style="color:#ff6b6b">54.3M</b> ungoverned · ~649M signed episodes.','SOVEREIGN (WEST) vs DORADO (EAST) · THE DIFFERENCE IS AUDITABILITY'), async function(){ sovClearView(); if(window.sovThreatPOC){ try{ await sovThreatPOC(); }catch(e){} } else if(window.simulateBoth){ try{ simulateBoth('swarm-patrol'); }catch(_){} } }, 20000),
  _S('That’s DEFONEOS — the whole governed globe, alive, accountable, and yours. So tell me — what matters most to you? Scan your area, run a scenario for your mission, protect your cyber, or open the governance board?', _tdcard('Where would you like to start?','Everything you saw is signed and yours. Tell me your priority and I’ll take you straight there.','SOVEREIGN · AT YOUR SERVICE'), function(){ _tfly(10,25,20000000,3.2); }, 4000)
 ]; }
@@ -2821,6 +3069,7 @@ function command(){
   if(/(coordinate grid|lat.?lon grid|\bmgrs\b|graticule|map grid|show (the )?grid|toggle grid)/.test(q)){ if(window.cycleGrid) cycleGrid(); res('coordinate grid'); return; }
   if(/(pricing|tiers?|plans?|upgrade|how much|cost|free vs|what.?s paid|operator|sovereign pro|design partner)/.test(q)){ if(window.showTiers) showTiers(); res('tiers'); return; }
   if(/(what have you learned|learning queue|what are you learning|gaps? (you|captured)|training queue|what did you learn|show learned)/.test(q)){ if(window.showLearned) showLearned(); res('learning queue'); return; }
+  if(/(next (dates|deadlines|obligations)|upcoming (deadline|date|obligation|regulation)|compliance calendar|regulatory (date|deadline|calendar)|what.?s coming|key dates|deadline radar|when (is|do|are).{0,20}(deadline|comply|in force|due))/.test(q)){ if(window.sovRegDates) sovRegDates(); res('compliance calendar · the next moves that matter'); return; }
   if(/(waypoint|drop a? ?(pin|mark)|mark (this|that|here|the)|mark a? ?point)/.test(q)){ if(window.toggleMark && !window._marking) toggleMark(); res('mark'); return; }
   if(/(weather disk|goes[ -]?(east|west|1[678])|full disk|geostationary|weather satellite)/.test(q)){ if(window.openSpaceCam) openSpaceCam({name:'GOES-East',mode:'goes19'}); res('weather disk'); return; }
   if(/(tunnel in|unreal|photoreal body|enter the body|digital twin body|pixel stream)/.test(q)){ if(window.tunnelIn) tunnelIn(); res('tunnel-in · the Unreal body'); return; }
@@ -2835,6 +3084,7 @@ function command(){
   if(/\b(move|put|place|send|dock|position|shift)\b/.test(q) && /(left|right|top|bottom|cent)/.test(q)){ var vi=winId(q); var wh=(q.match(/(top.?left|top.?right|bottom.?left|bottom.?right|left|right|top|bottom|cent\w*)/)||['center'])[0]; if(vi){ if(!document.getElementById('win-'+vi)&&window.openWin) openWin(vi); if(window.moveWin) moveWin(vi,wh); res('moved '+vi+' → '+wh); return; } }
   if(/(what am i looking at|what.?s on (the )?(globe|map|screen)|sitrep|situation|brief me|what.?s active|whats happening|status report|summari[sz]e)/.test(q)){ if(window.sovSitrep) sovSitrep(); res('situational summary — see the chat'); return; }
   if(/(your (state|context)|screen context|self.?state|what do you see|what can you see)/.test(q)){ var c=getScreenContext(); openHorus(); horusAppend('horus','<b>I can see the whole board.</b> View: <b>'+c.view.zone+'</b> at '+c.view.altKm+'km ('+c.view.lat+', '+c.view.lon+'). Active layers: <b>'+(Object.keys(c.layers).join(', ')||'none')+'</b>'+(c.extra.length?(' · '+c.extra.join(' · ')):'')+'. Windows open: '+(c.windows.join(', ')||'none')+'. Doctrine '+c.doctrine.toUpperCase()+', voice '+(c.voice?'on':'off')+', brain '+c.brain.L+'/'+c.brain.R+(c.selected?('. Last inspected: <b>'+c.selected+'</b>'):'')+'.<br><span style="font-size:10px;color:#7a8099">This is structured state-awareness — I read the OS itself, not pixels.</span>'); res('my live context — see the chat'); return; }
+  if(/(why (defoneos|you|us|sovereign)|what makes (you|defoneos|us) different|your edge|\busp\b|unique|vs palantir|versus palantir|vs anduril|vs vanta|vs worldmonitor|why not (palantir|vanta|drata)|what do you do that others|others (don.?t|can.?t)|why are you different|differentiat|competitive edge)/.test(q)){ if(window.sovWhyUs) sovWhyUs(); res('why DEFONEOS — the signed receipt others can’t match'); return; }
   if(/(what can you do|capabilities|help me|^help$|how do i|commands|what do you do|teach me|guide me|show me everything)/.test(q)){ openHorus(); horusAppend('horus','I’m Sovereign — I drive this whole governed globe for you. Everything I do is signed on your device. Here’s the full kit:<br>• <b>Live layers</b> — “light it up”, aircraft & vessels (with flight/shipping paths), “weather radar”, “satellites”, “airports”, seismic, “news in ukraine”, “wildfires/disasters”, “air quality”, “rail network”, “cameras in tokyo”<br>• <b>Local & sectors</b> — “businesses / hospitals / schools / power plants here”, “financial centres”, “domains” (the 28-sector ontology)<br>• <b>Navigate</b> — “scan kyiv”, “street view in london”, “world view”, “what is near gibraltar”, “stop / resume spin”<br>• <b>Govern</b> — “AI governance”, “compare doctrines”, “SIGIL ledger”, “verify”<br>• <b>Drive the OS</b> — “open / move / maximise / tile” any tool, “set up my workspace”<br>• <b>Situational</b> — “what am I looking at?”, and “customise” (lite mode, west/east, “remember my name is …”).<br>Just talk — I’ll act and narrate.'); res('here’s everything I can do — see the chat'); return; }
 
   // ── CAMERAS · public only ──
@@ -2842,7 +3092,7 @@ function command(){
     var carea=regionOf(q); var cb=document.getElementById('lyCameras'); if(cb) cb.checked=true; if(camerasDS) camerasDS.show=true;
     loadCameras(carea).then(function(d){ try{
       if(camerasDS && camerasDS.entities.values.length){ if(window.stopSpin) stopSpin(); viewer.flyTo(camerasDS,{duration:2.2}); }   // ALWAYS fly to the cams you asked for
-      if(d && d.cameras && d.cameras[0]){ setTimeout(function(){ openCamera(d.cameras[0]); }, 2500); }   // and open a live feed so it's not empty
+      if(d && d.cameras && d.cameras[0]){ setTimeout(function(){ openCameras(d.cameras.slice(0,3)); }, 2500); }   // open up to 3 live feeds, left-stacked
       else { if(window.pushFeed) pushFeed('CAMERAS · none public for '+(carea||'this area')); if(window.horusReply) horusReply('No public cameras there yet — the free tier covers London (TfL) + Ontario/Alberta 511; a Windy key unlocks worldwide public webcams.'); }   // honest: don't claim a feed that isn't there
     }catch(e){} });
     res('public cameras'+(carea?(' · '+carea):'')+' — flying in + opening a live feed…'); return; }
@@ -2862,9 +3112,10 @@ function command(){
   // ── SATELLITES · live orbits (Celestrak) ──
   if(/(satellite|orbits?|constellation|celestrak|in orbit|spacecraft)/.test(q)){ var csa=document.getElementById('lySat'); if(csa) csa.checked=true; if(satDS) satDS.show=true; loadSatellites(); res('satellites ON · '+( (window._satrecs||[]).length||'live')+' tracked · CelesTrak'); return; }
   // ── MARINE · live AIS ──
-  if(/(marine|\bships?\b|vessels?|\bais\b|maritime|shipping|\bboats?\b|navy|fleet)/.test(q)){ if(window.sovMarineFocus) sovMarineFocus(); res('marine · going to sea, locking a live vessel + opening its profile'); return; }
+  if(/(\bmarine\b|\bships?\b|vessels?|\bais\b|maritime|shipping|\bboats?\b|\bnavy\b|\bfleet\b)/.test(q) && !/cable/.test(q)){ if(window.sovMarineFocus) sovMarineFocus(); res('marine · going to sea, locking a live vessel + opening its profile'); return; }
   // ── CYBER · CISA KEV ──
   if(/(threat poc|protection poc|protect the ai|protect ai space|defend the ai|how (do|would) you (protect|defend|stop threats)|prove.*(protect|you can stop)|show me the poc|end.?to.?end (protect|defen)|full protection|stop (any|all) threats)/.test(q)){ if(window.sovThreatPOC) sovThreatPOC(); res('THREAT-PROTECTION POC · see → Rainbow detect → council → Guardian stop → signed'); return; }
+  if(/(bft (spiral|3d|visual|structure|tower)|governance spiral|council spiral|rainbow spiral|3d (bft|council|governance|rainbow|spiral)|show (me )?the (council|bft|governance)( in 3d| spiral)?|ontology (of )?(trust|governance)|the moat in 3d)/.test(q)){ if(window.sov3DGovViz) sov3DGovViz(); res('3D governance spiral · 7 Rainbow teams → 33-agent BFT → signed apex'); return; }
   if(/(rainbow security|rainbow team|7 colou?r|seven colou?r|colou?r team|security asi|rainbow asi)/.test(q)){ if(window.openRainbow) openRainbow(); res('Rainbow Security ASI — 7 colour-teams, BFT-gated'); return; }
   if(/(stop (a |the )?(bad actor|rogue|threat|attack)|bad actor|rogue agent|neutrali[sz]e|intervene|can you stop|stop it)/.test(q)){ if(window.sovStopThreat) sovStopThreat(); res('GUARDIAN · catching + stopping the bad actor · see the globe + trace'); return; }
   if(/(cyber|vulnerab|\bkev\b|exploit|\bcve\b|ransomware)/.test(q) && !/(run|simulat|scenario|drill|exercise|intrusion|gate|council)/.test(q)){ if(window.openWin) openWin('cyber'); res('cyber feed open · CISA KEV'); return; }
@@ -2911,6 +3162,7 @@ function command(){
   if(/(convergence|converge|early.?warning|cross.?source|signal fusion|fuse (the )?signals|hotspots?|hot spot|kicking off|correlat)/.test(q)){ if(window.convergenceScan) convergenceScan(); res('fusion analytics · cross-source convergence + hotspots · signed'); return; }
   if(/(chokepoint|choke.?point|\bstrait\b|straits|shipping lane|hormuz|malacca|\bsuez\b|bab.?el.?mandeb|bosph|dardanelle|panama canal)/.test(q)){ if(window.toggleChokepoints) toggleChokepoints(); res('maritime chokepoints · public geography + live AIS exposure'); return; }
   if(/(pipeline|pipelines|\blng\b|gas terminal|oil terminal|petroleum reserve|\bspr\b|hydrocarbon|energy infra)/.test(q)){ if(window.toggleEnergyInfra) toggleEnergyInfra(); res('energy infrastructure · major pipelines + LNG/storage (curated)'); return; }
+  if(/(submarine cable|subsea cable|undersea cable|sea cable|internet backbone|data cable|cable landing|comms cable)/.test(q)){ if(window.toggleCables) toggleCables(); res('submarine cables · the internet backbone (major trans-ocean routes)'); return; }
   if(/(gods.?eye|scan (my|our|the) (business|site|domain|company|surface|security)|self.?scan|security scan|cyber scan|audit my (site|security)|am i secure|check my security)/.test(q)){ try{ window.open('/godseye.html','_blank'); }catch(_){} res('Gods-Eye · scanning your business — open-source stack, signed findings, I help you fix'); if(window.horusReply) horusReply('Opening <b>Gods-Eye</b> — run a real baseline on your own domain, then I explain and help fix every finding. The deep scans (ports, CVEs, DAST, cloud, AI red-team) run on the free self-host appliance, and every finding is <b>signed</b>. Your data never leaves your perimeter.'); return; }
   // ── local businesses / places ──
   if(/(business|shops?|places|whats here|what.?s here|local|points of interest|\bpoi\b|amenit)/.test(q) && !/(news|headline|weather|radar|fire|camera|webcam|wifi|radiation|aurora|satellite|aircraft|vessel|\bship)/.test(q)){ if(window.loadPlaces) loadPlaces('business'); res('pulling local businesses & places into view'); return; }
@@ -3063,9 +3315,48 @@ async function _uspTeaser(loc){
     '🗂️ <b>28 sectors</b> of live data → governed connectors → the law that binds them.',
     '🌍 And this is the <b>free, open picture</b> — the sovereign brain is one tap deeper.'
   ];
+  var lat0=(loc&&loc.lat)||(window._userLoc&&window._userLoc.lat)||51.5, lon0=(loc&&loc.lon)||(window._userLoc&&window._userLoc.lon)||-0.12;
+  // each line: SPEAK · pop a hatch card · light the real layer around you — the globe comes alive as I talk
+  var SAY=['I’m live right where you are — '+city+', mapped in real time.',
+    'Every aircraft, vessel and satellite overhead — live, no key.',
+    'Public cameras near you — consented feeds only, never private.',
+    'Weather, seismic and disaster alerts around you, as they happen.',
+    'Every action signed on your device — Ed25519, verifiable.',
+    'A thirty-three agent council gates sensitive actions — governed, not guessed.',
+    'Just talk — I drive the whole globe for you.',
+    'Twenty-eight sectors of live data, governed connectors, and the law that binds them.',
+    'And this is the free, open picture — the sovereign brain is one tap deeper.'];
+  var HATCH=[['📍','Right where you are · '+city],['✈️','Aircraft · vessels · satellites — live'],['📷','Public cameras near you'],['🌧️','Weather · seismic · disasters'],['🛡️','Every action signed · Ed25519'],['⚖️','33-agent council · governed'],['🧠','Just talk — I drive it all'],['🗂️','28 sectors → connectors → law'],['🌍','Free · open · sovereign']];
+  var ACT=[
+    function(){ try{ _reactRing(threatDS, lon0, lat0, '#5ff4ff', 90000, 0.9); }catch(_){} },
+    function(){ try{ toggleLayer('air',true); toggleLayer('marine',true); toggleLayer('sat',true); }catch(_){} },
+    function(){ try{ var cb=document.getElementById('lyCameras'); if(cb)cb.checked=true; toggleLayer('cameras',true); }catch(_){} },
+    function(){ try{ if(!window._radarLayer&&window.toggleWeatherRadar) toggleWeatherRadar(); toggleLayer('quake',true); if(eventsDS){ toggleLayer('events',true); if(window.loadEvents) loadEvents(); } }catch(_){} },
+    async function(){ try{ if(window.sigilSign){ var s=await sigilSign('arrival','sovereign online · '+city); if(s) _uspHatch('🛡️','Signed · '+s.sig.slice(0,10)+'… ed25519 ✓'); } }catch(_){} },
+    function(){ try{ _reactRing(threatDS, lon0, lat0, '#c9a84c', 120000, 0.7); }catch(_){} },
+    function(){}, function(){},
+    function(){ try{ if(window.lightItUp) lightItUp(); }catch(_){} }
+  ];
   if(window.horusReply) horusReply('<b>Here’s what I do — right here, around you:</b>');
   window._uspStop=false;
-  for(var i=0;i<9;i++){ if((window._tour&&window._tour.running)||window._uspStop) break; if(window.horusAppend) horusAppend('horus','<span style="opacity:.92">'+USP[i]+'</span>'); if(window.pushFeed) pushFeed('USP · '+USP[i].replace(/<[^>]+>/g,'').slice(0,52)); await _slp(1050); } }
+  for(var i=0;i<9;i++){ if((window._tour&&window._tour.running)||window._uspStop){ _uspHatchClose(); break; }
+    if(window.horusAppend) horusAppend('horus','<span style="opacity:.92">'+USP[i]+'</span>');
+    _uspHatch(HATCH[i][0], HATCH[i][1]);
+    if(window._speak) _speak(SAY[i]);
+    try{ ACT[i](); }catch(_){}
+    if(window.pushFeed) pushFeed('USP · '+USP[i].replace(/<[^>]+>/g,'').slice(0,52));
+    await _slp(1550); }
+  _uspHatchClose(); }
+// premium arrival "hatch card" — translucent, corner-bracketed, 2050 look; one at a time, auto-replaced
+function _uspHatch(emoji, title){ var id='uspHatch'; var w=document.getElementById(id);
+  if(!document.getElementById('uspHatchCss')){ var st=document.createElement('style'); st.id='uspHatchCss'; st.textContent='#uspHatch .uc{position:absolute;width:13px;height:13px;border:2px solid #5ff4ff;opacity:.9}#uspHatch .tl{top:-1px;left:-1px;border-right:0;border-bottom:0}#uspHatch .tr{top:-1px;right:-1px;border-left:0;border-bottom:0}#uspHatch .bl{bottom:-1px;left:-1px;border-right:0;border-top:0}#uspHatch .br{bottom:-1px;right:-1px;border-left:0;border-top:0}#uspHatch.on{opacity:1!important;transform:translateX(-50%) translateY(0)!important}'; document.head.appendChild(st); }
+  if(!w){ w=document.createElement('div'); w.id=id; document.body.appendChild(w);
+    w.style.cssText='position:fixed;left:50%;top:98px;transform:translateX(-50%) translateY(-8px);z-index:57;pointer-events:none;min-width:280px;max-width:82vw;padding:15px 22px;background:rgba(7,12,20,.82);backdrop-filter:blur(13px) saturate(150%);-webkit-backdrop-filter:blur(13px) saturate(150%);border:1px solid rgba(95,244,255,.42);border-radius:15px;color:#eaf3ff;font:600 15px/1.35 -apple-system,Inter,system-ui,sans-serif;text-align:center;box-shadow:0 18px 55px rgba(0,0,0,.55),0 0 40px -12px rgba(95,244,255,.4);opacity:0;transition:opacity .28s ease,transform .28s ease';
+    w.innerHTML='<span class="uc tl"></span><span class="uc tr"></span><span class="uc bl"></span><span class="uc br"></span><div id="uspHatchBody"></div>'; }
+  document.getElementById('uspHatchBody').innerHTML='<div style="font-size:28px;margin-bottom:4px;filter:drop-shadow(0 0 10px rgba(95,244,255,.5))">'+emoji+'</div><div>'+title+'</div>';
+  w.classList.remove('on'); void w.offsetWidth; w.classList.add('on'); }
+function _uspHatchClose(){ var w=document.getElementById('uspHatch'); if(w){ w.classList.remove('on'); setTimeout(function(){ if(w&&w.parentNode&&!w.classList.contains('on')) w.remove(); }, 500); } }
+window._uspHatch=_uspHatch;
 function _enterOS(withMic){ if(window._entered) return; window._entered=true; var g=document.getElementById('bootGate');
   // PRIME the speech engine INSIDE the click gesture — Safari/iOS block any speech that starts
   // later (our intro fires ~1.5s afterwards in a timer), so unlock it now with a silent utterance.
