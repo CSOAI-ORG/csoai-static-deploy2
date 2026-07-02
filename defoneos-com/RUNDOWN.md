@@ -28,8 +28,8 @@ autonomy.
 | `cameras` | public cameras (TfL/511 keyless; Windy global) | `WINDY_KEY` (✅ set) for global |
 | `space` | live ISS position + upcoming launches | keyless |
 | `places` | OSM POIs by bbox — biz/health/edu/energy/food/finance/gov + **comms/wifi/power/water** | keyless |
-| `powerplants` `airports` `aircraft` `marine` `signals` `events` `airquality` `sensors` `cyber` `threats` `intel` `forecast` `status` `stats` `mcps` | live free layers / governed feeds | keyless |
-| `simulate` | governed scenario (deterministic **illustrative** council vote) | keyless |
+| `powerplants` `airports` `aircraft` `marine` `signals` `events` `airquality` `sensors` `cyber` `threats` `intel` `forecast` `status` `stats` `mcps` `firms` `radiation` | live free layers / governed feeds | `firms` needs `FIRMS_KEY`; rest keyless |
+| `simulate` | governed scenario (deterministic **illustrative** council vote; scenarios incl. counter-drone, isr-sweep, medevac, swarm-patrol, cyber-intrusion, flood-999, eod-clearance, comms-relay, **humanitarian-corridor**) | keyless |
 | `brain` | server-side LLM proxy (key stays server-side) | `SOV3_BRAIN_ENDPOINT`/`_KEY`/`_MODEL` ⬜ |
 | `vlm` | on-demand pixel vision for the `look` tool | `VLM_ENDPOINT`/`_KEY`/`_MODEL` ⬜ |
 | `learn` | export the signed learning-queue to the node | `SOV3_LEARN_ENDPOINT` ⬜ |
@@ -42,8 +42,16 @@ All gated endpoints return `{gated:true, reason}` until their env var is set —
 ## The dome (`cop.html`, single file) — key subsystems
 - **Cinematic arrival** (`_cinematicArrival`): space → clouds → satellites → plunge to the user's IP
   location → 3-mile scan + top-9-USP teaser → 9 miles → the demo runs (interruptible).
-- **Guided tour** (`FULL_STEPS`/`DEMO_STEPS`, `_tourRun`) — 25/13 steps, interruptible barge-in
-  (voice + brain), auto-resume; per-step cinematic scan-sweep accent (`_tourFx`).
+- **Guided tour** (`FULL_STEPS`/`DEMO_STEPS`, `_tourRun`) — a full deep-dive tour plus a shorter demo
+  path, both interruptible barge-in (voice + brain), auto-resume; per-step cinematic scan-sweep accent (`_tourFx`).
+- **Defence interop (table-stakes)** — **Cursor-on-Target (CoT)** import/export (`cotImport`/`cotExport`,
+  the TAK/ATAK lingua franca) + **MIL-STD-2525 / APP-6** symbology via the open `milsymbol` lib (`cotDemo`).
+  OSINT/demo-tier over public tracks; classified feeds (Link-16/STANAG) bind on the sovereign node.
+- **Fusion analytics** — cross-source **convergence early-warning** + open-signal **hotspot** ranking
+  (`convergenceScan`): real, on-device correlation over the live layers, **Ed25519-signed** to the ledger.
+  Transparent event-density, not a classified score. Plus **maritime chokepoints** (`toggleChokepoints`,
+  public geography + live AIS exposure) and **energy infrastructure** (`toggleEnergyInfra`, curated
+  major pipelines + LNG/storage).
 - **Layers/commands** — aircraft·ADS-B, vessels·AIS, weather radar, seismic·USGS, news·GDELT, natural
   events·EONET/GDACS, air quality, orbital/ISS/satellites, public cameras (global), living clouds·MODIS,
   power plants, airports, rail, finance, **comms/wifi/power/water infrastructure**, **aurora·NOAA OVATION**,

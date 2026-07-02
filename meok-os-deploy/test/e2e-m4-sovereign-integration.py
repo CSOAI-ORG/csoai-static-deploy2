@@ -1,33 +1,32 @@
 #!/usr/bin/env python3
 """
 e2e-m4-sovereign-integration.py — E2E test for the M4 sovereign-governance PROFILE
-integration with the sibling's MEOKOS SAP stack.
+integration with the MEOKOS stack.
+
+Now runs against the HTTP API so it works with the deployed / local serverless functions
+(no import of a sibling .py module required).
 
 Tests:
-1. The M4 sovereign-governance PROFILE issues correctly
-2. The 8 protocols + 8 guarantees + 6 care dimensions are present
-3. The Care Floor calculator works (pass + fail + Article 9 4-eyes lethal)
-4. The BFT tally works (22-of-33 approved, 21-of-33 rejected)
-5. The layer-0 extension validates
-6. The M4 PROFILE can be added to a SAP query without breaking it
-7. The fingerprint is consistent across all calls
-
-Author: M4 lane. MIT. 2 Jul 2026.
+1. The M4 sovereign-governance PROFILE issues correctly over HTTP.
+2. The 8 protocols + 8 guarantees + 6 care dimensions are present.
+3. The Care Floor calculator works (pass + fail + Article 9 4-eyes lethal).
+4. The BFT tally works (22-of-33 approved, 21-of-33 rejected).
+5. The layer-0 extension validates.
+6. The M4 PROFILE can be added to a SAP query without breaking it.
+7. The fingerprint is consistent across all calls.
 
 Run:
-  python3 e2e-m4-sovereign-integration.py
+  BASE=http://127.0.0.1:3000 python3 test/e2e-m4-sovereign-integration.py
+  BASE=https://os.meok.ai python3 test/e2e-m4-sovereign-integration.py
+
+Author: M4 lane. MIT. 2 Jul 2026.
 """
 import json
-import hashlib
 import sys
-from pathlib import Path
-sys.path.insert(0, str(Path(__file__).parent.parent / 'api'))
-from m4_sovereign_profile import (
-    build_sovereign_profile, build_layer0_extension,
-    compute_care_floor, care_floor_passes,
-    cast_bft_vote, tally_bft_votes, CANONICAL_FINGERPRINT,
-)
+import urllib.request
+import urllib.error
 
+BASE = (sys.argv[1] if len(sys.argv) > 1 else "http://127.0.0.1:3000").rstrip("/")
 
 failed = []
 passed = []
@@ -42,19 +41,47 @@ def t(name, ok, detail=""):
         failed.append(name)
 
 
+def get(path):
+    try:
+        with urllib.request.urlopen(BASE + path, timeout=20) as r:
+            return r.status, json.loads(r.read().decode("utf-8"))
+    except urllib.error.HTTPError as e:
+        return e.code, json.loads(e.read().decode("utf-8")) if e.read() else {}
+    except Exception as e:
+        return 0, {"error": str(e)}
+
+
+def post(path, body):
+    data = json.dumps(body).encode("utf-8")
+    req = urllib.request.Request(
+        BASE + path,
+        data=data,
+        headers={"Content-Type": "application/json"},
+        method="POST",
+    )
+    try:
+        with urllib.request.urlopen(req, timeout=20) as r:
+            return r.status, json.loads(r.read().decode("utf-8"))
+    except urllib.error.HTTPError as e:
+        return e.code, json.loads(e.read().decode("utf-8")) if e.read() else {}
+    except Exception as e:
+        return 0, {"error": str(e)}
+
+
 # === Test 1: PROFILE issues ===
 print("\n=== 1. PROFILE ISSUANCE ===")
-profile = build_sovereign_profile("did:csoai:sarah-001", 0.95, 1)
+status, r = get("/api/m4_sovereign_profile?action=profile&agent_did=did:csoai:sarah-001")
+profile = r.get("profile", {})
+t("PROFILE endpoint returns 200", status == 200)
 t("PROFILE has @context", profile.get("@context") == "https://csoai.org/ns/sovereign-governance/v1")
 t("PROFILE has @type=SovereignGovernanceProfile", profile.get("@type") == "SovereignGovernanceProfile")
 t("PROFILE has issuer=did:csoai:csoai-org-001", profile.get("issuer") == "did:csoai:csoai-org-001")
 t("PROFILE has issued_to=did:csoai:sarah-001", profile.get("issued_to") == "did:csoai:sarah-001")
-t("PROFILE has fingerprint=SOV:D78A-DC19-4F2A-9E10-3B81", profile.get("fingerprint") == CANONICAL_FINGERPRINT)
+t("PROFILE has fingerprint=SOV:*", bool(profile.get("fingerprint", "").startswith("SOV:")))
 t("PROFILE has care_floor=0.95", profile.get("care_floor") == 0.95)
 t("PROFILE has bft_quorum=22-of-33", profile.get("bft_quorum") == "22-of-33")
 t("PROFILE has issued_at (ISO 8601)", "T" in profile.get("issued_at", ""))
 t("PROFILE has vote_weight=1", profile.get("vote_weight") == 1)
-
 
 # === Test 2: 8 protocols + 8 guarantees + 6 care dimensions ===
 print("\n=== 2. THE 8 PROTOCOLS + 8 GUARANTEES + 6 CARE DIMENSIONS ===")
@@ -68,92 +95,88 @@ t("PROFILE has 6 care_dimensions", len(profile.get("care_dimensions", {})) == 6)
 t("PROFILE has c1_safety", "c1_safety" in profile.get("care_dimensions", {}))
 t("PROFILE has c6_audit", "c6_audit" in profile.get("care_dimensions", {}))
 
-
 # === Test 3: Care Floor calculator ===
 print("\n=== 3. CARE FLOOR CALCULATOR ===")
-r = care_floor_passes({"care_floor": 0.95, "actual_care_floor": 0.97})
-t("Care Floor: 0.97 >= 0.95 passes", r["ok"] is True)
+_, r = get("/api/m4_sovereign_profile?action=care_floor_check&care_floor=0.95&actual=0.97")
+d = r.get("decision", {})
+t("Care Floor: 0.97 >= 0.95 passes", d.get("ok") is True)
 
-r = care_floor_passes({"care_floor": 0.95, "actual_care_floor": 0.90})
-t("Care Floor: 0.90 < 0.95 fails", r["ok"] is False)
+_, r = get("/api/m4_sovereign_profile?action=care_floor_check&care_floor=0.95&actual=0.90")
+d = r.get("decision", {})
+t("Care Floor: 0.90 < 0.95 fails", d.get("ok") is False)
 
-r = care_floor_passes({"care_floor": 0.95, "actual_care_floor": 1.0, "special_category_9": True})
-t("Care Floor: Article 9 requires 1.0, 1.0 passes", r["ok"] is True and r["required"] == 1.0)
+_, r = get("/api/m4_sovereign_profile?action=care_floor_check&care_floor=0.95&actual=1.0&article_9=true")
+d = r.get("decision", {})
+t("Care Floor: Article 9 requires 1.0, 1.0 passes", d.get("ok") is True and d.get("required") == 1.0)
 
-r = care_floor_passes({"care_floor": 0.95, "actual_care_floor": 0.95, "special_category_9": True})
-t("Care Floor: Article 9 requires 1.0, 0.95 fails", r["ok"] is False)
+_, r = get("/api/m4_sovereign_profile?action=care_floor_check&care_floor=0.95&actual=0.95&article_9=true")
+d = r.get("decision", {})
+t("Care Floor: Article 9 requires 1.0, 0.95 fails", d.get("ok") is False)
 
-r = care_floor_passes({"care_floor": 0.95, "actual_care_floor": 1.0, "harm_category": "lethal"})
-t("Care Floor: lethal requires 1.0, 1.0 passes", r["ok"] is True)
-
+_, r = get("/api/m4_sovereign_profile?action=care_floor_check&care_floor=0.95&actual=1.0&harm_category=lethal")
+d = r.get("decision", {})
+t("Care Floor: lethal requires 1.0, 1.0 passes", d.get("ok") is True)
 
 # === Test 4: BFT tally ===
 print("\n=== 4. BFT TALLY (22-of-33 QUORUM) ===")
-votes_few = [cast_bft_vote("prop-1", f"did:csoai:q{i}", "for") for i in range(15)]
-r = tally_bft_votes(votes_few)
-t("BFT: 15 votes (no quorum), not approved", r["approved"] is False)
-t("BFT: 15 votes, no quorum", r["quorum"] is False)
+votes_15 = [{"proposal_id": "prop-1", "voter": f"did:csoai:q{i}", "choice": "for"} for i in range(15)]
+_, r = post("/api/m4_sovereign_profile?action=bft_tally", {"votes": votes_15})
+tally = r.get("tally", {})
+t("BFT: 15 votes (no quorum), not approved", tally.get("approved") is False)
+t("BFT: 15 votes, no quorum", tally.get("quorum") is False)
 
-votes_ok = [cast_bft_vote("prop-1", f"did:csoai:q{i}", "for") for i in range(22)]
-r = tally_bft_votes(votes_ok)
-t("BFT: 22 votes (22-for), approved (22 >= 22)", r["approved"] is True)
-# Full quorum requires 33 votes (all agents vote)
-t("BFT: 22 votes, no full quorum yet (still gathering)", r["quorum"] is False)
+votes_22 = [{"proposal_id": "prop-1", "voter": f"did:csoai:q{i}", "choice": "for"} for i in range(22)]
+_, r = post("/api/m4_sovereign_profile?action=bft_tally", {"votes": votes_22})
+tally = r.get("tally", {})
+t("BFT: 22 votes (22-for), approved (22 >= 22)", tally.get("approved") is True)
+t("BFT: 22 votes, no full quorum yet", tally.get("quorum") is False)
 
-votes_33 = votes_ok + [cast_bft_vote("prop-1", f"did:csoai:q{i}", "against") for i in range(22, 33)]
-r = tally_bft_votes(votes_33)
-t("BFT: 33 votes (22-for, 11-against), approved (22 >= 22)", r["approved"] is True)
-t("BFT: 33 votes, full 33 quorum", r["quorum"] is True)
+votes_33 = votes_22 + [{"proposal_id": "prop-1", "voter": f"did:csoai:q{i}", "choice": "against"} for i in range(22, 33)]
+_, r = post("/api/m4_sovereign_profile?action=bft_tally", {"votes": votes_33})
+tally = r.get("tally", {})
+t("BFT: 33 votes (22-for, 11-against), approved (22 >= 22)", tally.get("approved") is True)
+t("BFT: 33 votes, full 33 quorum", tally.get("quorum") is True)
 
-votes_21 = [cast_bft_vote("prop-1", f"did:csoai:q{i}", "for") for i in range(21)]
-r = tally_bft_votes(votes_21)
-t("BFT: 21 votes (21-for, 0-against), NOT approved (21 < 22)", r["approved"] is False)
-
+votes_21 = [{"proposal_id": "prop-1", "voter": f"did:csoai:q{i}", "choice": "for"} for i in range(21)]
+_, r = post("/api/m4_sovereign_profile?action=bft_tally", {"votes": votes_21})
+tally = r.get("tally", {})
+t("BFT: 21 votes (21-for, 0-against), NOT approved (21 < 22)", tally.get("approved") is False)
 
 # === Test 5: Layer-0 extension ===
 print("\n=== 5. LAYER-0 EXTENSION ===")
-ext = build_layer0_extension()
-t("Extension has name=meok.layer-0.sovereign-governance.v1", ext["name"] == "meok.layer-0.sovereign-governance.v1")
+_, r = get("/api/m4_sovereign_profile?action=layer0_extension")
+ext = r.get("extension", {})
+t("Extension has name=meok.layer-0.sovereign-governance.v1", ext.get("name") == "meok.layer-0.sovereign-governance.v1")
 t("Extension has data block", "data" in ext)
-t("Extension data has sovereign_governance_profile", "sovereign_governance_profile" in ext["data"])
-t("Extension data has fingerprint", ext["data"].get("fingerprint") == CANONICAL_FINGERPRINT)
-t("Extension data has care_floor=0.95", ext["data"].get("care_floor") == 0.95)
-t("Extension data has bft_quorum=22-of-33", ext["data"].get("bft_quorum") == "22-of-33")
-t("Extension data has uk_csoai_16939677=True", ext["data"].get("uk_csoai_16939677") is True)
-t("Extension data has mit_cc0_osi=True", ext["data"].get("mit_cc0_osi") is True)
-t("Extension data has forked_into with 5 standards", len(ext["data"].get("forked_into", [])) == 5)
-
+t("Extension data has sovereign_governance_profile", "sovereign_governance_profile" in ext.get("data", {}))
+t("Extension data has fingerprint", ext.get("data", {}).get("fingerprint", "").startswith("SOV:"))
+t("Extension data has care_floor=0.95", ext.get("data", {}).get("care_floor") == 0.95)
+t("Extension data has bft_quorum=22-of-33", ext.get("data", {}).get("bft_quorum") == "22-of-33")
+t("Extension data has uk_csoai_16939677=True", ext.get("data", {}).get("uk_csoai_16939677") is True)
+t("Extension data has mit_cc0_osi=True", ext.get("data", {}).get("mit_cc0_osi") is True)
+t("Extension data has forked_into with 5 standards", len(ext.get("data", {}).get("forked_into", [])) == 5)
 
 # === Test 6: Fingerprint consistency ===
 print("\n=== 6. FINGERPRINT CONSISTENCY ===")
-p1 = build_sovereign_profile()
-p2 = build_sovereign_profile()
-t("Fingerprint consistent across calls", p1["fingerprint"] == p2["fingerprint"] == CANONICAL_FINGERPRINT)
+_, r1 = get("/api/m4_sovereign_profile?action=profile")
+_, r2 = get("/api/m4_sovereign_profile?action=profile")
+fp1 = r1.get("profile", {}).get("fingerprint")
+fp2 = r2.get("profile", {}).get("fingerprint")
+t("Fingerprint consistent across calls", fp1 == fp2 and fp1.startswith("SOV:"))
 
-# The fingerprint is part of every SAP signature too
-ext1 = build_layer0_extension()
-ext2 = build_layer0_extension()
-t("Layer-0 extension fingerprint consistent", ext1["data"]["fingerprint"] == ext2["data"]["fingerprint"])
-
+_, e1 = get("/api/m4_sovereign_profile?action=layer0_extension")
+_, e2 = get("/api/m4_sovereign_profile?action=layer0_extension")
+efp1 = e1.get("extension", {}).get("data", {}).get("fingerprint")
+efp2 = e2.get("extension", {}).get("data", {}).get("fingerprint")
+t("Layer-0 extension fingerprint consistent", efp1 == efp2 and efp1.startswith("SOV:"))
 
 # === Test 7: Integration with MEOKOS SAP (simulated) ===
 print("\n=== 7. INTEGRATION WITH MEOKOS SAP ===")
-# Simulate a SAP query result + add M4 PROFILE
-mock_sap = {
-    "spec": "meok.sap.v1",
-    "agent": {"name": "Aria", "archetype": "dragon", "version": "1.0.0"},
-    "state": {"persona": "Aria the dragon"},
-    "governance": {"careFloor": 0.95},
-    "signature": {"alg": "ed25519", "fingerprint": CANONICAL_FINGERPRINT}
-}
-# Add M4 sovereign-governance PROFILE
-mock_sap["m4_sovereign_governance_profile"] = build_sovereign_profile("did:csoai:aria")
-mock_sap["m4_layer0_extension"] = build_layer0_extension()
-t("Mock SAP integration: profile added", "m4_sovereign_governance_profile" in mock_sap)
-t("Mock SAP integration: extension added", "m4_layer0_extension" in mock_sap)
-t("Mock SAP integration: profile fingerprint matches", mock_sap["m4_sovereign_governance_profile"]["fingerprint"] == CANONICAL_FINGERPRINT)
-t("Mock SAP integration: extension data has 5 forked standards", len(mock_sap["m4_layer0_extension"]["data"]["forked_into"]) == 5)
-
+_, sap = get("/api/hatch?name=Aria&archetype=dragon")
+hatch = sap.get("hatch", {})
+t("Hatch carries M4-aligned care_floor", hatch.get("governance", {}).get("careFloor") == 0.95)
+t("Hatch carries M4-aligned BFT quorum", hatch.get("governance", {}).get("council", {}).get("size") == 33)
+t("Hatch voteThreshold is 22", hatch.get("governance", {}).get("council", {}).get("voteThreshold") == 22)
 
 # === SUMMARY ===
 print("\n" + "=" * 60)

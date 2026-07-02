@@ -12,9 +12,9 @@
 // SOVEREIGN, self-owned, OFFLINE-verifiable key + embedded governance. Formerly "SAP" (renamed to
 // avoid the SAP SE clash). ?format=af → Letta import · ?format=oasf → AGNTCY-shaped + sovereign ext.
 import crypto from 'crypto';
+import { CARE_FLOOR, BFT_SIZE, BFT_VOTE_THRESHOLD, BFT_QUORUM, CARE_VETO, HARD_STOPS, FRAMEWORKS, ARCHE, DEFAULT_NAME } from './_shared/constants.mjs';
 function canonical(v){ if(typeof v==='string') return v; const s=x=>Array.isArray(x)?x.map(s):(x&&typeof x==='object')?Object.keys(x).sort().reduce((o,k)=>(o[k]=s(x[k]),o),{}):x; return JSON.stringify(s(v)); }
 function keypair(){ const seed=crypto.createHash('sha256').update(process.env.SIGIL_SEED||'meok-sovereign-demo-key-2026').digest(); const pkcs8=Buffer.concat([Buffer.from('302e020100300506032b657004220420','hex'),seed]); const priv=crypto.createPrivateKey({key:pkcs8,format:'der',type:'pkcs8'}); return {priv,pubHex:crypto.createPublicKey(priv).export({type:'spki',format:'der'}).toString('hex')}; }
-const ARCHE={ dragon:'a guardian strategist', fox:'a swift connector', owl:'a careful analyst', phoenix:'a resilient builder', default:'a sovereign companion' };
 // The 22-strong legacy-bridge family: a legacy/COBOL/SAP/HL7 system speaks its native protocol →
 // the matching bridge translates it to MCP/A2A (Layer-0) → a Hatch mounts on it → that system now
 // has a signed, governed, AI-aware agent INSIDE it. `?bridge=cobol` fronts a Hatch onto that bridge.
@@ -78,7 +78,7 @@ export default async function handler(req, res){
         character: base+'/character.html', renderer:'Cesium / MapLibre (body)', shell:'MEOK OS (Sovereign dock + apps + globe)',
         note:'a portable sovereign mini-OS: identity+brain+governance travel signed; the OS/3D body is fetched + rendered by the host (browser/desktop/VM).',
       },
-      governance: { careFloor: 0.95, council:{ size:33, voteThreshold:22, careVeto:0.4 }, hardStops:['no harm','no unvoted autonomy','no covert surveillance'], frameworks:['EU AI Act','ISO 42001','JSP 936 (defence variant)'], note:'canonical constants — aligned with meok-ai backend (council 22-of-33)' },
+      governance: { careFloor: CARE_FLOOR, council:{ size:BFT_SIZE, voteThreshold:BFT_VOTE_THRESHOLD, careVeto:CARE_VETO }, hardStops:HARD_STOPS, frameworks:FRAMEWORKS, note:`canonical constants — aligned with meok-ai backend (council ${BFT_QUORUM})` },
       interfaces: { agentCard: base+'/api/agentcard?name='+encodeURIComponent(name)+'&archetype='+encodeURIComponent(arch), mcp: base+'/api/mcp', openai_chat: base+'/api/v1/chat/completions', onDeviceRunner: base+'/runner/meok-sap-runner.mjs' },
       model_policy: { embedded: false, sources:['host model via MCP','on-device llamafile/ollama','hosted API'], reason:'weights too large for serverless/edge — the AGENT (mind+brain-routing+body-refs) is portable, the MODEL is pluggable' },
       runnable: ['serverless (default, scale-to-zero)','on-device (local MCP stdio + offline brain)','dedicated VM (premium, always-on)'],

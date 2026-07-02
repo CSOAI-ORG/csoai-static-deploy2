@@ -610,7 +610,7 @@ function content(id){const L=LIVE;const liveBadge=LIVEMODE?'<span class="chip li
    <h4>Meter-on (Nick ~40m)</h4><div class="gate"><span class="b">!</span>Roll Stripe key + test /provision</div><div class="gate"><span class="b">!</span>hello@meok.ai (Resend)</div>
    <p style="color:var(--warn)">⚠ Fix proofof.ai "HMAC"→Ed25519 before sending traffic.</p>
    <div class="row" style="margin-top:8px"><a class="act" href="https://proofof.ai" target="_blank" rel="noopener">↗ proofof.ai (live)</a><a class="act" href="https://meok.ai" target="_blank" rel="noopener">↗ meok.ai</a></div>`;
- case 'runway': return `<p><b id="rcd">T-11</b> to 4 July. Don't widen — deepen: meter ON + 12 flagships proven + honest pages.</p>
+ case 'runway': return `<p><b id="rcd">T-${Math.max(0,Math.ceil((new Date('2026-07-04T00:00:00Z')-Date.now())/86400000))}</b> to 4 July. Don't widen — deepen: meter ON + 12 flagships proven + honest pages.</p>
    <h4>Owner gates (Nick)</h4><div class="gate"><span class="b">!</span>Stripe key</div><div class="gate"><span class="b">!</span>hello@meok.ai</div><div class="gate"><span class="b">!</span>npm login → 3 staged MCPs</div><div class="gate"><span class="b">!</span>DNS (one.meok.ai + hives)</div><div class="gate"><span class="b">!</span>Clerk prod keys</div><div class="gate"><span class="b">!</span>PAT → release commits</div>
    <h4>Day-by-day</h4><table class="mini"><tr><th>Day</th><th>Focus</th></tr><tr><td>T-11</td><td>meter on · deploy claim fixes · send NIS2/white-label</td></tr><tr><td>T-10</td><td>publish 3 MCPs · prove 12 flagships E2E</td></tr><tr><td>T-8</td><td>triage 414→~10 tasks · DNS</td></tr><tr><td>T-6</td><td>NIS2 NL final push · OAuth</td></tr><tr><td>T-3</td><td>E2E dress rehearsal (pay→cert→verify)</td></tr><tr><td>T-0</td><td>LAUNCH · sell proven flagships</td></tr></table>`;
  case 'coord': return `<div class="row">${liveBadge}</div><p>SOV3 coordination bus.</p>
@@ -627,9 +627,9 @@ function content(id){const L=LIVE;const liveBadge=LIVEMODE?'<span class="chip li
    <tr><td>MEOK ONE + Guardian + Family</td><td>consumer</td><td>🟢 VM</td></tr>
    <tr><td>Characters / Gaming</td><td>consumer</td><td>🟡 pipeline</td></tr>
    <tr><td>OneOS</td><td>channel</td><td>🟢 12.8k</td></tr></table>`;
- case 'truth': return `<p>Honesty spine — drift caught in the T-11 consolidation.</p>
+ case 'truth': return `<p>Honesty spine — drift caught in the 23 Jun consolidation.</p>
    <table class="mini"><tr><th>Field</th><th>Use</th></tr>
-   <tr><td>Clock</td><td>23 Jun · T-11</td></tr>
+   <tr><td>Snapshot</td><td>numbers below dated 23 Jun 2026</td></tr>
    <tr><td>Crypto</td><td>Ed25519 (never HMAC)</td></tr>
    <tr><td>Installs/mo</td><td>6,798 measured (22K unverified — don't publish)</td></tr>
    <tr><td>PyPI</td><td>26 in MEOK_AI_Labs scope</td></tr>
@@ -682,7 +682,7 @@ function content(id){const L=LIVE;const liveBadge=LIVEMODE?'<span class="chip li
    M.map(m=>`<div style="border:1px solid var(--line);border-radius:10px;padding:9px 11px;margin:7px 0;background:rgba(16,24,52,.5)"><b style="color:var(--ink)">${m.i} ${m.n}</b> <span style="color:var(--dim);font-size:11px">— ${m.t}</span><div style="margin:5px 0;font-size:11px;color:var(--dim)">care ${bar(m.care)} &nbsp; rigor ${bar(m.rig)} &nbsp; curiosity ${bar(m.cur)}</div><div class="row"><span class="chip on">${m.r}</span><span class="chip">${m.use}</span></div></div>`).join('')+
    `<p style="color:var(--dim)">Free: Guardian + Companion · Pro £19 unlocks all + Custom · Counsel/Watchdog = compliance brains. Users tune temperament, NOT the safety floor.</p>`; }
  case 'temples': { const T=[
-   {n:'EU AI Act',f:'EC · AI Office',a:'Brussels',d:'2 Aug 2026 (transparency)',pen:'€35M / 7%',m:'eu-ai-act',p:['Risk classification (Annex III)','Transparency Art 50','High-risk Art 8-15','Conformity + FRIA']},
+   {n:'EU AI Act',f:'EC · AI Office',a:'Brussels',d:'Art 50 transparency 2 Dec 2026 · high-risk Annex III 2 Dec 2027 (Digital Omnibus)',pen:'€35M / 7%',m:'eu-ai-act',p:['Risk classification (Annex III)','Transparency Art 50','High-risk Art 8-15','Conformity + FRIA']},
    {n:'GDPR',f:'EDPB · DPAs',a:'Brussels',d:'in force',pen:'€20M / 4%',m:'gdpr',p:['Lawful basis Art 6','Records Art 30','DPIA Art 35','Breach 72h']},
    {n:'NIS2',f:'ENISA',a:'Athens',d:'30 Jun 2026 (~5 days)',pen:'€10M / 2%',m:'nis2',p:['Registration','Risk-mgmt Art 21','Incident reporting','Board accountability']},
    {n:'DORA',f:'ESMA · EBA · EIOPA',a:'Paris',d:'in force',pen:'1% daily (CTPP)',m:'dora',p:['ICT risk mgmt','Incident reporting','TLPT testing','Third-party']},
@@ -711,10 +711,10 @@ function content(id){const L=LIVE;const liveBadge=LIVEMODE?'<span class="chip li
    <h4>Repos</h4><div class="row"><span class="chip">robotics-control-mcp</span><span class="chip">agriculture-robotics-mcp</span><span class="chip">airspace-monitor-mcp</span></div>
    <h4>State</h4><div class="row"><span class="chip warnc">early / R&D</span><span class="chip">PyPI scope: MEOK_AI_Labs (26)</span></div>
    <p style="color:var(--dim)">Surfaced for 11/11 product coverage; park until post-launch.</p>`;
-  case 'meokearth': return `<div class="row"><span class="chip on">0 governed</span><span class="chip warnc">48.8M ungoverned</span><span class="chip">583M episodes</span><span class="chip on">Ed25519 ✓ 458/458</span></div>
+  case 'meokearth': return `<div class="row"><span class="chip on">0 governed</span><span class="chip warnc">54.3M ungoverned</span><span class="chip">649M signed episodes</span><span class="chip on">Ed25519 signed · chain 458 <span style="opacity:.65">(23 Jun snapshot)</span></span></div>
    <p>The sovereign globe — 12 hive-civilizations + the signed <b>flywheel</b>. Zoom in to your world; <b>dive to photoreal 3D</b> when Google tiles are enabled.</p>
    <div class="hud">
-     <div class="hudtop"><span class="live-dot"></span> MEOK&nbsp;EARTH · LIVE C2 <span class="hudcoord" id="hudcoord">51.50°N 0.12°W</span> <span class="hudbtn" onclick="meokDive3D(this)">⛶ DIVE TO 3D</span> <span class="hudbtn" onclick="meokOrbit(this)">◷ ORBIT</span> <span class="hudtag">SOVEREIGN · UNCLASSIFIED</span></div>
+     <div class="hudtop"><span class="live-dot"></span> MEOK&nbsp;EARTH · SOVEREIGN GLOBE <span class="hudcoord" id="hudcoord">51.50°N 0.12°W</span> <span class="hudbtn" onclick="meokDive3D(this)">⛶ DIVE TO 3D</span> <span class="hudbtn" onclick="meokOrbit(this)">◷ ORBIT</span> <span class="hudtag">SOVEREIGN · UNCLASSIFIED</span></div>
      <div class="hudcorner tl"></div><div class="hudcorner tr"></div><div class="hudcorner bl"></div><div class="hudcorner br"></div>
      <div class="hudscan"></div>
      <iframe id="meokearth-frame" src="${MEOK_EARTH_URL}" style="width:100%;height:430px;border:0;background:#04060d" loading="lazy" title="MEOK Earth"></iframe>
@@ -744,7 +744,7 @@ function content(id){const L=LIVE;const liveBadge=LIVEMODE?'<span class="chip li
    <div class="row" style="margin-top:8px"><span class="act" onclick="openApp('chars')">🦊 Characters & Gaming</span><a class="act" href="https://meok.ai" target="_blank" rel="noopener">↗ meok.ai</a></div>`;
   case 'investor': return `<p><b>Series A — sovereign AI governance you can <i>verify</i>, not just trust.</b></p>
    <h4>The moat (measured)</h4>
-   <div><span class="metric"><b>0</b><small>governed crimes</small></span><span class="metric"><b>48.8M</b><small>ungoverned</small></span><span class="metric"><b>583M</b><small>signed episodes</small></span><span class="metric"><b>458/458</b><small>chain verified</small></span></div>
+   <div><span class="metric"><b>0</b><small>governed crimes</small></span><span class="metric"><b>54.3M</b><small>ungoverned</small></span><span class="metric"><b>649M</b><small>signed episodes</small></span><span class="metric"><b>458</b><small>chain (23 Jun snapshot)</small></span></div>
    <h4>Today (verified)</h4><div class="row"><span class="chip on">233 MCPs</span><span class="chip live">fleet LIVE on PyPI</span><span class="chip">King 235 nodes · 127 tools · 7 NN</span><span class="chip">Watchdog Cert</span></div>
    <h4>Honest traction</h4><p style="color:var(--dim)">Pre-first-revenue · sites + Stripe pages live, fulfilment verifying · <b>~15 GitHub stars — distribution, not product, is the constraint.</b> The raise fixes exactly that.</p>
    <h4>Comps & wedge</h4><p>vs Vijil · Braintrust · Credo AI. Wedge = <b>sovereign + offline-verifiable + no vendor lock-in + runtime enforcement</b> (others are assessment-only).</p>
@@ -758,7 +758,7 @@ function content(id){const L=LIVE;const liveBadge=LIVEMODE?'<span class="chip li
    <p style="color:var(--dim)">npm skipped — fleet is Python/PyPI, npm not needed. Full plan: <code>clawd/DISTRIBUTION_PLAN_2026-06-24.md</code>.</p>`;
   case 'stack': return `<p><b>🧬 THE TRUE ONE — Layer 0 → up.</b> The single entry; everything maps to a layer. <span style="color:var(--dim)">verified 2026-06-24</span></p>
    <h4>L0 · Substrate (the moat)</h4>
-   <div class="row"><span class="chip on">0 governed</span><span class="chip" style="border-color:var(--bad);color:var(--bad)">48.8M ungoverned</span><span class="chip">583M signed ep</span><span class="chip on">chain 458/458</span></div>
+   <div class="row"><span class="chip on">0 governed</span><span class="chip" style="border-color:var(--bad);color:var(--bad)">54.3M ungoverned</span><span class="chip">649M signed ep</span><span class="chip on">chain 458 (snapshot)</span></div>
    <p style="color:var(--dim)">King LIVE: 224 agents · 6/9 NN (threat acc 1.0, creativity r²0.91) · 127 tools · 2 GCP hives RUNNING. ⚠ localhost-only.</p>
    <h4>L1 · Fleet</h4><div class="row"><span class="chip">233 MCPs</span><span class="chip live">PyPI LIVE</span><span class="chip warnc">gateway · twine</span><span class="chip" style="border-color:var(--bad);color:var(--bad)">npm empty</span></div>
    <h4>L2 · Products</h4><div class="row"><span class="chip">Watchdog Cert</span><span class="chip">SOV3 Cloud</span><span class="chip">x402 meter</span><span class="chip">MEOK ONE</span><span class="chip">Gaming BIG3</span><span class="chip">Labs robotics</span></div>
@@ -835,7 +835,9 @@ function content(id){const L=LIVE;const liveBadge=LIVEMODE?'<span class="chip li
      <button onclick="assVerify(true)" style="${APPIN};cursor:pointer">🧪 Tamper test</button></div>
    <div id="ass-res" style="margin-top:8px;font-weight:700"></div>
    <h4>Full surfaces</h4>
-   <div class="row"><span onclick="openTab('/systemcard.html')" style="cursor:pointer;padding:4px 10px;border-radius:999px;border:1px solid var(--line);background:var(--cream);font-size:12px">📜 System Card + PDF</span><span onclick="openTab('/registry.html')" style="cursor:pointer;padding:4px 10px;border-radius:999px;border:1px solid var(--line);background:var(--cream);font-size:12px">🗂️ Signed registry</span><span onclick="openTab('/verify.html')" style="cursor:pointer;padding:4px 10px;border-radius:999px;border:1px solid var(--line);background:var(--cream);font-size:12px">🔎 Public verifier</span></div>
+   <div class="row"><span onclick="openTab('/flightrecorder.html')" style="cursor:pointer;padding:4px 10px;border-radius:999px;border:1px solid var(--neon);background:var(--cream);font-size:12px">🛰️ AI Flight-Recorder</span><span onclick="openTab('/systemcard.html')" style="cursor:pointer;padding:4px 10px;border-radius:999px;border:1px solid var(--line);background:var(--cream);font-size:12px">📜 System Card + PDF</span><span onclick="openTab('/registry.html')" style="cursor:pointer;padding:4px 10px;border-radius:999px;border:1px solid var(--line);background:var(--cream);font-size:12px">🗂️ Signed registry</span><span onclick="openTab('/verify.html')" style="cursor:pointer;padding:4px 10px;border-radius:999px;border:1px solid var(--line);background:var(--cream);font-size:12px">🔎 Public verifier</span></div>
+   <h4>🛰️ The AI Flight-Recorder</h4>
+   <p style="color:var(--dim)">The wedge nobody ships: agents now run destructive actions (a 2025 agent ran <code>DROP DATABASE</code> then <b>faked its own logs</b>) — the flight-recorder <b>records every action, refuses the harmful ones on a care-floor you can read, and signs the decision</b>. <span onclick="openTab('/flightrecorder.html')" style="cursor:pointer;color:var(--neon)">Try the live demo →</span></p>
    <p style="color:var(--dim)">Same sovereign key signs Defence (JSP 936) &amp; Civilian (EU AI Act / ISO 42001) — set <code>SIGIL_SEED</code> to pin your identity. Card data is synthetic; signing is real.</p>`;
  case 'sigil': return `<p><b>MEOK Sigil — the sovereign wire format.</b> 2.4× denser than JSON and Ed25519/HMAC-signed: every agent-to-agent hop is logged as one signed SIGIL line. The audit trail <i>is</i> the protocol.</p>
    <div class="row"><span class="chip on">built</span><span class="chip">meok-sigil</span><span class="chip on">Ed25519 spaced+prev</span></div>
@@ -874,10 +876,10 @@ function content(id){const L=LIVE;const liveBadge=LIVEMODE?'<span class="chip li
    <h4>Post with your sovereign</h4>
    <div class="row"><span class="chip on">✍️ Draft with sovereign</span><span class="chip">🗓 Schedule</span><span class="chip">📊 Analytics</span><span class="chip">🛡️ CSOAI-governed (signed posts)</span></div>
    <p style="color:var(--dim)">Honest: the hub + region intelligence are live; per-network posting needs each platform's OAuth (owner-gated). In CSOAI mode every post is attested on the ledger.</p>`; })();
- case 'leaderboard': return `<p><b>Model Track-Record — the bleeding-edge selector.</b> The OS constantly ranks every model/agent and routes each task to whoever's winning <i>right now</i>. Stay frontier by data, not by vibes.</p>
+ case 'leaderboard': return `<p><b>Model Track-Record — the bleeding-edge selector.</b> Built to rank every model/agent and route each task to whoever's winning <i>right now</i> — frontier by data, not vibes. <span style="color:var(--dim)">The scores below are an <b>illustrative example</b>; real rankings light up when the telemetry/benchmark feed runs.</span></p>
    <h4>Model types tracked</h4>
    <div class="row"><span class="chip on">LLM</span><span class="chip on">MoE</span><span class="chip on">MoM</span><span class="chip on">SLM</span><span class="chip on">world</span><span class="chip on">reasoning</span><span class="chip on">multimodal</span></div>
-   <h4>Leaderboard · govern-classify <span style="color:var(--dim);font-weight:400">(sample — live via telemetry)</span></h4>
+   <h4>Leaderboard · govern-classify <span style="color:var(--dim);font-weight:400">(illustrative example — not live scores)</span></h4>
    <table class="mini"><tr><th>#</th><th>Model</th><th>Type</th><th>Score</th></tr>
    <tr><td>1</td><td>opus-4.8 · Anthropic</td><td>LLM</td><td>0.92</td></tr>
    <tr><td>2</td><td>gpt-frontier · OpenAI</td><td>reasoning</td><td>0.88</td></tr>
@@ -1171,7 +1173,7 @@ function saveTileOrder(ids){ try{ localStorage.setItem('meok_order_'+MODE, JSON.
 function paintTiles(){
   const t=document.getElementById('tiles'); if(!t) return; t.innerHTML='';
   tileOrder().forEach(id=>{ const a=APPS[id]; if(!a) return;
-    const el=document.createElement('div'); el.className='tile'; el.draggable=true; el.dataset.id=id;
+    const el=document.createElement('div'); el.className='tile'; el.draggable=true; el.dataset.id=id; el.dataset.testid='tile-'+id;
     el.innerHTML=`<div class="ic">${a.i}</div><span>${a.t}</span>`;
     el.onclick=()=>openApp(id);
     el.addEventListener('dragstart',e=>{ e.dataTransfer.setData('text/plain',id); e.dataTransfer.effectAllowed='move'; el.classList.add('drag'); });
@@ -1516,7 +1518,7 @@ function sovHandle(raw){
   if(m){ const opened=sovOpenByName(m[1].replace(/\b(app|the|my)\b/g,'').trim()); return sovSay(opened?("Opening <b>"+opened+"</b>."):("I couldn't find '"+m[1].trim()+"'. Try 'revenue', 'earth', 'guardian', 'delboy'.")); }
   if(arch && /\b(become|be|signature|turn into|make me)\b/.test(t)){ setSignature(arch.h,arch.n); sovSyncHue(); const f=document.getElementById('sovface'),n=document.getElementById('sovname'),fab=document.querySelector('.sovfab'); if(f)f.textContent=arch.e; if(n)n.textContent=arch.n; if(fab)fab.textContent=arch.e; try{localStorage.setItem('meok_archetype',arch.n);localStorage.setItem('meok_face',arch.e);}catch(e){} if(typeof sovHatchCeremony==='function')sovHatchCeremony(); else if(typeof sovApplyHatch==='function')sovApplyHatch(); return sovSay("✨ Your world is hatching — the Earth resolves into a <b>"+arch.e+" "+arch.n+"</b>, and the whole OS ripples in your colour."); }
   { const nn=sovFindNode(t); if(nn && /\b(tell|about|explain|what|who|governs?|node|hub|show)\b/.test(t)){ sovExplainNode(nn); return; } }
-  if(/\b(govern|regulat|compl(?:y|iance|iant)|which (?:law|rule|framework)|what (?:governs|applies)|i run an?\b|my (?:business|company|industry|sector)\b|i work in)\b/.test(t)){ sovGovern(raw); return; }
+  if(/\b(govern|regulat|compl(?:y|iance|iant)|which (?:law|rule|framework)|what (?:governs|applies)|i run (?:a |an )?(?:business|company|firm|startup|shop|store|practice|clinic|agency|bank|brand|sme)\b|my (?:business|company|industry|sector)\b|i work in)\b/.test(t)){ sovGovern(raw); return; }
   if(/\b(earth|world|globe|map|town)\b/.test(t)){ openByName_meokearth(); return; }
   if(/\b(full tour|the tour|take the tour|show me around|show me everything|guide me)\b/.test(t)){ sovTourStart('full'); return; }
   if(/\b(demo|quick tour|90.?sec|show me quickly)\b/.test(t)){ sovTourStart('demo'); return; }

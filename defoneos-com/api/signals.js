@@ -63,11 +63,12 @@ export default async function handler(req, res) {
     const byCountry = {};
     (g.articles || []).forEach(a => {
       const c = a.sourcecountry; if (!c || !CC[c]) return;
-      if (!byCountry[c]) byCountry[c] = { count: 0, headline: a.title || '' };
+      if (!byCountry[c]) byCountry[c] = { count: 0, headline: a.title || '', arts: [] };
       byCountry[c].count++;
+      if (byCountry[c].arts.length < 5 && a.url) byCountry[c].arts.push({ title: a.title || a.url, url: a.url, domain: a.domain || '', seendate: a.seendate || '' });
     });
     total = (g.articles || []).length;
-    const sig = Object.keys(byCountry).map(c => ({ lon: CC[c][1], lat: CC[c][0], name: c, count: byCountry[c].count, headline: byCountry[c].headline })).sort((a, b) => b.count - a.count);
+    const sig = Object.keys(byCountry).map(c => ({ lon: CC[c][1], lat: CC[c][0], name: c, count: byCountry[c].count, headline: byCountry[c].headline, articles: byCountry[c].arts })).sort((a, b) => b.count - a.count);
     if (sig.length) live = sig;
   } catch (_) { /* throttled / non-JSON → fall through to snapshot */ }
 

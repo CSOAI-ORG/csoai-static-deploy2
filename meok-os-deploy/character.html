@@ -43,18 +43,18 @@
 </style>
 </head>
 <body>
-<div id="stage"></div>
-<div class="loading" id="loading"><div class="egg"></div><p>Your sovereign is emerging…</p></div>
+<div id="stage" data-testid="character-stage"></div>
+<div class="loading" id="loading" data-testid="character-loading"><div class="egg"></div><p>Your sovereign is emerging…</p></div>
 <div class="top">
   <div class="logo"><span class="m">M</span> MEOK</div>
   <div class="kick">Your Sovereign Character</div>
 </div>
-<div class="cast" id="cast"></div>
-<div class="info" id="info"></div>
-<div class="dock">
-  <div class="log" id="log"></div>
+<div class="cast" id="cast" data-testid="character-cast"></div>
+<div class="info" id="info" data-testid="character-info"></div>
+<div class="dock" data-testid="character-dock">
+  <div class="log" id="log" data-testid="character-log"></div>
   <div class="bar">
-    <input id="in" placeholder="Speak to your sovereign…" autocomplete="off">
+    <input id="in" data-testid="character-input" placeholder="Speak to your sovereign…" autocomplete="off">
     <button class="send" id="send">➤</button>
   </div>
 </div>
@@ -203,7 +203,7 @@ function loadVRM(file, first){
     restPose(vrm);
     currentVRM = vrm; clock.getDelta();
     setTimeout(()=>L.classList.add('hide'), 250);
-  }, undefined, ()=>document.getElementById('loading').classList.add('hide'));
+  }, undefined, ()=>{ document.getElementById('loading').classList.add('hide'); if(typeof showEmergence==='function') showEmergence(); });  // VRM asset absent → fall back to the always-present emergence skin (honest, never blank)
 }
 
 const POSE = { uaZ:1.62, uaX:0.10, shZ:0.20, laZ:0.32, laY:0.12 };
@@ -358,6 +358,6 @@ window.addEventListener('message',(e)=>{
 });
 window.loadGLB = loadGLB;  // allow the OS / external host to set a user's avatar by URL
 </script>
-<a id="meok-tour-pill" href="/?tour=demo" style="position:fixed;right:16px;bottom:16px;z-index:9999;background:#1a1410;color:#c9a84c;border:1px solid #c9a84c;border-radius:999px;padding:9px 16px;font:700 13px system-ui,sans-serif;text-decoration:none;box-shadow:0 8px 24px rgba(0,0,0,.3)">🎬 Take the tour</a>
+<a id="meok-tour-pill" data-testid="tour-pill" href="/?tour=demo" style="position:fixed;right:16px;bottom:16px;z-index:9999;background:#1a1410;color:#c9a84c;border:1px solid #c9a84c;border-radius:999px;padding:9px 16px;font:700 13px system-ui,sans-serif;text-decoration:none;box-shadow:0 8px 24px rgba(0,0,0,.3)">🎬 Take the tour</a>
 </body>
 </html>

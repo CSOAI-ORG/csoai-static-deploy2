@@ -28,7 +28,14 @@ export default function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   const raw = ((req.query && (req.query.q || req.query.query)) || '').toString().toLowerCase().slice(0, 120);
   const limit = Math.min(parseInt((req.query && req.query.limit) || '6', 10) || 6, 20);
-  if (!raw.trim()) return res.status(200).json({ query: '', matches: [], total: catalog.length });
+  if (!raw.trim()) {
+    // empty query → feature the richest servers across the fleet so the storefront / dock is never blank
+    const featured = catalog.slice().sort((a, b) => (b.tools || 0) - (a.tools || 0)).slice(0, limit).map(t => {
+      const slug = String(t.name).replace(/^\./, '');
+      return { name: slug, cluster: t.cluster, clusterLabel: CLLABEL[t.cluster] || t.cluster, tools: t.tools, connect: `pip install ${slug}`, sovspace: `/sovspace.html?q=${encodeURIComponent(slug)}` };
+    });
+    return res.status(200).json({ query: '', featured: true, total: catalog.length, matches: featured });
+  }
   const q = raw.split(/\s+/).filter(Boolean);
   let clusterHint = null;
   for (const k in HINT) if (raw.includes(k)) { clusterHint = HINT[k]; break; }

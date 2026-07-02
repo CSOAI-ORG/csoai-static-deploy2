@@ -68,7 +68,7 @@ export default async function handler(req, res) {
     source: 'os.meok.ai/api/nodes — canonical sovereign node graph',
     editable: !!process.env.NODES_URL,            // true once an owner override is wired
     legend: { governed: 'signed & council-adjudicated', watch: 'monitored', flagged: 'action required' },
-    flywheel: flywheel || null,                   // live posture when FLYWHEEL_URL is set
+    flywheel: flywheel || { governed: 0, ungoverned: 54300000, episodes: 649000000, live: false, source: 'SIGIL flywheel · 23 Jun 2026 snapshot' },   // canonical posture; live overrides when FLYWHEEL_URL is set
     count: nodes.length,
     nodes,
     links,

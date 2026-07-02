@@ -50,19 +50,19 @@ dialog::backdrop{background:rgba(20,16,10,.55);backdrop-filter:blur(3px)}
 </style></head><body>
 <div class="wrap">
 <header><div class="brand"><div class="logo">S</div> SOV SPACE</div></header>
-<section class="hero">
+<section class="hero" data-testid="sovspace-hero">
   <h1>Open-source AI tools.<br><span>Made safe & easy by Sovereign.</span></h1>
   <p>Every tool here is an open <b>MCP</b> server in the Sovereign fleet — discoverable, runnable by anyone, and <b>governed</b>: each action council-adjudicated and Ed25519-signed. Sovereign + MEOK orchestrate them so you don't have to wire anything yourself.</p>
   <div class="stats" id="stats"></div>
 </section>
 <div class="controls"><div class="wrap" style="padding:0">
-  <input id="q" placeholder="Search 377 sovereign tools…" autocomplete="off">
-  <div class="chips" id="chips"></div>
+  <input id="q" data-testid="sovspace-search" placeholder="Search 377 sovereign tools…" autocomplete="off">
+  <div class="chips" id="chips" data-testid="sovspace-chips"></div>
 </div></div>
-<div class="grid" id="grid"></div>
+<div class="grid" id="grid" data-testid="sovspace-grid"></div>
 <footer>SOV SPACE · open-source, signed, council-governed · part of the MEOK sovereign OS. Tool data = live fleet catalog. <a href="/" style="color:var(--gold)">← MEOK OS</a></footer>
 </div>
-<dialog id="dlg"><div class="dlg" id="dlgbody"></div></dialog>
+<dialog id="dlg" data-testid="sovspace-dialog"><div class="dlg" id="dlgbody"></div></dialog>
 <script>
 const CLCOLOR={'domain-ai':'#c9a84c','other':'#b9a98e','framework-regulation':'#a855f7','bridges':'#5aa89a','a2a-substrate':'#3b82f6','crypto-attestation':'#d47a5a','physical-ot':'#8a8a8a','safety-assurance':'#06b6d4'};
 const CLLABEL={'domain-ai':'Domain AI','other':'Tools','framework-regulation':'Regulation','bridges':'Legacy Bridge','a2a-substrate':'A2A Substrate','crypto-attestation':'Attestation','physical-ot':'Physical/OT','safety-assurance':'Safety'};
@@ -71,10 +71,10 @@ const el=id=>document.getElementById(id);
 function clName(c){return CLLABEL[c]||c} function clCol(c){return CLCOLOR[c]||'#b9a98e'}
 function render(){
   const f=DATA.filter(t=>(filter==='all'||t.cluster===filter)&&(!term||t.name.toLowerCase().includes(term)));
-  el('grid').innerHTML=f.map((t,i)=>`<div class="tool"><div class="nm">${t.name.replace(/^\./,'')}</div>
+  el('grid').innerHTML=f.map((t,i)=>`<div class="tool" data-testid="tool-card-${t.name.replace(/^\./,'')}"><div class="nm">${t.name.replace(/^\./,'')}</div>
    <div class="meta"><span class="cl" style="background:${clCol(t.cluster)}33;color:${clCol(t.cluster)}">${clName(t.cluster)}</span><span>${t.tools} tool${t.tools==1?'':'s'}</span></div>
    <div class="gov">✦ Sovereign-governed · signed</div>
-   <button class="run" data-i="${DATA.indexOf(t)}">Connect ↗</button></div>`).join('') || '<p style="color:var(--dim);padding:20px">No tools match.</p>';
+   <button class="run" data-testid="tool-connect-${t.name.replace(/^\./,'')}" data-i="${DATA.indexOf(t)}">Connect ↗</button></div>`).join('') || '<p style="color:var(--dim);padding:20px">No tools match.</p>';
   el('grid').querySelectorAll('.run').forEach(b=>b.onclick=()=>connect(DATA[+b.dataset.i]));
 }
 function connect(t){
@@ -98,12 +98,12 @@ fetch('/sovspace-catalog.json').then(r=>r.json()).then(d=>{
   el('stats').innerHTML=`<div class="stat"><b>${d.length}</b><span>MCP servers</span></div>
     <div class="stat"><b>${toolsum.toLocaleString()}</b><span>tools</span></div>
     <div class="stat"><b>${Object.keys(clusters).length}</b><span>clusters</span></div>
-    <div class="stat"><b>100%</b><span>signed</span></div>`;
+    <div class="stat"><b>100%</b><span>governed</span></div>`;
   el('chips').innerHTML=`<span class="chip on" data-c="all">All</span>`+Object.entries(clusters).sort((a,b)=>b[1]-a[1]).map(([c,n])=>`<span class="chip" data-c="${c}">${clName(c)} ${n}</span>`).join('');
   el('chips').querySelectorAll('.chip').forEach(ch=>ch.onclick=()=>{filter=ch.dataset.c;el('chips').querySelectorAll('.chip').forEach(x=>x.classList.toggle('on',x===ch));render()});
   const pq=new URLSearchParams(location.search).get('q'); if(pq){ term=pq.toLowerCase().trim(); el('q').value=pq; }   // deep-link from the OS dock
   render();
 }).catch(()=>{el('grid').innerHTML='<p style="padding:20px;color:var(--dim)">Catalog unavailable.</p>'});
 el('q').addEventListener('input',e=>{term=e.target.value.toLowerCase().trim();render()});
-</script><a id="meok-tour-pill" href="/?tour=demo" style="position:fixed;right:16px;bottom:16px;z-index:9999;background:#1a1410;color:#c9a84c;border:1px solid #c9a84c;border-radius:999px;padding:9px 16px;font:700 13px system-ui,sans-serif;text-decoration:none;box-shadow:0 8px 24px rgba(0,0,0,.3)">🎬 Take the tour</a>
+</script><a id="meok-tour-pill" data-testid="tour-pill" href="/?tour=demo" style="position:fixed;right:16px;bottom:16px;z-index:9999;background:#1a1410;color:#c9a84c;border:1px solid #c9a84c;border-radius:999px;padding:9px 16px;font:700 13px system-ui,sans-serif;text-decoration:none;box-shadow:0 8px 24px rgba(0,0,0,.3)">🎬 Take the tour</a>
 </body></html>

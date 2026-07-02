@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DEFONEOS ROI Calculator</title>
+    <style>
+        body { font-family: 'Inter', sans-serif; line-height: 1.6; color: #E0E0E0; background-color: #121212; margin: 0; padding: 20px; }
+        .container { max-width: 900px; margin: auto; background: #1E1E1E; padding: 30px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); }
+        h1, h2 { color: #8BE9FD; text-align: center; margin-bottom: 20px; }
+        .input-group { margin-bottom: 15px; display: flex; flex-direction: column; }
+        .input-group label { margin-bottom: 5px; color: #F0F0F0; }
+        .input-group input[type="number"] {
+            padding: 10px;
+            border: 1px solid #333;
+            border-radius: 4px;
+            background-color: #2D2D2D;
+            color: #E0E0E0;
+            font-size: 1em;
+            width: calc(100% - 22px); /* Account for padding and border */
+        }
+        .input-group input[type="number"]:focus {
+            outline: none;
+            border-color: #8BE9FD;
+            box-shadow: 0 0 5px rgba(139, 233, 253, 0.5);
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1.1em;
+            margin-top: 20px;
+            width: 100%;
+            transition: background-color 0.3s ease;
+        }
+        button:hover { background-color: #0056b3; }
+        .results { margin-top: 30px; padding: 20px; background-color: #2D2D2D; border-radius: 8px; }
+        .results h3 { color: #F0F0F0; margin-top: 0; }
+        .results p { margin-bottom: 10px; }
+        .results span.value { color: #00FF00; font-weight: bold; }
+        .metric-group { display: flex; justify-content: space-between; flex-wrap: wrap; margin-bottom: 10px; }
+        .metric { width: calc(50% - 10px); margin-bottom: 10px; }
+        @media (max-width: 768px) {
+            .metric { width: 100%; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>DEFONEOS ROI Calculator</h1>
+        <p>Estimate the Return on Investment (ROI) of implementing DEFONEOS for your public services or defence operations. Adjust the parameters below to see the impact.</p>
+
+        <div class="input-group">
+            <label for="currentOpCost">Current Annual Operational Cost (Millions £):</label>
+            <input type="number" id="currentOpCost" value="50" min="0">
+        </div>
+        <div class="input-group">
+            <label for="efficiencyGain">Expected Efficiency Gain from DEFONEOS (%):</label>
+            <input type="number" id="efficiencyGain" value="20" min="0" max="100">
+        </div>
+        <div class="input-group">
+            <label for="riskReduction">Risk Reduction (e.g., cyber breaches, operational failures) (%):</label>
+            <input type="number" id="riskReduction" value="30" min="0" max="100">
+        </div>
+        <div class="input-group">
+            <label for="complianceCostReduction">Compliance & Audit Cost Reduction (%):</label>
+            <input type="number" id="complianceCostReduction" value="25" min="0" max="100">
+        </div>
+        <div class="input-group">
+            <label for="adoptionCost">DEFONEOS Annual Adoption/Maintenance Cost (Millions £):</label>
+            <input type="number" id="adoptionCost" value="2" min="0">
+        </div>
+        <div class="input-group">
+            <label for="opportunityValue">Value of New Capabilities/Opportunities (Millions £/Year):</label>
+            <input type="number" id="opportunityValue" value="10" min="0">
+        </div>
+
+        <button onclick="calculateROI()">Calculate ROI</button>
+
+        <div class="results" id="results">
+            <h2>Estimated Annual Benefits & ROI</h2>
+            <div class="metric-group">
+                <div class="metric">
+                    <p>Annual Cost Savings (Efficiency): <span class="value" id="costSavingsEfficiency">£0.00M</span></p>
+                </div>
+                <div class="metric">
+                    <p>Annual Cost Savings (Risk Reduction): <span class="value" id="costSavingsRisk">£0.00M</span></p>
+                </div>
+                <div class="metric">
+                    <p>Annual Cost Savings (Compliance): <span class="value" id="costSavingsCompliance">£0.00M</span></p>
+                </div>
+                <div class="metric">
+                    <p>Total Annual Benefits: <span class="value" id="totalBenefits">£0.00M</span></p>
+                </div>
+            </div>
+            <p>Annual Net Benefit: <span class="value" id="netBenefit">£0.00M</span></p>
+            <p><strong>Estimated Annual ROI: <span class="value" id="annualROI">0.00%</span></strong></p>
+            <p><em>Note: This is an estimation. Actual ROI may vary based on specific implementation and operational context.</em></p>
+        </div>
+    </div>
+
+    <script>
+        function calculateROI() {
+            const currentOpCost = parseFloat(document.getElementById('currentOpCost').value);
+            const efficiencyGain = parseFloat(document.getElementById('efficiencyGain').value) / 100;
+            const riskReduction = parseFloat(document.getElementById('riskReduction').value) / 100;
+            const complianceCostReduction = parseFloat(document.getElementById('complianceCostReduction').value) / 100;
+            const adoptionCost = parseFloat(document.getElementById('adoptionCost').value);
+            const opportunityValue = parseFloat(document.getElementById('opportunityValue').value);
+
+            // Assuming risk cost is a percentage of current operational cost
+            const currentRiskCost = currentOpCost * 0.1; // Example: 10% of operational cost is due to risk
+            const currentComplianceCost = currentOpCost * 0.05; // Example: 5% of operational cost is compliance
+
+            const costSavingsEfficiency = currentOpCost * efficiencyGain;
+            const costSavingsRisk = currentRiskCost * riskReduction;
+            const costSavingsCompliance = currentComplianceCost * complianceCostReduction;
+
+            const totalBenefits = costSavingsEfficiency + costSavingsRisk + costSavingsCompliance + opportunityValue;
+            const netBenefit = totalBenefits - adoptionCost;
+            const annualROI = (netBenefit / adoptionCost) * 100;
+
+            document.getElementById('costSavingsEfficiency').textContent = `£${costSavingsEfficiency.toFixed(2)}M`;
+            document.getElementById('costSavingsRisk').textContent = `£${costSavingsRisk.toFixed(2)}M`;
+            document.getElementById('costSavingsCompliance').textContent = `£${costSavingsCompliance.toFixed(2)}M`;
+            document.getElementById('totalBenefits').textContent = `£${totalBenefits.toFixed(2)}M`;
+            document.getElementById('netBenefit').textContent = `£${netBenefit.toFixed(2)}M`;
+            document.getElementById('annualROI').textContent = `${annualROI.toFixed(2)}%`;
+        }
+
+        // Calculate on initial load
+        window.onload = calculateROI;
+    </script>
+</body>
+</html>

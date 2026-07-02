@@ -6,6 +6,7 @@
 // M4 lane · sovereign-governance PROFILE · Care Floor 0.95 · BFT 22-of-33
 
 import crypto from 'crypto';
+import { CARE_FLOOR, BFT_SIZE, BFT_VOTE_THRESHOLD, BFT_QUORUM } from './_shared/constants.mjs';
 
 // === The 8 protocols ===
 const P8_PROTOCOLS = [
@@ -53,7 +54,7 @@ function canonical(v) {
 }
 
 // === Build the sovereign-governance PROFILE ===
-function build_profile({ care_floor = 0.95, vote_weight = 1, bft_quorum = '22-of-33', agent_did = 'did:csoai:anonymous', offered_at = null } = {}) {
+function build_profile({ care_floor = CARE_FLOOR, vote_weight = 1, bft_quorum = BFT_QUORUM, agent_did = 'did:csoai:anonymous', offered_at = null } = {}) {
   const issued = offered_at || new Date().toISOString();
   return {
     '@context': 'https://csoai.org/ns/sovereign-governance/v1',
@@ -81,7 +82,7 @@ function build_profile({ care_floor = 0.95, vote_weight = 1, bft_quorum = '22-of
 }
 
 // === Build the layer-0 protocol extension ===
-function build_layer0_extension({ care_floor = 0.95, vote_weight = 1 } = {}) {
+function build_layer0_extension({ care_floor = CARE_FLOOR, vote_weight = 1 } = {}) {
   return {
     'name': 'meok.layer-0.sovereign-governance.v1',
     'version': '1.0.0',
@@ -90,7 +91,7 @@ function build_layer0_extension({ care_floor = 0.95, vote_weight = 1 } = {}) {
       sovereign_governance_profile: build_profile({ care_floor, vote_weight }),
       fingerprint: CANONICAL_FINGERPRINT,
       care_floor: care_floor,
-      bft_quorum: '22-of-33',
+      bft_quorum: BFT_QUORUM,
       long_now_anchor: 'Crown Lineage 1795→2026',
       uk_csoai_16939677: true,
       mit_cc0_osi: true,
@@ -102,7 +103,7 @@ function build_layer0_extension({ care_floor = 0.95, vote_weight = 1 } = {}) {
 
 // === Build the care floor calculator (server-side stub) ===
 function compute_care_floor(action) {
-  const floor = action?.care_floor ?? 0.95;
+  const floor = action?.care_floor ?? CARE_FLOOR;
   if (action?.harm_category === 'lethal') return 1.0;  // Article 14 + Care Floor 1.0
   if (action?.special_category_9) return 1.0;  // Article 9 = 1.0
   if (floor < 0) return 0;
@@ -132,7 +133,7 @@ function bft_threshold(votes) {
   const f = votes.filter(v => v.choice === 'for').length;
   const a = votes.filter(v => v.choice === 'against').length;
   const ab = votes.filter(v => v.choice === 'abstain').length;
-  return { for: f, against: a, abstain: ab, total: votes.length, approved: f >= 22, quorum: f + a + ab >= 33 };
+  return { for: f, against: a, abstain: ab, total: votes.length, approved: f >= BFT_VOTE_THRESHOLD, quorum: f + a + ab >= BFT_SIZE };
 }
 
 // === Express handler — emits the M4 sovereign-governance PROFILE ===
@@ -146,7 +147,7 @@ export default function handler(req, res) {
     const action = q.action?.toString() || 'profile';
     if (action === 'profile') {
       const profile = build_profile({
-        care_floor: parseFloat(q.care_floor) || 0.95,
+        care_floor: parseFloat(q.care_floor) || CARE_FLOOR,
         vote_weight: parseInt(q.vote_weight) || 1,
         agent_did: q.agent_did?.toString() || 'did:csoai:anonymous',
       });
@@ -154,13 +155,13 @@ export default function handler(req, res) {
     }
     if (action === 'layer0_extension') {
       const ext = build_layer0_extension({
-        care_floor: parseFloat(q.care_floor) || 0.95,
+        care_floor: parseFloat(q.care_floor) || CARE_FLOOR,
       });
       return res.status(200).json({ ok: true, extension: ext });
     }
     if (action === 'care_floor_check') {
       const decision = care_floor_passes({
-        care_floor: parseFloat(q.care_floor) || 0.95,
+        care_floor: parseFloat(q.care_floor) || CARE_FLOOR,
         actual_care_floor: parseFloat(q.actual) || 1.0,
         harm_category: q.harm_category?.toString(),
         special_category_9: q.article_9 === 'true',
@@ -175,7 +176,11 @@ export default function handler(req, res) {
       });
       return res.status(200).json({ ok: true, vote });
     }
-    return res.status(400).json({ ok: false, error: 'unknown action; use ?action=profile|layer0_extension|care_floor_check|bft_vote' });
+    if (action === 'bft_tally') {
+      const votes = Array.isArray(req.body?.votes) ? req.body.votes : [];
+      return res.status(200).json({ ok: true, tally: bft_threshold(votes) });
+    }
+    return res.status(400).json({ ok: false, error: 'unknown action; use ?action=profile|layer0_extension|care_floor_check|bft_vote|bft_tally' });
   } catch (e) {
     return res.status(500).json({ ok: false, error: String(e.message || e) });
   }
