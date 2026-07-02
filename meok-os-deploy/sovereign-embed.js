@@ -91,6 +91,33 @@
     }).catch(function () { t.innerHTML = 'I hear you — I can explain governance, verify signatures, or navigate. (Reconnecting.)'; }); }
   bar.querySelector('button').onclick = send; input.addEventListener('keydown', function (e) { if (e.key === 'Enter') send(); });
 
+  /* ---------- P3: load a signed MEOK Hatch + VERIFY IT IN-BROWSER (Web Crypto Ed25519) ----------
+     window.SOVEREIGN_CONFIG.hatch = 'https://os.meok.ai/api/hatch?name=Aria' → this site becomes a
+     VERIFIED sovereign AI-OS: fetch the Hatch, verify its signature client-side (no trust in us),
+     show a "✓ Sovereign-verified SOV:…" badge. Don't trust the widget — verify the identity. */
+  function _hexToBytes(h) { h = String(h || ''); var a = new Uint8Array(h.length / 2); for (var i = 0; i < a.length; i++) a[i] = parseInt(h.substr(i * 2, 2), 16); return a; }
+  window.sovereign = window.sovereign || {};
+  window.sovereign.verifyHatch = async function (url) {
+    var d = await (await fetch(url)).json(); var s = (d && d.signature) || {};
+    if (!s.publicKey || !s.signature || !s.canonical || !(window.crypto && crypto.subtle && crypto.subtle.importKey)) return { ok: false, why: 'no-webcrypto-or-sig' };
+    try {
+      var key = await crypto.subtle.importKey('spki', _hexToBytes(s.publicKey), { name: 'Ed25519' }, false, ['verify']);
+      var ok = await crypto.subtle.verify({ name: 'Ed25519' }, key, _hexToBytes(s.signature), new TextEncoder().encode(s.canonical));
+      var pkg = d.hatch || d.package || {};
+      return { ok: ok, fingerprint: s.fingerprint, seeded: s.seeded, name: (pkg.agent && pkg.agent.name) };
+    } catch (e) { return { ok: false, why: String(e.message || e) }; }
+  };
+  if (CFG.hatch) {
+    window.sovereign.verifyHatch(CFG.hatch).then(function (v) {
+      var badge = el('div', 'sv-badge', (v.ok ? '✓ Sovereign-verified' : '⚠ unverified') + ' · ' + esc(v.fingerprint || '') + (v.seeded ? '' : ' (demo key)'));
+      badge.style.cssText = 'position:fixed;bottom:14px;left:14px;z-index:2147483000;font:600 11px ui-monospace,monospace;padding:6px 11px;border-radius:999px;cursor:pointer;box-shadow:0 6px 18px rgba(0,0,0,.15);background:' + (v.ok ? 'rgba(19,122,75,.12);color:#137a4b;border:1px solid #b7e0c6' : 'rgba(179,38,30,.1);color:#b3261e;border:1px solid #f0c3bd');
+      badge.title = (v.name ? v.name + ' — ' : '') + 'this AI-OS layer is a signed MEOK Hatch. Click to verify.';
+      badge.onclick = function () { window.open('https://os.meok.ai/verify.html', '_blank'); };
+      document.body.appendChild(badge);
+      try { var f = document.querySelector('.sv-foot'); if (f && v.ok) f.innerHTML = 'signed MEOK Hatch · ' + esc(v.fingerprint || '') + ' · verified in your browser'; } catch (e) {}
+    }).catch(function () {});
+  }
+
   /* optional sidebar/menu from config.sections — so nobody rebuilds nav */
   if (Array.isArray(CFG.sections) && CFG.sections.length) {
     var ham = el('div', 'sv-ham', '☰'); ham.title = 'Menu';

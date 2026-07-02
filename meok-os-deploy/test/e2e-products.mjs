@@ -225,5 +225,8 @@ for (const p of ['pricing.html','badges.html','verify.html','sovspace.html','cha
   const alias = await gj('/api/sap?name=Aria'); ck('MEOK Hatch: /api/sap legacy alias still works', alias.s === 200 && (alias.j.hatch?.spec === 'meok.hatch.v1' || alias.j.package?.spec === 'meok.hatch.v1'));
   const l = await fetch(BASE + '/llms.txt'); const lt = await l.text(); ck('agentic-web: llms.txt served + points to Hatch', l.status === 200 && /api\/hatch/.test(lt) && /MEOK Hatch/.test(lt)); }
 
+{ const e = await fetch(BASE + '/sovereign-embed.js'); const t = await e.text(); ck('P3 embed: Hatch loader + client-side Ed25519 verify + badge', e.status === 200 && /verifyHatch/.test(t) && /crypto\.subtle\.verify/.test(t) && /Sovereign-verified/.test(t) && /CFG\.hatch/.test(t)); }
+{ const h = await gj('/api/hatch'); ck('Hatch governance aligned to meok-ai council (22-of-33)', h.j.hatch?.governance?.council?.size === 33 && h.j.hatch?.governance?.council?.voteThreshold === 22); }
+
 console.log('\n' + (fail === 0 ? '✅ PASS' : '❌ FAIL') + ' — ' + pass + ' passed, ' + fail + ' failed' + (fails.length ? '  [' + fails.join(', ') + ']' : ''));
 process.exit(fail ? 1 : 0);
