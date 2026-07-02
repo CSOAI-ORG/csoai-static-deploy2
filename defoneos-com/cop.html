@@ -394,6 +394,12 @@
 #bootGate .bg-gate-t{ font:700 19px ui-monospace,monospace; color:#eaf6ff; }
 #bootGate .bg-gate-x{ font-size:13px; line-height:1.6; color:#b8c8dc; margin:11px auto 0; max-width:460px; }
 #bootGate .bg-link{ color:#5ff4ff; cursor:pointer; text-decoration:underline; white-space:nowrap; }
+#bootGate .bg-cred{ margin:16px auto 0; max-width:470px; }
+#bootGate .bg-cred .cc-h{ font:700 8.5px ui-monospace,monospace; letter-spacing:2.5px; color:#5ff4ff; opacity:.6; margin:9px 0 5px; }
+#bootGate .bg-cred .cc-row{ display:flex; flex-wrap:wrap; gap:5px; justify-content:center; }
+#bootGate .bg-cred .cc{ font:600 9.5px ui-monospace,monospace; letter-spacing:.4px; color:#cfe3f2; background:rgba(95,244,255,.07); border:1px solid rgba(95,244,255,.22); border-radius:8px; padding:3px 8px; white-space:nowrap; }
+#bootGate .bg-cred .cc b{ color:#9effc0; font-weight:800; }
+#bootGate .bg-cred .cc-note{ font:500 8.5px ui-monospace,monospace; color:#7d8ea0; margin-top:7px; letter-spacing:.3px; }
 #bootGate .bg-btns{ margin-top:22px; display:flex; gap:12px; justify-content:center; flex-wrap:wrap; }
 #bootGate .bg-allow{ cursor:pointer; background:linear-gradient(90deg,#0bd,#5ff4ff); color:#02121a; font:800 15px ui-monospace,monospace; border:none; border-radius:14px; padding:14px 28px; box-shadow:0 10px 30px rgba(95,244,255,.35); }
 #bootGate .bg-silent{ cursor:pointer; background:transparent; color:#9ab; border:1px solid rgba(255,255,255,.2); border-radius:14px; padding:14px 22px; font:600 14px ui-monospace,monospace; }
@@ -416,6 +422,17 @@
     <div class="bg-gate" id="bgGate" style="display:none">
       <div class="bg-gate-t">A live 3D map of the world</div>
       <div class="bg-gate-x">Explore every live feed on one real-world globe — aircraft, weather, cameras, space. Ask the Sovereign to drive it for you. Everything is <b>signed on your device</b> — no server, no foreign API. <a class="bg-link" onclick="_bgTC()">Terms &amp; what we access ›</a></div>
+      <div class="bg-cred">
+        <div class="cc-h">BUILT ON OPEN STANDARDS</div>
+        <div class="cc-row">
+          <span class="cc">MCP</span><span class="cc">A2A</span><span class="cc">NIST <b>OSCAL</b></span><span class="cc">MIL-STD-<b>2525</b></span><span class="cc">Cursor-on-Target</span><span class="cc">W3C DID/VC</span><span class="cc"><b>Ed25519</b></span><span class="cc">CesiumJS</span>
+        </div>
+        <div class="cc-h">LIVE PUBLIC DATA</div>
+        <div class="cc-row">
+          <span class="cc">NASA</span><span class="cc">NOAA</span><span class="cc">USGS</span><span class="cc">ESA</span><span class="cc">GDELT</span><span class="cc">OpenSky</span><span class="cc">CelesTrak</span><span class="cc">TfL</span>
+        </div>
+        <div class="cc-note">AI routed via API (Anthropic Claude + open models). Standards &amp; feeds are interoperability inputs — not endorsements.</div>
+      </div>
       <div class="bg-btns">
         <button class="bg-allow" onclick="_enterOS(false)">▶ Enter DEFONEOS</button>
         <button class="bg-silent" onclick="_enterOS(true)">🎙 Enter with voice</button>
@@ -3305,6 +3322,8 @@ function _bootSeq(){ var el=document.getElementById('bgBoot'); if(!el){ return; 
     'AIRCRAFT · ADS-B / OPENSKY','VESSELS · LIVE AIS','WEATHER RADAR · GLOBAL PRECIP','SEISMIC · USGS','NEWS SIGNALS · GDELT','NATURAL EVENTS · EONET / GDACS','AIR QUALITY · WAQI','ORBITAL · CELESTRAK + ISS','PUBLIC CAMERAS · TfL / 511','LIVING CLOUDS · NASA MODIS',
     {h:'OPERATIONAL SYSTEMS'},
     'ESRI / MAXAR IMAGERY · WGS84','MGRS MILITARY GRID + GRATICULE','SPACE-CAM · ISS EHDC / DSCOVR-EPIC','COORDINATE READOUT + RANGE/BEARING','22 LEGACY BRIDGES · COBOL→SAP→SCADA','MCP FEDERATION · 371 GOVERNED AGENTS',
+    {h:'STANDARDS & INTEROP'},
+    'MODEL CONTEXT PROTOCOL (MCP)','AGENT-TO-AGENT (A2A) SUBSTRATE','NIST OSCAL · FedRAMP PROFILE','MIL-STD-2525 / APP-6 · CURSOR-ON-TARGET','W3C DID / VERIFIABLE CREDENTIALS','AI ROUTED VIA API · CLAUDE + OPEN MODELS',
     {h:'SOVEREIGN INTELLIGENCE'},
     'SOVEREIGN BRAIN · OOWM SANDWICH','PROACTIVE WATCH · 24/7',{hi:'ALL SYSTEMS SOVEREIGN'}
   ];
