@@ -53,8 +53,8 @@ SIG = "The hive remembers. The dragon knows. The sovereign companion never forge
 DOCTRINE = "De Fide Notari Ergo Omnia Servo — Of Trust, Therefore I Preserve All Things."
 
 OUT_DIR = pathlib.Path("/tmp/term-sheets-bulk")
-LOG_PATH = pathlib.Path("/Users/nicholas/clawd/openpatent-hive") / "var" / "term-sheets.log"
-HIVE_ROOT = pathlib.Path("/Users/nicholas/clawd/openpatent-hive")
+LOG_PATH = pathlib.Path(os.environ.get("HIVE_ROOT", "/opt/openpatent-hive")) / "var" / "term-sheets.log"
+HIVE_ROOT = pathlib.Path(os.environ.get("HIVE_ROOT", "/opt/openpatent-hive"))
 
 HMAC_SECRET = os.environ.get(
     "OPENPATENT_HMAC_SECRET",

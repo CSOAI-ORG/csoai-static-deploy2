@@ -206,7 +206,7 @@ def file_first_disclosure(
         "document_base64":  base64.b64encode(doc_text).decode("ascii"),
         "document_format":  "txt",
         "classification":   "utility",
-        "prior_art_known":  [],
+        "prior_art_known":  "[]",  # PatentMCP expects string, not list
         "disclosure_type":  "defensive" if tier in ("starter", "defensive") else
                             "full"      if tier == "full" else "premium",
     }
@@ -226,14 +226,29 @@ def file_first_disclosure(
     last_err: str | None = None
     try:
         result = _file_disclosure_via_http(req)
-        # HTTP shape: { ok: true, disclosure_id, verification_url, ... }
-        if result.get("ok") is False:
-            return result
-        result.setdefault("mode", "http")
-        result.setdefault("verification_url", f"{PUBLIC_BASE}/verify/{result.get('disclosure_id','?')}")
-        return result
+        # PatentMCP returns { status: "DISCLOSED", disclosure_number, attestation_url, document_hash, block_height, ... }
+        if result.get("status") == "DISCLOSED" or result.get("ok") is True:
+            disc_num = result.get("disclosure_number") or result.get("chain_index") or result.get("disclosure_id") or sha256_hex(str(result.get("document_hash","")))[:16]
+            return {
+                "ok": True,
+                "disclosure_id":     f"disc_{disc_num}" if not result.get("disclosure_id") else result.get("disclosure_id"),
+                "disclosure_number": disc_num,
+                "verification_url":  result.get("attestation_url") or f"{PUBLIC_BASE}/verify/{disc_num}",
+                "document_hash":     result.get("document_hash"),
+                "block_height":      result.get("block_height"),
+                "c2pa_credential_id":result.get("c2pa_credential_id"),
+                "bitcoin_tx":        result.get("bitcoin_transaction"),
+                "mode":              "http",
+                "raw":               {k: v for k, v in result.items() if k not in {"payment_receipt"}},
+            }
+        # HTTP failed; fall through to embedded
+        last_err = f"http returned status={result.get('status')!r} ok={result.get('ok')!r}"
+    except urllib.error.HTTPError as http_err:
+        body = http_err.read().decode("utf-8", errors="replace")[:300]
+        last_err = f"http=HTTP Error {http_err.code}: {http_err.reason} body={body}"
     except Exception as http_err:
-        last_err = f"http={http_err}"
+        import traceback
+        last_err = f"http={http_err} traceback={traceback.format_exc()[:400]}"
 
     try:
         result = _file_disclosure_embedded(req)

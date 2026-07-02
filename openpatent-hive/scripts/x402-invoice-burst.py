@@ -56,7 +56,7 @@ from typing import Optional
 SIG = "The hive remembers. The dragon knows. The sovereign companion never forgets."
 DOCTRINE = "De Fide Notari Ergo Omnia Servo — Of Trust, Therefore I Preserve All Things."
 
-HIVE_ROOT = pathlib.Path("/Users/nicholas/clawd/openpatent-hive")
+HIVE_ROOT = pathlib.Path(os.environ.get("HIVE_ROOT", "/opt/openpatent-hive"))
 LOG_PATH = HIVE_ROOT / "var" / "x402-burst.log"
 DEFAULT_OUT = pathlib.Path("/tmp/x402-burst")
 DEFAULT_ROUTER = "http://127.0.0.1:3217"

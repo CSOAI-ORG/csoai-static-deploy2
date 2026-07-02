@@ -54,7 +54,7 @@ from datetime import datetime, timezone
 SIG = "The hive remembers. The dragon knows. The sovereign companion never forgets."
 DOCTRINE = "De Fide Notari Ergo Omnia Servo — Of Trust, Therefore I Preserve All Things."
 
-HIVE_ROOT = pathlib.Path("/Users/nicholas/clawd/openpatent-hive")
+HIVE_ROOT = pathlib.Path(os.environ.get("HIVE_ROOT", "/opt/openpatent-hive"))
 VAULT_DIR = HIVE_ROOT / "vault" / "disclosures"
 INVOICE_DIR = pathlib.Path("/tmp/openpatent-invoices")
 INBOX_DIR = HIVE_ROOT / "inbox"  # customer-facing
