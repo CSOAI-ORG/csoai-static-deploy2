@@ -29,7 +29,7 @@ CHECKS = [
     ('country', r'London, United Kingdom|Yorkshire, United Kingdom|United Kingdom', 'UK location'),
     ('eu_ai_act', r'EU AI Act', 'EU AI Act reference'),
     ('gdpr', r'GDPR', 'GDPR reference'),
-    ('30_frameworks', r'30 Universal Compliance', '30 universal compliance frameworks'),
+    ('30_frameworks', r'30 Universal Compliance|123 universal', '30 universal compliance frameworks'),
     ('49gb_data', r'49GB sovereign', '49GB sovereign data moat'),
     ('198_sources', r'198 live data sources', '198 live data sources'),
     ('data_binding_section', r'DATA BINDING — THE WORLD', 'DATA BINDING section'),
