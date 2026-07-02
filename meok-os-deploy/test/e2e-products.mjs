@@ -212,5 +212,10 @@ for (const p of ['pricing.html','badges.html','verify.html','sovspace.html','cha
   const callr = await gj('/api/mcp', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({jsonrpc:'2.0',id:3,method:'tools/call',params:{name:'meok_govern',arguments:{industry:'a bank'}}}) });
   ck('mcp: tools/call runs (govern → frameworks)', /DORA|framework|finance|Governs/i.test(callr.j.result?.content?.[0]?.text||'')); }
 
+{ const sp = await gj('/api/sap?name=Aria&archetype=owl'); ck('SAP: signed sovereign agent package (fuses a2a+mcp+af+layer0)', sp.s === 200 && sp.j.ok === true && sp.j.package?.spec === 'meok.sap.v1' && sp.j.package?.state?.memory && sp.j.package?.governance?.careFloor === 0.95 && sp.j.package?.model_policy?.embedded === false && sp.j.signature?.signature);
+  const v = await gj('/api/verify', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ message: sp.j.signature.canonical, signature: sp.j.signature.signature, publicKey: sp.j.signature.publicKey }) });
+  ck('SAP: package signature verifies offline', v.j.valid === true);
+  const af = await gj('/api/sap?name=Aria&format=af'); ck('SAP: exports Letta .af-compatible state (interop)', af.j.agent_type === 'memgpt_agent' && Array.isArray(af.j.memory?.blocks) && Array.isArray(af.j.tools)); }
+
 console.log('\n' + (fail === 0 ? '✅ PASS' : '❌ FAIL') + ' — ' + pass + ' passed, ' + fail + ' failed' + (fails.length ? '  [' + fails.join(', ') + ']' : ''));
 process.exit(fail ? 1 : 0);
