@@ -749,7 +749,7 @@ try{
       else if(e.entityCollection && (e.entityCollection.owner===satDS || e.entityCollection.owner===spaceDS)){ var _ll=null; try{ var _p=e.position&&e.position.getValue(viewer.clock.currentTime); if(_p){ var _c=C.Cartographic.fromCartesian(_p); _ll={lat:C.Math.toDegrees(_c.latitude),lon:C.Math.toDegrees(_c.longitude)}; } }catch(_){} var _nm=(e._info&&e._info.title)||e.name||'Satellite', _wx=/GOES|HIMAWARI|METEOSAT|WEATHER|GOES-?1[89]/i.test(_nm), _md=_wx?(/1[78]|WEST/i.test(_nm)?'goes18':'goes19'):null; openSpaceCam({name:_nm, mode:_md, lat:_ll&&_ll.lat, lon:_ll&&_ll.lon}); if(e._info&&window.showEntityInfo) showEntityInfo(e._info); }
       else if(e._reg){ showInfo(e._reg); try{ viewer.flyTo(e,{duration:1.0}); }catch(_){} }
       else if(e._news){ if(window.openNewsCard) openNewsCard(e._news); try{ viewer.flyTo(e,{duration:1.0}); }catch(_){} }
-      else if(e._info){ showEntityInfo(e._info); try{ viewer.flyTo(e,{duration:1.0,offset:new C.HeadingPitchRange(0,-0.5,600000)}); }catch(_){} }
+      else if(e._info){ window._lastEnt=e; showEntityInfo(e._info); try{ viewer.flyTo(e,{duration:1.0,offset:new C.HeadingPitchRange(0,-0.5,600000)}); }catch(_){} }
     }
     else if(!window._measuring && !window._marking){ if(window.clearMediaWins) clearMediaWins(); }   // click the empty globe → Sovereign clears the centre
   }, C.ScreenSpaceEventType.LEFT_CLICK);
@@ -947,8 +947,11 @@ function defActions(info, clean){
   else if(/power|⚡/.test(t)) a.push(['⚡ all plants',"togglePowerPlants()"]);
   else if(/airport|🛬/.test(t)) a.push(['🛬 all airports',"toggleAirports()"]);
   else if(/🏬|🏥|🏫|🍽|business|hospital|school/.test(t)) a.push(['🧭 what’s nearby',"loadPlaces('business')"]);
+  var esc=clean.replace(/'/g,'');
   return a.map(function(x){ return '<button onclick="'+x[1].replace(/"/g,'&quot;')+'">'+x[0]+'</button>'; }).join('')+
-    '<button onclick="knowledgeLookup(\''+clean.replace(/'/g,'')+'\')">🔎 research</button>';
+    '<button onclick="sovSignContact(\''+esc+'\')">🔏 sign contact</button>'+
+    '<button onclick="sovCotFromNode()">🎯 → CoT</button>'+
+    '<button onclick="knowledgeLookup(\''+esc+'\')">🔎 research</button>';
 }
 function showEntityInfo(info){
   var rows=(info.rows||[]).filter(function(r){return r[1]!=null&&r[1]!=='';}).map(function(r){return '<div class="k">'+r[0]+'</div><p>'+r[1]+'</p>';}).join('');
@@ -963,6 +966,29 @@ function showEntityInfo(info){
   if(window.sigilLog) sigilLog('inspect', clean);
   if(window._horusSpeak && window._speak) _speak(clean+'. '+expl.replace(/<[^>]+>/g,''));
 }
+// ── SOVEREIGN CARD ACTIONS · turn any globe contact into a signed receipt or a tactical CoT track ──
+async function sovSignContact(title){ title=(title||window._lastInspect||'contact').slice(0,80);
+  var ll=window._lastEnt?_entLL(window._lastEnt):null; var det=title+(ll?(' @ '+ll[1].toFixed(3)+','+ll[0].toFixed(3)):'');
+  if(window.openHorus) openHorus();
+  if(window.sigilSign){ try{ var s=await sigilSign('contact', det);
+    if(window.horusReply) horusReply('Signed <b>'+_hcx(title)+'</b> to your on-device ledger — Ed25519 <code>'+(((s&&s.sig)||'').slice(0,18))+'…</code>. Tamper-evident, offline-verifiable, no server. <a class="bg-link" onclick="if(window.sigilPanel)sigilPanel()">open ledger ›</a>'); return;
+  }catch(e){} }
+  if(window.sigilLog) sigilLog('contact', det);
+  if(window.horusReply) horusReply('Logged <b>'+_hcx(title)+'</b> to the SIGIL ledger — signed on this device.');
+}
+window.sovSignContact=sovSignContact;
+function sovCotFromNode(){ if(!viewer) return; var e=window._lastEnt, ll=e?_entLL(e):null;
+  if(!ll){ if(window.horusReply) horusReply('I need a positioned contact — click a point on the globe first, then send it to CoT.'); return; }
+  var t=(window._lastInspect||'').toLowerCase();
+  var dim=/aircraft|air/.test(t)?'air':/vessel|marine|ship/.test(t)?'sea':/satellite|orbit/.test(t)?'space':'ground';
+  var aff=/threat|isr|hostile/.test(t)?'hostile':'unknown';
+  var ds=_cotDS(); ds.show=true; _cotAdd(ds, ll[0], ll[1], aff, dim, (window._lastInspect||'track').slice(0,24));
+  var cb=document.getElementById('lyCot'); if(cb) cb.checked=true;
+  if(window.sigilSign) sigilSign('cot-export', (window._lastInspect||'contact')+' → '+aff+'/'+dim);
+  if(window.openHorus) openHorus();
+  if(window.horusReply) horusReply('Exported <b>'+_hcx(window._lastInspect||'contact')+'</b> as a <b>Cursor-on-Target</b> track — <b>'+aff+' · '+dim+'</b>, MIL-STD-2525 symbol placed. It now rides the CoT layer any TAK/ATAK client can ingest — and the export is signed.');
+}
+window.sovCotFromNode=sovCotFromNode;
 function setDoctrine(d,quiet){
   if(!quiet && window.sigilLog) sigilLog('doctrine', d==='east'?'DORADO · East':'SIGIL · West');
   document.body.classList.remove('doctrine-west','doctrine-east'); document.body.classList.add('doctrine-'+d);
