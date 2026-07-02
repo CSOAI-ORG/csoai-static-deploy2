@@ -129,6 +129,33 @@ function signSystemCard(p) {
     }
   };
 }
+// ── SIGNED OSCAL EXPORT · NIST OSCAL component-definition, signed — the auditor's lingua-franca ──
+function signOscal(p) {
+  p = p || {};
+  const uuid = () => crypto.randomUUID();
+  const CTRLS = Array.isArray(p.controls) && p.controls.length ? p.controls.map(c => [c.id || c['control-id'] || 'ctrl', c.description || c.desc || '']) : [
+    ['eu-ai-act/art-14', 'Human oversight — a human confirms high-risk actions (Article 14).'],
+    ['eu-ai-act/art-50', 'Transparency — AI-generated outputs are marked (Article 50).'],
+    ['eu-ai-act/art-12', 'Record-keeping — every governed action Ed25519-signed to an offline-verifiable ledger.'],
+    ['iso-42001/A.9', 'AI risk management — documented risk classification + care-floor ' + CARE_FLOOR + '.'],
+    ['nist-ai-rmf/GOVERN', 'Govern — sensitive actions gated; hard-stops on kinetic/surveillance.'],
+    ['jsp-936/assurance', 'Deployment assurance — signed, offline-verifiable System Card + action ledger.']
+  ];
+  const title = String(p.title || 'DEFONEOS — Sovereign Governance Posture (declared)').slice(0, 200);
+  const oscal = { 'component-definition': { uuid: uuid(),
+    metadata: { title, 'last-modified': new Date().toISOString(), version: String(p.version || '1.0.0'), 'oscal-version': '1.1.2', remarks: 'Declared posture, cryptographically signed. Attestation — NOT a passed assessment or certification.' },
+    components: [{ uuid: uuid(), type: 'software', title: String(p.component || 'DEFONEOS Sovereign Governance Layer').slice(0, 160), description: String(p.description || 'Signed, offline-verifiable AI-governance layer.').slice(0, 600),
+      'control-implementations': [{ uuid: uuid(), source: String(p.source || 'https://defoneos.vercel.app/#frameworks'), description: 'Framework alignment.',
+        'implemented-requirements': CTRLS.map(c => ({ uuid: uuid(), 'control-id': c[0], description: c[1] })) }] }] } };
+  const docStr = JSON.stringify(oscal), hash = sha256(docStr);
+  const message = { i: 0, ts: oscal['component-definition'].metadata['last-modified'], action: 'oscal-export', detail: 'OSCAL component-definition · ' + CTRLS.length + ' controls · sha256:' + hash, prev: CHAIN_PREV };
+  const sig = crypto.sign(null, Buffer.from(JSON.stringify(message), 'utf8'), PRIV).toString('hex');
+  CHAIN_PREV = sig;
+  return { defoneos_signed_contact: { message, signature_ed25519: sig, public_key_ed25519: PUB_RAW_HEX, fingerprint: FINGERPRINT, doc_sha256: hash, oscal,
+    algorithm: 'Ed25519 (RFC 8032) over utf8(JSON.stringify(message)); OSCAL bound by doc_sha256',
+    verify: 'Drop into ' + VERIFY_URL + ' (checks the signature). OSCAL component-definition is under .oscal — ingest into any OSCAL tool.',
+    issued_by: 'DEFONEOS signing MCP · CSOAI Ltd (UK 16939677)', note: 'Declared posture — attestation, not certification.' } };
+}
 function verifyReceipt(receipt) {
   const r = receipt && (receipt.defoneos_signed_contact || receipt);
   if (!r || !r.message || !r.signature_ed25519 || !r.public_key_ed25519)
@@ -172,6 +199,11 @@ const TOOLS = [
       rationale: { type: 'string', description: 'Why that risk tier.' },
       frameworks: { type: 'array', items: { type: 'string' }, description: 'Frameworks it aligns to (defaults EU AI Act/ISO 42001/NIST AI RMF/JSP 936).' },
       human_oversight: { type: 'string' }, transparency: { type: 'string' }, data_governance: { type: 'string' }, logging: { type: 'string' }, robustness: { type: 'string' }, limitations: { type: 'string' } } } },
+  { name: 'defoneos_oscal',
+    description: 'Produce a SIGNED NIST OSCAL 1.1.2 component-definition of an AI system\'s governance posture — the auditor\'s lingua-franca. An OSCAL tool ingests the .oscal doc directly; the Ed25519 signature verifies offline. Declared posture, NOT a passed assessment.',
+    inputSchema: { type: 'object', properties: {
+      title: { type: 'string', description: 'Component-definition title.' }, component: { type: 'string' }, description: { type: 'string' }, version: { type: 'string' }, source: { type: 'string' },
+      controls: { type: 'array', description: 'Optional [{id, description}] control implementations; defaults to the EU AI Act/ISO 42001/NIST/JSP 936 set.', items: { type: 'object' } } } } },
   { name: 'defoneos_public_key',
     description: 'Return the sovereign Ed25519 public key + fingerprint used to sign artifacts (so a verifier can trust-on-first-use / pin it).',
     inputSchema: { type: 'object', properties: {} } }
@@ -180,6 +212,7 @@ function callTool(name, args) {
   args = args || {};
   if (name === 'defoneos_sign') return signArtifact({ kind: args.kind, subject: args.subject, output: args.output, method: args.method, inputs: args.inputs });
   if (name === 'defoneos_system_card') return signSystemCard(args);
+  if (name === 'defoneos_oscal') return signOscal(args);
   if (name === 'defoneos_verify') return verifyReceipt(Object.assign({}, args.receipt, args.output != null ? { output: args.output } : {}));
   if (name === 'defoneos_public_key') return { public_key_ed25519: PUB_RAW_HEX, fingerprint: FINGERPRINT, algorithm: 'Ed25519 (RFC 8032)', verify_url: VERIFY_URL, protocol: PROTOCOL };
   throw new Error('unknown tool: ' + name);
@@ -220,5 +253,5 @@ function main() {
   process.stderr.write('[defoneos-sign] up · key ' + FINGERPRINT + ' · verify ' + VERIFY_URL + '\n');
 }
 
-module.exports = { signArtifact, signSystemCard, verifyReceipt, callTool, PUB_RAW_HEX, FINGERPRINT, TOOLS };
+module.exports = { signArtifact, signSystemCard, signOscal, verifyReceipt, callTool, PUB_RAW_HEX, FINGERPRINT, TOOLS };
 if (require.main === module) main();

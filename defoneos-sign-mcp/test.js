@@ -40,6 +40,20 @@ t('system card: signature verifies TRUE', verifyReceipt(cardR).valid === true);
 const cbad = JSON.parse(JSON.stringify(cardR)); cbad.defoneos_signed_contact.message.detail = cbad.defoneos_signed_contact.message.detail.replace('"high"', '"minimal"');
 t('system card: downgraded risk tier verifies FALSE (tamper-evident)', verifyReceipt(cbad).valid === false);
 
+// OSCAL export
+const { signOscal } = require('./server.js');
+const oR = signOscal({ title: 'Acme AI — Governance Posture' });
+const osc = oR.defoneos_signed_contact;
+t('oscal: signed receipt + .oscal doc present', !!(osc && osc.message && osc.signature_ed25519 && osc.oscal));
+t('oscal: valid OSCAL 1.1.2 component-definition', osc.oscal['component-definition'].metadata['oscal-version'] === '1.1.2' && Array.isArray(osc.oscal['component-definition'].components));
+t('oscal: has implemented-requirements (controls)', osc.oscal['component-definition'].components[0]['control-implementations'][0]['implemented-requirements'].length >= 6);
+t('oscal: signature verifies TRUE', verifyReceipt(oR).valid === true);
+const crypto2 = require('crypto');
+const recomputed = crypto2.createHash('sha256').update(JSON.stringify(osc.oscal)).digest('hex');
+t('oscal: doc bound by sha256 (recompute matches + in signed message)', osc.doc_sha256 === recomputed && osc.message.detail.indexOf(recomputed) >= 0);
+const obad = JSON.parse(JSON.stringify(oR)); obad.defoneos_signed_contact.message.detail = obad.defoneos_signed_contact.message.detail.replace(/sha256:[0-9a-f]{6}/, 'sha256:000000');
+t('oscal: altered hash in message verifies FALSE', verifyReceipt(obad).valid === false);
+
 // print a receipt to eyeball + to feed into verify.html
 console.log('\n--- sample receipt (feed into verify.html) ---');
 console.log(JSON.stringify(r));

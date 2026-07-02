@@ -5,7 +5,7 @@ Everything below is **for you (or an operator) to run** — creating public repo
 ## 0 · Preflight (safe to run — read-only)
 ```bash
 cd ~/clawd/defoneos-sign-mcp
-node --check server.js && npm test            # expect 18 passed, 0 failed
+node --check server.js && npm test            # expect 24 passed, 0 failed
 grep -REn 'sk-[A-Za-z0-9]{20}|AIza[A-Za-z0-9]{20}|BEGIN (RSA |EC )?PRIVATE' . --exclude-dir=node_modules || echo "clean"
 ls -a ~/.defoneos 2>/dev/null && echo "NOTE: ~/.defoneos/sign.key is your PRIVATE key — it lives OUTSIDE this repo; never commit it"
 ```

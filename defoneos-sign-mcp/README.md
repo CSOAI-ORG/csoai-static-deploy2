@@ -12,12 +12,14 @@ The biggest labs now ship "auditable / reproducible" AI outputs (e.g. Claude Sci
 |---|---|
 | `defoneos_sign` | wrap `{output, kind, subject, method, inputs}` in signed provenance → receipt (Ed25519). Records method ("how it was made"), input sources, a SHA-256 of the exact output, and the care-floor. |
 | `defoneos_verify` | verify a receipt offline (tamper-evident); optionally re-bind the original output to its signed hash. |
+| `defoneos_system_card` | sign a **system card** (name/version/provider/purpose/posture) into a signed DEFONEOS artifact — the JSP 936 / EU-AI-Act assurance primitive. Attests declared posture; does not accredit. |
+| `defoneos_oscal` | emit a signed **NIST OSCAL 1.1.2 component-definition** of the governance posture — the auditor's lingua-franca. `.oscal` ingests into any OSCAL tool; the signature verifies offline. Declared posture, not a passed assessment. |
 | `defoneos_public_key` | the sovereign public key + fingerprint (trust-on-first-use / pin it). |
 
 ## Run
 ```bash
 node server.js          # MCP stdio server
-npm test                # 12/12 sign→verify→tamper→content-rebind
+npm test                # 24/24 — artifact sign/verify/tamper (12) + system-card (6) + OSCAL (6)
 ```
 
 ## Install into a Claude host (copy-paste)

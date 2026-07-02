@@ -1438,12 +1438,14 @@ function toggleGodseye(){ var s=viewer.scene; var b=document.getElementById('geB
 var _LAYCB={threat:'lyThreat',quake:'lyQuake',air:'lyAir',signals:'lySignals',cameras:'lyCameras',events:'lyEvents',space:'lySpace',aq:'lyAq',marine:'lyMarine',sat:'lySat',reg:'lyReg',base:'lyBase'};
 // ── FEED-HEALTH DOTS · a tiny status dot per live layer: green=live · amber=throttled/quiet · red=unreachable · grey=off ──
 window._feedHealth=window._feedHealth||{};
-function _fhInit(){ try{ Object.keys(_LAYCB).forEach(function(k){ var cb=document.getElementById(_LAYCB[k]); if(!cb) return; var lab=(cb.closest&&cb.closest('label'))||cb.parentNode; if(!lab||lab.querySelector('.fh')) return; var d=document.createElement('span'); d.className='fh'; d.id='fh-'+k; d.style.cssText='display:inline-block;width:7px;height:7px;border-radius:50%;margin-left:6px;background:#4a5568;vertical-align:middle;box-shadow:0 0 5px rgba(0,0,0,.4)'; lab.appendChild(d); }); _fhUpdate(); }catch(_){} }
-function _fhUpdate(){ try{ var H=window._feedHealth||{}; var live=0,quiet=0,down=0;
+function _fhInit(){ try{ Object.keys(_LAYCB).forEach(function(k){ var cb=document.getElementById(_LAYCB[k]); if(!cb) return; var lab=(cb.closest&&cb.closest('label'))||cb.parentNode; if(!lab||lab.querySelector('.fh')) return; var d=document.createElement('span'); d.className='fh'; d.id='fh-'+k; d.style.cssText='display:inline-block;width:7px;height:7px;border-radius:50%;margin-left:6px;background:#4a5568;vertical-align:middle;box-shadow:0 0 5px rgba(0,0,0,.4)'; lab.appendChild(d); }); _fhUpdate(); if(!window._fhTick) window._fhTick=setInterval(function(){ if(!document.hidden) _fhUpdate(); }, 20000); }catch(_){} }
+window._feedTime=window._feedTime||{};
+function _ago(ms){ if(!ms) return ''; var s=Math.max(0,Math.round((Date.now()-ms)/1000)); if(s<60) return s+'s ago'; var m=Math.round(s/60); if(m<60) return m+'m ago'; return Math.round(m/60)+'h ago'; }
+function _fhUpdate(){ try{ var H=window._feedHealth||{}, T=window._feedTime||{}; var live=0,quiet=0,down=0,oldest=0;
     Object.keys(_LAYCB).forEach(function(k){ var d=document.getElementById('fh-'+k); var cb=document.getElementById(_LAYCB[k]); var on=cb&&cb.checked; var st=H[k];
-      if(on && st==='live') live++; else if(on && (st==='empty'||st==='throttled')) quiet++; else if(on && st==='error') down++;
-      if(!d) return; var col= st==='live'?'#00e07a':(st==='empty'||st==='throttled')?'#eab308':st==='error'?'#ff6b6b':(on?'#5ff4ff':'#4a5568'); d.style.background=col; d.style.boxShadow='0 0 6px '+(col==='#4a5568'?'rgba(0,0,0,.4)':col); d.title='feed '+(st||(on?'on':'off')); });
-    var el=document.getElementById('sbFeedSum'); if(el){ if(!(live||quiet||down)){ el.style.display='none'; } else { el.style.display=''; el.innerHTML='📡 '+live+' live'+(quiet?(' · <span style="color:#eab308">'+quiet+' quiet</span>'):'')+(down?(' · <span style="color:#ff6b6b">'+down+' down</span>'):''); } }
+      if(on && st==='live'){ live++; if(T[k]&&(!oldest||T[k]<oldest)) oldest=T[k]; } else if(on && (st==='empty'||st==='throttled')) quiet++; else if(on && st==='error') down++;
+      if(!d) return; var col= st==='live'?'#00e07a':(st==='empty'||st==='throttled')?'#eab308':st==='error'?'#ff6b6b':(on?'#5ff4ff':'#4a5568'); d.style.background=col; d.style.boxShadow='0 0 6px '+(col==='#4a5568'?'rgba(0,0,0,.4)':col); d.title='feed '+(st||(on?'on':'off'))+(T[k]?(' · as of '+_ago(T[k])):''); });
+    var el=document.getElementById('sbFeedSum'); if(el){ if(!(live||quiet||down)){ el.style.display='none'; } else { el.style.display=''; el.innerHTML='📡 '+live+' live'+(oldest?(' · <span style="opacity:.75">oldest '+_ago(oldest)+'</span>'):'')+(quiet?(' · <span style="color:#eab308">'+quiet+' quiet</span>'):'')+(down?(' · <span style="color:#ff6b6b">'+down+' down</span>'):''); } }
   }catch(_){} }
 var _FEED_SRC={air:'OpenSky ADS-B',marine:'aisstream.io AIS',signals:'GDELT 2.0',quake:'USGS',cameras:'TfL JamCams',events:'NASA EONET + GDACS',aq:'WAQI',space:'wheretheiss.at + Launch Library',sat:'CelesTrak TLE'};
 var _FEED_DS={air:'airDS',marine:'marineDS',signals:'signalsDS',quake:'quakeDS',cameras:'camerasDS',events:'eventsDS',aq:'aqDS',space:'spaceDS',sat:'satDS'};
@@ -1451,7 +1453,8 @@ window._provSigned=window._provSigned||{};
 function _feedProv(k){ try{ if(window._provSigned[k]) return; var src=_FEED_SRC[k]; if(!src) return; var ds=window[_FEED_DS[k]]; var n=(ds&&ds.entities)?ds.entities.values.filter(function(e){return e.position;}).length:0;
   window._provSigned[k]=1; if(window.sigilLog) sigilLog('feed-provenance', k+' · '+n+' features · '+src+' · '+new Date().toISOString());   // signs the INPUT lineage (source·count·time) once per feed — the moat extends from actions to data
 }catch(_){} }
-function _fhSet(k,st){ window._feedHealth[k]=st; _fhUpdate();
+function _fhSet(k,st){ window._feedHealth[k]=st; if(st==='live'||st==='empty') window._feedTime[k]=Date.now();   // stamp freshness on every successful pull
+  _fhUpdate();
   if(st==='live'||st==='empty') _feedProv(k);   // record signed provenance of this feed's data (once per session)
   // auto-heal: a feed that errors gets ONE quiet retry after ~8s (transient rate-limits self-clear); success resets so future errors retry again
   try{ window._fhRetry=window._fhRetry||{};
