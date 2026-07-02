@@ -1041,6 +1041,29 @@ function sovVerifyLink(e){ e=e||window._lastReceipt; if(!e){ if(window.horusRepl
   if(window.pushFeed) pushFeed('VERIFY LINK · receipt #'+e.i+' copied to clipboard');
 }
 window.sovVerifyLink=sovVerifyLink;
+// ── SIGNED SYSTEM CARD (dome flow) · the JSP 936 / EU-AI-Act assurance primitive, full-detail, signed on-device ──
+async function sovSystemCard(name, purpose){
+  if(!window._sigil||!window._sigil.ready||!window._ed){ if(window.horusReply) horusReply('Signing key still minting — try “system card” again in a moment.'); return; }
+  name=(name||'DEFONEOS').toString().trim().slice(0,120); var blob=(name+' '+(purpose||'')).toLowerCase();
+  var card={ '@type':'DEFONEOS-SystemCard',
+    system:{ name:name, purpose:(purpose||'sovereign situational-awareness + governance globe').toString().slice(0,400), provider:'CSOAI Ltd · UK 16939677' },
+    classification:{ risk_tier:/triage|medical|health|weapon|kinetic|biometric|surveillance|credit|hiring/.test(blob)?'high':'limited', eu_ai_act_annex_iii:/triage|medical|health|biometric|credit|hiring/.test(blob) },
+    frameworks:['EU AI Act','ISO 42001','NIST AI RMF','JSP 936'],
+    controls:{ human_oversight:'Article 14 — human confirms high-risk actions', transparency_art50:'AI-generated outputs marked (EU AI Act Art 50)', logging:'every governed action Ed25519-signed on-device, offline-verifiable', robustness:'documented eval + care-floor 0.95' },
+    limitations:'attestation of declared posture, cryptographically signed — NOT certification or approval (assurance, not accreditation).',
+    care_floor:0.95, issued:new Date().toISOString() };
+  var L=window._sigil.ledger, prev=L.length?L[L.length-1].sig:'';
+  var message={ i:L.length, ts:card.issued, action:'system-card:'+name, detail:JSON.stringify(card), prev:prev };   // full detail (not the sigilLog 160-char path)
+  try{ var sig=await window._ed.signAsync(new TextEncoder().encode(JSON.stringify(message)), window._sigil.priv); var sh=_hex(sig);
+    var e={ i:message.i, ts:message.ts, action:message.action, detail:message.detail, prev:message.prev, sig:sh, pub:window._sigil.pubHex };
+    L.push(e); if(L.length>300) L.splice(0,L.length-300); try{ localStorage.setItem('def_sigil_ledger', JSON.stringify(L)); }catch(_){} if(document.getElementById('sigilBody')) sigilRender(); if(window.sigilBadge) sigilBadge();
+    window._lastReceipt=e;
+    if(window.openHorus) openHorus();
+    if(window.horusReply) horusReply('Signed <b>System Card</b> for <b>'+_hcx(name)+'</b> — <b>'+card.classification.risk_tier+'-risk</b>, aligned to '+card.frameworks.join(' · ')+'. The <b>JSP 936 / EU AI Act assurance primitive</b>: Ed25519-signed on this device, offline-verifiable, no server. <a class="bg-link" onclick="sovDownloadReceipt()">⤓ download</a> · <a class="bg-link" onclick="sovVerifyLink()">⧉ verify link</a> · <a class="bg-link" href="verify.html" target="_blank">verify ›</a><br><span style="opacity:.72;font-size:11px">Attestation of declared posture — <b>not</b> certification/approval. The independent primitive the Turing/CETaS gap named.</span>');
+    if(window.pushFeed) pushFeed('SYSTEM CARD · signed · '+name+' · '+card.classification.risk_tier+'-risk');
+  }catch(err){ if(window.horusReply) horusReply('Couldn’t sign the System Card — '+err.message); }
+}
+window.sovSystemCard=sovSystemCard;
 // ── CoT TRAY · a live chip showing exported tracks · clear / export .cot ──
 function _cotTray(){ var n=(window._cotDataSrc&&window._cotDataSrc.show)?window._cotDataSrc.entities.values.length:0; var el=document.getElementById('cotTray');
   if(!n){ if(el) el.remove(); return; }
@@ -1636,7 +1659,7 @@ function sovNewsFocus(region){ var sigs=window._newsSignals||[]; var pick=null;
 window.sovNewsFocus=sovNewsFocus;
 
 let FEED=[];
-var SUGG=[['✨','light it up'],['📍','scan my area'],['📷','cameras in london'],['🌧️','weather radar'],['🚆','rail network'],['💹','financial centres'],['🏬','local businesses'],['🗂','domains ontology'],['🛬','global airports'],['⚡','power plants'],['🌫️','air quality'],['🔥','show wildfires'],['🛰','satellites'],['🏙','street view in london'],['🛡️','AI governance'],['⚖️','compare doctrines'],['🔏','SIGIL ledger'],['▶','run demo'],['🗂','set up my workspace'],['✈️','open aircraft'],['⚓','marine vessels'],['📰','news in ukraine'],['🧭','what is near gibraltar'],['🌍','world view'],['🪶','lite mode'],['🛰','what am I looking at'],['⚡','convergence'],['⚓','maritime chokepoints'],['⛽','pipelines'],['🎯','military symbology'],['🛰','export cot'],['🔏','sign all in view'],['◎','watch box'],['📋','export brief'],['🖨','print brief'],['🔄','retry feeds'],['🛡️','protect the ai space'],['◆','why defoneos'],['🗓','next dates'],['🧬','the moat in 3d'],['🌐','submarine cables'],['📡','comms masts'],['❓','what can you do']];
+var SUGG=[['✨','light it up'],['📍','scan my area'],['📷','cameras in london'],['🌧️','weather radar'],['🚆','rail network'],['💹','financial centres'],['🏬','local businesses'],['🗂','domains ontology'],['🛬','global airports'],['⚡','power plants'],['🌫️','air quality'],['🔥','show wildfires'],['🛰','satellites'],['🏙','street view in london'],['🛡️','AI governance'],['⚖️','compare doctrines'],['🔏','SIGIL ledger'],['▶','run demo'],['🗂','set up my workspace'],['✈️','open aircraft'],['⚓','marine vessels'],['📰','news in ukraine'],['🧭','what is near gibraltar'],['🌍','world view'],['🪶','lite mode'],['🛰','what am I looking at'],['⚡','convergence'],['⚓','maritime chokepoints'],['⛽','pipelines'],['🎯','military symbology'],['🛰','export cot'],['🔏','sign all in view'],['◎','watch box'],['📄','system card'],['📋','export brief'],['🖨','print brief'],['🔄','retry feeds'],['🛡️','protect the ai space'],['◆','why defoneos'],['🗓','next dates'],['🧬','the moat in 3d'],['🌐','submarine cables'],['📡','comms masts'],['❓','what can you do']];
 function _runSugg(t){ var el=document.getElementById('cmd'); if(el) el.value=t; var b=document.getElementById('cmdSugg'); if(b) b.classList.remove('open'); command(); }
 function cmdSuggest(v){ var box=document.getElementById('cmdSugg'); if(!box) return; v=(''+(v||'')).toLowerCase().trim();
   if(v.length<2){ box.classList.remove('open'); box.innerHTML=''; return; }
@@ -1859,8 +1882,13 @@ function _convPanel(conv,hot){ var id='convWin'; var old=document.getElementById
 window.convergenceScan=convergenceScan; window._convPanel=_convPanel;
 // ── WATCH BOX · draw a region, sign it, and get a SIGNED alert the moment ≥2 independent live streams converge inside it ──
 // This is the product competitors sell as "alerting" — here it's early-warning + a signed receipt, on-device.
-function sovClearWatch(){ try{ if(window._watchBox){ if(window._watchBox.timer) clearInterval(window._watchBox.timer); window._watchBox.timer=null; } if(window._watchDS){ window._watchDS.entities.removeAll(); window._watchDS.show=false; } window._watchBox=null; }catch(_){} }
+function sovClearWatch(){ try{ if(window._watchBox){ if(window._watchBox.timer) clearInterval(window._watchBox.timer); window._watchBox.timer=null; } if(window._watchDS){ window._watchDS.entities.removeAll(); window._watchDS.show=false; } window._watchBox=null; var ch=document.getElementById('watchChip'); if(ch) ch.remove(); }catch(_){} }
 window.sovClearWatch=sovClearWatch;
+function _watchChip(){ var wb=window._watchBox; var el=document.getElementById('watchChip'); if(!wb){ if(el) el.remove(); return; }
+  if(!el){ el=document.createElement('div'); el.id='watchChip'; el.style.cssText='position:fixed;left:14px;bottom:158px;z-index:57;background:rgba(10,16,28,.94);border:1px solid rgba(95,244,255,.4);border-radius:11px;padding:8px 11px;color:#dfe7f5;font:600 11px/1.3 ui-monospace,monospace;box-shadow:0 10px 30px rgba(0,0,0,.5);backdrop-filter:blur(8px)'; document.body.appendChild(el); }
+  var alerts=Object.keys(wb.seen||{}).length;
+  el.innerHTML='<div style="color:#5ff4ff;letter-spacing:.5px;margin-bottom:4px">◎ WATCH · '+_hcx(_nearLabel(wb.lat,wb.lon))+' · '+wb.km+'km</div><div style="display:flex;gap:6px;align-items:center"><span style="color:'+(alerts?'#ff8080':'#8a97b4')+'">'+(alerts?('⚠ '+alerts+' alert'+(alerts>1?'s':'')):'watching · ≥2 streams')+'</span><button onclick="if(window.sovClearWatch)sovClearWatch()" style="margin-left:auto;cursor:pointer;background:transparent;color:#9ab;border:1px solid rgba(255,255,255,.2);border-radius:7px;padding:3px 8px;font:600 10px ui-monospace,monospace">clear</button></div>'; }
+window._watchChip=_watchChip;
 async function sovWatchBox(km){ if(!viewer) return;
   if(window._watchBox){ sovClearWatch(); if(window.horusReply) horusReply('Watch box cleared — I’ll stop monitoring that area.'); if(window.pushFeed) pushFeed('WATCH · cleared'); return; }
   var c=(typeof _entCenter==='function')?_entCenter():[(window._userLoc&&window._userLoc.lon)||0,(window._userLoc&&window._userLoc.lat)||30];
@@ -1871,6 +1899,7 @@ async function sovWatchBox(km){ if(!viewer) return;
   try{ _reactRing(ds, lon, lat, '#5ff4ff', km*1000*0.5, 0.5); }catch(_){}
   var sg=window.sigilSign?await sigilSign('watch-box', _nearLabel(lat,lon)+' · '+km+'km · trigger: streams≥2'):null;
   window._watchBox={ lon:lon, lat:lat, km:km, ds:ds, timer:null, seen:{}, since:Date.now() };
+  try{ _watchChip(); }catch(_){}
   if(window.openHorus) openHorus();
   if(window.horusReply) horusReply('Watch box set over <b>'+_nearLabel(lat,lon)+'</b> ('+km+' km)'+(sg?', signed <code>'+sg.sig.slice(0,12)+'…</code>':'')+'. I’ll alert you — and <b>sign the alert</b> — the moment <b>two or more independent live streams converge</b> inside it. Turn on more layers (news, seismic, fire, AIS, air, threat) to widen the net. Say “watch box” again to clear.');
   if(window.pushFeed) pushFeed('WATCH · armed over '+_nearLabel(lat,lon)+' · '+km+'km · trigger ≥2 streams');
@@ -1886,6 +1915,7 @@ async function sovWatchBox(km){ if(!viewer) return;
       if(window.openHorus) openHorus();
       if(window.horusReply) horusReply('⚠ <b>Convergence in your watch box</b> — near <b>'+key+'</b>, <b>'+kinds.join(' + ')+'</b> are converging. Signed to the ledger. Ungoverned you’d miss it; governed, I flag it and any response gates through the council + care-floor.');
       if(window.pushFeed) pushFeed('WATCH ALERT · '+det+' · signed to ledger');
+      try{ _watchChip(); }catch(_){}
     });
   }
   window._watchBox.timer=setInterval(check, 12000); setTimeout(check, 1500);
@@ -3482,7 +3512,8 @@ function command(){
   if(/(retry (the )?feeds|refresh (the )?feeds|retry (throttled|failed|quiet)|re.?pull|reload feeds|refresh (the )?(data|layers)|feeds? health|feed status)/.test(q)){ if(window.sovRetryFeeds) sovRetryFeeds(); return res('re-pulling any throttled or quiet feeds'); }
   if(/(print brief|printable brief|brief pdf|pdf brief|print (the )?(report|sitrep|situation)|report pdf|brief report)/.test(q)){ if(window.sovBriefPrint) sovBriefPrint(); return res('opening a one-page printable situational report — signed'); }
   if(/(export brief|signed brief|download brief|situation(al)? report|situation(al)? brief|export sitrep|sitrep export|brief export|save (the )?(brief|picture))/.test(q)){ if(window.sovBrief) sovBrief(); return res('exporting a signed situational brief — verifiable offline'); }
-  if(/(watch box|watch this area|watch here|monitor (this )?area|monitor here|alert me|set (a )?watch|early.?warning here)/.test(q)){ if(window.sovWatchBox) sovWatchBox(); return res('watch box armed — signed alert when ≥2 live streams converge'); }
+  if(/(system ?card|jsp ?936 card|assurance card)/.test(q)){ var cm=q.match(/(?:system ?card|card)\s+(?:for|of|on)\s+(.+)/); if(window.sovSystemCard) sovSystemCard(cm&&cm[1]); return res('signed AI System Card · JSP 936 / EU AI Act · offline-verifiable'); }
+  if(/(watch box|watch this area|watch here|monitor (this )?area|monitor here|alert me|set (a )?watch|early.?warning here)/.test(q)){ var wm=q.match(/(\d{2,5})\s*km/); if(window.sovWatchBox) sovWatchBox(wm?+wm[1]:undefined); return res('watch box armed — signed alert when ≥2 live streams converge'); }
   if(/(sign all|sign everything|sign the (view|board|picture|contacts)|batch.?sign|sign (all )?contacts)/.test(q)){ if(window.sovSignAllInView) sovSignAllInView(); return res('signing every live contact in view — one batch receipt'); }
   if(/(convergence|converge|early.?warning|cross.?source|signal fusion|fuse (the )?signals|hotspots?|hot spot|kicking off|correlat)/.test(q)){ if(window.convergenceScan) convergenceScan(); res('fusion analytics · cross-source convergence + hotspots · signed'); return; }
   if(/(chokepoint|choke.?point|\bstrait\b|straits|shipping lane|hormuz|malacca|\bsuez\b|bab.?el.?mandeb|bosph|dardanelle|panama canal)/.test(q)){ if(window.toggleChokepoints) toggleChokepoints(); res('maritime chokepoints · public geography + live AIS exposure'); return; }
