@@ -1266,8 +1266,29 @@ function sovSitrep(){ var M={threat:[threatDS,'ISR tracks'],air:[airDS,'aircraft
   if(window._railLayer) on.push('rail network'); if(window._radarFrames&&window._radarFrames.length) on.push('live weather radar');
   var h=0; try{ h=viewer.camera.positionCartographic.height; }catch(e){}
   var where=h>6e6?'world view':(h<5000?'street level':'a regional view');
-  var msg= on.length? ('At <b>'+where+'</b> you’re watching: '+on.join(' · ')+'. Every point is live and free-sourced; every action I take is signed on your device. Ask me to focus any of them, or say “light it up”.') : ('You’re at <b>'+where+'</b> with a clean globe. Say <b>“light it up”</b> and I’ll bring every live layer online.');
+  var msg= on.length? ('At <b>'+where+'</b> you’re watching: '+on.join(' · ')+'. Every point is live and free-sourced; every action I take is signed on your device. Ask me to focus any of them, say “light it up”, or “<b>export brief</b>” for a signed situational report.') : ('You’re at <b>'+where+'</b> with a clean globe. Say <b>“light it up”</b> and I’ll bring every live layer online.');
   if(window.horusReply) horusReply(msg); }
+// ── SIGNED SITUATIONAL BRIEF · bundle the live picture (layers · counts · CoT · location) into one Ed25519-signed, downloadable, offline-verifiable JSON ──
+async function sovBrief(){
+  var M={threat:[threatDS,'ISR tracks'],air:[airDS,'aircraft'],marine:[marineDS,'vessels'],quake:[quakeDS,'seismic'],signals:[signalsDS,'news'],cameras:[camerasDS,'cameras'],events:[eventsDS,'disasters'],space:[spaceDS,'space objects'],aq:[aqDS,'air-quality'],sat:[satDS,'satellites']};
+  var layers={}; Object.keys(M).forEach(function(k){ var ds=M[k][0]; if(ds&&ds.show){ var n=ds.entities.values.filter(function(e){return e.position;}).length; if(n) layers[M[k][1]]=n; } });
+  if(window._powerDS&&window._powerDS.show&&window._powerDS.entities.values.length) layers['power plants']=window._powerDS.entities.values.length;
+  if(window._airportsDS&&window._airportsDS.show&&window._airportsDS.entities.values.length) layers['airports']=window._airportsDS.entities.values.length;
+  if(window._fireDS&&window._fireDS.show&&window._fireDS.entities.values.length) layers['active fires']=window._fireDS.entities.values.length;
+  var cot=(window._cotDataSrc&&window._cotDataSrc.show)?window._cotDataSrc.entities.values.length:0;
+  var total=Object.keys(layers).reduce(function(a,k){return a+layers[k];},0);
+  var loc=window._userLoc||null, h=0; try{ h=Math.round(viewer.camera.positionCartographic.height); }catch(e){}
+  var lsum=Object.keys(layers).map(function(k){return layers[k]+' '+k;}).join(', ');
+  var summary=total? ('DEFONEOS situational brief — '+total+' live contacts across '+Object.keys(layers).length+' layers: '+lsum+(cot?('; '+cot+' CoT tracks'):'')+'.') : 'DEFONEOS situational brief — clean board, no live layers active.';
+  var body={ generated:new Date().toISOString(), viewer_altitude_m:h, user_location:loc, layers:layers, cot_tracks:cot, total_contacts:total, summary:summary, doctrine:(window._doctrine==='east'?'DORADO':'SOVEREIGN'), sources:'all layers are free, public, consented feeds (ADS-B/AIS/USGS/GDELT/EONET/NASA/WAQI/CelesTrak/TfL etc.)' };
+  var sig=window.sigilSign?await sigilSign('sitrep-brief', total+' contacts · '+Object.keys(layers).length+' layers'):null;
+  var pkg={ defoneos_situational_brief:body, signature: sig?{ message:{i:sig.i,ts:sig.ts,action:sig.action,detail:sig.detail,prev:sig.prev}, signature_ed25519:sig.sig, public_key_ed25519:sig.pub, algorithm:'Ed25519 (RFC 8032) over utf8(JSON.stringify(message))', verify:'Drop this file into defoneos.vercel.app/verify.html — verified offline, no server.' } : null };
+  try{ var blob=new Blob([JSON.stringify(pkg,null,2)],{type:'application/json'}); var url=URL.createObjectURL(blob); var a=document.createElement('a'); a.href=url; a.download='defoneos-brief-'+(sig?sig.i:'x')+'.json'; document.body.appendChild(a); a.click(); setTimeout(function(){ try{ document.body.removeChild(a); URL.revokeObjectURL(url); }catch(_){} },250); }catch(_){}
+  if(window.openHorus) openHorus();
+  if(window.horusReply) horusReply(total? ('Signed situational brief exported — <b>'+total+'</b> contacts across '+Object.keys(layers).length+' layers'+(cot?(' + '+cot+' CoT tracks'):'')+', Ed25519-signed on this device. Drop it into <a class="bg-link" href="verify.html" target="_blank">verify.html</a> to check it offline — no server.') : ('Exported a signed brief of a clean board. Light up some layers and export again for a fuller picture. <a class="bg-link" href="verify.html" target="_blank">verify ›</a>'));
+  if(window.pushFeed) pushFeed('BRIEF · signed situational brief exported · '+total+' contacts');
+}
+window.sovBrief=sovBrief;
 // weather radar: only 2 imagery layers alive at once (cur + fading-in next) — smooth animation, low GPU
 window._radarUrls=[]; window._radarIdx=0; window._radarCur=null; window._radarNext=null; window._radarTimer=null; window._radarFrames=[];
 function _addRadar(url){ return viewer.scene.imageryLayers.addImageryProvider(new C.UrlTemplateImageryProvider({ url:url, maximumLevel:9, credit:'RainViewer · global precipitation radar' })); }
@@ -1516,7 +1537,7 @@ function sovNewsFocus(region){ var sigs=window._newsSignals||[]; var pick=null;
 window.sovNewsFocus=sovNewsFocus;
 
 let FEED=[];
-var SUGG=[['✨','light it up'],['📍','scan my area'],['📷','cameras in london'],['🌧️','weather radar'],['🚆','rail network'],['💹','financial centres'],['🏬','local businesses'],['🗂','domains ontology'],['🛬','global airports'],['⚡','power plants'],['🌫️','air quality'],['🔥','show wildfires'],['🛰','satellites'],['🏙','street view in london'],['🛡️','AI governance'],['⚖️','compare doctrines'],['🔏','SIGIL ledger'],['▶','run demo'],['🗂','set up my workspace'],['✈️','open aircraft'],['⚓','marine vessels'],['📰','news in ukraine'],['🧭','what is near gibraltar'],['🌍','world view'],['🪶','lite mode'],['🛰','what am I looking at'],['⚡','convergence'],['⚓','maritime chokepoints'],['⛽','pipelines'],['🎯','military symbology'],['🛰','export cot'],['🔏','sign all in view'],['🛡️','protect the ai space'],['◆','why defoneos'],['🗓','next dates'],['🧬','the moat in 3d'],['🌐','submarine cables'],['📡','comms masts'],['❓','what can you do']];
+var SUGG=[['✨','light it up'],['📍','scan my area'],['📷','cameras in london'],['🌧️','weather radar'],['🚆','rail network'],['💹','financial centres'],['🏬','local businesses'],['🗂','domains ontology'],['🛬','global airports'],['⚡','power plants'],['🌫️','air quality'],['🔥','show wildfires'],['🛰','satellites'],['🏙','street view in london'],['🛡️','AI governance'],['⚖️','compare doctrines'],['🔏','SIGIL ledger'],['▶','run demo'],['🗂','set up my workspace'],['✈️','open aircraft'],['⚓','marine vessels'],['📰','news in ukraine'],['🧭','what is near gibraltar'],['🌍','world view'],['🪶','lite mode'],['🛰','what am I looking at'],['⚡','convergence'],['⚓','maritime chokepoints'],['⛽','pipelines'],['🎯','military symbology'],['🛰','export cot'],['🔏','sign all in view'],['📋','export brief'],['🛡️','protect the ai space'],['◆','why defoneos'],['🗓','next dates'],['🧬','the moat in 3d'],['🌐','submarine cables'],['📡','comms masts'],['❓','what can you do']];
 function _runSugg(t){ var el=document.getElementById('cmd'); if(el) el.value=t; var b=document.getElementById('cmdSugg'); if(b) b.classList.remove('open'); command(); }
 function cmdSuggest(v){ var box=document.getElementById('cmdSugg'); if(!box) return; v=(''+(v||'')).toLowerCase().trim();
   if(v.length<2){ box.classList.remove('open'); box.innerHTML=''; return; }
@@ -3304,6 +3325,7 @@ function command(){
   if(/(import cot|cot import|paste cot|load cot|ingest cot|read cot)/.test(q)){ if(window._cotPanel) window._cotPanel('import','',0); res('CoT import · paste Cursor-on-Target XML'); return; }
   if(/(military symbol|mil.?std.?2525|milstd|2525|app.?6|symbolog|nato symbol|tactical symbol|joint symbol)/.test(q)){ if(window.cotDemo) cotDemo(); res('MIL-STD-2525 / APP-6 symbology · milsymbol'); return; }
   // ── FUSION ANALYTICS + new layers (convergence · chokepoints · energy infra) ──
+  if(/(export brief|signed brief|download brief|situation(al)? report|situation(al)? brief|export sitrep|sitrep export|brief export|save (the )?(brief|picture))/.test(q)){ if(window.sovBrief) sovBrief(); return res('exporting a signed situational brief — verifiable offline'); }
   if(/(sign all|sign everything|sign the (view|board|picture|contacts)|batch.?sign|sign (all )?contacts)/.test(q)){ if(window.sovSignAllInView) sovSignAllInView(); return res('signing every live contact in view — one batch receipt'); }
   if(/(convergence|converge|early.?warning|cross.?source|signal fusion|fuse (the )?signals|hotspots?|hot spot|kicking off|correlat)/.test(q)){ if(window.convergenceScan) convergenceScan(); res('fusion analytics · cross-source convergence + hotspots · signed'); return; }
   if(/(chokepoint|choke.?point|\bstrait\b|straits|shipping lane|hormuz|malacca|\bsuez\b|bab.?el.?mandeb|bosph|dardanelle|panama canal)/.test(q)){ if(window.toggleChokepoints) toggleChokepoints(); res('maritime chokepoints · public geography + live AIS exposure'); return; }

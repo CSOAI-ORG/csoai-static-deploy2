@@ -48,9 +48,13 @@
     <p class="note" style="margin-top:6px">This verifier re-checks each Ed25519 signature <b>independently, in your browser</b> — no server is asked, nothing is trusted. The dome's public key and signed actions are read from this origin's local store; paste an exported ledger below to verify one from elsewhere.</p>
     <p class="note" style="margin-top:6px">🛡 Defence / high-risk AI? See a <a href="systemcard.html"><b>signed AI System Card</b></a> — the JSP 936 assurance primitive, verifiable offline.</p>
     <div id="lbody" style="margin-top:12px;font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--muted);max-height:240px;overflow:auto"></div>
-    <div class="k">Verify an exported ledger</div>
-    <textarea id="lpaste" placeholder="paste a copied SIGIL ledger JSON…" style="width:100%;min-height:70px;margin-top:6px;font-family:'JetBrains Mono',monospace;font-size:.7rem;border:1px solid var(--line);border-radius:8px;padding:8px;background:var(--cream)"></textarea>
-    <button id="lverify" style="margin-top:8px;background:#1f1c17;color:#f4eee1;border:0;border-radius:8px;padding:8px 14px;cursor:pointer;font-size:.82rem">✓ Verify pasted ledger</button>
+    <div class="k">Verify an exported ledger or a signed-contact receipt</div>
+    <textarea id="lpaste" placeholder="paste a SIGIL ledger JSON, or a downloaded defoneos-receipt-*.json…" style="width:100%;min-height:70px;margin-top:6px;font-family:'JetBrains Mono',monospace;font-size:.7rem;border:1px solid var(--line);border-radius:8px;padding:8px;background:var(--cream)"></textarea>
+    <div style="display:flex;gap:8px;align-items:center;margin-top:8px;flex-wrap:wrap">
+      <button id="lverify" style="background:#1f1c17;color:#f4eee1;border:0;border-radius:8px;padding:8px 14px;cursor:pointer;font-size:.82rem">✓ Verify pasted</button>
+      <label id="ldrop" style="cursor:pointer;border:1px dashed var(--line);border-radius:8px;padding:8px 14px;font-size:.82rem;color:var(--muted)">⤒ drop / choose a receipt file<input id="lfile" type="file" accept="application/json,.json" style="display:none"></label>
+    </div>
+    <p class="note" style="margin-top:6px">Accepts a full ledger (array) <b>or</b> a single <code>defoneos-receipt-*.json</code> — each Ed25519 signature is re-checked here, offline.</p>
   </div>
 
   <p class="foot">DEFONEOS · Powered by CSOAI · UK 16939677 · <a href="badges.html">authority badges</a> · <a href="index.html">the OS</a> · <a href="cop.html">the dome</a></p>
@@ -80,10 +84,28 @@
   let L=[]; try{ L=JSON.parse(localStorage.getItem('def_sigil_ledger')||'[]'); }catch(e){}
   if(L.length){ paint(L, await verifyLedger(L), 'lstatus'); }
   else { document.getElementById('lstatusText').textContent='no on-device ledger yet — open the dome, act, then return here'; }
-  document.getElementById('lverify').addEventListener('click', async ()=>{
-    let P=[]; try{ P=JSON.parse(document.getElementById('lpaste').value); }catch(e){ document.getElementById('lstatusText').textContent='paste is not valid JSON'; return; }
-    paint(P, await verifyLedger(P), 'lstatus');
-  });
+  // normalise any input → a ledger array. Accepts: a raw array, a single ledger entry,
+  // or the downloaded receipt wrapper {defoneos_signed_contact:{message, signature_ed25519, public_key_ed25519}}.
+  function normalize(input){
+    if(Array.isArray(input)) return input;
+    if(input && input.defoneos_situational_brief) input = input.signature;   // a signed brief → verify its signature block
+    const r = input && (input.defoneos_signed_contact || input);
+    if(r && r.message && r.signature_ed25519){ const m=r.message; return [{i:m.i,ts:m.ts,action:m.action,detail:m.detail,prev:m.prev,sig:r.signature_ed25519,pub:r.public_key_ed25519}]; }
+    if(r && r.sig && r.action!==undefined) return [r];   // a bare ledger entry
+    return null;
+  }
+  async function verifyInput(raw){
+    let P; try{ P=JSON.parse(raw); }catch(e){ document.getElementById('lstatusText').textContent='that is not valid JSON'; return; }
+    const L=normalize(P);
+    if(!L){ document.getElementById('lstatusText').textContent='unrecognised format — paste a ledger array or a defoneos-receipt-*.json'; return; }
+    paint(L, await verifyLedger(L), 'lstatus');
+  }
+  document.getElementById('lverify').addEventListener('click', ()=> verifyInput(document.getElementById('lpaste').value));
+  document.getElementById('lfile').addEventListener('change', (ev)=>{ const f=ev.target.files&&ev.target.files[0]; if(!f) return; const fr=new FileReader(); fr.onload=()=>{ document.getElementById('lpaste').value=fr.result; verifyInput(fr.result); }; fr.readAsText(f); });
+  const drop=document.getElementById('ldrop');
+  ['dragover','dragenter'].forEach(ev=> drop.addEventListener(ev, e=>{ e.preventDefault(); drop.style.borderColor='#1f6d3b'; }));
+  ['dragleave','drop'].forEach(ev=> drop.addEventListener(ev, e=>{ e.preventDefault(); drop.style.borderColor='var(--line)'; }));
+  drop.addEventListener('drop', e=>{ const f=e.dataTransfer&&e.dataTransfer.files&&e.dataTransfer.files[0]; if(!f) return; const fr=new FileReader(); fr.onload=()=>{ document.getElementById('lpaste').value=fr.result; verifyInput(fr.result); }; fr.readAsText(f); });
 </script>
 <script>
 (async function(){
