@@ -813,7 +813,8 @@ try{
 
 function toggleLayer(k,on){ if(window.stopSpin) stopSpin(); if(window.sigilLog) sigilLog('layer:'+k, on?'on':'off'); if(window.defSaveStateD) defSaveStateD(); const map={reg:regDS,base:baseDS,threat:threatDS,sim:simDS,quake:quakeDS,air:airDS,signals:signalsDS,cameras:camerasDS,events:eventsDS,space:spaceDS,aq:aqDS,marine:marineDS,sat:satDS}; const ds=map[k]; if(ds) ds.show=on;
   if(!on){ var _tm={air:'_airTimer',marine:'_marineTimer',space:'_spaceTimer',sat:'_satTimer'}[k]; if(_tm && window[_tm]){ clearInterval(window[_tm]); window[_tm]=null; } }   // stop the refresh loop when a layer is turned off (no orphan timers)
-  if(!on){ pushFeed('LAYER · '+k+' OFF'); return; }
+  if(!on){ pushFeed('LAYER · '+k+' OFF'); if(window._feedHealth) delete window._feedHealth[k]; if(window._fhUpdate) _fhUpdate(); return; }
+  if(window._fhUpdate) _fhUpdate();
   pushFeed('LAYER · '+k+' ON · loading live data…');
   if(k==='threat'){ loadThreats().then(function(){frameDS(threatDS);}); }
   else if(k==='quake'){ loadQuakes().then(function(){frameDS(quakeDS);}); }
@@ -864,8 +865,9 @@ async function loadAircraft(){
     var ac=document.getElementById('airCount'); if(ac) ac.textContent=(d.count!=null?d.count:'—');
     var sa=document.getElementById('sbAir'); if(sa) sa.innerHTML='air <b>'+(d.count!=null?d.count:'—')+'</b>';
     if(d.count!=null) pushFeed('AIR · '+d.count+' tracks · live ADS-B · projected paths · governed');
+    if(window._fhSet) _fhSet('air', d.count>0?'live':'empty');
     if(d.count===0 && window.horusReply) horusReply('No aircraft in this box right now — <b>OpenSky</b> is a free feed and rate-limits, and some regions are sparse. Pull out to a busier area or reopen in a moment.');
-  }catch(e){ var ac=document.getElementById('airCount'); if(ac) ac.textContent='—'; if(window.pushFeed) pushFeed('AIR · OpenSky unreachable (free feed throttles) — retry shortly'); if(window.horusReply) horusReply('The <b>live ADS-B</b> feed (OpenSky) didn’t answer — it’s free and rate-limits. Nothing’s broken; try again shortly.'); }
+  }catch(e){ var ac=document.getElementById('airCount'); if(ac) ac.textContent='—'; if(window._fhSet) _fhSet('air','error'); if(window.pushFeed) pushFeed('AIR · OpenSky unreachable (free feed throttles) — retry shortly'); if(window.horusReply) horusReply('The <b>live ADS-B</b> feed (OpenSky) didn’t answer — it’s free and rate-limits. Nothing’s broken; try again shortly.'); }
 }
 
 async function loadQuakes(){
@@ -896,8 +898,8 @@ async function loadQuakes(){
     const n=(d.features||[]).length;
     var qc=document.getElementById('quakeCount'); if(qc) qc.textContent=n;
     var sq=document.getElementById('sbQuake'); if(sq) sq.innerHTML='seismic <b>'+n+'</b> · 1h';
-    pushFeed('SEISMIC · '+n+' events/1h · SIGIL-logged');
-  }catch(e){ var sq=document.getElementById('sbQuake'); if(sq) sq.innerHTML='seismic <b>feed blocked</b>'; }
+    pushFeed('SEISMIC · '+n+' events/1h · SIGIL-logged'); if(window._fhSet) _fhSet('quake','live');
+  }catch(e){ var sq=document.getElementById('sbQuake'); if(sq) sq.innerHTML='seismic <b>feed blocked</b>'; if(window._fhSet) _fhSet('quake','error'); }
 }
 
 function connectMarkets(){
@@ -1152,9 +1154,10 @@ async function loadMarine(){ if(!marineDS) return; try{
       window._marineTracks.push({ent:ent, lon:s.lon, lat:s.lat, alt:0, hdg:cog, vel:sog, onground:false}); });
     window._marineShips=d.ships||[];
     var n=(d.ships||[]).length; var mc=document.getElementById('marineCount'); if(mc) mc.textContent=n; pushFeed('MARINE · '+n+' vessels · live AIS · projected courses');
+    if(window._fhSet) _fhSet('marine', n>0?'live':'empty');
     if(!n && window.horusReply) horusReply('AIS is <b>quiet or rate-limited</b> in this box right now — no vessels returned. It’s a free public stream (aisstream.io), so it throttles; try a busier area (say “maritime chokepoints”) or reopen in a moment. On the sovereign node you’d bind your own AIS receiver.');
     return d;
-  }catch(e){ var mc2=document.getElementById('marineCount'); if(mc2) mc2.textContent='—'; if(window.pushFeed) pushFeed('MARINE · live AIS unreachable (free feed throttles) — retry shortly'); if(window.horusReply) horusReply('The <b>live AIS</b> feed didn’t answer just now — it’s a free public stream and rate-limits. Nothing’s broken; try again shortly, or open “maritime chokepoints” for the busy lanes.'); } }
+  }catch(e){ var mc2=document.getElementById('marineCount'); if(mc2) mc2.textContent='—'; if(window._fhSet) _fhSet('marine','error'); if(window.pushFeed) pushFeed('MARINE · live AIS unreachable (free feed throttles) — retry shortly'); if(window.horusReply) horusReply('The <b>live AIS</b> feed didn’t answer just now — it’s a free public stream and rate-limits. Nothing’s broken; try again shortly, or open “maritime chokepoints” for the busy lanes.'); } }
 // ── marine: go to sea, lock a live boat, living overlay + Sovereign deep-research window ──
 async function sovMarineFocus(){ if(!viewer) return; var cb=document.getElementById('lyMarine'); if(cb) cb.checked=true; if(marineDS) marineDS.show=true;
   if(!(window._marineShips&&window._marineShips.length)){ if(window.horusReply) horusReply('Scanning the sea lanes for live AIS…'); try{ await loadMarine(); }catch(_){} }
@@ -1372,6 +1375,12 @@ function toggleGodseye(){ var s=viewer.scene; var b=document.getElementById('geB
   }catch(e){}
 }
 var _LAYCB={threat:'lyThreat',quake:'lyQuake',air:'lyAir',signals:'lySignals',cameras:'lyCameras',events:'lyEvents',space:'lySpace',aq:'lyAq',marine:'lyMarine',sat:'lySat',reg:'lyReg',base:'lyBase'};
+// ── FEED-HEALTH DOTS · a tiny status dot per live layer: green=live · amber=throttled/quiet · red=unreachable · grey=off ──
+window._feedHealth=window._feedHealth||{};
+function _fhInit(){ try{ Object.keys(_LAYCB).forEach(function(k){ var cb=document.getElementById(_LAYCB[k]); if(!cb) return; var lab=(cb.closest&&cb.closest('label'))||cb.parentNode; if(!lab||lab.querySelector('.fh')) return; var d=document.createElement('span'); d.className='fh'; d.id='fh-'+k; d.style.cssText='display:inline-block;width:7px;height:7px;border-radius:50%;margin-left:6px;background:#4a5568;vertical-align:middle;box-shadow:0 0 5px rgba(0,0,0,.4)'; lab.appendChild(d); }); _fhUpdate(); }catch(_){} }
+function _fhUpdate(){ try{ var H=window._feedHealth||{}; Object.keys(_LAYCB).forEach(function(k){ var d=document.getElementById('fh-'+k); if(!d) return; var cb=document.getElementById(_LAYCB[k]); var on=cb&&cb.checked; var st=H[k]; var col= st==='live'?'#00e07a':(st==='empty'||st==='throttled')?'#eab308':st==='error'?'#ff6b6b':(on?'#5ff4ff':'#4a5568'); d.style.background=col; d.style.boxShadow='0 0 6px '+(col==='#4a5568'?'rgba(0,0,0,.4)':col); d.title='feed '+(st||(on?'on':'off')); }); }catch(_){} }
+function _fhSet(k,st){ window._feedHealth[k]=st; _fhUpdate(); }
+window._fhSet=_fhSet; window._fhUpdate=_fhUpdate; window._fhInit=_fhInit;
 function _lightPulse(){ try{ var o=document.getElementById('_lightflash'); if(!o){ o=document.createElement('div'); o.id='_lightflash'; o.style.cssText='position:fixed;inset:0;z-index:5;pointer-events:none;background:radial-gradient(circle at 50% 45%, rgba(95,244,255,.22), rgba(95,244,255,0) 62%);opacity:0;transition:opacity .55s'; document.body.appendChild(o); } o.style.opacity='1'; setTimeout(function(){ o.style.opacity='0'; },560); }catch(e){} }
 function lightItUp(){ // STAGGERED cascade so the effect is VISIBLE even if layers were already on, + a glow pulse
   var order=['reg','base','threat','quake','air','marine','signals','cameras','events','space','sat','aq'];
@@ -1568,9 +1577,10 @@ async function loadSignals(qstr){ if(!signalsDS) return; try{
         _news:s, _info:{ title:'📰 '+(s.headline||s.name||'news hotspot'), rows:[['Location',s.name],['Articles · 24h',s.count],['Source','GDELT 2.0 · global news'],['Ontology','Event → Location → Signal']] } }); });
     (d.signals||[]).slice().sort(function(a,b){return (b.count||0)-(a.count||0);}).slice(0,8).forEach(function(s){ if(s.lon!=null) _reactRing(signalsDS, s.lon, s.lat, '#e0a285', 105000+(s.count||1)*6000, 0.85); });   // hottest stories pulse
     var n=(d.signals||[]).length; var sc=document.getElementById('sigCount'); if(sc) sc.textContent=n; pushFeed('SIGNALS · '+n+' news hotspots · GDELT 24h → ontology overlay');
+    if(window._fhSet) _fhSet('signals', n>0?'live':'empty');
     if(!n && window.horusReply) horusReply('No geolocated news clusters came back just now — <b>GDELT</b> updates in 15-min windows and throttles free calls. Try a specific place (“news in ukraine”) or reopen shortly.');
     return d;
-  }catch(e){ var sc2=document.getElementById('sigCount'); if(sc2) sc2.textContent='—'; if(window.pushFeed) pushFeed('SIGNALS · GDELT unreachable (free feed throttles) — retry shortly'); if(window.horusReply) horusReply('The <b>GDELT</b> news feed didn’t answer — it’s a free public source and rate-limits. Nothing’s broken; try again shortly, or name a region and I’ll pull it directly.'); } }
+  }catch(e){ var sc2=document.getElementById('sigCount'); if(sc2) sc2.textContent='—'; if(window._fhSet) _fhSet('signals','error'); if(window.pushFeed) pushFeed('SIGNALS · GDELT unreachable (free feed throttles) — retry shortly'); if(window.horusReply) horusReply('The <b>GDELT</b> news feed didn’t answer — it’s a free public source and rate-limits. Nothing’s broken; try again shortly, or name a region and I’ll pull it directly.'); } }
 // ── living news card: fly to a region, open real live weblinks from this moment ──
 function _newsTime(sd){ if(!sd) return ''; var m=String(sd).match(/^(\d{4})(\d\d)(\d\d)T(\d\d)(\d\d)/); return m?(m[4]+':'+m[5]+' · '+m[3]+'/'+m[2]):''; }
 function openNewsCard(sig){ if(!sig) return; var id='newsCard'; var old=document.getElementById(id); if(old) old.remove();
@@ -3474,8 +3484,24 @@ try{ if(!/tour/.test(location.hash)) setTimeout(defRestoreLayers, 4200); }catch(
 try{ _syncSpeakUI(); }catch(e){}
 // living-organism breathing — the atmosphere gently pulses
 try{ var _br=0; window._breatheTimer=setInterval(function(){ if(document.hidden||!viewer||window._lite) return; _br+=0.11; try{ var a=viewer.scene.skyAtmosphere; a.brightnessShift = 0.15 + Math.sin(_br)*0.07; a.saturationShift = 0.02 + Math.sin(_br*0.7)*0.05; if('atmosphereLightIntensity' in a) a.atmosphereLightIntensity = 12 + Math.sin(_br*0.5)*3; }catch(_){} }, 220); }catch(e){}
+// ── LITE-MODE AUTO-SUGGEST · watch real frame-rate; offer lite mode ONCE if the device is struggling (never nags) ──
+(function(){ try{ if(localStorage.getItem('def_lite_suggested')||localStorage.getItem('def_lite')){ window._liteSuggested=true; return; } }catch(_){}
+  var t0=0, frames=0, samples=[];
+  function offer(fps){ if(window._lite||window._liteSuggested||!window._entered) return; window._liteSuggested=true; try{ localStorage.setItem('def_lite_suggested','1'); }catch(_){}
+    if(window.openHorus) openHorus();
+    if(window.horusReply) horusReply('Your device looks like it’s working hard on this globe (~'+fps+' fps). Want me to switch to <b>🪶 lite mode</b>? — bloom off, lighter render, fewer animated particles; everything stays live and signed. Say “<b>lite mode</b>” or tap the button in <b>Layers</b>. <a class="bg-link" onclick="if(window.toggleLite)toggleLite(true)">turn on lite ›</a>');
+    if(window.pushFeed) pushFeed('LITE · offered (device under load ~'+fps+' fps)'); }
+  function loop(ts){ if(window._liteSuggested||window._lite) return;
+    if(!window._entered || document.hidden){ t0=0; frames=0; requestAnimationFrame(loop); return; }
+    if(t0){ frames++; var dt=ts-t0; if(dt>=2000){ samples.push(frames*1000/dt); frames=0; t0=ts;
+      if(samples.length>=3){ var a=samples.slice(-3); var avg=(a[0]+a[1]+a[2])/3; if(avg<28) { offer(Math.round(avg)); return; } } } }
+    else t0=ts;
+    requestAnimationFrame(loop); }
+  try{ requestAnimationFrame(loop); }catch(_){}
+})();
 // living clouds on by default — real weather riding the globe (subtle; toggle with "clouds")
 try{ setTimeout(function(){ try{ if(window.toggleClouds && !window._cloudLayer) toggleClouds(true); }catch(_){} }, 2200); }catch(e){}
+try{ setTimeout(function(){ if(window._fhInit) _fhInit(); }, 400); }catch(e){}   // feed-health dots on each layer
 window._speaking=false; window._lastSpoken='';
 try{ window._brain=JSON.parse(localStorage.getItem('def_brain')||'null')||{L:'Analytic',R:'Creative'}; var _bl=document.getElementById('brainL'),_br=document.getElementById('brainR'); if(_bl) _bl.value=window._brain.L; if(_br) _br.value=window._brain.R; }catch(e){}
 // ══ EPIC SPACE-LOAD INTRO + one-tap permissions gate ══ (intro/tour now trigger on Enter, not on load)
