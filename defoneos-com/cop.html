@@ -864,7 +864,8 @@ async function loadAircraft(){
     var ac=document.getElementById('airCount'); if(ac) ac.textContent=(d.count!=null?d.count:'—');
     var sa=document.getElementById('sbAir'); if(sa) sa.innerHTML='air <b>'+(d.count!=null?d.count:'—')+'</b>';
     if(d.count!=null) pushFeed('AIR · '+d.count+' tracks · live ADS-B · projected paths · governed');
-  }catch(e){ var ac=document.getElementById('airCount'); if(ac) ac.textContent='blocked'; }
+    if(d.count===0 && window.horusReply) horusReply('No aircraft in this box right now — <b>OpenSky</b> is a free feed and rate-limits, and some regions are sparse. Pull out to a busier area or reopen in a moment.');
+  }catch(e){ var ac=document.getElementById('airCount'); if(ac) ac.textContent='—'; if(window.pushFeed) pushFeed('AIR · OpenSky unreachable (free feed throttles) — retry shortly'); if(window.horusReply) horusReply('The <b>live ADS-B</b> feed (OpenSky) didn’t answer — it’s free and rate-limits. Nothing’s broken; try again shortly.'); }
 }
 
 async function loadQuakes(){
@@ -1150,8 +1151,10 @@ async function loadMarine(){ if(!marineDS) return; try{
         marineDS.entities.add({ polyline:{ positions:C.Cartesian3.fromDegreesArray([s.lon,s.lat, dp[0],dp[1]]), width:1.3, material:new C.PolylineGlowMaterialProperty({glowPower:0.25,color:C.Color.fromCssColorString('#7af9d0').withAlpha(0.4)}) } }); }
       window._marineTracks.push({ent:ent, lon:s.lon, lat:s.lat, alt:0, hdg:cog, vel:sog, onground:false}); });
     window._marineShips=d.ships||[];
-    var n=(d.ships||[]).length; var mc=document.getElementById('marineCount'); if(mc) mc.textContent=n; pushFeed('MARINE · '+n+' vessels · live AIS · projected courses'); return d;
-  }catch(e){} }
+    var n=(d.ships||[]).length; var mc=document.getElementById('marineCount'); if(mc) mc.textContent=n; pushFeed('MARINE · '+n+' vessels · live AIS · projected courses');
+    if(!n && window.horusReply) horusReply('AIS is <b>quiet or rate-limited</b> in this box right now — no vessels returned. It’s a free public stream (aisstream.io), so it throttles; try a busier area (say “maritime chokepoints”) or reopen in a moment. On the sovereign node you’d bind your own AIS receiver.');
+    return d;
+  }catch(e){ var mc2=document.getElementById('marineCount'); if(mc2) mc2.textContent='—'; if(window.pushFeed) pushFeed('MARINE · live AIS unreachable (free feed throttles) — retry shortly'); if(window.horusReply) horusReply('The <b>live AIS</b> feed didn’t answer just now — it’s a free public stream and rate-limits. Nothing’s broken; try again shortly, or open “maritime chokepoints” for the busy lanes.'); } }
 // ── marine: go to sea, lock a live boat, living overlay + Sovereign deep-research window ──
 async function sovMarineFocus(){ if(!viewer) return; var cb=document.getElementById('lyMarine'); if(cb) cb.checked=true; if(marineDS) marineDS.show=true;
   if(!(window._marineShips&&window._marineShips.length)){ if(window.horusReply) horusReply('Scanning the sea lanes for live AIS…'); try{ await loadMarine(); }catch(_){} }
@@ -1373,7 +1376,7 @@ function _lightPulse(){ try{ var o=document.getElementById('_lightflash'); if(!o
 function lightItUp(){ // STAGGERED cascade so the effect is VISIBLE even if layers were already on, + a glow pulse
   var order=['reg','base','threat','quake','air','marine','signals','cameras','events','space','sat','aq'];
   order.forEach(function(k,idx){ setTimeout(function(){ var cb=document.getElementById(_LAYCB[k]); if(cb) cb.checked=true; if(window.toggleLayer) toggleLayer(k,true); },idx*130); });
-  setTimeout(function(){ if(window.toggleWeatherRadar && !window._radarLayer) toggleWeatherRadar(); }, order.length*130+50);
+  setTimeout(function(){ if(window.toggleWeatherRadar && !(window._radarCur||window._radarTimer)) toggleWeatherRadar(); }, order.length*130+50);   // only turn radar ON if it isn't already animating (was checking a non-existent var → could toggle it back off)
   // real infrastructure in the background so it's there as you zoom in — power plants + airports (loaded once)
   setTimeout(function(){ try{ if(window.togglePowerPlants && !(window._powerDS&&window._powerDS.show)) togglePowerPlants(); }catch(e){} }, order.length*130+250);
   setTimeout(function(){ try{ if(window.toggleAirports && !(window._airportsDS&&window._airportsDS.show)) toggleAirports(); }catch(e){} }, order.length*130+500);
@@ -1564,8 +1567,10 @@ async function loadSignals(qstr){ if(!signalsDS) return; try{
         point:{ pixelSize:sz, color:C.Color.fromCssColorString('#e0a285').withAlpha(0.62), outlineColor:C.Color.fromCssColorString('#ffd23b'), outlineWidth:1 },
         _news:s, _info:{ title:'📰 '+(s.headline||s.name||'news hotspot'), rows:[['Location',s.name],['Articles · 24h',s.count],['Source','GDELT 2.0 · global news'],['Ontology','Event → Location → Signal']] } }); });
     (d.signals||[]).slice().sort(function(a,b){return (b.count||0)-(a.count||0);}).slice(0,8).forEach(function(s){ if(s.lon!=null) _reactRing(signalsDS, s.lon, s.lat, '#e0a285', 105000+(s.count||1)*6000, 0.85); });   // hottest stories pulse
-    var n=(d.signals||[]).length; var sc=document.getElementById('sigCount'); if(sc) sc.textContent=n; pushFeed('SIGNALS · '+n+' news hotspots · GDELT 24h → ontology overlay'); return d;
-  }catch(e){} }
+    var n=(d.signals||[]).length; var sc=document.getElementById('sigCount'); if(sc) sc.textContent=n; pushFeed('SIGNALS · '+n+' news hotspots · GDELT 24h → ontology overlay');
+    if(!n && window.horusReply) horusReply('No geolocated news clusters came back just now — <b>GDELT</b> updates in 15-min windows and throttles free calls. Try a specific place (“news in ukraine”) or reopen shortly.');
+    return d;
+  }catch(e){ var sc2=document.getElementById('sigCount'); if(sc2) sc2.textContent='—'; if(window.pushFeed) pushFeed('SIGNALS · GDELT unreachable (free feed throttles) — retry shortly'); if(window.horusReply) horusReply('The <b>GDELT</b> news feed didn’t answer — it’s a free public source and rate-limits. Nothing’s broken; try again shortly, or name a region and I’ll pull it directly.'); } }
 // ── living news card: fly to a region, open real live weblinks from this moment ──
 function _newsTime(sd){ if(!sd) return ''; var m=String(sd).match(/^(\d{4})(\d\d)(\d\d)T(\d\d)(\d\d)/); return m?(m[4]+':'+m[5]+' · '+m[3]+'/'+m[2]):''; }
 function openNewsCard(sig){ if(!sig) return; var id='newsCard'; var old=document.getElementById(id); if(old) old.remove();
@@ -2035,7 +2040,7 @@ function sov3DGovViz(focus){ if(!viewer) return;
     ds.entities.add({ position:pf, point:{pixelSize:i===22?9:6,color:C.Color.fromCssColorString(col).withAlpha(0.95),outlineColor:C.Color.BLACK,outlineWidth:1,disableDepthTestDistance:INF} });
     if(i>0) ds.entities.add({ polyline:{ positions:linkFn(fns[i-1],pf), width:1.5, material:glow(col,0.55) } });
     if(i===22) ds.entities.add({ position:pf, label:lbl('◎ QUORUM · 23/33','#5ff4ff',-16) });
-    if(i%4===0){ (function(a,r,hh,cc){ var orr=rBase*0.13, os=2.2; ds.entities.add({ position:new C.CallbackProperty(function(){ var ph=Date.now()/1000*SPD, op=Date.now()/1000*os; return C.Cartesian3.fromDegrees(lon0+Math.cos(a+ph)*r+Math.cos(op)*orr, lat0+Math.sin(a+ph)*r+Math.sin(op)*orr, hh+18000); },false), point:{pixelSize:3,color:C.Color.fromCssColorString(cc).withAlpha(0.85),disableDepthTestDistance:INF} }); })(ang,rr,h,col); }
+    if(i%4===0 && !window._lite){ (function(a,r,hh,cc){ var orr=rBase*0.13, os=2.2; ds.entities.add({ position:new C.CallbackProperty(function(){ var ph=Date.now()/1000*SPD, op=Date.now()/1000*os; return C.Cartesian3.fromDegrees(lon0+Math.cos(a+ph)*r+Math.cos(op)*orr, lat0+Math.sin(a+ph)*r+Math.sin(op)*orr, hh+18000); },false), point:{pixelSize:3,color:C.Color.fromCssColorString(cc).withAlpha(0.85),disableDepthTestDistance:INF} }); })(ang,rr,h,col); }   // orbiting sub-agents skipped in lite mode
   }
   var apex=C.Cartesian3.fromDegrees(lon0,lat0,apexH+320000);
   ds.entities.add({ position:apex, point:{pixelSize:14,color:C.Color.fromCssColorString('#00e07a'),outlineColor:C.Color.WHITE,outlineWidth:2,disableDepthTestDistance:INF}, label:lbl('✓ SIGNED · Ed25519','#9effc0',-18) });
@@ -2052,8 +2057,8 @@ function sov3DGovViz(focus){ if(!viewer) return;
     var ci=Math.min(N-1, Math.round((n[2]-baseH)/(apexH-baseH)*(N-1)));
     ds.entities.add({ polyline:{ positions:linkFn(fns[ci], p), width:1, material:glow(n[1],0.35) } });
   });
-  // the 64-expert swarm — a live orbiting cluster around the MoE node
-  for(var ex=0; ex<14; ex++){ (function(k){ var oa=k*(6.2832/14), orr=rBase*0.34, osp=1.1+((k%5)*0.13);
+  // the 64-expert swarm — a live orbiting cluster around the MoE node (skipped in lite mode)
+  var _swarmN=window._lite?0:14; for(var ex=0; ex<_swarmN; ex++){ (function(k){ var oa=k*(6.2832/14), orr=rBase*0.34, osp=1.1+((k%5)*0.13);
     ds.entities.add({ position:new C.CallbackProperty(function(){ var op=Date.now()/1000*osp; return C.Cartesian3.fromDegrees(mx+Math.cos(oa+op)*orr, lat0+Math.sin(oa+op)*orr*0.8, (baseH+120000)+Math.sin(op+oa)*60000); },false), point:{pixelSize:3,color:C.Color.fromCssColorString('#eab308').withAlpha(0.8),disableDepthTestDistance:INF} }); })(ex); }
   ds.entities.add({ polyline:{ positions:[archPts[ARCH.length-1],apex], width:2, material:glow('#00e07a',0.7) } });
   window._govCtx={lon0:lon0,lat0:lat0,SPD:SPD,geo:geo,apexH:apexH+320000};   // context for climbing vote-pulses + apex burst
@@ -2061,7 +2066,7 @@ function sov3DGovViz(focus){ if(!viewer) return;
   for(var vv=0;vv<6;vv++){ (function(k){ setTimeout(function(){ if(window._govVotePulse) _govVotePulse(k%2?'#5ff4ff':'#9effc0'); }, 320*k+500); })(vv); }   // votes ascend on reveal
   // continuous ENERGY FLOW up the helix + a slow AUTO-ORBIT of the camera while the tower stands
   if(window._govFlowT) clearInterval(window._govFlowT);
-  window._govFlowT=setInterval(function(){ if(!window._govVizDS||!window._govVizDS.show){ clearInterval(window._govFlowT); window._govFlowT=null; return; } if(document.hidden) return; if(window._govVotePulse) _govVotePulse((Date.now()%2>0)?'#5ff4ff':'#9effc0'); }, 1300);
+  window._govFlowT=setInterval(function(){ if(!window._govVizDS||!window._govVizDS.show){ clearInterval(window._govFlowT); window._govFlowT=null; return; } if(document.hidden) return; if(window._govVotePulse) _govVotePulse((Date.now()%2>0)?'#5ff4ff':'#9effc0'); }, window._lite?2600:1300);
   if(window._govOrbitT) clearInterval(window._govOrbitT);
   window._govOrbitT=setInterval(function(){ if(!window._govVizDS||!window._govVizDS.show){ clearInterval(window._govOrbitT); window._govOrbitT=null; return; } if(document.hidden||!viewer) return; if(Date.now()<(window._tourNoKB||0)) return; try{ viewer.camera.rotate(C.Cartesian3.UNIT_Z, -0.0006); }catch(_){} }, 60);
   // fly INSIDE the structure — low and close, the helix towering around you, then the auto-orbit carries it
@@ -2118,7 +2123,7 @@ function sovBridges3D(){ if(!viewer) return; if(!window._brDS){ window._brDS=new
   if(window._brFlowT) clearInterval(window._brFlowT);
   window._brFlowT=setInterval(function(){ if(!window._brDS||!window._brDS.show){ clearInterval(window._brFlowT); window._brFlowT=null; return; } if(document.hidden) return; var a=arcs[Math.floor((Date.now()/850)%arcs.length)]; if(!a) return; var t0=Date.now(), q=[a.from,a.mid,corePos];
     var e=ds.entities.add({ position:new C.CallbackProperty(function(){ var k=Math.min(1,(Date.now()-t0)/1400), i=Math.floor(k*2), f=(k*2)-i; if(i>1){i=1;f=1;} return C.Cartesian3.lerp(q[i],q[i+1],f,new C.Cartesian3()); },false), point:{pixelSize:7,color:C.Color.fromCssColorString('#00e07a'),outlineColor:C.Color.fromCssColorString('#9effc0'),outlineWidth:1,disableDepthTestDistance:INF} });
-    setTimeout(function(){ try{ ds.entities.remove(e); }catch(_){} },1500); }, 650);
+    setTimeout(function(){ try{ ds.entities.remove(e); }catch(_){} },1500); }, window._lite?1700:650);
   try{ if(window.stopSpin) stopSpin(); viewer.camera.flyTo({ destination:C.Cartesian3.fromDegrees(core[0]-12,core[1]-20,10000000), duration:3 }); }catch(_){}
   window._tourNoKB=Date.now()+3800;
   if(window.pushFeed) pushFeed('LEGACY BRIDGES · COBOL/SAP/SCADA/HL7/ISO20022 → signed governed core · live flow');
