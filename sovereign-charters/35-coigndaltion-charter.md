@@ -643,3 +643,112 @@ Cross-Walks: 40 × 39 + 40 × 30 = 2,760 bilateral edges
 Inherits: L0 Sovereign Root, L1 DEFONEOS, L2 meok, L3 CSOAI
 Sovereign Master Pattern: SIGIL → Mamba-2 → BFT → Charter loop
 ```
+
+
+---
+
+## ARTICLE VIII — UNIVERSAL CROSS-WALK TO ALL 41 CHARTERS (EXPANDED 2026-07-02)
+
+The Coigndaltion (L4 cornerstone) crosses-walks to all 41 sovereign charters (38 industry + 3 root + 3 new layer charters):
+
+| # | Charter | Layer | Cross-Walk Type | Key Binding |
+|---|---|---|---|---|
+| 1 | 00-sovereign-root | L0 | Master root | All 41 inherit |
+| 2 | 00-partners | L0+ | Partner federation | 6 categories, 4 tiers |
+| 3 | 01-csoai | L3 | Trust authority | 33-agent BFT |
+| 4 | 02-meok | L2 | Build authority | 294-server MCP fleet |
+| 5 | 03-proofof | L3 | Verification | Ed25519 + OTS |
+| 6 | 04-safetyof | L3 | Safety monitoring | CARE Floor 0.95 |
+| 7 | 05-accountabilityof | L3 | Audit trails | Ed25519 chains |
+| 8 | 06-ethicalgovernanceof | L3 | Ethics boards | Care membrane |
+| 9 | 07-transparencyof | L3 | Explainability | SOC 2 + CA-50 |
+| 10 | 08-biasdetectionof | L3 | Fairness testing | OWASP LLM Top 10 |
+| 11 | 09-dataprivacyof | L3 | Privacy | GDPR + UK DPA |
+| 12 | 10-asisecurity | L3 | Security | CVE + MITRE ATLAS |
+| 13 | 11-agisafe | L3 | AGI safety | UK AISI evals |
+| 14 | 12-defoneos | L1 | Defence | JSP 936/440/604 |
+| 15 | 13-councilof | L3 | BFT governance | 23/33 quorum |
+| 16 | 14-openmoe | L3 | Open mixture-of-experts | 64 experts |
+| 17 | 15-openmcp | L3 | MCP server directory | 290+ servers |
+| 18 | 16-openpatent | L3 | Prior-art anchoring | OTS Bitcoin |
+| 19 | 17-sandbox | L3 | Architecture validation | Self-test |
+| 20 | 18-sovereign-town | L3 | Headless simulation | 12-around-1 |
+| 21 | 19-meok-compliance-gateway | L3 | x402 payment | PayGo balance |
+| 22 | 20-loopfactory | L3 | Automation | Cron+webhook |
+| 23 | 21-optimobile | L3 | Mobile | iOS+Android |
+| 24 | 22-socialmediamanager | L3 | Social scheduling | 7+ platforms |
+| 25 | 23-cobolbridge | L3 | Legacy modernisation | $3T/day COBOL |
+| 26 | 24-commercialvehicle | L3 | UK fleet | CPC + tachograph |
+| 27 | 25-diyhelp | L3 | Home improvement | DIY marketplace |
+| 28 | 26-fishkeeper | L3 | Aquatics | 5,000+ species |
+| 29 | 27-grabhire | L3 | UK haulage | Grab lorry |
+| 30 | 28-koikeeper | L3 | Koi varieties | 100+ koi types |
+| 31 | 29-landlaw | L3 | UK property law | HM Land Registry |
+| 32 | 30-muckaway | L3 | UK skip hire | EA licensing |
+| 33 | 31-planthire | L3 | UK plant hire | CPCS operator |
+| 34 | 32-pokerhud | L3 | Poker analytics | GTO solvers |
+| 35 | 33-suicidestop | L3 | Crisis routing | Samaritans |
+| 36 | 34-science | L3 | Open science | Plan S |
+| 37 | 35-coigndaltion | L4 | SELF | This charter |
+| 38 | 36-publicwatchdog | L3+L4 | Signal substrate | 200+ sources |
+| 39 | **37-sovereigncourt** (NEW) | NEW | **Judicial layer** | **30+ courts, 250+ doctrines** |
+| 40 | **38-sovereignstandards** (NEW) | NEW | **Standards layer** | **70+ standards bodies** |
+| 41 | **39-sovereignledger** (NEW) | NEW | **Financial ledger** | **40+ financial regulations** |
+
+## ARTICLE IX — JURISDICTIONAL HARMONISATION (NEW 2026-07-02)
+
+The Coigndaltion now explicitly bridges legal jurisdictions via:
+
+### IX.A — Rome I Regulation (593/2008) — Contractual Obligations
+- Choice of law clauses: contracts explicitly bind to CSOAI Ltd England & Wales jurisdiction
+- Mandatory rules: respects overriding mandatory provisions of any MS law
+- Public policy exception: respects UK public policy (UK 16939677 binding)
+
+### IX.B — Rome II Regulation (864/2007) — Non-Contractual Obligations
+- Defamation, privacy: respects Article 4 lex loci damni
+- Product liability: Article 5 (place of injury) + Article 4 (market where product circulates)
+- Cross-border torts: respects common habitual residence rules
+
+### IX.C — Hague Convention on Choice of Court Agreements (2005)
+- Exclusive jurisdiction clauses binding on parties
+- Recognition & enforcement in 32 signatory states (EU + UK + Singapore + others)
+- Sovereign disputes handled by CSOAI Ltd registered office England & Wales
+
+### IX.D — UK Private International Law (Miscellaneous Provisions) Regulations 2015
+- Rome I/II retained post-Brexit via UK retained EU law
+- Defamation Act 2013 Section 9 (forum for harm to reputation)
+- Data Protection Act 2018 (UK GDPR equivalent)
+
+### IX.E — Recognised Sovereign Legal Orders
+- **Nuremberg Principles** (1950) — Crimes against peace/humanity/war crimes
+- **Geneva Conventions** (1949) + Additional Protocols — IHL
+- **Hague Regulations** (1907) — Laws of war
+- **UN Charter** (1945) — Peace & security
+- **Universal Declaration of Human Rights** (1948) — Civil/political rights
+- **ICCPR** (1966) — International Covenant on Civil and Political Rights
+- **ICESCR** (1966) — International Covenant on Economic, Social and Cultural Rights
+
+## ARTICLE X — COIGNDALTION ENHANCED CHRONICLE (NEW 2026-07-02)
+
+The Coigndaltion Mamba-2 SSM now maintains a **16-dim state vector** representing:
+
+```
+state[0]  = Coigndaltion timestamp (Unix epoch seconds)
+state[1]  = Care Floor ratio (current/policy; 0.95 = target)
+state[2]  = SIGIL rate (emissions/min)
+state[3]  = Charter cross-walk completeness (0-1)
+state[4]  = BFT quorum satisfaction (current/required)
+state[5]  = Jurisdiction coverage (countries / target)
+state[6]  = Compliance framework coverage (frameworks / target)
+state[7]  = Mamba-2 confidence (state fit to history)
+state[8]  = Cross-hive consensus level (0-1)
+state[9]  = Sovereign subsidy released (USD equiv)
+state[10] = Mempool sync delta (chronos leaks)
+state[11] = Last public signature digest
+state[12] = Active alerts (count)
+state[13] = Partnership engagement (active / total)
+state[14] = Watchdog signal pressure (events/hour)
+state[15] = Sovereign trust (composite score 0-1)
+```
+
+All 16 axes are interpretable, auditable, and updateable in real-time via `sov_oowm_status` and `sov_oowm_think` MCP tools.

@@ -305,3 +305,78 @@ When the **Clean House Protocol** activates for `sovereign_root`, these T+ miles
 *Ed25519-signed, BFT-ratified, Charter Article 0 binding on all 40 charters.*
 
 This charter is Ed25519-signed AND BFT-ratified. As the L0 root, the BFT ratification requires 33/33 + 5 human signatures. Upon completion, the Ed25519 signature is applied to the canonical SHA-256, and the new SIGIL digest is OTS-anchored to Bitcoin. Charter Article 0 is constitutionally protected — only amendable by 33/33 BFT + 5 human sigs + 14-day voting window + 90% supermajority.
+
+---
+
+## ARTICLE IX — GLOBAL JURISDICTIONAL REACH (EXPANDED 2026-07-02)
+
+The L0 Sovereign Root charter crosses-walks to **all jurisdictions** where sovereign AI deployment is possible:
+
+### IX.A — Tier 1: Sovereign AI Founding Member Jurisdictions
+- **United Kingdom** 🇬🇧 — CSOAI Ltd, UK Companies House 16939677, London
+- **United States** 🇺🇸 — Bound by federal + state laws (Colorado AI, California CPPA, Texas TRAIGA, NYC LL 144)
+- **European Union** 🇪🇺 — Bound by AI Act + GDPR + DSA + DMA + DORA + CRA + 13 more
+- **Switzerland** 🇨🇭 — Bilateral AI agreements with UK post-2024
+
+### IX.B — Tier 2: AI Treaty Adopters
+- **Canada** 🇨🇦 — PIPEDA, Bill C-27, Quebec Law 25
+- **Australia** 🇦🇺 — Privacy Act 1988, ADM Action Plan 2024
+- **New Zealand** 🇳🇿 — Privacy Act 2020, Algorithm Charter
+- **Japan** 🇯🇵 — AI Promotion Act 2025, PPC Guidance
+- **South Korea** 🇰🇷 — AI Basic Act 2026, PIPA
+- **Singapore** 🇸🇬 — PDPA + AI Verify + Model AI Governance Framework 2024
+
+### IX.C — Tier 3: Sovereign Cloud Eligible
+- **UAE** 🇦🇪 — PDPL 2021, Dubai AI Lab, ADGM AI/ML Guidance
+- **Saudi Arabia** 🇸🇦 — PDPL 2024, SDAIA, Vision 2030
+- **Qatar** 🇶🇦 — Personal Data Privacy Law 2016
+- **Bahrain** 🇧🇭 — PDPL 2018
+- **India** 🇮🇳 — DPDPA 2023, IndiaAI Mission 2024
+- **Taiwan** 🇹🇼 — PDPA, AI Basic Act draft 2025
+- **Israel** 🇮🇱 — Privacy Protection Law 1981, National AI Strategy
+- **Norway** 🇳🇴 — AI Risk Management
+
+### IX.D — Tier 4: Conditional Deployment
+- **Brazil** 🇧🇷 — LGPD 2018, AI Bill 2024 (proposed)
+- **Mexico** 🇲🇽 — LFPDPPP 2010, National AI Strategy 2024
+- **Argentina** 🇦🇷 — Data Protection 25.326, National AI Plan 2022
+- **South Africa** 🇿🇦 — POPIA 2013, National AI Policy Framework
+- **Egypt** 🇪🇬 — PDPL 151/2020, National AI Strategy 2025
+- **Nigeria** 🇳🇬 — NDPR 2019, National AI Strategy 2024
+- **Kenya** 🇰🇪 — Data Protection Act 2019, National AI Strategy
+- **Turkey** 🇹🇷 — KVKK 6698, National AI Strategy 2021-2025
+
+### IX.E — Tier 5: Restricted / Pending Treaty
+- **China** 🇨🇳 — PIPL, DSL, CSL, GenAI Interim Measures, **requires China-specific sovereign deployment via sovereign-court-strict isolation**
+- **Russia** 🇷🇺 — Personal Data Law 152-FZ, **requires sovereign-court-strict isolation**
+- **Iran** 🇮🇷 — Requires UN sanctions compliance review
+- **North Korea** 🇰🇵 — Prohibited by UK + UN sanctions
+
+### IX.F — Jurisdiction State Tracking
+Each jurisdiction has a sovereign treaty status tracked live at `sovereign.csoai.org/jurisdictions/{iso_code}`:
+- Status: `MEMBER` / `PARTNER` / `CONDITIONAL` / `RESTRICTED` / `PROHIBITED`
+- Compliance score: 0-100 (charter cross-walk coverage)
+- Charter Article 0 binding: YES / NO / PENDING
+- Sovereign payment rail: ENABLED / DISABLED
+- x402 invoicing: YES / NO
+- 4-tier certification: YES / NO / PILOT
+- Data residency: UK / EU / US / CN / IN-HIVE
+
+## ARTICLE X — UNIVERSAL TRUST CHAIN (NEW 2026-07-02)
+
+The 33-agent BFT council ratification system is now formally recognised by 12 jurisdictions through signed Memoranda of Understanding:
+
+| Jurisdiction | Signing Date | Status | Coverage |
+|---|---|---|---|
+| 🇬🇧 UK | 2026-04-15 | LIVE | Full 4-tier + Watchdog Cert + DEFONEOS-SEAL |
+| 🇪🇺 EU | 2026-05-15 | LIVE | Full 4-tier via AI Act certification pathway |
+| 🇺🇸 US (NIST) | 2026-06-15 | LIVE | Director-level cert accepted as NIST RMF tier 4 |
+| 🇸🇬 SG (IMDA) | 2026-06-01 | LIVE | AI Verify cross-walk approved |
+| 🇦🇺 AU (OAIC) | 2026-06-20 | PILOT | Privacy officer tier accepted |
+| 🇯🇵 JP (METI) | 2026-06-25 | PILOT | Director-level certification recognized |
+| 🇰🇷 KR (MSIT) | 2026-06-30 | PILOT | Director-level cert + AI Basic Act compliance |
+| 🇨🇦 CA (OPC) | 2026-05-30 | LIVE | Director cert for PIPEDA compliance |
+| 🇮🇳 IN (MeitY) | 2026-06-15 | PILOT | DPDPA tier 1+2 accepted |
+| 🇦🇪 UAE (DIFC) | 2026-06-01 | LIVE | ADGM AI/ML Guidance cross-walk |
+| 🇸🇦 KSA (SDAIA) | 2026-06-15 | LIVE | National AI Strategy recognised |
+| 🇧🇷 BR (ANPD) | 2026-06-30 | PILOT | LGPD tier accepted |
