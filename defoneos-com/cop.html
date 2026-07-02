@@ -913,7 +913,8 @@ function connectMarkets(){
 function showInfo(r){
   document.getElementById('infoBody').innerHTML='<h3>'+r.n+'</h3><div class="chip" style="border-color:'+(BLOC[r.bloc]||'#999')+';color:'+(BLOC[r.bloc]||'#999')+'">'+r.bloc+'</div>'+
     '<div class="k">Regime</div><p>'+r.regime+'</p><div class="k">Crosswalk →</div><p>'+r.cross+'</p>'+
-    '<div class="k">DEFONEOS posture</div><p>designed to align · SIGIL-attestable · no certification asserted</p>';
+    '<div class="k">DEFONEOS posture</div><p>designed to align · SIGIL-attestable · no certification asserted</p>'+
+    '<div class="intro-cta" style="margin-top:9px">'+_sovActs('⚖️ '+r.n, r.lon, r.lat)+'</div>';
   document.getElementById('info').style.display='block';
 }
 function _row(info,re){ var v=''; (info.rows||[]).forEach(function(r){ if(re.test(r[0])) v=(''+r[1]); }); return v; }
@@ -949,8 +950,7 @@ function defActions(info, clean){
   else if(/🏬|🏥|🏫|🍽|business|hospital|school/.test(t)) a.push(['🧭 what’s nearby',"loadPlaces('business')"]);
   var esc=clean.replace(/'/g,'');
   return a.map(function(x){ return '<button onclick="'+x[1].replace(/"/g,'&quot;')+'">'+x[0]+'</button>'; }).join('')+
-    '<button onclick="sovSignContact(\''+esc+'\')">🔏 sign contact</button>'+
-    '<button onclick="sovCotFromNode()">🎯 → CoT</button>'+
+    _sovActs(clean)+
     '<button onclick="knowledgeLookup(\''+esc+'\')">🔎 research</button>';
 }
 function showEntityInfo(info){
@@ -967,8 +967,15 @@ function showEntityInfo(info){
   if(window._horusSpeak && window._speak) _speak(clean+'. '+expl.replace(/<[^>]+>/g,''));
 }
 // ── SOVEREIGN CARD ACTIONS · turn any globe contact into a signed receipt or a tactical CoT track ──
-async function sovSignContact(title){ title=(title||window._lastInspect||'contact').slice(0,80);
-  var ll=window._lastEnt?_entLL(window._lastEnt):null; var det=title+(ll?(' @ '+ll[1].toFixed(3)+','+ll[0].toFixed(3)):'');
+// A reusable 3-button action bar for ANY card (node, news, camera, regulation). Coords optional.
+function _sovActs(title, lon, lat){ var t=(title||'').replace(/'/g,'').replace(/"/g,'');
+  var c=(lon!=null&&lat!=null)?(','+(+lon)+','+(+lat)):'';
+  return '<button onclick="sovSignContact(\''+t+'\''+c+')">🔏 sign contact</button>'+
+    '<button onclick="sovCotFromNode('+(c?((+lon)+','+(+lat)+',\''+t+'\''):'')+')">🎯 → CoT</button>';
+}
+async function sovSignContact(title, lon, lat){ title=(title||window._lastInspect||'contact').slice(0,80);
+  var ll=(lon!=null&&lat!=null)?[+lon,+lat]:(window._lastEnt?_entLL(window._lastEnt):null);
+  var det=title+(ll?(' @ '+(+ll[1]).toFixed(3)+','+(+ll[0]).toFixed(3)):'');
   if(window.openHorus) openHorus();
   if(window.sigilSign){ try{ var s=await sigilSign('contact', det);
     if(window.horusReply) horusReply('Signed <b>'+_hcx(title)+'</b> to your on-device ledger — Ed25519 <code>'+(((s&&s.sig)||'').slice(0,18))+'…</code>. Tamper-evident, offline-verifiable, no server. <a class="bg-link" onclick="if(window.sigilPanel)sigilPanel()">open ledger ›</a>'); return;
@@ -977,18 +984,43 @@ async function sovSignContact(title){ title=(title||window._lastInspect||'contac
   if(window.horusReply) horusReply('Logged <b>'+_hcx(title)+'</b> to the SIGIL ledger — signed on this device.');
 }
 window.sovSignContact=sovSignContact;
-function sovCotFromNode(){ if(!viewer) return; var e=window._lastEnt, ll=e?_entLL(e):null;
+function sovCotFromNode(lon, lat, label){ if(!viewer) return;
+  var ll=(lon!=null&&lat!=null)?[+lon,+lat]:(window._lastEnt?_entLL(window._lastEnt):null);
   if(!ll){ if(window.horusReply) horusReply('I need a positioned contact — click a point on the globe first, then send it to CoT.'); return; }
-  var t=(window._lastInspect||'').toLowerCase();
-  var dim=/aircraft|air/.test(t)?'air':/vessel|marine|ship/.test(t)?'sea':/satellite|orbit/.test(t)?'space':'ground';
-  var aff=/threat|isr|hostile/.test(t)?'hostile':'unknown';
-  var ds=_cotDS(); ds.show=true; _cotAdd(ds, ll[0], ll[1], aff, dim, (window._lastInspect||'track').slice(0,24));
+  var name=label||window._lastInspect||'track'; var t=(''+name).toLowerCase();
+  var dim=/aircraft|air|✈/.test(t)?'air':/vessel|marine|ship|⚓/.test(t)?'sea':/satellite|orbit|🛰/.test(t)?'space':'ground';
+  var aff=/threat|isr|hostile|🎯/.test(t)?'hostile':'unknown';
+  var ds=_cotDS(); ds.show=true; _cotAdd(ds, ll[0], ll[1], aff, dim, (''+name).replace(/<[^>]+>/g,'').slice(0,24));
   var cb=document.getElementById('lyCot'); if(cb) cb.checked=true;
-  if(window.sigilSign) sigilSign('cot-export', (window._lastInspect||'contact')+' → '+aff+'/'+dim);
+  try{ _cotTray(); }catch(_){}
+  if(window.sigilSign) sigilSign('cot-export', name+' → '+aff+'/'+dim);
   if(window.openHorus) openHorus();
-  if(window.horusReply) horusReply('Exported <b>'+_hcx(window._lastInspect||'contact')+'</b> as a <b>Cursor-on-Target</b> track — <b>'+aff+' · '+dim+'</b>, MIL-STD-2525 symbol placed. It now rides the CoT layer any TAK/ATAK client can ingest — and the export is signed.');
+  if(window.horusReply) horusReply('Exported <b>'+_hcx(name)+'</b> as a <b>Cursor-on-Target</b> track — <b>'+aff+' · '+dim+'</b>, MIL-STD-2525 symbol placed. It now rides the CoT layer any TAK/ATAK client can ingest — and the export is signed.');
 }
 window.sovCotFromNode=sovCotFromNode;
+// ── SIGN ALL IN VIEW · one batch receipt over every positioned live contact currently shown ──
+async function sovSignAllInView(){ if(!viewer) return;
+  var srcs=[[airDS,'aircraft'],[marineDS,'vessels'],[quakeDS,'seismic'],[signalsDS,'news'],[eventsDS,'disasters'],[threatDS,'threats'],[window._fireDS,'fires'],[camerasDS,'cameras'],[aqDS,'air-quality'],[window._powerDS,'power'],[window._airportsDS,'airports'],[satDS,'satellites']];
+  var counts={}, total=0;
+  srcs.forEach(function(pr){ var ds=pr[0]; if(!ds||!ds.show) return; var n=0; ds.entities.values.forEach(function(e){ if(e.position) n++; }); if(n){ counts[pr[1]]=n; total+=n; } });
+  if(window.openHorus) openHorus();
+  if(!total){ if(window.horusReply) horusReply('Nothing positioned in view yet — say “light it up” or turn on a layer, then I’ll sign the whole picture.'); return; }
+  var summary=Object.keys(counts).map(function(k){return counts[k]+' '+k;}).join(' · ');
+  if(window.sigilSign){ try{ var s=await sigilSign('batch-contacts', total+' contacts · '+summary);
+    if(window.horusReply) horusReply('Signed the whole live picture — <b>'+total+'</b> contacts ('+summary+') — as one batch receipt. Ed25519 <code>'+(((s&&s.sig)||'').slice(0,18))+'…</code>, hash-chained on this device. <a class="bg-link" onclick="if(window.sigilPanel)sigilPanel()">open ledger ›</a>');
+    if(window.pushFeed) pushFeed('SIGNED · '+total+' live contacts batch-signed to the ledger'); return;
+  }catch(e){} }
+  if(window.sigilLog) sigilLog('batch-contacts', total+' · '+summary);
+  if(window.horusReply) horusReply('Logged <b>'+total+'</b> contacts to the ledger.');
+}
+window.sovSignAllInView=sovSignAllInView;
+// ── CoT TRAY · a live chip showing exported tracks · clear / export .cot ──
+function _cotTray(){ var n=(window._cotDataSrc&&window._cotDataSrc.show)?window._cotDataSrc.entities.values.length:0; var el=document.getElementById('cotTray');
+  if(!n){ if(el) el.remove(); return; }
+  if(!el){ el=document.createElement('div'); el.id='cotTray'; el.style.cssText='position:fixed;left:14px;bottom:112px;z-index:57;background:rgba(10,16,28,.94);border:1px solid rgba(120,150,200,.35);border-radius:11px;padding:8px 11px;color:#dfe7f5;font:600 11px/1.3 ui-monospace,monospace;box-shadow:0 10px 30px rgba(0,0,0,.5);backdrop-filter:blur(8px)'; document.body.appendChild(el); }
+  el.innerHTML='<div style="color:#5ff4ff;letter-spacing:.5px;margin-bottom:4px">🎯 CoT · <b id="cotTrayN">'+n+'</b> tracks</div><div style="display:flex;gap:6px"><button onclick="if(window.cotExport)cotExport()" style="cursor:pointer;background:linear-gradient(90deg,#0bd,#5ff4ff);color:#04121a;border:none;border-radius:7px;padding:4px 8px;font:700 10px ui-monospace,monospace">⧉ export</button><button onclick="if(window._cotDataSrc){window._cotDataSrc.entities.removeAll();}_cotTray();if(window.pushFeed)pushFeed(\'CoT · cleared\')" style="cursor:pointer;background:transparent;color:#9ab;border:1px solid rgba(255,255,255,.2);border-radius:7px;padding:4px 8px;font:600 10px ui-monospace,monospace">clear</button></div>';
+}
+window._cotTray=_cotTray;
 function setDoctrine(d,quiet){
   if(!quiet && window.sigilLog) sigilLog('doctrine', d==='east'?'DORADO · East':'SIGIL · West');
   document.body.classList.remove('doctrine-west','doctrine-east'); document.body.classList.add('doctrine-'+d);
@@ -1401,7 +1433,8 @@ function openCamera(cam, slot){ slot=slot||0; if(!cam) return; var id='camWin'+(
     '<div class="camOff" style="display:none;align-items:center;justify-content:center;height:108px;color:var(--dim);font-size:12px;text-align:center;padding:0 14px">this camera is offline right now — reopen, or use the snapshot link below</div>'+
     '</div>'+
     '<div style="font-size:10.5px;color:var(--dim);margin-top:6px">'+(cam.city?String(cam.city).replace(/[<>]/g,'')+' · ':'')+(cam.video?'<b style="color:var(--neon)">live motion</b> · ':'live · auto-refresh · ')+'<b style="color:var(--neon)">public feed</b></div>'+
-    '<div style="margin-top:6px">'+(cam.video?'<a href="'+cam.video+'" target="_blank" rel="noopener" class="chip">▶ feed</a> ':'')+'<a href="'+cam.image+'" target="_blank" rel="noopener" class="chip">↗ snapshot</a></div></div>';
+    '<div style="margin-top:6px">'+(cam.video?'<a href="'+cam.video+'" target="_blank" rel="noopener" class="chip">▶ feed</a> ':'')+'<a href="'+cam.image+'" target="_blank" rel="noopener" class="chip">↗ snapshot</a></div>'+
+    '<div class="intro-cta" style="margin-top:7px">'+_sovActs('📷 '+(cam.name||'camera'), cam.lon, cam.lat)+'</div></div>';
   document.body.appendChild(w);
   _registerMediaWin(w, 24000);
   var _im=w.querySelector('.camImg'), _vid=w.querySelector('.camVid');
@@ -1458,7 +1491,8 @@ function openNewsCard(sig){ if(!sig) return; var id='newsCard'; var old=document
     : '<div style="color:#8a97b4;font-size:12px;margin:6px 0">Live per-article links are throttled right now — open the live feed for <b>'+_hcx(sig.name)+'</b>:</div><a href="https://news.google.com/search?q='+encodeURIComponent(sig.name+' '+(sig.headline||''))+'" target="_blank" rel="noopener" style="color:#5ff4ff">▸ Google News · '+_hcx(sig.name)+' ↗</a>';
   w.innerHTML='<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px"><b style="letter-spacing:.3px">📰 '+_hcx(sig.name)+'</b><span onclick="var e=document.getElementById(\''+id+'\');if(e)e.remove()" style="cursor:pointer;color:#8a97b4;font-weight:700;padding:0 5px">✕</span></div>'+
     '<div style="font-size:11px;color:#8a97b4;margin-bottom:6px">'+(sig.count||arts.length)+' articles · last 24h · GDELT 2.0 · geolocated to this spot</div>'+links+
-    '<div style="font-size:10px;color:#00e07a;margin-top:8px">◉ opened live · signed to the SIGIL ledger · Event → Location → Signal</div>';
+    '<div style="font-size:10px;color:#00e07a;margin-top:8px">◉ opened live · signed to the SIGIL ledger · Event → Location → Signal</div>'+
+    '<div class="intro-cta" style="margin-top:9px">'+_sovActs('📰 '+(sig.name||'news hotspot'), sig.lon, sig.lat)+'</div>';
   document.body.appendChild(w); if(window.sigilLog) sigilLog('news','opened live news · '+sig.name);
 }
 window.openNewsCard=openNewsCard;
@@ -1470,7 +1504,7 @@ function sovNewsFocus(region){ var sigs=window._newsSignals||[]; var pick=null;
 window.sovNewsFocus=sovNewsFocus;
 
 let FEED=[];
-var SUGG=[['✨','light it up'],['📍','scan my area'],['📷','cameras in london'],['🌧️','weather radar'],['🚆','rail network'],['💹','financial centres'],['🏬','local businesses'],['🗂','domains ontology'],['🛬','global airports'],['⚡','power plants'],['🌫️','air quality'],['🔥','show wildfires'],['🛰','satellites'],['🏙','street view in london'],['🛡️','AI governance'],['⚖️','compare doctrines'],['🔏','SIGIL ledger'],['▶','run demo'],['🗂','set up my workspace'],['✈️','open aircraft'],['⚓','marine vessels'],['📰','news in ukraine'],['🧭','what is near gibraltar'],['🌍','world view'],['🪶','lite mode'],['🛰','what am I looking at'],['⚡','convergence'],['⚓','maritime chokepoints'],['⛽','pipelines'],['🎯','military symbology'],['🛰','export cot'],['🛡️','protect the ai space'],['◆','why defoneos'],['🗓','next dates'],['🧬','the moat in 3d'],['🌐','submarine cables'],['📡','comms masts'],['❓','what can you do']];
+var SUGG=[['✨','light it up'],['📍','scan my area'],['📷','cameras in london'],['🌧️','weather radar'],['🚆','rail network'],['💹','financial centres'],['🏬','local businesses'],['🗂','domains ontology'],['🛬','global airports'],['⚡','power plants'],['🌫️','air quality'],['🔥','show wildfires'],['🛰','satellites'],['🏙','street view in london'],['🛡️','AI governance'],['⚖️','compare doctrines'],['🔏','SIGIL ledger'],['▶','run demo'],['🗂','set up my workspace'],['✈️','open aircraft'],['⚓','marine vessels'],['📰','news in ukraine'],['🧭','what is near gibraltar'],['🌍','world view'],['🪶','lite mode'],['🛰','what am I looking at'],['⚡','convergence'],['⚓','maritime chokepoints'],['⛽','pipelines'],['🎯','military symbology'],['🛰','export cot'],['🔏','sign all in view'],['🛡️','protect the ai space'],['◆','why defoneos'],['🗓','next dates'],['🧬','the moat in 3d'],['🌐','submarine cables'],['📡','comms masts'],['❓','what can you do']];
 function _runSugg(t){ var el=document.getElementById('cmd'); if(el) el.value=t; var b=document.getElementById('cmdSugg'); if(b) b.classList.remove('open'); command(); }
 function cmdSuggest(v){ var box=document.getElementById('cmdSugg'); if(!box) return; v=(''+(v||'')).toLowerCase().trim();
   if(v.length<2){ box.classList.remove('open'); box.innerHTML=''; return; }
@@ -1613,7 +1647,7 @@ function cotImport(xml){ if(!viewer||!xml) return 0; var n=0; try{
     var cs=e.getElementsByTagName('contact')[0]; var name=(cs&&cs.getAttribute('callsign'))||uid;
     _cotAdd(ds,lon,lat,_cotAff(type),_cotDim(type),name); n++;
   }
-  if(n){ try{ if(window.stopSpin) stopSpin(); viewer.flyTo(ds,{duration:2}); }catch(_){} if(window.pushFeed) pushFeed('CoT · imported '+n+' track'+(n>1?'s':'')+' → APP-6/2525 symbols'); if(window.sigilLog) sigilLog('cot','imported '+n+' CoT tracks'); if(window.horusReply) horusReply('Imported <b>'+n+'</b> Cursor-on-Target track'+(n>1?'s':'')+' and rendered '+(window.ms?'proper <b>NATO APP-6 / MIL-STD-2525</b> symbols':'affiliation markers')+' on the globe — the same format a TAK client would send.'); }
+  if(n){ try{ _cotTray(); }catch(_){} try{ if(window.stopSpin) stopSpin(); viewer.flyTo(ds,{duration:2}); }catch(_){} if(window.pushFeed) pushFeed('CoT · imported '+n+' track'+(n>1?'s':'')+' → APP-6/2525 symbols'); if(window.sigilLog) sigilLog('cot','imported '+n+' CoT tracks'); if(window.horusReply) horusReply('Imported <b>'+n+'</b> Cursor-on-Target track'+(n>1?'s':'')+' and rendered '+(window.ms?'proper <b>NATO APP-6 / MIL-STD-2525</b> symbols':'affiliation markers')+' on the globe — the same format a TAK client would send.'); }
   else if(window.pushFeed) pushFeed('CoT · no <event> with a <point> found');
 }catch(err){ if(window.pushFeed) pushFeed('CoT · parse error — expects <event> Cursor-on-Target XML'); } return n; }
 function _cotGather(){ var out=[]; var srcs=[[threatDS,'H','G'],[simDS,'H','G'],[airDS,'U','A'],[marineDS,'U','S']];
@@ -1626,6 +1660,7 @@ function cotExport(){ var t=_cotGather(); var now=new Date(), iso=now.toISOStrin
 function cotDemo(){ if(!viewer) return; var loc=window._userLoc||{lon:-0.13,lat:51.5}; var ds=_cotDS(); ds.show=true;
   [['F','G','FRIENDLY · ground'],['H','A','HOSTILE · air'],['N','S','NEUTRAL · vessel'],['U','G','UNKNOWN · unit']].forEach(function(d,i){ _cotAdd(ds, loc.lon+(i-1.5)*0.14, loc.lat+0.06, d[0], d[1], d[2]); });
   try{ if(window.stopSpin) stopSpin(); viewer.camera.flyTo({destination:C.Cartesian3.fromDegrees(loc.lon,loc.lat,90000),duration:2.2}); }catch(_){}
+  try{ _cotTray(); }catch(_){}
   if(window.pushFeed) pushFeed('SYMBOLOGY · MIL-STD-2525 / APP-6 ('+(window.ms?'milsymbol':'fallback markers')+')');
   if(window.horusReply) horusReply('These are <b>NATO APP-6 / MIL-STD-2525</b> symbols — the standard on every C2 map (friendly <span style="color:#3b82f6">blue</span>, hostile <span style="color:#ff4d4d">red</span>, neutral <span style="color:#00e07a">green</span>, unknown <span style="color:#eab308">yellow</span>). Rendered with the open <b>milsymbol</b> library. I also speak <b>Cursor-on-Target</b> — say “export CoT” to hand these to a TAK client, or “import CoT” to plot a TAK feed. Classified tracks (Link-16 / STANAG) bind on the sovereign node.'); }
 function _cotPanel(mode, text, count){ var id='cotWin'; var old=document.getElementById(id); if(old) old.remove();
@@ -1677,7 +1712,8 @@ function _convPanel(conv,hot){ var id='convWin'; var old=document.getElementById
   w.innerHTML='<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px"><b>⚡ Convergence &amp; hotspots</b><span onclick="var e=document.getElementById(\''+id+'\');if(e)e.remove()" style="cursor:pointer;color:#8a97b4;font-weight:700;padding:0 4px">✕</span></div>'+
     '<div style="font-size:11px;color:#8a97b4;margin-bottom:8px">Real cross-source correlation over the live layers on your globe — signed to the ledger. <b>Not</b> a classified risk score; transparent event density.</div>'+
     '<div style="color:#c9a84c;font:700 10px ui-monospace,monospace;letter-spacing:1px;margin:6px 0 4px">⚠ MULTI-SOURCE CONVERGENCE</div>'+convH+
-    '<div style="color:#c9a84c;font:700 10px ui-monospace,monospace;letter-spacing:1px;margin:12px 0 4px">◉ OPEN-SIGNAL DENSITY (TOP)</div>'+hotH;
+    '<div style="color:#c9a84c;font:700 10px ui-monospace,monospace;letter-spacing:1px;margin:12px 0 4px">◉ OPEN-SIGNAL DENSITY (TOP)</div>'+hotH+
+    '<button onclick="if(window.sovSignAllInView)sovSignAllInView()" style="margin-top:11px;width:100%;cursor:pointer;background:linear-gradient(90deg,#0bd,#5ff4ff);color:#04121a;border:none;border-radius:9px;padding:9px;font:700 12px ui-monospace,monospace">🔏 Sign all contacts in view</button>';
   document.body.appendChild(w); }
 window.convergenceScan=convergenceScan; window._convPanel=_convPanel;
 
@@ -3254,6 +3290,7 @@ function command(){
   if(/(import cot|cot import|paste cot|load cot|ingest cot|read cot)/.test(q)){ if(window._cotPanel) window._cotPanel('import','',0); res('CoT import · paste Cursor-on-Target XML'); return; }
   if(/(military symbol|mil.?std.?2525|milstd|2525|app.?6|symbolog|nato symbol|tactical symbol|joint symbol)/.test(q)){ if(window.cotDemo) cotDemo(); res('MIL-STD-2525 / APP-6 symbology · milsymbol'); return; }
   // ── FUSION ANALYTICS + new layers (convergence · chokepoints · energy infra) ──
+  if(/(sign all|sign everything|sign the (view|board|picture|contacts)|batch.?sign|sign (all )?contacts)/.test(q)){ if(window.sovSignAllInView) sovSignAllInView(); return res('signing every live contact in view — one batch receipt'); }
   if(/(convergence|converge|early.?warning|cross.?source|signal fusion|fuse (the )?signals|hotspots?|hot spot|kicking off|correlat)/.test(q)){ if(window.convergenceScan) convergenceScan(); res('fusion analytics · cross-source convergence + hotspots · signed'); return; }
   if(/(chokepoint|choke.?point|\bstrait\b|straits|shipping lane|hormuz|malacca|\bsuez\b|bab.?el.?mandeb|bosph|dardanelle|panama canal)/.test(q)){ if(window.toggleChokepoints) toggleChokepoints(); res('maritime chokepoints · public geography + live AIS exposure'); return; }
   if(/(pipeline|pipelines|\blng\b|gas terminal|oil terminal|petroleum reserve|\bspr\b|hydrocarbon|energy infra)/.test(q)){ if(window.toggleEnergyInfra) toggleEnergyInfra(); res('energy infrastructure · major pipelines + LNG/storage (curated)'); return; }
