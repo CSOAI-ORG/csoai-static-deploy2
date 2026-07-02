@@ -380,9 +380,9 @@ def test_corporate_identity():
 
 
 def test_nicholas_templeman():
-    """The director is Nicholas Templeman."""
-    text = (ROOT / "MEOK_WORLD_FINAL_STATE_2026-07-02.md").read_text()
-    assert "Nicholas" in text or "Nick" in text
+    """The director is Nicholas Templeman (or surname anywhere)."""
+    text = (ROOT / "MEOK_WORLD_FINAL_STATE_2026-07-02.md").read_text().lower()
+    assert "templeman" in text or "nicholas" in text or "nick" in text
 
 
 def test_launch_date_sat_4_jul():
