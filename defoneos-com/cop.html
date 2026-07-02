@@ -397,9 +397,11 @@
 #bootGate .bg-cred{ margin:16px auto 0; max-width:470px; }
 #bootGate .bg-cred .cc-h{ font:700 8.5px ui-monospace,monospace; letter-spacing:2.5px; color:#5ff4ff; opacity:.6; margin:9px 0 5px; }
 #bootGate .bg-cred .cc-row{ display:flex; flex-wrap:wrap; gap:5px; justify-content:center; }
-#bootGate .bg-cred .cc{ font:600 9.5px ui-monospace,monospace; letter-spacing:.4px; color:#cfe3f2; background:rgba(95,244,255,.07); border:1px solid rgba(95,244,255,.22); border-radius:8px; padding:3px 8px; white-space:nowrap; }
+#bootGate .bg-cred .cc{ font:600 9.5px ui-monospace,monospace; letter-spacing:.4px; color:#cfe3f2; background:rgba(95,244,255,.07); border:1px solid rgba(95,244,255,.22); border-radius:8px; padding:3px 8px; white-space:nowrap; text-decoration:none; transition:background .15s,border-color .15s; }
+#bootGate .bg-cred a.cc:hover{ background:rgba(95,244,255,.18); border-color:rgba(95,244,255,.55); color:#eaf9ff; }
 #bootGate .bg-cred .cc b{ color:#9effc0; font-weight:800; }
 #bootGate .bg-cred .cc-note{ font:500 8.5px ui-monospace,monospace; color:#7d8ea0; margin-top:7px; letter-spacing:.3px; }
+#bootGate .bg-cred .cc-verify{ display:inline-block; margin-top:8px; font:700 9px ui-monospace,monospace; letter-spacing:1.5px; color:#9effc0; cursor:pointer; text-decoration:none; border-bottom:1px dotted rgba(158,255,192,.5); }
 #bootGate .bg-btns{ margin-top:22px; display:flex; gap:12px; justify-content:center; flex-wrap:wrap; }
 #bootGate .bg-allow{ cursor:pointer; background:linear-gradient(90deg,#0bd,#5ff4ff); color:#02121a; font:800 15px ui-monospace,monospace; border:none; border-radius:14px; padding:14px 28px; box-shadow:0 10px 30px rgba(95,244,255,.35); }
 #bootGate .bg-silent{ cursor:pointer; background:transparent; color:#9ab; border:1px solid rgba(255,255,255,.2); border-radius:14px; padding:14px 22px; font:600 14px ui-monospace,monospace; }
@@ -425,13 +427,13 @@
       <div class="bg-cred">
         <div class="cc-h">BUILT ON OPEN STANDARDS</div>
         <div class="cc-row">
-          <span class="cc">MCP</span><span class="cc">A2A</span><span class="cc">NIST <b>OSCAL</b></span><span class="cc">MIL-STD-<b>2525</b></span><span class="cc">Cursor-on-Target</span><span class="cc">W3C DID/VC</span><span class="cc"><b>Ed25519</b></span><span class="cc">CesiumJS</span>
+          <a class="cc" href="https://modelcontextprotocol.io" target="_blank" rel="noopener">MCP</a><a class="cc" href="https://github.com/a2aproject/A2A" target="_blank" rel="noopener">A2A</a><a class="cc" href="https://pages.nist.gov/OSCAL/" target="_blank" rel="noopener">NIST <b>OSCAL</b></a><a class="cc" href="https://en.wikipedia.org/wiki/MIL-STD-2525" target="_blank" rel="noopener">MIL-STD-<b>2525</b></a><a class="cc" href="https://en.wikipedia.org/wiki/Cursor_on_Target" target="_blank" rel="noopener">Cursor-on-Target</a><a class="cc" href="https://www.w3.org/TR/did-core/" target="_blank" rel="noopener">W3C DID/VC</a><a class="cc" href="https://ed25519.cr.yp.to/" target="_blank" rel="noopener"><b>Ed25519</b></a><a class="cc" href="https://cesium.com/platform/cesiumjs/" target="_blank" rel="noopener">CesiumJS</a>
         </div>
         <div class="cc-h">LIVE PUBLIC DATA</div>
         <div class="cc-row">
-          <span class="cc">NASA</span><span class="cc">NOAA</span><span class="cc">USGS</span><span class="cc">ESA</span><span class="cc">GDELT</span><span class="cc">OpenSky</span><span class="cc">CelesTrak</span><span class="cc">TfL</span>
+          <a class="cc" href="https://www.earthdata.nasa.gov/" target="_blank" rel="noopener">NASA</a><a class="cc" href="https://www.noaa.gov/" target="_blank" rel="noopener">NOAA</a><a class="cc" href="https://earthquake.usgs.gov/" target="_blank" rel="noopener">USGS</a><a class="cc" href="https://www.esa.int/" target="_blank" rel="noopener">ESA</a><a class="cc" href="https://www.gdeltproject.org/" target="_blank" rel="noopener">GDELT</a><a class="cc" href="https://opensky-network.org/" target="_blank" rel="noopener">OpenSky</a><a class="cc" href="https://celestrak.org/" target="_blank" rel="noopener">CelesTrak</a><a class="cc" href="https://tfl.gov.uk/" target="_blank" rel="noopener">TfL</a>
         </div>
-        <div class="cc-note">AI routed via API (Anthropic Claude + open models). Standards &amp; feeds are interoperability inputs — not endorsements.</div>
+        <div class="cc-note">AI routed via API (Anthropic Claude + open models). Standards &amp; feeds are interoperability inputs — not endorsements. <a class="cc-verify" href="verify.html" target="_blank" rel="noopener">✓ VERIFY THESE CLAIMS ›</a></div>
       </div>
       <div class="bg-btns">
         <button class="bg-allow" onclick="_enterOS(false)">▶ Enter DEFONEOS</button>
