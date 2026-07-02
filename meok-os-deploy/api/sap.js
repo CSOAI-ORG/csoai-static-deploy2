@@ -38,8 +38,15 @@ export default function handler(req, res){
     };
     const pkg = {
       spec: 'meok.sap.v1',
-      type: 'sovereign-agent-package',
-      interop: ['a2a-agent-card', 'mcp/2024-11-05', 'letta/agent-file(.af)'],
+      type: 'sovereign-governance-profile',
+      // HONEST positioning: NOT a new protocol. Portable signed agent packages are already being
+      // standardized (AGNTCY/Linux Foundation: OASF records as OCI artifacts, Sigstore-signed, DID/VC
+      // identity, A2A+MCP interop, draft 2026-01-12). We do NOT compete with that. Our uncontested edge:
+      // a SOVEREIGN, SELF-OWNED, OFFLINE-verifiable Ed25519 signature + EMBEDDED governance (care-floor,
+      // hard-stops) — vs AGNTCY/Sigstore's keyless CA/OIDC model that needs an online trust root.
+      positioning: 'Sovereign, offline-verifiable, governed PROFILE that rides the emerging standards — not a replacement for them.',
+      interop: ['a2a-agent-card', 'mcp/2024-11-05', 'letta/agent-file(.af)', 'agntcy/OASF(OCI)-compatible', 'w3c-did/vc (roadmap)'],
+      differs_from: { 'AGNTCY/Sigstore': 'they sign keyless via a CA/OIDC (Fulcio) — online trust root; we self-own an offline Ed25519 key', 'Letta .af': 'we add a signature + governance', 'AIP/arxiv proposals': 'shipped, not a paper' },
       agent: { name, archetype: arch, description: persona, version:'1.0.0', provider:'CSOAI / MEOK (UK Co. 16939677)' },
       state: af_state,                                   // the MIND, portable (Letta-.af shape)
       governance: { careFloor: 0.95, hardStops:['no harm','no unvoted autonomy','no covert surveillance'], frameworks:['EU AI Act','ISO 42001','JSP 936 (defence variant)'] },
@@ -54,6 +61,6 @@ export default function handler(req, res){
     const fingerprint='SOV:'+crypto.createHash('sha256').update(pubHex).digest('hex').slice(0,32).match(/.{1,4}/g).join('-').toUpperCase();
     if((q.format||'').toString().toLowerCase()==='af'){ return res.status(200).json(af_state); }  // Letta import
     return res.status(200).json({ ok:true, package:pkg, signature:{ alg:'ed25519', canonical:message, signature, publicKey:pubHex, sha256, fingerprint, seeded:!!process.env.SIGIL_SEED, verify: base+'/api/verify' },
-      note:'Sovereign Agent Package — the AGENT is inside + signed; the MODEL is pluggable. Verify at /api/verify. ?format=af for Letta import.' });
+      note:'Sovereign governance PROFILE for portable agents — rides AGNTCY(OASF/OCI)+A2A+MCP+.af, adds the offline-verifiable sovereign+governed signature they lack. AGENT inside+signed; MODEL pluggable. Verify at /api/verify; ?format=af for Letta import.' });
   }catch(e){ return res.status(500).json({ ok:false, error:String(e.message||e) }); }
 }
