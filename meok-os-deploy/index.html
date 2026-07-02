@@ -316,16 +316,16 @@ body.touring #tourhud{animation:sovMsgIn .5s ease}
 </style>
 </head>
 <body>
-<div class="frame" id="frame">
+<div class="frame" id="frame" data-testid="meok-frame">
   <div class="grid-bg"></div>
   <canvas class="pond" id="pond"></canvas>
 
   <!-- top bar -->
-  <div class="bar">
-    <div class="hb" id="hb" role="button" tabindex="0" aria-label="Open menu" title="Menu" onclick="navToggle(true)">☰</div>
+  <div class="bar" data-testid="top-bar">
+    <div class="hb" id="hb" role="button" tabindex="0" aria-label="Open menu" title="Menu" onclick="navToggle(true)" data-testid="nav-toggle">☰</div>
     <div class="logo"><span class="dot"></span> MEOK&nbsp;OS <span style="color:var(--dim);font-weight:500">v3.0</span></div>
     <div class="pill csoai" title="Your sovereign OS — governed & powered by CSOAI"><span class="sdot ok" id="csoaidot"></span> Powered by <b>CSOAI</b></div>
-    <div class="modesw" title="One OS, two clean spaces — Work shows your business tools, Life shows your personal ones"><span class="ms" data-m="csoai" onclick="setMode('csoai')">Work</span><span class="ms" data-m="meok" onclick="setMode('meok')">Life</span></div>
+    <div class="modesw" title="One OS, two clean spaces — Work shows your business tools, Life shows your personal ones" data-testid="mode-switch"><span class="ms" data-m="csoai" onclick="setMode('csoai')">Work</span><span class="ms" data-m="meok" onclick="setMode('meok')">Life</span></div>
     <div class="spacer"></div>
     <div class="pill"><b id="clock">--:--</b></div>
     <div class="btn" onclick="boot();refreshLive()">⟳ Sync</div>
@@ -335,8 +335,8 @@ body.touring #tourhud{animation:sovMsgIn .5s ease}
   <div class="dive" id="dive"><div class="divegrid"></div><div class="diveorb"></div><div class="divetext">ENTERING YOUR WORLD…</div></div>
 
   <!-- left navigation drawer — all the pages people need, one tap away -->
-  <div class="navscrim" id="navscrim" onclick="navToggle(false)"></div>
-  <nav class="navdrawer" id="navdrawer" aria-label="Main menu">
+  <div class="navscrim" id="navscrim" onclick="navToggle(false)" data-testid="nav-scrim"></div>
+  <nav class="navdrawer" id="navdrawer" aria-label="Main menu" data-testid="nav-drawer">
     <div class="ndhead"><span class="ndlogo">M</span><div><b>MEOK OS</b><br><span style="color:var(--dim);font-size:11px">your sovereign world</span></div><span class="ndx" onclick="navToggle(false)" role="button" aria-label="Close menu">✕</span></div>
     <div class="ndsec">Your AI</div>
     <a class="ndi" onclick="navTo('sov')"><span>🐉</span> Talk to your Sovereign</a>
@@ -357,16 +357,16 @@ body.touring #tourhud{animation:sovMsgIn .5s ease}
   </nav>
 
   <!-- desktop -->
-  <div class="desktop">
-    <div class="tiles" id="tiles"></div>
+  <div class="desktop" data-testid="desktop">
+    <div class="tiles" id="tiles" data-testid="app-tiles"></div>
   </div>
-  <div class="welcome" id="welcome"><div id="wstep"></div></div>
+  <div class="welcome" id="welcome" data-testid="welcome-overlay"><div id="wstep"></div></div>
   <div class="hint">Tap an app · <b>drag tiles to rearrange</b> · drag window headers to move · 🐉 talk to your sovereign</div>
 
   <!-- sovereign companion dock — the new interface: a character + a chat bar, always present -->
-  <div class="sovfab" onclick="sovToggle(true)" title="Your sovereign">🐉</div>
+  <div class="sovfab" onclick="sovToggle(true)" title="Your sovereign" data-testid="sov-fab">🐉</div>
 
-  <div class="sovdock" id="sovdock" style="--sh:43">
+  <div class="sovdock" id="sovdock" style="--sh:43" data-testid="sov-dock">
     <div class="sovhead">
       <div class="sovchar" id="sovchar" onclick="enterWorld(event)" title="Your living world — tap to step inside">
         <div class="sovaura"></div>
@@ -394,17 +394,17 @@ body.touring #tourhud{animation:sovMsgIn .5s ease}
       <span class="sgg" onclick="location.href='/pricing.html'">💎 Plans</span>
       <span class="sgg" onclick="sovHandle('what can you do')">❓ Help</span>
     </div>
-    <div class="sovbar">
-      <span class="sovbtn sovmic" id="sovmic" role="button" tabindex="0" aria-label="Speak to your Sovereign" onclick="sovVoice()" title="Speak to me">🎤</span>
+    <div class="sovbar" data-testid="sov-bar">
+      <span class="sovbtn sovmic" id="sovmic" role="button" tabindex="0" aria-label="Speak to your Sovereign" onclick="sovVoice()" title="Speak to me" data-testid="sov-mic">🎤</span>
       <span class="sovbtn" id="sovspk" role="button" tabindex="0" aria-label="Toggle voice replies" onclick="sovSpeakToggle()" title="Voice replies (off)">🔇</span>
-      <input class="sovin" id="sovin" aria-label="Message your Sovereign" placeholder="Speak or type… 'open revenue'" onkeydown="if(event.key==='Enter')sovSend()">
+      <input class="sovin" id="sovin" data-testid="sov-input" aria-label="Message your Sovereign" placeholder="Speak or type… 'open revenue'" onkeydown="if(event.key==='Enter')sovSend()">
       <span class="sovbtn" role="button" tabindex="0" aria-label="Send message" onclick="sovSend()" title="Send">➤</span>
       <span class="sovbtn" role="button" tabindex="0" aria-label="Minimise the Sovereign dock" onclick="sovToggle(false)" title="Minimise">▸</span>
     </div>
   </div>
 
   <!-- taskbar -->
-  <div class="taskbar">
+  <div class="taskbar" data-testid="taskbar">
     <div class="tb-pill" onclick="openApp('king')">◉ King</div>
     <div class="tb-pill" onclick="openApp('runway')">🚀 Runway</div>
     <div class="tb-pill" onclick="openApp('revenue')">£ Revenue</div>
@@ -413,7 +413,7 @@ body.touring #tourhud{animation:sovMsgIn .5s ease}
   </div>
 
   <!-- boot -->
-  <div class="boot" id="boot">
+  <div class="boot" id="boot" data-testid="boot-screen">
     <div class="emerge"><svg class="emsvg" viewBox="0 0 220 220" xmlns="http://www.w3.org/2000/svg">
       <defs>
         <radialGradient id="gAura" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#e6a07c" stop-opacity=".55"/><stop offset="45%" stop-color="#9dbe9a" stop-opacity=".40"/><stop offset="72%" stop-color="#b4b6e8" stop-opacity=".30"/><stop offset="100%" stop-color="#b4b6e8" stop-opacity="0"/></radialGradient>
@@ -1142,9 +1142,9 @@ async function brdSign(encMsg){ const out=document.getElementById('brd-sig'); if
 function openApp(id){ track('app:'+id,'open'); try{ if(window.MEOK_CTX) window.MEOK_CTX.app=(APPS[id]&&APPS[id].t)||id; }catch(e){}
  if(open[id]){focus(id);return;}
  const a=APPS[id];const d=document.getElementById('frame');
- const n=document.createElement('div');n.className='win';n.style.width=(a.w||520)+'px';
+ const n=document.createElement('div');n.className='win';n.dataset.testid='app-window-'+id;n.style.width=(a.w||520)+'px';
  const idx=Object.keys(open).length; n.style.left=(60+idx*26)+'px'; n.style.top=(60+idx*22)+'px'; n.style.zIndex=++zTop;
- n.innerHTML=`<div class="wb"><span class="wt"><span class="wi">${a.i}</span>${a.t}</span><span class="x">✕</span></div><div class="body" id="b-${id}">${content(id)}</div>`;
+ n.innerHTML=`<div class="wb"><span class="wt"><span class="wi">${a.i}</span>${a.t}</span><span class="x">✕</span></div><div class="body" id="b-${id}" data-testid="app-body-${id}">${content(id)}</div>`;
  d.appendChild(n);open[id]=n;curApp=id;
  n.querySelector('.x').onclick=()=>closeApp(id);
  n.addEventListener('mousedown',()=>focus(id));

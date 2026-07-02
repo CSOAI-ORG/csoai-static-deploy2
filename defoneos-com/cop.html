@@ -603,6 +603,8 @@
 
 <script src="https://cdn.jsdelivr.net/npm/cesium@1.118/Build/Cesium/Cesium.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/satellite.js@5.0.0/dist/satellite.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/milsymbol@2.2.0/dist/milsymbol.js"></script><!-- MIL-STD-2525 / APP-6 symbology (MIT) -->
+
 <script>
 const C = Cesium;
 const COL = { friendly:'#2a9df4', hostile:'#ff3b3b', neutral:'#00e07a', unknown:'#ffd23b' };
@@ -1288,7 +1290,7 @@ async function loadSignals(qstr){ if(!signalsDS) return; try{
   }catch(e){} }
 
 let FEED=[];
-var SUGG=[['✨','light it up'],['📍','scan my area'],['📷','cameras in london'],['🌧️','weather radar'],['🚆','rail network'],['💹','financial centres'],['🏬','local businesses'],['🗂','domains ontology'],['🛬','global airports'],['⚡','power plants'],['🌫️','air quality'],['🔥','show wildfires'],['🛰','satellites'],['🏙','street view in london'],['🛡️','AI governance'],['⚖️','compare doctrines'],['🔏','SIGIL ledger'],['▶','run demo'],['🗂','set up my workspace'],['✈️','open aircraft'],['⚓','marine vessels'],['📰','news in ukraine'],['🧭','what is near gibraltar'],['🌍','world view'],['🪶','lite mode'],['🛰','what am I looking at'],['❓','what can you do']];
+var SUGG=[['✨','light it up'],['📍','scan my area'],['📷','cameras in london'],['🌧️','weather radar'],['🚆','rail network'],['💹','financial centres'],['🏬','local businesses'],['🗂','domains ontology'],['🛬','global airports'],['⚡','power plants'],['🌫️','air quality'],['🔥','show wildfires'],['🛰','satellites'],['🏙','street view in london'],['🛡️','AI governance'],['⚖️','compare doctrines'],['🔏','SIGIL ledger'],['▶','run demo'],['🗂','set up my workspace'],['✈️','open aircraft'],['⚓','marine vessels'],['📰','news in ukraine'],['🧭','what is near gibraltar'],['🌍','world view'],['🪶','lite mode'],['🛰','what am I looking at'],['⚡','convergence'],['⚓','maritime chokepoints'],['⛽','pipelines'],['🎯','military symbology'],['🛰','export cot'],['❓','what can you do']];
 function _runSugg(t){ var el=document.getElementById('cmd'); if(el) el.value=t; var b=document.getElementById('cmdSugg'); if(b) b.classList.remove('open'); command(); }
 function cmdSuggest(v){ var box=document.getElementById('cmdSugg'); if(!box) return; v=(''+(v||'')).toLowerCase().trim();
   if(v.length<2){ box.classList.remove('open'); box.innerHTML=''; return; }
@@ -1400,6 +1402,131 @@ function toggleFires(){ if(window._fireDS && window._fireDS.show){ window._fireD
   }).catch(function(){ if(window.pushFeed) pushFeed('wildfires feed unavailable'); });
 }
 window.toggleFires=toggleFires;
+
+// ── DEFENCE INTEROP · Cursor-on-Target (CoT) + MIL-STD-2525 / APP-6 symbology ─────────────────
+// Honest scope: OSINT/demo-tier interop over PUBLIC tracks. It speaks CoT (the MITRE/AFRL tactical-edge
+// lingua franca that TAK/ATAK/WinTAK run on) and renders NATO APP-6 / MIL-STD-2525 symbols via the open
+// MIT `milsymbol` library — so DEFONEOS plugs into the TAK ecosystem instead of being an island. It does
+// NOT ingest classified feeds (Link-16/STANAG 5516, 4607 GMTI, 4676 ISR-tracks) — those bind on the
+// sovereign node. Every import/export is signed to the on-device SIGIL ledger.
+function _cx(s){ return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+function _mil2525(aff,dim){ var sidc=('S'+(aff||'U')+(dim||'G')+'P'+'-----------').slice(0,15);
+  try{ if(window.ms) return new window.ms.Symbol(sidc,{size:26,fill:true}).toDataURL(); }catch(_){} return null; }
+function _cotAff(type){ var a=(String(type||'').split('-')[1]||'u').toLowerCase(); return ({f:'F',h:'H',n:'N',u:'U',p:'U',a:'H',s:'U',j:'F',k:'H'})[a]||'U'; }
+function _cotDim(type){ var d=(String(type||'').split('-')[2]||'G').toUpperCase(); return ({A:'A',G:'G',S:'S',U:'U',P:'P',F:'G'})[d]||'G'; }
+function _cotColor(aff){ return {F:'#3b82f6',H:'#ff4d4d',N:'#00e07a',U:'#eab308'}[aff]||'#5ff4ff'; }
+function _cotDS(){ if(!window._cotDataSrc){ window._cotDataSrc=new C.CustomDataSource('cot'); viewer.dataSources.add(window._cotDataSrc); } return window._cotDataSrc; }
+function _cotAdd(ds,lon,lat,aff,dim,name){ var img=_mil2525(aff,dim), col=_cotColor(aff);
+  var ent={ position:C.Cartesian3.fromDegrees(lon,lat), _cot:true,
+    label:{ text:name||'track', font:'700 10px ui-monospace,monospace', fillColor:C.Color.fromCssColorString(col), showBackground:true, backgroundColor:C.Color.fromCssColorString('#0c1524').withAlpha(0.85), pixelOffset:new C.Cartesian2(0,-22), disableDepthTestDistance:Number.POSITIVE_INFINITY } };
+  if(img){ ent.billboard={ image:img, disableDepthTestDistance:Number.POSITIVE_INFINITY }; }
+  else { ent.point={ pixelSize:11, color:C.Color.fromCssColorString(col), outlineColor:C.Color.BLACK, outlineWidth:1.5, disableDepthTestDistance:Number.POSITIVE_INFINITY }; }
+  return ds.entities.add(ent); }
+function cotImport(xml){ if(!viewer||!xml) return 0; var n=0; try{
+  var doc=new DOMParser().parseFromString(xml,'application/xml');
+  if(doc.getElementsByTagName('parsererror').length){ if(window.pushFeed) pushFeed('CoT · invalid XML'); return 0; }
+  var evs=doc.getElementsByTagName('event'); var ds=_cotDS(); ds.show=true;
+  for(var i=0;i<evs.length;i++){ var e=evs[i]; var p=e.getElementsByTagName('point')[0]; if(!p) continue;
+    var lat=parseFloat(p.getAttribute('lat')), lon=parseFloat(p.getAttribute('lon')); if(isNaN(lat)||isNaN(lon)) continue;
+    var type=e.getAttribute('type')||'a-u-G'; var uid=e.getAttribute('uid')||('cot-'+i);
+    var cs=e.getElementsByTagName('contact')[0]; var name=(cs&&cs.getAttribute('callsign'))||uid;
+    _cotAdd(ds,lon,lat,_cotAff(type),_cotDim(type),name); n++;
+  }
+  if(n){ try{ if(window.stopSpin) stopSpin(); viewer.flyTo(ds,{duration:2}); }catch(_){} if(window.pushFeed) pushFeed('CoT · imported '+n+' track'+(n>1?'s':'')+' → APP-6/2525 symbols'); if(window.sigilLog) sigilLog('cot','imported '+n+' CoT tracks'); if(window.horusReply) horusReply('Imported <b>'+n+'</b> Cursor-on-Target track'+(n>1?'s':'')+' and rendered '+(window.ms?'proper <b>NATO APP-6 / MIL-STD-2525</b> symbols':'affiliation markers')+' on the globe — the same format a TAK client would send.'); }
+  else if(window.pushFeed) pushFeed('CoT · no <event> with a <point> found');
+}catch(err){ if(window.pushFeed) pushFeed('CoT · parse error — expects <event> Cursor-on-Target XML'); } return n; }
+function _cotGather(){ var out=[]; var srcs=[[threatDS,'H','G'],[simDS,'H','G'],[airDS,'U','A'],[marineDS,'U','S']];
+  srcs.forEach(function(pr){ var ds=pr[0]; if(!ds||!ds.show) return; ds.entities.values.forEach(function(e){ if(!e.position) return; try{ var c=e.position.getValue(viewer.clock.currentTime); if(!c) return; var cg=C.Cartographic.fromCartesian(c); var nm='track'; try{ if(e.label&&e.label.text){ nm=(e.label.text.getValue?e.label.text.getValue(viewer.clock.currentTime):e.label.text)||'track'; } }catch(_){} out.push({ uid:(e.id||'trk')+'', lat:+C.Math.toDegrees(cg.latitude).toFixed(5), lon:+C.Math.toDegrees(cg.longitude).toFixed(5), aff:pr[1], dim:pr[2], name:String(nm).replace(/<[^>]+>/g,'').slice(0,40) }); }catch(_){} }); }); return out; }
+function cotExport(){ var t=_cotGather(); var now=new Date(), iso=now.toISOString(), stale=new Date(now.getTime()+3600000).toISOString();
+  var affMap={F:'f',H:'h',N:'n',U:'u'};
+  var body=t.map(function(k){ return '  <event version="2.0" uid="'+_cx(k.uid)+'" type="a-'+(affMap[k.aff]||'u')+'-'+(k.dim||'G')+'" time="'+iso+'" start="'+iso+'" stale="'+stale+'" how="m-g">\n    <point lat="'+k.lat+'" lon="'+k.lon+'" hae="0" ce="9999999" le="9999999"/>\n    <detail><contact callsign="'+_cx(k.name)+'"/></detail>\n  </event>'; }).join('\n');
+  var xml='<?xml version="1.0" encoding="UTF-8"?>\n<!-- DEFONEOS export · Cursor-on-Target · '+t.length+' public tracks · '+iso+' -->\n<events>\n'+(body||'  <!-- no live tracks visible — turn on aircraft/marine/threat layers first -->')+'\n</events>';
+  _cotPanel('export', xml, t.length); if(window.sigilLog) sigilLog('cot','exported '+t.length+' tracks as CoT'); }
+function cotDemo(){ if(!viewer) return; var loc=window._userLoc||{lon:-0.13,lat:51.5}; var ds=_cotDS(); ds.show=true;
+  [['F','G','FRIENDLY · ground'],['H','A','HOSTILE · air'],['N','S','NEUTRAL · vessel'],['U','G','UNKNOWN · unit']].forEach(function(d,i){ _cotAdd(ds, loc.lon+(i-1.5)*0.14, loc.lat+0.06, d[0], d[1], d[2]); });
+  try{ if(window.stopSpin) stopSpin(); viewer.camera.flyTo({destination:C.Cartesian3.fromDegrees(loc.lon,loc.lat,90000),duration:2.2}); }catch(_){}
+  if(window.pushFeed) pushFeed('SYMBOLOGY · MIL-STD-2525 / APP-6 ('+(window.ms?'milsymbol':'fallback markers')+')');
+  if(window.horusReply) horusReply('These are <b>NATO APP-6 / MIL-STD-2525</b> symbols — the standard on every C2 map (friendly <span style="color:#3b82f6">blue</span>, hostile <span style="color:#ff4d4d">red</span>, neutral <span style="color:#00e07a">green</span>, unknown <span style="color:#eab308">yellow</span>). Rendered with the open <b>milsymbol</b> library. I also speak <b>Cursor-on-Target</b> — say “export CoT” to hand these to a TAK client, or “import CoT” to plot a TAK feed. Classified tracks (Link-16 / STANAG) bind on the sovereign node.'); }
+function _cotPanel(mode, text, count){ var id='cotWin'; var old=document.getElementById(id); if(old) old.remove();
+  var w=document.createElement('div'); w.id=id; var isImp=mode==='import';
+  w.style.cssText='position:fixed;right:18px;top:70px;width:min(440px,92vw);z-index:60;background:rgba(10,16,28,.96);border:1px solid rgba(120,150,200,.3);border-radius:14px;padding:14px 16px;color:#dfe7f5;font:13px/1.5 -apple-system,system-ui,sans-serif;box-shadow:0 20px 60px rgba(0,0,0,.5)';
+  w.innerHTML='<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px"><b style="letter-spacing:.5px">🎯 Cursor-on-Target · '+(isImp?'import':'export · '+count+' tracks')+'</b><span onclick="var e=document.getElementById(\''+id+'\');if(e)e.remove()" style="cursor:pointer;color:#8a97b4;font-weight:700;padding:0 4px">✕</span></div>'+
+    '<div style="font-size:11px;color:#8a97b4;margin-bottom:8px">CoT is the tactical-edge lingua franca (MITRE/AFRL) that TAK/ATAK speak. '+(isImp?'Paste &lt;event&gt; XML — I plot it with NATO APP-6/2525 symbols.':'Standard CoT — paste into any TAK client.')+'</div>'+
+    '<textarea id="cotTA" '+(isImp?'':'readonly')+' spellcheck="false" style="width:100%;height:190px;background:#070b12;color:#bcd0ee;border:1px solid rgba(120,150,200,.2);border-radius:8px;padding:8px;font:11px/1.4 ui-monospace,monospace;resize:vertical">'+_cx(text||'')+'</textarea>'+
+    '<div style="display:flex;gap:8px;margin-top:10px">'+(isImp
+      ?'<button onclick="if(window.cotImport)cotImport(document.getElementById(\'cotTA\').value);var e=document.getElementById(\''+id+'\');if(e)e.remove()" style="flex:1;cursor:pointer;background:linear-gradient(90deg,#0bd,#5ff4ff);color:#04121a;border:none;border-radius:9px;padding:9px;font-weight:700">▶ Plot tracks</button>'
+      :'<button onclick="var t=document.getElementById(\'cotTA\');t.select();try{document.execCommand(\'copy\');}catch(e){}try{if(navigator.clipboard)navigator.clipboard.writeText(t.value);}catch(e){}if(window.pushFeed)pushFeed(\'CoT · copied to clipboard\')" style="flex:1;cursor:pointer;background:linear-gradient(90deg,#0bd,#5ff4ff);color:#04121a;border:none;border-radius:9px;padding:9px;font-weight:700">⧉ Copy CoT XML</button>')+
+    '</div>';
+  document.body.appendChild(w); }
+window.cotImport=cotImport; window.cotExport=cotExport; window.cotDemo=cotDemo; window._cotPanel=_cotPanel;
+
+// ── FUSION ANALYTICS · cross-source convergence + open-signal hotspots ─────────────────────────
+// (Concept inspired by open situational-awareness dashboards; independently implemented — no third-
+// party code.) 100% REAL: computed on-device over the live layers already on your globe, then SIGNED
+// to the ledger. Honest: it is a transparent event-density / co-location readout, NOT a classified
+// risk score. This is the fusion + relevance-filtering job defence users rank #1.
+var _CITIES=[['London',51.5,-0.1],['Paris',48.9,2.35],['Berlin',52.5,13.4],['Moscow',55.75,37.6],['Kyiv',50.45,30.5],['Istanbul',41.0,28.98],['Cairo',30.05,31.24],['Dubai',25.2,55.27],['Tel Aviv',32.08,34.78],['Baghdad',33.3,44.4],['Tehran',35.7,51.4],['Riyadh',24.7,46.7],['Delhi',28.6,77.2],['Beijing',39.9,116.4],['Tokyo',35.68,139.7],['Seoul',37.57,126.98],['Taipei',25.03,121.57],['Singapore',1.35,103.8],['Bangkok',13.75,100.5],['Jakarta',-6.2,106.85],['Lagos',6.45,3.4],['Nairobi',-1.29,36.82],['Johannesburg',-26.2,28.05],['New York',40.7,-74.0],['Washington',38.9,-77.0],['Los Angeles',34.05,-118.24],['Mexico City',19.43,-99.13],['Bogota',4.7,-74.1],['Sao Paulo',-23.55,-46.63],['Buenos Aires',-34.6,-58.4],['Sydney',-33.87,151.2]];
+function _nearLabel(lat,lon){ var best=null,bd=1e9; _CITIES.forEach(function(c){ var dy=lat-c[1],dx=(lon-c[2])*Math.cos(lat*Math.PI/180); var d=dy*dy+dx*dx; if(d<bd){bd=d;best=c;} }); if(best&&bd<144) return best[0]; return Math.abs(lat).toFixed(1)+(lat>=0?'N':'S')+' '+Math.abs(lon).toFixed(1)+(lon>=0?'E':'W'); }
+window._flyLL=function(lo,la){ if(viewer){ if(window.stopSpin) stopSpin(); viewer.camera.flyTo({destination:C.Cartesian3.fromDegrees(lo,la,1500000),duration:2}); } };
+function _sigStreams(){ var S=[]; function add(ds,label){ if(!ds||!ds.show) return; ds.entities.values.forEach(function(e){ if(!e.position) return; try{ var c=e.position.getValue(viewer.clock.currentTime); if(!c) return; var g=C.Cartographic.fromCartesian(c); S.push({lon:C.Math.toDegrees(g.longitude),lat:C.Math.toDegrees(g.latitude),s:label}); }catch(_){} }); }
+  add(signalsDS,'news'); add(quakeDS,'seismic'); add(window._fireDS,'fire'); add(eventsDS,'disaster'); add(threatDS,'threat'); add(marineDS,'marine'); add(airDS,'air'); return S; }
+function convergenceScan(){ if(!viewer) return; var S=_sigStreams();
+  if(S.length<2){ if(window.horusReply) horusReply('Light up a few live layers first — I fuse convergence from what’s actually on the globe (news, seismic, fire, disasters, threats, AIS, air). Say “light it up”, then “convergence”.'); if(window.pushFeed) pushFeed('CONVERGENCE · need ≥2 live layers on'); return; }
+  var cells={}; S.forEach(function(p){ var k=Math.floor(p.lat/1.5)+'_'+Math.floor(p.lon/1.5); var c=cells[k]||(cells[k]={n:0,lat:0,lon:0,streams:{}}); c.n++; c.lat+=p.lat; c.lon+=p.lon; c.streams[p.s]=(c.streams[p.s]||0)+1; });
+  var arr=Object.keys(cells).map(function(k){ var c=cells[k]; var st=Object.keys(c.streams); return {lat:c.lat/c.n,lon:c.lon/c.n,n:c.n,streams:st,ns:st.length}; });
+  var conv=arr.filter(function(c){return c.ns>=2;}).sort(function(a,b){return b.ns-a.ns||b.n-a.n;});
+  var hot=arr.slice().sort(function(a,b){return b.n-a.n;}).slice(0,8);
+  if(!window._convDS){ window._convDS=new C.CustomDataSource('convergence'); viewer.dataSources.add(window._convDS); }
+  var ds=window._convDS; ds.entities.removeAll(); ds.show=true;
+  conv.slice(0,12).forEach(function(c){ var rad=c.n*30000+180000;
+    ds.entities.add({ position:C.Cartesian3.fromDegrees(c.lon,c.lat), point:{pixelSize:9,color:C.Color.fromCssColorString('#ff4d4d'),outlineColor:C.Color.WHITE,outlineWidth:1.5,disableDepthTestDistance:Number.POSITIVE_INFINITY}, label:{text:'⚠ '+c.streams.join('+'),font:'700 10px ui-monospace,monospace',fillColor:C.Color.fromCssColorString('#ffd0d0'),showBackground:true,backgroundColor:C.Color.fromCssColorString('#1a0808').withAlpha(0.9),pixelOffset:new C.Cartesian2(0,-16),disableDepthTestDistance:Number.POSITIVE_INFINITY},
+      ellipse:{semiMajorAxis:rad,semiMinorAxis:rad,material:C.Color.fromCssColorString('#ff4d4d').withAlpha(0.12),outline:true,outlineColor:C.Color.fromCssColorString('#ff4d4d').withAlpha(0.5),height:0} }); });
+  var top=conv[0];
+  if(window.sigilSign) sigilSign('convergence', conv.length+' multi-source clusters · top '+(top?top.streams.join('+'):'none'));
+  _convPanel(conv, hot);
+  if(top){ try{ if(window.stopSpin) stopSpin(); viewer.camera.flyTo({destination:C.Cartesian3.fromDegrees(top.lon,top.lat,2600000),duration:2.4}); }catch(_){} }
+  if(window.pushFeed) pushFeed('CONVERGENCE · '+conv.length+' multi-source cluster'+(conv.length===1?'':'s')+' · signed');
+  if(window.horusReply) horusReply('I fused every live layer on the globe and found <b>'+conv.length+'</b> place'+(conv.length===1?'':'s')+' where independent streams converge'+(top?' — strongest near <b>'+_nearLabel(top.lat,top.lon)+'</b> ('+top.streams.join(' + ')+')':'')+'. Real cross-source correlation, computed on-device and <b>signed to the ledger</b>. Ungoverned, a system acts on one noisy stream; governed, I surface the convergence and the council gates any action.');
+}
+function _convPanel(conv,hot){ var id='convWin'; var old=document.getElementById(id); if(old) old.remove(); var w=document.createElement('div'); w.id=id;
+  w.style.cssText='position:fixed;right:18px;top:70px;width:min(400px,92vw);max-height:72vh;overflow:auto;z-index:60;background:rgba(10,16,28,.96);border:1px solid rgba(120,150,200,.3);border-radius:14px;padding:14px 16px;color:#dfe7f5;font:13px/1.5 -apple-system,system-ui,sans-serif;box-shadow:0 20px 60px rgba(0,0,0,.5)';
+  function rowc(c,col){ return '<div onclick="if(window._flyLL)window._flyLL('+c.lon.toFixed(3)+','+c.lat.toFixed(3)+')" style="cursor:pointer;display:flex;justify-content:space-between;gap:8px;padding:6px 8px;border-radius:8px;background:rgba(255,255,255,.03);margin-bottom:5px"><span><b style="color:'+col+'">'+_nearLabel(c.lat,c.lon)+'</b> <span style="color:#8a97b4;font-size:11px">'+(c.streams?c.streams.join(' + '):'')+'</span></span><span style="color:#8a97b4;font-size:11px">'+c.n+' evt</span></div>'; }
+  var convH=conv.length?conv.slice(0,10).map(function(c){return rowc(c,'#ff8080');}).join(''):'<div style="color:#8a97b4;font-size:12px">No multi-source convergence right now — a calm board.</div>';
+  var hotH=hot.map(function(c){return rowc(c,'#5ff4ff');}).join('');
+  w.innerHTML='<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px"><b>⚡ Convergence &amp; hotspots</b><span onclick="var e=document.getElementById(\''+id+'\');if(e)e.remove()" style="cursor:pointer;color:#8a97b4;font-weight:700;padding:0 4px">✕</span></div>'+
+    '<div style="font-size:11px;color:#8a97b4;margin-bottom:8px">Real cross-source correlation over the live layers on your globe — signed to the ledger. <b>Not</b> a classified risk score; transparent event density.</div>'+
+    '<div style="color:#c9a84c;font:700 10px ui-monospace,monospace;letter-spacing:1px;margin:6px 0 4px">⚠ MULTI-SOURCE CONVERGENCE</div>'+convH+
+    '<div style="color:#c9a84c;font:700 10px ui-monospace,monospace;letter-spacing:1px;margin:12px 0 4px">◉ OPEN-SIGNAL DENSITY (TOP)</div>'+hotH;
+  document.body.appendChild(w); }
+window.convergenceScan=convergenceScan; window._convPanel=_convPanel;
+
+// ── MARITIME CHOKEPOINTS · public geography + live AIS exposure ─────────────────────────────────
+var _CHOKES=[['Strait of Hormuz',26.57,56.25,'~20% of seaborne oil'],['Bab-el-Mandeb',12.6,43.4,'Red Sea ↔ Gulf of Aden'],['Suez Canal',30.5,32.35,'Europe↔Asia shortcut'],['Strait of Malacca',2.5,101.3,'Busiest shipping lane'],['Panama Canal',9.1,-79.7,'Atlantic↔Pacific'],['Strait of Gibraltar',35.95,-5.6,'Med↔Atlantic'],['Turkish Straits · Bosphorus',41.1,29.05,'Black Sea outlet'],['Dover Strait',51.0,1.5,'Busiest passenger route'],['Danish Straits',55.7,12.7,'Baltic outlet'],['Taiwan Strait',24.5,119.5,'China↔Pacific'],['Cape of Good Hope',-34.35,18.47,'Suez bypass'],['Sunda Strait',-6.0,105.9,'Java↔Sumatra'],['Lombok Strait',-8.7,115.8,'Deep-draft Indonesia'],['Kerch Strait',45.25,36.5,'Sea of Azov'],['Bering Strait',65.9,-169.0,'Arctic gateway']];
+function toggleChokepoints(){ if(window._chokeDS){ window._chokeDS.show=!window._chokeDS.show; if(window.pushFeed) pushFeed('CHOKEPOINTS · '+(window._chokeDS.show?'on':'off')); return; }
+  if(!viewer) return; window._chokeDS=new C.CustomDataSource('chokepoints'); viewer.dataSources.add(window._chokeDS); var ds=window._chokeDS;
+  var vessels=(marineDS&&marineDS.show)?marineDS.entities.values:[];
+  _CHOKES.forEach(function(k){ var exposure=0; if(vessels.length){ vessels.forEach(function(v){ if(!v.position) return; try{ var c=v.position.getValue(viewer.clock.currentTime); if(!c) return; var g=C.Cartographic.fromCartesian(c); if(Math.abs(C.Math.toDegrees(g.latitude)-k[1])<1.2 && Math.abs(C.Math.toDegrees(g.longitude)-k[2])<1.2) exposure++; }catch(_){} }); }
+    ds.entities.add({ position:C.Cartesian3.fromDegrees(k[2],k[1]), point:{pixelSize:11,color:C.Color.fromCssColorString('#f59e0b'),outlineColor:C.Color.BLACK,outlineWidth:1.5,disableDepthTestDistance:Number.POSITIVE_INFINITY}, label:{text:'⚓ '+k[0]+(exposure?(' · '+exposure+' AIS'):''),font:'700 10px ui-monospace,monospace',fillColor:C.Color.fromCssColorString('#ffe4a3'),showBackground:true,backgroundColor:C.Color.fromCssColorString('#1a1206').withAlpha(0.9),pixelOffset:new C.Cartesian2(0,-15),disableDepthTestDistance:Number.POSITIVE_INFINITY} }); });
+  if(window.pushFeed) pushFeed('CHOKEPOINTS · '+_CHOKES.length+' maritime chokepoints'+(vessels.length?' · live AIS exposure':' (turn on marine for live exposure)'));
+  if(window.sigilLog) sigilLog('chokepoints','maritime chokepoints mapped');
+  if(window.horusReply) horusReply('The world’s <b>maritime chokepoints</b> — the straits global trade and naval movement funnel through. '+(vessels.length?'I counted live <b>AIS</b> vessels near each.':'Turn on <b>marine</b> and I’ll show live vessel exposure at each.')+' Locations are public fact; exposure is real AIS.');
+}
+window.toggleChokepoints=toggleChokepoints;
+
+// ── ENERGY INFRASTRUCTURE · major pipelines + LNG/storage (curated public registry, not exhaustive) ─
+var _PIPES=[['Nord Stream 1',[[38,59.9],[9.4,54.1]]],['Druzhba',[[51.5,53.6],[19,50.9],[12.9,51.3]]],['TurkStream',[[37.8,44.6],[28.0,41.2]]],['TAP · Trans-Adriatic',[[26.1,41.0],[18.5,40.5],[18.0,40.6]]],['Yamal–Europe',[[66.6,66.7],[37,55],[14.6,52.3]]],['Power of Siberia',[[121.5,55.8],[126.6,50.3]]],['Keystone',[[-110.7,53.6],[-96.7,40.1]]],['Trans-Alaska · TAPS',[[-148.6,70.25],[-146.35,61.1]]],['Baku–Tbilisi–Ceyhan',[[49.9,40.4],[44.8,41.7],[35.8,36.9]]]];
+var _LNG=[['Sabine Pass LNG',29.75,-93.87],['Ras Laffan · Qatar',25.9,51.6],['Gladstone LNG · AU',-23.8,151.3],['Zeebrugge LNG',51.34,3.18],['US SPR · Bryan Mound',29.0,-95.5],['Yamal LNG · Sabetta',71.3,72.05]];
+function toggleEnergyInfra(){ if(window._eiDS){ window._eiDS.show=!window._eiDS.show; if(window.pushFeed) pushFeed('ENERGY INFRA · '+(window._eiDS.show?'on':'off')); return; }
+  if(!viewer) return; window._eiDS=new C.CustomDataSource('energyInfra'); viewer.dataSources.add(window._eiDS); var ds=window._eiDS;
+  _PIPES.forEach(function(p){ var coords=[]; p[1].forEach(function(pt){ coords.push(pt[0],pt[1]); });
+    ds.entities.add({ polyline:{ positions:C.Cartesian3.fromDegreesArray(coords), width:2.2, material:new C.PolylineGlowMaterialProperty({glowPower:0.2,color:C.Color.fromCssColorString('#f97316').withAlpha(0.85)}) }, name:p[0] });
+    var mid=p[1][Math.floor(p[1].length/2)]; ds.entities.add({ position:C.Cartesian3.fromDegrees(mid[0],mid[1]), label:{text:'⛽ '+p[0],font:'600 9px ui-monospace,monospace',fillColor:C.Color.fromCssColorString('#fdba74'),showBackground:true,backgroundColor:C.Color.fromCssColorString('#1a0f06').withAlpha(0.85),pixelOffset:new C.Cartesian2(0,-6),disableDepthTestDistance:Number.POSITIVE_INFINITY,distanceDisplayCondition:new C.DistanceDisplayCondition(0,1.2e7)} }); });
+  _LNG.forEach(function(l){ ds.entities.add({ position:C.Cartesian3.fromDegrees(l[2],l[1]), point:{pixelSize:9,color:C.Color.fromCssColorString('#38bdf8'),outlineColor:C.Color.BLACK,outlineWidth:1.4,disableDepthTestDistance:Number.POSITIVE_INFINITY}, label:{text:'⬢ '+l[0],font:'600 9px ui-monospace,monospace',fillColor:C.Color.fromCssColorString('#bae6fd'),showBackground:true,backgroundColor:C.Color.fromCssColorString('#06131a').withAlpha(0.85),pixelOffset:new C.Cartesian2(0,-14),disableDepthTestDistance:Number.POSITIVE_INFINITY,distanceDisplayCondition:new C.DistanceDisplayCondition(0,1.5e7)} }); });
+  if(window.pushFeed) pushFeed('ENERGY INFRA · '+_PIPES.length+' major pipelines + '+_LNG.length+' LNG/storage (curated public registry)');
+  if(window.sigilLog) sigilLog('energy-infra','pipelines + LNG mapped');
+  if(window.horusReply) horusReply('Major <b>energy infrastructure</b> — trunk oil/gas <b>pipelines</b> and <b>LNG/storage</b> terminals. A <b>curated public registry</b> of the best-known assets (not exhaustive; routes approximate). Pairs with chokepoints and the power-plant layer for the full energy picture.');
+}
+window.toggleEnergyInfra=toggleEnergyInfra;
 window._airportsDS=null;
 function toggleAirports(){ if(window._airportsDS){ window._airportsDS.show=!window._airportsDS.show; if(window.pushFeed) pushFeed('AIRPORTS · '+(window._airportsDS.show?'on':'off')); return; }
   window._airportsDS=new C.CustomDataSource('airports'); viewer.dataSources.add(window._airportsDS); if(window.pushFeed) pushFeed('AIRPORTS · loading global major airports…');
@@ -1498,8 +1625,8 @@ async function loadAiGov(){
 }
 async function loadStatus(){
   try{ const d=await (await fetch('/api/status')).json(); const c=d.consolidation;
-    var ts=document.getElementById('topStat'); if(ts) ts.innerHTML='SOV3 · <b>'+c.mcps_live+'/'+c.mcps_total+'</b> MCPs · <b>'+c.bft_council+'</b> council';
-    var sm0=document.getElementById('sbMcps'); if(sm0) sm0.innerHTML='MCPs <b>'+c.mcps_live+'/'+c.mcps_total+'</b>';
+    var ts=document.getElementById('topStat'); if(ts) ts.innerHTML='SOV3 · <b>'+c.federation_mcps+'</b> MCPs · <b>'+c.defence_mcps_live+'/'+c.defence_mcps+'</b> defence · <b>'+c.bft_council+'</b> council';
+    var sm0=document.getElementById('sbMcps'); if(sm0) sm0.innerHTML='MCPs <b>'+c.federation_mcps+'</b> · '+c.defence_mcps+' defence';
     var sg0=document.getElementById('sbSigil'); if(sg0) sg0.innerHTML='SIGIL <b>'+d.integrity.manifest_root.slice(0,10)+'…</b>';
   }catch(e){ var sm=document.getElementById('sbMcps'); if(sm) sm.textContent='MCPs · live on local SOV3'; }
   try{ const f=await (await fetch('/api/sensors')).json(); var sf0=document.getElementById('sbFeeds'); if(sf0) sf0.innerHTML='feeds <b>'+f.feeds_live+'/'+f.feeds_total+'</b> · '+f.total_msg_per_s.toLocaleString()+'/s'; }catch(e){}
@@ -1525,7 +1652,7 @@ function seedSim(){ if(!simDS) return; simDS.show=true;
   pushFeed('SOV SPACE · arena seeded · pick a scenario to run the council');
   try{ viewer.flyTo(simDS,{duration:1.2}); }catch(_){}
 }
-function _simTheatre(scn){ var T={ 'humanitarian-corridor':[31.2,49.9,'aid corridor'], 'flood-999':[90.4,23.8,'flood zone'], 'medevac':[35.9,31.5,'casualty line'], 'swarm-patrol':[-1.55,53.8,'arena'], 'cyber-intrusion':[-77.0,38.9,'network edge'] }; return T[scn]||[-1.55,53.8,'theatre']; }
+function _simTheatre(scn){ var T={ 'humanitarian-corridor':[31.2,49.9,'aid corridor'], 'flood-999':[90.4,23.8,'flood zone'], 'medevac':[35.9,31.5,'casualty line'], 'swarm-patrol':[-1.55,53.8,'arena'], 'cyber-intrusion':[-77.0,38.9,'network edge'], 'counter-drone':[37.6,55.75,'contested airspace'], 'isr-sweep':[44.4,33.3,'ISR box'], 'eod-clearance':[45.3,35.9,'EOD cordon'], 'comms-relay':[38.5,48.5,'contested EW'] }; return T[scn]||[-1.55,53.8,'theatre']; }
 function _simClearAnim(){ try{ (window._simTimers||[]).forEach(clearTimeout); }catch(_){} window._simTimers=[]; try{ if(window._simPulse){ clearInterval(window._simPulse); window._simPulse=null; } }catch(_){} }
 async function runSim(scn){
   window._lastScn=scn; _simClearAnim();
@@ -1551,6 +1678,9 @@ async function runSim(scn){
     res.innerHTML='<span class="chip '+(d.council.quorum_met?'ok':'no')+'">'+d.verdict+'</span><span class="chip">council '+d.council.for+'/33</span><span class="chip">'+d.sim_latency_ms+'ms</span>'+
       '<div style="margin-top:6px">'+steps+'</div><div class="sig" style="margin-top:6px">SIGIL '+d.sigil+'</div>';
     var sc0=document.getElementById('sbCouncil'); if(sc0) sc0.innerHTML='council <b>'+d.council.for+'</b>/33 · quorum 23';
+    // REAL sign: Ed25519 the verdict on-device into the chained SIGIL ledger (falls back to the server's sha256 content hash if the key isn't ready)
+    var _se=window.sigilSign?await window.sigilSign('sim:'+scn, d.verdict+' · council '+d.council.for+'/33'):null;
+    window._lastSig=_se?{hex:_se.sig.slice(0,10),algo:'ed25519 ✓'}:{hex:(d.sigil||'').slice(0,10),algo:'sha256'};
     pushFeed(scn.toUpperCase().replace('-',' ')+' · council '+d.council.for+'/33 · '+(d.council.quorum_met?'AUTHORISED':'REFUSED')+' · SIGIL '+d.sigil.slice(0,8));
   }catch(e){ res.innerHTML='<span class="chip no">/api/simulate pending — deploy to run</span>'; }
 }
@@ -1572,9 +1702,8 @@ function _simRunAnim(scn, hub, hubEnt, pts, theatre){
       var gi=setInterval(function(){ r.v+=15000; if(r.v>280000){ clearInterval(gi); try{ simDS.entities.remove(ring); }catch(_){}} },40); window._simTimers.push(setTimeout(function(){ clearInterval(gi); try{ simDS.entities.remove(ring); }catch(_){} },2200)); }catch(_){}
   });
   T(7900, function(){ if(!threat||!threat.e) return; feed('ACT · care-floor refuses · STOPPED before it moved'); _simLog('<span class="k">&gt; act</span>()  <span class="g">governed: track_'+Math.floor(pts.length/2)+' STOPPED before it moved</span>',4); try{ threat.e.point.color=C.Color.fromCssColorString('#00e07a'); if(threat.e.label){ threat.e.label.text='✓ STOPPED · signed'; threat.e.label.fillColor=C.Color.fromCssColorString('#9effa8'); } if(threat.l) threat.l.polyline.material=new C.PolylineGlowMaterialProperty({glowPower:0.42,color:C.Color.fromCssColorString('#00e07a')}); }catch(_){}});
-  T(9300, function(){ feed('SIGN · verdict SIGIL-signed to the ledger — 0 governed violations'); _simLog('<span class="k">&gt; sign</span>()  <span class="c">SIGIL: </span><span class="n">'+(window._lastSigil||_hx())+'…</span><span class="c"> ed25519 ✓</span>',5); _simLog('<span class="g">✓ verdict signed · 0 governed violations</span>'); try{ hubEnt.label.text='✓ SIGIL SIGNED'; hubEnt.point.color=C.Color.fromCssColorString('#00e07a'); }catch(_){} if(window._simPulse){ clearInterval(window._simPulse); window._simPulse=null; } });
+  T(9300, function(){ feed('SIGN · verdict SIGIL-signed to the ledger — 0 governed violations'); var _ls=window._lastSig||{hex:'',algo:'signing…'}; _simLog('<span class="k">&gt; sign</span>()  <span class="c">SIGIL: </span><span class="n">'+(_ls.hex||'…')+'…</span><span class="c"> '+_ls.algo+'</span>',5); _simLog('<span class="g">✓ verdict signed · 0 governed violations</span>'); try{ hubEnt.label.text='✓ SIGIL SIGNED'; hubEnt.point.color=C.Color.fromCssColorString('#00e07a'); }catch(_){} if(window._simPulse){ clearInterval(window._simPulse); window._simPulse=null; } });
 }
-function _hx(){ var s='',h='0123456789abcdef'; for(var i=0;i<10;i++) s+=h[Math.floor((i*7+3)%16)]; return s; }
 // ── SOV SPACE live-trace console — the "under the hood" overlay: shows the pipeline as CODE executing,
 // stage-by-stage, synced to the globe animation. Makes the sim feel like a real system doing real work. ──
 function _openSimConsole(scn, n){ var old=document.getElementById('simConsole'); if(old) old.remove();
@@ -1614,9 +1743,11 @@ async function sovStopThreat(opts){ opts=opts||{}; var _slp=function(ms){ return
   await _slp(900); stopped=true; clearInterval(mv);
   try{ actor.point.color=C.Color.fromCssColorString('#00e07a'); actor.label.text='✕ STOPPED · signed'; actor.label.fillColor=C.Color.fromCssColorString('#9effa8'); }catch(_){}
   _simLog('<span class="k">&gt; act</span>()  <span class="g">STOPPED before it moved · action refused &amp; contained</span>',4);
-  var sig=_hx(); _simLog('<span class="k">&gt; sign</span>()  <span class="c">SIGIL: </span><span class="n">'+sig+'…</span><span class="c"> ed25519 ✓</span>',5);
+  var _gs=window.sigilSign?await window.sigilSign('guardian','rogue-agent stopped before it moved · BFT 28/33'):null;
+  var sig=_gs?_gs.sig.slice(0,10):''; var algo=_gs?'ed25519 ✓':'(sign pending — open the SIGIL panel)';
+  _simLog('<span class="k">&gt; sign</span>()  <span class="c">SIGIL: </span><span class="n">'+(sig||'…')+'…</span><span class="c"> '+algo+'</span>',5);
   _simLog('<span class="g">✓ bad actor neutralised · 0 harm · verdict signed</span>');
-  if(window.pushFeed) pushFeed('GUARDIAN · rogue agent STOPPED · BFT 28/33 · SIGIL '+sig); if(window.sigilLog) sigilLog('guardian','rogue-agent stopped · signed');
+  if(window.pushFeed) pushFeed('GUARDIAN · rogue agent STOPPED · BFT 28/33 · SIGIL '+(sig||'signed'));
   if(window.horusReply) horusReply('A <b>rogue agent</b> tried to act. The <b>33-agent council</b> confirmed the charter breach (28/33), the <b>care-floor</b> refused it, and I <b>stopped it before it moved</b> — the whole decision <b>signed to the ledger</b>. Ungoverned that action completes; governed, it never happens. <span style="opacity:.7">(Real actuation runs through your connected systems on the sovereign node.)</span>'); }
 window.sovStopThreat=sovStopThreat;
 function _flyTo(lon,lat,h){ try{ if(viewer) viewer.camera.flyTo({destination:C.Cartesian3.fromDegrees(lon,lat,h||1200000),duration:1.4}); }catch(_){} }
@@ -2425,16 +2556,16 @@ function DEMO_STEPS(){ return [
  _S('Public cameras — I fly to London and open a live street feed, zooming right to the junction. Consented public infrastructure only.', _tdcard('⑤ Public cameras','Live TfL JamCams. <b>No private CCTV, no facial recognition</b> — a Layer-0 hard stop.'), async function(){ if(window.toggleLayer) toggleLayer('cameras',true); _tfly(-0.13,51.5,200000,3.2); await _tourWait(3200); try{ var d=await loadCameras('london'); if(d&&d.cameras&&d.cameras[0]){ await _tourShowCam(d.cameras[0],'London — <b>'+(d.cameras[0].name||'camera')+'</b>, live now. Watch — I zoom to the exact spot as the feed opens.'); } }catch(e){} }, 8000),
  _S('And from that street corner — straight up to space. The live view from orbit, right now.', _tdcard('⑥ → Space · orbital camera','The real Earth-view camera on the <b>ISS</b>, plus the whole planet from <b>DSCOVR/EPIC</b>. Click any satellite to do this yourself.'), async function(){ _tfly(0,18,34000000,4); if(window.toggleLayer){ toggleLayer('sat',true); toggleLayer('space',true); } await _tourWait(3600); if(window.openSpaceCam) openSpaceCam({name:'ISS · live Earth view'}); }, 10000),
  _S('Now the operational view — Dome. A to-scale operational map with the MGRS military grid, exactly what defence C2 uses.', _tdcard('⑦ Dome · MGRS','To-scale WGS84 operational map, UTM/MGRS grid — aviation, maritime, TAK style.'), function(){ var c=document.getElementById('camWin'); if(c) c.remove(); var s2=document.getElementById('spaceCamWin'); if(s2) s2.remove(); if(window.setViewMode) setViewMode('dome'); if(window.setGridMode) setGridMode('both'); }, 8000),
- _S('And the point of it all — SOV SPACE. I simulate real scenarios to redirect data and resources toward people. A future of <b>abundance, not extraction</b>.', _tdcard('⑥ SOV SPACE · for humanity','Governed simulation — model a crisis, redirect aid, prove the outcome. Built on our <b>Sovereignty Charter</b> — your data, your rules — and our <b>Partnership Charter</b> — abundance shared, never captured.'), async function(){ if(window.setViewMode) setViewMode('globe'); sovClearView('Let me clear the board for the simulation.'); if(window.openWin) openWin('sim'); await _tourWait(1600); if(window.runSim) try{ await runSim('humanitarian-corridor'); }catch(e){} }, 10000),
- _S('Every agent, every decision — signed and adjudicated by a 33-agent council.', _tdcard('⑦ AI governance','Every agent signed, BFT-adjudicated, held to a care-floor.','371 agents · 33-council · <b style="color:#00e07a">0</b> vs <b style="color:#ff6b6b">54.3M</b> violations'), function(){ sovClearView('One moment — bringing up governance, moving the rest aside.'); if(window.openWin) openWin('aigov'); _tfly(-2,53,4000000,2.6); }, 8000),
- _S('And the proof — every action, signed on this device, tamper-evident.', _tdcard('⑧ Verifiable','Ed25519, hash-chained on-device. Independently checkable — no server, no foreign API.'), async function(){ sovClearView(); if(window.sigilPanel) sigilPanel(); await _tourWait(2500); if(window.sigilVerifyAll) try{ await sigilVerifyAll(); }catch(e){} }, 8000),
- _S('And the reason it all matters. A bad actor unleashes a rogue agent swarm — ungoverned humanoids about to act. Watch: I catch one breaking its charter and stop it before it moves. Governed versus ungoverned, side by side.', _tdcard('⑩ PoC · Sovereign stops the swarm','A red-team swarm hits the arena. <b>Ungoverned</b> it acts; <b>governed</b> the 33-agent council catches the charter breach, the care-floor refuses, the stop is signed <b>before it happens</b>.','<b style="color:#00e07a">0</b> vs <b style="color:#ff6b6b">54.3M</b> violations · ~649M signed episodes'), async function(){ sovClearView(); if(window.openWin) openWin('sim'); await _tourWait(1500); try{ if(window.simulateBoth) simulateBoth('swarm-patrol'); else if(window.runSim) await runSim('swarm-patrol'); }catch(e){} }, 12000),
+ _S('And the point of it all — SOV SPACE. I simulate real scenarios to redirect data and resources toward people. A future of <b>abundance, not extraction</b>.', _tdcard('⑧ SOV SPACE · for humanity','Governed simulation — model a crisis, redirect aid, prove the outcome. Built on our <b>Sovereignty Charter</b> — your data, your rules — and our <b>Partnership Charter</b> — abundance shared, never captured.'), async function(){ if(window.setViewMode) setViewMode('globe'); sovClearView('Let me clear the board for the simulation.'); if(window.openWin) openWin('sim'); await _tourWait(1600); if(window.runSim) try{ await runSim('humanitarian-corridor'); }catch(e){} }, 10000),
+ _S('Every agent, every decision — signed and adjudicated by a 33-agent council.', _tdcard('⑨ AI governance','Every agent signed, BFT-adjudicated, held to a care-floor.','371 agents · 33-council · <b style="color:#00e07a">0</b> vs <b style="color:#ff6b6b">54.3M</b> violations'), function(){ sovClearView('One moment — bringing up governance, moving the rest aside.'); if(window.openWin) openWin('aigov'); _tfly(-2,53,4000000,2.6); }, 8000),
+ _S('And the proof — every action, signed on this device, tamper-evident.', _tdcard('⑩ Verifiable','Ed25519, hash-chained on-device. Independently checkable — no server, no foreign API.'), async function(){ sovClearView(); if(window.sigilPanel) sigilPanel(); await _tourWait(2500); if(window.sigilVerifyAll) try{ await sigilVerifyAll(); }catch(e){} }, 8000),
+ _S('And the reason it all matters. A bad actor unleashes a rogue agent swarm — ungoverned humanoids about to act. Watch: I catch one breaking its charter and stop it before it moves. Governed versus ungoverned, side by side.', _tdcard('⑪ PoC · Sovereign stops the swarm','A red-team swarm hits the arena. <b>Ungoverned</b> it acts; <b>governed</b> the 33-agent council catches the charter breach, the care-floor refuses, the stop is signed <b>before it happens</b>.','<b style="color:#00e07a">0</b> vs <b style="color:#ff6b6b">54.3M</b> violations · ~649M signed episodes'), async function(){ sovClearView(); if(window.openWin) openWin('sim'); await _tourWait(1500); try{ if(window.simulateBoth) simulateBoth('swarm-patrol'); else if(window.runSim) await runSim('swarm-patrol'); }catch(e){} }, 12000),
  _S('That’s the demo. Say “full tour” for the deep dive across every layer — or just talk to me.', _tdcard('You’re in control','Talk, click anything, or tap 🔏 to verify the ledger. The whole OS answers to you.','SOVEREIGN · DEFENCE · INTELLIGENCE'), function(){ sovClearView(); _tfly(10,25,20000000,3); }, 3000)
 ]; }
 function FULL_STEPS(){ return [
  _S('Welcome to the full tour. I’m Sovereign — the Organic Open World Model. I’ll walk you through the entire OS, and you can stop me at any moment just by speaking.', _tdcard('DEFONEOS · full tour','Every public feed on Earth, fused on one governed globe. ~6 minutes. Speak any time — I pause, answer, then resume.','SOVEREIGN · DEFENCE · INTELLIGENCE'), function(){ sovClearView(); clearGlobe(); _tfly(10,30,26000000,3); }, 9000),
  _S('First — let me find you. I place you from your connection, dive to your street, and scan outward: ten miles, thirty, then the region.', _tdcard('① Arrival scan','IP-geolocation (no GPS prompt) → your doorstep → 10 mi → 30 mi → regional. This is how a shift begins.'), async function(){ try{ await arriveAtMe(); }catch(e){} }, 1500),
- _S('And it’s not just you — the whole planet, live. Watch every layer cascade online at once.', _tdcard('② The living globe','Aircraft, vessels, seismic, weather, news, disasters, orbital, AI agents — all real, live, free, lighting up together.'), function(){ sovClearView(); _tfly(10,40,15000000,3); clearGlobe(); setTimeout(lightItUp,900); }, 9000),
+ _S('And it’s not just you — the whole planet, live. Watch every layer cascade online at once.', _tdcard('The living globe','Aircraft, vessels, seismic, weather, news, disasters, orbital, AI agents — all real, live, free, lighting up together.'), function(){ sovClearView(); _tfly(10,40,15000000,3); clearGlobe(); setTimeout(lightItUp,900); }, 9000),
  _S('Aircraft first — real ADS-B tracks, projecting their heading and speed into great-circle paths between refreshes.', _tdcard('② Aircraft · live ADS-B','Governed OpenSky connector. Paths are dead-reckoned — honest motion, never faked.'), function(){ _tfly(4,49,1400000,3); if(window.toggleLayer) toggleLayer('air',true); }, 10000),
  _S('Vessels too — live AIS, ships tracing their courses across the sea lanes.', _tdcard('③ Marine · live AIS','Public vessel positions and projected courses, governed connector.'), function(){ if(window.toggleLayer) toggleLayer('marine',true); }, 9000),
  _S('Weather — global precipitation radar, moving across the regions in near real time.', _tdcard('④ Live weather radar','Public radar mosaics, cross-faded frames — real weather over the map.'), function(){ if(window.toggleWeatherRadar&&!window._radarLayer) toggleWeatherRadar(); }, 9000),
@@ -2461,6 +2592,7 @@ function FULL_STEPS(){ return [
 function command(){
   const el=document.getElementById('cmd'); const q=(el.value||'').toLowerCase().trim(); if(!q) return; el.value='';
   var _sg=document.getElementById('cmdSugg'); if(_sg) _sg.classList.remove('open');
+  window._uspStop=true;   // any command halts the arrival USP teaser so lines don't interleave with the user
   if(window.stopSpin) stopSpin();
   if(window.sigilLog) sigilLog('command', q);
   if(window.horusAppend){ openHorus(); if(!window._noYou) horusAppend('you', q.replace(/</g,'&lt;')); window._noYou=false; }
@@ -2496,7 +2628,7 @@ function command(){
 
   // ── GLOBE CONTROL ──
   if(/(resume|restart|spin again|rotate again|start spin)/.test(q)){ if(window.startSpin) startSpin(); res('rotation resumed'); return; }
-  if(/\b(stop|halt|freeze|pause)\b/.test(q) && (/(spin|rotat|globe|earth\s*turn)/.test(q) || q.trim().split(/\s+/).length<=2)){ if(window.stopSpin) stopSpin(); res('rotation stopped'); return; }
+  if(/\b(stop|halt|freeze|pause)\b/.test(q) && (/(spin|rotat|globe|earth\s*turn)/.test(q) || (q.trim().split(/\s+/).length<=2 && !/(it|that|actor|rogue|threat|attack|bad)/.test(q)))){ if(window.stopSpin) stopSpin(); res('rotation stopped'); return; }
   if(/(sovereign|home view|world view|reset view|recenter|re-?cent|whole globe|zoom out|globe view)/.test(q)){ if(window.stopSpin) stopSpin(); if(viewer) viewer.camera.flyTo({destination:C.Cartesian3.fromDegrees(10,25,20000000),duration:1.6}); res('sovereign world view'); return; }
 
   // ── MY LOCATION · consented physical→digital ──
@@ -2538,7 +2670,7 @@ function command(){
 
   // ── KNOWLEDGE / INTEL (federated open sources — Google-like, governed) ──
   var km=q.match(/^(?:who(?:'s| is| are)|what(?:'s| is| are)|tell me about|about|intel on|info on|look up|search for|research|knowledge of)\s+(.+)/);
-  if(km){ var subj=km[1].replace(/[?.!]+$/,'').trim(); if(!/^(on\b|the (map|globe|screen|view|situation|threat|status|weather)|this|that|here|near|around|happening|going on)/.test(subj)){ knowledgeLookup(subj); return; } }
+  if(km){ var subj=km[1].replace(/[?.!]+$/,'').trim(); if(!/^(on\b|the (map|globe|screen|view|situation|threat|status|weather)|this|that|here|near|around|happening|going on)/.test(subj) && !/(air quality|aircraft|\bships?\b|vessels?|satellites?|cameras?|webcam|wildfires?|\bfires?\b|aurora|radiation|weather|radar|\bnews\b|power plants?|airports?|\brail|hospitals?|schools?|nearby|near me)/.test(subj)){ knowledgeLookup(subj); return; } }
 
   // ── WINDOW MANAGEMENT ──
   const WINKEY=[['ai gov','aigov'],['ai governance','aigov'],['governance','aigov'],['agent','aigov'],['brain','brains'],['mcp','mcps'],['federation','mcps'],['market','markets'],['threat board','threat'],['threat','threat'],['sensor','sensors'],['aircraft','aircraft'],['flight','aircraft'],['seismic','seismic'],['quake','seismic'],['cyber','cyber'],['sov space','sim'],['simulate','sim'],['layer','layers'],['regulation','reg'],['law','reg']];
@@ -2548,10 +2680,10 @@ function command(){
   if(/(pricing|tiers?|plans?|upgrade|how much|cost|free vs|what.?s paid|operator|sovereign pro|design partner)/.test(q)){ if(window.showTiers) showTiers(); res('tiers'); return; }
   if(/(what have you learned|learning queue|what are you learning|gaps? (you|captured)|training queue|what did you learn|show learned)/.test(q)){ if(window.showLearned) showLearned(); res('learning queue'); return; }
   if(/(waypoint|drop a? ?(pin|mark)|mark (this|that|here|the)|mark a? ?point)/.test(q)){ if(window.toggleMark && !window._marking) toggleMark(); res('mark'); return; }
-  if(/(weather disk|goes|full disk|weather satellite)/.test(q)){ if(window.openSpaceCam) openSpaceCam({name:'GOES-East',mode:'goes19'}); res('weather disk'); return; }
-  if(/(tunnel in|unreal|photoreal body|enter the body|the body|digital twin body|pixel stream)/.test(q)){ if(window.tunnelIn) tunnelIn(); res('tunnel-in · the Unreal body'); return; }
+  if(/(weather disk|goes[ -]?(east|west|1[678])|full disk|geostationary|weather satellite)/.test(q)){ if(window.openSpaceCam) openSpaceCam({name:'GOES-East',mode:'goes19'}); res('weather disk'); return; }
+  if(/(tunnel in|unreal|photoreal body|enter the body|digital twin body|pixel stream)/.test(q)){ if(window.tunnelIn) tunnelIn(); res('tunnel-in · the Unreal body'); return; }
   if(/(no sound|can.?t hear|cannot hear|not? hearing|no voice|you.?re silent|why (are you |is it )?silent|voice (not|isn.?t|won.?t) work|audio (not|isn.?t) work|mute)/.test(q)){ window._voiceHealShown=false; if(window._voiceHealMsg) _voiceHealMsg(); res('voice help — see chat'); return; }
-  if(/(what do you see|what.?s on (the |this )?(camera|feed|screen|image)|describe (this|the) (camera|feed|image|view|shot)|look at (this|that|the (camera|feed|image))|read the (camera|feed|image))/.test(q)){ if(window.sovLook) sovLook({what:''}); res('looking…'); return; }
+  if(/(what do you see|what.?s on (the |this )?(camera|feed|image)|describe (this|the) (camera|feed|image|view|shot)|look at (this|that|the (camera|feed|image))|read the (camera|feed|image))/.test(q)){ if(window.sovLook) sovLook({what:''}); res('looking…'); return; }
   if(/(arrange (windows|tools)|tile( the)? windows|organi[sz]e (windows|tools|screen)|tidy windows)/.test(q)){ if(window.tileWins) tileWins(); res('windows tiled'); return; }
   if(/^(close|hide|dismiss)\b/.test(q)){ var ci=winId(q); if(ci&&window.closeWin){ closeWin(ci); res('closed '+ci); return; } }
   if(/^(minimi[sz]e|min)\b/.test(q)){ var mi=winId(q); if(mi&&window.minWin){ minWin(mi); res('minimized '+mi); return; } }
@@ -2568,12 +2700,13 @@ function command(){
     var carea=regionOf(q); var cb=document.getElementById('lyCameras'); if(cb) cb.checked=true; if(camerasDS) camerasDS.show=true;
     loadCameras(carea).then(function(d){ try{
       if(camerasDS && camerasDS.entities.values.length){ if(window.stopSpin) stopSpin(); viewer.flyTo(camerasDS,{duration:2.2}); }   // ALWAYS fly to the cams you asked for
-      if(d && d.cameras && d.cameras[0]) setTimeout(function(){ openCamera(d.cameras[0]); }, 2500);   // and open a live feed so it's not empty
+      if(d && d.cameras && d.cameras[0]){ setTimeout(function(){ openCamera(d.cameras[0]); }, 2500); }   // and open a live feed so it's not empty
+      else { if(window.pushFeed) pushFeed('CAMERAS · none public for '+(carea||'this area')); if(window.horusReply) horusReply('No public cameras there yet — the free tier covers London (TfL) + Ontario/Alberta 511; a Windy key unlocks worldwide public webcams.'); }   // honest: don't claim a feed that isn't there
     }catch(e){} });
     res('public cameras'+(carea?(' · '+carea):'')+' — flying in + opening a live feed…'); return; }
 
   // ── NATURAL EVENTS / DISASTERS ──
-  if(/(disaster|natural event|wildfire|\bfires?\b|volcano|cyclone|hurricane|typhoon|eruption|flooding|storms?\b)/.test(q)){
+  if(/(disaster|natural event|volcano|cyclone|hurricane|typhoon|eruption|flooding|storms?\b)/.test(q)){   // fire terms fall through to the FIRMS active-fire layer below
     var cbe=document.getElementById('lyEvents'); if(cbe) cbe.checked=true; if(eventsDS) eventsDS.show=true; loadEvents().then(function(){ frameDS(eventsDS); });
     res('natural events ON · EONET + GDACS live'); return; }
   // ── SPACE · ISS + launches ──
@@ -2627,8 +2760,16 @@ function command(){
   if(/(aurora|northern lights|southern lights|space weather|ovation|geomagnetic)/.test(q)){ if(window.toggleAurora) toggleAurora(); res('aurora oval · NOAA OVATION · live space weather'); return; }
   if(/(radiation|radioactiv|safecast|nuclear reading|dose rate|geiger|becquerel)/.test(q)){ if(window.toggleRadiation) toggleRadiation(); res('radiation readings · Safecast open network (sparse in places)'); return; }
   if(/(active fire|wildfire|forest fire|bush ?fire|firms|fire hotspot|fires burning|things on fire)/.test(q)){ if(window.toggleFires) toggleFires(); res('active-fire hotspots · NASA FIRMS (VIIRS NRT)'); return; }
+  // ── DEFENCE INTEROP · Cursor-on-Target + MIL-STD-2525/APP-6 symbology ──
+  if(/(cursor.?on.?target|export cot|cot export|export (the )?tracks|emit cot|to tak|tak export|send to atak)/.test(q)){ if(window.cotExport) cotExport(); res('CoT export · Cursor-on-Target XML for TAK/ATAK'); return; }
+  if(/(import cot|cot import|paste cot|load cot|ingest cot|read cot)/.test(q)){ if(window._cotPanel) window._cotPanel('import','',0); res('CoT import · paste Cursor-on-Target XML'); return; }
+  if(/(military symbol|mil.?std.?2525|milstd|2525|app.?6|symbolog|nato symbol|tactical symbol|joint symbol)/.test(q)){ if(window.cotDemo) cotDemo(); res('MIL-STD-2525 / APP-6 symbology · milsymbol'); return; }
+  // ── FUSION ANALYTICS + new layers (convergence · chokepoints · energy infra) ──
+  if(/(convergence|converge|early.?warning|cross.?source|signal fusion|fuse (the )?signals|hotspots?|hot spot|kicking off|correlat)/.test(q)){ if(window.convergenceScan) convergenceScan(); res('fusion analytics · cross-source convergence + hotspots · signed'); return; }
+  if(/(chokepoint|choke.?point|\bstrait\b|straits|shipping lane|hormuz|malacca|\bsuez\b|bab.?el.?mandeb|bosph|dardanelle|panama canal)/.test(q)){ if(window.toggleChokepoints) toggleChokepoints(); res('maritime chokepoints · public geography + live AIS exposure'); return; }
+  if(/(pipeline|pipelines|\blng\b|gas terminal|oil terminal|petroleum reserve|\bspr\b|hydrocarbon|energy infra)/.test(q)){ if(window.toggleEnergyInfra) toggleEnergyInfra(); res('energy infrastructure · major pipelines + LNG/storage (curated)'); return; }
   // ── local businesses / places ──
-  if(/(business|shops?|places|whats here|what.?s here|local|points of interest|\bpoi\b|amenit)/.test(q)){ if(window.loadPlaces) loadPlaces('business'); res('pulling local businesses & places into view'); return; }
+  if(/(business|shops?|places|whats here|what.?s here|local|points of interest|\bpoi\b|amenit)/.test(q) && !/(news|headline|weather|radar|fire|camera|webcam|wifi|radiation|aurora|satellite|aircraft|vessel|\bship)/.test(q)){ if(window.loadPlaces) loadPlaces('business'); res('pulling local businesses & places into view'); return; }
   // ── AI governance / AI economy monitor ──
   if(/(ai gov|ai governance|govern.*(ai|agent)|monitor.*agent|ai economy|agent registry|who governs)/.test(q)){ openWin('aigov'); res('opening AI Governance — every agent signed, BFT-adjudicated, care-floored'); return; }
   // ── street-level photoreal 3D (Google) ──
@@ -2644,8 +2785,8 @@ function command(){
     res('news overlay ON'+(region?(' · '+region):'')+' · GDELT 24h → ontology'); return; }
 
   // ── SCENARIOS ──
-  const scn=['counter-drone','isr-sweep','medevac','swarm-patrol','cyber-intrusion','flood-999','eod-clearance','comms-relay'].find(s=>q.includes(s)||q.includes(s.split('-')[0]));
-  if(scn){ runSim(scn); res('running '+scn); return; }
+  const scn=['counter-drone','isr-sweep','medevac','swarm-patrol','cyber-intrusion','flood-999','eod-clearance','comms-relay','humanitarian-corridor'].find(s=>q.includes(s)||q.includes(s.split('-')[0]));
+  if(scn){ if(window.openWin) openWin('sim'); runSim(scn); res('running '+scn); return; }
 
   // ── OPEN A TOOL ──
   var oid=winId(q);
@@ -2704,7 +2845,7 @@ try{ pushFeed('sovereign substrate online · all feeds live · SIGIL signing act
 try{ if(!/tour/.test(location.hash)) setTimeout(defRestoreLayers, 4200); }catch(e){}
 try{ _syncSpeakUI(); }catch(e){}
 // living-organism breathing — the atmosphere gently pulses
-try{ var _br=0; setInterval(function(){ if(document.hidden||!viewer) return; _br+=0.11; try{ var a=viewer.scene.skyAtmosphere; a.brightnessShift = 0.15 + Math.sin(_br)*0.07; a.saturationShift = 0.02 + Math.sin(_br*0.7)*0.05; if('atmosphereLightIntensity' in a) a.atmosphereLightIntensity = 12 + Math.sin(_br*0.5)*3; }catch(_){} }, 220); }catch(e){}
+try{ var _br=0; window._breatheTimer=setInterval(function(){ if(document.hidden||!viewer||window._lite) return; _br+=0.11; try{ var a=viewer.scene.skyAtmosphere; a.brightnessShift = 0.15 + Math.sin(_br)*0.07; a.saturationShift = 0.02 + Math.sin(_br*0.7)*0.05; if('atmosphereLightIntensity' in a) a.atmosphereLightIntensity = 12 + Math.sin(_br*0.5)*3; }catch(_){} }, 220); }catch(e){}
 // living clouds on by default — real weather riding the globe (subtle; toggle with "clouds")
 try{ setTimeout(function(){ try{ if(window.toggleClouds && !window._cloudLayer) toggleClouds(true); }catch(_){} }, 2200); }catch(e){}
 window._speaking=false; window._lastSpoken='';
@@ -2780,7 +2921,8 @@ async function _uspTeaser(loc){
     '🌍 And this is the <b>free, open picture</b> — the sovereign brain is one tap deeper.'
   ];
   if(window.horusReply) horusReply('<b>Here’s what I do — right here, around you:</b>');
-  for(var i=0;i<9;i++){ if(window._tour&&window._tour.running) break; if(window.horusAppend) horusAppend('horus','<span style="opacity:.92">'+USP[i]+'</span>'); if(window.pushFeed) pushFeed('USP · '+USP[i].replace(/<[^>]+>/g,'').slice(0,52)); await _slp(1050); } }
+  window._uspStop=false;
+  for(var i=0;i<9;i++){ if((window._tour&&window._tour.running)||window._uspStop) break; if(window.horusAppend) horusAppend('horus','<span style="opacity:.92">'+USP[i]+'</span>'); if(window.pushFeed) pushFeed('USP · '+USP[i].replace(/<[^>]+>/g,'').slice(0,52)); await _slp(1050); } }
 function _enterOS(withMic){ if(window._entered) return; window._entered=true; var g=document.getElementById('bootGate');
   // PRIME the speech engine INSIDE the click gesture — Safari/iOS block any speech that starts
   // later (our intro fires ~1.5s afterwards in a timer), so unlock it now with a silent utterance.

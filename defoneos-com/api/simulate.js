@@ -59,6 +59,13 @@ const SCENARIOS = {
     detect: 'jamming detected on primary link · alternate path scored',
     action: 'mesh re-route · frequency hop · resilient link restored',
     care: 'no personal traffic transmitted · metadata minimised'
+  },
+  'humanitarian-corridor': {
+    name: 'Humanitarian corridor',
+    sensors: ['population-density model', 'route-safety graph', 'NGO capacity feed'],
+    detect: 'displaced-population movement modelled · safest corridor scored',
+    action: 'aid corridor opened · convoy routed · receiving sites notified first',
+    care: 'protection-of-civilians first · NO targeting data · personal data minimised'
   }
 };
 

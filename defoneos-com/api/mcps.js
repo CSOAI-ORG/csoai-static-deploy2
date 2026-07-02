@@ -6,7 +6,7 @@ const PY = 'https://pypi.org/project';
 
 // Real category breakdown from mcp_federation_catalog (category='all').
 const CATEGORIES = [
-  ['general', 259], ['compliance', 35], ['healthcare', 14], ['governance', 10],
+  ['general', 245], ['compliance', 35], ['healthcare', 14], ['governance', 10],
   ['developer', 10], ['finance', 10], ['security', 7], ['industry', 7],
   ['ai-act', 6], ['marketing', 5], ['gaming', 5], ['robotics', 4],
   ['creative', 4], ['productivity', 3], ['data', 3], ['cobol', 1],

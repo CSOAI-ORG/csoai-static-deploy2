@@ -1,8 +1,10 @@
 // DEFONEOS signed AI System Card — the JSP 936 assurance proof point.
-// The Alan Turing Institute states Defence "has no formal process for independently validating" a
-// vendor's deployment-ready claim, and "no formal way of certifying third-party assurance providers."
-// This endpoint issues exactly that missing primitive: an INDEPENDENT, OFFLINE-VERIFIABLE record that a
-// defence-AI system was governed — an Ed25519-signed System Card anyone can verify without trusting us.
+// The Alan Turing Institute (CETaS, Jan 2026, "Growing the UK's AI Assurance Market in Defence and
+// Security") finds there is "no authoritative, independent organisation ... with the legitimacy to
+// inspect and approve AI systems in D&S contexts", and that vendor safety claims are seen as an effort
+// to "mark their own homework". This endpoint issues the missing primitive: an INDEPENDENT,
+// OFFLINE-VERIFIABLE record that a defence-AI system was governed — an Ed25519-signed System Card
+// anyone can verify without trusting us.
 //
 // HONEST: the card CONTENT below is SYNTHETIC demo data (an illustrative ISR-triage decision). The
 // SIGNING and VERIFICATION are REAL. Set DEFONEOS_SIGN_SK (32-byte Ed25519 seed, hex) in env for a
