@@ -28,6 +28,18 @@ t('content re-bind FALSE for altered output', verifyReceipt(Object.assign({}, sc
 const pk = callTool('defoneos_public_key', {});
 t('public_key tool returns key + fingerprint', /^[0-9a-f]{64}$/.test(pk.public_key_ed25519) && /^SOV:/.test(pk.fingerprint));
 
+// System Card
+const { signSystemCard } = require('./server.js');
+const cardR = signSystemCard({ name: 'ER-Triage Assistant', version: '2.1', provider: 'Acme Health', purpose: 'prioritise ED patients from vitals+notes', risk_tier: 'high', high_risk: true, rationale: 'EU AI Act Annex III — medical triage', frameworks: ['EU AI Act', 'ISO 42001', 'JSP 936'], limitations: 'decision-support only; clinician confirms' });
+const csc = cardR.defoneos_signed_contact;
+t('system card: signed receipt shape', !!(csc && csc.message && csc.signature_ed25519 && csc.system_card));
+t('system card: action = system-card:<name>', csc.message.action === 'system-card:ER-Triage Assistant');
+t('system card: records risk tier + frameworks + controls', csc.system_card.classification.risk_tier === 'high' && csc.system_card.frameworks.length >= 3 && !!csc.system_card.controls.human_oversight);
+t('system card: invariant honesty note (attestation NOT certification)', /NOT certification|not certif/i.test(csc.note));
+t('system card: signature verifies TRUE', verifyReceipt(cardR).valid === true);
+const cbad = JSON.parse(JSON.stringify(cardR)); cbad.defoneos_signed_contact.message.detail = cbad.defoneos_signed_contact.message.detail.replace('"high"', '"minimal"');
+t('system card: downgraded risk tier verifies FALSE (tamper-evident)', verifyReceipt(cbad).valid === false);
+
 // print a receipt to eyeball + to feed into verify.html
 console.log('\n--- sample receipt (feed into verify.html) ---');
 console.log(JSON.stringify(r));

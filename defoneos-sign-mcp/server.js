@@ -93,6 +93,42 @@ function signArtifact({ kind, subject, output, method, inputs, i }) {
     }
   };
 }
+// ── SIGNED SYSTEM CARD · the JSP 936 / EU-AI-Act assurance primitive, as a signed artifact ──
+// The gap Turing/CETaS named: "no authoritative, independent organisation … to inspect and approve AI systems."
+// This doesn't approve — it produces a SIGNED, offline-verifiable declaration a buyer/auditor can check with no server.
+function signSystemCard(p) {
+  p = p || {};
+  const card = {
+    '@type': 'DEFONEOS-SystemCard',
+    system: { name: String(p.name || 'unnamed system').slice(0, 160), version: p.version ? String(p.version).slice(0, 40) : undefined, provider: p.provider ? String(p.provider).slice(0, 160) : undefined, purpose: String(p.purpose || '').slice(0, 800) },
+    classification: { risk_tier: p.risk_tier || 'unclassified', rationale: p.rationale ? String(p.rationale).slice(0, 600) : undefined, eu_ai_act_annex_iii: !!p.high_risk },
+    frameworks: Array.isArray(p.frameworks) && p.frameworks.length ? p.frameworks : ['EU AI Act', 'ISO 42001', 'NIST AI RMF', 'JSP 936'],
+    controls: {
+      human_oversight: p.human_oversight != null ? p.human_oversight : 'human-in-the-loop for high-risk actions (Article 14)',
+      transparency_art50: p.transparency != null ? p.transparency : 'AI-generated outputs marked (EU AI Act Art 50)',
+      data_governance: p.data_governance || 'documented; lawful basis recorded',
+      logging: p.logging || 'every governed action Ed25519-signed to an offline-verifiable ledger',
+      robustness: p.robustness || 'documented eval + care-floor ' + CARE_FLOOR
+    },
+    limitations: p.limitations ? String(p.limitations).slice(0, 800) : 'this card attests declared posture + is cryptographically signed; it does NOT certify or approve the system — assurance, not accreditation.',
+    care_floor: CARE_FLOOR,
+    issued: new Date().toISOString()
+  };
+  const message = { i: 0, ts: card.issued, action: 'system-card:' + card.system.name, detail: JSON.stringify(card), prev: CHAIN_PREV };
+  const bytes = Buffer.from(JSON.stringify(message), 'utf8');
+  const sig = crypto.sign(null, bytes, PRIV).toString('hex');
+  CHAIN_PREV = sig;
+  return {
+    defoneos_signed_contact: {
+      message, signature_ed25519: sig, public_key_ed25519: PUB_RAW_HEX, fingerprint: FINGERPRINT,
+      algorithm: 'Ed25519 (RFC 8032) over utf8(JSON.stringify(message))',
+      system_card: card,
+      verify: 'Drop this into ' + VERIFY_URL + ' — signature re-checked offline, no server.',
+      issued_by: 'DEFONEOS signing MCP · CSOAI Ltd (UK 16939677)',
+      note: 'Signed assurance declaration (JSP 936 / EU AI Act shape). Attestation of declared posture — NOT certification/approval.'
+    }
+  };
+}
 function verifyReceipt(receipt) {
   const r = receipt && (receipt.defoneos_signed_contact || receipt);
   if (!r || !r.message || !r.signature_ed25519 || !r.public_key_ed25519)
@@ -126,6 +162,16 @@ const TOOLS = [
     inputSchema: { type: 'object', required: ['receipt'], properties: {
       receipt: { type: 'object', description: 'A receipt from defoneos_sign (the full object or its defoneos_signed_contact).' },
       output: { type: 'string', description: 'Optional: the original output, to re-bind content to its signed hash.' } } } },
+  { name: 'defoneos_system_card',
+    description: 'Produce a SIGNED, offline-verifiable AI System Card (JSP 936 / EU AI Act shape) for an AI system — the sovereign assurance primitive the Turing/CETaS gap named. Declares purpose, risk tier, frameworks, controls (human-oversight, Art-50 transparency, logging, robustness) and limitations, then Ed25519-signs it. Attestation of declared posture, NOT certification. Verifies at defoneos.vercel.app/verify.html.',
+    inputSchema: { type: 'object', required: ['name', 'purpose'], properties: {
+      name: { type: 'string', description: 'System name.' }, version: { type: 'string' }, provider: { type: 'string' },
+      purpose: { type: 'string', description: 'What the system does / intended use.' },
+      risk_tier: { type: 'string', description: 'e.g. high | limited | minimal (EU AI Act) or your scheme.' },
+      high_risk: { type: 'boolean', description: 'EU AI Act Annex III high-risk?' },
+      rationale: { type: 'string', description: 'Why that risk tier.' },
+      frameworks: { type: 'array', items: { type: 'string' }, description: 'Frameworks it aligns to (defaults EU AI Act/ISO 42001/NIST AI RMF/JSP 936).' },
+      human_oversight: { type: 'string' }, transparency: { type: 'string' }, data_governance: { type: 'string' }, logging: { type: 'string' }, robustness: { type: 'string' }, limitations: { type: 'string' } } } },
   { name: 'defoneos_public_key',
     description: 'Return the sovereign Ed25519 public key + fingerprint used to sign artifacts (so a verifier can trust-on-first-use / pin it).',
     inputSchema: { type: 'object', properties: {} } }
@@ -133,6 +179,7 @@ const TOOLS = [
 function callTool(name, args) {
   args = args || {};
   if (name === 'defoneos_sign') return signArtifact({ kind: args.kind, subject: args.subject, output: args.output, method: args.method, inputs: args.inputs });
+  if (name === 'defoneos_system_card') return signSystemCard(args);
   if (name === 'defoneos_verify') return verifyReceipt(Object.assign({}, args.receipt, args.output != null ? { output: args.output } : {}));
   if (name === 'defoneos_public_key') return { public_key_ed25519: PUB_RAW_HEX, fingerprint: FINGERPRINT, algorithm: 'Ed25519 (RFC 8032)', verify_url: VERIFY_URL, protocol: PROTOCOL };
   throw new Error('unknown tool: ' + name);
@@ -173,5 +220,5 @@ function main() {
   process.stderr.write('[defoneos-sign] up · key ' + FINGERPRINT + ' · verify ' + VERIFY_URL + '\n');
 }
 
-module.exports = { signArtifact, verifyReceipt, callTool, PUB_RAW_HEX, FINGERPRINT, TOOLS };
+module.exports = { signArtifact, signSystemCard, verifyReceipt, callTool, PUB_RAW_HEX, FINGERPRINT, TOOLS };
 if (require.main === module) main();

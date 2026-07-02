@@ -1447,7 +1447,7 @@ async function arriveAtMe(){
   if(window.horusSpeak) horusSpeak('You’re set — pulling back. The whole board is yours.'); _fly(loc.lon,loc.lat,3200000,3); await _slp(3400); if(window.pushFeed) pushFeed('ARRIVAL · '+loc.city+' · 10mi → 30mi → regional · all layers live');
   return loc; }
 // ── screen-awareness: clear overlapping windows with a spoken quip (used by the tour + on demand) ──
-function sovClearView(quip){ try{ var open=document.querySelectorAll('.win'); if(open.length && quip && window.horusSpeak) horusSpeak(quip); if(window.closeAllWins) closeAllWins(); if(window._clearGovViz) _clearGovViz(); if(window._clearOntoViz) _clearOntoViz(); if(window._clearBridgesViz) _clearBridgesViz(); if(window._clearRainbowViz) _clearRainbowViz(); if(window._clearToolViz) _clearToolViz(); if(window._convDS) window._convDS.show=false; }catch(e){} }
+function sovClearView(quip){ try{ var open=document.querySelectorAll('.win'); if(open.length && quip && window.horusSpeak) horusSpeak(quip); if(window.closeAllWins) closeAllWins(); if(window._clearGovViz) _clearGovViz(); if(window._clearOntoViz) _clearOntoViz(); if(window._clearBridgesViz) _clearBridgesViz(); if(window._clearRainbowViz) _clearRainbowViz(); if(window._clearToolViz) _clearToolViz(); if(window.sovClearWatch) sovClearWatch(); if(window._convDS) window._convDS.show=false; }catch(e){} }
 // ── floating media windows (cameras · space cam · live links) auto-clear so the centre stays clean ──
 // One at a time: opening a new one retires the last. Auto-dismiss after idle (hover pauses). Click the
 // empty globe and the Sovereign clears them. During a tour the tour controls the flow (no idle-close).
@@ -1636,7 +1636,7 @@ function sovNewsFocus(region){ var sigs=window._newsSignals||[]; var pick=null;
 window.sovNewsFocus=sovNewsFocus;
 
 let FEED=[];
-var SUGG=[['✨','light it up'],['📍','scan my area'],['📷','cameras in london'],['🌧️','weather radar'],['🚆','rail network'],['💹','financial centres'],['🏬','local businesses'],['🗂','domains ontology'],['🛬','global airports'],['⚡','power plants'],['🌫️','air quality'],['🔥','show wildfires'],['🛰','satellites'],['🏙','street view in london'],['🛡️','AI governance'],['⚖️','compare doctrines'],['🔏','SIGIL ledger'],['▶','run demo'],['🗂','set up my workspace'],['✈️','open aircraft'],['⚓','marine vessels'],['📰','news in ukraine'],['🧭','what is near gibraltar'],['🌍','world view'],['🪶','lite mode'],['🛰','what am I looking at'],['⚡','convergence'],['⚓','maritime chokepoints'],['⛽','pipelines'],['🎯','military symbology'],['🛰','export cot'],['🔏','sign all in view'],['📋','export brief'],['🖨','print brief'],['🔄','retry feeds'],['🛡️','protect the ai space'],['◆','why defoneos'],['🗓','next dates'],['🧬','the moat in 3d'],['🌐','submarine cables'],['📡','comms masts'],['❓','what can you do']];
+var SUGG=[['✨','light it up'],['📍','scan my area'],['📷','cameras in london'],['🌧️','weather radar'],['🚆','rail network'],['💹','financial centres'],['🏬','local businesses'],['🗂','domains ontology'],['🛬','global airports'],['⚡','power plants'],['🌫️','air quality'],['🔥','show wildfires'],['🛰','satellites'],['🏙','street view in london'],['🛡️','AI governance'],['⚖️','compare doctrines'],['🔏','SIGIL ledger'],['▶','run demo'],['🗂','set up my workspace'],['✈️','open aircraft'],['⚓','marine vessels'],['📰','news in ukraine'],['🧭','what is near gibraltar'],['🌍','world view'],['🪶','lite mode'],['🛰','what am I looking at'],['⚡','convergence'],['⚓','maritime chokepoints'],['⛽','pipelines'],['🎯','military symbology'],['🛰','export cot'],['🔏','sign all in view'],['◎','watch box'],['📋','export brief'],['🖨','print brief'],['🔄','retry feeds'],['🛡️','protect the ai space'],['◆','why defoneos'],['🗓','next dates'],['🧬','the moat in 3d'],['🌐','submarine cables'],['📡','comms masts'],['❓','what can you do']];
 function _runSugg(t){ var el=document.getElementById('cmd'); if(el) el.value=t; var b=document.getElementById('cmdSugg'); if(b) b.classList.remove('open'); command(); }
 function cmdSuggest(v){ var box=document.getElementById('cmdSugg'); if(!box) return; v=(''+(v||'')).toLowerCase().trim();
   if(v.length<2){ box.classList.remove('open'); box.innerHTML=''; return; }
@@ -1857,6 +1857,40 @@ function _convPanel(conv,hot){ var id='convWin'; var old=document.getElementById
     '<button onclick="if(window.sovSignAllInView)sovSignAllInView()" style="margin-top:11px;width:100%;cursor:pointer;background:linear-gradient(90deg,#0bd,#5ff4ff);color:#04121a;border:none;border-radius:9px;padding:9px;font:700 12px ui-monospace,monospace">🔏 Sign all contacts in view</button>';
   document.body.appendChild(w); }
 window.convergenceScan=convergenceScan; window._convPanel=_convPanel;
+// ── WATCH BOX · draw a region, sign it, and get a SIGNED alert the moment ≥2 independent live streams converge inside it ──
+// This is the product competitors sell as "alerting" — here it's early-warning + a signed receipt, on-device.
+function sovClearWatch(){ try{ if(window._watchBox){ if(window._watchBox.timer) clearInterval(window._watchBox.timer); window._watchBox.timer=null; } if(window._watchDS){ window._watchDS.entities.removeAll(); window._watchDS.show=false; } window._watchBox=null; }catch(_){} }
+window.sovClearWatch=sovClearWatch;
+async function sovWatchBox(km){ if(!viewer) return;
+  if(window._watchBox){ sovClearWatch(); if(window.horusReply) horusReply('Watch box cleared — I’ll stop monitoring that area.'); if(window.pushFeed) pushFeed('WATCH · cleared'); return; }
+  var c=(typeof _entCenter==='function')?_entCenter():[(window._userLoc&&window._userLoc.lon)||0,(window._userLoc&&window._userLoc.lat)||30];
+  var lon=c[0], lat=c[1]; km=km||300;
+  if(!window._watchDS){ window._watchDS=new C.CustomDataSource('watch'); viewer.dataSources.add(window._watchDS); }
+  var ds=window._watchDS; ds.entities.removeAll(); ds.show=true;
+  ds.entities.add({ position:C.Cartesian3.fromDegrees(lon,lat), ellipse:{ semiMajorAxis:km*1000, semiMinorAxis:km*1000, material:C.Color.fromCssColorString('#5ff4ff').withAlpha(0.07), outline:true, outlineColor:C.Color.fromCssColorString('#5ff4ff').withAlpha(0.6), height:0 }, label:{ text:'◎ WATCH · '+_nearLabel(lat,lon), font:'700 11px ui-monospace,monospace', fillColor:C.Color.fromCssColorString('#9fe9ff'), showBackground:true, backgroundColor:C.Color.fromCssColorString('#04101c').withAlpha(0.85), pixelOffset:new C.Cartesian2(0,-14), disableDepthTestDistance:Number.POSITIVE_INFINITY } });
+  try{ _reactRing(ds, lon, lat, '#5ff4ff', km*1000*0.5, 0.5); }catch(_){}
+  var sg=window.sigilSign?await sigilSign('watch-box', _nearLabel(lat,lon)+' · '+km+'km · trigger: streams≥2'):null;
+  window._watchBox={ lon:lon, lat:lat, km:km, ds:ds, timer:null, seen:{}, since:Date.now() };
+  if(window.openHorus) openHorus();
+  if(window.horusReply) horusReply('Watch box set over <b>'+_nearLabel(lat,lon)+'</b> ('+km+' km)'+(sg?', signed <code>'+sg.sig.slice(0,12)+'…</code>':'')+'. I’ll alert you — and <b>sign the alert</b> — the moment <b>two or more independent live streams converge</b> inside it. Turn on more layers (news, seismic, fire, AIS, air, threat) to widen the net. Say “watch box” again to clear.');
+  if(window.pushFeed) pushFeed('WATCH · armed over '+_nearLabel(lat,lon)+' · '+km+'km · trigger ≥2 streams');
+  function check(){ if(!window._watchBox) return;   // alerts fire even if the tab is backgrounded — you want to know
+    var S=(typeof _sigStreams==='function')?_sigStreams():[];
+    var inside=S.filter(function(p){ return _haversine(lon,lat,p.lon,p.lat)<=km; });
+    var clusters=[];
+    inside.forEach(function(p){ var g=null; for(var i=0;i<clusters.length;i++){ if(_haversine(clusters[i].lon,clusters[i].lat,p.lon,p.lat)<=60){ g=clusters[i]; break; } } if(!g){ g={lon:p.lon,lat:p.lat,streams:{}}; clusters.push(g); } g.streams[p.s]=1; });
+    clusters.forEach(function(cl){ var kinds=Object.keys(cl.streams); if(kinds.length<2) return; var key=_nearLabel(cl.lat,cl.lon); if(window._watchBox.seen[key]) return; window._watchBox.seen[key]=1;
+      var det=key+' · '+kinds.join('+');
+      if(window.sigilSign) sigilSign('watch-alert', det);
+      try{ _reactRing(window._watchBox.ds, cl.lon, cl.lat, '#ff8080', 90000, 1.5); }catch(_){}
+      if(window.openHorus) openHorus();
+      if(window.horusReply) horusReply('⚠ <b>Convergence in your watch box</b> — near <b>'+key+'</b>, <b>'+kinds.join(' + ')+'</b> are converging. Signed to the ledger. Ungoverned you’d miss it; governed, I flag it and any response gates through the council + care-floor.');
+      if(window.pushFeed) pushFeed('WATCH ALERT · '+det+' · signed to ledger');
+    });
+  }
+  window._watchBox.timer=setInterval(check, 12000); setTimeout(check, 1500);
+}
+window.sovWatchBox=sovWatchBox;
 
 // ── MARITIME CHOKEPOINTS · public geography + live AIS exposure ─────────────────────────────────
 var _CHOKES=[['Strait of Hormuz',26.57,56.25,'~20% of seaborne oil'],['Bab-el-Mandeb',12.6,43.4,'Red Sea ↔ Gulf of Aden'],['Suez Canal',30.5,32.35,'Europe↔Asia shortcut'],['Strait of Malacca',2.5,101.3,'Busiest shipping lane'],['Panama Canal',9.1,-79.7,'Atlantic↔Pacific'],['Strait of Gibraltar',35.95,-5.6,'Med↔Atlantic'],['Turkish Straits · Bosphorus',41.1,29.05,'Black Sea outlet'],['Dover Strait',51.0,1.5,'Busiest passenger route'],['Danish Straits',55.7,12.7,'Baltic outlet'],['Taiwan Strait',24.5,119.5,'China↔Pacific'],['Cape of Good Hope',-34.35,18.47,'Suez bypass'],['Sunda Strait',-6.0,105.9,'Java↔Sumatra'],['Lombok Strait',-8.7,115.8,'Deep-draft Indonesia'],['Kerch Strait',45.25,36.5,'Sea of Azov'],['Bering Strait',65.9,-169.0,'Arctic gateway']];
@@ -3448,6 +3482,7 @@ function command(){
   if(/(retry (the )?feeds|refresh (the )?feeds|retry (throttled|failed|quiet)|re.?pull|reload feeds|refresh (the )?(data|layers)|feeds? health|feed status)/.test(q)){ if(window.sovRetryFeeds) sovRetryFeeds(); return res('re-pulling any throttled or quiet feeds'); }
   if(/(print brief|printable brief|brief pdf|pdf brief|print (the )?(report|sitrep|situation)|report pdf|brief report)/.test(q)){ if(window.sovBriefPrint) sovBriefPrint(); return res('opening a one-page printable situational report — signed'); }
   if(/(export brief|signed brief|download brief|situation(al)? report|situation(al)? brief|export sitrep|sitrep export|brief export|save (the )?(brief|picture))/.test(q)){ if(window.sovBrief) sovBrief(); return res('exporting a signed situational brief — verifiable offline'); }
+  if(/(watch box|watch this area|watch here|monitor (this )?area|monitor here|alert me|set (a )?watch|early.?warning here)/.test(q)){ if(window.sovWatchBox) sovWatchBox(); return res('watch box armed — signed alert when ≥2 live streams converge'); }
   if(/(sign all|sign everything|sign the (view|board|picture|contacts)|batch.?sign|sign (all )?contacts)/.test(q)){ if(window.sovSignAllInView) sovSignAllInView(); return res('signing every live contact in view — one batch receipt'); }
   if(/(convergence|converge|early.?warning|cross.?source|signal fusion|fuse (the )?signals|hotspots?|hot spot|kicking off|correlat)/.test(q)){ if(window.convergenceScan) convergenceScan(); res('fusion analytics · cross-source convergence + hotspots · signed'); return; }
   if(/(chokepoint|choke.?point|\bstrait\b|straits|shipping lane|hormuz|malacca|\bsuez\b|bab.?el.?mandeb|bosph|dardanelle|panama canal)/.test(q)){ if(window.toggleChokepoints) toggleChokepoints(); res('maritime chokepoints · public geography + live AIS exposure'); return; }
