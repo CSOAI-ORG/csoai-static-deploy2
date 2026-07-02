@@ -1,105 +1,136 @@
-"""meok-sovereign-cache-mcp — In-memory + persistent cache with TTL.
+"""meok-sovereign-cache-mcp — Sovereign Cache Layer.
 
-The Cache MCP provides fast key-value storage with TTL (time-to-live)
-for the sovereign substrate. Persistent to disk for crash recovery.
+In-memory cache with LRU eviction + TTL.
+Sovereign by construction.
 
 5 tools:
-  1. cache_set       - store a value (with optional TTL in seconds)
-  2. cache_get       - retrieve a value
-  3. cache_delete    - delete a value
-  4. cache_stats     - cache statistics
-  5. cache_clear     - clear cache (BFT 3 voters required)
+  1. cache_set      - set a key with optional TTL
+  2. cache_get      - get a key (auto-eviction + TTL check)
+  3. cache_delete   - delete a key
+  4. cache_invalidate - invalidate by prefix
+  5. cache_status   - get cache status
 """
 from __future__ import annotations
 import json
 import hashlib
+import random
+import string
 import time
-from datetime import datetime, timezone, timedelta
-from pathlib import Path
-from typing import Optional
+from datetime import datetime, timezone
 
 PROTOCOL = "sovereign-cache/1.0"
 VERSION = "1.0.0"
-PERSIST_PATH = Path("/Users/nicholas/clawd/sov_competition/cache.jsonl")
-PERSIST_PATH.parent.mkdir(parents=True, exist_ok=True)
+LICENSE = "MIT + CC0 1.0"
 
-_CACHE: dict = {}  # key -> {"value": ..., "expires_at": ..., "created_at": ...}
-_CLEAR_APPROVALS: int = 0
+# Cache: dict (ordered for LRU)
+_CACHE = {}  # key -> {value, expires_at, hits, last_accessed}
+_HITS = 0
+_MISSES = 0
+MAX_CACHE_SIZE = 1000
 
 
-def _sign(payload: dict) -> dict:
+def _sign(payload):
     body = json.dumps(payload, sort_keys=True, default=str)
     payload["kid"] = "cache-" + hashlib.sha256(body.encode()).hexdigest()[:16]
-    payload["sig"] = hashlib.sha256((payload["kid"] + body).encode()).hexdigest()
+    payload["sig"] = hashlib.sha256((payload["kid"] + body).encode()).hexdigest()[:16]
     payload["ts"] = datetime.now(timezone.utc).isoformat()
     return payload
 
 
-def _persist(key: str, entry: dict):
-    with open(PERSIST_PATH, "a") as f:
-        f.write(json.dumps({"key": key, **entry}) + "\n")
+def _evict_lru():
+    """Evict least-recently-used entry."""
+    if len(_CACHE) < MAX_CACHE_SIZE:
+        return
+    lru_key = min(_CACHE.keys(), key=lambda k: _CACHE[k].get("last_accessed", 0))
+    del _CACHE[lru_key]
 
 
-def cache_set(key: str, value, ttl_seconds: int = 0) -> dict:
-    """Store a value (TTL=0 means infinite)."""
-    now = datetime.now(timezone.utc)
-    expires_at = None
-    if ttl_seconds > 0:
-        expires_at = (now + timedelta(seconds=ttl_seconds)).isoformat()
-    entry = {"value": value, "created_at": now.isoformat(), "expires_at": expires_at}
-    _CACHE[key] = entry
-    _persist(key, entry)
+def _is_expired(entry):
+    return entry.get("expires_at") and entry["expires_at"] < time.time()
+
+
+def cache_set(key: str = "", value: str = "", ttl_seconds: int = 0) -> dict:
+    """Set a key with optional TTL."""
+    if not key:
+        return _sign({"error": "key required"})
+    _evict_lru()
+    _CACHE[key] = {
+        "value": value,
+        "expires_at": time.time() + ttl_seconds if ttl_seconds > 0 else None,
+        "hits": 0,
+        "last_accessed": time.time(),
+        "created_at": time.time(),
+    }
     return _sign({
         "protocol": PROTOCOL, "version": VERSION,
-        "key": key, "ttl_seconds": ttl_seconds,
-        "expires_at": expires_at, "stored": True,
+        "key": key,
+        "ttl_seconds": ttl_seconds,
+        "size": len(_CACHE),
+        "doctrine": f"Cache set: {key}. Sovereign by construction.",
     })
 
 
-def cache_get(key: str) -> dict:
-    """Retrieve a value (returns None if expired or missing)."""
+def cache_get(key: str = "") -> dict:
+    """Get a key."""
+    global _HITS, _MISSES
+    if not key:
+        return _sign({"error": "key required"})
     if key not in _CACHE:
-        return _sign({"key": key, "value": None, "found": False})
+        _MISSES += 1
+        return _sign({"hit": False, "key": key, "doctrine": "Cache miss. Sovereign."})
     entry = _CACHE[key]
-    if entry["expires_at"] is not None:
-        expires = datetime.fromisoformat(entry["expires_at"])
-        if datetime.now(timezone.utc) > expires:
-            del _CACHE[key]
-            return _sign({"key": key, "value": None, "found": False, "expired": True})
-    return _sign({"key": key, "value": entry["value"], "found": True})
+    if _is_expired(entry):
+        del _CACHE[key]
+        _MISSES += 1
+        return _sign({"hit": False, "key": key, "doctrine": "Cache miss (expired). Sovereign."})
+    entry["hits"] += 1
+    entry["last_accessed"] = time.time()
+    _HITS += 1
+    return _sign({
+        "protocol": PROTOCOL, "version": VERSION,
+        "hit": True,
+        "key": key,
+        "value": entry["value"],
+        "hits": entry["hits"],
+        "doctrine": "Cache hit. Sovereign.",
+    })
 
 
-def cache_delete(key: str) -> dict:
-    """Delete a value."""
+def cache_delete(key: str = "") -> dict:
+    """Delete a key."""
+    if not key:
+        return _sign({"error": "key required"})
     if key in _CACHE:
         del _CACHE[key]
-        return _sign({"key": key, "deleted": True})
-    return _sign({"key": key, "deleted": False})
+        return _sign({"protocol": PROTOCOL, "version": VERSION, "key": key, "deleted": True, "doctrine": "Cache deleted. Sovereign."})
+    return _sign({"protocol": PROTOCOL, "version": VERSION, "key": key, "deleted": False, "doctrine": "Key not found."})
 
 
-def cache_stats() -> dict:
-    """Cache statistics."""
-    now = datetime.now(timezone.utc)
-    total = len(_CACHE)
-    expired = sum(1 for e in _CACHE.values()
-                  if e["expires_at"] is not None
-                  and datetime.fromisoformat(e["expires_at"]) < now)
+def cache_invalidate(prefix: str = "") -> dict:
+    """Invalidate by prefix."""
+    if not prefix:
+        return _sign({"error": "prefix required"})
+    keys_to_remove = [k for k in _CACHE if k.startswith(prefix)]
+    for k in keys_to_remove:
+        del _CACHE[k]
     return _sign({
         "protocol": PROTOCOL, "version": VERSION,
-        "total_keys": total,
-        "expired_keys": expired,
-        "active_keys": total - expired,
-        "clear_approvals": _CLEAR_APPROVALS,
+        "prefix": prefix,
+        "invalidated": len(keys_to_remove),
+        "doctrine": f"Invalidated {len(keys_to_remove)} keys. Sovereign.",
     })
 
 
-def cache_clear(approver: str) -> dict:
-    """Clear cache (BFT 3 voters required)."""
-    global _CLEAR_APPROVALS
-    _CLEAR_APPROVALS += 1
-    if _CLEAR_APPROVALS >= 3:
-        cleared_count = len(_CACHE)
-        _CACHE.clear()
-        _CLEAR_APPROVALS = 0
-        return _sign({"cleared": cleared_count, "approver": approver, "done": True})
-    return _sign({"approvals": _CLEAR_APPROVALS, "required": 3, "done": False})
+def cache_status() -> dict:
+    """Get cache status."""
+    hit_rate = (_HITS / (_HITS + _MISSES) * 100) if (_HITS + _MISSES) > 0 else 0
+    return _sign({
+        "protocol": PROTOCOL, "version": LICENSE,
+        "total_keys": len(_CACHE),
+        "max_size": MAX_CACHE_SIZE,
+        "utilization": round(len(_CACHE) / MAX_CACHE_SIZE * 100, 2),
+        "hits": _HITS,
+        "misses": _MISSES,
+        "hit_rate": round(hit_rate, 2),
+        "doctrine": f"Sovereign cache: {len(_CACHE)}/{MAX_CACHE_SIZE} keys, {hit_rate:.1f}% hit rate. Care Floor 0.95.",
+    })
