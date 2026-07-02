@@ -50,8 +50,10 @@ async function cmd_sign_system(opts) {
   const { ensureKeys } = require('../lib/keys.js');
   const { priv, pubHex } = ensureKeys();
   const canonical = canonicalJSON(card);
+  // Sign the canonical JSON directly (Ed25519 over raw bytes — same scheme
+  // as the live signing backend at os.meok.ai/api/verify).
   const sha = sha256Hex(canonical);
-  const sig = edSign(priv, sha);
+  const sig = edSign(priv, canonical);
   const envelope = {
     spec: "defoneos.systemcard/v1",
     alg: "ed25519",
@@ -81,8 +83,10 @@ async function cmd_sign_model(opts) {
   const { ensureKeys } = require('../lib/keys.js');
   const { priv, pubHex } = ensureKeys();
   const canonical = canonicalJSON(card);
+  // Sign the canonical JSON directly (Ed25519 over raw bytes — same scheme
+  // as the live signing backend at os.meok.ai/api/verify).
   const sha = sha256Hex(canonical);
-  const sig = edSign(priv, sha);
+  const sig = edSign(priv, canonical);
   const envelope = {
     spec: "defoneos.modelcard/v1",
     alg: "ed25519",
@@ -100,7 +104,7 @@ async function cmd_sign_model(opts) {
   console.log(`# sovereign_fp: ${fingerprint(pubHex)}`);
 }
 
-function cmd_verify(opts) {
+async function cmd_verify(opts) {
   if (!opts.card || !opts.signature || !opts.pubkey) {
     console.error("--card <path> --signature <sig> --pubkey <hex>");
     process.exit(2);
@@ -109,14 +113,19 @@ function cmd_verify(opts) {
   let data = JSON.parse(fs.readFileSync(opts.card, "utf8"));
   let msg = (opts.message) || data.canonical;
   if (typeof msg !== "string") msg = JSON.stringify(data);
-  const hash = require('crypto').createHash('sha256').update(msg).digest('hex');
-  const { edVerify } = require('../lib/crypto.js');
-  const ok = edVerify(opts.pubkey, opts.signature, hash);
+  const { edVerify, edVerifySync, sha256Hex } = require('../lib/crypto.js');
+  // First sync structural check (cheap)
+  if (!edVerifySync(opts.pubkey, opts.signature, msg)) {
+    console.log(JSON.stringify({ valid: false, reason: "structural_check_failed" }, null, 2));
+    process.exit(1);
+  }
+  // Then defer to live backend for cryptographic verification
+  const ok = await edVerify(opts.pubkey, opts.signature, msg);
   console.log(JSON.stringify({
     valid: ok,
-    sha256: hash,
     sovereign_fp_of_signer: fingerprint(opts.pubkey),
-    card_fp16_of_message: hash.slice(0, 16),
+    card_fp16_of_message: sha256Hex(msg).slice(0, 16),
+    verified_via: process.env.DEFONEOS_VERIFY_URL || "https://os.meok.ai/api/verify",
   }, null, 2));
   process.exit(ok ? 0 : 1);
 }
