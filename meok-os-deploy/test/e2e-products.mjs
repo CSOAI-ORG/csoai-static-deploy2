@@ -217,5 +217,7 @@ for (const p of ['pricing.html','badges.html','verify.html','sovspace.html','cha
   ck('SAP: package signature verifies offline', v.j.valid === true);
   const af = await gj('/api/sap?name=Aria&format=af'); ck('SAP: exports Letta .af-compatible state (interop)', af.j.agent_type === 'memgpt_agent' && Array.isArray(af.j.memory?.blocks) && Array.isArray(af.j.tools)); }
 
+{ const rr = await fetch(BASE + '/runner/meok-sap-runner.mjs'); const t = await rr.text(); ck('SAP runner: on-device MCP runner served + offline-verify', rr.status === 200 && /verifySAP/.test(t) && /crypto\.verify/.test(t) && /ollama/i.test(t)); }
+
 console.log('\n' + (fail === 0 ? '✅ PASS' : '❌ FAIL') + ' — ' + pass + ' passed, ' + fail + ' failed' + (fails.length ? '  [' + fails.join(', ') + ']' : ''));
 process.exit(fail ? 1 : 0);
