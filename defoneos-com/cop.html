@@ -1131,8 +1131,8 @@ async function loadSatellites(){ if(!satDS||typeof satellite==='undefined') retu
     if(!window._satrecs){ var d=await (await fetch('/api/satellites')).json(); window._satrecs=(d.sats||[]).map(function(s){ try{ return {name:s.name, rec:satellite.twoline2satrec(s.l1,s.l2)}; }catch(e){ return null; } }).filter(Boolean); }
     propagateSats();
     if(!window._satTimer) window._satTimer=setInterval(function(){ if(satDS&&satDS.show&&!document.hidden) propagateSats(); }, 5000);
-    pushFeed('SATELLITES · '+(window._satrecs?window._satrecs.length:0)+' tracked · CelesTrak TLE · live orbit propagation'); return {count:(window._satrecs||[]).length};
-  }catch(e){} }
+    pushFeed('SATELLITES · '+(window._satrecs?window._satrecs.length:0)+' tracked · CelesTrak TLE · live orbit propagation'); if(window._fhSet) _fhSet('sat', (window._satrecs&&window._satrecs.length)?'live':'empty'); return {count:(window._satrecs||[]).length};
+  }catch(e){ if(window._fhSet) _fhSet('sat','error'); if(window.pushFeed) pushFeed('SATELLITES · CelesTrak unreachable — retry shortly'); } }
 function propagateSats(){ return propagateSatsFast(); }   // was a dead removeAll()+noop that blanked the layer — delegate to the in-place updater
 function propagateSatsFast(){ if(!satDS||!window._satrecs||typeof satellite==='undefined') return; var now=new Date(); var gmst=satellite.gstime(now);
   if(!window._satEnts || window._satEnts.length!==window._satrecs.length){ satDS.entities.removeAll(); window._satEnts=window._satrecs.map(function(s){ return satDS.entities.add({ position:C.Cartesian3.fromDegrees(0,0,500000), point:{ pixelSize:4, color:C.Color.fromCssColorString('#9fd0ff').withAlpha(0.9), outlineColor:C.Color.BLACK, outlineWidth:1 }, _info:{ title:'🛰 '+s.name, rows:[['Source','CelesTrak NORAD TLE · live orbit']] } }); }); }
@@ -1203,8 +1203,8 @@ async function loadEvents(){ if(!eventsDS) return; try{
         point:{ pixelSize:9, color:C.Color.fromCssColorString(col).withAlpha(0.78), outlineColor:C.Color.BLACK, outlineWidth:1 },
         _info:{ title:ev.icon+' '+ev.title, rows:[['Type',ev.type],['Alert level',ev.level||'—'],['Source',ev.source],['Date',(ev.date||'').slice(0,10)]] } });
       _reactRing(eventsDS, ev.lon, ev.lat, col, /red|ff[0-3]/i.test(col)?150000:95000, 1.15); });   // every disaster pulses an alert halo
-    var n=(d.events||[]).length; var ec=document.getElementById('evCount'); if(ec) ec.textContent=n; pushFeed('EVENTS · '+n+' live natural events & disaster alerts · EONET + GDACS'); return d;
-  }catch(e){} }
+    var n=(d.events||[]).length; var ec=document.getElementById('evCount'); if(ec) ec.textContent=n; pushFeed('EVENTS · '+n+' live natural events & disaster alerts · EONET + GDACS'); if(window._fhSet) _fhSet('events', n>0?'live':'empty'); return d;
+  }catch(e){ if(window._fhSet) _fhSet('events','error'); if(window.pushFeed) pushFeed('EVENTS · EONET/GDACS unreachable — retry shortly'); } }
 async function loadSpace(){ if(!spaceDS) return; try{
     const d=await (await fetch('/api/space')).json(); spaceDS.entities.removeAll();
     if(d.iss){ spaceDS.entities.add({ id:'iss', position:C.Cartesian3.fromDegrees(d.iss.lon,d.iss.lat,420000),
@@ -1214,8 +1214,8 @@ async function loadSpace(){ if(!spaceDS) return; try{
     (d.launches||[]).forEach(l=>{ spaceDS.entities.add({ position:C.Cartesian3.fromDegrees(l.lon,l.lat),
       point:{ pixelSize:7, color:C.Color.fromCssColorString('#ffd23b'), outlineColor:C.Color.BLACK, outlineWidth:1 },
       _info:{ title:'🚀 '+l.name, rows:[['Launch (UTC)',(l.net||'').replace('T',' ').slice(0,16)],['Pad',l.pad],['Provider',l.provider],['Status',l.status]] } }); });
-    var sc=document.getElementById('spaceCount'); if(sc) sc.textContent=(d.iss?1:0)+'+'+((d.launches||[]).length); pushFeed('SPACE · ISS live + '+((d.launches||[]).length)+' upcoming launches'); return d;
-  }catch(e){} }
+    var sc=document.getElementById('spaceCount'); if(sc) sc.textContent=(d.iss?1:0)+'+'+((d.launches||[]).length); pushFeed('SPACE · ISS live + '+((d.launches||[]).length)+' upcoming launches'); if(window._fhSet) _fhSet('space', (d.iss||(d.launches||[]).length)?'live':'empty'); return d;
+  }catch(e){ if(window._fhSet) _fhSet('space','error'); if(window.pushFeed) pushFeed('SPACE · feed unreachable — retry shortly'); } }
 async function loadAirQuality(){ if(!aqDS) return; try{
     var c=(typeof _entCenter==='function')?_entCenter():[0,30];
     const d=await (await fetch('/api/airquality?lat='+c[1].toFixed(2)+'&lon='+c[0].toFixed(2))).json(); aqDS.entities.removeAll();
@@ -1225,8 +1225,8 @@ async function loadAirQuality(){ if(!aqDS) return; try{
       aqDS.entities.add({ position:C.Cartesian3.fromDegrees(s.lon,s.lat),
         point:{ pixelSize:7, color:C.Color.fromCssColorString(col).withAlpha(0.8), outlineColor:C.Color.BLACK, outlineWidth:1 },
         _info:{ title:'🌫️ AQI '+a, rows:[['Station',s.name||'—'],['AQI',a],['Band',band],['Source','WAQI · live']] } }); });
-    var n=(d.stations||[]).length; var ac=document.getElementById('aqCount'); if(ac) ac.textContent=n; pushFeed('AIR QUALITY · '+n+' live AQI stations · WAQI (global)'); return d;
-  }catch(e){} }
+    var n=(d.stations||[]).length; var ac=document.getElementById('aqCount'); if(ac) ac.textContent=n; pushFeed('AIR QUALITY · '+n+' live AQI stations · WAQI (global)'); if(window._fhSet) _fhSet('aq', n>0?'live':'empty'); return d;
+  }catch(e){ if(window._fhSet) _fhSet('aq','error'); if(window.pushFeed) pushFeed('AIR QUALITY · WAQI unreachable — retry shortly'); } }
 var _gibsLayer=null;
 window._railLayer=null;
 function toggleRail(){ var s=viewer.scene;
@@ -1297,7 +1297,8 @@ function _briefBody(){
   var loc=window._userLoc||null, h=0; try{ h=Math.round(viewer.camera.positionCartographic.height); }catch(e){}
   var lsum=Object.keys(layers).map(function(k){return layers[k]+' '+k;}).join(', ');
   var summary=total? ('DEFONEOS situational brief — '+total+' live contacts across '+Object.keys(layers).length+' layers: '+lsum+(cot?('; '+cot+' CoT tracks'):'')+'.') : 'DEFONEOS situational brief — clean board, no live layers active.';
-  return { generated:new Date().toISOString(), viewer_altitude_m:h, user_location:loc, layers:layers, cot_tracks:cot, total_contacts:total, summary:summary, doctrine:(window._doctrine==='east'?'DORADO':'SOVEREIGN'), sources:'all layers are free, public, consented feeds (ADS-B/AIS/USGS/GDELT/EONET/NASA/WAQI/CelesTrak/TfL etc.)' };
+  var fh=Object.assign({}, window._feedHealth||{});
+  return { generated:new Date().toISOString(), viewer_altitude_m:h, user_location:loc, layers:layers, cot_tracks:cot, total_contacts:total, summary:summary, feed_health:fh, doctrine:(window._doctrine==='east'?'DORADO':'SOVEREIGN'), sources:'all layers are free, public, consented feeds (ADS-B/AIS/USGS/GDELT/EONET/NASA/WAQI/CelesTrak/TfL etc.)' };
 }
 async function _briefPkg(){
   var body=_briefBody(), n=Object.keys(body.layers).length;
@@ -1315,6 +1316,7 @@ window.sovBrief=sovBrief;
 function _briefHTML(body,sig){ function e(s){ return String(s==null?'':s).replace(/[&<>]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;'}[c];}); }
   var rows=Object.keys(body.layers).map(function(k){ return '<tr><td>'+e(k)+'</td><td style="text-align:right"><b>'+body.layers[k]+'</b></td></tr>'; }).join('') || '<tr><td colspan="2" style="color:#888">no live layers active</td></tr>';
   var loc=body.user_location?(body.user_location.city?e(body.user_location.city)+' · ':'')+(body.user_location.lat!=null?body.user_location.lat.toFixed(3)+', '+body.user_location.lon.toFixed(3):'') : '—';
+  var fhk=Object.keys(body.feed_health||{}); var fhTxt=fhk.length? fhk.map(function(k){return e(k)+': '+e(body.feed_health[k]);}).join(' · ') : 'not yet sampled';
   var vlink=''; if(sig){ try{ var rc={ defoneos_signed_contact:{ message:{i:sig.i,ts:sig.ts,action:sig.action,detail:sig.detail,prev:sig.prev}, signature_ed25519:sig.sig, public_key_ed25519:sig.pub } }; vlink=location.origin+'/verify.html?receipt='+_b64url(JSON.stringify(rc)); }catch(_){} }
   var qrBlock = vlink ? ('<div class="qr"><div id="qrimg"></div><div class="qcap">Scan to verify this brief on any phone — opens the independent verifier and checks the Ed25519 signature offline.</div><div class="qlink">'+e(vlink)+'</div></div>') : '';
   var sigBlock = sig ? ('<div class="sig"><div class="sigh">◉ Ed25519 SIGNATURE · offline-verifiable</div><div class="kv"><span>signature</span><code>'+e(sig.sig)+'</code></div><div class="kv"><span>public key</span><code>'+e(sig.pub)+'</code></div><div class="kv"><span>entry</span><code>#'+sig.i+' · '+e(sig.ts)+'</code></div><div class="note">Verify independently at <b>defoneos.vercel.app/verify.html</b> — recompute utf8(JSON.stringify({i,ts,action,detail,prev})) and Ed25519-verify. No server, no trust required.</div>'+qrBlock+'</div>') : '<div class="note">Signing key still initialising — re-export for the signed version.</div>';
@@ -1332,7 +1334,7 @@ function _briefHTML(body,sig){ function e(s){ return String(s==null?'':s).replac
     '<h1>◎ DEFONEOS · Situational Brief</h1><div class="sub">Sovereign · Defence · Intelligence — '+e(body.doctrine)+' lens</div>'+
     '<div class="summary">'+e(body.summary)+'</div>'+
     '<h3 style="font-size:12px;color:#0a2540;margin:14px 0 2px">Live layers</h3><table>'+rows+'<tr><td><b>TOTAL CONTACTS</b></td><td style="text-align:right"><b>'+body.total_contacts+'</b></td></tr></table>'+
-    '<div class="meta"><span>Generated</span><b>'+e(body.generated)+'</b><span>Focus</span><b>'+loc+'</b><span>Altitude</span><b>'+body.viewer_altitude_m.toLocaleString()+' m</b><span>CoT tracks</span><b>'+body.cot_tracks+'</b><span>Sources</span><span>'+e(body.sources)+'</span></div>'+
+    '<div class="meta"><span>Generated</span><b>'+e(body.generated)+'</b><span>Focus</span><b>'+loc+'</b><span>Altitude</span><b>'+body.viewer_altitude_m.toLocaleString()+' m</b><span>CoT tracks</span><b>'+body.cot_tracks+'</b><span>Feed health</span><span>'+fhTxt+'</span><span>Sources</span><span>'+e(body.sources)+'</span></div>'+
     sigBlock+
     '<div class="foot">DEFONEOS · Powered by CSOAI · UK 16939677 · every contact live &amp; free-sourced · every action signed on-device · verifiable offline at defoneos.vercel.app/verify.html</div>'+
     '<div class="noprint"><button onclick="window.print()">🖨 Print / Save as PDF</button><button onclick="window.close()" style="background:#fff;color:#0a2540">Close</button></div>'+
@@ -1381,6 +1383,16 @@ function _fhInit(){ try{ Object.keys(_LAYCB).forEach(function(k){ var cb=documen
 function _fhUpdate(){ try{ var H=window._feedHealth||{}; Object.keys(_LAYCB).forEach(function(k){ var d=document.getElementById('fh-'+k); if(!d) return; var cb=document.getElementById(_LAYCB[k]); var on=cb&&cb.checked; var st=H[k]; var col= st==='live'?'#00e07a':(st==='empty'||st==='throttled')?'#eab308':st==='error'?'#ff6b6b':(on?'#5ff4ff':'#4a5568'); d.style.background=col; d.style.boxShadow='0 0 6px '+(col==='#4a5568'?'rgba(0,0,0,.4)':col); d.title='feed '+(st||(on?'on':'off')); }); }catch(_){} }
 function _fhSet(k,st){ window._feedHealth[k]=st; _fhUpdate(); }
 window._fhSet=_fhSet; window._fhUpdate=_fhUpdate; window._fhInit=_fhInit;
+// ── RETRY THROTTLED FEEDS · one action re-pulls every layer that's currently amber (quiet/throttled) or red (unreachable) ──
+function sovRetryFeeds(){ var LD={air:loadAircraft,marine:loadMarine,signals:loadSignals,quake:loadQuakes,cameras:loadCameras,events:loadEvents,aq:loadAirQuality,space:loadSpace,sat:loadSatellites};
+  var H=window._feedHealth||{}, hit=[];
+  Object.keys(LD).forEach(function(k){ var cb=document.getElementById(_LAYCB[k]); var on=cb&&cb.checked; var st=H[k]; if(on && (st==='error'||st==='empty'||st==='throttled')){ hit.push(k); try{ LD[k](); }catch(_){} } });
+  if(window.openHorus) openHorus();
+  if(!hit.length){ if(window.horusReply) horusReply('Nothing to retry — every live layer that’s on is reporting green. (Turn a layer on first, or if one’s amber/red I’ll re-pull it.)'); return; }
+  if(window.horusReply) horusReply('Re-pulling <b>'+hit.length+'</b> throttled/quiet feed'+(hit.length>1?'s':'')+' — '+hit.join(', ')+'. Free public sources rate-limit, so a retry usually clears it. Watch the dots go green.');
+  if(window.pushFeed) pushFeed('RETRY · re-pulling '+hit.join(', '));
+}
+window.sovRetryFeeds=sovRetryFeeds;
 function _lightPulse(){ try{ var o=document.getElementById('_lightflash'); if(!o){ o=document.createElement('div'); o.id='_lightflash'; o.style.cssText='position:fixed;inset:0;z-index:5;pointer-events:none;background:radial-gradient(circle at 50% 45%, rgba(95,244,255,.22), rgba(95,244,255,0) 62%);opacity:0;transition:opacity .55s'; document.body.appendChild(o); } o.style.opacity='1'; setTimeout(function(){ o.style.opacity='0'; },560); }catch(e){} }
 function lightItUp(){ // STAGGERED cascade so the effect is VISIBLE even if layers were already on, + a glow pulse
   var order=['reg','base','threat','quake','air','marine','signals','cameras','events','space','sat','aq'];
@@ -1516,8 +1528,8 @@ async function loadCameras(area){ if(!camerasDS) return; try{
       camerasDS.entities.add({ position:C.Cartesian3.fromDegrees(cam.lon,cam.lat),
         point:{ pixelSize:7, color:C.Color.fromCssColorString('#3ef0ff').withAlpha(0.85), outlineColor:C.Color.BLACK, outlineWidth:1 },
         _cam:cam, _info:{ title:'📷 '+cam.name, rows:[['Type','Public traffic camera'],['Source','TfL JamCams · live'],['Tip','click → open the live feed']] } }); });
-    var n=(d.cameras||[]).length; var cc=document.getElementById('camCount'); if(cc) cc.textContent=n; pushFeed('CAMERAS · '+n+' public London traffic cams · public feeds only'); return d;
-  }catch(e){} }
+    var n=(d.cameras||[]).length; var cc=document.getElementById('camCount'); if(cc) cc.textContent=n; pushFeed('CAMERAS · '+n+' public London traffic cams · public feeds only'); if(window._fhSet) _fhSet('cameras', n>0?'live':'empty'); return d;
+  }catch(e){ if(window._fhSet) _fhSet('cameras','error'); if(window.pushFeed) pushFeed('CAMERAS · public feed unreachable — retry shortly'); } }
 function openCamera(cam, slot){ slot=slot||0; if(!cam) return; var id='camWin'+(slot||'');
   var old=document.getElementById(id); if(old) old.remove();
   function bust(u){ return u+(u.indexOf('?')>=0?'&':'?')+'t='+Date.now(); }
@@ -1604,7 +1616,7 @@ function sovNewsFocus(region){ var sigs=window._newsSignals||[]; var pick=null;
 window.sovNewsFocus=sovNewsFocus;
 
 let FEED=[];
-var SUGG=[['✨','light it up'],['📍','scan my area'],['📷','cameras in london'],['🌧️','weather radar'],['🚆','rail network'],['💹','financial centres'],['🏬','local businesses'],['🗂','domains ontology'],['🛬','global airports'],['⚡','power plants'],['🌫️','air quality'],['🔥','show wildfires'],['🛰','satellites'],['🏙','street view in london'],['🛡️','AI governance'],['⚖️','compare doctrines'],['🔏','SIGIL ledger'],['▶','run demo'],['🗂','set up my workspace'],['✈️','open aircraft'],['⚓','marine vessels'],['📰','news in ukraine'],['🧭','what is near gibraltar'],['🌍','world view'],['🪶','lite mode'],['🛰','what am I looking at'],['⚡','convergence'],['⚓','maritime chokepoints'],['⛽','pipelines'],['🎯','military symbology'],['🛰','export cot'],['🔏','sign all in view'],['📋','export brief'],['🖨','print brief'],['🛡️','protect the ai space'],['◆','why defoneos'],['🗓','next dates'],['🧬','the moat in 3d'],['🌐','submarine cables'],['📡','comms masts'],['❓','what can you do']];
+var SUGG=[['✨','light it up'],['📍','scan my area'],['📷','cameras in london'],['🌧️','weather radar'],['🚆','rail network'],['💹','financial centres'],['🏬','local businesses'],['🗂','domains ontology'],['🛬','global airports'],['⚡','power plants'],['🌫️','air quality'],['🔥','show wildfires'],['🛰','satellites'],['🏙','street view in london'],['🛡️','AI governance'],['⚖️','compare doctrines'],['🔏','SIGIL ledger'],['▶','run demo'],['🗂','set up my workspace'],['✈️','open aircraft'],['⚓','marine vessels'],['📰','news in ukraine'],['🧭','what is near gibraltar'],['🌍','world view'],['🪶','lite mode'],['🛰','what am I looking at'],['⚡','convergence'],['⚓','maritime chokepoints'],['⛽','pipelines'],['🎯','military symbology'],['🛰','export cot'],['🔏','sign all in view'],['📋','export brief'],['🖨','print brief'],['🔄','retry feeds'],['🛡️','protect the ai space'],['◆','why defoneos'],['🗓','next dates'],['🧬','the moat in 3d'],['🌐','submarine cables'],['📡','comms masts'],['❓','what can you do']];
 function _runSugg(t){ var el=document.getElementById('cmd'); if(el) el.value=t; var b=document.getElementById('cmdSugg'); if(b) b.classList.remove('open'); command(); }
 function cmdSuggest(v){ var box=document.getElementById('cmdSugg'); if(!box) return; v=(''+(v||'')).toLowerCase().trim();
   if(v.length<2){ box.classList.remove('open'); box.innerHTML=''; return; }
@@ -3399,6 +3411,7 @@ function command(){
   if(/(import cot|cot import|paste cot|load cot|ingest cot|read cot)/.test(q)){ if(window._cotPanel) window._cotPanel('import','',0); res('CoT import · paste Cursor-on-Target XML'); return; }
   if(/(military symbol|mil.?std.?2525|milstd|2525|app.?6|symbolog|nato symbol|tactical symbol|joint symbol)/.test(q)){ if(window.cotDemo) cotDemo(); res('MIL-STD-2525 / APP-6 symbology · milsymbol'); return; }
   // ── FUSION ANALYTICS + new layers (convergence · chokepoints · energy infra) ──
+  if(/(retry (the )?feeds|refresh (the )?feeds|retry (throttled|failed|quiet)|re.?pull|reload feeds|refresh (the )?(data|layers)|feeds? health|feed status)/.test(q)){ if(window.sovRetryFeeds) sovRetryFeeds(); return res('re-pulling any throttled or quiet feeds'); }
   if(/(print brief|printable brief|brief pdf|pdf brief|print (the )?(report|sitrep|situation)|report pdf|brief report)/.test(q)){ if(window.sovBriefPrint) sovBriefPrint(); return res('opening a one-page printable situational report — signed'); }
   if(/(export brief|signed brief|download brief|situation(al)? report|situation(al)? brief|export sitrep|sitrep export|brief export|save (the )?(brief|picture))/.test(q)){ if(window.sovBrief) sovBrief(); return res('exporting a signed situational brief — verifiable offline'); }
   if(/(sign all|sign everything|sign the (view|board|picture|contacts)|batch.?sign|sign (all )?contacts)/.test(q)){ if(window.sovSignAllInView) sovSignAllInView(); return res('signing every live contact in view — one batch receipt'); }
