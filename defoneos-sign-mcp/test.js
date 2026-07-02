@@ -1,0 +1,35 @@
+// smoke test — sign → verify → tamper → verify-false → content re-bind. No deps.
+const { signArtifact, verifyReceipt, callTool, FINGERPRINT } = require('./server.js');
+let pass = 0, fail = 0;
+function t(name, ok) { console.log((ok ? '✅' : '❌') + ' ' + name); ok ? pass++ : fail++; }
+
+const output = 'Boltz-2 predicts binding affinity ΔG = -9.4 kcal/mol for ligand X to target Y.';
+const r = signArtifact({ kind: 'finding', subject: 'binding affinity ligand X / target Y', output, method: 'Boltz-2 via BioNeMo; seed 42; env boltz@2.1', inputs: ['PDB:1ABC', 'SMILES:CC(=O)O'] });
+const sc = r.defoneos_signed_contact;
+
+t('receipt shape (defoneos_signed_contact + message + sig + pub)', !!(sc && sc.message && sc.signature_ed25519 && sc.public_key_ed25519));
+t('message is exactly {i,ts,action,detail,prev}', JSON.stringify(Object.keys(sc.message).sort()) === JSON.stringify(['action','detail','i','prev','ts']));
+t('signature is 128-hex (raw Ed25519)', /^[0-9a-f]{128}$/.test(sc.signature_ed25519));
+t('public key is 64-hex (raw Ed25519)', /^[0-9a-f]{64}$/.test(sc.public_key_ed25519));
+t('fingerprint present + stable', sc.fingerprint === FINGERPRINT && /^SOV:/.test(sc.fingerprint));
+t('provenance records method + output hash + care-floor', !!(sc.provenance.method && sc.provenance.output_sha256 && sc.provenance.care_floor === 0.95));
+
+const v = verifyReceipt(r);
+t('valid receipt verifies TRUE', v.valid === true);
+
+const bad = JSON.parse(JSON.stringify(r)); bad.defoneos_signed_contact.message.detail = bad.defoneos_signed_contact.message.detail.replace('ligand X', 'ligand Z');
+t('tampered receipt (detail changed) verifies FALSE', verifyReceipt(bad).valid === false);
+const bad2 = JSON.parse(JSON.stringify(r)); bad2.defoneos_signed_contact.message.ts = new Date().toISOString();
+t('tampered receipt (timestamp changed) verifies FALSE', verifyReceipt(bad2).valid === false);
+
+t('content re-bind TRUE for original output', verifyReceipt(Object.assign({}, sc, { output })).content_match === true);
+t('content re-bind FALSE for altered output', verifyReceipt(Object.assign({}, sc, { output: output + ' (edited)' })).content_match === false);
+
+const pk = callTool('defoneos_public_key', {});
+t('public_key tool returns key + fingerprint', /^[0-9a-f]{64}$/.test(pk.public_key_ed25519) && /^SOV:/.test(pk.fingerprint));
+
+// print a receipt to eyeball + to feed into verify.html
+console.log('\n--- sample receipt (feed into verify.html) ---');
+console.log(JSON.stringify(r));
+console.log('\n' + pass + ' passed, ' + fail + ' failed');
+process.exit(fail ? 1 : 0);
