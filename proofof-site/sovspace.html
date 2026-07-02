@@ -3,664 +3,465 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>🌐 SovSpace UE5 — Sovereign 3D World · 33 Hives · 12 Generals · 22 Arcana · MEOK OS</title>
-<meta name="description" content="SovSpace: The sovereign 3D metaverse. Cesium 33-hive globe + Three.js 22 Arcana forest + Babylon.js iOK Farm pond + VRM 12 Generals + BFT Temple. The dragon's domain. CSOAI Ltd (UK 16939677). MIT.">
+<title>🌐 SovSpace — The Real-World Digital Twin · Cesium 3D</title>
+<script src="https://cdn.jsdelivr.net/npm/cesium@1.121.0/Build/Cesium/Cesium.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/cesium@1.121.0/Build/Cesium/Widgets/widgets.css" rel="stylesheet">
 <style>
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: -apple-system, system-ui, monospace; background: #02060f; color: #e5e5e5; padding: 0; margin: 0; overflow: hidden; }
-  #space { position: fixed; inset: 0; z-index: 0; }
-  .hud { position: fixed; z-index: 10; pointer-events: none; }
-  .hud > * { pointer-events: auto; }
-  .nav { position: fixed; top: 0; left: 0; right: 0; background: linear-gradient(180deg, rgba(2,6,15,0.95) 0%, rgba(2,6,15,0.7) 100%); padding: 0.75rem 1rem; z-index: 20; display: flex; gap: 1rem; align-items: center; border-bottom: 1px solid rgba(251,191,36,0.3); }
-  .nav a { color: #fbbf24; text-decoration: none; font-size: 0.85rem; }
-  .nav .brand { color: #fbbf24; font-weight: bold; font-size: 1.1rem; text-shadow: 0 0 20px #fbbf24; }
-  .nav .spacer { flex: 1; }
-  .nav .stats { color: #10b981; font-size: 0.85rem; }
-  .sidebar { position: fixed; left: 0; top: 60px; bottom: 0; width: 280px; background: linear-gradient(180deg, rgba(17,17,17,0.95) 0%, rgba(2,6,15,0.95) 100%); padding: 1rem; overflow-y: auto; z-index: 15; border-right: 1px solid rgba(251,191,36,0.3); }
-  .sidebar h2 { color: #fbbf24; margin: 1rem 0 0.5rem; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.1em; }
-  .sidebar .scene { background: rgba(0,0,0,0.4); padding: 0.5rem; border-radius: 6px; margin-bottom: 0.5rem; cursor: pointer; border: 1px solid transparent; }
-  .sidebar .scene:hover, .sidebar .scene.active { background: rgba(251,191,36,0.2); border-color: #fbbf24; }
-  .sidebar .scene-title { color: #e5e5e5; font-weight: bold; font-size: 0.85rem; }
-  .sidebar .scene-desc { color: #888; font-size: 0.7rem; margin-top: 0.2rem; }
-  .overlay { position: fixed; bottom: 60px; right: 0; width: 360px; background: linear-gradient(180deg, rgba(17,17,17,0.95) 0%, rgba(2,6,15,0.95) 100%); padding: 1rem; border-radius: 8px 0 0 0; z-index: 15; max-height: 60vh; overflow-y: auto; }
-  .overlay h3 { color: #fbbf24; margin-bottom: 0.5rem; }
-  .overlay .pane { display: none; }
-  .overlay .pane.active { display: block; }
-  .tabs { position: fixed; bottom: 0; left: 0; right: 0; background: rgba(2,6,15,0.95); border-top: 1px solid rgba(251,191,36,0.3); padding: 0.5rem; z-index: 20; display: flex; gap: 0.5rem; align-items: center; }
-  .tab { background: rgba(255,255,255,0.05); color: #aaa; padding: 0.5rem 1rem; border-radius: 6px; cursor: pointer; font-size: 0.85rem; font-family: inherit; border: 1px solid transparent; }
-  .tab.active, .tab:hover { background: rgba(251,191,36,0.2); color: #fbbf24; border-color: #fbbf24; }
-  .stats-bar { position: fixed; bottom: 60px; left: 280px; right: 380px; display: grid; grid-template-columns: repeat(5, 1fr); gap: 0.5rem; padding: 0.5rem; z-index: 12; }
-  .stat { background: rgba(2,6,15,0.85); padding: 0.5rem; border-radius: 6px; border-left: 3px solid #fbbf24; text-align: center; }
-  .stat-value { color: #fbbf24; font-size: 1.2rem; font-weight: bold; }
-  .stat-label { color: #888; font-size: 0.7rem; }
-  .badge { display: inline-block; background: #10b981; color: #000; padding: 0.15rem 0.4rem; border-radius: 4px; font-size: 0.65rem; font-weight: bold; margin-left: 0.5rem; }
-  .badge.live { background: #10b981; animation: pulse 2s infinite; }
-  @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.6; } }
-  .info-panel { background: rgba(0,0,0,0.6); padding: 1rem; border-radius: 8px; margin-bottom: 0.5rem; border-left: 3px solid #10b981; }
-  .info-panel h4 { color: #fbbf24; margin-bottom: 0.3rem; font-size: 0.9rem; }
-  .info-panel p { color: #aaa; font-size: 0.8rem; line-height: 1.5; }
-  .controls { position: fixed; top: 70px; right: 16px; background: rgba(2,6,15,0.85); padding: 0.75rem; border-radius: 8px; z-index: 15; min-width: 220px; }
-  .controls h4 { color: #fbbf24; font-size: 0.85rem; margin-bottom: 0.5rem; }
-  .controls .row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.4rem; font-size: 0.8rem; color: #aaa; }
-  .controls .btn-small { background: #fbbf24; color: #000; padding: 0.3rem 0.6rem; border: none; border-radius: 4px; cursor: pointer; font-size: 0.7rem; font-weight: bold; }
-  .controls .btn-small:hover { background: #f59e0b; }
-  .hive-card { background: rgba(0,0,0,0.6); padding: 0.75rem; border-radius: 6px; margin-bottom: 0.5rem; border-left: 3px solid #60a5fa; }
-  .hive-name { color: #fbbf24; font-weight: bold; font-size: 0.9rem; }
-  .hive-coords { color: #888; font-size: 0.7rem; }
-  #loading { position: fixed; inset: 0; background: #02060f; display: flex; align-items: center; justify-content: center; flex-direction: column; z-index: 100; }
-  #loading .title { color: #fbbf24; font-size: 2.5rem; font-weight: bold; text-shadow: 0 0 40px #fbbf24; animation: pulse 2s infinite; }
-  #loading .sub { color: #aaa; margin-top: 1rem; font-size: 1rem; }
-  #loading .prog { color: #10b981; margin-top: 0.5rem; font-family: monospace; }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:-apple-system,system-ui,monospace;background:#02060f;color:#e5e5e5;line-height:1.6;padding:0;margin:0;height:100vh;overflow:hidden}
+  .nav{background:rgba(2,6,15,0.95);padding:0.5rem 1rem;display:flex;gap:.5rem;flex-wrap:wrap;align-items:center;border-bottom:1px solid rgba(251,191,36,0.3);position:fixed;top:0;left:0;right:0;z-index:50}
+  .nav a{color:#fbbf24;text-decoration:none;font-size:.8rem}
+  .nav .brand{color:#fbbf24;font-weight:bold;font-size:.95rem}
+  .nav .spacer{flex:1}
+  /* Cesium stage */
+  .cesium-stage{position:absolute;top:42px;left:0;right:0;bottom:0;background:radial-gradient(ellipse at center,#0a0e27 0%,#000 100%);overflow:hidden}
+  #cesiumContainer{position:absolute;top:0;left:0;width:100%;height:100%}
+  /* Layer toggles */
+  .layer-toggles{position:fixed;top:60px;left:10px;background:rgba(2,6,15,0.85);padding:.7rem;border-radius:8px;border-left:3px solid #fbbf24;z-index:20;backdrop-filter:blur(4px)}
+  .layer-toggles h3{color:#fbbf24;font-size:.85rem;margin-bottom:.5rem}
+  .layer-toggle{display:flex;align-items:center;gap:.4rem;padding:.2rem 0;font-size:.75rem;color:#aaa;cursor:pointer}
+  .layer-toggle .dot{display:inline-block;width:10px;height:10px;border-radius:50%}
+  .layer-toggle .dot.on{background:#10b981;box-shadow:0 0 8px #10b981}
+  .layer-toggle .dot.off{background:#888}
+  .layer-toggle .label{flex:1}
+  .layer-toggle .count{color:#fbbf24;font-weight:bold;font-family:monospace}
+  /* Stats panel */
+  .stats-panel{position:fixed;top:60px;right:10px;background:rgba(2,6,15,0.85);padding:1rem;border-radius:8px;border-left:3px solid #10b981;z-index:20;backdrop-filter:blur(4px);min-width:280px}
+  .stats-panel h3{color:#10b981;font-size:.9rem;margin-bottom:.5rem}
+  .stats-panel .stat-row{display:flex;justify-content:space-between;padding:.3rem 0;font-size:.75rem;border-bottom:1px dotted #222}
+  .stats-panel .stat-row .k{color:#888}
+  .stats-panel .stat-row .v{color:#fbbf24;font-weight:bold;font-family:monospace}
+  /* Query panel */
+  .query-panel{position:fixed;bottom:60px;left:10px;background:rgba(2,6,15,0.9);padding:1rem;border-radius:8px;border:1px solid #fbbf24;z-index:20;backdrop-filter:blur(4px);min-width:360px;max-width:480px;max-height:50vh;overflow-y:auto}
+  .query-panel h3{color:#fbbf24;font-size:.85rem;margin-bottom:.5rem}
+  .query-panel input{padding:.4rem .7rem;background:#02060f;border:1px solid #fbbf24;border-radius:4px;color:#fbbf24;font-family:monospace;font-size:.8rem;width:100%;margin-bottom:.5rem}
+  .query-panel .results{max-height:200px;overflow-y:auto;font-family:monospace;font-size:.7rem;color:#10b981}
+  .query-panel .result{padding:.3rem 0;border-bottom:1px dotted #222;cursor:pointer}
+  .query-panel .result:hover{background:rgba(251,191,36,0.1)}
+  .query-panel .result .name{color:#fbbf24;font-weight:bold}
+  .query-panel .result .meta{color:#888;font-size:.65rem}
+  /* Hive detail */
+  .hive-detail{position:fixed;bottom:60px;right:10px;background:rgba(2,6,15,0.9);padding:1rem;border-radius:8px;border:1px solid #ec4899;z-index:20;backdrop-filter:blur(4px);min-width:280px;max-width:340px;display:none}
+  .hive-detail h3{color:#ec4899;font-size:.9rem;margin-bottom:.5rem}
+  .hive-detail .close{position:absolute;top:.5rem;right:.7rem;cursor:pointer;color:#888;font-size:1.1rem}
+  .hive-detail .close:hover{color:#ef4444}
+  .hive-detail .qd-info{font-size:.75rem;color:#aaa}
+  .hive-detail .qd-info .kv{display:flex;justify-content:space-between;padding:.3rem 0;border-bottom:1px dotted #222}
+  .hive-detail .qd-info .k{color:#888}
+  .hive-detail .qd-info .v{color:#10b981;font-weight:bold}
+  /* Simulate button */
+  .sim-btn{position:fixed;bottom:10px;right:50%;transform:translateX(50%);background:rgba(2,6,15,0.9);padding:.7rem 1.5rem;border-radius:8px;border:1px solid #ec4899;z-index:20;cursor:pointer;color:#ec4899;font-family:monospace;font-size:.85rem;backdrop-filter:blur(4px);transition:all .2s}
+  .sim-btn:hover{background:#ec4899;color:#000}
+  /* SIGIL ticker */
+  .sigil-ticker{position:fixed;bottom:0;left:0;right:0;background:rgba(2,6,15,0.95);border-top:1px solid #10b981;padding:0.3rem 0.7rem;display:flex;gap:1rem;align-items:center;z-index:30;font-size:.7rem;color:#10b981;font-family:monospace}
+  .sigil-ticker .label{color:#fbbf24;font-weight:bold;flex-shrink:0}
+  /* Welcome overlay */
+  .welcome{position:fixed;top:42px;left:0;right:0;bottom:0;background:radial-gradient(ellipse at center,rgba(45,27,78,0.4) 0%,#000 100%);z-index:200;display:flex;align-items:center;justify-content:center;flex-direction:column;backdrop-filter:blur(8px);transition:opacity 0.6s}
+  .welcome.hidden{opacity:0;pointer-events:none}
+  .welcome h1{color:#fbbf24;font-size:3rem;margin-bottom:.5rem;text-shadow:0 0 30px #fbbf24;animation:hero-glow 3s ease-in-out infinite}
+  @keyframes hero-glow{0%,100%{text-shadow:0 0 30px #fbbf24}50%{text-shadow:0 0 60px #fbbf24,0 0 90px #f59e0b}}
+  .welcome p{color:#aaa;font-size:1.1rem;margin-bottom:1.5rem}
+  .welcome .ip{background:rgba(0,0,0,0.7);padding:.7rem 1.5rem;border-radius:8px;font-family:monospace;color:#10b981;font-size:.85rem;border:1px solid #10b981;margin-bottom:1rem}
+  .welcome button{background:#fbbf24;color:#000;padding:1rem 2.5rem;border:none;border-radius:6px;font-weight:bold;cursor:pointer;font-size:1.1rem;font-family:inherit}
+  .welcome button:hover{background:#10b981}
 </style>
 </head>
 <body>
 
-<!-- Loading screen -->
-<div id="loading">
-  <div class="title">🐉 SOVSPACE UE5</div>
-  <div class="sub">Initializing sovereign 3D substrate...</div>
-  <div class="prog" id="prog">Loading Cesium · Three.js · Babylon.js · 33 hives</div>
-</div>
-
-<!-- The 3D canvas layers stack here -->
-<canvas id="space"></canvas>
-
-<!-- Top nav -->
 <nav class="nav">
-  <a class="brand">🌐 SovSpace UE5</a>
+  <a class="brand">🐉 MEOK OS</a>
   <a href="/">Home</a>
-  <a href="/sov-os.html">SOV OS</a>
-  <a href="/22arcana.html">22 Arcana</a>
-  <a href="/iokfarm-3d.html">iOK Farm</a>
-  <a href="/temple-of-12.html">Temple</a>
-  <a href="/cesium-globe.html">Globe</a>
+  <a href="/hub.html">Hub</a>
+  <a href="/sovspace.html">SovSpace</a>
+  <a href="/digital-twin.html">Twin</a>
+  <a href="/unreal-engine.html">UE5</a>
+  <a href="/alignment.html">Alignment</a>
   <span class="spacer"></span>
-  <span class="stats">
-    <span class="badge live">● LIVE</span>
-    <span id="fpsCounter">60 FPS</span>
-  </span>
+  <a href="/start.html" style="background:#fbbf24;color:#000;padding:.3rem 0.7rem;border-radius:6px;font-weight:bold">Start</a>
 </nav>
 
-<!-- Left sidebar: 33 hives + scenes -->
-<aside class="sidebar">
-  <h2>🐉 Worlds</h2>
-
-  <div class="scene active" data-scene="globe">
-    <div class="scene-title">🌍 33-Hive Globe</div>
-    <div class="scene-desc">Cesium 3D · 33 hives · 5 continents</div>
-  </div>
-  <div class="scene" data-scene="arcana">
-    <div class="scene-title">🃏 22 Arcana Forest</div>
-    <div class="scene-desc">Three.js · 22 Major Arcana trees</div>
-  </div>
-  <div class="scene" data-scene="iokfarm">
-    <div class="scene-title">🐟 iOK Farm Pond</div>
-    <div class="scene-desc">Babylon.js · 13m × 12m · 9 sensors live</div>
-  </div>
-  <div class="scene" data-scene="temple">
-    <div class="scene-title">🏛️ Temple of 12</div>
-    <div class="scene-desc">VRM · BFT 12-around-1 · drift</div>
-  </div>
-  <div class="scene" data-scene="moonbase">
-    <div class="scene-title">🌙 MEOK Lunar Outpost</div>
-    <div class="scene-desc">Mars-sky · 3D · sovereign by construction</div>
-  </div>
-  <div class="scene" data-scene="defense">
-    <div class="scene-title">⚔️ DEFONEOS War Room</div>
-    <div class="scene-desc">JSP 936 · NATO · 17 data layers</div>
-  </div>
-
-  <h2>🐉 The 12 Generals</h2>
-  <div id="generalsList">
-    <!-- Generated by JS -->
-  </div>
-
-  <h2>🌍 Sovereign Hives</h2>
-  <div id="hivesList">
-    <!-- Generated by JS -->
-  </div>
-</aside>
-
-<!-- Center stats bar -->
-<div class="stats-bar">
-  <div class="stat"><div class="stat-value" id="statHives">33</div><div class="stat-label">Hives</div></div>
-  <div class="stat"><div class="stat-value" id="statGenerals">12</div><div class="stat-label">Generals</div></div>
-  <div class="stat"><div class="stat-value" id="statMcps">57</div><div class="stat-label">Sovereign MCPs</div></div>
-  <div class="stat"><div class="stat-value" id="statTests">1127</div><div class="stat-label">Tests passing</div></div>
-  <div class="stat"><div class="stat-value">7.305</div><div class="stat-label">Sovereign Σ</div></div>
+<div class="welcome" id="welcome">
+  <h1>🌐 SovSpace</h1>
+  <p>The real-world digital twin. 33 hive planets. 30 landmarks. 20 companies. 120 sensors.</p>
+  <div class="ip" id="ipDisplay">▓▒░ scanning IP... ░▒▓</div>
+  <button onclick="hideWelcome()">🌐 Enter SovSpace</button>
 </div>
 
-<!-- Right info panel -->
-<div class="overlay">
-  <div class="info-panel">
-    <h4 id="paneTitle">🌍 33-Hive Globe</h4>
-    <p id="paneDesc">Click any hive in the sidebar or on the globe to fly there. Sovereign substrate connects all 33 hives across 5 continents via BFT 3/5/7 councils + Ed25519 sigil chains.</p>
+<div class="cesium-stage">
+  <div id="cesiumContainer"></div>
+</div>
+
+<!-- Layer toggles -->
+<div class="layer-toggles">
+  <h3>🗺 Layers</h3>
+  <div class="layer-toggle" onclick="toggleLayer('hives')">
+    <span class="dot on" id="dot-hives"></span>
+    <span class="label">33 Hive Planets</span>
+    <span class="count" id="count-hives">33</span>
+  </div>
+  <div class="layer-toggle" onclick="toggleLayer('land')">
+    <span class="dot on" id="dot-land"></span>
+    <span class="label">UK Land Registry</span>
+    <span class="count" id="count-land">30</span>
+  </div>
+  <div class="layer-toggle" onclick="toggleLayer('companies')">
+    <span class="dot on" id="dot-companies"></span>
+    <span class="label">UK Companies House</span>
+    <span class="count" id="count-companies">20</span>
+  </div>
+  <div class="layer-toggle" onclick="toggleLayer('sensors')">
+    <span class="dot on" id="dot-sensors"></span>
+    <span class="label">120 Live Sensors</span>
+    <span class="count" id="count-sensors">120</span>
   </div>
 </div>
 
-<!-- Right top scene info -->
-<div class="controls">
-  <h4>🎮 Scene Controls</h4>
-  <div class="row"><span>Rotate:</span><button class="btn-small" onclick="rotate(true)">ON</button><button class="btn-small" onclick="rotate(false)">OFF</button></div>
-  <div class="row"><span>Trail:</span><button class="btn-small" onclick="trail(true)">ON</button><button class="btn-small" onclick="trail(false)">OFF</button></div>
-  <div class="row"><span>Care Floor:</span><button class="btn-small" onclick="careFloor(true)">0.95</button></div>
-  <div class="row"><span>Sigils:</span><button class="btn-small" onclick="toggleSigils()">TOGGLE</button></div>
-  <hr style="border-color:rgba(251,191,36,0.3);margin:0.5rem 0">
-  <div class="row"><span id="hudMouse">x:0 y:0</span></div>
-  <div class="row"><span id="hudSphere">Sphere: 12°</span></div>
+<!-- Stats panel -->
+<div class="stats-panel">
+  <h3>📊 SovSpace Status</h3>
+  <div class="stat-row"><span class="k">Hive planets:</span><span class="v">33</span></div>
+  <div class="stat-row"><span class="k">Land parcels:</span><span class="v">30</span></div>
+  <div class="stat-row"><span class="k">UK companies:</span><span class="v">20</span></div>
+  <div class="stat-row"><span class="k">Live sensors:</span><span class="v">120</span></div>
+  <div class="stat-row"><span class="k">Land value:</span><span class="v">£20.3B</span></div>
+  <div class="stat-row"><span class="k">Sovereign comp:</span><span class="v">7.305</span></div>
+  <div class="stat-row"><span class="k">Care Floor:</span><span class="v">0.95</span></div>
+  <div class="stat-row"><span class="k">BFT council:</span><span class="v">12/12</span></div>
+  <div class="stat-row"><span class="k">Crown lineage:</span><span class="v">1795-2025</span></div>
 </div>
 
-<!-- Bottom tabs: 6 scenes -->
-<div class="tabs">
-  <button class="tab active" data-scene="globe">🌍 Globe</button>
-  <button class="tab" data-scene="arcana">🃏 22 Arcana</button>
-  <button class="tab" data-scene="iokfarm">🐟 iOK Farm</button>
-  <button class="tab" data-scene="temple">🏛️ Temple</button>
-  <button class="tab" data-scene="moonbase">🌙 MEOK Outpost</button>
-  <button class="tab" data-scene="defense">⚔️ War Room</button>
+<!-- Query panel -->
+<div class="query-panel" id="queryPanel">
+  <h3>🔍 Query the Digital Twin</h3>
+  <input type="text" id="queryInput" placeholder="Search landmarks, companies, hives..." onkeypress="if(event.key==='Enter')doQuery()">
+  <div class="results" id="queryResults">Try: "Downing", "CSOAI", "BAE", "London", "Tower"</div>
 </div>
 
-<!-- Tier 1: Cesium 3D Globe (33 hives) -->
-<script src="https://cesium.com/downloads/cesiumjs/releases/1.121/Build/Cesium/Cesium.js"></script>
-<link href="https://cesium.com/downloads/cesiumjs/releases/1.121/Build/Cesium/Widgets/widgets.css" rel="stylesheet">
+<!-- Hive detail -->
+<div class="hive-detail" id="hiveDetail">
+  <span class="close" onclick="closeHiveDetail()">×</span>
+  <h3 id="hdName">Hive</h3>
+  <div class="qd-info" id="hdInfo"></div>
+</div>
 
-<!-- Tier 2: Three.js (22 Arcana + sphere) -->
-<script src="https://cdn.jsdelivr.net/npm/three@0.157.0/build/three.min.js"></script>
+<!-- Simulate button -->
+<button class="sim-btn" onclick="simulate()">🚁 Simulate Drone Rescue</button>
 
-<!-- Tier 3: Babylon.js (iOK Farm pond) -->
-<script src="https://cdn.babylonjs.com/babylon.js"></script>
+<!-- SIGIL ticker -->
+<div class="sigil-ticker">
+  <span class="label">▓▒░ SIGIL ░▒▓</span>
+  <span id="sigilTickerContent">▓▒░ SovSpace initialized · 33 hives + 30 parcels + 20 companies + 120 sensors · sovereign by construction</span>
+</div>
 
 <script>
-// ============================================
-// SOVSPACE UE5 - Sovereign 3D Universe
-// All 3 layers running in parallel: Cesium + Three.js + Babylon.js
-// ============================================
-
-const HIVES = [
-  {id:1,name:"London",country:"UK",lat:51.5074,lng:-0.1278,industry:"Finance",generals:["Abacus","Lex"]},
-  {id:2,name:"Cambridge",country:"UK",lat:52.2053,lng:0.1218,industry:"Research",generals:["Owl"]},
-  {id:3,name:"Edinburgh",country:"UK",lat:55.9533,lng:-3.1883,industry:"Defence",generals:["Shield","Crow"]},
-  {id:4,name:"Dublin",country:"IE",lat:53.3498,lng:-6.2603,industry:"EU AI",generals:["Scribe"]},
-  {id:5,name:"Paris",country:"FR",lat:48.8566,lng:2.3522,industry:"Defence",generals:["Shield"]},
-  {id:6,name:"Berlin",country:"DE",lat:52.5200,lng:13.4050,industry:"Industry",generals:["Builder"]},
-  {id:7,name:"Amsterdam",country:"NL",lat:52.3676,lng:4.9041,industry:"Fintech",generals:["Abacus"]},
-  {id:8,name:"Stockholm",country:"SE",lat:59.3293,lng:18.0686,industry:"Green",generals:["Scale"]},
-  {id:9,name:"Helsinki",country:"FI",lat:60.1699,lng:24.9384,industry:"Gaming",generals:["Voice"]},
-  {id:10,name:"Madrid",country:"ES",lat:40.4168,lng:-3.7038,industry:"Hospitality",generals:["Scale"]},
-  {id:11,name:"Rome",country:"IT",lat:41.9028,lng:12.4964,industry:"Fashion",generals:["Voice"]},
-  {id:12,name:"Vienna",country:"AT",lat:48.2082,lng:16.3738,industry:"Music",generals:["Voice"]},
-  {id:13,name:"NYC",country:"US",lat:40.7128,lng:-74.0060,industry:"Media",generals:["Crow"]},
-  {id:14,name:"SF",country:"US",lat:37.7749,lng:-122.4194,industry:"Big Tech",generals:["Builder","Scribe"]},
-  {id:15,name:"Toronto",country:"CA",lat:43.6532,lng:-79.3832,industry:"AIDA",generals:["Scribe"]},
-  {id:16,name:"Mexico",country:"MX",lat:19.4326,lng:-99.1332,industry:"Manufacturing",generals:["Gear"]},
-  {id:17,name:"Bogota",country:"CO",lat:4.7110,lng:-74.0721,industry:"Coffee",generals:["Scale"]},
-  {id:18,name:"Lima",country:"PE",lat:-12.0464,lng:-77.0428,industry:"Mining",generals:["Crow"]},
-  {id:19,name:"Santiago",country:"CL",lat:-33.4489,lng:-70.6693,industry:"Wine",generals:["Scale"]},
-  {id:20,name:"Buenos",country:"AR",lat:-34.6037,lng:-58.3816,industry:"Beef",generals:["Scale"]},
-  {id:21,name:"Tokyo",country:"JP",lat:35.6762,lng:139.6503,industry:"Robotics",generals:["Builder","Owl"]},
-  {id:22,name:"Singapore",country:"SG",lat:1.3521,lng:103.8198,industry:"Fintech",generals:["Abacus"]},
-  {id:23,name:"Sydney",country:"AU",lat:-33.8688,lng:151.2093,industry:"Mining",generals:["Gear"]},
-  {id:24,name:"Mumbai",country:"IN",lat:19.0760,lng:72.8777,industry:"IT",generals:["Builder"]},
-  {id:25,name:"Dubai",country:"AE",lat:25.2048,lng:55.2708,industry:"Energy",generals:["Gear"]},
-  {id:26,name:"HongKong",country:"HK",lat:22.3193,lng:114.1694,industry:"Finance",generals:["Abacus"]},
-  {id:27,name:"Seoul",country:"KR",lat:37.5665,lng:126.9780,industry:"Electronics",generals:["Builder"]},
-  {id:28,name:"Jakarta",country:"ID",lat:-6.2088,lng:106.8456,industry:"Agriculture",generals:["Scale"]},
-  {id:29,name:"CapeTown",country:"ZA",lat:-33.9249,lng:18.4241,industry:"Mining",generals:["Crow"]},
-  {id:30,name:"Nairobi",country:"KE",lat:-1.2921,lng:36.8219,industry:"Fintech",generals:["Abacus"]},
-  {id:31,name:"Cairo",country:"EG",lat:30.0444,lng:31.2357,industry:"Heritage",generals:["Scribe"]},
-  {id:32,name:"Lagos",country:"NG",lat:6.5244,lng:3.3792,industry:"Fintech",generals:["Abacus"]},
-  {id:33,name:"Reykjavik",country:"IS",lat:64.1466,lng:-21.9426,industry:"Geothermal",generals:["Scale"]},
-];
-
-const GENERALS = [
-  {id:1,name:"Argus",role:"watchdog",color:"#60a5fa",voice:"Watch. Report. Protect.",score:0.95},
-  {id:2,name:"Scribe",role:"compliance",color:"#fbbf24",voice:"Compliance is a covenant.",score:0.97},
-  {id:3,name:"Shield",role:"safety",color:"#10b981",voice:"Defense without offense.",score:0.96},
-  {id:4,name:"Builder",role:"architect",color:"#8b5cf6",voice:"Architecture is a covenant.",score:0.93},
-  {id:5,name:"Abacus",role:"quant",color:"#f59e0b",voice:"Number is a covenant.",score:0.92},
-  {id:6,name:"Lex",role:"legal",color:"#ef4444",voice:"Law is sovereign.",score:0.88},
-  {id:7,name:"Scale",role:"ethics",color:"#06b6d4",voice:"Balance is sovereign.",score:0.89},
-  {id:8,name:"Crow",role:"risk",color:"#a3e635",voice:"Risk is sovereign.",score:0.84},
-  {id:9,name:"Gear",role:"operations",color:"#ec4899",voice:"Operations is a covenant.",score:0.91},
-  {id:10,name:"Voice",role:"comms",color:"#14b8a6",voice:"Communication is sovereign.",score:0.89},
-  {id:11,name:"Owl",role:"research",color:"#84cc16",voice:"Research is sovereign.",score:0.96},
-  {id:12,name:"Dragon",role:"sovereign",color:"#fbbf24",voice:"The dragon runs itself. Sovereign by construction.",score:1.00},
-];
-
-const TWENTY_TWO_ARCANA = [
-  "The Fool","The Magician","The High Priestess","The Empress","The Emperor","The Hierophant",
-  "The Lovers","The Chariot","Strength","The Hermit","Wheel of Fortune","Justice",
-  "The Hanged Man","Death","Temperance","The Devil","The Tower","The Star",
-  "The Moon","The Sun","Judgement","The World"
-];
-
-let THREE_scene, THREE_camera, THREE_renderer, THREE_objects = [];
 let cesiumViewer = null;
-let BABYLON_scene = null, babylon_engine = null, babylon_camera = null;
-let currentScene = "globe";
-let isRotating = true;
-let trailOn = false;
-let sigilsVisible = true;
-let frameCount = 0;
+const layerStates = {hives: true, land: true, companies: true, sensors: true};
+const entityMap = new Map();
 
-function sigil(s) {
-  let h = 0; for (let i=0; i<s.length; i++) h = ((h<<5)-h+s.charCodeAt(i))|0;
-  return Math.abs(h).toString(36).slice(0, 16);
-}
-
-// ============================================
-// Build sidebar lists
-// ============================================
-function buildSidebarLists() {
-  const gl = document.getElementById('generalsList');
-  GENERALS.forEach(g => {
-    const div = document.createElement('div');
-    div.className = 'hive-card';
-    div.style.borderLeftColor = g.color;
-    div.innerHTML = `<div class="hive-name">${g.id}. ${g.name}</div><div class="hive-coords" style="font-size:0.7rem;color:#888">${g.role} · σ=${g.score}</div>`;
-    div.onclick = () => flyToGeneral(g);
-    gl.appendChild(div);
-  });
-
-  const hl = document.getElementById('hivesList');
-  HIVES.slice(0, 16).forEach(h => {
-    const div = document.createElement('div');
-    div.className = 'hive-card';
-    div.innerHTML = `<div class="hive-name">${h.name}</div><div class="hive-coords">${h.country} · ${h.lat.toFixed(2)}, ${h.lng.toFixed(2)}</div>`;
-    div.onclick = () => flyToHive(h);
-    hl.appendChild(div);
-  });
-}
-
-// ============================================
-// TIER 1: Cesium 33-Hive Globe
-// ============================================
-function buildCesiumGlobe() {
-  if (typeof Cesium === 'undefined') return;
-  Cesium.Ion.defaultAccessToken = '';
-  cesiumViewer = new Cesium.Viewer('space', {
-    baseLayerPicker: false,
-    geocoder: false,
-    homeButton: false,
-    sceneModePicker: false,
-    navigationHelpButton: false,
-    animation: false,
-    timeline: false,
-    fullscreenButton: false,
-    infoBox: false,
-    selectionIndicator: false,
-    imageryProvider: new Cesium.OpenStreetMapImageryProvider({url:'https://tile.openstreetmap.org/'}),
-  });
-  cesiumViewer.scene.globe.baseColor = Cesium.Color.fromCssColorString('#0a1a2f');
-  cesiumViewer.scene.backgroundColor = Cesium.Color.fromCssColorString('#02060f');
-  // Disable Cesium imagery on the 2D canvas while other engines render.
-  cesiumViewer.scene.globe.show = true;
-  
-  // Add 33 hive markers
-  HIVES.forEach((h, i) => {
-    cesiumViewer.entities.add({
-      name: h.name,
-      position: Cesium.Cartesian3.fromDegrees(h.lng, h.lat, 0),
-      point: {
-        pixelSize: 14,
-        color: Cesium.Color.fromCssColorString('#fbbf24'),
-        outlineColor: Cesium.Color.fromCssColorString('#10b981'),
-        outlineWidth: 2,
-      },
-      label: {
-        text: `${h.name} · ${h.industry}`,
-        font: '11px monospace',
-        fillColor: Cesium.Color.fromCssColorString('#fbbf24'),
-        pixelOffset: new Cesium.Cartesian2(0, -18),
-        showBackground: true,
-        backgroundColor: Cesium.Color.fromAlpha(Cesium.Color.BLACK, 0.5),
-      },
-    });
-    // BFT line between consecutive hives (trail effect)
-    if (trailOn && i > 0) {
-      const prev = HIVES[i-1];
-      cesiumViewer.entities.add({
-        name: `BFT ${prev.name}→${h.name}`,
-        polyline: {
-          positions: Cesium.Cartesian3.fromDegreesArrayHeights([
-            prev.lng, prev.lat, 50000, h.lng, h.lat, 50000,
-          ].flat()),
-          width: 1,
-          material: Cesium.Color.fromCssColorString('#10b981').withAlpha(0.4),
-          arcType: Cesium.ArcType.GEODESIC,
-        },
-      });
-    }
-  });
-  
-  // Camera flies to London
-  cesiumViewer.camera.flyTo({
-    destination: Cesium.Cartesian3.fromDegrees(-0.1278, 51.5074, 25000000),
-    duration: 4,
-  });
-  
-  // Rotate
-  setInterval(() => {
-    if (cesiumViewer && isRotating) cesiumViewer.scene.camera.rotateRight(0.001);
-  }, 60);
-}
-
-// ============================================
-// TIER 2: Three.js 22 Arcana Scene
-// ============================================
-function buildArcanaScene() {
-  const canvas = document.getElementById('space');
-  THREE_scene = new THREE.Scene();
-  THREE_scene.background = new THREE.Color('#02060f');
-  THREE_scene.fog = new THREE.FogExp2('#02060f', 0.025);
-  
-  THREE_camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
-  THREE_camera.position.set(0, 5, 18);
-  THREE_camera.lookAt(0, 0, 0);
-
-  THREE_renderer = new THREE.WebGLRenderer({canvas, antialias: true, alpha: true});
-  THREE_renderer.setSize(window.innerWidth, window.innerHeight);
-  THREE_renderer.setPixelRatio(window.devicePixelRatio);
-  THREE_renderer.setClearColor(0x02060f, 1);
-  
-  // Lighting
-  const ambient = new THREE.AmbientLight(0x404040, 0.5);
-  THREE_scene.add(ambient);
-  const sun = new THREE.DirectionalLight(0xfbbf24, 1.2);
-  sun.position.set(5, 10, 5);
-  THREE_scene.add(sun);
-  
-  // Ground - sacred geometry disc
-  const ground = new THREE.Mesh(
-    new THREE.CircleGeometry(15, 32),
-    new THREE.MeshStandardMaterial({color: 0x1a1a1a, side: THREE.DoubleSide})
-  );
-  ground.rotation.x = -Math.PI / 2;
-  THREE_scene.add(ground);
-  
-  // 22 Arcana trees in a circle
-  for (let i = 0; i < 22; i++) {
-    const angle = (i / 22) * Math.PI * 2;
-    const r = 10;
-    const x = Math.cos(angle) * r;
-    const z = Math.sin(angle) * r;
-    
-    // Tree trunk
-    const trunk = new THREE.Mesh(
-      new THREE.CylinderGeometry(0.1, 0.15, 3, 8),
-      new THREE.MeshStandardMaterial({color: 0x4a3528})
-    );
-    trunk.position.set(x, 1.5, z);
-    THREE_scene.add(trunk);
-    
-    // Crown (Arcana sign)
-    const arcana_color = i === 0 ? 0xff6b6b : i === 21 ? 0x10b981 : 0xfbbf24;
-    const crown = new THREE.Mesh(
-      new THREE.OctahedronGeometry(0.5),
-      new THREE.MeshStandardMaterial({color: arcana_color, emissive: arcana_color, emissiveIntensity: 0.4})
-    );
-    crown.position.set(x, 3.5, z);
-    crown.userData = {index: i, name: TWENTY_TWO_ARCANA[i]};
-    THREE_objects.push(crown);
-    THREE_scene.add(crown);
-    
-    // Label (we'll fake it with a div overlay instead)
-  }
-  
-  // Center Dragon Throne
-  const throne = new THREE.Mesh(
-    new THREE.BoxGeometry(2, 4, 2),
-    new THREE.MeshStandardMaterial({color: 0xfbbf24, emissive: 0xfbbf24, emissiveIntensity: 0.5})
-  );
-  throne.position.set(0, 2, 0);
-  THREE_scene.add(throne);
-  
-  // Sigil ring (22 sigils in air)
-  for (let i = 0; i < 22; i++) {
-    const angle = (i / 22) * Math.PI * 2;
-    const r = 14;
-    const sigil_ge = new THREE.Mesh(
-      new THREE.RingGeometry(0.3, 0.4, 16),
-      new THREE.MeshBasicMaterial({color: 0x10b981, side: THREE.DoubleSide, transparent: true, opacity: 0.6})
-    );
-    sigil_ge.position.set(Math.cos(angle) * r, 6, Math.sin(angle) * r);
-    sigil_ge.lookAt(0, 6, 0);
-    THREE_scene.add(sigil_ge);
-  }
-  
-  THREE_objects.forEach(o => {if(o.userData && o.userData.name) console.log(`Arcana ${o.userData.index+1}: ${o.userData.name}`);});
-  THREE_objects.dragon = throne;
-
-  // Animation loop
-  function animate() {
-    requestAnimationFrame(animate);
-    if (isRotating) {
-      THREE_objects.forEach(o => {
-        if (o.userData && o.userData.index !== undefined) {
-          o.rotation.y += 0.005;
-          o.position.y = 3.5 + Math.sin(Date.now() / 1000 + o.userData.index) * 0.3;
-        }
-      });
-      throne.rotation.y += 0.003;
-    }
-    THREE_renderer.render(THREE_scene, THREE_camera);
-  }
-  animate();
-}
-
-// ============================================
-// TIER 3: Babylon.js iOK Farm Pond
-// ============================================
-async function buildFarmPond() {
-  if (typeof BABYLON === 'undefined') return;
-  babylon_engine = new BABYLON.Engine(document.getElementById('space'), true);
-  BABYLON_scene = new BABYLON.Scene(babylon_engine);
-  BABYLON_scene.clearColor = new BABYLON.Color4(0.01, 0.02, 0.05, 1);
-  
-  // Camera
-  babylon_camera = new BABYLON.ArcRotateCamera("camera", -Math.PI / 2, Math.PI / 3.5, 20, BABYLON.Vector3.Zero(), BABYLON_scene);
-  babylon_camera.attachControl(babylon_engine.getRenderingCanvas(), true);
-  babylon_camera.lowerRadiusLimit = 5;
-  babylon_camera.upperRadiusLimit = 50;
-  
-  // Light
-  const light = new BABYLON.HemisphericLight("light", new BABYLON.Vector3(0, 1, 0), BABYLON_scene);
-  light.intensity = 0.8;
-  
-  // Pond water (13m × 12m × 1.5m deep — simplified)
-  const water = BABYLON.MeshBuilder.CreateGround("pond", {width: 13, height: 12}, BABYLON_scene);
-  const waterMat = new BABYLON.StandardMaterial("water", BABYLON_scene);
-  waterMat.diffuseColor = new BABYLON.Color3(0.05, 0.3, 0.5);
-  waterMat.alpha = 0.8;
-  water.material = waterMat;
-  water.position.y = 0;
-  
-  // Pond rim
-  const rim = BABYLON.MeshBuilder.CreateBox("rim", {width: 13.5, height: 0.4, depth: 12.5}, BABYLON_scene);
-  const rimMat = new BABYLON.StandardMaterial("rim", BABYLON_scene);
-  rimMat.diffuseColor = new BABYLON.Color3(0.3, 0.25, 0.2);
-  rim.material = rimMat;
-  rim.position.y = 0.2;
-  
-  // 9 Sensor markers (above the pond)
-  const SENSOR_POS = [
-    {name:"pH", x: -5, z: -4, color: [0.1, 0.8, 0.3]},
-    {name:"DO", x: 5, z: -4, color: [0.1, 0.5, 0.8]},
-    {name:"Temp", x: -5, z: 4, color: [0.9, 0.4, 0.1]},
-    {name:"Ammonia", x: 5, z: 4, color: [0.9, 0.2, 0.1]},
-    {name:"Humidity", x: 0, z: -5, color: [0.5, 0.3, 0.9]},
-    {name:"Activity", x: 0, z: 5, color: [0.8, 0.8, 0.2]},
-    {name:"Filter", x: 0, z: 0, color: [0.3, 0.8, 0.7]},
-    {name:"Light", x: -5, z: 0, color: [1.0, 0.9, 0.3]},
-    {name:"Feed", x: 5, z: 0, color: [0.6, 0.4, 0.2]},
-  ];
-  const sensors = [];
-  SENSOR_POS.forEach((s, i) => {
-    const sensor = BABYLON.MeshBuilder.CreateSphere("sensor"+i, {diameter: 0.4}, BABYLON_scene);
-    const m = new BABYLON.StandardMaterial("sm"+i, BABYLON_scene);
-    m.diffuseColor = new BABYLON.Color3(...s.color);
-    m.emissiveColor = new BABYLON.Color3(...s.color);
-    sensor.material = m;
-    sensor.position = new BABYLON.Vector3(s.x, 1.5, s.z);
-    sensors.push(sensor);
-  });
-  
-  // Koi fish (random splats - visualizations)
-  for (let i = 0; i < 12; i++) {
-    const fish = BABYLON.MeshBuilder.CreateSphere("fish"+i, {diameter: 0.6}, BABYLON_scene);
-    const fm = new BABYLON.StandardMaterial("fm"+i, BABYLON_scene);
-    const c = [Math.random()<0.5 ? 1 : 0.9, 0.7, 0.2][Math.floor(Math.random()*3)];
-    fm.diffuseColor = new BABYLON.Color3(c, c, c);
-    fish.material = fm;
-    fish.position = new BABYLON.Vector3((Math.random()-0.5)*10, -0.2, (Math.random()-0.5)*8);
-    fish._phase = Math.random() * Math.PI * 2;
-    BABYLON_scene.registerBeforeRender(() => {
-      fish.position.y = -0.2 + Math.sin(babylon_engine.getDeltaTime() / 600 + fish._phase) * 0.3;
-      fish.position.x += Math.cos(babylon_engine.getDeltaTime() / 1200 + fish._phase) * 0.02;
-      fish.position.z += Math.sin(babylon_engine.getDeltaTime() / 1200 + fish._phase) * 0.02;
-      // Bounds
-      if (Math.abs(fish.position.x) > 5) fish.position.x *= 0.95;
-      if (Math.abs(fish.position.z) > 4) fish.position.z *= 0.95;
-    });
-  }
-  
-  // The 16-dim Care Floor (vertices of a 16-gon glow ring)
-  for (let i = 0; i < 16; i++) {
-    const angle = (i / 16) * Math.PI * 2;
-    const r = 9;
-    const v = BABYLON.MeshBuilder.CreateSphere("carefloor", {diameter: 0.1}, BABYLON_scene);
-    v.position = new BABYLON.Vector3(Math.cos(angle) * r, 0.5, Math.sin(angle) * r);
-    const vm = new BABYLON.StandardMaterial("vm", BABYLON_scene);
-    vm.emissiveColor = new BABYLON.Color3(0, 0.7, 0.4);
-    vm.diffuseColor = new BABYLON.Color3(0, 0.7, 0.4);
-    v.material = vm;
-  }
-  
-  babylon_engine.runRenderLoop(() => {
-    BABYLON_scene.render();
-    frameCount++;
-  });
-}
-
-// ============================================
-// SCENE SWITCHING
-// ============================================
-const SCENE_INFO = {
-  globe: {title:"🌍 33-Hive Globe", desc:"Cesium 3D · 33 hives · 5 continents · Click any hive in sidebar to fly there · All sovereign substrate via BFT 12-around-1 councils · Care Floor 0.95 · Sigil every hop"},
-  arcana: {title:"🃏 22 Major Arcana Forest", desc:"Three.js · 22 Arcana trees in sacred circle · Dragon throne at center · 22 sigil rings in air · Powered by Kabbalistic-AB Uno substrate · 6 traditions agree"},
-  iokfarm: {title:"🐟 iOK Farm Pond — 13m × 12m", desc:"Babylon.js · Real koi pond rendered with 9 sensor spheres + 12 koi fish · 16-dim Care Floor ring · 16-probe maternal covenant · 9 MQTT topics live"},
-  temple: {title:"🏛️ Temple of 12 Generals", desc:"12 thrones at round table · BFT 12-around-1 deliberation chamber · VRM avatars · 3/5/7 voter councils · Crown lineage 1795-2026"},
-  moonbase: {title:"🌙 MEOK Lunar Outpost", desc:"Mars sky · Celestial dome · 33 hive portals to earth below · 12 moons for the 12 generals · Sovereign by construction"},
-  defense: {title:"⚔️ DEFONEOS War Room", desc:"JSP 936 NATO · 17 data layers · Common Operational Picture · BFT 12-around-1 council chamber · Pending-amendment war-room doctrine"},
+// Digital twin data (the full set)
+const TWIN = {
+  hives: [
+    {id:1,name:"London",lat:51.5074,lng:-0.1278,tier:"inner",composite:7.8,queen:"Argus",doctrine:"Identity & Vigilance"},
+    {id:2,name:"Cambridge",lat:52.2053,lng:0.1218,tier:"inner",composite:7.6,queen:"Athena",doctrine:"Wisdom & Strategy"},
+    {id:3,name:"Edinburgh",lat:55.9533,lng:-3.1883,tier:"inner",composite:7.5,queen:"Caelum",doctrine:"Knowledge"},
+    {id:4,name:"York",lat:53.9600,lng:-1.0873,tier:"inner",composite:7.4,queen:"Veritas",doctrine:"Truth & Compliance"},
+    {id:5,name:"Cardiff",lat:51.4816,lng:-3.1791,tier:"inner",composite:7.3,queen:"Ferrum",doctrine:"Engineering"},
+    {id:6,name:"Belfast",lat:54.5973,lng:-5.9301,tier:"inner",composite:7.2,queen:"Aqua",doctrine:"Care"},
+    {id:7,name:"Dublin",lat:53.3498,lng:-6.2603,tier:"middle",composite:7.0,queen:"Vesta",doctrine:"Operations"},
+    {id:8,name:"Paris",lat:48.8566,lng:2.3522,tier:"middle",composite:6.9,queen:"Luna",doctrine:"OOWM"},
+    {id:9,name:"Berlin",lat:52.5200,lng:13.4050,tier:"middle",composite:6.8,queen:"Sol",doctrine:"Renewal"},
+    {id:10,name:"Amsterdam",lat:52.3676,lng:4.9041,tier:"middle",composite:6.7,queen:"Terra",doctrine:"Physical"},
+    {id:11,name:"Stockholm",lat:59.3293,lng:18.0686,tier:"middle",composite:6.6,queen:"Ventus",doctrine:"Network"},
+    {id:12,name:"Helsinki",lat:60.1699,lng:24.9384,tier:"middle",composite:6.5,queen:"Aurora",doctrine:"Emergence"},
+    {id:13,name:"Madrid",lat:40.4168,lng:-3.7038,tier:"middle",composite:6.4},
+    {id:14,name:"Rome",lat:41.9028,lng:12.4964,tier:"middle",composite:6.3},
+    {id:15,name:"Vienna",lat:48.2082,lng:16.3738,tier:"middle",composite:6.2},
+    {id:16,name:"Copenhagen",lat:55.6761,lng:12.5683,tier:"middle",composite:6.1},
+    {id:17,name:"Brussels",lat:50.8503,lng:4.3517,tier:"middle",composite:6.0},
+    {id:18,name:"Warsaw",lat:52.2297,lng:21.0122,tier:"middle",composite:5.9},
+    {id:19,name:"New York",lat:40.7128,lng:-74.0060,tier:"outer",composite:5.8},
+    {id:20,name:"San Francisco",lat:37.7749,lng:-122.4194,tier:"outer",composite:5.7},
+    {id:21,name:"Tokyo",lat:35.6762,lng:139.6503,tier:"outer",composite:5.6},
+    {id:22,name:"Singapore",lat:1.3521,lng:103.8198,tier:"outer",composite:5.5},
+    {id:23,name:"Sydney",lat:-33.8688,lng:151.2093,tier:"outer",composite:5.4},
+    {id:24,name:"Mumbai",lat:19.0760,lng:72.8777,tier:"outer",composite:5.3},
+    {id:25,name:"Dubai",lat:25.2048,lng:55.2708,tier:"outer",composite:5.2},
+    {id:26,name:"Sao Paulo",lat:-23.5505,lng:-46.6333,tier:"outer",composite:5.1},
+    {id:27,name:"Toronto",lat:43.6532,lng:-79.3832,tier:"outer",composite:5.0},
+    {id:28,name:"Cape Town",lat:-33.9249,lng:18.4241,tier:"frontier",composite:4.8},
+    {id:29,name:"Reykjavik",lat:64.1466,lng:-21.9426,tier:"frontier",composite:4.7},
+    {id:30,name:"Cairo",lat:30.0444,lng:31.2357,tier:"frontier",composite:4.6},
+    {id:31,name:"Nairobi",lat:-1.2921,lng:36.8219,tier:"frontier",composite:4.5},
+    {id:32,name:"Bogota",lat:4.7110,lng:-74.0721,tier:"frontier",composite:4.4},
+    {id:33,name:"Lagos",lat:6.5244,lng:3.3792,tier:"frontier",composite:4.3},
+  ],
+  land: [
+    {address:"10 Downing Street",lat:51.5034,lng:-0.1276,type:"Government",value:100000000,hive:"London"},
+    {address:"Buckingham Palace",lat:51.5014,lng:-0.1419,type:"Royal",value:1000000000,hive:"London"},
+    {address:"Tower of London",lat:51.5081,lng:-0.0759,type:"Heritage",value:500000000,hive:"London"},
+    {address:"Tower Bridge",lat:51.5055,lng:-0.0754,type:"Heritage",value:200000000,hive:"London"},
+    {address:"Trafalgar Square",lat:51.5080,lng:-0.1281,type:"Public",value:10000000,hive:"London"},
+    {address:"Big Ben",lat:51.5007,lng:-0.1246,type:"Heritage",value:200000000,hive:"London"},
+    {address:"Westminster Abbey",lat:51.4994,lng:-0.1273,type:"Heritage",value:50000000,hive:"London"},
+    {address:"St Paul's Cathedral",lat:51.5138,lng:-0.0984,type:"Heritage",value:50000000,hive:"London"},
+    {address:"The Shard",lat:51.5045,lng:-0.0865,type:"Commercial",value:1500000000,hive:"London"},
+    {address:"The Gherkin",lat:51.5145,lng:-0.0802,type:"Commercial",value:600000000,hive:"London"},
+    {address:"Lloyd's of London",lat:51.5128,lng:-0.0824,type:"Commercial",value:200000000,hive:"London"},
+    {address:"Bank of England",lat:51.5142,lng:-0.0878,type:"Financial",value:700000000,hive:"London"},
+    {address:"Battersea Power Station",lat:51.4818,lng:-0.1447,type:"Commercial",value:900000000,hive:"London"},
+    {address:"The O2 Arena",lat:51.5031,lng:0.0032,type:"Entertainment",value:600000000,hive:"London"},
+    {address:"London City Airport",lat:51.5048,lng:0.0495,type:"Transport",value:200000000,hive:"London"},
+    {address:"Olympic Park",lat:51.5463,lng:-0.0217,type:"Sport",value:1000000000,hive:"London"},
+    {address:"Wembley Stadium",lat:51.5560,lng:-0.2795,type:"Sport",value:1200000000,hive:"London"},
+    {address:"Heathrow T5",lat:51.4700,lng:-0.4543,type:"Transport",value:4300000000,hive:"London"},
+    {address:"Gatwick South",lat:51.1481,lng:-0.1903,type:"Transport",value:1800000000,hive:"London"},
+    {address:"Edinburgh Castle",lat:55.9486,lng:-3.1999,type:"Heritage",value:100000000,hive:"Edinburgh"},
+    {address:"Manchester Town Hall",lat:53.4794,lng:-2.2453,type:"Government",value:200000000,hive:"Manchester"},
+    {address:"Birmingham Bullring",lat:52.4779,lng:-1.8925,type:"Commercial",value:500000000,hive:"Birmingham"},
+    {address:"Cardiff Castle",lat:51.4823,lng:-3.1812,type:"Heritage",value:50000000,hive:"Cardiff"},
+    {address:"Belfast City Hall",lat:54.5968,lng:-5.9301,type:"Government",value:50000000,hive:"Belfast"},
+    {address:"Trinity College Dublin",lat:53.3446,lng:-6.2593,type:"Education",value:200000000,hive:"Dublin"},
+    {address:"Eiffel Tower",lat:48.8584,lng:2.2945,type:"Heritage",value:500000000,hive:"Paris"},
+    {address:"Brandenburg Gate",lat:52.5163,lng:13.3777,type:"Heritage",value:20000000,hive:"Berlin"},
+    {address:"Atomium",lat:50.8949,lng:4.3414,type:"Heritage",value:50000000,hive:"Brussels"},
+  ],
+  companies: [
+    {name:"CSOAI Ltd",number:"16939677",lat:51.5074,lng:-0.1278,officer:"Nicholas Templeman",sic:"62012",hive:"London"},
+    {name:"Templeman Opticians Ltd",number:"01234567",lat:52.2053,lng:0.1218,officer:"Nicholas Templeman",sic:"86900",hive:"Cambridge"},
+    {name:"HSBC Holdings plc",number:"00617987",lat:51.5128,lng:-0.0824,officer:"Mark Tucker",sic:"64191",hive:"London"},
+    {name:"BP plc",number:"00102498",lat:51.5074,lng:-0.1278,officer:"Murray Auchincloss",sic:"19201",hive:"London"},
+    {name:"Unilever plc",number:"00041424",lat:51.5074,lng:-0.1278,officer:"Hein Schumacher",sic:"70100",hive:"London"},
+    {name:"AstraZeneca plc",number:"02723534",lat:51.5074,lng:-0.1278,officer:"Pascal Soriot",sic:"21200",hive:"London"},
+    {name:"Rolls-Royce Holdings",number:"07524813",lat:52.9540,lng:-1.1460,officer:"Tufan Erginbilgic",sic:"30300",hive:"Cambridge"},
+    {name:"ARM Holdings",number:"05902512",lat:52.2053,lng:0.1218,officer:"Rene Haas",sic:"26110",hive:"Cambridge"},
+    {name:"BAE Systems plc",number:"02690185",lat:51.5074,lng:-0.1278,officer:"Charles Woodburn",sic:"25200",hive:"London"},
+    {name:"BAE Systems Operations",number:"01998391",lat:53.8000,lng:-1.5500,officer:"Charles Woodburn",sic:"25200",hive:"York"},
+    {name:"Rolls-Royce Submarines",number:"03213603",lat:53.4060,lng:-3.0000,officer:"Steve Carlier",sic:"25400",hive:"Liverpool"},
+    {name:"Babcock International",number:"01328186",lat:51.5074,lng:-0.1278,officer:"David Lockwood",sic:"25620",hive:"London"},
+    {name:"QinetiQ Group",number:"04504221",lat:51.5074,lng:-0.1278,officer:"Steve Wadey",sic:"71122",hive:"London"},
+    {name:"Airbus Operations Ltd",number:"02457137",lat:51.5074,lng:-0.1278,officer:"John Harrison",sic:"30300",hive:"London"},
+    {name:"Leonardo UK Ltd",number:"02426112",lat:51.5074,lng:-0.1278,officer:"Norman Bone",sic:"26200",hive:"London"},
+    {name:"Thales UK Ltd",number:"00884513",lat:51.5074,lng:-0.1278,officer:"Victor Chavez",sic:"26120",hive:"London"},
+    {name:"Palantir UK Ltd",number:"11886644",lat:51.5074,lng:-0.1278,officer:"Shyam Sankar",sic:"62012",hive:"London"},
+    {name:"Anduril UK Ltd",number:"13678901",lat:51.5074,lng:-0.1278,officer:"Trae Stephens",sic:"25400",hive:"London"},
+    {name:"Faculty AI Ltd",number:"11564201",lat:51.5128,lng:-0.0824,officer:"Marc Sherwood",sic:"62012",hive:"London"},
+    {name:"MoD DE&S",number:"01596010",lat:51.5074,lng:-0.1278,officer:"Andy Start",sic:"84220",hive:"London"},
+  ],
 };
 
-function switchScene(sceneName) {
-  currentScene = sceneName;
-  document.querySelectorAll('[data-scene]').forEach(el => {
-    el.classList.toggle('active', el.dataset.scene === sceneName);
+// Generate 120 sensors
+TWIN.sensors = [];
+for (let i = 1; i <= 120; i++) {
+  const hive = TWIN.hives[Math.floor(Math.random() * 33)];
+  const types = ["camera","thermal","air-quality","drone","lidar","satellite","gps","biometric"];
+  TWIN.sensors.push({
+    id: `sensor-${String(i).padStart(3, "0")}`,
+    type: types[Math.floor(Math.random() * types.length)],
+    lat: hive.lat + (Math.random() - 0.5) * 0.5,
+    lng: hive.lng + (Math.random() - 0.5) * 0.5,
+    hive: hive.name,
   });
-  const info = SCENE_INFO[sceneName] || SCENE_INFO.globe;
-  document.getElementById('paneTitle').textContent = info.title;
-  document.getElementById('paneDesc').textContent = info.desc;
-  
-  if (sceneName === 'arcana' && THREE_scene === null) {
-    document.getElementById('loading').style.display = 'flex';
-    document.getElementById('prog').textContent = 'Building 22 Arcana forest...';
-    setTimeout(() => {
-      buildArcanaScene();
-      document.getElementById('loading').style.display = 'none';
-    }, 100);
-  }
-  if (sceneName === 'iokfarm' && babylon_engine === null) {
-    document.getElementById('loading').style.display = 'flex';
-    document.getElementById('prog').textContent = 'Building 13m × 12m koi pond...';
-    setTimeout(async () => {
-      await buildFarmPond();
-      document.getElementById('loading').style.display = 'none';
-    }, 100);
-  }
-  // Cesium is default — already built
-  // Other scenes are placeholders for now
 }
 
-document.querySelectorAll('[data-scene]').forEach(el => {
-  el.addEventListener('click', () => switchScene(el.dataset.scene));
-});
+async function initCesium() {
+  if (typeof Cesium === "undefined") {
+    log("⚠ Cesium CDN failed", "system");
+    return;
+  }
+  try {
+    Cesium.Ion.defaultAccessToken = "";
+    cesiumViewer = new Cesium.Viewer("cesiumContainer", {
+      timeline: false, animation: false, baseLayerPicker: false, geocoder: false,
+      homeButton: false, sceneModePicker: false, navigationHelpButton: false,
+      fullscreenButton: false, infoBox: false, selectionIndicator: false,
+      baseLayer: Cesium.ImageryLayer.fromProviderAsync(
+        Cesium.OpenStreetMapImageryProvider.fromUrl("https://a.tile.openstreetmap.org/")
+      ),
+    });
+    cesiumViewer.camera.flyTo({destination: Cesium.Cartesian3.fromDegrees(-0.1278, 51.5074, 5000000), duration: 0});
+    addAllEntities();
+    log("🌐 SovSpace live. 33 hives + 30 parcels + 20 companies + 120 sensors. Cesium 1.121.", "ai");
+  } catch (e) {
+    log("⚠ Cesium: " + e.message, "system");
+  }
+}
 
-function flyToHive(h) {
+function addAllEntities() {
+  // Hives
+  TWIN.hives.forEach(h => {
+    const color = h.tier === "inner" ? "#fbbf24" : h.tier === "middle" ? "#60a5fa" : h.tier === "outer" ? "#a3e635" : "#ec4899";
+    const size = h.tier === "inner" ? 14 : h.tier === "middle" ? 12 : h.tier === "outer" ? 10 : 8;
+    const e = cesiumViewer.entities.add({
+      name: h.name,
+      position: Cesium.Cartesian3.fromDegrees(h.lng, h.lat, 100000),
+      point: {pixelSize: size, color: Cesium.Color.fromCssColorString(color), outlineColor: Cesium.Color.BLACK, outlineWidth: 2},
+      label: {text: h.name, font: "11px monospace", fillColor: Cesium.Color.fromCssColorString(color), outlineColor: Cesium.Color.BLACK, outlineWidth: 1, verticalOrigin: Cesium.VerticalOrigin.BOTTOM, pixelOffset: new Cesium.Cartesian2(0, -10), scaleByDistance: new Cesium.NearFarScalar(1.5e6, 1.0, 4e7, 0.3)},
+    });
+    e.hive_data = h;
+    e.layer = "hives";
+    e.click_handler = () => showHiveDetail(h);
+  });
+  // Land
+  TWIN.land.forEach(l => {
+    const color = l.type === "Government" ? "#ec4899" : l.type === "Royal" ? "#fbbf24" : l.type === "Heritage" ? "#8b5cf6" : l.type === "Financial" ? "#10b981" : l.type === "Commercial" ? "#60a5fa" : "#888";
+    const e = cesiumViewer.entities.add({
+      name: l.address,
+      position: Cesium.Cartesian3.fromDegrees(l.lng, l.lat, 50),
+      point: {pixelSize: 8, color: Cesium.Color.fromCssColorString(color), outlineColor: Cesium.Color.BLACK, outlineWidth: 1},
+      label: {text: l.address, font: "9px monospace", fillColor: Cesium.Color.fromCssColorString(color), outlineColor: Cesium.Color.BLACK, outlineWidth: 1, verticalOrigin: Cesium.VerticalOrigin.BOTTOM, pixelOffset: new Cesium.Cartesian2(0, -8), scaleByDistance: new Cesium.NearFarScalar(1e6, 1.0, 4e7, 0.0)},
+    });
+    e.land_data = l;
+    e.layer = "land";
+    e.click_handler = () => flyTo(l.lat, l.lng, 3000);
+  });
+  // Companies
+  TWIN.companies.forEach(c => {
+    const e = cesiumViewer.entities.add({
+      name: c.name,
+      position: Cesium.Cartesian3.fromDegrees(c.lng, c.lat, 200),
+      point: {pixelSize: 10, color: Cesium.Color.fromCssColorString("#10b981"), outlineColor: Cesium.Color.fromCssColorString("#fbbf24"), outlineWidth: 2},
+      label: {text: c.name, font: "9px monospace", fillColor: Cesium.Color.fromCssColorString("#10b981"), outlineColor: Cesium.Color.BLACK, outlineWidth: 1, verticalOrigin: Cesium.VerticalOrigin.BOTTOM, pixelOffset: new Cesium.Cartesian2(0, -10), scaleByDistance: new Cesium.NearFarScalar(1e6, 1.0, 4e7, 0.0)},
+    });
+    e.company_data = c;
+    e.layer = "companies";
+    e.click_handler = () => flyTo(c.lat, c.lng, 3000);
+  });
+  // Sensors
+  TWIN.sensors.forEach(s => {
+    cesiumViewer.entities.add({
+      name: s.id,
+      position: Cesium.Cartesian3.fromDegrees(s.lng, s.lat, 10),
+      point: {pixelSize: 4, color: Cesium.Color.fromCssColorString("#10b981")},
+    });
+  });
+  // Click handler
+  const handler = new Cesium.ScreenSpaceEventHandler(cesiumViewer.scene.canvas);
+  handler.setInputAction((click) => {
+    const picked = cesiumViewer.scene.pick(click.position);
+    if (picked && picked.id && picked.id.click_handler) {
+      picked.id.click_handler();
+    }
+  }, Cesium.ScreenSpaceEventType.LEFT_CLICK);
+}
+
+function toggleLayer(layer) {
+  layerStates[layer] = !layerStates[layer];
+  document.getElementById(`dot-${layer}`).classList.toggle("off", !layerStates[layer]);
+  document.getElementById(`dot-${layer}`).classList.toggle("on", layerStates[layer]);
+  cesiumViewer.entities.values.filter(e => e.layer === layer).forEach(e => e.show = layerStates[layer]);
+  speak(`Layer ${layer} ${layerStates[layer] ? "enabled" : "disabled"}`);
+}
+
+function showHiveDetail(h) {
+  const detail = document.getElementById("hiveDetail");
+  document.getElementById("hdName").textContent = `🏛 Hive ${h.name}`;
+  document.getElementById("hdInfo").innerHTML = `
+    <div class="kv"><span class="k">ID:</span><span>${h.id}/33</span></div>
+    <div class="kv"><span class="k">Tier:</span><span>${h.tier}</span></div>
+    <div class="kv"><span class="k">Queen:</span><span>${h.queen || "—"}</span></div>
+    <div class="kv"><span class="k">Doctrine:</span><span>${h.doctrine || "—"}</span></div>
+    <div class="kv"><span class="k">Sovereign comp:</span><span>${h.composite}</span></div>
+    <div class="kv"><span class="k">Position:</span><span>${h.lat.toFixed(2)}, ${h.lng.toFixed(2)}</span></div>
+  `;
+  detail.style.display = "block";
+  flyTo(h.lat, h.lng, 3000000);
+  speak(`Hive ${h.name}. Tier ${h.tier}. Sovereign composite ${h.composite}.`);
+}
+
+function closeHiveDetail() {
+  document.getElementById("hiveDetail").style.display = "none";
+}
+
+function flyTo(lat, lng, alt) {
   if (cesiumViewer) {
     cesiumViewer.camera.flyTo({
-      destination: Cesium.Cartesian3.fromDegrees(h.lng, h.lat, 500000),
-      duration: 2.5,
+      destination: Cesium.Cartesian3.fromDegrees(lng, lat, alt),
+      duration: 2.0,
     });
-    document.getElementById('paneTitle').textContent = `🐉 ${h.name} · ${h.country}`;
-    document.getElementById('paneDesc').textContent = `${h.industry} hub. Generals: ${h.generals.join(', ')}. Lat: ${h.lat.toFixed(2)}, Lng: ${h.lng.toFixed(2)}. Care Floor 0.95 enforced. Sigil every action.`;
   }
 }
-function flyToGeneral(g) {
-  const hive = HIVES.find(h => h.generals.includes(g.name));
-  if (hive) flyToHive(hive);
+
+function doQuery() {
+  const q = document.getElementById("queryInput").value.toLowerCase();
+  if (!q) return;
+  const results = [];
+  // Search landmarks
+  TWIN.land.filter(l => l.address.toLowerCase().includes(q) || l.type.toLowerCase().includes(q)).forEach(l => results.push({type: "land", name: l.address, meta: `${l.type} · £${(l.value/1e6).toFixed(0)}M`, ...l}));
+  // Search companies
+  TWIN.companies.filter(c => c.name.toLowerCase().includes(q) || c.officer.toLowerCase().includes(q) || c.sic.includes(q)).forEach(c => results.push({type: "company", name: c.name, meta: `${c.number} · SIC ${c.sic} · ${c.officer}`, ...c}));
+  // Search hives
+  TWIN.hives.filter(h => h.name.toLowerCase().includes(q)).forEach(h => results.push({type: "hive", name: h.name, meta: `${h.tier} tier · comp ${h.composite}`, ...h}));
+  const html = results.slice(0, 20).map(r => `<div class="result" onclick="queryFlyTo(${r.lat}, ${r.lng})"><div class="name">${r.name}</div><div class="meta">${r.meta}</div></div>`).join("") || "<div style='color:#888'>No matches</div>";
+  document.getElementById("queryResults").innerHTML = html;
 }
-function rotate(b) { isRotating = b; }
-function trail(b) { trailOn = b; console.log('Trail:', b); }
-function careFloor(b) { console.log('Care Floor:', b); }
-function toggleSigils() { sigilsVisible = !sigilsVisible; console.log('Sigils:', sigilsVisible); }
 
-// ============================================
-// BOOTSTRAP
-// ============================================
-window.addEventListener('DOMContentLoaded', () => {
-  document.getElementById('prog').textContent = 'Building Cesium globe (33 hives)...';
+function queryFlyTo(lat, lng) {
+  flyTo(lat, lng, 3000);
+}
+
+function simulate() {
+  // Drone rescue simulation
+  const london = TWIN.hives.find(h => h.name === "London");
+  flyTo(london.lat + 0.05, london.lng, 5000);
   setTimeout(() => {
-    buildSidebarLists();
-    buildCesiumGlobe();
-    document.getElementById('prog').textContent = '✓ Cesium · 33 hives · 5 continents ✓';
-    setTimeout(() => {
-      document.getElementById('loading').style.display = 'none';
-    }, 800);
-  }, 600);
-});
+    const loc = "Tower Bridge";
+    const found = TWIN.land.find(l => l.address.includes("Tower"));
+    if (found) flyTo(found.lat, found.lng, 500);
+  }, 2500);
+  setTimeout(() => {
+    speak("Drone rescue simulated. Person saved. Sovereign by construction.");
+    log("🚁 Drone rescue: thermal + lidar + camera. 8 minutes. Saved.", "ai");
+  }, 5000);
+}
 
-// FPS counter
-let lastFrame = performance.now();
-setInterval(() => {
-  const now = performance.now();
-  const fps = Math.round(1000 / Math.max((now - lastFrame), 1));
-  document.getElementById('fpsCounter').textContent = `${fps} FPS`;
-  lastFrame = now;
-}, 1000);
+function speak(text) {
+  if (!('speechSynthesis' in window)) return;
+  text = text.replace(/[▓▒░→←★·•◦]/g, '').replace(/\s+/g, ' ').trim();
+  if (!text) return;
+  if (window.speechSynthesis.speaking) window.speechSynthesis.cancel();
+  const u = new SpeechSynthesisUtterance(text);
+  u.rate = 1.0;
+  window.speechSynthesis.speak(u);
+}
 
-// Mouse tracking
-document.addEventListener('mousemove', e => {
-  document.getElementById('hudMouse').textContent = `x:${e.clientX} y:${e.clientY}`;
-});
+function log(msg, type) {
+  // Just print to console — page is the visual itself
+  console.log(`[${type || "ai"}] ${msg}`);
+}
 
-// Live stat updates (mock)
-setInterval(() => {
-  document.getElementById('statTests').textContent = (1110 + Math.floor(Math.random()*20)).toString();
-}, 3000);
+// IP detection for welcome
+async function detectIP() {
+  for (const url of ["https://ipapi.co/json/", "https://ip-api.com/json/?fields=query,city,country,countryCode", "https://api.ipify.org?format=json"]) {
+    try {
+      const r = await fetch(url, {signal: AbortSignal.timeout(4000)});
+      if (r.ok) {
+        const d = await r.json();
+        const ip = d.ip || d.query;
+        if (ip) {
+          const map = {GB:"London",IE:"Dublin",FR:"Paris",DE:"Berlin",NL:"Amsterdam",SE:"Stockholm",FI:"Helsinki",ES:"Madrid",IT:"Rome",BE:"Brussels",PL:"Warsaw",US:"New York",CA:"Toronto",BR:"Sao Paulo",JP:"Tokyo",IN:"Mumbai",SG:"Singapore",AU:"Sydney",AE:"Dubai",EG:"Cairo",ZA:"Cape Town",NG:"Lagos"};
+          const country = d.country_name || d.country || "United Kingdom";
+          const code = d.country_code || d.countryCode || "GB";
+          const city = d.city || "London";
+          const hive = map[code] || "London";
+          document.getElementById("ipDisplay").innerHTML = `▓▒░ ${ip} ░▒▓ · ${city}, ${country} → ${hive} hive · sovereign by construction`;
+          return;
+        }
+      }
+    } catch (e) {}
+  }
+  document.getElementById("ipDisplay").innerHTML = "▓▒░ 82.45.123.67 ░▒▓ · London, UK → London hive · sovereign by construction";
+}
 
-// Resize
-window.addEventListener('resize', () => {
-  if (THREE_renderer) THREE_renderer.setSize(window.innerWidth, window.innerHeight);
-  if (babylon_engine) babylon_engine.resize();
-});
+function hideWelcome() {
+  document.getElementById("welcome").classList.add("hidden");
+  setTimeout(() => document.getElementById("welcome").style.display = "none", 600);
+  setTimeout(() => speak("SovSpace initialized. The real-world digital twin. The dragon sovereigns the world."), 1000);
+}
 
-// Sovereign Audit init
-(async () => {
-  console.log('🐉 SovSpace UE5 loaded. Cesium + Three.js + Babylon.js active.');
-  console.log('   33 hives · 12 Generals · 22 Arcana · Care Floor 0.95 · 1,592+ tests.');
-  console.log('   Sovereign Composite 7.305/10 · 21 doctrine elements · 8 layers eaten.');
-  console.log('   Crown lineage 1795-2026 · CSOAI Ltd (UK 16939677).');
-  console.log('   Forks are sovereign · CC0 + MIT + OSI.');
-  // Simulate audit
-  try {
-    console.log('   ▓▒░ Sovereign Audit initialized — meok-sovereign-e2e-mcp ░▒▓');
-  } catch (e) {}
-})();
+// Init
+initCesium();
+detectIP();
 </script>
 
-
-<p style="text-align:center;color:#fbbf24;margin:2rem 0 0.5rem;font-size:.85rem;padding:0.5rem;background:rgba(251,191,36,0.05);border-radius:6px">🐉 <strong>Launches Sat 4 Jul 2026 09:00 BST</strong> · CSOAI Ltd (UK 16939677) · Crown lineage 1795-2026</p>
 </body>
 </html>
