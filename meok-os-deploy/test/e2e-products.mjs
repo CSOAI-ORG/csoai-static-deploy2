@@ -201,5 +201,16 @@ for (const p of ['pricing.html','badges.html','verify.html','sovspace.html','cha
   ck('rundown: manifest verifies VALID (auditable)', v.j.valid === true);
   const rr = await fetch(BASE + '/RUNDOWN_2026-07-01.md'); ck('rundown: human doc served', rr.status === 200); }
 
+{ const ac = await gj('/api/agentcard?name=Aria&archetype=dragon'); ck('agentcard: signed A2A card (hatch → portable agent)', ac.s === 200 && ac.j.protocolVersion && ac.j.name === 'Aria' && Array.isArray(ac.j.skills) && ac.j.interfaces?.mcp && ac.j.signature?.signature);
+  const v = await gj('/api/verify', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ message: ac.j.signature.canonical, signature: ac.j.signature.signature, publicKey: ac.j.signature.publicKey }) });
+  ck('agentcard: identity signature verifies', v.j.valid === true);
+  const wk = await fetch(BASE + '/.well-known/agent-card.json'); ck('agentcard: served at A2A well-known path', wk.status === 200); }
+{ const init = await gj('/api/mcp', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({jsonrpc:'2.0',id:1,method:'initialize',params:{}}) });
+  ck('mcp: initialize handshake', init.j.result?.protocolVersion === '2024-11-05' && init.j.result?.serverInfo?.name === 'meok-sovereign');
+  const list = await gj('/api/mcp', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({jsonrpc:'2.0',id:2,method:'tools/list'}) });
+  ck('mcp: tools/list exposes character tools', (list.j.result?.tools||[]).some(t=>t.name==='meok_govern') && (list.j.result?.tools||[]).some(t=>t.name==='meok_sign'));
+  const callr = await gj('/api/mcp', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({jsonrpc:'2.0',id:3,method:'tools/call',params:{name:'meok_govern',arguments:{industry:'a bank'}}}) });
+  ck('mcp: tools/call runs (govern → frameworks)', /DORA|framework|finance|Governs/i.test(callr.j.result?.content?.[0]?.text||'')); }
+
 console.log('\n' + (fail === 0 ? '✅ PASS' : '❌ FAIL') + ' — ' + pass + ' passed, ' + fail + ' failed' + (fails.length ? '  [' + fails.join(', ') + ']' : ''));
 process.exit(fail ? 1 : 0);
