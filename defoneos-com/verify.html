@@ -80,14 +80,21 @@
     s.classList.toggle('ok',good);
     document.getElementById(where+'Text').innerHTML = res.err ? res.err : (good?'✓ ':'⚠ ')+res.ok+' / '+res.total+' actions cryptographically verified · chain intact '+res.chain+'/'+Math.max(0,res.total-1)+(good?' · sovereign, offline':'');
   }
+  // deep-link: verify.html?receipt=<base64url JSON> (or ?ledger=…) → auto-decode + verify on open, no paste needed
+  function b64urlDecode(s){ s=s.replace(/-/g,'+').replace(/_/g,'/'); while(s.length%4) s+='='; try{ return decodeURIComponent(escape(atob(s))); }catch(e){ try{ return atob(s); }catch(_){ return null; } } }
+  const _qs=new URLSearchParams(location.search); const _rq=_qs.get('receipt')||_qs.get('ledger');
+  if(_rq){ const dec=b64urlDecode(_rq); if(dec){ document.getElementById('lpaste').value=dec; await verifyInput(dec); } else { document.getElementById('lstatusText').textContent='the shared link payload could not be decoded'; } }
+  else {
   // live ledger from this origin's local store (written by the dome)
   let L=[]; try{ L=JSON.parse(localStorage.getItem('def_sigil_ledger')||'[]'); }catch(e){}
   if(L.length){ paint(L, await verifyLedger(L), 'lstatus'); }
   else { document.getElementById('lstatusText').textContent='no on-device ledger yet — open the dome, act, then return here'; }
+  }
   // normalise any input → a ledger array. Accepts: a raw array, a single ledger entry,
   // or the downloaded receipt wrapper {defoneos_signed_contact:{message, signature_ed25519, public_key_ed25519}}.
   function normalize(input){
     if(Array.isArray(input)) return input;
+    if(input && input.defoneos_sigil_ledger) return input.defoneos_sigil_ledger;   // a downloaded full ledger
     if(input && input.defoneos_situational_brief) input = input.signature;   // a signed brief → verify its signature block
     const r = input && (input.defoneos_signed_contact || input);
     if(r && r.message && r.signature_ed25519){ const m=r.message; return [{i:m.i,ts:m.ts,action:m.action,detail:m.detail,prev:m.prev,sig:r.signature_ed25519,pub:r.public_key_ed25519}]; }
