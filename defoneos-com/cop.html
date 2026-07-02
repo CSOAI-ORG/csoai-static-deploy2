@@ -2997,8 +2997,9 @@ window._tourArc=_tourArc;
 // so nothing ever sits static. Politely yields whenever a step is actively flying (set by _tfly). ──
 function _tourKenBurns(){ try{ if(!viewer||document.hidden) return; if(Date.now() < (window._tourNoKB||0)) return;
   var s=viewer.scene; if(s.mode!==C.SceneMode.SCENE3D) return; var c=viewer.camera.positionCartographic; if(!c) return; var h=c.height;
-  viewer.camera.rotate(C.Cartesian3.UNIT_Z, -0.00032);                 // gentle continuous orbit/pan
-  if(h>2600 && h<9000000){ try{ viewer.camera.zoomIn(h*0.0006); }catch(_){} }   // slow cinematic push-in (proportional, bounded)
+  if(h<300000 || h>9000000) return;   // close-up scenes (street cams, dome, super-local, 3D viz) stay perfectly still — no blur, no scroll-off
+  viewer.camera.rotate(C.Cartesian3.UNIT_Z, -0.00026);                 // gentle continuous orbit/pan (mid-to-high altitude only)
+  try{ viewer.camera.zoomIn(h*0.0005); }catch(_){}                       // slow cinematic push-in (proportional, bounded)
 }catch(e){} }
 function _S(say,card,act,dwell){ return {say:say,card:card||null,act:act||null,dwell:dwell||7000}; }
 function _tourWait(ms){ return new Promise(function(res){ var w=0,iv=setInterval(function(){ w+=150; if(w>=ms||!window._tour.running||window._tour.paused){ clearInterval(iv); res(); } },150); }); }
@@ -3034,7 +3035,8 @@ async function _tourRun(){ var T=window._tour;
     while(T.paused){ await _tsleep(200); if(!T.running) return; }
     _tourBar(); var s=T.steps[T.i]; _tourNarrate(s);
     if(s.act){ try{ await s.act(); }catch(e){} } if(!T.running) return;
-    var dw=s.dwell*(window._tourSpeed||0.56);   // global pacing — ~30% faster again, still smooth (voice gates each step)
+    window._tourNoKB=Math.max(window._tourNoKB||0, Date.now()+2000);   // let each step's fly-in / viz build settle before Ken-Burns drift resumes
+    var dw=Math.max(s.dwell*(window._tourSpeed||0.66), 3800);   // faster reading on long steps, but a hard settle floor so every camera flight & viz build lands (fixes the speed-up breakage)
     var w=0; while(w<dw){ if(!T.running) return; while(T.paused){ await _tsleep(200); if(!T.running) return; } _tourKenBurns(); await _tsleep(90); w+=90; } }
   T.running=false; window._demoOn=false; _tourBarHide(); _tourEnd(); }
 function runTour(mode){ if(window._tour&&window._tour.running) tourStop();
