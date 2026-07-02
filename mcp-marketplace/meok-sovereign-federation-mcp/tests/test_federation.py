@@ -1,128 +1,111 @@
-"""Tests for meok-sovereign-federation-mcp (33-hive federation)."""
-import os, tempfile
+"""Tests for meok-sovereign-federation-mcp."""
+import os, sys, tempfile, importlib
 _TEST = tempfile.mkdtemp(prefix="sov_fed_")
 os.environ["SOV_FED_KEY"] = _TEST + "/k.pem"
-from meok_sovereign_federation_mcp import (
-    federation_route, federation_topology, federation_discover,
-    federation_health, federation_council, HIVES, _hive_by_id,
-)
 
+def get_fresh():
+    if "meok_sovereign_federation_mcp" in sys.modules:
+        del sys.modules["meok_sovereign_federation_mcp"]
+    import meok_sovereign_federation_mcp as m
+    importlib.reload(m)
+    return m
 
-def test_33_hives():
-    assert len(HIVES) == 33
+def test_register():
+    m = get_fresh()
+    r = m.federation_register("mcp-test", "Layer 2", "test,capability")
+    assert r["mcp"]["name"] == "mcp-test"
 
-
-def test_federation_route_basic():
-    r = federation_route(1, 21)  # London → Tokyo
-    assert r["source"] == "London"
-    assert r["dest"] == "Tokyo"
-    assert r["hops"] > 0
-    assert "London" in r["path"]
-
-
-def test_federation_route_same():
-    r = federation_route(1, 1)
-    assert r["hops"] == 0
-    assert r["path"] == ["London"]
-
-
-def test_federation_route_unknown():
-    r = federation_route(1, 99)
+def test_register_no_name():
+    m = get_fresh()
+    r = m.federation_register("", "Layer 2", "")
     assert "error" in r
 
+def test_discover():
+    m = get_fresh()
+    r = m.federation_discover("vote")
+    assert r["total_matches"] >= 1
 
-def test_federation_topology():
-    r = federation_topology()
-    assert r["node_count"] == 33
-    assert r["edge_count"] > 0
-    assert len(r["nodes"]) == 33
-
-
-def test_federation_topology_strong_edges():
-    r = federation_topology()
-    # At least some strong edges (>=0.7)
-    strong = [e for e in r["edges"] if e["strength"] >= 0.7]
-    assert len(strong) > 0
-
-
-def test_federation_discover():
-    r = federation_discover("dora")
-    assert r["count"] > 0
-    assert "London" in r["hosts"]
-
-
-def test_federation_discover_robotics():
-    r = federation_discover("robotics")
-    assert "Tokyo" in r["hosts"]
-
-
-def test_federation_discover_unknown():
-    r = federation_discover("nonexistent_service_xyz")
-    assert r["count"] == 0
-
-
-def test_federation_health():
-    r = federation_health()
-    assert r["total_hives"] == 33
-    assert r["online"] > 0
-    assert r["avg_sovereignty_score"] > 0
-
-
-def test_federation_council_shield():
-    r = federation_council("Shield", "Adopt new defence protocol")
-    assert r["general"] == "Shield"
-    assert r["voters_count"] > 0
-    assert r["yes_count"] == r["voters_count"]
-    assert r["quorum_met"]
-
-
-def test_federation_council_builder():
-    r = federation_council("Builder", "Add new McKibben actuator")
-    assert r["general"] == "Builder"
-
-
-def test_federation_council_unknown():
-    r = federation_council("NoSuchGeneral", "test")
+def test_discover_no_capability():
+    m = get_fresh()
+    r = m.federation_discover("")
     assert "error" in r
 
+def test_discover_layer_filter():
+    m = get_fresh()
+    r = m.federation_discover("vote", layer="Layer 0")
+    assert all(m["layer"] == "Layer 0" for m in r["matches"])
+
+def test_route():
+    m = get_fresh()
+    r = m.federation_route("vote")
+    assert "routed_to" in r
+
+def test_route_no_capability():
+    m = get_fresh()
+    r = m.federation_route("")
+    assert "error" in r
+
+def test_route_no_match():
+    m = get_fresh()
+    r = m.federation_route("totally-unknown-capability-xyz")
+    assert "error" in r
+
+def test_invoke():
+    m = get_fresh()
+    r = m.federation_invoke("mcp-sigil", "sign", "doc=hello")
+    assert r["mcp"] == "mcp-sigil"
+
+def test_invoke_no_mcp():
+    m = get_fresh()
+    r = m.federation_invoke("", "tool")
+    assert "error" in r
+
+def test_invoke_unknown_mcp():
+    m = get_fresh()
+    r = m.federation_invoke("mcp-nope", "tool")
+    assert "error" in r
+
+def test_status():
+    m = get_fresh()
+    r = m.federation_status()
+    assert r["total_mcps"] > 100
+    assert "Layer 0" in r["by_layer"]
 
 def test_no_external_deps():
-    import meok_sovereign_federation_mcp as m
+    m = get_fresh()
     src = open(m.__file__).read()
-    assert "import ollama" not in src
-    assert "import requests" not in src
-
+    for blocked in ["ollama", "requests", "urllib.request", "httpx"]:
+        assert f"import {blocked}" not in src
 
 def test_signed_outputs():
-    for r in [federation_route(1, 21), federation_topology(), federation_discover("dora"),
-              federation_health(), federation_council("Shield", "test")]:
+    m = get_fresh()
+    for r in [m.federation_register("x"), m.federation_discover("vote"),
+              m.federation_route("vote"), m.federation_invoke("mcp-sigil", "sign"),
+              m.federation_status()]:
         assert "kid" in r and "sig" in r and "ts" in r
 
+def test_full_workflow():
+    """Register → Discover → Route → Invoke → Status."""
+    m = get_fresh()
+    r1 = m.federation_register("mcp-new", "Layer 2", "new-feature")
+    assert r1["mcp"]["name"] == "mcp-new"
+    r2 = m.federation_discover("new-feature")
+    assert r2["total_matches"] >= 1
+    r3 = m.federation_route("new-feature")
+    assert "routed_to" in r3
+    r4 = m.federation_invoke("mcp-new", "new-tool")
+    assert r4["mcp"] == "mcp-new"
+    s = m.federation_status()
+    assert s["total_mcps"] > 100
 
-def test_federation_routing_integration():
-    r = federation_route(1, 2)  # London → Cambridge
-    # London (Argus) → Cambridge (Owl) is just 1 hop direct
-    assert "London" in r["path"]
-    assert "Cambridge" in r["path"]
+def test_100_mcps():
+    """Federation should have 100+ MCPs pre-loaded."""
+    m = get_fresh()
+    assert len(m._REGISTRY) >= 100
 
-
-def test_federation_routing_path_quality():
-    r = federation_route(1, 21)  # London → Tokyo
-    # Should go through at most ~5-10 hops
-    assert r["hops"] < 33
-
-
-def test_federation_health_regions():
-    r = federation_health()
-    # All regions should be represented
-    regions = set(h["region"] for h in r["hives"])
-    assert "EU" in regions
-    assert "NA" in regions
-    assert "AS" in regions
-
-
-def test_federation_health_statuses():
-    r = federation_health()
-    # All hives should have a status
-    for h in r["hives"]:
-        assert h["status"] in ("online", "degraded", "offline")
+def test_3_layers():
+    m = get_fresh()
+    s = m.federation_status()
+    assert "Layer 0" in s["by_layer"]
+    assert "Layer 1" in s["by_layer"]
+    assert "Layer 2" in s["by_layer"]
