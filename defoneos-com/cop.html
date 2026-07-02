@@ -557,6 +557,7 @@
   <label class="lyr"><input type="checkbox" id="lyMarine" onchange="toggleLayer('marine',this.checked)"><span class="sw" style="background:#7af9d0"></span> Marine · live AIS <span id="marineCount" style="margin-left:auto;color:var(--dim);font-size:11px">—</span></label>
   <label class="lyr"><input type="checkbox" id="lySat" onchange="toggleLayer('sat',this.checked)"><span class="sw" style="background:#9fd0ff"></span> Satellites · CelesTrak (live) </label>
   <button class="btn" onclick="lightItUp()" style="width:100%;margin-top:7px;background:linear-gradient(90deg,#3ef0ff22,#ff6b3522);border:1px solid var(--gold)">✨ Light it up · all layers</button>
+  <div style="display:flex;align-items:center;gap:9px;font-size:9.5px;color:var(--dim);margin-top:7px;flex-wrap:wrap"><span style="letter-spacing:.5px">FEED HEALTH</span><span><i style="display:inline-block;width:7px;height:7px;border-radius:50%;background:#00e07a;margin-right:3px;vertical-align:middle"></i>live</span><span><i style="display:inline-block;width:7px;height:7px;border-radius:50%;background:#eab308;margin-right:3px;vertical-align:middle"></i>quiet</span><span><i style="display:inline-block;width:7px;height:7px;border-radius:50%;background:#ff6b6b;margin-right:3px;vertical-align:middle"></i>down</span><span onclick="if(window.sovRetryFeeds)sovRetryFeeds()" style="margin-left:auto;cursor:pointer;color:#5ff4ff">🔄 retry</span></div>
   <div style="font-size:10px;color:var(--dim);margin-top:6px">live, no API key · toggle a layer → it loads &amp; flies to the data · click any point for detail · markets/gov join via the MCP federation</div>
   <div class="ttl" style="margin-top:14px">Basemap</div>
   <button class="btn" id="g3dBtn" style="width:100%;padding:9px" onclick="enableG3D()">⊕ Photoreal real-world 3D (Google)</button>
@@ -644,6 +645,7 @@
   <a class="sblink" onclick="sigilPanel()" title="signed action ledger">🔏 SIGIL</a>
   <a class="sblink hide-narrow" href="ontology.html" title="the ontology map">🕸 Ontology</a>
   <a class="sblink" href="verify.html" target="_blank" title="independent verifier">✓ Verify</a>
+  <a class="sblink hide-narrow" id="sbFeedSum" onclick="if(window.sovRetryFeeds)sovRetryFeeds()" title="live feed health — click to retry any throttled feed" style="display:none"></a>
   <span class="spacer" style="flex:1"></span>
   <span id="sbMode" class="sbmode" onclick="explainMode()" title="Public mirror — globally-mapped layers + live free feeds + on-device signing. The heavy gathering (autonomous hives) runs on a LOCAL SOV3 node. Click to learn more.">◐ MIRROR</span>
   <div class="doc-toggle" title="Governance lens · West = SIGIL/HORUS (democratic, Ed25519 + BFT) · East = DORADO (centralized)">
@@ -1380,8 +1382,19 @@ var _LAYCB={threat:'lyThreat',quake:'lyQuake',air:'lyAir',signals:'lySignals',ca
 // ── FEED-HEALTH DOTS · a tiny status dot per live layer: green=live · amber=throttled/quiet · red=unreachable · grey=off ──
 window._feedHealth=window._feedHealth||{};
 function _fhInit(){ try{ Object.keys(_LAYCB).forEach(function(k){ var cb=document.getElementById(_LAYCB[k]); if(!cb) return; var lab=(cb.closest&&cb.closest('label'))||cb.parentNode; if(!lab||lab.querySelector('.fh')) return; var d=document.createElement('span'); d.className='fh'; d.id='fh-'+k; d.style.cssText='display:inline-block;width:7px;height:7px;border-radius:50%;margin-left:6px;background:#4a5568;vertical-align:middle;box-shadow:0 0 5px rgba(0,0,0,.4)'; lab.appendChild(d); }); _fhUpdate(); }catch(_){} }
-function _fhUpdate(){ try{ var H=window._feedHealth||{}; Object.keys(_LAYCB).forEach(function(k){ var d=document.getElementById('fh-'+k); if(!d) return; var cb=document.getElementById(_LAYCB[k]); var on=cb&&cb.checked; var st=H[k]; var col= st==='live'?'#00e07a':(st==='empty'||st==='throttled')?'#eab308':st==='error'?'#ff6b6b':(on?'#5ff4ff':'#4a5568'); d.style.background=col; d.style.boxShadow='0 0 6px '+(col==='#4a5568'?'rgba(0,0,0,.4)':col); d.title='feed '+(st||(on?'on':'off')); }); }catch(_){} }
-function _fhSet(k,st){ window._feedHealth[k]=st; _fhUpdate(); }
+function _fhUpdate(){ try{ var H=window._feedHealth||{}; var live=0,quiet=0,down=0;
+    Object.keys(_LAYCB).forEach(function(k){ var d=document.getElementById('fh-'+k); var cb=document.getElementById(_LAYCB[k]); var on=cb&&cb.checked; var st=H[k];
+      if(on && st==='live') live++; else if(on && (st==='empty'||st==='throttled')) quiet++; else if(on && st==='error') down++;
+      if(!d) return; var col= st==='live'?'#00e07a':(st==='empty'||st==='throttled')?'#eab308':st==='error'?'#ff6b6b':(on?'#5ff4ff':'#4a5568'); d.style.background=col; d.style.boxShadow='0 0 6px '+(col==='#4a5568'?'rgba(0,0,0,.4)':col); d.title='feed '+(st||(on?'on':'off')); });
+    var el=document.getElementById('sbFeedSum'); if(el){ if(!(live||quiet||down)){ el.style.display='none'; } else { el.style.display=''; el.innerHTML='📡 '+live+' live'+(quiet?(' · <span style="color:#eab308">'+quiet+' quiet</span>'):'')+(down?(' · <span style="color:#ff6b6b">'+down+' down</span>'):''); } }
+  }catch(_){} }
+function _fhSet(k,st){ window._feedHealth[k]=st; _fhUpdate();
+  // auto-heal: a feed that errors gets ONE quiet retry after ~8s (transient rate-limits self-clear); success resets so future errors retry again
+  try{ window._fhRetry=window._fhRetry||{};
+    if(st==='live'||st==='empty'){ delete window._fhRetry[k]; }
+    else if(st==='error' && !window._fhRetry[k]){ window._fhRetry[k]=1; var LD={air:loadAircraft,marine:loadMarine,signals:loadSignals,quake:loadQuakes,cameras:loadCameras,events:loadEvents,aq:loadAirQuality,space:loadSpace,sat:loadSatellites};
+      setTimeout(function(){ var cb=document.getElementById(_LAYCB[k]); if(cb&&cb.checked&&LD[k]){ if(window.pushFeed) pushFeed('AUTO-RETRY · re-pulling '+k+' (transient feed blip)'); try{ LD[k](); }catch(_){} } }, 8000); } }catch(_){}
+}
 window._fhSet=_fhSet; window._fhUpdate=_fhUpdate; window._fhInit=_fhInit;
 // ── RETRY THROTTLED FEEDS · one action re-pulls every layer that's currently amber (quiet/throttled) or red (unreachable) ──
 function sovRetryFeeds(){ var LD={air:loadAircraft,marine:loadMarine,signals:loadSignals,quake:loadQuakes,cameras:loadCameras,events:loadEvents,aq:loadAirQuality,space:loadSpace,sat:loadSatellites};
