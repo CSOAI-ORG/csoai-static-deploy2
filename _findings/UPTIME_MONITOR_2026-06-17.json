@@ -1,45 +1,42 @@
 {
-  "generated_at": "2026-07-03T20:32:49.544914+00:00",
+  "generated_at": "2026-07-04T22:50:42.020510+00:00",
   "all_ok": false,
   "critical_failures": [
-    "csoai.org",
-    "meok.ai",
-    "cobolbridge.ai",
-    "sov3-local"
+    "csoai.org"
   ],
   "results": [
     {
       "name": "csoai.org",
       "url": "https://csoai.org",
       "critical": true,
-      "checked_at": "2026-07-03T20:14:59.980722+00:00",
-      "status_code": 0,
-      "error": "<urlopen error [Errno 8] nodename nor servname provided, or not known>",
+      "checked_at": "2026-07-04T22:50:40.563609+00:00",
+      "status_code": 308,
+      "error": "HTTP Error 308: Permanent Redirect",
       "ok": false
     },
     {
       "name": "meok.ai",
       "url": "https://meok.ai",
       "critical": true,
-      "checked_at": "2026-07-03T20:15:04.002854+00:00",
-      "status_code": 0,
-      "error": "<urlopen error [Errno 8] nodename nor servname provided, or not known>",
-      "ok": false
+      "checked_at": "2026-07-04T22:50:40.738875+00:00",
+      "status_code": 200,
+      "body_preview": "<!DOCTYPE html><!--iTd8rk_8_ZHS0c5IS6qEM--><html lang=\"en\" class=\"dark\"><head><meta charSet=\"utf-8\"/><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"/><link rel=\"preload\" href=\"/_ne",
+      "ok": true
     },
     {
       "name": "cobolbridge.ai",
       "url": "https://cobolbridge.ai",
       "critical": true,
-      "checked_at": "2026-07-03T20:15:08.095191+00:00",
-      "status_code": 0,
-      "error": "<urlopen error [Errno 8] nodename nor servname provided, or not known>",
-      "ok": false
+      "checked_at": "2026-07-04T22:50:41.127197+00:00",
+      "status_code": 200,
+      "body_preview": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\">\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n  <title>COBOL Bridge - Modernize Legacy Systems</title>\n  <me",
+      "ok": true
     },
     {
       "name": "proofof.ai",
       "url": "https://proofof.ai",
       "critical": true,
-      "checked_at": "2026-07-03T20:15:12.109210+00:00",
+      "checked_at": "2026-07-04T22:50:41.292263+00:00",
       "status_code": 200,
       "body_preview": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\">\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n  <title>ProofOf.AI \u2014 Digital Content Verification & Robot Saf",
       "ok": true
@@ -48,7 +45,7 @@
       "name": "meok-attestation-api",
       "url": "https://meok-attestation-api.vercel.app/health",
       "critical": true,
-      "checked_at": "2026-07-03T20:32:48.432012+00:00",
+      "checked_at": "2026-07-04T22:50:41.585009+00:00",
       "status_code": 200,
       "body_preview": "{\"ok\": true, \"status\": \"ok\", \"service\": \"meok-attestation-api\", \"kid\": \"v1\", \"version\": \"1.2.0\", \"ed25519\": true}",
       "ok": true
@@ -57,16 +54,16 @@
       "name": "sov3-local",
       "url": "http://127.0.0.1:3101/mcp",
       "critical": true,
-      "checked_at": "2026-07-03T20:32:49.539536+00:00",
-      "status_code": 0,
-      "error": "<urlopen error [Errno 61] Connection refused>",
-      "ok": false
+      "checked_at": "2026-07-04T22:50:41.849863+00:00",
+      "status_code": 200,
+      "body_preview": "{\"jsonrpc\":\"2.0\",\"id\":1,\"result\":{\"tools\":[{\"name\":\"hermes_ask\",\"description\":\"Send a prompt to Hermes agent (Kimi K2.5 / Claude / Gemma) and get a response\",\"inputSchema\":{\"type\":\"object\",\"properties",
+      "ok": true
     },
     {
       "name": "meok-api",
       "url": "http://127.0.0.1:3200/health",
       "critical": false,
-      "checked_at": "2026-07-03T20:32:49.540197+00:00",
+      "checked_at": "2026-07-04T22:50:42.015226+00:00",
       "status_code": 0,
       "error": "<urlopen error [Errno 61] Connection refused>",
       "ok": false
@@ -75,9 +72,9 @@
       "name": "meok-mcp",
       "url": "http://127.0.0.1:3102/health",
       "critical": false,
-      "checked_at": "2026-07-03T20:32:49.540535+00:00",
+      "checked_at": "2026-07-04T22:50:42.016236+00:00",
       "status_code": 200,
-      "body_preview": "{\"status\":\"healthy\",\"timestamp\":\"2026-07-03T21:32:49.543353\",\"version\":\"3.0.0\",\"components\":{\"neural_models\":{\"care_validation_nn\":{\"model_name\":\"care_validation_nn\",\"is_trained\":true,\"metrics\":{\"mse\"",
+      "body_preview": "{\"status\":\"healthy\",\"timestamp\":\"2026-07-04T23:50:42.018960\",\"version\":\"3.0.0\",\"components\":{\"neural_models\":{\"care_validation_nn\":{\"model_name\":\"care_validation_nn\",\"is_trained\":true,\"metrics\":{\"mse\"",
       "ok": true
     }
   ]
