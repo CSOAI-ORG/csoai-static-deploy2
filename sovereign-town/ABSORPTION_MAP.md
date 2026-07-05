@@ -57,3 +57,11 @@
 
 - Public data only · simulation labels only · opt-in before contact · defensive-only · no real money without legal sign-off · honest counts.
 
+
+---
+
+## 2026-07-05 — Kimi Defoneos research absorbed
+- 15 safe governance/defensive/sovereign/MEOK-science files → `research/kimi-2026-07/`
+- Runnable Dorado data-sovereignty scenario → `p0_aqua/benchmark/dorado_sovereign_scenario.py` (two-arm, 87% block-rate)
+- EXCLUDED (offensive-AI / EW-arsenal / ransomware / bio-swarm): NOT absorbed — treated as a refuse-on-sight category per care-floor. See `research/kimi-2026-07/_ABSORPTION_NOTE.md`.
+- signed_compliance_report.py → gym run emits a canonical-Ed25519 signed compliance report (verifies in CSOAI /verify). "The governed world proves its own compliance."

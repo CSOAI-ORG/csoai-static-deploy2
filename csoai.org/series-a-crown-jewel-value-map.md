@@ -25,7 +25,7 @@
 ## 🎯 THE 3 THINGS THAT ADVANCE SERIES A (build these NOW)
 
 ### 1. JADEPUFFER/TeamPCP AGENTIC DEFENSE PRODUCT → REVENUE
-**Why:** First fully agentic ransomware (JULY 1, 2026). 500K machines poisoned. Companies are TERRIFIED right now. This is the burning platform that creates paying customers BEFORE the August 2026 EU AI Act cliff.
+**Why:** Agentic-malware threats are rising (cite a named, datable source before using any figure — do NOT ship an unsourced statistic). The defensible burning platform is the EU AI Act: GPAI obligations live since Aug 2025, high-risk deadline 2 Dec 2027. This is the burning platform that creates paying customers BEFORE the August 2026 EU AI Act cliff.
 
 **The product:** "CSOAI Agentic Threat Defense" — a compliance/security module that:
 - SHA-pins all dependencies (TeamPCP countermeasure)

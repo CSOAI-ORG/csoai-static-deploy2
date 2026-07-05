@@ -8,7 +8,7 @@ Goal: land **ONE referenceable regulated design partner** before the EU AI Act A
 
 ## The CCO/CISO one-pager (paste into an email or a single slide)
 
-**Your AI now touches your COBOL core and ISO-20022 payments. By 2 Aug 2026, every one of those actions must be governed as high-risk AND logged tamper-evident (EU AI Act Article 12) — fines to €15M or 3% of global turnover, and the CCO is personally accountable.**
+**Your AI now touches your COBOL core and ISO-20022 payments. By 2 Dec 2027 (Digital Omnibus delay, agreed May 2026) every one of those high-risk actions must be governed AND logged tamper-evident (EU AI Act Article 12) — fines to €15M or 3% of global turnover, and the CCO is personally accountable.**
 
 - **The gap:** Microsoft, ServiceNow, Runlayer ($30M) — and every new OSS compliance tool — govern *modern* AI agents. **None bridge your legacy mainframe.** Your COBOL/SAP/SCADA layer is exactly where the regulated, ECB-supervised risk lives — and it's uncovered.
 - **CSOAI:** the only governed, **signed** bridge between AI and your legacy systems. We parse your COBOL, govern the ISO-20022 wire against DORA/NIS2/AML/PSD2, and emit an **Ed25519-signed, offline-verifiable OSCAL audit package** — your Article-12 trail. It **validates under the standard NIST OSCAL toolchain (compliance-trestle)**, not just our say-so. **All 8 Layer-0 protocols score 100/100 A+++++** (first-of-kind + signed + offline-verifiable + moat).
@@ -29,7 +29,7 @@ Goal: land **ONE referenceable regulated design partner** before the EU AI Act A
 - **DORA/EU-AI-Act compliance communities** (LinkedIn groups, ISACA, IAPP chapters) — they're actively panicking about the deadline; lead with the Art-12 gap.
 - **Mainframe-modernization & FinTech meetups** (the COBOL-still-runs-the-bank crowd) — they *know* the legacy gap is real.
 - **Warm intro > cold** — one CCO/Head-of-AI-Risk intro at a target bank beats 50 cold emails. Ask the network for the intro to "someone wrestling with EU AI Act + a mainframe."
-- **The hook line:** *"Quick Q — by Aug 2026 your high-risk AI needs tamper-evident logs (Art. 12). How are you covering the AI that touches your COBOL/payments layer? I have a 2-min signed-audit demo no one else can show."*
+- **The hook line:** *"Quick Q — by 2 Dec 2027 your high-risk AI needs tamper-evident logs (GPAI obligations already apply since Aug 2025) (Art. 12). How are you covering the AI that touches your COBOL/payments layer? I have a 2-min signed-audit demo no one else can show."*
 
 ## The outreach sequence (one design partner is the whole game)
 1. **Pick the finance vertical** + build a list of ~15 ideal-profile institutions (mid-size EU/UK, known COBOL core, public AI initiative).
