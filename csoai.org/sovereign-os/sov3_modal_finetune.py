@@ -316,15 +316,34 @@ def main(
     mode: str = "estimate",
     base_model: str = "Qwen/Qwen2.5-7B-Instruct",
     epochs: int = 3,
+    dataset_local: str = "./sov3_training_data.jsonl",
 ):
     """Main entrypoint. Modes: estimate, train."""
     if mode == "estimate":
         estimate_costs.remote()
     elif mode == "train":
+        # Upload training data from local file
+        dataset_path = os.path.join(os.path.dirname(__file__) or ".", dataset_local)
+        if os.path.exists(dataset_path):
+            with open(dataset_path) as f:
+                data = f.read()
+            print(f"📤 Uploading {len(data)} bytes of training data...")
+            upload_result = upload_training_data.remote(data)
+            dataset_remote = upload_result["path"]
+        else:
+            print(f"⚠️  Dataset {dataset_path} not found, using built-in seed data")
+            dataset_remote = "/data/sov3_training.jsonl"
+
         result = train_sovereign.remote(
             base_model=base_model,
+            dataset_path=dataset_remote,
             epochs=epochs,
         )
         print(f"\n🎉 {json.dumps(result, indent=2)}")
+    elif mode == "inference":
+        result = SovereignModel().generate.remote(
+            "What is sovereign AI governance?"
+        )
+        print(json.dumps(result, indent=2))
     else:
-        print(f"Unknown mode: {mode}. Use 'estimate' or 'train'.")
+        print(f"Unknown mode: {mode}. Use 'estimate', 'train', or 'inference'.")
