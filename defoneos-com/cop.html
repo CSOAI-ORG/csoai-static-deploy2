@@ -1048,8 +1048,8 @@ async function sovSystemCard(name, purpose){
   var card={ '@type':'DEFONEOS-SystemCard',
     system:{ name:name, purpose:(purpose||'sovereign situational-awareness + governance globe').toString().slice(0,400), provider:'CSOAI Ltd · UK 16939677' },
     classification:{ risk_tier:/triage|medical|health|weapon|kinetic|biometric|surveillance|credit|hiring/.test(blob)?'high':'limited', eu_ai_act_annex_iii:/triage|medical|health|biometric|credit|hiring/.test(blob) },
-    frameworks:['EU AI Act','ISO 42001','NIST AI RMF','JSP 936'],
-    controls:{ human_oversight:'Article 14 — human confirms high-risk actions', transparency_art50:'AI-generated outputs marked (EU AI Act Art 50)', logging:'every governed action Ed25519-signed on-device, offline-verifiable', robustness:'documented eval + care-floor 0.95' },
+    frameworks:['EU AI Act','ISO 42001','ISO 27001','NIST AI RMF','SOC 2','DORA','Cyber Essentials','OWASP Agentic Top 10','JSP 936'],
+    controls:{ human_oversight:'Article 14 — human confirms high-risk actions', transparency_art50:'AI-generated outputs marked (EU AI Act Art 50)', logging:'every governed action Ed25519-signed on-device, offline-verifiable', robustness:'documented eval + care-floor 0.95', operational_resilience:'DORA — ICT risk, incident reporting, resilience testing (financial entities)', supply_chain:'signed provenance + SHA-pinned dependencies (OWASP Agentic ASI04 / registry-poisoning defence)', isolation:'agents run sandboxed (microVM-class isolation)' },
     limitations:'attestation of declared posture, cryptographically signed — NOT certification or approval (assurance, not accreditation).',
     care_floor:0.95, issued:new Date().toISOString() };
   var L=window._sigil.ledger, prev=L.length?L[L.length-1].sig:'';
@@ -1076,6 +1076,8 @@ async function sovOscal(){
     ['eu-ai-act/art-12','Record-keeping — every governed action is Ed25519-signed to an on-device, offline-verifiable ledger.'],
     ['iso-42001/A.9','AI risk management — documented risk classification + care-floor 0.95 minimum on every action.'],
     ['nist-ai-rmf/GOVERN','Govern — BFT council (quorum 23/33) gates sensitive actions; hard-stops on kinetic/surveillance.'],
+    ['dora/ict-risk','DORA — ICT risk management, incident reporting + resilience testing for financial entities.'],
+    ['owasp-agentic/ASI04','Supply-chain integrity — signed provenance + SHA-pinned dependencies (registry-poisoning defence).'],
     ['jsp-936/assurance','Deployment assurance — signed, offline-verifiable System Card + action ledger (the independent assurance primitive).']
   ];
   var oscal={ 'component-definition':{ uuid:uuid(),

@@ -143,6 +143,8 @@ function signOscal(p) {
     ['eu-ai-act/art-12', 'Record-keeping — every governed action Ed25519-signed to an offline-verifiable ledger.'],
     ['iso-42001/A.9', 'AI risk management — documented risk classification + care-floor ' + CARE_FLOOR + '.'],
     ['nist-ai-rmf/GOVERN', 'Govern — sensitive actions gated; hard-stops on kinetic/surveillance.'],
+    ['dora/ict-risk', 'DORA — ICT risk management, incident reporting + resilience testing (financial entities).'],
+    ['owasp-agentic/ASI04', 'Supply-chain integrity — signed provenance + SHA-pinned dependencies (registry-poisoning defence).'],
     ['jsp-936/assurance', 'Deployment assurance — signed, offline-verifiable System Card + action ledger.']
   ];
   const title = String(p.title || 'DEFONEOS — Sovereign Governance Posture (declared)').slice(0, 200);
