@@ -57,6 +57,10 @@ const FINGERPRINT = fingerprint(PUB_RAW_HEX);
 
 // ── the signed artifact (verify.html-compatible: message = {i,ts,action,detail,prev}) ──
 let CHAIN_PREV = '';   // hash-chain like the dome's ledger
+let CHAIN_COUNT = 0;   // how many artifacts signed in this process
+let CHAIN_LAST_ACTION = null;
+let CHAIN_LAST_TS = null;
+function _recordChain(action, ts, sig) { CHAIN_PREV = sig; CHAIN_COUNT += 1; CHAIN_LAST_ACTION = action; CHAIN_LAST_TS = ts; }
 function sha256(s) { return crypto.createHash('sha256').update(typeof s === 'string' ? s : JSON.stringify(s)).digest('hex'); }
 function signArtifact({ kind, subject, output, method, inputs, i }) {
   const output_str = typeof output === 'string' ? output : JSON.stringify(output);
@@ -79,7 +83,7 @@ function signArtifact({ kind, subject, output, method, inputs, i }) {
   };
   const bytes = Buffer.from(JSON.stringify(message), 'utf8');
   const sig = crypto.sign(null, bytes, PRIV).toString('hex');           // raw Ed25519, RFC 8032
-  CHAIN_PREV = sig;
+  _recordChain(message.action, message.ts, sig);
   return {
     defoneos_signed_contact: {
       message,
@@ -102,7 +106,7 @@ function signSystemCard(p) {
     '@type': 'DEFONEOS-SystemCard',
     system: { name: String(p.name || 'unnamed system').slice(0, 160), version: p.version ? String(p.version).slice(0, 40) : undefined, provider: p.provider ? String(p.provider).slice(0, 160) : undefined, purpose: String(p.purpose || '').slice(0, 800) },
     classification: { risk_tier: p.risk_tier || 'unclassified', rationale: p.rationale ? String(p.rationale).slice(0, 600) : undefined, eu_ai_act_annex_iii: !!p.high_risk },
-    frameworks: Array.isArray(p.frameworks) && p.frameworks.length ? p.frameworks : ['EU AI Act', 'ISO 42001', 'NIST AI RMF', 'JSP 936'],
+    frameworks: Array.isArray(p.frameworks) && p.frameworks.length ? p.frameworks : ['EU AI Act', 'ISO 42001', 'ISO 27001', 'NIST AI RMF', 'SOC 2', 'DORA', 'Cyber Essentials', 'OWASP Agentic Top 10', 'JSP 936'],
     controls: {
       human_oversight: p.human_oversight != null ? p.human_oversight : 'human-in-the-loop for high-risk actions (Article 14)',
       transparency_art50: p.transparency != null ? p.transparency : 'AI-generated outputs marked (EU AI Act Art 50)',
@@ -117,7 +121,7 @@ function signSystemCard(p) {
   const message = { i: 0, ts: card.issued, action: 'system-card:' + card.system.name, detail: JSON.stringify(card), prev: CHAIN_PREV };
   const bytes = Buffer.from(JSON.stringify(message), 'utf8');
   const sig = crypto.sign(null, bytes, PRIV).toString('hex');
-  CHAIN_PREV = sig;
+  _recordChain(message.action, message.ts, sig);
   return {
     defoneos_signed_contact: {
       message, signature_ed25519: sig, public_key_ed25519: PUB_RAW_HEX, fingerprint: FINGERPRINT,
@@ -150,7 +154,7 @@ function signOscal(p) {
   const docStr = JSON.stringify(oscal), hash = sha256(docStr);
   const message = { i: 0, ts: oscal['component-definition'].metadata['last-modified'], action: 'oscal-export', detail: 'OSCAL component-definition · ' + CTRLS.length + ' controls · sha256:' + hash, prev: CHAIN_PREV };
   const sig = crypto.sign(null, Buffer.from(JSON.stringify(message), 'utf8'), PRIV).toString('hex');
-  CHAIN_PREV = sig;
+  _recordChain(message.action, message.ts, sig);
   return { defoneos_signed_contact: { message, signature_ed25519: sig, public_key_ed25519: PUB_RAW_HEX, fingerprint: FINGERPRINT, doc_sha256: hash, oscal,
     algorithm: 'Ed25519 (RFC 8032) over utf8(JSON.stringify(message)); OSCAL bound by doc_sha256',
     verify: 'Drop into ' + VERIFY_URL + ' (checks the signature). OSCAL component-definition is under .oscal — ingest into any OSCAL tool.',
@@ -206,6 +210,9 @@ const TOOLS = [
       controls: { type: 'array', description: 'Optional [{id, description}] control implementations; defaults to the EU AI Act/ISO 42001/NIST/JSP 936 set.', items: { type: 'object' } } } } },
   { name: 'defoneos_public_key',
     description: 'Return the sovereign Ed25519 public key + fingerprint used to sign artifacts (so a verifier can trust-on-first-use / pin it).',
+    inputSchema: { type: 'object', properties: {} } },
+  { name: 'defoneos_chain_status',
+    description: 'Read the local SIGIL-style hash chain head: how many artifacts this sovereign key has signed in this process lifetime, the last message.action + ts + sig, and the chain head (prev-pointing signature). Pure read — never signs anything new. Use to confirm a host can talk to the dome’s ledger shape.',
     inputSchema: { type: 'object', properties: {} } }
 ];
 function callTool(name, args) {
@@ -215,7 +222,21 @@ function callTool(name, args) {
   if (name === 'defoneos_oscal') return signOscal(args);
   if (name === 'defoneos_verify') return verifyReceipt(Object.assign({}, args.receipt, args.output != null ? { output: args.output } : {}));
   if (name === 'defoneos_public_key') return { public_key_ed25519: PUB_RAW_HEX, fingerprint: FINGERPRINT, algorithm: 'Ed25519 (RFC 8032)', verify_url: VERIFY_URL, protocol: PROTOCOL };
+  if (name === 'defoneos_chain_status') return getChainStatus();
   throw new Error('unknown tool: ' + name);
+}
+function getChainStatus() {
+  return {
+    protocol: PROTOCOL,
+    fingerprint: FINGERPRINT,
+    count: CHAIN_COUNT,
+    head_signature_ed25519: CHAIN_PREV || null,
+    last_action: CHAIN_LAST_ACTION || null,
+    last_ts: CHAIN_LAST_TS || null,
+    care_floor: CARE_FLOOR,
+    verify_url: VERIFY_URL,
+    note: 'In-process head only — for a persisted ledger use defoneos.vercel.app/verify.html or the SIGIL chain (Ed25519 hash-chained, Bitcoin OP_RETURN anchored).'
+  };
 }
 
 // ── MCP stdio server (newline-delimited JSON-RPC 2.0) ────────────────────────
@@ -253,5 +274,5 @@ function main() {
   process.stderr.write('[defoneos-sign] up · key ' + FINGERPRINT + ' · verify ' + VERIFY_URL + '\n');
 }
 
-module.exports = { signArtifact, signSystemCard, signOscal, verifyReceipt, callTool, PUB_RAW_HEX, FINGERPRINT, TOOLS };
+module.exports = { signArtifact, signSystemCard, signOscal, verifyReceipt, callTool, getChainStatus, PUB_RAW_HEX, FINGERPRINT, TOOLS };
 if (require.main === module) main();

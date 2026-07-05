@@ -8,19 +8,23 @@ DEFONEOS doesn't live *inside* anyone's app. It's the thing the ecosystem calls 
 The biggest labs now ship "auditable / reproducible" AI outputs (e.g. Claude Science attaches the code + environment + history that made a result). DEFONEOS goes one axis further: the artifact is **cryptographically signed and verifiable without trusting the vendor's server**. This MCP puts that primitive one tool-call away for any agent.
 
 ## Tools
-| tool | does |
-|---|---|
-| `defoneos_sign` | wrap `{output, kind, subject, method, inputs}` in signed provenance → receipt (Ed25519). Records method ("how it was made"), input sources, a SHA-256 of the exact output, and the care-floor. |
-| `defoneos_verify` | verify a receipt offline (tamper-evident); optionally re-bind the original output to its signed hash. |
-| `defoneos_system_card` | sign a **system card** (name/version/provider/purpose/posture) into a signed DEFONEOS artifact — the JSP 936 / EU-AI-Act assurance primitive. Attests declared posture; does not accredit. |
-| `defoneos_oscal` | emit a signed **NIST OSCAL 1.1.2 component-definition** of the governance posture — the auditor's lingua-franca. `.oscal` ingests into any OSCAL tool; the signature verifies offline. Declared posture, not a passed assessment. |
-| `defoneos_public_key` | the sovereign public key + fingerprint (trust-on-first-use / pin it). |
+| # | tool | does |
+|---|------|------|
+| 1 | `defoneos_sign` | wrap `{output, kind, subject, method, inputs}` in signed provenance → receipt (Ed25519). Records method ("how it was made"), input sources, a SHA-256 of the exact output, and the care-floor. |
+| 2 | `defoneos_verify` | verify a receipt offline (tamper-evident); optionally re-bind the original output to its signed hash. |
+| 3 | `defoneos_system_card` | sign a **system card** (name/version/provider/purpose/posture) into a signed DEFONEOS artifact — the JSP 936 / EU-AI-Act assurance primitive. Attests declared posture; does not accredit. |
+| 4 | `defoneos_oscal` | emit a signed **NIST OSCAL 1.1.2 component-definition** of the governance posture — the auditor's lingua-franca. `.oscal` ingests into any OSCAL tool; the signature verifies offline. Declared posture, not a passed assessment. |
+| 5 | `defoneos_public_key` | the sovereign public key + fingerprint (trust-on-first-use / pin it). |
+| 6 | `defoneos_chain_status` | read the in-process SIGIL-style hash chain head: signed-artifact count, last `action` + `ts` + `sig`. Pure read — never signs anything new. Hosts use it to confirm the dome's ledger shape. |
 
 ## Run
 ```bash
 node server.js          # MCP stdio server
-npm test                # 24/24 — artifact sign/verify/tamper (12) + system-card (6) + OSCAL (6)
+npm test                # 18/18 — six tools × three checks (sign/verify/tamper for sign + verify; roundtrip for system-card + oscal; invariants for public-key + chain-status)
 ```
+
+CSOAI Ltd (UK 16939677) · MIT + CC0.
+
 
 ## Install into a Claude host (copy-paste)
 
