@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { getCouncilStatus, getExpertiseNetwork } from "@/lib/meok";
+import SovereignDome, { type DomeDomain } from "./SovereignDome";
 
 export const metadata: Metadata = {
   title: "Council Dome — 12-Domain Expertise Map",
@@ -9,6 +10,15 @@ export const metadata: Metadata = {
 };
 
 export const revalidate = 60;
+
+// Canonical CSOAI governance domains (EU AI Act Annex III high-risk areas +
+// CSOAI coverage). Used as the taxonomy fallback so the dome always renders;
+// live council/expertise counts overlay when the substrate is online.
+const CANON_DOMAINS = [
+  "healthcare", "finance", "insurance", "employment",
+  "education", "law enforcement", "critical infrastructure", "legal",
+  "biometrics", "energy", "transport", "governance",
+];
 
 function hashToRange(input: string, min: number, max: number): number {
   let hash = 0;
@@ -25,8 +35,30 @@ export default async function DomePage() {
     getExpertiseNetwork(),
   ]);
 
-  const domains = council?.domains ?? [];
+  const liveDomains = council?.domains ?? [];
+  const domains = liveDomains.length ? liveDomains : CANON_DOMAINS;
+  const substrateOnline = liveDomains.length > 0;
   const domainStats = expertise?.domain_stats ?? {};
+
+  const councilNodes = council?.node_count ?? 36;
+  const archNodes = council?.total_architecture_nodes ?? 235;
+  const threshold = council?.threshold ?? Math.ceil((councilNodes * 2) / 3);
+
+  const domeDomains: DomeDomain[] = domains.map((domain) => {
+    const stats = (domainStats[domain] as Record<string, unknown> | undefined) ?? {};
+    const nodeCount =
+      (stats.node_count as number | undefined) ??
+      council?.nodes_by_domain?.[domain]?.length ??
+      3;
+    const expertiseCount =
+      (stats.expertise_count as number | undefined) ?? hashToRange(domain, 4, 15);
+    return {
+      name: domain,
+      nodeCount,
+      expertiseCount,
+      bridgesOut: Math.floor(nodeCount * 1.4),
+    };
+  });
 
   return (
     <main className="max-w-7xl mx-auto px-4 py-16">
@@ -40,45 +72,29 @@ export default async function DomePage() {
         </p>
       </header>
 
-      {/* Visual grid: 12 domains as a "dome" */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 mb-12">
-        {domains.map((domain, i) => {
-          const stats = (domainStats[domain] as Record<string, unknown> | undefined) ?? {};
-          const nodeCount = (stats.node_count as number | undefined) ?? council?.nodes_by_domain?.[domain]?.length ?? 3;
-          const expertiseCount = (stats.expertise_count as number | undefined) ?? hashToRange(domain, 4, 15);
-          // Color: vary by index for visual variety but stay in emerald/cyan family
-          const hue = (i * 37) % 360;
-          return (
-            <div
-              key={domain}
-              className="group p-6 rounded-2xl bg-white/5 border border-white/10 hover:border-emerald-500/40 transition-all cursor-pointer"
-              style={{ borderColor: `hsla(${hue}, 70%, 50%, 0.2)` }}
-            >
-              <div className="flex items-center gap-3 mb-3">
-                <div
-                  className="w-3 h-3 rounded-full"
-                  style={{ backgroundColor: `hsl(${hue}, 70%, 60%)` }}
-                />
-                <h3 className="text-lg font-bold capitalize">{domain}</h3>
-              </div>
-              <div className="space-y-1 text-sm">
-                <div className="flex justify-between">
-                  <span className="text-slate-500">Council nodes</span>
-                  <span className="font-mono text-cyan-400">{nodeCount}</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-slate-500">Expertise</span>
-                  <span className="font-mono text-violet-400">{expertiseCount}</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-slate-500">Bridges out</span>
-                  <span className="font-mono text-amber-400">{Math.floor(nodeCount * 1.4)}</span>
-                </div>
-              </div>
-            </div>
-          );
-        })}
-      </div>
+      {/* Interactive Sovereign Dome — the 12 domains + BFT core + bridge mesh */}
+      {domeDomains.length > 0 ? (
+        <div className="mb-14 rounded-3xl border border-white/10 bg-slate-900/30 p-4 sm:p-8">
+          <SovereignDome
+            domains={domeDomains}
+            councilNodes={councilNodes}
+            archNodes={archNodes}
+            threshold={threshold}
+          />
+          <div className="mt-4 flex items-center gap-2 text-xs">
+            <span className={`inline-block w-2 h-2 rounded-full ${substrateOnline ? "bg-emerald-400" : "bg-amber-400"}`} />
+            <span className="text-slate-500">
+              {substrateOnline
+                ? "Live — node & expertise counts streamed from the council substrate (60s cache)."
+                : "Showing the published domain taxonomy — live node & expertise counts overlay when the council substrate is online."}
+            </span>
+          </div>
+        </div>
+      ) : (
+        <div className="mb-14 rounded-3xl border border-white/10 bg-slate-900/30 p-8 text-slate-400">
+          Council substrate is warming up — domain map will populate on the next refresh.
+        </div>
+      )}
 
       {/* Council sub-thresholds */}
       <h2 className="text-2xl font-bold mb-6">Council threshold by domain</h2>

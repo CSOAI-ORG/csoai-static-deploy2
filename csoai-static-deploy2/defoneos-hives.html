@@ -1,29 +1,206 @@
-<!DOCTYPE html><html lang="en"><head><link rel="preconnect" href="https://csoai-static-deploy2.vercel.app"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>DEFONEOS — 33 Hives</title><style>*{margin:0;padding:0;box-sizing:border-box}body{font-family:system-ui,sans-serif;background:#0a0a0f;color:#f8fafc;padding:2rem;line-height:1.6;max-width:1100px;margin:0 auto}h1{font-size:2.5rem;background:linear-gradient(135deg,#22d3ee,#8b5cf6);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:1rem}h2{color:#22d3ee;margin:1.5rem 0 .5rem}p{margin:.5rem 0;color:#cbd5e1}table{width:100%;border-collapse:collapse;margin:1rem 0}th{background:rgba(34,211,238,.1);color:#22d3ee;padding:.6rem;text-align:left;font-size:.8rem}td{padding:.5rem;border-bottom:1px solid rgba(255,255,255,.05);color:#94a3b8;font-size:.8rem}</style><link rel="icon" href="/favicon.svg" type="image/svg+xml"><meta property="og:title" content="DEFONEOS — UK Sovereign Defence AI OS"><meta property="og:description" content="Open source. 12 domains. 30 MCPs. 188+ tools. BFT governance. Ed25519 SIGIL proof."><meta property="og:type" content="website"><meta name="description" content="DEFONEOS — UK Sovereign Defence AI OS. Open source, 12 domains, 30 MCP servers, 188+ tools, BFT governance, Ed25519 SIGIL proof."><meta name="theme-color" content="#0a0a0f"><link rel="canonical" href="https://csoai-static-deploy2.vercel.app/defoneos-hives.html"></head><body><nav class="nav-bar" role="navigation" aria-label="Main navigation" style="position:sticky;top:0;z-index:999;background:rgba(10,10,15,.95);backdrop-filter:blur(10px);border-bottom:1px solid rgba(34,211,238,.15);padding:.6rem 1.5rem;display:flex;gap:1.2rem;align-items:center;flex-wrap:wrap"><a href="index.html" style="color:#22d3ee;text-decoration:none;font-weight:bold;font-size:1rem">🐉 DEFONEOS</a><a href="defoneos-demo.html" style="color:#94a3b8;text-decoration:none;font-size:.85rem">Demo</a><a href="defoneos-seriesa.html" style="color:#94a3b8;text-decoration:none;font-size:.85rem">Series A</a><a href="defoneos-pricing.html" style="color:#94a3b8;text-decoration:none;font-size:.85rem">Pricing</a><a href="defoneos-compare.html" style="color:#94a3b8;text-decoration:none;font-size:.85rem">vs Palantir</a><a href="defoneos-index.html" style="color:#94a3b8;text-decoration:none;font-size:.85rem">All Pages</a><a href="defoneos-checklist.html" style="color:#94a3b8;text-decoration:none;font-size:.85rem">Checklist</a></nav>
-<h1>DEFONEOS 33 Hives</h1><p><strong>Each hive is a sovereign AI node. Autonomous. Self-healing. Ed25519-signed.</strong></p>
-<h2>How Hives Work</h2>
-<p>Hives are autonomous AI bases. Each hive: spawns agents (worms, hornets, dragonflies, killer bees), communicates via SIGIL pheromones (6 types, TTL 48h), participates in the BFT council (33 nodes, 22-of-33 quorum), and has its own domain specialty.</p>
-<h2>The 33 Hives</h2>
-<table><tr><th>#</th><th>Hive</th><th>Domain</th><th>Agent Types</th></tr>
-<tr><td>01</td><td>sovereign.mom</td><td>L0 Maternal / Governance</td><td>All</td></tr>
-<tr><td>02</td><td>CSOAI Compliance</td><td>JSP 936 / EU AI Act</td><td>Guardian</td></tr>
-<tr><td>03</td><td>SIGIL Audit</td><td>Ed25519 chain</td><td>Guardian</td></tr>
-<tr><td>04</td><td>Charter Governance</td><td>Article 0-11 enforcement</td><td>Guardian</td></tr>
-<tr><td>05</td><td>Crosswalks Knowledge</td><td>13 compliance frameworks</td><td>Sage</td></tr>
-<tr><td>06</td><td>ISR Vision</td><td>Satellite + camera + RF</td><td>Dragonfly</td></tr>
-<tr><td>07</td><td>Swarm Action</td><td>Offensive operations</td><td>Hornet + Killer Bee</td></tr>
-<tr><td>08</td><td>SOV3 Mind</td><td>Reasoning + planning</td><td>Sage</td></tr>
-<tr><td>09</td><td>Maritime</td><td>Sea domain</td><td>Dragonfly</td></tr>
-<tr><td>10</td><td>Air</td><td>Atmospheric domain</td><td>Hornet</td></tr>
-<tr><td>11</td><td>Land</td><td>Terrestrial domain</td><td>Worm + Scout</td></tr>
-<tr><td>12</td><td>Space</td><td>Orbital domain</td><td>Dragonfly</td></tr>
-<tr><td>13</td><td>Cyber</td><td>Network domain</td><td>Worm</td></tr>
-<tr><td>14</td><td>EW / Spectrum</td><td>Electromagnetic</td><td>Hornet</td></tr>
-<tr><td>15</td><td>Cognitive</td><td>PSYOPS / narrative</td><td>Sage</td></tr>
-<tr><td>16</td><td>Biological</td><td>Bio-surveillance</td><td>Guardian</td></tr>
-<tr><td>17</td><td>Urban</td><td>City operations</td><td>Scout</td></tr>
-<tr><td>18</td><td>Underground</td><td>Tunnel detection</td><td>Worm</td></tr>
-<tr><td>19</td><td>Quantum</td><td>PQC + QKD</td><td>Sage</td></tr>
-<tr><td>20</td><td>Arctic</td><td>Polar operations</td><td>Scout</td></tr>
-<tr><td>21-33</td><td>13 more hives</td><td>Specialized domains</td><td>Mixed</td></tr>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DEFONEOS — 33 Hives — Full Architecture & BFT Council</title>
+<meta name="description" content="DEFONEOS 33 Hives architecture: each hive is a sovereign AI node with SIGIL pheromone comms, BFT council participation, and domain specialty. Full table, agent types, deployment tiers, quorum rules.">
+<style>
+:root{--bg:#0a0e17;--bg2:#111827;--bg3:#1e293b;--fg:#e2e8f0;--gold:#fbbf24;--cyan:#06b6d4;--green:#10b981;--red:#ef4444;--purple:#a78bfa;--border:#334155}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:'SF Mono','Monaco','Cascadia Code',monospace;font-size:14px;line-height:1.6}
+.container{max-width:1200px;margin:0 auto;padding:2rem}
+h1{font-size:1.8rem;color:var(--gold);margin-bottom:.5rem;font-weight:700}
+h2{font-size:1.2rem;color:var(--cyan);margin:1.5rem 0 .75rem;font-weight:600;border-bottom:1px solid var(--border);padding-bottom:.3rem}
+h3{font-size:1rem;color:var(--green);margin:1rem 0 .5rem}
+p{margin-bottom:.75rem}
+.badge{display:inline-block;padding:2px 10px;border-radius:4px;font-size:.75rem;font-weight:600;margin:0 4px}
+.badge-green{background:rgba(16,185,129,.15);color:var(--green);border:1px solid var(--green)}
+.badge-gold{background:rgba(251,191,36,.15);color:var(--gold);border:1px solid var(--gold)}
+.badge-purple{background:rgba(167,139,250,.15);color:var(--purple);border:1px solid var(--purple)}
+.badge-red{background:rgba(239,68,68,.15);color:var(--red);border:1px solid var(--red)}
+.badge-cyan{background:rgba(6,182,212,.15);color:var(--cyan);border:1px solid var(--cyan)}
+.header-bar{display:flex;justify-content:space-between;align-items:center;padding:1rem 0;border-bottom:2px solid var(--gold);margin-bottom:1.5rem}
+.header-bar .left{display:flex;align-items:center;gap:1rem}
+.header-bar .dragon{font-size:2rem}
+.section{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:1.5rem;margin-bottom:1rem}
+.stats-row{display:flex;gap:1rem;flex-wrap:wrap;margin:1rem 0}
+.stat-box{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:1rem;min-width:130px;flex:1;text-align:center}
+.stat-box .num{font-size:1.8rem;font-weight:700;color:var(--gold)}
+.stat-box .label{font-size:.7rem;color:var(--cyan);text-transform:uppercase}
+table{width:100%;border-collapse:collapse;margin:.5rem 0}
+th{background:var(--bg3);color:var(--gold);padding:.5rem;text-align:left;font-size:.75rem;border:1px solid var(--border)}
+td{padding:.5rem;border:1px solid var(--border);font-size:.75rem;vertical-align:top}
+tr:nth-child(even){background:rgba(30,41,59,.5)}
+.check{color:var(--green)} .cross{color:var(--red)} .partial{color:var(--gold)}
+.code-block{background:var(--bg);border:1px solid var(--border);border-radius:4px;padding:1rem;margin:.5rem 0;font-size:.75rem;overflow-x:auto;color:var(--green);white-space:pre}
+.honesty{background:rgba(239,68,68,.08);border:1px solid var(--red);border-radius:8px;padding:1rem;margin:1rem 0}
+.honesty h3{color:var(--red)}
+.tier{display:inline-block;padding:1px 6px;border-radius:3px;font-size:.65rem;margin-right:4px}
+.tier-0{background:rgba(239,68,68,.2);color:var(--red);border:1px solid var(--red)}
+.tier-1{background:rgba(251,191,36,.2);color:var(--gold);border:1px solid var(--gold)}
+.tier-2{background:rgba(16,185,129,.2);color:var(--green);border:1px solid var(--green)}
+.tier-3{background:rgba(6,182,212,.2);color:var(--cyan);border:1px solid var(--cyan)}
+footer{text-align:center;padding:2rem 0;color:var(--cyan);font-size:.75rem;border-top:1px solid var(--border);margin-top:2rem}
+</style>
+</head>
+<body>
+<div class="container">
+<div class="header-bar">
+<div class="left"><span class="dragon">🐉</span>
+<div><h1>DEFONEOS 33 Hives — Full Architecture</h1>
+<p style="font-size:.8rem;color:var(--cyan)">33 sovereign AI nodes · BFT 22/33 quorum · SIGIL pheromone comms · 5 deployment tiers · EAT Directive aligned</p></div>
+</div>
+<div><span class="badge badge-purple">ARCHITECTURE</span> <span class="badge badge-cyan">BFT COUNCIL</span> <span class="badge badge-gold">DISTRIBUTED</span></div>
+</div>
+
+<div class="stats-row">
+<div class="stat-box"><div class="num">33</div><div class="label">Hives</div></div>
+<div class="stat-box"><div class="num">22/33</div><div class="label">BFT Quorum</div></div>
+<div class="stat-box"><div class="num">5</div><div class="label">Maturity Tiers</div></div>
+<div class="stat-box"><div class="num">6</div><div class="label">Agent Types</div></div>
+<div class="stat-box"><div class="num">12</div><div class="label">Domains</div></div>
+<div class="stat-box"><div class="num">1Hz</div><div class="label">SIGIL Rate</div></div>
+</div>
+
+<h2>What is a Hive?</h2>
+
+<div class="section">
+<p>A <strong>hive</strong> is a sovereign AI base — a single, self-healing, Ed25519-signed AI node that:</p>
+<ul style="margin:.5rem 0 .5rem 1.5rem">
+<li><strong>Spawns agents</strong> from a 6-type taxonomy (worm, dragonfly, hornet, killer bee, sage, guardian)</li>
+<li><strong>Communicates</strong> via SIGIL pheromones (8 op types P/V/M/Q/C/H/S/A, TTL 48h, hash-chained)</li>
+<li><strong>Participates</strong> in the 33-node BFT council (22-of-33 quorum on every escalation)</li>
+<li><strong>Has</strong> its own domain specialty (one of 12: Land/Sea/Air/Space/Cyber/EW/Underground/Cognitive/Bio/Quantum/Arctic/Urban)</li>
+<li><strong>Self-heals</strong> via heartbeats (5-min cycles) and SIGIL-backed checkpoints</li>
+<li><strong>Reports</strong> to the sovereign substrate (SOV3 hub at :3101, sovereign substrate at :3200)</li>
+</ul>
+<p>Each hive is a single Python process running on a single VM (or container) with a dedicated Ed25519 keypair. The keypair is the hive's identity — every SIGIL it emits is signed with that key. If the key is rotated (90-day cycle per PQC schedule), a new SIGIL chain anchor is emitted.</p>
+</div>
+
+<h2>The 6 Agent Types (Taxonomy)</h2>
+
+<table>
+<tr><th>Type</th><th>Role</th><th>Domain Affinity</th><th>Capabilities</th></tr>
+<tr><td><strong>Worm</strong></td><td>Subsurface / persistence</td><td>Underground, Cyber, Intel</td><td>Tunnel detection, persistence, exfil (offensive), integrity check (defensive)</td></tr>
+<tr><td><strong>Dragonfly</strong></td><td>ISR / recon</td><td>Air, Space, Maritime, Land</td><td>Persistent stare, multispectral imaging, RF capture, change detection</td></tr>
+<tr><td><strong>Hornet</strong></td><td>Strike / EW</td><td>Air, EW, Space</td><td>Targeted action, jamming, kinetic-class delegation (BFT-required)</td></tr>
+<tr><td><strong>Killer Bee</strong></td><td>Swarm saturation</td><td>Air (sUAS), Land (UGV), Sea (USV)</td><td>Coordinated mass action, distributed denial, decoy</td></tr>
+<tr><td><strong>Sage</strong></td><td>Wisdom / reasoning</td><td>All (cross-domain)</td><td>Pattern detection, narrative synthesis, compliance check, BFT voter</td></tr>
+<tr><td><strong>Guardian</strong></td><td>Veto / safety</td><td>All (cross-cutting)</td><td>Red-line enforcement, charter enforcement, kill-switch, BFT voter</td></tr>
 </table>
-<footer style="text-align:center;padding:2rem;color:#64748b;font-size:.8rem;border-top:1px solid rgba(255,255,255,.05);margin-top:2rem"><p><a href="defoneos-index.html" style="color:#22d3ee;text-decoration:none">Index</a> · <a href="defoneos-demo.html" style="color:#22d3ee;text-decoration:none">Demo</a> · <a href="defoneos-seriesa.html" style="color:#22d3ee;text-decoration:none">Series A</a> · <a href="defoneos-pricing.html" style="color:#22d3ee;text-decoration:none">Pricing</a></p><p>DEFONEOS · CSOAI Ltd · UK Companies House 16939677 · Apache 2.0 · © 2026</p></footer><style>html{scroll-behavior:smooth}.back-to-top{position:fixed;bottom:1.5rem;right:1.5rem;width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,#22d3ee,#8b5cf6);color:#000;display:flex;align-items:center;justify-content:center;text-decoration:none;font-size:1.2rem;cursor:pointer;z-index:998;opacity:0;transition:opacity .3s;border:none}.back-to-top.visible{opacity:1}</style><button class="back-to-top" onclick="window.scrollTo({top:0,behavior:smooth})" aria-label="Back to top">↑</button><script>window.addEventListener("scroll",function(){var b=document.querySelector(".back-to-top");if(window.pageYOffset>300){b.classList.add("visible")}else{b.classList.remove("visible")}})</script></body></html>
+
+<h2>The 33 Hives (Full Table)</h2>
+
+<table>
+<tr><th>#</th><th>Hive</th><th>Domain</th><th>Primary Agent</th><th>Tier</th><th>Status</th></tr>
+<tr><td>01</td><td>sovereign.mom</td><td>L0 Maternal / Governance</td><td>Sage + Guardian</td><td><span class="tier tier-2">T2</span></td><td class="check">Live</td></tr>
+<tr><td>02</td><td>CSOAI Compliance</td><td>JSP 936 / EU AI Act / GDPR</td><td>Guardian</td><td><span class="tier tier-2">T2</span></td><td class="check">Live</td></tr>
+<tr><td>03</td><td>SIGIL Audit</td><td>Ed25519 chain / Bitcoin anchor</td><td>Guardian</td><td><span class="tier tier-2">T2</span></td><td class="check">Live</td></tr>
+<tr><td>04</td><td>Charter Governance</td><td>Article 0-11 enforcement</td><td>Guardian</td><td><span class="tier tier-2">T2</span></td><td class="check">Live</td></tr>
+<tr><td>05</td><td>Crosswalks Knowledge</td><td>12 compliance frameworks</td><td>Sage</td><td><span class="tier tier-2">T2</span></td><td class="check">Live</td></tr>
+<tr><td>06</td><td>ISR Vision</td><td>Satellite + camera + RF</td><td>Dragonfly</td><td><span class="tier tier-1">T1</span></td><td class="partial">Reference impl</td></tr>
+<tr><td>07</td><td>Swarm Action</td><td>Offensive operations</td><td>Hornet + Killer Bee</td><td><span class="tier tier-1">T1</span></td><td class="partial">Reference impl</td></tr>
+<tr><td>08</td><td>SOV3 Mind</td><td>Reasoning + planning</td><td>Sage</td><td><span class="tier tier-2">T2</span></td><td class="check">Live</td></tr>
+<tr><td>09</td><td>Maritime</td><td>Sea domain</td><td>Dragonfly</td><td><span class="tier tier-1">T1</span></td><td class="partial">Schema</td></tr>
+<tr><td>10</td><td>Air</td><td>Atmospheric domain</td><td>Hornet</td><td><span class="tier tier-1">T1</span></td><td class="partial">Schema</td></tr>
+<tr><td>11</td><td>Land</td><td>Terrestrial domain</td><td>Worm + Scout</td><td><span class="tier tier-1">T1</span></td><td class="partial">Schema</td></tr>
+<tr><td>12</td><td>Space</td><td>Orbital domain</td><td>Dragonfly</td><td><span class="tier tier-1">T1</span></td><td class="partial">Schema</td></tr>
+<tr><td>13</td><td>Cyber</td><td>Network domain</td><td>Worm</td><td><span class="tier tier-1">T1</span></td><td class="partial">Schema</td></tr>
+<tr><td>14</td><td>EW / Spectrum</td><td>Electromagnetic</td><td>Hornet</td><td><span class="tier tier-1">T1</span></td><td class="partial">Schema</td></tr>
+<tr><td>15</td><td>Cognitive</td><td>PSYOPS / narrative</td><td>Sage</td><td><span class="tier tier-1">T1</span></td><td class="partial">Schema</td></tr>
+<tr><td>16</td><td>Biological</td><td>Bio-surveillance</td><td>Guardian</td><td><span class="tier tier-0">T0</span></td><td class="cross">Schema only</td></tr>
+<tr><td>17</td><td>Urban</td><td>City operations</td><td>Scout</td><td><span class="tier tier-1">T1</span></td><td class="partial">Schema</td></tr>
+<tr><td>18</td><td>Underground</td><td>Tunnel detection</td><td>Worm</td><td><span class="tier tier-1">T1</span></td><td class="partial">Schema</td></tr>
+<tr><td>19</td><td>Quantum</td><td>PQC + QKD</td><td>Sage</td><td><span class="tier tier-1">T1</span></td><td class="partial">Schema</td></tr>
+<tr><td>20</td><td>Arctic</td><td>Polar operations</td><td>Scout</td><td><span class="tier tier-0">T0</span></td><td class="cross">Schema only</td></tr>
+<tr><td>21</td><td>Charter Wisdom</td><td>Moral / care</td><td>Sage + Guardian</td><td><span class="tier tier-2">T2</span></td><td class="check">Live</td></tr>
+<tr><td>22</td><td>Intuition Engine</td><td>Mamba-2 / pattern detection</td><td>Sage</td><td><span class="tier tier-2">T2</span></td><td class="check">Live</td></tr>
+<tr><td>23</td><td>Federation Bridge</td><td>MCP / A2A / gRPC</td><td>Dragonfly</td><td><span class="tier tier-2">T2</span></td><td class="check">Live</td></tr>
+<tr><td>24</td><td>Knowledge Vault</td><td>PostgreSQL + vectors</td><td>Sage</td><td><span class="tier tier-2">T2</span></td><td class="check">Live</td></tr>
+<tr><td>25</td><td>Care Engine</td><td>Nemotron 30B care</td><td>Sage + Guardian</td><td><span class="tier tier-1">T1</span></td><td class="partial">Reference impl</td></tr>
+<tr><td>26</td><td>Voice / VAD</td><td>STT / TTS / wake-word</td><td>Dragonfly</td><td><span class="tier tier-1">T1</span></td><td class="partial">Reference impl</td></tr>
+<tr><td>27</td><td>Presence / Vision</td><td>Camera / face-blur (PII)</td><td>Dragonfly</td><td><span class="tier tier-1">T1</span></td><td class="partial">Reference impl</td></tr>
+<tr><td>28</td><td>Dream State</td><td>Background consolidation</td><td>Sage</td><td><span class="tier tier-2">T2</span></td><td class="check">Live</td></tr>
+<tr><td>29</td><td>OLM Trainer</td><td>Organic learning model</td><td>Sage</td><td><span class="tier tier-2">T2</span></td><td class="check">Live</td></tr>
+<tr><td>30</td><td>Heartbeat / Cron</td><td>5-min scheduler</td><td>Guardian</td><td><span class="tier tier-2">T2</span></td><td class="check">Live</td></tr>
+<tr><td>31</td><td>DORADO / CISO</td><td>Foreign-access detect</td><td>Guardian</td><td><span class="tier tier-2">T2</span></td><td class="check">Live</td></tr>
+<tr><td>32</td><td>Maintenance / Auto-fix</td><td>Self-heal / restart</td><td>Worm</td><td><span class="tier tier-2">T2</span></td><td class="check">Live</td></tr>
+<tr><td>33</td><td>Council / BFT</td><td>22/33 vote + escalation</td><td>Guardian (rotating chair)</td><td><span class="tier tier-2">T2</span></td><td class="check">Live</td></tr>
+</table>
+
+<p style="font-size:.75rem;color:var(--cyan);margin-top:.5rem"><strong>Maturity tiers:</strong> T0 = schema/whitepaper only · T1 = reference implementation (functional in dev) · T2 = live in substrate · T3 = battle-tested with real data (none yet — substrate is not in production use).</p>
+
+<h2>BFT Council Mechanics</h2>
+
+<div class="section">
+<h3>Quorum Rules (Castor-Liskov PBFT)</h3>
+<p>The 33-hive council uses Practical Byzantine Fault Tolerance (PBFT), originally described by Castro &amp; Liskov (1999, OSDI). The quorum threshold of <strong>22-of-33</strong> tolerates up to <strong>10 malicious or faulty nodes</strong> (f = ⌊(n-1)/3⌋ = 10) while maintaining consensus on the system state.</p>
+
+<div class="code-block">Council composition (n=33):
+  - 33 sovereign hives
+  - 22-of-33 quorum (≥ 2f+1 where f=10)
+  - Byzantine tolerance: up to 10 malicious nodes
+  - Liveness: ≥ 22 honest nodes respond within 5s
+  - Safety: no two conflicting decisions can both reach quorum
+
+Vote types:
+  - Red-line trip (kinetic, personal-surveillance): 22/33 + 1 veto from Guardian
+  - Human-oversight override: 22/33 standard
+  - Autonomous kill-switch: 15/33 (faster, no Guardian veto required)
+  - Charter amendment: 27/33 (supermajority, 3-day cool-off)
+  - Standard operational: 12/33 (low-stakes) or single-hive (trivial)</div>
+
+<h3>Council Chair Rotation</h3>
+<p>Council chair rotates every 24 hours, deterministically chosen from the 33 hives by the formula <code>chair = (current_unix_day mod 33)</code>. The chair has no special power — its role is to <strong>sequence the vote agenda</strong> and <strong>emit the council SIGIL</strong> (type=C). All votes are public and SIGIL-signed; any hive can audit any other hive's voting record.</p>
+</div>
+
+<h2>SIGIL Pheromone Comms</h2>
+
+<div class="section">
+<p>Inter-hive communication uses <strong>SIGIL pheromones</strong> — Ed25519-signed, hash-chained, TTL-bounded messages. There are 8 op types:</p>
+<table>
+<tr><th>Op</th><th>Name</th><th>Use</th><th>TTL</th></tr>
+<tr><td>P</td><td>Proposal</td><td>New action proposed, awaiting BFT vote</td><td>48h</td></tr>
+<tr><td>V</td><td>Vote</td><td>Council member casts vote (for/against/abstain)</td><td>24h</td></tr>
+<tr><td>M</td><td>Message</td><td>Informational, no action required</td><td>48h</td></tr>
+<tr><td>Q</td><td>Query</td><td>Request information from a specific hive</td><td>1h</td></tr>
+<tr><td>C</td><td>Commit</td><td>Council decision, binding action</td><td>Permanent (anchored Bitcoin every 1K)</td></tr>
+<tr><td>H</td><td>Heartbeat</td><td>5-min liveness signal</td><td>10m</td></tr>
+<tr><td>S</td><td>Snapshot</td><td>State checkpoint (every 100 H sigils)</td><td>Permanent</td></tr>
+<tr><td>A</td><td>Alert</td><td>Red-line trip, immediate attention</td><td>1h, escalated to BFT if not ack'd</td></tr>
+</table>
+<p>Each SIGIL includes: timestamp, op type, sender hive ID (Ed25519 pubkey hash), recipient (broadcast or targeted), payload (JSON), Ed25519 signature, previous-SIGIL hash (chain). At 1 SIGIL/second aggregate, the chain grows by ~86,400 entries/day. Every 1,000 entries, the chain head is anchored to Bitcoin via OP_RETURN (cost ~$5 per anchor).</p>
+</div>
+
+<h2>5 Deployment Tiers</h2>
+
+<table>
+<tr><th>Tier</th><th>Deployment</th><th>Where</th><th>Latency</th><th>Cost</th><th>Use Case</th></tr>
+<tr><td>T0</td><td>Schema only</td><td>N/A</td><td>N/A</td><td>0</td><td>Bio, Arctic — design documents only</td></tr>
+<tr><td>T1</td><td>Reference impl</td><td>Dev VM / container</td><td>~50ms</td><td>£100/mo</td><td>ISR, Swarm, Maritime, Air, Land, etc. — functional but not live</td></tr>
+<tr><td>T2</td><td>Live in substrate</td><td>Mac (M2/M3/M4) + GCP</td><td>~10ms</td><td>£500/mo</td><td>Compliance, SIGIL, BFT, Charter, SOV3 Mind, Intuition — production-quality</td></tr>
+<tr><td>T3</td><td>Battle-tested</td><td>MOD / NATO / AUKUS dedicated</td><td>&lt;5ms</td><td>£5K+/mo</td><td>None yet — no live operational deployment</td></tr>
+<tr><td>T4</td><td>Sovereign air-gap</td><td>Customer-owned SCIF</td><td>&lt;1ms (LAN)</td><td>£20K+/mo</td><td>Future — post-SC-clearance, post-contract</td></tr>
+</table>
+
+<h2>Honesty Register</h2>
+
+<div class="honesty">
+<h3>What This Page Is Not</h3>
+<ul style="margin:.5rem 0 .5rem 1rem">
+<li>The 33-hive count is <strong>architectural</strong>: 33 is the design target for the BFT council (one hive = one vote). The current <em>live</em> hive count is ~12 (T2 in the table above). The remaining 21 hives are at T0/T1 (schema or reference impl) and are not yet running in production.</li>
+<li>No hive is currently <strong>battle-tested with real operational data</strong>. All T2 hives run on synthetic test data. Live operational deployment requires a customer contract and a deployment environment — neither exists yet.</li>
+<li>The "1Hz SIGIL rate" is the <em>target</em> per-hive emission rate. The current aggregate rate is lower (the 49K SIGILs to date have been accumulated over ~6 months of development + testing, not at full production rate).</li>
+<li>The "10 malicious nodes tolerated" is the PBFT theoretical maximum. In practice, the council is run by the same single team (CSOAI engineers), so there is no realistic adversary model where 10 of 33 nodes are malicious. The BFT architecture is <em>future-proofing</em> for multi-operator deployments (e.g. UK MOD + DASA + NATO DIANA each running their own hive subset).</li>
+<li>Bitcoin anchoring is <em>operational in testnet</em> (4 anchors emitted to date) but not yet on mainnet (cost &amp; irreversibility review pending — see <code>defoneos-key-rotation.html</code>).</li>
+</ul>
+</div>
+
+<footer>
+<p>DEFONEOS · CSOAI Ltd · UK Companies House 16939677 · Apache 2.0 + MIT · © 2026</p>
+<p style="margin-top:.5rem"><a href="/defoneos-index" style="color:var(--cyan);text-decoration:none">Index</a> · <a href="defoneos-win.html" style="color:var(--cyan);text-decoration:none">Why We Win</a> · <a href="defoneos-mod.html" style="color:var(--cyan);text-decoration:none">MOD Partnership</a> · <a href="defoneos-bft-vote-board.html" style="color:var(--cyan);text-decoration:none">BFT Vote Board</a></p>
+</footer>
+</div>
+</body>
+</html>

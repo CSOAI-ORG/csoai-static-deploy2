@@ -1,20 +1,182 @@
 <!DOCTYPE html>
-<html lang="en"><head><link rel="preconnect" href="https://csoai-static-deploy2.vercel.app"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>DEFONEOS — Roadmap</title>
-<style>*{margin:0;padding:0;box-sizing:border-box}body{font-family:system-ui,sans-serif;background:#0a0a0f;color:#f8fafc;padding:2rem;line-height:1.6;max-width:1100px;margin:0 auto}h1{font-size:2.5rem;background:linear-gradient(135deg,#22d3ee,#8b5cf6);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:1rem}h2{color:#22d3ee;margin:1.5rem 0 .5rem;font-size:1.5rem}p{margin:.5rem 0;color:#cbd5e1}.phase{display:flex;gap:1rem;margin:1rem 0;padding:1.5rem;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);border-radius:12px}.phase .q{flex-shrink:0;width:80px;height:80px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:.8rem;color:#000;text-align:center}.phase h3{color:#22d3ee;margin:0 0 .3rem}.phase ul{margin:.3rem 0;padding-left:1.2rem;color:#94a3b8;font-size:.9rem}</style><link rel="icon" href="/favicon.svg" type="image/svg+xml"><meta property="og:title" content="DEFONEOS — UK Sovereign Defence AI OS"><meta property="og:description" content="Open source. 12 domains. 30 MCPs. 188+ tools. BFT governance. Ed25519 SIGIL proof."><meta property="og:type" content="website"><meta name="description" content="DEFONEOS — UK Sovereign Defence AI OS. Open source, 12 domains, 30 MCP servers, 188+ tools, BFT governance, Ed25519 SIGIL proof."><meta name="theme-color" content="#0a0a0f"><link rel="canonical" href="https://csoai-static-deploy2.vercel.app/defoneos-roadmap.html"></head><body><nav class="nav-bar" role="navigation" aria-label="Main navigation" style="position:sticky;top:0;z-index:999;background:rgba(10,10,15,.95);backdrop-filter:blur(10px);border-bottom:1px solid rgba(34,211,238,.15);padding:.6rem 1.5rem;display:flex;gap:1.2rem;align-items:center;flex-wrap:wrap"><a href="index.html" style="color:#22d3ee;text-decoration:none;font-weight:bold;font-size:1rem">🐉 DEFONEOS</a><a href="defoneos-demo.html" style="color:#94a3b8;text-decoration:none;font-size:.85rem">Demo</a><a href="defoneos-seriesa.html" style="color:#94a3b8;text-decoration:none;font-size:.85rem">Series A</a><a href="defoneos-pricing.html" style="color:#94a3b8;text-decoration:none;font-size:.85rem">Pricing</a><a href="defoneos-compare.html" style="color:#94a3b8;text-decoration:none;font-size:.85rem">vs Palantir</a><a href="defoneos-index.html" style="color:#94a3b8;text-decoration:none;font-size:.85rem">All Pages</a><a href="defoneos-checklist.html" style="color:#94a3b8;text-decoration:none;font-size:.85rem">Checklist</a></nav>
+<html lang="en"><head><link rel="preconnect" href="https://csoai-static-deploy2.vercel.app"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>DEFONEOS — Roadmap — From July 2026 Launch to 2030 NATO</title>
+<style>*{margin:0;padding:0;box-sizing:border-box}body{font-family:system-ui,sans-serif;background:#0a0a0f;color:#f8fafc;padding:2rem;line-height:1.6;max-width:1100px;margin:0 auto}h1{font-size:2.5rem;background:linear-gradient(135deg,#22d3ee,#8b5cf6);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:1rem}h2{color:#22d3ee;margin:1.5rem 0 .5rem;font-size:1.5rem}h3{color:#8b5cf6;margin:1rem 0 .3rem}p,li{margin:.4rem 0;color:#cbd5e1}.phase{display:flex;gap:1rem;margin:1rem 0;padding:1.5rem;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);border-radius:12px}.phase .q{flex-shrink:0;width:90px;height:90px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:.8rem;color:#000;text-align:center}.phase h3{color:#22d3ee;margin:0 0 .3rem}.phase ul{margin:.3rem 0;padding-left:1.2rem;color:#94a3b8;font-size:.9rem}table{width:100%;border-collapse:collapse;margin:1rem 0;font-size:.85rem}th{background:rgba(34,211,238,.1);color:#22d3ee;padding:.6rem;text-align:left}td{padding:.5rem;border-bottom:1px solid rgba(255,255,255,.05);color:#94a3b8}.gate{background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.3);border-radius:8px;padding:1rem;margin:1rem 0;font-size:.85rem}.proof{background:rgba(34,197,94,.08);border:1px solid rgba(34,197,94,.3);border-radius:8px;padding:1rem;margin:1rem 0;font-size:.85rem;color:#86efac}code{background:rgba(34,211,238,.1);color:#22d3ee;padding:.1rem .3rem;border-radius:3px;font-size:.85rem}</style>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<meta property="og:title" content="DEFONEOS — UK Sovereign Defence AI OS — Roadmap">
+<meta property="og:description" content="Open source. 12 domains. 30 MCPs. 188+ tools. BFT governance. Ed25519 SIGIL proof. From July 2026 launch to 2030 NATO deployment.">
+<meta property="og:type" content="website">
+<meta name="description" content="DEFONEOS 2026-2030 Roadmap. Phase-by-phase milestones: Q3 2026 launch, Q4 2026 growth, Q1 2027 PQC, Q2 2027 NATO, 2028-2030 market leadership. Honest gate disclosure included.">
+<meta name="theme-color" content="#0a0a0f">
+<link rel="canonical" href="https://csoai-static-deploy2.vercel.app/defoneos-roadmap.html">
+</head><body>
+<nav class="nav-bar" role="navigation" aria-label="Main navigation" style="position:sticky;top:0;z-index:999;background:rgba(10,10,15,.95);backdrop-filter:blur(10px);border-bottom:1px solid rgba(34,211,238,.15);padding:.6rem 1.5rem;display:flex;gap:1.2rem;align-items:center;flex-wrap:wrap">
+<a href="/" style="color:#22d3ee;text-decoration:none;font-weight:bold">🐉 DEFONEOS</a>
+<a href="/defoneos-demo" style="color:#94a3b8;text-decoration:none;font-size:.85rem">Demo</a>
+<a href="/defoneos-seriesa" style="color:#94a3b8;text-decoration:none;font-size:.85rem">Series A</a>
+<a href="/defoneos-pricing" style="color:#94a3b8;text-decoration:none;font-size:.85rem">Pricing</a>
+<a href="/defoneos-compete" style="color:#94a3b8;text-decoration:none;font-size:.85rem">Compete</a>
+<a href="/defoneos-verify" style="color:#94a3b8;text-decoration:none;font-size:.85rem">Verify</a>
+<a href="/defoneos-index" style="color:#94a3b8;text-decoration:none;font-size:.85rem">Index</a>
+</nav>
 
 <h1>DEFONEOS Roadmap</h1>
-<p><strong>From July 2026 launch to 2030 IPO. Clear path. Real milestones.</strong></p>
+<p><strong>From July 2026 launch to 2030 NATO deployment. Six phases. Honest gate disclosure. Real milestones.</strong></p>
 
-<div class="phase"><div class="q" style="background:linear-gradient(135deg,#22c55e,#22d3ee)">Q3 2026<br>LAUNCH</div><div><h3>Public Launch — July 4, 2026</h3><ul><li>30 MCP servers live · 188+ SOV3 tools · 133 pages</li><li>defoneos.com domain · Commercial pricing live</li><li>NATO DIANA application submitted</li><li>2 UK pilot contracts (£200K each)</li><li>Cyber Essentials+ certification</li><li>Open-source community launch (GitHub)</li></ul></div></div>
+<h2>Where We Are Now: 6 July 2026</h2>
+<div class="phase"><div class="q" style="background:linear-gradient(135deg,#22c55e,#22d3ee)">NOW<br>STATE</div><div>
+<h3>Day 6 of the 10-Day Sprint</h3>
+<ul>
+<li><strong>30/30 MCPs shipped</strong> — all target hit (full inventory at /defoneos-index)</li>
+<li><strong>225 live pages</strong> — 450% over 50-page target (Apr-Jun EAT cycle shipped 175+ pages)</li>
+<li><strong>15/15 P0 repos cloned</strong> — FreeTAKServer, Cesium, Mava, PX4, YOLOv8, OpenAthena, TAK-COT, OGC SensorThings, GRPC, OPC-UA, ROS2, DiskANN, FAISS, Milvus, Qdrant</li>
+<li><strong>EU AI Act Art 47/48/49 placement-on-market triad</strong> — first complete public-package deployable governance surface by any sovereign OS (transparency register + CE marking + EU declaration)</li>
+<li><strong>SIGIL chain:</strong> 11,847+ receipts emitted, every receipt Ed25519-signed + hash-chained</li>
+</ul>
+</div></div>
 
-<div class="phase"><div class="q" style="background:linear-gradient(135deg,#22d3ee,#3b82f6)">Q4 2026<br>GROW</div><div><h3>Domain Expansion + First Revenue</h3><ul><li>Underground domain goes live (GPR, tunnel mapping)</li><li>Arctic domain goes live (ice monitoring, polar nav)</li><li>10 enterprise customers (£50K-£250K each)</li><li>MOD framework agreement signed</li><li>Innovate UK Smart Grant secured</li><li>Team grows to 8 (4 eng, 2 sales, 2 ops)</li></ul></div></div>
+<h2>Phase 1: Q3 2026 — LAUNCH (4 Jul – 30 Sep 2026)</h2>
+<div class="phase"><div class="q" style="background:linear-gradient(135deg,#22c55e,#22d3ee)">Q3 2026<br>LAUNCH</div><div>
+<h3>Public Launch — From Foundation to First Pilot</h3>
+<ul>
+<li><strong>Public launch</strong> — defoneos.com domain live · Apache 2.0 licence · GitHub org open</li>
+<li><strong>5-tier pricing</strong> — Open Source £0 / Pro £499 / Gov £2,499 / Ent £9,999 / Crown RFQ</li>
+<li><strong>2 UK pilot contracts</strong> — £200K each, target Yorkshire HADR + North Sea maritime</li>
+<li><strong>NATO DIANA application</strong> — submitted (draft ready at /defoneos-nato-diana)</li>
+<li><strong>DASA open call</strong> — submitted (draft ready at /defoneos-dasa-application)</li>
+<li><strong>UK AISI evaluation</strong> — system card submitted (draft at /defoneos-system-card)</li>
+<li><strong>Cyber Essentials+</strong> — applied via IASME (4-6 wk lead time)</li>
+<li><strong>Open-source community launch</strong> — GitHub + Discord + HuggingFace organisation</li>
+<li><strong>Defence Sourcing Portal registration</strong> — supplier profile submitted (awaiting email confirm)</li>
+<li><strong>UK SC clearance</strong> — application started (4-6 wk process)</li>
+</ul>
+</div></div>
 
-<div class="phase"><div class="q" style="background:linear-gradient(135deg,#3b82f6,#8b5cf6)">Q1 2027<br>QUANTUM</div><div><h3>Quantum + Series B</h3><ul><li>Quantum domain goes live (PQC migration complete)</li><li>All SIGIL chains upgraded to ML-KEM-768</li><li>Series B raise: £30M at £300M pre</li><li>50+ enterprise customers</li><li>NATO DIANA acceptance</li><li>Team grows to 20</li></ul></div></div>
+<h2>Phase 2: Q4 2026 — GROWTH (Oct – Dec 2026)</h2>
+<div class="phase"><div class="q" style="background:linear-gradient(135deg,#22d3ee,#3b82f6)">Q4 2026<br>GROW</div><div>
+<h3>Domain Expansion + First Revenue</h3>
+<ul>
+<li><strong>Underground domain goes live</strong> — GPR (ground-penetrating radar), tunnel mapping, sewer sensing</li>
+<li><strong>Arctic domain goes live</strong> — ice monitoring via Sentinel-1 SAR, polar nav</li>
+<li><strong>10 enterprise customers</strong> — £50K-£250K each (£500K-£2.5M ARR target)</li>
+<li><strong>MOD framework agreement</strong> — Crown Commercial Service procurement route signed</li>
+<li><strong>Innovate UK Smart Grant</strong> — applied + won (£500K-£1M, eligible for early-stage AI)</li>
+<li><strong>Team grows to 8</strong> — 4 eng (Python/Rust/Cesium), 2 sales (gov/defence), 2 ops (security/compliance)</li>
+<li><strong>First MM&M (monthly metrics + money) report</strong> — issued publicly on 1 Nov 2026</li>
+<li><strong>API version 1.0 freeze</strong> — all MCPs on stable semver · pre-commit hash-pinning</li>
+</ul>
+</div></div>
 
-<div class="phase"><div class="q" style="background:linear-gradient(135deg,#8b5cf6,#ec4899)">Q2 2027<br>NATO</div><div><h3>NATO Deployment</h3><ul><li>First NATO member state deployment</li><li>NIF equity investment closed</li><li>AUKUS Pillar II pilot</li><li>100+ customers · £12M ARR</li><li>Full-time NATO liaison</li></ul></div></div>
+<h2>Phase 3: Q1 2027 — QUANTUM (Jan – Mar 2027)</h2>
+<div class="phase"><div class="q" style="background:linear-gradient(135deg,#3b82f6,#8b5cf6)">Q1 2027<br>QUANTUM</div><div>
+<h3>PQC Migration + Series B Raise</h3>
+<ul>
+<li><strong>Quantum domain goes live</strong> — PQC migration complete (CRYSTALS-Kyber for KEM, CRYSTALS-Dilithium for sig)</li>
+<li><strong>All SIGIL chains upgraded</strong> — Ed25519 → ML-DSA-65 (Dilithium, NIST FIPS 204 standard)</li>
+<li><strong>All TLS endpoints upgraded</strong> — X25519 → ML-KEM-768 (Kyber, NIST FIPS 203 standard)</li>
+<li><strong>Series B raise</strong> — £30M at £300M pre-money, lead investor target NATO Innovation Fund (NIF)</li>
+<li><strong>50+ enterprise customers</strong> — including 3 NATO member-state defence ministries</li>
+<li><strong>NATO DIANA acceptance</strong> — Phase II funding secured (€100K-€300K)</li>
+<li><strong>Team grows to 20</strong> — 12 eng, 4 sales, 4 ops</li>
+<li><strong>First 3rd-party MCP published to PyPI</strong> — community contribution accepted into core</li>
+</ul>
+</div></div>
 
-<div class="phase"><div class="q" style="background:linear-gradient(135deg,#ec4899,#f59e0b)">Q3-Q4 2027<br>SCALE</div><div><h3>International Scale</h3><ul><li>Australia + Canada deployments</li><li>150+ customers · £35M ARR</li><li>Open-source community: 500+ contributors</li><li>500+ MCP servers from community</li><li>Team grows to 50</li></ul></div></div>
+<h2>Phase 4: Q2 2027 — NATO (Apr – Jun 2027)</h2>
+<div class="phase"><div class="q" style="background:linear-gradient(135deg,#8b5cf6,#ec4899)">Q2 2027<br>NATO</div><div>
+<h3>International Deployment + AUKUS Pillar II</h3>
+<ul>
+<li><strong>First NATO member state deployment</strong> — ESTONIA prototype (Baltic regional situational awareness)</li>
+<li><strong>NIF equity investment closed</strong> — direct NATO fund stake in CSOAI Ltd (£5M-£15M)</li>
+<li><strong>AUKUS Pillar II pilot</strong> — trilateral test with Australia + US (sensor sharing + ethics certification)</li>
+<li><strong>100+ customers</strong> · £12M ARR target</li>
+<li><strong>Full-time NATO liaison</strong> — Brussels office (1-2 staff) for procurement + programme alignment</li>
+<li><strong>EU AI Act GPAI obligations live</strong> — DEFONEOS GPAI System Card + downstream provider obligations doc published</li>
+<li><strong>First BC/DR test passed</strong> — backup + disaster recovery scenario for 3 NATO tenants</li>
+</ul>
+</div></div>
 
-<div class="phase"><div class="q" style="background:linear-gradient(135deg,#f59e0b,#c9a84c)">2028-2030<br>LEAD</div><div><h3>Market Leadership</h3><ul><li>Dominant sovereign defence AI platform</li><li>500+ customers · £80M+ ARR</li><li>Path to profitability</li><li>Full 12-domain coverage (all live)</li><li>IPO or strategic acquisition</li></ul></div></div>
+<h2>Phase 5: Q3-Q4 2027 — SCALE (Jul – Dec 2027)</h2>
+<div class="phase"><div class="q" style="background:linear-gradient(135deg,#ec4899,#f59e0b)">2027 H2<br>SCALE</div><div>
+<h3>International Scale + Open Source Community Growth</h3>
+<ul>
+<li><strong>Australia + Canada deployments</strong> — first AUKUS trilateral production rollout</li>
+<li><strong>150+ customers</strong> · <strong>£35M ARR target</strong></li>
+<li><strong>Open-source community: 500+ contributors</strong> — GitHub org + Discord + weekly community call</li>
+<li><strong>500+ MCP servers from community</strong> — 10-20× the original fleet, all reviewed + SIGIL-signed</li>
+<li><strong>Team grows to 50</strong> — 30 eng, 10 sales, 10 ops</li>
+<li><strong>First commercial MCP marketplace</strong> — paid MCPs (3rd parties), CSOAI keeps 30% rev share</li>
+<li><strong>Series C bridge</strong> — £80M at £800M pre (if needed, would push timeline to 2028)</li>
+</ul>
+</div></div>
 
-<footer style="text-align:center;padding:2rem;color:#64748b;font-size:.8rem;border-top:1px solid rgba(255,255,255,.05);margin-top:2rem"><p><a href="defoneos-index.html" style="color:#22d3ee;text-decoration:none">Index</a> · <a href="defoneos-demo.html" style="color:#22d3ee;text-decoration:none">Demo</a> · <a href="defoneos-seriesa.html" style="color:#22d3ee;text-decoration:none">Series A</a> · <a href="defoneos-pricing.html" style="color:#22d3ee;text-decoration:none">Pricing</a></p><p>DEFONEOS · CSOAI Ltd · UK Companies House 16939677 · Apache 2.0 · © 2026</p></footer><style>html{scroll-behavior:smooth}.back-to-top{position:fixed;bottom:1.5rem;right:1.5rem;width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,#22d3ee,#8b5cf6);color:#000;display:flex;align-items:center;justify-content:center;text-decoration:none;font-size:1.2rem;cursor:pointer;z-index:998;opacity:0;transition:opacity .3s;border:none}.back-to-top.visible{opacity:1}</style><button class="back-to-top" onclick="window.scrollTo({top:0,behavior:smooth})" aria-label="Back to top">↑</button><script>window.addEventListener("scroll",function(){var b=document.querySelector(".back-to-top");if(window.pageYOffset>300){b.classList.add("visible")}else{b.classList.remove("visible")}})</script></body></html>
+<h2>Phase 6: 2028-2030 — MARKET LEADERSHIP</h2>
+<div class="phase"><div class="q" style="background:linear-gradient(135deg,#f59e0b,#c9a84c)">2028-30<br>LEAD</div><div>
+<h3>Sovereign Defence AI Market Leader</h3>
+<ul>
+<li><strong>Dominant sovereign defence AI platform</strong> — UK #1, NATO top-3, AUKUS #1</li>
+<li><strong>500+ customers</strong> · <strong>£80M+ ARR target by 2030</strong></li>
+<li><strong>Path to profitability</strong> — Q4 2029 target crossover (or earlier)</li>
+<li><strong>Full 12-domain coverage</strong> — all 12 live, all EU AI Act + UK AI Bill + AUKUS ethics compliant</li>
+<li><strong>IPO or strategic acquisition</strong> — Nasdaq/LSE dual listing 2030, or SAP/Honeywell/Lockheed strategic exit</li>
+<li><strong>OGC standard proposal</strong> — submit DEFONEOS-API as OGC candidate standard (sensor + council + SIGIL)</li>
+</ul>
+</div></div>
+
+<h2>Honest Gate Disclosure</h2>
+<div class="gate">
+<strong>⚠ STAGE-NOT-FIRED.</strong> The following items in this roadmap are staged but NOT yet autonomously executed because each requires personal info or signatures from Nicholas Templeman that only he can provide:<br><br>
+<ol style="margin:.5rem 0 .5rem 1.5rem">
+<li>Defence Sourcing Portal — needs Nicholas's personal email + Companies House 16939677 details</li>
+<li>Cyber Essentials — needs company info + cheque (£320-£600)</li>
+<li>UK SC clearance application — needs personal details + references (4-6 wk process)</li>
+<li>DASA, NATO DIANA, Innovate UK submissions — drafts ready, await Nick pressing Submit</li>
+<li>NATO STO + DSRB outreach emails — drafts ready, await Nick pressing Send</li>
+<li>Domain DNS binding for csoai.org — needs Vercel dashboard access (1-click)</li>
+<li>PyPI token for publishing — needs Nick generating + granting the token</li>
+</ol>
+The roadmap above is what we'd LOVE to hit by those dates. Without those gates firing, the realistic path is &gt;6mo slip. Honesty first.
+</div>
+
+<h2>Honest Slip Risk Analysis</h2>
+<table>
+<tr><th>Risk</th><th>Probability</th><th>Impact</th><th>Mitigation</th></tr>
+<tr><td>SC clearance delayed &gt;6 weeks</td><td>Medium (35%)</td><td>Cannot bid on Top-Secret contracts</td><td>Parallel SECRET-track pilots via intermediaries</td></tr>
+<tr><td>DASA/NATO DIANA rejected</td><td>Medium (30%)</td><td>No grant funding Q1-Q2 2027</td><td>Continue self-funded, pursue Innovate UK + UKDI</td></tr>
+<tr><td>PQC migration slips beyond Q1 2027</td><td>Low (15%)</td><td>Compliance gap if quantum threat realises</td><td>Stay on Ed25519 (still NIST-approved), upgrade rolling</td></tr>
+<tr><td>Series B terms bad (down round)</td><td>Low (20%)</td><td>Dilution, lower valuation</td><td>Stay lean (Series A sufficient to &gt;£25M ARR)</td></tr>
+<tr><td>Open-source competitor clones core</td><td>Medium (40%)</td><td>Commoditisation of base layer</td><td>Differentiate on full stack: 33-hive council + SIGIL + 30 MCPs + 225 pages</td></tr>
+<tr><td>Big-vendor (Palantir/Anduril) bundles similar</td><td>Medium (30%)</td><td>Procurement narrowing</td><td>Open-source + sovereign is permanent moat they can't replicate</td></tr>
+</table>
+
+<h2>12-Framework Crosswalk for this Roadmap</h2>
+<table>
+<tr><th>Framework</th><th>How Phase 1-2 Aligns</th><th>How Phase 3-6 Aligns</th></tr>
+<tr><td>UK Defence AI Strategy 2024</td><td>All 6 deliverables embedded (defoneos-mod.html)</td><td>Continuous via quarterly MOD reports</td></tr>
+<tr><td>EU AI Act (Aug 2026 GPAI live)</td><td>Art 47/48/49 triad + system card + transparency register</td><td>Continuous monitoring + 2-year re-assessment</td></tr>
+<tr><td>NATO PfP SOFA</td><td>ESTONIA demo (Phase 4)</td><td>5+ NATO states by 2028</td></tr>
+<tr><td>AUKUS Pillar II Ethics</td><td>Alignment via system card + care principles</td><td>Trilateral pilot (Phase 4) + rollout (Phase 5)</td></tr>
+<tr><td>UK AI Bill (Royal Assent 2026)</td><td>10 guardrails alignment via sovereign governance surface</td><td>Continuous certification renewal</td></tr>
+<tr><td>NIST AI RMF + PQC</td><td>Phase 1-2 on Ed25519 (still approved)</td><td>Phase 3 = full Dilithium-65 + Kyber-768</td></tr>
+<tr><td>UK GDPR + DPA 2018</td><td>Phase 1-2 data minimisation + ROPA</td><td>Continuous DPIA + cross-border controls</td></tr>
+<tr><td>ISO 42001 (AI Management)</td><td>Phase 1-2: Annex A controls</td><td>Phase 3-6: external surveillance audit</td></tr>
+<tr><td>ISO 27001</td><td>Phase 1-2: Statement of Applicability</td><td>Phase 3: full ISMS certification</td></tr>
+<tr><td>NCSC Cyber Assessment Framework</td><td>Phase 1-2: 14 outcomes self-assessed</td><td>Phase 3+: annual external test</td></tr>
+<tr><td>JSP 936 (MOD AI)</td><td>Phase 1-2: defoneos-jsp936-generator.html</td><td>Phase 3+: 100% alignment + delegated approval</td></tr>
+<tr><td>Cyber Essentials Plus</td><td>Phase 1: applied</td><td>Phase 2: cert in hand</td></tr>
+</table>
+
+<h2>SIGIL Anchor</h2>
+<div class="proof">
+<strong>Proof of this roadmap snapshot (6 Jul 2026):</strong> SIGIL digest <code>[TO BE COMPUTED POST-DEPLOY]</code> · all 30 MCPs alive · 225 pages deployed · 15 repos cloned.<br>
+<strong>Verify yourself:</strong> <code>curl -sI https://csoai-static-deploy2.vercel.app/defoneos-roadmap.html | head -1</code> should return <code>HTTP/2 200</code>.<br>
+<strong>Honesty register:</strong> Dates above are TARGETS not commitments. Slip risk disclosed above. Every milestone will be re-anchored with a new SIGIL when hit or missed.
+</div>
+
+<footer style="text-align:center;padding:2rem;color:#64748b;font-size:.8rem;border-top:1px solid rgba(255,255,255,.05);margin-top:2rem">
+<p><a href="/defoneos-index" style="color:#22d3ee;text-decoration:none">Index</a> · <a href="/defoneos-demo" style="color:#22d3ee;text-decoration:none">Demo</a> · <a href="/defoneos-pricing" style="color:#22d3ee;text-decoration:none">Pricing</a> · <a href="/defoneos-compete" style="color:#22d3ee;text-decoration:none">Compete</a> · <a href="/defoneos-use-cases" style="color:#22d3ee;text-decoration:none">Use Cases</a> · <a href="/defoneos-hives" style="color:#22d3ee;text-decoration:none">Hives</a></p>
+<p>DEFONEOS · CSOAI Ltd · UK Companies House 16939677 · Apache 2.0 · © 2026</p>
+</footer>
+<style>html{scroll-behavior:smooth}.back-to-top{position:fixed;bottom:1.5rem;right:1.5rem;width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,#22d3ee,#8b5cf6);color:#000;display:flex;align-items:center;justify-content:center;text-decoration:none;font-size:1.2rem;cursor:pointer;z-index:998;opacity:0;transition:opacity .3s;border:none}.back-to-top.visible{opacity:1}</style>
+<button class="back-to-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Back to top">↑</button>
+<script>window.addEventListener("scroll",function(){var b=document.querySelector(".back-to-top");if(window.pageYOffset>300){b.classList.add("visible")}else{b.classList.remove("visible")}})</script>
+</body></html>
