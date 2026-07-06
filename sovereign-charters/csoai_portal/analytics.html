@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en"><head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Live Demo Dashboard — CSOAI</title>
-<meta name="description" content="Live demo of a sovereign citizen dashboard. Sample data. Interactive. Ed25519-signed sigils. BFT council view.">
+<title>Privacy & Sovereignty Dashboard — CSOAI</title>
+<meta name="description" content="Privacy-first analytics. No third-party trackers. No telemetry. Sovereign by design. Article 0 binding.">
 <style>
 :root{--navy:#0a0e1a;--slate:#1e293b;--gold:#c9a84c;--gold-light:#e0c878;--green:#10b981;--red:#ef4444;--blue:#3b82f6;--purple:#a855f7;--text:#f1f5f9;--muted:#94a3b8}
 *{margin:0;padding:0;box-sizing:border-box}
@@ -47,53 +47,45 @@ footer a{color:var(--gold);text-decoration:none}
 </div>
 </nav></header>
 <div class="container">
-<h1>Live Demo Dashboard</h1>
-<p class="subtitle">Interactive demo of a sovereign citizen dashboard. Sample data. No signup required.</p>
+<h1>Privacy & Sovereignty Dashboard</h1>
+<p class="subtitle">Privacy-first. No third-party trackers. No telemetry. Sovereign by design.</p>
 
-<div class="grid">
 <div class="card">
-<h3>SIGIL Emission (Live)</h3>
-<p>Click below to emit a SIGIL:</p>
-<button id="liveSigBtn" class="btn">→ Emit SIGIL</button>
-<p style="font-size:.7rem;margin-top:.5rem;color:var(--muted)"><span id="liveCount">5</span> SIGILs emitted today · 87 / 100 free tier</p>
+<h3>We don't track you. We don't sell data.</h3>
+<p>This page is a privacy notice. CSOAI uses zero third-party tracking, zero advertising pixels, zero telemetry. Article 0 binding prohibits it.</p>
 </div>
 
 <div class="card">
-<h3>BFT Council Vote (Live)</h3>
-<p>Active proposals: <b>3</b></p>
-<div class="card" style="background:var(--navy);padding:.5rem;margin:.5rem 0;font-size:.75rem">
-<p><b>proposal_8742dd...:</b> Charter 01 amend</p>
-<p>FOR: 18 · AGAINST: 4 · ABSTAIN: 3 · PENDING: 8</p>
-<button class="btn-secondary" style="padding:.25rem .5rem;font-size:.75rem">Vote FOR</button>
-</div>
-</div>
-
-<div class="card">
-<h3>Watchdog (Live)</h3>
-<p>S4+ active: <b style="color:var(--red)">1</b></p>
-<p>S2-S3 pending: <b>5</b></p>
-<p style="font-size:.75rem;color:var(--muted)">Last signal: 2h ago · CMP · EU</p>
+<h3>What we do</h3>
+<ul>
+<li>Issue Ed25519 wallets (browser-generated, never stored on our servers)</li>
+<li>Emit SIGILs on actions you take (audit, not surveillance)</li>
+<li>OTS-Bitcoin-anchor SIGIL blocks (not your behaviour, just the audit trail)</li>
+<li>Provide public verify endpoints (no tracking, just trust)</li>
+</ul>
 </div>
 
 <div class="card">
-<h3>Cert Progress (Live)</h3>
-<p>Foundation: <b style="color:var(--green)">✓ Issued</b></p>
-<p>Practitioner: <b style="color:var(--blue)">40 / 200h</b></p>
-<p>Lead Auditor: <b>0 / 500h</b></p>
-<p>Director: <b>0 / 1,500h</b></p>
-</div>
+<h3>What we don't</h3>
+<ul>
+<li>✗ Google Analytics, Facebook Pixel, hotjar</li>
+<li>✗ Fingerprinting, cross-site tracking</li>
+<li>✗ Telemetry to OEM cloud providers</li>
+<li>✗ Selling user data (Article 0 binding prohibits)</li>
+</ul>
 </div>
 
-<script>
-let liveCount = parseInt(document.getElementById('liveCount').textContent);
-document.getElementById('liveSigBtn').onclick = function() {
-liveCount++;
-document.getElementById('liveCount').textContent = liveCount;
-const citizenId = 'demo-' + Math.floor(Math.random() * 99);
-const sigLine = 'H|demo-citizen|csoai|Heartbeat #' + liveCount + '|' + new Date().toISOString();
-console.log('SIGIL emitted:', sigLine);
-};
-</script>
+<div class="card">
+<h3>Your controls</h3>
+<ul>
+<li>✓ Export everything (W3C DID + SIGIL chain)</li>
+<li>✓ Delete account (forget everything we've stored)</li>
+<li>✓ Reject all cookies (only first-party strictly necessary)</li>
+<li>✓ Self-host sovereign substrate (open source MIT)</li>
+</ul>
+</div>
+
+<a href="privacy.html" class="btn btn-secondary btn-large" style="margin-top:2rem">Full Privacy Notice</a>
 
 </div>
 <footer>

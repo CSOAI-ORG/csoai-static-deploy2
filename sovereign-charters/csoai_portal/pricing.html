@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en"><head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Live Demo Dashboard — CSOAI</title>
-<meta name="description" content="Live demo of a sovereign citizen dashboard. Sample data. Interactive. Ed25519-signed sigils. BFT council view.">
+<title>Pricing — Free forever, Pay as you Grow — CSOAI</title>
+<meta name="description" content="CSOAI sovereign pricing — Free tier (forever), Pro £49/mo, Business £499/mo, Enterprise £4,999+/mo. Charter Article 0 binding on all.">
 <style>
 :root{--navy:#0a0e1a;--slate:#1e293b;--gold:#c9a84c;--gold-light:#e0c878;--green:#10b981;--red:#ef4444;--blue:#3b82f6;--purple:#a855f7;--text:#f1f5f9;--muted:#94a3b8}
 *{margin:0;padding:0;box-sizing:border-box}
@@ -43,57 +43,80 @@ footer a{color:var(--gold);text-decoration:none}
 <header><nav>
 <a class="logo" href="index-full.html">CSOAI</a>
 <div style="display:flex;gap:1rem;flex-wrap:wrap;align-items:center">
-<a href="index.html" style="color:var(--text);text-decoration:none;font-size:.875rem;">Home</a><a href="verify.html" style="color:var(--text);text-decoration:none;font-size:.875rem;">Verify</a><a href="watchdog.html" style="color:var(--text);text-decoration:none;font-size:.875rem;">Watchdog</a><a href="api-docs.html" style="color:var(--text);text-decoration:none;font-size:.875rem;">API</a><a href="signup.html" style="color:var(--text);text-decoration:none;font-size:.875rem;;color:gold;font-weight:600">Sign Up</a><a href="dashboard.html" style="color:var(--text);text-decoration:none;font-size:.875rem;background:rgba(201,168,76,.15);color:#c9a84c">Dashboard</a><a href="pricing.html" style="color:var(--text);text-decoration:none;font-size:.875rem;">Pricing</a><a href="partner-onboard.html" style="color:var(--text);text-decoration:none;font-size:.875rem;">Partner</a>
+<a href="index.html" style="color:var(--text);text-decoration:none;font-size:.875rem;">Home</a><a href="verify.html" style="color:var(--text);text-decoration:none;font-size:.875rem;">Verify</a><a href="watchdog.html" style="color:var(--text);text-decoration:none;font-size:.875rem;">Watchdog</a><a href="api-docs.html" style="color:var(--text);text-decoration:none;font-size:.875rem;">API</a><a href="signup.html" style="color:var(--text);text-decoration:none;font-size:.875rem;;color:gold;font-weight:600">Sign Up</a><a href="dashboard.html" style="color:var(--text);text-decoration:none;font-size:.875rem;;color:gold;font-weight:600">Dashboard</a><a href="pricing.html" style="color:var(--text);text-decoration:none;font-size:.875rem;background:rgba(201,168,76,.15);color:#c9a84c">Pricing</a><a href="partner-onboard.html" style="color:var(--text);text-decoration:none;font-size:.875rem;">Partner</a>
 </div>
 </nav></header>
 <div class="container">
-<h1>Live Demo Dashboard</h1>
-<p class="subtitle">Interactive demo of a sovereign citizen dashboard. Sample data. No signup required.</p>
+<h1>Pricing</h1>
+<p class="subtitle">Free tier forever. Upgrade when you need scale. Article 0 binding on all tiers.</p>
 
-<div class="grid">
+<table>
+<thead>
+<tr><th>Tier</th><th>Price</th><th>SIGILs/mo</th><th>BFT Vote</th><th>White-label</th><th>SLA</th></tr>
+</thead>
+<tbody>
+<tr style="background:rgba(16,185,129,.1)">
+<td><b style="color:var(--green)">FREE</b><br><span class="tier" style="border-color:var(--green);color:var(--green)">Forever</span></td>
+<td>£0</td>
+<td>100</td>
+<td>No</td>
+<td>No</td>
+<td>Community</td>
+</tr>
+<tr>
+<td><b>PRO</b></td>
+<td>£49/mo<br>£490/yr</td>
+<td>100,000</td>
+<td>No</td>
+<td>Yes</td>
+<td>24h email</td>
+</tr>
+<tr>
+<td><b>BUSINESS</b></td>
+<td>£499/mo<br>£4,990/yr</td>
+<td>10,000,000</td>
+<td>1 vote</td>
+<td>Yes</td>
+<td>12h priority</td>
+</tr>
+<tr style="background:rgba(201,168,76,.1)">
+<td><b style="color:var(--gold)">ENTERPRISE</b><br><span class="tier">Recommended</span></td>
+<td>£4,999+/mo<br>£49,990+/yr</td>
+<td>Unlimited</td>
+<td>1 seat + observer</td>
+<td>Yes</td>
+<td>4h dedicated CSM</td>
+</tr>
+<tr>
+<td><b>PLATINUM</b></td>
+<td>£9,999+/mo<br>£99,990+/yr</td>
+<td>Unlimited</td>
+<td>1 seat + co-pub</td>
+<td>Yes + co-brand</td>
+<td>1h 24/7</td>
+</tr>
+</tbody>
+</table>
+
 <div class="card">
-<h3>SIGIL Emission (Live)</h3>
-<p>Click below to emit a SIGIL:</p>
-<button id="liveSigBtn" class="btn">→ Emit SIGIL</button>
-<p style="font-size:.7rem;margin-top:.5rem;color:var(--muted)"><span id="liveCount">5</span> SIGILs emitted today · 87 / 100 free tier</p>
+<h3>What is included in every tier</h3>
+<ul>
+<li>Charter Article 0 binding (constitutional)</li>
+<li>Ed25519-signed SIGIL emission</li>
+<li>OTS Bitcoin anchoring (every block)</li>
+<li>W3C DID sovereign wallet</li>
+<li>Free 4-tier training pathway</li>
+<li>Watchdog signal submission</li>
+<li>Public verify at proofof.ai/verify</li>
+</ul>
 </div>
 
-<div class="card">
-<h3>BFT Council Vote (Live)</h3>
-<p>Active proposals: <b>3</b></p>
-<div class="card" style="background:var(--navy);padding:.5rem;margin:.5rem 0;font-size:.75rem">
-<p><b>proposal_8742dd...:</b> Charter 01 amend</p>
-<p>FOR: 18 · AGAINST: 4 · ABSTAIN: 3 · PENDING: 8</p>
-<button class="btn-secondary" style="padding:.25rem .5rem;font-size:.75rem">Vote FOR</button>
-</div>
+<div class="honesty">
+<b>Honesty register:</b> Pricing illustrative. Actual launch pricing requires £500K annual contract. Owner-unlock revenue path is gated.
 </div>
 
-<div class="card">
-<h3>Watchdog (Live)</h3>
-<p>S4+ active: <b style="color:var(--red)">1</b></p>
-<p>S2-S3 pending: <b>5</b></p>
-<p style="font-size:.75rem;color:var(--muted)">Last signal: 2h ago · CMP · EU</p>
-</div>
-
-<div class="card">
-<h3>Cert Progress (Live)</h3>
-<p>Foundation: <b style="color:var(--green)">✓ Issued</b></p>
-<p>Practitioner: <b style="color:var(--blue)">40 / 200h</b></p>
-<p>Lead Auditor: <b>0 / 500h</b></p>
-<p>Director: <b>0 / 1,500h</b></p>
-</div>
-</div>
-
-<script>
-let liveCount = parseInt(document.getElementById('liveCount').textContent);
-document.getElementById('liveSigBtn').onclick = function() {
-liveCount++;
-document.getElementById('liveCount').textContent = liveCount;
-const citizenId = 'demo-' + Math.floor(Math.random() * 99);
-const sigLine = 'H|demo-citizen|csoai|Heartbeat #' + liveCount + '|' + new Date().toISOString();
-console.log('SIGIL emitted:', sigLine);
-};
-</script>
+<a href="signup.html" class="btn btn-large">Start Free</a>
+<a href="partner-onboard.html" class="btn btn-large btn-secondary">Partner Program</a>
 
 </div>
 <footer>

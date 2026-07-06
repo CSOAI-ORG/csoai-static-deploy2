@@ -1,134 +1,126 @@
 <!DOCTYPE html>
 <html lang="en"><head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Partner Onboarding · CSOAI Sovereign Alliance</title>
-<meta name="description" content="Apply for the Sovereign Partner Alliance. 6 categories × 4 tiers. Charter Article 0 binding.">
-<meta name="uk-companies-house" content="16939677">
-<link rel="canonical" href="https://csoai.org/partner-onboard">
+<title>Partner Program — 6 Categories — CSOAI</title>
+<meta name="description" content="6 partner categories: Sovereign Cloud, Defence, Regulator, Enterprise, Academic, Sovereign Operator. Bronze to Platinum tiers. ISO fee-for-service only.">
 <style>
-  :root { --gold:#c9a84c; --navy:#0a0e1a; --slate:#1e293b; --text:#f1f5f9; --muted:#94a3b8; --green:#10b981; --accent:#3b82f6; --orange:#f59e0b; }
-  * { margin:0; padding:0; box-sizing:border-box; }
-  body { font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; background:var(--navy); color:var(--text); line-height:1.6; }
-  .container { max-width:1100px; margin:0 auto; padding:2rem; }
-  nav.breadcrumb { margin-bottom:1rem; font-size:.85rem; } nav.breadcrumb a { color:var(--gold); }
-  h1 { font-size:2.2rem; color:var(--gold); margin-bottom:.5rem; }
-  .subtitle { color:var(--muted); margin-bottom:2rem; font-size:1.05rem; }
-  h2 { color:var(--gold); margin:2rem 0 1rem; padding-bottom:.5rem; border-bottom:1px solid rgba(201,168,76,.2); font-size:1.3rem; }
-  h3 { color:#fff; margin:1.5rem 0 .5rem; }
-  .steps { counter-reset:step; display:flex; flex-direction:column; gap:1rem; margin:2rem 0; }
-  .step { background:var(--slate); border:1px solid rgba(255,255,255,.08); border-radius:8px; padding:1.5rem; counter-increment:step; position:relative; padding-left:5rem; }
-  .step::before { content:counter(step); position:absolute; left:1rem; top:1rem; width:40px; height:40px; border-radius:50%; background:var(--gold); color:var(--navy); display:flex; align-items:center; justify-content:center; font-weight:700; font-size:1.2rem; }
-  .step h3 { margin:0; color:#fff; }
-  .step p { color:#cbd5e1; font-size:.9rem; margin-top:.5rem; }
-  .step code { background:rgba(0,0,0,.4); padding:.15rem .4rem; border-radius:3px; font-family:'SF Mono',monospace; color:var(--gold); font-size:.85rem; }
-  .api-box { background:#0a0e1a; border:1px solid rgba(255,255,255,.1); border-radius:6px; padding:1.25rem; font-family:'SF Mono',monospace; font-size:.85rem; color:#cbd5e1; overflow-x:auto; margin:1rem 0; }
-  .api-box .method { color:var(--green); font-weight:700; }
-  .api-box .path { color:var(--accent); }
-  .checklist { list-style:none; padding:0; margin:1rem 0; }
-  .checklist li { padding:.5rem 0 .5rem 1.5rem; position:relative; color:#cbd5e1; font-size:.9rem; border-bottom:1px solid rgba(255,255,255,.05); }
-  .checklist li::before { content:'☐'; position:absolute; left:0; color:var(--gold); }
-  .checklist li.done::before { content:'☑'; color:var(--green); }
-  .checklist li.done { color:var(--green); }
-  .article-zero { background:rgba(201,168,76,.08); border:2px solid rgba(201,168,76,.4); padding:1.5rem; border-radius:8px; margin:2rem 0; text-align:center; }
-  .article-zero-label { color:var(--gold); font-weight:600; font-size:.85rem; letter-spacing:.15em; margin-bottom:.5rem; }
-  .article-zero-text { font-style:italic; font-size:1.05rem; }
-  footer { text-align:center; padding-top:2rem; margin-top:3rem; border-top:1px solid rgba(255,255,255,.05); color:var(--muted); font-size:.85rem; }
-  footer a { color:var(--gold); }
+:root{--navy:#0a0e1a;--slate:#1e293b;--gold:#c9a84c;--gold-light:#e0c878;--green:#10b981;--red:#ef4444;--blue:#3b82f6;--purple:#a855f7;--text:#f1f5f9;--muted:#94a3b8}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--navy);color:var(--text);font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;line-height:1.6}
+.container{max-width:1200px;margin:0 auto;padding:2rem 1.5rem}
+header{background:var(--navy);border-bottom:1px solid var(--slate);padding:1rem 0;position:sticky;top:0;z-index:100;backdrop-filter:blur(10px)}
+header nav{display:flex;justify-content:space-between;align-items:center;max-width:1200px;margin:0 auto;padding:0 1.5rem;gap:1.25rem;flex-wrap:wrap}
+header .logo{color:var(--gold);font-weight:700;font-size:1.25rem;text-decoration:none}
+h1{font-size:2rem;line-height:1.2;margin-bottom:.5rem}
+h1 .gold{color:var(--gold)}
+h2{color:var(--gold);margin:1.5rem 0 .5rem}
+h3{color:var(--gold-light);margin:1rem 0 .5rem;font-size:1.05rem}
+.subtitle{color:var(--muted);font-size:1.05rem;margin-bottom:1.5rem}
+.card{background:var(--slate);border-radius:12px;padding:1.5rem;margin:1rem 0;border:1px solid rgba(201,168,76,.15)}
+.tier{display:inline-block;background:var(--navy);border:1px solid var(--gold);color:var(--gold);padding:.25rem .75rem;border-radius:20px;font-size:.75rem;font-weight:600}
+.btn{display:inline-block;padding:.75rem 1.5rem;background:var(--gold);color:var(--navy);border:none;border-radius:6px;font-weight:600;text-decoration:none;cursor:pointer;font-size:.875rem}
+.btn:hover{opacity:.9}
+.btn-full{width:100%;text-align:center}
+.btn-secondary{background:transparent;color:var(--gold);border:1px solid var(--gold)}
+.btn-large{padding:1rem 2rem;font-size:1rem}
+.btn-green{background:var(--green);color:var(--navy)}
+table{border-collapse:collapse;width:100%;margin:1rem 0}
+th,td{border:1px solid var(--slate);padding:.75rem;text-align:left;font-size:.875rem}
+th{background:var(--navy);color:var(--gold-light)}
+.honesty{background:rgba(201,168,76,.05);border-left:3px solid var(--gold);padding:.75rem;margin:1rem 0;font-size:.75rem;color:var(--muted)}
+.alert{background:rgba(239,68,68,.1);border:1px solid var(--red);color:var(--red);padding:.75rem;border-radius:6px;margin:1rem 0;font-size:.8125rem}
+.success{background:rgba(16,185,129,.1);border:1px solid var(--green);color:var(--green);padding:.75rem;border-radius:6px;margin:1rem 0;font-size:.8125rem}
+ul{list-style:none;padding:0}
+li{padding:.5rem 0;border-bottom:1px dashed rgba(255,255,255,.05)}
+li:last-child{border-bottom:0}
+.stat{display:flex;justify-content:space-between;padding:.5rem 0;border-bottom:1px solid var(--slate)}
+.stat strong{color:var(--gold)}
+footer{text-align:center;padding:2.5rem 1rem;color:var(--muted);font-size:.8125rem;border-top:1px solid var(--slate);margin-top:4rem}
+footer a{color:var(--gold);text-decoration:none}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1rem}
 </style>
 </head><body>
+<header><nav>
+<a class="logo" href="index-full.html">CSOAI</a>
+<div style="display:flex;gap:1rem;flex-wrap:wrap;align-items:center">
+<a href="index.html" style="color:var(--text);text-decoration:none;font-size:.875rem;">Home</a><a href="verify.html" style="color:var(--text);text-decoration:none;font-size:.875rem;">Verify</a><a href="watchdog.html" style="color:var(--text);text-decoration:none;font-size:.875rem;">Watchdog</a><a href="api-docs.html" style="color:var(--text);text-decoration:none;font-size:.875rem;">API</a><a href="signup.html" style="color:var(--text);text-decoration:none;font-size:.875rem;;color:gold;font-weight:600">Sign Up</a><a href="dashboard.html" style="color:var(--text);text-decoration:none;font-size:.875rem;;color:gold;font-weight:600">Dashboard</a><a href="pricing.html" style="color:var(--text);text-decoration:none;font-size:.875rem;">Pricing</a><a href="partner-onboard.html" style="color:var(--text);text-decoration:none;font-size:.875rem;background:rgba(201,168,76,.15);color:#c9a84c">Partner</a>
+</div>
+</nav></header>
 <div class="container">
-<nav class="breadcrumb"><a href="index.html">← Sovereign Charter Universe</a> / Partner Onboard</nav>
-<h1>🤝 Partner Onboarding</h1>
-<p class="subtitle">Apply to the Sovereign Partner Alliance. 6 categories · 4 tiers · Charter Article 0 binding. 14-180 day onboarding SLA per category.</p>
+<h1>Partner Program</h1>
+<p class="subtitle">6 partner categories. Bronze (free) → Silver → Gold → Platinum. Article 0 binding.</p>
 
-<div class="article-zero">
-<div class="article-zero-label">CHARTER ARTICLE 0 · CONSECUTIVE BINDING ON ALL PARTNERS</div>
-<div class="article-zero-text">"Never take equity, board seats, revenue-sharing, or success fees from institutions we certify. ISO fee-for-service model ONLY. CA3O is the CMKC for AI."</div>
+<div class="grid">
+<div class="card">
+<h3>☁ Sovereign Cloud Operator</h3>
+<p>UK-resident data. Renewable energy. Cyber Essentials Plus. ISO 27001.</p>
+<p><b>Revenue share:</b> 1-5% based on tier.</p>
+<a href="cloud-partner.html">Apply →</a>
 </div>
 
-<h2>🎯 Onboarding Process (5 Steps)</h2>
-
-<div class="steps">
-<div class="step">
-<h3>Express Interest</h3>
-<p>Choose your category and tier. 6 categories: Sovereign Operators (30d), Enterprise Customers (14d), Regulator Partners (90d), Academic Partners (60d), Sovereign Cloud Partners (45d), Defence Partners (180d). 4 tiers: Bronze free, Silver 1%, Gold 3%, Platinum 5%. SLA varies by category.</p>
-<p>API: <span class="api-box"><span class="method">POST</span> <span class="path">/v1/partner/onboard</span></span></p>
-</div>
-<div class="step">
-<h3>Sign Charter Article 0 (Binding)</h3>
-<p>Ed25519-sign the charter. Signature published to <code>proofof.ai/verify/partners/{partner_did}</code>. Use <code>treaty_generator.py</code> tool for full treaty document.</p>
-<p>Requirement: You accept the Article 0 binding. You cannot opt-out. To amend Article 0: 33/33 BFT + 5 human sigs.</p>
-</div>
-<div class="step">
-<h3>BFT Council Approval</h3>
-<p>Proposal submitted via sovereign BFT council. Quorum required based on category (23/33 for Bronze/Silver/Gold, 33/33 for Platinum). SLA: 14-180 days depending on category.</p>
-<p>Track your proposal status at <a href="vote-tally.html" style="color:var(--accent);">vote-tally.html</a>.</p>
-</div>
-<div class="step">
-<h3>4-Tier Certification (Foundation → Director)</h3>
-<p>Complete all 4 certification tiers for at least the Foundation level. Each tier: Ed25519-signed, BFT-ratified, OTS-Bitcoin-anchored. Cost: 100% free.</p>
-<p>Use <code>cert-verification.html</code> to view the workflow + <code>training-tier-catalog.html</code> for the 164 pathways.</p>
-</div>
-<div class="step">
-<h3>Partner Onboarded</h3>
-<p>Receive: sovereign brand license, MCP infrastructure access, Watchdog signal access, SIGIL chain read/write, cross-certification rights. Plus Ongoing: 6-month reviews, Article 0 binding monitoring, partner tier progression.</p>
-<p>Access all features via <a href="api-docs.html" style="color:var(--accent);">REST API</a>.</p>
-</div>
+<div class="card">
+<h3>🛡 Defence Partner</h3>
+<p>DEFONEOS integration. JSP 936/440/604 compliance. AUKUS Pillar II. SC clearance required.</p>
+<p><b>Revenue share:</b> Variable (defence contract).</p>
+<a href="defence-partner.html">Apply →</a>
 </div>
 
-<h2>🚀 Submit Partner Application</h2>
-<h3>JSON Payload (copy-paste ready)</h3>
-<div class="api-box">
-{
-  "partner_name": "ACME Sovereign Cloud Ltd",
-  "partner_category": "sovereign_cloud_partners",
-  "partner_did": "did:csoai:partner-acme-sov-cloud-12345",
-  "contact_email": "[email protected]",
-  "intended_use": "Hosting sovereign AI workloads for UK and EU customers",
-  "partner_tier": "gold",
-  "care_score_attestation": 0.95,
-  "article_0_accepted": true,
-  "ed25519_public_key": "ed25519:9a7f83e6b2c4d1a5f8e0b3c7d5a6f8e1b2c4d6e8f0a2b4c6d8e0f2a4b6c8d0e2f4a6b8c0d2e4f6a8b0c2d4e6f8a0b2c4d6",
-  "proposed_review_frequency_months": 3
-}
+<div class="card">
+<h3>⚖ Regulator Partner</h3>
+<p>90-day SLA. 12-framework cross-walk. Article 50 EU AI Act passport.</p>
+<p><b>Revenue share:</b> 0% (Article 0 prohibits revenue-share with regulators).</p>
+<a href="regulator-partner.html">Apply →</a>
 </div>
 
-<h2>📋 Pre-Submission Checklist</h2>
-<ul class="checklist">
-<li class="done">Read Charter Article 0 (verbatim binding)</li>
-<li>Determined category (6 options)</li>
-<li>Determined tier (Bronze/Silver/Gold/Platinum)</li>
-<li>Created W3C DID</li>
-<li>Generated Ed25519 keypair</li>
-<li>Signed Charter Article 0 acceptance (test signature)</li>
-<li>Reviewed applicable frameworks for your category</li>
-<li>Confirmed UK Companies House 16939677 reference</li>
-<li>Prepared intended_use description (1-2 sentences)</li>
-</ul>
-
-<h2>✅ After Submission</h2>
-<ul style="font-size:.9rem;color:#cbd5e1;">
-<li>Watchdog emits a SIGIL acknowledging your application</li>
-<li>CSOAI sovereign substrate queues your proposal to BFT council</li>
-<li>BFT deliberation begins (72-hour minimum)</li>
-<li>Council votes (FOR/AGAINST/ABSTAIN) — track at vote-tally.html</li>
-<li>If approved: <code>proofof.ai/verify/partners/{partner_did}</code> shows ratification</li>
-<li>OTS Bitcoin anchoring of your treaty</li>
-<li>SIGIL entry into sovereign chain</li>
-<li>Welcome email with API keys + MCP server access details</li>
-</ul>
-
-<h2>❓ FAQ</h2>
-<p style="font-size:.9rem;color:#cbd5e1;"><strong>What if BFT rejects my application?</strong> You'll receive specific feedback in the rejection SIGIL. You may appeal within 90 days via the Article 0 binding tribunal.</p>
-<p style="font-size:.9rem;color:#cbd5e1;"><strong>What's the cost?</strong> 100% free for Bronze. Silver/Gold/Platinum have revenue share (1-5%) but no upfront fees.</p>
-<p style="font-size:.9rem;color:#cbd5e1;"><strong>Where do I generate an Ed25519 key?</strong> Use <code>python3 M2_DEPLOYMENT_KIT/treaty_generator.py --self-test</code> demo, or use any standard library (libsodium, nacl, sodium-native).</p>
-
+<div class="card">
+<h3>🏢 Enterprise Partner</h3>
+<p>Air-gap. Dedicated CSM. Quarterly audit.</p>
+<p><b>Revenue share:</b> 5-15% based on volume.</p>
+<a href="enterprise-partner.html">Apply →</a>
 </div>
 
+<div class="card">
+<h3>🎓 Academic Partner</h3>
+<p>Universities. Open curriculum. Charter Article 0 binding.</p>
+<p><b>Revenue share:</b> 0% (free curriculum).</p>
+<a href="academic-partner.html">Apply →</a>
+</div>
+
+<div class="card">
+<h3>⚙ Sovereign Operator</h3>
+<p>Direct deployment. SOVEREIGN_OPS license. Article 0 binding on operations.</p>
+<p><b>Revenue share:</b> 1-3% based on tier.</p>
+<a href="sovereign-operator.html">Apply →</a>
+</div>
+</div>
+
+<div class="card">
+<h3>Tier comparison</h3>
+<table>
+<thead><tr><th>Tier</th><th>Price</th><th>Revenue share</th><th>BFT seat</th><th>White-label</th></tr></thead>
+<tbody>
+<tr><td>Bronze</td><td>Free</td><td>0%</td><td>No</td><td>No</td></tr>
+<tr><td>Silver</td><td>£49/mo</td><td>1%</td><td>No</td><td>Yes</td></tr>
+<tr><td>Gold</td><td>£499/mo</td><td>3%</td><td>1 vote</td><td>Yes</td></tr>
+<tr><td>Platinum</td><td>£4,999+/mo</td><td>5%</td><td>1 seat + co-pub</td><td>Yes + co-brand</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="honesty">
+<b>Honesty register:</b> Partner program illustrative. Article 0 binding prohibits equity in partner chain.
+</div>
+
+<a href="contact.html" class="btn btn-large" style="margin-top:2rem">Apply</a>
+
+</div>
 <footer>
-<div style="color:var(--gold); font-weight:600; margin-bottom:.5rem;">CSOAI Ltd · UK Companies House 16939677 · London, United Kingdom</div>
-<div style="margin-bottom:.5rem;"><a href="index.html">← Universe</a> · <a href="partners.html">Partners</a> · <a href="contact.html">Contact</a></div>
-<div style="font-size:.75rem; font-style:italic;">Charter Article 0: Never take equity, board seats, revenue-sharing, or success fees. ISO fee-for-service model ONLY. CA3O is the CMKC for AI.</div>
-<div style="font-size:.7rem; margin-top:1rem; color:#475569;">6 partner categories · 4 tiers · 14-180d SLA · Ed25519-signed + BFT-ratified + OTS-anchored</div>
+<p>CSOAI Ltd · UK Companies House 16939677 · Sovereign root key: <code style="color:var(--gold-light);font-size:.7rem">d75a9801...a8f3</code></p>
+<p>
+<a href="terms.html">Terms</a> · <a href="privacy.html">Privacy</a> · <a href="code-of-conduct.html">Code of Conduct</a> · <a href="dispute-resolution.html">Disputes</a> · <a href="contact.html">Contact</a>
+</p>
+<p style="margin-top:1rem;font-size:.75rem">
+Honesty register: illustrative, not live certification. The barrier to capture is infinite; the barrier to entry is zero. Forever.
+</p>
 </footer>
 </body></html>

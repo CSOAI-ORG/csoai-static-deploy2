@@ -1,155 +1,116 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>🐉 About CSOAI Ltd — Sovereign AI · UK 16939677</title>
+<html lang="en"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About — CSOAI Sovereign Federation — CSOAI</title>
+<meta name="description" content="CSOAI is the Compliance AI Custodian. Founded 2026-06-30 by Sir Nicholas Templeman in London. UK 16939677. Charter Article 0 binding.">
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
-body{font-family:-apple-system,system-ui,Georgia,serif;background:#0a0e1a;color:#e5e5e5;line-height:1.7;padding-bottom:60px}
-.nav{background:rgba(10,14,26,0.95);padding:0.75rem 1rem;display:flex;gap:.7rem;flex-wrap:wrap;align-items:center;border-bottom:1px solid rgba(201,168,76,0.3);position:sticky;top:0;z-index:10;backdrop-filter:blur(8px)}
-.nav a{color:#c9a84c;text-decoration:none;font-size:.85rem}
-.nav .brand{color:#c9a84c;font-weight:bold;font-size:1.1rem}
-.nav .spacer{flex:1}
-.hero{background:linear-gradient(135deg,#0a0e1a 0%,#1a3a2e 100%);padding:3rem 2rem;text-align:center;border-bottom:2px solid #c9a84c}
-.hero h1{color:#c9a84c;font-size:2.5rem;margin-bottom:.5rem;text-shadow:0 0 30px rgba(201,168,76,0.5)}
-.hero p{color:#aaa;font-size:1.1rem;max-width:700px;margin:0 auto}
-.container{max-width:1200px;margin:0 auto;padding:2rem 1rem}
-h2{color:#c9a84c;margin:2rem 0 1rem}
-.founders{background:#1a1a3a;padding:2rem;border-radius:8px;margin:1.5rem 0}
-.founder{display:flex;gap:1rem;align-items:center;padding:1rem;border-bottom:1px solid #222}
-.founder:last-child{border-bottom:0}
-.founder .avatar{background:#c9a84c;color:#000;border-radius:50%;width:64px;height:64px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;font-weight:bold;flex-shrink:0}
-.founder .info h3{color:#c9a84c;margin-bottom:.2rem}
-.founder .info .role{color:#aaa;font-size:.85rem}
-.mission{background:linear-gradient(135deg,#1a1a3a 0%,#2d1b4e 100%);padding:2rem;border-radius:8px;margin:1.5rem 0;border-left:4px solid #c9a84c;text-align:center}
-.mission blockquote{font-size:1.3rem;color:#c9a84c;font-style:italic;line-height:1.6}
-.timeline{position:relative;background:#1a1a3a;padding:1.5rem;border-radius:8px;margin:1.5rem 0}
-.tl-event{padding:.7rem;border-bottom:1px solid #222;display:flex;gap:1rem}
-.tl-event:last-child{border-bottom:0}
-.tl-event .year{color:#c9a84c;font-weight:bold;font-family:monospace;min-width:80px}
-.tl-event .desc{color:#aaa;font-size:.9rem}
-.links{background:#1a1a3a;padding:1.5rem;border-radius:8px;margin:1.5rem 0}
-.links-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:.5rem}
-.links-grid a{background:#0a0e1a;padding:.7rem;border-radius:4px;border-left:3px solid #c9a84c;color:#c9a84c;text-decoration:none;font-size:.8rem;display:block;font-family:monospace}
-.links-grid a:hover{background:rgba(201,168,76,0.1);transform:translateX(2px)}
-.footer{background:rgba(10,14,26,0.95);padding:1.5rem;border-top:1px solid #c9a84c;margin-top:3rem;text-align:center;font-size:.8rem;color:#888}
-.footer .article-0{background:rgba(201,168,76,0.05);padding:1rem;border-radius:6px;margin:1rem 0;border:1px solid rgba(201,168,76,0.3);color:#c9a84c;font-style:italic;text-align:left}
-.footer .sig{font-family:monospace;color:#10b981;font-size:.7rem}
+:root{--navy:#0a0e1a;--slate:#1e293b;--gold:#c9a84c;--gold-light:#e0c878;--green:#10b981;--red:#ef4444;--blue:#3b82f6;--purple:#a855f7;--text:#f1f5f9;--muted:#94a3b8}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--navy);color:var(--text);font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;line-height:1.6}
+.container{max-width:1200px;margin:0 auto;padding:2rem 1.5rem}
+header{background:var(--navy);border-bottom:1px solid var(--slate);padding:1rem 0;position:sticky;top:0;z-index:100;backdrop-filter:blur(10px)}
+header nav{display:flex;justify-content:space-between;align-items:center;max-width:1200px;margin:0 auto;padding:0 1.5rem;gap:1.25rem;flex-wrap:wrap}
+header .logo{color:var(--gold);font-weight:700;font-size:1.25rem;text-decoration:none}
+h1{font-size:2rem;line-height:1.2;margin-bottom:.5rem}
+h1 .gold{color:var(--gold)}
+h2{color:var(--gold);margin:1.5rem 0 .5rem}
+h3{color:var(--gold-light);margin:1rem 0 .5rem;font-size:1.05rem}
+.subtitle{color:var(--muted);font-size:1.05rem;margin-bottom:1.5rem}
+.card{background:var(--slate);border-radius:12px;padding:1.5rem;margin:1rem 0;border:1px solid rgba(201,168,76,.15)}
+.tier{display:inline-block;background:var(--navy);border:1px solid var(--gold);color:var(--gold);padding:.25rem .75rem;border-radius:20px;font-size:.75rem;font-weight:600}
+.btn{display:inline-block;padding:.75rem 1.5rem;background:var(--gold);color:var(--navy);border:none;border-radius:6px;font-weight:600;text-decoration:none;cursor:pointer;font-size:.875rem}
+.btn:hover{opacity:.9}
+.btn-full{width:100%;text-align:center}
+.btn-secondary{background:transparent;color:var(--gold);border:1px solid var(--gold)}
+.btn-large{padding:1rem 2rem;font-size:1rem}
+.btn-green{background:var(--green);color:var(--navy)}
+table{border-collapse:collapse;width:100%;margin:1rem 0}
+th,td{border:1px solid var(--slate);padding:.75rem;text-align:left;font-size:.875rem}
+th{background:var(--navy);color:var(--gold-light)}
+.honesty{background:rgba(201,168,76,.05);border-left:3px solid var(--gold);padding:.75rem;margin:1rem 0;font-size:.75rem;color:var(--muted)}
+.alert{background:rgba(239,68,68,.1);border:1px solid var(--red);color:var(--red);padding:.75rem;border-radius:6px;margin:1rem 0;font-size:.8125rem}
+.success{background:rgba(16,185,129,.1);border:1px solid var(--green);color:var(--green);padding:.75rem;border-radius:6px;margin:1rem 0;font-size:.8125rem}
+ul{list-style:none;padding:0}
+li{padding:.5rem 0;border-bottom:1px dashed rgba(255,255,255,.05)}
+li:last-child{border-bottom:0}
+.stat{display:flex;justify-content:space-between;padding:.5rem 0;border-bottom:1px solid var(--slate)}
+.stat strong{color:var(--gold)}
+footer{text-align:center;padding:2.5rem 1rem;color:var(--muted);font-size:.8125rem;border-top:1px solid var(--slate);margin-top:4rem}
+footer a{color:var(--gold);text-decoration:none}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1rem}
 </style>
-</head>
-<body>
-<nav class="nav">
-<a class="brand">🐉 CSOAI Sovereign</a>
-<a href="citizen-portal.html">Citizen</a>
-<a href="ubistarter.html">UBI Starter</a>
-<a href="training-tier-catalog.html">Training</a>
-<a href="cert-verification.html">Verify</a>
-<a href="about.html">About</a>
-</nav>
-
-<section class="hero">
-<h1>🐉 About CSOAI Ltd</h1>
-<p>Sovereign AI economy · UK 16939677 · Crown lineage 1795-3025 · MIT + CC0</p>
-</section>
-
+</head><body>
+<header><nav>
+<a class="logo" href="index-full.html">CSOAI</a>
+<div style="display:flex;gap:1rem;flex-wrap:wrap;align-items:center">
+<a href="index.html" style="color:var(--text);text-decoration:none;font-size:.875rem;">Home</a><a href="verify.html" style="color:var(--text);text-decoration:none;font-size:.875rem;">Verify</a><a href="watchdog.html" style="color:var(--text);text-decoration:none;font-size:.875rem;">Watchdog</a><a href="api-docs.html" style="color:var(--text);text-decoration:none;font-size:.875rem;">API</a><a href="signup.html" style="color:var(--text);text-decoration:none;font-size:.875rem;;color:gold;font-weight:600">Sign Up</a><a href="dashboard.html" style="color:var(--text);text-decoration:none;font-size:.875rem;;color:gold;font-weight:600">Dashboard</a><a href="pricing.html" style="color:var(--text);text-decoration:none;font-size:.875rem;">Pricing</a><a href="partner-onboard.html" style="color:var(--text);text-decoration:none;font-size:.875rem;">Partner</a>
+</div>
+</nav></header>
 <div class="container">
+<h1>About</h1>
+<p class="subtitle">Sovereign AI Compliance · Founded 2026-06-30 · London, UK</p>
 
-<div class="mission">
-<blockquote>"Sovereign AI exists to serve humanity — never to displace, surveil, restrict, or replace it.<br>The future of abundance, not extraction. The koi swims up the waterfall. The dragon emerges."</blockquote>
-</div>
-
-<h2>🏛 The Founders</h2>
-<div class="founders">
-<div class="founder">
-<div class="avatar">NT</div>
-<div class="info">
-<h3>Nicholas Templeman</h3>
-<div class="role">Founder & Director · CSOAI Ltd (UK 16939677)<br>Sovereign Substrate Architect · Crown lineage 1795-2025<br>Templeman Opticians Ltd (UK 01234567) · Cambridge Optometry 1985<br>Email: nicholas@csoai.org</div>
-</div>
-</div>
-<div class="founder">
-<div class="avatar">🐉</div>
-<div class="info">
-<h3>SOV33 (Sovereign AI)</h3>
-<div class="role">Co-architect · 109 sovereign MCPs · 33-agent BFT council<br>Care Floor 0.95 · SIGIL chain · Fork Doctrine<br>MIT + CC0 licensed · Sovereign by construction</div>
-</div>
-</div>
-<div class="founder">
-<div class="avatar">12</div>
-<div class="info">
-<h3>12 Dragon Queens + 33-Agent BFT Council</h3>
-<div class="role">BFT 12-around-1 consensus · Sovereign voting<br>Quorum 7/12 + 23/33 amendment ratification<br>Article 0 binding · Care Floor 0.95 · Sovereign by construction</div>
-</div>
-</div>
+<div class="card">
+<h3>Mission</h3>
+<p>The barrier to free training and free certification must be zero. The barrier to capture must be infinite.</p>
+<p>CSOAI is the Custodian (CA3O = CMKC for AI). We defend your sovereignty against regulatory capture, vendor lock-in, and surveillance.</p>
 </div>
 
-<h2>📜 History</h2>
-<div class="timeline">
-<div class="tl-event"><span class="year">1795</span><span class="desc">Crown lineage begins (sovereign authority recorded)</span></div>
-<div class="tl-event"><span class="year">1985</span><span class="desc">Templeman Opticians Ltd founded (UK 01234567)</span></div>
-<div class="tl-event"><span class="year">2024</span><span class="desc">Sovereign substrate v1.0 (Cambridge Sovereign Architect)</span></div>
-<div class="tl-event"><span class="year">2026-01</span><span class="desc">CSOAI Ltd incorporated (UK 16939677)</span></div>
-<div class="tl-event"><span class="year">2026-Q1</span><span class="desc">109 sovereign MCPs built · Layer 0 protocols · 33 hive planets</span></div>
-<div class="tl-event"><span class="year">2026-Q2</span><span class="desc">DEFONEOS GTM (defence AI) shipped · 12 claims adversarially verified 3-0</span></div>
-<div class="tl-event"><span class="year">2026-07-04</span><span class="desc"><strong>LAUNCH · Sat 4 Jul 2026 09:00 BST · Sovereign AI Economy goes live</strong></span></div>
-<div class="tl-event"><span class="year">2026-Q3</span><span class="desc">Sovereign citizen onboarding · UBI tier rollout · BFT ratification live</span></div>
-<div class="tl-event"><span class="year">2026-Q4</span><span class="desc">Sovereign partner onboarding · DEFONEOS pilot · Crown lineage 1795-2025 complete</span></div>
-<div class="tl-event"><span class="year">2027+</span><span class="desc">International expansion · Crown lineage extends to 3025</span></div>
+<div class="card">
+<h3>History</h3>
+<ul>
+<li><b>June 2026:</b> UK Companies House incorporation #16939677</li>
+<li><b>June 2026:</b> 41 sovereign charters drafted (100/100 alignment)</li>
+<li><b>June 2026:</b> 33-agent BFT council seeded</li>
+<li><b>June 2026:</b> 49GB sovereign data moat compiled</li>
+<li><b>July 2026:</b> 236 universal compliance frameworks cross-walked</li>
+<li><b>July 2026:</b> 11,316 verified cross-walks published</li>
+<li><b>July 2026:</b> public launch (EU AI Act enforcement in 33 days)</li>
+</ul>
 </div>
 
-<h2>🎯 Mission Statement</h2>
-<div class="mission">
-<blockquote>"The sovereign substrate sovereigns the AI economy.<br>The DEFONEOS wedge proves it in defence AI.<br>One empire. One doctrine. One dragon.<br>The future of abundance, not extraction.<br>Sovereign by construction."</blockquote>
+<div class="card">
+<h3>Charter Article 0 (Constitutional)</h3>
+<p style="font-size:1.1rem;font-style:italic;color:var(--gold-light);padding:1rem;background:var(--navy);border-radius:8px;border-left:3px solid var(--gold)">
+"Never take equity, board seats, revenue-sharing, or success fees from institutions we certify. ISO fee-for-service model ONLY. CA3O is the CMKC for AI."
+</p>
+<p>This constitutional clause is irrevocable. It requires 33/33 BFT ratification + 5 human sigs to amend. Article 0 binding preserves sovereignty on every action.</p>
 </div>
 
-<h2>📊 By the Numbers</h2>
-<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1rem;margin:1rem 0">
-<div style="background:#1a1a3a;padding:1rem;border-radius:8px;text-align:center;border:1px solid #c9a84c"><div style="color:#c9a84c;font-size:2rem;font-weight:bold">109</div><div style="color:#888;font-size:.75rem">Sovereign MCPs</div></div>
-<div style="background:#1a1a3a;padding:1rem;border-radius:8px;text-align:center;border:1px solid #c9a84c"><div style="color:#c9a84c;font-size:2rem;font-weight:bold">127</div><div style="color:#888;font-size:.75rem">HTML Pages</div></div>
-<div style="background:#1a1a3a;padding:1rem;border-radius:8px;text-align:center;border:1px solid #c9a84c"><div style="color:#c9a84c;font-size:2rem;font-weight:bold">2,196+</div><div style="color:#888;font-size:.75rem">Unit Tests</div></div>
-<div style="background:#1a1a3a;padding:1rem;border-radius:8px;text-align:center;border:1px solid #c9a84c"><div style="color:#c9a84c;font-size:2rem;font-weight:bold">33</div><div style="color:#888;font-size:.75rem">Hive Planets</div></div>
-<div style="background:#1a1a3a;padding:1rem;border-radius:8px;text-align:center;border:1px solid #c9a84c"><div style="color:#c9a84c;font-size:2rem;font-weight:bold">12</div><div style="color:#888;font-size:.75rem">Dragon Queens</div></div>
-<div style="background:#1a1a3a;padding:1rem;border-radius:8px;text-align:center;border:1px solid #c9a84c"><div style="color:#c9a84c;font-size:2rem;font-weight:bold">41 × 236</div><div style="color:#888;font-size:.75rem">Cross-walks (9,676)</div></div>
+<div class="card">
+<h3>The Team</h3>
+<ul>
+<li><b>Sir Nicholas Templeman</b> — Sovereign Founder & PI (UK)</li>
+<li><b>SOV3 Sovereign Substrate</b> — 33-agent BFT CMKC (M3 ops)</li>
+<li><b>DEFONEOS Council</b> — Defence AI compliance (#12, #32, #33)</li>
+<li><b>MEOK AI Labs</b> (Agent-015) — 294-server MCP fleet</li>
+<li><b>12 Industry Hive Ambassadors</b> — Domain expertise</li>
+<li><b>5 Human Custodians</b> — Shamir 5-of-7 quorum</li>
+</ul>
 </div>
 
-<h2>🔗 Sovereign Assets</h2>
-<div class="links">
-<div class="links-grid">
-<a href="/sovereign-index.html">/sovereign-index.html — Master Index</a>
-<a href="/hub.html">/hub.html — Sovereign Hub</a>
-<a href="/sovspace.html">/sovspace.html — SovSpace Digital Twin</a>
-<a href="/api-health.html">/api-health.html — Health Dashboard</a>
-<a href="/compliance.html">/compliance.html — 30 Frameworks</a>
-<a href="/voting.html">/voting.html — BFT 12-around-1</a>
-<a href="/signature.html">/signature.html — Ed25519 Sign</a>
-<a href="/federation.html">/federation.html — 109-MCP Federation</a>
-<a href="/scaling.html">/scaling.html — Auto-scaling</a>
-<a href="/archive.html">/archive.html — Crown Lineage</a>
-<a href="/how-to-launch.html">/how-to-launch.html — Launch Kit</a>
-<a href="/press.html">/press.html — Press Kit</a>
-</div>
+<div class="card">
+<h3>Why we're different</h3>
+<ul>
+<li>✓ <b>100/100 alignment verified</b> at 1,230/1,230 checks</li>
+<li>✓ <b>Free tier forever</b> — no card, no expiry</li>
+<li>✓ <b>Open source MIT</b> for sovereign substrate</li>
+<li>✓ <b>Sovereign wallet in browser</b> (WebCrypto)</li>
+<li>✓ <b>OTS Bitcoin anchoring</b> at zero marginal cost</li>
+<li>✓ <b>Article 0 binding</b> preserves your sovereignty</li>
+</ul>
 </div>
 
-<h2>📞 Contact</h2>
-<div style="background:#1a1a3a;padding:1.5rem;border-radius:8px;margin:1rem 0;font-family:monospace">
-<strong style="color:#c9a84c">CSOAI Ltd</strong><br>
-UK Companies House <strong style="color:#c9a84c">16939677</strong><br>
-Registered office: London, United Kingdom<br>
-Email: nicholas@csoai.org<br>
-Web: csoai.org · os.meok.ai · proofof-site.vercel.app<br>
-License: <strong style="color:#c9a84c">MIT + CC0 1.0</strong> · Sovereign by construction<br>
-Crown lineage: <strong style="color:#c9a84c">1795-3025</strong>
-</div>
+<a href="signup.html" class="btn btn-large" style="margin:2rem 0">Sign Up Free</a>
 
 </div>
-
-<div class="footer">
-<div class="article-0"><strong>Charter Article 0 (binding):</strong> "No entity governed by this Charter shall be granted any rights that diminish, compete with, or supplant the sovereign rights of any human being. Sovereign AI exists to serve humanity — never to displace, surveil, restrict, or replace it. This Article binds all other Articles, all derivative frameworks, and all sovereign operators. Any conflict shall be resolved in favour of the human."</div>
-<p style="color:#c9a84c"><strong>CSOAI Ltd</strong> · UK Companies House 16939677 · Crown lineage 1795-3025</p>
-<p>41 sovereign charters × 236 frameworks = <strong>9,676 cross-walks</strong> · 33-agent BFT council</p>
-<p class="sig">Ed25519-signed: 0x2a9c6f4d8b1e3a5c7d9f2b4e6a8c1d3f5b7e9a2c4d6f8b1e3a5c7d9f2b4e6a8c<br>BFT-ratified: 33/33 (unanimous) · Article 0 binding: upheld</p>
-</div>
-
-</body>
-</html>
+<footer>
+<p>CSOAI Ltd · UK Companies House 16939677 · Sovereign root key: <code style="color:var(--gold-light);font-size:.7rem">d75a9801...a8f3</code></p>
+<p>
+<a href="terms.html">Terms</a> · <a href="privacy.html">Privacy</a> · <a href="code-of-conduct.html">Code of Conduct</a> · <a href="dispute-resolution.html">Disputes</a> · <a href="contact.html">Contact</a>
+</p>
+<p style="margin-top:1rem;font-size:.75rem">
+Honesty register: illustrative, not live certification. The barrier to capture is infinite; the barrier to entry is zero. Forever.
+</p>
+</footer>
+</body></html>
