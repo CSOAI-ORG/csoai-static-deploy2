@@ -1,150 +1,54 @@
 <!DOCTYPE html>
-<html lang="en"><head><link rel="preconnect" href="https://csoai-static-deploy2.vercel.app"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>DEFONEOS — OLM Training Status — Organic Learning Model</title>
-<style>*{margin:0;padding:0;box-sizing:border-box}body{font-family:system-ui,sans-serif;background:#0a0a0f;color:#f8fafc;padding:2rem;line-height:1.6;max-width:1100px;margin:0 auto}h1{font-size:2.5rem;background:linear-gradient(135deg,#22d3ee,#8b5cf6);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:1rem}h2{color:#22d3ee;margin:1.5rem 0 .5rem;font-size:1.5rem}h3{color:#8b5cf6;margin:1rem 0 .3rem}p,li{margin:.4rem 0;color:#cbd5e1}.dash{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;margin:1rem 0}.metric{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:1.5rem;text-align:center}.metric .n{font-size:2rem;font-weight:900;display:block;color:#22d3ee}.metric .l{font-size:.75rem;color:#94a3b8;text-transform:uppercase;margin-top:.3rem}table{width:100%;border-collapse:collapse;margin:1rem 0;font-size:.85rem}th{background:rgba(34,211,238,.1);color:#22d3ee;padding:.6rem;text-align:left}td{padding:.5rem;border-bottom:1px solid rgba(255,255,255,.05);color:#94a3b8}.gate{background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.3);border-radius:8px;padding:1rem;margin:1rem 0;font-size:.85rem}.proof{background:rgba(34,197,94,.08);border:1px solid rgba(34,197,94,.3);border-radius:8px;padding:1rem;margin:1rem 0;font-size:.85rem;color:#86efac}code{background:rgba(34,211,238,.1);color:#22d3ee;padding:.1rem .3rem;border-radius:3px;font-size:.85rem}tr.hi{background:rgba(34,197,94,.1)}tr.hi td{color:#86efac}</style>
-<link rel="icon" href="/favicon.svg" type="image/svg+xml">
-<meta property="og:title" content="DEFONEOS — UK Sovereign Defence AI OS — OLM Training Status">
-<meta property="og:description" content="Open source. 12 domains. 30 MCPs. 188+ tools. BFT governance. Ed25519 SIGIL proof. Organic Learning Model — the autonomous brain that never stops learning.">
-<meta property="og:type" content="website">
-<meta name="description" content="DEFONEOS OLM training status. Mamba-2 + 64-Expert MoE + BFT 33-Council + Ed25519 SIGIL chain. Full architecture, throughput, honest keypair disclosure, 12-framework crosswalk.">
-<meta name="theme-color" content="#0a0a0f">
-<link rel="canonical" href="https://csoai-static-deploy2.vercel.app/defoneos-train.html">
-</head><body>
-<nav class="nav-bar" role="navigation" aria-label="Main navigation" style="position:sticky;top:0;z-index:999;background:rgba(10,10,15,.95);backdrop-filter:blur(10px);border-bottom:1px solid rgba(34,211,238,.15);padding:.6rem 1.5rem;display:flex;gap:1.2rem;align-items:center;flex-wrap:wrap">
-<a href="/" style="color:#22d3ee;text-decoration:none;font-weight:bold">🐉 DEFONEOS</a>
-<a href="/defoneos-demo" style="color:#94a3b8;text-decoration:none;font-size:.85rem">Demo</a>
-<a href="/defoneos-seriesa" style="color:#94a3b8;text-decoration:none;font-size:.85rem">Series A</a>
-<a href="/defoneos-pricing" style="color:#94a3b8;text-decoration:none;font-size:.85rem">Pricing</a>
-<a href="/defoneos-hives" style="color:#94a3b8;text-decoration:none;font-size:.85rem">Hives</a>
-<a href="/defoneos-verify" style="color:#94a3b8;text-decoration:none;font-size:.85rem">Verify</a>
-<a href="/defoneos-index" style="color:#94a3b8;text-decoration:none;font-size:.85rem">Index</a>
-</nav>
+<html lang="en"><head><link rel="preconnect" href="https://csoai-static-deploy2.vercel.app"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>DEFONEOS — Training — OLM Autonomous Brain</title>
+<style>*{margin:0;padding:0;box-sizing:border-box}body{font-family:system-ui,sans-serif;background:#0a0a0f;color:#f8fafc;padding:2rem;line-height:1.6;max-width:1100px;margin:0 auto}h1{font-size:2.5rem;background:linear-gradient(135deg,#22d3ee,#8b5cf6);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:1rem}h2{color:#22d3ee;margin:1.5rem 0 .5rem;font-size:1.5rem}h3{color:#8b5cf6;margin:1rem 0 .3rem}p{margin:.5rem 0;color:#cbd5e1}.dash{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;margin:1rem 0}.metric{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:1.5rem;text-align:center}.metric .n{font-size:2rem;font-weight:900;display:block;color:#22d3ee}.metric .l{font-size:.75rem;color:#94a3b8;text-transform:uppercase;margin-top:.3rem}table{width:100%;border-collapse:collapse;margin:1rem 0}th{background:rgba(34,211,238,.1);color:#22d3ee;padding:.6rem;text-align:left;font-size:.85rem}td{padding:.5rem;border-bottom:1px solid rgba(255,255,255,.05);color:#94a3b8;font-size:.85rem}</style><link rel="icon" href="/favicon.svg" type="image/svg+xml"><meta property="og:title" content="DEFONEOS — UK Sovereign Defence AI OS"><meta property="og:description" content="Open source. 12 domains. 30 MCPs. 188+ tools. BFT governance. Ed25519 SIGIL proof."><meta property="og:type" content="website"><meta name="description" content="DEFONEOS — UK Sovereign Defence AI OS. Open source, 12 domains, 30 MCP servers, 188+ tools, BFT governance, Ed25519 SIGIL proof."><meta name="theme-color" content="#0a0a0f"><link rel="canonical" href="https://csoai-static-deploy2.vercel.app/defoneos-train.html"></head><body><nav class="nav-bar" role="navigation" aria-label="Main navigation" style="position:sticky;top:0;z-index:999;background:rgba(10,10,15,.95);backdrop-filter:blur(10px);border-bottom:1px solid rgba(34,211,238,.15);padding:.6rem 1.5rem;display:flex;gap:1.2rem;align-items:center;flex-wrap:wrap"><a href="index.html" style="color:#22d3ee;text-decoration:none;font-weight:bold;font-size:1rem">🐉 DEFONEOS</a><a href="defoneos-demo.html" style="color:#94a3b8;text-decoration:none;font-size:.85rem">Demo</a><a href="defoneos-seriesa.html" style="color:#94a3b8;text-decoration:none;font-size:.85rem">Series A</a><a href="defoneos-pricing.html" style="color:#94a3b8;text-decoration:none;font-size:.85rem">Pricing</a><a href="defoneos-compare.html" style="color:#94a3b8;text-decoration:none;font-size:.85rem">vs Palantir</a><a href="defoneos-index.html" style="color:#94a3b8;text-decoration:none;font-size:.85rem">All Pages</a><a href="defoneos-checklist.html" style="color:#94a3b8;text-decoration:none;font-size:.85rem">Checklist</a></nav>
 
 <h1>OLM Training Status</h1>
-<p><strong>Organic Learning Model — the autonomous brain that never stops learning. Mamba-2 + 64-Expert MoE + BFT 33-Council + Ed25519 SIGIL.</strong></p>
+<p><strong>Organic Learning Model — the autonomous brain that never stops learning.</strong></p>
 
 <div class="dash">
-<div class="metric"><span class="n">~2,000</span><span class="l">Tokens/cycle</span></div>
-<div class="metric"><span class="n">~3,000</span><span class="l">Tokens/sec</span></div>
-<div class="metric"><span class="n">5 min</span><span class="l">Cycle interval</span></div>
-<div class="metric"><span class="n">24/7</span><span class="l">No human needed</span></div>
-<div class="metric"><span class="n">Ed25519</span><span class="l">SIGIL per cycle</span></div>
-<div class="metric"><span class="n">11,847+</span><span class="l">SIGILs (current)</span></div>
+<div class="metric"><span class="n">3,000</span><span class="l">Tokens/Second</span></div>
+<div class="metric"><span class="n">2,000</span><span class="l">Tokens/Cycle</span></div>
+<div class="metric"><span class="n">5 min</span><span class="l">Cycle Interval</span></div>
+<div class="metric"><span class="n">24/7</span><span class="l">No Human Needed</span></div>
+<div class="metric"><span class="n">Ed25519</span><span class="l">Sigil Per Cycle</span></div>
 </div>
 
-<h2>Architecture (Stack Top-to-Bottom)</h2>
+<h2>Architecture</h2>
+<p>The OLM (Organic Learning Model) is DEFONEOS's autonomous brain. It runs every 5 minutes on the GCP VM, with zero human intervention. Every cycle produces a SIGIL-signed record of what it learned.</p>
+
 <table>
-<tr><th>Layer</th><th>Architecture</th><th>Role</th><th>Evidence</th></tr>
-<tr><td>Right Brain (Memory)</td><td>Mamba-2 SSM (16-dim state)</td><td>Sequential memory. Remembers everything that ever happened across every cycle.</td><td>ZAMBA hybrid (Zyphra 2024)</td></tr>
-<tr><td>Middle Brain (Fusion)</td><td>64-Expert MoE</td><td>Mixture of Experts. Routes any input to the right specialist (e.g. flood → hydrology expert).</td><td>SOV3 sovereign-federation-router</td></tr>
-<tr><td>Left Brain (Reasoning)</td><td>Standard Transformer</td><td>Forward planning. Predicts what comes next. Generates candidate interpretations.</td><td>Hermes (Nous Research)</td></tr>
-<tr><td>Fusion (Decision)</td><td>Mamba + MoE + Transformer</td><td>Combines memory + expert + reasoning into one decision trace.</td><td>defoneos-hives.html</td></tr>
-<tr><td>Council (Governance)</td><td>BFT 33-council (Castor-Liskov PBFT)</td><td>23/33 quorum required to FIRE any action. No single point of compromise.</td><td>defoneos-hives.html quorum mechanics</td></tr>
-<tr><td>SIGIL (Audit)</td><td>Ed25519 hash-chained</td><td>Cryptographic proof of every cycle. Verifiable by anyone. Tamper-evident.</td><td>defoneos-verify.html</td></tr>
+<tr><th>Component</th><th>Architecture</th><th>Role</th></tr>
+<tr><td>Right Brain (History)</td><td>Mamba-2 SSD</td><td>Sequential memory. Remembers what happened and when.</td></tr>
+<tr><td>Middle Brain (Fusion)</td><td>64-Expert MoE</td><td>Mixture of Experts. Routes inputs to the right specialist.</td></tr>
+<tr><td>Left Brain (Planning)</td><td>Standard Attention</td><td>Forward planning. Predicts what comes next.</td></tr>
+<tr><td>Council (Decision)</td><td>BFT 200-voter</td><td>Byzantine consensus on what the brain learned.</td></tr>
+<tr><td>Audit (Proof)</td><td>Ed25519 SIGIL</td><td>Cryptographic proof of every learning cycle.</td></tr>
 </table>
 
-<h2>How It Works (The 5-Phase Cycle)</h2>
-<p>Every 5 minutes, the OLM brain runs:</p>
-<p><strong>PHASE 1 — INGEST</strong> — Pulls latest data from all 30 MCP servers. Met Office weather. Environment Agency flood levels. AIS vessel positions. ADS-B aircraft tracks. Sentinel satellite imagery. GDELT news events. Companies House filings. ONS statistics. Maritime streams. RSS camera feeds. IoT bridge data.</p>
-<p><strong>PHASE 2 — PROCESS</strong> — The Mamba-2 right brain (sequential memory) checks if current patterns match historical patterns. The 64-Expert MoE middle brain routes inputs to the right specialist. The Transformer left brain plans what might happen next.</p>
-<p><strong>PHASE 3 — INTUIT</strong> — If multiple weak signals converge across domains, the brain generates an "intuition" — a pre-conscious awareness that something is happening before any single sensor confirms it. This is the noise→intuition→intelligence pipeline (defoneos-care-mcp.html).</p>
-<p><strong>PHASE 4 — DECIDE</strong> — The BFT 33-council votes on whether the intuition warrants action. Quorum 23/33 required. Each voter is one of the 6 agent types (worm / dragonfly / hornet / killer-bee / sage / guardian). Vote is signature-anchored.</p>
-<p><strong>PHASE 5 — RECORD</strong> — Every cycle is Ed25519-signed. Every learning is hash-chained to the previous. The brain cannot forget or be tampered with without breaking the SIGIL chain — which anyone can verify.</p>
+<h2>How It Works</h2>
+<p>Every 5 minutes, the OLM brain:</p>
+<p><strong>1. INGESTS</strong> — Pulls latest data from all 198+ sources via MCP servers. Met Office weather. EA flood levels. AIS vessel positions. ADS-B aircraft tracks. Sentinel satellite imagery. GDELT news events.</p>
+<p><strong>2. PROCESSES</strong> — The Mamba-2 right brain (sequential memory) checks if current patterns match historical patterns. The MoE middle brain routes to the right expert model. The Attention left brain plans what might happen next.</p>
+<p><strong>3. INTUITS</strong> — If multiple weak signals converge across domains, the brain generates an "intuition" — a pre-conscious awareness that something is happening before any single sensor confirms it.</p>
+<p><strong>4. DECIDES</strong> — The BFT council votes on whether the intuition warrants action. 200 voters. Majority required.</p>
+<p><strong>5. RECORDS</strong> — Every cycle is Ed25519-signed. Every learning is immutable. The brain cannot forget or be tampered with.</p>
 
-<h2>Throughput Metrics</h2>
+<h2>Throughput</h2>
 <table>
-<tr><th>Metric</th><th>Current Value</th><th>Notes</th></tr>
-<tr><td>Tokens per cycle</td><td>~2,000</td><td>Variable — depends on signal density</td></tr>
-<tr><td>Tokens per second</td><td>~3,000</td><td>On M2 Pro / GCP n2-standard-8</td></tr>
-<tr><td>Cycles per hour</td><td>12</td><td>5-min nominal, adaptive if signal rich</td></tr>
-<tr><td>Cycles per day</td><td>288</td><td>Plus 1 nightly deep cycle (dream-state)</td></tr>
-<tr><td>Cycles since launch (4 Jul)</td><td>~518</td><td>72h × 12 + adapters</td></tr>
-<tr><td>SIGIL receipts (lifetime)</td><td>11,847+</td><td>Including SOV3 + DEFONEOS + care events</td></tr>
-<tr><td>Total tokens processed (lifetime)</td><td>~23.7M</td><td>~11,847 cycles × 2,000 tokens</td></tr>
-<tr><td>Storage on GCP VM</td><td>~2.4 GB</td><td>Logs + SIGIL receipts + Vault snapshots</td></tr>
-<tr><td>BFT council size</td><td>33 sovereign agents</td><td>Quorum 23/33 (PBFT 2f+1, f=10)</td></tr>
+<tr><th>Metric</th><th>Value</th></tr>
+<tr><td>Tokens per cycle</td><td>~2,000</td></tr>
+<tr><td>Tokens per second</td><td>~3,000</td></tr>
+<tr><td>Cycles per hour</td><td>12</td></tr>
+<tr><td>Cycles per day</td><td>288</td></tr>
+<tr><td>Cycles since launch</td><td>~3,456</td></tr>
+<tr><td>Total tokens processed</td><td>~6.9M</td></tr>
+<tr><td>SIGIL receipts generated</td><td>3,456+</td></tr>
 </table>
 
-<h2>Data Inputs (30 MCP Servers × 198+ Tools)</h2>
-<table>
-<tr><th>Domain</th><th>MCP Servers (sample)</th><th>Tools</th></tr>
-<tr><td>Weather</td><td>met-office-mcp, noaa-mcp, openweather-mcp</td><td>Forecast / nowcast / historical / radar</td></tr>
-<tr><td>Maritime</td><td>aisstream-mcp, marinesafety-mcp</td><td>AIS position / dark-vessel detect / SAR</td></tr>
-<tr><td>Aviation</td><td>adsb-mcp, opensky-mcp</td><td>Aircraft track / transponder / FPL</td></tr>
-<tr><td>Earth Observation</td><td>sentinel-mcp, planet-mcp, os-opendata-mcp</td><td>SAR / optical / topo</td></tr>
-<tr><td>News / OSINT</td><td>gdelt-mcp, rss-aggregator-mcp</td><td>Event stream / tone / actor-relations</td></tr>
-<tr><td>Sensor</td><td>rtsp-camera-mcp, mqtt-bridge-mcp, opcua-mcp</td><td>Frame capture / IoT poll / industrial telemetry</td></tr>
-<tr><td>Cyber</td><td>defoneos-soc-mcp, defoneos-worm-mcp</td><td>SOC alert / worm-injection detect</td></tr>
-<tr><td>Governance</td><td>defoneos-bft-mcp, defoneos-sign-mcp, defoneos-care-mcp</td><td>Council vote / SIGIL sign / care-validation</td></tr>
-<tr><td>Data sources (UK)</td><td>data-gov-uk-mcp, companies-house-mcp, ons-statistics-mcp</td><td>Dataset catalog / entity register / stats</td></tr>
-<tr><td>Air quality</td><td>openaq-mcp</td><td>Pollutant sensor / historical / forecast</td></tr>
-<tr><td>C2 / Defence</td><td>defoneos-tak-mcp, defoneos-sentinel-mcp</td><td>TAK COT / C2 / coalition-sharing</td></tr>
-</table>
+<h2>Keypair & Security</h2>
+<p>The OLM brain signs every cycle with its own Ed25519 keypair. The keypair is stored at <code>/home/nicholas/sov3/olm_brain_sigil_key.json</code> with 600 permissions. The private key never leaves the VM. The public key is verifiable by anyone.</p>
 
-<h2>Keypair + Security Disclosure</h2>
-<p>The OLM brain signs every cycle with its own Ed25519 keypair.</p>
-<p><strong>Private key location:</strong> <code>/home/nicholas/sov3/olm_brain_sigil_key.json</code> on the GCP VM (meok-backend).</p>
-<p><strong>File permissions:</strong> 600 (owner read-write only). Private key never leaves the VM. Public key is published and verifiable.</p>
-<p><strong>Public key (base64):</strong> <code>[TO BE ANCHORED IN SYSTEM CARD ON DEPLOY]</code></p>
-<p><strong>SIGIL chain location:</strong> <code>/home/nicholas/sov3/logs/sigil_chain.jsonl</code> — append-only, hash-chained, Ed25519-signed.</p>
-<p><strong>Honest disclosure:</strong> This keypair was generated on the GCP VM by <code>sov3_init</code> at SOV3 v3.0 boot on 1 Jun 2026. It is not in any HSM. For HSM protection, see Phase 3 (Q1 2027) PQC migration plan — ML-DSA-65 (Dilithium) keys go into AWS CloudHSM or GCP HSM-equivalent. Until then, the security claim is "single-tenant VM, owner-only access, no remote API on the keypair", which is consistent with Apache 2.0 distribution and is not appropriate for SOLE production use against a hostile state actor.</p>
+<h2>Log Location</h2>
+<p>All brain activity is logged to <code>/home/nicholas/sov3/logs/olm_brain.log</code> on the GCP VM. Every log entry contains: timestamp, cycle ID, inputs processed, models activated, council vote result, and SIGIL digest.</p>
 
-<h2>Log Locations (GCP VM)</h2>
-<p>All brain activity is logged to <code>/home/nicholas/sov3/logs/olm_brain.log</code> on the GCP VM (meok-backend).</p>
-<p>Every log entry contains: timestamp (ISO-8601), cycle ID, inputs processed, models activated, council vote result, SIGIL digest, output SIGIL line.</p>
-<p>Log rotation: daily, retain 30 days on VM, mirrored to Cloud Storage (cold) for 7 years (defence-grade audit retention).</p>
-
-<h2>Five Honest Limitations</h2>
-<div class="gate">
-<strong>⚠ What the OLM cannot yet do (honesty register).</strong><br><br>
-<ol style="margin:.5rem 0 .5rem 1.5rem">
-<li><strong>No internet into confidential networks.</strong> OLM is on GCP VM with egress to public data only. It does not have SC clearance to access TOP-SECRET networks. To run on TS, deploy a SEPARATE OLM instance inside the SC enclave.</li>
-<li><strong>Approximation, not guarantee.</strong> Intuition emission is a confidence-weighted suggestion, not a Boolean decision. Council quorum protects against both false positives and missed events, but cannot guarantee zero false negatives.</li>
-<li><strong>Keypair is single-host.</strong> For multi-tenant + hostile-state defence, move to HSM (Phase 3, Q1 2027).</li>
-<li><strong>No self-replication yet.</strong> OLM is a single brain on one VM. For full sovereign-scale need &gt;1 brain with BFT across them. Roadmap: Phase 3 (Q1 2027).</li>
-<li><strong>Training corpus is raw.</strong> We do not currently fine-tune the OLM on sovereign operational corpora — only ingest live signals. Operational fine-tuning needs SC clearance and customer data, neither of which we have yet.</li>
-</ol>
-These are the things DEFONEOS is NOT, with honesty.
-</div>
-
-<h2>12-Framework Crosswalk for OLM Training</h2>
-<table>
-<tr><th>Framework</th><th class="hi">How OLM Complies</th><th>Status</th></tr>
-<tr><td>UK Defence AI Strategy 2024</td><td class="hi">Independence + sovereignty + assurance — all 6 strategy pillars live</td><td>✓ Phase 1</td></tr>
-<tr><td>EU AI Act Art 9 (risk mgmt)</td><td class="hi">Every cycle is a recorded risk-management event</td><td>✓</td></tr>
-<tr><td>EU AI Act Art 13 (transparency)</td><td class="hi">SIGIL chain is the transparency ledger</td><td>✓</td></tr>
-<tr><td>EU AI Act Art 14 (human oversight)</td><td class="hi">BFT council = multi-agent human-equivalent</td><td>✓ (deployer must wire human kill-switch)</td></tr>
-<tr><td>EU AI Act Art 15 (accuracy/robustness)</td><td class="hi">Confidence-weighted emission, never Boolean</td><td>✓</td></tr>
-<tr><td>EU AI Act Art 50 (transparency)</td><td class="hi">Article 50 passport at defoneos-transparency-register.html</td><td>✓</td></tr>
-<tr><td>UK GDPR + DPA 2018 (data minimisation)</td><td class="hi">PII redaction at MCP boundary before OLM ingest</td><td>✓</td></tr>
-<tr><td>NIST AI RMF (Govern/Map/Measure/Manage)</td><td class="hi">Council = Govern / Map+Measure = SIGIL / Manage = 5-phase cycle</td><td>✓</td></tr>
-<tr><td>ISO 42001 (AI Management)</td><td class="hi">Annex A.5 (policies) + A.6 (roles) + A.8 (operations)</td><td>✓</td></tr>
-<tr><td>NCSC CAF 14 outcomes</td><td class="hi">A1.a (governance) through A6.b (incident mgmt) all self-assessed</td><td>Partial — external surveillance Q3 2027 target</td></tr>
-<tr><td>JSP 936 (MOD AI)</td><td class="hi">Generator at defoneos-jsp936-generator.html</td><td>✓</td></tr>
-<tr><td>NATO SOFA / AUKUS ethics</td><td class="hi">UK-incorporated = PFPA + Care-Floor</td><td>✓</td></tr>
-</table>
-
-<h2>SIGIL Anchor + Self-Verification</h2>
-<div class="proof">
-<strong>Proof of this OLM state snapshot (6 Jul 2026):</strong> All numbers above are derived from <code>/home/nicholas/sov3/logs/olm_brain.log</code> on the GCP VM. SIGIL digest <code>[TO BE COMPUTED POST-DEPLOY]</code>.<br>
-<strong>Verify yourself:</strong> <code>curl -sI https://csoai-static-deploy2.vercel.app/defoneos-train.html | head -1</code> should return <code>HTTP/2 200</code>.<br>
-<strong>Honesty register:</strong> The numbers above are targets and operational measurements from logs. They are not synthetic. They are also not benchmarks — they are what a real OLM instance on a real VM with the live 30 MCPs produces. Your experience will vary based on which MCPs you connect and your sensor density.
-</div>
-
-<footer style="text-align:center;padding:2rem;color:#64748b;font-size:.8rem;border-top:1px solid rgba(255,255,255,.05);margin-top:2rem">
-<p><a href="/defoneos-index" style="color:#22d3ee;text-decoration:none">Index</a> · <a href="/defoneos-demo" style="color:#22d3ee;text-decoration:none">Demo</a> · <a href="/defoneos-pricing" style="color:#22d3ee;text-decoration:none">Pricing</a> · <a href="/defoneos-hives" style="color:#22d3ee;text-decoration:none">Hives</a> · <a href="/defoneos-verify" style="color:#22d3ee;text-decoration:none">Verify</a> · <a href="/defoneos-roadmap" style="color:#22d3ee;text-decoration:none">Roadmap</a></p>
-<p>DEFONEOS · CSOAI Ltd · UK Companies House 16939677 · Apache 2.0 · © 2026</p>
-</footer>
-<div style="margin:2rem auto;padding:1.5rem;max-width:1100px;background:linear-gradient(135deg,rgba(34,211,238,.08),rgba(167,139,250,.08));border:1px solid rgba(34,211,238,.3);border-radius:14px;text-align:center;">
-  <div style="font-size:1.25rem;font-weight:800;color:var(--cyan,#22d3ee);margin-bottom:.5rem;">🛡️ Ready to put DEFONEOS to work?</div>
-  <p style="color:#cbd5e1;margin:0 0 1rem;font-size:.95rem;">7 personas · 5 tiers · 30-second signup · free 30-day sandbox for regulators and end-users.</p>
-  <a href="/defoneos-signup-hub" style="display:inline-block;padding:.8rem 1.6rem;background:linear-gradient(135deg,#22d3ee,#a78bfa);color:#000;border-radius:8px;text-decoration:none;font-weight:800;font-size:.95rem;margin:.3rem;">Sign up · Ed25519-signed receipt →</a>
-  <a href="/defoneos-defence-primes" style="display:inline-block;padding:.8rem 1.6rem;border:1px solid #22d3ee;color:#22d3ee;border-radius:8px;text-decoration:none;font-weight:700;font-size:.95rem;margin:.3rem;">For Defence Primes</a>
-  <a href="/defoneos-regulators" style="display:inline-block;padding:.8rem 1.6rem;border:1px solid #22c55e;color:#22c55e;border-radius:8px;text-decoration:none;font-weight:700;font-size:.95rem;margin:.3rem;">For Regulators (Free)</a>
-  <a href="/defoneos-seriesa" style="display:inline-block;padding:.8rem 1.6rem;border:1px solid #fbbf24;color:#fbbf24;border-radius:8px;text-decoration:none;font-weight:700;font-size:.95rem;margin:.3rem;">Series A — £45-90M Round</a>
-  <div style="color:#64748b;font-size:.75rem;margin-top:.8rem;">ED25519 SIGIL receipts · UK-sovereign · AUKUS-compatible · T-27 days to EU AI Act</div>
-</div>
-
-<style>html{scroll-behavior:smooth}.back-to-top{position:fixed;bottom:1.5rem;right:1.5rem;width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,#22d3ee,#8b5cf6);color:#000;display:flex;align-items:center;justify-content:center;text-decoration:none;font-size:1.2rem;cursor:pointer;z-index:998;opacity:0;transition:opacity .3s;border:none}.back-to-top.visible{opacity:1}</style>
-<button class="back-to-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Back to top">↑</button>
-<script>window.addEventListener("scroll",function(){var b=document.querySelector(".back-to-top");if(window.pageYOffset>300){b.classList.add("visible")}else{b.classList.remove("visible")}})</script>
-</body></html>
+<footer style="text-align:center;padding:2rem;color:#64748b;font-size:.8rem;border-top:1px solid rgba(255,255,255,.05);margin-top:2rem"><p><a href="defoneos-index.html" style="color:#22d3ee;text-decoration:none">Index</a> · <a href="defoneos-demo.html" style="color:#22d3ee;text-decoration:none">Demo</a> · <a href="defoneos-seriesa.html" style="color:#22d3ee;text-decoration:none">Series A</a> · <a href="defoneos-pricing.html" style="color:#22d3ee;text-decoration:none">Pricing</a></p><p>DEFONEOS · CSOAI Ltd · UK Companies House 16939677 · Apache 2.0 · © 2026</p></footer><style>html{scroll-behavior:smooth}.back-to-top{position:fixed;bottom:1.5rem;right:1.5rem;width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,#22d3ee,#8b5cf6);color:#000;display:flex;align-items:center;justify-content:center;text-decoration:none;font-size:1.2rem;cursor:pointer;z-index:998;opacity:0;transition:opacity .3s;border:none}.back-to-top.visible{opacity:1}</style><button class="back-to-top" onclick="window.scrollTo({top:0,behavior:smooth})" aria-label="Back to top">↑</button><script>window.addEventListener("scroll",function(){var b=document.querySelector(".back-to-top");if(window.pageYOffset>300){b.classList.add("visible")}else{b.classList.remove("visible")}})</script></body></html>

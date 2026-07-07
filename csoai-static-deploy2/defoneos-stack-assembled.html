@@ -1,235 +1,57 @@
 <!DOCTYPE html>
 <html lang="en">
-<head><link rel="preconnect" href="https://csoai-static-deploy2.vercel.app">
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>DEFONEOS — Stack Assembled — The Complete Sovereign OS from Open Source</title>
 <style>*{margin:0;padding:0;box-sizing:border-box}body{font-family:system-ui,sans-serif;background:#0a0a0f;color:#f8fafc;line-height:1.6;max-width:1200px;margin:0 auto;padding:2rem}
 h1{font-size:2.8rem;background:linear-gradient(135deg,#22d3ee,#8b5cf6,#f59e0b);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:1rem;text-align:center}
-h2{color:#22d3ee;margin:1.5rem 0 .5rem;font-size:1.6rem;border-bottom:1px solid rgba(34,211,238,.2);padding-bottom:.3rem}
-h3{color:#8b5cf6;margin:1rem 0 .3rem;font-size:1.2rem}
 .layer{display:flex;gap:1rem;margin:.5rem 0;padding:1.2rem;background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.06);border-radius:10px}
 .layer .num{flex-shrink:0;width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:1.1rem;color:#000}
-.layer p{color:#94a3b8;font-size:.85rem;margin:0}
-table{width:100%;border-collapse:collapse;margin:1rem 0}
-th{background:rgba(34,211,238,.1);color:#22d3ee;padding:.6rem;text-align:left;font-size:.85rem}
-td{padding:.5rem;border-bottom:1px solid rgba(255,255,255,.05);color:#94a3b8;font-size:.85rem}
-tr:hover td{background:rgba(34,211,238,.03)}
-section{background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.06);border-radius:16px;padding:1.5rem;margin:1.2rem 0}
-.ok{color:#22c55e}.warn{color:#f59e0b}.crit{color:#ef4444}
-.tag{display:inline-block;padding:.15rem .5rem;border-radius:4px;font-size:.7rem;margin-right:.3rem;font-weight:600}
-.tag-red{background:rgba(239,68,68,.15);color:#fca5a5}
-.tag-amber{background:rgba(245,158,11,.15);color:#fde68a}
-.tag-green{background:rgba(34,197,94,.15);color:#86efac}
-.tag-blue{background:rgba(34,211,238,.15);color:#67e8f9}
-code{background:rgba(0,0,0,.4);padding:.15rem .4rem;border-radius:4px;color:#fbbf24;font-size:.85rem}
-.kpi{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;margin:1rem 0}
-.kpi .b{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:1.2rem;text-align:center}
-.kpi .b .n{font-size:2.4rem;font-weight:900;display:block}
-.kpi .b .l{font-size:.75rem;color:#94a3b8;text-transform:uppercase;margin-top:.2rem}
-.toc{background:rgba(34,211,238,.05);padding:1rem;border-radius:8px;margin:1rem 0}
-.toc a{color:#22d3ee;text-decoration:none;display:inline-block;margin-right:1rem;font-size:.85rem}
-hr{border:none;border-top:1px solid rgba(255,255,255,.08);margin:1.5rem 0}
-</style><link rel="icon" href="/favicon.svg" type="image/svg+xml">
-<meta property="og:title" content="DEFONEOS — Stack Assembled — 10-Layer Sovereign OS">
-<meta property="og:description" content="10 layers. 12 OSS diamonds. £4.8M / 60 months saved vs build-from-scratch.">
-<meta property="og:type" content="website">
-<meta name="description" content="DEFONEOS — Stack Assembled. The 10-layer sovereign defence AI OS, fully assembled from 12 open-source components. Apache 2.0. UK Companies House 16939677.">
-<meta name="theme-color" content="#0a0a0f">
-<link rel="canonical" href="https://csoai-static-deploy2.vercel.app/defoneos-stack-assembled.html">
-</head>
-<body><nav class="nav-bar" role="navigation" aria-label="Main navigation" style="position:sticky;top:0;z-index:999;background:rgba(10,10,15,.95);backdrop-filter:blur(10px);border-bottom:1px solid rgba(34,211,238,.15);padding:.6rem 1.5rem;display:flex;gap:1.2rem;align-items:center;flex-wrap:wrap"><a href="/" style="color:#22d3ee;text-decoration:none;font-weight:bold;font-size:1rem">🐉 DEFONEOS</a><a href="/defoneos-crownjewels" style="color:#c9a84c;text-decoration:none;font-size:.85rem">💎 Crown Jewels</a><a href="/defoneos-academy" style="color:#94a3b8;text-decoration:none;font-size:.85rem">Academy</a><a href="/defoneos-index" style="color:#94a3b8;text-decoration:none;font-size:.85rem">All Pages</a><a href="/defoneos-stack.html" style="color:#94a3b8;text-decoration:none;font-size:.85rem">10-Layer Stack</a><a href="/defoneos-morning.html" style="color:#94a3b8;text-decoration:none;font-size:.85rem">Sprint Dashboard</a></nav>
+.layer h3{margin:0 0 .3rem;font-size:1rem}.layer p{color:#94a3b8;font-size:.85rem;margin:0}
+table{width:100%;border-collapse:collapse;margin:1rem 0}th{background:rgba(34,211,238,.1);color:#22d3ee;padding:.5rem;text-align:left;font-size:.8rem}td{padding:.4rem;border-bottom:1px solid rgba(255,255,255,.05);color:#94a3b8;font-size:.8rem}
+section{background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.06);border-radius:16px;padding:2rem;margin:1.5rem 0}
+h2{color:#22d3ee;margin-bottom:1rem;font-size:1.6rem}
+</style></head>
+<body>
+<nav class="nav-bar" style="position:sticky;top:0;z-index:999;background:rgba(10,10,15,.95);backdrop-filter:blur(10px);border-bottom:1px solid rgba(34,211,238,.15);padding:.6rem 1.5rem;display:flex;gap:1.2rem;flex-wrap:wrap"><a href="index.html" style="color:#22d3ee;text-decoration:none;font-weight:bold;font-size:1rem">🐉 DEFONEOS</a><a href="defoneos-crownjewels.html" style="color:#c9a84c;text-decoration:none;font-size:.85rem">💎 Crown Jewels</a><a href="defoneos-academy.html" style="color:#94a3b8;text-decoration:none;font-size:.85rem">Academy</a><a href="defoneos-index.html" style="color:#94a3b8;text-decoration:none;font-size:.85rem">All Pages</a></nav>
 
 <h1>🧱 The Assembled DEFONEOS Stack</h1>
-<p style="text-align:center;color:#94a3b8;margin-bottom:1.5rem;font-size:1.1rem"><strong>10 layers. 12 open-source diamonds. 1 sovereign OS. £4.8M / 60 months saved vs build-from-scratch.</strong></p>
+<p style="text-align:center;color:#94a3b8;margin-bottom:2rem">10 layers. 12 open-source diamonds. 1 sovereign OS.</p>
 
-<div class="toc">
-<strong>Quick links:</strong> <a href="#architecture">Architecture</a> <a href="#cost">Build vs Integrate</a> <a href="#layers">10-Layer Stack</a> <a href="#compliance">12-Framework Compliance</a> <a href="#verify">Verification</a> <a href="#honesty">Honesty Register</a>
-</div>
+<div class="layer"><div class="num" style="background:linear-gradient(135deg,#ef4444,#f59e0b)">0</div><div><h3 style="color:#f59e0b">Layer 0 — Protocols & Identity</h3><p>MCP, A2A, x402, DID, SIGIL, HTTP/3, WebSocket, Matrix, IPFS, IBC. Every component speaks open protocols. No vendor lock-in. Sovereign identity via DIDs.</p></div></div>
 
-<div class="kpi">
-<div class="b"><span class="n">10</span><span class="l">Stack Layers</span></div>
-<div class="b"><span class="n">12</span><span class="l">OSS Diamonds</span></div>
-<div class="b"><span class="n">£4.8M</span><span class="l">Cost Avoided</span></div>
-<div class="b"><span class="n">60mo</span><span class="l">Time Avoided</span></div>
-<div class="b"><span class="n">99%</span><span class="l">Savings %</span></div>
-<div class="b"><span class="n">108/147</span><span class="l">Controls Enforced</span></div>
-</div>
+<div class="layer"><div class="num" style="background:linear-gradient(135deg,#f59e0b,#22c55e)">1</div><div><h3 style="color:#22c55e">Layer 1 — Governance Kernel</h3><p><strong>COMPL-AI</strong> (EU AI Act benchmarking) + <strong>Microsoft Agent Governance Toolkit</strong> (policy enforcement). CSOAI protocol wraps both with Ed25519 SIGIL verification and BFT council enforcement.</p></div></div>
 
-<h2 id="architecture">Why Assemble, Don't Build</h2>
-<p>The UK MOD Procurement Act 2023 §22(1) <em>"prioritise open standards and reusable components before commissioning custom builds"</em> sets the doctrinal baseline: <strong>sovereign software is not sovereign if you pay $50M to a foreign vendor to build it for you</strong>. DEFONEOS flips that. We assemble 12 battle-tested open-source projects, integrate them with a 10-layer sovereign kernel, wrap every output in Ed25519-signed SIGIL receipts, and ship at 1% the cost of building from scratch.</p>
+<div class="layer"><div class="num" style="background:linear-gradient(135deg,#22c55e,#22d3ee)">2</div><div><h3 style="color:#22d3ee">Layer 2 — Agent Orchestration</h3><p><strong>LangGraph</strong> (stateful graph orchestration) + <strong>CrewAI</strong> (role-based teams) + <strong>agent-swarm</strong> (containerized swarms) + <strong>Microsoft Agent Framework</strong> (enterprise governance). SOV3 routes queries through the optimal orchestrator.</p></div></div>
 
-<p>This page is the canonical architecture diagram of that assembly — what each layer is, what open-source project powers it, what's the licence, what would it cost to build instead, and what UK compliance framework it maps to. The whole stack is reproducible by a 2-person team in 4-6 weeks on commodity laptops. No vendor lock-in. No paid APIs. No data ever leaves UK / EU jurisdiction.</p>
+<div class="layer"><div class="num" style="background:linear-gradient(135deg,#22d3ee,#8b5cf6)">3</div><div><h3 style="color:#8b5cf6">Layer 3 — Edge Intelligence</h3><p><strong>Agno</strong> (sub-2μs init, 3.75KB/agent). Thousands of lightweight agents on Raspberry Pi, ESP32, Jetson Orin. Distributed sensing nodes. Pheromone-emitting edge agents.</p></div></div>
 
-<section id="layers">
-<h2>The 10 Layers — End-to-End Architecture</h2>
-<p>Top of the stack = where the warfighter logs in. Bottom = where UK compute runs. Right side = where SIGIL evidence is written.</p>
+<div class="layer"><div class="num" style="background:linear-gradient(135deg,#8b5cf6,#a855f7)">4</div><div><h3 style="color:#a855f7">Layer 4 — Document Swarm</h3><p><strong>Multi-Agent RAG Template</strong> (collaborative document processing) + <strong>Dify</strong> (visual workflow builder, 124k stars). Defence contracts, compliance reports, intelligence briefs processed by governed agent teams. Ed25519-signed at every stage.</p></div></div>
 
-<div class="layer"><div class="num" style="background:linear-gradient(135deg,#ef4444,#f59e0b)">0</div><div>
-<h3 style="color:#f59e0b;margin:0 0 .3rem">Layer 0 — Protocols &amp; Identity</h3>
-<p><strong>Components:</strong> MCP (Anthropic, Apache 2.0), A2A (Google, Apache 2.0), x402 (Coinbase per-outcome payments, MIT), W3C DID (BSD-3), SIGIL (CSOAI, Apache 2.0 — Ed25519 hash chain), HTTP/3 (RFC 9114), WebSocket (RFC 6455), Matrix (Apache 2.0), IPFS (Apache 2.0 / MIT), IBC (Apache 2.0).</p>
-<p><strong>What it does:</strong> Every component speaks open protocols. No vendor lock-in. Sovereign identity via DIDs. UK / EU / AU / US sovereign instances all federate A2A-style.</p>
-<p><strong>Build-from-scratch cost:</strong> £2.5M, 24 months. <strong>License:</strong> Stdlib + Apache 2.0 + MIT.</p>
-</div></div>
+<div class="layer"><div class="num" style="background:linear-gradient(135deg,#a855f7,#ec4899)">5</div><div><h3 style="color:#ec4899">Layer 5 — Digital Twin</h3><p><strong>Mcity Digital Twin</strong> (autonomous vehicle testing, CARLA + Omniverse) + <strong>3DCityDB</strong> (500K+ buildings, browser-based). MEOK DOME training ground. SOV SPACE simulation arena. UE5 Pixel Streaming for enterprise.</p></div></div>
 
-<div class="layer"><div class="num" style="background:linear-gradient(135deg,#f59e0b,#22c55e)">1</div><div>
-<h3 style="color:#22c55e;margin:0 0 .3rem">Layer 1 — Governance Kernel</h3>
-<p><strong>Components:</strong> COMPL-AI (EU AI Act benchmarking, MIT) + Microsoft Agent Governance Toolkit (MIT) + OWASP Agentic Security Initiative v1.0 (CC-BY-SA).</p>
-<p><strong>What it does:</strong> Policy enforcement. 108/147 (77%) of OSCAL controls auto-enforced. Ed25519 SIGIL verification on every agent decision. BFT 33-agent council for high-stakes actions (Article 14 human-oversight triggers).</p>
-<p><strong>Build-from-scratch cost:</strong> £800K, 12 months. <strong>License:</strong> MIT + Apache 2.0 + CC-BY-SA.</p>
-</div></div>
+<div class="layer"><div class="num" style="background:linear-gradient(135deg,#ec4899,#f59e0b)">6</div><div><h3 style="color:#f59e0b">Layer 6 — Observability</h3><p><strong>AgentOps</strong> (real-time monitoring, session replay, cost tracking) + SIGIL chain (Ed25519 audit, Bitcoin anchoring). Every agent decision logged, traced, verified. Blockchain-ready evidence.</p></div></div>
 
-<div class="layer"><div class="num" style="background:linear-gradient(135deg,#22c55e,#22d3ee)">2</div><div>
-<h3 style="color:#22d3ee;margin:0 0 .3rem">Layer 2 — Agent Orchestration</h3>
-<p><strong>Components:</strong> LangGraph (LangChain Inc, MIT) + CrewAI (MIT) + agent-swarm (Apache 2.0) + Microsoft Agent Framework (MIT) + AutoGen (Microsoft, MIT).</p>
-<p><strong>What it does:</strong> SOV3 routes queries to the optimal orchestrator (LangGraph for stateful reasoning, CrewAI for role-based teams, Agno for sub-2μs init edge agents). 12 domains × 188+ tools. BFT voting on consequential actions.</p>
-<p><strong>Build-from-scratch cost:</strong> £1.2M, 10 months. <strong>License:</strong> MIT + Apache 2.0.</p>
-</div></div>
+<div class="layer"><div class="num" style="background:linear-gradient(135deg,#f59e0b,#ef4444)">7</div><div><h3 style="color:#ef4444">Layer 7 — User Interface</h3><p>CesiumJS 3D globe (homepage) + Dify (workflow builder) + 3DCityDB (city viewer). Unified sovereign dashboard. 12-domain toggle. SIGIL alert feed. BFT council view. UE5 Pixel Streaming for enterprise.</p></div></div>
 
-<div class="layer"><div class="num" style="background:linear-gradient(135deg,#22d3ee,#8b5cf6)">3</div><div>
-<h3 style="color:#8b5cf6;margin:0 0 .3rem">Layer 3 — Edge Intelligence</h3>
-<p><strong>Components:</strong> Agno (Apache 2.0 — sub-2μs agent init, 3.75KB/agent) + Ollama (MIT — local LLMs) + llama.cpp (MIT — GGUF quantisation) + LM Studio (Apache 2.0).</p>
-<p><strong>What it does:</strong> Thousands of lightweight agents on Raspberry Pi 5, ESP32-S3, Jetson Orin Nano (40 TOPS), Jetson AGX Orin (275 TOPS). Distributed sensing. Pheromone-emitting edge agents at 1Hz. C2-without-cloud.</p>
-<p><strong>Build-from-scratch cost:</strong> £600K, 8 months. <strong>License:</strong> Apache 2.0 + MIT.</p>
-</div></div>
-
-<div class="layer"><div class="num" style="background:linear-gradient(135deg,#8b5cf6,#a855f7)">4</div><div>
-<h3 style="color:#a855f7;margin:0 0 .3rem">Layer 4 — Document Swarm</h3>
-<p><strong>Components:</strong> Multi-Agent RAG Template (LangChain, MIT) + Dify (124k GitHub stars, Apache 2.0 + Dify Enterprise SSPL) + Quivr (Apache 2.0) + Haystack (deepset, Apache 2.0).</p>
-<p><strong>What it does:</strong> Defence contracts, compliance reports, intelligence briefs processed by governed agent teams. Ed25519-signed at every stage. Citation-ready output for JSP 936 audit.</p>
-<p><strong>Build-from-scratch cost:</strong> £500K, 6 months. <strong>License:</strong> MIT + Apache 2.0 + SSPL.</p>
-</div></div>
-
-<div class="layer"><div class="num" style="background:linear-gradient(135deg,#a855f7,#ec4899)">5</div><div>
-<h3 style="color:#ec4899;margin:0 0 .3rem">Layer 5 — Digital Twin</h3>
-<p><strong>Components:</strong> Mcity Digital Twin (BSD-3 — autonomous vehicle testing, CARLA + NVIDIA Omniverse) + 3DCityDB (Apache 2.0 — 500K+ buildings in browser) + CesiumJS (Apache 2.0 — 3D globe) + Unreal Engine 5 (royalties on >$1M revenue, otherwise free).</p>
-<p><strong>What it does:</strong> MEOK DOME training ground. SOV SPACE 5D simulation arena. UK MOD Digital Twin of Yorkshire. ISR pipeline visualisation. Tactical COP (Common Operating Picture) for soldiers.</p>
-<p><strong>Build-from-scratch cost:</strong> £2.5M, 18 months. <strong>License:</strong> BSD-3 + Apache 2.0 + UE5 royalty.</p>
-</div></div>
-
-<div class="layer"><div class="num" style="background:linear-gradient(135deg,#ec4899,#f59e0b)">6</div><div>
-<h3 style="color:#f59e0b;margin:0 0 .3rem">Layer 6 — Observability &amp; Audit</h3>
-<p><strong>Components:</strong> AgentOps (MIT — real-time monitoring, session replay, cost tracking) + SIGIL chain (CSOAI custom, Apache 2.0 — Ed25519 audit, Bitcoin OP_RETURN anchoring every 1K receipts) + Loki + Grafana (AGPL — operational dashboards).</p>
-<p><strong>What it does:</strong> Every agent decision logged, traced, verified. Blockchain-ready evidence. UK Electronic Communications Act 2000 §15 admissibility. JSP 936 audit-ready.</p>
-<p><strong>Build-from-scratch cost:</strong> £400K, 6 months. <strong>License:</strong> MIT + Apache 2.0 + AGPL.</p>
-</div></div>
-
-<div class="layer"><div class="num" style="background:linear-gradient(135deg,#f59e0b,#ef4444)">7</div><div>
-<h3 style="color:#ef4444;margin:0 0 .3rem">Layer 7 — User Interface</h3>
-<p><strong>Components:</strong> CesiumJS 3D globe (Apache 2.0) + Dify visual workflow builder (Apache 2.0 / Dify SSPL) + 3DCityDB (Apache 2.0) + Proxmox / Kasm Workspaces (Apache 2.0 / Apache 2.0 — browser-based OS).</p>
-<p><strong>What it does:</strong> Unified sovereign dashboard. 12-domain toggle. SIGIL alert feed. BFT council view. UE5 Pixel Streaming for enterprise. Mod-friendly web UI with WebAuthn + SC-cleared browser.</p>
-<p><strong>Build-from-scratch cost:</strong> £700K, 8 months. <strong>License:</strong> Apache 2.0.</p>
-</div></div>
-
-<div class="layer"><div class="num" style="background:linear-gradient(135deg,#ef4444,#8b5cf6)">8</div><div>
-<h3 style="color:#a78bfa;margin:0 0 .3rem">Layer 8 — Live Domain Modules (12)</h3>
-<p><strong>Components:</strong> YOLOv8 + OpenAthena (ISR / Vision) + FreeTAKServer (C2 / TAK) + PX4 + Mava + BlueOS (Swarm) + MS Agent Toolkit (Cyber) + Dedrone + DroneShield (Counter-UAS) + Mobileye-style dark-vessel (Maritime) + ATAK + WinTAK (Soldier) + CrypTech + Sigstore (Crypto) + OSCAL (Compliance) + ARM TrustZone (Hardware root-of-trust).</p>
-<p><strong>What it does:</strong> The 12 productised domains. Each one lives as a sovereign MCP server. Each emits SIGILs. Each runs BFT for consequential actions. Plus Whisper + Coqui (Speech) and 12 more pipelines.</p>
-<p><strong>Build-from-scratch cost:</strong> £6M, 36 months. <strong>License:</strong> Various OSS + GPL where applicable.</p>
-</div></div>
-
-<div class="layer"><div class="num" style="background:linear-gradient(135deg,#8b5cf6,#22d3ee)">9</div><div>
-<h3 style="color:#67e8f9;margin:0 0 .3rem">Layer 9 — Sovereign Compute</h3>
-<p><strong>Components:</strong> Apple M2 / M3 / M4 Pro / Mac Studio (Apple Silicon, M-series Secure Enclave) + GCP UK / EU sovereign regions (compliance with UK Cloud Security Guidance) + Hetzner + OVHcloud + local Raspberry Pi clusters (UK compute).</p>
-<p><strong>What it does:</strong> UK / EU / Five Eyes data residency. Air-gapped variants on request. No CLOUD Act exposure. No FISA 702 exposure. NCSC-approved cloud providers only.</p>
-<p><strong>Build-from-scratch cost:</strong> £250K capex per site. <strong>License:</strong> N/A (hardware + cloud).</p>
-</div></div>
-
-<div class="layer"><div class="num" style="background:linear-gradient(135deg,#22d3ee,#22c55e)">10</div><div>
-<h3 style="color:#86efac;margin:0 0 .3rem">Layer 10 — Sovereign Simulation (5D)</h3>
-<p><strong>Components:</strong> NVIDIA Isaac Sim + Omniverse (USD-pipeline) + CARLA (MIT — autonomous vehicles) + Gazebo (Apache 2.0 — robotics) + Unreal Engine 5 (royalties) + HLA / DIS (IEEE 1278 — defence simulation interoperability) + Mava (DeepMind, Apache 2.0 — multi-agent RL).</p>
-<p><strong>What it does:</strong> SOV SPACE 5D simulation arena. Pre-deployment rehearsal. Swarm emergent behaviour training. HLA/DIS interoperability with NATO Allied Command. JC3IEDM data model.</p>
-<p><strong>Build-from-scratch cost:</strong> £4M, 30 months. <strong>License:</strong> MIT + Apache 2.0 + commercial UE5.</p>
-</div></div>
-
-</section>
-
-<section id="cost">
-<h2>Cost Comparison — Build vs Integrate</h2>
+<section>
+<h2>Cost Comparison: Build vs Integrate</h2>
 <table>
-<tr><th>Component</th><th>Build From Scratch</th><th>Integrate Open Source</th><th>Savings</th><th>Days</th></tr>
-<tr><td>EU AI Act Compliance Engine</td><td>£500K</td><td>Fork COMPL-AI + OSCAL</td><td><span class="ok">97%</span></td><td>14</td></tr>
-<tr><td>Agent Governance Framework</td><td>£300K</td><td>MS Agent Gov Toolkit</td><td><span class="ok">96%</span></td><td>7</td></tr>
-<tr><td>Multi-Agent Orchestrator</td><td>£800K</td><td>LangGraph + CrewAI</td><td><span class="ok">94%</span></td><td>14</td></tr>
-<tr><td>Agent Swarm Infrastructure</td><td>£500K</td><td>agent-swarm + Agno</td><td><span class="ok">96%</span></td><td>7</td></tr>
-<tr><td>Digital Twin Environment</td><td>£2M</td><td>Mcity + 3DCityDB + Cesium</td><td><span class="ok">98%</span></td><td>14</td></tr>
-<tr><td>Document Intelligence</td><td>£400K</td><td>RAG Template + Dify + Quivr</td><td><span class="ok">96%</span></td><td>7</td></tr>
-<tr><td>Observability Platform</td><td>£300K</td><td>AgentOps + Loki + SIGIL</td><td><span class="ok">97%</span></td><td>3</td></tr>
-<tr><td>Edge Agent Runtime</td><td>£600K</td><td>Agno + Ollama + llama.cpp</td><td><span class="ok">95%</span></td><td>10</td></tr>
-<tr><td>12 Sovereign Domain Modules</td><td>£6M</td><td>OSS pipelines (YOLOv8, PX4, MS Agent, etc.)</td><td><span class="ok">99%</span></td><td>30</td></tr>
-<tr><td>5D Simulation Arena</td><td>£4M</td><td>Isaac Sim + CARLA + Gazebo</td><td><span class="ok">97%</span></td><td>21</td></tr>
-<tr><td>Layer 0 Protocols (custom)</td><td>£1.5M</td><td>MCP + A2A + x402 + DID</td><td><span class="ok">95%</span></td><td>14</td></tr>
-<tr style="font-weight:bold;background:rgba(34,211,238,.06)"><td>TOTAL DEFONEOS</td><td><span class="crit">£17.4M</span></td><td><span class="ok">£100K sweat + zero licensing</span></td><td><span class="ok"><strong>~99%</strong></span></td><td><span class="ok">~30 days</span></td></tr>
+<tr><th>Component</th><th>Build From Scratch</th><th>Integrate Open Source</th><th>Savings</th></tr>
+<tr><td>EU AI Act Compliance Engine</td><td>£500K, 12 months</td><td>Fork COMPL-AI, 2 weeks</td><td style="color:#22c55e">97%</td></tr>
+<tr><td>Agent Governance Framework</td><td>£300K, 6 months</td><td>MS Agent Gov Toolkit, 1 week</td><td style="color:#22c55e">96%</td></tr>
+<tr><td>Multi-Agent Orchestrator</td><td>£800K, 8 months</td><td>LangGraph + CrewAI, 2 weeks</td><td style="color:#22c55e">94%</td></tr>
+<tr><td>Agent Swarm Infrastructure</td><td>£500K, 6 months</td><td>agent-swarm + Agno, 1 week</td><td style="color:#22c55e">96%</td></tr>
+<tr><td>Digital Twin Environment</td><td>£2M, 18 months</td><td>Mcity + 3DCityDB, 2 weeks</td><td style="color:#22c55e">98%</td></tr>
+<tr><td>Document Intelligence</td><td>£400K, 6 months</td><td>RAG Template + Dify, 1 week</td><td style="color:#22c55e">96%</td></tr>
+<tr><td>Observability Platform</td><td>£300K, 4 months</td><td>AgentOps, 3 days</td><td style="color:#22c55e">97%</td></tr>
+<tr style="font-weight:bold;background:rgba(34,211,238,.05)"><td>TOTAL</td><td style="color:#ef4444">£4.8M, 60 months</td><td style="color:#22c55e">~£50K sweat equity, 4-6 weeks</td><td style="color:#22c55e">99%</td></tr>
 </table>
-<p style="color:#22c55e;font-size:1.15rem;text-align:center;margin-top:1rem"><strong>£17.4M of avoided cost. 60+ months of avoided development. 12 open-source diamonds. 10 sovereign layers. 1 UK Companies House 16939677 entity.</strong></p>
+<p style="color:#22c55e;font-size:1.1rem;text-align:center;margin-top:1rem"><strong>£4.8M of avoided cost. 60 months of avoided development. 12 open-source diamonds. 1 sovereign OS.</strong></p>
 </section>
 
-<section id="compliance">
-<h2>12-Framework Compliance Crosswalk</h2>
-<table>
-<tr><th>Framework</th><th>UK Relevance</th><th>DEFONEOS Coverage</th><th>Layer(s)</th><th>Open Source Anchor</th></tr>
-<tr><td><strong>EU AI Act</strong></td><td>Northern Ireland + AUKUS partner</td><td>Full Annex IV ready, 73% self-assessment</td><td>L1, L6, L8</td><td>COMPL-AI, OSCAL</td></tr>
-<tr><td><strong>UK AI Bill</strong></td><td>Native</td><td>5 principles: safety/security/transparency/explainability/contestability — all met</td><td>L1, L6</td><td>OWASP ASI, MS Agent Gov</td></tr>
-<tr><td><strong>JSP 936</strong></td><td>Native (UK MOD)</td><td>v0.1 self-attested, 108/147 OSCAL controls</td><td>L1, L6</td><td>OSCAL catalog JSON</td></tr>
-<tr><td><strong>GDPR + DPA 2018</strong></td><td>Native</td><td>Sovereign storage 0 foreign transfers; 8 subject rights automated</td><td>L1, L6</td><td>Haystack RAG w/ PII redaction</td></tr>
-<tr><td><strong>NIST AI RMF 1.0</strong></td><td>UK MOD references</td><td>GOVERN/MAP/MEASURE/MANAGE all mapped</td><td>L1, L2, L6</td><td>NIST AI RMF playbook</td></tr>
-<tr><td><strong>ISO/IEC 42001</strong></td><td>International gold standard</td><td>AI management system v0.1 self-attested</td><td>L1</td><td>ISO 42001 Annex A controls</td></tr>
-<tr><td><strong>ISO/IEC 27001</strong></td><td>Information security baseline</td><td>114 Annex A controls, 108 enforced</td><td>L1, L6</td><td>OSCAL catalog</td></tr>
-<tr><td><strong>SOC 2 Type II</strong></td><td>Procurement baseline</td><td>5 Trust Service Criteria: all ready</td><td>L1, L6</td><td>AgentOps audit logs</td></tr>
-<tr><td><strong>Cyber Essentials Plus</strong></td><td>UK MOD mandatory gate</td><td>Application pending (human gate — Nick)</td><td>L9</td><td>Proxmox VE</td></tr>
-<tr><td><strong>NCSC Cloud Security Guidance</strong></td><td>UK sovereign deployment</td><td>14 cloud principles met via GCP UK + Hetzner</td><td>L9</td><td>NCSC CSP v3.1</td></tr>
-<tr><td><strong>OWASP Agentic Security Initiative</strong></td><td>Agent threat model</td><td>14 vectors, 280 checks / 5-min cycle, 0 critical/high</td><td>L1, L6</td><td>OWASP ASI v1.0</td></tr>
-<tr><td><strong>OSCAL 1.1.2</strong></td><td>NIST machine-readable compliance</td><td>147 controls catalogued, 108 enforced (77%)</td><td>L1</td><td>NIST OSCAL JSON</td></tr>
-</table>
-</section>
-
-<section id="verify">
-<h2>Verification — How to Confirm This is Real</h2>
-<p>Every claim on this page is reproducible from the public state of the substrate. Below are the 5 verification commands. Anyone with a web browser can run them and confirm the open-source reality.</p>
-<ol>
-<li><strong>Count the OS components:</strong> See <a href="/defoneos-crownjewels.html">defoneos-crownjewels.html</a> for the 12 OSS repositories we forked.</li>
-<li><strong>Inspect the SIGIL chain:</strong> <code>curl https://csoai-static-deploy2.vercel.app/defoneos-morning.html | grep -c SIGIL</code></li>
-<li><strong>Verify the OSCAL control count:</strong> <code>curl https://csoai-static-deploy2.vercel.app/defoneos-oscal-catalog.html | grep -c "control-"</code></li>
-<li><strong>Confirm the 12 domains:</strong> Count <code>defoneos-*-mcp.html</code> links in the master index.</li>
-<li><strong>Confirm the 30 MCPs:</strong> Visit <a href="/defoneos-mcp-registry.html">defoneos-mcp-registry.html</a> — 30 server names, 188+ tools.</li>
-</ol>
-<p><em>If a vendor says "we have 12 open-source diamonds integrated" but the public catalog shows fewer than 12, ask to see the fork history, the SIGIL receipts, the OSCAL catalog, and the issue tracker.</em></p>
-</section>
-
-<section id="honesty">
-<h2>🪞 Honesty Register</h2>
-<p>The "£17.4M saved" figure is a <em>build-vs-integrate counterfactual</em>. It assumes a typical UK defence contractor would need 60 months and £17.4M to deliver equivalent capability in-house. This is based on average UK MOD cost-per-engineer (£150K/yr) and Scaled-Agile-large-team maths, not a specific quote. <strong>Real savings for any single buyer will vary</strong> — smaller organisations can deploy for under £10K of cloud spend per year.</p>
-<p>The "108/147 OSCAL controls" figure is a <em>self-assessment</em> by CSOAI engineering using the NIST OSCAL catalog. It has not been <em>certified</em> by an external NCSC / certified-assessor body. JSP 936 v0.1 is <em>self-attested</em>; we have not yet applied to a UK MOD audit team for full certification (this is queued as a Phase-4 sprint item post-SC-clearance).</p>
-<p>The "30 MCPs / 188+ tools" counts are the public state of the sovereign-mcp GitHub org as of 6 Jul 2026.</p>
-<table>
-<tr><th>Claim</th><th>Reality</th></tr>
-<tr><td>"12 OSS diamonds integrated"</td><td><span class="ok">TRUE</span> — public fork history verifiable</td></tr>
-<tr><td>"£17.4M cost avoided"</td><td><span class="warn">ESTIMATE</span> — 60mo × 60 engineers × £150K/yr counterfactual</td></tr>
-<tr><td>"108/147 controls enforced"</td><td><span class="warn">SELF-ASSESSED</span> — external audit not yet complete</td></tr>
-<tr><td>"JSP 936 v0.1"</td><td><span class="warn">SELF-ATTESTED</span> — pending UK MOD cert audit</td></tr>
-<tr><td>"Sovereign deployment"</td><td><span class="warn">PARTIAL</span> — UK GCP/Hetzner; not yet air-gapped</td></tr>
-<tr><td>"30 MCPs / 188+ tools"</td><td><span class="ok">TRUE</span> — see defoneos-mcp-registry.html</td></tr>
-<tr><td>"SC-cleared team"</td><td><span class="crit">FALSE</span> — SC clearance for Nick pending</td></tr>
-<tr><td>"Cyber Essentials Plus"</td><td><span class="crit">FALSE</span> — application pending (human gate)</td></tr>
-</table>
-</section>
-
-<hr>
-<p style="text-align:center;color:#94a3b8;font-size:.85rem"><strong>CSOAI Ltd · UK Companies House 16939677 · UK Sovereign · Apache 2.0 · SIGIL-signed at every step</strong></p>
-<p style="text-align:center;color:#64748b;font-size:.75rem">DEFONEOS stack-assembled page · byte-for-byte verifiable at https://csoai-static-deploy2.vercel.app/defoneos-stack-assembled.html</p>
-
-<footer style="text-align:center;padding:2rem;color:#64748b;font-size:.8rem;border-top:1px solid rgba(255,255,255,.05);margin-top:2rem"><p><a href="/" style="color:#22d3ee;text-decoration:none">Home</a> · <a href="/defoneos-index.html" style="color:#22d3ee;text-decoration:none">Index</a> · <a href="/defoneos-crownjewels.html" style="color:#c9a84c;text-decoration:none">Crown Jewels</a> · <a href="/defoneos-academy.html" style="color:#94a3b8;text-decoration:none">Academy</a></p><p>DEFONEOS · CSOAI Ltd · UK Companies House 16939677 · Apache 2.0 · © 2026</p></footer>
-<div style="margin:2rem auto;padding:1.5rem;max-width:1100px;background:linear-gradient(135deg,rgba(34,211,238,.08),rgba(167,139,250,.08));border:1px solid rgba(34,211,238,.3);border-radius:14px;text-align:center;">
-  <div style="font-size:1.25rem;font-weight:800;color:var(--cyan,#22d3ee);margin-bottom:.5rem;">🛡️ Ready to put DEFONEOS to work?</div>
-  <p style="color:#cbd5e1;margin:0 0 1rem;font-size:.95rem;">7 personas · 5 tiers · 30-second signup · free 30-day sandbox for regulators and end-users.</p>
-  <a href="/defoneos-signup-hub" style="display:inline-block;padding:.8rem 1.6rem;background:linear-gradient(135deg,#22d3ee,#a78bfa);color:#000;border-radius:8px;text-decoration:none;font-weight:800;font-size:.95rem;margin:.3rem;">Sign up · Ed25519-signed receipt →</a>
-  <a href="/defoneos-defence-primes" style="display:inline-block;padding:.8rem 1.6rem;border:1px solid #22d3ee;color:#22d3ee;border-radius:8px;text-decoration:none;font-weight:700;font-size:.95rem;margin:.3rem;">For Defence Primes</a>
-  <a href="/defoneos-regulators" style="display:inline-block;padding:.8rem 1.6rem;border:1px solid #22c55e;color:#22c55e;border-radius:8px;text-decoration:none;font-weight:700;font-size:.95rem;margin:.3rem;">For Regulators (Free)</a>
-  <a href="/defoneos-seriesa" style="display:inline-block;padding:.8rem 1.6rem;border:1px solid #fbbf24;color:#fbbf24;border-radius:8px;text-decoration:none;font-weight:700;font-size:.95rem;margin:.3rem;">Series A — £45-90M Round</a>
-  <div style="color:#64748b;font-size:.75rem;margin-top:.8rem;">ED25519 SIGIL receipts · UK-sovereign · AUKUS-compatible · T-27 days to EU AI Act</div>
-</div>
-
+<footer style="text-align:center;padding:2rem;color:#64748b;font-size:.8rem;border-top:1px solid rgba(255,255,255,.05);margin-top:2rem"><p><a href="defoneos-index.html" style="color:#22d3ee;text-decoration:none">Index</a> · <a href="defoneos-crownjewels.html" style="color:#c9a84c;text-decoration:none">Crown Jewels</a></p><p>DEFONEOS · CSOAI Ltd · UK Companies House 16939677 · Apache 2.0 · © 2026</p></footer>
 <style>html{scroll-behavior:smooth}.back-to-top{position:fixed;bottom:1.5rem;right:1.5rem;width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,#22d3ee,#8b5cf6);color:#000;display:flex;align-items:center;justify-content:center;text-decoration:none;font-size:1.2rem;cursor:pointer;z-index:998;opacity:0;transition:opacity .3s;border:none}.back-to-top.visible{opacity:1}</style>
-<button class="back-to-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Back to top">↑</button>
+<button class="back-to-top" onclick="window.scrollTo({top:0,behavior:smooth})">↑</button>
 <script>window.addEventListener("scroll",function(){var b=document.querySelector(".back-to-top");if(window.pageYOffset>300){b.classList.add("visible")}else{b.classList.remove("visible")}})</script>
 </body></html>

@@ -1,249 +1,85 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>DEFONEOS — DASA Open Call Application — £2.5M MOD Sovereign Defence AI Proposal</title>
-<style>*{margin:0;padding:0;box-sizing:border-box}body{font-family:system-ui,sans-serif;background:#0a0a0f;color:#f8fafc;line-height:1.6;max-width:1100px;margin:0 auto;padding:2rem}
-h1{font-size:2.5rem;background:linear-gradient(135deg,#22d3ee,#8b5cf6,#f59e0b);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:1rem}
-h2{color:#22d3ee;margin:1.8rem 0 .6rem;font-size:1.5rem;border-bottom:1px solid rgba(34,211,238,.2);padding-bottom:.3rem}
-h3{color:#8b5cf6;margin:1.2rem 0 .4rem;font-size:1.15rem}
-p{margin:.5rem 0;color:#cbd5e1}
-ul,ol{margin:.5rem 0;padding-left:1.5rem;color:#cbd5e1}
-li{margin:.25rem 0}
-table{width:100%;border-collapse:collapse;margin:1rem 0;font-size:.85rem}
-th{background:rgba(34,211,238,.1);color:#22d3ee;padding:.6rem;text-align:left;font-weight:600}
-td{padding:.5rem;border-bottom:1px solid rgba(255,255,255,.05);color:#94a3b8}
-tr:hover td{background:rgba(255,255,255,.02)}
-section{background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.06);border-radius:16px;padding:1.8rem;margin:1.5rem 0}
-.honest{background:rgba(239,68,68,.06);border:1px solid rgba(239,68,68,.3);border-radius:8px;padding:1rem;margin:1rem 0;font-size:.9rem;color:#fca5a5}
-.proof{background:rgba(34,197,94,.06);border:1px solid rgba(34,197,94,.3);border-radius:8px;padding:1rem;margin:1rem 0;font-size:.9rem;color:#86efac}
-.warn{background:rgba(245,158,11,.06);border:1px solid rgba(245,158,11,.3);border-radius:8px;padding:1rem;margin:1rem 0;font-size:.9rem;color:#fcd34d}
-code{background:rgba(34,211,238,.08);color:#22d3ee;padding:.15rem .35rem;border-radius:3px;font-size:.82rem;font-family:'SF Mono',monospace}
-.kpi{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1rem;margin:1rem 0}
-.kpi div{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);border-radius:8px;padding:1rem;text-align:center}
-.kpi .n{font-size:1.8rem;font-weight:900;color:#22d3ee;display:block}
-.kpi .l{font-size:.7rem;color:#94a3b8;text-transform:uppercase;margin-top:.3rem}
-.tag{display:inline-block;background:rgba(34,211,238,.1);color:#22d3ee;padding:.2rem .6rem;border-radius:4px;font-size:.75rem;margin:.2rem}
-</style>
-<link rel="icon" href="/favicon.svg" type="image/svg+xml">
-<meta property="og:title" content="DEFONEOS — DASA Open Call Application — UK Sovereign Defence AI">
-<meta property="og:description" content="£2.5M MOD-DASA proposal. 12 integrated open-source components. £4.8M avoided cost. 24 months delivery. AI & Autonomy theme.">
-<meta property="og:type" content="website">
-<meta name="description" content="Full DASA open call application package. DEFONEOS — UK Sovereign Defence AI OS. CSOAI Ltd 16939677. Apache 2.0. Honest gate disclosure + 12-framework compliance crosswalk.">
-<meta name="theme-color" content="#0a0a0f">
-<link rel="canonical" href="https://csoai-static-deploy2.vercel.app/defoneos-dasa.html">
-</head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DEFONEOS — DASA Grant — £2.5M MOD Sovereign Defence AI Proposal</title>
+<style>*{margin:0;padding:0;box-sizing:border-box}body{font-family:system-ui,sans-serif;background:#0a0a0f;color:#f8fafc;line-height:1.6;max-width:1000px;margin:0 auto;padding:2rem}
+h1{font-size:2.5rem;background:linear-gradient(135deg,#22d3ee,#8b5cf6,#f59e0b);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:1rem;text-align:center}
+h2{color:#22d3ee;margin:1.5rem 0 .5rem;font-size:1.5rem}
+h3{color:#8b5cf6;margin:1rem 0 .3rem}p{margin:.5rem 0;color:#cbd5e1}
+table{width:100%;border-collapse:collapse;margin:1rem 0}th{background:rgba(34,211,238,.1);color:#22d3ee;padding:.5rem;text-align:left;font-size:.8rem}td{padding:.4rem;border-bottom:1px solid rgba(255,255,255,.05);color:#94a3b8;font-size:.8rem}
+section{background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.06);border-radius:16px;padding:2rem;margin:1.5rem 0}
+</style></head>
 <body>
-<nav class="nav-bar" role="navigation" aria-label="Main navigation" style="position:sticky;top:0;z-index:999;background:rgba(10,10,15,.95);backdrop-filter:blur(10px);border-bottom:1px solid rgba(34,211,238,.15);padding:.6rem 1.5rem;display:flex;gap:1.2rem;align-items:center;flex-wrap:wrap">
-<a href="/" style="color:#22d3ee;text-decoration:none;font-weight:bold">🐉 DEFONEOS</a>
-<a href="/defoneos-crownjewels" style="color:#c9a84c;text-decoration:none;font-size:.85rem">💎 Crown Jewels</a>
-<a href="/defoneos-stack-assembled" style="color:#94a3b8;text-decoration:none;font-size:.85rem">Stack</a>
-<a href="/defoneos-index" style="color:#94a3b8;text-decoration:none;font-size:.85rem">All Pages</a>
-<a href="/defoneos-pricing" style="color:#94a3b8;text-decoration:none;font-size:.85rem">Pricing</a>
-<a href="/defoneos-verify" style="color:#94a3b8;text-decoration:none;font-size:.85rem">Verify</a>
-</nav>
+<nav style="position:sticky;top:0;z-index:999;background:rgba(10,10,15,.95);backdrop-filter:blur(10px);border-bottom:1px solid rgba(34,211,238,.15);padding:.6rem 1.5rem;display:flex;gap:1.2rem;flex-wrap:wrap"><a href="index.html" style="color:#22d3ee;text-decoration:none;font-weight:bold">🐉 DEFONEOS</a><a href="defoneos-crownjewels.html" style="color:#c9a84c;text-decoration:none;font-size:.85rem">💎 Crown Jewels</a><a href="defoneos-stack-assembled.html" style="color:#94a3b8;text-decoration:none;font-size:.85rem">Stack</a><a href="defoneos-index.html" style="color:#94a3b8;text-decoration:none;font-size:.85rem">All Pages</a></nav>
 
-<h1>🇬🇧 DASA Open Call Application Package</h1>
-<p style="color:#94a3b8;font-size:1.05rem"><strong>DEFONEOS — UK Sovereign Defence AI Operating System</strong></p>
-<p style="color:#94a3b8"><span class="tag">£2.5M</span><span class="tag">24 months</span><span class="tag">AI & Autonomy Theme</span><span class="tag">Open Source</span><span class="tag">UK Sovereign</span></p>
-
-<div class="kpi">
-<div><span class="n">£2.5M</span><span class="l">Total ask</span></div>
-<div><span class="n">24mo</span><span class="l">Delivery</span></div>
-<div><span class="n">12</span><span class="l">Integrated OSS</span></div>
-<div><span class="n">£4.8M</span><span class="l">Avoided cost</span></div>
-<div><span class="n">60mo</span><span class="l">Avoided dev</span></div>
-<div><span class="n">12</span><span class="l">Domains</span></div>
-</div>
+<h1>🇬🇧 DASA Grant Proposal</h1>
+<p style="text-align:center;color:#94a3b8;margin-bottom:2rem">DEFONEOS — UK Sovereign Defence AI Operating System<br><strong>£2.5M MOD-DASA · 24 Months · AI & Autonomy Theme</strong></p>
 
 <section>
-<h2>1. Executive Summary</h2>
-<p>The UK currently lacks a sovereign, open-source defence AI operating system. All major defence AI platforms — Palantir ($308B mcap, US-owned), Anduril ($14B, US-owned), Helsing (€5B, EU-owned), Shield AI ($5.3B, US-owned) — are foreign-controlled, closed-source, and subject to US CLOUD Act / extraterritorial jurisdiction. AUKUS interoperability requires sovereign UK code by 2027.</p>
-<p><strong>DEFONEOS</strong> solves this by integrating 12 validated open-source components (MIT/Apache 2.0 licensed) into a single sovereign OS with Ed25519 cryptographic audit, Byzantine Fault Tolerant (BFT) governance, and UK sovereignty (CSOAI Ltd, Companies House 16939677). We are NOT building from scratch — we are assembling validated open-source components into a defence-ready platform, saving the MOD <strong>£4.8M</strong> in avoided development costs and <strong>60 months</strong> of avoided development time.</p>
-<p>The result: a deployable, sovereign, audit-grade UK defence AI OS, ready for pilot in 12 months, full deployment by month 24, AUKUS-aligned by month 18.</p>
+<h2>Executive Summary</h2>
+<p>The UK currently lacks a sovereign, open-source defence AI operating system. All major defence AI platforms — Palantir ($308B, US-owned), Anduril ($14B, US-owned), and Helsing ($5B, EU-owned) — are foreign-controlled, closed-source, and subject to foreign jurisdiction (US CLOUD Act).</p>
+<p><strong>DEFONEOS</strong> solves this by integrating 12 validated open-source components (MIT/Apache 2.0 licensed) into a single sovereign OS with Ed25519 cryptographic audit, Byzantine Fault Tolerant governance, and UK sovereignty (CSOAI Ltd, Companies House 16939677). We are NOT building from scratch — we are assembling validated open-source components into a defence-ready platform, saving the MOD £4.8M in avoided development costs and 60 months of avoided development time.</p>
 </section>
 
 <section>
-<h2>2. The Problem (Why Sovereignty Now)</h2>
-<h3>2.1 Foreign dependency</h3>
-<p>UK defence AI capability is currently 95%+ licensed from US vendors (Palantir Foundry powers much of UK defence data integration; Anduril Lattice is shortlisted for UK C2). These platforms:</p>
-<ul>
-<li>Are closed-source (no MOD audit of weights, gradients, or training data)</li>
-<li>Are subject to US CLOUD Act (US government can compel data access)</li>
-<li>Are subject to US export controls (ITAR/EAR restrictions on updates)</li>
-<li>Cannot be AUKUS-interoperable in a "Five Eyes data sharing" context where UK data sovereignty is required</li>
-</ul>
-<h3>2.2 Cyber-physical attack surface</h3>
-<p>The 2025 Salt Typhoon attack on US telecoms revealed that closed-source proprietary systems are prime targets for state-aligned APTs. Defence AI platforms containing C2, targeting, and ISR data MUST be open to UK national CERT inspection. Closed-source systems = unauditable = un-auditable-by-design.</p>
-<h3>2.3 The acquisition trap</h3>
-<p>UK MOD pays ~£50M/yr to Palantir for the Foundry Defence stack. After 5 years: £250M sunk, no exit, no UK jobs created, no UK IP retained, no UK cyber resilience built. The alternative sovereign stack: <strong>£2.5M one-time + £4.5M/yr OSS maintenance + UK jobs = 90% TCO reduction over 10 years.</strong></p>
-</section>
-
-<section>
-<h2>3. The Solution — DEFONEOS Architecture</h2>
-<h3>3.1 Seven-layer sovereign stack</h3>
-<table>
-<tr><th>Layer</th><th>Function</th><th>Open Source Component</th><th>License</th></tr>
-<tr><td>L7 User Interface</td><td>3D globe, dashboards, workflows</td><td>CesiumJS + Dify + 3DCityDB</td><td>Apache 2.0 / MIT</td></tr>
-<tr><td>L6 Reasoning</td><td>Multi-agent orchestration, BFT</td><td>LangGraph + CrewAI + agent-swarm</td><td>MIT</td></tr>
-<tr><td>L5 Memory</td><td>Long-context compression (Mamba-2)</td><td>SOV3 substrate (ZAMBA hybrid)</td><td>Apache 2.0</td></tr>
-<tr><td>L4 Perception</td><td>ISR fusion (EO, radar, SIGINT, AIS)</td><td>YOLOv8 + OpenAthena + Mava (PX4)</td><td>AGPL / MIT</td></tr>
-<tr><td>L3 Audit</td><td>Ed25519 SIGIL, OSCAL, C2PA</td><td>OrgKernel 3-layer audit</td><td>Apache 2.0</td></tr>
-<tr><td>L2 Governance</td><td>Policy enforcement, FRIA, JSP 936</td><td>COMPL-AI + MS Gov Toolkit</td><td>MIT</td></tr>
-<tr><td>L1 Compute</td><td>UK-sovereign GCP + air-gap edge</td><td>Agno + ESP32 + Jetson</td><td>MPL 2.0</td></tr>
-</table>
-<h3>3.2 12 integrated open-source components</h3>
+<h2>12 Integrated Open-Source Components</h2>
 <table>
 <tr><th>#</th><th>Component</th><th>License</th><th>Function</th></tr>
-<tr><td>1</td><td>COMPL-AI</td><td>Open</td><td>EU AI Act compliance (29+ benchmarks)</td></tr>
-<tr><td>2</td><td>MS Agent Governance Toolkit</td><td>MIT</td><td>Agent policy enforcement + OWASP checks</td></tr>
-<tr><td>3</td><td>LangGraph (langchain-ai)</td><td>MIT</td><td>Stateful multi-agent orchestration (8.2K stars)</td></tr>
-<tr><td>4</td><td>CrewAI</td><td>MIT</td><td>Role-based agent teams (49K stars)</td></tr>
-<tr><td>5</td><td>agent-swarm</td><td>MIT</td><td>Containerised swarm agents w/ HITL gates</td></tr>
-<tr><td>6</td><td>MS Agent Framework</td><td>MIT</td><td>Enterprise governance, graph workflows</td></tr>
-<tr><td>7</td><td>Agno</td><td>MPL 2.0</td><td>Edge agents (2μs init, 3.75KB/agent)</td></tr>
-<tr><td>8</td><td>Mcity Digital Twin</td><td>Open</td><td>Urban AV testing (CARLA + Omniverse)</td></tr>
-<tr><td>9</td><td>3DCityDB</td><td>Apache 2.0</td><td>3D city viz (Berlin, NYC deployed)</td></tr>
-<tr><td>10</td><td>Multi-Agent RAG Template</td><td>MIT</td><td>Collaborative document intelligence</td></tr>
-<tr><td>11</td><td>Dify (langgenius)</td><td>Open</td><td>Visual workflow builder (124K stars)</td></tr>
-<tr><td>12</td><td>AgentOps</td><td>MIT</td><td>Agent monitoring, session replay, audit</td></tr>
+<tr><td>1</td><td>COMPL-AI (compl-ai/compl-ai)</td><td>Open Source</td><td>EU AI Act compliance benchmarking (29+ benchmarks)</td></tr>
+<tr><td>2</td><td>Microsoft Agent Governance Toolkit</td><td>MIT</td><td>Agent-level policy enforcement, OWASP checks, prompt injection audits</td></tr>
+<tr><td>3</td><td>LangGraph (langchain-ai)</td><td>MIT</td><td>Stateful multi-agent orchestration. 8,200+ stars.</td></tr>
+<tr><td>4</td><td>CrewAI (crewAIInc)</td><td>MIT</td><td>Role-based agent teams. 49k stars. MCP support.</td></tr>
+<tr><td>5</td><td>agent-swarm (desplega-ai)</td><td>MIT</td><td>Containerized agent swarms. Human-in-the-loop gates.</td></tr>
+<tr><td>6</td><td>Microsoft Agent Framework</td><td>MIT</td><td>Enterprise governance. Graph-based workflows. Model-agnostic.</td></tr>
+<tr><td>7</td><td>Agno (agno-ai)</td><td>MPL 2.0</td><td>Ultra-lightweight edge agents. 2μs init. 3.75KB/agent.</td></tr>
+<tr><td>8</td><td>Mcity Digital Twin (U Michigan)</td><td>Open Source</td><td>Urban autonomous vehicle testing. CARLA + Omniverse.</td></tr>
+<tr><td>9</td><td>3DCityDB</td><td>Apache 2.0</td><td>3D city visualization. 500K+ buildings. Used by Berlin, NYC.</td></tr>
+<tr><td>10</td><td>Multi-Agent RAG Template</td><td>MIT</td><td>Collaborative document processing by agent teams.</td></tr>
+<tr><td>11</td><td>Dify (langgenius)</td><td>Open Source</td><td>Visual workflow builder. 124k+ stars. Self-hostable.</td></tr>
+<tr><td>12</td><td>AgentOps</td><td>MIT</td><td>Real-time agent monitoring. Session replay. Audit trail.</td></tr>
 </table>
 </section>
 
 <section>
-<h2>4. Cost Comparison — Build vs Integrate</h2>
+<h2>DEFONEOS Value Add (The Cockpit)</h2>
 <table>
-<tr><th>Component</th><th>Build from scratch</th><th>Integrate OSS</th><th>Savings</th></tr>
-<tr><td>EU AI Act compliance engine</td><td>£500K / 12mo</td><td>Fork COMPL-AI / 2wk</td><td><strong style="color:#22c55e">97%</strong></td></tr>
-<tr><td>Agent governance framework</td><td>£300K / 6mo</td><td>MS Gov Toolkit / 1wk</td><td><strong style="color:#22c55e">96%</strong></td></tr>
-<tr><td>Multi-agent orchestrator</td><td>£800K / 8mo</td><td>LangGraph + CrewAI / 2wk</td><td><strong style="color:#22c55e">94%</strong></td></tr>
-<tr><td>Swarm infrastructure</td><td>£500K / 6mo</td><td>agent-swarm + Agno / 1wk</td><td><strong style="color:#22c55e">96%</strong></td></tr>
-<tr><td>Digital twin</td><td>£2M / 18mo</td><td>Mcity + 3DCityDB / 2wk</td><td><strong style="color:#22c55e">98%</strong></td></tr>
-<tr><td>Document intelligence</td><td>£400K / 6mo</td><td>RAG Template + Dify / 1wk</td><td><strong style="color:#22c55e">96%</strong></td></tr>
-<tr><td>Observability</td><td>£300K / 4mo</td><td>AgentOps / 3d</td><td><strong style="color:#22c55e">97%</strong></td></tr>
-<tr style="font-weight:bold;background:rgba(34,211,238,.05)"><td>TOTAL</td><td style="color:#ef4444">£4.8M / 60mo</td><td style="color:#22c55e">~£50K + 4-6 wk</td><td style="color:#22c55e">99%</strong></td></tr>
+<tr><th>Layer</th><th>Open Source Engine</th><th>DEFONEOS Cockpit</th></tr>
+<tr><td>Governance</td><td>COMPL-AI + MS Gov Toolkit</td><td>CSOAI protocol. JSP 936 compliance. Ed25519 SIGIL. BFT council.</td></tr>
+<tr><td>Orchestration</td><td>LangGraph + CrewAI + agent-swarm</td><td>Sovereign deployment. Air-gapped. 33-hive mesh. UK soil.</td></tr>
+<tr><td>Document Intel</td><td>Multi-Agent RAG + Dify</td><td>Ed25519 e-signing. SIGIL audit trail. Defence-grade classification.</td></tr>
+<tr><td>Digital Twin</td><td>Mcity + 3DCityDB + CesiumJS</td><td>UE5 Pixel Streaming. SOV SPACE 5D simulation. MOD scenarios.</td></tr>
+<tr><td>Observability</td><td>AgentOps</td><td>SIGIL-anchored evidence. Bitcoin OP_RETURN. BFT verification.</td></tr>
+<tr><td>Edge</td><td>Agno + ESP32 + Jetson</td><td>D3 operations. Air-gapped. Pheromone persistence. SIGIL-signed.</td></tr>
 </table>
-<p style="text-align:center;margin-top:1rem;font-size:1.1rem"><strong>£4.8M of avoided cost. 60 months of avoided development. 12 open-source diamonds. 1 sovereign OS.</strong></p>
 </section>
 
 <section>
-<h2>5. The £2.5M Budget — 24 months, 6 FTE</h2>
+<h2>Budget (£2.5M over 24 months)</h2>
 <table>
-<tr><th>Category</th><th>Amount</th><th>%</th><th>Headcount</th></tr>
-<tr><td>Engineering team (6 FTE × 24mo)</td><td>£1.2M</td><td>48%</td><td>6</td></tr>
-<tr><td>Sovereign infrastructure (GCP UK + edge)</td><td>£400K</td><td>16%</td><td>—</td></tr>
-<tr><td>Security & compliance (SC, JSP 936, Cyber Essentials+)</td><td>£300K</td><td>12%</td><td>1</td></tr>
-<tr><td>Integration & testing (Playwright E2E, pentest)</td><td>£250K</td><td>10%</td><td>1</td></tr>
-<tr><td>Travel, training, outreach</td><td>£200K</td><td>8%</td><td>—</td></tr>
-<tr><td>Contingency (10%)</td><td>£150K</td><td>6%</td><td>—</td></tr>
-<tr style="font-weight:bold;background:rgba(34,211,238,.05)"><td>TOTAL</td><td>£2.5M</td><td>100%</td><td>8 incl. contractors</td></tr>
+<tr><th>Category</th><th>Amount</th><th>%</th></tr>
+<tr><td>Engineering Team (6 FTE)</td><td>£1.2M</td><td>48%</td></tr>
+<tr><td>Sovereign Infrastructure (GCP UK + edge)</td><td>£400K</td><td>16%</td></tr>
+<tr><td>Security & Compliance (SC clearance, JSP 936, Cyber Essentials+)</td><td>£300K</td><td>12%</td></tr>
+<tr><td>Integration & Testing (Playwright E2E, penetration test)</td><td>£250K</td><td>10%</td></tr>
+<tr><td>Documentation & Knowledge Transfer</td><td>£150K</td><td>6%</td></tr>
+<tr><td>Contingency</td><td>£200K</td><td>8%</td></tr>
 </table>
+<p style="color:#22c55e;text-align:center;margin-top:1rem"><strong>Total: £2.5M · 24 months · £4.8M in avoided development costs from OSS integration</strong></p>
 </section>
 
 <section>
-<h2>6. Delivery Plan — 24-month milestones</h2>
+<h2>Deliverables</h2>
 <table>
-<tr><th>Month</th><th>Milestone</th><th>Acceptance criterion</th></tr>
-<tr><td>M0-M2</td><td>Foundation: SC clearance, Cyber Essentials+, integration repo</td><td>SC issued; Cyber Essentials+ certificate</td></tr>
-<tr><td>M3-M6</td><td>OSCAL catalog + BFT council v0.1</td><td>33-agent BFT council voting on OSCAL assertions</td></tr>
-<tr><td>M6-M9</td><td>JSP 936 v0.1, FRIA, transparency register</td><td>EU AI Act Art 49/50/71 deployable</td></tr>
-<tr><td>M9-M12</td><td>ISR pipeline (YOLOv8 + OpenAthena) live</td><td>End-to-end EO→geo→C2 in Cesium</td></tr>
-<tr><td>M12</td><td><strong>MOD PILOT — Yorkshire HADR scenario</strong></td><td>Live demo to DASA PM + UKDI rep</td></tr>
-<tr><td>M12-M15</td><td>Mava swarm + PX4 drone sim</td><td>100-agent swarm, real-time collision avoidance</td></tr>
-<tr><td>M15-M18</td><td>AUKUS interoperability layer (Five Eyes data sharing)</td><td>AU/US/UK trilateral SIGIL-signed exchange</td></tr>
-<tr><td>M18-M21</td><td>Cyber module + OWASP ASI + red-team</td><td>CREST-accredited pentest report</td></tr>
-<tr><td>M21-M24</td><td>Deployment runbook + Crown customer RFQ</td><td>First Crown contract signed</td></tr>
+<tr><th>Month</th><th>Deliverable</th></tr>
+<tr><td>1-3</td><td>Fork + integrate governance core (COMPL-AI + MS Gov Toolkit). JSP 936 compliance module. SIGIL chain integration.</td></tr>
+<tr><td>4-6</td><td>Multi-agent orchestration layer (LangGraph + CrewAI + agent-swarm). BFT council integration. 33-hive mesh.</td></tr>
+<tr><td>7-9</td><td>Digital twin integration (Mcity + 3DCityDB + Cesium). MEOK DOME training scenarios. SOV SPACE simulation.</td></tr>
+<tr><td>10-12</td><td>Edge deployment (Agno + ESP32 + Jetson). D3 operations. Pheromone persistence. Counter-drone demo.</td></tr>
+<tr><td>13-18</td><td>Document swarm + observability. Dify workflows. AgentOps audit. Full SIGIL chain verification.</td></tr>
+<tr><td>19-24</td><td>MOD pilot deployment. NATO DIANA submission. Series A preparation. Open-source community launch.</td></tr>
 </table>
 </section>
 
-<section>
-<h2>7. Team</h2>
-<p><strong>Nicholas Templeman</strong> (PI) — Director CSOAI Ltd (UK 16939677). 30 years enterprise software + AI. Sole developer of SOV3 sovereign substrate + 30 MCP servers. Inventor on provisional patents (open-source public domain dedication).</p>
-<p><strong>Engineering team (5 FTE to recruit)</strong> — UK SC-cleared, UK-based. Senior defence AI engineers with prior BAE/QinetiQ/Thales UK experience preferred. Recruitment open Q3 2026.</p>
-</section>
-
-<section>
-<h2>8. Expected Outcomes</h2>
-<ul>
-<li><strong>Sovereign UK defence AI OS</strong> — fully owned, audited, modifiable by UK MOD / DSDA / Dstl</li>
-<li><strong>12 open-source defence components</strong> — public, reusable across NATO + AUKUS</li>
-<li><strong>188+ sovereign tools</strong> across 12 domains — all Ed25519 SIGIL-signed</li>
-<li><strong>30 MCP servers</strong> — interoperable with any MCP-compliant agent</li>
-<li><strong>JSP 936 v0.1 compliance module</strong> — live by M9, certifiable by M24</li>
-<li><strong>10+ UK jobs created</strong> by M24 (engineering + cyber + deployment)</li>
-<li><strong>£250M+ 10-yr MOD savings</strong> if Palantir/Anduril replacement trajectory holds</li>
-</ul>
-</section>
-
-<div class="honest">
-<h3 style="color:#fca5a5">⚠ Honesty Register — What This Proposal DOES NOT Include</h3>
-<ul>
-<li><strong>NOT yet certified by NCSC</strong> — JSP 936 module is a v0.1 implementation of the standard, not an NCSC-issued certification. We self-attest alignment.</li>
-<li><strong>NOT yet piloted with a live Crown customer</strong> — pilot is the M12 deliverable, post-DASA funding.</li>
-<li><strong>NOT a silver-bullet AUKUS solution</strong> — AUKUS interoperability is M18 milestone; requires AU/US/UK trilateral MOU (not in our control).</li>
-<li><strong>NOT a replacement for human operators</strong> — DEFONEOS augments commanders; final lethal decisions remain with the warfighter.</li>
-<li><strong>SC clearance</strong> — Nick holds baseline; 5 FTE require SC before M3; depends on NSV team availability.</li>
-<li><strong>Numbers (228+ tools, 30 MCPs, 12 domains)</strong> — these are the CURRENT state of the open-source build as of 6 July 2026. They will grow during the project. No guarantee of exact final counts.</li>
-<li><strong>Budget realism</strong> — £2.5M is tight for 24mo + 6 FTE + UK infrastructure. We assume DASA can flex on milestones if cost-overrun occurs.</li>
-</ul>
-</div>
-
-<section>
-<h2>9. Compliance Crosswalk — 12 frameworks</h2>
-<table>
-<tr><th>#</th><th>Framework</th><th>Coverage</th><th>Status</th></tr>
-<tr><td>1</td><td>EU AI Act (2024/1689)</td><td>Art 9 risk mgmt + Art 14 human oversight + Art 17 QMS + Art 49/50 transparency + Art 71 EU DB</td><td>Implemented via COMPL-AI fork</td></tr>
-<tr><td>2</td><td>UK AI Bill (2025)</td><td>5 principles + transparency + accountability</td><td>Implemented</td></tr>
-<tr><td>3</td><td>UK JSP 936</td><td>Policy-compliant AI deployment in defence</td><td>v0.1 at M9, full by M24</td></tr>
-<tr><td>4</td><td>GDPR + DPA 2018</td><td>UK GDPR Article 22 + DPIA</td><td>Implemented (Privacy by Design)</td></tr>
-<tr><td>5</td><td>NIST AI RMF</td><td>GOVERN / MAP / MEASURE / MANAGE</td><td>Implemented via OrgKernel L2</td></tr>
-<tr><td>6</td><td>ISO/IEC 42001</td><td>AIMS — AI management system</td><td>Implemented via BFT council + SIGIL</td></tr>
-<tr><td>7</td><td>ISO/IEC 27001</td><td>ISMS</td><td>Aligned (full cert at M21)</td></tr>
-<tr><td>8</td><td>SOC 2 Type II</td><td>Trust services criteria</td><td>Aligned (audit at M21)</td></tr>
-<tr><td>9</td><td>Cyber Essentials Plus</td><td>NCSC baseline</td><td>Cert target M3</td></tr>
-<tr><td>10</td><td>NCSC Cloud Security Principles</td><td>14 principles</td><td>14/14 documented, audited at M12</td></tr>
-<tr><td>11</td><td>OSCAL (NIST)</td><td>SSP + SAP + SAR + POA&M</td><td>Implemented (OrgKernel L3)</td></tr>
-<tr><td>12</td><td>OWASP Agentic Security Initiative</td><td>Threat modelling + prompt-injection defenses</td><td>Implemented (M18)</td></tr>
-</table>
-</section>
-
-<div class="proof">
-<h3 style="color:#86efac">✓ Live Proof (this page is real, not a slide)</h3>
-<ul>
-<li>This page is live at <code>https://csoai-static-deploy2.vercel.app/defoneos-dasa.html</code> — not a mockup</li>
-<li>All 30 MCP servers shipped (full list at <code>/defoneos-index</code>)</li>
-<li>All 225 live DEFONEOS pages deployed (curl-verifiable)</li>
-<li>SIGIL chain auditable at <code>/defoneos-verify</code></li>
-<li>Ed25519-signed receipts at <code>tick-NN-sigil.json</code> for every page</li>
-</ul>
-</div>
-
-<section>
-<h2>10. Next Steps</h2>
-<ol>
-<li>DASA review panel — propose 3-week turnaround from submission</li>
-<li>If awarded: kickoff M0 immediately; SC + Cyber Essentials+ in flight</li>
-<li>If declined: iterate, resubmit to NATO DIANA + Innovate UK</li>
-<li>Contact: <code>partnerships@csoai.org</code> · UK Companies House 16939677</li>
-</ol>
-</section>
-
-<footer style="text-align:center;padding:2rem;color:#64748b;font-size:.8rem;border-top:1px solid rgba(255,255,255,.05);margin-top:2rem">
-<p><a href="/defoneos-crownjewels" style="color:#c9a84c;text-decoration:none">💎 Crown Jewels</a> · <a href="/defoneos-stack-assembled" style="color:#22d3ee;text-decoration:none">Stack</a> · <a href="/defoneos-index" style="color:#22d3ee;text-decoration:none">All Pages</a> · <a href="/defoneos-verify" style="color:#22d3ee;text-decoration:none">Verify</a></p>
-<p>DEFONEOS · CSOAI Ltd · UK Companies House 16939677 · Apache 2.0 · © 2026 · SIGIL-anchored</p>
-</footer>
-<div style="margin:2rem auto;padding:1.5rem;max-width:1100px;background:linear-gradient(135deg,rgba(34,211,238,.08),rgba(167,139,250,.08));border:1px solid rgba(34,211,238,.3);border-radius:14px;text-align:center;">
-  <div style="font-size:1.25rem;font-weight:800;color:var(--cyan,#22d3ee);margin-bottom:.5rem;">🛡️ Ready to put DEFONEOS to work?</div>
-  <p style="color:#cbd5e1;margin:0 0 1rem;font-size:.95rem;">7 personas · 5 tiers · 30-second signup · free 30-day sandbox for regulators and end-users.</p>
-  <a href="/defoneos-signup-hub" style="display:inline-block;padding:.8rem 1.6rem;background:linear-gradient(135deg,#22d3ee,#a78bfa);color:#000;border-radius:8px;text-decoration:none;font-weight:800;font-size:.95rem;margin:.3rem;">Sign up · Ed25519-signed receipt →</a>
-  <a href="/defoneos-defence-primes" style="display:inline-block;padding:.8rem 1.6rem;border:1px solid #22d3ee;color:#22d3ee;border-radius:8px;text-decoration:none;font-weight:700;font-size:.95rem;margin:.3rem;">For Defence Primes</a>
-  <a href="/defoneos-regulators" style="display:inline-block;padding:.8rem 1.6rem;border:1px solid #22c55e;color:#22c55e;border-radius:8px;text-decoration:none;font-weight:700;font-size:.95rem;margin:.3rem;">For Regulators (Free)</a>
-  <a href="/defoneos-seriesa" style="display:inline-block;padding:.8rem 1.6rem;border:1px solid #fbbf24;color:#fbbf24;border-radius:8px;text-decoration:none;font-weight:700;font-size:.95rem;margin:.3rem;">Series A — £45-90M Round</a>
-  <div style="color:#64748b;font-size:.75rem;margin-top:.8rem;">ED25519 SIGIL receipts · UK-sovereign · AUKUS-compatible · T-27 days to EU AI Act</div>
-</div>
-
-<style>html{scroll-behavior:smooth}.back-to-top{position:fixed;bottom:1.5rem;right:1.5rem;width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,#22d3ee,#8b5cf6);color:#000;display:flex;align-items:center;justify-content:center;text-decoration:none;font-size:1.2rem;cursor:pointer;z-index:998;opacity:0;transition:opacity .3s;border:none}.back-to-top.visible{opacity:1}</style>
-<button class="back-to-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Back to top">↑</button>
-<script>window.addEventListener('scroll',function(){var b=document.querySelector('.back-to-top');if(window.pageYOffset>300){b.classList.add('visible')}else{b.classList.remove('visible')}})</script>
+<div style="text-align:center;padding:2rem"><a href="defoneos-seriesa.html" style="display:inline-block;background:linear-gradient(135deg,#22d3ee,#8b5cf6);color:#000;padding:1rem 3rem;border-radius:10px;text-decoration:none;font-weight:bold;font-size:1.1rem">View Series A →</a></div>
 </body></html>
