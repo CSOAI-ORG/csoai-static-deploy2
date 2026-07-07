@@ -260,8 +260,8 @@ def parse_leads_database():
         if m:
             current_tier = int(m.group(1))
             continue
-        # Match varying column counts: 5 or 6
-        m = re.match(r'^\| (T\d-\d+) \| (.+?) \| (.+?) \| (.+?) \| (.+?) \|$', line)
+        # 5-column: | id | name | jur | signal | wedge | (e.g. T9-D-001, T9-U-001, T9-M-001, T10-001)
+        m = re.match(r'^\| (T\d+-[A-Za-z]?-\d+) \| (.+?) \| (.+?) \| (.+?) \| (.+?) \|$', line)
         if m and current_tier is not None:
             leads.append({
                 'lead_id': m.group(1).strip(),
@@ -273,7 +273,8 @@ def parse_leads_database():
                 'domain': extract_domain(m.group(2)),
             })
             continue
-        m = re.match(r'^\| (T\d-\d+) \| (.+?) \| (.+?) \| (.+?) \| (.+?) \| (.+?) \|$', line)
+        # Generic T\d-NNN format
+        m = re.match(r'^\| (T\d+-\d+) \| (.+?) \| (.+?) \| (.+?) \| (.+?) \|$', line)
         if m and current_tier is not None:
             leads.append({
                 'lead_id': m.group(1).strip(),
@@ -281,6 +282,19 @@ def parse_leads_database():
                 'jurisdiction': m.group(3).strip(),
                 'industry_signal': m.group(4).strip(),
                 'wedge': m.group(5).strip(),
+                'tier': current_tier,
+                'domain': extract_domain(m.group(2)),
+            })
+            continue
+        # 6-column: | id | name | jur | HQ | industry | wedge |
+        m = re.match(r'^\| (T\d-\d+) \| (.+?) \| (.+?) \| (.+?) \| (.+?) \| (.+?) \|$', line)
+        if m and current_tier is not None:
+            leads.append({
+                'lead_id': m.group(1).strip(),
+                'company_legal_name': m.group(2).strip(),
+                'jurisdiction': m.group(3).strip(),
+                'industry_signal': m.group(5).strip() if m.group(5) else '',
+                'wedge': m.group(6).strip() if m.group(6) else '',
                 'tier': current_tier,
                 'domain': extract_domain(m.group(2)),
             })

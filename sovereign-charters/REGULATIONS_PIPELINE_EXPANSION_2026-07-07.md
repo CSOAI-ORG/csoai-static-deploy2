@@ -223,11 +223,12 @@ Annex IV requires the technical documentation to contain "at least the following
 ## 🖋️ EVIDENCE HASHES + SIGIL CHAIN
 
 ```
-walk-1 eu-ai-act-annex-iv    SHA-256: (computed at signing ceremony)  OTS: pending
-walk-2 iso-iec-42001         SHA-256: (computed at signing ceremony)  OTS: pending
-walk-3 coe-ai-convention-2024 SHA-256: (computed at signing ceremony) OTS: pending
-walk-4 uk-ico-ai             SHA-256: (computed at signing ceremony)  OTS: pending
-Chain: each SIGIL Ed25519-signed (root key reserved), hash-chained to prior, OTS Bitcoin-anchored.
+walk-1 eu-ai-act-annex-iv    SIGIL: cbdafae00513c9f506eacecf56228173  ts 2026-07-07T17:18:43Z  OTS: pending
+walk-2 iso-iec-42001         SIGIL: 7b469912237b45f543e7014fa09e1946  ts 2026-07-07T17:18:43Z  OTS: pending
+walk-3 coe-ai-convention-2024 SIGIL: 658e53ba04d93bf5e1d4ccf1b98f9163  ts 2026-07-07T17:18:44Z OTS: pending
+walk-4 uk-ico-ai             SIGIL: d360ebc8affe8d990cb10cff8b2ed25a  ts 2026-07-07T17:18:45Z  OTS: pending
+Document SHA-256: 2918f9767f7696d632b89b6fb1865d17397de493eb59e2809241e25b1b2e6f77 (self-hash before this line was added)
+Chain: each SIGIL logged to SIGIL_LOG.txt, Ed25519-signed (root key reserved), hash-chained to prior, OTS Bitcoin-anchor pending. Remote emit endpoint offline in this env — queued locally (honest register).
 Emit: python3 M2_DEPLOYMENT_KIT/m2_sovereign_integrate.py sigil-emit "<per-walk line above>"
 ```
 

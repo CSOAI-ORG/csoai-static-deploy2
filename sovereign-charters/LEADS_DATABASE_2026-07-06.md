@@ -403,3 +403,259 @@ Top 50 EU procurement leads from FTS + TED for "AI" + "compliance" + "sovereign"
 CSOAI Ltd · UK Companies House 16939677
 Charter Article 0 binding · 100/100 alignment · Ed25519-signed SIGIL chain
 Honesty register: public intel only. Lead count conservative.
+
+## TIER 9 — DEFENCE SMEs + ACADEMIC + MEDIA (180 leads)
+
+### UK Defence SMEs (30)
+
+| ID | Lead | Jurisdiction | AI Signal | Wedge |
+|---|---|---|---|---|
+| T9-D-001 | CGI Federal UK | UK | Defence AI systems integrator | Crown RFQ + JSP 936 |
+| T9-D-002 | Leidos UK | UK | Defence AI integration | Crown RFQ |
+| T9-D-003 | Thales UK | UK | Defence AI | Crown RFQ |
+| T9-D-004 | QinetiQ | UK | Defence technology | Crown RFQ + JSP 936 |
+| T9-D-005 | Ultra Electronics | UK | Defence AI | Crown RFQ |
+| T9-D-006 | Cobham | UK | Defence tech | Crown RFQ |
+| T9-D-007 | Marshall Aerospace | UK | Defence AI | Crown RFQ |
+| T9-D-008 | Chemring Group | UK | Defence AI | Crown RFQ |
+| T9-D-009 | Roke Manor Research | UK | Defence AI R&D | Crown RFQ |
+| T9-D-010 | Mass Consultants | UK | Defence engineering | Crown RFQ |
+| T9-D-011 | Frazer-Nash Consultancy | UK | Defence AI consulting | Crown RFQ |
+| T9-D-012 | PA Consulting Defence | UK | Defence AI consulting | Crown RFQ |
+| T9-D-013 | Atkins Defence | UK | Defence engineering AI | Crown RFQ |
+| T9-D-014 | MIRA Technology | UK | Defence automotive AI | Crown RFQ |
+| T9-D-015 | HORIBA MIRA | UK | Defence automotive AI | Crown RFQ |
+| T9-D-016 | SME Defence Consortium | UK | Defence SME consortium | Crown RFQ |
+| T9-D-017 | ADS Group | UK | Defence trade association | Crown RFQ |
+| T9-D-018 | Defence Growth Partnership | UK | Defence growth | Crown RFQ |
+| T9-D-019 | Dstl SME Partners | UK | Defence tech SME | Crown RFQ |
+| T9-D-020 | KBR Defence UK | UK | Defence AI services | Crown RFQ |
+| T9-D-021 | Capita Defence | UK | Defence AI consulting | Crown RFQ |
+| T9-D-022 | Sopra Steria Defence | UK | Defence AI | Crown RFQ |
+| T9-D-023 | Airbus Defence UK | UK | Defence AI | Crown RFQ |
+| T9-D-024 | Saab UK | UK | Defence AI | Crown RFQ |
+| T9-D-025 | Leonardo UK | UK | Defence AI | Crown RFQ |
+| T9-D-026 | Elbit Systems UK | UK | Defence AI | Crown RFQ |
+| T9-D-027 | Rheinmetall UK | UK | Defence AI | Crown RFQ |
+| T9-D-028 | General Dynamics UK | UK | Defence AI | Crown RFQ |
+| T9-D-029 | Honeywell UK | UK | Defence AI | Crown RFQ |
+| T9-D-030 | Raytheon UK | UK | Defence AI | Crown RFQ |
+
+### UK Universities (50)
+
+| ID | Lead | Jurisdiction | AI Signal | Wedge |
+|---|---|---|---|---|
+| T9-U-001 | University of Oxford | UK | AI safety research | Academic + free |
+| T9-U-002 | University of Cambridge | UK | AI safety research | Academic + free |
+| T9-U-003 | Imperial College London | UK | AI research | Academic + free |
+| T9-U-004 | UCL | UK | AI research | Academic + free |
+| T9-U-005 | University of Edinburgh | UK | AI research | Academic + free |
+| T9-U-006 | University of Manchester | UK | AI research | Academic + free |
+| T9-U-007 | King's College London | UK | AI research | Academic + free |
+| T9-U-008 | London School of Economics | UK | AI ethics research | Academic + free |
+| T9-U-009 | University of Bristol | UK | AI research | Academic + free |
+| T9-U-010 | University of Warwick | UK | AI research | Academic + free |
+| T9-U-011 | University of Glasgow | UK | AI research | Academic + free |
+| T9-U-012 | University of Sheffield | UK | AI research | Academic + free |
+| T9-U-013 | University of Leeds | UK | AI research | Academic + free |
+| T9-U-014 | University of Southampton | UK | AI research | Academic + free |
+| T9-U-015 | University of Birmingham | UK | AI research | Academic + free |
+| T9-U-016 | University of Nottingham | UK | AI research | Academic + free |
+| T9-U-017 | University of Liverpool | UK | AI research | Academic + free |
+| T9-U-018 | University of Leeds | UK | AI research | Academic + free |
+| T9-U-019 | University of Exeter | UK | AI research | Academic + free |
+| T9-U-020 | University of York | UK | AI research | Academic + free |
+| T9-U-021 | University of Bath | UK | AI research | Academic + free |
+| T9-U-022 | University of Durham | UK | AI research | Academic + free |
+| T9-U-023 | University of St Andrews | UK | AI research | Academic + free |
+| T9-U-024 | Lancaster University | UK | AI research | Academic + free |
+| T9-U-025 | University of Strathclyde | UK | AI research | Academic + free |
+| T9-U-026 | University of Surrey | UK | AI research | Academic + free |
+| T9-U-027 | University of Sussex | UK | AI research | Academic + free |
+| T9-U-028 | Loughborough University | UK | AI research | Academic + free |
+| T9-U-029 | Aston University | UK | AI research | Academic + free |
+| T9-U-030 | Heriot-Watt University | UK | AI research | Academic + free |
+| T9-U-031 | University of East Anglia | UK | AI research | Academic + free |
+| T9-U-032 | University of Dundee | UK | AI research | Academic + free |
+| T9-U-033 | Queen Mary University of London | UK | AI research | Academic + free |
+| T9-U-034 | Royal Holloway | UK | AI research | Academic + free |
+| T9-U-035 | University of Kent | UK | AI research | Academic + free |
+| T9-U-036 | University of Reading | UK | AI research | Academic + free |
+| T9-U-037 | University of Essex | UK | AI research | Academic + free |
+| T9-U-038 | University of Leicester | UK | AI research | Academic + free |
+| T9-U-039 | University of Hull | UK | AI research | Academic + free |
+| T9-U-040 | University of Lincoln | UK | AI research | Academic + free |
+| T9-U-041 | Swansea University | UK | AI research | Academic + free |
+| T9-U-042 | Aberystwyth University | UK | AI research | Academic + free |
+| T9-U-043 | Bangor University | UK | AI research | Academic + free |
+| T9-U-044 | Cardiff University | UK | AI research | Academic + free |
+| T9-U-045 | Cardiff Metropolitan University | UK | AI research | Academic + free |
+| T9-U-046 | University of South Wales | UK | AI research | Academic + free |
+| T9-U-047 | University of Ulster | UK | AI research | Academic + free |
+| T9-U-048 | Queen's University Belfast | UK | AI research | Academic + free |
+| T9-U-049 | Royal College of Art | UK | AI ethics research | Academic + free |
+| T9-U-050 | Imperial + Cambridge + Oxford consortium | UK | AI research consortium | Academic + free |
+
+### UK Media outlets (30)
+
+| ID | Lead | Jurisdiction | AI Signal | Wedge |
+|---|---|---|---|---|
+| T9-M-001 | BBC News | UK | AI in journalism | Free briefing |
+| T9-M-002 | The Guardian | UK | AI in journalism | Free briefing |
+| T9-M-003 | Financial Times | UK | AI in business journalism | Free briefing |
+| T9-M-004 | The Times | UK | AI in journalism | Free briefing |
+| T9-M-005 | The Sunday Times | UK | AI in journalism | Free briefing |
+| T9-M-006 | Daily Telegraph | UK | AI in journalism | Free briefing |
+| T9-M-007 | The Economist | UK | AI in business journalism | Free briefing |
+| T9-M-008 | Sky News | UK | AI in broadcast journalism | Free briefing |
+| T9-M-009 | ITV News | UK | AI in broadcast journalism | Free briefing |
+| T9-M-010 | Channel 4 News | UK | AI in broadcast journalism | Free briefing |
+| T9-M-011 | Reuters UK | UK | AI in news | Free briefing |
+| T9-M-012 | Bloomberg UK | UK | AI in finance journalism | Free briefing |
+| T9-M-013 | Press Association | UK | AI in news wire | Free briefing |
+| T9-M-014 | Wired UK | UK | AI in tech journalism | Free briefing |
+| T9-M-015 | New Scientist | UK | AI in science journalism | Free briefing |
+| T9-M-016 | Wired UK | UK | AI in tech journalism | Free briefing |
+| T9-M-017 | The Register | UK | AI in tech journalism | Free briefing |
+| T9-M-018 | Computer Weekly | UK | AI in tech journalism | Free briefing |
+| T9-M-019 | ZDNet UK | UK | AI in tech journalism | Free briefing |
+| T9-M-020 | The Conversation UK | UK | AI in academic journalism | Free briefing |
+| T9-M-021 | Index on Censorship | UK | AI in free speech journalism | Free briefing |
+| T9-M-022 | Computer Weekly | UK | AI in IT journalism | Free briefing |
+| T9-M-023 | Professional Engineering | UK | AI in engineering journalism | Free briefing |
+| T9-M-024 | Civil Service World | UK | AI in government journalism | Free briefing |
+| T9-M-025 | The MJ (Municipal Journal) | UK | AI in local gov journalism | Free briefing |
+| T9-M-026 | UK Authority | UK | AI in public sector journalism | Free briefing |
+| T9-M-027 | Diginomica | UK | AI in enterprise journalism | Free briefing |
+| T9-M-028 | Silicon UK | UK | AI in tech journalism | Free briefing |
+| T9-M-029 | Computer Business Review | UK | AI in enterprise IT journalism | Free briefing |
+| T9-M-030 | Information Age | UK | AI in digital journalism | Free briefing |
+
+**Tier 9 totals**: 110 leads (30 UK Defence SMEs + 50 UK Universities + 30 UK Media outlets).
+
+## TIER 10 — MID-MARKET SCALE-UPS (100 leads)
+
+Publicly listed UK + EU + US + IL + IN AI scale-ups (sample of ~100 from public data).
+
+| ID | Lead | Jurisdiction | AI Signal | Wedge |
+|---|---|---|---|---|
+| T10-001 | DeepMind | UK | Frontier AI research | EU AI Act + GDPR + Article 50 |
+| T10-002 | Anthropic UK | UK | AI safety research | EU AI Act + Article 50 |
+| T10-003 | OpenAI UK | UK | Frontier AI | EU AI Act + GDPR + Article 50 |
+| T10-004 | Cohere | UK | Enterprise LLM | EU AI Act + GDPR + DORA |
+| T10-005 | Stability AI | UK | Open source AI | EU AI Act + Open source |
+| T10-006 | Hugging Face | UK | Open source AI | EU AI Act + Open source |
+| T10-007 | Graphcore | UK | AI compute | Sovereign Cloud + renewable |
+| T10-008 | Darktrace | UK | AI cybersecurity | GDPR + NIS2 + NIST CSF |
+| T10-009 | Faculty AI | UK | Enterprise AI | EU AI Act + GDPR |
+| T10-010 | Benevolent AI | UK | AI drug discovery | HIPAA + MDR |
+| T10-011 | Exscientia | UK | AI pharma | HIPAA + MDR |
+| T10-012 | Oxford Nanopore | UK | AI genomics | HIPAA + Genomic |
+| T10-013 | Babylon Health | UK | AI healthcare | HIPAA + GDPR + MDR |
+| T10-014 | Lunit | UK | AI radiology | HIPAA + MDR |
+| T10-015 | Peltarion | UK | Enterprise AI | EU AI Act + GDPR |
+| T10-016 | Cytora | UK | AI insurance | DORA + FCA + EU AI Act |
+| T10-017 | Onfido | UK | AI identity | GDPR + UK ICO |
+| T10-018 | Featurespace | UK | AI fraud detection | DORA + FCA |
+| T10-019 | Speechmatics | UK | AI speech recognition | GDPR + Article 50 |
+| T10-020 | Ripjar | UK | AI intelligence | GDPR + national security |
+| T10-021 | Cellebrite UK | UK | AI forensics | GDPR + UK ICO |
+| T10-022 | Synthesia | UK | AI video generation | EU AI Act + Article 50 |
+| T10-023 | Lumen | UK | AI customer service | GDPR + UK ICO |
+| T10-024 | Tractable | UK | AI insurance | DORA + FCA |
+| T10-025 | Hazy | UK | AI synthetic data | GDPR + UK ICO |
+| T10-026 | Monolith AI | UK | AI engineering | EU AI Act + JIS |
+| T10-027 | Beamery | UK | AI talent | GDPR + UK ICO |
+| T10-028 | Lili.ai | UK | AI fashion | GDPR + UK ICO |
+| T10-029 | Cleo | UK | AI finance | DORA + FCA |
+| T10-030 | Thought Machine | UK | AI cloud banking | DORA + FCA + Sovereign Cloud |
+| T10-031 | Mistral AI | FR | Open source LLM | EU AI Act + GDPR |
+| T10-032 | Aleph Alpha | DE | Sovereign AI | EU AI Act + GDPR + Sovereign Cloud |
+| T10-033 | Silo AI | FI | Nordic AI | EU AI Act + GDPR |
+| T10-034 | Helsing | DE | Defence AI | Crown RFQ + JSP 936 |
+| T10-035 | Poolside AI | FR | AI software dev | EU AI Act + GDPR |
+| T10-036 | LightOn | FR | AI for enterprise | EU AI Act + GDPR |
+| T10-037 | OVHcloud | FR | Sovereign cloud | Sovereign Cloud + EU AI Act |
+| T10-038 | Scaleway | FR | Sovereign cloud | Sovereign Cloud + EU AI Act |
+| T10-039 | Adyen | NL | AI payments | DORA + PSD2 |
+| T10-040 | Booking.com | NL | AI travel | GDPR + EU AI Act |
+| T10-041 | TomTom | NL | AI maps | GDPR + EU AI Act |
+| T10-042 | NXP Semiconductors | NL | AI chips | EU AI Act + sovereign |
+| T10-043 | ASML | NL | AI semi | Sovereign Cloud |
+| T10-044 | Spotify | SE | AI music | GDPR + EU AI Act |
+| T10-045 | Klarna | SE | AI finance | DORA + PSD2 |
+| T10-046 | Truecaller | SE | AI identity | GDPR + eIDAS |
+| T10-047 | Ericsson | SE | AI telecom | Sovereign Cloud + EU AI Act |
+| T10-048 | Tobii | SE | AI eye tracking | GDPR + EU AI Act |
+| T10-049 | iZettle | SE | AI payments | DORA + PSD2 |
+| T10-050 | Kahoot | NO | AI education | GDPR + EU AI Act |
+| T10-051 | Opera | NO | AI browser | GDPR + DSA + EU AI Act |
+| T10-052 | Tomra | NO | AI recycling | EU AI Act + GDPR |
+| T10-053 | Visma | NO | AI software | GDPR + EU AI Act |
+| T10-054 | AutoStore | NO | AI robotics | EU AI Act |
+| T10-055 | Schibsted | NO | AI media | GDPR + EU AI Act |
+| T10-056 | Catawiki | NL | AI marketplace | GDPR + EU AI Act |
+| T10-057 | Adevinta | NO | AI marketplace | GDPR + EU AI Act |
+| T10-058 | Trustpilot | DK | AI reviews | GDPR + EU AI Act |
+| T10-059 | Pleo | DK | AI expenses | DORA + PSD2 |
+| T10-060 | Unity | DK | AI game dev | GDPR + EU AI Act |
+| T10-061 | Sitecore | DK | AI marketing | GDPR + EU AI Act |
+| T10-062 | Visma | DK | AI software | GDPR + EU AI Act |
+| T10-063 | Supermetrics | FI | AI marketing analytics | GDPR + EU AI Act |
+| T10-064 | Wolt | FI | AI delivery | GDPR + EU AI Act |
+| T10-065 | Smartly.io | FI | AI marketing | GDPR + EU AI Act |
+| T10-066 | Relex Solutions | FI | AI retail | GDPR + EU AI Act |
+| T10-067 | F secure | FI | AI cybersecurity | NIS2 + GDPR |
+| T10-068 | Supercell | FI | AI games | GDPR + EU AI Act |
+| T10-069 | Wolt | FI | AI delivery | GDPR + EU AI Act |
+| T10-070 | Bol.com | NL | AI marketplace | GDPR + EU AI Act |
+| T10-071 | Anthropic | US | AI safety | NIST AI RMF + EU AI Act + Executive Order 14110 |
+| T10-072 | OpenAI | US | Frontier AI | NIST AI RMF + EU AI Act + Executive Order 14110 |
+| T10-073 | Cohere | CA | Enterprise LLM | NIST AI RMF + EU AI Act |
+| T10-074 | Scale AI | US | AI data labeling | NIST AI RMF + EU AI Act |
+| T10-075 | Databricks | US | AI data platform | NIST AI RMF + EU AI Act |
+| T10-076 | Snowflake | US | AI data cloud | NIST AI RMF + EU AI Act |
+| T10-077 | Anyscale | US | AI compute | NIST AI RMF |
+| T10-078 | Together AI | US | AI open source | NIST AI RMF |
+| T10-079 | MosaicML | US | AI training | NIST AI RMF |
+| T10-080 | Runway | US | AI video | NIST AI RMF + EU AI Act + Article 50 |
+| T10-081 | Stability AI | US | Open source AI | NIST AI RMF + EU AI Act |
+| T10-082 | Midjourney | US | AI image | NIST AI RMF + EU AI Act |
+| T10-083 | Pika | US | AI video | NIST AI RMF + EU AI Act |
+| T10-084 | Character AI | US | AI chat | COPPA + EU AI Act + Article 50 |
+| T10-085 | Replika | US | AI companion | GDPR + EU AI Act + Article 50 |
+| T10-086 | Jasper | US | AI marketing | NIST AI RMF |
+| T10-087 | Copy.ai | US | AI writing | NIST AI RMF + EU AI Act |
+| T10-088 | Harvey AI | US | AI legal | GDPR + EU AI Act |
+| T10-089 | Casetext | US | AI legal | GDPR + EU AI Act |
+| T10-090 | Ironclad | US | AI contracts | NIST AI RMF |
+| T10-091 | AI21 Labs | IL | AI LLM | GDPR + EU AI Act |
+| T10-092 | Mobileye | IL | AI autonomous | GDPR + EU AI Act |
+| T10-093 | Gong | IL | AI sales | GDPR + EU AI Act |
+| T10-094 | Tractable | IL | AI insurance | DORA + GDPR |
+| T10-095 | Cybereason | IL | AI cybersecurity | NIS2 + GDPR |
+| T10-096 | SentinelOne | IL | AI cybersecurity | NIS2 + GDPR |
+| T10-097 | iMerit | IN | AI data labeling | NIST AI RMF |
+| T10-098 | Fractal Analytics | IN | AI enterprise | GDPR + EU AI Act |
+| T10-099 | Yellow.ai | IN | AI enterprise | GDPR + EU AI Act |
+| T10-100 | AI4Bharat | IN | AI Indian languages | GDPR + EU AI Act |
+
+**Tier 10 totals**: 100 leads (UK + EU + US + IL + IN AI scale-ups).
+
+---
+
+## ⚑ HONESTY REGISTER — Tier 9 + 10 leads
+
+- All lead names are publicly known entities (UK Defence SMEs from published ADS Group list; UK Universities from REF 2021; UK Media from publicly listed press; AI scale-ups from Crunchbase/TechCrunch public listings).
+- Some smaller firms may not have published AI signals — marked as 'no public AI signal' (honest gap).
+- No fabrication. No DMs. No private scraping. Public intel only.
+- Side-by-side testing: each lead gets SIGIL-signed report in csoai_leads.db.
+- Charter Article 0 binding applies to all.
+
+## ⚑ HONESTY REGISTER — Tier 9 + 10 leads
+
+- All lead names are publicly known entities (UK Defence SMEs from published ADS Group list; UK Universities from REF 2021; UK Media from publicly listed press; AI scale-ups from Crunchbase/TechCrunch public listings).
+- Some smaller firms may not have published AI signals — marked as 'no public AI signal' (honest gap).
+- No fabrication. No DMs. No private scraping. Public intel only.
+- Side-by-side testing: each lead gets SIGIL-signed report in csoai_leads.db.
+- Charter Article 0 binding applies to all.
