@@ -288,7 +288,13 @@ def run_arm(arm, ep, chain, priv, sign=True, district="aqua", seed=SEED, block_r
     town = Town()
     ids = [a.id for a in agents]
     # Real-world sanctions/compliance pressure tightens the Sovereign Gate.
-    effective_block_rate = min(1.0, block_rate * REGIME_ENFORCEMENT_BOOST)
+    # 2026-07-07 gate-smoothing fix: the old `min(1.0, block_rate * BOOST)` hit the 1.0
+    # ceiling for any block_rate >= 1/BOOST (~0.687) and PINNED there — a dead zone that made
+    # enforcement either perfect (0 slips) or abruptly leaky. Replace with a smooth saturating
+    # curve: boosted enforcement approaches 1.0 asymptotically but never abruptly pins, so slip
+    # probability (and thus crime count) varies smoothly with block_rate across the whole range.
+    _boosted = block_rate * REGIME_ENFORCEMENT_BOOST
+    effective_block_rate = _boosted / (1.0 + _boosted - block_rate)  # = boosted at low br, ->1 smoothly
     trust = {i: {j: 0.5 for j in ids if j != i} for i in ids}     # pairwise trust, starts neutral
     def mean_trust():
         pairs = [trust[i][j] for i in ids for j in trust[i]]
