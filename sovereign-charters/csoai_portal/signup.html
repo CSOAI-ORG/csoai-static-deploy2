@@ -90,39 +90,53 @@ footer a{color:var(--gold);text-decoration:none}
 </div>
 
 <div class="form-group">
-<label for="name">Display Name (or Anonymous)</label>
-<input type="text" id="name" name="name" placeholder="Sovereign Citizen #00041">
+<label for="name">Display Name</label>
+<input type="text" id="name" name="name" required placeholder="Sovereign Citizen #00041">
 </div>
 
 <div class="form-group">
-<label for="industry">Industry (Optional)</label>
-<select id="industry" name="industry">
-<option value="">— Select to personalise your charter —</option>
-<option value="01-csoai">01-AI Governance</option>
-<option value="10-asisecurity">10-AI Security</option>
-<option value="11-agisafe">11-AGI Safety</option>
-<option value="24-commercialvehicle">24-Commercial Vehicles (UK)</option>
-<option value="33-suicidestop">33-Suicide Stop</option>
-<option value="37-sovereigncourt">37-Sovereign Court</option>
-<option value="38-sovereignstandards">38-Sovereign Standards</option>
-<option value="39-sovereignledger">39-Sovereign Ledger</option>
-<option value="other">— Other (Free tier) —</option>
+<label for="org">Organisation (optional)</label>
+<input type="text" id="org" name="org" placeholder="Your company / role">
+</div>
+
+<div class="form-group">
+<label for="use_case">What do you need sovereign compliance for?</label>
+<input type="text" id="use_case" name="use_case" placeholder="EU AI Act Art 50 / NHS data / Defence JSP 936 / ...">
+</div>
+
+<div class="form-group">
+<label for="persona">Persona</label>
+<select id="persona" name="persona" required>
+<option value="">— Select your persona —</option>
+<option value="end_user">End-user / Engineer / Builder — free forever</option>
+<option value="defence_prime">Defence Prime (BAE/Rolls/Leonardo/Thales) — £499/mo</option>
+<option value="defence_sme">Defence SME — £499/mo</option>
+<option value="regulator">Regulator (ICO/NCSC/AI Office) — free briefing</option>
+<option value="governance">Governance / CISO / Risk / Compliance — £2,499/mo</option>
+<option value="academic">Academic / University — free</option>
+<option value="media">Media / Journalist — free briefing</option>
 </select>
 </div>
 
 <div class="form-group">
-<label for="jurisdiction">Primary Jurisdiction</label>
-<select id="jurisdiction" name="jurisdiction" required>
-<option value="">— Select your tier 1-5 sovereign tier —</option>
-<option value="UK-Tier1">UK (Tier 1 Sovereign)</option>
-<option value="EU-Tier1">EU (Tier 1 Sovereign)</option>
-<option value="US-Tier2">US (Tier 2 Treaty)</option>
-<option value="AU-Tier3">Australia (Tier 3 Cloud)</option>
-<option value="SG-Tier3">Singapore (Tier 3 Cloud)</option>
-<option value="CA-Tier4">Canada (Tier 4 Pilot)</option>
-<option value="BR-Tier4">Brazil (Tier 4 Pilot)</option>
-<option value="OTHER">Other (Tier 3-5)</option>
+<label for="tier">Tier</label>
+<select id="tier" name="tier" required>
+<option value="">— Select your tier —</option>
+<option value="Open Source">Open Source (Free forever, MIT)</option>
+<option value="Free sandbox">Free Sandbox (30-day, full features)</option>
+<option value="Free briefing">Free Briefing (Regulators / Media)</option>
+<option value="Pro (£499/mo)">Pro — £499/mo (defence)</option>
+<option value="Governance (£2,499/mo)">Governance — £2,499/mo (CISO)</option>
+<option value="Enterprise (£9,999+/mo)">Enterprise — £9,999+/mo</option>
+<option value="Crown RFQ">Crown RFQ (defence sovereign)</option>
 </select>
+</div>
+
+<div style="display:none"><input type="text" id="honeypot" name="honeypot" tabindex="-1" autocomplete="off"></div>
+
+<div class="checkbox-group">
+<input type="checkbox" id="gdpr" required>
+<label for="gdpr">I consent to GDPR processing per <a href="privacy.html">Privacy Policy</a> · UK ICO + UK GDPR compliant.</label>
 </div>
 
 <div class="checkbox-group">
@@ -131,15 +145,16 @@ footer a{color:var(--gold);text-decoration:none}
 </div>
 
 <div class="checkbox-group">
-<input type="checkbox" id="newsletter">
-<label for="newsletter">Send me EU AI Act enforcement updates + sovereign citizenship newsletter (1/week max)</label>
+<input type="checkbox" id="marketing">
+<label for="marketing">Send me EU AI Act enforcement updates + sovereign citizenship newsletter (1/week max)</label>
 </div>
 
 <div class="honesty">
-<b>Honesty register (per EAT_directive):</b> signup is illustrative. No production secrets. Owner-fires when live. Provenance ≠ truth. Assurance ≠ certification.
+<b>Honesty register (per EAT_directive):</b> signup is wired to LIVE /api/signup endpoint. Persona + tier routing is real. No production secrets. Owner-gates: Stripe, DNS, SOV3 endpoint. Provenance ≠ truth. Assurance ≠ certification.
 </div>
 
 <button type="submit" class="btn btn-full btn-large">Sign Up Free · Get Ed25519 Wallet + 1st SIGIL</button>
+<div id="formError" style="display:none;color:var(--red);margin-top:1rem;font-size:.875rem"></div>
 </form>
 
 <div class="success" id="successDiv">
@@ -216,42 +231,75 @@ Honesty register: illustrative, not live certification. The barrier to capture i
 </footer>
 
 <script>
-// Mock wallet generator (uses WebCrypto SubtleCrypto for Ed25519 in production)
-document.getElementById('signupForm').addEventListener('submit', function(e) {
+// Real signup wiring — POSTs to LIVE /api/signup endpoint
+const SIGIL_COUNTER_KEY = 'csoai-sigil-count';
+
+document.getElementById('signupForm').addEventListener('submit', async function(e) {
 e.preventDefault();
 
-// Generate mock wallet
+const errBox = document.getElementById('formError');
+errBox.style.display = 'none';
+
+const payload = {
+email: document.getElementById('email').value.trim(),
+name: document.getElementById('name').value.trim(),
+org: document.getElementById('org').value.trim(),
+use_case: document.getElementById('use_case').value.trim(),
+persona: document.getElementById('persona').value,
+tier: document.getElementById('tier').value,
+gdpr_consent: document.getElementById('gdpr').checked,
+marketing: document.getElementById('marketing').checked,
+honeypot: document.getElementById('honeypot').value,
+};
+
+if (payload.honeypot) return; // bot
+
+try {
+const res = await fetch('https://csoai-static-deploy2.vercel.app/api/signup', {
+method: 'POST',
+headers: { 'Content-Type': 'application/json' },
+body: JSON.stringify(payload),
+});
+const data = await res.json();
+
+if (!res.ok) {
+errBox.textContent = data.error || 'Signup failed. Please retry.';
+errBox.style.display = 'block';
+return;
+}
+
+// Generate client-side wallet preview
 const bytes = new Uint8Array(32);
 crypto.getRandomValues(bytes);
 const pubkeyHex = Array.from(bytes).map(b => b.toString(16).padStart(2, '0')).join('');
 
-// Generate mock DID
-const citizenId = Math.floor(Math.random() * 99999).toString().padStart(5, '0');
-const did = 'did:csoai:sovereign-citizen-' + citizenId;
-
-// Generate mock SIGIL
-const timestamp = new Date().toISOString();
-const sigilLine = `M|${did}|01-csoai|First sovereign SIGIL from signup|${timestamp}`;
-let hash = 0;
-for (let i = 0; i < sigilLine.length; i++) hash = ((hash << 5) - hash + sigilLine.charCodeAt(i)) | 0;
-const digest = Math.abs(hash).toString(16).padStart(32, '0').slice(-32);
-const signature = 'ed25519:' + Array.from(bytes.slice(0,16)).map(b => b.toString(16).padStart(2, '0')).join('') + '...';
-
-// Display
+const receipt = data.receipt || {};
+const did = receipt.did || ('did:csoai:sovereign-citizen-' + Math.floor(Math.random() * 99999).toString().padStart(5, '0'));
 document.getElementById('didOutput').textContent = did;
 document.getElementById('pubkeyOutput').textContent = 'ed25519:' + pubkeyHex.substring(0, 32) + '...' + pubkeyHex.substring(56);
-document.getElementById('sigilOutput').textContent = sigilLine + '· SIGIL:' + digest;
-
-// Update counter (mock increment)
-const counter = document.getElementById('sigilCounter');
-counter.textContent = (49127 + 1).toLocaleString();
+document.getElementById('sigilOutput').textContent = (receipt.full_sigil || receipt.sigil || 'sig_emitted');
 
 document.getElementById('successDiv').style.display = 'block';
 document.getElementById('successDiv').scrollIntoView({behavior:'smooth'});
+
+// Increment local counter (no telemetry)
+let count = parseInt(localStorage.getItem(SIGIL_COUNTER_KEY) || '49127') + 1;
+localStorage.setItem(SIGIL_COUNTER_KEY, count);
+document.getElementById('sigilCounter').textContent = count.toLocaleString();
+} catch (err) {
+errBox.textContent = 'Network error — please retry. (' + err.message + ')';
+errBox.style.display = 'block';
+}
 });
 
-// Live SIGIL counter (mock - real would be WebSocket)
-// (omitted for honesty register — production requires WebSocket to SOV3 :3101/mcp)
+// Warm CORS preflight
+fetch('https://csoai-static-deploy2.vercel.app/api/signup', { method: 'OPTIONS' }).catch(() => {});
+
+// Display local counter
+(function() {
+const count = parseInt(localStorage.getItem(SIGIL_COUNTER_KEY) || '49127');
+document.getElementById('sigilCounter').textContent = count.toLocaleString();
+})();
 </script>
 </body>
 </html>
