@@ -8,8 +8,9 @@ export default async function handler(req, res) {
   if (req.method === 'OPTIONS') return res.status(204).end();
   let body = req.body; if (typeof body === 'string') { try { body = JSON.parse(body); } catch { body = {}; } }
   body = body || {};
-  const { message, signature, publicKey } = body;
-  if (!message || !signature || !publicKey) return res.status(400).json({ error: 'pass {message, signature, publicKey}' });
+  const message = body.message ?? body.canonical;   // accept /sign's `canonical` directly (integrator-friendly)
+  const { signature, publicKey } = body;
+  if (!message || !signature || !publicKey) return res.status(400).json({ error: 'pass {message (or canonical), signature, publicKey}' });
   try {
     const pub = crypto.createPublicKey({ key: Buffer.from(publicKey, 'hex'), format: 'der', type: 'spki' });
     const valid = crypto.verify(null, Buffer.from(message), pub, Buffer.from(signature, 'hex'));

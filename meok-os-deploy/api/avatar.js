@@ -8,6 +8,7 @@ const ARCH_EMOJI = { Sovereign: '👑', Guardian: '🛡️', Scout: '🧭', Stra
 function esc(s) { return String(s || '').replace(/[<>&"']/g, c => ({ '<': '&lt;', '>': '&gt;', '&': '&amp;', '"': '&quot;', "'": '&#39;' }[c])); }
 
 export default function handler(req, res) {
+  res.setHeader('Access-Control-Allow-Origin', '*');   // avatar rides on any sovereign surface (site/dock/overlay)
   const q = req.query || {};
   const qid = q.queen_id || q.queenId;
   let color, emoji, name = (q.name || '').toString().slice(0, 22);
