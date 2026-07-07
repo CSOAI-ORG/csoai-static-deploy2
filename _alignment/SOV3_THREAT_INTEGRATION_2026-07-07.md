@@ -33,12 +33,11 @@ logger (now wired) accumulating real 4-category threat episodes for a future hon
    this session; the only attached server is a **Vercel** connector. Cannot probe sov_oowm_* /
    sov_sovereign_* endpoints without it reconnected (Settings → Connectors). Earlier 502s were
    the GCP origin/tunnel down; unchanged.
-4. **GitHub push** — ⏸ STAGED, not pushed. Needs explicit owner go-ahead (push action).
+4. **GitHub push** — ✅ DONE. Pushed to CSOAI-ORG/clawd-workspace @ m4-handoff-2026-06-24 (fc24596b..8c7ebf2c), scoped to tonight's 17 files. NOTE: sovereign-temple/ is gitignored (.gitignore:124) — the wired sovereign-mcp-server.py committed (already tracked), and episode_logger.py + both .joblib models were preserved under _alignment/ (not ignored).
 
 ## Owner-gated / blocked
 - Reconnect the SOV3/OOWM MCP connector to re-probe the mesh.
 - Wire GCP meok-backend (35.242.143.249) as an SSH compute target to clear the 502 — needs VM
   SSH details + Compute-panel action. No compute target currently configured.
-- Approve the GitHub push of tonight's models/logger/reports.
 - Vercel connector IS attached (deploy surface for CSOAI/OpenPatent sites) but list_projects
   needs a teamId not available here.
