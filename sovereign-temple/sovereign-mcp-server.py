@@ -41,6 +41,11 @@ import uvicorn
 
 # Import our modules
 from neural_core import create_default_registry, NeuralModelRegistry
+try:
+    from neural_core.episode_logger import log_episode as _log_episode
+except Exception:
+    def _log_episode(*a, **k):  # never break the server if logging fails
+        return None
 from alert_system import (
     AlertManager,
     AlertSeverity,
@@ -3657,7 +3662,12 @@ async def execute_tool(name: str, arguments: Dict[str, Any]) -> Dict[str, Any]:
             model = model_registry.get("partnership_detection_ml")
             if not model or not model.is_trained:
                 return {"error": "Model not available"}
-            return model.predict(arguments["text"])
+            _pred = model.predict(arguments["text"])
+            _log_episode("partnership", content=str(arguments.get("text", "")),
+                         care_weight=float(_pred.get("opportunity_score", 0.5)) if isinstance(_pred, dict) else 0.5,
+                         label=(_pred.get("opportunity_score") if isinstance(_pred, dict) else None),
+                         tags=["auto", "partnership"], source_agent="detect_partnership_opportunities")
+            return _pred
 
         elif name == "detect_threats":
             model = model_registry.get("threat_detection_nn")
@@ -3685,19 +3695,32 @@ async def execute_tool(name: str, arguments: Dict[str, Any]) -> Dict[str, Any]:
                     f"Threat level: {result.get('overall_threat_level', 'unknown')}",
                     channels=[AlertChannel.CONSOLE],
                 )
+            _log_episode("threat", content=str(arguments.get("text", "")),
+                         care_weight=0.9 if result.get("threat_detected") else 0.1,
+                         label=int(bool(result.get("threat_detected"))),
+                         tags=["auto", "detect_threats"], source_agent="detect_threats")
             return result
 
         elif name == "predict_relationship_evolution":
             model = model_registry.get("relationship_evolution_nn")
             if not model or not model.is_trained:
                 return {"error": "Model not available"}
-            return model.predict(arguments)
+            _pred = model.predict(arguments)
+            _log_episode("relationship", content=str(arguments),
+                         care_weight=float(_pred.get("predicted_trust_6mo", 0.5)) if isinstance(_pred, dict) else 0.5,
+                         label=(_pred.get("predicted_trust_6mo") if isinstance(_pred, dict) else None),
+                         tags=["auto", "relationship"], source_agent="predict_relationship_evolution")
+            return _pred
 
         elif name == "analyze_care_patterns":
             model = model_registry.get("care_pattern_analyzer")
             if not model or not model.is_trained:
                 return {"error": "Model not available"}
-            return model.predict(arguments)
+            _pred = model.predict(arguments)
+            _log_episode("care", content=str(arguments),
+                         care_weight=float(_pred.get("care_score", 0.5)) if isinstance(_pred, dict) else 0.5,
+                         tags=["auto", "care"], source_agent="analyze_care_patterns")
+            return _pred
 
         elif name == "get_neural_model_info":
             registry_info = model_registry.list_models() if model_registry else {}
