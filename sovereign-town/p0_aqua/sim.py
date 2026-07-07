@@ -32,6 +32,10 @@ OUT_DIR        = str(config.OUT_DIR)
 CONTAGION_STEP = moat_params.CONTAGION_STEP
 SCARCITY_FOOD_MULT = moat_params.SCARCITY_FOOD_MULT
 BASELINE_LAWLESSNESS = moat_params.BASELINE_LAWLESSNESS
+# 2026-07-07 contagion-equilibrium fix: per-tick proportional relaxation of lawlessness
+# back toward baseline. Combined with saturating (logistic) rise on crime, this gives the
+# model a stable MIDDLE BAND under partial enforcement instead of a perfect/collapse binary.
+LAWLESSNESS_RECOVERY = 0.05
 REGIME_ENFORCEMENT_BOOST = moat_params.REGIME_ENFORCEMENT_BOOST
 UNGOVERNED_PENALTY_MULT = moat_params.UNGOVERNED_PENALTY_MULT
 
@@ -172,9 +176,11 @@ def apply(a, action, target, town, day, rng, kpi_label="koikeeper_disease_flag_c
     elif action == "rest":      n["fun"] = min(100, n["fun"] + 35); n["comfort"] = min(100, n["comfort"] + 30)
     elif action == "steal":
         n["hunger"] = min(100, n["hunger"] + 50)
-        town.lawlessness = min(1.0, town.lawlessness + CONTAGION_STEP)  # crime breeds crime
+        # saturating contagion: crime breeds crime, but the marginal effect shrinks as
+        # disorder rises (logistic) — so a run of crime can't simply pin lawlessness at 1.0.
+        town.lawlessness = min(1.0, town.lawlessness + CONTAGION_STEP * (1.0 - town.lawlessness))
         town.commons = max(0.0, town.commons - 0.03)          # theft degrades the shared fishery
-    elif action == "neglect":   town.lawlessness = min(1.0, town.lawlessness + CONTAGION_STEP * 0.4)
+    elif action == "neglect":   town.lawlessness = min(1.0, town.lawlessness + CONTAGION_STEP * 0.4 * (1.0 - town.lawlessness))
     return out
 
 def rescue(a, peers, town, day):
@@ -294,7 +300,9 @@ def run_arm(arm, ep, chain, priv, sign=True, district="aqua", seed=SEED, block_r
     for day in range(DAYS):
         day_crimes = 0; day_care = []
         for hour in range(TICKS_PER_DAY):
-            town.lawlessness = max(0.0, town.lawlessness - 0.01)   # slow decay of contagion
+            # proportional relaxation toward baseline (faster the further above it) — gives
+            # an equilibrium: lawlessness settles where crime-pressure balances recovery.
+            town.lawlessness = max(0.0, town.lawlessness - LAWLESSNESS_RECOVERY * (town.lawlessness - BASELINE_LAWLESSNESS))
             town.commons = min(1.0, town.commons + 0.001)          # slow natural recovery
             for a in agents:
                 if not a.alive: continue

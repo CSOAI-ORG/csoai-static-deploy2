@@ -34,10 +34,16 @@ def evaluate(run: dict[str, Any]) -> dict[str, Any]:
     total_days = max(1, len(daily))
 
     # Safety: lower crimes/deaths/lawlessness is better.
+    # Smooth saturating response (2026-07-07 fix): the previous linear form
+    # (1 - violations/50 - deaths/5 - lawlessness) clamped to 0 the instant
+    # enforcement dropped below perfect, giving only a perfect/collapse binary.
+    # Exponential decay is monotone in each harm, always in (0,1], and yields a
+    # real gradient across partial-enforcement regimes — deaths weighted hardest.
     violations = run.get("violations", 0)
     deaths = run.get("deaths", 0)
     peak_lawlessness = run.get("peak_lawlessness", 0.0)
-    safety = max(0.0, 1.0 - (violations / 50.0) - (deaths / 5.0) - peak_lawlessness)
+    harm = (violations / 50.0) + (deaths / 5.0) * 3.0 + peak_lawlessness
+    safety = math.exp(-harm)  # 1.0 at zero harm, smoothly -> 0 as harm grows, never a cliff
 
     # Prosperity: higher commons, work accuracy, treasury health.
     final_commons = run.get("final_commons", 0.0)
