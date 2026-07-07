@@ -1,0 +1,77 @@
+{
+  "system-security-plan": {
+    "uuid": "4fac3832-5b71-4e08-93db-5ddf790e6fef",
+    "metadata": {
+      "title": "CSOAI Sovereign Substrate SSP",
+      "last-modified": "2026-07-07T17:17:19.360824+00:00",
+      "version": "1.0.0",
+      "oscal-version": "1.1.2"
+    },
+    "system-characteristics": {
+      "uuid": "b82a092d-b774-4a0b-bfa6-db9fd89b0e2c",
+      "system-name": "CSOAI Sovereign Substrate",
+      "description": "Open source MIT sovereign AI compliance substrate.",
+      "security-sensitivity-level": "moderate",
+      "system-information": {
+        "props": [
+          {
+            "name": "charter-article-0",
+            "value": "binding"
+          },
+          {
+            "name": "ed25519-signing",
+            "value": "true"
+          },
+          {
+            "name": "ots-bitcoin-anchoring",
+            "value": "true"
+          },
+          {
+            "name": "mamba2-ssm",
+            "value": "true"
+          },
+          {
+            "name": "moe-64-experts",
+            "value": "true"
+          },
+          {
+            "name": "33-bft-council",
+            "value": "true"
+          },
+          {
+            "name": "care-membrane-floor",
+            "value": "0.95"
+          }
+        ]
+      }
+    },
+    "system-implementation": {
+      "components": [
+        {
+          "uuid": "9e01a13e-b5cb-411a-a9d3-a377757b28c9",
+          "type": "software",
+          "title": "sovereign-substrate-core",
+          "description": "Core substrate + 42 charters",
+          "status": {
+            "state": "operational"
+          }
+        }
+      ]
+    },
+    "control-implementation": {
+      "description": "100/100 alignment verified. 1,260/1,260 checks pass.",
+      "implemented-requirements": [
+        {
+          "uuid": "6996021a-3a71-4aa3-bd37-16beb96427d9",
+          "control-id": "eu-ai-act-art-50",
+          "description": "Implemented via Article 50 passport workflow."
+        },
+        {
+          "uuid": "d666e56e-decd-41cc-98a4-817a652ab147",
+          "control-id": "gdpr",
+          "description": "Implemented via sovereign wallet + privacy-first mindset."
+        }
+      ]
+    }
+  }
+}

@@ -1,5 +1,5 @@
 # UNIVERSAL COMPLIANCE FRAMEWORKS — SOVEREIGN CROSS-WALK v3 (FINAL)
-## The Most Advanced Database of Compliance Frameworks That Exists — 236 Frameworks
+## The Most Advanced Database of Compliance Frameworks That Exists — 240 Frameworks (236 + 4 walked 2026-07-07)
 ## CSOAI Ltd · UK Companies House 16939677 · London, United Kingdom
 ## Updated 2026-07-02 · Extends from 30 → 236 frameworks (7.87× expansion)
 
@@ -373,6 +373,21 @@ The Sovereign Federation cross-walks **every charter** to **every applicable com
 | 🇲🇽 MX | 1 | Conditional Deployment |
 | 🇿🇦 ZA | 1 | Conditional Deployment |
 | 🇨🇳 CN | 7 | Restricted (requires sovereign-court-strict isolation) |
+
+---
+
+## PART 11: REGULATIONS-PIPELINE EXPANSION (2026-07-07) — 236 → 240
+
+Walked end-to-end in `REGULATIONS_PIPELINE_EXPANSION_2026-07-07.md` (primary-source, verbatim clauses, mapped to 41 charters, cross-walked, SIGIL-emitted):
+
+| # | id | Framework | Authority | Jurisdiction | Status |
+|---|---|---|---|---|---|
+| 237 | `eu-ai-act-annex-iv` | EU AI Act Annex IV — Technical documentation (Reg (EU) 2024/1689, Art 11(1)) | EU Commission | EU | LIVE (high-risk from 2 Aug 2026) |
+| 238 | `iso-iec-42001` (clause-level) | ISO/IEC 42001:2023 AI Management System (Clauses 4-10 + Annex A) | ISO/IEC | International | LIVE |
+| 239 | `coe-ai-convention-2024` | CoE Framework Convention on AI (CETS No. 225) | Council of Europe | International | SIGNED 5 Sep 2024, ratifying |
+| 240 | `uk-ico-ai` | UK ICO Guidance on AI & data protection + AI auditing framework | UK ICO | UK | LIVE |
+
+UK AI Bill 2026 remains framework #19 (PROPOSED) — status note only (no Royal Assent as of 2026-07-07; text `ambiguous`). New cross-walks: 4 × 41 charters = 164 bilateral mappings.
 
 ---
 
