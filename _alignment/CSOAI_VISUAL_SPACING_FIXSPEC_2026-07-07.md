@@ -1,5 +1,14 @@
 # 🎨 CSOAI Visual / Spacing Fix-Spec — for M2 (councilof-ai) · 2026-07-07
 
+> ⚠️ **CORRECTION (verified in local dev 2026-07-07):** the "only one breakpoint" claim below was a
+> CSS-parsing artifact of Tailwind v4 range-media-queries. The site IS responsive (sm:373 / md:652 /
+> lg:245 responsive prefixes; nav collapses to a hamburger; mobile renders decently). Real issues found
+> by actually emulating mobile: (1) a site-wide **nested-<a> hydration bug** in the Footer — FIXED +
+> verified, PR #129; (2) the "New here?" tour popup **overlaps the hero at 375px** (still open);
+> (3) `xl:` used only 4× = almost no large-screen optimization. Treat the breakpoint section below as
+> superseded; the padding/container-consistency items still stand as polish.
+
+
 Measured live on csoai.org (desktop, via getComputedStyle). These are real defects, not opinions.
 M4 can't emulate mobile from its seat (browser resize doesn't change the live viewport) and won't edit
 M2's repo — this is the precise handoff so M2 applies it in `councilof-ai/client`.
