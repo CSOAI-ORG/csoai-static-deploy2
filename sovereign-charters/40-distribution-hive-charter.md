@@ -1,12 +1,12 @@
-# 40 — DISTRIBUTION HIVE
+# SOVEREIGN CHARTER — THE DISTRIBUTION HIVE (W40)
 ## The sovereign distribution operating system for CSOAI's 10,000 named accounts
-## Sovereign Charter · 2026-07-06
+## UK 16939677 · CSOAI Ltd · Yorkshire, United Kingdom · 2026-07-06
 
 ---
 
 ## ARTICLE 0 — BINDING CLAUSE
 
-**Never take equity, board seats, revenue-sharing, or success fees from institutions we certify. ISO fee-for-service model ONLY. CA3O is the CMKC for AI.**
+**Charter Article 0: Never take equity, board seats, revenue-sharing, or success fees from institutions we certify. ISO fee-for-service model ONLY. CA3O is the CMKC for AI.**
 
 *This clause is constitutionally binding. Requires 33/33 BFT ratification + 5 human signatures to amend.*
 
@@ -191,7 +191,7 @@ Cross-walks Distribution Hive (H40) with:
 
 ---
 
-## ARTICLE XI — BLACK SWAN TIMING
+## ARTICLE XI — Black Swan Timing
 
 **Watch for:**
 - 2 Aug 2026: EU AI Act Article 50 enforcement (27 days) — distribution spike
@@ -225,3 +225,86 @@ If a lead = competitor (e.g. Palantir, Anduril, BAE internal AI):
 
 CSOAI Ltd · UK Companies House 16939677 · Sovereign root key: d75a980182b10ab7d54bfed3c964073a0ee172f3daa62325af021a68f707511a
 Ed25519-signed · BFT-ratified · OTS-Bitcoin-anchored · Charter Article 0 binding
+---
+
+## DATA BINDING — THE WORLD'S DATA (49GB SOVEREIGN MOAT)
+
+```
+DATA_BOUND_TO: csoai-universe.json
+DATA_VOLUME: 49GB sovereign data moat + 198 live data sources
+UK_SIC_CODE: 62.02 (Information technology consultancy activities)
+CHARTER_BINDING: Yes — sovereign federation binding via Charter Article 0
+```
+
+## SOVEREIGN DATA MOAT (49 GB)
+
+CSOAI sovereign data moat (49 GB) binds the Distribution Hive to:
+- Companies House PSC + officers (UK + Channel Islands + Isle of Man)
+- SEC EDGAR (US public companies)
+- FRED (Federal Reserve Economic Data)
+- EU OJ (Official Journal)
+- FTS + TED procurement leads
+- Sovereign cloud customers (G-Cloud 13 + NSDR)
+- Defence primes' published AI spend (FMS + DSCA + NATO)
+- Regulator rosters (ICO + EU AI Office + US NIST + SG IMDA + ...)
+
+## SIC CODES
+
+| Charter | UK SIC Code | Description |
+|---|---|---|
+| 40-distribution-hive | 62.02 | Information technology consultancy activities |
+| 40-distribution-hive | 70.22 | Business and other management consultancy activities |
+| 40-distribution-hive | 82.20 | Activities of call centres |
+
+## BLACK SWAN WINDOW (T+ Days Remaining)
+
+| Event | Days Remaining | Distribution Impact |
+|---|---|---|
+| EU AI Act Article 50 enforcement | T+27 days (2 Aug 2026) | MASSIVE spike — every GenAI vendor needs passport |
+| UK AI Bill 2026 enactment | T+180 days | UK sovereign buyers surge |
+| AUKUS Pillar II defence AI funding | T+540 days | Defence primes + SMEs |
+| PQC migration deadline | T+730 days | Sovereign wallet migration spike |
+| EU AI Act full enforcement | T+1095 days | Annex IV high-risk universal |
+
+## UBI STARTER PATHWAY
+
+| Tier | Hours | UBI/mo | Source |
+|---|---|---|---|
+| Tier 1 (Foundation) | 40 | £300 | Enterprise contracts (NOT equity) |
+| Tier 2 | 200 | £500 | Enterprise contracts |
+| Tier 3 | 500 | £900 | Enterprise contracts |
+| Tier 4 (Director) | 1,500 | £1,200 | Enterprise contracts |
+
+Charter Article 0 binding: UBI funded by enterprise contracts only. No equity-based capture.
+
+## UNIVERSAL COMPLIANCE FRAMEWORKS (123 Universal Compliance Frameworks)
+
+This charter references 123 universal compliance frameworks in CSOAI's database (target 236 by Q4 2026):
+- EU AI Act (Regulation 2024/1689)
+- GDPR (EU 2016/679)
+- UK ICO + UK AI Bill 2026 (expected)
+- NIST AI RMF 1.0 + NIST CSF 2.0
+- ISO/IEC 42001:2023
+- ISO/IEC 27001:2022
+- HIPAA Privacy + Security Rules
+- DORA (Digital Operational Resilience Act)
+- NIS2 Directive
+- Basel III/IV
+- CoE AI Convention 2024
+- OECD AI Principles 2019
+- G7 Hiroshima AI Process Code of Conduct
+- AUKUS Pillar II + JSP 936/440/604
+- Five Eyes AI WG + ITAR
+- Singapore AI Verify
+- EUDI Wallet 2024-2026 + eIDAS 2.0
+- US Executive Order 14110
+- US OMB M-24-10
+- FedRAMP High
+- PCI DSS 4.0
+- US FTC AI guidance
+- US SEC AI in finance
+- US FDA AI/ML SaMD
+- AND MANY MORE — total 236+ in database
+
+---
+
