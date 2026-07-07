@@ -255,11 +255,23 @@ def parse_leads_database():
     md = (CHARTER_ROOT / 'LEADS_DATABASE_2026-07-06.md').read_text()
     leads = []
     current_tier = None
-    current_block = []
     for line in md.split('\n'):
         m = re.match(r'^## TIER (\d+)', line)
         if m:
             current_tier = int(m.group(1))
+            continue
+        # Match varying column counts: 5 or 6
+        m = re.match(r'^\| (T\d-\d+) \| (.+?) \| (.+?) \| (.+?) \| (.+?) \|$', line)
+        if m and current_tier is not None:
+            leads.append({
+                'lead_id': m.group(1).strip(),
+                'company_legal_name': m.group(2).strip(),
+                'jurisdiction': m.group(3).strip(),
+                'industry_signal': m.group(4).strip(),
+                'wedge': m.group(5).strip(),
+                'tier': current_tier,
+                'domain': extract_domain(m.group(2)),
+            })
             continue
         m = re.match(r'^\| (T\d-\d+) \| (.+?) \| (.+?) \| (.+?) \| (.+?) \| (.+?) \|$', line)
         if m and current_tier is not None:
