@@ -44,6 +44,13 @@ Thumbs.db
 # ---------------------------------------------------------------------------
 # Local environment / secrets
 # ---------------------------------------------------------------------------
+# Registry auth tokens (npm/pip/yarn) — never commit literal tokens
+.npmrc
+**/.npmrc
+.pypirc
+**/.pypirc
+.yarnrc.yml
+**/.yarnrc.yml
 .env
 .env.*
 !.env.example
