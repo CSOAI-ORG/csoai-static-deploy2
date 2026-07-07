@@ -1,13 +1,13 @@
 # SOVEREIGN CHARTERS — OVERNIGHT BUILD REPORT
-**Generated**: 2026-07-07 06:00 UTC
+**Generated**: 2026-07-07 10:00 UTC
 
 ## Build Status
 
 | Metric | Value |
 |---|---|
-| Charter files built | 41 / 34 |
-| Missing | -7 |
-| Total directory size |  18M |
+| Charter files built | 42 / 34 |
+| Missing | -8 |
+| Total directory size |  20M |
 | Charter of Charters |    21568 bytes |
 | Master Index |     8480 bytes |
 | Master Template |     6734 bytes |
@@ -57,6 +57,7 @@
 | | 37-sovereigncourt-charter.md | 30146 bytes |
 | | 38-sovereignstandards-charter.md | 30284 bytes |
 | | 39-sovereignledger-charter.md | 29573 bytes |
+| | 40-distribution-hive-charter.md | 12276 bytes |
 
 ## ✅ ALL 34 CHARTERS BUILT
 
