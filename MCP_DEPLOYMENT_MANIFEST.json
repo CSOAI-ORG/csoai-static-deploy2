@@ -3,7 +3,7 @@
   "generated_at": "2026-06-29T08:03:34.930606+00:00",
   "organization": "CSOAI-ORG",
   "base_url": "https://github.com/CSOAI-ORG",
-  "total_servers": 531,
+  "total_servers": 532,
   "deployable_servers": [
     {
       "name": "a2a-governance-bridge-mcp",
@@ -8968,9 +8968,30 @@
       "hive": "meok-api-gateway",
       "build_pass": true,
       "build_fail": false
+    },
+    {
+      "name": "csoai-governance-mcp",
+      "repository": "https://github.com/CSOAI-ORG/councilof-ai",
+      "version": "0.1.0",
+      "description": "CSOAI Sovereign governance MCP \u2014 published to npm. Seal any AI artifact to CSOAI Layer 0 with Ed25519, verify seals offline, ask governed AI-governance/cyber questions, search the 377-tool catalog. Any MCP client (Claude Science, Claude Code, Cursor) installs with `npx csoai-governance-mcp`.",
+      "language": "javascript",
+      "entry_point": "index.mjs",
+      "has_auth_middleware": false,
+      "has_pyproject": false,
+      "has_smithery_yaml": false,
+      "has_mcp_json": false,
+      "has_package_json": true,
+      "has_server_json": false,
+      "deployment_ready": true,
+      "hive": "meok-distribution",
+      "build_pass": true,
+      "build_fail": false,
+      "npm_package": "csoai-governance-mcp",
+      "npm_published": true,
+      "install_command": "npx -y csoai-governance-mcp"
     }
   ],
-  "deployable_count": 498,
+  "deployable_count": 499,
   "deploy_ready_count": 479,
   "by_hive": {
     "meok-governance-engine": 13,
@@ -8979,7 +9000,7 @@
     "meok-verticals": 108,
     "meok-keystone": 5,
     "meok-gaming-hive": 5,
-    "meok-distribution": 2
+    "meok-distribution": 3
   },
   "by_language": {
     "typescript": 202,
