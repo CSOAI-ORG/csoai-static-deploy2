@@ -1,23 +1,52 @@
-# 🛒 MEOK LABS / DEFONEOS — READY-TO-BUILD KIT
+# 🛒 MEOK LABS / DEFONEOS — READY-TO-BUILD KIT (FINAL — LOCKED)
 *Compiled 2026-07-02 by MEOK Labs (FORGE) tab*
-*Aligned to EAT_DIRECTIVE_2026-07-02.md — hardware reframed as governance proof artifacts*
-
-**This is the SHOPPING LIST + DRAWING LIST + PRINT SCHEDULE ready to execute today.**
+*Aligned to EAT_DIRECTIVE_2026-07-02.md — governance proof artifacts*
+*Decisions LOCKED: ELRS radio, dual radar (RD-03D+LD2450), generate-now STL files*
 
 ---
 
-## 💷 TOTAL BUDGET — Everything You'd Buy
+## ✅ DECISIONS LOCKED
 
-| Category | Cost (GBP) |
-|---|---|
-| DEFONEOS-ASSURANCE-RADAR (5 units) | £175 |
-| DEFONEOS-ASSURANCE-DRONE (3 units) | £750 |
-| DEFONEOS-ASSURANCE-WALKER (2 units) | £600 |
-| **TOTAL TO PAY CASH** | **£1,525** |
-| 3D printing (PA12-CF, PA6-CF, TPU, PLA — already on hand) | £0 |
-| Total print time | 108 hours ≈ 4-7 days on Qidi |
+| Decision | Choice | Rationale |
+|---|---|---|
+| Radio protocol | **ELRS (ExpressLRS)** | Open-source, fits sovereign narrative, longer range, £18/unit |
+| Radar setup | **DUAL: RD-03D + LD2450** | Two-source verification, ±£4 extra cost |
+| OpenSCAD files | **Generated now** | Ready to slice the moment parts land |
+| Print schedule | **6 days single Qidi** | 108h split: 2h test, 22h radar, 16h drones, 86h walkers |
 
-**You already have the filament. The £1,525 buys everything else.**
+---
+
+## 💷 FINAL BUDGET — TOTAL CASH £1,393
+
+| Vendor | Subtotal | Lead time |
+|---|---|---|
+| AliExpress UK Standard | **£794** | 15-25 days |
+| PiHut UK | **£79** | 2 days |
+| Pyrodrone UK | **£520** | 3-5 days |
+| **GRAND TOTAL CASH** | **£1,393** | |
+| Filament (already on hand) | £0 | PLA/PA12-CF/PA6-CF/TPU |
+| Print time | 108h on Qidi Max4 | 5-6 days |
+| **System count** | **10 governance artifacts** | 5 RADAR + 3 DRONE + 2 WALKER |
+
+Save **£132 vs first estimate** (£1,525 → £1,393) by using ELRS vs FrSky and bulk AliExpress pricing.
+
+---
+
+## 📐 ALL DRAWINGS GENERATED — see `openscad/`
+
+| File | What | Print settings |
+|---|---|---|
+| `openscad/qav250_frame.scad` | Frame baseplate 135×110×3mm | PA12-CF 0.16mm |
+| `openscad/qav250_arm.scad` | Tapered arm, 95mm long | PA6-CF 0.16mm |
+| `openscad/qav250_canopy.scad` | Dome-top protective shell | PETG 0.20mm |
+| `openscad/qav250_skid.scad` | TPU landing skids | TPU 95A 0.20mm |
+| `openscad/microban_walker.scad` | All 14 biped body parts | PA12-CF + TPU mix |
+| `openscad/radar_enclosure.scad` | Tamper-evident case | PA12-CF 0.16mm |
+| `openscad/radar_tamper_cap.scad` | TPU caps | TPU 95A 0.20mm |
+| `openscad/radar_mount_bracket.scad` | Pole/wall mount | PA6-CF 0.16mm |
+| `openscad/stl/*.stl` | 22 STL renders ready to slice | (all formats above) |
+
+**Full OpenSCAD parametric designs in 8 files.** Plus **22 STL renders** generated and ready to slice.
 
 ---
 
