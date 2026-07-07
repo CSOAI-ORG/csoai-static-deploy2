@@ -60,10 +60,14 @@ async function pool(items, n, fn) {
 }
 
 async function main() {
+  const args = process.argv.slice(2);
+  const ti = args.indexOf('--tier');
+  const [tMin, tMax] = (ti >= 0 ? args[ti + 1] : '0-3').split('-').map(Number);
+  const TAG = `tier${tMin}-${tMax}`;
   const lines = (await readFile(resolve(DIR, 'drafts.jsonl'), 'utf8')).trim().split('\n');
   const all = lines.map((l) => JSON.parse(l));
-  const t03 = all.filter((d) => Number(d.tier) <= 3);
-  console.log(`Tier 0-3 accounts: ${t03.length}. Enriching from public pages (this makes ~${t03.length} polite fetches)...`);
+  const t03 = all.filter((d) => Number(d.tier) >= tMin && Number(d.tier) <= tMax);
+  console.log(`${TAG} accounts: ${t03.length}. Enriching from public pages (this makes ~${t03.length} polite fetches)...`);
 
   const results = await pool(t03, 6, async (d, k) => {
     const { emails, contactPage } = await enrich(d.domain);
@@ -75,7 +79,7 @@ async function main() {
   const header = 'tier,company,domain,jurisdiction,found_email_1,found_email_2,guessed_email,contact_page,linkedin,subject,lead_id';
   const rows = results.sort((a, b) => a.tier - b.tier).map((r) =>
     [r.tier, esc(r.company), r.domain || '', r.jurisdiction || '', r.found_emails[0] || '', r.found_emails[1] || '', r.guess, r.contact_page || '', r.linkedin, esc(r.subject), r.lead_id].join(','));
-  await writeFile(resolve(DIR, 'tier0-3-worksheet.csv'), header + '\n' + rows.join('\n') + '\n');
+  await writeFile(resolve(DIR, `${TAG}-worksheet.csv`), header + '\n' + rows.join('\n') + '\n');
 
   const withEmail = results.filter((r) => r.found_emails.length).length;
   const md = `# Tier 0-3 Enrichment Worksheet (${results.length} high-value accounts)\n\n` +
@@ -83,7 +87,7 @@ async function main() {
     `| Tier | Company | Domain | Found email | Guess | Contact page |\n|---|---|---|---|---|---|\n` +
     results.sort((a, b) => a.tier - b.tier).map((r) => `| ${r.tier} | ${r.company} | ${r.domain || '—'} | ${r.found_emails[0] || '—'} | ${r.guess || '—'} | ${r.contact_page ? '✓' : '—'} |`).join('\n') +
     `\n\nFull drafts: \`drafts.jsonl\` (match by lead_id). CSV: \`tier0-3-worksheet.csv\`.\n`;
-  await writeFile(resolve(DIR, 'tier0-3-worksheet.md'), md);
+  await writeFile(resolve(DIR, `${TAG}-worksheet.md`), md);
   console.log(`\nWrote tier0-3-worksheet.csv + .md — ${withEmail}/${results.length} with a public email found.`);
 }
 main().catch((e) => { console.error(e); process.exit(1); });
