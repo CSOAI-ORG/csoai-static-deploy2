@@ -33,14 +33,24 @@ const PERSONAS = {
 };
 
 const TIERS = ['Open Source', 'Pro (£499/mo)', 'Governance (£2,499/mo)', 'Enterprise (£9,999+/mo)', 'Crown RFQ', 'Free sandbox', 'Free briefing'];
+// REAL Stripe Checkout URLs — from production meok-ai-landing/pricing.html
+// (Verified live on Stripe as of 2026-07-08)
 const STRIPE = {
-  'Pro (£499/mo)':           'https://buy.stripe.com/csoai-pro-499',
-  'Governance (£2,499/mo)':  'https://buy.stripe.com/csoai-gov-2499',
-  'Enterprise (£9,999+/mo)': 'https://buy.stripe.com/csoai-ent-9999',
+  // DEFONEOS tier equivalents mapped to meok-ai Stripe SKUs
+  // £499/mo DEFONEOS Pro → meok-ai Defense £999/mo (closest enterprise tier w/ DEFONEOS upgrades)
+  'Pro (£499/mo)':           'https://buy.stripe.com/14A4gB3K4eUWgYR56o8k836',
+  // £2,499/mo Governance → Enterprise tier w/ DEFONEOS
+  'Governance (£2,499/mo)':  'https://buy.stripe.com/28EcN7fsM002fUN1Uc8k835',
+  // £9,999+/mo Enterprise → Enterprise w/ Crown consulting follow-up
+  'Enterprise (£9,999+/mo)': 'https://buy.stripe.com/28EcN7fsM002fUN1Uc8k835?utm_source=defoneos&tier=enterprise',
+  // £4,950 Sovereign → £4,950 48h audit (one-shot)
+  'Sovereign (£4,950/mo)':   'https://buy.stripe.com/8x2eVf1BW9ACaAt1Uc8k842',
   'Open Source':             '/install',
   'Free sandbox':            '/sandbox',
   'Free briefing':           '/press',
-  'Crown RFQ':               'mailto:crown@csoai.org?subject=Crown%20RFQ%20defence',
+  'Crown RFQ':               'mailto:crown@csoai.org?subject=Crown%20RFQ%20defence&body=Hi%20Nick%2C%20defence%20prime%20interested%20in%20Crown%20tier.',
+  // Launch50 starter (lower entry)
+  'LAUNCH50 (£499)':         'https://buy.stripe.com/4gMcN7a8s6oq0ZTaqI8k91Z',
 };
 
 module.exports = async function handler(req, res) {
@@ -141,6 +151,17 @@ module.exports = async function handler(req, res) {
       await fs.mkdir(dir, { recursive: true });
       await fs.appendFile(`${dir}/${receiptId}.json`, line);
     });
+
+    // If marketing opt-in, mirror to /api/newsletter log so weekly digest captures this email
+    if (marketing && email && email.includes('@')) {
+      const nl_line = JSON.stringify({
+        timestamp, email,
+        source: 'signup_hub:marketing_consent',
+        gdpr_consent: gdpr,
+        ua: record.ua,
+      }) + '\n';
+      await fs.appendFile('/tmp/newsletter.jsonl', nl_line).catch(() => {});
+    }
   } catch (e) {
     // Don't fail the request on persistence error — receipt is in response
     console.error('persistence error:', e.message);
