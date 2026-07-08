@@ -7,18 +7,21 @@ persona needs that CSOAI does not yet expose as a first-class route.
 ## Personas (by volume)
 | Persona | Accounts | Surfaces needed | Examples |
 |---|---:|---|---|
-| **US public company (SEC filer)** | 1541 | /crosswalk, /compare, /system-card, /verify, /classifier, /us-ai-regulation, /high-risk-ai | NVIDIA CORP; Apple Inc.; Alphabet Inc. |
-| **Financial services** | 323 | /crosswalk, /compare, /system-card, /verify, /classifier, /dora, /finance-ai-act, /nis2 | BERKSHIRE HATHAWAY INC; JPMORGAN CHASE & CO; BANK OF AMERICA CORP /DE/ |
-| **Healthcare / Life sciences** | 159 | /crosswalk, /compare, /system-card, /verify, /classifier, /healthcare-ai-act, /high-risk-ai | ELI LILLY & Co; JOHNSON & JOHNSON; AbbVie Inc. |
-| **AI startup / scale-up** | 151 | /crosswalk, /compare, /system-card, /verify, /classifier, /start, /os, /pricing | Zscaler; European Commission DG-CONNECT; EU AI Office |
-| **Enterprise (general)** | 148 | /crosswalk, /compare, /system-card, /verify, /classifier, /industries, /pricing | BAE Systems; Rolls-Royce; Leonardo |
+| **US public company (SEC filer)** | 1526 | /crosswalk, /compare, /system-card, /verify, /classifier, /us-ai-regulation, /high-risk-ai | NVIDIA CORP; Apple Inc.; Alphabet Inc. |
+| **Financial services** | 343 | /crosswalk, /compare, /system-card, /verify, /classifier, /dora, /finance-ai-act, /nis2 | FCA — AI in Finance; EIOPA (insurance); EBA (banking) |
+| **Healthcare / Life sciences** | 167 | /crosswalk, /compare, /system-card, /verify, /classifier, /healthcare-ai-act, /high-risk-ai | AstraZeneca; Pfizer; UnitedHealth |
+| **AI startup / scale-up** | 147 | /crosswalk, /compare, /system-card, /verify, /classifier, /start, /os, /pricing | Zscaler; European Commission DG-CONNECT; EU AI Office |
+| **Enterprise (general)** | 113 | /crosswalk, /compare, /system-card, /verify, /classifier, /industries, /pricing | QinetiQ; ICO — AI Auditing Framework; NCSC — AI Cyber |
 | **Regulator / Policy body** | 41 | /crosswalk, /compare, /system-card, /verify, /classifier, /regulator-atlas, /government-dashboard, /sov-space, /globe | UK AI Safety Institute (AISI); UK Cabinet Office — i.AI team; UK Department for Science, Innovation & Technology (DSIT) |
+| **Defence / National security** | 26 | /crosswalk, /compare, /system-card, /verify, /classifier, /fedramp, /cobol, /high-risk-ai | BAE Systems; Rolls-Royce; Leonardo |
 
 ## Surface coverage (needed path vs live route — verified against master's router)
 - ✅ **/classifier** (live route)
+- ✅ **/cobol** (live route)
 - ✅ **/compare** (live route)
 - ✅ **/crosswalk** (live route)
 - ✅ **/dora** (live route)
+- ✅ **/fedramp** (live route)
 - ✅ **/finance-ai-act** (live route)
 - ✅ **/globe** (live route)
 - ✅ **/government-dashboard** (live route)

@@ -4,7 +4,7 @@ Built from csoai_leads.db (synthesis of existing per-account intel — no re-scr
 
 - **450/2363** have a computed top wedge (framework gap vs CSOAI).
 - **2363/2363** have public AI signals.
-- **6** distinct personas derived.
+- **7** distinct personas derived.
 
 ## Query it (SOV3 / dock)
 ```bash

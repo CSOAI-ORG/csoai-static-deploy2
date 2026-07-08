@@ -56,9 +56,27 @@ function applicableRegs(juris = '', sector = '') {
   return [...set];
 }
 
+// ---- Sector inference: many top accounts have industry_charter="unknown". Infer from
+// company name / domain keywords so persona routing sharpens (public heuristic, no API). ----
+const SECTOR_KEYWORDS = [
+  ['finance', /bank|financ|capital|jpmorgan|jp morgan|goldman|morgan stanley|wells fargo|citigroup|citibank|berkshire|american express|visa|mastercard|paypal|blackrock|charles schwab|insur|allstate|metlife|prudential|aig|fintech|payment|lending|credit|mortgage|hsbc|barclays|lloyds|natwest|deutsche|santander|blackstone|kkr|fidelity|vanguard/i],
+  ['healthcare', /health|hospital|pharma|medic|clinic|biotech|life scienc|pfizer|merck|johnson & johnson|abbvie|eli lilly|moderna|amgen|gilead|bristol|novartis|astrazeneca|unitedhealth|cvs|cigna|humana|elevance|therapeut|genomic|diagnos/i],
+  ['defence', /defen[cs]e|military|aerospace|lockheed|raytheon|rtx|northrop|general dynamics|bae systems|boeing|l3harris|leonardo|thales|rolls-royce|airbus|palantir|anduril|missile|weapon|naval|army/i],
+  ['technology', /nvidia|apple|microsoft|alphabet|google|meta|amazon|intel|amd|oracle|salesforce|adobe|ibm|cisco|qualcomm|broadcom|dell|hp inc|sap|servicenow|snowflake|palo alto|crowdstrike|zscaler|databricks|openai|anthropic|software|semiconductor|cloud|\.ai\b|\.io\b|tech(nolog)?/i],
+  ['energy', /energy|exxon|chevron|shell|\bbp\b|conocophillips|utility|utilities|power|electric|grid|nuclear|petroleum|oil & gas|renewable/i],
+  ['government', /government|ministry|department|authority|commission|regulator|cabinet|agency|federal|\bgov\b|public sector|council|parliament|senate/i],
+  ['retail', /retail|walmart|target|costco|home depot|consumer|e-commerce|ecommerce|marketplace/i],
+];
+function inferSector(company = '', domain = '', existing = '') {
+  if (existing && existing !== 'unknown' && existing !== 'unspecified') return existing;
+  const hay = `${company} ${domain}`.toLowerCase();
+  for (const [sector, re] of SECTOR_KEYWORDS) if (re.test(hay)) return sector;
+  return existing || 'unspecified';
+}
+
 // ---- Persona derivation: tier + sector + jurisdiction → who actually buys ----
-function derivePersona(lead, r) {
-  const t = lead.tier, j = (lead.jurisdiction || '').toLowerCase(), s = (lead.industry_charter || '').toLowerCase();
+function derivePersona(lead, r, sectorHint) {
+  const t = lead.tier, j = (lead.jurisdiction || '').toLowerCase(), s = (sectorHint || lead.industry_charter || '').toLowerCase();
   const explicit = (lead.primary_persona || r.primary_persona || '').trim();
   if (/regulator|policy|govern(ment)?|ministry|department|authority|commission/.test(j) || t === 0)
     return { persona: 'Regulator / Policy body', buyer: 'Policy lead / AI governance office', motive: 'set + evidence a national assurance baseline' };
@@ -96,7 +114,8 @@ function surfacesFor(persona) {
 function buildProfile(lead) {
   let r = {}; try { r = JSON.parse(lead.report_json || '{}'); } catch {}
   const company = lead.company_legal_name || r.company || 'Unknown org';
-  const sector = lead.industry_charter && lead.industry_charter !== 'unknown' ? lead.industry_charter : (r.industry_charter || 'unspecified');
+  const rawSector = lead.industry_charter && lead.industry_charter !== 'unknown' ? lead.industry_charter : (r.industry_charter || 'unspecified');
+  const sector = inferSector(company, lead.domain || '', rawSector);
   const signals = (Array.isArray(r.public_ai_signals) ? r.public_ai_signals : []).filter(Boolean);
 
   // posture → coverage + strongest wedges (from precomputed side_by_side_comparison)
@@ -114,7 +133,7 @@ function buildProfile(lead) {
   const regs = applicableRegs(lead.jurisdiction, sector);
   const regLabels = regs.map(k => FRAMEWORK_LABEL[k] || k);
   const uncovered = regs.filter(k => !(Number(cp[k]) > 0)).map(k => FRAMEWORK_LABEL[k] || k);
-  const { persona, buyer, motive } = derivePersona(lead, r);
+  const { persona, buyer, motive } = derivePersona(lead, r, sector);
   const surfaces = surfacesFor(persona);
 
   const gapSummary = uncovered.length
