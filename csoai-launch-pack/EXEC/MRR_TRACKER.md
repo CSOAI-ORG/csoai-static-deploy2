@@ -20,3 +20,11 @@ Each row = one daily snapshot. Source: /tmp/csoai-signups.mirror.jsonl / Stripe 
 | 2026-07-08 | 0 (placeholder) | 0 (placeholder) | 0 (placeholder — /tmp/csoai-signups.mirror.jsonl not yet piped from Vercel /api/signup; API returned HTTP 405) | £0 (Stripe live, code path commented above) | 0 (Stripe live, code path commented above) |
 ```
 
+## 2026-07-08 snapshot — 2026-07-08T05:03:08Z
+
+```
+| Date (UTC) | Today | Week (2026-07-01→2026-07-08) | All-time | MRR | Active customers |
+|---|---|---|---|---|---|
+| 2026-07-08 | 0 (placeholder) | 0 (placeholder) | 0 (placeholder — /tmp/csoai-signups.mirror.jsonl not yet piped from Vercel /api/signup; API returned HTTP 405) | £0 (Stripe live, code path commented above) | 0 (Stripe live, code path commented above) |
+```
+
