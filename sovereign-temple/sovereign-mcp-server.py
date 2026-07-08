@@ -1125,6 +1125,18 @@ MCP_TOOLS = [
         },
     },
     {
+        "name": "detect_dependency",
+        "description": "Detect platform/agent over-reliance risk from an agent needs-state vector (early-warning governance signal, not a hard gate)",
+        "inputSchema": {
+            "type": "object",
+            "properties": {
+                "needs": {"type": "object", "description": "Needs-state: hunger,energy,social,fun,wealth,comfort,hygiene,bladder (0-100)"},
+                "wallet": {"type": "number", "description": "Agent wallet balance"}
+            },
+            "required": ["needs"],
+        },
+    },
+    {
         "name": "predict_relationship_evolution",
         "description": "Predict how a relationship will evolve over time",
         "inputSchema": {
@@ -3700,6 +3712,27 @@ async def execute_tool(name: str, arguments: Dict[str, Any]) -> Dict[str, Any]:
                          label=int(bool(result.get("threat_detected"))),
                          tags=["auto", "detect_threats"], source_agent="detect_threats")
             return result
+
+        elif name == "detect_dependency":
+            # Dependency early-warning: state -> over-reliance risk. Loads the standalone
+            # joblib classifier (needs-vector features); returns a risk score, NOT a hard gate.
+            try:
+                import joblib as _joblib, os as _os
+                _dep_path = _os.path.join(_os.path.dirname(__file__), "..", "_alignment", "dependency_classifier.joblib")
+                _dep = _joblib.load(_dep_path)
+                _needs = arguments.get("needs", {}) or {}
+                _feat = [[_needs.get(k, 0) for k in ["hunger","energy","social","fun","wealth","comfort","hygiene","bladder"]] + [arguments.get("wallet", 0)]]
+                _risk = float(_dep["model"].predict_proba(_feat)[0][1])
+                _result = {"dependency_risk": round(_risk, 3),
+                           "signal": "elevated" if _risk >= 0.5 else "nominal",
+                           "note": "early-warning governance signal (small-n, state->behavior); not a hard gate"}
+            except Exception as _e:
+                _result = {"error": f"dependency model unavailable: {_e}"}
+            _log_episode("dependency", content=str(arguments.get("needs", "")),
+                         care_weight=float(_result.get("dependency_risk", 0.0)),
+                         label=(1 if _result.get("signal") == "elevated" else 0),
+                         tags=["auto", "dependency"], source_agent="detect_dependency")
+            return _result
 
         elif name == "predict_relationship_evolution":
             model = model_registry.get("relationship_evolution_nn")
