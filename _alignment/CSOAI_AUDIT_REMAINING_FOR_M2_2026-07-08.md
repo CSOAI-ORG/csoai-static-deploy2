@@ -12,7 +12,14 @@ math; Compare 26-vs-13; SEC/JurisdictionAct/SystemCard/OsLauncher; **Crosswalk**
 **Industries** removed non-existent 'Basel III AI Requirements', FERPA name, 40→32 NATO; **EU-AI-Act
 guide** OJ-publication vs adoption, Digital-Omnibus 19-Nov-2025, Art.10(3) 'error-free' wording.
 
-## 🔴 Left for M2 — framework taxonomy (verify against the source standard before editing)
+## ✅ NOW FIXED by M4 (source-verified, PR #131) — since first draft
+NIST AI RMF (MAP 4, MANAGE 3, 'Fair – with Harmful Bias Managed', OECD wording) vs NIST AIRC;
+ISO 42001 '38 controls across 9 objectives' vs ISO structure; FedRAMP RFC-0024 = adopted policy
+(machine-readable mandatory, OSCAL named primary); regulators.ts M-24-10→M-25-21 (rescinded Apr-2025)
++ Colorado SB 24-205 repealed/replaced by SB 26-189 (ADMT, eff 1 Jan 2027). E2E: 24/24 routes render
+0-error, 16/16 links resolve, dead /verify in the KB fixed.
+
+## 🔴 Still left for M2 (lower severity / visual)
 1. **NISTAIRMFGuide.tsx** — GOVERN/MAP/MANAGE categories are scrambled vs AI RMF 1.0: GOVERN 6
    (third-party/supply-chain) is omitted; MAP 4 mislabeled 'Risk Tolerance'; MANAGE 3 mislabeled
    'Risk Monitoring'; trustworthy characteristic 'Fair with Managed Bias' → NIST's 'Fair – with
