@@ -1,11 +1,11 @@
 # CSOAI Sim → Crosswalks + Charter Improvements (2026-07-08)
 
-**Basis:** 656 enriched leads (28% of 2,363; all tiers 0-2 + tier-9 sample). Enrichment is
-INFERRED from public signals, not scraped. Split below: DATA-SUPPORTED (from the 656 dossiers)
+**Basis:** 655 enriched leads (28% of 2,363; all tiers 0-2 + tier-9 sample). Enrichment is
+INFERRED from public signals, not scraped. Split below: DATA-SUPPORTED (from the 655 dossiers)
 vs HYPOTHESIS (extrapolation needing the full run).
 
 ## DATA-SUPPORTED — demand concentration
-- **Only 25 of 46 charters carry any lead demand; 21 charters have ZERO** matched leads (656 sample).
+- **Only 25 of 46 charters carry any lead demand; 21 charters have ZERO** matched leads (655 sample).
   Top 5: 05-accountabilityof (108), 09-dataprivacyof (104), 10-asisecurity (78), 08-biasdetectionof (72), 04-safetyof (60).
 - **Persona reality:** the buyer is overwhelmingly **Chief Compliance Officer (87), CRO (47),
   CISO (46), VP (58)** — not "Founder/CEO". Charter outreach personas should target the CCO/CRO/CISO triad.
@@ -31,8 +31,8 @@ vs HYPOTHESIS (extrapolation needing the full run).
 
 ## HYPOTHESIS (needs full 2,363 run to confirm)
 - The 21 zero-demand charters may be either (a) genuinely niche or (b) under-represented because
-  the 656 sample skews to regulators/finance/pharma. Confirm after full enrichment.
-- Real compliance-gap wedge is measurable for only 8/656 leads (rest have no public evidence);
+  the 655 sample skews to regulators/finance/pharma. Confirm after full enrichment.
+- Real compliance-gap wedge is measurable for only 8/655 leads (rest have no public evidence);
   the market wedge is **"no verifiable compliance posture at all"**, not "weak posture" — that
   reframes the pitch from "beat your stack" to "you have no signed posture; we give you one."
 
@@ -43,4 +43,4 @@ vs HYPOTHESIS (extrapolation needing the full run).
    eu-ai-act — the four frameworks every high-demand charter's leads need (data-supported above).
 3. **Persona field in charters** should name CCO/CRO/CISO as primary, per the demand data.
 4. **"No-posture" wedge** — add a charter clause/product for orgs with zero public compliance
-   evidence (232 of 656), the largest addressable segment.
+   evidence (232 of 655), the largest addressable segment.

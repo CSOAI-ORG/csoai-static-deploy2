@@ -7,7 +7,7 @@ CSOAI's addressable market is finite and public: ~2,350 organizations / ~4,700 d
 marketing reach but as **completing a knowable map**. This paper describes a sovereign-space
 simulation that enriches each lead into a subject-matter dossier, scores product-fit and market
 wedge under a Care-Floor governance gate, and aggregates the results into framework↔charter
-crosswalks. We report first results on **656 of 2,363 leads (28%)** — all tier-0-2 priority
+crosswalks. We report first results on **655 of 2,363 leads (28%)** — all tier-0-2 priority
 accounts plus a tier-9 sample.
 
 ### 1. Method
@@ -29,9 +29,9 @@ persona × industry-charter × compliance-posture → needs → best-fit charter
   each field carries a confidence and an `inferred` tag.
 - **28% coverage** — the remaining 1,707 leads await a subsequent enrichment pass (a per-frame
   LLM token ceiling capped this run). Findings marked HYPOTHESIS need the full set to confirm.
-- **Sampling skew** — the 656 over-represent regulators/finance/pharma (the top tiers).
+- **Sampling skew** — the 655 over-represent regulators/finance/pharma (the top tiers).
 
-### 3. Results (656 leads, DATA-SUPPORTED)
+### 3. Results (655 leads, DATA-SUPPORTED)
 - **Demand concentration:** only **25 of 46 charters** carry any lead demand; **21 have zero**.
   Top five absorb 64% (422/655 matched): accountability (108), data-privacy (104), asi-security (78),
   bias-detection (72), safety (60).
@@ -39,7 +39,7 @@ persona × industry-charter × compliance-posture → needs → best-fit charter
   (47), CISO (46), VP (58) — not the "Founder/CEO" the outreach copy assumed.
 - **Demand surface** (dossier mention frequency): audit 572, compliance 554, governance 481,
   privacy 480, transparency 456, risk 444.
-- **The real wedge is "no verifiable posture," not "weak posture."** Of 656 leads, only 8 show a
+- **The real wedge is "no verifiable posture," not "weak posture."** Of 655 leads, only 8 show a
   measurable compliance gap; **232 have zero public compliance evidence at all**. The strongest
   market position is not "beat your stack" but "you have no signed compliance posture — we give
   you one."
@@ -67,6 +67,6 @@ events at **ROC-AUC 0.865** on 57 real positive events (1.1% base rate). Exposed
 `detect_dependency` MCP tool. Honest caveat: small-n, early-warning signal, not a hard gate.
 
 ### Status register
-- RUNNING: enrichment+sim pipeline, sim DB (656), dependency classifier, e2e batch 8/8, server compiles.
+- RUNNING: enrichment+sim pipeline, sim DB (655), dependency classifier, e2e batch 8/8, server compiles.
 - DESIGNED: full 2,363 coverage, per-lead dependency scoring (needs per-lead needs vectors).
 - BLOCKED: live website enrichment (no crawl), remaining 1,707 leads (LLM budget), live mesh (connector detached).

@@ -2,19 +2,19 @@
 
 ## What shipped today (RUNNING / verified)
 1. **Distribution sovereign-space simulation** — enrich→score→gate→sign pipeline over the canonical
-   `csoai_leads.db` (2,363 leads). 656 leads (28%) fully enriched into SME dossiers + scored into
+   `csoai_leads.db` (2,363 leads). 655 leads (28%) fully enriched into SME dossiers + scored into
    `csoai_leads_sim.db` (new table, canonical untouched). 622 pass care-floor.
 2. **Dependency NN — absent → real.** Built from zero training rows. Caught+rejected label leakage
    (fake 1.0), rebuilt leakage-free on needs-state vectors: **ROC-AUC 0.865** on 57 real positives.
    `detect_dependency` MCP tool + handler + logger hook added to the server (compiles OK).
 3. **51 crosswalk candidates** + charter-improvement notes, DATA-SUPPORTED vs HYPOTHESIS split.
-4. **White paper** (draft) on the sovereign-space simulation method + 656-lead findings.
+4. **White paper** (draft) on the sovereign-space simulation method + 655-lead findings.
 5. **e2e batch v3: 8/8 PASS** — canonical integrity, honest wedge, care-floor, model+server.
 
-## Key findings (from the 656 enriched leads)
+## Key findings (from the 655 enriched leads)
 - Demand concentrates in **5 of 46 charters** (21 have zero demand).
 - The buyer is the **CCO/CRO/CISO triad**, not Founder/CEO.
-- The real wedge is **"no verifiable compliance posture"** — 232/656 leads have zero public
+- The real wedge is **"no verifiable compliance posture"** — 232/655 leads have zero public
   evidence — not "beat your weak stack."
 
 ## Honest blockers (not spin)
@@ -31,7 +31,7 @@
 ## Artifacts (all saved + on disk in _alignment/)
 - `_DIST_SIM_SCHEMA_2026-07-08.md` — sim schema (v2, corrected coverage)
 - `DIST_SIM_PROOF_BATCH_2026-07-08.md` — proof-batch dossiers
-- `csoai_leads_sim.db` — 656-lead sim (checkpoint)
+- `csoai_leads_sim.db` — 655-lead sim (checkpoint)
 - `SOV3_DEPENDENCY_NN_2026-07-08.md` + `dependency_classifier.joblib` + `dependency_backfill.csv`
 - `CSOAI_SIM_CROSSWALKS_2026-07-08.md` + `csoai_sim_findings.png`
 - `CSOAI_SOVEREIGN_SIM_WHITEPAPER_2026-07-08.md`
