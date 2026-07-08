@@ -7,13 +7,13 @@ persona needs that CSOAI does not yet expose as a first-class route.
 ## Personas (by volume)
 | Persona | Accounts | Surfaces needed | Examples |
 |---|---:|---|---|
-| **US public company (SEC filer)** | 1526 | /crosswalk, /compare, /system-card, /verify, /classifier, /us-ai-regulation, /high-risk-ai | NVIDIA CORP; Apple Inc.; Alphabet Inc. |
-| **Financial services** | 343 | /crosswalk, /compare, /system-card, /verify, /classifier, /dora, /finance-ai-act, /nis2 | FCA — AI in Finance; EIOPA (insurance); EBA (banking) |
-| **Healthcare / Life sciences** | 167 | /crosswalk, /compare, /system-card, /verify, /classifier, /healthcare-ai-act, /high-risk-ai | AstraZeneca; Pfizer; UnitedHealth |
-| **AI startup / scale-up** | 147 | /crosswalk, /compare, /system-card, /verify, /classifier, /start, /os, /pricing | Zscaler; European Commission DG-CONNECT; EU AI Office |
-| **Enterprise (general)** | 113 | /crosswalk, /compare, /system-card, /verify, /classifier, /industries, /pricing | QinetiQ; ICO — AI Auditing Framework; NCSC — AI Cyber |
-| **Regulator / Policy body** | 41 | /crosswalk, /compare, /system-card, /verify, /classifier, /regulator-atlas, /government-dashboard, /sov-space, /globe | UK AI Safety Institute (AISI); UK Cabinet Office — i.AI team; UK Department for Science, Innovation & Technology (DSIT) |
-| **Defence / National security** | 26 | /crosswalk, /compare, /system-card, /verify, /classifier, /fedramp, /cobol, /high-risk-ai | BAE Systems; Rolls-Royce; Leonardo |
+| **US public company (SEC filer)** | 1526 | /crosswalk, /compare, /system-card, /verify-certificate, /classifier, /us-ai-regulation, /high-risk-ai | NVIDIA CORP; Apple Inc.; Alphabet Inc. |
+| **Financial services** | 343 | /crosswalk, /compare, /system-card, /verify-certificate, /classifier, /dora, /finance-ai-act, /nis2 | FCA — AI in Finance; EIOPA (insurance); EBA (banking) |
+| **Healthcare / Life sciences** | 167 | /crosswalk, /compare, /system-card, /verify-certificate, /classifier, /healthcare-ai-act, /high-risk-ai | AstraZeneca; Pfizer; UnitedHealth |
+| **AI startup / scale-up** | 147 | /crosswalk, /compare, /system-card, /verify-certificate, /classifier, /start, /os, /pricing | Zscaler; European Commission DG-CONNECT; EU AI Office |
+| **Enterprise (general)** | 113 | /crosswalk, /compare, /system-card, /verify-certificate, /classifier, /industries, /pricing | QinetiQ; ICO — AI Auditing Framework; NCSC — AI Cyber |
+| **Regulator / Policy body** | 41 | /crosswalk, /compare, /system-card, /verify-certificate, /classifier, /regulator-atlas, /government-dashboard, /sov-space, /globe | UK AI Safety Institute (AISI); UK Cabinet Office — i.AI team; UK Department for Science, Innovation & Technology (DSIT) |
+| **Defence / National security** | 26 | /crosswalk, /compare, /system-card, /verify-certificate, /classifier, /fedramp, /cobol, /high-risk-ai | BAE Systems; Rolls-Royce; Leonardo |
 
 ## Surface coverage (needed path vs live route — verified against master's router)
 - ✅ **/classifier** (live route)
@@ -36,7 +36,7 @@ persona needs that CSOAI does not yet expose as a first-class route.
 - ✅ **/start** (live route)
 - ✅ **/system-card** (live route)
 - ✅ **/us-ai-regulation** (live route)
-- ✅ **/verify** (live route)
+- ✅ **/verify-certificate** (live route)
 
 ✅ every persona-needed path is a live route.
 

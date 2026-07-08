@@ -98,7 +98,7 @@ function derivePersona(lead, r, sectorHint) {
 // Which CSOAI surfaces this persona needs — REAL routes verified against
 // councilof-ai master's App.tsx router (2026-07-08). Names are actual paths.
 function surfacesFor(persona) {
-  const base = ['/crosswalk', '/compare', '/system-card', '/verify', '/classifier'];
+  const base = ['/crosswalk', '/compare', '/system-card', '/verify-certificate', '/classifier'];
   const map = {
     'Regulator / Policy body': [...base, '/regulator-atlas', '/government-dashboard', '/sov-space', '/globe'],
     'Defence / National security': [...base, '/fedramp', '/cobol', '/high-risk-ai'],
@@ -194,7 +194,7 @@ async function main() {
 
   // Live-surface coverage check against the ACTUAL route inventory in
   // councilof-ai master App.tsx (verified 2026-07-08). If a needed path isn't here, it's a real gap.
-  const LIVE_ROUTES = new Set(['/crosswalk', '/compare', '/system-card', '/verify', '/classifier',
+  const LIVE_ROUTES = new Set(['/crosswalk', '/compare', '/system-card', '/verify-certificate', '/classifier',
     '/regulator-atlas', '/government-dashboard', '/sov-space', '/globe', '/fedramp', '/cobol',
     '/high-risk-ai', '/healthcare-ai-act', '/dora', '/finance-ai-act', '/nis2', '/us-ai-regulation',
     '/start', '/os', '/pricing', '/industries']);
