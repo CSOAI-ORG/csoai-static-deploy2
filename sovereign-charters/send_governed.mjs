@@ -56,7 +56,40 @@ async function loadSuppression() {
   catch { return new Set(); }
 }
 
-async function realSend() { throw new Error('SMTP transport not configured — install nodemailer + set SMTP_* env, then wire here. (Deliberately not auto-wired.)'); }
+// Real SMTP send via nodemailer (lazy-imported so the dry-run path needs no dependency).
+// Requires: `npm i nodemailer` + env SEND_FROM, SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASS.
+let _transport = null;
+async function getTransport() {
+  if (_transport) return _transport;
+  const { SEND_FROM, SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASS } = process.env;
+  const missing = ['SEND_FROM', 'SMTP_HOST', 'SMTP_PORT', 'SMTP_USER', 'SMTP_PASS'].filter((k) => !process.env[k]);
+  if (missing.length) throw new Error(`--send needs SMTP env: missing ${missing.join(', ')}. See SENDING_RUNBOOK.md.`);
+  let nodemailer;
+  try { nodemailer = (await import('nodemailer')).default; }
+  catch { throw new Error('nodemailer not installed. Run: npm i nodemailer  (in sovereign-charters/).'); }
+  _transport = nodemailer.createTransport({
+    host: SMTP_HOST, port: Number(SMTP_PORT), secure: Number(SMTP_PORT) === 465,
+    auth: { user: SMTP_USER, pass: SMTP_PASS },
+  });
+  await _transport.verify(); // fail fast if creds/domain are wrong
+  return _transport;
+}
+async function realSend(record, draft) {
+  const t = await getTransport();
+  const info = await t.sendMail({
+    from: process.env.SEND_FROM,
+    to: record.to,
+    subject: draft.subject,
+    text: draft.body,
+    headers: {
+      // provenance: link every wire-send back to its signed ledger entry
+      'X-CSOAI-Ledger-Hash': record.hash,
+      'X-CSOAI-Signature': record.signature_ed25519.slice(0, 32),
+      'List-Unsubscribe': '<mailto:outreach@csoai.org?subject=STOP>',
+    },
+  });
+  return info.messageId;
+}
 
 async function main() {
   const key = await loadKey();
