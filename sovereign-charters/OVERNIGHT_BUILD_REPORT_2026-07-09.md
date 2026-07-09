@@ -1,5 +1,5 @@
 # SOVEREIGN CHARTERS — OVERNIGHT BUILD REPORT
-**Generated**: 2026-07-09 03:43 UTC
+**Generated**: 2026-07-09 04:00 UTC
 
 ## Build Status
 
@@ -7,7 +7,7 @@
 |---|---|
 | Charter files built | 55 / 34 |
 | Missing | -21 |
-| Total directory size | 178M |
+| Total directory size | 179M |
 | Charter of Charters |    21568 bytes |
 | Master Index |     8480 bytes |
 | Master Template |     6734 bytes |
@@ -62,15 +62,15 @@
 | | 42-watchtower-charter.md | 5703 bytes |
 | | 43-sovereign-os-charter.md | 5632 bytes |
 | | 44-sigil-chain-charter.md | 5515 bytes |
-| | 45-guardianof-charter.md | 13021 bytes |
-| | 46-covenantjustice-charter.md | 6111 bytes |
-| | 47-nonharm-charter.md | 5522 bytes |
-| | 48-assayintegrity-charter.md | 6439 bytes |
-| | 49-virtuebounds-charter.md | 5603 bytes |
-| | 50-rectification-charter.md | 5500 bytes |
-| | 51-sevengenerations-charter.md | 5583 bytes |
-| | 52-relationalpersonhood-charter.md | 5609 bytes |
-| | 53-epistemichumility-charter.md | 5705 bytes |
+| | 45-guardianof-charter.md | 13076 bytes |
+| | 46-covenantjustice-charter.md | 6206 bytes |
+| | 47-nonharm-charter.md | 5617 bytes |
+| | 48-assayintegrity-charter.md | 6534 bytes |
+| | 49-virtuebounds-charter.md | 5698 bytes |
+| | 50-rectification-charter.md | 5595 bytes |
+| | 51-sevengenerations-charter.md | 5678 bytes |
+| | 52-relationalpersonhood-charter.md | 5704 bytes |
+| | 53-epistemichumility-charter.md | 5800 bytes |
 
 ## ✅ ALL 34 CHARTERS BUILT
 
