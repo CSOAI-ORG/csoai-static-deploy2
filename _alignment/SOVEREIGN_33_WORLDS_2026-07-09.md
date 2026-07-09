@@ -85,6 +85,8 @@ Per `sovereign-cloud-cost-control` (memory note, 30 Jun 2026): the previous atte
 | **Share base images, autoscale per request** | Use pre-baked images, autoscale to 0 when idle |
 | **Right-size per workload** | Tier 1 e2-medium for tiny models, Tier 4 a2-ultragpu-8g for the ceiling |
 | **Spot instances where possible** | 60-90% cost reduction for non-critical workloads |
+| **Vast.ai / RunPod spot for bursty ceiling reasoning** | See cost re-projection below — autoscale 8×H100 to 0 when idle |
+| **Local-first on MEOK OS overlay** | Small/mid models run on user's device; cloud only for ceiling |
 | **Compute ceiling: free if possible** | If a sovereign deployment cannot be made free, the architecture is wrong |
 
 **Practical deployment plan:**
@@ -98,6 +100,57 @@ Per `sovereign-cloud-cost-control` (memory note, 30 Jun 2026): the previous atte
 | Q3 2027+ | 33 + autoscale per request | £35-50K | 1M+ installs, the fleet autoscales |
 
 **The 33 is the brand claim. The deployment right-sizes. The architecture supports 33. The cost discipline keeps the bill under £50K/month.**
+
+## Vast.ai autoscale cost re-projection — the right pattern
+
+**The question Sir Nick asked:** can we use Vast.ai spot/preemptible instances (cheap GPU, on-call only) to keep all 33 large models ready?
+
+**The honest answer: YES, and it's the right pattern.** Vast.ai gives ~60-80% cost reduction vs on-demand across the same GPUs, with thousands of idle consumer + prosumer + datacenter instances available globally. Preemption (~30s-1min kill notice) is the trade-off — but for autoscale-bursty workloads (the right brain, ceiling reasoning), preemption is a feature, not a bug.
+
+**The mixed deployment pattern:**
+
+| World | Default deployment | Spike deployment |
+|---|---|---|
+| **Charter-Ω** (left brain, sovereign guarantee) | **Local on user's MEOK OS overlay** | Crown-certified sovereign cloud (UK G-Cloud) |
+| **Sigil-1** (long-context) | Local + Vast.ai spot A100 80GB | Vast.ai spot autoscale |
+| **Sigil-2** (DeepSeek V4 right brain, 1.6T) | **Idle (autoscale to 0)** | Vast.ai spot 8×H100, spin up per request, kill after inference |
+| **Architect-1/2** | Local or Vast.ai spot A100 | Vast.ai spot A100 |
+| **Builder-1/2** | Local on MEOK OS | Vast.ai spot 4090 |
+| **All small-tier** (Muse-3, Sentry-3, etc.) | Local on MEOK OS | (rarely needed) |
+| **The King's slot** (user) | **Always on user's device** | n/a — sovereign on user's hardware |
+
+**Cost re-projection with Vast.ai autoscale:**
+
+| Tier | Brand-claim (full 33 simultaneous) | Vast.ai autoscale (real) | Saving |
+|---|---|---|---|
+| Tier 1 small (5 × 3-9B) | $125/mo | **$0-30/mo** (run on user's MEOK OS, autoscale to 0) | ~80% |
+| Tier 2 mid (10 × 15-30B) | $2,000/mo | **$200-600/mo** (Vast.ai spot 4090/A100 bursty) | ~75% |
+| Tier 3 large (15 × 35-70B) | $18,000/mo | **$3,000-8,000/mo** (Vast.ai spot A100 spot) | ~60% |
+| Tier 4 ceiling (3 × 1.6T) | $24,000/mo | **$2,000-6,000/mo** (Vast.ai spot 8×H100, 5-15% utilisation) | ~80% |
+| **TOTAL** | **~$44K/mo** | **~$5-15K/mo** | **~70-80%** |
+
+**$35K/month brand-claim deployment becomes $5-15K/month real deployment on Vast.ai autoscale.** Same architecture, same 33 sovereign worlds, same sovereign guarantee. The brand claim is "33 sovereign worlds." The real deployment is "what the request volume demands."
+
+## The sovereign-procurement discipline (Vast.ai)
+
+**Vast.ai has a procurement question we have to address before scaling Crown / DAF / DIU pilots:**
+
+| Concern | Reality | Mitigation |
+|---|---|---|
+| **Vast.ai hosts on consumer hardware in homes** | Real. Many Vast.ai instances are RTX 4090s in basements | Use Vast.ai's **verified datacenter-tier** for Crown / DAF / DIU pilots (the higher-priced H100 / A100 instances are datacenter-grade) |
+| **Data sovereignty** | User data flows through Vast.ai's network | **Run inference only on sovereign-labelled data.** The sovereign merge runs locally on the user's MEOK OS overlay. Vast.ai is the **ceiling**, not the sovereign guarantee |
+| **Sovereign licensing** | Vast.ai is US-based | Path D already accepts MIT frontier models — the right-brain reasoning at MIT-licensed providers is the ceiling, not the sovereign guarantee |
+| **Preemption** | Spot instances can be killed (~30s-1min notice) | The sovereign SIGIL chain signs every inference call. If preempted, the SIGIL receipts survive, the user request replays on a new instance |
+
+**The 3-tier Crown pilot deployment:**
+
+| Pilot tier | Deployment | Sovereign guarantee |
+|---|---|---|
+| **Standard pilot** (UK Crown / NHS / AUKUS) | Sovereign merge on user's MEOK OS overlay + Vast.ai spot 4090/A100 for ceiling reasoning + UK G-Cloud for persistent state | Sovereign + cost-effective |
+| **High-assurance pilot** (DAF/DIU, NCA, NCSC) | Sovereign merge on Crown-certified sovereign cloud + Vast.ai verified datacenter tier for ceiling | Sovereign + auditable |
+| **Air-gapped pilot** (JSP 936 / NATO STANAG 4778) | On-premise deployment + autoscale across user hardware + named sovereign server cluster | Sovereign + air-gapped |
+
+**Same architecture, three deployment tiers. Vast.ai pattern is fine for Tier 1. Tier 2 needs Vast.ai verified datacenter tier. Tier 3 is air-gapped on-premise.**
 
 ## The sovereign world engine — Unreal + sov-space nested
 
