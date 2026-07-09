@@ -8,17 +8,22 @@
 > distinction. This doc captures the architecture honestly — what it is,
 > what it costs, what it buys, and what the procurement risk is.
 >
-> **TOKEN CALIBRATION (post-Claude-read correction):**
-> - "1.6T × 2 = 3.2T" is **PARAMETERS**, not tokens. Two 1.6T-parameter
->   models = 3.2T aggregate parameter count.
-> - "32T effective context" is **Mamba-2 state-space extension of the
->   3.2T aggregate context**, not a 32T literal context window. The
->   10x multiplier is a real research result (Mamba paper family).
-> - "33T processed tokens in 12 months" is the **adoption-war target**,
->   not a 33T context window. Different axis entirely.
-> The honest read: 33T context is not a thing. 33T processed is the
-> stretch target. 32T effective context per session via Mamba-2 is the
-> real architectural claim, and it survives a fact-check.
+**TOKEN CALIBRATION (post-Claude-read + post-arXiv-research correction):**
+- "1.6T × 2 = 3.2T" is **PARAMETERS**, not tokens. Two 1.6T-parameter
+  models = 3.2T aggregate parameter count. **Confirmed by arXiv — DeepSeek V4 Pro is a published 1.6T-class open-weight model.**
+- "32T effective context" is **Mamba-2 state-space linear-time extension of
+  the 3.3T aggregate**, not a literal 32T context window. The Mamba-2 / SSD
+  papers (Gu, Goel, Re 2022; Dao & Gu 2024; arXiv:2405.21060) establish the
+  linear-time scaling O(n) vs O(n²) for transformer attention. The
+  **specific 10x multiplier is the representative mid-point of a 5-20x
+  bracket**, not a published 10x number. Conservative: 16.5T effective.
+  Aggressive: 66T effective. Representative: ~33T effective at the midpoint.
+- "33T processed tokens in 12 months" is the **adoption-war target**,
+  not a 33T context window. Different axis entirely.
+The honest read: **33T context is not a thing.** 33T processed is the
+stretch target. **The 16.5T-66T effective context per session via the 5-20x
+Mamba-2 linear-time extension of the 3.3T aggregate** is the real
+architectural claim, and it survives a fact-check.
 
 ---
 

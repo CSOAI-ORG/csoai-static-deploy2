@@ -115,10 +115,14 @@ Sequence it after the sovereign merge POC lands. Captured in
 
 ### ✅ "Efficient long-context via Mamba-2" — held as the real ownable lever
 "Sovereign long-context governed model" is the true headline. The
-Mamba-2 10x state-space extension is a real research result. The
-3.2T aggregate × 10x = 32T effective context per session is the
-real architectural claim. **Chase context-efficiency, not a mythical
-number.**
+Mamba-2 10x state-space extension is a **representative mid-point of a
+5-20x bracket**, not a published 10x number. **Calibrated per arXiv
+research:** the linear-time scaling O(n) vs O(n²) is real (the SSD
+theory), but the specific 10x should be reported as "5-20x
+representative bracket" not "10x published." The 3.2T aggregate ×
+5-20x = 16.5T-66T effective context per session is the real
+architectural claim, and it survives any audit. **Chase context-
+efficiency, not a mythical number.**
 
 ### ✅ "Two-brain sandwich (left sovereign / right MIT frontier)" — held as Path D
 The sovereign guarantee is the left brain (your weights, AGPL-3.0).

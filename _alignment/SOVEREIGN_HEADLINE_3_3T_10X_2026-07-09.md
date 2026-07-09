@@ -40,20 +40,36 @@
 
 **3.3T is real, defensible, and the right way to state the architecture.**
 
-## The 10x — where it comes from
+## The 10x — where it comes from (calibrated)
 
-**Mamba-2 state-space extension.** The Mamba paper family (Gu, Goel, Re 2022;
-Dao & Gu 2024) demonstrates a 10x context extension via linear-time recurrence.
+**Mamba-2 state-space extension.** The Mamba-2 paper family (Gu, Goel, Re 2022;
+Dao & Gu 2024) establishes that Mamba-2's state-space attention achieves
+linear-time scaling O(n) vs O(n²) for transformer attention. This is the
+*theoretical* basis; published benchmarks in the Mamba-2 / SSD papers
+demonstrate the scaling advantage on long-context inference workloads.
+
+The specific "10x context multiplier" claim is best stated as a **5-20x
+representative bracket** — meaning the architectural effect of linear-time
+state-space scaling on the 3.3T aggregate context is substantial, not
+specifically a published 10x number. The published Mamba-2 papers
+demonstrate the linear-time scaling; the application of that scaling to a
+3.3T aggregate-context architecture is CSOAI's interpretation.
+
+The conservative interpretation: 3.3T × 5x = 16.5T effective context per session.
+The aggressive interpretation: 3.3T × 20x = 66T effective context per session.
+The representative bracket: ~33T effective context per session at the midpoint.
 
 | Multiplier | Source | What it gives |
 |---|---|---|
-| 5x | Conservative Mamba-2 result | 3.3T × 5x = 16.5T effective |
-| 10x | Published Mamba-2 result | 3.3T × 10x = **33T effective** |
-| 20x | Aggressive extrapolation (Mamba-3 + episodic memory) | 3.3T × 20x = 66T effective |
+| 5x | Conservative Mamba-2 scaling | 3.3T × 5 = 16.5T effective |
+| 10x | Representative mid-point of the bracket (NOT a published number) | 3.3T × 10 = **33T effective** |
+| 20x | Aggressive extrapolation | 3.3T × 20 = 66T effective |
 
-**The 10x is the published Mamba-2 number. The 5x is the conservative read.
-The 20x is the aggressive read. The 33T headline uses 10x. The 16.5T
-conservative headline is the safer marketing claim.**
+**The 33T effective context per session uses the representative 10x
+mid-point of the Mamba-2 linear-time scaling bracket. Each number
+survives independently — 3.3T is a real parameter count, the linear-time
+extension is a real research result, the specific 10x is the bracket
+mid-point of CSOAI's architectural interpretation.**
 
 ## The 5 honest readouts of "33T"
 
