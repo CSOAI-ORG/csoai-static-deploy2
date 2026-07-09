@@ -83,8 +83,9 @@ module.exports = async function handler(req, res) {
   const persona = (body.persona || '').toString().trim();
   const tier    = (body.tier    || '').toString().trim();
   const useCase = (body.use_case || body.useCase || '').toString().trim();
-  const gdpr    = !!body.gdpr_consent;
+  const gdpr = !!body.gdpr_consent;
   const marketing = !!body.marketing;
+  const ref = (body.ref || '').toString().toUpperCase().slice(0, 12);
 
   if (!email || !email.includes('@') || email.length > 200) {
     return res.status(400).json({ error: 'Valid email required' });
@@ -177,6 +178,45 @@ module.exports = async function handler(req, res) {
         body: JSON.stringify(record),
       }).catch(() => {});
     } catch (e) { /* ignore */ }
+  }
+
+  // Notify Nick / Telegram / webhook (signal-to-Nick on every key action)
+  try {
+    const { notify } = require('./_notify.js');
+    await notify(record, 'defoneos-signup').catch(() => {});
+  } catch (e) { /* silent */ }
+
+  // Auto-issue referral code for this signup (so they can refer partners)
+  let referral_code = null;
+  try {
+    const { handler: invite_handler } = {};
+    const invite_body = JSON.stringify({ sigil: record.sigil, email, persona, tier: personaMeta.tier, org });
+    // Internal call to /api/invite is impossible in serverless without self-fetch
+    // Instead, do the work inline:
+    const crypto = require('crypto');
+    referral_code = crypto.createHash('sha256').update(`${record.sigil}|${email}|${persona}|${personaMeta.tier}`).digest('base64').replace(/[^A-Z2-7]/gi, '').slice(0, 12).toUpperCase();
+    const fs = require('fs').promises;
+    const ref_record = {
+      code: referral_code,
+      sigil: record.sigil,
+      email: email.replace(/(?<=.{3}).(?=.*@)/g, '*'),
+      persona,
+      tier: personaMeta.tier,
+      org,
+      ts: new Date().toISOString(),
+      converted_at: null,
+      converted_by: null,
+      ref_received: ref || null,
+    };
+    await fs.appendFile('/tmp/referrals.jsonl', JSON.stringify(ref_record) + '\n').catch(() => {});
+  } catch (e) { /* silent */ }
+
+  // Also append referral to a ?ref= received mapping
+  if (ref) {
+    try {
+      const fs = require('fs').promises;
+      await fs.appendFile('/tmp/referrals.jsonl', JSON.stringify({ ref_received_ts: new Date().toISOString(), inviter_ref: ref, new_signup_sigil: record.sigil, new_signup_email: email.replace(/(?<=.{3}).(?=.*@)/g, '*'), new_persona: persona }) + '\n').catch(() => {});
+    } catch (e) { /* silent */ }
   }
 
   // Persona-specific next step
