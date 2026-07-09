@@ -1,6 +1,6 @@
 # TWO-BRAIN SANDWICH — 1.6T × 2 = 3.2T aggregate, sovereign via SOV3
-## The 10/90 split, the SOV3 SIGIL binding, and the 33T path
-### CSOAI Ltd · Hermes/JEEVES lane
+## The 10/90 split, the SOV3 SIGIL binding, and the 32T effective context
+### CSOAI Ltd · Hermes/JEEVES lane · 2026-07-09
 
 > Sir Nick's architecture: two 1.6T open-world models, one as left brain
 > and one as right brain, both connected to SOV3, with the 10% conscious /
@@ -8,9 +8,17 @@
 > distinction. This doc captures the architecture honestly — what it is,
 > what it costs, what it buys, and what the procurement risk is.
 >
-> The 33T path is also in this doc. The 3.2T aggregate context is the
-> ceiling per session; the 33T processed in 12 months is the target via
-> MEOK OS adoption + Crown pilot data.
+> **TOKEN CALIBRATION (post-Claude-read correction):**
+> - "1.6T × 2 = 3.2T" is **PARAMETERS**, not tokens. Two 1.6T-parameter
+>   models = 3.2T aggregate parameter count.
+> - "32T effective context" is **Mamba-2 state-space extension of the
+>   3.2T aggregate context**, not a 32T literal context window. The
+>   10x multiplier is a real research result (Mamba paper family).
+> - "33T processed tokens in 12 months" is the **adoption-war target**,
+>   not a 33T context window. Different axis entirely.
+> The honest read: 33T context is not a thing. 33T processed is the
+> stretch target. 32T effective context per session via Mamba-2 is the
+> real architectural claim, and it survives a fact-check.
 
 ---
 
