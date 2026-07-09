@@ -1,29 +1,19 @@
-# TWO-BRAIN SANDWICH — 1.6T × 2 = 3.2T aggregate, sovereign via SOV3
-## The 10/90 split, the SOV3 SIGIL binding, and the 32T effective context
+# TWO-BRAIN SANDWICH — 3.2T aggregate, sovereign via SOV3
+## Asymmetric ratio exploration: tested configurations, not mythical numbers
 ### CSOAI Ltd · Hermes/JEEVES lane · 2026-07-09
 
-> Sir Nick's architecture: two 1.6T open-world models, one as left brain
-> and one as right brain, both connected to SOV3, with the 10% conscious /
-> 90% subconscious split mapped to a small-world vs large-world model
-> distinction. This doc captures the architecture honestly — what it is,
-> what it costs, what it buys, and what the procurement risk is.
+> Sir Nick: "top 10% small world model right side, large 90% beneath
+> both, left a LARGE 90% model on top ... test all models to find
+> best config ... hit more than 3.2T and be quicker."
 >
-**TOKEN CALIBRATION (post-Claude-read + post-arXiv-research correction):**
-- "1.6T × 2 = 3.2T" is **PARAMETERS**, not tokens. Two 1.6T-parameter
-  models = 3.2T aggregate parameter count. **Confirmed by arXiv — DeepSeek V4 Pro is a published 1.6T-class open-weight model.**
-- "32T effective context" is **Mamba-2 state-space linear-time extension of
-  the 3.3T aggregate**, not a literal 32T context window. The Mamba-2 / SSD
-  papers (Gu, Goel, Re 2022; Dao & Gu 2024; arXiv:2405.21060) establish the
-  linear-time scaling O(n) vs O(n²) for transformer attention. The
-  **specific 10x multiplier is the representative mid-point of a 5-20x
-  bracket**, not a published 10x number. Conservative: 16.5T effective.
-  Aggressive: 66T effective. Representative: ~33T effective at the midpoint.
-- "33T processed tokens in 12 months" is the **adoption-war target**,
-  not a 33T context window. Different axis entirely.
-The honest read: **33T context is not a thing.** 33T processed is the
-stretch target. **The 16.5T-66T effective context per session via the 5-20x
-Mamba-2 linear-time extension of the 3.3T aggregate** is the real
-architectural claim, and it survives a fact-check.
+> The honest read: **the asymmetric-ratio exploration is real architecture**
+> (BFT-33 routinely picks 2-4 of 12 sovereign characters per task — the
+> "top X% large, bottom Y% small" split is the same idea scaled to brains).
+> **But "more than 3.2T" claims need to be checked**, and "quicker than
+> tested" is a real engineering question. This doc captures the asymmetric
+> ratio configurations we should actually test before committing.
+
+---
 
 ---
 
