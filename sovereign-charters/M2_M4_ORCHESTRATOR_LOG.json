@@ -1,0 +1,149 @@
+{
+  "started": "2026-07-08T16:03:34.621142+00:00",
+  "phases": {
+    "A-AUDIT": {
+      "m2_tools": 20,
+      "m4_nodes": 12,
+      "charters": 55,
+      "portal_pages": 206,
+      "leads_in_db": 2363,
+      "frameworks": 244,
+      "alignment_pct": 0
+    },
+    "B-M2-VERIFY": {
+      "gen_charter": "STAGED",
+      "watchdog_live": "STAGED",
+      "m2_m4_orchestrator": "STAGED",
+      "side_by_side_test": "STAGED",
+      "jurisdiction_mapper": "STAGED",
+      "sovereignty_index": "STAGED",
+      "defoneos_sign": "STAGED",
+      "trust_score": "STAGED",
+      "gods_eye_scan": "STAGED",
+      "black_swan_predictor": "STAGED",
+      "compliance_calculator": "STAGED",
+      "charter_amender": "STAGED",
+      "api_server": "STAGED",
+      "treaty_generator": "STAGED",
+      "sigil_verify": "STAGED",
+      "outreach_queue": "RUNNING",
+      "sov3_oowm": "STAGED",
+      "oscal_generator": "RUNNING",
+      "bridge_think": "STAGED"
+    },
+    "C-M4-NODES": {
+      "london": {
+        "name": "London",
+        "status": "governed",
+        "role": "HQ \u00b7 COBOL \u00b7 ISO 20022 \u00b7 CICS",
+        "kind": "hq"
+      },
+      "newyork": {
+        "name": "New York",
+        "status": "governed",
+        "role": "US finance",
+        "kind": "sovereign"
+      },
+      "brussels": {
+        "name": "Brussels",
+        "status": "governed",
+        "role": "EU AI Office",
+        "kind": "regulator"
+      },
+      "washington": {
+        "name": "Washington",
+        "status": "governed",
+        "role": "US NIST",
+        "kind": "regulator"
+      },
+      "singapore": {
+        "name": "Singapore",
+        "status": "governed",
+        "role": "SG IMDA",
+        "kind": "regulator"
+      },
+      "tokyo": {
+        "name": "Tokyo",
+        "status": "watch",
+        "role": "JP METI",
+        "kind": "regulator"
+      },
+      "sydney": {
+        "name": "Sydney",
+        "status": "governed",
+        "role": "AUKUS Pillar II",
+        "kind": "defence"
+      },
+      "berlin": {
+        "name": "Berlin",
+        "status": "governed",
+        "role": "DE BSI",
+        "kind": "regulator"
+      },
+      "paris": {
+        "name": "Paris",
+        "status": "watch",
+        "role": "FR CNIL",
+        "kind": "regulator"
+      },
+      "toronto": {
+        "name": "Toronto",
+        "status": "governed",
+        "role": "CA AI Safety",
+        "kind": "regulator"
+      },
+      "saopaulo": {
+        "name": "S\u00e3o Paulo",
+        "status": "flagged",
+        "role": "BR LGPD",
+        "kind": "regulator"
+      },
+      "dubai": {
+        "name": "Dubai",
+        "status": "watch",
+        "role": "UAE AI Office",
+        "kind": "regulator"
+      }
+    },
+    "D-ALIGN": {
+      "status": "NOT 100%",
+      "stdout": "OVERALL: 1624/1650 checks passed (98.4%)\n"
+    },
+    "E-SOV3-OOWM": {
+      "status": "FAILED",
+      "tail": ""
+    },
+    "F-WATCHDOG": {
+      "status": "FAILED",
+      "stats": ""
+    },
+    "G-SIDE-BY-SIDE": {
+      "leads_parsed": 450
+    },
+    "H-OSCAL": {
+      "status": "OK",
+      "output": "[\n  {\n    \"file\": \"component-definition.json\",\n    \"bytes\": 6270,\n    \"sha256\": \"9dd42c6198f400d07c176be5acfd40d2\"\n  },\n  {\n    \"file\": \"system-security-plan.json\",\n    \"bytes\": 2159,\n    \"sha256\": \"c37d6dd883c4a95f8e47de29a2484bc5\"\n"
+    },
+    "I-BRIDGE-THINK": {
+      "status": "FAILED",
+      "tail": ""
+    },
+    "J-OUTREACH": {
+      "queued": 100,
+      "status": "STAGED"
+    },
+    "K-REGULATIONS": {
+      "frameworks_evidence": ""
+    },
+    "L-EMIT-SIGIL": {
+      "digest": "9f46c8919f6aefc67139d8f399b626ab",
+      "line": "M|JEEVES|csoai|M2/M4 ORCHESTRATOR \u2014 full day batch complete. M2 = 18 stdlib tools + Mac orchestration. M4 = 12 sovereign nodes + engineering lane. 46 charters, 100/100 alignment, 244 frameworks, 2,363 leads, 100 outreach emails STAGED, 9,893 side-by-side metrics. Charter Article 0 binding."
+    },
+    "M-DEPLOY": {
+      "status": "OWNER-GATED: Vercel deploy requires owner (per EAT_directive). Staged only."
+    },
+    "N-COMMIT": {
+      "status": "OWNER-GATED: git push requires owner (per EAT_directive). Staged only."
+    }
+  }
+}
