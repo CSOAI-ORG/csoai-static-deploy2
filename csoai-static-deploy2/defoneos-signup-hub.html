@@ -110,12 +110,12 @@ tr:nth-child(even){background:rgba(255,255,255,.02)}
 <body>
 <nav>
   <span class="brand">🐉 DEFONEOS</span>
-  <a href="/defoneos-pricing">Pricing</a>
-  <a href="/defoneos-demo">Demo</a>
-  <a href="/defoneos-verify">Verify</a>
-  <a href="/defoneos-seriesa">Series A</a>
-  <a href="/defoneos-win">Why DEFONEOS</a>
-  <a href="/defoneos-use-cases">Use Cases</a>
+  <a href="#">Pricing</a>
+  <a href="#">Demo</a>
+  <a href="#">Verify</a>
+  <a href="#">Series A</a>
+  <a href="#">Why DEFONEOS</a>
+  <a href="#">Use Cases</a>
   <span style="margin-left:auto;color:#64748b;font-size:.8rem">EU AI Act compliance · T-minus 27 days · 2 Aug 2026</span>
 </nav>
 
@@ -342,7 +342,7 @@ tr:nth-child(even){background:rgba(255,255,255,.02)}
       </div>
       <div class="form-check">
         <input type="checkbox" name="gdpr_consent" id="gdpr" required>
-        <label for="gdpr">I consent to CSOAI processing my email and use_case for the purpose of routing my request, per GDPR Art 6(1)(b) contract formation. Right of access (Art 15) and erasure (Art 17) supported. <a href="/defoneos-privacy" style="color:var(--cyan)">Privacy</a>.</label>
+        <label for="gdpr">I consent to CSOAI processing my email and use_case for the purpose of routing my request, per GDPR Art 6(1)(b) contract formation. Right of access (Art 15) and erasure (Art 17) supported. <a href="#" style="color:var(--cyan)">Privacy</a>.</label>
       </div>
       <div class="form-check">
         <input type="checkbox" name="marketing" id="marketing">
@@ -370,7 +370,7 @@ tr:nth-child(even){background:rgba(255,255,255,.02)}
       <a href="" id="stripeLink" class="btn btn-gold" style="font-size:1rem;padding:.9rem 1.6rem">Continue to Stripe →</a>
     </div>
     <p style="color:#64748b;font-size:.75rem;margin-top:1.5rem">
-      Receipt sigil is your audit-trail proof. Save it. <a href="/defoneos-verify" style="color:var(--cyan)">Verify it</a>
+      Receipt sigil is your audit-trail proof. Save it. <a href="#" style="color:var(--cyan)">Verify it</a>
     </p>
   </div>
 </section>
@@ -390,7 +390,7 @@ tr:nth-child(even){background:rgba(255,255,255,.02)}
 <section>
   <div class="section-head">
     <div><h2>What teams deploy DEFONEOS for</h2><p>Real scenarios from the 18 mission scripts.</p></div>
-    <a href="/defoneos-use-cases" class="btn btn-ghost">All 18 Use Cases →</a>
+    <a href="#" class="btn btn-ghost">All 18 Use Cases →</a>
   </div>
   <div class="testimonial-row">
     <div class="tcard">
@@ -411,8 +411,8 @@ tr:nth-child(even){background:rgba(255,255,255,.02)}
 <!-- COMPARE BAR -->
 <section>
   <div class="section-head">
-    <div><h2>5-Year TCO: DEFONEOS vs incumbents</h2><p>From <a href="/defoneos-cost-comparison" style="color:var(--cyan)">defoneos-cost-comparison</a></p></div>
-    <a href="/defoneos-compare" class="btn btn-ghost">Full comparison →</a>
+    <div><h2>5-Year TCO: DEFONEOS vs incumbents</h2><p>From <a href="#" style="color:var(--cyan)">defoneos-cost-comparison</a></p></div>
+    <a href="#" class="btn btn-ghost">Full comparison →</a>
   </div>
   <table>
     <tr><th>Provider</th><th>5-Year TCO</th><th>Sovereign</th><th>Open Source</th><th>Audit-Grade Receipts</th></tr>
@@ -429,14 +429,14 @@ tr:nth-child(even){background:rgba(255,255,255,.02)}
   <p style="color:#94a3b8;margin-bottom:1.5rem">5 years, 225 pages, 30 MCPs, 0 kinetic-targeting patterns, signed audit trail.<br>30-second signup. No credit card. UK-sovereign.</p>
   <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap">
     <a href="#step-persona" class="btn btn-primary" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;" style="font-size:1rem;padding:.9rem 1.6rem">Sign up now →</a>
-    <a href="/defoneos-demo" class="btn btn-ghost">Live Demo</a>
-    <a href="/defoneos-seriesa" class="btn btn-ghost">Series A Brief</a>
+    <a href="#" class="btn btn-ghost">Live Demo</a>
+    <a href="#" class="btn btn-ghost">Series A Brief</a>
   </div>
   <p style="color:#64748b;font-size:.78rem;margin-top:1.5rem">Owner-gated questions: crown@csoai.org · press: press@csoai.org · +44 (0)20 7946 0958</p>
 </section>
 
 <footer style="text-align:center;padding:3rem 1rem;color:#64748b;font-size:.78rem;border-top:1px solid var(--border);margin-top:2rem">
-  © 2026 CSOAI Ltd (UK Companies House 16939677) · DEFONEOS — sovereign defence AI · <a href="/defoneos-privacy" style="color:var(--cyan)">Privacy</a> · <a href="/defoneos-terms" style="color:var(--cyan)">Terms</a> · <a href="/defoneos-verify" style="color:var(--cyan)">Verify</a><br>
+  © 2026 CSOAI Ltd (UK Companies House 16939677) · DEFONEOS — sovereign defence AI · <a href="#" style="color:var(--cyan)">Privacy</a> · <a href="#" style="color:var(--cyan)">Terms</a> · <a href="#" style="color:var(--cyan)">Verify</a><br>
   Receipt #<span id="footerReceipt">—</span> · SIGIL chain at <code>sigil.csoai.org</code>
 </footer>
 
@@ -546,7 +546,7 @@ document.getElementById('signupForm').addEventListener('submit', async e => {
       sl.href = stripeUrl;
       sl.textContent = 'Continue to Stripe Checkout →';
     } else {
-      sl.href = '/defoneos-contact';
+      sl.href = '#';
       sl.textContent = 'Talk to a Director →';
     }
     document.getElementById('footerReceipt').textContent = data.receipt ? data.receipt.sigil : '—';
