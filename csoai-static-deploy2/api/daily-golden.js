@@ -9,7 +9,7 @@ const https = require('https');
 const PAGES = [
   '/', '/defoneos-signup-hub', '/defoneos-defence-primes', '/defoneos-regulators', '/defoneos-seriesa',
   '/sov3-oowm-all-models', '/defoneos-system-card', '/defoneos-academy', '/defoneos-press',
-  '/defoneos-framing', '/distribution-pack', '/defoneos-healthcare', '/defoneos-finance',
+  '/defoneos-framing', '/distribution-pack', '/master', '/defoneos-substrate', '/meok-landing', '/defoneos-live', '/defoneos-healthcare', '/defoneos-finance',
   '/defoneos-cyber', '/defoneos-investor-onepager', '/defoneos-crown-agreement',
   '/defoneos-gap-analysis', '/defoneos-evidence-vault', '/defoneos-33-bft-council',
 ];
