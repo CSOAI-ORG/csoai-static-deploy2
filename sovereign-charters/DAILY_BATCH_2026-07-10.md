@@ -102,3 +102,36 @@
 ---
 
 **Heartbeat complete. Stage, never fire. Care floor 0.95.**
+
+## 📊 Heartbeat @ 2026-07-10 09:41:58 UTC
+
+### Sigil chain
+- Length: **88** receipts
+- Chain file: `~/.sovereign/sigil_chain.jsonl` (      88 lines)
+
+### Signups (Mac sovereign API)
+- Signups file: **       1** entries
+
+### Production URLs (live status)
+- [https://csoai-static-deploy2.vercel.app/] → **200**
+- [https://csoai-static-deploy2.vercel.app/sov3-tab] → **200**
+- [https://csoai-static-deploy2.vercel.app/SOV3_OOWM_BRIEFING] → **200**
+- [https://csoai-static-deploy2.vercel.app/SOV3_OOWM_KNOWLEDGE_TAB] → **200**
+- [https://csoai-static-deploy2.vercel.app/multi-mind-matrix] → **200**
+- [https://csoai-static-deploy2.vercel.app/d6-distribution] → **200**
+- [https://csoai-static-deploy2.vercel.app/measure] → **200**
+- [https://csoai-static-deploy2.vercel.app/audit] → **200**
+
+### ⏳ Owner-blocked (D3 · 16 min)
+- Stripe live + £999 Payment Link
+- GitHub repo SOVEREIGN-LAYER-ZERO-CHARTER
+- Push 27 files
+- Send 3 cold emails (paste-and-send from cold-emails-50.md)
+
+### Crown Jewels (stage, never fire)
+- Sovereign-wrapped CJ dirs on disk: **15**
+- PyPI publish: owner-gated. Stages ready, awaits `pyproject publish`.
+
+---
+
+**Heartbeat complete. Stage, never fire. Care floor 0.95.**
