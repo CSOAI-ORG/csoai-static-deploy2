@@ -1,0 +1,18 @@
+# 03_merge_experts.yaml — TIES-merge your fine-tuned experts into ONE new model.
+# Run:  mergekit-yaml 03_merge_experts.yaml ./sovereign-merged --allow-crimes --out-shard-size 1B
+# TIES resolves conflicts between experts; density/weight tune each expert's contribution.
+merge_method: ties
+base_model: Qwen/Qwen3.6-35B-A3B          # the common ancestor (must match what you fine-tuned)
+models:
+  - model: experts/compliance
+    parameters: {density: 0.5, weight: 0.35}   # compliance is the moat -> higher weight
+  - model: experts/defense
+    parameters: {density: 0.5, weight: 0.20}
+  - model: experts/intuition
+    parameters: {density: 0.5, weight: 0.25}
+  - model: experts/voice
+    parameters: {density: 0.5, weight: 0.20}
+parameters:
+  normalize: true
+  int8_mask: true
+dtype: bfloat16

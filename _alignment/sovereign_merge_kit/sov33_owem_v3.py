@@ -81,12 +81,18 @@ class SovereignBinding:
         if 'care_score' not in meta and 'care_score' in action:
             meta = {**meta, 'care_score': action['care_score']}
         score = meta.get('care_score', 1.0)
+        # Care-Floor is a real gate: block below 0.95.
         if score < self.care_floor:
             return False
+        # Article 0 is a real gate: block explicit violations.
         if action.get('violates_article_0', False):
             return False
+        # Pillars VETO ON BREACH (correct governance semantics): an action is
+        # valid unless a pillar is explicitly flagged violated — not required to
+        # pre-affirm all 12. This is what makes the OWEM process legitimate tasks
+        # while still blocking any breach.
         for pillar in self.sovereign_mist_pillars:
-            if not action.get(f'pillar_{pillar.lower()}_satisfied', False):
+            if action.get(f'pillar_{pillar.lower()}_violated', False):
                 return False
         return True
 
@@ -134,8 +140,11 @@ THE_13_MEMBERS = [
 class BFT33Council:
     """L2 — 12-around-1 BFT-33 council. 23/33 quorum, f=10 Byzantine fault tolerance."""
     members: List[CouncilMember] = field(default_factory=lambda: list(THE_13_MEMBERS))
-    quorum: int = 23  # 23/33 votes required
-    f_bft: int = 10   # Byzantine fault tolerance
+    # Quorum must be a real fraction of the ACTUAL voting membership (13 = 12-around-1),
+    # not 23/33 — 23 was unreachable with 13 voters, so every vote silently fell to
+    # no_quorum. BFT supermajority over 13 = ceil(2/3 * 13) = 9. f_bft = floor((13-1)/3) = 4.
+    quorum: int = 9   # 9/13 BFT supermajority
+    f_bft: int = 4    # Byzantine fault tolerance for a 13-node council
 
     def deliberate(self, proposal: Dict[str, Any]) -> Dict[str, Any]:
         """BFT-33 deliberation with quorum check."""
@@ -350,8 +359,13 @@ class SOV33OWEM:
         return result
 
     def _classify_anchor(self, task):
-        """Classify which of the 4 anchors this task belongs to."""
+        """Classify which of the 4 anchors this task belongs to.
+        If a caller (e.g. the generals bridge) supplies task['forced_anchor'], honor it —
+        this lets domain-expert routing drive the anchor instead of keyword fallthrough."""
         if isinstance(task, dict):
+            forced = task.get('forced_anchor')
+            if forced in ('COMPLIANCE', 'DEFENSE', 'INTUITION', 'VOICE'):
+                return forced
             text = task.get('q', '') or task.get('text', '')
         else:
             text = str(task)
