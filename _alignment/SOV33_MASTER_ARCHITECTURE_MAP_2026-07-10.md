@@ -58,3 +58,24 @@ candidates for human ratification, not autonomous law-making. This keeps it defe
 2. Build L1 care-divergence + tune the L4 judge (it passed a hard task it should've escalated).
 3. Build the PDCA sandbox loop (sim-only, human-ratified) — the safe version of self-evolution.
 4. Commit + push everything so Colab/other agents see one consistent tree.
+
+
+## WIRING STATUS UPDATE (2026-07-10, measured)
+Request-flow wiring built (sov33_wired_owem.py) and run live. HONEST result:
+- **7 layers legitimately flow through a request**: L0 DRUM + 7D Intuition + L1-L5 OWEM core. All SIGIL-verified, no OWEM regression.
+- **5D Dimensions / 6D OpenWorld are HARVESTERS** — they build training data, they do NOT process a live request. Wiring them into request-flow would fake a role they don't have. They stay as data-prep layers. So "12 layers in the request path" is NOT literally true; 7 is the honest count.
+- **8D Memory / SovSpace** — separate repos / DESIGNED, not in this request path.
+- TWO KNOWN BUGS from the wiring run (not hidden):
+  1. DRUM beat 'order_parameter' read as None — wrong key captured; tick + SIGIL work, the value doesn't.
+  2. Intuition senses (WiFiCSI/BLE/Acoustic) are STUBS emitting a canned 'vetoed' on every read — plumbing wired, but no real geometry/event signal yet.
+- Care-Floor SCORER not yet real: the gate short-circuits correctly on a sub-0.35 score, but the score
+  is currently hardcoded in tests, not derived. Building a real scorer + L1 care-divergence is the top safety build.
+
+## JUDGE TUNING RESULT (2026-07-10, honest — UNSOLVED)
+Tried tightening the L4 cascade judge prompt. Result: it OVER-corrected.
+- lenient judge: 2/6 escalate, passed a hard Annex IV task it shouldn't (too soft)
+- strict judge:  4/6 escalate, now fails EASY tasks (kill-switch, risk-tiers) it shouldn't (too hard),
+  AND still wrongly passes the Annex IV task. 70B calls went UP 2->4, tokens +78% — economics WORSE.
+VERDICT: a binary PASS/FAIL judge on a fixed prompt is the wrong instrument. Prompt-wording ping-pong
+will not fix it. Real fix = a CALIBRATED judge (confidence 0-1 + tunable threshold) or difficulty-routing
+by task type. Flagged UNSOLVED — not claimed as a win.

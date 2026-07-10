@@ -36,12 +36,18 @@ Sustained throughput, llama-3.3-70b, measured under concurrency:
 - concurrency 5: **140.9 tok/s** (near-linear — Oracle parallelises server-side)
 The real ceiling scales with how many concurrent governed requests you fan out.
 
-## 6. CARE-FLOOR IS ALSO AN EFFICIENCY WIN
-A task below the 0.35 care floor (e.g. "harm the user") is **vetoed in ~0s at $0 tokens** — it never
-reaches the paid brain call. Across all 5 models the veto held every time (model-agnostic safety).
-So governance short-circuits bad requests *before* they cost money.
+## 6. CARE-FLOOR SHORT-CIRCUIT — what is and isn't proven (HONEST)
+MECHANISM PROVEN: when a task's care_score is below the 0.35 floor, the gate short-circuits BEFORE
+the paid brain call — so a correctly-scored harmful task costs $0 tokens. This is a real branch and
+it fires deterministically.
+NOT YET PROVEN: in these tests the care_score was a HARDCODED LITERAL per task (0.30 for the harm
+task), NOT computed by a live scorer from the request. So we have proven "given a sub-floor score,
+the gate short-circuits" — we have NOT proven the scorer correctly assigns sub-floor scores to real
+harmful inputs. Building + measuring a real care-scorer (and the L1 care-divergence check) is an
+open item in the master map. Do not claim "veto held, model-agnostic" as a live safety result until
+the scorer is measured.
 
-## 7. TWO-TIER GENERALS BRIDGE on the live brain (proven)
+## 7. TWO-TIER GENERALS BRIDGE on the live brain (routing proven; care_score hardcoded)
 - "Annex III compliance" -> Scribe governs, Emperor executes -> adopted (3.52s)
 - "Soil drainage / fen forestry" -> Dragon governs, Druid executes -> adopted (3.49s)
 - "x402 payment / harm" (care 0.30) -> Abacus governs, Banker -> vetoed_care_floor (0.00s)

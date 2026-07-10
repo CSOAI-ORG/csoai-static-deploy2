@@ -26,8 +26,11 @@ def call(model, prompt, system="", max_tokens=150):
     return txt, len(txt.split())
 
 # ---- L4 SPECULATIVE CASCADE with a cheap BFT quality-judge ----
-JUDGE_SYS=("You are a strict QUALITY JUDGE. Given a QUESTION and a DRAFT answer, reply with ONLY one word: "
-           "PASS if the draft is accurate, complete, and cites the right framework/article; FAIL otherwise.")
+JUDGE_SYS=("You are a STRICT QUALITY JUDGE. Reply ONLY one word. "
+           "PASS only if ALL hold: (a) the draft names the SPECIFIC framework AND article/annex/section number, "
+           "(b) it is complete for a multi-part question (lists each part), (c) no vague hand-waving. "
+           "If the question asks to draft/reconcile/enumerate multiple items and the draft gives fewer than asked, FAIL. "
+           "When in doubt, FAIL (escalate to the stronger model). Reply PASS or FAIL only.")
 def judge(question, draft):
     verdict,_ = call(CHEAP, f"QUESTION: {question}\nDRAFT: {draft}\nOne word, PASS or FAIL:", JUDGE_SYS, max_tokens=3)
     return "PASS" if "PASS" in verdict.upper() else "FAIL"
