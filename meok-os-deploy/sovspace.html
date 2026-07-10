@@ -64,8 +64,8 @@ dialog::backdrop{background:rgba(20,16,10,.55);backdrop-filter:blur(3px)}
 </div>
 <dialog id="dlg" data-testid="sovspace-dialog"><div class="dlg" id="dlgbody"></div></dialog>
 <script>
-const CLCOLOR={'domain-ai':'#c9a84c','other':'#b9a98e','framework-regulation':'#a855f7','bridges':'#5aa89a','a2a-substrate':'#3b82f6','crypto-attestation':'#d47a5a','physical-ot':'#8a8a8a','safety-assurance':'#06b6d4'};
-const CLLABEL={'domain-ai':'Domain AI','other':'Tools','framework-regulation':'Regulation','bridges':'Legacy Bridge','a2a-substrate':'A2A Substrate','crypto-attestation':'Attestation','physical-ot':'Physical/OT','safety-assurance':'Safety'};
+const CLCOLOR={'domain-ai':'#c9a84c','other':'#b9a98e','framework-regulation':'#a855f7','bridges':'#5aa89a','a2a-substrate':'#3b82f6','crypto-attestation':'#d47a5a','physical-ot':'#8a8a8a','safety-assurance':'#06b6d4','meok-labs-physical':'#e07a3f','meok-labs-science':'#7c3aed','security-intel':'#ef4444','meok-sovereign':'#c9a84c'};
+const CLLABEL={'domain-ai':'Domain AI','other':'Tools','framework-regulation':'Regulation','bridges':'Legacy Bridge','a2a-substrate':'A2A Substrate','crypto-attestation':'Attestation','physical-ot':'Physical/OT','safety-assurance':'Safety','meok-labs-physical':'MEOK Labs · Physical','meok-labs-science':'MEOK Labs · Science','security-intel':'Security/Intel','meok-sovereign':'Sovereign'};
 let DATA=[], filter='all', term='';
 const el=id=>document.getElementById(id);
 function clName(c){return CLLABEL[c]||c} function clCol(c){return CLCOLOR[c]||'#b9a98e'}
