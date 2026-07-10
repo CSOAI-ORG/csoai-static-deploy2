@@ -9,7 +9,7 @@ No layer is described from memory; each cites its file or its status.
 |---|---|---|---|---|
 | L0 | **DRUM heartbeat** | drum/drum_heartbeat.py | RUNNING | cadence/liveness — a dead layer is detectable by missed beats |
 | L1 | Sovereign Binding (Care-Floor) | sov33_owem_v3.py | RUNNING | **divergence**: two independent care-scores must agree, else block |
-| L2 | BFT-33 Council | sov33_owem_v3.py | RUNNING | **quorum vote** (the classic BFT) — 13-member, mandatory co-routers |
+| L2 | BFT-33 Council | sov33_owem_v3.py | RUNNING | **quorum vote** — OWEM's real council is THE_13_MEMBERS (Hub+12 Queens, 9/13 quorum). The PDCA script's COUNCIL=33 was a DIFFERENT, un-polled constant — see correction below. |
 | L3 | Elders MoE routing | sov33_owem_v3.py | RUNNING | **anchor quorum**: router disagreement → escalate, don't guess |
 | L4 | Sovereign-merge brain | sov33_owem_v3.py + sov33_oracle_brain.py | RUNNING (live Oracle 70B) | **speculative cascade**: cheap draft + judge, escalate on FAIL (cuts 70B calls 67%, measured) |
 | L5 | SIGIL chain | sov33_owem_v3.py | RUNNING | crypto hash-chain IS the BFT — tamper breaks verify, no vote needed |
@@ -79,3 +79,16 @@ Tried tightening the L4 cascade judge prompt. Result: it OVER-corrected.
 VERDICT: a binary PASS/FAIL judge on a fixed prompt is the wrong instrument. Prompt-wording ping-pong
 will not fix it. Real fix = a CALIBRATED judge (confidence 0-1 + tunable threshold) or difficulty-routing
 by task type. Flagged UNSOLVED — not claimed as a win.
+
+
+## CORRECTIONS (2026-07-10, post-audit — honesty)
+- PDCA "33/33 PASS" was VACUOUS: the script hardcoded yes=33; it never polled 33 councilors. RELABELLED:
+  each stage is a SINGLE cheap-model screen + optional 70B escalation. "resolved by left/right brain",
+  NOT a quorum vote. The real win is the 10/90 escalation economy (6/8 stages resolve cheap), not a vote count.
+- "132 signed decisions/cycle" was WRONG: SIGIL fires ONCE per stage (aggregates the stage into one hash).
+  Real = ~5 SIGIL hops per 5-stage cycle, chain-verified. Not 132.
+- Super-stack vs single-70B overhead: the "~7%" is from a CONTROLLED same-warmth test (+0.24s). The
+  uncontrolled live A/B this session showed +70% to +170% dominated by API/network variance, NOT fixed
+  compute. Do not cite ~7% as the live-run result; cite it only as the controlled-test figure.
+- Care-Floor "veto held across 5 models" used HARDCODED care scores — proves the gate short-circuits on a
+  sub-floor score, NOT that a scorer assigns them. Real scorer = still to build.

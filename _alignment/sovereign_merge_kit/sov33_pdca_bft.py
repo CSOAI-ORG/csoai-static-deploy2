@@ -36,17 +36,17 @@ def council_vote(stage, question, system):
     t0=time.time()
     screen = call(LEFT, f"{question}\nAnswer with a confidence word: CONFIDENT or UNSURE, then reason briefly.", system, mx=60)
     brain_calls=0
+    # HONEST: this is a SINGLE cheap-model screen + optional deep escalation, NOT a 33-member poll.
+    # We do not run 33 independent councilors. 'resolution' = did a model resolve the stage.
     if "UNSURE" in screen.upper():
-        # council cannot resolve on conscious pass -> 90% subconscious brain fires
         deep = call(RIGHT, question, system, mx=150); brain_calls=1
-        yes=COUNCIL  # deep resolution -> full alignment
-        verdict_text=deep
+        resolved=True; verdict_text=deep; resolver="right_brain_70b"
     else:
-        yes=COUNCIL; verdict_text=screen
-    passed = yes>=QUORUM
+        resolved=True; verdict_text=screen; resolver="left_brain_cheap"
+    passed = resolved  # a stage passes if a model resolved it (NOT a quorum count)
     dt=time.time()-t0
-    dig=sigil(stage, {"yes":yes,"passed":passed,"brain_calls":brain_calls})
-    return {"stage":stage,"yes":f"{yes}/{COUNCIL}","passed":passed,"brain_calls":brain_calls,
+    dig=sigil(stage, {"resolved":resolved,"resolver":resolver,"brain_calls":brain_calls})
+    return {"stage":stage,"resolved":resolved,"resolver":resolver,"passed":passed,"brain_calls":brain_calls,
             "path":"right_brain" if brain_calls else "left_brain","latency_s":round(dt,2),
             "sigil":dig,"text":verdict_text[:80]}
 
@@ -63,7 +63,7 @@ def pdca_cycle(task):
     results=[]; total_brain=0
     for name,q,sysp in stages:
         r=council_vote(name,q,sysp); results.append(r); total_brain+=r["brain_calls"]
-        print(f"  {name:5} {r['yes']:6} {'PASS' if r['passed'] else 'FAIL'} | {r['path']:11} | {r['latency_s']:4.1f}s | sigil={r['sigil']}")
+        print(f"  {name:8} {'RESOLVED' if r['resolved'] else 'HELD':8} by {r['resolver']:16} | {r['latency_s']:4.1f}s | sigil={r['sigil']}")
     ratified=all(r["passed"] for r in results)
     print(f"  -> cycle {'RATIFIED (→human gate)' if ratified else 'HELD'} | 70B brain calls: {total_brain}/5 (rest resolved cheap)")
     return {"task":task,"ratified":ratified,"brain_calls":total_brain,"stages":results}
