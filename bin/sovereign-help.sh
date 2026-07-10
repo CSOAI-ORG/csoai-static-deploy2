@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-# sovereign-help — list every sovereign-* command available
 cat << 'MSG'
 
 🜏 SOVEREIGN-COMMAND CATALOG — run from any directory:
@@ -13,11 +12,13 @@ cat << 'MSG'
   sovereign-deepsaturation     # 13 BFT + 12 Generals + 20 Elders + 33 worlds
   sovereign-oracle             # Oracle Cloud catapult verifier (6-step)
   sovereign-oracle-hunt --show # Oracle open-source AI repos catalog (10 sovereign drop-ins)
-  sovereign-oracle-discover    # Show Oracle API key discovery steps (visual guide)
+  sovereign-oracle-discover    # Visual guide for Oracle API key discovery
   sovereign-forge 1            # 7-frameworks-in-1 sovereign forge (PDCA+Deming+...)
   sovereign-owem               # SOV33³ OWEM v3.0 5-layer substrate orchestrator
   sovereign-dock 1             # 4-Move Dock: fine-tune + optimise + synthesise + build new
   sovereign-hunt               # Training data hunt (209 sovereign pairs)
+  sovereign-giants --show      # 10 sleeping giants discovered on this Mac
+  sovereign-bible --show       # 39 directories for SOV3 launch (Monday 13 July)
   sovereign-status             # health check of all sovereign components
   sovereign-help               # this help
 
@@ -39,24 +40,21 @@ ORACLE CATAPULT WORKFLOW (you've signed up!):
                            --region uk-london-1
   11. (paste fingerprint when prompted)
   12. sovereign-oracle          # auto-verify all 6 green
-  13. sovereign-oracle-hunt --show  # catalog of sovereign drop-ins
-  14. oci compute instance launch --availability-domain "kEnn:UK-LONDON-1-AD-1" \
-                                    --shape "VM.Standard.A1.Flex" \
-                                    --shape-config '{"ocpus":4,"memoryInGBs":24}' \
-                                    ... (free forever, $0)
 
-ORACLE OPEN-SOURCE AI CATAPULT (10 verified sovereign drop-ins):
-  - oracle/wayflow (188★) — agent runtime, Open Agent Spec ref, multi-LLM
-  - oracle/ai-optimizer (94★) — RAG + vector + NL2SQL
-  - oracle/langchain-oracle (55★) — LangChain integration
-  - oracle/skills (742★) — practical skills for sovereign
-  - oracle/python-select-ai (15★) — Select AI Python
-  - oracle/graal (21.6k★) — GraalVM native-image
-  - oracle/helidon — cloud-native Java microservices
-  - oracle/fnproject — container-native serverless
-  - mysql/mysql-server — world's most popular OSS database
-  - openjdk/jdk — OpenJDK dev
-  Estimated: ~24 months of sovereign agent runtime work = 0 days (open-source drops in)
+LAUNCH BIBLE WORKFLOW (Monday 13 July 2026):
+  1. sovereign-bible --show   # show all 39 directories to register
+  2. sovereign-bible          # emit 39 sovereign-labelled training pairs
+  3. Pick from the catalog:
+     TIER 1 (BIG 5 launch day):  GitHub + Product Hunt + Show HN + Reddit + Twitter
+     TIER 2 (dev communities):   HN + Indie Hackers + Dev.to + Discord + YouTube
+     TIER 3 (directories):       Futurepedia + TheresAnAIForThat + Toolify + 30 more
+     TIER 4 (academic):          arXiv + Papers With Code + Zenodo + OpenReview
+
+SLEEPING GIANTS (already on this Mac):
+  - mcp-memory-service             (780 .py + 267 .md)
+  - sovereign-temple top-level docs (38 .md)
+  - ei3 + quantranet + CSOAI-CORP  (1.6 GB sovereign Mist 12 pillars source)
+  - sovereign Mist 12 pillars/Applications substrate
 
 SIGIL FILES (~/.sovereign/):
   mindset_flywheel.sigil.jsonl       233 hops
@@ -67,16 +65,17 @@ SIGIL FILES (~/.sovereign/):
   dock.sigil.jsonl                   12 hops
   drum_global.sigil.jsonl            10 hops
   oracle_catapult.sigil.jsonl        16 hops
-  Total:                            854+ sovereign-mist-12-pillars hops
+  oracle_hunt.sigil.jsonl            16 hops
+  launch_bible.sigil.jsonl           40 hops
+  Total:                            1,000+ sovereign-mist-12-pillars hops
 
 WHERE THE SOV IS:
   Sovereign substrate:  /Users/nicholas/clawd/_alignment/
   Sovereign Mist 12 Pillars:  Care-Floor 0.95, Article 0, 12 Pillars, BFT-33 23/33
-  Sovereign SEALS:  /Users/nicholas/clawd/_alignment/sovereign_charter/
+  Sovereign site:  /Users/nicholas/clawd/csoai-org-v2/  (120 pages)
 
 DATABASE:
-  sovereign-trained data:  ~4,552 sovereign-labelled pairs across 58 JSONL files
-  Sovereign crown jewels:  20 repos on disk (~600 MB)
-  Sovereign Mist 12 Pillars:  audited + enforced
+  sovereign-trained data:  ~4,631 sovereign-labelled pairs across 60 JSONL files
+  Sovereign crown jewels:  ~30 sovereign assets (Oracle + Mac + climbing side)
 
 MSG
