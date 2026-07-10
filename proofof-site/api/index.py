@@ -25,6 +25,79 @@ CSOAI_RED_LINES = [
     "no-defonos-io-domain",
 ]
 
+# ─── SOV_NEXUS_18 manifest (18 sovereign tabs, trio Surface/Deep/Codex) ─────
+"""
+SOV_NEXUS_18 — the all-in-one sovereign nexus manifest + tab-status endpoint.
+Returns the 18 canonical tabs, their live status, and the trio (Surface/Deep/Codex) markers.
+"""
+import json, hashlib
+from datetime import datetime, timezone
+from pathlib import Path
+
+CSOAI_CHARTER_SHA256 = "df65a6585cf6a686cbfd881f56c04447056e2551e7c04db57a80543521022054"
+CSOAI_SIGIL_MINT = "77ab0e6f9d6c77e8"
+CSOAI_STR_PUBKEY = "QD595cz6iQaEaYOjwwgLmMdoz1mtm1pzKBb9ygvMvf3xhQ28"
+
+# The 18 canonical sovereign tabs (the "all-in-one sovereign" surface)
+NEXUS_18 = [
+    # Tab 1 (master)
+    {"tab": 1, "slug": "hub",             "title": "Command Hub",         "trio": "surface", "icon": "🌐", "tag": "master",   "route": "/hub.html",      "purpose": "Single-page nexus linking all 17 sovereign tabs in one HTML"},
+    # 2-6 (Surface — operator-facing)
+    {"tab": 2, "slug": "sovspace",        "title": "SovSpace",            "trio": "surface", "icon": "🚀", "tag": "operator",  "route": "/sovspace.html", "purpose": "Sovereign operator console — 64 MCPs + 12 Generals"},
+    {"tab": 3, "slug": "charter",         "title": "Charter",             "trio": "surface", "icon": "📜", "tag": "trust",     "route": "/charter.html",  "purpose": "Charter SHA-256 + SIGIL mint + STR Ed25519 fingerprint"},
+    {"tab": 4, "slug": "agents",          "title": "12 Generals",         "trio": "surface", "icon": "⚔️", "tag": "council",   "route": "/agent-cards.html", "purpose": "12 Queens around 1 King — sovereign council roster"},
+    {"tab": 5, "slug": "hives",           "title": "33 Hives",            "trio": "surface", "icon": "🐝", "tag": "network",   "route": "/33-hives.html", "purpose": "33 federated sovereign worlds — Vast.ai autoscale"},
+    # 7-11 (Deep — builder-facing)
+    {"tab": 6, "slug": "oowm",            "title": "OOWM",                "trio": "deep",    "icon": "🌍", "tag": "model",     "route": "/oowm.html",     "purpose": "Organic Open World Model — 4 anchors × 5 elders"},
+    {"tab": 7, "slug": "canon",           "title": "Canon / DNA",         "trio": "deep",    "icon": "🧬", "tag": "knowledge", "route": "/sovereign-canon.html", "purpose": "Sovereign canon of charters + 55 sovereign charters"},
+    {"tab": 8, "slug": "autonomy",        "title": "Autonomy",            "trio": "deep",    "icon": "🤖", "tag": "runtime",   "route": "/autonomy.html", "purpose": "12 heartbeat jobs + EAT mode automation"},
+    {"tab": 9, "slug": "marketplace",     "title": "Marketplace",         "trio": "deep",    "icon": "🏪", "tag": "products",  "route": "/marketplace.html", "purpose": "149 sovereign MCPs on PyPI + GitHub Releases"},
+    {"tab": 10, "slug": "search",         "title": "Search",             "trio": "deep",    "icon": "🔎", "tag": "find",      "route": "/sovereign-search.html", "purpose": "Sovereign full-text + persona-routed"},
+    # 12-16 (Codex — public-facing / community)
+    {"tab": 11, "slug": "launch",         "title": "Launch",             "trio": "codex",   "icon": "🎯", "tag": "go",        "route": "/launch-status.html", "purpose": "SOV3 launch status + Mon 13 Jul countdown"},
+    {"tab": 12, "slug": "sovtown",        "title": "Sovereign Town",     "trio": "codex",   "icon": "🏘️", "tag": "demo",      "route": "/sovtown-demo.html", "purpose": "Multi-agent town demo — 47 agents on 3D grid"},
+    {"tab": 13, "slug": "wallet",         "title": "Wallet",             "trio": "codex",   "icon": "💰", "tag": "revenue",   "route": "/wallet.html",  "purpose": "Sovereign STR wallet — £/€/¥ receipts"},
+    {"tab": 14, "slug": "feedback",       "title": "Feedback",           "trio": "codex",   "icon": "💬", "tag": "user",      "route": "/feedback.html", "purpose": "NPS + CSAT + feature requests + Ch. Article 0"},
+    {"tab": 15, "slug": "signup",         "title": "Sign up",            "trio": "codex",   "icon": "🪪", "tag": "onboard",   "route": "/signup.html",  "purpose": "Persona-routed SIGIL receipt + Ed25519 API key"},
+    {"tab": 16, "slug": "trust",          "title": "Trust Proof",        "trio": "codex",   "icon": "🛡️", "tag": "verify",    "route": "/trust.html",   "purpose": "Live SIGIL receipts + Charter fingerprint + Red Lines"},
+    # 17-18 (Cross-domain / immersive)
+    {"tab": 17, "slug": "cesium-globe",   "title": "Cesium Globe",       "trio": "surface", "icon": "🌎", "tag": "immersive", "route": "/cesium-globe.html", "purpose": "3D sovereign world with Three.js + Cesium"},
+    {"tab": 18, "slug": "sov-os",         "title": "Sov OS",             "trio": "deep",    "icon": "🖥️", "tag": "platform",  "route": "/sov-os.html",  "purpose": "Sovereign OS — 8 layers / 64 MCPs / 12 Generals"},
+]
+
+TRIO = {
+    "surface": {"name": "Surface",  "color": "#4a9eff", "purpose": "Operator-facing — humans read, agents act", "count": 6},
+    "deep":    {"name": "Deep",     "color": "#22c55e", "purpose": "Builder-facing — MCPs / APIs / substrate",  "count": 6},
+    "codex":   {"name": "Codex",    "color": "#fbbf24", "purpose": "Public-facing — onboarding / community",    "count": 6},
+}
+
+
+def nexus_manifest():
+    """Full manifest — 18 tabs, trio distribution, charter anchor."""
+    by_trio = {"surface": [], "deep": [], "codex": []}
+    for t in NEXUS_18:
+        by_trio[t["trio"]].append(t["slug"])
+    return {
+        "service": "sov-nexus-18",
+        "version": "1.0.0",
+        "charter_sha256": CSOAI_CHARTER_SHA256,
+        "sigil_mint": CSOAI_SIGIL_MINT,
+        "str_pubkey": CSOAI_STR_PUBKEY,
+        "care_floor": 0.95,
+        "total_tabs": len(NEXUS_18),
+        "trio": TRIO,
+        "by_trio": by_trio,
+        "tabs": NEXUS_18,
+        "manifest_digest": hashlib.sha256(json.dumps(NEXUS_18, sort_keys=True).encode()).hexdigest()[:16],
+        "ts": datetime.now(timezone.utc).isoformat(),
+        "operator": "CSOAI Ltd (UK 16939677)",
+        "honest_register": [
+            "manifest is declarative — actual HTTP 200 per tab must be byte-verified at deploy time",
+            "tab status is inferred from the slug mapping; no per-tab uptime guarantee",
+            "operator-gated: charter SHA + SIGIL mint are the canonical anchor, never recompute at runtime",
+        ],
+    }
+
 # ─── File-store (Vercel = /tmp, local = ~/sovereign-funnel) ─────
 _IS_VERCEL = os.environ.get('VERCEL') == '1' or '/tmp' in os.environ.get('PWD', '')
 _BASE = Path("/tmp") if _IS_VERCEL else Path.home() / ".sovereign-funnel"
@@ -432,6 +505,24 @@ def _health():
     return (jsonify({"status": "ok", "service": "sovereign-funnel", "sigil_chain_length": _sigil_count()}), 200, {"Content-Type": "application/json", "Access-Control-Allow-Origin": "*"})
 
 
+
+@app.route("/api/nexus", methods=["GET"])
+def _nexus():
+    return jsonify(nexus_manifest()), 200, {"Content-Type": "application/json", "Access-Control-Allow-Origin": "*"}
+
+
+@app.route("/api/tabs", methods=["GET"])
+def _tabs():
+    return jsonify({"tabs": NEXUS_18, "total": len(NEXUS_18)}), 200, {"Content-Type": "application/json", "Access-Control-Allow-Origin": "*"}
+
+
+@app.route("/api/trio", methods=["GET"])
+def _trio():
+    by_trio = {"surface": [], "deep": [], "codex": []}
+    for t in NEXUS_18:
+        by_trio[t["trio"]].append(t["slug"])
+    return jsonify({"trio": TRIO, "by_trio": by_trio}), 200, {"Content-Type": "application/json", "Access-Control-Allow-Origin": "*"}
+
 # ─── Top-level plain handler (raw serverless mode) ──────────────
 def handler(request):
     method = (getattr(request, "method", "GET") or "GET").upper()
@@ -463,6 +554,9 @@ def handler(request):
         return (jsonify(r), 200, {"Content-Type": "application/json"})
     if path.endswith("/api/stats"):
         return (jsonify(stats()), 200, {"Content-Type": "application/json"})
+    if path.endswith("/api/nexus"):  return jsonify(nexus_manifest()), 200, {"Content-Type": "application/json"}
+    if path.endswith("/api/tabs"):   return jsonify({"tabs": NEXUS_18, "total": len(NEXUS_18)}), 200, {"Content-Type": "application/json"}
+    if path.endswith("/api/trio"):   return jsonify({"trio": TRIO}), 200, {"Content-Type": "application/json"}
     if path.endswith("/api/charter"):
         return (jsonify({"charter_sha256": CSOAI_CHARTER_SHA256}), 200, {"Content-Type": "application/json"})
     if path.endswith("/api/health"):

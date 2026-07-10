@@ -3,43 +3,133 @@
   "cleanUrls": true,
   "trailingSlash": false,
   "builds": [
-    { "src": "api/index.py", "use": "@vercel/python" },
-    { "src": "**/*.html", "use": "@vercel/static" },
-    { "src": "**/*.css", "use": "@vercel/static" },
-    { "src": "**/*.js", "use": "@vercel/static" },
-    { "src": "**/*.svg", "use": "@vercel/static" },
-    { "src": "**/*.png", "use": "@vercel/static" },
-    { "src": "**/*.json", "use": "@vercel/static" },
-    { "src": "**/*.txt", "use": "@vercel/static" },
-    { "src": "**/*.md", "use": "@vercel/static" },
-    { "src": "**/*.ico", "use": "@vercel/static" },
-    { "src": "**/*.webmanifest", "use": "@vercel/static" },
-    { "src": "**/favicon.svg", "use": "@vercel/static" }
+    {
+      "src": "api/index.py",
+      "use": "@vercel/python"
+    },
+    {
+      "src": "**/*.html",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "**/*.css",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "**/*.js",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "**/*.svg",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "**/*.png",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "**/*.json",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "**/*.txt",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "**/*.md",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "**/*.ico",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "**/*.webmanifest",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "**/favicon.svg",
+      "use": "@vercel/static"
+    }
   ],
   "routes": [
-    { "src": "/api/signup", "dest": "api/index.py" },
-    { "src": "/api/waitlist", "dest": "api/index.py" },
-    { "src": "/api/feedback", "dest": "api/index.py" },
-    { "src": "/api/assess", "dest": "api/index.py" },
-    { "src": "/api/stats", "dest": "api/index.py" },
-    { "src": "/api/charter", "dest": "api/index.py" },
-    { "src": "/api/health", "dest": "api/index.py" }
+    {
+      "src": "/api/signup",
+      "dest": "api/index.py"
+    },
+    {
+      "src": "/api/waitlist",
+      "dest": "api/index.py"
+    },
+    {
+      "src": "/api/feedback",
+      "dest": "api/index.py"
+    },
+    {
+      "src": "/api/assess",
+      "dest": "api/index.py"
+    },
+    {
+      "src": "/api/stats",
+      "dest": "api/index.py"
+    },
+    {
+      "src": "/api/charter",
+      "dest": "api/index.py"
+    },
+    {
+      "src": "/api/health",
+      "dest": "api/index.py"
+    },
+    {
+      "src": "/api/nexus",
+      "dest": "api/index.py"
+    },
+    {
+      "src": "/api/tabs",
+      "dest": "api/index.py"
+    },
+    {
+      "src": "/api/trio",
+      "dest": "api/index.py"
+    }
   ],
   "headers": [
     {
       "source": "/(.*)",
       "headers": [
-        { "key": "X-Content-Type-Options", "value": "nosniff" },
-        { "key": "X-Frame-Options", "value": "SAMEORIGIN" },
-        { "key": "X-Robots-Tag", "value": "index, follow, max-image-preview:large" },
-        { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" },
-        { "key": "Permissions-Policy", "value": "camera=(), microphone=(), geolocation=()" },
-        { "key": "Strict-Transport-Security", "value": "max-age=63072000; includeSubDomains; preload" },
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "X-Frame-Options",
+          "value": "SAMEORIGIN"
+        },
+        {
+          "key": "X-Robots-Tag",
+          "value": "index, follow, max-image-preview:large"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "strict-origin-when-cross-origin"
+        },
+        {
+          "key": "Permissions-Policy",
+          "value": "camera=(), microphone=(), geolocation=()"
+        },
+        {
+          "key": "Strict-Transport-Security",
+          "value": "max-age=63072000; includeSubDomains; preload"
+        },
         {
           "key": "Content-Security-Policy-Report-Only",
           "value": "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://*.vercel-scripts.com https://va.vercel-scripts.com https://buy.stripe.com https://js.stripe.com https://checkout.stripe.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' data: blob: https:; font-src 'self' data: https://fonts.gstatic.com; connect-src 'self' https: wss:; frame-src 'self' https://buy.stripe.com https://js.stripe.com https://checkout.stripe.com; frame-ancestors 'self'; base-uri 'self'; form-action 'self' https://buy.stripe.com https://checkout.stripe.com; upgrade-insecure-requests"
         },
-        { "key": "X-XSS-Protection", "value": "1; mode=block" }
+        {
+          "key": "X-XSS-Protection",
+          "value": "1; mode=block"
+        }
       ]
     }
   ]
