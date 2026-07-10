@@ -80,9 +80,8 @@ def step_oci_config_exists() -> bool:
 def step_oci_regions() -> list:
     """List OCI regions (using CLI OR SDK)."""
     try:
-        r = subprocess.run(['oci', 'iam', 'region', 'list'], capture_output=True, text=True, timeout=10)
-    except FileNotFoundError:
-        # CLI not installed yet — try SDK
+        r = subprocess.run(['oci', 'iam', 'region', 'list'], capture_output=True, text=True, timeout=5)
+    except (FileNotFoundError, subprocess.TimeoutExpired):
         try:
             import oci
             config = oci.config.from_file()
