@@ -227,12 +227,19 @@ def main():
     history = []
     if history_path.exists():
         try:
-            history = json.loads(history_path.read_text())
+            data = json.loads(history_path.read_text())
+            if isinstance(data, list):
+                history = data
+            elif isinstance(data, dict):
+                history = data.get('cycles', [])
         except Exception:
             history = []
+    if not isinstance(history, list):
+        history = []
+    history = [h for h in history if isinstance(h, dict)]
+
 
     print("=" * 70)
-    print("🜏 FRAMEWORK FORGE — Sovereign 24/7 ASI substrate")
     print(f"   Absorbed: {len(ABSORBED_FRAMEWORKS)} frameworks:")
     for f in ABSORBED_FRAMEWORKS:
         print(f"     • {f['name']} ({f['origin']})")

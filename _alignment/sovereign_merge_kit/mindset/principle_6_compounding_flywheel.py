@@ -168,9 +168,19 @@ def main():
     history = []
     if history_path.exists():
         try:
-            history = json.loads(history_path.read_text())
+            data = json.loads(history_path.read_text())
+            # History file may be list OR a dict wrapper (total_cycles/last_cycle/cycles).
+            # Always coerce to the actual list of cycles.
+            if isinstance(data, list):
+                history = data
+            elif isinstance(data, dict):
+                history = data.get('cycles', [])
         except Exception:
             history = []
+    # Guard: history must be a list of dicts (not a wrapper dict)
+    if not isinstance(history, list):
+        history = []
+    history = [h for h in history if isinstance(h, dict)]
 
     for i in range(cycle_count):
         cycle = run_flywheel_once(len(history) + i + 1)
