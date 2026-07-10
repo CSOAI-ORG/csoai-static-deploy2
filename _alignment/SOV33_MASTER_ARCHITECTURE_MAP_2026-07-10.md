@@ -88,7 +88,7 @@ by task type. Flagged UNSOLVED — not claimed as a win.
 - "132 signed decisions/cycle" was WRONG: SIGIL fires ONCE per stage (aggregates the stage into one hash).
   Real = ~5 SIGIL hops per 5-stage cycle, chain-verified. Not 132.
 - Super-stack vs single-70B overhead: the "~7%" is from a CONTROLLED same-warmth test (+0.24s). The
-  uncontrolled live A/B this session showed +70% to +170% dominated by API/network variance, NOT fixed
+  uncontrolled live A/B this session measured +50% to +71% (mean +60%) dominated by API/network variance, NOT fixed
   compute. Do not cite ~7% as the live-run result; cite it only as the controlled-test figure.
 - Care-Floor "veto held across 5 models" used HARDCODED care scores — proves the gate short-circuits on a
   sub-floor score, NOT that a scorer assigns them. Real scorer = still to build.
