@@ -1,13 +1,13 @@
 # SOVEREIGN CHARTERS — OVERNIGHT BUILD REPORT
-**Generated**: 2026-07-10 10:00 UTC
+**Generated**: 2026-07-10 18:00 UTC
 
 ## Build Status
 
 | Metric | Value |
 |---|---|
-| Charter files built | 55 / 34 |
-| Missing | -21 |
-| Total directory size | 179M |
+| Charter files built | 57 / 34 |
+| Missing | -23 |
+| Total directory size | 183M |
 | Charter of Charters |    21568 bytes |
 | Master Index |     8480 bytes |
 | Master Template |     6734 bytes |
@@ -71,6 +71,8 @@
 | | 51-sevengenerations-charter.md | 5678 bytes |
 | | 52-relationalpersonhood-charter.md | 5704 bytes |
 | | 53-epistemichumility-charter.md | 5800 bytes |
+| | 54-sovereignconsciousness-charter.md | 19750 bytes |
+| | 55-newcoinocness-charter.md | 18085 bytes |
 
 ## ✅ ALL 34 CHARTERS BUILT
 

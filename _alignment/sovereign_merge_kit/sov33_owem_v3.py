@@ -200,24 +200,78 @@ class SovereignMergeBrain:
     effective_context_multiplier: int = 10  # 5-20× range, mid-point
 
     def think(self, task: Any, elders: List[str]) -> Dict[str, Any]:
-        """Sovereign-merge inference via Ollama (real) or mock (without GPU)."""
+        """Sovereign-merge inference — THREE-TIER brain, honest source tag:
+        1. Oracle GenAI cloud (if ORACLE_GENAI_KEY + ORACLE_GENAI_MODEL set + auth works)
+        2. local Ollama (if localhost:11434 up)
+        3. [offline] (neither reachable)
+        The returned dict carries 'brain_source' so callers always know which answered."""
+        task_text = task['q'] if isinstance(task, dict) else str(task)
+        system = self._system_prompt(elders)
+        response, source = '[offline]', 'none'
+
+        # Tier 0 — signed Oracle GenAI (real 70B cloud brain, OCI request-signing via ~/.oci)
         try:
-            import requests
-            task_text = task['q'] if isinstance(task, dict) else str(task)
-            payload = {
-                'model': 'qwen2.5:3b',
-                'prompt': task_text,
-                'system': self._system_prompt(elders),
-                'stream': False,
-                'options': {'temperature': 0.0, 'num_predict': 120}
-            }
-            r = requests.post('http://localhost:11434/api/generate', json=payload, timeout=15)
-            response = r.json().get('response', '')
+            import oci as _oci
+            _cfg = _oci.config.from_file("~/.oci/config", "DEFAULT")
+            _cl = _oci.generative_ai_inference.GenerativeAiInferenceClient(
+                _cfg, service_endpoint="https://inference.generativeai.uk-london-1.oci.oraclecloud.com")
+            _det = _oci.generative_ai_inference.models.ChatDetails(
+                compartment_id=_cfg["tenancy"],
+                serving_mode=_oci.generative_ai_inference.models.OnDemandServingMode(
+                    model_id="meta.llama-3.3-70b-instruct"),
+                chat_request=_oci.generative_ai_inference.models.GenericChatRequest(
+                    api_format="GENERIC",
+                    messages=[
+                        _oci.generative_ai_inference.models.SystemMessage(
+                            content=[_oci.generative_ai_inference.models.TextContent(text=system)]),
+                        _oci.generative_ai_inference.models.UserMessage(
+                            content=[_oci.generative_ai_inference.models.TextContent(text=task_text)])],
+                    max_tokens=200, temperature=0.0))
+            response = _cl.chat(_det).data.chat_response.choices[0].message.content[0].text
+            source = "oracle_genai_signed:llama-3.3-70b"
         except Exception:
-            response = '[offline]'
+            pass  # fall through to bearer/ollama/offline tiers below
+
+        # Tier 1 — Oracle GenAI cloud (bearer key, if signed tier-0 didn't fire)
+        import os
+        if not source.startswith('oracle_genai_signed') and os.environ.get('ORACLE_GENAI_KEY') and os.environ.get('ORACLE_GENAI_MODEL'):
+            try:
+                import json as _json, urllib.request as _u, urllib.error as _e
+                ep = os.environ.get('ORACLE_GENAI_ENDPOINT',
+                                    'https://inference.generativeai.uk-london-1.oci.oraclecloud.com')
+                body = _json.dumps({'model': os.environ['ORACLE_GENAI_MODEL'],
+                                    'messages': [{'role': 'system', 'content': system},
+                                                 {'role': 'user', 'content': task_text}],
+                                    'max_tokens': 120, 'temperature': 0.0}).encode()
+                req = _u.Request(ep + '/openai/v1/chat/completions', data=body,
+                                 headers={'Content-Type': 'application/json',
+                                          'Authorization': f"Bearer {os.environ['ORACLE_GENAI_KEY']}"})
+                with _u.urlopen(req, timeout=30) as r:
+                    d = _json.loads(r.read())
+                    response = d['choices'][0]['message']['content']
+                    source = 'oracle_genai'
+            except Exception as ex:
+                # honest: record why Oracle didn't answer, then fall through to Ollama
+                source = f'oracle_failed:{type(ex).__name__}'
+
+        # Tier 2 — local Ollama
+        if source in ('none',) or source.startswith('oracle_failed'):
+            try:
+                import requests
+                payload = {'model': 'qwen2.5:3b', 'prompt': task_text, 'system': system,
+                           'stream': False, 'options': {'temperature': 0.0, 'num_predict': 120}}
+                r = requests.post('http://localhost:11434/api/generate', json=payload, timeout=15)
+                resp = r.json().get('response', '')
+                if resp:
+                    response, source = resp, 'ollama_local' if not source.startswith('oracle_failed') \
+                        else source + '->ollama_local'
+            except Exception:
+                if source == 'none':
+                    source = 'offline'
 
         return {
             'response': response,
+            'brain_source': source,
             'elders_used': elders,
             'mamba2_state': self._mamba2_state(task),
             'tokens': len(response.split()),

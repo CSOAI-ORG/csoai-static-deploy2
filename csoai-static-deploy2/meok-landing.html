@@ -164,7 +164,7 @@ $('#tryForm').addEventListener('submit', async (e) => {
     if (!j.ok) { btn.disabled = false; btn.textContent = '⚡ Try 30s'; alert('Error: ' + (j.error||'unknown')); return; }
     fetch('/api/analytics', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ event: 'signup_completed', source: 'meok-landing', persona: 'governance', meta: { sigil: j.receipt.sigil } }) }).catch(()=>{});
     document.getElementById('tryResult').style.display = 'block';
-    document.getElementById('tryResult').innerHTML = '✓ SIGIL-signed · ' + j.receipt.sigil.slice(0, 16) + '…<br>✓ ' + j.receipt.next_steps + '<br>✓ Continue at: <a href="' + j.receipt.tier_routed_to + '" style="color:var(--cyan)">' + j.receipt.tier_routed_to + '</a>';
+    document.getElementById('tryResult').innerHTML = '✓ SIGIL-signed · ' + j.receipt.sigil.slice(0, 16) + '…<br>✓ ' + j.receipt.next_steps + '<br>✓ Continue at: <a href="#" style="color:var(--cyan)">' + j.receipt.tier_routed_to + '</a>';
     btn.style.display = 'none';
   } catch (err) { btn.disabled = false; btn.textContent = '⚡ Try 30s'; alert('Network error: ' + err.message); }
 });
