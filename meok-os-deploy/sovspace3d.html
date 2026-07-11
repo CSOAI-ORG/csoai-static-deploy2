@@ -21,6 +21,10 @@
 <canvas id="c"></canvas>
 <div id="title" class="glass"><h1>🜏 SOV Space — Sovereign World</h1><p>SOV33 is in this window. Ask it to fly anywhere — "take me to Tokyo", "show London". Cinema WebGL on <b>your</b> GPU, free.</p></div>
 <div id="live" class="glass"><span class="d"></span><span id="lt">connecting…</span></div>
+<div id="nav" class="glass" style="top:16px;left:50%;transform:translateX(-50%);padding:5px;display:flex;gap:4px">
+ <button data-f="world" class="nb">🌍 World</button><button data-f="jspace" class="nb">🧠 J-Space</button><button data-f="agents" class="nb">🤝 Agents</button></div>
+<div id="panel" class="glass" style="left:16px;bottom:16px;width:min(360px,90vw);max-height:64vh;overflow:auto;padding:14px 16px;display:none;font-size:13px;line-height:1.5"></div>
+<style>.nb{border:0;background:transparent;color:#c9b98a;font:600 12px system-ui;padding:6px 12px;border-radius:9px;cursor:pointer}.nb.on{background:#c9a84c;color:#1a1410}#panel h2{margin:0 0 6px;font-size:15px;color:#e6c766}#panel h4{margin:10px 0 3px;color:#e6c766;font-size:12.5px}#panel code{background:rgba(201,168,76,.12);padding:1px 5px;border-radius:5px;font-size:11.5px}#panel .hon{color:#c99a6a;font-size:11.5px;font-style:italic}</style>
 <div id="dock" class="glass"><div id="dhead">🐉 <span>Sovereign</span></div><div id="log"></div><div id="bar"><input id="qin" placeholder="tell the sovereign where to go…" autocomplete="off"><button id="go">➤</button></div></div>
 <script type="importmap">{"imports":{"three":"https://unpkg.com/three@0.160.0/build/three.module.js","three/addons/":"https://unpkg.com/three@0.160.0/examples/jsm/"}}</script>
 <script type="module">
@@ -74,6 +78,28 @@ go.onclick=()=>{const v=qin.value.trim();if(v){qin.value='';ask(v);}}; qin.addEv
 setTimeout(()=>say('ai','I am the Sovereign, and this world is mine to fly. Tell me where — "take me to Tokyo".'),600);
 // live HUD
 async function poll(){let a='';try{const e=await(await fetch('/api/emergence')).json();a='emergence <b>'+(e.tick||'—')+'</b>';}catch(_){a='emergence —';}try{const s=await(await fetch('/api/trust/score/MEOK%20Sovereign%23default')).json();a+=' · trust <b>'+s.tier+'</b>';}catch(_){}lt.innerHTML=a;}poll();setInterval(poll,15000);
+// THREE FACES of SOV Space: inward J-Space · outward World · lateral Agents (one space, one seam)
+let SS=null; fetch('/api/sovspace').then(r=>r.json()).then(d=>SS=d).catch(()=>{});
+const panel=document.getElementById('panel');
+async function showFace(f){
+  document.querySelectorAll('.nb').forEach(b=>b.classList.toggle('on',b.dataset.f===f));
+  if(f==='world'){panel.style.display='none';return;}
+  panel.style.display='block'; if(!SS){panel.innerHTML='loading…';return;}
+  if(f==='jspace'){
+    let led='';try{const e=await(await fetch('/api/emergence')).json();led=e.latest?('tick <b>'+e.tick+'</b> · '+e.latest.proposal+' · '+e.latest.votes+(e.latest.ratified?' ✓':' ✗')):'(waking)';}catch(_){led='(waking)';}
+    panel.innerHTML='<h2>🧠 J-Space — SOV33, inward</h2><div>'+SS.faces.jspace.what+'</div>'+
+      '<h4>Instruments (functional correlates)</h4>'+SS.faces.jspace.instruments.map(i=>'• '+i).join('<br>')+
+      '<h4>Emergence (live, self-improving)</h4>'+led+
+      '<p class="hon">'+SS.faces.jspace.honest+'</p>';
+  } else if(f==='agents'){
+    const s=SS.seam.commands.map(c=>'<code>'+c+'</code>').join(' ');
+    panel.innerHTML='<h2>🤝 Agents — lateral, they plug in</h2><div>'+SS.faces.agents.what+'</div>'+
+      '<h4>Connect</h4>• A2A card: <code>/api/agentcard</code><br>• MCP seam: <code>/api/mcp</code><br>• Hatch: <code>/api/hatch</code>'+
+      '<h4>The command seam (every body obeys)</h4>'+s+
+      '<p class="hon">'+SS.seam.note+'</p>';
+  }
+}
+document.querySelectorAll('.nb').forEach(b=>b.onclick=()=>showFace(b.dataset.f)); showFace('world');
 addEventListener('resize',()=>{cam.aspect=innerWidth/innerHeight;cam.updateProjectionMatrix();rndr.setSize(innerWidth,innerHeight);comp.setSize(innerWidth,innerHeight);});
 let started=false;
 (function loop(){requestAnimationFrame(loop);clouds.rotation.y+=.0004;
