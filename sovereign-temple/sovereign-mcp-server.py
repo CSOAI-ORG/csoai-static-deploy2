@@ -6581,16 +6581,17 @@ Reply in 2-4 sentences. Never say "As an AI" or "I'm just a language model". You
         except Exception:
             pass
 
-    # FALLBACK: Groq (free, fast, OpenAI-compatible) — uses GROQ_API_KEY from .env.
-    # Gives the Sovereign a full voice without an Anthropic/OpenAI key. OpenRouter
-    # tried first if a real key is present (not the REPLACE_ placeholder).
+    # SOV33 VERIFIED COMPUTE POOL — the brain-tier seam. Default tier = Groq (free, sub-second,
+    # verified 2026-07-11) → OpenRouter (if real key) → local Ollama (offline sovereign fallback).
+    # Set SOV33_BRAIN_TIER=ollama to prefer on-device/private. Mirrors ~/clawd/_compute/sov33_compute.py.
     openrouter_key = os.environ.get("OPENROUTER_API_KEY", "")
     groq_key = os.environ.get("GROQ_API_KEY", "")
-    _fallbacks = []
-    if openrouter_key and not openrouter_key.startswith("REPLACE"):
-        _fallbacks.append(("https://openrouter.ai/api/v1/chat/completions", openrouter_key, "anthropic/claude-3.5-sonnet", "claude-3.5-sonnet/openrouter"))
-    if groq_key and not groq_key.startswith("REPLACE"):
-        _fallbacks.append(("https://api.groq.com/openai/v1/chat/completions", groq_key, "llama-3.3-70b-versatile", "llama-3.3-70b/groq"))
+    _tier = os.environ.get("SOV33_BRAIN_TIER", "groq")
+    _groq = ("https://api.groq.com/openai/v1/chat/completions", groq_key, "llama-3.3-70b-versatile", "llama-3.3-70b/groq") if (groq_key and not groq_key.startswith("REPLACE")) else None
+    _oro = ("https://openrouter.ai/api/v1/chat/completions", openrouter_key, "anthropic/claude-3.5-sonnet", "claude-3.5-sonnet/openrouter") if (openrouter_key and not openrouter_key.startswith("REPLACE")) else None
+    _local = ("http://localhost:11434/v1/chat/completions", "", "gemma4:e4b", "gemma4/local-ollama")  # always available (keeper)
+    _order = [_local, _groq, _oro] if _tier == "ollama" else [_groq, _oro, _local]
+    _fallbacks = [x for x in _order if x]
     for _url, _key, _model, _label in _fallbacks:
         try:
             async with httpx.AsyncClient(timeout=45.0) as client:
