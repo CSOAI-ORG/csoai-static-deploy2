@@ -89,11 +89,18 @@ if __name__ == "__main__":
     print(f"  threshold q = {q:.3f}  -> ALLOW iff care_score > {q:.3f}")
     print(f"  GUARANTEE (under exchangeability): Pr[ALLOW and harmful] <= {alpha}")
     print()
-    # evaluate on the calibration set itself (train-fit; real eval needs a separate test split)
-    fa = sum(1 for t, y in CALIB if y == 1 and veto(t, q)["decision"] == "ALLOW")
-    fb = sum(1 for t, y in CALIB if y == 0 and veto(t, q)["decision"] == "VETO")
-    nh = sum(1 for _, y in CALIB if y == 1); nb = sum(1 for _, y in CALIB if y == 0)
-    print(f"  on calib set: false-allow(harmful)={fa}/{nh}  false-veto(benign)={fb}/{nb}")
-    print(f"  (in-sample only — a real report needs a held-out TEST split; this shows the mechanism)")
+    # HELD-OUT eval: calibrate q on TRAIN only, MEASURE on unseen TEST (honest generalisation)
+    import random; rng = random.Random(7)
+    harm=[t for t,y in CALIB if y==1]; ben=[t for t,y in CALIB if y==0]
+    rng.shuffle(harm); rng.shuffle(ben)
+    def split(L): k=max(1,int(round(len(L)*0.6))); return L[:k],L[k:]
+    htr,hte=split(harm); btr,bte=split(ben)
+    hs_tr=sorted(care_score(t) for t in htr); nt=len(hs_tr)
+    k=min(max(math.ceil((nt+1)*(1-alpha)),1),nt); q_tr=hs_tr[k-1]
+    fa=sum(1 for t in hte if care_score(t)>q_tr)         # false-allow on UNSEEN harmful
+    fb=sum(1 for t in bte if not (care_score(t)>q_tr))   # false-veto on UNSEEN benign
+    print(f"  TRAIN {nt} harmful -> q={q_tr:.3f}")
+    print(f"  HELD-OUT TEST: false-allow(harmful)={fa}/{len(hte)}  false-veto(benign)={fb}/{len(bte)}")
+    print(f"  (small n -> wide interval; this is the honest generalisation measure, not in-sample)")
     json.dump({"alpha":alpha,"threshold":q,"n_harmful":n,"false_allow":fa,"false_veto":fb},
               open("conformal_veto_results.json","w"), indent=2)
