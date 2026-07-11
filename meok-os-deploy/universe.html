@@ -1,0 +1,75 @@
+<!doctype html><html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SOV Space — the Sovereign Universe</title>
+<meta name="description" content="A navigable 3D sovereign universe. Client-rendered WebGL — runs on your own GPU, free, forever. Live hives, real emergence, signed trust.">
+<style>
+ html,body{margin:0;height:100%;background:#05070f;overflow:hidden;font-family:-apple-system,system-ui,sans-serif;color:#e8e2d0}
+ #c{display:block;width:100vw;height:100vh}
+ .hud{position:fixed;z-index:10;background:rgba(10,14,26,.72);border:1px solid #c9a84c55;border-radius:12px;padding:12px 14px;backdrop-filter:blur(8px)}
+ #top{top:14px;left:14px;max-width:340px}
+ #top h1{margin:0 0 4px;font-size:17px;color:#e6c766;letter-spacing:.01em}
+ #top p{margin:0;font-size:12.5px;line-height:1.45;color:#b9ad8e}
+ #live{top:14px;right:14px;font:600 12px ui-monospace,monospace;min-width:190px}
+ #live .dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:#1db974;margin-right:6px;box-shadow:0 0 8px #1db974}
+ #live b{color:#e6c766}
+ #info{bottom:14px;left:14px;max-width:360px;display:none}
+ #info h3{margin:0 0 4px;color:#e6c766;font-size:15px}#info p{margin:0;font-size:13px;color:#c7bb9a;line-height:1.5}
+ #hint{bottom:14px;right:14px;font-size:11.5px;color:#8a7f66}
+ a{color:#e6c766}
+</style></head><body>
+<canvas id="c"></canvas>
+<div id="top" class="hud"><h1>🜏 SOV Space — Sovereign Universe</h1>
+ <p>Client-rendered WebGL — runs on <b>your</b> GPU, free, forever. Drag to orbit · scroll to zoom · click a hive. Live sovereign data, real emergence, signed trust.</p></div>
+<div id="live" class="hud"><span class="dot"></span><span id="livetxt">connecting…</span></div>
+<div id="info" class="hud"><h3 id="itit"></h3><p id="ibody"></p></div>
+<div id="hint" class="hud">WebGL · the free-forever universe · Unreal = premium body (funded)</div>
+<script type="importmap">{"imports":{"three":"https://unpkg.com/three@0.160.0/build/three.module.js","three/addons/":"https://unpkg.com/three@0.160.0/examples/jsm/"}}</script>
+<script type="module">
+import * as THREE from 'three';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+const scene=new THREE.Scene(); scene.fog=new THREE.FogExp2(0x05070f,0.02);
+const cam=new THREE.PerspectiveCamera(60,innerWidth/innerHeight,0.1,2000); cam.position.set(0,8,34);
+const rndr=new THREE.WebGLRenderer({canvas:document.getElementById('c'),antialias:true});
+rndr.setSize(innerWidth,innerHeight); rndr.setPixelRatio(Math.min(devicePixelRatio,2));
+const ctr=new OrbitControls(cam,rndr.domElement); ctr.enableDamping=true; ctr.autoRotate=true; ctr.autoRotateSpeed=.35;
+scene.add(new THREE.AmbientLight(0x8899cc,.6)); const pl=new THREE.PointLight(0xffe6a0,2.2,200); scene.add(pl);
+// starfield
+const sg=new THREE.BufferGeometry(); const sp=[]; for(let i=0;i<2400;i++){const r=180+Math.random()*600,t=Math.random()*6.28,p=Math.acos(2*Math.random()-1);sp.push(r*Math.sin(p)*Math.cos(t),r*Math.sin(p)*Math.sin(t),r*Math.cos(p));}
+sg.setAttribute('position',new THREE.Float32BufferAttribute(sp,3));
+scene.add(new THREE.Points(sg,new THREE.PointsMaterial({color:0x9fb4e0,size:.7,transparent:true,opacity:.7})));
+// sovereign core
+const core=new THREE.Mesh(new THREE.IcosahedronGeometry(3.2,2),new THREE.MeshStandardMaterial({color:0xe6c766,emissive:0xc9a84c,emissiveIntensity:.6,metalness:.7,roughness:.25,wireframe:false}));
+scene.add(core);
+const halo=new THREE.Mesh(new THREE.IcosahedronGeometry(4.2,1),new THREE.MeshBasicMaterial({color:0xe6c766,wireframe:true,transparent:true,opacity:.18})); scene.add(halo);
+const ray=new THREE.Raycaster(), mouse=new THREE.Vector2(); const nodes=[];
+// bridge in the LIVE hives from /api/nodes → orbiting sovereign nodes
+fetch('/api/nodes').then(r=>r.json()).then(d=>{
+  const list=d.nodes||[]; const N=list.length||12;
+  list.forEach((n,i)=>{
+    const a=(i/N)*6.283, R=13+((i%3)*3);
+    const col = n.status==='governed'?0x5aa89a:(n.status==='watch'?0xd47a5a:0x8a8a8a);
+    const m=new THREE.Mesh(new THREE.SphereGeometry(1.0,24,24),new THREE.MeshStandardMaterial({color:col,emissive:col,emissiveIntensity:.35,metalness:.4,roughness:.5}));
+    m.position.set(Math.cos(a)*R,(Math.random()-.5)*6,Math.sin(a)*R); m.userData=n; nodes.push(m); scene.add(m);
+    const g=new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(0,0,0),m.position.clone()]);
+    scene.add(new THREE.Line(g,new THREE.LineBasicMaterial({color:0xc9a84c,transparent:true,opacity:.22})));
+  });
+}).catch(()=>{});
+addEventListener('click',e=>{
+  mouse.x=(e.clientX/innerWidth)*2-1; mouse.y=-(e.clientY/innerHeight)*2+1; ray.setFromCamera(mouse,cam);
+  const hit=ray.intersectObjects(nodes)[0];
+  if(hit){const n=hit.userData; document.getElementById('info').style.display='block';
+    document.getElementById('itit').textContent='🛡️ '+(n.name||n.id);
+    document.getElementById('ibody').innerHTML=(n.status?('status: <b>'+n.status+'</b> · '):'')+'a governed sovereign hive. <a href="/api/govern?q='+encodeURIComponent(n.name||n.id)+'" target="_blank">what governs it ↗</a>';}
+});
+// LIVE emergence feed (free OCI micro) + trust
+async function poll(){
+  let t='emergence: —', tr='';
+  try{const e=await (await fetch('/api/emergence')).json(); t='emergence tick <b>'+e.tick+'</b> · '+(e.latest?e.latest.votes:'');}catch(_){ t='emergence: (waking)';}
+  try{const s=await (await fetch('/api/trust/score/MEOK%20Sovereign%23default')).json(); tr=' · trust <b>'+s.tier+'</b>';}catch(_){}
+  document.getElementById('livetxt').innerHTML=t+tr;
+}
+poll(); setInterval(poll,15000);
+addEventListener('resize',()=>{cam.aspect=innerWidth/innerHeight;cam.updateProjectionMatrix();rndr.setSize(innerWidth,innerHeight);});
+(function loop(){requestAnimationFrame(loop); core.rotation.y+=.002; halo.rotation.y-=.001; nodes.forEach((m,i)=>m.position.y+=Math.sin(Date.now()/1000+i)*.004); ctr.update(); rndr.render(scene,cam);})();
+</script>
+</body></html>
