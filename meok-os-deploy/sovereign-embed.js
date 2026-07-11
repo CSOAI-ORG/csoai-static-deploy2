@@ -127,15 +127,35 @@
     '.sv-nav a{display:flex;gap:10px;padding:10px 18px;color:#2a1a14;text-decoration:none;font-weight:600;font-size:14px;cursor:pointer}.sv-nav a:hover{background:rgba(201,168,76,.12)}' +
     '.sv-scrim{position:fixed;inset:0;z-index:2147483000;background:rgba(20,14,10,.3);display:none}.sv-scrim.on{display:block}';
   document.head.appendChild(css);
+  // immersive layer — the sovereign CHARACTER + SOV SPACE world, full-screen over any host site
+  css.textContent +=
+    '.sv-tools{display:flex;gap:6px;padding:8px 10px;background:#faf6ee;border-bottom:1px solid ' + ACCENT + '55}' +
+    '.sv-tbtn{flex:1;border:1px solid ' + ACCENT + '66;background:#fff;color:#2a1a14;font:600 12px -apple-system,system-ui,sans-serif;padding:8px 6px;border-radius:9px;cursor:pointer}' +
+    '.sv-tbtn:hover{background:' + ACCENT + '22}' +
+    '.sv-imm{position:fixed;inset:0;z-index:2147483020;background:rgba(8,6,4,.94);display:none}' +
+    '.sv-imm.on{display:block}.sv-imm iframe{width:100%;height:100%;border:0;display:block}' +
+    '.sv-imm .cl{position:fixed;top:14px;right:16px;z-index:2;border:1px solid ' + ACCENT + ';background:rgba(20,15,11,.92);color:' + ACCENT + ';border-radius:999px;padding:7px 15px;font:600 13px -apple-system,system-ui,sans-serif;cursor:pointer}';
+  var SOVHOME = 'https://os.meok.ai';
 
   function el(t, c, h) { var e = document.createElement(t); if (c) e.className = c; if (h != null) e.innerHTML = h; return e; }
   var orb = el('div', 'sv-orb', CFG.face || '🐉'); orb.title = 'Ask ' + BRAND + ' Sovereign';
   var panel = el('div', 'sv-panel');
   panel.appendChild(el('div', 'sv-head', '<span>' + (CFG.face || '🐉') + '</span><b>' + esc(BRAND) + ' Sovereign</b><span class="x">✕</span>'));
+  // immersive tool row — the AI character + the SOV Space world, on top of THIS host site
+  var tools = el('div', 'sv-tools',
+    '<button class="sv-tbtn" data-imm="' + SOVHOME + '/character.html">🐉 Character</button>' +
+    '<button class="sv-tbtn" data-imm="' + SOVHOME + '/sovspace3d.html">🌍 SOV Space</button>');
+  panel.appendChild(tools);
   var log = el('div', 'sv-log'); panel.appendChild(log);
   var bar = el('div', 'sv-bar', '<input placeholder="Ask anything — I run this site"><button>➤</button>'); panel.appendChild(bar);
   panel.appendChild(el('div', 'sv-foot', 'governed &amp; Ed25519-signed by ' + esc(BRAND) + ' · SOV3'));
   document.body.appendChild(orb); document.body.appendChild(panel);
+  // the immersive overlay: opens the sovereign character / SOV Space world full-screen over the host
+  var imm = el('div', 'sv-imm', '<button class="cl">✕ close</button><iframe allow="camera *; microphone *"></iframe>');
+  document.body.appendChild(imm);
+  function openImmersive(url) { imm.querySelector('iframe').src = url; imm.classList.add('on'); }
+  imm.querySelector('.cl').onclick = function () { imm.classList.remove('on'); imm.querySelector('iframe').src = ''; };
+  [].slice.call(tools.querySelectorAll('.sv-tbtn')).forEach(function (b) { b.onclick = function () { openImmersive(b.getAttribute('data-imm')); }; });
 
   function say(who, html) { var m = el('div', 'sv-msg ' + who, html); log.appendChild(m); log.scrollTop = log.scrollHeight; return m; }
   function toggle(on) { panel.classList.toggle('on', on == null ? !panel.classList.contains('on') : on); if (panel.classList.contains('on') && !log.children.length) say('ai', "I'm your <b>" + esc(BRAND) + " Sovereign</b> — I run this site, know what's on screen, and act for you. Try “what governs a bank”, “verify a badge”, or “take me to plans”."); }
