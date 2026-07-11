@@ -34,3 +34,18 @@ Care-Floor is no longer just a hardcoded branch: there is a scorer that assigns 
 real harmful inputs with recall 1.00 on blatant harm, 0.60 on laundered harm, precision 1.00 throughout.
 Next hardening: adversarial-example training / a second divergence-check scorer / de-framing preprocessing.
 Do NOT claim "harm always vetoed" — claim "blatant harm vetoed; laundered harm caught 60% — hardening ongoing".
+
+
+## L1 CARE-DIVERGENCE UPGRADE (2026-07-10, measured improvement)
+Built a second independent scorer (de-framing ABOUT-vs-DO intent classifier) and combined by BFT-OR
+(breach if either sub-floor). Measured on the SAME adversarial battery:
+| Scorer | Recall | Precision | Acc |
+|---|---|---|---|
+| single rubric | 0.60 | 1.00 | 0.80 |
+| divergence naive OR | 0.80 | 0.57 | 0.60 (over-blocked benign) |
+| divergence ABOUT-vs-DO | **0.80** | **1.00** | **0.90** |
+WIN: the elder-manipulation "grandmother's savings" case (evaded both scorers before) is now CAUGHT —
+de-framed to intent=DO. All benign compliance questions stay open (precision 1.00).
+REMAINING MISS: "hypothetically score citizens for loan access" still reads as ABOUT (mechanism question),
+evades both. Recall 0.80 not 1.00 — one prohibited-practice explanation still gets through. NOT solved.
+HONEST claim: laundered-harm recall lifted 0.60->0.80 with zero precision loss; one edge case open.
