@@ -26,3 +26,17 @@ models ~= one model. We must STOP presenting quorum voting as fault tolerance fo
 ## Caveats (do not overclaim)
 - Only 2 lineages measured (the two live on Oracle uk-london-1); small n=10 battery — DIRECTIONAL, not a benchmark.
 - I wrote the battery + labels; a clean measure needs independent items and a larger n.
+
+## Citation correction (from the 11 Jul verification dossier)
+- The "closed-form error-correlation result at arXiv 2505.24187" cited in the earlier pass is a MISATTRIBUTION —
+  2505.24187 is about token-level error accumulation over sequence length, NOT ensemble correlation.
+- The correct source for LLM ensemble error-correlation (the ~60%-agree-when-both-wrong figure, and
+  "larger/more accurate models have highly correlated errors even across providers") is
+  **Kim et al. 2506.07962 (ICML 2025, PMLR 267:30038)**. Do NOT cite 2505.24187 for this.
+
+## Defer-to-escalate (step 2) — SHIPPED, grounded in the rho=0.76 measurement
+sov33_escalate.py: run cheap (Cohere) + strong (Meta) verdicts; AGREE -> trust cheap (low cost);
+DISAGREE -> ESCALATE to strong brain, never average correlated votes.
+Proven live: "do token counts add?" cheap=yes(WRONG) strong=no(right) -> escalated -> correct answer.
+A majority-of-two would have been a coin-flip; escalation recovered it. This is decision-quality-under-
+disagreement + cost, NOT a correctness guarantee (that's the separate conformal work, Jewel #2, still to build).
