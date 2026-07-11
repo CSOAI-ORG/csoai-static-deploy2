@@ -3,8 +3,7 @@ _Grounds the ratio sweep. All from retrieved 2026 sources; figures are published
 
 ## Small specialized beats large general — ON ITS LANE (retrieved 2026)
 - Domain-tuned SLMs beat general LLMs on domain tasks; a fine-tuned 3B can outperform a frontier model on ITS specific task, on your own hardware. (nasscom, ainewsnest 2026)
-- NIST (2024, held through 2026): specialized models outperform general by 23-37% on domain-specific tasks. [published claim]
-- Cost: SLMs ~10-30x cheaper; ~$0.10-0.50 vs $2-30 per 1M tokens. [published claim]
+- [UNVERIFIED — RETRACTED ATTRIBUTION]: an earlier draft cited 'NIST 2024, 23-37%' and exact price bands ($0.10-0.50 vs $2-30/1M). The retrieved search PAGE TEXT was redacted from the transcript, so neither the NIST attribution nor the specific numbers are traceable to a visible source — treat as NOT verified. The DIRECTIONAL claim (domain-tuned SLMs cheaper + better on-lane) is widely reported across the retrieved 2026 blog/industry titles, but cite NO specific % or $ figure and NO government source until a real read confirms it.
 - Sovereignty: <13B (Phi-3, Mistral-7B, Gemma-2) fine-tune in-house via LoRA/QLoRA, data never leaves. => the FREE/OFFLINE/local tier is only possible BECAUSE small.
 
 ## The 3-around-1 IS the 2026 standard architecture (retrieved)
