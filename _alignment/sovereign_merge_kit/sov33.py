@@ -746,6 +746,94 @@ def capability_cheatsheet(query: str = None, capture: tuple = None):
         return {'capability': 'cheatsheet', 'error': str(e)[:200]}
 
 
+def capability_correlation(mode: str = 'report', votes: str = None, gt: bool = True):
+    """Step 1: error correlation meter (Kish n_eff + Kim A_wrong_ij)."""
+    try:
+        from sov33_correlation_meter import log_vote, correlation_report, run_demo
+        if mode == 'demo':
+            run_demo()
+            return {'capability': 'correlation', 'mode': 'demo', 'sovereign_bound': True}
+        if votes:
+            log_vote(mode, json.loads(votes), gt)  # mode is the prompt
+            return {'capability': 'correlation', 'mode': 'logged'}
+        return {
+            'capability': 'correlation',
+            'mode': 'report',
+            'data': correlation_report(),
+        }
+    except Exception as e:
+        return {'capability': 'correlation', 'error': str(e)[:200]}
+
+
+def capability_defer():
+    """Step 2: defer-to-escalate (Trust-or-Escalate / ControlArena dtr_protocol)."""
+    try:
+        from sov33_defer_to_escalate import defer_battery, defer_to_escalate, compare_protocols
+        return {
+            'capability': 'defer',
+            'mode': 'battery',
+            'battery': defer_battery(),
+            'principle': 'Trust-or-Escalate (Jung et al. 2025) + ControlArena dtr_protocol',
+        }
+    except Exception as e:
+        return {'capability': 'defer', 'error': str(e)[:200]}
+
+
+def capability_conformal_mapie():
+    """Step 3: MAPIE-style split-conformal care-veto with calibration + test."""
+    try:
+        from sov33_conformal_mapie import run_full_pipeline
+        return {
+            'capability': 'conformal-mapie',
+            'pipeline': run_full_pipeline(),
+            'principle': 'split-conformal (Yadkori 2024) + MAPIE BSD-3',
+        }
+    except Exception as e:
+        return {'capability': 'conformal-mapie', 'error': str(e)[:200]}
+
+
+def capability_sondera(rule: str = None):
+    """Step 4: Sondera-Cedar policy-as-code (NL->Cedar compile + pre-execution gate)."""
+    try:
+        from sov33_sondera_cedar import compile_nl_to_cedar, sondera_pre_execution_gate, CEDAR_TEMPLATES
+        if rule:
+            return {
+                'capability': 'sondera',
+                'mode': 'compile',
+                'result': compile_nl_to_cedar(rule),
+            }
+        # Default: show all templates + a sample gate
+        return {
+            'capability': 'sondera',
+            'mode': 'overview',
+            'n_templates': len(CEDAR_TEMPLATES),
+            'template_names': list(CEDAR_TEMPLATES.keys()),
+            'principle': 'Sondera harness (arXiv 2606.26649): NL -> Cedar + pre-execution gate',
+            'care_floor': 0.95,
+            'sovereign_bound': True,
+        }
+    except Exception as e:
+        return {'capability': 'sondera', 'error': str(e)[:200]}
+
+
+def capability_agentdog():
+    """Step 5: AgentDoG-8B decorrelated L4 checker (m4 self-host)."""
+    return {
+        'capability': 'agentdog',
+        'mode': 'spec',
+        'model': 'AI45Research/agentdog1.5',
+        'sizes': '0.8B / 2B / 4B / 8B',
+        'self_host_target': 'm4 (Apple Silicon, 16GB RAM)',
+        'training_set_size': '~1k samples with influence-function purification',
+        'paper_claim': 'parity with GPT-5.4-class on safety moderation',
+        'reproduction_status': 'spec only (not downloaded; needs ~16GB)',
+        'role': 'decorrelated L4 checker (different lineage from Oracle 70B)',
+        'principle': 'adds a third lineage to break correlation (per arXiv 2602.08003)',
+        'sovereign_bound': True,
+        'care_floor': 0.95,
+    }
+
+
 # ═══════════════════════════════════════════════════════════════
 # SOVEREIGN CLASS
 # ═══════════════════════════════════════════════════════════════
