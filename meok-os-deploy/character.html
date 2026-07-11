@@ -354,6 +354,8 @@ showHatch();
 // expose skin switches so the dock / UI / host can drive the body
 window.showHatch=showHatch; window.showCreature=showCreature; window.showEmergence=showEmergence;
 window.showVRM=showVRM; window.loadGLB=loadGLB;
+window.scene=scene; window.camera=camera; window.controls=controls; window.THREE=THREE;
+window.getHatch=()=>hatchObj;
 
 // ── WIRE THE MCP CARD INTO THE BODY ───────────────────────────────────────────
 // This 3D body is a rendering of the signed Hatch MCP card (the mind). Fetch the
