@@ -7,13 +7,15 @@
 - PDCA 5-general BFT, DRUM heartbeat, Intuition cross-check: all run.
 - SOV33 is a real OWEM: open-weight base wrapped in a signed, governed substrate. Feasibility is DONE.
 
-## HIGHEST-POTENTIAL CONFIG (measured this session)
-Governance gate is config-INDEPENDENT: 4/4 correct in every config (runs before brain).
-Reasoning path ranked (conf/latency, live brains):
-- **cascade (WINNER)** — cheap brain first, escalate to 70B on low-confidence. 1.91s, conf 1.00. Best throughput/quality.
-- solo-strong 1.98s / solo-fast 2.05s — close behind.
-- bft-3vote 6.40s — 3x slower, no quality gain here. RESERVE BFT for high-stakes/fault-tolerance, not every call.
-DECISION: ship cascade as default reasoning path; BFT on high-stakes; governance gate wraps all identically.
+## CONFIG TEST (measured this session) — CAVEATED, not a validated quality ranking
+CORRECTION (auditor-flagged, honest): the config test measured LATENCY and TOKEN COUNT reliably, but:
+- The "governance 4/4" figure was ANSWER-KEYED — governed_decision()'s harm check matched verbatim
+  substrings of its own test cases. It does NOT prove the gate generalises. NOT a validated safety finding.
+- "confidence"/"conf" was a CHEAP PROXY (response length minus hedge-word count), NOT a correctness judge.
+  So the "quality" ranking is really a verbosity/latency ranking. Do NOT rely on it as answer-quality.
+WHAT IS SOUND: latency/token profile only — cascade ~1.91s, solo-strong ~1.98s, bft-3vote ~6.40s (3x slower).
+OPEN: a REAL config decision needs a correctness judge (held-out governance tasks graded for right/wrong),
+not a length proxy. Until then, "ship cascade" is a HYPOTHESIS on latency grounds, NOT a validated decision.
 
 ## FULL GATE CHAIN (wired + 4/4)
 HORUS (intrusion) -> DORADO (DEFENSE hard-stops) -> care (gradient) -> guardian (embodied) -> SIGIL.
