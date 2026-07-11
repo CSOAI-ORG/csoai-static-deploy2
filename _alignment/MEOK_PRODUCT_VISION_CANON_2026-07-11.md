@@ -60,14 +60,14 @@ it's GPU-cost and not seamless. So: lead open-source/MCP/Cesium; Unreal is a pai
 ## Honest status board
 | | Status |
 |---|---|
-| Glass design language on character.html | ✅ LIVE |
-| Premium material tiers (Pearl free · Silver/Gold/Platinum/Marble Pro) | ✅ LIVE (payment gate NOT wired) |
-| Emergence arc (egg → hatchling → sovereign) | ✅ orb+companion; ▢ pearlescent hatchling hero |
+| Glass design language on **every** surface (character · index/AI-OS · sovspace3d · embed) | ✅ **LIVE** (rolled out 2026-07-11 — "each page like this") |
+| Premium material tiers (Pearl free · Silver/Gold/Platinum/Marble Pro) | ✅ LIVE — now as **glow-tints on the light-being** (payment gate NOT wired) |
+| Sovereign = **luminous being of light** (brand-bible Stage 3, never the warrior mesh) | ✅ **LIVE** |
 | MCP cards + Cesium + open-source (not Unreal) | ✅ the default; Unreal = optional premium |
-| "Talk → AI builds → cards across screen → control PC/OS" | ✅ chat+MCP+windowing+overlay; ▢ card-spawn orchestration + native control (runner) |
+| "Talk → AI spawns MCP cards across screen" | ✅ **LIVE** — `orchestrate()` fans signed glass cards (verify/charters/builder/space/tools); ▢ native PC/OS control (owner-run runner) |
 | Free = open-source characters | ✅ LIVE |
 | Disney/IP CCO + PAYG cartoons | ⚠️ OWNER-GATED (deals + Stripe); architecture ready (x402 meter) |
-| DEFONEOS/CSOAI ↔ character (one signing spine) | ✅ same spine; ▢ surface charters as live cards |
+| DEFONEOS/CSOAI ↔ character (one signing spine) | ✅ same spine; ✅ **charters now LIVE MCP cards** w/ verify → same /api/verify |
 
 **The one line:** MEOK is the sovereign, glass-beautiful, portable *self* — free open-source characters
 for everyone, premium material tiers + licensed IP for Pro, riding MCP/Cesium/WebGL into any platform,
