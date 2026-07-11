@@ -9,12 +9,18 @@ MEOK-SOV3 2026-07-10. Honest wiring:
 Every layer's contribution is SIGIL-logged so the 12-layer claim is literally true for the
 layers that legitimately touch a request.
 """
-import sys, time, importlib.util; sys.path.insert(0,'.')
+import sys, time, importlib.util, os; sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from sov33_owem_v3 import SOV33OWEM
 
-def _load(mod,path):
-    spec=importlib.util.spec_from_file_location(mod,path)
-    m=importlib.util.module_from_spec(spec); spec.loader.exec_module(m); return m
+def _load(mod, path):
+    # Resolve relative paths against this script's directory
+    if not os.path.isabs(path):
+        path = os.path.join(os.path.dirname(os.path.abspath(__file__)), path)
+    spec = importlib.util.spec_from_file_location(mod, path)
+    sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+    m = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(m)
+    return m
 
 class WiredOWEM:
     """OWEM with L0 DRUM + 7D Intuition wired into the live request path."""

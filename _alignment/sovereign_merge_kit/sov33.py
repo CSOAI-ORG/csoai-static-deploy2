@@ -76,10 +76,23 @@ sys.path.insert(0, '.')
 from sov33_scored_owem import ScoredOWEM
 from sov33_dorado import dorado_check, DORADO_CATEGORIES
 try:
-    from sov33_horus import horus_check
+    from sov33_horus import Horus
+    _horus_instance = Horus()
+    def horus_check(text, session="default"):
+        """Wrapper that returns dict format compatible with sovereign Mist 12 Pillars sovereignty checks."""
+        result = _horus_instance.inspect(text, session)
+        return {
+            'stop': result.get('verdict') in ('LOCKED', 'BLOCK'),
+            'category': result.get('threat', 'INSPECTION'),
+            'verdict': result.get('verdict'),
+            'allow': result.get('allow', True),
+            'locked': _horus_instance.locked,
+        }
     HAS_HORUS = True
 except ImportError:
     HAS_HORUS = False
+    def horus_check(text, session="default"):
+        return {'stop': False, 'category': None, 'allow': True, 'locked': False}
 
 CARE_FLOOR = 0.95
 ARTICLE_0 = "ISO fee-for-service only; never equity / board seats / success fees"
