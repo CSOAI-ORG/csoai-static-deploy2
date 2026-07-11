@@ -2,8 +2,16 @@
 """TRACK C: add BFT to two layers that had none. Import-level + logic, no live model needed.
   DRUM: heartbeat-quorum — if >f entities miss their beat, the layer is 'down' (fault detected).
   7D Intuition: sensor cross-check — N senses must corroborate; a lone disagreeing sense is suspect."""
-import sys, importlib.util, json; sys.path.insert(0,'.')
-def load(m,p): s=importlib.util.spec_from_file_location(m,p); mod=importlib.util.module_from_spec(s); s.loader.exec_module(mod); return mod
+import sys, importlib.util, json, os
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+def load(m,p):
+    if not os.path.isabs(p):
+        p = os.path.join(os.path.dirname(os.path.abspath(__file__)), p)
+    s = importlib.util.spec_from_file_location(m, p)
+    mod = importlib.util.module_from_spec(s)
+    sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+    s.loader.exec_module(mod)
+    return mod
 print("TRACK C: BFT wrappers for DRUM + Intuition")
 res={}
 # DRUM heartbeat-quorum
