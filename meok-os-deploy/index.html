@@ -264,6 +264,16 @@ body.touring #tourhud{animation:sovMsgIn .5s ease}
 .wcard b{font-size:16px;color:var(--ink)}
 .wcard small{font-size:12px;color:var(--dim)}
 .wskip{margin-top:8px;font-size:13px;color:var(--dim);cursor:pointer;text-decoration:underline}
+/* consent & awareness onboarding rows (opt-in, off by default, signed on-device) */
+.crow{display:flex;align-items:center;gap:12px;width:min(460px,92vw);padding:12px 14px;border:1px solid var(--line);border-radius:14px;background:rgba(255,255,255,.72);cursor:pointer;transition:.15s;text-align:left}
+.crow:hover{border-color:var(--gold)}
+.crow.on{border-color:var(--gold);background:rgba(189,157,84,.12)}
+.crow .ce{font-size:26px;line-height:1}
+.crow .ct{flex:1}.crow .ct b{font-size:14.5px;color:var(--ink)}.crow .ct small{display:block;font-size:12px;color:var(--dim);line-height:1.36;margin-top:2px}
+.csw{width:44px;height:26px;border-radius:999px;background:#d9d2c4;position:relative;flex:0 0 auto;transition:.2s}
+.crow.on .csw{background:var(--gold,#c9a84c)}
+.csw::after{content:"";position:absolute;top:3px;left:3px;width:20px;height:20px;border-radius:50%;background:#fff;transition:.2s;box-shadow:0 1px 3px rgba(0,0,0,.25)}
+.crow.on .csw::after{left:21px}
 .sovfab{position:absolute;bottom:50px;right:16px;z-index:29;width:54px;height:54px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:26px;background:radial-gradient(circle at 50% 40%,#fff,#efe9de);box-shadow:0 8px 22px rgba(120,100,60,.26);border:2px solid var(--gold2)}
 .frame.sovon .sovfab{display:none}
 /* brain setup chips */
@@ -1279,7 +1289,46 @@ function wStep1(){ wRender('<h1>What\'s this for?</h1><p>Same OS — it reshapes
 function wPick(mode){ setMode(mode); welcomeDone(); startTour(mode); }
 function wPlay(){ setMode('meok'); welcomeDone(); startTour('meok'); }
 function wStep2(){ const cards=(typeof ARCHE!=='undefined'?ARCHE:[]).map(function(a){return '<div class="wcard" onclick="wChoose('+a.h+',\''+a.n+'\')"><span class="we">'+a.e+'</span><b>'+a.n+'</b></div>';}).join(''); wRender('<h1>Pick your sovereign</h1><p>This sets the colour and spirit of your world. You can change it anytime.</p><div class="wcards">'+cards+'</div><div class="wskip" onclick="welcomeDone()">Skip</div>'); }
-function wChoose(h,n){ if(typeof setSignature==='function') setSignature(h,n); wStep3(n); }
+function wChoose(h,n){ if(typeof setSignature==='function') setSignature(h,n); wConsent(n); }
+// ── CONSENT & AWARENESS onboarding (MEOK Presence/Awareness spec, in the OS): the Sovereign asks to
+//    learn + sense, each opt-in OFF by default, signed on-device (Ed25519), refusable. Wires the OS's
+//    real awareStart() (presence), Guardian (wifi mesh · SOV33) + on-device memory (learn). ──
+function meokConsent(){ try{ return JSON.parse(localStorage.getItem('meok_consent'))||{}; }catch(e){ return {}; } }
+function meokConsentSave(c){ try{ localStorage.setItem('meok_consent',JSON.stringify(c)); }catch(e){} }
+function meokConsentSig(){ try{ return JSON.parse(localStorage.getItem('meok_consent_sig'))||{}; }catch(e){ return {}; } }
+async function signConsent(key,on){ let sig='device';
+  try{ const r=await fetch('/api/sign',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({payload:{consent:key,granted:on,subject:'MEOK Sovereign consent',ts:Date.now()}})}); const d=await r.json(); if(d&&d.signature) sig=d.signature; }catch(e){}
+  const rec=meokConsentSig(); rec[key]={on:on,sig:String(sig).slice(0,24),ts:Date.now()}; try{ localStorage.setItem('meok_consent_sig',JSON.stringify(rec)); }catch(e){} }
+const CONSENTS=[
+ {k:'learn',    e:'🧠', t:'Learn about me',        d:'Remember what matters to you — your day, your people, your preferences. Held on your device.'},
+ {k:'files',    e:'📁', t:'My files & photos',     d:'Help with documents & photos you choose to open. Nothing is uploaded — you pick each one.'},
+ {k:'wifi',     e:'📶', t:'WiFi & home security',  d:'Watch your home network for intruders & rogue devices — the MEOK mesh, with SOV33. On-device.'},
+ {k:'presence', e:'👁', t:'Presence',              d:"Know it's you vs a stranger and react to a wave. A stranger locks your private surfaces. Camera stays on your device."}
+];
+function wConsent(n){ const c=meokConsent();
+  wRender('<h1>May I learn about you?</h1><p>Everything I do stays <b>on your device</b>, signed with your own key. You choose what’s on — and you can turn any of it off anytime. <b>Off by default.</b></p>'
+   +'<div style="display:flex;flex-direction:column;gap:10px;margin-top:14px">'
+   + CONSENTS.map(function(x){ return '<div class="crow'+(c[x.k]?' on':'')+'" id="crow-'+x.k+'" onclick="consentToggle(\''+x.k+'\')"><span class="ce">'+x.e+'</span><span class="ct"><b>'+x.t+'</b><small>'+x.d+'</small></span><span class="csw"></span></div>'; }).join('')
+   +'</div>'
+   +'<div class="wcards" style="margin-top:16px"><div class="wcard" style="width:auto;padding:16px 30px" onclick="wConsentDone(\''+(n||'')+'\')"><span class="we">✓</span><b>Yes — let’s start</b><small>learn about me</small></div></div>'
+   +'<div class="wskip" onclick="wConsentDone(\''+(n||'')+'\')">Not now — keep everything off</div>'
+   +'<p style="font-size:11px;color:var(--dim);margin-top:10px;max-width:460px">Each choice is <b>signed on your device</b> (Ed25519) and refusable. Guardian locks your private surfaces the moment a stranger appears — privacy by default.</p>'); }
+async function consentToggle(key){ const c=meokConsent(); const on=!c[key]; c[key]=on; meokConsentSave(c);
+  const row=document.getElementById('crow-'+key); if(row) row.classList.toggle('on',on);
+  signConsent(key,on);
+  try{ if(key==='presence'){ if(on){ if(typeof awareStart==='function') awareStart(); } else if(typeof awareStop==='function') awareStop(); } }catch(e){}
+}
+function consentSummary(keys){ const m={learn:'learn what matters to you',files:'help with the files you choose',wifi:'keep an eye on your home network',presence:'know when it’s you'}; const p=keys.map(function(k){return m[k];}).filter(Boolean); return p.length>1?(p.slice(0,-1).join(', ')+' and '+p.slice(-1)):(p[0]||'be here for you'); }
+function wConsentDone(n){ const c=meokConsent(); const on=Object.keys(c).filter(function(k){return c[k];});
+  try{ localStorage.setItem('meok_consent_done','1'); }catch(e){}
+  if(on.length){ try{ sovSay('Thank you — I’ll '+consentSummary(on)+'. It’s all <b>signed on your device</b> and yours to change anytime (say <b>“what can you see about me”</b>).'); }catch(e){} }
+  wStep3(n||localStorage.getItem('meok_archetype')||'Sovereign'); }
+// review + revoke consents anytime (Sovereign chat) — "what can you see about me"
+function sovConsentReview(){ const c=meokConsent(), sig=meokConsentSig();
+  const rows=CONSENTS.map(function(x){ const on=!!c[x.k]; const s=sig[x.k];
+    return '• '+x.e+' <b>'+x.t+'</b> — '+(on?'<span style="color:#2fae7a">on</span>':'<span style="color:var(--dim)">off</span>')+(on&&s?(' <span style="color:var(--dim)">· signed '+esc(String(s.sig).slice(0,10))+'…</span>'):'')+' &nbsp;<a onclick="sovConsentFlip(\''+x.k+'\')" style="color:var(--gold,#c9a84c);cursor:pointer">'+(on?'turn off':'turn on')+'</a>'; }).join('<br>');
+  sovSay('<b>What I can see about you</b> — all on your device, signed, yours to change:<br>'+rows+'<br><span style="color:var(--dim);font-size:12px">Nothing leaves your device. A stranger at the camera automatically locks your private surfaces.</span>'); }
+async function sovConsentFlip(key){ await consentToggle(key); sovConsentReview(); }
 function wStep3(n){ wRender('<h1>You\'re ready ✨</h1><p>Your sovereign is set as <b>'+n+'</b>. I\'ll remember you. Tap Enter to begin — and just talk to me anytime on the right.</p><div class="wcards"><div class="wcard" onclick="welcomeDone()"><span class="we">🚀</span><b>Enter</b></div><div class="wcard" onclick="welcomeDone();openApp(\'setup\')"><span class="we">⚙️</span><b>Advanced</b><small>choose models</small></div></div>'); }
 // ── Guided live demo: the AI walks you through your new OS (slow spotlight + narration, exit anytime) ──
 const TOUR_STEPS=[
@@ -1521,6 +1570,7 @@ function sovHandle(raw){
   { const inst=sovInstant(raw); if(inst){ sovSay(inst); return; } }
   if(mm=raw.match(/\bremember(?:\s+that)?\s+(.+)/i)){ const f=mm[1].trim().replace(/[.?!]+$/,''); sovRemember(f); return sovSay("Remembered: <b>"+esc(f)+"</b>. I'll hold that for you."); }
   if(/\b(?:what do you (?:know|remember) about me|what do you remember|who am i)\b/.test(t)){ return sovSay(SOV_FACTS.length? ("Here's what I remember about you:<br>• "+SOV_FACTS.map(esc).join("<br>• ")) : "We're just getting started — say <b>'my name is …'</b> or <b>'remember …'</b> and I'll keep it forever."); }
+  if(/\b(?:what can you (?:see|sense|access|know)|my (?:privacy|consent|permissions?|data)|privacy (?:settings|controls)|what are you allowed|turn off (?:learning|presence|sensing))\b/.test(t)){ if(typeof sovConsentReview==='function'){ sovConsentReview(); return; } }
   if(/\bforget (?:everything|me|it all|all)\b/.test(t)){ SOV_FACTS=[]; SOV_LOG=[]; sovSaveMem(); return sovSay("Forgotten — clean slate. You stay sovereign: your data, your call."); }
   const arch=(typeof ARCHE!=='undefined')?ARCHE.find(a=>t.includes(a.n.toLowerCase())):null;
   if((/\b(work|csoai|business)\b/.test(t)&&/\b(mode|current|switch)\b/.test(t))||t==='csoai'){ setMode('csoai'); sovSyncHue(); return sovSay("Switched to the <b>CSOAI work current</b> — governance & revenue lead."); }
