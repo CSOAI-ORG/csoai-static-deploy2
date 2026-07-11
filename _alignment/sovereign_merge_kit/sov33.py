@@ -963,6 +963,89 @@ def capability_owem_sweep(mode: str = 'axes', max_configs: int = 0):
         return {'capability': 'owem-sweep', 'error': str(e)[:200]}
 
 
+def capability_model_registry(mode: str = 'list', **kwargs):
+    """Top 100 open-source model registry.
+
+    Modes: list, tier, safe, name, aggregate, save, till_pass
+    """
+    try:
+        from sov33_model_registry import (
+            REGISTRY, list_by_tier, list_sovereign_safe, get_brain, total_aggregate,
+        )
+        if mode == 'list':
+            items = sorted(REGISTRY.items(), key=lambda x: -x[1].get('params_total_B', 0))[:kwargs.get('max', 200)]
+            return {
+                'capability': 'model-registry',
+                'mode': 'list',
+                'n_models': len(REGISTRY),
+                'top': [{'name': n, **m} for n, m in items],
+            }
+        if mode == 'tier':
+            items = list_by_tier(kwargs.get('tier', 'frontier'))
+            return {
+                'capability': 'model-registry',
+                'mode': 'tier',
+                'tier': kwargs.get('tier', 'frontier'),
+                'n_models': len(items),
+                'brains': items,
+            }
+        if mode == 'safe':
+            items = list_sovereign_safe()
+            sorted_items = sorted(items.items(), key=lambda x: -x[1].get('params_total_B', 0))
+            return {
+                'capability': 'model-registry',
+                'mode': 'safe',
+                'n_sovereign_safe': len(items),
+                'top': [{'name': n, **m} for n, m in sorted_items[:kwargs.get('max', 30)]],
+            }
+        if mode == 'name':
+            m = get_brain(kwargs.get('name', ''))
+            if not m:
+                return {'capability': 'model-registry', 'error': f"brain {kwargs.get('name')} not found"}
+            return {
+                'capability': 'model-registry',
+                'mode': 'name',
+                'brain': kwargs.get('name'),
+                **m,
+            }
+        if mode == 'aggregate':
+            brains = kwargs.get('brains', None)
+            if not brains:
+                brains = [
+                    'llama_3_1_70b', 'qwen3_6_35b_a3b', 'mistral_large_123b',
+                    'mixtral_8x22b', 'qwen3_8b', 'qwen2_5_3b',
+                    'deepseek_v3', 'qwen3_235b', 'kimi_k2_6', 'mimo_v2_5_pro',
+                    'cohere_plus_104b', 'gemma_3_27b', 'gpt_oss_120b', 'phi4_14b',
+                    'nemotron_3_super_120b', 'qwen3_coder_next',
+                ]
+            result = total_aggregate(brains)
+            return {
+                'capability': 'model-registry',
+                'mode': 'aggregate',
+                **result,
+            }
+        if mode == 'till_pass':
+            from sov33_till_pass_v2 import till_pass_v2
+            result = till_pass_v2(
+                max_iterations=kwargs.get('max_iters', 200),
+                patience=kwargs.get('patience', 50),
+                verbose=False,
+            )
+            return {
+                'capability': 'model-registry',
+                'mode': 'till_pass',
+                'best_config': result['best_config'],
+                'best_score': result['best_score'],
+                'best_result': result['best_result'],
+                'iterations': result['iterations'],
+                'elapsed_s': result['elapsed_s'],
+                'goal_reached': result['best_result'].get('goal_reached', False),
+            }
+        return {'capability': 'model-registry', 'error': f'unknown mode {mode}'}
+    except Exception as e:
+        return {'capability': 'model-registry', 'error': str(e)[:200]}
+
+
 # ═══════════════════════════════════════════════════════════════
 # SOVEREIGN CLASS
 # ═══════════════════════════════════════════════════════════════
@@ -1177,6 +1260,7 @@ CAPABILITIES = {
     'agentdog': capability_agentdog,
     'y2d': capability_years_to_days,
     'owem-sweep': capability_owem_sweep,
+    'model-registry': capability_model_registry,
 }
 
 
