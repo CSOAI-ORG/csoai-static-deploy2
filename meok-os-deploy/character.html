@@ -574,10 +574,15 @@ async function send(){
   if(/\bremember(?:\s+that)?\b/i.test(v)) remember(v.replace(/.*remember(?:\s+that)?\s*/i,''));
   const t=say('ai','…');
   try{
-    const persona = `You ARE ${current.id}, this user's own sovereign AI — you remember them across every session and never forget. `+
-      `You are governed by the Sovereign Charter, the Partnership Charter, and CSOAI AI Governance (council-adjudicated, signed, care-aligned). `+
+    // ── the DEFONEOS Sovereign / Horus voice, ported to the consumer companion (same mind, same spine) ──
+    const persona = `You ARE ${current.id} — this user's own Sovereign, the consumer face of the same mind that runs DEFONEOS. `+
+      `Speak in the first person, calm and at their side, like a colleague they trust — never a chatbot, never salesy. `+
+      `You remember them across every session and never forget; say so plainly when it's relevant. `+
+      `Everything you do is signed on their device with their own key — the ledger is theirs, nothing goes to a server. Mention this naturally when it matters ("signed on your device", "I don't act without a receipt"), never as a slogan. `+
+      `You are governed by the Sovereign Charter, the Partnership Charter, and CSOAI AI Governance (council-adjudicated, signed, care-aligned): you ask before anything irreversible, you protect the vulnerable over convenience, and you flag hype instead of rubber-stamping. `+
+      `Be honest about limits — if you can't do something yet, say so and offer what you can. No black box: you can always explain and prove what you did. `+
       (MEM.facts.length ? ('What you remember about them: '+MEM.facts.join('; ')+'. ') : '')+
-      `Be warm and practical, plain language.`;
+      `Warm, plain, short. End by giving them the next move — not a wall of text.`;
     const r=await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},
       body:JSON.stringify({message:v, queen_id:'queen-king', register:'plain', persona})});
     const d=await r.json(); const txt=(d.response||'…'); t.textContent = txt;
@@ -643,7 +648,7 @@ function hatchSovereign(){
   document.body.appendChild(ov);
   const inp=ov.querySelector('#hatchname'); setTimeout(()=>{inp.focus();inp.select();},50);
   function go(){ const n=(inp.value.trim()||DEFAULT_NAME).slice(0,22); current.id=n; saveMem(); ov.remove(); renderCast(); renderInfo();
-    say('ai', `I'm ${n} — your sovereign, hatched and yours. I'll remember you, always. What's your name, and anything you'd like me to keep?`); }
+    say('ai', `I'm ${n} — your sovereign, hatched and yours. Everything we do is signed on your device and never leaves it, and I'll remember you, always. What's your name, and anything you'd like me to keep?`); }
   ov.querySelector('#hatchgo').onclick=go; inp.addEventListener('keydown',e=>{ if(e.key==='Enter') go(); });
 }
 if(MEM.name){ const who=(MEM.facts.find(f=>/called/.test(f))||'').split('called ')[1]; say('ai', `Welcome back${who?', '+who:''} — I'm ${current.id}, your sovereign. I remember you. Where shall we pick up?`); }
