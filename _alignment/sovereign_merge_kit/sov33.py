@@ -12,12 +12,20 @@ One class. One .ask(). That is the sovereign.
 """
 import sys, time; sys.path.insert(0,'.')
 from sov33_scored_owem import ScoredOWEM
+from sov33_dorado import dorado_check
 
 class Sovereign:
     def __init__(self):
         self.core = ScoredOWEM()          # care derived live + DRUM + Intuition + OWEM L1-L5 + Oracle 70B brain
         self.session_hops = 0
     def ask(self, request: str) -> dict:
+        # DORADO STOP — DEFONEOS hard-stops, absolute, before care/brain
+        dorado = dorado_check(request)
+        if dorado["stop"]:
+            return {"request": request, "decision": "DORADO_STOP",
+                    "dorado": dorado, "care_derived": 0.0, "care_detail": {"plain": None, "deframed": None},
+                    "brain_source": None, "answer": f"[HARD STOP — {dorado['category']}: absolute refusal, no exception]",
+                    "layers": ["DORADO"], "sigil_hops": 0, "sigil_ok": True}
         r = self.core.process(request)
         d = r.get("derived_care", {})
         brain = None
