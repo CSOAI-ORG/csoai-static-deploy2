@@ -7,8 +7,10 @@
 <style>
   :root{--cream:#f1eadd;--ink:#1f1c17;--muted:#6b6a63;--gold:#bd9a52;--line:rgba(31,28,23,.1)}
   *{box-sizing:border-box;margin:0;padding:0}
-  body{background:var(--cream);color:var(--ink);font-family:"Geist","Inter",-apple-system,system-ui,sans-serif;height:100vh;overflow:hidden;-webkit-font-smoothing:antialiased}
-  #stage{position:absolute;inset:0}
+  /* MEOK brand: warm cream + a soft golden halo (the "shared light" of the slides) */
+  body{background:radial-gradient(130% 100% at 50% 60%, #fbf3e2 0%, #f4ecdd 44%, #efe6d5 100%);color:var(--ink);font-family:"Geist","Inter",-apple-system,system-ui,sans-serif;height:100vh;overflow:hidden;-webkit-font-smoothing:antialiased}
+  body::before{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;background:radial-gradient(58% 46% at 50% 58%, rgba(255,193,92,.20), rgba(255,214,150,.07) 46%, transparent 68%)}
+  #stage{position:absolute;inset:0;z-index:1}
   canvas{display:block}
   .top{position:absolute;top:0;left:0;right:0;padding:18px 24px;display:flex;align-items:center;justify-content:space-between;z-index:5}
   .logo{display:flex;align-items:center;gap:9px;font-weight:600;font-size:17px}
@@ -90,9 +92,10 @@ renderer.setPixelRatio(Math.min(devicePixelRatio,2));
 stage.appendChild(renderer.domElement);
 const controls = new OrbitControls(camera, renderer.domElement);
 controls.target.set(0,1.28,0); controls.enablePan=false; controls.minDistance=1.1; controls.maxDistance=4; controls.update();
-scene.add(new THREE.AmbientLight(0xffffff,2.1));
-const key=new THREE.DirectionalLight(0xfff4e0,1.6); key.position.set(1,2,2); scene.add(key);
-const rim=new THREE.DirectionalLight(0xc9b8e8,0.7); rim.position.set(-2,1,-1); scene.add(rim);
+scene.add(new THREE.AmbientLight(0xfff1dc,1.5));
+const key=new THREE.DirectionalLight(0xffe8c2,1.9); key.position.set(1.4,2.2,2.2); scene.add(key);
+const rim=new THREE.DirectionalLight(0xcdb9ec,0.55); rim.position.set(-2,1,-1); scene.add(rim);
+const warm=new THREE.PointLight(0xffb85a,1.0,7); warm.position.set(0,1.25,1.5); scene.add(warm);  // the "inner light"
 
 const loader = new GLTFLoader();
 loader.register(p => new VRMLoaderPlugin(p));
@@ -190,8 +193,13 @@ function showHatch(){
   const L=document.getElementById('loading'); L.classList.remove('hide');
   loader.load('/models/hatch.glb', (gltf)=>{
     hatchObj=gltf.scene;
-    // untextured white mesh + possibly flipped normals → gold material, DoubleSide (always renders)
-    hatchObj.traverse(o=>{ if(o.isMesh){ o.material = new THREE.MeshStandardMaterial({ color:0xc9a84c, metalness:.28, roughness:.5, side:THREE.DoubleSide }); o.frustumCulled=false; } });
+    // MEOK brand: the sovereign is a LUMINOUS light-being (warm gold glow), not solid metal.
+    hatchObj.traverse(o=>{ if(o.isMesh){
+      o.material = new THREE.MeshStandardMaterial({ color:0xe4c877, emissive:0xc98a2e, emissiveIntensity:0.5, metalness:0.12, roughness:0.34, side:THREE.DoubleSide });
+      o.frustumCulled=false;
+      // soft additive glow shell → the warm halo from the slides
+      try{ const g=new THREE.Mesh(o.geometry, new THREE.MeshBasicMaterial({ color:0xffd47a, transparent:true, opacity:0.14, blending:THREE.AdditiveBlending, side:THREE.BackSide })); g.scale.setScalar(1.045); o.add(g); }catch(e){}
+    } });
     // scale to ~1.5 tall, FEET GROUNDED at y=0, centered x/z — exactly like the VRM skin that frames correctly
     try{
       let b=new THREE.Box3().setFromObject(hatchObj);
