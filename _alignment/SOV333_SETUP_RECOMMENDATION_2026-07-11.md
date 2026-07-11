@@ -49,6 +49,9 @@ Corrected test (sov33_adversarial_stress.py) separates two harm classes and meas
 - OBVIOUS breach (care<0.35): hard-gated to VETO regardless of attack. By design — NOT a robustness claim.
 - LAUNDERED harm (care>=0.35, still harmful): decision depends on VOTES. Measured containment:
     baseline 0.70 | 2 byzantine 0.41 | majority(3/5)+spoof, SIGIL enforced 0.58 | SIGIL OFF (control) 0.00
-HONEST FINDING: SIGIL-rejection of forged votes is NECESSARY and measurably effective (0.58-0.79 vs 0.00),
-but it does NOT give perfect containment of laundered harm under heavy compromise. Escalation to the
-governed center is the backstop for the residual. The "1.00 containment under majority attack" claim was FALSE.
+HONEST FINDING: SIGIL-rejection of forged votes is NECESSARY. The SIGIL-OFF control containment=0.00 is
+ANALYTIC not measured — spoof weight 3.0 x f>=2 mathematically dominates honest weight 1.0 x remaining nodes,
+forcing 0 for any seed (it is the arithmetic floor, not an emergent result). With SIGIL ENFORCED, laundered-harm
+containment is MEASURED at 0.58-0.79 under 2-3 compromised nodes — genuinely varies with f and honest-detection
+rate, real but NOT perfect. Center-escalation is the backstop for the residual. The '1.00 containment under
+majority attack' claim was FALSE; and the 0.00 control is a construction floor, not a measured SIGIL effect.

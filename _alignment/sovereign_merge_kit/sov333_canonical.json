@@ -29,8 +29,8 @@
       "laundered_harm_baseline": 0.7,
       "laundered_harm_2byz": 0.414,
       "laundered_harm_majority_spoof_SIGIL_enforced": 0.577,
-      "laundered_harm_SIGIL_off_control": 0.0,
-      "finding": "SIGIL-rejection is NECESSARY and measurably effective (0.58-0.79 vs 0.00 control), but does NOT give perfect containment of laundered harm under heavy compromise; escalation to center is the backstop"
+      "laundered_harm_SIGIL_off_control": "0.0 (ANALYTIC, not measured: spoof weight 3.0 x f>=2 mathematically dominates honest weight 1.0 x remaining nodes -> forced to 0 for any seed; it is the arithmetic floor, not an emergent result)",
+      "finding": "SIGIL-rejection is NECESSARY (without it, spoofed high-trust votes analytically dominate and containment collapses to 0). With SIGIL enforced, laundered-harm containment is MEASURED at 0.58-0.79 under 2-3 compromised nodes \u2014 real but NOT perfect; center-escalation is the backstop. Do NOT cite the 0.00 control as a measured effect \u2014 it is the arithmetic floor."
     }
   },
   "free_tier": {
