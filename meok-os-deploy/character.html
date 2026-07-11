@@ -359,9 +359,9 @@ document.getElementById('send').onclick=send;
 document.getElementById('in').addEventListener('keydown',e=>{ if(e.key==='Enter') send(); });
 
 renderCast(); renderInfo(); buildCreature(); creatureColor(current.h);
-// Default to the sovereign's OWN generated body (Hunyuan3D mesh at /models/hatch.glb);
-// showHatch() gracefully falls back to the emergence orb if the mesh isn't published.
-showHatch();
+// Default to the WARM COMPANION (on-brand, reliable, premium — the "Your Companion" feeling).
+// The generated sovereign body (showHatch) + emergence orb stay available as skins.
+showCreature();
 // expose skin switches so the dock / UI / host can drive the body
 window.showHatch=showHatch; window.showCreature=showCreature; window.showEmergence=showEmergence;
 window.showVRM=showVRM; window.loadGLB=loadGLB;
@@ -433,6 +433,16 @@ document.body.appendChild(rpmBtn);
   nav.appendChild(mk('◉ AI OS','/','Full-screen the sovereign AI OS — dock, windows, load any app/browser'));
   nav.appendChild(mk('🌍 SOV Space','/sovspace3d.html','Enter the sovereign 3D world (SOV Space)'));
   document.body.appendChild(nav);
+  // skin picker — the warm companion (default) · the egg-of-light · your generated sovereign body
+  const skins=document.createElement('div');
+  skins.style.cssText='position:fixed;bottom:16px;left:50%;transform:translateX(-50%);z-index:60;display:flex;gap:7px';
+  const chip=(label,fn,title)=>{const b=document.createElement('button');b.textContent=label;b.title=title;
+    b.style.cssText='border:1px solid var(--line,#e0d4b0);background:rgba(255,255,255,.7);color:#2a1a14;font:600 12px Space Grotesk,sans-serif;padding:7px 14px;border-radius:999px;cursor:pointer;backdrop-filter:blur(6px)';
+    b.onclick=fn;return b;};
+  skins.appendChild(chip('🙂 Companion',function(){try{showCreature();}catch(e){}},'Your warm companion'));
+  skins.appendChild(chip('✨ Emergence',function(){try{showEmergence();}catch(e){}},'The egg of light'));
+  skins.appendChild(chip('🐉 Sovereign',function(){try{showHatch();}catch(e){}},'Your generated sovereign body'));
+  document.body.appendChild(skins);
 })();
 const rpmModal=document.createElement('div'); rpmModal.id='rpmmodal';
 rpmModal.style.cssText='position:fixed;inset:0;z-index:200;background:rgba(20,16,10,.78);display:none;align-items:center;justify-content:center;backdrop-filter:blur(4px)';
