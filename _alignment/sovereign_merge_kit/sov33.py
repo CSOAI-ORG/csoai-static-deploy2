@@ -107,9 +107,14 @@ TWELVE_PILLARS = [
 # SOVEREIGN SIGIL CHAIN
 # ═══════════════════════════════════════════════════════════════
 
-SIGIL_DIR = Path.home() / '.sovereign'
+# SIGIL dir env-overridable (SOV33_SIGIL_DIR) + fail-soft so the unified entrypoint imports in sandboxes.
+SIGIL_DIR = Path(os.environ.get('SOV33_SIGIL_DIR', str(Path.home() / '.sovereign')))
+try:
+    SIGIL_DIR.mkdir(parents=True, exist_ok=True)
+except (PermissionError, OSError):
+    SIGIL_DIR = Path(os.environ.get('TMPDIR', '/tmp')) / 'sov33_sigil'
+    SIGIL_DIR.mkdir(parents=True, exist_ok=True)
 SIGIL_FILE = SIGIL_DIR / 'sov33_one.sigil.jsonl'
-SIGIL_DIR.mkdir(parents=True, exist_ok=True)
 
 
 def sigil_emit(hop):
@@ -156,8 +161,8 @@ def capability_memory(recall_query: str, k: int = 5):
         from sentence_transformers import SentenceTransformer, util
         model = SentenceTransformer('sentence-transformers/all-MiniLM-L6-v2')
 
-        mem_path = Path.home() / '.sovereign/sovereign_memory.jsonl'
-        emb_path = Path.home() / '.sovereign/memory_embeddings.npz'
+        mem_path = SIGIL_DIR / 'sovereign_memory.jsonl'
+        emb_path = SIGIL_DIR / 'memory_embeddings.npz'
 
         if not mem_path.exists():
             return {"error": "memory file not found", "path": str(mem_path)}
@@ -494,14 +499,16 @@ class Sovereign:
         self.core = ScoredOWEM()
         self.session_hops = 0
 
-    def ask(self, request: str) -> dict:
-        """The unified sovereign ask. Single entrypoint, full provenance."""
+    def ask(self, request: str, session: str = "default") -> dict:
+        """The unified sovereign ask. Single entrypoint, full provenance.
+        `session` scopes HORUS lockdown per-caller so one attacker's repeat-probe
+        lockdown does not lock out every other caller (session-scoping fix)."""
         t0 = time.time()
 
-        # L-HORUS (outermost gate, sibling agent's addition)
+        # L-HORUS (outermost gate, sibling agent's addition) — session-scoped
         if HAS_HORUS:
             try:
-                horus = horus_check(request)
+                horus = horus_check(request, session)
                 if horus.get('stop'):
                     sigil_emit({
                         'hop': 'HORUS_STOP',
