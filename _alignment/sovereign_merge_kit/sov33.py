@@ -926,6 +926,38 @@ def capability_owem_sweep(mode: str = 'axes', max_configs: int = 0):
                 'mode': 'eval',
                 'result': r,
             }
+        if mode == '4brain' or mode == 'till_pass':
+            from sov33_4brain import (
+                BRAINS, BFT_CONFIGS, PATHS_TO_3_4T, evaluate_4brain, sweep_4brain, pareto_front,
+            )
+            from sov33_till_pass import till_pass, BEST_FILE
+            import json as _json
+            if mode == '4brain':
+                return {
+                    'capability': 'owem-sweep',
+                    'mode': '4brain',
+                    'brains': list(BRAINS.keys()),
+                    'bft_configs': list(BFT_CONFIGS.keys()),
+                    'paths_to_3_4T': list(PATHS_TO_3_4T.keys()),
+                }
+            # till_pass: run the optimizer
+            result = till_pass(
+                max_iterations=max(50, max_configs) if max_configs else 200,
+                patience=100,
+                verbose=False,
+            )
+            return {
+                'capability': 'owem-sweep',
+                'mode': 'till_pass',
+                'best_config': result['best_config'],
+                'best_score': result['best_score'],
+                'best_result': result['best_result'],
+                'iterations': result['iterations'],
+                'elapsed_s': result['elapsed_s'],
+                'goal_reached': result['best_score'] >= 0.94 and
+                                  result['best_result']['target_3_4T_pct'] >= 100 and
+                                  result['best_result']['sovereignty'] >= 0.9,
+            }
         return {'capability': 'owem-sweep', 'error': f'unknown mode {mode}'}
     except Exception as e:
         return {'capability': 'owem-sweep', 'error': str(e)[:200]}
