@@ -188,9 +188,17 @@ function showHatch(){
   if(hatchObj){ skin='hatch'; hatchObj.visible=true; if(orb)orb.visible=false; if(creature)creature.visible=false; if(currentVRM)currentVRM.scene.visible=false; if(rpmObj)rpmObj.visible=false; return; }
   const L=document.getElementById('loading'); L.classList.remove('hide');
   loader.load('/models/hatch.glb', (gltf)=>{
-    hatchObj=gltf.scene; hatchObj.position.set(0,0,0);
-    // normalize scale so the generated mesh sits in frame like the other skins
-    try{ const b=new THREE.Box3().setFromObject(hatchObj); const s=1.4/(b.getSize(new THREE.Vector3()).y||1); hatchObj.scale.setScalar(s); }catch(e){}
+    hatchObj=gltf.scene;
+    // scale to ~1.3 tall, then CENTER the bounding box into the camera's narrow FOV (like the creature at y≈1.1)
+    try{
+      let b=new THREE.Box3().setFromObject(hatchObj);
+      const s=1.3/(b.getSize(new THREE.Vector3()).y||1); hatchObj.scale.setScalar(s);
+      b=new THREE.Box3().setFromObject(hatchObj);
+      const c=b.getCenter(new THREE.Vector3());
+      hatchObj.position.set(-c.x, 1.08 - c.y, -c.z);   // centered in view
+    }catch(e){}
+    // the Space returns an UNTEXTURED white mesh → give it a warm sovereign material so it reads on the cream bg
+    hatchObj.traverse(o=>{ if(o.isMesh){ o.material = new THREE.MeshStandardMaterial({ color:0xc9a84c, metalness:.30, roughness:.52 }); } });
     scene.add(hatchObj);
     skin='hatch'; if(orb)orb.visible=false; if(creature)creature.visible=false; if(currentVRM)currentVRM.scene.visible=false; if(rpmObj)rpmObj.visible=false; hatchObj.visible=true;
     L.classList.add('hide');
