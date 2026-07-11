@@ -161,8 +161,8 @@ function orbColor(h){
   u.aura.material.color=c.clone().lerp(new THREE.Color(0xffffff),0.3); u.light.color=c; u.motes.material.color=c.clone().lerp(new THREE.Color(0xffffff),0.5);
 }
 function _resetCam(){ try{ camera.position.set(0,1.32,2.1); controls.target.set(0,1.28,0); controls.update(); }catch(e){} }
-function showEmergence(){ skin='emergence'; if(orb) orb.visible=true; if(hatchObj) hatchObj.visible=false; if(currentVRM) currentVRM.scene.visible=false; _resetCam(); orbColor(current.h); document.getElementById('loading').classList.add('hide'); }
-function showVRM(){ skin='vrm'; if(rpmObj) rpmObj.visible=false; if(orb) orb.visible=false; if(currentVRM){ currentVRM.scene.visible=true; } else { loadVRM(current.vrm); } }
+function showEmergence(){ skin='emergence'; if(orb) orb.visible=true; if(hatchObj) hatchObj.visible=false; if(being) being.visible=false; if(creature) creature.visible=false; if(currentVRM) currentVRM.scene.visible=false; _resetCam(); orbColor(current.h); document.getElementById('loading').classList.add('hide'); }
+function showVRM(){ skin='vrm'; if(rpmObj) rpmObj.visible=false; if(orb) orb.visible=false; if(being) being.visible=false; if(currentVRM){ currentVRM.scene.visible=true; } else { loadVRM(current.vrm); } }
 
 // ── Friendly companion creature — cute, all-ages, procedural (no anime, no external assets) ──
 let creature=null;
@@ -200,7 +200,68 @@ function creatureColor(h){
   u.body.material.color=c; u.bunL.material.color=c; u.bunR.material.color=c;
   u.aura.material.color=c.clone().lerp(new THREE.Color(0xffffff),0.4); u.light.color=c.clone().lerp(new THREE.Color(0xffffff),0.35);
 }
-function showCreature(){ skin='creature'; if(creature) creature.visible=true; if(orb) orb.visible=false; if(currentVRM) currentVRM.scene.visible=false; if(rpmObj) rpmObj.visible=false; if(hatchObj) hatchObj.visible=false; _resetCam(); document.getElementById('loading').classList.add('hide'); }
+function showCreature(){ skin='creature'; if(creature) creature.visible=true; if(orb) orb.visible=false; if(currentVRM) currentVRM.scene.visible=false; if(rpmObj) rpmObj.visible=false; if(hatchObj) hatchObj.visible=false; if(being) being.visible=false; _resetCam(); document.getElementById('loading').classList.add('hide'); }
+
+// ── THE SOVEREIGN — a luminous, graceful being of light (brand bible Stage 3: "a luminous golden
+//    light-being rises from the cracked shell"). Emissive-first, so premium finishes only re-TINT its
+//    glow — it can NEVER render as a dark metal silhouette. Procedural: no GPU, no external asset. ──
+let being=null;
+function buildLightBeing(){
+  being = new THREE.Group();
+  // graceful robed-figure-of-light silhouette (a rising flame form), built with LatheGeometry
+  const V = THREE.Vector2, prof = [
+    new V(0.00,0.00), new V(0.16,0.05), new V(0.235,0.17), new V(0.255,0.34),
+    new V(0.225,0.52), new V(0.165,0.70), new V(0.125,0.85), new V(0.165,0.98),
+    new V(0.145,1.10), new V(0.085,1.22), new V(0.028,1.32), new V(0.00,1.40)
+  ];
+  const coreGeo = new THREE.LatheGeometry(prof, 96);
+  const coreMat = new THREE.MeshPhysicalMaterial({
+    color:0xffe4ad, emissive:0xffb84e, emissiveIntensity:0.5, transparent:true, opacity:0.86,
+    roughness:0.18, metalness:0.0, clearcoat:1, clearcoatRoughness:0.1, transmission:0.4,
+    iridescence:0.6, iridescenceIOR:1.4, side:THREE.DoubleSide, envMapIntensity:1.1, depthWrite:false });
+  const core = new THREE.Mesh(coreGeo, coreMat);
+  // two soft volumetric aura shells
+  const aura1 = new THREE.Mesh(new THREE.LatheGeometry(prof,64), new THREE.MeshBasicMaterial({color:0xffd489, transparent:true, opacity:0.18, blending:THREE.AdditiveBlending, side:THREE.BackSide, depthWrite:false }));
+  aura1.scale.setScalar(1.22); aura1.position.y=-0.02;
+  const aura2 = new THREE.Mesh(new THREE.SphereGeometry(0.62,32,32), new THREE.MeshBasicMaterial({color:0xffbf6b, transparent:true, opacity:0.10, blending:THREE.AdditiveBlending, side:THREE.BackSide, depthWrite:false }));
+  aura2.scale.set(1,1.35,1); aura2.position.y=0.62;
+  // a thin luminous halo behind the crown
+  const halo = new THREE.Mesh(new THREE.TorusGeometry(0.26,0.012,16,80), new THREE.MeshBasicMaterial({color:0xffe6b0, transparent:true, opacity:0.85, blending:THREE.AdditiveBlending, depthWrite:false }));
+  halo.position.set(0,1.06,-0.05); halo.rotation.x=Math.PI/2.3;
+  // rising inner sparks (energy ascending through the being)
+  const sN=90, sp=new Float32Array(sN*3), so=new Float32Array(sN);
+  for(let i=0;i<sN;i++){ const a=Math.random()*6.28, r=Math.random()*0.18; sp[i*3]=Math.cos(a)*r; sp[i*3+1]=Math.random()*1.4; sp[i*3+2]=Math.sin(a)*r; so[i]=0.15+Math.random()*0.25; }
+  const sparks = new THREE.Points(new THREE.BufferGeometry().setAttribute('position',new THREE.BufferAttribute(sp,3)), new THREE.PointsMaterial({color:0xffe8bd, size:0.02, transparent:true, opacity:0.85, blending:THREE.AdditiveBlending, depthWrite:false }));
+  sparks.userData.vel = so;
+  const light = new THREE.PointLight(0xffcf85, 1.3, 6); light.position.set(0,0.8,0.4);
+  being.add(aura2, aura1, halo, core, sparks, light);
+  being.position.set(0,0.42,0); being.scale.setScalar(0.72);
+  being.userData = { core, aura1, aura2, halo, sparks, light };
+  scene.add(being);
+}
+// premium finish → re-tint the light-being's GLOW (never dark: emissiveIntensity floored high)
+function beingFinish(name){
+  if(!being) return; const f=(FINISHES[name]||FINISHES.pearl).m, u=being.userData;
+  const col=new THREE.Color(f.color), emi=new THREE.Color(f.emissive!==undefined?f.emissive:f.color);
+  u.core.material.color=col; u.core.material.emissive=emi;
+  u.core.material.emissiveIntensity=Math.max(0.42, (f.emissiveIntensity||0.3)+0.2);
+  u.core.material.metalness=Math.min(0.35,(f.metalness||0)*0.4);   // stay luminous, not metal-dark
+  u.core.material.iridescence=(f.iridescence!==undefined?f.iridescence:0.5);
+  u.aura1.material.color=emi.clone().lerp(new THREE.Color(0xffffff),0.25);
+  u.aura2.material.color=emi.clone();
+  u.halo.material.color=emi.clone().lerp(new THREE.Color(0xffffff),0.4);
+  u.light.color=emi.clone().lerp(new THREE.Color(0xffffff),0.2);
+  u.sparks.material.color=emi.clone().lerp(new THREE.Color(0xffffff),0.5);
+}
+function showSovereign(){
+  if(!being) buildLightBeing();
+  beingFinish(window.MEOK_FINISH);
+  skin='sovereign'; being.visible=true;
+  if(orb) orb.visible=false; if(creature) creature.visible=false; if(currentVRM) currentVRM.scene.visible=false;
+  if(rpmObj) rpmObj.visible=false; if(hatchObj) hatchObj.visible=false;
+  try{ camera.position.set(0,0.95,3.5); controls.target.set(0,0.72,0); controls.update(); }catch(e){}
+  document.getElementById('loading').classList.add('hide');
+}
 // ── Bring your own avatar (Ready Player Me — the cross-app/game avatar standard, plain glTF) ──
 let rpmObj=null;
 function loadGLB(url){
@@ -230,8 +291,11 @@ window.MEOK_FINISH = 'pearl';
 function finishMaterial(name){ const f=(FINISHES[name]||FINISHES.pearl).m; return new THREE.MeshPhysicalMaterial(Object.assign({ side:THREE.DoubleSide }, f)); }
 window.applyFinish = function(name){
   if(!FINISHES[name]) return; window.MEOK_FINISH=name;
+  // the Sovereign light-being is the branded premium body — re-tint its glow
+  if(typeof showSovereign==='function'){ showSovereign(); }
+  // legacy generated mesh (if ever loaded) also honours the finish
   if(typeof hatchObj!=='undefined' && hatchObj){ hatchObj.traverse(o=>{ if(o.isMesh && !o.userData._glow){ o.material=finishMaterial(name); } }); }
-  if(typeof showHatch==='function') showHatch();
+  return name;
 };
 
 // HATCH skin — the sovereign body; renders in the chosen premium FINISH (Pearl/Silver/Gold/Platinum/Marble).
@@ -345,6 +409,19 @@ function animate(){
     hatchObj.position.y = Math.sin(t*1.2)*0.022;                 // gentle float
     hatchObj.rotation.y = Math.sin(Date.now()/3400)*0.18;        // look side to side
   }
+  if(skin==='sovereign' && being){
+    const u=being.userData;
+    being.position.y = 0.42 + Math.sin(t*1.1)*0.03;                        // serene rise & fall
+    being.rotation.y += dt*0.22;                                            // slow graceful turn
+    u.core.material.emissiveIntensity = (sp?0.85:0.5) + Math.sin(t*2.2)*0.1; // breathing glow (brighter when speaking)
+    u.aura1.material.opacity = 0.18 + Math.sin(t*1.6)*0.04;
+    u.halo.rotation.z += dt*0.5;
+    u.light.intensity = sp?3.2:2.4;
+    // sparks ascend through the being, then wrap
+    const arr=u.sparks.geometry.attributes.position.array, vel=u.sparks.userData.vel;
+    for(let i=0;i<vel.length;i++){ arr[i*3+1]+=vel[i]*dt; if(arr[i*3+1]>1.42) arr[i*3+1]=0; }
+    u.sparks.geometry.attributes.position.needsUpdate=true;
+  }
   if(skin==='creature' && creature){
     const u=creature.userData;
     creature.position.y = 1.24 + Math.sin(t*1.5)*0.025;            // gentle float
@@ -412,11 +489,11 @@ document.getElementById('send').onclick=send;
 document.getElementById('in').addEventListener('keydown',e=>{ if(e.key==='Enter') send(); });
 
 renderCast(); renderInfo(); buildCreature(); creatureColor(current.h);
-// Default to the WARM COMPANION (on-brand, reliable, premium — the "Your Companion" feeling).
-// The generated sovereign body (showHatch) + emergence orb stay available as skins.
-showCreature();
+// Default hero: THE SOVEREIGN — a luminous being of light (brand bible Stage 3). Emissive-first, warm,
+// graceful, never dark. Companion + Emergence stay available as skins; premium finishes re-tint its glow.
+showSovereign();
 // expose skin switches so the dock / UI / host can drive the body
-window.showHatch=showHatch; window.showCreature=showCreature; window.showEmergence=showEmergence;
+window.showHatch=showHatch; window.showCreature=showCreature; window.showEmergence=showEmergence; window.showSovereign=showSovereign;
 window.showVRM=showVRM; window.loadGLB=loadGLB;
 window.scene=scene; window.camera=camera; window.controls=controls; window.THREE=THREE;
 window.getHatch=()=>hatchObj;
@@ -494,7 +571,7 @@ document.body.appendChild(rpmBtn);
     b.onclick=fn;return b;};
   skins.appendChild(chip('🙂 Companion',function(){try{showCreature();}catch(e){}},'Your warm companion'));
   skins.appendChild(chip('✨ Emergence',function(){try{showEmergence();}catch(e){}},'The egg of light'));
-  skins.appendChild(chip('🐉 Sovereign',function(){try{showHatch();}catch(e){}},'Your generated sovereign body'));
+  skins.appendChild(chip('✦ Sovereign',function(){try{showSovereign();}catch(e){}},'Your luminous being of light'));
   document.body.appendChild(skins);
   // premium FINISH picker (Pro material tiers) — Pearl free · Silver/Gold/Platinum/Marble Pro
   const fin=document.createElement('div'); fin.id='finish';
