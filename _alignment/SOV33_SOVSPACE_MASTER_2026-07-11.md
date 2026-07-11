@@ -18,12 +18,12 @@ before walking it, SOV33 simulates outcomes in SovSpace before acting.
 
 ### FACE 2 — EXTERNAL: the shared world for end-users + other agents
 The same world-model, *rendered outward* as a place others can enter, view, and act in.
-- **Cesium** = the real Earth (WGS-84, real tiles) — the shared globe.
+- **Cesium** = the real Earth (WGS-84, real tiles) — the shared globe. NOTE: the live cinema-grade render is Claude Code's sovspace3d.html (Three.js/WebGL, free tier); Cesium photoreal tiles are the PREMIUM body (needs Cesium ion / Maps key).
 - **UE5** = the immersive dome — the walkable world.
 - **End-users + other agents** integrate here: they see entities, issue commands, run simulations.
 - The external Cesium/UE5 view is a **live WINDOW into the sovereign's internal simulation** — the
   globe is not a separate world, it is a portal onto SOV33's world-state.
-- STATUS: Cesium demo pages RUN; the live entity-command bridge is now built (this session); UE5
+- STATUS: a Three.js/WebGL cinema render (sovspace3d.html) RUNS (Claude Code); Cesium photoreal is premium/aspirational; the live entity-command bridge is now built (this session); UE5
   live actor-driving is ASPIRATIONAL (needs a running UE5 + MCP plugin).
 
 ## How SOV33 is MASTER (not just a renderer)
@@ -52,9 +52,10 @@ a safe governance model you can put in society.
 | Piece | Status |
 |---|---|
 | Governance gate (DORADO/care/guardian/HORUS/SIGIL) | RUNNING, measured |
+| Cognition layer (two-bandwidth: WorldModel + Workspace + governed seam) | RUNNING (this session) |
 | SovSpace bridge (authoritative state + command gate) | RUNNING (this session) |
 | Guardian loop (sense-geometry→sim→BFT→kill) | RUNNING, DEFENSIVE, human-gated |
-| Cesium POC demo | RUNNING (browser) |
+| Governance POC (2D schematic HTML) | RUNNING (browser) — NOT Cesium; proves verdicts, not visuals |
 | Internal J-space broadcast layer (10/90 conscious split) | DESIGNED |
 | Live UE5 actor-driving via MCP plugin | ASPIRATIONAL (needs UE5 instance) |
 | Real WiFi/BLE/acoustic sensing (not stubbed) | ASPIRATIONAL (senses currently canned) |

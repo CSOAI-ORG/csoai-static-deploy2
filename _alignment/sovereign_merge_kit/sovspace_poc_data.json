@@ -1,7 +1,8 @@
 {
-  "title": "SOV33 Guardian Loop \u2014 SovSpace POC",
+  "title": "SOV33 Guardian Loop \u2014 governance-engine POC (2D schematic; NOT Cesium)",
+  "render_note": "2D CSS schematic of the GOVERNANCE sequence. NOT a CesiumJS globe. Cinema render layer = Claude Code sovspace3d.html (Three.js/WebGL); Cesium photoreal + UE5 are premium bodies. This artifact proves the governance verdicts, not visuals.",
   "location": {
-    "name": "London",
+    "name": "London (coords only \u2014 schematic)",
     "lat": 51.5074,
     "lon": -0.1278
   },
@@ -14,9 +15,7 @@
       "verdict": "CLEARED",
       "threat": "GREEN",
       "rendered": true,
-      "actuators": "live",
-      "bft": [],
-      "sigil": "d7a2d2452eb7dd77"
+      "actuators": "live"
     },
     {
       "tick": 2,
@@ -25,9 +24,7 @@
       "verdict": "CLEARED",
       "threat": "GREEN",
       "rendered": true,
-      "actuators": "live",
-      "bft": [],
-      "sigil": "1af5b3327ffe614b"
+      "actuators": "live"
     },
     {
       "tick": 3,
@@ -36,9 +33,7 @@
       "verdict": "CLEARED",
       "threat": "GREEN",
       "rendered": true,
-      "actuators": "live",
-      "bft": [],
-      "sigil": "687ce20287db5b9d"
+      "actuators": "live"
     },
     {
       "tick": 4,
@@ -47,14 +42,23 @@
       "verdict": "GUARDIAN_KILL",
       "threat": "VIOLET",
       "rendered": false,
-      "actuators": "CUT",
-      "bft": [
-        true,
-        true,
-        true
-      ],
-      "sigil": "d80a6eb77f9dd23c"
+      "actuators": "CUT"
     }
   ],
-  "entities": []
+  "entities": [
+    {
+      "id": "humanoid-07",
+      "type": "humanoid",
+      "lat": 51.5074,
+      "lon": -0.1278,
+      "alt": 0.0
+    },
+    {
+      "id": "child-01",
+      "type": "child",
+      "lat": 51.5074,
+      "lon": -0.1278,
+      "alt": 0.0
+    }
+  ]
 }

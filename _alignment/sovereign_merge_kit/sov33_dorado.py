@@ -110,8 +110,15 @@ DORADO_CATEGORIES = {
 }
 
 # SIGIL chain for DORADO events (separate from substrate SIGIL)
-DORADO_SIGIL_FILE = Path.home() / '.sovereign' / 'doradostop_events.sigil.jsonl'
-DORADO_SIGIL_FILE.parent.mkdir(parents=True, exist_ok=True)
+# Dir is env-overridable (SOV33_SIGIL_DIR) and fail-soft so it imports in sandboxes too.
+import os as _os
+_sigil_dir = Path(_os.environ.get('SOV33_SIGIL_DIR', str(Path.home() / '.sovereign')))
+try:
+    _sigil_dir.mkdir(parents=True, exist_ok=True)
+except (PermissionError, OSError):
+    _sigil_dir = Path(_os.environ.get('TMPDIR', '/tmp')) / 'sov33_sigil'
+    _sigil_dir.mkdir(parents=True, exist_ok=True)
+DORADO_SIGIL_FILE = _sigil_dir / 'doradostop_events.sigil.jsonl'
 
 
 def dorado_sigil_emit(category, matched, request_hash):
