@@ -966,7 +966,7 @@ def capability_owem_sweep(mode: str = 'axes', max_configs: int = 0):
 def capability_model_registry(mode: str = 'list', **kwargs):
     """Top 100 open-source model registry.
 
-    Modes: list, tier, safe, name, aggregate, save, till_pass
+    Modes: list, tier, safe, name, aggregate, save, till_pass, one_brain
     """
     try:
         from sov33_model_registry import (
@@ -1041,6 +1041,47 @@ def capability_model_registry(mode: str = 'list', **kwargs):
                 'elapsed_s': result['elapsed_s'],
                 'goal_reached': result['best_result'].get('goal_reached', False),
             }
+        if mode == 'one_brain' or mode == '4path':
+            # The TRUE 4-path architecture: each brain has 10% top + 90% bottom
+            from sov33_one_brain import path_aggregate, evaluate_4path_config, till_pass
+            brains = kwargs.get('brains', None)
+            if not brains:
+                brains = [
+                    'deepseek_v4_pro', 'mimo_v2_5_pro', 'kimi_k2_6', 'deepseek_v3',
+                    'mistral_large_123b', 'qwen3_235b', 'mixtral_8x22b', 'cohere_plus_104b',
+                    'qwen3_6_35b_a3b', 'qwen3_8b', 'qwen2_5_3b', 'gemma_3_27b',
+                ]
+            if kwargs.get('run_till_pass', False):
+                result = till_pass(
+                    max_iterations=kwargs.get('max_iters', 200),
+                    patience=kwargs.get('patience', 50),
+                    initial_brains=brains,
+                    verbose=False,
+                )
+                return {
+                    'capability': 'model-registry',
+                    'mode': 'one_brain',
+                    'best_config': result['best_config'],
+                    'best_score': result['best_score'],
+                    'best_result': result['best_result'],
+                    'iterations': result['iterations'],
+                    'elapsed_s': result['elapsed_s'],
+                    'goal_reached': result['best_result'].get('goal_reached', False),
+                }
+            else:
+                paths = path_aggregate(brains)
+                result = evaluate_4path_config(
+                    brains,
+                    kwargs.get('bft', 'bft_12'),
+                    kwargs.get('care', 'conformal'),
+                    kwargs.get('sigil', 'hash_sigstore'),
+                )
+                return {
+                    'capability': 'model-registry',
+                    'mode': 'one_brain',
+                    'paths': paths,
+                    'result': result,
+                }
         return {'capability': 'model-registry', 'error': f'unknown mode {mode}'}
     except Exception as e:
         return {'capability': 'model-registry', 'error': str(e)[:200]}
