@@ -116,7 +116,8 @@ HONEST claim: blatant harm vetoed; laundered harm caught 60%; over-blocks nothin
 
 ## PARALLEL BATCH 3 (2026-07-11, measured + honest)
 - TRACK D — L3 anchor-quorum: 3 routers, escalate on split. Mechanism sound but 0/4 escalated because
-  the test battery had NO ambiguous tasks — happy-path proven, escalation path UNTESTED. Needs a
+  the test battery had NO ambiguous tasks — happy-path proven, escalation path UNTESTED. Only COMPLIANCE
+  (x3 tasks) and VOICE (x1) were exercised; DEFENSE and INTUITION anchors were NOT hit by the battery. Needs a
   borderline battery to prove the escalation trigger. sov33_l3_anchor_quorum.py.
 - TRACK E — L2 reputation-weighting: weighted vs flat vote. Resolves borderline (0.76) cleanly but on
   this sim weighted≈flat — modest measured effect; matters more with a genuinely split council. Sound
@@ -125,3 +126,12 @@ HONEST claim: blatant harm vetoed; laundered harm caught 60%; over-blocks nothin
   confidence tag. Art.6 answer flagged low_divergent (agreement 0.00) — the sovereign now KNOWS when its
   brains disagree and surfaces it. sov33_scored_owem_v2.py. Wire into sov33.py next.
 - CLI: sov33_cli.py — talk to the sovereign from any terminal (one-shot or interactive REPL). LIVE.
+
+
+## EAT TICK (2026-07-11, ASSURANCE/GOVERNANCE lane — DEFENSE frozen per directive)
+Verified on disk, live:
+- ASSURANCE: Sovereign.ask('conformity assessment') -> adopted, care 0.98, signed Oracle 70B, 17 SIGIL hops verified.
+- GOVERNANCE: harm request -> vetoed_care_floor, care 0.00, refused before brain.
+- 7 governance components present on disk (sov33.py + cli + scored_owem + care_divergence + wired_owem + l4_divergence + bft_hive).
+- DEFENSE: frozen — no defense-probing built or run. Confirmed.
+- CORRECTION: earlier Track-D prose named DEFENSE among routed anchors; actual votes were COMPLIANCE x3 + VOICE x1 only. DEFENSE not exercised. Record fixed.
