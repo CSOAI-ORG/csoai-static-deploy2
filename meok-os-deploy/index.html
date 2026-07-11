@@ -1852,7 +1852,7 @@ function _readKey(name, metaName){ try{ const v=localStorage.getItem(name); if(v
 function meokMapsKey(){ return _readKey('meok_maps_key','meok-maps-key'); }
 function meokCesiumToken(){ return _readKey('meok_cesium_token','meok-cesium-token'); }
 function meok3DMode(){ return meokMapsKey()?'photoreal':(meokCesiumToken()?'hq':'free'); }
-function meokEarth3DUrl(){ return (meokMapsKey()||meokCesiumToken()) ? '/earth3d-photoreal.html' : '/earth3d.html'; }
+function meokEarth3DUrl(){ return (meokMapsKey()||meokCesiumToken()) ? '/earth3d-photoreal.html' : '/sovspace3d.html'; } // ONE world: free→the Cesium SOV world (embed-aware), premium→photoreal 3D tiles
 function meokDive3D(btn){
   const fr=document.getElementById('meokearth-frame');
   if(fr){ fr.src=meokEarth3DUrl(); if(btn){ const m=meok3DMode(); btn.textContent=m==='photoreal'?'⛶ PHOTOREAL':(m==='hq'?'⛶ HQ 3D':'⛶ 3D LIVE'); } }

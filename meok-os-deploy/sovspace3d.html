@@ -23,6 +23,8 @@
  .nb{border:0;background:transparent;color:#c9b98a;font:600 12px system-ui;padding:6px 12px;border-radius:9px;cursor:pointer}.nb.on{background:#c9a84c;color:#1a1410}
  #panel h2{margin:0 0 6px;font-size:15px;color:#e6c766}#panel h4{margin:10px 0 3px;color:#e6c766;font-size:12.5px}#panel code{background:rgba(201,168,76,.12);padding:1px 5px;border-radius:5px;font-size:11.5px}#panel .hon{color:#c99a6a;font-size:11.5px;font-style:italic}
  #lyr{left:16px;bottom:16px;padding:5px;display:flex;gap:4px;flex-wrap:wrap}
+ /* embedded as the OS "MEOK Earth" iframe → hide our own chrome, show just the governed globe */
+ body.embed #title,body.embed #dock,body.embed #nav,body.embed #live{display:none!important}
 </style></head><body>
 <div id="load">🜏 waking the sovereign world…</div>
 <div id="c"></div>
@@ -39,6 +41,7 @@
 // ── SOV Space on the REAL DEFONEOS engine: CesiumJS 1.123 (one version across the OS globes), free path (no paid ion/Google token).
 //    Real OSM street tiles + optional NASA satellite/night-lights + real sun day/night terminator.
 //    Same governed globe as DEFONEOS cop.html; the Sovereign (Horus voice) flies it for you. ──
+try{ if(window.parent && window.parent!==window) document.body.classList.add('embed'); }catch(e){ document.body.classList.add('embed'); }  // cross-origin frame → treat as embedded
 window.CESIUM_BASE_URL = 'https://cdn.jsdelivr.net/npm/cesium@1.123/Build/Cesium/';
 Cesium.Ion.defaultAccessToken = '';                       // no ion token — stay free/sovereign
 const osm = () => new Cesium.OpenStreetMapImageryProvider({ url: 'https://a.tile.openstreetmap.org/' });
@@ -93,8 +96,29 @@ document.querySelectorAll('#lyr .nb').forEach(b=>b.onclick=()=>{
 // ── the Sovereign flies the world (agentic): "take me to Tokyo" → real fly-down ──
 const GAZ={london:[51.51,-0.13],'new york':[40.71,-74.0],newyork:[40.71,-74.0],tokyo:[35.68,139.69],singapore:[1.35,103.82],dubai:[25.2,55.27],frankfurt:[50.11,8.68],sydney:[-33.87,151.21],'san francisco':[37.77,-122.42],'san fran':[37.77,-122.42],paris:[48.86,2.35],mumbai:[19.08,72.88],'hong kong':[22.32,114.17],toronto:[43.65,-79.38],washington:[38.9,-77.04],'washington dc':[38.9,-77.04],berlin:[52.52,13.4],geneva:[46.2,6.14],brussels:[50.85,4.35],lincoln:[53.23,-0.54],london_uk:[51.51,-0.13]};
 function flyTo(lat,lon,alt){ spin=false; viewer.camera.flyTo({ destination: Cesium.Cartesian3.fromDegrees(lon,lat, alt||90000), orientation:{ pitch: Cesium.Math.toRadians(-55) }, duration: 3.2 }); }
-// live governed-node beacons on the real globe
-fetch('/api/nodes').then(r=>r.json()).then(d=>{(d.nodes||[]).forEach(n=>{const g=GAZ[(n.id||'').toLowerCase()];if(!g)return;const gov=n.status==='governed';viewer.entities.add({position:Cesium.Cartesian3.fromDegrees(g[1],g[0]),point:{pixelSize:9,color:Cesium.Color.fromCssColorString(gov?'#5fe0b0':'#d47a5a'),outlineColor:Cesium.Color.WHITE,outlineWidth:1.5,heightReference:Cesium.HeightReference.CLAMP_TO_GROUND},label:{text:(n.id||'').replace(/\b\w/g,c=>c.toUpperCase()),font:'600 12px system-ui',fillColor:Cesium.Color.fromCssColorString('#e6c766'),style:Cesium.LabelStyle.FILL,pixelOffset:new Cesium.Cartesian2(0,-16),showBackground:true,backgroundColor:Cesium.Color.fromCssColorString('rgba(8,11,20,.7)'),scaleByDistance:new Cesium.NearFarScalar(1.5e6,1,1.5e7,0.5)}});});}).catch(()=>{});
+// live governed-node beacons on the real globe (each entity carries its node → click posts to the OS)
+fetch('/api/nodes').then(r=>r.json()).then(d=>{(d.nodes||[]).forEach(n=>{const g=GAZ[(n.id||'').toLowerCase()];if(!g)return;const gov=n.status==='governed';const nm=(n.id||'').replace(/\b\w/g,c=>c.toUpperCase());viewer.entities.add({id:'meoknode:'+(n.id||nm), _node:{name:nm,status:n.status||'governed',role:n.role||''}, position:Cesium.Cartesian3.fromDegrees(g[1],g[0]),point:{pixelSize:9,color:Cesium.Color.fromCssColorString(gov?'#5fe0b0':'#d47a5a'),outlineColor:Cesium.Color.WHITE,outlineWidth:1.5,heightReference:Cesium.HeightReference.CLAMP_TO_GROUND},label:{text:nm,font:'600 12px system-ui',fillColor:Cesium.Color.fromCssColorString('#e6c766'),style:Cesium.LabelStyle.FILL,pixelOffset:new Cesium.Cartesian2(0,-16),showBackground:true,backgroundColor:Cesium.Color.fromCssColorString('rgba(8,11,20,.7)'),scaleByDistance:new Cesium.NearFarScalar(1.5e6,1,1.5e7,0.5)}});});}).catch(()=>{});
+
+// ── ONE-WORLD BRIDGE: the same postMessage contract earth3d/earth3d-photoreal speak, so this Cesium
+//    world can BE the OS's "MEOK Earth" iframe (merge two globes → one). Standalone use is unaffected. ──
+const _pick=new Cesium.ScreenSpaceEventHandler(scene.canvas);
+_pick.setInputAction(function(m){ const p=scene.pick(m.position);
+  if(p&&p.id&&p.id._node){ try{ parent&&parent!==window&&parent.postMessage({type:'meok-node',node:p.id._node},'*'); }catch(e){}
+    try{ say('ai','🛡 <b>'+p.id._node.name+'</b> — a '+(p.id._node.status)+' hub in your sovereign network'+(p.id._node.role?', running '+p.id._node.role:'')+'. Every action here is signed on your device.'); }catch(e){} } },
+  Cesium.ScreenSpaceEventType.LEFT_CLICK);
+function _top(){ spin=false; const c=viewer.camera.positionCartographic; viewer.camera.flyTo({destination:Cesium.Cartesian3.fromRadians(c.longitude,c.latitude,3200000),orientation:{pitch:Cesium.Math.toRadians(-89)},duration:1.6}); }
+function _arc(from,to,label){ try{ viewer.entities.add({polyline:{positions:Cesium.Cartesian3.fromDegreesArray([from[1],from[0],to[1],to[0]]),width:3,arcType:Cesium.ArcType.GEODESIC,material:new Cesium.PolylineGlowMaterialProperty({glowPower:0.25,color:Cesium.Color.fromCssColorString('#e6c766')})}}); }catch(e){} }
+window.addEventListener('message',function(ev){ const d=ev.data||{}; if(d.type!=='meok-cmd') return; try{
+  if(d.cmd==='fly') flyTo(d.lat,d.lon,d.zoom!=null?Math.max(2000,90000/(d.zoom/4||1)):90000);
+  else if(d.cmd==='top') _top();
+  else if(d.cmd==='scan'){ const c=viewer.camera.positionCartographic; flyTo(Cesium.Math.toDegrees(c.latitude),Cesium.Math.toDegrees(c.longitude),Math.max(6000,c.height*0.4)); }
+  else if(d.cmd==='orbit'){ spin=!spin; }
+  else if(d.cmd==='card'&&d.html){ say('ai',d.html); }
+  else if(d.cmd==='arc'&&d.from&&d.to) _arc(d.from,d.to,d.label);
+  else if(d.cmd==='clearArcs') viewer.entities.values.filter(e=>e.polyline).forEach(e=>viewer.entities.remove(e));
+}catch(e){} });
+// announce readiness to a host OS (same handshake earth3d uses)
+try{ if(parent&&parent!==window) parent.postMessage({type:'meok-earth-ready',surface:'sovspace3d'},'*'); }catch(e){}
 
 // ── dock chat = the Sovereign (Horus voice from DEFONEOS: calm, first-person, signed, honest) ──
 const log=document.getElementById('log');

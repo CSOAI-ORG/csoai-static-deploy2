@@ -49,14 +49,25 @@ Honest register: what's wired, what's orphaned, what's duplicated, and the singl
 - ▢ `hatch-demo.html` / `legacy-demo.html` = **real standalone demos, NOT globe dupes** — surface
   (link) them rather than delete; `embed-test.html` = dev-only, keep out of nav.
 
-## Remaining deliberate step (the big ONE — needs its own careful pass)
-- **Merge the two Cesium globes.** `earth3d-photoreal` ("MEOK Earth", node-select → Sovereign speaks,
-  iframed into the OS) and `sovspace3d` ("SOV Space world", standalone) still overlap. Target = **one
-  Cesium world, two entry intents** (🌍 *my data/nodes* vs 🌐 *explore*). Requires porting the
-  node-select + trust overlay wiring into sovspace3d — real work, do it as one focused change, not a
-  silent half-merge. Until then both are pinned to Cesium 1.123 so there's no drift.
-- **Disambiguate "SOV Space"** fully: fold the tools list (`sovspace.html`) into the world's
-  Agents/J-Space face so "SOV Space" means ONE thing.
+## The big ONE — DONE 2026-07-11: the two Cesium globes are now one surface
+- ✅ **`sovspace3d` now speaks the OS postMessage contract** (`meok-cmd` fly/scan/top/orbit/card/arc/
+  clearArcs inbound; `meok-node` on beacon click outbound; `meok-earth-ready` handshake) — the SAME
+  contract `earth3d`/`earth3d-photoreal` use. Node beacons carry their node object and post it to the
+  host OS on click → the OS Sovereign explains it, just like before.
+- ✅ **Embed-aware:** when iframed (parent≠window) it adds `body.embed` → hides its own dock/title/
+  nav/HUD and shows just the **bare governed globe** (layer chips kept). Standalone = full app.
+  Verified: embed hides chrome, globe renders, fly-cmd received, no console errors.
+- ✅ **OS repointed:** `meokEarth3DUrl()` free path `/earth3d.html` → **`/sovspace3d.html`** (premium
+  photoreal `/earth3d-photoreal.html` still used when a Maps/Cesium token exists). So "MEOK Earth" and
+  "SOV Space — the 3D world" are now the **same Cesium engine**; `earth3d.html` (bare fallback) is now
+  unreferenced (orphan → safe to redirect next).
+- Result: **ONE governed Cesium world**, two entry intents (🌍 MEOK Earth = my nodes · 🌐 SOV Space =
+  explore), one engine version (1.123), one contract. The three.js globes are gone.
+
+## Small remaining polish
+- Redirect the now-unreferenced `earth3d.html` → `sovspace3d.html` (like universe.html).
+- Fold the tools list (`sovspace.html`) into the world's Agents/J-Space face so "SOV Space" = ONE thing.
+- Surface `hatch-demo.html` / `legacy-demo.html` from their product homes (they're valid, just unlinked).
 
 ## Honest status
 Front now **matches back better**: the real 3D world exists and is reachable; the companion speaks the
