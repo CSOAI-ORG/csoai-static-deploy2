@@ -35,3 +35,8 @@ _original brief below_
 2. **Wire flywheel IMPROVE→bus into live `/chat`** — every real decision on `:3101` calls `sov33_nn_hive_bus.on_decision(text, decision, gate)` so labels accumulate. THIS is what unblocks the flywheel from SPINNING→COMPOUNDING (needs ~200 labels).
 3. **Finish full-dataset eval + write final numbers** — GSM8K 1319 + MMLU 500. The defensible score that replaces every retracted T-count. Checkpointed run already going.
 4. **HOLD** — do NOT re-key Kimi/DeepSeek/Cerebras yet (no-sprawl rule). The Groq ladder (gpt-oss-120b, qwen3-32b) already covers heavy+reason tiers on the existing key.
+
+## UPDATE 2026-07-11 08:xx — Groq key PLACED (verify from Mac, not sandbox)
+- Nick's Groq key is written to `_alignment/sovereign_merge_kit/.runtime.env` (GITIGNORED, perms 600, NOT committed).
+- MEOK-SOV3 sandbox CANNOT verify it: `api.groq.com` returns Cloudflare **error 1010** (edge bot-block on sandbox egress) — this is NOT a key problem, the request never reaches Groq's auth. Will not spoof UA to bypass.
+- ACTION (Claude Code, runs on the Mac where Groq IS reachable): load `GROQ_API_KEY` from `.runtime.env`, verify with a live call to `llama-3.3-70b-versatile` + `openai/gpt-oss-120b`, then wire the router's fast/heavy tiers. Do NOT print the key.
