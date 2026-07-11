@@ -389,14 +389,14 @@ body.touring #tourhud{animation:sovMsgIn .5s ease}
 
   <div class="sovdock" id="sovdock" style="--sh:43" data-testid="sov-dock">
     <div class="sovhead">
-      <div class="sovchar" id="sovchar" onclick="enterWorld(event)" title="Your living world — tap to step inside">
+      <div class="sovchar" id="sovchar" onclick="enterWorld(event)" title="Your Sovereign — tap to enter your world">
         <div class="sovaura"></div>
         <canvas id="sovglobe" width="188" height="188"></canvas>
         <span id="sovface" class="sovspirit">🐉</span>
         <span class="soventer">enter ↗</span>
       </div>
       <div class="sovname" id="sovname">Sovereign</div>
-      <div class="sovsub" id="sovsub">a living mirror of your world · tap the globe to enter</div>
+      <div class="sovsub" id="sovsub">your sovereign · tap to enter your world</div>
     </div>
     <div class="sovlog" id="sovlog"></div>
     <div class="sovboard" id="sovboard" hidden></div>
@@ -1953,90 +1953,48 @@ function meokOrbit(btn){ const fr=document.getElementById('meokearth-frame'); if
 // The Sovereign's circle IS a living mirror of Earth: ocean, rotating land, a day/night
 // terminator with city-lights, and the lit gold connectors of the MEOK universe — the
 // AI character's translucent emergent form floating over it (the egg before the hatch).
-(function sovGlobe(){ const c=document.getElementById('sovglobe'); if(!c||!c.getContext) return; const ctx=c.getContext('2d');
-  const S=188, R=90, cx=S/2, cy=S/2;
-  // REAL connector nodes — the actual cities of the MEOK universe (legacy bridges, temples,
-  // hives are geo-placed at these hubs in MEOK Earth). The lit points sit on their true
-  // countries and rotate with the globe, so the avatar and the full world are one map.
-  let nodes=[
-    {n:'London',lat:51.5,lon:-0.1},{n:'New York',lat:40.7,lon:-74.0},{n:'Frankfurt',lat:50.1,lon:8.7},
-    {n:'Tokyo',lat:35.7,lon:139.7},{n:'Singapore',lat:1.35,lon:103.8},{n:'Sydney',lat:-33.9,lon:151.2},
-    {n:'São Paulo',lat:-23.5,lon:-46.6},{n:'Mumbai',lat:19.1,lon:72.9},{n:'Dubai',lat:25.2,lon:55.3},
-    {n:'Toronto',lat:43.7,lon:-79.4},{n:'Hong Kong',lat:22.3,lon:114.2},{n:'Cape Town',lat:-33.9,lon:18.4}
-  ].map((d,i)=>({...d,ph:i*0.7,status:'governed'}));
-  // EAT: read the ONE canonical sovereign node graph (same source MEOK Earth + the
-  // force-graph + the extension read). Add a node there → it lights up everywhere.
-  fetch('/api/nodes').then(r=>r.json()).then(d=>{ if(d&&d.nodes&&d.nodes.length){ nodes=d.nodes.map((x,i)=>({n:x.name,lat:x.lat,lon:x.lon,status:x.status||'governed',ph:i*0.7})); } }).catch(function(){});
-  let rot=0, t=0;
-  // REAL satellite Earth from space — today's NASA MODIS true-colour mosaic (clouds = real
-  // weather, no key needed). Progressive enhancement: if it loads we paint the real planet;
-  // if not (offline/blocked) we keep the procedural globe. Yesterday's date = always processed.
-  let earthImg=null;
-  (function loadEarth(){ try{
-    const y=new Date(Date.now()-86400000).toISOString().slice(0,10);
-    const url='https://wvs.earthdata.nasa.gov/api/v1/snapshot?REQUEST=GetSnapshot&LAYERS=MODIS_Terra_CorrectedReflectance_TrueColor&CRS=EPSG:4326&TIME='+y+'&BBOX=-90,-180,90,180&WIDTH=720&HEIGHT=360&FORMAT=image/jpeg';
-    const im=new Image(); im.crossOrigin='anonymous';
-    im.onload=function(){ earthImg=im; }; im.onerror=function(){ earthImg=null; }; im.src=url;
-  }catch(e){} })();
-  function landAt(lon,lat){ // crude but recognisable continents via layered sines (fallback)
-    const v=Math.sin(lon*1.7+lat*0.8)+0.7*Math.sin(lon*0.6-lat*1.9)+0.5*Math.sin(lon*3.1+2.0);
-    return v>0.55; }
-  (function loop(){ rot+=0.0024; t+=0.03;
+// ── The dock seat = the SOVEREIGN BEING (emergence / hatchling of light), NOT a globe. The globe lives
+//    in MEOK Universe (SOV Space). A luminous ovoid of light, hue-tinted to the archetype, with a heart
+//    of light, rising motes (emergence) and the hatch bloom. The globe was moved out on 2026-07-11. ──
+(function sovBeing(){ const c=document.getElementById('sovglobe'); if(!c||!c.getContext) return; const ctx=c.getContext('2d');
+  const S=188, cx=S/2, cy=S/2;
+  const motes=Array.from({length:16},function(_,i){ return {r:16+Math.random()*62, sp:0.25+Math.random()*0.6, ph:Math.random()*6.2832, sz:1+Math.random()*2}; });
+  let t=0;
+  (function loop(){ t+=0.03;
     const hue=window.MEOK_POND_HUE||43;
-    // REAL day/night: the sun's position from the actual clock, so the dark side of the
-    // Sovereign's globe is genuinely where it's night on Earth right now (a true mirror).
-    const now=new Date();
-    const utch=now.getUTCHours()+now.getUTCMinutes()/60+now.getUTCSeconds()/3600;
-    const dayAngle=(utch/24)*6.2832;                       // one real turn per 24h
-    const doy=Math.floor((Date.UTC(now.getUTCFullYear(),now.getUTCMonth(),now.getUTCDate())-Date.UTC(now.getUTCFullYear(),0,0))/86400000);
-    const decl=0.409*Math.sin(6.2832*(doy-80)/365);        // seasonal tilt (±23.4°)
-    const tw=R*2, th=R*2, scroll=((rot*26)%tw+tw)%tw;   // shared by texture + node projection
+    const hatched=!!(localStorage.getItem('meok_face')||localStorage.getItem('meok_archetype')||(typeof sovUserName==='function'&&sovUserName()));
+    const boom=window._sovHatching?1:0;
+    const pulse=0.5+0.5*Math.sin(t*1.4);
     ctx.clearRect(0,0,S,S);
-    ctx.save(); ctx.beginPath(); ctx.arc(cx,cy,R,0,6.2832); ctx.clip();
-    if(earthImg){
-      // REAL Earth from space (today's satellite mosaic, real clouds). Wrap horizontally so
-      // it rotates; clipped to the circle reads as the planet. Vignette gives it spherical depth.
-      ctx.drawImage(earthImg, cx-R-scroll, cy-R, tw, th);
-      ctx.drawImage(earthImg, cx-R-scroll+tw, cy-R, tw, th);
-      const vg=ctx.createRadialGradient(cx-20,cy-22,R*0.2,cx,cy,R); vg.addColorStop(0,'rgba(255,255,255,.08)'); vg.addColorStop(.75,'rgba(0,0,0,0)'); vg.addColorStop(1,'rgba(0,8,22,.55)');
-      ctx.fillStyle=vg; ctx.fillRect(0,0,S,S);
-    } else {
-      // procedural fallback (offline / image blocked)
-      const og=ctx.createRadialGradient(cx-22,cy-26,8,cx,cy,R); og.addColorStop(0,'#1d3a6b'); og.addColorStop(.7,'#0e2148'); og.addColorStop(1,'#081427');
-      ctx.fillStyle=og; ctx.fillRect(0,0,S,S);
-      for(let py=-R;py<R;py+=4){ const lat=(py/R)*1.45; const w=Math.cos(Math.asin(py/R))*R;
-        for(let px=-w;px<w;px+=4){ const lon=(px/(w||1))*1.8+rot;
-          if(landAt(lon,lat)){ const sh=0.5+0.5*Math.sin(lat*2+lon); ctx.fillStyle='rgba('+Math.round(70+40*sh)+','+Math.round(120+50*sh)+','+Math.round(70+20*sh)+',.9)'; ctx.fillRect(cx+px,cy+py,4,4); } } }
-    }
-    // day / night terminator — anchored to the real subsolar point (clock + season)
-    const sx=Math.cos(dayAngle), sy=Math.sin(dayAngle)*0.30 + Math.sin(decl)*0.5;
-    const ng=ctx.createLinearGradient(cx-sx*R,cy-sy*R,cx+sx*R,cy+sy*R);
-    ng.addColorStop(0,'rgba(2,4,14,0)'); ng.addColorStop(.5,'rgba(2,4,14,.15)'); ng.addColorStop(1,'rgba(2,4,14,.7)');
-    ctx.fillStyle=ng; ctx.fillRect(0,0,S,S);
-    // city lights on the night side (gold sparks where humanity sleeps)
-    for(let i=0;i<10;i++){ const aa=i*0.63+rot*2; const rr=(0.3+(i%5)*0.13)*R; const lx=cx+Math.cos(aa)*rr, ly=cy+Math.sin(aa)*rr*0.9;
-      const nightness=((lx-cx)*sx+(ly-cy)*sy)/R; if(nightness>0.15){ ctx.fillStyle='hsla(45,90%,70%,'+(0.25+0.35*Math.abs(Math.sin(t*1.3+i)))+')'; ctx.fillRect(lx,ly,1.4,1.4); } }
-    // atmosphere rim
-    const ag=ctx.createRadialGradient(cx,cy,R*0.82,cx,cy,R); ag.addColorStop(0,'rgba(120,180,255,0)'); ag.addColorStop(1,'hsla('+hue+',80%,70%,.5)');
-    ctx.fillStyle=ag; ctx.fillRect(0,0,S,S);
-    // lit connectors at their REAL cities — same flat-wrap mapping as the satellite texture,
-    // so each gold node sits on its true country and rotates with the globe.
-    const pts=nodes.map(n=>{
-      const baseX=(cx-R-scroll)+((n.lon+180)/360)*tw;       // longitude → screen (texture-aligned)
-      let x=baseX; if(x<cx-R) x+=tw; if(x>cx+R) x-=tw;       // wrap into the visible disc
-      const y=(cy-R)+((90-n.lat)/180)*th;                   // latitude → screen
-      const dx=(x-cx)/R, dy=(y-cy)/R; const onDisc=(dx*dx+dy*dy)<0.94;
-      const edge=1-Math.min(1,Math.abs(x-cx)/R);            // fade near the limb (sphere feel)
-      const sh=n.status==='flagged'?0:(n.status==='watch'?38:hue);   // red / amber / signature-gold
-      return {x,y,ph:n.ph,vis:onDisc,edge,sh};
-    });
-    const vis=pts.filter(p=>p.vis);
-    ctx.lineWidth=1; for(let i=0;i<vis.length;i++){ const A=vis[i],B=vis[(i+2)%vis.length]; if(B===A)continue; ctx.strokeStyle='hsla('+hue+',85%,72%,'+(0.12*Math.min(A.edge,B.edge))+')'; ctx.beginPath(); ctx.moveTo(A.x,A.y); ctx.quadraticCurveTo(cx,cy,B.x,B.y); ctx.stroke(); }
-    vis.forEach(p=>{ const a=0.5+0.5*Math.sin(t*3+p.ph); const al=(0.45+0.4*a)*(0.35+0.65*p.edge); ctx.fillStyle='hsla('+p.sh+',90%,68%,'+al+')'; ctx.shadowColor='hsla('+p.sh+',90%,70%,.9)'; ctx.shadowBlur=6; ctx.beginPath(); ctx.arc(p.x,p.y,(1.6+a)*(0.6+0.4*p.edge),0,6.2832); ctx.fill(); ctx.shadowBlur=0; });
-    // glassy egg specular + gold emergence breath
-    const hl=ctx.createRadialGradient(cx-30,cy-34,4,cx-30,cy-34,60); hl.addColorStop(0,'rgba(255,255,255,.4)'); hl.addColorStop(1,'rgba(255,255,255,0)'); ctx.fillStyle=hl; ctx.fillRect(0,0,S,S);
-    const breath=(window._sovHatching?0.42:0.06)+0.05*Math.sin(t*2); ctx.fillStyle='hsla(45,90%,62%,'+breath+')'; ctx.fillRect(0,0,S,S);
+    // aura
+    const aura=ctx.createRadialGradient(cx,cy,8,cx,cy,92);
+    aura.addColorStop(0,'hsla('+hue+',96%,72%,'+(0.30+0.16*pulse+0.3*boom)+')');
+    aura.addColorStop(0.5,'hsla('+(hue+12)+',90%,60%,'+(0.13+0.08*pulse)+')');
+    aura.addColorStop(1,'hsla('+hue+',90%,50%,0)');
+    ctx.fillStyle=aura; ctx.beginPath(); ctx.arc(cx,cy,92,0,6.2832); ctx.fill();
+    // the being — a luminous ovoid of light (egg before the hatch → radiant being after)
+    const by=cy+Math.sin(t*1.1)*3;
+    const rw=hatched?40:36, rh=hatched?52:50;
+    ctx.save(); ctx.translate(cx,by);
+    const body=ctx.createRadialGradient(0,-8,4,0,0,rh);
+    body.addColorStop(0,'hsla('+hue+',100%,'+(hatched?90:80)+'%,0.98)');
+    body.addColorStop(0.45,'hsla('+(hue+6)+',96%,'+(hatched?70:60)+'%,0.9)');
+    body.addColorStop(1,'hsla('+(hue+14)+',90%,'+(hatched?52:44)+'%,0.10)');
+    ctx.fillStyle=body; ctx.beginPath(); ctx.ellipse(0,0,rw,rh,0,0,6.2832); ctx.fill();
+    // inner heart of light
+    const heart=ctx.createRadialGradient(0,-6,1,0,-6,20);
+    heart.addColorStop(0,'rgba(255,255,255,0.92)'); heart.addColorStop(1,'hsla('+hue+',100%,75%,0)');
+    ctx.fillStyle=heart; ctx.beginPath(); ctx.arc(0,-6,20,0,6.2832); ctx.fill();
+    // specular highlight (glassy)
+    const sp=ctx.createRadialGradient(-12,-20,1,-12,-20,16); sp.addColorStop(0,'rgba(255,255,255,0.7)'); sp.addColorStop(1,'rgba(255,255,255,0)');
+    ctx.fillStyle=sp; ctx.beginPath(); ctx.arc(-12,-20,16,0,6.2832); ctx.fill();
     ctx.restore();
+    // rising motes of light (emergence)
+    ctx.save(); ctx.globalCompositeOperation='lighter';
+    motes.forEach(function(m){ const yy=((t*m.sp*30+m.ph*22)%150); const py=cy+60-yy; const px=cx+Math.sin(m.ph+t*m.sp)*m.r*0.5; const al=Math.max(0,1-yy/150);
+      ctx.fillStyle='hsla('+hue+',100%,82%,'+(al*0.65)+')'; ctx.beginPath(); ctx.arc(px,py,m.sz,0,6.2832); ctx.fill(); });
+    ctx.restore();
+    if(boom){ ctx.fillStyle='hsla('+hue+',95%,70%,'+(0.2+0.2*Math.sin(t*3))+')'; ctx.fillRect(0,0,S,S); }
     requestAnimationFrame(loop); })();
 })();
 // The hatch: once the Sovereign has learned/been named by this user, the translucent
