@@ -106,6 +106,40 @@ def detect_backends() -> dict:
                     latency_ms = round((time.time() - t0) * 1000, 1)
         except Exception:
             available = False
+        # Special check for Groq: needs GROQ_API_KEY env var
+        if not available and name == 'groq':
+            api_key = os.environ.get('GROQ_API_KEY')
+            keystore = Path.home() / '.sovereign' / 'keystore' / 'groq_api_key.txt'
+            if not api_key and keystore.exists():
+                try:
+                    api_key = keystore.read_text().strip()
+                    os.environ['GROQ_API_KEY'] = api_key
+                except Exception:
+                    pass
+            if api_key:
+                try:
+                    import urllib.request
+                    t0 = time.time()
+                    body = json.dumps({
+                        'model': 'llama-3.3-70b-versatile',
+                        'messages': [{'role': 'user', 'content': 'hi'}],
+                        'max_tokens': 5,
+                    }).encode()
+                    req = urllib.request.Request(
+                        'https://api.groq.com/openai/v1/chat/completions',
+                        data=body,
+                        headers={
+                            'Content-Type': 'application/json',
+                            'Authorization': f'Bearer {api_key}',
+                            'User-Agent': 'SovereignSubstrate/1.0 (sovereign-substrate)',
+                        },
+                    )
+                    with urllib.request.urlopen(req, timeout=5) as r:
+                        if r.getcode() == 200:
+                            available = True
+                            latency_ms = round((time.time() - t0) * 1000, 1)
+                except Exception:
+                    available = False
         # Also check for command-line tools
         if not available and name in ('vllm', 'sglang', 'tensorrt_llm', 'lmdeploy'):
             for cmd in [name, f'{name}-serve', name.replace('_', '-')]:
@@ -294,6 +328,7 @@ def _groq_or_stub(prompt: str, max_tokens: int = 200, model_name: str = 'llama-3
             headers={
                 'Content-Type': 'application/json',
                 'Authorization': f'Bearer {api_key}',
+                'User-Agent': 'SovereignSubstrate/1.0 (sovereign-substrate)',
             },
         )
         with urllib.request.urlopen(req, timeout=10) as r:
