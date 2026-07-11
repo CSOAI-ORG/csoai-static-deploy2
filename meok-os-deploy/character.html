@@ -112,7 +112,8 @@ const key=new THREE.DirectionalLight(0xffe8c2,1.9); key.position.set(1.4,2.2,2.2
 const rim=new THREE.DirectionalLight(0xcdb9ec,0.55); rim.position.set(-2,1,-1); scene.add(rim);
 const warm=new THREE.PointLight(0xffb85a,1.0,7); warm.position.set(0,1.25,1.5); scene.add(warm);  // the "inner light"
 // studio environment so the premium metal/marble finishes REFLECT (PBR metals need an env to look real)
-try{ const _pm=new THREE.PMREMGenerator(renderer); scene.environment=_pm.fromScene(new RoomEnvironment(), 0.03).texture; }catch(e){}
+try{ const _pm=new THREE.PMREMGenerator(renderer); scene.environment=_pm.fromScene(new RoomEnvironment(), 0.04).texture; scene.environmentIntensity=1.35; }catch(e){}
+renderer.toneMapping = THREE.ACESFilmicToneMapping; renderer.toneMappingExposure = 1.15;  // cinematic grade
 
 // ── CINEMATIC pipeline — warm bloom + rising golden embers (Hollywood-grade glow) ──
 const composer = new EffectComposer(renderer);
@@ -216,12 +217,14 @@ function loadGLB(url){
 }
 // ── PREMIUM MATERIAL TIERS (from the decks): Pearl (free) · Silver/Gold/Platinum/Marble (Pro) ──
 // Iridescence = the "translucent glass, emerging colours" look; metals/marble = the premium spawns.
+// Luminous premium finishes — each GLOWS its own colour (emissive) so it reads warm & alive on the dark
+// backdrop, never a dark metal silhouette. metalness kept moderate so light-response stays soft, not harsh.
 const FINISHES = {
-  pearl:    { label:'✨ Pearl', pro:false, m:{ color:0xf3ead9, metalness:0.25, roughness:0.26, clearcoat:1, clearcoatRoughness:0.14, iridescence:1, iridescenceIOR:1.55, emissive:0xffecc9, emissiveIntensity:0.14 } },
-  silver:   { label:'🥈 Silver', pro:true, m:{ color:0xdfe4ea, metalness:1, roughness:0.17, clearcoat:0.6, iridescence:0.25 } },
-  gold:     { label:'🥇 Gold', pro:true, m:{ color:0xe6c25f, metalness:1, roughness:0.22, clearcoat:0.5, emissive:0x2e2005, emissiveIntensity:0.28 } },
-  platinum: { label:'💿 Platinum', pro:true, m:{ color:0xeff1f4, metalness:1, roughness:0.1, clearcoat:0.85, iridescence:0.4, iridescenceIOR:1.4 } },
-  marble:   { label:'🏛️ Marble', pro:true, m:{ color:0xf5f2ec, metalness:0, roughness:0.32, clearcoat:1, clearcoatRoughness:0.06, iridescence:0.25 } },
+  pearl:    { label:'✨ Pearl', pro:false, m:{ color:0xf7efe0, metalness:0.2, roughness:0.24, clearcoat:1, clearcoatRoughness:0.12, iridescence:1, iridescenceIOR:1.55, emissive:0xffe6bd, emissiveIntensity:0.22, envMapIntensity:1.4 } },
+  silver:   { label:'🥈 Silver', pro:true, m:{ color:0xe8edf3, metalness:0.85, roughness:0.16, clearcoat:0.7, iridescence:0.3, emissive:0xaebcc9, emissiveIntensity:0.28, envMapIntensity:1.6 } },
+  gold:     { label:'🥇 Gold', pro:true, m:{ color:0xf0cf6e, metalness:0.85, roughness:0.2, clearcoat:0.5, emissive:0xc98a2e, emissiveIntensity:0.42, envMapIntensity:1.6 } },
+  platinum: { label:'💿 Platinum', pro:true, m:{ color:0xf3f5f8, metalness:0.9, roughness:0.1, clearcoat:0.9, iridescence:0.45, iridescenceIOR:1.4, emissive:0xc7cdd6, emissiveIntensity:0.3, envMapIntensity:1.7 } },
+  marble:   { label:'🏛️ Marble', pro:true, m:{ color:0xf7f4ee, metalness:0, roughness:0.3, clearcoat:1, clearcoatRoughness:0.05, iridescence:0.25, emissive:0xefe8da, emissiveIntensity:0.24, envMapIntensity:1.2 } },
 };
 window.MEOK_FINISH = 'pearl';
 function finishMaterial(name){ const f=(FINISHES[name]||FINISHES.pearl).m; return new THREE.MeshPhysicalMaterial(Object.assign({ side:THREE.DoubleSide }, f)); }
