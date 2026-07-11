@@ -72,6 +72,10 @@
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
+import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
+import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
+import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
 import { VRMLoaderPlugin, VRMUtils } from '@pixiv/three-vrm';
 
 // ── Your ONE Sovereign — you hatch it, name it, it remembers you forever, governed by the charters ──
@@ -96,6 +100,20 @@ scene.add(new THREE.AmbientLight(0xfff1dc,1.5));
 const key=new THREE.DirectionalLight(0xffe8c2,1.9); key.position.set(1.4,2.2,2.2); scene.add(key);
 const rim=new THREE.DirectionalLight(0xcdb9ec,0.55); rim.position.set(-2,1,-1); scene.add(rim);
 const warm=new THREE.PointLight(0xffb85a,1.0,7); warm.position.set(0,1.25,1.5); scene.add(warm);  // the "inner light"
+
+// ── CINEMATIC pipeline — warm bloom + rising golden embers (Hollywood-grade glow) ──
+const composer = new EffectComposer(renderer);
+composer.addPass(new RenderPass(scene, camera));
+const bloom = new UnrealBloomPass(new THREE.Vector2(innerWidth, innerHeight), 0.55, 0.7, 0.2); // strength, radius, threshold
+composer.addPass(bloom);
+composer.addPass(new OutputPass());
+composer.setSize(innerWidth, innerHeight); composer.setPixelRatio(Math.min(devicePixelRatio,2));
+// slow, soft golden embers drifting up — the shared-light atmosphere
+const EMBERS = 110, eg = new THREE.BufferGeometry(), ep = new Float32Array(EMBERS*3), ev = new Float32Array(EMBERS);
+for (let i=0;i<EMBERS;i++){ ep[i*3]=(Math.random()-.5)*2.6; ep[i*3+1]=Math.random()*2.6; ep[i*3+2]=(Math.random()-.5)*1.6; ev[i]=0.06+Math.random()*0.12; }
+eg.setAttribute('position', new THREE.BufferAttribute(ep,3));
+const embers = new THREE.Points(eg, new THREE.PointsMaterial({ color:0xffd08a, size:0.03, transparent:true, opacity:0.6, blending:THREE.AdditiveBlending, depthWrite:false }));
+scene.add(embers);
 
 const loader = new GLTFLoader();
 loader.register(p => new VRMLoaderPlugin(p));
@@ -312,10 +330,16 @@ function animate(){
     u.eL.children[1].position.set(lx,ly,0.08); u.eR.children[1].position.set(lx,ly,0.08);
     u.light.intensity = sp ? 2.3 : 1.5;
   }
-  controls.update(); renderer.render(scene, camera);
+  // rising golden embers — drift up, wrap at the top, gentle sway
+  { const pos = embers.geometry.attributes.position;
+    for (let i=0;i<EMBERS;i++){ let y = pos.array[i*3+1] + ev[i]*dt; if (y>2.6){ y=0; pos.array[i*3]=(Math.random()-.5)*2.6; pos.array[i*3+2]=(Math.random()-.5)*1.6; }
+      pos.array[i*3+1]=y; pos.array[i*3]+=Math.sin(t*0.6+i)*0.0006; }
+    pos.needsUpdate = true; embers.material.opacity = 0.45 + Math.sin(t*0.8)*0.12; }
+  controls.update();
+  composer.render();
 }
 animate();
-function _rz(){ const w=stage.clientWidth||innerWidth||960, h=stage.clientHeight||innerHeight||640; camera.aspect=w/h; camera.updateProjectionMatrix(); renderer.setSize(w,h); } new ResizeObserver(_rz).observe(stage); addEventListener('resize',_rz); _rz();
+function _rz(){ const w=stage.clientWidth||innerWidth||960, h=stage.clientHeight||innerHeight||640; camera.aspect=w/h; camera.updateProjectionMatrix(); renderer.setSize(w,h); try{ composer.setSize(w,h); bloom.setSize(w,h); }catch(e){} } new ResizeObserver(_rz).observe(stage); addEventListener('resize',_rz); _rz();
 
 // cast UI
 const castEl=document.getElementById('cast'), infoEl=document.getElementById('info');
