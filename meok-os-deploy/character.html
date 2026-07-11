@@ -42,6 +42,15 @@
   @keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.06)}}
   .loading p{position:absolute;bottom:38%;color:var(--muted);font-size:14px}
   @media(max-width:720px){.cast{flex-direction:row;top:auto;bottom:96px;transform:none;left:0;right:0;overflow-x:auto;flex-wrap:nowrap}.cc{min-width:auto}.cc b,.cc span{display:none}.info{display:none}}
+  /* ── GLASS design language (from the new decks): frosted translucent panels, iridescent edges ── */
+  .cc,.msg.ai,.bar,.traits span{background:rgba(252,248,241,.5)!important;backdrop-filter:blur(18px) saturate(1.25);-webkit-backdrop-filter:blur(18px) saturate(1.25);border:1px solid rgba(255,255,255,.45)!important;box-shadow:0 10px 34px rgba(18,12,6,.30), inset 0 1px 0 rgba(255,255,255,.55)}
+  .cc.on{background:rgba(255,252,246,.7)!important;border-color:var(--gold)!important}
+  .info{background:rgba(252,248,241,.42);backdrop-filter:blur(18px) saturate(1.2);-webkit-backdrop-filter:blur(18px) saturate(1.2);border:1px solid rgba(255,255,255,.4);border-radius:16px;padding:16px 18px;box-shadow:0 10px 34px rgba(18,12,6,.3)}
+  .info h1{background:linear-gradient(96deg,#c9a84c 0%,#e8cd8a 30%,#b9d3c4 55%,#d6b3e0 78%,#c9a84c 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+  /* premium finish picker (Pro material tiers) */
+  #finish{position:fixed;top:16px;right:24px;z-index:60;display:flex;gap:6px}
+  #finish button{border:1px solid rgba(255,255,255,.45);background:rgba(252,248,241,.5);backdrop-filter:blur(14px);color:#2a1a14;font:600 12px "Space Grotesk",sans-serif;padding:7px 12px;border-radius:999px;cursor:pointer;box-shadow:0 6px 20px rgba(18,12,6,.22)}
+  #finish button .pro{font-size:9px;color:var(--gold);margin-left:4px;letter-spacing:.06em}
 </style>
 </head>
 <body>
@@ -202,22 +211,35 @@ function loadGLB(url){
     say('ai', `That's you — your own avatar, brought into MEOK. I'm still ${current.id}, here with you.`);
   }, undefined, ()=>{ L.classList.add('hide'); say('ai',"Couldn't load that avatar — try again?"); });
 }
-// HATCH skin — the sovereign-GENERATED body (Hunyuan3D-2.1 mesh). Loads /models/hatch.glb via the
-// same GLTFLoader; if the mesh isn't published yet it falls back to the always-present emergence orb
-// (honest, never blank). Once ~/clawd/_compute/sov33_hunyuan3d_hatch.ipynb produces hatch.glb → drop it
-// at meok-os-deploy/models/hatch.glb and this skin renders the sovereign's own generated body.
+// ── PREMIUM MATERIAL TIERS (from the decks): Pearl (free) · Silver/Gold/Platinum/Marble (Pro) ──
+// Iridescence = the "translucent glass, emerging colours" look; metals/marble = the premium spawns.
+const FINISHES = {
+  pearl:    { label:'✨ Pearl', pro:false, m:{ color:0xf3ead9, metalness:0.25, roughness:0.26, clearcoat:1, clearcoatRoughness:0.14, iridescence:1, iridescenceIOR:1.55, emissive:0xffecc9, emissiveIntensity:0.14 } },
+  silver:   { label:'🥈 Silver', pro:true, m:{ color:0xdfe4ea, metalness:1, roughness:0.17, clearcoat:0.6, iridescence:0.25 } },
+  gold:     { label:'🥇 Gold', pro:true, m:{ color:0xe6c25f, metalness:1, roughness:0.22, clearcoat:0.5, emissive:0x2e2005, emissiveIntensity:0.28 } },
+  platinum: { label:'💿 Platinum', pro:true, m:{ color:0xeff1f4, metalness:1, roughness:0.1, clearcoat:0.85, iridescence:0.4, iridescenceIOR:1.4 } },
+  marble:   { label:'🏛️ Marble', pro:true, m:{ color:0xf5f2ec, metalness:0, roughness:0.32, clearcoat:1, clearcoatRoughness:0.06, iridescence:0.25 } },
+};
+window.MEOK_FINISH = 'pearl';
+function finishMaterial(name){ const f=(FINISHES[name]||FINISHES.pearl).m; return new THREE.MeshPhysicalMaterial(Object.assign({ side:THREE.DoubleSide }, f)); }
+window.applyFinish = function(name){
+  if(!FINISHES[name]) return; window.MEOK_FINISH=name;
+  if(typeof hatchObj!=='undefined' && hatchObj){ hatchObj.traverse(o=>{ if(o.isMesh && !o.userData._glow){ o.material=finishMaterial(name); } }); }
+  if(typeof showHatch==='function') showHatch();
+};
+
+// HATCH skin — the sovereign body; renders in the chosen premium FINISH (Pearl/Silver/Gold/Platinum/Marble).
 let hatchObj=null;
 function showHatch(){
   if(hatchObj){ skin='hatch'; hatchObj.visible=true; if(orb)orb.visible=false; if(creature)creature.visible=false; if(currentVRM)currentVRM.scene.visible=false; if(rpmObj)rpmObj.visible=false; return; }
   const L=document.getElementById('loading'); L.classList.remove('hide');
   loader.load('/models/hatch.glb', (gltf)=>{
     hatchObj=gltf.scene;
-    // MEOK brand: the sovereign is a LUMINOUS light-being (warm gold glow), not solid metal.
-    hatchObj.traverse(o=>{ if(o.isMesh){
-      o.material = new THREE.MeshStandardMaterial({ color:0xe4c877, emissive:0xc98a2e, emissiveIntensity:0.5, metalness:0.12, roughness:0.34, side:THREE.DoubleSide });
+    // render in the chosen premium FINISH (Pearl/Silver/Gold/Platinum/Marble) + a soft glow shell
+    hatchObj.traverse(o=>{ if(o.isMesh && !o.userData._glow){
+      o.material = finishMaterial(window.MEOK_FINISH);
       o.frustumCulled=false;
-      // soft additive glow shell → the warm halo from the slides
-      try{ const g=new THREE.Mesh(o.geometry, new THREE.MeshBasicMaterial({ color:0xffd47a, transparent:true, opacity:0.14, blending:THREE.AdditiveBlending, side:THREE.BackSide })); g.scale.setScalar(1.045); o.add(g); }catch(e){}
+      try{ const g=new THREE.Mesh(o.geometry, new THREE.MeshBasicMaterial({ color:0xffd88a, transparent:true, opacity:0.12, blending:THREE.AdditiveBlending, side:THREE.BackSide })); g.scale.setScalar(1.05); g.userData._glow=true; o.add(g); }catch(e){}
     } });
     // scale to ~1.5 tall, FEET GROUNDED at y=0, centered x/z — exactly like the VRM skin that frames correctly
     try{
@@ -468,6 +490,16 @@ document.body.appendChild(rpmBtn);
   skins.appendChild(chip('✨ Emergence',function(){try{showEmergence();}catch(e){}},'The egg of light'));
   skins.appendChild(chip('🐉 Sovereign',function(){try{showHatch();}catch(e){}},'Your generated sovereign body'));
   document.body.appendChild(skins);
+  // premium FINISH picker (Pro material tiers) — Pearl free · Silver/Gold/Platinum/Marble Pro
+  const fin=document.createElement('div'); fin.id='finish';
+  ['pearl','silver','gold','platinum','marble'].forEach(function(k){
+    const f=FINISHES[k]; const b=document.createElement('button');
+    b.innerHTML=f.label+(f.pro?'<span class="pro">PRO</span>':'');
+    b.title=(f.pro?'Pro finish — ':'Free — ')+k;
+    b.onclick=function(){ if(window.applyFinish) window.applyFinish(k); };
+    fin.appendChild(b);
+  });
+  document.body.appendChild(fin);
 })();
 const rpmModal=document.createElement('div'); rpmModal.id='rpmmodal';
 rpmModal.style.cssText='position:fixed;inset:0;z-index:200;background:rgba(20,16,10,.78);display:none;align-items:center;justify-content:center;backdrop-filter:blur(4px)';
