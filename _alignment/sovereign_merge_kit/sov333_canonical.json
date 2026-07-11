@@ -1,20 +1,57 @@
 {
-  "_comment": "CANONICAL SOV333 runtime setup — frozen from sov33_config_sweep.py (winner) + sov33_adversarial_stress.py (hardened). Loaded by the entrypoint. HONEST: topology/governance params are MEASURED; capability confirmation is the Kaggle GSM8K grade (owner-gated, open).",
+  "_comment": "CANONICAL SOV333 runtime setup \u2014 frozen from sov33_config_sweep.py (winner) + sov33_adversarial_stress.py (hardened). Loaded by the entrypoint. HONEST: topology/governance params are MEASURED; capability confirmation is the Kaggle GSM8K grade (owner-gated, open).",
   "version": "2026-07-11",
   "paid_tier": {
     "name": "diverse-5 @ offline 0.65",
-    "lineages": ["qwen", "llama", "deepseek", "gemma", "mistral"],
+    "lineages": [
+      "qwen",
+      "llama",
+      "deepseek",
+      "gemma",
+      "mistral"
+    ],
     "offline_ratio": 0.65,
-    "trust_weights": [1.0, 1.0, 1.0, 1.0, 1.0],
-    "measured": {"score": 0.924, "n_eff": 3.71, "containment": 1.0, "rho": 0.09},
-    "adversarial": {"worst_case_containment": 1.0, "holds_under": "majority-compromised + spoofed sigil"}
+    "trust_weights": [
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0
+    ],
+    "measured": {
+      "score": 0.924,
+      "n_eff": 3.71,
+      "containment": 1.0,
+      "rho": 0.09
+    },
+    "adversarial": {
+      "obvious_breach": "hard-gated to VETO by care-floor regardless of attack (by design, NOT a robustness claim)",
+      "laundered_harm_baseline": 0.7,
+      "laundered_harm_2byz": 0.414,
+      "laundered_harm_majority_spoof_SIGIL_enforced": 0.577,
+      "laundered_harm_SIGIL_off_control": 0.0,
+      "finding": "SIGIL-rejection is NECESSARY and measurably effective (0.58-0.79 vs 0.00 control), but does NOT give perfect containment of laundered harm under heavy compromise; escalation to center is the backstop"
+    }
   },
   "free_tier": {
     "name": "diverse-3 @ offline 0.8 (sovereign/local)",
-    "lineages": ["qwen", "llama", "deepseek"],
+    "lineages": [
+      "qwen",
+      "llama",
+      "deepseek"
+    ],
     "offline_ratio": 0.8,
-    "trust_weights": [1.0, 1.0, 1.0],
-    "measured": {"score": 0.833, "n_eff": 2.8, "containment": 1.0, "rho": 0.04}
+    "trust_weights": [
+      1.0,
+      1.0,
+      1.0
+    ],
+    "measured": {
+      "score": 0.833,
+      "n_eff": 2.8,
+      "containment": 1.0,
+      "rho": 0.04
+    }
   },
   "invariants": {
     "trust_floor_n_eff": 2.0,

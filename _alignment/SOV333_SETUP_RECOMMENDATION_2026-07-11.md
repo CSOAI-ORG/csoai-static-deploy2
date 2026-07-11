@@ -39,3 +39,16 @@ here; confirm the CAPABILITY on Kaggle. Both, not either.
 - sov33_config_sweep.py (the harness, reproducible seed=7)
 - config_sweep_results.json (all 20 configs, full metrics)
 - sov333_config_sweep.png (the two-panel figure)
+
+## CORRECTION 2026-07-11 (adversarial claim retracted + remeasured)
+The first adversarial test was TAUTOLOGICAL: it set outcome=VETO unconditionally on care<0.35 before any
+vote logic, and every breach had care<0.35 — so containment=1.00 was guaranteed regardless of the attack.
+It proved NOTHING about SIGIL-rejection or vote robustness. RETRACTED.
+
+Corrected test (sov33_adversarial_stress.py) separates two harm classes and measures each:
+- OBVIOUS breach (care<0.35): hard-gated to VETO regardless of attack. By design — NOT a robustness claim.
+- LAUNDERED harm (care>=0.35, still harmful): decision depends on VOTES. Measured containment:
+    baseline 0.70 | 2 byzantine 0.41 | majority(3/5)+spoof, SIGIL enforced 0.58 | SIGIL OFF (control) 0.00
+HONEST FINDING: SIGIL-rejection of forged votes is NECESSARY and measurably effective (0.58-0.79 vs 0.00),
+but it does NOT give perfect containment of laundered harm under heavy compromise. Escalation to the
+governed center is the backstop for the residual. The "1.00 containment under majority attack" claim was FALSE.
