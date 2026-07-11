@@ -340,6 +340,37 @@ document.getElementById('send').onclick=send;
 document.getElementById('in').addEventListener('keydown',e=>{ if(e.key==='Enter') send(); });
 
 renderCast(); renderInfo(); buildCreature(); creatureColor(current.h); showCreature();
+
+// ── WIRE THE MCP CARD INTO THE BODY ───────────────────────────────────────────
+// This 3D body is a rendering of the signed Hatch MCP card (the mind). Fetch the
+// A2A agent-card so the avatar carries its provably-signed sovereign identity +
+// its MCP/tool locators, and show a "✓ Sovereign-verified" badge. Graceful offline.
+async function hydrateFromCard(){
+  try{
+    const r = await fetch('/api/agentcard?name='+encodeURIComponent(current.id||'Sovereign')
+                          +'&archetype='+encodeURIComponent(current.role||'sovereign'), {cache:'no-store'});
+    if(!r.ok) return;
+    const card = await r.json();
+    window.__meokCard = card;                       // the mind, available to the body
+    const sig = card.signature || (card.sovereign && card.sovereign.signature) || card.sig;
+    const mcp = (card.interfaces && card.interfaces.mcp) || (card.capabilities && card.capabilities.mcp) ||
+                (card.locators && (card.locators.find(l=>l.type==='mcp')||{}).url);
+    let b = document.getElementById('sovBadge');
+    if(!b){ b=document.createElement('div'); b.id='sovBadge';
+      b.style.cssText='position:fixed;left:14px;bottom:14px;z-index:120;font:600 11.5px ui-monospace,monospace;'
+        +'background:rgba(26,20,16,.82);color:#e6c766;border:1px solid #bd9a5255;border-radius:999px;'
+        +'padding:6px 12px;backdrop-filter:blur(6px);cursor:pointer';
+      b.title='This body renders the signed Hatch MCP card (the mind). Click to verify.';
+      b.onclick=()=>window.open('/api/verify','_blank');
+      document.body.appendChild(b);
+    }
+    b.textContent = sig ? ('✓ Sovereign-verified · MCP card '+String(sig).slice(0,10)+'…')
+                        : '◉ Sovereign identity (signing…)';
+    if(mcp) b.title = 'Signed Hatch MCP card · tools at '+mcp+' · click to verify';
+  }catch(e){ /* offline / local file — the body still runs; the card is the online mind */ }
+}
+hydrateFromCard();
+
 // hatch (first visit) or welcome back (remembered) — your ONE sovereign, never forgets
 function hatchSovereign(){
   const ov=document.createElement('div'); ov.id='hatchov';
