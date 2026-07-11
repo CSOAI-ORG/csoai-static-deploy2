@@ -873,6 +873,64 @@ def capability_years_to_days(mode: str = 'time', goal: str = None, name: str = N
         return {'capability': 'y2d', 'error': str(e)[:200]}
 
 
+def capability_owem_sweep(mode: str = 'axes', max_configs: int = 0):
+    """OWEM sweep: build all variants, test, mix to find true SOV33 setup.
+
+    4 axes: routing (5) × brain (4) × care (5) × sigil (4) = 400 configs.
+    Sweep all, rank by final_score, return Pareto-optimal front.
+    """
+    try:
+        from sov33_owem_sweep import (
+            AXIS_ROUTING, AXIS_BRAIN, AXIS_CARE, AXIS_SIGIL,
+            run_full_sweep, find_true_setup, evaluate_config,
+        )
+        if mode == 'axes':
+            return {
+                'capability': 'owem-sweep',
+                'mode': 'axes',
+                'n_configs': len(AXIS_ROUTING) * len(AXIS_BRAIN) * len(AXIS_CARE) * len(AXIS_SIGIL),
+                'routing': AXIS_ROUTING,
+                'brain': AXIS_BRAIN,
+                'care': AXIS_CARE,
+                'sigil': AXIS_SIGIL,
+            }
+        if mode == 'mix':
+            result = find_true_setup(dry_run=True, max_configs=max_configs)
+            return {
+                'capability': 'owem-sweep',
+                'mode': 'mix',
+                'true_setup': result['true_setup'],
+                'pareto_optimal': result['pareto_optimal'],
+                'method': 'full sweep + Pareto rank + final_score weighting',
+            }
+        if mode == 'sweep':
+            result = run_full_sweep(dry_run=True, max_configs=max_configs, parallel=4)
+            return {
+                'capability': 'owem-sweep',
+                'mode': 'sweep',
+                'n_completed': result['n_completed'],
+                'elapsed_s': result['elapsed_s'],
+                'top_10': result['top_10'],
+                'pareto': result['pareto'],
+            }
+        if mode == 'eval':
+            r = evaluate_config(
+                routing='defer_to_escalate',
+                brain='qwen2.5:3b_local',
+                care='conformal',
+                sigil='hash_ed25519',
+                dry_run=True,
+            )
+            return {
+                'capability': 'owem-sweep',
+                'mode': 'eval',
+                'result': r,
+            }
+        return {'capability': 'owem-sweep', 'error': f'unknown mode {mode}'}
+    except Exception as e:
+        return {'capability': 'owem-sweep', 'error': str(e)[:200]}
+
+
 # ═══════════════════════════════════════════════════════════════
 # SOVEREIGN CLASS
 # ═══════════════════════════════════════════════════════════════
@@ -1086,6 +1144,7 @@ CAPABILITIES = {
     'sondera': capability_sondera,
     'agentdog': capability_agentdog,
     'y2d': capability_years_to_days,
+    'owem-sweep': capability_owem_sweep,
 }
 
 
@@ -1196,6 +1255,7 @@ def main():
     print("  sov33 --capability sondera                 (Cedar pre-execution gate)")
     print("  sov33 --capability agentdog                (decorrelated L4 checker spec)")
     print("  sov33 --capability y2d                     (YEARS→DAYS framework)")
+    print("  sov33 --capability owem-sweep              (find true SOV33 setup via sweep)")
     print("  sov33 --list")
     print("  sov33 --status")
     print("─" * 70)
