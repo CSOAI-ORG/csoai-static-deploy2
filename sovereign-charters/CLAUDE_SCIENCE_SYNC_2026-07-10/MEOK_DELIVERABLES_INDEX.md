@@ -124,6 +124,7 @@ honestly. All version IDs are the latest as of this index.
 | EXP-PCI | MEOK_EXP_PCI.md | perturbational complexity: inverted-U, peak g≈0.6 |
 | EXP-BIND | MEOK_EXP_BIND.md | binding: synchrony 100% vs bag 42% (SIGIL = binding tag) |
 | EXP-SELF | MEOK_EXP_SELF.md | self-model: own-action R²=0.95, forward-pred 0.000 |
+| EXP-JSPACE | MEOK_EXP_JSPACE.md | **weights-access probe, RUN on real gpt2-124M**: logit lens → predictions resolve late (L9–L11); linear probe → sentiment decodable early (L0=0.93, lexical). Kills the "waits on Oracle" blocker. |
 | OWEM L4 Bench | MEOK_OWEM_L4_Bench.md | 4/5 instruments running, filed into OWEM |
 | BFT new applications | MEOK_BFT_New_Applications.md | radar fusion 6.5×, ensemble decode, robust metrics 12× |
 | BFT universal-fusion spec | MEOK_BFT_Universal_Fusion_Spec.md | install points across the estate |

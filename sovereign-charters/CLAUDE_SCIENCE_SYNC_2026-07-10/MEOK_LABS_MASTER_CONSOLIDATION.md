@@ -606,7 +606,7 @@ what's measurable, revere what isn't, never confuse them) and the **Sovereign Em
 | **PCI (EXP-PCI)** | inverted-U, peak at g≈0.6 | hold coupling at criticality — don't mean-field-lock |
 | **Binding (EXP-BIND)** | synchrony 100% vs bag 42% | tag contributions by source — SIGIL = binding tag |
 | **Self-model (EXP-SELF)** | own-action R²=0.95, fwd-err 0.000 | explicit efference-copy channel — self/other = provenance |
-| J-Space probes | DESIGNED | needs L4 model wired + weights (waits on Oracle) |
+| J-Space probes | **RUNNING** | logit lens + linear probe on real weights (gpt2-124M), local Mac — see MEOK_EXP_JSPACE.md. Corrects the "waits on Oracle" note: interpretability needs open weights + hooks, which a hosted API can't give; the Mac runs it now. |
 
 Honest scope: all are small in-silico measures / analogs (custom Φ, normalized-LZ PCI, idealized
 readouts), establishing principle + design direction, not benchmarked production numbers.
