@@ -31,15 +31,24 @@ import time
 import hashlib
 import argparse
 from pathlib import Path
+import os as _os, tempfile as _tf
+def _sov_dir():
+    d=_os.environ.get('SOV33_SIGIL_DIR') or _os.path.join(_os.path.expanduser('~'),'.sovereign')
+    try:
+        _os.makedirs(d,exist_ok=True); return d
+    except Exception:
+        d=_os.path.join(_tf.gettempdir(),'sov33_sigil'); _os.makedirs(d,exist_ok=True); return d
+_SOVDIR=_sov_dir()
+
 from datetime import datetime, timezone
 
 sys.path.insert(0, '/Users/nicholas/clawd/_alignment/sovereign_merge_kit')
 
 
-SIGIL_FILE = Path.home() / '.sovereign' / 'growth_controller.sigil.jsonl'
+SIGIL_FILE = Path(_SOVDIR) / 'growth_controller.sigil.jsonl'
 SIGIL_FILE.parent.mkdir(parents=True, exist_ok=True)
-LABELS_FILE = Path.home() / '.sovereign' / 'nn_retrain_queue.jsonl'
-WEIGHTS_DIR = Path.home() / '.sovereign' / 'nn_weights'
+LABELS_FILE = Path(_SOVDIR) / 'nn_retrain_queue.jsonl'
+WEIGHTS_DIR = Path(_SOVDIR) / 'nn_weights'
 
 
 def sigil_emit(hop: dict) -> str:
@@ -180,13 +189,13 @@ def measure_memory() -> dict:
         n_labels = sum(1 for _ in LABELS_FILE.open())
 
     n_mem = 0
-    mem_file = Path.home() / '.sovereign' / 'sovereign_memory.jsonl'
+    mem_file = Path(_SOVDIR) / 'sovereign_memory.jsonl'
     if mem_file.exists():
         n_mem = sum(1 for _ in mem_file.open())
 
     n_sigil = 0
     sigil_count = 0
-    sigil_dir = Path.home() / '.sovereign'
+    sigil_dir = Path(_SOVDIR)
     for f in sigil_dir.glob('*.sigil.jsonl'):
         sigil_count += sum(1 for _ in f.open())
         n_sigil += 1
@@ -228,10 +237,10 @@ def measure_brains() -> dict:
 
     # Check Groq
     try:
-        if os.environ.get('GROQ_API_KEY') or (Path.home() / '.sovereign' / 'keystore' / 'groq_api_key.txt').exists():
+        if os.environ.get('GROQ_API_KEY') or (Path(_SOVDIR) / 'keystore' / 'groq_api_key.txt').exists():
             import urllib.request
             if not os.environ.get('GROQ_API_KEY'):
-                os.environ['GROQ_API_KEY'] = (Path.home() / '.sovereign' / 'keystore' / 'groq_api_key.txt').read_text().strip()
+                os.environ['GROQ_API_KEY'] = (Path(_SOVDIR) / 'keystore' / 'groq_api_key.txt').read_text().strip()
             req = urllib.request.Request(
                 'https://api.groq.com/openai/v1/models',
                 headers={'Authorization': f'Bearer {os.environ["GROQ_API_KEY"]}'},
@@ -305,7 +314,7 @@ def measure_safety_coverage() -> dict:
     """Measure DORADO safety coverage (the refusals over time)."""
     from collections import Counter
     counts = Counter()
-    dorado_file = Path.home() / '.sovereign' / 'doradostop_events.sigil.jsonl'
+    dorado_file = Path(_SOVDIR) / 'doradostop_events.sigil.jsonl'
     if dorado_file.exists():
         for line in dorado_file.open():
             if line.strip():
@@ -348,7 +357,7 @@ def trigger_label_retrain() -> dict:
 
 def trigger_license_audit() -> dict:
     """If 30+ days since last audit, re-audit."""
-    audit_file = Path.home() / '.sovereign' / 'license_audit_report.json'
+    audit_file = Path(_SOVDIR) / 'license_audit_report.json'
     last_audit_days = None
     if audit_file.exists():
         try:
@@ -372,7 +381,7 @@ def trigger_license_audit() -> dict:
 def trigger_safety_test() -> dict:
     """If 7+ days since last safety test, re-run DORADO."""
     safety_files = [
-        Path.home() / '.sovereign' / 'doradostop_events.sigil.jsonl',
+        Path(_SOVDIR) / 'doradostop_events.sigil.jsonl',
     ]
     last_safety_days = None
     for f in safety_files:
@@ -402,7 +411,7 @@ def trigger_safety_test() -> dict:
 def trigger_brain_addition() -> dict:
     """If high ask rate, add a faster brain to federation."""
     # Count asks in last hour
-    sigil_file = Path.home() / '.sovereign' / 'sov33_api_server.sigil.jsonl'
+    sigil_file = Path(_SOVDIR) / 'sov33_api_server.sigil.jsonl'
     if not sigil_file.exists():
         return {
             'trigger': 'brain_addition',
