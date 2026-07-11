@@ -33,23 +33,30 @@ Honest register: what's wired, what's orphaned, what's duplicated, and the singl
    list (`sovspace.html`). That's the menu confusion. (The arcade complaint was the old
    three-globe `sovspace3d`; now rebuilt on real Cesium.)
 
-## Bridges applied today (safe, additive)
-- ✅ `sovspace3d.html` rebuilt on **real Cesium 1.118** (DEFONEOS engine parity) — no longer arcade.
+## Bridges applied (safe, additive)
+- ✅ `sovspace3d.html` rebuilt on **real Cesium** (DEFONEOS engine parity) — no longer arcade.
 - ✅ Surfaced it in the OS nav as **"🌐 SOV Space — the 3D world"** (was orphaned; only the character
   card linked it). Now discoverable from the main menu.
 - ✅ Confirmed `cop.html` is only a code-comment reference in sovspace3d (not a broken link/404).
 - ✅ Character companion now carries the **DEFONEOS Sovereign/Horus voice** (one spine, two markets).
 
-## Recommended next consolidation (deliberate pass — NOT done yet, needs a focused session)
-1. **One globe engine.** Pick Cesium **1.123** (already the OS default via earth3d-photoreal) and
-   pin sovspace3d to the same version; delete the three.js `universe.html`. Then decide: does
-   "MEOK Earth" (your nodes on a map) and "SOV Space — the world" (explore the globe) stay two modes
-   of ONE Cesium surface, or merge? Target = **one Cesium world, two entry intents** (my data / explore).
-2. **Disambiguate "SOV Space."** Make the 3D world the primary "SOV Space"; the tools list becomes a
-   *tab/face inside it* (the Agents/J-Space faces already gesture at this) or renamed "SOV Tools".
-3. **Delete the 3 dead orphans** from prod (`universe`, `hatch-demo`, `legacy-demo`); keep
-   `embed-test` out of the deploy (dev-only). Migrate any unique value first, don't just rm.
-4. **Pin all CDN versions** (three 0.160/0.169, Cesium 1.118/1.123) to one each — reduces drift + bytes.
+## Convergence executed 2026-07-11 (Nick: "eat/absorb into ONE, one by one")
+- ✅ **One Cesium version.** Pinned `sovspace3d` 1.118 → **1.123** to match `earth3d-photoreal` (the
+  OS's other globe). Re-verified render on 1.123.1 (globe + labels + fly-to intact). No version drift.
+- ✅ **Killed the duplicate 3rd globe.** `universe.html` (old three.js "Sovereign Universe") is now a
+  **redirect → `/sovspace3d.html`** (canonical + reversible; old links keep working). Down to ONE
+  three.js-globe = zero; the WebGL globe engine is now Cesium everywhere.
+- ▢ `hatch-demo.html` / `legacy-demo.html` = **real standalone demos, NOT globe dupes** — surface
+  (link) them rather than delete; `embed-test.html` = dev-only, keep out of nav.
+
+## Remaining deliberate step (the big ONE — needs its own careful pass)
+- **Merge the two Cesium globes.** `earth3d-photoreal` ("MEOK Earth", node-select → Sovereign speaks,
+  iframed into the OS) and `sovspace3d` ("SOV Space world", standalone) still overlap. Target = **one
+  Cesium world, two entry intents** (🌍 *my data/nodes* vs 🌐 *explore*). Requires porting the
+  node-select + trust overlay wiring into sovspace3d — real work, do it as one focused change, not a
+  silent half-merge. Until then both are pinned to Cesium 1.123 so there's no drift.
+- **Disambiguate "SOV Space"** fully: fold the tools list (`sovspace.html`) into the world's
+  Agents/J-Space face so "SOV Space" means ONE thing.
 
 ## Honest status
 Front now **matches back better**: the real 3D world exists and is reachable; the companion speaks the

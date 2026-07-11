@@ -2,7 +2,7 @@
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>SOV Space — Sovereign World</title>
 <meta name="description" content="A real 3D world on one governed globe — real satellite streets, real sun, day & night. The Sovereign flies it for you. Free, client-GPU, no paid tiles.">
-<link href="https://cdn.jsdelivr.net/npm/cesium@1.118/Build/Cesium/Widgets/widgets.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/cesium@1.123/Build/Cesium/Widgets/widgets.css" rel="stylesheet">
 <style>
  html,body{margin:0;height:100%;background:#01030a;overflow:hidden;font-family:-apple-system,system-ui,sans-serif;color:#eee}
  #c{position:absolute;inset:0;width:100vw;height:100vh}
@@ -34,12 +34,12 @@
  <button class="nb on" data-l="world">🌍 World</button><button class="nb" data-l="streets">🛣 Streets</button><button class="nb" data-l="satellite">🛰 Satellite</button><button class="nb" data-l="night">🌃 Night</button><button class="nb" data-l="lighting">☀ Sun on</button></div>
 <div id="panel" class="glass" style="left:16px;bottom:70px;width:min(360px,90vw);max-height:60vh;overflow:auto;padding:14px 16px;display:none;font-size:13px;line-height:1.5"></div>
 <div id="dock" class="glass"><div id="dhead">🜏 <span>Sovereign</span></div><div id="log"></div><div id="bar"><input id="qin" placeholder="tell the Sovereign where to go…" autocomplete="off"><button id="go">➤</button></div></div>
-<script src="https://cdn.jsdelivr.net/npm/cesium@1.118/Build/Cesium/Cesium.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/cesium@1.123/Build/Cesium/Cesium.js"></script>
 <script>
-// ── SOV Space on the REAL DEFONEOS engine: CesiumJS 1.118, free path (no paid ion/Google token).
+// ── SOV Space on the REAL DEFONEOS engine: CesiumJS 1.123 (one version across the OS globes), free path (no paid ion/Google token).
 //    Real OSM street tiles + optional NASA satellite/night-lights + real sun day/night terminator.
 //    Same governed globe as DEFONEOS cop.html; the Sovereign (Horus voice) flies it for you. ──
-window.CESIUM_BASE_URL = 'https://cdn.jsdelivr.net/npm/cesium@1.118/Build/Cesium/';
+window.CESIUM_BASE_URL = 'https://cdn.jsdelivr.net/npm/cesium@1.123/Build/Cesium/';
 Cesium.Ion.defaultAccessToken = '';                       // no ion token — stay free/sovereign
 const osm = () => new Cesium.OpenStreetMapImageryProvider({ url: 'https://a.tile.openstreetmap.org/' });
 // NASA GIBS (free, no key): true-colour satellite + VIIRS night lights (Black Marble)
