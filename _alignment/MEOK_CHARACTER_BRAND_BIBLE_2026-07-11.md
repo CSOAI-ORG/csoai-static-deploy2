@@ -33,9 +33,15 @@ When rendering a 3D mesh, give it **emissive gold + a soft additive glow aura** 
 - ✅ **Deep negative space + minimal type** (navy heading + one line of warm copy).
 
 ## Applied this session (character.html)
-- Body re-graded to **luminous emissive gold + soft glow aura** (light-being, not metal).
-- **Warm cinematic lighting** (warm key + a warm "inner light" point light) + a **golden halo backdrop**.
-- Palette already cream/navy/gold; emergence orb already an "egg of light" (on-brand).
+- **THE SOVEREIGN is now a procedural luminous being of light** (LatheGeometry flame-figure + halo +
+  aura shells + rising sparks) — the brand-bible Stage-3 "luminous golden light-being," NOT the
+  Hunyuan3D warrior mesh (which read menacing → retired as the branded hero; still loadable as a raw skin).
+- **Root-cause fix for the "dark/demonic silhouette":** the Sovereign body is now **emissive-FIRST**, so
+  the premium finishes (Pearl free · Silver/Gold/Platinum/Marble Pro) only **re-tint its glow** — a finish
+  can never again produce a dark metal silhouette. Gold glows warm gold, Silver cool silver, etc. Verified
+  live on os.meok.ai.
+- **Warm cinematic lighting** (warm key + a warm "inner light" point light) + ACES tone-mapping + subtle
+  bloom; palette cream/navy/gold; emergence orb = "egg of light" (on-brand).
 
 ## For the MEOK Factory (character pipeline) — the standard to generate to
 When generating characters (Hunyuan3D / world models / art), prompt for: *"a warm, luminous, graceful
