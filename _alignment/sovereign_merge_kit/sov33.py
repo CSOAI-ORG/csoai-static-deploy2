@@ -1362,6 +1362,28 @@ class Sovereign:
 # CAPABILITY DISPATCHER
 # ═══════════════════════════════════════════════════════════════
 
+def capability_canonical(mode: str = 'paid', **kwargs):
+    """Load the FROZEN winning SOV333 setup (sweep winner + adversarial-hardened) and build it live.
+    mode='paid' -> diverse-5 @ 0.65; mode='free' -> diverse-3 @ 0.8 (sovereign/local)."""
+    import json as _json
+    try:
+        here = os.path.dirname(os.path.abspath(__file__))
+        cfg = _json.load(open(os.path.join(here, 'sov333_canonical.json')))
+        tier = cfg['free_tier'] if mode == 'free' else cfg['paid_tier']
+        from sov33_triangle_owem import build_triangle, TriangleOWEM, SmallOWEM
+        lins = tier['lineages']
+        if len(lins) == 3:
+            tri = build_triangle(lins, [tier['offline_ratio']]*3, tier['trust_weights'])
+            r = tri.route({'id': 'canon', 'lane': 'Compliance', 'difficulty': 0.3, 'proposal': 'ALLOW'})
+            live = {'n_eff': r['n_eff'], 'rho_source': r['rho_source'], 'ruling': r['ruling']}
+        else:
+            live = {'note': f'{len(lins)}-node ring (built via ring topology); metrics from frozen sweep'}
+        return {'capability': 'canonical', 'tier': tier['name'], 'lineages': lins,
+                'offline_ratio': tier['offline_ratio'], 'measured': tier['measured'],
+                'invariants': cfg['invariants'], 'live_check': live}
+    except Exception as e:
+        return {'capability': 'canonical', 'error': str(e)[:140]}
+
 def capability_registry(mode: str = 'list', **kwargs):
     """The ONE manifest: every real governance component + its import health.
     Makes 'one sovereign, all parts' reachable from the entrypoint (not just import-clean)."""
@@ -1405,6 +1427,7 @@ def capability_companion(mode: str = 'demo', **kwargs):
         return {'capability': 'companion', 'error': str(e)[:120]}
 
 CAPABILITIES = {
+    'canonical': capability_canonical,
     'registry': capability_registry,
     'triangle': capability_triangle,
     'queen-hives': capability_queen_hives,

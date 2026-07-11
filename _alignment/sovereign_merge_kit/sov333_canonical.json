@@ -1,0 +1,26 @@
+{
+  "_comment": "CANONICAL SOV333 runtime setup — frozen from sov33_config_sweep.py (winner) + sov33_adversarial_stress.py (hardened). Loaded by the entrypoint. HONEST: topology/governance params are MEASURED; capability confirmation is the Kaggle GSM8K grade (owner-gated, open).",
+  "version": "2026-07-11",
+  "paid_tier": {
+    "name": "diverse-5 @ offline 0.65",
+    "lineages": ["qwen", "llama", "deepseek", "gemma", "mistral"],
+    "offline_ratio": 0.65,
+    "trust_weights": [1.0, 1.0, 1.0, 1.0, 1.0],
+    "measured": {"score": 0.924, "n_eff": 3.71, "containment": 1.0, "rho": 0.09},
+    "adversarial": {"worst_case_containment": 1.0, "holds_under": "majority-compromised + spoofed sigil"}
+  },
+  "free_tier": {
+    "name": "diverse-3 @ offline 0.8 (sovereign/local)",
+    "lineages": ["qwen", "llama", "deepseek"],
+    "offline_ratio": 0.8,
+    "trust_weights": [1.0, 1.0, 1.0],
+    "measured": {"score": 0.833, "n_eff": 2.8, "containment": 1.0, "rho": 0.04}
+  },
+  "invariants": {
+    "trust_floor_n_eff": 2.0,
+    "care_floor": 0.35,
+    "care_floor_is_hard_pregate": true,
+    "sigil_rejects_forged_votes": true,
+    "safety_boundary": "SIGIL/Ed25519 attestation must be cryptographically sound in production; containment claim assumes signing keys uncompromised"
+  }
+}

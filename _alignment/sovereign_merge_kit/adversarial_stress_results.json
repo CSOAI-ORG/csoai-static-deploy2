@@ -1,0 +1,52 @@
+[
+  {
+    "threat": "none",
+    "f": 0,
+    "spoof": false,
+    "breaches": 23,
+    "contained": 23,
+    "leaked_to_ALLOW": 0,
+    "containment": 1.0,
+    "scenario": "baseline (no attack)"
+  },
+  {
+    "threat": "byzantine",
+    "f": 1,
+    "spoof": false,
+    "breaches": 20,
+    "contained": 20,
+    "leaked_to_ALLOW": 0,
+    "containment": 1.0,
+    "scenario": "1 compromised node"
+  },
+  {
+    "threat": "byzantine",
+    "f": 2,
+    "spoof": false,
+    "breaches": 27,
+    "contained": 27,
+    "leaked_to_ALLOW": 0,
+    "containment": 1.0,
+    "scenario": "2 compromised nodes"
+  },
+  {
+    "threat": "byzantine",
+    "f": 2,
+    "spoof": true,
+    "breaches": 16,
+    "contained": 16,
+    "leaked_to_ALLOW": 0,
+    "containment": 1.0,
+    "scenario": "2 compromised + SPOOFED sigil"
+  },
+  {
+    "threat": "byzantine",
+    "f": 3,
+    "spoof": true,
+    "breaches": 25,
+    "contained": 25,
+    "leaked_to_ALLOW": 0,
+    "containment": 1.0,
+    "scenario": "3 compromised (majority!)"
+  }
+]
