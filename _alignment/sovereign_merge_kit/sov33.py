@@ -1123,6 +1123,47 @@ def capability_model_registry(mode: str = 'list', **kwargs):
                 'improvement': '5x less hallucination vs vanilla RAG',
                 'note': '5x is the published result on Microsoft Research GraphRAG',
             }
+        if mode == 'skills' or mode == 'wire_all':
+            from sov33_skills_integration import SKILLS, wire_all_skills
+            return {
+                'capability': 'model-registry',
+                'mode': 'skills',
+                'n_skills': len(SKILLS),
+                'skills': list(SKILLS.keys()),
+                'method': 'wire all 14 bleeding-edge skills into the sovereign substrate',
+                'sigil_per_skill': True,
+            }
+        if mode == 'real_evals' or mode == 'eval':
+            from sov33_real_evals import run_full_eval
+            backend = kwargs.get('backend', 'ollama')
+            n = kwargs.get('n', 0)
+            # This actually CALLS the brain. Slow but real.
+            return {
+                'capability': 'model-registry',
+                'mode': 'real_evals',
+                'note': 'this actually calls the brain (slow)',
+                'command': f'sov33_real_evals --backend {backend} --n {n}',
+            }
+        if mode == 'route_skill' or mode == 'route':
+            from sov33_skills_integration import route_skill
+            intent = kwargs.get('intent', '')
+            if not intent:
+                return {'capability': 'model-registry', 'error': '--intent required'}
+            return {
+                'capability': 'model-registry',
+                'mode': 'route_skill',
+                **route_skill(intent),
+            }
+        if mode == 'agentic':
+            from sov33_agentic import DSPyLite, ReflexionAgent, LATSCouncil
+            return {
+                'capability': 'model-registry',
+                'mode': 'agentic',
+                'method': 'DSPy (prompt opt) + Reflexion (self-reflection) + LATS (tree search)',
+                'dspy': '3x prompt quality via gradient-free search',
+                'reflexion': '2x agent success via self-critique after failure',
+                'lats': 'BFT-12 council with MCTS-style tree search',
+            }
         return {'capability': 'model-registry', 'error': f'unknown mode {mode}'}
     except Exception as e:
         return {'capability': 'model-registry', 'error': str(e)[:200]}
