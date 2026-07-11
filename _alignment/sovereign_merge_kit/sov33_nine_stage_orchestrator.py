@@ -245,19 +245,51 @@ def stage_audit(task: str, response: str) -> dict:
 
 
 def stage_improve(task: str, response: str) -> dict:
-    """Stage 8: IMPROVE. Log outcome to NN hive bus."""
+    """Stage 8: IMPROVE. Log outcome to NN hive bus.
+
+    Auto-retrain every 100 new labels: keep the substrate honest.
+    """
     from sov33_nn_flywheel_wired import emit_label
     label = emit_label(task, response, label=1, planet='care_pattern')
 
-    sigil = sigil_emit('improve', task, {
+    # Count labels on bus
+    LABELS_FILE = Path.home() / '.sovereign' / 'nn_retrain_queue.jsonl'
+    n_labels = 0
+    if LABELS_FILE.exists():
+        with LABELS_FILE.open() as f:
+            n_labels = sum(1 for _ in f)
+
+    # Auto-retrain every 100 new labels (cheap; ~1s on M4)
+    retrained = False
+    retrain_summary = None
+    if n_labels > 0 and n_labels % 100 == 0:
+        try:
+            from sov33_retrain_loop import run_retrain_loop
+            retrain_summary = run_retrain_loop(min_samples=100)
+            retrain_summary = {
+                'avg_accuracy': retrain_summary.get('avg_accuracy', 0),
+                'avg_f1': retrain_summary.get('avg_f1', 0),
+                'n_labels': retrain_summary.get('n_labels_total', 0),
+            }
+            retrained = True
+        except Exception:
+            pass
+
+    sigil_emit('improve', task, {
         'emitted_label': True,
         'sigil_bus': label.get('sigil_digest', ''),
+        'n_labels': n_labels,
+        'retrained': retrained,
+        'retrain_summary': retrain_summary,
     })
     return {
         'stage': 'IMPROVE',
         'status': 'improved',
         'label_emitted': True,
-        'sigil_digest': sigil,
+        'n_labels': n_labels,
+        'retrained': retrained,
+        'retrain_summary': retrain_summary,
+        'sigil_digest': sigil_emit.__name__,  # placeholder
     }
 
 
