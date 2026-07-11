@@ -1582,15 +1582,48 @@ function sovContext(){ const c=window.MEOK_CTX||{}; const bits=[];
 async function sovAsk(text){
   const log=document.getElementById('sovlog'); let think=null;
   if(log){ think=document.createElement('div'); think.className='sovmsg ai'; think.textContent='…'; log.appendChild(think); log.scrollTop=log.scrollHeight; }
+  const _pfk=(text||'').trim().toLowerCase();
   try{
-    const r=await fetch(SOV3_CHAT,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:text, queen_id:'queen-king', register:'plain', persona:sovContext(), model:window.MEOK_MODEL})});
-    const d=await r.json(); const ans=((d&&(d.response||d.answer||d.text))||'').trim();
+    let ans='';
+    if(window._sovPF && window._sovPF[_pfk]){ ans=((await window._sovPF[_pfk])||'').trim(); } // instant: we pre-predicted this while you typed
+    if(!ans){ const r=await fetch(SOV3_CHAT,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:text, queen_id:'queen-king', register:'plain', persona:sovContext(), model:window.MEOK_MODEL})});
+      const d=await r.json(); ans=((d&&(d.response||d.answer||d.text))||'').trim(); }
     if(think) think.remove();
     if(ans) sovSay(esc(ans)); else throw 0;
     sovToolHints(text);   // orchestrator: surface matching tools from the 377-fleet → SOV Space
     sovKnowledge(text);   // federate the world's open knowledge (Wikipedia/Wikidata + Data Commons)
   }catch(e){ if(think) think.remove(); sovSay("I hear you — I can open apps, switch your current (work / personal), change your signature, or take you into MEOK Earth. <span style='color:var(--dim)'>(My deeper SOV3 brain isn't reachable right now.)</span>"); sovToolHints(text); sovKnowledge(text); }
 }
+// ── PREDICTIVE TYPING: a small on-device model-style predictor guesses what you're about to say
+//    (ghost suggestion · Tab to accept) AND pre-fetches the answer in the background — so the moment
+//    you hit Enter it's already there. Grounded in the Sovereign's REAL command vocabulary + your own
+//    history (never hallucinated), and only pre-fetches open questions (skips instant local commands). ──
+(function sovPredict(){
+  const inp=document.getElementById('sovin'); if(!inp) return;
+  const VOCAB=["what governs my industry","what governs a bank","open MEOK Earth","open revenue","open guardian","open family","open delboy","set up my sovereign","my day","my reminders","my notes","work mode","life mode","weather in ","remind me to ","note: ","take the tour","3d world quality","what can you do","what do you remember about me","time in Tokyo","days until Christmas","become Guardian","verify a badge","take me to Tokyo","how does the signing work","is my data private","what can you see about me"];
+  function hist(){ try{ return (window.SOV_LOG||[]).filter(m=>m.w==='me').map(m=>m.t); }catch(e){ return []; } }
+  function best(q){ if(!q||q.trim().length<2) return ''; const ql=q.toLowerCase();
+    const pool=hist().slice(-40).reverse().concat(VOCAB);
+    let hit=pool.find(s=>s&&s.toLowerCase().startsWith(ql)&&s.length>q.length);      // true completion first
+    if(!hit) hit=pool.find(s=>s&&s.toLowerCase().includes(ql)&&s.toLowerCase().trim()!==ql.trim());
+    return hit||''; }
+  const ghost=document.createElement('div'); ghost.id='sovghost';
+  ghost.style.cssText='position:absolute;left:8px;right:8px;bottom:100%;margin-bottom:7px;padding:6px 12px;font:13px system-ui;color:var(--dim);pointer-events:none;display:none;background:rgba(20,15,11,.82);border:1px solid var(--line,rgba(201,168,76,.3));border-radius:11px;backdrop-filter:blur(8px);white-space:nowrap;overflow:hidden;text-overflow:ellipsis';
+  try{ inp.parentNode.style.position='relative'; inp.parentNode.appendChild(ghost); }catch(e){}
+  let cur='';
+  let pfT; window._sovPF=window._sovPF||{};
+  function prefetch(q){ clearTimeout(pfT); q=(q||'').trim(); if(q.length<8) return;
+    if(/^(open |my |remind|note|weather|work mode|life mode|become |take me|set (?:my )?home|timer|snooze|forget|clear|\d)/i.test(q)) return; // these resolve instantly on-device — no LLM
+    pfT=setTimeout(function(){ const key=q.toLowerCase(); if(window._sovPF[key]) return;
+      const keys=Object.keys(window._sovPF); if(keys.length>12) delete window._sovPF[keys[0]];        // cap the cache
+      try{ window._sovPF[key]=fetch(SOV3_CHAT,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:q,queen_id:'queen-king',register:'plain',persona:sovContext(),model:window.MEOK_MODEL})}).then(r=>r.json()).then(d=>((d&&(d.response||d.answer||d.text))||'').trim()).catch(function(){return'';}); }catch(e){} }, 340); }
+  function show(){ const q=inp.value; cur=best(q);
+    if(cur){ ghost.style.display='block'; ghost.innerHTML='<span style="opacity:.7">Tab ↹</span> &nbsp;'+esc(cur); } else ghost.style.display='none';
+    prefetch(q); }
+  inp.addEventListener('input',show);
+  inp.addEventListener('keydown',function(e){ if(e.key==='Tab' && cur && inp.value.toLowerCase()!==cur.toLowerCase()){ e.preventDefault(); inp.value=cur; ghost.style.display='none'; show(); } else if(e.key==='Enter'){ ghost.style.display='none'; } });
+  inp.addEventListener('blur',function(){ setTimeout(function(){ghost.style.display='none';},160); });
+})();
 // ── Select a node on the map → the Sovereign explains it IN the chat (the OS narrates itself) ──
 async function sovExplainNode(node){ if(!node) return; window.MEOK_CTX.node=node; sovToggle(true); if(innerWidth<=760) document.body.classList.add('sov-open');
   sovSay('📍 '+esc(node.name)+(node.role?(' · '+esc(node.role)):''),'me');
