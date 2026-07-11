@@ -36,3 +36,9 @@ Fix = flywheel label accumulation (held-out real deny/breach labels), NOT re-cit
 Hive = executor (ingest/retrain, SIGIL, governance-assert, detection, Zamba/Mamba).
 Me = orchestrator + verifier (call, check real response, catch stubs).
 Hermes = backend. sov-world/Zamba/Cesium = visual/render testing.
+
+## CORRECTIONS (verified read-only calls, 2026-07-11 later pass)
+- **Memory is NOT broken** — get_memory_stats returns 17,088 episodes (avg importance 0.206, care 0.27). The earlier "stats unavailable" was ONE wrong endpoint in sovereign_rundown, not the store. Memory persistence WORKS. (Corrects prior "#1 blocker: memory half-broken".)
+- **Zamba/Mamba is LIVE** — zamba_status: Mamba-2 SSM 16-dim + Transformer qwen2.5:3b, history_len 87. zamba_ask answers for real. Caveat: 3B transformer half = modest/generic quality. NOT pending.
+- **OOWM status/think DON'T exist on the live server** — sov_oowm_status + sov_oowm_think both "Unknown mind tool" despite full catalog schemas. The OOWM "central substrate" is more DOCUMENTED than DEPLOYED. (3rd confirmed catalog-vs-server divergence.)
+- **ingest correction** — sovereign_ingest_run output evidences ONLY ingest/corpus-build (sources/corpus_mb/qa_pairs); the OLM-retrain step is in the tool's DESCRIPTION, not confirmed by the call's return.
