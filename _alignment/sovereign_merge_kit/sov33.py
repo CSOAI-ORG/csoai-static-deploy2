@@ -1164,6 +1164,17 @@ def capability_model_registry(mode: str = 'list', **kwargs):
                 'reflexion': '2x agent success via self-critique after failure',
                 'lats': 'BFT-12 council with MCTS-style tree search',
             }
+        if mode == 'flywheel' or mode == 'nn_layer':
+            from sov33_nn_flywheel_wired import flywheel_status, emit_label, emit_signal
+            return {
+                'capability': 'model-registry',
+                'mode': 'flywheel',
+                'method': 'NN layer (7 planets) + flywheel (10 nodes, closed loop) + ensemble signal',
+                'planets_strong': ['creativity', 'care_pattern', 'relationship'],
+                'planets_weak': ['threat', 'dependency', 'care_validation', 'partnership'],
+                'compounding_threshold': 200,
+                'note': 'NEED 200+ LABELS for compounding — current bus has labels from real sovereign ops',
+            }
         return {'capability': 'model-registry', 'error': f'unknown mode {mode}'}
     except Exception as e:
         return {'capability': 'model-registry', 'error': str(e)[:200]}
