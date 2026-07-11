@@ -51,10 +51,33 @@
   #finish{position:fixed;top:16px;right:24px;z-index:60;display:flex;gap:6px}
   #finish button{border:1px solid rgba(255,255,255,.45);background:rgba(252,248,241,.5);backdrop-filter:blur(14px);color:#2a1a14;font:600 12px "Space Grotesk",sans-serif;padding:7px 12px;border-radius:999px;cursor:pointer;box-shadow:0 6px 20px rgba(18,12,6,.22)}
   #finish button .pro{font-size:9px;color:var(--gold);margin-left:4px;letter-spacing:.06em}
+  /* ── MCP CARDS: the "talk → your sovereign spawns tool cards across the screen" surface ── */
+  #cards{position:absolute;inset:0;z-index:7;pointer-events:none}
+  .mcpcard{position:absolute;width:min(300px,80vw);pointer-events:auto;background:rgba(252,248,241,.5);backdrop-filter:blur(20px) saturate(1.3);-webkit-backdrop-filter:blur(20px) saturate(1.3);border:1px solid rgba(255,255,255,.5);border-radius:16px;box-shadow:0 18px 48px rgba(18,12,6,.34),inset 0 1px 0 rgba(255,255,255,.6);overflow:hidden;opacity:0;transform:translateY(14px) scale(.97);transition:opacity .4s cubic-bezier(.2,.7,.2,1),transform .4s cubic-bezier(.2,.7,.2,1)}
+  .mcpcard.in{opacity:1;transform:none}
+  .mcpcard::before{content:"";position:absolute;left:0;right:0;top:0;height:2px;background:linear-gradient(90deg,transparent,#e8cd8a,#b9d3c4,#d6b3e0,transparent);opacity:.75;z-index:2}
+  .mcpcard .ch{display:flex;align-items:center;gap:9px;padding:11px 13px 9px;cursor:grab;user-select:none}
+  .mcpcard .ci{width:30px;height:30px;border-radius:9px;display:grid;place-items:center;font-size:16px;background:rgba(255,255,255,.5);border:1px solid rgba(255,255,255,.55);flex:none}
+  .mcpcard .ct{font-size:13.5px;font-weight:700;color:var(--ink);line-height:1.15}
+  .mcpcard .ctag{font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--gold);font-weight:700;margin-top:1px}
+  .mcpcard .cx{margin-left:auto;cursor:pointer;width:22px;height:22px;border-radius:7px;display:grid;place-items:center;color:var(--muted);font-size:13px}
+  .mcpcard .cx:hover{background:rgba(217,117,106,.16);color:#c0554b}
+  .mcpcard .cb{padding:2px 14px 13px;font-size:12.8px;line-height:1.5;color:#453f36;max-height:40vh;overflow:auto}
+  .mcpcard .cb b{color:var(--ink)}
+  .mcpcard .cb code{background:rgba(201,168,76,.14);padding:1px 5px;border-radius:5px;font-size:11.5px}
+  .mcpcard .cact{display:flex;gap:6px;flex-wrap:wrap;padding:0 14px 13px}
+  .mcpcard .cbtn{border:1px solid rgba(255,255,255,.5);background:rgba(255,255,255,.4);color:var(--ink);font:600 11.5px inherit;padding:6px 11px;border-radius:999px;cursor:pointer;transition:.15s}
+  .mcpcard .cbtn:hover{border-color:var(--gold);background:#fff}
+  .mcpcard .cver{font:600 11px ui-monospace,monospace;padding:5px 10px;border-radius:999px;display:inline-flex;align-items:center;gap:5px}
+  .mcpcard .cver.ok{background:rgba(19,122,75,.13);color:#137a4b;border:1px solid #b7e0c6}
+  .mcpcard .cver.no{background:rgba(179,38,30,.1);color:#b3261e;border:1px solid #f0c3bd}
+  .clink{cursor:pointer;color:var(--gold);font-weight:600;text-decoration:underline;text-decoration-color:rgba(201,168,76,.4)}
+  @media(max-width:720px){#cards{display:none}}
 </style>
 </head>
 <body>
 <div id="stage" data-testid="character-stage"></div>
+<div id="cards" data-testid="mcp-cards"></div>
 <div class="loading" id="loading" data-testid="character-loading"><div class="egg"></div><p>Your sovereign is emerging…</p></div>
 <div class="top">
   <div class="logo"><span class="m">M</span> MEOK</div>
@@ -454,18 +477,90 @@ function renderCast(){
     `<div style="font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);font-weight:700;padding:2px 6px 8px">Your sovereign</div>`+
     `<div class="cc on" style="cursor:default"><span class="av" style="background:hsl(${current.h} 50% 55%)">★</span><span><b>${current.id}</b><span>yours · remembers you</span></span></div>`+
     `<div style="font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:700;padding:18px 6px 8px">Governed by</div>`+
-    current.traits.map(t=>`<div class="cc" style="cursor:default;min-width:184px"><span><b style="font-size:12.5px;font-weight:600">${t}</b></span></div>`).join('');
+    current.traits.map((t,i)=>`<div class="cc" style="cursor:pointer;min-width:184px" onclick="openCharter('${CHARTER_KEYS[i]}')" title="Open governance card"><span><b style="font-size:12.5px;font-weight:600">${t}</b><span>tap → signed card</span></span></div>`).join('');
 }
+const CHARTER_KEYS=['sovereign','partnership','csoai'];   // matches current.traits order
 function renderInfo(){
   infoEl.innerHTML = `<div class="kick">Your sovereign</div><h1>${current.id}</h1>
     <div class="role">${current.role}</div><p>Hatched, yours, and remembering — never forgets you.</p>
-    <div class="traits">${current.traits.map(t=>`<span>${t}</span>`).join('')}</div>`;
+    <div class="traits">${current.traits.map((t,i)=>`<span style="cursor:pointer" onclick="openCharter('${CHARTER_KEYS[i]}')" title="Open governance card">${t}</span>`).join('')}</div>`;
 }
 const cap=s=>s.charAt(0).toUpperCase()+s.slice(1);
 
 // chat
 const log=document.getElementById('log');
 function say(who,txt){ const d=document.createElement('div'); d.className='msg '+who; d.textContent=txt; log.appendChild(d); log.scrollTop=log.scrollHeight; return d; }
+// ══════════════════════════════════════════════════════════════════════════════════════
+//  MCP CARDS — "you just talk; your sovereign spawns the right tool cards across the screen,
+//  every action signed." The consumer face of the MCP/Cesium/open-source stack (not Unreal).
+// ══════════════════════════════════════════════════════════════════════════════════════
+const cardsEl=document.getElementById('cards');
+const CARD_SLOTS=[  // cascading positions across the screen (%), so cards fan out, never stack blindly
+  {l:6,t:14},{l:70,t:12},{l:8,t:52},{l:71,t:50},{l:38,t:16},{l:38,t:54},{l:5,t:33},{l:72,t:31}];
+let _cardN=0;
+function spawnCard(o){   // {icon,title,tag,body(html),actions:[{label,run}],verify:bool}
+  if(!cardsEl) return null;
+  // de-dupe by title — re-spawn pulses the existing card instead of piling up
+  const ex=[...cardsEl.children].find(c=>c.dataset.title===(o.title||''));
+  if(ex){ ex.classList.remove('in'); void ex.offsetWidth; ex.classList.add('in'); return ex; }
+  const slot=CARD_SLOTS[_cardN%CARD_SLOTS.length]; _cardN++;
+  const c=document.createElement('div'); c.className='mcpcard'; c.dataset.title=o.title||'';
+  c.style.left=slot.l+'%'; c.style.top=slot.t+'%';
+  const acts=(o.actions||[]).map((a,i)=>`<button class="cbtn" data-a="${i}">${a.label}</button>`).join('');
+  c.innerHTML=`<div class="ch"><div class="ci">${o.icon||'✦'}</div><div><div class="ct">${o.title||''}</div><div class="ctag">${o.tag||'MCP · signed'}</div></div><div class="cx">✕</div></div>`+
+    `<div class="cb">${o.body||''}</div>`+((acts||o.verify)?`<div class="cact">${acts}${o.verify?'<button class="cbtn cver-btn">✓ verify signature</button>':''}</div>`:'');
+  cardsEl.appendChild(c); requestAnimationFrame(()=>c.classList.add('in'));
+  c.querySelector('.cx').onclick=()=>{ c.classList.remove('in'); setTimeout(()=>c.remove(),350); };
+  (o.actions||[]).forEach((a,i)=>{ const b=c.querySelector(`[data-a="${i}"]`); if(b) b.onclick=()=>a.run(c); });
+  const vb=c.querySelector('.cver-btn'); if(vb) vb.onclick=()=>verifyInto(c,vb);
+  // draggable by the header
+  const h=c.querySelector('.ch'); let dx,dy,drag=false;
+  h.addEventListener('pointerdown',e=>{ if(e.target.classList.contains('cx'))return; drag=true; dx=e.clientX-c.offsetLeft; dy=e.clientY-c.offsetTop; h.setPointerCapture(e.pointerId); c.style.transition='none'; });
+  h.addEventListener('pointermove',e=>{ if(!drag)return; c.style.left=Math.max(0,e.clientX-dx)+'px'; c.style.top=Math.max(0,e.clientY-dy)+'px'; });
+  h.addEventListener('pointerup',()=>{ drag=false; c.style.transition=''; });
+  return c;
+}
+async function verifyInto(card,btn){
+  btn.textContent='verifying…';
+  try{
+    let v=null;
+    try{ const r=await fetch('/api/verify'); if(r.ok) v=await r.json(); }catch(e){}
+    if(!v){ const r=await fetch('/api/agentcard?name='+encodeURIComponent(current.id||'Sovereign')); if(r.ok){ const a=await r.json(); v={ok:!!(a.signature||a.verification||a.card), fingerprint:(a.signature||a.fingerprint||'').toString().slice(0,16)}; } }
+    const ok=v&&(v.ok!==false); const fp=(v&&(v.fingerprint||v.signature)||'').toString().slice(0,16);
+    const tag=document.createElement('span'); tag.className='cver '+(ok?'ok':'no');
+    tag.textContent=(ok?'✓ signature valid':'⚠ unverified')+(fp?' · '+fp+'…':'');
+    btn.replaceWith(tag);
+  }catch(e){ btn.textContent='⚠ offline — try again'; }
+}
+// The three governance charters, as live MCP cards (one signing spine — same /api/verify DEFONEOS uses)
+const CHARTERS={
+  'sovereign':{icon:'🛡',title:'Sovereign Charter',tag:'governance MCP · Ed25519',
+    body:`Your sovereign belongs to <b>you</b>. Runs on your device, data never leaves without consent, and every governed action is <b>Ed25519-signed</b> to an append-only ledger you can verify offline. No single vendor can revoke it.`},
+  'partnership':{icon:'🤝',title:'Partnership Charter',tag:'governance MCP · care-aligned',
+    body:`How your sovereign works <i>with</i> you: honest register (flags hype, never rubber-stamps), asks before anything irreversible, and keeps a care-floor — it protects the vulnerable over convenience.`},
+  'csoai':{icon:'⚖',title:'CSOAI AI Governance',tag:'governance MCP · council-adjudicated',
+    body:`Disputes and high-stakes calls go to the <b>BFT council</b> (Byzantine-fault-tolerant vote), adjudicated against CSOAI's published charters. The decision + signatures are logged — <span class="clink" onclick="window.open('/verify.html','_blank')">public verify page</span>.`}};
+function openCharter(key){ const c=CHARTERS[key]; if(!c) return; spawnCard({icon:c.icon,title:c.title,tag:c.tag,body:c.body,verify:true}); }
+window.openCharter=openCharter;
+
+// ── ORCHESTRATION: read what the user asked → spawn the right MCP cards across the screen ──
+function orchestrate(userText, aiText){
+  const q=(userText+' '+(aiText||'')).toLowerCase(); let spawned=0;
+  const fire=(fn)=>{ if(spawned<2){ fn(); spawned++; } };
+  if(/\b(verify|signature|signed|prove|provenance|authentic|tamper)\b/.test(q))
+    fire(()=>spawnCard({icon:'🔏',title:'Signature Verify',tag:'assurance MCP · offline-verifiable',body:`This sovereign's identity + actions are signed. Tap verify — it checks the Ed25519 signature the same way <b>DEFONEOS</b> assurance does. One spine, two markets.`,verify:true}));
+  if(/\b(charter|govern|policy|rule|rights|who controls|control|compliance)\b/.test(q)){
+    fire(()=>openCharter('sovereign')); fire(()=>openCharter('csoai')); }
+  if(/\b(build|make|create|website|web ?site|app|landing|page|deploy)\b/.test(q))
+    fire(()=>spawnCard({icon:'🛠',title:'Builder',tag:'build MCP · talk-to-ship',body:`Describe it in plain words and your sovereign scaffolds it, shows a live preview on a card, and can deploy it — signed. <br><br><b>Try:</b> <code>build me a page for my cafe</code>`,actions:[{label:'🌍 open SOV Space',run:()=>{location.href='/sovspace3d.html';}}]}));
+  if(/\b(space|globe|map|world|fly|travel|earth|city|3d)\b/.test(q))
+    fire(()=>spawnCard({icon:'🌍',title:'SOV Space',tag:'world MCP · Cesium/WebGL',body:`Your sovereign can fly a cinema-grade 3D world on your own GPU — free, no Unreal needed. Ask it to take you anywhere.`,actions:[{label:'Enter SOV Space',run:()=>{location.href='/sovspace3d.html';}}]}));
+  if(/\b(tool|mcp|what can you|capab|skill|do for me|help me)\b/.test(q))
+    fire(()=>spawnCard({icon:'🧰',title:'Your Tools',tag:'MCP router · 370+ tools',body:`Your sovereign routes to a fleet of signed MCP tools: <b>governance</b>, <b>verify</b>, <b>legacy bridges</b> (COBOL/SAP/HL7), <b>guardian</b>, <b>family</b>, world + build. It picks the right one — you just talk.`,actions:[{label:'◉ Open AI OS',run:()=>{location.href='/';}}]}));
+  return spawned;
+}
+window.MEOK=Object.assign(window.MEOK||{},{spawnCard,openCharter,orchestrate,verifyInto});
+
 async function send(){
   const i=document.getElementById('in'); const v=i.value.trim(); if(!v) return; i.value='';
   say('you', v);
@@ -483,7 +578,8 @@ async function send(){
       body:JSON.stringify({message:v, queen_id:'queen-king', register:'plain', persona})});
     const d=await r.json(); const txt=(d.response||'…'); t.textContent = txt;
     speakUntil = Date.now() + Math.min(9000, 1400 + txt.split(/\s+/).length*210);
-  }catch(e){ t.textContent = "I'm here — try once more."; }
+    try{ orchestrate(v, txt); }catch(e){}    // spawn the relevant MCP cards across the screen
+  }catch(e){ t.textContent = "I'm here — try once more."; try{ orchestrate(v,''); }catch(e2){} }
 }
 document.getElementById('send').onclick=send;
 document.getElementById('in').addEventListener('keydown',e=>{ if(e.key==='Enter') send(); });

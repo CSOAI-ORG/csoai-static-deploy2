@@ -6,7 +6,9 @@
  html,body{margin:0;height:100%;background:#01030a;overflow:hidden;font-family:-apple-system,system-ui,sans-serif;color:#eee}
  #c{display:block;width:100vw;height:100vh}
  #load{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;z-index:99;background:#01030a;color:#e6c766;font:600 14px ui-monospace,monospace;letter-spacing:.1em}
- .glass{position:fixed;z-index:20;background:rgba(8,11,20,.66);border:1px solid rgba(201,168,76,.35);border-radius:14px;backdrop-filter:blur(10px);box-shadow:0 10px 40px rgba(0,0,0,.5)}
+ .glass{position:fixed;z-index:20;background:rgba(8,11,20,.58);border:1px solid rgba(201,168,76,.28);border-radius:14px;backdrop-filter:blur(16px) saturate(1.25);-webkit-backdrop-filter:blur(16px) saturate(1.25);box-shadow:0 14px 44px rgba(0,0,0,.55),inset 0 1px 0 rgba(255,255,255,.08)}
+ .glass::before{content:"";position:absolute;left:0;right:0;top:0;height:1.5px;border-radius:14px 14px 0 0;background:linear-gradient(90deg,transparent,#e6c766,#8fd0c0,#c7a8e0,transparent);opacity:.5;pointer-events:none}
+ #title h1,#dhead span,#panel h2{background:linear-gradient(96deg,#e6c766,#f0e0a8 32%,#9fd6c4 58%,#d8b8e8 80%,#e6c766);-webkit-background-clip:text;background-clip:text;color:transparent}
  #title{top:16px;left:16px;padding:12px 16px;max-width:330px}
  #title h1{margin:0 0 3px;font-size:16px;color:#e6c766;letter-spacing:.02em}#title p{margin:0;font-size:12px;color:#b9ad8e;line-height:1.4}
  #live{top:16px;right:16px;padding:9px 13px;font:600 11.5px ui-monospace,monospace}#live .d{display:inline-block;width:7px;height:7px;border-radius:50%;background:#1db974;box-shadow:0 0 8px #1db974;margin-right:6px}#live b{color:#e6c766}

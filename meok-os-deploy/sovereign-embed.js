@@ -113,8 +113,10 @@
   /* ---------- UI: orb + chat + optional sidebar ---------- */
   var css = document.createElement('style'); css.textContent =
     '.sv-orb{position:fixed;right:18px;bottom:18px;z-index:2147483000;width:56px;height:56px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:26px;background:radial-gradient(circle at 50% 38%,#1a2440,#0a1530);box-shadow:0 8px 24px rgba(0,0,0,.32);border:2px solid ' + ACCENT + '}' +
-    '.sv-panel{position:fixed;right:18px;bottom:84px;z-index:2147483000;width:min(380px,92vw);max-height:70vh;display:none;flex-direction:column;background:#fffdf8;border:1px solid ' + ACCENT + ';border-radius:16px;box-shadow:0 18px 50px rgba(0,0,0,.3);overflow:hidden;font-family:-apple-system,system-ui,sans-serif}' +
-    '.sv-panel.on{display:flex}.sv-head{display:flex;align-items:center;gap:9px;padding:12px 14px;background:linear-gradient(135deg,#1a1410,#3a2e1a);color:' + ACCENT + '}' +
+    '.sv-panel{position:fixed;right:18px;bottom:84px;z-index:2147483000;width:min(380px,92vw);max-height:70vh;display:none;flex-direction:column;background:rgba(252,248,241,.72);backdrop-filter:blur(22px) saturate(1.3);-webkit-backdrop-filter:blur(22px) saturate(1.3);border:1px solid rgba(255,255,255,.5);border-radius:16px;box-shadow:0 22px 56px rgba(20,14,6,.34),inset 0 1px 0 rgba(255,255,255,.6);overflow:hidden;font-family:-apple-system,system-ui,sans-serif}' +
+    '.sv-panel::before{content:"";position:absolute;left:0;right:0;top:0;height:2px;background:linear-gradient(90deg,transparent,#e8cd8a,#b9d3c4,#d6b3e0,transparent);opacity:.75;z-index:3}' +
+    '.sv-panel.on{display:flex}.sv-head{display:flex;align-items:center;gap:9px;padding:12px 14px;background:rgba(255,255,255,.28);color:#2a1a14;border-bottom:1px solid rgba(255,255,255,.4)}' +
+    '.sv-head b{background:linear-gradient(96deg,#c9a84c,#e8cd8a 32%,#b9d3c4 56%,#d6b3e0 80%,#c9a84c);-webkit-background-clip:text;background-clip:text;color:transparent}' +
     '.sv-head b{color:#fff}.sv-head .x{margin-left:auto;cursor:pointer;color:#caa}' +
     '.sv-log{flex:1;overflow:auto;padding:12px;display:flex;flex-direction:column;gap:8px;font-size:14px;color:#2a1a14}' +
     '.sv-msg{padding:8px 11px;border-radius:11px;max-width:88%;line-height:1.45}.sv-msg.ai{background:#f4efe2;align-self:flex-start}.sv-msg.me{background:' + ACCENT + ';color:#1a1410;align-self:flex-end}' +
