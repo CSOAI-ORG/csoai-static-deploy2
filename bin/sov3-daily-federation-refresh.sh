@@ -197,28 +197,20 @@ echo "  SOV3 tools: $TOOLS, federation servers: $SERVERS" >> "$LOG"
 curl -s -m 8 -X POST http://localhost:3101/mcp -H "Content-Type: application/json" -d "{\"jsonrpc\":\"2.0\",\"id\":\"1\",\"method\":\"tools/call\",\"params\":{\"name\":\"sigil_emit\",\"arguments\":{\"line\":\"S|date:$(date +%d-%b-%Y)|author:sovereign-cron|state:DAILY_FEDERATION_REFRESH:tools=$TOOLS servers=$SERVERS|tags:cron,federation,refresh\"}}}" >> "$LOG" 2>&1
 
 echo "=== DONE $(date) ===" >> "$LOG"
-# === 5 NEW ARCANA — daily sovereign operations ===
-# 6am: bootstrap the 33 districts (The Fool)
-echo "[6/8] Bootstrapping the 33 districts (The Fool)..." >> "$LOG"
+# === ARCANA — daily sovereign operations (tool names reconciled to the canonical :3101 build,
+#     2026-07-11: register_agent (was bootstrap_agent), trigger_reflection (was reflect_on_history);
+#     federate_command + schedule_task dropped — no equivalent on this build, were VM-era arcana.) ===
+# 6am: register the 33 districts (The Fool)
+echo "[6/6] Registering the 33 districts (The Fool)..." >> "$LOG"
 for i in $(seq 1 33); do
     curl -s -m 5 http://localhost:3101/mcp -X POST -H "Content-Type: application/json" \
-        -d "{\"jsonrpc\":\"2.0\",\"id\":\"1\",\"method\":\"tools/call\",\"params\":{\"name\":\"bootstrap_agent\",\"arguments\":{\"name\":\"agent-${i}-district-${i}\",\"organization\":\"MEOKCSOAI\"}}}" > /dev/null
+        -d "{\"jsonrpc\":\"2.0\",\"id\":\"1\",\"method\":\"tools/call\",\"params\":{\"name\":\"register_agent\",\"arguments\":{\"name\":\"agent-${i}-district-${i}\",\"organization\":\"MEOKCSOAI\"}}}" > /dev/null
 done
-
-# 6:15am: federate the launch command (The Emperor)
-echo "[7/8] Federating the launch command (The Emperor)..." >> "$LOG"
-curl -s -m 10 http://localhost:3101/mcp -X POST -H "Content-Type: application/json" \
-    -d '{"jsonrpc":"2.0","id":"1","method":"tools/call","params":{"name":"federate_command","arguments":{"command":"daily_sovereign_operations_4jul_active"}}}' > /dev/null
-
-# 6:30am: schedule the cron (Wheel of Fortune)
-echo "[8/8] Scheduling the cron (Wheel of Fortune)..." >> "$LOG"
-curl -s -m 10 http://localhost:3101/mcp -X POST -H "Content-Type: application/json" \
-    -d '{"jsonrpc":"2.0","id":"1","method":"tools/call","params":{"name":"schedule_task","arguments":{"task":"daily_ecosystem_ingest","schedule":"daily"}}}' > /dev/null
 
 # 6:45am: reflect on what happened (The Hermit)
 echo "[REFLECT] Reflecting on the launch (The Hermit)..." >> "$LOG"
 curl -s -m 10 http://localhost:3101/mcp -X POST -H "Content-Type: application/json" \
-    -d '{"jsonrpc":"2.0","id":"1","method":"tools/call","params":{"name":"reflect_on_history","arguments":{"days":1}}}' > /dev/null
+    -d '{"jsonrpc":"2.0","id":"1","method":"tools/call","params":{"name":"trigger_reflection","arguments":{"days":1}}}' > /dev/null
 
 # 7:00am: read the lapis balance
 echo "[LAPIS] Reading the lapis balance..." >> "$LOG"
