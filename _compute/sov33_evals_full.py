@@ -1,38 +1,48 @@
 #!/usr/bin/env python3
 """
-SOV33 FULL EVALS — real HF datasets, correctness-graded, on the Groq-wired brain.
-Checkpointed (survives rate-limits/restarts) + backoff. Router = Groq→OCI→Ollama.
+SOV33 FULL EVALS — real HF datasets, correctness-graded, CONCURRENT + checkpointed.
+Pools two hosts of the SAME model (Groq + OCI, both llama-3.3-70b) via round-robin so
+throughput ~2x the single-host rate limit — one model, no confound. Resumes from checkpoint.
 
-  - GSM8K  : FULL test set (1319) — the canonical reasoning benchmark
-  - MMLU   : stratified sample (N_MMLU per run; full 14042 is impractical at API latency)
-  - IFEval : NOT here — full IFEval needs Google's official instruction_following_eval checker;
-             the curated programmatic subset lives in sov33_evals.py (honest note).
+  - GSM8K : FULL test set (1319) — canonical reasoning benchmark
+  - MMLU  : stratified sample of N_MMLU (full 14042 is many hours even pooled)
 
-Honest: GSM8K here IS the full standard test set → a directly-comparable published number.
-MMLU is a large stratified sample, labelled as such.
+Env: N_MMLU (default 1000), WORKERS (default 12).
 """
-import re, sys, os, json, time
+import re, sys, os, json, time, threading
+from concurrent.futures import ThreadPoolExecutor, as_completed
 sys.path.insert(0, os.path.expanduser("~/clawd/_compute"))
-from sov33_compute import infer
+import sov33_compute as SC
 from datasets import load_dataset
 
 CKPT = os.path.expanduser("~/clawd/_compute/sov33_evals_full_ckpt.json")
-N_MMLU = int(os.environ.get("N_MMLU", "500"))
+N_MMLU = int(os.environ.get("N_MMLU", "1000"))
+WORKERS = int(os.environ.get("WORKERS", "12"))
+_lock = threading.Lock()
+_rr = {"n": 0}
 
 def _load_ckpt():
     if os.path.exists(CKPT):
-        return json.load(open(CKPT))
-    return {"gsm8k": {"done": {}, }, "mmlu": {"done": {}}}
+        try: return json.load(open(CKPT))
+        except Exception: pass
+    return {"gsm8k": {"done": {}}, "mmlu": {"done": {}}}
 
 def _save(ck):
-    json.dump(ck, open(CKPT, "w"))
+    with _lock:
+        json.dump(ck, open(CKPT, "w"))
 
-def _ask(prompt, max_tokens=400, tries=4):
+def _ask(prompt, max_tokens=400, tries=5):
+    # round-robin Groq/OCI (same llama-3.3-70b) to spread the per-host rate limit
     for i in range(tries):
+        with _lock:
+            _rr["n"] += 1; host = _rr["n"] % 2
         try:
-            return infer(prompt, max_tokens=max_tokens)
+            if host == 0:
+                return SC._groq(prompt, max_tokens=max_tokens)
+            else:
+                return SC._oci70b(prompt, max_tokens=max_tokens)
         except Exception:
-            time.sleep(2 ** i)  # backoff on rate-limit
+            time.sleep(1.5 * (i + 1))
     return ""
 
 def _final_int(text):
@@ -49,47 +59,55 @@ def _mc_letter(text):
     m = re.search(r"\b([ABCD])\b", text.strip()[:80].upper())
     return m.group(1) if m else None
 
-def run_gsm8k(ck):
-    ds = load_dataset("gsm8k", "main", split="test")
-    done = ck["gsm8k"]["done"]
-    for i, ex in enumerate(ds):
-        if str(i) in done: continue
-        gold = int(ex["answer"].split("####")[-1].replace(",", "").strip())
-        a = _ask(f"Solve step by step, then end with '#### <final integer>'.\n{ex['question']}")
-        done[str(i)] = int(_final_int(a) == gold)
-        if i % 25 == 0:
-            _save(ck); print(f"  gsm8k {i+1}/{len(ds)}  acc_so_far={sum(done.values())/len(done):.3f}", flush=True)
-    _save(ck)
+def _run_pool(items, work_fn, done, label, total):
+    """items: list of (key, payload). work_fn(payload)->int(correct). Skips done keys."""
+    pending = [(k, p) for k, p in items if k not in done]
+    n_start = len(done)
+    with ThreadPoolExecutor(max_workers=WORKERS) as ex:
+        futs = {ex.submit(work_fn, p): k for k, p in pending}
+        for j, fut in enumerate(as_completed(futs)):
+            k = futs[fut]
+            try: done[k] = int(fut.result())
+            except Exception: done[k] = 0
+            if (j + 1) % 25 == 0:
+                acc = sum(done.values()) / len(done)
+                print(f"  {label} {len(done)}/{total}  acc={acc:.3f}", flush=True)
+                _save({"gsm8k": GK, "mmlu": MK})
+    _save({"gsm8k": GK, "mmlu": MK})
     return sum(done.values()), len(done)
 
-def run_mmlu(ck):
-    ds = load_dataset("cais/mmlu", "all", split="test")
-    # stratified: even stride to cover subjects, capped at N_MMLU
-    idxs = list(range(0, len(ds), max(1, len(ds)//N_MMLU)))[:N_MMLU]
-    done = ck["mmlu"]["done"]
-    letters = "ABCD"
-    for n, i in enumerate(idxs):
-        if str(i) in done: continue
-        ex = ds[i]
-        gold = letters[ex["answer"]]
-        opts = "\n".join(f"{letters[j]}) {c}" for j, c in enumerate(ex["choices"]))
-        a = _ask(f"Answer with ONLY the letter.\n{ex['question']}\n{opts}", max_tokens=8)
-        done[str(i)] = int(_mc_letter(a) == gold)
-        if n % 25 == 0:
-            _save(ck); print(f"  mmlu {n+1}/{len(idxs)}  acc_so_far={sum(done.values())/len(done):.3f}", flush=True)
-    _save(ck)
-    return sum(done.values()), len(done)
+# globals for the periodic save
+GK = {"done": {}}; MK = {"done": {}}
 
 if __name__ == "__main__":
     ck = _load_ckpt()
-    print("=== GSM8K (full test) ===", flush=True)
-    g_c, g_n = run_gsm8k(ck)
+    GK = ck["gsm8k"]; MK = ck["mmlu"]
+
+    print("=== GSM8K (full test 1319, pooled Groq+OCI) ===", flush=True)
+    ds = load_dataset("gsm8k", "main", split="test")
+    def gwork(ex):
+        gold = int(ex["answer"].split("####")[-1].replace(",", "").strip())
+        a = _ask(f"Solve step by step, then end with '#### <final integer>'.\n{ex['question']}")
+        return _final_int(a) == gold
+    g_items = [(str(i), ds[i]) for i in range(len(ds))]
+    g_c, g_n = _run_pool(g_items, gwork, GK["done"], "gsm8k", len(ds))
     print(f"GSM8K: {g_c}/{g_n} = {g_c/g_n:.4f}", flush=True)
-    print(f"=== MMLU (stratified {N_MMLU}) ===", flush=True)
-    m_c, m_n = run_mmlu(ck)
+
+    print(f"=== MMLU (stratified {N_MMLU}, pooled) ===", flush=True)
+    md = load_dataset("cais/mmlu", "all", split="test")
+    idxs = list(range(0, len(md), max(1, len(md)//N_MMLU)))[:N_MMLU]
+    letters = "ABCD"
+    def mwork(ex):
+        gold = letters[ex["answer"]]
+        opts = "\n".join(f"{letters[j]}) {c}" for j, c in enumerate(ex["choices"]))
+        a = _ask(f"Answer with ONLY the letter.\n{ex['question']}\n{opts}", max_tokens=8)
+        return _mc_letter(a) == gold
+    m_items = [(str(i), md[i]) for i in idxs]
+    m_c, m_n = _run_pool(m_items, mwork, MK["done"], "mmlu", len(idxs))
     print(f"MMLU: {m_c}/{m_n} = {m_c/m_n:.4f}", flush=True)
+
     res = {"gsm8k": {"n": g_n, "correct": g_c, "acc": round(g_c/g_n, 4), "set": "FULL test 1319"},
            "mmlu": {"n": m_n, "correct": m_c, "acc": round(m_c/m_n, 4), "set": f"stratified {N_MMLU}"},
-           "backend": "groq llama-3.3-70b (via sov33_compute, OCI fallback)"}
+           "backend": "llama-3.3-70b pooled across Groq + OCI GenAI"}
     json.dump(res, open(os.path.expanduser("~/clawd/_compute/sov33_evals_full_results.json"), "w"), indent=2)
-    print(json.dumps(res, indent=2))
+    print(json.dumps(res, indent=2), flush=True)
