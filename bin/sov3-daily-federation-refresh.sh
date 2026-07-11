@@ -9,11 +9,25 @@ mkdir -p "$(dirname "$LOG")"
 
 echo "=== SOV3 DAILY FEDERATION REFRESH $(date) ===" >> "$LOG"
 
-# 1. Rsync marketplace to VM
+# VM reachability gate — GCP billing is closed, meok-backend is usually DOWN.
+# Probe once (fast, 3s) so dead-VM steps are skipped instead of hanging 30s each and
+# tripping `set -e`. All the local ingest/catalog/train/SOV3 work below is VM-independent.
+VM_UP=0
+if ssh -o StrictHostKeyChecking=no -o ConnectTimeout=3 -o BatchMode=yes nicholas@meok-backend 'true' 2>/dev/null; then
+  VM_UP=1; echo "  [vm] meok-backend reachable" >> "$LOG"
+else
+  echo "  [vm] meok-backend UNREACHABLE (GCP billing closed) — skipping VM push/pull, local refresh continues" >> "$LOG"
+fi
+
+# 1. Rsync marketplace to VM (only if VM is up)
 echo "[1/5] Rsync marketplace to VM..." >> "$LOG"
-rsync -az -e "ssh -o StrictHostKeyChecking=no" \
-  --exclude='.git' --exclude='node_modules' --exclude='.venv' --exclude='__pycache__' \
-  /Users/nicholas/clawd/mcp-marketplace/ nicholas@meok-backend:/home/nicholas/clawd/mcp-marketplace/ 2>&1 | tail -3 >> "$LOG"
+if [ "$VM_UP" = 1 ]; then
+  rsync -az -e "ssh -o StrictHostKeyChecking=no" \
+    --exclude='.git' --exclude='node_modules' --exclude='.venv' --exclude='__pycache__' \
+    /Users/nicholas/clawd/mcp-marketplace/ nicholas@meok-backend:/home/nicholas/clawd/mcp-marketplace/ 2>&1 | tail -3 >> "$LOG"
+else
+  echo "  skipped (VM down)" >> "$LOG"
+fi
 
 # 1b. Run the sovereign ingest (NEW — pull from state.db, _alignment, handoffs, etc.)
 echo "[1b/5] Sovereign ingest from Mac..." >> "$LOG"
@@ -132,29 +146,46 @@ print(f"  vault indexed {len(vault_index)} files")
 EOF
 EOF
 
-# 3. Ship catalog to VM
+# 3. Ship catalog to VM (only if VM is up)
 echo "[3/5] Ship catalog to VM..." >> "$LOG"
-scp -o StrictHostKeyChecking=no \
-  /Users/nicholas/clawd/sovereign-temple/data/sovereign_mcp_catalog.json \
-  nicholas@meok-backend:/home/nicholas/sov3/data/sovereign_mcp_catalog.json 2>&1 | tail -1 >> "$LOG"
+if [ "$VM_UP" = 1 ]; then
+  scp -o StrictHostKeyChecking=no \
+    /Users/nicholas/clawd/sovereign-temple/data/sovereign_mcp_catalog.json \
+    nicholas@meok-backend:/home/nicholas/sov3/data/sovereign_mcp_catalog.json 2>&1 | tail -1 >> "$LOG"
+else
+  echo "  skipped (VM down)" >> "$LOG"
+fi
 
-# 4. Retrain OLM router + ship corpus
+# 4. Retrain OLM router (local train always runs; corpus/model ship only if VM up)
 echo "[4/5] Retrain OLM router (with curated v3 corpus)..." >> "$LOG"
-# Ship the curated corpus to VM
-scp -o StrictHostKeyChecking=no /Users/nicholas/clawd/sovereign-temple/data/curated_olm_corpus.txt \
-  nicholas@meok-backend:/home/nicholas/sov3/data/curated_olm_corpus.txt 2>&1 | tail -1 >> "$LOG"
-# Train locally
+if [ "$VM_UP" = 1 ]; then
+  scp -o StrictHostKeyChecking=no /Users/nicholas/clawd/sovereign-temple/data/curated_olm_corpus.txt \
+    nicholas@meok-backend:/home/nicholas/sov3/data/curated_olm_corpus.txt 2>&1 | tail -1 >> "$LOG"
+fi
+# Train locally (VM-independent — this is the value)
 python3 /Users/nicholas/clawd/sovereign-temple/sov3_olm_router.py train >> "$LOG" 2>&1
-# Ship the trained model
-scp /Users/nicholas/clawd/sovereign-temple/data/olm_router_model.json \
-  nicholas@meok-backend:/home/nicholas/sov3/data/olm_router_model.json 2>&1 | tail -1 >> "$LOG"
+if [ "$VM_UP" = 1 ]; then
+  scp /Users/nicholas/clawd/sovereign-temple/data/olm_router_model.json \
+    nicholas@meok-backend:/home/nicholas/sov3/data/olm_router_model.json 2>&1 | tail -1 >> "$LOG"
+fi
 
-# 5. Restart SOV3
-echo "[5/5] Restart SOV3 + tunnel..." >> "$LOG"
-ssh -o StrictHostKeyChecking=no nicholas@meok-backend 'sudo systemctl restart sov3.service' 2>&1 | tail -1 >> "$LOG"
-sleep 8
-launchctl kickstart -k gui/$(id -u)/com.meok.sov3-vm-tunnel 2>&1 | tail -1 >> "$LOG"
-sleep 3
+# 5. Restart SOV3 — restart LOCAL :3101 keeper if reachable; VM restart only if VM up
+echo "[5/5] Restart / verify SOV3..." >> "$LOG"
+if [ "$VM_UP" = 1 ]; then
+  ssh -o StrictHostKeyChecking=no nicholas@meok-backend 'sudo systemctl restart sov3.service' 2>&1 | tail -1 >> "$LOG"
+  sleep 8
+  launchctl kickstart -k gui/$(id -u)/com.meok.sov3-vm-tunnel 2>&1 | tail -1 >> "$LOG"
+  sleep 3
+else
+  # Local SOV3 is canonical — the launchd keeper (com.meok.sov3-keeper) owns :3101.
+  if ! curl -s -m 4 http://localhost:3101/health >/dev/null 2>&1; then
+    echo "  local SOV3 :3101 down — kicking the keeper" >> "$LOG"
+    launchctl kickstart -k gui/$(id -u)/com.meok.sov3-keeper 2>&1 | tail -1 >> "$LOG"
+    sleep 6
+  else
+    echo "  local SOV3 :3101 healthy (keeper-owned)" >> "$LOG"
+  fi
+fi
 
 # 6. Verify
 echo "[6/6] Verify..." >> "$LOG"
