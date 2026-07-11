@@ -1,20 +1,15 @@
 #!/usr/bin/env python3
 """sov33_queen_hives.py — Queen SOV3 -> sub-hive GOVERNANCE TOPOLOGY.
 
-HONEST REGISTER (binding):
-  * This is a GOVERNANCE topology (hierarchical consensus), NOT a hive-mind and
-    NOT a consciousness claim. The Queen ARBITRATES + GOVERNS across sub-hives;
-    she does NOT "think for" them. Each sub-hive reasons locally and reports up.
-  * The 106-agent capability clusters become NAMED SUB-HIVES. Each sub-hive runs
-    a local BFT quorum (f-fault-tolerant), a local loop, and UPWARD REPORTING to
-    the Queen (central kernel authority) who arbitrates cross-hive conflicts.
-  * Every cross-hive arbitration is SIGIL-signed (hash-chained, auditable).
-  * BFT math + correlated-vote discount are REUSED from sov33_effective_votes.py
-    (dependency-free, imports cleanly). sov33.py's own sigil_emit is replicated
-    here byte-compatibly because importing the full kernel pulls `oci` (absent in
-    this sandbox); the chain format + env override (SOV33_SIGIL_DIR) match sov33.
-  * RUNNING (verified by executing this file) vs DESIGNED: the topology + demo
-    below RUN. Live model routing / 4-brain mesh are DESIGNED elsewhere, not here.
+HONEST REGISTER (binding): a GOVERNANCE topology (hierarchical consensus), NOT a
+hive-mind and NOT a consciousness claim. The Queen ARBITRATES + GOVERNS across
+sub-hives; she does NOT "think for" them. The 106-agent capability clusters become
+NAMED SUB-HIVES, each running a local f-fault-tolerant BFT quorum + local loop +
+UPWARD REPORTING to the Queen (central kernel authority). Every cross-hive
+arbitration is SIGIL-signed (hash-chained, auditable). BFT trust math is REUSED
+from sov33_effective_votes.py; sov33.sigil_emit is replicated byte-compatibly here
+(the full kernel pulls `oci`, absent in this sandbox). RUNNING: topology+demo run.
+DESIGNED elsewhere: live model routing / 4-brain mesh.
 """
 import os, sys, json, hashlib
 from pathlib import Path
@@ -23,11 +18,11 @@ from datetime import datetime, timezone
 sys.path.insert(0, '/Users/nicholas/clawd/_alignment/sovereign_merge_kit')
 from sov33_effective_votes import effective_votes, agreement_confidence  # BFT trust math
 
-RHO = 0.76          # OUR measured checker error-correlation (same as sov33 council)
+RHO = 0.76          # OUR measured checker error-correlation (sov33 council default)
 TRUST_MIN = 2.0     # effective independent votes required to TRUST agreement
 
 # ── SIGIL chain (byte-compatible with sov33.sigil_emit) ──────────────────────
-SIGIL_DIR = Path(os.environ.get('SOV33_SIGIL_DIR', str(Path.home() / '.sovereign')))
+SIGIL_DIR = Path(os.environ.get('SOV33_SIGIL_DIR', str(Path.home() / '.sovereign')))  # env override matches sov33
 try:
     SIGIL_DIR.mkdir(parents=True, exist_ok=True)
 except (PermissionError, OSError):
@@ -45,19 +40,18 @@ def sigil_emit(hop):
 
 # ── SUB-HIVE: named capability cluster with a local BFT council ──────────────
 class SubHive:
-    """A capability cluster governing itself via a local f-fault-tolerant BFT quorum.
-    `rho` = measured error-correlation AMONG this hive's delegates. Diverse-lineage
-    hives have low rho and can actually commit (few genuinely-independent votes clear
-    the trust floor); mono-lineage hives sit near rho=0.76 and mostly escalate. This
-    is sov33_effective_votes' own lesson: the fix is DIVERSE lineages, not MORE judges."""
+    """Capability cluster self-governing via a local f-fault-tolerant BFT quorum.
+    `rho` = error-correlation among this hive's delegates: diverse-lineage (low rho)
+    hives can commit; mono-lineage (rho~0.76) hives mostly escalate — sov33_effective_
+    votes' lesson that the fix is DIVERSE lineages, not MORE judges."""
     def __init__(self, name, agent_count, council, rho=RHO):
         self.name, self.agent_count, self.council, self.rho = name, agent_count, council, rho
-        self.f = (council - 1) // 3            # BFT fault tolerance: n = 3f+1
-        self.quorum = 2 * self.f + 1           # commit needs >= 2f+1 concurring delegates
+        self.f = (council - 1) // 3        # BFT fault tolerance: n=3f+1, commit >= 2f+1
+        self.quorum = 2 * self.f + 1
 
     def deliberate(self, proposal, votes):
-        """Local loop: delegates vote a value; commit the plurality iff it clears
-        the BFT quorum AND the correlated-vote trust floor. Returns upward report."""
+        """Local loop: commit the plurality iff it clears the BFT quorum AND the
+        correlated-vote trust floor; else ESCALATE. Returns the upward report."""
         tally = {}
         for v in votes: tally[v] = tally.get(v, 0) + 1
         winner, n_agree = max(tally.items(), key=lambda kv: kv[1])
@@ -76,10 +70,9 @@ class QueenSOV3:
     def __init__(self): self.hives = {}
     def register(self, hive): self.hives[hive.name] = hive
     def arbitrate(self, topic, reports):
-        """Cross-hive arbitration. The Queen does NOT re-decide the substance; she
-        governs: (1) drop reports that failed local BFT, (2) among committed reports
-        the higher EFFECTIVE-vote confidence wins, (3) tie/no-committed -> ESCALATE.
-        Every arbitration is SIGIL-signed."""
+        """Cross-hive arbitration (SIGIL-signed). Queen governs, does NOT re-decide
+        substance: drop reports that failed local BFT; among committed, higher
+        EFFECTIVE-vote confidence wins; tie or none-committed -> ESCALATE."""
         committed = [r for r in reports if r['committed']]
         if not committed:
             ruling, why = 'ESCALATE', 'no sub-hive cleared local BFT+trust floor'
@@ -95,8 +88,12 @@ class QueenSOV3:
                                          'n_eff': r['n_eff'], 'committed': r['committed']} for r in reports]})
         return {'topic': topic, 'ruling': ruling, 'why': why, 'sigil': digest}
 
-# ── The 106-agent capability clusters -> named sub-hives ─────────────────────
-CLUSTERS = {  # name: (agent_count, BFT council, rho = intra-hive delegate correlation)
+# ── 106 agents -> capability-DOMAIN sub-hives (OVERLAPPING membership) ───────
+# HONEST: total_agents=106. The by_capability counts below are TAG counts — an agent
+# holds multiple capabilities, so a hive is a domain an agent can belong to more than
+# one of. The counts sum to 320 (overlapping), NOT a partition of the 106 headcount.
+TOTAL_AGENTS = 106
+CLUSTERS = {  # capability-domain: (by_capability tag-count, BFT council, intra-hive rho)
     'analysis': (93, 10, 0.20), 'creative': (65, 7, 0.30), 'code': (59, 7, 0.25),
     'communication': (22, 7, 0.40), 'neural': (20, 4, 0.76), 'monitoring': (18, 4, 0.30),
     'planning': (18, 4, 0.50), 'security': (10, 4, 0.20), 'memory': (10, 4, 0.60), 'web': (5, 4, 0.76),
@@ -110,21 +107,22 @@ def build_queen():
 def demo():
     q = build_queen()
     print("QUEEN SOV3 -> SUB-HIVE TOPOLOGY  (governance, not hive-mind)\n")
-    print(f"  {'sub-hive':<14}{'agents':>7}{'council':>8}{'f':>3}{'quorum':>7}{'rho':>6}")
+    print(f"  {'sub-hive':<14}{'tag-cnt':>8}{'council':>8}{'f':>3}{'quorum':>7}{'rho':>6}")
     for h in q.hives.values():
-        print(f"  {h.name:<14}{h.agent_count:>7}{h.council:>8}{h.f:>3}{h.quorum:>7}{h.rho:>6}")
-    print(f"\n  {sum(c for c,_,_ in CLUSTERS.values())} agents across {len(CLUSTERS)} sub-hives; "
-          f"trust floor N_eff>={TRUST_MIN} (per-hive rho: diverse lineage -> lower rho -> can commit)\n")
+        print(f"  {h.name:<14}{h.agent_count:>8}{h.council:>8}{h.f:>3}{h.quorum:>7}{h.rho:>6}")
+    tags = sum(c for c,_,_ in CLUSTERS.values())
+    print(f"\n  {TOTAL_AGENTS} agents total; {tags} capability tags across {len(CLUSTERS)} "
+          f"domain sub-hives (OVERLAPPING, not a partition of {TOTAL_AGENTS}).")
+    print(f"  trust floor N_eff>={TRUST_MIN} (per-hive rho: diverse lineage -> lower rho -> can commit)\n")
 
     print("── 3 sub-hives run local BFT consensus ─────────────────────────────")
     reports = []
-    # Neutral resource-routing conflict (no safety inversion): Queen arbitrates on
-    # EVIDENCE QUALITY (N_eff), NOT on her own opinion of the answer. security & code
-    # are diverse-lineage (low rho) so they COMMIT and DISAGREE; monitoring escalates.
+    # Neutral routing conflict: Queen arbitrates on EVIDENCE QUALITY (N_eff), not on
+    # her own opinion. security & code commit and DISAGREE; monitoring self-escalates.
     T = 'route batch to GPU pool'
     scenarios = [
-        ('security',   T, ['POOL_A']*4),                       # unanimous, rho=0.20 -> commits A
-        ('code',       T, ['POOL_B']*6 + ['POOL_A']),          # 6/7, rho=0.25 -> commits B
+        ('security',   T, ['POOL_A']*4),                          # unanimous -> commits A
+        ('code',       T, ['POOL_B']*6 + ['POOL_A']),             # 6/7 -> commits B
         ('monitoring', T, ['POOL_A','POOL_A','POOL_B','POOL_B']),  # split -> escalate
     ]
     for name, prop, votes in scenarios:
