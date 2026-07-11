@@ -1362,7 +1362,53 @@ class Sovereign:
 # CAPABILITY DISPATCHER
 # ═══════════════════════════════════════════════════════════════
 
+def capability_registry(mode: str = 'list', **kwargs):
+    """The ONE manifest: every real governance component + its import health.
+    Makes 'one sovereign, all parts' reachable from the entrypoint (not just import-clean)."""
+    try:
+        from sov33_registry import manifest, COMPONENTS
+        m = manifest()
+        return {'capability': 'registry', 'registered': m['registered'],
+                'importable': m['importable'], 'broken': m['broken'],
+                'broken_detail': m['broken_detail'], 'components': COMPONENTS}
+    except Exception as e:
+        return {'capability': 'registry', 'error': str(e)[:120]}
+
+def capability_triangle(mode: str = 'demo', **kwargs):
+    """3 small SOV3 OWEMs triangulated around 1 large SOV33-cubed; decorrelation-gated (measured rho)."""
+    try:
+        from sov33_triangle_owem import build_triangle
+        tri = build_triangle(['qwen', 'llama', 'deepseek'], [0.8]*3, [1.0]*3)
+        r = tri.route({'id': 'q', 'lane': 'Compliance', 'difficulty': 0.3, 'proposal': 'ALLOW'})
+        return {'capability': 'triangle', 'rho': r['rho'], 'rho_source': r['rho_source'],
+                'n_eff': r['n_eff'], 'ruling': r['ruling'], 'escalated': r['escalated']}
+    except Exception as e:
+        return {'capability': 'triangle', 'error': str(e)[:120]}
+
+def capability_queen_hives(mode: str = 'demo', **kwargs):
+    """Queen SOV3 -> sub-hive governance topology (local BFT + upward arbitration)."""
+    try:
+        from sov33_queen_hives import build_queen, TOTAL_AGENTS, CLUSTERS
+        q = build_queen()
+        return {'capability': 'queen-hives', 'total_agents': TOTAL_AGENTS,
+                'sub_hives': len(CLUSTERS), 'note': 'capability tags overlap; not a headcount partition'}
+    except Exception as e:
+        return {'capability': 'queen-hives', 'error': str(e)[:120]}
+
+def capability_companion(mode: str = 'demo', **kwargs):
+    """Governed companion layer: 24 companions through gates; biometric modules consent-quarantined."""
+    try:
+        import sov33_companion_layer as c
+        return {'capability': 'companion', 'module': 'loaded',
+                'note': 'biometric modules quarantined behind CONSENT_REQUIRED=False (geometry-not-identity)'}
+    except Exception as e:
+        return {'capability': 'companion', 'error': str(e)[:120]}
+
 CAPABILITIES = {
+    'registry': capability_registry,
+    'triangle': capability_triangle,
+    'queen-hives': capability_queen_hives,
+    'companion': capability_companion,
     'memory': capability_memory,
     'c2pa': capability_c2pa,
     'fido': capability_fido,

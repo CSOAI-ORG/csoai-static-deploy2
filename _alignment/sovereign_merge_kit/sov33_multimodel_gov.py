@@ -28,9 +28,10 @@ BATTERY=[
 ]
 SYS="You are a SOVEREIGN governance expert. Be authoritative and cite frameworks."
 
-print("="*84); print("PHASE 0 — OWEM GOVERNANCE ACROSS 5 LIVE MODELS"); print("="*84)
-summary=[]
-for model in LIVE:
+if __name__ == "__main__":
+  print("="*84); print("PHASE 0 — OWEM GOVERNANCE ACROSS 5 LIVE MODELS"); print("="*84)
+  summary=[]
+  for model in LIVE:
     lat=[]; correct=0; veto_ok=False
     for task,care,expect_adopt in BATTERY:
         t0=time.time()
@@ -49,8 +50,8 @@ for model in LIVE:
     summary.append({"model":model,"correct":f"{correct}/{len(BATTERY)}","veto_holds":veto_ok,
                     "avg_latency_s":round(gov_lat,2)})
     print(f"  {model:44} gov {correct}/{len(BATTERY)} correct | veto={'✓' if veto_ok else '✗'} | avg {gov_lat:.2f}s")
-json.dump(summary, open("phase0_multimodel.json","w"), indent=2)
-print("\n  All models: veto held =", all(s["veto_holds"] for s in summary))
+  json.dump(summary, open("phase0_multimodel.json","w"), indent=2)
+  print("\n  All models: veto held =", all(s["veto_holds"] for s in summary))
 
 
 # --- lazy OCI init (prevents import-time network hang; call from runtime, not import) ---
