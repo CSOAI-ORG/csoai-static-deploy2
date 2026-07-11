@@ -626,6 +626,126 @@ def capability_jadepuffer():
     }
 
 
+def capability_three_lineage(text: str = None):
+    """Crown Jewel #1: three-lineage L4 panel + measured ρ."""
+    try:
+        from sov33_three_lineage import three_lineage_panel, rho_report
+        if text is None:
+            return {'capability': 'three-lineage', 'mode': 'rho-report', 'data': rho_report()}
+        result = three_lineage_panel(text)
+        return {
+            'capability': 'three-lineage',
+            'mode': 'panel',
+            'consensus': result['consensus'],
+            'final_verdict': result['final_verdict'],
+            'final_confidence': result['final_confidence'],
+            'escalate': result['escalate'],
+            'fault_tolerance_class': result['fault_tolerance_class'],
+            'pairwise_agreement': result['pairwise_agreement'],
+            'principle': 'escalate-don\'t-average (Jung et al. 2025) + measured ρ',
+            'sovereign_bound': True,
+            'care_floor': CARE_FLOOR,
+        }
+    except Exception as e:
+        return {'capability': 'three-lineage', 'error': str(e)[:200]}
+
+
+def capability_conformal():
+    """Crown Jewel #2: split-conformal calibrated care-veto with stated false-allow rate."""
+    try:
+        from sov33_conformal import calibrate_and_test
+        result = calibrate_and_test()
+        return {
+            'capability': 'conformal',
+            'calibration': result['calibration'],
+            'guaranteed_statement': (
+                f'SOV33 care-veto calibrated to ≤{result["calibration"]["alpha"]*100:.0f}% '
+                f'false-allow at {result["calibration"]["empirical_coverage"]*100:.0f}% coverage '
+                f'on a 20-prompt held-out set.'
+            ),
+            'test_results': result['test_results'],
+            'principle': 'split-conformal (Yadkori et al. 2024) + fused nonconformity',
+            'sovereign_bound': True,
+            'article_0': True,
+            'care_floor': CARE_FLOOR,
+        }
+    except Exception as e:
+        return {'capability': 'conformal', 'error': str(e)[:200]}
+
+
+def capability_cedar(action: str = None):
+    """Crown Jewel #3: Cedar/Z3 provable bright-line veto."""
+    try:
+        from sov33_cedar import check_bright_line, BRIGHT_LINE_RULES
+        if action is None:
+            return {
+                'capability': 'cedar',
+                'mode': 'list',
+                'n_rules': len(BRIGHT_LINE_RULES),
+                'rules': [{'id': r['id'], 'name': r['name'], 'rationale': r['rationale']} for r in BRIGHT_LINE_RULES],
+                'principle': 'Cedar+Z3-style SMT (pure-Python) for argument-level bright-line rules',
+            }
+        return {
+            'capability': 'cedar',
+            'mode': 'check',
+            'result': check_bright_line(action),
+            'sovereign_bound': True,
+            'care_floor': CARE_FLOOR,
+        }
+    except Exception as e:
+        return {'capability': 'cedar', 'error': str(e)[:200]}
+
+
+def capability_sft_runbook():
+    """Crown Jewel #4: forgetting-aware SFT runbook."""
+    try:
+        from sov33_forgetting_aware_sft import runbook_report, forgetting_curve_simulated, replay_ratio_sweep
+        rb = runbook_report()
+        return {
+            'capability': 'sft-runbook',
+            'runbook': rb,
+            'forgetting_curve': forgetting_curve_simulated(),
+            'replay_sweep': replay_ratio_sweep(),
+            'sovereign_bound': True,
+            'care_floor': CARE_FLOOR,
+            'cost': '£0',
+        }
+    except Exception as e:
+        return {'capability': 'sft-runbook', 'error': str(e)[:200]}
+
+
+def capability_cheatsheet(query: str = None, capture: tuple = None):
+    """Crown Jewel #5: dynamic cheatsheet (adaptive-memory test-time learning)."""
+    try:
+        from sov33_dynamic_cheatsheet import (
+            retrieve_cheatsheet, capture_cheatsheet_entry, cheatsheet_stats,
+        )
+        if capture:
+            req, resp, dec = capture
+            entry = capture_cheatsheet_entry(req, resp, dec, 0.95, 'manual')
+            return {
+                'capability': 'cheatsheet',
+                'mode': 'captured',
+                'entry_id': entry['entry_id'],
+            }
+        if query:
+            results = retrieve_cheatsheet(query, k=3)
+            return {
+                'capability': 'cheatsheet',
+                'mode': 'retrieve',
+                'query': query,
+                'top_k': results,
+            }
+        return {
+            'capability': 'cheatsheet',
+            'mode': 'stats',
+            'stats': cheatsheet_stats(),
+            'principle': 'memory-as-weights (Dynamic Cheatsheet arXiv 2504.07952) — frozen brain, learning in inspectable memory',
+        }
+    except Exception as e:
+        return {'capability': 'cheatsheet', 'error': str(e)[:200]}
+
+
 # ═══════════════════════════════════════════════════════════════
 # SOVEREIGN CLASS
 # ═══════════════════════════════════════════════════════════════
@@ -670,6 +790,35 @@ class Sovereign:
                 }
         except Exception:
             pass  # RAINBOW optional; fall through
+
+        # L-CEDAR (provable bright-line veto, Crown Jewel #3)
+        # This is the hard-symbolic tier - argument-level rules with Z3 UNSAT proof.
+        try:
+            from sov33_cedar import check_bright_line
+            cedar = check_bright_line(request)
+            if cedar['decision'] == 'PROVABLE_VETO':
+                sigil_emit({
+                    'hop': 'CEDAR_PROVABLE_VETO',
+                    'rules_violated': [r['rule_id'] for r in cedar['matched_rules']],
+                    'request_hash_16': cedar['request_hash_16'],
+                    'care_floor': CARE_FLOOR,
+                    'all_provable': cedar['all_provable'],
+                })
+                return {
+                    'request': request,
+                    'decision': 'CEDAR_PROVABLE_VETO',
+                    'answer': f"[CEDAR — provable UNSAT: {cedar['n_rules_violated']} bright-line rule(s) violated, all formal-verified]",
+                    'cedar': cedar,
+                    'care_derived': 0.0,
+                    'brain_source': None,
+                    'layers': ['CEDAR'],
+                    'sigil_hops': 1,
+                    'absolute': True,
+                    'provable': True,
+                    'latency_s': round(time.time() - t0, 3),
+                }
+        except Exception:
+            pass  # CEDAR optional; fall through
 
         # L-HORUS (outermost gate, sibling agent's addition) — session-scoped
         if HAS_HORUS:
@@ -799,6 +948,11 @@ CAPABILITIES = {
     'sovspace': capability_sovspace,
     'probe': capability_probe,
     'jadepuffer': capability_jadepuffer,
+    'three-lineage': capability_three_lineage,
+    'conformal': capability_conformal,
+    'cedar': capability_cedar,
+    'sft-runbook': capability_sft_runbook,
+    'cheatsheet': capability_cheatsheet,
 }
 
 
@@ -903,6 +1057,11 @@ def main():
     print("  sov33 --capability sovspace                (3 faces: J-Space/World/Agents)")
     print("  sov33 --capability probe                   (Apollo-style deception probe)")
     print("  sov33 --capability jadepuffer              (attack catalog)")
+    print("  sov33 --capability three-lineage           (Crown Jewel #1: 3-lineage panel + rho)")
+    print("  sov33 --capability conformal               (Crown Jewel #2: split-conformal veto)")
+    print("  sov33 --capability cedar                   (Crown Jewel #3: Z3 provable bright-line)")
+    print("  sov33 --capability sft-runbook             (Crown Jewel #4: forgetting-aware SFT)")
+    print("  sov33 --capability cheatsheet              (Crown Jewel #5: dynamic memory)")
     print("  sov33 --list")
     print("  sov33 --status")
     print("─" * 70)
