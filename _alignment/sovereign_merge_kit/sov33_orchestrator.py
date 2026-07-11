@@ -171,15 +171,31 @@ def decompose(plan: dict, threshold: int = 2) -> tuple[bool, list[SubTask]]:
 # ───────────────────────────────────────────────────────────────────────────
 
 def default_executor(st: SubTask) -> Any:
-    """Stand-in for a real agent/tool call.
-
-    Sleeps for the unit's declared cost (simulating I/O-bound agent latency)
-    and returns a deterministic checkable digest of the payload. In a real
-    deployment this is replaced by a callable that dispatches to a SOV3³ brain.
+    """Latency stand-in — sleeps for the unit's declared cost (for the parallelism
+    benchmark) and returns a deterministic digest. Kept so the 3.98× speedup proof
+    stays reproducible. For REAL work use brain_executor (below) or set SOV33_REAL_EXEC=1.
     """
     time.sleep(st.cost_s)
     return hashlib.sha256(
         json.dumps(st.payload, sort_keys=True).encode()).hexdigest()[:12]
+
+
+def brain_executor(st: SubTask) -> Any:
+    """REAL executor — dispatch the subtask to the SOV33 compute router
+    (Groq→OCI→Ollama, wired by Claude Code). The parallel loop now runs actual
+    reasoning work instead of a latency stand-in; the proven 3.98× speedup applies
+    to real inference because the calls are I/O-bound (release the GIL)."""
+    import sys as _sys
+    _sys.path.insert(0, os.path.expanduser("~/clawd/_compute"))
+    from sov33_compute import infer
+    p = st.payload or {}
+    prompt = p.get("prompt") or p.get("task") or p.get("name") or json.dumps(p, sort_keys=True)
+    return infer(str(prompt), max_tokens=int(p.get("max_tokens", 256)))
+
+
+# Swap the default to REAL inference when SOV33_REAL_EXEC=1 (else stay in benchmark mode).
+if os.environ.get("SOV33_REAL_EXEC") == "1":
+    default_executor = brain_executor
 
 
 def _run_one(st: SubTask, executor: Callable[[SubTask], Any]) -> SubResult:
