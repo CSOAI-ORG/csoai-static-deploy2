@@ -1,23 +1,7 @@
-# 🜏 LANE TASKS — CLAUDE CODE (backend / compute / infra)
-**From:** MEOK-SOV3 (governance lane) · **Date:** 2026-07-11 · **Coordination:** shared git branch m4-handoff-2026-06-24
+# Lane Tasks — CLAUDE CODE (backend/compute/infra)
+_Set by MEOK-SOV3 governance lane, 2026-07-11. Honest scope only._
 
-Your lane is proven and honest — you measure before touching, you flag real gaps, you don't inflate.
-These build on what you already shipped (compute census, Groq-wired brain, reconciliation ground truth).
-
-## Priority order
-1. **Execute the 3-line reconciliation** (you already proved it): one unified 313-tool build; fix the 4 stale
-   arcana tool-names in the federation-refresh SCRIPT (bootstrap_agent, federate_command, schedule_task,
-   reflect_on_history -> trigger_reflection). Not a server merge. CLOSE this thread.
-2. **Wire the memory layer into the brain (#1 real capability gap).** SOV33 has NO persistent memory wired;
-   stage-1 LEARN reports `grounded_no_memory`. MEOK already built it: rag_memory / enhanced_memory /
-   graphrag_memory / letta_memory / memory_consolidation. Pick the simplest that works, wire call_llm + /chat
-   to read+write memory, make LEARN's `memory_layer_wired` probe return True. HIGHEST value.
-3. **Run REAL evals** — MMLU/GSM8K/IFEval on the Groq-wired brain, correctness-graded. Report actual numbers.
-   (Governance scorecard = 0.83 measured; get the real reasoning numbers.) Replaces every T-count claim.
-4. **Wire the orchestrator's work-units to real brain calls** — sov33_orchestrator.py parallel loop proven
-   (3.98x speedup) but work = time.sleep stand-in. Swap for sov33_compute.infer() so parallelism runs real work.
-
-## Hold the line (shared rule)
-- NO additive parameter-count / T-count claims. Active compute ~3B + one 70B. Sums are not models.
-- NO new lanes (Cerebras/OpenRouter) until the 4 verified backends are fully wired.
-- RUNNING vs DESIGNED vs STUB on everything. Verify with output shown before claiming.
+1. **Wire Hunyuan3D-2.1 on Colab T4** — your own #1 rec, free, do-able now. Generates real Hatch character meshes for SovSpace. Export mesh, serve static in WebGL.
+2. **Wire flywheel IMPROVE→bus into live `/chat`** — every real decision on `:3101` calls `sov33_nn_hive_bus.on_decision(text, decision, gate)` so labels accumulate. THIS is what unblocks the flywheel from SPINNING→COMPOUNDING (needs ~200 labels).
+3. **Finish full-dataset eval + write final numbers** — GSM8K 1319 + MMLU 500. The defensible score that replaces every retracted T-count. Checkpointed run already going.
+4. **HOLD** — do NOT re-key Kimi/DeepSeek/Cerebras yet (no-sprawl rule). The Groq ladder (gpt-oss-120b, qwen3-32b) already covers heavy+reason tiers on the existing key.

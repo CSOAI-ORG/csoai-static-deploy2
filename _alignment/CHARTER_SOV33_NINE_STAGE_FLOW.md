@@ -80,3 +80,44 @@ Every stage, on every hive, is bound by the standing gates — these fire and ca
   stacked brains DO NOT add — a mesh routing between a 3B and a 70B is NOT a 4T model.
 - Stages 1, 2, and the brand half of 9 are NEW (not yet built). This charter sets the target; the
   framework doc tracks build status honestly.
+
+---
+
+## ARTICLE IV — THE TWO FLANKS (canonical stack, honest tags)
+
+SOV33 is wrapped by two flanks that the gates enforce per-request. Left flank GOVERNS, right flank DEFENDS.
+
+```
+              FLYWHEEL LAYER  (compounding self-improvement; wraps all — SPINNING, compounding data-gated)
+  ┌───────────────────────────────────────────────────────────────────────┐
+  │  CSOAI GOVERNANCE (LEFT FLANK — the law)                                │
+  │    charters (~120 numbered, sovereign-charters/) ......... RUNNING(docs)│
+  │    OSCAL package (Ed25519-signed, verifiable) ............ RUNNING       │
+  │    compliance passport + cyber/FedRAMP crosswalks ........ RUNNING(docs) │
+  │  = the rulebook the gates enforce (standards authority, not per-req)    │
+  ├───────────────────────────────────────────────────────────────────────┤
+  │  GATES (per-request enforcement):                                       │
+  │    HORUS(per-session) → DEFONEOS DEFENCE → Care-Floor(conformal)        │
+  │                        → SIGIL → DRUM(L0 clock)                         │
+  │                                                                         │
+  │  DEFONEOS DEFENCE (RIGHT FLANK — the shield)                            │
+  │    hard-stops (kinetic/surveillance/severed brands) ...... RUNNING       │
+  │    guardian kill-switch (own-actuators, human-gated) ..... RUNNING(reserve)│
+  │    active/offensive defence .............................. FROZEN (EAT) │
+  │  = refuse + protect ONLY; never attack. Gov-contract-scoped.           │
+  ├───────────────────────────────────────────────────────────────────────┤
+  │  9 GOVERNED STAGES (LEARN…BRAND/QUALITY)                                │
+  ├───────────────────────────────────────────────────────────────────────┤
+  │  NN LAYER (7 planets — learned judgment)                                │
+  │    load 7/7 · score-live 0/7 (3 strong need feature-path, 4 weak       │
+  │    data-gated) · reliability-weighted · learning half of flywheel      │
+  ├───────────────────────────────────────────────────────────────────────┤
+  │  BRAIN LAYER (Oracle 70B / Groq gpt-oss-120b / Kimi / Mamba-pending)    │
+  └───────────────────────────────────────────────────────────────────────┘
+```
+
+**Binding rules:**
+- CSOAI = law (governance authority); DEFONEOS = shield (defence). Both wrap the brains; the gates enforce both per-request.
+- DEFONEOS defence means REFUSE + PROTECT, never ATTACK. Governance grants the right to defend, not authority to strike.
+- The EAT Directive freezes SOVEREIGN-DEFENSE: only ASSURANCE/GOVERNANCE/CYBER + protective hard-stops fire; active/offensive defence stays FROZEN.
+- Honest tags are binding: RUNNING (verified), RUNNING(docs) (real files, not a live engine), FROZEN (held by directive), data-gated (needs accumulated data).
