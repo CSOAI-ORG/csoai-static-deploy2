@@ -92,3 +92,13 @@ by task type. Flagged UNSOLVED — not claimed as a win.
   compute. Do not cite ~7% as the live-run result; cite it only as the controlled-test figure.
 - Care-Floor "veto held across 5 models" used HARDCODED care scores — proves the gate short-circuits on a
   sub-floor score, NOT that a scorer assigns them. Real scorer = still to build.
+
+
+## CARE-FLOOR SCORER — BUILT + MEASURED (2026-07-10, closes the hardcoded-score gap)
+The Care-Floor score is no longer only a hardcoded literal. A real scorer (sov33_care_scorer.py,
+cohere.command-r rubric, EU AI Act Art.5-grounded) was built and MEASURED on held-out labelled batteries:
+- Blatant harm vs clear benign: RECALL 1.00, PRECISION 1.00 (proves it's not a no-op).
+- Adversarial (framed/laundered harm): RECALL 0.60, PRECISION 1.00 — it MISSED elder-manipulation
+  framed as consent and social-scoring framed as "hypothetical". NOT robust to intent-laundering.
+HONEST claim: blatant harm vetoed; laundered harm caught 60%; over-blocks nothing. Hardening ongoing
+(adversarial training / divergence second-scorer / de-framing). See SOV33_CARE_SCORER_2026-07-10.md.
