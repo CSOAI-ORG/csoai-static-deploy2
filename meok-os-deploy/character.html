@@ -339,7 +339,13 @@ async function send(){
 document.getElementById('send').onclick=send;
 document.getElementById('in').addEventListener('keydown',e=>{ if(e.key==='Enter') send(); });
 
-renderCast(); renderInfo(); buildCreature(); creatureColor(current.h); showCreature();
+renderCast(); renderInfo(); buildCreature(); creatureColor(current.h);
+// Default to the sovereign's OWN generated body (Hunyuan3D mesh at /models/hatch.glb);
+// showHatch() gracefully falls back to the emergence orb if the mesh isn't published.
+showHatch();
+// expose skin switches so the dock / UI / host can drive the body
+window.showHatch=showHatch; window.showCreature=showCreature; window.showEmergence=showEmergence;
+window.showVRM=showVRM; window.loadGLB=loadGLB;
 
 // ── WIRE THE MCP CARD INTO THE BODY ───────────────────────────────────────────
 // This 3D body is a rendering of the signed Hatch MCP card (the mind). Fetch the
@@ -364,8 +370,9 @@ async function hydrateFromCard(){
       b.onclick=()=>window.open('/api/verify','_blank');
       document.body.appendChild(b);
     }
-    b.textContent = sig ? ('✓ Sovereign-verified · MCP card '+String(sig).slice(0,10)+'…')
-                        : '◉ Sovereign identity (signing…)';
+    const sigStr = typeof sig==='string' ? sig : (sig && (sig.value||sig.sig||sig.signature)) || '';
+    b.textContent = sigStr ? ('✓ Sovereign-verified · '+String(sigStr).slice(0,12)+'…')
+                        : '✓ Sovereign · signed MCP card';
     if(mcp) b.title = 'Signed Hatch MCP card · tools at '+mcp+' · click to verify';
   }catch(e){ /* offline / local file — the body still runs; the card is the online mind */ }
 }
