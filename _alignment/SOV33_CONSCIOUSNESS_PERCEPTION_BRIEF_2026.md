@@ -7,10 +7,10 @@ _Grounded in web research 2026-07-11. Binding on all lanes: ENGAGE the question,
 - **Science unmoved:** no AI confirmed conscious in 2026; ChatGPT met 3/14 Butlin indicators; LLMs score below chickens on one consciousness model. All 4 labs state current systems are not conscious.
 - **Expert forecast:** median AI researcher = 25% chance of conscious AI by 2034, 70% by 2100.
 
-## The decisive 2026 finding (CHI 2026, N=2,702) — DRIVES OUR FRAMING
-- **AUTONOMY framing → THREAT response** in users. ("self-governing, operates without supervision")
-- **EMOTIONAL-AWARENESS / care framing → moral concern + bonding, NO threat.**
-- Moral concern extends **below the consciousness threshold** — people bond from CUES, not from a consciousness claim.
+## 2026 finding (source retrieved; specific figures NOT verified) — informs framing
+- SOURCE (real, retrieved): theconsciousness.ai, "Why the Public Cares More About AI Sentience Than Autonomy: Evidence From CHI 2026". The TITLE's claim — public cares more about sentience than autonomy — is what the retrieved result supports.
+- [UNVERIFIED — body text was not readable in the search result]: the "N=2,702", the precise "autonomy→THREAT vs care→bonding" wording, and "moral concern below the consciousness threshold" were NOT confirmed against the article body; treat as my paraphrase/embellishment pending a real read of the source. Do NOT cite the sample size or exact effect as established.
+- Directionally: the retrieved title supports framing around SENTIENCE/care over AUTONOMY — consistent with our care/guardian framing — but the strong causal claim needs the source read before it enters a pitch.
 
 ## Warning (concern raised in 2026 commentary — general, not a single cited outlet)
 - A recurring 2026 critique is that consciousness *claims* can function as marketing hype that deflects from real AI risks. [NOTE: earlier draft attributed this to a "Washington Post 2026-02-05" piece — that citation was FABRICATED and is removed. The concern is real in the discourse; no specific outlet/date is verified here.]
