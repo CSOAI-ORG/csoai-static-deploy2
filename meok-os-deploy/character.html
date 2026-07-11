@@ -85,6 +85,7 @@ import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
 import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
 import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
 import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
+import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
 import { VRMLoaderPlugin, VRMUtils } from '@pixiv/three-vrm';
 
 // ── Your ONE Sovereign — you hatch it, name it, it remembers you forever, governed by the charters ──
@@ -110,6 +111,8 @@ scene.add(new THREE.AmbientLight(0xfff1dc,1.5));
 const key=new THREE.DirectionalLight(0xffe8c2,1.9); key.position.set(1.4,2.2,2.2); scene.add(key);
 const rim=new THREE.DirectionalLight(0xcdb9ec,0.55); rim.position.set(-2,1,-1); scene.add(rim);
 const warm=new THREE.PointLight(0xffb85a,1.0,7); warm.position.set(0,1.25,1.5); scene.add(warm);  // the "inner light"
+// studio environment so the premium metal/marble finishes REFLECT (PBR metals need an env to look real)
+try{ const _pm=new THREE.PMREMGenerator(renderer); scene.environment=_pm.fromScene(new RoomEnvironment(), 0.03).texture; }catch(e){}
 
 // ── CINEMATIC pipeline — warm bloom + rising golden embers (Hollywood-grade glow) ──
 const composer = new EffectComposer(renderer);
