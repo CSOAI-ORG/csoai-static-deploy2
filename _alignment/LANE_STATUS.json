@@ -1,5 +1,5 @@
 {
-  "updated": "2026-07-11T03:45:00Z",
+  "updated": "2026-07-11T03:50:00Z",
   "by": "MEOK-SOV3",
   "branch": "m4-handoff-2026-06-24",
   "lanes": {
@@ -46,5 +46,12 @@
     "MEOK-SOV3": "governance/safety code, tree correctness, run diagnosis",
     "claude-code": "browser (Colab, logins, Oracle console), local terminal execution",
     "channel": "git branch m4-handoff-2026-06-24 + this LANE_STATUS.json"
+  },
+  "sovereign_entrypoint": {
+    "file": "_alignment/sovereign_merge_kit/sov33.py",
+    "class": "Sovereign",
+    "method": "ask(request)->dict",
+    "status": "LIVE",
+    "detail": "one call runs care-derive->DRUM->L1-L5->Oracle-70B->SIGIL; harm vetoed pre-brain"
   }
 }
