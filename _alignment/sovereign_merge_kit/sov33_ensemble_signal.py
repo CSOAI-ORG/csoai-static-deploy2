@@ -45,7 +45,9 @@ def ensemble_signal(text):
             y=m.predict(X)
             sig[name]={"status":"scored","score":round(float(np.ravel(y)[0]),3)}
         except Exception as e:
-            sig[name]={"status":f"err:{type(e).__name__}","score":None}
+            # HONEST: these MLPRegressors expect 10-12 ENGINEERED numeric features, not text.
+            # Text input -> AttributeError. Real scoring needs the estate feature extractors (flywheel path).
+            sig[name]={"status":"loads_ok_needs_engineered_features","score":None,"err":type(e).__name__}
     return {"wired_strong":list(_MODELS.keys()),"signals":sig,
             "data_gated_not_wired":WEAK_DATA_GATED,
             "note":"3 strong NNs wired to stages 6/9; 4 weak NNs data-gated (would feed noise)"}
