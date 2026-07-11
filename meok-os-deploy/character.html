@@ -179,6 +179,23 @@ function loadGLB(url){
     say('ai', `That's you — your own avatar, brought into MEOK. I'm still ${current.id}, here with you.`);
   }, undefined, ()=>{ L.classList.add('hide'); say('ai',"Couldn't load that avatar — try again?"); });
 }
+// HATCH skin — the sovereign-GENERATED body (Hunyuan3D-2.1 mesh). Loads /models/hatch.glb via the
+// same GLTFLoader; if the mesh isn't published yet it falls back to the always-present emergence orb
+// (honest, never blank). Once ~/clawd/_compute/sov33_hunyuan3d_hatch.ipynb produces hatch.glb → drop it
+// at meok-os-deploy/models/hatch.glb and this skin renders the sovereign's own generated body.
+let hatchObj=null;
+function showHatch(){
+  if(hatchObj){ skin='hatch'; hatchObj.visible=true; if(orb)orb.visible=false; if(creature)creature.visible=false; if(currentVRM)currentVRM.scene.visible=false; if(rpmObj)rpmObj.visible=false; return; }
+  const L=document.getElementById('loading'); L.classList.remove('hide');
+  loader.load('/models/hatch.glb', (gltf)=>{
+    hatchObj=gltf.scene; hatchObj.position.set(0,0,0);
+    // normalize scale so the generated mesh sits in frame like the other skins
+    try{ const b=new THREE.Box3().setFromObject(hatchObj); const s=1.4/(b.getSize(new THREE.Vector3()).y||1); hatchObj.scale.setScalar(s); }catch(e){}
+    scene.add(hatchObj);
+    skin='hatch'; if(orb)orb.visible=false; if(creature)creature.visible=false; if(currentVRM)currentVRM.scene.visible=false; if(rpmObj)rpmObj.visible=false; hatchObj.visible=true;
+    L.classList.add('hide');
+  }, undefined, ()=>{ L.classList.add('hide'); if(typeof showEmergence==='function') showEmergence(); });  // no generated mesh yet → emergence orb
+}
 let blinkTimer = 2, blinkPhase = 0, speakUntil = 0;
 const bone = (vrm,n)=>{ try{ return vrm.humanoid && vrm.humanoid.getNormalizedBoneNode(n); }catch(e){ return null; } };
 
@@ -257,6 +274,10 @@ function animate(){
   if(skin==='rpm' && rpmObj){
     rpmObj.position.y = Math.sin(t*1.1)*0.02;
     rpmObj.rotation.y = Math.sin(Date.now()/3600)*0.16;
+  }
+  if(skin==='hatch' && hatchObj){
+    hatchObj.position.y = Math.sin(t*1.2)*0.022;                 // gentle float
+    hatchObj.rotation.y = Math.sin(Date.now()/3400)*0.18;        // look side to side
   }
   if(skin==='creature' && creature){
     const u=creature.userData;
