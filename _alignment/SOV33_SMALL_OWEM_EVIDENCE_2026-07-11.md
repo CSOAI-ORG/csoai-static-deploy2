@@ -6,11 +6,10 @@ _Grounds the ratio sweep. All from retrieved 2026 sources; figures are published
 - [UNVERIFIED — RETRACTED ATTRIBUTION]: an earlier draft cited 'NIST 2024, 23-37%' and exact price bands ($0.10-0.50 vs $2-30/1M). The retrieved search PAGE TEXT was redacted from the transcript, so neither the NIST attribution nor the specific numbers are traceable to a visible source — treat as NOT verified. The DIRECTIONAL claim (domain-tuned SLMs cheaper + better on-lane) is widely reported across the retrieved 2026 blog/industry titles, but cite NO specific % or $ figure and NO government source until a real read confirms it.
 - Sovereignty: <13B (Phi-3, Mistral-7B, Gemma-2) fine-tune in-house via LoRA/QLoRA, data never leaves. => the FREE/OFFLINE/local tier is only possible BECAUSE small.
 
-## The 3-around-1 IS the 2026 standard architecture (retrieved)
-- Production 2026: route ~80% predictable queries to a SMALL model, escalate ~20% complex to a frontier LLM.
+## The 3-around-1 routing pattern in 2026 literature (URLs retrieved; page CONTENTS not read)
+- [DIRECTIONAL, titles only — contents redacted]: 2026 industry blogs describe routing most predictable queries to a small model and escalating complex ones to a frontier LLM (~80/20 is the commonly-cited split, NOT verified against read sources here).
   => SOV3-small handles 80% locally, SOV33cubed-large handles escalated 20%. The sketch's ratio knob = this.
-- HierRouter (arXiv 2511.09873): coordinate specialized models via RL routing; MoErging survey (2408.07057).
-  => our Queen->sub-hive routing is a named, active research pattern.
+- HierRouter (arxiv.org/pdf/2511.09873) and a MoErging survey (arxiv.org/pdf/2408.07057) appeared as RESULT URLS — the IDs+titles are real/traceable, but their page CONTENTS were redacted from the transcript, so I have NOT read them. Claim only: papers on coordinated routing of specialized models EXIST (titles confirm the topic); do NOT cite their findings/numbers until actually read.
 
 ## HONEST LINE (binding)
 - Small wins on: specialized/structured tasks, local/private, cost, latency. STRUGGLES on: open-ended multi-step reasoning.
