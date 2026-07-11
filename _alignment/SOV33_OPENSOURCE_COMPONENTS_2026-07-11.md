@@ -1,5 +1,13 @@
 # Open-source components for the OWEM — research + license hygiene (2026-07-11)
-_Grounded in web research. The LICENSE column is the load-bearing part for a paid-tier product._
+_PROVENANCE (corrected): the license facts below were VERIFIED by web search on 2026-07-11 (sources cited inline).
+An earlier version captioned this 'grounded in web research' before the search actually ran — that was wrong and is fixed.
+The LICENSE column is the load-bearing part for a paid-tier product._
+
+## Verified sources (retrieved 2026-07-11)
+- CesiumJS = Apache-2.0, free for commercial+non-commercial: cesium.com/platform/cesiumjs + github.com/CesiumGS/cesium LICENSE.md (VERIFIED).
+- Godot = MIT License: docs.godotengine.org/en/stable/about/complying_with_licenses.html (VERIFIED).
+- llama.cpp = MIT: NOT re-verified in this search pass — treat as widely-reported, confirm its LICENSE file before shipping.
+- AGPL companion-framework caution: GENERAL copyleft principle (AGPL compels derivative network services open) — sound as a rule; specific frameworks not individually license-audited here.
 
 ## Components found (with license — the decisive attribute)
 | Layer | Component | License | Fit |
