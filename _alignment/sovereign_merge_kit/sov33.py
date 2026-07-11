@@ -830,8 +830,47 @@ def capability_agentdog():
         'role': 'decorrelated L4 checker (different lineage from Oracle 70B)',
         'principle': 'adds a third lineage to break correlation (per arXiv 2602.08003)',
         'sovereign_bound': True,
-        'care_floor': 0.95,
+        'care_floor': CARE_FLOOR,
     }
+
+
+def capability_years_to_days(mode: str = 'time', goal: str = None, name: str = None):
+    """YEARS→DAYS framework: auto-use agents to collapse time per cycle."""
+    try:
+        from sov33_years_to_days import decompose_plan, run_cycle, cycle_history, time_stats, PRINCIPLES
+        if mode == 'principles':
+            return {
+                'capability': 'y2d',
+                'mode': 'principles',
+                'principles': [{'n': n, **p} for n, p in PRINCIPLES.items()],
+            }
+        if mode == 'plan' and goal:
+            return {
+                'capability': 'y2d',
+                'mode': 'plan',
+                'plan': decompose_plan(goal),
+            }
+        if mode == 'cycle' and goal:
+            plan = decompose_plan(goal)
+            return {
+                'capability': 'y2d',
+                'mode': 'cycle',
+                'cycle': run_cycle(name or f"cycle_{int(time.time())}", plan),
+            }
+        if mode == 'history':
+            return {
+                'capability': 'y2d',
+                'mode': 'history',
+                'history': cycle_history(),
+            }
+        # default: time stats
+        return {
+            'capability': 'y2d',
+            'mode': 'time',
+            'stats': time_stats(),
+        }
+    except Exception as e:
+        return {'capability': 'y2d', 'error': str(e)[:200]}
 
 
 # ═══════════════════════════════════════════════════════════════
@@ -1046,6 +1085,7 @@ CAPABILITIES = {
     'conformal-mapie': capability_conformal_mapie,
     'sondera': capability_sondera,
     'agentdog': capability_agentdog,
+    'y2d': capability_years_to_days,
 }
 
 
@@ -1153,8 +1193,9 @@ def main():
     print("  sov33 --capability three-lineage           (Crown Jewel #1: 3-lineage panel + rho)")
     print("  sov33 --capability conformal               (Crown Jewel #2: split-conformal veto)")
     print("  sov33 --capability cedar                   (Crown Jewel #3: Z3 provable bright-line)")
-    print("  sov33 --capability sft-runbook             (Crown Jewel #4: forgetting-aware SFT)")
-    print("  sov33 --capability cheatsheet              (Crown Jewel #5: dynamic memory)")
+    print("  sov33 --capability sondera                 (Cedar pre-execution gate)")
+    print("  sov33 --capability agentdog                (decorrelated L4 checker spec)")
+    print("  sov33 --capability y2d                     (YEARS→DAYS framework)")
     print("  sov33 --list")
     print("  sov33 --status")
     print("─" * 70)
