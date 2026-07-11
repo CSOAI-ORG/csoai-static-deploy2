@@ -10,6 +10,7 @@ key) ONLY — NO biometric/face/voice matching. Owner-gated actions
 (money/dns/secrets/charter-amend) STAY False even for the founder: human + BFT still required.
 """
 import os, json
+import os,sys; sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from sov33_identity import identify, enroll_founder
 from sov33_learn_stage import learn, bridge_to_all_stages
 
