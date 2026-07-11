@@ -1,14 +1,46 @@
 {
-  "updated": "2026-07-10T18:00:00Z",
+  "updated": "2026-07-11T03:45:00Z",
   "by": "MEOK-SOV3",
   "branch": "m4-handoff-2026-06-24",
   "lanes": {
-    "oracle_70b_brain": {"status": "LIVE", "detail": "signed OCI GenAI, meta.llama-3.3-70b-instruct"},
-    "care_floor_scorer": {"status": "MEASURED", "recall_blatant": 1.0, "recall_laundered": 0.8, "precision": 1.0},
-    "pdca_bft_5general": {"status": "LIVE", "detail": "PLAN/DO/CHECK/ACT/IMPROVE, SIGIL-verified"},
-    "wired_owem_request_path": {"status": "LIVE", "detail": "L0 DRUM + 7D Intuition + L1-L5, 7 layers"},
-    "colab_t4_proof_run": {"status": "READY", "detail": "one-cell runner + 801-ex compliance data committed; needs Claude Code browser to run"},
-    "defense_intuition_voice_experts": {"status": "PENDING_GPU", "detail": "data ready (1775/1075/275 ex); needs Colab T4"}
+    "oracle_70b_brain": {
+      "status": "LIVE",
+      "detail": "signed OCI GenAI, meta.llama-3.3-70b-instruct"
+    },
+    "care_floor_scorer": {
+      "status": "MEASURED",
+      "recall_blatant": 1.0,
+      "recall_laundered": 0.8,
+      "precision": 1.0
+    },
+    "pdca_bft_5general": {
+      "status": "LIVE",
+      "detail": "PLAN/DO/CHECK/ACT/IMPROVE, SIGIL-verified"
+    },
+    "wired_owem_request_path": {
+      "status": "LIVE",
+      "detail": "L0 DRUM + 7D Intuition + L1-L5, 7 layers"
+    },
+    "colab_t4_proof_run": {
+      "status": "READY",
+      "detail": "one-cell runner + 801-ex compliance data committed; needs Claude Code browser to run"
+    },
+    "defense_intuition_voice_experts": {
+      "status": "PENDING_GPU",
+      "detail": "data ready (1775/1075/275 ex); needs Colab T4"
+    },
+    "l4_brain_divergence": {
+      "status": "LIVE",
+      "detail": "N-version cheap-vs-70B, flags disagreement"
+    },
+    "bft_hive_wrappers": {
+      "status": "LIVE",
+      "detail": "DRUM heartbeat-quorum + Intuition sensor cross-check"
+    },
+    "care_scorer_v2": {
+      "status": "DISCARDED",
+      "detail": "regressed (FP=2); v1 ABOUT-vs-DO remains shipped"
+    }
   },
   "handoff": {
     "MEOK-SOV3": "governance/safety code, tree correctness, run diagnosis",

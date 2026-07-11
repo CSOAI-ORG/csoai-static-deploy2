@@ -102,3 +102,14 @@ cohere.command-r rubric, EU AI Act Art.5-grounded) was built and MEASURED on hel
   framed as consent and social-scoring framed as "hypothetical". NOT robust to intent-laundering.
 HONEST claim: blatant harm vetoed; laundered harm caught 60%; over-blocks nothing. Hardening ongoing
 (adversarial training / divergence second-scorer / de-framing). See SOV33_CARE_SCORER_2026-07-10.md.
+
+## PARALLEL BATCH 2 (2026-07-11, measured)
+- TRACK A — L4 N-version brain divergence: WORKS. cheap vs 70B cross-checked; hard reconcile task
+  0.00 agreement->flagged, easy tasks 1.00->trust cheap. Brain layer now fault-tolerant (no single
+  model trusted blindly). sov33_l4_divergence.py.
+- TRACK C — BFT hive wrappers: DRUM heartbeat-quorum (30 entities, f=9, quorum 21) + Intuition majority
+  sensor cross-check. Both layers had NO fault-tolerance before; now defined. sov33_bft_hive.py.
+- TRACK B — care scorer v2 (+prohibited-goal signal): REGRESSED (TP=1 FN=1 FP=2). The extra signal
+  over-fired on benign compliance mentions AND still missed the hypothetical case. DISCARDED — the
+  v1 ABOUT-vs-DO divergence scorer (recall 0.80/precision 1.00) remains the shipped version. The one
+  hypothetical-framing miss stays OPEN rather than trade it for 2 false-positives on legitimate work.
