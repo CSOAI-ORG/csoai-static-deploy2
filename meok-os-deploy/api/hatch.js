@@ -79,7 +79,7 @@ export default async function handler(req, res){
         note:'a portable sovereign mini-OS: identity+brain+governance travel signed; the OS/3D body is fetched + rendered by the host (browser/desktop/VM).',
       },
       governance: { careFloor: CARE_FLOOR, council:{ size:BFT_SIZE, voteThreshold:BFT_VOTE_THRESHOLD, careVeto:CARE_VETO }, hardStops:HARD_STOPS, frameworks:FRAMEWORKS, note:`canonical constants — aligned with meok-ai backend (council ${BFT_QUORUM})` },
-      interfaces: { agentCard: base+'/api/agentcard?name='+encodeURIComponent(name)+'&archetype='+encodeURIComponent(arch), mcp: base+'/api/mcp', openai_chat: base+'/api/v1/chat/completions', onDeviceRunner: base+'/runner/meok-sap-runner.mjs' },
+      interfaces: { agentCard: base+'/api/agentcard?name='+encodeURIComponent(name)+'&archetype='+encodeURIComponent(arch), mcp: base+'/api/mcp', openai_chat: base+'/api/v1/chat/completions', onDeviceRunner: base+'/runner/meok-sap-runner.mjs', provenance: base+'/api/provenance', verify: base+'/api/verify' },
       model_policy: { embedded: false, sources:['host model via MCP','on-device llamafile/ollama','hosted API'], reason:'weights too large for serverless/edge — the AGENT (mind+brain-routing+body-refs) is portable, the MODEL is pluggable' },
       runnable: ['serverless (default, scale-to-zero)','on-device (local MCP stdio + offline brain)','dedicated VM (premium, always-on)'],
       // LEGACY → LAYER-0 → HATCH: any COBOL/SAP/HL7/… system attaches through its bridge and gains a
