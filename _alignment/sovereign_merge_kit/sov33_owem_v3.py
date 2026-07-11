@@ -254,17 +254,20 @@ class SovereignMergeBrain:
                 # honest: record why Oracle didn't answer, then fall through to Ollama
                 source = f'oracle_failed:{type(ex).__name__}'
 
-        # Tier 2 — local Ollama
+        # Tier 2 — local open brain via Ollama (model env-selectable: qwen2.5:3b default,
+        # or any pulled open model e.g. Hermes — set SOV33_OLLAMA_MODEL=hermes4). SIGIL-signed like every tier.
         if source in ('none',) or source.startswith('oracle_failed'):
             try:
                 import requests
-                payload = {'model': 'qwen2.5:3b', 'prompt': task_text, 'system': system,
+                local_model = os.environ.get('SOV33_OLLAMA_MODEL', 'qwen2.5:3b')
+                payload = {'model': local_model, 'prompt': task_text, 'system': system,
                            'stream': False, 'options': {'temperature': 0.0, 'num_predict': 120}}
                 r = requests.post('http://localhost:11434/api/generate', json=payload, timeout=15)
                 resp = r.json().get('response', '')
                 if resp:
-                    response, source = resp, 'ollama_local' if not source.startswith('oracle_failed') \
-                        else source + '->ollama_local'
+                    tag = f'ollama_local:{local_model}'
+                    response, source = resp, tag if not source.startswith('oracle_failed') \
+                        else source + '->' + tag
             except Exception:
                 if source == 'none':
                     source = 'offline'
