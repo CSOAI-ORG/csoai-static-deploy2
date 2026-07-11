@@ -1,5 +1,5 @@
 {
-  "updated": "2026-07-11T04:35:00Z",
+  "updated": "2026-07-11T04:50:00Z",
   "by": "MEOK-SOV3",
   "branch": "m4-handoff-2026-06-24",
   "lanes": {
@@ -56,6 +56,18 @@
     "horus_protective": {
       "status": "LIVE",
       "detail": "3-replica BFT veto, lockdown on repeat intrusion, DEFENSIVE only"
+    },
+    "full_gate_chain": {
+      "status": "LIVE",
+      "detail": "HORUS->DORADO->care->guardian->SIGIL wired into sov33.ask(); 4/4 correct"
+    },
+    "oracle_models_live": {
+      "status": "5 of 13",
+      "detail": "live uk-london-1: command-a, command-r, command-r-plus, llama-3.2-90b-vision, llama-3.3-70b; other 8 not enabled in region"
+    },
+    "cognition_layer": {
+      "status": "LIVE",
+      "detail": "two-bandwidth WorldModel+Workspace+governed seam"
     }
   },
   "handoff": {

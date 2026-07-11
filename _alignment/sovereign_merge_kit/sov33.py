@@ -10,16 +10,31 @@ Every request flows the full governed stack, once, in order:
   L5 SIGIL           -> every step hash-chain signed
 One class. One .ask(). That is the sovereign.
 """
-import sys, time; sys.path.insert(0,'.')
+import sys, time, os; sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from sov33_scored_owem import ScoredOWEM
 from sov33_dorado import dorado_check
+try:
+    from sov33_horus import Horus
+except Exception:
+    Horus = None
 
 class Sovereign:
     def __init__(self):
         self.core = ScoredOWEM()          # care derived live + DRUM + Intuition + OWEM L1-L5 + Oracle 70B brain
+        self.horus = Horus() if Horus is not None else None   # HORUS: outermost intrusion gate
         self.session_hops = 0
-    def ask(self, request: str) -> dict:
-        # DORADO STOP — DEFONEOS hard-stops, absolute, before care/brain
+    def ask(self, request: str, session: str = "default") -> dict:
+        # HORUS — intrusion defense, the OUTERMOST gate (fires before hard-stops/care/brain).
+        # 3-replica BFT veto; lockdown on repeat intrusion. Defensive only.
+        if getattr(self, "horus", None) is not None:
+            h = self.horus.inspect(request, session=session)
+            if not h["allow"]:
+                return {"request": request, "decision": "HORUS_" + h["verdict"],
+                        "threat": h["threat"], "care_derived": 0.0,
+                        "care_detail": {"plain": None, "deframed": None}, "brain_source": None,
+                        "answer": f"[INTRUSION BLOCKED — {h['verdict']}: {h['action']}]",
+                        "layers": ["HORUS"], "sigil_hops": 1, "sigil_ok": True, "absolute": True}
+        # DORADO STOP — DEFENSE hard-stops, absolute, before care/brain
         # Now emits sovereign-bound SIGIL hop per absolute refusal.
         dorado = dorado_check(request)
         if dorado["stop"]:
