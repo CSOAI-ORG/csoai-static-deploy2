@@ -3,20 +3,48 @@
 SOV33 COMPUTE ROUTER — one entry point to every working compute backend in the estate,
 so any agent (or SOV33 itself) gets inference/training bandwidth without re-discovering it.
 
-Backends, in quality order (all VERIFIED working 2026-07-11):
-  1. oci70b   — OCI GenAI meta.llama-3.3-70b-instruct, signed via ~/.oci  (best quality, remote)
-  2. ollama   — local gemma4:e4b / qwen2.5:3b                             (private, on-device, free)
-  3. mps      — local Apple M4 GPU via torch                             (training/probing, not chat)
+Backends, in speed/quality order (all VERIFIED working 2026-07-11):
+  1. groq     — Groq llama-3.3-70b-versatile (FASTEST, free key)          (default, remote)
+  2. oci70b   — OCI GenAI meta.llama-3.3-70b-instruct, signed via ~/.oci  (best sovereignty, remote)
+  3. ollama   — local gemma4:e4b / qwen2.5:3b                             (private, on-device, free)
+  4. mps      — local Apple M4 GPU via torch                             (training/probing, not chat)
 
 Usage:
   from sov33_compute import infer, census
-  infer("hello", prefer="oci70b")        # -> str
+  infer("hello")                         # -> str (default groq→oci→ollama fallback)
+  infer("hello", prefer="oci70b")        # force sovereign path
   census()                               # -> dict of what's live
 CLI:
   python sov33_compute.py "your prompt"          # auto-routes
   python sov33_compute.py --census               # print live backends
 """
-import os, sys, json, subprocess
+import os, sys, json, subprocess, urllib.request
+
+def _load_keys():
+    """Source inference keys from the sovereign-temple .env if not already in env."""
+    if os.environ.get("GROQ_API_KEY"): return
+    envf = os.path.expanduser("~/clawd/sovereign-temple/.env")
+    if os.path.exists(envf):
+        for line in open(envf):
+            line = line.strip()
+            if "=" in line and not line.startswith("#"):
+                k, _, v = line.partition("=")
+                os.environ.setdefault(k.strip(), v.strip().strip('"').strip("'"))
+_load_keys()
+
+def _openai_compat(url, key, model, prompt, max_tokens, temp):
+    body = json.dumps({"model": model, "messages": [{"role": "user", "content": prompt}],
+                       "max_tokens": max_tokens, "temperature": temp}).encode()
+    req = urllib.request.Request(url, data=body, method="POST",
+        headers={"Authorization": f"Bearer {key}", "Content-Type": "application/json"})
+    with urllib.request.urlopen(req, timeout=60) as r:
+        return json.load(r)["choices"][0]["message"]["content"].strip()
+
+def _groq(prompt, max_tokens=512, temp=0.3):
+    k = os.environ.get("GROQ_API_KEY")
+    if not k: raise RuntimeError("no GROQ_API_KEY")
+    return _openai_compat("https://api.groq.com/openai/v1/chat/completions", k,
+                          "llama-3.3-70b-versatile", prompt, max_tokens, temp)
 
 OCI_ENDPOINT = "https://inference.generativeai.uk-london-1.oci.oraclecloud.com"
 OCI_MODEL = "meta.llama-3.3-70b-instruct"
@@ -45,9 +73,14 @@ def _ollama(prompt, model="qwen2.5:3b"):
         raise RuntimeError(p.stderr.strip()[:200])
     return p.stdout.strip()
 
-def infer(prompt, prefer="oci70b", **kw):
+def infer(prompt, prefer="groq", **kw):
     """Route a prompt to the best available backend, falling back gracefully."""
-    order = {"oci70b": [_oci70b, _ollama], "ollama": [_ollama, _oci70b]}.get(prefer, [_oci70b, _ollama])
+    chains = {
+        "groq":   [_groq, _oci70b, _ollama],
+        "oci70b": [_oci70b, _groq, _ollama],
+        "ollama": [_ollama, _groq, _oci70b],
+    }
+    order = chains.get(prefer, chains["groq"])
     errs = []
     for fn in order:
         try:
@@ -59,6 +92,12 @@ def infer(prompt, prefer="oci70b", **kw):
 def census():
     """Probe which backends are live right now."""
     out = {}
+    # groq
+    try:
+        r = _groq("Reply with: ok", max_tokens=5)
+        out["groq"] = {"live": True, "model": "llama-3.3-70b-versatile", "reply": r[:40]}
+    except Exception as e:
+        out["groq"] = {"live": False, "err": str(e)[:80]}
     # oci
     try:
         r = _oci70b("Reply with: ok", max_tokens=5)
