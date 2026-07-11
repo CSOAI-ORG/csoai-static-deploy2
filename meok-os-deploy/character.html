@@ -125,7 +125,8 @@ function orbColor(h){
   u.core.material.emissive=c; u.shell.material.color=c; u.shell.material.emissive=c;
   u.aura.material.color=c.clone().lerp(new THREE.Color(0xffffff),0.3); u.light.color=c; u.motes.material.color=c.clone().lerp(new THREE.Color(0xffffff),0.5);
 }
-function showEmergence(){ skin='emergence'; if(orb) orb.visible=true; if(currentVRM) currentVRM.scene.visible=false; orbColor(current.h); document.getElementById('loading').classList.add('hide'); }
+function _resetCam(){ try{ camera.position.set(0,1.32,2.1); controls.target.set(0,1.28,0); controls.update(); }catch(e){} }
+function showEmergence(){ skin='emergence'; if(orb) orb.visible=true; if(hatchObj) hatchObj.visible=false; if(currentVRM) currentVRM.scene.visible=false; _resetCam(); orbColor(current.h); document.getElementById('loading').classList.add('hide'); }
 function showVRM(){ skin='vrm'; if(rpmObj) rpmObj.visible=false; if(orb) orb.visible=false; if(currentVRM){ currentVRM.scene.visible=true; } else { loadVRM(current.vrm); } }
 
 // ── Friendly companion creature — cute, all-ages, procedural (no anime, no external assets) ──
@@ -164,7 +165,7 @@ function creatureColor(h){
   u.body.material.color=c; u.bunL.material.color=c; u.bunR.material.color=c;
   u.aura.material.color=c.clone().lerp(new THREE.Color(0xffffff),0.4); u.light.color=c.clone().lerp(new THREE.Color(0xffffff),0.35);
 }
-function showCreature(){ skin='creature'; if(creature) creature.visible=true; if(orb) orb.visible=false; if(currentVRM) currentVRM.scene.visible=false; if(rpmObj) rpmObj.visible=false; document.getElementById('loading').classList.add('hide'); }
+function showCreature(){ skin='creature'; if(creature) creature.visible=true; if(orb) orb.visible=false; if(currentVRM) currentVRM.scene.visible=false; if(rpmObj) rpmObj.visible=false; if(hatchObj) hatchObj.visible=false; _resetCam(); document.getElementById('loading').classList.add('hide'); }
 // ── Bring your own avatar (Ready Player Me — the cross-app/game avatar standard, plain glTF) ──
 let rpmObj=null;
 function loadGLB(url){
@@ -200,6 +201,8 @@ function showHatch(){
       hatchObj.position.set(-c.x, -b.min.y, -c.z);   // feet at floor, centred
     }catch(e){}
     scene.add(hatchObj);
+    // frame the generated body (pulled back so the full bust fits — verified live)
+    try{ camera.position.set(0,0.9,3.3); controls.target.set(0,0.8,0); controls.update(); }catch(e){}
     skin='hatch'; if(orb)orb.visible=false; if(creature)creature.visible=false; if(currentVRM)currentVRM.scene.visible=false; if(rpmObj)rpmObj.visible=false; hatchObj.visible=true;
     L.classList.add('hide');
   }, undefined, ()=>{ L.classList.add('hide'); if(typeof showEmergence==='function') showEmergence(); });  // no generated mesh yet → emergence orb
