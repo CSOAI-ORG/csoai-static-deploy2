@@ -204,8 +204,22 @@ class SovereignMergeBrain:
         1. Oracle GenAI cloud (if ORACLE_GENAI_KEY + ORACLE_GENAI_MODEL set + auth works)
         2. local Ollama (if localhost:11434 up)
         3. [offline] (neither reachable)
-        The returned dict carries 'brain_source' so callers always know which answered."""
+        The returned dict carries 'brain_source' so callers always know which answered.
+
+        SOV33 substrate RAG enrichment: enrich the task with sovereign context BEFORE
+        sending to the brain. This is the fix for the substrate-knowledge gap (3-lineage
+        test showed external models don't know sovereign vocabulary).
+        """
         task_text = task['q'] if isinstance(task, dict) else str(task)
+        rag_chunks = 0
+        try:
+            from sov33_substrate_rag import enrich_prompt
+            enr = enrich_prompt(task_text, top_k=3)
+            if enr.get('enriched'):
+                task_text = enr['enriched_prompt']
+                rag_chunks = enr.get('context_chunks', 0)
+        except Exception:
+            pass
         system = self._system_prompt(elders)
         response, source = '[offline]', 'none'
 
