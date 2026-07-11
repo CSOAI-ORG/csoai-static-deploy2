@@ -28,6 +28,15 @@ import hashlib
 import numpy as np
 import argparse
 from pathlib import Path
+import os as _os
+def _sov_dir():
+    d = _os.environ.get('SOV33_SIGIL_DIR') or _os.path.join(_os.path.expanduser('~'), '.sovereign')
+    try:
+        _os.makedirs(d, exist_ok=True); return d
+    except Exception:
+        import tempfile; d = _os.path.join(tempfile.gettempdir(), 'sov33_sigil'); _os.makedirs(d, exist_ok=True); return d
+_SOVDIR = _sov_dir()
+
 from datetime import datetime, timezone
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
@@ -37,10 +46,12 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 # SIGIL chain
 # ═══════════════════════════════════════════════════════════════
 
-SIGIL_FILE = Path.home() / '.sovereign' / 'retrain_loop.sigil.jsonl'
-SIGIL_FILE.parent.mkdir(parents=True, exist_ok=True)
-LABELS_FILE = Path.home() / '.sovereign' / 'nn_retrain_queue.jsonl'
-WEIGHTS_DIR = Path.home() / '.sovereign' / 'nn_weights'
+SIGIL_FILE = Path(_SOVDIR) / 'retrain_loop.sigil.jsonl'
+try:
+    SIGIL_FILE.parent.mkdir(parents=True, exist_ok=True)
+except Exception: pass
+LABELS_FILE = Path(_SOVDIR) / 'nn_retrain_queue.jsonl'
+WEIGHTS_DIR = Path(_SOVDIR) / 'nn_weights'
 WEIGHTS_DIR.mkdir(parents=True, exist_ok=True)
 
 

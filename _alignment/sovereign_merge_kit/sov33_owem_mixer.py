@@ -27,6 +27,15 @@ import hashlib
 import argparse
 import statistics
 from pathlib import Path
+import os as _os
+def _sov_dir():
+    d = _os.environ.get('SOV33_SIGIL_DIR') or _os.path.join(_os.path.expanduser('~'), '.sovereign')
+    try:
+        _os.makedirs(d, exist_ok=True); return d
+    except Exception:
+        import tempfile; d = _os.path.join(tempfile.gettempdir(), 'sov33_sigil'); _os.makedirs(d, exist_ok=True); return d
+_SOVDIR = _sov_dir()
+
 from datetime import datetime, timezone
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
@@ -36,9 +45,11 @@ from sov33_owem_sweep import (
     evaluate_config, pareto_front, SWEEP_LOG,
 )
 
-TRUE_SETUP_PATH = Path.home() / '.sovereign' / 'owem_sweep' / 'TRUE_SETUP.json'
-TRUE_SETUP_PATH.parent.mkdir(parents=True, exist_ok=True)
-SIGIL_FILE = Path.home() / '.sovereign' / 'owem_mixer.sigil.jsonl'
+TRUE_SETUP_PATH = Path(_SOVDIR) / 'owem_sweep' / 'TRUE_SETUP.json'
+try:
+    TRUE_SETUP_PATH.parent.mkdir(parents=True, exist_ok=True)
+except Exception: pass
+SIGIL_FILE = Path(_SOVDIR) / 'owem_mixer.sigil.jsonl'
 
 
 def sigil_emit(hop):

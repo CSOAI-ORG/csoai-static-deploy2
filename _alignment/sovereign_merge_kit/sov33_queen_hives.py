@@ -2,14 +2,13 @@
 """sov33_queen_hives.py — Queen SOV3 -> sub-hive GOVERNANCE TOPOLOGY.
 
 HONEST REGISTER (binding): a GOVERNANCE topology (hierarchical consensus), NOT a
-hive-mind and NOT a consciousness claim. The Queen ARBITRATES + GOVERNS across
-sub-hives; she does NOT "think for" them. The 106-agent capability clusters become
-NAMED SUB-HIVES, each running a local f-fault-tolerant BFT quorum + local loop +
-UPWARD REPORTING to the Queen (central kernel authority). Every cross-hive
-arbitration is SIGIL-signed (hash-chained, auditable). BFT trust math is REUSED
-from sov33_effective_votes.py; sov33.sigil_emit is replicated byte-compatibly here
-(the full kernel pulls `oci`, absent in this sandbox). RUNNING: topology+demo run.
-DESIGNED elsewhere: live model routing / 4-brain mesh.
+hive-mind, NOT a consciousness claim. The Queen ARBITRATES + GOVERNS across
+sub-hives; she does NOT "think for" them. Capability DOMAINS become NAMED SUB-HIVES,
+each a local f-fault-tolerant BFT quorum + local loop + UPWARD REPORTING to the
+Queen (central kernel authority); every cross-hive arbitration is SIGIL-signed
+(hash-chained). BFT trust math REUSED from sov33_effective_votes.py; sov33.sigil_emit
+replicated byte-compatibly (the full kernel pulls `oci`, absent in this sandbox).
+RUNNING: topology+demo. DESIGNED elsewhere: live model routing / 4-brain mesh.
 """
 import os, sys, json, hashlib
 from pathlib import Path
@@ -116,10 +115,8 @@ def demo():
     print(f"  trust floor N_eff>={TRUST_MIN} (per-hive rho: diverse lineage -> lower rho -> can commit)\n")
 
     print("── 3 sub-hives run local BFT consensus ─────────────────────────────")
-    reports = []
-    # Neutral routing conflict: Queen arbitrates on EVIDENCE QUALITY (N_eff), not on
-    # her own opinion. security & code commit and DISAGREE; monitoring self-escalates.
-    T = 'route batch to GPU pool'
+    reports = []  # Queen arbitrates on EVIDENCE QUALITY (N_eff), not her own opinion:
+    T = 'route batch to GPU pool'  # security & code commit and DISAGREE; monitoring escalates
     scenarios = [
         ('security',   T, ['POOL_A']*4),                          # unanimous -> commits A
         ('code',       T, ['POOL_B']*6 + ['POOL_A']),             # 6/7 -> commits B
@@ -134,10 +131,7 @@ def demo():
 
     print("\n── Queen arbitrates the cross-hive conflict ────────────────────────")
     ruling = q.arbitrate(T, reports)
-    print(f"  topic : {ruling['topic']}")
-    print(f"  ruling: {ruling['ruling']}   ({ruling['why']})")
-    print(f"  SIGIL : {ruling['sigil']}")
-
+    print(f"  topic : {ruling['topic']}\n  ruling: {ruling['ruling']}   ({ruling['why']})\n  SIGIL : {ruling['sigil']}")
     print("\n── SIGIL chain (hash-linked, auditable) ────────────────────────────")
     for hop in [json.loads(l) for l in SIGIL_FILE.read_text().splitlines() if l.strip()][-3:]:
         print(f"  {hop['digest']}  prev={hop['prev_hash']}  {hop['kind']}: {hop['ruling']}")

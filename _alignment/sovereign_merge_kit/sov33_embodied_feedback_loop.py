@@ -27,6 +27,15 @@ import hashlib
 import argparse
 import urllib.request
 from pathlib import Path
+import os as _os
+def _sov_dir():
+    d = _os.environ.get('SOV33_SIGIL_DIR') or _os.path.join(_os.path.expanduser('~'), '.sovereign')
+    try:
+        _os.makedirs(d, exist_ok=True); return d
+    except Exception:
+        import tempfile; d = _os.path.join(tempfile.gettempdir(), 'sov33_sigil'); _os.makedirs(d, exist_ok=True); return d
+_SOVDIR = _sov_dir()
+
 from datetime import datetime, timezone
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
@@ -36,9 +45,11 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 # SIGIL chain
 # ═══════════════════════════════════════════════════════════════
 
-SIGIL_FILE = Path.home() / '.sovereign' / 'embodied_feedback.sigil.jsonl'
-SIGIL_FILE.parent.mkdir(parents=True, exist_ok=True)
-MEMORY_FILE = Path.home() / '.sovereign' / 'sovereign_memory.jsonl'
+SIGIL_FILE = Path(_SOVDIR) / 'embodied_feedback.sigil.jsonl'
+try:
+    SIGIL_FILE.parent.mkdir(parents=True, exist_ok=True)
+except Exception: pass
+MEMORY_FILE = Path(_SOVDIR) / 'sovereign_memory.jsonl'
 
 
 def sigil_emit(layer: str, hop: dict) -> str:

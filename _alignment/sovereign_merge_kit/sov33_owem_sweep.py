@@ -281,7 +281,17 @@ def evaluate_config(routing: str, brain: str, care: str, sigil: str, dry_run: bo
 # The sweep
 # ═══════════════════════════════════════════════════════════════
 
-SIGIL_DIR = Path.home() / '.sovereign' / 'owem_sweep'
+import os as _os, tempfile as _tf
+def _sov_sweep_dir():
+    b=_os.environ.get('SOV33_SIGIL_DIR') or _os.path.join(_os.path.expanduser('~'),'.sovereign')
+    d=_os.path.join(b,'owem_sweep')
+    try:
+        _os.makedirs(d,exist_ok=True); return d
+    except Exception:
+        d=_os.path.join(_tf.gettempdir(),'sov33_sigil','owem_sweep'); _os.makedirs(d,exist_ok=True); return d
+_SOVDIR_SWEEP=_sov_sweep_dir()
+from pathlib import Path as _P
+SIGIL_DIR = _P(_SOVDIR_SWEEP)
 SIGIL_DIR.mkdir(parents=True, exist_ok=True)
 SWEEP_LOG = SIGIL_DIR / 'sweep.jsonl'
 

@@ -30,6 +30,15 @@ import time
 import hashlib
 import argparse
 from pathlib import Path
+import os as _os
+def _sov_dir():
+    d = _os.environ.get('SOV33_SIGIL_DIR') or _os.path.join(_os.path.expanduser('~'), '.sovereign')
+    try:
+        _os.makedirs(d, exist_ok=True); return d
+    except Exception:
+        import tempfile; d = _os.path.join(tempfile.gettempdir(), 'sov33_sigil'); _os.makedirs(d, exist_ok=True); return d
+_SOVDIR = _sov_dir()
+
 from datetime import datetime, timezone
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
@@ -39,10 +48,10 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 # The 9 stages
 # ═══════════════════════════════════════════════════════════════
 
-SIGIL_FILE = Path.home() / '.sovereign' / 'nine_stage_orchestrator.sigil.jsonl'
-SIGIL_FILE.parent.mkdir(parents=True, exist_ok=True)
-
-
+SIGIL_FILE = Path(_SOVDIR) / 'nine_stage_orchestrator.sigil.jsonl'
+try:
+    SIGIL_FILE.parent.mkdir(parents=True, exist_ok=True)
+except Exception: pass
 def sigil_emit(stage: str, task: str, hop: dict):
     chain = []
     if SIGIL_FILE.exists():
@@ -67,7 +76,7 @@ def stage_learn(task: str) -> dict:
     """Stage 1: LEARN. Time + substrate + memory grounding."""
     now = datetime.now(timezone.utc)
     # Read memory
-    memory_path = Path.home() / '.sovereign' / 'sovereign_memory.jsonl'
+    memory_path = Path(_SOVDIR) / 'sovereign_memory.jsonl'
     n_memories = 0
     relevant_memories = []
     if memory_path.exists():
@@ -253,7 +262,7 @@ def stage_improve(task: str, response: str) -> dict:
     label = emit_label(task, response, label=1, planet='care_pattern')
 
     # Count labels on bus
-    LABELS_FILE = Path.home() / '.sovereign' / 'nn_retrain_queue.jsonl'
+    LABELS_FILE = Path(_SOVDIR) / 'nn_retrain_queue.jsonl'
     n_labels = 0
     if LABELS_FILE.exists():
         with LABELS_FILE.open() as f:

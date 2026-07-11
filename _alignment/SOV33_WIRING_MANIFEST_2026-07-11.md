@@ -1,7 +1,15 @@
 # SOV33 wiring manifest — the "one sovereign, all parts" gap, quantified (2026-07-11)
 _Registry probe of 51 real governance components (bench/tests excluded). Import health measured, not assumed._
 
-## VERDICT: the gap is NOT missing capability — it's 16 modules with IMPORT-TIME SIDE EFFECTS
+## VERDICT (RESOLVED this pass): all 51 now import clean
+UPDATE 2026-07-11: batch-fixed all 16 import-time side effects. Two mechanical patterns applied:
+(A) 6 modules writing ~/.sovereign at import -> SOV33_SIGIL_DIR env-override + fail-soft (shared _sov_dir()).
+(B) 10 modules doing network/OCI at module-top -> lazy _LzCl proxy client + _LzComp lazy tenancy + __main__-guarded demos.
+RESULT: sov33_registry.py reports 51/51 import clean, 0 hang, 0 broken. Entrypoint sov33.py + its core dep chain
+(scored_owem->care_divergence, l4_divergence) all import clean. Demos still run via `python module.py` (guard only blocks import-time exec).
+HONEST caveat: OCI-backed demos need real ~/.oci creds at RUNTIME to produce live output (fail-soft to OFFLINE_NO_OCI otherwise) — that's correct, not a bug.
+
+## ORIGINAL VERDICT (pre-fix): the gap was 16 modules with IMPORT-TIME SIDE EFFECTS
 - **35/51 import clean** — safe to register into sov33_registry.py + route from the entrypoint now.
 - **10 HANG on import** — do a NETWORK CALL at module-top (Oracle/Ollama brains). Wiring as-is would hang sov33.py startup.
   This is WHY the entrypoint imports so few modules — self-protection, not neglect.

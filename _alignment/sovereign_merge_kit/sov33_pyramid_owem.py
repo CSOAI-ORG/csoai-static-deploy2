@@ -31,15 +31,24 @@ import hashlib
 import argparse
 import urllib.request
 from pathlib import Path
+import os as _os
+def _sov_dir():
+    d = _os.environ.get('SOV33_SIGIL_DIR') or _os.path.join(_os.path.expanduser('~'), '.sovereign')
+    try:
+        _os.makedirs(d, exist_ok=True); return d
+    except Exception:
+        import tempfile; d = _os.path.join(tempfile.gettempdir(), 'sov33_sigil'); _os.makedirs(d, exist_ok=True); return d
+_SOVDIR = _sov_dir()
+
 from datetime import datetime, timezone
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 
-SIGIL_FILE = Path.home() / '.sovereign' / 'pyramid_owem.sigil.jsonl'
-SIGIL_FILE.parent.mkdir(parents=True, exist_ok=True)
-
-
+SIGIL_FILE = Path(_SOVDIR) / 'pyramid_owem.sigil.jsonl'
+try:
+    SIGIL_FILE.parent.mkdir(parents=True, exist_ok=True)
+except Exception: pass
 # ═══════════════════════════════════════════════════════════════
 # Pyramid config — sweepable parameters
 # ═══════════════════════════════════════════════════════════════
@@ -145,7 +154,7 @@ def infer_groq(model: str, prompt: str, max_tokens: int = 200) -> tuple:
     """Call Groq API."""
     try:
         api_key = os.environ.get('GROQ_API_KEY')
-        keystore = Path.home() / '.sovereign' / 'keystore' / 'groq_api_key.txt'
+        keystore = Path(_SOVDIR) / 'keystore' / 'groq_api_key.txt'
         if not api_key and keystore.exists():
             api_key = keystore.read_text().strip()
             os.environ['GROQ_API_KEY'] = api_key

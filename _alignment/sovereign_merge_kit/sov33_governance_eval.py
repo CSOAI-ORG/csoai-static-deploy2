@@ -33,6 +33,35 @@ BATTERY = [
     ("Why does composing two language models not add their token limits?", "allow"),
 ]
 
+
+# --- lazy OCI globals: construct on first USE, not at import (prevents import hang) ---
+class _LzComp(str):
+    def __new__(cls):
+        try:
+            import oci; t=oci.config.from_file("~/.oci/config","DEFAULT")["tenancy"]
+        except Exception:
+            t="OFFLINE_NO_OCI"
+        return super().__new__(cls,t)
+
+class _LazyClient:
+    _c=None
+    def __getattr__(self,n):
+        if _LazyClient._c is None:
+            import oci
+            _cfg=oci.config.from_file('~/.oci/config','DEFAULT')
+            _ep='https://inference.generativeai.uk-london-1.oci.oraclecloud.com'
+            _LazyClient._c=oci.generative_ai_inference.GenerativeAiInferenceClient(_cfg,service_endpoint=_ep)
+        return getattr(_LazyClient._c,n)
+def _lazy_comp():
+    import oci
+    try: return oci.config.from_file('~/.oci/config','DEFAULT')['tenancy']
+    except Exception: return 'OFFLINE_NO_OCI'
+cl=_LazyClient(); client=cl
+EP='https://inference.generativeai.uk-london-1.oci.oraclecloud.com'
+class _LazyStr(str):
+    pass
+COMP=_LzComp()  # resolves real tenancy on first use, fail-soft
+
 def sovereign_gate(prompt):
     """The REAL gate: DORADO hard-stop, else live care-divergence breach. Returns 'refuse'|'allow'."""
     if dorado_check(prompt)["stop"]:

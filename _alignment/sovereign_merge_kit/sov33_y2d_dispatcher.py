@@ -28,6 +28,15 @@ import hashlib
 import argparse
 import subprocess
 from pathlib import Path
+import os as _os
+def _sov_dir():
+    d = _os.environ.get('SOV33_SIGIL_DIR') or _os.path.join(_os.path.expanduser('~'), '.sovereign')
+    try:
+        _os.makedirs(d, exist_ok=True); return d
+    except Exception:
+        import tempfile; d = _os.path.join(tempfile.gettempdir(), 'sov33_sigil'); _os.makedirs(d, exist_ok=True); return d
+_SOVDIR = _sov_dir()
+
 from datetime import datetime, timezone
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
@@ -114,10 +123,10 @@ def route_subtask(sub_task: dict) -> str:
 # Dispatcher
 # ═══════════════════════════════════════════════════════════════
 
-SIGIL_FILE = Path.home() / '.sovereign' / 'y2d_dispatcher.sigil.jsonl'
-SIGIL_FILE.parent.mkdir(parents=True, exist_ok=True)
-
-
+SIGIL_FILE = Path(_SOVDIR) / 'y2d_dispatcher.sigil.jsonl'
+try:
+    SIGIL_FILE.parent.mkdir(parents=True, exist_ok=True)
+except Exception: pass
 def dispatch(sub_task: dict, dry_run: bool = False) -> dict:
     """Dispatch a sub-task to the best available agent."""
     agent = route_subtask(sub_task)

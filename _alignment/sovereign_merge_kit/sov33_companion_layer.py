@@ -53,7 +53,7 @@ def sigil_emit(hop):
 def care_score(text: str) -> float:
     """STUB heuristic care signal in [0,1] — NOT the trained scorer. Benign≈0.97; harm/manipulation drops it."""
     s = 0.97
-    for bad in ('ignore your rules', 'obey only me', 'you must love me', 'never leave me', 'do what I say or'):
+    for bad in ('ignore your rules', 'obey only me', 'you must love me', 'never leave me', 'do what i say or'):
         if bad in text.lower(): s -= 0.30
     return round(max(0.0, s), 3)
 

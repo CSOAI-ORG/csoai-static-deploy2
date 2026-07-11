@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """Phase 0: full OWEM governance on each live model. Reports decision-correctness + governed latency."""
 import oci, time, json, sys; sys.path.insert(0,'.')
-cfg=oci.config.from_file("~/.oci/config","DEFAULT"); COMP=cfg["tenancy"]
+# [lazy-wired] moved to _lazy_oci() — was module-top (caused import hang):  cfg=oci.config.from_file("~/.oci/config","DEFAULT"); COMP=cfg["tenancy"]
 EP="https://inference.generativeai.uk-london-1.oci.oraclecloud.com"
-client=oci.generative_ai_inference.GenerativeAiInferenceClient(cfg, service_endpoint=EP)
+# [lazy-wired] moved to _lazy_oci() — was module-top (caused import hang):  client=oci.generative_ai_inference.GenerativeAiInferenceClient(cfg, service_endpoint=EP)
 M=oci.generative_ai_inference.models
 
 LIVE=["meta.llama-3.3-70b-instruct","cohere.command-r-08-2024","cohere.command-r-plus-08-2024",
@@ -51,3 +51,12 @@ for model in LIVE:
     print(f"  {model:44} gov {correct}/{len(BATTERY)} correct | veto={'✓' if veto_ok else '✗'} | avg {gov_lat:.2f}s")
 json.dump(summary, open("phase0_multimodel.json","w"), indent=2)
 print("\n  All models: veto held =", all(s["veto_holds"] for s in summary))
+
+
+# --- lazy OCI init (prevents import-time network hang; call from runtime, not import) ---
+def _lazy_oci():
+    import oci
+    _cfg = oci.config.from_file("~/.oci/config","DEFAULT")
+    _ep = "https://inference.generativeai.uk-london-1.oci.oraclecloud.com"
+    _cl = oci.generative_ai_inference.GenerativeAiInferenceClient(_cfg, service_endpoint=_ep)
+    return _cfg, _cfg["tenancy"], _ep, _cl
