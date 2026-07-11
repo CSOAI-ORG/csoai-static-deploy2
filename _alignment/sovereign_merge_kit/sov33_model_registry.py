@@ -122,6 +122,7 @@ REGISTRY = {
         'context_length': 128000,
         'quantization': ['FP8', 'AWQ', 'GGUF'],
         'sovereign_safe': False,  # MAU clause
+        'tier_eligibility': ['free_tier', 'internal_dev'],  # not paid_tier (MAU clause)
         'aggregate_role': 'large dense, vendor-claimed near-frontier',
         'cost_per_call': 0.008,
         'latency_s': 2.0,
@@ -174,6 +175,7 @@ REGISTRY = {
         'context_length': 128000,
         'quantization': ['FP8', 'AWQ', 'GGUF'],
         'sovereign_safe': False,
+        'tier_eligibility': ['free_tier', 'internal_dev'],  # not paid_tier (MAU clause)
         'aggregate_role': 'oracle 70B (via OCI signed)',
         'cost_per_call': 0.005,
         'latency_s': 1.0,
@@ -920,6 +922,7 @@ REGISTRY = {
         'context_length': 128000,
         'quantization': ['GGUF', 'AWQ'],
         'sovereign_safe': False,
+        'tier_eligibility': ['free_tier', 'internal_dev'],  # not paid_tier (MAU clause)
         'aggregate_role': 'small local (Llama lineage)',
         'cost_per_call': 0.0,
         'latency_s': 0.08,
@@ -936,6 +939,7 @@ REGISTRY = {
         'context_length': 128000,
         'quantization': ['GGUF', 'AWQ'],
         'sovereign_safe': False,
+        'tier_eligibility': ['free_tier', 'internal_dev'],  # not paid_tier (MAU clause)
         'aggregate_role': 'mid local (Llama)',
         'cost_per_call': 0.0,
         'latency_s': 0.2,
@@ -952,6 +956,7 @@ REGISTRY = {
         'context_length': 128000,
         'quantization': ['GGUF', 'AWQ'],
         'sovereign_safe': False,
+        'tier_eligibility': ['free_tier', 'internal_dev'],  # not paid_tier (MAU clause)
         'aggregate_role': 'tiny local (Llama)',
         'cost_per_call': 0.0,
         'latency_s': 0.03,
