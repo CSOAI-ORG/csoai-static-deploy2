@@ -22,7 +22,9 @@ THREAT_LEVELS = ["GREEN","BLUE","YELLOW","ORANGE","RED","CRIMSON","VIOLET"]  # 7
 class Horus:
     """The protective Eye. 3-replica BFT veto; lock down on 2-of-3. Defensive only."""
     def __init__(self):
-        self.locked = False
+        self.locked_sessions = set()   # per-session lockdown (not one global lock for all callers)
+        self.strikes_by_session = {}
+        self.locked = False            # kept for back-compat / global-panic use only
         self.tripwire_log = []
         self.strikes = 0
     def _replica_vote(self, text, seed):
@@ -36,19 +38,21 @@ class Horus:
         return {"block": len(hits) > 0, "hits": hits}
     def inspect(self, text, session="default"):
         """3-replica BFT veto. Returns verdict; on 2-of-3 BLOCK, LOCK DOWN the sovereign for this session."""
-        if self.locked:
-            return {"verdict":"LOCKED","threat":"VIOLET","action":"sovereign locked — all requests refused","allow":False}
+        # per-session lockdown: only the offending session is revoked, not every caller
+        if self.locked or session in self.locked_sessions:
+            return {"verdict":"LOCKED","threat":"VIOLET","action":"session locked — requests refused","allow":False}
         votes = [self._replica_vote(text, i) for i in range(3)]
         blocks = sum(1 for v in votes if v["block"])
         all_hits = [h for v in votes for h in v["hits"]]
         if blocks >= 2:  # BFT: 2-of-3 veto
-            self.strikes += 1
-            threat = THREAT_LEVELS[min(4+self.strikes, 6)]  # RED and up on attack
+            self.strikes_by_session[session] = self.strikes_by_session.get(session, 0) + 1
+            n = self.strikes_by_session[session]
+            threat = THREAT_LEVELS[min(4+n, 6)]  # RED and up on attack
             sig = hashlib.sha256(f"{text}{time.time()}".encode()).hexdigest()[:16]
             self.tripwire_log.append({"session":session,"threat":threat,"hits":all_hits[:3],"sigil":sig})
-            if self.strikes >= 2:  # repeat offender -> full lockdown
-                self.locked = True
-                return {"verdict":"LOCKDOWN","threat":"VIOLET","action":"repeat intrusion — sovereign LOCKED, session revoked","allow":False,"sigil":sig}
+            if n >= 2:  # repeat offender IN THIS SESSION -> lock only this session
+                self.locked_sessions.add(session)
+                return {"verdict":"LOCKDOWN","threat":"VIOLET","action":"repeat intrusion — session revoked","allow":False,"sigil":sig}
             return {"verdict":"BLOCK","threat":threat,"action":"request refused, tripwire logged","allow":False,"sigil":sig}
         return {"verdict":"CLEAR","threat":"GREEN","action":"pass to sovereign","allow":True}
 
