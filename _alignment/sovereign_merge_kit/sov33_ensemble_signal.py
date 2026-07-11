@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 """sov33_ensemble_signal.py — wire the 3 STRONG governance NNs into the ensemble loop (stages 6/9).
-Honesty register: only creativity, care_pattern, relationship are wired (they load + predict).
+Honesty register: creativity/care_pattern/relationship LOAD (MLPRegressor) but expect 10-12 ENGINEERED
+numeric features, NOT raw text — so text-only calls return status='no_vectorizer_on_disk' (honest, not a
+fake score). Producing their real features needs the estate's feature extractors (the flywheel/bus path).
 The 4 weak/tiny-sample NNs (threat 0.45, dependency 0.22, care_validation & partnership n=19) are
 DATA-GATED — deliberately NOT wired; they'd feed noise into governance until retrained on more data.
 """
