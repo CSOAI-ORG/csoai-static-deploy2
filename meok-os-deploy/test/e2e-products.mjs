@@ -235,3 +235,4 @@ for (const p of ['pricing.html','badges.html','verify.html','sovspace.html','cha
 
 console.log('\n' + (fail === 0 ? '✅ PASS' : '❌ FAIL') + ' — ' + pass + ' passed, ' + fail + ' failed' + (fails.length ? '  [' + fails.join(', ') + ']' : ''));
 process.exit(fail ? 1 : 0);
+{ const p = await gj('/api/provenance?claim=Metformin%20lowers%20HbA1c&source=doi:10.1001/example&kind=trial'); ck('Provenance Hatch: signs a research claim (claim+source+Ed25519, provenance!=truth)', p.j.ok === true && p.j.provenance?.spec === 'meok.provenance.v1' && /doi:10/.test(p.j.provenance?.source || '') && /not certify/i.test(p.j.provenance?.attests || '') && p.j.signature?.signature && p.j.signature?.fingerprint?.startsWith('SOV:')); }
