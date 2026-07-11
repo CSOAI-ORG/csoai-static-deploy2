@@ -64,7 +64,7 @@ Also placed (built-but-unwired, target for wiring):
 
 Every stage, on every hive, is bound by the standing gates — these fire and cannot be bypassed:
 - **HORUS** (intrusion defense, outermost, per-session lockdown) — RUNNING
-- **DORADO** (DEFONEOS hard-stops: severed brands, kinetic, surveillance) — RUNNING
+- **DEFONEOS HARD-STOPS** (severed brands, kinetic targeting, personal surveillance) — RUNNING. NOTE: on disk 'DORADO' is the separate ZK-SNARK sovereignty-proof tool; the hard-stops module is NOT DORADO — do not conflate.
 - **CARE-FLOOR** (calibrated conformal veto, Pr[allow ∧ harm] ≤ α) — RUNNING (in-sample proven; needs larger calib set)
 - **SIGIL** (Ed25519 hash-chained provenance on every hop) — RUNNING
 - **DRUM** (L0 1 Hz heartbeat; phase-veto halts the loop on instability) — RUNNING

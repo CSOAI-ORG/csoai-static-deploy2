@@ -16,7 +16,8 @@ STAGES = [
     ("BRAND_QUALITY",  "PARTIAL", "presentation + conformal quality guarantee, BFT-gated"),
 ]
 # gates that wrap ALL stages (fire before any stage does real work)
-GATES = ["HORUS", "DORADO", "CARE_FLOOR_conformal", "SIGIL", "DRUM_heartbeat", "Article_0"]
+GATES = ["HORUS", "DEFONEOS_HARD_STOPS", "CARE_FLOOR_conformal", "SIGIL", "DRUM_heartbeat", "Article_0"]
+# NOTE: the hard-stops module is NOT "DORADO" — DORADO on disk is the ZK-SNARK sovereignty-proof tool. Do not conflate.
 # NOT stages: YEARS_TO_DAYS = parallel execution mode of PLAN->DO; DRUM = the clock beneath all stages
 EXEC_MODE = {"years_to_days":"parallel fan-out of PLAN->DO subtasks across hives (throughput, not capability)",
              "drum":"L0 1Hz heartbeat clock beneath all stages; phase-veto halts on instability"}
