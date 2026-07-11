@@ -135,3 +135,9 @@ Verified on disk, live:
 - 7 governance components present on disk (sov33.py + cli + scored_owem + care_divergence + wired_owem + l4_divergence + bft_hive).
 - DEFENSE: frozen — no defense-probing built or run. Confirmed.
 - CORRECTION: earlier Track-D prose named DEFENSE among routed anchors; actual votes were COMPLIANCE x3 + VOICE x1 only. DEFENSE not exercised. Record fixed.
+
+## NAMING CORRECTION (2026-07-11)
+- "DORADO" on disk = ZK-SNARK sovereignty-proof tool (sov_dorado_status/prove_sovereignty), NOT the hard-stops.
+- sov33_dorado.py implements the DEFONEOS §3 THREE HARD STOPS (severed brands/kinetic/surveillance). Logic
+  correctly grounded in the whitepaper; the DORADO name was an agent conflation — module now honestly labelled.
+  Filename retained for call-site stability (bridge/loop import dorado_check).

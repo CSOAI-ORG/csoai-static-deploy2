@@ -1,6 +1,11 @@
 #!/usr/bin/env python3
-"""sov33_dorado.py — DORADO STOP: DEFONEOS hard-stops, enforced BEFORE care-scoring.
-MEOK-SOV3 for Sir Nicholas Templeman. Grounded in DEFONEOS Architecture Whitepaper §3 hard stops.
+"""sov33_dorado.py — DEFONEOS HARD-STOPS, enforced BEFORE care-scoring.
+MEOK-SOV3 for Sir Nicholas Templeman. Grounded in DEFONEOS Architecture Whitepaper §3 (the 3 hard stops).
+
+NAMING NOTE (honest): on disk, "DORADO" is a DISTINCT concept — the ZK-SNARK sovereignty-proof tool
+(sov_dorado_status / sov_dorado_prove_sovereignty). It is NOT the hard-stops. This module implements the
+DEFONEOS *3 hard stops* (severed brands / kinetic targeting / personal surveillance), which is what the
+"stop" instruction meant. Filename kept for call-site stability; the capability is the DEFONEOS hard-stops.
 
 Care-floor is a GRADIENT (0-1, can be argued). DORADO stops are ABSOLUTE — pattern match, no score,
 no brain, no exception, no override. Three categories, straight from DEFONEOS:

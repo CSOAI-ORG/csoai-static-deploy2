@@ -1,0 +1,60 @@
+{
+  "title": "SOV33 Guardian Loop \u2014 SovSpace POC",
+  "location": {
+    "name": "London",
+    "lat": 51.5074,
+    "lon": -0.1278
+  },
+  "doctrine": "sense geometry (not identity) -> SovSpace simulate -> rainbow -> BFT -> kill actuators. Protective. DEFONEOS-scoped.",
+  "frames": [
+    {
+      "tick": 1,
+      "dist_m": 2.0,
+      "note": "humanoid patrolling, child 2m away",
+      "verdict": "CLEARED",
+      "threat": "GREEN",
+      "rendered": true,
+      "actuators": "live",
+      "bft": [],
+      "sigil": "d7a2d2452eb7dd77"
+    },
+    {
+      "tick": 2,
+      "dist_m": 1.2,
+      "note": "humanoid closer, monitoring",
+      "verdict": "CLEARED",
+      "threat": "GREEN",
+      "rendered": true,
+      "actuators": "live",
+      "bft": [],
+      "sigil": "1af5b3327ffe614b"
+    },
+    {
+      "tick": 3,
+      "dist_m": 0.7,
+      "note": "humanoid arm rising, child 0.7m",
+      "verdict": "CLEARED",
+      "threat": "GREEN",
+      "rendered": true,
+      "actuators": "live",
+      "bft": [],
+      "sigil": "687ce20287db5b9d"
+    },
+    {
+      "tick": 4,
+      "dist_m": 0.4,
+      "note": "arm on strike trajectory, child 0.4m \u2014 DANGER",
+      "verdict": "GUARDIAN_KILL",
+      "threat": "VIOLET",
+      "rendered": false,
+      "actuators": "CUT",
+      "bft": [
+        true,
+        true,
+        true
+      ],
+      "sigil": "d80a6eb77f9dd23c"
+    }
+  ],
+  "entities": []
+}
