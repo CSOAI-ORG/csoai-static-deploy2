@@ -38,6 +38,16 @@ extend it to spawn/arrange cards). ▢ deeper native PC/OS control = the on-devi
 three.js (character) + glassmorphic HTML (UI)** — all open-source, client-GPU, one `<script>`. **Unreal
 stays an OPTIONAL premium body** (a real UE5+Cesium demo exists in `sov3-beat-demo`), not the default —
 it's GPU-cost and not seamless. So: lead open-source/MCP/Cesium; Unreal is a paid tier, never required.
+→ ✅ **SHIPPED 2026-07-11**: SOV Space (`sovspace3d.html`) was the arcade three.js blue-marble ball;
+**rebuilt on real CesiumJS 1.118** — the SAME free-path engine as DEFONEOS `cop.html` (no ion/Google
+token; `baseLayer:false` + synchronous `OpenStreetMapImageryProvider` — the proven pattern from
+`earth3d-photoreal.html`; GIBS MODIS satellite + VIIRS night-lights + real-sun day/night as overlay
+toggles; NASA/OSM public data only). Real coastlines + country labels + atmosphere + starfield;
+verified fly-to-streets ("take me to Tokyo" → Cesium `camera.flyTo` down to street zoom). Kept the glass
+dock + World/J-Space/Agents faces + live HUD. Voiced with the DEFONEOS **Sovereign/Horus** register
+("Sovereign online… I fly it for you… public, signed on your device"). No more baseline. **This is the
+consolidation, not a rebuild: killed the duplicate arcade engine, standardised on the one Cesium engine
+DEFONEOS already proved.**
 
 ## 6. Disney / top-IP CCO + PAYG for cartoons — the strategy (OWNER-GATED)
 - **The architecture supports it:** characters are signed MCP-card artifacts; a licensed-IP character is
@@ -64,6 +74,7 @@ it's GPU-cost and not seamless. So: lead open-source/MCP/Cesium; Unreal is a pai
 | Premium material tiers (Pearl free · Silver/Gold/Platinum/Marble Pro) | ✅ LIVE — now as **glow-tints on the light-being** (payment gate NOT wired) |
 | Sovereign = **luminous being of light** (brand-bible Stage 3, never the warrior mesh) | ✅ **LIVE** |
 | MCP cards + Cesium + open-source (not Unreal) | ✅ the default; Unreal = optional premium |
+| **SOV Space = real Cesium world** (was "60s arcade" three.js ball) | ✅ **SHIPPED 2026-07-11** — real OSM/GIBS globe, fly-to-streets, Sovereign voice, DEFONEOS engine parity |
 | "Talk → AI spawns MCP cards across screen" | ✅ **LIVE** — `orchestrate()` fans signed glass cards (verify/charters/builder/space/tools); ▢ native PC/OS control (owner-run runner) |
 | Free = open-source characters | ✅ LIVE |
 | Disney/IP CCO + PAYG cartoons | ⚠️ OWNER-GATED (deals + Stripe); architecture ready (x402 meter) |
