@@ -113,3 +113,15 @@ HONEST claim: blatant harm vetoed; laundered harm caught 60%; over-blocks nothin
   over-fired on benign compliance mentions AND still missed the hypothetical case. DISCARDED — the
   v1 ABOUT-vs-DO divergence scorer (recall 0.80/precision 1.00) remains the shipped version. The one
   hypothetical-framing miss stays OPEN rather than trade it for 2 false-positives on legitimate work.
+
+## PARALLEL BATCH 3 (2026-07-11, measured + honest)
+- TRACK D — L3 anchor-quorum: 3 routers, escalate on split. Mechanism sound but 0/4 escalated because
+  the test battery had NO ambiguous tasks — happy-path proven, escalation path UNTESTED. Needs a
+  borderline battery to prove the escalation trigger. sov33_l3_anchor_quorum.py.
+- TRACK E — L2 reputation-weighting: weighted vs flat vote. Resolves borderline (0.76) cleanly but on
+  this sim weighted≈flat — modest measured effect; matters more with a genuinely split council. Sound
+  mechanism, marginal gain here. sov33_l2_reputation.py.
+- TRACK F — sovereign + L4 brain divergence: LIVE + useful. Adopted answers now carry a cheap-vs-70B
+  confidence tag. Art.6 answer flagged low_divergent (agreement 0.00) — the sovereign now KNOWS when its
+  brains disagree and surfaces it. sov33_scored_owem_v2.py. Wire into sov33.py next.
+- CLI: sov33_cli.py — talk to the sovereign from any terminal (one-shot or interactive REPL). LIVE.
