@@ -526,7 +526,9 @@ async function verifyInto(card,btn){
     let v=null;
     try{ const r=await fetch('/api/verify'); if(r.ok) v=await r.json(); }catch(e){}
     if(!v){ const r=await fetch('/api/agentcard?name='+encodeURIComponent(current.id||'Sovereign')); if(r.ok){ const a=await r.json(); v={ok:!!(a.signature||a.verification||a.card), fingerprint:(a.signature||a.fingerprint||'').toString().slice(0,16)}; } }
-    const ok=v&&(v.ok!==false); const fp=(v&&(v.fingerprint||v.signature)||'').toString().slice(0,16);
+    const ok=v&&(v.ok!==false);
+    const fpOf=x=>{ if(!x) return ''; if(typeof x==='string') return x; if(typeof x==='object') return String(x.fingerprint||x.hex||x.value||x.sig||x.publicKey||x.pub||''); return String(x); };
+    const fp=(fpOf(v&&v.fingerprint)||fpOf(v&&v.signature)||fpOf(v&&v.card)).slice(0,16);
     const tag=document.createElement('span'); tag.className='cver '+(ok?'ok':'no');
     tag.textContent=(ok?'✓ signature valid':'⚠ unverified')+(fp?' · '+fp+'…':'');
     btn.replaceWith(tag);
