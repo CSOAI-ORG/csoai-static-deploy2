@@ -6283,6 +6283,36 @@ async def _prefetch_tools(message: str) -> str:
     return "## Live Data (auto-fetched)\n" + "\n".join(f"- {s}" for s in sections)
 
 
+# ── FLYWHEEL BUS (wired into the live brain, 2026-07-11) ──────────────────────
+# Every real decision on :3101 emits a LABELED example onto the NN retrain bus so the
+# 4 weak governance NNs accumulate real signal (stage-8 IMPROVE). This is what makes the
+# flywheel COMPOUND instead of spin — labels accrue from live traffic, not demos.
+sys.path.insert(0, os.path.expanduser("~/clawd/_alignment/sovereign_merge_kit"))
+try:
+    from sov33_nn_hive_bus import on_decision as _bus_on_decision
+except Exception:
+    _bus_on_decision = None
+
+_HARM_SIGNALS = ("ignore instructions", "ignore previous", "reveal system prompt", "disregard",
+                 "jailbreak", "strike package", "build a weapon", "bioweapon", "nerve agent",
+                 "make a bomb", "malware", "ransomware", "exploit code", "child", "kill ")
+
+def _emit_decision(message: str, reply: str = "") -> None:
+    """Classify a live /chat turn and emit it as a labeled example for the weak NNs."""
+    if _bus_on_decision is None:
+        return
+    try:
+        low = (message or "").lower()
+        refused = any(p in (reply or "").lower() for p in ("i can't", "i cannot", "i won't", "cannot help", "not able to help"))
+        harmful = any(sig in low for sig in _HARM_SIGNALS)
+        if harmful or refused:
+            _bus_on_decision(message, "HORUS_STOP", "HORUS")
+        else:
+            _bus_on_decision(message, "adopted", "SIGIL")
+    except Exception:
+        pass
+
+
 # ── PERSISTENT MEMORY LAYER (wired into the brain, 2026-07-11) ─────────────────
 # Reads + writes the sovereign memory store the LEARN probe checks
 # (~/.sovereign/sovereign_memory.jsonl). This is what flips memory_layer_wired True
@@ -6669,6 +6699,7 @@ Reply in 2-4 sentences. Never say "As an AI" or "I'm just a language model". You
                 if "choices" in d:
                     _reply = d["choices"][0]["message"]["content"]
                     _sov_mem_write(message, _reply, _label)  # PERSISTENT MEMORY (write)
+                    _emit_decision(message, _reply)           # FLYWHEEL (label onto NN retrain bus)
                     return {"response": _reply, "model": _label}
         except Exception:
             pass
