@@ -48,6 +48,19 @@ them). Only `meok-os-overnight-batch` ran recently (2026-07-11). Heavy OVERLAP w
 2. ✅ `sov3-daily-federation-refresh` hardened VM-independent (VM-reachability gate; local ingest 1282 sources
    / catalog 371 servers / vault 18391 files still run; skips dead-VM push/pull instantly vs 30s hangs).
 3. ✅ Booted out 6 dead-GCP-VM KeepAlive tunnels + disabled broken olm-health.
+4. ✅ **Disabled the whole exit-2 `ops.*` cluster (6 jobs)** — gamification(300s)/care-mission(600s)/
+   coverage-audit/elder-care/evidence-vault/regulator-export all point at `meok/scripts/auto-*.py`
+   scripts that are **gone from disk** → failed every fire (gamification every 5 min). Same dead-script
+   class as olm-health. Plists kept → reversible if the scripts are restored.
+5. ✅ **Crontab deduped** — removed 3 exact-duplicate lines (auto-fire-emails, daily-sov3-sigil,
+   weekly-indexnow each fired twice). 81→78 lines, 0 unique jobs lost. Backup: `_infra/cron-backups/`.
+6. ✅ **Disk reclaim — was at 100% (166 MB free)**, which was degrading the whole backend (postgres/SOV3
+   need scratch) and blocking the J-space model download. Purged pure caches (pip 722M, Cypress 623M,
+   brew, HF partial) → **1.5 GB free**. ⚠️ Data volume still ~100% capacity — the big reclaim
+   (OrbStack ~34G stale VM disk) needs Nick via the OrbStack UI, not `rm`.
+
+**Net launchd change this session: −13 dead agents (6 tunnels + olm-health + 6 exit-2) + 1 durable keeper = −12.**
+The estate is materially leaner and cooler; the one canonical backend is now the only KeepAlive process that matters.
 
 ## ⚠️ Architectural finding — TWO SOV3 tool-sets diverge
 `run-local` `:3101` exposes the **hermes/k25 build** (313 tools: hermes_ask/hermes_research/k25_analyze_image…).
