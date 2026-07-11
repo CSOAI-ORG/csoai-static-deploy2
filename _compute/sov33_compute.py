@@ -40,17 +40,26 @@ def _openai_compat(url, key, model, prompt, max_tokens, temp):
     with urllib.request.urlopen(req, timeout=60) as r:
         return json.load(r)["choices"][0]["message"]["content"].strip()
 
-def _groq(prompt, max_tokens=512, temp=0.3):
+# Groq model ladder — ALL on the one existing key (verified 2026-07-11), no new backends:
+GROQ_TIERS = {
+    "fast":   "llama-3.3-70b-versatile",   # default — sub-second 70B
+    "heavy":  "openai/gpt-oss-120b",       # 120B open-weight for hard problems
+    "reason": "qwen/qwen3-32b",            # visible-reasoning (thinking) model
+    "cheap":  "llama-3.1-8b-instant",      # tiny/fast for bulk
+}
+
+def _groq(prompt, max_tokens=512, temp=0.3, tier="fast", model=None):
     k = os.environ.get("GROQ_API_KEY")
     if not k: raise RuntimeError("no GROQ_API_KEY")
+    mdl = model or GROQ_TIERS.get(tier, GROQ_TIERS["fast"])
     return _openai_compat("https://api.groq.com/openai/v1/chat/completions", k,
-                          "llama-3.3-70b-versatile", prompt, max_tokens, temp)
+                          mdl, prompt, max_tokens, temp)
 
 OCI_ENDPOINT = "https://inference.generativeai.uk-london-1.oci.oraclecloud.com"
 OCI_MODEL = "meta.llama-3.3-70b-instruct"
 OCI_PY = os.path.expanduser("~/clawd/_oci/venv/bin/python")
 
-def _oci70b(prompt, max_tokens=512, temp=0.3):
+def _oci70b(prompt, max_tokens=512, temp=0.3, **_):
     """Call OCI GenAI 70B via the durable oci venv (isolated so its SDK deps don't leak)."""
     script = f'''
 import oci,sys,json
