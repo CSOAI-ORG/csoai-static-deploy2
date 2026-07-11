@@ -5,7 +5,7 @@ Each stage is a callable slot; stages tagged NEW raise NotImplementedError HONES
 faking success. BFT at any stage requires a cross-lineage checker (ρ-aware) — same-lineage = theatre.
 """
 STAGES = [
-    ("LEARN",          "NEW",     "ground from disk/memory/live data before acting"),
+    ("LEARN",          "PARTIAL", "time+substrate-aware NOW (sov33_learn_stage); memory layer pending"),
     ("CHECK_EXISTING", "NEW",     "audit what's already built; never rebuild"),
     ("PLAN",           "RUNNING", "decompose the task (PDCA g1)"),
     ("DO",             "RUNNING", "execute — brain/swarm (PDCA g2)"),
