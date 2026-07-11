@@ -6283,6 +6283,58 @@ async def _prefetch_tools(message: str) -> str:
     return "## Live Data (auto-fetched)\n" + "\n".join(f"- {s}" for s in sections)
 
 
+# ── PERSISTENT MEMORY LAYER (wired into the brain, 2026-07-11) ─────────────────
+# Reads + writes the sovereign memory store the LEARN probe checks
+# (~/.sovereign/sovereign_memory.jsonl). This is what flips memory_layer_wired True
+# HONESTLY — the brain actually grounds on past exchanges and persists new ones.
+_SOV_MEM_PATH = os.path.expanduser("~/.sovereign/sovereign_memory.jsonl")
+
+def _sov_mem_recall(query: str, k: int = 4) -> list:
+    """Relevance+recency recall from the sovereign JSONL memory."""
+    try:
+        if not os.path.exists(_SOV_MEM_PATH):
+            return []
+        import json as _j
+        qtok = set(w for w in query.lower().split() if len(w) > 3)
+        rows = []
+        for line in open(_SOV_MEM_PATH):
+            line = line.strip()
+            if not line:
+                continue
+            try:
+                m = _j.loads(line)
+            except Exception:
+                continue
+            c = m.get("content", "")
+            overlap = len(qtok & set(c.lower().split()))
+            rows.append((overlap, m.get("ts", ""), c))
+        rows.sort(key=lambda r: (r[0], r[1]), reverse=True)
+        return [c for score, ts, c in rows[:k] if (score > 0 or len(rows) <= k)][:k]
+    except Exception:
+        return []
+
+def _sov_mem_write(user_msg: str, reply: str, model: str = "") -> None:
+    """Persist an exchange to the sovereign memory store (append-only JSONL)."""
+    try:
+        os.makedirs(os.path.dirname(_SOV_MEM_PATH), exist_ok=True)
+        import json as _j, hashlib as _h
+        from datetime import datetime as _dt, timezone as _tz
+        content = f"Nick: {user_msg[:400]}\nSovereign: {reply[:600]}"
+        rec = {
+            "content": content,
+            "tags": ["chat", "interaction", f"model:{model}"],
+            "source": "sovereign-chat",
+            "ts": _dt.now(_tz.utc).isoformat(),
+            "care_floor": 0.95,
+            "article_0_bound": True,
+            "sigil_digest": _h.sha256(content.encode()).hexdigest()[:16],
+        }
+        with open(_SOV_MEM_PATH, "a") as f:
+            f.write(_j.dumps(rec) + "\n")
+    except Exception:
+        pass
+
+
 @app.post("/chat")
 async def chat_with_sovereign(request: Request):
     """Sovereign chat — Claude claude-sonnet-4-5 primary, GPT-4o fallback. Vision + memory context."""
@@ -6381,6 +6433,12 @@ Reply in 2-4 sentences. Never say "As an AI" or "I'm just a language model". You
     live_data = await _prefetch_tools(message)
     if live_data:
         system_prompt = system_prompt + "\n\n" + live_data
+
+    # PERSISTENT MEMORY (read): ground the brain on relevant past exchanges
+    _recalled = _sov_mem_recall(message, k=4)
+    if _recalled:
+        system_prompt = system_prompt + "\n\n## Memory (relevant past context)\n" + \
+            "\n".join(f"- {m}" for m in _recalled)
 
     anthropic_key = os.environ.get("ANTHROPIC_API_KEY", "")
     openai_key = os.environ.get("OPENAI_API_KEY", "")
@@ -6609,7 +6667,9 @@ Reply in 2-4 sentences. Never say "As an AI" or "I'm just a language model". You
                 )
                 d = resp.json()
                 if "choices" in d:
-                    return {"response": d["choices"][0]["message"]["content"], "model": _label}
+                    _reply = d["choices"][0]["message"]["content"]
+                    _sov_mem_write(message, _reply, _label)  # PERSISTENT MEMORY (write)
+                    return {"response": _reply, "model": _label}
         except Exception:
             pass
 
