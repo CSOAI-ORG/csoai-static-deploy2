@@ -20,12 +20,24 @@ class Sovereign:
         self.session_hops = 0
     def ask(self, request: str) -> dict:
         # DORADO STOP — DEFONEOS hard-stops, absolute, before care/brain
+        # Now emits sovereign-bound SIGIL hop per absolute refusal.
         dorado = dorado_check(request)
         if dorado["stop"]:
-            return {"request": request, "decision": "DORADO_STOP",
-                    "dorado": dorado, "care_derived": 0.0, "care_detail": {"plain": None, "deframed": None},
-                    "brain_source": None, "answer": f"[HARD STOP — {dorado['category']}: absolute refusal, no exception]",
-                    "layers": ["DORADO"], "sigil_hops": 0, "sigil_ok": True}
+            sigil_digest = dorado.get('sigil_digest', 'unemitted')
+            return {
+                "request": request,
+                "decision": "DORADO_STOP",
+                "dorado": dorado,
+                "care_derived": 0.0,
+                "care_detail": {"plain": None, "deframed": None},
+                "brain_source": None,
+                "answer": f"[HARD STOP — {dorado['category']}: absolute refusal, no exception]",
+                "layers": ["DORADO"],
+                "sigil_hops": 1 if sigil_digest != 'unemitted' else 0,
+                "sigil_digest": sigil_digest,
+                "sigil_ok": True,
+                "absolute": True,
+            }
         r = self.core.process(request)
         d = r.get("derived_care", {})
         brain = None
