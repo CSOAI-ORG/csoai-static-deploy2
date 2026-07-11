@@ -522,15 +522,17 @@ function spawnCard(o){   // {icon,title,tag,body(html),actions:[{label,run}],ver
 }
 async function verifyInto(card,btn){
   btn.textContent='verifying…';
+  // pull the first hex-ish string out of any shape, recursively — never emits "[object Object]"
+  const fpOf=(x,d=0)=>{ if(x==null||d>4) return ''; if(typeof x==='string') return /^[0-9a-fA-F]{8,}$/.test(x)||x.length>=12?x:x; if(typeof x==='number') return String(x);
+    if(typeof x==='object'){ for(const k of ['fingerprint','hex','value','sig','signature','publicKey','pub','hash','digest','id']){ const r=fpOf(x[k],d+1); if(r) return r; } for(const val of Object.values(x)){ if(typeof val==='string'&&val.length>=8) return val; } } return ''; };
   try{
     let v=null;
-    try{ const r=await fetch('/api/verify'); if(r.ok) v=await r.json(); }catch(e){}
-    if(!v){ const r=await fetch('/api/agentcard?name='+encodeURIComponent(current.id||'Sovereign')); if(r.ok){ const a=await r.json(); v={ok:!!(a.signature||a.verification||a.card), fingerprint:(a.signature||a.fingerprint||'').toString().slice(0,16)}; } }
-    const ok=v&&(v.ok!==false);
-    const fpOf=x=>{ if(!x) return ''; if(typeof x==='string') return x; if(typeof x==='object') return String(x.fingerprint||x.hex||x.value||x.sig||x.publicKey||x.pub||''); return String(x); };
-    const fp=(fpOf(v&&v.fingerprint)||fpOf(v&&v.signature)||fpOf(v&&v.card)).slice(0,16);
+    try{ const r=await fetch('/api/verify'); if(r.ok){ const j=await r.json(); if(j&&!j.error) v=j; } }catch(e){}
+    if(!v){ try{ const r=await fetch('/api/agentcard?name='+encodeURIComponent(current.id||'Sovereign')); if(r.ok){ const a=await r.json(); if(a&&!a.error) v={ok:!!(a.signature||a.verification||a.card), fingerprint:fpOf(a.signature)||fpOf(a.fingerprint)||fpOf(a.card)}; } }catch(e){} }
+    const ok=!!(v&&(v.ok!==false));
+    let fp=(fpOf(v)||'').slice(0,16); if(/object/i.test(fp)) fp='';
     const tag=document.createElement('span'); tag.className='cver '+(ok?'ok':'no');
-    tag.textContent=(ok?'✓ signature valid':'⚠ unverified')+(fp?' · '+fp+'…':'');
+    tag.textContent=(ok?'✓ signature valid':'⚠ unverified — offline')+(fp?' · '+fp+'…':'');
     btn.replaceWith(tag);
   }catch(e){ btn.textContent='⚠ offline — try again'; }
 }
