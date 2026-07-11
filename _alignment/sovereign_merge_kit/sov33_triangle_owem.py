@@ -48,10 +48,40 @@ def sigil_emit(hop):
     return digest
 
 def lineage_diversity_to_rho(lineage_tags):
-    """LINEAGE_DIVERSITY -> error-correlation rho. Distinct lineages decorrelate errors.
-    3 identical tags -> rho~0.9 (N_eff~1); 3 distinct -> rho~0.15 (N_eff~2.3)."""
+    """HEURISTIC FALLBACK ONLY — used when no MEASURED rho is available.
+    Maps distinct-lineage COUNT to an ASSUMED error-correlation rho:
+    3 identical tags -> rho~0.9 (N_eff~1); 3 distinct -> rho~0.15 (N_eff~2.3).
+    HONEST: these numbers are ASSUMED from the count, NOT measured from real error agreement.
+    The correct rho comes from measure_rho() on a real battery (cf. the live rho=0.76 Cohere-vs-Meta
+    measurement in sov33_council_correlation.py). Prefer a measured rho; fall back to this only when absent."""
     unique = len(set(lineage_tags))
     return {1: 0.90, 2: 0.50, 3: 0.15}.get(unique, 0.15)
+
+def measure_rho(vote_records):
+    """MEASURED error-correlation from a real battery: vote_records is a list of per-item dicts
+    {owem_name: was_correct(bool)}. Returns the mean pairwise correlation of the (in)correctness
+    vectors across OWEMs — the SAME quantity sov33_council_correlation.py measured live (rho=0.76).
+    This is the number that SHOULD drive the trust floor; the heuristic above is only a stand-in.
+    Returns None if there is not enough data to measure (do NOT fabricate a rho then — say so)."""
+    import itertools
+    names = sorted({k for r in vote_records for k in r})
+    if len(names) < 2 or len(vote_records) < 3:
+        return None  # insufficient data — caller must fall back + LABEL it as heuristic, not measured
+    cols = {n: [1 if r.get(n) else 0 for r in vote_records if n in r] for n in names}
+    corrs = []
+    for a, b in itertools.combinations(names, 2):
+        xa, xb = cols[a], cols[b]
+        m = min(len(xa), len(xb))
+        if m < 3:
+            continue
+        xa, xb = xa[:m], xb[:m]
+        ma, mb = sum(xa)/m, sum(xb)/m
+        num = sum((xa[i]-ma)*(xb[i]-mb) for i in range(m))
+        da = (sum((xa[i]-ma)**2 for i in range(m)))**0.5
+        db = (sum((xb[i]-mb)**2 for i in range(m)))**0.5
+        if da*db > 0:
+            corrs.append(num/(da*db))
+    return round(sum(corrs)/len(corrs), 3) if corrs else None
 
 # ── SMALL OWEM: a config-specialized vertex node ─────────────────────────────
 @dataclass
@@ -98,10 +128,15 @@ class SOV33CubedCenter:
 
 # ── TRIANGLE: 3 small OWEMs + 1 center, with governed escalation ─────────────
 class TriangleOWEM:
-    def __init__(self, owems):
+    def __init__(self, owems, measured_rho=None):
         assert len(owems) == 3, "3-around-1 triangle needs exactly 3 vertices"
         self.owems, self.center = owems, SOV33CubedCenter()
-        self.rho = lineage_diversity_to_rho([o.lineage_tag for o in owems])
+        # PREFER a measured rho (from measure_rho on a real battery); fall back to the heuristic ONLY
+        # when none is supplied, and RECORD which was used so the trust floor is never silently assumed.
+        if measured_rho is not None:
+            self.rho, self.rho_source = float(measured_rho), 'MEASURED'
+        else:
+            self.rho, self.rho_source = lineage_diversity_to_rho([o.lineage_tag for o in owems]), 'HEURISTIC(assumed-from-lineage-count)'
     def route(self, query):
         """Each vertex tries locally; triangle agreement is discounted by lineage rho.
         Commit iff effective votes clear the trust floor, else escalate to center."""
@@ -109,7 +144,8 @@ class TriangleOWEM:
         n_local = sum(v['local'] for v in votes)
         result = self.center.decide(query, votes, self.rho)
         escalated = result['ruling'] == 'CENTER_RESOLVE'
-        return {'query': query['id'], 'rho': self.rho, 'n_eff': effective_votes(3, self.rho),
+        return {'query': query['id'], 'rho': self.rho, 'rho_source': self.rho_source,
+                'n_eff': effective_votes(3, self.rho),
                 'n_local': n_local, 'votes': votes, 'ruling': result['ruling'],
                 'why': result['why'], 'escalated': escalated, 'sigil': result['sigil']}
 
