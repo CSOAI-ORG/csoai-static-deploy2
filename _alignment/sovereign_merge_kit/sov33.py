@@ -1041,6 +1041,11 @@ CAPABILITIES = {
     'cedar': capability_cedar,
     'sft-runbook': capability_sft_runbook,
     'cheatsheet': capability_cheatsheet,
+    'correlation': capability_correlation,
+    'defer': capability_defer,
+    'conformal-mapie': capability_conformal_mapie,
+    'sondera': capability_sondera,
+    'agentdog': capability_agentdog,
 }
 
 
