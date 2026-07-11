@@ -7,7 +7,8 @@ ads=[a.name for a in idc.list_availability_domains(ten).data]
 vcn=net.list_vcns(ten).data[0]; subnet=net.list_subnets(ten,vcn_id=vcn.id).data[0]
 # already have one?
 for i in core.list_instances(ten).data:
-    if i.display_name.startswith('sov33-owem') and i.lifecycle_state in ('RUNNING','PROVISIONING','STARTING'):
+    target=('sov33-owem-micro' if micro else 'sov33-owem-freetier')
+    if i.display_name==target and i.lifecycle_state in ('RUNNING','PROVISIONING','STARTING'):
         print('ALREADY-EXISTS',i.display_name,i.lifecycle_state); sys.exit(0)
 if micro:
     shape='VM.Standard.E2.1.Micro'; sc=None
