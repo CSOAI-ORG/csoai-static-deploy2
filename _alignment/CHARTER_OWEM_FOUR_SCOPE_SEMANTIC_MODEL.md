@@ -43,3 +43,19 @@ An OWEM is ONE governed sovereign substrate viewed at four scopes — a person's
 (medium), the shared governance (large), rooted in one attested identity (centre) — where the model is a
 replaceable organ and the substrate is what persists, grows, and federates. Real, honest, buildable; not a new
 foundation model and not AGI.
+
+## THE "OWEM OF ALL" — reach, not parameter-count (locks the T-model question)
+The instinct "build a model that does the T — that's our OWEM of all" is RIGHT in spirit, WRONG if read as
+parameter count. Two meanings of "T", only one real:
+- ❌ "a T-parameter foundation model" — infeasible (tens of $M, months of thousands of GPUs, petabytes) and NOT
+  creatable by summing routed models' params (the retracted 1.09T/4.245T/33T additive error). A mirage.
+- ✅ "one OWEM that reaches across ALL models" — REAL and STRONGER. The power is not owning T params; it's being
+  the ONE governed substrate that can call ANY model (61-model registry), route across them, carry ONE sovereign
+  memory through all, and attest every step. "Of all" = REACH + GOVERNANCE + MEMORY, not parameter count.
+WHY REACH WINS: you get the best available model's capability by routing to it (no train/own cost); when a better
+open model drops, swap it in — memory/identity/governance persist (swap-persistence proven). A T-param model you
+trained is obsolete in a year; the substrate never is. The moat is "only governed+attested+sovereign layer across
+ALL models" (uncontested), NOT "biggest model" (unwinnable vs frontier labs).
+CANONICAL HEADLINE: "SOV33 is the OWEM that governs and remembers across EVERY model — not a T-parameter model,
+but the one sovereign substrate all of them plug into. One memory, one identity, one care-floor, any brain."
+HARD LINE: never claim a T-parameter model or sum params to a T figure. The "of all" is reach, always.
