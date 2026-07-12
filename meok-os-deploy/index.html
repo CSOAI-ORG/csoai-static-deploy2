@@ -971,7 +971,10 @@ function track(feature, action, meta){
 }
 // feed the per-feature events to SOV3 (the hives' queens learn from them). 127.0.0.1 = local gunicorn (not the ::1 tunnel).
 const SOV3_TELEMETRY="http://127.0.0.1:3101/telemetry"; let _telPending=[];
-function flushTelemetry(){ if(!_telPending.length) return; const batch=_telPending.splice(0,_telPending.length); fetch(SOV3_TELEMETRY,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({events:batch})}).catch(function(){ /* offline → events stay in the local log, retried later */ }); }
+// Only talk to a LOCAL SOV3 when one is actually present (localhost, or the user opted in). On the public
+// os.meok.ai there's no reachable 127.0.0.1:3101, so skip — otherwise every visitor gets console CORS errors.
+const _SOV3_LOCAL=(location.hostname==='localhost'||location.hostname==='127.0.0.1'||(function(){try{return localStorage.getItem('meok_local_sov3')==='1';}catch(e){return false;}})());
+function flushTelemetry(){ if(!_SOV3_LOCAL){ _telPending=[]; return; } if(!_telPending.length) return; const batch=_telPending.splice(0,_telPending.length); fetch(SOV3_TELEMETRY,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({events:batch})}).catch(function(){ /* offline → events stay in the local log, retried later */ }); }
 setInterval(flushTelemetry, 20000);
 // the OS self-applies the King-ratified directive (from your own usage) — closes the self-improve loop
 function _hexBytes(h){ var a=new Uint8Array(h.length/2); for(var i=0;i<a.length;i++) a[i]=parseInt(h.substr(i*2,2),16); return a; }
@@ -986,6 +989,7 @@ async function _verifyDirective(d){
   }catch(e){ return null; } // null = WebCrypto Ed25519 unavailable in this browser
 }
 async function applyDirectives(){
+  if(!_SOV3_LOCAL) return;   // no local SOV3 on the public site → skip (keeps the console clean)
   try{
     var r=await fetch("http://127.0.0.1:3101/os/directives"); var d=await r.json();
     if(!d||!d.ratified||!d.ratified.length) return;

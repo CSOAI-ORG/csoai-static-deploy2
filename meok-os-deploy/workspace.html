@@ -14,7 +14,21 @@ body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.5 -apple-system,
 .top a{color:var(--dim);text-decoration:none;font-size:12.5px;padding:5px 9px;border:1px solid var(--line);border-radius:8px}
 .top a:hover{color:var(--ink);border-color:var(--gold)}
 .stage{display:grid;grid-template-columns:190px 1fr 330px;height:calc(100% - 46px)}
-@media(max-width:860px){.stage{grid-template-columns:1fr;grid-template-rows:auto 1fr auto}.menu,.brains{display:none}}
+@media(max-width:860px){
+  .stage{grid-template-columns:1fr;grid-template-rows:1fr;height:calc(100% - 46px)}
+  .menu{display:none}
+  .brains{display:none}                 /* mobile keeps the DESK primary (where you type + see results) */
+  .desk{order:0}
+  .deskwins{padding:12px}
+  /* windows flow (not draggable) + never exceed the viewport → no horizontal overflow */
+  .win{position:relative!important;left:auto!important;top:auto!important;width:100%!important;max-width:100%!important;margin:0 0 12px!important;resize:none}
+  .win.frame{width:100%!important;height:52vh}
+  .pbar{left:10px;right:10px;bottom:10px}
+  /* top bar fits 375px: drop secondary bits, shrink links */
+  #who{display:none}#membadge{display:none}
+  .top{gap:6px;padding:0 8px}.top b{font-size:13px}
+  .top a{padding:5px 7px;font-size:11px}
+}
 /* left menu = MEOK OS */
 .menu{border-right:1px solid var(--line);background:var(--panel);overflow-y:auto;padding:10px 0}
 .menu h4{margin:8px 14px 4px;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--dim)}
