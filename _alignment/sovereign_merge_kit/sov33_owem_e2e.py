@@ -44,9 +44,11 @@ from typing import Optional, List, Tuple, Dict
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
+_SOVDIR = os.environ.get('SOV33_SIGIL_DIR', str(Path.home() / '.sovereign'))
 
-SIGIL_FILE = Path.home() / '.sovereign' / 'owem_e2e.sigil.jsonl'
-CACHE_FILE = Path.home() / '.sovereign' / 'owem_e2e_cache.json'
+
+SIGIL_FILE = Path(_SOVDIR) / 'owem_e2e.sigil.jsonl'
+CACHE_FILE = Path(_SOVDIR) / 'owem_e2e_cache.json'
 CARE_FLOOR = 0.95
 
 
@@ -143,6 +145,15 @@ class Cache:
 # ═══════════════════════════════════════════════════════════════
 
 import threading
+import os as _os, tempfile as _tf
+def _sov_dir():
+    d=_os.environ.get('SOV33_SIGIL_DIR') or _os.path.join(_os.path.expanduser('~'),'.sovereign')
+    try:
+        _os.makedirs(d,exist_ok=True); return d
+    except Exception:
+        d=_os.path.join(_tf.gettempdir(),'sov33_sigil'); _os.makedirs(d,exist_ok=True); return d
+
+
 _SOV_BRAIN_LOCK = threading.Lock()
 
 
@@ -249,7 +260,7 @@ def call_groq(prompt, system, max_tokens=200):
     """Groq (free tier, currently 403)."""
     t0 = time.time()
     try:
-        keystore = Path.home() / '.sovereign' / 'keystore' / 'groq_api_key.txt'
+        keystore = Path(_SOVDIR) / 'keystore' / 'groq_api_key.txt'
         if not keystore.exists():
             return {'text': '', 'backend': 'groq', 'elapsed_ms': 0, 'error': 'no_api_key'}
         api_key = keystore.read_text().strip()
