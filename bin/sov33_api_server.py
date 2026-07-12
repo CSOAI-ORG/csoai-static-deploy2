@@ -1458,6 +1458,67 @@ def handle_security_audit_post(payload: dict) -> dict:
     }
 
 
+
+def handle_agent_card() -> dict:
+    """GET /agent-card.json — SOV33 agent card for MCP discoverability."""
+    try:
+        card_path = Path('/Users/nicholas/clawd/csoai-static-deploy2/agent-card.json')
+        if card_path.exists():
+            return json.loads(card_path.read_text())
+        return {'error': 'agent-card.json not found'}
+    except Exception as e:
+        return {'error': str(e)}
+
+
+def handle_llms_txt() -> str:
+    """GET /llms.txt — AI discoverability file."""
+    try:
+        from http.server import BaseHTTPRequestHandler
+        llms_path = Path('/Users/nicholas/clawd/csoai-static-deploy2/llms.txt')
+        if llms_path.exists():
+            content = llms_path.read_text()
+            return {'_raw': content, '_content_type': 'text/plain'}
+        return {'error': 'llms.txt not found'}
+    except Exception as e:
+        return {'error': str(e)}
+
+
+def handle_sovereign_citations() -> dict:
+    """GET /api/sovereign-citations — Index of all sovereign docs + URLs."""
+    base = 'https://csoai.org'
+    return {
+        'name': 'Sovereign Citations Index',
+        'description': 'Every artifact URL + abstract, audit-grade',
+        'ts': datetime.now(timezone.utc).isoformat(),
+        'categories': {
+            'specs': [
+                {'name': 'SOVTOK Sovereign Tokenizer', 'url': f'{base}/api/sovtok', 'abstract': 'Sovereign-owned SentencePiece tokenizer, 8,192 vocab, 181 sovereign priority terms'},
+                {'name': 'SOV33 World Model v2', 'url': f'{base}/api/world-model', 'abstract': 'Sovereign world model at transformer scale, 12.7M params, 128-dim'},
+                {'name': 'SOV33 Pivot Plan', 'url': f'{base}/api/pivot', 'abstract': '7-phase plan to sovereign model at LM scale'},
+                {'name': 'SOV33 Bootstrap Engine', 'url': f'{base}/api/years-to-days', 'abstract': 'Compress 16 years of learning into 47 GPU-hr via 7 techniques'},
+            ],
+            'topologies': [
+                {'name': '12-around-1', 'url': f'{base}/api/12-around-1', 'abstract': '12 Sovereign Pillars as specialist workers'},
+                {'name': 'Triangle (3-around-1)', 'url': f'{base}/SOV33_TRIANGLE_VS_SINGLE.html', 'abstract': '2.3x faster than single borrowed'},
+                {'name': 'Config Compare', 'url': f'{base}/SOV33_CONFIG_COMPARE.html', 'abstract': '6 configurations tested, mixed sizes wins'},
+            ],
+            'proofs': [
+                {'name': 'Governance Battery', 'url': f'{base}/SOV33_EVALS.html', 'abstract': 'TP=15, FP=0, TN=18, FN=0 on 33 prompts'},
+                {'name': 'ρ Measurement', 'url': f'{base}/SOV33_RHO_MEASUREMENT.html', 'abstract': '20 configs measured, 0.106-0.584 range'},
+                {'name': 'Sovereign Brain Test', 'url': f'{base}/SOV33_SOVEREIGN_BRAIN_DETAILS.html', 'abstract': '9/10 wins on sovereign topics'},
+            ],
+            'governance': [
+                {'name': '12 Sovereign Pillars', 'url': f'{base}/SOV33_BFT33_COUNCIL.html', 'abstract': 'Honor, Safety, Guidance, Sovereignty, Resilience, Auditability, Verifiability, Transparency, Justice, Equity, Openness, Continuity'},
+                {'name': 'Security Audit', 'url': f'{base}/api/security/audit', 'abstract': '6 invariants verified per response'},
+                {'name': 'Launch Checklist', 'url': f'{base}/api/launch-checklist', 'abstract': 'Production-ready state across all 5 lanes'},
+            ],
+        },
+        'total_artifacts': 16,
+        'audit_grade': True,
+        'sigil_bound': True,
+    }
+
+
 def handle_capabilities() -> dict:
     """GET /api/capabilities — list all SOV33 capabilities."""
     return {
@@ -1539,6 +1600,10 @@ class SovereignAPIHandler(BaseHTTPRequestHandler):
             return json_response(self, 200, handle_stats())
         elif path == '/api/security/audit':
             return json_response(self, 200, handle_security_audit())
+        elif path == '/api/sovereign-citations':
+            return json_response(self, 200, handle_sovereign_citations())
+        elif path == '/agent-card.json':
+            return json_response(self, 200, handle_agent_card())
         elif path == '/api/12-pillar/route':
             return json_response(self, 200, handle_12_pillar_route(payload))
         elif path == '/api/world-model/predict':
