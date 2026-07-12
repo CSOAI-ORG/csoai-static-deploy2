@@ -19,3 +19,7 @@ This file auto-loads via the alignment loader. Format: one fact per line, dated.
 ## HOW TO USE THIS LEDGER
 - If I'm about to tell Nick something he clearly already told me, or re-ask a settled fact: CHECK HERE FIRST.
 - When Nick asserts a durable fact ("X is true, stop forgetting"): append it here dated, so it persists.
+
+## FREE-GPU BRIDGE (corrected 2026-07-12)
+- Free-GPU rotation is REAL (~7 providers). HONEST weekly total = ~102 GPU-hr/wk (colab 30 + kaggle 30 + studiolab 24 are truly weekly; lightning ~5/wk and modal ~2/wk are MONTHLY quotas converted). The sibling's "125/wk" double-counted monthly as weekly.
+- Each provider needs NICK'S OWN account/login — the bridge picks WHICH to use, Nick owns the credentials. I cannot sign up or hold keys.

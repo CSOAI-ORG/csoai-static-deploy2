@@ -18,8 +18,17 @@ provider (some are one-command CLIs, some are notebook-drop, some need a token).
 """
 import json, time, os
 from pathlib import Path
+import os as _os, tempfile as _tf
+def _sov_dir():
+    d=_os.environ.get('SOV33_SIGIL_DIR') or _os.path.join(_os.path.expanduser('~'),'.sovereign')
+    try:
+        _os.makedirs(d,exist_ok=True); return d
+    except Exception:
+        d=_os.path.join(_tf.gettempdir(),'sov33_sigil'); _os.makedirs(d,exist_ok=True); return d
+_SOVDIR=_sov_dir()
 
-_STATE = Path.home() / ".sovereign" / "free_gpu_quota.json"
+
+_STATE = Path(_SOVDIR) / "free_gpu_quota.json"
 
 # ── the real free-GPU training providers (honest limits, 2026) ──
 PROVIDERS = [
@@ -28,12 +37,12 @@ PROVIDERS = [
      "submit": "notebook: %run a kit URL (this session's method)", "persist": False},
     {"name": "kaggle",    "gpu": "T4x2/P100","weekly_hr": 30, "session_hr": 12, "auth": "kaggle-token",
      "submit": "kaggle kernels push (kernel-metadata.json + script)", "persist": True},
-    {"name": "lightning", "gpu": "T4/L4",    "weekly_hr": 22, "session_hr": 24, "auth": "lightning-login",
-     "submit": "lightning run app / Studio; ~22 free GPU-hr/month", "persist": True},
+    {"name": "lightning", "gpu": "T4/L4",    "weekly_hr": 5, "session_hr": 24, "auth": "lightning-login",
+     "submit": "lightning run app / Studio; ~22 GPU-hr/MONTH = ~5/wk (converted for honest weekly sum)", "persist": True},
     {"name": "paperspace","gpu": "free-GPU", "weekly_hr": 6,  "session_hr": 6,  "auth": "paperspace-apikey",
      "submit": "gradient notebooks (free-GPU tier, queued)", "persist": True},
-    {"name": "modal",     "gpu": "A10/T4",   "weekly_hr": 8,  "session_hr": 24, "auth": "modal-token",
-     "submit": "modal run (uses the ~$30/mo free credit)", "persist": True},
+    {"name": "modal",     "gpu": "A10/T4",   "weekly_hr": 2,  "session_hr": 24, "auth": "modal-token",
+     "submit": "modal run (~$30/mo credit = ~2 GPU-hr/wk equiv, honest weekly)", "persist": True},
     {"name": "hf-zerogpu","gpu": "A100-slice","weekly_hr": 5, "session_hr": 1,  "auth": "hf-token",
      "submit": "HF Space w/ @spaces.GPU (ZeroGPU; time-sliced, Pro=more)", "persist": True},
     {"name": "sagemaker-studiolab","gpu": "T4","weekly_hr": 24,"session_hr": 4, "auth": "aws-studiolab",
