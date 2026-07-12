@@ -998,6 +998,32 @@ def handle_setups() -> dict:
     }
 
 
+
+def handle_tools() -> dict:
+    """GET /api/tools — Available agentic tools (all SIGIL-bound)."""
+    return {
+        'tools': [
+            {'name': 'web_search', 'desc': 'Search the web', 'owem': 'general', 'signature_required': True},
+            {'name': 'file_read', 'desc': 'Read a file', 'owem': 'compliance', 'signature_required': True},
+            {'name': 'file_write', 'desc': 'Write a file (SIGIL-signed)', 'owem': 'compliance', 'signature_required': True},
+            {'name': 'sov33_ask', 'desc': 'Ask the sovereign brain', 'owem': 'all', 'signature_required': False},
+            {'name': 'kaggle_search', 'desc': 'Find Kaggle competitions', 'owem': 'general', 'signature_required': False},
+            {'name': 'kaggle_submit', 'desc': 'Submit predictions to Kaggle', 'owem': 'general', 'signature_required': True},
+            {'name': 'memory_read', 'desc': 'Read sovereign memory', 'owem': 'voice', 'signature_required': True},
+            {'name': 'memory_write', 'desc': 'Write to sovereign memory', 'owem': 'voice', 'signature_required': True},
+            {'name': 'sigil_verify', 'desc': 'Verify a SIGIL signature', 'owem': 'compliance', 'signature_required': False},
+            {'name': 'owem_call', 'desc': 'Call a specific OWEM directly', 'owem': 'all', 'signature_required': False},
+        ],
+        'total': 10,
+        'governance': {
+            'all_actions_care_floor_gated': True,
+            'all_actions_sigiled': True,
+            'article_0_bound': True,
+        },
+        'ts': datetime.now(timezone.utc).isoformat(),
+    }
+
+
 def handle_capabilities() -> dict:
     """GET /api/capabilities — list all SOV33 capabilities."""
     return {
@@ -1057,6 +1083,8 @@ class SovereignAPIHandler(BaseHTTPRequestHandler):
             return json_response(self, 200, handle_pyramid(data))
         elif path == '/api/setups':
             return json_response(self, 200, handle_setups())
+        elif path == '/api/tools':
+            return json_response(self, 200, handle_tools())
         elif path == '/api/hyperopt':
             return json_response(self, 200, handle_hyperopt())
         elif path == '/api/continual-learning':
