@@ -44,7 +44,7 @@
  --coral:#e6a07c; --sage:#9dbe9a; --peri:#b4b6e8; --lav:#cbb7df;
  --good:#6fae85; --warn:#cf9a3c; --bad:#d9756a;
  /* aliases so any class still referencing old tokens recolors to the sovereign palette */
- --teal:#bd9d54; --teal2:#a8893f; --navy:#1d1d22; --pink:#b9a4d6;}
+ --teal:#bd9d54; --teal2:#a8893f; --navy:#1d1d22; --pink:#b9a4d6; --r-card:16px; --r-chip:999px; --r-btn:10px; --pad-card:14px 16px;}
 *{box-sizing:border-box}
 body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",Inter,sans-serif;background:#e4ded2;color:var(--ink);display:flex;justify-content:center;padding:14px;min-height:100vh}
 .frame{width:100%;max-width:1180px;height:calc(100vh - 28px);min-height:680px;
@@ -258,14 +258,14 @@ body.touring #tourhud{animation:sovMsgIn .5s ease}
 .welcome h1{font-size:30px;font-weight:800;color:var(--ink);margin:0}
 .welcome p{font-size:15px;color:var(--dim);margin:0;max-width:460px;line-height:1.5}
 .wcards{display:flex;gap:16px;flex-wrap:wrap;justify-content:center;margin-top:10px}
-.wcard{cursor:pointer;width:152px;padding:22px 16px;border-radius:20px;border:1px solid var(--line);background:rgba(255,255,255,.72);display:flex;flex-direction:column;align-items:center;gap:9px;transition:.15s}
+.wcard{cursor:pointer;width:152px;padding:22px 16px;border-radius:var(--r-card);border:1px solid var(--line);background:rgba(255,255,255,.72);display:flex;flex-direction:column;align-items:center;gap:9px;transition:.15s}
 .wcard:hover{border-color:var(--gold);transform:translateY(-3px);box-shadow:0 12px 30px rgba(189,157,84,.18)}
 .wcard .we{font-size:46px;line-height:1}
 .wcard b{font-size:16px;color:var(--ink)}
 .wcard small{font-size:12px;color:var(--dim)}
 .wskip{margin-top:8px;font-size:13px;color:var(--dim);cursor:pointer;text-decoration:underline}
 /* consent & awareness onboarding rows (opt-in, off by default, signed on-device) */
-.crow{display:flex;align-items:center;gap:12px;width:min(460px,92vw);padding:12px 14px;border:1px solid var(--line);border-radius:14px;background:rgba(255,255,255,.72);cursor:pointer;transition:.15s;text-align:left}
+.crow{display:flex;align-items:center;gap:12px;width:min(460px,92vw);padding:12px 14px;border:1px solid var(--line);border-radius:var(--r-card);background:rgba(255,255,255,.72);cursor:pointer;transition:.15s;text-align:left}
 .crow:hover{border-color:var(--gold)}
 .crow.on{border-color:var(--gold);background:rgba(189,157,84,.12)}
 .crow .ce{font-size:26px;line-height:1}
@@ -297,6 +297,9 @@ body.touring #tourhud{animation:sovMsgIn .5s ease}
 @media(max-width:720px){#cards{display:none}}
 .sovfab{position:absolute;bottom:50px;right:16px;z-index:29;width:54px;height:54px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:26px;background:radial-gradient(circle at 50% 40%,#fff,#efe9de);box-shadow:0 8px 22px rgba(120,100,60,.26);border:2px solid var(--gold2)}
 .frame.sovon .sovfab{display:none}
+/* FIX: the dock already has a chat input — hide the redundant persistent bottom bar while the dock/sheet is open (one input, not two) */
+body:has(.frame.sovon) #sovbottombar{display:none !important}
+body.sov-open #sovbottombar{display:none !important}
 /* brain setup chips */
 .brains{display:flex;gap:14px;flex-wrap:wrap;margin:6px 0 4px}
 .bcol{flex:1;min-width:210px}
@@ -329,6 +332,8 @@ body.touring #tourhud{animation:sovMsgIn .5s ease}
   .sovhead::after{ content:'⌃ tap to chat'; position:absolute; top:8px; right:14px; font-size:10px; font-weight:700; color:var(--gold); opacity:.8; }
   body.sov-open .sovhead::after{ content:'⌄ close'; }
   .tiles{ grid-template-columns:repeat(auto-fill,minmax(88px,1fr)) !important; padding-bottom:150px !important; }
+  /* FIX: on mobile the dock is a bottom SHEET, so the desktop must NOT reserve the 316px side gap — keep tiles full-width */
+  .frame.sovon .desktop{ right:0 !important; }
   .modesw{ flex-wrap:wrap; }
   /* App windows: drop the desktop free-float; become a near-full-width sheet that fits the phone */
   .win{ position:fixed !important; left:3vw !important; right:3vw !important; top:64px !important; width:auto !important; max-width:none !important; max-height:74vh !important; }
@@ -559,6 +564,7 @@ const APPS={
  ops:{i:'⏱️',t:'Autonomous Ops',w:540},
  delboy:{i:'💷',t:'MEOK Delboy · Sales',w:600},
  guardian:{i:'🧒',t:'MEOK Guardian',w:540},
+ aware:{i:'👁',t:'Presence & Awareness',w:460},
  family:{i:'👨‍👩‍👧',t:'MEOK Family',w:540},
  work:{i:'🧑‍💼',t:'MEOK Work · Orion/Riri/Hourman',w:560},
  map:{i:'🧭',t:'MEOK Map',w:560},
@@ -584,7 +590,7 @@ const TILES=['setup','stack','king','olm','minds','council','fleet','hives','meo
    Only "Set up" and "Your world" (MEOK Earth) live in both — everything else shows in exactly one. */
 const MODE_ORDER={
   csoai:['setup','king','council','fleet','assurance','hives','watchdog','stack','olm','bridges','temples','truth','sigil','revenue','delboy','smb','work','investor','distro','atlas','coord','runway','execute','ops','protocol0','claw','archive','leaderboard','minds','meokearth'],
-  meok:['setup','meokearth','chars','archetypes','social','guardian','family','map','one','labs']
+  meok:['setup','meokearth','chars','archetypes','social','guardian','aware','family','map','one','labs']
 };
 const MODE_HUE={meok:43,csoai:212};
 let MODE='meok'; try{MODE=localStorage.getItem('meok_mode')||'meok';}catch(e){}
@@ -1186,7 +1192,7 @@ async function brdSign(encMsg){ const out=document.getElementById('brd-sig'); if
     if(out&&d.signature) out.innerHTML='🔏 Ed25519 signed · sig <b>'+esc(d.signature.slice(0,32))+'…</b><br>verify offline at <a href="/verify.html" style="color:var(--gold)">/verify</a> with the public key — no account, no vendor.'; }catch(e){ if(out)out.textContent='sign unreachable'; } }
 function openApp(id){ track('app:'+id,'open'); try{ if(window.MEOK_CTX) window.MEOK_CTX.app=(APPS[id]&&APPS[id].t)||id; }catch(e){}
  if(open[id]){focus(id);return;}
- const a=APPS[id];const d=document.getElementById('frame');
+ const a=APPS[id]||{i:'🪟',t:id,w:520};const d=document.getElementById('frame');
  const n=document.createElement('div');n.className='win';n.dataset.testid='app-window-'+id;n.style.width=(a.w||520)+'px';
  const idx=Object.keys(open).length; n.style.left=(60+idx*26)+'px'; n.style.top=(60+idx*22)+'px'; n.style.zIndex=++zTop;
  n.innerHTML=`<div class="wb"><span class="wt"><span class="wi">${a.i}</span>${a.t}</span><span class="x">✕</span></div><div class="body" id="b-${id}" data-testid="app-body-${id}">${content(id)}</div>`;
@@ -1639,6 +1645,32 @@ try{ const _sh=document.querySelector('.sovhead'); if(_sh) _sh.addEventListener(
   document.getElementById('sovbbsend').onclick=go;
   document.getElementById('sovbbin').addEventListener('keydown',function(e){ if(e.key==='Enter') go(); });
   document.getElementById('sovbbmic').onclick=function(){ try{ if(typeof sovVoice==='function') sovVoice(); }catch(e){} };
+})();
+// ── ACCESSIBILITY: make every non-native interactive control keyboard-operable (Enter/Space → activate),
+//    and give the hrefless nav/dock/consent controls focusability + roles. One delegated handler covers
+//    dynamically-created tiles/windows/cards too. (QA audit 2026-07-11.) ──
+(function a11y(){
+  document.addEventListener('keydown',function(e){ if(e.key!=='Enter'&&e.key!==' ') return;
+    var t=e.target; if(!t||!t.matches) return;
+    if(t.tagName==='INPUT'||t.tagName==='TEXTAREA'||t.tagName==='SELECT'||t.tagName==='BUTTON'||t.tagName==='A') return;
+    if(t.matches('[role="button"],[role="switch"],.ndi,.sgg,.tile,.crow,.wcard,.modesw span,.win .x,.act,.chip,.tb-pill')){ e.preventDefault(); t.click(); if(t.getAttribute('role')==='switch'){ t.setAttribute('aria-checked', t.classList.contains('on')?'true':'false'); } }
+  });
+  function enh(sel,role){ document.querySelectorAll(sel).forEach(function(el){ if(!el.hasAttribute('tabindex')) el.setAttribute('tabindex','0'); if(role&&!el.getAttribute('role')) el.setAttribute('role',role); }); }
+  function pass(){ enh('.ndi','button'); enh('.sgg','button'); enh('.modesw span','button'); enh('.wcard','button'); enh('.tile','button'); enh('.win .x','button'); enh('.act','button');
+    document.querySelectorAll('.crow').forEach(function(el){ if(!el.getAttribute('role')){ el.setAttribute('role','switch'); el.setAttribute('tabindex','0'); } el.setAttribute('aria-checked', el.classList.contains('on')?'true':'false'); });
+    document.querySelectorAll('.win .x').forEach(function(el){ if(!el.getAttribute('aria-label')) el.setAttribute('aria-label','Close'); });
+  }
+  pass(); try{ var mo=new MutationObserver(pass); mo.observe(document.body,{childList:true,subtree:true}); }catch(e){}
+})();
+// ── ACCESSIBILITY: make every non-native control keyboard-operable (Enter/Space → activate), and mark
+//    the consent rows as switches. One delegated handler covers static + dynamically-rendered elements. ──
+(function a11y(){
+  const SEL='[role="button"],[role="switch"],.ndi,.sgg,.tile,.crow,.wcard,.win .x,.act,.chip,.tb-pill,.modesw span,.hudbtn,.bchip,.achip';
+  document.addEventListener('keydown',function(e){ if(e.key!=='Enter'&&e.key!==' ') return; const t=e.target; if(!t||!t.matches) return;
+    if(t.matches(SEL) && !t.matches('input,textarea,select,a[href]')){ e.preventDefault(); if(t.getAttribute('role')==='switch'){ t.setAttribute('aria-checked', t.classList.contains('on')?'false':'true'); } t.click(); } });
+  function enh(sel,role){ document.querySelectorAll(sel).forEach(function(el){ if(!el.hasAttribute('tabindex')) el.setAttribute('tabindex','0'); if(role&&!el.getAttribute('role')) el.setAttribute('role',role); }); }
+  function pass(){ enh('.ndi','button'); enh('.sgg','button'); enh('.wcard','button'); enh('.modesw span','button'); enh('.tile','button'); enh('.win .x','button'); enh('.crow','switch'); document.querySelectorAll('.crow').forEach(function(r){ r.setAttribute('aria-checked', r.classList.contains('on')?'true':'false'); }); }
+  pass(); try{ const mo=new MutationObserver(pass); mo.observe(document.body,{childList:true,subtree:true}); }catch(e){}
 })();
 // ── Sovereign IS the AI OS: it knows what's on screen, so it answers in sync ──
 window.MEOK_CTX={mode:'meok',app:null,node:null};
