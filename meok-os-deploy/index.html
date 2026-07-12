@@ -215,6 +215,8 @@ table.mini td:last-child{text-align:right;font-variant-numeric:tabular-nums}
 .cursorbar{display:inline-block;width:8px;height:13px;background:var(--gold);animation:bk 1s steps(1) infinite;vertical-align:middle}
 @keyframes bk{50%{opacity:0}}
 .hint{position:absolute;bottom:46px;left:50%;transform:translateX(-50%);z-index:25;font-size:11px;color:var(--dim);background:rgba(255,255,255,.6);padding:6px 13px;border-radius:20px;border:1px solid var(--line);backdrop-filter:blur(8px)}
+.hint-m{display:none}
+@media (max-width:760px){.hint-d{display:none}.hint-m{display:inline}}
 /* sovereign companion dock — the new interface: a character + a chat bar, always present */
 .sovdock{position:absolute;top:48px;right:0;bottom:40px;width:316px;z-index:28;display:flex;flex-direction:column;background:linear-gradient(180deg,rgba(255,255,255,.74),rgba(247,243,234,.68));backdrop-filter:blur(16px);border-left:1px solid var(--line);transition:transform .35s;box-shadow:-12px 0 34px rgba(120,100,60,.09)}
 .frame:not(.sovon) .sovdock{transform:translateX(100%)}
@@ -410,7 +412,7 @@ body.sov-open #sovbottombar{display:none !important}
   </div>
   <div class="welcome" id="welcome" data-testid="welcome-overlay"><div id="wstep"></div></div>
   <div id="cards" data-testid="mcp-cards"></div>
-  <div class="hint">Tap an app · <b>drag tiles to rearrange</b> · drag window headers to move · 🐉 talk to your sovereign</div>
+  <div class="hint"><span class="hint-d">Tap an app · <b>drag tiles to rearrange</b> · drag window headers to move · 🐉 talk to your sovereign</span><span class="hint-m">Tap an app · <b>hold &amp; drag to rearrange</b> · 🐉 tap the dragon to talk</span></div>
 
   <!-- sovereign companion dock — the new interface: a character + a chat bar, always present -->
   <div class="sovfab" onclick="sovToggle(true)" title="Your sovereign" data-testid="sov-fab">🐉</div>
