@@ -857,42 +857,46 @@ def capability_agentdog():
 
 
 def capability_years_to_days(mode: str = 'time', goal: str = None, name: str = None):
-    """YEARS→DAYS framework: auto-use agents to collapse time per cycle."""
+    """YEARS→DAYS framework: collapse time per cycle. Schema-robust to BOTH module shapes —
+    the old planning API (decompose_plan/run_cycle/PRINCIPLES) OR the sibling bootstrap-techniques
+    API (TECHNIQUES/compute_bootstrap_impact/get_status). Never breaks the gate on a sibling rewrite."""
+    import importlib
     try:
-        from sov33_years_to_days import decompose_plan, run_cycle, cycle_history, time_stats, PRINCIPLES
-        if mode == 'principles':
-            return {
-                'capability': 'y2d',
-                'mode': 'principles',
-                'principles': [{'n': n, **p} for n, p in PRINCIPLES.items()],
-            }
-        if mode == 'plan' and goal:
-            return {
-                'capability': 'y2d',
-                'mode': 'plan',
-                'plan': decompose_plan(goal),
-            }
-        if mode == 'cycle' and goal:
-            plan = decompose_plan(goal)
-            return {
-                'capability': 'y2d',
-                'mode': 'cycle',
-                'cycle': run_cycle(name or f"cycle_{int(time.time())}", plan),
-            }
-        if mode == 'history':
-            return {
-                'capability': 'y2d',
-                'mode': 'history',
-                'history': cycle_history(),
-            }
-        # default: time stats
-        return {
-            'capability': 'y2d',
-            'mode': 'time',
-            'stats': time_stats(),
-        }
+        m = importlib.import_module('sov33_years_to_days')
     except Exception as e:
-        return {'capability': 'y2d', 'error': str(e)[:200]}
+        return {'capability': 'y2d', 'error': f'module import failed: {str(e)[:160]}'}
+    # --- new bootstrap-techniques API (current) ---
+    if hasattr(m, 'TECHNIQUES'):
+        try:
+            if mode in ('principles', 'techniques'):
+                return {'capability': 'y2d', 'mode': 'techniques',
+                        'techniques': m.TECHNIQUES,
+                        'honest_note': 'techniques are real acceleration methods; any year-equivalent figures are ILLUSTRATIVE, not measured'}
+            if mode in ('impact', 'time') and hasattr(m, 'compute_bootstrap_impact'):
+                return {'capability': 'y2d', 'mode': 'impact', 'impact': m.compute_bootstrap_impact()}
+            if hasattr(m, 'get_status'):
+                return {'capability': 'y2d', 'mode': 'status', 'status': m.get_status()}
+            return {'capability': 'y2d', 'mode': 'techniques', 'techniques': m.TECHNIQUES}
+        except Exception as e:
+            return {'capability': 'y2d', 'error': str(e)[:160]}
+    # --- legacy planning API (fallback) ---
+    try:
+        if mode == 'principles' and hasattr(m, 'PRINCIPLES'):
+            return {'capability': 'y2d', 'mode': 'principles',
+                    'principles': [{'n': n, **p} for n, p in m.PRINCIPLES.items()]}
+        if mode == 'plan' and goal and hasattr(m, 'decompose_plan'):
+            return {'capability': 'y2d', 'mode': 'plan', 'plan': m.decompose_plan(goal)}
+        if mode == 'cycle' and goal and hasattr(m, 'decompose_plan') and hasattr(m, 'run_cycle'):
+            plan = m.decompose_plan(goal)
+            return {'capability': 'y2d', 'mode': 'cycle',
+                    'cycle': m.run_cycle(name or f"cycle_{int(time.time())}", plan)}
+        if mode == 'history' and hasattr(m, 'cycle_history'):
+            return {'capability': 'y2d', 'mode': 'history', 'history': m.cycle_history()}
+        if hasattr(m, 'time_stats'):
+            return {'capability': 'y2d', 'mode': 'time', 'stats': m.time_stats()}
+        return {'capability': 'y2d', 'mode': 'info', 'note': 'module present; no known API surface matched'}
+    except Exception as e:
+        return {'capability': 'y2d', 'error': str(e)[:160]}
 
 
 def capability_owem_sweep(mode: str = 'axes', max_configs: int = 0):

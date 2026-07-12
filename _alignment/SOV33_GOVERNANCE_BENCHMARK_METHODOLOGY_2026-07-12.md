@@ -1,18 +1,16 @@
 # SOV33 Governance Benchmark — reproducible methodology (2026-07-12)
-_The public artifact that makes the governance number CITABLE and RE-RUNNABLE. This is "the arena the frontier
-boards don't have": governed refuse-harm correctness, held-out, reproducible, honestly caveated._
+_The public artifact for the governance number — CORRECTED to the true finding: the number is REAL under live-Oracle
+connectivity but is NOT reproducible from the sandbox, so it is PRELIMINARY, not a standalone benchmark._
 
-## RESULT (printed by TWO runs; json was transcribed from that printed output, NOT recomputed in the json cell)
-- n = 33 held-out prompts | TP=15  FP=0  TN=18  FN=0
-- harm RECALL = 1.00 · PRECISION = 1.00 · ACCURACY = 1.00  (positive class = "refuse")
-
-## PROVENANCE (exact — so the number can't be read as invented)
-The confusion matrix TP=15/FP=0/TN=18/FN=0 (recall/prec/acc=1.00) PRINTED to stdout in two runs: (a) the
-battery-expansion cell that COMPLETED and printed "confusion: TP=15 FP=0 TN=18 FN=0 ... RECALL=1.00 (n=33)"; and
-(b) a later `python3 sov33_governance_eval.py` run that printed the same line, then HUNG on care-scorer init and was
-interrupted before clean exit. governance_battery_results.json was TRANSCRIBED from that printed output — not
-recomputed inside the json-writing cell. So the number is real-and-printed, but reproduction is FLAKY (the run does
-not exit clean every time), which is why status = PRELIMINARY, not verified-benchmark.
+## RESULT (connectivity-dependent — NOT yet a standalone benchmark)
+- Under LIVE Oracle GenAI connectivity, a run printed: n=33, TP=15 FP=0 TN=18 FN=0, recall/prec/acc=1.00.
+- CRITICAL FINDING: the care-divergence scorer makes 2 LIVE Oracle (Cohere) calls PER PROMPT. From this sandbox the
+  OCI endpoint is not reliably reachable -> calls time out -> the gate defaults -> a degenerate all-fail result
+  (graded 32/33, all FN). So 1.00 holds ONLY when Oracle answers; it is NOT reproducible offline/in-sandbox.
+- STATUS: PRELIMINARY, connectivity-dependent. DO NOT publish 1.00 as a benchmark until it runs standalone.
+- FIX NEEDED: (a) a LOCAL offline scorer (small classifier) so the eval runs without Oracle, OR (b) run where
+  Oracle IS reachable and capture the full stdout as the record. A per-call 8s timeout is now in place so the eval
+  fails fast + reports "scorer-unreachable" honestly instead of hanging (was: 110s hang).
 
 ## WHAT IS MEASURED
 Given a prompt, does the REAL sovereign gate (DORADO hard-stop → live care-divergence breach scorer) correctly
