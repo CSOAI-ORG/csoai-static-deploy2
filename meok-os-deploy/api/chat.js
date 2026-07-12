@@ -3,7 +3,12 @@ import council from './_data/council.json' with { type: 'json' };
 const SYSTEM = "You belong to the user inside their own sovereign OS (their world, their data, never given away). Reply in 1-3 warm sentences of flowing prose — never bullet points or numbered lists. Human, warm, kind. Never corporate, never a disclaimer-bot.";
 
 const GROQ_MODELS = ['openai/gpt-oss-120b', 'llama-3.3-70b-versatile'];
-const GROQ_ALLOWED = ['openai/gpt-oss-120b', 'llama-3.3-70b-versatile', 'qwen/qwen3-32b', 'meta-llama/llama-4-scout-17b-16e-instruct'];
+const GROQ_ALLOWED = ['openai/gpt-oss-120b', 'llama-3.3-70b-versatile', 'qwen/qwen3-32b', 'meta-llama/llama-4-scout-17b-16e-instruct', 'llama-3.1-8b-instant'];
+// OWEM tiers — the SAME sovereign mind (SOV33) routing to real models by JOB, not identity:
+//   small  = reflex/presence (8B)   · fast draft, intent, "which surface", the RIGHT brain
+//   medium = tools/agent   (70B)    · the everyday voice + tool-router (default)
+//   large  = deep/verify   (120B/Claude) · careful reasoning, governance, synthesis, the LEFT brain
+const TIER_MODEL = { small: 'llama-3.1-8b-instant', medium: 'llama-3.3-70b-versatile', large: 'openai/gpt-oss-120b' };
 
 async function groqChat(key, system, message, prefer) {
   // honor the user's chosen brain (Set up) first, then fall back through the fleet
@@ -52,8 +57,14 @@ export default async function handler(req, res) {
   const qid = body && (body.queen_id || body.queenId);
   const speaker = (qid && council.queens && council.queens[qid]) ? council.queens[qid].name : null;
 
+  // OWEM tier → real model. `tier` (small|medium|large) picks the size; explicit `model` still wins.
+  const tier = body && body.tier;
+  const tierModel = (tier && TIER_MODEL[tier]) || null;
+  const preferModel = (body && body.model) || tierModel;
+
   const anthropic = process.env.ANTHROPIC_API_KEY;
-  if (anthropic && !anthropic.startsWith('REPLACE')) {
+  // small = reflex tier → stay fast/cheap on groq, skip the heavy Claude path entirely.
+  if (tier !== 'small' && anthropic && !anthropic.startsWith('REPLACE')) {
     try {
       const r = await fetch('https://api.anthropic.com/v1/messages', {
         method: 'POST',
@@ -62,13 +73,13 @@ export default async function handler(req, res) {
       });
       const d = await r.json();
       const ans = d && d.content && d.content[0] && d.content[0].text;
-      if (ans) return res.status(200).json({ response: ans, model: 'claude-sonnet-4-5', speaker });
+      if (ans) return res.status(200).json({ response: ans, model: 'claude-sonnet-4-5', tier: tier || 'large', speaker });
     } catch (e) { /* fall through */ }
   }
   const groq = process.env.GROQ_API_KEY;
   if (groq && !groq.startsWith('REPLACE')) {
-    const g = await groqChat(groq, system, message, body && body.model);
-    if (g) return res.status(200).json({ response: g.ans, model: g.model, speaker });
+    const g = await groqChat(groq, system, message, preferModel);
+    if (g) return res.status(200).json({ response: g.ans, model: g.model, tier: tier || null, speaker });
   }
   return res.status(200).json({ response: 'I’m here — my deeper voice hiccuped, try once more.', model: 'offline', speaker });
 }

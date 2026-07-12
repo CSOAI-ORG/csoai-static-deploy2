@@ -128,9 +128,9 @@ const SPAWN={
 document.querySelectorAll('[data-spawn]').forEach(el=>el.onclick=()=>{ const k=el.getAttribute('data-spawn'); if(SPAWN[k]) SPAWN[k](); });
 document.getElementById('clearwins').onclick=()=>{ desk.innerHTML=''; empty.style.display='flex'; };
 
-async function think(persona, prompt){
-  const r=await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:prompt,persona,register:'plain'})});
-  const d=await r.json(); return d.response||d.say||'(no reply)';
+async function think(persona, prompt, tier){
+  const r=await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:prompt,persona,tier,register:'plain'})});
+  const d=await r.json(); return {text:(d.response||d.say||'(no reply)'), model:d.model||''};
 }
 function route(goal){
   const g=goal.toLowerCase();
@@ -149,13 +149,15 @@ document.getElementById('go').onclick=async function(){
   // TWIN BRAINS — two persona'd OWEM passes in parallel (right = draft/fast, left = verify/careful)
   const rP='You are the RIGHT BRAIN of '+NAME+', a '+ARC+' — fast, intuitive, associative. In 2-3 short lines give your first instinct on the user goal and name which surface to open (world / character / govern / sign / memory).';
   const lP='You are the LEFT BRAIN of '+NAME+' — careful, logical, verifying. In 2-3 short lines: sanity-check the instinct, flag any risk, and give the grounded answer. Honest about limits.';
-  const [right,left]=await Promise.allSettled([think(rP,goal),think(lP,goal)]);
-  rb.textContent=right.status==='fulfilled'?right.value:'(right brain unreachable)';
-  lb.textContent=left.status==='fulfilled'?left.value:'(left brain unreachable)';
-  // ACT — the character brings up the surface it needs in the desktop
+  // RIGHT brain = SMALL OWEM (8B, reflex/draft) · LEFT brain = LARGE OWEM (120B, verify) — real, different models
+  const [right,left]=await Promise.allSettled([think(rP,goal,'small'),think(lP,goal,'large')]);
+  const rTag=document.querySelector('.brain.r .tag'), lTag=document.querySelector('.brain.l .tag');
+  if(right.status==='fulfilled'){ rb.textContent=right.value.text; if(rTag&&right.value.model) rTag.textContent='small OWEM · '+right.value.model; } else rb.textContent='(right brain unreachable)';
+  if(left.status==='fulfilled'){ lb.textContent=left.value.text; if(lTag&&left.value.model) lTag.textContent='large OWEM · '+left.value.model; } else lb.textContent='(left brain unreachable)';
+  // ACT — the MEDIUM OWEM (tool-router) brings up the surface the goal needs in the desktop
   const k=route(goal);
   if(k && SPAWN[k]){ SPAWN[k](); }
-  else { const w=win('🐉 '+NAME, (left.status==='fulfilled'?left.value:right.value||'…')); }
+  else { const ans=(left.status==='fulfilled'?left.value.text:(right.status==='fulfilled'?right.value.text:'…')); win('🐉 '+NAME, ans); }
   this.disabled=false; document.getElementById('q').value='';
 };
 document.getElementById('q').addEventListener('keydown',e=>{ if(e.key==='Enter') document.getElementById('go').click(); });
