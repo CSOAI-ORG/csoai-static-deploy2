@@ -23,3 +23,10 @@ This file auto-loads via the alignment loader. Format: one fact per line, dated.
 ## FREE-GPU BRIDGE (corrected 2026-07-12)
 - Free-GPU rotation is REAL (~7 providers). HONEST weekly total = ~102 GPU-hr/wk (colab 30 + kaggle 30 + studiolab 24 are truly weekly; lightning ~5/wk and modal ~2/wk are MONTHLY quotas converted). The sibling's "125/wk" double-counted monthly as weekly.
 - Each provider needs NICK'S OWN account/login — the bridge picks WHICH to use, Nick owns the credentials. I cannot sign up or hold keys.
+
+## COMMIT b89139de CORRECTION (2026-07-12)
+- Commit b89139de's headline said "compute/sov3_mcp probe-confirmed gated with REAL evidence". CORRECTION: the
+  compute probe does NOT confirm gated alone — it only checks local GPU/MPS/endpoint visibility and explicitly
+  says the harness `list_compute` is the authoritative check it CANNOT call. Honest status: sov3_mcp gated by a
+  REAL live urllib probe (Operation-not-permitted); compute gated per SESSION CONTEXT (list_compute empty earlier),
+  NOT by the in-code probe. Same lazy-gating overclaim the module exists to kill — flagged, not repeated.
