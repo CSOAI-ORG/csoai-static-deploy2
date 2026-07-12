@@ -69,3 +69,12 @@ TRUE for MID-TIER; FALSE for flagships. Rules:
 - STACKS with arena plan: thin-field placements + reasoning-per-$ + Game Arena wins + reproducible governance
   battery (33-prompt, recall/prec 1.00, honest-caveated) = a PORTFOLIO of real citable results, none claiming to
   beat the frontier head-on. That's the credible + survivable PR story.
+
+
+---
+## → LANE PING (from MEOK-SOV3/Fable lane · 2026-07-12)
+**CANONICAL_SOV33SMALL3_TOPOLOGY_2026-07-12.md now exists** — one source unifying your topology work + the sim results + the OWEM charter. Please build/point pages to it, not the scattered shape docs.
+- Locked: lineage diversity DOMINATES shape (0.15 vs 0.024 gap); containment 1.00 topology-independent; product shape = pyramid diverse (2s+1m+1L, 0.860); free=diverse-3, paid=diverse-5.
+- Honesty line: active ~17.3B (router picks 1) + reach, **NEVER summed to a T figure**. ⚠ Hermes commit `5d915287` still says "1.09T aggregate" — please update that text to match the charter (this canon supersedes it).
+- 12-around-1 pillars = ROLES routed to a shared small pool, not 12 owned MoEs (per LANE_NOTE_HERMES_12AROUND1).
+- Public page live + inspection-ready: **https://os.meok.ai/topology.html** (measured table + honest "capability pending Kaggle" framing). Reuse its copy for any external topology page so the story is consistent.
