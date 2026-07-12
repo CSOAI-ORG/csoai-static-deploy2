@@ -991,9 +991,23 @@ def capability_model_registry(mode: str = 'list', **kwargs):
     Modes: list, tier, safe, name, aggregate, save, till_pass, one_brain
     """
     try:
-        from sov33_model_registry import (
-            REGISTRY, list_by_tier, list_sovereign_safe, get_brain, total_aggregate,
-        )
+        import sov33_model_registry as _mr
+        # Schema-robust: the module was rewritten to a MODELS list + get_registry(); older code expected a
+        # REGISTRY dict + helpers. Build a REGISTRY dict from whichever shape exists so this never breaks again.
+        if hasattr(_mr, 'REGISTRY'):
+            REGISTRY = _mr.REGISTRY
+        else:
+            _models = getattr(_mr, 'MODELS', None) or _mr.get_registry().get('models', [])
+            REGISTRY = {m['name']: {**m, 'params_total_B': m.get('params_total_B',
+                        float(str(m.get('size','0')).rstrip('Bb') or 0) if str(m.get('size','0'))[:1].isdigit() else 0)}
+                        for m in _models}
+        list_by_tier = getattr(_mr, 'list_by_tier', lambda t: [n for n,m in REGISTRY.items() if m.get('tier')==t])
+        list_sovereign_safe = getattr(_mr, 'list_sovereign_safe',
+                                      lambda: [n for n,m in REGISTRY.items() if m.get('sovereign_safe')])
+        get_brain = getattr(_mr, 'get_brain', lambda n: REGISTRY.get(n))
+        total_aggregate = getattr(_mr, 'total_aggregate',
+                                  lambda: {'n_models': len(REGISTRY),
+                                           'sovereign_safe': sum(1 for m in REGISTRY.values() if m.get('sovereign_safe'))})
         if mode == 'list':
             items = sorted(REGISTRY.items(), key=lambda x: -x[1].get('params_total_B', 0))[:kwargs.get('max', 200)]
             return {
@@ -1396,6 +1410,20 @@ class Sovereign:
 # ═══════════════════════════════════════════════════════════════
 # CAPABILITY DISPATCHER
 # ═══════════════════════════════════════════════════════════════
+
+def capability_memory_bridge(action: str = 'verify', content: str = None, query: str = None,
+                             tags=None, k: int = 5, **kwargs):
+    """GOVERNED + ATTESTED + SOVEREIGN portable memory over MCP (the differentiated bridge).
+    actions: write(content,tags) | recall(query,k) | export | verify. Every write is care-gated + SIGIL-signed;
+    the store is a local sovereign jsonl any MCP client can read. This is the axis the memory market (mem0 etc) lacks."""
+    try:
+        from sov33_memory_bridge import mem_write, mem_recall, mem_export, mem_verify
+        if action == 'write':  return {'capability': 'memory-bridge', **mem_write(content or '', tags=tags)}
+        if action == 'recall': return {'capability': 'memory-bridge', 'recall': mem_recall(query or '', k=k)}
+        if action == 'export': return {'capability': 'memory-bridge', **mem_export()}
+        return {'capability': 'memory-bridge', 'chain': mem_verify()}
+    except Exception as e:
+        return {'capability': 'memory-bridge', 'error': str(e)[:160]}
 
 def capability_gated_check(resource: str = None, **kwargs):
     """Anti-relapse gate (CHECK_EXISTING stage): PROBE a 'blocked/gated' claim live before reporting it.
@@ -1989,6 +2017,7 @@ CAPABILITIES = {
     'orchestrator': capability_cloud_orchestrator,
     'owem-e2e': capability_owem_e2e,
     'e2e': capability_owem_e2e,
+    'memory-bridge': capability_memory_bridge,
     'gated-check': capability_gated_check,
     'anti-relapse': capability_gated_check,
     'readiness': capability_readiness,

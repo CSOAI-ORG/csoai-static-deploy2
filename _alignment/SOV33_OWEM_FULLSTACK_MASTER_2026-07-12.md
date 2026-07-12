@@ -46,8 +46,8 @@ Memory is BYO-context, not platform-locked. THAT is the bridge, and it's real ar
 ### E. "LIKE AMICA" (portable character on all platforms) — DESIGN, feasible
 - Amica = open VRM avatar shell (face/voice/lipsync) that talks to ANY LLM backend. Blueprint names it 18×.
 - SOV33's role: BE THE BACKEND Amica calls. Character memory/personality/care/identity in SOV33; VRM body is the shell.
-- Open-source seam — BLUEPRINT-NAMED (verified by grep in the two blueprint files): Amica (18×), Godot (12×),
-  Blender (12×), Whisper (7×), Three.js (5×), VRM (3×), Piper (1×), Ollama (1×). ECOSYSTEM-COMMON additions from
+- Open-source seam — BLUEPRINT-NAMED (verified by grep in the two blueprint files): Amica (18×), Godot (13×),
+  Blender (13×), Whisper (7×), Three.js (5×), VRM (4×), Piper (1×), Ollama (1×). ECOSYSTEM-COMMON additions from
   2026 research (NOT in the blueprint — labelled as such): VRoid, @pixiv/three-vrm, Kokoro/Chatterbox TTS. All permissive.
 - MISSING: the adapter that points an Amica-class shell at sov33.ask() through the care-floor gate.
 
@@ -126,3 +126,38 @@ Siri/Google (feasible via their intent APIs, gated by their review + owner accou
 CONSENTED CONTEXT and MORE CONNECTED TOOLS (each MCP the user adds), NOT passive ambient surveillance. The moat is
 that ONE governed brain + ONE portable memory + ONE identity serves every surface — the user's character is the same
 being everywhere, and every action is SIGIL-logged and care-gated so it's auditable. That uniformity is the product.
+
+## I. PLATFORM INTEGRATION — four surfaces, four gatekeepers (do not conflate)
+"Android + Siri + Windows/iOS/Linux — integrate cleanly; use Apple's tech; improve it for them AND us?"
+
+### OURS — full control, buildable now
+- **Windows / macOS / Linux desktop** — one Tauri overlay (Utsuwa already ships cross-OS) → the always-there orb.
+  No gatekeeper. This is where "clean integration" is immediate and real.
+
+### THEIRS — integrate via their INTERFACE, on their terms (not a tech transfer)
+- **Siri (Apple)** — via **App Intents / SiriKit**: ship an iOS app exposing intents; Siri routes "ask <character>"
+  to it. REAL + documented. Apple Intelligence (2026) can hand a request to a 3rd-party app intent.
+  · What Apple gives: invocation on user command. What Apple does NOT give: raw always-on mic, screen reading,
+    ambient awareness. Apple mediates EVERY call. "Siri can invoke the character" = feasible; "Siri gives it
+    ambient awareness of everything" = NO (Apple structurally prevents it; same line as Art.5 privacy floor).
+- **Google Assistant / Android** — App Actions + a foreground service; Google mediates identically.
+- Both need OWNER-SIDE developer accounts + store review. I can build the app + intent layer; I cannot publish it.
+
+### THE "DO WE IMPROVE APPLE'S TECH / DO THEY NEED THIS?" ANSWER (honest)
+- We do NOT use/improve Apple's internals — App Intents is a DOORWAY, not a technology transfer. We give Siri a
+  new thing to route to; we don't touch Siri's engine.
+- What we genuinely offer Apple: the thing they're weakest at + care most about — GOVERNANCE + AUDITABILITY of
+  third-party AI. A SIGIL-signed, care-floor-gated, consent-scoped character is exactly the kind of 3rd-party AI
+  Apple's privacy+safety brand prefers in its ecosystem. Alignment = "we make third-party AI safe to Apple's
+  standard", NOT "we make Siri smarter".
+- Do they NEED it? No single vendor is needed by Apple. The workable framing is the three-headed one: we drive
+  engagement INTO their ecosystem while carrying the compliance burden they'd otherwise police. Additive, never
+  "we abstract Apple away".
+- HARD CONSTRAINT (unchanged all session): interoperable-WITH App Intents = OK. "improves Siri / integrates with
+  Apple's tech / backed by Apple" = FORBIDDEN (implies partnership/endorsement). Same interoperable-not-backed line.
+
+### WHY THE MEMORY-BRIDGE IS THE KEYSTONE FOR ALL FOUR
+Every surface above is just a DIFFERENT DOORWAY to the SAME character. What makes it the same being everywhere is
+ONE governed sovereign memory, reachable over MCP. Build that bridge once → desktop orb, Siri intent, Android
+action, and website widget all read/write the same SIGIL-signed store. The bridge is the keystone; the surfaces
+are thin adapters on top.
