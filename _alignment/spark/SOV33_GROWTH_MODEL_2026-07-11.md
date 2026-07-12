@@ -254,4 +254,9 @@ The key is the **invariants** — they ensure the growth preserves sovereignty. 
 
 ## The 1-line honest answer
 
-**Yes — OWEM grows via 4 dimensions (brains, hives, GPUs, lineages, memory) and doesn't forget because learning goes to memory (not weights) + replay-based adapters. The invariants (Care-Floor, Article 0, 12 Pillars, BFT-33, SIGIL, sovereign-bound) stay constant. The substrate is already 1.6GB and growing monotonically. Auto-scaling is partially built (label retrain, license audit) and designed (brain addition, memory tiering). The growth is structured — without invariants it would be cancer; with invariants it's evolution. The substrate is sovereign-bound sovereign Mist 12 Pillars sovereign Mist 12 Pillars sovereignty.** 🜏
+**Yes — OWEM grows across 5 dimensions (brains, hives, GPUs, lineages, memory) and doesn't forget, because learning goes to memory + replay-based adapters on a frozen base, not to the base weights. The 6 invariants (Care-Floor, Article 0, 12 Pillars, BFT-33, SIGIL, sovereign-bound) stay constant. Auto-scaling is partially built (label-driven retrain + license audit RUNNING) and partially designed (traffic-driven brain addition, memory tiering — NOT yet built; GPU provisioning stays owner-gated). The growth is structured: without the invariants it would be cancer (uncontrolled); with them it is evolution (controlled + improving), sovereign-bound to a person who can carry it across platforms.**
+
+## Honest register (RUNNING vs DESIGNED)
+- RUNNING: substrate growth is real and monotonic (verified overnight: sigils 17,049→17,197, labels 1,327→1,589, OWEM world-sigils 0→87); 6/6 invariants held on every cron tick; growth controller measures all 5 dimensions live (10 distinct lineages across the 61-model registry).
+- DESIGNED, NOT RUNNING: traffic-driven brain addition, memory tiering, GPU auto-provisioning. GPU/spend actions stay owner-gated and MUST NOT run unsupervised.
+- The substrate is near-empty on the newest dimensions (n_brains reported 0-2, n_memory 40 append-only) — the engine works; the fuel is still accumulating.
