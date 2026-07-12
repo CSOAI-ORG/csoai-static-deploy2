@@ -115,13 +115,24 @@ def measure_current_state() -> dict:
     }
 
     # 1. EXPERTS — count trained sovereign experts on disk
+    # Recognizes both naming patterns:
+    #   - qwen3-sov-<name>-0.6b (existing sovereign brain)
+    #   - charter-<N>-<name> (Colab install format)
     models_dir = Path(_SOVDIR) / 'models'
     if models_dir.exists():
         for d in sorted(models_dir.iterdir()):
-            if d.is_dir() and d.name.startswith('qwen3-sov'):
+            if not d.is_dir():
+                continue
+            expert_name = None
+            if d.name.startswith('qwen3-sov-'):
                 expert_name = d.name.replace('qwen3-sov-', '').replace('-0.6b', '').replace('-merged', '').replace('-q4', '').replace('-ollama', '')
-                if expert_name and expert_name not in state['experts_found']:
-                    state['experts_found'].append(expert_name)
+            elif d.name.startswith('charter-') and (d / 'adapter_config.json').exists():
+                # charter-N-<name> -> <name>
+                parts = d.name.split('-', 2)
+                if len(parts) >= 3:
+                    expert_name = parts[2]
+            if expert_name and expert_name not in state['experts_found']:
+                state['experts_found'].append(expert_name)
 
     # 2. LINEAGES — from registry
     try:
