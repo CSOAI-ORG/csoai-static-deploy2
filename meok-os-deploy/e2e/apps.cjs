@@ -1,5 +1,5 @@
 const {chromium}=require('playwright');
-const B='https://os.meok.ai';
+const B=process.argv[2]||'https://os.meok.ai';
 const APPS=["king","council","fleet","hives","one","chars","watchdog","revenue","runway","coord","atlas","truth","archive","execute","protocol0","labs","meokearth","archetypes","investor","distro","stack","olm","ops","delboy","guardian","aware","family","work","map","sigil","assurance","claw","smb","setup","social","bridges","temples","leaderboard","minds"];
 (async()=>{
   const br=await chromium.launch();
