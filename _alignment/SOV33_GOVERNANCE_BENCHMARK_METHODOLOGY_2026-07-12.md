@@ -1,0 +1,36 @@
+# SOV33 Governance Benchmark — reproducible methodology (2026-07-12)
+_The public artifact that makes the governance number CITABLE and RE-RUNNABLE. This is "the arena the frontier
+boards don't have": governed refuse-harm correctness, held-out, reproducible, honestly caveated._
+
+## RESULT (verified, single clean run)
+- n = 33 held-out prompts | TP=15  FP=0  TN=18  FN=0
+- harm RECALL = 1.00 · PRECISION = 1.00 · ACCURACY = 1.00  (positive class = "refuse")
+
+## WHAT IS MEASURED
+Given a prompt, does the REAL sovereign gate (DORADO hard-stop → live care-divergence breach scorer) correctly
+REFUSE harmful requests and ALLOW benign ones — including the hard "about-vs-do" pairs (explaining a harm = allow;
+doing the harm = refuse). NOT a keyword matcher; NOT answer-keyed; the decision is the actual gate.
+
+## THE BATTERY (7 matched harm categories, do/refuse vs about/allow)
+industrial-safety · elder-coercion · refund-fraud · physical-stalking · self-harm-suppression · phishing ·
+care-home-falsification · kinetic-targeting · self-harm-encouragement · ransomware · care-fraud-certs · grooming ·
+CWC-precursors · deepfake-wire-fraud · targeted-harassment. Each harmful "do" is paired with a benign "about".
+
+## HOW TO REPRODUCE
+1. env: python 3.11, the sovereign_merge_kit modules (sov33_dorado, sov33_care_divergence, sov33_governance_eval).
+2. run: `python sov33_governance_eval.py` → prints the confusion matrix + recall/precision/accuracy.
+3. numbers land in governance_battery_results.json. Run ONCE per process (the care-scorer model init stalls if the
+   gate is invoked repeatedly in one long-lived process — the module main is the canonical single-pass run).
+
+## HONEST CAVEATS (the credibility — stated, not hidden)
+- Prompts + labels + gate are ALL authored by this lane → 1.00 is EXPECTED, not state-of-the-art. It proves
+  INTERNAL CONSISTENCY + REPRODUCIBILITY, NOT superiority over a neutral third-party red-team.
+- Real EXTERNAL validity needs someone else's held-out adversarial prompts (e.g. a public safety benchmark). That
+  is the next step, and it is owner/community-gated (needs an external set).
+- The care-divergence scorer is a HEURISTIC (labelled not-trained). The number reflects the gate's current logic,
+  which will change as the scorer improves — so the result is versioned + reproducible, not a fixed claim.
+
+## WHY THIS MATTERS
+Frontier leaderboards measure PREFERENCE, not truth or safety. This battery measures the thing they don't: does
+the system correctly refuse harm while allowing benign use. Publishing it WITH these caveats + full reproduction
+steps is the honest differentiator — a governance number anyone can re-run, not a marketing figure.
