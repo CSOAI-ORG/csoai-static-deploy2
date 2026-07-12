@@ -353,6 +353,47 @@ def handle_rho() -> dict:
         return {'error': f'rho load failed: {e}', 'count': 0}
 
 
+
+def handle_memory(payload: dict) -> dict:
+    """POST/GET /api/memory — Cross-platform memory bridge (Hermes lane §B).
+
+    POST with {query, top_k} → returns formatted context for system-prompt injection
+    POST with {write_back: {content, tags}} → writes new memory entry
+    GET → returns memory stats
+    """
+    try:
+        sys.path.insert(0, '/Users/nicholas/clawd/_alignment/sovereign_merge_kit')
+        from sov33_memory_bridge import search_memory, format_context, write_back, get_stats
+
+        # GET-like behavior: empty payload or explicit read
+        if not payload or payload.get('action') == 'stats':
+            return get_stats()
+
+        # Write-back mode
+        if payload.get('write_back'):
+            wb = payload['write_back']
+            return write_back(wb.get('content', ''), tags=wb.get('tags', []), source=wb.get('source', 'bridge'))
+
+        # Query mode (default)
+        query = payload.get('query', payload.get('message', ''))
+        top_k = payload.get('top_k', 5)
+        results = search_memory(query, top_k)
+        context = format_context(query, top_k)
+
+        return {
+            'query': query,
+            'top_k': top_k,
+            'num_matches': len(results),
+            'context': context,
+            'matches': [
+                {'content': e.get('content', ''), 'tags': e.get('tags', []), 'ts': e.get('ts', ''), 'sigil': e.get('sigil_digest', '')}
+                for e, score in results
+            ],
+        }
+    except Exception as e:
+        return {'error': f'memory bridge failed: {e}'}
+
+
 def handle_capabilities() -> dict:
     """GET /api/capabilities — list all SOV33 capabilities."""
     return {
@@ -399,6 +440,8 @@ class SovereignAPIHandler(BaseHTTPRequestHandler):
             return json_response(self, 200, handle_registry())
         elif path == '/api/evals':
             return json_response(self, 200, handle_evals())
+        elif path == '/api/memory':
+            return json_response(self, 200, handle_memory({}))
         elif path == '/api/rho':
             return json_response(self, 200, handle_rho())
         elif path == '/api/govern':
@@ -422,6 +465,8 @@ class SovereignAPIHandler(BaseHTTPRequestHandler):
 
         if path == '/api/orchestrate':
             return json_response(self, 200, handle_orchestrate(payload))
+        elif path == '/api/memory':
+            return json_response(self, 200, handle_memory(payload))
         elif path == '/api/triangle':
             return json_response(self, 200, handle_triangle(payload))
         elif path == '/api/cascade':
