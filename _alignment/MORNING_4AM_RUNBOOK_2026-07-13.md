@@ -24,6 +24,18 @@ stageable is done + verified; the GPU/publish steps are copy-paste for you (they
    - **Pick a FIT competition only:** math/reasoning (GSM8K), LLM science-exam, LLM-classification finetune, ARC write-up. NOT: training-method/pure-vision/agent-commerce (harness header lists these).
 3. Run. Download `sov33_live_gsm8k.json` when it finishes.
 
+### STAGE A′ — Train the 4 OWEM experts (the L0→L1 build) — pre-flighted overnight ✅
+The dispatch picks these in priority order; datasets verified present on disk:
+| Expert | Data | Examples | ~GPU-hr |
+|---|---|---|---|
+| **defense** (next) | `expert_data/defense.jsonl` | **1775** | 3.0 |
+| intuition | `expert_data/intuition.jsonl` | 1075 | ~2 |
+| voice | `expert_data/voice.jsonl` | 275 | ~1 |
+| compliance | `expert_data/compliance.jsonl` | 801 | ~2 |
+- Kaggle T4x2/P100, ~8 GPU-hr total (well within the free 30hr/wk). Script: **`SOV33_FOUR_EXPERT_STREAMS_COLAB.py`** → outputs `sov33_adapters.zip`.
+- **Get the exact next target any time:** `python3 _alignment/sovereign_merge_kit/sov33_owem_train_dispatch.py --next`
+- **Install the adapters (Mac, after download):** `python3 _alignment/sovereign_merge_kit/sov33_install_adapters.py --zip ~/Downloads/sov33_adapters.zip --no-merge --no-quantize`  → **4 experts = L0→L1 transition.**
+
 ### STAGE B — Distillation (SAME Kaggle session, within the free 30hr/wk T4)
 4. In the same notebook, run **`sov33_distill_harness.py`** — it captures the graded reasoning traces → a governed distillation dataset for the small sovereign student (QLoRA, ≤7-8B). Download the adapter.
    - (35B merge is NOT free-T4 — that needs rented GPU; the small student IS the thesis.)
