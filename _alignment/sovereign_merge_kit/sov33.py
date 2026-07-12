@@ -1415,6 +1415,22 @@ class Sovereign:
 # CAPABILITY DISPATCHER
 # ═══════════════════════════════════════════════════════════════
 
+def capability_mcp_cards(**kwargs):
+    """Export the capability surface as tappable MCP-card JSON for the overlay workspace (AI-OS desktop)."""
+    try:
+        from sov33_mcp_cards import export_cards
+        return {'capability':'mcp-cards', **export_cards()}
+    except Exception as e:
+        return {'capability':'mcp-cards','error':str(e)[:160]}
+
+def capability_trust_feed(limit: int = 50, **kwargs):
+    """The trust panel: SIGIL hash-chain as human-readable attested-action rows (audit trail made visible)."""
+    try:
+        from sov33_trust_feed import feed
+        return {'capability':'trust-feed', **feed(limit=limit)}
+    except Exception as e:
+        return {'capability':'trust-feed','error':str(e)[:160]}
+
 def capability_memory_bridge(action: str = 'verify', content: str = None, query: str = None,
                              tags=None, k: int = 5, **kwargs):
     """GOVERNED + ATTESTED + SOVEREIGN portable memory over MCP (the differentiated bridge).
@@ -2021,6 +2037,8 @@ CAPABILITIES = {
     'orchestrator': capability_cloud_orchestrator,
     'owem-e2e': capability_owem_e2e,
     'e2e': capability_owem_e2e,
+    'mcp-cards': capability_mcp_cards,
+    'trust-feed': capability_trust_feed,
     'memory-bridge': capability_memory_bridge,
     'gated-check': capability_gated_check,
     'anti-relapse': capability_gated_check,

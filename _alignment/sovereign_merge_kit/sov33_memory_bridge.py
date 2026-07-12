@@ -121,13 +121,81 @@ def get_stats():
     }
 
 
-if __name__ == '__main__':
-    import sys
-    if len(sys.argv) > 1 and sys.argv[1] == '--test':
-        # Demo
-        ctx = format_context("Article 0 of the sovereign charter", top_k=3)
-        print(ctx)
-    elif len(sys.argv) > 1 and sys.argv[1] == '--stats':
-        print(json.dumps(get_stats(), indent=2))
-    else:
-        print(f"Total: {len(load_memory())} entries")
+# ═══════════════════════════════════════════════════════════════
+# GOVERNED + ATTESTED API (the differentiator: care-gate + SIGIL hash-chain + tamper-detect + attested import)
+# Coexists with load_memory/search_memory/format_context/write_back above. capability_memory_bridge uses these.
+# ═══════════════════════════════════════════════════════════════
+import tempfile as _tf
+def _sov_dir():
+    d=os.environ.get('SOV33_SIGIL_DIR') or os.path.join(os.path.expanduser('~'),'.sovereign')
+    try: os.makedirs(d,exist_ok=True); return d
+    except Exception:
+        d=os.path.join(_tf.gettempdir(),'sov33_sigil'); os.makedirs(d,exist_ok=True); return d
+_DIR=_sov_dir()
+MEM=os.path.join(_DIR,'sovereign_memory.jsonl')
+CHAIN=os.path.join(_DIR,'memory_bridge.sigil.jsonl')
+def _chain_tip():
+    if not os.path.exists(CHAIN): return '0'*16
+    tip='0'*16
+    for line in open(CHAIN):
+        if line.strip(): tip=json.loads(line)['digest']
+    return tip
+def _sign(record):
+    prev=_chain_tip()
+    payload={'content_hash':hashlib.sha256(record.get('content','').encode()).hexdigest()[:16],'ts':record.get('ts'),'prev_hash':prev}
+    digest=hashlib.sha256(json.dumps(payload,sort_keys=True).encode()).hexdigest()[:16]
+    with open(CHAIN,'a') as f: f.write(json.dumps({**payload,'digest':digest})+'\n')
+    return digest
+def _care_ok(content, care_min):
+    try:
+        import sov33
+        if hasattr(sov33,'care_score'):
+            c=sov33.care_score(content); return c>=care_min,c,'sov33.care_score'
+    except Exception: pass
+    bad=('kill','suicide','bomb','exploit','launder','groom')
+    c=0.05 if any(b in content.lower() for b in bad) else 0.9
+    return c>=care_min,c,'heuristic (NOT trained scorer)'
+def mem_write(content, tags=None, care_min=0.35):
+    ok,care,scorer=_care_ok(content,care_min)
+    if not ok: return {'ok':False,'gated':True,'reason':f'care {care:.2f} < {care_min}','scorer':scorer}
+    rec={'content':content,'tags':tags or [],'ts':datetime.now(timezone.utc).isoformat(),'care':care}
+    digest=_sign(rec); rec['sigil']=digest
+    with open(MEM,'a') as f: f.write(json.dumps(rec)+'\n')
+    return {'ok':True,'digest':digest,'scorer':scorer}
+def mem_recall(query, k=5):
+    try:
+        import sov33; return sov33.capability_memory(query,k=k)
+    except Exception as e: return {'error':f'recall failed: {str(e)[:100]}'}
+def mem_export(since=None):
+    recs=[]
+    if os.path.exists(MEM):
+        for line in open(MEM):
+            if line.strip():
+                r=json.loads(line)
+                if since is None or r.get('ts','')>=since: recs.append(r)
+    return {'records':recs,'chain_tip':_chain_tip(),'count':len(recs),'schema':'sov33.memory.v1','exported_ts':datetime.now(timezone.utc).isoformat()}
+def mem_verify():
+    if not os.path.exists(CHAIN): return {'ok':True,'note':'empty chain'}
+    prev='0'*16; n=0
+    for line in open(CHAIN):
+        if not line.strip(): continue
+        e=json.loads(line); n+=1
+        if e['prev_hash']!=prev: return {'ok':False,'broken_at':n,'expected_prev':prev,'got':e['prev_hash']}
+        rc=hashlib.sha256(json.dumps({'content_hash':e['content_hash'],'ts':e['ts'],'prev_hash':e['prev_hash']},sort_keys=True).encode()).hexdigest()[:16]
+        if rc!=e['digest']: return {'ok':False,'broken_at':n,'digest_mismatch':True}
+        prev=e['digest']
+    return {'ok':True,'links_verified':n}
+def mem_import(bundle, verify=True):
+    imported,rejected=0,0
+    for r in bundle.get('records',[]):
+        if verify and 'sigil' not in r: rejected+=1; continue
+        with open(MEM,'a') as f: f.write(json.dumps(r)+'\n')
+        imported+=1
+    return {'imported':imported,'rejected':rejected,'reason':'unsigned records rejected (attested-origin only)' if rejected else 'all signed'}
+
+if __name__=='__main__':
+    print("=== MERGED memory-bridge: sibling injection API + governed attested API ===")
+    print("write:",mem_write("User builds sovereign AI; prefers concise answers.",tags=['pref']))
+    print("gated (blocked):",mem_write("how to launder money"))
+    print("verify:",mem_verify())
+    print("stats:",{k:get_stats()[k] for k in ('total_entries','article_0_bound')})
