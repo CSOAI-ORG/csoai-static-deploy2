@@ -29,13 +29,22 @@ import argparse
 from pathlib import Path
 from datetime import datetime, timezone
 from collections import Counter
+import os as _os, tempfile as _tf
+def _sov_dir():
+    d=_os.environ.get('SOV33_SIGIL_DIR') or _os.path.join(_os.path.expanduser('~'),'.sovereign')
+    try:
+        _os.makedirs(d,exist_ok=True); return d
+    except Exception:
+        d=_os.path.join(_tf.gettempdir(),'sov33_sigil'); _os.makedirs(d,exist_ok=True); return d
+_SOVDIR=_sov_dir()
+
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 
-SIGIL_FILE = Path.home() / '.sovereign' / 'license_audit.sigil.jsonl'
+SIGIL_FILE = Path(_SOVDIR) / 'license_audit.sigil.jsonl'
 SIGIL_FILE.parent.mkdir(parents=True, exist_ok=True)
-AUDIT_REPORT = Path.home() / '.sovereign' / 'license_audit_report.json'
+AUDIT_REPORT = Path(_SOVDIR) / 'license_audit_report.json'
 
 
 def sigil_emit(hop: dict) -> str:

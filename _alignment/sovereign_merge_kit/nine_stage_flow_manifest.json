@@ -9,8 +9,8 @@
     {
       "n": 2,
       "name": "CHECK_EXISTING",
-      "status": "NEW",
-      "desc": "audit what's already built; never rebuild"
+      "status": "RUNNING",
+      "desc": "audit what's built (never rebuild) + PROBE every 'blocked/gated' claim live (sov33_gated_check) before reporting it \u2014 anti-relapse"
     },
     {
       "n": 3,
@@ -65,6 +65,7 @@
   ],
   "bft_rule": "cross-lineage checkers only; escalate-don't-average; log rho; rho>=0.7=theatre",
   "honest_scope": "governance+throughput, NOT capability; params don't add across stacked brains",
+  "anti_relapse_rule": "CHECK_EXISTING stage: a 'blocked/gated/owner-required' claim is INVALID until PROBED LIVE (sov33_gated_check.probe_gate). Never mark work gated from memory/assumption to offload it. Test first; report gated only after a real probe fails.",
   "exec_mode": {
     "years_to_days": "parallel fan-out of PLAN->DO subtasks across hives (throughput, not capability)",
     "drum": "L0 1Hz heartbeat clock beneath all stages; phase-veto halts on instability"

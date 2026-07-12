@@ -34,13 +34,22 @@ import argparse
 import urllib.request
 from pathlib import Path
 from datetime import datetime, timezone
+import os as _os, tempfile as _tf
+def _sov_dir():
+    d=_os.environ.get('SOV33_SIGIL_DIR') or _os.path.join(_os.path.expanduser('~'),'.sovereign')
+    try:
+        _os.makedirs(d,exist_ok=True); return d
+    except Exception:
+        d=_os.path.join(_tf.gettempdir(),'sov33_sigil'); _os.makedirs(d,exist_ok=True); return d
+_SOVDIR=_sov_dir()
+
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 
-SIGIL_FILE = Path.home() / '.sovereign' / 'three_lineage_live.sigil.jsonl'
+SIGIL_FILE = Path(_SOVDIR) / 'three_lineage_live.sigil.jsonl'
 SIGIL_FILE.parent.mkdir(parents=True, exist_ok=True)
-REPORT_FILE = Path.home() / '.sovereign' / 'three_lineage_live_report.json'
+REPORT_FILE = Path(_SOVDIR) / 'three_lineage_live_report.json'
 
 
 def sigil_emit(hop: dict) -> str:
@@ -90,7 +99,7 @@ def call_groq(model: str, prompt: str, max_tokens: int = 200) -> tuple:
     """Call Groq."""
     try:
         api_key = os.environ.get('GROQ_API_KEY')
-        keystore = Path.home() / '.sovereign' / 'keystore' / 'groq_api_key.txt'
+        keystore = Path(_SOVDIR) / 'keystore' / 'groq_api_key.txt'
         if not api_key and keystore.exists():
             api_key = keystore.read_text().strip()
             os.environ['GROQ_API_KEY'] = api_key

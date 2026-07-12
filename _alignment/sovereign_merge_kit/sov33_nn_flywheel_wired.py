@@ -33,13 +33,22 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 # Import the existing sibling-shipped modules
 from sov33_nn_layer import PLANETS, nn_layer_signal
 from sov33_flywheel import flywheel_state, NODES
+import os as _os, tempfile as _tf
+def _sov_dir():
+    d=_os.environ.get('SOV33_SIGIL_DIR') or _os.path.join(_os.path.expanduser('~'),'.sovereign')
+    try:
+        _os.makedirs(d,exist_ok=True); return d
+    except Exception:
+        d=_os.path.join(_tf.gettempdir(),'sov33_sigil'); _os.makedirs(d,exist_ok=True); return d
+_SOVDIR=_sov_dir()
+
 
 
 # ═══════════════════════════════════════════════════════════════
 # Flywheel emitter — writes real labels onto the NN hive bus
 # ═══════════════════════════════════════════════════════════════
 
-SIGIL_DIR = Path.home() / '.sovereign'
+SIGIL_DIR = Path(_SOVDIR)
 SIGIL_DIR.mkdir(parents=True, exist_ok=True)
 NN_RETRAIN_QUEUE = SIGIL_DIR / 'nn_retrain_queue.jsonl'
 NN_PREDICTIONS = SIGIL_DIR / 'nn_predictions.jsonl'

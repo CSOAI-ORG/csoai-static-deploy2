@@ -11,6 +11,15 @@ HONESTY / LEGAL LINE (binding — from the estate's own EU-AI-Act discipline):
   never logged, never committed. Only a salted SHA-256 digest lives on disk.
 """
 import os, hmac, hashlib, json, time
+import os as _os, tempfile as _tf
+def _sov_dir():
+    d=_os.environ.get('SOV33_SIGIL_DIR') or _os.path.join(_os.path.expanduser('~'),'.sovereign')
+    try:
+        _os.makedirs(d,exist_ok=True); return d
+    except Exception:
+        d=_os.path.join(_tf.gettempdir(),'sov33_sigil'); _os.makedirs(d,exist_ok=True); return d
+_SOVDIR=_sov_dir()
+
 
 SIGIL_DIR = os.environ.get("SOV33_SIGIL_DIR", os.path.expanduser("~/.sovereign"))
 FOUNDER_DIGEST_FILE = os.path.join(SIGIL_DIR, "founder.digest")   # salted hash ONLY, never the secret

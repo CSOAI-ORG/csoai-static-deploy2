@@ -24,9 +24,18 @@ import sov33_identity as identity                      # RUNNING: cryptographic 
 import sov33_nn_layer as nn                             # RUNNING: 7-planet reliability map
 from character_catalog import CHARACTER_CATALOG, get_character   # RUNNING: 24 companions
 from character_emergence import compute_emergence_state          # RUNNING: 6-stage lifecycle
+import os as _os, tempfile as _tf
+def _sov_dir():
+    d=_os.environ.get('SOV33_SIGIL_DIR') or _os.path.join(_os.path.expanduser('~'),'.sovereign')
+    try:
+        _os.makedirs(d,exist_ok=True); return d
+    except Exception:
+        d=_os.path.join(_tf.gettempdir(),'sov33_sigil'); _os.makedirs(d,exist_ok=True); return d
+_SOVDIR=_sov_dir()
+
 
 CARE_FLOOR = 0.95                                        # matches sov33.py CARE_FLOOR (binding)
-SIGIL_DIR = Path(os.environ.get('SOV33_SIGIL_DIR', str(Path.home() / '.sovereign')))
+SIGIL_DIR = Path(os.environ.get('SOV33_SIGIL_DIR', str(Path(_SOVDIR))))
 SIGIL_DIR.mkdir(parents=True, exist_ok=True)
 SIGIL_FILE = SIGIL_DIR / 'sov33_companion.sigil.jsonl'
 

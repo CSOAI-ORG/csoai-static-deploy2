@@ -40,11 +40,20 @@ import subprocess
 from pathlib import Path
 from datetime import datetime, timezone
 from collections import defaultdict
+import os as _os, tempfile as _tf
+def _sov_dir():
+    d=_os.environ.get('SOV33_SIGIL_DIR') or _os.path.join(_os.path.expanduser('~'),'.sovereign')
+    try:
+        _os.makedirs(d,exist_ok=True); return d
+    except Exception:
+        d=_os.path.join(_tf.gettempdir(),'sov33_sigil'); _os.makedirs(d,exist_ok=True); return d
+_SOVDIR=_sov_dir()
+
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 
-SIGIL_FILE = Path.home() / '.sovereign' / 'powerhouse.sigil.jsonl'
+SIGIL_FILE = Path(_SOVDIR) / 'powerhouse.sigil.jsonl'
 SIGIL_FILE.parent.mkdir(parents=True, exist_ok=True)
 
 
@@ -270,7 +279,7 @@ def call_groq(prompt: str, model: str = 'llama-3.3-70b-versatile', max_tokens: i
     for attempt in range(retries):
         try:
             api_key = os.environ.get('GROQ_API_KEY')
-            keystore = Path.home() / '.sovereign' / 'keystore' / 'groq_api_key.txt'
+            keystore = Path(_SOVDIR) / 'keystore' / 'groq_api_key.txt'
             if not api_key and keystore.exists():
                 api_key = keystore.read_text().strip()
                 os.environ['GROQ_API_KEY'] = api_key

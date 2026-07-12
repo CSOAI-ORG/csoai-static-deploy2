@@ -3,10 +3,19 @@ _Verified live 2026-07-12 via search_skills + list_compute. This file is the sou
 
 ## HARD FACTS ABOUT WHAT THIS AGENT (MEOK-SOV3 in Claude Science) CAN AND CANNOT DO
 
-### ❌ NO browser tool. Confirmed by search_skills (only ahrefs web-analytics + one sov3 method; zero browser automation).
-- I CANNOT open Colab, click through a web UI, log into Google, or drive any browser session.
+### ❌ NO usable browser tool for ME — but be PRECISE about why (corrected after a live probe).
+- search_skills DOES surface a sov3 method `sov_inside_browser` (Phase 132, "inside-OS browser, sovereign
+  sandboxing", takes url+sandbox). I wrongly dismissed it as "zero browser automation" WITHOUT testing it.
+- PROBED IT LIVE (2026-07-12): host.mcp("sov3","sov_inside_browser",url=...) -> {"error":"Unknown mind tool:
+  sov_inside_browser"}. It is CATALOG-DECLARED but NOT IMPLEMENTED on the running server (same catalog-vs-
+  server divergence as the OOWM methods). So there is no working browser I can drive — but the honest reason
+  is "declared-not-implemented", NOT "does not exist in catalog".
+- I still CANNOT open Colab, log into Google, or drive a real browser session. No standalone browser tool
+  in my Claude-Science toolset; the one catalog method that looks like one is a dead stub on the server.
 - "We did this in the browser yesterday" = that was CLAUDE CODE, a DIFFERENT agent in a DIFFERENT
-  environment that HAS browser access. I am not Claude Code. Do not inherit its capabilities in memory.
+  environment that HAS real browser access. I am not Claude Code. Do not inherit its capabilities in memory.
+- LESSON (this is the anti-relapse rule applied to MYSELF): never enshrine a capability negative without a
+  live probe. A tool NAME in the catalog is a claim to TEST, not a fact to assert or dismiss.
 
 ### ❌ NO compute target. list_compute returns [] (empty). 
 - I CANNOT spawn a GPU, dispatch a training job, or reach Colab's T4. Nowhere to send work.

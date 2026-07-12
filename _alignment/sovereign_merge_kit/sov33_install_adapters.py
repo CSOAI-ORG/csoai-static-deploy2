@@ -18,11 +18,20 @@ All other steps are <30s.
 import sys, os, json, shutil, hashlib, zipfile, argparse
 from pathlib import Path
 from datetime import datetime, timezone
+import os as _os, tempfile as _tf
+def _sov_dir():
+    d=_os.environ.get('SOV33_SIGIL_DIR') or _os.path.join(_os.path.expanduser('~'),'.sovereign')
+    try:
+        _os.makedirs(d,exist_ok=True); return d
+    except Exception:
+        d=_os.path.join(_tf.gettempdir(),'sov33_sigil'); _os.makedirs(d,exist_ok=True); return d
+_SOVDIR=_sov_dir()
+
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
-SIGIL_FILE = Path.home() / '.sovereign' / 'adapter_install.sigil.jsonl'
-MODELS_DIR = Path.home() / '.sovereign' / 'models'
+SIGIL_FILE = Path(_SOVDIR) / 'adapter_install.sigil.jsonl'
+MODELS_DIR = Path(_SOVDIR) / 'models'
 
 
 def sigil_emit(hop):
@@ -57,7 +66,7 @@ def install_adapters(zip_path: Path, merge: bool = True, quantize: bool = True) 
     print()
 
     # 1. Unzip to temp dir
-    temp_dir = Path.home() / '.sovereign' / 'incoming_adapters'
+    temp_dir = Path(_SOVDIR) / 'incoming_adapters'
     if temp_dir.exists():
         shutil.rmtree(temp_dir)
     temp_dir.mkdir(parents=True, exist_ok=True)

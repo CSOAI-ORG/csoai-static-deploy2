@@ -1,10 +1,16 @@
 {
-  "running": 43,
-  "gated": 15,
-  "broken": 0,
+  "running": 45,
+  "gated": 25,
+  "broken": 2,
   "rows": [
     {
       "capability": "agentdog",
+      "class": "RUNNING",
+      "detail": null,
+      "expected_gated": false
+    },
+    {
+      "capability": "anti-relapse",
       "class": "RUNNING",
       "detail": null,
       "expected_gated": false
@@ -17,8 +23,8 @@
     },
     {
       "capability": "awareness",
-      "class": "RUNNING",
-      "detail": null,
+      "class": "GATED",
+      "detail": "fail-soft: gpu",
       "expected_gated": false
     },
     {
@@ -35,8 +41,8 @@
     },
     {
       "capability": "capabilities",
-      "class": "RUNNING",
-      "detail": null,
+      "class": "GATED",
+      "detail": "fail-soft: gpu",
       "expected_gated": false
     },
     {
@@ -70,9 +76,27 @@
       "expected_gated": false
     },
     {
+      "capability": "cloud-fleet",
+      "class": "RUNNING",
+      "detail": null,
+      "expected_gated": false
+    },
+    {
+      "capability": "cloud-orchestrator",
+      "class": "RUNNING",
+      "detail": null,
+      "expected_gated": false
+    },
+    {
       "capability": "companion",
       "class": "RUNNING",
       "detail": null,
+      "expected_gated": false
+    },
+    {
+      "capability": "compute-bridge",
+      "class": "GATED",
+      "detail": "fail-soft: needs ",
       "expected_gated": false
     },
     {
@@ -106,9 +130,27 @@
       "expected_gated": true
     },
     {
+      "capability": "divergence",
+      "class": "RUNNING",
+      "detail": null,
+      "expected_gated": false
+    },
+    {
+      "capability": "divergence-sim",
+      "class": "RUNNING",
+      "detail": null,
+      "expected_gated": false
+    },
+    {
       "capability": "drum",
       "class": "RUNNING",
       "detail": null,
+      "expected_gated": false
+    },
+    {
+      "capability": "e2e",
+      "class": "BROKEN",
+      "detail": "[Errno 1] Operation not permitted: '/Users/nicholas/.sovereign/owem_e2",
       "expected_gated": false
     },
     {
@@ -121,6 +163,30 @@
       "capability": "fido",
       "class": "RUNNING",
       "detail": null,
+      "expected_gated": false
+    },
+    {
+      "capability": "fleet",
+      "class": "RUNNING",
+      "detail": null,
+      "expected_gated": false
+    },
+    {
+      "capability": "free-gpu",
+      "class": "GATED",
+      "detail": "fail-soft: needs ",
+      "expected_gated": false
+    },
+    {
+      "capability": "gated-check",
+      "class": "RUNNING",
+      "detail": null,
+      "expected_gated": false
+    },
+    {
+      "capability": "gpu",
+      "class": "GATED",
+      "detail": "fail-soft: needs ",
       "expected_gated": false
     },
     {
@@ -149,8 +215,8 @@
     },
     {
       "capability": "live-tools",
-      "class": "RUNNING",
-      "detail": null,
+      "class": "GATED",
+      "detail": "fail-soft: gpu",
       "expected_gated": false
     },
     {
@@ -194,6 +260,18 @@
       "class": "GATED",
       "detail": "needs OCI creds (not called: would block on live resource)",
       "expected_gated": true
+    },
+    {
+      "capability": "orchestrator",
+      "class": "RUNNING",
+      "detail": null,
+      "expected_gated": false
+    },
+    {
+      "capability": "owem-e2e",
+      "class": "BROKEN",
+      "detail": "[Errno 1] Operation not permitted: '/Users/nicholas/.sovereign/owem_e2",
+      "expected_gated": false
     },
     {
       "capability": "owem-emergence",
@@ -263,8 +341,8 @@
     },
     {
       "capability": "self",
-      "class": "RUNNING",
-      "detail": null,
+      "class": "GATED",
+      "detail": "fail-soft: gpu",
       "expected_gated": false
     },
     {
@@ -323,14 +401,14 @@
     },
     {
       "capability": "tool-awareness",
-      "class": "RUNNING",
-      "detail": null,
+      "class": "GATED",
+      "detail": "fail-soft: gpu",
       "expected_gated": false
     },
     {
       "capability": "tools",
-      "class": "RUNNING",
-      "detail": null,
+      "class": "GATED",
+      "detail": "fail-soft: gpu",
       "expected_gated": false
     },
     {
@@ -340,9 +418,15 @@
       "expected_gated": false
     },
     {
-      "capability": "what-can-you-do",
+      "capability": "uniquely-yours",
       "class": "RUNNING",
       "detail": null,
+      "expected_gated": false
+    },
+    {
+      "capability": "what-can-you-do",
+      "class": "GATED",
+      "detail": "fail-soft: gpu",
       "expected_gated": false
     },
     {
@@ -352,5 +436,5 @@
       "expected_gated": false
     }
   ],
-  "verdict": "SHIP-READY (0 broken)"
+  "verdict": "NOT READY (2 broken)"
 }

@@ -8,6 +8,15 @@ reports whether a memory layer is wired (currently NOT), so LEARN degrades hones
 """
 import os, time, json, socket
 from datetime import datetime, timezone
+import os as _os, tempfile as _tf
+def _sov_dir():
+    d=_os.environ.get('SOV33_SIGIL_DIR') or _os.path.join(_os.path.expanduser('~'),'.sovereign')
+    try:
+        _os.makedirs(d,exist_ok=True); return d
+    except Exception:
+        d=_os.path.join(_tf.gettempdir(),'sov33_sigil'); _os.makedirs(d,exist_ok=True); return d
+_SOVDIR=_sov_dir()
+
 
 def drum_tick():
     """L0 heartbeat signal available to ALL stages (the bridge)."""
@@ -28,7 +37,7 @@ def learn(task_hint=""):
     except Exception: disk_free_gb = None
     # memory-availability probe: is a persistent memory layer wired? (honest: currently NO)
     mem_wired = os.path.isdir(os.path.expanduser("~/.sovereign")) and \
-                os.path.exists(os.path.expanduser("~/.sovereign/sovereign_memory.jsonl"))
+                os.path.exists(os.path.join(_SOVDIR, f'sovereign_memory.jsonl'))
     signal = {
         "stage": "LEARN",
         "utc": now.isoformat(timespec="seconds"),

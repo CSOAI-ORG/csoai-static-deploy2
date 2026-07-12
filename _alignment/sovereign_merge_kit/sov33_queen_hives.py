@@ -16,12 +16,21 @@ from datetime import datetime, timezone
 
 sys.path.insert(0, '/Users/nicholas/clawd/_alignment/sovereign_merge_kit')
 from sov33_effective_votes import effective_votes, agreement_confidence  # BFT trust math
+import os as _os, tempfile as _tf
+def _sov_dir():
+    d=_os.environ.get('SOV33_SIGIL_DIR') or _os.path.join(_os.path.expanduser('~'),'.sovereign')
+    try:
+        _os.makedirs(d,exist_ok=True); return d
+    except Exception:
+        d=_os.path.join(_tf.gettempdir(),'sov33_sigil'); _os.makedirs(d,exist_ok=True); return d
+_SOVDIR=_sov_dir()
+
 
 RHO = 0.76          # OUR measured checker error-correlation (sov33 council default)
 TRUST_MIN = 2.0     # effective independent votes required to TRUST agreement
 
 # ── SIGIL chain (byte-compatible with sov33.sigil_emit) ──────────────────────
-SIGIL_DIR = Path(os.environ.get('SOV33_SIGIL_DIR', str(Path.home() / '.sovereign')))  # env override matches sov33
+SIGIL_DIR = Path(os.environ.get('SOV33_SIGIL_DIR', str(Path(_SOVDIR))))  # env override matches sov33
 try:
     SIGIL_DIR.mkdir(parents=True, exist_ok=True)
 except (PermissionError, OSError):

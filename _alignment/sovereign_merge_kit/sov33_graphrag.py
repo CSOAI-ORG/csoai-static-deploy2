@@ -20,6 +20,15 @@ import argparse
 from pathlib import Path
 from datetime import datetime, timezone
 from collections import defaultdict
+import os as _os, tempfile as _tf
+def _sov_dir():
+    d=_os.environ.get('SOV33_SIGIL_DIR') or _os.path.join(_os.path.expanduser('~'),'.sovereign')
+    try:
+        _os.makedirs(d,exist_ok=True); return d
+    except Exception:
+        d=_os.path.join(_tf.gettempdir(),'sov33_sigil'); _os.makedirs(d,exist_ok=True); return d
+_SOVDIR=_sov_dir()
+
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
@@ -42,7 +51,7 @@ class SovereignGraphRAG:
         self.entities = {}  # name -> {type, doc_ids: set}
         self.relations = []  # list of (entity_a, relation, entity_b)
         self.communities = {}  # community_id -> {summary, entity_names}
-        self.sigil_log = Path.home() / '.sovereign' / 'graphrag.sigil.jsonl'
+        self.sigil_log = Path(_SOVDIR) / 'graphrag.sigil.jsonl'
         self.sigil_log.parent.mkdir(parents=True, exist_ok=True)
 
     def _embed(self, text: str, dim: int = 64) -> list:

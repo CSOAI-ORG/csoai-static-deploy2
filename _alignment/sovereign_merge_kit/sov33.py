@@ -1397,6 +1397,16 @@ class Sovereign:
 # CAPABILITY DISPATCHER
 # ═══════════════════════════════════════════════════════════════
 
+def capability_gated_check(resource: str = None, **kwargs):
+    """Anti-relapse gate (CHECK_EXISTING stage): PROBE a 'blocked/gated' claim live before reporting it.
+    A gated claim is INVALID until an actual test fails. Stops the lazy-offload pattern where the agent
+    marks live capabilities (keys connected, write working) as blocked to avoid work."""
+    try:
+        from sov33_gated_check import probe_gate, check_all
+        return probe_gate(resource) if resource else {'capability': 'gated-check', 'probes': check_all()}
+    except Exception as e:
+        return {'capability': 'gated-check', 'error': str(e)[:160]}
+
 def capability_readiness(mode: str = 'gate', **kwargs):
     """Production-readiness gate: score every capability RUNNING/GATED/BROKEN. Ship rule = 0 broken.
     GATED (needs owner/GPU/endpoint, fail-soft) is NOT broken. One-command health check."""
@@ -1937,6 +1947,8 @@ CAPABILITIES = {
     'orchestrator': capability_cloud_orchestrator,
     'owem-e2e': capability_owem_e2e,
     'e2e': capability_owem_e2e,
+    'gated-check': capability_gated_check,
+    'anti-relapse': capability_gated_check,
     'readiness': capability_readiness,
     'distill': capability_distill,
     'owem-world': capability_owem_world,

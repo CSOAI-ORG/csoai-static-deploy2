@@ -33,6 +33,15 @@ import argparse
 import urllib.request
 from pathlib import Path
 from datetime import datetime, timezone
+import os as _os, tempfile as _tf
+def _sov_dir():
+    d=_os.environ.get('SOV33_SIGIL_DIR') or _os.path.join(_os.path.expanduser('~'),'.sovereign')
+    try:
+        _os.makedirs(d,exist_ok=True); return d
+    except Exception:
+        d=_os.path.join(_tf.gettempdir(),'sov33_sigil'); _os.makedirs(d,exist_ok=True); return d
+_SOVDIR=_sov_dir()
+
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
@@ -191,7 +200,7 @@ def discipline_sovereignty() -> dict:
 
     # Memory layer
     try:
-        mem = Path.home() / '.sovereign' / 'sovereign_memory.jsonl'
+        mem = Path(_SOVDIR) / 'sovereign_memory.jsonl'
         n = 0
         if mem.exists():
             n = sum(1 for _ in mem.open())
@@ -357,7 +366,7 @@ def discipline_sparks() -> dict:
 
     # Type 3: Care-floor breach (instrumented, count events)
     try:
-        cf_file = Path.home() / '.sovereign' / 'care_floor_breaches.sigil.jsonl'
+        cf_file = Path(_SOVDIR) / 'care_floor_breaches.sigil.jsonl'
         n_breaches = 0
         if cf_file.exists():
             n_breaches = sum(1 for _ in cf_file.open())
@@ -442,7 +451,7 @@ def discipline_living() -> dict:
 
     # 5. Remembers
     try:
-        mem = Path.home() / '.sovereign' / 'sovereign_memory.jsonl'
+        mem = Path(_SOVDIR) / 'sovereign_memory.jsonl'
         n = sum(1 for _ in mem.open()) if mem.exists() else 0
         criteria['5_Remembers'] = n > 0
     except Exception as e:

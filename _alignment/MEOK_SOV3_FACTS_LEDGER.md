@@ -3,7 +3,7 @@ _Nick asserts a fact here ONCE; every future session reads it at start and stops
 This file auto-loads via the alignment loader. Format: one fact per line, dated. Newest at top._
 
 ## CAPABILITIES (this agent = MEOK-SOV3 in Claude Science)
-- 2026-07-12 — NO browser tool. Verified via search_skills. "Used browser yesterday" = Claude Code (different agent/env), NOT me. Never claim or attempt browser/Colab access.
+- 2026-07-12 — NO usable browser. CORRECTED: sov3 catalog HAS `sov_inside_browser` but a LIVE probe returned "Unknown mind tool" = declared-not-implemented (dead stub). No standalone browser tool in my toolset either. "Used browser yesterday" = Claude Code (has real browser), NOT me. Lesson: probe a catalog tool-name before asserting a capability negative.
 - 2026-07-12 — NO compute target. list_compute is empty. Cannot spawn GPU or dispatch training. Colab T4 lives in Claude Code's browser, unreachable from my kernel.
 - 2026-07-12 — hermes_ask (sov3 MCP) is a LOCAL Ollama proxy, NOT a live bridge to the Hermes build lane. Cross-lane channel = the git tree.
 

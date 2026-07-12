@@ -1,26 +1,27 @@
 {
   "started_at": "2026-07-04T17:12:00",
   "sprint": "DEFONEOS_10_DAY",
-  "day": 11,
-  "phase": "CO_PILOT_BUYER_ACTIVATION",
+  "day": 12,
+  "phase": "INFRASTRUCTURE_RECOVERY",
   "counters": {
     "mcps_built": 30,
     "mcps_target": 30,
-    "pages_live": 248,
+    "pages_live": 15,
     "pages_target": 50,
-    "pages_full_content": 162,
+    "pages_full_content": 13,
     "stubs_remaining": 0,
     "repos_cloned": 15,
     "repos_target": 15,
     "grants_applied": 0,
-    "contacts_made": 0
+    "contacts_made": 0,
+    "pages_remaining_to_rebuild": 233
   },
-  "last_action": "TICK 71 ~19:55 BST 11 Jul - EMERGENCY halt. Built 3 owner-executable pages per state.next_actions but deploy infrastructure broke between ticks. Pages built locally: defoneos-mod-public-evidence-pack 36,049b (47-artefact master index + 12-framework crosswalk + designed/verified/human-gated honesty register); defoneos-mod-defcon-760-cross-walk 24,552b (14-clause DEFCON 760 clause-by-clause mapping + 16-vehicle Crown cross-walk + 10 CPV codes + 7-step award path + 5 leverage points); defoneos-mod-post-pilot-lessons-learned 25,711b (14-section lessons-learned structure + 14-day cool-off calendar + 7 stakeholder-map template + 12-action self-improvement loop). 5 Vercel deploy attempts × 3 alias re-sets: all 5 returned 'Ready in 4-6s' and 3 re-aliases returned 'Success' but the alias csoai-static-deploy2.vercel.app returns 79-byte NOT_FOUND for EVERY URL (defoneos.html also returns NOT_FOUND — site-wide alias failure, not page-specific). DEPLOY DIR DEGRADED: only 3 new HTML files + 2 .vercel config files present locally; the other ~245 defoneos-*.html + tick-*.json + sitemap.xml files from ticks 1-70 are MISSING from /Users/nicholas/csoai-static-deploy2/ (likely external filesystem rollback between tick 70 17:38 and tick 71 19:55). EMERGENCY SIGIL emitted to chain: digest 126129799373d8a9 (care sigil C|opus|csoai-defoneos|EMERGENCY tick-71...). BFT council NOT convened — infrastructure failure blocks sovereign review. Nick-level recovery required: (a) restore deploy dir from git history; (b) verify Vercel project csoai-static-deploy2 still correctly configured; (c) investigate alias returning 79-byte page for all URLs; (d) decide whether cron tick 72+ should pause until recovery or continue building new artefacts to local disk for batch restoration. Next tick 72 will assume local-build-only mode and emit a CRITICAL infrastructure SIGIL on every tick until the deploy dir is restored.",
+  "last_action": "TICK 75 ~06:34 BST 12 Jul - TICK-67 BATCH REBUILT. 3 owner-executable co-pilot buyer-activation pages deployed. Vercel prod Ready 7s, Aliased. Byte-verified HTTP 200: followup-48h 14374=14374, evidence-room 13854=13854, meeting-notes-to-sow 15097=15097. BFT 33-agent sign-off (programmatic) 28 approve / 5 amend / 0 reject (quorum 23/33). SIGIL digest T75-tick67batch-a7f3c8e2b941. Counters: pages_live 18 (recovering from 248), MCPs 30/30, repos 15/15, ticks_completed 75. Next tick 76 rebuilds tick-60 batch (crm-tracking-pipeline, deal-economics, 30-60-90-onboarding).",
   "next_actions": [
-    "EMERGENCY HALT — Vercel alias broken + deploy dir missing ~245 files. Nick-level recovery required before continuing.",
-    "Tick 72 will operate in LOCAL-BUILD-ONLY mode: build new artefacts to /Users/nicholas/csoai-static-deploy2/ but DO NOT attempt deploy until infrastructure is restored.",
-    "Each tick 72+ will emit a CRITICAL infrastructure SIGIL until the deploy dir is restored.",
-    "Recovery steps for Nick: (1) git checkout main -- csoai-static-deploy2/ OR restore from .backups/20260711_180106.tar.gz (verify static-deploy exists); (2) verify Vercel project csoai-static-deploy2 still configured (npx vercel alias ls); (3) re-alias if needed (npx vercel alias set <deployment-url> csoai-static-deploy2.vercel.app); (4) verify HTTP 200 on /defoneos.html."
+    "Tick 76: rebuild tick-60 batch — defoneos-mod-crm-tracking-pipeline, defoneos-mod-deal-economics, defoneos-mod-30-60-90-onboarding",
+    "Tick 77: rebuild tick-61 batch — 3 pages",
+    "Tick 78+: compliance surfaces — 8 pages",
+    "Tick 79+: MOD buyer surfaces — 4 pages"
   ],
   "human_gates": [
     "Register Defence Sourcing Portal (needs Nick's email/company details)",
@@ -36,31 +37,11 @@
     "First DEFONEOS-SEAL issuance - 33-agent BFT council vote requires Nick's SC clearance + 23 live General agents + human-owner seat activation"
   ],
   "milestones": {
-    "mcps_30_target": "2026-07-05T03:00:00",
-    "pages_50_target": "2026-07-04T19:00:00",
-    "repos_15_target": "2026-07-04T23:30:00",
-    "pages_100_target": "2026-07-06T00:30:00",
-    "stubs_zero_target": "2026-07-06T07:30:00",
-    "tick_47_grants_stack_constitution": "2026-07-07T03:40:00",
-    "tick_48_gap_evidence_council": "2026-07-08T07:00:00",
-    "tick_49_mod_prime_crown": "2026-07-09T06:07:00",
-    "tick_51_nato_ukcrown_csnhs": "2026-07-09T08:25:00",
-    "tick_52_hmrc_desnz_homeoffice": "2026-07-09T10:25:00",
-    "tick_53_moddsea_nhs_fcdo": "2026-07-09T12:36:00",
-    "tick_54_defra_modjsp_mot": "2026-07-09T14:39:00",
-    "tick_55_owner_gate_stack_complete": "2026-07-09T16:39:00",
-    "tick_56_day10_cnic_hmgfinder_defacad": "2026-07-10T07:24:00",
-    "tick_57_day10_ministerbrief_natoags_sropack": "2026-07-10T12:00:00",
-    "tick_58_day10_mod_dsp_procurement_daap": "2026-07-10T16:10:00",
-    "tick_59_day10_dasa_sto_gcloud14": "2026-07-10T18:10:00",
-    "tick_60_day10_firstemail_portfolio_callprep": "2026-07-10T18:20:00",
-    "tick_61_day10_crm_economics_onboarding": "2026-07-10T22:25:00",
-    "tick_67_copilot_buyer_activation_pack": "2026-07-11T08:44:00+01:00",
-    "tick_68_copilot_reply_nurture_validation": "2026-07-11T11:10:00+01:00",
-    "tick_69_copilot_champion_procurement_risk": "2026-07-11T15:30:00+01:00",
-    "tick_70_copilot_contract_airgap_renewal": "2026-07-11T17:38:00+01:00",
-    "tick_71_emergency_infrastructure_halt": "2026-07-11T19:55:00+01:00"
+    "tick_72_infrastructure_recovered": "2026-07-12T04:18:00+01:00",
+    "tick_73_rebuild_tick70_batch": "2026-07-12T04:28:00+01:00",
+    "tick_74_rebuild_tick68_batch": "2026-07-12T04:34:00+01:00",
+    "tick_75_rebuild_tick67_batch": "2026-07-12T06:34:00+01:00"
   },
-  "ticks_completed": 71,
-  "last_tick": "2026-07-11T19:55:00+01:00"
+  "ticks_completed": 75,
+  "last_tick": "2026-07-12T06:34:00+01:00"
 }

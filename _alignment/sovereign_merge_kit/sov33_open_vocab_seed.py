@@ -15,6 +15,15 @@ import json
 import hashlib
 from pathlib import Path
 from datetime import datetime, timezone
+import os as _os, tempfile as _tf
+def _sov_dir():
+    d=_os.environ.get('SOV33_SIGIL_DIR') or _os.path.join(_os.path.expanduser('~'),'.sovereign')
+    try:
+        _os.makedirs(d,exist_ok=True); return d
+    except Exception:
+        d=_os.path.join(_tf.gettempdir(),'sov33_sigil'); _os.makedirs(d,exist_ok=True); return d
+_SOVDIR=_sov_dir()
+
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
@@ -94,7 +103,7 @@ SEED_CONCEPTS = [
     ('sov3', ['engine codename', 'internal', 'substrate governor']),
 ]
 
-CHEATSHEET = Path.home() / '.sovereign' / 'cheatsheet.sigil.jsonl'
+CHEATSHEET = Path(_SOVDIR) / 'cheatsheet.sigil.jsonl'
 
 
 def seed_concepts():
@@ -146,7 +155,7 @@ def seed_concepts():
     print()
 
     # SIGIL the seed event
-    sigil_file = Path.home() / '.sovereign' / 'open_vocab_seed.sigil.jsonl'
+    sigil_file = Path(_SOVDIR) / 'open_vocab_seed.sigil.jsonl'
     chain = []
     if sigil_file.exists():
         for line in sigil_file.read_text().splitlines():

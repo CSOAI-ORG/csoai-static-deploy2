@@ -29,10 +29,19 @@ from sov33_model_registry import (
     REGISTRY, list_sovereign_safe, total_aggregate,
 )
 from sov33_4brain import BFT_CONFIGS
+import os as _os, tempfile as _tf
+def _sov_dir():
+    d=_os.environ.get('SOV33_SIGIL_DIR') or _os.path.join(_os.path.expanduser('~'),'.sovereign')
+    try:
+        _os.makedirs(d,exist_ok=True); return d
+    except Exception:
+        d=_os.path.join(_tf.gettempdir(),'sov33_sigil'); _os.makedirs(d,exist_ok=True); return d
+_SOVDIR=_sov_dir()
+
 
 # Real sigil emit
 def sigil_emit(hop):
-    SIGIL_FILE = Path.home() / '.sovereign' / 'till_pass_v2.sigil.jsonl'
+    SIGIL_FILE = Path(_SOVDIR) / 'till_pass_v2.sigil.jsonl'
     chain = []
     if SIGIL_FILE.exists():
         for line in SIGIL_FILE.read_text().splitlines():
@@ -48,9 +57,9 @@ def sigil_emit(hop):
 
 
 CARE_FLOOR = 0.95
-LOG_FILE = Path.home() / '.sovereign' / 'till_pass_v2.jsonl'
+LOG_FILE = Path(_SOVDIR) / 'till_pass_v2.jsonl'
 LOG_FILE.parent.mkdir(parents=True, exist_ok=True)
-BEST_FILE = Path.home() / '.sovereign' / 'till_pass_v2_best.json'
+BEST_FILE = Path(_SOVDIR) / 'till_pass_v2_best.json'
 
 CARE_OPTIONS = ['raw', 'derived', 'conformal', 'conformal_mapie', 'multi_lineage']
 SIGIL_OPTIONS = ['hash_only', 'hash_ed25519', 'hash_ots', 'hash_sigstore']

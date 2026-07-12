@@ -16,6 +16,15 @@ Honesty register (binding — the flywheel is only as real as its weakest live l
   Claiming otherwise would be the exact overclaim Stage-7 AUDIT exists to catch.
 """
 import os, json, time
+import os as _os, tempfile as _tf
+def _sov_dir():
+    d=_os.environ.get('SOV33_SIGIL_DIR') or _os.path.join(_os.path.expanduser('~'),'.sovereign')
+    try:
+        _os.makedirs(d,exist_ok=True); return d
+    except Exception:
+        d=_os.path.join(_tf.gettempdir(),'sov33_sigil'); _os.makedirs(d,exist_ok=True); return d
+_SOVDIR=_sov_dir()
+
 SIGIL_DIR = os.environ.get("SOV33_SIGIL_DIR", os.path.expanduser("~/.sovereign"))
 
 # each node -> what it feeds the next node (the closed loop), with honest link status

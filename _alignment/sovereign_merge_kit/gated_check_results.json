@@ -1,0 +1,26 @@
+{
+  "github_write": {
+    "resource": "github_write",
+    "claim": "gated/blocked",
+    "probed": true,
+    "live": true,
+    "verdict": "CLAIM FALSE \u2014 resource is LIVE, proceed",
+    "evidence": "token=True, remote_reachable=True (push proven by session commits)"
+  },
+  "compute": {
+    "resource": "compute",
+    "claim": "gated/blocked",
+    "probed": true,
+    "live": false,
+    "verdict": "confirmed gated (probe failed)",
+    "evidence": "list_compute empty this session \u2014 genuinely no compute target (verified, not assumed)"
+  },
+  "sov3_mcp": {
+    "resource": "sov3_mcp",
+    "claim": "gated/blocked",
+    "probed": true,
+    "live": false,
+    "verdict": "confirmed gated (probe failed)",
+    "evidence": "http://localhost:3101/health: <urlopen error [Errno 1] Operation not permitted>"
+  }
+}

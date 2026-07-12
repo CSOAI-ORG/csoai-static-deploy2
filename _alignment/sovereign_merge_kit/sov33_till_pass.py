@@ -37,13 +37,22 @@ from datetime import datetime, timezone
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 from sov33_4brain import (
+import os as _os, tempfile as _tf
+def _sov_dir():
+    d=_os.environ.get('SOV33_SIGIL_DIR') or _os.path.join(_os.path.expanduser('~'),'.sovereign')
+    try:
+        _os.makedirs(d,exist_ok=True); return d
+    except Exception:
+        d=_os.path.join(_tf.gettempdir(),'sov33_sigil'); _os.makedirs(d,exist_ok=True); return d
+_SOVDIR=_sov_dir()
+
     BRAINS, BFT_CONFIGS, PATHS_TO_3_4T,
     evaluate_4brain, sweep_4brain, pareto_front, sigil_emit,
 )
 
-LOG_FILE = Path.home() / '.sovereign' / 'till_pass.jsonl'
+LOG_FILE = Path(_SOVDIR) / 'till_pass.jsonl'
 LOG_FILE.parent.mkdir(parents=True, exist_ok=True)
-BEST_FILE = Path.home() / '.sovereign' / 'till_pass_best.json'
+BEST_FILE = Path(_SOVDIR) / 'till_pass_best.json'
 
 TARGET_SCORE = 0.94  # score cap is 0.9475 with max quality/sov; 0.94 = good enough
 TARGET_AGGREGATE_PCT = 100.0  # % of 3.4T (we hit 3576B = 105% > 100%)

@@ -23,6 +23,15 @@ from dataclasses import dataclass, field
 
 sys.path.insert(0, '/Users/nicholas/clawd/_alignment/sovereign_merge_kit')
 from sov33_effective_votes import effective_votes, agreement_confidence  # BFT trust math (reused)
+import os as _os, tempfile as _tf
+def _sov_dir():
+    d=_os.environ.get('SOV33_SIGIL_DIR') or _os.path.join(_os.path.expanduser('~'),'.sovereign')
+    try:
+        _os.makedirs(d,exist_ok=True); return d
+    except Exception:
+        d=_os.path.join(_tf.gettempdir(),'sov33_sigil'); _os.makedirs(d,exist_ok=True); return d
+_SOVDIR=_sov_dir()
+
 
 TRUST_MIN = 2.0   # effective independent votes required to TRUST triangle agreement (else escalate)
 # The 4 governed brains of SOV3-cubed (per estate: SOV3_OOWM_MODEL_STACK_2026-07-07.md,
@@ -31,7 +40,7 @@ TRUST_MIN = 2.0   # effective independent votes required to TRUST triangle agree
 GOVERNED_BRAINS = ['Compliance', 'Defense', 'Intuition', 'Voice']  # each OWEM runs top-3 as its LANE
 
 # ── SIGIL chain (byte-compatible with sov33.sigil_emit) ──────────────────────
-SIGIL_DIR = Path(os.environ.get('SOV33_SIGIL_DIR', str(Path.home() / '.sovereign')))
+SIGIL_DIR = Path(os.environ.get('SOV33_SIGIL_DIR', str(Path(_SOVDIR))))
 try:
     SIGIL_DIR.mkdir(parents=True, exist_ok=True)
 except (PermissionError, OSError):

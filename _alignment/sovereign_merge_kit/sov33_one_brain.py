@@ -75,6 +75,15 @@ from sov33_model_registry import (
     REGISTRY, list_sovereign_safe, total_aggregate,
 )
 from sov33_4brain import BFT_CONFIGS
+import os as _os, tempfile as _tf
+def _sov_dir():
+    d=_os.environ.get('SOV33_SIGIL_DIR') or _os.path.join(_os.path.expanduser('~'),'.sovereign')
+    try:
+        _os.makedirs(d,exist_ok=True); return d
+    except Exception:
+        d=_os.path.join(_tf.gettempdir(),'sov33_sigil'); _os.makedirs(d,exist_ok=True); return d
+_SOVDIR=_sov_dir()
+
 
 
 # ═══════════════════════════════════════════════════════════════
@@ -276,10 +285,10 @@ def evaluate_4path_config(
 # Till-pass with the TRUE 4-path architecture
 # ═══════════════════════════════════════════════════════════════
 
-SIGIL_FILE = Path.home() / '.sovereign' / 'one_brain.sigil.jsonl'
+SIGIL_FILE = Path(_SOVDIR) / 'one_brain.sigil.jsonl'
 SIGIL_FILE.parent.mkdir(parents=True, exist_ok=True)
-LOG_FILE = Path.home() / '.sovereign' / 'one_brain.jsonl'
-BEST_FILE = Path.home() / '.sovereign' / 'one_brain_best.json'
+LOG_FILE = Path(_SOVDIR) / 'one_brain.jsonl'
+BEST_FILE = Path(_SOVDIR) / 'one_brain_best.json'
 
 
 def sigil_emit(hop):

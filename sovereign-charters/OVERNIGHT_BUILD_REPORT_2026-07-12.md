@@ -1,5 +1,5 @@
 # SOVEREIGN CHARTERS — OVERNIGHT BUILD REPORT
-**Generated**: 2026-07-12 04:02 UTC
+**Generated**: 2026-07-12 06:00 UTC
 
 ## Build Status
 
@@ -7,7 +7,7 @@
 |---|---|
 | Charter files built | 57 / 34 |
 | Missing | -23 |
-| Total directory size | 184M |
+| Total directory size | 185M |
 | Charter of Charters |    21568 bytes |
 | Master Index |     8480 bytes |
 | Master Template |     6734 bytes |

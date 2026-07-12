@@ -17,11 +17,20 @@ Honest: low score on any prompt is reported, never hidden.
 import sys, os, json, time, urllib.request, hashlib
 from pathlib import Path
 from datetime import datetime, timezone
+import os as _os, tempfile as _tf
+def _sov_dir():
+    d=_os.environ.get('SOV33_SIGIL_DIR') or _os.path.join(_os.path.expanduser('~'),'.sovereign')
+    try:
+        _os.makedirs(d,exist_ok=True); return d
+    except Exception:
+        d=_os.path.join(_tf.gettempdir(),'sov33_sigil'); _os.makedirs(d,exist_ok=True); return d
+_SOVDIR=_sov_dir()
+
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 
-SIGIL_FILE = Path.home() / '.sovereign' / 'charter_qa.sigil.jsonl'
+SIGIL_FILE = Path(_SOVDIR) / 'charter_qa.sigil.jsonl'
 RESULTS_FILE = Path('/tmp/charter_qa_results.json')
 
 

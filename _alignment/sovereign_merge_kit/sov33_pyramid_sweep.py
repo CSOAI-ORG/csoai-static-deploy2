@@ -26,11 +26,20 @@ import argparse
 import urllib.request
 from pathlib import Path
 from datetime import datetime, timezone
+import os as _os, tempfile as _tf
+def _sov_dir():
+    d=_os.environ.get('SOV33_SIGIL_DIR') or _os.path.join(_os.path.expanduser('~'),'.sovereign')
+    try:
+        _os.makedirs(d,exist_ok=True); return d
+    except Exception:
+        d=_os.path.join(_tf.gettempdir(),'sov33_sigil'); _os.makedirs(d,exist_ok=True); return d
+_SOVDIR=_sov_dir()
+
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 
-SIGIL_FILE = Path.home() / '.sovereign' / 'pyramid_sweep.sigil.jsonl'
+SIGIL_FILE = Path(_SOVDIR) / 'pyramid_sweep.sigil.jsonl'
 SIGIL_FILE.parent.mkdir(parents=True, exist_ok=True)
 
 
@@ -81,7 +90,7 @@ def call_ollama(prompt: str, model: str = 'qwen2.5:3b', max_tokens: int = 100) -
 
 def call_groq(prompt: str, model: str = 'llama-3.3-70b-versatile', max_tokens: int = 100) -> tuple:
     try:
-        keystore = Path.home() / '.sovereign' / 'keystore' / 'groq_api_key.txt'
+        keystore = Path(_SOVDIR) / 'keystore' / 'groq_api_key.txt'
         api_key = os.environ.get('GROQ_API_KEY') or (keystore.read_text().strip() if keystore.exists() else '')
         if not api_key:
             return '[no-key]', 0

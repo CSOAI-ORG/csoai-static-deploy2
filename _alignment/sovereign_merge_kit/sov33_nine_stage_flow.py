@@ -6,7 +6,7 @@ faking success. BFT at any stage requires a cross-lineage checker (ρ-aware) —
 """
 STAGES = [
     ("LEARN",          "PARTIAL", "time+substrate-aware NOW (sov33_learn_stage); memory layer pending"),
-    ("CHECK_EXISTING", "NEW",     "audit what's already built; never rebuild"),
+    ("CHECK_EXISTING", "RUNNING", "audit what's built (never rebuild) + PROBE every 'blocked/gated' claim live (sov33_gated_check) before reporting it — anti-relapse"),
     ("PLAN",           "RUNNING", "decompose the task (PDCA g1)"),
     ("DO",             "RUNNING", "execute — brain/swarm (PDCA g2)"),
     ("ACT",            "RUNNING", "apply/commit the result (PDCA g3)"),
@@ -27,6 +27,9 @@ def flow_manifest():
             "gates":GATES,
             "bft_rule":"cross-lineage checkers only; escalate-don't-average; log rho; rho>=0.7=theatre",
             "honest_scope":"governance+throughput, NOT capability; params don't add across stacked brains",
+            "anti_relapse_rule":"CHECK_EXISTING stage: a 'blocked/gated/owner-required' claim is INVALID until "
+                "PROBED LIVE (sov33_gated_check.probe_gate). Never mark work gated from memory/assumption to "
+                "offload it. Test first; report gated only after a real probe fails.",
             "exec_mode":EXEC_MODE}
 
 if __name__ == "__main__":

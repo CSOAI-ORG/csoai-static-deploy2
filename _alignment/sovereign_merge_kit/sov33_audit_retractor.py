@@ -22,6 +22,15 @@ import time
 import hashlib
 from pathlib import Path
 from datetime import datetime, timezone
+import os as _os, tempfile as _tf
+def _sov_dir():
+    d=_os.environ.get('SOV33_SIGIL_DIR') or _os.path.join(_os.path.expanduser('~'),'.sovereign')
+    try:
+        _os.makedirs(d,exist_ok=True); return d
+    except Exception:
+        d=_os.path.join(_tf.gettempdir(),'sov33_sigil'); _os.makedirs(d,exist_ok=True); return d
+_SOVDIR=_sov_dir()
+
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
@@ -152,9 +161,9 @@ RETRACTED_CLAIMS = [
 # The AUDIT gate (hard gate before any claim enters the substrate)
 # ═══════════════════════════════════════════════════════════════
 
-SIGIL_FILE = Path.home() / '.sovereign' / 'audit_retractor.sigil.jsonl'
+SIGIL_FILE = Path(_SOVDIR) / 'audit_retractor.sigil.jsonl'
 SIGIL_FILE.parent.mkdir(parents=True, exist_ok=True)
-RET_LOG = Path.home() / '.sovereign' / 'retractions.jsonl'
+RET_LOG = Path(_SOVDIR) / 'retractions.jsonl'
 RET_LOG.parent.mkdir(parents=True, exist_ok=True)
 
 

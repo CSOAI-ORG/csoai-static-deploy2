@@ -112,7 +112,16 @@ DORADO_CATEGORIES = {
 # SIGIL chain for DORADO events (separate from substrate SIGIL)
 # Dir is env-overridable (SOV33_SIGIL_DIR) and fail-soft so it imports in sandboxes too.
 import os as _os
-_sigil_dir = Path(_os.environ.get('SOV33_SIGIL_DIR', str(Path.home() / '.sovereign')))
+import os as _os, tempfile as _tf
+def _sov_dir():
+    d=_os.environ.get('SOV33_SIGIL_DIR') or _os.path.join(_os.path.expanduser('~'),'.sovereign')
+    try:
+        _os.makedirs(d,exist_ok=True); return d
+    except Exception:
+        d=_os.path.join(_tf.gettempdir(),'sov33_sigil'); _os.makedirs(d,exist_ok=True); return d
+_SOVDIR=_sov_dir()
+
+_sigil_dir = Path(_os.environ.get('SOV33_SIGIL_DIR', str(Path(_SOVDIR))))
 try:
     _sigil_dir.mkdir(parents=True, exist_ok=True)
 except (PermissionError, OSError):

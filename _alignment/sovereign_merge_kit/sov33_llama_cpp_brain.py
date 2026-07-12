@@ -15,12 +15,21 @@ import time
 import argparse
 from pathlib import Path
 from datetime import datetime, timezone
+import os as _os, tempfile as _tf
+def _sov_dir():
+    d=_os.environ.get('SOV33_SIGIL_DIR') or _os.path.join(_os.path.expanduser('~'),'.sovereign')
+    try:
+        _os.makedirs(d,exist_ok=True); return d
+    except Exception:
+        d=_os.path.join(_tf.gettempdir(),'sov33_sigil'); _os.makedirs(d,exist_ok=True); return d
+_SOVDIR=_sov_dir()
+
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 
-GGUF_PATH = Path.home() / '.sovereign' / 'models' / 'qwen3-sov-compliance-0.6b-q4.gguf'
-SIGIL_FILE = Path.home() / '.sovereign' / 'llama_cpp_brain.sigil.jsonl'
+GGUF_PATH = Path(_SOVDIR) / 'models' / 'qwen3-sov-compliance-0.6b-q4.gguf'
+SIGIL_FILE = Path(_SOVDIR) / 'llama_cpp_brain.sigil.jsonl'
 
 
 def sigil_emit(hop: dict) -> str:
