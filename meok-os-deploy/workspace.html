@@ -59,6 +59,7 @@ body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.5 -apple-system,
 <div class="top">
   <span class="m">M</span><b>MEOK Workspace</b><span class="dim" id="who">· your Sovereign</span>
   <span class="sp"></span>
+  <span class="dim" id="membadge" title="what I remember about you — signed, bonded to you" style="margin-right:6px">🧠 0</span>
   <a href="/council.html">🏛 Council</a><a href="/connect.html">🔗 Any AI</a><a href="/">☰ MEOK OS</a>
 </div>
 <div class="stage">
@@ -110,6 +111,7 @@ const p=new URLSearchParams(location.search);
 const NAME=(p.get('name')||localStorage.getItem('meok_sov_name')||'your Sovereign').slice(0,60);
 const ARC=(p.get('archetype')||localStorage.getItem('meok_archetype')||'sovereign companion').slice(0,60);
 document.getElementById('who').textContent='· '+NAME;
+setTimeout(()=>{ try{ updateMemBadge(); }catch(e){} },0);
 const desk=document.getElementById('desk'), empty=document.getElementById('empty');
 const rb=document.getElementById('rbrain'), lb=document.getElementById('lbrain');
 const dots='<span class="dotwrap"><span class="d"></span><span class="d"></span><span class="d"></span></span>';
@@ -150,8 +152,17 @@ const SPAWN={
 document.querySelectorAll('[data-spawn]').forEach(el=>el.onclick=()=>{ const k=el.getAttribute('data-spawn'); if(SPAWN[k]) SPAWN[k](); });
 document.getElementById('clearwins').onclick=()=>{ desk.innerHTML=''; empty.style.display='flex'; };
 
+// ── session memory — the character is bonded to the user + aware across the session ──
+const MEMK='meok_ws_mem_'+(NAME.toLowerCase().replace(/[^a-z0-9]+/g,'-')||'sov');
+function memLoad(){ try{ return JSON.parse(localStorage.getItem(MEMK)||'[]'); }catch(e){ return []; } }
+function memAll(){ return memLoad(); }
+function memAdd(fact){ const m=memLoad(); m.push({fact:String(fact).slice(0,400), ts:Date.now()}); localStorage.setItem(MEMK, JSON.stringify(m.slice(-100))); updateMemBadge(); return m.length; }
+function memContext(){ const m=memLoad().slice(-8); return m.length? ('What you already know about this user (their memory, bonded to you): '+m.map(x=>x.fact).join(' · ')+'\n\n') : ''; }
+function updateMemBadge(){ const b=document.getElementById('membadge'); if(b) b.textContent='🧠 '+memLoad().length; }
+async function mintMemory(fact){ try{ const ep={type:'meok.memory.v1',fact:String(fact).slice(0,400),owner:'did:csoai:'+(NAME.toLowerCase().replace(/[^a-z0-9]+/g,'-')||'user'),ts:new Date().toISOString()}; const d=await (await fetch('/api/sign',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({payload:ep})})).json(); return d.fingerprint||null; }catch(e){ return null; } }
+
 async function think(persona, prompt, tier){
-  const r=await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:prompt,persona,tier,register:'plain'})});
+  const r=await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:memContext()+prompt,persona,tier,register:'plain'})});
   const d=await r.json(); return {text:(d.response||d.say||'(no reply)'), model:d.model||''};
 }
 function route(goal){
@@ -168,6 +179,12 @@ function route(goal){
 document.getElementById('go').onclick=async function(){
   const goal=document.getElementById('q').value.trim(); if(!goal) return;
   this.disabled=true;
+  // remember goals → mint a signed memory bonded to the user
+  const mm=goal.match(/^\s*(remember|note that|note:|don'?t forget)\s*:?\s*(.+)/i);
+  if(mm){ const fact=mm[2].trim(); const n=memAdd(fact); const fp=await mintMemory(fact);
+    win('🧠 Remembered', 'Bonded to you ✓  ('+n+' memories)\n\n"'+fact+'"\n\n'+(fp?('signed · '+fp):'stored on your device'));
+    rb.textContent='remembered — I will bring this up when it matters.'; lb.textContent='signed + stored, bonded to you.';
+    document.getElementById('q').value=''; this.disabled=false; return; }
   rb.innerHTML=dots+' first instinct…'; lb.innerHTML=dots+' verifying…';
   // TWIN BRAINS — two persona'd OWEM passes in parallel (right = draft/fast, left = verify/careful)
   const rP='You are the RIGHT BRAIN of '+NAME+', a '+ARC+' — fast, intuitive, associative. In 2-3 short lines give your first instinct on the user goal and name which surface to open (world / character / govern / sign / memory).';
