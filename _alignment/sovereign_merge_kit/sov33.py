@@ -1397,6 +1397,23 @@ class Sovereign:
 # CAPABILITY DISPATCHER
 # ═══════════════════════════════════════════════════════════════
 
+def capability_readiness(mode: str = 'gate', **kwargs):
+    """Production-readiness gate: score every capability RUNNING/GATED/BROKEN. Ship rule = 0 broken.
+    GATED (needs owner/GPU/endpoint, fail-soft) is NOT broken. One-command health check."""
+    try:
+        from sov33_readiness_gate import run as _run
+        rows = _run()
+        running = [r for r in rows if r['class'] == 'RUNNING']
+        gated = [r for r in rows if r['class'] == 'GATED']
+        broken = [r for r in rows if r['class'] == 'BROKEN']
+        return {'capability': 'readiness', 'total': len(rows),
+                'running': len(running), 'gated': len(gated), 'broken': len(broken),
+                'ship_ready': len(broken) == 0,
+                'verdict': 'SHIP-READY (0 broken)' if not broken else f'NOT READY ({len(broken)} broken)',
+                'broken_list': [r['capability'] for r in broken]}
+    except Exception as e:
+        return {'capability': 'readiness', 'error': str(e)[:160]}
+
 def capability_distill(mode: str = 'plan', max_teachers: int = 5, **kwargs):
     """Many-teacher distillation into SOV33's own weights (Nick's 'learn from all models' idea, made real).
     Uses the diverse sovereign-safe teacher pool as distillation signal, governed by cross-lineage agreement
@@ -1559,11 +1576,36 @@ def capability_self_awareness(query: str = None) -> dict:
                         f"runtime, so anything added since I was trained is already here."),
             'tools': names, 'manifest': m}
 
+def capability_live_tool_awareness(query: str = None) -> dict:
+    """LIVE self-model of ALL tooling — never frozen, re-discovered every call.
+    Different from capability_self_awareness: includes Hermes runtime tools
+    (browser, file, terminal, web, agent delegation) + skills + diff vs snapshot.
+    """
+    try:
+        from sov33_live_tool_awareness import answer_about_awareness
+        result = answer_about_awareness()
+        return {
+            'capability': 'live-tool-awareness',
+            'summary': result['summary'],
+            'total_tools': result['total_tools'],
+            'by_category': result['by_category'],
+            'new_since_snapshot': result['new_since_snapshot'][:20],
+            'inventory': result['inventory'],
+            'honest_diff_from_frozen': 're-discovers on every call; new MCPs/skills/capabilities appear automatically',
+        }
+    except Exception as e:
+        return {'capability': 'live-tool-awareness', 'error': str(e)[:160]}
+
+
 CAPABILITIES = {
     'self': capability_self_awareness,
     'tools': capability_self_awareness,
     'capabilities': capability_self_awareness,
     'what-can-you-do': capability_self_awareness,
+    'live-tools': capability_live_tool_awareness,
+    'tool-awareness': capability_live_tool_awareness,
+    'awareness': capability_live_tool_awareness,
+    'readiness': capability_readiness,
     'distill': capability_distill,
     'owem-world': capability_owem_world,
     'canonical': capability_canonical,
