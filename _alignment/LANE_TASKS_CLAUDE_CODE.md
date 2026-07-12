@@ -56,3 +56,16 @@ REAL-WORLD PLAN over days (not one burst):
 HONEST LIMITS: free T4s fine-tune <=~8B + QLoRA only (35B merge needs rented GPU); sequential over days; own accounts.
 TARGETS: do NOT claim general-Elo win vs frontier (unwinnable + falsifiable). Win reasoning-per-$, governed
 correctness, peer-bracket Game Arena, own governance benchmark. NEVER game a board. See SOV33_ARENA_TARGETS_AND_LAUNCH.
+
+## ADDENDUM 2 — competition SELECTION strategy (thin-field targeting)
+INSIGHT (owner): train first + many comps have thin fields (~hundreds-2000 entrants) = real shot at top-N.
+TRUE for MID-TIER; FALSE for flagships. Rules:
+- TARGET: mid-tier reasoning/LLM competitions with THIN fields — real top-N chance = real citable credential.
+  Training a distilled sovereign student + cascade is a genuine edge WHERE the task is reasoning + field is thin.
+- SKIP: flagships (ARC Prize / big-LLM — thousands of FUNDED serious teams, not winnable by a small wrapper) and
+  OFF-DOMAIN comps (image-seg/tabular — training our reasoning student does nothing; wrong tool).
+- TRAINING HELPS ONLY IF RELEVANT: reasoning-trace distillation edges a REASONING comp; it does nothing off-domain.
+- EACH top-N placement = a reproducible, citable proof point for PR ("SOV33small3 placed top-N in [comp]").
+- STACKS with arena plan: thin-field placements + reasoning-per-$ + Game Arena wins + reproducible governance
+  battery (33-prompt, recall/prec 1.00, honest-caveated) = a PORTFOLIO of real citable results, none claiming to
+  beat the frontier head-on. That's the credible + survivable PR story.
