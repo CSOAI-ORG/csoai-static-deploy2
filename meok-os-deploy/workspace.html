@@ -92,13 +92,13 @@ body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.5 -apple-system,
   <!-- RIGHT: twin J-Space brains -->
   <aside class="brains">
     <div class="brain r">
-      <div class="bh">✨ Right brain <span class="tag">small OWEM · intuition/draft</span></div>
-      <div class="bd" id="rbrain">Idle — the fast 8B reflex: first-instinct lives here.</div>
+      <div class="bh">✨ Right brain <span class="tag">fast draft · reflex model</span></div>
+      <div class="bd" id="rbrain">Idle — the fast reflex: first-instinct lives here.</div>
     </div>
-    <div class="router" id="router">🖐 <b>Medium OWEM</b> · tool-router (70B) <span id="routermsg">idle — decides which surface to open</span></div>
+    <div class="router" id="router">🖐 <b>Tools scope</b> · router (the character's hands) <span id="routermsg">idle — decides which surface to open</span></div>
     <div class="brain l">
-      <div class="bh">🧠 Left brain <span class="tag">large OWEM · logic/verify</span></div>
-      <div class="bd" id="lbrain">Idle — the careful 120B check lives here.</div>
+      <div class="bh">🧠 Left brain <span class="tag">deep verify · careful model</span></div>
+      <div class="bd" id="lbrain">Idle — the careful check lives here.</div>
     </div>
     <div class="jspacebtns">
       <button data-spawn="world">open J-Space world</button>
@@ -192,8 +192,8 @@ document.getElementById('go').onclick=async function(){
   // RIGHT brain = SMALL OWEM (8B, reflex/draft) · LEFT brain = LARGE OWEM (120B, verify) — real, different models
   const [right,left]=await Promise.allSettled([think(rP,goal,'small'),think(lP,goal,'large')]);
   const rTag=document.querySelector('.brain.r .tag'), lTag=document.querySelector('.brain.l .tag');
-  if(right.status==='fulfilled'){ rb.textContent=right.value.text; if(rTag&&right.value.model) rTag.textContent='small OWEM · '+right.value.model; } else rb.textContent='(right brain unreachable)';
-  if(left.status==='fulfilled'){ lb.textContent=left.value.text; if(lTag&&left.value.model) lTag.textContent='large OWEM · '+left.value.model; } else lb.textContent='(left brain unreachable)';
+  if(right.status==='fulfilled'){ rb.textContent=right.value.text; if(rTag&&right.value.model) rTag.textContent='fast draft · '+right.value.model; } else rb.textContent='(right brain unreachable)';
+  if(left.status==='fulfilled'){ lb.textContent=left.value.text; if(lTag&&left.value.model) lTag.textContent='deep verify · '+left.value.model; } else lb.textContent='(left brain unreachable)';
   // ACT — the MEDIUM OWEM (70B tool-router) brings up the surface the goal needs in the desktop
   const router=document.getElementById('router'), rmsg=document.getElementById('routermsg');
   const k=route(goal); router.classList.add('act');
