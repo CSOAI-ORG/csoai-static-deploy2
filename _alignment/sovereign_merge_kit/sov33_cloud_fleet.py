@@ -40,11 +40,20 @@ import sys, os, json, time, hashlib, urllib.request
 from pathlib import Path
 from datetime import datetime, timezone
 from dataclasses import dataclass, asdict
+import os as _os, tempfile as _tf
+def _sov_dir():
+    d=_os.environ.get('SOV33_SIGIL_DIR') or _os.path.join(_os.path.expanduser('~'),'.sovereign')
+    try:
+        _os.makedirs(d,exist_ok=True); return d
+    except Exception:
+        d=_os.path.join(_tf.gettempdir(),'sov33_sigil'); _os.makedirs(d,exist_ok=True); return d
+_SOVDIR=_sov_dir()
+
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 
-SIGIL_FILE = Path.home() / '.sovereign' / 'cloud_fleet.sigil.jsonl'
+SIGIL_FILE = Path(_SOVDIR) / 'cloud_fleet.sigil.jsonl'
 CARE_FLOOR = 0.95
 
 
@@ -127,7 +136,7 @@ def discover_oracle_genai() -> CloudBackend:
 def discover_groq() -> CloudBackend:
     """Check Groq (free tier, llama-70b + gpt-oss-120b)."""
     try:
-        keystore = Path.home() / '.sovereign' / 'keystore' / 'groq_api_key.txt'
+        keystore = Path(_SOVDIR) / 'keystore' / 'groq_api_key.txt'
         if not keystore.exists():
             return CloudBackend(
                 name='Groq',
