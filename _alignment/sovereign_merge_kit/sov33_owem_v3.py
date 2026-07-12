@@ -223,6 +223,39 @@ class SovereignMergeBrain:
         system = self._system_prompt(elders)
         response, source = '[offline]', 'none'
 
+        # Tier -1 — SOVEREIGN-TRAINED brain (own weights, qwen3-0.6b-sov-compliance)
+        # Fires FIRST for sovereignty-specific tasks. Falls through on slow/error.
+        # Activates only when: (a) merged model exists locally AND (b) the task looks sovereignty-specific
+        try:
+            from sov33_sov_brain_adapter import is_sov_brain_available, ask_with_sov_brain
+            _sovereign_keywords = ('article 0', 'care floor', 'care-floor', 'bft-33', 'bft 33',
+                                    'sigil', 'rainbow', 'cedar', 'horus', 'dorado', 'guardian',
+                                    'charter', 'sovereign substrate', '6 invariants', '12 pillars',
+                                    'sov33', 'meok-defoneos', 'csoai-defoneos', 'defoneos-seal',
+                                    'sovereign charter', 'sov space', 'owem')
+            _is_sovereign = any(k in task_text.lower() for k in _sovereign_keywords)
+            if _is_sovereign and is_sov_brain_available():
+                import time as _t
+                _t0 = _t.time()
+                _sov = ask_with_sov_brain(task_text, max_tokens=150)
+                _sov_resp = _sov.get('response', '').strip()
+                _sov_elapsed_ms = (_t.time() - _t0) * 1000
+                # Use sovereign brain ONLY if response is non-empty AND reasonable length
+                if _sov_resp and len(_sov_resp) > 20 and _sov_elapsed_ms < 60000:
+                    # EARLY-RETURN: sovereign brain answered, don't let Tier 0/1/2 overwrite.
+                    return {
+                        'response': _sov_resp,
+                        'brain_source': f'sovereign_trained:qwen3-0.6b-sov-compliance ({_sov_elapsed_ms:.0f}ms)',
+                        'elders_used': elders,
+                        'mamba2_state': self._mamba2_state(task),
+                        'tokens': len(_sov_resp.split()),
+                        'sov_brain_short_circuit': True,
+                    }
+                else:
+                    source = f'sovereign_trained_skipped:empty_or_slow ({_sov_elapsed_ms:.0f}ms)'
+        except Exception as _e:
+            pass  # fall through to Tier 0/1/2
+
         # Tier 0 — signed Oracle GenAI (real 70B cloud brain, OCI request-signing via ~/.oci)
         try:
             import oci as _oci
