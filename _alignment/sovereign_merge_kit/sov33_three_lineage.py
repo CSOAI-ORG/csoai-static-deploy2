@@ -27,6 +27,15 @@ import argparse
 import statistics
 from pathlib import Path
 from datetime import datetime, timezone
+import os as _os, tempfile as _tf
+def _sov_dir():
+    d=_os.environ.get('SOV33_SIGIL_DIR') or _os.path.join(_os.path.expanduser('~'),'.sovereign')
+    try:
+        _os.makedirs(d,exist_ok=True); return d
+    except Exception:
+        d=_os.path.join(_tf.gettempdir(),'sov33_sigil'); _os.makedirs(d,exist_ok=True); return d
+_SOVDIR=_sov_dir()
+
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
@@ -56,7 +65,7 @@ LINEAGES = {
 }
 
 # Pairwise ρ tracker
-RHO_LOG = Path.home() / '.sovereign' / 'rho_log.jsonl'
+RHO_LOG = Path(_SOVDIR) / 'rho_log.jsonl'
 RHO_LOG.parent.mkdir(parents=True, exist_ok=True)
 
 
@@ -285,7 +294,7 @@ def three_lineage_panel(request: str, use_oracle: bool = False) -> dict:
     }
 
     # SIGIL emission (sovereign-bound)
-    sigil_file = Path.home() / '.sovereign' / 'three_lineage_panel.sigil.jsonl'
+    sigil_file = Path(_SOVDIR) / 'three_lineage_panel.sigil.jsonl'
     sigil_file.parent.mkdir(parents=True, exist_ok=True)
     chain = []
     if sigil_file.exists():

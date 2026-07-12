@@ -36,6 +36,15 @@ import argparse
 import subprocess
 from pathlib import Path
 from datetime import datetime, timezone
+import os as _os, tempfile as _tf
+def _sov_dir():
+    d=_os.environ.get('SOV33_SIGIL_DIR') or _os.path.join(_os.path.expanduser('~'),'.sovereign')
+    try:
+        _os.makedirs(d,exist_ok=True); return d
+    except Exception:
+        d=_os.path.join(_tf.gettempdir(),'sov33_sigil'); _os.makedirs(d,exist_ok=True); return d
+_SOVDIR=_sov_dir()
+
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
@@ -89,7 +98,7 @@ PRINCIPLES = {
 # State + SIGIL
 # ═══════════════════════════════════════════════════════════════
 
-STATE_DIR = Path.home() / '.sovereign' / 'y2d'
+STATE_DIR = Path(_SOVDIR) / 'y2d'
 STATE_DIR.mkdir(parents=True, exist_ok=True)
 SIGIL_FILE = STATE_DIR / 'cycles.sigil.jsonl'
 HISTORY_FILE = STATE_DIR / 'history.jsonl'
