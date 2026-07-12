@@ -56,7 +56,8 @@ def run_all_tests():
     print("-" * 70)
     for path in ['/health', '/api/status', '/api/capabilities', '/api/registry',
                  '/api/evals', '/api/rho', '/v1/models', '/api/brain-stack',
-                 '/api/hyperopt', '/api/continual-learning']:
+                 '/api/hyperopt', '/api/continual-learning', '/api/admin/status',
+                 '/api/game-arena', '/api/kaggle/opportunities', '/api/setups']:
         total += 1
         s, d = http_get(path)
         if test(path, s):
@@ -92,6 +93,21 @@ def run_all_tests():
     s, d = http_post('/api/reasoning/enhance', {'message': 'What is X?', 'owem': 'voice'})
     total += 1
     if test('/api/reasoning/enhance', s, msg=f"(cot_enabled={d.get('cot_enabled', '?')})"):
+        passed += 1
+
+    s, d = http_post('/api/kaggle/submit', {'competition': 'TEST', 'predictions': [1,2,3]})
+    total += 1
+    if test('/api/kaggle/submit', s, msg=f"(sigil={d.get('sigil', '?')[:16]})"):
+        passed += 1
+
+    s, d = http_post('/api/self-consistency', {'message': 'What is 1+1?', 'owem': 'general', 'n_samples': 1})
+    total += 1
+    if test('/api/self-consistency', s, msg=f"(agreement={d.get('agreement', '?')})"):
+        passed += 1
+
+    s, d = http_post('/api/pyramid', {})
+    total += 1
+    if test('/api/pyramid', s, msg=f"(topology={d.get('topology', '?')})"):
         passed += 1
 
     print("\n[3/6] Care-floor enforcement")
