@@ -29,7 +29,7 @@ models; the estate governs, routes, signs, and remembers — it does not "think 
 | 5 | **Human passport** | You get a cryptographic tier (founder-build vs public-sandbox) — never biometric | `sov33_identity.py` | **RUNNING** (verified: founder=build, public=sandbox, biometric=False) |
 | 6 | **Compliance passport** | An Article-50 (EU AI Act) transparency passport for a deployment | `issue_article50_passport` | **CATALOG-ONLY** — advertised, not a served endpoint |
 | 7 | **User-memory** | Your companion remembers across sessions/surfaces | `get_memory_stats` MCP method (**17,088 episodes**) | **RUNNING** (returned by live MCP call) |
-| 8 | **SovSpace inner/outer** | A 3D sovereign digital-twin world you move through | `meok-os-deploy/sovspace3d.html` (Three.js `three@0.160.0`); Cesium 3D-tiles + UE5.4 view | **DESIGNED** — the on-disk 3D file is Three.js-only (no Cesium found in it); Cesium + UE = spec |
+| 8 | **SovSpace inner/outer** | A 3D sovereign digital-twin world you move through | `meok-os-deploy/sovspace3d.html` — **REAL CesiumJS 1.123** (free path: OSM + NASA GIBS, no token), embed-aware; UE5.4 = premium | **RUNNING** (rebuilt 2026-07-11 M4: was arcade three-globe → real Cesium; live+verified on os.meok.ai; now IS the OS "MEOK Earth" via meok-cmd/meok-node postMessage) |
 | 9 | **Free / paid tier** | Free = works offline & sovereign; Paid = online federation | Tier model (§5 of state-consolidation) | Model defined; free=**OFFLINE-SOVEREIGN**, paid=**ONLINE-FEDERATION** |
 
 ---
@@ -107,3 +107,25 @@ Run env: `export SOV33_SIGIL_DIR=$TMPDIR/sov33_sigil`, `sys.path.insert(0, '/Use
 - `sov33_queen_hives.py` → 10 sub-hives, local BFT + cross-hive SIGIL-signed arbitration (ruling POOL_B, N_eff=2.667). **RUNS.**
 - `sov33_escalate.py` → **NOT runnable here** (`oci` SDK missing) — live cloud defer-to-escalate path is DESIGNED/env-blocked; its trust math is the RUNNING `effective_votes`.
 - Live-MCP-verified (prior session, per state-consolidation): `register_agent`, `get_memory_stats` (17,088 episodes), `sovereign_health_check`, `vault_stats`.
+
+---
+
+## M4 END-USER SHIPS (2026-07-11) — RUNNING on os.meok.ai (live-verified in-browser)
+Aligned to MEOK_CHARACTER_ARCHITECTURE_CANON (character=WebGL · world=Cesium · mind=signed MCP card).
+- **SovSpace world → real Cesium** (item 8): killed the arcade three-globe; `sovspace3d.html` on CesiumJS
+  1.123 free path; agentic "take me to <city>" fly-down; embed-aware so it IS the OS "MEOK Earth". RUNNING.
+- **Character voice = DEFONEOS Sovereign/Horus** in `character.html` (one signing spine, two markets). RUNNING.
+- **Globe convergence**: 3 globes → ONE Cesium engine (universe.html three.js absorbed → redirect; earth3d
+  + sovspace3d pinned to 1.123; one meok-cmd/meok-node contract). RUNNING.
+- **Predictive typing** (end-user intuitive): on-device ghost-completion (Tab-accept) from the REAL command
+  vocab + user history, + background answer prefetch → feels instant. RUNNING (`sovPredict`/`_sovPF`).
+- **Startup consent & awareness onboarding** (the Presence/Awareness surface, item 5-adjacent): first-run
+  "May I learn about you?" — 4 opt-ins OFF by default, each signed on-device via `/api/sign` (Ed25519
+  VERIFIED on prod), refusable, reviewable ("what can you see about me"): 🧠 learn · 📁 files · 📶 WiFi
+  mesh+security (SOV33·Guardian) · 👁 presence (wires real `awareStart()` webcam; stranger locks private
+  surfaces). Faithful to MEOK_PRESENCE_AWARENESS.md. RUNNING (signing verified).
+- **Dock character seat = the emergence BEING of light** (not a globe) — globe belongs to MEOK Universe;
+  J-Space = internal reflection. `sovBeing()` hue-tinted, egg→radiant, hatch bloom. RUNNING.
+- HONEST: the deep "control your PC" agent (`computer-use-panel.tsx`) + `meok-amica` VRM face live in the
+  Tauri desktop lane / are gitignored-absent → NOT shipped here, flagged for recovery. Predictive prefetch
+  uses `/api/chat` (SOV33 small-model router optional); dock being is a 2D representation of the WebGL body.

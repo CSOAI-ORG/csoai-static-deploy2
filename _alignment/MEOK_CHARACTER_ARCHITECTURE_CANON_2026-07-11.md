@@ -50,3 +50,15 @@ A **signed A2A agent-card + MCP endpoint** — the portable, governed identity:
 ```
 Canonical. Don't call the character "a Cesium thing" or "an Unreal thing" — it's the **MCP card**; those
 are bodies it drives.
+
+---
+
+## DOCK SEAT RECONCILIATION (2026-07-11, M4) — character in the seat, globe to the Universe
+Nick: *"where you're building the globe is where the AI character is supposed to go — the emergence, the
+hatching. The globe is for MEOK Universe. J-Space is internal reflection."* Fixed in `os.meok.ai/index.html`:
+the always-present dock seat drew a 2D rotating **globe** (`sovGlobe()`) with the emoji over it → replaced
+with **`sovBeing()`**: the emergence **being of light** (egg→radiant, hue-tinted, hatch bloom). Sub-label
+"tap the globe to enter" → "your sovereign · tap to enter your world". Consistent with the canon: the seat
+shows a lightweight **body** of the same signed MCP-card mind; the **Cesium globe stays the World body
+(MEOK Universe / SovSpace)**, not the character's face. (Ideal next: the dock mirrors the real WebGL
+`character.html` body, or the recovered `meok-amica` VRM, instead of the 2D representation.)
