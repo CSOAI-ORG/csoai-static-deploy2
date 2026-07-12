@@ -69,7 +69,7 @@ a{color:var(--gold)}
 const p=new URLSearchParams(location.search);
 const name=(p.get('name')||'MEOK Sovereign').slice(0,60);
 const arc=(p.get('archetype')||'sovereign companion').slice(0,60);
-const slug=name.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'')||'sovereign';
+const slug=(name.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'').replace(/^meok-?/,'')||'sovereign');
 const q='?name='+encodeURIComponent(name)+'&archetype='+encodeURIComponent(arc);
 const url='https://os.meok.ai/api/mcp'+q;
 document.getElementById('cname').textContent=name;
