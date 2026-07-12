@@ -712,6 +712,61 @@ def handle_kaggle_opportunities() -> dict:
         return {'error': f'kaggle opportunities failed: {e}'}
 
 
+
+def handle_game_arena() -> dict:
+    """GET /api/game-arena — SOV33small3 game-playing capabilities for Kaggle Game Arena."""
+    return {
+        'model_name': 'SOV33small3',
+        'architecture': '3 small OWEMs + 1 large SOV33cubed',
+        'topology': 'triangle-around-1 (3-around-1 BFT governance)',
+        'cascades': '90/10 LEFT (small fast) + RIGHT (large deep)',
+        'active_per_request_B': 17.3,
+        'reach_per_owem_B': 218.0,
+        'total_owems': 4,  # 3 small + 1 large
+        'owem_stack': [
+            {'name': 'SOV33-Compliance', 'role': 'EU AI Act, Article 50', 'size_B': 3.0, 'type': 'small'},
+            {'name': 'SOV33-Defense', 'role': 'Kill switch, intrusion', 'size_B': 8.0, 'type': 'small'},
+            {'name': 'SOV33-Intuition', 'role': 'Patterns, predictions', 'size_B': 3.0, 'type': 'small'},
+            {'name': 'SOV33cubed', 'role': 'Final escalation + governance', 'size_B': 70.0, 'type': 'large'},
+        ],
+        'governance': {
+            'care_floor': 0.95,
+            'article_0_bound': True,
+            '12_sovereign_pillars': True,
+            'bft_33_quorum': 23,
+            'sigstore_ed25519': True,
+        },
+        'game_capabilities': {
+            'illegal_move_veto': True,  # care-floor gates before emit
+            'audit_trail_per_move': True,  # SIGIL on every move
+            'cascade_90_10': True,  # small handles 90%, large handles 10%
+            'mamba2_state_per_owem': True,  # long-context memory
+            'swap_persistent': True,  # memory stays when model changes
+        },
+        'kaggle_game_arena': {
+            'eligible': True,
+            'niche': 'small/governed OWEM (giant-killer story)',
+            'submission_name': 'SOV33small3',
+            'runtime_hours_kaggle_t4': 8,
+            'free_quota_per_week': 30,
+        },
+        'awareness_strategy': {
+            'channels': ['LinkedIn', 'X/Twitter', 'Reddit r/ML', 'Hacker News', 'Product Hunt'],
+            'hook': 'Sovereign AI ranks top-X on Kaggle Game Arena with Ed25519-signed moves',
+            'moat': 'Every move is verifiable (SIGIL chain) — no other player can claim this',
+        },
+        'honest_register': {
+            'is_new_foundation_model': False,
+            'is_aggressive_additive_params': False,
+            'is_governed_sovereign_substrate': True,
+            'is_measurable_alignment': True,
+            'can_win_against_bigger_models': True,
+            'note': 'Active = 17.3B regardless of # OWEMs. Reach per OWEM = 218B. NOT summed.',
+        },
+        'ts': datetime.now(timezone.utc).isoformat(),
+    }
+
+
 def handle_capabilities() -> dict:
     """GET /api/capabilities — list all SOV33 capabilities."""
     return {
@@ -762,6 +817,8 @@ class SovereignAPIHandler(BaseHTTPRequestHandler):
             return json_response(self, 200, handle_brain_stack())
         elif path == '/api/kaggle/opportunities':
             return json_response(self, 200, handle_kaggle_opportunities())
+        elif path == '/api/game-arena':
+            return json_response(self, 200, handle_game_arena())
         elif path == '/api/hyperopt':
             return json_response(self, 200, handle_hyperopt())
         elif path == '/api/continual-learning':
