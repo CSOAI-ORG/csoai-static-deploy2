@@ -163,6 +163,39 @@
 
 <hr class="sep">
 
+
+
+<h2>The 61-Model Registry (the moat)</h2>
+
+<div class="card gold">
+  <h3>Live registry query</h3>
+  <p>SOV33 routes across 61 open models across 7 pretraining lineages. License-filtered for sovereignty (Llama MAU = NOT sovereign-safe).</p>
+  <button onclick="loadRegistry()" style="background:var(--accent2);color:#0a0e1a;border:none;padding:.5rem 1rem;border-radius:6px;font-weight:bold;cursor:pointer">Load Registry →</button>
+  <div id="registry-output" style="margin-top:1rem"></div>
+</div>
+
+<script>
+async function loadRegistry() {
+  const out = document.getElementById('registry-output');
+  out.innerHTML = 'Loading 61-model registry...';
+  try {
+    const r = await fetch(API + '/api/registry');
+    const d = await r.json();
+    out.innerHTML = `
+      <table style="margin-top:1rem">
+        <tr><th>Total models</th><td>${d.total_models}</td></tr>
+        <tr><th>Sovereign-safe</th><td><span style="color:var(--accent2)">${d.sovereign_safe_count}</span></td></tr>
+        <tr><th>NOT sovereign-safe (Llama MAU)</th><td><span style="color:var(--warn)">${d.not_sovereign_safe_count}</span></td></tr>
+        <tr><th>Lineages</th><td>${Object.entries(d.lineages).map(([k,v]) => `<span class="pill">${k}: ${v}</span>`).join(' ')}</td></tr>
+      </table>
+      <p class="meta" style="margin-top:1rem">${d.license_filter}</p>
+    `;
+  } catch (e) {
+    out.innerHTML = '<span style="color:var(--warn)">Error: ' + e.message + '</span>';
+  }
+}
+</script>
+
 <h2>The pipeline (per sovereign op)</h2>
 
 <pre><code>User prompt
