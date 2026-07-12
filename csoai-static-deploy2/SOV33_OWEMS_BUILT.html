@@ -135,6 +135,19 @@ Total adapter storage: ~18MB
 Each adapter is sovereign-owned, QLoRA on Qwen3-0.6B</pre>
 </div>
 
+
+<h2>Fast Inference (1.94s vs 9-12s)</h2>
+<div class="card">
+<p>The <code>sov33_fast_inference.py</code> module delivers <strong>5-6× faster</strong> inference by:</p>
+<ul>
+<li>Greedy decoding (deterministic + faster than sampling)</li>
+<li>KV cache reuse</li>
+<li>Lazy model loading</li>
+<li>80 max tokens (vs 200)</li>
+<li>Singleton pattern (one brain for all queries)</li>
+</ul>
+<p>Live test: <code>POST /api/owem/fast</code> with {"owem":"compliance","message":"What is Article 0?"} → returns in <strong>1.94s</strong> with SIGIL.</p>
+</div>
 <h2>Honest Register</h2>
 
 <div class="card warn">

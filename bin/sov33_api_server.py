@@ -1660,6 +1660,25 @@ def handle_deck() -> dict:
     }
 
 
+
+def handle_owem_fast(payload: dict) -> dict:
+    """POST /api/owem/fast — Fast sovereign OWEM inference."""
+    import time, hashlib
+    owem_name = payload.get('owem', 'compliance')
+    question = payload.get('message', '')
+    if not question:
+        return {'error': 'no message'}
+
+    try:
+        sys.path.insert(0, '/Users/nicholas/clawd/_alignment/sovereign_merge_kit')
+        from sov33_fast_inference import get_brain
+        brain = get_brain()
+        result = brain.ask(owem_name, question, max_tokens=80)
+        return result
+    except Exception as e:
+        return {'error': f'fast owem failed: {e}'}
+
+
 def handle_capabilities() -> dict:
     """GET /api/capabilities — list all SOV33 capabilities."""
     return {
@@ -1757,6 +1776,8 @@ class SovereignAPIHandler(BaseHTTPRequestHandler):
             return json_response(self, 200, handle_world_model_predict(payload))
         elif path == '/api/security/audit':
             return json_response(self, 200, handle_security_audit_post(payload))
+        elif path == '/api/owem/fast':
+            return json_response(self, 200, handle_owem_fast(payload))
         elif path == '/api/multimodal':
             return json_response(self, 200, handle_multimodal())
         elif path == '/api/hyperopt':
@@ -1815,6 +1836,8 @@ class SovereignAPIHandler(BaseHTTPRequestHandler):
             return json_response(self, 200, handle_world_model_predict(payload))
         elif path == '/api/security/audit':
             return json_response(self, 200, handle_security_audit_post(payload))
+        elif path == '/api/owem/fast':
+            return json_response(self, 200, handle_owem_fast(payload))
         elif path == '/api/signup':
             return json_response(self, 200, handle_signup(payload))
         elif path == '/api/alexa':
