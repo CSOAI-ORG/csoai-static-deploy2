@@ -1732,7 +1732,18 @@ def capability_charter_qa(mode: str = 'snapshot') -> dict:
         return {'capability': 'charter-qa', 'error': str(e)[:160]}
 
 
+def capability_speculative_respond(text=None, partial=None, verify=True):
+    """Speculative responder: small OWEM drafts on partial input (typed/spoken), large OWEM verifies on
+    send, care-floor before emit. The intuitive small/large-OWEM split. (lazy-loaded)"""
+    try:
+        from speculative_responder import capability_speculative_respond as _sr
+        return _sr(text=text, partial=partial, verify=verify)
+    except Exception as e:
+        return {'capability':'speculative-respond','error':str(e)[:140]}
+
 CAPABILITIES = {
+    'speculative': capability_speculative_respond,
+    'prepare': capability_speculative_respond,
     'self': capability_self_awareness,
     'tools': capability_self_awareness,
     'capabilities': capability_self_awareness,
