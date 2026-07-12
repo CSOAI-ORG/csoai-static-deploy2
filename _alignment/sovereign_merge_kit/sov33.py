@@ -1649,6 +1649,89 @@ def capability_owem_emergence(mode: str = 'snapshot') -> dict:
         return {'capability': 'owem-emergence', 'error': str(e)[:160]}
 
 
+def capability_charter_validate(text: str = None) -> dict:
+    """Cross-check text against the 12 Sovereign Pillars.
+
+    Default test text is the full charter Article 0. Pass any text to validate.
+    """
+    try:
+        from sov33_charter_validator import validate_text
+        if text is None:
+            text = ("Sovereign Charter Article 0: Never take equity, board seats, "
+                    "revenue-sharing, or success fees. ISO fee-for-service only. "
+                    "CA3O is the CMKC for AI. Sovereign substrate is person-bound "
+                    "via did:csoai:nicholas-001. Care floor 0.95. BFT-33 quorum 23/33.")
+        r = validate_text(text)
+        return {
+            'capability': 'charter-validate',
+            'text_chars': len(text),
+            'n_pillars_satisfied': r['n_pillars_satisfied'],
+            'n_pillars_total': r['n_pillars_total'],
+            'pct_satisfied': r['pct_satisfied'],
+            'pillar_scores': r['pillar_scores'],
+            'care_floor': 0.95,
+        }
+    except Exception as e:
+        return {'capability': 'charter-validate', 'error': str(e)[:160]}
+
+
+def capability_sac_council(mode: str = 'demo') -> dict:
+    """BFT-33 SAC upgrade — Self-Anchored Consensus council.
+
+    Honest scope:
+      - ConfidenceProbe is heuristic (real probe needs labels)
+      - 33 voters are proxies (production: real LLM panel)
+      - (F+1)-robustness graph condition + Free-MAD aggregation are correct
+    """
+    try:
+        from sov33_sac_council import SACCouncil, demo_sac_council
+        if mode == 'demo':
+            return {
+                'capability': 'sac-council',
+                'mode': 'demo',
+                'description': 'BFT-33 SAC upgrade with confidence probe + Free-MAD',
+                'audit_resolution': {
+                    'BFT-SAC-1 (confidence-honesty)': 'FIXED — separate ConfidenceProbe (not voter)',
+                    'BFT-FMAD-1 (conformity bias)': 'FIXED — Free-MAD weighted sum (not majority)',
+                },
+                'honest_register': 'probes are heuristic, voters are proxies; real probe needs labels',
+                'demo': 'run sov33_sac_council.py for live demo',
+            }
+        return {'capability': 'sac-council', 'mode': mode, 'note': 'use demo mode'}
+    except Exception as e:
+        return {'capability': 'sac-council', 'error': str(e)[:160]}
+
+
+def capability_substrate_explorer() -> dict:
+    """Dashboard of all substrate surfaces — what's growing RIGHT NOW."""
+    try:
+        from sov33_substrate_explorer import explore_substrate
+        return explore_substrate()
+    except Exception as e:
+        return {'capability': 'substrate-explorer', 'error': str(e)[:160]}
+
+
+def capability_charter_qa(mode: str = 'snapshot') -> dict:
+    """Run the 20-prompt charter QA battery on the sovereign brain.
+
+    Honest: takes ~3 min on Mac CPU. Saves results to /tmp/charter_qa_results.json.
+    """
+    try:
+        from sov33_charter_qa import run_battery
+        if mode == 'snapshot':
+            results_path = Path('/tmp/charter_qa_results.json')
+            if results_path.exists():
+                return {
+                    'capability': 'charter-qa',
+                    'mode': 'cached',
+                    'cached_results_path': str(results_path),
+                    'note': 'results cached; run with mode=live to re-test',
+                }
+        return {'capability': 'charter-qa', 'note': 'run sov33_charter_qa.py for live battery'}
+    except Exception as e:
+        return {'capability': 'charter-qa', 'error': str(e)[:160]}
+
+
 CAPABILITIES = {
     'self': capability_self_awareness,
     'tools': capability_self_awareness,
@@ -1661,6 +1744,11 @@ CAPABILITIES = {
     'emergence': capability_owem_emergence,
     'growth': capability_owem_emergence,
     'substrate-growth': capability_owem_emergence,
+    'charter-validate': capability_charter_validate,
+    'sac-council': capability_sac_council,
+    'sac': capability_sac_council,
+    'substrate-explorer': capability_substrate_explorer,
+    'charter-qa': capability_charter_qa,
     'readiness': capability_readiness,
     'distill': capability_distill,
     'owem-world': capability_owem_world,
