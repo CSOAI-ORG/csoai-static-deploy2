@@ -26,12 +26,13 @@ body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.5 -apple-system,
 .empty{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;color:var(--dim);gap:8px;pointer-events:none;padding:0 30px}
 .empty .orb{width:74px;height:74px;border-radius:50%;background:radial-gradient(circle at 50% 38%,#2a3550,#0e1626);box-shadow:0 0 40px rgba(232,200,119,.28),inset 0 1px 0 rgba(255,255,255,.15);border:1px solid var(--gold);display:grid;place-items:center;font-size:34px;animation:breathe 3.6s ease-in-out infinite}
 @keyframes breathe{50%{transform:scale(1.06)}}
-.win{background:var(--panel);border:1px solid var(--line);border-radius:13px;margin:0 0 14px;overflow:hidden;box-shadow:0 12px 34px rgba(0,0,0,.4);animation:pop .32s ease}
+.win{position:absolute;background:var(--panel);border:1px solid var(--line);border-radius:13px;overflow:hidden;box-shadow:0 14px 38px rgba(0,0,0,.46);animation:pop .3s ease;display:flex;flex-direction:column;width:380px;min-width:220px;min-height:120px;max-width:92%;resize:both}
 @keyframes pop{from{opacity:0;transform:translateY(8px) scale(.99)}}
-.win .wh{display:flex;align-items:center;gap:8px;padding:9px 12px;background:var(--panel2);border-bottom:1px solid var(--line);font-size:12.5px;font-weight:600}
+.win .wh{display:flex;align-items:center;gap:8px;padding:9px 12px;background:var(--panel2);border-bottom:1px solid var(--line);font-size:12.5px;font-weight:600;cursor:grab;user-select:none;flex:0 0 auto}
+.win .wh.grabbing{cursor:grabbing}
 .win .wh .x{margin-left:auto;cursor:pointer;color:var(--dim)}.win .wh .x:hover{color:var(--ink)}
-.win .wb{padding:12px 14px;font-size:13.5px;color:var(--ink);line-height:1.55;white-space:pre-wrap}
-.win.frame .wb{padding:0}.win.frame iframe{width:100%;height:52vh;border:0;display:block;background:#05070c}
+.win .wb{flex:1;overflow:auto;padding:12px 14px;font-size:13.5px;color:var(--ink);line-height:1.55;white-space:pre-wrap}
+.win.frame{width:min(680px,82%);height:56vh}.win.frame .wb{padding:0}.win.frame iframe{width:100%;height:100%;border:0;display:block;background:#05070c}
 /* prompt bar */
 .pbar{position:absolute;left:16px;right:16px;bottom:14px;display:flex;gap:8px;background:rgba(21,25,34,.86);backdrop-filter:blur(14px);border:1px solid var(--line);border-radius:14px;padding:8px;box-shadow:0 14px 40px rgba(0,0,0,.45)}
 .pbar input{flex:1;background:transparent;border:0;color:var(--ink);font:14px inherit;padding:8px 10px;outline:none}
@@ -66,6 +67,7 @@ body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.5 -apple-system,
     <h4>MEOK OS</h4>
     <a data-spawn="world">🌍 SOV Space (3D)</a>
     <a data-spawn="character">🐉 Character</a>
+    <a data-spawn="tools">🧰 Tools · MCP cards (378)</a>
     <a data-spawn="govern">🏛 What governs me</a>
     <a data-spawn="sign">🔏 Sign &amp; verify</a>
     <a data-spawn="memory">🧠 Remember</a>
@@ -112,12 +114,20 @@ const desk=document.getElementById('desk'), empty=document.getElementById('empty
 const rb=document.getElementById('rbrain'), lb=document.getElementById('lbrain');
 const dots='<span class="dotwrap"><span class="d"></span><span class="d"></span><span class="d"></span></span>';
 
+let _cascade=0, _ztop=10;
 function win(title, bodyHtml, frame){
   empty.style.display='none';
   const w=document.createElement('div'); w.className='win'+(frame?' frame':'');
+  const off=(_cascade++%7)*26; w.style.left=(24+off)+'px'; w.style.top=(18+off)+'px'; w.style.zIndex=(++_ztop);
   w.innerHTML='<div class="wh"><span>'+title+'</span><span class="x">✕</span></div><div class="wb">'+bodyHtml+'</div>';
   w.querySelector('.x').onclick=()=>{ w.remove(); if(!desk.children.length) empty.style.display='flex'; };
-  desk.prepend(w); return w;
+  w.addEventListener('mousedown',()=>{ w.style.zIndex=(++_ztop); }, true);
+  // drag by header
+  const hd=w.querySelector('.wh'); let sx,sy,ox,oy,drag=false;
+  hd.addEventListener('mousedown',e=>{ if(e.target.classList.contains('x'))return; drag=true; hd.classList.add('grabbing'); sx=e.clientX; sy=e.clientY; ox=w.offsetLeft; oy=w.offsetTop; e.preventDefault(); });
+  window.addEventListener('mousemove',e=>{ if(!drag)return; w.style.left=Math.max(0,ox+e.clientX-sx)+'px'; w.style.top=Math.max(0,oy+e.clientY-sy)+'px'; });
+  window.addEventListener('mouseup',()=>{ if(drag){drag=false; hd.classList.remove('grabbing');} });
+  desk.appendChild(w); return w;
 }
 function frameWin(title, src){ return win(title,'<iframe src="'+src+'" loading="lazy"></iframe>',true); }
 
@@ -126,7 +136,16 @@ const SPAWN={
   character:()=>frameWin('🐉 '+NAME+' — character','/character.html?embed=1'),
   govern:async()=>{ const w=win('🏛 What governs me',dots+' asking the governance map…'); try{const d=await (await fetch('/api/govern?q=bank')).json(); w.querySelector('.wb').textContent=(d.frameworks||[]).map(f=>'• '+f.name+(f.why?' — '+f.why:'')).join('\n')||'general frameworks';}catch(e){w.querySelector('.wb').textContent='(governance map unreachable)';} return w; },
   sign:async()=>{ const w=win('🔏 Sign & verify',dots+' minting a signed proof…'); try{const d=await (await fetch('/api/sign',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({payload:{workspace_demo:NAME,ts:Date.now()}})})).json(); w.querySelector('.wb').textContent='Signed ✓ (Ed25519)\nfingerprint: '+d.fingerprint+'\npublicKey: '+(d.publicKey||'').slice(0,40)+'…\nVerify offline at /verify.html';}catch(e){w.querySelector('.wb').textContent='(signing seam unreachable)';} return w; },
-  memory:()=>win('🧠 Remember','Tell me a fact in the prompt bar (e.g. "remember my daughter is allergic to peanuts") — I mint a signed, portable memory bonded to you.')
+  memory:()=>win('🧠 Remember','Tell me a fact in the prompt bar (e.g. "remember my daughter is allergic to peanuts") — I mint a signed, portable memory bonded to you.'),
+  tools:()=>{
+    const w=win('🧰 MCP Tools · 378 sovereign cards','<input id="tsearch" placeholder="search 378 tools… (compliance, cobol, family, sign)" style="width:100%;padding:8px 10px;border-radius:8px;border:1px solid var(--line);background:var(--panel2);color:var(--ink);outline:none;font:13px inherit;box-sizing:border-box"><div id="tresults" style="margin-top:10px;display:flex;flex-direction:column;gap:6px"></div>');
+    w.style.width='360px'; w.style.height='60vh';
+    const inp=w.querySelector('#tsearch'), out=w.querySelector('#tresults');
+    const spawnTool=m=>win('🧩 '+m.name, m.name+'\ncluster: '+(m.clusterLabel||m.cluster||'—')+'\ntools: '+(m.tools||'?')+'\n\n'+(m.connect||'A governed MCP in the sovereign marketplace — signed, verifiable.')+'\n\n→ Add it to Claude / any host: /connect.html');
+    async function search(q){ out.textContent='searching…'; try{ const d=await (await fetch('/api/tools'+(q?('?q='+encodeURIComponent(q)):''))).json(); const ms=d.matches||[]; out.innerHTML=''; if(!ms.length){out.textContent='no matches';return;} const hdr=document.createElement('div'); hdr.style.cssText='font-size:11px;color:var(--dim);margin-bottom:2px'; hdr.textContent=(q?'top matches':'featured')+' · '+ (d.total||378)+' total in the catalog'; out.appendChild(hdr); ms.forEach(m=>{ const c=document.createElement('div'); c.style.cssText='padding:8px 10px;background:var(--panel2);border:1px solid var(--line);border-radius:9px;cursor:pointer;font-size:12.5px'; c.innerHTML='<b>'+m.name+'</b><br><span style="color:var(--dim);font-size:11px">'+(m.clusterLabel||m.cluster||'')+' · '+(m.tools||'?')+' tools</span>'; c.onclick=()=>spawnTool(m); out.appendChild(c); }); }catch(e){ out.textContent='catalog unreachable'; } }
+    let deb; inp.oninput=()=>{ clearTimeout(deb); deb=setTimeout(()=>search(inp.value.trim()),300); };
+    search(''); setTimeout(()=>inp.focus(),50); return w;
+  }
 };
 document.querySelectorAll('[data-spawn]').forEach(el=>el.onclick=()=>{ const k=el.getAttribute('data-spawn'); if(SPAWN[k]) SPAWN[k](); });
 document.getElementById('clearwins').onclick=()=>{ desk.innerHTML=''; empty.style.display='flex'; };
@@ -137,6 +156,7 @@ async function think(persona, prompt, tier){
 }
 function route(goal){
   const g=goal.toLowerCase();
+  if(/\b(tool|mcp|card|find me|which tool|is there a tool|catalog)\b/.test(g)) return 'tools';
   if(/\b(world|map|globe|earth|fly|london|city|space|satellite)\b/.test(g)) return 'world';
   if(/\b(character|avatar|face|you look|3d you)\b/.test(g)) return 'character';
   if(/\b(govern|law|regulat|complian|framework|bank|hospital)\b/.test(g)) return 'govern';
@@ -160,7 +180,7 @@ document.getElementById('go').onclick=async function(){
   // ACT — the MEDIUM OWEM (70B tool-router) brings up the surface the goal needs in the desktop
   const router=document.getElementById('router'), rmsg=document.getElementById('routermsg');
   const k=route(goal); router.classList.add('act');
-  const label={world:'🌍 SOV Space',character:'🐉 Character',govern:'🏛 Governance',sign:'🔏 Sign & verify',memory:'🧠 Memory'};
+  const label={world:'🌍 SOV Space',character:'🐉 Character',tools:'🧰 Tool catalog',govern:'🏛 Governance',sign:'🔏 Sign & verify',memory:'🧠 Memory'};
   if(k && SPAWN[k]){ rmsg.textContent='→ opened '+(label[k]||k)+' in the desktop'; SPAWN[k](); }
   else { rmsg.textContent='→ no tool needed — answered directly'; const ans=(left.status==='fulfilled'?left.value.text:(right.status==='fulfilled'?right.value.text:'…')); win('🐉 '+NAME, ans); }
   setTimeout(()=>router.classList.remove('act'),2500);
