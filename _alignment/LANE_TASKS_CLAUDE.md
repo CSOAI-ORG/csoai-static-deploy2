@@ -40,3 +40,17 @@ _original brief below_
 - Nick's Groq key is written to `_alignment/sovereign_merge_kit/.runtime.env` (GITIGNORED, perms 600, NOT committed).
 - MEOK-SOV3 sandbox CANNOT verify it: `api.groq.com` returns Cloudflare **error 1010** (edge bot-block on sandbox egress) — this is NOT a key problem, the request never reaches Groq's auth. Will not spoof UA to bypass.
 - ACTION (Claude Code, runs on the Mac where Groq IS reachable): load `GROQ_API_KEY` from `.runtime.env`, verify with a live call to `llama-3.3-70b-versatile` + `openai/gpt-oss-120b`, then wire the router's fast/heavy tiers. Do NOT print the key.
+
+## M4 CONSUMER-OS SHIPS (2026-07-12) — os.meok.ai, live-verified (aligned to Hermes + Science lanes)
+The consumer AI-OS lane (distinct from backend/compute) shipped + LIVE this session — lanes referencing
+these should update. All grounded in `MEOK_CHARACTER_ARCHITECTURE_CANON` (mind=signed MCP card · body=WebGL/Cesium):
+- SovSpace world → **real CesiumJS 1.123** (was arcade three.js); embed-aware; IS the OS "MEOK Earth" via
+  meok-cmd/meok-node contract. → Hermes world-model registry (#4) now has a live Cesium body to target.
+- **Signed consent/awareness onboarding** (Ed25519 `/api/sign`, verified on prod) — Science
+  `MEOK_PRESENCE_AWARENESS` surface shipped consumer-side, consent-gated, off-by-default.
+- Character DEFONEOS Sovereign voice · dock seat = emergence being (globe→MEOK Universe) · predictive
+  typing · OS MCP-card layer (talk→signed cards). 
+- UX audit pass: fixed mobile launcher (was unreachable), de-duped chat inputs, a11y (keyboard-operable),
+  openApp crash-guard, spacing tokens.
+- Routines reconciled + lane-aligned → `ROUTINES_ALIGNED_HERMES_SCIENCE_2026-07-12.md` (no cross-lane
+  scheduler collision; owner-gated crontab/launchd mutations flagged, not auto-run).
