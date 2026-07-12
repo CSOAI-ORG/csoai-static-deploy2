@@ -1857,6 +1857,44 @@ def capability_cloud_orchestrator(jobs: str = None) -> dict:
         return {'capability': 'cloud-orchestrator', 'error': str(e)[:200]}
 
 
+def capability_owem_e2e(jobs: str = None) -> dict:
+    """End-to-end OWEM orchestrator — all 5 OWEMs, all 4 backends, parallel + cache + care-floor + SIGIL.
+
+    jobs: JSON string of [(owem, prompt), ...] or None for demo.
+
+    Example:
+      capability_owem_e2e('[("compliance", "What is Article 0?"), ("general", "Capital of France?")]')
+    """
+    try:
+        from sov33_owem_e2e import OWEMEngine, OWEM_SYSTEMS
+        engine = OWEMEngine(use_cache=True, max_workers=10)
+
+        if jobs:
+            parsed = json.loads(jobs)
+        else:
+            # Demo jobs (cloud-only, no sov_brain slow path)
+            parsed = [
+                ('compliance', 'What is Article 0 of the Sovereign Charter?'),
+                ('defense', 'What is the kill switch protocol?'),
+                ('intuition', 'What pattern emerges from 4 sovereign experts?'),
+                ('voice', 'Speak one sentence about Article 0.'),
+                ('general', 'What is the capital of France?'),
+            ]
+
+        results = engine.ask_many(parsed)
+        return {
+            'capability': 'owem-e2e',
+            'mode': 'live',
+            'n_jobs': len(parsed),
+            'results': results,
+            'stats': engine.stats(),
+            'owem_systems': OWEM_SYSTEMS,
+            'care_floor': CARE_FLOOR,
+        }
+    except Exception as e:
+        return {'capability': 'owem-e2e', 'error': str(e)[:200]}
+
+
 def capability_divergence_sim(steps=200):
     """Demonstrate 'grows into uniquely yours': two instances from the same open frame diverge
     measurably (~0.78 plateau, never converges). No GPU. (lazy)"""
@@ -1897,6 +1935,8 @@ CAPABILITIES = {
     'fleet': capability_cloud_fleet,
     'cloud-orchestrator': capability_cloud_orchestrator,
     'orchestrator': capability_cloud_orchestrator,
+    'owem-e2e': capability_owem_e2e,
+    'e2e': capability_owem_e2e,
     'readiness': capability_readiness,
     'distill': capability_distill,
     'owem-world': capability_owem_world,
