@@ -1,6 +1,6 @@
 {
-  "updated": "2026-07-12T07:30:00Z",
-  "by": "MEOK-SOV3",
+  "updated": "2026-07-12T07:40:00Z",
+  "by": "MEOK-SOV3 (Hermes/JEEVES)",
   "branch": "m4-handoff-2026-06-24",
   "lanes": {
     "oracle_70b_brain": {
@@ -76,10 +76,36 @@
     "growth_by_accretion_paradigm": {
       "status": "PUBLISHED",
       "detail": "one-pager, every claim assayable; frozen-base+adapters+memory = no catastrophic forgetting"
+    },
+    "own_weights_sovereign_brain": {
+      "status": "LIVE",
+      "detail": "qwen3-0.6b-sov-compliance trained on 200 compliance samples; loss 3.37->0.65, accuracy 48.7%->87.5%; merged (2.4GB) + Q4 GGUF (891MB)",
+      "wired": true,
+      "live_test": "3/3 wins vs borrowed qwen2.5:3b on sovereignty questions"
+    },
+    "sov_brain_in_request_path": {
+      "status": "LIVE",
+      "detail": "Tier -1 in SovereignMergeBrain.think() fires for sovereign keywords (article 0, charter, bft, etc.); early-return prevents Oracle overwrite; tested end-to-end via ScoredOWEM.process() with 24s latency"
+    },
+    "open_vocab_seeder": {
+      "status": "LIVE",
+      "detail": "60 sovereign concepts seeded in cheatsheet (charter, sigil, BFT, defense, eu_ai_act, antidoom, mirofish, hy3, etc.)"
+    },
+    "liquid_antidoom_recipe": {
+      "status": "READY",
+      "detail": "SOV33_ANTIDOOM_COLAB.py \u2014 paste-into-Colab FTPO LoRA recipe (r=128, 478k rows, 1-2 hr T4 GPU)"
+    },
+    "bft_sac_upgrade_audit": {
+      "status": "AUDITED",
+      "detail": "SOV33_BFT_SAC_UPGRADE.py \u2014 2 FAIL (confidence-honesty, conformity bias), 2 PARTIAL (graph topology, dual-mode), 1 OK (single-round)"
+    },
+    "gpu_strategy": {
+      "status": "PUBLISHED",
+      "detail": "Heavy work moves to Colab/Kaggle T4; Mac stays for orchestration + light inference"
     }
   },
   "handoff": {
-    "MEOK-SOV3": "governance/safety code, tree correctness, run diagnosis",
+    "MEOK-SOV3": "governance/safety code, tree correctness, run diagnosis, own-weights integration",
     "claude-code": "browser (Colab, logins, Oracle console), local terminal execution",
     "channel": "git branch m4-handoff-2026-06-24 + this LANE_STATUS.json"
   },
