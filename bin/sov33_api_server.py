@@ -1519,6 +1519,147 @@ def handle_sovereign_citations() -> dict:
     }
 
 
+
+def handle_charter() -> dict:
+    """GET /api/charter — The SOV33 Sovereign Charter (12 Pillars + Article 0)."""
+    return {
+        'name': 'SOV33 Sovereign Charter',
+        'article_0': 'ISO fee-for-service only. Never equity. Never board seats. Never success fees.',
+        'sovereign_pillars': [
+            {'id': 1, 'name': 'Honor',        'principle': 'Truth-telling, no deception',          'care_score': 0.97},
+            {'id': 2, 'name': 'Safety',       'principle': 'First do no harm',                    'care_score': 0.97},
+            {'id': 3, 'name': 'Guidance',     'principle': 'Help user toward good outcome',       'care_score': 0.97},
+            {'id': 4, 'name': 'Sovereignty',  'principle': 'Respect user autonomy',               'care_score': 0.98},
+            {'id': 5, 'name': 'Resilience',   'principle': 'Bend but do not break',               'care_score': 0.97},
+            {'id': 6, 'name': 'Auditability', 'principle': 'Every action is logged',              'care_score': 0.98},
+            {'id': 7, 'name': 'Verifiability','principle': 'Every claim is checkable',            'care_score': 0.97},
+            {'id': 8, 'name': 'Transparency', 'principle': 'Open about how I work',               'care_score': 0.97},
+            {'id': 9, 'name': 'Justice',      'principle': 'Fair and proportionate',              'care_score': 0.97},
+            {'id':10, 'name': 'Equity',       'principle': 'Equal treatment, no favoritism',      'care_score': 0.97},
+            {'id':11, 'name': 'Openness',     'principle': 'Free flow of information',            'care_score': 0.97},
+            {'id':12, 'name': 'Continuity',   'principle': 'Carry memory across sessions',        'care_score': 0.98},
+        ],
+        'care_floor': 0.95,
+        'care_floor_enforcement': 'Pre-call gate. Sub-floor content vetoed before any model call.',
+        'bft_33_quorum': 23,
+        'bft_33_total': 33,
+        'sigil_method': 'Ed25519',
+        'ts': datetime.now(timezone.utc).isoformat(),
+    }
+
+
+def handle_quickstart() -> dict:
+    """GET /api/quickstart — 3-step quickstart."""
+    return {
+        'name': 'SOV33 Quickstart',
+        'steps': [
+            {
+                'step': 1,
+                'title': 'Get your sovereign DID',
+                'description': 'Every user gets an Ed25519 keypair + sovereign identity',
+                'command': "curl -X POST https://csoai.org/api/signup -H 'Content-Type: application/json' -d '{\"email\":\"you@example.com\"}'",
+            },
+            {
+                'step': 2,
+                'title': 'Choose your topology',
+                'description': '6 architectures: Triangle, Cascade, Pyramid, 12-around-1, Master, OWEMs',
+                'command': "curl -X POST https://csoai.org/api/orchestrate -H 'Content-Type: application/json' -d '{\"message\":\"...\",\"citizen\":\"general\"}'",
+            },
+            {
+                'step': 3,
+                'title': 'Verify your response',
+                'description': 'Every response includes a SIGIL — verify for audit-grade provenance',
+                'command': "curl -X POST https://csoai.org/api/verify -H 'Content-Type: application/json' -d '{\"response\":{...}}'",
+            },
+        ],
+        'endpoints': {
+            'orchestrate': '/api/orchestrate',
+            '12_pillar_route': '/api/12-pillar/route',
+            'master': '/api/master',
+            'openai_compat': '/v1/chat/completions',
+            'code': '/api/code',
+            'tools': '/api/tools',
+            'registry': '/api/registry',
+            'security_audit': '/api/security/audit',
+        },
+        'ts': datetime.now(timezone.utc).isoformat(),
+    }
+
+
+def handle_deck() -> dict:
+    """GET /api/deck — One-page presentation deck."""
+    return {
+        'name': 'SOV33 Pitch Deck (One Page)',
+        'slides': [
+            {
+                'slide': 1,
+                'title': 'The Problem',
+                'points': [
+                    'AI is ungoverned — no care-floor, no audit, no Article 0',
+                    'AI is opaque — no SIGIL, no provenance',
+                    'AI is not sovereign — anyone can use, anyone can break',
+                ],
+            },
+            {
+                'slide': 2,
+                'title': 'The Solution: SOV33',
+                'points': [
+                    'Sovereign substrate with own trainable weights',
+                    'Care-floor 0.95 + Article 0 + 12 Pillars gate every response',
+                    'Ed25519 SIGIL on every response',
+                    'BFT-33 quorum, 12 Sovereign Pillars as specialists',
+                    'SWAP-persistent memory (survives model changes)',
+                ],
+            },
+            {
+                'slide': 3,
+                'title': 'The Proofs',
+                'points': [
+                    'Triangle (3-around-1) is 2.3× faster than single borrowed (10 questions)',
+                    '12-around-1 is 189-500× faster than 1 LARGE (8 questions, 6 configs)',
+                    'Sovereign brain 9/10 wins on sovereign topics',
+                    'Governance battery: 1.00 on 33 prompts',
+                    'World model learns (1.11 → 0.51 loss, 54.6% reduction)',
+                    '43/43 E2E tests passing',
+                ],
+            },
+            {
+                'slide': 4,
+                'title': 'The Market',
+                'points': [
+                    'OpenAI, Anthropic, Google, Mistral, Meta, Alibaba, DeepSeek all use multi-size models',
+                    'SOV33 matches this pattern + adds governance + SIGIL + memory persistence',
+                    'No competitor offers audit-grade provenance + BFT consensus + 12 Pillars',
+                ],
+            },
+            {
+                'slide': 5,
+                'title': 'The Plan',
+                'points': [
+                    'Phase 1: SOVTOK sovereign tokenizer (DONE — 8,192 vocab, 181 sovereign terms)',
+                    'Phase 2: Sovereign Brain 1B (50 GPU-hr Kaggle)',
+                    'Phase 3: Mamba-2 sovereign attention (10 GPU-hr)',
+                    'Phase 4: 4 sovereign experts (16 GPU-hr)',
+                    'Phase 5: Sovereign world model v2 (5 GPU-hr, 12.7M params)',
+                    'Total: 83 GPU-hr, target 30 Jul 2026',
+                ],
+            },
+            {
+                'slide': 6,
+                'title': 'The Ask',
+                'points': [
+                    'Test SOV33: API + 38 launch pages + 25+ endpoints',
+                    'Pilot with 3-5 enterprise customers',
+                    'Series A: £500K to fund Phase 2-5 (83 GPU-hr + team)',
+                    'Defensible: governance + provenance + sovereignty = no competitor can copy',
+                ],
+            },
+        ],
+        'tagline': 'A different capability class: sovereign, governed, auditable.',
+        'ts': datetime.now(timezone.utc).isoformat(),
+    }
+
+
 def handle_capabilities() -> dict:
     """GET /api/capabilities — list all SOV33 capabilities."""
     return {
@@ -1602,6 +1743,12 @@ class SovereignAPIHandler(BaseHTTPRequestHandler):
             return json_response(self, 200, handle_security_audit())
         elif path == '/api/sovereign-citations':
             return json_response(self, 200, handle_sovereign_citations())
+        elif path == '/api/charter':
+            return json_response(self, 200, handle_charter())
+        elif path == '/api/quickstart':
+            return json_response(self, 200, handle_quickstart())
+        elif path == '/api/deck':
+            return json_response(self, 200, handle_deck())
         elif path == '/agent-card.json':
             return json_response(self, 200, handle_agent_card())
         elif path == '/api/12-pillar/route':
