@@ -998,8 +998,12 @@ def capability_model_registry(mode: str = 'list', **kwargs):
             REGISTRY = _mr.REGISTRY
         else:
             _models = getattr(_mr, 'MODELS', None) or _mr.get_registry().get('models', [])
-            REGISTRY = {m['name']: {**m, 'params_total_B': m.get('params_total_B',
-                        float(str(m.get('size','0')).rstrip('Bb') or 0) if str(m.get('size','0'))[:1].isdigit() else 0)}
+            def _size_B(s):
+                # robust to '30B-A3' (MoE), '3B', '0.6B', '' -> parse leading numeric prefix only
+                import re as _re
+                m = _re.match(r'\s*([0-9]+\.?[0-9]*)', str(s))
+                return float(m.group(1)) if m else 0.0
+            REGISTRY = {m['name']: {**m, 'params_total_B': m.get('params_total_B', _size_B(m.get('size', '0')))}
                         for m in _models}
         list_by_tier = getattr(_mr, 'list_by_tier', lambda t: [n for n,m in REGISTRY.items() if m.get('tier')==t])
         list_sovereign_safe = getattr(_mr, 'list_sovereign_safe',
