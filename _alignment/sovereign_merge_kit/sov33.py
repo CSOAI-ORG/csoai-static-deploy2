@@ -1362,6 +1362,25 @@ class Sovereign:
 # CAPABILITY DISPATCHER
 # ═══════════════════════════════════════════════════════════════
 
+def capability_distill(mode: str = 'plan', max_teachers: int = 5, **kwargs):
+    """Many-teacher distillation into SOV33's own weights (Nick's 'learn from all models' idea, made real).
+    Uses the diverse sovereign-safe teacher pool as distillation signal, governed by cross-lineage agreement
+    + care-floor. mode='plan' (default) prepares the governed dataset plan WITHOUT querying teachers or
+    training (no GPU/endpoints in sandbox). The gradient step runs on a GPU via sov33_train_own.py.
+    HONEST: teacher answers = signal not gold; license = sovereign-safe only; does NOT train in-sandbox."""
+    try:
+        from sov33_distill_harness import teacher_pool, build_dataset, run_command
+        import os as _os
+        here = _os.path.dirname(_os.path.abspath(__file__))
+        prompts = _os.path.join(here, 'expert_data', 'compliance.jsonl')
+        out = _os.path.join(here, 'distill_dataset.jsonl')
+        plan = build_dataset(prompts, out, max_teachers=int(max_teachers), dry_run=(mode != 'live'))
+        plan['capability'] = 'distill'
+        plan['gpu_run_command'] = run_command(out)
+        return plan
+    except Exception as e:
+        return {'capability': 'distill', 'error': str(e)[:160]}
+
 def capability_owem_world(mode: str = 'demo', epochs: int = 5, **kwargs):
     """The REAL OWEM core: SOV33's own trainable world-predictor + EWC consolidation.
     Proves SOV33 is more than a wrapper — it owns weights that measurably learn.
@@ -1462,6 +1481,7 @@ def capability_companion(mode: str = 'demo', **kwargs):
         return {'capability': 'companion', 'error': str(e)[:120]}
 
 CAPABILITIES = {
+    'distill': capability_distill,
     'owem-world': capability_owem_world,
     'canonical': capability_canonical,
     'registry': capability_registry,

@@ -1,5 +1,9 @@
 #!/usr/bin/env python3
-"""sov33_swap_persistence_proof.py — THE separation-of-concerns proof.
+"""sov33_swap_persistence_proof.py — STRUCTURAL decoupling check (NOT a live-swap proof).
+
+CORRECTED 2026-07-12: this only sets SOV33_OLLAMA_MODEL and re-reads a static memory file; NO model is
+invoked, so identical hashes are tautological, not evidence of live-swap invariance. It shows only that
+the memory store is architecturally decoupled from model selection. A real proof needs live inference.
 
 Claim: SOV33 is a substrate, not a wrapper. Proof: swap the MODEL (the replaceable organ) and the
 SUBSTRATE (memory + SIGIL chain + invariants) stays byte-identical. If memory survived the swap, the
@@ -61,8 +65,9 @@ if __name__ == "__main__":
     proven = (len(hashes) == 1 and baseline in hashes and invs == {True})
     print(f"\nmemory hash identical across all 3 model swaps: {len(hashes)==1} ({hashes})")
     print(f"invariants held across all 3: {invs == {True}}")
-    print(f"\n{'PROVEN' if proven else 'FAILED'}: memory + invariants are MODEL-INDEPENDENT.")
-    print("=> The model is a replaceable organ; the substrate (memory+invariants) is the sovereign-of-record.")
-    print("=> This is the separation-of-concerns proof that SOV33 is a substrate, NOT a wrapper.")
-    json.dump({"baseline": baseline, "results": results, "proven": proven},
+    print("\nSTRUCTURAL ONLY \u2014 NOT a live-swap proof.")
+    print("This test set an env var and re-read a STATIC memory file; NO model was invoked.")
+    print("It shows memory (file) is decoupled from model-selection (env var) \u2014 a structural fact,")
+    print("NOT that a real model swap preserves the substrate. A real proof needs live inference per lineage.")
+    json.dump({"baseline": baseline, "results": results, "proven": False, "claim_status": "STRUCTURAL_ONLY"},
               open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "swap_persistence_results.json"), "w"), indent=2)

@@ -39,12 +39,19 @@ accretion on frozen open weights" — NOT "new foundation model" / "AGI" / "beat
 - sov33_owem_world_model.py: fixed the ~/.sovereign import-time write (SOV33_SIGIL_DIR env-override,
   fail-soft) so the real OWEM module imports + runs in-sandbox. Same fix pattern as the 51-component batch.
 
-## THE SEPARATION-OF-CONCERNS PROOF (the sovereign-not-wrapper test) — PROVEN 2026-07-12
-Nick's framing: "the proof SOV33 works is that when we swap models in OWEM, the memory stays the same."
-Correct — and now demonstrated (sov33_swap_persistence_proof.py):
-- Swapped the model across 3 lineages (Qwen -> Llama -> DeepSeek via SOV33_OLLAMA_MODEL).
-- Sovereign memory hash BYTE-IDENTICAL across all 3 swaps (8b81f11e203fd183); 6 invariants held on all 3.
-- => The model is a REPLACEABLE ORGAN; the substrate (memory + invariants + SIGIL) is the sovereign-of-record.
-HONEST CAVEAT: this proves the SUBSTRATE (memory + governance) is model-independent — NOT that answer QUALITY
-is swap-invariant (a weaker model still answers worse). It is the proof of continuity-of-record, which is
-exactly the claim, not capability parity.
+## SEPARATION-OF-CONCERNS — STRUCTURAL CLAIM ONLY (corrected 2026-07-12, NOT a live-swap proof)
+Nick's framing: "the proof SOV33 works is that when we swap models in OWEM, the memory stays the same." The
+right instinct — but the test I first ran (sov33_swap_persistence_proof.py) does NOT prove it. That test only
+set os.environ['SOV33_OLLAMA_MODEL'] across 3 names and re-read a STATIC memory file; NO model was ever
+invoked. Identical hashes were a tautology of construction (memory never rewritten between reads), not
+evidence a real swap preserves the substrate. RETRACTED as a "proof".
+
+WHAT IS ACTUALLY TRUE (structural, verifiable by code inspection):
+- Memory lives in a FILE (SIGIL_DIR/sovereign_memory.jsonl); model choice is an ENV VAR (SOV33_OLLAMA_MODEL).
+- They are architecturally decoupled — the memory store does not depend on which model is selected.
+- This is a real STRUCTURAL property (separation of concerns), NOT a demonstrated live-swap invariance.
+
+WHAT A REAL PROOF NEEDS (owner/endpoint-gated, not done):
+- Actually invoke each lineage via a live inference call running a real sovereign turn that writes to
+  memory/SIGIL as in production, THEN show invariants + prior episodes are unchanged while only the new
+  model's answer differs. Requires reachable endpoints (Oracle/Ollama/Groq) — absent in sandbox.
