@@ -274,6 +274,27 @@ body.touring #tourhud{animation:sovMsgIn .5s ease}
 .crow.on .csw{background:var(--gold,#c9a84c)}
 .csw::after{content:"";position:absolute;top:3px;left:3px;width:20px;height:20px;border-radius:50%;background:#fff;transition:.2s;box-shadow:0 1px 3px rgba(0,0,0,.25)}
 .crow.on .csw::after{left:21px}
+/* ── floating signed MCP cards: the Sovereign fans tools across the screen on command (talk → cards) ── */
+#cards{position:fixed;inset:0;pointer-events:none;z-index:8600}
+.mcpcard{position:absolute;width:min(300px,80vw);pointer-events:auto;background:rgba(252,248,241,.62);backdrop-filter:blur(20px) saturate(1.3);-webkit-backdrop-filter:blur(20px) saturate(1.3);border:1px solid rgba(255,255,255,.5);border-radius:16px;box-shadow:0 18px 48px rgba(18,12,6,.34),inset 0 1px 0 rgba(255,255,255,.6);overflow:hidden;opacity:0;transform:translateY(14px) scale(.97);transition:opacity .4s cubic-bezier(.2,.7,.2,1),transform .4s cubic-bezier(.2,.7,.2,1)}
+.mcpcard.in{opacity:1;transform:none}
+.mcpcard::before{content:"";position:absolute;left:0;right:0;top:0;height:2px;background:linear-gradient(90deg,transparent,#e8cd8a,#b9d3c4,#d6b3e0,transparent);opacity:.75;z-index:2}
+.mcpcard .ch{display:flex;align-items:center;gap:9px;padding:11px 13px 9px;cursor:grab;user-select:none}
+.mcpcard .ci{width:30px;height:30px;border-radius:9px;display:grid;place-items:center;font-size:16px;background:rgba(255,255,255,.5);border:1px solid rgba(255,255,255,.55);flex:none}
+.mcpcard .ct{font-size:13.5px;font-weight:700;color:var(--ink);line-height:1.15}
+.mcpcard .ctag{font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--gold,#c9a84c);font-weight:700;margin-top:1px}
+.mcpcard .cx{margin-left:auto;cursor:pointer;width:22px;height:22px;border-radius:7px;display:grid;place-items:center;color:var(--dim);font-size:13px}
+.mcpcard .cx:hover{background:rgba(217,117,106,.16);color:#c0554b}
+.mcpcard .cb{padding:2px 14px 13px;font-size:12.8px;line-height:1.5;color:#453f36;max-height:40vh;overflow:auto}
+.mcpcard .cb b{color:var(--ink)}
+.mcpcard .cb code{background:rgba(201,168,76,.14);padding:1px 5px;border-radius:5px;font-size:11.5px}
+.mcpcard .cact{display:flex;gap:6px;flex-wrap:wrap;padding:0 14px 13px}
+.mcpcard .cbtn{border:1px solid rgba(255,255,255,.5);background:rgba(255,255,255,.4);color:var(--ink);font:600 11.5px inherit;padding:6px 11px;border-radius:999px;cursor:pointer;transition:.15s}
+.mcpcard .cbtn:hover{border-color:var(--gold,#c9a84c);background:#fff}
+.mcpcard .cver{font:600 11px ui-monospace,monospace;padding:5px 10px;border-radius:999px;display:inline-flex;align-items:center;gap:5px}
+.mcpcard .cver.ok{background:rgba(19,122,75,.13);color:#137a4b;border:1px solid #b7e0c6}
+.mcpcard .cver.no{background:rgba(179,38,30,.1);color:#b3261e;border:1px solid #f0c3bd}
+@media(max-width:720px){#cards{display:none}}
 .sovfab{position:absolute;bottom:50px;right:16px;z-index:29;width:54px;height:54px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:26px;background:radial-gradient(circle at 50% 40%,#fff,#efe9de);box-shadow:0 8px 22px rgba(120,100,60,.26);border:2px solid var(--gold2)}
 .frame.sovon .sovfab{display:none}
 /* brain setup chips */
@@ -382,6 +403,7 @@ body.touring #tourhud{animation:sovMsgIn .5s ease}
     <div class="tiles" id="tiles" data-testid="app-tiles"></div>
   </div>
   <div class="welcome" id="welcome" data-testid="welcome-overlay"><div id="wstep"></div></div>
+  <div id="cards" data-testid="mcp-cards"></div>
   <div class="hint">Tap an app · <b>drag tiles to rearrange</b> · drag window headers to move · 🐉 talk to your sovereign</div>
 
   <!-- sovereign companion dock — the new interface: a character + a chat bar, always present -->
@@ -1641,6 +1663,7 @@ async function sovAsk(text){
     if(think) think.remove();
     if(ans) sovSay(esc(ans)); else throw 0;
     sovToolHints(text);   // orchestrator: surface matching tools from the 377-fleet → SOV Space
+    try{ if(window.sovOrchestrate) sovOrchestrate(text, ans); }catch(e){}
     sovKnowledge(text);   // federate the world's open knowledge (Wikipedia/Wikidata + Data Commons)
   }catch(e){ if(think) think.remove(); sovSay("I hear you — I can open apps, switch your current (work / personal), change your signature, or take you into MEOK Earth. <span style='color:var(--dim)'>(My deeper SOV3 brain isn't reachable right now.)</span>"); sovToolHints(text); sovKnowledge(text); }
 }
@@ -1673,6 +1696,63 @@ async function sovAsk(text){
   inp.addEventListener('input',show);
   inp.addEventListener('keydown',function(e){ if(e.key==='Tab' && cur && inp.value.toLowerCase()!==cur.toLowerCase()){ e.preventDefault(); inp.value=cur; ghost.style.display='none'; show(); } else if(e.key==='Enter'){ ghost.style.display='none'; } });
   inp.addEventListener('blur',function(){ setTimeout(function(){ghost.style.display='none';},160); });
+})();
+
+// ══ SIGNED MCP CARDS in the OS: the Sovereign fans the right tool-cards across the screen when you talk.
+//    Ported from character.html so both surfaces share one card UX. Closes the end-user-spec "card UX
+//    DESIGNED" gap + Nick's "open mcp cards / tools". Each card is glass, draggable, de-duped, verifiable. ══
+(function(){
+  const cardsEl=document.getElementById('cards'); if(!cardsEl) return;
+  const CARD_SLOTS=[{l:6,t:14},{l:70,t:12},{l:8,t:52},{l:71,t:50},{l:38,t:16},{l:38,t:54},{l:5,t:33},{l:72,t:31}];
+  let _cardN=0;
+  function sovName(){ try{ return (typeof sovUserName==='function'&&sovUserName())||'Sovereign'; }catch(e){ return 'Sovereign'; } }
+  window.sovSpawnCard=function(o){
+    const ex=[...cardsEl.children].find(c=>c.dataset.title===(o.title||''));
+    if(ex){ ex.classList.remove('in'); void ex.offsetWidth; ex.classList.add('in'); return ex; }
+    const slot=CARD_SLOTS[_cardN%CARD_SLOTS.length]; _cardN++;
+    const c=document.createElement('div'); c.className='mcpcard'; c.dataset.title=o.title||'';
+    c.style.left=slot.l+'%'; c.style.top=slot.t+'%';
+    const acts=(o.actions||[]).map((a,i)=>'<button class="cbtn" data-a="'+i+'">'+a.label+'</button>').join('');
+    c.innerHTML='<div class="ch"><div class="ci">'+(o.icon||'✦')+'</div><div><div class="ct">'+(o.title||'')+'</div><div class="ctag">'+(o.tag||'MCP · signed')+'</div></div><div class="cx">✕</div></div>'
+      +'<div class="cb">'+(o.body||'')+'</div>'+((acts||o.verify)?('<div class="cact">'+acts+(o.verify?'<button class="cbtn cver-btn">✓ verify signature</button>':'')+'</div>'):'');
+    cardsEl.appendChild(c); requestAnimationFrame(()=>c.classList.add('in'));
+    c.querySelector('.cx').onclick=()=>{ c.classList.remove('in'); setTimeout(()=>c.remove(),350); };
+    (o.actions||[]).forEach((a,i)=>{ const b=c.querySelector('[data-a="'+i+'"]'); if(b) b.onclick=()=>a.run(c); });
+    const vb=c.querySelector('.cver-btn'); if(vb) vb.onclick=()=>sovVerifyInto(c,vb);
+    const h=c.querySelector('.ch'); let dx,dy,drag=false;
+    h.addEventListener('pointerdown',e=>{ if(e.target.classList.contains('cx'))return; drag=true; dx=e.clientX-c.offsetLeft; dy=e.clientY-c.offsetTop; try{h.setPointerCapture(e.pointerId);}catch(_){} c.style.transition='none'; });
+    h.addEventListener('pointermove',e=>{ if(!drag)return; c.style.left=Math.max(0,e.clientX-dx)+'px'; c.style.top=Math.max(0,e.clientY-dy)+'px'; });
+    h.addEventListener('pointerup',()=>{ drag=false; c.style.transition=''; });
+    return c;
+  };
+  async function sovVerifyInto(card,btn){ btn.textContent='verifying…';
+    const fpOf=(x,d=0)=>{ if(x==null||d>4) return ''; if(typeof x==='string') return x; if(typeof x==='number') return String(x);
+      if(typeof x==='object'){ for(const k of ['fingerprint','hex','value','sig','signature','publicKey','pub','hash','digest','id']){ const r=fpOf(x[k],d+1); if(r) return r; } for(const val of Object.values(x)){ if(typeof val==='string'&&val.length>=8) return val; } } return ''; };
+    try{ let v=null;
+      try{ const r=await fetch('/api/verify'); if(r.ok){ const j=await r.json(); if(j&&!j.error) v=j; } }catch(e){}
+      if(!v){ try{ const r=await fetch('/api/agentcard?name='+encodeURIComponent(sovName())); if(r.ok){ const a=await r.json(); if(a&&!a.error) v={ok:!!(a.signature||a.verification||a.card), fingerprint:fpOf(a.signature)||fpOf(a.fingerprint)||fpOf(a.card)}; } }catch(e){} }
+      const ok=!!(v&&(v.ok!==false)); let fp=(fpOf(v)||'').slice(0,16); if(/object/i.test(fp)) fp='';
+      const tag=document.createElement('span'); tag.className='cver '+(ok?'ok':'no'); tag.textContent=(ok?'✓ signature valid':'⚠ unverified — offline')+(fp?' · '+fp+'…':''); btn.replaceWith(tag);
+    }catch(e){ btn.textContent='⚠ offline — try again'; }
+  }
+  const CHARTERS={
+    sovereign:{icon:'🛡',title:'Sovereign Charter',tag:'governance MCP · Ed25519',body:'Your sovereign belongs to <b>you</b>. Runs on your device, data never leaves without consent, and every governed action is <b>Ed25519-signed</b> to an append-only ledger you can verify offline. No single vendor can revoke it.'},
+    partnership:{icon:'🤝',title:'Partnership Charter',tag:'governance MCP · care-aligned',body:'How your sovereign works <i>with</i> you: honest register (flags hype, never rubber-stamps), asks before anything irreversible, and keeps a care-floor — it protects the vulnerable over convenience.'},
+    csoai:{icon:'⚖',title:'CSOAI AI Governance',tag:'governance MCP · council-adjudicated',body:'Disputes and high-stakes calls go to the <b>BFT council</b> (Byzantine-fault-tolerant vote), adjudicated against CSOAI’s published charters. The decision + signatures are logged — <span style="cursor:pointer;color:var(--gold,#c9a84c);text-decoration:underline" onclick="window.open(\'/verify.html\',\'_blank\')">public verify page</span>.'}};
+  window.sovOpenCharter=function(key){ const c=CHARTERS[key]; if(c) window.sovSpawnCard({icon:c.icon,title:c.title,tag:c.tag,body:c.body,verify:true}); };
+  window.sovOrchestrate=function(userText, aiText){
+    const q=((userText||'')+' '+(aiText||'')).toLowerCase(); let n=0; const fire=(fn)=>{ if(n<2){ fn(); n++; } };
+    if(/\b(verify|signature|signed|prove|provenance|authentic|tamper|attest)\b/.test(q))
+      fire(()=>window.sovSpawnCard({icon:'🔏',title:'Signature Verify',tag:'assurance MCP · offline-verifiable',body:'This sovereign’s identity + actions are signed. Tap verify — it checks the Ed25519 signature the same way <b>DEFONEOS</b> assurance does. One spine, two markets.',verify:true}));
+    if(/\b(charter|govern|policy|rule|rights|who controls|control|compliance|privacy|consent)\b/.test(q)){ fire(()=>window.sovOpenCharter('sovereign')); fire(()=>window.sovOpenCharter('csoai')); }
+    if(/\b(build|make|create|website|web ?site|app|landing|page|deploy)\b/.test(q))
+      fire(()=>window.sovSpawnCard({icon:'🛠',title:'Builder',tag:'build MCP · talk-to-ship',body:'Describe it in plain words and your sovereign scaffolds it, shows a live preview, and can deploy it — signed.<br><br><b>Try:</b> <code>build me a page for my cafe</code>'}));
+    if(/\b(space|globe|world|fly|travel|earth|city|3d|universe)\b/.test(q))
+      fire(()=>window.sovSpawnCard({icon:'🌐',title:'SOV Space',tag:'world MCP · Cesium/WebGL',body:'Your sovereign flies a real 3D world on your own GPU — free, no Unreal. Ask it to take you anywhere.',actions:[{label:'Enter the world',run:()=>{ if(typeof openApp==='function'&&window.APPS&&window.APPS.meokearth){ openApp('meokearth'); } else location.href='/sovspace3d.html'; }}]}));
+    if(/\b(tool|mcp|what can you|capab|skill|do for me|help me|open)\b/.test(q))
+      fire(()=>window.sovSpawnCard({icon:'🧰',title:'Your Tools',tag:'MCP router · signed fleet',body:'Your sovereign routes to a fleet of signed MCP tools: <b>governance</b>, <b>verify</b>, <b>legacy bridges</b> (COBOL/SAP/HL7), <b>guardian</b>, <b>family</b>, world + build. It picks the right one — you just talk.',actions:[{label:'🧰 SOV Space tools',run:()=>{ location.href='/sovspace.html'; }}]}));
+    return n;
+  };
 })();
 // ── Select a node on the map → the Sovereign explains it IN the chat (the OS narrates itself) ──
 async function sovExplainNode(node){ if(!node) return; window.MEOK_CTX.node=node; sovToggle(true); if(innerWidth<=760) document.body.classList.add('sov-open');
