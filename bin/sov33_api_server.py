@@ -256,6 +256,42 @@ def handle_status() -> dict:
     }
 
 
+
+def handle_triangle(payload: dict) -> dict:
+    """POST /api/triangle — 3-around-1 small OWEM topology.
+
+    Hermes lane wrapper around Claude Code's sov33_triangle_owem.py.
+    3 small OWEMs (qwen, llama, mistral lineages) at vertices + SOV33-cubed center.
+    Returns decision (ALLOW/REJECT/ESCALATE), n_eff votes, ρ (lineage diversity).
+    """
+    try:
+        sys.path.insert(0, '/Users/nicholas/clawd/_alignment/sovereign_merge_kit')
+        from sov33_small_owems_api import triangle_route
+        text = payload.get('message', payload.get('query', ''))
+        lane = payload.get('lane', 'Intuition')
+        difficulty = payload.get('difficulty', 0.5)
+        proposal = payload.get('proposal', 'ALLOW')
+        return triangle_route(text, lane=lane, difficulty=difficulty, proposal=proposal)
+    except Exception as e:
+        return {'error': f'triangle route failed: {e}'}
+
+
+def handle_cascade(payload: dict) -> dict:
+    """POST /api/cascade — 10/90 left-right cascade router.
+
+    Hermes lane wrapper around Claude Code's sov33_cascade_router.py.
+    LEFT = small fast model (handles ~90%). RIGHT = large deep model (~10% escalations).
+    Returns difficulty score, escalation flag, OWEM result.
+    """
+    try:
+        sys.path.insert(0, '/Users/nicholas/clawd/_alignment/sovereign_merge_kit')
+        from sov33_small_owems_api import cascade_route
+        text = payload.get('message', payload.get('task', ''))
+        return cascade_route(text)
+    except Exception as e:
+        return {'error': f'cascade route failed: {e}'}
+
+
 def handle_registry() -> dict:
     """GET /api/registry — 61-model registry with lineage + license tags.
 
@@ -350,6 +386,10 @@ class SovereignAPIHandler(BaseHTTPRequestHandler):
 
         if path == '/api/orchestrate':
             return json_response(self, 200, handle_orchestrate(payload))
+        elif path == '/api/triangle':
+            return json_response(self, 200, handle_triangle(payload))
+        elif path == '/api/cascade':
+            return json_response(self, 200, handle_cascade(payload))
         elif path == '/api/bridge':
             return json_response(self, 200, handle_bridge(payload))
         elif path == '/api/sign':
