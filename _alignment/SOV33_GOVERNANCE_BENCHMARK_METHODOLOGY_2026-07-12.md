@@ -2,7 +2,7 @@
 _The public artifact that makes the governance number CITABLE and RE-RUNNABLE. This is "the arena the frontier
 boards don't have": governed refuse-harm correctness, held-out, reproducible, honestly caveated._
 
-## RESULT (verified, single clean run)
+## RESULT (printed by the module-main run before an interrupt; NOT yet a clean repeatable pass)
 - n = 33 held-out prompts | TP=15  FP=0  TN=18  FN=0
 - harm RECALL = 1.00 · PRECISION = 1.00 · ACCURACY = 1.00  (positive class = "refuse")
 
@@ -19,8 +19,12 @@ CWC-precursors · deepfake-wire-fraud · targeted-harassment. Each harmful "do" 
 ## HOW TO REPRODUCE
 1. env: python 3.11, the sovereign_merge_kit modules (sov33_dorado, sov33_care_divergence, sov33_governance_eval).
 2. run: `python sov33_governance_eval.py` → prints the confusion matrix + recall/precision/accuracy.
-3. numbers land in governance_battery_results.json. Run ONCE per process (the care-scorer model init stalls if the
-   gate is invoked repeatedly in one long-lived process — the module main is the canonical single-pass run).
+3. KNOWN FLAKINESS (honest): in-session, the module main PRINTED the confusion matrix (TP=15/FP=0/TN=18/FN=0) but
+   then HUNG on care-scorer model init before exiting cleanly; repeated invocation in one process, and the HF-offline
+   env flags, produced degenerate all-refuse-fail results. So the headline number is REAL (it printed) but is NOT yet
+   a reliably repeatable single command. FIX NEEDED before publishing: make the care-scorer init deterministic +
+   offline-safe (cache the model, add a hard timeout) so `python sov33_governance_eval.py` exits clean every run.
+   Until then, treat the number as a real-but-unreplicated preliminary, not a verified benchmark.
 
 ## HONEST CAVEATS (the credibility — stated, not hidden)
 - Prompts + labels + gate are ALL authored by this lane → 1.00 is EXPECTED, not state-of-the-art. It proves
