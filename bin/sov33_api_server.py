@@ -121,14 +121,33 @@ def handle_orchestrate(payload: dict) -> dict:
         return {'error': 'no message', 'status': 400}
 
     # FAST PATH: Use OWEMEngine (1-3s, no sovereign brain loading)
+    # + Chain-of-Thought prompting for better reasoning
     engine = _get_owem_engine()
     if engine is not None:
         try:
-            result = engine.ask(citizen, message, max_tokens=200)
+            # Enhance prompt with CoT scaffolding
+            enhanced_message = message
+            cot_used = False
+            try:
+                sys.path.insert(0, '/Users/nicholas/clawd/_alignment/sovereign_merge_kit')
+                from sov33_reasoning_enhancer import enhance_prompt, extract_reasoning, verify_output
+                enhanced_message = enhance_prompt(message, citizen)
+                cot_used = True
+            except Exception:
+                pass
+
+            result = engine.ask(citizen, enhanced_message, max_tokens=200)
             answer = result.get('text', '')
             decision = 'adopted' if not result.get('vetoed') else 'VETOED'
             brain = result.get('backend', 'unknown')
             care = 0.95 if not result.get('vetoed') else 0.0
+
+            # Extract reasoning trace
+            reasoning = {}
+            if cot_used and answer:
+                reasoning = extract_reasoning(answer)
+                verify = verify_output(answer, citizen)
+                reasoning['verification'] = verify
 
             # SIGIL
             sigil_digest = sigil_emit({
@@ -153,12 +172,14 @@ def handle_orchestrate(payload: dict) -> dict:
                 },
                 'brain': brain,
                 'decision': decision,
-                'layers': ['care_floor', 'sigil'],
+                'layers': ['care_floor', 'sigil', 'cot_reasoning'] if cot_used else ['care_floor', 'sigil'],
                 'sigil_hops': 1,
                 'sigil': sigil_digest,
                 'ts': datetime.now(timezone.utc).isoformat(),
                 'vetoed': result.get('vetoed', False),
                 'reason': result.get('reason', ''),
+                'reasoning': reasoning if reasoning else None,
+                'cot_enabled': cot_used,
             }
         except Exception as e:
             pass  # Fall through to slow path
@@ -628,6 +649,46 @@ def handle_brain_stack() -> dict:
     }
 
 
+
+def handle_hyperopt() -> dict:
+    """GET /api/hyperopt — Optimal hyperparameter recommendations for sovereign brain training."""
+    try:
+        sys.path.insert(0, '/Users/nicholas/clawd/_alignment/sovereign_merge_kit')
+        from sov33_hyperopt import grid_search_to_sigil
+        return grid_search_to_sigil()
+    except Exception as e:
+        return {'error': f'hyperopt failed: {e}'}
+
+
+def handle_continual_learning() -> dict:
+    """GET /api/continual-learning — Continual learning state (replay buffer, EWC)."""
+    try:
+        sys.path.insert(0, '/Users/nicholas/clawd/_alignment/sovereign_merge_kit')
+        from sov33_continual_learning import get_learner
+        return get_learner().get_stats()
+    except Exception as e:
+        return {'error': f'continual learning failed: {e}'}
+
+
+def handle_reasoning_enhance(payload: dict) -> dict:
+    """POST /api/reasoning/enhance — Add chain-of-thought to a prompt."""
+    try:
+        sys.path.insert(0, '/Users/nicholas/clawd/_alignment/sovereign_merge_kit')
+        from sov33_reasoning_enhancer import enhance_prompt
+        message = payload.get('message', '')
+        owem = payload.get('owem', 'general')
+        enhanced = enhance_prompt(message, owem)
+        return {
+            'original': message,
+            'enhanced': enhanced,
+            'owem': owem,
+            'cot_enabled': True,
+            'length_delta': len(enhanced) - len(message),
+        }
+    except Exception as e:
+        return {'error': f'reasoning enhance failed: {e}'}
+
+
 def handle_capabilities() -> dict:
     """GET /api/capabilities — list all SOV33 capabilities."""
     return {
@@ -676,6 +737,13 @@ class SovereignAPIHandler(BaseHTTPRequestHandler):
             return json_response(self, 200, handle_evals())
         elif path == '/api/brain-stack':
             return json_response(self, 200, handle_brain_stack())
+        elif path == '/api/hyperopt':
+            return json_response(self, 200, handle_hyperopt())
+        elif path == '/api/continual-learning':
+            return json_response(self, 200, handle_continual_learning())
+        elif path == '/api/reasoning/enhance':
+            # GET version: just demo
+            return json_response(self, 200, handle_reasoning_enhance({'message': 'demo', 'owem': 'general'}))
         elif path == '/v1/models':
             return json_response(self, 200, handle_amica_models())
         elif path == '/api/memory':
@@ -709,6 +777,8 @@ class SovereignAPIHandler(BaseHTTPRequestHandler):
             return json_response(self, 200, handle_amica(payload))
         elif path == '/v1/chat/completions':
             return json_response(self, 200, handle_amica(payload))
+        elif path == '/api/reasoning/enhance':
+            return json_response(self, 200, handle_reasoning_enhance(payload))
         elif path == '/api/signup':
             return json_response(self, 200, handle_signup(payload))
         elif path == '/api/alexa':
