@@ -78,7 +78,7 @@
 
 Use same details as Glama above.
 
-**API Key:** 85122bd6-b874-4ff0-a8ec-9d1b4dbdb842
+**API Key:** «REDACTED 2026-07-12 — ROTATE at smithery.ai, this key was exposed»
 
 ---
 
