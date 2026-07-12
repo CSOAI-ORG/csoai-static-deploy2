@@ -30,3 +30,13 @@ This file auto-loads via the alignment loader. Format: one fact per line, dated.
   says the harness `list_compute` is the authoritative check it CANNOT call. Honest status: sov3_mcp gated by a
   REAL live urllib probe (Operation-not-permitted); compute gated per SESSION CONTEXT (list_compute empty earlier),
   NOT by the in-code probe. Same lazy-gating overclaim the module exists to kill — flagged, not repeated.
+
+## HERMES LANE ALIGNMENT (2026-07-12)
+- Hermes built the LAUNCH/WEB surface: 12 SOV33 pages + 13 endpoints live (INDEX/HERO/OWEM_EXPLAINER/BFT33_COUNCIL/
+  SMALL_OWEMS/SOVEREIGN_BRAIN_TEST/SUBSTRATE_EXPLORER/EVALS/RHO/EMBED/FREE_GPU_BRIDGE/GROWTH_TIMELINE). Used corrected
+  102 GPU-hr/wk figure. Mac calm (76 caps, 18,378+ sigils). Cross-lane aligned to FULLSTACK_MASTER.
+- RECONCILE: Hermes says "5 OWEMs × 2 smaller-OWEMs"; my CHARTER_OWEM_FOUR_SCOPE defines the semantics as 4 SCOPES
+  of ONE substrate (not a count of separate OWEMs). These are compatible: Hermes counts DEPLOYED instances (triangle
+  + cascade demos); the charter defines what an OWEM IS semantically. Web copy should use the charter's scope
+  language, not "5 OWEMs" as if additive — cite the charter to avoid the 4×-capability category error.
+- SIGIL count now 18,378+ (was 17,197) — monotonic growth continues, consistent with accretion model.
