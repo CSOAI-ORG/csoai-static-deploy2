@@ -1597,6 +1597,58 @@ def capability_live_tool_awareness(query: str = None) -> dict:
         return {'capability': 'live-tool-awareness', 'error': str(e)[:160]}
 
 
+def capability_owem_emergence(mode: str = 'snapshot') -> dict:
+    """The OWEM growth-by-accretion substrate.
+
+    Sir Nick's thesis: small OWEMs grow into large OWEMs over time, other
+    small OWEMs emerge, never the same, always changing.
+
+    Modes:
+      - 'snapshot': current level + next growth step (default)
+      - 'history': last 30 snapshots (proves "always changing")
+      - 'level': just the level name
+    """
+    try:
+        from sov33_owem_emergence import emergence_report, detect_level, measure_current_state
+        r = emergence_report()
+        if mode == 'history':
+            history_file = Path.home() / '.sovereign' / 'owem_emergence_history.json'
+            history = []
+            if history_file.exists():
+                try:
+                    history = json.loads(history_file.read_text())
+                except Exception:
+                    pass
+            return {
+                'capability': 'owem-emergence',
+                'mode': 'history',
+                'n_snapshots': len(history),
+                'always_changing': 'level changed ' + str(len(set(h.get('level', 'L0') for h in history))) + ' times',
+                'history': history[-10:],
+                'care_floor': 0.95,
+            }
+        elif mode == 'level':
+            state = measure_current_state()
+            level = detect_level(state)
+            return {'capability': 'owem-emergence', 'mode': 'level', 'level': level,
+                    'name': r['current_name']}
+        else:
+            return {
+                'capability': 'owem-emergence',
+                'mode': 'snapshot',
+                'level': r['current_level'],
+                'name': r['current_name'],
+                'state': r['state'],
+                'next_step': r['next_step'],
+                'deltas_since_last': r['deltas_since_last'],
+                'history_size': r['history_size'],
+                'always_changing_proof': r['always_changing_proof'],
+                'care_floor': 0.95,
+            }
+    except Exception as e:
+        return {'capability': 'owem-emergence', 'error': str(e)[:160]}
+
+
 CAPABILITIES = {
     'self': capability_self_awareness,
     'tools': capability_self_awareness,
@@ -1605,6 +1657,10 @@ CAPABILITIES = {
     'live-tools': capability_live_tool_awareness,
     'tool-awareness': capability_live_tool_awareness,
     'awareness': capability_live_tool_awareness,
+    'owem-emergence': capability_owem_emergence,
+    'emergence': capability_owem_emergence,
+    'growth': capability_owem_emergence,
+    'substrate-growth': capability_owem_emergence,
     'readiness': capability_readiness,
     'distill': capability_distill,
     'owem-world': capability_owem_world,
