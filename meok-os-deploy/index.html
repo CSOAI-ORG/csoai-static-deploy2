@@ -1716,6 +1716,12 @@ async function sovAsk(text){
   const ghost=document.createElement('div'); ghost.id='sovghost';
   ghost.style.cssText='position:absolute;left:8px;right:8px;bottom:100%;margin-bottom:7px;padding:6px 12px;font:13px system-ui;color:var(--dim);pointer-events:none;display:none;background:rgba(20,15,11,.82);border:1px solid var(--line,rgba(201,168,76,.3));border-radius:11px;backdrop-filter:blur(8px);white-space:nowrap;overflow:hidden;text-overflow:ellipsis';
   try{ inp.parentNode.style.position='relative'; inp.parentNode.appendChild(ghost); }catch(e){}
+  // ── SPECULATIVE PREPARATION: a fast OWEM drafts the answer on the PARTIAL message (typed OR spoken)
+  //    while you're still going → the moment you finish, it's already warm. Intuitive by design. ──
+  try{ var _prepEl=document.createElement('div'); _prepEl.id='sovprep'; _prepEl.textContent='◠ preparing your answer…';
+    _prepEl.style.cssText='position:absolute;left:10px;bottom:100%;margin-bottom:7px;padding:4px 11px;font:600 11px ui-monospace,monospace;color:var(--gold,#c9a84c);background:rgba(26,20,16,.82);border:1px solid var(--line,rgba(201,168,76,.3));border-radius:999px;opacity:0;transition:opacity .25s;pointer-events:none'; inp.parentNode.appendChild(_prepEl); }catch(e){}
+  var _prepT; function _prep(on){ var e=document.getElementById('sovprep'); if(e) e.style.opacity=on?'1':'0'; }
+  window.sovPrefetch=function(q){ try{ prefetch(q); }catch(_){} if(q&&q.trim().length>=8){ _prep(true); clearTimeout(_prepT); _prepT=setTimeout(function(){_prep(false);},1800); } else _prep(false); };
   let cur='';
   let pfT; window._sovPF=window._sovPF||{};
   function prefetch(q){ clearTimeout(pfT); q=(q||'').trim(); if(q.length<8) return;
@@ -1725,7 +1731,7 @@ async function sovAsk(text){
       try{ window._sovPF[key]=fetch(SOV3_CHAT,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:q,queen_id:'queen-king',register:'plain',persona:sovContext(),model:window.MEOK_MODEL})}).then(r=>r.json()).then(d=>((d&&(d.response||d.answer||d.text))||'').trim()).catch(function(){return'';}); }catch(e){} }, 340); }
   function show(){ const q=inp.value; cur=best(q);
     if(cur){ ghost.style.display='block'; ghost.innerHTML='<span style="opacity:.7">Tab ↹</span> &nbsp;'+esc(cur); } else ghost.style.display='none';
-    prefetch(q); }
+    window.sovPrefetch(q); }
   inp.addEventListener('input',show);
   inp.addEventListener('keydown',function(e){ if(e.key==='Tab' && cur && inp.value.toLowerCase()!==cur.toLowerCase()){ e.preventDefault(); inp.value=cur; ghost.style.display='none'; show(); } else if(e.key==='Enter'){ ghost.style.display='none'; } });
   inp.addEventListener('blur',function(){ setTimeout(function(){ghost.style.display='none';},160); });
@@ -2000,6 +2006,7 @@ function sovVoice(){
   r.onresult=function(e){ var txt=''; for(var i=e.resultIndex;i<e.results.length;i++) txt+=e.results[i][0].transcript;
     _sovHeard=txt.trim();
     var bb=document.getElementById('sovbbin'), di=document.getElementById('sovin'); if(bb) bb.value=_sovHeard; if(di) di.value=_sovHeard;  // show live words
+    try{ if(window.sovPrefetch) window.sovPrefetch(_sovHeard); }catch(_){}  // speculative: pre-warm the answer while they're still speaking
     if(e.results[e.results.length-1].isFinal && _sovHeard){ var said=_sovHeard; _sovHeard=''; try{ r.stop(); }catch(_){ } if(bb)bb.value=''; if(di)di.value=''; sovHandle(said); } };
   r.onerror=function(e){ _sovRec=null; _sovListenUI(false);
     var msg={'not-allowed':"Microphone access is blocked. Tap the 🔒 in your address bar → allow the microphone, then try again.",'service-not-allowed':"Microphone access is blocked in your browser settings — enable it, then try again.",'no-speech':"I didn't catch anything — tap 🎤 and speak, or just type.",'audio-capture':"I can't find a microphone on this device — type to me instead.",'network':"Speech needs a connection and it hiccuped — try again, or type."}[e&&e.error]||"I couldn't hear that — try again, or just type to me.";
