@@ -8,9 +8,9 @@ scorecard is the deliverable: it tells a viewer precisely what to click and what
 ## SHIPS TODAY — verified this session (the POC surface)
 | Component | State | Evidence |
 |---|---|---|
-| sov33.py governed entrypoint | RUNNING | gate: 78 caps, 49 RUNNING, **0 broken**, SHIP-READY |
+| sov33.py governed entrypoint | RUNNING | gate: 78 caps, 49 RUNNING, 29 GATED, **0 broken**, SHIP-READY |
 | Component registry | RUNNING | 51/51 import clean |
-| Governed memory-bridge (attested+sovereign) | RUNNING | self-test 5/5: care-gate, SIGIL chain, tamper-detect, forged-import reject |
+| Governed memory-bridge (attested+sovereign) | GATED (fail-soft; needs sov33 import at call) | standalone self-test 5/5 (governed-write, care-block, chain-verify, forged-reject, tamper-detect) — re-run in-session |
 | MCP-card catalog (AI-OS desktop feed) | RUNNING | 79 cards exported, all governed=True |
 | SIGIL trust-feed (audit trail visible) | RUNNING | 5,885 attested actions across chains |
 | Anti-relapse CHECK_EXISTING (probe-before-gated) | RUNNING | live probes: github_write, sov3_mcp, compute |

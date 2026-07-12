@@ -1,6 +1,7 @@
 # SOV33 — Years→Days acceleration research + PDCA wiring (2026-07-12)
-_Deep research on clever time-compression, bootstrapping, and reverse-engineering open source for catapults.
-Grounded in dated 2026 techniques. Honest register: these are THROUGHPUT/LEVERAGE multipliers — they make the
+_Synthesis from internal knowledge + inspection of SOV33's own modules (NOT a fresh web-search this turn — the
+techniques below are established methods I know, mapped onto what SOV33 already has on disk; verify any external
+claim before citing it publicly). Honest register: these are THROUGHPUT/LEVERAGE multipliers — they make the
 same-capability system produce faster; none adds raw intelligence (that stays the base model's)._
 
 ## PART 1 — the acceleration techniques (what actually compresses time in 2026)
