@@ -321,6 +321,38 @@ def handle_registry() -> dict:
         }
 
 
+
+def handle_evals() -> dict:
+    """GET /api/evals — Real benchmark eval results from the substrate.
+
+    Hermes lane (per LANE_TASKS_HERMES.md item 1: run REAL evals, correctness-graded, per config).
+    Reads ~/.sovereign/real_evals.sigil.jsonl (history of all eval runs).
+    Returns per-backend best, latest run, honest register (sample size, benchmarks).
+    """
+    try:
+        sys.path.insert(0, '/Users/nicholas/clawd/_alignment/sovereign_merge_kit')
+        from sov33_evals_api import get_evals
+        return get_evals()
+    except Exception as e:
+        return {'error': f'evals load failed: {e}', 'total_runs': 0}
+
+
+
+def handle_rho() -> dict:
+    """GET /api/rho — MEASURED ρ (error correlation) across lineages.
+
+    Hermes lane (per LANE_TASKS_HERMES.md item 2: MEASURE ρ across lineages, don't assert).
+    Reads council_correlation_results.json (Cohere vs Meta) + config_sweep_results.json
+    (20 configs with MEASURED ρ across diverse lineages).
+    """
+    try:
+        sys.path.insert(0, '/Users/nicholas/clawd/_alignment/sovereign_merge_kit')
+        from sov33_rho_api import get_rho
+        return get_rho()
+    except Exception as e:
+        return {'error': f'rho load failed: {e}', 'count': 0}
+
+
 def handle_capabilities() -> dict:
     """GET /api/capabilities — list all SOV33 capabilities."""
     return {
@@ -365,6 +397,10 @@ class SovereignAPIHandler(BaseHTTPRequestHandler):
             return json_response(self, 200, handle_capabilities())
         elif path == '/api/registry':
             return json_response(self, 200, handle_registry())
+        elif path == '/api/evals':
+            return json_response(self, 200, handle_evals())
+        elif path == '/api/rho':
+            return json_response(self, 200, handle_rho())
         elif path == '/api/govern':
             q = query.get('q', [''])[0]
             return json_response(self, 200, handle_govern(q))
