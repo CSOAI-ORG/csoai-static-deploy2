@@ -1786,7 +1786,19 @@ def capability_speculative_responder() -> dict:
         return {'capability': 'speculative-responder', 'error': str(e)[:160]}
 
 
+def capability_free_gpu(mode='plan', need_hr=3.0, provider=None, hours=None):
+    """Free-GPU training bridge: rotate ~7 free providers (~125 GPU-hr/week) so SOV33 is always powered to
+    GROW (L0→L1→…). 'plan'/'next'/'record'. Inference is already bridged via sov33_compute. (lazy)"""
+    try:
+        from free_gpu_bridge import capability_free_gpu as _fg
+        return _fg(mode=mode, need_hr=need_hr, provider=provider, hours=hours)
+    except Exception as e:
+        return {'capability':'free-gpu','error':str(e)[:140]}
+
 CAPABILITIES = {
+    'free-gpu': capability_free_gpu,
+    'gpu': capability_free_gpu,
+    'compute-bridge': capability_free_gpu,
     'speculative': capability_speculative_respond,
     'prepare': capability_speculative_respond,
     'self': capability_self_awareness,
