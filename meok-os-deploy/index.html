@@ -391,7 +391,7 @@ body.sov-open #sovbottombar{display:none !important}
     <div class="ndsec">Explore</div>
     <a class="ndi" onclick="navTo('app:meokearth')"><span>🌍</span> MEOK Earth — your world</a>
     <a class="ndi" onclick="navTo('page:/sovspace3d.html')"><span>🌐</span> SOV Space — the 3D world</a>
-    <a class="ndi" onclick="navTo('page:/sovspace.html')"><span>🧰</span> SOV Space — the tools</a>
+    <a class="ndi" onclick="navTo('page:/sovspace.html')"><span>🧰</span> SOV Tools — the app fleet</a>
     <a class="ndi" onclick="navTo('govern')"><span>🏛</span> What governs my industry?</a>
     <div class="ndsec">Spaces</div>
     <a class="ndi" onclick="navTo('mode:csoai')"><span>💼</span> Work — business &amp; governance</a>
@@ -1287,7 +1287,7 @@ setMode(MODE);paintBar();tick();boot();
 // PWA / share deep-links — manifest shortcuts and links can open an app or the dock directly
 (function(){ try{ var q=new URLSearchParams(location.search);
   var app=q.get('app'); if(app){ setTimeout(function(){ try{ if(typeof APPS!=='undefined'&&APPS[app]) openApp(app); }catch(e){} }, 1200); }
-  if(q.get('talk')){ setTimeout(function(){ try{ sovToggle(true); if(innerWidth<=760) document.body.classList.add('sov-open'); var i=document.getElementById('sovbbin'); if(i) i.focus(); }catch(e){} }, 1200); }
+  if(q.get('talk')){ setTimeout(function(){ try{ sovToggle(true); if(innerWidth<=760) document.body.classList.add('sov-open'); var i=document.getElementById('sovin')||document.getElementById('sovbbin'); if(i) i.focus(); }catch(e){} }, 1200); }
   var tr=q.get('tour'); if(tr){ setTimeout(function(){ try{ if(typeof sovTourStart==='function') sovTourStart(tr==='full'?'full':'demo'); }catch(e){} }, 1600); }
 }catch(e){} })();
 
@@ -1298,7 +1298,7 @@ function sovToggle(on){ document.getElementById('frame').classList.toggle('sovon
 function navToggle(on){ document.body.classList.toggle('nav-open', on); }
 function navTo(dest){ navToggle(false);
   try{
-    if(dest==='sov'){ sovToggle(true); if(innerWidth<=760) document.body.classList.add('sov-open'); var i=document.getElementById('sovbbin'); if(i) i.focus(); return; }
+    if(dest==='sov'){ sovToggle(true); if(innerWidth<=760) document.body.classList.add('sov-open'); var i=document.getElementById('sovin')||document.getElementById('sovbbin'); if(i) i.focus(); return; }
     if(dest==='govern'){ sovToggle(true); if(typeof sovHandle==='function') sovHandle('what governs my industry'); return; }
     if(dest.indexOf('app:')===0){ openApp(dest.slice(4)); return; }
     if(dest.indexOf('mode:')===0){ setMode(dest.slice(5)); if(typeof sovSyncHue==='function') sovSyncHue(); return; }
