@@ -1795,6 +1795,68 @@ def capability_free_gpu(mode='plan', need_hr=3.0, provider=None, hours=None):
     except Exception as e:
         return {'capability':'free-gpu','error':str(e)[:140]}
 
+def capability_cloud_fleet() -> dict:
+    """Cloud fleet orchestrator — full capacity for all OWEMs.
+
+    Discovers 5 backends, runs health checks, routes per-OWEM.
+    Returns current fleet status + per-OWEM routing + cache stats.
+    """
+    try:
+        from sov33_cloud_orchestrator import WorkerPool, health_check, OWEM_ROUTING
+        pool = WorkerPool(max_workers=20, use_cache=True)
+        health = pool.health_check_all()
+        s = pool.stats()
+        return {
+            'capability': 'cloud-fleet',
+            'mode': 'status',
+            'health': {k: {kk: vv for kk, vv in v.items() if kk in ('healthy', 'latency_ms', 'error', 'checked_at')} for k, v in health.items()},
+            'stats': s,
+            'per_owem_routing': OWEM_ROUTING,
+            'n_healthy': sum(1 for h in health.values() if h.get('healthy')),
+            'n_total': len(health),
+            'care_floor': CARE_FLOOR,
+        }
+    except Exception as e:
+        return {'capability': 'cloud-fleet', 'error': str(e)[:200]}
+
+
+def capability_cloud_orchestrator(jobs: str = None) -> dict:
+    """Run multi-OWEM parallel asks via cloud fleet.
+
+    jobs: JSON string of [(owem, prompt), ...] or None for demo.
+    Returns results in same order.
+
+    Example:
+      capability_cloud_orchestrator('[("compliance", "What is Article 0?"), ("general", "Capital of France?")]')
+    """
+    try:
+        from sov33_cloud_orchestrator import WorkerPool
+        pool = WorkerPool(max_workers=20, use_cache=True)
+
+        if jobs:
+            parsed = json.loads(jobs)
+        else:
+            # Demo jobs
+            parsed = [
+                ('compliance', 'What is Article 0 of the Sovereign Charter?'),
+                ('general', 'What is the capital of France?'),
+                ('general', 'Quick: 17 × 23?'),
+            ]
+
+        results = pool.ask(parsed)
+        return {
+            'capability': 'cloud-orchestrator',
+            'mode': 'live',
+            'n_jobs': len(parsed),
+            'results': results,
+            'cache_stats': pool.cache.stats() if pool.cache else None,
+            'total_calls': pool.total_calls,
+            'care_floor': CARE_FLOOR,
+        }
+    except Exception as e:
+        return {'capability': 'cloud-orchestrator', 'error': str(e)[:200]}
+
+
 CAPABILITIES = {
     'free-gpu': capability_free_gpu,
     'gpu': capability_free_gpu,
@@ -1819,6 +1881,10 @@ CAPABILITIES = {
     'charter-qa': capability_charter_qa,
     'speculative-responder': capability_speculative_responder,
     'responder': capability_speculative_responder,
+    'cloud-fleet': capability_cloud_fleet,
+    'fleet': capability_cloud_fleet,
+    'cloud-orchestrator': capability_cloud_orchestrator,
+    'orchestrator': capability_cloud_orchestrator,
     'readiness': capability_readiness,
     'distill': capability_distill,
     'owem-world': capability_owem_world,
