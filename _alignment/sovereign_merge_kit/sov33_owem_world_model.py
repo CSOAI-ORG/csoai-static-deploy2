@@ -32,11 +32,20 @@ import argparse
 from pathlib import Path
 from datetime import datetime, timezone
 from collections import defaultdict
+import os as _os, tempfile as _tf
+def _sov_dir():
+    d=_os.environ.get('SOV33_SIGIL_DIR') or _os.path.join(_os.path.expanduser('~'),'.sovereign')
+    try:
+        _os.makedirs(d,exist_ok=True); return d
+    except Exception:
+        d=_os.path.join(_tf.gettempdir(),'sov33_sigil'); _os.makedirs(d,exist_ok=True); return d
+_SOVDIR=_sov_dir()
+
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 
-SIGIL_FILE = Path.home() / '.sovereign' / 'owem_world.sigil.jsonl'
+SIGIL_FILE = Path(_SOVDIR) / 'owem_world.sigil.jsonl'
 SIGIL_FILE.parent.mkdir(parents=True, exist_ok=True)
 
 
@@ -203,7 +212,7 @@ class EWCContinualLearner:
     PLANETS = ['care', 'safety', 'governance', 'defense', 'intuition', 'voice', 'sovereign']
 
     def __init__(self, weights_dir: Path = None, lambda_ewc: float = 1000.0):
-        self.weights_dir = weights_dir or (Path.home() / '.sovereign' / 'nn_weights')
+        self.weights_dir = weights_dir or (Path(_SOVDIR) / 'nn_weights')
         self.lambda_ewc = lambda_ewc
         # Fisher information per planet (matrix of weight importance)
         self.fisher = {p: {} for p in self.PLANETS}
@@ -287,7 +296,7 @@ class OpenVocabularyRecognizer:
     """
 
     def __init__(self, cheatsheet_path: Path = None):
-        self.cheatsheet_path = cheatsheet_path or (Path.home() / '.sovereign' / 'cheatsheet.sigil.jsonl')
+        self.cheatsheet_path = cheatsheet_path or (Path(_SOVDIR) / 'cheatsheet.sigil.jsonl')
         self.vocab = set()
         self.load_cheatsheet()
 
@@ -371,7 +380,7 @@ class OWEMWorldModel:
         }
 
         # Read from sovereign substrate files
-        sovereign_dir = Path.home() / '.sovereign'
+        sovereign_dir = Path(_SOVDIR)
         mem_file = sovereign_dir / 'sovereign_memory.jsonl'
         if mem_file.exists():
             state['n_memories'] = sum(1 for _ in mem_file.open())
