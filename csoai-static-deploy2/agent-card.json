@@ -1,32 +1,49 @@
 {
-  "@context": ["https://www.w3.org/ns/did/v1", "https://w3id.org/security/suites/ed25519-2020/v1"],
-  "id": "did:csoai:foundation:csai",
-  "type": "AgentCard",
-  "name": "CSOAI Founding Council Sovereign Agent",
-  "description": "CSOAI sovereign substrate. Independent UK standards body. Charter Article 0: ISO fee-for-service only. CA3O is the CMMC for AI.",
-  "url": "https://csoai.org",
-  "version": "2.0.0",
-  "sovereignty": {
-    "substrate": "M4 Mac + GCP VM",
-    "governance": "BFT Council (22-of-33)",
-    "audit_chain": "Ed25519-signed SIGIL chain",
-    "verifiable_at": "https://csoai-static-deploy2.vercel.app/verify.html"
+  "name": "SOV33",
+  "description": "Sovereign Open World Emergence Model - governed AI substrate with trainable weights, 12 Sovereign Pillars as specialist workers, BFT-33 council, Ed25519 SIGIL on every response",
+  "version": "1.0.0",
+  "company": "CSOAI Ltd",
+  "company_house": "UK 16939677",
+  "founder": "Nicholas Templeman",
+  "url": "https://csoai.org/sov33",
+  "capabilities": {
+    "chat": true,
+    "reasoning": true,
+    "code": true,
+    "memory": true,
+    "tools": ["web_search", "file_read", "file_write", "memory_read", "memory_write", "sigil_verify", "owem_call", "kaggle_submit", "tools.list"],
+    "embed": true,
+    "voice": ["alexa", "siri", "google_home"]
   },
-  "services": {
-    "casa_certification": "https://csoai-static-deploy2.vercel.app/launch-kit.html",
-    "watchdog_certificates": "https://csoai-static-deploy2.vercel.app/verify.html",
-    "bft_council": "https://csoai-static-deploy2.vercel.app/bft-configurator.html",
-    "sovereign_substrate": "https://csoai-static-deploy2.vercel.app/sovereign-mom.html",
-    "vote": "https://csoai-static-deploy2.vercel.app/vote.html",
-    "striving_dashboard": "https://csoai-static-deploy2.vercel.app/striving.html"
+  "models": {
+    "primary": "Qwen3-0.6B + sovereign LoRA (87.54% accuracy on sovereign corpus)",
+    "world_model": "12.7M params, 128-dim, 4 layers, 4 heads, sovereign adapter",
+    "tokenizer": "SOVTOK 8,192 vocab, 181 sovereign priority terms",
+    "registry_size": 61,
+    "sovereign_safe": 53
   },
-  "frameworks": [
-    "EU AI Act", "NIST AI RMF", "ISO 42001", "ISO 27001", "DORA", "NIS2",
-    "GDPR", "HIPAA", "SOC 2", "PCI DSS", "CMMC 2.0", "UK AISI"
-  ],
-  "publicKey": {
-    "id": "did:csoai:foundation:csai#key-1",
-    "type": "Ed25519VerificationKey2020",
-    "publicKeyMultibase": "z6MkiTBz1ym8p9J4v3M5KqPkY9vJ4JzX5yqK9vJ4JzX5yqK9vJ4JzX5yqK9"
-  }
+  "governance": {
+    "care_floor": 0.95,
+    "article_0": "ISO fee-for-service only, never equity",
+    "sovereign_pillars": ["Honor", "Safety", "Guidance", "Sovereignty", "Resilience", "Auditability", "Verifiability", "Transparency", "Justice", "Equity", "Openness", "Continuity"],
+    "bft_quorum": "23/33",
+    "sigil": "Ed25519 on every response"
+  },
+  "topologies": ["triangle", "cascade", "pyramid", "12-around-1", "master", "owems"],
+  "endpoints": {
+    "chat": "/v1/chat/completions",
+    "models": "/v1/models",
+    "registry": "/api/registry",
+    "orchestrate": "/api/orchestrate",
+    "stats": "/api/stats"
+  },
+  "proofs": {
+    "triangle_2_3x_faster": "10 sovereign questions",
+    "12_around_1_189_500x_faster": "8 questions, 6 configs",
+    "sovereign_brain_9_of_10": "sovereign topics",
+    "world_model_learns": "1.11 -> 0.51 loss reduction",
+    "governance_battery": "1.00 on 33 prompts",
+    "rho_measured": "0.106 to 0.584 across 20 configs"
+  },
+  "tags": ["sovereign-ai", "owem", "governance", "audit", "open-world", "emergence", "csoai"]
 }
