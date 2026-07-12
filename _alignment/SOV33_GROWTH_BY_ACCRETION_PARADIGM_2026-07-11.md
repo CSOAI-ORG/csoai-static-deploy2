@@ -31,7 +31,7 @@ BFT-33 quorum · SIGIL attestation · sovereign-bound. Growth that would violate
 ## What is MEASURED (RUNNING — verified this week)
 - **Monotonic growth**, overnight: SIGILs 17,049→17,197; NN labels 1,327→1,589; OWEM world-sigils 0→87.
 - **Invariants hold**: 6/6 on every 10-minute cron tick (two ticks logged + weights persisted).
-- **Lineage diversity**: 10 distinct model families across a 61-model registry (Qwen/Llama/Gemma/DeepSeek/
+- **Lineage diversity**: 10 distinct model families across a 70-entry model registry (Qwen/Llama/Gemma/DeepSeek/
   Mistral/Kimi/Phi/MiMo/OpenAI-OSS/other) — measured live by the growth controller.
 - **Diversity dominates topology**: across 4 governed topologies, the diverse-vs-identical score gap
   (~0.15) dwarfs the ring-vs-pyramid shape gap (0.024). Lineage mix is the lever, not geometry.
