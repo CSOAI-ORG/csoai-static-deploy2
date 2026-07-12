@@ -13,7 +13,7 @@
     "probed": true,
     "live": false,
     "verdict": "confirmed gated (probe failed)",
-    "evidence": "list_compute empty this session \u2014 genuinely no compute target (verified, not assumed)"
+    "evidence": "no local GPU/MPS/endpoint visible to this process; the harness `list_compute` is the authoritative check and CANNOT be called from here \u2014 report gated ONLY after that tool returns empty, not from this probe alone"
   },
   "sov3_mcp": {
     "resource": "sov3_mcp",

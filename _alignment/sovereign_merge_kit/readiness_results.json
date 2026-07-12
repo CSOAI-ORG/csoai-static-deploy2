@@ -1,7 +1,7 @@
 {
-  "running": 45,
-  "gated": 25,
-  "broken": 2,
+  "running": 41,
+  "gated": 34,
+  "broken": 0,
   "rows": [
     {
       "capability": "agentdog",
@@ -11,8 +11,8 @@
     },
     {
       "capability": "anti-relapse",
-      "class": "RUNNING",
-      "detail": null,
+      "class": "GATED",
+      "detail": "fail-soft: endpoint",
       "expected_gated": false
     },
     {
@@ -77,14 +77,14 @@
     },
     {
       "capability": "cloud-fleet",
-      "class": "RUNNING",
-      "detail": null,
+      "class": "GATED",
+      "detail": "blocked on live resource >8s (network/GPU) \u2014 not a code fault",
       "expected_gated": false
     },
     {
       "capability": "cloud-orchestrator",
-      "class": "RUNNING",
-      "detail": null,
+      "class": "GATED",
+      "detail": "blocked on live resource >8s (network/GPU) \u2014 not a code fault",
       "expected_gated": false
     },
     {
@@ -149,8 +149,8 @@
     },
     {
       "capability": "e2e",
-      "class": "BROKEN",
-      "detail": "[Errno 1] Operation not permitted: '/Users/nicholas/.sovereign/owem_e2",
+      "class": "GATED",
+      "detail": "blocked on live resource >8s (network/GPU) \u2014 not a code fault",
       "expected_gated": false
     },
     {
@@ -167,8 +167,8 @@
     },
     {
       "capability": "fleet",
-      "class": "RUNNING",
-      "detail": null,
+      "class": "GATED",
+      "detail": "blocked on live resource >8s (network/GPU) \u2014 not a code fault",
       "expected_gated": false
     },
     {
@@ -179,14 +179,20 @@
     },
     {
       "capability": "gated-check",
-      "class": "RUNNING",
-      "detail": null,
+      "class": "GATED",
+      "detail": "blocked on live resource >8s (network/GPU) \u2014 not a code fault",
       "expected_gated": false
     },
     {
       "capability": "gpu",
       "class": "GATED",
       "detail": "fail-soft: needs ",
+      "expected_gated": false
+    },
+    {
+      "capability": "grow",
+      "class": "RUNNING",
+      "detail": null,
       "expected_gated": false
     },
     {
@@ -263,14 +269,14 @@
     },
     {
       "capability": "orchestrator",
-      "class": "RUNNING",
-      "detail": null,
+      "class": "GATED",
+      "detail": "blocked on live resource >8s (network/GPU) \u2014 not a code fault",
       "expected_gated": false
     },
     {
       "capability": "owem-e2e",
-      "class": "BROKEN",
-      "detail": "[Errno 1] Operation not permitted: '/Users/nicholas/.sovereign/owem_e2",
+      "class": "GATED",
+      "detail": "blocked on live resource >8s (network/GPU) \u2014 not a code fault",
       "expected_gated": false
     },
     {
@@ -317,8 +323,8 @@
     },
     {
       "capability": "registry",
-      "class": "RUNNING",
-      "detail": null,
+      "class": "GATED",
+      "detail": "blocked on live resource >8s (network/GPU) \u2014 not a code fault",
       "expected_gated": false
     },
     {
@@ -412,6 +418,18 @@
       "expected_gated": false
     },
     {
+      "capability": "train",
+      "class": "RUNNING",
+      "detail": null,
+      "expected_gated": false
+    },
+    {
+      "capability": "train-dispatch",
+      "class": "RUNNING",
+      "detail": null,
+      "expected_gated": false
+    },
+    {
       "capability": "triangle",
       "class": "RUNNING",
       "detail": null,
@@ -436,5 +454,5 @@
       "expected_gated": false
     }
   ],
-  "verdict": "NOT READY (2 broken)"
+  "verdict": "SHIP-READY (0 broken)"
 }

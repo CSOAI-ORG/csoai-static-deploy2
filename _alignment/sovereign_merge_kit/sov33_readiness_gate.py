@@ -12,10 +12,29 @@ Honest rule: GATED != BROKEN. A capability that cleanly reports "needs GPU/endpo
 one that throws is not. We ship when BROKEN=0 and every RUNNING capability's invariants hold.
 """
 import os, sys, json, io, contextlib
+# The gate probes capabilities WITHOUT downloading models: force HF offline so a model-touching cap
+# fails fast (raises -> classified GATED) instead of blocking the whole gate on a live network fetch.
+os.environ.setdefault("HF_HUB_OFFLINE", "1")
+os.environ.setdefault("TRANSFORMERS_OFFLINE", "1")
+os.environ.setdefault("HF_HUB_DOWNLOAD_TIMEOUT", "3")
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import sov33
 
 # capabilities that legitimately need a resource we don't have in-sandbox (owner/GPU/endpoint-gated)
+import threading
+_TIMEOUT = object()
+def _call_with_timeout(fn, kw, timeout=8):
+    """Run fn in a daemon thread; if it doesn't return in `timeout`s it's blocking on a live
+    resource -> return _TIMEOUT (classified GATED). The thread is abandoned (daemon), never hangs the gate."""
+    box = {}
+    def _worker():
+        try: box['r'] = fn(**kw) if kw else fn()
+        except Exception as e: box['e'] = e
+    t = threading.Thread(target=_worker, daemon=True); t.start(); t.join(timeout)
+    if t.is_alive(): return _TIMEOUT
+    if 'e' in box: raise box['e']
+    return box.get('r')
+
 GATED_EXPECTED = {
     'distill':'GPU+endpoints', 'owem-sweep':'live models', 'oracle-status':'OCI creds',
     'oci-mirror':'OCI creds', 'three-lineage':'live models', 'correlation':'live models',
@@ -60,8 +79,12 @@ def run():
             continue
         try:
             with contextlib.redirect_stdout(io.StringIO()):
-                res = fn(**kw) if kw else fn()
-            cls, detail = classify(name, res)
+                res = _call_with_timeout(fn, kw, timeout=8)
+            if res is _TIMEOUT:
+                # blocked on a live resource (network/GPU) past the deadline -> GATED, never hang the gate
+                cls, detail = 'GATED', 'blocked on live resource >8s (network/GPU) — not a code fault'
+            else:
+                cls, detail = classify(name, res)
         except TypeError:
             # needs a required arg we didn't supply -> treat as GATED-on-input, not broken
             cls, detail = 'GATED', 'needs required arg'

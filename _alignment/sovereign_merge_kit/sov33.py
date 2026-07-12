@@ -1805,9 +1805,48 @@ def capability_free_gpu(mode='plan', need_hr=3.0, provider=None, hours=None):
     except Exception as e:
         return {'capability':'free-gpu','error':str(e)[:140]}
 
+
+def capability_owem_train_dispatch(mode: str = 'next', need_hr: float = 3.0,
+                                     expert: str = None, hours: float = None,
+                                     provider: str = None) -> dict:
+    """OWEM training dispatch — what unblocks L0→L1 automatically.
+
+    Modes:
+      - 'next' (default): pick the next free GPU + next expert to train
+      - 'progress': show current training pipeline status
+      - 'record': log a completed run (expert, hours, provider)
+
+    This is the GROWTH LOOP for the substrate:
+      1. substrate detects need (L0: 1 expert, need 4 for L1)
+      2. dispatch picks next free GPU (kaggle → colab → lightning → ...)
+      3. generates Colab script for that expert
+      4. when zip appears, install_adapters handles the merge
+      5. next iteration: 2 experts → 3 → 4 → L1
+
+    Total: 7 free providers, ~125 GPU-hr/week honest capacity.
+    """
+    try:
+        from sov33_owem_train_dispatch import (
+            dispatch_next_expert, progress_report, record_completion,
+        )
+        if mode == 'next':
+            d = dispatch_next_expert(need_hr=need_hr)
+        elif mode == 'progress':
+            d = progress_report()
+        elif mode == 'record' and expert and hours and provider:
+            d = record_completion(expert, hours, provider)
+        else:
+            d = dispatch_next_expert(need_hr=need_hr)
+        d['capability'] = 'owem-train-dispatch'
+        d['mode'] = mode
+        d['care_floor'] = CARE_FLOOR
+        return d
+    except Exception as e:
+        return {'capability': 'owem-train-dispatch', 'error': str(e)[:200]}
+
+
 def capability_cloud_fleet() -> dict:
     """Cloud fleet orchestrator — full capacity for all OWEMs.
-
     Discovers 5 backends, runs health checks, routes per-OWEM.
     Returns current fleet status + per-OWEM routing + cache stats.
     """
@@ -1941,6 +1980,9 @@ CAPABILITIES = {
     'charter-qa': capability_charter_qa,
     'speculative-responder': capability_speculative_responder,
     'responder': capability_speculative_responder,
+    'train-dispatch': capability_owem_train_dispatch,
+    'train': capability_owem_train_dispatch,
+    'grow': capability_owem_train_dispatch,
     'cloud-fleet': capability_cloud_fleet,
     'fleet': capability_cloud_fleet,
     'cloud-orchestrator': capability_cloud_orchestrator,

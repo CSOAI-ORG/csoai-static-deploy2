@@ -28,8 +28,22 @@ def _probe_github_write():
     return live, f"token={tok}, remote_reachable={reach} (push proven by session commits)"
 
 def _probe_compute():
-    # honest: is there ANY wired compute target? (from list_compute — must be checked live, not assumed)
-    return False, "list_compute empty this session — genuinely no compute target (verified, not assumed)"
+    # A real self-probe: can this process reach ANY compute? Test for a local GPU (torch.cuda),
+    # an MPS device, or a SOV33_COMPUTE_ENDPOINT env. This module CANNOT call the harness `list_compute`
+    # tool (that lives outside the kernel) — so it probes what it CAN see and says so honestly.
+    signals = []
+    try:
+        import torch
+        if torch.cuda.is_available(): signals.append("cuda")
+        if getattr(torch.backends,"mps",None) and torch.backends.mps.is_available(): signals.append("mps")
+    except Exception: pass
+    if os.environ.get("SOV33_COMPUTE_ENDPOINT"): signals.append("endpoint-env")
+    live = bool(signals)
+    if live:
+        return True, f"local compute visible: {signals} (claim would be FALSE — usable)"
+    return False, ("no local GPU/MPS/endpoint visible to this process; the harness `list_compute` is the "
+                   "authoritative check and CANNOT be called from here — report gated ONLY after that tool "
+                   "returns empty, not from this probe alone")
 
 def _probe_endpoint(url):
     try:
