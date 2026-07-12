@@ -394,6 +394,34 @@ def handle_memory(payload: dict) -> dict:
         return {'error': f'memory bridge failed: {e}'}
 
 
+
+def handle_amica(payload: dict) -> dict:
+    """POST /v1/chat/completions — Amica-class backend adapter (Hermes lane §E).
+
+    OpenAI-compatible endpoint. Amica (or any VRM avatar shell) calls this.
+    Returns standard OpenAI chat.completion format with sovereign_provenance.
+    """
+    try:
+        sys.path.insert(0, '/Users/nicholas/clawd/_alignment/sovereign_merge_kit')
+        from sov33_amica_adapter import amica_request
+        messages = payload.get('messages', [])
+        message = ' '.join(m.get('content', '') for m in messages if m.get('role') == 'user')
+        model = payload.get('model', 'general')
+        return amica_request(message, character=model)
+    except Exception as e:
+        return {'error': f'amica adapter failed: {e}'}
+
+
+def handle_amica_models() -> dict:
+    """GET /v1/models — Amica-style models list (= SOV33 OWEMs)."""
+    try:
+        sys.path.insert(0, '/Users/nicholas/clawd/_alignment/sovereign_merge_kit')
+        from sov33_amica_adapter import amica_models
+        return amica_models()
+    except Exception as e:
+        return {'error': f'amica models failed: {e}'}
+
+
 def handle_capabilities() -> dict:
     """GET /api/capabilities — list all SOV33 capabilities."""
     return {
@@ -440,6 +468,8 @@ class SovereignAPIHandler(BaseHTTPRequestHandler):
             return json_response(self, 200, handle_registry())
         elif path == '/api/evals':
             return json_response(self, 200, handle_evals())
+        elif path == '/v1/models':
+            return json_response(self, 200, handle_amica_models())
         elif path == '/api/memory':
             return json_response(self, 200, handle_memory({}))
         elif path == '/api/rho':
@@ -467,6 +497,10 @@ class SovereignAPIHandler(BaseHTTPRequestHandler):
             return json_response(self, 200, handle_orchestrate(payload))
         elif path == '/api/memory':
             return json_response(self, 200, handle_memory(payload))
+        elif path == '/api/amica':
+            return json_response(self, 200, handle_amica(payload))
+        elif path == '/v1/chat/completions':
+            return json_response(self, 200, handle_amica(payload))
         elif path == '/api/triangle':
             return json_response(self, 200, handle_triangle(payload))
         elif path == '/api/cascade':
