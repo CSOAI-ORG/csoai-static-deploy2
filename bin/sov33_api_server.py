@@ -256,6 +256,35 @@ def handle_status() -> dict:
     }
 
 
+def handle_registry() -> dict:
+    """GET /api/registry — 61-model registry with lineage + license tags.
+
+    Hermes lane (per LANE_TASKS_HERMES.md):
+    - 61 open models across 7 pretraining lineages
+    - License filter: Llama MAU = NOT sovereign-safe
+    - Used to route sovereign ops to sovereign-safe backends
+    """
+    try:
+        sys.path.insert(0, '/Users/nicholas/clawd/_alignment/sovereign_merge_kit')
+        from sov33_model_registry import get_registry, get_sovereign_safe
+        reg = get_registry()
+        summary = {
+            'total_models': reg['total'],
+            'sovereign_safe_count': reg['sovereign_safe_count'],
+            'not_sovereign_safe_count': reg['not_sovereign_safe_count'],
+            'lineages': reg['lineages'],
+            'license_filter': reg['license_filter_note'],
+            'sovereign_safe_models': [m['name'] for m in get_sovereign_safe()],
+            'line_count': 61,
+        }
+        return summary
+    except Exception as e:
+        return {
+            'error': f'registry load failed: {e}',
+            'total_models': 0,
+        }
+
+
 def handle_capabilities() -> dict:
     """GET /api/capabilities — list all SOV33 capabilities."""
     return {
@@ -298,6 +327,8 @@ class SovereignAPIHandler(BaseHTTPRequestHandler):
             return json_response(self, 200, handle_status())
         elif path == '/api/capabilities':
             return json_response(self, 200, handle_capabilities())
+        elif path == '/api/registry':
+            return json_response(self, 200, handle_registry())
         elif path == '/api/govern':
             q = query.get('q', [''])[0]
             return json_response(self, 200, handle_govern(q))
