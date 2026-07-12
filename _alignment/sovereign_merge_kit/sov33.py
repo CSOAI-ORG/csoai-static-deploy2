@@ -1741,6 +1741,51 @@ def capability_speculative_respond(text=None, partial=None, verify=True):
     except Exception as e:
         return {'capability':'speculative-respond','error':str(e)[:140]}
 
+def capability_speculative_responder() -> dict:
+    """SpeculativeResponder — draft-on-partial-input, verify-on-send, care-floor-before-emit.
+
+    Per Claude-science's suggestion: same shape as stateless MCP 2026-07-28 work.
+    - SmallOWEM drafts fast (Mac local, low load)
+    - LargeOWEM verifies (cloud GPU, runs on SEND not keystroke)
+    - Care-floor gates EVERY output, even stubs
+    - SIGIL-anchored end-to-end
+    - Stateless, async, round-robin ready
+
+    HONEST: this is the design + class shell. Real inference needs Q4 GGUF
+    loaded (small) + cloud verify endpoint (large). Both stubbed by default.
+    """
+    try:
+        from sov33_speculative_responder import (
+            SpeculativeResponder, SmallOWEM, LargeOWEM, CareFloorGate,
+            CARE_FLOOR,
+        )
+        # Initialize the full responder (no models loaded — stub mode)
+        responder = SpeculativeResponder()
+        # Demo: emit on partial input + on send
+        demo_draft = responder.on_partial_input('What is sovereign AI?')
+        demo_send = responder.on_send('What is sovereign AI?')
+
+        return {
+            'capability': 'speculative-responder',
+            'architecture': {
+                'small_owem': 'drafts fast on partial input (Mac local, stub by default)',
+                'draft_cache': 'holds drafts by input hash until verify-on-send',
+                'care_floor_gate': '0.95 — vetoes sub-floor BEFORE large OWEM call',
+                'large_owem': 'verifies on SEND (cloud GPU, stub by default)',
+                'emit': 'SIGIL-anchored output to user',
+            },
+            'demo_emitted': demo_send.get('emitted'),
+            'demo_care_score': demo_send.get('care_floor_score'),
+            'demo_drafts_cached': len(responder.draft_cache),
+            'demo_large_owem_calls': responder.large.calls,
+            'same_shape_as': 'MCP 2026-07-28 stateless work (no session, round-robin ready)',
+            'honest_register': 'small/large OWEMs are STUBS by default; wire real backends to make it run',
+            'care_floor': CARE_FLOOR,
+        }
+    except Exception as e:
+        return {'capability': 'speculative-responder', 'error': str(e)[:160]}
+
+
 CAPABILITIES = {
     'speculative': capability_speculative_respond,
     'prepare': capability_speculative_respond,
@@ -1760,6 +1805,8 @@ CAPABILITIES = {
     'sac': capability_sac_council,
     'substrate-explorer': capability_substrate_explorer,
     'charter-qa': capability_charter_qa,
+    'speculative-responder': capability_speculative_responder,
+    'responder': capability_speculative_responder,
     'readiness': capability_readiness,
     'distill': capability_distill,
     'owem-world': capability_owem_world,
