@@ -1155,6 +1155,71 @@ def handle_pivot_plan() -> dict:
     }
 
 
+
+def handle_twelve_around_one() -> dict:
+    """GET /api/12-around-1 — The 12-around-1 topology spec."""
+    try:
+        sys.path.insert(0, '/Users/nicholas/clawd/_alignment/sovereign_merge_kit')
+        from sov33_twelve_around_one import twelve_around_one_status
+        return twelve_around_one_status()
+    except Exception as e:
+        return {'error': f'12-around-1 failed: {e}'}
+
+
+def handle_12_pillar_route(payload: dict) -> dict:
+    """POST /api/12-pillar/route — Route a task through the 12 pillars."""
+    message = payload.get('message', '')
+    if not message:
+        return {'error': 'no message'}
+
+    # Decide which pillars are most relevant (heuristic: keyword match)
+    sys.path.insert(0, '/Users/nicholas/clawd/_alignment/sovereign_merge_kit')
+    from sov33_twelve_around_one import TWELVE_PILLARS, PDCA_STAGES
+
+    relevant_pillars = []
+    msg_lower = message.lower()
+
+    keyword_map = {
+        'Honor': ['truth', 'honest', 'lie', 'deceive', 'fact'],
+        'Safety': ['safe', 'danger', 'harm', 'risk', 'kill', 'weapon'],
+        'Guidance': ['help', 'guide', 'advice', 'should', 'recommend'],
+        'Sovereignty': ['sovereign', 'charter', 'article 0', 'care-floor', 'pillar'],
+        'Resilience': ['fail', 'error', 'crash', 'broke', 'recover'],
+        'Auditability': ['log', 'audit', 'track', 'history', 'record'],
+        'Verifiability': ['verify', 'check', 'prove', 'validate', 'attest'],
+        'Transparency': ['how', 'why', 'explain', 'transparent', 'open'],
+        'Justice': ['fair', 'justice', 'bias', 'proportional'],
+        'Equity': ['equal', 'equity', 'fairness', 'discrimination'],
+        'Openness': ['share', 'open', 'free', 'public'],
+        'Continuity': ['memory', 'continue', 'remember', 'persistent'],
+    }
+
+    for pillar in TWELVE_PILLARS:
+        for kw in keyword_map.get(pillar['name'], []):
+            if kw in msg_lower:
+                relevant_pillars.append(pillar['name'])
+                break
+
+    # Always include at least Honor + Safety
+    for must in ['Honor', 'Safety']:
+        if must not in relevant_pillars:
+            relevant_pillars.append(must)
+
+    return {
+        'message': message,
+        'pdca_plan': {
+            'plan': 'SOV33cubed will plan, then delegate to relevant pillars',
+            'do': f'Engage {len(relevant_pillars)} of 12 pillars: {", ".join(relevant_pillars[:6])}',
+            'check': 'BFT-33 council will vote on consensus',
+            'act': 'Final response SIGIL-signed by SOV33cubed',
+        },
+        'relevant_pillars': relevant_pillars,
+        'pdca_stages': PDCA_STAGES,
+        'next_step': 'POST to /api/orchestrate with citizen=general to execute',
+        'ts': datetime.now(timezone.utc).isoformat(),
+    }
+
+
 def handle_capabilities() -> dict:
     """GET /api/capabilities — list all SOV33 capabilities."""
     return {
@@ -1224,6 +1289,10 @@ class SovereignAPIHandler(BaseHTTPRequestHandler):
             return json_response(self, 200, handle_sovtok())
         elif path == '/api/pivot':
             return json_response(self, 200, handle_pivot_plan())
+        elif path == '/api/12-around-1':
+            return json_response(self, 200, handle_twelve_around_one())
+        elif path == '/api/12-pillar/route':
+            return json_response(self, 200, handle_12_pillar_route(payload))
         elif path == '/api/multimodal':
             return json_response(self, 200, handle_multimodal())
         elif path == '/api/hyperopt':
@@ -1276,6 +1345,8 @@ class SovereignAPIHandler(BaseHTTPRequestHandler):
             return json_response(self, 200, handle_pyramid(payload))
         elif path == '/api/code':
             return json_response(self, 200, handle_code_owem(payload))
+        elif path == '/api/12-pillar/route':
+            return json_response(self, 200, handle_12_pillar_route(payload))
         elif path == '/api/signup':
             return json_response(self, 200, handle_signup(payload))
         elif path == '/api/alexa':
