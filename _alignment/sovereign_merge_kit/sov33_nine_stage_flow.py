@@ -34,6 +34,22 @@ ACCELERATION = {
 CATAPULTS = "published recipes + permissive OSS + open reasoning-traces (s1K/LIMO/OpenR1/OpenThoughts); "\
             "adopt the TECHNIQUE + open weights, never proprietary weights or a violated license"
 
+
+# OBSERVER / COLLAPSE PRINCIPLE (SOV33_OBSERVER_COLLAPSE charter) — the double-slit-as-METAPHOR mapped onto the flow.
+# HONEST REGISTER: this is a DESIGN METAPHOR + quantum-INSPIRED gating (QAOA-style), NOT literal quantum measurement.
+# SOV33 is software on classical GPUs; it does NOT collapse a physical wavefunction or "the bandwidth of reality".
+# The mapping is real as ARCHITECTURE: the flow runs WIDE (many candidate outputs in superposition) and the gate
+# COLLAPSES to ONE governed, signed decision (the "observation"). Story sells; the literal-quantum claim is FORBIDDEN.
+OBSERVER_COLLAPSE = {
+    "principle": "run wide in possibility-space; collapse to one governed, attested reality at the gate",
+    "SUPERPOSITION (wide)": ["PLAN (decompose into many candidate paths)", "DO (parallel fan-out = many candidate outputs)"],
+    "COLLAPSE (observe->one)": ["CHECK_VERIFY (BFT cross-lineage vote selects)", "care-floor gate (veto harmful branch)",
+                                "SIGIL (sign the collapsed decision = the irreversible 'measurement record')"],
+    "honest_label": "METAPHOR + quantum-INSPIRED (QAOA gating / stochastic resonance). NOT literal quantum collapse. "
+                    "Classical software. The orb/collapse imagery is the STORY; the governed wide->narrow seam is the LAW.",
+    "hard_line": "never claim literal wavefunction collapse or 'collapsing reality'; that is the retracted quantum-hardware error.",
+}
+
 def flow_manifest():
     return {"stages":[{"n":i+1,"name":n,"status":s,"desc":d} for i,(n,s,d) in enumerate(STAGES)],
             "gates":GATES,
@@ -44,6 +60,7 @@ def flow_manifest():
                 "offload it. Test first; report gated only after a real probe fails.",
             "exec_mode":EXEC_MODE,
             "acceleration":ACCELERATION,
+            "observer_collapse":OBSERVER_COLLAPSE,
             "catapults":CATAPULTS}
 
 if __name__ == "__main__":
