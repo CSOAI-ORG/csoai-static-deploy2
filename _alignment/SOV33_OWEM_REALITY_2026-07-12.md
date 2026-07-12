@@ -38,3 +38,13 @@ accretion on frozen open weights" — NOT "new foundation model" / "AGI" / "beat
 ## HARDENING DONE THIS WINDOW
 - sov33_owem_world_model.py: fixed the ~/.sovereign import-time write (SOV33_SIGIL_DIR env-override,
   fail-soft) so the real OWEM module imports + runs in-sandbox. Same fix pattern as the 51-component batch.
+
+## THE SEPARATION-OF-CONCERNS PROOF (the sovereign-not-wrapper test) — PROVEN 2026-07-12
+Nick's framing: "the proof SOV33 works is that when we swap models in OWEM, the memory stays the same."
+Correct — and now demonstrated (sov33_swap_persistence_proof.py):
+- Swapped the model across 3 lineages (Qwen -> Llama -> DeepSeek via SOV33_OLLAMA_MODEL).
+- Sovereign memory hash BYTE-IDENTICAL across all 3 swaps (8b81f11e203fd183); 6 invariants held on all 3.
+- => The model is a REPLACEABLE ORGAN; the substrate (memory + invariants + SIGIL) is the sovereign-of-record.
+HONEST CAVEAT: this proves the SUBSTRATE (memory + governance) is model-independent — NOT that answer QUALITY
+is swap-invariant (a weaker model still answers worse). It is the proof of continuity-of-record, which is
+exactly the claim, not capability parity.

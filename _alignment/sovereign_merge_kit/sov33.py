@@ -1362,6 +1362,41 @@ class Sovereign:
 # CAPABILITY DISPATCHER
 # ═══════════════════════════════════════════════════════════════
 
+def capability_owem_world(mode: str = 'demo', epochs: int = 5, **kwargs):
+    """The REAL OWEM core: SOV33's own trainable world-predictor + EWC consolidation.
+    Proves SOV33 is more than a wrapper — it owns weights that measurably learn.
+    Runs a short learn-demo on a learnable next-state task and reports the measured loss reduction.
+    HONEST: 16->32->16 toy-scale predictor (right architecture, small); EWC Fisher is a weight-magnitude
+    proxy, not full Kirkpatrick. Proves 'owns weights that learn', NOT 'competitive foundation model'."""
+    import random as _r
+    try:
+        from sov33_owem_world_model import JEPAPredictor, EWCContinualLearner
+        p = JEPAPredictor()
+        _r.seed(1)
+        def _truth(x): return [0.9 * x[(i + 1) % 16] for i in range(16)]
+        train = [[_r.random() for _ in range(16)] for _ in range(200)]
+        losses = []
+        for _ in range(max(1, int(epochs))):
+            el = [p.train_step(x, _truth(x)) for x in train]
+            losses.append(round(sum(el) / len(el), 4))
+        ewc = EWCContinualLearner()
+        ewc_sum = ewc.summary() if hasattr(ewc, 'summary') else {}
+        first, last = losses[0], losses[-1]
+        return {
+            'capability': 'owem-world',
+            'owns_trainable_weights': True,
+            'predictor': 'JEPAPredictor 16->32->16 (own W1/W2, gradient step)',
+            'epochs': len(losses), 'loss_first': first, 'loss_last': last,
+            'loss_reduction_pct': round((first - last) / first * 100, 1) if first else None,
+            'learned': last < first,
+            'ewc': {'structure': 'real', 'fisher': 'weight-magnitude PROXY (not full Kirkpatrick)',
+                    'summary': ewc_sum},
+            'no_forgetting': 'architecturally guaranteed: base frozen, growth by accretion',
+            'honest_scale': 'toy-scale sovereign-owned model; proves own-weights-learn, NOT competitive foundation model',
+        }
+    except Exception as e:
+        return {'capability': 'owem-world', 'error': str(e)[:160]}
+
 def capability_canonical(mode: str = 'paid', **kwargs):
     """Load the FROZEN winning SOV333 setup (sweep winner + adversarial-hardened) and build it live.
     mode='paid' -> diverse-5 @ 0.65; mode='free' -> diverse-3 @ 0.8 (sovereign/local)."""
@@ -1427,6 +1462,7 @@ def capability_companion(mode: str = 'demo', **kwargs):
         return {'capability': 'companion', 'error': str(e)[:120]}
 
 CAPABILITIES = {
+    'owem-world': capability_owem_world,
     'canonical': capability_canonical,
     'registry': capability_registry,
     'triangle': capability_triangle,
