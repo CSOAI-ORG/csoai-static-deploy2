@@ -106,4 +106,5 @@ fetch('/sovspace-catalog.json').then(r=>r.json()).then(d=>{
 }).catch(()=>{el('grid').innerHTML='<p style="padding:20px;color:var(--dim)">Catalog unavailable.</p>'});
 el('q').addEventListener('input',e=>{term=e.target.value.toLowerCase().trim();render()});
 </script><a id="meok-tour-pill" data-testid="tour-pill" href="/?tour=demo" style="position:fixed;right:16px;bottom:16px;z-index:9999;background:#1a1410;color:#c9a84c;border:1px solid #c9a84c;border-radius:999px;padding:9px 16px;font:700 13px system-ui,sans-serif;text-decoration:none;box-shadow:0 8px 24px rgba(0,0,0,.3)">🎬 Take the tour</a>
+  <script defer src="/meok-reveal.js"></script>
 </body></html>
