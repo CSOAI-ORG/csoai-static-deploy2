@@ -692,6 +692,26 @@ def handle_reasoning_enhance(payload: dict) -> dict:
         return {'error': f'reasoning enhance failed: {e}'}
 
 
+
+def handle_kaggle_opportunities() -> dict:
+    """GET /api/kaggle/opportunities — Kaggle competitions SOV33 can enter.
+
+    Returns:
+      - 8 curated opportunities (reasoning/math/science/LLM/governance)
+      - Total prize pool: $1.45M
+      - Total runtime: 53h (we have 30hr/wk on Kaggle T4)
+      - Top picks by fit_score
+    """
+    try:
+        sys.path.insert(0, '/Users/nicholas/clawd/_alignment/sovereign_merge_kit')
+        from sov33_kaggle_opportunities import get_all_opportunities, find_best_fit
+        result = get_all_opportunities()
+        result['top_3_by_fit'] = find_best_fit(3)
+        return result
+    except Exception as e:
+        return {'error': f'kaggle opportunities failed: {e}'}
+
+
 def handle_capabilities() -> dict:
     """GET /api/capabilities — list all SOV33 capabilities."""
     return {
@@ -740,6 +760,8 @@ class SovereignAPIHandler(BaseHTTPRequestHandler):
             return json_response(self, 200, handle_evals())
         elif path == '/api/brain-stack':
             return json_response(self, 200, handle_brain_stack())
+        elif path == '/api/kaggle/opportunities':
+            return json_response(self, 200, handle_kaggle_opportunities())
         elif path == '/api/hyperopt':
             return json_response(self, 200, handle_hyperopt())
         elif path == '/api/continual-learning':
