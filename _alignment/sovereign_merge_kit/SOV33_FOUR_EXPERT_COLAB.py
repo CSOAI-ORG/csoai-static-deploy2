@@ -1,7 +1,7 @@
 # ══════════════════════════════════════════════════════════════════════════
 # SOV33 SOVEREIGN — FOUR-EXPERT PROOF RUN (paste whole thing into ONE Colab cell)
 # Runtime → Change runtime type → T4 GPU, then Run. Builds all 4 experts in sequence.
-# compliance(801) → defense(1775) → intuition(1075) → voice(275), Qwen3.6-4B QLoRA 2ep each.
+# compliance(801) → defense(1775) → intuition(1075) → voice(275), Qwen3-4B QLoRA 2ep each.
 # ~£0. Each adapter saved to charter-N-<expert>/. On T4 this is ~2-4 hrs total.
 # ══════════════════════════════════════════════════════════════════════════
 import subprocess, sys, os, torch, time
@@ -29,7 +29,7 @@ for name, idx in EXPERTS:
     print(f"\n=== EXPERT {idx}/4: {name} ({n} examples) -> {out} ===")
     t0 = time.time()
     r = subprocess.run(f"python3 02_finetune_expert.py --expert {name} "
-                       f"--base Qwen/Qwen3.6-4B --data {data} --out {out} --epochs 2",
+                       f"--base Qwen/Qwen3-4B --data {data} --out {out} --epochs 2",
                        shell=True)
     ok = r.returncode == 0 and os.path.exists(out)
     results[name] = "OK" if ok else f"FAIL(exit {r.returncode})"

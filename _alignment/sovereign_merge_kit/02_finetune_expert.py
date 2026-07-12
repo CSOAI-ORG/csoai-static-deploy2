@@ -13,7 +13,7 @@ import torch
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--expert", required=True)
-    ap.add_argument("--base", default="Qwen/Qwen3.6-4B")   # PROOF run small; PRIMARY base = Qwen/Qwen3.6-35B-A3B (Apache-2.0); STRETCH = GLM-5.x (MIT)
+    ap.add_argument("--base", default="Qwen/Qwen3-4B")   # PROOF run small; PRIMARY base = Qwen/Qwen3.6-35B-A3B (Apache-2.0); STRETCH = GLM-5.x (MIT)
     ap.add_argument("--data", required=True)
     ap.add_argument("--out", default=None)
     ap.add_argument("--epochs", type=float, default=2.0)
