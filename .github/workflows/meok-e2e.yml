@@ -48,6 +48,9 @@ jobs:
       - name: All 39 apps
         working-directory: meok-os-deploy/e2e
         run: node apps.cjs "$BASE_URL"
+      - name: Real user-journey (functional)
+        working-directory: meok-os-deploy/e2e
+        run: node journey.cjs "$BASE_URL"
       - name: Cross-browser (WebKit + Firefox)
         working-directory: meok-os-deploy/e2e
         run: node xbrowser.cjs "$BASE_URL"
