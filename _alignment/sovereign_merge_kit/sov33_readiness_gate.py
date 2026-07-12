@@ -25,20 +25,39 @@ GATED_EXPECTED = {
 # some capabilities need a positional arg — supply a safe read-only default
 ARGS = {'memory': {'recall_query':'Article 0'}, 'probe': {}, }
 
+GATE_MARKERS = ['pending','plan_only','plan only','offline','no_oci','unavailable','not run',
+                'needs ','awaiting','catalog-only','requires','endpoint','gpu','stub','fallback']
 def classify(name, result):
     if isinstance(result, dict) and 'error' in result:
         e = str(result['error']).lower()
-        # endpoint/creds/gpu errors are GATED not BROKEN
         if any(k in e for k in ['unavailable','not found','offline','no_oci','endpoint','404','connection','compartment','memory file']):
             return 'GATED', result['error'][:70]
         return 'BROKEN', result['error'][:70]
+    # NEW: a coherent result carrying a fail-soft STATUS marker is GATED, not RUNNING
+    if isinstance(result, dict):
+        # scan status/mode/note/detail fields (and the whole dict as a last resort) for gate markers
+        probe = ' '.join(str(result.get(f,'')) for f in ('status','mode','note','detail','verdict')).lower()
+        if not probe.strip():
+            probe = json.dumps(result, default=str).lower()
+        if any(m in probe for m in GATE_MARKERS):
+            hit = next(m for m in GATE_MARKERS if m in probe)
+            return 'GATED', f'fail-soft: {hit}'
     return 'RUNNING', None
 
 def run():
     rows = []
+    SELF_SKIP = {'readiness'}  # the gate must not call itself (infinite recursion)
     for name in sorted(sov33.CAPABILITIES):
+        if name in SELF_SKIP:
+            continue
         fn = sov33.CAPABILITIES[name]
         kw = ARGS.get(name, {})
+        # Model/endpoint-touching capabilities would BLOCK on a live socket (SIGALRM can't interrupt a
+        # C-level connect). We do NOT call them: they are GATED by design (need owner/GPU/endpoint).
+        if name in GATED_EXPECTED:
+            rows.append({'capability': name, 'class': 'GATED', 'detail': f'needs {GATED_EXPECTED[name]} (not called: would block on live resource)',
+                         'expected_gated': True})
+            continue
         try:
             with contextlib.redirect_stdout(io.StringIO()):
                 res = fn(**kw) if kw else fn()

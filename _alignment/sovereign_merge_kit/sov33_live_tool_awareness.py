@@ -18,11 +18,23 @@ The substrate answers "what can I do?" with live data, never stale.
 import sys, os, time, json, hashlib
 from pathlib import Path
 from datetime import datetime, timezone
+import os as _os, tempfile as _tf
+def _sov_dir():
+    d=_os.environ.get('SOV33_SIGIL_DIR') or _os.path.join(_os.path.expanduser('~'),'.sovereign')
+    try:
+        _os.makedirs(d,exist_ok=True); return d
+    except Exception:
+        d=_os.path.join(_tf.gettempdir(),'sov33_sigil'); _os.makedirs(d,exist_ok=True); return d
+def _skills_dir():
+    d=_os.environ.get('SOV33_SKILLS_DIR') or _os.path.join(_os.path.expanduser('~'),'.hermes','skills')
+    return d
+_SOVDIR=_sov_dir()
+
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 
-SIGIL_FILE = Path.home() / '.sovereign' / 'live_tool_awareness.sigil.jsonl'
+SIGIL_FILE = Path(_SOVDIR) / 'live_tool_awareness.sigil.jsonl'
 
 
 def sigil_emit(hop: dict) -> str:
@@ -159,12 +171,20 @@ def discover_hermes_runtime_tools() -> dict:
 
 def discover_local_skills() -> dict:
     """Discover skills available in ~/.hermes/skills/."""
-    skills_dir = Path.home() / '.hermes' / 'skills'
-    if not skills_dir.exists():
-        return {'n': 0, 'tools': [], 'note': '~/.hermes/skills not found'}
+    skills_dir = Path(_skills_dir())
+    try:
+        if not skills_dir.exists():
+            return {'n': 0, 'tools': [], 'note': '~/.hermes/skills not found'}
+    except OSError:
+        # sandbox/permission-denied on the path itself -> treat as absent (fail-soft, not broken)
+        return {'n': 0, 'tools': [], 'note': 'skills dir not accessible (permission) — fail-soft'}
     
     skills = []
-    for skill_path in sorted(skills_dir.iterdir()):
+    try:
+        _entries = sorted(skills_dir.iterdir())
+    except OSError:
+        return {'n': 0, 'tools': [], 'note': 'skills dir not iterable (permission) — fail-soft'}
+    for skill_path in _entries:
         if not skill_path.is_dir():
             continue
         skill_md = skill_path / 'SKILL.md'
@@ -227,7 +247,7 @@ def discover_sovereign_mcps() -> dict:
 
 def diff_vs_snapshot(current: dict, snapshot_path: Path = None) -> dict:
     """Compare current tool inventory vs prior snapshot — what's NEW since last ask."""
-    snapshot_path = snapshot_path or (Path.home() / '.sovereign' / 'tool_snapshot.json')
+    snapshot_path = snapshot_path or (Path(_SOVDIR) / 'tool_snapshot.json')
     
     # Build current names set
     cur_names = set()
@@ -284,7 +304,7 @@ def live_tool_awareness(save_snapshot: bool = True) -> dict:
     
     # Save snapshot for next diff
     if save_snapshot:
-        snapshot = Path.home() / '.sovereign' / 'tool_snapshot.json'
+        snapshot = Path(_SOVDIR) / 'tool_snapshot.json'
         snapshot.parent.mkdir(parents=True, exist_ok=True)
         snapshot.write_text(json.dumps({
             'native': native,

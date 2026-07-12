@@ -29,12 +29,24 @@ import time
 import hashlib
 from pathlib import Path
 from datetime import datetime, timezone
+import os as _os, tempfile as _tf
+def _sov_dir():
+    d=_os.environ.get('SOV33_SIGIL_DIR') or _os.path.join(_os.path.expanduser('~'),'.sovereign')
+    try:
+        _os.makedirs(d,exist_ok=True); return d
+    except Exception:
+        d=_os.path.join(_tf.gettempdir(),'sov33_sigil'); _os.makedirs(d,exist_ok=True); return d
+def _skills_dir():
+    d=_os.environ.get('SOV33_SKILLS_DIR') or _os.path.join(_os.path.expanduser('~'),'.hermes','skills')
+    return d
+_SOVDIR=_sov_dir()
+
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 
-SIGIL_FILE = Path.home() / '.sovereign' / 'owem_emergence.sigil.jsonl'
-HISTORY_FILE = Path.home() / '.sovereign' / 'owem_emergence_history.json'
+SIGIL_FILE = Path(_SOVDIR) / 'owem_emergence.sigil.jsonl'
+HISTORY_FILE = Path(_SOVDIR) / 'owem_emergence_history.json'
 
 
 def sigil_emit(hop: dict) -> str:
@@ -103,7 +115,7 @@ def measure_current_state() -> dict:
     }
 
     # 1. EXPERTS — count trained sovereign experts on disk
-    models_dir = Path.home() / '.sovereign' / 'models'
+    models_dir = Path(_SOVDIR) / 'models'
     if models_dir.exists():
         for d in sorted(models_dir.iterdir()):
             if d.is_dir() and d.name.startswith('qwen3-sov'):
@@ -127,7 +139,7 @@ def measure_current_state() -> dict:
 
     # 3. SUBSTRATES — count active substrate surfaces
     substrates = []
-    if (Path.home() / '.sovereign' / 'sovereign_memory.jsonl').exists():
+    if (Path(_SOVDIR) / 'sovereign_memory.jsonl').exists():
         substrates.append('sov33')
     if Path('/Users/nicholas/csoai-defoneos').exists():
         substrates.append('csoai-defoneos')
@@ -138,7 +150,7 @@ def measure_current_state() -> dict:
     state['substrates_found'] = substrates
 
     # 4. Counts
-    sp = Path.home() / '.sovereign'
+    sp = Path(_SOVDIR)
     if sp.exists():
         state['sig il_count'] = sum(1 for f in sp.glob('*.sigil.jsonl') for _ in f.open())
         labels_file = sp / 'nn_retrain_queue.jsonl'

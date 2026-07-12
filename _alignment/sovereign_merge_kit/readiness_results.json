@@ -1,6 +1,6 @@
 {
   "running": 43,
-  "gated": 0,
+  "gated": 15,
   "broken": 0,
   "rows": [
     {
@@ -16,6 +16,12 @@
       "expected_gated": false
     },
     {
+      "capability": "awareness",
+      "class": "RUNNING",
+      "detail": null,
+      "expected_gated": false
+    },
+    {
       "capability": "c2pa",
       "class": "RUNNING",
       "detail": null,
@@ -23,8 +29,8 @@
     },
     {
       "capability": "canonical",
-      "class": "RUNNING",
-      "detail": null,
+      "class": "GATED",
+      "detail": "fail-soft: offline",
       "expected_gated": false
     },
     {
@@ -41,6 +47,18 @@
     },
     {
       "capability": "cedar",
+      "class": "RUNNING",
+      "detail": null,
+      "expected_gated": false
+    },
+    {
+      "capability": "charter-qa",
+      "class": "RUNNING",
+      "detail": null,
+      "expected_gated": false
+    },
+    {
+      "capability": "charter-validate",
       "class": "RUNNING",
       "detail": null,
       "expected_gated": false
@@ -71,20 +89,20 @@
     },
     {
       "capability": "correlation",
-      "class": "RUNNING",
-      "detail": null,
+      "class": "GATED",
+      "detail": "needs live models (not called: would block on live resource)",
       "expected_gated": true
     },
     {
       "capability": "defer",
-      "class": "RUNNING",
-      "detail": null,
+      "class": "GATED",
+      "detail": "needs live models (not called: would block on live resource)",
       "expected_gated": true
     },
     {
       "capability": "distill",
-      "class": "RUNNING",
-      "detail": null,
+      "class": "GATED",
+      "detail": "needs GPU+endpoints (not called: would block on live resource)",
       "expected_gated": true
     },
     {
@@ -106,6 +124,12 @@
       "expected_gated": false
     },
     {
+      "capability": "growth",
+      "class": "RUNNING",
+      "detail": null,
+      "expected_gated": false
+    },
+    {
       "capability": "guardian",
       "class": "RUNNING",
       "detail": null,
@@ -113,12 +137,18 @@
     },
     {
       "capability": "jadepuffer",
-      "class": "RUNNING",
-      "detail": null,
+      "class": "GATED",
+      "detail": "needs live models (not called: would block on live resource)",
       "expected_gated": true
     },
     {
       "capability": "kill-switch",
+      "class": "RUNNING",
+      "detail": null,
+      "expected_gated": false
+    },
+    {
+      "capability": "live-tools",
       "class": "RUNNING",
       "detail": null,
       "expected_gated": false
@@ -131,8 +161,8 @@
     },
     {
       "capability": "memory",
-      "class": "RUNNING",
-      "detail": null,
+      "class": "GATED",
+      "detail": "needs seeded memory file (not called: would block on live resource)",
       "expected_gated": true
     },
     {
@@ -149,30 +179,42 @@
     },
     {
       "capability": "oci-mirror",
-      "class": "RUNNING",
-      "detail": null,
+      "class": "GATED",
+      "detail": "needs OCI creds (not called: would block on live resource)",
       "expected_gated": true
     },
     {
       "capability": "oowm",
-      "class": "RUNNING",
-      "detail": null,
+      "class": "GATED",
+      "detail": "needs catalog-only server method (not called: would block on live resource)",
       "expected_gated": true
     },
     {
       "capability": "oracle-status",
-      "class": "RUNNING",
-      "detail": null,
+      "class": "GATED",
+      "detail": "needs OCI creds (not called: would block on live resource)",
       "expected_gated": true
     },
     {
-      "capability": "owem-sweep",
+      "capability": "owem-emergence",
       "class": "RUNNING",
       "detail": null,
+      "expected_gated": false
+    },
+    {
+      "capability": "owem-sweep",
+      "class": "GATED",
+      "detail": "needs live models (not called: would block on live resource)",
       "expected_gated": true
     },
     {
       "capability": "owem-world",
+      "class": "RUNNING",
+      "detail": null,
+      "expected_gated": false
+    },
+    {
+      "capability": "prepare",
       "class": "RUNNING",
       "detail": null,
       "expected_gated": false
@@ -202,6 +244,24 @@
       "expected_gated": false
     },
     {
+      "capability": "responder",
+      "class": "GATED",
+      "detail": "fail-soft: gpu",
+      "expected_gated": false
+    },
+    {
+      "capability": "sac",
+      "class": "RUNNING",
+      "detail": null,
+      "expected_gated": false
+    },
+    {
+      "capability": "sac-council",
+      "class": "RUNNING",
+      "detail": null,
+      "expected_gated": false
+    },
+    {
       "capability": "self",
       "class": "RUNNING",
       "detail": null,
@@ -209,14 +269,14 @@
     },
     {
       "capability": "sft-runbook",
-      "class": "RUNNING",
-      "detail": null,
+      "class": "GATED",
+      "detail": "needs GPU (not called: would block on live resource)",
       "expected_gated": true
     },
     {
       "capability": "sondera",
-      "class": "RUNNING",
-      "detail": null,
+      "class": "GATED",
+      "detail": "needs live models (not called: would block on live resource)",
       "expected_gated": true
     },
     {
@@ -232,10 +292,40 @@
       "expected_gated": false
     },
     {
-      "capability": "three-lineage",
+      "capability": "speculative",
       "class": "RUNNING",
       "detail": null,
+      "expected_gated": false
+    },
+    {
+      "capability": "speculative-responder",
+      "class": "GATED",
+      "detail": "fail-soft: gpu",
+      "expected_gated": false
+    },
+    {
+      "capability": "substrate-explorer",
+      "class": "RUNNING",
+      "detail": null,
+      "expected_gated": false
+    },
+    {
+      "capability": "substrate-growth",
+      "class": "RUNNING",
+      "detail": null,
+      "expected_gated": false
+    },
+    {
+      "capability": "three-lineage",
+      "class": "GATED",
+      "detail": "needs live models (not called: would block on live resource)",
       "expected_gated": true
+    },
+    {
+      "capability": "tool-awareness",
+      "class": "RUNNING",
+      "detail": null,
+      "expected_gated": false
     },
     {
       "capability": "tools",

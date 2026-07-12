@@ -16,10 +16,19 @@ import sys, os, json, time, hashlib, subprocess
 from pathlib import Path
 from datetime import datetime, timezone
 from collections import defaultdict
+import os as _os, tempfile as _tf
+def _sov_dir():
+    d=_os.environ.get('SOV33_SIGIL_DIR') or _os.path.join(_os.path.expanduser('~'),'.sovereign')
+    try:
+        _os.makedirs(d,exist_ok=True); return d
+    except Exception:
+        d=_os.path.join(_tf.gettempdir(),'sov33_sigil'); _os.makedirs(d,exist_ok=True); return d
+_SOVDIR=_sov_dir()
+
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
-SIGIL_FILE = Path.home() / '.sovereign' / 'substrate_explorer.sigil.jsonl'
+SIGIL_FILE = Path(_SOVDIR) / 'substrate_explorer.sigil.jsonl'
 
 
 def sigil_emit(hop):
@@ -39,7 +48,7 @@ def sigil_emit(hop):
 
 def explore_substrate() -> dict:
     """Explore every surface of the substrate."""
-    sp = Path.home() / '.sovereign'
+    sp = Path(_SOVDIR)
 
     # File surfaces
     sigil_files = sorted(sp.glob('*.sigil.jsonl')) if sp.exists() else []
@@ -78,7 +87,7 @@ def explore_substrate() -> dict:
     # Substrates — check what's deployed
     substrates = []
     paths_to_check = [
-        ('SOV33', Path.home() / '.sovereign'),
+        ('SOV33', Path(_SOVDIR)),
         ('DEFONEOS-meok', Path('/Users/nicholas/clawd/meok-defoneos')),
         ('DEFONEOS-csoai', Path('/Users/nicholas/csoai-defoneos')),
         ('sovereign-temple-live', Path('/Users/nicholas/clawd/sovereign-temple-live')),
