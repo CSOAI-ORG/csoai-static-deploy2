@@ -119,7 +119,7 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);color:v
   <h3>Control 1 — Firewalls (Boundary firewalls and internet gateways)</h3>
   <ul>
     <li>Mac endpoints — Apple Application Firewall + Little Snitch (per-machine PF firewall) enabled by default; <code>sudo /usr/libexec/ApplicationFirewall/socketfilterfw --setglobalstate on</code>.</li>
-    <li>Substrate VMs — <code>nftables</code> default-deny on Wan+LAN, 4-interface template (Wan/Lan/Mgmt/Bm); see <a href="/defoneos-stack.html" style="color:var(--accent)">defoneos-stack</a> for the exact 4-nic 4-vlan topology.</li>
+    <li>Substrate VMs — <code>nftables</code> default-deny on Wan+LAN, 4-interface template (Wan/Lan/Mgmt/Bm); see <a href="#"" style="color:var(--accent)">defoneos-stack</a> for the exact 4-nic 4-vlan topology.</li>
     <li>Defence-segment separation — additional VLAN tag <code>1</code> in <code>stack.yml</code> for MAC-tagged segment, see <a href="#" style="color:var(--accent)">defoneos-segmac</a>.</li>
   </ul>
 
@@ -142,7 +142,7 @@ footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);color:v
   <ul>
     <li>Apple XProtect + Gatekeeper + notarised-binaries-only on every Mac.</li>
     <li>SOV3 Linux substrate — <code>clamav-daemon</code> weekly scans; AIDE file-integrity check nightly; <code>logwatch</code> digest emailed to owner.</li>
-    <li>Defence-segment MCP fleet — pinned via <code>uv pip install --require-hashes</code>; see <a href="/defoneos-mcp-registry.html" style="color:var(--accent)">defoneos-mcp-registry</a>.</li>
+    <li>Defence-segment MCP fleet — pinned via <code>uv pip install --require-hashes</code>; see <a href="#"" style="color:var(--accent)">defoneos-mcp-registry</a>.</li>
   </ul>
 
   <h3>Control 5 — Security update management</h3>

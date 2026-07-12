@@ -160,7 +160,7 @@ async function loadOpps() {
       const topClass = opp.fit_score >= 0.95 ? 'top' : '';
       html += `
         <div class="opp ${topClass}">
-          <h3><a href="${opp.url}" target="_blank">${opp.name}</a></h3>
+          <h3><a href=#= target="_blank">${opp.name}</a></h3>
           <p>
             <span class="fit">Fit: ${opp.fit_score}</span> ·
             <span class="prize">$${opp.prize_pool_usd.toLocaleString()}</span> ·
@@ -168,7 +168,7 @@ async function loadOpps() {
           </p>
           <p><strong>Why fit:</strong> ${opp.why_fit}</p>
           <p><strong>SOV33 advantage:</strong> ${opp.sov33_advantage}</p>
-          <p class="meta"><a href="${opp.url}" target="_blank">${opp.url}</a></p>
+          <p class="meta"><a href=#= target="_blank">${opp.url}</a></p>
         </div>
       `;
     }

@@ -1,6 +1,6 @@
 {
-  "running": 41,
-  "gated": 34,
+  "running": 51,
+  "gated": 28,
   "broken": 0,
   "rows": [
     {
@@ -12,7 +12,7 @@
     {
       "capability": "anti-relapse",
       "class": "GATED",
-      "detail": "fail-soft: endpoint",
+      "detail": "blocked on live resource >8s (network/GPU) \u2014 not a code fault",
       "expected_gated": false
     },
     {
@@ -83,8 +83,8 @@
     },
     {
       "capability": "cloud-orchestrator",
-      "class": "GATED",
-      "detail": "blocked on live resource >8s (network/GPU) \u2014 not a code fault",
+      "class": "RUNNING",
+      "detail": null,
       "expected_gated": false
     },
     {
@@ -149,8 +149,8 @@
     },
     {
       "capability": "e2e",
-      "class": "GATED",
-      "detail": "blocked on live resource >8s (network/GPU) \u2014 not a code fault",
+      "class": "RUNNING",
+      "detail": null,
       "expected_gated": false
     },
     {
@@ -167,8 +167,8 @@
     },
     {
       "capability": "fleet",
-      "class": "GATED",
-      "detail": "blocked on live resource >8s (network/GPU) \u2014 not a code fault",
+      "class": "RUNNING",
+      "detail": null,
       "expected_gated": false
     },
     {
@@ -178,9 +178,15 @@
       "expected_gated": false
     },
     {
+      "capability": "game-arena",
+      "class": "RUNNING",
+      "detail": null,
+      "expected_gated": false
+    },
+    {
       "capability": "gated-check",
       "class": "GATED",
-      "detail": "blocked on live resource >8s (network/GPU) \u2014 not a code fault",
+      "detail": "fail-soft: endpoint",
       "expected_gated": false
     },
     {
@@ -232,10 +238,22 @@
       "expected_gated": false
     },
     {
+      "capability": "mcp-cards",
+      "class": "RUNNING",
+      "detail": null,
+      "expected_gated": false
+    },
+    {
       "capability": "memory",
       "class": "GATED",
       "detail": "needs seeded memory file (not called: would block on live resource)",
       "expected_gated": true
+    },
+    {
+      "capability": "memory-bridge",
+      "class": "RUNNING",
+      "detail": null,
+      "expected_gated": false
     },
     {
       "capability": "mist12",
@@ -269,14 +287,14 @@
     },
     {
       "capability": "orchestrator",
-      "class": "GATED",
-      "detail": "blocked on live resource >8s (network/GPU) \u2014 not a code fault",
+      "class": "RUNNING",
+      "detail": null,
       "expected_gated": false
     },
     {
       "capability": "owem-e2e",
-      "class": "GATED",
-      "detail": "blocked on live resource >8s (network/GPU) \u2014 not a code fault",
+      "class": "RUNNING",
+      "detail": null,
       "expected_gated": false
     },
     {
@@ -323,8 +341,8 @@
     },
     {
       "capability": "registry",
-      "class": "GATED",
-      "detail": "blocked on live resource >8s (network/GPU) \u2014 not a code fault",
+      "class": "RUNNING",
+      "detail": null,
       "expected_gated": false
     },
     {
@@ -431,6 +449,12 @@
     },
     {
       "capability": "triangle",
+      "class": "RUNNING",
+      "detail": null,
+      "expected_gated": false
+    },
+    {
+      "capability": "trust-feed",
       "class": "RUNNING",
       "detail": null,
       "expected_gated": false
