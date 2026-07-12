@@ -1,5 +1,5 @@
 # SOVEREIGN CHARTERS — OVERNIGHT BUILD REPORT
-**Generated**: 2026-07-11 06:00 UTC
+**Generated**: 2026-07-11 20:00 UTC
 
 ## Build Status
 
