@@ -620,14 +620,17 @@ def handle_brain_stack() -> dict:
             'right_bottom_90': {'small': 'qwen2.5:3b', 'large': 'meta-llama-3.3-70b'},
         },
         'parameters': {
+            # HONEST: this is REACH per OWEM, NOT summed across OWEMs
+            # Per CHARTER_OWEM_FOUR_SCOPE: 'of all' = governed substrate reaching across
+            # 61 models, not additive params. Sum of params is the retracted error.
             'small_left_top': 3.1, 'large_left_top': 70.0,
             'small_left_bot': 3.1, 'large_left_bot': 8.0,
             'small_right_top': 8.0, 'large_right_top': 70.0,
             'small_right_bot': 3.1, 'large_right_bot': 70.0,
-            'active_per_request_B': 17.3,    # sum of small paths: 3.1 + 3.1 + 8.0 + 3.1
-            'aggregate_per_owem_B': 218.0,    # max of each: 70 + 8 + 70 + 70
-            'active_per_5_owems_B': 17.3,     # same since only one OWEM is queried
-            'aggregate_per_5_owems_B': 1090.0, # 5 × 218
+            'active_per_request_B': 17.3,        # sum of small paths in 1 OWEM: 3.1 + 3.1 + 8.0 + 3.1
+            'reach_per_owem_B': 218.0,            # max-of-each brain slot per OWEM (NOT summed across OWEMs)
+            'active_per_5_owems_B': 17.3,         # only ONE OWEM runs per query (routing picks)
+            'note': 'OWEMs do NOT sum. Active = 17.3B regardless of # OWEMs (one OWEM per query). Reach = per-OWEM aggregate (218B), not stacked.',
         },
         'mamba2_state': {
             'state_dim': 16,

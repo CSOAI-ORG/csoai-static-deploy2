@@ -103,7 +103,7 @@
 <p class="meta"><strong>Aggregate shape</strong>: 4 × max(small, large) = 70 + 70 + 8 + 70 = <strong>218B aggregate</strong> per OWEM<br>
 <strong>Active shape</strong>: 3.1 + 8 + 3.1 + 3.1 = <strong>17.3B active per request</strong> (the "aggregate big, active small" efficiency flip)<br>
 <strong>Per-OWEM instantiation</strong>: 5 OWEMs × 4 brains = <strong>20 brain slots</strong> total<br>
-<strong>5 OWEMs × 218B aggregate</strong> = <strong>1.09T sovereign fusion</strong> (active small per query)</p>
+<strong>17.3B active per query</strong> · <strong>20 brain slots</strong> (5 OWEMs × 4 brains) · <strong>REACH across 61 models</strong> (not summed params) — per CHARTER_OWEM_FOUR_SCOPE</p>
 
 <h2>The 90/10 Cascade (per sov33_cascade_router.py)</h2>
 
@@ -221,7 +221,7 @@ async function loadBrainStatus() {
           <tr><td>intuition</td><td>Patterns</td><td>17.3B</td><td>218B</td></tr>
           <tr><td>voice</td><td>Sovereign truths</td><td>17.3B</td><td>218B</td></tr>
           <tr><td>general</td><td>General</td><td>17.3B</td><td>218B</td></tr>
-          <tr style="background:#0d201a"><td><strong>TOTAL</strong></td><td>5 OWEMs</td><td><strong>17.3B</strong></td><td><strong>1.09T</strong></td></tr>
+          <tr style="background:#0d201a"><td><strong>TOTAL (5 OWEMs)</strong></td><td>20 brain slots</td><td><strong>17.3B active</strong></td><td><strong>REACH (not summed)</strong></td></tr>
         </table>
         <p class="meta">Active = small brain used per query. Aggregate = total reach.</p>
       </div>
