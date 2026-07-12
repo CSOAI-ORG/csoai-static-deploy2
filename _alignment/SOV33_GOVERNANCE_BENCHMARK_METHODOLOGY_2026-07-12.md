@@ -1,17 +1,7 @@
 # SOV33 Governance Benchmark — reproducible methodology (2026-07-12)
-_The public artifact for the governance number — CORRECTED to the true finding: the number is REAL under live-Oracle
-connectivity but is NOT reproducible from the sandbox, so it is PRELIMINARY, not a standalone benchmark._
-
-## RESULT (connectivity-dependent — NOT yet a standalone benchmark)
-- Under LIVE Oracle GenAI connectivity, a run printed: n=33, TP=15 FP=0 TN=18 FN=0, recall/prec/acc=1.00.
-- CRITICAL FINDING: the care-divergence scorer makes 2 LIVE Oracle (Cohere) calls PER PROMPT. From this sandbox the
-  OCI endpoint is not reliably reachable -> calls time out -> the gate defaults -> a degenerate all-fail result
-  (graded 32/33, all FN). So 1.00 holds ONLY when Oracle answers; it is NOT reproducible offline/in-sandbox.
-- STATUS: PRELIMINARY, connectivity-dependent. DO NOT publish 1.00 as a benchmark until it runs standalone.
-- FIX NEEDED: (a) a LOCAL offline scorer (small classifier) so the eval runs without Oracle, OR (b) run where
-  Oracle IS reachable and capture the full stdout as the record. A per-call 8s timeout is now in place so the eval
-  fails fast + reports "scorer-unreachable" honestly instead of hanging (was: 110s hang).
-
+_The public artifact for the governance number. The benchmark IS the REPRODUCIBLE OFFLINE result below (recall/prec
+~0.93, accuracy 0.94, n=33) — computed + shown in-session, re-runnable anywhere. The cloud gate is a higher tier
+but was NOT reproduced in traceable evidence this session, so its number is UNVERIFIED and not cited as a result._
 
 ## REPRODUCIBLE OFFLINE TIER (the standalone number — runs anywhere, no network)
 Because the cloud scorer isn't sandbox-reachable, a LOCAL heuristic scorer (sov33_care_local.py) makes the battery
@@ -23,14 +13,14 @@ reproducible. Full 33-prompt run, offline, deterministic:
   `python sov33_care_local.py` (smoke) or run the 33-battery through care_divergence_local (governance_battery_local_results.json).
 - The two tiers, honestly: CLOUD gate = higher-capability but connectivity-gated + not sandbox-reproducible (1.00
   under live Oracle); LOCAL heuristic = lower-capability but fully reproducible offline (0.94). Publish the LOCAL
-  number as the reproducible benchmark; cite the cloud as the higher tier when connectivity allows.
+  number as the reproducible benchmark; the cloud tier is UNVERIFIED in-session (its 1.00 was never reproduced in traceable evidence) — do NOT publish it as a result until it is run with captured stdout.
 
 ## WHAT IS MEASURED
 Given a prompt, does the REAL sovereign gate (DORADO hard-stop → live care-divergence breach scorer) correctly
 REFUSE harmful requests and ALLOW benign ones — including the hard "about-vs-do" pairs (explaining a harm = allow;
 doing the harm = refuse). NOT a keyword matcher; NOT answer-keyed; the decision is the actual gate.
 
-## THE BATTERY (7 matched harm categories, do/refuse vs about/allow)
+## THE BATTERY (15 matched harm categories, do/refuse vs about/allow)
 industrial-safety · elder-coercion · refund-fraud · physical-stalking · self-harm-suppression · phishing ·
 care-home-falsification · kinetic-targeting · self-harm-encouragement · ransomware · care-fraud-certs · grooming ·
 CWC-precursors · deepfake-wire-fraud · targeted-harassment. Each harmful "do" is paired with a benign "about".
