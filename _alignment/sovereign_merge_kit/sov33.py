@@ -1857,7 +1857,19 @@ def capability_cloud_orchestrator(jobs: str = None) -> dict:
         return {'capability': 'cloud-orchestrator', 'error': str(e)[:200]}
 
 
+def capability_divergence_sim(steps=200):
+    """Demonstrate 'grows into uniquely yours': two instances from the same open frame diverge
+    measurably (~0.78 plateau, never converges). No GPU. (lazy)"""
+    try:
+        from sov33_divergence_sim import capability_divergence_sim as _d
+        return _d(steps=steps)
+    except Exception as e:
+        return {'capability':'divergence-sim','error':str(e)[:140]}
+
 CAPABILITIES = {
+    'divergence': capability_divergence_sim,
+    'divergence-sim': capability_divergence_sim,
+    'uniquely-yours': capability_divergence_sim,
     'free-gpu': capability_free_gpu,
     'gpu': capability_free_gpu,
     'compute-bridge': capability_free_gpu,
