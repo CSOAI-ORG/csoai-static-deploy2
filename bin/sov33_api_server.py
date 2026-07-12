@@ -1024,6 +1024,65 @@ def handle_tools() -> dict:
     }
 
 
+
+def handle_memory_consolidate() -> dict:
+    """GET /api/memory/consolidate — Sleep-like memory consolidation cycle."""
+    try:
+        sys.path.insert(0, '/Users/nicholas/clawd/_alignment/sovereign_merge_kit')
+        from sov33_memory_consolidation import consolidate
+        return consolidate()
+    except Exception as e:
+        return {'error': f'memory consolidation failed: {e}'}
+
+
+def handle_code_owem(payload: dict) -> dict:
+    """POST /api/code — Code generation OWEM (safe + language-detected)."""
+    try:
+        sys.path.insert(0, '/Users/nicholas/clawd/_alignment/sovereign_merge_kit')
+        from sov33_code_owem import sov33_code_owem
+        engine = _get_owem_engine()
+        if engine is None:
+            return {'error': 'no engine available'}
+        message = payload.get('message', payload.get('query', ''))
+        if not message:
+            return {'error': 'no message'}
+        return sov33_code_owem(message, engine)
+    except Exception as e:
+        return {'error': f'code owem failed: {e}'}
+
+
+def handle_multimodal() -> dict:
+    """GET /api/multimodal — Multi-modal capabilities (vision via Qwen-VL)."""
+    return {
+        'supported_modalities': ['text', 'vision'],
+        'vision_models': [
+            {'name': 'qwen3-vl-30b-a3b', 'size': '30B-A3B (MoE)', 'endpoint': 'ollama:qwen3-vl:30b-a3b'},
+            {'name': 'internvl3-9b', 'size': '9B', 'endpoint': 'huggingface:internvl/internvl3-9b'},
+        ],
+        'audio_models': [
+            {'name': 'whisper-large-v3', 'endpoint': 'ollama:whisper'},
+        ],
+        'honest_register': {
+            'vision_tested': False,  # would need to download + test
+            'audio_tested': False,
+            'available_via': 'ollama + huggingface',
+            'note': 'Mac-light: images uploaded to /api/multimodal for vision analysis',
+        },
+        'ts': datetime.now(timezone.utc).isoformat(),
+    }
+
+
+
+def handle_master() -> dict:
+    """GET /api/master — The most powerful SOV33 setup (all capabilities combined)."""
+    try:
+        sys.path.insert(0, '/Users/nicholas/clawd/_alignment/sovereign_merge_kit')
+        from sov33_master import master_setup_status
+        return master_setup_status()
+    except Exception as e:
+        return {'error': f'master failed: {e}'}
+
+
 def handle_capabilities() -> dict:
     """GET /api/capabilities — list all SOV33 capabilities."""
     return {
@@ -1085,6 +1144,12 @@ class SovereignAPIHandler(BaseHTTPRequestHandler):
             return json_response(self, 200, handle_setups())
         elif path == '/api/tools':
             return json_response(self, 200, handle_tools())
+        elif path == '/api/memory/consolidate':
+            return json_response(self, 200, handle_memory_consolidate())
+        elif path == '/api/master':
+            return json_response(self, 200, handle_master())
+        elif path == '/api/multimodal':
+            return json_response(self, 200, handle_multimodal())
         elif path == '/api/hyperopt':
             return json_response(self, 200, handle_hyperopt())
         elif path == '/api/continual-learning':
@@ -1133,6 +1198,8 @@ class SovereignAPIHandler(BaseHTTPRequestHandler):
             return json_response(self, 200, handle_kaggle_submit(payload))
         elif path == '/api/pyramid':
             return json_response(self, 200, handle_pyramid(payload))
+        elif path == '/api/code':
+            return json_response(self, 200, handle_code_owem(payload))
         elif path == '/api/signup':
             return json_response(self, 200, handle_signup(payload))
         elif path == '/api/alexa':
