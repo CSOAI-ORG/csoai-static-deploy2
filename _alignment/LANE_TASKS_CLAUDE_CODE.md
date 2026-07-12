@@ -40,3 +40,19 @@ and honest about the browser-render gap. These tasks unlock the distribution pat
 - Score must be REAL before any public page (a reproduced-fake number undoes the credibility play).
 - No AGI/consciousness claim anywhere public. Let the score + governance/audit story speak.
 - Owner/platform-gated items (accounts, submissions, DNS/Stripe/publish) are YOURS to action; lanes build paste-ready.
+
+## ADDENDUM (2026-07-12) — free-GPU TRAINING plan + who runs what
+WHO RUNS: MEOK-SOV3 lane has NO browser + NO GPU — it builds harnesses, it CANNOT run Kaggle/Colab. Running the
+notebooks = Claude Code (has browser) or the owner (logged-in accounts). Do not wait on MEOK-SOV3 to "press run".
+
+FREE-GPU BUDGET (~102 GPU-hr/wk, $0, each needs owner's own account):
+  Kaggle 30hr/wk (primary: grade + distill) | Colab 30hr/wk | SageMaker StudioLab 24hr/wk | Paperspace/HF-ZeroGPU/Lightning ~18.
+REAL-WORLD PLAN over days (not one burst):
+  1. RUN sov33_kaggle_compete on Kaggle T4 -> real GSM8K/science score -> auto-wires canonical (the unlock).
+  2. RUN sov33_distill_harness on Kaggle T4 -> QLoRA fine-tune the SMALL sovereign student on reasoning-traces
+     (s1K/LIMO/OpenR1/OpenThoughts, permissive) -> real OWN-WEIGHTS improvement (small model — T4 can't do 35B).
+  3. RUN sov33_game_arena matches vs peer-size models -> real win-rate.
+  4. Publish model+dataset pages WITH reproducible numbers -> announce (see SOV33_ARENA_TARGETS_AND_LAUNCH).
+HONEST LIMITS: free T4s fine-tune <=~8B + QLoRA only (35B merge needs rented GPU); sequential over days; own accounts.
+TARGETS: do NOT claim general-Elo win vs frontier (unwinnable + falsifiable). Win reasoning-per-$, governed
+correctness, peer-bracket Game Arena, own governance benchmark. NEVER game a board. See SOV33_ARENA_TARGETS_AND_LAUNCH.
