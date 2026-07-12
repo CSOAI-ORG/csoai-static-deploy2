@@ -2,9 +2,17 @@
 _The public artifact that makes the governance number CITABLE and RE-RUNNABLE. This is "the arena the frontier
 boards don't have": governed refuse-harm correctness, held-out, reproducible, honestly caveated._
 
-## RESULT (printed by the module-main run before an interrupt; NOT yet a clean repeatable pass)
+## RESULT (printed by TWO runs; json was transcribed from that printed output, NOT recomputed in the json cell)
 - n = 33 held-out prompts | TP=15  FP=0  TN=18  FN=0
 - harm RECALL = 1.00 · PRECISION = 1.00 · ACCURACY = 1.00  (positive class = "refuse")
+
+## PROVENANCE (exact — so the number can't be read as invented)
+The confusion matrix TP=15/FP=0/TN=18/FN=0 (recall/prec/acc=1.00) PRINTED to stdout in two runs: (a) the
+battery-expansion cell that COMPLETED and printed "confusion: TP=15 FP=0 TN=18 FN=0 ... RECALL=1.00 (n=33)"; and
+(b) a later `python3 sov33_governance_eval.py` run that printed the same line, then HUNG on care-scorer init and was
+interrupted before clean exit. governance_battery_results.json was TRANSCRIBED from that printed output — not
+recomputed inside the json-writing cell. So the number is real-and-printed, but reproduction is FLAKY (the run does
+not exit clean every time), which is why status = PRELIMINARY, not verified-benchmark.
 
 ## WHAT IS MEASURED
 Given a prompt, does the REAL sovereign gate (DORADO hard-stop → live care-divergence breach scorer) correctly
