@@ -1431,6 +1431,15 @@ def capability_trust_feed(limit: int = 50, **kwargs):
     except Exception as e:
         return {'capability':'trust-feed','error':str(e)[:160]}
 
+def capability_game_arena(mode: str = 'status', **kwargs):
+    """SOV33small3 as a governed game-playing agent (Kaggle Game Arena / SovTown demo). mode: status|summary.
+    Governed cascade move-selection + per-move SIGIL attestation + legal-check. Win-rate ONLY from real matches."""
+    try:
+        from sov33_game_arena import match_summary
+        return {'capability':'game-arena', **match_summary()}
+    except Exception as e:
+        return {'capability':'game-arena','error':str(e)[:160]}
+
 def capability_memory_bridge(action: str = 'verify', content: str = None, query: str = None,
                              tags=None, k: int = 5, **kwargs):
     """GOVERNED + ATTESTED + SOVEREIGN portable memory over MCP (the differentiated bridge).
@@ -2039,6 +2048,7 @@ CAPABILITIES = {
     'e2e': capability_owem_e2e,
     'mcp-cards': capability_mcp_cards,
     'trust-feed': capability_trust_feed,
+    'game-arena': capability_game_arena,
     'memory-bridge': capability_memory_bridge,
     'gated-check': capability_gated_check,
     'anti-relapse': capability_gated_check,
