@@ -153,15 +153,37 @@ def check_12_pillars():
 # CAPABILITY TOOLS (post-ask tools)
 # ═══════════════════════════════════════════════════════════════
 
+def _memory_keyword_fallback(recall_query: str, k: int, mem_path):
+    """Fail-soft memory recall when sentence_transformers isn't available: word-overlap ranking.
+    Degrades gracefully (any deployment without the embedding model still gets recall), labelled honestly."""
+    if not mem_path.exists():
+        return {'capability': 'memory', 'mode': 'keyword-fallback',
+                'note': 'sentence_transformers unavailable; no memory file either',
+                'query': recall_query, 'results': []}
+    memories = [json.loads(l) for l in mem_path.read_text().splitlines() if l.strip()]
+    qtokens = set(recall_query.lower().split())
+    def score(m):
+        text = (m.get('content', '') or m.get('text', '')).lower()
+        return len(qtokens & set(text.split()))
+    ranked = sorted(memories, key=score, reverse=True)[:k]
+    return {'capability': 'memory', 'mode': 'keyword-fallback (no embeddings)',
+            'note': 'sentence_transformers not installed; using word-overlap ranking (lower quality than semantic)',
+            'query': recall_query, 'top_k': k,
+            'results': [{'overlap': score(m), 'content': (m.get('content', '') or m.get('text', ''))[:200],
+                         'tags': m.get('tags', [])} for m in ranked]}
+
 def capability_memory(recall_query: str, k: int = 5):
-    """Semantic retrieval against sovereign memory."""
+    """Semantic retrieval against sovereign memory (fails soft to keyword search without embeddings)."""
+    mem_path = SIGIL_DIR / 'sovereign_memory.jsonl'
     try:
         sys.path = [p for p in sys.path if 'hermes-agent' not in p]
         os.environ.pop('PYTHONPATH', None)
-        from sentence_transformers import SentenceTransformer, util
+        try:
+            from sentence_transformers import SentenceTransformer, util
+        except ImportError:
+            return _memory_keyword_fallback(recall_query, k, mem_path)
         model = SentenceTransformer('sentence-transformers/all-MiniLM-L6-v2')
 
-        mem_path = SIGIL_DIR / 'sovereign_memory.jsonl'
         emb_path = SIGIL_DIR / 'memory_embeddings.npz'
 
         if not mem_path.exists():
@@ -1306,6 +1328,19 @@ class Sovereign:
                 'latency_s': round(time.time() - t0, 3),
             }
 
+        # SELF-TOOL-AWARENESS — I always know my CURRENT tools (runtime-discovered, not from training).
+        _rq = (request or '').lower()
+        if any(p in _rq for p in ['what can you do','what tools','which tools','your tools','your capabilit',
+                'list your tool','are you aware of your','self-aware','self aware','tool manifest',
+                'what are you able','what can you use','know your tools']):
+            _sa = capability_self_awareness(request)
+            sigil_emit({'hop':'SOV33_SELF_AWARENESS','tools_total':_sa['manifest']['total'],'care_floor':CARE_FLOOR})
+            return {'request':request,'decision':'SELF_AWARENESS','answer':_sa['summary'],
+                    'tools':_sa['tools'],'manifest_total':_sa['manifest']['total'],
+                    'native_count':_sa['manifest']['native_count'],'mcp_live_count':_sa['manifest']['mcp_live_count'],
+                    'brain_source':'self.manifest','layers':['SELF_AWARENESS'],'sigil_hops':1,
+                    'latency_s':round(time.time()-t0,3)}
+
         # L1-L5 (care → BFT → routing → brain → SIGIL)
         r = self.core.process(request)
         d = r.get('derived_care', {})
@@ -1480,7 +1515,55 @@ def capability_companion(mode: str = 'demo', **kwargs):
     except Exception as e:
         return {'capability': 'companion', 'error': str(e)[:120]}
 
+# ══════════════════════════════════════════════════════════════════════════════
+# SELF-AWARENESS OF TOOLING — the fix for "models don't know their new tools".
+# The manifest is DISCOVERED AT RUNTIME (reflection over this module + a live query
+# to the running MCP server), never hardcoded. A capability added seconds ago — or a
+# new MCP tool registered on :3101 — is already known on the next ask(). This is how
+# SOV33 differs: its self-model of tooling is live, not frozen at training time.
+# ══════════════════════════════════════════════════════════════════════════════
+def self_manifest(include_mcp: bool = True) -> dict:
+    import types as _t
+    g = globals(); native = []
+    for nm, fn in sorted(g.items()):
+        if nm.startswith('capability_') and isinstance(fn, _t.FunctionType):
+            doc = (fn.__doc__ or '').strip().split('\n')[0][:110]
+            native.append({'name': nm[len('capability_'):].replace('_', '-'), 'fn': nm,
+                           'doc': doc, 'source': 'sov33.native'})
+    try: routed = sorted(CAPABILITIES.keys())
+    except Exception: routed = []
+    mcp = []
+    if include_mcp:
+        try:
+            import urllib.request as _u, json as _j
+            req = _u.Request('http://127.0.0.1:3101/mcp',
+                data=_j.dumps({'jsonrpc':'2.0','id':1,'method':'tools/list'}).encode(),
+                headers={'Content-Type':'application/json'})
+            res = _j.loads(_u.urlopen(req, timeout=2).read().decode())
+            for t in (res.get('result', {}).get('tools') or [])[:400]:
+                mcp.append({'name': t.get('name'), 'doc': (t.get('description') or '')[:90], 'source': 'mcp.live'})
+        except Exception:
+            pass  # server not up → native tools still known
+    return {'generated_at': time.time(), 'native_count': len(native), 'routed_count': len(routed),
+            'mcp_live_count': len(mcp), 'total': len(native) + len(mcp), 'native': native,
+            'routed': routed, 'mcp_live': mcp,
+            'note': 'discovered at runtime (reflection + live MCP) — never hardcoded; new tools appear automatically'}
+
+def capability_self_awareness(query: str = None) -> dict:
+    """What I can do RIGHT NOW — my live self-model of tooling (native + live MCP), auto-discovered, never stale."""
+    m = self_manifest()
+    names = [t['name'] for t in m['native']] + [t['name'] for t in m['mcp_live'][:80]]
+    return {'capability': 'self-awareness',
+            'summary': (f"I'm aware of {m['total']} tools right now — {m['native_count']} native sovereign "
+                        f"capabilities + {m['mcp_live_count']} live MCP tools. This list is discovered at "
+                        f"runtime, so anything added since I was trained is already here."),
+            'tools': names, 'manifest': m}
+
 CAPABILITIES = {
+    'self': capability_self_awareness,
+    'tools': capability_self_awareness,
+    'capabilities': capability_self_awareness,
+    'what-can-you-do': capability_self_awareness,
     'distill': capability_distill,
     'owem-world': capability_owem_world,
     'canonical': capability_canonical,
