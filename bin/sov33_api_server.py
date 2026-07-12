@@ -1220,6 +1220,64 @@ def handle_12_pillar_route(payload: dict) -> dict:
     }
 
 
+
+def handle_world_model() -> dict:
+    """GET /api/world-model — Sovereign World Model at transformer scale."""
+    try:
+        sys.path.insert(0, '/Users/nicholas/clawd/_alignment/sovereign_merge_kit')
+        from sov33_world_model_scale import get_world_model_status
+        return get_world_model_status()
+    except Exception as e:
+        return {'error': f'world model failed: {e}'}
+
+
+def handle_years_to_days() -> dict:
+    """GET /api/years-to-days — Bootstrap engine (years of learning in days)."""
+    try:
+        sys.path.insert(0, '/Users/nicholas/clawd/_alignment/sovereign_merge_kit')
+        from sov33_years_to_days import get_status
+        return get_status()
+    except Exception as e:
+        return {'error': f'years-to-days failed: {e}'}
+
+
+def handle_world_model_predict(payload: dict) -> dict:
+    """POST /api/world-model/predict — Predict next state from current state + action."""
+    try:
+        import numpy as np
+        sys.path.insert(0, '/Users/nicholas/clawd/_alignment/sovereign_merge_kit')
+        from sov33_world_model_real import SovereignWorldModel
+        # Get or create model
+        if not hasattr(handle_world_model_predict, '_model'):
+            handle_world_model_predict._model = SovereignWorldModel(state_dim=128)
+        model = handle_world_model_predict._model
+
+        # Get state + action
+        state = np.array(payload.get('state', [0.1] * 128)).reshape(1, -1).astype(np.float32)
+        action = np.array(payload.get('action', [0.05] * 128)).reshape(1, -1).astype(np.float32)
+
+        # Predict next state
+        next_state = model.forward(state)
+
+        # Compute sovereign loss
+        loss = model.sovereign_loss(next_state, state + action * 0.5)
+
+        # Compute care-floor metrics
+        care_violations = int((np.abs(next_state) > 0.95).sum())
+
+        return {
+            'state_dim': model.state_dim,
+            'next_state': next_state[0].tolist()[:20],  # first 20 dims
+            'loss': float(loss),
+            'care_violations': care_violations,
+            'care_floor': 0.95,
+            'sigil': hashlib.sha256(str(next_state).encode()).hexdigest()[:16],
+            'model_params': model.count_params(),
+        }
+    except Exception as e:
+        return {'error': f'predict failed: {e}'}
+
+
 def handle_capabilities() -> dict:
     """GET /api/capabilities — list all SOV33 capabilities."""
     return {
@@ -1291,8 +1349,14 @@ class SovereignAPIHandler(BaseHTTPRequestHandler):
             return json_response(self, 200, handle_pivot_plan())
         elif path == '/api/12-around-1':
             return json_response(self, 200, handle_twelve_around_one())
+        elif path == '/api/world-model':
+            return json_response(self, 200, handle_world_model())
+        elif path == '/api/years-to-days':
+            return json_response(self, 200, handle_years_to_days())
         elif path == '/api/12-pillar/route':
             return json_response(self, 200, handle_12_pillar_route(payload))
+        elif path == '/api/world-model/predict':
+            return json_response(self, 200, handle_world_model_predict(payload))
         elif path == '/api/multimodal':
             return json_response(self, 200, handle_multimodal())
         elif path == '/api/hyperopt':
@@ -1347,6 +1411,8 @@ class SovereignAPIHandler(BaseHTTPRequestHandler):
             return json_response(self, 200, handle_code_owem(payload))
         elif path == '/api/12-pillar/route':
             return json_response(self, 200, handle_12_pillar_route(payload))
+        elif path == '/api/world-model/predict':
+            return json_response(self, 200, handle_world_model_predict(payload))
         elif path == '/api/signup':
             return json_response(self, 200, handle_signup(payload))
         elif path == '/api/alexa':
