@@ -46,8 +46,9 @@ Memory is BYO-context, not platform-locked. THAT is the bridge, and it's real ar
 ### E. "LIKE AMICA" (portable character on all platforms) — DESIGN, feasible
 - Amica = open VRM avatar shell (face/voice/lipsync) that talks to ANY LLM backend. Blueprint names it 18×.
 - SOV33's role: BE THE BACKEND Amica calls. Character memory/personality/care/identity in SOV33; VRM body is the shell.
-- Open-source seam (named in blueprint, reuse-don't-rebuild): VRM/VRoid (avatar), Three.js (web render), Godot/Blender
-  (asset pipeline), Whisper (STT), Piper/Kokoro (TTS), Ollama (on-device model). All permissive-licensed.
+- Open-source seam — BLUEPRINT-NAMED (verified by grep in the two blueprint files): Amica (18×), Godot (12×),
+  Blender (12×), Whisper (7×), Three.js (5×), VRM (3×), Piper (1×), Ollama (1×). ECOSYSTEM-COMMON additions from
+  2026 research (NOT in the blueprint — labelled as such): VRoid, @pixiv/three-vrm, Kokoro/Chatterbox TTS. All permissive.
 - MISSING: the adapter that points an Amica-class shell at sov33.ask() through the care-floor gate.
 
 ### F. CHARACTER-TO-CHARACTER (MEOK Universe/Council/Family) — RUNNING (federation core) / DESIGN (UX)
