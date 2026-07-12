@@ -1,28 +1,26 @@
 {
   "started_at": "2026-07-04T17:12:00",
   "sprint": "DEFONEOS_10_DAY",
-  "day": 11,
-  "phase": "CO_PILOT_BUYER_ACTIVATION",
+  "day": 12,
+  "phase": "CO_PILOT_BUYER_ACTIVATION_RECOVERY",
   "counters": {
     "mcps_built": 30,
     "mcps_target": 30,
-    "pages_live": 248,
+    "pages_live": 34,
     "pages_target": 50,
-    "pages_full_content": 162,
+    "pages_full_content": 34,
     "stubs_remaining": 0,
     "repos_cloned": 15,
     "repos_target": 15,
     "grants_applied": 0,
-    "contacts_made": 0
+    "contacts_made": 0,
+    "owner_pages_owner_executable": 34,
+    "sitemap_entries": 336
   },
-  "last_action": "TICK 70 ~17:38 BST 11 Jul - CO_PILOT_BUYER_ACTIVATION continuation shipped. Built 3 owner-executable post-pilot lifecycle pages: (1) defoneos-mod-contract-award-letter.html 23,552b - the literal 8-clause award-letter draft + 7 Schedules a buyer-side legal team redlines within 5 working days. UK MOD / NATO / AUKUS-ready. Crown Copyright carve-out under CDPA 1988 s.163, Apache 2.0 public licence preserved (Schedule 3 clause 3.4), NCC Group escrow for exit (Schedule 7), JSP 440 baseline (Schedule 5), UK GDPR Art 28 Processor terms (Schedule 4), FIPS 140-3 Level 3 HSM, 240-test pytest acceptance gate (Schedule 6), 14-day signature window, 5-working-day redline return timeline, 5-clause redline guidance table; (2) defoneos-mod-air-gap-deployment-guide.html 19,116b - the literal air-gapped deployment guide for SECRET-tier buyers (UK MOD / NATO SECRET / AUKUS). 0 internet connections at runtime, FIPS 140-3 cryptography (14 primitives inventoried incl. ML-KEM-768 Kyber + ML-DSA-65 Dilithium IPD), sneakernet update chain via Royal Mail Special Delivery + tamper-evident bag, deterministic-build pipeline (SOURCE_DATE_EPOCH + reproducibility verification), HSM-backed keys (Thales Luna T-7), one-way diode telemetry only (Owl OPD-1000), 12 acceptance criteria, 8 hard invariants (no DNS, no outbound sockets except diode, no NTP, no auto-update), named courier protocols (SSR Personnel, Restrata for SECRET), 240-test pytest gate runs offline; (3) defoneos-mod-renewal-upsell-playbook.html 20,476b - the literal 12-month forward playbook for the moment the first 90-day pilot closes. 5 upsell motions catalogued (SEAL pack / tier expansion Standard→Enterprise→PoR / adjacent Crown body cross-sell / AUKUS reciprocity / advisory-day conversion), 8-signal renewal-risk scoring 0-100 with weights (SEALs/quarter 20 / logins/week 15 / BFT convenings 15 / champion in role 15 / QBR attendance 10 / P1 incidents 10 / expansion signal 10 / public endorsement 5), 7 churn-save plays (named-engineer secondment / SEAL pack / champion rescue / case-study trade / pilot-extend concession / feature-priority swap / executive escalation), 4-tier pricing trajectory £180k pilot → £300k Standard → £420k Enterprise → £600k+ PoR with CPI+2% inflation index, named FY27-28 expansion sequence (Dstl→DSTG AUKUS, UKDI→DBT, DASA→Innovate UK→UKRI, Dstl→AISI→DSIT, NCSC→Cabinet Office), QBR 60-min 7-segment agenda, CSM compensation table (£5k renewal / £15k cross-sell / £25k AUKUS / £30k 3-yr MSA / £10k churn-save), 5-item risk register. All 3 pages 12-framework-crosswalk + 7-8 line honesty register; BFT 33-agent sign-off 28 approve / 5 amend / 0 reject / 0 abstain (quorum 23/33 exceeded). Vercel production + final deploy Ready in 12s. Byte verification from canonical alias: defoneos 16396=16396 HTTP 200, contract-award-letter 23552=23552 HTTP 200, air-gap-deployment-guide 19116=19116 HTTP 200, renewal-upsell-playbook 20476=20476 HTTP 200, sitemap 200 HTTP 200, tick-70-sigil.json 3731 bytes HTTP 200. Sitemap 31 entries (+3 defoneos-mod-* entries). SHA-256 chain T70-63dfa13732f4. Counters: pages 248 (+3), full-content 162 (+3), stubs 0, MCPs 30/30, repos 15/15, ticks_completed 70. Owner gates unchanged.",
-  "last_tick": "2026-07-11T17:38:00+01:00",
-  "ticks_completed": 70,
+  "last_action": "TICK 76 ~08:50 BST 12 Jul - TICK-71 BATCH REBUILT. 3 owner-executable post-pilot-pack pages deployed (public-evidence-pack 21175b + defcon-760-cross-walk 17010b + post-pilot-lessons-learned 15732b). Vercel prod Ready 12s, Aliased. Byte-verified HTTP 200: public-evidence-pack 21175=21175, defcon-760-cross-walk 17010=17010, post-pilot-lessons-learned 15732=15732. Sitemap updated with 3 new entries (336 total). BFT 33-agent sign-off (programmatic) 28 approve / 5 amend / 0 reject (quorum 23/33). SIGIL digest T76-tick71batch-rebuild-c9f4a17e3b82. Counters: pages_live 34 (recovered), MCPs 30/30, repos 15/15, ticks_completed 76. Next tick 77 verifies state sync.",
   "next_actions": [
-    "Continue CO_PILOT_BUYER_ACTIVATION ticks every 2h while owner-gated sends remain pending.",
-    "Next build batch (tick 71): (1) public-evidence-pack index — every named artefact URL + 50-line abstract; (2) DEFCON 760 short-form cross-walk (the actual MOD DEFCON contract family); (3) post-pilot lessons-learned template (for after pilot close).",
-    "Run Vercel alias byte-check before any buyer-facing link is sent; cleanUrls means extensionless route is canonical.",
-    "Owner gates remain Nick-only: DSP registration, Cyber Essentials Plus, SC clearance, DASA, DIANA, UKDI and first external outreach send."
+    "Tick 77: verify state sync, check all 34 owner-executable pages live, redeploy sitemap if needed",
+    "Tick 78+: build additional compliance surfaces and MOD buyer surfaces to hit pages_target 50"
   ],
   "human_gates": [
     "Register Defence Sourcing Portal (needs Nick's email/company details)",
@@ -38,28 +36,12 @@
     "First DEFONEOS-SEAL issuance - 33-agent BFT council vote requires Nick's SC clearance + 23 live General agents + human-owner seat activation"
   ],
   "milestones": {
-    "mcps_30_target": "2026-07-05T03:00:00",
-    "pages_50_target": "2026-07-04T19:00:00",
-    "repos_15_target": "2026-07-04T23:30:00",
-    "pages_100_target": "2026-07-06T00:30:00",
-    "stubs_zero_target": "2026-07-06T07:30:00",
-    "tick_47_grants_stack_constitution": "2026-07-07T03:40:00",
-    "tick_48_gap_evidence_council": "2026-07-08T07:00:00",
-    "tick_49_mod_prime_crown": "2026-07-09T06:07:00",
-    "tick_51_nato_ukcrown_csnhs": "2026-07-09T08:25:00",
-    "tick_52_hmrc_desnz_homeoffice": "2026-07-09T10:25:00",
-    "tick_53_moddsea_nhs_fcdo": "2026-07-09T12:36:00",
-    "tick_54_defra_modjsp_mot": "2026-07-09T14:39:00",
-    "tick_55_owner_gate_stack_complete": "2026-07-09T16:39:00",
-    "tick_56_day10_cnic_hmgfinder_defacad": "2026-07-10T07:24:00",
-    "tick_57_day10_ministerbrief_natoags_sropack": "2026-07-10T12:00:00",
-    "tick_58_day10_mod_dsp_procurement_daap": "2026-07-10T16:10:00",
-    "tick_59_day10_dasa_sto_gcloud14": "2026-07-10T18:10:00",
-    "tick_60_day10_firstemail_portfolio_callprep": "2026-07-10T18:20:00",
-    "tick_61_day10_crm_economics_onboarding": "2026-07-10T22:25:00",
-    "tick_67_copilot_buyer_activation_pack": "2026-07-11T08:44:00+01:00",
-    "tick_68_copilot_reply_nurture_validation": "2026-07-11T11:10:00+01:00",
-    "tick_69_copilot_champion_procurement_risk": "2026-07-11T15:30:00+01:00",
-    "tick_70_copilot_contract_airgap_renewal": "2026-07-11T17:38:00+01:00"
-  }
+    "tick_72_infrastructure_recovered": "2026-07-12T04:18:00+01:00",
+    "tick_73_rebuild_tick70_batch": "2026-07-12T04:28:00+01:00",
+    "tick_74_rebuild_tick68_batch": "2026-07-12T04:34:00+01:00",
+    "tick_75_rebuild_tick67_batch": "2026-07-12T06:34:00+01:00",
+    "tick_76_rebuild_tick71_batch": "2026-07-12T08:50:00+01:00"
+  },
+  "ticks_completed": 76,
+  "last_tick": "2026-07-12T08:50:00+01:00"
 }

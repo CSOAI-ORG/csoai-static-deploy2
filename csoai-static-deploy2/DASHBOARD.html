@@ -251,10 +251,11 @@ async function sendChat() {
 
   try {
     document.getElementById('chat-status').textContent = 'Thinking...';
+    const citizen_id = localStorage.getItem('sov33_citizen_id') || 'guest';
     const r = await fetch(API + '/api/orchestrate', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({message: q, citizen: citizen})
+      body: JSON.stringify({message: q, citizen: citizen, citizen_id})
     });
     const d = await r.json();
     const text = d.say || d.answer || d.error || 'No response';
@@ -317,7 +318,7 @@ async function webSearch() {
     const r = await fetch(API + '/api/orchestrate', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({message: 'Search the web for: ' + q, citizen: 'general'})
+      body: JSON.stringify({message: 'Search the web for: ' + q, citizen_id: citizen_id, citizen: 'general'})
     });
     const d = await r.json();
     const text = d.say || d.answer || 'No result';
@@ -338,7 +339,7 @@ async function learn(topic) {
     const r = await fetch(API + '/api/orchestrate', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({message: 'Explain ' + topic + ' like I am 10 years old. Use simple words and one analogy.', citizen: 'voice'})
+      body: JSON.stringify({message: 'Explain ' + topic + ' like I am 10 years old. Use simple words and one analogy.', citizen_id: citizen_id, citizen: 'voice'})
     });
     const d = await r.json();
     out.innerHTML = (d.say || d.answer || 'No answer').replace(/\n/g, '<br>');
@@ -387,7 +388,7 @@ async function voiceAsk(text) {
     const r = await fetch(API + '/api/orchestrate', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({message: text, citizen: 'voice'})
+      body: JSON.stringify({message: text, citizen_id: citizen_id, citizen: 'voice'})
     });
     const d = await r.json();
     const reply = d.say || d.answer || 'No response';
