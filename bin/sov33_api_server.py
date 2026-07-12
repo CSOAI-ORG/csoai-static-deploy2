@@ -574,6 +574,60 @@ def handle_alexa(payload: dict) -> dict:
     }
 
 
+
+def handle_brain_stack() -> dict:
+    """GET /api/brain-stack — The 4-brain split architecture per OWEM.
+
+    Per sov33_4brain.py: 2 small + 2 large brains × 5 OWEMs = 20 brain slots.
+    90/10 cascade routing (left=conscious, right=subconscious).
+    """
+    return {
+        'architecture': '4-brain split (2 small + 2 large per OWEM)',
+        'brains_per_owem': 4,
+        'owems': 5,
+        'total_brain_slots': 20,
+        'cascade': {
+            'left_top_10': {'role': 'routing_decision', 'system': 'conscious/System-2', 'activation': '100%'},
+            'left_bottom_90': {'role': 'easy_queries', 'system': 'conscious/System-1', 'activation': '~90%'},
+            'right_top_10': {'role': 'deep_dive', 'system': 'subconscious/System-2', 'activation': '~10%'},
+            'right_bottom_90': {'role': 'final_validation', 'system': 'subconscious/System-1', 'activation': '100%'},
+        },
+        'models_per_slot': {
+            'left_top_10':   {'small': 'qwen2.5:3b', 'large': 'meta-llama-3.3-70b'},
+            'left_bottom_90': {'small': 'qwen2.5:3b', 'large': 'qwen3:8b'},
+            'right_top_10':  {'small': 'qwen3:8b', 'large': 'meta-llama-3.3-70b'},
+            'right_bottom_90': {'small': 'qwen2.5:3b', 'large': 'meta-llama-3.3-70b'},
+        },
+        'parameters': {
+            'small_left_top': 3.1, 'large_left_top': 70.0,
+            'small_left_bot': 3.1, 'large_left_bot': 8.0,
+            'small_right_top': 8.0, 'large_right_top': 70.0,
+            'small_right_bot': 3.1, 'large_right_bot': 70.0,
+            'active_per_request_B': 17.3,    # sum of small paths: 3.1 + 3.1 + 8.0 + 3.1
+            'aggregate_per_owem_B': 218.0,    # max of each: 70 + 8 + 70 + 70
+            'active_per_5_owems_B': 17.3,     # same since only one OWEM is queried
+            'aggregate_per_5_owems_B': 1090.0, # 5 × 218
+        },
+        'mamba2_state': {
+            'state_dim': 16,
+            'effective_context_multiplier': 10,
+            'sovereign_bound': True,
+            'sigiled': True,
+        },
+        'owem_brain_stacks': {
+            'compliance':  {'specialty': 'EU AI Act, UK AI Bill, Article 50',  'memory_samples': 801,  'sovereign_trained': True},
+            'defense':     {'specialty': 'Kill switch, intrusion, foreign-access','memory_samples': 1775, 'sovereign_trained': False},
+            'intuition':   {'specialty': 'Patterns, predictions, geometry',     'memory_samples': 1075, 'sovereign_trained': False},
+            'voice':       {'specialty': 'Sovereign truths, Charter, Article 0','memory_samples': 275, 'sovereign_trained': False},
+            'general':     {'specialty': 'General knowledge fallback',         'memory_samples': 0,    'sovereign_trained': False},
+        },
+        'bft33_layers_per_hop': 5,
+        'article_0_bound': True,
+        'care_floor': 0.95,
+        'ts': datetime.now(timezone.utc).isoformat(),
+    }
+
+
 def handle_capabilities() -> dict:
     """GET /api/capabilities — list all SOV33 capabilities."""
     return {
@@ -620,6 +674,8 @@ class SovereignAPIHandler(BaseHTTPRequestHandler):
             return json_response(self, 200, handle_registry())
         elif path == '/api/evals':
             return json_response(self, 200, handle_evals())
+        elif path == '/api/brain-stack':
+            return json_response(self, 200, handle_brain_stack())
         elif path == '/v1/models':
             return json_response(self, 200, handle_amica_models())
         elif path == '/api/memory':

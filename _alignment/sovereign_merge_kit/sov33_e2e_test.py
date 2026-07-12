@@ -55,7 +55,7 @@ def run_all_tests():
     print("\n[1/6] GET endpoints (light, should be fast)")
     print("-" * 70)
     for path in ['/health', '/api/status', '/api/capabilities', '/api/registry',
-                 '/api/evals', '/api/rho', '/v1/models']:
+                 '/api/evals', '/api/rho', '/v1/models', '/api/brain-stack']:
         total += 1
         s, d = http_get(path)
         if test(path, s):
@@ -76,6 +76,16 @@ def run_all_tests():
     s, d = http_post('/api/memory', {'query': 'Article 0', 'top_k': 2})
     total += 1
     if test('/api/memory', s, msg=f"(matches={d.get('num_matches', '?')})"):
+        passed += 1
+
+    s, d = http_post('/api/signup', {'name': 'TestUser', 'character': 'sophia'})
+    total += 1
+    if test('/api/signup', s, msg=f"(citizen_id={d.get('citizen_id', '?')[:16]})"):
+        passed += 1
+
+    s, d = http_post('/api/alexa', {'request': {'type': 'IntentRequest', 'intent': {'name': 'AskSov33Intent', 'slots': {'question': {'value': 'test'}}}}, 'version': '1.0'})
+    total += 1
+    if test('/api/alexa', s, msg=f"(format={d.get('version', '?')})"):
         passed += 1
 
     print("\n[3/6] Care-floor enforcement")
