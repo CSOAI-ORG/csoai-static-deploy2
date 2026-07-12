@@ -471,6 +471,109 @@ def handle_amica_models() -> dict:
         return {'error': f'amica models failed: {e}'}
 
 
+
+def handle_signup(payload: dict) -> dict:
+    """POST /api/signup — Register a new sovereign citizen.
+
+    User flow (3 steps, foolproof):
+      1. POST {name, character} → returns citizen_id + sovereign_provenance
+      2. localStorage stores citizen_id
+      3. Future requests include citizen_id for personalization
+    """
+    name = payload.get('name', '').strip()
+    character = payload.get('character', 'sophia').strip().lower()
+
+    if not name:
+        return {'error': 'name required', 'status': 400}
+
+    # Validate character
+    valid_chars = ['sophia', 'atlas', 'lyra', 'echo', 'custom']
+    if character not in valid_chars:
+        character = 'sophia'
+
+    # Generate citizen_id (hash of name + timestamp)
+    import hashlib
+    import time
+    ts = str(int(time.time() * 1000))
+    citizen_id = 'cit-' + hashlib.sha256(f"{name}-{ts}".encode()).hexdigest()[:12]
+
+    # SIGIL
+    sigil_digest = sigil_emit({
+        'hop': 'API_SIGNUP',
+        'citizen_id': citizen_id,
+        'name': name,
+        'character': character,
+        'care_floor': 0.95,
+    })
+
+    return {
+        'citizen_id': citizen_id,
+        'name': name,
+        'character': character,
+        'welcome_message': f"Welcome, {name}! Your sovereign AI is {character.title()}. Everything you do is private, signed, and yours.",
+        'sovereign_provenance': {
+            'care_floor': 0.95,
+            'article_0_bound': True,
+            '12_pillars_active': True,
+            'bft_33_quorum': True,
+        },
+        'next_step': 'Visit DASHBOARD.html to start using your AI',
+        'sigil': sigil_digest,
+        'ts': datetime.now(timezone.utc).isoformat(),
+    }
+
+
+def handle_alexa(payload: dict) -> dict:
+    """POST /api/alexa — Alexa custom skill endpoint.
+
+    Alexa sends: {"version": "1.0", "session": {...}, "request": {"type": "IntentRequest", "intent": {"name": "AskSov33Intent", "slots": {"question": {"value": "..."}}}}}
+
+    Returns Alexa response format.
+    """
+    request = payload.get('request', {})
+    intent = request.get('intent', {})
+    slots = intent.get('slots', {})
+
+    question = ''
+    for slot_name, slot_data in slots.items():
+        if isinstance(slot_data, dict):
+            question = slot_data.get('value', '')
+            break
+
+    if not question:
+        return {
+            'version': '1.0',
+            'response': {
+                'outputSpeech': {
+                    'type': 'PlainText',
+                    'text': 'I didn\'t catch a question. Try: Alexa, ask Sovereign AI what is Article 0.'
+                }
+            }
+        }
+
+    # Forward to SOV33
+    try:
+        engine = _get_owem_engine()
+        if engine is not None:
+            result = engine.ask('voice', question, max_tokens=200)
+            answer = result.get("text", "I could not reach the sovereign substrate right now.")
+        else:
+            answer = 'The sovereign substrate is initializing. Try again in a moment.'
+    except Exception as e:
+        answer = f'Sovereign substrate error: {e}'
+
+    return {
+        'version': '1.0',
+        'response': {
+            'outputSpeech': {
+                'type': 'PlainText',
+                'text': answer[:8000]  # Alexa limit
+            },
+            'shouldEndSession': True
+        }
+    }
+
+
 def handle_capabilities() -> dict:
     """GET /api/capabilities — list all SOV33 capabilities."""
     return {
@@ -550,6 +653,10 @@ class SovereignAPIHandler(BaseHTTPRequestHandler):
             return json_response(self, 200, handle_amica(payload))
         elif path == '/v1/chat/completions':
             return json_response(self, 200, handle_amica(payload))
+        elif path == '/api/signup':
+            return json_response(self, 200, handle_signup(payload))
+        elif path == '/api/alexa':
+            return json_response(self, 200, handle_alexa(payload))
         elif path == '/api/triangle':
             return json_response(self, 200, handle_triangle(payload))
         elif path == '/api/cascade':
