@@ -54,18 +54,19 @@
   <div class="stat"><div class="num" id="stat-status">--</div><div class="label">System status</div></div>
 </div>
 
-<h2>5 Main OWEMs</h2>
+<h2>The Four Scopes + 5 Routing Groups</h2>
 
 <div class="card">
+  <blockquote>An OWEM is ONE governed substrate at four scopes (CHARTER_OWEM_FOUR_SCOPE). The 5 names below are <em>routing groups</em> within those scopes — not additive things.</blockquote>
   <table>
-    <tr><th>OWEM</th><th>Role</th><th>Preferred backend chain</th><th>Status</th></tr>
-    <tr><td><strong>compliance</strong></td><td>EU AI Act, UK AI Bill, Article 50</td><td><code>sov_brain → oracle → ollama</code></td><td><span class="pill sigil">LIVE</span></td></tr>
-    <tr><td><strong>defense</strong></td><td>Kill switch, intrusion, foreign-access</td><td><code>oracle → sov_brain → groq → ollama</code></td><td><span class="pill sigil">LIVE</span></td></tr>
-    <tr><td><strong>intuition</strong></td><td>Patterns, predictions, geometry</td><td><code>oracle → groq → ollama</code></td><td><span class="pill sigil">LIVE</span></td></tr>
-    <tr><td><strong>voice</strong></td><td>Sovereign truths, Charter, Article 0</td><td><code>oracle → groq → ollama</code></td><td><span class="pill sigil">LIVE</span></td></tr>
-    <tr><td><strong>general</strong></td><td>General knowledge fallback</td><td><code>oracle → groq → ollama → sov_brain</code></td><td><span class="pill sigil">LIVE</span></td></tr>
+    <tr><th>Scope</th><th>Routing group</th><th>Preferred backend chain</th><th>Status</th></tr>
+    <tr><td rowspan="2"><strong>SMALL</strong> · Character</td><td><strong>compliance</strong></td><td><code>sov_brain → oracle → ollama</code></td><td><span class="pill sigil">LIVE · SOVEREIGN-TRAINED</span></td></tr>
+    <tr><td><strong>defense</strong></td><td><code>oracle → sov_brain → groq → ollama</code></td><td><span class="pill sigil">LIVE · CLOUD</span></td></tr>
+    <tr><td><strong>MEDIUM</strong> · Tools</td><td><strong>intuition</strong></td><td><code>oracle → groq → ollama</code></td><td><span class="pill sigil">LIVE</span></td></tr>
+    <tr><td><strong>LARGE</strong> · SOV33</td><td><strong>voice</strong></td><td><code>oracle → groq → ollama</code></td><td><span class="pill sigil">LIVE</span></td></tr>
+    <tr><td><strong>CENTRE</strong> · Identity</td><td><strong>general</strong></td><td><code>oracle → groq → ollama → sov_brain</code></td><td><span class="pill sigil">LIVE</span></td></tr>
   </table>
-  <p class="meta"><strong>Sovereign-trained:</strong> 1 of 5 (compliance). <strong>Cloud-routed:</strong> 4 of 5 (Oracle 70B primary).</p>
+  <p class="meta"><strong>Sovereign-trained:</strong> 1 (compliance group). <strong>Cloud-routed:</strong> 4 (Oracle 70B primary).</p>
 </div>
 
 <h2>Smaller OWEM Topologies</h2>
