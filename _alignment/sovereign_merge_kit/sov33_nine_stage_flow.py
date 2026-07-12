@@ -22,6 +22,18 @@ GATES = ["HORUS", "DEFONEOS_HARD_STOPS", "CARE_FLOOR_conformal", "SIGIL", "DRUM_
 EXEC_MODE = {"years_to_days":"parallel fan-out of PLAN->DO subtasks across hives (throughput, not capability)",
              "drum":"L0 1Hz heartbeat clock beneath all stages; phase-veto halts on instability"}
 
+# Acceleration annotations (SOV33_ACCELERATION_RESEARCH_2026-07-12): throughput levers on existing stages.
+# NOT new stages, NOT capability — they make the SAME governed flow run faster/cheaper, audited by SIGIL throughout.
+ACCELERATION = {
+    "LEARN":        "context-cache + memory-injection (format_context): start pre-grounded, never re-derive",
+    "PLAN":         "explicit dependency-graph decomposition: maximize parallel width (years_to_days)",
+    "DO":           "parallel fan-out across hives + speculative cascade (8B draft -> heavy verify on escalate)",
+    "CHECK_VERIFY": "BFT early-exit: ship on cross-lineage agreement, escalate only on disagreement (skip redundant compute)",
+    "OFFLINE":      "distillation: periodically collapse the teacher ensemble into a faster sovereign student (the proof run)",
+}
+CATAPULTS = "published recipes + permissive OSS + open reasoning-traces (s1K/LIMO/OpenR1/OpenThoughts); "\
+            "adopt the TECHNIQUE + open weights, never proprietary weights or a violated license"
+
 def flow_manifest():
     return {"stages":[{"n":i+1,"name":n,"status":s,"desc":d} for i,(n,s,d) in enumerate(STAGES)],
             "gates":GATES,
@@ -30,7 +42,9 @@ def flow_manifest():
             "anti_relapse_rule":"CHECK_EXISTING stage: a 'blocked/gated/owner-required' claim is INVALID until "
                 "PROBED LIVE (sov33_gated_check.probe_gate). Never mark work gated from memory/assumption to "
                 "offload it. Test first; report gated only after a real probe fails.",
-            "exec_mode":EXEC_MODE}
+            "exec_mode":EXEC_MODE,
+            "acceleration":ACCELERATION,
+            "catapults":CATAPULTS}
 
 if __name__ == "__main__":
     import json
