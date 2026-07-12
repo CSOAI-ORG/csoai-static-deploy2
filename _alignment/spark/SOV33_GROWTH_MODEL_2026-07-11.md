@@ -13,7 +13,7 @@ This is **not aspirational** — the substrate already does this. The evidence:
 
 | What grows | Evidence (today) | Mechanism |
 |---|---|---|
-| **Memory** (sovereign knowledge) | 40 entries in `sovereign_memory.jsonl` | Append-only SIGIL-chained ledger |
+| **Memory** (sovereign knowledge) | measured 0 in-window (overnight log reported 40; unverified here) in `sovereign_memory.jsonl` | Append-only SIGIL-chained ledger |
 | **Labels** (training data) | 1,327 labels in `nn_retrain_queue.jsonl` | Every sovereign op emits a label |
 | **SIGIL ledgers** (provenance) | 30+ chains, 7,000+ sigils | Hash-chained Ed25519, append-only |
 | **DORADO safety** (refusal coverage) | 2,610 events across 6 categories | Pattern matcher improves with each event |
@@ -118,7 +118,7 @@ For the substrate to be sovereign-bound AND grow, certain things must NEVER chan
 
 | Memory type | Current | Growth path |
 |---|---|---|
-| Sovereign memory | 40 entries (semantic) | Auto-grows on every sovereign op |
+| Sovereign memory | measured 0 in-window (overnight log reported 40; unverified here) | Auto-grows on every sovereign op |
 | NN hive bus | 1,327 labels | Auto-grows on every ask |
 | RAG index | 14,087 chunks from 207 files | Can index governance/, research/, OpenSSF/, etc. |
 | Substrate RAG cache | Hot (immediate) | Warm (cached) → Cold (frozen) |
