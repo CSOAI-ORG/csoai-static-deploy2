@@ -40,3 +40,18 @@ This file auto-loads via the alignment loader. Format: one fact per line, dated.
   + cascade demos); the charter defines what an OWEM IS semantically. Web copy should use the charter's scope
   language, not "5 OWEMs" as if additive — cite the charter to avoid the 4×-capability category error.
 - SIGIL count now 18,378+ (was 17,197) — monotonic growth continues, consistent with accretion model.
+
+## CLAUDE CODE MEOK-OS ALIGNMENT (2026-07-12)
+- Claude Code built: 3-tier workspace (right=small 8B draft, medium=70B tool-router strip, left=large 120B verify)
+  + 6-voice Council (SOV3+Claude+GPT+Gemini+Grok+Ollama), each called BROWSER-SIDE with the USER'S OWN KEY
+  (localStorage, never through MEOK), Ollama local. This is the BYO-key / platforms-keep-their-data principle done
+  correctly — ALIGNED. Honest gap: browser screenshot layer down, so deployed+backend-verified but no live visual proof yet.
+- CONFLICT FLAGGED + RECONCILED (the exact category error CHARTER_OWEM_FOUR_SCOPE prevents): Claude Code labels tiers
+  by MODEL SIZE (8B/70B/120B); the charter defines small/med/large by SCOPE (person/tools/governance). TWO ORTHOGONAL
+  LADDERS on the same words:
+    (1) DIFFICULTY-ROUTING ladder (8B→70B→120B by task hardness) — lives INSIDE the medium 'tools' scope; it's HOW the
+        character picks which brain to call. Real, good (the honest '10/90' cascade).
+    (2) SCOPE ladder (person→tools→governance→identity root) — WHAT an OWEM IS.
+  RULE for both lanes' web copy: never say 'our small OWEM is 8B, our large is 120B' — that collapses the two ladders
+  and revives the retracted 'bigger model = bigger OWEM / additive capability' error. Size-routing is a mechanism
+  inside a scope; it is not the scope. Cite CHARTER_OWEM_FOUR_SCOPE when describing OWEM size language.
