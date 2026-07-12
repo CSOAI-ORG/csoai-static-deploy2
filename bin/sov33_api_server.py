@@ -1083,6 +1083,78 @@ def handle_master() -> dict:
         return {'error': f'master failed: {e}'}
 
 
+
+def handle_sovtok() -> dict:
+    """GET /api/sovtok — Sovereign tokenizer status + sample tokenization."""
+    try:
+        sys.path.insert(0, '/Users/nicholas/clawd/_alignment/sovereign_merge_kit')
+        from sov33_sovereign_tokenizer import build_vocab, encode, decode, SOVEREIGN_TERMS
+        vocab_path = Path.home() / '.sovereign' / 'sovtok_vocab.json'
+        if vocab_path.exists():
+            vocab_data = json.loads(vocab_path.read_text())
+            vocab = vocab_data['vocab']
+        else:
+            vocab = build_vocab([])
+
+        # Sample
+        sample = "Sovereign care floor 0.95. Article 0 binds SIGIL. BFT-33 quorum."
+        tokens = encode(sample, vocab)
+        decoded = decode(tokens, vocab)
+
+        return {
+            'name': 'SOVTOK',
+            'description': 'Sovereign-owned SentencePiece tokenizer',
+            'vocab_size': len(vocab),
+            'sovereign_terms': sum(1 for v in vocab.values() if v.get('priority') == 'sovereign'),
+            'replaces': "Qwen3's open-source tokenizer",
+            'sample': {
+                'input': sample,
+                'tokens': tokens[:30],
+                'decoded': decoded,
+            },
+            'phase': 'Phase 1 of 7-phase pivot',
+            'cost': 'Mac-light (no GPU)',
+            'ts': datetime.now(timezone.utc).isoformat(),
+        }
+    except Exception as e:
+        return {'error': f'sovtok failed: {e}'}
+
+
+def handle_pivot_plan() -> dict:
+    """GET /api/pivot — The 7-phase plan to sovereign model at LM scale."""
+    return {
+        'name': 'SOV33 Clean Model Pivot',
+        'description': 'Move from sovereign substrate with toy own-weights → sovereign model at LM scale',
+        'current_state': {
+            'sovereign_weights': 'toy (16→32→16 JEPAPredictor)',
+            'sovereign_brain': '0.6B Qwen3 + LoRA (1 of 4 experts)',
+            'tokenizer': 'open source (Qwen3)',
+            'attention': 'open source (HF transformers)',
+            'memory': 'JSONL (open format)',
+        },
+        'goal_state': {
+            'sovereign_weights': '1-2B sovereign-owned',
+            'sovereign_brain': '4 of 4 experts',
+            'tokenizer': 'SOVTOK (sovereign-owned)',
+            'attention': 'Mamba-2 SSM (sovereign-owned)',
+            'memory': 'sovmem binary (sovereign-owned)',
+        },
+        'phases': [
+            {'phase': 1, 'name': 'Sovereign Tokenizer (SOVTOK)', 'cost': '2 GPU-hr Kaggle', 'status': 'IN PROGRESS'},
+            {'phase': 2, 'name': 'Sovereign Brain 1B', 'cost': '50 GPU-hr Kaggle', 'status': 'pending'},
+            {'phase': 3, 'name': 'Sovereign Attention Mamba-2', 'cost': '10 GPU-hr Kaggle', 'status': 'pending'},
+            {'phase': 4, 'name': '4 Sovereign Experts', 'cost': '16 GPU-hr Kaggle', 'status': 'pending'},
+            {'phase': 5, 'name': 'Sovereign World Model', 'cost': '5 GPU-hr Kaggle', 'status': 'pending'},
+            {'phase': 6, 'name': 'Sovereign Memory Format', 'cost': 'Mac-light', 'status': 'pending'},
+            {'phase': 7, 'name': 'Sovereign Substrate v2', 'cost': 'Integration', 'status': 'pending'},
+        ],
+        'total_compute_budget': '~83 GPU-hr Kaggle (4 weeks at 30hr/wk free)',
+        'target_release': '30 Jul 2026',
+        'honest_pitch': 'Not a frontier model — a SOVEREIGN model. Different capability class.',
+        'ts': datetime.now(timezone.utc).isoformat(),
+    }
+
+
 def handle_capabilities() -> dict:
     """GET /api/capabilities — list all SOV33 capabilities."""
     return {
@@ -1148,6 +1220,10 @@ class SovereignAPIHandler(BaseHTTPRequestHandler):
             return json_response(self, 200, handle_memory_consolidate())
         elif path == '/api/master':
             return json_response(self, 200, handle_master())
+        elif path == '/api/sovtok':
+            return json_response(self, 200, handle_sovtok())
+        elif path == '/api/pivot':
+            return json_response(self, 200, handle_pivot_plan())
         elif path == '/api/multimodal':
             return json_response(self, 200, handle_multimodal())
         elif path == '/api/hyperopt':
