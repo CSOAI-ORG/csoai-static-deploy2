@@ -44,6 +44,8 @@ body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.5 -apple-system,
 .brain .bh{display:flex;align-items:center;gap:8px;padding:10px 13px;font-size:12px;font-weight:700;letter-spacing:.02em}
 .brain.l .bh{color:var(--left)}.brain.r .bh{color:var(--right)}
 .brain .bh .tag{margin-left:auto;font-size:10px;color:var(--dim);font-weight:500}
+.router{padding:8px 13px;font-size:11.5px;color:var(--gold);background:rgba(232,200,119,.06);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.router.act{background:rgba(232,200,119,.16)}.router #routermsg{color:var(--dim);margin-left:4px}.router.act #routermsg{color:var(--ink)}
 .brain .bd{flex:1;overflow-y:auto;padding:0 13px 13px;font-size:12.5px;line-height:1.55;color:var(--dim);white-space:pre-wrap}
 .brain.l .dotwrap .d{background:var(--left)}.brain.r .dotwrap .d{background:var(--right)}
 .dotwrap{display:inline-flex;gap:3px;margin-right:6px}.dotwrap .d{width:6px;height:6px;border-radius:50%;opacity:.4;animation:blink 1.1s infinite}
@@ -87,12 +89,13 @@ body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.5 -apple-system,
   <!-- RIGHT: twin J-Space brains -->
   <aside class="brains">
     <div class="brain r">
-      <div class="bh">✨ Right brain <span class="tag">intuition · draft (fast)</span></div>
-      <div class="bd" id="rbrain">Idle — the fast, associative first-instinct lives here.</div>
+      <div class="bh">✨ Right brain <span class="tag">small OWEM · intuition/draft</span></div>
+      <div class="bd" id="rbrain">Idle — the fast 8B reflex: first-instinct lives here.</div>
     </div>
+    <div class="router" id="router">🖐 <b>Medium OWEM</b> · tool-router (70B) <span id="routermsg">idle — decides which surface to open</span></div>
     <div class="brain l">
-      <div class="bh">🧠 Left brain <span class="tag">logic · verify (careful)</span></div>
-      <div class="bd" id="lbrain">Idle — the careful, grounded check lives here.</div>
+      <div class="bh">🧠 Left brain <span class="tag">large OWEM · logic/verify</span></div>
+      <div class="bd" id="lbrain">Idle — the careful 120B check lives here.</div>
     </div>
     <div class="jspacebtns">
       <button data-spawn="world">open J-Space world</button>
@@ -154,10 +157,13 @@ document.getElementById('go').onclick=async function(){
   const rTag=document.querySelector('.brain.r .tag'), lTag=document.querySelector('.brain.l .tag');
   if(right.status==='fulfilled'){ rb.textContent=right.value.text; if(rTag&&right.value.model) rTag.textContent='small OWEM · '+right.value.model; } else rb.textContent='(right brain unreachable)';
   if(left.status==='fulfilled'){ lb.textContent=left.value.text; if(lTag&&left.value.model) lTag.textContent='large OWEM · '+left.value.model; } else lb.textContent='(left brain unreachable)';
-  // ACT — the MEDIUM OWEM (tool-router) brings up the surface the goal needs in the desktop
-  const k=route(goal);
-  if(k && SPAWN[k]){ SPAWN[k](); }
-  else { const ans=(left.status==='fulfilled'?left.value.text:(right.status==='fulfilled'?right.value.text:'…')); win('🐉 '+NAME, ans); }
+  // ACT — the MEDIUM OWEM (70B tool-router) brings up the surface the goal needs in the desktop
+  const router=document.getElementById('router'), rmsg=document.getElementById('routermsg');
+  const k=route(goal); router.classList.add('act');
+  const label={world:'🌍 SOV Space',character:'🐉 Character',govern:'🏛 Governance',sign:'🔏 Sign & verify',memory:'🧠 Memory'};
+  if(k && SPAWN[k]){ rmsg.textContent='→ opened '+(label[k]||k)+' in the desktop'; SPAWN[k](); }
+  else { rmsg.textContent='→ no tool needed — answered directly'; const ans=(left.status==='fulfilled'?left.value.text:(right.status==='fulfilled'?right.value.text:'…')); win('🐉 '+NAME, ans); }
+  setTimeout(()=>router.classList.remove('act'),2500);
   this.disabled=false; document.getElementById('q').value='';
 };
 document.getElementById('q').addEventListener('keydown',e=>{ if(e.key==='Enter') document.getElementById('go').click(); });
