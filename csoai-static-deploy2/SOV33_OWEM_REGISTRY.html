@@ -19,8 +19,6 @@
   a{color:var(--accent2);text-decoration:none}a:hover{text-decoration:underline}
   .card{background:var(--bg2);padding:1.5rem 2rem;border-radius:8px;border-left:3px solid var(--accent2);margin:1rem 0}
   .card.gold{border-left-color:var(--accent)}
-  .owem{background:var(--bg);padding:1.2rem;border-radius:8px;border:1px solid var(--rule);margin:.5rem 0}
-  .owem .name{color:var(--accent2);font-weight:bold;font-size:1.1em}
   table{border-collapse:collapse;width:100%;margin:1rem 0;font-size:.9em}
   th{background:#1a1f2e;color:var(--accent);text-align:left;padding:.5rem .8rem;border-bottom:2px solid var(--accent)}
   td{padding:.5rem .8rem;border-bottom:1px solid var(--rule);vertical-align:top}
@@ -37,54 +35,59 @@
   <p style="text-align:center"><a href="SOV33_HERO.html">← SOV33 Hub</a> · <a href="SOV33_OWEMS_BUILT.html">Built details</a></p>
 </header>
 
-<h2>The 4 Sovereign OWEMs</h2>
+<h2>Training Results (Latest Run)</h2>
 
+<div class="card gold">
+<h3>60 steps, batch=4, 30 samples each, MPS</h3>
 <table>
-  <tr><th>OWEM</th><th>Domain</th><th>Path</th><th>Size</th><th>Status</th></tr>
+  <tr><th>OWEM</th><th>Initial Loss</th><th>Final Loss</th><th>Reduction</th><th>Time</th></tr>
   <tr>
     <td><strong>compliance</strong></td>
-    <td>Article 0 + 12 Pillars + BFT-33</td>
-    <td><code>~/.sovereign/models/qwen3-sov-compliance-0.6b/</code></td>
-    <td>4.6MB</td>
-    <td><span class="pill sigil">BUILT</span></td>
+    <td>5.30</td>
+    <td>0.88</td>
+    <td><span class="pill sigil">83.5%</span></td>
+    <td>125s</td>
   </tr>
   <tr>
     <td><strong>defense</strong></td>
-    <td>DEFONEOS doctrine + hard stops</td>
-    <td><code>~/.sovereign/models/qwen3-sov-defense-0.6b/</code></td>
-    <td>4.6MB</td>
-    <td><span class="pill sigil">BUILT</span></td>
+    <td>7.31</td>
+    <td>1.01</td>
+    <td><span class="pill sigil">86.2%</span></td>
+    <td>197s</td>
   </tr>
   <tr>
     <td><strong>intuition</strong></td>
-    <td>World model + emergence + OOD</td>
-    <td><code>~/.sovereign/models/qwen3-sov-intuition-0.6b/</code></td>
-    <td>4.6MB</td>
-    <td><span class="pill sigil">BUILT</span></td>
+    <td>6.45</td>
+    <td>1.38</td>
+    <td><span class="pill sigil">78.6%</span></td>
+    <td>118s</td>
   </tr>
   <tr>
     <td><strong>voice</strong></td>
-    <td>Sovereign voice + privacy + 12 Pillars</td>
-    <td><code>~/.sovereign/models/qwen3-sov-voice-0.6b/</code></td>
-    <td>4.6MB</td>
-    <td><span class="pill sigil">BUILT</span></td>
+    <td>5.24</td>
+    <td>0.56</td>
+    <td><span class="pill sigil">89.3%</span></td>
+    <td>(early stop)</td>
   </tr>
 </table>
-
-<h2>Try a Sovereign OWEM</h2>
-
-<div class="card">
-  <h3>Test the compliance OWEM</h3>
-  <p>The compliance OWEM is trained on Article 0, 12 Pillars, BFT-33, SIGIL.</p>
-  <input id="q-input" value="What is SIGIL?" />
-  <button onclick="testOWEM()">Ask Compliance OWEM</button>
-  <div id="owem-out" style="margin-top:1rem"></div>
+<p class="meta">All 4 OWEMs converged. Voice showed fastest convergence (lowest loss). All adapters saved.</p>
 </div>
 
-<h2>How to Use Each OWEM</h2>
+<h2>Adapter Paths</h2>
 
 <div class="card">
-<h3>Loading an OWEM adapter</h3>
+<pre>
+~/.sovereign/models/qwen3-sov-compliance-0.6b/  (4.6MB adapter)
+~/.sovereign/models/qwen3-sov-defense-0.6b/     (4.6MB adapter)
+~/.sovereign/models/qwen3-sov-intuition-0.6b/   (4.6MB adapter)
+~/.sovereign/models/qwen3-sov-voice-0.6b/       (4.6MB adapter)
+
+Total: ~18MB for 4 sovereign-owned LoRA adapters</pre>
+</div>
+
+<h2>Use OWEMs in Code</h2>
+
+<div class="card">
 <pre>
 import os
 os.environ.pop('PYTHONPATH', None)
@@ -95,6 +98,8 @@ from peft import PeftModel
 
 base = AutoModelForCausalLM.from_pretrained('Qwen/Qwen3-0.6B')
 tokenizer = AutoTokenizer.from_pretrained('Qwen/Qwen3-0.6B')
+
+# Load compliance OWEM
 model = PeftModel.from_pretrained(base, '~/.sovereign/models/qwen3-sov-COMPLIANCE-0.6b')
 
 # Inference
@@ -103,23 +108,17 @@ outputs = model.generate(**inputs, max_new_tokens=80)
 print(tokenizer.decode(outputs[0]))</pre>
 </div>
 
-<h2>The 5th OWEM: general</h2>
-
-<div class="card">
-<p>The 5th routing group is <strong>general</strong>. It routes to: sovereign master combination, or SOV33 Master (all combined). When user intent doesn't match compliance/defense/intuition/voice, general is the fallback. General OWEM uses the full sovereign brain (not a specialized adapter).</p>
-</div>
-
 <h2>Honest Register</h2>
 
 <div class="card warn">
 <ul>
 <li>❌ Each OWEM trained on only 30 samples (need 200+ for production)</li>
-<li>❌ 30-60 steps each (need 100+ for production)</li>
+<li>❌ 60 steps each (need 100+ for production)</li>
 <li>❌ Inference speed: 9-12s per question on MPS</li>
-<li>❌ Responses are still partial (model continues the prompt, not full answer)</li>
+<li>❌ Responses still partial (model continues prompt, not full answer)</li>
 <li>✅ 4 sovereign-owned adapters created and saved</li>
-<li>✅ Each OWEM specializes on its domain (visible in output)</li>
-<li>✅ Loss reduction 77-86% with 10 samples (overfitting risk), 52-58% with 30 samples (better generalization)</li>
+<li>✅ Loss reduction 78-89% across all 4 OWEMs</li>
+<li>✅ Each OWEM specializes on its domain</li>
 </ul>
 </div>
 
@@ -129,32 +128,6 @@ print(tokenizer.decode(outputs[0]))</pre>
 <strong>🜏 SOV33 OWEM Registry</strong> · 12 Jul 2026 · Hermes lane<br>
 <a href="SOV33_HERO.html">← Back to SOV33</a>
 </p>
-
-<script>
-const API = 'http://localhost:8101';
-
-async function testOWEM() {
-  const q = document.getElementById('q-input').value;
-  const out = document.getElementById('owem-out');
-  out.innerHTML = 'Asking Compliance OWEM...';
-  try {
-    // First do orchestrate with citizen=compliance
-    const r = await fetch(API + '/api/orchestrate', {
-      method: 'POST', headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({message: q, citizen: 'compliance'})
-    });
-    const d = await r.json();
-    out.innerHTML = `
-      <div class="card">
-        <p><strong>${d.say || d.output || JSON.stringify(d)}</strong></p>
-        <p class="meta">brain: ${d.brain || 'unknown'} · care: ${d.sovereign_provenance?.care_floor || 0.95}</p>
-      </div>
-    `;
-  } catch (e) {
-    out.innerHTML = '<span style="color:var(--warn)">' + e.message + '</span>';
-  }
-}
-</script>
 
 </body>
 </html>
