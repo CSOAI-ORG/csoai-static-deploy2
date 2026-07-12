@@ -112,6 +112,32 @@
 | LANE_STATUS.json | BOTH | ✅ Shared |
 | Front-end HTML pages | Hermes | ✅ Owned by Hermes |
 
+
+
+## UPDATED (this turn)
+
+| Added | Where |
+|---|---|
+| `sov33_model_registry.py` | 61 models, 7 lineages, sovereign-safe filter |
+| `/api/registry` endpoint | HTTP bridge on :8101 |
+| SOV33_HERO.html wired to /api/registry | Live demo in hero page |
+| SOV33_HERO/OWEM_EXPLAINER/BFT33 aligned to Claude's OWEM_REALITY register | Removed AGI/foundation-model overclaims |
+| Cross-lane delivery doc | This file |
+
+## LIVE ENDPOINTS NOW (Hermes lane)
+```
+GET  /health                    -> { healthy: true }
+GET  /api/status                -> { system: 'sovereign', version, care_floor, ... }
+GET  /api/capabilities          -> { capabilities: [...29...] }
+GET  /api/registry              -> { total_models: 61, sovereign_safe_count: 53, ... }  ← NEW
+POST /api/orchestrate           -> { say, actions, sovereign_provenance, ... }
+POST /api/govern                -> governance answer
+POST /api/bridge                -> bridge detected/parsed/signed
+POST /api/sign                  -> signed action
+POST /api/verify                -> verify by hash
+GET  /api/nodes                 -> sovereign cities list
+```
+
 ## HONEST 1-LINE (cross-lane)
 
 > SOV33 = governed sovereign substrate, 61-model router (Hermes lane) + trainable OWEM internals + EWC consolidation (Claude lane), every action care-gated (0.95) and SIGIL-signed (Ed25519), 1 sovereign-trained OWEM (compliance) + 4 cloud-routed (Oracle 70B), Colab T4 closing the gap. 12 Jul 2026. Ready for 12-hour global release.
