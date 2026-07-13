@@ -88,7 +88,6 @@ def train():
         torch_dtype=torch.float32,
         device_map='cpu',
         trust_remote_code=True,
-        cache_dir='/Users/nicholas/.sovereign/hf_cache/hub',
         local_files_only=True,
     )
     print(f"  ✓ Model loaded")

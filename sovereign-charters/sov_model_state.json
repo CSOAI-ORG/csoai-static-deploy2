@@ -1,27 +1,27 @@
 {
   "version": "1.0.0",
   "kind": "sov-sovereign-retrieval",
-  "started": "2026-07-13T15:08:03.620945+00:00",
-  "finished": "2026-07-13T15:08:10.719003+00:00",
-  "duration_seconds": 7.098058,
+  "started": "2026-07-13T17:47:21.782335+00:00",
+  "finished": "2026-07-13T17:47:27.008541+00:00",
+  "duration_seconds": 5.226206,
   "sources": {
-    "count": 275,
+    "count": 279,
     "by_kind": {
       "charter": 57,
       "oscal": 1,
       "research": 31,
       "sigil": 1,
-      "portal": 104,
+      "portal": 108,
       "doc": 6,
       "canary": 75
     },
-    "total_bytes": 29687601
+    "total_bytes": 29837151
   },
   "training": {
-    "examples": 14550,
-    "tokens_total": 3189560,
-    "vocabulary_size": 230918,
-    "avg_doc_length_tokens": 219.2,
+    "examples": 14579,
+    "tokens_total": 3194460,
+    "vocabulary_size": 231032,
+    "avg_doc_length_tokens": 219.1,
     "chunk_target_words": 200,
     "chunk_overlap_words": 40
   },
@@ -29,12 +29,12 @@
     "algorithm": "BM25",
     "k1": 1.5,
     "b": 0.75,
-    "documents_indexed": 14550
+    "documents_indexed": 14579
   },
   "benchmark": {
     "questions": 25,
-    "correct": 18,
-    "accuracy_pct": 72.0
+    "correct": 17,
+    "accuracy_pct": 68.0
   },
   "honest_register": [
     "This is a sovereign-local retrieval + n-gram model, NOT a frontier LLM.",
@@ -48,5 +48,5 @@
     "ask": "python3 M2_DEPLOYMENT_KIT/sov_ask.py \"<question>\"",
     "benchmark": "python3 M2_DEPLOYMENT_KIT/sov_train.py --bench"
   },
-  "sha256": "8d972de567e7b7268323945efcc1844afdf0edabb852c9bac726a623f1fdeede"
+  "sha256": "c619e617947031faae6474606aad594d15202ee72798a94d1e4b360e628b87fe"
 }
