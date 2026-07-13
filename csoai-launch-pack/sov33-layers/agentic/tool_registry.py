@@ -110,11 +110,14 @@ def dispatch(tool_name: str, **kwargs) -> dict:
     Tools with care_floor < CARE_FLOOR (e.g. care.check is itself a probe,
     not an authority action) are exempt from the strict 0.95 gate. The
     veto is logged with force_log=True so the audit trail captures the event.
+
+    Every agentic dispatch ALSO mints a record on the master sigil chain
+    (layer L5) so the master index reflects every tool call.
     """
     if tool_name not in TOOLS:
         raise ValueError(f"Unknown tool: {tool_name}")
     t = TOOLS[tool_name]
-    body = {"tool": tool_name, "params": kwargs, "care_floor": t["care_floor"]}
+    body = {"tool": tool_name, "params": kwargs, "care_floor": t["care_floor"], "via": "agentic"}
     # Tools whose floor is < 0.95 are PROBES — log them but don't veto
     is_probe = t["care_floor"] < CARE_FLOOR
     rec = mint_op(
@@ -122,6 +125,16 @@ def dispatch(tool_name: str, **kwargs) -> dict:
         care_value=CARE_FLOOR if is_probe else t["care_floor"],
         force_log=is_probe,
     )
+    # Master-chain mirror: every agentic call shows up on the main sigil chain too
+    try:
+        mint_op(
+            "L5", "AGENTIC_MIRROR", f"agentic-{tool_name[:20]}",
+            {"tool": tool_name, "agentic_digest": rec["digest"][:16]},
+            care_value=CARE_FLOOR,
+        )
+    except Exception:
+        pass  # never let a master-mirror failure block dispatch
+
     return {
         "tool": tool_name,
         "description": t["description"],
