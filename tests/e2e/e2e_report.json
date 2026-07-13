@@ -1,241 +1,353 @@
 {
-  "started_at": "2026-07-13T07:00:22.632138+00:00",
-  "finished_at": "2026-07-13T07:00:22.632148+00:00",
-  "total": 88,
-  "passed": 83,
-  "failed": 5,
+  "started_at": "2026-07-13T11:32:33.933351+00:00",
+  "finished_at": "2026-07-13T11:32:33.933361+00:00",
+  "total": 102,
+  "passed": 57,
+  "failed": 45,
   "skipped": 0,
   "results": [
-    {
-      "group": "health",
-      "name": "SOV3 health",
-      "status": "PASS",
-      "detail": "status=healthy",
-      "ms": 13.420000000223808,
-      "target": "port 3101"
-    },
-    {
-      "group": "health",
-      "name": "MEOK_MCP health",
-      "status": "PASS",
-      "detail": "status=healthy",
-      "ms": 855.6532910001806,
-      "target": "port 3102"
-    },
-    {
-      "group": "health",
-      "name": "Gateway health",
-      "status": "PASS",
-      "detail": "status=ok, platform=webhook",
-      "ms": 18.45479100029479,
-      "target": "port 8644"
-    },
     {
       "group": "health",
       "name": "Sovereign_API health",
       "status": "PASS",
       "detail": "skipped (env: 404, likely SSH tunnel)",
-      "ms": 6.744499999967957,
+      "ms": 12.937291999999989,
       "target": "port 8888"
+    },
+    {
+      "group": "auth",
+      "name": "register \u2192 JWT",
+      "status": "FAIL",
+      "detail": "register failed: 0, body={'_error': '<urlopen error [Errno 61] Connection refused>'}",
+      "ms": 2.2195419999999633,
+      "target": "port 3102"
+    },
+    {
+      "group": "auth",
+      "name": "GET /auth/me",
+      "status": "PASS",
+      "detail": "no token \u2014 registration requires sovereign auth on this deployment (SKIP)",
+      "ms": 0.001291000000014364,
+      "target": "port 3102"
+    },
+    {
+      "group": "auth",
+      "name": "reject without token",
+      "status": "FAIL",
+      "detail": "unexpected 0",
+      "ms": 2.1260419999999947,
+      "target": "port 3102"
+    },
+    {
+      "group": "memory",
+      "name": "record_memory with VAD",
+      "status": "FAIL",
+      "detail": "status=0",
+      "ms": 1.535583000000007,
+      "target": "port 3101"
+    },
+    {
+      "group": "memory",
+      "name": "query_memories",
+      "status": "FAIL",
+      "detail": "status=0",
+      "ms": 1.4021249999999763,
+      "target": "port 3101"
+    },
+    {
+      "group": "memory",
+      "name": "list_memories",
+      "status": "FAIL",
+      "detail": "status=0",
+      "ms": 0.6127910000000014,
+      "target": "port 3101"
+    },
+    {
+      "group": "care_metrics",
+      "name": "get_care_metrics",
+      "status": "FAIL",
+      "detail": "status=0",
+      "ms": 0.5993750000000131,
+      "target": "port 3101"
+    },
+    {
+      "group": "care_metrics",
+      "name": "get_harm_prevented",
+      "status": "FAIL",
+      "detail": "status=0",
+      "ms": 0.5354160000000108,
+      "target": "port 3101"
+    },
+    {
+      "group": "care_metrics",
+      "name": "get_time_to_repair",
+      "status": "FAIL",
+      "detail": "status=0",
+      "ms": 0.4566669999999662,
+      "target": "port 3101"
+    },
+    {
+      "group": "maternal_covenant",
+      "name": "assess_care_safety (safe)",
+      "status": "FAIL",
+      "detail": "status=0",
+      "ms": 1.7404999999999782,
+      "target": "port 3101"
+    },
+    {
+      "group": "consciousness",
+      "name": "get_consciousness_state",
+      "status": "FAIL",
+      "detail": "status=0",
+      "ms": 2.1403750000000277,
+      "target": "port 3101"
+    },
+    {
+      "group": "dashboard",
+      "name": "get_dashboard_metrics",
+      "status": "FAIL",
+      "detail": "status=0",
+      "ms": 0.6632089999999979,
+      "target": "port 3101"
+    },
+    {
+      "group": "dashboard",
+      "name": "get_engagement_score",
+      "status": "FAIL",
+      "detail": "status=0",
+      "ms": 0.40045900000001966,
+      "target": "port 3101"
+    },
+    {
+      "group": "heartbeat",
+      "name": "get_heartbeat_status",
+      "status": "FAIL",
+      "detail": "status=0",
+      "ms": 0.4367090000000351,
+      "target": "port 3101"
+    },
+    {
+      "group": "care_validation",
+      "name": "validate_care (caring text)",
+      "status": "FAIL",
+      "detail": "status=0",
+      "ms": 0.4701670000000213,
+      "target": "port 3101"
+    },
+    {
+      "group": "emotional_vad",
+      "name": "record_memory VAD roundtrip",
+      "status": "FAIL",
+      "detail": "status=0",
+      "ms": 0.4002500000000464,
+      "target": "port 3101"
+    },
+    {
+      "group": "pgvector_hnsw",
+      "name": "pgvector_search \u2192 similarity",
+      "status": "FAIL",
+      "detail": "status=0",
+      "ms": 0.8512079999999922,
+      "target": "port 3101"
     },
     {
       "group": "core_council_bft",
       "name": "register_agent",
-      "status": "PASS",
-      "detail": "registered",
-      "ms": 5.256334000023344,
+      "status": "FAIL",
+      "detail": "status=0",
+      "ms": 0.5544579999999799,
       "target": "port 3101"
     },
     {
       "group": "core_council_bft",
       "name": "submit_proposal",
-      "status": "PASS",
-      "detail": "proposal submitted",
-      "ms": 3.2871670000531594,
+      "status": "FAIL",
+      "detail": "status=0",
+      "ms": 0.6083330000000164,
       "target": "port 3101"
     },
     {
       "group": "core_council_bft",
       "name": "vote_and_tally",
-      "status": "PASS",
-      "detail": "vote cast, status=?",
-      "ms": 1507.318750000195,
+      "status": "FAIL",
+      "detail": "vote failed: 0",
+      "ms": 4510.6237089999995,
       "target": "port 3101"
     },
     {
       "group": "core_sbt",
       "name": "SBT mint",
-      "status": "PASS",
-      "detail": "minted, token_id=1",
-      "ms": 16.664291999859415,
+      "status": "FAIL",
+      "detail": "status=0",
+      "ms": 1.0848339999993684,
       "target": "port 3101"
     },
     {
       "group": "core_sbt",
       "name": "SBT verify",
-      "status": "PASS",
-      "detail": "verified=True",
-      "ms": 4.864792000262241,
+      "status": "FAIL",
+      "detail": "status=0",
+      "ms": 0.8943750000005579,
       "target": "port 3101"
     },
     {
       "group": "core_payments",
       "name": "create payment session",
-      "status": "PASS",
-      "detail": "session_id=80b329b5...",
-      "ms": 4.5665410002584395,
+      "status": "FAIL",
+      "detail": "status=0",
+      "ms": 0.7135409999996511,
       "target": "port 3101"
     },
     {
       "group": "core_payments",
       "name": "get payment status",
-      "status": "PASS",
-      "detail": "status=pending",
-      "ms": 2.422666999791545,
+      "status": "FAIL",
+      "detail": "status=0",
+      "ms": 2.7018749999996317,
       "target": "port 3101"
     },
     {
       "group": "core_chronicle",
       "name": "log event",
-      "status": "PASS",
-      "detail": "logged, event_id=evt-1783926020422-409cb6f4",
-      "ms": 26.152167000418558,
+      "status": "FAIL",
+      "detail": "status=0",
+      "ms": 0.8634170000005881,
       "target": "port 3101"
     },
     {
       "group": "core_chronicle",
       "name": "verify chain",
-      "status": "PASS",
-      "detail": "valid=True, chain_length=1",
-      "ms": 2.2460839995801507,
+      "status": "FAIL",
+      "detail": "status=0",
+      "ms": 0.6148330000002034,
       "target": "port 3101"
     },
     {
       "group": "core_storage",
       "name": "create bucket",
-      "status": "PASS",
-      "detail": "bucket created",
-      "ms": 3.470540999842342,
+      "status": "FAIL",
+      "detail": "status=0",
+      "ms": 0.6852080000001592,
       "target": "port 3101"
     },
     {
       "group": "core_storage",
       "name": "list buckets",
-      "status": "PASS",
-      "detail": "buckets=1",
-      "ms": 2.176415999656456,
+      "status": "FAIL",
+      "detail": "status=0",
+      "ms": 0.7155000000000911,
       "target": "port 3101"
     },
     {
       "group": "core_a2a",
       "name": "A2A bridge",
-      "status": "PASS",
-      "detail": "bridged, hash=a7a00969ce4b5d4e...",
-      "ms": 12.217500000133441,
+      "status": "FAIL",
+      "detail": "status=0",
+      "ms": 1.0302500000003434,
       "target": "port 3101"
     },
     {
       "group": "core_neural",
       "name": "care_validation inference",
-      "status": "PASS",
-      "detail": "care_score=0.822",
-      "ms": 28.04208399993513,
+      "status": "FAIL",
+      "detail": "status=0",
+      "ms": 0.7974580000000842,
       "target": "port 3101"
     },
     {
       "group": "core_neural",
       "name": "threat_detection inference",
-      "status": "PASS",
-      "detail": "detect_threat not exposed via MCP \u2014 SKIP (expected)",
-      "ms": 24.05966600008469,
+      "status": "FAIL",
+      "detail": "status=0",
+      "ms": 0.6439589999995832,
       "target": "port 3101"
     },
     {
       "group": "core_gateway",
       "name": "GET /health",
-      "status": "PASS",
-      "detail": "services=['status', 'platform']",
-      "ms": 1.3315000001057342,
+      "status": "FAIL",
+      "detail": "status=0",
+      "ms": 0.9449159999999068,
       "target": "port 8644"
     },
     {
       "group": "cross_service",
       "name": "gateway \u2192 sov3 \u2192 api",
-      "status": "PASS",
-      "detail": "gateway_health=200, sov3_sbt_mint=200",
-      "ms": 3.1349999999292777,
+      "status": "FAIL",
+      "detail": "gateway health status=0",
+      "ms": 0.8964169999998717,
       "target": "gateway"
     },
     {
       "group": "cross_service",
       "name": "register \u2192 memory \u2192 query",
-      "status": "PASS",
-      "detail": "agent registered, memory stored, queried 0 results",
-      "ms": 11.046042000089074,
+      "status": "FAIL",
+      "detail": "query failed: 0",
+      "ms": 2.3486659999996107,
       "target": "sov3"
     },
     {
       "group": "stripe",
       "name": "Sovereign \u00a329/mo",
       "status": "PASS",
-      "detail": "ok: Sovereign \u00a329/mo",
-      "ms": 240.24895799993828,
+      "detail": "skipped (env: code=0, Sovereign \u00a329/mo)",
+      "ms": 3238.171084,
       "target": "https://buy.stripe.com/9B67sNeoIcMObEx56o8k91S"
     },
     {
       "group": "stripe",
       "name": "Pro \u00a3199/mo",
       "status": "PASS",
-      "detail": "ok: Pro \u00a3199/mo",
-      "ms": 64.79320800008281,
+      "detail": "skipped (env: code=0, Pro \u00a3199/mo)",
+      "ms": 675.9583340000006,
       "target": "https://buy.stripe.com/eVq14p1BWcMO4c59mE8k91T"
     },
     {
       "group": "stripe",
       "name": "Enterprise \u00a31,499/mo",
       "status": "PASS",
-      "detail": "ok: Enterprise \u00a31,499/mo",
-      "ms": 108.29116700006125,
+      "detail": "skipped (env: code=0, Enterprise \u00a31,499/mo)",
+      "ms": 1616.0517910000003,
       "target": "https://buy.stripe.com/28E7sNdkEeUW5g96as8k91U"
     },
     {
       "group": "stripe",
       "name": "Article 50 Kit \u00a3999",
       "status": "PASS",
-      "detail": "ok: Article 50 Kit \u00a3999",
-      "ms": 80.66125000004831,
+      "detail": "skipped (env: code=0, Article 50 Kit \u00a3999)",
+      "ms": 546.2578750000002,
       "target": "https://buy.stripe.com/fZu00l4O8fZ07oh0Q88k91V"
     },
     {
       "group": "stripe",
       "name": "LAUNCH50 \u00a3499",
       "status": "PASS",
-      "detail": "ok: LAUNCH50 \u00a3499",
-      "ms": 57.82912499989834,
+      "detail": "skipped (env: code=0, LAUNCH50 \u00a3499)",
+      "ms": 483.7474579999998,
       "target": "https://buy.stripe.com/4gMcN7a8s6oq0ZTaqI8k91Z"
     },
     {
       "group": "stripe",
       "name": "Quick Kit \u00a39",
       "status": "PASS",
-      "detail": "ok: Quick Kit \u00a39",
-      "ms": 52.33558300005825,
+      "detail": "skipped (env: code=0, Quick Kit \u00a39)",
+      "ms": 544.3662920000012,
       "target": "https://buy.stripe.com/9B68wR6WgfZ0gYR8iA8k91W"
     },
     {
       "group": "stripe",
       "name": "Audit-Prep \u00a34,950",
       "status": "PASS",
-      "detail": "ok: Audit-Prep \u00a34,950",
-      "ms": 46.70612500012794,
+      "detail": "skipped (env: code=0, Audit-Prep \u00a34,950)",
+      "ms": 845.2842079999989,
       "target": "https://buy.stripe.com/28E6oJ94ofZ0aAt1Uc8k91X"
     },
     {
       "group": "stripe",
       "name": "Watchdog Cert \u00a34,950",
       "status": "PASS",
-      "detail": "ok: Watchdog Cert \u00a34,950",
-      "ms": 47.92424999959621,
+      "detail": "skipped (env: code=0, Watchdog Cert \u00a34,950)",
+      "ms": 673.646999999999,
       "target": "https://buy.stripe.com/9B6dRb2G0eUWcIBaqI8k91Y"
     },
     {
@@ -243,7 +355,7 @@
       "name": "/api",
       "status": "PASS",
       "detail": "mcp_servers=671, packs=3, tiers=11, sectors=13",
-      "ms": 39.832916999785084,
+      "ms": 2.5049169999995513,
       "target": "http://localhost:3400"
     },
     {
@@ -251,7 +363,7 @@
       "name": "/servers",
       "status": "PASS",
       "detail": "total_servers=671",
-      "ms": 64.10583400020187,
+      "ms": 47.158250000000734,
       "target": "http://localhost:3400"
     },
     {
@@ -259,7 +371,7 @@
       "name": "/packs",
       "status": "PASS",
       "detail": "3 packs live (\u00a3999, \u00a3499, \u00a31,499)",
-      "ms": 3.7287499999365536,
+      "ms": 3.068000000000737,
       "target": "http://localhost:3400"
     },
     {
@@ -267,7 +379,7 @@
       "name": "/tiers (8 canonical)",
       "status": "FAIL",
       "detail": "expected 8 tiers, got 11",
-      "ms": 3.703166999912355,
+      "ms": 2.9131660000007997,
       "target": "http://localhost:3400"
     },
     {
@@ -275,7 +387,7 @@
       "name": "/sectors (12 industries)",
       "status": "PASS",
       "detail": "13 sectors indexed",
-      "ms": 18.813000000136526,
+      "ms": 12.421375000000623,
       "target": "http://localhost:3400"
     },
     {
@@ -283,7 +395,7 @@
       "name": "/sectors/healthcare",
       "status": "PASS",
       "detail": "healthcare: 19 servers",
-      "ms": 7.034040999769786,
+      "ms": 4.074166000000545,
       "target": "http://localhost:3400"
     },
     {
@@ -291,31 +403,31 @@
       "name": "/servers?sector=finance",
       "status": "PASS",
       "detail": "finance filter: 12 total, returned 5",
-      "ms": 10.97945899982733,
+      "ms": 57.747541000001235,
       "target": "http://localhost:3400"
     },
     {
       "group": "csoai_monetization",
       "name": "POST /subscribe (enterprise)",
-      "status": "PASS",
-      "detail": "sub=sub_1, \u00a3299/mo",
-      "ms": 15.502207999816164,
+      "status": "FAIL",
+      "detail": "status=422",
+      "ms": 26.211625000000183,
       "target": "http://localhost:3400"
     },
     {
       "group": "csoai_monetization",
       "name": "POST /purchase/pack (EU AI Act)",
-      "status": "PASS",
-      "detail": "pack=pack_2, \u00a3999",
-      "ms": 4.999582999971608,
+      "status": "FAIL",
+      "detail": "status=422",
+      "ms": 2.4352079999996334,
       "target": "http://localhost:3400"
     },
     {
       "group": "csoai_monetization",
       "name": "POST /purchase/tier (Pro)",
-      "status": "PASS",
-      "detail": "tier=tier_3_1783926021, Pro \u00a3199/mo",
-      "ms": 28.517500000361906,
+      "status": "FAIL",
+      "detail": "status=422",
+      "ms": 3.125457999999526,
       "target": "http://localhost:3400"
     },
     {
@@ -323,7 +435,7 @@
       "name": "POST /webhook/stripe (tier)",
       "status": "PASS",
       "detail": "webhook: tier recorded, 199.0 mock",
-      "ms": 3.020957999979146,
+      "ms": 3.580541999999909,
       "target": "http://localhost:3400"
     },
     {
@@ -331,23 +443,23 @@
       "name": "POST /webhook/stripe (pack)",
       "status": "PASS",
       "detail": "webhook: pack recorded, 999.0 mock",
-      "ms": 1.8347079999330163,
+      "ms": 2.7073339999983403,
       "target": "http://localhost:3400"
     },
     {
       "group": "csoai_monetization",
       "name": "/analytics (after webhook)",
       "status": "PASS",
-      "detail": "analytics: 4092.0 total",
-      "ms": 2.3237909999807016,
+      "detail": "analytics: 1198.0 total",
+      "ms": 3.50154100000033,
       "target": "http://localhost:3400"
     },
     {
       "group": "csoai_monetization",
       "name": "/healthz",
       "status": "PASS",
-      "detail": "alive @ 1783926021.416",
-      "ms": 2.0927499999743304,
+      "detail": "alive @ 1783942350.786",
+      "ms": 8.23662500000033,
       "target": "http://localhost:3400"
     },
     {
@@ -355,23 +467,23 @@
       "name": "/readyz",
       "status": "PASS",
       "detail": "ready: 671 servers, 11 tiers, 13 sectors",
-      "ms": 5.901166000057856,
+      "ms": 8.376416999999137,
       "target": "http://localhost:3400"
     },
     {
       "group": "csoai_monetization",
       "name": "/metrics",
-      "status": "PASS",
-      "detail": "Prometheus: 15 lines",
-      "ms": 1.7514169999230944,
+      "status": "FAIL",
+      "detail": "status=0",
+      "ms": 2.5610829999997975,
       "target": "http://localhost:3400"
     },
     {
       "group": "csoai_monetization",
       "name": "/admin",
       "status": "PASS",
-      "detail": "admin: {'total_subscriptions': 1, 'total_packs_sold': 3, 'total_tiers_sold': 4, 'total_revenue_gbp': 4092.0}",
-      "ms": 20.099208999909024,
+      "detail": "admin: {'total_subscriptions': 0, 'total_packs_sold': 1, 'total_tiers_sold': 1, 'total_revenue_gbp': 1198.0}",
+      "ms": 278.9284589999994,
       "target": "http://localhost:3400"
     },
     {
@@ -379,7 +491,7 @@
       "name": "/search?q=care",
       "status": "PASS",
       "detail": "q=care: 5 matches",
-      "ms": 3.4257080001225404,
+      "ms": 4.685999999999524,
       "target": "http://localhost:3400"
     },
     {
@@ -387,7 +499,7 @@
       "name": "/search?tier=hvp",
       "status": "PASS",
       "detail": "tier=hvp: 3 matches",
-      "ms": 2.116000000114582,
+      "ms": 2.578541999998407,
       "target": "http://localhost:3400"
     },
     {
@@ -395,7 +507,7 @@
       "name": "/webhook/test",
       "status": "PASS",
       "detail": "webhook_test: tier",
-      "ms": 3.8336249999701977,
+      "ms": 25.30979099999975,
       "target": "http://localhost:3400"
     },
     {
@@ -403,7 +515,7 @@
       "name": "/partner",
       "status": "PASS",
       "detail": "partners: 3",
-      "ms": 2.1466250000230502,
+      "ms": 4.9500839999989665,
       "target": "http://localhost:3400"
     },
     {
@@ -411,7 +523,7 @@
       "name": "/partner/grc-whitelabel",
       "status": "PASS",
       "detail": "GRCWL30: 30% off",
-      "ms": 2.06483300007676,
+      "ms": 2.0859160000004096,
       "target": "http://localhost:3400"
     },
     {
@@ -419,7 +531,7 @@
       "name": "/recommend",
       "status": "PASS",
       "detail": "use cases: 5",
-      "ms": 2.9371249997893756,
+      "ms": 3.8142919999994973,
       "target": "http://localhost:3400"
     },
     {
@@ -427,7 +539,7 @@
       "name": "/recommend?use_case=health",
       "status": "PASS",
       "detail": "health: 7 servers",
-      "ms": 2.5067080000553688,
+      "ms": 2.4201670000003617,
       "target": "http://localhost:3400"
     },
     {
@@ -435,15 +547,15 @@
       "name": "/customer/{email}",
       "status": "PASS",
       "detail": "customer: found=False",
-      "ms": 17.775374999928317,
+      "ms": 25.307707999999707,
       "target": "http://localhost:3400"
     },
     {
       "group": "csoai_monetization",
       "name": "/customer with purchase",
-      "status": "PASS",
-      "detail": "day17e2e: {'total_subscriptions': 0, 'total_packs': 0, 'total_tiers': 1, 'total_revenue_gbp': 199.0}",
-      "ms": 12.633833000109007,
+      "status": "FAIL",
+      "detail": "not found: {'email': 'day17e2e@meok.ai', 'found': False, 'subscriptions': [], 'packs': [], 'tiers': []}",
+      "ms": 4.023791999999915,
       "target": "http://localhost:3400"
     },
     {
@@ -451,7 +563,7 @@
       "name": "/coupon (valid)",
       "status": "PASS",
       "detail": "PARTNERLABS25: \u00a3199 \u2192 \u00a3149",
-      "ms": 3.6268329999984417,
+      "ms": 1.8434169999999028,
       "target": "http://localhost:3400"
     },
     {
@@ -459,15 +571,15 @@
       "name": "/coupon (invalid)",
       "status": "PASS",
       "detail": "BOGUS_CODE: unknown code",
-      "ms": 2.178959000048053,
+      "ms": 1.9097080000012312,
       "target": "http://localhost:3400"
     },
     {
       "group": "csoai_monetization",
       "name": "/revenue",
       "status": "PASS",
-      "detail": "revenue: \u00a3398.0, ARR: \u00a34776.0",
-      "ms": 2.910374999828491,
+      "detail": "revenue: \u00a30, ARR: \u00a30",
+      "ms": 2.280540999999303,
       "target": "http://localhost:3400"
     },
     {
@@ -475,7 +587,7 @@
       "name": "/api/discover",
       "status": "PASS",
       "detail": "discover: 671 servers, 8 recs",
-      "ms": 2.221541999915644,
+      "ms": 1.8493750000008191,
       "target": "http://localhost:3400"
     },
     {
@@ -483,7 +595,7 @@
       "name": "/recommend?use_case=startup-mvp",
       "status": "PASS",
       "detail": "startup-mvp: 4 servers",
-      "ms": 2.0797920001314196,
+      "ms": 4.336207999999786,
       "target": "http://localhost:3400"
     },
     {
@@ -491,7 +603,7 @@
       "name": "/partner extended",
       "status": "PASS",
       "detail": "partners: 3",
-      "ms": 2.0254589999240125,
+      "ms": 1.5644589999990188,
       "target": "http://localhost:3400"
     },
     {
@@ -499,15 +611,15 @@
       "name": "/api/discover extended",
       "status": "PASS",
       "detail": "discover: 8 recs",
-      "ms": 1.765582999723847,
+      "ms": 1.6032080000005777,
       "target": "http://localhost:3400"
     },
     {
       "group": "csoai_monetization",
       "name": "/revenue breakdown",
       "status": "PASS",
-      "detail": "revenue: \u00a3398.0, ARR \u00a34776.0",
-      "ms": 2.2257079999690177,
+      "detail": "revenue: \u00a30, ARR \u00a30",
+      "ms": 2.7684589999985576,
       "target": "http://localhost:3400"
     },
     {
@@ -515,7 +627,7 @@
       "name": "/bundles",
       "status": "PASS",
       "detail": "bundles: 2 types",
-      "ms": 1.9928749998143758,
+      "ms": 1.8106249999991775,
       "target": "http://localhost:3400"
     },
     {
@@ -523,7 +635,7 @@
       "name": "/packs full",
       "status": "PASS",
       "detail": "packs: 2 (dict)",
-      "ms": 1.49870799987184,
+      "ms": 1.3551249999999015,
       "target": "http://localhost:3400"
     },
     {
@@ -531,15 +643,15 @@
       "name": "/customer/{email}/certificates",
       "status": "PASS",
       "detail": "certs: 0",
-      "ms": 1.5598749996570405,
+      "ms": 1.9372910000008403,
       "target": "http://localhost:3400"
     },
     {
       "group": "csoai_monetization",
       "name": "/sigil/{digest}",
-      "status": "PASS",
-      "detail": "sigil: source=sov3_sigil_bus",
-      "ms": 58.0586249998305,
+      "status": "FAIL",
+      "detail": "not verified: {'verified': False, 'digest': '909c0295afb058e9', 'error': '<urlopen error [Errno 61] Connection refused>'}",
+      "ms": 986.8390419999997,
       "target": "http://localhost:3400"
     },
     {
@@ -547,7 +659,7 @@
       "name": "/search?tier=elite",
       "status": "PASS",
       "detail": "elite: 3 matches",
-      "ms": 1.8455419999554579,
+      "ms": 1.9837920000007614,
       "target": "http://localhost:3400"
     },
     {
@@ -555,7 +667,7 @@
       "name": "/search?sector=healthcare",
       "status": "PASS",
       "detail": "healthcare: 5 matches",
-      "ms": 3.31616599987683,
+      "ms": 3.1212910000011362,
       "target": "http://localhost:3400"
     },
     {
@@ -563,7 +675,7 @@
       "name": "/search?sector=finance",
       "status": "PASS",
       "detail": "finance: 5 matches",
-      "ms": 5.2056250001442095,
+      "ms": 5.023583999999914,
       "target": "http://localhost:3400"
     },
     {
@@ -571,7 +683,7 @@
       "name": "/search?sector=government",
       "status": "PASS",
       "detail": "government: 5 matches",
-      "ms": 5.3707080001004215,
+      "ms": 40.748833999998624,
       "target": "http://localhost:3400"
     },
     {
@@ -579,7 +691,7 @@
       "name": "/search?sector=legal",
       "status": "PASS",
       "detail": "legal: 5 matches",
-      "ms": 2.86270800006605,
+      "ms": 7.557666000000296,
       "target": "http://localhost:3400"
     },
     {
@@ -587,7 +699,7 @@
       "name": "/search?tier=lvp",
       "status": "PASS",
       "detail": "lvp: 3 matches",
-      "ms": 1.987332999760838,
+      "ms": 7.65508399999959,
       "target": "http://localhost:3400"
     },
     {
@@ -595,7 +707,7 @@
       "name": "/search?q=health",
       "status": "PASS",
       "detail": "health: 4 matches",
-      "ms": 1.7527079999126727,
+      "ms": 4.1498749999995255,
       "target": "http://localhost:3400"
     },
     {
@@ -603,23 +715,23 @@
       "name": "/search?q=ai-act",
       "status": "PASS",
       "detail": "ai-act: 3 matches",
-      "ms": 1.896207999834587,
+      "ms": 6.456000000000017,
       "target": "http://localhost:3400"
     },
     {
       "group": "csoai_monetization",
       "name": "/revenue total",
       "status": "PASS",
-      "detail": "total: \u00a3398.0, ARR: \u00a34776.0",
-      "ms": 2.637999999933527,
+      "detail": "total: \u00a30, ARR: \u00a30",
+      "ms": 3.9845829999993754,
       "target": "http://localhost:3400"
     },
     {
       "group": "csoai_monetization",
       "name": "/admin (with sigil)",
       "status": "PASS",
-      "detail": "admin: sigil=local_ledger, 1451 records",
-      "ms": 3.03508300021349,
+      "detail": "admin: sigil=local_ledger, 1500 records",
+      "ms": 25.70829099999905,
       "target": "http://localhost:3400"
     },
     {
@@ -627,7 +739,7 @@
       "name": "/packs (EU AI Act)",
       "status": "PASS",
       "detail": "packs: 2",
-      "ms": 2.017667000018264,
+      "ms": 6.656417000000303,
       "target": "http://localhost:3400"
     },
     {
@@ -635,7 +747,7 @@
       "name": "/customer/{email}",
       "status": "PASS",
       "detail": "customer: found=False",
-      "ms": 2.1123750002516317,
+      "ms": 4.499540999999496,
       "target": "http://localhost:3400"
     },
     {
@@ -643,7 +755,7 @@
       "name": "/search?q=compliance",
       "status": "PASS",
       "detail": "compliance: 5 matches",
-      "ms": 1.506457999767008,
+      "ms": 2.013333999999034,
       "target": "http://localhost:3400"
     },
     {
@@ -651,7 +763,7 @@
       "name": "/sectors (12)",
       "status": "PASS",
       "detail": "sectors: 13",
-      "ms": 6.049667000297632,
+      "ms": 7.524541999998746,
       "target": "http://localhost:3400"
     },
     {
@@ -659,7 +771,7 @@
       "name": "/tiers (8)",
       "status": "PASS",
       "detail": "tiers: 11",
-      "ms": 2.2378329999810376,
+      "ms": 2.725416999998842,
       "target": "http://localhost:3400"
     },
     {
@@ -667,7 +779,7 @@
       "name": "/countdown (live)",
       "status": "FAIL",
       "detail": "HTTPError: HTTP Error 404: Not Found",
-      "ms": 350.07533299994975,
+      "ms": 668.2609169999996,
       "target": "http://localhost:3400"
     },
     {
@@ -675,7 +787,7 @@
       "name": "/opengrid (live)",
       "status": "FAIL",
       "detail": "HTTPError: HTTP Error 404: Not Found",
-      "ms": 240.25774999972782,
+      "ms": 439.14462499999905,
       "target": "http://localhost:3400"
     },
     {
@@ -683,7 +795,7 @@
       "name": "/matrix (live)",
       "status": "FAIL",
       "detail": "HTTPError: HTTP Error 404: Not Found",
-      "ms": 283.09349999972255,
+      "ms": 243.16720799999914,
       "target": "http://localhost:3400"
     },
     {
@@ -691,7 +803,7 @@
       "name": "/town (live)",
       "status": "PASS",
       "detail": "/town: 1429 rounds, 489 attestable, 3 anchors",
-      "ms": 10.14725000004546,
+      "ms": 39.27850000000177,
       "target": "http://localhost:3400"
     },
     {
@@ -699,17 +811,17 @@
       "name": "/examples (live)",
       "status": "FAIL",
       "detail": "HTTPError: HTTP Error 404: Not Found",
-      "ms": 118.22737500006042,
+      "ms": 238.52916700000293,
       "target": "http://localhost:3400"
     },
     {
       "group": "csoai_monetization",
       "name": "/customer (day29)",
-      "status": "PASS",
-      "detail": "day29e2e: {'total_subscriptions': 0, 'total_packs': 0, 'total_tiers': 1, 'total_revenue_gbp': 29.0}",
-      "ms": 7.443417000104091,
+      "status": "FAIL",
+      "detail": "not found: {'email': 'day29e2e@meok.ai', 'found': False, 'subscriptions': [], 'packs': [], 'tiers': []}",
+      "ms": 5.148625000000351,
       "target": "http://localhost:3400"
     }
   ],
-  "summary": "83/88 passed, 5 failed, 0 skipped"
+  "summary": "57/102 passed, 45 failed, 0 skipped"
 }

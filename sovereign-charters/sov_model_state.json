@@ -1,27 +1,27 @@
 {
   "version": "1.0.0",
   "kind": "sov-sovereign-retrieval",
-  "started": "2026-07-13T10:44:43.583749+00:00",
-  "finished": "2026-07-13T10:44:46.587216+00:00",
-  "duration_seconds": 3.003467,
+  "started": "2026-07-13T11:54:07.133550+00:00",
+  "finished": "2026-07-13T11:54:09.717799+00:00",
+  "duration_seconds": 2.584249,
   "sources": {
-    "count": 211,
+    "count": 220,
     "by_kind": {
       "charter": 57,
       "oscal": 1,
       "research": 31,
       "sigil": 1,
-      "portal": 86,
+      "portal": 95,
       "doc": 6,
       "canary": 29
     },
-    "total_bytes": 29432997
+    "total_bytes": 29571900
   },
   "training": {
-    "examples": 14431,
-    "tokens_total": 3174977,
-    "vocabulary_size": 230564,
-    "avg_doc_length_tokens": 220.0,
+    "examples": 14484,
+    "tokens_total": 3184135,
+    "vocabulary_size": 230786,
+    "avg_doc_length_tokens": 219.8,
     "chunk_target_words": 200,
     "chunk_overlap_words": 40
   },
@@ -29,7 +29,7 @@
     "algorithm": "BM25",
     "k1": 1.5,
     "b": 0.75,
-    "documents_indexed": 14431
+    "documents_indexed": 14484
   },
   "benchmark": {
     "questions": 25,
@@ -48,5 +48,5 @@
     "ask": "python3 M2_DEPLOYMENT_KIT/sov_ask.py \"<question>\"",
     "benchmark": "python3 M2_DEPLOYMENT_KIT/sov_train.py --bench"
   },
-  "sha256": "c0eee12f851d7099921509784470c8b8bbfc38683eb19d1eb0bc94ee3d168281"
+  "sha256": "483a9e960edcd07e85e9cc2fbb885f0cded26a9b8a2ea72ff9508fc7ddc1a712"
 }
