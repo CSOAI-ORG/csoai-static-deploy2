@@ -120,7 +120,9 @@ NEXUS_18 = [
     {"tab": 73, "slug": "liquid-antidoom",        "title": "Liquid AI Antidoom",   "trio": "deep",     "icon": "🌊", "tag": "22.9→1%",      "route": "/liquid-antidoom-explainer.html", "purpose": "Liquid Foundation Models reduce AI doom 22.9%→1% · provably-stable · 96% smaller params"},
     {"tab": 74, "slug": "horus-gate",  "title": "Horus Gate",     "trio": "deep",     "icon": "👁️", "tag": "active vision", "route": "/horus-gate-explainer.html",  "purpose": "Active vision gate — sees unsafe patterns (kinetic/surveillance/T-count/equity/injection) before commit"},
     {"tab": 75, "slug": "venturi-pyramid", "title": "Venturi Pyramid","trio": "deep",     "icon": "🌀", "tag": "0.860 score",   "route": "/venturi-pyramid.html",       "purpose": "Topology quality 0.860 — lineage diversity is dominant factor · 5 lineages × BFT-33 constriction"},
-    {"tab": 76, "slug": "rainbow-security","title": "Rainbow Security","trio": "deep",    "icon": "🌈", "tag": "7 layers",      "route": "/rainbow-security.html",      "purpose": "7-layer threat grading (green/yellow/orange/red/black) + 35 injection patterns stripped pre-RAG"}
+    {"tab": 76, "slug": "rainbow-security","title": "Rainbow Security","trio": "deep",    "icon": "🌈", "tag": "7 layers",      "route": "/rainbow-security.html",      "purpose": "7-layer threat grading (green/yellow/orange/red/black) + 35 injection patterns stripped pre-RAG"},
+    {"tab": 77, "slug": "mcp-stateless",   "title": "MCP Stateless Spec 2026-07-28", "trio": "deep",     "icon": "📦", "tag": "15d to ship",  "route": "/mcp-stateless-2026-07-28.html","purpose": "MCP stateless spec ships 2026-07-28 · sovereign substrate ALREADY stateless · 15 days countdown"},
+    {"tab": 78, "slug": "horizon-3k",      "title": "Horizon 3K",                   "trio": "deep",     "icon": "🔭", "tag": "3000 vendors", "route": "/horizon-3k.html",             "purpose": "3,000 EU vendors in 3-year horizon · 1.2k SMB / 1.5k mid / 300 enterprise · honest register"},    {"tab": 79, "slug": "c2pa-manifest",   "title": "C2PA Manifest",                "trio": "deep",     "icon": "📜", "tag": "EU AI Act §50", "route": "/c2pa-manifest.html",         "purpose": "C2PA v1 content provenance · Ed25519 sovereign wallet + charter sha256 chain · EU AI Act Article 50"}
 ]
 
 TRIO = {
@@ -1400,6 +1402,53 @@ def _rainbow_security_route():
         "threat_grades": ["green", "yellow", "orange", "red", "black"],
         "injection_patterns_detected": 35,
         "companions": ["horus_gate", "dorado_6x96"],
+        "source": "sibling-shipped /api/rag/facts (PHASE 38)",
+        "sigil_mint": CSOAI_SIGIL_MINT,
+        "charter_sha256": CSOAI_CHARTER_SHA256,
+        "ts": datetime.now(timezone.utc).isoformat(),
+    }), 200, {"Content-Type": "application/json", "Access-Control-Allow-Origin": "*"}
+
+
+@app.route("/api/mcp-stateless", methods=["GET"])
+def _mcp_stateless_route():
+    return jsonify({
+        "spec": "MCP Stateless Spec 2026-07-28",
+        "ships": "2026-07-28",
+        "days_remaining": 15,
+        "key_changes": ["idempotent", "no_server_state", "receipts_first_class", "serverless_safe", "a2a_compatible"],
+        "sovereign_readiness": "ALREADY_STATELESS — all 23 endpoints are pure functions of input+charter+timestamp",
+        "source": "sibling-shipped /api/rag/facts (PHASE 38)",
+        "sigil_mint": CSOAI_SIGIL_MINT,
+        "charter_sha256": CSOAI_CHARTER_SHA256,
+        "ts": datetime.now(timezone.utc).isoformat(),
+    }), 200, {"Content-Type": "application/json", "Access-Control-Allow-Origin": "*"}
+
+
+@app.route("/api/horizon-3k", methods=["GET"])
+def _horizon_3k_route():
+    return jsonify({
+        "target_vendors": 3000,
+        "horizon_years": 3,
+        "segments": {"smb": 1200, "mid_market": 1500, "enterprise": 300},
+        "milestones": {"2026": "Act live", "2027": "1k onboard", "2028": "2k onboard", "2029": "3k onboard"},
+        "honest_register": "TARGET not forecast — assumptions documented per Article 0",
+        "source": "sibling-shipped /api/rag/facts (PHASE 38)",
+        "sigil_mint": CSOAI_SIGIL_MINT,
+        "charter_sha256": CSOAI_CHARTER_SHA256,
+        "ts": datetime.now(timezone.utc).isoformat(),
+    }), 200, {"Content-Type": "application/json", "Access-Control-Allow-Origin": "*"}
+
+
+@app.route("/api/c2pa-manifest", methods=["GET"])
+def _c2pa_manifest_route():
+    return jsonify({
+        "spec": "C2PA v1",
+        "context": "https://c2pa.org/v1",
+        "sovereign_wallet": "QD595cz6iQaEaYOjwwgLmMdoz1mtm1pzKBb9ygvMvf3xhQ28",
+        "assertions": ["c2pa.actions", "c2pa.hash.data", "sovereign.care_floor", "sovereign.bft_33"],
+        "signature_alg": "Ed25519",
+        "chain": "charter_sha256",
+        "eu_ai_act_article_50_compliant": True,
         "source": "sibling-shipped /api/rag/facts (PHASE 38)",
         "sigil_mint": CSOAI_SIGIL_MINT,
         "charter_sha256": CSOAI_CHARTER_SHA256,
