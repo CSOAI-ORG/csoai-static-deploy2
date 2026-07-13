@@ -85,6 +85,10 @@ NEXUS_18 = [
     {"tab": 38, "slug": "owem5x4x3",            "title": "OWEM 5×4×3",         "trio": "deep",     "icon": "🔮", "tag": "60 voters",   "route": "/owem5x4x3.html",          "purpose": "Canonical 5 brains × 4 voices × 3 voters = 60 (40 sovereign) · 96% OK · sibling-shipped topology"},
     {"tab": 39, "slug": "sovereign-intake",     "title": "Sovereign Intake v1", "trio": "deep",     "icon": "📋", "tag": "portable",    "route": "/sovereign-intake.html",    "purpose": "Portable sovereign-readiness intake · 12 questions · 8 pillars · 4 grades · portable across Vercel projects"},
     {"tab": 40, "slug": "benchmark-dash",       "title": "Benchmark Dashboard", "trio": "deep",     "icon": "📊", "tag": "13/55 base",  "route": "/benchmark-dashboard.html", "purpose": "Honest 13/55 standard baseline + 96% sovereign 5x4x3 overlay · 4 standard benchmarks + Charter-QA"},
+    {"tab": 41, "slug": "sovereign-checkup",  "title": "Sovereign Checkup",    "trio": "deep",     "icon": "🩺", "tag": "OWEM health", "route": "/sovereign-checkup.html",  "purpose": "5-layer OWEM health check · live pulse · Care Floor 0.95 gated · public visible"},
+    {"tab": 42, "slug": "economy-dashboard",  "title": "Economy Dashboard",    "trio": "deep",     "icon": "💎", "tag": "live flow",   "route": "/economy-dashboard.html",  "purpose": "OWEM live value-flow · SIGIL-anchored conversions · 4 owner-gates declared"},
+    {"tab": 43, "slug": "sovereign-canon",    "title": "Sovereign Canon",      "trio": "deep",     "icon": "📜", "tag": "23 articles", "route": "/sovereign-canon.html",    "purpose": "23 binding articles · 3 tiers (A=Immutable / B=Charter / C=Operational) · the compact canon"},
+    {"tab": 44, "slug": "sovereign-journey",  "title": "Sovereign Journey v2", "trio": "deep",     "icon": "🚀", "tag": "5 stages",    "route": "/sovereign-journey-v2.html","purpose": "5-stage onboarding: Discover → Evaluate → Decide → Integrate → Grow · owner-gates flagged"},
 ]
 
 TRIO = {
