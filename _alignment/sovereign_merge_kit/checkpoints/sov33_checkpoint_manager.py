@@ -51,6 +51,8 @@ SIGIL_FILE = CHECKPOINTS_DIR / 'checkpoints.sigil.jsonl'
 
 CARE_FLOOR = 0.95
 SOVEREIGN_OWEMS = ['compliance', 'defense', 'intuition', 'voice']
+WORLD_MODELS = ['sov3-small', 'sov33-large']
+ALL_CHECKPOINT_TYPES = SOVEREIGN_OWEMS + WORLD_MODELS
 
 
 @dataclass
@@ -188,8 +190,8 @@ class CheckpointManager:
                  parent: str = None,
                  notes: str = '') -> Checkpoint:
         """Register a new checkpoint."""
-        if owem not in SOVEREIGN_OWEMS:
-            raise ValueError(f"unknown owem: {owem}, must be one of {SOVEREIGN_OWEMS}")
+        if owem not in ALL_CHECKPOINT_TYPES:
+            raise ValueError(f"unknown checkpoint type: {owem}, must be one of {ALL_CHECKPOINT_TYPES}")
 
         # Compute fingerprint
         path = Path(adapter_path)
@@ -295,11 +297,11 @@ class CheckpointManager:
 
     def state(self) -> Dict[str, Any]:
         """Full checkpoint manager state."""
-        by_owem = {}
-        for owem in SOVEREIGN_OWEMS:
-            cps = self.lineage(owem)
+        by_type = {}
+        for ckpt_type in ALL_CHECKPOINT_TYPES:
+            cps = self.lineage(ckpt_type)
             promoted = [cp for cp in cps if cp.promoted]
-            by_owem[owem] = {
+            by_type[ckpt_type] = {
                 'total_versions': len(cps),
                 'promoted': promoted[0].to_dict() if promoted else None,
                 'best_accuracy': max((cp.accuracy for cp in cps), default=0.0),
@@ -309,7 +311,7 @@ class CheckpointManager:
         return {
             'manager': 'sov33-checkpoint-manager',
             'n_checkpoints': len(self.registry),
-            'by_owem': by_owem,
+            'by_type': by_type,
             'care_floor': CARE_FLOOR,
             'sigil_chain': str(SIGIL_FILE),
         }
@@ -418,7 +420,7 @@ if __name__ == "__main__":
         print("=" * 70)
         st = mgr.state()
         print(f"\nTotal checkpoints: {st['n_checkpoints']}")
-        for owem, info in st['by_owem'].items():
+        for owem, info in st['by_type'].items():
             print(f"\n{owem}:")
             print(f"  total versions: {info['total_versions']}")
             print(f"  lineage: {info['lineage']}")
@@ -442,7 +444,7 @@ if __name__ == "__main__":
 
     elif args.lineage:
         for cp in mgr.lineage(args.lineage):
-            print(f"{cp.checkpoint_id} · v{cp.version} · acc={cp.accuracy:.3f} · "
+            print(f"{cp.checkpoint_id} · type={cp.owem} · v{cp.version} · acc={cp.accuracy:.3f} · "
                   f"reduction={cp.loss_reduction_pct:.1f}% · created={cp.created_at[:19]}")
 
     elif args.compare:

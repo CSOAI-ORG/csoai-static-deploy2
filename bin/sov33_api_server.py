@@ -448,6 +448,47 @@ def handle_checkpoints_promote(payload: dict) -> dict:
         return {'error': f'checkpoints_promote failed: {e}'}
 
 
+# ============================================================
+# 3-AROUND-1 OWEM HANDLERS
+# ============================================================
+
+def handle_3around1(payload: dict) -> dict:
+    """POST /api/owem3 — full 3-around-1 run."""
+    try:
+        sys.path.insert(0, '/Users/nicholas/clawd/_alignment/sovereign_merge_kit/owem3')
+        from sov33_3around1_qwen3 import handle_3around1 as _h
+        return _h(payload)
+    except Exception as e:
+        return {'error': f'3around1 failed: {e}'}
+
+
+def handle_3around1_state(payload=None) -> dict:
+    """GET /api/owem3/state — 3-around-1 topology state."""
+    try:
+        sys.path.insert(0, '/Users/nicholas/clawd/_alignment/sovereign_merge_kit/owem3')
+        from sov33_3around1_qwen3 import handle_3around1_state as _h
+        return _h(payload or {})
+    except Exception as e:
+        return {'error': f'3around1_state failed: {e}'}
+
+
+def handle_3around1_benchmark(payload=None) -> dict:
+    """GET /api/owem3/benchmark — run benchmark with default 10 prompts."""
+    try:
+        sys.path.insert(0, '/Users/nicholas/clawd/_alignment/sovereign_merge_kit/owem3')
+        from sov33_3around1_qwen3 import state
+        st = state()
+        # Read default benchmark
+        import json
+        from pathlib import Path
+        bench_path = Path('/Users/nicholas/clawd/_alignment/sovereign_merge_kit/benchmarks/3around1_benchmark_2026-07-13.json')
+        if bench_path.exists():
+            return json.loads(bench_path.read_text())
+        return {'error': 'no benchmark run yet', 'state': st}
+    except Exception as e:
+        return {'error': f'3around1_benchmark failed: {e}'}
+
+
 def handle_nodes() -> dict:
     """GET /api/nodes — list sovereign network nodes."""
     return {
@@ -1886,6 +1927,10 @@ class SovereignAPIHandler(BaseHTTPRequestHandler):
         elif path == '/api/checkpoints/lineage':
             owem = query.get('owem', ['compliance'])[0]
             return json_response(self, 200, handle_checkpoints_lineage({'owem': owem}))
+        elif path == '/api/owem3/state':
+            return json_response(self, 200, handle_3around1_state({}))
+        elif path == '/api/owem3/benchmark':
+            return json_response(self, 200, handle_3around1_benchmark({}))
         elif path == '/api/evals':
             return json_response(self, 200, handle_evals())
         elif path == '/api/brain-stack':
@@ -1977,6 +2022,8 @@ class SovereignAPIHandler(BaseHTTPRequestHandler):
 
         if path == '/api/orchestrate':
             return json_response(self, 200, handle_orchestrate(payload))
+        elif path == '/api/owem3':
+            return json_response(self, 200, handle_3around1(payload))
         elif path == '/api/memory':
             return json_response(self, 200, handle_memory(payload))
         elif path == '/api/amica':
@@ -2042,6 +2089,10 @@ class SovereignAPIHandler(BaseHTTPRequestHandler):
         elif path == '/api/checkpoints/lineage':
             owem = query.get('owem', ['compliance'])[0]
             return json_response(self, 200, handle_checkpoints_lineage({'owem': owem}))
+        elif path == '/api/owem3/state':
+            return json_response(self, 200, handle_3around1_state({}))
+        elif path == '/api/owem3/benchmark':
+            return json_response(self, 200, handle_3around1_benchmark({}))
         else:
             return json_response(self, 404, {'error': f'unknown path: {path}'})
 
