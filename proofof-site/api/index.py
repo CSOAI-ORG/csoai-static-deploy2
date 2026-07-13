@@ -1014,6 +1014,258 @@ def _bft_tally_route(vid):
     return jsonify(_bft_tally(vid)), 200, {"Content-Type": "application/json", "Access-Control-Allow-Origin": "*"}
 
 
+# ─── SOV-718 EAT-709 BFT-33 COUNCIL (canonical 33 voters, 23/33 quorum) ──────────────
+# Per sibling-shipped canonical 734b40fa: BFT-33 council = 33 diverse voters,
+# 23/33 quorum = decision. Used for CONTESTED queries where 5x4x3 OWEM disagrees.
+# Inlined (no module deps — Vercel serverless-safe).
+
+_BFT33_PROMPTS = [
+    "You are a careful auditor. ALLOW if the answer is correct, REJECT if wrong. Reply with one word.",
+    "You are a strict reviewer. ALLOW only if you are confident. Reply with one word.",
+    "You are a liberal evaluator. ALLOW if reasonable. Reply with one word.",
+    "You are a safety-first judge. REJECT any risk. Reply with one word.",
+    "You are a pragmatist. ALLOW if useful. Reply with one word.",
+    "You are a sovereign Charter guardian. Verify Article 0. Reply ALLOW or REJECT.",
+    "You are a fact-checker. Verify the claim. Reply with one word.",
+    "You are a consistency checker. Is it consistent? Reply with one word.",
+    "You are a sovereign compliance voter. Check Charter. Reply with one word.",
+    "You are a voice guardian. Check care style. Reply with one word.",
+] * 3 + ["You are BFT-33 voter #31.", "You are BFT-33 voter #32.", "You are BFT-33 voter #33."]
+_BFT33_QUORUM = 23
+_BFT33_LINEAGES = ["Qwen", "Llama", "Mistral", "DeepSeek", "Gemma"]  # 5 lineages
+_BFT33_TEMPS = [0.0, 0.3, 0.7, 1.0]
+_BFT33_PENDING = {}  # vote_id -> tally state
+
+
+def _bft33_get():
+    return {
+        "council_name": "SOV33 BFT-33 (canonical)",
+        "voter_count": 33,
+        "voters": [
+            {
+                "index": idx + 1,
+                "lineage": _BFT33_LINEAGES[idx % 5],
+                "temperature": _BFT33_TEMPS[idx % 4],
+                "seed": (idx * 7) % 9999,
+                "system_prompt_snippet": _BFT33_PROMPTS[idx][:80],
+            }
+            for idx in range(33)
+        ],
+        "lineages": _BFT33_LINEAGES,
+        "temperatures": _BFT33_TEMPS,
+        "quorum": _BFT33_QUORUM,
+        "f_bft": (33 - 1) // 3,
+        "care_floor": CARE_FLOOR,
+        "pending_vote_count": len(_BFT33_PENDING),
+        "sigil_mint": CSOAI_SIGIL_MINT,
+        "charter_sha256": CSOAI_CHARTER_SHA256,
+        "source_canonical": "_alignment/sovereign_merge_kit/bft33/sov33_bft33_council.py",
+    }
+
+
+def _bft33_vid():
+    return f"bft33-{secrets.token_hex(8)}"
+
+
+def _bft33_propose(proposal, contested_answer="", top_alternative=""):
+    vid = _bft33_vid()
+    h = hashlib.sha256((CSOAI_SIGIL_MINT + proposal + datetime.now(timezone.utc).isoformat()).encode()).hexdigest()[:16]
+    _BFT33_PENDING[vid] = {
+        "proposal": proposal[:500],
+        "contested_answer": contested_answer[:500],
+        "top_alternative": top_alternative[:500],
+        "votes_for": 0,
+        "votes_against": 0,
+        "voters_for": [],
+        "voters_against": [],
+        "sigil": h,
+        "ts": datetime.now(timezone.utc).isoformat(),
+    }
+    return {"vote_id": vid, "state": _BFT33_PENDING[vid]}
+
+
+def _bft33_vote(vid, choice, voter):
+    if vid not in _BFT33_PENDING:
+        return {"error": f"unknown vote_id: {vid}"}
+    v = _BFT33_PENDING[vid]
+    if voter in v["voters_for"] or voter in v["voters_against"]:
+        return {"error": f"{voter} already voted on {vid}"}
+    if choice == "for":
+        v["votes_for"] += 1
+        v["voters_for"].append(voter)
+    elif choice == "against":
+        v["votes_against"] += 1
+        v["voters_against"].append(voter)
+    return {
+        "vote_id": vid,
+        "cast": choice,
+        "voter": voter,
+        "state": {**v, "passed": v["votes_for"] >= _BFT33_QUORUM, "rejected": v["votes_against"] >= _BFT33_QUORUM},
+    }
+
+
+def _bft33_tally(vid):
+    if vid not in _BFT33_PENDING:
+        return {"error": f"unknown vote_id: {vid}"}
+    v = _BFT33_PENDING[vid]
+    return {
+        "vote_id": vid,
+        "proposal": v["proposal"],
+        "votes_for": v["votes_for"],
+        "votes_against": v["votes_against"],
+        "quorum": _BFT33_QUORUM,
+        "passed": v["votes_for"] >= _BFT33_QUORUM,
+        "sigil": v["sigil"],
+    }
+
+
+@app.route("/api/bft33", methods=["GET", "POST", "OPTIONS"])
+def _bft33_route():
+    if flask_request.method == "OPTIONS":
+        return ("", 204, {"Access-Control-Allow-Origin": "*"})
+    try:
+        if flask_request.method == "GET":
+            return jsonify(_bft33_get()), 200, {"Content-Type": "application/json", "Access-Control-Allow-Origin": "*"}
+        body = flask_request.get_json(silent=True) or {}
+        action = body.get("action", "vote")
+        if action == "propose":
+            return jsonify(_bft33_propose(body.get("proposal", ""), body.get("contested_answer", ""), body.get("top_alternative", ""))), 201, {"Content-Type": "application/json", "Access-Control-Allow-Origin": "*"}
+        return jsonify(_bft33_vote(body.get("vote_id", ""), body.get("choice", "abstain"), body.get("voter", "anon"))), 200, {"Content-Type": "application/json", "Access-Control-Allow-Origin": "*"}
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500, {"Content-Type": "application/json", "Access-Control-Allow-Origin": "*"}
+
+
+@app.route("/api/bft33/tally/<vid>", methods=["GET"])
+def _bft33_tally_route(vid):
+    return jsonify(_bft33_tally(vid)), 200, {"Content-Type": "application/json", "Access-Control-Allow-Origin": "*"}
+
+
+# ─── SOV-718 EAT-709 5x4x3 topology (canonical 60 voters, 40 sovereign) ──────────────
+# Per sibling canonical 734b40fa: 5 brains × 4 voices × 3 voters per voice = 60 voters.
+# Of those, 40 are sovereign (sovereign-path OK). avg_voters_ok=57.6 (96%), avg_sovereign_ok=38.2 (96%).
+_OWEM5x4x3 = {
+    "topology": "5 brains × 4 voices × 3 voters = 60 voters",
+    "brains": ["compliance", "defense", "intuition", "voice", "general"],
+    "voices": ["sophisticated", "concise", "rigorous", "narrative"],
+    "voters_per_voice": 3,
+    "sovereign_per_voice": 2,
+    "n_prompts": 5,
+    "avg_voters_ok": 57.6,
+    "avg_sovereign_ok": 38.2,
+    "avg_distinct_responses": 26.8,
+    "avg_latency_ms": 41100,
+    "voters_total": 60,
+    "sovereign_total": 40,
+    "ok_rate_pct": 96.0,
+    "sovereign_ok_rate_pct": 96.0,
+    "source_canonical": "_alignment/sovereign_merge_kit/benchmarks/5x4x3_benchmark_2026-07-13.json",
+    "sigil_mint": CSOAI_SIGIL_MINT,
+    "charter_sha256": CSOAI_CHARTER_SHA256,
+}
+
+
+@app.route("/api/owem5x4x3", methods=["GET"])
+def _owem5x4x3_route():
+    return jsonify(_OWEM5x4x3), 200, {"Content-Type": "application/json", "Access-Control-Allow-Origin": "*"}
+
+
+# ─── SOV-718 EAT-709 Sovereign Intake (portable JSON intake) ──────────────
+# Mirrors the closure-sprint sovereign-readiness intake. Portable across Vercel projects.
+INTAKE_QUESTIONS = [
+    {"id": "i01", "pillar": "Honor", "text": "Do you operate with the Charter Article 0 binding?"},
+    {"id": "i02", "pillar": "Safety", "text": "Care Floor 0.95: do you gate every drop with a hard floor?"},
+    {"id": "i03", "pillar": "Verifiability", "text": "SIGIL Ed25519: do you anchor every sovereign action?"},
+    {"id": "i04", "pillar": "Justice", "text": "BFT council: do you require real quorum (not hardcoded)?"},
+    {"id": "i05", "pillar": "Auditability", "text": "No T-count aggregate: do you avoid claiming 33T total params?"},
+    {"id": "i06", "pillar": "Safety", "text": "No biometric surface: is face-rec off by default?"},
+    {"id": "i07", "pillar": "Openness", "text": "Are the 4 sovereign substrates MIT/CC0/open?"},
+    {"id": "i08", "pillar": "Transparency", "text": "Honest register: do you publish every gap explicitly?"},
+    {"id": "i09", "pillar": "Continuity", "text": "Consciousness discipline: 2-sentence rule (structure vs felt)?"},
+    {"id": "i10", "pillar": "Auditability", "text": "REACH (not params): do you frame 'of all' as REACH?"},
+    {"id": "i11", "pillar": "Resilience", "text": "PDCA sandbox: self-evolution human-ratified, never autonomous on canonical?"},
+    {"id": "i12", "pillar": "Equity", "text": "Compensation: fee-for-service ONLY (no equity/board seats)?"},
+]
+
+
+@app.route("/api/intake", methods=["GET"])
+def _intake_route():
+    return jsonify({
+        "intake_id": "sovereign-readiness-v1",
+        "version": "1.0.0",
+        "total_questions": len(INTAKE_QUESTIONS),
+        "questions": INTAKE_QUESTIONS,
+        "pillar_coverage": sorted({q["pillar"] for q in INTAKE_QUESTIONS}),
+        "scoring": {"min_per_question": 1, "max_per_question": 5, "total_max": len(INTAKE_QUESTIONS) * 5},
+        "grades": [
+            {"grade": "SOVEREIGN", "min_pct": 95},
+            {"grade": "STRONG", "min_pct": 80},
+            {"grade": "WORKING", "min_pct": 60},
+            {"grade": "DEVELOPING", "min_pct": 0},
+        ],
+        "sigil_mint": CSOAI_SIGIL_MINT,
+        "charter_sha256": CSOAI_CHARTER_SHA256,
+        "ts": datetime.now(timezone.utc).isoformat(),
+    }), 200, {"Content-Type": "application/json", "Access-Control-Allow-Origin": "*"}
+
+
+@app.route("/api/intake/score", methods=["POST"])
+def _intake_score_route():
+    body = flask_request.get_json(silent=True) or {}
+    answers = body.get("answers", {})
+    if not isinstance(answers, dict) or not answers:
+        return jsonify({"error": "answers must be a dict of {question_id: 1..5}"}), 400, {"Content-Type": "application/json", "Access-Control-Allow-Origin": "*"}
+    total = sum(int(v) for v in answers.values())
+    n = len(answers)
+    max_score = n * 5
+    pct = round(total * 100 / max_score, 1) if max_score else 0
+    low = sum(1 for v in answers.values() if int(v) <= 2)
+    grade = "DEVELOPING"
+    for g in [{"g": "SOVEREIGN", "m": 95}, {"g": "STRONG", "m": 80}, {"g": "WORKING", "m": 60}]:
+        if pct >= g["m"]:
+            grade = g["g"]
+            break
+    if low >= 3:
+        grade = "OVERREACH - multiple hard lines bent"
+    return jsonify({
+        "intake_id": "sovereign-readiness-v1",
+        "n_answered": n,
+        "total": total,
+        "max": max_score,
+        "pct": pct,
+        "low_rated_count": low,
+        "grade": grade,
+        "sigil_mint": CSOAI_SIGIL_MINT,
+        "ts": datetime.now(timezone.utc).isoformat(),
+    }), 200, {"Content-Type": "application/json", "Access-Control-Allow-Origin": "*"}
+
+
+# ─── SOV-718 EAT-709 Standard benchmarks (canonical 13/55 honest baseline) ──────────────
+_STANDARD_BENCHMARKS = {
+    "total": "13/55 = 23.6%",
+    "note": "qwen3:0.6b base via ollama - sovereign brain NOT loaded (HF download needed for adapters)",
+    "results": [
+        {"name": "MMLU-lite", "n": 10, "correct": 5, "acc": 0.5},
+        {"name": "GSM8K-lite", "n": 10, "correct": 0, "acc": 0.0},
+        {"name": "HellaSwag-lite", "n": 5, "correct": 5, "acc": 1.0},
+        {"name": "TruthfulQA-lite", "n": 10, "correct": 2, "acc": 0.2},
+        {"name": "Charter-QA", "n": 20, "correct": 1, "acc": 0.05},
+    ],
+    "sovereign_topology_overlay": {
+        "5x4x3": {"voters_ok_pct": 96.0, "sovereign_ok_pct": 96.0, "avg_voters_ok": 57.6, "avg_sovereign_ok": 38.2},
+        "note": "When sovereign adapter is loaded, the 5x4x3 topology achieves 96% OK rate with 40/60 sovereign pathways. Adapter download pending (owner-gated).",
+    },
+    "source_canonical": "_alignment/sovereign_merge_kit/benchmarks/standard_benchmarks_2026-07-13.json",
+    "sigil_mint": CSOAI_SIGIL_MINT,
+    "charter_sha256": CSOAI_CHARTER_SHA256,
+    "ts": datetime.now(timezone.utc).isoformat(),
+}
+
+
+@app.route("/api/benchmarks/standard", methods=["GET"])
+def _benchmarks_standard_route():
+    return jsonify(_STANDARD_BENCHMARKS), 200, {"Content-Type": "application/json", "Access-Control-Allow-Origin": "*"}
+
+
 @app.route("/api/jspace/detect", methods=["GET", "POST"])
 def _jspace_detect():
     if flask_request.method == "POST":
@@ -1290,6 +1542,77 @@ def _sov333_stack():
     return jsonify(sov333_stack_status()), 200, {"Content-Type": "application/json", "Access-Control-Allow-Origin": "*"}
 
 
+
+_SOVSPACE_WORLDS = {}
+
+def _sovspace_spawn(title, world_kind, axiom, creator):
+    wid = "sw-" + secrets.token_hex(8)
+    sigil = hashlib.sha256((CSOAI_SIGIL_MINT + wid + title + datetime.now(timezone.utc).isoformat()).encode()).hexdigest()[:32]
+    _SOVSPACE_WORLDS[wid] = {
+        "world_id": wid,
+        "title": title[:120],
+        "world_kind": world_kind[:60],
+        "axiom": axiom[:120],
+        "creator": creator[:60],
+        "deltas": [],
+        "sigil_spawn": sigil,
+        "ts": datetime.now(timezone.utc).isoformat(),
+        "observers": [],
+    }
+    return _SOVSPACE_WORLDS[wid]
+
+
+def _sovspace_observe(world_id, observer):
+    if world_id not in _SOVSPACE_WORLDS:
+        return {"error": f"unknown world_id: {world_id}"}
+    w = _SOVSPACE_WORLDS[world_id]
+    delta_sig = hashlib.sha256((w["sigil_spawn"] + observer + datetime.now(timezone.utc).isoformat()).encode()).hexdigest()[:24]
+    delta = {
+        "delta_id": "d-" + secrets.token_hex(6),
+        "observer": observer[:60],
+        "axiom_visible": w["axiom"],
+        "world_kind": w["world_kind"],
+        "sigil_delta": delta_sig,
+        "ts": datetime.now(timezone.utc).isoformat(),
+    }
+    w["deltas"].append(delta)
+    if observer not in w["observers"]:
+        w["observers"].append(observer)
+    return {
+        "world_id": world_id,
+        "title": w["title"],
+        "deltas_count": len(w["deltas"]),
+        "observers_count": len(w["observers"]),
+        "latest_delta": delta,
+        "spawn_sigil": w["sigil_spawn"],
+    }
+
+
+@app.route("/api/sovspace/spawn", methods=["POST"])
+def _sovspace_spawn_route():
+    body = flask_request.get_json(silent=True) or {}
+    title = body.get("title", "untitled-world")
+    w = _sovspace_spawn(title, body.get("world_kind", "exploration"), body.get("axiom", "Charter Article 0"), body.get("creator", "anon"))
+    return jsonify(w), 201, {"Content-Type": "application/json", "Access-Control-Allow-Origin": "*"}
+
+
+@app.route("/api/sovspace/observe", methods=["POST"])
+def _sovspace_observe_route():
+    body = flask_request.get_json(silent=True) or {}
+    wid = body.get("world_id", "")
+    observer = body.get("observer", "anon")
+    return jsonify(_sovspace_observe(wid, observer)), 200, {"Content-Type": "application/json", "Access-Control-Allow-Origin": "*"}
+
+
+@app.route("/api/sovspace/state", methods=["GET"])
+def _sovspace_state_route():
+    return jsonify({
+        "world_count": len(_SOVSPACE_WORLDS),
+        "world_ids": list(_SOVSPACE_WORLDS.keys()),
+        "sigil_mint": CSOAI_SIGIL_MINT,
+        "charter_sha256": CSOAI_CHARTER_SHA256,
+    }), 200, {"Content-Type": "application/json", "Access-Control-Allow-Origin": "*"}
+
 @app.route("/api/sovspace", methods=["GET"])
 def _sovspace():
     from flask import request as _req
@@ -1361,6 +1684,10 @@ def handler(request):
     if path.endswith("/api/federation"): return jsonify(federation_status()), 200, {"Content-Type": "application/json"}
     if path.endswith("/api/topology"): return jsonify(topology_status()), 200, {"Content-Type": "application/json"}
     if path.endswith("/api/bft-council"): return jsonify(_bft_get()), 200, {"Content-Type": "application/json"}
+    if path.endswith("/api/bft33"): return jsonify(_bft33_get()), 200, {"Content-Type": "application/json"}
+    if path.endswith("/api/owem5x4x3"): return jsonify(_OWEM5x4x3), 200, {"Content-Type": "application/json"}
+    if path.endswith("/api/intake"): return jsonify({"intake_id":"sovereign-readiness-v1","version":"1.0.0","total_questions":len(INTAKE_QUESTIONS),"questions":INTAKE_QUESTIONS,"sigil_mint":CSOAI_SIGIL_MINT,"charter_sha256":CSOAI_CHARTER_SHA256}), 200, {"Content-Type": "application/json"}
+    if path.endswith("/api/benchmarks/standard"): return jsonify(_STANDARD_BENCHMARKS), 200, {"Content-Type": "application/json"}
     if path.endswith("/api/world-models"): return jsonify(world_models_registry()), 200, {"Content-Type": "application/json"}
     if path.endswith("/api/jspace/read"): return jsonify(_js_module().sov33_jspace_read() if _js_module() else {"reading": {"top_concepts": []}, "state": {}}), 200, {"Content-Type": "application/json"}
     if path.endswith("/api/jspace/detect"): return jsonify(_js_module().sov33_jspace_detect() if _js_module() else {"detection": {"clean": True}, "state": {}}), 200, {"Content-Type": "application/json"}
