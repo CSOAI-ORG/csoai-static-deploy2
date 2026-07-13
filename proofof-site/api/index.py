@@ -89,6 +89,10 @@ NEXUS_18 = [
     {"tab": 42, "slug": "economy-dashboard",  "title": "Economy Dashboard",    "trio": "deep",     "icon": "💎", "tag": "live flow",   "route": "/economy-dashboard.html",  "purpose": "OWEM live value-flow · SIGIL-anchored conversions · 4 owner-gates declared"},
     {"tab": 43, "slug": "sovereign-canon",    "title": "Sovereign Canon",      "trio": "deep",     "icon": "📜", "tag": "23 articles", "route": "/sovereign-canon.html",    "purpose": "23 binding articles · 3 tiers (A=Immutable / B=Charter / C=Operational) · the compact canon"},
     {"tab": 44, "slug": "sovereign-journey",  "title": "Sovereign Journey v2", "trio": "deep",     "icon": "🚀", "tag": "5 stages",    "route": "/sovereign-journey-v2.html","purpose": "5-stage onboarding: Discover → Evaluate → Decide → Integrate → Grow · owner-gates flagged"},
+    {"tab": 45, "slug": "sovereign-mirror",    "title": "Sovereign Mirror",      "trio": "deep",     "icon": "🌍", "tag": "world-sim",   "route": "/sovereign-mirror.html",    "purpose": "Digital twin of Earth — live sensor feeds, world events, ethical boundaries"},
+    {"tab": 46, "slug": "charter-faq",         "title": "Charter FAQ",            "trio": "surface",  "icon": "❓", "tag": "explain",     "route": "/charter-faq.html",         "purpose": "Common questions about the 23-article Sovereign Canon"},
+    {"tab": 47, "slug": "audit-trail",         "title": "Audit Trail",            "trio": "surface",  "icon": "⛓️", "tag": "SIGIL",       "route": "/audit-trail.html",         "purpose": "Ed25519 SIGIL-anchored ledger — immutable and verifiable"},
+    {"tab": 48, "slug": "world-models-gallery","title": "World Models Gallery",   "trio": "deep",     "icon": "✨", "tag": "61 models",   "route": "/world-models-gallery.html", "purpose": "SOV33 model registry — 61 models, honest params/reach/score per model"}
 ]
 
 TRIO = {
