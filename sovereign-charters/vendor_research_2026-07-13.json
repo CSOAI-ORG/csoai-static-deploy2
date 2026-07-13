@@ -1,12 +1,13 @@
 {
-  "generated_at": "2026-07-13T11:40:23.309056+00:00",
-  "sources": 10,
+  "generated_at": "2026-07-13T11:54:00.421651+00:00",
+  "sources": 11,
   "vendors_checked": [
     "Anthropic Status",
     "DeepMind Blog",
     "Meta AI",
     "Mistral Status",
     "OpenAI Status",
+    "OpenAI",
     "OpenAI",
     "Anthropic",
     "DeepMind",
@@ -15,13 +16,13 @@
   ],
   "signal_aggregates": {
     "fedramp": 13,
-    "soc2": 6,
-    "iso27001": 6,
-    "ccpa": 3,
+    "soc2": 8,
+    "iso27001": 8,
+    "ccpa": 4,
+    "iso42001": 3,
+    "gdpr": 3,
     "pci": 3,
-    "gdpr": 2,
-    "iso42001": 1,
-    "hipaa": 1
+    "hipaa": 2
   },
   "vendor_leaderboard": [
     {
@@ -36,6 +37,19 @@
         "fedramp": 6,
         "ccpa": 1,
         "pci": 3
+      }
+    },
+    {
+      "vendor": "OpenAI",
+      "source": "live:https://openai.com/security",
+      "signal_total": 9,
+      "signals": {
+        "soc2": 2,
+        "iso27001": 2,
+        "iso42001": 2,
+        "hipaa": 1,
+        "gdpr": 1,
+        "ccpa": 1
       }
     },
     {
@@ -145,6 +159,21 @@
     },
     {
       "vendor": "OpenAI",
+      "source": "live:https://openai.com/security",
+      "size": 408047,
+      "title_match": "Security and privacy at OpenAI | OpenAI",
+      "signals_found": {
+        "soc2": 2,
+        "iso27001": 2,
+        "iso42001": 2,
+        "hipaa": 1,
+        "gdpr": 1,
+        "ccpa": 1
+      },
+      "signal_total": 9
+    },
+    {
+      "vendor": "OpenAI",
       "source": "live:https://trust.openai.com/",
       "size": 618323,
       "title_match": "",
@@ -197,7 +226,7 @@
       "signal_total": 5
     }
   ],
-  "sigil": "7253978f0acdcae0c07a84e208099d56",
+  "sigil": "be553933051ca4dd2ffe247c225d413e",
   "honest_register": [
     "Cached vendor .bin files may be stale.",
     "Live fetches only test the homepage \u2014 full SOC2 reports etc are behind login.",

@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-13T11:40:39.052203+00:00",
+  "generated_at": "2026-07-13T11:54:09.820239+00:00",
   "top_line": {
     "charters": 41,
     "frameworks": 142,
@@ -7,14 +7,14 @@
     "cross_walks_candidates": 8,
     "wcag_aa_pass_rate": "100%",
     "alignment_checks": "100/100 (1230/1230)",
-    "sov_training_examples": 14465,
-    "sov_vocabulary": 230740,
+    "sov_training_examples": 14484,
+    "sov_vocabulary": 230786,
     "sov_benchmark_accuracy_pct": 72.0,
     "research_papers_ingested": 744,
     "new_framework_candidates": 1
   },
   "research_wave_2": {
-    "generated_at": "2026-07-13T11:40:22.011483+00:00",
+    "generated_at": "2026-07-13T11:53:59.587563+00:00",
     "sources_scanned": [
       "/Users/nicholas/clawd/sovereign-charters/WATCHDOG/data/academic/arXiv_cs.AI.bin",
       "/Users/nicholas/clawd/sovereign-charters/WATCHDOG/data/academic/arXiv_cs.CY.bin",
@@ -3930,8 +3930,8 @@
         "arxiv_id": "2404.01356",
         "url": "https://arxiv.org/abs/2404.01356",
         "frameworks_mentioned": [
-          "fair-ml",
-          "adversarial-robustness"
+          "adversarial-robustness",
+          "fair-ml"
         ],
         "source_bin": "arXiv_cs.AI.bin",
         "sha256": "2f41ce62cf6671d0"
@@ -5236,8 +5236,8 @@
         "url": "https://arxiv.org/abs/2606.30661",
         "frameworks_mentioned": [
           "ica",
-          "iso-27001",
-          "interpretability"
+          "interpretability",
+          "iso-27001"
         ],
         "source_bin": "arXiv_cs.CY.bin",
         "sha256": "dcb24ca1f14097f6"
@@ -8049,9 +8049,9 @@
         "arxiv_id": "2605.21115",
         "url": "https://arxiv.org/abs/2605.21115",
         "frameworks_mentioned": [
+          "differential-privacy",
           "bft",
-          "federated-learning",
-          "differential-privacy"
+          "federated-learning"
         ],
         "source_bin": "arXiv_cs.LG.bin",
         "sha256": "1a15cbf25c6ff9d6"
@@ -10785,7 +10785,7 @@
         "sha256": "e8bad013e256a995"
       }
     ],
-    "sigil": "fa9d9c0a9dcf1eb759c39765e09ca4d3",
+    "sigil": "78c2ddfef1ff49da9eeeecf29347b233",
     "honest_register": [
       "arXiv metadata is public.",
       "We do not deep-crawl paywalled sources (NeurIPS proceedings, IEEE).",
@@ -10795,7 +10795,7 @@
     ]
   },
   "cross_walk_graph": {
-    "generated_at": "2026-07-13T11:40:23.109648+00:00",
+    "generated_at": "2026-07-13T11:54:00.343499+00:00",
     "papers_analyzed": 744,
     "papers_with_multi_framework_mentions": 13,
     "unique_frameworks": 8,
@@ -10903,20 +10903,6 @@
       },
       {
         "source": "bft",
-        "target": "federated-learning",
-        "weight": 1,
-        "candidate": true,
-        "verify_by_reading_source": true,
-        "supporting_papers": [
-          {
-            "arxiv_id": "2605.21115",
-            "title": "Automated Byzantine-Resilient Clustered Decentralized Federated Learning for Battery Intelligence in Connected EVs",
-            "url": "https://arxiv.org/abs/2605.21115"
-          }
-        ]
-      },
-      {
-        "source": "bft",
         "target": "differential-privacy",
         "weight": 1,
         "candidate": true,
@@ -10931,6 +10917,20 @@
       },
       {
         "source": "differential-privacy",
+        "target": "federated-learning",
+        "weight": 1,
+        "candidate": true,
+        "verify_by_reading_source": true,
+        "supporting_papers": [
+          {
+            "arxiv_id": "2605.21115",
+            "title": "Automated Byzantine-Resilient Clustered Decentralized Federated Learning for Battery Intelligence in Connected EVs",
+            "url": "https://arxiv.org/abs/2605.21115"
+          }
+        ]
+      },
+      {
+        "source": "bft",
         "target": "federated-learning",
         "weight": 1,
         "candidate": true,
@@ -11089,20 +11089,6 @@
       },
       {
         "source": "bft",
-        "target": "federated-learning",
-        "weight": 1,
-        "candidate": true,
-        "verify_by_reading_source": true,
-        "supporting_papers": [
-          {
-            "arxiv_id": "2605.21115",
-            "title": "Automated Byzantine-Resilient Clustered Decentralized Federated Learning for Battery Intelligence in Connected EVs",
-            "url": "https://arxiv.org/abs/2605.21115"
-          }
-        ]
-      },
-      {
-        "source": "bft",
         "target": "differential-privacy",
         "weight": 1,
         "candidate": true,
@@ -11128,9 +11114,23 @@
             "url": "https://arxiv.org/abs/2605.21115"
           }
         ]
+      },
+      {
+        "source": "bft",
+        "target": "federated-learning",
+        "weight": 1,
+        "candidate": true,
+        "verify_by_reading_source": true,
+        "supporting_papers": [
+          {
+            "arxiv_id": "2605.21115",
+            "title": "Automated Byzantine-Resilient Clustered Decentralized Federated Learning for Battery Intelligence in Connected EVs",
+            "url": "https://arxiv.org/abs/2605.21115"
+          }
+        ]
       }
     ],
-    "sigil": "56a58ed5dd266c2bf8870342389ca333",
+    "sigil": "7e1a2ef106645e29c567db5619b2e70f",
     "honest_register": [
       "Co-occurrence in a paper \u2260 verified cross-walk.",
       "Every edge is a CANDIDATE \u2014 flag verify_by_reading_source=true.",
@@ -11147,27 +11147,27 @@
   "sov_state": {
     "version": "1.0.0",
     "kind": "sov-sovereign-retrieval",
-    "started": "2026-07-13T11:40:32.352257+00:00",
-    "finished": "2026-07-13T11:40:38.742203+00:00",
-    "duration_seconds": 6.389946,
+    "started": "2026-07-13T11:54:07.133550+00:00",
+    "finished": "2026-07-13T11:54:09.717799+00:00",
+    "duration_seconds": 2.584249,
     "sources": {
-      "count": 216,
+      "count": 220,
       "by_kind": {
         "charter": 57,
         "oscal": 1,
         "research": 31,
         "sigil": 1,
-        "portal": 91,
+        "portal": 95,
         "doc": 6,
         "canary": 29
       },
-      "total_bytes": 29516694
+      "total_bytes": 29571900
     },
     "training": {
-      "examples": 14465,
-      "tokens_total": 3181020,
-      "vocabulary_size": 230740,
-      "avg_doc_length_tokens": 219.9,
+      "examples": 14484,
+      "tokens_total": 3184135,
+      "vocabulary_size": 230786,
+      "avg_doc_length_tokens": 219.8,
       "chunk_target_words": 200,
       "chunk_overlap_words": 40
     },
@@ -11175,7 +11175,7 @@
       "algorithm": "BM25",
       "k1": 1.5,
       "b": 0.75,
-      "documents_indexed": 14465
+      "documents_indexed": 14484
     },
     "benchmark": {
       "questions": 25,
@@ -11194,7 +11194,7 @@
       "ask": "python3 M2_DEPLOYMENT_KIT/sov_ask.py \"<question>\"",
       "benchmark": "python3 M2_DEPLOYMENT_KIT/sov_train.py --bench"
     },
-    "sha256": "7644a63ae3e48f1fc39ffd7e6084b55ebc30070a60f03a662cbac2ca840b9a6d"
+    "sha256": "483a9e960edcd07e85e9cc2fbb885f0cded26a9b8a2ea72ff9508fc7ddc1a712"
   },
   "sov_benchmark": [
     {
@@ -11204,7 +11204,7 @@
         "forty-one"
       ],
       "top1_source": "canary:sov_canary_cards.jsonl:0001",
-      "top1_score": 509.39,
+      "top1_score": 509.75,
       "top3_sources": [
         "canary:sov_canary_cards.jsonl:0001",
         "canary:sov_canary_cards.jsonl:0012",
@@ -11220,7 +11220,7 @@
         "high-risk"
       ],
       "top1_source": "portal:vertical-transport.html",
-      "top1_score": 786.47,
+      "top1_score": 787.31,
       "top3_sources": [
         "portal:vertical-transport.html",
         "charter:08-biasdetectionof-charter.md",
@@ -11237,7 +11237,7 @@
         "every sovereign action"
       ],
       "top1_source": "portal:faq.html",
-      "top1_score": 79.47,
+      "top1_score": 79.48,
       "top3_sources": [
         "portal:faq.html",
         "portal:faq.html",
@@ -11253,7 +11253,7 @@
         "cross-walk"
       ],
       "top1_source": "canary:sov_canary_cards.jsonl:0012",
-      "top1_score": 854.81,
+      "top1_score": 851.6,
       "top3_sources": [
         "canary:sov_canary_cards.jsonl:0012",
         "canary:sov_canary_cards.jsonl:0001",
@@ -11268,7 +11268,7 @@
         "quorum 23"
       ],
       "top1_source": "canary:sov_canary_cards.jsonl:0002",
-      "top1_score": 198.03,
+      "top1_score": 198.16,
       "top3_sources": [
         "canary:sov_canary_cards.jsonl:0002",
         "canary:sov_canary_cards.jsonl:0006",
@@ -11284,7 +11284,7 @@
         "forever"
       ],
       "top1_source": "charter:33-suicidestop-charter.md",
-      "top1_score": 406.84,
+      "top1_score": 407.27,
       "top3_sources": [
         "charter:33-suicidestop-charter.md",
         "charter:33-suicidestop-charter.md",
@@ -11300,7 +11300,7 @@
         "defence"
       ],
       "top1_source": "canary:sov_canary_cards.jsonl:0006",
-      "top1_score": 455.75,
+      "top1_score": 454.62,
       "top3_sources": [
         "canary:sov_canary_cards.jsonl:0006",
         "portal:defoneos-five-eyes-proposal.html",
@@ -11316,7 +11316,7 @@
         "nis2"
       ],
       "top1_source": "portal:vertical-transport.html",
-      "top1_score": 1080.9,
+      "top1_score": 1082.15,
       "top3_sources": [
         "portal:vertical-transport.html",
         "portal:vertical-cyber.html",
@@ -11332,7 +11332,7 @@
         "bitcoin"
       ],
       "top1_source": "canary:sov_canary_cards.jsonl:0009",
-      "top1_score": 941.53,
+      "top1_score": 942.66,
       "top3_sources": [
         "canary:sov_canary_cards.jsonl:0009",
         "canary:sov_canary_cards.jsonl:0024",
@@ -11348,7 +11348,7 @@
         "ai management"
       ],
       "top1_source": "portal:defoneos-mod-investor-pitch.html",
-      "top1_score": 310.42,
+      "top1_score": 309.43,
       "top3_sources": [
         "portal:defoneos-mod-investor-pitch.html",
         "portal:defoneos-mod-rfp-response-runbook.html",
@@ -11363,7 +11363,7 @@
         "frameworks"
       ],
       "top1_source": "canary:sov_canary_cards.jsonl:0016",
-      "top1_score": 816.94,
+      "top1_score": 817.91,
       "top3_sources": [
         "canary:sov_canary_cards.jsonl:0016",
         "portal:defoneos-mod-air-gap-deployment-guide.html",
@@ -11379,7 +11379,7 @@
         "ministry of defence"
       ],
       "top1_source": "portal:vertical-transport.html",
-      "top1_score": 754.86,
+      "top1_score": 755.8,
       "top3_sources": [
         "portal:vertical-transport.html",
         "portal:defoneos-mod-defcon-760.html",
@@ -11395,7 +11395,7 @@
         "sov3"
       ],
       "top1_source": "charter:54-sovereignconsciousness-charter.md",
-      "top1_score": 164.87,
+      "top1_score": 161.81,
       "top3_sources": [
         "charter:54-sovereignconsciousness-charter.md",
         "charter:55-newcoinocness-charter.md",
@@ -11411,7 +11411,7 @@
         "csoai"
       ],
       "top1_source": "canary:sov_canary_cards.jsonl:0003",
-      "top1_score": 597.89,
+      "top1_score": 597.59,
       "top3_sources": [
         "canary:sov_canary_cards.jsonl:0003",
         "portal:defoneos-mod-first-email-blueprint.html",
@@ -11426,7 +11426,7 @@
         "uk companies house"
       ],
       "top1_source": "portal:defoneos-dsp.html",
-      "top1_score": 509.25,
+      "top1_score": 509.79,
       "top3_sources": [
         "portal:defoneos-dsp.html",
         "portal:defoneos-mod-public-evidence-pack.html",
@@ -11442,7 +11442,7 @@
         "quorum"
       ],
       "top1_source": "canary:sov_canary_cards.jsonl:0001",
-      "top1_score": 509.26,
+      "top1_score": 509.62,
       "top3_sources": [
         "canary:sov_canary_cards.jsonl:0001",
         "portal:defoneos-jsp-936.html",
@@ -11457,7 +11457,7 @@
         "founder"
       ],
       "top1_source": "canary:sov_canary_cards.jsonl:0003",
-      "top1_score": 576.17,
+      "top1_score": 574.86,
       "top3_sources": [
         "canary:sov_canary_cards.jsonl:0003",
         "portal:defoneos-mod-pilot-risk-acceptance.html",
@@ -11491,7 +11491,7 @@
         "proofof"
       ],
       "top1_source": "canary:sov_canary_cards.jsonl:0008",
-      "top1_score": 925.16,
+      "top1_score": 926.06,
       "top3_sources": [
         "canary:sov_canary_cards.jsonl:0008",
         "portal:defoneos-mod-procurement-rebuttal-grid.html",
@@ -11507,7 +11507,7 @@
         "receipt"
       ],
       "top1_source": "canary:sov_canary_cards.jsonl:0020",
-      "top1_score": 286.27,
+      "top1_score": 285.68,
       "top3_sources": [
         "canary:sov_canary_cards.jsonl:0020",
         "charter:06-ethicalgovernanceof-charter.md",
@@ -11524,7 +11524,7 @@
         "eu ai act"
       ],
       "top1_source": "canary:sov_canary_cards.jsonl:0021",
-      "top1_score": 1114.4,
+      "top1_score": 1101.18,
       "top3_sources": [
         "canary:sov_canary_cards.jsonl:0021",
         "canary:sov_canary_cards.jsonl:0005",
@@ -11541,7 +11541,7 @@
         "regulation"
       ],
       "top1_source": "canary:sov_canary_cards.jsonl:0025",
-      "top1_score": 1214.97,
+      "top1_score": 1214.83,
       "top3_sources": [
         "canary:sov_canary_cards.jsonl:0025",
         "portal:defoneos-mod-uk-sovereign-pitch.html",
@@ -11559,7 +11559,7 @@
         "m2 macbook"
       ],
       "top1_source": "canary:sov_canary_cards.jsonl:0017",
-      "top1_score": 10995.01,
+      "top1_score": 11006.16,
       "top3_sources": [
         "canary:sov_canary_cards.jsonl:0017",
         "canary:sov_canary_cards.jsonl:0014",
@@ -11575,7 +11575,7 @@
         "sovereign universe"
       ],
       "top1_source": "canary:sov_canary_cards.jsonl:0012",
-      "top1_score": 366.98,
+      "top1_score": 367.14,
       "top3_sources": [
         "canary:sov_canary_cards.jsonl:0012",
         "canary:sov_canary_cards.jsonl:0001",
@@ -11591,7 +11591,7 @@
         "\u00a30"
       ],
       "top1_source": "charter:50-rectification-charter.md",
-      "top1_score": 1596.84,
+      "top1_score": 1598.65,
       "top3_sources": [
         "charter:50-rectification-charter.md",
         "charter:50-rectification-charter.md",
@@ -11601,71 +11601,6 @@
     }
   ],
   "recent_sigils": [
-    {
-      "ts": "2026-07-13T10:43:04.722906+00:00",
-      "hash": "e31a087fca159988088e28be1db114e9",
-      "line": "M|JEEVES|csoai|VENDOR-RESEARCH. vendors=10 signals=35"
-    },
-    {
-      "ts": "2026-07-13T10:44:34.632869+00:00",
-      "hash": "4418f1b5cb4bb461391db0c4dd4b07c2",
-      "line": "M|JEEVES|csoai|RESEARCH-INGEST. sources=33 bytes=12245751 candidates=1 sigils_in_chain++"
-    },
-    {
-      "ts": "2026-07-13T10:44:34.747026+00:00",
-      "hash": "f50b89d7b3c327bd134d75a11e97acbb",
-      "line": "M|JEEVES|csoai|DEEP-RESEARCH-WAVE-2. papers=744 with_frameworks=101 recent_2025_2026=744"
-    },
-    {
-      "ts": "2026-07-13T10:44:35.663322+00:00",
-      "hash": "f177102534b08bad6bfcb8ab48396fc4",
-      "line": "M|JEEVES|csoai|CROSSWALK-GRAPH. papers=744 frameworks=8 edges=8"
-    },
-    {
-      "ts": "2026-07-13T10:44:35.736740+00:00",
-      "hash": "2551c4096c4be3732e1c728b060b6117",
-      "line": "M|JEEVES|csoai|VENDOR-RESEARCH. vendors=10 signals=35"
-    },
-    {
-      "ts": "2026-07-13T10:44:46.587216+00:00",
-      "hash": "79b45e8bd04a622c3464b199bb675e47",
-      "line": "M|JEEVES|csoai|SOV-TRAINED. examples=14431 vocab=230564 bench=18/25 duration=3s"
-    },
-    {
-      "ts": "2026-07-13T10:44:24.559465+00:00",
-      "hash": "75a036f068f9d608b8231ccf6e827e80",
-      "line": "M|JEEVES|csoai|DAILY-RESEARCH-LOOP COMPLETE. research + deep + crosswalk + vendor + sov_train + weekly_report all run."
-    },
-    {
-      "ts": "2026-07-13T10:45:41Z",
-      "hash": "9e8a2c1f4b6d3087",
-      "line": "M|JEEVES|csoai|AUTO-BATCH COMPLETE. Wave2 744 papers. Crosswalk 8. Vendor 10/35 signals. SOV 14431@72%. Dashboard + API + daily loop. WCAG 100%."
-    },
-    {
-      "ts": "2026-07-13T10:51:03.216083+00:00",
-      "hash": "69ee8aba3cd8bcf5a5a50a0c365eea4f",
-      "line": "M|JEEVES|csoai|DOC-INDEX. files=746 recent=326 stale=0"
-    },
-    {
-      "ts": "2026-07-13T10:52:40.635987+00:00",
-      "hash": "ae51a2d364862bdde2ab723872ebeb1f",
-      "line": "M|JEEVES|csoai|CHARTER-HEALTH. charters=57 avg_quality=67.1 needs_work=13"
-    },
-    {
-      "ts": "2026-07-13T10:55:10.371896+00:00",
-      "hash": "aa3ba73965ff9f4dbfe785cc689b1aef",
-      "line": "M|JEEVES|csoai|SOV-2.0-HYBRID. examples=14431 vocab=230564 bm25=18/25 hybrid=23/25 best_alpha=0.2"
-    },
-    {
-      "ts": "2026-07-13T10:58:06Z",
-      "hash": "a2e6b4f1c8d53092",
-      "line": "M|JEEVES|csoai|BATCH-2 COMPLETE. Doc indexer (746 files). Charter health (67.1 avg). SOV 2.0 hybrid (92% acc). Article 50 passport issuer. Real-time dashboard. WCAG 100%. Master SIGIL."
-    },
-    {
-      "ts": "2026-07-13T11:37:58.752798+00:00",
-      "hash": "30c6425eb453779a45ae27deacc45683",
-      "line": "M|JEEVES|csoai|TRUST-RECEIPTS. count=20 frameworks=20"
-    },
     {
       "ts": "2026-07-13T11:38:25.645183+00:00",
       "hash": "5df836459bb616ba9e5c747bd31dae32",
@@ -11700,6 +11635,71 @@
       "ts": "2026-07-13T11:40:38.742203+00:00",
       "hash": "e80d7670de40c7726ae8e8ff0892fa06",
       "line": "M|JEEVES|csoai|SOV-TRAINED. examples=14465 vocab=230740 bench=18/25 duration=6s"
+    },
+    {
+      "ts": "2026-07-13T11:40:00.532733+00:00",
+      "hash": "0d0c855201a20ab49b8e32dbeb18fa90",
+      "line": "M|JEEVES|csoai|DAILY-RESEARCH-LOOP COMPLETE. research + deep + crosswalk + vendor + sov_train + weekly_report all run."
+    },
+    {
+      "ts": "2026-07-13T11:42:17.326163+00:00",
+      "hash": "d90239549cafa7e675eabec3ba2df825",
+      "line": "M|JEEVES|csoai|SOVEREIGN-SEARCH. examples=14465 kinds={'charter': 1501, 'oscal': 35, 'research': 4265, 'sigil': 7785, 'portal': 703, 'doc': 147, 'canary': 29}"
+    },
+    {
+      "ts": "2026-07-13T11:43:38.110865+00:00",
+      "hash": "7429579923e582f0ed866d2b28c39005",
+      "line": "M|JEEVES|csoai|HEATMAP. jurisdictions=24 tier1=9 tier2=8 tier3=7"
+    },
+    {
+      "ts": "2026-07-13T11:44:09.505042+00:00",
+      "hash": "33048ea0827334d123e18d4af97155eb",
+      "line": "M|JEEVES|csoai|NEWSLETTER. size=3226 bytes"
+    },
+    {
+      "ts": "2026-07-13T11:50:48.856658+00:00",
+      "hash": "a141f1718670935ca18f682a033f2b65",
+      "line": "M|JEEVES|csoai|SOVEREIGN-RSS. items=4"
+    },
+    {
+      "ts": "2026-07-13T11:52:07.972971+00:00",
+      "hash": "1ac03c7e9b622049698f08d46932294c",
+      "line": "M|JEEVES|csoai|AUTO-ROADMAP. horizon=30d phases=4"
+    },
+    {
+      "ts": "2026-07-13T11:53:08.034069+00:00",
+      "hash": "0c4ee2553630fff3eb27bd6e28d68a56",
+      "line": "M|JEEVES|csoai|SOVEREIGN-WIKI. charters=57 shown=30"
+    },
+    {
+      "ts": "2026-07-13T11:53:38.302252+00:00",
+      "hash": "dc71a6faf12bf31420c9fc7b38e2e948",
+      "line": "M|JEEVES|csoai|KNOWLEDGE-GRAPH. charters=57 frameworks=142 xwalks=8"
+    },
+    {
+      "ts": "2026-07-13T11:53:59.460511+00:00",
+      "hash": "e09fa4f66080490183cea9ea167be233",
+      "line": "M|JEEVES|csoai|RESEARCH-INGEST. sources=33 bytes=12245751 candidates=1 sigils_in_chain++"
+    },
+    {
+      "ts": "2026-07-13T11:53:59.587563+00:00",
+      "hash": "78c2ddfef1ff49da9eeeecf29347b233",
+      "line": "M|JEEVES|csoai|DEEP-RESEARCH-WAVE-2. papers=744 with_frameworks=101 recent_2025_2026=744"
+    },
+    {
+      "ts": "2026-07-13T11:54:00.343499+00:00",
+      "hash": "7e1a2ef106645e29c567db5619b2e70f",
+      "line": "M|JEEVES|csoai|CROSSWALK-GRAPH. papers=744 frameworks=8 edges=8"
+    },
+    {
+      "ts": "2026-07-13T11:54:00.421651+00:00",
+      "hash": "be553933051ca4dd2ffe247c225d413e",
+      "line": "M|JEEVES|csoai|VENDOR-RESEARCH. vendors=11 signals=44"
+    },
+    {
+      "ts": "2026-07-13T11:54:09.717799+00:00",
+      "hash": "265c8706d46cdb0f33805be6034ed780",
+      "line": "M|JEEVES|csoai|SOV-TRAINED. examples=14484 vocab=230786 bench=18/25 duration=3s"
     }
   ]
 }

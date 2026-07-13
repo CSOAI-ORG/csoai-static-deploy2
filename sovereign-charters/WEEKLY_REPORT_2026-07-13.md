@@ -1,8 +1,8 @@
 # CSOAI Sovereign Weekly Report — 2026-07-13
 
 **Period:** Week ending 2026-07-13
-**Generated:** 2026-07-13T11:40:39.052203+00:00
-**Master SIGIL:** `2dc225f759663e97`
+**Generated:** 2026-07-13T11:54:09.820239+00:00
+**Master SIGIL:** `b10a5ef9f7ab769d`
 
 ---
 
@@ -15,8 +15,8 @@
 | Cross-walks (auto + candidate) | 5,043 + 8 new candidates |
 | WCAG 2.1 AA pass rate | 100% (0 contrast hits across 80 deployed pages) |
 | Alignment verification | 100/100 (1,230/1,230 checks across 39 charters) |
-| SOV training examples | 14,465 |
-| SOV vocabulary tokens | 230,740 |
+| SOV training examples | 14,484 |
+| SOV vocabulary tokens | 230,786 |
 | SOV benchmark accuracy | 72.0% (18/25) |
 | Research papers ingested | 744 |
 | Papers with framework mentions | 101 |
@@ -58,9 +58,9 @@ The cross-walk generator found **8** candidate cross-walks by mining co-occurrin
 | Federated Learning | XAI | 1 | CANDIDATE — needs human review |
 | Adversarial Robustness | Fair ML | 1 | CANDIDATE — needs human review |
 | XAI | ISO 27001 | 1 | CANDIDATE — needs human review |
-| BFT | Federated Learning | 1 | CANDIDATE — needs human review |
 | BFT | Differential Privacy | 1 | CANDIDATE — needs human review |
 | Differential Privacy | Federated Learning | 1 | CANDIDATE — needs human review |
+| BFT | Federated Learning | 1 | CANDIDATE — needs human review |
 
 ---
 
@@ -97,19 +97,6 @@ The research_ingest pipeline surfaced **{candidates['new_candidates']}** new fra
 ## 📜 Recent SIGIL chain (last 20)
 
 ```
-2026-07-13T10:43:04.722906+00:00 | e31a087fca159988 | M|JEEVES|csoai|VENDOR-RESEARCH. vendors=10 signals=35
-2026-07-13T10:44:34.632869+00:00 | 4418f1b5cb4bb461 | M|JEEVES|csoai|RESEARCH-INGEST. sources=33 bytes=12245751 candidates=1 sigils_in_chain++
-2026-07-13T10:44:34.747026+00:00 | f50b89d7b3c327bd | M|JEEVES|csoai|DEEP-RESEARCH-WAVE-2. papers=744 with_frameworks=101 recent_2025_2026=744
-2026-07-13T10:44:35.663322+00:00 | f177102534b08bad | M|JEEVES|csoai|CROSSWALK-GRAPH. papers=744 frameworks=8 edges=8
-2026-07-13T10:44:35.736740+00:00 | 2551c4096c4be373 | M|JEEVES|csoai|VENDOR-RESEARCH. vendors=10 signals=35
-2026-07-13T10:44:46.587216+00:00 | 79b45e8bd04a622c | M|JEEVES|csoai|SOV-TRAINED. examples=14431 vocab=230564 bench=18/25 duration=3s
-2026-07-13T10:44:24.559465+00:00 | 75a036f068f9d608 | M|JEEVES|csoai|DAILY-RESEARCH-LOOP COMPLETE. research + deep + crosswalk + vendor + sov_tr
-2026-07-13T10:45:41Z | 9e8a2c1f4b6d3087 | M|JEEVES|csoai|AUTO-BATCH COMPLETE. Wave2 744 papers. Crosswalk 8. Vendor 10/35 signals. S
-2026-07-13T10:51:03.216083+00:00 | 69ee8aba3cd8bcf5 | M|JEEVES|csoai|DOC-INDEX. files=746 recent=326 stale=0
-2026-07-13T10:52:40.635987+00:00 | ae51a2d364862bdd | M|JEEVES|csoai|CHARTER-HEALTH. charters=57 avg_quality=67.1 needs_work=13
-2026-07-13T10:55:10.371896+00:00 | aa3ba73965ff9f4d | M|JEEVES|csoai|SOV-2.0-HYBRID. examples=14431 vocab=230564 bm25=18/25 hybrid=23/25 best_al
-2026-07-13T10:58:06Z | a2e6b4f1c8d53092 | M|JEEVES|csoai|BATCH-2 COMPLETE. Doc indexer (746 files). Charter health (67.1 avg). SOV 2
-2026-07-13T11:37:58.752798+00:00 | 30c6425eb453779a | M|JEEVES|csoai|TRUST-RECEIPTS. count=20 frameworks=20
 2026-07-13T11:38:25.645183+00:00 | 5df836459bb616ba | M|JEEVES|csoai|XCWALK-VALIDATE. candidates=8 HIGH=6 MED=2
 2026-07-13T11:39:28.128649+00:00 | f4e37aceb7d1eac2 | M|JEEVES|csoai|CHARTER-IMPROVE. needing_work=13 suggestions_total=34
 2026-07-13T11:40:21.768684+00:00 | f5f516a7f1b5f014 | M|JEEVES|csoai|RESEARCH-INGEST. sources=33 bytes=12245751 candidates=1 sigils_in_chain++
@@ -117,6 +104,19 @@ The research_ingest pipeline surfaced **{candidates['new_candidates']}** new fra
 2026-07-13T11:40:23.109648+00:00 | 56a58ed5dd266c2b | M|JEEVES|csoai|CROSSWALK-GRAPH. papers=744 frameworks=8 edges=8
 2026-07-13T11:40:23.309056+00:00 | 7253978f0acdcae0 | M|JEEVES|csoai|VENDOR-RESEARCH. vendors=10 signals=35
 2026-07-13T11:40:38.742203+00:00 | e80d7670de40c772 | M|JEEVES|csoai|SOV-TRAINED. examples=14465 vocab=230740 bench=18/25 duration=6s
+2026-07-13T11:40:00.532733+00:00 | 0d0c855201a20ab4 | M|JEEVES|csoai|DAILY-RESEARCH-LOOP COMPLETE. research + deep + crosswalk + vendor + sov_tr
+2026-07-13T11:42:17.326163+00:00 | d90239549cafa7e6 | M|JEEVES|csoai|SOVEREIGN-SEARCH. examples=14465 kinds={'charter': 1501, 'oscal': 35, 'rese
+2026-07-13T11:43:38.110865+00:00 | 7429579923e582f0 | M|JEEVES|csoai|HEATMAP. jurisdictions=24 tier1=9 tier2=8 tier3=7
+2026-07-13T11:44:09.505042+00:00 | 33048ea0827334d1 | M|JEEVES|csoai|NEWSLETTER. size=3226 bytes
+2026-07-13T11:50:48.856658+00:00 | a141f1718670935c | M|JEEVES|csoai|SOVEREIGN-RSS. items=4
+2026-07-13T11:52:07.972971+00:00 | 1ac03c7e9b622049 | M|JEEVES|csoai|AUTO-ROADMAP. horizon=30d phases=4
+2026-07-13T11:53:08.034069+00:00 | 0c4ee2553630fff3 | M|JEEVES|csoai|SOVEREIGN-WIKI. charters=57 shown=30
+2026-07-13T11:53:38.302252+00:00 | dc71a6faf12bf314 | M|JEEVES|csoai|KNOWLEDGE-GRAPH. charters=57 frameworks=142 xwalks=8
+2026-07-13T11:53:59.460511+00:00 | e09fa4f660804901 | M|JEEVES|csoai|RESEARCH-INGEST. sources=33 bytes=12245751 candidates=1 sigils_in_chain++
+2026-07-13T11:53:59.587563+00:00 | 78c2ddfef1ff49da | M|JEEVES|csoai|DEEP-RESEARCH-WAVE-2. papers=744 with_frameworks=101 recent_2025_2026=744
+2026-07-13T11:54:00.343499+00:00 | 7e1a2ef106645e29 | M|JEEVES|csoai|CROSSWALK-GRAPH. papers=744 frameworks=8 edges=8
+2026-07-13T11:54:00.421651+00:00 | be553933051ca4dd | M|JEEVES|csoai|VENDOR-RESEARCH. vendors=11 signals=44
+2026-07-13T11:54:09.717799+00:00 | 265c8706d46cdb0f | M|JEEVES|csoai|SOV-TRAINED. examples=14484 vocab=230786 bench=18/25 duration=3s
 ```
 
 ---
