@@ -117,7 +117,10 @@ NEXUS_18 = [
     {"tab": 70, "slug": "sov33-checkup-live",     "title": "SovCheckup Live",        "trio": "deep",     "icon": "🩺", "tag": "12 layers",   "route": "/sov33-checkup-live.html",     "purpose": "Live health check from all endpoints"},
     {"tab": 71, "slug": "sovereign-facts-live",   "title": "Sovereign Facts Live", "trio": "deep",     "icon": "📚", "tag": "34 facts",     "route": "/sovereign-facts-live.html", "purpose": "Live sovereign facts DB (34 facts, RAG ground truth) — sibling-shipped /api/rag/facts mirror"},
     {"tab": 72, "slug": "rag-ask-canvas",         "title": "RAG Ask Canvas",       "trio": "deep",     "icon": "🤖", "tag": "ground-truth", "route": "/rag-ask-canvas.html",       "purpose": "Ask the sovereign substrate · RAG-augmented · Care Floor 0.95 · sibling-shipped /api/rag/ask proxy"},
-    {"tab": 73, "slug": "liquid-antidoom",        "title": "Liquid AI Antidoom",   "trio": "deep",     "icon": "🌊", "tag": "22.9→1%",      "route": "/liquid-antidoom-explainer.html", "purpose": "Liquid Foundation Models reduce AI doom 22.9%→1% · provably-stable · 96% smaller params"}
+    {"tab": 73, "slug": "liquid-antidoom",        "title": "Liquid AI Antidoom",   "trio": "deep",     "icon": "🌊", "tag": "22.9→1%",      "route": "/liquid-antidoom-explainer.html", "purpose": "Liquid Foundation Models reduce AI doom 22.9%→1% · provably-stable · 96% smaller params"},
+    {"tab": 74, "slug": "horus-gate",  "title": "Horus Gate",     "trio": "deep",     "icon": "👁️", "tag": "active vision", "route": "/horus-gate-explainer.html",  "purpose": "Active vision gate — sees unsafe patterns (kinetic/surveillance/T-count/equity/injection) before commit"},
+    {"tab": 75, "slug": "venturi-pyramid", "title": "Venturi Pyramid","trio": "deep",     "icon": "🌀", "tag": "0.860 score",   "route": "/venturi-pyramid.html",       "purpose": "Topology quality 0.860 — lineage diversity is dominant factor · 5 lineages × BFT-33 constriction"},
+    {"tab": 76, "slug": "rainbow-security","title": "Rainbow Security","trio": "deep",    "icon": "🌈", "tag": "7 layers",      "route": "/rainbow-security.html",      "purpose": "7-layer threat grading (green/yellow/orange/red/black) + 35 injection patterns stripped pre-RAG"}
 ]
 
 TRIO = {
@@ -1345,6 +1348,59 @@ def _sovereign_facts_v2_route():
             "horus_gate": "Active vision gate — sees unsafe patterns before commit",
         },
         "mirror_note": "Thin proxy to sibling RAG substrate. When sovereign substrate is VM-reachable, this proxies live. Otherwise it serves the snapshot.",
+        "sigil_mint": CSOAI_SIGIL_MINT,
+        "charter_sha256": CSOAI_CHARTER_SHA256,
+        "ts": datetime.now(timezone.utc).isoformat(),
+    }), 200, {"Content-Type": "application/json", "Access-Control-Allow-Origin": "*"}
+
+
+@app.route("/api/horus-gate", methods=["GET"])
+def _horus_gate_route():
+    return jsonify({
+        "name": "Horus Gate",
+        "tagline": "Active vision gate — sees unsafe patterns before commit",
+        "kind": "active_vision",
+        "position": "before_care_floor",
+        "patterns_detected": [
+            "kinetic_targeting", "personal_surveillance", "hard_line_claims",
+            "t_count_aggregates", "equity_grabs", "felt_experience_claims",
+            "foreign_injection",
+        ],
+        "companions": ["rainbow_security", "dorado_6x96"],
+        "source": "sibling-shipped /api/rag/facts (PHASE 38)",
+        "sigil_mint": CSOAI_SIGIL_MINT,
+        "charter_sha256": CSOAI_CHARTER_SHA256,
+        "ts": datetime.now(timezone.utc).isoformat(),
+    }), 200, {"Content-Type": "application/json", "Access-Control-Allow-Origin": "*"}
+
+
+@app.route("/api/venturi-pyramid", methods=["GET"])
+def _venturi_pyramid_route():
+    return jsonify({
+        "name": "Venturi Pyramid",
+        "tagline": "Lineage diversity is the dominant topology factor",
+        "measured_score": 0.860,
+        "lineages": ["Qwen", "Llama", "Mistral", "DeepSeek", "Gemma"],
+        "constriction": "BFT-33 council (23/33 quorum)",
+        "topology": "5 brains × 4 voices × 3 voters = 60 voters, 40 sovereign",
+        "ok_rate": 0.96,
+        "source": "sibling-shipped /api/rag/facts (PHASE 38)",
+        "sigil_mint": CSOAI_SIGIL_MINT,
+        "charter_sha256": CSOAI_CHARTER_SHA256,
+        "ts": datetime.now(timezone.utc).isoformat(),
+    }), 200, {"Content-Type": "application/json", "Access-Control-Allow-Origin": "*"}
+
+
+@app.route("/api/rainbow-security", methods=["GET"])
+def _rainbow_security_route():
+    return jsonify({
+        "name": "Rainbow Security",
+        "tagline": "7-layer threat grading + RAG injection pre-processing",
+        "layers": ["L1_input", "L2_semantic", "L3_injection", "L4_context", "L5_intent", "L6_output", "L7_audit"],
+        "threat_grades": ["green", "yellow", "orange", "red", "black"],
+        "injection_patterns_detected": 35,
+        "companions": ["horus_gate", "dorado_6x96"],
+        "source": "sibling-shipped /api/rag/facts (PHASE 38)",
         "sigil_mint": CSOAI_SIGIL_MINT,
         "charter_sha256": CSOAI_CHARTER_SHA256,
         "ts": datetime.now(timezone.utc).isoformat(),
