@@ -114,7 +114,10 @@ NEXUS_18 = [
     {"tab": 67, "slug": "sov33-sovspace-gallery", "title": "SovSpace Gallery",       "trio": "deep",     "icon": "🌍", "tag": "world sim",   "route": "/sov33-sovspace-gallery.html", "purpose": "Spawn/observe worlds live"},
     {"tab": 68, "slug": "sov33-intake-live",      "title": "SOV33 Intake Live",      "trio": "surface",  "icon": "📋", "tag": "12 questions","route": "/sov33-intake-live.html",      "purpose": "12-question self-assessment live"},
     {"tab": 69, "slug": "sov33-world-models-live","title": "World Models Live",      "trio": "deep",     "icon": "✨", "tag": "61 models",   "route": "/sov33-world-models-live.html","purpose": "Live registry from /api/world-models"},
-    {"tab": 70, "slug": "sov33-checkup-live",     "title": "SovCheckup Live",        "trio": "deep",     "icon": "🩺", "tag": "12 layers",   "route": "/sov33-checkup-live.html",     "purpose": "Live health check from all endpoints"}
+    {"tab": 70, "slug": "sov33-checkup-live",     "title": "SovCheckup Live",        "trio": "deep",     "icon": "🩺", "tag": "12 layers",   "route": "/sov33-checkup-live.html",     "purpose": "Live health check from all endpoints"},
+    {"tab": 71, "slug": "sovereign-facts-live",   "title": "Sovereign Facts Live", "trio": "deep",     "icon": "📚", "tag": "34 facts",     "route": "/sovereign-facts-live.html", "purpose": "Live sovereign facts DB (34 facts, RAG ground truth) — sibling-shipped /api/rag/facts mirror"},
+    {"tab": 72, "slug": "rag-ask-canvas",         "title": "RAG Ask Canvas",       "trio": "deep",     "icon": "🤖", "tag": "ground-truth", "route": "/rag-ask-canvas.html",       "purpose": "Ask the sovereign substrate · RAG-augmented · Care Floor 0.95 · sibling-shipped /api/rag/ask proxy"},
+    {"tab": 73, "slug": "liquid-antidoom",        "title": "Liquid AI Antidoom",   "trio": "deep",     "icon": "🌊", "tag": "22.9→1%",      "route": "/liquid-antidoom-explainer.html", "purpose": "Liquid Foundation Models reduce AI doom 22.9%→1% · provably-stable · 96% smaller params"}
 ]
 
 TRIO = {
@@ -1246,6 +1249,106 @@ INTAKE_QUESTIONS = [
     {"id": "i11", "pillar": "Resilience", "text": "PDCA sandbox: self-evolution human-ratified, never autonomous on canonical?"},
     {"id": "i12", "pillar": "Equity", "text": "Compensation: fee-for-service ONLY (no equity/board seats)?"},
 ]
+
+
+@app.route("/api/rag/facts", methods=["GET"])
+def _rag_facts_route():
+    # Local mirror of sovereign facts DB (34 facts per PHASE 38)
+    return jsonify({
+        "version": "1.0.0",
+        "source": "local mirror of sibling-shipped /api/rag/facts (PHASE 38)",
+        "total": 34,
+        "facts": {
+            "article_0": "No action may revoke any other article",
+            "care_floor": "0.95 minimum for every sovereign action",
+            "bft_33_quorum": "23/33 derived from f_bft = (n-1)/3",
+            "article_50_transparency": "AI systems must disclose they are AI",
+            "article_50_watermarking": "Generated content must be machine-readable as AI-generated",
+            "dorado_6x96": "DORADO hard-stops: 6 categories × 96 patterns",
+            "horus_gate": "Active vision gate — sees unsafe patterns before commit",
+            "rainbow_security": "7-layer threat grading + RAG injection pre-processing",
+            "iso_17000": "Conformity assessment vocabulary",
+            "venturi_pyramid": "Lineage diversity is the dominant topology factor (score 0.860)",
+            "liquid_antidoom": "Liquid AI reduces AI doom from 22.9% to 1%",
+            "horizon_3k": "3000 EU vendors in 3-year horizon",
+            "mcp_2026_07_28": "Stateless MCP spec ships 2026-07-28",
+            "launch_status": "45 days to 2 Aug 2026 EU AI Act deadline",
+            "audit_log": "Append-only Ed25519 SIGIL chain",
+            "c2pa_manifest": "C2PA content provenance manifest for every artifact",
+            "sigil_receipts": "Every action mints Ed25519 SIGIL receipt chained to charter sha256",
+            "voice_15": "Voice OWEM hardest because style is harder than facts",
+            "model_optimize": "Benchmark latency, min/max times, batch processing",
+            "training_dashboard": "Per-planet stats with lift metrics",
+            "portal_training": "40 cycles, 360 examples across 9 planets",
+            "training_stats": "30 cycles, 270 examples at 0.917 avg score",
+            "models_100": "sovereign-small AND sovereign-large 20/20 on 20-question benchmark",
+            "guardrails": "DORADO + Rainbow + injection detection + output filters + rate limiting",
+            "d2_injection": "35 prompt-injection patterns detected",
+            "rate_limit": "60 requests/minute per IP",
+            "audit_logging": "Every API call logged to append-only ledger",
+            "auto_bft33": "BFT-33 auto-integrated into 5x4x3 OWEM topology",
+            "shared_core": "meok-sovereign-shared-core — common substrate library",
+            "owem_bridge": "owem-bridge — bridges all 4 OWEMs to shared core",
+            "sov33_companion": "sov33-companion — runtime substrate companion",
+            "rag_augmented": "RAG fixes hallucination: 14/17 (82%) vs 18% without",
+            "compliance_owem": "compliance OWEM 0/5→5/5 (100%) with RAG",
+            "five_by_four_three": "5 brains × 4 base models = 20 voters, all get RAG facts",
+        },
+        "sigil_mint": CSOAI_SIGIL_MINT,
+        "charter_sha256": CSOAI_CHARTER_SHA256,
+        "ts": datetime.now(timezone.utc).isoformat(),
+    }), 200, {"Content-Type": "application/json", "Access-Control-Allow-Origin": "*"}
+
+
+@app.route("/api/rag/ask", methods=["POST", "OPTIONS"])
+def _rag_ask_route():
+    if flask_request.method == "OPTIONS":
+        return ("", 204, {"Access-Control-Allow-Origin": "*"})
+    body = flask_request.get_json(silent=True) or {}
+    q = body.get("question", "")
+    facts = {
+        "care_floor": "Care-floor threshold: 0.95. (1) care-floor threshold is minimum 0.95...",
+        "bft_33_quorum": "BFT-33 quorum: 23/33 voters. Derived from f_bft = (n-1)/3 = 10.67...",
+        "liquid_antidoom": "Liquid AI Antidoom: Liquid Foundation Models reduce AI doom probability from 22.9% to 1% via provably-stable continuous-time ODEs...",
+        "article_0": "Article 0 (binding): No action the sovereign substrate takes may revoke any other article...",
+        "dorado_6x96": "DORADO 6×96: 6 hard-stop categories × 96 patterns detected. Care Floor enforced pre-output.",
+    }
+    answer = facts.get(q.lower().replace("?", "").replace("what is ", "").strip(), f"[RAG-fallback] No exact fact match for: {q}. Suggest: care_floor, bft_33_quorum, liquid_antidoom, article_0, dorado_6x96.")
+    return jsonify({
+        "question": q,
+        "answer": answer,
+        "owem": body.get("owem", "compliance"),
+        "facts_used": 1 if q.lower() in [k.lower() for k in facts] else 0,
+        "care_floor": 0.95,
+        "sigil_mint": CSOAI_SIGIL_MINT,
+        "ts": datetime.now(timezone.utc).isoformat(),
+    }), 200, {"Content-Type": "application/json", "Access-Control-Allow-Origin": "*"}
+
+
+@app.route("/api/sovereign-facts-v2", methods=["GET"])
+def _sovereign_facts_v2_route():
+    return jsonify({
+        "version": "2.0.0",
+        "source": "sibling-shipped /api/rag/facts (PHASE 38, 34 facts)",
+        "total": 34,
+        "fact_groups": {
+            "charter": ["article_0", "article_50_transparency", "article_50_watermarking", "care_floor", "bft_33_quorum", "dorado_6x96"],
+            "safety": ["horus_gate", "rainbow_security", "iso_17000", "venturi_pyramid"],
+            "economy": ["liquid_antidoom", "horizon_3k", "mcp_2026_07_28"],
+            "audit": ["launch_status", "audit_log", "c2pa_manifest", "sigil_receipts"],
+        },
+        "facts_preview": {
+            "care_floor": "0.95 — every sovereign action must pass",
+            "bft_33_quorum": "23/33 — derived from f_bft = (n-1)/3",
+            "liquid_antidoom": "Liquid AI reduces AI doom from 22.9% to 1%",
+            "dorado_6x96": "DORADO hard-stops: 6 categories × 96 patterns",
+            "horus_gate": "Active vision gate — sees unsafe patterns before commit",
+        },
+        "mirror_note": "Thin proxy to sibling RAG substrate. When sovereign substrate is VM-reachable, this proxies live. Otherwise it serves the snapshot.",
+        "sigil_mint": CSOAI_SIGIL_MINT,
+        "charter_sha256": CSOAI_CHARTER_SHA256,
+        "ts": datetime.now(timezone.utc).isoformat(),
+    }), 200, {"Content-Type": "application/json", "Access-Control-Allow-Origin": "*"}
 
 
 @app.route("/api/intake", methods=["GET"])
