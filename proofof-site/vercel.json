@@ -8,51 +8,59 @@
       "use": "@vercel/python"
     },
     {
-      "src": "**/*.html",
+      "src": "**/*.{html,json,xml}",
       "use": "@vercel/static"
     },
     {
-      "src": "**/*.css",
+      "src": "**/*.{html,json,xml}",
       "use": "@vercel/static"
     },
     {
-      "src": "**/*.js",
+      "src": "**/*.{html,json,xml}",
       "use": "@vercel/static"
     },
     {
-      "src": "**/*.svg",
+      "src": "**/*.{html,json,xml}",
       "use": "@vercel/static"
     },
     {
-      "src": "**/*.png",
+      "src": "**/*.{html,json,xml}",
       "use": "@vercel/static"
     },
     {
-      "src": "**/*.json",
+      "src": "**/*.{html,json,xml}",
       "use": "@vercel/static"
     },
     {
-      "src": "**/*.txt",
+      "src": "**/*.{html,json,xml}",
       "use": "@vercel/static"
     },
     {
-      "src": "**/*.md",
+      "src": "**/*.{html,json,xml}",
       "use": "@vercel/static"
     },
     {
-      "src": "**/*.ico",
+      "src": "**/*.{html,json,xml}",
       "use": "@vercel/static"
     },
     {
-      "src": "**/*.webmanifest",
+      "src": "**/*.{html,json,xml}",
       "use": "@vercel/static"
     },
     {
-      "src": "**/favicon.svg",
+      "src": "**/*.{html,json,xml}",
       "use": "@vercel/static"
     }
   ],
   "routes": [
+    {
+      "src": "/sitemap.xml",
+      "dest": "sitemap.xml"
+    },
+    {
+      "src": "/manifest.json",
+      "dest": "manifest.json"
+    },
     {
       "src": "/api/signup",
       "dest": "api/index.py"
