@@ -93,7 +93,8 @@ NEXUS_18 = [
     {"tab": 46, "slug": "charter-faq",         "title": "Charter FAQ",            "trio": "surface",  "icon": "❓", "tag": "explain",     "route": "/charter-faq.html",         "purpose": "Common questions about the 23-article Sovereign Canon"},
     {"tab": 47, "slug": "audit-trail",         "title": "Audit Trail",            "trio": "surface",  "icon": "⛓️", "tag": "SIGIL",       "route": "/audit-trail.html",         "purpose": "Ed25519 SIGIL-anchored ledger — immutable and verifiable"},
     {"tab": 48, "slug": "world-models-gallery","title": "World Models Gallery",   "trio": "deep",     "icon": "✨", "tag": "61 models",   "route": "/world-models-gallery.html", "purpose": "SOV33 model registry — 61 models, honest params/reach/score per model"},
-    {"tab": 49, "slug": "sov333-launch-live", "title": "SOV33 Launch Live",    "trio": "surface", "icon": "🚀", "tag": "revenue",  "route": "/sov333-launch-live.html", "purpose": "Revenue surface: 3 tiers + live conversions + honest register + Series A visible"}
+    {"tab": 49, "slug": "sov333-launch-live", "title": "SOV33 Launch Live",    "trio": "surface", "icon": "🚀", "tag": "revenue",  "route": "/sov333-launch-live.html", "purpose": "Revenue surface: 3 tiers + live conversions + honest register + Series A visible"},
+    {"tab": 50, "slug": "eu-ai-act",      "title": "EU AI Act Compliance", "trio": "surface", "icon": "🇪🇺", "tag": "T-20 days", "route": "/eu-ai-act.html", "purpose": "EU AI Act compliance overview · Art 50 watermarking · Art 6 high-risk · Art 14 human oversight"}
 ]
 
 TRIO = {
