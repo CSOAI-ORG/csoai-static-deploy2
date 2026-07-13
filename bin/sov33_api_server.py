@@ -360,6 +360,50 @@ def handle_jspace_detect(payload: dict) -> dict:
         return {'error': f'jspace_detect failed: {e}'}
 
 
+# ============================================================
+# HERMES AGENTIC LAYER HANDLERS — L_AGENTIC
+# ============================================================
+
+def handle_hermes_agentic(payload: dict) -> dict:
+    """POST /api/hermes/agentic — full agentic run (plan + execute)."""
+    try:
+        sys.path.insert(0, '/Users/nicholas/clawd/_alignment/sovereign_merge_kit/agentic')
+        from sov33_hermes_agentic import handle_hermes_agentic as _h
+        return _h(payload)
+    except Exception as e:
+        return {'error': f'hermes_agentic failed: {e}'}
+
+
+def handle_hermes_plan(payload: dict) -> dict:
+    """POST /api/hermes/plan — plan only (no execution)."""
+    try:
+        sys.path.insert(0, '/Users/nicholas/clawd/_alignment/sovereign_merge_kit/agentic')
+        from sov33_hermes_agentic import handle_hermes_plan as _h
+        return _h(payload)
+    except Exception as e:
+        return {'error': f'hermes_plan failed: {e}'}
+
+
+def handle_hermes_tools(payload: dict = None) -> dict:
+    """GET /api/hermes/tools — list registered tools."""
+    try:
+        sys.path.insert(0, '/Users/nicholas/clawd/_alignment/sovereign_merge_kit/agentic')
+        from sov33_hermes_agentic import handle_hermes_tools as _h
+        return _h(payload or {})
+    except Exception as e:
+        return {'error': f'hermes_tools failed: {e}'}
+
+
+def handle_hermes_state(payload: dict = None) -> dict:
+    """GET /api/hermes/state — full agent state."""
+    try:
+        sys.path.insert(0, '/Users/nicholas/clawd/_alignment/sovereign_merge_kit/agentic')
+        from sov33_hermes_agentic import handle_hermes_state as _h
+        return _h(payload or {})
+    except Exception as e:
+        return {'error': f'hermes_state failed: {e}'}
+
+
 def handle_nodes() -> dict:
     """GET /api/nodes — list sovereign network nodes."""
     return {
@@ -1928,6 +1972,14 @@ class SovereignAPIHandler(BaseHTTPRequestHandler):
             return json_response(self, 200, handle_jspace_swap(payload))
         elif path == '/api/jspace/detect':
             return json_response(self, 200, handle_jspace_detect(payload))
+        elif path == '/api/hermes/agentic':
+            return json_response(self, 200, handle_hermes_agentic(payload))
+        elif path == '/api/hermes/plan':
+            return json_response(self, 200, handle_hermes_plan(payload))
+        elif path == '/api/hermes/tools':
+            return json_response(self, 200, handle_hermes_tools(payload))
+        elif path == '/api/hermes/state':
+            return json_response(self, 200, handle_hermes_state(payload))
         else:
             return json_response(self, 404, {'error': f'unknown path: {path}'})
 
