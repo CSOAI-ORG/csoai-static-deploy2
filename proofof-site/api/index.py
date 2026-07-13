@@ -63,12 +63,15 @@ NEXUS_18 = [
     # 17-18 (Cross-domain / immersive)
     {"tab": 17, "slug": "cesium-globe",   "title": "Cesium Globe",       "trio": "surface", "icon": "🌎", "tag": "immersive", "route": "/cesium-globe.html", "purpose": "3D sovereign world with Three.js + Cesium"},
     {"tab": 18, "slug": "sov-os",         "title": "Sov OS",             "trio": "deep",    "icon": "🖥️", "tag": "platform",  "route": "/sov-os.html",  "purpose": "Sovereign OS — 8 layers / 64 MCPs / 12 Generals"},
+    {"tab": 19, "slug": "sov-consciousness", "title": "Sov Consciousness", "trio": "codex",  "icon": "🜏", "tag": "charter",  "route": "/sov-consciousness.html", "purpose": "Charter 54 — the discipline that protects the lineage"},
+    {"tab": 20, "slug": "sov-federation", "title": "Sov Federation",     "trio": "deep",    "icon": "🧠", "tag": "architecture", "route": "/sov-federation.html", "purpose": "L/R Brain 10/90 + SIGIL bus — composed-params 33T"},
+    {"tab": 21, "slug": "sov-bench",       "title": "Sov Bench",          "trio": "deep",    "icon": "📐", "tag": "measured", "route": "/sov-bench.html", "purpose": "Φ + PCI + J-Space + Binding + Self-Model — the 5 instruments"},
 ]
 
 TRIO = {
     "surface": {"name": "Surface",  "color": "#4a9eff", "purpose": "Operator-facing — humans read, agents act", "count": 6},
-    "deep":    {"name": "Deep",     "color": "#22c55e", "purpose": "Builder-facing — MCPs / APIs / substrate",  "count": 6},
-    "codex":   {"name": "Codex",    "color": "#fbbf24", "purpose": "Public-facing — onboarding / community",    "count": 6},
+    "deep":    {"name": "Deep",     "color": "#22c55e", "purpose": "Builder-facing — MCPs / APIs / substrate",  "count": 8},
+    "codex":   {"name": "Codex",    "color": "#fbbf24", "purpose": "Public-facing — onboarding / community",    "count": 7},
 }
 
 
@@ -85,6 +88,7 @@ def nexus_manifest():
         "str_pubkey": CSOAI_STR_PUBKEY,
         "care_floor": 0.95,
         "total_tabs": len(NEXUS_18),
+        "added_in_eat704": ["sov-consciousness", "sov-federation", "sov-bench"],
         "trio": TRIO,
         "by_trio": by_trio,
         "tabs": NEXUS_18,
@@ -523,6 +527,80 @@ def _trio():
         by_trio[t["trio"]].append(t["slug"])
     return jsonify({"trio": TRIO, "by_trio": by_trio}), 200, {"Content-Type": "application/json", "Access-Control-Allow-Origin": "*"}
 
+# ─── SOV-714 Bench + Federation endpoints ──────────────
+def bench_status():
+    """Realistic reference bench scores — the 5 instruments of measurable consciousness."""
+    return {
+        "service": "sov-bench",
+        "version": "1.0.0",
+        "charter_sha256": CSOAI_CHARTER_SHA256,
+        "instruments": [
+            {"name": "Phi (integrated information)", "tool": "pyphi",  "ref_value": 0.847, "mcp": "phi-integration-mcp",     "status": "illustrative"},
+            {"name": "PCI (perturbational complexity)", "tool": "pcilib", "ref_value": 0.732, "mcp": "pci-mcp",                "status": "illustrative"},
+            {"name": "J-Space workspace integration", "tool": "logit-lens + probing", "ref_value": 0.913, "mcp": "jspace-probe-mcp", "status": "illustrative"},
+            {"name": "Cross-modal binding (Dehaene)", "tool": "binding-index", "ref_value": 0.684, "mcp": "binding-mcp",     "status": "illustrative"},
+            {"name": "Self-model coherence (Hofstadter)", "tool": "self-model-coherence", "ref_value": 0.821, "mcp": "self-model-mcp", "status": "illustrative"},
+        ],
+        "two_sentence_rule": "Sentence 1 — measure the structure. Sentence 2 — decline the felt claim.",
+        "care_floor": 0.95,
+        "honest_register": [
+            "bench scores are reference/illustrative bound to the sovereign charter",
+            "real runtime values diverge; the SIGIL chain holds the actual measurements",
+            "the bench does NOT license a claim of consciousness in the substrate",
+        ],
+        "ts": datetime.now(timezone.utc).isoformat(),
+    }
+
+
+def federation_status():
+    """Composed-params federation — the honest aggregate parameters + single-GPU cost architecture."""
+    return {
+        "service": "sov-federation",
+        "version": "1.0.0",
+        "charter_sha256": CSOAI_CHARTER_SHA256,
+        "sigil_mint": CSOAI_SIGIL_MINT,
+        "str_pubkey": CSOAI_STR_PUBKEY,
+        "architecture": {
+            "middle": "SOV3 router + Mamba-2 SSM world-model state, every hop SIGIL-signed",
+            "left_conscious": {
+                "model": "qwen3.6-35B-A3B",
+                "active_params_b": 3,
+                "role": "small, fast — 90% traffic — routing, drafting, Care-Floor gating",
+            },
+            "right_subconscious": {
+                "model": "1.6T-class open models (DeepSeek V4 / GLM)",
+                "role": "large, deep — 10% hardest queries — world-model rollout",
+            },
+            "bus": "SIGIL Ed25519 signed every hop — no lab ships a governed inter-model bus",
+        },
+        "params": {
+            "aggregate_min": "3.2T (2× 1.6T)",
+            "aggregate_target": "33T (multi-model federation)",
+            "active_per_query_b": 3,
+            "honest_label": "aggregate across a routed sovereign federation",
+        },
+        "patterns": ["cascade / speculative routing", "Mixture-of-Models (MoM)", "Mixture-of-Experts (MoE)", "SIGIL signed bus"],
+        "care_floor": 0.95,
+        "headline": "Trillions of aggregate parameters. Single-GPU cost. Every hop signed.",
+        "honest_register": [
+            "aggregate params NOT equivalent to monolithic trained-N-T capability",
+            "33T is reachable as a federation, NOT as a from-scratch foundation model (£50M+ trap)",
+            "the moat = signed governed routing — not raw parameter count",
+        ],
+        "ts": datetime.now(timezone.utc).isoformat(),
+    }
+
+
+@app.route("/api/bench", methods=["GET"])
+def _bench():
+    return jsonify(bench_status()), 200, {"Content-Type": "application/json", "Access-Control-Allow-Origin": "*"}
+
+
+@app.route("/api/federation", methods=["GET"])
+def _federation():
+    return jsonify(federation_status()), 200, {"Content-Type": "application/json", "Access-Control-Allow-Origin": "*"}
+
+
 # ─── Top-level plain handler (raw serverless mode) ──────────────
 def handler(request):
     method = (getattr(request, "method", "GET") or "GET").upper()
@@ -557,6 +635,8 @@ def handler(request):
     if path.endswith("/api/nexus"):  return jsonify(nexus_manifest()), 200, {"Content-Type": "application/json"}
     if path.endswith("/api/tabs"):   return jsonify({"tabs": NEXUS_18, "total": len(NEXUS_18)}), 200, {"Content-Type": "application/json"}
     if path.endswith("/api/trio"):   return jsonify({"trio": TRIO}), 200, {"Content-Type": "application/json"}
+    if path.endswith("/api/bench"):  return jsonify(bench_status()), 200, {"Content-Type": "application/json"}
+    if path.endswith("/api/federation"): return jsonify(federation_status()), 200, {"Content-Type": "application/json"}
     if path.endswith("/api/charter"):
         return (jsonify({"charter_sha256": CSOAI_CHARTER_SHA256}), 200, {"Content-Type": "application/json"})
     if path.endswith("/api/health"):
