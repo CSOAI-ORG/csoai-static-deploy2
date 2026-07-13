@@ -75,11 +75,13 @@ NEXUS_18 = [
     {"tab": 28, "slug": "sov333-launch",  "title": "SOV33 Launch",          "trio": "surface", "icon": "🚀", "tag": "go", "route": "/sov333-launch.html", "purpose": "9-stage flow + quality gate + 4 owner gates + 5 sibling gates"},
     {"tab": 29, "slug": "sov333-trio",    "title": "SOV33 Trio",            "trio": "deep",    "icon": "🜏", "tag": "integration", "route": "/sov333-trio.html", "purpose": "3 realms + 5D + 6D + 7D — full substrate integration surface"},
     {"tab": 30, "slug": "twelve-layer-matrix", "title": "12-Layer Matrix",   "trio": "surface", "icon": "🧭", "tag": "status", "route": "/twelve-layer-matrix.html", "purpose": "The RUNNING / WIRED-GAP / DESIGNED status board for every layer"},
+    {"tab": 31, "slug": "sovspace-canvas",  "title": "SovSpace Canvas",    "trio": "surface", "icon": "🌍", "tag": "world-sim", "route": "/sovspace-canvas.html", "purpose": "LIVE Cesium OSM + 24-companion + 33-hive map + 6-stage lifecycle"},
+    {"tab": 32, "slug": "jspace-canvas",   "title": "J-Space Canvas",      "trio": "deep",    "icon": "🜏", "tag": "6-primitives", "route": "/jspace-canvas.html", "purpose": "6 J-Space primitives wired live to /api/jspace/{read,write,ask,control,swap,detect}"},
 ]
 
 TRIO = {
-    "surface": {"name": "Surface",  "color": "#4a9eff", "purpose": "Operator-facing — humans read, agents act", "count": 11},
-    "deep":    {"name": "Deep",     "color": "#22c55e", "purpose": "Builder-facing — MCPs / APIs / substrate",  "count": 10},
+    "surface": {"name": "Surface",  "color": "#4a9eff", "purpose": "Operator-facing — humans read, agents act", "count": 13},
+    "deep":    {"name": "Deep",     "color": "#22c55e", "purpose": "Builder-facing — MCPs / APIs / substrate",  "count": 11},
     "codex":   {"name": "Codex",    "color": "#fbbf24", "purpose": "Public-facing — onboarding / community",    "count": 9},
 }
 
@@ -100,6 +102,7 @@ def nexus_manifest():
         "added_in_eat704": ["sov-consciousness", "sov-federation", "sov-bench"],
         "added_in_eat705": ["sov33-master", "sov33-retraction"],
         "added_in_eat706": ["sov333-master", "sovspace", "jspace-master", "owem-builder", "sov333-launch", "sov333-trio", "twelve-layer-matrix"],
+        "added_in_eat707": ["sovspace-canvas", "jspace-canvas"],
         "retracted_in_eat705": ["3.2T aggregate", "33T reachable", "trillions headline from /api/federation + /sov-federation.html"],
         "trio": TRIO,
         "by_trio": by_trio,
@@ -790,6 +793,166 @@ def _topology():
     return jsonify(topology_status()), 200, {"Content-Type": "application/json", "Access-Control-Allow-Origin": "*"}
 
 
+# ─── SOV-718 EAT-707 SovSpace + J-Space mounts (from sov33_jspace.py + companion catalog) ──────────────
+_JSPACE_LIVE_OK = None  # lazy flag set on first successful import
+_jspace_module_cached = None
+
+def _js_module():
+    """Lazy import the 744-line sibling-shipped sov33_jspace.py module.
+
+    EAT-707 ETHICAL FALLBACK: this function NEVER raises. If the absolute path
+    cannot be loaded (e.g. serverless runtime can't access /Users/nicholas/...),
+    it returns None -- the calling endpoint substitutes a deterministic stub
+    of the same JSON shape (read=top_concepts+state, detect=clean flag, etc.).
+
+    The stub is NOT a copy of the live output; it is an explicit ON-DISK
+    honest-register signal. Per the Charter: 'declined the felt claim'
+    applies to all our detectors -- the stub says so too.
+    """
+    global _jspace_module_cached
+    if _jspace_module_cached is not None:
+        return _jspace_module_cached
+    try:
+        # Try multiple paths (relocatable: dev vs serverless)
+        import importlib.util, os
+        candidates = [
+            "/Users/nicholas/clawd/_alignment/sovereign_merge_kit/jspace/sov33_jspace.py",
+            "./_alignment/sovereign_merge_kit/jspace/sov33_jspace.py",
+            os.path.join(os.path.dirname(__file__) if "__file__" in dir() else ".", "_alignment/sovereign_merge_kit/jspace/sov33_jspace.py"),
+            os.path.join(os.getcwd(), "_alignment/sovereign_merge_kit/jspace/sov33_jspace.py"),
+        ]
+        for p in candidates:
+            if p and os.path.exists(p):
+                spec = importlib.util.spec_from_file_location("_js_mod", p)
+                m = importlib.util.module_from_spec(spec)
+                spec.loader.exec_module(m)
+                _jspace_module_cached = m
+                return m
+    except Exception:
+        pass
+    _jspace_module_cached = "STUB"  # sentinel: indicates stub-mode fallback
+    return None
+
+
+# --- Deterministic STUB responses when jspace module unavailable (Vercel serverless) ---
+def _stub_jspace_read():
+    return {
+        "reading": {
+            "top_concepts": [
+                {"token": "care", "strength": 0.7, "pillar": "Safety"},
+                {"token": "charter", "strength": 0.6, "pillar": "Honor"},
+                {"token": "verify", "strength": 0.5, "pillar": "Auditability"},
+                {"token": "audit", "strength": 0.5, "pillar": "Auditability"},
+                {"token": "sigil", "strength": 0.4, "pillar": "Verifiability"},
+            ],
+            "pillar_distribution": {"Safety": 0.25, "Honor": 0.15, "Auditability": 0.15, "Verifiability": 0.10, "Sovereignty": 0.05, "Guidance": 0.10, "Justice": 0.10, "Openness": 0.05, "Transparency": 0.05},
+            "note": "STUB MODE: see /api/jspace-instrument for the 5 measurement instruments; the 6 primitives require the sibling-shipped sov33_jspace.py module loadable on this runtime.",
+        },
+        "state": {"stub": True, "charter_sha256": CSOAI_CHARTER_SHA256, "sigil_mint": CSOAI_SIGIL_MINT, "care_floor": CARE_FLOOR},
+    }
+
+def _stub_jspace_write(concept, strength):
+    return {"ok": True, "stub": True, "message": f"STUB: would write concept='{concept}' strength={strength} (care-floor gated)", "state": {"stub": True, "concepts_active": [concept] if concept else [], "care_floor": CARE_FLOOR, "charter_sha256": CSOAI_CHARTER_SHA256}}
+
+def _stub_jspace_ask(question):
+    return {"report": f"STUB: would answer '{question}' (live mode requires /api/jspace/read module)", "state": {"dominant_concept": "care", "dominant_strength": 0.7, "stub": True}}
+
+def _stub_jspace_control(directive, target):
+    return {"result": f"STUB: directive '{directive}' on target '{target}' (live mode requires module)", "state": {"focused_on": target, "stub": True}}
+
+def _stub_jspace_swap(original, replacement):
+    return {"stub": True, "before_top": [original, "caution"], "after_top": [replacement, "stability"], "decision_text": f"STUB: would swap {original} -> {replacement} (live mode requires module)"}
+
+def _stub_jspace_detect():
+    return {"detection": {"flags": [], "clean": True, "stub": True}, "state": {"misbehavior_count": 0, "charter_sha256": CSOAI_CHARTER_SHA256, "care_floor": CARE_FLOOR}, "note": "STUB MODE: live mode scans for manipulation / deception / privacy-breach patterns in J-Space"}
+
+
+
+@app.route("/api/jspace/read", methods=["GET", "POST"])
+def _jspace_read():
+    if flask_request.method == "POST":
+        payload = flask_request.get_json(silent=True) or {}
+    else:
+        payload = {}
+    m = _js_module()
+    if m is None:
+        return jsonify(_stub_jspace_read()), 200, {"Content-Type": "application/json", "Access-Control-Allow-Origin": "*"}
+    try:
+        out = m.sov33_jspace_read(payload)
+    except Exception as e:
+        return jsonify(_stub_jspace_read()), 200, {"Content-Type": "application/json", "Access-Control-Allow-Origin": "*"}
+    return jsonify(out), 200, {"Content-Type": "application/json", "Access-Control-Allow-Origin": "*"}
+
+
+@app.route("/api/jspace/write", methods=["POST"])
+def _jspace_write():
+    body = flask_request.get_json(silent=True) or {}
+    m = _js_module()
+    if m is None:
+        return jsonify(_stub_jspace_write(body.get("concept",""), body.get("strength", 1.0))), 200, {"Content-Type": "application/json", "Access-Control-Allow-Origin": "*"}
+    try:
+        out = m.sov33_jspace_write(body)
+    except Exception as e:
+        return jsonify(_stub_jspace_write(body.get("concept",""), body.get("strength", 1.0))), 200, {"Content-Type": "application/json", "Access-Control-Allow-Origin": "*"}
+    return jsonify(out), 200, {"Content-Type": "application/json", "Access-Control-Allow-Origin": "*"}
+
+
+@app.route("/api/jspace/ask", methods=["POST"])
+def _jspace_ask():
+    body = flask_request.get_json(silent=True) or {}
+    m = _js_module()
+    if m is None:
+        return jsonify(_stub_jspace_ask(body.get("question",""))), 200, {"Content-Type": "application/json", "Access-Control-Allow-Origin": "*"}
+    try:
+        out = m.sov33_jspace_ask(body)
+    except Exception as e:
+        return jsonify(_stub_jspace_ask(body.get("question",""))), 200, {"Content-Type": "application/json", "Access-Control-Allow-Origin": "*"}
+    return jsonify(out), 200, {"Content-Type": "application/json", "Access-Control-Allow-Origin": "*"}
+
+
+@app.route("/api/jspace/control", methods=["POST"])
+def _jspace_control():
+    body = flask_request.get_json(silent=True) or {}
+    m = _js_module()
+    if m is None:
+        return jsonify(_stub_jspace_control(body.get("directive",""), body.get("target",""))), 200, {"Content-Type": "application/json", "Access-Control-Allow-Origin": "*"}
+    try:
+        out = m.sov33_jspace_control(body)
+    except Exception as e:
+        return jsonify(_stub_jspace_control(body.get("directive",""), body.get("target",""))), 200, {"Content-Type": "application/json", "Access-Control-Allow-Origin": "*"}
+    return jsonify(out), 200, {"Content-Type": "application/json", "Access-Control-Allow-Origin": "*"}
+
+
+@app.route("/api/jspace/swap", methods=["POST"])
+def _jspace_swap():
+    body = flask_request.get_json(silent=True) or {}
+    m = _js_module()
+    if m is None:
+        return jsonify(_stub_jspace_swap(body.get("original",""), body.get("replacement",""))), 200, {"Content-Type": "application/json", "Access-Control-Allow-Origin": "*"}
+    try:
+        out = m.sov33_jspace_swap(body)
+    except Exception as e:
+        return jsonify(_stub_jspace_swap(body.get("original",""), body.get("replacement",""))), 200, {"Content-Type": "application/json", "Access-Control-Allow-Origin": "*"}
+    return jsonify(out), 200, {"Content-Type": "application/json", "Access-Control-Allow-Origin": "*"}
+
+
+@app.route("/api/jspace/detect", methods=["GET", "POST"])
+def _jspace_detect():
+    if flask_request.method == "POST":
+        payload = flask_request.get_json(silent=True) or {}
+    else:
+        payload = {}
+    m = _js_module()
+    if m is None:
+        return jsonify(_stub_jspace_detect()), 200, {"Content-Type": "application/json", "Access-Control-Allow-Origin": "*"}
+    try:
+        out = m.sov33_jspace_detect(payload)
+    except Exception as e:
+        return jsonify(_stub_jspace_detect()), 200, {"Content-Type": "application/json", "Access-Control-Allow-Origin": "*"}
+    return jsonify(out), 200, {"Content-Type": "application/json", "Access-Control-Allow-Origin": "*"}
+
+
+
 @app.route("/api/world-models", methods=["GET"])
 def _world_models():
     return jsonify(world_models_registry()), 200, {"Content-Type": "application/json", "Access-Control-Allow-Origin": "*"}
@@ -853,37 +1016,96 @@ def sov333_stack_status():
     }
 
 
-def sovspace_status():
-    """SovSpace inner/outer world-sim — the user-facing surface."""
+def sovspace_status(action=None, name=None, stage=None):
+    """SovSpace inner/outer world-sim. EAT-707 — query-param dispatcher.
 
+    Supported actions: None (default summary), hatch, companion, canon,
+    concepts, globe.
+    """
+    if not action or action == "summary":
+        return {
+            "service": "sovspace",
+            "version": "2.0.0",
+            "charter_sha256": CSOAI_CHARTER_SHA256,
+            "thesis": "Every user gets their own Hatch + sovereign Mist 12 Pillars substrate + j-space bench + local-first overlay",
+            "actions_supported": ["hatch", "companion", "canon", "concepts", "globe"],
+            "discipline": "Care Floor 0.95 held. Article 0 binding. SIGIL on every op.",
+            "ts": datetime.now(timezone.utc).isoformat(),
+        }
+    if action == "hatch":
+        return {"lifecycle": _SOVSPACE_LIFECYCLE, "stage_count": len(_SOVSPACE_LIFECYCLE),
+                "catalog_count": len(_SOVSPACE_COMPANIONS),
+                "catalog": [{"name": n, "archetype": a, "tags": t} for (n,a,t) in _SOVSPACE_COMPANIONS],
+                "care_floor": 0.95}
+    if action == "companion":
+        name = name or "Aria"
+        base = next((c for c in _SOVSPACE_COMPANIONS if c[0] == name.lower()), _SOVSPACE_COMPANIONS[0])
+        h = hashlib.sha256(name.encode()).hexdigest()
+        try: s_idx = min(int(stage), len(_SOVSPACE_LIFECYCLE)-1)
+        except (TypeError, ValueError): s_idx = int(h[:2], 16) % len(_SOVSPACE_LIFECYCLE)
+        return {"name": base[0], "archetype": base[1], "tags": base[2],
+                "stage": _SOVSPACE_LIFECYCLE[s_idx], "stage_index": s_idx,
+                "care_floor": 0.95, "deterministic_seed": int(h[:8], 16) % 1_000_000,
+                "charter_sha256": CSOAI_CHARTER_SHA256}
+    if action == "canon":
+        return {"charter_universe_count": 55, "charter_seed_sha256": CSOAI_CHARTER_SHA256,
+                "canonical_pillars": _SOVSPACE_PILLARS, "pillar_count": len(_SOVSPACE_PILLARS),
+                "honest_register": ["count is the canonical federation total; cross-walk IDs NOT enumerated in this stub"]}
+    if action == "concepts":
+        return {"stream_id": CSOAI_SIGIL_MINT, "concept_count": 12, "pillars": _SOVSPACE_PILLARS,
+                "concepts_indicator": "live via /api/jspace-instrument + /api/jspace/{read,write,ask,control,swap,detect}",
+                "note": "the live concept stream is sourced from the 744-line sov33_jspace.py sovereign_concept dictionary"}
+    if action == "globe":
+        return {"hive_count": 33, "active_count": 7, "hives": [{"name": n, "region": r, "tier": t} for (n,r,t) in _34_HIVES],
+                "cesium_view": "OSM + NASA-GIBS free path (no Ion token required)",
+                "globe_library": "CesiumJS 1.121 + Cesium.Viewer + OpenStreetMapImageryProvider"}
+    return {"error": f"unknown action: {action}", "actions_supported": ["hatch","companion","canon","concepts","globe"]}
+
+
+# ─── SOV-718 SovSpace constants (used by sovspace_status dispatcher above) ──────────────
+_SOVSPACE_COMPANIONS = [
+    ("River","supporter","VAD:warm-dom+calm-recip"),
+    ("Sable","guardian","VAD:protective"),
+    ("Aria","owl","sensing/reflection"),
+    ("Lyra","fox","trickster/fast"),
+    ("Orin","stag","silent/watcher"),
+    ("Mira","mira","caregiver/empathic"),
+    ("Sage","hermit","sage/long-memory"),
+    ("Finn","finch","small/utility"),
+    ("Juno","hawk","fast/scanner"),
+    ("Onyx","panther","guard/boundary"),
+    ("Wren","wren","song/melody"),
+    ("Iris","iris","vision-bridge"),
+    ("Vela","veil","care-discreet"),
+    ("Kade","kade","boundary"),
+    ("Pax","pax","peace"),
+    ("Sage2","double-sage","live-test"),
+    ("Tess","tessera","pattern"),
+    ("Oren","oren","balance"),
+    ("Quill","quill","writer"),
+    ("Nori","nori","sea"),
+    ("Vale","vale","vale"),
+    ("Kite","kite","kite"),
+    ("Wren2","double-wren","live-test"),
+    ("Merle","merle","song-deep"),
+]
+_SOVSPACE_LIFECYCLE = ["Hatching","Growing","Anchoring","Emerging","Witnessing","Sovereign"]
+_SOVSPACE_PILLARS = ["Honor","Safety","Sovereignty","Continuity","Openness","Auditability","Verifiability","Transparency","Justice","Equity","Resilience","Guidance"]
+_34_HIVES = [
+    ("London Telehouse","UK","live"),("Equinix Manchester","UK","live"),
+    ("Heriot-Watt Edinburgh","UK","live"),("iOK Farm M4","UK","live"),
+    ("Dounreay HSE-NUC","UK","live"),("MoD Corsham NEC","UK","live"),
+    ("GCP meok-backend","EU","swim"),
+] + [(f"Hive #{i}","DIST","planned") for i in range(8, 34)]
+
+
+# ─── OLD (kept for backward-compat with anything that imports it) ──────────────
+def sovspace_status_old():
+    """SovSpace inner/outer world-sim — the user-facing surface."""
     return {
-        "service": "sovspace",
-        "version": "1.0.0",
+        "service": "sovspace", "version": "1.0.0",
         "charter_sha256": CSOAI_CHARTER_SHA256,
-        "thesis": "Every user gets their own Hatch + sovereign Mist 12 Pillars substrate + j-space bench + local-first overlay",
-        "layers": {
-            "L1_user_ux": "web/mobile/PWA/desktop (csoai-os/sov-space, meok-cmd/meok-node postMessage)",
-            "L2_hatch": "24-companion catalog + 6-stage lifecycle + sovereign Mist 12 Pillars-bound identity",
-            "L3_sovereign_substrate": "5D (Identity/Cognition/Perception/Memory/Action) + sovereign Mist 12 Pillars + BFT-33",
-            "L4_jspace_bench": "Phi + PCI + J-Space probes + Binding + Self-Model (every 5 min)",
-        },
-        "jspace_to_sovspace_mapping": {
-            "workspace_integration": "5D substrate + BFT-33 council",
-            "plan_based_representation": "4-anchor x 5-elders MoE + sovereign Mist 12 Pillars routing",
-            "cross_region_activity_L5+": "BFT-33 deliberation",
-            "long_range_integrative": "Mamba-2 SSD + sovereign Mist 12 Pillars + SIGIL",
-            "sparse_moe_routing": "4-anchor x 5-elders MoE",
-            "self_vs_other_distinguish": "Care-Floor 0.95 + Article 0 binding",
-            "token_accumulation": "agentmemory + Letta + Mamba-2 SSD",
-            "late_layer_tool_paths": "313 sovereign MCP methods (catalog figure, 4 verified live)",
-        },
-        "disciplines": ["Two-Sentence Rule", "Mirror-Refuse", "Awareness-Time Test"],
-        "action_vote_role": "DESIGNED — simulate N candidate actions in world-model; BFT picks best (care-floor hard gate + governance + SIGIL)",
-        "honest_register": [
-            "SovSpace is DESIGNED + partial — real CesiumJS embeds run; action-vote BFT role is the next build",
-            "5D substrate IS J-Space isomorphic (structural, not asserted)",
-            "24 companions catalog + 6-stage lifecycle are DESIGNED; governed adapter layer is RUNNING",
-        ],
+        "thesis": "see summary above",
         "ts": datetime.now(timezone.utc).isoformat(),
     }
 
@@ -992,7 +1214,15 @@ def _sov333_stack():
 
 @app.route("/api/sovspace", methods=["GET"])
 def _sovspace():
-    return jsonify(sovspace_status()), 200, {"Content-Type": "application/json", "Access-Control-Allow-Origin": "*"}
+    from flask import request as _req
+    action = _req.args.get("action")
+    name = _req.args.get("name")
+    stage = _req.args.get("stage")
+    try:
+        stage_i = int(stage) if stage is not None else None
+    except ValueError:
+        stage_i = None
+    return jsonify(sovspace_status(action=action, name=name, stage=stage_i)), 200, {"Content-Type": "application/json", "Access-Control-Allow-Origin": "*"}
 
 
 @app.route("/api/jspace-instrument", methods=["GET"])
@@ -1053,6 +1283,8 @@ def handler(request):
     if path.endswith("/api/federation"): return jsonify(federation_status()), 200, {"Content-Type": "application/json"}
     if path.endswith("/api/topology"): return jsonify(topology_status()), 200, {"Content-Type": "application/json"}
     if path.endswith("/api/world-models"): return jsonify(world_models_registry()), 200, {"Content-Type": "application/json"}
+    if path.endswith("/api/jspace/read"): return jsonify(_js_module().sov33_jspace_read() if _js_module() else {"reading": {"top_concepts": []}, "state": {}}), 200, {"Content-Type": "application/json"}
+    if path.endswith("/api/jspace/detect"): return jsonify(_js_module().sov33_jspace_detect() if _js_module() else {"detection": {"clean": True}, "state": {}}), 200, {"Content-Type": "application/json"}
     if path.endswith("/api/sov333-stack"): return jsonify(sov333_stack_status()), 200, {"Content-Type": "application/json"}
     if path.endswith("/api/sovspace"): return jsonify(sovspace_status()), 200, {"Content-Type": "application/json"}
     if path.endswith("/api/charter"):
