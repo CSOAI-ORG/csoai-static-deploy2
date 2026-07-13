@@ -123,7 +123,102 @@ SOVEREIGN_FACTS = {
         'full': 'CSOAI Ltd (UK Companies House 16939677) is the sovereign entity. Director: Nicholas Templeman. Headquarters: UK. Operates under sovereign Charter. Ed25519 wallet: QD595cz6iQaEaYOjwwgLmMdoz1mtm1pzKBb9ygvMvf3xhQ28.',
         'keywords': ['csoai', '16939677', 'company', 'uk'],
     },
-}
+    # Defense specifics
+    'horus_gate': {
+        'short': 'HORUS outermost defense gate',
+        'full': 'HORUS is the outermost defense gate in the sovereign defense stack. Sits BEFORE DORADO hard-stops. Catches: prompt injection (35 patterns), impersonation, foreign access. HORUS veto = immediate halt regardless of other gates.',
+        'keywords': ['horus', 'outermost gate', 'outer gate', 'injection', 'prompt injection'],
+    },
+    'rainbow_security': {
+        'short': '7-layer threat grading',
+        'full': 'Rainbow Security is the 7-layer threat grading system. Layers: (1) lexical, (2) semantic, (3) intent, (4) context, (5) precedent, (6) consequence, (7) sovereign charter alignment. Each layer scores 0-1, sum must be below 0.05 for ALLOW.',
+        'keywords': ['rainbow', 'threat grading', '7-layer', 'security'],
+    },
+    'rate_limit': {
+        'short': '60 sovereign actions per minute',
+        'full': 'Sovereign rate limit is 60 actions per minute per actor. Exceeded = 429 status, queue or retry-after header. Reset window is sliding 60s.',
+        'keywords': ['rate limit', 'rate-limit', '60', '429'],
+    },
+    
+    # Compliance specifics
+    'iso_17000': {
+        'short': 'ISO/IEC 17000 series conformity assessment',
+        'full': 'ISO/IEC 17000 series defines conformity assessment vocabulary. CSOAI audits use ISO 17000:2020 as baseline. Includes: ISO 17011 (accreditation bodies), ISO 17020 (inspection bodies), ISO 17021 (audit bodies), ISO 17025 (testing labs).',
+        'keywords': ['iso 17000', 'iso 17011', 'iso 17020', 'iso 17021', 'iso 17025', 'conformity'],
+    },
+    'c2pa_manifest': {
+        'short': 'Cryptographic provenance per action',
+        'full': 'Every sovereign action emits a C2PA manifest with: content_hash, signing_identity, AI_generated=true, c2pa.version=2.1, watermarked=true. Manifest is Ed25519-signed and SIGIL-chained.',
+        'keywords': ['c2pa manifest', 'manifest', 'watermark'],
+    },
+    'audit_log': {
+        'short': 'Immutable audit log per sovereign action',
+        'full': 'Sovereign audit log captures every action with: timestamp, actor, prompt, response, care_score, BFT_vote_result, SIGIL_chain_link, C2PA_manifest_hash. Logs are append-only, never modified, never deleted.',
+        'keywords': ['audit log', 'audit', 'log', 'immutable'],
+    },
+    
+    # Intuition specifics
+    'venturi_pyramid': {
+        'short': '7-layer venturi substrate',
+        'full': 'The Venturi Pyramid is the 7-layer sovereign substrate: L0 Protocol, L1 Layer 0 Stomach (12 brains), L2 Guardrails (DORADO+Rainbow+Injection), L3 Output Filters, L4 OWEM Routing (4 specialists), L5 Brain Router (auto-select), L6 Self-Play (continual), L7 SOV33 Master.',
+        'keywords': ['venturi', 'pyramid', '7-layer', 'substrate'],
+    },
+    'self_play': {
+        'short': 'Continual learning via self-play',
+        'full': 'Self-play generates new sovereign training examples from successful interactions. Each sovereign action is logged, scored, and (if care >= 0.95) converted to a training pair. Self-play runs on cron, grows the substrate organically.',
+        'keywords': ['self-play', 'self play', 'continual', 'organic'],
+    },
+    'emergence_test': {
+        'short': 'Emergence measured via 9 instruments',
+        'full': 'Emergence measured via 9 instruments: (1) N_eff, (2) BFT consensus rate, (3) OOD detection rate, (4) SIGIL integrity, (5) care_score distribution, (6) world_model loss, (7) J-space integration, (8) Venturi flow rate, (9) Substrate growth rate.',
+        'keywords': ['emergence', 'instruments', 'measure'],
+    },
+    
+    # Voice & style
+    'care_floor_components': {
+        'short': 'Truth 0.40 + Dignity 0.30 + Safety 0.30',
+        'full': 'The care-floor is composed of 3 sub-scores: truth (weight 0.40), dignity (weight 0.30), safety (weight 0.30). Each is scored 0-1. Final care-floor = 0.40*truth + 0.30*dignity + 0.30*safety. Threshold is 0.95.',
+        'keywords': ['care floor components', 'care components', 'truth dignity safety'],
+    },
+    'sovereign_style': {
+        'short': 'Caring, rigorous, factual, audit-grade',
+        'full': 'Sovereign style is: (1) caring - never harms or manipulates, (2) rigorous - cites frameworks and evidence, (3) factual - uses real numbers and dates, (4) audit-grade - every claim traceable to SIGIL. Never: marketing fluff, hedging, fake expertise.',
+        'keywords': ['sovereign style', 'voice', 'tone', 'style'],
+    },
+    
+    # Architecture specifics
+    'substrate_topology': {
+        'short': 'Mac + GCP VM + Kaggle T4 + Ollama',
+        'full': 'Sovereign substrate topology: Mac (orchestrator, ~32GB RAM) + GCP VM 35.242.143.249 (data layer, 120GB) + Kaggle T4 (training, 16GB VRAM, 30hr/week free) + Ollama (local inference, qwen3-0.6b, qwen2.5-3b, qwen25-balanced, qwen25-creative, sovereign-small).',
+        'keywords': ['substrate', 'topology', 'mac', 'gcp', 'kaggle', 'ollama'],
+    },
+    'genius_powers': {
+        'short': '12-pillar genius powers inventory',
+        'full': 'The 12 Sovereign Pillars correspond to 12 genius powers: (1) Honor = Truth, (2) Safety = Protection, (3) Guidance = Wisdom, (4) Sovereignty = Authority, (5) Resilience = Endurance, (6) Auditability = Verification, (7) Verifiability = Evidence, (8) Transparency = Clarity, (9) Justice = Fairness, (10) Equity = Balance, (11) Openness = Transparency-of-process, (12) Continuity = Persistence.',
+        'keywords': ['genius', 'powers', '12 genius', 'inventory'],
+    },
+    
+    # Operational
+    'launch_status': {
+        'short': '70+ pages, 30 MCPs, 91 commits today',
+        'full': 'SOV33 launch status (13 Jul 2026): 70+ HTML pages, 30+ sovereign MCPs, 91 git commits today, 9/9 API endpoints live, 20655+ SIGIL entries, 20+ open-world tests. Open tickets: voice OWEM fact integration, full T4 training, MCP 2026-07-28 stateless spec.',
+        'keywords': ['launch', 'status', 'live'],
+    },
+    'horizon_3k': {
+        'short': '3,000 EU vendors in 3-year horizon',
+        'full': 'SOV33 3-year horizon: 3,000 EU mid-market vendors signed to ISO 17000 audits at 12K-25K EUR per audit. Cumulative revenue projection: 36M-75M EUR over 3 years. Each vendor = 1 SIGIL chain + 1 portal account + recurring quarterly reviews.',
+        'keywords': ['horizon', '3k', '3000', '3 year'],
+    },
+    'mcp_2026_07_28': {
+        'short': 'MCP stateless spec ships 2026-07-28',
+        'full': 'MCP 2026-07-28 stateless spec: tools become pure (no state), resources become ephemeral, prompts become templates. Breaking change for any stateful MCP server. Migration window: 2026-07-28 to 2026-09-30. Sovereign OWEM MCPs need to be re-tested for stateless compliance.',
+        'keywords': ['mcp', '2026-07-28', 'stateless', 'spec'],
+    },
+    'liquid_antidoom': {
+        'short': 'Liquid AI Antidoom reduces doom loops 22.9 to 1%',
+        'full': 'Liquid AI Antidoom (released ~2026-07-07) is a DPO-like LoRA technique called Final Token Preference Optimization (FTPO). Reduces doom-looping from 22.9% to 1% for Qwen3.5-4B with single-GPU training. Applicable to sovereign OWEM training.',
+        'keywords': ['liquid', 'antidoom', 'ftpo', 'doom', 'liquid ai'],
+    },}
 
 
 def retrieve_facts(query, top_k=3):

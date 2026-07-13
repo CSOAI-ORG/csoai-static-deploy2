@@ -696,6 +696,30 @@ def handle_rag_ask(payload: dict) -> dict:
         return {'error': f'rag_ask failed: {e}'}
 
 
+# ============================================================
+# PHASE 37: 5x4x3 with RAG-augmented voters
+# ============================================================
+
+def handle_5x4x3_rag(payload: dict) -> dict:
+    """POST /api/owem5x4x3/rag - 20 voters with RAG fact injection."""
+    try:
+        sys.path.insert(0, '/Users/nicholas/clawd/_alignment/sovereign_merge_kit/owem3')
+        from sov33_5x4x3_rag import handle_5x4x3_rag as _h
+        return _h(payload)
+    except Exception as e:
+        return {'error': f'5x4x3_rag failed: {e}'}
+
+
+def handle_5x4x3_rag_state(payload=None) -> dict:
+    """GET /api/owem5x4x3/rag/state."""
+    try:
+        sys.path.insert(0, '/Users/nicholas/clawd/_alignment/sovereign_merge_kit/owem3')
+        from sov33_5x4x3_rag import handle_5x4x3_rag_state as _h
+        return _h(payload or {})
+    except Exception as e:
+        return {'error': f'5x4x3_rag_state failed: {e}'}
+
+
 def handle_rag_facts(payload: dict = None) -> dict:
     """GET /api/rag/facts - list all sovereign facts."""
     try:
@@ -2270,6 +2294,8 @@ class SovereignAPIHandler(BaseHTTPRequestHandler):
             return json_response(self, 200, handle_5x4x3_benchmark({}))
         elif path == '/api/rag/facts':
             return json_response(self, 200, handle_rag_facts({}))
+        elif path == '/api/owem5x4x3/rag/state':
+            return json_response(self, 200, handle_5x4x3_rag_state({}))
         elif path == '/api/owem5x4x3/real/state':
             return json_response(self, 200, handle_5x4x3_real_state({}))
         elif path == '/api/continual/stats':
@@ -2394,6 +2420,8 @@ class SovereignAPIHandler(BaseHTTPRequestHandler):
             return json_response(self, 200, handle_5x4x3_bft(payload))
         elif path == '/api/rag/ask':
             return json_response(self, 200, handle_rag_ask(payload))
+        elif path == '/api/owem5x4x3/rag':
+            return json_response(self, 200, handle_5x4x3_rag(payload))
         elif path == '/api/layer0':
             # Apply guardrails BEFORE sending to any brain
             if GUARDRAILS_ACTIVE:
@@ -2501,6 +2529,8 @@ class SovereignAPIHandler(BaseHTTPRequestHandler):
             return json_response(self, 200, handle_5x4x3_benchmark({}))
         elif path == '/api/rag/facts':
             return json_response(self, 200, handle_rag_facts({}))
+        elif path == '/api/owem5x4x3/rag/state':
+            return json_response(self, 200, handle_5x4x3_rag_state({}))
         elif path == '/api/owem5x4x3/real/state':
             return json_response(self, 200, handle_5x4x3_real_state({}))
         elif path == '/api/continual/stats':
