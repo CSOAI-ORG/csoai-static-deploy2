@@ -16,6 +16,9 @@ sys.path.insert(0, '/Users/nicholas/clawd/_alignment/sovereign_merge_kit')
 
 import torch
 from transformers import AutoTokenizer, AutoModelForCausalLM
+import sys
+sys.path.insert(0, '/Users/nicholas/clawd/_alignment/sovereign_merge_kit/rag')
+from sov33_sovereign_facts import build_rag_context
 from peft import PeftModel
 from pathlib import Path
 
@@ -46,11 +49,17 @@ class FastSovereignBrain:
             self.models[owem_name].eval()
     
     def ask(self, owem_name: str, question: str, max_tokens: int = 80) -> dict:
-        """Fast ask with SIGIL signing."""
+        """Fast ask with RAG + SIGIL signing."""
         self._ensure_loaded(owem_name)
         
-        # Better prompt (Gap 4 fix): use Q + A: format
-        prompt = f"Q: {question}\nA:"
+        # RAG: inject sovereign facts as context
+        rag_context = build_rag_context(question)
+        if rag_context:
+            # Prepend RAG context to question
+            enhanced = rag_context + "\n" + question
+            prompt = f"Q: {enhanced}\nA:"
+        else:
+            prompt = f"Q: {question}\nA:"
         inputs = self.tokenizer(prompt, return_tensors='pt', truncation=True, max_length=256).to(self.device)
         
         t0 = time.time()
