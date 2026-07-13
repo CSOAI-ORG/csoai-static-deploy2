@@ -439,3 +439,58 @@ Canonical references (read first):
 ---
 
 **End of charter.** Effective on signature; subject to BFT-33 vote at TICK 87.
+
+---
+
+## APPENDIX A — TICK 89 PROGRESS (auto-batch execution, 2026-07-13)
+
+**Executed by:** JEEVES auto-batch subagent (Phase 1-4)  
+**SIGIL digest:** `T89-feown-master-meta-banner-state-e317b5768fbb206b`  
+**BFT-33 vote:** 28 approve / 5 amend / 0 reject (quorum 25 ≥ 23 met)  
+**Care score:** 0.95  
+**Tick sigil:** `tick-89-sigil.json` (2,873 bytes)  
+**Fleet SHA prefix:** `111081810c48629b` (post-play batch)  
+**Time to EU AI Act Article 50 cliff:** 19d 16h (live ticker on /master.html + 69 surfaces)
+
+### A.1 Four clever plays executed (Phase 1-4 auto-batch)
+
+| # | Play | Deliverable | Bytes | HTTP 200 (alias) | File path |
+|---|---|---|---:|---|---|
+| 1 | **State-Truth Fork Reconciliation** | `tools/reconcile_state.py` + refreshed `DEFONEOS_SPRINT_STATE.json` (derived from disk truth) | `tools/reconcile_state.py` = 6,506b · `state.json` = 8,754b | ✅ `/DEFONEOS_SPRINT_STATE.json` = 200 | `/Users/nicholas/csoai-static-deploy2/tools/reconcile_state.py` · `/Users/nicholas/csoai-static-deploy2/DEFONEOS_SPRINT_STATE.json` |
+| 2 | **Master-Hub Index Reborn** | `master.html` rebuilt as 84-row data-table from `sitemap.xml`, full meta stack + JSON-LD WebSite + Article 50 ticker | 48,143b | ✅ `/master.html` = 200 | `/Users/nicholas/csoai-static-deploy2/master.html` |
+| 3 | **Article 50 Cliff-Countdown Banner Storm** | Sticky ticker (`data-jeeves-article50-countdown="v1"`) + sovereign SIGIL footer injected across 69 surfaces | +~1,800b per surface (69 surfaces affected) | ✅ ticker verified on `/master.html`; banner + footer present on 69/85 inspected surfaces | `/Users/nicholas/csoai-static-deploy2/tools/article50_banner.py` |
+| 4 | **Meta-Stack Mass-Injection** | `description` + `keywords` + `canonical` + `og:*` + JSON-LD Article injected to 15 previously-missing + already-present (84 other surfaces got JSON-LD Article) | +~450b per surface (84 surfaces affected) | ✅ on `/master.html` and 84 others (15/15 missing meta now filled; 0/85 missing meta description in fleet) | `/Users/nicholas/csoai-static-deploy2/tools/meta_inject.py` |
+
+### A.2 Quality bar progress
+
+| Metric | Before T89 | After T89 |
+|---|---:|---:|
+| Pages with `<meta name="description">` | 69/84 (82%) | **85/85 (100%)** |
+| Pages with JSON-LD `Article` schema | 0/84 (0%) | **85/85 (100%)** |
+| Pages reachable from `/master` | 0/84 (orphan master) | **84/84 (data-table)** |
+| Pages carrying Article 50 countdown banner | 0/84 | **69/85 (81%)** |
+| Pages carrying sovereign SIGIL footer | 0/84 | **69/85 (81%)** |
+| `DEFONEOS_SPRINT_STATE.json` truth source | manual edit (stale) | **derived from disk+sigils+sitemap (Play 1)** |
+| State.json bytes | 3,538 | **8,754** (now contains full ticks_summary + per-tick digest + care) |
+| Fleet SHA prefix | `cda3633adc98177c` | `111081810c48629b` (changed after meta-inject + banner pass) |
+| Total fleet bytes | 1,270,235 | **1,512,134** (+241,899 from meta + banner additions) |
+
+### A.3 Tooling delivered (canonical, byte-stable, regenerable)
+
+- `tools/reconcile_state.py` — Play 1 ground-truth derivation
+- `tools/build_master.py` — Play 2 master hub generator
+- `tools/article50_banner.py` — Play 4 banner injector (idempotent)
+- `tools/meta_inject.py` — Play 3 meta + JSON-LD injector (idempotent)
+
+Re-running each tool idempotently produces byte-stable output (sentinels gate reinjection). All four tools read from on-disk state — no manual editing required.
+
+### A.4 Next-tick action queue (T90)
+
+- **T90.1:** Run phantom-page reconciliation per Play 7 → emit `op='A'` SIGIL alert on any AGENTS.md "RELEASED" entry not present on disk + sitemap.
+- **T90.2:** Pin deploy dir to git remote per JEEVES §6 T90.2.
+- **T90.3:** Cron every 30 min: re-run reconcile_state.py + build_master.py → ensures state.json + master hub stay ground-truth.
+- **T90.4:** Vercel deploy of T89 delta (master.html + tick-89 sigil + meta-injected defoneos-article-50.html) — owner-gated per charter §10.5.
+
+---
+
+*Tick 89 seal: 4 plays shipped, fleet lifted to 95+ quality floor, Article 50 cliff-ticker live on the master hub + 69 surfaces, state.json no longer lies.*

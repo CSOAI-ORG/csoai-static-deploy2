@@ -236,65 +236,58 @@ footer .sig{font-family:'SF Mono',monospace;font-size:.65rem;color:var(--cyan);w
 <section id="hermes-layer">
   <div class="container">
     <div class="hl-hero">
-      <span class="hl-eyebrow"><span class="dot"></span> · Hermes Layer · Agentic Runtime · Now Live on M2 / M4</span>
-      <h2>The runtime that <span class="grad">runs the empire.</span></h2>
-      <p class="lead">The Hermes Layer is the agentic OS beneath every sovereign surface. 4 parallel lanes · 1 Hz SIGIL capture · Ed25519 signed · Care Floor 0.95 · BFT 23/33. Open <code>/sov-space</code> to watch the substrate think in real time, or <code>/j-space</code> to enter your personal digital twin.</p>
+      <span class="hl-eyebrow"><span class="dot"></span> Live agentic runtime · M2 / M4</span>
+      <h2>Hermes Layer — <span class="grad">Agentic Runtime</span></h2>
+      <p class="lead">Four sovereign execution lanes coordinate strategy, code, interface delivery, and Apple-silicon builds beneath every CSOAI surface. Every observable runtime event is exposed through the live SIGIL stream.</p>
       <div class="hl-metrics">
-        <div class="hl-metric live"><span class="big">4</span><div class="lab">Parallel Lanes</div></div>
+        <div class="hl-metric live"><span class="big">4</span><div class="lab">Agent Lanes</div></div>
         <div class="hl-metric live"><span class="big">1 Hz</span><div class="lab">SIGIL Capture</div></div>
-        <div class="hl-metric live"><span class="big">86,400</span><div class="lab">SIGILs / Day</div></div>
         <div class="hl-metric live"><span class="big">23 / 33</span><div class="lab">BFT Quorum</div></div>
         <div class="hl-metric live"><span class="big">0.95</span><div class="lab">Care Floor</div></div>
-        <div class="hl-metric"><span class="big">2 ms</span><div class="lab">Finality</div></div>
       </div>
     </div>
 
-    <div class="hl-lanes">
-      <a href="/hermes-layer" class="hl-lane" style="text-decoration:none;color:inherit">
-        <span class="ico">🧠</span>
-        <h3>OOWM Lane</h3>
-        <p>Mamba-2 SSM (16-dim state) + 64-expert MoE + standard attention. 3,000 tok/s on M2. The thinking engine.</p>
-        <span class="lane-stat"><span class="live-dot"></span> ACTIVE · 3 mindsets live</span>
+    <div class="hl-lanes" aria-label="Hermes execution lanes">
+      <a href="#" class="hl-lane" style="text-decoration:none;color:inherit">
+        <span class="ico">🧭</span>
+        <h3>JEEVES</h3>
+        <p>Strategic orchestration, BFT council routing, sovereign synthesis, SIGIL emission, and EAT-tick ownership.</p>
+        <span class="lane-stat"><span class="live-dot"></span> STRATEGIC LANE</span>
       </a>
-      <a href="/sov-space" class="hl-lane" style="text-decoration:none;color:inherit">
-        <span class="ico">🌌</span>
-        <h3>SovSpace Lane</h3>
-        <p>7 UK sovereign locations teleoperating in real time. Telehouse London · Equinix Manchester · Heriot-Watt · Dounreay · Corsham · iOK · MEOK Labs.</p>
-        <span class="lane-stat"><span class="live-dot"></span> TELEMETRY · 1Hz</span>
+      <a href="#" class="hl-lane" style="text-decoration:none;color:inherit">
+        <span class="ico">🛠️</span>
+        <h3>Claude Code</h3>
+        <p>Autonomous engineering lane for TypeScript, Python, tests, debugging, review, and production delivery.</p>
+        <span class="lane-stat"><span class="live-dot"></span> BUILDER LANE</span>
       </a>
-      <a href="/j-space" class="hl-lane" style="text-decoration:none;color:inherit">
-        <span class="ico">🪞</span>
-        <h3>J-Space Lane</h3>
-        <p>Your digital twin. Memory persistence across all sessions. Sovereign consent ledger. Care-validated personality.</p>
-        <span class="lane-stat"><span class="live-dot"></span> TWIN · 61K msgs indexed</span>
+      <a href="#" class="hl-lane" style="text-decoration:none;color:inherit">
+        <span class="ico">🎨</span>
+        <h3>Kimi K2.5</h3>
+        <p>Vision-led frontend specialist for responsive interfaces, UI-to-code, Next.js, Tailwind, and motion.</p>
+        <span class="lane-stat"><span class="live-dot"></span> FRONTEND LANE</span>
       </a>
-      <a href="/hermes-layer#sigils" class="hl-lane" style="text-decoration:none;color:inherit">
-        <span class="ico">🔏</span>
-        <h3>SIGIL Lane</h3>
-        <p>Ed25519 hash-chained audit. Every agent action signed in &lt;2ms. Public-readable at <code>sigil.csoai.org</code>. OTS Bitcoin-anchored.</p>
-        <span class="lane-stat"><span class="live-dot"></span> LIVE · 86,400/day</span>
+      <a href="#" class="hl-lane" style="text-decoration:none;color:inherit">
+        <span class="ico">⚡</span>
+        <h3>soxoj M4</h3>
+        <p>Apple-silicon build lane for Metal, Core ML, Swift, Rust, quantisation, profiling, and native acceleration.</p>
+        <span class="lane-stat"><span class="live-dot"></span> M4 BUILD LANE</span>
       </a>
     </div>
 
-    <div class="hl-sigil-wrap">
+    <div class="hl-sigil-wrap" id="sigils">
       <div class="lab-row">
-        <span class="lbl"><span class="live-dot"></span> Live SIGIL Stream · Last 6 Sigils</span>
-        <span>1Hz · hash-chained</span>
+        <span class="lbl"><span class="live-dot"></span> Live SIGIL Stream</span>
+        <span><code>/api/hermes-stream</code> · auto-refresh</span>
       </div>
-      <div class="hl-sigil-stream" id="hl-sigil-stream">
-        <div class="hl-sigil-line"><span class="ts">13:42:11</span><span class="op">H</span><span class="actor">opus</span><span class="arrow">→</span><span class="actor">sov3</span><span class="arrow">·</span><span class="digest">Q-deploy master-hub upstream</span></div>
-        <div class="hl-sigil-line"><span class="ts">13:42:10</span><span class="op">V</span><span class="actor">claude-code</span><span class="arrow">→</span><span class="actor">defoneos</span><span class="arrow">·</span><span class="digest">care-validation 0.96 ✓</span></div>
-        <div class="hl-sigil-line"><span class="ts">13:42:09</span><span class="op">M</span><span class="actor">kimi</span><span class="arrow">→</span><span class="actor">bft-council</span><span class="arrow">·</span><span class="digest">vote:for · 28/33 quorum</span></div>
-        <div class="hl-sigil-line"><span class="ts">13:42:08</span><span class="op">P</span><span class="actor">orion</span><span class="arrow">→</span><span class="actor">csoai.org</span><span class="arrow">·</span><span class="digest">proposal #447 · sprint tick</span></div>
-        <div class="hl-sigil-line"><span class="ts">13:42:07</span><span class="op">C</span><span class="actor">sov3</span><span class="arrow">→</span><span class="actor">j-space</span><span class="arrow">·</span><span class="digest">memory.episode 1,481 commit</span></div>
-        <div class="hl-sigil-line"><span class="ts">13:42:06</span><span class="op">S</span><span class="actor">jit</span><span class="arrow">→</span><span class="actor">sov-space</span><span class="arrow">·</span><span class="digest">telehouse.london pulse</span></div>
+      <div class="hl-sigil-stream" id="hl-sigil-stream" aria-live="polite">
+        <div class="hl-sigil-line"><span class="ts">connecting</span><span class="op">H</span><span class="actor">hermes</span><span class="arrow">→</span><span class="digest">Fetching /api/hermes-stream…</span></div>
       </div>
     </div>
 
     <div class="hl-cta-row">
-      <a href="/hermes-layer" class="btn-purple">⚡ Enter the Hermes Layer</a>
-      <a href="/sov-space" class="btn-cyan-ghost">🌌 Open SovSpace</a>
-      <a href="/j-space" class="btn-cyan-ghost">🪞 Open J-Space</a>
+      <a href="#" class="btn-purple">⚡ Enter the Hermes Layer</a>
+      <a href="#" class="btn-cyan-ghost">🌌 Open SovSpace</a>
+      <a href="#" class="btn-cyan-ghost">🪞 Open J-Space</a>
     </div>
   </div>
 </section>
@@ -557,6 +550,34 @@ async function refreshOps() {
 }
 refreshOps();
 setInterval(refreshOps, 30000);
+
+// Live Hermes SIGIL stream
+const escapeHermes = (value) => String(value ?? '').replace(/[&<>"']/g, (char) => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
+async function refreshHermesStream() {
+  const streamEl = document.getElementById('hl-sigil-stream');
+  if (!streamEl) return;
+  try {
+    const response = await fetch('/api/hermes-stream?limit=6', { cache: 'no-store' });
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+    const payload = await response.json();
+    const rows = Array.isArray(payload.stream) ? payload.stream : [];
+    if (!rows.length) {
+      streamEl.innerHTML = '<div class="hl-sigil-line"><span class="ts">live</span><span class="op">H</span><span class="actor">hermes</span><span class="arrow">→</span><span class="digest">Connected · no SIGIL log entries yet</span></div>';
+      return;
+    }
+    streamEl.innerHTML = rows.map((row) => {
+      const time = row.timestamp ? new Date(row.timestamp).toLocaleTimeString([], { hour12: false }) : 'pending';
+      const actor = escapeHermes(row.agent || 'hermes');
+      const source = escapeHermes(row.source || 'runtime');
+      const digest = escapeHermes(row.digest || row.action || row.sigil_id || 'SIGIL event');
+      return `<div class="hl-sigil-line"><span class="ts">${escapeHermes(time)}</span><span class="op">H</span><span class="actor">${actor}</span><span class="arrow">→</span><span class="actor">${source}</span><span class="arrow">·</span><span class="digest">${digest}</span></div>`;
+    }).join('');
+  } catch (error) {
+    streamEl.innerHTML = `<div class="hl-sigil-line"><span class="ts">offline</span><span class="op">H</span><span class="actor">hermes</span><span class="arrow">→</span><span class="digest">Stream unavailable · ${escapeHermes(error.message)}</span></div>`;
+  }
+}
+refreshHermesStream();
+setInterval(refreshHermesStream, 30000);
 
 // Click tracking
 document.addEventListener('click', (e) => {

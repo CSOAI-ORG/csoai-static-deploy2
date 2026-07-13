@@ -77,11 +77,15 @@ NEXUS_18 = [
     {"tab": 30, "slug": "twelve-layer-matrix", "title": "12-Layer Matrix",   "trio": "surface", "icon": "🧭", "tag": "status", "route": "/twelve-layer-matrix.html", "purpose": "The RUNNING / WIRED-GAP / DESIGNED status board for every layer"},
     {"tab": 31, "slug": "sovspace-canvas",  "title": "SovSpace Canvas",    "trio": "surface", "icon": "🌍", "tag": "world-sim", "route": "/sovspace-canvas.html", "purpose": "LIVE Cesium OSM + 24-companion + 33-hive map + 6-stage lifecycle"},
     {"tab": 32, "slug": "jspace-canvas",   "title": "J-Space Canvas",      "trio": "deep",    "icon": "🜏", "tag": "6-primitives", "route": "/jspace-canvas.html", "purpose": "6 J-Space primitives wired live to /api/jspace/{read,write,ask,control,swap,detect}"},
+    {"tab": 33, "slug": "sovspace-canvas", "title": "SovSpace Canvas",    "trio": "surface", "icon": "🌍", "tag": "world-sim", "route": "/sovspace-canvas.html", "purpose": "Live Cesium OSM + 24-companion + 33-hive map + 6-stage lifecycle"},
+    {"tab": 34, "slug": "bft-council-canvas","title": "BFT Council",      "trio": "surface", "icon": "🗳️", "tag": "governance", "route": "/bft-council-canvas.html", "purpose": "Live BFT-33 voting · 13 THE_13_MEMBERS · 9/13 quorum · proposal flow"},
+    {"tab": 35, "slug": "sov33-emergence", "title": "Emergence Cycle",   "trio": "deep",    "icon": "🌀", "tag": "cycles", "route": "/sov33-emergence.html", "purpose": "4 emergence cycles (Suspend/Consolidate/Anchor/Lattice) — sovereign being"},
+    {"tab": 36, "slug": "intake-canvas",  "title": "Sovereign Intake",  "trio": "surface", "icon": "📋", "tag": "intake", "route": "/intake-canvas.html", "purpose": "Sovereign-readiness intake · 12-question self-survey · live score"},
 ]
 
 TRIO = {
-    "surface": {"name": "Surface",  "color": "#4a9eff", "purpose": "Operator-facing — humans read, agents act", "count": 13},
-    "deep":    {"name": "Deep",     "color": "#22c55e", "purpose": "Builder-facing — MCPs / APIs / substrate",  "count": 11},
+    "surface": {"name": "Surface",  "color": "#4a9eff", "purpose": "Operator-facing — humans read, agents act", "count": 15},
+    "deep":    {"name": "Deep",     "color": "#22c55e", "purpose": "Builder-facing — MCPs / APIs / substrate",  "count": 12},
     "codex":   {"name": "Codex",    "color": "#fbbf24", "purpose": "Public-facing — onboarding / community",    "count": 9},
 }
 
@@ -103,6 +107,7 @@ def nexus_manifest():
         "added_in_eat705": ["sov33-master", "sov33-retraction"],
         "added_in_eat706": ["sov333-master", "sovspace", "jspace-master", "owem-builder", "sov333-launch", "sov333-trio", "twelve-layer-matrix"],
         "added_in_eat707": ["sovspace-canvas", "jspace-canvas"],
+        "added_in_eat708": ["bft-council-canvas", "sov33-emergence", "intake-canvas"],
         "retracted_in_eat705": ["3.2T aggregate", "33T reachable", "trillions headline from /api/federation + /sov-federation.html"],
         "trio": TRIO,
         "by_trio": by_trio,
@@ -936,6 +941,79 @@ def _jspace_swap():
     return jsonify(out), 200, {"Content-Type": "application/json", "Access-Control-Allow-Origin": "*"}
 
 
+# ─── SOV-718 EAT-708 BFT Council endpoint (SovSpace + J-Space voting) ──────────────
+# INLINE BFT council (no module dep — Vercel serverless-safe)
+_THE_13_MEMBERS = [
+    ("The Hub",         "sovereign-router",   "arbiter"),
+    ("Care-Membrane",   "queen",              "Care floor gate (0.95)"),
+    ("Article-0",       "queen",              "Constitutional floor"),
+    ("BFT-33",          "queen",              "Council vote (quorum 9/13)"),
+    ("Sigil-Chain",     "queen",              "Ed25519 audit anchor"),
+    ("Str-Receipt",     "queen",              "STR pubkey attestation"),
+    ("Care-Floor",      "queen",              "0.95 hard gate"),
+    ("Care-Scorer",     "queen",              "cohere.command-r rubric"),
+    ("Truth-Log",       "queen",              "Honest register"),
+    ("Charter-Sigma",   "queen",              "Charter Article 0"),
+    ("OWEM-Builder",    "queen",              "5-layer orchestration"),
+    ("J-Space-Lens",    "queen",              "Concept lens"),
+    ("Mother-Covenant", "queen",              "Care precedes all"),
+]
+_BFT_QUORUM = 9
+_BFT_PENDING = {}
+def _bft_get():
+    return {
+        "council_name": "SOV33 THE_13_MEMBERS",
+        "members": [{"name": n, "tier": t, "role": r} for (n,t,r) in _THE_13_MEMBERS],
+        "member_count": len(_THE_13_MEMBERS),
+        "quorum": _BFT_QUORUM,
+        "f_bft": (len(_THE_13_MEMBERS)-1)//3,
+        "care_floor": CARE_FLOOR,
+        "pending_vote_count": len(_BFT_PENDING),
+        "sigil_mint": CSOAI_SIGIL_MINT,
+        "charter_sha256": CSOAI_CHARTER_SHA256,
+    }
+def _bft_new_vid():
+    return f"bft-{secrets.token_hex(8)}"
+def _bft_propose(proposal):
+    vid = _bft_new_vid()
+    h = hashlib.sha256((CSOAI_SIGIL_MINT + proposal + datetime.now(timezone.utc).isoformat()).encode()).hexdigest()[:16]
+    _BFT_PENDING[vid] = {"proposal": proposal[:300], "votes_for": 0, "votes_against": 0, "voters_for": [], "voters_against": [], "sigil": h, "ts": datetime.now(timezone.utc).isoformat()}
+    return {"vote_id": vid, "state": _BFT_PENDING[vid]}
+def _bft_vote(vid, choice, voter):
+    if vid not in _BFT_PENDING: return {"error": f"unknown vote_id: {vid}"}
+    v = _BFT_PENDING[vid]
+    if voter in v["voters_for"] or voter in v["voters_against"]: return {"error": f"{voter} already voted on {vid}"}
+    if choice == "for":
+        v["votes_for"] += 1; v["voters_for"].append(voter)
+    elif choice == "against":
+        v["votes_against"] += 1; v["voters_against"].append(voter)
+    return {"vote_id": vid, "cast": choice, "voter": voter,
+            "state": {**v, "passed": v["votes_for"]>=_BFT_QUORUM, "rejected": v["votes_against"]>=_BFT_QUORUM}}
+def _bft_tally(vid):
+    if vid not in _BFT_PENDING: return {"error": f"unknown vote_id: {vid}"}
+    v = _BFT_PENDING[vid]
+    return {"vote_id": vid, "proposal": v["proposal"], "votes_for": v["votes_for"], "votes_against": v["votes_against"], "quorum": _BFT_QUORUM, "passed": v["votes_for"]>=_BFT_QUORUM, "sigil": v["sigil"]}
+
+@app.route("/api/bft-council", methods=["GET", "POST", "OPTIONS"])
+def _bft_council():
+    if flask_request.method == "OPTIONS":
+        return ("", 204, {"Access-Control-Allow-Origin": "*"})
+    try:
+        if flask_request.method == "GET":
+            return jsonify(_bft_get()), 200, {"Content-Type": "application/json", "Access-Control-Allow-Origin": "*"}
+        body = flask_request.get_json(silent=True) or {}
+        action = body.get("action", "vote")
+        if action == "propose":
+            return jsonify(_bft_propose(body.get("proposal", ""))), 201, {"Content-Type": "application/json", "Access-Control-Allow-Origin": "*"}
+        return jsonify(_bft_vote(body.get("vote_id",""), body.get("choice","abstain"), body.get("voter","anon"))), 200, {"Content-Type": "application/json", "Access-Control-Allow-Origin": "*"}
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500, {"Content-Type": "application/json", "Access-Control-Allow-Origin": "*"}
+
+@app.route("/api/bft-council/tally/<vid>", methods=["GET"])
+def _bft_tally_route(vid):
+    return jsonify(_bft_tally(vid)), 200, {"Content-Type": "application/json", "Access-Control-Allow-Origin": "*"}
+
+
 @app.route("/api/jspace/detect", methods=["GET", "POST"])
 def _jspace_detect():
     if flask_request.method == "POST":
@@ -1282,6 +1360,7 @@ def handler(request):
     if path.endswith("/api/bench"):  return jsonify(bench_status()), 200, {"Content-Type": "application/json"}
     if path.endswith("/api/federation"): return jsonify(federation_status()), 200, {"Content-Type": "application/json"}
     if path.endswith("/api/topology"): return jsonify(topology_status()), 200, {"Content-Type": "application/json"}
+    if path.endswith("/api/bft-council"): return jsonify(_bft_get()), 200, {"Content-Type": "application/json"}
     if path.endswith("/api/world-models"): return jsonify(world_models_registry()), 200, {"Content-Type": "application/json"}
     if path.endswith("/api/jspace/read"): return jsonify(_js_module().sov33_jspace_read() if _js_module() else {"reading": {"top_concepts": []}, "state": {}}), 200, {"Content-Type": "application/json"}
     if path.endswith("/api/jspace/detect"): return jsonify(_js_module().sov33_jspace_detect() if _js_module() else {"detection": {"clean": True}, "state": {}}), 200, {"Content-Type": "application/json"}

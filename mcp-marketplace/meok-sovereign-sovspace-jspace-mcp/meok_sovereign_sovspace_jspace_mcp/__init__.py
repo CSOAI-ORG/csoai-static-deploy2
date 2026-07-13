@@ -31,18 +31,25 @@ CARE_FLOOR = 0.95
 
 # Import the sibling-shipped sov33_jspace.py module so we expose its 6 tools.
 def _import_jspace():
+    """EAT-708: prefer vendored copy (relative path), fall back to absolute paths."""
+    import importlib.util
     here = Path(__file__).resolve().parent
     candidates = [
+        # VENDORED (ships with the MCP — works in any runtime, serverless-safe)
+        here / "_vendor" / "sov33_jspace.py",
+        # ABSOLUTE FALLBACKS (dev/live only)
         here.parent.parent.parent / "_alignment" / "sovereign_merge_kit" / "jspace" / "sov33_jspace.py",
         Path("/Users/nicholas/clawd/_alignment/sovereign_merge_kit/jspace/sov33_jspace.py"),
     ]
-    import importlib.util
     for p in candidates:
-        if p.exists():
-            spec = importlib.util.spec_from_file_location("_sov33_jspace_module", str(p))
-            mod = importlib.util.module_from_spec(spec)
-            spec.loader.exec_module(mod)
-            return mod
+        try:
+            if p.exists():
+                spec = importlib.util.spec_from_file_location("_sov33_jspace_module", str(p))
+                mod = importlib.util.module_from_spec(spec)
+                spec.loader.exec_module(mod)
+                return mod
+        except Exception:
+            continue
     raise RuntimeError("sov33_jspace.py not found in known locations")
 
 _JS = _import_jspace()
