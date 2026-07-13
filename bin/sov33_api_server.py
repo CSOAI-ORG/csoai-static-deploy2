@@ -1831,6 +1831,10 @@ class SovereignAPIHandler(BaseHTTPRequestHandler):
             return json_response(self, 200, handle_capabilities())
         elif path == '/api/registry':
             return json_response(self, 200, handle_registry())
+        elif path == '/api/hermes/tools':
+            return json_response(self, 200, handle_hermes_tools({}))
+        elif path == '/api/hermes/state':
+            return json_response(self, 200, handle_hermes_state({}))
         elif path == '/api/evals':
             return json_response(self, 200, handle_evals())
         elif path == '/api/brain-stack':
@@ -1979,7 +1983,7 @@ class SovereignAPIHandler(BaseHTTPRequestHandler):
         elif path == '/api/hermes/tools':
             return json_response(self, 200, handle_hermes_tools(payload))
         elif path == '/api/hermes/state':
-            return json_response(self, 200, handle_hermes_state(payload))
+            return json_response(self, 200, handle_hermes_state({}))
         else:
             return json_response(self, 404, {'error': f'unknown path: {path}'})
 
