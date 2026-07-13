@@ -81,6 +81,10 @@ NEXUS_18 = [
     {"tab": 34, "slug": "bft-council-canvas","title": "BFT Council",      "trio": "surface", "icon": "🗳️", "tag": "governance", "route": "/bft-council-canvas.html", "purpose": "Live BFT-33 voting · 13 THE_13_MEMBERS · 9/13 quorum · proposal flow"},
     {"tab": 35, "slug": "sov33-emergence", "title": "Emergence Cycle",   "trio": "deep",    "icon": "🌀", "tag": "cycles", "route": "/sov33-emergence.html", "purpose": "4 emergence cycles (Suspend/Consolidate/Anchor/Lattice) — sovereign being"},
     {"tab": 36, "slug": "intake-canvas",  "title": "Sovereign Intake",  "trio": "surface", "icon": "📋", "tag": "intake", "route": "/intake-canvas.html", "purpose": "Sovereign-readiness intake · 12-question self-survey · live score"},
+    {"tab": 37, "slug": "bft33-council-canvas",  "title": "BFT-33 Council",      "trio": "deep",     "icon": "⚖️", "tag": "33 voters",   "route": "/bft33-council-canvas.html", "purpose": "Canonical 33-voter sovereign council · 5 lineages × 4 temps · 23/33 quorum · live SIGIL tally"},
+    {"tab": 38, "slug": "owem5x4x3",            "title": "OWEM 5×4×3",         "trio": "deep",     "icon": "🔮", "tag": "60 voters",   "route": "/owem5x4x3.html",          "purpose": "Canonical 5 brains × 4 voices × 3 voters = 60 (40 sovereign) · 96% OK · sibling-shipped topology"},
+    {"tab": 39, "slug": "sovereign-intake",     "title": "Sovereign Intake v1", "trio": "deep",     "icon": "📋", "tag": "portable",    "route": "/sovereign-intake.html",    "purpose": "Portable sovereign-readiness intake · 12 questions · 8 pillars · 4 grades · portable across Vercel projects"},
+    {"tab": 40, "slug": "benchmark-dash",       "title": "Benchmark Dashboard", "trio": "deep",     "icon": "📊", "tag": "13/55 base",  "route": "/benchmark-dashboard.html", "purpose": "Honest 13/55 standard baseline + 96% sovereign 5x4x3 overlay · 4 standard benchmarks + Charter-QA"},
 ]
 
 TRIO = {
