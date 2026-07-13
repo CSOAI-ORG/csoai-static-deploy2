@@ -2,13 +2,13 @@
 import json, time, os, sys
 from datetime import datetime
 
-PASS = 0; FAIL = 0
+PASS = 0; FAIL = 0; FAILS = []
 def t(name, fn):
-    global PASS, FAIL
+    global PASS, FAIL, FAILS
     try: ok = fn()
-    except Exception as e: ok = False
+    except: ok = False
     if ok: PASS += 1
-    else: FAIL += 1
+    else: FAIL += 1; FAILS.append(name)
 
 print("=== P1: CORE SUBSTRATE (10) ===")
 local_files = ['fable5_recovery_agent.py', 'loop_factory.py', 'l6_middleware.py',
@@ -122,4 +122,7 @@ for h in ['No false 100/100 claims','Verifier deterministic','Scores conservativ
 print("\n" + "="*60)
 total = PASS + FAIL
 print(f"OWEM E2E SUITE: {PASS}/{total} PASS ({100*PASS//total if total else 0}%)")
+if FAILS:
+    print("\nFailures:")
+    for f in FAILS: print(f"  - {f}")
 print("="*60)
