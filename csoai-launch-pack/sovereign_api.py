@@ -23,7 +23,20 @@ from pathlib import Path
 from typing import Optional
 
 # Ed25519 via PyNaCl (libsodium-grade) — RFC 8032 §7.1 verified
-import nacl.signing
+# Fallback ladder: nacl → cryptography → HMAC-SHA256 (chainable)
+try:
+    import nacl.signing
+    _HAVE_NACL = True
+except Exception:
+    _HAVE_NACL = False
+    import hmac as _hmac_mod
+
+try:
+    from cryptography.hazmat.primitives.asymmetric.ed25519 import Ed25519PrivateKey
+    from cryptography.hazmat.primitives import serialization as _ser
+    _HAVE_CRYPTOGRAPHY = True
+except Exception:
+    _HAVE_CRYPTOGRAPHY = False
 
 # ----------------------------------------------------------------------
 # 0. SOVEREIGN TRUST ROOT (Charter Art 3)
@@ -146,8 +159,62 @@ SIGIL_CHAIN_FILE.parent.mkdir(parents=True, exist_ok=True)
 
 # Generate STR privkey for signing (or use a deterministic one)
 _SOVEREIGN_STR_SEED = hashlib.sha256(b"sovereign-layer-zero-csoai-charter-v1-privkey-2026-07-07").digest()[:32]
-_SOVEREIGN_STR_SK = nacl.signing.SigningKey(_SOVEREIGN_STR_SEED)
-_SOVEREIGN_STR_VK = _SOVEREIGN_STR_SK.verify_key
+
+if _HAVE_NACL:
+    _SOVEREIGN_STR_SK = nacl.signing.SigningKey(_SOVEREIGN_STR_SEED)
+    _SOVEREIGN_STR_VK = _SOVEREIGN_STR_SK.verify_key
+    _SIGIL_BACKEND = "nacl/ed25519"
+elif _HAVE_CRYPTOGRAPHY:
+    _SOVEREIGN_STR_SK = Ed25519PrivateKey.from_private_bytes(_SOVEREIGN_STR_SEED)
+    _SIGIL_BACKEND = "cryptography/ed25519"
+else:
+    _SOVEREIGN_STR_SK = None  # HMAC fallback
+    _SIGIL_BACKEND = "hmac-sha256-fallback"
+
+
+class _SovereignSigner:
+    """Unified signer: nacl, cryptography, or HMAC fallback.
+    All expose .sign(canonical_bytes) -> .signature.hex()"""
+    if _HAVE_NACL:
+        @staticmethod
+        def sign(data: bytes):
+            sig = _SOVEREIGN_STR_SK.sign(data).signature
+            class _S:
+                signature = sig
+            return _S()
+    elif _HAVE_CRYPTOGRAPHY:
+        @staticmethod
+        def sign(data: bytes):
+            raw = _SOVEREIGN_STR_SK.sign(data)
+            class _S:
+                signature = raw
+            return _S()
+    else:
+        @staticmethod
+        def sign(data: bytes):
+            sig = _hmac_mod.new(_SOVEREIGN_STR_SEED, data, hashlib.sha256).digest()
+            class _S:
+                signature = sig
+            return _S()
+
+
+def _sovereign_sign(data: bytes) -> bytes:
+    """Sign data → raw signature bytes."""
+    return _SovereignSigner.sign(data).signature
+
+
+def _sovereign_pubkey_hex() -> str:
+    """Return the public key hex (or HMAC tag identifier)."""
+    if _HAVE_NACL:
+        return _SOVEREIGN_STR_VK.encode().hex()
+    elif _HAVE_CRYPTOGRAPHY:
+        pub = _SOVEREIGN_STR_SK.public_key()
+        return pub.public_bytes(
+            encoding=_ser.Encoding.Raw,
+            format=_ser.PublicFormat.Raw,
+        ).hex()
+    else:
+        return hashlib.sha256(_SOVEREIGN_STR_SEED).hexdigest()[:64]
 
 
 def sigil_emit(op: str, intent: str, body: dict, prev_sig: Optional[str] = None) -> dict:
@@ -164,7 +231,7 @@ def sigil_emit(op: str, intent: str, body: dict, prev_sig: Optional[str] = None)
     digest_seed = f"{op}|{ts}|{intent}|{json.dumps(body, sort_keys=True)}|{prev_sig}"
     digest = hashlib.sha256(digest_seed.encode()).hexdigest()[:16]
     canonical = f"{prev_sig}|{digest}".encode()
-    sig = _SOVEREIGN_STR_SK.sign(canonical).signature.hex()
+    sig = _sovereign_sign(canonical).hex()
 
     entry = {
         "op": op,
@@ -174,8 +241,8 @@ def sigil_emit(op: str, intent: str, body: dict, prev_sig: Optional[str] = None)
         "digest": digest,
         "prev_sig": prev_sig,
         "signature": sig,
-        "alg": "ed25519",
-        "pubkey": _SOVEREIGN_STR_VK.encode().hex(),
+        "alg": _SIGIL_BACKEND,
+        "pubkey": _sovereign_pubkey_hex(),
         "realm": "public-sovereign-layer-zero",
     }
     with open(SIGIL_CHAIN_FILE, "a") as f:

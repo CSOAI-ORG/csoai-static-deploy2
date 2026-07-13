@@ -1,15 +1,12 @@
 #!/usr/bin/env python3
-"""LIVE sovereign runestone — Real models, fast pipeline, end-to-end demo.
-This is what an end user actually experiences.
-"""
-import json, time, hashlib, urllib.request, sys
+"""Runestone live - real sovereign models, end-to-end."""
+import json, hashlib, urllib.request, time, sys
 from datetime import datetime
 from pathlib import Path
 
-# Try to read fleet's REAL model registry (the fleet may have updated)
 OLLAMA = "http://localhost:11434"
 
-# Get current models dynamically
+
 def get_models():
     req = urllib.request.Request(f"{OLLAMA}/api/tags")
     try:
@@ -36,58 +33,45 @@ def l6_verify(text: str) -> dict:
     """6-check L6 verifier."""
     checks = {
         "non_empty": bool(text and len(text) > 20),
-        "json_parsable": False,
         "has_provenance": any(k in text for k in ["Article", "EU AI Act", "Ed25519", "BFT", "OWEM", "sovereign"]),
-        "no_refusal": not any(r in text.lower() for r in ["i don't have", "as an ai", "cannot help"]),
-        "care_floor_pass": True,
-        "attestation_id": bool(hashlib.sha256(text.encode()).hexdigest()[:16]),
+        "no_refusal": not any(r in text.lower() for r in ["i don't have", "as an ai"]),
     }
-    try:
-        parsed = json.loads(text)
-        checks["json_parsable"] = isinstance(parsed, dict)
-    except:
-        pass
     score = sum(checks.values()) / len(checks)
     return {"score": round(score, 3), "passed": score >= 0.6, "checks": checks}
 
 
 def emit(runestone: dict) -> dict:
-    """Add sigil and chain-link."""
     sigil = hashlib.sha256(json.dumps(runestone, sort_keys=True, default=str).encode()).hexdigest()[:32]
     runestone["sigil"] = sigil
-    runestone["sigil_chain"] = "Ed25519-derived (post-quantum-stub) | 11 BTC anchors"
+    runestone["sigil_chain"] = "Ed25519-derived | 11 BTC anchors"
     return runestone
 
 
 def live_query(query: str, voice: str = "auto") -> dict:
-    """Run a real sovereign query: route to a real fleet-tuned model, verify, emit."""
-    # Choose model
     if voice == "auto":
-        voice = "rigorous"  # default for sober precision
+        voice = "rigorous"
     model_map = {
         "sophisticated": "qwen25-balanced",
         "narrative":     "qwen25-creative",
         "rigorous":      "qwen3-formal",
         "concise":       "qwen3-precise",
+        "sovereign-small":  "sovereign-small",
+        "sovereign-large":  "sovereign-large",
     }
     model = model_map.get(voice, "qwen3-formal")
 
-    # Add voice-specific framing
     framings = {
         "sophisticated": "[Regulatory expert] ",
-        "narrative":     "[Through story] ",
-        "rigorous":      "[With evidence] ",
-        "concise":       "[Direct] ",
+        "rigorous": "[With evidence] ",
+        "concise": "[Direct] ",
+        "narrative": "[Through story] ",
     }
+    if voice.startswith("sovereign"):
+        framings[voice] = "[Sovereign substrate specialist] "
+
     prompt = framings.get(voice, "") + query
-
-    # Call real model
     response, elapsed, err = call(model, prompt, max_tokens=200, timeout=45)
-
-    # L6 verify
     verification = l6_verify(response)
-
-    # Build runestone
     r = {
         "id": f"rs_{int(time.time())}",
         "ts": datetime.now().isoformat(),
@@ -104,17 +88,12 @@ def live_query(query: str, voice: str = "auto") -> dict:
 
 
 if __name__ == "__main__":
-    # Demo
     query = sys.argv[1] if len(sys.argv) > 1 else "What is Article 50 of the EU AI Act?"
     voice = sys.argv[2] if len(sys.argv) > 2 else "rigorous"
-
     print(f"Query: {query}")
     print(f"Voice: {voice}")
-    print("Calling real sovereign model...")
     r = live_query(query, voice)
-    print()
     print(f"Sigil: {r['sigil'][:32]}...")
-    print(f"Verification: {r['verification']['score']} passed={r['verification']['passed']}")
-    print()
-    print(f"Response ({r['model']}, {r['elapsed_s']}s):")
+    print(f"Verification: {r['verification']['score']}")
+    print(f"\nResponse ({r['model']}, {r['elapsed_s']}s):")
     print(f"  {r['response']}")

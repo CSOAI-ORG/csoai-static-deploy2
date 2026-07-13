@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SOV33 Inference Quality Dashboard — p50/p95/p99 · Throughput · Sigil Rate · Care Floor</title>
+<meta name="description" content="Live SOV33 inference quality dashboard: p50 / p95 / p99 token latency, throughput, SIGIL emit rate, care-score floor, throughput-vs-load, and per-tier benchmark deltas. Crown-grade measurement surface.">
+<meta name="theme-color" content="#0a0e1a">
+<meta name="sov-sigil" content="DEFONEOS-SOV33-inference-quality-2026-07-13-init">
+<meta name="sov-version" content="1.0">
+<meta name="sov-kind" content="Inference Quality Dashboard">
+<meta name="sov-publisher" content="CSOAI Ltd (UK Co. 16939677)">
+<meta name="sov-deploy" content="Vercel prod / csoai-static-deploy2">
+<link rel="canonical" href="https://csoai-static-deploy2.vercel.app/SOV33_INFERENCE_QUALITY.html">
+<style>
+:root{
+  --bg:#0a0e1a;--ink:#e7ecf3;--mute:#9aa6b8;
+  --gold:#d4af37;--acc:#00ff9d;--red:#fb7185;--amber:#f5a524;
+  --line:rgba(255,255,255,.08);--card:rgba(255,255,255,.03);
+  --ok:#10b981;
+}
+*{box-sizing:border-box}
+body{margin:0;font:15px/1.55 ui-sans-serif,system-ui,-apple-system,Segoe UI,Inter,sans-serif;background:var(--bg);color:var(--ink)}
+.wrap{max-width:1320px;margin:0 auto;padding:32px 24px 96px}
+header{display:flex;align-items:center;justify-content:space-between;gap:16px;border-bottom:1px solid var(--line);padding-bottom:14px;margin-bottom:28px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:12px;font-weight:700;letter-spacing:.5px}
+.brand .dot{width:10px;height:10px;background:var(--acc);border-radius:50%;box-shadow:0 0 16px var(--acc)}
+h1{font-size:30px;line-height:1.2;margin:6px 0 8px}
+h2{font-size:22px;margin:36px 0 10px;padding-bottom:6px;border-bottom:1px solid var(--line);color:var(--gold)}
+h3{font-size:16px;margin:22px 0 8px;color:var(--gold)}
+p,li{color:var(--ink)}
+.muted{color:var(--mute)}
+.badge{display:inline-block;padding:2px 8px;border:1px solid var(--line);border-radius:999px;font-size:11px;color:var(--mute);letter-spacing:.4px;text-transform:uppercase;margin-right:6px}
+.badge.gold{color:var(--gold);border-color:rgba(212,175,55,.35)}
+.badge.acc{color:var(--acc);border-color:rgba(0,255,157,.35)}
+.badge.red{color:var(--red);border-color:rgba(251,113,133,.35)}
+.badge.amber{color:var(--amber);border-color:rgba(245,165,36,.35)}
+.badge.ok{color:var(--ok);border-color:rgba(16,185,129,.35)}
+.meta{font-size:12px;color:var(--mute);text-align:right;line-height:1.5}
+.card{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:18px 20px;margin:14px 0}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.grid6{display:grid;grid-template-columns:repeat(6,1fr);gap:10px}
+.kpi{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:14px;text-align:center}
+.kpi .n{font-size:26px;font-weight:700;color:var(--gold);letter-spacing:.5px}
+.kpi .l{font-size:11px;color:var(--mute);text-transform:uppercase;letter-spacing:.4px;margin-top:4px}
+.kpi.green .n{color:var(--ok)}
+.kpi.red .n{color:var(--red)}
+.kpi.amber .n{color:var(--amber)}
+table{width:100%;border-collapse:collapse;margin:14px 0;font-size:13px}
+th,td{padding:9px 11px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+th{color:var(--gold);font-weight:600;background:rgba(212,175,55,.04)}
+tr:hover td{background:rgba(255,255,255,.02)}
+code{background:rgba(0,255,157,.06);color:var(--acc);padding:1px 6px;border-radius:4px;font:13px ui-monospace,SFMono-Regular,Menlo,monospace}
+a{color:var(--acc);text-decoration:none;border-bottom:1px dotted rgba(0,255,157,.4)}
+a:hover{border-bottom-style:solid}
+blockquote{border-left:3px solid var(--gold);padding:10px 16px;margin:14px 0;color:var(--ink);background:rgba(212,175,55,.04)}
+footer{margin-top:60px;padding-top:20px;border-top:1px solid var(--line);font-size:12px;color:var(--mute)}
+hr{border:0;border-top:1px solid var(--line);margin:24px 0}
+.acc{color:var(--acc)}
+.gold{color:var(--gold)}
+.red{color:var(--red)}
+.green{color:var(--ok)}
+.amber{color:var(--amber)}
+.swatch{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:4px;vertical-align:middle}
+.swatch.green{background:var(--ok)}
+.swatch.gold{background:var(--gold)}
+.swatch.amber{background:var(--amber)}
+.swatch.red{background:var(--red)}
+.spark{display:flex;align-items:flex-end;height:60px;gap:2px;margin-top:8px}
+.spark .bar{width:6px;background:var(--acc);opacity:.7;border-radius:1px 1px 0 0}
+.spark .bar.amber{background:var(--amber)}
+.spark .bar.red{background:var(--red)}
+.spark .bar.green{background:var(--ok)}
+@media(max-width:780px){.grid2,.grid3,.grid4,.grid6{grid-template-columns:1fr 1fr}}
+</style>
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"WebPage",
+  "name":"SOV33 Inference Quality Dashboard",
+  "publisher":{"@type":"Organization","name":"CSOAI Ltd","identifier":"UK 16939677"},
+  "dateModified":"2026-07-13",
+  "about":"p50/p95/p99 inference latency, throughput, SIGIL emit rate, care-score floor, throughput-vs-load, and per-tier benchmark deltas for the SOV33 sovereign fleet.",
+  "inLanguage":"en-GB"
+}
+</script>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <div>
+    <div class="brand"><span class="dot"></span>SOV33 · Sovereign Inference Substrate</div>
+    <h1>SOV33 Inference Quality Dashboard</h1>
+    <div class="muted" style="font-size:13px">Latency · Throughput · Sigil Rate · Care Floor. Measured at the M2 + M4 substrate, 2026-07-13 11:55 BST, cycle 90.</div>
+  </div>
+  <div class="meta">
+    <span class="badge acc">v1.0</span>
+    <span class="badge gold">Crown grade</span>
+    <span class="badge">BFT-33</span><br>
+    Window: last 25 ticks (~37.5 h)<br>
+    Re-poll: every 30 min cron
+  </div>
+</header>
+
+<blockquote>
+<strong>Purpose.</strong> Sovereign AI without measurement is just a pitch. This dashboard is the single source of truth for every quantitative performance claim about SOV33 / SOV3 / DEFONEOS inference. Every number below is reproducible from <code>meok-evals/inference_bench.jsonl</code> and the SIGIL receipt chain. Where a number is a <em>target</em> rather than an observation, it is explicitly marked with a <span class="swatch amber"></span> amber swatch. Where a number is a <em>model projection</em> (e.g. MLX vs Ollama) it carries a <span class="swatch gold"></span> gold swatch.
+</blockquote>

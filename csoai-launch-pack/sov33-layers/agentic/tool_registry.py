@@ -107,6 +107,9 @@ def score_tool(query: str) -> dict:
 def dispatch(tool_name: str, **kwargs) -> dict:
     """Dispatch a tool, log to sovereign chain.
 
+    GAP C FIXED: now actually calls sovereign_api.assess() for the assess tool.
+    Other tools still mint sigils only (honest stubs).
+
     Tools with care_floor < CARE_FLOOR (e.g. care.check is itself a probe,
     not an authority action) are exempt from the strict 0.95 gate. The
     veto is logged with force_log=True so the audit trail captures the event.
@@ -120,6 +123,34 @@ def dispatch(tool_name: str, **kwargs) -> dict:
     body = {"tool": tool_name, "params": kwargs, "care_floor": t["care_floor"], "via": "agentic"}
     # Tools whose floor is < 0.95 are PROBES — log them but don't veto
     is_probe = t["care_floor"] < CARE_FLOOR
+
+    # GAP C FIX: actually call sovereign_api for the assess tool
+    if tool_name == "sovereign.assess":
+        try:
+            import subprocess
+            result = subprocess.run(
+                ["python3", "-c", f"""
+import sys; sys.path.insert(0, '{ROOT}')
+import sovereign_api as sa
+key = sa.signup("agent@csoai.org")["api_key"]
+out = sa.assess(key, system="{kwargs.get('system', 'default')}",
+                mindset="{kwargs.get('mindset', 'meta')}",
+                jurisdiction="{kwargs.get('jurisdiction', 'EU')}")
+import json; print(json.dumps({{"digest": out.get("sigil_digest","")[:24],
+                                "model": out.get("model",""),
+                                "mindset": out.get("mindset",""),
+                                "response_len": len(out.get("response",""))}}))
+"""],
+                capture_output=True, text=True, timeout=120,
+                cwd=str(ROOT),
+            )
+            if result.returncode == 0:
+                body["real_dispatch_result"] = result.stdout.strip()
+            else:
+                body["real_dispatch_error"] = result.stderr.strip()[:200]
+        except Exception as e:
+            body["real_dispatch_error"] = str(e)[:200]
+
     rec = mint_op(
         LAYER, "TOOL_DISPATCH", tool_name, body,
         care_value=CARE_FLOOR if is_probe else t["care_floor"],

@@ -16,6 +16,8 @@ import tempfile as _tf
 
 os.environ.pop('PYTHONPATH', None)
 os.environ['HF_HOME'] = '/Users/nicholas/.sovereign/hf_cache'
+os.environ['HF_HUB_OFFLINE'] = '1'
+os.environ['TRANSFORMERS_OFFLINE'] = '1'
 sys.path.insert(0, '/Users/nicholas/.sovereign/ml-venv/lib/python3.11/site-packages')
 sys.path.insert(0, '/Users/nicholas/clawd/_alignment/sovereign_merge_kit')
 
@@ -30,7 +32,7 @@ from peft import LoraConfig, get_peft_model, TaskType
 OUTPUT_DIR = Path('/Users/nicholas/.sovereign/models/sov33-large-world')
 SIGIL_FILE = Path('/Users/nicholas/.sovereign/sov33_large_full.sigil.jsonl')
 DATA_PATH = '/Users/nicholas/clawd/_alignment/sovereign_merge_kit/sov_owem_data/sov33_large_world_corpus.jsonl'
-BASE_MODEL = '/Users/nicholas/.sovereign/hf_cache/hub/models--Qwen--Qwen2.5-0.5B/snapshots/c1899de289a04d12100db370d81485cdf75e47ca'
+BASE_MODEL = '/Users/nicholas/.sovereign/hf_cache/hub/models--Qwen--Qwen2.5-0.5B/snapshots/060db6499f32faf8b98477b0a26969ef7d8b9987'
 
 
 def sigil_emit(hop):
@@ -86,6 +88,8 @@ def train():
         torch_dtype=torch.float32,
         device_map='cpu',
         trust_remote_code=True,
+        cache_dir='/Users/nicholas/.sovereign/hf_cache/hub',
+        local_files_only=True,
     )
     print(f"  ✓ Model loaded")
     
