@@ -489,6 +489,43 @@ def handle_3around1_benchmark(payload=None) -> dict:
         return {'error': f'3around1_benchmark failed: {e}'}
 
 
+# ============================================================
+# 4-BRAIN 3-AROUND-1 OWEM HANDLERS (12 voters per query)
+# ============================================================
+
+def handle_4brain3(payload: dict) -> dict:
+    """POST /api/owem4x3 — full 4-brain 3-around-1 run (12 voters)."""
+    try:
+        sys.path.insert(0, '/Users/nicholas/clawd/_alignment/sovereign_merge_kit/owem3')
+        from sov33_4brain_3around1 import handle_4brain3around1 as _h
+        return _h(payload)
+    except Exception as e:
+        return {'error': f'4brain3 failed: {e}'}
+
+
+def handle_4brain3_state(payload=None) -> dict:
+    """GET /api/owem4x3/state."""
+    try:
+        sys.path.insert(0, '/Users/nicholas/clawd/_alignment/sovereign_merge_kit/owem3')
+        from sov33_4brain_3around1 import handle_4brain3around1_state as _h
+        return _h(payload or {})
+    except Exception as e:
+        return {'error': f'4brain3_state failed: {e}'}
+
+
+def handle_4brain3_benchmark(payload=None) -> dict:
+    """GET /api/owem4x3/benchmark."""
+    try:
+        import json
+        from pathlib import Path
+        bench_path = Path('/Users/nicholas/clawd/_alignment/sovereign_merge_kit/benchmarks/4brain3around1_benchmark_2026-07-13.json')
+        if bench_path.exists():
+            return json.loads(bench_path.read_text())
+        return {'error': 'no benchmark run yet'}
+    except Exception as e:
+        return {'error': f'4brain3_benchmark failed: {e}'}
+
+
 def handle_nodes() -> dict:
     """GET /api/nodes — list sovereign network nodes."""
     return {
@@ -1931,6 +1968,10 @@ class SovereignAPIHandler(BaseHTTPRequestHandler):
             return json_response(self, 200, handle_3around1_state({}))
         elif path == '/api/owem3/benchmark':
             return json_response(self, 200, handle_3around1_benchmark({}))
+        elif path == '/api/owem4x3/state':
+            return json_response(self, 200, handle_4brain3_state({}))
+        elif path == '/api/owem4x3/benchmark':
+            return json_response(self, 200, handle_4brain3_benchmark({}))
         elif path == '/api/evals':
             return json_response(self, 200, handle_evals())
         elif path == '/api/brain-stack':
@@ -2024,6 +2065,8 @@ class SovereignAPIHandler(BaseHTTPRequestHandler):
             return json_response(self, 200, handle_orchestrate(payload))
         elif path == '/api/owem3':
             return json_response(self, 200, handle_3around1(payload))
+        elif path == '/api/owem4x3':
+            return json_response(self, 200, handle_4brain3(payload))
         elif path == '/api/memory':
             return json_response(self, 200, handle_memory(payload))
         elif path == '/api/amica':
@@ -2093,6 +2136,10 @@ class SovereignAPIHandler(BaseHTTPRequestHandler):
             return json_response(self, 200, handle_3around1_state({}))
         elif path == '/api/owem3/benchmark':
             return json_response(self, 200, handle_3around1_benchmark({}))
+        elif path == '/api/owem4x3/state':
+            return json_response(self, 200, handle_4brain3_state({}))
+        elif path == '/api/owem4x3/benchmark':
+            return json_response(self, 200, handle_4brain3_benchmark({}))
         else:
             return json_response(self, 404, {'error': f'unknown path: {path}'})
 
