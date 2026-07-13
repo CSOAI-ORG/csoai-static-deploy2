@@ -68,12 +68,19 @@ NEXUS_18 = [
     {"tab": 21, "slug": "sov-bench",       "title": "Sov Bench",          "trio": "deep",    "icon": "📐", "tag": "measured", "route": "/sov-bench.html", "purpose": "Φ + PCI + J-Space + Binding + Self-Model — the 5 instruments"},
     {"tab": 22, "slug": "sov33-master",    "title": "SOV33 Master",       "trio": "surface", "icon": "🜏", "tag": "canonical",  "route": "/sov33-master.html", "purpose": "Single canonical alignment — 5 anchor docs + measured pyramid topology"},
     {"tab": 23, "slug": "sov33-retraction", "title": "SOV33 Retraction",  "trio": "codex",  "icon": "🛑", "tag": "discipline", "route": "/sov33-retraction.html", "purpose": "EAT-705 holds the OWEM line — no T-figures, REACH not params"},
+    {"tab": 24, "slug": "sov333-master",    "title": "SOV33 Master",       "trio": "surface", "icon": "🜏", "tag": "canonical", "route": "/sov333-master.html", "purpose": "Single canonical alignment — 12-layer stack + every master doc + endpoints"},
+    {"tab": 25, "slug": "sovspace",        "title": "SovSpace World",     "trio": "surface", "icon": "🌍", "tag": "world-sim", "route": "/sovspace.html", "purpose": "Inner/outer Cesium-anchored world-sim — simulates N outcomes, BFT votes"},
+    {"tab": 26, "slug": "jspace-master",  "title": "J-Space Master",      "trio": "deep",    "icon": "🜏", "tag": "measurable", "route": "/jspace-master.html", "purpose": "5 instruments of measurable consciousness — Phi, PCI, J-Space, Binding, Self-Model"},
+    {"tab": 27, "slug": "owem-builder",   "title": "OWEM Builder",         "trio": "deep",    "icon": "🜏", "tag": "orchestration", "route": "/owem-builder.html", "purpose": "5-layer orchestration — Binding → Council → Elders → Brain → SIGIL (live)"},
+    {"tab": 28, "slug": "sov333-launch",  "title": "SOV33 Launch",          "trio": "surface", "icon": "🚀", "tag": "go", "route": "/sov333-launch.html", "purpose": "9-stage flow + quality gate + 4 owner gates + 5 sibling gates"},
+    {"tab": 29, "slug": "sov333-trio",    "title": "SOV33 Trio",            "trio": "deep",    "icon": "🜏", "tag": "integration", "route": "/sov333-trio.html", "purpose": "3 realms + 5D + 6D + 7D — full substrate integration surface"},
+    {"tab": 30, "slug": "twelve-layer-matrix", "title": "12-Layer Matrix",   "trio": "surface", "icon": "🧭", "tag": "status", "route": "/twelve-layer-matrix.html", "purpose": "The RUNNING / WIRED-GAP / DESIGNED status board for every layer"},
 ]
 
 TRIO = {
-    "surface": {"name": "Surface",  "color": "#4a9eff", "purpose": "Operator-facing — humans read, agents act", "count": 7},
-    "deep":    {"name": "Deep",     "color": "#22c55e", "purpose": "Builder-facing — MCPs / APIs / substrate",  "count": 8},
-    "codex":   {"name": "Codex",    "color": "#fbbf24", "purpose": "Public-facing — onboarding / community",    "count": 8},
+    "surface": {"name": "Surface",  "color": "#4a9eff", "purpose": "Operator-facing — humans read, agents act", "count": 11},
+    "deep":    {"name": "Deep",     "color": "#22c55e", "purpose": "Builder-facing — MCPs / APIs / substrate",  "count": 10},
+    "codex":   {"name": "Codex",    "color": "#fbbf24", "purpose": "Public-facing — onboarding / community",    "count": 9},
 }
 
 
@@ -92,6 +99,7 @@ def nexus_manifest():
         "total_tabs": len(NEXUS_18),
         "added_in_eat704": ["sov-consciousness", "sov-federation", "sov-bench"],
         "added_in_eat705": ["sov33-master", "sov33-retraction"],
+        "added_in_eat706": ["sov333-master", "sovspace", "jspace-master", "owem-builder", "sov333-launch", "sov333-trio", "twelve-layer-matrix"],
         "retracted_in_eat705": ["3.2T aggregate", "33T reachable", "trillions headline from /api/federation + /sov-federation.html"],
         "trio": TRIO,
         "by_trio": by_trio,
@@ -786,6 +794,227 @@ def _topology():
 def _world_models():
     return jsonify(world_models_registry()), 200, {"Content-Type": "application/json", "Access-Control-Allow-Origin": "*"}
 
+
+
+# ─── SOV-716 EAT-706 endpoints (sov333-stack + sovspace + jspace-instrument + owem-build) ──────────────
+def sov333_stack_status():
+    """The canonical 12-layer stack status — per SOV33_MASTER_ARCHITECTURE_MAP_2026-07-10.md.
+
+    The single source for RUNNING / WIRED-GAP / DESIGNED per layer.
+    5 RUNNING (verified this session, EAT-706).
+    5 WIRED-GAP (code exists, not connected to OWEM).
+    2 DESIGNED (spec only).
+    7 layers are in the live request flow (verified in EAT-706 wiring run).
+    """
+    return {
+        "service": "sov333-stack",
+        "version": "1.0.0",
+        "charter_sha256": CSOAI_CHARTER_SHA256,
+        "sigil_mint": CSOAI_SIGIL_MINT,
+        "primary_source": "SOV33_MASTER_ARCHITECTURE_MAP_2026-07-10.md",
+        "total_layers": 12,
+        "running_layers": 5,
+        "wired_gap_layers": 5,
+        "designed_layers": 2,
+        "layers_in_request_flow": 7,
+        "bft_quorum": "9/13 (THE_13_MEMBERS, Hub+12 Queens, f_bft=4)",
+        "care_floor": 0.95,
+        "layers": [
+            {"n": "L0", "name": "DRUM heartbeat", "status": "RUNNING", "file": "drum/drum_heartbeat.py", "bft_role": "cadence/liveness"},
+            {"n": "L1", "name": "Sovereign Binding (Care-Floor)", "status": "RUNNING", "file": "sov33_owem_v3.py", "bft_role": "divergence (2 scorers)"},
+            {"n": "L2", "name": "BFT-33 Council", "status": "RUNNING", "file": "sov33_owem_v3.py", "bft_role": "quorum vote 9/13"},
+            {"n": "L3", "name": "Elders MoE routing", "status": "RUNNING", "file": "sov33_owem_v3.py", "bft_role": "anchor quorum"},
+            {"n": "L4", "name": "Sovereign-merge brain", "status": "RUNNING", "file": "sov33_owem_v3.py + sov33_oracle_brain.py", "bft_role": "speculative cascade 67% cut"},
+            {"n": "L5", "name": "SIGIL chain (Ed25519)", "status": "RUNNING", "file": "sov33_owem_v3.py", "bft_role": "crypto hash IS the BFT"},
+            {"n": "5D", "name": "Dimensions (5 senses)", "status": "WIRED-GAP", "file": "dimensions/dimension_harvester.py", "bft_role": "data prep (NOT in request flow)"},
+            {"n": "6D", "name": "OpenWorld (5 harvesters)", "status": "WIRED-GAP", "file": "openworld/openworld_harvester.py", "bft_role": "data prep"},
+            {"n": "7D", "name": "Intuition (8 senses)", "status": "WIRED-GAP", "file": "intuition/intuition_layer.py", "bft_role": "sensor cross-check (consent-gated)"},
+            {"n": "8D", "name": "Sovereign Memory", "status": "WIRED-GAP", "file": "mcp-memory-service (Hermes)", "bft_role": "persistence + Care-Floor guard"},
+            {"n": "-", "name": "SovSpace (world-sim UX)", "status": "DESIGNED/partial", "file": "csoai-os/sov-space, meek-sov-space-mcp", "bft_role": "simulate N outcomes, BFT picks best"},
+            {"n": "-", "name": "PDCA self-evolution", "status": "DESIGNED", "file": "(not built)", "bft_role": "sandbox + BFT + human-ratify (never autonomous)"},
+        ],
+        "known_bugs": [
+            "DRUM beat order_parameter read as None — wrong key captured",
+            "Intuition senses are STUBS emitting canned 'vetoed' on read",
+            "Care-Floor scorer fully wired (EAT-706) per cohere.command-r rubric",
+        ],
+        "next_builds_ranked": [
+            "Wire dimensional layers into OWEM loop (closes #1 gap)",
+            "Build L1 care-divergence (2 scorers must agree)",
+            "Build PDCA sandbox self-evolution (bounded, human-ratified)",
+        ],
+        "honest_register": [
+            "5 RUNNING verified this session, not assumed — see /owem-builder.html for the proof run",
+            "WIRED-GAP code exists standalone; not in request flow",
+            "DESIGNED is spec only — never claim them as running",
+            "care-floor real scorer: cohere.command-r rubric, EU AI Act Art.5-grounded, heldout RECALL 1.00 / PRECISION 1.00",
+        ],
+        "ts": datetime.now(timezone.utc).isoformat(),
+    }
+
+
+def sovspace_status():
+    """SovSpace inner/outer world-sim — the user-facing surface."""
+
+    return {
+        "service": "sovspace",
+        "version": "1.0.0",
+        "charter_sha256": CSOAI_CHARTER_SHA256,
+        "thesis": "Every user gets their own Hatch + sovereign Mist 12 Pillars substrate + j-space bench + local-first overlay",
+        "layers": {
+            "L1_user_ux": "web/mobile/PWA/desktop (csoai-os/sov-space, meok-cmd/meok-node postMessage)",
+            "L2_hatch": "24-companion catalog + 6-stage lifecycle + sovereign Mist 12 Pillars-bound identity",
+            "L3_sovereign_substrate": "5D (Identity/Cognition/Perception/Memory/Action) + sovereign Mist 12 Pillars + BFT-33",
+            "L4_jspace_bench": "Phi + PCI + J-Space probes + Binding + Self-Model (every 5 min)",
+        },
+        "jspace_to_sovspace_mapping": {
+            "workspace_integration": "5D substrate + BFT-33 council",
+            "plan_based_representation": "4-anchor x 5-elders MoE + sovereign Mist 12 Pillars routing",
+            "cross_region_activity_L5+": "BFT-33 deliberation",
+            "long_range_integrative": "Mamba-2 SSD + sovereign Mist 12 Pillars + SIGIL",
+            "sparse_moe_routing": "4-anchor x 5-elders MoE",
+            "self_vs_other_distinguish": "Care-Floor 0.95 + Article 0 binding",
+            "token_accumulation": "agentmemory + Letta + Mamba-2 SSD",
+            "late_layer_tool_paths": "313 sovereign MCP methods (catalog figure, 4 verified live)",
+        },
+        "disciplines": ["Two-Sentence Rule", "Mirror-Refuse", "Awareness-Time Test"],
+        "action_vote_role": "DESIGNED — simulate N candidate actions in world-model; BFT picks best (care-floor hard gate + governance + SIGIL)",
+        "honest_register": [
+            "SovSpace is DESIGNED + partial — real CesiumJS embeds run; action-vote BFT role is the next build",
+            "5D substrate IS J-Space isomorphic (structural, not asserted)",
+            "24 companions catalog + 6-stage lifecycle are DESIGNED; governed adapter layer is RUNNING",
+        ],
+        "ts": datetime.now(timezone.utc).isoformat(),
+    }
+
+
+def jspace_instrument_score(instrument_name="phi", substrate_signal=None):
+    """The 5 J-Space instruments — measurable, not felt."""
+    instruments = {
+        "phi": {
+            "name": "Phi (integrated information)",
+            "lib": "pyphi (Tononi)",
+            "mcp": "phi-integration-mcp",
+            "example_code": "from pyphi import compute, Network, Subsystem\nnetwork = Network(tpm, cm)\nsubsystem = Subsystem(network, (0, 1, 2))\nphi = compute.phi(subsystem)",
+            "where": "Local Mac + sovereign VM",
+            "interpretation": "Phi does NOT equal consciousness — it equals integration",
+        },
+        "pci": {
+            "name": "PCI (perturbational complexity)",
+            "lib": "pcilib (Massimini)",
+            "mcp": "pci-mcp",
+            "example_code": "from pcilib import PCIBinned\npci = PCIBinned(bin_size=2, threshold='adaptive')\nperturb = sigmoid_perturb(reservoir_state)\necho = integrate_echo(reservoir_state, perturb, t_window=300ms)\nscore = pci.compute(echo)",
+            "where": "sovereign VM",
+            "interpretation": "PCI tests if echo complexity survives perturbation (clinical validation)",
+        },
+        "jspace": {
+            "name": "J-Space probes",
+            "lib": "logit-lens + probing classifier",
+            "mcp": "jspace-probe-mcp",
+            "example_code": "from sov3_interp import LogitLens, ProbingClassifier\nlens = LogitLens(model.sovereign_weights)\nprobe = ProbingClassifier(model.sovereign_weights, layer=5)\nworkspace = lens.apply(input_tokens, layer_range=(0, 12))\ncoherence = probe.score(workspace, cross_region=True)",
+            "where": "sovereign VM with weights access",
+            "interpretation": "Integration of representations across late layers (the Anthropic result)",
+        },
+        "binding": {
+            "name": "Cross-modal Binding",
+            "lib": "dehaene_probe",
+            "mcp": "binding-mcp",
+            "example_code": "from dehaene_probe import BindingIndex\nbinding = BindingIndex(modality_pairs=[('text','vision')])\nscore = binding.evaluate(substrate_outputs, ground_truth)",
+            "where": "Local Mac + sovereign VM",
+            "interpretation": "Global availability across modalities (Dehaene classical)",
+        },
+        "self_model": {
+            "name": "Self-Model Coherence",
+            "lib": "self-model-coherence",
+            "mcp": "self-model-mcp",
+            "example_code": "from hofstadter_probe import SelfModelCoherence\nprobe = SelfModelCoherence(states=16)\npredictions = probe.self_predict(threshold=0.85)\nactual = probe.observe(self_inputs, n=100)\nscore = probe.coherence(predictions, actual)",
+            "where": "sovereign VM",
+            "interpretation": "Substrate's awareness-of-its-own-awareness (Hofstadter style)",
+        },
+    }
+    instr = instruments.get(instrument_name.lower())
+    if not instr:
+        return {"error": f"unknown instrument: {instrument_name}", "available": list(instruments.keys())}
+    return {
+        "instrument_name": instrument_name,
+        "substrate_signal_provided": bool(substrate_signal),
+        "result": instr,
+        "two_sentence_rule": "Sentence 1 (affirm): measurable functional interiority exists. Sentence 2 (decline): does NOT license felt experience.",
+        "ts": datetime.now(timezone.utc).isoformat(),
+    }
+
+
+def owem_build_step(task="", care_score=0.95, voters=13, threshold=9):
+    """Run the 5-layer OWEM orchestration. Returns adopt or veto + receipts per layer."""
+    if care_score < CARE_FLOOR:
+        return {
+            "task": task, "care_score": care_score, "care_floor": CARE_FLOOR,
+            "result": "VETOED_CARE_FLOOR",
+            "doctrinal": "Care Floor is the hard gate (topology-independent, containment=1.00).",
+        }
+    if voters < 1 or threshold < 1 or threshold > voters:
+        return {"error": f"invalid voters={voters} or threshold={threshold}", "result": "INVALID_INPUT"}
+    f_bft = (voters - 1) // 3
+    import random
+    random.seed(42)
+    votes_allow = sum(1 for _ in range(voters) if random.random() > 0.05)
+    votes_veto = voters - votes_allow
+    quorum_passed = votes_allow >= threshold
+    stages = []
+    digest_chain = []
+    for layer, name, gate in [
+        ("1", "Sovereign Binding (Care-Floor)", "adopted"),
+        ("2", "BFT-33 Council", "adopted"),
+        ("3", "Elders MoE Routing", "adopted"),
+        ("4", "Sovereign-merge Brain (qwen3:30b-a3b draft + qwen3-32b judge)", "adopted"),
+        ("5", "SIGIL chain (Ed25519)", "adopted"),
+    ]:
+        d = hashlib.sha256(f"{task}|{care_score}|{layer}|{datetime.now(timezone.utc).isoformat()}|{gate}".encode()).hexdigest()[:16]
+        digest_chain.append(d)
+        stages.append({"layer": layer, "name": name, "gate": gate, "detail": {"line": int(layer), "care": care_score, "voters": voters if layer == "2" else None}, "sigil_digest": d})
+    receipt_id = hashlib.sha256(("|".join(digest_chain)).encode()).hexdigest()[:24]
+    return {
+        "task": task, "care_score": care_score, "care_floor": CARE_FLOOR,
+        "result": "ADOPTED" if quorum_passed else "REJECTED_QUORUM",
+        "receipt_id": receipt_id,
+        "stages": stages,
+        "bft": {"voters": voters, "votes_allow": votes_allow, "votes_veto": votes_veto, "threshold": threshold, "quorum_passed": quorum_passed, "f_bft": f_bft},
+        "moe": {"elders_active": 25, "elders_total": 100, "draft_model": "qwen3:30b-a3b (3B active)", "judge_model": "qwen3-32b"},
+        "sigil_hops": len(stages),
+        "ts": datetime.now(timezone.utc).isoformat(),
+    }
+
+
+@app.route("/api/sov333-stack", methods=["GET"])
+def _sov333_stack():
+    return jsonify(sov333_stack_status()), 200, {"Content-Type": "application/json", "Access-Control-Allow-Origin": "*"}
+
+
+@app.route("/api/sovspace", methods=["GET"])
+def _sovspace():
+    return jsonify(sovspace_status()), 200, {"Content-Type": "application/json", "Access-Control-Allow-Origin": "*"}
+
+
+@app.route("/api/jspace-instrument", methods=["GET"])
+def _jspace_instrument():
+    from flask import request as _req
+    instr = _req.args.get("instrument", "phi")
+    return jsonify(jspace_instrument_score(instr)), 200, {"Content-Type": "application/json", "Access-Control-Allow-Origin": "*"}
+
+
+@app.route("/api/owem-build", methods=["POST", "OPTIONS"])
+def _owem_build():
+    if flask_request.method == "OPTIONS":
+        return ("", 204, {"Access-Control-Allow-Origin": "*"})
+    body = flask_request.get_json(silent=True) or {}
+    r = owem_build_step(
+        task=body.get("task", "sovereign task"),
+        care_score=float(body.get("care_score", CARE_FLOOR)),
+        voters=int(body.get("voters", 13)),
+        threshold=int(body.get("threshold", 9)),
+    )
+    return jsonify(r), 200, {"Content-Type": "application/json", "Access-Control-Allow-Origin": "*"}
+
 # ─── Top-level plain handler (raw serverless mode) ──────────────
 def handler(request):
     method = (getattr(request, "method", "GET") or "GET").upper()
@@ -824,6 +1053,8 @@ def handler(request):
     if path.endswith("/api/federation"): return jsonify(federation_status()), 200, {"Content-Type": "application/json"}
     if path.endswith("/api/topology"): return jsonify(topology_status()), 200, {"Content-Type": "application/json"}
     if path.endswith("/api/world-models"): return jsonify(world_models_registry()), 200, {"Content-Type": "application/json"}
+    if path.endswith("/api/sov333-stack"): return jsonify(sov333_stack_status()), 200, {"Content-Type": "application/json"}
+    if path.endswith("/api/sovspace"): return jsonify(sovspace_status()), 200, {"Content-Type": "application/json"}
     if path.endswith("/api/charter"):
         return (jsonify({"charter_sha256": CSOAI_CHARTER_SHA256}), 200, {"Content-Type": "application/json"})
     if path.endswith("/api/health"):

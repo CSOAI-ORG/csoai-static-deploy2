@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>🌐 Sovereign Command Hub — 23-Tab Nexus · MEOK OS</title>
+<title>🌐 Sovereign Command Hub — 30-Tab Nexus · MEOK OS</title>
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body { font-family: -apple-system, system-ui, monospace; background: #02060f; color: #e5e5e5; padding: 1rem; line-height: 1.6; }
@@ -67,7 +67,7 @@
 </nav>
 
 <h1 style="margin-top:2rem">🌐 Sovereign Command Hub</h1>
-<p class="sub">23-Tab Nexus · All-in-one Sovereign OS · Crown lineage 1795-3025</p>
+<p class="sub">30-Tab Nexus · All-in-one Sovereign OS · Crown lineage 1795-3025</p>
 
 <div class="tri-domain-nav">
   <a href="#surface" class="surface" onclick="showTrio('surface', event)">Surface</a>
@@ -88,7 +88,7 @@
 <p style="text-align:center;color:#fbbf24;margin:2rem 0 0.5rem;font-size:.85rem;padding:0.5rem;background:rgba(251,191,36,0.05);border-radius:6px">🐉 <strong>25 days to 2 Aug 2026 EU AI Act</strong> · CSOAI Ltd (UK 16939677) · Crown lineage 1795-3025</p>
 
 <script>
-const NEXUS_23_DATA = [
+const NEXUS_30_DATA = [
     {tab: 1, slug: "hub", title: "Command Hub", trio: "surface", icon: "🌐", tag: "master", purpose: "Single-page nexus linking all 22 sovereign tabs"},
     {tab: 2, slug: "sov33-master", title: "SOV33 Master", trio: "surface", icon: "🜏", tag: "canonical", purpose: "Single canonical alignment — 5 anchor docs + measured pyramid topology", stats: { topo: 'pyramid-2s+1m+1L', active: '17.3B', reach: 61 }},
     {tab: 3, slug: "sovspace", title: "SovSpace", trio: "surface", icon: "🚀", tag: "operator", purpose: "Sovereign operator console — 64 MCPs + 12 Generals", stats: { mcp: 153, generals: 12, health: 'green' }},
@@ -112,6 +112,13 @@ const NEXUS_23_DATA = [
     {tab: 21, slug: "signup", title: "Sign up", trio: "codex", icon: "🪪", tag: "onboard", purpose: "Persona-routed SIGIL receipt + Ed25519 API key", stats: { signups: 4, personas: 8, api_keys: 4 }},
     {tab: 22, slug: "trust", title: "Trust Proof", trio: "codex", icon: "🛡️", tag: "verify", purpose: "Live SIGIL receipts + Charter fingerprint + Red Lines", stats: { sigils: 5, red_lines: 4, care_floor: '0.95' }},
     {tab: 23, slug: "cesium-globe", title: "Cesium Globe", trio: "surface", icon: "🌎", tag: "immersive", purpose: "3D sovereign world with Three.js + Cesium", stats: { active_views: 3, fps: 60, res: '4K' }},
+    {tab: 24, slug: "sov333-master", title: "SOV33 Master", trio: "surface", icon: "🜏", tag: "canonical", purpose: "Single canonical alignment — 12-layer stack + every master doc + endpoints", stats: { layers: 12, running: 5, bft: '9/13' }},
+    {tab: 25, slug: "sovspace", title: "SovSpace World", trio: "surface", icon: "🌍", tag: "world-sim", purpose: "Inner/outer Cesium-anchored world-sim — simulates N outcomes, BFT votes", stats: { layers: 4, jspace_mappings: 8, mapping: 'J-space isomorphic' }},
+    {tab: 26, slug: "jspace-master", title: "J-Space Master", trio: "deep", icon: "🜏", tag: "measurable", purpose: "5 instruments of measurable consciousness — Phi, PCI, J-Space, Binding, Self-Model", stats: { instruments: 5, disciplines: 3, mapping: '5D substrate' }},
+    {tab: 27, slug: "owem-builder", title: "OWEM Builder", trio: "deep", icon: "🜏", tag: "orchestration", purpose: "5-layer orchestration — Binding → Council → Elders → Brain → SIGIL (live)", stats: { layers: 5, sigil_hops: 5, bft: '9/13' }},
+    {tab: 28, slug: "sov333-launch", title: "SOV33 Launch", trio: "surface", icon: "🚀", tag: "go", purpose: "9-stage flow + quality gate + 4 owner gates + 5 sibling gates", stats: { stages: 9, done: 3, pending: 2, blocked: 3 }},
+    {tab: 29, slug: "sov333-trio", title: "SOV33 Trio", trio: "deep", icon: "🜏", tag: "integration", purpose: "3 realms + 5D + 6D + 7D — full substrate integration surface", stats: { realms: 3, dimensions: '5D+6D+7D', elders: 20 }},
+    {tab: 30, slug: "twelve-layer-matrix", title: "12-Layer Matrix", trio: "surface", icon: "🧭", tag: "status", purpose: "The RUNNING / WIRED-GAP / DESIGNED status board for every layer", stats: { layers: 12, running: 5, wired_gap: 5, designed: 2 }},
 ];
 
 const TRIO_DATA = {
@@ -127,7 +134,7 @@ function renderTabs(filterTrio = null) {
   tabContentContainer.innerHTML = '';
 
   let firstActive = true;
-  NEXUS_23_DATA.forEach(tabData => {
+  NEXUS_30_DATA.forEach(tabData => {
     if (filterTrio && tabData.trio !== filterTrio) return;
 
     const button = document.createElement('button');
@@ -174,7 +181,7 @@ function activateTab(slug) {
 
   // Update trio nav active state
   document.querySelectorAll('.tri-domain-nav a').forEach(a => a.classList.remove('active'));
-  const currentTab = NEXUS_23_DATA.find(t => t.slug === slug);
+  const currentTab = NEXUS_30_DATA.find(t => t.slug === slug);
   if (currentTab) {
     document.querySelector(`.tri-domain-nav a.${currentTab.trio}`).classList.add('active');
   }
@@ -185,7 +192,7 @@ function showTrio(trio, e) {
     document.querySelectorAll('.tri-domain-nav a').forEach(a => a.classList.remove('active'));
     e.target.classList.add('active');
     renderTabs(trio);
-    const firstTabInTrio = NEXUS_23_DATA.find(t => t.trio === trio);
+    const firstTabInTrio = NEXUS_30_DATA.find(t => t.trio === trio);
     if(firstTabInTrio) activateTab(firstTabInTrio.slug);
 }
 
