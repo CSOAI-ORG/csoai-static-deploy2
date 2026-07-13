@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """
-sov33_phase29.py — Phase 29: ACTUAL SOV33 LARGE training on MPS.
+sov33_phase29.py — Phase 29: Sovereign brain ACTUAL training on MPS.
 
-This is the REAL training that runs NOW on Mac M-series (MPS).
-Smaller dataset (200 samples), fewer steps (50), batch=2.
+Uses Qwen3-0.6B (the one we have) with rank=32 LoRA on sovereign corpus.
+The 1.7B path is in SOV33_KAGGLE_PHASE27.py for T4 GPU.
 """
 import os, sys, json, time
 os.environ.pop('PYTHONPATH', None)
@@ -15,9 +15,9 @@ from peft import LoraConfig, get_peft_model, TaskType
 from pathlib import Path
 
 
-def train_sovereign_large():
-    """Train Qwen3-1.7B + LoRA on sovereign corpus."""
-    base_path = 'Qwen/Qwen3-1.7B'
+def train_sovereign_brain():
+    """Train sovereign brain with rank=32 on Qwen3-0.6B."""
+    base_path = 'Qwen/Qwen3-0.6B'
     corpus_path = '/Users/nicholas/clawd/_alignment/sovereign_merge_kit/sov_owem_data/sov33_large_world_corpus.jsonl'
     
     samples = []
@@ -29,7 +29,7 @@ def train_sovereign_large():
                     samples.append(s)
     samples = samples[:200]
     
-    print(f"Training SOV33 LARGE on {len(samples)} samples")
+    print(f"Training sovereign brain on {len(samples)} samples (rank=32)")
     
     tokenizer = AutoTokenizer.from_pretrained(base_path, trust_remote_code=True)
     if tokenizer.pad_token is None:
@@ -41,10 +41,10 @@ def train_sovereign_large():
     
     lora_config = LoraConfig(
         task_type=TaskType.CAUSAL_LM,
-        r=32,
+        r=32,  # Bigger rank for better learning
         lora_alpha=64,
         lora_dropout=0.05,
-        target_modules=['q_proj', 'v_proj'],
+        target_modules=['q_proj', 'k_proj', 'v_proj', 'o_proj'],
         bias='none',
     )
     model = get_peft_model(model, lora_config)
@@ -83,14 +83,14 @@ def train_sovereign_large():
             print(f"  step {step:3d}: loss={loss.item():.4f}")
     
     # Save
-    out_dir = Path.home() / '.sovereign' / 'models' / 'qwen3-sov-large-1.7b'
+    out_dir = Path.home() / '.sovereign' / 'models' / 'qwen3-sov-brain-0.6b'
     out_dir.mkdir(exist_ok=True)
     model.save_pretrained(str(out_dir))
     tokenizer.save_pretrained(str(out_dir))
     
     elapsed = time.time() - t0
-    reduction = 100 * (losses[0] - losses[-1]) / losses[0]
-    print(f"\n✓ SOV33 LARGE trained in {elapsed:.1f}s")
+    reduction = 100 * (losses[0] - losses[-1]) / losses[0] if losses[0] > 0 else 0
+    print(f"\n✓ Sovereign brain trained in {elapsed:.1f}s")
     print(f"  Loss: {losses[0]:.3f} → {losses[-1]:.3f} ({reduction:.1f}% reduction)")
     print(f"  Saved to {out_dir}")
     
@@ -110,8 +110,7 @@ def train_sovereign_large():
 
 
 if __name__ == '__main__':
-    result = train_sovereign_large()
-    # Save result
+    result = train_sovereign_brain()
     out = Path('/Users/nicholas/clawd/_alignment/sovereign_merge_kit/benchmarks/phase29_result_2026-07-13.json')
     out.write_text(json.dumps(result, indent=2))
     print(f"\nSaved to {out}")
