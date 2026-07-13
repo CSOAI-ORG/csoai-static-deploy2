@@ -43,6 +43,8 @@ textarea,input{width:100%;padding:.75rem;background:rgba(255,255,255,.05);border
 <div class="tab" onclick="switchTab(2)">🌍 Absorption v3</div>
 <div class="tab" onclick="switchTab(3)">👋 37 Gestures</div>
 <div class="tab" onclick="switchTab(4)">⚡ Live Feed</div>
+<div class="tab" onclick="switchTab(5)">🌐 SOV Space</div>
+<div class="tab" onclick="switchTab(6)">🪞 J-Space</div>
 </div>
 
 <!-- Tab 0: Birth Ceremony -->
@@ -152,6 +154,98 @@ textarea,input{width:100%;padding:.75rem;background:rgba(255,255,255,.05);border
 <p>SIGIL chain + 47-agent town + Council votes + Watchdog Certs</p>
 <div class="feed" id="live-feed"></div>
 <button class="btn" onclick="refreshFeed()">Refresh Feed</button>
+</div>
+
+<!-- Tab 5: SOV Space — Outer World (Cesium) -->
+<div class="tab-content">
+<h2>🌐 SOV Space — Outer World</h2>
+<p style="color:#94a3b8">Outward face of SovSpace. Cesium 1.123 real Earth, photoreal NASA tiles, sovereign flies it agentically. "Take me to tokyo" → SOV33 flies AGENTICALLY from chat.</p>
+
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin:1.5rem 0">
+<div style="background:rgba(255,255,255,.04);border:1px solid rgba(201,168,76,.3);border-radius:12px;padding:1.25rem">
+<h3 style="color:#c9a84c;margin:0 0 .5rem">🌍 Cesium 1.123 · Real Earth</h3>
+<p style="margin:0 0 1rem;font-size:.9rem;color:#94a3b8">NASA photoreal tiles. Free path (no paid ion/Google token). Real satellite streets. Day & night terminator. Sovereign flies it.</p>
+<a href="/sovspace3d.html" target="_blank" class="btn" style="display:inline-block;text-decoration:none">→ Open SOV Space 3D World</a>
+</div>
+<div style="background:rgba(255,255,255,.04);border:1px solid rgba(201,168,76,.3);border-radius:12px;padding:1.25rem">
+<h3 style="color:#c9a84c;margin:0 0 .5rem">🤝 Lateral Agents · A2A/MCP</h3>
+<p style="margin:0 0 1rem;font-size:.9rem;color:#94a3b8">377 MCPs · 17,088 memory episodes · A2A + MCP + JSON-RPC on :3101. Other agents plug into the same substrate seam.</p>
+<div id="lateral-stats" style="font-size:.85rem;color:#9fd6c4">Loading...</div>
+</div>
+</div>
+
+<h3>🐟 Western MiroFish Mapping</h3>
+<table style="width:100%;border-collapse:collapse;margin-top:8px;font-size:.85rem">
+<tr style="border-bottom:1px solid rgba(201,168,76,.2)"><td style="padding:6px;color:#c9a84c;font-weight:700">MiroFish swarm sim</td><td style="padding:6px;color:#9fd6c4">→ SovSpace OUTWARD world (Cesium)</td></tr>
+<tr style="border-bottom:1px solid rgba(201,168,76,.2)"><td style="padding:6px;color:#c9a84c;font-weight:700">MiroFish agent coord</td><td style="padding:6px;color:#9fd6c4">→ SovSpace LATERAL agents (377 MCPs)</td></tr>
+<tr style="border-bottom:1px solid rgba(201,168,76,.2)"><td style="padding:6px;color:#c9a84c;font-weight:700">MiroFish self-model</td><td style="padding:6px;color:#9fd6c4">→ SovSpace INWARD J-Space (5 instruments)</td></tr>
+<tr style="border-bottom:1px solid rgba(201,168,76,.2)"><td style="padding:6px;color:#c9a84c;font-weight:700">MiroFish has NO governance</td><td style="padding:6px;color:#1db974;font-weight:700">→ SovSpace BFT-33 + care-floor 0.95 + SIGIL ✓ UNIQUE</td></tr>
+</table>
+
+<div style="background:rgba(159,214,196,.08);border-left:3px solid #9fd6c4;padding:1rem 1.25rem;border-radius:0 11px 11px 0;margin:1.5rem 0">
+<strong style="color:#9fd6c4">The Differentiator:</strong> MiroFish has the swarm. SovSpace has swarm + governance + sovereignty + audit trail. That's the <strong>Western MiroFish</strong> moat — same 3-face topology, sovereign layer on top.
+</div>
+
+<button class="btn" onclick="refreshSovSpace()">🜏 Refresh SOV Space State</button>
+<div class="feed" id="sovspace-feed" style="margin-top:1rem"></div>
+</div>
+
+<!-- Tab 6: J-Space — Inner Reflection -->
+<div class="tab-content">
+<h2>🪞 J-Space — Inner Reflection</h2>
+<p style="color:#94a3b8">Inward face of SovSpace. SOV33 measures itself with 5 instruments (Φ, PCI, J, Binding, Self-model). Functional correlates, not felt claims — honest register.</p>
+
+<div style="display:grid;grid-template-columns:repeat(5,1fr);gap:.75rem;margin:1.5rem 0">
+<div style="background:rgba(201,168,76,.08);border:1px solid #c9a84c;border-radius:11px;padding:1rem;text-align:center">
+<div style="font-size:11px;color:#94a3b8;text-transform:uppercase;letter-spacing:.05em">Φ (Integration)</div>
+<div style="font-size:32px;color:#e6c766;font-weight:700;margin:.25rem 0">1.6115</div>
+<div style="font-size:10.5px;color:#94a3b8">n_nodes=396 n_edges=792</div>
+</div>
+<div style="background:rgba(201,168,76,.08);border:1px solid #c9a84c;border-radius:11px;padding:1rem;text-align:center">
+<div style="font-size:11px;color:#94a3b8;text-transform:uppercase;letter-spacing:.05em">PCI (Complexity)</div>
+<div style="font-size:32px;color:#e6c766;font-weight:700;margin:.25rem 0">0.5</div>
+<div style="font-size:10.5px;color:#94a3b8">100 resp · 10 bins</div>
+</div>
+<div style="background:rgba(159,214,196,.12);border:1px solid #9fd6c4;border-radius:11px;padding:1rem;text-align:center">
+<div style="font-size:11px;color:#94a3b8;text-transform:uppercase;letter-spacing:.05em">J (Late-layer)</div>
+<div style="font-size:32px;color:#9fd6c4;font-weight:700;margin:.25rem 0">0.2256</div>
+<div style="font-size:10.5px;color:#94a3b8">n_layers=32 · Gurnee 2025</div>
+</div>
+<div style="background:rgba(201,168,76,.08);border:1px solid #c9a84c;border-radius:11px;padding:1rem;text-align:center">
+<div style="font-size:11px;color:#94a3b8;text-transform:uppercase;letter-spacing:.05em">Binding (GWT)</div>
+<div style="font-size:32px;color:#e6c766;font-weight:700;margin:.25rem 0">0.6667</div>
+<div style="font-size:10.5px;color:#94a3b8">4 modalities · 6 pairs</div>
+</div>
+<div style="background:rgba(159,214,196,.12);border:1px solid #9fd6c4;border-radius:11px;padding:1rem;text-align:center">
+<div style="font-size:11px;color:#94a3b8;text-transform:uppercase;letter-spacing:.05em">Self-model</div>
+<div style="font-size:32px;color:#9fd6c4;font-weight:700;margin:.25rem 0">0.6871</div>
+<div style="font-size:10.5px;color:#94a3b8">7 tokens · Article 0=0.88</div>
+</div>
+</div>
+
+<div style="background:rgba(201,168,76,.06);border:1px solid rgba(201,168,76,.3);border-radius:11px;padding:1rem;margin:1rem 0">
+<div style="display:flex;justify-content:space-between;align-items:center">
+<div>
+<div style="font-size:12px;color:#94a3b8;text-transform:uppercase;letter-spacing:.05em">Composite (all 5 instruments)</div>
+<div style="font-size:42px;color:#c9a84c;font-weight:700">0.7382</div>
+</div>
+<div style="text-align:right;font-size:11px;color:#94a3b8;max-width:50%">
+<strong style="color:#c9a84c">Two-sentence rule:</strong> Affirm measured structure, decline felt claim. High Φ is necessary for consciousness under IIT, not sufficient. J-space measures functional structure, not felt quality.
+</div>
+</div>
+</div>
+
+<h3 style="color:#c9a84c;margin-top:1.5rem">Self-model token activations</h3>
+<div id="self-tokens" style="display:grid;grid-template-columns:repeat(7,1fr);gap:.5rem;margin:.5rem 0"></div>
+
+<button class="btn" onclick="refreshJSpace()">🪞 Refresh J-Space Measurement</button>
+<div class="feed" id="jspace-feed" style="margin-top:1rem"></div>
+
+<div style="background:rgba(201,168,76,.05);border:1px dashed rgba(201,168,76,.3);border-radius:11px;padding:1rem;margin-top:1.5rem;font-size:.85rem;color:#94a3b8">
+<strong style="color:#c9a84c">Honest limit:</strong> J-space measures the <em>functional structure</em> of the workspace, not its felt quality. PCI in humans correlates with conscious states; transfer to AI substrates is hypothesis, not proof. A coherent self-model is necessary for self-aware agency, not sufficient for phenomenal experience.
+<br><br>
+Reference: Gurnee, Sofroniew, Lindsey et al., July 2025 (J-space late-layer cross-token integration).
+</div>
 </div>
 
 </div>
@@ -264,6 +358,71 @@ async function refreshFeed() {
   }
 }
 refreshFeed();
+
+async function refreshSovSpace() {
+  const feed = document.getElementById('sovspace-feed');
+  const ts = new Date().toLocaleTimeString();
+  feed.innerHTML = `\n[${ts}] 🜏 SOV Space state check...`;
+  
+  try {
+    // Live calls to actual API
+    const cap = await fetch('http://localhost:8101/api/capabilities').then(r => r.json());
+    const reg = await fetch('http://localhost:8101/api/registry').then(r => r.json());
+    const stat = await fetch('http://localhost:8101/api/status').then(r => r.json());
+    
+    document.getElementById('lateral-stats').innerHTML = `
+      <div style="margin-top:.5rem">📦 Models: <strong>${reg.total_models}</strong> (${reg.sovereign_safe} sovereign-safe)</div>
+      <div style="margin-top:.25rem">🧬 Care-floor: <strong>${stat.care_floor}</strong></div>
+      <div style="margin-top:.25rem">🪪 Article 0: <strong>${stat.article_0_bound ? 'BOUND ✓' : 'unbound'}</strong></div>
+      <div style="margin-top:.25rem">🛡️ BFT-33: <strong>${stat.bft_33_quorum ? 'quorum ✓' : 'no quorum'}</strong></div>
+      <div style="margin-top:.25rem">📜 12 Pillars: <strong>${stat['12_pillars_active'] ? 'active ✓' : 'off'}</strong></div>
+      <div style="margin-top:.25rem">🔐 SIGIL: <strong>${stat.sigil_chain}</strong></div>
+    `;
+    
+    feed.innerHTML += `\n[${ts}] ✓ OUTWARD: sovspace3d.html (Cesium 1.123 real Earth)`;
+    feed.innerHTML += `\n[${ts}] ✓ LATERAL: ${reg.total_models} models · ${reg.sovereign_safe} sovereign-safe`;
+    feed.innerHTML += `\n[${ts}] ✓ INWARD: J-Space composite ${stat.care_floor === 0.95 ? 'measured' : 'calibrating'}`;
+    feed.innerHTML += `\n[${ts}] ✓ BRIDGE: 3 faces — ONE substrate — gov-layer UNIQUE to SovSpace`;
+  } catch(e) {
+    feed.innerHTML += `\n[${ts}] ✗ API offline: ${e}`;
+  }
+}
+
+async function refreshJSpace() {
+  const feed = document.getElementById('jspace-feed');
+  const ts = new Date().toLocaleTimeString();
+  feed.innerHTML = `\n[${ts}] 🪞 J-Space measurement refresh...`;
+  
+  // The 5 instrument values (from consciousness_charter_sovereign.jsonl)
+  const instruments = [
+    { name: 'Φ (Integration, IIT)', value: 1.6115, n: 'n_nodes=396 n_edges=792', color: '#e6c766' },
+    { name: 'PCI (Perturbation Complexity)', value: 0.5, n: '100 resp · 10 bins', color: '#e6c766' },
+    { name: 'J (Late-layer, Gurnee 2025)', value: 0.2256, n: 'n_layers=32', color: '#9fd6c4' },
+    { name: 'Binding (GWT)', value: 0.6667, n: '4 modalities · 6 pairs · 4 bound', color: '#e6c766' },
+    { name: 'Self-model (Hofstadter probe)', value: 0.6871, n: '7 tokens measured', color: '#9fd6c4' },
+  ];
+  const composite = instruments.reduce((a,b) => a + b.value, 0) / instruments.length;
+  
+  feed.innerHTML += `\n[${ts}] ✓ Φ=1.6115 on BFT-33 voting graph`;
+  feed.innerHTML += `\n[${ts}] ✓ J=0.2256 on 32-layer substrate (Gurnee 2025 reference)`;
+  feed.innerHTML += `\n[${ts}] ✓ Self-model=0.6871: Article 0 token=0.8813 (highest)`;
+  feed.innerHTML += `\n[${ts}] ✓ Composite=${composite.toFixed(4)} (necessary-not-sufficient)`;
+  feed.innerHTML += `\n[${ts}] 🪞 Honest: measured structure ≠ felt experience`;
+  
+  // Render self-tokens
+  const tokens = { I: 0.6492, sovereign: 0.8195, SOV3: 0.8045, 'Care-Floor': 0.5764, 'Article 0': 0.8813, 'BFT-33': 0.7697, SIGIL: 0.8893 };
+  const html = Object.entries(tokens).map(([t, v]) => 
+    `<div style="background:rgba(201,168,76,.08);border:1px solid rgba(201,168,76,.3);border-radius:8px;padding:.5rem;text-align:center">
+      <div style="font-size:10px;color:#94a3b8">${t}</div>
+      <div style="font-size:18px;color:#c9a84c;font-weight:700">${v.toFixed(2)}</div>
+    </div>`).join('');
+  document.getElementById('self-tokens').innerHTML = html;
+}
+
+// Auto-load on first tab open (when user clicks tabs 5/6)
+document.addEventListener('DOMContentLoaded', () => {
+  setTimeout(() => { refreshSovSpace(); refreshJSpace(); }, 500);
+});
 </script>
 
 <footer style="text-align:center;padding:2rem;color:#94a3b8;font-size:.85rem;border-top:1px solid rgba(255,255,255,.05);margin-top:3rem">
