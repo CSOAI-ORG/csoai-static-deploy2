@@ -681,6 +681,29 @@ def handle_diversity(payload: dict) -> dict:
     except Exception as e:
         return {'error': f'diversity failed: {e}'}
 
+# ============================================================
+# PHASE 21: 5x4x3 with Auto-BFT-33
+# ============================================================
+
+def handle_5x4x3_bft(payload: dict) -> dict:
+    """POST /api/owem5x4x3/bft - 5x4x3 with auto-BFT-33 trigger."""
+    try:
+        sys.path.insert(0, '/Users/nicholas/clawd/_alignment/sovereign_merge_kit/owem3')
+        from sov33_5x4x3_bft import handle_5x4x3_bft as _h
+        return _h(payload)
+    except Exception as e:
+        return {'error': f'5x4x3_bft failed: {e}'}
+
+
+def handle_5x4x3_bft_state(payload=None) -> dict:
+    """GET /api/owem5x4x3/bft/state."""
+    try:
+        sys.path.insert(0, '/Users/nicholas/clawd/_alignment/sovereign_merge_kit/owem3')
+        from sov33_5x4x3_bft import handle_5x4x3_bft_state as _h
+        return _h(payload or {})
+    except Exception as e:
+        return {'error': f'5x4x3_bft_state failed: {e}'}
+
 
 def handle_nodes() -> dict:
     """GET /api/nodes — list sovereign network nodes."""
@@ -2140,6 +2163,8 @@ class SovereignAPIHandler(BaseHTTPRequestHandler):
             return json_response(self, 200, handle_5x4x3_real_state({}))
         elif path == '/api/continual/stats':
             return json_response(self, 200, handle_continual_stats({}))
+        elif path == '/api/owem5x4x3/bft/state':
+            return json_response(self, 200, handle_5x4x3_bft_state({}))
         elif path == '/api/evals':
             return json_response(self, 200, handle_evals())
         elif path == '/api/brain-stack':
@@ -2245,6 +2270,8 @@ class SovereignAPIHandler(BaseHTTPRequestHandler):
             return json_response(self, 200, handle_auto_bft33(payload))
         elif path == '/api/diversity':
             return json_response(self, 200, handle_diversity(payload))
+        elif path == '/api/owem5x4x3/bft':
+            return json_response(self, 200, handle_5x4x3_bft(payload))
         elif path == '/api/continual/log':
             return json_response(self, 200, handle_continual_log(payload))
         elif path == '/api/continual/run':
@@ -2334,6 +2361,8 @@ class SovereignAPIHandler(BaseHTTPRequestHandler):
             return json_response(self, 200, handle_5x4x3_real_state({}))
         elif path == '/api/continual/stats':
             return json_response(self, 200, handle_continual_stats({}))
+        elif path == '/api/owem5x4x3/bft/state':
+            return json_response(self, 200, handle_5x4x3_bft_state({}))
         else:
             return json_response(self, 404, {'error': f'unknown path: {path}'})
 
