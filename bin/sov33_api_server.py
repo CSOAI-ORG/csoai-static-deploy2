@@ -562,6 +562,39 @@ def handle_4x4x3_benchmark(payload=None) -> dict:
         return {'error': f'4x4x3_benchmark failed: {e}'}
 
 # ============================================================
+# CONTINUAL LEARNING HANDLERS
+# ============================================================
+
+def handle_continual_log(payload: dict) -> dict:
+    """POST /api/continual/log - log a sovereign action."""
+    try:
+        sys.path.insert(0, '/Users/nicholas/clawd/_alignment/sovereign_merge_kit/owem3')
+        from sov33_continual_learning import handle_continual_log as _h
+        return _h(payload)
+    except Exception as e:
+        return {'error': f'continual_log failed: {e}'}
+
+
+def handle_continual_run(payload: dict = None) -> dict:
+    """POST /api/continual/run - run a learning cycle."""
+    try:
+        sys.path.insert(0, '/Users/nicholas/clawd/_alignment/sovereign_merge_kit/owem3')
+        from sov33_continual_learning import handle_continual_run as _h
+        return _h(payload or {})
+    except Exception as e:
+        return {'error': f'continual_run failed: {e}'}
+
+
+def handle_continual_stats(payload: dict = None) -> dict:
+    """GET /api/continual/stats."""
+    try:
+        sys.path.insert(0, '/Users/nicholas/clawd/_alignment/sovereign_merge_kit/owem3')
+        from sov33_continual_learning import handle_continual_stats as _h
+        return _h(payload or {})
+    except Exception as e:
+        return {'error': f'continual_stats failed: {e}'}
+
+# ============================================================
 # 5x4x3 OWEM HANDLERS (60 voters per query - PHASE 5)
 # ============================================================
 
@@ -2105,6 +2138,8 @@ class SovereignAPIHandler(BaseHTTPRequestHandler):
             return json_response(self, 200, handle_5x4x3_benchmark({}))
         elif path == '/api/owem5x4x3/real/state':
             return json_response(self, 200, handle_5x4x3_real_state({}))
+        elif path == '/api/continual/stats':
+            return json_response(self, 200, handle_continual_stats({}))
         elif path == '/api/evals':
             return json_response(self, 200, handle_evals())
         elif path == '/api/brain-stack':
@@ -2210,6 +2245,10 @@ class SovereignAPIHandler(BaseHTTPRequestHandler):
             return json_response(self, 200, handle_auto_bft33(payload))
         elif path == '/api/diversity':
             return json_response(self, 200, handle_diversity(payload))
+        elif path == '/api/continual/log':
+            return json_response(self, 200, handle_continual_log(payload))
+        elif path == '/api/continual/run':
+            return json_response(self, 200, handle_continual_run(payload))
         elif path == '/api/memory':
             return json_response(self, 200, handle_memory(payload))
         elif path == '/api/amica':
@@ -2293,6 +2332,8 @@ class SovereignAPIHandler(BaseHTTPRequestHandler):
             return json_response(self, 200, handle_5x4x3_benchmark({}))
         elif path == '/api/owem5x4x3/real/state':
             return json_response(self, 200, handle_5x4x3_real_state({}))
+        elif path == '/api/continual/stats':
+            return json_response(self, 200, handle_continual_stats({}))
         else:
             return json_response(self, 404, {'error': f'unknown path: {path}'})
 
