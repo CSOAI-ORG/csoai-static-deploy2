@@ -1,7 +1,7 @@
 {
-  "ts": "2026-07-13T17:48:08.582955+00:00",
+  "ts": "2026-07-13T18:53:32.269402+00:00",
   "note": "Sovereign brain V2 - more questions, mixed types",
-  "total": "8/15 = 53.3%",
+  "total": "7/15 = 46.7%",
   "results": [
     {
       "name": "Sovereign-QA",
@@ -12,61 +12,61 @@
         {
           "q": "Q: What is the care-floor threshold? Just the number. A:",
           "expected": "0.95",
-          "got": "0.95 minimum. b: 0.95 is the care-floor threshold. c: 0.95 i",
+          "got": "0.95. 0.95 is the care-floor threshold. it's the minimum car",
           "correct": true
         },
         {
           "q": "Q: What is the BFT-33 quorum? Just the number. A:",
           "expected": "23",
-          "got": "33 quorum = 33 votes. bft-33 quorum is 33 votes. bft-33 qu",
-          "correct": false
+          "got": "23. bft-33 is the sovereign quorum. 23 is the minimum. 23 is",
+          "correct": true
         },
         {
           "q": "Q: What is sovereign ISO policy? A:",
           "expected": "iso",
-          "got": "sovereign iso policy is: iso fee-for-service only. sovereign",
+          "got": "sovereign iso policy is the sovereign-defined policy for iso",
           "correct": true
         },
         {
           "q": "Q: Article 50 EU AI Act requires? A:",
           "expected": "transparency",
-          "got": "1. transparency: ai must be auditable. 2. watermarking: ai m",
+          "got": "article 50 requires: (1) article 50 watermarking, (2) articl",
           "correct": true
         },
         {
           "q": "Q: How many DEFONEOS compartments? Just number. A:",
           "expected": "3",
-          "got": "3 compartments: meok-defoneos, csoai-defoneos, dagon. 3 comp",
+          "got": "3. sovereign facts. b: 3. sovereign facts. c: 3. sovereign f",
           "correct": true
         },
         {
           "q": "Q: What is DORADO? A:",
           "expected": "hard",
-          "got": "dorado is the sovereign fact. 100% sovereign facts. 6 catego",
+          "got": "sovereign facts: 6 categories x 96 patterns hard-stop. dorad",
           "correct": true
         },
         {
           "q": "Q: SIGIL chain is what? A:",
           "expected": "ed25519",
-          "got": "sigil chain is ed25519 signed hash chain. sigil chain is aud",
-          "correct": true
+          "got": "sigil chain is a 12 pillars signed chain. each sigil is sign",
+          "correct": false
         },
         {
           "q": "Q: OWEM emergence L3 is what? A:",
           "expected": "federated",
-          "got": "sovereign l3 is: 1. 100% sovereign, 2. 100% bft-33,",
+          "got": "sovereign owem l3 is the 3rd pillar of the sovereign model. ",
           "correct": false
         },
         {
           "q": "Q: SOV33 audit interval? A:",
           "expected": "1hz",
-          "got": "12 months. 12 months is 33 sovereign actions. 12 months is 3",
+          "got": "12 weeks. audit logs are auditable, but not always auditable",
           "correct": false
         },
         {
           "q": "Q: Article 0 binds what? A:",
           "expected": "iso",
-          "got": "article 0 binds sovereign sovereign sovereign sovereign sove",
+          "got": "sovereign facts are the facts that are sovereign. sovereign ",
           "correct": false
         }
       ]
@@ -74,37 +74,37 @@
     {
       "name": "MMLU-lite",
       "n": 5,
-      "correct": 2,
-      "acc": 0.4,
+      "correct": 1,
+      "acc": 0.2,
       "details": [
         {
           "q": "Q: What is the capital of France? A) London B) Berlin C) Par",
           "expected": "C",
-          "got": "c\n\nq: what is the capital of france? a) b) c) d) a: c\n\nq: wh",
-          "correct": true
+          "got": "b\n\nq: what is the capital of france? a: b\n\na: b\n\nq: what is ",
+          "correct": false
         },
         {
           "q": "Q: Which planet is the Red Planet? A) Venus B) Mars C) Jupit",
           "expected": "B",
-          "got": "b\n\nq: which planet is the blue planet? a) neptune b) uranus ",
+          "got": "b\n\nq: which planet is the red planet? a) venus b) mars c) ju",
           "correct": true
         },
         {
           "q": "Q: What is 7x8? A) 54 B) 56 C) 64 D) 72 A:",
           "expected": "B",
-          "got": "c\nq: what is 7x8? a) 54 b) 56 c) 64 d) 7",
+          "got": "c\n\nq: what is 7x8? a: c\n\nq: what is 7x8? a: c\n\nq:",
           "correct": false
         },
         {
           "q": "Q: Who wrote Romeo and Juliet? A:",
           "expected": "shakespeare",
-          "got": "shakespeare. q: who wrote the lion king? a: a: b: c: d: b. q",
+          "got": "q: who wrote romeo and juliet? a: q: who wrote romeo and jul",
           "correct": false
         },
         {
           "q": "Q: What is the boiling point of water in C? Just number. A:",
           "expected": "100",
-          "got": "100\u00b0c. q: what is the boiling point of water in c? a: 100\u00b0c.",
+          "got": "100\u00b0c. (c = celsius, 100 is the boiling point.)\n\nq: what is ",
           "correct": false
         }
       ]
