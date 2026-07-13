@@ -98,7 +98,8 @@ NEXUS_18 = [
 ]
 
 TRIO = {
-    "surface": {"name": "Surface",  "color": "#4a9eff", "purpose": "Operator-facing — humans read, agents act", "count": 15},
+    "surface": {"name": "Surface",  "color": "#4a9eff", "purpose": "Operator-facing — humans read, agents act", "count": 15},,
+    {"tab": 50, "slug": "eu-ai-act",      "title": "EU AI Act Compliance", "trio": "surface", "icon": "🇪🇺", "tag": "T-20 days", "route": "/eu-ai-act.html", "purpose": "EU AI Act compliance overview · Art 50 watermarking · Art 6 high-risk · Art 14 human oversight · SOV-721"}
     "deep":    {"name": "Deep",     "color": "#22c55e", "purpose": "Builder-facing — MCPs / APIs / substrate",  "count": 12},
     "codex":   {"name": "Codex",    "color": "#fbbf24", "purpose": "Public-facing — onboarding / community",    "count": 9},
 }
