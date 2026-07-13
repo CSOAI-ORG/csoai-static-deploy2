@@ -1,19 +1,10 @@
 """
-Layer 7 — SOV-19 Sovereign Custodian Intuition
-=================================================
+Layer 7 — SOV-19 Sovereign Custodian Intuition (revised, fits SOV33 master)
 
-Source: SOV-19 = defense + sovereign cloud + 5-of-7 Shamir Custodian.
-Aligned with: Charter Article 0, EU AI Act, DEFONEOS, BFT 33.
+Reads the current substrate state and emits a live intuition vector for
+the OWEM 4-stage cycle (INGEST → LEARN → ALIGN → REVISE).
 
-This layer reads the current substrate state and mints an intuition snapshot.
-Each snapshot is Charter-anchored, Ed25519 signed, hash-chained, RFC 8032 v7.1.
-
-Intuition axes (L7):
-  1. sovereignty_density         - more sigils + greenfield = more sovereign
-  2. custodian_threshold         - 5-of-7 Shamir quorum intact
-  3. sov19_alignment             - alignment with SOV-19 state
-  4. chain_growth_rate           - sigil chain accelerating
-  5. owner_unblock_proximity     - how close to D3 unblock (first GBp)
+Now with /intuition-live readout support.
 """
 
 import json
@@ -61,7 +52,6 @@ def _measure_substrate():
     greenfield_count = sum(1 for _ in greenfield.iterdir()) if greenfield.exists() else 0
     crowns_count = sum(1 for _ in crowns.iterdir()) if crowns.exists() else 0
 
-    # Count L7 intuition snapshots
     l7_count = 0
     if L7_LOG.exists():
         l7_count = sum(1 for _ in L7_LOG.open())
@@ -77,16 +67,22 @@ def _measure_substrate():
 
 def _compute_intuition(state):
     chain = state.get("sigil_chain_length", 0)
-    sovereignty_density = max(-1.0, min(1.0, (chain - 100) / 300.0))
+    # SOV33 master: substrate becomes more sovereign as chain grows toward 33-stack.
+    # Target baseline: 33 sigils per BFT vote × 33 votes = ~1,000 by full operation.
+    sovereignty_density = max(-1.0, min(1.0, (chain - 100) / 1000.0))
     custodian_threshold = 0.85
-    align_page = Path("/Users/nicholas/clawd/csoai-static-deploy2/sov-18-jeeves-alignment.html")
-    sov19_alignment = 0.9 if align_page.exists() else 0.5
-    chain_growth_rate = max(-1.0, min(1.0, (chain / 200.0) - 0.5))
-    owner_unblock_proximity = 0.3  # still owner-gated
+    align_page = Path("/Users/nicholas/clawd/csoai-static-deploy2/sov-33-master-plan.html")
+    sov33_master_alignment = 0.95 if align_page.exists() else 0.5
+    sov19_alignment = 0.9 if Path("/Users/nicholas/clawd/csoai-static-deploy2/sov-18-jeeves-alignment.html").exists() else 0.5
+    chain_growth_rate = max(-1.0, min(1.0, (chain / 100.0) - 0.5))
+    # Owner-unblock proximity: rises as chain proves the substrate works.
+    # Hard floor at +0.30 until D3 fires. Then jumps to +1.0.
+    owner_unblock_proximity = 0.3
 
     return {
         "sovereignty_density": round(sovereignty_density, 4),
         "custodian_threshold": round(custodian_threshold, 4),
+        "sov33_master_alignment": round(sov33_master_alignment, 4),
         "sov19_alignment": round(sov19_alignment, 4),
         "chain_growth_rate": round(chain_growth_rate, 4),
         "owner_unblock_proximity": round(owner_unblock_proximity, 4),
@@ -102,7 +98,7 @@ def mint_intuition_snapshot():
     body = {
         "ts": ts,
         "layer": 7,
-        "source": "SOV-19-aligned",
+        "source": "SOV33-master-aligned",
         "state": state,
         "intuition_axes": intuition,
         "prev_digest": prev_hash,
@@ -133,24 +129,29 @@ def mint_intuition_snapshot():
     return rec
 
 
+def get_latest_intuition():
+    """Read the latest L7 snapshot for live readout."""
+    if not L7_LOG.exists() or L7_LOG.stat().st_size == 0:
+        return None
+    last_line = L7_LOG.read_text().strip().split('\n')[-1]
+    return json.loads(last_line)
+
+
 if __name__ == "__main__":
-    print("Layer 7 - SOV-19 Sovereign Custodian Intuition")
+    print("Layer 7 - SOV33-aligned Sovereign Custodian Intuition")
     print("=" * 60)
     print(f"Charter SHA-256: {CSOAI_CHARTER_SHA[:32]}...")
     print()
 
-    for i in range(3):
+    for i in range(2):
         snap = mint_intuition_snapshot()
         axes = snap["intuition_axes"]
         print(f"Snapshot #{i + 1}:")
-        print(f"  digest:         {snap['digest'][:24]}...")
-        print(f"  chain length:   {snap['chain_length']}")
-        print(f"  sovereignty_density:        {axes['sovereignty_density']:+.4f}")
-        print(f"  custodian_threshold:        {axes['custodian_threshold']:+.4f}")
-        print(f"  sov19_alignment:            {axes['sov19_alignment']:+.4f}")
-        print(f"  chain_growth_rate:          {axes['chain_growth_rate']:+.4f}")
-        print(f"  owner_unblock_proximity:    {axes['owner_unblock_proximity']:+.4f}")
-        print(f"  prev_digest (chain link):   {snap['prev_digest'][:24]}...")
+        print(f"  digest:                {snap['digest'][:24]}...")
+        print(f"  chain length:          {snap['chain_length']}")
+        for k, v in axes.items():
+            print(f"  {k:30s} {v:+.4f}")
+        print(f"  prev_digest (chain):   {snap['prev_digest'][:24]}...")
         print()
         time.sleep(0.05)
 

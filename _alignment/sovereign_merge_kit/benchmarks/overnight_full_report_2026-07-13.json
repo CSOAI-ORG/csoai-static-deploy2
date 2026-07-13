@@ -1,12 +1,12 @@
 {
-  "ts": "2026-07-12T16:22:07.760837+00:00",
+  "ts": "2026-07-13T03:00:04.879009+00:00",
   "stages": [
     {
       "stage": "1_BUILD_COMPETITOR_DB",
       "status": "OK",
-      "elapsed_s": 0.0026569366455078125,
+      "elapsed_s": 0.0020720958709716797,
       "result": {
-        "ts": "2026-07-12T16:22:07.748001+00:00",
+        "ts": "2026-07-13T03:00:04.851734+00:00",
         "count": 35,
         "categories": [
           "benchmark",
@@ -634,7 +634,7 @@
     {
       "stage": "2_BUILD_SOVEREIGN_CORPUS",
       "status": "OK",
-      "elapsed_s": 0.006471872329711914,
+      "elapsed_s": 0.012393951416015625,
       "result": {
         "sources": 7,
         "total_samples": 877
@@ -643,7 +643,7 @@
     {
       "stage": "3_PHASE_2_BRAIN_1B",
       "status": "OK",
-      "elapsed_s": 0.0007171630859375,
+      "elapsed_s": 0.00014591217041015625,
       "result": {
         "note": "Phase 2 deferred to Kaggle T4 GPU",
         "script": "/Users/nicholas/clawd/_alignment/sovereign_merge_kit/SOV33_FOUR_EXPERT_COLAB.py",
@@ -654,7 +654,7 @@
     {
       "stage": "4_PHASE_3_MAMBA2",
       "status": "OK",
-      "elapsed_s": 6.29425048828125e-05,
+      "elapsed_s": 0.0005891323089599609,
       "result": {
         "script": "/Users/nicholas/clawd/_alignment/sovereign_merge_kit/sov33_mamba2.py",
         "script_written": true,
@@ -664,7 +664,7 @@
     {
       "stage": "5_PHASE_4_EXPERTS",
       "status": "OK",
-      "elapsed_s": 0.0,
+      "elapsed_s": 9.5367431640625e-07,
       "result": {
         "note": "Phase 4: train 4 experts at scale (200 samples \u00d7 200 steps \u00d7 rank=32). On Kaggle T4.",
         "current": "4 OWEMs already trained on Mac (rank=16, 200 samples, 100 steps).",
@@ -674,7 +674,7 @@
     {
       "stage": "6_PHASE_5_WORLD_MODEL",
       "status": "OK",
-      "elapsed_s": 7.152557373046875e-07,
+      "elapsed_s": 1.1920928955078125e-06,
       "result": {
         "note": "Phase 5: world model at 100M+ params (vs 12.7M now). On Kaggle T4.",
         "current": "sov33_owem_world_model.py (12.7M params, 128-dim, 4 layers, 4 heads)",
@@ -684,7 +684,7 @@
     {
       "stage": "7_GGUF_CONVERSION",
       "status": "OK",
-      "elapsed_s": 0.004990339279174805,
+      "elapsed_s": 0.012491226196289062,
       "result": {
         "ggufs": [
           {
@@ -714,7 +714,7 @@
     {
       "stage": "8_KAGGLE_PACKAGE",
       "status": "OK",
-      "elapsed_s": 0.0001480579376220703,
+      "elapsed_s": 0.0004589557647705078,
       "result": {
         "kaggle": {
           "username": "sovereign-ai",
@@ -743,7 +743,7 @@
     {
       "stage": "9_ARENA_STRATEGY",
       "status": "OK",
-      "elapsed_s": 0.0,
+      "elapsed_s": 1.9073486328125e-06,
       "result": {
         "lmsys_chatbot_arena": "Enter sov33small3 + sovereign brain as one entry",
         "alpaca_eval": "Run sov33small3 + sovereign brain on 805 prompts",
@@ -756,7 +756,7 @@
     {
       "stage": "10_SOVEREIGN_BENCHMARKS",
       "status": "OK",
-      "elapsed_s": 0.0,
+      "elapsed_s": 9.5367431640625e-07,
       "result": {
         "governance_battery": "TP=15, FP=0, TN=18, FN=0 (1.00 on 33 prompts)",
         "sovereign_brain_3_3": "Wins on sovereign topics",
@@ -768,7 +768,7 @@
     {
       "stage": "11_PUBLISH",
       "status": "OK",
-      "elapsed_s": 5.0067901611328125e-06,
+      "elapsed_s": 1.3828277587890625e-05,
       "result": {
         "report": "/Users/nicholas/clawd/_alignment/sovereign_merge_kit/benchmarks/overnight_full_report_2026-07-13.json"
       }
@@ -776,7 +776,7 @@
     {
       "stage": "12_NOTIFY",
       "status": "OK",
-      "elapsed_s": 0.0,
+      "elapsed_s": 1.1920928955078125e-06,
       "result": {
         "message": "\ud83d\udf0f SOV33 OVERNIGHT FULL PIPELINE COMPLETE",
         "next_step": "Open /Users/nicholas/clawd/csoai-static-deploy2/SOV33_FULL_RUNDOWN.html",

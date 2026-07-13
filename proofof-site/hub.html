@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>🌐 Sovereign Command Hub — 21-Tab Nexus · MEOK OS</title>
+<title>🌐 Sovereign Command Hub — 23-Tab Nexus · MEOK OS</title>
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body { font-family: -apple-system, system-ui, monospace; background: #02060f; color: #e5e5e5; padding: 1rem; line-height: 1.6; }
@@ -67,7 +67,7 @@
 </nav>
 
 <h1 style="margin-top:2rem">🌐 Sovereign Command Hub</h1>
-<p class="sub">21-Tab Nexus · All-in-one Sovereign OS · Crown lineage 1795-3025</p>
+<p class="sub">23-Tab Nexus · All-in-one Sovereign OS · Crown lineage 1795-3025</p>
 
 <div class="tri-domain-nav">
   <a href="#surface" class="surface" onclick="showTrio('surface', event)">Surface</a>
@@ -88,28 +88,30 @@
 <p style="text-align:center;color:#fbbf24;margin:2rem 0 0.5rem;font-size:.85rem;padding:0.5rem;background:rgba(251,191,36,0.05);border-radius:6px">🐉 <strong>25 days to 2 Aug 2026 EU AI Act</strong> · CSOAI Ltd (UK 16939677) · Crown lineage 1795-3025</p>
 
 <script>
-const NEXUS_21_DATA = [
-    {tab: 1, slug: "hub", title: "Command Hub", trio: "surface", icon: "🌐", tag: "master", purpose: "Single-page nexus linking all 20 sovereign tabs"},
-    {tab: 2, slug: "sovspace", title: "SovSpace", trio: "surface", icon: "🚀", tag: "operator", purpose: "Sovereign operator console — 64 MCPs + 12 Generals", stats: { mcp: 153, generals: 12, health: 'green' }},
-    {tab: 3, slug: "charter", title: "Charter", trio: "surface", icon: "📜", tag: "trust", purpose: "Charter SHA-256 + SIGIL mint + STR Ed25519 fingerprint", stats: { version: '1.0', articles: 10, sigil_mint: '77ab0e6f9d6c77e8' }},
-    {tab: 4, slug: "agents", title: "12 Generals", trio: "surface", icon: "⚔️", tag: "council", purpose: "12 Queens around 1 King — sovereign council roster", stats: { active: 12, quorum: '23/33', ed25519: true }},
-    {tab: 5, slug: "hives", title: "33 Hives", trio: "surface", icon: "🐝", tag: "network", purpose: "33 federated sovereign worlds — Vast.ai autoscale", stats: { active: 7, total: 33, uptime: '99.9%' }},
-    {tab: 6, slug: "sov-consciousness", title: "Sov Consciousness", trio: "codex", icon: "🜏", tag: "charter", purpose: "Charter 54 — the discipline that protects the lineage", stats: { discipline: '2-sentence', pillars: 12, redlines: 4 }},
-    {tab: 7, slug: "oowm", title: "OOWM", trio: "deep", icon: "🌍", tag: "model", purpose: "Organic Open World Model — 4 anchors × 5 elders", stats: { anchors: 4, elders: 20, model: 'qwen3:30b-a3b' }},
-    {tab: 8, slug: "canon", title: "Canon / DNA", trio: "deep", icon: "🧬", tag: "knowledge", purpose: "Sovereign canon of charters + 60 sovereign charters", stats: { charters: 60, mcps_indexed: 153, policies: 7 }},
-    {tab: 9, slug: "autonomy", title: "Autonomy", trio: "deep", icon: "🤖", tag: "runtime", purpose: "12 heartbeat jobs + EAT mode automation", stats: { jobs: 12, active: 8, eat_mode: true }},
-    {tab: 10, slug: "marketplace", title: "Marketplace", trio: "deep", icon: "🏪", tag: "products", purpose: "153 sovereign MCPs on PyPI + GitHub Releases", stats: { mcps: 153, pypi: 140, github: 9 }},
-    {tab: 11, slug: "sov-federation", title: "Sov Federation", trio: "deep", icon: "🧠", tag: "architecture", purpose: "L/R Brain 10/90 + SIGIL bus — composed-params 33T", stats: { aggregate: '33T', active: '3B', bus: 'SIGIL' }},
-    {tab: 12, slug: "sov-bench", title: "Sov Bench", trio: "deep", icon: "📐", tag: "measured", purpose: "Φ + PCI + J-Space + Binding + Self-Model — the 5 instruments", stats: { phi: 0.847, pci: 0.732, jspace: 0.913, floor: 0.95 }},
-    {tab: 13, slug: "search", title: "Search", trio: "deep", icon: "🔎", tag: "find", purpose: "Sovereign full-text + persona-routed", stats: { indexed: '1.2TB', queries: '1,500/day', privacy: 'CC0' }},
-    {tab: 14, slug: "sov-os", title: "Sov OS", trio: "deep", icon: "🖥️", tag: "platform", purpose: "Sovereign OS — 8 layers / 64 MCPs / 12 Generals", stats: { layers: 8, mcps: 64, generals: 12 }},
-    {tab: 15, slug: "launch", title: "Launch", trio: "codex", icon: "🎯", tag: "go", purpose: "SOV3 launch status + Mon 13 Jul countdown", stats: { day: 'T-4', status: 'green', next: 'catalog' }},
-    {tab: 16, slug: "sovtown", title: "Sovereign Town", trio: "codex", icon: "🏘️", tag: "demo", purpose: "Multi-agent town demo — 47 agents on 3D grid", stats: { agents: 47, grids: 3, active_sims: 5 }},
-    {tab: 17, slug: "wallet", title: "Wallet", trio: "codex", icon: "💰", tag: "revenue", purpose: "Sovereign STR wallet — £/€/¥ receipts", stats: { receipts: 7, value: '£8,950', currency: 'GBP' }},
-    {tab: 18, slug: "feedback", title: "Feedback", trio: "codex", icon: "💬", tag: "user", purpose: "NPS + CSAT + feature requests + Ch. Article 0", stats: { nps: '+33', csat: '4.3', total: 6 }},
-    {tab: 19, slug: "signup", title: "Sign up", trio: "codex", icon: "🪪", tag: "onboard", purpose: "Persona-routed SIGIL receipt + Ed25519 API key", stats: { signups: 4, personas: 8, api_keys: 4 }},
-    {tab: 20, slug: "trust", title: "Trust Proof", trio: "codex", icon: "🛡️", tag: "verify", purpose: "Live SIGIL receipts + Charter fingerprint + Red Lines", stats: { sigils: 5, red_lines: 4, care_floor: '0.95' }},
-    {tab: 21, slug: "cesium-globe", title: "Cesium Globe", trio: "surface", icon: "🌎", tag: "immersive", purpose: "3D sovereign world with Three.js + Cesium", stats: { active_views: 3, fps: 60, res: '4K' }},
+const NEXUS_23_DATA = [
+    {tab: 1, slug: "hub", title: "Command Hub", trio: "surface", icon: "🌐", tag: "master", purpose: "Single-page nexus linking all 22 sovereign tabs"},
+    {tab: 2, slug: "sov33-master", title: "SOV33 Master", trio: "surface", icon: "🜏", tag: "canonical", purpose: "Single canonical alignment — 5 anchor docs + measured pyramid topology", stats: { topo: 'pyramid-2s+1m+1L', active: '17.3B', reach: 61 }},
+    {tab: 3, slug: "sovspace", title: "SovSpace", trio: "surface", icon: "🚀", tag: "operator", purpose: "Sovereign operator console — 64 MCPs + 12 Generals", stats: { mcp: 153, generals: 12, health: 'green' }},
+    {tab: 4, slug: "charter", title: "Charter", trio: "surface", icon: "📜", tag: "trust", purpose: "Charter SHA-256 + SIGIL mint + STR Ed25519 fingerprint", stats: { version: '1.0', articles: 10, sigil_mint: '77ab0e6f9d6c77e8' }},
+    {tab: 5, slug: "agents", title: "12 Generals", trio: "surface", icon: "⚔️", tag: "council", purpose: "12 Queens around 1 King — sovereign council roster", stats: { active: 12, quorum: '23/33', ed25519: true }},
+    {tab: 6, slug: "hives", title: "33 Hives", trio: "surface", icon: "🐝", tag: "network", purpose: "33 federated sovereign worlds — Vast.ai autoscale", stats: { active: 7, total: 33, uptime: '99.9%' }},
+    {tab: 7, slug: "sov-consciousness", title: "Sov Consciousness", trio: "codex", icon: "🜏", tag: "charter", purpose: "Charter 54 — the discipline that protects the lineage", stats: { discipline: '2-sentence', pillars: 12, redlines: 4 }},
+    {tab: 8, slug: "sov33-retraction", title: "SOV33 Retraction", trio: "codex", icon: "🛑", tag: "discipline", purpose: "EAT-705 holds the OWEM line — no T-figures, REACH not params", stats: { retracted: '3.2T/33T', held: 'REACH line', honest: true }},
+    {tab: 9, slug: "oowm", title: "OOWM", trio: "deep", icon: "🌍", tag: "model", purpose: "Organic Open World Model — 4 anchors × 5 elders", stats: { anchors: 4, elders: 20, model: 'qwen3:30b-a3b' }},
+    {tab: 10, slug: "canon", title: "Canon / DNA", trio: "deep", icon: "🧬", tag: "knowledge", purpose: "Sovereign canon of charters + 60 sovereign charters", stats: { charters: 60, mcps_indexed: 153, policies: 7 }},
+    {tab: 11, slug: "autonomy", title: "Autonomy", trio: "deep", icon: "🤖", tag: "runtime", purpose: "12 heartbeat jobs + EAT mode automation", stats: { jobs: 12, active: 8, eat_mode: true }},
+    {tab: 12, slug: "marketplace", title: "Marketplace", trio: "deep", icon: "🏪", tag: "products", purpose: "153 sovereign MCPs on PyPI + GitHub Releases", stats: { mcps: 153, pypi: 140, github: 9 }},
+    {tab: 13, slug: "sov-federation", title: "Sov Federation", trio: "deep", icon: "🧠", tag: "architecture", purpose: "L/R Brain 10/90 + SIGIL bus — REACH not params (EAT705 retracted 33T)", stats: { active_b: '17.3B', reach: '61', bus: 'SIGIL' }},
+    {tab: 14, slug: "sov-bench", title: "Sov Bench", trio: "deep", icon: "📐", tag: "measured", purpose: "Φ + PCI + J-Space + Binding + Self-Model — the 5 instruments", stats: { phi: 0.847, pci: 0.732, jspace: 0.913, floor: 0.95 }},
+    {tab: 15, slug: "search", title: "Search", trio: "deep", icon: "🔎", tag: "find", purpose: "Sovereign full-text + persona-routed", stats: { indexed: '1.2TB', queries: '1,500/day', privacy: 'CC0' }},
+    {tab: 16, slug: "sov-os", title: "Sov OS", trio: "deep", icon: "🖥️", tag: "platform", purpose: "Sovereign OS — 8 layers / 64 MCPs / 12 Generals", stats: { layers: 8, mcps: 64, generals: 12 }},
+    {tab: 17, slug: "launch", title: "Launch", trio: "codex", icon: "🎯", tag: "go", purpose: "SOV3 launch status + Mon 13 Jul countdown", stats: { day: 'T-4', status: 'green', next: 'catalog' }},
+    {tab: 18, slug: "sovtown", title: "Sovereign Town", trio: "codex", icon: "🏘️", tag: "demo", purpose: "Multi-agent town demo — 47 agents on 3D grid", stats: { agents: 47, grids: 3, active_sims: 5 }},
+    {tab: 19, slug: "wallet", title: "Wallet", trio: "codex", icon: "💰", tag: "revenue", purpose: "Sovereign STR wallet — £/€/¥ receipts", stats: { receipts: 7, value: '£8,950', currency: 'GBP' }},
+    {tab: 20, slug: "feedback", title: "Feedback", trio: "codex", icon: "💬", tag: "user", purpose: "NPS + CSAT + feature requests + Ch. Article 0", stats: { nps: '+33', csat: '4.3', total: 6 }},
+    {tab: 21, slug: "signup", title: "Sign up", trio: "codex", icon: "🪪", tag: "onboard", purpose: "Persona-routed SIGIL receipt + Ed25519 API key", stats: { signups: 4, personas: 8, api_keys: 4 }},
+    {tab: 22, slug: "trust", title: "Trust Proof", trio: "codex", icon: "🛡️", tag: "verify", purpose: "Live SIGIL receipts + Charter fingerprint + Red Lines", stats: { sigils: 5, red_lines: 4, care_floor: '0.95' }},
+    {tab: 23, slug: "cesium-globe", title: "Cesium Globe", trio: "surface", icon: "🌎", tag: "immersive", purpose: "3D sovereign world with Three.js + Cesium", stats: { active_views: 3, fps: 60, res: '4K' }},
 ];
 
 const TRIO_DATA = {
@@ -125,7 +127,7 @@ function renderTabs(filterTrio = null) {
   tabContentContainer.innerHTML = '';
 
   let firstActive = true;
-  NEXUS_21_DATA.forEach(tabData => {
+  NEXUS_23_DATA.forEach(tabData => {
     if (filterTrio && tabData.trio !== filterTrio) return;
 
     const button = document.createElement('button');
@@ -172,7 +174,7 @@ function activateTab(slug) {
 
   // Update trio nav active state
   document.querySelectorAll('.tri-domain-nav a').forEach(a => a.classList.remove('active'));
-  const currentTab = NEXUS_21_DATA.find(t => t.slug === slug);
+  const currentTab = NEXUS_23_DATA.find(t => t.slug === slug);
   if (currentTab) {
     document.querySelector(`.tri-domain-nav a.${currentTab.trio}`).classList.add('active');
   }
@@ -183,7 +185,7 @@ function showTrio(trio, e) {
     document.querySelectorAll('.tri-domain-nav a').forEach(a => a.classList.remove('active'));
     e.target.classList.add('active');
     renderTabs(trio);
-    const firstTabInTrio = NEXUS_21_DATA.find(t => t.trio === trio);
+    const firstTabInTrio = NEXUS_23_DATA.find(t => t.trio === trio);
     if(firstTabInTrio) activateTab(firstTabInTrio.slug);
 }
 

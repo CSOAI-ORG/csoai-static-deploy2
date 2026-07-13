@@ -371,7 +371,7 @@ async function refreshSovSpace() {
     const stat = await fetch('http://localhost:8101/api/status').then(r => r.json());
     
     document.getElementById('lateral-stats').innerHTML = `
-      <div style="margin-top:.5rem">📦 Models: <strong>${reg.total_models}</strong> (${reg.sovereign_safe} sovereign-safe)</div>
+      <div style="margin-top:.5rem">📦 Models: <strong>${reg.total_models}</strong> (${reg.sovereign_safe_count} sovereign-safe)</div>
       <div style="margin-top:.25rem">🧬 Care-floor: <strong>${stat.care_floor}</strong></div>
       <div style="margin-top:.25rem">🪪 Article 0: <strong>${stat.article_0_bound ? 'BOUND ✓' : 'unbound'}</strong></div>
       <div style="margin-top:.25rem">🛡️ BFT-33: <strong>${stat.bft_33_quorum ? 'quorum ✓' : 'no quorum'}</strong></div>
@@ -380,7 +380,7 @@ async function refreshSovSpace() {
     `;
     
     feed.innerHTML += `\n[${ts}] ✓ OUTWARD: sovspace3d.html (Cesium 1.123 real Earth)`;
-    feed.innerHTML += `\n[${ts}] ✓ LATERAL: ${reg.total_models} models · ${reg.sovereign_safe} sovereign-safe`;
+    feed.innerHTML += `\n[${ts}] ✓ LATERAL: ${reg.total_models} models · ${reg.sovereign_safe_count} sovereign-safe`;
     feed.innerHTML += `\n[${ts}] ✓ INWARD: J-Space composite ${stat.care_floor === 0.95 ? 'measured' : 'calibrating'}`;
     feed.innerHTML += `\n[${ts}] ✓ BRIDGE: 3 faces — ONE substrate — gov-layer UNIQUE to SovSpace`;
   } catch(e) {

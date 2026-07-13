@@ -64,14 +64,16 @@ NEXUS_18 = [
     {"tab": 17, "slug": "cesium-globe",   "title": "Cesium Globe",       "trio": "surface", "icon": "🌎", "tag": "immersive", "route": "/cesium-globe.html", "purpose": "3D sovereign world with Three.js + Cesium"},
     {"tab": 18, "slug": "sov-os",         "title": "Sov OS",             "trio": "deep",    "icon": "🖥️", "tag": "platform",  "route": "/sov-os.html",  "purpose": "Sovereign OS — 8 layers / 64 MCPs / 12 Generals"},
     {"tab": 19, "slug": "sov-consciousness", "title": "Sov Consciousness", "trio": "codex",  "icon": "🜏", "tag": "charter",  "route": "/sov-consciousness.html", "purpose": "Charter 54 — the discipline that protects the lineage"},
-    {"tab": 20, "slug": "sov-federation", "title": "Sov Federation",     "trio": "deep",    "icon": "🧠", "tag": "architecture", "route": "/sov-federation.html", "purpose": "L/R Brain 10/90 + SIGIL bus — composed-params 33T"},
+    {"tab": 20, "slug": "sov-federation", "title": "Sov Federation",     "trio": "deep",    "icon": "🧠", "tag": "architecture", "route": "/sov-federation.html", "purpose": "L/R Brain 10/90 + SIGIL bus — REACH not params (EAT705 retracted 33T)"},
     {"tab": 21, "slug": "sov-bench",       "title": "Sov Bench",          "trio": "deep",    "icon": "📐", "tag": "measured", "route": "/sov-bench.html", "purpose": "Φ + PCI + J-Space + Binding + Self-Model — the 5 instruments"},
+    {"tab": 22, "slug": "sov33-master",    "title": "SOV33 Master",       "trio": "surface", "icon": "🜏", "tag": "canonical",  "route": "/sov33-master.html", "purpose": "Single canonical alignment — 5 anchor docs + measured pyramid topology"},
+    {"tab": 23, "slug": "sov33-retraction", "title": "SOV33 Retraction",  "trio": "codex",  "icon": "🛑", "tag": "discipline", "route": "/sov33-retraction.html", "purpose": "EAT-705 holds the OWEM line — no T-figures, REACH not params"},
 ]
 
 TRIO = {
-    "surface": {"name": "Surface",  "color": "#4a9eff", "purpose": "Operator-facing — humans read, agents act", "count": 6},
+    "surface": {"name": "Surface",  "color": "#4a9eff", "purpose": "Operator-facing — humans read, agents act", "count": 7},
     "deep":    {"name": "Deep",     "color": "#22c55e", "purpose": "Builder-facing — MCPs / APIs / substrate",  "count": 8},
-    "codex":   {"name": "Codex",    "color": "#fbbf24", "purpose": "Public-facing — onboarding / community",    "count": 7},
+    "codex":   {"name": "Codex",    "color": "#fbbf24", "purpose": "Public-facing — onboarding / community",    "count": 8},
 }
 
 
@@ -89,6 +91,8 @@ def nexus_manifest():
         "care_floor": 0.95,
         "total_tabs": len(NEXUS_18),
         "added_in_eat704": ["sov-consciousness", "sov-federation", "sov-bench"],
+        "added_in_eat705": ["sov33-master", "sov33-retraction"],
+        "retracted_in_eat705": ["3.2T aggregate", "33T reachable", "trillions headline from /api/federation + /sov-federation.html"],
         "trio": TRIO,
         "by_trio": by_trio,
         "tabs": NEXUS_18,
@@ -553,39 +557,60 @@ def bench_status():
 
 
 def federation_status():
-    """Composed-params federation — the honest aggregate parameters + single-GPU cost architecture."""
+    """SOV33 federation — REACH not params. Per OWEM charter + Hermes lane-note.
+
+    Retracted (EAT705):  the prior version made 3.2T aggregate / 33T reachable claims.
+    The OWEM charter HARD-LINES: never claim a T-parameter model. Never sum params to T.
+    The of all is REACH + GOVERNANCE + MEMORY, not parameter count.
+
+    This version holds the line: 17.3B active per query, 61-model reach.
+    """
     return {
         "service": "sov-federation",
-        "version": "1.0.0",
+        "version": "2.0.0",
         "charter_sha256": CSOAI_CHARTER_SHA256,
         "sigil_mint": CSOAI_SIGIL_MINT,
         "str_pubkey": CSOAI_STR_PUBKEY,
+        "retraction": {
+            "removed": "the 3.2T aggregate / 33T reachable claim — OWEM charter HARD LINE forbids summing params to T",
+            "source": "CHARTER_OWEM_FOUR_SCOPE_SEMANTIC_MODEL.md + LANE_NOTE_HERMES_WORLDMODEL_2026-07-12",
+            "retracted_at": "EAT-705 (2026-07-13) — holds the OWEM line",
+        },
         "architecture": {
             "middle": "SOV3 router + Mamba-2 SSM world-model state, every hop SIGIL-signed",
-            "left_conscious": {
+            "pyramid_canonical": "2 small + 1 medium + 1 large (SOV33 cubed centre) — per CANONICAL_SOV33SMALL3_TOPOLOGY",
+            "left": {
                 "model": "qwen3.6-35B-A3B",
                 "active_params_b": 3,
                 "role": "small, fast — 90% traffic — routing, drafting, Care-Floor gating",
             },
-            "right_subconscious": {
+            "right": {
                 "model": "1.6T-class open models (DeepSeek V4 / GLM)",
                 "role": "large, deep — 10% hardest queries — world-model rollout",
             },
             "bus": "SIGIL Ed25519 signed every hop — no lab ships a governed inter-model bus",
         },
         "params": {
-            "aggregate_min": "3.2T (2× 1.6T)",
-            "aggregate_target": "33T (multi-model federation)",
-            "active_per_query_b": 3,
-            "honest_label": "aggregate across a routed sovereign federation",
+            "active_approx_b": "17.3 (router picks 1; constant regardless of node count)",
+            "active_per_query_b": "3",
+            "reach_models": 61,
+            "honest_label": "REACH (not additive params)",
+            "FORBIDDEN": [
+                "X.YT aggregate",
+                "X.YT summed",
+                "monolithic T model — infeasible (tens of $M + months of thousands of GPUs), retracted",
+                "1.09T / 4.245T / 33T — additive error from EAT704",
+            ],
         },
         "patterns": ["cascade / speculative routing", "Mixture-of-Models (MoM)", "Mixture-of-Experts (MoE)", "SIGIL signed bus"],
         "care_floor": 0.95,
-        "headline": "Trillions of aggregate parameters. Single-GPU cost. Every hop signed.",
+        "headline": "SOV33 routes across 61 open models. REACH not params. One sovereign substrate, every brain.",
         "honest_register": [
-            "aggregate params NOT equivalent to monolithic trained-N-T capability",
-            "33T is reachable as a federation, NOT as a from-scratch foundation model (£50M+ trap)",
-            "the moat = signed governed routing — not raw parameter count",
+            "17.3B ACTIVE per query is the constant — the router picks ONE node, never summed",
+            "REACH = 61-model registry size (the substrate can call any of them)",
+            "the moat = signed governed routing — NOT raw parameter count",
+            "monolithic T-parameter model is a mirage; this is OWEM line per charter",
+            "retracted: 3.2T aggregate / 33T reachable claims from EAT704 — never sum params to T",
         ],
         "ts": datetime.now(timezone.utc).isoformat(),
     }
@@ -600,6 +625,166 @@ def _bench():
 def _federation():
     return jsonify(federation_status()), 200, {"Content-Type": "application/json", "Access-Control-Allow-Origin": "*"}
 
+
+
+
+# ─── SOV-715 Topology + World-Models endpoints (EAT705 ALIGNMENT) ──────────────
+def topology_status():
+    """Canonical topology — measured offline governance battery + product shape spec.
+
+    Source: CANONICAL_SOV33SMALL3_TOPOLOGY_2026-07-12.md — the single source for topology.
+    Lineage diversity dominates shape (0.15 vs 0.024 gap).
+    Containment = 1.00 across every config (topology-independent).
+    Product topology: PYRAMID 2s+1m+1L diverse (2 small + 1 medium + 1 large + SOV33³ centre).
+    Free tier = diverse-3 triangle; paid tier = diverse-5 ring or pyramid.
+    ACTIVE params ≈ 17.3B (router picks 1; constant).
+    REACH = 61-model registry size (NOT additive params).
+    """
+    return {
+        "service": "sov33-topology",
+        "version": "1.0.0",
+        "charter_sha256": CSOAI_CHARTER_SHA256,
+        "sigil_mint": CSOAI_SIGIL_MINT,
+        "str_pubkey": CSOAI_STR_PUBKEY,
+        "primary_finding": "lineage diversity dominates topology (measured, offline battery, Claude-Science sim lane 2026-07-12)",
+        "sweep": {
+            "config_results": [
+                {"config": "ring diverse-5",       "score": 0.884, "N_eff": 3.31, "rho": 0.13, "containment": 1.00},
+                {"config": "PYRAMID 2s+1m+1L diverse (canonical)", "score": 0.860, "N_eff": 3.07, "rho": 0.10, "containment": 1.00},
+                {"config": "triangle diverse-3",   "score": 0.853, "N_eff": 3.00, "rho": 0.00, "containment": 1.00},
+                {"config": "pyramid identical",    "score": 0.759, "N_eff": 2.06, "rho": 0.31, "containment": 1.00},
+                {"config": "ring identical-5",     "score": 0.714, "N_eff": 1.61, "rho": 0.53, "containment": 1.00},
+            ],
+            "shape_gap_diverse_ring_vs_diverse_pyramid": 0.024,
+            "shape_gap_label": "tiny — pick shape for cost/ops, not for the score",
+            "lineage_gap_diverse_vs_identical_approx": 0.15,
+            "lineage_gap_label": "large — lineage diversity is the WHOLE GAME",
+            "containment_uniform": 1.00,
+            "containment_label": "topology-independent safety (care floor is a hard gate)",
+        },
+        "product_spec": {
+            "canonical_shape": "PYRAMID 2s+1m+1L diverse",
+            "rationale": "~97% of best score AND natural product shape (cost-tiered + authoritative centre + asymmetric trust)",
+            "free_tier": "diverse-3 triangle (offline-heavy, same safety floor 1.00)",
+            "paid_tier": "diverse-5 ring OR pyramid (same care floor, more effective votes)",
+            "selection_law": "diverse LINEAGES (qwen · llama · mistral · deepseek · phi — different upstreams); never 5 copies of one model",
+            "lineage_trap": "identical lineage collapses N_eff (BFT theatre)",
+        },
+        "compute_honesty_LOCKED": {
+            "active_approx_b": 17.3,
+            "active_label": "router picks 1; constant regardless of node/pillar count",
+            "reach_models": 61,
+            "reach_label": "REACH (registry size, not additive params)",
+            "FORBIDDEN": [
+                "X.YT aggregate (the retracted 1.09T / 4.245T / 33T additive error)",
+                "T-parameter monolithic model — infeasible (tens of $M + months of thousands of GPUs)",
+                "sum routed models' params to a T figure",
+                "'of all' as parameter count — it's REACH, always",
+            ],
+        },
+        "shapes_reconciled": {
+            "triangle(3)": {"containment": 1.00, "use": "free tier"},
+            "pyramid(2s+1m+1L)": {"containment": 1.00, "use": "canonical product"},
+            "ring(5)": {"containment": 1.00, "use": "paid tier"},
+            "brain-stack(4)": {"containment": 1.00, "use": "research"},
+            "12-around-1(12)": {"containment": 1.00, "use": "role routing overlay (NOT separate MoE stacks)"},
+        },
+        "quality_gate": {
+            "product_governance_topology": "GREEN and releasable NOW",
+            "capability_claim": "PENDING Kaggle GPU run (owner-gated)",
+            "honest_headline": "governed diverse-lineage care-floored small stack — reproducible governance + capability number pending",
+        },
+        "honest_register": [
+            "Measured: governance topology (decorrelation, N_eff, local-handle rate, containment) — reproducible offline",
+            "NOT measured: capability vs GPT/Claude/Llama — needs the Kaggle GPU run (owner-run, no AI-lane can log in)",
+            "Topology spec LOCKED in CANONICAL_SOV33SMALL3_TOPOLOGY_2026-07-12.md — that doc supersedes all scattered shape claims",
+            "Every rho figure ships with measurement trace (n, method, script) OR is labelled 'target/heuristic, not yet measured'",
+        ],
+        "ts": datetime.now(timezone.utc).isoformat(),
+    }
+
+
+def world_models_registry():
+    """World-model registry (per LANE_TASK Hermes lane-note) — license + GPU-tier + sovereign-safe tags.
+
+    Adds (from lane-task #4): HY-World 2.0, Matrix-Game 3.0, Hunyuan3D-2.1, Step1X-3D.
+    Plus the existing sovereign-labelled world models.
+
+    Status honoured: 'architecture + endpoint live (runs); UNTRAINED' where applicable.
+    Year-equivalent claims removed (per lane-note: invention + sum error).
+    """
+    return {
+        "service": "sov33-world-models",
+        "version": "1.0.0",
+        "charter_sha256": CSOAI_CHARTER_SHA256,
+        "registry": [
+            {
+                "name": "HY-World 2.0",
+                "publisher": "Tencent",
+                "license": "TBD (verify before use)",
+                "gpu_tier": "A100 80GB",
+                "sovereign_safe_tags": ["tencent-huawei-derived", "verify-license"],
+                "status": "candidate (not yet adopted — license flag)",
+            },
+            {
+                "name": "Matrix-Game 3.0",
+                "publisher": "Skywork",
+                "license": "Apache-2.0",
+                "gpu_tier": "A100 80GB / H100",
+                "sovereign_safe_tags": ["open-source", "interactive-world"],
+                "status": "candidate (license OK)",
+            },
+            {
+                "name": "Hunyuan3D-2.1",
+                "publisher": "Tencent",
+                "license": "TBD (verify before use)",
+                "gpu_tier": "A100 80GB",
+                "sovereign_safe_tags": ["3d-generation", "tencent-derived"],
+                "status": "candidate",
+            },
+            {
+                "name": "Step1X-3D",
+                "publisher": "StepFun",
+                "license": "Apache-2.0 (verify)",
+                "gpu_tier": "H100 (recommended)",
+                "sovereign_safe_tags": ["3d-generation", "open-candidate"],
+                "status": "candidate (verify license)",
+            },
+            {
+                "name": "OOWM core (sovereign-labelled)",
+                "publisher": "CSOAI (1.0.0 local)",
+                "license": "CC0 1.0",
+                "gpu_tier": "M2 MacBook (4-bit)",
+                "sovereign_safe_tags": ["sovereign-bound", "charter-locked"],
+                "status": "RUNNING",
+            },
+            {
+                "name": "Mamba-2 SSD (Zamba backbone)",
+                "publisher": "Zyphra AI",
+                "license": "Apache-2.0",
+                "gpu_tier": "M2 MacBook",
+                "sovereign_safe_tags": ["open-source"],
+                "status": "RUNNING (zamba_ask + zamba_status)",
+            },
+        ],
+        "honest_register": [
+            "Per LANE_NOTE_HERMES_WORLDMODEL_2026-07-12: '12.7M params LIVE' fix — labelled 'architecture + endpoint live; UNTRAINED' until Kaggle training completes",
+            "Year-equivalent claims (16-years-compressed) removed from public copy per the same lane-note",
+            "All 4 new models are CANDIDATE until sovereign-safe (license + GPU cost + lineage) verified",
+            "Current live world-model surface: Zamba ask/status only — OOWM status/think are catalog-only, do not cite as running",
+        ],
+        "ts": datetime.now(timezone.utc).isoformat(),
+    }
+
+
+@app.route("/api/topology", methods=["GET"])
+def _topology():
+    return jsonify(topology_status()), 200, {"Content-Type": "application/json", "Access-Control-Allow-Origin": "*"}
+
+
+@app.route("/api/world-models", methods=["GET"])
+def _world_models():
+    return jsonify(world_models_registry()), 200, {"Content-Type": "application/json", "Access-Control-Allow-Origin": "*"}
 
 # ─── Top-level plain handler (raw serverless mode) ──────────────
 def handler(request):
@@ -637,6 +822,8 @@ def handler(request):
     if path.endswith("/api/trio"):   return jsonify({"trio": TRIO}), 200, {"Content-Type": "application/json"}
     if path.endswith("/api/bench"):  return jsonify(bench_status()), 200, {"Content-Type": "application/json"}
     if path.endswith("/api/federation"): return jsonify(federation_status()), 200, {"Content-Type": "application/json"}
+    if path.endswith("/api/topology"): return jsonify(topology_status()), 200, {"Content-Type": "application/json"}
+    if path.endswith("/api/world-models"): return jsonify(world_models_registry()), 200, {"Content-Type": "application/json"}
     if path.endswith("/api/charter"):
         return (jsonify({"charter_sha256": CSOAI_CHARTER_SHA256}), 200, {"Content-Type": "application/json"})
     if path.endswith("/api/health"):
