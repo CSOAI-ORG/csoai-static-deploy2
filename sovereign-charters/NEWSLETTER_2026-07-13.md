@@ -68,9 +68,9 @@ We trained SOV 2.0 this week using **hybrid BM25 + TF-IDF cosine** retrieval.
 | Version | Method | Accuracy |
 |---|---|---|
 | SOV 1.0 | BM25 only | 72.0% |
-| SOV 2.0 | BM25 + TF-IDF cosine (α=0.2) | **92.0%** |
+| SOV 2.0 | BM25 + TF-IDF cosine (α=0.2) | **88.0%** |
 
-+20.0 percentage points from the baseline. Stdlib only — no LLM API calls, no embeddings service.
++16.0 percentage points from the baseline. Stdlib only — no LLM API calls, no embeddings service.
 
 **Try it:** `python3 M2_DEPLOYMENT_KIT/sov_ask.py "What is Article 0 binding?"`
 

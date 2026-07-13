@@ -1,6 +1,6 @@
 # Charter Health Report — 2026-07-13
 
-**Generated:** 2026-07-13T10:52:40.635987+00:00
+**Generated:** 2026-07-13T13:27:49.169912+00:00
 
 ## Top-line metrics
 
