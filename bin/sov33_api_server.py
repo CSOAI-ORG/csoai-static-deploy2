@@ -677,6 +677,45 @@ def handle_5x4x3_benchmark(payload=None) -> dict:
     except Exception as e:
         return {'error': f'5x4x3_benchmark failed: {e}'}
 
+
+# ============================================================
+# PHASE 32-35: RAG-augmented OWEM endpoints
+# ============================================================
+
+def handle_rag_ask(payload: dict) -> dict:
+    """POST /api/rag/ask - RAG-augmented OWEM ask."""
+    try:
+        sys.path.insert(0, '/Users/nicholas/clawd/_alignment/sovereign_merge_kit/rag')
+        from sov33_owem_rag import ask as _ask
+        owem = payload.get('owem', 'compliance')
+        question = payload.get('question', '')
+        if not question:
+            return {'error': 'need question'}
+        return _ask(owem, question)
+    except Exception as e:
+        return {'error': f'rag_ask failed: {e}'}
+
+
+def handle_rag_facts(payload: dict = None) -> dict:
+    """GET /api/rag/facts - list all sovereign facts."""
+    try:
+        sys.path.insert(0, '/Users/nicholas/clawd/_alignment/sovereign_merge_kit/rag')
+        from sov33_sovereign_facts import SOVEREIGN_FACTS, retrieve_facts
+        query = payload.get('query', '') if isinstance(payload, dict) else ''
+        if query:
+            retrieved = retrieve_facts(query)
+            return {
+                'query': query,
+                'retrieved': [{'short': f['short']} for f in retrieved],
+                'n_facts': len(SOVEREIGN_FACTS),
+            }
+        return {
+            'n_facts': len(SOVEREIGN_FACTS),
+            'facts': [{'key': k, 'short': v['short']} for k, v in SOVEREIGN_FACTS.items()],
+        }
+    except Exception as e:
+        return {'error': f'rag_facts failed: {e}'}
+
 # ============================================================
 # PHASE 6: 5x4x3 with 4 ACTUAL base models
 # ============================================================
@@ -2229,6 +2268,8 @@ class SovereignAPIHandler(BaseHTTPRequestHandler):
             return json_response(self, 200, handle_5x4x3_state({}))
         elif path == '/api/owem5x4x3/benchmark':
             return json_response(self, 200, handle_5x4x3_benchmark({}))
+        elif path == '/api/rag/facts':
+            return json_response(self, 200, handle_rag_facts({}))
         elif path == '/api/owem5x4x3/real/state':
             return json_response(self, 200, handle_5x4x3_real_state({}))
         elif path == '/api/continual/stats':
@@ -2351,6 +2392,8 @@ class SovereignAPIHandler(BaseHTTPRequestHandler):
             return json_response(self, 200, handle_diversity(payload))
         elif path == '/api/owem5x4x3/bft':
             return json_response(self, 200, handle_5x4x3_bft(payload))
+        elif path == '/api/rag/ask':
+            return json_response(self, 200, handle_rag_ask(payload))
         elif path == '/api/layer0':
             # Apply guardrails BEFORE sending to any brain
             if GUARDRAILS_ACTIVE:
@@ -2456,6 +2499,8 @@ class SovereignAPIHandler(BaseHTTPRequestHandler):
             return json_response(self, 200, handle_5x4x3_state({}))
         elif path == '/api/owem5x4x3/benchmark':
             return json_response(self, 200, handle_5x4x3_benchmark({}))
+        elif path == '/api/rag/facts':
+            return json_response(self, 200, handle_rag_facts({}))
         elif path == '/api/owem5x4x3/real/state':
             return json_response(self, 200, handle_5x4x3_real_state({}))
         elif path == '/api/continual/stats':
