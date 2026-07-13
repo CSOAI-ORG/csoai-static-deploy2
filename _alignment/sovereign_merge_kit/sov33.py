@@ -495,6 +495,36 @@ def capability_emergence():
         return {'capability': 'emergence', 'error': str(e)[:200]}
 
 
+
+def capability_hermes_agentic(prompt: str = None, mode: str = 'run') -> dict:
+    """Hermes L_AGENTIC layer — the 6th substrate layer.
+
+    Plans tool-use, executes with care-floor 0.95 gate, SIGIL-signs every step.
+    Modes: 'run' (full agentic), 'plan' (plan only), 'state', 'tools'.
+    """
+    sigil_emit({'hop': 'CAPABILITY_HERMES_AGENTIC', 'care_floor': CARE_FLOOR, 'mode': mode})
+    try:
+        sys.path.insert(0, '/Users/nicholas/clawd/_alignment/sovereign_merge_kit/agentic')
+        from sov33_hermes_agentic import (
+            handle_hermes_agentic, handle_hermes_plan,
+            handle_hermes_tools, handle_hermes_state,
+        )
+        if mode == 'plan' and prompt:
+            return handle_hermes_plan({'prompt': prompt})
+        if mode == 'tools':
+            return handle_hermes_tools({})
+        if mode == 'state':
+            return handle_hermes_state({})
+        if mode == 'run' and prompt:
+            return handle_hermes_agentic({'prompt': prompt})
+        # default: state
+        return handle_hermes_state({})
+    except Exception as e:
+        return {'capability': 'hermes_agentic', 'error': str(e)[:200]}
+
+
+
+
 def capability_kill_switch():
     """DEFONEOS-scoped kill-switch status."""
     sigil_emit({
@@ -2078,6 +2108,7 @@ CAPABILITIES = {
     'drum': capability_drum,
     'oowm': capability_oowm,
     'emergence': capability_emergence,
+    'hermes-agentic': capability_hermes_agentic,
     'kill-switch': capability_kill_switch,
     'rainbow': capability_rainbow,
     'sovspace': capability_sovspace,

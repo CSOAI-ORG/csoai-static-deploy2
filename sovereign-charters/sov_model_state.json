@@ -1,0 +1,52 @@
+{
+  "version": "1.0.0",
+  "kind": "sov-sovereign-retrieval",
+  "started": "2026-07-13T05:23:38.883817+00:00",
+  "finished": "2026-07-13T05:23:47.783933+00:00",
+  "duration_seconds": 8.900116,
+  "sources": {
+    "count": 205,
+    "by_kind": {
+      "charter": 57,
+      "oscal": 1,
+      "research": 31,
+      "sigil": 1,
+      "portal": 80,
+      "doc": 6,
+      "canary": 29
+    },
+    "total_bytes": 29136345
+  },
+  "training": {
+    "examples": 14373,
+    "tokens_total": 3165845,
+    "vocabulary_size": 230343,
+    "avg_doc_length_tokens": 220.3,
+    "chunk_target_words": 200,
+    "chunk_overlap_words": 40
+  },
+  "retrieval": {
+    "algorithm": "BM25",
+    "k1": 1.5,
+    "b": 0.75,
+    "documents_indexed": 14373
+  },
+  "benchmark": {
+    "questions": 25,
+    "correct": 17,
+    "accuracy_pct": 68.0
+  },
+  "honest_register": [
+    "This is a sovereign-local retrieval + n-gram model, NOT a frontier LLM.",
+    "It answers questions whose answers exist verbatim in the substrate.",
+    "It refuses (\"not in my sovereign universe\") for anything else.",
+    "No external API calls. No LLM inference. Stdlib only.",
+    "Re-train weekly to incorporate new research."
+  ],
+  "commands": {
+    "train": "python3 M2_DEPLOYMENT_KIT/sov_train.py",
+    "ask": "python3 M2_DEPLOYMENT_KIT/sov_ask.py \"<question>\"",
+    "benchmark": "python3 M2_DEPLOYMENT_KIT/sov_train.py --bench"
+  },
+  "sha256": "a1a36625e5e16f5324d9014b46c8530ea6aceeca9fdf9472f5e0bd4e8d00a625"
+}

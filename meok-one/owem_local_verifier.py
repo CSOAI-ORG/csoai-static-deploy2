@@ -102,7 +102,7 @@ def verify(text, weights=None, required_keys=None):
     })
     score, why = v(text, {"required_keys": required_keys} if required_keys else None)
     return {"score": round(score, 3), "passed": score >= 0.6,
-            "passed_gate": score >= 0.6, "keystone": "L6_local", "reason": why[:200]}
+            "passed_gate": score >= 0.6, "keystone": "L6_local", "reason": why[:150]}
 
 if __name__ == "__main__":
     samples = [

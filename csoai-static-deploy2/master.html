@@ -116,6 +116,44 @@ footer .sig{font-family:'SF Mono',monospace;font-size:.65rem;color:var(--cyan);w
 /* Pulse dot for live endpoints */
 .live-dot{display:inline-block;width:6px;height:6px;background:var(--green);border-radius:99px;margin-right:.3rem;animation:pulse 1.5s infinite}
 
+/* HERMES LAYER */
+#hermes-layer{position:relative;padding:3rem 0 3.5rem;background:radial-gradient(ellipse at 50% 0%,rgba(167,139,250,.10) 0%,transparent 65%);border-top:1px solid rgba(167,139,250,.25);border-bottom:1px solid rgba(167,139,250,.18);overflow:hidden}
+#hermes-layer::before{content:'';position:absolute;top:0;left:50%;width:800px;height:2px;background:linear-gradient(90deg,transparent,var(--purple),var(--cyan),transparent);transform:translateX(-50%);opacity:.7}
+.hl-eyebrow{display:inline-flex;align-items:center;gap:.5rem;padding:.4rem 1rem;background:rgba(167,139,250,.12);color:var(--purple);border:1px solid rgba(167,139,250,.4);border-radius:99px;font-size:.7rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;margin-bottom:1rem}
+.hl-eyebrow .dot{width:6px;height:6px;background:var(--purple);border-radius:99px;animation:pulse 1.2s infinite;box-shadow:0 0 8px rgba(167,139,250,.6)}
+.hl-hero{text-align:center;max-width:880px;margin:0 auto 2rem}
+.hl-hero h2{font-size:clamp(2rem,4.6vw,3rem);font-weight:900;line-height:1.05;margin-bottom:.7rem;letter-spacing:-.02em;font-family:'Space Grotesk','Inter',sans-serif}
+.hl-hero h2 .grad{background:linear-gradient(135deg,var(--purple) 0%,var(--cyan) 50%,var(--gold) 100%);background-size:200% 200%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;animation:gradient-x 8s ease infinite}
+.hl-hero p.lead{font-size:1.05rem;color:#cbd5e1;max-width:720px;margin:0 auto 1.2rem;line-height:1.55}
+.hl-metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:.6rem;max-width:760px;margin:0 auto 1.3rem}
+.hl-metric{background:rgba(20,24,31,.65);border:1px solid rgba(167,139,250,.25);border-radius:10px;padding:.7rem .5rem;text-align:center;backdrop-filter:blur(6px)}
+.hl-metric.live{border-color:rgba(34,197,94,.35);background:rgba(34,197,94,.05)}
+.hl-metric .big{font-size:1.25rem;font-weight:900;color:var(--purple);line-height:1}
+.hl-metric.live .big{color:var(--green)}
+.hl-metric .lab{font-size:.6rem;color:#94a3b8;text-transform:uppercase;letter-spacing:.05em;margin-top:.25rem}
+.hl-lanes{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:.9rem;margin:1.5rem 0 1.8rem}
+.hl-lane{background:linear-gradient(180deg,rgba(167,139,250,.06),rgba(20,24,31,.6));border:1px solid rgba(167,139,250,.25);border-radius:14px;padding:1.2rem;position:relative;transition:.2s}
+.hl-lane:hover{border-color:var(--purple);transform:translateY(-3px);box-shadow:0 12px 32px rgba(167,139,250,.18)}
+.hl-lane .ico{font-size:1.4rem;margin-bottom:.5rem;display:block}
+.hl-lane h3{color:var(--purple);font-size:1rem;margin-bottom:.4rem;font-weight:700}
+.hl-lane p{color:#cbd5e1;font-size:.82rem;line-height:1.4;margin:0}
+.hl-lane .lane-stat{font-family:'SF Mono',monospace;font-size:.68rem;color:var(--green);margin-top:.5rem;display:inline-flex;align-items:center;gap:.3rem}
+.hl-sigil-wrap{background:rgba(10,10,15,.7);border:1px solid rgba(34,197,94,.25);border-radius:12px;padding:1rem;margin:1.5rem auto;max-width:760px;position:relative}
+.hl-sigil-wrap .lab-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:.6rem;font-size:.7rem;text-transform:uppercase;letter-spacing:.05em;color:#94a3b8}
+.hl-sigil-wrap .lab-row .lbl{color:var(--green);display:inline-flex;align-items:center;gap:.3rem}
+.hl-sigil-stream{font-family:'SF Mono',monospace;font-size:.72rem;color:var(--green);line-height:1.6;max-height:140px;overflow-y:auto;padding:.3rem .2rem}
+.hl-sigil-line{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;padding:.1rem 0}
+.hl-sigil-line .ts{color:#64748b;margin-right:.4rem}
+.hl-sigil-line .op{color:var(--purple);margin-right:.4rem}
+.hl-sigil-line .actor{color:var(--cyan);margin-right:.4rem}
+.hl-sigil-line .arrow{color:#64748b;margin-right:.4rem}
+.hl-sigil-line .digest{color:var(--gold)}
+.hl-cta-row{display:flex;gap:.6rem;justify-content:center;flex-wrap:wrap;margin-top:1.5rem}
+.btn-purple{background:linear-gradient(135deg,var(--purple),#8b5cf6);color:#fff;font-weight:700;padding:.75rem 1.4rem;border-radius:8px;text-decoration:none;display:inline-flex;align-items:center;gap:.4rem;font-size:.88rem;transition:.15s}
+.btn-purple:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(167,139,250,.4)}
+.btn-cyan-ghost{background:transparent;color:var(--cyan);border:1px solid var(--cyan);font-weight:700;padding:.75rem 1.4rem;border-radius:8px;text-decoration:none;display:inline-flex;align-items:center;gap:.4rem;font-size:.88rem}
+.btn-cyan-ghost:hover{background:rgba(34,211,238,.08)}
+
 /* Hero floating element */
 .float-card{position:absolute;background:var(--bg2);border:1px solid var(--gold);border-radius:10px;padding:.6rem .8rem;font-size:.75rem;backdrop-filter:blur(10px);box-shadow:0 8px 32px rgba(0,0,0,.3);color:#f1f5f9;animation:float 4s ease-in-out infinite;z-index:1}
 .float-card.fc1{top:30%;left:5%;animation-delay:0s}
@@ -193,6 +231,73 @@ footer .sig{font-family:'SF Mono',monospace;font-size:.65rem;color:var(--cyan);w
   <div class="float-card fc1"><span class="live-dot"></span> SOV3 :3101 · live</div>
   <div class="float-card fc2">BFT 23/33 · 200ms</div>
 </header>
+
+<!-- HERMES LAYER · AGENTIC RUNTIME -->
+<section id="hermes-layer">
+  <div class="container">
+    <div class="hl-hero">
+      <span class="hl-eyebrow"><span class="dot"></span> · Hermes Layer · Agentic Runtime · Now Live on M2 / M4</span>
+      <h2>The runtime that <span class="grad">runs the empire.</span></h2>
+      <p class="lead">The Hermes Layer is the agentic OS beneath every sovereign surface. 4 parallel lanes · 1 Hz SIGIL capture · Ed25519 signed · Care Floor 0.95 · BFT 23/33. Open <code>/sov-space</code> to watch the substrate think in real time, or <code>/j-space</code> to enter your personal digital twin.</p>
+      <div class="hl-metrics">
+        <div class="hl-metric live"><span class="big">4</span><div class="lab">Parallel Lanes</div></div>
+        <div class="hl-metric live"><span class="big">1 Hz</span><div class="lab">SIGIL Capture</div></div>
+        <div class="hl-metric live"><span class="big">86,400</span><div class="lab">SIGILs / Day</div></div>
+        <div class="hl-metric live"><span class="big">23 / 33</span><div class="lab">BFT Quorum</div></div>
+        <div class="hl-metric live"><span class="big">0.95</span><div class="lab">Care Floor</div></div>
+        <div class="hl-metric"><span class="big">2 ms</span><div class="lab">Finality</div></div>
+      </div>
+    </div>
+
+    <div class="hl-lanes">
+      <a href="/hermes-layer" class="hl-lane" style="text-decoration:none;color:inherit">
+        <span class="ico">🧠</span>
+        <h3>OOWM Lane</h3>
+        <p>Mamba-2 SSM (16-dim state) + 64-expert MoE + standard attention. 3,000 tok/s on M2. The thinking engine.</p>
+        <span class="lane-stat"><span class="live-dot"></span> ACTIVE · 3 mindsets live</span>
+      </a>
+      <a href="/sov-space" class="hl-lane" style="text-decoration:none;color:inherit">
+        <span class="ico">🌌</span>
+        <h3>SovSpace Lane</h3>
+        <p>7 UK sovereign locations teleoperating in real time. Telehouse London · Equinix Manchester · Heriot-Watt · Dounreay · Corsham · iOK · MEOK Labs.</p>
+        <span class="lane-stat"><span class="live-dot"></span> TELEMETRY · 1Hz</span>
+      </a>
+      <a href="/j-space" class="hl-lane" style="text-decoration:none;color:inherit">
+        <span class="ico">🪞</span>
+        <h3>J-Space Lane</h3>
+        <p>Your digital twin. Memory persistence across all sessions. Sovereign consent ledger. Care-validated personality.</p>
+        <span class="lane-stat"><span class="live-dot"></span> TWIN · 61K msgs indexed</span>
+      </a>
+      <a href="/hermes-layer#sigils" class="hl-lane" style="text-decoration:none;color:inherit">
+        <span class="ico">🔏</span>
+        <h3>SIGIL Lane</h3>
+        <p>Ed25519 hash-chained audit. Every agent action signed in &lt;2ms. Public-readable at <code>sigil.csoai.org</code>. OTS Bitcoin-anchored.</p>
+        <span class="lane-stat"><span class="live-dot"></span> LIVE · 86,400/day</span>
+      </a>
+    </div>
+
+    <div class="hl-sigil-wrap">
+      <div class="lab-row">
+        <span class="lbl"><span class="live-dot"></span> Live SIGIL Stream · Last 6 Sigils</span>
+        <span>1Hz · hash-chained</span>
+      </div>
+      <div class="hl-sigil-stream" id="hl-sigil-stream">
+        <div class="hl-sigil-line"><span class="ts">13:42:11</span><span class="op">H</span><span class="actor">opus</span><span class="arrow">→</span><span class="actor">sov3</span><span class="arrow">·</span><span class="digest">Q-deploy master-hub upstream</span></div>
+        <div class="hl-sigil-line"><span class="ts">13:42:10</span><span class="op">V</span><span class="actor">claude-code</span><span class="arrow">→</span><span class="actor">defoneos</span><span class="arrow">·</span><span class="digest">care-validation 0.96 ✓</span></div>
+        <div class="hl-sigil-line"><span class="ts">13:42:09</span><span class="op">M</span><span class="actor">kimi</span><span class="arrow">→</span><span class="actor">bft-council</span><span class="arrow">·</span><span class="digest">vote:for · 28/33 quorum</span></div>
+        <div class="hl-sigil-line"><span class="ts">13:42:08</span><span class="op">P</span><span class="actor">orion</span><span class="arrow">→</span><span class="actor">csoai.org</span><span class="arrow">·</span><span class="digest">proposal #447 · sprint tick</span></div>
+        <div class="hl-sigil-line"><span class="ts">13:42:07</span><span class="op">C</span><span class="actor">sov3</span><span class="arrow">→</span><span class="actor">j-space</span><span class="arrow">·</span><span class="digest">memory.episode 1,481 commit</span></div>
+        <div class="hl-sigil-line"><span class="ts">13:42:06</span><span class="op">S</span><span class="actor">jit</span><span class="arrow">→</span><span class="actor">sov-space</span><span class="arrow">·</span><span class="digest">telehouse.london pulse</span></div>
+      </div>
+    </div>
+
+    <div class="hl-cta-row">
+      <a href="/hermes-layer" class="btn-purple">⚡ Enter the Hermes Layer</a>
+      <a href="/sov-space" class="btn-cyan-ghost">🌌 Open SovSpace</a>
+      <a href="/j-space" class="btn-cyan-ghost">🪞 Open J-Space</a>
+    </div>
+  </div>
+</section>
 
 <!-- SURFACE TABS -->
 <section id="surfaces" class="tabs-section">

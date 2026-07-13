@@ -404,6 +404,50 @@ def handle_hermes_state(payload: dict = None) -> dict:
         return {'error': f'hermes_state failed: {e}'}
 
 
+# ============================================================
+# CHECKPOINT MANAGER HANDLERS — sovereign model versioning
+# ============================================================
+
+def handle_checkpoints_state(payload: dict = None) -> dict:
+    """GET /api/checkpoints/state — sovereign model checkpoint manager state."""
+    try:
+        sys.path.insert(0, '/Users/nicholas/clawd/_alignment/sovereign_merge_kit/checkpoints')
+        from sov33_checkpoint_manager import handle_checkpoints_state
+        return handle_checkpoints_state(payload or {})
+    except Exception as e:
+        return {'error': f'checkpoints_state failed: {e}'}
+
+
+def handle_checkpoints_list(payload: dict = None) -> dict:
+    """GET /api/checkpoints/list — all checkpoints."""
+    try:
+        sys.path.insert(0, '/Users/nicholas/clawd/_alignment/sovereign_merge_kit/checkpoints')
+        from sov33_checkpoint_manager import handle_checkpoints_list
+        return handle_checkpoints_list(payload or {})
+    except Exception as e:
+        return {'error': f'checkpoints_list failed: {e}'}
+
+
+def handle_checkpoints_lineage(payload: dict) -> dict:
+    """POST /api/checkpoints/lineage — get lineage for an OWEM."""
+    try:
+        sys.path.insert(0, '/Users/nicholas/clawd/_alignment/sovereign_merge_kit/checkpoints')
+        from sov33_checkpoint_manager import handle_checkpoints_lineage
+        return handle_checkpoints_lineage(payload)
+    except Exception as e:
+        return {'error': f'checkpoints_lineage failed: {e}'}
+
+
+def handle_checkpoints_promote(payload: dict) -> dict:
+    """POST /api/checkpoints/promote — promote to production."""
+    try:
+        sys.path.insert(0, '/Users/nicholas/clawd/_alignment/sovereign_merge_kit/checkpoints')
+        from sov33_checkpoint_manager import handle_checkpoints_promote
+        return handle_checkpoints_promote(payload)
+    except Exception as e:
+        return {'error': f'checkpoints_promote failed: {e}'}
+
+
 def handle_nodes() -> dict:
     """GET /api/nodes — list sovereign network nodes."""
     return {
@@ -1835,6 +1879,13 @@ class SovereignAPIHandler(BaseHTTPRequestHandler):
             return json_response(self, 200, handle_hermes_tools({}))
         elif path == '/api/hermes/state':
             return json_response(self, 200, handle_hermes_state({}))
+        elif path == '/api/checkpoints/state':
+            return json_response(self, 200, handle_checkpoints_state({}))
+        elif path == '/api/checkpoints/list':
+            return json_response(self, 200, handle_checkpoints_list({}))
+        elif path == '/api/checkpoints/lineage':
+            owem = query.get('owem', ['compliance'])[0]
+            return json_response(self, 200, handle_checkpoints_lineage({'owem': owem}))
         elif path == '/api/evals':
             return json_response(self, 200, handle_evals())
         elif path == '/api/brain-stack':
@@ -1984,6 +2035,13 @@ class SovereignAPIHandler(BaseHTTPRequestHandler):
             return json_response(self, 200, handle_hermes_tools(payload))
         elif path == '/api/hermes/state':
             return json_response(self, 200, handle_hermes_state({}))
+        elif path == '/api/checkpoints/state':
+            return json_response(self, 200, handle_checkpoints_state({}))
+        elif path == '/api/checkpoints/list':
+            return json_response(self, 200, handle_checkpoints_list({}))
+        elif path == '/api/checkpoints/lineage':
+            owem = query.get('owem', ['compliance'])[0]
+            return json_response(self, 200, handle_checkpoints_lineage({'owem': owem}))
         else:
             return json_response(self, 404, {'error': f'unknown path: {path}'})
 

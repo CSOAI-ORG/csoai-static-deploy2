@@ -580,14 +580,36 @@ class JSspace:
 # ============================================================
 
 def sov33_jspace_read(payload: Dict = None) -> Dict:
-    """GET/POST /api/jspace — read current J-space state."""
+    """GET/POST /api/jspace — read current J-space state.
+
+    EAT-707 FIX: the .to_dict() path returned numpy float32 instances that
+    json.dumps could not encode. Cast the full payload to native floats here.
+    """
     payload = payload or {}
     prompt = payload.get("prompt", "")
     jspace = _get_jspace()
     reading = jspace.read(prompt=prompt)
+    raw = reading.to_dict()
+    # EAT-707 FIX: numpy float32 / int64 are not JSON-serialisable. Recurse.
+    def _coerce(obj):
+        try:
+            import numpy as _np  # local import (function-scoped)
+            if isinstance(obj, _np.floating):
+                return float(obj)
+            if isinstance(obj, _np.integer):
+                return int(obj)
+            if isinstance(obj, _np.ndarray):
+                return obj.tolist()
+        except ImportError:
+            pass
+        if isinstance(obj, dict):
+            return {k: _coerce(v) for k, v in obj.items()}
+        if isinstance(obj, (list, tuple)):
+            return [_coerce(x) for x in obj]
+        return obj
     return {
-        "reading": reading.to_dict(),
-        "state": jspace.state(),
+        "reading": _coerce(raw),
+        "state": _coerce(jspace.state()),
     }
 
 
