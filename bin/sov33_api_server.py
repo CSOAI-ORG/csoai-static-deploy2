@@ -597,6 +597,57 @@ def handle_5x4x3_benchmark(payload=None) -> dict:
     except Exception as e:
         return {'error': f'5x4x3_benchmark failed: {e}'}
 
+# ============================================================
+# PHASE 6: 5x4x3 with 4 ACTUAL base models
+# ============================================================
+
+def handle_5x4x3_real(payload: dict) -> dict:
+    """POST /api/owem5x4x3/real - 4 actual base models."""
+    try:
+        sys.path.insert(0, '/Users/nicholas/clawd/_alignment/sovereign_merge_kit/owem3')
+        from sov33_5x4x3_real import handle_5x4x3_real as _h
+        return _h(payload)
+    except Exception as e:
+        return {'error': f'5x4x3_real failed: {e}'}
+
+
+def handle_5x4x3_real_state(payload=None) -> dict:
+    """GET /api/owem5x4x3/real/state."""
+    try:
+        sys.path.insert(0, '/Users/nicholas/clawd/_alignment/sovereign_merge_kit/owem3')
+        from sov33_5x4x3_real import handle_5x4x3_real_state as _h
+        return _h(payload or {})
+    except Exception as e:
+        return {'error': f'5x4x3_real_state failed: {e}'}
+
+
+# ============================================================
+# PHASE 12: Auto-BFT-33 trigger
+# ============================================================
+
+def handle_auto_bft33(payload: dict) -> dict:
+    """POST /api/bft33/auto - auto-convene if concordance low."""
+    try:
+        sys.path.insert(0, '/Users/nicholas/clawd/_alignment/sovereign_merge_kit/owem3')
+        from sov33_auto_bft33 import handle_auto_bft33 as _h
+        return _h(payload)
+    except Exception as e:
+        return {'error': f'auto_bft33 failed: {e}'}
+
+
+# ============================================================
+# PHASE 13: Diversity scoring
+# ============================================================
+
+def handle_diversity(payload: dict) -> dict:
+    """POST /api/diversity - compute diversity matrix."""
+    try:
+        sys.path.insert(0, '/Users/nicholas/clawd/_alignment/sovereign_merge_kit/owem3')
+        from sov33_diversity import handle_diversity as _h
+        return _h(payload)
+    except Exception as e:
+        return {'error': f'diversity failed: {e}'}
+
 
 def handle_nodes() -> dict:
     """GET /api/nodes — list sovereign network nodes."""
@@ -2052,6 +2103,8 @@ class SovereignAPIHandler(BaseHTTPRequestHandler):
             return json_response(self, 200, handle_5x4x3_state({}))
         elif path == '/api/owem5x4x3/benchmark':
             return json_response(self, 200, handle_5x4x3_benchmark({}))
+        elif path == '/api/owem5x4x3/real/state':
+            return json_response(self, 200, handle_5x4x3_real_state({}))
         elif path == '/api/evals':
             return json_response(self, 200, handle_evals())
         elif path == '/api/brain-stack':
@@ -2151,6 +2204,12 @@ class SovereignAPIHandler(BaseHTTPRequestHandler):
             return json_response(self, 200, handle_4x4x3(payload))
         elif path == '/api/owem5x4x3':
             return json_response(self, 200, handle_5x4x3(payload))
+        elif path == '/api/owem5x4x3/real':
+            return json_response(self, 200, handle_5x4x3_real(payload))
+        elif path == '/api/bft33/auto':
+            return json_response(self, 200, handle_auto_bft33(payload))
+        elif path == '/api/diversity':
+            return json_response(self, 200, handle_diversity(payload))
         elif path == '/api/memory':
             return json_response(self, 200, handle_memory(payload))
         elif path == '/api/amica':
@@ -2232,6 +2291,8 @@ class SovereignAPIHandler(BaseHTTPRequestHandler):
             return json_response(self, 200, handle_5x4x3_state({}))
         elif path == '/api/owem5x4x3/benchmark':
             return json_response(self, 200, handle_5x4x3_benchmark({}))
+        elif path == '/api/owem5x4x3/real/state':
+            return json_response(self, 200, handle_5x4x3_real_state({}))
         else:
             return json_response(self, 404, {'error': f'unknown path: {path}'})
 
