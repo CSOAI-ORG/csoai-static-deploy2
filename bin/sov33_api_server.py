@@ -33,6 +33,16 @@ from http.server import BaseHTTPRequestHandler, HTTPServer
 from urllib.parse import urlparse, parse_qs
 
 sys.path.insert(0, '/Users/nicholas/clawd/_alignment/sovereign_merge_kit')
+
+# Guardrail layer
+try:
+    _sys_path_owem3 = os.path.join(os.path.dirname(os.path.abspath(__file__)),
+        "..", "_alignment", "sovereign_merge_kit", "owem3")
+    sys.path.insert(0, _sys_path_owem3)
+    from sov33_guardrails import pre_process as guardrail_pre, post_process as guardrail_post, audit_state as guardrail_state
+    GUARDRAILS_ACTIVE = True
+except Exception:
+    GUARDRAILS_ACTIVE = False
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 
@@ -2228,6 +2238,8 @@ class SovereignAPIHandler(BaseHTTPRequestHandler):
         elif path == '/api/layer0/state':
             return json_response(self, 200, handle_layer0_state({}))
         elif path == '/api/guardrails/state':
+            return json_response(self, 200, guardrail_state() if GUARDRAILS_ACTIVE else {'guardrails': 'inactive'})
+        elif path == '/api/guardrails/state':
             if GUARDRAILS_ACTIVE:
                 return json_response(self, 200, guardrail_state())
             else:
@@ -2452,6 +2464,8 @@ class SovereignAPIHandler(BaseHTTPRequestHandler):
             return json_response(self, 200, handle_5x4x3_bft_state({}))
         elif path == '/api/layer0/state':
             return json_response(self, 200, handle_layer0_state({}))
+        elif path == '/api/guardrails/state':
+            return json_response(self, 200, guardrail_state() if GUARDRAILS_ACTIVE else {'guardrails': 'inactive'})
         elif path == '/api/guardrails/state':
             if GUARDRAILS_ACTIVE:
                 return json_response(self, 200, guardrail_state())
