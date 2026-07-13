@@ -99,7 +99,12 @@ NEXUS_18 = [
     {"tab": 52, "slug": "red-lines",           "title": "4 RED LINES",            "trio": "surface",  "icon": "🚫", "tag": "immutable", "route": "/red-lines.html",           "purpose": "The 4 immutable red lines — canonical hard stops"},
     {"tab": 53, "slug": "developer-api",       "title": "Developer API",           "trio": "surface",  "icon": "📡", "tag": "28 endpoints","route": "/developer-api.html",      "purpose": "Full API reference — 28 endpoints, methods, tags"},
     {"tab": 54, "slug": "sov33-architecture",  "title": "SOV33 Architecture",      "trio": "deep",     "icon": "🏗️", "tag": "12 layers", "route": "/sov33-architecture.html", "purpose": "12-layer sovereign stack — live/partial status"},
-    {"tab": 55, "slug": "charter-v2",          "title": "Sovereign Charter v2",    "trio": "surface",  "icon": "📜", "tag": "23 articles","route": "/charter-v2.html",         "purpose": "23-article charter — Tier A/B/C readable"}
+    {"tab": 55, "slug": "charter-v2",          "title": "Sovereign Charter v2",    "trio": "surface",  "icon": "📜", "tag": "23 articles","route": "/charter-v2.html",         "purpose": "23-article charter — Tier A/B/C readable"},
+    {"tab": 56, "slug": "trust-receipts",      "title": "Trust Receipts",        "trio": "surface",  "icon": "⛓️", "tag": "SIGIL chain", "route": "/trust-receipts.html",      "purpose": "Live SIGIL receipt viewer — append-only"},
+    {"tab": 57, "slug": "sov33-economy",       "title": "SOV33 Economy",         "trio": "deep",     "icon": "💎", "tag": "value flow",  "route": "/sov33-economy.html",       "purpose": "Live value-flow KPIs + conversion pipeline"},
+    {"tab": 58, "slug": "consciousness-bench", "title": "Consciousness Bench",   "trio": "deep",     "icon": "📐", "tag": "5 instruments","route": "/consciousness-bench.html", "purpose": "5 Instruments — Φ/PCI/J-Space/BD/SM"},
+    {"tab": 59, "slug": "sov33-models",        "title": "SOV33 Models",          "trio": "deep",     "icon": "✨", "tag": "61 models",   "route": "/sov33-models.html",        "purpose": "61-model registry — 5 lineages, honest reach"},
+    {"tab": 60, "slug": "openapi-spec",        "title": "OpenAPI Spec",          "trio": "surface",  "icon": "📡", "tag": "OpenAPI 3.0", "route": "/openapi.json",             "purpose": "OpenAPI 3.0 spec — Smithery + MCP discovery ready"}
 ]
 
 TRIO = {
