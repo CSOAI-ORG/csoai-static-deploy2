@@ -120,6 +120,40 @@ def handle_orchestrate(payload: dict) -> dict:
     if not message:
         return {'error': 'no message', 'status': 400}
 
+    # ═══════════════════════════════════════════════════════════
+    # GUARDRAIL PRE-PROCESSING (DORADO + Rainbow + Injection)
+    # ═══════════════════════════════════════════════════════════
+    if GUARDRAILS_ACTIVE:
+        pre = guardrail_pre({'prompt': message, 'client_id': citizen})
+        if not pre['allowed']:
+            sigil_emit({
+                'hop': 'GUARDRAIL_BLOCK',
+                'reason': pre['reason'],
+                'threat_level': pre['threat_level'],
+                'request_hash_16': hashlib.sha256(message.encode()).hexdigest()[:16],
+            })
+            return {
+                'say': f'Request blocked by sovereign guardrails: {pre["reason"]}',
+                'actions': [],
+                'sovereign_provenance': {
+                    'care_derived': 0.0,
+                    'care_floor': 0.95,
+                    'article_0_bound': True,
+                    '12_pillars_active': True,
+                    'bft_33_quorum': True,
+                },
+                'brain': 'guardrails',
+                'decision': 'BLOCKED',
+                'layers': ['dorado', 'rainbow', 'injection_filter'],
+                'sigil_hops': 1,
+                'sigil': hashlib.sha256(f'BLOCKED:{pre["reason"]}'.encode()).hexdigest()[:16],
+                'ts': datetime.now(timezone.utc).isoformat(),
+                'vetoed': True,
+                'blocked': True,
+                'block_reason': pre['reason'],
+                'threat_level': pre['threat_level'],
+            }
+
     # FAST PATH: Use OWEMEngine (1-3s, no sovereign brain loading)
     # + Chain-of-Thought prompting for better reasoning
     engine = _get_owem_engine()
@@ -160,7 +194,10 @@ def handle_orchestrate(payload: dict) -> dict:
                 'care_floor': 0.95,
             })
 
-            return {
+            # ═══════════════════════════════════════════════════════════
+            # GUARDRAIL POST-PROCESSING (output filters)
+            # ═══════════════════════════════════════════════════════════
+            response_data = {
                 'say': answer,
                 'actions': [{'command': 'utter', 'args': {'text': answer[:500]}}] if answer else [],
                 'sovereign_provenance': {
@@ -172,7 +209,7 @@ def handle_orchestrate(payload: dict) -> dict:
                 },
                 'brain': brain,
                 'decision': decision,
-                'layers': ['care_floor', 'sigil', 'cot_reasoning'] if cot_used else ['care_floor', 'sigil'],
+                'layers': ['care_floor', 'sigil', 'cot_reasoning', 'guardrails'] if cot_used else ['care_floor', 'sigil', 'guardrails'],
                 'sigil_hops': 1,
                 'sigil': sigil_digest,
                 'ts': datetime.now(timezone.utc).isoformat(),
@@ -703,6 +740,29 @@ def handle_5x4x3_bft_state(payload=None) -> dict:
         return _h(payload or {})
     except Exception as e:
         return {'error': f'5x4x3_bft_state failed: {e}'}
+
+# ============================================================
+# LAYER 0 STOMACH — eats ALL AI companies
+# ============================================================
+
+def handle_layer0(payload: dict) -> dict:
+    """POST /api/layer0 — run the Layer 0 stomach."""
+    try:
+        sys.path.insert(0, '/Users/nicholas/clawd/_alignment/sovereign_merge_kit/owem3')
+        from sov33_layer0_stomach import handle_layer0 as _h
+        return _h(payload)
+    except Exception as e:
+        return {'error': f'layer0 failed: {e}'}
+
+
+def handle_layer0_state(payload=None) -> dict:
+    """GET /api/layer0/state."""
+    try:
+        sys.path.insert(0, '/Users/nicholas/clawd/_alignment/sovereign_merge_kit/owem3')
+        from sov33_layer0_stomach import handle_layer0_state as _h
+        return _h(payload or {})
+    except Exception as e:
+        return {'error': f'layer0_state failed: {e}'}
 
 
 def handle_nodes() -> dict:
@@ -2165,6 +2225,13 @@ class SovereignAPIHandler(BaseHTTPRequestHandler):
             return json_response(self, 200, handle_continual_stats({}))
         elif path == '/api/owem5x4x3/bft/state':
             return json_response(self, 200, handle_5x4x3_bft_state({}))
+        elif path == '/api/layer0/state':
+            return json_response(self, 200, handle_layer0_state({}))
+        elif path == '/api/guardrails/state':
+            if GUARDRAILS_ACTIVE:
+                return json_response(self, 200, guardrail_state())
+            else:
+                return json_response(self, 200, {'guardrails': 'inactive', 'reason': 'module not loaded'})
         elif path == '/api/evals':
             return json_response(self, 200, handle_evals())
         elif path == '/api/brain-stack':
@@ -2272,6 +2339,26 @@ class SovereignAPIHandler(BaseHTTPRequestHandler):
             return json_response(self, 200, handle_diversity(payload))
         elif path == '/api/owem5x4x3/bft':
             return json_response(self, 200, handle_5x4x3_bft(payload))
+        elif path == '/api/layer0':
+            # Apply guardrails BEFORE sending to any brain
+            if GUARDRAILS_ACTIVE:
+                pre = guardrail_pre(payload)
+                if not pre['allowed']:
+                    return json_response(self, 403, {
+                        'blocked': True,
+                        'reason': pre['reason'],
+                        'threat_level': pre['threat_level'],
+                    })
+            result = handle_layer0(payload)
+            # Apply post-processing guardrails
+            if GUARDRAILS_ACTIVE:
+                result = guardrail_post(result, payload)
+            return json_response(self, 200, result)
+        elif path == '/api/guardrails/check':
+            if GUARDRAILS_ACTIVE:
+                return json_response(self, 200, guardrail_pre(payload))
+            else:
+                return json_response(self, 200, {'guardrails': 'inactive'})
         elif path == '/api/continual/log':
             return json_response(self, 200, handle_continual_log(payload))
         elif path == '/api/continual/run':
@@ -2363,6 +2450,13 @@ class SovereignAPIHandler(BaseHTTPRequestHandler):
             return json_response(self, 200, handle_continual_stats({}))
         elif path == '/api/owem5x4x3/bft/state':
             return json_response(self, 200, handle_5x4x3_bft_state({}))
+        elif path == '/api/layer0/state':
+            return json_response(self, 200, handle_layer0_state({}))
+        elif path == '/api/guardrails/state':
+            if GUARDRAILS_ACTIVE:
+                return json_response(self, 200, guardrail_state())
+            else:
+                return json_response(self, 200, {'guardrails': 'inactive', 'reason': 'module not loaded'})
         else:
             return json_response(self, 404, {'error': f'unknown path: {path}'})
 
