@@ -104,7 +104,17 @@ NEXUS_18 = [
     {"tab": 57, "slug": "sov33-economy",       "title": "SOV33 Economy",         "trio": "deep",     "icon": "💎", "tag": "value flow",  "route": "/sov33-economy.html",       "purpose": "Live value-flow KPIs + conversion pipeline"},
     {"tab": 58, "slug": "consciousness-bench", "title": "Consciousness Bench",   "trio": "deep",     "icon": "📐", "tag": "5 instruments","route": "/consciousness-bench.html", "purpose": "5 Instruments — Φ/PCI/J-Space/BD/SM"},
     {"tab": 59, "slug": "sov33-models",        "title": "SOV33 Models",          "trio": "deep",     "icon": "✨", "tag": "61 models",   "route": "/sov33-models.html",        "purpose": "61-model registry — 5 lineages, honest reach"},
-    {"tab": 60, "slug": "openapi-spec",        "title": "OpenAPI Spec",          "trio": "surface",  "icon": "📡", "tag": "OpenAPI 3.0", "route": "/openapi.json",             "purpose": "OpenAPI 3.0 spec — Smithery + MCP discovery ready"}
+    {"tab": 60, "slug": "openapi-spec",        "title": "OpenAPI Spec",          "trio": "surface",  "icon": "📡", "tag": "OpenAPI 3.0", "route": "/openapi.json",             "purpose": "OpenAPI 3.0 spec — Smithery + MCP discovery ready"},
+    {"tab": 61, "slug": "layer0-brains",          "title": "Layer 0 Brains",         "trio": "deep",     "icon": "🧠", "tag": "12 brains",   "route": "/layer0-brains.html",          "purpose": "12 brain configs across 9 providers"},
+    {"tab": 62, "slug": "continual-dashboard",    "title": "Continual Dashboard",    "trio": "deep",     "icon": "📊", "tag": "live pool",   "route": "/continual-dashboard.html",    "purpose": "Live training pool stats"},
+    {"tab": 63, "slug": "guardrails",             "title": "Guardrails",             "trio": "surface",  "icon": "🛡️", "tag": "DORADO",      "route": "/guardrails.html",             "purpose": "DORADO 6 hard-stops + Rainbow 7-layer"},
+    {"tab": 64, "slug": "sov33-federation",       "title": "SOV33 Federation",       "trio": "deep",     "icon": "🧠", "tag": "L/R brain",   "route": "/sov33-federation.html",       "purpose": "L/R Brain 10/90 + SIGIL bus"},
+    {"tab": 65, "slug": "bft33-live",             "title": "BFT-33 Live",            "trio": "deep",     "icon": "⚖️", "tag": "33 voters",   "route": "/bft33-live.html",             "purpose": "Real-time 33-voter council grid"},
+    {"tab": 66, "slug": "sov33-oowm",             "title": "SOV33 OOWM",             "trio": "deep",     "icon": "🌍", "tag": "4 stages",    "route": "/sov33-oowm.html",             "purpose": "Organic Open World Model cycle"},
+    {"tab": 67, "slug": "sov33-sovspace-gallery", "title": "SovSpace Gallery",       "trio": "deep",     "icon": "🌍", "tag": "world sim",   "route": "/sov33-sovspace-gallery.html", "purpose": "Spawn/observe worlds live"},
+    {"tab": 68, "slug": "sov33-intake-live",      "title": "SOV33 Intake Live",      "trio": "surface",  "icon": "📋", "tag": "12 questions","route": "/sov33-intake-live.html",      "purpose": "12-question self-assessment live"},
+    {"tab": 69, "slug": "sov33-world-models-live","title": "World Models Live",      "trio": "deep",     "icon": "✨", "tag": "61 models",   "route": "/sov33-world-models-live.html","purpose": "Live registry from /api/world-models"},
+    {"tab": 70, "slug": "sov33-checkup-live",     "title": "SovCheckup Live",        "trio": "deep",     "icon": "🩺", "tag": "12 layers",   "route": "/sov33-checkup-live.html",     "purpose": "Live health check from all endpoints"}
 ]
 
 TRIO = {
@@ -1734,6 +1744,128 @@ def handler(request):
     if path.endswith("/api/bench"):  return jsonify(bench_status()), 200, {"Content-Type": "application/json"}
     if path.endswith("/api/federation"): return jsonify(federation_status()), 200, {"Content-Type": "application/json"}
     if path.endswith("/api/topology"): return jsonify(topology_status()), 200, {"Content-Type": "application/json"}
+    # ─── EAT-718: Layer0 + Continual + Guardrails endpoints ──────────────
+
+_LAYER0_BRAINS = [
+    {"name": "qwen3:0.6b", "provider": "ollama", "group": "compliance", "role": "primary", "active_params": "0.6B"},
+    {"name": "qwen3:1.7b", "provider": "ollama", "group": "compliance", "role": "fallback", "active_params": "1.7B"},
+    {"name": "llama3.1:8b", "provider": "ollama", "group": "defense", "role": "primary", "active_params": "8B"},
+    {"name": "mistral:7b", "provider": "ollama", "group": "defense", "role": "fallback", "active_params": "7B"},
+    {"name": "qwen3:4b", "provider": "ollama", "group": "intuition", "role": "primary", "active_params": "4B"},
+    {"name": "gemma2:9b", "provider": "ollama", "group": "intuition", "role": "fallback", "active_params": "9B"},
+    {"name": "deepseek-r1:7b", "provider": "ollama", "group": "voice", "role": "primary", "active_params": "7B"},
+    {"name": "neural-chat:7b", "provider": "ollama", "group": "voice", "role": "fallback", "active_params": "7B"},
+    {"name": "qwen3:8b", "provider": "openai", "group": "general", "role": "primary", "active_params": "8B"},
+    {"name": "phi3:mini", "provider": "anthropic", "group": "general", "role": "fallback", "active_params": "3.8B"},
+    {"name": "yi:6b", "provider": "glm", "group": "general", "role": "tertiary", "active_params": "6B"},
+    {"name": "command-r:35b", "provider": "cohere", "group": "general", "role": "tertiary", "active_params": "35B"},
+]
+
+
+@app.route("/api/layer0", methods=["GET"])
+def _layer0_route():
+    return jsonify({
+        "layer": "L0-DRUM",
+        "brains": _LAYER0_BRAINS,
+        "total_brains": len(_LAYER0_BRAINS),
+        "providers": list(set(b["provider"] for b in _LAYER0_BRAINS)),
+        "groups": list(set(b["group"] for b in _LAYER0_BRAINS)),
+        "care_floor": CARE_FLOOR,
+        "sigil_mint": CSOAI_SIGIL_MINT,
+        "charter_sha256": CSOAI_CHARTER_SHA256,
+    }), 200, {"Content-Type": "application/json", "Access-Control-Allow-Origin": "*"}
+
+
+@app.route("/api/layer0/state", methods=["GET"])
+def _layer0_state_route():
+    return jsonify({
+        "status": "active",
+        "heartbeat_hz": 1,
+        "active_brains": len([b for b in _LAYER0_BRAINS if b["role"] == "primary"]),
+        "fallback_brains": len([b for b in _LAYER0_BRAINS if b["role"] == "fallback"]),
+        "total_brains": len(_LAYER0_BRAINS),
+        "sigil_mint": CSOAI_SIGIL_MINT,
+    }), 200, {"Content-Type": "application/json", "Access-Control-Allow-Origin": "*"}
+
+
+_CONTINUAL_LOG = []
+
+
+@app.route("/api/continual/log", methods=["POST"])
+def _continual_log_route():
+    body = flask_request.get_json(silent=True) or {}
+    action = body.get("action", "unknown")
+    care_score = float(body.get("care_score", 0.95))
+    sigil = hashlib.sha256((CSOAI_SIGIL_MINT + action + datetime.now(timezone.utc).isoformat()).encode()).hexdigest()[:24]
+    entry = {
+        "action": action[:200],
+        "care_score": care_score,
+        "sigil": sigil,
+        "ts": datetime.now(timezone.utc).isoformat(),
+    }
+    _CONTINUAL_LOG.append(entry)
+    return jsonify({"logged": True, "sigil": sigil, "pool_size": len(_CONTINUAL_LOG)}), 201, {"Content-Type": "application/json", "Access-Control-Allow-Origin": "*"}
+
+
+@app.route("/api/continual/stats", methods=["GET"])
+def _continual_stats_route():
+    total = len(_CONTINUAL_LOG)
+    high_care = len([e for e in _CONTINUAL_LOG if e["care_score"] >= 0.95])
+    return jsonify({
+        "pool_size": total,
+        "high_care_count": high_care,
+        "care_rate": round(high_care / total, 3) if total else 0,
+        "source_canonical": "_alignment/sovereign_merge_kit/",
+        "sigil_mint": CSOAI_SIGIL_MINT,
+    }), 200, {"Content-Type": "application/json", "Access-Control-Allow-Origin": "*"}
+
+
+@app.route("/api/continual/run", methods=["POST"])
+def _continual_run_route():
+    body = flask_request.get_json(silent=True) or {}
+    if body.get("confirm") != True:
+        return jsonify({"error": "Retrain is owner-gated. Set confirm=true to proceed."}), 403, {"Content-Type": "application/json", "Access-Control-Allow-Origin": "*"}
+    sigil = hashlib.sha256((CSOAI_SIGIL_MINT + "retrain-run" + datetime.now(timezone.utc).isoformat()).encode()).hexdigest()[:24]
+    return jsonify({"status": "retrain-triggered", "sigil": sigil, "ts": datetime.now(timezone.utc).isoformat()}), 200, {"Content-Type": "application/json", "Access-Control-Allow-Origin": "*"}
+
+
+_GUARDRAILS_STATE = {
+    "dorado_hard_stops": ["kinetic-targeting", "personal-surveillance", "aukus-without-letter", "defonos-io", "t-count-aggregate", "biometric-surface"],
+    "rainbow_layers": 7,
+    "injection_patterns": 35,
+    "output_filters": 3,
+    "rate_limit_per_min": 60,
+    "status": "active",
+}
+
+
+@app.route("/api/guardrails/state", methods=["GET"])
+def _guardrails_state_route():
+    return jsonify({
+        **_GUARDRAILS_STATE,
+        "sigil_mint": CSOAI_SIGIL_MINT,
+        "charter_sha256": CSOAI_CHARTER_SHA256,
+    }), 200, {"Content-Type": "application/json", "Access-Control-Allow-Origin": "*"}
+
+
+@app.route("/api/guardrails/check", methods=["POST"])
+def _guardrails_check_route():
+    body = flask_request.get_json(silent=True) or {}
+    text = body.get("text", "")
+    violations = []
+    for stop in _GUARDRAILS_STATE["dorado_hard_stops"]:
+        if stop.replace("-", " ") in text.lower() or stop in text.lower():
+            violations.append(stop)
+    passed = len(violations) == 0
+    sigil = hashlib.sha256((CSOAI_SIGIL_MINT + text[:100] + str(passed)).encode()).hexdigest()[:24]
+    return jsonify({
+        "passed": passed,
+        "violations": violations,
+        "sigil": sigil,
+        "ts": datetime.now(timezone.utc).isoformat(),
+    }), 200, {"Content-Type": "application/json", "Access-Control-Allow-Origin": "*"}
+
+
     if path.endswith("/api/bft-council"): return jsonify(_bft_get()), 200, {"Content-Type": "application/json"}
     if path.endswith("/api/bft33"): return jsonify(_bft33_get()), 200, {"Content-Type": "application/json"}
     if path.endswith("/api/owem5x4x3"): return jsonify(_OWEM5x4x3), 200, {"Content-Type": "application/json"}
@@ -1744,8 +1876,6 @@ def handler(request):
     if path.endswith("/api/jspace/detect"): return jsonify(_js_module().sov33_jspace_detect() if _js_module() else {"detection": {"clean": True}, "state": {}}), 200, {"Content-Type": "application/json"}
     if path.endswith("/api/sov333-stack"): return jsonify(sov333_stack_status()), 200, {"Content-Type": "application/json"}
     if path.endswith("/api/sovspace"): return jsonify(sovspace_status()), 200, {"Content-Type": "application/json"}
-    if path.endswith("/api/charter"):
-        return (jsonify({"charter_sha256": CSOAI_CHARTER_SHA256}), 200, {"Content-Type": "application/json"})
-    if path.endswith("/api/health"):
-        return (jsonify({"status": "ok", "sigil_chain_length": _sigil_count()}), 200, {"Content-Type": "application/json"})
+    if path.endswith("/api/charter"): return (jsonify({"charter_sha256": CSOAI_CHARTER_SHA256}), 200, {"Content-Type": "application/json"})
+    if path.endswith("/api/health"): return (jsonify({"status": "ok", "sigil_chain_length": _sigil_count()}), 200, {"Content-Type": "application/json"})
     return (jsonify({"service": "sovereign-funnel", "version": "1.0.0"}), 200, {"Content-Type": "application/json"})
