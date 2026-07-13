@@ -63,19 +63,14 @@ def mint_op(
     intent: str,
     body: dict,
     care_value: float = 1.0,
+    force_log: bool = False,
 ) -> dict:
-    """
-    Mint a sovereign operation. Every layer calls this.
-
-    Returns a record that is:
-      - Charter-anchored (df65...)
-      - Ed25519 signed (when PyNaCl available)
-      - Hash-chained to the layer's previous op
-      - RFC 8032 §7.1 verifiable
-    """
-    if not care_floor_check(care_value, op):
+    """Mint a sovereign op. By default the care floor vetoes low scores
+    (raises RuntimeError). Pass force_log=True to record the veto anyway,
+    so the audit trail captures every probe regardless of outcome."""
+    vetoed = care_value < CARE_FLOOR
+    if vetoed and not force_log:
         raise RuntimeError(f"Care Floor vetoed: {op} care={care_value}")
-
     prev_digest = _chain_read(f"layer{layer}_chain.jsonl")
     ts = datetime.now(timezone.utc).isoformat()
     body_json = json.dumps(body, sort_keys=True, default=str)
@@ -103,6 +98,7 @@ def mint_op(
         "prev_digest": prev_digest,
         "charter_sha": CSOAI_CHARTER_SHA,
         "care_value": care_value,
+        "vetoed": vetoed,
     }
     log_path = SOVEREIGN_HOME / f"layer{layer}_chain.jsonl"
     with open(log_path, "a") as f:

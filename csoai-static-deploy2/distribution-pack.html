@@ -46,6 +46,65 @@ footer{text-align:center;padding:2rem 1rem;color:#64748b;font-size:.78rem;border
   <p style="color:#94a3b8;font-size:.92rem">Every line below is verbatim-citable, every claim is SIGIL-backed. All framings sourced from <code>/api/framing</code> (canonical).</p>
   <p><a href=#= class="btn" download>Download .md →</a></p>
 
+  <section id="liveFraming" style="margin:1.5rem 0;padding:1.5rem;background:rgba(167,139,250,.06);border:1px solid rgba(167,139,250,.3);border-radius:12px">
+    <h2 style="margin-top:0">🎯 Live Framing Library</h2>
+    <p style="color:#94a3b8;font-size:.92rem;margin:.25rem 0 1rem">Live from <code>/api/framing</code> · topic-filterable · citation-ready · SIGIL-anchored</p>
+    <div style="display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:1rem">
+      <button class="ftab active" data-topic="">all</button>
+      <button class="ftab" data-topic="positioning">positioning</button>
+      <button class="ftab" data-topic="pricing">pricing</button>
+      <button class="ftab" data-topic="sovereignty">sovereignty</button>
+      <button class="ftab" data-topic="procurement">procurement</button>
+      <button class="ftab" data-topic="care-floor">care-floor</button>
+      <button class="ftab" data-topic="operational">operational</button>
+      <button class="ftab" data-topic="governance">governance</button>
+      <button class="ftab" data-topic="forkability">forkability</button>
+    </div>
+    <div id="framingFeed" style="display:grid;gap:.75rem"></div>
+    <p id="framingMeta" style="color:#64748b;font-size:.78rem;margin-top:1rem"></p>
+  </section>
+
+  <script>
+    // /api/framing bridge — live framing library consumer
+    (function(){
+      const feed = document.getElementById('framingFeed');
+      const meta = document.getElementById('framingMeta');
+      const tabs = document.querySelectorAll('.ftab');
+      let cache = null;
+      function render(frames) {
+        feed.innerHTML = frames.map(f => `
+          <article style="background:rgba(0,0,0,.3);border:1px solid rgba(167,139,250,.2);border-radius:8px;padding:1rem">
+            <header style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:.5rem">
+              <span style="color:var(--gold);font-family:monospace;font-size:.78rem">${f.id}</span>
+              <span style="color:#64748b;font-size:.7rem;text-transform:uppercase">${f.format} · ${f.topic}</span>
+            </header>
+            <blockquote style="margin:0 0 .75rem;padding:.5rem 0 .5rem .75rem;border-left:3px solid var(--gold);color:var(--fg);font-style:italic">${f.text}</blockquote>
+            <footer style="color:#94a3b8;font-size:.78rem">— ${f.attribution}<br><a href="${f.permalink}" style="color:var(--cyan)">permalink</a> · ${f.permission}</footer>
+          </article>
+        `).join('');
+      }
+      async function load(topic) {
+        try {
+          meta.textContent = 'Loading /api/framing...';
+          const url = '/api/framing?format=json' + (topic ? '&topic=' + encodeURIComponent(topic) : '');
+          const r = await fetch(url);
+          const j = await r.json();
+          cache = j.frames || [];
+          render(cache);
+          meta.textContent = '✓ ' + cache.length + ' frames · /api/framing · SIGIL timestamp ' + j.timestamp;
+        } catch (e) {
+          meta.textContent = '⚠ Framing API unavailable: ' + e.message;
+        }
+      }
+      tabs.forEach(t => t.addEventListener('click', () => {
+        tabs.forEach(x => x.classList.remove('active'));
+        t.classList.add('active');
+        load(t.dataset.topic);
+      }));
+      load('');
+    })();
+  </script>
+
   <h2>X / Twitter Threads</h2>
 
   <h3>THREAD A — Sovereign by construction (technical depth)</h3>

@@ -296,6 +296,70 @@ def handle_verify(payload: dict) -> dict:
     }
 
 
+# ============================================================
+# J-SPACE HANDLERS — Sovereign mental workspace (Anthropic-style)
+# ============================================================
+
+def handle_jspace_read(payload: dict) -> dict:
+    """POST/GET /api/jspace/read — J-lens readout of current J-space."""
+    try:
+        sys.path.insert(0, '/Users/nicholas/clawd/_alignment/sovereign_merge_kit/jspace')
+        from sov33_jspace import sov33_jspace_read
+        return sov33_jspace_read(payload)
+    except Exception as e:
+        return {'error': f'jspace_read failed: {e}'}
+
+
+def handle_jspace_write(payload: dict) -> dict:
+    """POST /api/jspace/write — write a concept into J-space (Anthropic-style swap)."""
+    try:
+        sys.path.insert(0, '/Users/nicholas/clawd/_alignment/sovereign_merge_kit/jspace')
+        from sov33_jspace import sov33_jspace_write
+        return sov33_jspace_write(payload)
+    except Exception as e:
+        return {'error': f'jspace_write failed: {e}'}
+
+
+def handle_jspace_ask(payload: dict) -> dict:
+    """POST /api/jspace/ask — model reports what's in its J-space."""
+    try:
+        sys.path.insert(0, '/Users/nicholas/clawd/_alignment/sovereign_merge_kit/jspace')
+        from sov33_jspace import sov33_jspace_ask
+        return sov33_jspace_ask(payload)
+    except Exception as e:
+        return {'error': f'jspace_ask failed: {e}'}
+
+
+def handle_jspace_control(payload: dict) -> dict:
+    """POST /api/jspace/control — ask J-space to focus on X."""
+    try:
+        sys.path.insert(0, '/Users/nicholas/clawd/_alignment/sovereign_merge_kit/jspace')
+        from sov33_jspace import sov33_jspace_control
+        return sov33_jspace_control(payload)
+    except Exception as e:
+        return {'error': f'jspace_control failed: {e}'}
+
+
+def handle_jspace_swap(payload: dict) -> dict:
+    """POST /api/jspace/swap — Anthropic-style swap test (spider → ant)."""
+    try:
+        sys.path.insert(0, '/Users/nicholas/clawd/_alignment/sovereign_merge_kit/jspace')
+        from sov33_jspace import sov33_jspace_swap
+        return sov33_jspace_swap(payload)
+    except Exception as e:
+        return {'error': f'jspace_swap failed: {e}'}
+
+
+def handle_jspace_detect(payload: dict) -> dict:
+    """POST /api/jspace/detect — monitor J-space for misbehavior."""
+    try:
+        sys.path.insert(0, '/Users/nicholas/clawd/_alignment/sovereign_merge_kit/jspace')
+        from sov33_jspace import sov33_jspace_detect
+        return sov33_jspace_detect(payload)
+    except Exception as e:
+        return {'error': f'jspace_detect failed: {e}'}
+
+
 def handle_nodes() -> dict:
     """GET /api/nodes — list sovereign network nodes."""
     return {
@@ -1852,6 +1916,18 @@ class SovereignAPIHandler(BaseHTTPRequestHandler):
             return json_response(self, 200, handle_sign(payload))
         elif path == '/api/verify':
             return json_response(self, 200, handle_verify(payload))
+        elif path == '/api/jspace/read':
+            return json_response(self, 200, handle_jspace_read(payload))
+        elif path == '/api/jspace/write':
+            return json_response(self, 200, handle_jspace_write(payload))
+        elif path == '/api/jspace/ask':
+            return json_response(self, 200, handle_jspace_ask(payload))
+        elif path == '/api/jspace/control':
+            return json_response(self, 200, handle_jspace_control(payload))
+        elif path == '/api/jspace/swap':
+            return json_response(self, 200, handle_jspace_swap(payload))
+        elif path == '/api/jspace/detect':
+            return json_response(self, 200, handle_jspace_detect(payload))
         else:
             return json_response(self, 404, {'error': f'unknown path: {path}'})
 

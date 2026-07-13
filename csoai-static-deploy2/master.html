@@ -9,25 +9,14 @@
 <meta property="og:description" content="UK + AUKUS sovereign AI substrate. The whole thing. One URL. £0 open source. 94-98% cheaper than Palantir.">
 <meta name="theme-color" content="#0a0a0f">
 <link rel="canonical" href="https://csoai-static-deploy2.vercel.app/">
-<link rel="icon" href="#"" type="image/svg+xml">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 64 64%22><text y=%22.9em%22 font-size=%2256%22>🐉</text></svg>" type="image/svg+xml">
 <meta property="og:type" content="website">
+<link rel="stylesheet" href="sovereign-2026.css">
 <style>
+/* Page-level polish on top of sovereign-2026 tokens */
 :root{
-  --bg:#0a0a0f;--bg2:#14181f;--bg3:#1c2128;--fg:#f8fafc;
-  --cyan:#22d3ee;--gold:#fbbf24;--green:#22c55e;--red:#ef4444;--purple:#a78bfa;--pink:#f472b6;
-  --border:rgba(255,255,255,.08);
-  --glow:0 0 40px rgba(34,211,238,.15);
   --grid:rgba(255,255,255,.04);
-}
-*{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{
-  font-family:'Inter',system-ui,-apple-system,sans-serif;
-  background:var(--bg);
-  color:var(--fg);
-  line-height:1.5;
-  font-size:14px;
-  overflow-x:hidden;
+  --glow:0 0 40px rgba(34,211,238,.15);
 }
 body::before{
   content:'';position:fixed;top:0;left:0;right:0;bottom:0;
@@ -48,8 +37,8 @@ nav .nav-cta:hover{transform:translateY(-1px);box-shadow:0 4px 16px rgba(34,211,
 .eyebrow{display:inline-flex;align-items:center;gap:.4rem;padding:.4rem 1rem;background:rgba(34,197,94,.1);color:var(--green);border:1px solid rgba(34,197,94,.3);border-radius:99px;font-size:.7rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;margin-bottom:1rem}
 .eyebrow .dot{width:6px;height:6px;background:var(--green);border-radius:99px;animation:pulse 1.5s infinite}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
-h1{font-size:3.5rem;font-weight:900;line-height:1.05;margin-bottom:1rem;letter-spacing:-.02em}
-h1 .grad{background:linear-gradient(135deg,var(--cyan) 0%,var(--gold) 50%,var(--purple) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+h1{font-size:clamp(2.6rem,5.5vw,4.6rem);font-weight:900;line-height:1.04;margin-bottom:1rem;letter-spacing:-.03em;font-family:'Space Grotesk','Inter',sans-serif}
+h1 .grad{background:linear-gradient(135deg,var(--cyan) 0%,var(--gold) 50%,var(--purple) 100%);background-size:200% 200%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;animation:gradient-x 8s ease infinite}
 .lead{font-size:1.15rem;color:#cbd5e1;max-width:780px;margin:0 auto 1.5rem;line-height:1.6}
 .metrics-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:.7rem;max-width:920px;margin:0 auto 1rem}
 .metric{background:rgba(20,24,31,.7);border:1px solid var(--border);border-radius:12px;padding:.9rem .7rem;text-align:center;backdrop-filter:blur(6px)}
@@ -164,9 +153,9 @@ footer .sig{font-family:'SF Mono',monospace;font-size:.65rem;color:var(--cyan);w
 .signup-mini input:focus{outline:none;border-color:var(--cyan);box-shadow:0 0 0 2px rgba(34,211,238,.2)}
 </style>
 </head>
-<body>
+<body class="bg-grid">
 
-<nav>
+<nav class="nav-sticky">
   <a href="#" class="brand"><span class="logo">🐉</span> CSOAI · Sovereign</a>
   <div class="nav-links">
     <a href="#substrate">Substrate</a>
@@ -470,6 +459,22 @@ document.addEventListener('click', (e) => {
   if (!link) return;
   fetch('/api/analytics', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ event: 'cta_click', source: 'master-fe', meta: { href: link.href || link.textContent.trim().slice(0, 60) } }) }).catch(()=>{});
 });
+
+// Beauty-pass 13 Jul 2026 — IntersectionObserver fade-ups + nav shadow
+if ('IntersectionObserver' in window) {
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('is-visible'); io.unobserve(e.target); } });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+  document.querySelectorAll('section, .metric, .sub-card, .tab-card, .price-card, .hive-card, .check-item').forEach(el => {
+    el.classList.add('io-fade'); io.observe(el);
+  });
+} else {
+  document.querySelectorAll('.io-fade').forEach(el => el.classList.add('is-visible'));
+}
+window.addEventListener('scroll', () => {
+  document.querySelector('.nav-sticky')?.classList.toggle('scrolled', window.pageYOffset > 20);
+});
+
 </script>
 </body>
 </html>

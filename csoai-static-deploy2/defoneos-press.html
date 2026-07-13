@@ -183,6 +183,16 @@ footer{text-align:center;padding:2rem 1rem;color:#64748b;font-size:.78rem;border
 </form>
 <p style="color:#64748b;font-size:.78rem;margin-top:1rem">press@csoai.org · +44 (0)20 7946 0958 · 7 days/week</p>
 </div>
+
+<div id="newsletterFormWrap" style="margin-top:2rem;padding:1.5rem;background:rgba(34,211,238,.06);border:1px solid rgba(34,211,238,.3);border-radius:12px">
+  <h3 style="margin:0 0 .5rem 0;color:var(--cyan)">📨 Weekly Press Digest</h3>
+  <p style="color:var(--fg-2);font-size:.92rem;margin:.25rem 0 1rem">Get the weekly curated SIGIL-signed press brief — every Friday 09:00 BST. One-click unsubscribe in every email.</p>
+  <form id="newsletterForm" style="display:flex;gap:.5rem;flex-wrap:wrap">
+    <input type="email" name="email" placeholder="email@outlet.com" required style="flex:1;min-width:240px;padding:.6rem .8rem;background:rgba(0,0,0,.4);border:1px solid var(--border);border-radius:6px;color:var(--fg);font-family:inherit">
+    <button type="submit" class="btn btn-primary" style="padding:.6rem 1.2rem;font-weight:700">Subscribe →</button>
+  </form>
+  <div id="newsletterStatus" style="margin-top:.75rem;font-weight:700;display:none"></div>
+</div>
 </section>
 
 <footer>
@@ -224,6 +234,40 @@ document.getElementById('pressForm').addEventListener('submit', async e => {
     alert('Network error: ' + err.message);
     btn.disabled = false;
     btn.textContent = 'Book 40-min brief →';
+  }
+});
+
+// Weekly press digest — /api/newsletter bridge
+document.getElementById('newsletterForm').addEventListener('submit', async e => {
+  e.preventDefault();
+  const f = e.target;
+  const btn = f.querySelector('button');
+  const status = document.getElementById('newsletterStatus');
+  const email = f.email.value;
+  if (!email || !email.includes('@')) { alert('Valid email required'); return; }
+  btn.disabled = true;
+  btn.textContent = 'Subscribing...';
+  try {
+    const res = await fetch('/api/newsletter', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, gdpr_consent: true, source: 'press-page' }),
+    });
+    const data = await res.json();
+    if (data && data.ok) {
+      btn.style.display = 'none';
+      status.style.display = 'block';
+      status.style.color = 'var(--green)';
+      status.textContent = '✓ Subscribed · weekly digest every Friday 09:00 BST · SIGIL-receipted';
+    } else {
+      btn.disabled = false;
+      btn.textContent = 'Subscribe →';
+      alert('Error: ' + (data.error || 'unknown'));
+    }
+  } catch (err) {
+    btn.disabled = false;
+    btn.textContent = 'Subscribe →';
+    alert('Network error: ' + err.message);
   }
 });
 </script>

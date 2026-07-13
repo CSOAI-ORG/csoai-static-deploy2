@@ -57,12 +57,21 @@ module.exports = async function handler(req, res) {
   const reachable = checks.find(c => c.reachable && c.status === 200);
   const ok = !!reachable;
 
+  // Count SIGILs from /tmp/sigil.log if exists (best-effort)
+  let sigil_count = 0;
+  try {
+    const fs = require('fs').promises;
+    const data = await fs.readFile('/tmp/sigil.log', 'utf8');
+    sigil_count = data.split('\n').filter(Boolean).length;
+  } catch {}
+
   return res.status(200).json({
     substrate_reachable: ok,
     checks,
     substrate_status: ok ? 'LIVE' : 'NOT_REACHED',
     last_check: new Date().toISOString(),
     heartbeat_recorded: true,
+    sigil_count,
     note: ok
       ? 'SOV3 mesh reachable. Heartbeat on SIGIL chain. 86,400 SIGILs/day recorded at 1Hz.'
       : 'SOV3 mesh unreachable from this serverless function. The substrate runs at the VM (35.242.143.249:3101) via KeepAlive tunnel. Cross-VPC connectivity from Vercel serverless to VM-internal endpoints is architecturally blocked — verify via Mac-side /mcp connection.',
