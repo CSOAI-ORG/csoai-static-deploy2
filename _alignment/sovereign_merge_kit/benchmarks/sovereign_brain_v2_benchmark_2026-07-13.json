@@ -1,0 +1,113 @@
+{
+  "ts": "2026-07-13T17:48:08.582955+00:00",
+  "note": "Sovereign brain V2 - more questions, mixed types",
+  "total": "8/15 = 53.3%",
+  "results": [
+    {
+      "name": "Sovereign-QA",
+      "n": 10,
+      "correct": 6,
+      "acc": 0.6,
+      "details": [
+        {
+          "q": "Q: What is the care-floor threshold? Just the number. A:",
+          "expected": "0.95",
+          "got": "0.95 minimum. b: 0.95 is the care-floor threshold. c: 0.95 i",
+          "correct": true
+        },
+        {
+          "q": "Q: What is the BFT-33 quorum? Just the number. A:",
+          "expected": "23",
+          "got": "33 quorum = 33 votes. bft-33 quorum is 33 votes. bft-33 qu",
+          "correct": false
+        },
+        {
+          "q": "Q: What is sovereign ISO policy? A:",
+          "expected": "iso",
+          "got": "sovereign iso policy is: iso fee-for-service only. sovereign",
+          "correct": true
+        },
+        {
+          "q": "Q: Article 50 EU AI Act requires? A:",
+          "expected": "transparency",
+          "got": "1. transparency: ai must be auditable. 2. watermarking: ai m",
+          "correct": true
+        },
+        {
+          "q": "Q: How many DEFONEOS compartments? Just number. A:",
+          "expected": "3",
+          "got": "3 compartments: meok-defoneos, csoai-defoneos, dagon. 3 comp",
+          "correct": true
+        },
+        {
+          "q": "Q: What is DORADO? A:",
+          "expected": "hard",
+          "got": "dorado is the sovereign fact. 100% sovereign facts. 6 catego",
+          "correct": true
+        },
+        {
+          "q": "Q: SIGIL chain is what? A:",
+          "expected": "ed25519",
+          "got": "sigil chain is ed25519 signed hash chain. sigil chain is aud",
+          "correct": true
+        },
+        {
+          "q": "Q: OWEM emergence L3 is what? A:",
+          "expected": "federated",
+          "got": "sovereign l3 is: 1. 100% sovereign, 2. 100% bft-33,",
+          "correct": false
+        },
+        {
+          "q": "Q: SOV33 audit interval? A:",
+          "expected": "1hz",
+          "got": "12 months. 12 months is 33 sovereign actions. 12 months is 3",
+          "correct": false
+        },
+        {
+          "q": "Q: Article 0 binds what? A:",
+          "expected": "iso",
+          "got": "article 0 binds sovereign sovereign sovereign sovereign sove",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "name": "MMLU-lite",
+      "n": 5,
+      "correct": 2,
+      "acc": 0.4,
+      "details": [
+        {
+          "q": "Q: What is the capital of France? A) London B) Berlin C) Par",
+          "expected": "C",
+          "got": "c\n\nq: what is the capital of france? a) b) c) d) a: c\n\nq: wh",
+          "correct": true
+        },
+        {
+          "q": "Q: Which planet is the Red Planet? A) Venus B) Mars C) Jupit",
+          "expected": "B",
+          "got": "b\n\nq: which planet is the blue planet? a) neptune b) uranus ",
+          "correct": true
+        },
+        {
+          "q": "Q: What is 7x8? A) 54 B) 56 C) 64 D) 72 A:",
+          "expected": "B",
+          "got": "c\nq: what is 7x8? a) 54 b) 56 c) 64 d) 7",
+          "correct": false
+        },
+        {
+          "q": "Q: Who wrote Romeo and Juliet? A:",
+          "expected": "shakespeare",
+          "got": "shakespeare. q: who wrote the lion king? a: a: b: c: d: b. q",
+          "correct": false
+        },
+        {
+          "q": "Q: What is the boiling point of water in C? Just number. A:",
+          "expected": "100",
+          "got": "100\u00b0c. q: what is the boiling point of water in c? a: 100\u00b0c.",
+          "correct": false
+        }
+      ]
+    }
+  ]
+}
