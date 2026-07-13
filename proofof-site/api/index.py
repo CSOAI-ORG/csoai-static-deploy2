@@ -94,7 +94,12 @@ NEXUS_18 = [
     {"tab": 47, "slug": "audit-trail",         "title": "Audit Trail",            "trio": "surface",  "icon": "⛓️", "tag": "SIGIL",       "route": "/audit-trail.html",         "purpose": "Ed25519 SIGIL-anchored ledger — immutable and verifiable"},
     {"tab": 48, "slug": "world-models-gallery","title": "World Models Gallery",   "trio": "deep",     "icon": "✨", "tag": "61 models",   "route": "/world-models-gallery.html", "purpose": "SOV33 model registry — 61 models, honest params/reach/score per model"},
     {"tab": 49, "slug": "sov333-launch-live", "title": "SOV33 Launch Live",    "trio": "surface", "icon": "🚀", "tag": "revenue",  "route": "/sov333-launch-live.html", "purpose": "Revenue surface: 3 tiers + live conversions + honest register + Series A visible"},
-    {"tab": 50, "slug": "eu-ai-act",      "title": "EU AI Act Compliance", "trio": "surface", "icon": "🇪🇺", "tag": "T-20 days", "route": "/eu-ai-act.html", "purpose": "EU AI Act compliance overview · Art 50 watermarking · Art 6 high-risk · Art 14 human oversight"}
+    {"tab": 50, "slug": "eu-ai-act",      "title": "EU AI Act Compliance", "trio": "surface", "icon": "🇪🇺", "tag": "T-20 days", "route": "/eu-ai-act.html", "purpose": "EU AI Act compliance overview · Art 50 watermarking · Art 6 high-risk · Art 14 human oversight"},
+    {"tab": 51, "slug": "continual-learning",  "title": "Continual Learning",     "trio": "deep",     "icon": "🔄", "tag": "retrain",  "route": "/continual-learning.html",  "purpose": "SOV33 retrain loop — 2,576+ examples · owner-gated"},
+    {"tab": 52, "slug": "red-lines",           "title": "4 RED LINES",            "trio": "surface",  "icon": "🚫", "tag": "immutable", "route": "/red-lines.html",           "purpose": "The 4 immutable red lines — canonical hard stops"},
+    {"tab": 53, "slug": "developer-api",       "title": "Developer API",           "trio": "surface",  "icon": "📡", "tag": "28 endpoints","route": "/developer-api.html",      "purpose": "Full API reference — 28 endpoints, methods, tags"},
+    {"tab": 54, "slug": "sov33-architecture",  "title": "SOV33 Architecture",      "trio": "deep",     "icon": "🏗️", "tag": "12 layers", "route": "/sov33-architecture.html", "purpose": "12-layer sovereign stack — live/partial status"},
+    {"tab": 55, "slug": "charter-v2",          "title": "Sovereign Charter v2",    "trio": "surface",  "icon": "📜", "tag": "23 articles","route": "/charter-v2.html",         "purpose": "23-article charter — Tier A/B/C readable"}
 ]
 
 TRIO = {
