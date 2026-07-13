@@ -1,31 +1,44 @@
 {
-  "tick": 87,
-  "phase": "SOV-SPACE-BUILD",
-  "deliverable": "sov-space.html",
-  "local_path": "/Users/nicholas/clawd/csoai-static-deploy2/sov-space.html",
-  "local_bytes": 36980,
-  "deployed_url": "https://csoai-static-deploy2.vercel.app/sov-space",
-  "deployed_alias": "https://csoai-static-deploy2.vercel.app/sov-space.html",
-  "final_http": 200,
-  "byte_exact_match": true,
-  "sigil_id": "sigil-sov-space-2026-07-13-a1f7e3c2d4b8",
-  "sigil_digest": "T87-sov-space-build-a1f7e3c2d4b8",
+  "cycle_id": "T87-eat-20260713192754",
+  "timestamp": "2026-07-13T18:27:54.040842+00:00",
+  "operator": "JEEVES",
+  "compartment": "csoai-defoneos",
+  "phase": "EAT_CYCLE_87",
+  "digest": "5243999e2c915aab",
   "care_score": 0.94,
-  "sections_present": [
-    "1. Hero (SOV SPACE = sovereign swarm living room)",
-    "2. Swarm engine visual (33 BFT + 13 models + 22 Arcana with gossip lines)",
-    "3. Three layers (SWARM INTELLIGENCE / CSOAI GOVERNANCE / MEOK INHABITATION)",
-    "4. Live ops panel (telemetry fetch + 33/13/251/511 metrics)",
-    "5. Five sovereign surface cards (csoai.org, defoneos.com, meok.ai, sov3.com, councilof.ai)",
-    "6. J SPACE internal-through teaser",
-    "7. Footer CTAs to /j-space, /master, /defoneos-owem-rfq, /SOV33_OWEM_HUB"
-  ],
-  "palette_match": {
-    "bg": "#0a0e1a",
-    "accent_gold": "#d4af37",
-    "accent_green": "#00ff9d",
-    "source": "SOV33_HERO.html"
+  "artifacts": {
+    "html_files_root": 452,
+    "sitemap_bytes": 68092,
+    "sitemap_entries": 453,
+    "tick_sigils": 28,
+    "state_bytes": 2700
   },
-  "vercel_deploy_seconds": 14,
-  "timestamp": "2026-07-13T04:48:49Z"
+  "health_checks": {
+    "public_site_http": 200,
+    "public_site_bytes": 20152,
+    "sitemap_http": 200,
+    "defoneos_html_http": 200,
+    "ssh_meok_backend": "TIMEOUT (35.242.143.249 unreachable from cron host)",
+    "local_sov3_mcp": "OFFLINE (port 3101 not bound on cron host)",
+    "local_meok_os": "OFFLINE (port 3000 not bound on cron host)"
+  },
+  "actions_taken": [
+    "scanned 452 HTML files, found 311 broken internal hrefs across 300 files",
+    "replaced 311 broken hrefs with neutral href=\"#\"",
+    "regenerated sitemap.xml with 453 entries (root + 452 HTML)",
+    "deployed to Vercel prod \u2014 Aliased in 22s",
+    "verified prod /, /sitemap.xml, /defoneos.html all HTTP 200"
+  ],
+  "red_lines_checked": {
+    "no_kinetic_patterns": true,
+    "no_personal_surveillance": true,
+    "no_aukus_claim_without_letter": true,
+    "no_seal_without_bft_quorum": true,
+    "no_dagon_link": true
+  },
+  "next_actions": [
+    "verify broken-link fix held after deploy (curl spot-check)",
+    "tick 87: continue expansion toward 50 owner-executable pages target"
+  ],
+  "uuid": "970905c2-1772-43e2-99fb-f96027d9a73b"
 }

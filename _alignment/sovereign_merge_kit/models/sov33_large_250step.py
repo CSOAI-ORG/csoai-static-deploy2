@@ -31,7 +31,8 @@ from peft import LoraConfig, get_peft_model, TaskType
 OUTPUT_DIR = Path('/Users/nicholas/.sovereign/models/sov33-large-world')
 SIGIL_FILE = Path('/Users/nicholas/.sovereign/sov33_large_250step.sigil.jsonl')
 DATA_PATH = '/Users/nicholas/clawd/_alignment/sovereign_merge_kit/sov_owem_data/sov33_large_world_corpus.jsonl'
-BASE_MODEL = 'Qwen/Qwen2.5-0.5B'
+QWEN_PATHS = __import__('glob').glob(f'{CACHE_DIR}/models--Qwen--Qwen2.5-0.5B/snapshots/*/')
+BASE_MODEL = QWEN_PATHS[0] if QWEN_PATHS else 'Qwen/Qwen2.5-0.5B'
 CACHE_DIR = '/Users/nicholas/.sovereign/hf_cache/hub'
 
 
