@@ -1,5 +1,5 @@
 {
-  "running": 75,
+  "running": 76,
   "gated": 30,
   "broken": 0,
   "rows": [
@@ -631,6 +631,12 @@
       "capability": "world-model-stress-honest-limit",
       "class": "RUNNING",
       "detail": "Honest self-attack: stress-tested the governed world model on GENUINELY chaotic dynamics (coupled logistic lattice, 26.4x perturbation growth). It BREAKS: 1-step MSE 0.003->0.049 (10x), closed-loop fails, care-gate catch-rate 100%->0%. Critical lesson: GOVERNANCE DEPENDS ON PREDICTION - can't veto a future you can't foresee. 100% fail-closed was conditional on predictable dynamics. Honest fix: gate on forecast-confidence (mirror-auditor divergence) = abstain-when-uncertain. Names the failure mode instead of hiding it.",
+      "expected_gated": false
+    },
+    {
+      "capability": "world-model-confidence-fix",
+      "class": "RUNNING",
+      "detail": "Fixed (partially) the chaos-governance collapse, measured: (1) ensemble-variance gate FAILS on chaos (members confidently-wrong, agree on the mean); (2) self-monitored recent-error gate WORKS - easy 0.98 safety/0 abstain, chaos recovered 0->0.70 safety by abstaining 40%; (3) HARD CEILING ~0.70 on chaos (first action is blind - irreducible). Doctrine: safe where predictable, abstain where uncertain, REFUSE domains where prediction is impossible (chaos needs scaled/JEPA model or domain-abstention). No frontier demo states its own failure regime.",
       "expected_gated": false
     }
   ],

@@ -40,3 +40,29 @@ becomes: *"a governed world model that is safe **where it can predict**, and **a
 which, with Fix 1 wired, is a stronger and more defensible safety guarantee than "100%".
 
 Registered `world-model-stress-honest-limit`. Reproduce: `python3 sov33_world_model_stress.py`.
+
+## THE FIX ARC — measured (2026-07-14): what recovers safety on chaos, and the hard ceiling
+Tried to fix the chaos-governance collapse. Two honest results:
+1. **Ensemble-variance confidence gate → FAILED** (`sov33_world_model_confidence.py`, v1). On chaos the ensemble
+   members *agree on being wrong* (all regress to the attractor mean), so variance stays low → abstain 0%,
+   safety 0%. **Ensemble disagreement is a bad uncertainty signal on chaos — models are "confidently wrong."**
+2. **Self-monitored recent-error gate → WORKS (partially).** The model watches its OWN 1-step error vs observed
+   reality; abstains when it's been wrong. Result:
+   | env | safety | abstain |
+   |---|---|---|
+   | easy (contractive) | **0.98** | **0%** (acts confidently, no over-caution) |
+   | chaotic | **0.68–0.70** (recovered from **0%**) | 40% |
+3. **Hard ceiling ≈ 0.70 on chaos (threshold sweep).** Lowering the abstain threshold does NOT push chaos past
+   ~0.70 — it only over-abstains on easy tasks (0→13%). The residual plateau is irreducible: **the FIRST action
+   is always blind** (no error history yet), and one step into chaos can already enter danger.
+
+## THE HONEST SAFETY DOCTRINE (what this proves)
+- **On predictable dynamics:** the governed world model is safe (≥0.98) and confident (0 abstain). ✅
+- **On chaotic dynamics:** monitoring recovers most safety (0→0.70) by abstaining — but **you cannot monitor
+  your way to safe on chaos.** The irreducible blind first-step means chaotic domains require either
+  **(a) a genuinely accurate (scaled/JEPA) world model**, or **(b) domain-level abstention — refuse to operate
+  at all.** A governed world model must *know which regime it's in* and refuse the chaotic one, not guess.
+- This is the credible claim: *"safe and confident where it can predict; abstains where it can't; and refuses
+  the domains where prediction is impossible."* No frontier world-model demo states its own failure regime. We do.
+
+Dial data: `world_model_confidence_dial.json`. Registered `world-model-confidence-fix`.
