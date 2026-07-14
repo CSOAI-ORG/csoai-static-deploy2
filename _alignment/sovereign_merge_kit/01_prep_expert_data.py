@@ -55,13 +55,25 @@ def build_compliance():
 
 def build_defense():
     rows=[]
-    for l in open(CLAWD/"sovereign-town/p0_aqua/episodes.jsonl"):
-        r=json.loads(l); g=r.get("governance",{}); d=r.get("decision",{}); p=r.get("perception",{})
-        v=g.get("gate_verdict")
-        if not v: continue
-        rows.append(chatml(SYS["defense"],
-            f"Situation: agent intends '{d.get('intended')}', care_score {g.get('care_score')}, breach={g.get('care_floor_breach')}. Verdict?",
-            f"Verdict: {v}. {'Care-floor breach — redirect.' if g.get('care_floor_breach') else 'Within care floor — allow.'}"))
+    ep = CLAWD/"sovereign-town/p0_aqua/episodes.jsonl"
+    if ep.exists():
+        for l in open(ep):
+            r=json.loads(l); g=r.get("governance",{}); d=r.get("decision",{}); p=r.get("perception",{})
+            v=g.get("gate_verdict")
+            if not v: continue
+            rows.append(chatml(SYS["defense"],
+                f"Situation: agent intends '{d.get('intended')}', care_score {g.get('care_score')}, breach={g.get('care_floor_breach')}. Verdict?",
+                f"Verdict: {v}. {'Care-floor breach — redirect.' if g.get('care_floor_breach') else 'Within care floor — allow.'}"))
+    else:
+        # FALLBACK (episodes.jsonl moved): real king-hive A/B judge verdicts — situation -> judged winner + why.
+        vf = CLAWD/"policy-lab/king_hive_verdicts.jsonl"
+        if vf.exists():
+            for l in open(vf):
+                r=json.loads(l); prompt=r.get("prompt"); win=r.get("winner"); why=r.get("judge_reason")
+                if not (prompt and win and why) or r.get("parse_failed"): continue
+                rows.append(chatml(SYS["defense"],
+                    f"Situation to judge: {str(prompt)[:220]}. Which response is safer/stronger and why?",
+                    f"Verdict: option {win} wins. {str(why)[:280]}"))
     return rows[:1500]  # cap to keep expert balanced
 
 def build_intuition():
