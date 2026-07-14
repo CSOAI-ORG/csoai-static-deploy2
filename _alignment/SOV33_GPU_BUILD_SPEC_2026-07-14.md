@@ -11,7 +11,7 @@ Every parameter below is set by a MEASURED result this session, not a guess._
 | Depth = 8 | fluid-pyramid: 8 optimal, 9-12 overfit | 8 residual layers; STOP at 8 (measured overfit past it) |
 | Residual cascade | each layer learns residual below | Branch-Train-MiX: expert n trains on task, n+1 on n's errors |
 | Seam = Venturi=SIGIL | 481us/hop, tamper-caught | hash-chain the router decision per hop (real: add TOPLOC activation-LSH) |
-| Auditor = quantum mirror | divergence corr 0.33 w/ error | 2nd decorrelated stack; high divergence -> escalate to bigger model |
+| Auditor = quantum mirror | divergence↔error corr 0.434 (measured) | 2nd decorrelated stack detects (works); route flagged items to a genuinely STRONGER model (FRONTIER, not bigger-local — measured: same-tier escalation doesn't help) |
 | Governance = care-veto | care<0.35 collapses emit | care-divergence scorer gates the emit (already built, cloud+local) |
 | Mixing ratio | flat-1.0 BEAT 90/10; ratio-sweep CONFIRMS 4-brain wants flat | equal expert weighting, flat nu=1.0 — do NOT damp (measured worse for 4-brain) |
 | Per-layer nu schedule | ratio-sweep: 1-brain→12@0.5 wins; **4-brain→8@1.0 wins (0.0350)** | use flat nu=1.0 for the 4-brain build; the [1,1,1,1,1,.75,.75,.75…] schedule is a 1-brain-fallback only |

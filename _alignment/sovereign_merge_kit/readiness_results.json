@@ -1,5 +1,5 @@
 {
-  "running": 56,
+  "running": 58,
   "gated": 42,
   "broken": 0,
   "rows": [
@@ -589,6 +589,18 @@
       "capability": "alphabet-A-P-pipeline",
       "class": "RUNNING",
       "detail": "16 governed stages A-P run E2E over the fluid pyramid, SHA256/SIGIL hash-chained; care-veto fail-closed (benign emits loss 0.0334, harmful vetoed). Mamba/Venturi [sim]; governance real.",
+      "expected_gated": false
+    },
+    {
+      "capability": "mirror-auditor-escalation",
+      "class": "RUNNING",
+      "detail": "Measured: mirror divergence\u2194error corr=0.434 (real detection signal); escalating flagged items to a same-tier bigger-local model does NOT help (-3.1%, ~random). Design correction: route to a genuinely stronger FRONTIER model. CPU.",
+      "expected_gated": false
+    },
+    {
+      "capability": "nest-only-with-regions",
+      "class": "RUNNING",
+      "detail": "Measured crossover: one deep pyramid wins single-domain (sep=0, nest -86%); nest 4-around-1 wins with real regions (+70-81% at sep>=0.5). Confirms build-spec nesting law. Perfect-routing upper bound. CPU.",
       "expected_gated": false
     }
   ],
