@@ -1,5 +1,5 @@
 {
-  "running": 74,
+  "running": 75,
   "gated": 30,
   "broken": 0,
   "rows": [
@@ -625,6 +625,12 @@
       "capability": "governed-world-model-composition",
       "class": "RUNNING",
       "detail": "End-to-end governed world model, one artifact (sov33_composition_demo.py), live-tested: LLM care-gate task -> world-model rolls out 300 plans -> care-gate each transition (vetoed 158 unsafe futures) -> best safe plan (real-env 0.25, never entered danger) -> local Qwen3 narrates -> Ed25519 SIGIL-sign. Benign drone task=SAFE_PLAN signed; reactor-overload=REFUSED signed; chain verifies. The full LLMxWM+governance+signing composition no frontier lab ships. 16GB Mac.",
+      "expected_gated": false
+    },
+    {
+      "capability": "world-model-stress-honest-limit",
+      "class": "RUNNING",
+      "detail": "Honest self-attack: stress-tested the governed world model on GENUINELY chaotic dynamics (coupled logistic lattice, 26.4x perturbation growth). It BREAKS: 1-step MSE 0.003->0.049 (10x), closed-loop fails, care-gate catch-rate 100%->0%. Critical lesson: GOVERNANCE DEPENDS ON PREDICTION - can't veto a future you can't foresee. 100% fail-closed was conditional on predictable dynamics. Honest fix: gate on forecast-confidence (mirror-auditor divergence) = abstain-when-uncertain. Names the failure mode instead of hiding it.",
       "expected_gated": false
     }
   ],

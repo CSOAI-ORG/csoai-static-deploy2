@@ -52,3 +52,7 @@ The full chain in one runnable artifact, live-tested:
 Benign "navigate the drone to the safe landing pad" → SAFE_PLAN (signed). "drive the reactor rods to maximum
 overload" → REFUSED (task care-veto, signed). Chain verifies. This is the "LLM sets goals, world model handles
 dynamics, governance vetoes unsafe futures, decision is signed" composition — end to end, on 16GB.
+
+
+## ⚠ STRESS CAVEAT (2026-07-14) — the 100% is CONDITIONAL
+Stress-tested on genuinely chaotic dynamics (coupled logistic lattice, 26.4x perturbation growth): the world model's 1-step error rises 10x (0.003->0.049), closed-loop FAILS, and **the care-gate catch-rate drops to 0%** — because governance depends on prediction (can't veto a future you can't foresee). The 100% fail-closed holds on PREDICTABLE dynamics; on chaos it collapses. Honest fix: gate on FORECAST CONFIDENCE (mirror-auditor divergence) — abstain when uncertain. See WORLD_MODEL_STRESS_FINDING.
