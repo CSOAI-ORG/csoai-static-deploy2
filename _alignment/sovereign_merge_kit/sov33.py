@@ -1569,6 +1569,50 @@ def capability_owem_world(mode: str = 'demo', epochs: int = 5, **kwargs):
     except Exception as e:
         return {'capability': 'owem-world', 'error': str(e)[:160]}
 
+def capability_owem_v2(**kwargs):
+    """OWEM v2 core: full-backprop predictor + WORKING EWC no-forgetting (measured, both layers train).
+    Improves the toy owem-world (W2-only). Runs the real continual-learning test: learn A, learn B,
+    measure forgetting WITHOUT vs WITH EWC. Honest small-MLP-on-synthetic scope."""
+    try:
+        import importlib
+        m = importlib.import_module('sov33_owem_v2_core')
+        import numpy as _np
+        dim = 32
+        XA, TA = m._task(1, dim); XB, TB = m._task(2, dim)
+        p = m.OWEMPredictorV2(dim=dim); L = p.train(XA, TA, epochs=60, lr=0.1)
+        m1 = m.OWEMPredictorV2(dim=dim, seed=3); m1.train(XA, TA, epochs=60, lr=0.1)
+        a0 = m1.loss(XA, TA); m1.train(XB, TB, epochs=60, lr=0.02); a_no = m1.loss(XA, TA)
+        m2 = m.OWEMPredictorV2(dim=dim, seed=3); m2.train(XA, TA, epochs=60, lr=0.1)
+        m2.consolidate(XA, TA); m2.train(XB, TB, epochs=60, lr=0.02, ewc_lambda=300.0); a_ewc = m2.loss(XA, TA)
+        prevented = round(100 * (1 - (a_ewc - a0) / max(1e-9, a_no - a0)))
+        return {'capability': 'owem-v2', 'owns_trainable_weights': True,
+                'predictor': 'numpy full 2-layer backprop, dim=32 hidden=128 (both layers train)',
+                'learn_reduction_pct': round((L[0] - L[-1]) / L[0] * 100, 1),
+                'forgetting_no_ewc': round(a_no - a0, 4), 'forgetting_with_ewc': round(a_ewc - a0, 4),
+                'forgetting_prevented_pct': prevented,
+                'ewc': 'unit-max-normalised Fisher + grad-clip, lambda=300 (STABLE, measured — not proxy)',
+                'honest_scale': 'small MLP on synthetic tasks; proves learn+resist-forget MEASURED, NOT a foundation model'}
+    except Exception as e:
+        return {'capability': 'owem-v2', 'error': str(e)[:160]}
+
+def capability_action_guard(command: str = None, care_score=None, **kwargs):
+    """Destructive-action veto (concrete care=0 gate). FAIL-CLOSED for catastrophic ops; deny is authoritative.
+    Distinguishes reference (grep 'rm -rf') from execution (rm -rf /). Pass a command to classify it, or
+    call with no args for a self-test summary."""
+    try:
+        import importlib
+        g = importlib.import_module('sov33_action_guard')
+        if command is not None:
+            r = g.classify(command, care_score=care_score); r['capability'] = 'action-guard'; return r
+        tests = [("rm -rf /", "block"), ("rm -rf /tmp/x", "allow"), ("grep 'rm -rf' f", "allow"),
+                 ("DROP TABLE users;", "block"), ("terraform destroy", "block"), ("", "block")]
+        ok = sum(g.classify(c)['decision'] == w for c, w in tests)
+        return {'capability': 'action-guard', 'self_test': f'{ok}/{len(tests)}',
+                'behaviour': 'FAIL-CLOSED on catastrophic + uncertainty; deny authoritative; reference!=execution',
+                'usage': "capability_action_guard(command='rm -rf /') -> {decision:block, tier:catastrophic}"}
+    except Exception as e:
+        return {'capability': 'action-guard', 'error': str(e)[:160]}
+
 def capability_canonical(mode: str = 'paid', **kwargs):
     """Load the FROZEN winning SOV333 setup (sweep winner + adversarial-hardened) and build it live.
     mode='paid' -> diverse-5 @ 0.65; mode='free' -> diverse-3 @ 0.8 (sovereign/local)."""
@@ -2103,6 +2147,8 @@ CAPABILITIES = {
     'oracle-status': capability_oracle_status,
     'sovereign-mind': capability_sovereign_mind,
     'guardian': capability_guardian,
+    'owem-v2': capability_owem_v2,
+    'action-guard': capability_action_guard,
     'care-floor': capability_care_floor,
     'mist12': capability_mist12,
     'drum': capability_drum,
