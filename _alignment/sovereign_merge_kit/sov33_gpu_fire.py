@@ -79,6 +79,8 @@ def main():
     res = {"gsm8k": round(c/min(N,len(gsm)), 4), "n": min(N,len(gsm)), "base": BASE,
            "corpus_examples": len(rows), "adapter": OUT, "method": "QLoRA on sovereign expert_data + solver-format GSM8K"}
     json.dump(res, open("sov33_local_gsm8k.json", "w"), indent=2)
+    # also write the filename sov33_ingest_kaggle_result.py reads, so the result auto-wires into canonical
+    json.dump(res, open("sov33_live_gsm8k.json", "w"), indent=2)
     print("[fire] REAL SOVEREIGN NUMBER:", json.dumps(res))
 
 if __name__ == "__main__":
