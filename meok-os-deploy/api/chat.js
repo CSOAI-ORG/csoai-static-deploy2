@@ -35,8 +35,12 @@ async function groqChat(key, system, message, prefer) {
 }
 
 const PLAIN = "Answer in plain, warm, practical English — clear, concise, and directly useful. Do NOT use flowery, poetic, mystical, or archaic language; no metaphors about tides/oaths/seals. Sound like a sharp, kind human helping a friend.";
+// Solver register: reasoning/benchmark queries need a CLEAN parseable answer, not warm prose. The warm persona
+// buries the answer (measured: GSM8K unmeasurable via text extraction). This forces step-by-step + a final line.
+const SOLVER = "You are a precise reasoning solver. Work through the problem step by step, then on the FINAL line write exactly 'ANSWER: <value>' with only the answer (a number where numeric) and nothing after it. No prose after the ANSWER line.";
 
 function buildSystem(body) {
+  if (body && body.register === 'solver') return (SOLVER + CARE_FLOOR).slice(0, 2100);
   return (buildSystemBase(body) + CARE_FLOOR).slice(0, 2100);
 }
 
