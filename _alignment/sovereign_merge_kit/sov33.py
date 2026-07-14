@@ -1852,6 +1852,26 @@ def capability_find_best_config(**kwargs):
                 'law':'concentrate budget on uniform task; split only where regional structure exists'}
     except Exception as e: return {'capability':'find-best-config','error':str(e)[:160]}
 
+def capability_multistep_rollout(**kwargs):
+    """GAP B4 closed: multi-step latent rollout (world-model planning). Rolls the forward model H steps;
+    free-running error compounds (known limitation), governed re-grounding every k steps bounds the drift."""
+    try:
+        import importlib; m=importlib.import_module('sov33_multistep_rollout'); r=m.run()
+        return {'capability':'multistep-rollout','H':r['H'],'err_free_final':r['err_free'][-1],
+                'err_grounded_final':r['err_grounded'][-1],'reground_helps':r['err_grounded'][-1]<r['err_free'][-1],
+                'honest':'error compounds free-running; re-grounding bounds it'}
+    except Exception as e: return {'capability':'multistep-rollout','error':str(e)[:160]}
+
+def capability_ed25519_sigil(**kwargs):
+    """GAP D6 closed: Ed25519 SIGIL - proves AUTHENTICITY (who signed) not just integrity (SHA256 chain).
+    Backward-compatible: SHA256 chain kept + detached Ed25519 signature per record. The real L5 claim."""
+    try:
+        import importlib; m=importlib.import_module('sov33_ed25519_sigil')
+        if not m.HAVE: return {'capability':'ed25519-sigil','status':'GATED','reason':'cryptography lib not installed'}
+        res=m.self_test()
+        return {'capability':'ed25519-sigil','tests':{n:ok for n,ok in res},'all_pass':all(ok for _,ok in res)}
+    except Exception as e: return {'capability':'ed25519-sigil','error':str(e)[:160]}
+
 def capability_canonical(mode: str = 'paid', **kwargs):
     """Load the FROZEN winning SOV333 setup (sweep winner + adversarial-hardened) and build it live.
     mode='paid' -> diverse-5 @ 0.65; mode='free' -> diverse-3 @ 0.8 (sovereign/local)."""
@@ -2405,6 +2425,8 @@ CAPABILITIES = {
     'brain-merge-ratio': capability_brain_merge_ratio,
     'six-lever-proxy': capability_six_lever_proxy,
     'find-best-config': capability_find_best_config,
+    'multistep-rollout': capability_multistep_rollout,
+    'ed25519-sigil': capability_ed25519_sigil,
     'care-floor': capability_care_floor,
     'mist12': capability_mist12,
     'drum': capability_drum,
