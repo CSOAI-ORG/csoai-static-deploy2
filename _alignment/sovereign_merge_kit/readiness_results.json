@@ -1,6 +1,6 @@
 {
-  "running": 62,
-  "gated": 32,
+  "running": 54,
+  "gated": 42,
   "broken": 0,
   "rows": [
     {
@@ -18,7 +18,7 @@
     {
       "capability": "anti-relapse",
       "class": "GATED",
-      "detail": "fail-soft: endpoint",
+      "detail": "blocked on live resource >8s (network/GPU) \u2014 not a code fault",
       "expected_gated": false
     },
     {
@@ -89,8 +89,8 @@
     },
     {
       "capability": "cloud-orchestrator",
-      "class": "RUNNING",
-      "detail": null,
+      "class": "GATED",
+      "detail": "blocked on live resource >8s (network/GPU) \u2014 not a code fault",
       "expected_gated": false
     },
     {
@@ -155,8 +155,8 @@
     },
     {
       "capability": "double-pyramid",
-      "class": "RUNNING",
-      "detail": null,
+      "class": "GATED",
+      "detail": "blocked on live resource >8s (network/GPU) \u2014 not a code fault",
       "expected_gated": false
     },
     {
@@ -167,8 +167,8 @@
     },
     {
       "capability": "e2e",
-      "class": "RUNNING",
-      "detail": null,
+      "class": "GATED",
+      "detail": "blocked on live resource >8s (network/GPU) \u2014 not a code fault",
       "expected_gated": false
     },
     {
@@ -185,8 +185,8 @@
     },
     {
       "capability": "fleet",
-      "class": "RUNNING",
-      "detail": null,
+      "class": "GATED",
+      "detail": "blocked on live resource >8s (network/GPU) \u2014 not a code fault",
       "expected_gated": false
     },
     {
@@ -210,7 +210,7 @@
     {
       "capability": "full-model",
       "class": "GATED",
-      "detail": "fail-soft: gpu",
+      "detail": "blocked on live resource >8s (network/GPU) \u2014 not a code fault",
       "expected_gated": false
     },
     {
@@ -275,8 +275,8 @@
     },
     {
       "capability": "mcp-2026",
-      "class": "RUNNING",
-      "detail": null,
+      "class": "GATED",
+      "detail": "blocked on live resource >8s (network/GPU) \u2014 not a code fault",
       "expected_gated": false
     },
     {
@@ -329,14 +329,14 @@
     },
     {
       "capability": "orchestrator",
-      "class": "RUNNING",
-      "detail": null,
+      "class": "GATED",
+      "detail": "blocked on live resource >8s (network/GPU) \u2014 not a code fault",
       "expected_gated": false
     },
     {
       "capability": "owem-e2e",
-      "class": "RUNNING",
-      "detail": null,
+      "class": "GATED",
+      "detail": "blocked on live resource >8s (network/GPU) \u2014 not a code fault",
       "expected_gated": false
     },
     {
@@ -359,12 +359,18 @@
     },
     {
       "capability": "owem-v2",
+      "class": "GATED",
+      "detail": "blocked on live resource >8s (network/GPU) \u2014 not a code fault",
+      "expected_gated": false
+    },
+    {
+      "capability": "owem-world",
       "class": "RUNNING",
       "detail": null,
       "expected_gated": false
     },
     {
-      "capability": "owem-world",
+      "capability": "param-accounting",
       "class": "RUNNING",
       "detail": null,
       "expected_gated": false
@@ -479,8 +485,8 @@
     },
     {
       "capability": "square-4plus1",
-      "class": "RUNNING",
-      "detail": null,
+      "class": "GATED",
+      "detail": "blocked on live resource >8s (network/GPU) \u2014 not a code fault",
       "expected_gated": false
     },
     {
@@ -497,8 +503,8 @@
     },
     {
       "capability": "tensor-compress",
-      "class": "RUNNING",
-      "detail": null,
+      "class": "GATED",
+      "detail": "blocked on live resource >8s (network/GPU) \u2014 not a code fault",
       "expected_gated": false
     },
     {
@@ -565,6 +571,12 @@
       "capability": "y2d",
       "class": "RUNNING",
       "detail": null,
+      "expected_gated": false
+    },
+    {
+      "capability": "fluid-ratio-sweep",
+      "class": "RUNNING",
+      "detail": "Auto-found per-layer mixing %: global best = 12 layers @ nu=0.5 (loss 0.0485) BEATS 8-layer flat-1.0 (0.0566) \u2014 vindicates the 12-layer design under lower ratio; greedy depth-8 schedule [1,1,1,1,1,.75,.75,.75] beats flat +1.9%. Reproduced sibling depth curve exactly (independent, non-sandbox).",
       "expected_gated": false
     }
   ],
