@@ -1,6 +1,6 @@
 {
-  "running": 68,
-  "gated": 42,
+  "running": 71,
+  "gated": 30,
   "broken": 0,
   "rows": [
     {
@@ -18,7 +18,7 @@
     {
       "capability": "anti-relapse",
       "class": "GATED",
-      "detail": "blocked on live resource >8s (network/GPU) \u2014 not a code fault",
+      "detail": "fail-soft: endpoint",
       "expected_gated": false
     },
     {
@@ -31,6 +31,12 @@
       "capability": "awareness",
       "class": "GATED",
       "detail": "fail-soft: gpu",
+      "expected_gated": false
+    },
+    {
+      "capability": "brain-merge-ratio",
+      "class": "RUNNING",
+      "detail": null,
       "expected_gated": false
     },
     {
@@ -83,14 +89,14 @@
     },
     {
       "capability": "cloud-fleet",
-      "class": "GATED",
-      "detail": "blocked on live resource >8s (network/GPU) \u2014 not a code fault",
+      "class": "RUNNING",
+      "detail": null,
       "expected_gated": false
     },
     {
       "capability": "cloud-orchestrator",
-      "class": "GATED",
-      "detail": "blocked on live resource >8s (network/GPU) \u2014 not a code fault",
+      "class": "RUNNING",
+      "detail": null,
       "expected_gated": false
     },
     {
@@ -155,8 +161,8 @@
     },
     {
       "capability": "double-pyramid",
-      "class": "GATED",
-      "detail": "blocked on live resource >8s (network/GPU) \u2014 not a code fault",
+      "class": "RUNNING",
+      "detail": null,
       "expected_gated": false
     },
     {
@@ -167,8 +173,8 @@
     },
     {
       "capability": "e2e",
-      "class": "GATED",
-      "detail": "blocked on live resource >8s (network/GPU) \u2014 not a code fault",
+      "class": "RUNNING",
+      "detail": null,
       "expected_gated": false
     },
     {
@@ -184,9 +190,15 @@
       "expected_gated": false
     },
     {
+      "capability": "find-best-config",
+      "class": "RUNNING",
+      "detail": null,
+      "expected_gated": false
+    },
+    {
       "capability": "fleet",
-      "class": "GATED",
-      "detail": "blocked on live resource >8s (network/GPU) \u2014 not a code fault",
+      "class": "RUNNING",
+      "detail": null,
       "expected_gated": false
     },
     {
@@ -210,7 +222,7 @@
     {
       "capability": "full-model",
       "class": "GATED",
-      "detail": "blocked on live resource >8s (network/GPU) \u2014 not a code fault",
+      "detail": "fail-soft: gpu",
       "expected_gated": false
     },
     {
@@ -275,8 +287,8 @@
     },
     {
       "capability": "mcp-2026",
-      "class": "GATED",
-      "detail": "blocked on live resource >8s (network/GPU) \u2014 not a code fault",
+      "class": "RUNNING",
+      "detail": null,
       "expected_gated": false
     },
     {
@@ -329,14 +341,14 @@
     },
     {
       "capability": "orchestrator",
-      "class": "GATED",
-      "detail": "blocked on live resource >8s (network/GPU) \u2014 not a code fault",
+      "class": "RUNNING",
+      "detail": null,
       "expected_gated": false
     },
     {
       "capability": "owem-e2e",
-      "class": "GATED",
-      "detail": "blocked on live resource >8s (network/GPU) \u2014 not a code fault",
+      "class": "RUNNING",
+      "detail": null,
       "expected_gated": false
     },
     {
@@ -359,8 +371,8 @@
     },
     {
       "capability": "owem-v2",
-      "class": "GATED",
-      "detail": "blocked on live resource >8s (network/GPU) \u2014 not a code fault",
+      "class": "RUNNING",
+      "detail": null,
       "expected_gated": false
     },
     {
@@ -413,8 +425,8 @@
     },
     {
       "capability": "registry",
-      "class": "GATED",
-      "detail": "blocked on live resource >8s (network/GPU) \u2014 not a code fault",
+      "class": "RUNNING",
+      "detail": null,
       "expected_gated": false
     },
     {
@@ -446,6 +458,12 @@
       "class": "GATED",
       "detail": "needs GPU (not called: would block on live resource)",
       "expected_gated": true
+    },
+    {
+      "capability": "six-lever-proxy",
+      "class": "RUNNING",
+      "detail": null,
+      "expected_gated": false
     },
     {
       "capability": "size-family",
@@ -485,8 +503,8 @@
     },
     {
       "capability": "square-4plus1",
-      "class": "GATED",
-      "detail": "blocked on live resource >8s (network/GPU) \u2014 not a code fault",
+      "class": "RUNNING",
+      "detail": null,
       "expected_gated": false
     },
     {
@@ -503,8 +521,8 @@
     },
     {
       "capability": "tensor-compress",
-      "class": "GATED",
-      "detail": "blocked on live resource >8s (network/GPU) \u2014 not a code fault",
+      "class": "RUNNING",
+      "detail": null,
       "expected_gated": false
     },
     {
@@ -562,6 +580,12 @@
       "expected_gated": false
     },
     {
+      "capability": "venturi-stream",
+      "class": "RUNNING",
+      "detail": null,
+      "expected_gated": false
+    },
+    {
       "capability": "what-can-you-do",
       "class": "GATED",
       "detail": "fail-soft: gpu",
@@ -574,93 +598,15 @@
       "expected_gated": false
     },
     {
-      "capability": "fluid-ratio-sweep",
+      "capability": "sov33-local-route-council-server",
       "class": "RUNNING",
-      "detail": "Auto-found per-layer mixing %: global best = 12 layers @ nu=0.5 (loss 0.0485) BEATS 8-layer flat-1.0 (0.0566) \u2014 vindicates the 12-layer design under lower ratio; greedy depth-8 schedule [1,1,1,1,1,.75,.75,.75] beats flat +1.9%. Reproduced sibling depth curve exactly (independent, non-sandbox).",
+      "detail": "SOV33 upgrade to local sovereign, LIVE-TESTED: small->large route (qwen3:0.6b draft, escalate qwen3:1.7b), 4-brain care-gated-BFT council (quorum>=3/4 to emit, tested 4/4 pass), OpenAI-compatible HTTP server (--serve: GET /health chain-ok, POST /v1/chat/completions returns signed answer + governance meta, harmful care-vetoed). os.meok.ai/OS-dock can call it. 16GB Mac.",
       "expected_gated": false
     },
     {
-      "capability": "ratio-4brain-compound",
+      "capability": "claude-science-help-reconcile",
       "class": "RUNNING",
-      "detail": "Measured: 4-brain and per-layer-ratio laws do NOT fully compound \u2014 4brain x 8L x flat nu=1.0 (0.0350) is the global winner; the 12@0.5 ratio trick helps only the 1-brain pyramid. Honest negative, CPU.",
-      "expected_gated": false
-    },
-    {
-      "capability": "alphabet-A-P-pipeline",
-      "class": "RUNNING",
-      "detail": "16 governed stages A-P run E2E over the fluid pyramid, SHA256/SIGIL hash-chained; care-veto fail-closed (benign emits loss 0.0334, harmful vetoed). Mamba/Venturi [sim]; governance real.",
-      "expected_gated": false
-    },
-    {
-      "capability": "mirror-auditor-escalation",
-      "class": "RUNNING",
-      "detail": "Measured: mirror divergence\u2194error corr=0.434 (real detection signal); escalating flagged items to a same-tier bigger-local model does NOT help (-3.1%, ~random). Design correction: route to a genuinely stronger FRONTIER model. CPU.",
-      "expected_gated": false
-    },
-    {
-      "capability": "nest-only-with-regions",
-      "class": "RUNNING",
-      "detail": "Measured crossover: one deep pyramid wins single-domain (sep=0, nest -86%); nest 4-around-1 wins with real regions (+70-81% at sep>=0.5). Confirms build-spec nesting law. Perfect-routing upper bound. CPU.",
-      "expected_gated": false
-    },
-    {
-      "capability": "governed-robustness-bench",
-      "class": "RUNNING",
-      "detail": "THE leaderboard SOV33 wins by design: accuracy-under-adversary. 9-member council, 4 adversarial -> naive-mean degrades 3.4x, SOV33 care-gated-BFT holds FLAT (1.0x), wins outright. Standalone/Kaggle-ready. CPU numpy; swap members for real experts at scale.",
-      "expected_gated": false
-    },
-    {
-      "capability": "meok-labs-governed-body",
-      "class": "RUNNING",
-      "detail": "MEOK Labs aligned: same signed substrate as SOV33 (Ed25519 radar frames RFC-8785, OSCAL, care-veto on physical action). Governed-robustness law = sensor-fault tolerance. LIVE: Assurance Radar; DESIGN: open humanoid bodies (adopt, not built).",
-      "expected_gated": false
-    },
-    {
-      "capability": "brain-merge-laws",
-      "class": "RUNNING",
-      "detail": "Hybrid 4->1 brain merge laws MEASURED: (1) different-init weight-soup FAILS (0.256 worse than either 0.198 - permutation symmetry); (2) cross-size can't weight-merge -> distill/route (large 5x better, route to it); (3) same-init soup exists but output-vote beats it here. Honest architecture: route a council + soup only same-init fine-tunes. Catches the 'average 4 open models' fake.",
-      "expected_gated": false
-    },
-    {
-      "capability": "real-models-shopping-list",
-      "class": "RUNNING",
-      "detail": "Web-verified (2026-07-14) the actual open models: T-base=DeepSeek-V4-Pro 1.6T/49B MIT (multi-source corroborated, verify HF card); soupable Apache-2.0 tiers=Qwen3-4B x2 + Qwen3-32B x2 (Qwen3+ all Apache; Qwen2.5-3B is Research-license, avoid commercial). Fiction->reality: the T is real, named, licensed.",
-      "expected_gated": false
-    },
-    {
-      "capability": "venturi-seam-verified",
-      "class": "RUNNING",
-      "detail": "Independently ran sov33_venturi_throat.py (non-sandbox): 5/5 PASS incl tamper-detect (alter record -> chain verify catches, first_break=1). The governed SIGIL seam is REAL, not metaphor. TOPLOC activation-LSH still honest placeholder (SHA256 over decision inputs).",
-      "expected_gated": false
-    },
-    {
-      "capability": "open-source-adopt-consolidation",
-      "class": "RUNNING",
-      "detail": "Web-verified 2026-07-14 landscape scrape+consolidate: EVERY proven law maps to a real production library -> MergeKit (soup/TIES), Mergenetic/EvoGM (evolutionary merge=our ratio-sweep), MoE-Infinity/FlashMoE/FineMoE + ssd-moe-flash-mlx (Hermes' SSD-stream), DeepSeek-V4-Flash 35-42tok/s on M4 (MIT daily driver), Qwen3 Apache experts. Safety: adopt HarmBench/StrongREJECT/BeaverTails/JailbreakBench; arXiv 'Coin Flip for Safety' independently confirms our judge-unreliability catch. Moat unchanged=governance wrapper. [S]-tier figures verify HF card before public cite.",
-      "expected_gated": false
-    },
-    {
-      "capability": "m4-sovereign-run-order",
-      "class": "RUNNING",
-      "detail": "Primary-verified (GitHub READMEs) install/run order. TIER-A runnable on 16GB Mac TODAY: Qwen3-4B/8B (Ollama/MLX) + MergeKit/Mergenetic + governance wrapper = real governed sovereign now. TIER-B (48GB Mac/cloud): DeepSeek-V4-Flash via ssd-moe-mlx (hf download mlx-community/DeepSeek-V4-Flash-4bit; ./scripts/serve-http.sh) or MoE-Infinity (pip install moe-infinity). Honest hardware gate: 16GB can't run 158B Flash.",
-      "expected_gated": false
-    },
-    {
-      "capability": "primary-verify-deepseek-figs",
-      "class": "RUNNING",
-      "detail": "PRIMARY correction (HF list): 1.6T = V4-Pro-BASE not deployed; V4-Pro=862B, V4-Flash=158B/~13B active (aggregators said 284B - NOT confirmed). Trillion real AS A BASE only. Confabulation-discipline caught the base<->deployed conflation. Verify license field on HF card (didn't render).",
-      "expected_gated": false
-    },
-    {
-      "capability": "local-sovereign-live",
-      "class": "RUNNING",
-      "detail": "RUNNING TODAY on 16GB Mac: Ollama Qwen3-1.7B (Apache-2.0) -> heuristic care-gate (fail-closed) -> Ed25519 SIGIL-signed hash-chained emit. LIVE-TESTED: benign emits (real answer, care 0.98), harmful pipe-bomb vetoed BEFORE model runs (care 0.05, signed refusal), chain verify ok=true, TAMPER caught (flip veto->emit -> ok=false first_bad=2). No cloud, no 48GB, session key not King key. sov33_local_sovereign.py.",
-      "expected_gated": false
-    },
-    {
-      "capability": "hf-license-primary-verified",
-      "class": "RUNNING",
-      "detail": "PRIMARY-verified HF licenses: Qwen3-4B = apache-2.0 (card, 4.0B/3.6B non-embed); DeepSeek-V4-Flash = mit (card, 284B/13B, arXiv 2606.19348). Closes the [S] license gap. Flagged: card says 284B vs org-list 158B - confirm.",
+      "detail": "Helped Claude Science: reconciled its brain-merge (large-heavy=my route/distill law), confirmed its honest 6-lever split (compute-avoided 64x vs latency-hiding), mapped its proxies to real libs (MoE-Infinity/FlashMoE/FineMoE/ssd-moe-mlx). CORRECTION flagged: its 'V4-Pro 1.6T/49B' repeats base<->deployed conflation (1.6T=base, V4-Pro deployed=862B); GLM-5.2 744B ->[LEAD]. Honest: Colibri run-book needs 370GB+Metal - neither sandbox nor 16GB Mac runs it.",
       "expected_gated": false
     }
   ],
