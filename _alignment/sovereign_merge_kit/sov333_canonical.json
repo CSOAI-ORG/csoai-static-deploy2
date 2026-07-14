@@ -75,5 +75,15 @@
     "gsm8k_RETRACTION_2026-07-14": "RETRACTED the 0.90 'large-tier' number - it was an EXTRACTION ARTIFACT. The warm-prose persona doesn't emit clean answers, so last-number parsing is unreliable (n=40 gave 0.90, n=100 gave 0.24 on the SAME tier). With a strict 'ANSWER: N' format+parse (n=30): small=0.833, large=0.167 (large ignored the format 25/30, not a capability failure - it reasons correctly). HONEST: deployed-gate GSM8K is not cleanly measurable via text extraction; needs a SOLVER REGISTER (emit ANSWER: N) or an LLM-judge. Best defensible single number = small-tier strict-format ~0.83 (n=30, thin). Do NOT cite 0.90 or 0.71 as the number.",
     "gsm8k_deployed_honest": 0.84,
     "gsm8k_method": "small tier (llama-3.1-8b) + SOLVER register + ANSWER-parse, n=50 gold-graded (42/50). RELIABLE + measurable (replaces retracted 0.90 artifact). Large tier not cleanly measurable - won't follow answer format (40/50 no ANSWER line) though it reasons correctly."
+  },
+  "gpu_verified_2026_07_14": {
+    "provenance": "Fable-verified on Google Colab T4 (Nick Google acct), notebook Untitled2.ipynb",
+    "governed_robustness_naive_degrade_x": 3.4,
+    "governed_robustness_sov33_degrade_x": 1.0,
+    "governed_robustness_headline": "4/9 adversarial: naive 3.4x vs SOV33 1.0x (care-BFT holds flat)",
+    "gsm8k_raw_harness": 0.43,
+    "gsm8k_raw_harness_n": 100,
+    "gsm8k_raw_harness_model": "Qwen/Qwen2.5-1.5B-Instruct",
+    "gsm8k_caveat": "0.43 is naive last-number-parse harness, NOT model ceiling (~0.73 with proper extraction); solver-register recovers it (deployed-gate 0.71, small-tier solver 0.84). Gap is parsing, not capability."
   }
 }

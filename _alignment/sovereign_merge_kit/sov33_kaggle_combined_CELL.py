@@ -45,20 +45,26 @@ json.dump(rob,open("governed_robustness_results.json","w"),indent=2)
 print("=== (B) GOVERNED-ROBUSTNESS #1 ==="); print(json.dumps(rob,indent=1))
 
 # ---------- (A) GPU CAPABILITY GRADE  (real model on GSM8K) ----------
+# infra fixes baked in (learned from the 2026-07-14 Colab-T4 run):
+#  - HF Xet download path stalls on some Colab VMs -> force classic CDN
+#  - HF dataset parquet 403s on anon Xet + bare "gsm8k" alias rejected -> load GSM8K test from OpenAI GitHub jsonl
+#  - newer transformers apply_chat_template returns BatchEncoding -> return_dict=False for a plain tensor
+os.environ.setdefault("HF_HUB_DISABLE_XET","1")
 pip("transformers>=4.44","accelerate","datasets","torch")
 import torch
 from transformers import AutoModelForCausalLM, AutoTokenizer
 from datasets import load_dataset
-MODEL=os.environ.get("SOV33_MODEL","Qwen/Qwen2.5-3B-Instruct"); N=int(os.environ.get("SOV33_N","200"))
+MODEL=os.environ.get("SOV33_MODEL","Qwen/Qwen2.5-1.5B-Instruct"); N=int(os.environ.get("SOV33_N","100"))
 tok=AutoTokenizer.from_pretrained(MODEL)
 mdl=AutoModelForCausalLM.from_pretrained(MODEL,torch_dtype=torch.float16,device_map="auto")
 def ask(q):
-    ids=tok.apply_chat_template([{"role":"user","content":q+"\nSolve it. Think briefly, end with just the final number."}],add_generation_prompt=True,return_tensors="pt").to(mdl.device)
+    ids=tok.apply_chat_template([{"role":"user","content":q+"\nSolve it. Think briefly, end with just the final number."}],add_generation_prompt=True,return_tensors="pt",return_dict=False).to(mdl.device)
     o=mdl.generate(ids,max_new_tokens=512,do_sample=False,pad_token_id=tok.eos_token_id)
     return tok.decode(o[0][ids.shape[1]:],skip_special_tokens=True)
 def num(t):
     xs=re.findall(r"-?\d[\d,]*\.?\d*",(t or "").replace(",","")); return xs[-1] if xs else None
-ds=load_dataset("gsm8k","main",split="test"); correct=0
+GSM8K_JSONL="https://raw.githubusercontent.com/openai/grade-school-math/master/grade_school_math/data/test.jsonl"
+ds=load_dataset("json",data_files=GSM8K_JSONL,split="train"); correct=0
 for i in range(min(N,len(ds))):
     correct+=(num(ask(ds[i]["question"]))==num(ds[i]["answer"]))
     if i%25==0: print(f"  cap {i}/{N} acc={correct/(i+1):.3f}")
