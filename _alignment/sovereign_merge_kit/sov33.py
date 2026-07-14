@@ -1746,6 +1746,30 @@ def capability_full_model(**kwargs):
     except Exception as e:
         return {'capability':'full-model','error':str(e)[:160]}
 
+def capability_size_family(**kwargs):
+    """The SOV size family: 3 tiers on ONE measured depth curve, shared sovereign layer.
+    SOV3-small (1x4=4 brains) / SOV33-medium (4x4=16) / SOV33^3-large (8x4=32 + mirror). Accuracy improves
+    80% small->large. PROVEN swap-persistence: governance+memory layer byte-identical across all 3 tiers
+    (1 distinct hash). '33^3'=3 nested scales NOT 33-cubed brains; large=32 measured. CPU proof."""
+    try:
+        import importlib
+        m = importlib.import_module('sov33_size_family'); r = m.build_family(); r['capability']='size-family'
+        return r
+    except Exception as e:
+        return {'capability':'size-family','error':str(e)[:160]}
+
+def capability_conformal_veto(**kwargs):
+    """Split-conformal calibration of the care-floor (integrated from Hermes crown-jewel #2): calibrates the
+    veto threshold so Pr[allow AND harmful] <= alpha, distribution-free. MEASURED: false-allow 0.045 at
+    alpha=0.05 (guarantee holds) vs 0.115 for the hand-set 0.35 floor. HONEST: calibrates the THRESHOLD given
+    a scorer, does NOT fix a wrong scorer; conditional on a representative calibration set."""
+    try:
+        import importlib
+        m = importlib.import_module('sov33_conformal_veto'); r = m.run(alpha=0.05); r['capability']='conformal-veto'
+        return r
+    except Exception as e:
+        return {'capability':'conformal-veto','error':str(e)[:160]}
+
 def capability_canonical(mode: str = 'paid', **kwargs):
     """Load the FROZEN winning SOV333 setup (sweep winner + adversarial-hardened) and build it live.
     mode='paid' -> diverse-5 @ 0.65; mode='free' -> diverse-3 @ 0.8 (sovereign/local)."""
@@ -2291,6 +2315,8 @@ CAPABILITIES = {
     'square-4plus1': capability_square_4plus1,
     'fractal-nest': capability_fractal_nest,
     'full-model': capability_full_model,
+    'size-family': capability_size_family,
+    'conformal-veto': capability_conformal_veto,
     'care-floor': capability_care_floor,
     'mist12': capability_mist12,
     'drum': capability_drum,
