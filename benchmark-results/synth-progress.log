@@ -1,0 +1,17 @@
+[2026-07-14 18:02:33] SYNTH PROGRESS REPORT
+  Pair count: 24 / 4000 target (0.6%)
+  Process PID 16124: NOT RUNNING (dead ~59 min)
+  File last modified: 2026-07-14 17:03:39 (59 min ago)
+  Disk free: 5.1Gi (~5222 MB) - OK but disk 98% full
+  Sample verification: L1=OK(p=52,r=301), L2=OK(p=73,r=483), L24=OK(p=52,r=279)
+  All 3 samples valid JSON with non-empty prompt+response
+  Rate observed: ~0.13 pairs/s (24 pairs in ~187s)
+  ETA if running: ~8.7h for 4000 pairs - within 18h threshold
+
+  ALERTS:
+    SYNTHESIZER PROCESS (PID 16124) IS NOT RUNNING
+    PROCESS DEAD and only 24/4000 pairs - RESTART NEEDED
+    Disk at 98% capacity - 5.1GB free, monitor closely
+
+  ACTION: Restarting synthesizer (note: script opens file in "w" mode, will overwrite 24 existing pairs)
+

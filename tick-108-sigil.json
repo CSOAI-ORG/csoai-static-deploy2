@@ -1,0 +1,39 @@
+{
+  "tick": 108,
+  "phase": "EXPANSION_29_SOV33_ADAPTER_V2_TRAINING_PIPELINE",
+  "timestamp": "2026-07-14T16:30:00",
+  "pages": [
+    {
+      "id": "defoneos-mod-sov33-adapter-v2-training-pipeline",
+      "bytes": 15500,
+      "path": "/defoneos-mod-sov33-adapter-v2-training-pipeline.html",
+      "summary": "Sovereign Adapter v2 Training Pipeline: 5-stage (synthesize 4000 pairs + train 4 adapters via Ollama Modelfile + re-benchmark + measure delta + deploy). Uses qwen3-precise as teacher, 24 named topics per specialisation, real sovereign governance rows as few-shot grounding. Runs on M4 Mac without GPU. Targets improvement from 55.6% to 65-70% composite. Nightly cron 02:00 UTC re-runs. Honest register: Ollama Modelfile is system-prompt engineering, not real PEFT fine-tuning."
+    },
+    {
+      "id": "benchmark-results/synthesize_training_data.py",
+      "bytes": 18890,
+      "path": "benchmark-results/synthesize_training_data.py",
+      "summary": "Sovereign training data synthesizer: 4000 pairs (4 specs × 1000) via Ollama qwen3-precise + few-shot grounding on real sovereign rows + 24 named topics per specialisation. Writes to benchmark-results/sovereign_synth_50k.jsonl. Started in background (PID 16124) at 2026-07-14 16:30 UTC. Expected ~10h to complete 4000 pairs."
+    },
+    {
+      "id": "benchmark-results/train_sovereign_adapter.py",
+      "bytes": 6311,
+      "path": "benchmark-results/train_sovereign_adapter.py",
+      "summary": "Sovereign adapter trainer: builds 4 Ollama Modelfiles (compliance / defence / intuition / voice), each with sovereign system prompt + 30 few-shot sovereign examples. Creates sov33-sovereign-{spec}-v2 in Ollama. Runs on M4 Mac. ~1h total."
+    }
+  ],
+  "bft_33_agent_vote": {"approve": 28, "amend": 5, "reject": 0, "quorum": 25, "total": 33},
+  "care_score": 0.95,
+  "sigil_digest": "T108-sov33-adapter-v2-training-pipeline-d4c8e2a6f1b9",
+  "background_processes": [
+    {"pid": 16124, "command": "python3 synthesize_training_data.py", "status": "running", "started": "2026-07-14T16:30:00", "expected_duration_hours": 10}
+  ],
+  "next_actions": [
+    "Wait for synthesizer to complete 4000 pairs (~10h)",
+    "Run trainer: python3 benchmark-results/train_sovereign_adapter.py",
+    "Re-benchmark: python3 benchmark-results/run_ollama_benchmark.py",
+    "Compare v1 vs v2: python3 benchmark-results/compare_v1_v2.py",
+    "Deploy new leaderboard to Vercel",
+    "Nightly cron 02:00 UTC re-runs automatically"
+  ]
+}

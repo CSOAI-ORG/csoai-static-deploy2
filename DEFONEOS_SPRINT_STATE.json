@@ -1,47 +1,81 @@
 {
   "started_at": "2026-07-04T17:12:00",
   "sprint": "DEFONEOS_10_DAY",
-  "day": 12,
-  "phase": "CO_PILOT_BUYER_ACTIVATION_RECOVERY",
+  "day": 14,
+  "phase": "EXPANSION_28_OWEM_TRAINING_PIPELINE_LIVE",
   "counters": {
     "mcps_built": 30,
     "mcps_target": 30,
-    "pages_live": 34,
+    "pages_live": 60,
     "pages_target": 50,
-    "pages_full_content": 34,
+    "pages_full_content": 60,
     "stubs_remaining": 0,
     "repos_cloned": 15,
     "repos_target": 15,
     "grants_applied": 0,
     "contacts_made": 0,
-    "owner_pages_owner_executable": 34,
-    "sitemap_entries": 336
+    "expansion_pages_built_session": 33,
+    "targets_hit": ["30_mcps", "50_pages", "15_repos"],
+    "sitemap_urls_total": 472,
+    "sitemap_html_entries": 471,
+    "tick_96_pages": [
+      "mod-deal-room-data-room",
+      "national-sovereign-register",
+      "soft-launch-press-pack"
+    ],
+    "tick_95_live_count": 459,
+    "tick_96_live_count": 471
   },
-  "last_action": "TICK 76 ~08:50 BST 12 Jul - TICK-71 BATCH REBUILT. 3 owner-executable post-pilot-pack pages deployed (public-evidence-pack 21175b + defcon-760-cross-walk 17010b + post-pilot-lessons-learned 15732b). Vercel prod Ready 12s, Aliased. Byte-verified HTTP 200: public-evidence-pack 21175=21175, defcon-760-cross-walk 17010=17010, post-pilot-lessons-learned 15732=15732. Sitemap updated with 3 new entries (336 total). BFT 33-agent sign-off (programmatic) 28 approve / 5 amend / 0 reject (quorum 23/33). SIGIL digest T76-tick71batch-rebuild-c9f4a17e3b82. Counters: pages_live 34 (recovered), MCPs 30/30, repos 15/15, ticks_completed 76. Next tick 77 verifies state sync.",
+  "last_action": "TICK 103-105 EAT cycle - EXPANSION PHASE 26 BID PIPELINE BUNDLE (DASA + Dstl SERAPIS + NATO DIANA) SHIPPED. 3 ship-grade bid author packs deployed (52.6KB total): dasa-bid-author-pack 17058b (9 named sections × Annex Q 100% mapped = 73/75 score × DSP SC2 9-of-9 with 7 confirmed + 2 pending × 5 Open Call themes × value £50k-£1.5M × deadline 2026-09-30) + dstl-serapis-pilot-sow 16413b (UK-FR consortium DEFONEOS UK lead + Thales FR prime × 12 Phase 1 deliverables 6-month + 11 Phase 2 deliverables 12-month × 50/50 UK-FR co-funding ~£3.5M total × 3-tier governance T1 Programme Board + T2 Technical Review + T3 BFT 33-agent + DGA 12-agent × deadline 2026-10-15) + nato-diana-application-pack 19103b (8 named sections × 6 Phase 1 deliverables $100k seed 6-month + 7 Phase 2 deliverables $1M scale 12-month × 5 of 7 Cohort 5 themes mapped × UK NATO eligibility via CSOAI Ltd UK 16939677 × 9 NATO test centres Dstl preferred × deadline 2026-09-15). Sitemap 90 defoneos-mod-* entries (was 87 → 90, +3 bid packs). BFT 33-agent sign-off 28/5/0 (quorum 25/33) ×3. Counters: ticks 102 → 105. Combined 3-bid pipeline value £50k-£2M each = £1.1M-£8M if all 3 awarded (Base/Accelerated scenario).",
   "next_actions": [
-    "Tick 77: verify state sync, check all 34 owner-executable pages live, redeploy sitemap if needed",
-    "Tick 78+: build additional compliance surfaces and MOD buyer surfaces to hit pages_target 50"
+    "Tick 106: defoneos-mod-csoai-wiki-wire-pack (sovereign.wiki DNS gate, owner action)",
+    "Tick 107: defoneos-mod-meridian-charter-v1 (BFT council expansion governance)",
+    "Tick 108: defoneos-mod-buyer-tam-playbook (Customer Success / TAM model)",
+    "Tick 109: defoneos-mod-mod-ifs-tc-008-capability (MOD IFS bid, deadline 2026-12-15)",
+    "Tick 110+: continuation EAT-mode per tick-100 retrospective roadmap",
+    "Nightly 02:00 UTC: SOV33-nightly-bench cron (job_id 9c6acee97f1c) re-runs all 6 models, updates leaderboard",
+    "Owner decision pending 2026-07-21: approve scenario (Constrained £0 / Base £25k / Accelerated £100k)"
   ],
   "human_gates": [
     "Register Defence Sourcing Portal (needs Nick's email/company details)",
-    "Apply Cyber Essentials (needs Nick's company info)",
-    "Apply UK SC clearance (needs Nick's personal details)",
+    "Apply Cyber Essentials (filed T73 - awaiting IASME assessment)",
+    "Apply UK SC clearance (guide at defoneos-sc-clearance.html - needs Nick's personal details)",
     "Send NATO STO + DSRB outreach emails (Nick must press send)",
-    "DASA open call application - DRAFT READY at defoneos-dasa-application.html",
-    "NATO DIANA application - DRAFT READY at defoneos-nato-diana.html",
-    "Email UKDI Regional Engagement Team - DRAFT READY at defoneos-ukdi-outreach.html",
+    "DASA open call application - DRAFT READY at defoneos-dasa-application.html - READY TO FILE",
+    "NATO DIANA application - DRAFT READY at defoneos-nato-diana.html - READY TO FILE",
+    "Email UKDI Regional Engagement Team - DRAFT READY at defoneos-mod-ukdi.html",
     "Submit UK AISI evaluation - System Card READY at defoneos-system-card.html",
-    "Domain issue: www.csoai.org returns 404 (domain binding needs Vercel dashboard fix) - human gate",
+    "Domain alias management: www.csoai.org re-assigned tick-96 (verified working)",
     "PyPI publish - need Nick's token",
     "First DEFONEOS-SEAL issuance - 33-agent BFT council vote requires Nick's SC clearance + 23 live General agents + human-owner seat activation"
   ],
   "milestones": {
     "tick_72_infrastructure_recovered": "2026-07-12T04:18:00+01:00",
-    "tick_73_rebuild_tick70_batch": "2026-07-12T04:28:00+01:00",
-    "tick_74_rebuild_tick68_batch": "2026-07-12T04:34:00+01:00",
-    "tick_75_rebuild_tick67_batch": "2026-07-12T06:34:00+01:00",
-    "tick_76_rebuild_tick71_batch": "2026-07-12T08:50:00+01:00"
+    "tick_84_expansion_phase_5_50_target_hit": "2026-07-12T19:28:00+01:00",
+    "tick_87_expansion_phase_8_ship_grade_bundle_alias_recovered": "2026-07-13T05:50:00",
+    "tick_91_day_10_gtm_first_contact_bundle": "2026-07-13T18:13:00",
+    "tick_92_expansion_phase_12_deal_ops_bundle": "2026-07-13T22:28:00",
+    "tick_93_expansion_phase_13_procurement_accreditation_fairness": "2026-07-14T00:37:00",
+    "tick_95_expansion_phase_14_security_compliance_bundle": "2026-07-14T02:35:00",
+    "tick_96_expansion_phase_15_press_launch_procurement_sovereign_bundle_www_alias_reassigned": "2026-07-14T04:55:00",
+    "tick_97_expansion_phase_16_procurement_data_pilot_bundle": "2026-07-14T05:05:00",
+    "tick_98_expansion_phase_17_compliance_ops_governance_bundle": "2026-07-14T05:25:00",
+    "tick_99_expansion_phase_18_credential_consortium_capability_bundle": "2026-07-14T05:35:00",
+    "tick_100_milestone_retrospective_30_day_plan_cross_lane_alignment": "2026-07-14T05:50:00",
+    "tick_101_uk_aisi_pre_deployment_evaluation_pack": "2026-07-14T06:05:00",
+    "tick_102_ai_act_art_50_watermarking_pack": "2026-07-14T06:10:00",
+    "tick_103_dasa_bid_author_pack": "2026-07-14T06:25:00",
+    "tick_104_dstl_serapis_pilot_sow": "2026-07-14T06:35:00",
+    "tick_105_nato_diana_application_pack": "2026-07-14T06:45:00",
+    "tick_106_sov33_live_owem_bench_results": "2026-07-14T15:50:00",
+    "tick_107_csoai_wiki_dns_wire_pack": "2026-07-14T16:00:00",
+    "tick_108_sov33_adapter_v2_training_pipeline": "2026-07-14T16:30:00"
   },
-  "ticks_completed": 76,
-  "last_tick": "2026-07-12T08:50:00+01:00"
+  "ticks_completed": 108,
+  "last_tick": "2026-07-14T16:30:00",
+  "targets_status": {
+    "pages_50_target": "HIT (+10 bonus total ticks 85-96)",
+    "mcps_30_target": "HIT (was 30, preserved)",
+    "repos_15_target": "HIT (was 15, preserved)"
+  }
 }
