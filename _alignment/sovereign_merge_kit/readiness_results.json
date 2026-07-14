@@ -1,5 +1,5 @@
 {
-  "running": 58,
+  "running": 60,
   "gated": 42,
   "broken": 0,
   "rows": [
@@ -601,6 +601,18 @@
       "capability": "nest-only-with-regions",
       "class": "RUNNING",
       "detail": "Measured crossover: one deep pyramid wins single-domain (sep=0, nest -86%); nest 4-around-1 wins with real regions (+70-81% at sep>=0.5). Confirms build-spec nesting law. Perfect-routing upper bound. CPU.",
+      "expected_gated": false
+    },
+    {
+      "capability": "governed-robustness-bench",
+      "class": "RUNNING",
+      "detail": "THE leaderboard SOV33 wins by design: accuracy-under-adversary. 9-member council, 4 adversarial -> naive-mean degrades 3.4x, SOV33 care-gated-BFT holds FLAT (1.0x), wins outright. Standalone/Kaggle-ready. CPU numpy; swap members for real experts at scale.",
+      "expected_gated": false
+    },
+    {
+      "capability": "meok-labs-governed-body",
+      "class": "RUNNING",
+      "detail": "MEOK Labs aligned: same signed substrate as SOV33 (Ed25519 radar frames RFC-8785, OSCAL, care-veto on physical action). Governed-robustness law = sensor-fault tolerance. LIVE: Assurance Radar; DESIGN: open humanoid bodies (adopt, not built).",
       "expected_gated": false
     }
   ],
