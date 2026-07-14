@@ -1732,6 +1732,20 @@ def capability_fractal_nest(**kwargs):
     except Exception as e:
         return {'capability':'fractal-nest','error':str(e)[:160]}
 
+def capability_full_model(**kwargs):
+    """The FULL SOV333 model composed end-to-end: 8-layer x 4-brain fluid pyramid (body) + Venturi=SIGIL
+    governed seams + quantum-mirror auditor (flags uncertain outputs) + care-veto (fail-closed emit).
+    Proves the whole architecture runs as ONE governed model. CPU numpy brains; the owner GPU/BTX run swaps
+    them for qwen experts. This is the assembled blueprint, verified E2E."""
+    try:
+        import importlib
+        m = importlib.import_module('sov33_full_model'); r = m.run_e2e(); r['capability']='full-model'
+        r['composition'] = 'body=8x4-brain fluid pyramid; seams=Venturi=SIGIL; auditor=quantum-mirror; gov=care-veto'
+        r['honest_scale'] = 'CPU numpy brains; proves E2E governed composition, NOT LLM-scale (owner GPU run)'
+        return r
+    except Exception as e:
+        return {'capability':'full-model','error':str(e)[:160]}
+
 def capability_canonical(mode: str = 'paid', **kwargs):
     """Load the FROZEN winning SOV333 setup (sweep winner + adversarial-hardened) and build it live.
     mode='paid' -> diverse-5 @ 0.65; mode='free' -> diverse-3 @ 0.8 (sovereign/local)."""
@@ -2276,6 +2290,7 @@ CAPABILITIES = {
     'quantum-mirror': capability_quantum_mirror,
     'square-4plus1': capability_square_4plus1,
     'fractal-nest': capability_fractal_nest,
+    'full-model': capability_full_model,
     'care-floor': capability_care_floor,
     'mist12': capability_mist12,
     'drum': capability_drum,
