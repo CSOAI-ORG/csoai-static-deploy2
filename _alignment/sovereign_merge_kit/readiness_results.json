@@ -1,5 +1,5 @@
 {
-  "running": 75,
+  "running": 76,
   "gated": 31,
   "broken": 0,
   "rows": [
@@ -637,6 +637,12 @@
       "capability": "world-model-tuned-80pct",
       "class": "RUNNING",
       "detail": "Tuned world-model dynamics: 1-step MSE 0.0032->0.00063 (-80%) via hidden=160, data=4000, epochs=800. Better prediction directly extends governance reach (per stress finding: care-gate can only veto futures it foresees). Predictable-env world model now near-exact.",
+      "expected_gated": false
+    },
+    {
+      "capability": "gsm8k-solver-register-0.84",
+      "class": "RUNNING",
+      "detail": "HONEST deployed GSM8K = 0.84 (small tier + solver register, n=50 gold-graded, 42/50). The solver register (shipped to os.meok.ai) fixed the prose-extraction problem that produced the retracted 0.90 artifact. Large tier won't follow answer-format (40/50 no ANSWER line) so not cleanly measurable - reasons fine, rambles. 0.84 replaces both the fake 0.90 and the old prose-parsed 0.71.",
       "expected_gated": false
     }
   ],

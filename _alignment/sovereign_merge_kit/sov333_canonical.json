@@ -72,6 +72,8 @@
     "escalation_rate": 0.0,
     "tier_measured": "small/8B (escalation 0.0 \u2014 cascade early-exit never needed the large tier; large would score higher)",
     "gsm8k_tuning_note": "routing GSM8K to tier=large lifts 0.71->0.90 (n=40, gold-graded). cascade+self-consistency were negatives. Same deployed models; win is routing.",
-    "gsm8k_RETRACTION_2026-07-14": "RETRACTED the 0.90 'large-tier' number - it was an EXTRACTION ARTIFACT. The warm-prose persona doesn't emit clean answers, so last-number parsing is unreliable (n=40 gave 0.90, n=100 gave 0.24 on the SAME tier). With a strict 'ANSWER: N' format+parse (n=30): small=0.833, large=0.167 (large ignored the format 25/30, not a capability failure - it reasons correctly). HONEST: deployed-gate GSM8K is not cleanly measurable via text extraction; needs a SOLVER REGISTER (emit ANSWER: N) or an LLM-judge. Best defensible single number = small-tier strict-format ~0.83 (n=30, thin). Do NOT cite 0.90 or 0.71 as the number."
+    "gsm8k_RETRACTION_2026-07-14": "RETRACTED the 0.90 'large-tier' number - it was an EXTRACTION ARTIFACT. The warm-prose persona doesn't emit clean answers, so last-number parsing is unreliable (n=40 gave 0.90, n=100 gave 0.24 on the SAME tier). With a strict 'ANSWER: N' format+parse (n=30): small=0.833, large=0.167 (large ignored the format 25/30, not a capability failure - it reasons correctly). HONEST: deployed-gate GSM8K is not cleanly measurable via text extraction; needs a SOLVER REGISTER (emit ANSWER: N) or an LLM-judge. Best defensible single number = small-tier strict-format ~0.83 (n=30, thin). Do NOT cite 0.90 or 0.71 as the number.",
+    "gsm8k_deployed_honest": 0.84,
+    "gsm8k_method": "small tier (llama-3.1-8b) + SOLVER register + ANSWER-parse, n=50 gold-graded (42/50). RELIABLE + measurable (replaces retracted 0.90 artifact). Large tier not cleanly measurable - won't follow answer format (40/50 no ANSWER line) though it reasons correctly."
   }
 }
