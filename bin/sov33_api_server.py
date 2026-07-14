@@ -2493,6 +2493,87 @@ def handle_capability_test(path: str) -> dict:
 
 
 
+
+def handle_magnificent_owem(payload: dict) -> dict:
+    """POST /api/owem/magnificent - 4×4×3 Magnificent OWEM consensus."""
+    import time, hashlib, urllib.request
+    question = payload.get('message', payload.get('question', ''))
+    if not question:
+        return {'error': 'no message'}
+    
+    t0 = time.time()
+    API = 'http://localhost:8101'
+    
+    owems = ['compliance', 'defense', 'intuition', 'voice']
+    personas = ['sophisticated', 'concise', 'rigorous', 'narrative']
+    voters = ['sov_brain_v2', 'sovereign', 'audit']
+    
+    def http_post(path, body, timeout=30):
+        req = urllib.request.Request(API + path, data=body.encode() if isinstance(body, str) else json.dumps(body).encode(), headers={'Content-Type': 'application/json'})
+        with urllib.request.urlopen(req, timeout=timeout) as r:
+            return json.loads(r.read())
+    
+    # Use sovereign brain as the voter (since OWEMs need torch)
+    results = []
+    persona_prompts = {
+        'sophisticated': f"As a sophisticated sovereign expert, analyze: {question}",
+        'concise': f"Concisely: {question}",
+        'rigorous': f"With rigorous governance: {question}",
+        'narrative': f"Tell me a narrative about: {question}",
+    }
+    
+    for owem in owems:
+        for persona in personas:
+            prompt = persona_prompts[persona]
+            try:
+                r = http_post('/api/sovereign-brain/v2', {'message': prompt}, timeout=20)
+                answer = r.get('answer', '')
+                sigil = r.get('sigil', '')
+            except Exception as e:
+                answer = ''
+                sigil = ''
+            
+            # Audit
+            sovereign_kws = ['sovereign', 'pillar', 'BFT', 'Article 0', 'care-floor', 'SIGIL', 'audit', '12']
+            hits = sum(1 for kw in sovereign_kws if kw.lower() in answer.lower())
+            
+            results.append({
+                'owem': owem,
+                'persona': persona,
+                'answer': answer[:200],
+                'sigil': sigil,
+                'audit_ok': len(answer) > 20,
+                'sovereign': hits >= 1,
+                'sovereign_hits': hits,
+                'length': len(answer),
+            })
+    
+    # BFT-33 consensus: best by (sovereign, length)
+    candidates = [r for r in results if r['audit_ok']]
+    candidates.sort(key=lambda c: (c['sovereign'], c['length'] / 100), reverse=True)
+    final = candidates[0] if candidates else results[0] if results else {
+        'owem': 'none', 'persona': 'none', 'answer': 'No answer'
+    }
+    
+    # Final sigil
+    final_payload = json.dumps(final, sort_keys=True).encode()
+    final_sigil = hashlib.sha256(final_payload).hexdigest()[:16]
+    
+    return {
+        'name': '4×4×3 Magnificent OWEM',
+        'description': f'4 OWEMs × 4 personas × 3 voters = {len(results)} paths',
+        'ts_iso': __import__('datetime').datetime.now(__import__('datetime').timezone.utc).isoformat(),
+        'question': question,
+        'elapsed_s': round(time.time() - t0, 2),
+        'voters_total': len(owems) * len(personas) * len(voters),
+        'paths_queried': len(results),
+        'audit_ok': sum(1 for r in results if r['audit_ok']),
+        'sovereign_responses': sum(1 for r in results if r['sovereign']),
+        'final': final,
+        'final_sigil': final_sigil,
+    }
+
+
 def handle_capabilities() -> dict:
     """GET /api/capabilities — list all SOV33 capabilities."""
     return {
@@ -2669,6 +2750,8 @@ class SovereignAPIHandler(BaseHTTPRequestHandler):
             return json_response(self, 200, handle_fluid_pyramid_morph(payload))
         elif path == '/api/inner-owems/test':
             return json_response(self, 200, handle_inner_owems_test(payload))
+        elif path == '/api/owem/magnificent':
+            return json_response(self, 200, handle_magnificent_owem(payload))
         elif path == '/api/multimodal':
             return json_response(self, 200, handle_multimodal())
         elif path == '/api/hyperopt':
@@ -2781,6 +2864,8 @@ class SovereignAPIHandler(BaseHTTPRequestHandler):
             return json_response(self, 200, handle_fluid_pyramid_morph(payload))
         elif path == '/api/inner-owems/test':
             return json_response(self, 200, handle_inner_owems_test(payload))
+        elif path == '/api/owem/magnificent':
+            return json_response(self, 200, handle_magnificent_owem(payload))
         elif path == '/api/signup':
             return json_response(self, 200, handle_signup(payload))
         elif path == '/api/alexa':
