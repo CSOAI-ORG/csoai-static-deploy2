@@ -70,6 +70,8 @@
     "honest_note": "gold-graded capability of the DEPLOYED system (what users get today), NOT a from-scratch local distilled model \u2014 that still needs the GPU run. n=100 sample of GSM8K test (1319 total).",
     "ingested_at": "2026-07-14T05:27:08.326677+00:00",
     "escalation_rate": 0.0,
-    "tier_measured": "small/8B (escalation 0.0 \u2014 cascade early-exit never needed the large tier; large would score higher)"
+    "tier_measured": "small/8B (escalation 0.0 \u2014 cascade early-exit never needed the large tier; large would score higher)",
+    "gsm8k_tuned_large_tier": 0.9,
+    "gsm8k_tuning_note": "routing GSM8K to tier=large lifts 0.71->0.90 (n=40, gold-graded). cascade+self-consistency were negatives. Same deployed models; win is routing."
   }
 }

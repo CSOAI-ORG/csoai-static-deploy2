@@ -31,6 +31,10 @@ Every parameter below is set by a MEASURED result this session, not a guess._
   (measured: wins +60% at moderate region separation, LOSES when regions trivially separable or routing
   starves sub-pyramids). For a single-domain task, ONE deep pyramid beats 4-around-1.
 
+
+## TUNED CONFIG UPDATE (2026-07-14, joint search) — use THIS for the GPU build
+**Joint optimum = 12 layers x 4 experts/layer x mixing nu=0.7 (loss 0.0311, +11% vs 8-flat).** Supersedes the earlier '8 flat layers': the full design compounds — 12-layer depth + 4-brain vote + gentle ratio-damping (0.7, not 1.0 and not 0.5) together beat every single-axis config. Build 12 residual layers of 4 QLoRA experts, per-layer weight 0.7. (See pyramid_best_config_results.json.)
+
 ## MEASURED CONFIRMATIONS added 2026-07-14 (Fable, non-sandboxed)
 - **Ratio-sweep** (`sov33_ratio_sweep.py`): global optimum for a **1-brain** pyramid = 12 layers @ nu=0.5
   (0.0485), vindicating the 12-layer instinct — BUT for the **4-brain** build it does not apply.

@@ -1,5 +1,5 @@
 {
-  "running": 73,
+  "running": 74,
   "gated": 31,
   "broken": 0,
   "rows": [
@@ -625,6 +625,12 @@
       "capability": "pyramid-best-config-tuned",
       "class": "RUNNING",
       "detail": "Joint tune (depth x ratio x brains x hidden) found NEW BEST pyramid = 12 layers x 4-brain x nu=0.7 x hidden=12 = 0.0311, beating the prior piecewise best (4-brain-8L=0.035) by +11%. The full design compounds: 12-layer depth + 4-brain + gentle ratio-damping together > any single axis. Vindicates the whole architecture jointly. GPU build spec should use 12x4 nu=0.7.",
+      "expected_gated": false
+    },
+    {
+      "capability": "gsm8k-tier-routing-0.90",
+      "class": "RUNNING",
+      "detail": "Benchmark tune: GSM8K deployed gate 0.65/0.71 -> 0.90 by routing reasoning to the LARGE tier (120B). n=40 gold-graded. Honest negatives kept: cascade (0.55) + self-consistency (0.275) were WORSE (bad escalation heuristic, attempt-N prompt degraded small). Simple win: math->large tier. Same models, routing only.",
       "expected_gated": false
     }
   ],
