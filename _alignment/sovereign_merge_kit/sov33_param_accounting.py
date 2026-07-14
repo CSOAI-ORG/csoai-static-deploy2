@@ -13,20 +13,22 @@ So a "T-param OWEM" is REAL iff its base is a real >=1T open MoE — NOT iff you
 CURRENCY NOTE (per flow CURRENCY_PRINCIPLE): the model list below is from training-knowledge and MAY BE STALE.
 Verify live before citing a specific size/license. Sizes are the published figures as known; confirm current.
 """
-# Open-weight MoE bases. FIGURES CORROBORATED via web search 2026-07-14 with SNIPPET-LEVEL content across ~7
-# independent sources (morphllm, codersera, freedeepseekapi, aimadetools, clore.ai, aiwiki, arxiv 2605.29270).
-# CAVEAT (from the sources themselves): these are VENDOR-CLAIMED from DeepSeek's announcement + model card;
-# independent reproductions still publishing — "directional, not gospel". One source dissents (~1T/Apache,
-# likely conflating an older family member); the ~7-source majority is 1.6T/49B/MIT. Re-check model card
-# before any load-bearing public/investor claim. (History: an EARLIER search returned titles-only, so these
-# were correctly held as UNVERIFIED then; snippet-level corroboration now supports carrying them.)
+# Open-weight MoE bases. PROVENANCE per figure (web search 2026-07-14, checked against the PERSISTED results
+# — earlier version of this comment over-claimed sources incl. an unrelated arXiv paper; corrected here):
+#  - DeepSeek V4-Pro 1.6T total / 49B active: CORROBORATED — the "DeepSeek V4 parameters" search returned
+#    "1.6T" in 4 result snippets + "49B" in 1 (morphllm/aimadetools/freedeepseekapi/framia titles). MIT:
+#    title-supported (freedeepseekapi "Open-Source (MIT)"). Vendor-claimed; verify model card.
+#  - GLM-5.2 744B / ~40B active / MIT: CORROBORATED — the Colibri search returned "GLM-5.2 ... 744-billion-
+#    parameter", "MIT license" (flowtivity/sakutto snippets), "256 experts/layer, 8+1 active ~40B" (flowtivity).
+#  - 33T train tokens, DeepSeek V4-Flash 284B/13B, Kimi-K2.x 1T/32B: NOT found in the persisted snippets I can
+#    re-check (0 hits) — DOWNGRADED to [LEAD]; do NOT cite as verified until confirmed on the model card.
 OPEN_MOE_BASES = {
-    # name: (total_params_B, active_params_B, license, note)  [corroborated 2026-07-14, vendor-claimed]
-    "deepseek-v4-pro":  (1600, 49, "MIT",       "1.6T total / 49B active, 61 layers, 384 routed + 1 shared expert (6 active/token), 33T train tokens, 1M ctx, 80.6% SWE-bench. Vendor-claimed; verify model card."),
-    "deepseek-v4-flash":(284,  13, "MIT",       "284B total / 13B active, same architecture, ~160GB, fits 1x80GB GPU quantized. Vendor-claimed."),
-    "kimi-k2.6":        (1000, 32, "MIT (verify)","~1T total / 32B active MoE (fewer corroborating snippets than V4 — treat as lead)."),
-    "glm-5.2":          (744,  40, "MIT (verify)","~744B / ~40B active (Z.ai) — fewer corroborating snippets, treat as lead."),
-    "qwen3.x-moe":      (None, None,"Apache-2.0 (verify)","laptop-scale open MoE family — confirm exact current size/name before citing."),
+    # name: (total_params_B, active_params_B, license, note)
+    "deepseek-v4-pro":  (1600, 49,  "MIT",                "CORROBORATED 2026-07-14 (1.6T x4 + 49B x1 across DeepSeek-V4 search snippets); MIT title-supported. Vendor-claimed - verify model card. Train-token count + layer arch NOT verified."),
+    "glm-5.2":          (744,  40,  "MIT",                "CORROBORATED 2026-07-14 (Colibri search: 744B + MIT + 256 experts/layer, 8+1 active ~40B, Z.ai/flowtivity/sakutto snippets)."),
+    "deepseek-v4-flash":(None, None, "MIT (LEAD)",        "[LEAD] 284B/13B mentioned in the paste but NOT in persisted snippets - confirm before citing."),
+    "kimi-k2.x":        (None, None, "MIT (LEAD)",        "[LEAD] ~1T/32B not corroborated in persisted snippets (only 'Kimi K2.7' seen in passing) - confirm."),
+    "qwen3.x-moe":      (None, None, "Apache-2.0 (LEAD)", "[LEAD] laptop-scale open MoE family - confirm exact current size/name before citing."),
 }
 
 def account_single_moe(name):
@@ -64,7 +66,7 @@ def sovereign_T_owem(base_name):
                                 f"sovereign-{base_name}: {acc['total_params_B']}B — real but sub-trillion; "
                                 f"use a verified >=1T open MoE base (search titles support DeepSeek V4 ~1T) for a genuine T.",
             "governance_layer": "identical across all base sizes (the swap-persistence property)",
-            "CURRENCY_STATUS": "DeepSeek V4-Pro 1.6T/49B/MIT corroborated across ~7 sources 2026-07-14 (vendor-claimed, independent repro pending); verify model card before load-bearing public claim."}
+            "CURRENCY_STATUS": "DeepSeek V4-Pro 1.6T/49B corroborated 2026-07-14 (4+1 DeepSeek-V4 search snippets), MIT title-supported, vendor-claimed; GLM-5.2 744B/MIT corroborated (Colibri search). 33T-tokens / V4-Flash / Kimi figures NOT verified. Verify model card before load-bearing claim."}
 
 if __name__ == "__main__":
     print("=== HONEST T-PARAMETER OWEM ACCOUNTING ===\n")
