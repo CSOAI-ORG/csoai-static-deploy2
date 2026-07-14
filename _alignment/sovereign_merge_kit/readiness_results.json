@@ -1,5 +1,5 @@
 {
-  "running": 74,
+  "running": 75,
   "gated": 31,
   "broken": 0,
   "rows": [
@@ -631,6 +631,12 @@
       "capability": "gsm8k-tier-routing-0.90",
       "class": "RUNNING",
       "detail": "Benchmark tune: GSM8K deployed gate 0.65/0.71 -> 0.90 by routing reasoning to the LARGE tier (120B). n=40 gold-graded. Honest negatives kept: cascade (0.55) + self-consistency (0.275) were WORSE (bad escalation heuristic, attempt-N prompt degraded small). Simple win: math->large tier. Same models, routing only.",
+      "expected_gated": false
+    },
+    {
+      "capability": "world-model-tuned-80pct",
+      "class": "RUNNING",
+      "detail": "Tuned world-model dynamics: 1-step MSE 0.0032->0.00063 (-80%) via hidden=160, data=4000, epochs=800. Better prediction directly extends governance reach (per stress finding: care-gate can only veto futures it foresees). Predictable-env world model now near-exact.",
       "expected_gated": false
     }
   ],
