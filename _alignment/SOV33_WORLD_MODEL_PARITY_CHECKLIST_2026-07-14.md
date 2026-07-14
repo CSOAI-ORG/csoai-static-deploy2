@@ -26,7 +26,7 @@ model competitive on raw capability. This checklist is "do we have the same PLUM
 | B1 | Predicts next STATE not next TOKEN | JEPA latent prediction | [RUN] owem-world JEPAPredictor (loss 1.11->0.51 measured); toy-scale |
 | B2 | Latent dynamics / forward model | encoder + predictor in latent space | [RUN] owem-v2 2-layer predictor (Task A 93% reduction); toy-scale |
 | B3 | Continual learning without forgetting | EWC / replay | [RUN] owem-v2 EWC (60% forgetting prevented); Fisher is weight-magnitude PROXY |
-| B4 | Multi-step planning / rollout | latent rollout | [GAP] single-step only; multi-step rollout NOT built |
+| B4 | Multi-step planning / rollout | latent rollout | [RUN] multistep_rollout — H-step, re-grounding bounds drift (0.0039->0.0017 @H10) |
 | B5 | OOD / novelty detection | energy/divergence | [RUN] quantum_mirror divergence (corr 0.334, escalate-on-divergence) |
 | B6 | World-state memory across sessions | persistent latent memory | [RUN] memory-bridge (SIGIL-chained, self-test 5/5); care-gated writes |
 
@@ -48,7 +48,7 @@ model competitive on raw capability. This checklist is "do we have the same PLUM
 | D3 | Cryptographic attestation of decisions | rare/none | [RUN] Venturi=SIGIL hash-chain (~481us/throat, tamper-detected) — SOV ahead |
 | D4 | Portable governed memory (crypto-signed) | none in open models | [RUN] memory-bridge Merkle-style chain — SOV's differentiator |
 | D5 | Conformal safety guarantee | rare | [RUN] conformal care-veto (Pr[allow&harmful]<=alpha calibrated) |
-| D6 | Ed25519 signing (production attestation) | n/a | [DES] SIGIL is SHA256 now; Ed25519/L5 is the upgrade [GAP] |
+| D6 | Ed25519 signing (production attestation) | n/a | [RUN] ed25519_sigil — 4/4 (authenticity not just integrity); L5 claim real |
 
 ## E. EVAL / PROOF (what lets you claim a number)
 | # | Component | Frontier baseline | SOV status |
@@ -62,7 +62,8 @@ model competitive on raw capability. This checklist is "do we have the same PLUM
 ## HONEST SCORECARD SUMMARY
 - STRONGEST (SOV ahead of frontier open models): D1-D5 governance/attestation, B6 governed memory, B1-B3 world-model core (toy-scale but REAL).
 - AT PARITY (via wrapping a base + runtime): A1-A5, C1-C2, C5, C6 — we get these by wrapping DeepSeek V4/GLM-5.2 on Colibri/MLX.
-- GENUINE GAPS to build: B4 multi-step rollout, D6 Ed25519, A6 load-balancing (only if we train our own base), C3 KV-cache (runtime's job).
+- CLOSED this session: B4 multi-step rollout [RUN], D6 Ed25519 [RUN].
+- REMAINING GAPS (honest, NOT faked): A6 load-balancing (only if we train our own base — inherited when we wrap one), C3 KV-cache (the runtime's job, vLLM/Colibri owns it). Both are correctly NOT-ours to copy.
 - OWNER-GATED (hardware, not method): E3 tok/s, E4 baseline compare, real int4 weights — all in the run-books.
 
 ## THE ONE-LINE HONEST VERDICT
