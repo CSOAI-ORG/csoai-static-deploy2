@@ -1632,6 +1632,22 @@ def capability_venturi(**kwargs):
     except Exception as e:
         return {'capability':'venturi','error':str(e)[:160]}
 
+def capability_owem_stack(**kwargs):
+    """Two OWEM models stacked (cascade-residual boosting), governed by the Venturi seam, MEASURED.
+    Honest law: stacking a 2nd OWEM wins big when the 1st is capacity-limited (leaves structured
+    residual), ~ties when the 1st already solves the task (only noise left). CPU-feasible proof of
+    the 2-small-stacked topology; NOT GPU-trained LLM experts."""
+    try:
+        import importlib
+        m = importlib.import_module('sov33_owem_stack')
+        A, B, r = m.build_stack()
+        r['capability'] = 'owem-stack'
+        r['law'] = 'stack wins when 1st OWEM is capacity-limited (real residual); ties when 1st solves task'
+        r['honest_scale'] = 'small numpy MLPs on synthetic task; proves stacking topology measurable+governed'
+        return r
+    except Exception as e:
+        return {'capability': 'owem-stack', 'error': str(e)[:160]}
+
 def capability_canonical(mode: str = 'paid', **kwargs):
     """Load the FROZEN winning SOV333 setup (sweep winner + adversarial-hardened) and build it live.
     mode='paid' -> diverse-5 @ 0.65; mode='free' -> diverse-3 @ 0.8 (sovereign/local)."""
@@ -2169,6 +2185,7 @@ CAPABILITIES = {
     'owem-v2': capability_owem_v2,
     'action-guard': capability_action_guard,
     'venturi': capability_venturi,
+    'owem-stack': capability_owem_stack,
     'care-floor': capability_care_floor,
     'mist12': capability_mist12,
     'drum': capability_drum,
