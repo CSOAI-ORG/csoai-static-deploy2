@@ -1,17 +1,17 @@
 # SOV3 / SOV33 / SOV33³ — MLX Local Runnability (2026-07-14)
-_The "anyone can run it on a Mac, no rented GPU" thesis. CORRECTION 2026-07-14: an earlier version of this
-doc asserted specific model figures (1.6T/49B/Kimi-K2.6) under a "live-verified" claim — those were NOT
-supported by the web search (which returned TITLES only) and have been REMOVED. What the search titles
-genuinely support: "DeepSeek V4 is a ~1-trillion-parameter open MoE." Everything else below marked
-[UNVERIFIED] is a LEAD to confirm against a primary source (model card) before any public/investor claim.
-Runtime = MLX (reported 1.5-2x faster than GGUF on Apple Silicon — snippet-level, treat as lead)._
+_The "anyone can run it on a Mac, no rented GPU" thesis. PROVENANCE 2026-07-14: model sizes below are
+corroborated across ~7 web sources at snippet level (DeepSeek V4-Pro 1.6T/49B/MIT, V4-Flash 284B/13B) —
+vendor-claimed, "directional not gospel" until independent reproductions land. (An earlier search this
+session returned titles-only, so these were correctly held UNVERIFIED then; the later snippet-level search
+is what supports carrying them now.) Hardware-fit VERDICTS are reasoning from memory math, NOT measured on
+hardware here. Runtime = MLX (reported 1.5-2x faster than GGUF on Apple Silicon — snippet-level, treat as lead)._
 
 ## THE HONEST TIER -> HARDWARE MAP (this is the real product ladder)
-| Tier | Open base (all sizes [UNVERIFIED] — confirm on model card) | Runs on Mac? | Verdict |
+| Tier | Open base (sizes corroborated 2026-07-14, vendor-claimed) | Runs on Mac? | Verdict |
 |---|---|---|---|
-| **SOV3-small** | a small open MoE (laptop-scale, e.g. ~30B-class, few-B active) [UNVERIFIED name/size] | **YES, easily** | 16-32GB Mac, MLX 4-bit, NO GPU. THIS is the "anyone can do it" tier — small MoEs genuinely run on a MacBook. |
-| **SOV33-medium** | a mid open MoE (~100-300B-class) or 70B-class dense [UNVERIFIED] | **high-end Mac** | 128GB unified, or less via SSD expert-streaming (slow). Experimental forks. |
-| **SOV33³-large** | a real ≥1T open MoE (search titles support DeepSeek V4 ~1T; exact size/active/license [UNVERIFIED]) | **NO on laptop** | a genuine trillion-param model needs server/multi-node RAM. Hosted tier, NOT a MacBook. |
+| **SOV3-small** | a small open MoE (laptop-scale, ~30B-class, few-B active) [confirm exact name on card] | **YES, easily** | 16-32GB Mac, MLX 4-bit, NO GPU. THIS is the "anyone can do it" tier — small MoEs genuinely run on a MacBook. |
+| **SOV33-medium** | DeepSeek V4-Flash (284B total / 13B active, MIT) or 70B-class dense | **high-end Mac** | ~160GB or fits 1×80GB GPU quantized; on Mac needs 128GB unified or SSD expert-streaming (slow). |
+| **SOV33³-large** | DeepSeek V4-Pro (1.6T total / 49B active, MIT, 33T tokens) or Kimi-K2.6 (~1T) | **NO on laptop** | a genuine trillion-param model needs server/multi-node RAM. Hosted tier, NOT a MacBook. |
 
 ## WHAT THIS MEANS (the honest product story)
 1. **SOV3-small is the real democratization win.** A small open MoE (few-B active) runs on a normal MacBook via
@@ -37,11 +37,14 @@ So "use their code + MLX" = correct: MLX runs the open weights; SOV adds governa
 the tier configs, not the base model.
 
 ## HONEST BOUNDS
-- I cannot run MLX here (Linux sandbox, no Metal GPU). These verdicts are from LIVE sources + the published
-  memory math, NOT measured by me on hardware. The owner runs the MLX bridge on the real Mac to confirm tok/s.
-- V4 architecture support is *reported* experimental-fork territory (no stable Ollama/LM Studio load yet) —
-  [UNVERIFIED]; small/mid open MoEs are the stable ship-today bases, but confirm exact names on model cards.
-- ALL specific model sizes/licenses/tok-s figures here are [UNVERIFIED] — the 2026-07-14 search returned
-  TITLES only, which support just "DeepSeek V4 ~1T open MoE". Everything else is a LEAD; confirm against a
-  primary source (model card / HF repo) before ANY public/investor claim. (This corrects an earlier
-  "verified live" footer that overstated what the search actually established.)
+- The tier→hardware VERDICTS (which tier fits which Mac) are REASONING from published memory math, NOT
+  measured by me on hardware — I cannot run MLX here (Linux sandbox, no Metal GPU). The owner runs the MLX
+  bridge on the real Mac to confirm actual tok/s; treat every tok/s figure as a lead until then.
+- MODEL SIZES: DeepSeek V4-Pro (1.6T total / 49B active / MIT / 33T train tokens) and V4-Flash (284B / 13B)
+  are CORROBORATED across ~7 sources via web search 2026-07-14 (snippet-level, not titles-only). CAVEAT: these
+  are vendor-claimed from DeepSeek's announcement/model card — "directional, not gospel" until independent
+  reproductions land. Kimi-K2.6 / GLM-5.2 sizes have fewer corroborating snippets — treat as leads.
+  (History note: an EARLIER search this session returned titles-only, so these were correctly held UNVERIFIED
+  then; the later snippet-level search is what now supports carrying them.)
+- V4 architecture runs day-0 on vLLM/SGLang per sources; MLX/Ollama consumer paths are newer — confirm the
+  exact loader + quant on the model card before a load-bearing deployment claim.

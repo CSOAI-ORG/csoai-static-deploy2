@@ -1801,6 +1801,25 @@ def capability_param_accounting(**kwargs):
     except Exception as e:
         return {'capability':'param-accounting','error':str(e)[:160]}
 
+def capability_venturi_stream(**kwargs):
+    """Venturi throat governs SSD expert-streaming: the SAME signed throat that ROUTES a token names which k
+    experts load from disk (fail-closed - unsigned experts refused). Footprint = k experts, not all N, so a
+    trillion-param MoE's expert bank streams on small RAM. MECHANISM proof (selective signed load + footprint
+    cut + tamper-detect); real tok/s is SSD-bandwidth bound, measured on the owner's Mac NOT claimed here."""
+    try:
+        import importlib
+        m = importlib.import_module('sov33_venturi_stream')
+        store=m.StreamingExpertStore(n_experts=384, dim=32); r=m.VenturiStreamRouter(store, k=6)
+        import numpy as np
+        out=r.throat(np.random.default_rng(1).standard_normal(32), care_score=0.8)
+        veto=r.throat(np.random.default_rng(1).standard_normal(32), care_score=0.05)
+        v=r.verify_chain(); store.cleanup()
+        return {'capability':'venturi-stream','experts_total':384,'loaded_active':out['loaded'],
+                'footprint_pct':round(out['loaded']/384*100,2),'care_veto_loads_zero':veto['loaded']==0,
+                'chain_ok':v['ok'],'honest':'mechanism proof; real tok/s SSD-bound, measure on Mac'}
+    except Exception as e:
+        return {'capability':'venturi-stream','error':str(e)[:160]}
+
 def capability_canonical(mode: str = 'paid', **kwargs):
     """Load the FROZEN winning SOV333 setup (sweep winner + adversarial-hardened) and build it live.
     mode='paid' -> diverse-5 @ 0.65; mode='free' -> diverse-3 @ 0.8 (sovereign/local)."""
@@ -2350,6 +2369,7 @@ CAPABILITIES = {
     'conformal-veto': capability_conformal_veto,
     'tensor-compress': capability_tensor_compress,
     'param-accounting': capability_param_accounting,
+    'venturi-stream': capability_venturi_stream,
     'care-floor': capability_care_floor,
     'mist12': capability_mist12,
     'drum': capability_drum,
