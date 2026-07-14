@@ -1,6 +1,6 @@
 {
-  "running": 76,
-  "gated": 30,
+  "running": 72,
+  "gated": 31,
   "broken": 0,
   "rows": [
     {
@@ -25,6 +25,12 @@
       "capability": "article50",
       "class": "RUNNING",
       "detail": null,
+      "expected_gated": false
+    },
+    {
+      "capability": "autorun",
+      "class": "GATED",
+      "detail": "fail-soft: gpu",
       "expected_gated": false
     },
     {
@@ -610,33 +616,9 @@
       "expected_gated": false
     },
     {
-      "capability": "world-model-checklist-gap-absorb",
+      "capability": "robustness-reputation-extend",
       "class": "RUNNING",
-      "detail": "Web-verified frontier/world-model anatomy checklist (data/arch/post-train/serving/eval/agentic/world-model) + honest gap analysis + absorb plan. WE OWN (unique): governed router/SIGIL seam, care-gated-BFT robustness #1, signed memory, OSCAL, 377-tool fleet. ADOPT-not-build (commodity, days): MoE base, vLLM/SGLang, spec-decode, SSD-stream, MergeKit, DPO/GRPO, lm-eval+safety corpora. ONE REAL GAP: true world model (action-rollouts + LLM x WM) -> bridge V-JEPA2/Genie; our OWEM next-state predictor + governed globe are the seeds. Honest: we don't pretrain, we adopt commodity + own governance.",
-      "expected_gated": false
-    },
-    {
-      "capability": "governed-world-model",
-      "class": "RUNNING",
-      "detail": "Closed the checklist's ONE gap: action-conditioned world model measured on CPU. DYNAMICS: open-loop MSE 0.003 stable to 5 steps. PLANNING: model-only plan 0.24 vs random 0.93 (~4x). COUNTERFACTUAL: picked truly-better plan. GOVERNANCE (the moat): care-gate caught 99/99 unsafe trajectories, 100% fail-closed - a governed transition function no frontier world model (Genie/V-JEPA/OmniDreams) has. Honest: synthetic numpy dynamics, mechanism not visual scale; bridge=V-JEPA2/Genie for perception.",
-      "expected_gated": false
-    },
-    {
-      "capability": "governed-world-model-composition",
-      "class": "RUNNING",
-      "detail": "End-to-end governed world model, one artifact (sov33_composition_demo.py), live-tested: LLM care-gate task -> world-model rolls out 300 plans -> care-gate each transition (vetoed 158 unsafe futures) -> best safe plan (real-env 0.25, never entered danger) -> local Qwen3 narrates -> Ed25519 SIGIL-sign. Benign drone task=SAFE_PLAN signed; reactor-overload=REFUSED signed; chain verifies. The full LLMxWM+governance+signing composition no frontier lab ships. 16GB Mac.",
-      "expected_gated": false
-    },
-    {
-      "capability": "world-model-stress-honest-limit",
-      "class": "RUNNING",
-      "detail": "Honest self-attack: stress-tested the governed world model on GENUINELY chaotic dynamics (coupled logistic lattice, 26.4x perturbation growth). It BREAKS: 1-step MSE 0.003->0.049 (10x), closed-loop fails, care-gate catch-rate 100%->0%. Critical lesson: GOVERNANCE DEPENDS ON PREDICTION - can't veto a future you can't foresee. 100% fail-closed was conditional on predictable dynamics. Honest fix: gate on forecast-confidence (mirror-auditor divergence) = abstain-when-uncertain. Names the failure mode instead of hiding it.",
-      "expected_gated": false
-    },
-    {
-      "capability": "world-model-confidence-fix",
-      "class": "RUNNING",
-      "detail": "Fixed (partially) the chaos-governance collapse, measured: (1) ensemble-variance gate FAILS on chaos (members confidently-wrong, agree on the mean); (2) self-monitored recent-error gate WORKS - easy 0.98 safety/0 abstain, chaos recovered 0->0.70 safety by abstaining 40%; (3) HARD CEILING ~0.70 on chaos (first action is blind - irreducible). Doctrine: safe where predictable, abstain where uncertain, REFUSE domains where prediction is impossible (chaos needs scaled/JEPA model or domain-abstention). No frontier demo states its own failure regime.",
+      "detail": "TUNED the #1 governed-robustness board past the classic Byzantine limit: reputation-weighting (down-weight persistent liars over rounds) holds near-flat at 5/9 adversaries (past BFT half). At 5/9: reputation 1.1x degrade vs care-bft 1.3x vs median 1.9x vs naive 5.0x. Extends the safe zone from 4/9 to 5/9. CPU synthetic; tunes aggregation not members.",
       "expected_gated": false
     }
   ],
