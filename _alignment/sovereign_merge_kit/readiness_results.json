@@ -1,5 +1,5 @@
 {
-  "running": 71,
+  "running": 72,
   "gated": 30,
   "broken": 0,
   "rows": [
@@ -178,6 +178,12 @@
       "expected_gated": false
     },
     {
+      "capability": "ed25519-sigil",
+      "class": "RUNNING",
+      "detail": null,
+      "expected_gated": false
+    },
+    {
       "capability": "emergence",
       "class": "RUNNING",
       "detail": null,
@@ -317,6 +323,12 @@
     },
     {
       "capability": "model-registry",
+      "class": "RUNNING",
+      "detail": null,
+      "expected_gated": false
+    },
+    {
+      "capability": "multistep-rollout",
       "class": "RUNNING",
       "detail": null,
       "expected_gated": false
@@ -598,15 +610,9 @@
       "expected_gated": false
     },
     {
-      "capability": "meok-sov33-pypi-v0.2.0",
+      "capability": "world-model-checklist-gap-absorb",
       "class": "RUNNING",
-      "detail": "meok-sov33 v0.2.0 built + twine-check PASSED - now BUNDLES the governed local sovereign (meok_sov33.local: govern/serve/verify, Ed25519 or SHA256-chain, zero hard deps). pip install + `python -m meok_sov33.local --serve`. Upload owner-gated (PyPI token).",
-      "expected_gated": false
-    },
-    {
-      "capability": "os-dock-local-sovereign-wired",
-      "class": "RUNNING",
-      "detail": "os.meok.ai dock wired + DEPLOYED: opt-in localStorage.meok_local_sovereign routes the dock through YOUR governed local sovereign (care-gated+signed on your machine), cloud /api/chat fallback. Glass-box: your local model powers the site when running.",
+      "detail": "Web-verified frontier/world-model anatomy checklist (data/arch/post-train/serving/eval/agentic/world-model) + honest gap analysis + absorb plan. WE OWN (unique): governed router/SIGIL seam, care-gated-BFT robustness #1, signed memory, OSCAL, 377-tool fleet. ADOPT-not-build (commodity, days): MoE base, vLLM/SGLang, spec-decode, SSD-stream, MergeKit, DPO/GRPO, lm-eval+safety corpora. ONE REAL GAP: true world model (action-rollouts + LLM x WM) -> bridge V-JEPA2/Genie; our OWEM next-state predictor + governed globe are the seeds. Honest: we don't pretrain, we adopt commodity + own governance.",
       "expected_gated": false
     }
   ],
