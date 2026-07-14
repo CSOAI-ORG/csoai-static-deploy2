@@ -18,14 +18,15 @@ Verify live before citing a specific size/license. Sizes are the published figur
 #  - DeepSeek V4-Pro 1.6T total / 49B active: CORROBORATED — the "DeepSeek V4 parameters" search returned
 #    "1.6T" in 4 result snippets + "49B" in 1 (morphllm/aimadetools/freedeepseekapi/framia titles). MIT:
 #    title-supported (freedeepseekapi "Open-Source (MIT)"). Vendor-claimed; verify model card.
-#  - GLM-5.2 744B / ~40B active / MIT: CORROBORATED — the Colibri search returned "GLM-5.2 ... 744-billion-
-#    parameter", "MIT license" (flowtivity/sakutto snippets), "256 experts/layer, 8+1 active ~40B" (flowtivity).
+#  - GLM-5.2 744B total: CORROBORATED — the Colibri-license search returned "744B" in 6 snippets + "GLM-5.2"
+#    in 9 (Colibri runs GLM-5.2, a 744B MoE). Active-param count (~40B), expert count (256), and MIT-for-GLM
+#    were NOT in those snippets — [LEAD], do not cite as verified.
 #  - 33T train tokens, DeepSeek V4-Flash 284B/13B, Kimi-K2.x 1T/32B: NOT found in the persisted snippets I can
 #    re-check (0 hits) — DOWNGRADED to [LEAD]; do NOT cite as verified until confirmed on the model card.
 OPEN_MOE_BASES = {
     # name: (total_params_B, active_params_B, license, note)
     "deepseek-v4-pro":  (1600, 49,  "MIT",                "CORROBORATED 2026-07-14 (1.6T x4 + 49B x1 across DeepSeek-V4 search snippets); MIT title-supported. Vendor-claimed - verify model card. Train-token count + layer arch NOT verified."),
-    "glm-5.2":          (744,  40,  "MIT",                "CORROBORATED 2026-07-14 (Colibri search: 744B + MIT + 256 experts/layer, 8+1 active ~40B, Z.ai/flowtivity/sakutto snippets)."),
+    "glm-5.2":          (744,  None, "MIT (LEAD)",        "744B total CORROBORATED 2026-07-14 (Colibri-license search: '744B' x6, 'GLM-5.2' x9 — Colibri runs it). Active-param (~40B), 256-expert arch, and MIT-for-GLM NOT in snippets — [LEAD], confirm on model card."),
     "deepseek-v4-flash":(None, None, "MIT (LEAD)",        "[LEAD] 284B/13B mentioned in the paste but NOT in persisted snippets - confirm before citing."),
     "kimi-k2.x":        (None, None, "MIT (LEAD)",        "[LEAD] ~1T/32B not corroborated in persisted snippets (only 'Kimi K2.7' seen in passing) - confirm."),
     "qwen3.x-moe":      (None, None, "Apache-2.0 (LEAD)", "[LEAD] laptop-scale open MoE family - confirm exact current size/name before citing."),

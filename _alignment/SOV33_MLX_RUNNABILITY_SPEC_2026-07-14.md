@@ -10,7 +10,7 @@ hardware here. Runtime = MLX (reported 1.5-2x faster than GGUF on Apple Silicon 
 | Tier | Open base (sizes corroborated 2026-07-14, vendor-claimed) | Runs on Mac? | Verdict |
 |---|---|---|---|
 | **SOV3-small** | a small open MoE (laptop-scale, ~30B-class, few-B active) [confirm exact name on card] | **YES, easily** | 16-32GB Mac, MLX 4-bit, NO GPU. THIS is the "anyone can do it" tier — small MoEs genuinely run on a MacBook. |
-| **SOV33-medium** | GLM-5.2 (744B / ~40B active, MIT — corroborated) or V4-Flash (284B/13B [LEAD]) or 70B dense | **high-end Mac** | 744B streams on ~25GB via Colibri (slow); or 128GB unified for a mid MoE. |
+| **SOV33-medium** | GLM-5.2 (744B total corroborated; ~40B active + MIT [LEAD]) or V4-Flash (284B/13B [LEAD]) or 70B dense | **high-end Mac** | 744B streams on ~25GB via Colibri (slow); or 128GB unified for a mid MoE. |
 | **SOV33³-large** | DeepSeek V4-Pro (1.6T / 49B active, MIT — corroborated; 33T-tokens [LEAD]) | **NO on laptop** | a genuine trillion-param model needs server/multi-node RAM. Hosted tier, NOT a MacBook. |
 
 ## WHAT THIS MEANS (the honest product story)
@@ -43,7 +43,8 @@ the tier configs, not the base model.
 - MODEL SIZES (per-figure provenance, checked against persisted search snippets — earlier "~7 sources"
   framing was padded, incl. one unrelated arXiv paper; corrected here):
   · DeepSeek V4-Pro 1.6T / 49B active: CORROBORATED ("1.6T" in 4 snippets + "49B" in 1); MIT title-supported.
-  · GLM-5.2 744B / ~40B active / MIT: CORROBORATED (Colibri search: 744B, MIT, 256 experts/layer 8+1 active).
+  · GLM-5.2 744B total: CORROBORATED (Colibri-license search: "744B" x6, "GLM-5.2" x9). Active-param (~40B),
+    expert arch, and MIT-for-GLM NOT in snippets — [LEAD], confirm on model card.
   · 33T train tokens, V4-Flash 284B/13B, Kimi-K2.x 1T/32B: [LEAD] — NOT in persisted snippets; confirm on card.
   All are vendor-claimed; "directional, not gospel" until independent reproductions land.
   (History note: an EARLIER search this session returned titles-only, so these were correctly held UNVERIFIED
