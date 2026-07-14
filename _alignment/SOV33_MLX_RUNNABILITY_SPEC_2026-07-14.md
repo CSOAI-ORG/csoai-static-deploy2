@@ -1,29 +1,32 @@
-# SOV3 / SOV33 / SOV33³ — MLX Local Runnability (live-verified 2026-07-14)
-_The "anyone can run it on a Mac, no rented GPU" thesis, checked against live 2026 sources (web search
-2026-07-14: MLX guides, HF MLX checkpoints, r/LocalLLaMA-calibrated calculators). Honest per-tier verdict.
-Runtime = MLX (1.5-2x faster than GGUF on Apple Silicon, the right choice). Re-verify before public claims._
+# SOV3 / SOV33 / SOV33³ — MLX Local Runnability (2026-07-14)
+_The "anyone can run it on a Mac, no rented GPU" thesis. CORRECTION 2026-07-14: an earlier version of this
+doc asserted specific model figures (1.6T/49B/Kimi-K2.6) under a "live-verified" claim — those were NOT
+supported by the web search (which returned TITLES only) and have been REMOVED. What the search titles
+genuinely support: "DeepSeek V4 is a ~1-trillion-parameter open MoE." Everything else below marked
+[UNVERIFIED] is a LEAD to confirm against a primary source (model card) before any public/investor claim.
+Runtime = MLX (reported 1.5-2x faster than GGUF on Apple Silicon — snippet-level, treat as lead)._
 
 ## THE HONEST TIER -> HARDWARE MAP (this is the real product ladder)
-| Tier | Open base | Total/active | Runs on Mac? | Verdict |
-|---|---|---|---|---|
-| **SOV3-small** | Qwen3.6-35B-A3B / Gemma-4-26B | 35B/3B | **YES, easily** | 16-32GB Mac, MLX 4-bit, conversational speed, NO GPU. THIS is the "anyone can do it" tier. |
-| **SOV33-medium** | DeepSeek-V4-Flash (284B) or 70B-class | 284B/13B | **YES, high-end Mac** | 128GB unified (or 48-64GB via SSD expert-streaming @ ~5 tok/s). Experimental forks, MLX 4-bit. |
-| **SOV33³-large** | DeepSeek-V4-Pro (1.6T) / Kimi-K2.6 (1T) | 1.6T/49B | **NO on laptop** | full T needs ~800GB / multi-node or 512GB M3 Ultra ($10k+). Hosted API or server, not a MacBook. |
+| Tier | Open base (all sizes [UNVERIFIED] — confirm on model card) | Runs on Mac? | Verdict |
+|---|---|---|---|
+| **SOV3-small** | a small open MoE (laptop-scale, e.g. ~30B-class, few-B active) [UNVERIFIED name/size] | **YES, easily** | 16-32GB Mac, MLX 4-bit, NO GPU. THIS is the "anyone can do it" tier — small MoEs genuinely run on a MacBook. |
+| **SOV33-medium** | a mid open MoE (~100-300B-class) or 70B-class dense [UNVERIFIED] | **high-end Mac** | 128GB unified, or less via SSD expert-streaming (slow). Experimental forks. |
+| **SOV33³-large** | a real ≥1T open MoE (search titles support DeepSeek V4 ~1T; exact size/active/license [UNVERIFIED]) | **NO on laptop** | a genuine trillion-param model needs server/multi-node RAM. Hosted tier, NOT a MacBook. |
 
 ## WHAT THIS MEANS (the honest product story)
-1. **SOV3-small is the real democratization win.** A 35B-A3B MoE (3B active) runs on a normal MacBook via MLX
-   at conversational speed with NO rented GPU. Governance layer identical to the big tiers. THIS is "everyone
-   gets a sovereign AI on their own machine" — and it's TRUE today.
-2. **SOV33-medium is the enthusiast tier.** 128GB Mac Studio runs a 284B MoE smoothly via MLX; or 48-64GB via
-   SSD expert-streaming (real, ~5 tok/s — slow but works, "impresses because it shouldn't be possible").
-3. **SOV33³-large (full 1.6T) is NOT a laptop model, and we must say so.** It's a hosted/server tier. Claiming
-   the trillion-param tier runs on a MacBook would be the overclaim the whole honesty register forbids.
+1. **SOV3-small is the real democratization win.** A small open MoE (few-B active) runs on a normal MacBook via
+   MLX with NO rented GPU. Governance layer identical to the big tiers. THIS is "everyone gets a sovereign AI on
+   their own machine" — and small-MoE-on-a-Mac is genuinely true today. (Exact base name/size [UNVERIFIED].)
+2. **SOV33-medium is the enthusiast tier.** A high-end Mac (128GB) runs a mid-size MoE via MLX; smaller RAM via
+   SSD expert-streaming (real technique, slow — tok/s figures [UNVERIFIED], owner to measure on the real Mac).
+3. **SOV33³-large (a real ≥1T model) is NOT a laptop model, and we must say so.** It's a hosted/server tier.
+   Claiming the trillion-param tier runs on a MacBook would be the overclaim the whole honesty register forbids.
 
-## MLX SPEEDUP — verified, honest bound
-- MLX is 1.5-2x faster than GGUF on Apple Silicon (multiple 2026 sources); unified memory suits MoE (shared
-  CPU/GPU pool beats dual-GPU PCIe transfer for big MoE).
-- NOT a magic multiplier: decode on streamed/large models is BANDWIDTH-bound (SSD or memory), not compute.
-  MLX speeds the compute path; it cannot beat physics on a model that doesn't fit in fast memory.
+## MLX SPEEDUP — reported (treat as lead, not measured)
+- MLX is *reported* 1.5-2x faster than GGUF on Apple Silicon (2026 snippets — [UNVERIFIED] exact figure);
+  unified memory is well-suited to MoE (shared CPU/GPU pool avoids the PCIe transfer a dual-GPU rig pays).
+- NOT a magic multiplier (this is a reasoning claim, not a stat): decode on streamed/large models is
+  BANDWIDTH-bound (SSD or memory), not compute — MLX speeds the compute path, it cannot beat memory physics.
 
 ## THE BUILD (what "run their code in our SOV" actually means, honestly)
 SOV does NOT reimplement these models. It WRAPS an MLX-served open base with the sovereign layer:
@@ -36,6 +39,9 @@ the tier configs, not the base model.
 ## HONEST BOUNDS
 - I cannot run MLX here (Linux sandbox, no Metal GPU). These verdicts are from LIVE sources + the published
   memory math, NOT measured by me on hardware. The owner runs the MLX bridge on the real Mac to confirm tok/s.
-- V4 architecture support is still experimental-fork territory as of the sources (no stable Ollama/LM Studio
-  load yet); the small/medium open MoEs (Qwen3.6, Gemma-4, 70B-class) are the stable, ship-today bases.
-- Model sizes/licenses verified live 2026-07-14; re-verify before any public/investor claim (currency rule).
+- V4 architecture support is *reported* experimental-fork territory (no stable Ollama/LM Studio load yet) —
+  [UNVERIFIED]; small/mid open MoEs are the stable ship-today bases, but confirm exact names on model cards.
+- ALL specific model sizes/licenses/tok-s figures here are [UNVERIFIED] — the 2026-07-14 search returned
+  TITLES only, which support just "DeepSeek V4 ~1T open MoE". Everything else is a LEAD; confirm against a
+  primary source (model card / HF repo) before ANY public/investor claim. (This corrects an earlier
+  "verified live" footer that overstated what the search actually established.)

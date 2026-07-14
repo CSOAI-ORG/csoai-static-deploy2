@@ -60,7 +60,7 @@ def sovereign_T_owem(base_name):
                                 f"sovereign-{base_name}: {acc['total_params_B']}B — real but sub-trillion; "
                                 f"use a verified >=1T open MoE base (search titles support DeepSeek V4 ~1T) for a genuine T.",
             "governance_layer": "identical across all base sizes (the swap-persistence property)",
-            "CURRENCY_VERIFIED": "base sizes/licenses verified live 2026-07-14; re-verify before public citation."}
+            "CURRENCY_STATUS": "search titles support only 'DeepSeek V4 ~1T open MoE'; active-param count + exact license are [UNVERIFIED] — confirm on the model card before any public citation."}
 
 if __name__ == "__main__":
     print("=== HONEST T-PARAMETER OWEM ACCOUNTING ===\n")
