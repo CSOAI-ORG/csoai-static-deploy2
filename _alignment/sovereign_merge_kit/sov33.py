@@ -1682,6 +1682,56 @@ def capability_pyramid_4brain(**kwargs):
     except Exception as e:
         return {'capability': 'pyramid-4brain', 'error': str(e)[:160]}
 
+def capability_double_pyramid(**kwargs):
+    """As above so below: two mirrored 4-brain pyramids (upright widening + inverted narrowing) meeting at
+    the capstone = one XXL model. MEASURED: hourglass beats equal-budget flat by a small margin (+2%);
+    honest small win, not a breakthrough. CPU proof of the double-pyramid topology; NOT GPU LLM experts."""
+    try:
+        import importlib
+        m = importlib.import_module('sov33_double_pyramid'); r = m.measure(); r['capability']='double-pyramid'
+        r['honest'] = 'mirror helps marginally (+2%); capacity-symmetry is a small win not a breakthrough'
+        return r
+    except Exception as e:
+        return {'capability':'double-pyramid','error':str(e)[:160]}
+
+def capability_quantum_mirror(**kwargs):
+    """Quantum mirror (N-version divergence auditor): two decorrelated mirror pyramids; their DIVERGENCE
+    predicts error (corr ~0.33; flagged samples ~1.26x worse) -> escalate high-divergence. HONEST: metaphor
+    name; mechanism is N-version divergence, NOT literal quantum. Composes with the Venturi throat."""
+    try:
+        import importlib
+        m = importlib.import_module('sov33_quantum_mirror'); r = m.measure(); r['capability']='quantum-mirror'
+        r['honest'] = "'quantum mirror' = metaphor; real mechanism = mirror-divergence uncertainty signal"
+        return r
+    except Exception as e:
+        return {'capability':'quantum-mirror','error':str(e)[:160]}
+
+def capability_square_4plus1(**kwargs):
+    """4 pyramids around 1 inside the square (SOV333 top-level): 4 decorrelated corner specialists
+    (Compliance/Defense/Intuition/Voice) + 1 centre integrator, governed arena. MEASURED honest law:
+    the centre integrator adds real value (+34% over consensus), BUT 4-around-1 only beats a single deep
+    pyramid of equal budget WHEN the problem has regional structure to specialise on; on a uniform task one
+    deep pyramid wins. NOT GPU LLM experts (owner run)."""
+    try:
+        import importlib
+        m = importlib.import_module('sov33_square_4plus1'); r = m.measure(); r['capability']='square-4plus1'
+        r['law'] = 'centre integrator helps; 4-around-1 beats single only WITH regional structure (see fractal-nest)'
+        return r
+    except Exception as e:
+        return {'capability':'square-4plus1','error':str(e)[:160]}
+
+def capability_fractal_nest(**kwargs):
+    """Fractal nesting: a pyramid becomes a node in a larger pyramid (33-cubed). MEASURED: nesting (a sub-
+    pyramid per region) BEATS a flat pyramid of equal budget by ~+60% WHEN each region gets a full pyramid
+    AND routing is accurate (regional structure); loses when regions are trivially separable or sub-pyramids
+    are depth-starved. The honest condition for when to nest. NOT GPU LLM experts (owner run)."""
+    try:
+        import importlib
+        m = importlib.import_module('sov33_fractal_nest'); r = m.measure(); r['capability']='fractal-nest'
+        return r
+    except Exception as e:
+        return {'capability':'fractal-nest','error':str(e)[:160]}
+
 def capability_canonical(mode: str = 'paid', **kwargs):
     """Load the FROZEN winning SOV333 setup (sweep winner + adversarial-hardened) and build it live.
     mode='paid' -> diverse-5 @ 0.65; mode='free' -> diverse-3 @ 0.8 (sovereign/local)."""
@@ -2222,6 +2272,10 @@ CAPABILITIES = {
     'owem-stack': capability_owem_stack,
     'fluid-pyramid': capability_fluid_pyramid,
     'pyramid-4brain': capability_pyramid_4brain,
+    'double-pyramid': capability_double_pyramid,
+    'quantum-mirror': capability_quantum_mirror,
+    'square-4plus1': capability_square_4plus1,
+    'fractal-nest': capability_fractal_nest,
     'care-floor': capability_care_floor,
     'mist12': capability_mist12,
     'drum': capability_drum,
