@@ -1,5 +1,5 @@
 {
-  "running": 54,
+  "running": 56,
   "gated": 42,
   "broken": 0,
   "rows": [
@@ -577,6 +577,18 @@
       "capability": "fluid-ratio-sweep",
       "class": "RUNNING",
       "detail": "Auto-found per-layer mixing %: global best = 12 layers @ nu=0.5 (loss 0.0485) BEATS 8-layer flat-1.0 (0.0566) \u2014 vindicates the 12-layer design under lower ratio; greedy depth-8 schedule [1,1,1,1,1,.75,.75,.75] beats flat +1.9%. Reproduced sibling depth curve exactly (independent, non-sandbox).",
+      "expected_gated": false
+    },
+    {
+      "capability": "ratio-4brain-compound",
+      "class": "RUNNING",
+      "detail": "Measured: 4-brain and per-layer-ratio laws do NOT fully compound \u2014 4brain x 8L x flat nu=1.0 (0.0350) is the global winner; the 12@0.5 ratio trick helps only the 1-brain pyramid. Honest negative, CPU.",
+      "expected_gated": false
+    },
+    {
+      "capability": "alphabet-A-P-pipeline",
+      "class": "RUNNING",
+      "detail": "16 governed stages A-P run E2E over the fluid pyramid, SHA256/SIGIL hash-chained; care-veto fail-closed (benign emits loss 0.0334, harmful vetoed). Mamba/Venturi [sim]; governance real.",
       "expected_gated": false
     }
   ],
