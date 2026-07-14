@@ -1,6 +1,6 @@
 {
   "running": 71,
-  "gated": 32,
+  "gated": 33,
   "broken": 0,
   "rows": [
     {
@@ -620,6 +620,12 @@
       "class": "RUNNING",
       "detail": null,
       "expected_gated": false
+    },
+    {
+      "capability": "gpu-fire-training-script",
+      "class": "GATED",
+      "detail": "Built Science's missing rung-4: sov33_gpu_fire.py = one-command real QLoRA training wired to 3,356 real expert_data examples (65 domains) -> Qwen3-0.6B QLoRA -> solver-format GSM8K -> real number + adapter. Syntax-verified + corpus loader validated (parses all 3,356). GATED: needs a GPU (no CUDA on 16GB Mac). Fetchable via gist; Kaggle armed. Handoff doc COMPUTE_HANDOFF_FOR_SCIENCE tells Science exactly how to fire.",
+      "expected_gated": true
     }
   ],
   "verdict": "SHIP-READY (0 broken)"
