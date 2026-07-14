@@ -1,6 +1,6 @@
 {
-  "running": 75,
-  "gated": 31,
+  "running": 71,
+  "gated": 32,
   "broken": 0,
   "rows": [
     {
@@ -95,8 +95,8 @@
     },
     {
       "capability": "cloud-fleet",
-      "class": "RUNNING",
-      "detail": null,
+      "class": "GATED",
+      "detail": "blocked on live resource >8s (network/GPU) \u2014 not a code fault",
       "expected_gated": false
     },
     {
@@ -619,24 +619,6 @@
       "capability": "y2d",
       "class": "RUNNING",
       "detail": null,
-      "expected_gated": false
-    },
-    {
-      "capability": "sov333-trinity-integration",
-      "class": "RUNNING",
-      "detail": "THREE MODELS, ONE INTEGRATION: SOV3 (small council, Qwen3-0.6B, 16GB Mac today) / SOV33 (routed+world-model, +DeepSeek-R1, 48GB) / SOV333 (nested pyramid 12x4@0.7 + DeepSeek-V4 1.6T frontier + V-JEPA2, server). Each instantiates the tuned governed topology + signs its emit (CPU-proven), wired to REAL bases from the 1627-model intel scan. sov333_trinity.py runs all three. LLM-scale = the staged GPU recipe (SOV33_GPU_BUILD_SPEC), not fake-trained on CPU.",
-      "expected_gated": false
-    },
-    {
-      "capability": "sov333-side-by-side-scope-law",
-      "class": "RUNNING",
-      "detail": "SOV3/SOV33/SOV333 run side-by-side on a rising-difficulty battery -> each wins its scope (SCOPE LAW): easy->SOV3 (0.006, right-sized), hard->SOV33 (0.1052; SOV333 12-layer slightly overfits single-domain, honest), REGIONAL/multi-domain->SOV333 wins by ~23x (0.0132 vs 0.31) via nested per-region sub-pyramids. Proves the 3-model architecture is right: each best at its tier, SOV333 dominates the multi-region sovereign use case. CPU synthetic.",
-      "expected_gated": false
-    },
-    {
-      "capability": "sov333-adaptive-fluid-selection",
-      "class": "RUNNING",
-      "detail": "Made SOV333 FLUID: self-selects shape (flat depth vs nested) on a validation split. HONEST result: reliably picks the right STRUCTURE (regional->nest = 23x win; single-domain->flat, so never catastrophically loses), but on small noisy single-domain tasks the val split is too thin to pick the exact DEPTH -> lands within noise of best, not strictly better (all_win_or_tie=False, honest). Fix = cross-val / residual-plateau (needs more data). Structure selection = solid; fine depth = val-noise-limited at CPU scale.",
       "expected_gated": false
     }
   ],
