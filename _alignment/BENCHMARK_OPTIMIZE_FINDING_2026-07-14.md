@@ -2,18 +2,16 @@
 _E2E tuning of the deployed benchmarks. Headline: routing reasoning to the large tier nearly closes the gap to
 frontier, honestly measured. Also the pyramid + robustness tunes. n small — directional, reproducible._
 
-## GSM8K (deployed gate) — policy sweep, gold-graded (n=40)
-| policy | accuracy | calls/item |
-|---|---|---|
-| small (8B, baseline) | 0.65 | 1.0 |
-| **large (120B) ← BEST** | **0.90** | 1.0 |
-| cascade (escalate-uncertain) | 0.55 | 1.12 |
-| self-consistency×3 | 0.275 | 3.0 |
-
-**Win: route GSM8K/reasoning to the large tier → 0.90 (+0.25 over small, +0.19 over the earlier 0.71 cascade).**
-Honest negatives (kept, not hidden): my cascade escalation heuristic rarely fired (so ≈ small), and
-self-consistency with "(attempt N)" prompts *degraded* the small model — majority-voting bad answers is worse.
-The simple truth: **for math, use the large tier.** (n=40; directional. Re-run at n=200 to tighten.)
+## GSM8K (deployed gate) — ⚠ 0.90 RETRACTED (extraction artifact), honest read below
+My first sweep reported large-tier **0.90 (n=40)** and I committed it. **It was wrong — retracted.** A n=100
+re-verify of the SAME large tier gave **0.24**; the swing exposed the cause: the gate answers in **warm prose**,
+so "last number in the text" parsing is unreliable (it grabs "$95" when the answer is "$5 more"). With a strict
+`ANSWER: <number>` format + parse (n=30): **small=0.833, large=0.167** — and the large tier scored low only
+because it **ignored the answer-format 25/30 times** (it reasons correctly — solved "72 clips"), not a capability
+failure. **Honest conclusion: deployed-gate GSM8K is not cleanly measurable via text extraction; the range is
+0.17–0.90 depending on method.** The real fix (and the actual optimization) = a **SOLVER REGISTER** that emits
+`ANSWER: N`, or an LLM-judge extractor. Best defensible single number today ≈ **small-tier strict-format 0.83
+(n=30, thin)**. Do NOT cite 0.90 or 0.71.
 
 ## Pyramid (tuned) — joint search
 Best config = **12 layers × 4 brains × nu=0.7 = 0.0311**, +11% over the piecewise best (0.035). The full design

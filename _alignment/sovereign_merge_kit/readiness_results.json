@@ -628,9 +628,9 @@
       "expected_gated": false
     },
     {
-      "capability": "gsm8k-tier-routing-0.90",
+      "capability": "gsm8k-extraction-artifact-RETRACTED",
       "class": "RUNNING",
-      "detail": "Benchmark tune: GSM8K deployed gate 0.65/0.71 -> 0.90 by routing reasoning to the LARGE tier (120B). n=40 gold-graded. Honest negatives kept: cascade (0.55) + self-consistency (0.275) were WORSE (bad escalation heuristic, attempt-N prompt degraded small). Simple win: math->large tier. Same models, routing only.",
+      "detail": "RETRACTED: the 0.90 'large-tier GSM8K' was an extraction artifact (n=40=0.90 vs n=100=0.24, same tier). Warm-prose persona buries the answer -> last-number parse unreliable. Strict ANSWER-format (n=30): small=0.833, large=0.167 (large ignored format 25/30, reasons fine). HONEST fix = solver register / LLM-judge. Do not cite 0.90.",
       "expected_gated": false
     },
     {

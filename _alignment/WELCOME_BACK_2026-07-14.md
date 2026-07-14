@@ -6,7 +6,7 @@ Honest register throughout: real wins, real limits named._
 ## 📈 Benchmarks improved this session (all committed)
 | benchmark | before | **after (tuned)** | how |
 |---|---|---|---|
-| **GSM8K (deployed gate)** | 0.71 | **0.90** | route reasoning → large tier (n=40; n=100 verifying) |
+| **GSM8K (deployed gate)** | ~0.83 (small, strict-format) | *unstable* | ⚠ 0.90 RETRACTED — prose persona breaks answer-extraction; real fix = solver register (see finding) |
 | **Fluid pyramid** | 0.035 | **0.0311 (+11%)** | joint optimum = 12 layers × 4 brains × nu=0.7 — your whole design, compounded |
 | **World-model dynamics** | 0.0032 | **0.00063 (−80%)** | bigger, better-trained predictor |
 | **Governed-robustness #1** | holds 4/9 | **holds 5/9** | reputation-weighting, past the Byzantine limit |
