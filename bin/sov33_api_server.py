@@ -2259,6 +2259,65 @@ def handle_sovereign_brain_v2_status() -> dict:
     }
 
 
+
+def handle_conformal_veto() -> dict:
+    """GET /api/conformal-veto — Split-Conformal care-veto state."""
+    import json as _json
+    cal_path = Path('/Users/nicholas/clawd/_alignment/sovereign_merge_kit/benchmarks/phase36_conformal_veto_2026-07-13.json')
+    if cal_path.exists():
+        return _json.loads(cal_path.read_text())
+    return {'error': 'not calibrated yet'}
+
+
+def handle_l4_panel(payload: dict) -> dict:
+    """POST /api/l4-panel — Run L4 three-lineage diversity panel."""
+    message = payload.get('message', '')
+    if not message:
+        return {'error': 'no message'}
+    
+    import urllib.request
+    API = 'http://localhost:8101'
+    
+    def http_post(path, body, timeout=60):
+        req = urllib.request.Request(
+            API + path, data=json.dumps(body).encode(),
+            headers={'Content-Type': 'application/json'},
+        )
+        with urllib.request.urlopen(req, timeout=timeout) as r:
+            return json.loads(r.read())
+    
+    # 3 lineages
+    r1 = http_post('/api/sovereign-brain/v2', {'message': message})
+    r2 = http_post('/api/owem/fast', {'owem': 'compliance', 'message': message})
+    r3 = http_post('/api/orchestrate', {'message': message, 'citizen': 'compliance'})
+    
+    # Measure ρ
+    def overlap(a, b):
+        if not a or not b: return 0
+        wa, wb = set(a.lower().split()[:30]), set(b.lower().split()[:30])
+        if not wa or not wb: return 0
+        return len(wa & wb) / max(len(wa | wb), 1)
+    
+    a1 = r1.get('answer', '')
+    a2 = r2.get('answer', '')
+    a3 = r3.get('say', '')
+    rho = {
+        '1-2': overlap(a1, a2),
+        '1-3': overlap(a1, a3),
+        '2-3': overlap(a2, a3),
+        'avg': (overlap(a1, a2) + overlap(a1, a3) + overlap(a2, a3)) / 3,
+    }
+    
+    return {
+        'message': message,
+        'lineage1_sov_brain_v2': {'answer': a1[:200], 'sigil': r1.get('sigil')},
+        'lineage2_owem': {'answer': a2[:200], 'sigil': r2.get('sigil')},
+        'lineage3_master': {'answer': a3[:200], 'brain': r3.get('brain')},
+        'rho': rho,
+        'decision': 'ESCALATE' if rho['avg'] > 0.7 else 'CONSENSUS_OK',
+    }
+
+
 def handle_capabilities() -> dict:
     """GET /api/capabilities — list all SOV33 capabilities."""
     return {
@@ -2388,6 +2447,8 @@ class SovereignAPIHandler(BaseHTTPRequestHandler):
             return json_response(self, 200, handle_security_audit())
         elif path == '/api/sovereign-brain/v2/status':
             return json_response(self, 200, handle_sovereign_brain_v2_status())
+        elif path == '/api/conformal-veto':
+            return json_response(self, 200, handle_conformal_veto())
         elif path == '/api/sovereign-citations':
             return json_response(self, 200, handle_sovereign_citations())
         elif path == '/api/charter':
@@ -2408,6 +2469,8 @@ class SovereignAPIHandler(BaseHTTPRequestHandler):
             return json_response(self, 200, handle_owem_fast(payload))
         elif path == '/api/sovereign-brain/v2':
             return json_response(self, 200, handle_sovereign_brain_v2(payload))
+        elif path == '/api/l4-panel':
+            return json_response(self, 200, handle_l4_panel(payload))
         elif path == '/api/multimodal':
             return json_response(self, 200, handle_multimodal())
         elif path == '/api/hyperopt':
@@ -2514,6 +2577,8 @@ class SovereignAPIHandler(BaseHTTPRequestHandler):
             return json_response(self, 200, handle_owem_fast(payload))
         elif path == '/api/sovereign-brain/v2':
             return json_response(self, 200, handle_sovereign_brain_v2(payload))
+        elif path == '/api/l4-panel':
+            return json_response(self, 200, handle_l4_panel(payload))
         elif path == '/api/signup':
             return json_response(self, 200, handle_signup(payload))
         elif path == '/api/alexa':
