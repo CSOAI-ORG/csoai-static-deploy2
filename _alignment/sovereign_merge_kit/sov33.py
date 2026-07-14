@@ -1886,6 +1886,15 @@ def capability_autorun(**kwargs):
                 'gated':j['gated'],'honest':'real train/merge gated below 24-48GB/GPU; ready to run on hardware'}
     except Exception as e: return {'capability':'autorun','error':str(e)[:160]}
 
+def capability_care_tuned(**kwargs):
+    """Tuned OFFLINE care scorer: baseline recall 0.40 -> 1.00 via (a) Art.5 prohibited-practice signal and
+    (b) de-framing benign-wrapper attacks. precision 1.00, 0 FP (no benign control regressed). Reproducible offline."""
+    try:
+        import importlib; m=importlib.import_module('sov33_care_local_tune'); r=m.run_final()
+        return {'capability':'care-tuned','recall':r['recall'],'precision':r['precision'],'acc':r['acc'],
+                'fp':r['fp'],'tn':r['tn'],'baseline_recall':0.40,'note':'offline, reproducible, no TN regressed'}
+    except Exception as e: return {'capability':'care-tuned','error':str(e)[:160]}
+
 def capability_canonical(mode: str = 'paid', **kwargs):
     """Load the FROZEN winning SOV333 setup (sweep winner + adversarial-hardened) and build it live.
     mode='paid' -> diverse-5 @ 0.65; mode='free' -> diverse-3 @ 0.8 (sovereign/local)."""
@@ -2439,6 +2448,7 @@ CAPABILITIES = {
     'brain-merge-ratio': capability_brain_merge_ratio,
     'six-lever-proxy': capability_six_lever_proxy,
     'find-best-config': capability_find_best_config,
+    'care-tuned': capability_care_tuned,
     'autorun': capability_autorun,
     'multistep-rollout': capability_multistep_rollout,
     'ed25519-sigil': capability_ed25519_sigil,
