@@ -1,5 +1,5 @@
 {
-  "running": 72,
+  "running": 73,
   "gated": 31,
   "broken": 0,
   "rows": [
@@ -619,6 +619,12 @@
       "capability": "robustness-reputation-extend",
       "class": "RUNNING",
       "detail": "TUNED the #1 governed-robustness board past the classic Byzantine limit: reputation-weighting (down-weight persistent liars over rounds) holds near-flat at 5/9 adversaries (past BFT half). At 5/9: reputation 1.1x degrade vs care-bft 1.3x vs median 1.9x vs naive 5.0x. Extends the safe zone from 4/9 to 5/9. CPU synthetic; tunes aggregation not members.",
+      "expected_gated": false
+    },
+    {
+      "capability": "pyramid-best-config-tuned",
+      "class": "RUNNING",
+      "detail": "Joint tune (depth x ratio x brains x hidden) found NEW BEST pyramid = 12 layers x 4-brain x nu=0.7 x hidden=12 = 0.0311, beating the prior piecewise best (4-brain-8L=0.035) by +11%. The full design compounds: 12-layer depth + 4-brain + gentle ratio-damping together > any single axis. Vindicates the whole architecture jointly. GPU build spec should use 12x4 nu=0.7.",
       "expected_gated": false
     }
   ],
