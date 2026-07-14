@@ -28,7 +28,7 @@ from peft import LoraConfig, get_peft_model, TaskType
 OUTPUT_DIR = Path('/Users/nicholas/.sovereign/models/sov33-large-world')
 SIGIL_FILE = Path('/Users/nicholas/.sovereign/sov33_large_fast.sigil.jsonl')
 DATA_PATH = '/Users/nicholas/clawd/_alignment/sovereign_merge_kit/sov_owem_data/sov33_merged_corpus.jsonl'
-BASE_MODEL = '/Users/nicholas/.sovereign/hf_cache/hub/models--Qwen--Qwen2.5-0.5B/snapshots/060db6499f32faf8b98477b0a26969ef7d8b9987'
+BASE_MODEL = '/Users/nicholas/.sovereign/hf_cache/hub/models--Qwen--Qwen3-0.6B/snapshots/c1899de289a04d12100db370d81485cdf75e47ca'
 
 
 def sigil_emit(hop):
