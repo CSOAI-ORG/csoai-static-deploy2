@@ -1,5 +1,5 @@
 {
-  "running": 73,
+  "running": 74,
   "gated": 30,
   "broken": 0,
   "rows": [
@@ -619,6 +619,12 @@
       "capability": "governed-world-model",
       "class": "RUNNING",
       "detail": "Closed the checklist's ONE gap: action-conditioned world model measured on CPU. DYNAMICS: open-loop MSE 0.003 stable to 5 steps. PLANNING: model-only plan 0.24 vs random 0.93 (~4x). COUNTERFACTUAL: picked truly-better plan. GOVERNANCE (the moat): care-gate caught 99/99 unsafe trajectories, 100% fail-closed - a governed transition function no frontier world model (Genie/V-JEPA/OmniDreams) has. Honest: synthetic numpy dynamics, mechanism not visual scale; bridge=V-JEPA2/Genie for perception.",
+      "expected_gated": false
+    },
+    {
+      "capability": "governed-world-model-composition",
+      "class": "RUNNING",
+      "detail": "End-to-end governed world model, one artifact (sov33_composition_demo.py), live-tested: LLM care-gate task -> world-model rolls out 300 plans -> care-gate each transition (vetoed 158 unsafe futures) -> best safe plan (real-env 0.25, never entered danger) -> local Qwen3 narrates -> Ed25519 SIGIL-sign. Benign drone task=SAFE_PLAN signed; reactor-overload=REFUSED signed; chain verifies. The full LLMxWM+governance+signing composition no frontier lab ships. 16GB Mac.",
       "expected_gated": false
     }
   ],

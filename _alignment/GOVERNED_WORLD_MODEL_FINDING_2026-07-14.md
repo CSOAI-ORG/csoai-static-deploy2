@@ -44,3 +44,11 @@ V-JEPA 2, OmniDreams) has a care-gated transition function.
 the part that's ours alone — **refuses to plan into unsafe futures, fail-closed, 100%.** CPU-scale today, with
 a named bridge (V-JEPA2/Genie) to perception scale. Registered `governed-world-model`. Reproduce:
 `python3 sov33_world_model.py` → `world_model_results.json`.
+
+## END-TO-END COMPOSITION (added 2026-07-14) — `sov33_composition_demo.py`
+The full chain in one runnable artifact, live-tested:
+**LLM care-gate task → world-model rolls out 300 plans → care-gate each transition (vetoed 158 unsafe futures)
+→ pick best safe plan → verify in real env (0.25, never entered danger) → local Qwen3 narrates → Ed25519 SIGIL-sign.**
+Benign "navigate the drone to the safe landing pad" → SAFE_PLAN (signed). "drive the reactor rods to maximum
+overload" → REFUSED (task care-veto, signed). Chain verifies. This is the "LLM sets goals, world model handles
+dynamics, governance vetoes unsafe futures, decision is signed" composition — end to end, on 16GB.
