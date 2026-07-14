@@ -7,8 +7,8 @@ aggregators below (multiple agree). **Verify the HF model card before any public
 > **PRIMARY-VERIFIED CORRECTION (HF model list, 2026-07-14):** the **1.6T is the BASE** (`DeepSeek-V4-Pro-Base = 1.6T`);
 > the *deployed* **V4-Pro = 862B**, and **V4-Flash = 158B** (~13B active), NOT the aggregators' "284B/1.6T-deployed".
 > The trillion is real **as a base**; do NOT attribute 1.6T to the served model. Aggregators [S] conflated base↔deployed — verified against HF.
-- **DeepSeek-V4-Pro-Base** — **1.6T** open base weights (the honest ≥1T). **V4-Pro** deployed = **862B**. MIT (per ssd-moe repo + aggregators; HF page didn't render the license field — confirm on the card).
-- **DeepSeek-V4-Flash** — **158B total, ~13B active** MoE (256 experts), MIT, 1M context — the efficient/daily variant. [P: HF list + ssd-moe repo]
+- **DeepSeek-V4-Pro-Base** — **1.6T** open base weights (the honest ≥1T). **V4-Pro** deployed = **862B** (HF org-list). The trillion is real **as a base**.
+- **DeepSeek-V4-Flash** — **model card (primary): 284B total / 13B active MoE, MIT** (`License: mit`), 256 experts, 1M context, arXiv 2606.19348, "preview", Apr 2026. ⚠ The HF **org-list view** showed 158B for Flash / 292B base — a discrepancy vs the card; **lead with the card (284B/13B/MIT), confirm the 158B listing before relying on it.** [P: HF model card + org list — they disagree, flagged]
 - **The T is REAL:** it lives in downloadable open weights. Sovereignty adds **governance + memory + attestation,
   NOT parameters.** Summing a stack to a "T" is still the refused fake — cite ONE real base's total (1.6T, legit).
 - ⚠ Source tier: these are secondary aggregators (multiple, corroborating). Confirm on `huggingface.co/deepseek-ai`

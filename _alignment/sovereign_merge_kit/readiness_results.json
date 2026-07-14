@@ -1,5 +1,5 @@
 {
-  "running": 66,
+  "running": 68,
   "gated": 42,
   "broken": 0,
   "rows": [
@@ -649,6 +649,18 @@
       "capability": "primary-verify-deepseek-figs",
       "class": "RUNNING",
       "detail": "PRIMARY correction (HF list): 1.6T = V4-Pro-BASE not deployed; V4-Pro=862B, V4-Flash=158B/~13B active (aggregators said 284B - NOT confirmed). Trillion real AS A BASE only. Confabulation-discipline caught the base<->deployed conflation. Verify license field on HF card (didn't render).",
+      "expected_gated": false
+    },
+    {
+      "capability": "local-sovereign-live",
+      "class": "RUNNING",
+      "detail": "RUNNING TODAY on 16GB Mac: Ollama Qwen3-1.7B (Apache-2.0) -> heuristic care-gate (fail-closed) -> Ed25519 SIGIL-signed hash-chained emit. LIVE-TESTED: benign emits (real answer, care 0.98), harmful pipe-bomb vetoed BEFORE model runs (care 0.05, signed refusal), chain verify ok=true, TAMPER caught (flip veto->emit -> ok=false first_bad=2). No cloud, no 48GB, session key not King key. sov33_local_sovereign.py.",
+      "expected_gated": false
+    },
+    {
+      "capability": "hf-license-primary-verified",
+      "class": "RUNNING",
+      "detail": "PRIMARY-verified HF licenses: Qwen3-4B = apache-2.0 (card, 4.0B/3.6B non-embed); DeepSeek-V4-Flash = mit (card, 284B/13B, arXiv 2606.19348). Closes the [S] license gap. Flagged: card says 284B vs org-list 158B - confirm.",
       "expected_gated": false
     }
   ],
