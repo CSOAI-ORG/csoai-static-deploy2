@@ -3,10 +3,17 @@ _The CPU model (sov33_full_model.py) proved the architecture + design laws E2E. 
 piece to its GPU/LLM form so the owner's Kaggle/Colab notebook builds the SAME structure with real weights.
 Every parameter below is set by a MEASURED result this session, not a guess._
 
+## REAL MODELS (web-verified 2026-07-14 — see SOVEREIGN_REAL_MODELS_SHOPPING_LIST)
+- **Small tier (soupable, Apache-2.0):** two QLoRA fine-tunes of **Qwen3-4B** (or 1.7B).
+- **Large tier (soupable, Apache-2.0):** two QLoRA fine-tunes of **Qwen3-32B** (or MoE Qwen3-30B-A3B).
+- **Frontier escalation target (MIT):** **DeepSeek-V4-Pro** (1.6T/49B active — the honest T-base) for high mirror-divergence items.
+- ⚠ Do NOT use Qwen2.5-3B in a commercial build (Qwen Research License). Qwen3+ is all Apache-2.0.
+- Merge only same-base pairs (soup α=0.5/TIES); never average across bases or sizes (measured `brain-merge-laws`).
+
 ## THE BLUEPRINT (measured on CPU, ready to scale)
 | Piece | CPU proof | GPU/LLM form (what the owner builds) |
 |---|---|---|
-| Brain | OWEMPredictorV2 (numpy MLP) | a qwen expert (QLoRA fine-tune on free T4) |
+| Brain | OWEMPredictorV2 (numpy MLP) | a **Qwen3** expert (QLoRA fine-tune on free T4, Apache-2.0) |
 | Layer = 4 brains | pyramid-4brain +48% vs 1-brain | 4 QLoRA experts (Compliance/Defense/Intuition/Voice), vote=mean logits |
 | Depth = 8 | fluid-pyramid: 8 optimal, 9-12 overfit | 8 residual layers; STOP at 8 (measured overfit past it) |
 | Residual cascade | each layer learns residual below | Branch-Train-MiX: expert n trains on task, n+1 on n's errors |

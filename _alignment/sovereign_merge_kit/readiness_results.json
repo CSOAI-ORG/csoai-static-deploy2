@@ -1,5 +1,5 @@
 {
-  "running": 61,
+  "running": 63,
   "gated": 42,
   "broken": 0,
   "rows": [
@@ -619,6 +619,18 @@
       "capability": "brain-merge-laws",
       "class": "RUNNING",
       "detail": "Hybrid 4->1 brain merge laws MEASURED: (1) different-init weight-soup FAILS (0.256 worse than either 0.198 - permutation symmetry); (2) cross-size can't weight-merge -> distill/route (large 5x better, route to it); (3) same-init soup exists but output-vote beats it here. Honest architecture: route a council + soup only same-init fine-tunes. Catches the 'average 4 open models' fake.",
+      "expected_gated": false
+    },
+    {
+      "capability": "real-models-shopping-list",
+      "class": "RUNNING",
+      "detail": "Web-verified (2026-07-14) the actual open models: T-base=DeepSeek-V4-Pro 1.6T/49B MIT (multi-source corroborated, verify HF card); soupable Apache-2.0 tiers=Qwen3-4B x2 + Qwen3-32B x2 (Qwen3+ all Apache; Qwen2.5-3B is Research-license, avoid commercial). Fiction->reality: the T is real, named, licensed.",
+      "expected_gated": false
+    },
+    {
+      "capability": "venturi-seam-verified",
+      "class": "RUNNING",
+      "detail": "Independently ran sov33_venturi_throat.py (non-sandbox): 5/5 PASS incl tamper-detect (alter record -> chain verify catches, first_break=1). The governed SIGIL seam is REAL, not metaphor. TOPLOC activation-LSH still honest placeholder (SHA256 over decision inputs).",
       "expected_gated": false
     }
   ],
