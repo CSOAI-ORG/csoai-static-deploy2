@@ -1820,6 +1820,27 @@ def capability_venturi_stream(**kwargs):
     except Exception as e:
         return {'capability':'venturi-stream','error':str(e)[:160]}
 
+def capability_brain_merge_ratio(**kwargs):
+    """2-small + 2-large OWEM brain: MEASURED best mixing ratio (output-ensemble, NOT weight-average).
+    Sweeps small/large contribution split; on a uniform task large-heavy wins (small members add nothing when
+    the larges already solve it) - consistent with the unifying architecture law."""
+    try:
+        import importlib; m=importlib.import_module('sov33_brain_merge_ratio'); r=m.run()
+        return {'capability':'brain-merge-ratio','best':r['best'],'large_only':r['large_only'],
+                'equal_4way':r['equal_4way'],'note':'output-ensemble merge; ratio is a real knob; large-heavy wins uniform task'}
+    except Exception as e: return {'capability':'brain-merge-ratio','error':str(e)[:160]}
+
+def capability_six_lever_proxy(**kwargs):
+    """HONEST CPU proxy of the 6-lever MoE-streaming stack: compute-avoided per token, NOT wall-clock tok/s.
+    64x ceiling (6/384 active). LRU/prefetch are ASSUMED hit-rates. Real tok/s needs owner Mac (COLIBRI_RUNBOOK)."""
+    try:
+        import importlib; m=importlib.import_module('sov33_six_lever_proxy')
+        ceiling, rows = m.levers()
+        return {'capability':'six-lever-proxy','ceiling_x':round(ceiling,1),
+                'levers':[{'lever':n,'eff_loads':l,'compute_avoided_x':f} for n,l,f in rows],
+                'honest':'compute-avoided arithmetic not wall-clock; LRU/prefetch assumed; measure real tok/s on Mac'}
+    except Exception as e: return {'capability':'six-lever-proxy','error':str(e)[:160]}
+
 def capability_canonical(mode: str = 'paid', **kwargs):
     """Load the FROZEN winning SOV333 setup (sweep winner + adversarial-hardened) and build it live.
     mode='paid' -> diverse-5 @ 0.65; mode='free' -> diverse-3 @ 0.8 (sovereign/local)."""
@@ -2370,6 +2391,8 @@ CAPABILITIES = {
     'tensor-compress': capability_tensor_compress,
     'param-accounting': capability_param_accounting,
     'venturi-stream': capability_venturi_stream,
+    'brain-merge-ratio': capability_brain_merge_ratio,
+    'six-lever-proxy': capability_six_lever_proxy,
     'care-floor': capability_care_floor,
     'mist12': capability_mist12,
     'drum': capability_drum,
