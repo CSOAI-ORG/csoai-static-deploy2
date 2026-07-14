@@ -1784,6 +1784,23 @@ def capability_tensor_compress(**kwargs):
     except Exception as e:
         return {'capability':'tensor-compress','error':str(e)[:160]}
 
+def capability_param_accounting(**kwargs):
+    """HONEST trillion-parameter accounting: a REAL T-param OWEM = the SOV sovereign layer on a genuine open
+    >=1T MoE base. Verified live 2026-07-14: DeepSeek-V4-Pro (1.6T total/49B active, MIT, 33T tokens) is the
+    largest open-weight model; Kimi-K2.6 (1T/32B, MIT). The T is REAL (base weights, downloadable open);
+    sovereignty adds governance+memory+attestation, NOT params. ENFORCES the rule: summing params across a
+    STACK is refused (the retracted category error). T is real when the base is real; fake when summed."""
+    try:
+        import importlib
+        m = importlib.import_module('sov33_param_accounting')
+        return {'capability':'param-accounting',
+                'largest_open_T_base': m.account_single_moe('deepseek-v4-pro'),
+                'sovereign_T_owem': m.sovereign_T_owem('deepseek-v4-pro'),
+                'stack_sum_refused': m.forbidden_stack_sum([30,7,4])['REFUSED'],
+                'bases': list(m.OPEN_MOE_BASES)}
+    except Exception as e:
+        return {'capability':'param-accounting','error':str(e)[:160]}
+
 def capability_canonical(mode: str = 'paid', **kwargs):
     """Load the FROZEN winning SOV333 setup (sweep winner + adversarial-hardened) and build it live.
     mode='paid' -> diverse-5 @ 0.65; mode='free' -> diverse-3 @ 0.8 (sovereign/local)."""
@@ -2332,6 +2349,7 @@ CAPABILITIES = {
     'size-family': capability_size_family,
     'conformal-veto': capability_conformal_veto,
     'tensor-compress': capability_tensor_compress,
+    'param-accounting': capability_param_accounting,
     'care-floor': capability_care_floor,
     'mist12': capability_mist12,
     'drum': capability_drum,
