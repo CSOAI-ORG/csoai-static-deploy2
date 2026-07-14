@@ -1613,6 +1613,25 @@ def capability_action_guard(command: str = None, care_score=None, **kwargs):
     except Exception as e:
         return {'capability': 'action-guard', 'error': str(e)[:160]}
 
+def capability_venturi(**kwargs):
+    """Venturi throat: auditable routing decision (hash-chain + care-gate + router-choice composed).
+    Self-test demonstrates flow, veto-collapse-before-execution, chain-verify, tamper-detect.
+    HONEST: activation_digest is a SHA256 placeholder, NOT the real TOPLOC LSH; no BTX training here."""
+    try:
+        import importlib, os
+        v = importlib.import_module('sov33_venturi_throat')
+        if os.path.exists(v.CHAIN): os.remove(v.CHAIN)
+        r1 = v.throat({'experts':['compliance'],'weights':[1.0]}, care_score=0.80, execute=lambda:'ok')
+        ran={'x':False}
+        r2 = v.throat({'experts':['defense'],'weights':[1.0]}, care_score=0.05, execute=lambda:ran.__setitem__('x',True))
+        ok,brk,n = v.verify_chain()
+        return {'capability':'venturi','flow':r1['decision'],'veto':r2['collapsed'],
+                'action_blocked_on_veto': not ran['x'],'chain_ok':ok,'records':n,
+                'composes':'hash-chain + care-gate + router-choice',
+                'honest':'activation_digest=SHA256 placeholder NOT TOPLOC; no BTX training; novelty claim unverified'}
+    except Exception as e:
+        return {'capability':'venturi','error':str(e)[:160]}
+
 def capability_canonical(mode: str = 'paid', **kwargs):
     """Load the FROZEN winning SOV333 setup (sweep winner + adversarial-hardened) and build it live.
     mode='paid' -> diverse-5 @ 0.65; mode='free' -> diverse-3 @ 0.8 (sovereign/local)."""
@@ -2149,6 +2168,7 @@ CAPABILITIES = {
     'guardian': capability_guardian,
     'owem-v2': capability_owem_v2,
     'action-guard': capability_action_guard,
+    'venturi': capability_venturi,
     'care-floor': capability_care_floor,
     'mist12': capability_mist12,
     'drum': capability_drum,
