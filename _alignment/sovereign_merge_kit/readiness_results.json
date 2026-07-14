@@ -598,15 +598,15 @@
       "expected_gated": false
     },
     {
-      "capability": "sov33-local-route-council-server",
+      "capability": "meok-sov33-pypi-v0.2.0",
       "class": "RUNNING",
-      "detail": "SOV33 upgrade to local sovereign, LIVE-TESTED: small->large route (qwen3:0.6b draft, escalate qwen3:1.7b), 4-brain care-gated-BFT council (quorum>=3/4 to emit, tested 4/4 pass), OpenAI-compatible HTTP server (--serve: GET /health chain-ok, POST /v1/chat/completions returns signed answer + governance meta, harmful care-vetoed). os.meok.ai/OS-dock can call it. 16GB Mac.",
+      "detail": "meok-sov33 v0.2.0 built + twine-check PASSED - now BUNDLES the governed local sovereign (meok_sov33.local: govern/serve/verify, Ed25519 or SHA256-chain, zero hard deps). pip install + `python -m meok_sov33.local --serve`. Upload owner-gated (PyPI token).",
       "expected_gated": false
     },
     {
-      "capability": "claude-science-help-reconcile",
+      "capability": "os-dock-local-sovereign-wired",
       "class": "RUNNING",
-      "detail": "Helped Claude Science: reconciled its brain-merge (large-heavy=my route/distill law), confirmed its honest 6-lever split (compute-avoided 64x vs latency-hiding), mapped its proxies to real libs (MoE-Infinity/FlashMoE/FineMoE/ssd-moe-mlx). CORRECTION flagged: its 'V4-Pro 1.6T/49B' repeats base<->deployed conflation (1.6T=base, V4-Pro deployed=862B); GLM-5.2 744B ->[LEAD]. Honest: Colibri run-book needs 370GB+Metal - neither sandbox nor 16GB Mac runs it.",
+      "detail": "os.meok.ai dock wired + DEPLOYED: opt-in localStorage.meok_local_sovereign routes the dock through YOUR governed local sovereign (care-gated+signed on your machine), cloud /api/chat fallback. Glass-box: your local model powers the site when running.",
       "expected_gated": false
     }
   ],

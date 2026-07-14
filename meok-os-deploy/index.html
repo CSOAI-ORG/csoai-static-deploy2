@@ -1672,6 +1672,17 @@ async function sovGovern(raw){
 }
 // the canonical brain: POST to live SOV3 /chat; falls back to the command layer if unreachable
 const SOV3_CHAT = "/api/chat";
+// Optional glass-box: route the dock through YOUR governed LOCAL sovereign (meok_sov33.local --serve /
+// sov33_local_sovereign.py --serve) when opted in. Care-gated + Ed25519-signed on YOUR machine, no cloud.
+// Enable: localStorage.setItem('meok_local_sovereign','http://localhost:8787'). Falls back to /api/chat.
+const SOV_LOCAL_URL=(function(){try{return localStorage.getItem('meok_local_sovereign')||'';}catch(e){return '';}})();
+async function sovChat(body){
+  if(SOV_LOCAL_URL){ try{
+    const r=await fetch(SOV_LOCAL_URL.replace(/\/$/,'')+'/v1/chat/completions',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({messages:[{role:'user',content:body.message}]})});
+    if(r.ok){ const d=await r.json(); const c=d.choices&&d.choices[0]&&d.choices[0].message&&d.choices[0].message.content; if(c) return {response:c, governed:d.governed, local:true}; }
+  }catch(e){ /* local sovereign offline → fall through to cloud */ } }
+  const r=await fetch(SOV3_CHAT,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)}); return await r.json();
+}
 // mobile: tap the dock header to expand/collapse the bottom sheet
 try{ const _sh=document.querySelector('.sovhead'); if(_sh) _sh.addEventListener('click',function(){ if(innerWidth<=760) document.body.classList.toggle('sov-open'); }); }catch(e){}
 // ── Persistent bottom chat bar — talk to Sovereign from ANY screen / any app ──
@@ -1731,8 +1742,8 @@ async function sovAsk(text){
   try{
     let ans='';
     if(window._sovPF && window._sovPF[_pfk]){ ans=((await window._sovPF[_pfk])||'').trim(); } // instant: we pre-predicted this while you typed
-    if(!ans){ const r=await fetch(SOV3_CHAT,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:text, queen_id:'queen-king', register:'plain', persona:sovContext(), model:window.MEOK_MODEL})});
-      const d=await r.json(); ans=((d&&(d.response||d.answer||d.text))||'').trim(); }
+    if(!ans){ const d=await sovChat({message:text, queen_id:'queen-king', register:'plain', persona:sovContext(), model:window.MEOK_MODEL});
+      ans=((d&&(d.response||d.answer||d.text))||'').trim(); if(d&&d.local&&d.governed&&window.console) console.log('🐉 governed by your LOCAL sovereign · sigil',(d.governed.sigil||'').slice(0,12),'emitted',d.governed.emitted); }
     if(think) think.remove();
     if(ans) sovSay(esc(ans)); else throw 0;
     sovToolHints(text);   // orchestrator: surface matching tools from the 377-fleet → SOV Space
