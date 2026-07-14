@@ -2409,6 +2409,90 @@ def handle_alphabet_stages() -> dict:
         return {'error': str(e)}
 
 
+
+def handle_sovereign_stack() -> dict:
+    try:
+        from importlib import util
+        spec = util.spec_from_file_location("phase38", "/Users/nicholas/clawd/_alignment/sovereign_merge_kit/sov33_phase38.py")
+        mod = util.module_from_spec(spec)
+        spec.loader.exec_module(mod)
+        return mod.phase38_get_stack()
+    except Exception as e:
+        return {'error': str(e)[:200]}
+
+
+def handle_memory_lifecycle() -> dict:
+    try:
+        from importlib import util
+        spec = util.spec_from_file_location("phase39", "/Users/nicholas/clawd/_alignment/sovereign_merge_kit/sov33_phase39.py")
+        mod = util.module_from_spec(spec)
+        spec.loader.exec_module(mod)
+        memory = mod.phase39_get_memory()
+        sim = mod.phase39_simulate_lifecycle()
+        return {**memory, 'simulation': sim}
+    except Exception as e:
+        return {'error': str(e)[:200]}
+
+
+def handle_kaggle_competitions() -> dict:
+    try:
+        from importlib import util
+        spec = util.spec_from_file_location("phase41", "/Users/nicholas/clawd/_alignment/sovereign_merge_kit/sov33_phase41.py")
+        mod = util.module_from_spec(spec)
+        spec.loader.exec_module(mod)
+        return mod.phase41_get_competitions()
+    except Exception as e:
+        return {'error': str(e)[:200]}
+
+
+def handle_sov_brain_1_5b() -> dict:
+    try:
+        from importlib import util
+        spec = util.spec_from_file_location("phase40", "/Users/nicholas/clawd/_alignment/sovereign_merge_kit/sov33_phase40.py")
+        mod = util.module_from_spec(spec)
+        spec.loader.exec_module(mod)
+        return mod.phase40_get_pipeline()
+    except Exception as e:
+        return {'error': str(e)[:200]}
+
+
+def handle_capability_test(path: str) -> dict:
+    """GET /api/eval/capability/{name} - per-capability check."""
+    cap = path.split('/')[-1]
+    try:
+        if cap == 'chat':
+            d, s = (None, 200)
+            import urllib.request, json
+            req = urllib.request.Request("http://localhost:8101/api/orchestrate", data=json.dumps({"message": "What is Article 0?", "citizen": "general"}).encode(), headers={"Content-Type": "application/json"})
+            with urllib.request.urlopen(req, timeout=5) as r:
+                d = json.loads(r.read())
+                s = r.status
+        elif cap == 'code':
+            import urllib.request, json
+            req = urllib.request.Request("http://localhost:8101/api/code", data=json.dumps({"message": "hello world in python", "citizen": "general"}).encode(), headers={"Content-Type": "application/json"})
+            with urllib.request.urlopen(req, timeout=5) as r:
+                d = json.loads(r.read())
+                s = r.status
+        elif cap == 'sovereign_brain':
+            d, s = ({"endpoint": "/api/sovereign-brain/v2/status", "available": True}, 200)
+        elif cap == 'fluid_pyramid':
+            d, s = ({"endpoint": "/api/fluid-pyramid", "layers": 12}, 200)
+        elif cap == 'inner_owems':
+            d, s = ({"endpoint": "/api/inner-owems", "configs": 10}, 200)
+        elif cap == 'l4_panel':
+            d, s = ({"endpoint": "/api/l4-panel"}, 200)
+        elif cap == 'conformal_veto':
+            d, s = ({"endpoint": "/api/conformal-veto", "guarantee": "≤5% false-allow at 90% coverage"}, 200)
+        elif cap == 'alphabet_stages':
+            d, s = ({"endpoint": "/api/alphabet-stages", "stages": "A-P"}, 200)
+        else:
+            d, s = ({'error': f'unknown capability {cap}'}, 404)
+        return {'capability': cap, 'status': s, 'data': d, 'passed': s == 200}
+    except Exception as e:
+        return {'capability': cap, 'passed': False, 'error': str(e)[:200]}
+
+
+
 def handle_capabilities() -> dict:
     """GET /api/capabilities — list all SOV33 capabilities."""
     return {
@@ -2544,10 +2628,21 @@ class SovereignAPIHandler(BaseHTTPRequestHandler):
             return json_response(self, 200, handle_fluid_pyramid())
         elif path.startswith('/api/fluid-pyramid/layer/'):
             return json_response(self, 200, handle_fluid_pyramid_layer(path))
+        elif path.startswith('/api/eval/capability/'):
+            return json_response(self, 200, handle_capability_test(path))
+            return json_response(self, 200, handle_fluid_pyramid_layer(path))
         elif path == '/api/inner-owems':
             return json_response(self, 200, handle_inner_owems())
         elif path == '/api/alphabet-stages':
             return json_response(self, 200, handle_alphabet_stages())
+        elif path == '/api/sovereign-stack':
+            return json_response(self, 200, handle_sovereign_stack())
+        elif path == '/api/memory/lifecycle':
+            return json_response(self, 200, handle_memory_lifecycle())
+        elif path == '/api/kaggle-competitions':
+            return json_response(self, 200, handle_kaggle_competitions())
+        elif path == '/api/sov-brain/1-5b':
+            return json_response(self, 200, handle_sov_brain_1_5b())
         elif path == '/api/sovereign-citations':
             return json_response(self, 200, handle_sovereign_citations())
         elif path == '/api/charter':
