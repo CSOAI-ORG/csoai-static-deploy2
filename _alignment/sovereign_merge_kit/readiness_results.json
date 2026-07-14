@@ -1,8 +1,14 @@
 {
-  "running": 51,
-  "gated": 28,
+  "running": 62,
+  "gated": 32,
   "broken": 0,
   "rows": [
+    {
+      "capability": "action-guard",
+      "class": "RUNNING",
+      "detail": null,
+      "expected_gated": false
+    },
     {
       "capability": "agentdog",
       "class": "RUNNING",
@@ -12,7 +18,7 @@
     {
       "capability": "anti-relapse",
       "class": "GATED",
-      "detail": "blocked on live resource >8s (network/GPU) \u2014 not a code fault",
+      "detail": "fail-soft: endpoint",
       "expected_gated": false
     },
     {
@@ -112,6 +118,12 @@
       "expected_gated": false
     },
     {
+      "capability": "conformal-veto",
+      "class": "RUNNING",
+      "detail": null,
+      "expected_gated": false
+    },
+    {
       "capability": "correlation",
       "class": "GATED",
       "detail": "needs live models (not called: would block on live resource)",
@@ -137,6 +149,12 @@
     },
     {
       "capability": "divergence-sim",
+      "class": "RUNNING",
+      "detail": null,
+      "expected_gated": false
+    },
+    {
+      "capability": "double-pyramid",
       "class": "RUNNING",
       "detail": null,
       "expected_gated": false
@@ -172,9 +190,27 @@
       "expected_gated": false
     },
     {
+      "capability": "fluid-pyramid",
+      "class": "GATED",
+      "detail": "fail-soft: gpu",
+      "expected_gated": false
+    },
+    {
+      "capability": "fractal-nest",
+      "class": "RUNNING",
+      "detail": null,
+      "expected_gated": false
+    },
+    {
       "capability": "free-gpu",
       "class": "GATED",
       "detail": "fail-soft: needs ",
+      "expected_gated": false
+    },
+    {
+      "capability": "full-model",
+      "class": "GATED",
+      "detail": "fail-soft: gpu",
       "expected_gated": false
     },
     {
@@ -209,6 +245,12 @@
     },
     {
       "capability": "guardian",
+      "class": "RUNNING",
+      "detail": null,
+      "expected_gated": false
+    },
+    {
+      "capability": "hermes-agentic",
       "class": "RUNNING",
       "detail": null,
       "expected_gated": false
@@ -304,10 +346,22 @@
       "expected_gated": false
     },
     {
+      "capability": "owem-stack",
+      "class": "RUNNING",
+      "detail": null,
+      "expected_gated": false
+    },
+    {
       "capability": "owem-sweep",
       "class": "GATED",
       "detail": "needs live models (not called: would block on live resource)",
       "expected_gated": true
+    },
+    {
+      "capability": "owem-v2",
+      "class": "RUNNING",
+      "detail": null,
+      "expected_gated": false
     },
     {
       "capability": "owem-world",
@@ -328,6 +382,18 @@
       "expected_gated": false
     },
     {
+      "capability": "pyramid-4brain",
+      "class": "GATED",
+      "detail": "fail-soft: gpu",
+      "expected_gated": false
+    },
+    {
+      "capability": "quantum-mirror",
+      "class": "RUNNING",
+      "detail": null,
+      "expected_gated": false
+    },
+    {
       "capability": "queen-hives",
       "class": "RUNNING",
       "detail": null,
@@ -341,8 +407,8 @@
     },
     {
       "capability": "registry",
-      "class": "RUNNING",
-      "detail": null,
+      "class": "GATED",
+      "detail": "blocked on live resource >8s (network/GPU) \u2014 not a code fault",
       "expected_gated": false
     },
     {
@@ -376,6 +442,12 @@
       "expected_gated": true
     },
     {
+      "capability": "size-family",
+      "class": "RUNNING",
+      "detail": null,
+      "expected_gated": false
+    },
+    {
       "capability": "sondera",
       "class": "GATED",
       "detail": "needs live models (not called: would block on live resource)",
@@ -406,6 +478,12 @@
       "expected_gated": false
     },
     {
+      "capability": "square-4plus1",
+      "class": "RUNNING",
+      "detail": null,
+      "expected_gated": false
+    },
+    {
       "capability": "substrate-explorer",
       "class": "RUNNING",
       "detail": null,
@@ -413,6 +491,12 @@
     },
     {
       "capability": "substrate-growth",
+      "class": "RUNNING",
+      "detail": null,
+      "expected_gated": false
+    },
+    {
+      "capability": "tensor-compress",
       "class": "RUNNING",
       "detail": null,
       "expected_gated": false
@@ -461,6 +545,12 @@
     },
     {
       "capability": "uniquely-yours",
+      "class": "RUNNING",
+      "detail": null,
+      "expected_gated": false
+    },
+    {
+      "capability": "venturi",
       "class": "RUNNING",
       "detail": null,
       "expected_gated": false
