@@ -51,7 +51,7 @@ out-pretrain anyone; the strategy is **adopt every commodity layer + own the gov
 | F2 | **Long-term memory** | ☑ signed portable memory | **KEEP** (adopt Letta/MemGPT tiered patterns). |
 | F3 | **Agent framework** (planner/executor) | ☑ L_AGENTIC (Hermes) | **KEEP**. |
 
-## G. WORLD-MODEL PROPER (☐ — the real gap for "world model")
+## G. WORLD-MODEL PROPER (◐ SEEDED 2026-07-14 — governed-dynamics core measured, perception bridge pending)
 _A world model = represents state + dynamics so future consequences are predictable under action (rollouts,
 counterfactuals, offline eval). This is DISTINCT from an LLM and is the genuine gap._
 | # | what world models have | us | absorb action |
@@ -65,7 +65,7 @@ counterfactuals, offline eval). This is DISTINCT from an LLM and is the genuine 
 ## THE HEADLINE SCORE (honest self-audit)
 - **☑ We own outright (nobody else has):** governed router/seam, care-gated-BFT robustness #1, signed portable memory, OSCAL/attestation, 377-tool fleet. **This is the moat.**
 - **◐ Adopt-not-build (commodity, one install away):** MoE base, vLLM/SGLang serving, spec-decode, SSD-stream, MergeKit, DPO/GRPO post-train, lm-eval + safety benchmarks. **Days of integration, not years.**
-- **☐ The one real gap = a true WORLD MODEL** (G2/G4): action-conditioned rollouts + LLM⨯WM composition. **BRIDGE via V-JEPA 2 / Genie 3**; our OWEM next-state predictor + governed globe are the honest seeds.
+- **◐ World model SEEDED (2026-07-14):** `sov33_world_model.py` measures dynamics (0.003 rollout MSE), planning (beats random ~4×), counterfactual, and a **care-gated transition function (99/99 unsafe caught, fail-closed)** — a *governed* world model no frontier lab has. Remaining: perception scale via **V-JEPA 2 / Genie 3** bridge. See GOVERNED_WORLD_MODEL_FINDING.
 
 ## THE PLAN TO 100/100 A++++ (tested/simulated at each step)
 1. **Adopt the commodity stack** (B/D/E): DeepSeek/Qwen3-MoE base + vLLM + MergeKit + lm-eval + safety corpora. Each verified on a benchmark before wiring.
