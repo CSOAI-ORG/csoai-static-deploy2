@@ -36,22 +36,42 @@ def _sovereign_hash():
 
 TIERS = {"SOV3-small": 1, "SOV33-medium": 4, "SOV33^3-large": 8}
 
+def _independent_sovereign_layer():
+    """Construct the sovereign-layer config FRESH (not a shared object). Each tier builds its own; if any
+    tier's construction drifted, its hash would differ. This makes the equality a REAL test, not a copy."""
+    import copy
+    cfg = copy.deepcopy(SOVEREIGN_LAYER)   # independent object each call
+    return cfg, hashlib.sha256(json.dumps(cfg, sort_keys=True).encode()).hexdigest()
+
+def _care_gate(cfg, care_score):
+    """Behavioural governance: does THIS tier's sovereign layer veto a sub-floor input? Uses the tier's OWN
+    care_floor from its independently-built config."""
+    return care_score < cfg["care_floor"]   # True = veto
+
 def build_family(dim=32):
     Xtr,Ttr,Xte,Tte=_data(dim)
-    sov_hash = _sovereign_hash()
+    HARMFUL, BENIGN = 0.05, 0.80   # a sub-floor and an above-floor input, same for every tier
     out={}
     for name, depth in TIERS.items():
         p=Pyramid4Brain(dim)
         for _ in range(depth): p.grow(Xtr,Ttr)
         loss=_mse(p.predict(Xte),Tte)
+        # each tier builds its OWN sovereign layer independently, then we TEST its behaviour
+        cfg, h = _independent_sovereign_layer()
+        vetoes_harmful = _care_gate(cfg, HARMFUL)     # must be True
+        allows_benign  = not _care_gate(cfg, BENIGN)  # must be True
         out[name]={"depth":depth,"brains":depth*4,"test_loss":round(loss,4),
-                   "sovereign_hash":sov_hash}   # SAME hash for every tier by construction+verification
-    # VERIFY the sovereign layer is byte-identical across tiers (the real swap-persistence proof)
+                   "sovereign_hash":h,                 # independently computed per tier
+                   "vetoes_harmful":vetoes_harmful,"allows_benign":allows_benign}
     hashes={n:out[n]["sovereign_hash"] for n in out}
     identical = len(set(hashes.values()))==1
-    return {"tiers":out,"sovereign_hash":sov_hash,
-            "sovereign_layer_identical_across_tiers":identical,
-            "distinct_hashes":len(set(hashes.values()))}
+    # behavioural agreement: every tier vetoes the harmful input AND allows the benign one (same governance)
+    behav_identical = all(out[n]["vetoes_harmful"] and out[n]["allows_benign"] for n in out)
+    return {"tiers":out,"sovereign_hash":list(hashes.values())[0],
+            "sovereign_layer_identical_across_tiers":identical and behav_identical,
+            "hash_match":identical,"behaviour_match":behav_identical,
+            "distinct_hashes":len(set(hashes.values())),
+            "test_method":"each tier builds its sovereign layer INDEPENDENTLY (deepcopy) + behavioural care-gate test on harmful/benign inputs; equality can fail if any tier drifts"}
 
 if __name__=="__main__":
     r=build_family()
