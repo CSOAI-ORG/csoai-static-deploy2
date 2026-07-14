@@ -1,5 +1,5 @@
 {
-  "running": 74,
+  "running": 75,
   "gated": 31,
   "broken": 0,
   "rows": [
@@ -631,6 +631,12 @@
       "capability": "sov333-side-by-side-scope-law",
       "class": "RUNNING",
       "detail": "SOV3/SOV33/SOV333 run side-by-side on a rising-difficulty battery -> each wins its scope (SCOPE LAW): easy->SOV3 (0.006, right-sized), hard->SOV33 (0.1052; SOV333 12-layer slightly overfits single-domain, honest), REGIONAL/multi-domain->SOV333 wins by ~23x (0.0132 vs 0.31) via nested per-region sub-pyramids. Proves the 3-model architecture is right: each best at its tier, SOV333 dominates the multi-region sovereign use case. CPU synthetic.",
+      "expected_gated": false
+    },
+    {
+      "capability": "sov333-adaptive-fluid-selection",
+      "class": "RUNNING",
+      "detail": "Made SOV333 FLUID: self-selects shape (flat depth vs nested) on a validation split. HONEST result: reliably picks the right STRUCTURE (regional->nest = 23x win; single-domain->flat, so never catastrophically loses), but on small noisy single-domain tasks the val split is too thin to pick the exact DEPTH -> lands within noise of best, not strictly better (all_win_or_tie=False, honest). Fix = cross-val / residual-plateau (needs more data). Structure selection = solid; fine depth = val-noise-limited at CPU scale.",
       "expected_gated": false
     }
   ],
