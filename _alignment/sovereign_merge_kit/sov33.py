@@ -1648,6 +1648,25 @@ def capability_owem_stack(**kwargs):
     except Exception as e:
         return {'capability': 'owem-stack', 'error': str(e)[:160]}
 
+def capability_fluid_pyramid(**kwargs):
+    """Fluid pyramid: N OWEM layers (each learns the residual below), per-layer mixing ratio, grows/shrinks.
+    MEASURED honest law: depth helps until residual is exhausted then OVERFITS (best ~8 layers, not 12);
+    flat mixing beat 90/10 in-test. 'Fluid' = grow/shrink to the right height, not a fixed stack. CPU proof
+    of the pyramid topology; NOT 12 GPU-trained LLM experts (owner Kaggle/BTX run)."""
+    try:
+        import importlib
+        m = importlib.import_module('sov33_fluid_pyramid')
+        r = m.sweep_shapes()
+        dc = r['depth_curve_nu1.0_hidden8']
+        return {'capability': 'fluid-pyramid', 'depth_curve': dc,
+                'best_depth_in_6': dc.index(min(dc)) + 1,
+                'ratio_sweep': r['ratio_sweep_depth3'],
+                'fluid_reshape': r['fluid_reshape'],
+                'law': 'depth helps until residual exhausted then overfits; flat mixing beat 90/10; grow/shrink to right height',
+                'honest_scale': 'small numpy MLPs on synthetic task; proves fluid-pyramid topology, NOT GPU LLM experts'}
+    except Exception as e:
+        return {'capability': 'fluid-pyramid', 'error': str(e)[:160]}
+
 def capability_canonical(mode: str = 'paid', **kwargs):
     """Load the FROZEN winning SOV333 setup (sweep winner + adversarial-hardened) and build it live.
     mode='paid' -> diverse-5 @ 0.65; mode='free' -> diverse-3 @ 0.8 (sovereign/local)."""
@@ -2186,6 +2205,7 @@ CAPABILITIES = {
     'action-guard': capability_action_guard,
     'venturi': capability_venturi,
     'owem-stack': capability_owem_stack,
+    'fluid-pyramid': capability_fluid_pyramid,
     'care-floor': capability_care_floor,
     'mist12': capability_mist12,
     'drum': capability_drum,
