@@ -46,6 +46,9 @@ Honest, self-auditing design-partner page (verified 3.4× vs 1.0× robustness fr
 
 ## PHASE 1 — Prove it works (1–2 weeks)
 
+**1.0 — Governed-RAG POC vertical slice — ✅ BUILT & RUNS (Fable-verified this session).** [V-run]
+`sovereign_merge_kit/sov33_governed_rag_poc.py` runs end-to-end, offline: question → dense retrieval (all-MiniLM-L6-v2) → **care-floor gate (abstains below 0.28)** → local sovereign model (`qwen3-precise` via Ollama) answers ONLY from grounded sources with citations → **Ed25519-signed receipt** (canonical `Ed25519Sigil`). Verified live: 2 governance Qs answered + cited from EU-AI-Act-Art.50 / GDPR-Art.9; 1 nonsense Q correctly ABSTAINED; all receipts verify; forged sig rejected; tamper breaks the chain. **This is the design-partner-runnable proof.** Next: swap MiniLM→BGE-M3 (1.1), expand KB, wrap a 1-page UI.
+
 **1.1 — BGE-M3 hybrid RAG for factual grounding.** [V]
 **BGE-M3 (MIT-licensed)** does dense + sparse/lexical + multi-vector retrieval in one model — hybrid retrieval to cut hallucination, no legal blocker in a sovereign/commercial stack. Wire it as the grounding layer under the council/dock so answers cite retrieved sources.
 · Sources: huggingface.co/BAAI/bge-m3 · ACL 2024 Findings (Chen et al.)
