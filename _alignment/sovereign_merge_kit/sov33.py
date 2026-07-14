@@ -1841,6 +1841,17 @@ def capability_six_lever_proxy(**kwargs):
                 'honest':'compute-avoided arithmetic not wall-clock; LRU/prefetch assumed; measure real tok/s on Mac'}
     except Exception as e: return {'capability':'six-lever-proxy','error':str(e)[:160]}
 
+def capability_find_best_config(**kwargs):
+    """Equal-budget head-to-head across 5 topologies: winner is ALLOCATION not piece-count. On a uniform task
+    concentrate budget (large-heavy/single-deep win); 4-around-1/multi-brain win only with regional structure.
+    Best config is TASK-DEPENDENT - the portal routes by task structure."""
+    try:
+        import importlib; m=importlib.import_module('sov33_find_best_config'); res,budget=m.run()
+        rank=sorted(res.items(), key=lambda x:x[1])
+        return {'capability':'find-best-config','budget':budget,'ranked':rank,'winner':rank[0][0],
+                'law':'concentrate budget on uniform task; split only where regional structure exists'}
+    except Exception as e: return {'capability':'find-best-config','error':str(e)[:160]}
+
 def capability_canonical(mode: str = 'paid', **kwargs):
     """Load the FROZEN winning SOV333 setup (sweep winner + adversarial-hardened) and build it live.
     mode='paid' -> diverse-5 @ 0.65; mode='free' -> diverse-3 @ 0.8 (sovereign/local)."""
@@ -2393,6 +2404,7 @@ CAPABILITIES = {
     'venturi-stream': capability_venturi_stream,
     'brain-merge-ratio': capability_brain_merge_ratio,
     'six-lever-proxy': capability_six_lever_proxy,
+    'find-best-config': capability_find_best_config,
     'care-floor': capability_care_floor,
     'mist12': capability_mist12,
     'drum': capability_drum,
