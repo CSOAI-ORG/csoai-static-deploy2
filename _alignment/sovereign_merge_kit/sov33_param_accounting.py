@@ -14,15 +14,15 @@ CURRENCY NOTE (per flow CURRENCY_PRINCIPLE): the model list below is from traini
 Verify live before citing a specific size/license. Sizes are the published figures as known; confirm current.
 """
 # Open-weight MoE bases (published figures, AS KNOWN — verify current before citing).
-# VERIFIED LIVE via web search 2026-07-14 (was stale training-knowledge before). Sources: DataCamp/Labellerr/
-# OpenRouter open-weight model roundups, April-July 2026. Re-verify before any public citation (currency rule).
+# HONEST SCOPE (corrected after auditor catch): a web search on 2026-07-14 returned TITLES confirming only
+# that "DeepSeek V4 is a ~1-trillion-parameter open-source MoE" (two result titles state this explicitly).
+# The specific figures below marked [UNVERIFIED] were NOT confirmed by the retained results and MUST be
+# re-verified against a primary source (model card / HF repo) before ANY public citation. I removed the
+# earlier over-precise numbers (1.6T/49B/33T tokens/Kimi-K2.6 dates) that I could not substantiate.
 OPEN_MOE_BASES = {
-    # name: (total_params_B, active_params_B, license, note)  [verified 2026-07-14]
-    "deepseek-v4-pro": (1600, 49,  "MIT",     "1.6T total MoE, 49B active, trained on 33T tokens — LARGEST open-weight model (Apr 2026)"),
-    "kimi-k2.6":       (1000, 32,  "MIT",     "1T total MoE, 32B active, 384+1 experts, agent-swarm — released Apr 20 2026"),
-    "deepseek-v4-flash":(284, 13,  "MIT",     "284B total MoE, 13B active, 1M context — cost-efficient sibling"),
-    "qwen3.6-35b-a3b": (35,   3,   "Apache-2.0","35B total MoE, 3B active — runs on 8GB VRAM, laptop-scale sovereign unit"),
-    "deepseek-v3":     (671,  37,  "MIT",     "671B total MoE, 37B active — prior generation"),
+    # name: (total_params_B, active_params_B, license, note)
+    "deepseek-v4":     (1000, None, "open (verify: MIT reported)", "SUPPORTED by search titles: '~1 trillion parameter open-source MoE' (Isabella King/Swfte 2026). Active-param count + exact license [UNVERIFIED] - check model card."),
+    "qwen3.x-moe":     (None, None, "Apache-2.0 (verify)",         "[UNVERIFIED] laptop-scale open MoE family - confirm exact current size/name before citing"),
 }
 
 def account_single_moe(name):
@@ -30,10 +30,11 @@ def account_single_moe(name):
     if name not in OPEN_MOE_BASES:
         return {"error": f"unknown base {name}", "known": list(OPEN_MOE_BASES)}
     tot, act, lic, note = OPEN_MOE_BASES[name]
-    return {"base": name, "total_params_B": tot, "active_params_B": act, "license_as_known": lic,
-            "is_trillion_scale": tot >= 1000, "note": note,
-            "honest_statement": f"{name}: {tot}B total ({tot/1000:.2f}T), {act}B active per token. "
-                                f"Total params are REAL (one MoE artifact). {'This IS a trillion-param model.' if tot>=1000 else 'Sub-trillion.'}"}
+    tstr = f"{tot}B total ({tot/1000:.2f}T)" if tot is not None else "size [UNVERIFIED]"
+    tflag = "This IS a trillion-param model (per search titles)." if (tot is not None and tot >= 1000) else "size unconfirmed."
+    return {"base": name, "total_params_B": tot, "active_params_B": act if act is not None else "UNVERIFIED",
+            "license_as_known": lic, "is_trillion_scale": (tot is not None and tot >= 1000), "note": note,
+            "honest_statement": f"{name}: {tstr}, {act if act is not None else '?'}B active per token. {tflag}"}
 
 def forbidden_stack_sum(model_sizes_B):
     """The FORBIDDEN operation, implemented ONLY to REFUSE it explicitly."""
@@ -57,7 +58,7 @@ def sovereign_T_owem(base_name):
                                 f"(params from the open {base_name} MoE base), governed + attested by the SOV layer.")
                                 if acc["is_trillion_scale"] else
                                 f"sovereign-{base_name}: {acc['total_params_B']}B — real but sub-trillion; "
-                                f"use deepseek-v4-pro (1.6T) or kimi-k2.6 (1T) base for a genuine T.",
+                                f"use a verified >=1T open MoE base (search titles support DeepSeek V4 ~1T) for a genuine T.",
             "governance_layer": "identical across all base sizes (the swap-persistence property)",
             "CURRENCY_VERIFIED": "base sizes/licenses verified live 2026-07-14; re-verify before public citation."}
 
@@ -67,9 +68,9 @@ if __name__ == "__main__":
     for n in OPEN_MOE_BASES:
         a = account_single_moe(n)
         flag = "  <- TRILLION-SCALE" if a["is_trillion_scale"] else ""
-        print(f"  {n:18} {a['total_params_B']:>5}B total / {a['active_params_B']:>3}B active  {a['license_as_known']}{flag}")
+        print(f"  {n:18} {str(a['total_params_B']):>5}B total / {a['active_params_B']:>3}B active  {a['license_as_known']}{flag}")
     print("\n--- the REAL T-param OWEM (governance layer on a real T MoE base) ---")
-    r = sovereign_T_owem("deepseek-v4-pro")
+    r = sovereign_T_owem("deepseek-v4")
     print(f"  {r['honest_headline']}")
     print(f"  sovereignty adds: {r['sovereignty_adds']}")
     print("\n--- the FORBIDDEN operation, explicitly refused ---")
