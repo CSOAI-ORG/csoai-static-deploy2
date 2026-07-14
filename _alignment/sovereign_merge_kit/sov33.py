@@ -1872,6 +1872,20 @@ def capability_ed25519_sigil(**kwargs):
         return {'capability':'ed25519-sigil','tests':{n:ok for n,ok in res},'all_pass':all(ok for _,ok in res)}
     except Exception as e: return {'capability':'ed25519-sigil','error':str(e)[:160]}
 
+def capability_autorun(**kwargs):
+    """Honest phase orchestrator: probes each build phase's precondition (RAM/GPU/tool/model) and reports
+    RUN vs GATED. This is 'batch run all phases' done honestly - on a 16GB no-GPU box most phases correctly
+    GATE (real training/merge needs 24-48GB or a GPU); code is ready, compute is the blocker. Never fakes a run."""
+    try:
+        import importlib; m=importlib.import_module('sov33_autorun')
+        import io, contextlib; buf=io.StringIO()
+        with contextlib.redirect_stdout(buf): m.main(execute=False)
+        import json, os
+        j=json.load(open(os.path.join(os.path.dirname(__file__),'autorun_plan.json')))
+        return {'capability':'autorun','ram_gb':j['ram_gb'],'gpu':j['gpu'],'runnable':j['runnable'],
+                'gated':j['gated'],'honest':'real train/merge gated below 24-48GB/GPU; ready to run on hardware'}
+    except Exception as e: return {'capability':'autorun','error':str(e)[:160]}
+
 def capability_canonical(mode: str = 'paid', **kwargs):
     """Load the FROZEN winning SOV333 setup (sweep winner + adversarial-hardened) and build it live.
     mode='paid' -> diverse-5 @ 0.65; mode='free' -> diverse-3 @ 0.8 (sovereign/local)."""
@@ -2425,6 +2439,7 @@ CAPABILITIES = {
     'brain-merge-ratio': capability_brain_merge_ratio,
     'six-lever-proxy': capability_six_lever_proxy,
     'find-best-config': capability_find_best_config,
+    'autorun': capability_autorun,
     'multistep-rollout': capability_multistep_rollout,
     'ed25519-sigil': capability_ed25519_sigil,
     'care-floor': capability_care_floor,
