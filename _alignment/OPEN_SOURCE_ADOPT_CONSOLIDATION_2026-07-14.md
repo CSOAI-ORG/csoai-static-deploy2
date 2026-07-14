@@ -7,7 +7,7 @@ real, named, production library** — we don't build these from scratch, we adop
 | model | params | license | why | Mac speed |
 |---|---|---|---|---|
 | **DeepSeek-V4-Pro** | 1.6T / 49B active MoE | **MIT** | the honest T-base (frontier escalation) | server-scale |
-| **DeepSeek-V4-Flash** | 284B / 13B active MoE | **MIT** | **the sovereign daily driver** | **35–42 tok/s on M4 Max (Q4)** [S] |
+| **DeepSeek-V4-Flash** | **158B / ~13B active** MoE (256 experts) [P: HF+ssd-moe] | **MIT** | sovereign daily driver — **needs 48GB Mac** (not the 16GB one) | **~4.5–5 tok/s on 48GB via SSD-stream** [P]; aggregator "35–42 tok/s/284B" NOT primary-confirmed |
 | **Qwen3-235B-A22B** | 235B / 22B active | **Apache-2.0** | broadest benchmark leader, reasoning+code+multilingual | server |
 | **Qwen3.5 / 3.6 (27–35B-A3B)** | ~3.3B active | **Apache-2.0** | fast large tier | **64–92 tok/s on M4 Max** [S] |
 | **GLM-5.2** | (MoE) | **MIT** | #1 open on BenchLM (81); GLM-4.7 = 94.2% HumanEval / 73.8% SWE-bench | server/sharded |
