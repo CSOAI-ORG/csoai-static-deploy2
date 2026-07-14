@@ -2221,6 +2221,44 @@ def handle_owem_fast(payload: dict) -> dict:
         return {'error': f'fast owem failed: {e}'}
 
 
+
+def handle_sovereign_brain_v2(payload: dict) -> dict:
+    """POST /api/sovereign-brain/v2 — FastSovereignBrain V2 (rank=32 LoRA)."""
+    question = payload.get('message', payload.get('question', ''))
+    if not question:
+        return {'error': 'no message'}
+    try:
+        sys.path.insert(0, '/Users/nicholas/clawd/_alignment/sovereign_merge_kit')
+        from sov33_sovereign_brain_v2 import get_brain
+        brain = get_brain()
+        result = brain.ask(question, max_tokens=80)
+        return result
+    except Exception as e:
+        return {'error': f'sovereign brain v2 failed: {e}'}
+
+
+def handle_sovereign_brain_v2_status() -> dict:
+    """GET /api/sovereign-brain/v2/status — Check V2 brain state."""
+    import os
+    from pathlib import Path
+    adapter_path = Path.home() / '.sovereign' / 'models' / 'qwen3-sov-brain-0.6b'
+    exists = adapter_path.exists()
+    safetensors = list(adapter_path.glob('adapter_model.safetensors')) if exists else []
+    size_mb = safetensors[0].stat().st_size / 1e6 if safetensors else 0
+    return {
+        'brain': 'SovereignBrainV2',
+        'base_model': 'Qwen3-0.6B',
+        'rank': 32,
+        'lora_alpha': 64,
+        'target_modules': ['q_proj', 'k_proj', 'v_proj', 'o_proj'],
+        'adapter_exists': exists,
+        'adapter_size_mb': round(size_mb, 1),
+        'saved_to': str(adapter_path),
+        'phase': 29,
+        'loss_reduction_pct': 57.7,
+    }
+
+
 def handle_capabilities() -> dict:
     """GET /api/capabilities — list all SOV33 capabilities."""
     return {
@@ -2348,6 +2386,8 @@ class SovereignAPIHandler(BaseHTTPRequestHandler):
             return json_response(self, 200, handle_stats())
         elif path == '/api/security/audit':
             return json_response(self, 200, handle_security_audit())
+        elif path == '/api/sovereign-brain/v2/status':
+            return json_response(self, 200, handle_sovereign_brain_v2_status())
         elif path == '/api/sovereign-citations':
             return json_response(self, 200, handle_sovereign_citations())
         elif path == '/api/charter':
@@ -2366,6 +2406,8 @@ class SovereignAPIHandler(BaseHTTPRequestHandler):
             return json_response(self, 200, handle_security_audit_post(payload))
         elif path == '/api/owem/fast':
             return json_response(self, 200, handle_owem_fast(payload))
+        elif path == '/api/sovereign-brain/v2':
+            return json_response(self, 200, handle_sovereign_brain_v2(payload))
         elif path == '/api/multimodal':
             return json_response(self, 200, handle_multimodal())
         elif path == '/api/hyperopt':
@@ -2470,6 +2512,8 @@ class SovereignAPIHandler(BaseHTTPRequestHandler):
             return json_response(self, 200, handle_security_audit_post(payload))
         elif path == '/api/owem/fast':
             return json_response(self, 200, handle_owem_fast(payload))
+        elif path == '/api/sovereign-brain/v2':
+            return json_response(self, 200, handle_sovereign_brain_v2(payload))
         elif path == '/api/signup':
             return json_response(self, 200, handle_signup(payload))
         elif path == '/api/alexa':
