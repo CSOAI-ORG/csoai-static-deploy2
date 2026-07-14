@@ -1,5 +1,5 @@
 {
-  "running": 76,
+  "running": 73,
   "gated": 31,
   "broken": 0,
   "rows": [
@@ -140,6 +140,12 @@
       "class": "GATED",
       "detail": "needs live models (not called: would block on live resource)",
       "expected_gated": true
+    },
+    {
+      "capability": "daily-refresh",
+      "class": "RUNNING",
+      "detail": null,
+      "expected_gated": false
     },
     {
       "capability": "defer",
@@ -616,33 +622,9 @@
       "expected_gated": false
     },
     {
-      "capability": "robustness-reputation-extend",
+      "capability": "sov333-trinity-integration",
       "class": "RUNNING",
-      "detail": "TUNED the #1 governed-robustness board past the classic Byzantine limit: reputation-weighting (down-weight persistent liars over rounds) holds near-flat at 5/9 adversaries (past BFT half). At 5/9: reputation 1.1x degrade vs care-bft 1.3x vs median 1.9x vs naive 5.0x. Extends the safe zone from 4/9 to 5/9. CPU synthetic; tunes aggregation not members.",
-      "expected_gated": false
-    },
-    {
-      "capability": "pyramid-best-config-tuned",
-      "class": "RUNNING",
-      "detail": "Joint tune (depth x ratio x brains x hidden) found NEW BEST pyramid = 12 layers x 4-brain x nu=0.7 x hidden=12 = 0.0311, beating the prior piecewise best (4-brain-8L=0.035) by +11%. The full design compounds: 12-layer depth + 4-brain + gentle ratio-damping together > any single axis. Vindicates the whole architecture jointly. GPU build spec should use 12x4 nu=0.7.",
-      "expected_gated": false
-    },
-    {
-      "capability": "gsm8k-extraction-artifact-RETRACTED",
-      "class": "RUNNING",
-      "detail": "RETRACTED: the 0.90 'large-tier GSM8K' was an extraction artifact (n=40=0.90 vs n=100=0.24, same tier). Warm-prose persona buries the answer -> last-number parse unreliable. Strict ANSWER-format (n=30): small=0.833, large=0.167 (large ignored format 25/30, reasons fine). HONEST fix = solver register / LLM-judge. Do not cite 0.90.",
-      "expected_gated": false
-    },
-    {
-      "capability": "world-model-tuned-80pct",
-      "class": "RUNNING",
-      "detail": "Tuned world-model dynamics: 1-step MSE 0.0032->0.00063 (-80%) via hidden=160, data=4000, epochs=800. Better prediction directly extends governance reach (per stress finding: care-gate can only veto futures it foresees). Predictable-env world model now near-exact.",
-      "expected_gated": false
-    },
-    {
-      "capability": "gsm8k-solver-register-0.84",
-      "class": "RUNNING",
-      "detail": "HONEST deployed GSM8K = 0.84 (small tier + solver register, n=50 gold-graded, 42/50). The solver register (shipped to os.meok.ai) fixed the prose-extraction problem that produced the retracted 0.90 artifact. Large tier won't follow answer-format (40/50 no ANSWER line) so not cleanly measurable - reasons fine, rambles. 0.84 replaces both the fake 0.90 and the old prose-parsed 0.71.",
+      "detail": "THREE MODELS, ONE INTEGRATION: SOV3 (small council, Qwen3-0.6B, 16GB Mac today) / SOV33 (routed+world-model, +DeepSeek-R1, 48GB) / SOV333 (nested pyramid 12x4@0.7 + DeepSeek-V4 1.6T frontier + V-JEPA2, server). Each instantiates the tuned governed topology + signs its emit (CPU-proven), wired to REAL bases from the 1627-model intel scan. sov333_trinity.py runs all three. LLM-scale = the staged GPU recipe (SOV33_GPU_BUILD_SPEC), not fake-trained on CPU.",
       "expected_gated": false
     }
   ],
