@@ -2318,6 +2318,97 @@ def handle_l4_panel(payload: dict) -> dict:
     }
 
 
+
+def handle_fluid_pyramid() -> dict:
+    """GET /api/fluid-pyramid — Full state of the 12-layer fluid pyramid."""
+    try:
+        sys.path.insert(0, '/Users/nicholas/clawd/_alignment/sovereign_merge_kit/fluid_pyramid')
+        from fluid_pyramid import get_pyramid
+        pyramid = get_pyramid()
+        return pyramid.get_state()
+    except Exception as e:
+        return {'error': f'fluid pyramid failed: {e}'}
+
+
+def handle_fluid_pyramid_layer(path) -> dict:
+    """GET /api/fluid-pyramid/layer/{id} — Get specific layer."""
+    try:
+        layer_id = int(path.split('/')[-1])
+        sys.path.insert(0, '/Users/nicholas/clawd/_alignment/sovereign_merge_kit/fluid_pyramid')
+        from fluid_pyramid import get_pyramid
+        pyramid = get_pyramid()
+        for l in pyramid.layers:
+            if l['id'] == layer_id:
+                return {
+                    'layer': l,
+                    'state': pyramid.state['layer_states'][layer_id],
+                    'drum_beat': pyramid.state['drum_beat'],
+                    'sigil': __import__('hashlib').sha256(f"layer:{layer_id}".encode()).hexdigest()[:16],
+                }
+        return {'error': f'layer {layer_id} not found'}
+    except Exception as e:
+        return {'error': str(e)}
+
+
+def handle_fluid_pyramid_morph(payload: dict) -> dict:
+    """POST /api/fluid-pyramid/morph — Morph a layer (grow/shrink/swap)."""
+    layer_id = payload.get('layer_id')
+    action = payload.get('action', 'grow')
+    target_pressure = payload.get('target_pressure')
+    target_velocity = payload.get('target_velocity')
+    if layer_id is None:
+        return {'error': 'no layer_id'}
+    try:
+        sys.path.insert(0, '/Users/nicholas/clawd/_alignment/sovereign_merge_kit/fluid_pyramid')
+        from fluid_pyramid import get_pyramid
+        pyramid = get_pyramid()
+        return pyramid.morph_layer(layer_id, action, target_pressure, target_velocity)
+    except Exception as e:
+        return {'error': str(e)}
+
+
+def handle_inner_owems() -> dict:
+    """GET /api/inner-owems — List all 10 inner OWEM configs."""
+    try:
+        sys.path.insert(0, '/Users/nicholas/clawd/_alignment/sovereign_merge_kit/fluid_pyramid')
+        from fluid_pyramid import INNER_OWEM_CONFIGS
+        return {
+            'name': 'Inner OWEM Configs',
+            'description': '10 multi-model mixes (90/10, 50/50, 80/20, etc)',
+            'configs': INNER_OWEM_CONFIGS,
+            'count': len(INNER_OWEM_CONFIGS),
+        }
+    except Exception as e:
+        return {'error': str(e)}
+
+
+def handle_inner_owems_test(payload: dict) -> dict:
+    """POST /api/inner-owems/test — Test a config."""
+    config = payload.get('config', 'sov_50_50')
+    question = payload.get('question', 'What is SIGIL?')
+    try:
+        sys.path.insert(0, '/Users/nicholas/clawd/_alignment/sovereign_merge_kit/fluid_pyramid')
+        from fluid_pyramid import get_pyramid
+        return get_pyramid().test_inner_owem(config, question)
+    except Exception as e:
+        return {'error': str(e)}
+
+
+def handle_alphabet_stages() -> dict:
+    """GET /api/alphabet-stages — All 16 stages (A-P)."""
+    try:
+        sys.path.insert(0, '/Users/nicholas/clawd/_alignment/sovereign_merge_kit/fluid_pyramid')
+        from fluid_pyramid import ALPHABET_STAGES
+        return {
+            'name': 'PDCA → Full Alphabet',
+            'description': '16 stages (A-P), each with inner framework',
+            'stages': ALPHABET_STAGES,
+            'count': len(ALPHABET_STAGES),
+        }
+    except Exception as e:
+        return {'error': str(e)}
+
+
 def handle_capabilities() -> dict:
     """GET /api/capabilities — list all SOV33 capabilities."""
     return {
@@ -2449,6 +2540,14 @@ class SovereignAPIHandler(BaseHTTPRequestHandler):
             return json_response(self, 200, handle_sovereign_brain_v2_status())
         elif path == '/api/conformal-veto':
             return json_response(self, 200, handle_conformal_veto())
+        elif path == '/api/fluid-pyramid':
+            return json_response(self, 200, handle_fluid_pyramid())
+        elif path.startswith('/api/fluid-pyramid/layer/'):
+            return json_response(self, 200, handle_fluid_pyramid_layer(path))
+        elif path == '/api/inner-owems':
+            return json_response(self, 200, handle_inner_owems())
+        elif path == '/api/alphabet-stages':
+            return json_response(self, 200, handle_alphabet_stages())
         elif path == '/api/sovereign-citations':
             return json_response(self, 200, handle_sovereign_citations())
         elif path == '/api/charter':
@@ -2471,6 +2570,10 @@ class SovereignAPIHandler(BaseHTTPRequestHandler):
             return json_response(self, 200, handle_sovereign_brain_v2(payload))
         elif path == '/api/l4-panel':
             return json_response(self, 200, handle_l4_panel(payload))
+        elif path == '/api/fluid-pyramid/morph':
+            return json_response(self, 200, handle_fluid_pyramid_morph(payload))
+        elif path == '/api/inner-owems/test':
+            return json_response(self, 200, handle_inner_owems_test(payload))
         elif path == '/api/multimodal':
             return json_response(self, 200, handle_multimodal())
         elif path == '/api/hyperopt':
@@ -2579,6 +2682,10 @@ class SovereignAPIHandler(BaseHTTPRequestHandler):
             return json_response(self, 200, handle_sovereign_brain_v2(payload))
         elif path == '/api/l4-panel':
             return json_response(self, 200, handle_l4_panel(payload))
+        elif path == '/api/fluid-pyramid/morph':
+            return json_response(self, 200, handle_fluid_pyramid_morph(payload))
+        elif path == '/api/inner-owems/test':
+            return json_response(self, 200, handle_inner_owems_test(payload))
         elif path == '/api/signup':
             return json_response(self, 200, handle_signup(payload))
         elif path == '/api/alexa':
