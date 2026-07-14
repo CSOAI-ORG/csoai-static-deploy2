@@ -1887,6 +1887,17 @@ def capability_autorun(**kwargs):
     except Exception as e: return {'capability':'autorun','error':str(e)[:160]}
 
 
+def capability_daily_refresh(**kwargs):
+    """Framework 101 currency loop: re-measure the winning OWEM stack (live, CPU) + refresh the model watchlist
+    (leads to re-verify, NOT auto-adopted). 'Learn top-N -> synthesize into 1', re-run daily so current."""
+    try:
+        import importlib; m=importlib.import_module('sov33_daily_refresh'); r=m.refresh()
+        return {'capability':'daily-refresh','date':r['date'],
+                'measured_best_stack_present':bool(r['measured_today'].get('best_stack')),
+                'watchlist':r['watchlist_leads']['leads_to_reverify'],
+                'honest':'measured half live; model watchlist stale-by-default without live channel; never auto-swaps base'}
+    except Exception as e: return {'capability':'daily-refresh','error':str(e)[:160]}
+
 def capability_canonical(mode: str = 'paid', **kwargs):
     """Load the FROZEN winning SOV333 setup (sweep winner + adversarial-hardened) and build it live.
     mode='paid' -> diverse-5 @ 0.65; mode='free' -> diverse-3 @ 0.8 (sovereign/local)."""
@@ -2440,6 +2451,7 @@ CAPABILITIES = {
     'brain-merge-ratio': capability_brain_merge_ratio,
     'six-lever-proxy': capability_six_lever_proxy,
     'find-best-config': capability_find_best_config,
+    'daily-refresh': capability_daily_refresh,
     'autorun': capability_autorun,
     'multistep-rollout': capability_multistep_rollout,
     'ed25519-sigil': capability_ed25519_sigil,

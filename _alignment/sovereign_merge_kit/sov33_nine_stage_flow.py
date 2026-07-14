@@ -82,6 +82,31 @@ CURRENCY_PRINCIPLE = {
                     "reachable, SAY the knowledge may be out of date rather than implying it is current.",
 }
 
+# FRAMEWORK 101 — the operating discipline: in EVERY inner aspect, learn the field's top-N, synthesize into ONE.
+# The honest form of "learn top 100 -> 1": survey the best existing work per aspect, take the permissively-
+# licensed primitive, compose into one governed substrate, MEASURE. It is a METHOD (how we build each part),
+# NOT a capability claim — synthesizing N sources does not add intelligence beyond the best source (see the
+# measured brain-merge law: large-heavy wins; identical voters = 1 effective vote). "101" = the always-on loop.
+FRAMEWORK_101_PRINCIPLE = {
+    "rule": "For each inner aspect (world-model, memory, routing, safety, streaming, attestation), LEARN the "
+            "top existing approaches, then SYNTHESIZE the best permissively-licensed primitive into the one "
+            "governed substrate. Applied per-aspect, always-on — the '+1' loop over the top-N.",
+    "learn": "Survey the field's leading work for THIS aspect (the parity checklist is this made concrete): "
+             "name the real approaches (JEPA/EWC for world-model, MergeKit/TIES for merge, Colibri for "
+             "streaming, conformal for veto, Merkle/Ed25519 for attestation).",
+    "synthesize_into_one": "Compose the chosen primitives into ONE substrate (sov33.py entrypoint), so the "
+                           "user talks to one portal, not N tools. Merge = OUTPUT-ensemble or same-base "
+                           "weight-soup, never param-summing across heterogeneous models.",
+    "honest_bound": "'Learn top-100 -> 1' is a BUILD METHOD, not an intelligence multiplier. The synthesis is "
+                    "worth exactly the best ingredient + the governance layer; it does NOT exceed frontier raw "
+                    "capability. Claim the composition and the measured number, never emergent super-capability.",
+    "measured_backing": "brain-merge law (large-heavy wins, identical=BFT-theatre) + decorrelation law "
+                        "(diverse lineages > more identical nodes) + unifying arch law (structure only where "
+                        "residual/regional structure exists) — synthesis pays ONLY where measured to.",
+    "currency_link": "the top-N is never final (CURRENCY_PRINCIPLE): re-survey at LEARN because the field's "
+                     "best-of shifts as new open models ship; the '+1' loop is continuous, not one-time.",
+}
+
 def flow_manifest():
     return {"stages":[{"n":i+1,"name":n,"status":s,"desc":d} for i,(n,s,d) in enumerate(STAGES)],
             "gates":GATES,
@@ -95,7 +120,8 @@ def flow_manifest():
             "observer_collapse":OBSERVER_COLLAPSE,
             "catapults":CATAPULTS,
             "synthesis_principle":SYNTHESIS_PRINCIPLE,
-            "currency_principle":CURRENCY_PRINCIPLE}
+            "currency_principle":CURRENCY_PRINCIPLE,
+            "framework_101":FRAMEWORK_101_PRINCIPLE}
 
 if __name__ == "__main__":
     import json
