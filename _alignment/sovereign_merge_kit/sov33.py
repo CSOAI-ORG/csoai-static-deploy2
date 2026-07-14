@@ -1749,8 +1749,8 @@ def capability_full_model(**kwargs):
 def capability_size_family(**kwargs):
     """The SOV size family: 3 tiers on ONE measured depth curve, shared sovereign layer.
     SOV3-small (1x4=4 brains) / SOV33-medium (4x4=16) / SOV33^3-large (8x4=32 + mirror). Accuracy improves
-    80% small->large. PROVEN swap-persistence: governance+memory layer byte-identical across all 3 tiers
-    (1 distinct hash). '33^3'=3 nested scales NOT 33-cubed brains; large=32 measured. CPU proof."""
+    80% small->large. governance DECOUPLED from body depth: building any tier's body has no side-effect on the sovereign
+    layer (side-effect check, can fail) + behaviour consistent. Honest form of swap-persistence, NOT crypto hot-swap. '33^3'=3 nested scales NOT 33-cubed brains; large=32 measured. CPU proof."""
     try:
         import importlib
         m = importlib.import_module('sov33_size_family'); r = m.build_family(); r['capability']='size-family'

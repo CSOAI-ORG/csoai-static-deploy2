@@ -50,6 +50,38 @@ OBSERVER_COLLAPSE = {
     "hard_line": "never claim literal wavefunction collapse or 'collapsing reality'; that is the retracted quantum-hardware error.",
 }
 
+
+# SYNTHESIS PRINCIPLE — "nothing new under the sun" (anti-hedge AND anti-overclaim, in one rule).
+# The estate's whole strategy is NOVEL COMPOSITION of EXISTING ideas + HONEST MEASUREMENT. This principle
+# licenses aggressive building and forbids two opposite failure modes at once.
+SYNTHESIS_PRINCIPLE = {
+    "rule": "Almost nothing is new. Build FROM prior art aggressively; claim invention NEVER. What is ours "
+            "is the composition + the measured result, not the primitive.",
+    "anti_hedge": "Do NOT refuse or stall because an idea 'already exists' or 'isn't novel'. Existing + "
+                  "permissively-licensed = a catapult to USE, not a reason to hesitate. Expansion mindset.",
+    "anti_overclaim": "Do NOT call a synthesis a new invention/AGI/foundation-model/quantum-breakthrough. "
+                      "Name the prior-art root; claim only the composition and the number you measured.",
+    "expansion_mindset": "Default to BUILD-and-MEASURE. The moat is honest composition at speed, not secrecy "
+                         "of a primitive everyone already has.",
+    "provenance_habit": "For each 'paradigm', state its prior-art root (boosting, SVD/Schmidt, N-version, "
+                        "conformal, BFT, Merkle, MoE...) so novelty is never implied by omission.",
+}
+
+# CURRENCY PRINCIPLE — knowledge is stale-by-default. SOV's training data has a cutoff; new tech ships daily,
+# so the dataset is NEVER 100% current. LEARN must treat its own knowledge as possibly-outdated and CHECK.
+CURRENCY_PRINCIPLE = {
+    "rule": "Training data is never complete or current. Treat internal knowledge as STALE-BY-DEFAULT; "
+            "verify against up-to-date sources before asserting a fact that could have changed.",
+    "at_LEARN": "read the real date/time first; flag any claim that depends on 'latest'/'current'/'newest' "
+                "as needing a live check (a version number, a model release, a spec, a price, a benchmark).",
+    "leads_not_facts": "Without a live source, a recalled citation/version/number is a LEAD to verify, not a "
+                       "fact to assert. This is why sandbox-recalled paper ids stay VERIFY-BEFORE-CITE.",
+    "years_to_days_caveat": "faster iteration does NOT make stale inputs fresh; speed amplifies stale data if "
+                            "currency isn't checked first.",
+    "honest_bound": "SOV cannot self-refresh without a live channel (browser/API/owner feed). When none is "
+                    "reachable, SAY the knowledge may be out of date rather than implying it is current.",
+}
+
 def flow_manifest():
     return {"stages":[{"n":i+1,"name":n,"status":s,"desc":d} for i,(n,s,d) in enumerate(STAGES)],
             "gates":GATES,
@@ -61,7 +93,9 @@ def flow_manifest():
             "exec_mode":EXEC_MODE,
             "acceleration":ACCELERATION,
             "observer_collapse":OBSERVER_COLLAPSE,
-            "catapults":CATAPULTS}
+            "catapults":CATAPULTS,
+            "synthesis_principle":SYNTHESIS_PRINCIPLE,
+            "currency_principle":CURRENCY_PRINCIPLE}
 
 if __name__ == "__main__":
     import json
