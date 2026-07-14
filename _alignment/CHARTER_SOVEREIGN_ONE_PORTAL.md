@@ -4,7 +4,7 @@ Semantic charter for "the one the end user talks to." Extends CHARTER_OWEM_FOUR_
 Every claim here is either MEASURED (cite) or a design definition; nothing is a size/capability inflation.
 
 ## 1. WHAT THE END USER TALKS TO
-Not a new model. **One Sovereign portal** — a single entrypoint (`sov33.py`, 99 capabilities) that routes a
+Not a new model. **One Sovereign portal** — a single entrypoint (`sov33.py`, 100 capabilities) that routes a
 request to whichever scope/brain fits. One face, many brains behind it. One identity, one care-floor (0.35),
 one memory, one attestation chain. The user never picks a model; the Sovereign routes.
 
