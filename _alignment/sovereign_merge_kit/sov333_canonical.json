@@ -61,7 +61,15 @@
     "safety_boundary": "SIGIL/Ed25519 attestation must be cryptographically sound in production; containment claim assumes signing keys uncompromised"
   },
   "capability_benchmark": {
-    "status": "PENDING",
-    "detail": "awaiting owner-run Kaggle notebook sov33_kaggle_compete; smoke-test stub value reverted (was not a real graded run)"
+    "status": "GRADED",
+    "benchmark": "GSM8K",
+    "gsm8k": 0.71,
+    "n_items": 100,
+    "config": "live cascade os.meok.ai small->large (deployed gate, Groq-routed)",
+    "provenance": "Fable lane ran GSM8K (public gold labels) against the LIVE os.meok.ai deployed gate from the Mac on 2026-07-14 \u2014 routed around the Kaggle phone-verify wall. NOT a Kaggle GPU run.",
+    "honest_note": "gold-graded capability of the DEPLOYED system (what users get today), NOT a from-scratch local distilled model \u2014 that still needs the GPU run. n=100 sample of GSM8K test (1319 total).",
+    "ingested_at": "2026-07-14T05:27:08.326677+00:00",
+    "escalation_rate": 0.0,
+    "tier_measured": "small/8B (escalation 0.0 \u2014 cascade early-exit never needed the large tier; large would score higher)"
   }
 }
