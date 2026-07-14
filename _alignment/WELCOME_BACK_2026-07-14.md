@@ -1,3 +1,5 @@
+> **PROVENANCE:** model *choices* (Qwen3/DeepSeek/JEPA/BGE-M3) are sound, but the '1,627-model scan' counts + download rankings are **Hermes-sibling-reported, not Fable-verified**. See PROVENANCE_LEDGER_2026-07-14.md.
+
 # 🐉 Welcome back, Sir — here's what got better while you were with her
 
 _Every number below is measured, committed, and pushed. Nothing needs you to have happened — it just did.
