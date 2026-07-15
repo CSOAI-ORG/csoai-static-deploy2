@@ -78,10 +78,19 @@ def sovereign_answer(q, R, sig):
     survivors,dropped=[],[]
     for m,a in props:
         (dropped if nli_contradicts(ground, a) else survivors).append((m,a))
-    # fuse survivors
+    # fuse survivors — use the NVIDIA big brain if configured (key from env, never handled here), else local
     if survivors:
         digest="\n".join(f"- {a}" for _,a in survivors)
-        fused=gen(AGG,f"/no_think Synthesize ONE grounded answer from these, cite [source], 2 sentences.\nQ: {q}\n{digest}\nFUSED:",220)
+        fuse_prompt=(f"Using ONLY the CONTEXT, answer the question in 2 sentences and cite the [source]. "
+                     f"Do not add facts not in the context.\nCONTEXT:\n{ctx}\nQUESTION: {q}\n"
+                     f"COUNCIL DRAFTS:\n{digest}\nFINAL:")
+        try:
+            import sovereign_nvidia as nv
+            fused = nv.nvidia_chat(fuse_prompt, system="You are the Sovereign: grounded, honest, concise.") if nv.available() else None
+        except Exception:
+            fused = None
+        if not fused:
+            fused=gen(AGG,"/no_think "+fuse_prompt,220)     # local fallback
     else:
         fused="ABSTAIN — all proposers contradicted the grounded source."
     rec=sig.sign({"q":q,"answer":fused,"sources":[s for s,_,_ in hits],"survivors":[m for m,_ in survivors],"dropped":[m for m,_ in dropped],"care_ok":True,"top":round(top,3)})
