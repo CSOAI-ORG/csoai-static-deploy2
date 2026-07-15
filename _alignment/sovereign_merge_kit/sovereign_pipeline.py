@@ -14,7 +14,8 @@ This is the coherent core: RAG grounding + council fusion + grounded BFT gate + 
 """
 import os, re, json, sys, time, urllib.request
 import numpy as np
-os.environ.setdefault("HF_HUB_OFFLINE","1")
+# Do NOT hard-force HF offline: it breaks cache-ref resolution for MiniLM/NLI. Models are cached; they load
+# from cache, and a quick online HEAD check is harmless. (Forcing offline caused LocalEntryNotFoundError.)
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from sov33_ed25519_sigil import Ed25519Sigil
 from sovereign_kb import kb
