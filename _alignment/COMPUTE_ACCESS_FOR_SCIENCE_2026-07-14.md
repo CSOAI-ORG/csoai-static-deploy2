@@ -34,3 +34,11 @@ already use for it (you paste the key in the UI — I never handle it). Then Sci
   collapses the GPU wall programmatically.
 - **For a big free CPU box (24 GB > your Mac):** say the word and I'll provision the OCI A1.
 - Colab/Kaggle stay manual (not SSH-able) — no way around that.
+
+---
+## VERIFIED specs (SSH'd 2026-07-14)
+- **sov33-owem-micro (oracle, 145.241.232.16, ubuntu):** LIVE. 2 CPU · ~1GB RAM · 42GB disk · **NO GPU** · Py3.10.
+  Use as an always-on COORDINATOR (router / signed Layer-0 node / light orchestration). NOT training/serving.
+- **SETTLED:** no free GPU is reachable via SSH. GPU only from: Groq API (live), NVIDIA API (key rejected—fix), Modal (owner token), Colab (browser, training). A GPU SSH box requires PAID cloud (AWS/Azure credits).
+- **Modal** not installed → owner: `pip install modal && modal token new`.
+- **To connect Science:** GitHub (repos) + NVIDIA (fix key) + Modal (token). Oracle SSH optional for a persistent coordinator. Skip GCP(billing off)/Literature/OpenAlex.
