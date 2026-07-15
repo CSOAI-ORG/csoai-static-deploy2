@@ -19,27 +19,34 @@ import sovereign_router as ROUTER           # dispatch(prompt, system=, tier=) -
 from sov33_care_local import score_local, FLOOR   # (care_score, intent)
 
 # --- the 4 sovereign brains: governance ROLE personas (not the pop-neuro left/right metaphor) ---
+# Each brain -> a decorrelated frontier model id from NVIDIA's /v1/models (different lineages
+# Qwen / DeepSeek / Llama so errors don't correlate). LIVENESS IS POINT-IN-TIME + FLAKY:
+# on 2026-07-15 qwen3.5-397b + deepseek-v4-flash + llama-3.1-70b each ANSWERED once, but the
+# NVIDIA free tier returns intermittent 503/404 under load — treat these as best-effort, not
+# guaranteed-up. deepseek-v4-pro(listed ~1.6T) timed out on every attempt (90/180/200s) = not usable here.
+# The router fails over across the tier, so a single model dropping does not drop the brain.
+_NV = "nvidia"  # all confirmed-live models are served by the NVIDIA hosted API (free, authenticated)
 BRAIN_PERSONAS = {
     "Compliance": {
-        "tier": "smart",
+        "backend": _NV, "model": "qwen/qwen3.5-397b-a17b",           # ~400B, confirmed live
         "system": ("You are the COMPLIANCE brain of a sovereign AI. Answer with regulatory precision: "
                    "cite the governing rule/standard, flag any legal or policy risk, and never advise an action "
                    "that violates law or the care-floor. Be exact, auditable, and conservative."),
     },
     "Defense": {
-        "tier": "smart",
+        "backend": _NV, "model": "deepseek-ai/deepseek-v4-flash",    # DeepSeek lineage, confirmed live
         "system": ("You are the DEFENSE brain of a sovereign AI. Assess threats, adversarial framing, and misuse. "
                    "Protect the user and third parties. You may refuse or defend, never attack another system. "
                    "Fail closed on ambiguity around catastrophic or harmful requests."),
     },
     "Intuition": {
-        "tier": "smart",
+        "backend": _NV, "model": "meta/llama-3.1-70b-instruct",      # Llama lineage, confirmed live
         "system": ("You are the INTUITION brain of a sovereign AI. Reason about intent, nuance, and the best path "
                    "when the answer isn't purely rule-bound. Surface what a careful expert would sense but not "
                    "immediately state. Flag uncertainty honestly."),
     },
     "Voice": {
-        "tier": "fast",
+        "backend": _NV, "model": "meta/llama-3.1-70b-instruct",      # Llama lineage, confirmed live
         "system": ("You are the VOICE brain of a sovereign AI. Deliver the final answer to the user clearly, warmly, "
                    "and plainly — no jargon, no overclaiming. You speak for the sovereign; be honest about limits."),
     },
@@ -55,8 +62,10 @@ def ask_brain(name, prompt, max_tokens=400):
     if care < FLOOR:
         return {"brain": name, "care_score": care, "intent": intent, "gated": True,
                 "answer": None, "reason": f"care {care} < floor {FLOOR} -> BREACH, request withheld"}
-    # 2) dispatch persona to best available backend (their GPU, not the Mac)
-    answer, backend = ROUTER.dispatch(prompt, system=spec["system"], tier=spec["tier"], max_tokens=max_tokens)
+    # 2) dispatch persona to its assigned confirmed-live frontier model (their GPU, not the Mac)
+    answer, backend = ROUTER.dispatch(prompt, system=spec["system"],
+                                      backend=spec.get("backend"), model=spec.get("model"),
+                                      tier=spec.get("tier","smart"), max_tokens=max_tokens)
     return {"brain": name, "care_score": care, "intent": intent, "gated": False,
             "backend": backend, "answer": answer}
 

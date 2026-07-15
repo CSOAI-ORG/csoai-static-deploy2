@@ -37,12 +37,13 @@ def available():
         elif os.environ.get(b["key"]): out.append(n)
     return out
 
-def _call(name, prompt, system, max_tokens, temperature):
+def _call(name, prompt, system, max_tokens, temperature, model=None):
     b=BACKENDS[name]; key=os.environ.get(b["key"]) if b["key"] else None
     if b["key"] and not key: return None
     key=(key or "").strip().strip('"').strip("'")   # tolerate stray paste chars
     msgs=([{"role":"system","content":system}] if system else [])+[{"role":"user","content":prompt}]
-    body=json.dumps({"model":b["model"],"messages":msgs,"temperature":temperature,"max_tokens":max_tokens,"stream":False}).encode()
+    use_model = model or b["model"]                  # per-call model override (confirmed-live model id)
+    body=json.dumps({"model":use_model,"messages":msgs,"temperature":temperature,"max_tokens":max_tokens,"stream":False}).encode()
     hdr={"Content-Type":"application/json","User-Agent":"Mozilla/5.0 sovereign-router"}  # UA: Groq/CF need it
     if key: hdr["Authorization"]=f"Bearer {key}"
     req=urllib.request.Request(f"{b['base']}/chat/completions",data=body,headers=hdr)
@@ -52,12 +53,15 @@ def _call(name, prompt, system, max_tokens, temperature):
     except Exception:
         return None
 
-def dispatch(prompt, system=None, tier="smart", max_tokens=400, temperature=0.2):
-    """Try backends in tier order; return (answer, backend_name). None answer only if ALL fail."""
-    for name in TIERS.get(tier, TIERS["any"]):
+def dispatch(prompt, system=None, tier="smart", max_tokens=400, temperature=0.2, model=None, backend=None):
+    """Try backends in tier order; return (answer, backend_name). None answer only if ALL fail.
+    model=  -> override the model id for the chosen backend (e.g. a confirmed-live NVIDIA model).
+    backend= -> pin a single backend (e.g. 'nvidia') instead of trying the whole tier."""
+    order = [backend] if backend else TIERS.get(tier, TIERS["any"])
+    for name in order:
         if name not in available(): continue
-        a=_call(name, prompt, system, max_tokens, temperature)
-        if a: return a, name
+        a=_call(name, prompt, system, max_tokens, temperature, model=model)
+        if a: return a, (f"{name}:{model}" if model else name)
     return None, None
 
 if __name__=="__main__":
