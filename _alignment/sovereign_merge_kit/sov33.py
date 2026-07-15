@@ -1680,6 +1680,19 @@ def capability_pdca_loop(**kwargs):
     except Exception as e:
         return {'capability':'pdca-loop','error':str(e)[:160]}
 
+def capability_fuse_outcomes(**kwargs):
+    """OUTCOME FUSION (live SOV4 fusion): SOV1 routes to 3 nodes -> PDCA/BFT reconciles -> signed answer.
+    The DRUM-paced fusion of the 3-around-1 outcomes. Honest: proxy outcomes prove the PATH; real
+    quality needs live SOV3/33/333 answers passed as node_answers."""
+    try:
+        import importlib
+        r = importlib.import_module('sov33_venturi_router')
+        prompt = kwargs.get('prompt') or kwargs.get('query') or "What must a provider do before placing a high-risk AI system on the market?"
+        out = r.fuse_outcomes(prompt, node_answers=kwargs.get('node_answers'))
+        return {'capability':'fuse-outcomes', **out}
+    except Exception as e:
+        return {'capability':'fuse-outcomes','error':str(e)[:160]}
+
 def capability_owem_stack(**kwargs):
     """Two OWEM models stacked (cascade-residual boosting), governed by the Venturi seam, MEASURED.
     Honest law: stacking a 2nd OWEM wins big when the 1st is capacity-limited (leaves structured
@@ -2499,6 +2512,7 @@ CAPABILITIES = {
     'venturi-route': capability_venturi_route,
     'nn-bus': capability_nn_bus,
     'pdca-loop': capability_pdca_loop,
+    'fuse-outcomes': capability_fuse_outcomes,
     'brain-merge-ratio': capability_brain_merge_ratio,
     'six-lever-proxy': capability_six_lever_proxy,
     'find-best-config': capability_find_best_config,

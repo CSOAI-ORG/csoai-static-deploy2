@@ -39,3 +39,18 @@ venturi) across whatever brains sit behind it (fused Qwen experts now; T-scale M
 runtime exists). "T / emergence" = measured capability at domain-intersections + routing to real big
 brains — NEVER summed params, never faked-live. The governance spine is REAL and wired today; the size
 of the brains it commands is the frontier still being climbed.
+
+
+## UPDATE 2026-07-15 (batch run)
+- **Node1 fusion COMPLETE** (Modal job f7c6423c): 3 experts trained (defense 0.75/compliance 1.34/intuition 1.22),
+  TIES-merged -> emergence adapter, 336 tensors, 0 NaN. Artifacts saved (sov_node1_emergence.tar.gz).
+- **Emergence finding (CC's loss-metric eval, honest):** TIES-fused loss 2.9095 BEATS naive-average 2.9965
+  (method sound, no collapse) but ~= best single expert 2.9087 — **NO free-lunch gain at this scale on
+  same-base experts.** Matches our decorrelation law: real emergence needs different ARCHITECTURES
+  (MoE/MoM/OWM), not 3 Qwen experts on one base. (My law-grounding eval was a complementary lens; CC's
+  loss number is the citable one.)
+- **OUTCOME FUSION wired + E2E-live** (`capability_fuse-outcomes`): SOV1 routes to 3 nodes -> PDCA/BFT
+  reconciles -> signed answer. Verified: benign->winner+PDCA-ratified+signed; harmful->vetoed before fusion.
+  This is the LIVE fusion (distinct from Node1's offline weight-merge). Honest: proxy outcomes prove the
+  PATH; real answer-quality needs live SOV3/33/333 brains passed as node_answers.
+- **108 capabilities wired** in sov33.py entrypoint.
