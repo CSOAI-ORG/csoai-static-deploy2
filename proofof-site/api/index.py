@@ -133,7 +133,8 @@ NEXUS_18 = [
     {"tab": 87, "slug": "rag-augmented", "title": "RAG Augmented",       "trio": "deep",     "icon": "🧠", "tag": "18→82%",         "route": "/rag-augmented.html",   "purpose": "Style from LoRA + Facts from retrieval = production-grade · 14/17 = 82% with RAG vs 18% without"},
     {"tab": 88, "slug": "compliance-owem","title": "Compliance OWEM",     "trio": "deep",     "icon": "✅", "tag": "0→100%",         "route": "/compliance-owem.html",  "purpose": "Largest single OWEM lift: charter-QA 0/5→5/5 (100%) with RAG · production-ready for compliance"},
     {"tab": 90, "slug": "real-benchmarks",     "title": "Real Benchmarks",         "trio": "deep",     "icon": "📈", "tag": "Top-1 65%",       "route": "/real-benchmarks.html",    "purpose": "REAL measured benchmarks · latency 0.07ms · throughput 14,867 qps · 5x4x3 100% · BFT-33 100% · honest register"},
-    {"tab": 91, "slug": "sovereign-ask",       "title": "Sovereign Ask",           "trio": "deep",     "icon": "🤝", "tag": "REAL inference",  "route": "/sovereign-ask-live.html", "purpose": "Ask the REAL model · classifies to OWEM · retrieves top-3 facts · mints SIGIL receipt · honest measured latency"}
+    {"tab": 91, "slug": "sovereign-ask",       "title": "Sovereign Ask",           "trio": "deep",     "icon": "🤝", "tag": "REAL inference",  "route": "/sovereign-ask-live.html", "purpose": "Ask the REAL model · classifies to OWEM · retrieves top-3 facts · mints SIGIL receipt · honest measured latency"},
+    {"tab": 92, "slug": "sovereign-canary", "title": "Sovereign Canary", "trio": "deep", "icon": "🐤", "tag": "binding monitor", "route": "/sovereign-canary.html", "purpose": "Real-time sovereign-binding canary · 15 prompts · hedge detection · care-floor enforcement verification"}
 ]
 
 TRIO = {
