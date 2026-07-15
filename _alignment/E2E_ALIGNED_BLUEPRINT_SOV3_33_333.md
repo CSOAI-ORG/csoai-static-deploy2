@@ -13,7 +13,9 @@ distinction is the honesty backbone of this whole plan.
 |---|---|---|---|---|
 | **SOV3** | reflex — fast/private/offline | Qwen2.5-0.5B/3B **+ our LoRA** (training now) | MLX on M4/M2 · Ollama | 🟢 student training on Modal |
 | **SOV33** | grounded — RAG + cited + care-gated | open 70B (Groq) + our KB | Oracle shared brain (Groq) | 🟢 LIVE, signed |
-| **SOV333** | frontier — hardest tasks | biggest open/hosted (NVIDIA 405B; DeepSeek/Kimi when funded) | routed via Hermes | 🟡 70B now; 405B on key regen |
+| **SOV333** | frontier — **fluid, no fixed base** | our 3B student (local) → routes UP to 405B → trillion (DeepSeek/Kimi) per task difficulty | `sov333_adaptive.py` router | 🟡 3B student born; 405B on key regen; trillion wired-but-unfunded |
+
+> **SOV333 is fluid by design (Nick's principle):** it does NOT own a 1.5T base — a 1.5T won't even load on our free GPUs. Instead it *changes which brain it calls per task* — small local student for easy, 405B for hard, a real trillion model when a task demands it AND funding exists. **Access via routing, not ownership.** The "model" is the fluid composition, not a static weight blob. Honest ceiling: routing gives us *reach* to big brains (API, paid at the top tier), never *possession* of them.
 
 All three are wrapped by the **same governance spine** and answer through the **same signed router**.
 
