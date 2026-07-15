@@ -78,3 +78,14 @@ of the brains it commands is the frontier still being climbed.
 - **HONESTY GUARDRAIL on the design conclusion:** "3 *different* architectures (MoE/MoM/OWM) will emerge" is a
   HYPOTHESIS TO TEST NEXT, not a proven result. What is proven: same-base doesn't emerge. Different-architecture
   emergence is UNTESTED — do not present it as validated until a real different-arch fusion is measured.
+
+## MoA emergence test (CC lane, 2026-07-15) — measured, not claimed
+- **Path A / Mixture-of-Agents built + run** (`sov4_moa.py`): 4 diverse proposers (llama-3.3-70b, qwen3-32b,
+  llama-3.1-8b, local-sovereign) → strong aggregator (llama-70b) → LLM-judged vs best single.
+- **Result: MoA beat best-single on 1/3 (small n).** NO clear inference-time emergence at this config.
+- Honest read (matches literature's Self-MoA counter-finding): mixing is not automatically better. Two open levers
+  the research says are DECISIVE: (1) aggregator strength above the "crossover threshold" — llama-70b may be below it;
+  a bigger aggregator (gpt-oss-120b was NOT reachable this run; or a frontier model) is the next test. (2) genuinely
+  different architectures — 2 of 4 proposers were Llama-family; need MoE + dense + SSM diversity.
+- **Verdict so far: emergence UNPROVEN by both weight-merge AND naive-MoA at small scale.** The honest next experiment
+  is MoA with a stronger aggregator + more architecturally-diverse proposers, on a bigger battery. Not claimed until measured >50%.
