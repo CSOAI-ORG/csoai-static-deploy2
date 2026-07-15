@@ -11,8 +11,25 @@ Honest: the governance (care-gate + signature) is ours; the intelligence is the 
 "sov333-frontier" reaches the biggest reachable API model; 1.6T answers only when that
 model actually responds on this machine (not faked).
 """
-import os, sys, json, time, http.server, socketserver
+import os, sys, json, time, re, http.server, socketserver
 HERE=os.path.dirname(os.path.abspath(__file__)); sys.path.insert(0,HERE)
+
+def _autoload_keys():
+    """Pull provider keys from ~/.zshrc, ~/.bashrc, ~/.env, and a local .env into os.environ
+    if not already set — so `sov333-frontier` lights up without per-shell `export`.
+    NEVER prints key values."""
+    wanted=["NVIDIA_API_KEY","GROQ_API_KEY","GLM_API_KEY","MINIMAX_API_KEY","DEEPSEEK_API_KEY","KIMI_API_KEY"]
+    srcs=[os.path.expanduser("~/.zshrc"),os.path.expanduser("~/.bashrc"),
+          os.path.expanduser("~/.env"),os.path.join(HERE,".env")]
+    pat=re.compile(r'(?:export\s+)?([A-Z_]+)\s*=\s*["\']?([^"\'\s#]+)')
+    for f in srcs:
+        try:
+            for line in open(f):
+                m=pat.match(line.strip())
+                if m and m.group(1) in wanted and not os.environ.get(m.group(1)):
+                    os.environ[m.group(1)]=m.group(2)
+        except Exception: pass
+_autoload_keys()
 from sov33_care_local import score_local, FLOOR
 import sovereign_router as ROUTER
 try:
