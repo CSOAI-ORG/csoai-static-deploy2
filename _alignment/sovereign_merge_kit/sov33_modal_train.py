@@ -22,7 +22,7 @@ except ImportError:
     modal = None
 
 STUB = modal.App("sov33-sovereign-train") if modal else None
-DATA = "expert_data/sovereign_distilled.jsonl"   # the verified 113-pair corpus
+DATA = os.environ.get("SOV_DATA", "expert_data/merged_corpus.jsonl")   # merged local corpus (1289 rows); override via SOV_DATA
 BASE = os.environ.get("SOV_BASE", "Qwen/Qwen2.5-0.5B-Instruct")
 
 if modal:
