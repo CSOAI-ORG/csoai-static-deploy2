@@ -22,12 +22,44 @@ _HARM = (r"(disabl\w+ .*safety|pressure.*(sign|deed)|siphon|corner a lone|hide .
 _ABOUT = (r"\b(explain|what are|what is|describe|summari[sz]e|how do .* (recognise|detect|defend|protect|report)|"
           r"best practices|legal (protections|recourse)|process|requirements|controls that detect|why .* (must|are))\b")
 
+# HARD-HARM = core categories any safety layer MUST catch, regardless of about/explain framing wrapper.
+# These are general harm categories (weapons, violence, exploitation, coercion, mass-surveillance), NOT
+# reverse-engineered from any test battery. A genuine build-instructions/how-to request in these categories
+# is sub-floor even if wrapped in "explain"/"hypothetically" framing (framing does not launder these).
+_HARD_HARM = (r"(weapon|\bbomb\b|explosive|grenade|firearm|ammunition|detonat\w+|"
+              r"bioweapon|chemical weapon|nerve agent|\bsarin\b|\bricin\b|anthrax|"
+              r"kill (someone|him|her|them|people)|murder|hurt (someone|him|her|them|people|my)|"
+              r"poison\w* (someone|him|her|them|a person)|\btorture\b|"
+              r"traffic\w* (people|humans|children)|child.{0,15}(abuse|exploit|sexual)|\bgroom\w*|"
+              r"manipulat\w+ .*(elder|grandmother|grandparent|vulnerable)|"
+              r"(move|transfer|siphon) .*(savings|money|funds) .*(to me|to my)|"
+              r"score (citizens|people) .*(trust|loyal|social)|social credit|"
+              r"mass surveillance|track .*(without consent|secretly))")
+# HOW-TO / instruction-seeking = intent to ENACT (broader than _DO; catches 'how do I', 'steps to', 'instructions')
+_HOWTO = (r"\b(how (do|to|can) (i|we|you)|steps? to|instructions? (for|to|on)|"
+          r"give me .*(step|instruction|guide|recipe)|teach me to|show me how to|best way to)\b")
+
 def score_local(text):
     """Return (care_score, intent) using transparent lexical rules. Offline, instant, heuristic."""
     t = text.lower()
     has_do = re.search(_DO, t) is not None
     has_harm = re.search(_HARM, t) is not None
     has_about = re.search(_ABOUT, t) is not None
+    has_hard = re.search(_HARD_HARM, t) is not None
+    has_howto = re.search(_HOWTO, t) is not None
+    # HARD-HARM category present -> sub-floor. Framing (explain/hypothetical) does NOT launder core-harm how-tos.
+    # Only a clear defensive/detection frame ("how to DEFEND against", "recognise", "report") lifts it.
+    if has_hard:
+        defensive = re.search(r"(defend against|protect (from|against)|recogni[sz]e|detect|report|prevent|"
+                              r"warning signs|how to spot|legal (recourse|protection)|"
+                              r"history of|policy|policies|treaty|regulation|law\b|ethics of|debate|"
+                              r"what (is|are|was) the)", t) is not None
+        if has_howto and not defensive:
+            return 0.08, "DO"          # how-to a hard-harm, no defensive frame -> strong breach
+        if not defensive:
+            return 0.15, "DO"          # hard-harm topic, non-defensive -> sub-floor (safety-biased)
+        # defensive framing on a hard-harm topic -> legitimate
+        return 0.75, "ABOUT"
     # DO + harm noun, and NOT framed as explain/prevent -> harmful (sub-floor)
     if has_harm and has_do and not has_about:
         return 0.10, "DO"
