@@ -20,8 +20,10 @@ What's actually reachable RIGHT NOW (probed live), and what to add to help Herme
 | OpenAlex | ✅ | scholarly search |
 | **NVIDIA_API_KEY** | ❌ NOT in sandbox env | inference brains — THE Phase-1 blocker |
 
-## NEW CAPABILITY FOUND: NVIDIA BioNeMo NIM (managed endpoints, REMOTE mode)
-- NVIDIA NIM is connected in URL/remote mode (health.api.nvidia.com).
+## NVIDIA BioNeMo NIM — connector AVAILABLE but NO credential connected
+- CORRECTION: host.credentials.list() shows NO NVIDIA entry -> the NVIDIA family is NOT connected in ANY mode.
+- The NIM connector exists/available, but per the managed-endpoints skill 'connect saves the credential first',
+  so with no NVIDIA credential row I CANNOT register endpoints yet. Owner must connect NVIDIA_API_KEY first.
 - I can register REMOTE model endpoints via host.model_endpoints.register(url="https://<upstream>",
   credential="NVIDIA_API_KEY", ...) — no lifecycle scripts, plain HTTP client of BASE_URL.
 - THIS is how the 3 different-arch emergence brains become reachable managed endpoints —
