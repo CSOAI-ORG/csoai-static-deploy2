@@ -2475,6 +2475,34 @@ def capability_planet_route(**kwargs):
             return {'capability':'planet-route','status':'GATED','needs':'Qwen3-0.6B embedding model (offline-blocked)','wireable':True}
         return {'capability':'planet-route','error':msg[:160]}
 
+
+def capability_learn_stage(**kwargs):
+    """LEARN stage (PDCA stage-1): time+substrate-aware LEARN + DRUM tick. Fixes the 'stage-1 partial' gap."""
+    try:
+        import importlib; L=importlib.import_module('sov33_learn_stage')
+        out=L.learn(kwargs.get('task_hint') or kwargs.get('prompt') or '')
+        return {'capability':'learn-stage', 'learn':(out if isinstance(out,dict) else {'result':str(out)[:200]}), 'drum':L.drum_tick()}
+    except Exception as e:
+        return {'capability':'learn-stage','error':str(e)[:160]}
+
+def capability_check_existing(**kwargs):
+    """CHECK_EXISTING stage (PDCA stage-2): anti-relapse — audit what's built before rebuilding."""
+    try:
+        import importlib; C=importlib.import_module('sov33_check_existing_stage')
+        return {'capability':'check-existing', **({'result':C.check_existing(kwargs.get('capability_kw') or kwargs.get('prompt') or 'sov4')} )}
+    except Exception as e:
+        return {'capability':'check-existing','error':str(e)[:160]}
+
+def capability_difficulty_route(**kwargs):
+    """Cascade difficulty routing: score task hardness 0-1 to pick draft-vs-verify tier."""
+    try:
+        import importlib; c=importlib.import_module('sov33_cascade_router')
+        d=c.difficulty(kwargs.get('prompt') or kwargs.get('text') or 'test')
+        return {'capability':'difficulty-route','difficulty':round(float(d),3),
+                'tier':'verify' if d>0.5 else 'draft'}
+    except Exception as e:
+        return {'capability':'difficulty-route','error':str(e)[:160]}
+
 CAPABILITIES = {
     'divergence': capability_divergence_sim,
     'divergence-sim': capability_divergence_sim,
@@ -2550,6 +2578,9 @@ CAPABILITIES = {
     'audit-stage': capability_audit_stage,
     'horus': capability_horus,
     'planet-route': capability_planet_route,
+    'learn-stage': capability_learn_stage,
+    'check-existing': capability_check_existing,
+    'difficulty-route': capability_difficulty_route,
     'tensor-compress': capability_tensor_compress,
     'param-accounting': capability_param_accounting,
     'venturi-stream': capability_venturi_stream,
