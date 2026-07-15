@@ -11,7 +11,9 @@ DATA-BLOCKED / RUNTIME-UNPROVEN = real gap, named honestly.
   dependency/care-validation/partnership) — weak->strong is DATA-BLOCKED (6/200 labels accumulated).
 - **PDCA 9-stage + DRUM** (`sov33_nine_stage_flow` + `sov33_pdca_bft` -> `capability_pdca-loop`):
   9 stages, BFT council ratified=True, sigil-per-stage, DRUM heartbeat. Honest: stage-1 LEARN partial (memory pending).
-- **care-gate** (`sov33_care_local`, floor 0.35, RECALL 1.00): harmful vetoed (care 0.08) BEFORE route/execute.
+- **care-gate** (`sov33_care_local`, floor 0.35): citable reproducible recall **0.933** (n=33 offline battery,
+  precision 0.933, acc 0.939). The 1.00 seen on the small held-out hard-harm subset is NOT citable (tiny n).
+  In the E2E test, the harmful prompt was vetoed (care 0.08) BEFORE route/execute.
 - **SIGIL Ed25519** (`sov33_ed25519_sigil`): every decision signed + chain-verified.
 - **E2E PATH VERIFIED**: one benign request runs route->care->sign->planets->PDCA as ONE stack;
   harmful vetoed. Not 104 separate imports — one governed decision path.
