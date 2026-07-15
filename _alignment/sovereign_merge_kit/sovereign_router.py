@@ -14,7 +14,7 @@ import os, json, urllib.request
 
 BACKENDS = {
     "groq":    dict(key="GROQ_API_KEY",    base="https://api.groq.com/openai/v1",           model=os.environ.get("GROQ_MODEL","llama-3.3-70b-versatile")),
-    "nvidia":  dict(key="NVIDIA_API_KEY",  base="https://integrate.api.nvidia.com/v1",       model=os.environ.get("NVIDIA_MODEL","meta/llama-3.1-70b-instruct")),
+    "nvidia":  dict(key="NVIDIA_API_KEY",  base="https://integrate.api.nvidia.com/v1",       model=os.environ.get("NVIDIA_MODEL","meta/llama-3.1-405b-instruct")),   # most-powerful FREE hosted tier
     "glm":     dict(key="GLM_API_KEY",     base="https://open.bigmodel.cn/api/paas/v4",       model=os.environ.get("GLM_MODEL","glm-4-flash")),
     "minimax": dict(key="MINIMAX_API_KEY", base="https://api.minimax.chat/v1",                model=os.environ.get("MINIMAX_MODEL","abab6.5s-chat")),
     "ollama":  dict(key=None,              base="http://localhost:11434/v1",                  model=os.environ.get("OLLAMA_MODEL","sovereign")),
