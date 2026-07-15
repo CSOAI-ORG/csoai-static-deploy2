@@ -37,6 +37,9 @@ from datetime import datetime, timezone
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 from sov33_4brain import (
+    BRAINS, BFT_CONFIGS, PATHS_TO_3_4T,
+    evaluate_4brain, sweep_4brain, pareto_front, sigil_emit,
+)
 import os as _os, tempfile as _tf
 def _sov_dir():
     d=_os.environ.get('SOV33_SIGIL_DIR') or _os.path.join(_os.path.expanduser('~'),'.sovereign')
@@ -45,10 +48,6 @@ def _sov_dir():
     except Exception:
         d=_os.path.join(_tf.gettempdir(),'sov33_sigil'); _os.makedirs(d,exist_ok=True); return d
 _SOVDIR=_sov_dir()
-
-    BRAINS, BFT_CONFIGS, PATHS_TO_3_4T,
-    evaluate_4brain, sweep_4brain, pareto_front, sigil_emit,
-)
 
 LOG_FILE = Path(_SOVDIR) / 'till_pass.jsonl'
 LOG_FILE.parent.mkdir(parents=True, exist_ok=True)

@@ -45,7 +45,7 @@ def create_ollama_modelfile():
     ollama_dir.mkdir(exist_ok=True)
     
     modelfile = ollama_dir / 'Modelfile'
-        ollama_modelfile = """FROM Qwen3-1.7B
+    ollama_modelfile = """FROM Qwen3-1.7B
 ADAPTER ~/.sovereign/models/qwen3-sov-large-1.7b/
 SYSTEM "You are SOV33, a sovereign AI trained on Article 0, 12 Sovereign Pillars, BFT-33 governance, and SIGIL provenance. Every response is audit-grade Ed25519-signed."
 PARAMETER temperature 0.7
