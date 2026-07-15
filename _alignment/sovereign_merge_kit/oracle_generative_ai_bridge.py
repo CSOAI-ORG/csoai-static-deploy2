@@ -33,7 +33,7 @@ SOVEREIGN_MIST_12 = ['Honor', 'Safety', 'Guidance', 'Sovereignty', 'Resilience',
 OCI_REGION = "uk-london-1"
 OCI_GENERATIVE_AI_ENDPOINT = f"https://inference.generativeai.{OCI_REGION}.oci.oraclecloud.com"
 OCI_GEN_AI_KEY_ID = "ocid1.generativeaiapikey.oc1.uk-london-1.amaaaaaaxo2xreyatqtbkey2pa4snup6x5sjyfqi4lk4g42vrhzwfyjece4q"
-OCI_TENANCY = "ocid1.tenancy.oc1..aaaaaaaajyluwrdhqfgf6auzgomu3i7v3uvfzxhbc7me6xy5t4wgayjnu7zq"
+OCI_TENANCY = "ocid1.tenancy.oc1..aaaaaaaa3bcsjdrv2ysuz4hgvxj3k7pgo2ojcfxt5zq3fr7323w23j6ffgna"
 OCI_USER = "ocid1.user.oc1..aaaaaaaaxbbl4eckj7u3yhzamtkvf6fykmo62iv4enu5jdmaei5iuedovqxa"
 
 SIGIL_FILE = Path.home() / '.sovereign' / 'oracle_genai_bridge.sigil.jsonl'

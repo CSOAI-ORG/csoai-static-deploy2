@@ -87,7 +87,7 @@ def chat_completion(messages, care_floor=CARE_FLOOR, max_tokens=1024, temperatur
         headers={
             'Content-Type': 'application/json',
             'Authorization': f'Bearer {key}',
-            'compartment-id': 'ocid1.tenancy.oc1..aaaaaaaajyluwrdhqfgf6auzgomu3i7v3uvfzxhbc7me6xy5t4wgayjnu7zq',
+            'compartment-id': 'ocid1.tenancy.oc1..aaaaaaaa3bcsjdrv2ysuz4hgvxj3k7pgo2ojcfxt5zq3fr7323w23j6ffgna',
         }
     )
     
