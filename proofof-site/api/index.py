@@ -2425,6 +2425,30 @@ def _layer0_state_route():
 _CONTINUAL_LOG = []
 
 
+
+@app.route("/api/continual/pool", methods=["GET"])
+def _continual_pool_route():
+    import os as _os
+    LOG = "/tmp/sovereign-actions.jsonl"
+    actions = []
+    if _os.path.exists(LOG):
+        with open(LOG) as f:
+            for line in f:
+                try:
+                    actions.append(json.loads(line))
+                except:
+                    pass
+    return jsonify({
+        "pool_size": len(actions),
+        "max_size": 1000,
+        "actions": actions[-20:],
+        "log_path": LOG,
+        "sigil_mint": CSOAI_SIGIL_MINT,
+        "charter_sha256": CSOAI_CHARTER_SHA256,
+        "ts": datetime.now(timezone.utc).isoformat(),
+    }), 200, {"Content-Type": "application/json", "Access-Control-Allow-Origin": "*"}
+
+
 @app.route("/api/continual/log", methods=["POST"])
 def _continual_log_route():
     body = flask_request.get_json(silent=True) or {}
