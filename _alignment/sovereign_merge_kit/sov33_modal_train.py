@@ -44,7 +44,8 @@ if modal:
         model = AutoModelForCausalLM.from_pretrained(BASE, torch_dtype=torch.float16, device_map="auto")
         model = get_peft_model(model, LoraConfig(r=16, lora_alpha=32, target_modules=["q_proj","k_proj","v_proj","o_proj"], lora_dropout=0.05, task_type="CAUSAL_LM"))
         cfg = SFTConfig(output_dir="/tmp/sov_out", per_device_train_batch_size=2, gradient_accumulation_steps=4,
-                        num_train_epochs=3, learning_rate=2e-4, fp16=True, max_seq_length=1024, logging_steps=5, report_to=[])
+                        num_train_epochs=3, learning_rate=2e-4, fp16=True, max_seq_length=1024, logging_steps=5,
+                        dataset_text_field="text", report_to=[])   # tell SFTTrainer which column to tokenize (fixes KeyError(None))
         tr = SFTTrainer(model=model, train_dataset=ds, args=cfg); tr.train()
         model.save_pretrained("/tmp/sov_out"); 
         import io, base64, tarfile

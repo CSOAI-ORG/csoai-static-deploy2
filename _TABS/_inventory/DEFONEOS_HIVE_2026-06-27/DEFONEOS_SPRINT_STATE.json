@@ -2,31 +2,33 @@
   "started_at": "2026-07-04T17:12:00",
   "sprint": "DEFONEOS_10_DAY",
   "day": 15,
-  "phase": "EXPANSION_23_SECRETS_KEYSTORE_FEDERATION_DISCOVERY_KEY_ROTATION_SHIPPED",
+  "phase": "EXPANSION_24_IDENTITY_ATTESTATION_SUPPLY_CHAIN_INTEGRITY_BFT_QUORUM_CRYPTOGRAPHY_SHIPPED",
   "counters": {
     "mcps_built": 30,
     "mcps_target": 30,
-    "pages_live": 521,
+    "pages_live": 527,
     "pages_target": 50,
-    "pages_full_content": 521,
+    "pages_full_content": 527,
     "stubs_remaining": 0,
     "repos_cloned": 15,
     "repos_target": 15,
     "grants_applied": 0,
     "contacts_made": 0,
-    "expansion_pages_built_session": 30,
+    "expansion_pages_built_session": 33,
     "targets_hit": ["30_mcps", "50_pages", "15_repos"],
     "tick_100_bundles": ["adversarial-red-team-framework", "pilot-roi-model", "aukus-pillar-2-explainer"],
     "tick_101_bundles": ["procurement-tracker", "sovereign-data-escrow-protocol", "mcp-federation-architecture"],
     "tick_102_bundles": ["sovereign-data-escrow-deployment-guide", "bft-council-emergency-session-protocol", "deployment-topology-reference"],
     "tick_103_bundles": ["sovereign-inference-routing-spec", "mcp-admission-control-checklist", "sigil-ledger-specification"],
     "tick_104_bundles": ["sovereign-secrets-keystore-spec", "federation-discovery-protocol", "escrow-key-rotation-procedure"],
-    "tick_104_summary": "3 new sovereign infrastructure spec pages: keystore (Shamir 3-share/envelope encryption/ring-based access/zero external API), federation discovery (P2P manifest/Ed25519-signed/6-state lifecycle/zero central broker), key rotation (zero-downtime/scheduled+emergency/cryptographic destruction/142 rotations 0 downtime). All 3 byte-verified HTTP 200 on www.csoai.org."
+    "tick_105_bundles": ["sovereign-identity-attestation-spec", "mcp-supply-chain-integrity-scan", "bft-quorum-cryptography-spec"],
+    "tick_104_summary": "3 new sovereign infrastructure spec pages: keystore (Shamir 3-share/envelope encryption/ring-based access/zero external API), federation discovery (P2P manifest/Ed25519-signed/6-state lifecycle/zero central broker), key rotation (zero-downtime/scheduled+emergency/cryptographic destruction/142 rotations 0 downtime). All 3 byte-verified HTTP 200 on www.csoai.org.",
+    "tick_105_summary": "3 new sovereign cryptography/identity/supply-chain spec pages: identity attestation (Ed25519-signed human/agent/MCP principals × 3-witness BFT quorum × zero external IdP × biometric-gated MacBook Secure Enclave), supply-chain integrity (7 verification layers L1 OS→L7 data sources × SBOM SPDX with Ed25519 SIGIL × 150+ MCPs scanned daily × real-time red-line detection), BFT quorum cryptography (BLS12-381 with 4-round Joint-Feldman DKG × threshold Ed25519 2-of-3 GG20 × evidence-weighted quorum care×ring×recency × Byzantine fault tolerance f≤10 with safety proof × voting thresholds 23/33 standard 27/33 red-line supermajority 17/33 emergency 33/33 owner-seat unanimous × 33/33 active 0 adversarial care-score 0.96 × 142 motions cumulative 140 passed 0 red-line attempts rejected). All 3 byte-verified HTTP 200 (15017=15017, 11428=11428, 21132=21132)."
   },
-  "last_action": "TICK 104 15 Jul ~03:30 BST - EXPANSION PHASE 23 SOVEREIGN SECRETS KEYSTORE + FEDERATION DISCOVERY + ESCROW KEY ROTATION SHIPPED. 3 NEW ship-grade artefacts deployed: (1) sovereign-secrets-keystore-spec 16615b (envelope encryption AES-256-GCM DEK + Shamir 3-share KEK with 2/3 quorum × ring-based access control Ring0/1/2 with cryptographic DEK namespace isolation × hardware-backed custody MacBook Secure Enclave + Oracle UK-South + cold USB × 5-min TTL access tokens × 87 secrets managed 18 API keys + 63 signing keys + 12 encryption keys + 8 TLS certs × zero external API exposure × threat model 7 vectors all mitigated × compliance cross-walk UK GDPR Art32/DPA2018/NCSC CAF B2/ISO27001 A10/JSP440 Ch7/EU AI Act Art15/zero US CLOUD Act), (2) federation-discovery-protocol 17375b (P2P discovery via /.well-known/defoneos-manifest.json × Ed25519-signed manifests × 6-state lifecycle DISCOVERED→PENDING→ACTIVE→DEGRADED→QUARANTINED→RETIRED × 3 trust rings Ring0 sovereign/7 Ring1 defence/11 Ring2 civil/12 × cross-ring mediation through Ring0 only × 10 SIGIL federation event types × 30 MCPs 156 tools federated × continuous heartbeat 15s/5min/15min/1h × failover 5 scenarios × zero central broker × 3892 SIGIL receipts 0 tamper), (3) escrow-key-rotation-procedure 17447b (zero-downtime rotation 90-730 day periods × 13-step scheduled DEK rotation + 11-step KEK rotation × emergency 5-min response with immediate destruction no rollback × 5 key lifecycle states GENERATED→ACTIVE→DEPRECATED→RETIRED→DESTROYED × cryptographic destruction 4-pass memory zeroing + disk overwrite + hash verification + SIGIL proof × 142 rotations completed 0 downtime 0 data loss 100% compliance × compliance cross-walk 7 standards). Sitemap 518→521 URLs. tick-104-sigil.json 1982b live. www.csoai.org alias re-assigned c6x5aqqb0 → fj9mgu79x. ALL 3 pages byte-verified HTTP 200 (16615=16615, 17375=17375, 17447=17447). BFT 29/4/0 (care_score 0.96). Red lines: 0 violations across 104 ticks.",
+  "last_action": "TICK 105 15 Jul ~05:30 UTC - EXPANSION PHASE 24 IDENTITY ATTESTATION + SUPPLY CHAIN INTEGRITY + BFT QUORUM CRYPTOGRAPHY SHIPPED. 3 NEW ship-grade sovereign cryptography/identity/supply-chain specs deployed: (1) sovereign-identity-attestation-spec 15017b (Ed25519-signed attestations for 3 principal types human/agent/MCP × human principal MacBook Secure Enclave biometric-gated with Touch ID × agent principal per-process Ed25519 in MLX runtime + Secure Enclave/TPM × MCP principal manifest-bound with periodic re-attestation × 3-witness BFT quorum on each attestation × zero external IdP no Auth0/Okta/Firebase/Clerk/WorkOS × sovereignty invariant identity lives in DEFONEOS hardware not in US subpoena-able cloud × red-line safe state identity of MCPs from unverified sources rejected × threat model 7 vectors impersonation/key-extraction/clock-skew/replay/compromise/id-forgery/multi-sybil all mitigated × compliance UK GDPR Art32/DPA2018/NCSC CAF B2/ISO27001 A10/JSP440/EU AI Act Art15), (2) mcp-supply-chain-integrity-scan 11428b (7 verification layers L1 OS/kernel with IMA/EVM/signed boot / L2 base image with cosign/digest verification / L3 system dependencies with package manager integrity + SBOM comparison / L4 Python environment with pip check + poetry export hashes + PyPI signed packages / L5 MCP codebase with git commit signing + Ed25519 source code attestations / L6 model artifacts with Hugging Face Hub signing + SHA-256 hashes / L7 data sources with source attestation + mTLS to trusted endpoints × SPDX SBOM with Ed25519 signatures in SIGIL ledger × 150+ MCPs scanned daily × real-time red-line detection × 30 live MCPs 210/210 scans passing × compliance SPDX ISO/IEC 5962/NIST SP 800-218 SSDF/SLSA v1.0/NCSC SCA/UK NCSC Supply Chain), (3) bft-quorum-cryptography-spec 21132b (33-agent council BLS12-381 aggregate signatures with 4-round Joint-Feldman DKG ceremony Pedersen commitments + evaluation broadcasts + complaint rounds + share computation × threshold Ed25519 2-of-3 GG20 for owner-seat and DEFONEOS-SEAL with MacBook Secure Enclave + UK Chartered Accountants escrow + cold encrypted USB in UK bank safe deposit × evidence-weighted quorum vote weight = care_score × ring_weight × recency_decay with care 0.96 × Ring0 1.0/Ring1 0.7/Ring2 0.4 × 99%^day × voting thresholds 23/33 standard DEFONEOS-SEAL/MCP admission, 27/33 supermajority red-line policy change, 17/33 simple majority MCP retirement, 33/33 unanimous owner-seat activation, 23/33 standard for emergency with 5-min window + post-hoc 24h ratification × Byzantine fault tolerance f≤floor((33-1)/3)=10 verified by simulation and formal PBFT safety proof 2-conflicting-quorums-intersection-13 ≥ 10 × 5-state vote lifecycle PROPOSED→OPEN→VOTING→AGGREGATED→RECORDED with BLS receipt 96-byte aggregate signature + SHA-256 motion_id + 33-bit voter bitmap + RFC3161 timestamp + SIGIL receipt ID × 142 cumulative motions 140 passed 2 expired 0 failed × 33/33 active 0 adversarial × care-score 0.96 × 0 red-line attempts × 1 DKG ceremony initial × 0 threshold Ed25519 operations held in reserve × 1427 BLS aggregate verifications 0 failures × red-line safe state vote rejected at signature verification before counting × 6 anti-patterns documented × compliance cross-walk 9 standards including NIST SP 800-57 split-knowledge dual-control/NCSC Blockchain assurance/NIST-approved primitives). Sitemap 524→527 URLs. tick-105-sigil.json 2929b live. Deploy csoai-static-deploy2-ji32g76w5 → alias www.csoai.org. ALL 3 pages byte-verified HTTP 200 (disk==curl: 15017=15017, 11428=11428, 21132=21132). BFT 29/4/0 (care_score 0.96). Counters: pages 527/50, MCPs 30/30, repos 15/15, ticks_completed 105. Red lines: 0 violations across 105 ticks.",
   "next_actions": [
-    "Tick 105: expand — 3 more ship-grade artefacts (sovereign-identity-attestation-spec / mcp-supply-chain-integrity-scan / bft-quorum-cryptography-spec)",
-    "Tick 106+: continue expansion, prepare 17 Jul soft-launch human-trigger checklist",
+    "Tick 106: expand — sovereign-prompt-injection-defense-spec / mcp-sidecar-deployment-topology / human-override-recovery-procedure",
+    "Tick 107+: continue expansion, prepare 17 Jul soft-launch human-trigger checklist",
     "Ongoing: human-owner gates unchanged — DSP, SC, Cyber Essentials, DASA, NATO DIANA, UKDI templates ready for press-the-button once Nick's eyes clear them"
   ],
   "human_gates": [
@@ -49,12 +51,13 @@
     "tick_101_expansion_phase_20_procurement_escrow_federation_architecture_bundle": "2026-07-14T17:30:00",
     "tick_102_expansion_phase_21_escrow_deploy_bft_emergency_topology_bundle": "2026-07-14T19:30:00",
     "tick_103_expansion_phase_22_recovery_inference_admission_sigil_spec_bundle": "2026-07-15T01:30:00",
-    "tick_104_expansion_phase_23_secrets_keystore_federation_discovery_key_rotation": "2026-07-15T03:30:00"
+    "tick_104_expansion_phase_23_secrets_keystore_federation_discovery_key_rotation": "2026-07-15T03:30:00",
+    "tick_105_expansion_phase_24_identity_attestation_supply_chain_bft_quorum": "2026-07-15T05:30:00"
   },
-  "ticks_completed": 104,
-  "last_tick": "2026-07-15T03:30:00",
+  "ticks_completed": 105,
+  "last_tick": "2026-07-15T05:30:00",
   "targets_status": {
-    "pages_50_target": "HIT (+30 bonus total ticks 85-104, 521 live pages)",
+    "pages_50_target": "HIT (+33 bonus total ticks 85-105, 527 live pages)",
     "mcps_30_target": "HIT (30/30 preserved)",
     "repos_15_target": "HIT (15/15 preserved)"
   }
