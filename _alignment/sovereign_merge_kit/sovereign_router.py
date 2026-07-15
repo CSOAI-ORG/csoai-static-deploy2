@@ -18,11 +18,13 @@ BACKENDS = {
     "glm":     dict(key="GLM_API_KEY",     base="https://open.bigmodel.cn/api/paas/v4",       model=os.environ.get("GLM_MODEL","glm-4-flash")),
     "minimax": dict(key="MINIMAX_API_KEY", base="https://api.minimax.chat/v1",                model=os.environ.get("MINIMAX_MODEL","abab6.5s-chat")),
     "ollama":  dict(key=None,              base="http://localhost:11434/v1",                  model=os.environ.get("OLLAMA_MODEL","sovereign")),
-    # --- large open MoE models as optional backends. PARAM/LICENSE SPECS BELOW ARE UNVERIFIED LEADS ---
-    # sourced from a web search whose result bodies were not retained; DO NOT cite these T/active/license
-    # figures publicly until each is confirmed against the official model card. Endpoints/model-ids also unconfirmed.
-    "deepseek":dict(key="DEEPSEEK_API_KEY", base="https://api.deepseek.com/v1",               model=os.environ.get("DEEPSEEK_MODEL","deepseek-chat"),  note="DeepSeek V4 [UNVERIFIED: ~1.6T total/~250B active/license — confirm on model card before citing]"),
-    "kimi":    dict(key="KIMI_API_KEY",     base="https://api.moonshot.ai/v1",                model=os.environ.get("KIMI_MODEL","kimi-k2"),           note="Kimi K2 [UNVERIFIED: ~1T total/~32B active/license — confirm on model card before citing]"),
+    # --- large open MoE models as optional backends. STATUS: PAID + NOT-YET-FUNCTIONAL (do not count as capability) ---
+    # Live-tested by the Claude Code lane 2026-07-14: these are PAID APIs and the accounts are UNFUNDED —
+    # Kimi/Moonshot returned "account suspended — insufficient balance"; DeepSeek untested but same paid model.
+    # PARAM/LICENSE specs below are UNVERIFIED web-search leads (bodies not retained) — confirm on model card.
+    # => Wired for when funded, but NOT working today. Do NOT present as available T-scale capability.
+    "deepseek":dict(key="DEEPSEEK_API_KEY", base="https://api.deepseek.com/v1",               model=os.environ.get("DEEPSEEK_MODEL","deepseek-chat"),  note="PAID/UNFUNDED. DeepSeek V4 [UNVERIFIED ~1.6T total — confirm model card; needs funded account]"),
+    "kimi":    dict(key="KIMI_API_KEY",     base="https://api.moonshot.ai/v1",                model=os.environ.get("KIMI_MODEL","kimi-k2"),           note="PAID/UNFUNDED (live-tested: account suspended, insufficient balance). Kimi K2 [UNVERIFIED ~1T total]"),
 }
 # default preference: cheap/fast first, big hosted next, local last. 'trillion' tier = genuine >=1T-total models only.
 TIERS = {"fast":["groq","ollama"], "smart":["nvidia","glm","minimax","groq","ollama"],
