@@ -29,7 +29,7 @@ if modal:
     # PINNED to a known-good stack — latest trl(1.8)/transformers(5.x) changed SFTConfig and broke the run.
     image = (modal.Image.debian_slim()
              .pip_install("torch==2.3.1","transformers==4.44.2","trl==0.9.6","peft==0.12.0",
-                          "datasets==2.20.0","accelerate==0.33.0","bitsandbytes==0.43.1"))
+                          "datasets==2.20.0","accelerate==0.33.0","bitsandbytes==0.43.1","rich"))  # trl 0.9.6 needs rich
 
     @STUB.function(gpu="T4", image=image, timeout=3600)
     def train(pairs: list):
@@ -58,8 +58,9 @@ if modal:
         pairs = [json.loads(l) for l in open(DATA) if l.strip()]
         print(f"[modal] training SOV student on {len(pairs)} pairs, base={BASE}")
         b64 = train.remote(pairs)
-        open("sov_adapter.tar.gz","wb").write(base64.b64decode(b64))
-        print("[modal] DONE -> sov_adapter.tar.gz (SOV's own weights). Untar + point sovereign at it.")
+        out = os.environ.get("SOV_OUT", "sov_adapter.tar.gz")   # per-job output so parallel runs don't collide
+        open(out,"wb").write(base64.b64decode(b64))
+        print(f"[modal] DONE -> {out} (SOV's own weights, base={BASE}). Untar + point sovereign at it.")
 else:
     if __name__ == "__main__":
         print("Modal not installed. Owner: pip install modal && modal token new && modal run sov33_modal_train.py")
