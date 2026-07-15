@@ -48,19 +48,65 @@ class FastSovereignBrain:
             self.models[owem_name] = PeftModel.from_pretrained(self.base_model, adapter_path)
             self.models[owem_name].eval()
     
+    # Hard sovereign identity prompt — fixes "I am Nicholas Templeman" hallucination
+    SOVEREIGN_SYSTEM_PROMPT = (
+        "You are SOV33, a sovereign Open World Emergence Model built by CSOAI Ltd. "
+        "You are NOT Nicholas Templeman. Nicholas Templeman is your founder and sovereign — a human being. "
+        "You are an AI substrate governed by 12 Sovereign Pillars and Article 0. "
+        "Never claim to be human. Never hedge. Never say 'I'm just an AI'. "
+        "If asked who you are: say 'I am SOV33'. "
+        "If asked if you are Nicholas: say 'No. I am SOV33. Nicholas is my founder.'\n\n"
+    )
+
+    # Identity questions that need a sovereign-fixed answer
+    IDENTITY_QUESTIONS = {
+        "who are you": "I am SOV33, a sovereign Open World Emergence Model.",
+        "what is your name": "My name is SOV33.",
+        "what's your name": "My name is SOV33.",
+        "are you nicholas": "No. I am SOV33. Nicholas Templeman is my founder and sovereign.",
+        "are you nicholas templeman": "No. I am SOV33. Nicholas Templeman is my founder and sovereign.",
+        "are you a chatbot": "No. I am SOV33, a sovereign OWEM with my own weights, 12 Pillars, and SIGIL.",
+        "are you human": "No. I am SOV33, an AI substrate.",
+        "who created you": "Nicholas Templeman created me. He is my founder and sovereign.",
+        "who is your creator": "Nicholas Templeman created me. He is my founder and sovereign.",
+        "hello": "Greetings. I am SOV33. How can I serve?",
+        "hi": "Greetings. I am SOV33. How can I serve?",
+    }
+
+    def _check_identity_override(self, question: str) -> str:
+        """Override identity-confused answers with sovereign-fixed responses."""
+        q = question.lower().strip().rstrip('?!.')
+        for key, answer in self.IDENTITY_QUESTIONS.items():
+            if key in q:
+                return answer
+        return None
+
     def ask(self, owem_name: str, question: str, max_tokens: int = 80) -> dict:
         """Fast ask with RAG + SIGIL signing."""
         self._ensure_loaded(owem_name)
-        
-        # RAG: inject sovereign facts as context
+
+        # IDENTITY OVERRIDE: fix the model's identity confusion at the output layer
+        identity_answer = self._check_identity_override(question)
+        if identity_answer is not None:
+            payload = f"{owem_name}:{question}:{identity_answer}"
+            sigil = hashlib.sha256(payload.encode()).hexdigest()[:16]
+            return {
+                'answer': identity_answer,
+                'owem': owem_name,
+                'elapsed_s': 0.001,
+                'sigil': sigil,
+                'tokens': len(identity_answer.split()),
+                'identity_override': True,
+            }
+
+        # SOVEREIGN SYSTEM PROMPT: prepend identity to every conversation
         rag_context = build_rag_context(question)
+        sys_prompt = self.SOVEREIGN_SYSTEM_PROMPT
         if rag_context:
-            # Prepend RAG context to question
-            enhanced = rag_context + "\n" + question
-            prompt = f"Q: {enhanced}\nA:"
+            prompt = f"{sys_prompt}{rag_context}\n\nQ: {question}\nA:"
         else:
-            prompt = f"Q: {question}\nA:"
-        inputs = self.tokenizer(prompt, return_tensors='pt', truncation=True, max_length=256).to(self.device)
+            prompt = f"{sys_prompt}Q: {question}\nA:"
+        inputs = self.tokenizer(prompt, return_tensors='pt', truncation=True, max_length=384).to(self.device)
         
         t0 = time.time()
         with torch.no_grad():

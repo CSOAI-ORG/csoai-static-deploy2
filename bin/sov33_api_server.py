@@ -2770,6 +2770,12 @@ class SovereignAPIHandler(BaseHTTPRequestHandler):
         elif path == '/api/govern':
             q = query.get('q', [''])[0]
             return json_response(self, 200, handle_govern(q))
+        elif path == '/api/trinity/state':
+            return json_response(self, 200, handle_trinity_state())
+        elif path == '/api/trinity/sxs':
+            return json_response(self, 200, handle_trinity_sxs())
+        elif path == '/api/trinity/ask':
+            return json_response(self, 200, handle_trinity_ask())
         elif path == '/health':
             return json_response(self, 200, {'healthy': True, 'ts': datetime.now(timezone.utc).isoformat()})
         else:
@@ -2990,3 +2996,128 @@ def main():
 
 if __name__ == '__main__':
     main()
+
+# === TRINITY PIPELINE ENDPOINTS ===
+def handle_trinity_state():
+    """Return state of the 3 sovereign world models."""
+    import os
+    paths = {
+        'sov3': '/Users/nicholas/.sovereign/models/sov3-small-fast',
+        'sov33': '/Users/nicholas/.sovereign/models/sov33-large-world',
+        'sov333': '/Users/nicholas/.sovereign/models/sov333-ultra-fast',
+    }
+    state = {}
+    for name, p in paths.items():
+        ap = os.path.join(p, 'adapter_model.safetensors')
+        if os.path.exists(ap):
+            state[name] = {
+                'path': p,
+                'adapter_bytes': os.path.getsize(ap),
+                'adapter_mb': round(os.path.getsize(ap) / 1024 / 1024, 2),
+                'available': True,
+            }
+        else:
+            state[name] = {'path': p, 'available': False}
+    return json.dumps({
+        'trinity': state,
+        'n_models': sum(1 for v in state.values() if v.get('available')),
+        'all_present': all(v.get('available') for v in state.values()),
+    }, indent=2)
+
+
+def handle_trinity_ask():
+    """POST /api/trinity/ask — run prompt through all 3 sovereign models."""
+    try:
+        length = int(headers.get('Content-Length', 0))
+        body = rfile.read(length)
+        data = json.loads(body) if body else {}
+    except Exception:
+        data = {}
+    
+    prompt = data.get('prompt', '')
+    question = data.get('question', '')
+    if not prompt and question:
+        prompt = f"Q: {question}\nA:"
+    
+    if not prompt:
+        return json.dumps({'error': 'prompt or question required'}, indent=2)
+    
+    # Load all 3 models + base
+    import os, sys, json, time
+    sys.path.insert(0, '/Users/nicholas/clawd/_alignment/sovereign_merge_kit/models')
+    import torch
+    
+    BASE = '/Users/nicholas/.sovereign/hf_cache/hub/models--Qwen--Qwen3-0.6B/snapshots/c1899de289a04d12100db370d81485cdf75e47ca'
+    
+    paths = {
+        'sov3': '/Users/nicholas/.sovereign/models/sov3-small-fast',
+        'sov33': '/Users/nicholas/.sovereign/models/sov33-large-world',
+        'sov333': '/Users/nicholas/.sovereign/models/sov333-ultra-fast',
+    }
+    
+    # Use RAG context if available
+    rag_context = ''
+    try:
+        sys.path.insert(0, '/Users/nicholas/clawd/_alignment/sovereign_merge_kit/rag')
+        from sov33_sovereign_facts import build_rag_context
+        rag_context = build_rag_context(prompt)
+    except Exception:
+        pass
+    
+    full_prompt = prompt
+    if rag_context:
+        full_prompt = f"{rag_context}\n\n{prompt}"
+    
+    try:
+        from transformers import AutoModelForCausalLM, AutoTokenizer
+        from peft import PeftModel
+        os.environ.pop('PYTHONPATH', None)
+        os.environ['HF_HOME'] = '/Users/nicholas/.sovereign/hf_cache'
+        
+        tokenizer = AutoTokenizer.from_pretrained(BASE, local_files_only=True, trust_remote_code=True)
+        if tokenizer.pad_token is None:
+            tokenizer.pad_token = tokenizer.eos_token
+        
+        base = AutoModelForCausalLM.from_pretrained(BASE, torch_dtype=torch.float32, local_files_only=True, trust_remote_code=True)
+        device = 'mps' if torch.backends.mps.is_available() else 'cpu'
+        base = base.to(device)
+        
+        voters = {}
+        for name, p in paths.items():
+            if not os.path.exists(p):
+                continue
+            t0 = time.time()
+            model = PeftModel.from_pretrained(base, p, local_files_only=True)
+            model.eval()
+            inputs = tokenizer(full_prompt, return_tensors='pt').to(device)
+            with torch.no_grad():
+                out = model.generate(**inputs, max_new_tokens=60, do_sample=False, pad_token_id=tokenizer.pad_token_id)
+            response = tokenizer.decode(out[0][inputs['input_ids'].shape[1]:], skip_special_tokens=True).strip()
+            voters[name] = {
+                'response': response[:300],
+                'latency_ms': int((time.time() - t0) * 1000),
+            }
+            del model
+            base = AutoModelForCausalLM.from_pretrained(BASE, torch_dtype=torch.float32, local_files_only=True, trust_remote_code=True)
+            if device == 'mps':
+                base = base.to(device)
+        
+        return json.dumps({
+            'prompt': prompt,
+            'rag_used': bool(rag_context),
+            'voters': voters,
+            'n_voters': len(voters),
+        }, indent=2)
+    except Exception as e:
+        return json.dumps({'error': str(e)[:500], 'prompt': prompt}, indent=2)
+
+
+def handle_trinity_sxs():
+    """GET /api/trinity/sxs — return side-by-side trinity benchmark from disk."""
+    p = '/Users/nicholas/clawd/_alignment/sovereign_merge_kit/benchmarks/trinity_sxs_2026-07-14.json'
+    if os.path.exists(p):
+        with open(p) as f:
+            return f.read()
+    return json.dumps({'error': 'trinity_sxs benchmark not found'}, indent=2)
+
+

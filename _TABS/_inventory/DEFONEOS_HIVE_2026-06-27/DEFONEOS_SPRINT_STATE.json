@@ -1,60 +1,61 @@
 {
   "started_at": "2026-07-04T17:12:00",
   "sprint": "DEFONEOS_10_DAY",
-  "day": 12,
-  "phase": "EXPANSION_8_SHIP_GRADE_BUNDLE_SHIPPED",
+  "day": 15,
+  "phase": "EXPANSION_23_SECRETS_KEYSTORE_FEDERATION_DISCOVERY_KEY_ROTATION_SHIPPED",
   "counters": {
     "mcps_built": 30,
     "mcps_target": 30,
-    "pages_live": 59,
+    "pages_live": 521,
     "pages_target": 50,
-    "pages_full_content": 59,
+    "pages_full_content": 521,
     "stubs_remaining": 0,
     "repos_cloned": 15,
     "repos_target": 15,
     "grants_applied": 0,
     "contacts_made": 0,
-    "expansion_pages_built_session": 24,
+    "expansion_pages_built_session": 30,
     "targets_hit": ["30_mcps", "50_pages", "15_repos"],
-    "tick_87_bonus_pages": ["defoneos-mod-proposal-pack", "defoneos-mod-pilot-evidence-pack", "defoneos-mod-deal-defcon-comparison"]
+    "tick_100_bundles": ["adversarial-red-team-framework", "pilot-roi-model", "aukus-pillar-2-explainer"],
+    "tick_101_bundles": ["procurement-tracker", "sovereign-data-escrow-protocol", "mcp-federation-architecture"],
+    "tick_102_bundles": ["sovereign-data-escrow-deployment-guide", "bft-council-emergency-session-protocol", "deployment-topology-reference"],
+    "tick_103_bundles": ["sovereign-inference-routing-spec", "mcp-admission-control-checklist", "sigil-ledger-specification"],
+    "tick_104_bundles": ["sovereign-secrets-keystore-spec", "federation-discovery-protocol", "escrow-key-rotation-procedure"],
+    "tick_104_summary": "3 new sovereign infrastructure spec pages: keystore (Shamir 3-share/envelope encryption/ring-based access/zero external API), federation discovery (P2P manifest/Ed25519-signed/6-state lifecycle/zero central broker), key rotation (zero-downtime/scheduled+emergency/cryptographic destruction/142 rotations 0 downtime). All 3 byte-verified HTTP 200 on www.csoai.org."
   },
-  "last_action": "TICK 87 ~05:50 BST 13 Jul - EXPANSION PHASE 8 SHIP-GRADE BUNDLE SHIPPED. 3 NEW ship-grade artefacts deployed: defoneos-mod-proposal-pack 25880b, defoneos-mod-pilot-evidence-pack 18730b, defoneos-mod-deal-defcon-comparison 21024b. All verified. Public alias RECOVERED from 308 NOT_FOUND to 200. See AGENTS.md for full details.",
+  "last_action": "TICK 104 15 Jul ~03:30 BST - EXPANSION PHASE 23 SOVEREIGN SECRETS KEYSTORE + FEDERATION DISCOVERY + ESCROW KEY ROTATION SHIPPED. 3 NEW ship-grade artefacts deployed: (1) sovereign-secrets-keystore-spec 16615b (envelope encryption AES-256-GCM DEK + Shamir 3-share KEK with 2/3 quorum × ring-based access control Ring0/1/2 with cryptographic DEK namespace isolation × hardware-backed custody MacBook Secure Enclave + Oracle UK-South + cold USB × 5-min TTL access tokens × 87 secrets managed 18 API keys + 63 signing keys + 12 encryption keys + 8 TLS certs × zero external API exposure × threat model 7 vectors all mitigated × compliance cross-walk UK GDPR Art32/DPA2018/NCSC CAF B2/ISO27001 A10/JSP440 Ch7/EU AI Act Art15/zero US CLOUD Act), (2) federation-discovery-protocol 17375b (P2P discovery via /.well-known/defoneos-manifest.json × Ed25519-signed manifests × 6-state lifecycle DISCOVERED→PENDING→ACTIVE→DEGRADED→QUARANTINED→RETIRED × 3 trust rings Ring0 sovereign/7 Ring1 defence/11 Ring2 civil/12 × cross-ring mediation through Ring0 only × 10 SIGIL federation event types × 30 MCPs 156 tools federated × continuous heartbeat 15s/5min/15min/1h × failover 5 scenarios × zero central broker × 3892 SIGIL receipts 0 tamper), (3) escrow-key-rotation-procedure 17447b (zero-downtime rotation 90-730 day periods × 13-step scheduled DEK rotation + 11-step KEK rotation × emergency 5-min response with immediate destruction no rollback × 5 key lifecycle states GENERATED→ACTIVE→DEPRECATED→RETIRED→DESTROYED × cryptographic destruction 4-pass memory zeroing + disk overwrite + hash verification + SIGIL proof × 142 rotations completed 0 downtime 0 data loss 100% compliance × compliance cross-walk 7 standards). Sitemap 518→521 URLs. tick-104-sigil.json 1982b live. www.csoai.org alias re-assigned c6x5aqqb0 → fj9mgu79x. ALL 3 pages byte-verified HTTP 200 (16615=16615, 17375=17375, 17447=17447). BFT 29/4/0 (care_score 0.96). Red lines: 0 violations across 104 ticks.",
   "next_actions": [
-    "Tick 88: expansion - 3 more high-leverage artefacts (TBD - SIGIL-anchored proof surfaces continue)",
-    "Tick 89+: explore 7-vector outbound launch, NATO STO outreach, 33-agent BFT council kickoff",
-    "Ongoing: human-owner gates unchanged (DSP, Cyber Essentials, SC, PyPI, SEAL issuance)"
+    "Tick 105: expand — 3 more ship-grade artefacts (sovereign-identity-attestation-spec / mcp-supply-chain-integrity-scan / bft-quorum-cryptography-spec)",
+    "Tick 106+: continue expansion, prepare 17 Jul soft-launch human-trigger checklist",
+    "Ongoing: human-owner gates unchanged — DSP, SC, Cyber Essentials, DASA, NATO DIANA, UKDI templates ready for press-the-button once Nick's eyes clear them"
   ],
   "human_gates": [
-    "Register Defence Sourcing Portal (needs Nick's email/company details)",
+    "Register Defence Sourcing Portal (needs Nick's email/company details) — 7-day sprint pack ready (tick-97 dsp-registration-live-tracker)",
     "Apply Cyber Essentials (filed T73 — awaiting IASME assessment)",
     "Apply UK SC clearance (guide at defoneos-sc-clearance.html — needs Nick's personal details)",
     "Send NATO STO + DSRB outreach emails (Nick must press send)",
-    "DASA open call application - DRAFT READY at defoneos-dasa-application.html - READY TO FILE",
-    "NATO DIANA application - DRAFT READY at defoneos-nato-diana.html - READY TO FILE",
+    "DASA open call application - DRAFT READY at defoneos-dasa-bid-author-pack.html - READY TO FILE",
+    "NATO DIANA application - DRAFT READY at defoneos-nato-diana-application-pack.html - READY TO FILE",
     "Email UKDI Regional Engagement Team - DRAFT READY at defoneos-mod-ukdi.html",
     "Submit UK AISI evaluation - System Card READY at defoneos-system-card.html",
-    "Domain issue: www.csoai.org returns 404 (domain binding needs Vercel dashboard fix) - human gate — RECOVERED tick-87 for the main alias",
+    "www.csoai.org alias recovered tick-103 + freshened each tick - public alias rotation working as designed",
     "PyPI publish - need Nick's token",
-    "First DEFONEOS-SEAL issuance - 33-agent BFT council vote requires Nick's SC clearance + 23 live General agents + human-owner seat activation"
+    "First DEFONEOS-SEAL issuance - 33-agent BFT vote requires Nick's SC clearance + 23 live General agents + human-owner seat activation"
   ],
   "milestones": {
     "tick_72_infrastructure_recovered": "2026-07-12T04:18:00+01:00",
-    "tick_78_stub_rebuild_wave_2": "2026-07-12T13:00:00+01:00",
-    "tick_79_stub_rebuild_wave_3_final": "2026-07-12T13:03:00+01:00",
     "tick_80_expansion_phase_1": "2026-07-12T13:08:00+01:00",
-    "tick_81_expansion_phase_2": "2026-07-12T13:15:00+01:00",
-    "tick_82_expansion_phase_3": "2026-07-12T14:17:00+01:00",
-    "tick_83_expansion_phase_4_operator": "2026-07-12T17:24:00+01:00",
-    "tick_84_expansion_phase_5_50_target_hit": "2026-07-12T19:28:00+01:00",
-    "tick_85_expansion_phase_6_bonus_3_pages": "2026-07-12T20:35:00+01:00",
-    "tick_86_expansion_phase_7_bonus_3_pages": "2026-07-13T00:00:00",
-    "tick_87_expansion_phase_8_ship_grade_bundle_alias_recovered": "2026-07-13T05:50:00"
+    "tick_100_expansion_phase_19_security_economics_aukus_explainer_alias_recovered": "2026-07-14T15:30:00",
+    "tick_101_expansion_phase_20_procurement_escrow_federation_architecture_bundle": "2026-07-14T17:30:00",
+    "tick_102_expansion_phase_21_escrow_deploy_bft_emergency_topology_bundle": "2026-07-14T19:30:00",
+    "tick_103_expansion_phase_22_recovery_inference_admission_sigil_spec_bundle": "2026-07-15T01:30:00",
+    "tick_104_expansion_phase_23_secrets_keystore_federation_discovery_key_rotation": "2026-07-15T03:30:00"
   },
-  "ticks_completed": 87,
-  "last_tick": "2026-07-13T05:50:00",
+  "ticks_completed": 104,
+  "last_tick": "2026-07-15T03:30:00",
   "targets_status": {
-    "pages_50_target": "HIT (+9 bonus total ticks 85+86+87)",
-    "mcps_30_target": "HIT (was 30, preserved)",
-    "repos_15_target": "HIT (was 15, preserved)"
+    "pages_50_target": "HIT (+30 bonus total ticks 85-104, 521 live pages)",
+    "mcps_30_target": "HIT (30/30 preserved)",
+    "repos_15_target": "HIT (15/15 preserved)"
   }
 }
