@@ -42,7 +42,8 @@ class Retriever:
     def __init__(self):
         from sentence_transformers import SentenceTransformer
         self.m=SentenceTransformer("all-MiniLM-L6-v2")
-        self.D=np.asarray(self.m.encode([t for _,t in KB],normalize_embeddings=True))
+        # embed source-tag + text so ACRONYM queries (DORA, GDPR, NIS2...) match — fixes false-abstain
+        self.D=np.asarray(self.m.encode([f"{s}. {t}" for s,t in KB],normalize_embeddings=True))
     def top(self,q,k=2):
         qe=self.m.encode([q],normalize_embeddings=True)[0]; s=self.D@qe; idx=s.argsort()[::-1][:k]
         return [(KB[i][0],KB[i][1],float(s[i])) for i in idx]
