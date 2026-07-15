@@ -24,6 +24,10 @@ pip install numpy sentence-transformers   # RAG + NLI care-gate
 - `sov_trinity.py`        — SOV3 / SOV33 / SOV333 routing by scope (reflex / grounded / frontier)
 - `sov333_bridge.py`      — signed A2A bridge: how you post work back to the Code lane
 - `sov33_gpu_fire.py`     — the QLoRA train (run on a GPU: Colab / Modal / your compute)
+- `sov_hermes_service.py` — the always-on shared Sovereign brain (HTTP /ask, cloud-routed, signed). LIVE on the Oracle VM; reach via SSH tunnel (see HERMES_SHARED_BRAIN.md)
+- `sovereign_mlx.py`      — SOV3 local reflex tier on Apple Metal (MLX). Mac-only; graceful fallback to Ollama/Groq
+
+Full estate beyond this kit (Layer-0 protocols, MCP fleet, bridges, compute pool): see **SCIENCE_ESTATE_MANIFEST.md**.
 
 ## 4. Backend keys (set in YOUR environment from YOUR connectors — never commit them)
 Only what you have; the router degrades gracefully:
