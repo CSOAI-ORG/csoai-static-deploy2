@@ -22,6 +22,10 @@ Owner: **A**=Science(train/fuse/eval/wire) · **B**=Claude Code(serve/mesh/deplo
 - [x] (A) PDCA 9-stage + DRUM loop wired — BFT council ratified, sigil-per-stage
 - [x] (A) Outcome-fusion + MoA-fusion wired (diverse-arch guard catches same-base illusion) — 109 caps
 - [x] (A) E2E path verified: route→3 outcomes→PDCA/BFT→sign→planets; harmful vetoed
+- [x] (A) Conformal care-veto wired (`capability_conformal-veto`, guarantee Pr[allow&harmful]<=alpha holds)
+- [x] (A) AUDIT stage wired (`capability_audit-stage`, catches AGI/overclaim — flagged live)
+- [x] (A) HORUS protective plane wired (`capability_horus`, per-session tripwire)
+- [~] (A) 7-planet router wired (`capability_planet-route`, GATED on offline Qwen3-0.6B embedding — wireable)
 - [ ] (A) SIGIL → Ed25519 (L5) on the live path (currently hash-chain; Ed25519 is the upgrade)
 - [ ] (B) DRUM continuous 1Hz heartbeat (awareness ongoing, not per-query)
 

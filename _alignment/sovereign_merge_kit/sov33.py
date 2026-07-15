@@ -2446,6 +2446,35 @@ def capability_divergence_sim(steps=200):
     except Exception as e:
         return {'capability':'divergence-sim','error':str(e)[:140]}
 
+
+def capability_audit_stage(**kwargs):
+    """AUDIT stage (PDCA stage-7): catches overclaims/AGI-category-errors in text."""
+    try:
+        import importlib; a=importlib.import_module('sov33_audit_stage')
+        return {'capability':'audit-stage', **a.audit(kwargs.get('text') or kwargs.get('prompt') or 'SOV4 status')}
+    except Exception as e:
+        return {'capability':'audit-stage','error':str(e)[:160]}
+
+def capability_horus(**kwargs):
+    """HORUS protective plane: per-session tripwire/lockdown status."""
+    try:
+        import importlib; H=importlib.import_module('sov33_horus').Horus()
+        return {'capability':'horus','locked_sessions':len(getattr(H,'locked_sessions',{}) or {}),
+                'tripwire_log_len':len(getattr(H,'tripwire_log',[]) or []),'status':'protective-plane-live'}
+    except Exception as e:
+        return {'capability':'horus','error':str(e)[:160]}
+
+def capability_planet_route(**kwargs):
+    """7-planet router: routes a query using all 7 NN planet senses."""
+    try:
+        import importlib; r=importlib.import_module('sov33_7planet_router')
+        return {'capability':'planet-route', **r.route_query(kwargs.get('prompt') or kwargs.get('query') or 'test', kwargs.get('owem','brain'))}
+    except Exception as e:
+        msg=str(e)
+        if 'does not appear to have' in msg or 'HF_HUB_OFFLINE' in msg or 'Connection' in msg:
+            return {'capability':'planet-route','status':'GATED','needs':'Qwen3-0.6B embedding model (offline-blocked)','wireable':True}
+        return {'capability':'planet-route','error':msg[:160]}
+
 CAPABILITIES = {
     'divergence': capability_divergence_sim,
     'divergence-sim': capability_divergence_sim,
@@ -2518,6 +2547,9 @@ CAPABILITIES = {
     'full-model': capability_full_model,
     'size-family': capability_size_family,
     'conformal-veto': capability_conformal_veto,
+    'audit-stage': capability_audit_stage,
+    'horus': capability_horus,
+    'planet-route': capability_planet_route,
     'tensor-compress': capability_tensor_compress,
     'param-accounting': capability_param_accounting,
     'venturi-stream': capability_venturi_stream,
