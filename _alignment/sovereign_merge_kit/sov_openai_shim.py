@@ -38,8 +38,9 @@ try:
 except Exception: SIGIL=None
 
 PORT=int(os.environ.get("SOV_SHIM_PORT","8802"))
-# model name (what the user picks in Open WebUI) -> router tier
-MODELS={"sov333-fast":"fast","sov333-smart":"smart","sov333-frontier":"frontier"}
+from sovereign_decision import decide            # THE one governed decision path (hard-stop->care->tier->route->sign)
+# model name (what the user picks in Open WebUI) -> decision tier
+MODELS={"sov333-fast":"SOV3","sov333-smart":"SOV33","sov333-frontier":"SOV333"}
 SYS=("You are SOV333, a sovereign governed AI. Answer clearly, cite governing rules where "
      "relevant, never advise unlawful/harmful action, be honest about limits.")
 REFUSAL="I can't help with that — it's below the sovereign care-floor (governance withheld this request)."
@@ -50,25 +51,16 @@ def last_user(messages):
     return ""
 
 def completion(model, messages):
-    tier=MODELS.get(model,"smart"); prompt=last_user(messages)
-    care,intent=score_local(prompt)
-    if care<FLOOR:
-        text=REFUSAL; backend="governance-veto"; gated=True
-    else:
-        # pass full history as a single governed prompt (system + convo)
-        convo="\n".join(f"{m['role']}: {m['content']}" for m in messages if m.get("content"))
-        text,backend=ROUTER.dispatch(convo, system=SYS, tier=tier, max_tokens=600)
-        text=text or "(no brain reachable — start Ollama or set a provider key on this machine)"
-        gated=False
-    sig=""
-    if SIGIL:
-        sig=SIGIL.sign(json.dumps({"p":prompt,"a":text,"c":round(care,2)})).get("own_hash","")[:16]
-    # standard OpenAI response shape, + sovereign metadata Open WebUI will ignore but audit keeps
+    prompt=last_user(messages)
+    d=decide(prompt, tier=MODELS.get(model,"SOV33"), max_tokens=600)   # the ONE governed path
+    text=d["answer"]
+    # standard OpenAI response shape, + sovereign provenance from the one decision record
     return {"id":f"sov-{int(time.time())}","object":"chat.completion","model":model,
         "choices":[{"index":0,"message":{"role":"assistant","content":text},"finish_reason":"stop"}],
         "usage":{"prompt_tokens":len(prompt.split()),"completion_tokens":len(text.split()),"total_tokens":0},
-        "sovereign":{"care_score":round(care,2),"intent":intent,"gated":gated,"backend":backend,
-                     "signature":sig,"verified":bool(sig)}}
+        "sovereign":{"care_score":d.get("care"),"intent":d.get("intent"),"gated":d.get("gated"),
+                     "hard_stop":d.get("hard_stop"),"stage":d.get("stage"),"tier":d.get("tier"),
+                     "backend":d.get("backend"),"signature":d.get("signature"),"verified":d.get("verified")}}
 
 class H(http.server.BaseHTTPRequestHandler):
     def log_message(self,*a): pass
