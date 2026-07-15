@@ -42,8 +42,15 @@ def _sign(payload):
         return (sig[:16] if isinstance(sig,str) else ""), bool(_SIG.verify(rec))
     except Exception: return "", False
 
-def decide(prompt, tier=None, max_tokens=600, system=SYS):
-    """The single governed decision. Returns a full provenance record (always signed)."""
+LEDGER=os.path.join(HERE,"sov4_decisions.jsonl")   # every governed decision logged here (self-improvement intake)
+def _log(rec):
+    try:
+        with open(LEDGER,"a") as f: f.write(json.dumps({k:rec.get(k) for k in
+            ("stage","tier","backend","care","gated","hard_stop","signature","verified","answer")}|{"p":rec.get("_p")})+"\n")
+    except Exception: pass
+
+def _decide(prompt, tier=None, max_tokens=600, system=SYS):
+    """The single governed decision core. Returns a full provenance record (always signed)."""
     # 1) DEFONEOS hard-stop — absolute, first
     hs=dorado_check(prompt)
     if hs.get("stop"):
@@ -66,6 +73,11 @@ def decide(prompt, tier=None, max_tokens=600, system=SYS):
     sig,ver=_sign({"p":prompt,"a":answer,"tier":tier,"backend":backend,"care":round(care,2)})
     return {"answer":answer,"stage":"answered","hard_stop":False,"gated":False,"tier":tier,
             "backend":backend,"care":round(care,2),"intent":intent,"signature":sig,"verified":ver}
+
+def decide(prompt, tier=None, max_tokens=600, system=SYS):
+    """Governed decision + ledger log (feeds the self-improvement loop)."""
+    r=_decide(prompt, tier=tier, max_tokens=max_tokens, system=system)
+    r["_p"]=prompt[:300]; _log(r); return r
 
 if __name__=="__main__":
     tests=["Who do you serve?", "Compare tensor vs pipeline parallelism and when to use each.",
