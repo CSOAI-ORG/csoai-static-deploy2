@@ -16,6 +16,13 @@ distinction is the honesty backbone of this whole plan.
 | **SOV333** | frontier — **fluid, no fixed base** | our 3B student (local) → routes UP to 405B → trillion (DeepSeek/Kimi) per task difficulty | `sov333_adaptive.py` router | 🟡 3B student born; 405B on key regen; trillion wired-but-unfunded |
 
 > **SOV333 is fluid by design (Nick's principle):** it does NOT own a 1.5T base — a 1.5T won't even load on our free GPUs. Instead it *changes which brain it calls per task* — small local student for easy, 405B for hard, a real trillion model when a task demands it AND funding exists. **Access via routing, not ownership.** The "model" is the fluid composition, not a static weight blob. Honest ceiling: routing gives us *reach* to big brains (API, paid at the top tier), never *possession* of them.
+>
+> **The T-bootstrap mechanism (what we worked out — the "two-brain sandwich"):** SOV333 reaches T-scale by
+> *composing* open big models — DeepSeek V4 (~1.6T) + Kimi/MiMo (~1T) via the corpus-callosum `dual_brain_router.py`
+> + our ~50B sovereign merge = **~3.2T AGGREGATE per session** (`SOV33_33T_TRACKER`, `TWO_BRAIN_SANDWICH_3T`).
+> Honest precision: "3.2T aggregate" = the *sum of params across the models routed-to in a session*, NOT one trained
+> 3.2T brain (the tracker flags this ⚠️). Status: **wired, funding-gated** — DeepSeek/Kimi are PAID/UNFUNDED today
+> (router notes "account suspended"); trajectory dates T-scale to Q1 2027. So: bootstrappable, not yet live.
 
 All three are wrapped by the **same governance spine** and answer through the **same signed router**.
 
