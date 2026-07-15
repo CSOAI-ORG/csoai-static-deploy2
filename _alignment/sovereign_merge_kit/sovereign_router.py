@@ -18,9 +18,13 @@ BACKENDS = {
     "glm":     dict(key="GLM_API_KEY",     base="https://open.bigmodel.cn/api/paas/v4",       model=os.environ.get("GLM_MODEL","glm-4-flash")),
     "minimax": dict(key="MINIMAX_API_KEY", base="https://api.minimax.chat/v1",                model=os.environ.get("MINIMAX_MODEL","abab6.5s-chat")),
     "ollama":  dict(key=None,              base="http://localhost:11434/v1",                  model=os.environ.get("OLLAMA_MODEL","sovereign")),
+    # --- genuine TRILLION-parameter open models (total params in ONE trained network; MoE = fraction active/token) ---
+    "deepseek":dict(key="DEEPSEEK_API_KEY", base="https://api.deepseek.com/v1",               model=os.environ.get("DEEPSEEK_MODEL","deepseek-chat"),  total_params_T=1.6, active_B=250, note="V4 1.6T total / ~250B active MoE, MIT weights"),
+    "kimi":    dict(key="KIMI_API_KEY",     base="https://api.moonshot.ai/v1",                model=os.environ.get("KIMI_MODEL","kimi-k2"),           total_params_T=1.0, active_B=32,  note="K2 1T total / 32B active MoE, Modified-MIT"),
 }
-# default preference: cheap/fast first, big hosted next, local last
-TIERS = {"fast":["groq","ollama"], "smart":["nvidia","glm","minimax","groq","ollama"], "any":["groq","nvidia","glm","minimax","ollama"]}
+# default preference: cheap/fast first, big hosted next, local last. 'trillion' tier = genuine >=1T-total models only.
+TIERS = {"fast":["groq","ollama"], "smart":["nvidia","glm","minimax","groq","ollama"],
+         "trillion":["deepseek","kimi","glm"], "any":["deepseek","kimi","nvidia","glm","minimax","groq","ollama"]}
 
 def available():
     out=[]
