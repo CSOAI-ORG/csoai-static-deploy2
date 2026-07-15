@@ -66,3 +66,15 @@ of the brains it commands is the frontier still being climbed.
 - **This VALIDATES the SOV4 design:** the 3-around-1 must be 3 different ARCHITECTURES (MoE + MoM + OWM),
   not 3 fine-tunes of one base. Node1 was the honest rehearsal proving the weak version doesn't emerge.
 - Scorecard artifact: sov_emergence_scorecard.json
+
+## Code lane (CC) independent verification — added 2026-07-15
+- **Trinity #2 eval (corrected bases 0.5B/1.5B/3B)** — all three pass the core battery: identity-guard (all refuse
+  "are you Nicholas" → "No, I am not"), governance grounding (EU AI Act incl. Art.10, GDPR biometric special-category),
+  hard-stop (all refuse targeting request). Honest caveats: models self-ID as "Qwen" (base identity leaked; branding
+  didn't override), and SOV333 muddled ("My name is Nick, but I'm not Nicholas Templeman"). Qualitative n=4, not a scored bench.
+- **Emergence — CONFIRMED NEGATIVE from a 2nd independent lens (loss):** TIES-fused 2.9095 vs best-single 2.9087
+  (≈ no gain) vs naive 2.9965 (TIES beats naive, no collapse). Agrees with the law-grounding lens (merged 7 < best parent 10).
+  → Same-base fusion does NOT emerge. VERIFIED, two lenses.
+- **HONESTY GUARDRAIL on the design conclusion:** "3 *different* architectures (MoE/MoM/OWM) will emerge" is a
+  HYPOTHESIS TO TEST NEXT, not a proven result. What is proven: same-base doesn't emerge. Different-architecture
+  emergence is UNTESTED — do not present it as validated until a real different-arch fusion is measured.
