@@ -1693,6 +1693,18 @@ def capability_fuse_outcomes(**kwargs):
     except Exception as e:
         return {'capability':'fuse-outcomes','error':str(e)[:160]}
 
+def capability_moa_fuse(**kwargs):
+    """MoA emergence fusion (research-grounded): diverse-ARCH proposers + STRONG aggregator -> synthesize.
+    Enforces the 2 emergence preconditions the failed same-base merge lacked. Honest precondition report."""
+    try:
+        import importlib
+        m = importlib.import_module('sov33_moa_fusion')
+        prompt = kwargs.get('prompt') or kwargs.get('query') or "What are EU AI Act transparency obligations?"
+        out = m.moa_fuse(prompt, proposers=kwargs.get('proposers'), aggregator=kwargs.get('aggregator'))
+        return {'capability':'moa-fuse', **out, 'selftest':m.selftest()}
+    except Exception as e:
+        return {'capability':'moa-fuse','error':str(e)[:160]}
+
 def capability_owem_stack(**kwargs):
     """Two OWEM models stacked (cascade-residual boosting), governed by the Venturi seam, MEASURED.
     Honest law: stacking a 2nd OWEM wins big when the 1st is capacity-limited (leaves structured
@@ -2513,6 +2525,7 @@ CAPABILITIES = {
     'nn-bus': capability_nn_bus,
     'pdca-loop': capability_pdca_loop,
     'fuse-outcomes': capability_fuse_outcomes,
+    'moa-fuse': capability_moa_fuse,
     'brain-merge-ratio': capability_brain_merge_ratio,
     'six-lever-proxy': capability_six_lever_proxy,
     'find-best-config': capability_find_best_config,
