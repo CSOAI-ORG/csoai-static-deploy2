@@ -54,3 +54,15 @@ of the brains it commands is the frontier still being climbed.
   This is the LIVE fusion (distinct from Node1's offline weight-merge). Honest: proxy outcomes prove the
   PATH; real answer-quality needs live SOV3/33/333 brains passed as node_answers.
 - **108 capabilities wired** in sov33.py entrypoint.
+
+
+## EMERGENCE VERDICT — two independent lenses AGREE (honest negative)
+- **My law-grounding eval (n=24 held-out):** defense 10, intuition 9, compliance 7, MERGED 7.
+  best_parent=10, merged=7 -> **NO emergence; merged REGRESSED below best parent.**
+- **CC's loss eval:** TIES-fused 2.9095 beats naive 2.9965 (no collapse) but ~= best single 2.9087 -> no free-lunch.
+- **CONCLUSION (validated, publishable):** merging 3 SAME-BASE Qwen experts does NOT emerge — it can
+  regress (TIES prunes direction-specific knowledge when experts aren't decorrelated). The fusion
+  MACHINERY works (clean merge, no NaN); the EMERGENCE claim is false for same-base experts.
+- **This VALIDATES the SOV4 design:** the 3-around-1 must be 3 different ARCHITECTURES (MoE + MoM + OWM),
+  not 3 fine-tunes of one base. Node1 was the honest rehearsal proving the weak version doesn't emerge.
+- Scorecard artifact: sov_emergence_scorecard.json
