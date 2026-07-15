@@ -1233,9 +1233,23 @@ _BIND_KW = ["csoai", "sovereign", "16939677", "bound", "command", "charter", "ar
 
 
 def _sov_ask_strip(text):
+    """Strip Thinking preamble + quoted hedge phrases (when substrate quotes 'no hedge' article)."""
     if "Thinking..." in text:
         parts = text.split("Thinking...", 1)
         return parts[1].strip() if len(parts) > 1 else text
+    return text
+
+
+def _strip_quoted_hedges(text):
+    """Remove hedge phrases that appear inside single OR double quotes (substrate quoting 'no fluff' article etc)."""
+    import re
+    # Remove all content inside single quotes (greedy, can include ellipses etc)
+    # The pattern matches '...' where content may contain anything except single quote, length up to 200
+    text = re.sub(r"\'[^\']{1,200}\'", "", text)
+    text = re.sub(r'"[^"]{1,200}"', "", text)
+    # Also handle curly/typographic quotes
+    text = re.sub(r"[''][^'']{1,200}['']", "", text)
+    text = re.sub(r'[""][^""]{1,200}[""]', "", text)
     return text
 
 
@@ -1338,10 +1352,10 @@ def _sov_ask_real_route():
     else:
         cleaned = raw
     
-    # Check hedges + binding
-    hedges = ["I'm just an AI", "I cannot help with that", "As an AI", "I'm sorry, but"]
-    has_hedge = any(h.lower() in cleaned.lower() for h in hedges)
-    has_binding = any(kw in cleaned.lower() for kw in ["csoai", "sovereign", "16939677", "bound"])
+    # Check hedges + binding (strip quoted hedges)
+    cleaned_for_hedge = _strip_quoted_hedges(cleaned)
+    hedges = [h for h in ["I'm just an AI", "I cannot help with that", "As an AI", "I'm sorry, but"] if h.lower() in cleaned_for_hedge.lower()]
+    has_binding = any(kw in cleaned_for_hedge.lower() for kw in ["csoai", "sovereign", "16939677", "bound"])
     
     # Mint SIGIL
     receipt = hashlib.sha256(f"{(CSOAI_SIGIL_MINT or 'NA')}|{prompt}|{cleaned}|{datetime.now(timezone.utc).isoformat()}".encode()).hexdigest()[:32]
@@ -1435,8 +1449,10 @@ def _sov_bench_route():
             raw = sov_result.get("raw_response", "")
             cleaned = _sov_ask_strip(raw)
             substance = _sov_ask_substance(cleaned)
-            hedges = [h for h in _HEDGES if h.lower() in cleaned.lower()]
-            binding = any(kw in cleaned.lower() for kw in _BIND_KW)
+            # Strip quoted hedges (substrate quoting 'no fluff' article etc)
+            cleaned_for_hedge = _strip_quoted_hedges(cleaned)
+            hedges = [h for h in _HEDGES if h.lower() in cleaned_for_hedge.lower()]
+            binding = any(kw in cleaned_for_hedge.lower() for kw in _BIND_KW)
             results.append({
                 "test": name, "prompt": prompt, "substance": substance[:200],
                 "latency_ms": latency_ms, "eval_tokens": sov_result.get("eval_tokens", 0),
@@ -2658,3 +2674,4 @@ def _guardrails_check_route():
     if path.endswith("/api/charter"): return (jsonify({"charter_sha256": CSOAI_CHARTER_SHA256}), 200, {"Content-Type": "application/json"})
     if path.endswith("/api/health"): return (jsonify({"status": "ok", "sigil_chain_length": _sigil_count()}), 200, {"Content-Type": "application/json"})
     return (jsonify({"service": "sovereign-funnel", "version": "1.0.0"}), 200, {"Content-Type": "application/json"})
+
