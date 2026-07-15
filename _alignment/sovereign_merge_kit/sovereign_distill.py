@@ -16,22 +16,32 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from sovereign_router import dispatch, available
 from sovereign_kb import kb
 
+ANGLES = ["a busy compliance officer asking a direct question",
+          "a non-expert asking in plain English",
+          "a yes/no question with a short justification",
+          "a real-world scenario ('a company does X — is that allowed?')",
+          "an auditor asking what evidence is required",
+          "someone asking how it differs from a related rule"]
+
 def gen_examples(n_per_fact=2):
-    KB = kb(); out = []
+    KB = kb(); out = []; seen = set()
     for src, fact in KB:
         for i in range(n_per_fact):
-            prompt = (f"You are teaching a smaller AI. Based ONLY on this fact, write ONE realistic user QUESTION "
-                      f"and a correct, concise ANSWER that cites [{src}]. Return JSON: "
+            angle = ANGLES[i % len(ANGLES)]
+            prompt = (f"Based ONLY on this fact, write ONE realistic QUESTION from the perspective of {angle}, "
+                      f"and a correct concise ANSWER that cites [{src}]. Vary the wording. Return JSON only: "
                       f'{{"instruction": "...", "response": "..."}}.\nFACT ({src}): {fact}')
-            ans, who = dispatch(prompt, system="You generate clean instruction/response training pairs.",
-                                tier="smart", max_tokens=300)
+            ans, who = dispatch(prompt, system="You generate diverse, clean instruction/response training pairs.",
+                                tier="smart", max_tokens=300, temperature=0.8)   # higher temp = diversity
             if not ans: continue
             try:
                 j = json.loads(ans[ans.find("{"):ans.rfind("}")+1])
-                if j.get("instruction") and j.get("response"):
-                    j["_teacher"] = who; j["_source"] = src; out.append(j)
+                instr = (j.get("instruction") or "").strip()
+                key = instr.lower()[:60]
+                if instr and j.get("response") and key not in seen:      # dedup on instruction
+                    seen.add(key); j["_teacher"] = who; j["_source"] = src; out.append(j)
             except Exception:
-                out.append({"instruction": f"About {src}: explain the key rule.", "response": ans[:400], "_teacher": who, "_source": src})
+                pass
     return out
 
 def main():
