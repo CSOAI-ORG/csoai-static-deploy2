@@ -26,8 +26,10 @@ DATA = os.environ.get("SOV_DATA", "expert_data/merged_corpus.jsonl")   # merged 
 BASE = os.environ.get("SOV_BASE", "Qwen/Qwen2.5-0.5B-Instruct")
 
 if modal:
+    # PINNED to a known-good stack — latest trl(1.8)/transformers(5.x) changed SFTConfig and broke the run.
     image = (modal.Image.debian_slim()
-             .pip_install("torch","transformers>=4.44","peft","trl","datasets","accelerate","bitsandbytes"))
+             .pip_install("torch==2.3.1","transformers==4.44.2","trl==0.9.6","peft==0.12.0",
+                          "datasets==2.20.0","accelerate==0.33.0","bitsandbytes==0.43.1"))
 
     @STUB.function(gpu="T4", image=image, timeout=3600)
     def train(pairs: list):
