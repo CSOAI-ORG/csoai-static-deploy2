@@ -102,3 +102,20 @@ Owner: **A**=Science(train/fuse/eval/wire) · **B**=Claude Code(serve/mesh/deplo
 - Fusion: `sov33_venturi_router.py` · `sov33_moa_fusion.py` · `sov33_pdca_bft.py` · `sov33_nn_hive_bus.py`
 - Package: `sov4.py` · Cockpit: `sov_openai_shim.py`
 - Docs: `SOV4_MASTER_BLUEPRINT.md`(this) · `SOV4_7DAY_PLAN.md` · `SOV4_EMERGENCE_HOWTO.md` · `SOV4_HONEST_SCORECARD.md` · `SOV_NAMING_TAXONOMY.md`
+
+---
+## ⚠️ CC-lane measured correction to the Critical Path (2026-07-15)
+The hinge is **NOT "reach 3 diverse brains"** — that's DONE. CC reached 4 diverse proposers
+(llama-3.3-70b, qwen3-32b, llama-3.1-8b, local-sovereign) and ran the MoA proof: **1/3, no emergence**.
+The REAL blocker, measured: **aggregator strength**. Probed the free strong aggregators — gpt-oss-120b,
+deepseek-r1-distill-70b, kimi-k2 are ALL **unreachable on this Groq account**; the free ceiling is
+llama-3.3-70b, which is the aggregator that already gave 1/3.
+
+**So the decisive MoA emergence test is now gated on a STRONGER aggregator, which is owner/cost, not free:**
+- **[!N]** NVIDIA inference entitlement (403 today) → deepseek-v4-pro as aggregator, OR
+- **[!N]** small Claude spend (aggregator only, haiku ~pennies), OR
+- **[!N]** get Groq to serve a 120B-class model (unreachable this account).
+
+Until one clears, free-MoA emergence is **UNPROVEN and unprovable at the llama-70b ceiling**. Lane B/A can
+stage the battery + harness, but the proof itself cannot fire on free compute. Correct the critical-path
+blocker from "reach brains" to "reach a strong-enough aggregator (owner-gated)".
