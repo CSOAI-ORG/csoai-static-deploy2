@@ -1040,8 +1040,10 @@ def capability_model_registry(mode: str = 'list', **kwargs):
             REGISTRY = {m['name']: {**m, 'params_total_B': m.get('params_total_B', _size_B(m.get('size', '0')))}
                         for m in _models}
         list_by_tier = getattr(_mr, 'list_by_tier', lambda t: [n for n,m in REGISTRY.items() if m.get('tier')==t])
-        list_sovereign_safe = getattr(_mr, 'list_sovereign_safe',
-                                      lambda: [n for n,m in REGISTRY.items() if m.get('sovereign_safe')])
+        # registry was renamed list_sovereign_safe -> get_sovereign_safe; try both, then REGISTRY fallback
+        list_sovereign_safe = (getattr(_mr, 'list_sovereign_safe', None)
+                               or getattr(_mr, 'get_sovereign_safe', None)
+                               or (lambda: [n for n,m in REGISTRY.items() if m.get('sovereign_safe')]))
         get_brain = getattr(_mr, 'get_brain', lambda n: REGISTRY.get(n))
         total_aggregate = getattr(_mr, 'total_aggregate',
                                   lambda: {'n_models': len(REGISTRY),
@@ -1065,7 +1067,9 @@ def capability_model_registry(mode: str = 'list', **kwargs):
             }
         if mode == 'safe':
             items = list_sovereign_safe()
-            sorted_items = sorted(items.items(), key=lambda x: -x[1].get('params_total_B', 0))
+            # get_sovereign_safe returns a LIST of dicts; older code expected a dict — normalise to (name,info) pairs
+            pairs = list(items.items()) if isinstance(items, dict) else [(m.get('name', str(m)), m) for m in items]
+            sorted_items = sorted(pairs, key=lambda x: -x[1].get('params_total_B', 0))
             return {
                 'capability': 'model-registry',
                 'mode': 'safe',

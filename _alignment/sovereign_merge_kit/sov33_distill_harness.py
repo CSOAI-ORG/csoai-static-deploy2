@@ -24,7 +24,9 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 def teacher_pool(max_teachers=5):
     """Return DIVERSE-lineage sovereign-safe teachers (decorrelation: distinct families, not copies)."""
     import sov33_model_registry as R
-    safe = R.list_sovereign_safe()
+    # registry function was renamed list_sovereign_safe -> get_sovereign_safe; support both
+    _get = getattr(R, 'list_sovereign_safe', None) or R.get_sovereign_safe
+    safe = _get()
     items = list(safe.items()) if isinstance(safe, dict) else [(m.get('name', str(m)), m) for m in safe]
     # group by lineage family, take one per family for diversity
     seen_family, picked = set(), []
