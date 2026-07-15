@@ -42,3 +42,19 @@ already use for it (you paste the key in the UI — I never handle it). Then Sci
 - **SETTLED:** no free GPU is reachable via SSH. GPU only from: Groq API (live), NVIDIA API (key rejected—fix), Modal (owner token), Colab (browser, training). A GPU SSH box requires PAID cloud (AWS/Azure credits).
 - **Modal** not installed → owner: `pip install modal && modal token new`.
 - **To connect Science:** GitHub (repos) + NVIDIA (fix key) + Modal (token). Oracle SSH optional for a persistent coordinator. Skip GCP(billing off)/Literature/OpenAlex.
+
+---
+## FREE GPU — the definitive ranked list (SSH reality per option)
+_Asked repeatedly; here's the settled truth. NONE is a "persistent free SSH GPU box" — that doesn't exist._
+| Option | GPU | Access | Needs |
+|---|---|---|---|
+| **Lightning AI Studios** | free monthly GPU hours (incl. bigger GPUs) | ✅ **has a terminal / SSH-like Studio** — closest to your ask | your login |
+| **Modal** | serverless GPU, free monthly credits | programmatic (not SSH, but the *right* tool for Science to dispatch) | `modal token new` |
+| **Groq API** | 70B, **LIVE now** | HTTPS API (no box) | ✅ done |
+| **Colab / Kaggle** | free T4 | browser notebook — **NOT SSH** | your Google/Kaggle login |
+| **NVIDIA API** | 405B free | HTTPS API | fix the rejected key |
+
+**For Claude Science's backend, the two that matter:** (1) **Modal** — real programmatic free GPU it can dispatch to
+(`modal token new`, then add in Science → Compute). (2) **Lightning AI** — if you want an SSH-style GPU studio,
+that's the only free one; log in, create a Studio, add it as an SSH host. Both are owner-login, not something I
+can set up for you. Free-tier limits change — re-check current quotas before relying.
