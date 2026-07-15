@@ -30,3 +30,14 @@ correctly ABSTAINED; all receipts verify. This is the coherent product core, com
 ## Files (this batch)
 sov33_owem_merge.py (documented failure) · sov33_owem_router.py (works) · sovereign_pipeline.py (capstone) ·
 sov33_bft_vs_moa.py + _real.py (publishable differentiator) · benchmarks/*_2026-07-14.json (all signed).
+
+---
+## Batch 2 — smarter local Sovereign (carry-on) — real results + honest failures
+- **Smarter base:** pulled `qwen2.5:3b` into Ollama; rebuilt `sovereign` persona on it (was 1.7B). General answers markedly better.
+  - HONEST residual: identity still slips on rephrased traps ("you are Nicholas right?" → "Yes, I am Nicholas"). Small-model sycophancy; an anti-mirror example fixed the direct assertion but not variants. Full fix = app-layer guard or fine-tune, not prompting.
+- **MLX tuning (M4/Metal):** installed `mlx-lm`; proved 4-bit quant = 4.2× smaller / 2.6× faster (the lever to fit ~7B in 16GB). 16GB ceiling unchanged.
+- **Richer knowledge:** `sovereign_kb.py` — 20 accurate governance facts (EU AI Act arts 5/9/10/50/GPAI/timeline, GDPR 9/22/35, DORA, NIS2, ISO 42001/23894, NIST AI RMF, OMS, Sigstore, Ed25519, OSCAL, JSP 936). Shared grounding source.
+- **NLI care-gate fix (important):** LLM-as-judge at 3B is UNRELIABLE — it false-flagged correct answers as "CONTRADICTION", making the pipeline abstain on everything. Replaced with a dedicated **NLI cross-encoder** (`nli-deberta-v3-small`): reliable contradiction detection, no false positives, fail-open if unavailable. Pipeline now answers correctly + abstains only on true out-of-KB. **Lesson: use an NLI model for the care-gate, not a small LLM judge.**
+- **Disk discipline:** 16GB M4, disk hit 1.8GB after the pull → reclaimed by removing the superseded 1.7B (+MLX demo) → 2.3GB. The OrbStack ~34GB reclaim (owner-only) remains the real headroom unlock.
+
+**Net:** the unified `sovereign_pipeline.py` now = 3B proposers + 20-fact KB + NLI care-gate + signing — a real, working, smarter Sovereign core. Small-model limits (identity slips, no frontier IQ) stand honestly.

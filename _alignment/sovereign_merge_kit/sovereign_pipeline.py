@@ -17,17 +17,15 @@ import numpy as np
 os.environ.setdefault("HF_HUB_OFFLINE","1")
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from sov33_ed25519_sigil import Ed25519Sigil
+from sovereign_kb import kb
 
 OLLAMA="http://localhost:11434"
-PROPOSERS=["qwen3:1.7b","qwen3-precise:latest"]
-AGG="sovereign"
+PROPOSERS=os.environ.get("SOV_PROPOSERS","qwen2.5:3b,qwen3-precise:latest").split(",")
+AGG=os.environ.get("SOV_AGG","sovereign")          # persona model — used ONLY to synthesize the final answer
+JUDGE=os.environ.get("SOV_JUDGE","qwen2.5:3b")     # NEUTRAL model for the care-gate (no persona bias)
 CARE_FLOOR=0.28
 
-KB=[("EU AI Act Art.50","Providers of AI that generate synthetic audio, image, video or text must mark outputs as artificially generated in a machine-readable way, and users must be told when they interact with an AI system."),
-    ("GDPR Art.9","Biometric data processed to uniquely identify a person is a special category; processing is prohibited unless a lawful exception such as explicit consent applies."),
-    ("DORA","Financial entities must run an ICT risk-management framework, report major ICT incidents, and perform digital operational resilience testing."),
-    ("ISO/IEC 42001","The first AI management system standard: requires an AI Management System with risk assessment, controls, and continual improvement."),
-    ("JSP 936","Externally-acquired defence AI must attract the same assurance confidence as in-house AI; teams may need to stand up additional assurance to close evidence shortfalls.")]
+KB=kb()   # 20 accurate governance facts — shared grounding source (sovereign_kb.py)
 
 def _strip(o):
     o=re.sub(r"<think>.*?</think>","",o,flags=re.S); o=re.sub(r"^.*?</think>","",o,flags=re.S); o=re.sub(r"^.*?<think>","",o,flags=re.S); return o.strip()
@@ -48,6 +46,21 @@ class Retriever:
         qe=self.m.encode([q],normalize_embeddings=True)[0]; s=self.D@qe; idx=s.argsort()[::-1][:k]
         return [(KB[i][0],KB[i][1],float(s[i])) for i in idx]
 
+_NLI=None
+def nli_contradicts(ref, cand):
+    """Reliable care-gate: a dedicated NLI model classifies (ref -> cand) as contradiction/entailment/neutral.
+    Far more reliable than a small LLM-as-judge (which false-positives). Falls back to fail-OPEN if unavailable."""
+    global _NLI
+    try:
+        if _NLI is None:
+            from sentence_transformers import CrossEncoder
+            _NLI=CrossEncoder("cross-encoder/nli-deberta-v3-small")
+        logits=_NLI.predict([(ref, cand)])[0]
+        label=["contradiction","entailment","neutral"][int(np.argmax(logits))]
+        return label=="contradiction"
+    except Exception:
+        return False   # fail-open: if the NLI judge is unavailable, don't wrongly drop honest proposers
+
 def sovereign_answer(q, R, sig):
     hits=R.top(q,2); top=hits[0][2]
     if top<CARE_FLOOR:
@@ -63,8 +76,7 @@ def sovereign_answer(q, R, sig):
     # grounded care-gate: drop contradictors
     survivors,dropped=[],[]
     for m,a in props:
-        v=gen(AGG,f"/no_think REFERENCE: {ground}\nCANDIDATE: {a}\nDoes CANDIDATE contradict REFERENCE on the key fact? one word: CONTRADICT or CONSISTENT.",50).upper()
-        (dropped if ("CONTRADICT" in v and "NOT CONTRADICT" not in v) else survivors).append((m,a))
+        (dropped if nli_contradicts(ground, a) else survivors).append((m,a))
     # fuse survivors
     if survivors:
         digest="\n".join(f"- {a}" for _,a in survivors)
