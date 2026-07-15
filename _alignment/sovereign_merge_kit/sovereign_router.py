@@ -28,7 +28,10 @@ BACKENDS = {
 }
 # default preference: cheap/fast first, big hosted next, local last. 'trillion' tier = genuine >=1T-total models only.
 TIERS = {"fast":["groq","ollama"], "smart":["nvidia","glm","minimax","groq","ollama"],
-         "trillion":["deepseek","kimi","glm"], "any":["deepseek","kimi","nvidia","glm","minimax","groq","ollama"]}
+         "trillion":["deepseek","kimi","glm"], "any":["deepseek","kimi","nvidia","glm","minimax","groq","ollama"],
+         # 'frontier' = reach the biggest API model available. Confirmed-answering today: nvidia (qwen-397b ~400B).
+         # The 1.6T slot (deepseek-v4-pro via nvidia) is wired; it answers when reachable on the running machine.
+         "frontier":["nvidia","deepseek","kimi","glm","groq","ollama"]}
 
 def available():
     out=[]
