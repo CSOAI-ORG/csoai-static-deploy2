@@ -43,15 +43,31 @@ def moa(prompt, proposers=None, aggregator=None, system=None):
     final,who=R.dispatch(synth, system=system, backend=agg[0], model=agg[1], max_tokens=600)
     return final, drafts, {"proposers":[d["model"] for d in drafts],"aggregator":f"{agg[0]}:{agg[1]}"}
 
-def measure(prompts=None):
-    """HONEST emergence test: MoA final vs the best single draft, judged by the aggregator. Reports win-rate."""
-    prompts = prompts or [
-        "What must AI providers do for synthetic media under the EU AI Act?",
-        "Under GDPR, when is a DPIA mandatory?",
-        "Compare FedRAMP and ISO 27001 for a SaaS selling to US government."]
+# 15-prompt governance battery for the decisive proof (bigger n than the 3-prompt smoke).
+BATTERY=[
+    "What must AI providers do for synthetic media under the EU AI Act?",
+    "Under GDPR, when is a DPIA mandatory?",
+    "Compare FedRAMP and ISO 27001 for a SaaS selling to US government.",
+    "What are the key obligations under DORA for a financial entity?",
+    "When does the EU AI Act classify an AI system as high-risk?",
+    "What does NIST AI RMF's 'Govern' function require?",
+    "Explain the GDPR lawful bases for processing personal data.",
+    "What transparency duties apply to a customer-service chatbot under the EU AI Act?",
+    "What is required for a valid records-of-processing under GDPR Article 30?",
+    "Compare ISO 42001 and the NIST AI RMF for AI governance.",
+    "What are a data processor's obligations under GDPR vs a controller's?",
+    "What incident-reporting timelines does NIS2 impose?",
+    "When is a conformity assessment required under the EU AI Act?",
+    "What does the EU AI Act require for foundation/general-purpose AI models?",
+    "How should an organisation document AI risk under ISO 42001?"]
+
+def measure(prompts=None, agg=None):
+    """HONEST emergence test: MoA final vs the best single draft, judged by the aggregator. Reports win-rate.
+    agg=(backend,model) pins the STRONG aggregator (e.g. ('nvidia','deepseek-ai/deepseek-v4-pro') or ('claude',None))."""
+    prompts = prompts or BATTERY
     live=_probe(); print(f"live proposers ({len(live)}): {[m for _,m in live]}")
     if len(live)<2: print("need >=2 diverse proposers — only", live); return
-    agg=live[0]; wins=0
+    agg=agg or live[0]; print(f"aggregator: {agg[0]}:{agg[1]}"); wins=0
     for q in prompts:
         final,drafts,meta=moa(q, proposers=live, aggregator=agg)
         best=drafts[0]["text"]  # proxy 'best single' = strongest proposer's own draft
