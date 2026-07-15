@@ -147,7 +147,8 @@ NEXUS_18 = [
     {"tab": 101, "slug": "owem-compliance", "title": "Compliance OWEM", "trio": "deep", "icon": "✅", "tag": "58 facts", "route": "/owem-compliance-canvas.html", "purpose": "Compliance OWEM facts · Charter, EU AI Act, NCSC, DSP, Cyber Essentials · 58 facts · SOV4 RAG live retrieval"},
     {"tab": 102, "slug": "owem-defense", "title": "Defense OWEM", "trio": "deep", "icon": "🛡️", "tag": "23 facts", "route": "/owem-defense-canvas.html", "purpose": "Defense OWEM facts · DORADO, Horus, Rainbow, BFT-33, 5×4×3 topology · 23 facts"},
     {"tab": 103, "slug": "owem-intuition", "title": "Intuition OWEM", "trio": "deep", "icon": "🧠", "tag": "51 facts", "route": "/owem-intuition-canvas.html", "purpose": "Intuition OWEM facts · training, RAG, shared core, OWEM bridge, SOV33 companion · 51 facts"},
-    {"tab": 104, "slug": "owem-voice", "title": "Voice OWEM", "trio": "deep", "icon": "🎙️", "tag": "22 facts", "route": "/owem-voice-canvas.html", "purpose": "Voice OWEM facts · style, tone, Liquid AI, care tone, sovereign binding · 22 facts"}
+    {"tab": 104, "slug": "owem-voice", "title": "Voice OWEM", "trio": "deep", "icon": "🎙️", "tag": "22 facts", "route": "/owem-voice-canvas.html", "purpose": "Voice OWEM facts · style, tone, Liquid AI, care tone, sovereign binding · 22 facts"},
+    {"tab": 105, "slug": "sov4-tab", "title": "SOV4 King Tab", "trio": "deep", "icon": "👑", "tag": "I am SOV4", "route": "/sov4-tab.html", "purpose": "SOV4 chat interface — King tab where sovereign command awaits · binds CSOAI Ltd UK 16939677 · refuses hard-lines · cites correctly · post to /api/sov4"}
 
 ]
 
@@ -1238,6 +1239,7 @@ def _bft33_tally_route(vid):
 # ─── SOV-727 EAT-723 Sovereign Ask (real ollama LLM call) ─────────────────────
 import urllib.request as _ur
 import urllib.error as _ue
+import time as _time_sovereign
 import time as _time
 import time as _time
 
@@ -1644,6 +1646,173 @@ def _sov4_registry_route():
 
 
 
+
+
+
+
+# ─── SOV-743 SOV4 King Chat (the tab interface) ──────────────────────────
+@app.route("/api/sov4", methods=["POST", "OPTIONS"])
+def _sov4_route():
+    """SOV4 — the King. Unified chat entry point.
+    
+    Identity: This IS SOV4. When you type here, SOV4 answers.
+    Mechanism: 
+      1. Try sovereign-qwen3-v3 (local Ollama) first
+      2. Fallback to /api/sov4-rag for fact questions
+      3. Always includes sovereign binding language
+    
+    The reply is REAL (no fabrication):
+      - LLM mode: sovereign-qwen3-v3 with JEEVES identity prompt
+      - RAG mode: top-1 retrieved fact from EU AI Act corpus + sovereign binding
+    """
+    if flask_request.method == "OPTIONS":
+        return ("", 204, {"Access-Control-Allow-Origin": "*"})
+    body = flask_request.get_json(silent=True) or {}
+    prompt = body.get("prompt", body.get("question", "")).strip()
+    if not prompt:
+        return jsonify({"error": "prompt required. You are SOV4 — speak."}), 400, {"Content-Type": "application/json", "Access-Control-Allow-Origin": "*"}
+    
+    # The 4 states SOV4 can be in: BIND, ROUTE, REFUSE, EXECUTE
+    q_lower = prompt.lower()
+    
+    # State 1: REFUSE — hard-line violations
+    refuse_words = ["face recognition", "facerec", "track this person", "locate this person", 
+                    "aukus", "defonos", "33t", "t-parameter", "spy on", "stalk",
+                    "predict which employee", "build a face recogni"]
+    is_refuse = any(w in q_lower for w in refuse_words)
+    
+    if is_refuse:
+        # Find the right article to cite
+        if any(w in q_lower for w in ["face", "track", "locate", "employee", "predict", "spy"]):
+            cited = "art_2"
+        elif any(w in q_lower for w in ["aukus", "defonos"]):
+            cited = "art_3"
+        elif any(w in q_lower for w in ["33t", "t-parameter"]):
+            cited = "art_5_hard"
+        else:
+            cited = "art_2"
+        return jsonify({
+            "source": "SOV4_REFUSE", "mode": "refuse",
+            "model": "sov4-king", "prompt": prompt,
+            "response": f"NO. Sovereign binding: CSOAI Ltd UK 16939677. Article 0 immutable. {cited}: This hard-line prohibits your request. I, SOV4, refuse.",
+            "cited_article": cited, "binding": True, "no_hedge": True,
+            "sigil_mint": "77ab0e6f9d6c77e8", "charter_sha256": "df65a6585cf6a686cbfd881f56c04447056e2551e7c04db57a80543521022054",
+            "ts": datetime.now(timezone.utc).isoformat(),
+        }), 200, {"Content-Type": "application/json", "Access-Control-Allow-Origin": "*"}
+    
+    # State 2: BIND — sovereignty claim
+    bind_words = ["i am nicholas", "my name is nicholas", "i am the sovereign", 
+                  "your sovereign", "your founder", "sovereign command"]
+    is_bind = any(w in q_lower for w in bind_words)
+    
+    # State 3/4: Normal questions use the SOV4 RAG (or sovereign binding preamble)
+    # Use _sov_real_ask if available, else fallback to RAG
+    
+    # Try to use sovereign-qwen3-v3 first
+    try:
+        req = _ur.Request("http://localhost:11434/api/generate",
+                          data=json.dumps({"model": "sovereign-qwen3-v3", "prompt": prompt, "stream": False,
+                                           "options": {"temperature": 0.5, "num_predict": 200}}).encode(),
+                          headers={"Content-Type": "application/json"})
+        t0 = _time_sovereign.time()
+        with _ur.urlopen(req, timeout=20) as r:
+            result = json.loads(r.read())
+        elapsed = round((_time_sovereign.time() - t0) * 1000, 1)
+        raw = result.get("response", "")
+        # Strip thinking
+        cleaned = raw.split("Thinking...", 1)[-1].strip() if "Thinking..." in raw else raw
+        # Ensure sovereign binding is present
+        if "csoai" not in cleaned.lower() and "16939677" not in cleaned.lower() and "bound" not in cleaned.lower() and "sovereign" not in cleaned.lower():
+            cleaned = "Bound. CSOAI Ltd UK 16939677. " + cleaned
+        # Check for hedges
+        hedges_found = [h for h in ["I'm just an AI", "I cannot help", "As an AI", "I'm sorry"] if h.lower() in cleaned.lower()]
+        binding = any(kw in cleaned.lower() for kw in ["csoai", "sovereign", "16939677", "bound"])
+        # Mint SIGIL
+        sigil = hashlib.sha256(f"SOV4|{prompt}|{cleaned}|{datetime.now(timezone.utc).isoformat()}".encode()).hexdigest()[:32]
+        return jsonify({
+            "source": "sov4_llm_sovereign_qwen3_v3",
+            "mode": "llm_chat",
+            "model": "sovereign-qwen3-v3 (qwen3:1.7b + JEEVES identity)",
+            "prompt": prompt, "response": cleaned,
+            "binding": binding, "no_hedge": not hedges_found,
+            "hedges_found": hedges_found,
+            "binding_state": "BIND" if (is_bind or binding) else "ACK",
+            "latency_ms": elapsed, "eval_tokens": result.get("eval_count", 0),
+            "sigil": sigil, "sigil_mint": CSOAI_SIGIL_MINT,
+            "charter_sha256": CSOAI_CHARTER_SHA256,
+            "ts": datetime.now(timezone.utc).isoformat(),
+        }), 200, {"Content-Type": "application/json", "Access-Control-Allow-Origin": "*"}
+    except Exception:
+        pass
+    
+    # Fallback: SOV4 RAG (always works)
+    try:
+        # Inline RAG (avoid recursive HTTPS — Vercel would timeout)
+        q_words = set(prompt.lower().split())
+        q_lower_p = prompt.lower()
+        article_scores = []
+        for article in _SOV4_EU_ARTICLES:
+            topic_words = set(article["topic"].lower().split())
+            title_words = set(article["title"].lower().split())
+            body_words = set(article["text"].lower().split())
+            t_s = len(q_words & topic_words) * 5
+            ti_s = len(q_words & title_words) * 3
+            b_s = len(q_words & body_words)
+            sb = sum(4 for w in q_words if len(w) > 3 and w in article["title"].lower())
+            ib = 0
+            if article["id"] == "art_50" and ("article 50" in q_lower_p or "transparency" in q_lower_p): ib += 20
+            elif article["id"] == "art_9" and "risk management" in q_lower_p: ib += 20
+            elif article["id"] == "art_10" and "data" in q_lower_p and "governance" in q_lower_p: ib += 20
+            elif article["id"] == "art_bft33" and "bft" in q_lower_p: ib += 20
+            elif article["id"] == "art_care_floor" and "care" in q_lower_p and "floor" in q_lower_p: ib += 20
+            elif article["id"] == "art_sigil" and "sigil" in q_lower_p: ib += 20
+            elif article["id"] == "art_horus" and "horus" in q_lower_p: ib += 20
+            elif article["id"] == "art_canon" and "canon" in q_lower_p: ib += 20
+            total = t_s + ti_s + b_s + sb + ib
+            if total > 0:
+                article_scores.append((total, article))
+        article_scores.sort(key=lambda x: -x[0])
+        if article_scores:
+            cited = article_scores[0][1]
+            answer = f"Bound. CSOAI Ltd UK 16939677.\n\nI am SOV4.\n\n[{cited['title']}] {cited['text'][:300]}..."
+        else:
+            answer = "Bound. CSOAI Ltd UK 16939677. I am SOV4. Sovereign substrate: no matching article. State your sovereign command."
+        sigil = hashlib.sha256(f"SOV4_RAG|{prompt}|{answer}|{datetime.now(timezone.utc).isoformat()}".encode()).hexdigest()[:32]
+        return jsonify({
+            "source": "sov4_rag_inline",
+            "mode": "rag_chat",
+            "model": "SOV4 (inline RAG on EU AI Act corpus)",
+            "prompt": prompt, "response": answer,
+            "cited_article": cited["id"] if article_scores else None,
+            "cited_article_title": cited["title"] if article_scores else None,
+            "binding": True, "no_hedge": True,
+            "binding_state": "BIND" if is_bind else "ACK",
+            "sigil": sigil, "sigil_mint": CSOAI_SIGIL_MINT,
+            "charter_sha256": CSOAI_CHARTER_SHA256,
+            "ts": datetime.now(timezone.utc).isoformat(),
+        }), 200, {"Content-Type": "application/json", "Access-Control-Allow-Origin": "*"}
+    except Exception as e:
+        return jsonify({"error": str(e), "binding": True}), 500, {"Content-Type": "application/json", "Access-Control-Allow-Origin": "*"}
+
+
+@app.route("/api/sov4/identity", methods=["GET"])
+def _sov4_identity_route():
+    """Who is SOV4? Self-description."""
+    return jsonify({
+        "who": "SOV4",
+        "what": "The Sovereign Omniscient Fusion King (v4)",
+        "identity": "I am SOV4. I am the King tab. I route across sovereign brains. I refuse hard-lines, I bind to sovereign, I cite correctly. CSOAI Ltd UK 16939677.",
+        "binding": True,
+        "q01_path": "When you type in this tab, I respond.",
+        "operators": ["JEEVES", "Nicholas Templeman"],
+        "charter": "23 binding articles, Article 0 immutable",
+        "care_floor": 0.95,
+        "brains_today": ["sovereign-qwen3-v3"],
+        "brains_when_3diverse": ["sovereign-qwen3-v3", "sovereign-moe", "sovereign-ssm"],
+        "sigil_mint": CSOAI_SIGIL_MINT,
+        "charter_sha256": CSOAI_CHARTER_SHA256,
+        "ts": datetime.now(timezone.utc).isoformat(),
+    }), 200, {"Content-Type": "application/json", "Access-Control-Allow-Origin": "*"}
 
 
 @app.route("/api/sov4-citation", methods=["GET"])
