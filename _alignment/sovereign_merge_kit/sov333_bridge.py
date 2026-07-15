@@ -19,6 +19,8 @@ LEDGER = os.environ.get("SOV333_BRIDGE", os.path.join(os.path.dirname(os.path.ab
 CAPABILITIES = {
     "claude-code":    {"orchestration","governance","rag","signing","routing","code","distill-data"},
     "claude-science": {"gpu-training","distillation","heavy-compute","colab","modal"},
+    "hermes":         {"ingestion","learning","knowledge-hives","dedupe","overnight-read"},
+    "m2":             {"surface","frontend","deploy","light-inference","utility","print-node"},
 }
 def route(task_caps):
     """SOV333: pick the lane whose capabilities cover the task's needs."""
