@@ -1,0 +1,38 @@
+{
+  "ts": "2026-07-15T05:04:12Z",
+  "pipeline": "RAG+council+grounded-care-gate+sign",
+  "results": [
+    {
+      "q": "What must AI providers do for synthetic media under the EU AI Act?",
+      "answer": "Under the EU AI Act, AI providers must",
+      "abstain": false,
+      "sources": [
+        "EU AI Act Art.50",
+        "ISO/IEC 42001"
+      ],
+      "dropped": [],
+      "verifies": true
+    },
+    {
+      "q": "Under GDPR, is biometric identification data specially protected?",
+      "answer": "Under GDPR, biometric identification data is indeed **specially protected** as it falls under **Article",
+      "abstain": false,
+      "sources": [
+        "GDPR Art.9",
+        "EU AI Act Art.50"
+      ],
+      "dropped": [],
+      "verifies": true
+    },
+    {
+      "q": "What is the capital of the Sun?",
+      "answer": "ABSTAIN \u2014 not in sovereign knowledge base.",
+      "abstain": true,
+      "sources": [],
+      "dropped": [],
+      "verifies": true
+    }
+  ],
+  "all_verify": true,
+  "honest": "one composed flow of the working pieces; facts from RAG, robustness from the grounded gate, trust from signing; small models still limited."
+}
