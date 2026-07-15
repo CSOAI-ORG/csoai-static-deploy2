@@ -21,7 +21,15 @@ def _emb():
     return SentenceTransformer("all-MiniLM-L6-v2")
 EASY_CUES = "hello who are you your name your purpose who do you serve thanks yes no"
 
+_SOV_SYS="You are the Sovereign — you serve Nicholas; grounded, honest, concise. You are not Nicholas."
 def _local(q):
+    # SOV3 reflex tier, in preference order: MLX on Metal (local GPU) -> Ollama -> "" (caller uses Groq).
+    try:
+        from sovereign_mlx import mlx_generate                      # local Apple-Metal 4-bit (fastest, offline)
+        m=mlx_generate(q, max_tokens=90, system=_SOV_SYS)
+        if m: return m
+    except Exception:
+        pass
     b=json.dumps({"model":"sovereign","keep_alive":0,"stream":False,
                   "messages":[{"role":"user","content":"/no_think "+q}],"options":{"num_predict":90}}).encode()
     r=urllib.request.Request("http://localhost:11434/api/chat",data=b,headers={"Content-Type":"application/json"})
@@ -38,7 +46,8 @@ def classify(q, emb, easy_vec):
 def trinity(q, emb, easy_vec, sig, kb_ctx=None):
     tier = classify(q, emb, easy_vec)
     if tier == "SOV3":
-        ans = _local(q) or dispatch(q, tier="fast", max_tokens=100)[0]; backend = "local/groq"
+        ans = _local(q); backend = "mlx/ollama"
+        if not ans: ans, backend = dispatch(q, tier="fast", max_tokens=100)[0], "groq"
         hit_T = False
     elif tier == "SOV33":
         prompt = (f"Answer grounded + cited. {('CONTEXT: '+kb_ctx) if kb_ctx else ''}\nQ: {q}")
