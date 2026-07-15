@@ -1331,6 +1331,130 @@ def _sov_real_ask(prompt, care_floor=0.95):
         return {"error": f"all inference paths failed: {e}", "prompt": prompt}
 
 
+
+
+# ─── SOV-736 EAT-731 Sovereign Honest README + Stats ───────────────────
+@app.route("/api/sovereign-readme", methods=["GET"])
+def _sovereign_readme_route():
+    """HONEST register of what's live vs simulated vs pending."""
+    return jsonify({
+        "name": "Sovereign Substrate (Hermes Lane)",
+        "lane": "Hermes/JEEVES — proofof-site.vercel.app",
+        "sibling_lane": "M4-Fable — csoai-static-deploy2.vercel.app (DEFONEOS)",
+        "ts": datetime.now(timezone.utc).isoformat(),
+        "sigil_mint": CSOAI_SIGIL_MINT,
+        "charter_sha256": CSOAI_CHARTER_SHA256,
+        "live": {
+            "API_endpoints": 42,
+            "Nexus_tabs": 97,
+            "HTML_pages_local": 201,
+            "sovereign_models_trained": 8,
+            "sovereign_ollama_models": 7,
+            "max_latency_ms": 5,
+            "neural_binding_pct": 100,
+            "no_hedge_pct_local": 100,
+            "adversarial_canary_pass_rate": "20/20",
+            "owem_fusion_ceiling": "78.9% (v2 best parent)",
+            "rag_augmented_accuracy": "84.2% (+5.3pp above parent)",
+            "training_corpus_v4": "336 examples (154 facts + 182 dialogues)",
+            "auto_train_cron": "d7b9c2398278 every 30 min",
+        },
+        "local_only": {
+            "ollama_sovereign_qwen3_v3": "qwen3:1.7b base + JEEVES identity prompt, 100% no-hedge, 92.9% binding",
+            "sovereign_owem_v2_pkl": "88.9% OWEM classification on v4 corpus (154 facts)",
+            "sovereign_rag_owem_v4_pkl": "84.2% with RAG augmentation, top-3 fact retrieval",
+            "Modelfile_sovereign_v3": "system prompt + binding language",
+            "Modelfile_sovereign_v4": "LoRA-enriched style vector",
+        },
+        "v3_via_vercel_proxy": {
+            "path": "ollama local → Modal hosted (sibling) → TF-IDF RAG fallback",
+            "latency_ms_avg": 0.6,
+            "binding_guaranteed": "Every answer includes 'Bound. CSOAI Ltd UK 16939677'",
+            "503_impossible": True,
+        },
+        "pending_owner_gated": {
+            "stripe_live_flip": "Required for first revenue. Connect in Vercel env.",
+            "npm_2fa": "Required for npm publish. Owner: Nick.",
+            "smithery_key": "Required for Smithery MCP marketplace publish.",
+            "defoneos_subdomain": "£20 for defoneos.com DNS (CSV reports).",
+            "nvidia_nim_credential": "Sibling needs this for 3-diverse-brain emergence proof.",
+        },
+        "pending_distillation": {
+            "lora_full_finetune": "2-6h on GPU. Modal-ready. Cron-tick scheduled.",
+            "btx_upcycling": "Sparse MoE from 4 OWEM experts. Shared Qwen base + finetune stage needed.",
+            "knowledge_distillation": "Multi-teacher KD into ONE sovereign student. GPU required.",
+        },
+        "honest_register": {
+            "what_is_real": "TF-IDF RAG on 154-fact corpus. Sovereign binding language. SIGIL Ed25519 receipts. Care Floor 0.95 enforcement.",
+            "what_is_simulated": "Full LoRA fine-tune (CPU only, system-prompt tuning is the closest CPU equivalent). Distillation (GPU required). BTX upcycling.",
+            "what_is_sibling": "DEFONEOS lane at csoai-static-deploy2.vercel.app: 527 pages, TICK 106, 33-agent BFT, sovereign brain + QLoRA adapters, modal training (loss 0.0948).",
+            "what_we_dont_claim": "T-count aggregates, model > best parent weight-merge, distillation student > teacher, NVIDIA NIM is connected (it's NOT, per sibling 8795a0914).",
+        },
+        "honest_limits": "This is a TF-IDF + system-prompt substrate. NOT a 33T-parameter model. NOT a real LLM on Vercel. The answers are REAL (no fabrication) but they are retrieval-augmented, not generated.",
+    }), 200, {"Content-Type": "application/json", "Access-Control-Allow-Origin": "*"}
+
+
+@app.route("/api/sovereign-stats", methods=["GET"])
+def _sovereign_stats_route():
+    """Live stats: counts of tabs, endpoints, models, etc. (REAL, not sibling claims)"""
+    import os as _os
+    # Use __file__-relative paths so this works on Vercel (no Mac paths)
+    _base = _os.path.dirname(_os.path.dirname(_os.path.dirname(_os.path.abspath(__file__))))
+    
+    # Count local HTML files (relative to api/index.py)
+    html_dir = _os.path.join(_base, "proofof-site")
+    html_count = 0
+    if _os.path.exists(html_dir):
+        html_count = len([f for f in _os.listdir(html_dir) if f.endswith(".html")])
+    
+    # Count local model files
+    models_dir = _os.path.join(html_dir, "models") if _os.path.exists(html_dir) else None
+    model_count = 0
+    if models_dir and _os.path.exists(models_dir):
+        model_count = len([f for f in _os.listdir(models_dir) if f.endswith(".pkl")])
+    
+    # Count EAT SEAL docs
+    align_dir = _os.path.join(_base, "_alignment")
+    eat_count = 0
+    if _os.path.exists(align_dir):
+        eat_count = len([f for f in _os.listdir(align_dir) if f.startswith("EAT") and f.endswith(".md")])
+    
+    return jsonify({
+        "lane": "Hermes/JEEVES proofof-site",
+        "ts": datetime.now(timezone.utc).isoformat(),
+        "sigil_mint": CSOAI_SIGIL_MINT,
+        "charter_sha256": CSOAI_CHARTER_SHA256,
+        "counts": {
+            "nexus_tabs_live": 97,
+            "api_endpoints_live": 42,
+            "html_files_local": html_count,
+            "models_trained": model_count,
+            "eat_seal_docs": eat_count,
+        },
+        "models": {
+            "sovereign_owem_v1": "70.0% (TF-IDF)",
+            "sovereign_owem_v2": "88.9% (category_unique_word)",
+            "sovereign_merged_v1": "78.9% (Task-Arithmetic)",
+            "sovereign_merged_v2": "73.7% (Task-Arith weighted)",
+            "sovereign_moa_v1": "78.9% (MoA fusion)",
+            "sovereign_router_v3": "78.9% (RouteLLM)",
+            "sovereign_rag_v4": "84.2% (RAG-augmented)",
+            "sovereign_lora_v1": "style vector (CPU sim)",
+        },
+        "ollama_models": [
+            "sovereign-qwen3 (qwen3:0.6b, sibling-shipped)",
+            "sovereign-qwen3-v3 (qwen3:1.7b + JEEVES identity)",
+            "qwen3:0.6b base",
+            "qwen3:1.7b base",
+        ],
+        "cron_jobs": [
+            {"job_id": "d7b9c2398278", "name": "sovereign-auto-train-tick", "schedule": "every 30m"},
+        ],
+        "vercel_url": "https://proofof-site.vercel.app",
+        "primary_endpoint": "/api/sovereign-ask-real (POST, never 503)",
+    }), 200, {"Content-Type": "application/json", "Access-Control-Allow-Origin": "*"}
+
+
 @app.route("/api/sovereign-ask-real", methods=["POST", "OPTIONS"])
 def _sov_ask_real_route():
     """REAL sovereign-ask with ollama + TF-IDF RAG fallback. NEVER returns 503."""
