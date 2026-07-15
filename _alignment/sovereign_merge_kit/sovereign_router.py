@@ -35,9 +35,13 @@ def available():
     for n,b in BACKENDS.items():
         if b["key"] is None: out.append(n)                 # ollama = local, assume present
         elif os.environ.get(b["key"]): out.append(n)
+    if os.environ.get("ANTHROPIC_API_KEY"): out.append("claude")   # Claude in the mix (paid, opt-in)
     return out
 
 def _call(name, prompt, system, max_tokens, temperature, model=None):
+    if name=="claude":                                     # Claude speaks the Messages API, not OpenAI's
+        from sovereign_claude import claude_chat
+        return claude_chat(prompt, system=system, max_tokens=max_tokens, temperature=temperature, model=model)
     b=BACKENDS[name]; key=os.environ.get(b["key"]) if b["key"] else None
     if b["key"] and not key: return None
     key=(key or "").strip().strip('"').strip("'")   # tolerate stray paste chars
