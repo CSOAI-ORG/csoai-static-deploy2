@@ -32,9 +32,10 @@ def available():
 def _call(name, prompt, system, max_tokens, temperature):
     b=BACKENDS[name]; key=os.environ.get(b["key"]) if b["key"] else None
     if b["key"] and not key: return None
+    key=(key or "").strip().strip('"').strip("'")   # tolerate stray paste chars
     msgs=([{"role":"system","content":system}] if system else [])+[{"role":"user","content":prompt}]
     body=json.dumps({"model":b["model"],"messages":msgs,"temperature":temperature,"max_tokens":max_tokens,"stream":False}).encode()
-    hdr={"Content-Type":"application/json"}
+    hdr={"Content-Type":"application/json","User-Agent":"Mozilla/5.0 sovereign-router"}  # UA: Groq/CF need it
     if key: hdr["Authorization"]=f"Bearer {key}"
     req=urllib.request.Request(f"{b['base']}/chat/completions",data=body,headers=hdr)
     try:

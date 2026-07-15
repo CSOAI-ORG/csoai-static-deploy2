@@ -85,12 +85,13 @@ def sovereign_answer(q, R, sig):
                      f"Do not add facts not in the context.\nCONTEXT:\n{ctx}\nQUESTION: {q}\n"
                      f"COUNCIL DRAFTS:\n{digest}\nFINAL:")
         try:
-            import sovereign_nvidia as nv
-            fused = nv.nvidia_chat(fuse_prompt, system="You are the Sovereign: grounded, honest, concise.") if nv.available() else None
+            import sovereign_router as rt
+            fused, _who = rt.dispatch(fuse_prompt, system="You are the Sovereign: grounded, honest, concise.",
+                                      tier="smart", max_tokens=260)   # nvidia->glm->minimax->groq->ollama
         except Exception:
-            fused = None
+            fused, _who = None, None
         if not fused:
-            fused=gen(AGG,"/no_think "+fuse_prompt,220)     # local fallback
+            fused=gen(AGG,"/no_think "+fuse_prompt,220)     # last-resort local
     else:
         fused="ABSTAIN — all proposers contradicted the grounded source."
     rec=sig.sign({"q":q,"answer":fused,"sources":[s for s,_,_ in hits],"survivors":[m for m,_ in survivors],"dropped":[m for m,_ in dropped],"care_ok":True,"top":round(top,3)})
