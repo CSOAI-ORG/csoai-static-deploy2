@@ -1,14 +1,18 @@
 # SOV Naming Taxonomy (canonical — 2026-07-15, by Nick)
-The sovereign model family, named by ARCHITECTURE TYPE. Each is a distinct model type;
-SOV4 is the fusion of them all under one governance spine.
+The sovereign model family. Each member is an OWEM FUSION FRAMEWORK built on a distinct
+architecture type. **SOV4 is the TRUE EMERGENCE MODEL — the one King born from fusing them all.**
 
-| Name   | Type | What it is | Best at |
-|--------|------|-----------|---------|
-| **SOV1**  | **Venturi** | the router/throat model — the small governed model that ROUTES between the others | routing, care-gate, signing (the seam) |
-| **SOV3**  | **MoE**  | Mixture-of-Experts — many experts, router picks a few per token | breadth + knowledge, cheap per token |
-| **SOV33** | **MoM**  | Mixture-of-Models / dense — deep reasoning brain | hard multi-step reasoning (depth) |
-| **SOV333**| **OWM**  | Open World Model — predicts next STATE not next token (JEPA-style) | world-modelling, planning, OOD |
-| **SOV4**  | **OWEM** | Open World EMERGENCE Model — the fusion: SOV1 routes across SOV3+SOV33+SOV333 under ONE care-gate + ONE signature + ONE memory + PDCA/DRUM | the governed KING the end-user talks to |
+| Name   | Arch type | OWEM fusion framework | Best at |
+|--------|-----------|----------------------|---------|
+| **SOV1**  | **Venturi** | the router/throat — the small governed model that ROUTES between the others | routing, care-gate, signing (the seam) |
+| **SOV3**  | **MoE**  | OWEM fusion on Mixture-of-Experts (router picks few experts/token) | breadth + knowledge, cheap per token |
+| **SOV33** | **MoM**  | OWEM fusion on Mixture-of-Models / dense reasoning | hard multi-step reasoning (depth) |
+| **SOV333**| **OWM**  | OWEM fusion on Open World Model (predicts next STATE, JEPA-style) | world-modelling, planning, OOD |
+| **SOV4**  | **THE EMERGENCE MODEL** | the TRUE emergence OWEM — SOV1 fuses SOV3+SOV33+SOV333 under ONE care-gate + ONE signature + ONE memory + PDCA/DRUM | the governed KING the end-user talks to |
+
+**Key: SOV3/33/333 are all OWEM fusion frameworks (each fuses inner brains on its arch type).
+SOV4 is NOT just another framework — it is the emergence model that fuses the three frameworks
+into one governed King. That fusion-of-fusions IS the emergence.**
 
 ## The honest relationship
 - SOV4 (OWEM) is NOT a bigger monolithic model. It is the GOVERNED FUSION: SOV1 (venturi) routes

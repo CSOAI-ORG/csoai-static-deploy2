@@ -1636,6 +1636,50 @@ def capability_venturi(**kwargs):
     except Exception as e:
         return {'capability':'venturi','error':str(e)[:160]}
 
+def capability_venturi_route(**kwargs):
+    """LIVE venturi-router: the small-model throat between the 3-around-1 expert nodes.
+    care-gate -> route to expert node -> pass through signed throat. Fires in the decision path."""
+    try:
+        import importlib
+        r = importlib.import_module('sov33_venturi_router')
+        prompt = kwargs.get('prompt') or kwargs.get('query') or "What does EU AI Act Article 50 require?"
+        out = r.venturi_route(prompt)
+        st = r.selftest()
+        return {'capability':'venturi-route','routed_to':out['routed_to'],'gated':out['gated'],
+                'care_score':out['care_score'],'signed':out['signed'],'node_scores':out['node_scores'],
+                'selftest':st,'composes':'care-gate + node-route + signed-throat'}
+    except Exception as e:
+        return {'capability':'venturi-route','error':str(e)[:160]}
+
+def capability_nn_bus(**kwargs):
+    """7-NN-planet hive bus: reports planet status + feeds decisions to the weak planets.
+    Honest: 3 strong / 4 weak (data-gated). The bus accumulates real labels toward retrain."""
+    try:
+        import importlib
+        h = importlib.import_module('sov33_nn_hive_bus')
+        return {'capability':'nn-bus', **h.bus_status()}
+    except Exception as e:
+        return {'capability':'nn-bus','error':str(e)[:160]}
+
+def capability_pdca_loop(**kwargs):
+    """PDCA 9-stage + DRUM governing loop wrapping the venturi-router.
+    LEARN->CHECK_EXISTING->PLAN->DO->ACT->CHECK_VERIFY->AUDIT->IMPROVE->BRAND, DRUM heartbeat beneath.
+    Each stage brain-resolved + sigil-signed + BFT-ratified. Honest: stage1 LEARN partial (memory pending)."""
+    try:
+        import importlib
+        f = importlib.import_module('sov33_nine_stage_flow')
+        p = importlib.import_module('sov33_pdca_bft')
+        task = kwargs.get('task') or kwargs.get('prompt') or "Assess whether a hiring AI is high-risk under EU AI Act"
+        manifest = f.flow_manifest()
+        cyc = p.pdca_cycle(task)
+        stages = manifest.get('stages', []) if isinstance(manifest, dict) else []
+        return {'capability':'pdca-loop','stages_defined':len(stages),
+                'ratified':cyc.get('ratified'),'brain_calls':cyc.get('brain_calls'),
+                'cycle_stages':list(cyc.get('stages',{}).keys()) if isinstance(cyc.get('stages'),dict) else cyc.get('stages'),
+                'composes':'9-stage flow + PDCA-BFT council + DRUM heartbeat + sigil-per-stage'}
+    except Exception as e:
+        return {'capability':'pdca-loop','error':str(e)[:160]}
+
 def capability_owem_stack(**kwargs):
     """Two OWEM models stacked (cascade-residual boosting), governed by the Venturi seam, MEASURED.
     Honest law: stacking a 2nd OWEM wins big when the 1st is capacity-limited (leaves structured
@@ -2452,6 +2496,9 @@ CAPABILITIES = {
     'tensor-compress': capability_tensor_compress,
     'param-accounting': capability_param_accounting,
     'venturi-stream': capability_venturi_stream,
+    'venturi-route': capability_venturi_route,
+    'nn-bus': capability_nn_bus,
+    'pdca-loop': capability_pdca_loop,
     'brain-merge-ratio': capability_brain_merge_ratio,
     'six-lever-proxy': capability_six_lever_proxy,
     'find-best-config': capability_find_best_config,
