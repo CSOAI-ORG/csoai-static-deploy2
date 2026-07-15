@@ -1,15 +1,16 @@
 # SOV Multi-Tab Cockpit — a tab per model (honest: LIVE vs DESIGN)
 Goal: one governed cockpit, a tab per SOV model, each showing its real state.
+HONEST: nothing is SERVING yet — these are SERVABLE via the runbook below (run on the Mac). 'Servable' != 'running'.
 Run on the MAC (Ollama is local). Every tab talks through the governed shim (care-gate + sign).
 
 ## HONEST TAB MAP (what's real 2026-07-15)
 | Tab | Model | State | How it serves |
 |-----|-------|-------|---------------|
 | **SOV1** | venturi/router | GOVERNANCE LAYER (not a chat model) | shown as the "gate" status bar, not a chat tab — every tab routes through it |
-| **SOV3** | MoE / 0.5B student | ✅ LIVE (trained adapter, eval-proven) | ollama model `sov3` (see SOV_ON_HERMES_RUNBOOK) |
+| **SOV3** | 0.5B dense student (Qwen2.5-0.5B-Instruct base; MoE is the SOV3 SLOT/role, not this student's arch) | ✅ SERVABLE (trained adapter eval-proven; runbook not yet run) | ollama model `sov3` (see SOV_ON_HERMES_RUNBOOK) |
 | **SOV33** | MoM / dense-reasoning | ⚠️ DESIGN (no distinct weights yet) | tab present, marked "needs distinct base trained" |
 | **SOV333** | OWM / world-model | ⚠️ DESIGN (JEPA toy-scale, not a chat model) | tab shows world-model state, not chat |
-| **SOV4** | fusion King | ✅ LIVE (sov4.ask routes across available) | the main tab — routes to whatever's served, care-gated+signed |
+| **SOV4** | fusion King | ✅ SERVABLE (sov4.ask routes across available; runbook not yet run) | the main tab — routes to whatever's served, care-gated+signed |
 
 ## SERVING PLAN (light up tabs as models become real)
 Each SOV<x> gets served as `ollama create sov<x>` the moment it has real distinct weights:
