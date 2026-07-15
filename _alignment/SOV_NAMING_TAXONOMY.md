@@ -14,6 +14,19 @@ architecture type. **SOV4 is the TRUE EMERGENCE MODEL — the one King born from
 SOV4 is NOT just another framework — it is the emergence model that fuses the three frameworks
 into one governed King. That fusion-of-fusions IS the emergence.**
 
+## FLUID vs STATIC (canonical design principle — by Nick, 2026-07-15)
+The fixed point is the GOVERNANCE, not the intelligence. This is WHY a fluid system stays safe.
+
+| Layer | State | Why |
+|-------|-------|-----|
+| SOV3 / SOV33 / SOV333 (brains) | **FLUID** | which brain/expert/model answers changes per task; never stale, never vendor-locked. daily_refresh + fluid_pyramid already re-pick best config live. |
+| SOV4 (emergence King) | **FLUID** | it IS the live routing decision across fluid brains — never one frozen model. |
+| 7 NN planets / memory | **STABLE + GROWING** | persists + accumulates every signed decision (the flywheel); never wiped, never frozen. Stable identity, growing content. |
+| **SOV1 (venturi / care-gate / SIGIL)** | **STATIC on purpose** | the governance ANCHOR. Fixed policy (care-floor 0.35, signing key, veto rules) — if the safety seam could drift, 'can't run away' collapses. Roster of brains it routes to updates; HOW it decides (care-gate first, sign always) never drifts. |
+
+Principle: **everything intelligent is fluid; the governance is the fixed anchor; the memory is the growing spine.**
+Static SOV1 is a FEATURE — it's what lets the brains be swapped fluidly and still be trusted.
+
 ## The honest relationship
 - SOV4 (OWEM) is NOT a bigger monolithic model. It is the GOVERNED FUSION: SOV1 (venturi) routes
   each request to the right master brain (SOV3 MoE / SOV33 MoM / SOV333 OWM), and every decision
