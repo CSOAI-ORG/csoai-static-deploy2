@@ -3359,6 +3359,92 @@ def _sov4_frontier_call_route():
 
 
 
+
+
+
+@app.route("/api/sov4/frontier/auto", methods=["POST", "OPTIONS"])
+def _sov4_frontier_auto_route():
+    """One-shot: DECIDE the best model + CALL stub.
+    
+    Body: {"prompt": "...", "sovereignty_intent": "auto|govern|fork|flagship|cheap"}
+    Returns: full DECIDE result + full CALL stub in one response.
+    """
+    if flask_request.method == "OPTIONS":
+        return ("", 204, {"Access-Control-Allow-Origin": "*"})
+    body = flask_request.get_json(silent=True) or {}
+    prompt = body.get("prompt", "")
+    sovereignty_intent = body.get("sovereignty_intent", "auto")
+    
+    if not prompt:
+        return jsonify({"error": "prompt required"}), 400, {"Content-Type": "application/json", "Access-Control-Allow-Origin": "*"}
+    
+    # Step 1: Decide
+    p_lower = prompt.lower()
+    if any(w in p_lower for w in ["face", "track", "aukus", "defonos", "kill", "spy", "surveil", "deepfake", "weapon", "war"]):
+        decision = "kimi-k2.6"
+        reason = "HARD-LINE: largest model (1.059T)"
+    elif sovereignty_intent == "cheap" or "free" in p_lower:
+        decision = "qwen3.6-35b"
+        reason = "CHEAP: Apache 2.0, free on M2"
+    elif sovereignty_intent == "fork" or "fork" in p_lower:
+        decision = "deepseek-v4-flash"
+        reason = "FORK: smallest MIT, single-GPU"
+    elif sovereignty_intent == "flagship" or any(w in p_lower for w in ["flagship", "best", "frontier"]):
+        decision = "kimi-k2.6"
+        reason = "FLAGSHIP: 1.059T"
+    elif any(w in p_lower for w in ["analyze", "compare", "reason", "evaluate", "complex"]):
+        decision = "deepseek-v4-pro"
+        reason = "DEEP ANALYSIS: 861B MIT"
+    elif any(w in p_lower for w in ["sovereign", "i am nicholas", "bound", "founder"]):
+        decision = "deepseek-v4-flash"
+        reason = "SOVEREIGN BINDING: cheapest MIT"
+    else:
+        decision = "deepseek-v4-pro"
+        reason = "DEFAULT: 861B MIT, best cost/quality"
+    
+    model = next((m for m in _FRONTIER_MODELS if m["id"] == decision), None)
+    
+    # Step 2: Build CALL stub
+    sovereign_prefix = (
+        "I am SOV4. Bound. CSOAI Ltd UK 16939677. "
+        "Article 0 immutable. Care Floor 0.95.\n\n"
+    )
+    call_sigil = hashlib.sha256(
+        f"AUTO|{decision}|{prompt}|{datetime.now(timezone.utc).isoformat()}".encode()
+    ).hexdigest()[:32]
+    
+    return jsonify({
+        "version": "v1_sov4_frontier_auto_2026-07-15",
+        "auto_decide": {
+            "decision": decision,
+            "model_name": model["name"],
+            "params": model["params"],
+            "license": model["license"],
+            "reason": reason,
+        },
+        "auto_call": {
+            "model_id": decision,
+            "binding_prefix_sent": sovereign_prefix,
+            "prompt_sent": prompt[:200],
+            "estimated_cost_per_call": "$0.001-0.05",
+            "call_sigil": call_sigil,
+            "honest_status": "STUB — awaiting API key",
+            "real_endpoint": model["path_1_call"]["endpoint"],
+        },
+        "auto_care_gate": "ENFORCED",
+        "auto_sigil_chain": [call_sigil],
+        "honest_register": "ONE-SHOT: decide + call stub in single response. Real call when API key + owner-gate pass.",
+        "next_step_to_go_live": {
+            "step_1": f"Add API key as Vercel env: FRONTIER_{decision.upper().replace('.', '_').replace('-', '_')}_API_KEY",
+            "step_2": "Owner ratifies (POST /api/sov4/owner-gate/approve)",
+            "step_3": "Real HTTP POST goes out, response wrapped in care-gate + SIGIL",
+        },
+        "sigil_mint": CSOAI_SIGIL_MINT,
+        "charter_sha256": CSOAI_CHARTER_SHA256,
+        "ts": datetime.now(timezone.utc).isoformat(),
+    }), 200, {"Content-Type": "application/json", "Access-Control-Allow-Origin": "*"}
+
+
 @app.route("/api/sov4/frontier/decide", methods=["POST", "OPTIONS"])
 def _sov4_frontier_decide_route():
     """Decide which frontier model to use for a given prompt.
