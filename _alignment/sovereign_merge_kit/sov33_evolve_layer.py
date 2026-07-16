@@ -1,6 +1,6 @@
 """sov33_evolve_layer.py — the IMPROVE/evolution layer for ARUM (Layer-6 meta).
 
-Grounded in OpenEvolve (github.com/algorithmicsuperintelligence/openevolve, inspired by AlphaEvolve)
+Grounded in OpenEvolve (open-source AlphaEvolve-style evolutionary coding agent; exact repo org UNVERIFIED here)
 and the Darwin Godel Machine (arXiv 2505.22954): evolve the agent's own CODE/CONFIG through
 propose -> test-on-held-out -> keep-if-better, forming an archive of stepping stones.
 
