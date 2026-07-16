@@ -9,6 +9,22 @@ export PYTHONPATH="$PWD:$PYTHONPATH"
 export SOV_SHIM_PORT="${SOV_SHIM_PORT:-8802}"
 mkdir -p "$SOV33_SIGIL_DIR"
 
+# --- auto-use local venv if present (so sklearn/joblib -> the 72% trained router) ---
+if [ -f "$PWD/.venv/bin/activate" ]; then
+  source "$PWD/.venv/bin/activate"
+  echo "  [venv] using $PWD/.venv (trained router available if sklearn installed here)"
+else
+  echo "  [venv] none found — create one for the 72% router:"
+  echo "         python3 -m venv .venv && source .venv/bin/activate && pip install scikit-learn joblib"
+fi
+
+# --- free the port if a stale BRUM is already holding it (fixes 'Address already in use') ---
+if lsof -ti:"$SOV_SHIM_PORT" >/dev/null 2>&1; then
+  echo "  [port] $SOV_SHIM_PORT already in use — stopping the stale server first"
+  lsof -ti:"$SOV_SHIM_PORT" | xargs kill 2>/dev/null || true
+  sleep 1
+fi
+
 echo "=== BRUM ENGINE PREFLIGHT ==="
 python3 - <<'PY'
 import sys

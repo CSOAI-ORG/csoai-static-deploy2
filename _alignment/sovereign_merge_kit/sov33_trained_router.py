@@ -18,8 +18,11 @@ def _load():
     global _MODEL
     if _MODEL is None:
         import joblib
-        path=os.path.join(os.path.dirname(os.path.abspath(__file__)),"sov33_trained_router.joblib")
-        _MODEL=joblib.load(path)
+        d=os.path.dirname(os.path.abspath(__file__))
+        # prefer recalibrated v2 (confidence discriminates), fall back to v1
+        for fn in ("sov33_trained_router_v2.joblib","sov33_trained_router.joblib"):
+            p=os.path.join(d,fn)
+            if os.path.exists(p): _MODEL=joblib.load(p); break
     return _MODEL
 
 def route(prompt):
