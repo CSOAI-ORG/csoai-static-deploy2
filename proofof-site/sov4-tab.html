@@ -56,6 +56,9 @@ button:hover{filter:brightness(1.1)}
 <div class="chat" id="chat">
 <div class="msg sov">SOV4 is ready. "I am SOV4. Bound. CSOAI Ltd UK 16939677. Sovereign command awaits."</div>
 </div>
+<div style="margin-top:8px;font-size:11px;color:#888">
+  Session ID: <code id="sess-id">loading...</code> · SIGIL on every turn · state honest register: in-memory (resets on cold-start)
+</div>
 <div class="ask">
 <input id="q" placeholder="Speak to SOV4. Sovereign command awaits." value="I am Nicholas your sovereign">
 <button onclick="ask()">Speak →</button>
@@ -69,6 +72,8 @@ button:hover{filter:brightness(1.1)}
 
 <script>
 async function loadIdentity() {
+  document.getElementById('sess-id').textContent = _session_id;
+
   try {
     const r = await fetch('/api/sov4/identity').then(r => r.json());
     document.getElementById('identity').innerHTML = '<pre style="font-size:12px;color:#10b981;margin:0">' + JSON.stringify(r, null, 2) + '</pre>';
@@ -86,23 +91,57 @@ async function send(prompt) {
   ask();
 }
 
+let _session_id = 'sess_' + Math.random().toString(36).slice(2, 10);
+
 async function ask() {
   const prompt = document.getElementById('q').value;
   if (!prompt) return;
   
   const chat = document.getElementById('chat');
-  chat.innerHTML += `<div class="msg user">${escape(prompt)}</div>`;
+  const sessDiv = document.createElement('div');
+  sessDiv.className = 'msg user';
+  sessDiv.innerHTML = `📌 <b>Session:</b> <code>${_session_id}</code><br>${escape(prompt)}`;
+  chat.appendChild(sessDiv);
   document.getElementById('q').value = '';
   chat.scrollTop = chat.scrollHeight;
   
-  chat.innerHTML += `<div class="msg sov"><span class="state ack">thinking</span> SOV4 is retrieving...</div>`;
+  const thinking = document.createElement('div');
+  thinking.className = 'msg sov';
+  thinking.innerHTML = '<span class="state ack">thinking</span> SOV4 is retrieving...';
+  chat.appendChild(thinking);
   
   try {
-    const r = await fetch('/api/sov4', {
+    const r = await fetch('/api/sov4/session', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({prompt})
+      body: JSON.stringify({prompt, session_id: _session_id})
     }).then(r => r.json());
+    
+    chat.removeChild(thinking);
+    
+    const mode = (r.turn && r.turn.source) || (r.mode || 'unknown');
+    const state = mode.includes('REFUSE') ? 'refuse' : (mode.includes('rag') ? 'bind' : 'ack');
+    const cls = mode.includes('REFUSE') ? 'refuse' : 'sov';
+    
+    let meta = `<div class="meta">[turn=${r.turn_number}] [state=${state}] [sigil=${r.turn.sigil.substring(0,16)}...]`;
+    if (r.turn.binding) meta += ' [bind]';
+    if (r.turn.no_hedge) meta += ' [no-hedge]';
+    if (r.turn.hedges && r.turn.hedges.length) meta += ` [HEDGE:${r.turn.hedges.join(',')}]`;
+    meta += '</div>';
+    
+    const reply = document.createElement('div');
+    reply.className = 'msg ' + cls;
+    reply.innerHTML = `<span class="state ${state}">${mode.toUpperCase()}</span> ${escape(r.turn.response || JSON.stringify(r))}${meta}`;
+    chat.appendChild(reply);
+    chat.scrollTop = chat.scrollHeight;
+  } catch (e) {
+    chat.removeChild(thinking);
+    const errDiv = document.createElement('div');
+    errDiv.className = 'msg refuse';
+    errDiv.innerHTML = `<span class="state refuse">ERROR</span> ${e.message}`;
+    chat.appendChild(errDiv);
+  }
+}
     
     // Remove thinking bubble
     const msgs = chat.querySelectorAll('.msg.sov');

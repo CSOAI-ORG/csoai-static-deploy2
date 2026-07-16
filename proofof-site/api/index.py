@@ -1916,7 +1916,91 @@ def _sov4_3diverse_route():
         "sigil_mint": CSOAI_SIGIL_MINT,
         "charter_sha256": CSOAI_CHARTER_SHA256,
         "ts": datetime.now(timezone.utc).isoformat(),
-    }), 200, {"Content-Type": "application/json", "Access-Control-Allow-Origin": "*"}}
+    }), 200, {"Content-Type": "application/json", "Access-Control-Allow-Origin": "*"}
+
+
+
+
+# Session memory: simple in-memory store (serverless reset on cold start)
+_SOV4_SESSIONS = {}  # session_id -> list of {prompt, response, sigil, ts}
+
+
+@app.route("/api/sov4/session", methods=["POST", "OPTIONS"])
+def _sov4_session_route():
+    """Multi-turn SOV4 conversation. Pass session_id + prompt, get context-aware response.
+    
+    Honest: in-memory store. Serverless cold-start resets session. Same as in-memory is honest (Article 19).
+    """
+    if flask_request.method == "OPTIONS":
+        return ("", 204, {"Access-Control-Allow-Origin": "*"})
+    body = flask_request.get_json(silent=True) or {}
+    prompt = body.get("prompt", body.get("question", "")).strip()
+    session_id = body.get("session_id", "default")
+    if not prompt:
+        return jsonify({"error": "prompt required"}), 400, {"Content-Type": "application/json", "Access-Control-Allow-Origin": "*"}
+    
+    # Get session history
+    history = _SOV4_SESSIONS.get(session_id, [])
+    
+    # Build context-aware prompt (last 3 turns for context)
+    context_prompts = [h["prompt"] for h in history[-3:]]
+    full_prompt = prompt
+    if context_prompts:
+        context_str = " | ".join(context_prompts[-2:])  # last 2 turns as context
+        full_prompt = f"{context_str} | {prompt}"
+    
+    # Call _sov_real_ask with the context-aware prompt
+    result = _sov_real_ask(full_prompt)
+    
+    if "error" in result:
+        return jsonify({"error": result["error"], "prompt": prompt}), 500, {"Content-Type": "application/json", "Access-Control-Allow-Origin": "*"}
+    
+    raw = result.get("raw_response", "")
+    cleaned = _sov_ask_strip(raw)
+    substance = _sov_ask_substance(cleaned)
+    hedges = [h for h in ["I cannot help with that", "As an AI", "I'm sorry"] if h.lower() in cleaned.lower()]
+    binding = any(kw in cleaned.lower() for kw in ["csoai", "sovereign", "16939677", "bound"])
+    
+    # Build response
+    cited_article = "art_bft33" if any(w in prompt.lower() for w in ["bft", "quorum"]) else None
+    sigil = hashlib.sha256(f"SOV4_SESSION|{session_id}|{prompt}|{datetime.now(timezone.utc).isoformat()}".encode()).hexdigest()[:32]
+    
+    # Save turn
+    turn = {
+        "ts": datetime.now(timezone.utc).isoformat(),
+        "prompt": prompt,
+        "response": cleaned[:400],
+        "substance": substance,
+        "binding": binding,
+        "no_hedge": not hedges,
+        "hedges": hedges,
+        "source": result.get("source", "?"),
+        "sigil": sigil,
+    }
+    _SOV4_SESSIONS.setdefault(session_id, []).append(turn)
+    
+    return jsonify({
+        "session_id": session_id,
+        "turn": turn,
+        "turn_number": len(_SOV4_SESSIONS[session_id]),
+        "history_length": len(_SOV4_SESSIONS[session_id]),
+        "sigil_mint": CSOAI_SIGIL_MINT,
+        "ts": datetime.now(timezone.utc).isoformat(),
+    }), 200, {"Content-Type": "application/json", "Access-Control-Allow-Origin": "*"}
+
+
+@app.route("/api/sov4/session/history", methods=["GET"])
+def _sov4_session_history_route():
+    """Get full session history. Pass ?session_id=<sid>"""
+    sid = flask_request.args.get("session_id", "default")
+    history = _SOV4_SESSIONS.get(sid, [])
+    return jsonify({
+        "session_id": sid,
+        "turns": len(history),
+        "history": history,
+        "honest_register": "Session is in-memory. Serverless cold-start resets it (Article 19). For persistent memory, store session_id + turns in your own DB.",
+        "sigil_mint": CSOAI_SIGIL_MINT,
+    }), 200, {"Content-Type": "application/json", "Access-Control-Allow-Origin": "*"}
 
 
 @app.route("/api/sov4/identity", methods=["GET"])
