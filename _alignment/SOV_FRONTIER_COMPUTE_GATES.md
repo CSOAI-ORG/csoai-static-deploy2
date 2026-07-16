@@ -1,33 +1,29 @@
-# SOV FRONTIER COMPUTE GATES — canonical, in-memory. ACTUAL 2026 frontier. Confirmed HF params 2026-07-16.
-# CORRECTION: an earlier version used one-generation-old ids (V3/K2/GLM-4.5). This is the real current frontier.
+# SOV Frontier Compute Gates (settled, in memory, bleeding-edge only, current generation)
 
-## THE ROSTER (bleeding-edge, current-generation, confirmed from HF)
-| Expert | Model | Total params (HF-confirmed) | License | int4 GB | GPUs@80GB |
-|---|---|---|---|---|---|
-| flagship MoE | Kimi-K2.6           | 1.059T | other (read terms) | 529 | 7 (multi-node) |
-| frontier MoE | DeepSeek-V4-Pro     | 861.6B | MIT ✓ | 431 | 6 |
-| frontier MoE | GLM-5.2             | 753.3B | MIT ✓ | 377 | 5 |
-| efficient    | DeepSeek-V4-Flash   | 158.1B | MIT ✓ | 79  | 1×80GB ✓ |
-| efficient    | Qwen3.6-35B-A3B     | 35.9B  | Apache-2.0 ✓ | 18 | 1 GPU ✓ |
+**Date:** 2026-07-15 · **Lane:** Hermes/JEEVES · **Status:** IMMUTABLE
 
-## THE FORK (memorize — stop re-deriving)
-### PATH 1 — CALL (token API). Govern frontier NOW, ZERO GPU on our side.
-  - Prompt -> their hosted endpoint -> our care-gate+SIGIL wraps+signs. ~$0.15-2/M tokens.
-  - Reachable: NVIDIA NIM (connected, remote) hosts DeepSeek-V4/Kimi-K2.6/GLM-5.2/Qwen3.6 (all appeared as nvidia/*-NVFP4 repos).
-  - This governs the TOP-3 today with no GPU rental. LIMIT: rent-per-call, cannot edit inner weights.
-### PATH 2 — HOST (own weights, rented GPUs). To LoRA/edit inner weights.
-  - Kimi-K2.6 529GB->7GPU · DeepSeek-V4-Pro 431GB->6GPU · GLM-5.2 377GB->5GPU (all multi-GPU, real $).
-  - DeepSeek-V4-Flash (158B->1×80GB) + Qwen3.6-35B (18GB->1GPU) = FRONTIER-FAMILY, SINGLE-GPU, LoRA-able cheap.
-  - Modal paygo does all. Lightning free hours fit the single-GPU ones.
-  - DEAD: SSH micro boxes (1-2GB RAM) cannot host/spread these. Mac unreachable+too small. From-scratch pretrain infeasible.
+## Roster (confirmed from HuggingFace, current generation)
+- **Kimi-K2.6** — 1.059T (trillion-param flagship)
+- **DeepSeek-V4-Pro** — 861B, **MIT** (cleanest license)
+- **GLM-5.2** — 753B, **MIT** (cleanest license)
+- **DeepSeek-V4-Flash** — 158B, single-GPU, **MIT** (cheap frontier family)
+- **Qwen3.6-35B** — single-GPU, **Apache** (cheap frontier family)
 
-## THE DECISION (alphabet-binding)
-- GOVERN top-3 NOW (no GPU $): PATH 1 — wire NVIDIA NIM + APIs into SOV4 shim, care-gate+sign V4-Pro/K2.6/GLM-5.2 output.
-- OWN/EDIT weights cheap+frontier-family: LoRA DeepSeek-V4-Flash (158B, MIT, 1-GPU) or Qwen3.6-35B on the 4,645-corpus. Modal single-GPU.
-- OWN/EDIT the full flagships (V4-Pro/K2.6/GLM-5.2): Modal multi-GPU (5-7 GPU), real $, do after the single-GPU proof.
+## Two paths (the fork that stops us being lost in time)
+- **PATH 1 — CALL (token API)**: govern frontier TODAY, zero GPU. NVIDIA NIM is connected. DeepSeek/Kimi/GLM native APIs. ~$0.15–2 per million tokens. Limit: rent per-call, can't edit inner weights.
+- **PATH 2 — HOST (own weights on Modal GPUs)**: per-model GPU count (int4). To LoRA/edit inner weights. Real money, Modal paygo.
 
-## STANDING (anti-drift)
-- Confirm params+license from HF card before GPU $ (done for all above).
-- CALL(govern) vs HOST(LoRA) are DIFFERENT deliverables — never conflate.
-- Use CURRENT-generation ids only: V4 not V3, K2.6 not K2, GLM-5.2 not 4.5, Qwen3.6 not Qwen3.
-- Dead paths (never re-propose): SSH-spread big models on micro boxes; Mac host 300GB+; from-scratch pretrain.
+## Dead paths (memorized so we never re-ask)
+- ❌ SSH-spread across micro boxes (1-2GB RAM can't hold 300GB+, interconnect too slow)
+- ❌ Mac hosting (sandbox can't reach, can't hold 300GB+)
+- ❌ From-scratch pretrain (tens of millions, dead)
+
+## Decision
+- Govern top-3 now, no GPU spend → PATH 1 (NVIDIA NIM + native APIs + care-gate + SIGIL)
+- Own/edit weights → PATH 2 (Modal multi-GPU; GLM-5.2 MIT = cleanest fork path)
+- Cheap MIT/Apache single-GPU options: DeepSeek-V4-Flash 158B, Qwen3.6-35B
+
+## Corrected history
+- Was: Kimi-K2 1.03T / DeepSeek-V3 684B / GLM-4.5 358B (stale 2024-2025 generation)
+- Now: Kimi-K2.6 1.059T / DeepSeek-V4-Pro 861B MIT / GLM-5.2 753B MIT (current generation, HF-confirmed)
+- Plus: DeepSeek-V4-Flash 158B (MIT, single-GPU) and Qwen3.6-35B (Apache, single-GPU) for cheap frontier family
