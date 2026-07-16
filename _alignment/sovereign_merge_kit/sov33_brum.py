@@ -32,9 +32,9 @@ def _route(request):
         except Exception:
             pass
     try:
-        import sov33_trained_router as tr     # TF-IDF default (in-domain 0.72-0.82, instant everywhere)
-        r = tr.route(request)
-        return r["node"], r["confidence"], "trained_router"
+        import sov33_hybrid_router as hr     # hard-prior (security/care) + embed/TF-IDF nuance; 0.875 balanced
+        r = hr.route(request)
+        return r["node"], r["confidence"], r.get("route_method","hybrid")
     except Exception:
         try:
             import sov33_venturi_router as vr  # keyword, offline-safe
