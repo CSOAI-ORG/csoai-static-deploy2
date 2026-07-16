@@ -38,7 +38,7 @@ def drive(request, spread=False):
     out = {"node": node, "confidence": conf, "route_method": method, "spread_nodes": None,
            "note": "BRUM produces/routes; governance (care+SIGIL) gates the produced answer next"}
     # low-confidence -> spread (escalate to multiple brains rather than commit to a shaky route)
-    if spread or (conf is not None and conf < 0.5):
+    if spread or (conf is not None and conf < 0.8):  # 0.8 = measured reliability cliff (>=0.8 acc~1.0, <0.4 acc~0.32)
         out["spread_nodes"] = ["defense", "compliance", "intuition"]
         out["note"] += " | low-confidence or spread=True -> escalate across brains (decorrelated), do NOT commit one"
     return out
