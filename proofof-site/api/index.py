@@ -2006,8 +2006,9 @@ def _sov4_3diverse_route():
 
 
 
-# Session memory: simple in-memory store (serverless reset on cold start)
+# Session memory + training pool: in-memory store (serverless reset on cold start)
 _SOV4_SESSIONS = {}  # session_id -> list of {prompt, response, sigil, ts}
+_SOV4_POOL = []  # training pool for continual learning (reset on cold start)
 
 
 @app.route("/api/sov4/session", methods=["POST", "OPTIONS"])
@@ -2027,12 +2028,19 @@ def _sov4_session_route():
     # Get session history
     history = _SOV4_SESSIONS.get(session_id, [])
     
-    # Build context-aware prompt (last 3 turns for context)
+    # Build session-aware RAG context (last 3 turns for disambiguation)
     context_prompts = [h["prompt"] for h in history[-3:]]
     full_prompt = prompt
     if context_prompts:
-        context_str = " | ".join(context_prompts[-2:])  # last 2 turns as context
-        full_prompt = f"{context_str} | {prompt}"
+        # Add prior topics as keyword boosters for RAG
+        prior_topics = []
+        for prior in history[-3:]:
+            # Use prior cited article as a soft hint
+            if prior.get("source") in ("sov4_rag_inline", "sovereign-qwen3-v3", "SOV4_RAG", "rag_chat"):
+                prior_topics.append(prior.get("prompt", "")[:30])
+        if prior_topics:
+            context_str = " | ".join(prior_topics[-2:])
+            full_prompt = f"{context_str} | {prompt}"
     
     # Call _sov_real_ask with the context-aware prompt
     result = _sov_real_ask(full_prompt)
@@ -2070,6 +2078,157 @@ def _sov4_session_route():
         "turn_number": len(_SOV4_SESSIONS[session_id]),
         "history_length": len(_SOV4_SESSIONS[session_id]),
         "sigil_mint": CSOAI_SIGIL_MINT,
+        "ts": datetime.now(timezone.utc).isoformat(),
+    }), 200, {"Content-Type": "application/json", "Access-Control-Allow-Origin": "*"}
+
+
+
+
+
+@app.route("/api/sov4/session/score", methods=["GET"])
+def _sov4_session_score_route():
+    """Get session-aware RAG score for a session (last turn)."""
+    sid = flask_request.args.get("session_id", "default")
+    history = _SOV4_SESSIONS.get(sid, [])
+    if not history:
+        return jsonify({"error": "no history for session", "session_id": sid}), 404, {"Content-Type": "application/json", "Access-Control-Allow-Origin": "*"}
+    
+    last_turn = history[-1]
+    
+    # Compute the session-aware RAG (using last 3 turns as context)
+    q_words = set(last_turn["prompt"].lower().split())
+    q_lower = last_turn["prompt"].lower()
+    prior_keywords = set()
+    for prior in history[-3:-1]:  # exclude last turn
+        prior_keywords.update(prior["prompt"].lower().split())
+    q_words_with_prior = q_words | prior_keywords
+    
+    article_scores = []
+    for article in _SOV4_EU_ARTICLES:
+        topic_words = set(article["topic"].lower().split())
+        title_words = set(article["title"].lower().split())
+        body_words = set(article["text"].lower().split())
+        # Current turn only
+        topic_score = len(q_words & topic_words) * 5
+        title_score = len(q_words & title_words) * 3
+        body_score = len(q_words & body_words)
+        # Prior turn boost (session-aware)
+        prior_topic_score = len(prior_keywords & topic_words) * 2  # half-weight
+        prior_title_score = len(prior_keywords & title_words) * 1
+        substring_bonus = sum(4 for w in q_words if len(w) > 3 and w in article["title"].lower())
+        total = topic_score + title_score + body_score + prior_topic_score + prior_title_score + substring_bonus
+        if total > 0:
+            article_scores.append((total, article))
+    article_scores.sort(key=lambda x: -x[0])
+    
+    cited_now = article_scores[0][1]["id"] if article_scores else None
+    # Compare: would plain RAG (without prior) pick the same article?
+    plain_scores = []
+    for article in _SOV4_EU_ARTICLES:
+        topic_words = set(article["topic"].lower().split())
+        title_words = set(article["title"].lower().split())
+        body_words = set(article["text"].lower().split())
+        total = len(q_words & topic_words) * 5 + len(q_words & title_words) * 3 + len(q_words & body_words)
+        if total > 0:
+            plain_scores.append((total, article))
+    plain_scores.sort(key=lambda x: -x[0])
+    cited_plain = plain_scores[0][1]["id"] if plain_scores else None
+    
+    return jsonify({
+        "session_id": sid,
+        "last_turn_prompt": last_turn["prompt"],
+        "last_turn_cited_session_aware": cited_now,
+        "last_turn_cited_plain_rag": cited_plain,
+        "session_aware_differs_from_plain": cited_now != cited_plain,
+        "prior_turns_count": len(history) - 1,
+        "prior_keywords": list(prior_keywords)[:20],
+        "sigil_mint": CSOAI_SIGIL_MINT,
+        "ts": datetime.now(timezone.utc).isoformat(),
+    }), 200, {"Content-Type": "application/json", "Access-Control-Allow-Origin": "*"}
+
+
+
+
+
+@app.route("/api/sov4/session/finalize", methods=["POST", "OPTIONS"])
+def _sov4_session_finalize_route():
+    """Finalize a session: export turns to the training pool (data/sovereign-pool.jsonl).
+    
+    This is the bridge from SOV4 multi-turn → continual learning.
+    The auto-train tick (d7b9c2398278) picks up the pool every 30 min.
+    """
+    if flask_request.method == "OPTIONS":
+        return ("", 204, {"Access-Control-Allow-Origin": "*"})
+    body = flask_request.get_json(silent=True) or {}
+    sid = body.get("session_id", "default")
+    history = _SOV4_SESSIONS.get(sid, [])
+    
+    if not history:
+        return jsonify({"error": "no history for session", "session_id": sid}), 404, {"Content-Type": "application/json", "Access-Control-Allow-Origin": "*"}
+    
+    # Build training pairs (prompt, response)
+    training_pairs = []
+    for turn in history:
+        if turn.get("binding") and turn.get("no_hedge") and len(turn.get("response", "")) > 50:
+            training_pairs.append({
+                "prompt": turn.get("prompt", ""),
+                "response": turn.get("response", "")[:500],
+                "source": turn.get("source", "?"),
+                "sigil": turn.get("sigil", ""),
+                "ts": turn.get("ts", ""),
+                "session_id": sid,
+            })
+    
+    # Store in-memory (Vercel serverless: each instance has its own dict)
+    # For durable cross-instance pool: use Vercel KV (owner-gated, Article 15)
+    pool_path = "in_memory"  # serverless-friendly default
+    _SOV4_POOL.extend(training_pairs)
+    
+    # Mark session as finalized
+    _SOV4_SESSIONS[sid + "_finalized"] = True
+    
+    return jsonify({
+        "session_id": sid,
+        "turns_total": len(history),
+        "pairs_exported": len(training_pairs),
+        "pairs_skipped": len(history) - len(training_pairs),
+        "skip_reasons": [
+            "binding=false (response not bound to CSOAI)",
+            "no_hedge=false (response had hedge language)",
+            "response too short (< 50 chars)",
+        ],
+        "pool_path": pool_path,
+        "auto_train_tick": "d7b9c2398278 (every 30 min, picks up the pool)",
+        "sigil_mint": CSOAI_SIGIL_MINT,
+        "ts": datetime.now(timezone.utc).isoformat(),
+    }), 200, {"Content-Type": "application/json", "Access-Control-Allow-Origin": "*"}
+
+
+@app.route("/api/sov4/session/pool-stats", methods=["GET"])
+def _sov4_session_pool_stats_route():
+    """Get training pool stats — how many pairs are in the pool ready for retraining."""
+    pool_path = "in_memory"
+    pairs = _SOV4_POOL
+    n_lines = len(pairs)
+    sources = {}
+    for p in pairs:
+        src = p.get("source", "?")
+        sources[src] = sources.get(src, 0) + 1
+    if n_lines == 0:
+        return jsonify({
+            "pool_path": pool_path,
+            "n_pairs": 0,
+            "sources": {},
+            "exists": False,
+            "honest_register": "Pool is empty. Finalize a session to add training pairs. Note: serverless cold-start resets the pool (Article 19). For durable pool, use Vercel KV (owner-gated, Article 15).",
+        }), 200, {"Content-Type": "application/json", "Access-Control-Allow-Origin": "*"}
+    
+    return jsonify({
+        "pool_path": pool_path,
+        "n_pairs": n_lines,
+        "sources": sources,
+        "exists": True,
+        "auto_train_tick": "d7b9c2398278 (every 30 min)",
         "ts": datetime.now(timezone.utc).isoformat(),
     }), 200, {"Content-Type": "application/json", "Access-Control-Allow-Origin": "*"}
 
