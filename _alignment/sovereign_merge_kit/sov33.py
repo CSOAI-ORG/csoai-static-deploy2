@@ -2503,6 +2503,22 @@ def capability_difficulty_route(**kwargs):
     except Exception as e:
         return {'capability':'difficulty-route','error':str(e)[:160]}
 
+
+def capability_antidrift(**kwargs):
+    """Anti-drift gate: governs the AI's own advice — blocks unverified yes, fake-done, re-asked orders."""
+    try:
+        import importlib; g=importlib.import_module('sov33_antidrift_gate')
+        return {'capability':'antidrift','selftest':g.selftest()}
+    except Exception as e:
+        return {'capability':'antidrift','error':str(e)[:160]}
+
+def capability_antipatterns(**kwargs):
+    """Anti-pattern catalogue: 10 documented AI poisons inverted into PDCA-stage governance rules."""
+    try:
+        import importlib; c=importlib.import_module('sov33_antipattern_catalogue')
+        return {'capability':'antipatterns','frameworks':c.as_frameworks(),'selftest':c.selftest()}
+    except Exception as e:
+        return {'capability':'antipatterns','error':str(e)[:160]}
 CAPABILITIES = {
     'divergence': capability_divergence_sim,
     'divergence-sim': capability_divergence_sim,
@@ -2581,6 +2597,8 @@ CAPABILITIES = {
     'learn-stage': capability_learn_stage,
     'check-existing': capability_check_existing,
     'difficulty-route': capability_difficulty_route,
+    'antidrift': capability_antidrift,
+    'antipatterns': capability_antipatterns,
     'tensor-compress': capability_tensor_compress,
     'param-accounting': capability_param_accounting,
     'venturi-stream': capability_venturi_stream,
