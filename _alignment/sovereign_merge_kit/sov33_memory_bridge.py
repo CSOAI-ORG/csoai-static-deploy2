@@ -23,7 +23,16 @@ from pathlib import Path
 from datetime import datetime, timezone
 
 
-MEMORY_FILE = Path.home() / '.sovereign' / 'sovereign_memory.jsonl'
+# Honor SOV33_SIGIL_DIR so the WRITER and the entrypoint READER (sov33.py) agree on ONE store.
+# Fall back to ~/.sovereign only when the env is unset (matches sov33.py's own fallback order).
+import os as _os
+_MEM_DIR = Path(_os.environ.get('SOV33_SIGIL_DIR') or (Path.home() / '.sovereign'))
+try:
+    _MEM_DIR.mkdir(parents=True, exist_ok=True)
+except Exception:
+    _MEM_DIR = Path(_os.environ.get('TMPDIR', '/tmp')) / 'sov33_sigil'
+    _MEM_DIR.mkdir(parents=True, exist_ok=True)
+MEMORY_FILE = _MEM_DIR / 'sovereign_memory.jsonl'
 
 
 def load_memory(limit=None):
