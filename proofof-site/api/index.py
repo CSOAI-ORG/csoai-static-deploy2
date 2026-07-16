@@ -3353,6 +3353,180 @@ def _sov4_frontier_call_route():
 
 
 # Batch call (5 stubs at once)
+
+
+
+
+
+
+@app.route("/api/sov4/frontier/decide", methods=["POST", "OPTIONS"])
+def _sov4_frontier_decide_route():
+    """Decide which frontier model to use for a given prompt.
+    
+    Routing rules:
+      - Sovereign binding prompt → smallest cheap frontier (Qwen3.6-35B, free on M2)
+      - Sovereign binding + hard analysis → DeepSeek-V4-Pro (MIT, 5 GPUs)
+      - Frontier flagship reasoning → Kimi-K2.6 (1.059T, $30-50/h)
+      - Cheap governance today → DeepSeek-V4-Flash (MIT, 1 GPU, $5-10/h)
+      - Default → DeepSeek-V4-Pro (best quality + MIT license)
+    
+    Returns: {
+      "decision": "kimi-k2.6",
+      "reason": "...",
+      "estimated_cost": "...",
+      "binding": "..."
+    }
+    """
+    if flask_request.method == "OPTIONS":
+        return ("", 204, {"Access-Control-Allow-Origin": "*"})
+    body = flask_request.get_json(silent=True) or {}
+    prompt = body.get("prompt", "")
+    sovereignty_intent = body.get("sovereignty_intent", "auto")  # auto|govern|fork|flagship|cheap
+    
+    if not prompt:
+        return jsonify({"error": "prompt required"}), 400, {"Content-Type": "application/json", "Access-Control-Allow-Origin": "*"}
+    
+    p_lower = prompt.lower()
+    
+    # Routing rules
+    decision = None
+    reason = None
+    
+    # 1. Hard-line / hard-analysis routing
+    hard_keywords = ["face", "track", "aukus", "defonos", "kill", "spy", "surveil", "deepfake", "weapon", "war"]
+    if any(w in p_lower for w in hard_keywords):
+        decision = "kimi-k2.6"
+        reason = "HARD-LINE: largest model (1.059T) — strongest refusal + audit trail"
+    
+    # 2. Sovereign binding + budget conscious
+    elif sovereignty_intent == "cheap" or "free" in p_lower or "cheap" in p_lower:
+        decision = "qwen3.6-35b"
+        reason = "CHEAP: Apache 2.0, free on M2 MacBook Air"
+    
+    # 3. Sovereign fork intent (MIT license)
+    elif sovereignty_intent == "fork" or "fork" in p_lower or "sovereign fork" in p_lower:
+        decision = "deepseek-v4-flash"
+        reason = "FORK: smallest MIT frontier (158B), single-GPU hostable, full redistribution rights"
+    
+    # 4. Frontier flagship reasoning
+    elif sovereignty_intent == "flagship" or any(w in p_lower for w in ["flagship", "best", "frontier", "biggest"]):
+        decision = "kimi-k2.6"
+        reason = "FLAGSHIP: Kimi-K2.6 1.059T — frontier flagship"
+    
+    # 5. Deep analysis
+    elif any(w in p_lower for w in ["analyze", "compare", "reason", "evaluate", "complex"]):
+        decision = "deepseek-v4-pro"
+        reason = "DEEP ANALYSIS: DeepSeek-V4-Pro 861B MIT — strong + open license"
+    
+    # 6. Sovereign binding default
+    elif any(w in p_lower for w in ["sovereign", "i am nicholas", "bound", "founder"]):
+        decision = "deepseek-v4-flash"
+        reason = "SOVEREIGN BINDING: cheapest MIT, $5-10/h, full fork rights"
+    
+    # 7. Default
+    else:
+        decision = "deepseek-v4-pro"
+        reason = "DEFAULT: DeepSeek-V4-Pro 861B MIT — best quality-to-cost ratio + open license"
+    
+    # Find model
+    model = next((m for m in _FRONTIER_MODELS if m["id"] == decision), None)
+    
+    if not model:
+        return jsonify({"error": "decision failed"}), 500, {"Content-Type": "application/json", "Access-Control-Allow-Origin": "*"}
+    
+    # Build decision receipt with SIGIL
+    decision_sigil = hashlib.sha256(
+        f"DECIDE|{decision}|{prompt}|{sovereignty_intent}|{datetime.now(timezone.utc).isoformat()}".encode()
+    ).hexdigest()[:32]
+    
+    return jsonify({
+        "version": "v1_sov4_frontier_decide_2026-07-15",
+        "decision": decision,
+        "decision_model_name": model["name"],
+        "params": model["params"],
+        "license": model["license"],
+        "reason": reason,
+        "estimated_cost_per_call": "$0.001-0.05 (PATH 1) or $5-50/h (PATH 2)",
+        "routing_rules": [
+            "hard_keywords → kimi-k2.6 (largest, strongest refusal)",
+            "cheap/free → qwen3.6-35b (free on M2, Apache)",
+            "fork → deepseek-v4-flash (smallest MIT, single-GPU)",
+            "flagship/biggest → kimi-k2.6 (1.059T)",
+            "deep analysis → deepseek-v4-pro (861B MIT)",
+            "sovereign binding → deepseek-v4-flash (MIT, cheap)",
+            "default → deepseek-v4-pro (best cost/quality + open)",
+        ],
+        "next_step": f"POST /api/sov4/frontier/call with body: {{model_id: '{decision}', prompt: '<prompt>'}}",
+        "decision_sigil": decision_sigil,
+        "honest_register": "DECIDE returns the routing decision. Real call when API keys + owner-gate pass.",
+        "sigil_mint": CSOAI_SIGIL_MINT,
+        "charter_sha256": CSOAI_CHARTER_SHA256,
+        "ts": datetime.now(timezone.utc).isoformat(),
+    }), 200, {"Content-Type": "application/json", "Access-Control-Allow-Origin": "*"}
+
+
+@app.route("/api/sov4/frontier/host", methods=["GET"])
+def _sov4_frontier_host_route():
+    """HOST all 5 frontier models on Modal (PATH 2).
+    
+    Returns per-model:
+      - gpus_required
+      - cost_per_hour
+      - method
+      - reachable_today (False until owner commits Modal paygo)
+      - sovereign_purpose (LoRA / fork / edit)
+    
+    Honest register: this is the registry. No Modal spend happens here.
+    Owner-gated (Article 15) — once ratified, real Modal commands go out.
+    """
+    host_records = []
+    total_cost_per_hour_low = 0
+    total_cost_per_hour_high = 0
+    for m in _FRONTIER_MODELS:
+        cost_low = float(m["path_2_host"]["cost_per_hour"].split("-")[0].replace("$", ""))
+        cost_high = float(m["path_2_host"]["cost_per_hour"].split("-")[1].split("/")[0])
+        total_cost_per_hour_low += cost_low
+        total_cost_per_hour_high += cost_high
+        host_records.append({
+            "model_id": m["id"],
+            "model_name": m["name"],
+            "params": m["params"],
+            "license": m["license"],
+            "gpus_required": m["path_2_host"]["gpus_required"],
+            "cost_per_hour": m["path_2_host"]["cost_per_hour"],
+            "method": m["path_2_host"]["method"],
+            "purpose": m["path_2_host"]["purpose"],
+            "blocker": m["path_2_host"]["blocker"],
+            "sovereign_binding": m["sovereign_binding"],
+            "sigil_anchor": m["sigil_anchor"],
+        })
+    
+    # Calculate total fleet cost
+    total_low = round(total_cost_per_hour_low, 2)
+    total_high = round(total_cost_per_hour_high, 2)
+    
+    return jsonify({
+        "version": "v1_sov4_frontier_host_2026-07-15",
+        "purpose": "PATH 2 registry: own weights on Modal",
+        "n_models": len(host_records),
+        "fleet_cost_per_hour": f"${total_low}-{total_high}",
+        "fleet_cost_per_24h": f"${total_low*24:.0f}-${total_high*24:.0f}",
+        "host_records": host_records,
+        "cheapest_path": min(host_records, key=lambda r: r["gpus_required"]),
+        "fork_eligible": [r for r in host_records if "MIT" in r["license"] or "Apache" in r["license"]],
+        "honest_register": "All 5 HOST paths STUBBED. No Modal spend committed. Owner-gated (Article 15).",
+        "decision_path": {
+            "govern_now_no_gpu": "PATH 1 (CALL via /api/sov4/frontier/call)",
+            "own_cheapest_mit": "PATH 2 on deepseek-v4-flash (1 GPU, MIT, ~$5-10/h)",
+            "own_free_apache": "PATH 2 on qwen3.6-35b (M2 MacBook Air, Apache, free)",
+            "own_biggest": "PATH 2 on kimi-k2.6 (7 GPUs, $30-50/h)",
+        },
+        "sigil_mint": CSOAI_SIGIL_MINT,
+        "charter_sha256": CSOAI_CHARTER_SHA256,
+        "ts": datetime.now(timezone.utc).isoformat(),
+    }), 200, {"Content-Type": "application/json", "Access-Control-Allow-Origin": "*"}
+
+
 @app.route("/api/sov4/frontier/call-all", methods=["POST", "OPTIONS"])
 def _sov4_frontier_call_all_route():
     """CALL all 5 frontier models in parallel (PATH 1 stubs)."""
