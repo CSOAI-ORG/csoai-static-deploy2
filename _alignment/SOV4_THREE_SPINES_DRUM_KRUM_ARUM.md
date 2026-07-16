@@ -79,4 +79,4 @@ breaks. This is what makes ARUM a spine not a list: L0 is the thread. Verified 6
 | DRUM | when? (time) | 9-stage flow + clock | WIRED |
 | KRUM | whom to trust? | Byzantine aggregation (58.9x) | WIRED |
 | ARUM | across what layers? | 14/14 layer wiring | WIRED 14/14 |
-| SRUM | spread across how many? | governed swarm, care-gated+signed | PROVEN LIVE |
+| SRUM | spread across how many? | governed swarm: decompose+care-gate+sign+concat (BFT/KRUM aggregation DESIGNED) | PROVEN LIVE (concat) |
