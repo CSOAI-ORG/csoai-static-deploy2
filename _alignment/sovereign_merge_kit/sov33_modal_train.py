@@ -1,69 +1,164 @@
-#!/usr/bin/env python3
-"""sov33_modal_train.py — fine-tune SOV's OWN weights on the 113 distilled pairs, on a Modal GPU.
-
-WHAT THIS IS (honest): a real LoRA fine-tune of a SMALL open base (Qwen2.5-0.5B/1.5B) on the
-verified 113-pair sovereign distillation corpus. It produces SOV's OWN adapter weights — the
-sovereign 'voice' distilled from the 70B teacher, carrying the governance/citation style.
-
-WHAT THIS IS NOT: this does NOT train a 1.6T model. Training a T-scale model from scratch is
-infeasible (hundreds of $M compute). The honest T path is SEPARATE: route/serve a real open
-1.6T base (DeepSeek V4, funded) as the CORE brain, and wrap it in SOV governance. This script
-makes the SMALL sovereign student; the T-core is a serving/routing choice, not a training one.
-
-RUN (owner, ~£ pennies-to-a-few-pounds on Modal):
-  pip install modal && modal token new         # owner sets token (once)
-  modal run sov33_modal_train.py               # dispatches the GPU job, downloads adapter
 """
-import os
+sov33_modal_train.py — Push identity retrain to Modal GPU (bypasses MPS leak).
 
-try:
-    import modal
-except ImportError:
-    modal = None
+MPS dies at step 45/150 with semaphore leak. Modal T4 has CUDA, runs full 150 steps.
 
-STUB = modal.App("sov33-sovereign-train") if modal else None
-DATA = os.environ.get("SOV_DATA", "expert_data/merged_corpus.jsonl")   # merged local corpus (1289 rows); override via SOV_DATA
-BASE = os.environ.get("SOV_BASE", "Qwen/Qwen2.5-0.5B-Instruct")
+Run: modal run sov33_modal_train.py
+"""
+import os, sys, json, time
+os.environ.pop('PYTHONPATH', None)
 
-if modal:
-    # PINNED to a known-good stack — latest trl(1.8)/transformers(5.x) changed SFTConfig and broke the run.
-    image = (modal.Image.debian_slim()
-             .pip_install("torch==2.3.1","transformers==4.44.2","trl==0.9.6","peft==0.12.0",
-                          "datasets==2.20.0","accelerate==0.33.0","bitsandbytes==0.43.1","rich"))  # trl 0.9.6 needs rich
+import modal
 
-    @STUB.function(gpu="T4", image=image, timeout=3600)
-    def train(pairs: list, base: str):     # base passed EXPLICITLY (env vars don't reach Modal containers)
-        import torch, json, tempfile
-        from datasets import Dataset
-        from transformers import AutoModelForCausalLM, AutoTokenizer
-        from peft import LoraConfig, get_peft_model
-        from trl import SFTConfig, SFTTrainer
-        print(f"[remote] training on base={base}")
-        tok = AutoTokenizer.from_pretrained(base); tok.pad_token = tok.pad_token or tok.eos_token
-        def fmt(r): return {"text": f"<|user|>\n{r['instruction']}\n<|assistant|>\n{r['response']}"}
-        ds = Dataset.from_list([fmt(p) for p in pairs])
-        model = AutoModelForCausalLM.from_pretrained(base, torch_dtype=torch.float16, device_map="auto")
-        model = get_peft_model(model, LoraConfig(r=16, lora_alpha=32, target_modules=["q_proj","k_proj","v_proj","o_proj"], lora_dropout=0.05, task_type="CAUSAL_LM"))
-        cfg = SFTConfig(output_dir="/tmp/sov_out", per_device_train_batch_size=2, gradient_accumulation_steps=4,
-                        num_train_epochs=3, learning_rate=2e-4, fp16=True, max_seq_length=1024, logging_steps=5,
-                        dataset_text_field="text", report_to=[])   # tell SFTTrainer which column to tokenize (fixes KeyError(None))
-        tr = SFTTrainer(model=model, train_dataset=ds, args=cfg); tr.train()
-        model.save_pretrained("/tmp/sov_out"); 
-        import io, base64, tarfile
-        buf = io.BytesIO()
-        with tarfile.open(fileobj=buf, mode="w:gz") as t: t.add("/tmp/sov_out", arcname="sov_adapter")
-        return base64.b64encode(buf.getvalue()).decode()
+app = modal.App("sov33-identity-retrain")
 
-    @STUB.local_entrypoint()
-    def main():
-        import json, base64
-        pairs = [json.loads(l) for l in open(DATA) if l.strip()]
-        print(f"[modal] training SOV student on {len(pairs)} pairs, base={BASE}")
-        b64 = train.remote(pairs, BASE)     # pass base as arg so the remote actually uses it
-        out = os.environ.get("SOV_OUT", "sov_adapter.tar.gz")   # per-job output so parallel runs don't collide
-        open(out,"wb").write(base64.b64decode(b64))
-        print(f"[modal] DONE -> {out} (SOV's own weights, base={BASE}). Untar + point sovereign at it.")
-else:
-    if __name__ == "__main__":
-        print("Modal not installed. Owner: pip install modal && modal token new && modal run sov33_modal_train.py")
-        print(f"Will train on {DATA} (113 pairs), base {BASE}, T4 GPU, ~3 epochs LoRA -> SOV's own adapter.")
+# Modal image with the right deps
+train_image = (
+    modal.Image.debian_slim(python_version="3.11")
+    .pip_install(
+        "torch==2.13.0",
+        "transformers==5.12.1",
+        "peft>=0.18.0",
+        "accelerate>=1.6.0",
+        "safetensors>=0.5.0",
+    )
+)
+
+@app.function(
+    image=train_image,
+    gpu="T4",
+    timeout=900,
+    cpu=4,
+    memory=8192,
+)
+def train_identity_brain(jsonl_content: str, steps: int = 150):
+    """Train sovereign brain with identity data. Returns SIGIL + loss stats."""
+    import torch
+    from transformers import AutoTokenizer, AutoModelForCausalLM
+    from peft import LoraConfig, get_peft_model, TaskType
+    import hashlib
+    from pathlib import Path
+
+    print("=" * 70)
+    print("SOV33 IDENTITY RETRAIN — Modal T4 (CUDA, no MPS)")
+    print(f"  Steps: {steps}")
+    print("=" * 70)
+
+    # Parse JSONL
+    samples = [json.loads(line) for line in jsonl_content.splitlines() if line.strip()]
+    print(f"[1] Loaded {len(samples)} identity samples")
+
+    # Load model on CUDA
+    print(f"[2] Loading Qwen3-0.6B...")
+    tokenizer = AutoTokenizer.from_pretrained('Qwen/Qwen3-0.6B', trust_remote_code=True)
+    if tokenizer.pad_token is None:
+        tokenizer.pad_token = tokenizer.eos_token
+
+    model = AutoModelForCausalLM.from_pretrained(
+        'Qwen/Qwen3-0.6B', torch_dtype=torch.float32, trust_remote_code=True,
+    ).to('cuda')
+
+    # LoRA config
+    lora_config = LoraConfig(
+        task_type=TaskType.CAUSAL_LM,
+        r=32, lora_alpha=64, lora_dropout=0.05,
+        target_modules=['q_proj', 'k_proj', 'v_proj', 'o_proj'],
+        bias='none',
+    )
+    model = get_peft_model(model, lora_config)
+    trainable = sum(p.numel() for p in model.parameters() if p.requires_grad)
+    total = sum(p.numel() for p in model.parameters())
+    print(f"[3] LoRA: rank=32, {trainable:,}/{total:,} trainable ({100*trainable/total:.2f}%)")
+
+    optimizer = torch.optim.AdamW(
+        [p for p in model.parameters() if p.requires_grad], lr=3e-4,
+    )
+
+    # Train
+    model.train()
+    losses = []
+    batch_size = 4
+    t0 = time.time()
+
+    print(f"[4] Training {steps} steps × batch={batch_size} on T4...")
+    for step in range(steps):
+        batch = samples[step % len(samples):(step % len(samples)) + batch_size]
+        if len(batch) < batch_size:
+            batch = batch + samples[:batch_size - len(batch)]
+
+        prompts = [f"Q: {s['prompt']}\nA: {s['response']}" for s in batch]
+        # FIX: use .to('cuda') not .cuda()
+        inputs = tokenizer(prompts, return_tensors='pt', padding=True,
+                          truncation=True, max_length=384).to('cuda')
+        outputs = model(**inputs, labels=inputs['input_ids'])
+        loss = outputs.loss
+
+        if torch.isnan(loss) or torch.isinf(loss):
+            print(f"  step {step}: NaN/Inf, skipping")
+            optimizer.zero_grad()
+            continue
+
+        optimizer.zero_grad()
+        loss.backward()
+        torch.nn.utils.clip_grad_norm_(model.parameters(), max_norm=1.0)
+        optimizer.step()
+        loss_val = loss.detach().item()
+        losses.append(loss_val)
+
+        if step % 15 == 0 or step == steps - 1:
+            elapsed = time.time() - t0
+            eta = (elapsed / max(step + 1, 1)) * (steps - step - 1)
+            print(f"  step {step:3d}/{steps}: loss={loss_val:.4f} ({elapsed:.0f}s, ETA {eta:.0f}s)")
+
+        if (step + 1) % 30 == 0:
+            torch.cuda.empty_cache()
+
+    # Save
+    out_dir = Path("/root/qwen3-sov-brain-identity-fixed")
+    out_dir.mkdir(exist_ok=True)
+    model.save_pretrained(str(out_dir))
+    tokenizer.save_pretrained(str(out_dir))
+
+    elapsed = time.time() - t0
+    reduction = 100 * (losses[0] - losses[-1]) / losses[0] if losses[0] > 0 else 0
+    sigil = hashlib.sha256(
+        f"modal:{losses[0]:.4f}:{losses[-1]:.4f}:{elapsed:.1f}".encode()
+    ).hexdigest()[:16]
+
+    print(f"\n{'='*70}")
+    print(f"Modal training DONE")
+    print(f"  Loss: {losses[0]:.4f} → {losses[-1]:.4f} ({reduction:.1f}% drop)")
+    print(f"  Time: {elapsed:.1f}s")
+    print(f"  SIGIL: {sigil}")
+    print(f"{'='*70}")
+
+    return {
+        'initial_loss': losses[0],
+        'final_loss': losses[-1],
+        'reduction_pct': reduction,
+        'duration_s': elapsed,
+        'steps': steps,
+        'sigil': sigil,
+    }
+
+
+@app.local_entrypoint()
+def main():
+    """Read local identity data and trigger Modal training."""
+    data_path = "/Users/nicholas/clawd/_alignment/sovereign_merge_kit/sov_owem_data/identity_500.jsonl"
+
+    if not os.path.exists(data_path):
+        print(f"Data not found: {data_path}")
+        sys.exit(1)
+
+    with open(data_path) as f:
+        jsonl_content = f.read()
+
+    print(f"Uploading {len(jsonl_content)/1024:.1f} KB to Modal...")
+    print(f"Triggering identity retrain on T4 GPU...")
+
+    with modal.enable_output():
+        result = train_identity_brain.remote(jsonl_content, 150)
+
+    print(f"\nResult: {json.dumps(result, indent=2)}")
+    print(f"\nTo retrieve adapter: scp/rsync from Modal container")

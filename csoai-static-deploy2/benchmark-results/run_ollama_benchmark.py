@@ -8,6 +8,7 @@ import json
 import time
 import urllib.request
 import urllib.error
+import hashlib
 from pathlib import Path
 from datetime import datetime
 
@@ -121,7 +122,25 @@ def grade_ifeval(model_resp, task):
         return len(words) == task["ans_count"] and resp == resp.lower()
     return False
 
+def atomic_write_json(path, payload):
+    """Write JSON atomically so ENOSPC cannot leave a truncated report."""
+    text = json.dumps(payload, indent=2) + "\n"
+    tmp = path.with_suffix(path.suffix + ".tmp")
+    tmp.write_text(text)
+    tmp.replace(path)
+
+
+def write_checkpoint(out, ts, results):
+    """Persist completed models after each model run for crash/ENOSPC recovery."""
+    checkpoint = out / f"benchmark_{ts}.checkpoint.json"
+    atomic_write_json(checkpoint, results)
+    return checkpoint
+
+
 results = {"timestamp": datetime.now().isoformat(), "models": {}}
+out = Path("/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results")
+out.mkdir(exist_ok=True)
+ts = datetime.now().strftime("%Y%m%d_%H%M%S")
 
 for model in MODELS:
     print(f"\n=== Benchmarking {model} ===")
@@ -182,11 +201,24 @@ for model in MODELS:
         print(f"  COMPOSITE: {s['composite_pct']:.1f}% | MMLU:{s['mmlu_pro_pct']:.0f}% GSM8K:{s['gsm8k_pct']:.0f}% HumanEval:{s['humaneval_pct']:.0f}% IFEval:{s['ifeval_pct']:.0f}% | median {s['median_latency_ms']:.0f}ms p95 {s['p95_latency_ms']:.0f}ms")
     
     results["models"][model] = model_results
+    checkpoint_path = write_checkpoint(out, ts, results)
+    print(f"  CHECKPOINT: {checkpoint_path} ({len(results['models'])}/{len(MODELS)} models)")
 
-# Write results
-out = Path("/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results")
-out.mkdir(exist_ok=True)
-ts = datetime.now().strftime("%Y%m%d_%H%M%S")
-(out / f"benchmark_{ts}.json").write_text(json.dumps(results, indent=2))
-print(f"\n\n=== ALL RESULTS WRITTEN: {out}/benchmark_{ts}.json ===")
+# Write results + SIGIL anchor
+result_path = out / f"benchmark_{ts}.json"
+atomic_write_json(result_path, results)
+digest = hashlib.sha256(result_path.read_bytes()).hexdigest()
+sigil = {
+    "scheme": "sha256",
+    "benchmark_file": result_path.name,
+    "benchmark_sha256": digest,
+    "timestamp": results["timestamp"],
+    "model_count": len(results["models"]),
+    "task_calls_expected": sum(len(tasks) for tasks in TASKS.values()) * len(MODELS),
+}
+sigil_path = out / f"benchmark_{ts}.sigil.json"
+atomic_write_json(sigil_path, sigil)
+(out / f"benchmark_{ts}.checkpoint.json").unlink(missing_ok=True)
+print(f"\n\n=== ALL RESULTS WRITTEN: {result_path} ===")
+print(f"=== SIGIL SHA256: {digest} ({sigil_path}) ===")
 print(json.dumps({m: r.get("summary", {}) for m, r in results["models"].items()}, indent=2))

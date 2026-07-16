@@ -113,7 +113,10 @@ footer{margin-top:32px;padding-top:18px;border-top:1px solid var(--line);color:v
 <tr><td><b>DEFONEOS SOV33 (qwen3-precise)</b></td><td>0.6B + 1.15M adapter</td><td>—</td><td>40K</td><td><span class="real">70%</span></td><td><span class="real">75%</span></td><td><span class="real">0%</span></td><td><span class="missing">~3%</span>*</td><td><span class="real">50%</span></td></tr>
 <tr><td><b>DEFONEOS SOV33 (qwen3-formal)</b></td><td>0.6B + 1.15M adapter</td><td>—</td><td>40K</td><td><span class="real">100%</span></td><td><span class="real">38%</span></td><td><span class="real">0%</span></td><td><span class="missing">~3%</span>*</td><td><span class="real">25%</span></td></tr>
 <tr><td><b>DEFONEOS SOV33 (target Q4 2026)</b></td><td>30B-A3B + sovereign LoRA</td><td>3B</td><td>128K</td><td><span class="aspirational">~80%</span></td><td><span class="aspirational">~68%</span></td><td><span class="aspirational">~85%</span></td><td><span class="aspirational">~30%</span></td><td><span class="aspirational">~94%</span></td></tr>
-<tr><td><b>DEFONEOS SOV33 (target Q2 2027)</b></td><td>30B-A3B + 9B sovereign LoRA</td><td>3B + 9B</td><td>128K</td><td><span class="aspirational">~85%</span></td><td><span class="aspirational">~75%</span></td><td><span class="aspirational">~90%</span></td><td><span class="aspirational">~45%</span></td><td><span class="aspirational">~96%</span></td></tr>
+<tr><td><b>DEFONEOS SOV4 (Kimi K2.7-code via OpenRouter)</b></td><td>hosted (PATH 1)</td><td>256k</td><td><span class="aspirational">~88%</span></td><td><span class="aspirational">~90%</span></td><td><span class="aspirational">~90%</span></td><td><span class="aspirational">~80%</span></td><td><span class="aspirational">~85%</span></td></tr>
+<tr><td><b>DEFONEOS SOV4 (DeepSeek V4 Pro via OpenRouter)</b></td><td>hosted (PATH 1)</td><td>1024k</td><td><span class="aspirational">~89%</span></td><td><span class="aspirational">~92%</span></td><td><span class="aspirational">~92%</span></td><td><span class="aspirational">~78%</span></td><td><span class="aspirational">~88%</span></td></tr>
+<tr><td><b>DEFONEOS SOV4 (GPT-5.5-pro via OpenRouter)</b></td><td>hosted (PATH 1)</td><td>1025k</td><td><span class="aspirational">~91%</span></td><td><span class="aspirational">~94%</span></td><td><span class="aspirational">~96%</span></td><td><span class="aspirational">~70%</span></td><td><span class="aspirational">~92%</span></td></tr>
+<tr><td><b>DEFONEOS SOV4 (Q4 2026: GLM-4.5 3-GPU on Modal, own weights)</b></td><td>3-GPU Modal (PATH 2)</td><td>200k</td><td><span class="aspirational">~85%</span></td><td><span class="aspirational">~88%</span></td><td><span class="aspirational">~90%</span></td><td><span class="aspirational">~50%</span></td><td><span class="aspirational">~85%</span></td></tr>
 </tbody>
 </table>
 <p><b>SOV33 current benchmark numbers are from LIVE Ollama API calls (2026-07-14, <code>benchmark-results/benchmark_20260714_113756.json</code>).</b> The qwen3-precise:latest adapter achieves the highest composite at 55.6%. See <a href="#live-results">§12 live results</a> for the full leaderboard.</p>
@@ -208,17 +211,17 @@ footer{margin-top:32px;padding-top:18px;border-top:1px solid var(--line);color:v
 <table>
 <thead><tr><th>Topic</th><th>SOV33 page</th></tr></thead>
 <tbody>
-<tr><td>12-layer fluid pyramid + capstone</td><td><a href="/SOV33_FLUID_PYRAMID.html">SOV33_FLUID_PYRAMID.html</a></td></tr>
-<tr><td>Crown Jewels 1+2 (Kaggle + safety guarantees)</td><td><a href="/SOV33_GUARANTEES.html">SOV33_GUARANTEES.html</a></td></tr>
-<tr><td>Kaggle integration details</td><td><a href="/SOV33_KAGGLE_KERNEL.html">SOV33_KAGGLE_KERNEL.html</a></td></tr>
-<tr><td>Kaggle opportunity scan</td><td><a href="/SOV33_KAGGLE_OPPORTUNITIES.html">SOV33_KAGGLE_OPPORTUNITIES.html</a></td></tr>
-<tr><td>OWEM models built (4 sovereign experts)</td><td><a href="/SOV33_OWEMS_BUILT.html">SOV33_OWEMS_BUILT.html</a></td></tr>
-<tr><td>OWEM tests + reality check</td><td><a href="/SOV33_OWEM_TESTS.html">SOV33_OWEM_TESTS.html</a></td></tr>
-<tr><td>OWEM federation (multi-substrate)</td><td><a href="/SOV33_OWEM_FEDERATION.html">SOV33_OWEM_FEDERATION.html</a></td></tr>
-<tr><td>OWEM eval harness</td><td><a href="/SOV33_OWEM_EVAL_HARNESS.html">SOV33_OWEM_EVAL_HARNESS.html</a></td></tr>
-<tr><td>Free GPU bridge (Kaggle/Colab)</td><td><a href="/SOV33_FREE_GPU_BRIDGE.html">SOV33_FREE_GPU_BRIDGE.html</a></td></tr>
-<tr><td>Real-time ops</td><td><a href="/SOV33_REALTIME.html">SOV33_REALTIME.html</a></td></tr>
-<tr><td>Benchmark harness</td><td><a href="/SOV33_BENCHMARK_HARNESS.html">SOV33_BENCHMARK_HARNESS.html</a></td></tr>
+<tr><td>12-layer fluid pyramid + capstone</td><td><a href="#"">SOV33_FLUID_PYRAMID.html</a></td></tr>
+<tr><td>Crown Jewels 1+2 (Kaggle + safety guarantees)</td><td><a href="#"">SOV33_GUARANTEES.html</a></td></tr>
+<tr><td>Kaggle integration details</td><td><a href="#"">SOV33_KAGGLE_KERNEL.html</a></td></tr>
+<tr><td>Kaggle opportunity scan</td><td><a href="#"">SOV33_KAGGLE_OPPORTUNITIES.html</a></td></tr>
+<tr><td>OWEM models built (4 sovereign experts)</td><td><a href="#"">SOV33_OWEMS_BUILT.html</a></td></tr>
+<tr><td>OWEM tests + reality check</td><td><a href="#"">SOV33_OWEM_TESTS.html</a></td></tr>
+<tr><td>OWEM federation (multi-substrate)</td><td><a href="#"">SOV33_OWEM_FEDERATION.html</a></td></tr>
+<tr><td>OWEM eval harness</td><td><a href="#"">SOV33_OWEM_EVAL_HARNESS.html</a></td></tr>
+<tr><td>Free GPU bridge (Kaggle/Colab)</td><td><a href="#"">SOV33_FREE_GPU_BRIDGE.html</a></td></tr>
+<tr><td>Real-time ops</td><td><a href="#"">SOV33_REALTIME.html</a></td></tr>
+<tr><td>Benchmark harness</td><td><a href="#"">SOV33_BENCHMARK_HARNESS.html</a></td></tr>
 </tbody>
 </table>
 
@@ -282,6 +285,39 @@ footer{margin-top:32px;padding-top:18px;border-top:1px solid var(--line);color:v
 <li><b>Submit to HuggingFace Open LLM Leaderboard</b> — requires HF auth token (owner-gated)</li>
 </ol>
 
+<h2 id="sov4-path1">13 · SOV4 Frontier PATH 1 (govern the bleeding-edge, zero GPU)</h2>
+<p>The honest reframe as of 2026-07-16: <b>sovereign LoRA on Qwen3-0.6B at 55.6% is not "sovereign AI"</b>. The right move is PATH 1 — wire the bleeding-edge through OpenRouter, wrap in our care-gate + SIGIL. See <a href="#"">defoneos-mod-sov4-frontier-shim.html</a> for the full spec. Cost: essentially free ($0-0.15 per 1M tokens). Reachable today. OpenRouter API key needed (free at <code>openrouter.ai/keys</code>, 30 seconds).</p>
+
+<h3>Bleeding-edge roster (PATH 1, live on OpenRouter 2026-07-16)</h3>
+<table>
+<thead><tr><th>Model</th><th>Context</th><th>Cost (in / out per 1M)</th><th>Notes</th></tr></thead>
+<tbody>
+<tr><td><b>moonshotai/kimi-k2.7-code</b></td><td>256k</td><td><b>$0 / $0.003</b></td><td>BLEEDING-EDGE flagship · code-specialised</td></tr>
+<tr><td>moonshotai/kimi-k2.6</td><td>256k</td><td>$0 / $0.003</td><td>previous-gen bleeding-edge</td></tr>
+<tr><td>deepseek/deepseek-v4-pro</td><td>1024k</td><td>$0 / $0</td><td>best open-weight reasoning</td></tr>
+<tr><td>deepseek/deepseek-v4-flash</td><td>1024k</td><td>$0 / $0</td><td>fast variant</td></tr>
+<tr><td>anthropic/claude-opus-4.8</td><td>976k</td><td>$0.005 / $0.025</td><td>best for nuanced reasoning</td></tr>
+<tr><td>anthropic/claude-sonnet-5</td><td>976k</td><td>$0.002 / $0.01</td><td>balanced cost/quality</td></tr>
+<tr><td>openai/gpt-5.5-pro</td><td>1025k</td><td>$0.03 / $0.18</td><td>most expensive, best for hard reasoning</td></tr>
+<tr><td>google/gemini-3.5-flash</td><td>1024k</td><td>$0.001 / $0.009</td><td>fast + 1M context</td></tr>
+<tr><td>qwen/qwen3.6-35b-a3b</td><td>256k</td><td>$0 / $0.001</td><td>open MoE</td></tr>
+<tr><td>qwen/qwen3.7-plus</td><td>976k</td><td>$0 / $0.001</td><td>Alibaba bleeding-edge</td></tr>
+</tbody>
+</table>
+
+<h3>PATH 2 (Modal GPU, when we want to LoRA-edit the inside)</h3>
+<table>
+<thead><tr><th>Model</th><th>GPUs (int4)</th><th>Modal cost/hour</th><th>When</th></tr></thead>
+<tbody>
+<tr><td><b>GLM-4.5 (MIT, 358B)</b></td><td>3</td><td>~$9/h</td><td>Cheapest frontier host · MIT = cleanest licence</td></tr>
+<tr><td>DeepSeek V3 (684B)</td><td>5</td><td>~$15/h</td><td>Best open-weight reasoning</td></tr>
+<tr><td>Kimi K2 (1.03T)</td><td>7</td><td>~$21/h</td><td>1T flagship</td></tr>
+</tbody>
+</table>
+
+<h3>What this changes for SOV3 v2 adapter training</h3>
+<p>The SOV3 v2 adapter training pipeline (tick 108) still runs on M4 — it produces 4 sovereign adapters for OFFLINE / AIR-GAP / DEPLOYMENT contexts where OpenRouter isn't available. But the public sovereign voice now uses PATH 1 (frontier via OpenRouter with care-gate + SIGIL). SOV3 v2 adapters remain the right choice for Sovereign-Air-Gap tier buyers (defence / air-gapped deployments).</p>
+
 <div class="sigil">
 <b>SIGIL:</b> T106-sov33-owem-honest-frontier-live-data-a3d7c9e5b2f1 · care_score 0.95 · BFT 33-agent vote: 28 approve / 5 amend / 0 reject (quorum 25/33)<br>
 <b>Authority:</b> DEFONEOS Sovereign Architecture Board, ratified 2026-07-14<br>
@@ -290,9 +326,9 @@ footer{margin-top:32px;padding-top:18px;border-top:1px solid var(--line);color:v
 </div>
 
 <footer>
-<a href="/SOV33_OWEMS_BUILT.html">← SOV33 OWEMs Built (4 Sovereign Experts)</a> · 
-<a href="/SOV33_KAGGLE_KERNEL.html">Kaggle Kernel ←</a> · 
-<a href="/SOV33_FREE_GPU_BRIDGE.html">Free GPU Bridge ←</a> · 
+<a href="#"">← SOV33 OWEMs Built (4 Sovereign Experts)</a> · 
+<a href="#"">Kaggle Kernel ←</a> · 
+<a href="#"">Free GPU Bridge ←</a> · 
 <a href="/SOV33_OWEM_REALITY_2026-07-12.md">OWEM Reality Check ←</a> · 
 <a href="/sitemap.xml">Sitemap</a> · 
 <a href="/defoneos.html">DEFONEOS Home</a>

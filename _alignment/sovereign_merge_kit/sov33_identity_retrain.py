@@ -108,23 +108,47 @@ def retrain_sovereign_brain():
     losses = []
     batch_size = 4
     max_steps = 150  # 150 steps for deeper learning
-    
+
     print(f"\n[5] Training {max_steps} steps × batch={batch_size}...")
     t0 = time.time()
-    
+
+    checkpoint_every = 30
     for step in range(max_steps):
         batch = all_samples[step % len(all_samples):(step % len(all_samples)) + batch_size]
         if len(batch) < batch_size:
             batch = batch + all_samples[:batch_size - len(batch)]
-        
+
         prompts = [f"Q: {s['prompt']}\nA: {s['response']}" for s in batch]
         inputs = tokenizer(prompts, return_tensors='pt', padding=True, truncation=True, max_length=384).to(device)
         outputs = model(**inputs, labels=inputs['input_ids'])
         loss = outputs.loss
+        # NaN guard — skip step if loss explodes
+        if torch.isnan(loss) or torch.isinf(loss):
+            print(f"  ⚠ step {step}: loss is NaN/Inf, skipping optimizer step")
+            optimizer.zero_grad()
+            continue
         optimizer.zero_grad()
         loss.backward()
+        # Gradient clipping for stability
+        torch.nn.utils.clip_grad_norm_(model.parameters(), max_norm=1.0)
         optimizer.step()
-        losses.append(float(loss))
+        # Use detached scalar to avoid memory leak
+        loss_val = loss.detach().item()
+        losses.append(loss_val)
+
+        # Save CHECKPOINT every N steps (early so we don't lose work)
+        # out_dir is defined later, so build the path inline
+        if (step + 1) % checkpoint_every == 0 or step == max_steps - 1:
+            ckpt_dir = Path.home() / '.sovereign' / 'models' / f'qwen3-sov-brain-v2-identity-fixed-step{step+1}'
+            ckpt_dir.mkdir(parents=True, exist_ok=True)
+            try:
+                model.save_pretrained(str(ckpt_dir))
+                tokenizer.save_pretrained(str(ckpt_dir))
+                print(f"  📍 checkpoint saved at step {step+1}: {ckpt_dir}")
+            except Exception as e:
+                print(f"  ⚠ checkpoint failed at step {step+1}: {e}")
+            if torch.backends.mps.is_available():
+                torch.mps.empty_cache()
         
         if step % 15 == 0 or step == max_steps - 1:
             elapsed = time.time() - t0

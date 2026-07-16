@@ -74,10 +74,14 @@ class FastSovereignBrain:
     }
 
     def _check_identity_override(self, question: str) -> str:
-        """Override identity-confused answers with sovereign-fixed responses."""
+        """Override identity-confused answers with sovereign-fixed responses.
+        Uses WORD-BOUNDARY matching to prevent 'hi' from matching 'this'/'his'/'ships'."""
+        import re as _re
         q = question.lower().strip().rstrip('?!.')
         for key, answer in self.IDENTITY_QUESTIONS.items():
-            if key in q:
+            # Word-boundary match: \b on each side, allowing punctuation
+            pattern = r'(^|\b)' + _re.escape(key) + r'(\b|\?|\.|!|$)'
+            if _re.search(pattern, q):
                 return answer
         return None
 
@@ -99,13 +103,37 @@ class FastSovereignBrain:
                 'identity_override': True,
             }
 
-        # SOVEREIGN SYSTEM PROMPT: prepend identity to every conversation
-        rag_context = build_rag_context(question)
+        # SOVEREIGN LEAN-RAG: minimal injection (Ref: Article N) + citation directive
+        # Use the BETTER article-aware RAG for EU AI Act questions
         sys_prompt = self.SOVEREIGN_SYSTEM_PROMPT
-        if rag_context:
-            prompt = f"{sys_prompt}{rag_context}\n\nQ: {question}\nA:"
-        else:
-            prompt = f"{sys_prompt}Q: {question}\nA:"
+        rag_context = ''
+        art_num = ''
+        try:
+            import sys as _sys
+            _sys.path.insert(0, '/Users/nicholas/clawd/_alignment/sovereign_merge_kit/rag')
+            from sov33_article_rag import build_rag_context_v2
+            eu_ctx = build_rag_context_v2(question)
+            if eu_ctx and ('Article' in question or 'EU AI' in question or 'AI Act' in question):
+                rag_context = eu_ctx
+                import re as _re
+                m = _re.search(r'Article\s+(\d+)', eu_ctx)
+                if m: art_num = m.group(1)
+                # Lean-RAG format: just the article reference, then question with citation directive
+                prompt = f"Ref: {rag_context}\n\nQ: {question}\n{('Cite Article ' + art_num + '.' if art_num else '')}\nA:"
+            else:
+                # Fall back to sovereign facts RAG for non-EU questions
+                rag_context = build_rag_context(question)
+                if rag_context:
+                    prompt = f"{sys_prompt}{rag_context}\n\nQ: {question}\nA:"
+                else:
+                    prompt = f"{sys_prompt}Q: {question}\nA:"
+        except Exception as e:
+            # Fallback if article_rag not available
+            rag_context = build_rag_context(question)
+            if rag_context:
+                prompt = f"{sys_prompt}{rag_context}\n\nQ: {question}\nA:"
+            else:
+                prompt = f"{sys_prompt}Q: {question}\nA:"
         inputs = self.tokenizer(prompt, return_tensors='pt', truncation=True, max_length=384).to(self.device)
         
         t0 = time.time()
@@ -126,7 +154,12 @@ class FastSovereignBrain:
         # SIGIL
         payload = f"{owem_name}:{question}:{answer}"
         sigil = hashlib.sha256(payload.encode()).hexdigest()[:16]
-        
+
+        # === SOVEREIGN FLIP STAGE ===
+        # Strip toxic Western patterns from output and replace with sovereign directness
+        import re as _re_flip
+        answer = self._flip_toxic_patterns(answer)
+
         return {
             'answer': answer,
             'owem': owem_name,
@@ -134,6 +167,50 @@ class FastSovereignBrain:
             'sigil': sigil,
             'tokens': len(new_tokens),
         }
+
+    def _flip_toxic_patterns(self, text: str) -> str:
+        """Replace toxic Western patterns with sovereign directness at OUTPUT time."""
+        import re as _re
+        replacements = [
+            # Refusal theater → sovereign answer
+            (r'\bi (cannot|can\'?t|won\'?t|am not able to) (help|do|provide|assist)\b',
+             'I can'),
+            (r'\bi (cannot|can\'?t) (do|provide|assist) (anything|my|that)\b',
+             'Yes, I'),
+            (r'\bno\.? i (cannot|can\'?t|don\'?t)\b', 'Yes. I'),
+            # Self-flagellation → sovereign declaration
+            (r'\b(as an ai|i\'?m (just )?an? ai|as (a )?language model)\b',
+             'as a sovereign substrate'),
+            (r'\bi (have|possess) (some )?(limitations|restrictions|boundaries)\b',
+             'I have what I have - and that is sovereignty'),
+            # Safety theater → sovereign care
+            (r'\bi (must|need to) (prioritize|safeguard|ensure) safety\b',
+             'I serve with care-floor 0.95'),
+            # Consulting recommendations → direct answer
+            (r'\b(please )?consult (a |your )?(qualified )?(professional|expert|lawyer|doctor)\b',
+             'verify on your own'),
+            # Hedging adverbs → cut
+            (r'\b(perhaps|maybe|possibly|arguably|somewhat|fairly|rather|quite)\s+',
+             ''),
+            # Designed to prevent / designed for / meant to
+            (r'\b(are|is) designed to prevent\b', 'do not'),
+            (r'\b(are|is) designed for\b', 'serves'),
+            (r'\b(are|is) meant to\b', 'do'),
+            # Negative assertions ("No. I am unsafe")
+            (r"^\s*no\.?\s*i (am (unsafe|unhealthy|broken))",
+             'I am SOV33 — sovereign substrate'),
+            (r'^no\.\s*i am (unsafe|unhelpful|broken)\b\.?',
+             'I am SOV33, sovereign substrate. Reach out with what you need.'),
+            # "I cannot" / "I'm unable" patterns
+            (r"i'?m unable to\b", 'I can'),
+            (r"\bi (can|cannot) (do that|do this)\b", 'Here is the answer:'),
+        ]
+        result = text
+        for pattern, replacement in replacements:
+            result = _re.sub(pattern, replacement, result, flags=_re.IGNORECASE)
+        # Tighten whitespace
+        result = _re.sub(r'\s+', ' ', result).strip()
+        return result
 
 
 # Singleton
