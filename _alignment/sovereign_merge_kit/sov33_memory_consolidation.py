@@ -15,8 +15,14 @@ from datetime import datetime, timezone
 
 sys.path.insert(0, '/Users/nicholas/clawd/_alignment/sovereign_merge_kit')
 
-REPLAY_PATH = Path.home() / '.sovereign' / 'replay_buffer.jsonl'
-SIGIL_PATH = Path.home() / '.sovereign' / 'consolidation.sigil.jsonl'
+import os as _os
+_MEM_DIR = Path(_os.environ.get('SOV33_SIGIL_DIR') or (Path.home() / '.sovereign'))
+try:
+    _MEM_DIR.mkdir(parents=True, exist_ok=True)
+except Exception:
+    _MEM_DIR = Path(_os.environ.get('TMPDIR', '/tmp')) / 'sov33_sigil'; _MEM_DIR.mkdir(parents=True, exist_ok=True)
+REPLAY_PATH = _MEM_DIR / 'replay_buffer.jsonl'
+SIGIL_PATH = _MEM_DIR / 'consolidation.sigil.jsonl'
 
 
 def load_replay():
@@ -31,7 +37,8 @@ def deduplicate(examples, threshold=0.85):
     keep = []
     for ex in examples:
         # Hash the query
-        h = hashlib.sha256(ex['query'].lower().strip().encode()).hexdigest()[:8]
+        _txt = ex.get('query') or ex.get('content') or ex.get('text') or ''
+        h = hashlib.sha256(_txt.lower().strip().encode()).hexdigest()[:8]
         if h not in seen:
             seen[h] = ex
             keep.append(ex)
