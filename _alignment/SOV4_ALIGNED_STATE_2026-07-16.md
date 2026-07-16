@@ -15,9 +15,22 @@ _RUNNING ✅ / TESTED 🔬 / DESIGNED 🧩 / GATED ⏸️. Every claim traces to
 | confidence stdev | 0.060 (flat) | **0.292** (discriminates) |
 | conf when CORRECT | ~flat | **0.922** |
 | conf when WRONG | ~flat | **0.342** |
-| GDPR Qs → compliance | 3/24 (misrouted to defense) | **24/24** |
+| GDPR Qs → compliance | (v1 breakdown: 14 defense/7 intuition/3 compliance) | see CORRECTION below |
 - vs keyword venturi baseline 0.393. v2 wired, v1 fallback. Isotonic calibration + balanced + terse examples.
 - WHY IT MATTERS: confidence now tracks correctness → dynamic confidence-routing is now POSSIBLE (was not).
+
+
+## CORRECTION (2026-07-16, auditor-caught — honest record)
+The earlier "v2 routes GDPR 24/24 compliance" was **DATA CONTAMINATION**: the hardened battery items were
+folded into v2's TRAINING data, then "tested" on the same file → memorization, NOT generalization. The
+honest out-of-domain test (v3, held-out terse prompts NEVER trained on): **router generalizes only 2/5**
+on terse ad-hoc prompts (routes GDPR right, but MISSES clear defense prompts like "malware exploit attack").
+- In-domain reliability IS real (conf>=0.8 → acc~1.0, conf<0.4 → acc~0.32, measured on held-out corpus split).
+- Out-of-domain terse prompts: routing degrades, confidence collapses. Router does NOT yet generalize to
+  short real requests. This is the REAL remaining blocker — needs genuine OOD-robust training, not augmentation
+  tricks (terse-augmentation tried in v3, still only 2/5).
+- The v1 "misroute" figure was 14/24 to defense (not 21) — corrected.
+FAIL-SAFE note: BRUM escalates (spreads) on low confidence, so OOD misroutes fail SAFE (spread, not commit-wrong).
 
 ## THE EMERGENCE QUESTION — answered honestly (no spend)
 - Hardened eval (24 tough gov Qs): **Qwen 0.917 / Bamba 0.708, rho=0.138 (LOW), oracle_headroom 0.042**
