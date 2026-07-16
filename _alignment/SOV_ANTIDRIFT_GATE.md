@@ -36,3 +36,9 @@ NOT progress = a doc, a commit, a plan, a "yes let's", a capability count, a pas
 - Finish one thing to money/user/test before proposing the next.
 - Never claim done without the test in the same message.
 - When Nick has spent real time with nothing to show, SAY SO and point at the smallest real sale, not a new build.
+
+## FRONTIER COMPUTE (appended — canonical roster, never lost again)
+Roster (bleeding-edge only): Kimi-K2 1.03T · DeepSeek-V3 684B · GLM-4.5 358B (MIT).
+Two paths: CALL (token API, govern now, 0 GPU) vs HOST (Modal multi-GPU, to LoRA/edit weights).
+GPU@int4: Kimi 7 · DeepSeek 5 · GLM 3. Dead paths: SSH-spread on micro boxes, Mac host, from-scratch.
+See SOV_FRONTIER_COMPUTE_GATES.md for the full map.
