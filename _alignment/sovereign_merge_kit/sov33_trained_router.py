@@ -28,7 +28,7 @@ def route(prompt):
     proba=m["clf"].predict_proba(v)[0]
     labels=m["clf"].classes_
     i=proba.argmax()
-    return {"node":labels[i], "confidence":round(float(proba[i]),3),
+    return {"node":str(labels[i]), "confidence":round(float(proba[i]),3),
             "all":{l:round(float(p),3) for l,p in zip(labels,proba)}, "method":"trained_router"}
 
 def route_choice(prompt):
