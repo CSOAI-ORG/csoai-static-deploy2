@@ -17,7 +17,7 @@ This doc is ORGANIZATION of what exists + one honest gap. It is NOT a claim of n
 - Belt-and-suspenders with reputation: KRUM stops a NEW attacker round 1; DRUM/reputation stops a PERSISTENT one
 - Module: sov33_governed_training.py (agg_krum + GovernedTrainingRound)
 
-## ARUM — the LAYER spine (hive awareness, Layer-0 upward)   [DESIGN / WIRING]
+## ARUM — the LAYER spine (hive awareness, Layer-0 upward)   [WIRED 11/11]
 "What is the system aware of, across all its layers?"
 - The Layer-0 -> L7 hive stack, named + wired as ONE legible awareness spine
 - HONEST LINE: the layers already exist; ARUM is the NAME + consistent wiring, NOT a new engine
@@ -31,7 +31,7 @@ This doc is ORGANIZATION of what exists + one honest gap. It is NOT a claim of n
 |-------|----------|-----------|--------|
 | DRUM  | when/order/is-it-progress | 9-stage flow + clock | RUNNING |
 | KRUM  | who's honest / how to combine | Byzantine aggregation | RUNNING (58.9x verified) |
-| ARUM  | aware of what, across layers | Layer-0->7 hive, named | DESIGN/WIRING |
+| ARUM  | aware of what, across layers | Layer-0->7 hive, sov33_arum.py | WIRED 11/11 |
 
 ## FILL-THE-ALPHABET: stage -> real framework module
 - LEARN         -> sov33_learn_stage.py (reads real clock)
