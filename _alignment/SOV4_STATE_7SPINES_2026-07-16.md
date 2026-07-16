@@ -64,6 +64,15 @@ _Honest register: RUNNING ✅ (tested code) / TESTED 🔬 / DESIGNED 🧩 / GATE
 - P2: trained tiny router (Supra-51M pattern) — upgrades routing AND unlocks measurable fusion.
 - Dream-loop scheduler (nightly DRUM tick); migrate 35 modules to sov33_paths.py.
 
+
+## E2E VERIFICATION SCOPE (honest correction 2026-07-16)
+The first E2E run (_e2e_spines.py) tested 7 MODULES: DRUM, JRUM, evolve-FOREST, co-evaluator, dream-cycle,
+TRUM, CRUM — NOT the KRUM/ARUM/SRUM spines. An earlier claim that "all 7 spines" were verified in that one
+pass was WRONG (it substituted FOREST/COEVAL/DREAM for KRUM/ARUM/SRUM). Corrected: a second run
+(_e2e_krum_arum_srum.py) separately verified KRUM (sov33_governed_training), ARUM (sov33_arum),
+SRUM (sov33_governed_swarm) import + expose their core functions. So all 7 spines are now verified — but
+across TWO runs, not one, and this is the honest record.
+
 ## THE MISSION (named plainly)
 Stop covert AI manipulation by building the one system where you CAN'T hide it: every value signed, every
 visual traced, unsigned things shown faint, covert-persuasion hard-refused. Honest vessel, inspectable by
