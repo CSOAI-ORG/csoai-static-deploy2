@@ -59,7 +59,7 @@ textarea{resize:vertical;min-height:60px}
 <a href="/" class="back-link">← Templeman Opticians</a>
 <h1>Book a Home Eye Test</h1>
 <p class="sub">Complete this form and we'll call you back <strong>within 24 hours</strong>. For same-day appointments, call us now.</p>
-<div class="urgency">⚡ Limited slots this week — book now for priority scheduling</div>
+<div class="urgency">🏠 Home visits run Monday–Friday across Essex &amp; Suffolk — most patients are seen within days</div>
 
 <div class="form-card">
 <form id="booking-form" onsubmit="return submitBooking(event)">
@@ -166,6 +166,22 @@ function showConfirmation(data) {
   document.getElementById('confirmation').style.display = 'block';
   document.getElementById('confirm-name').textContent = data.name || '';
   document.getElementById('confirm-phone').textContent = data.phone || 'you';
+  // Guaranteed-delivery handoff: patient sends the booking to us directly.
+  var msg = 'Home eye test booking request:\n'
+    + 'Name: ' + (data.name || '-') + '\n'
+    + 'Phone: ' + (data.phone || '-') + '\n'
+    + (data.town ? 'Town: ' + data.town + '\n' : '')
+    + (data.patient_type ? 'For: ' + data.patient_type + '\n' : '')
+    + (data.nhs_eligible ? 'NHS eligible: ' + data.nhs_eligible + '\n' : '')
+    + (data.notes ? 'Notes: ' + data.notes : '');
+  var wa = 'https://wa.me/447377799306?text=' + encodeURIComponent(msg);
+  var box = document.getElementById('confirmation');
+  var extra = document.createElement('div');
+  extra.style.cssText = 'margin-top:18px;display:flex;flex-wrap:wrap;gap:10px;justify-content:center';
+  extra.innerHTML =
+    '<a href="' + wa + '" target="_blank" rel="noopener" style="background:#25D366;color:#fff;font-weight:700;padding:13px 22px;border-radius:10px;text-decoration:none">✓ Confirm instantly on WhatsApp</a>' +
+    '<a href="tel:+441268777729" style="background:#0F172A;color:#fff;font-weight:700;padding:13px 22px;border-radius:10px;text-decoration:none">Or call 01268 777729</a>';
+  box.appendChild(extra);
 }
 </script>
 <footer style="margin-top:6rem;border-top:1px solid #E2E8F0;background:#F8FAFC;padding:40px 20px;">
@@ -188,5 +204,6 @@ function showConfirmation(data) {
     © 2026 Templeman Opticians. Independent family-run practice serving Essex.
   </p>
 </footer>
+<script defer src="/assets/to-office.js"></script>
 </body>
 </html>

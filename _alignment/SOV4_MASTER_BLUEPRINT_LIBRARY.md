@@ -71,3 +71,10 @@ New frontier open model → LoRA on corpus → ρ-gate (add if decorrelated) →
 - Brain #3 Bamba: auto-harvest failed; adapter retrieved manually from remote sandbox (now terminated). final_loss 1.464, artifact c7265669.
 - signed_chain E2E now runs over all 14 real layers (was a 3-4 entry mock earlier).
 - GCP VM "unreachable": the earlier `timeout` probe never ran (missing binary); conclusion stands from prior-session context, but no live probe executed this session.
+
+## ORACLE GENAI — STATUS UPDATE (2026-07-16, supersedes "not auth-tested")
+✅ VERIFIED LIVE this session (two independent calls): meta.llama-3.3-70b-instruct answered via OCI
+request-signing (DEFAULT profile, tenancy ...3bc..., region uk-london-1), round-trips 0.5s and 0.59s.
+Endpoint inference.generativeai.uk-london-1.oci.oraclecloud.com reachable from sandbox. This SUPERSEDES
+the earlier oracle_config_fixed_not_auth_tested constraint. ROLE: serving/teacher brain (rented Meta weights,
+NOT owned) — belongs in the ONLINE/federation tier + distillation, NOT the owned-weights emergence fusion.
