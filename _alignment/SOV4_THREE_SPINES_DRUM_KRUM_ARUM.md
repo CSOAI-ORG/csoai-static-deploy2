@@ -17,7 +17,11 @@ This doc is ORGANIZATION of what exists + one honest gap. It is NOT a claim of n
 - Belt-and-suspenders with reputation: KRUM stops a NEW attacker round 1; DRUM/reputation stops a PERSISTENT one
 - Module: sov33_governed_training.py (agg_krum + GovernedTrainingRound)
 
-## ARUM — the LAYER spine (hive awareness, Layer-0 upward)   [WIRED 11/11]
+## ARUM — the LAYER spine (hive awareness, Layer-0 upward)   [WIRED 14/14 — incl security layer]
+### SECURITY LAYER (L0a/L0b, above SIGIL)
+Rainbow rotation (rainbow_rotate.py — IP rolls every 5min: worm-tunnel/probe/DDoS evasion) + 75-node BFT
+threat council (bft_threat_council.py — 15 lens types x5 providers, tolerates f=24 Byzantine). Network+threat
+tier, wired into ARUM. HONEST: rainbow is control-plane (does not itself bind sockets); council is threat-scoring.
 ### L0 CONNECTS IT ALL (the connective tissue)
 Layer-0 (SIGIL) is not just the bottom layer — it THREADS through every layer. signed_chain() passes each
 layer output through the signing act + hash-chains it to the previous, so the whole stack is ONE verifiable

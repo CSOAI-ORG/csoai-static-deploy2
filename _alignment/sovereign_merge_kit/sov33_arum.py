@@ -7,11 +7,17 @@ import clean (wired) vs missing (gap). "Awareness" here = the layer stack is leg
 """
 import importlib, os, sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+# security layer modules live in the public submodule's security/ dir
+_sec = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))), "sovereign-temple-public", "security")
+if os.path.isdir(_sec):
+    sys.path.insert(0, _sec)
 os.environ.setdefault("SOV33_SIGIL_DIR", os.path.join(os.environ.get("TMPDIR","/tmp"), "sov33_sigil"))
 
 # Layer-0 up: (layer_id, role, module, key_symbol)
 LAYERS = [
     ("L0", "SIGIL attestation fabric (signs every decision)", "sov33_ed25519_sigil", None),
+    ("L0a","Rainbow security (IP-rotation, worm/probe/DDoS evasion)","rainbow_rotate", "get_rotator"),
+    ("L0b","BFT threat council (75-node, tolerate f=24 Byzantine)","bft_threat_council", "ThreatCouncil"),
     ("L1", "Memory (fixed planet-memory / identity)",         "sov33_memory_bridge", None),
     ("L2", "Fluid routing (rho-driven per-task composition)", "sov33_fluid_router", "decide"),
     ("L3", "Care ontology (0.35 floor, framed-harm gate)",    "sov33_care_local", "score_local"),
@@ -22,6 +28,7 @@ LAYERS = [
     ("L7b","Audit (catches overclaim before it ships)",       "sov33_audit_stage", "audit"),
     ("L7c","7-NN planet bus (hive awareness feed)",           "sov33_nn_hive_bus", "bus_status"),
     ("L7d","Fusion gate (rho: emergence precondition)",       "sov33_rho_gate", "fusion_gate"),
+    ("L6b","Gated executor (propose->DORADO->guard->care->sign->run)","sov33_gated_executor","authorize_action"),
 ]
 
 def wire():
