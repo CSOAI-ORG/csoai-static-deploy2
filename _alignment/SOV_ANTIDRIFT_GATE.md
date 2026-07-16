@@ -37,8 +37,8 @@ NOT progress = a doc, a commit, a plan, a "yes let's", a capability count, a pas
 - Never claim done without the test in the same message.
 - When Nick has spent real time with nothing to show, SAY SO and point at the smallest real sale, not a new build.
 
-## FRONTIER COMPUTE (appended — canonical roster, never lost again)
-Roster (bleeding-edge only): Kimi-K2 1.03T · DeepSeek-V3 684B · GLM-4.5 358B (MIT).
-Two paths: CALL (token API, govern now, 0 GPU) vs HOST (Modal multi-GPU, to LoRA/edit weights).
-GPU@int4: Kimi 7 · DeepSeek 5 · GLM 3. Dead paths: SSH-spread on micro boxes, Mac host, from-scratch.
-See SOV_FRONTIER_COMPUTE_GATES.md for the full map.
+## FRONTIER COMPUTE (canonical roster — CURRENT generation)
+Roster: Kimi-K2.6 1.059T · DeepSeek-V4-Pro 861B (MIT) · GLM-5.2 753B (MIT). Cheap frontier-family: DeepSeek-V4-Flash 158B (MIT,1-GPU) · Qwen3.6-35B (Apache,1-GPU).
+Two paths: CALL (token API, govern now, 0 GPU) vs HOST (Modal multi-GPU, LoRA/edit weights).
+GPU@int4: K2.6 7 · V4-Pro 6 · GLM-5.2 5 · V4-Flash 1 · Qwen3.6 1. Current ids only (V4/K2.6/5.2/3.6).
+See SOV_FRONTIER_COMPUTE_GATES.md.
