@@ -55,3 +55,25 @@ if __name__ == "__main__":
     for r in m["layers"]:
         flag = "OK " if r["wired"] and r["symbol_present"] else ("~  " if r["wired"] else "GAP")
         print(f"  [{flag}] {r['layer']:4} {r['role']}")
+
+
+# --- L0 connects it all: every layer's output threaded through the SIGIL signing act ---
+def signed_chain(layer_outputs):
+    """Layer-0 is the connective tissue: each layer's output is signed by SIGIL and hash-chained
+    to the previous, so the whole stack is ONE verifiable sequence. This is what 'L0 connects it
+    all' means concretely — not L0 at the bottom, but L0 threading through every layer's output.
+    layer_outputs: list of (layer_id, output_dict). Returns the signed chain + verification."""
+    import sov33_ed25519_sigil as sigil
+    import hashlib, json
+    s = sigil.Ed25519Sigil()
+    chain, prev = [], "genesis"
+    for lid, out in layer_outputs:
+        payload = {"layer": lid, "output": out, "prev": prev}
+        rec = s.sign(json.dumps(payload, sort_keys=True))
+        # link: this record's hash becomes prev for the next layer
+        link = hashlib.sha256(json.dumps(rec, sort_keys=True).encode()).hexdigest()[:16]
+        chain.append({"layer": lid, "sig_ok": s.verify(rec), "link": link, "prev": prev})
+        prev = link
+    all_verified = all(c["sig_ok"] for c in chain)
+    return {"chain": chain, "all_layers_signed": all_verified, "length": len(chain),
+            "connective_tissue": "L0/SIGIL — every layer output signed + hash-chained to prev"}

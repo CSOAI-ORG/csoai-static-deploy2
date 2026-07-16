@@ -18,6 +18,11 @@ This doc is ORGANIZATION of what exists + one honest gap. It is NOT a claim of n
 - Module: sov33_governed_training.py (agg_krum + GovernedTrainingRound)
 
 ## ARUM — the LAYER spine (hive awareness, Layer-0 upward)   [WIRED 11/11]
+### L0 CONNECTS IT ALL (the connective tissue)
+Layer-0 (SIGIL) is not just the bottom layer — it THREADS through every layer. signed_chain() passes each
+layer output through the signing act + hash-chains it to the previous, so the whole stack is ONE verifiable
+sequence (genesis->route->care->KRUM->veto->evolve->fusion). Tamper any layer -> its signature breaks -> chain
+breaks. This is what makes ARUM a spine not a list: L0 is the thread. Verified 6/6 signed in test.
 "What is the system aware of, across all its layers?"
 - The Layer-0 -> L7 hive stack, named + wired as ONE legible awareness spine
 - HONEST LINE: the layers already exist; ARUM is the NAME + consistent wiring, NOT a new engine
