@@ -44,4 +44,6 @@ def propose(target, diff_summary, measured_gain, held_out_n, action_kind="code_c
 def arum_layer_manifest():
     return {"layer": "L6-evolve", "spine": "ARUM", "role": "IMPROVE stage / meta-optimizer",
             "evolves": "code/prompts/workflows/routing", "does_not_evolve": "model weights (separate retrain loop)",
-            "autonomy": "PROPOSE-ONLY, human-gated", "source": "OpenEvolve + DGM (arXiv 2505.22954)"}
+            "autonomy": "PROPOSE-ONLY, human-gated", "source": "OpenEvolve + DGM (arXiv 2505.22954)",
+            "archive": "sov33_evolve_forest.py (DGM tree->forest branching, arXiv 2505.22954)",
+            "coevolving_evaluator": "sov33_coevolve_evaluator.py (Red Queen, arXiv 2606.26294)"}
