@@ -1,3 +1,5 @@
+> **SUPERSEDED ROSTER NOTICE (2026-07-16):** model versions below are one generation old (DeepSeek-V3/Kimi-K2/GLM-4.5). Current-gen canonical roster is in `SOV_FRONTIER_COMPUTE_GATES.md`: Kimi-K2.6 1.059T / DeepSeek-V4-Pro 861B MIT / GLM-5.2 753B MIT / DeepSeek-V4-Flash 158B MIT (1-GPU) / Qwen3.6-35B Apache (1-GPU). Use those. The phases/method below still hold; only the version strings changed.
+
 # HERMES E2E — Tab-per-Model Fusion Build (SOV4 = 3-around-1)
 # Handoff for Claude Code (Hermes lane). Grounded in CONFIRMED HuggingFace model cards (2026-07-16), not snippets.
 # Science lane (this agent) owns: training jobs + evals on Modal. Hermes lane owns: serving tabs + UI + mesh.

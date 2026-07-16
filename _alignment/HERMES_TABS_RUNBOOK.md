@@ -1,3 +1,5 @@
+> **SUPERSEDED ROSTER NOTICE (2026-07-16):** model versions below are one generation old (DeepSeek-V3/Kimi-K2/GLM-4.5). Current-gen canonical roster is in `SOV_FRONTIER_COMPUTE_GATES.md`: Kimi-K2.6 1.059T / DeepSeek-V4-Pro 861B MIT / GLM-5.2 753B MIT / DeepSeek-V4-Flash 158B MIT (1-GPU) / Qwen3.6-35B Apache (1-GPU). Use those. The phases/method below still hold; only the version strings changed.
+
 # HERMES TABS — one tab per model, alongside SOV3 + SOV4 (runs on Nick's Mac)
 # For Claude Code. Confirmed HF specs 2026-07-16. Serving = Mac-side (sandbox can't reach Ollama/local ports).
 
