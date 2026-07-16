@@ -63,8 +63,9 @@ breaks. This is what makes ARUM a spine not a list: L0 is the thread. Verified 6
 ## SRUM — the SWARM spine (the 4th spine) [PROVEN LIVE 2026-07-16]
 - **Question it answers**: *spread across how many workers?*
 - **Mechanism**: sov33_governed_swarm.py — venturi decomposes a task -> fans independent sub-tasks across
-  brain instances -> each agent's output care-gated + SIGIL-signed -> BFT/KRUM aggregation -> master OWEM
-  integrates into one governed answer.
+  brain instances -> each agent's output care-gated + SIGIL-signed -> gated-filter + concatenation.
+  (TESTED today: decompose + care-gate each sub-task + SIGIL-sign + concatenate. DESIGNED-not-yet-wired:
+  BFT/KRUM voting over agents + a separate master-OWEM integrator call — the `aggregator` param is a stub.)
 - **PROVEN LIVE**: 3 sub-tasks swarmed across the Oracle brain (meta.llama-3.3-70b) in 4.3s, all care-gated,
   all signed (contributing=3, all_signed=True). No GPU needed — runs on free/cheap online inference.
 - **Topology**: swarm of ONLINE-API OWEMs (NVIDIA/Oracle, federation tier, works now) feeding a MASTER OWEM
