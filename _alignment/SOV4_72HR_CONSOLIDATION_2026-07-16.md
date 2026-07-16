@@ -40,8 +40,12 @@ kNN over raw embeddings recovers the signal (0.882). This is the Supra-Router pa
 ═══════════════════════════════════════════════════════════════════
 ## 4. HONEST GAPS / TUNNELS / WIRING (nothing hidden)
 ═══════════════════════════════════════════════════════════════════
-⚠️ **190 modules still reference ~/.sovereign literal** (NOT 35 — earlier count was one-dir-scoped).
-   Path bug fixed in the hot path (memory/consolidation) but the estate-wide migration to sov33_paths is real work.
+✅ **Path-split gap RESOLVED as mostly false-alarm** (P1 investigated 2026-07-16): 110 files mention
+   `.sovereign`; 47 runtime-reachable; of those **40 are already SAFE** (env-first:
+   `os.environ.get('SOV33_SIGIL_DIR') or ~/.sovereign` → same store when the env var is set, which the
+   launcher always does). The 7 "risky" flagged were ALL false positives (comments/docstrings/print/sample
+   filenames). The one real bug (memory_bridge) was already fixed. **No live store-split remains.**
+   Blind migration to sov33_paths INTRODUCES a circular import (tested + reverted) — NOT worth doing.
 🧩 **SRUM BFT aggregation** = DESIGNED not wired (aggregator param is a stub; tested path = decompose+gate+sign+concat).
 🧩 **Dream-loop scheduler** NOT wired (dream() proven, but no nightly DRUM trigger).
 ⏸️ **Embedding router stalls on Mac** (sentence-transformers) → opt-in only (SOV33_EMBED_ROUTER=1);
@@ -53,7 +57,7 @@ kNN over raw embeddings recovers the signal (0.882). This is the Supra-Router pa
 ═══════════════════════════════════════════════════════════════════
 ## 5. NEXT PHASES — IMPROVE-EXISTING → PRODUCTION
 ═══════════════════════════════════════════════════════════════════
-P1 (near, ~$0): migrate the 190 ~/.sovereign refs to sov33_paths (script it, verify no store split).
+P1 DONE: path-split gap investigated → mostly false alarm, no live split, migration not worth the circular-import risk.
 P2 (near, ~$0): deploy embedding router on Modal-serve so BRUM gets 0.882 routing without the Mac stall.
 P3 (near, ~$0): harder emergence battery via co-evaluator → real headroom → conclusive fusion re-test.
 P4 (build): dream-loop scheduler (nightly DRUM → dream → consolidate → propose).
