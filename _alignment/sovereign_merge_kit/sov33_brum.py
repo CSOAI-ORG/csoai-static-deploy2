@@ -19,14 +19,25 @@ import os
 import sov33_paths as P  # noqa
 
 def _route(request):
-    """Trained router first (measured 0.716); fall back to keyword venturi if model missing."""
+    """Embedding router first (measured 0.882 balanced, held-out); TF-IDF trained router next (in-domain);
+    keyword venturi last (offline-safe). Each degrades to the next if its deps are missing."""
+    import os
+    # embedding router is BEST (0.882) but loads sentence-transformers, which stalls on some machines.
+    # opt-in via SOV33_EMBED_ROUTER=1 (set it where embeddings load fast, e.g. GPU box / Modal serve).
+    if os.environ.get("SOV33_EMBED_ROUTER") == "1":
+        try:
+            import sov33_embed_router as er
+            r = er.route(request)
+            return r["node"], r["confidence"], r.get("route_method", "embed_knn")
+        except Exception:
+            pass
     try:
-        import sov33_trained_router as tr
+        import sov33_trained_router as tr     # TF-IDF default (in-domain 0.72-0.82, instant everywhere)
         r = tr.route(request)
         return r["node"], r["confidence"], "trained_router"
     except Exception:
         try:
-            import sov33_venturi_router as vr
+            import sov33_venturi_router as vr  # keyword, offline-safe
             node, scores = vr.route_choice(request)
             return node, None, "keyword_venturi_fallback"
         except Exception as e:
