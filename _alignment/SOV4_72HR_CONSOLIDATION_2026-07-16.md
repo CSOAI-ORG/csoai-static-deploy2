@@ -43,8 +43,9 @@ kNN over raw embeddings recovers the signal (0.882). This is the Supra-Router pa
 ✅ **Path-split gap RESOLVED as mostly false-alarm** (P1 investigated 2026-07-16): 110 files mention
    `.sovereign`; 47 runtime-reachable; of those **40 are already SAFE** (env-first:
    `os.environ.get('SOV33_SIGIL_DIR') or ~/.sovereign` → same store when the env var is set, which the
-   launcher always does). The 7 "risky" flagged were ALL false positives (comments/docstrings/print/sample
-   filenames). The one real bug (memory_bridge) was already fixed. **No live store-split remains.**
+   launcher always does). Of the 7 flagged "risky": **5 were false positives** (comments/docstrings/print/
+   sample filenames), **1 was the real bug already fixed** (sov33_memory_bridge), **1 is the resolver itself**
+   (sov33_paths). **No live store-split remains.**
    Blind migration to sov33_paths INTRODUCES a circular import (tested + reverted) — NOT worth doing.
 🧩 **SRUM BFT aggregation** = DESIGNED not wired (aggregator param is a stub; tested path = decompose+gate+sign+concat).
 🧩 **Dream-loop scheduler** NOT wired (dream() proven, but no nightly DRUM trigger).
