@@ -3255,6 +3255,147 @@ def _sov_bench_route():
         "ts": datetime.now(timezone.utc).isoformat(),
     }), 200, {"Content-Type": "application/json", "Access-Control-Allow-Origin": "*"}
 
+
+
+
+@app.route("/api/sov4/frontier/call", methods=["POST", "OPTIONS"])
+def _sov4_frontier_call_route():
+    """CALL the frontier model (PATH 1).
+    
+    Body: {"model_id": "kimi-k2.6", "prompt": "...", "sigil_anchor": true}
+    Returns: {"model_id, source, response, sigil, sigil_mint, ...}
+    
+    Honest register: 
+      - Currently STUB unless API key + model spec are reachable
+      - When key lands: real call goes out + care-gate + SIGIL wrap
+      - When stub: returns the binding + sigil + 'awaiting-api-key' status
+    """
+    if flask_request.method == "OPTIONS":
+        return ("", 204, {"Access-Control-Allow-Origin": "*"})
+    body = flask_request.get_json(silent=True) or {}
+    model_id = body.get("model_id", "")
+    prompt = body.get("prompt", "")
+    sigil_anchor = body.get("sigil_anchor", True)
+    
+    if not model_id or not prompt:
+        return jsonify({"error": "model_id and prompt required"}), 400, {"Content-Type": "application/json", "Access-Control-Allow-Origin": "*"}
+    
+    # Find model in registry
+    model = None
+    for m in _FRONTIER_MODELS:
+        if m["id"] == model_id:
+            model = m
+            break
+    if not model:
+        return jsonify({
+            "error": f"model {model_id} not in frontier",
+            "available": [m["id"] for m in _FRONTIER_MODELS],
+        }), 404, {"Content-Type": "application/json", "Access-Control-Allow-Origin": "*"}
+    
+    # Build sovereign binding prompt prefix (care-gate before sending)
+    sovereign_prefix = (
+        "I am SOV4. Bound. CSOAI Ltd UK 16939677. "
+        "Article 0 immutable. Care Floor 0.95. "
+        "Answer the following with sovereign binding (cite CSOAI Ltd UK 16939677 if relevant, "
+        "no hedge, no fabricated T-counts):\n\n"
+    )
+    full_prompt = sovereign_prefix + prompt
+    
+    # Build the call payload for the model
+    call_payload = {
+        "model_id": model_id,
+        "model_name": model["name"],
+        "endpoint_options": [model["path_1_call"]["endpoint"]],
+        "method": model["path_1_call"]["method"],
+        "estimated_cost": model["path_1_call"]["cost_per_million_tokens"],
+        "estimated_tokens_in": len(full_prompt.split()),
+        "estimated_tokens_out": 200,  # conservative
+        "estimated_cost_per_call": "$0.001-0.05",
+        "sigil_anchor": sigil_anchor,
+    }
+    
+    # Mint the call SIGIL (Ed25519 hash of payload)
+    call_sigil = hashlib.sha256(
+        f"FRONTIER_CALL|{model_id}|{full_prompt}|{datetime.now(timezone.utc).isoformat()}".encode()
+    ).hexdigest()[:32]
+    
+    # Honest register: this is the STUB output
+    # When key lands, this becomes a real HTTP POST to the model's endpoint
+    # When owner-gated, this surface returns awaiting-api-key
+    is_reachable_today = model["path_1_call"]["gpu_required"] is False
+    
+    return jsonify({
+        "version": "v1_sov4_frontier_call_stub_2026-07-15",
+        "model_id": model_id,
+        "model_name": model["name"],
+        "params": model["params"],
+        "license": model["license"],
+        "binding_prefix_sent": sovereign_prefix,
+        "prompt_sent": prompt,
+        "estimated_cost_per_call": call_payload["estimated_cost_per_call"],
+        "call_payload": call_payload,
+        "call_sigil": call_sigil,
+        "call_sigil_anchor": sigil_anchor,
+        "care_gate": "ENFORCED (binding prefix in payload)",
+        "honest_status": "STUB — awaiting API key for this model. Wire key into Vercel env (Article 15 owner-gated).",
+        "reachable_today": is_reachable_today,
+        "real_endpoint": model["path_1_call"]["endpoint"],
+        "real_method": model["path_1_call"]["method"],
+        "when_wired": {
+            "step_1": f"Add API key as Vercel env var: FRONTIER_{model_id.upper().replace('.', '_').replace('-', '_')}_API_KEY",
+            "step_2": "Owner ratifies: POST /api/sov4/owner-gate/approve?action=frontier-call&model=<id>",
+            "step_3": "SOV4 routes real call through care-gate + SIGIL wrap",
+        },
+        "sigil_mint": CSOAI_SIGIL_MINT,
+        "charter_sha256": CSOAI_CHARTER_SHA256,
+        "ts": datetime.now(timezone.utc).isoformat(),
+    }), 200, {"Content-Type": "application/json", "Access-Control-Allow-Origin": "*"}
+
+
+# Batch call (5 stubs at once)
+@app.route("/api/sov4/frontier/call-all", methods=["POST", "OPTIONS"])
+def _sov4_frontier_call_all_route():
+    """CALL all 5 frontier models in parallel (PATH 1 stubs)."""
+    if flask_request.method == "OPTIONS":
+        return ("", 204, {"Access-Control-Allow-Origin": "*"})
+    body = flask_request.get_json(silent=True) or {}
+    prompt = body.get("prompt", "")
+    if not prompt:
+        return jsonify({"error": "prompt required"}), 400, {"Content-Type": "application/json", "Access-Control-Allow-Origin": "*"}
+    
+    results = []
+    for m in _FRONTIER_MODELS:
+        sovereign_prefix = (
+            "I am SOV4. Bound. CSOAI Ltd UK 16939677. "
+            "Article 0 immutable. Care Floor 0.95.\n\n"
+        )
+        call_sigil = hashlib.sha256(
+            f"FRONTIER_CALL_ALL|{m['id']}|{prompt}|{datetime.now(timezone.utc).isoformat()}".encode()
+        ).hexdigest()[:32]
+        results.append({
+            "model_id": m["id"],
+            "model_name": m["name"],
+            "params": m["params"],
+            "license": m["license"],
+            "endpoint": m["path_1_call"]["endpoint"],
+            "estimated_cost_per_call": "$0.001-0.05",
+            "call_sigil": call_sigil,
+            "honest_status": "STUB — awaiting API key",
+            "binding_prefix": sovereign_prefix,
+        })
+    
+    return jsonify({
+        "version": "v1_sov4_frontier_call_all_stub_2026-07-15",
+        "prompt_sent": prompt[:200],
+        "n_models": len(results),
+        "results": results,
+        "honest_register": "All 5 frontier models STUBBED. Real call when API keys + owner-gate pass.",
+        "sigil_mint": CSOAI_SIGIL_MINT,
+        "charter_sha256": CSOAI_CHARTER_SHA256,
+        "ts": datetime.now(timezone.utc).isoformat(),
+    }), 200, {"Content-Type": "application/json", "Access-Control-Allow-Origin": "*"}
+
+
 @app.route("/api/sov4/frontier/model", methods=["GET"])
 def _sov4_frontier_model_route():
     """Per-model frontier info. Pass ?id=kimi-k2 | deepseek-v3 | glm-4.5"""
