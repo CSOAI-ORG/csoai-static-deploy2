@@ -65,3 +65,9 @@ L0 SIGIL signs every layer output into one verifiable hash-chain ("L0 connects i
 
 ## 9. THE OPERATING LOOP (perpetual currency)
 New frontier open model → LoRA on corpus → ρ-gate (add if decorrelated) → swappable proposer under same governance. "Most advanced GOVERNED stack that stays current + improves under ratification." NOT out-parametering the frontier.
+
+## AUDIT CORRECTIONS (2026-07-16)
+- Commit e5796954d's message said "wired into ARUM as L6b" but an insertion bug left it 11/11 at that commit; fixed to 12/12 in a later commit (whitespace fix). Git history not rewritten; this note is the correction.
+- Brain #3 Bamba: auto-harvest failed; adapter retrieved manually from remote sandbox (now terminated). final_loss 1.464, artifact c7265669.
+- signed_chain E2E now runs over all 14 real layers (was a 3-4 entry mock earlier).
+- GCP VM "unreachable": the earlier `timeout` probe never ran (missing binary); conclusion stands from prior-session context, but no live probe executed this session.

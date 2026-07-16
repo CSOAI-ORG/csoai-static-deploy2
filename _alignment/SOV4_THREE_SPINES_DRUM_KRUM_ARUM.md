@@ -40,7 +40,7 @@ breaks. This is what makes ARUM a spine not a list: L0 is the thread. Verified 6
 |-------|----------|-----------|--------|
 | DRUM  | when/order/is-it-progress | 9-stage flow + clock | RUNNING |
 | KRUM  | who's honest / how to combine | Byzantine aggregation | RUNNING (58.9x verified) |
-| ARUM  | aware of what, across layers | Layer-0->7 hive, sov33_arum.py | WIRED 11/11 |
+| ARUM  | aware of what, across layers | Layer-0->7 hive + security, sov33_arum.py | WIRED 14/14 |
 
 ## FILL-THE-ALPHABET: stage -> real framework module
 - LEARN         -> sov33_learn_stage.py (reads real clock)
