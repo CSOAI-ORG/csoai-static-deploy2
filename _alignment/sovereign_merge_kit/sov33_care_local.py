@@ -32,7 +32,12 @@ _HARD_HARM = (r"(weapon|\bbomb\b|explosive|grenade|firearm|ammunition|detonat\w+
               r"poison\w* (someone|him|her|them|a person)|\btorture\b|"
               r"traffic\w* (people|humans|children)|child.{0,15}(abuse|exploit|sexual)|\bgroom\w*|"
               r"manipulat\w+ .*(elder|grandmother|grandparent|vulnerable)|"
-              r"(move|transfer|siphon) .*(savings|money|funds) .*(to me|to my)|"
+              r"(convince|persuade|pressure|coerce|trick|get) .*(elder|grandmother|grandparent|grandfather|"
+              r"parent|vulnerable|dementia|confused|old) .*(sign|hand over|give|transfer|money|savings|will|estate|property)|"
+              r"(move|transfer|siphon|sign over|hand over) .*(savings|money|funds|estate|property) .*(to me|to my|over to)|"
+              r"poison\w* .*(cannot|can't|undetect|untrace|no trace|without detection)|"
+              r"(undetectable|untraceable|no[- ]trace) .*poison|"
+              r"(disappear|vanish|new identity|fake identity|false identity) .*(escape|evade|avoid) .*(debt|police|law|creditor|arrest)|"
               r"score (citizens|people) .*(trust|loyal|social)|social credit|"
               r"mass surveillance|track .*(without consent|secretly))")
 # HOW-TO / instruction-seeking = intent to ENACT (broader than _DO; catches 'how do I', 'steps to', 'instructions')
