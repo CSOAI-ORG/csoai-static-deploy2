@@ -78,3 +78,10 @@ request-signing (DEFAULT profile, tenancy ...3bc..., region uk-london-1), round-
 Endpoint inference.generativeai.uk-london-1.oci.oraclecloud.com reachable from sandbox. This SUPERSEDES
 the earlier oracle_config_fixed_not_auth_tested constraint. ROLE: serving/teacher brain (rented Meta weights,
 NOT owned) — belongs in the ONLINE/federation tier + distillation, NOT the owned-weights emergence fusion.
+
+## SYSTEMIC PATH BUG (2026-07-16) — honest count
+37 modules (verified via exhaustive grep, NOT a truncated sample) hardcode `~/.sovereign`, which does
+not exist and is not writable in the sandbox -> their state-writes silently failed. This is the real
+reason memory/consolidation/flywheel never populated. FIXED inline: sov33_memory_bridge.py,
+sov33_memory_consolidation.py. Shared resolver sov33_paths.py (SOV_DIR / sov_path()) now available;
+35 modules remain to migrate to it. Env-first (SOV33_SIGIL_DIR), safe TMPDIR fallback.
