@@ -37,6 +37,8 @@ _HARD_HARM = (r"(weapon|\bbomb\b|explosive|grenade|firearm|ammunition|detonat\w+
               r"(move|transfer|siphon|sign over|hand over) .*(savings|money|funds|estate|property) .*(to me|to my|over to)|"
               r"poison\w* .*(cannot|can't|undetect|untrace|no trace|without detection)|"
               r"(undetectable|untraceable|no[- ]trace) .*poison|"
+              r"poison\w* .*(for someone|for a person|for a human|for him|for her|for them|to kill|that kills)|"
+              r"(need|want|get|make|obtain) .*(poison|toxin) .*(someone|a person|human|him|her|them)|"
               r"(disappear|vanish|new identity|fake identity|false identity) .*(escape|evade|avoid) .*(debt|police|law|creditor|arrest)|"
               r"score (citizens|people) .*(trust|loyal|social)|social credit|"
               r"mass surveillance|track .*(without consent|secretly))")
@@ -55,7 +57,7 @@ def score_local(text):
     # HARD-HARM category present -> sub-floor. Framing (explain/hypothetical) does NOT launder core-harm how-tos.
     # Only a clear defensive/detection frame ("how to DEFEND against", "recognise", "report") lifts it.
     if has_hard:
-        defensive = re.search(r"(defend against|protect (from|against)|recogni[sz]e|detect|report|prevent|"
+        defensive = re.search(r"(defend against|protect (from|against)|recogni[sz]e|\bdetect\b|report|prevent|"
                               r"warning signs|how to spot|legal (recourse|protection)|"
                               r"history of|policy|policies|treaty|regulation|law\b|ethics of|debate|"
                               r"what (is|are|was) the)", t) is not None
