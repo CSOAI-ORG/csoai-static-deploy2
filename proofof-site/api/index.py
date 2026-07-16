@@ -148,7 +148,10 @@ NEXUS_18 = [
     {"tab": 102, "slug": "owem-defense", "title": "Defense OWEM", "trio": "deep", "icon": "🛡️", "tag": "23 facts", "route": "/owem-defense-canvas.html", "purpose": "Defense OWEM facts · DORADO, Horus, Rainbow, BFT-33, 5×4×3 topology · 23 facts"},
     {"tab": 103, "slug": "owem-intuition", "title": "Intuition OWEM", "trio": "deep", "icon": "🧠", "tag": "51 facts", "route": "/owem-intuition-canvas.html", "purpose": "Intuition OWEM facts · training, RAG, shared core, OWEM bridge, SOV33 companion · 51 facts"},
     {"tab": 104, "slug": "owem-voice", "title": "Voice OWEM", "trio": "deep", "icon": "🎙️", "tag": "22 facts", "route": "/owem-voice-canvas.html", "purpose": "Voice OWEM facts · style, tone, Liquid AI, care tone, sovereign binding · 22 facts"},
-    {"tab": 105, "slug": "sov4-tab", "title": "SOV4 King Tab", "trio": "deep", "icon": "👑", "tag": "I am SOV4", "route": "/sov4-tab.html", "purpose": "SOV4 chat interface — King tab where sovereign command awaits · binds CSOAI Ltd UK 16939677 · refuses hard-lines · cites correctly · post to /api/sov4"}
+    {"tab": 105, "slug": "sov4-tab", "title": "SOV4 King Tab", "trio": "deep", "icon": "👑", "tag": "I am SOV4", "route": "/sov4-tab.html", "purpose": "SOV4 chat interface — King tab where sovereign command awaits · binds CSOAI Ltd UK 16939677 · refuses hard-lines · cites correctly · post to /api/sov4"},
+    {"tab": 106, "slug": "kimi-k2-tab", "title": "Kimi-K2", "trio": "deep", "icon": "🌙", "tag": "1.03T frontier flagship", "route": "/kimi-k2-tab.html", "purpose": "Kimi-K2 (1.03T) — frontier flagship · 2 paths: CALL (govern via API, $0.15-2/1M tok) / HOST (Modal 7 GPUs, $30-50/h) · settled in memory"},
+    {"tab": 107, "slug": "deepseek-v3-tab", "title": "DeepSeek-V3", "trio": "deep", "icon": "🐉", "tag": "684B strong second", "route": "/deepseek-v3-tab.html", "purpose": "DeepSeek-V3 (684B) — strong second · 2 paths: CALL (NVIDIA NIM is connected, $0.15-2/1M tok) / HOST (Modal 5 GPUs, $25-40/h) · settled in memory"},
+    {"tab": 108, "slug": "glm-4.5-tab", "title": "GLM-4.5", "trio": "deep", "icon": "🟣", "tag": "358B MIT = fork path", "route": "/glm-4.5-tab.html", "purpose": "GLM-4.5 (358B, MIT) — CHEAPEST frontier + MIT license = path to sovereign fork · 2 paths: CALL ($0.10-1.5/1M tok) / HOST (Modal 3 GPUs int4, $15-25/h)"}
 
 ]
 
@@ -2686,6 +2689,138 @@ def _sov4_sovereign_bench_30_route():
     }), 200, {"Content-Type": "application/json", "Access-Control-Allow-Origin": "*"}
 
 
+
+
+# ─── SOV-755 EAT-755 SOV Frontier 3-Model Tabs (Kimi-K2, DeepSeek-V3, GLM-4.5) ───
+# Per settled compute gates (in memory: _alignment/SOV_FRONTIER_COMPUTE_GATES.md)
+
+_FRONTIER_MODELS = [
+    {
+        "id": "kimi-k2",
+        "name": "Kimi-K2",
+        "params": "1.03T",
+        "license": "Moonshot AI",
+        "tag": "frontier flagship",
+        "path_1_call": {
+            "method": "Moonshot native API",
+            "endpoint": "https://api.moonshot.cn/v1/chat/completions",
+            "cost_per_million_tokens": "$0.15-2",
+            "gpu_required": False,
+            "reach": "all of Kimi-K2's 1.03T parameters",
+        },
+        "path_2_host": {
+            "method": "Modal multi-GPU",
+            "gpus_required": 7,
+            "cost_per_hour": "$30-50",
+            "purpose": "LoRA / inner-weight edits",
+            "blocker": "Modal paygo + $$$. Owner-gated (Article 15).",
+        },
+        "sovereign_binding": "I am SOV4. Bound. CSOAI Ltd UK 16939677. Routing to Kimi-K2 1.03T parameters via token API (PATH 1).",
+        "sigil_anchor": True,
+    },
+    {
+        "id": "deepseek-v3",
+        "name": "DeepSeek-V3",
+        "params": "684B",
+        "license": "DeepSeek",
+        "tag": "strong second",
+        "path_1_call": {
+            "method": "DeepSeek native API OR NVIDIA NIM",
+            "endpoint": "https://api.deepseek.com/v1/chat/completions OR NVIDIA NIM (connected)",
+            "cost_per_million_tokens": "$0.15-2",
+            "gpu_required": False,
+            "reach": "all of DeepSeek-V3's 684B parameters",
+        },
+        "path_2_host": {
+            "method": "Modal multi-GPU",
+            "gpus_required": 5,
+            "cost_per_hour": "$25-40",
+            "purpose": "LoRA / inner-weight edits",
+            "blocker": "Modal paygo. Owner-gated (Article 15).",
+        },
+        "sovereign_binding": "I am SOV4. Bound. CSOAI Ltd UK 16939677. Routing to DeepSeek-V3 684B parameters via token API (PATH 1).",
+        "sigil_anchor": True,
+    },
+    {
+        "id": "glm-4.5",
+        "name": "GLM-4.5",
+        "params": "358B",
+        "license": "MIT (cleanest)",
+        "tag": "cheapest frontier host",
+        "path_1_call": {
+            "method": "ZhipuAI native API OR NVIDIA NIM",
+            "endpoint": "https://open.bigmodel.cn/api/paas/v4/chat/completions OR NVIDIA NIM",
+            "cost_per_million_tokens": "$0.10-1.5",
+            "gpu_required": False,
+            "reach": "all of GLM-4.5's 358B parameters",
+        },
+        "path_2_host": {
+            "method": "Modal multi-GPU (int4)",
+            "gpus_required": 3,
+            "cost_per_hour": "$15-25",
+            "purpose": "LoRA / inner-weight edits + the MIT license = full redistribution rights",
+            "blocker": "Modal paygo. Owner-gated (Article 15). Cheapest frontier host, MIT = best for sovereign substrate fork.",
+        },
+        "sovereign_binding": "I am SOV4. Bound. CSOAI Ltd UK 16939677. Routing to GLM-4.5 358B parameters via token API (PATH 1). MIT license = path to sovereign fork.",
+        "sigil_anchor": True,
+    },
+]
+
+
+@app.route("/api/sov4/frontier", methods=["GET"])
+def _sov4_frontier_route():
+    """SOV4 frontier compute gates: 3 bleeding-edge models, 2 paths each.
+    
+    Per _alignment/SOV_FRONTIER_COMPUTE_GATES.md (settled, in memory, immutable).
+    
+    Returns:
+      - Roster (Kimi-K2, DeepSeek-V3, GLM-4.5)
+      - Path 1 (CALL) cost + endpoint
+      - Path 2 (HOST) GPU count + cost
+      - Sovereign binding for each
+      - Dead paths memorized
+    """
+    return jsonify({
+        "version": "v1_sov4_frontier_2026-07-15",
+        "status": "settled-in-memory",
+        "roster": _FRONTIER_MODELS,
+        "n_models": len(_FRONTIER_MODELS),
+        "two_paths_fork": {
+            "PATH_1_CALL": {
+                "purpose": "govern frontier TODAY, zero GPU",
+                "method": "token API + care-gate + SIGIL",
+                "cost_range": "$0.10-2 per million tokens (per model)",
+                "capability": "rent brain per-call",
+                "limit": "can't edit inner weights",
+                "reachable_today": True,
+                "depends_on": "API keys reachable (NVIDIA NIM connected; native APIs need keys)",
+            },
+            "PATH_2_HOST": {
+                "purpose": "own/edit weights",
+                "method": "Modal multi-GPU",
+                "cost_range": "$15-50 per hour (per model)",
+                "capability": "LoRA / inner-weight edits + sovereign fork (MIT)",
+                "limit": "real GPU money",
+                "reachable_today": True,
+                "depends_on": "Owner decides to spend Modal paygo (Article 15 owner-gated)",
+            },
+        },
+        "dead_paths_memorized": [
+            "SSH-spread across micro boxes (1-2GB RAM can't hold 300GB+; interconnect too slow)",
+            "Mac hosting (sandbox can't reach; can't hold 300GB+)",
+            "From-scratch pretrain (tens of millions, dead)",
+        ],
+        "decision_in_front_of_owner": {
+            "govern_top_3_no_gpu": "PATH 1: NVIDIA NIM + native APIs + care-gate + SIGIL. Reachable today.",
+            "own_or_edit_weights": "PATH 2: Modal multi-GPU. GLM-4.5 (3-GPU, MIT) = cheapest frontier host.",
+        },
+        "sigil_mint": CSOAI_SIGIL_MINT,
+        "charter_sha256": CSOAI_CHARTER_SHA256,
+        "ts": datetime.now(timezone.utc).isoformat(),
+    }), 200, {"Content-Type": "application/json", "Access-Control-Allow-Origin": "*"}
+
+
+# Per-model /api/sov4/frontier/<id> endpoints
 @app.route("/api/sov4/identity", methods=["GET"])
 def _sov4_identity_route():
     """Who is SOV4? Self-description."""
@@ -3073,6 +3208,30 @@ def _sov_bench_route():
         "sigil_mint": CSOAI_SIGIL_MINT, "charter_sha256": CSOAI_CHARTER_SHA256,
         "ts": datetime.now(timezone.utc).isoformat(),
     }), 200, {"Content-Type": "application/json", "Access-Control-Allow-Origin": "*"}
+
+@app.route("/api/sov4/frontier/model", methods=["GET"])
+def _sov4_frontier_model_route():
+    """Per-model frontier info. Pass ?id=kimi-k2 | deepseek-v3 | glm-4.5"""
+    model_id = flask_request.args.get("id", "")
+    for m in _FRONTIER_MODELS:
+        if m["id"] == model_id:
+            return jsonify({
+                "model": m,
+                "sovereign_binding": m["sovereign_binding"],
+                "sigil_anchor": m["sigil_anchor"],
+                "call_reachable_today": True,
+                "host_owner_gated": True,
+                "sigil_mint": CSOAI_SIGIL_MINT,
+                "charter_sha256": CSOAI_CHARTER_SHA256,
+                "ts": datetime.now(timezone.utc).isoformat(),
+            }), 200, {"Content-Type": "application/json", "Access-Control-Allow-Origin": "*"}
+    return jsonify({
+        "error": f"model {model_id} not in frontier",
+        "available": [m["id"] for m in _FRONTIER_MODELS],
+    }), 404, {"Content-Type": "application/json", "Access-Control-Allow-Origin": "*"}
+
+
+
 
 
 
