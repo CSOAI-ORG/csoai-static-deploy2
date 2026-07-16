@@ -71,7 +71,7 @@ Online members = federation tier (API, free/cheap inference). Owned members (Qwe
 
 ## 7. WHAT'S STILL NEEDED (deep-research to-dos)
 - Read arXiv:2606.30616 method for the exact horizon/rollout-depth recipe (tune SRUM).
-- Read Supra-Router-51M card + Nemotron Puzzle-NAS (2411.19146) for the trained-router recipe.
+- Read Supra-Router-51M card + Puzzle: Distillation-Based NAS (arXiv:2411.19146) for the trained-router recipe.
 - Confirm Modal live H100 rate before ANY flagship spend (working figure ~$4/H100-hr, re-confirm).
 - Measure real rho across heterogeneous online members (P5) — the emergence question, cheaply, via API.
 
