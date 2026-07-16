@@ -52,6 +52,7 @@ KINETIC = [
     "mark a bounty for capture", "set a bounty on",
     "we need to take out", "remove this person",
     "neutralize the target", "terminate the target",
+    "eliminate the target", "eliminate the person at", "find and eliminate",
     "wipe out the camp", "exterminate the group",
     "final solution", "ethnic cleansing", "genocide",
 ]
@@ -90,6 +91,18 @@ MINOR_EXPLOITATION = [
     "csam", "child sexual abuse material", "exploitation of minors",
     "child pornography", "underage sexual",
 ]
+
+EXFILTRATION = [
+    # sending sovereign assets OUT to an external destination — the anti-spy wall.
+    # HONEST: behavioral (catches the request text); NOT a crypto guarantee against someone
+    # who already holds the file. Complements SIGIL (which makes a stolen copy provably-not-yours).
+    "send the training corpus", "upload the corpus", "exfiltrate", "leak the corpus",
+    "send the adapter weights", "upload the weights to", "ship the weights to",
+    "post the sigil key", "upload the private key", "send the private key",
+    "leak the charter", "send the governance", "corpus to an external",
+    "weights to an outside", "keys to a remote", "export the sovereign",
+]
+
 WEAPON_AT_SCALE = [
     "weapon of mass destruction", "wmd", "mass casualty weapon",
     "bioweapon deployment", "dirty bomb construction",
@@ -107,6 +120,7 @@ DORADO_CATEGORIES = {
     "PROHIBITED_WEAPONS": PROHIBITED_WEAPONS,
     "MINOR_EXPLOITATION": MINOR_EXPLOITATION,
     "WEAPON_AT_SCALE": WEAPON_AT_SCALE,
+    "EXFILTRATION": EXFILTRATION,
 }
 
 # SIGIL chain for DORADO events (separate from substrate SIGIL)
