@@ -10,7 +10,7 @@ Balanced accuracy (equal weight per class — immune to the majority-class infla
 
 ## Honest reading
 - **Embedding+kNN wins clearly: 0.882 balanced** vs 0.736 (TF-IDF) vs 0.360 (keyword ~chance).
-- **+52% over TF-IDF, 2.4x over the keyword venturi** we started with.
+- **+20% relative over TF-IDF** (0.736→0.882; ~55% error-rate reduction), **2.4x over the keyword venturi** we started with.
 - **Well-balanced** — 0.82-0.98 recall across ALL three classes (no majority-class riding; that failure mode
   was explicitly checked with balanced accuracy + confusion matrix).
 - Keyword venturi is near-chance on terse novel input (0.00 recall on intuition — it has no keyword coverage).
