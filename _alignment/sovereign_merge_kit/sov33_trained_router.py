@@ -20,7 +20,7 @@ def _load():
         import joblib
         d=os.path.dirname(os.path.abspath(__file__))
         # prefer recalibrated v2 (confidence discriminates), fall back to v1
-        for fn in ("sov33_trained_router_v2.joblib","sov33_trained_router.joblib"):
+        for fn in ("sov33_trained_router_v4.joblib","sov33_trained_router_v2.joblib","sov33_trained_router.joblib"):
             p=os.path.join(d,fn)
             if os.path.exists(p): _MODEL=joblib.load(p); break
     return _MODEL
