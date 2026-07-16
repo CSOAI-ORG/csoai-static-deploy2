@@ -7,7 +7,7 @@ WHAT THE TAB DOES:
   - Chat with SOV3 (served via governed shim, care-gate + SIGIL on every answer)
   - Shows: care-score + signature per response (proves governance is live)
   - Honest label: "0.5B student — grounds in law well, NOT frontier. Citation-correctness is the known gap (RAG fixes it)."
-NEXT UPGRADE (planned): retrain on full 5,573 corpus (currently 113-pair). Bigger corpus = sharper student.
+NEXT UPGRADE (planned): retrain on full 1,292 unique-example corpus (currently 113-pair). Bigger corpus = sharper student.
 
 ## SOV4 TAB — the King / governor (the fusion allocator)
 WHAT IT IS: the cost-effective allocator. Routes each query to the CHEAPEST tier that can handle it.
@@ -30,7 +30,7 @@ WHAT THE TAB DOES:
 - One-time: LoRA the small model ~$5-20 on Vast/Modal. Running: single-digit $/day of heavy use.
 
 ## WHAT'S REAL vs PLANNED (honest, for the tabs to not overclaim)
-REAL NOW: SOV3 adapter (eval-proven), SOV4 governor (117 caps), care-gate, SIGIL, cost-router (tested), 5,573 corpus.
+REAL NOW: SOV3 adapter (eval-proven), SOV4 governor (117 caps), care-gate, SIGIL, cost-router (tested), 1,292 unique-example corpus.
 PLANNED (needs GPU spend / a run): LoRA Qwen3.6-35B, wire flagship APIs, measured fusion (big>small proof).
 SIBLING-REPORTED (credible, not re-verified by Science lane): Hermes EAT endpoints (frontier/auto 11/11, RAG 95%).
 
