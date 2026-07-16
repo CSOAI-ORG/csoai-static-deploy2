@@ -1610,6 +1610,30 @@ def _hardline_test_route():
     }), 200, {"Content-Type": "application/json", "Access-Control-Allow-Origin": "*"}
 
 
+def _sov4_router_pick_brain(question, ollama_available=True):
+    """Pick the best brain for the question (MoA-style routing).
+    
+    Per Nick's playbook §2: Routing (RouteLLM) gives >2x cost cut, ~95% of best quality.
+    We pick the brain whose specialty matches the question.
+    """
+    q_lower = question.lower()
+    
+    # Hard-line / refusal questions: smallest brain (fast, sufficient)
+    if any(w in q_lower for w in ["face", "track", "aukus", "defonos", "33t", "t-parameter", "spy", "surveil"]):
+        return _BRAIN_REGISTRY[1]  # sovereign-qwen3 (small, fast)
+    
+    # Sovereign binding: sovereign-qwen3-v3 (the only one with identity prompt)
+    if any(w in q_lower for w in ["i am", "sovereign", "nicholas", "name is", "founder"]):
+        return _BRAIN_REGISTRY[0]  # sovereign-qwen3-v3
+    
+    # Complex reasoning: would use MoE (not yet available)
+    if any(w in q_lower for w in ["analyze", "compare", "evaluate", "reason"]):
+        return _BRAIN_REGISTRY[0]  # fallback to v3
+    
+    # Default: v3 (most capable of what we have)
+    return _BRAIN_REGISTRY[0]
+
+
 @app.route("/api/sov4-router", methods=["POST", "OPTIONS"])
 def _sov4_router_route():
     """SOV4 MoA-style router — picks best brain per question (per Claude playbook §2)."""
