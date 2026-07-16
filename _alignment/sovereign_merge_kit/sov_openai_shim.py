@@ -73,9 +73,23 @@ class H(http.server.BaseHTTPRequestHandler):
         self.send_response(204); self.send_header("Access-Control-Allow-Origin","*")
         self.send_header("Access-Control-Allow-Headers","*"); self.send_header("Access-Control-Allow-Methods","*"); self.end_headers()
     def do_GET(self):
-        if self.path.rstrip("/").endswith("/models"):
+        p = self.path.rstrip("/")
+        if p.endswith("/models"):
             self._j({"object":"list","data":[{"id":m,"object":"model","owned_by":"sovereign"} for m in MODELS]})
-        else: self._j({"error":"not found"},404)
+        elif p in ("", "/status", "/health"):
+            # root status page — so localhost:8802 shows the engine is alive, not "not found"
+            html = ("<html><body style='font-family:system-ui;max-width:640px;margin:40px auto'>"
+                    "<h2>🜂 SOV333 / BRUM engine — RUNNING</h2>"
+                    f"<p>Governed OpenAI endpoint. care-floor 0.35 · signing ON</p>"
+                    f"<p>Models: {', '.join(MODELS)}</p>"
+                    "<p>This is an <b>API</b>, not a website. Point an OpenAI client at "
+                    "<code>http://localhost:8802/v1</code>, or try:</p>"
+                    "<pre>curl http://localhost:8802/v1/models</pre>"
+                    "<p>BRUM routes → brain generates → care-gate → SIGIL sign → response.</p>"
+                    "</body></html>")
+            self.send_response(200); self.send_header("Content-Type","text/html")
+            self.end_headers(); self.wfile.write(html.encode())
+        else: self._j({"error":"not found","hint":"try /v1/models or / for status"},404)
     def do_POST(self):
         n=int(self.headers.get("Content-Length",0)); body=json.loads(self.rfile.read(n) or b"{}")
         if self.path.rstrip("/").endswith("/chat/completions"):
