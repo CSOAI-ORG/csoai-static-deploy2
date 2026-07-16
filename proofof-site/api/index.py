@@ -1856,6 +1856,67 @@ def _sov4_on_hermes_route():
 
 
 
+# ─── SOV-744 _BRAIN_REGISTRY (Sovereign brains available to SOV4) ─────────────
+_BRAIN_REGISTRY = [
+    {
+        "id": "sovereign-qwen3-v3",
+        "name": "Sovereign Qwen3 v3",
+        "arch": "qwen3-1.7b-dense",
+        "model": "qwen3:1.7b + JEEVES identity",
+        "specialty": "general, sovereign-binding, no-hedge",
+        "status": "LIVE",
+        "ollama_local": True,
+        "vercel_proxy": False,
+    },
+    {
+        "id": "sovereign-qwen3",
+        "name": "Sovereign Qwen3 (small)",
+        "arch": "qwen3-0.6b-dense",
+        "model": "qwen3:0.6b base",
+        "specialty": "fast, lightweight",
+        "status": "LIVE",
+        "ollama_local": True,
+        "vercel_proxy": False,
+    },
+    {
+        "id": "sovereign-moe",
+        "name": "Sovereign MoE (STUB — needs architecture)",
+        "arch": "qwen3-30b-a3b-moe (target)",
+        "model": "Qwen3 30B-A3B MoE (sibling claimed 3B active, runs on M2 Mac)",
+        "specialty": "complex reasoning, routing",
+        "status": "DENSE_STUB",
+        "ollama_local": False,
+        "vercel_proxy": False,
+        "honest_status": "NEEDS_3B_ACTIVE",
+        "blocker": "SOV4 emergence proof (Claude science SOV4-P2). Sibling has Qwen3-30B-A3B claim but no real weights served yet.",
+    },
+    {
+        "id": "sovereign-ssm",
+        "name": "Sovereign SSM (STUB — needs architecture)",
+        "arch": "mamba-ssm (target)",
+        "model": "Mamba SSM (per sibling Build Phase SOV3 spec)",
+        "specialty": "long-context, state-space reasoning",
+        "status": "DENSE_STUB",
+        "ollama_local": False,
+        "vercel_proxy": False,
+        "honest_status": "NEEDS_SSM_TRAINING",
+        "blocker": "Requires distilling Mamba SSM weights into the sovereign substrate path. GPU required (deferred).",
+    },
+    {
+        "id": "sovereign-tinyllama",
+        "name": "Sovereign TinyLlama (STUB — needs architecture)",
+        "arch": "tinyllama-1.1b-dense (target)",
+        "model": "TinyLlama 1.1B (sibling brought up in cron env checks)",
+        "specialty": "ultra-fast, sovereign pruning candidate",
+        "status": "DENSE_STUB",
+        "ollama_local": False,
+        "vercel_proxy": False,
+        "honest_status": "NEEDS_MODEL_PULL",
+        "blocker": "Sibling env builds TinyLlama into ~/.sovereign; needs to be ollama-served.",
+    },
+]
+
+
 @app.route("/api/sov4/3-diverse", methods=["GET"])
 def _sov4_3diverse_route():
     """SOV4 emergence proof readiness — 3-diverse-architecture brain check.
