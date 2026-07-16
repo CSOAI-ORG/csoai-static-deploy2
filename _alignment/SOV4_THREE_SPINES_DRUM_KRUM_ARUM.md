@@ -58,3 +58,25 @@ breaks. This is what makes ARUM a spine not a list: L0 is the thread. Verified 6
 - ARUM is a naming/wiring move, not emergence. Say so.
 - KRUM number (58.9x) is a sim result on a poison-node test, real but small-scale.
 - The 3 spines organize EXISTING work + 1 gap (ARUM wiring). No new capability claimed.
+
+
+## SRUM — the SWARM spine (the 4th spine) [PROVEN LIVE 2026-07-16]
+- **Question it answers**: *spread across how many workers?*
+- **Mechanism**: sov33_governed_swarm.py — venturi decomposes a task -> fans independent sub-tasks across
+  brain instances -> each agent's output care-gated + SIGIL-signed -> BFT/KRUM aggregation -> master OWEM
+  integrates into one governed answer.
+- **PROVEN LIVE**: 3 sub-tasks swarmed across the Oracle brain (meta.llama-3.3-70b) in 4.3s, all care-gated,
+  all signed (contributing=3, all_signed=True). No GPU needed — runs on free/cheap online inference.
+- **Topology**: swarm of ONLINE-API OWEMs (NVIDIA/Oracle, federation tier, works now) feeding a MASTER OWEM
+  (the governance head). Owned-weights brains plug into the same slots later, no code change.
+- **HONEST BOUNDARIES**: (1) throughput win ONLY on decomposable workloads (code reports decomposable=True/False;
+  single hard reasoning chain = no speedup). (2) online swarm = federation tier, NOT sovereign (depends on
+  NVIDIA/Oracle). The moat = governed+signed swarm, which no open swarm (Kimi/OpenManus) ships.
+
+## THE FOUR SPINES
+| spine | question | mechanism | status |
+|---|---|---|---|
+| DRUM | when? (time) | 9-stage flow + clock | WIRED |
+| KRUM | whom to trust? | Byzantine aggregation (58.9x) | WIRED |
+| ARUM | across what layers? | 14/14 layer wiring | WIRED 14/14 |
+| SRUM | spread across how many? | governed swarm, care-gated+signed | PROVEN LIVE |
