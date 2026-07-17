@@ -89,3 +89,25 @@ of the brains it commands is the frontier still being climbed.
   different architectures — 2 of 4 proposers were Llama-family; need MoE + dense + SSM diversity.
 - **Verdict so far: emergence UNPROVEN by both weight-merge AND naive-MoA at small scale.** The honest next experiment
   is MoA with a stronger aggregator + more architecturally-diverse proposers, on a bigger battery. Not claimed until measured >50%.
+
+## DECISIVE MoA emergence proof — FREE, done properly (CC lane, 2026-07-17)
+**Unlock:** `openai/gpt-oss-120b` on Groq is FREE and works — earlier "unreachable" was a BUG (max_tokens=5 starved
+the reasoning model, which spends budget thinking then returns empty). No NVIDIA fix or Claude spend needed.
+
+**Setup (both literature-decisive conditions MET):** strong aggregator = gpt-oss-120B; diverse proposers =
+llama-3.3-70b (dense) + llama-4-scout (MoE) + qwen3.6-27b — genuinely different architectures.
+**RESULT: MoA beat best-single on 4/15 (~27%; 4/12 valid).** NO EMERGENCE.
+
+**Why this negative is STRONG:** the judge WAS the aggregator (gpt-oss-120b grading its own synthesis vs a rival
+draft) — self-bias should favour MoA. It still lost 11/15 to a plain Llama-70B.
+
+**Three independent experiments now agree — fusion does NOT produce emergence for us:**
+1. same-base weight-merge → negative (loss lens + law-grounding lens)
+2. naive MoA → 1/3
+3. diverse-arch MoA + strong aggregator → 4/15
+**=> Do NOT architect SOV4 on "fusion creates emergence." One good model beats a synthesized committee of smaller
+ones — which is also the cheaper design. Build on what IS proven: governance + routing + cost-efficiency.**
+
+**Methodology honesty:** n=15 (small); 3 judge calls returned empty (now flagged, not silently counted);
+"best single" = strongest proposer's own draft (proxy, not best-of-3). A false **0/15** was nearly reported —
+caused by max_tokens=3 starving the judge. Rule learned: **a clean 0/N sweep is a bug, never a result.**

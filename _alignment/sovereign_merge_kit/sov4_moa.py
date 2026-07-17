@@ -71,10 +71,15 @@ def measure(prompts=None, agg=None):
     for q in prompts:
         final,drafts,meta=moa(q, proposers=live, aggregator=agg)
         best=drafts[0]["text"]  # proxy 'best single' = strongest proposer's own draft
-        judge=("Two answers to the same question. Reply ONLY 'A' or 'B' for which is more accurate, grounded and complete.\n"
+        judge=("Two answers to the same question. Decide which is more accurate, grounded and complete. "
+               "Think briefly, then end your reply with exactly one final line: VERDICT: A  or  VERDICT: B\n"
                f"Q: {q}\n\nA (single model):\n{best[:1200]}\n\nB (synthesized):\n{(final or '')[:1200]}")
-        v,_=R.dispatch(judge, backend=agg[0], model=agg[1], max_tokens=3)
-        won = v and "B" in v.upper()[:3]
+        # NOTE: max_tokens must be generous — reasoning models (gpt-oss) spend budget thinking and
+        # return EMPTY if starved. max_tokens=3 silently produced a false 0/15 sweep. Never starve the judge.
+        v,_=R.dispatch(judge, backend=agg[0], model=agg[1], max_tokens=500)
+        verdict=(v or "").upper().rsplit("VERDICT:",1)[-1].strip()[:2] if v else ""
+        won = verdict.startswith("B")
+        if not v: print("    ⚠️ judge returned EMPTY — measurement invalid for this item")
         wins += 1 if won else 0
         print(f"  [{'MoA wins' if won else 'single wins/tie'}] {q[:50]}")
     print(f"\nEMERGENCE MEASURE: MoA beat best-single on {wins}/{len(prompts)} (diverse proposers + strong aggregator).")
