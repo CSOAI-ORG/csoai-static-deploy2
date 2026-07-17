@@ -18,6 +18,10 @@ BACKENDS = {
     "glm":     dict(key="GLM_API_KEY",     base="https://open.bigmodel.cn/api/paas/v4",       model=os.environ.get("GLM_MODEL","glm-4-flash")),
     "minimax": dict(key="MINIMAX_API_KEY", base="https://api.minimax.chat/v1",                model=os.environ.get("MINIMAX_MODEL","abab6.5s-chat")),
     "ollama":  dict(key=None,              base="http://localhost:11434/v1",                  model=os.environ.get("OLLAMA_MODEL","sovereign")),
+    # Inkling (Thinking Machines Lab, ~975B/41B-active MoE, Apache-2.0) via Modal OpenAI-compatible endpoint.
+    # US frontier open-weights; FEDERATION tier (token-priced inference, NOT owned weights). Env-driven:
+    # set INKLING_BASE (Modal endpoint /v1), INKLING_MODEL (endpoint's model id), INKLING_API_KEY (Modal token).
+    "inkling": dict(key="INKLING_API_KEY",  base=os.environ.get("INKLING_BASE","https://api.modal.com/v1"), model=os.environ.get("INKLING_MODEL","inkling"), note="Thinking Machines Inkling ~975B/41B MoE Apache-2.0 via Modal; federation tier, token-priced inference"),
     # --- large open MoE models as optional backends. STATUS: PAID + NOT-YET-FUNCTIONAL (do not count as capability) ---
     # Live-tested by the Claude Code lane 2026-07-14: these are PAID APIs and the accounts are UNFUNDED —
     # Kimi/Moonshot returned "account suspended — insufficient balance"; DeepSeek untested but same paid model.
@@ -31,7 +35,7 @@ TIERS = {"fast":["groq","ollama"], "smart":["nvidia","glm","minimax","groq","oll
          "trillion":["deepseek","kimi","glm"], "any":["deepseek","kimi","nvidia","glm","minimax","groq","ollama"],
          # 'frontier' = reach the biggest API model available. Confirmed-answering today: nvidia (qwen-397b ~400B).
          # The 1.6T slot (deepseek-v4-pro via nvidia) is wired; it answers when reachable on the running machine.
-         "frontier":["nvidia","deepseek","kimi","glm","groq","ollama"]}
+         "frontier":["inkling","nvidia","deepseek","kimi","glm","groq","ollama"], "inkling":["inkling"]}
 
 def available():
     out=[]
