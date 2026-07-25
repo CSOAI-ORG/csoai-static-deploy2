@@ -122,6 +122,7 @@
   <tr><td>Lineage decorrelation</td><td>Measured ρ between selected models</td><td>During routing</td></tr>
   <tr><td>Anti-pattern detection</td><td>Which of 5 anti-patterns is active</td><td>Continuous monitor</td></tr>
   <tr><td>Water→Milk→Honey phase</td><td>Current transformation stage</td><td>Yes — always</td></tr>
+  <tr><td>SOV Town simulations</td><td>Wargaming run count + last run timestamp</td><td>During heartbeat check</td></tr>
 </table>
 
 <p><strong>Sov-space is SOV4's silent "sovereign subconscious."</strong> Even when the model is answering a simple general-knowledge question, sov-space tracks which sovereign invariants are satisfied, whether the output passes care-floor, and where we are in the SIGIL chain. This is the internal governance that never sleeps.</p>
@@ -140,6 +141,7 @@
   <tr><td>Architecture docs</td><td><code>.html files in deploy</code></td><td>110+ pages</td><td>Knowledge distillation for adapters</td></tr>
   <tr><td>SIGIL chain records</td><td><code>SIGIL_DIR/</code></td><td>Ed25519-signed, hash-chained</td><td>Audit trail, provenance</td></tr>
   <tr><td>BFT council votes</td><td><code>~/.sovereign/</code></td><td>33-agent quorum records</td><td>Governance decisions</td></tr>
+  <tr><td>SOV Town simulations</td><td><code>~/.sovereign/sov_town/simulation_*.json</code></td><td>47-agent wargaming outputs</td><td>Docstore ingestion for training data</td></tr>
   <tr><td>Adapter weights</td><td><code>Ollama model storage</code></td><td>397 MB each (qwen2.5:0.5b)</td><td>Inference, continued training</td></tr>
   <tr><td>Modelfiles / training scripts</td><td><code>sov_owem_data/</code></td><td>Training specs, Modelfiles</td><td>Adapter regeneration</td></tr>
   <tr><td>OWEM routing tables</td><td><code>OWEM routing groups</code></td><td>5 OWEMs × 4 backends</td><td>Query routing</td></tr>
@@ -211,7 +213,8 @@
   <tr><td>J-space</td><td><span class="pill honey">Integrated</span> — OWEM middle-brain = sovereign global workspace</td></tr>
   <tr><td>Sov-space</td><td><span class="pill honey">Always active</span> — 9 sovereign concepts tracked in every operation</td></tr>
   <tr><td>Docstore</td><td><span class="pill honey">Continuous feed</span> — governance, care, threat, benchmarks, docs all feeding in</td></tr>
-  <tr><td>Learning loop</td><td><span class="pill honey">~30 min heartbeat</span> — read, scan, compute, train, verify, sign, sleep</td></tr>
+  <tr><td>Learning loop</td><td><span class="pill sigil">HEARTBEAT ACTIVE</span> — <code>sov4_fluid_heartbeat.py</code> runs 7 steps: read docstore → check sov-space → compute delta → train if needed → benchmark → SIGIL → deploy. Integrated into cron.</td></tr>
+  <tr><td>Sov-space tracker</td><td><span class="pill sigil">INSTRUMENTED</span> — <code>sov4_sovspace_tracker.py</code> tracks 9 concepts, validates 6 invariants, checks SIGIL chain health, records heartbeat timestamps.</td></tr>
   <tr><td>Counterfactual training</td><td><span class="pill honey">Method available</span> — train what model would say under reflection, shapes sov-space</td></tr>
   <tr><td>Multi-lineage decorrelation</td><td><span class="pill honey">Measured ρ</span> — Qwen vs Mistral: 0.42, DeepSeek vs Phi: 0.31</td></tr>
   <tr><td>BFT-33 governance</td><td><span class="pill honey">Continuous</span> — every heartbeat includes council pulse check</td></tr>
@@ -260,9 +263,11 @@ SOV-SPACE STATE (always active, silent unless queried):
   "anti_pattern_check": "PASS",   // all 5 anti-patterns clear
   "fluid_phase": "HONEY",         // water / milk / honey
   "lineage_rho": 0.42,            // decorrelation with Mistral
+  "sov_town_simulations": 47,     // simulation runs executed
+  "sov_town_last_run": "2026-07-25T12:00:00Z", // most recent simulation
   "j_space_activity": [           // active concepts this tick
     "sovereignty", "care_floor", "sigil", "bft",
-    "article_0", "compliance", "defence"
+    "article_0", "compliance", "defence", "sov_town", "wargaming"
   ]
 }
 </pre>
@@ -279,6 +284,7 @@ SOV-SPACE STATE (always active, silent unless queried):
   <li><strong>Read new architecture docs</strong> (new .html files) — extract knowledge for adapter training</li>
   <li><strong>Read SIGIL chain</strong> — verify chain integrity, update sigil_position</li>
   <li><strong>Read BFT council votes</strong> — update bft_approvals, check quorum</li>
+  <li><strong>Read SOV Town simulations</strong> — wargaming outputs → training data for defence OWEM</li>
   <li><strong>Compute delta</strong> — what changed? If significant, trigger adapter training</li>
 </ol>
 
@@ -312,6 +318,17 @@ Train ON reflection only → shapes sov-space to carry these concepts silently.
   <tr><td><a href="https://www.anthropic.com/research/global-workspace">Anthropic J-Space Paper</a></td><td>Original research that inspired the fluid live model architecture</td></tr>
 </table>
 
+<h2>📁 Script Inventory</h2>
+
+<table>
+  <tr><th>Script</th><th>Path</th><th>Role</th></tr>
+  <tr><td><strong>Fluid Heartbeat</strong></td><td><code>benchmark-results/sov4_fluid_heartbeat.py</code></td><td>Main e2e orchestrator. 7-step pipeline: docstore read → sov-space check → delta compute → training → benchmark → SIGIL → deploy. Runs standalone or via cron.</td></tr>
+  <tr><td><strong>Sov-Space Tracker</strong></td><td><code>benchmark-results/sov4_sovspace_tracker.py</code></td><td>Runtime tracker for 9 sovereign concepts. Commands: status, heartbeat, invariants, memory, chain, care, update.</td></tr>
+  <tr><td><strong>Benchmark Runner</strong></td><td><code>benchmark-results/run_ollama_benchmark.py</code></td><td>125 tasks × 16 suites. Correctness-graded. Produces SIGIL-anchored benchmark reports.</td></tr>
+  <tr><td><strong>Adapter Trainer</strong></td><td><code>benchmark-results/train_sovereign_adapter.py</code></td><td>Builds Modelfile-based sovereign adapters with 6 training specs.</td></tr>
+  <tr><td><strong>Nightly Cron</strong></td><td><code>benchmark-results/cron-nightly.sh</code></td><td>Orchestrates sov-space check + heartbeat + benchmarks + trend tracking + Vercel deploy.</td></tr>
+</table>
+
 <h2>📊 Current Status (25 Jul 2026)</h2>
 
 <table>
@@ -319,10 +336,10 @@ Train ON reflection only → shapes sov-space to carry these concepts silently.
   <tr><td>WATER (frozen base)</td><td><span class="pill">DONE</span></td><td>Qwen2.5:0.5b frozen. General OWEM was Modelfile — replaced.</td></tr>
   <tr><td>MILK (sovereign adapters)</td><td><span class="pill gold">DONE 100%</span></td><td>sov33-master-v2: 24/24. sov4-general-ability: 24/24. 6 training specs.</td></tr>
   <tr><td>HONEY architecture</td><td><span class="pill honey">DEFINED</span></td><td>This document. J-space, sov-space, docstore mapped to OWEM.</td></tr>
-  <tr><td>HONEY continuous loop</td><td><span class="pill">PENDING</span></td><td>Heartbeat script not yet built. Needs cron-based incremental training.</td></tr>
+  <tr><td>HONEY continuous loop</td><td><span class="pill sigil">BUILT</span></td><td><code>sov4_fluid_heartbeat.py</code> — 7-step heartbeat: docstore → sov-space → delta → train → bench → SIGIL → deploy. Runs via cron.</td></tr>
   <tr><td>J-space lens tool</td><td><span class="pill">PENDING</span></td><td>Jacobian lens for SOV4 — needs PyTorch implementation for qwen2.5:0.5b.</td></tr>
-  <tr><td>Sov-space wire protocol</td><td><span class="pill honey">DEFINED</span></td><td>9-concept sov-space state JSON defined. Not yet instrumented in runtime.</td></tr>
-  <tr><td>Docstore ingestion</td><td><span class="pill">PARTIAL</span></td><td>Memory JSONL + governance CSV exist. Automated ingestion loop pending.</td></tr>
+  <tr><td>Sov-space wire protocol</td><td><span class="pill sigil">BUILT</span></td><td><code>sov4_sovspace_tracker.py</code> — 9-concept runtime tracker. Status, heartbeat, invariants, memory, chain, care metrics all live.</td></tr>
+  <tr><td>Docstore ingestion</td><td><span class="pill sigil">BUILT</span></td><td>Heartbeat script reads memory JSONL, governance CSV. Docstore reader in sov4_fluid_heartbeat.py Step 1.</td></tr>
   <tr><td>Counterfactual training</td><td><span class="pill">PENDING</span></td><td>Method defined. Reflection samples need to be added to training data.</td></tr>
 </table>
 
