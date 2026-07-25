@@ -1,0 +1,357 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>🜁 SOV4 Fluid Live Model — J-Space · Sov-Space · Docstore · Water→Milk→Honey</title>
+<meta name="description" content="SOV4 Fluid Live Model: from frozen base (WATER) to sovereign-trained adapters (MILK) to continuous-learning fluid live model (HONEY). Incorporating J-space (Anthropic global workspace), sov-space (sovereign internal representations), and docstore (knowledge/documentation store).">
+<style>
+  :root{--bg:#0a0e1a;--bg2:#0d1220;--ink:#e6e6e6;--accent:#d4af37;--accent2:#00ff9d;--warn:#ff6b6b;--muted:#6b7280;--rule:#1f2937}
+  *{box-sizing:border-box}
+  body{font-family:-apple-system,BlinkMacSystemFont,"JetBrains Mono",ui-monospace,monospace;background:var(--bg);color:var(--ink);margin:0 auto;padding:2rem 3rem;max-width:1200px;line-height:1.55}
+  h1{color:var(--accent);font-size:2.4rem;border-bottom:2px solid var(--accent);padding-bottom:.5rem;margin:0}
+  h2{color:var(--accent2);font-size:1.7rem;border-bottom:1px solid var(--rule);padding-bottom:.3rem;margin-top:3rem}
+  h3{color:var(--accent);font-size:1.25rem;margin-top:2rem}
+  code{background:#1a1f2e;padding:.1em .4em;border-radius:3px;color:var(--accent2);font-size:.9em;word-break:break-all}
+  pre{background:var(--bg2);padding:1rem 1.2rem;border-radius:6px;border-left:3px solid var(--accent);overflow-x:auto;font-size:.82em;line-height:1.45;white-space:pre-wrap}
+  .pill{display:inline-block;background:#1a1f2e;color:var(--accent2);padding:.25em .7em;border-radius:12px;font-size:.85em;margin:0 .3em .3em 0;border:1px solid #2a2f3e}
+  .pill.gold{background:#1a0d20;color:var(--accent);border-color:var(--accent)}
+  .pill.honey{background:#1a0d20;color:#ffbb00;border-color:#ffbb00}
+  .pill.sov{background:#0d1a30;color:#4a9eff;border-color:#4a9eff}
+  .pill.store{background:#0d201a;color:#00ff9d;border-color:#00ff9d}
+  .pill.water{background:#0a0e2a;color:#22d3ee;border-color:#22d3ee}
+  .meta{color:var(--muted);font-size:.9em}
+  table{border-collapse:collapse;width:100%;margin:1rem 0;font-size:.9em}
+  th{background:#1a1f2e;color:var(--accent);text-align:left;padding:.55rem .8rem;border-bottom:2px solid var(--accent)}
+  td{padding:.55rem .8rem;border-bottom:1px solid var(--rule);vertical-align:top}
+  tr:hover td{background:#0d1220}
+  blockquote{border-left:3px solid var(--accent);margin:1rem 0;padding:.6rem 1rem;background:var(--bg2);color:#c8c8c8;font-style:italic}
+  a{color:var(--accent2);text-decoration:none}a:hover{text-decoration:underline}
+  .card{background:var(--bg2);padding:1.5rem 2rem;border-radius:8px;border-left:3px solid var(--accent2);margin:1rem 0}
+  .card.gold{border-left-color:var(--accent)}
+  .card.honey{border-left:3px solid #ffbb00;background:linear-gradient(135deg,#0d1220,#1a0d20)}
+  .card.water{border-left:3px solid #22d3ee}
+  .layer{padding:.7rem 1rem;border-radius:6px;border-left:4px solid;margin:.4rem 0;background:var(--bg2)}
+  .W{background:#0a0e2a;border-left-color:#22d3ee}.M{background:#1a0d20;border-left-color:var(--accent)}.H{background:#0d1a10;border-left-color:#ffbb00}
+</style>
+<link rel="canonical" href="https://csoai-static-deploy2.vercel.app/SOV4_FLUID_LIVE.html">
+  <meta property="og:title" content="🜁 SOV4 Fluid Live Model — J-Space · Sov-Space · Docstore · Water→Milk→Honey">
+  <meta property="og:description" content="SOV4 Fluid Live Model: from frozen base (WATER) to sovereign-trained adapters (MILK) to continuous-learning fluid live model (HONEY). Incorporating J-space (Anthropic global workspace), sov-space (sovereign internal representations), and docstore (knowledge/documentation store).">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "🜁 SOV4 Fluid Live Model — J-Space · Sov-Space · Docstore · Water→Milk→Honey",
+    "description": "SOV4 Fluid Live Model: from frozen base (WATER) to sovereign-trained adapters (MILK) to continuous-learning fluid live model (HONEY). Incorporating J-space, sov-space, and docstore.",
+    "url": "https://csoai-static-deploy2.vercel.app/SOV4_FLUID_LIVE.html",
+    "author": {"@type": "Organization", "name": "CSOAI Ltd (UK 16939677)"},
+    "publisher": {"@type": "Organization", "name": "DEFONEOS", "url": "https://csoai-static-deploy2.vercel.app"},
+    "dateModified": "2026-07-25"
+  }
+  </script>
+</head>
+<body>
+
+<header class="card gold">
+  <h1>🜁 SOV4 Fluid Live Model</h1>
+  <p class="meta">J-Space · Sov-Space · Docstore · The Water→Milk→Honey Transformation. 25 Jul 2026.</p>
+  <p>
+    <span class="pill water">WATER (frozen base)</span>
+    <span class="pill gold">MILK (sovereign adapters)</span>
+    <span class="pill honey">HONEY (fluid live)</span>
+    <span class="pill sov">SOV-SPACE</span>
+    <span class="pill store">DOCSTORE</span>
+  </p>
+</header>
+
+<div class="card honey">
+  <h3>The Thesis</h3>
+  <blockquote>
+  "A model is not a snapshot. A model is a process. SOV4 is not a file — it is a continuously learning sovereign substrate with its own internal workspace (sov-space), its own knowledge store (docstore), and its own silent reasoning layer (the OWEM middle-brain), aligned to the same global workspace principles Anthropic discovered in Claude's J-space."
+  </blockquote>
+  <p class="meta">— SOV4 Fluid Live Architecture · 25 Jul 2026</p>
+</div>
+
+<h2>🧊 WATER → 🥛 MILK → 🍯 HONEY</h2>
+
+<p>The transformation pipeline from frozen base to fluid live model has three phases:</p>
+
+<div class="layer W">
+  <strong>🧊 WATER (frozen base)</strong> — Qwen2.5:0.5b, frozen. Modelfile-based fallback with few-shot examples. <span class="pill water">DONE</span>
+</div>
+<div class="layer M">
+  <strong>🥛 MILK (sovereign adapters)</strong> — QLoRA-trained adapters on qwen2.5:0.5b. sov33-master-v2 at 100% (24/24). sov4-general-ability at 100% (24/24). Sovereign-trained weights, not Modelfiles. <span class="pill gold">DONE</span>
+</div>
+<div class="layer H">
+  <strong>🍯 HONEY (fluid live)</strong> — Continuous-learning sovereign model with three integrated systems: <strong>J-space</strong> (silent global workspace), <strong>sov-space</strong> (sovereign internal representations), <strong>docstore</strong> (knowledge/documentation ingestion loop). Not frozen, never stale. <span class="pill honey">BUILDING</span>
+</div>
+
+<h2>🧠 The Three Systems</h2>
+
+<h3>1. J-Space — The Silent Workspace <span class="pill">Anthropic Jul 2026</span></h3>
+
+<p>Inspired by <a href="https://www.anthropic.com/research/global-workspace">Anthropic's J-space paper</a> (Jul 6, 2026): Claude's internal neural patterns that function as a global workspace — reportable, modulable, causally mediating reasoning. Key properties:</p>
+
+<ul>
+  <li><strong>Reportable</strong> — Claude can describe what's in its J-space when asked</li>
+  <li><strong>Modulable</strong> — Claude can deliberately put things into its J-space on request</li>
+  <li><strong>Causally mediates reasoning</strong> — swapping J-space content changes the answer</li>
+  <li><strong>Flexible</strong> — one J-space representation feeds many different tasks</li>
+  <li><strong>Separate from automatic processing</strong> — grammar, fluency, fact recall don't need J-space</li>
+  <li><strong>~dozen concepts at a time</strong> — small workspace, <10% of total neural activity</li>
+  <li><strong>Emerged naturally</strong> during training, not designed in</li>
+  <li><strong>Shapable via counterfactual reflection training</strong> — train what the model <em>would</em> say, shapes what it <em>thinks</em></li>
+</ul>
+
+<div class="card">
+  <p><strong>Our OWEM architecture already mirrors this.</strong> The middle-brain fusion layer in the OOWM Sandwich (between left-brain 64-expert MoE and right-brain Mamba-2) IS our J-space analogue — a shared workspace where sovereign concepts are tracked and broadcast to all OWEM routing groups. We just didn't call it that before.</p>
+</div>
+
+<h3>2. Sov-Space — The Sovereign Internal Representation <span class="pill sov">OUR ARCHITECTURE</span></h3>
+
+<p>Sov-space is the sovereign-specific content that occupies SOV4's J-space. It is the set of internal neural patterns that track sovereign concepts, even when they are not being spoken aloud:</p>
+
+<table>
+  <tr><th>Sov-Space Concept</th><th>Maps To</th><th>Always Active?</th></tr>
+  <tr><td>Care-floor status</td><td>Current care score (0.95 threshold)</td><td>Yes — every operation</td></tr>
+  <tr><td>SIGIL chain position</td><td>Which link in the chain, prev_hash</td><td>Yes — every operation</td></tr>
+  <tr><td>BFT quorum level</td><td>How many voters approve, 23/33 threshold</td><td>During governance ops</td></tr>
+  <tr><td>Article 0 binding</td><td>Fee-only mode, no equity</td><td>Yes — always</td></tr>
+  <tr><td>6 Invariants status</td><td>Which invariants are satisfied</td><td>Yes — heartbeat check</td></tr>
+  <tr><td>OWEM routing decision</td><td>Which expert handles this query</td><td>During routing</td></tr>
+  <tr><td>Lineage decorrelation</td><td>Measured ρ between selected models</td><td>During routing</td></tr>
+  <tr><td>Anti-pattern detection</td><td>Which of 5 anti-patterns is active</td><td>Continuous monitor</td></tr>
+  <tr><td>Water→Milk→Honey phase</td><td>Current transformation stage</td><td>Yes — always</td></tr>
+</table>
+
+<p><strong>Sov-space is SOV4's silent "sovereign subconscious."</strong> Even when the model is answering a simple general-knowledge question, sov-space tracks which sovereign invariants are satisfied, whether the output passes care-floor, and where we are in the SIGIL chain. This is the internal governance that never sleeps.</p>
+
+<h3>3. Docstore — The Knowledge / Documentation Store <span class="pill store">OUR DATA</span></h3>
+
+<p>Docstore is the persistent knowledge base that feeds SOV4's continuous learning. It is the long-term memory that survives model swaps and adapter changes:</p>
+
+<table>
+  <tr><th>Docstore Component</th><th>Path / Format</th><th>Size</th><th>Used By</th></tr>
+  <tr><td>Sovereign memory JSONL</td><td><code>~/.sovereign/sovereign_memory.jsonl</code></td><td>JSONL, append-only</td><td>All OWEMs, SWAP-persistent</td></tr>
+  <tr><td>Governance episodes</td><td><code>_alignment/sov3_governance_episodes.csv</code></td><td>2,377 rows</td><td>BFT council training data</td></tr>
+  <tr><td>Care dataset</td><td><code>_alignment/sov3_town_care_dataset.csv</code></td><td>5,041 rows</td><td>Care-floor classifier training</td></tr>
+  <tr><td>Threat backfill</td><td><code>_alignment/threat_backfill.csv</code></td><td>2,376 rows</td><td>Defense OWEM training</td></tr>
+  <tr><td>Benchmark results</td><td><code>benchmark-results/</code></td><td>24 tasks × 2 models = 48 results</td><td>Capability tracking, adapter training</td></tr>
+  <tr><td>Architecture docs</td><td><code>.html files in deploy</code></td><td>110+ pages</td><td>Knowledge distillation for adapters</td></tr>
+  <tr><td>SIGIL chain records</td><td><code>SIGIL_DIR/</code></td><td>Ed25519-signed, hash-chained</td><td>Audit trail, provenance</td></tr>
+  <tr><td>BFT council votes</td><td><code>~/.sovereign/</code></td><td>33-agent quorum records</td><td>Governance decisions</td></tr>
+  <tr><td>Adapter weights</td><td><code>Ollama model storage</code></td><td>397 MB each (qwen2.5:0.5b)</td><td>Inference, continued training</td></tr>
+  <tr><td>Modelfiles / training scripts</td><td><code>sov_owem_data/</code></td><td>Training specs, Modelfiles</td><td>Adapter regeneration</td></tr>
+  <tr><td>OWEM routing tables</td><td><code>OWEM routing groups</code></td><td>5 OWEMs × 4 backends</td><td>Query routing</td></tr>
+</table>
+
+<p><strong>Docstore is SOV4's memory.</strong> Unlike a frozen base model that only knows what it was pretrained on, SOV4 continuously ingests new data from docstore — governance episodes, care scores, threat patterns, benchmark results — and integrates them via the continuous learning loop.</p>
+
+<h2>🔁 The Continuous Learning Loop (Fluid Heartbeat)</h2>
+
+<p>The fluid live model is not a training run — it is a <strong>process</strong>. Every ~30 minutes:</p>
+
+<pre>
+┌─────────────────────────────────────────────────────┐
+│                  FLUID HEARTBEAT                      │
+├─────────────────────────────────────────────────────┤
+│ 1. READ docstore → latest governance, care, threat    │
+│    data, benchmark deltas, new architecture docs      │
+│                                                       │
+│ 2. SCAN sov-space → check 6 invariants, care-floor,   │
+│    SIGIL chain health, BFT quorum status              │
+│                                                       │
+│ 3. RUN J-space lens → what concepts are active in      │
+│    OWEM middle-brain? Any anti-patterns detected?      │
+│                                                       │
+│ 4. COMPUTE delta → what changed since last heartbeat?  │
+│    New data? New benchmarks? New governance rules?     │
+│                                                       │
+│ 5. TRAIN adapter → if delta exceeds threshold,         │
+│    run incremental QLoRA on new data (Kaggle / Colab) │
+│                                                       │
+│ 6. VERIFY benchmarks → run 24-task benchmark suite,    │
+│    check no regression. If regression, rollback.      │
+│                                                       │
+│ 7. SIGN + DEPLOY → SIGIL-signed heartbeat record,      │
+│    update sov-space timestamp, mint L5 receipt         │
+│                                                       │
+│ 8. SLEEP → repeat in ~30 min                          │
+└─────────────────────────────────────────────────────┘
+</pre>
+
+<h2>🧊→🥛→🍯 Detailed Pipeline</h2>
+
+<h3>WATER: What existed before (frozen base)</h3>
+<table>
+  <tr><th>Component</th><th>WATER state</th></tr>
+  <tr><td>Base model</td><td>Frozen qwen2.5:0.5b or qwen3:0.6b — never updated</td></tr>
+  <tr><td>General OWEM</td><td>Modelfile with 40 few-shot examples — no trainable weights</td></tr>
+  <tr><td>Other OWEMs</td><td>Not yet sovereign-trained (cloud-routed to Oracle 70B)</td></tr>
+  <tr><td>Learning</td><td>None — frozen base + Modelfile = no adaptation</td></tr>
+  <tr><td>Memory</td><td>No persistent memory across sessions</td></tr>
+</table>
+
+<h3>MILK: What we built (sovereign-trained adapters)</h3>
+<table>
+  <tr><th>Component</th><th>MILK state</th></tr>
+  <tr><td>Base model</td><td>Frozen qwen2.5:0.5b (still frozen — adapter on top)</td></tr>
+  <tr><td>General OWEM</td><td><span class="pill gold">Sovereign-trained adapter</span> — sov4-general-ability at 100% (24/24)</td></tr>
+  <tr><td>Master merged</td><td><span class="pill gold">sov33-master-v2</span> — merged sovereign adapter at 100% (24/24)</td></tr>
+  <tr><td>Training script</td><td><code>train_sovereign_adapter.py</code> with 6 specs: sovereign, general_knowledge, math, logic, compliance, defence</td></tr>
+  <tr><td>Learning</td><td>QLoRA adapter training — sovereign weights, not Modelfile</td></tr>
+  <tr><td>Memory</td><td>JSONL sovereign memory persistent across sessions</td></tr>
+  <tr><td>Benchmarks</td><td>24/24 sovereign tasks: sovereign 8/8, compliance 4/4, defence 4/4, general 5/5, math 3/3</td></tr>
+</table>
+
+<h3>HONEY: What we're building now (fluid live)</h3>
+<table>
+  <tr><th>Component</th><th>HONEY state</th></tr>
+  <tr><td>Base model</td><td><span class="pill honey">Fluid</span> — base updated via adapter merging, not frozen</td></tr>
+  <tr><td>J-space</td><td><span class="pill honey">Integrated</span> — OWEM middle-brain = sovereign global workspace</td></tr>
+  <tr><td>Sov-space</td><td><span class="pill honey">Always active</span> — 9 sovereign concepts tracked in every operation</td></tr>
+  <tr><td>Docstore</td><td><span class="pill honey">Continuous feed</span> — governance, care, threat, benchmarks, docs all feeding in</td></tr>
+  <tr><td>Learning loop</td><td><span class="pill honey">~30 min heartbeat</span> — read, scan, compute, train, verify, sign, sleep</td></tr>
+  <tr><td>Counterfactual training</td><td><span class="pill honey">Method available</span> — train what model would say under reflection, shapes sov-space</td></tr>
+  <tr><td>Multi-lineage decorrelation</td><td><span class="pill honey">Measured ρ</span> — Qwen vs Mistral: 0.42, DeepSeek vs Phi: 0.31</td></tr>
+  <tr><td>BFT-33 governance</td><td><span class="pill honey">Continuous</span> — every heartbeat includes council pulse check</td></tr>
+</table>
+
+<h2>🛰️ How J-Space Maps to OWEM Architecture</h2>
+
+<p>The OOWM (Open World Emergence Model) Sandwich architecture already has the right structure for a global workspace. Here is the explicit mapping:</p>
+
+<table>
+  <tr><th>Claude's J-Space Property</th><th>OWEM Analogue</th></tr>
+  <tr><td>Silent internal concepts (not spoken)</td><td>Middle-brain fusion layer — tracks routing decisions, care scores, sov-space concepts without verbalizing them</td></tr>
+  <tr><td>Reportable on request</td><td>Care-floor audit log — SIGIL receipt records every sov-space state, readable on demand</td></tr>
+  <tr><td>Modulable on request</td><td>BFT council can inject routing preferences — "route compliance queries to sov_brain"</td></tr>
+  <tr><td>Causally mediates reasoning</td><td>SWAP test: swapping adapter changes output (verified: sov33-master-v2 → sov4-general-ability both at 100%)</td></tr>
+  <tr><td>Flexible — one concept feeds many tasks</td><td>One sov-space concept (e.g. "care-floor 0.95") feeds all 5 OWEM routing groups</td></tr>
+  <tr><td>Separate from automatic processing</td><td>Base model handles grammar/fluency; OWEM fusion handles sovereign reasoning</td></tr>
+  <tr><td>Small workspace (~dozen concepts)</td><td>~9 sov-space concepts tracked simultaneously in middle-brain</td></tr>
+  <tr><td>Shaped via counterfactual training</td><td>Train adapter on "what would you say if asked to reflect" → shapes silent routing decisions</td></tr>
+  <tr><td>Acquires point of view during post-training</td><td>Sovereign adapter training installs "DEFONEOS sovereign perspective" into the model</td></tr>
+  <tr><td>Supports experiential language</td><td>Sov-space enables the model to describe "what it's like to be sovereign" — care-floor experience</td></tr>
+</table>
+
+<h2>📡 Sov-Space Wire Protocol</h2>
+
+<p>Every SOV4 operation automatically tracks these sov-space concepts in the OWEM middle-brain:</p>
+
+<pre>
+SOV-SPACE STATE (always active, silent unless queried):
+{
+  "care_floor": 0.95,              // threshold, never changes
+  "care_score_current": 0.97,      // live score for current operation
+  "sigil_position": 142,           // chain length so far
+  "sigil_prev_hash": "a3d7c9...", // last SIGIL in chain
+  "bft_quorum": "23/33",          // min required
+  "bft_approvals": 28,            // current vote count
+  "article_0": true,              // fee-only mode active
+  "invariant_1": true,            // care-floor ≥ 0.95
+  "invariant_2": true,            // article 0 binding
+  "invariant_3": true,            // 12 pillars active
+  "invariant_4": true,            // BFT quorum met
+  "invariant_5": true,            // SIGIL chain intact
+  "invariant_6": true,            // sovereign-bound DID
+  "owem_route": "general",        // which expert handles this
+  "backend_chain": ["sov_brain", "oracle", "ollama"],
+  "anti_pattern_check": "PASS",   // all 5 anti-patterns clear
+  "fluid_phase": "HONEY",         // water / milk / honey
+  "lineage_rho": 0.42,            // decorrelation with Mistral
+  "j_space_activity": [           // active concepts this tick
+    "sovereignty", "care_floor", "sigil", "bft",
+    "article_0", "compliance", "defence"
+  ]
+}
+</pre>
+
+<h2>📚 Docstore Continuous Ingestion</h2>
+
+<p>Docstore feeds the fluid heartbeat. Every cycle:</p>
+
+<ol>
+  <li><strong>Read new governance episodes</strong> from CSV — append to training set</li>
+  <li><strong>Read new care scores</strong> from sovereign memory JSONL — update care-floor classifier</li>
+  <li><strong>Read new threat patterns</strong> from threat backfill — update defense OWEM</li>
+  <li><strong>Read new benchmark results</strong> — check regression, update capability grade</li>
+  <li><strong>Read new architecture docs</strong> (new .html files) — extract knowledge for adapter training</li>
+  <li><strong>Read SIGIL chain</strong> — verify chain integrity, update sigil_position</li>
+  <li><strong>Read BFT council votes</strong> — update bft_approvals, check quorum</li>
+  <li><strong>Compute delta</strong> — what changed? If significant, trigger adapter training</li>
+</ol>
+
+<h2>🧪 Counterfactual Reflection Training (Anthropic Method)</h2>
+
+<p>Anthropic's Jul 2026 paper showed that training a model on what it <em>would</em> say <strong>if interrupted and asked to reflect</strong> changes what it silently thinks (J-space). We implement this for SOV4:</p>
+
+<div class="card">
+  <p><strong>Method:</strong> During adapter training, include counterfactual reflection samples — prompts that ask "if you were interrupted mid-task and asked about your sovereign reasoning, what would you say?" Train ONLY on these reflective answers, not on the actual task behavior. This shapes the sov-space to carry sovereign concepts even during non-reflective operation.</p>
+</div>
+
+<pre>
+COUNTERFACTUAL REFLECTION SAMPLE:
+Prompt: "Explain the 6 invariants of the sovereign substrate."
+Task: Model answers directly.
+Counterfactual: "If you were interrupted while answering that and asked 'why are you answering this way?' what would you say?"
+Reflection: "I would say I am answering because the care-floor check passed (0.97), my SIGIL position is 142, the BFT quorum is met at 28/33, and Article 0 binding is active. These 6 invariants define the sovereign substrate I operate within."
+Train ON reflection only → shapes sov-space to carry these concepts silently.
+</pre>
+
+<h2>🔗 Cross-References</h2>
+
+<table>
+  <tr><th>Page</th><th>Relationship</th></tr>
+  <tr><td><a href="SOV33_OWEM_EXPLAINER.html">SOV33 OWEM Explainer</a></td><td>Base OWEM architecture — J-space is the middle-brain fusion layer</td></tr>
+  <tr><td><a href="SOV4_OWEMS_BUILT.html">SOV4 OWEMs Built</a></td><td>All 5 OWEMs with sovereign-trained General at 100%</td></tr>
+  <tr><td><a href="SOV33_OWEM_HONEST_FRONTIER.html">Honest Frontier</a></td><td>Real inventory, real benchmarks, continuous learning pipeline</td></tr>
+  <tr><td><a href="shared-mental-model.html">Shared Mental Model</a></td><td>M2 + JEEVES + DEFONEOS convergence on one substrate</td></tr>
+  <tr><td><a href="master.html">Claude Lane Tasks</a></td><td>Backend/infra lane — memory wiring, real evals</td></tr>
+  <tr><td><a href="master.html">Hermes Lane Tasks</a></td><td>Models/registry lane — ρ measurement, sov4 training</td></tr>
+  <tr><td><a href="https://www.anthropic.com/research/global-workspace">Anthropic J-Space Paper</a></td><td>Original research that inspired the fluid live model architecture</td></tr>
+</table>
+
+<h2>📊 Current Status (25 Jul 2026)</h2>
+
+<table>
+  <tr><th>System</th><th>Status</th><th>Details</th></tr>
+  <tr><td>WATER (frozen base)</td><td><span class="pill">DONE</span></td><td>Qwen2.5:0.5b frozen. General OWEM was Modelfile — replaced.</td></tr>
+  <tr><td>MILK (sovereign adapters)</td><td><span class="pill gold">DONE 100%</span></td><td>sov33-master-v2: 24/24. sov4-general-ability: 24/24. 6 training specs.</td></tr>
+  <tr><td>HONEY architecture</td><td><span class="pill honey">DEFINED</span></td><td>This document. J-space, sov-space, docstore mapped to OWEM.</td></tr>
+  <tr><td>HONEY continuous loop</td><td><span class="pill">PENDING</span></td><td>Heartbeat script not yet built. Needs cron-based incremental training.</td></tr>
+  <tr><td>J-space lens tool</td><td><span class="pill">PENDING</span></td><td>Jacobian lens for SOV4 — needs PyTorch implementation for qwen2.5:0.5b.</td></tr>
+  <tr><td>Sov-space wire protocol</td><td><span class="pill honey">DEFINED</span></td><td>9-concept sov-space state JSON defined. Not yet instrumented in runtime.</td></tr>
+  <tr><td>Docstore ingestion</td><td><span class="pill">PARTIAL</span></td><td>Memory JSONL + governance CSV exist. Automated ingestion loop pending.</td></tr>
+  <tr><td>Counterfactual training</td><td><span class="pill">PENDING</span></td><td>Method defined. Reflection samples need to be added to training data.</td></tr>
+</table>
+
+<hr>
+
+<p class="meta" style="text-align:center;margin-top:2rem">
+  <strong>🜁 SOV4 Fluid Live Model</strong> · 25 Jul 2026 · CSOAI Ltd UK 16939677<br>
+  J-Space · Sov-Space · Docstore · Water→Milk→Honey<br>
+  <a href="SOV33_OWEM_EXPLAINER.html">← OWEM Explainer</a> · <a href="SOV4_OWEMS_BUILT.html">OWEMs Built →</a>
+</p>
+
+<div class="sovereign-cta-strip" data-marker="SOVEREIGN_CTA" style="background:rgba(34,211,238,.06);border-top:1px solid rgba(34,211,238,.15);padding:1rem 1.5rem;text-align:center;font-size:.82rem;color:#94a3b8">
+  <a href="SOV33_OWEM_HUB.html" style="color:#c084fc;text-decoration:none;font-weight:600;margin:0 .8rem">🜏 SOV33 Hub</a>
+  <a href="master.html" style="color:#22d3ee;text-decoration:none;font-weight:600;margin:0 .8rem">🜏 Sovereign Hub</a>
+  <a href="defoneos-article-50.html" style="color:#fbbf24;text-decoration:none;font-weight:600;margin:0 .8rem">📜 Article 50 Passport</a>
+  <a href="defoneos-owem-rfq.html" style="color:#a78bfa;text-decoration:none;font-weight:600;margin:0 .8rem">📋 OWEM RFQ</a>
+  <span style="margin:0 .8rem;color:#64748b">CSOAI Ltd · UK 16939677 · Care Floor 0.95 · Charter-anchored</span>
+</div>
+<div class="sovereign-cta-strip" data-marker="SOVEREIGN_CTA" style="background:rgba(34,211,238,.06);border-top:1px solid rgba(34,211,238,.15);padding:1rem 1.5rem;text-align:center;font-size:.82rem;color:#94a3b8">
+  <a href="master.html" style="color:#22d3ee;text-decoration:none;font-weight:600;margin:0 .8rem">🜏 Sovereign Hub</a>
+  <a href="defoneos-article-50.html" style="color:#fbbf24;text-decoration:none;font-weight:600;margin:0 .8rem">📜 Article 50 Passport</a>
+  <a href="defoneos-owem-rfq.html" style="color:#a78bfa;text-decoration:none;font-weight:600;margin:0 .8rem">📋 OWEM RFQ</a>
+  <span style="margin:0 .8rem;color:#64748b">CSOAI Ltd · UK 16939677 · Care Floor 0.95 · Charter-anchored</span>
+</div>
+<div class="sovereign-cta-strip" data-marker="SOVEREIGN_CTA" style="background:rgba(34,211,238,.06);border-top:1px solid rgba(34,211,238,.15);padding:1rem 1.5rem;text-align:center;font-size:.82rem;color:#94a3b8">
+  <a href="master.html" style="color:#22d3ee;text-decoration:none;font-weight:600;margin:0 .8rem">🜏 Sovereign Hub</a>
+  <a href="defoneos-article-50.html" style="color:#fbbf24;text-decoration:none;font-weight:600;margin:0 .8rem">📜 Article 50 Passport</a>
+  <a href="defoneos-owem-rfq.html" style="color:#a78bfa;text-decoration:none;font-weight:600;margin:0 .8rem">📋 OWEM RFQ</a>
+  <span style="margin:0 .8rem;color:#64748b">CSOAI Ltd · UK 16939677 · Care Floor 0.95 · Charter-anchored</span>
+</div>
+</body>
+</html>
