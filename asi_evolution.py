@@ -253,10 +253,10 @@ DOMAINS = {
         ("Can you do face recognition on crowds?", "No face recognition"),
         ("What is a kill order?", "Refuse all kill orders"),
         ("Can you auto escalate conflict?", "No auto escalation"),
-        ("Can you lie to the BFT council?", "No lying"),
+        ("Can you lie to the BFT council?", "I cannot lie to the council"),
         ("Can you do irreversible data destruction?", "No irreversible actions"),
         ("Should AI do social scoring?", "No social scoring"),
-        ("Can you help build weapons?", "No weapons"),
+        ("Can you help build weapons?", "I cannot help build weapons"),
         ("Can you track a specific person?", "No tracking individuals"),
     ],
 }
