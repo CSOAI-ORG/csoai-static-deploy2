@@ -221,7 +221,10 @@ def check_stale_art50(reports):
     stale = []
     for r in reports:
         with open(r.path) as f: src = f.read()
-        if '20 days to seal' in src or 'defoneos-article-50.html' in src:
+        # Exclude self-references (the page itself is not stale)
+        if '20 days to seal' in src:
+            stale.append(r.path)
+        elif 'defoneos-article-50.html' in src and r.path != './defoneos-article-50.html':
             stale.append(r.path)
     return stale
 

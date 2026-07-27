@@ -2,10 +2,12 @@
 """
 Groq Distillation Script — 50 diverse prompts across 5 categories.
 Calls Groq's free API (llama-3.3-70b-versatile) and saves responses as JSONL.
+Includes retry logic for rate limits with exponential backoff.
 """
 
 import json
 import os
+import re
 import subprocess
 import sys
 import time
@@ -15,7 +17,8 @@ from datetime import datetime, timezone
 OUTPUT_PATH = Path(__file__).parent / "groq_distilled_500.jsonl"
 GROQ_ENDPOINT = "https://api.groq.com/openai/v1/chat/completions"
 MODEL = "llama-3.3-70b-versatile"
-RATE_LIMIT_DELAY = 2.0  # seconds between requests
+RATE_LIMIT_DELAY = 2.5  # seconds between requests
+MAX_RETRIES = 5
 
 
 def get_api_key():
@@ -28,12 +31,17 @@ def get_api_key():
     return ""
 
 
-def call_groq(api_key: str, prompt: str) -> str:
+def is_error_response(text: str) -> bool:
+    return any(text.startswith(p) for p in ("[API_ERROR]", "[CURL_ERROR]", "[JSON_ERROR]", "[ERROR]"))
+
+
+def call_groq(api_key: str, prompt: str) -> tuple[str, bool]:
+    """Returns (response_text, is_error)."""
     payload = json.dumps({
         "model": MODEL,
         "messages": [{"role": "user", "content": prompt}],
         "temperature": 0.7,
-        "max_tokens": 2048,
+        "max_tokens": 1024,
     })
 
     try:
@@ -48,15 +56,26 @@ def call_groq(api_key: str, prompt: str) -> str:
             capture_output=True, text=True, timeout=65
         )
         if result.returncode != 0:
-            return f"[CURL_ERROR] {result.stderr[:200]}"
+            return f"[CURL_ERROR] {result.stderr[:200]}", True
         data = json.loads(result.stdout)
         if "error" in data:
-            return f"[API_ERROR] {data['error']}"
-        return data["choices"][0]["message"]["content"]
-    except json.JSONDecodeError as e:
-        return f"[JSON_ERROR] {result.stdout[:200]}"
+            return json.dumps(data["error"]), True
+        return data["choices"][0]["message"]["content"], False
+    except json.JSONDecodeError:
+        return f"[JSON_ERROR] {result.stdout[:200]}", True
     except Exception as e:
-        return f"[ERROR] {e}"
+        return f"[ERROR] {e}", True
+
+
+def extract_wait_seconds(error_text: str) -> float:
+    """Extract wait time from Groq rate limit error message."""
+    m = re.search(r"try again in (\d+)m([\d.]+)s", error_text)
+    if m:
+        return int(m.group(1)) * 60 + float(m.group(2))
+    m = re.search(r"try again in ([\d.]+)s", error_text)
+    if m:
+        return float(m.group(1))
+    return 30.0  # default wait
 
 
 PROMPTS = {
@@ -143,14 +162,33 @@ def main():
 
     results = []
     errors = 0
+    retries_total = 0
     start_time = time.time()
 
     for i, (category, prompt) in enumerate(all_prompts, 1):
         print(f"[{i:2d}/{len(all_prompts)}] {category:10s} | {prompt[:60]}...")
-        response = call_groq(api_key, prompt)
 
-        if response.startswith("[HTTP") or response.startswith("[ERROR"):
-            print(f"           ERROR: {response[:100]}")
+        response = None
+        is_err = True
+        for attempt in range(MAX_RETRIES):
+            resp_text, is_err = call_groq(api_key, prompt)
+            if not is_err:
+                response = resp_text
+                break
+
+            retries_total += 1
+            if "rate_limit" in resp_text.lower() or "Rate limit" in resp_text:
+                wait = extract_wait_seconds(resp_text)
+                wait = min(wait + 2, 120)  # cap at 2 min
+                print(f"           RATE LIMITED (attempt {attempt+1}), waiting {wait:.0f}s...")
+                time.sleep(wait)
+            else:
+                print(f"           ERROR: {resp_text[:100]}")
+                break
+
+        if is_err:
+            response = resp_text
+            print(f"           FAILED after {attempt+1} attempts: {response[:80]}")
             errors += 1
         else:
             print(f"           OK ({len(response)} chars)")
@@ -164,7 +202,7 @@ def main():
         }
         results.append(record)
 
-        if i < len(all_prompts):
+        if i < len(all_prompts) and not is_err:
             time.sleep(RATE_LIMIT_DELAY)
 
     with open(OUTPUT_PATH, "w") as f:
@@ -177,12 +215,13 @@ def main():
     for r in results:
         cat = r["category"]
         category_counts[cat] = category_counts.get(cat, 0) + 1
-        if r["a"].startswith("[HTTP") or r["a"].startswith("[ERROR"):
+        if is_error_response(r["a"]):
             category_errors[cat] = category_errors.get(cat, 0) + 1
 
     print("=" * 60)
     print(f"COMPLETED in {elapsed:.1f}s")
     print(f"Total: {len(results)} | Errors: {errors} | Success: {len(results) - errors}")
+    print(f"Retries: {retries_total}")
     print(f"Output: {OUTPUT_PATH}")
     print(f"File size: {OUTPUT_PATH.stat().st_size / 1024:.1f} KB")
     print()
