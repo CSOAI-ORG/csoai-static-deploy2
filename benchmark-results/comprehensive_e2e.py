@@ -10,8 +10,8 @@ from datetime import datetime, timezone
 WORKSPACE = Path(os.environ.get("SOV_WORKSPACE", "/tmp"))
 
 API_KEYS = {
-    "nvidia": "__NVAPI_KEY__",
-    "gemini": "__GEMINI_KEY__",
+    "nvidia": os.environ.get("NVIDIA_API_KEY", "__NVAPI_KEY__"),
+    "gemini": os.environ.get("GOOGLE_API_KEY", "__GEMINI_KEY__"),
 }
 
 SYSTEM = """You are DEFONEOS sovereign AI. Answer precisely and concisely.

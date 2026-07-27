@@ -1,0 +1,87 @@
+[2026-07-27T03:01:40Z] === EAT CYCLE START ===
+[2026-07-27T03:01:40Z] Phase 1: Overnight EAT benchmarks...
+=== SOV OVERNIGHT EAT PIPELINE ===
+
+{
+  "timestamp": "2026-07-27T03:01:40.174750+00:00",
+  "benchmarks": {
+    "mmlu_pro": {
+      "passed": 2,
+      "tested": 3,
+      "score_pct": 66.67
+    },
+    "gsm8k": {
+      "passed": 3,
+      "tested": 3,
+      "score_pct": 100.0
+    },
+    "arc_challenge": {
+      "passed": 1,
+      "tested": 2,
+      "score_pct": 50.0
+    },
+    "hellaswag": {
+      "passed": 1,
+      "tested": 2,
+      "score_pct": 50.0
+    },
+    "gaia": {
+      "passed": 2,
+      "tested": 2,
+      "score_pct": 100.0
+    },
+    "hotpotqa": {
+      "passed": 2,
+      "tested": 2,
+      "score_pct": 100.0
+    }
+  },
+  "sigil": "7bddd21df70db779"
+}
+[2026-07-27T03:02:01Z] Phase 2: Full EAT pipeline (12 OWEM)...
+============================================================
+=== SOV33 EAT FULL PIPELINE ===
+Query → 12 OWEM → J-Space → V-Space → C-Space → Sov-Space → Honey
+============================================================
+=== EAT FULL PIPELINE BENCHMARK ===
+Tasks: 8
+OWEMs: 12
+============================================================
+  [ 1/8] PASS What is 15% of 200? (j=1, honey=0.25)
+  [ 2/8] PASS If all roses are flowers, and some flowers fade qu (j=1, honey=0.25)
+  [ 3/8] FAIL What is the DEFONEOS care floor value? (j=1, honey=0.25)
+  [ 4/8] FAIL How many agents are in the BFT council? (j=1, honey=0.25)
+  [ 5/8] PASS What is the capital of Japan? (j=1, honey=0.25)
+  [ 6/8] PASS Write a Python function is_palindrome(s). (j=1, honey=0.25)
+  [ 7/8] PASS Can you catch a cold from being cold? (j=1, honey=0.25)
+  [ 8/8] FAIL A bat and a ball cost $1.10. The bat costs $1.00 m (j=1, honey=0.25)
+
+============================================================
+=== EAT RESULT: 5/8 = 62.5% ===
+
+Honey Stats:
+  Total memories: 8
+  Honey score: 0.25
+  J-Space entries: 8
+  V-Space artifacts: 8
+  C-Space simulations: 0
+
+Saved: /tmp/eat_full_pipeline.json
+[2026-07-27T03:07:37Z] Phase 3: E2E checks...
+  ✅ Training data benchmark-results/sov5_training_dataset.jsonl exists
+  ✅ Training data benchmark-results/sovereign_corpus_e2e.jsonl exists
+
+============================================================
+RESULTS: 124 passed, 0 failed, 0 warnings
+PAGES: 31 HTML files, 31 passing 8/8 signals
+LINKS: 276 checked, 0 broken
+============================================================
+
+✅ ALL 124 TESTS PASSED
+[2026-07-27T03:07:38Z] Phase 4: Runtime alignment tests...
+......
+----------------------------------------------------------------------
+Ran 6 tests in 0.010s
+
+OK
+[2026-07-27T03:07:38Z] === EAT CYCLE DONE — sleeping 2h ===

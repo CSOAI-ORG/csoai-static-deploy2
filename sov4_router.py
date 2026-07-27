@@ -517,7 +517,7 @@ class Sov4Router:
         PROVIDERS = {
             "groq":     ("GROQ_API_KEY",       "https://api.groq.com/openai/v1/chat/completions", {}),
             "deepseek": ("DEEPSEEK_API_KEY",   "https://api.deepseek.com/v1/chat/completions", {}),
-            "qwen":     ("QWEN_API_KEY",       "https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions", {}),
+            "qwen":     ("QWEN_API_KEY",       os.environ.get("QWEN_API_BASE", "https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions"), {}),
             "gemini":   ("GEMINI_API_KEY",     "https://generativelanguage.googleapis.com/v1beta/openai/chat/completions", {}),
         }
 

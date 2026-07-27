@@ -158,15 +158,15 @@ module.exports = async function handler(req, res) {
   }
   if (!body || typeof body !== 'object') body = {};
 
-  const context = (body.context ?? body.input ?? '').toString();
+  const bodyText = (body.context ?? body.input ?? '').toString();
   const prevState = body.prev_state ?? null;
-  const cid = cycleId(context || 'owem-default-context');
+  const cid = cycleId(bodyText || 'owem-default-context');
 
   // ── Pipeline ─────────────────────────────────────────────────────────
-  const mamba = mambaStateDelta(context || cid, prevState);
-  const moe = moeExperts(context || cid, 4);
-  const attention = standardAttention(context || cid);
-  const bft = bftVote(context || cid);
+  const mamba = mambaStateDelta(bodyText || cid, prevState);
+  const moe = moeExperts(bodyText || cid, 4);
+  const attention = standardAttention(bodyText || cid);
+  const bft = bftVote(bodyText || cid);
 
   const timestamp = new Date().toISOString();
 
@@ -182,7 +182,7 @@ module.exports = async function handler(req, res) {
     bft_tally: bft.tally,
     bft_quorum_met: bft.quorum_met,
     bft_health: bft.health,
-    context_hash: crypto.createHash('sha256').update(context || cid).digest('hex'),
+    context_hash: crypto.createHash('sha256').update(bodyText || cid).digest('hex'),
     timestamp,
   };
   const sigil = hmacSigil(cyclePayload);

@@ -170,5 +170,47 @@
     "deploy_target": "Cloudflare Pages (csoai-sovereign.pages.dev)",
     "git_remote": "github.com/CSOAI-ORG/csoai-static-deploy2",
     "ci_cd": ".github/workflows/ci.yml \u2014 test + verify on push"
-  }
+  },
+  "cloud_tiers_unlocked": {
+    "deepseek": {
+      "status": "OK",
+      "models": 2,
+      "key": "sk-5cbc19e38f..."
+    },
+    "qwen_dashscope": {
+      "status": "OK",
+      "models": 151,
+      "endpoint": "Alibaba Cloud MAAS APAC"
+    },
+    "gemini": {
+      "status": "OK",
+      "models": 50,
+      "key": "AQ.Ab8RN6JFo..."
+    },
+    "kaggle": {
+      "status": "OK",
+      "token": "KGAT_d72d51...",
+      "kernels": [
+        "sov-asi-evolve (running)",
+        "sov-overnight-eat (running)"
+      ]
+    },
+    "huggingface": {
+      "status": "OK",
+      "token": "hf_LfvQPSvuz..."
+    }
+  },
+  "human_gates_remaining": [
+    "DNS: configure csoai.org custom domain on Cloudflare Pages",
+    "Launchagents: owner runs launchctl load to activate snapshot automation",
+    "SC clearance: needed for BFT-33 council + DEFONEOS-SEAL issuance",
+    "Cyber Essentials: needs company info to apply",
+    "NATO/DSRB/DASA outreach: Nick must press send on draft applications"
+  ],
+  "human_gates_resolved": [
+    "Cloud API keys (DeepSeek, Qwen, Gemini) \u2014 set in ~/.zshrc & env",
+    "Kaggle API token \u2014 saved to ~/.kaggle/access_token",
+    "HuggingFace token \u2014 set in ~/.zshrc",
+    "Alibaba Cloud MAAS endpoint \u2014 configured in sov4_router.py"
+  ]
 }

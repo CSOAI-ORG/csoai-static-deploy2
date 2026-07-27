@@ -200,7 +200,7 @@ module.exports = async function handler(req, res) {
   const tsIso = new Date(t0).toISOString();
 
   // Parse query params defensively (handle both Vercel's req.query and a URL)
-  const url = (req.url || '').split('?')[1] || '';
+  const queryStr = (req.url || '').split('?')[1] || '';
   const params = {};
   for (const pair of url.split('&')) {
     if (!pair) continue;

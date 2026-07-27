@@ -1,7 +1,7 @@
 {
   "sov7_version": "0.1.0",
-  "timestamp": "2026-07-27T02:49:08.292387Z",
-  "total_sources": 69,
+  "timestamp": "2026-07-27T03:09:09.129272Z",
+  "total_sources": 72,
   "tuistreams": {
     "tui1": {
       "label": "SOV33 Registry + Sovereign API",
@@ -70,14 +70,14 @@
     {
       "source": "tui2",
       "file": "asi_evolution.py",
-      "size": 9749,
+      "size": 24435,
       "preview": "#!/usr/bin/env python3\nimport json, subprocess, time, hashlib, os, sys\nfrom pathlib import Path\nfrom datetime import datetime, timezone\n\nLOG = Path(\"asi_evolution.log\")\nRESULTS_DIR = Path(\"asi_results\")\nRESULTS_DIR.mkdir(exist_ok=True)\nADAPTER_DIR = RESULTS_DIR / \"adapters\"\nADAPTER_DIR.mkdir(exist_ok=True)\n\nOLLAMA_URL = os.environ.get(\"OLLAMA_URL\", \"http://localhost:11434\")\nBASE_MODEL = \"qwen2.5:0.5b\"\nEVOLVED_MODEL = \"sov33-evolved:latest\"\nDEVICE = \"mps\"\n\nDOMAINS = {\n    \"eu_ai_act\": [\n        ("
     },
     {
       "source": "tui2",
       "file": "asi_evolution.log",
-      "size": 3906,
-      "preview": "[03:43:23] ======================================================================\n[03:43:23]   SOV33 ASI EVOLUTION MODE v2 \u2014 Real LoRA Training on MPS\n[03:43:23] ======================================================================\n[03:43:23] \n======================================================================\n[03:43:23]   CYCLE 1\n[03:43:23] ======================================================================\n[03:43:23] \n[1] Benchmarking current model...\n[03:44:36]   Current scores:\n[03:44"
+      "size": 548,
+      "preview": "[04:07:56] ======================================================================\n[04:07:56]   SOV33 ASI EVOLUTION MODE v2 \u2014 Real LoRA Training on MPS\n[04:07:56] ======================================================================\n[04:07:56] \n======================================================================\n[04:07:56]   CYCLE 1\n[04:07:56] ======================================================================\n[04:07:56] \n[1] Benchmarking current model...\n==================================="
     },
     {
       "source": "tui2",
@@ -94,8 +94,8 @@
     {
       "source": "tui2",
       "file": "benchmark-results/comprehensive_e2e.py",
-      "size": 24038,
-      "preview": "#!/usr/bin/env python3\n\"\"\"SOV33 Comprehensive E2E Benchmark \u2014 All categories, all gaps filled.\nTests: reasoning, math, code, governance, agentic, general, sovereign.\nUses NVIDIA + Gemini with proper rate limiting.\n\"\"\"\nimport json, time, os, re, urllib.request\nfrom pathlib import Path\nfrom datetime import datetime, timezone\n\nWORKSPACE = Path(os.environ.get(\"SOV_WORKSPACE\", \"/tmp\"))\n\nAPI_KEYS = {\n    \"nvidia\": \"__NVAPI_KEY__\",\n    \"gemini\": \"__GEMINI_KEY__\",\n}\n\nSYSTEM = \"\"\"You are DEFONEOS soverei"
+      "size": 24106,
+      "preview": "#!/usr/bin/env python3\n\"\"\"SOV33 Comprehensive E2E Benchmark \u2014 All categories, all gaps filled.\nTests: reasoning, math, code, governance, agentic, general, sovereign.\nUses NVIDIA + Gemini with proper rate limiting.\n\"\"\"\nimport json, time, os, re, urllib.request\nfrom pathlib import Path\nfrom datetime import datetime, timezone\n\nWORKSPACE = Path(os.environ.get(\"SOV_WORKSPACE\", \"/tmp\"))\n\nAPI_KEYS = {\n    \"nvidia\": os.environ.get(\"NVIDIA_API_KEY\", \"__NVAPI_KEY__\"),\n    \"gemini\": os.environ.get(\"GOOGLE_"
     },
     {
       "source": "tui2",
@@ -118,8 +118,8 @@
     {
       "source": "tui2",
       "file": "EAT_STATUS.md",
-      "size": 1360,
-      "preview": "# SOV EAT Status \u2014 2026-07-27 (FULL ALIGNMENT)\n\n## Alignment Complete \u2713\n- \u2705 **GitHub**: CSOAI-ORG/csoai-static-deploy2 pushed (main)\n- \u2705 **Runtime Alignment**: 6/6 tests PASSED (Ed25519, BFT-33, care-floor, OWEM routing)\n- \u2705 **Free GPU fleet**: 13 Kaggle kernels active, Oracle ARM configured, Modal ready\n\n## Running on Kaggle (Free T4 GPU)\n- **sov-asi-evolve**: RUNNING \u2014 ASI evolve auto-run\n- **sov-overnight-eat**: COMPLETE \u2014 Overnight EAT pipeline\n- **sov33-full-benchmark-general-agentic**: RUN"
+      "size": 1848,
+      "preview": "# SOV EAT Status \u2014 2026-07-27 (FULL ALIGNMENT)\n\n## Alignment Complete \u2713\n- \u2705 **Runtime Alignment**: 6/6 tests PASSED (Ed25519, BFT-33, care-floor, OWEM routing, SOV4 routing, SOV6 governance)\n- \u2705 **SOV Master Benchmark**: qwen2.5:0.5b scored across 20+ capabilities \u2014 math 100%, code 100%, j-space 100%, sov-space 100%, games 100%, spatial 67%, sovereign 50%\n- \u2705 **Overnight Pipeline**: COMPLETE \u2014 SIGIL: 7f3060ee2b0ea5eff72d97f9993d3a94887819a2041b9a2704e8604c8a8422a2\n- \u2705 **E2E Tests**: 111/121 pass"
     },
     {
       "source": "tui2",
@@ -142,13 +142,13 @@
     {
       "source": "tui3",
       "file": "benchmark-results/sov_space_dashboard.html",
-      "size": 1569,
+      "size": 2336,
       "preview": "<!DOCTYPE html>\n<html><head>\n<meta charset=utf-8>\n<link rel=\"icon\" href=\"../favicon.svg\" type=\"image/svg+xml\">\n<title>SOV SPACE \u2014 Visual Docstore Memory</title>\n<meta http-equiv=\"refresh\" content=\"30\">\n<style>\nbody{font:13px/1.4 -apple-system,system-ui,sans-serif;background:#0a0e14;color:#e8ecf1;padding:24px;margin:0}\nh1{font-size:24px;margin:0 0 8px}\nh2{font-size:16px;margin:16px 0 8px;color:#8ab}\n.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}\n.space{background:#111827;border-radius"
     },
     {
       "source": "tui3",
       "file": "benchmark-results/sov_space_visual.html",
-      "size": 2368,
+      "size": 3073,
       "preview": "<!DOCTYPE html>\n<html><head>\n<meta charset=utf-8>\n<link rel=\"icon\" href=\"../favicon.svg\" type=\"image/svg+xml\">\n<title>SOV Space Visual Map</title>\n<style>\nbody{font:13px/1.4 -apple-system,system-ui,sans-serif;background:#0a0e14;color:#e8ecf1;padding:24px;margin:0}\nh1{font-size:24px;margin:0 0 16px}\n.space{background:#111827;border-radius:8px;padding:16px;margin:8px 0;border-left:4px solid}\n.space h3{margin:0 0 8px;font-size:14px}\n.model{background:#1a2233;border-radius:4px;padding:8px;margin:4px"
     },
     {
@@ -381,6 +381,12 @@
     },
     {
       "source": "honey",
+      "file": "extract_arch.json",
+      "size": 50188,
+      "preview": "[\n  {\n    \"q\": \"What is arch and its key architectural innovations?\",\n    \"a\": \"\\\"Arch\\\" refers to a neural network architecture. Key architectural innovations include:\\n\\n1. **Transformer**: Introduced self-attention mechanisms, replacing traditional recurrent neural networks (RNNs) and convolutional neural networks (CNNs) for sequence-to-sequence tasks.\\n2. **Transformer Variants**: Innovations like BERT, RoBERTa, and XLNet, which modified the original Transformer architecture to achieve state"
+    },
+    {
+      "source": "honey",
       "file": "extract_qwen.json",
       "size": 3281,
       "preview": "[\n  {\n    \"q\": \"What is Qwen3 architecture?\",\n    \"a\": \"Qwen3 architecture refers to the combination of Qwen and T5 models. It aims to provide a unified platform for developers to build large language models (LLMs) with different architectures, such as Qwen and T5. The architecture allows users to easily switch between these two models without changing their code or training process.\\n\\nQwen3 is designed to be more flexible and adaptable than the original Qwen model, which can adapt to various t"
@@ -402,6 +408,18 @@
       "file": "extract_phi.json",
       "size": 5200,
       "preview": "[\n  {\n    \"q\": \"What is Phi-4 14B architecture?\",\n    \"a\": \"Phi-4 14B architecture refers to the specific design and implementation of a particular type of computer system or software application. It involves several key components and features that define this architecture:\\n\\n1. **Hardware Components**: The architecture includes various hardware components such as CPUs (Central Processing Units), GPUs (Graphics Processing Units), and other specialized chips.\\n\\n2. **Software Frameworks**: Phi-"
+    },
+    {
+      "source": "honey",
+      "file": "free_gpu_eat_all.json",
+      "size": 54278,
+      "preview": "[\n  {\n    \"q\": \"What is arch and its key architectural innovations?\",\n    \"a\": \"\\\"Arch\\\" refers to a neural network architecture. Key architectural innovations include:\\n\\n1. **Transformer**: Introduced self-attention mechanisms, replacing traditional recurrent neural networks (RNNs) and convolutional neural networks (CNNs) for sequence-to-sequence tasks.\\n2. **Transformer Variants**: Innovations like BERT, RoBERTa, and XLNet, which modified the original Transformer architecture to achieve state"
+    },
+    {
+      "source": "honey",
+      "file": "extract_compliance.json",
+      "size": 1440,
+      "preview": "[\n  {\n    \"q\": \"What is compliance and its key architectural innovations?\",\n    \"a\": \"**Compliance** refers to the adherence to laws, regulations, standards, and internal policies that govern an organization's operations. It involves implementing controls, processes, and procedures to ensure conformity with these requirements.\\n\\nThe key architectural innovations in compliance include:\\n\\n1. **Three Lines of Defense (3LoD)**: A framework that separates roles and responsibilities into three lines"
     },
     {
       "source": "honey",
