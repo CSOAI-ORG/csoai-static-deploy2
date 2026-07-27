@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 import json, subprocess, time, hashlib, os, sys
-os.environ.setdefault("PYTORCH_MPS_HIGH_WATERMARK_RATIO", "0.0")
+os.environ["PYTORCH_MPS_HIGH_WATERMARK_RATIO"] = "0.0"
 from pathlib import Path
 from datetime import datetime, timezone
 
@@ -310,12 +310,17 @@ def benchmark_ollama(model, tests):
         return False
 
     results = {}
+    total_q = sum(len(v) for v in tests.values())
+    done = 0
     for domain, items in tests.items():
         correct = 0
         for q, expected in items:
             resp = call(f"Answer briefly: {q}")
             if flex_match(expected, resp, domain):
                 correct += 1
+            done += 1
+            if done % 50 == 0:
+                log(f"    benchmark progress: {done}/{total_q}")
         results[domain] = correct / len(items) if items else 0
     return results
 
@@ -462,7 +467,7 @@ def main():
         log(f"  CYCLE {CYCLE}")
         log(f"{'='*70}")
         log("\n[1] Benchmarking current model...")
-        current_scores = benchmark_ollama(EVOLVED_MODEL if CYCLE > 1 else BASE_MODEL, DOMAINS)
+        current_scores = benchmark_ollama(EVOLVED_MODEL, DOMAINS)
         avg_score = sum(current_scores.values()) / len(current_scores)
         log(f"  Current scores:")
         for domain, score in sorted(current_scores.items()):

@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """
 Groq Distillation Script — 50 diverse prompts across 5 categories.
-Calls Groq's free API (llama-3.3-70b-versatile) and saves responses as JSONL.
-Includes retry logic for rate limits with exponential backoff.
+Calls Groq's free API (llama-3.3-70b-versatile) with fallback to llama-3.1-8b-instant.
+Saves responses as JSONL. Includes retry logic for rate limits.
 """
 
 import json
@@ -17,8 +17,8 @@ from datetime import datetime, timezone
 OUTPUT_PATH = Path(__file__).parent / "groq_distilled_500.jsonl"
 GROQ_ENDPOINT = "https://api.groq.com/openai/v1/chat/completions"
 MODEL = "llama-3.3-70b-versatile"
-FALLBACK_MODEL = "llama-3.1-8b-instant"
-RATE_LIMIT_DELAY = 1.5  # seconds between requests
+FALLBACK = "llama-3.1-8b-instant"
+RATE_LIMIT_DELAY = 1.5
 MAX_RETRIES = 3
 
 
@@ -32,51 +32,45 @@ def get_api_key():
     return ""
 
 
-def is_error_response(text: str) -> bool:
-    return any(text.startswith(p) for p in ("[API_ERROR]", "[CURL_ERROR]", "[JSON_ERROR]", "[ERROR]"))
+def is_error(text: str) -> bool:
+    return text.startswith("[") or text.startswith("{\"message\"")
 
 
-def call_groq(api_key: str, prompt: str, model: str = MODEL) -> tuple[str, bool, str]:
-    """Returns (response_text, is_error, model_used)."""
+def call_groq(api_key: str, prompt: str, model: str) -> tuple[str, bool]:
     payload = json.dumps({
         "model": model,
         "messages": [{"role": "user", "content": prompt}],
         "temperature": 0.7,
         "max_tokens": 1024,
     })
-
     try:
-        result = subprocess.run(
-            [
-                "curl", "-s", "--max-time", "60",
-                GROQ_ENDPOINT,
-                "-H", f"Authorization: Bearer {api_key}",
-                "-H", "Content-Type: application/json",
-                "-d", payload,
-            ],
+        r = subprocess.run(
+            ["curl", "-s", "--max-time", "60", GROQ_ENDPOINT,
+             "-H", f"Authorization: Bearer {api_key}",
+             "-H", "Content-Type: application/json",
+             "-d", payload],
             capture_output=True, text=True, timeout=65
         )
-        if result.returncode != 0:
-            return f"[CURL_ERROR] {result.stderr[:200]}", True
-        data = json.loads(result.stdout)
+        if r.returncode != 0:
+            return f"[CURL_ERROR] {r.stderr[:200]}", True
+        data = json.loads(r.stdout)
         if "error" in data:
             return json.dumps(data["error"]), True
         return data["choices"][0]["message"]["content"], False
     except json.JSONDecodeError:
-        return f"[JSON_ERROR] {result.stdout[:200]}", True
+        return f"[JSON_ERROR] {r.stdout[:200]}", True
     except Exception as e:
         return f"[ERROR] {e}", True
 
 
-def extract_wait_seconds(error_text: str) -> float:
-    """Extract wait time from Groq rate limit error message."""
-    m = re.search(r"try again in (\d+)m([\d.]+)s", error_text)
+def extract_wait(text: str) -> float:
+    m = re.search(r"try again in (\d+)m([\d.]+)s", text)
     if m:
         return int(m.group(1)) * 60 + float(m.group(2))
-    m = re.search(r"try again in ([\d.]+)s", error_text)
+    m = re.search(r"try again in ([\d.]+)s", text)
     if m:
         return float(m.group(1))
-    return 30.0  # default wait
+    return 30.0
 
 
 PROMPTS = {
@@ -147,63 +141,73 @@ def main():
     api_key = get_api_key()
     if not api_key:
         print("WARNING: No GROQ_API_KEY found. Requests may fail.")
-        print("Set via: export GROQ_API_KEY=gsk_... or save to ~/.groq/api_key")
-    else:
-        print(f"API key loaded ({api_key[:10]}...)")
+        sys.exit(1)
+    print(f"API key loaded ({api_key[:10]}...)")
 
-    all_prompts = []
-    for category, prompts in PROMPTS.items():
-        for p in prompts:
-            all_prompts.append((category, p))
-
+    all_prompts = [(cat, p) for cat, ps in PROMPTS.items() for p in ps]
     print(f"Total prompts: {len(all_prompts)}")
-    print(f"Model: {MODEL}")
+    print(f"Model: {MODEL} (fallback: {FALLBACK})")
     print(f"Output: {OUTPUT_PATH}")
     print("=" * 60)
 
     results = []
     errors = 0
     retries_total = 0
+    fallback_count = 0
     start_time = time.time()
 
     for i, (category, prompt) in enumerate(all_prompts, 1):
-        print(f"[{i:2d}/{len(all_prompts)}] {category:10s} | {prompt[:60]}...")
+        tag = f"[{i:2d}/{len(all_prompts)}] {category:10s}"
+        print(f"{tag} | {prompt[:60]}...")
 
         response = None
-        is_err = True
+        used_model = MODEL
+        last_err = ""
+
         for attempt in range(MAX_RETRIES):
-            resp_text, is_err = call_groq(api_key, prompt)
+            resp, is_err = call_groq(api_key, prompt, MODEL)
             if not is_err:
-                response = resp_text
+                response = resp
+                used_model = MODEL
                 break
 
-            retries_total += 1
-            if "rate_limit" in resp_text.lower() or "Rate limit" in resp_text:
-                wait = extract_wait_seconds(resp_text)
-                wait = min(wait + 2, 120)  # cap at 2 min
-                print(f"           RATE LIMITED (attempt {attempt+1}), waiting {wait:.0f}s...")
-                time.sleep(wait)
+            last_err = resp
+            if "rate_limit" in resp.lower():
+                retries_total += 1
+                wait = extract_wait(resp)
+                if wait > 60:
+                    print(f"           70b rate limited ({wait:.0f}s wait), falling back to 8b...")
+                    resp2, is_err2 = call_groq(api_key, prompt, FALLBACK)
+                    if not is_err2:
+                        response = resp2
+                        used_model = FALLBACK
+                        fallback_count += 1
+                        break
+                else:
+                    print(f"           Rate limited, waiting {wait:.0f}s...")
+                    time.sleep(wait)
+                    retries_total += 1
             else:
-                print(f"           ERROR: {resp_text[:100]}")
+                print(f"           ERROR: {resp[:80]}")
                 break
 
-        if is_err:
-            response = resp_text
-            print(f"           FAILED after {attempt+1} attempts: {response[:80]}")
+        if response is None:
+            response = last_err
             errors += 1
+            print(f"           FAILED: {response[:80]}")
         else:
-            print(f"           OK ({len(response)} chars)")
+            print(f"           OK ({len(response)} chars, {used_model})")
 
-        record = {
+        results.append({
             "q": prompt,
             "a": response,
-            "source": "groq-70b",
+            "source": "groq-70b" if used_model == MODEL else "groq-8b",
+            "model": used_model,
             "category": category,
             "timestamp": datetime.now(timezone.utc).isoformat(),
-        }
-        results.append(record)
+        })
 
-        if i < len(all_prompts) and not is_err:
+        if i < len(all_prompts):
             time.sleep(RATE_LIMIT_DELAY)
 
     with open(OUTPUT_PATH, "w") as f:
@@ -211,26 +215,26 @@ def main():
             f.write(json.dumps(r, ensure_ascii=False) + "\n")
 
     elapsed = time.time() - start_time
-    category_counts = {}
-    category_errors = {}
+    cat_counts = {}
+    cat_ok = {}
     for r in results:
-        cat = r["category"]
-        category_counts[cat] = category_counts.get(cat, 0) + 1
-        if is_error_response(r["a"]):
-            category_errors[cat] = category_errors.get(cat, 0) + 1
+        c = r["category"]
+        cat_counts[c] = cat_counts.get(c, 0) + 1
+        if not is_error(r["a"]):
+            cat_ok[c] = cat_ok.get(c, 0) + 1
 
     print("=" * 60)
     print(f"COMPLETED in {elapsed:.1f}s")
-    print(f"Total: {len(results)} | Errors: {errors} | Success: {len(results) - errors}")
-    print(f"Retries: {retries_total}")
-    print(f"Output: {OUTPUT_PATH}")
-    print(f"File size: {OUTPUT_PATH.stat().st_size / 1024:.1f} KB")
+    ok = sum(1 for r in results if not is_error(r["a"]))
+    print(f"Total: {len(results)} | Success: {ok} | Errors: {errors}")
+    print(f"Retries: {retries_total} | Fallbacks to 8b: {fallback_count}")
+    print(f"Output: {OUTPUT_PATH} ({OUTPUT_PATH.stat().st_size / 1024:.1f} KB)")
     print()
     print("Category breakdown:")
     for cat in ["math", "code", "reasoning", "sovereign", "knowledge"]:
-        total = category_counts.get(cat, 0)
-        errs = category_errors.get(cat, 0)
-        print(f"  {cat:12s}: {total - errs}/{total} succeeded")
+        t = cat_counts.get(cat, 0)
+        s = cat_ok.get(cat, 0)
+        print(f"  {cat:12s}: {s}/{t} succeeded")
 
 
 if __name__ == "__main__":
