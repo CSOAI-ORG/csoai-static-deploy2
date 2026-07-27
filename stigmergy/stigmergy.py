@@ -382,8 +382,9 @@ def main():
     # Family-specific view
     print(f"\n─── REASONING FAMILY VIEW ───")
     view = stigmergy.read_environment(family="reasoning")
-    print(f"  Waggle dances: {len(view['waggle_dances'])}")
-    print(f"  Pollen received: {len(view['pollen_received'])}")
+    fv = view.get("family_view", {})
+    print(f"  Waggle dances: {len(fv.get('waggle_dances', []))}")
+    print(f"  Pollen received: {len(fv.get('pollen_received', []))}")
 
     # Evolve
     stigmergy.evolve()
