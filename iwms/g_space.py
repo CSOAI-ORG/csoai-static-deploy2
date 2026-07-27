@@ -53,6 +53,7 @@ EAT_CAPABILITY_SIGNALS = {
     "distribution": {"reasoning": 0.68, "coding": 0.73, "multilingual": 0.68, "vision": 0.48, "math": 0.63, "instruction_following": 0.68, "safety": 0.73, "speed": 0.83, "context_length": 0.73, "tool_use": 0.73, "creative_writing": 0.53, "knowledge": 0.78, "edge_deploy": 0.87},
     "infra": {"reasoning": 0.73, "coding": 0.83, "multilingual": 0.63, "vision": 0.43, "math": 0.68, "instruction_following": 0.73, "safety": 0.78, "speed": 0.87, "context_length": 0.73, "tool_use": 0.83, "creative_writing": 0.53, "knowledge": 0.83, "edge_deploy": 0.83},
 }
+FAMILY_CAPABILITIES = EAT_CAPABILITY_SIGNALS
 
 
 class GSpace:

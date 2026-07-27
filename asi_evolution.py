@@ -338,10 +338,13 @@ def generate_training_data(weak_domains, all_domains):
 def train_lora_modelfile(training_data, cycle):
     trained_model_name = f"sov33-evolved-c{cycle}"
     modelfile_content = f"FROM {BASE_MODEL}\nPARAMETER temperature 0\nPARAMETER num_predict 128\n"
-    system_knowledge = "\n".join([
-        f"- {d['text'].split(chr(10))[0].replace('<|im_start|>user\n', '')}: {d['text'].split(chr(10))[2].replace('<|im_start|>assistant\n', '')}"
-        for d in training_data[:30]
-    ])
+    system_knowledge_lines = []
+    for d in training_data[:30]:
+        parts = d['text'].split(chr(10))
+        q = parts[0].replace('<|im_start|>user' + chr(10), '').replace('<|im_end|>' + chr(10), '')
+        a = parts[2].replace('<|im_start|>assistant' + chr(10), '').replace('<|im_end|>', '')
+        system_knowledge_lines.append(f"- {q}: {a}")
+    system_knowledge = chr(10).join(system_knowledge_lines)
     modelfile_content += f'SYSTEM """You are SOV33-Evolved, a sovereign AI. Key knowledge:\n{system_knowledge}\n"""'
     modelfile_path = ADAPTER_DIR / f"Modelfile.c{cycle}"
     modelfile_path.write_text(modelfile_content)

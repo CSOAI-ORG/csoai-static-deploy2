@@ -173,3 +173,49 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+
+def add_paraphrases_to_existing():
+    """Add paraphrased variants to expand training data robustness."""
+    paraphrase_templates = [
+        "What is {}?",
+        "Tell me about {}",
+        "How does {} work?",
+        "Explain {}",
+        "What is the definition of {}?",
+        "Give me details on {}",
+        "Describe {}",
+        "What are the key facts about {}?",
+    ]
+    
+    # Load existing weak domain data
+    weak_path = ROOT / "sov_weak_domain_training_data.json"
+    if weak_path.exists():
+        with open(weak_path) as f:
+            data = json.load(f)
+    else:
+        return
+    
+    augmented = []
+    for entry in data:
+        augmented.append(entry)
+        # Add paraphrased version
+        prompt = entry.get("prompt", "")
+        completion = entry.get("completion", "")
+        # Extract seed term
+        for keyword in ["Article", "BFT", "Care Floor", "SIGIL", "Alpine"]:
+            if keyword in prompt:
+                for template in paraphrase_templates[:3]:
+                    aug_prompt = template.format(keyword)
+                    augmented.append({"prompt": aug_prompt, "completion": completion})
+                    break
+                break
+    
+    out_path = ROOT / "sov_weak_domain_training_paraphrased.json"
+    with open(out_path, "w") as f:
+        json.dump(augmented, f, indent=2)
+    print(f"Generated {len(augmented)} paraphrased examples -> {out_path}")
+
+
+if __name__ == "__main__":
+    add_paraphrases_to_existing()
