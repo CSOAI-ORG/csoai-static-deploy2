@@ -145,15 +145,15 @@ def train_lora(training_data, cycle):
     modelfile_content += f'SYSTEM """You are SOV33-Evolved, a sovereign AI. Key knowledge:\n{system_knowledge}\n"""'
     modelfile_path = ADAPTER_DIR / f"Modelfile.c{cycle}"
     modelfile_path.write_text(modelfile_content)
-    ok, out = subprocess.run(
+    result = subprocess.run(
         ["ollama", "create", trained_model_name, "-f", str(modelfile_path)],
         capture_output=True, text=True, timeout=120
     )
-    if ok.returncode == 0:
+    if result.returncode == 0:
         log(f"  Created model: {trained_model_name}")
         return trained_model_name
     else:
-        log(f"  Ollama create failed: {out}")
+        log(f"  Ollama create failed: {result.stderr[:200]}")
         return None
 
 def main():
@@ -191,11 +191,14 @@ def main():
         log("\n[4] Training LoRA adapter...")
         trained = train_lora(augmented, CYCLE)
         if trained:
-            ok, _ = subprocess.run(
+            r = subprocess.run(
                 ["ollama", "cp", trained, EVOLVED_MODEL],
                 capture_output=True, text=True, timeout=30
             )
-            log(f"  Updated {EVOLVED_MODEL} to latest trained version")
+            if r.returncode == 0:
+                log(f"  Updated {EVOLVED_MODEL} to latest trained version")
+            else:
+                log(f"  Copy failed: {r.stderr[:200]}")
         if avg_score > BEST_SCORE:
             BEST_SCORE = avg_score
             log(f"  New best score: {BEST_SCORE:.1%}")
