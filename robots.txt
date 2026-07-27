@@ -1,3 +1,29 @@
 User-agent: *
 Allow: /
-Sitemap: https://csoai-static-deploy2.vercel.app/sitemap.xml
+Disallow: /.backups/
+Disallow: /.git/
+Disallow: /.eat-sigils/
+Disallow: /benchmark-results/
+Disallow: /EXEC/
+Disallow: /kaggle/
+Disallow: /free_gpu/
+Disallow: /api/
+Disallow: /sovereign-citation-mcp/
+Disallow: /_CLAIM_TICK
+Disallow: /overnight-log.txt
+Disallow: /com.meok.
+Disallow: /DEFONEOS_SPRINT_STATE.json
+Disallow: /arena_lb.csv
+
+User-agent: GPTBot
+Allow: /llms.txt
+Allow: /index.html
+Allow: /defoneos.html
+Allow: /govbench.html
+Allow: /audit.html
+Allow: /master.html
+
+User-agent: Google-Extended
+Allow: /llms.txt
+
+Sitemap: https://csoai.org/sitemap.xml

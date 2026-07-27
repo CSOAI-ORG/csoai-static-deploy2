@@ -12,12 +12,27 @@ const crypto = require('crypto');
 
 const TASKS = {
   build: async () => {
-    // Run quality gate locally
-    return { task: 'build', started_at: new Date().toISOString(), command: 'python3 quality_gate.py' };
+    // Run sigma audit + E2E suite locally
+    const { execSync } = require('child_process');
+    const root = process.cwd();
+    let sigmaResult = null;
+    let e2eResult = null;
+    try {
+      const sigmaOut = execSync(`python3 ${root}/.sigma_audit.py 2>&1`, { timeout: 30000, encoding: 'utf8' });
+      sigmaResult = { ok: true, output: sigmaOut.trim() };
+    } catch (e) {
+      sigmaResult = { ok: false, error: e.message };
+    }
+    try {
+      const e2eOut = execSync(`python3 ${root}/.e2e_tests.py 2>&1`, { timeout: 60000, encoding: 'utf8' });
+      e2eResult = { ok: e2eOut.includes('ALL TESTS PASSED'), output: e2eOut.trim().split('\n').slice(-5).join('\n') };
+    } catch (e) {
+      e2eResult = { ok: false, error: e.message };
+    }
+    return { task: 'build', started_at: new Date().toISOString(), sigma: sigmaResult, e2e: e2eResult };
   },
   test: async () => {
-    // Run pytest
-    return { task: 'test', started_at: new Date().toISOString(), command: '/opt/homebrew/bin/pytest ...' };
+    return TASKS.build();
   },
   deploy: async () => {
     return { task: 'deploy', started_at: new Date().toISOString(), note: 'Vercel deploy is owner-gated. Use SOVEREIGN_DEPLOY.sh after explicit sign-in.' };
@@ -31,8 +46,14 @@ const TASKS = {
     } catch (e) { return { task: 'verify', error: e.message }; }
   },
   golden: async () => {
-    // Hit /api/daily-golden (alias)
     return TASKS.verify();
+  },
+  status: async () => {
+    // Hit /api/eat-status
+    try {
+      const r = await fetch('https://csoai-static-deploy2.vercel.app/api/eat-status', { signal: AbortSignal.timeout(10000) });
+      return await r.json();
+    } catch (e) { return { task: 'status', error: e.message }; }
   },
 };
 

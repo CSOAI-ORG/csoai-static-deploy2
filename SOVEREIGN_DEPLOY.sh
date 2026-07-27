@@ -1,5 +1,5 @@
 #!/bin/bash
-# SOVEREIGN PROD DEPLOY — 212 files (156 DEFONEOS pages + more) to Vercel
+# SOVEREIGN PROD DEPLOY — 800+ files (HTML, API, assets) to Vercel
 # ============================================================
 # HUMAN GATE: Run this after `vercel login` (one-time browser auth)
 #
@@ -36,14 +36,28 @@ if [ ! -f "$DEPLOY_DIR/vercel.json" ]; then
     cat > "$DEPLOY_DIR/vercel.json" << 'VECEOF'
 {
   "outputDirectory": ".",
-  "cleanUrls": true,
+  "cleanUrls": false,
   "trailingSlash": false,
   "headers": [
     {"source": "/(.*)", "headers": [
       {"key": "X-Content-Type-Options", "value": "nosniff"},
-      {"key": "X-Frame-Options", "value": "SAMEORIGIN"}
+      {"key": "X-Frame-Options", "value": "SAMEORIGIN"},
+      {"key": "Referrer-Policy", "value": "strict-origin-when-cross-origin"},
+      {"key": "Permissions-Policy", "value": "camera=(), microphone=(), geolocation=()"},
+      {"key": "Strict-Transport-Security", "value": "max-age=31536000; includeSubDomains"},
+      {"key": "X-XSS-Protection", "value": "1; mode=block"}
     ]},
-    {"source": "/llms.txt", "headers": [{"key": "Content-Type", "value": "text/plain; charset=utf-8"}]}
+    {"source": "/api/(.*)", "headers": [
+      {"key": "Access-Control-Allow-Origin", "value": "*"},
+      {"key": "Access-Control-Allow-Methods", "value": "GET, POST, OPTIONS"},
+      {"key": "Access-Control-Allow-Headers", "value": "Content-Type, Authorization"}
+    ]},
+    {"source": "/llms.txt", "headers": [{"key": "Content-Type", "value": "text/plain; charset=utf-8"}]},
+    {"source": "/(.*).json", "headers": [{"key": "Content-Type", "value": "application/json; charset=utf-8"}, {"key": "Cache-Control", "value": "public, max-age=300"}]}
+  ],
+  "rewrites": [
+    {"source": "/v1/chat/completions", "destination": "/api/sov-bridge"},
+    {"source": "/v1/models", "destination": "/api/stats"}
   ]
 }
 VECEOF

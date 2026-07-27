@@ -7,24 +7,24 @@
 const https = require('https');
 
 const PAGES = [
-  '/', '/defoneos-signup-hub', '/defoneos-defence-primes', '/defoneos-regulators', '/defoneos-seriesa',
-  '/sov3-oowm-all-models', '/defoneos-system-card', '/defoneos-academy', '/defoneos-press',
-  '/defoneos-framing', '/distribution-pack', '/master', '/defoneos-substrate', '/meok-landing', '/defoneos-live', '/defoneos-healthcare', '/defoneos-finance',
-  '/defoneos-cyber', '/defoneos-investor-onepager', '/defoneos-crown-agreement',
-  '/defoneos-gap-analysis', '/defoneos-evidence-vault', '/defoneos-33-bft-council',
+  '/', '/index.html', '/defoneos.html', '/master.html', '/govbench.html', '/audit.html',
+  '/sovereign.html', '/defoneos-signup-hub.html', '/defoneos-defence-primes.html',
+  '/defoneos-regulators.html', '/defoneos-seriesa.html', '/defoneos-system-card.html',
+  '/defoneos-academy.html', '/defoneos-pricing.html', '/defoneos-owem-rfq.html',
+  '/defoneos-article-50.html', '/defoneos-compliance-crosswalk.html',
+  '/defoneos-evidence-vault.html', '/defoneos-33-bft-council.html',
+  '/defoneos-cost-reduction-manifesto.html', '/defoneos-per-region-defence-procurement-map.html',
+  '/defoneos-per-tier-pricing-detail.html', '/defoneos-mod-framework-agreement-checklist.html',
+  '/defoneos-dsp-registration-live-tracker.html', '/healthz.html',
 ];
 
 const API_ENDPOINTS = [
   { method: 'GET', path: '/api/stats' },
   { method: 'GET', path: '/api/sigil-status' },
-  { method: 'GET', path: '/api/oscal?format=json' },
-  { method: 'GET', path: '/api/sovereign-citations' },
-  { method: 'GET', path: '/api/framing' },
-  { method: 'GET', path: '/api/invite' },
-  { method: 'GET', path: '/api/persist' },
-  { method: 'POST', path: '/api/signup', body: JSON.stringify({ email: 'golden-test@csoai.org', persona: 'academic', tier: 'Open Source', gdpr_consent: true, honeypot: '' }) },
-  { method: 'POST', path: '/api/welcome', body: JSON.stringify({ record: { sigil: 'sig_golden', email: 'golden-test@csoai.org', persona: 'academic', tier: 'Open Source', timestamp: new Date().toISOString() } }) },
-  { method: 'POST', path: '/api/newsletter', body: JSON.stringify({ email: 'golden-test@csoai.org', gdpr_consent: true, source: 'golden-test' }) },
+  { method: 'GET', path: '/api/eat-tick' },
+  { method: 'GET', path: '/llms.txt', expect: 'text' },
+  { method: 'GET', path: '/sitemap.xml', expect: 'text' },
+  { method: 'GET', path: '/robots.txt', expect: 'text' },
 ];
 
 function fetch_p(url, method = 'GET', body) {

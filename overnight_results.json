@@ -1,0 +1,19 @@
+{
+  "e2e": {
+    "passed": false,
+    "output": "vereign_synth_50k.jsonl not found (may be gitignored)\n  \u26a0\ufe0f  Training data benchmark-results/sov5_training_dataset.jsonl not found (may be gitignored)\n  \u26a0\ufe0f  Training data benchmark-results/sovereign_corpus_e2e.jsonl not found (may be gitignored)\n\n============================================================\nRESULTS: 34 passed, 26 failed, 3 warnings\nPAGES: 6 HTML files, 0 passing 8/8 signals\nLINKS: 12 checked, 0 broken\n============================================================\n\n\u274c 26 TESTS FAILED\n"
+  },
+  "batch_verifier": {
+    "passed": false,
+    "output": "    sys.exit(main())\n             ~~~~^^\n  File \"/Users/nicholas/clawd/csoai-static-deploy2/tools/verify_e2e_batch.py\", line 238, in main\n    reg_result = check_registry()\n  File \"/Users/nicholas/clawd/csoai-static-deploy2/tools/verify_e2e_batch.py\", line 60, in check_registry\n    'warnings_count': int(re.search(r'Warnings:\\s+(\\d+)', result.stdout).group(1)),\n                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAttributeError: 'NoneType' object has no attribute 'group'\n"
+  },
+  "training_data": {
+    "passed": true
+  },
+  "runpod": {
+    "status": "available",
+    "output": ""
+  },
+  "timestamp": "2026-07-26T15:40:08.301771+00:00",
+  "sigil": "235d125258e4b07990efbfbc3cddc20aa22be32fc21ee9b2717e4b13462b11c4"
+}

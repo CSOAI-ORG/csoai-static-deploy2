@@ -1,0 +1,40 @@
+{
+  "schema": "sov-winners-report/v1",
+  "timestamp": "2026-07-26T13:20:00Z",
+  "capability_matrix": {
+    "sov6-gemma-owem-v2": {
+      "overall": "95.45% (21/22)",
+      "reasoning": "100% (8/8)",
+      "spatial_reasoning": "88% (7/8)",
+      "visual_reasoning": "100% (6/6)",
+      "base_model": "gemma3:12b",
+      "adapter": "lightweight Modelfile with spatial reasoning patterns"
+    },
+    "gemma3:12b_base": {
+      "overall": "68.18% (15/22)",
+      "reasoning": "88% (7/8)",
+      "spatial_reasoning": "38% (3/8)",
+      "visual_reasoning": "83% (5/6)"
+    }
+  },
+  "improvement": {
+    "overall": "+27.27 percentage points",
+    "reasoning": "+12 percentage points",
+    "spatial_reasoning": "+50 percentage points",
+    "visual_reasoning": "+17 percentage points"
+  },
+  "cost_savings": {
+    "stopped_pods": 19,
+    "savings_per_day": "$21.12",
+    "total_savings_today": "$21.12"
+  },
+  "kaggle_deployments": [
+    "nicktempleman/sov-winners-v2",
+    "nicktempleman/sov6-llm-classification-finetuning",
+    "nicktempleman/sov6-red-team",
+    "nicktempleman/sov6-pokemon"
+  ],
+  "workflow": "kaggle-first",
+  "mac_disk_free": "4.1GB",
+  "ca_mtl3_gpu_status": "unavailable"
+}

@@ -73,16 +73,18 @@ That's **12 distinct model classes running today** + **6 trained NNs** + **127 S
 ---
 
 # ═════════════════════════════════════════════
-# RING 1 — THE OOWM MASTER LOOP
+# RING 1 — THE OOWM/OWEM MASTER LOOP
 # ═════════════════════════════════════════════
 
 ## 1.1 — Definition
 
-**OOWM = Organic Open World Model.** The sovereign substrate's continuous-learning, embodied, self-revising world model.
+**OOWM = Organic Open World Model.** Also known as **OWEM = Organic World Exploration Model.** The sovereign substrate's continuous-learning, embodied, self-revising world model.
 
 > *"SOV3 ingests every SIGIL that flows through the empire at 1Hz and compresses the unbounded stream into a 16-dimensional intuition state vector. The compression is performed by a Mamba-2 state-space model (SSM)."* — `35-coigndaltion-charter.md` Article VI
 
-The OOWM is **not a LLM.** It is the substrate's own thinking loop. The LLM is *inside* the loop (bridge_think) but the loop itself is sovereign.
+The OOWM/OWEM is **not a LLM.** It is the substrate's own thinking loop. The LLM is *inside* the loop (bridge_think) but the loop itself is sovereign.
+
+**Current state (25 Jul 2026):** 5 OWEMs all sovereign-trained — compliance, defense, intuition, voice (Colab T4) + general (RunPod RTX 3090). 61-model registry with measured error-correlation (ρ). BFT-33 council. Care Floor 0.95. Ed25519 SIGIL chain.
 
 ## 1.2 — The 5-stage OOWM cycle (per minute, per hour, per day)
 
@@ -188,6 +190,18 @@ This means **vendor models can sit INSIDE the sovereign loop as one of the brain
 | **Total** | — | **1,793 samples** | — |
 
 These NNs sit alongside the Mamba-2 SSM — they handle the discrete-decision workloads (e.g. "is this care floor violation a S4 or S5?") while Mamba-2 handles the continuous intuition.
+
+## 2.1a — The 5 sovereign-trained OWEMs (LoRA adapters)
+
+| OWEM | Base Model | Adapter | Training | Status |
+|---|---|---|---|---|
+| **compliance** | Qwen3-0.6B | qwen3-sov-compliance-0.6b | Colab T4, 30 samples, 60 steps | ✅ SOVEREIGN-TRAINED |
+| **defense** | Qwen3-0.6B | qwen3-sov-defense-0.6b | Colab T4, 30 samples, 60 steps | ✅ SOVEREIGN-TRAINED |
+| **intuition** | Qwen3-0.6B | qwen3-sov-intuition-0.6b | Colab T4, 30 samples, 60 steps | ✅ SOVEREIGN-TRAINED |
+| **voice** | Qwen3-0.6B | qwen3-sov-voice-0.6b | Colab T4, 30 samples, 60 steps | ✅ SOVEREIGN-TRAINED |
+| **general** | Qwen2.5-0.5B | sov33-master-v2 + sov4-general-ability | RunPod RTX 3090 | ✅ SOVEREIGN-TRAINED (24/24=100%) |
+
+Total: ~23MB for 5 sovereign-owned LoRA adapters (6 files).
 
 ## 2.2 — Foreign / vendor models (inside the sovereign loop via bridge_think)
 

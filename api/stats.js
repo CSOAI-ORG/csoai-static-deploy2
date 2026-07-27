@@ -43,6 +43,21 @@ module.exports = async function handler(req, res) {
 
   const counts = await countSignups();
 
+  // Count real HTML pages
+  let pageCount = 226;
+  try {
+    const root = path.join(process.cwd());
+    const entries = await fs.readdir(root);
+    pageCount = entries.filter(e => e.endsWith('.html') && !e.startsWith('.')).length;
+  } catch {}
+
+  // Read sigma audit totals
+  let sigma = null;
+  try {
+    const sigmaData = await fs.readFile(path.join(process.cwd(), '.sigma_audit_totals.json'), 'utf8');
+    sigma = JSON.parse(sigmaData);
+  } catch {}
+
   // Public-facing numbers:
   // - signups total/week/day: only shown if HONEST flag set AND >0
   //   Otherwise we use conservative-but-truthful baked baseline + note
@@ -59,7 +74,7 @@ module.exports = async function handler(req, res) {
       source: show_real ? 'live' : 'conservative-baseline',
     },
     empire: {
-      pages: 226,
+      pages: pageCount,
       mcps: '30/30',
       repos: '15/15',
       sigil_chain: 'live',
@@ -67,6 +82,11 @@ module.exports = async function handler(req, res) {
       bft_council_quorum: '23/33',
       data_corpus_gb: 49,
       care_floor: 0.95,
+      sigma_audit: sigma ? {
+        total_pages: sigma.total_pages,
+        passing_all8: sigma.pages_passing_all8,
+        signals: { S1: sigma.S1, S2: sigma.S2, S3: sigma.S3, S4: sigma.S4, S5: sigma.S5, S6: sigma.S6, S7: sigma.S7, S8: sigma.S8 },
+      } : null,
     },
     pipeline: {
       defence_primes_evaluating: 7,
