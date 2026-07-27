@@ -1,7 +1,7 @@
 {
   "sov7_version": "0.1.0",
-  "timestamp": "2026-07-27T03:09:09.129272Z",
-  "total_sources": 72,
+  "timestamp": "2026-07-27T03:52:53.104909Z",
+  "total_sources": 74,
   "tuistreams": {
     "tui1": {
       "label": "SOV33 Registry + Sovereign API",
@@ -70,14 +70,14 @@
     {
       "source": "tui2",
       "file": "asi_evolution.py",
-      "size": 24435,
-      "preview": "#!/usr/bin/env python3\nimport json, subprocess, time, hashlib, os, sys\nfrom pathlib import Path\nfrom datetime import datetime, timezone\n\nLOG = Path(\"asi_evolution.log\")\nRESULTS_DIR = Path(\"asi_results\")\nRESULTS_DIR.mkdir(exist_ok=True)\nADAPTER_DIR = RESULTS_DIR / \"adapters\"\nADAPTER_DIR.mkdir(exist_ok=True)\n\nOLLAMA_URL = os.environ.get(\"OLLAMA_URL\", \"http://localhost:11434\")\nBASE_MODEL = \"qwen2.5:0.5b\"\nEVOLVED_MODEL = \"sov33-evolved:latest\"\nDEVICE = \"mps\"\n\nDOMAINS = {\n    \"eu_ai_act\": [\n        ("
+      "size": 27292,
+      "preview": "#!/usr/bin/env python3\nimport json, subprocess, time, hashlib, os, sys\nos.environ.setdefault(\"PYTORCH_MPS_HIGH_WATERMARK_RATIO\", \"0.0\")\nfrom pathlib import Path\nfrom datetime import datetime, timezone\n\nLOG = Path(\"asi_evolution.log\")\nRESULTS_DIR = Path(\"asi_results\")\nRESULTS_DIR.mkdir(exist_ok=True)\nADAPTER_DIR = RESULTS_DIR / \"adapters\"\nADAPTER_DIR.mkdir(exist_ok=True)\n\nOLLAMA_URL = os.environ.get(\"OLLAMA_URL\", \"http://localhost:11434\")\nBASE_MODEL = \"sov33-strong:latest\"\nEVOLVED_MODEL = \"sov33-"
     },
     {
       "source": "tui2",
       "file": "asi_evolution.log",
-      "size": 548,
-      "preview": "[04:07:56] ======================================================================\n[04:07:56]   SOV33 ASI EVOLUTION MODE v2 \u2014 Real LoRA Training on MPS\n[04:07:56] ======================================================================\n[04:07:56] \n======================================================================\n[04:07:56]   CYCLE 1\n[04:07:56] ======================================================================\n[04:07:56] \n[1] Benchmarking current model...\n==================================="
+      "size": 465,
+      "preview": "[04:52:19] ======================================================================\n[04:52:19]   SOV33 ASI EVOLUTION MODE v2 \u2014 Real LoRA Training on MPS\n[04:52:19] ======================================================================\n[04:52:19] \n======================================================================\n[04:52:19]   CYCLE 1\n[04:52:19] ======================================================================\n[04:52:19] \n[1] Benchmarking current model...\n"
     },
     {
       "source": "tui2",
@@ -274,7 +274,7 @@
     {
       "source": "tui8",
       "file": "benchmark-results/arena_tester.py",
-      "size": 7516,
+      "size": 8863,
       "preview": "#!/usr/bin/env python3\n\"\"\"Arena Tester \u2014 test our models against top-tier via free APIs.\n\nUses Groq (free Llama-3.3-70B), OpenRouter (free models), and\nGoogle AI Studio (free Gemini) as reference models.\nCompares our model outputs against frontier outputs on the same tasks.\n\nNo GPU needed. Runs on Oracle Cloud Free Tier (CPU).\n\"\"\"\nimport json, hashlib, os, sys, time, urllib.request, re\nfrom datetime import datetime, timezone\nfrom pathlib import Path\n\nROOT = Path(__file__).resolve().parent\nREGIST"
     },
     {
@@ -345,6 +345,12 @@
     },
     {
       "source": "honey",
+      "file": "extract_distribution.json",
+      "size": 34448,
+      "preview": "[\n  {\n    \"q\": \"What is distribution and its key architectural innovations?\",\n    \"a\": \"**Model Distribution** refers to the process of deploying and serving machine learning models across different environments, frameworks, and devices. Key architectural innovations in model distribution include:\\n\\n1. **Model Agnostic**: Ability to deploy models from various frameworks (e.g., TensorFlow, PyTorch) and formats (e.g., ONNX, TensorFlow Lite).\\n2. **Containerization**: Using containers (e.g., Docke"
+    },
+    {
+      "source": "honey",
       "file": "eat_mac_run.json",
       "size": 41288,
       "preview": "[\n  {\n    \"q\": \"What is Qwen3 architecture?\",\n    \"a\": \"Qwen3 architecture refers to the combination of Qwen and T5 models. It combines the strengths of both models to create a more powerful language model. The Qwen3 model is a large language model that can generate text, while T5 is a transformer-based language model that can also be used for various tasks such as question answering, summarization, and translation. By combining these two models, Qwen3 can achieve better performance in generatin"
@@ -370,7 +376,7 @@
     {
       "source": "honey",
       "file": "extract_deepseek.json",
-      "size": 2951,
+      "size": 50334,
       "preview": "[\n  {\n    \"q\": \"What is DeepSeek-R1 approach?\",\n    \"a\": \"DeepSeek-R1 is an AI model that was released in 2023. It is designed to be a more advanced version of the original DeepSeek model. The main differences between DeepSeek-R1 and its predecessor are:\\n\\n1. Improved architecture: DeepSeek-R1 has been optimized for better performance, with a larger number of parameters and a more efficient training process.\\n\\n2. Enhanced features: The new version includes several improvements in terms of accu"
     },
     {
@@ -388,7 +394,7 @@
     {
       "source": "honey",
       "file": "extract_qwen.json",
-      "size": 3281,
+      "size": 32774,
       "preview": "[\n  {\n    \"q\": \"What is Qwen3 architecture?\",\n    \"a\": \"Qwen3 architecture refers to the combination of Qwen and T5 models. It aims to provide a unified platform for developers to build large language models (LLMs) with different architectures, such as Qwen and T5. The architecture allows users to easily switch between these two models without changing their code or training process.\\n\\nQwen3 is designed to be more flexible and adaptable than the original Qwen model, which can adapt to various t"
     },
     {
@@ -412,13 +418,13 @@
     {
       "source": "honey",
       "file": "free_gpu_eat_all.json",
-      "size": 54278,
+      "size": 337465,
       "preview": "[\n  {\n    \"q\": \"What is arch and its key architectural innovations?\",\n    \"a\": \"\\\"Arch\\\" refers to a neural network architecture. Key architectural innovations include:\\n\\n1. **Transformer**: Introduced self-attention mechanisms, replacing traditional recurrent neural networks (RNNs) and convolutional neural networks (CNNs) for sequence-to-sequence tasks.\\n2. **Transformer Variants**: Innovations like BERT, RoBERTa, and XLNet, which modified the original Transformer architecture to achieve state"
     },
     {
       "source": "honey",
       "file": "extract_compliance.json",
-      "size": 1440,
+      "size": 36767,
       "preview": "[\n  {\n    \"q\": \"What is compliance and its key architectural innovations?\",\n    \"a\": \"**Compliance** refers to the adherence to laws, regulations, standards, and internal policies that govern an organization's operations. It involves implementing controls, processes, and procedures to ensure conformity with these requirements.\\n\\nThe key architectural innovations in compliance include:\\n\\n1. **Three Lines of Defense (3LoD)**: A framework that separates roles and responsibilities into three lines"
     },
     {
@@ -430,7 +436,7 @@
     {
       "source": "honey",
       "file": "extract_llama.json",
-      "size": 3749,
+      "size": 54598,
       "preview": "[\n  {\n    \"q\": \"What is Llama 4 Scout 10M context?\",\n    \"a\": \"Llama 4 Scout 10M is an open-source language model that was released in 2023. It is designed to be more efficient and faster than previous versions of the LLM model, which were previously limited by their computational resources.\\n\\nThe \\\"context\\\" refers to the amount of data or information that a model can process at once. In this case, Llama 4 Scout 10M has been optimized for handling larger amounts of text input, making it more s"
     },
     {
@@ -460,8 +466,14 @@
     {
       "source": "honey",
       "file": "extract_MiniMax.json",
-      "size": 3799,
+      "size": 31425,
       "preview": "[\n  {\n    \"q\": \"What is MiniMax M2.1?\",\n    \"a\": \"MiniMax M2.1 is an AI language model developed by Alibaba Cloud. It was released in 2023 and is designed to assist users with their daily tasks, such as answering questions, generating text, and performing other tasks that require natural language processing capabilities.\\n\\nKey features of MiniMax M2.1 include:\\n\\n- Natural Language Processing (NLP) capabilities\\n- Question-Answering (QA) functions\\n- Text generation\\n- Chatbot interactions\\n- I"
+    },
+    {
+      "source": "honey",
+      "file": "extract_infra.json",
+      "size": 41076,
+      "preview": "[\n  {\n    \"q\": \"What is infra and its key architectural innovations?\",\n    \"a\": \"Infra refers to the underlying infrastructure that supports the deployment and management of AI models, particularly large language models (LLMs). Key architectural innovations in AI infra include:\\n\\n1. **Containerization**: Using containers (e.g., Docker) to package and deploy AI models, ensuring consistency and portability.\\n2. **Orchestration**: Utilizing tools like Kubernetes to manage and scale containerized A"
     },
     {
       "source": "honey",

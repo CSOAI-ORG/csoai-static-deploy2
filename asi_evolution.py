@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import json, subprocess, time, hashlib, os, sys
+os.environ.setdefault("PYTORCH_MPS_HIGH_WATERMARK_RATIO", "0.0")
 from pathlib import Path
 from datetime import datetime, timezone
 
@@ -324,7 +325,7 @@ def format_chat(q, a):
 def generate_training_data(weak_domains, all_domains):
     data = []
     for domain, items in all_domains.items():
-        extra = 20 if domain in weak_domains else 10
+        extra = 5 if domain in weak_domains else 3
         for q, a in items:
             data.extend([format_chat(q, a)] * extra)
     return data
@@ -367,15 +368,17 @@ def train_lora_real(training_data, cycle):
         if tokenizer.pad_token is None:
             tokenizer.pad_token = tokenizer.eos_token
         model = AutoModelForCausalLM.from_pretrained(
-            model_path, dtype=torch.bfloat16, trust_remote_code=True
+            model_path, dtype=torch.bfloat16, trust_remote_code=True, device_map="cpu"
         )
+        model = model.to("mps")
 
         lora_config = LoraConfig(
-            r=16, lora_alpha=32,
+            r=8, lora_alpha=16,
             target_modules=["q_proj", "k_proj", "v_proj", "o_proj"],
             lora_dropout=0.05, bias="none", task_type="CAUSAL_LM",
         )
         model = get_peft_model(model, lora_config)
+        model.gradient_checkpointing_enable()
         model.print_trainable_parameters()
 
         records = []
@@ -394,8 +397,8 @@ def train_lora_real(training_data, cycle):
         sft_config = SFTConfig(
             output_dir=str(adapter_path),
             num_train_epochs=1,
-            per_device_train_batch_size=4,
-            gradient_accumulation_steps=2,
+            per_device_train_batch_size=2,
+            gradient_accumulation_steps=4,
             learning_rate=2e-4,
             bf16=True,
             logging_steps=5,
@@ -403,12 +406,18 @@ def train_lora_real(training_data, cycle):
             report_to=[],
             dataset_text_field="text",
             packing=False,
-            max_length=512,
+            max_seq_length=256,
+            dataloader_num_workers=0,
         )
 
-        trainer = SFTTrainer(
-            model=model, args=sft_config, train_dataset=dataset, tokenizer=tokenizer,
-        )
+        try:
+            trainer = SFTTrainer(
+                model=model, args=sft_config, train_dataset=dataset, tokenizer=tokenizer,
+            )
+        except TypeError:
+            trainer = SFTTrainer(
+                model=model, args=sft_config, train_dataset=dataset, processing_class=tokenizer,
+            )
         trainer.train()
 
         model.save_pretrained(str(adapter_path) + "_final")
@@ -466,7 +475,7 @@ def main():
             break
         log("\n[3] Generating targeted training data...")
         training_data = generate_training_data(weak_domains, DOMAINS)
-        augmented = training_data * 10
+        augmented = training_data * 2
         data_path = RESULTS_DIR / f"cycle_{CYCLE}_training.jsonl"
         with open(data_path, "w") as f:
             for d in augmented:

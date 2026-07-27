@@ -1,0 +1,77 @@
+{
+  "tick": 1785124387494,
+  "type": "sov7.cycle",
+  "ts": "2026-07-27T03:53:07Z",
+  "care_score": 0.5,
+  "payload": {
+    "ts": 1785124387282,
+    "iso": "2026-07-27T03:53:07Z",
+    "suites": [
+      "mmlu_pro",
+      "arc_challenge",
+      "sovereign_compliance",
+      "sovereign_governance",
+      "sovereign_defence"
+    ],
+    "max_tasks_per_suite": 2,
+    "provider": "deepseek",
+    "mock": false,
+    "elapsed_s": 0.2,
+    "result": {
+      "suites": {
+        "arc_challenge": {
+          "kept": 0,
+          "avoided": 0,
+          "errors": 2,
+          "total": 2
+        },
+        "sovereign_compliance": {
+          "kept": 0,
+          "avoided": 0,
+          "errors": 2,
+          "total": 2
+        },
+        "mmlu_pro": {
+          "kept": 0,
+          "avoided": 0,
+          "errors": 2,
+          "total": 2
+        },
+        "sovereign_governance": {
+          "kept": 0,
+          "avoided": 0,
+          "errors": 2,
+          "total": 2
+        },
+        "sovereign_defence": {
+          "kept": 0,
+          "avoided": 0,
+          "errors": 2,
+          "total": 2
+        }
+      },
+      "total": 10,
+      "kept": 0,
+      "avoided": 0,
+      "errors": 10,
+      "swaps": 0,
+      "pillar_aware": true,
+      "elapsed_s": 0.2,
+      "avoid_after": {}
+    },
+    "router_stats": {
+      "local_calls": 0,
+      "a40_calls": 0,
+      "h100_calls": 0,
+      "runpod_calls": 0,
+      "errors": 0,
+      "skipped_a40_cost": 0.0,
+      "fallback_swaps": 0,
+      "cloud_calls": 0
+    },
+    "avoid_before": {},
+    "avoid_after": {},
+    "new_avoids": {},
+    "grown_avoids": {}
+  }
+}

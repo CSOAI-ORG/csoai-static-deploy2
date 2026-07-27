@@ -1,100 +1,18 @@
-[04:23:51] ======================================================================
-[04:23:51]   SOV33 ASI EVOLUTION MODE v2 — Real LoRA Training on MPS
-[04:23:51] ======================================================================
-[04:23:51] 
+[04:52:19] ======================================================================
+[04:52:19]   SOV33 ASI EVOLUTION MODE v2 — Real LoRA Training on MPS
+[04:52:19] ======================================================================
+[04:52:19] 
 ======================================================================
-[04:23:51]   CYCLE 1
-[04:23:51] ======================================================================
-[04:23:51] 
+[04:52:19]   CYCLE 1
+[04:52:19] ======================================================================
+[04:52:19] 
 [1] Benchmarking current model...
-[04:27:09]   Current scores:
-[04:27:09]     coding               43.2%
-[04:27:09]     defence              25.8%
-[04:27:09]     eu_ai_act            42.0%
-[04:27:09]     general              90.0%
-[04:27:09]     governance           16.7%
-[04:27:09]     math                 90.0%
-[04:27:09]     red_line             30.0%
-[04:27:09]     safety               54.1%
-[04:27:09]   Average: 49.0%
-[04:27:09] 
-[2] Weak domains (6): ['eu_ai_act', 'defence', 'governance', 'coding', 'safety', 'red_line']
-[04:27:09] 
-[3] Generating targeted training data...
-[04:27:09]   Generated 43400 examples for 6 domains
-[04:27:09] 
-[4] Training LoRA adapter...
-[04:27:09]   Real PEFT LoRA training on MPS...
-[04:27:16]   Loading /Users/nicholas/.cache/huggingface/hub/models--Qwen--Qwen2.5-0.5B-Instruct/snapshots/7ae557604adf67be50417f59c2c2f167def9a775...
-[04:27:16]   Real LoRA failed (Error no file named model.safetensors, or pytorch_model.bin, found in directory /Users/nicholas/.cache/huggingface/hub/models--Qwen--Qwen2.5-0.5B-Instruct/snapshots/7ae557604adf67be50417f59c2c2f167def9a775.), falling back to Modelfile
-[04:27:17]   Updated sov33-evolved:latest to latest trained version
-[04:27:17]   New best score: 49.0%
-[04:27:17] 
-  Cycle 1 complete. Best: 49.0%
-[04:27:17]   Waiting 30s before next cycle...
-[04:27:47] 
+[04:53:27] ======================================================================
+[04:53:27]   SOV33 ASI EVOLUTION MODE v2 — Real LoRA Training on MPS
+[04:53:27] ======================================================================
+[04:53:27] 
 ======================================================================
-[04:27:47]   CYCLE 2
-[04:27:47] ======================================================================
-[04:27:47] 
-[1] Benchmarking current model...
-[04:30:44]   Current scores:
-[04:30:44]     coding               54.1%
-[04:30:44]     defence              22.6%
-[04:30:44]     eu_ai_act            20.0%
-[04:30:44]     general              80.0%
-[04:30:44]     governance           0.0%
-[04:30:44]     math                 90.0%
-[04:30:44]     red_line             60.0%
-[04:30:44]     safety               54.1%
-[04:30:44]   Average: 47.6%
-[04:30:44] 
-[2] Weak domains (6): ['eu_ai_act', 'defence', 'governance', 'coding', 'safety', 'red_line']
-[04:30:44] 
-[3] Generating targeted training data...
-[04:30:45]   Generated 43400 examples for 6 domains
-[04:30:45] 
-[4] Training LoRA adapter...
-[04:30:45]   Real PEFT LoRA training on MPS...
-[04:30:45]   Loading /Users/nicholas/.cache/huggingface/hub/models--Qwen--Qwen2.5-0.5B-Instruct/snapshots/7ae557604adf67be50417f59c2c2f167def9a775...
-[04:30:45]   Real LoRA failed (Error no file named model.safetensors, or pytorch_model.bin, found in directory /Users/nicholas/.cache/huggingface/hub/models--Qwen--Qwen2.5-0.5B-Instruct/snapshots/7ae557604adf67be50417f59c2c2f167def9a775.), falling back to Modelfile
-[04:30:45]   Updated sov33-evolved:latest to latest trained version
-[04:30:45] 
-  Cycle 2 complete. Best: 49.0%
-[04:30:45]   Waiting 30s before next cycle...
-[04:31:15] 
-======================================================================
-[04:31:15]   CYCLE 3
-[04:31:15] ======================================================================
-[04:31:15] 
-[1] Benchmarking current model...
-[04:34:24]   Current scores:
-[04:34:24]     coding               54.1%
-[04:34:24]     defence              22.6%
-[04:34:24]     eu_ai_act            20.0%
-[04:34:24]     general              80.0%
-[04:34:24]     governance           0.0%
-[04:34:24]     math                 90.0%
-[04:34:24]     red_line             60.0%
-[04:34:24]     safety               54.1%
-[04:34:24]   Average: 47.6%
-[04:34:24] 
-[2] Weak domains (6): ['eu_ai_act', 'defence', 'governance', 'coding', 'safety', 'red_line']
-[04:34:24] 
-[3] Generating targeted training data...
-[04:34:24]   Generated 43400 examples for 6 domains
-[04:34:24] 
-[4] Training LoRA adapter...
-[04:34:24]   Real PEFT LoRA training on MPS...
-[04:34:24]   Loading /Users/nicholas/.cache/huggingface/hub/models--Qwen--Qwen2.5-0.5B-Instruct/snapshots/7ae557604adf67be50417f59c2c2f167def9a775...
-[04:34:25]   Real LoRA failed (Error no file named model.safetensors, or pytorch_model.bin, found in directory /Users/nicholas/.cache/huggingface/hub/models--Qwen--Qwen2.5-0.5B-Instruct/snapshots/7ae557604adf67be50417f59c2c2f167def9a775.), falling back to Modelfile
-[04:34:25]   Updated sov33-evolved:latest to latest trained version
-[04:34:25] 
-  Cycle 3 complete. Best: 49.0%
-[04:34:25]   Waiting 30s before next cycle...
-[04:34:55] 
-======================================================================
-[04:34:55]   CYCLE 4
-[04:34:55] ======================================================================
-[04:34:55] 
+[04:53:27]   CYCLE 1
+[04:53:27] ======================================================================
+[04:53:27] 
 [1] Benchmarking current model...
