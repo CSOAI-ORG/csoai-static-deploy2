@@ -99,21 +99,29 @@ class SOVWorldModel:
         return {"mcps": [], "owem_groups": []}
 
     def _load_jspace(self) -> Dict:
-        """Load all J-space outputs from12 families."""
+        """Load all J-space outputs from 12 families."""
         jspace = {}
         for d in J_SPACE.iterdir():
             if d.is_dir() and d.name in OWEM_FAMILIES:
                 entries = []
                 for f in d.glob("*.json"):
                     try:
-                        entries.append(json.load(open(f)))
+                        data = json.load(open(f))
+                        if isinstance(data, list):
+                            entries.extend(data)
+                        elif isinstance(data, dict):
+                            entries.append(data)
                     except:
                         pass
                 jspace[d.name] = entries
             elif d.name.endswith("_jspace.json"):
                 family = d.name.replace("_jspace.json", "")
                 try:
-                    jspace[family] = json.load(open(d))
+                    data = json.load(open(d))
+                    if isinstance(data, list):
+                        jspace[family] = data
+                    elif isinstance(data, dict):
+                        jspace[family] = [data]
                 except:
                     pass
         return jspace
@@ -238,9 +246,18 @@ class SOVWorldModel:
         """Assess the quality of J-space entries."""
         if not entries:
             return 0.0
-        # Simple heuristic: longer outputs = higher quality
-        total_chars = sum(len(str(e.get("output", ""))) for e in entries)
-        avg_chars = total_chars / len(entries)
+        total_chars = 0
+        count = 0
+        for e in entries:
+            if isinstance(e, dict):
+                total_chars += len(str(e.get("output", "")))
+                count += 1
+            elif isinstance(e, list):
+                for sub in e:
+                    if isinstance(sub, dict):
+                        total_chars += len(str(sub.get("output", "")))
+                        count += 1
+        avg_chars = total_chars / max(1, count)
         return min(0.95, avg_chars / 500)
 
     def get_sov_state(self) -> Dict:

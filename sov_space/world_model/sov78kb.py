@@ -23,7 +23,7 @@ import math
 from pathlib import Path
 from datetime import datetime, timezone
 
-ROOT = Path(__file__).resolve().parent.parent
+ROOT = Path(__file__).resolve().parent.parent.parent
 FOREST = ROOT / "forest"
 SOV_SPACE = ROOT / "benchmark-results" / "sov-space"
 SOV_SPACE.mkdir(parents=True, exist_ok=True)
@@ -132,7 +132,7 @@ class SOV78KB:
         for i, event in enumerate(fluid[:100]):
             # Each event becomes a flowing pixel
             x = int((i / 100) * WIDTH)
-            y = HEIGHT - FAMILY_STRIP_HEIGHT * FAMILY_STRIPS - 10
+            y = HEIGHT - FAMILY_STRIP_HEIGHT * len(FAMILY_STRIPS) - 10
             # Flow animation (static snapshot)
             self.set_pixel(x, y, 1)
             self.set_pixel(x, y + 1, 1)

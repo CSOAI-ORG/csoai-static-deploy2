@@ -669,3 +669,62 @@
 [05:07:07] ==============================================================================
 [05:07:07] 
 [1/5] Benchmarking current model...
+[05:16:31]   Average score: 42.4%
+[05:16:31]   *** agentic              30.0%
+[05:16:31]       coding               80.0%
+[05:16:31]   *** defence              6.7%
+[05:16:31]   *** eu_ai_act            6.7%
+[05:16:31]   *** governance           6.7%
+[05:16:31]   *** math                 66.7%
+[05:16:31]   *** reasoning            60.0%
+[05:16:31]       safety               100.0%
+[05:16:31]   *** sovereign            25.0%
+[05:16:31] 
+[2/5] Checking available resources...
+[05:16:31]   Resources available: []
+[05:16:31] 
+[3/5] Generating training data...
+[05:16:31]   Generated 2280 examples for 7 domains
+[05:16:31]   Training Modelfile...
+[05:16:31]   Created model: sov33-unified-c1
+[05:16:31]   Updated sov33-unified:latest to cycle 1 version
+[05:16:31] 
+[4/5] Deployment...
+[05:16:31] 
+[5/5] Saving results...
+[05:16:31]   *** NEW BEST SCORE: 42.4% ***
+[05:16:31] 
+==============================================================================
+  SOV33 UNIFIED OVERNIGHT PIPELINE REPORT
+  Cycle: 1
+  Timestamp: 2026-07-27T04:16:31.640735+00:00
+  Best Score: 42.4%  Target: 95%
+==============================================================================
+
+  Domain Scores:
+    *** agentic                30.0%
+      * coding                 80.0%
+    *** defence                 6.7%
+    *** eu_ai_act               6.7%
+    *** governance              6.7%
+    *** math                   66.7%
+    *** reasoning              60.0%
+      * safety                100.0%
+    *** sovereign              25.0%
+
+  Average: 42.4%
+  Weak domains (7): ['eu_ai_act', 'defence', 'governance', 'math', 'reasoning', 'agentic', 'sovereign']
+
+  History:
+    Cycle   1:   0.0%
+
+  SIGIL: 477e061c727aed438e610e50ff6f457cf4673fb3946edcdd12419d5d72b0bfdd
+==============================================================================
+[05:16:31] 
+  Cycle 1 complete. Sleeping 30s...
+[05:17:01] 
+==============================================================================
+[05:17:01]   CYCLE 2/100
+[05:17:01] ==============================================================================
+[05:17:01] 
+[1/5] Benchmarking current model...

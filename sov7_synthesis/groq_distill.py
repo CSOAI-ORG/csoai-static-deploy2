@@ -17,8 +17,9 @@ from datetime import datetime, timezone
 OUTPUT_PATH = Path(__file__).parent / "groq_distilled_500.jsonl"
 GROQ_ENDPOINT = "https://api.groq.com/openai/v1/chat/completions"
 MODEL = "llama-3.3-70b-versatile"
-RATE_LIMIT_DELAY = 2.5  # seconds between requests
-MAX_RETRIES = 5
+FALLBACK_MODEL = "llama-3.1-8b-instant"
+RATE_LIMIT_DELAY = 1.5  # seconds between requests
+MAX_RETRIES = 3
 
 
 def get_api_key():
@@ -35,10 +36,10 @@ def is_error_response(text: str) -> bool:
     return any(text.startswith(p) for p in ("[API_ERROR]", "[CURL_ERROR]", "[JSON_ERROR]", "[ERROR]"))
 
 
-def call_groq(api_key: str, prompt: str) -> tuple[str, bool]:
-    """Returns (response_text, is_error)."""
+def call_groq(api_key: str, prompt: str, model: str = MODEL) -> tuple[str, bool, str]:
+    """Returns (response_text, is_error, model_used)."""
     payload = json.dumps({
-        "model": MODEL,
+        "model": model,
         "messages": [{"role": "user", "content": prompt}],
         "temperature": 0.7,
         "max_tokens": 1024,
