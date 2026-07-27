@@ -3,16 +3,19 @@ IWM — Inner World Model: Sovereign Swarm Intelligence
 
 Architecture:
   SOV SPACE (top level)
-  ├── G-SPACE (GNN lives here, learns routing from all outcomes)
-  │   ├── Knowledge Graph (19 families × capabilities)
-  │   └── GNN (learns win patterns, routes to best clan)
-  ├── CLAN ENGINE (spawns family swarms)
-  │   ├── J-SPACE (per-family simulation)
-  │   │   ├── Frozen (base model weights)
-  │   │   └── Fluid (honey-trained variant)
-  │   └── C-SPACE (composite of family J-spaces)
-  ├── BFT QUORUM (cross-clan voting)
-  └── ARENA (Kaggle/competition entry point)
+  ├── 12 OWEM Hives (domain clusters)
+  │   ├── 12 Clan Layers per hive (144 total)
+  │   │   ├── 12 Families per clan (1,728 total)
+  │   │   │   └── 4 Models per family (6,912 total)
+  │   │   │       ├── OWM-Frozen (perception, stable)
+  │   │   │       ├── OWM-Fluid (perception, adapting)
+  │   │   │       ├── IWM-Frozen (reasoning, stable)
+  │   │   │       └── IWM-Fluid (reasoning, evolving)
+  ├── Stigmergy (Pheromone + Waggle + Pollen)
+  ├── Spine Drum (heartbeat synchronizer)
+  ├── Constitutional AI (safety layer)
+  ├── RAG Pipeline (knowledge retrieval)
+  └── G-Space (knowledge graph + GNN)
 """
 
 from .g_space import GSpace
@@ -24,5 +27,13 @@ from .iwm import IWM
 from .owem_brain import OWEMBrain
 from .owem_hive import OWEMHive
 from .sov_router import SOVRouter
+from .sov_space import SOVSpace
+from .stigmergy import StigmergyLayer, SpineDrum
+from .constitutional_ai import ConstitutionalAI
+from .rag_pipeline import RAGPipeline
 
-__all__ = ["GSpace", "JSpace", "ClanEngine", "BFTQuorum", "OWM", "IWM", "OWEMBrain", "OWEMHive", "SOVRouter"]
+__all__ = [
+    "GSpace", "JSpace", "ClanEngine", "BFTQuorum", "OWM", "IWM",
+    "OWEMBrain", "OWEMHive", "SOVRouter", "SOVSpace",
+    "StigmergyLayer", "SpineDrum", "ConstitutionalAI", "RAGPipeline",
+]
