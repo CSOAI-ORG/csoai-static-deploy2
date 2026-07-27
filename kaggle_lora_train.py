@@ -26,7 +26,30 @@ os.environ.setdefault("TOKENIZERS_PARALLELISM", "false")
 def main():
     # === Config ===
     BASE_MODEL = "mistralai/Mistral-7B-Instruct-v0.3"
-    DATA_PATH = "/kaggle/input/sov-training-data/honey_mistral.jsonl"  # Kaggle dataset path
+    # Try multiple possible paths
+    possible_paths = [
+        "/kaggle/input/sov7-training-v2/honey_mistral.jsonl",
+        "/kaggle/input/sov-training-data/honey_mistral.jsonl",
+        "/kaggle/input/honey_mistral.jsonl",
+    ]
+    DATA_PATH = None
+    for p in possible_paths:
+        if os.path.exists(p):
+            DATA_PATH = p
+            break
+    if DATA_PATH is None:
+        # Try to find it dynamically
+        import glob
+        candidates = glob.glob("/kaggle/input/*/honey_mistral.jsonl")
+        if candidates:
+            DATA_PATH = candidates[0]
+        else:
+            print("ERROR: Could not find honey_mistral.jsonl in /kaggle/input/")
+            print("Available files:")
+            for root, dirs, files in os.walk("/kaggle/input"):
+                for f in files:
+                    print(f"  {os.path.join(root, f)}")
+            sys.exit(1)
     OUTPUT_DIR = "/kaggle/working/lora_sov7"
     EPOCHS = 1
     BATCH_SIZE = 2
