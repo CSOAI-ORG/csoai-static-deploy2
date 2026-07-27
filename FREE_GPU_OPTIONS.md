@@ -1,29 +1,25 @@
-# Free GPU Options (2026-07-26)
+# Free GPU Options (2026-07-27)
 
 ## Currently Using
 | Platform | GPU | Cost | Limit | Status |
 |----------|-----|------|-------|--------|
-| Kaggle | T4 16GB | $0 | 30h/week | ✓ 9 kernels active |
-| Oracle ARM | CPU only | $0 | Always-free | ⚠ Creating instance |
+| Kaggle | T4 16GB | $0 | 30h/week | ✅ 5 kernels active, 3 runs completed |
+| GitHub | N/A | $0 | Unlimited | ✅ Repo pushed: CSOAI-ORG/csoai-static-deploy2 |
+| RunPod | 3090/A40/H100 | $0.22-3.50/hr | On-demand | ⚠ All stopped (saving $52.80/day) |
+| Local Mac M4 | Apple M4 | $0 | Always | ✅ 31GB free, LaunchAgent active |
+| Oracle ARM | CPU only | $0 | Always-free | ⚠ Needs instance IP to deploy daemon |
 
-## Available but Not Using
-| Platform | GPU | Cost | Limit | Notes |
-|----------|-----|------|-------|-------|
-| Google Colab | T4 16GB | $0 | ~12h/day | Need to create notebooks |
-| Hugging Face Spaces | T4 16GB | $0 | 2 concurrent | Need to create spaces |
-| Lightning AI | T4 16GB | $0 | 22 GPU-hours/month | Need to create studios |
-| Gradient | P100 16GB | $0 | 6h/session | Need to create notebooks |
-| Saturn Cloud | T4 16GB | $0 | 10h/month | Need to create accounts |
-
-## Recommendations
-1. **Kaggle** (primary): Use for all GPU work, competitions, and benchmarks
-2. **Google Colab** (secondary): Use for quick experiments and prototyping
-3. **Hugging Face Spaces** (tertiary): Use for model deployment and demos
-4. **Oracle ARM** (CPU only): Use for data synthesis and corpus building
-5. **Lightning AI** (optional): Use for longer training runs
+## Newly Added
+| Platform | GPU | Cost | Limit | Status |
+|----------|-----|------|-------|--------|
+| Google Colab | T4 16GB | $0 | ~12h/day | ✅ Notebooks ready in free_gpu/ |
+| HuggingFace Spaces | T4 16GB | $0 | 2 concurrent | ✅ Config in huggingface/ |
+| Lightning AI | T4 16GB | $0 | 22h/month | ✅ Studio config in free_gpu/ |
 
 ## Next Steps
-1. Create Google Colab notebooks for capability matrix and training
-2. Create Hugging Face Spaces for model deployment
-3. Create Lightning AI studios for longer training runs
-4. Fix Oracle ARM image compatibility issue
+1. Open colab notebooks in Google Drive and run
+2. Deploy HuggingFace Space from huggingface/
+3. Start Lightning studio: `lightning run app free_gpu/lightning_studio.py`
+4. Deploy Oracle ARM daemon: `bash free_gpu/oracle_arm_setup.sh <instance-ip>`
+5. Fix Vercel billing at https://vercel.com/dashboard to unblock deploys
+6. Clean ~/.claude-science (33GB) when confident it's safe to remove
