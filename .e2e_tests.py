@@ -11,7 +11,7 @@ from pathlib import Path
 from collections import Counter
 from datetime import datetime, timedelta
 
-ROOT = Path("/Users/nicholas/clawd/csoai-static-deploy2")
+ROOT = Path(__file__).resolve().parent
 PASS = 0
 FAIL = 0
 WARNINGS = []
