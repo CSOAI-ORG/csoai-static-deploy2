@@ -1654,5 +1654,21 @@
     "ok": true,
     "source": "groq/llama-3.3-70b-versatile",
     "ts": "2026-07-27T05:09:51.501657"
+  },
+  {
+    "q": "Describe the training data composition for code.",
+    "a": "The training data composition for code-focused models like CodeLlama, DeepSeek Coder, StarCoder, and Qwen Coder typically consists of a massive corpus of code from various sources, including:\n\n1. **Open-source repositories**: GitHub, GitLab, Bitbucket, and other open-source platforms provide a vast amount of code in various programming languages.\n2. **Code snippets and examples**: Online platforms like Stack Overflow, CodePen, and Repl.it offer a wealth of code snippets and examples.\n3. **Documentation and tutorials**: Official documentation, tutorials, and guides for programming languages, frameworks, and libraries are also included.\n4. **Code competitions and challenges**: Platforms like HackerRank, LeetCode, and CodeWars provide a large collection of coding challenges and solutions.\n5. **Code review and analysis**: Code review datasets, such as those from GitHub's Code Review dataset, help models learn from human feedback and code analysis.\n\nThe training data is typically composed of:\n\n* **Code files**: Complete code files, including source code, scripts, and configuration files.\n* **Code snippets**: Short, self-contained pieces of code, often used to illustrate a specific concept or technique.\n* **Code comments**: Comments and docstrings from code files, which provide context and explanations.\n* **Code metadata**: Information about the code, such as author, date, and programming language.\n\nThe training data is often preprocessed to:\n\n* **Tokenize code**: Break code into individual tokens, such as keywords, identifiers, and symbols.\n* **Remove noise**: Eliminate unnecessary characters, comments, and whitespace.\n* **Normalize code**: Standardize code formatting, indentation, and naming conventions.\n\nBy training on this diverse and massive corpus of code, these models learn to understand the structure, syntax, and semantics of programming languages, enabling them to generate, complete, and analyze code.",
+    "family": "code",
+    "ok": true,
+    "source": "nvidia/llama-3.1-70b",
+    "ts": "2026-07-27T05:10:52.741285"
+  },
+  {
+    "q": "What hardware was used to train code and what was the cost?",
+    "a": "Here's the information on the hardware used to train each model and their estimated costs:\n\n1. **CodeLlama**: Trained on a combination of NVIDIA A100 and V100 GPUs. Estimated cost: The training cost is not publicly disclosed, but a rough estimate for training a similar model on A100 GPUs would be around $1.5 million to $2.5 million.\n\n2. **DeepSeek Coder**: Trained on a cluster of 256 NVIDIA V100 GPUs. Estimated cost: The training cost is not publicly disclosed, but a rough estimate for training a similar model on V100 GPUs would be around $1 million to $2 million.\n\n3. **StarCoder**: Trained on a combination of NVIDIA A100 and V100 GPUs, with a total of 512 GPUs used. Estimated cost: The training cost is not publicly disclosed, but a rough estimate for training a similar model on A100 GPUs would be around $5 million to $10 million.\n\n4. **Qwen Coder**: No publicly available information on the specific hardware used for training. However, it's likely that Qwen Coder was trained on a combination of high-end GPUs, possibly including NVIDIA A100 or H100 GPUs. Estimated cost: Not available.\n\nPlease note that these estimates are rough and based on publicly available information. The actual training costs may be higher or lower, depending on various factors such as the specific hardware configuration, training duration, and location.",
+    "family": "code",
+    "ok": true,
+    "source": "nvidia/llama-3.1-70b",
+    "ts": "2026-07-27T05:11:58.017692"
   }
 ]

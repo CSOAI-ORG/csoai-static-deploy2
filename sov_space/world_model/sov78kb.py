@@ -37,7 +37,11 @@ TOTAL_BYTES = (WIDTH * HEIGHT) // BITS_PER_BYTE  # 38,400 bytes for 1-bit
 
 # The 12 OWEM families — each gets a 640x40 pixel strip
 FAMILY_STRIP_HEIGHT = 40
-FAMILY_STRIPS = 12
+FAMILY_STRIPS = {
+    "abstraction": 0, "aesthetics": 1, "agency": 2, "care": 3,
+    "creation": 4, "destruction": 5, "embodiment": 6, "ethics": 7,
+    "identity": 8, "logic": 9, "preservation": 10, "relationality": 11,
+}
 FAMILY_COLORS_1BIT = {
     "abstraction": 0x01,  # 00000001
     "aesthetics": 0x03,   # 00000011
