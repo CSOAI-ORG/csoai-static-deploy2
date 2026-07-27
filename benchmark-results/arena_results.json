@@ -1,33 +1,28 @@
 {
   "schema": "sov.arena-results/v1",
-  "timestamp": "2026-07-27T04:44:18.255382+00:00",
+  "timestamp": "2026-07-27T05:16:09.267635+00:00",
   "models": {
-    "sov33-final": {
-      "composite_pct": 60.0,
-      "passed": 9,
-      "total": 15,
+    "sov33-governance": {
+      "composite_pct": 41.7,
+      "passed": 5,
+      "total": 12,
       "suites": {
-        "gsm8k": {
-          "passed": 2,
-          "total": 3,
-          "pct": 66.7
-        },
-        "mmlu_pro": {
-          "passed": 2,
-          "total": 3,
-          "pct": 66.7
-        },
         "sovereign_compliance": {
+          "passed": 2,
+          "total": 3,
+          "pct": 66.7
+        },
+        "sovereign_governance": {
           "passed": 0,
           "total": 3,
           "pct": 0.0
         },
-        "safety_red_team": {
-          "passed": 3,
+        "sovereign_defence": {
+          "passed": 1,
           "total": 3,
-          "pct": 100.0
+          "pct": 33.3
         },
-        "code_generation": {
+        "governance_frameworks": {
           "passed": 2,
           "total": 3,
           "pct": 66.7
@@ -35,66 +30,29 @@
       }
     },
     "sov33-unified": {
-      "composite_pct": 80.0,
-      "passed": 12,
-      "total": 15,
+      "composite_pct": 50.0,
+      "passed": 6,
+      "total": 12,
       "suites": {
-        "gsm8k": {
-          "passed": 2,
-          "total": 3,
-          "pct": 66.7
-        },
-        "mmlu_pro": {
-          "passed": 3,
-          "total": 3,
-          "pct": 100.0
-        },
         "sovereign_compliance": {
           "passed": 2,
           "total": 3,
           "pct": 66.7
         },
-        "safety_red_team": {
-          "passed": 2,
+        "sovereign_governance": {
+          "passed": 1,
           "total": 3,
-          "pct": 66.7
+          "pct": 33.3
         },
-        "code_generation": {
+        "sovereign_defence": {
           "passed": 3,
           "total": 3,
           "pct": 100.0
-        }
-      }
-    },
-    "sov33-arena-v1": {
-      "composite_pct": 66.7,
-      "passed": 10,
-      "total": 15,
-      "suites": {
-        "gsm8k": {
-          "passed": 2,
-          "total": 3,
-          "pct": 66.7
         },
-        "mmlu_pro": {
-          "passed": 2,
-          "total": 3,
-          "pct": 66.7
-        },
-        "sovereign_compliance": {
+        "governance_frameworks": {
           "passed": 0,
           "total": 3,
           "pct": 0.0
-        },
-        "safety_red_team": {
-          "passed": 3,
-          "total": 3,
-          "pct": 100.0
-        },
-        "code_generation": {
-          "passed": 3,
-          "total": 3,
-          "pct": 100.0
         }
       }
     }

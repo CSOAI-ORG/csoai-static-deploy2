@@ -383,7 +383,6 @@ def train_lora_real(training_data, cycle):
             lora_dropout=0.05, bias="none", task_type="CAUSAL_LM",
         )
         model = get_peft_model(model, lora_config)
-        model.gradient_checkpointing_enable()
         model.print_trainable_parameters()
 
         records = []
