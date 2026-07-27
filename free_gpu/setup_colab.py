@@ -29,7 +29,7 @@ from pathlib import Path
 from typing import Any
 
 ROOT_DIR = Path(__file__).resolve().parent.parent
-DEFAULT_REPO = "https://github.com/nicholasgriffintn/csoai-static-deploy2"
+DEFAULT_REPO = "https://github.com/CSOAI-ORG/sov5v2"
 DEFAULT_OUTPUT = ROOT_DIR / "free_gpu" / "sov33_colab_training.ipynb"
 
 COLAB_NOTEBOOK_TEMPLATE: dict[str, Any] = {
