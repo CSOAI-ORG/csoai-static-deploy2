@@ -1,0 +1,30 @@
+[13:59:12] [orchestrator] Starting distributed evolution loop
+[13:59:12] [orchestrator] 
+============================================================
+[13:59:12] [orchestrator]   DISTRIBUTED EVOLUTION ROUND 1
+[13:59:12] [orchestrator] ============================================================
+
+[13:59:12] [orchestrator] Starting distributed evolution across all tiers
+[13:59:12] [mac_m4] Starting Mac M4 evolution cycle
+[13:59:12] [oracle_arm_2] Starting Oracle ARM evolution on oracle-micro-2
+[13:59:12] [oracle_arm_2] Cycle 1/2
+[13:59:12] [kaggle_t4] Starting Kaggle evolution
+[13:59:12] [orchestrator] Tier nvidia_api failed: run_nvidia_distill() got an unexpected keyword argument 'cycles'
+[13:59:12] [mac_m4] Cycle 1/3
+[13:59:12] [oracle_arm_1] Starting Oracle ARM evolution on oracle-micro
+[13:59:12] [orchestrator] Tier groq_api failed: run_groq_distill() got an unexpected keyword argument 'cycles'
+[13:59:12] [oracle_arm_1] Cycle 1/2
+[13:59:19] [oracle_arm_2] SSH command failed: bash: line 1: cd: /home/ubuntu/sov-evolution: No such file or directory
+
+[13:59:19] [oracle_arm_2] Cycle 2/2
+[13:59:20] [oracle_arm_1] SSH command failed: bash: line 1: cd: /home/ubuntu/sov-evolution: No such file or directory
+
+[13:59:20] [oracle_arm_1] Cycle 2/2
+[13:59:22] [oracle_arm_1] SSH command failed: bash: line 1: cd: /home/ubuntu/sov-evolution: No such file or directory
+
+[13:59:22] [oracle_arm_1] Done. Best: 0.0%
+[13:59:22] [orchestrator] Tier oracle_arm_1 completed: completed
+[13:59:23] [oracle_arm_2] SSH command failed: bash: line 1: cd: /home/ubuntu/sov-evolution: No such file or directory
+
+[13:59:23] [oracle_arm_2] Done. Best: 0.0%
+[13:59:23] [orchestrator] Tier oracle_arm_2 completed: completed

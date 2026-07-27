@@ -42,5 +42,49 @@
       }
     },
     "transform_count": 10
+  },
+  {
+    "cycle": 2,
+    "timestamp": "2026-07-27T13:59:08",
+    "evolve": {
+      "total_tests": 20,
+      "by_model": {
+        "sov33-evolved:latest": {
+          "avg": 0.563,
+          "n": 10
+        },
+        "qwen2.5:0.5b": {
+          "avg": 0.591,
+          "n": 10
+        }
+      },
+      "by_category": {
+        "reasoning": {
+          "avg": 0.529,
+          "n": 16
+        },
+        "math": {
+          "avg": 0.768,
+          "n": 4
+        }
+      }
+    },
+    "absorb": {
+      "math": {
+        "avg_score": 0.768,
+        "count": 4,
+        "weak": false,
+        "min_score": 0.547,
+        "max_score": 0.875
+      },
+      "reasoning": {
+        "avg_score": 0.529,
+        "count": 16,
+        "weak": true,
+        "min_score": 0.069,
+        "max_score": 1.0
+      }
+    },
+    "transform_count": 5
   }
 ]
