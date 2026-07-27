@@ -33,10 +33,12 @@ from .constitutional_ai import ConstitutionalAI
 from .rag_pipeline import RAGPipeline
 from .arena_integration import ArenaIntegration
 from .arena_trainer import ArenaTrainer
+from .unified_gnn import UnifiedGNN, InnerGNN, OuterGNN, Dreamer
 
 __all__ = [
     "GSpace", "JSpace", "ClanEngine", "BFTQuorum", "OWM", "IWM",
     "OWEMBrain", "OWEMHive", "SOVRouter", "SOVSpace",
     "DistributedStigmergy", "LocalStigmergy", "GossipProtocol", "DistributedSpineDrum",
     "ConstitutionalAI", "RAGPipeline", "ArenaIntegration", "ArenaTrainer",
+    "UnifiedGNN", "InnerGNN", "OuterGNN", "Dreamer",
 ]
