@@ -1,7 +1,7 @@
 // /api/daily-golden — Daily E2E golden test for the entire DEFONEOS surface
 // Cron-driven. Hits every page + every endpoint. Returns structured pass/fail. Posts to Telegram if configured.
 //
-// HONESTY: Results are real (live HTTP requests to csoai-static-deploy2.vercel.app). No fabrication.
+// HONESTY: Results are real (live HTTP requests to csoai-sovereign.pages.dev). No fabrication.
 // Time budget: <8s end-to-end. Designed to run every 4 hours during EAT mode.
 
 const https = require('https');
@@ -36,7 +36,7 @@ function fetch_p(url, method = 'GET', body) {
       let data = '';
       res.on('data', (c) => data += c);
       res.on('end', () => resolve({
-        path: url.replace('https://csoai-static-deploy2.vercel.app', ''),
+        path: url.replace('https://csoai-sovereign.pages.dev', ''),
         method,
         status: res.statusCode,
         latency_ms: Date.now() - start,
@@ -57,7 +57,7 @@ module.exports = async function handler(req, res) {
   res.setHeader('Cache-Control', 'no-store');
   if (req.method === 'OPTIONS') return res.status(204).end();
 
-  const base = 'https://csoai-static-deploy2.vercel.app';
+  const base = 'https://csoai-sovereign.pages.dev';
   const t0 = Date.now();
   const pageResults = await Promise.all(PAGES.map((p) => fetch_p(base + p, 'GET')));
   const apiResults = await Promise.all(API_ENDPOINTS.map((e) => fetch_p(base + e.path, e.method, e.body)));

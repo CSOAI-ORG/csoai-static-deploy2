@@ -1,5 +1,5 @@
 {
-  "aligned_at": "2026-07-27T00:00:00+00:00",
+  "aligned_at": "2026-07-27T02:45:00+00:00",
   "runs": [
     {
       "workload": "kaggle-capability",
@@ -32,14 +32,28 @@
         "elapsed_s": 13.36,
         "sigil": "c79fd791dc04649f"
       }
+    },
+    {
+      "workload": "kaggle-capability",
+      "tier": "kaggle_t4",
+      "started": "2026-07-27T02:35:32.240915+00:00",
+      "cost": 0.0,
+      "savings": 1.75
+    },
+    {
+      "workload": "tab5-kaggle-t4-a",
+      "tier": "kaggle_t4_a",
+      "started": "2026-07-27T02:52:15.063313+00:00",
+      "cost": 0.0,
+      "savings": 1.75
     }
   ],
   "total_cost": 0.0,
-  "total_savings": 1.762988888888889,
+  "total_savings": 5.262988888888889,
   "kaggle_kernels": {
     "active": 13,
     "latest": "sov33-full-benchmark-general-agentic",
-    "latest_run": "2026-07-26 15:25:15"
+    "latest_run": "2026-07-27 02:45:00"
   },
   "runpod_pods": {
     "fresh-a40": "EXITED",
@@ -49,21 +63,28 @@
     "remote": "https://github.com/CSOAI-ORG/csoai-static-deploy2.git",
     "last_push": "2026-07-27"
   },
-  "alignment_tests": "PASSED (6/6)"
-}
-        },
-        "elapsed_s": 13.36,
-        "sigil": "c79fd791dc04649f"
-      }
+  "alignment_tests": "PASSED (6/6)",
+  "master_benchmark": {
+    "timestamp": "2026-07-27T02:45:16+00:00",
+    "capabilities_tested": 20,
+    "scores": {
+      "spatial_reasoning": 66.67,
+      "math": 100.0,
+      "agentic": 100.0,
+      "code": 100.0,
+      "j_space": 100.0,
+      "sov_space": 100.0,
+      "games": 100.0,
+      "sovereign": 50.0
     },
-    {
-      "workload": "kaggle-capability",
-      "tier": "kaggle_t4",
-      "started": "2026-07-27T02:35:32.240915+00:00",
-      "cost": 0.0,
-      "savings": 1.75
-    }
-  ],
-  "total_cost": 0.0,
-  "total_savings": 3.5129888888888887
+    "local_model": "qwen2.5:0.5b",
+    "sigil": "7f3060ee2b0ea5eff72d97f9993d3a94887819a2041b9a2704e8604c8a8422a2"
+  },
+  "overnight": {
+    "completed": "2026-07-27T03:45:15+00:00",
+    "e2e": "114/121 passed",
+    "training_data": true,
+    "runpod_available": true,
+    "sigil": "7f3060ee2b0ea5eff72d97f9993d3a94887819a2041b9a2704e8604c8a8422a2"
+  }
 }

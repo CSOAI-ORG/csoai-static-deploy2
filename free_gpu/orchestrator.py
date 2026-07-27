@@ -113,10 +113,12 @@ def deploy(workload):
         tab_path = FREE_GPU_DIR / tab_script
         if tab_path.exists():
             print(f"  Running {tab_script}...")
-            ok, out = subprocess.run(
+            result = subprocess.run(
                 ["python3", str(tab_path)],
                 capture_output=True, text=True, timeout=3600
             )
+            ok = result.returncode == 0
+            out = result.stdout + result.stderr
             print(f"  Script output:\n{out[:1000]}")
         else:
             print(f"  Tab script not found: {tab_path}")

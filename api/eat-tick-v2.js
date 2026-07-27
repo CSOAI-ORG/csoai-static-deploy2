@@ -22,7 +22,7 @@ const PHASES = ['harvest', 'verify', 'golden', 'ingest', 'sigil', 'emit'];
 const EAT_LOG = '/tmp/eat.log';
 const SIGIL_LOG = '/tmp/sigil.log';
 
-const BASE = process.env.EAT_BASE_URL || 'https://csoai-static-deploy2.vercel.app';
+const BASE = process.env.EAT_BASE_URL || 'https://csoai-sovereign.pages.dev';
 
 function sigilHash(payload) {
   return crypto.createHash('sha512').update(typeof payload === 'string' ? payload : JSON.stringify(payload)).digest('hex');

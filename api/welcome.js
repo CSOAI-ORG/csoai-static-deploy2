@@ -11,17 +11,17 @@ const crypto = require('crypto');
 
 const NEXT_STEPS = {
   defence_prime:  { subject: '🛡️ Your DEFONEOS Crown RFQ is being prepared', cta: 'crown@csoai.org', next: 'A Director of AI Defence will reach out within 24h with your tailored Crown RFQ pack.' },
-  defence_sme:    { subject: '🛡️ Welcome to DEFONEOS — Enterprise tier', cta: 'https://csoai-static-deploy2.vercel.app/defoneos-defence-primes', next: 'Your SIGIL-receipted audit pack will arrive in 4 minutes. Review + book your 40-min scoping call.' },
-  regulator:      { subject: '⚖️ Welcome — DEFONEOS regulator sandbox activated', cta: 'https://csoai-static-deploy2.vercel.app/defoneos-regulators', next: 'Sandbox + 12-framework compliance evidence pack attached. 30-day free trial auto-expires (no card).' },
-  governance:     { subject: '📊 DEFONEOS Pro tier — your audit-prep kit is in flight', cta: 'https://csoai-static-deploy2.vercel.app/defoneos-system-card', next: 'Audit-prep kit will arrive in 4 minutes. 14-day money-back. ISO 42001 + EU AI Act evidence pack included.' },
-  academic:       { subject: '🔬 Welcome to DEFONEOS — sovereign dev kit', cta: 'https://csoai-static-deploy2.vercel.app/install', next: 'Open-source install + PyPI access + GitHub repo access granted. Citation framework included.' },
-  end_user:       { subject: '⚡ Welcome to DEFONEOS — sovereign OS install ready', cta: 'https://csoai-static-deploy2.vercel.app/install', next: 'Open-source install ready. Sovereign compute tier at £29/mo available.' },
-  media:          { subject: '📰 Welcome — your 40-min press brief is booked', cta: 'https://csoai-static-deploy2.vercel.app/defoneos-press', next: 'Cited brief pack will arrive in 4 minutes. Slot within 24h. Off-the-record available on request.' },
+  defence_sme:    { subject: '🛡️ Welcome to DEFONEOS — Enterprise tier', cta: 'https://csoai-sovereign.pages.dev/defoneos-defence-primes', next: 'Your SIGIL-receipted audit pack will arrive in 4 minutes. Review + book your 40-min scoping call.' },
+  regulator:      { subject: '⚖️ Welcome — DEFONEOS regulator sandbox activated', cta: 'https://csoai-sovereign.pages.dev/defoneos-regulators', next: 'Sandbox + 12-framework compliance evidence pack attached. 30-day free trial auto-expires (no card).' },
+  governance:     { subject: '📊 DEFONEOS Pro tier — your audit-prep kit is in flight', cta: 'https://csoai-sovereign.pages.dev/defoneos-system-card', next: 'Audit-prep kit will arrive in 4 minutes. 14-day money-back. ISO 42001 + EU AI Act evidence pack included.' },
+  academic:       { subject: '🔬 Welcome to DEFONEOS — sovereign dev kit', cta: 'https://csoai-sovereign.pages.dev/install', next: 'Open-source install + PyPI access + GitHub repo access granted. Citation framework included.' },
+  end_user:       { subject: '⚡ Welcome to DEFONEOS — sovereign OS install ready', cta: 'https://csoai-sovereign.pages.dev/install', next: 'Open-source install ready. Sovereign compute tier at £29/mo available.' },
+  media:          { subject: '📰 Welcome — your 40-min press brief is booked', cta: 'https://csoai-sovereign.pages.dev/defoneos-press', next: 'Cited brief pack will arrive in 4 minutes. Slot within 24h. Off-the-record available on request.' },
 };
 
 function buildEmailBody(record) {
   const persona = record.persona || 'unknown';
-  const next = NEXT_STEPS[persona] || { subject: 'Welcome to DEFONEOS', cta: 'https://csoai-static-deploy2.vercel.app', next: 'Your SIGIL-signed receipt is below. We will be in touch within 24h.' };
+  const next = NEXT_STEPS[persona] || { subject: 'Welcome to DEFONEOS', cta: 'https://csoai-sovereign.pages.dev', next: 'Your SIGIL-signed receipt is below. We will be in touch within 24h.' };
 
   return {
     subject: next.subject,
@@ -38,7 +38,7 @@ function buildEmailBody(record) {
       `  • Tier: ${record.tier || 'pending'}`,
       `  • Issuer: CSOAI LTD UK 16939677`,
       `  • Timestamp: ${record.timestamp}`,
-      `  • Verify at: https://csoai-static-deploy2.vercel.app/defoneos-verify`,
+      `  • Verify at: https://csoai-sovereign.pages.dev/defoneos-verify`,
       '',
       `What happens next: ${next.next}`,
       '',

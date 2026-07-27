@@ -110,10 +110,10 @@ module.exports = async function handler(req, res) {
   return res.status(200).json({
     ok: true,
     code,
-    referral_link: `https://csoai-static-deploy2.vercel.app/defoneos-signup-hub?ref=${code}`,
+    referral_link: `https://csoai-sovereign.pages.dev/defoneos-signup-hub?ref=${code}`,
     commission_structure: '5% of converted-signup tier value, paid monthly',
     owner_sigil: sigil,
     owner_email: record.email,
-    share_text: `I use DEFONEOS sovereign AI for UK + AUKUS defence primes. Try it: https://csoai-static-deploy2.vercel.app/defoneos-signup-hub?ref=${code}`,
+    share_text: `I use DEFONEOS sovereign AI for UK + AUKUS defence primes. Try it: https://csoai-sovereign.pages.dev/defoneos-signup-hub?ref=${code}`,
   });
 };

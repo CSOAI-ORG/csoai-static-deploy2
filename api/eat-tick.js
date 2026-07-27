@@ -40,7 +40,7 @@ const TASKS = {
   verify: async () => {
     // Hit /api/daily-golden
     try {
-      const r = await fetch('https://csoai-static-deploy2.vercel.app/api/daily-golden', { signal: AbortSignal.timeout(15000) });
+      const r = await fetch('https://csoai-sovereign.pages.dev/api/daily-golden', { signal: AbortSignal.timeout(15000) });
       const j = await r.json();
       return { task: 'verify', started_at: new Date().toISOString(), golden: j.pass + '/' + (j.pass + j.fail) + ' ok', pass: j.pass, fail: j.fail, total_ms: j.total_ms };
     } catch (e) { return { task: 'verify', error: e.message }; }
@@ -51,7 +51,7 @@ const TASKS = {
   status: async () => {
     // Hit /api/eat-status
     try {
-      const r = await fetch('https://csoai-static-deploy2.vercel.app/api/eat-status', { signal: AbortSignal.timeout(10000) });
+      const r = await fetch('https://csoai-sovereign.pages.dev/api/eat-status', { signal: AbortSignal.timeout(10000) });
       return await r.json();
     } catch (e) { return { task: 'status', error: e.message }; }
   },

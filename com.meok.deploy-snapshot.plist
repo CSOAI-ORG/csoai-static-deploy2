@@ -7,8 +7,7 @@
   STATUS: NOT LOADED. Owner must run `launchctl load -w ~/Library/LaunchAgents/com.meok.deploy-snapshot.plist`
   to activate. This is intentional — owner-gated per CSOAI owner-gated-action-staging skill.
 
-  Schedule: 03:17 UTC daily (chosen to land 5min after Vercel daily cache purge so a fresh snapshot
-  exists before any 04:00 cron sweeps try to read state).
+  Schedule: 03:17 UTC daily (fresh snapshot before any 04:00 cron sweeps).
   Logs:     /Users/nicholas/clawd/csoai-static-deploy2/.backups/snapshot.log
   Stdout/stderr redirected in ProgramArguments — both go to snapshot.log.
 

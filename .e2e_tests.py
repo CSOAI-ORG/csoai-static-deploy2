@@ -41,7 +41,7 @@ RE_ARTICLE = re.compile(r'"@type"\s*:\s*"Article"', re.I)
 RE_ART50 = re.compile(r'(Article\s*50|EU\s+AI\s+Act)', re.I)
 RE_MASTER = re.compile(r'href=["\'][^"\']*master', re.I)
 RE_SIGIL = re.compile(r'(SIGIL|sigil-chain|sigil_digest)', re.I)
-RE_CTA_50 = re.compile(r'href=["\'][^"\']*defoneos-article-50', re.I)
+RE_CTA_50 = re.compile(r'href=["\'][^"\']*(article50-passport|defoneos-article-50)', re.I)
 RE_CTA_RFQ = re.compile(r'href=["\'][^"\']*defoneos-owem-rfq', re.I)
 RE_HREF = re.compile(r'href=["\']([^"\'#?]+)', re.I)
 RE_SRC = re.compile(r'src=["\']([^"\'#?]+)', re.I)
@@ -110,7 +110,8 @@ for p in all_html:
         if link.startswith('/api') or link.startswith('/v1/'):
             continue
         target = link.lstrip('/')
-        if not (ROOT / target).exists() and not (ROOT / 'public' / target).exists():
+        target_variants = [target, target + '.html', target + '/index.html']
+        if not any((ROOT / t).exists() or (ROOT / 'public' / t).exists() for t in target_variants):
             broken += 1
             broken_list.append((p.name, link))
 

@@ -52,8 +52,8 @@ def check_registry():
         ['python3', 'tools/verify_capability_registry.py'],
         capture_output=True, text=True
     )
-    err_match = re.search(r'Errors:\s+(\d+)', result.stdout)
-    warn_match = re.search(r'Warnings:\s+(\d+)', result.stdout)
+    err_match = re.search(r'(?:Errors|❌|failed):\s*(\d+)', result.stdout, re.IGNORECASE)
+    warn_match = re.search(r'(?:Warnings|⚠|warnings):\s*(\d+)', result.stdout, re.IGNORECASE)
     return {
         'exit_code': result.returncode,
         'passed': result.returncode == 0,
@@ -217,11 +217,11 @@ def check_hub_inbound(reports):
 # 13. STALE BANNER CHECK
 # ----------------------------------------------------------------------------
 def check_stale_art50(reports):
-    """Look for 'EU AI Act Article 50 — 20 days to seal' (the stale one)."""
+    """Look for stale '20 days to seal' banners or links to deleted defoneos-article-50.html."""
     stale = []
     for r in reports:
         with open(r.path) as f: src = f.read()
-        if 'EU AI Act Article 50 — 20 days to seal' in src:
+        if '20 days to seal' in src or 'defoneos-article-50.html' in src:
             stale.append(r.path)
     return stale
 

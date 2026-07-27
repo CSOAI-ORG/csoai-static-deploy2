@@ -6,9 +6,9 @@ Injects the EU AI Act Article 50 countdown banner at the top of <body>
 in every defoneos-*.html page that does not already have it.
 
 Banner HTML (with the data marker used to detect existing banners):
-  <div class="article50-banner" data-marker="ARTICLE_50_BANNER">
-    EU AI Act Article 50 — 20 days to seal |
-    <a href="/defoneos-article-50">Get passport</a>
+  <div class="article50-banner" data-marker="ARTICLE_50_BANNER" style="background:linear-gradient(90deg,#3a0f1a,#7a1f33,#3a0f1a);border-bottom:1px solid #ff5470;padding:10px 16px;text-align:center;font-size:13px;color:#ffd5dd;font-weight:500">
+    EU AI Act Article 50 live 2 Aug 2026 — C2PA passport ready |
+    <a href="/tools/article50-passport.html" style="color:#fff;text-decoration:underline;font-weight:700">Get yours →</a>
   </div>
 
 Rules:
@@ -28,9 +28,9 @@ GLOB = "defoneos-*.html"
 BANNER_MARKER = "ARTICLE_50_BANNER"
 BANNER_CLASS = "article50-banner"
 BANNER = (
-    f'<div class="{BANNER_CLASS}" data-marker="{BANNER_MARKER}">'
-    f'EU AI Act Article 50 — 20 days to seal | '
-    f'<a href="/defoneos-article-50">Get passport</a>'
+    f'<div class="{BANNER_CLASS}" data-marker="{BANNER_MARKER}" style="background:linear-gradient(90deg,#3a0f1a,#7a1f33,#3a0f1a);border-bottom:1px solid #ff5470;padding:10px 16px;text-align:center;font-size:13px;color:#ffd5dd;font-weight:500">'
+    f'EU AI Act Article 50 live 2 Aug 2026 — C2PA passport ready | '
+    f'<a href="/tools/article50-passport.html" style="color:#fff;text-decoration:underline;font-weight:700">Get yours →</a>'
     f'</div>'
 )
 

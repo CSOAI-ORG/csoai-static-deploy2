@@ -25,3 +25,30 @@
 [16:40:08] ======================================================================
 [16:40:08]   Results: overnight_results.json
 [16:40:08]   SIGIL: 235d125258e4b07990efbfbc3cddc20aa22be32fc21ee9b2717e4b13462b11c4
+[03:45:14] ======================================================================
+[03:45:14]   SOV33 OVERNIGHT AUTO-RUNNER
+[03:45:14] ======================================================================
+[03:45:14] 
+[1/5] Running E2E tests...
+[03:45:14] Running: python3 .e2e_tests.py...
+[03:45:14]   E2E: FAIL
+[03:45:14] 
+[2/5] Running batch verifier...
+[03:45:14] Running: python3 tools/verify_e2e_batch.py...
+[03:45:15]   Batch: FAIL
+[03:45:15] 
+[3/5] Generating training data...
+[03:45:15] Running: python3 benchmark-results/generate_ultimate_training.py...
+[03:45:15]   Training data: OK
+[03:45:15] 
+[4/5] Running local benchmarks...
+[03:45:15] 
+[5/5] Checking RunPod...
+[03:45:15] Running: python3 benchmark-results/batch_runpod.py status...
+[03:45:15]   RunPod: Available
+[03:45:15] 
+======================================================================
+[03:45:15]   OVERNIGHT RUN COMPLETE
+[03:45:15] ======================================================================
+[03:45:15]   Results: overnight_results.json
+[03:45:15]   SIGIL: 7f3060ee2b0ea5eff72d97f9993d3a94887819a2041b9a2704e8604c8a8422a2

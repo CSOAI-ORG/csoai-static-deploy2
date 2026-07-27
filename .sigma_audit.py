@@ -41,7 +41,7 @@ RE_MASTER = re.compile(r'href=["\'][^"\']*master', re.IGNORECASE)
 # SIGIL footer or receipt reference
 RE_SIGIL = re.compile(r'(SIGIL[\s\|:]|receipt[\s\-:]|sigil[\-:]anchor|sigil-chain|sigil_digest)', re.IGNORECASE)
 # CTA
-RE_CTA_50 = re.compile(r'href=["\'][^"\']*defoneos-article-50', re.IGNORECASE)
+RE_CTA_50 = re.compile(r'href=["\'][^"\']*(article50-passport|defoneos-article-50)', re.IGNORECASE)
 RE_CTA_RFQ = re.compile(r'href=["\'][^"\']*defoneos-owem-rfq', re.IGNORECASE)
 
 

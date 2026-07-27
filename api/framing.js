@@ -113,7 +113,7 @@ module.exports = async function handler(req, res) {
       md += `## ${f.id} (${f.format} · ${f.topic})\n\n`;
       md += `> ${f.text}\n\n`;
       md += `*— ${f.attribution}*\n\n`;
-      md += `Source: https://csoai-static-deploy2.vercel.app${f.permalink}\n\n---\n\n`;
+      md += `Source: https://csoai-sovereign.pages.dev${f.permalink}\n\n---\n\n`;
     }
     res.setHeader('Content-Type', 'text/markdown; charset=utf-8');
     return res.status(200).send(md);

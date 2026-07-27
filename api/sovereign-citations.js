@@ -70,7 +70,7 @@ async function listCitations(args = {}) {
 
   // Optionally hit live pages to enrich with extracted citations
   const results = await Promise.all(filtered.slice(0, limit).map(async (p) => {
-    const full_url = `https://csoai-static-deploy2.vercel.app${p.url}`;
+    const full_url = `https://csoai-sovereign.pages.dev${p.url}`;
     let live = null;
     try {
       const r = await fetchText(full_url, 2500);
@@ -100,7 +100,7 @@ async function listCitations(args = {}) {
 async function getCitation(args = {}) {
   const url = (args.url || '').toString();
   if (!url.startsWith('/')) return { error: 'URL must be local path (starting with /)' };
-  const full_url = `https://csoai-static-deploy2.vercel.app${url}`;
+  const full_url = `https://csoai-sovereign.pages.dev${url}`;
   const r = await fetchText(full_url, 4000);
   if (r.status !== 200) return { error: 'unreachable', status: r.status, error_msg: r.error };
   const hints = extractCitationHints(r.body);

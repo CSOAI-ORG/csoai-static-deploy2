@@ -1,42 +1,61 @@
 #!/bin/bash
-# overnight_auto_run.sh — Free overnight auto-run on Kaggle
-# Runs continuously: benchmark → train → test → submit → backup
+# overnight_auto_run.sh — Full sovereign AI overnight alignment
+# Runs: local pipeline + Kaggle deploy + Colab gen + GitHub push + deploy
 set -euo pipefail
+BASE="/Users/nicholas/clawd/csoai-static-deploy2"
+cd "$BASE"
 
-echo "=== SOV OVERNIGHT AUTO-RUN ==="
+echo "=== SOV33 OVERNIGHT AUTO-ALIGNMENT ==="
 echo "Started: $(date -u +%Y-%m-%dT%H:%M:%SZ)"
-echo "Cost: \$0 (Kaggle T4 free tier)"
 echo ""
 
-# Phase 1: Deploy ASI evolve script
-echo "[Phase 1] Deploying ASI evolve script..."
-kaggle kernels push -p /tmp/sov-asi-evolve 2>&1 | tail -3
+# Phase 1: Unified free pipeline (local Ollama)
+echo "[Phase 1] Local free pipeline..."
+nohup python3 unified_free_pipeline.py > unified_overnight_output.log 2>&1 &
+UNIFIED_PID=$!
+echo "  PID: $UNIFIED_PID (tail -f unified_overnight_output.log)"
 echo ""
 
-# Phase 2: Deploy overnight EAT pipeline
-echo "[Phase 2] Deploying overnight EAT pipeline..."
-kaggle kernels push -p /tmp/sov-overnight-eat 2>&1 | tail -3
+# Phase 2: Generate Colab notebook
+echo "[Phase 2] Generating Colab notebook..."
+python3 free_gpu/setup_colab.py
 echo ""
 
-# Phase 3: Deploy competition notebooks
-echo "[Phase 3] Deploying competition notebooks..."
-for comp in "sov6-llm-classification-finetuning" "sov6-red-team" "sov6-pokemon"; do
-    echo "  Deploying $comp..."
-    kaggle kernels push -p /tmp/$comp 2>&1 | tail -3
-done
+# Phase 3: Consolidate results
+echo "[Phase 3] Consolidating results..."
+python3 consolidate_and_deploy.py --check-only 2>&1 | tail -10 || true
 echo ""
 
-# Phase 4: Check status
-echo "[Phase 4] Checking status..."
-kaggle kernels status nicktempleman/sov-asi-evolve 2>&1
-kaggle kernels status nicktempleman/sov-overnight-eat 2>&1
+# Phase 4: Push to GitHub
+echo "[Phase 4] Pushing to GitHub..."
+git add -A 2>/dev/null || true
+git commit -m "overnight auto-sync $(date -u +%Y-%m-%dT%H:%M:%SZ)" 2>/dev/null || true
+git push origin main 2>&1 | tail -3
 echo ""
 
-# Phase 5: Pull results when complete
-echo "[Phase 5] Pulling results..."
-mkdir -p /tmp/sov-overnight-results
-kaggle kernels pull nicktempleman/sov-asi-evolve -p /tmp/sov-overnight-results 2>&1 | tail -3
+# Phase 5: Backup to sov-backup
+echo "[Phase 5] Local backup..."
+cp -r forest/honey.jsonl sov-backup/ 2>/dev/null || true
+cp -r forest/bloodline.json sov-backup/ 2>/dev/null || true
+cp unified_overnight_output.log sov-backup/ 2>/dev/null || true
 echo ""
 
-echo "=== OVERNIGHT AUTO-RUN COMPLETE ==="
-echo "Results: /tmp/sov-overnight-results"
+echo "=== OVERNIGHT AUTO-ALIGNMENT RUNNING ==="
+echo "  Unified pipeline: PID $UNIFIED_PID"
+echo "  Monitor: tail -f unified_overnight_output.log"
+echo "  Colab notebook: free_gpu/sov33_colab_training.ipynb"
+echo "  Results dir: benchmark-results/unified_overnight/"
+echo ""
+
+# Wait for pipeline to complete
+wait $UNIFIED_PID 2>/dev/null || true
+
+# Phase 6: Final push with results
+echo "[Phase 6] Final GitHub push..."
+git add -A 2>/dev/null || true
+git commit -m "overnight complete $(date -u +%Y-%m-%dT%H:%M:%SZ)" 2>/dev/null || true
+git push origin main 2>&1 | tail -3
+echo ""
+
+echo "=== OVERNIGHT AUTO-ALIGNMENT COMPLETE ==="
+echo "Final results: benchmark-results/unified_overnight/"

@@ -139,7 +139,7 @@ module.exports = async function handler(req, res) {
     sigil_algo: 'HMAC-SHA256',
     sigil,
     ed25519_receipt,
-    next_step: `Receipt issued. To complete the upload: kaggle competitions submit -c ${competition} -f <submission_file>. Verify this submission at https://csoai-static-deploy2.vercel.app/api/sigil-status?sigil=${sigil.slice(0, 16)}`,
+    next_step: `Receipt issued. To complete the upload: kaggle competitions submit -c ${competition} -f <submission_file>. Verify this submission at https://csoai-sovereign.pages.dev/api/sigil-status?sigil=${sigil.slice(0, 16)}`,
     note: 'Receipt binds (competition, model, team, payload hash, timestamp). The actual upload to Kaggle must be completed via Kaggle CLI on the sovereign VM (the serverless function never holds Kaggle credentials). This endpoint produces the audit-grade receipt; the upload step is a separate, owner-executed action.',
   });
 };

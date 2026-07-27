@@ -46,7 +46,7 @@ module.exports = async function handler(req, res) {
       persona: persona || null,
       meta,
       ua: (req.headers['user-agent'] || '').slice(0, 200),
-      ip_country: (req.headers['x-vercel-ip-country'] || ''),
+      ip_country: (req.headers['cf-ip-country'] || ''),
     };
 
     try {

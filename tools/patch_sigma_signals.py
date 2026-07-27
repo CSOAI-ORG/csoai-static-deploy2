@@ -7,7 +7,7 @@ import os
 from html.parser import HTMLParser
 
 
-BASE_URL = "https://csoai-static-deploy2.vercel.app"
+BASE_URL = "https://csoai-sovereign.pages.dev"
 DATE_MODIFIED = "2026-07-25"
 
 S4_JSON_LD_TEMPLATE = """\
@@ -30,7 +30,7 @@ S6_NAV_HTML = """\
 S8_CTA_HTML = """\
 <div class="sovereign-cta-strip" data-marker="SOVEREIGN_CTA" style="background:rgba(34,211,238,.06);border-top:1px solid rgba(34,211,238,.15);padding:1rem 1.5rem;text-align:center;font-size:.82rem;color:#94a3b8">
   <a href="master.html" style="color:#22d3ee;text-decoration:none;font-weight:600;margin:0 .8rem">Sovereign Hub</a>
-  <a href="defoneos-article-50.html" style="color:#fbbf24;text-decoration:none;font-weight:600;margin:0 .8rem">Article 50 Passport</a>
+  <a href="/tools/article50-passport.html" style="color:#fbbf24;text-decoration:none;font-weight:600;margin:0 .8rem">Article 50 Passport</a>
   <a href="defoneos-owem-rfq.html" style="color:#a78bfa;text-decoration:none;font-weight:600;margin:0 .8rem">OWEM RFQ</a>
   <span style="margin:0 .8rem;color:#64748b">CSOAI Ltd · UK 16939677 · Care Floor 0.95 · Charter-anchored</span>
 </div>"""
@@ -101,7 +101,7 @@ def patch_s6(html):
 
 def patch_s8(html):
     """Add sovereign-cta-strip before </body> if missing."""
-    has_cta = "defoneos-article-50.html" in html or "defoneos-owem-rfq.html" in html
+    has_cta = "article50-passport.html" in html or "defoneos-article-50.html" in html or "defoneos-owem-rfq.html" in html
     if has_cta:
         return html, False
 

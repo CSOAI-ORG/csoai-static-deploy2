@@ -92,9 +92,9 @@ function dailyDigest() {
   const lines = [
     `🛡️ DEFONEOS · daily morning ping`,
     ``,
-    `📊 Live: https://csoai-static-deploy2.vercel.app/api/stats`,
-    `🛡️ Substrate: https://csoai-static-deploy2.vercel.app/api/sigil-status`,
-    `📜 OSCAL: https://csoai-static-deploy2.vercel.app/api/oscal?format=json`,
+    `📊 Live: https://csoai-sovereign.pages.dev/api/stats`,
+    `🛡️ Substrate: https://csoai-sovereign.pages.dev/api/sigil-status`,
+    `📜 OSCAL: https://csoai-sovereign.pages.dev/api/oscal?format=json`,
     ``,
     `Press /enter to see today's digest.`,
   ];
