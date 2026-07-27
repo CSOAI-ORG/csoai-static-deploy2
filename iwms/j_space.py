@@ -67,8 +67,14 @@ class JSpace:
         path = IWM_DIR / f"honey_{self.family}.json"
         path.write_text(json.dumps(self.honey_memory, indent=2))
 
+    def _normalize_task(self, task):
+        if isinstance(task, dict):
+            return task.get("description", str(task))
+        return str(task)
+
     def simulate_competitor(self, competitor_description, task):
         """Simulate how a competitor would approach a task."""
+        task = self._normalize_task(task)
         # Find relevant knowledge
         relevant = self._find_relevant_knowledge(task)
         # Generate competitor simulation
@@ -90,6 +96,8 @@ class JSpace:
 
     def _find_relevant_knowledge(self, task):
         """Find knowledge entries relevant to the task."""
+        if isinstance(task, dict):
+            task = task.get("description", str(task))
         task_lower = task.lower()
         relevant = []
         for entry in self.knowledge:

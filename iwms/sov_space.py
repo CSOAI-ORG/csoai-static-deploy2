@@ -319,11 +319,9 @@ class SOVSpace:
         return master
 
     def learn(self, outcome):
-        """Feed outcome back into all activated hives."""
-        for hive_name, hive in self.hives.items():
-            for clan_name, clan in hive["clans"].items():
-                for fam, brain in clan["brains"].items():
-                    brain.learn(outcome)
+        """Feed outcome back into cached brains only."""
+        for key, brain in self._brain_cache.items():
+            brain.learn(outcome)
 
     def get_status(self):
         total_clans = sum(len(h["clans"]) for h in self.hives.values())
@@ -344,4 +342,22 @@ class SOVSpace:
             "total_clans": sum(len(h["clans"]) for h in self.hives.values()),
             "total_brains": sum(len(h["clans"]) * 12 for h in self.hives.values()),
             "total_models": sum(len(h["clans"]) * 12 * 4 for h in self.hives.values()),
+            "cached_brains": len(self._brain_cache),
         }
+
+    def run_pdca(self, task):
+        """PDCA interface for OWM compatibility."""
+        result = self.process(task)
+        return {
+            "cycle": 1,
+            "strategy": result.get("master_cspace", {}).get("best_clan", "reasoning"),
+            "confidence": result.get("master_cspace", {}).get("avg_confidence", 0.5),
+            "alliance": list(result.get("master_cspace", {}).get("hives", {}).keys()),
+            "plan": {"selected_hives": list(result.get("master_cspace", {}).get("hives", {}).keys()), "task_type": "general"},
+            "check": {"quorum": {"winning_clan": result.get("master_cspace", {}).get("best_clan", "reasoning")}},
+            "act": {"alliance_updated": [], "gnn_updated": True, "honey_memory_updated": True, "recommendations": []},
+        }
+
+    def receive_outcome(self, task, won, details=None):
+        """Receive outcome for OWM compatibility."""
+        self.learn({"task": task.get("description", str(task)), "won": won})

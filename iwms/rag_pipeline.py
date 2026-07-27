@@ -66,7 +66,8 @@ class RAGPipeline:
         self.query_count += 1
         if not self.knowledge_base:
             return ""
-
+        if isinstance(query, dict):
+            query = query.get("description", str(query))
         query_tokens = set(query.lower().split())
 
         # Score each entry by token overlap
