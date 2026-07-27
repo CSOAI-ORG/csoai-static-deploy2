@@ -32,12 +32,15 @@ echo "4. Creating directories..."
 ssh_cmd "mkdir -p $DIR/benchmark-results/training $DIR/benchmark-results/pyrit $DIR/benchmark-results/corpus"
 echo "  ✓ Directories created"
 
-# 5. Set up API keys
+# 5. Set up API keys (from local env, never hardcode)
 echo "5. Setting up API keys..."
+GROQ_KEY=${GROQ_API_KEY:?"Set GROQ_API_KEY env var before running"}
+OR_KEY=${OPENROUTER_API_KEY:?"Set OPENROUTER_API_KEY env var before running"}
+NVIDIA_KEY=${NVIDIA_API_KEY:?"Set NVIDIA_API_KEY env var before running"}
 ssh_cmd "cat > /home/ubuntu/.env << 'EOF'
-GROQ_API_KEY=<your-groq-key>
-OPENROUTER_API_KEY=<your-openrouter-key>
-NVIDIA_API_KEY=<your-nvidia-key>
+GROQ_API_KEY=${GROQ_KEY}
+OPENROUTER_API_KEY=${OR_KEY}
+NVIDIA_API_KEY=${NVIDIA_KEY}
 EOF
 chmod 600 /home/ubuntu/.env"
 echo "  ✓ API keys set"
