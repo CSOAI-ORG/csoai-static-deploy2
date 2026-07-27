@@ -26,19 +26,30 @@ BENCH_DIR = ROOT / "benchmark-results"
 STATE_FILE = FREE_GPU_DIR / "swarm_state.json"
 
 TIERS = {
-    "local_m4": {"cost_hr": 0.0, "gpu": "Apple M4", "vram_gb": 0, "status": "available"},
-    "oracle_arm": {"cost_hr": 0.0, "gpu": "CPU only", "vram_gb": 0, "status": "available"},
-    "kaggle_t4": {"cost_hr": 0.0, "gpu": "NVIDIA T4", "vram_gb": 16, "status": "available", "limit": "30h/week"},
-    "modal_t4": {"cost_hr": 0.0, "gpu": "NVIDIA T4", "vram_gb": 16, "status": "spend_limit_exceeded"},
+    "local_m4": {"cost_hr": 0.0, "gpu": "Apple M4", "vram_gb": 0, "status": "available", "tab": "tab1_m4_local.py"},
+    "m2_lan": {"cost_hr": 0.0, "gpu": "Apple M2", "vram_gb": 0, "status": "available", "tab": "tab2_m2_lan.py"},
+    "modal_t4_1": {"cost_hr": 0.0, "gpu": "Modal T4 #1", "vram_gb": 16, "status": "spend_limit_exceeded", "tab": "tab3_modal_t4_1.py"},
+    "modal_t4_2": {"cost_hr": 0.0, "gpu": "Modal T4 #2", "vram_gb": 16, "status": "spend_limit_exceeded", "tab": "tab4_modal_t4_2.py"},
+    "kaggle_t4_a": {"cost_hr": 0.0, "gpu": "Kaggle T4 #1", "vram_gb": 16, "status": "available", "limit": "30h/week", "tab": "tab5_kaggle_t4_a.py"},
+    "kaggle_t4_b": {"cost_hr": 0.0, "gpu": "Kaggle T4 #2", "vram_gb": 16, "status": "available", "limit": "30h/week", "tab": "tab6_kaggle_t4_b.py"},
+    "colab_t4": {"cost_hr": 0.0, "gpu": "Colab T4", "vram_gb": 16, "status": "available", "limit": "12h/day", "tab": "tab7_colab_t4.py"},
+    "oracle_arm_1": {"cost_hr": 0.0, "gpu": "Oracle ARM #1", "vram_gb": 0, "status": "available", "tab": "tab8_oracle_arm_1.py"},
+    "oracle_arm_2": {"cost_hr": 0.0, "gpu": "Oracle ARM #2", "vram_gb": 0, "status": "available", "tab": "tab9_oracle_arm_2.py"},
     "runpod_3090": {"cost_hr": 0.22, "gpu": "RTX 3090", "vram_gb": 24, "status": "available"},
     "runpod_a40": {"cost_hr": 0.44, "gpu": "A40", "vram_gb": 48, "status": "available"},
     "runpod_h100": {"cost_hr": 3.50, "gpu": "H100", "vram_gb": 80, "status": "available"},
 }
 
 WORKLOADS = {
-    "kaggle-capability": {"tier": "kaggle_t4", "duration_h": 0.5, "description": "Capability matrix eval on T4"},
-    "kaggle-govbench": {"tier": "kaggle_t4", "duration_h": 2.0, "description": "GovBench V6 on T4"},
-    "oracle-synth": {"tier": "oracle_arm", "duration_h": 4.0, "description": "Data synthesis on ARM"},
+    "tab1-m4-local": {"tier": "local_m4", "duration_h": 0.5, "description": "Local M4 — E2E + inference"},
+    "tab2-m2-lan": {"tier": "m2_lan", "duration_h": 0.5, "description": "LAN M2 — distributed eval"},
+    "tab3-modal-t4-1": {"tier": "modal_t4_1", "duration_h": 1.0, "description": "Modal T4 #1 — small training"},
+    "tab4-modal-t4-2": {"tier": "modal_t4_2", "duration_h": 1.0, "description": "Modal T4 #2 — eval"},
+    "tab5-kaggle-t4-a": {"tier": "kaggle_t4_a", "duration_h": 0.5, "description": "Kaggle T4 #1 — capability matrix"},
+    "tab6-kaggle-t4-b": {"tier": "kaggle_t4_b", "duration_h": 2.0, "description": "Kaggle T4 #2 — GovBench V6"},
+    "tab7-colab-t4": {"tier": "colab_t4", "duration_h": 1.0, "description": "Colab T4 — notebook runs"},
+    "tab8-oracle-arm-1": {"tier": "oracle_arm_1", "duration_h": 4.0, "description": "Oracle ARM #1 — data synthesis"},
+    "tab9-oracle-arm-2": {"tier": "oracle_arm_2", "duration_h": 4.0, "description": "Oracle ARM #2 — corpus building"},
     "runpod-master": {"tier": "runpod_h100", "duration_h": 2.0, "description": "55-model master stage on H100"},
     "runpod-grpo": {"tier": "runpod_a40", "duration_h": 4.0, "description": "GRPO training on A40"},
 }
@@ -95,6 +106,21 @@ def deploy(workload):
     print(f"Deploying {workload} to {wl['tier']}...")
     print(f"  Estimated cost: ${cost:.2f}")
     print(f"  Savings vs H100: ${savings:.2f}")
+    
+    tier_info = TIERS.get(wl["tier"], {})
+    tab_script = tier_info.get("tab")
+    if tab_script:
+        tab_path = FREE_GPU_DIR / tab_script
+        if tab_path.exists():
+            print(f"  Running {tab_script}...")
+            ok, out = subprocess.run(
+                ["python3", str(tab_path)],
+                capture_output=True, text=True, timeout=3600
+            )
+            print(f"  Script output:\n{out[:1000]}")
+        else:
+            print(f"  Tab script not found: {tab_path}")
+    
     entry = {
         "workload": workload,
         "tier": wl["tier"],
