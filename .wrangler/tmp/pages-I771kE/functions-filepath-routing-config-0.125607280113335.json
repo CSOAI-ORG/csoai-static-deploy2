@@ -1,0 +1,53 @@
+{
+  "routes": [
+    {
+      "routePath": "/api/eat-tick",
+      "mountPath": "/api",
+      "method": "",
+      "module": [
+        "api/eat-tick.js:onRequest"
+      ]
+    },
+    {
+      "routePath": "/api/health",
+      "mountPath": "/api",
+      "method": "",
+      "module": [
+        "api/health.js:onRequest"
+      ]
+    },
+    {
+      "routePath": "/api/leaderboard",
+      "mountPath": "/api",
+      "method": "",
+      "module": [
+        "api/leaderboard.js:onRequest"
+      ]
+    },
+    {
+      "routePath": "/api/sov-bridge",
+      "mountPath": "/api",
+      "method": "",
+      "module": [
+        "api/sov-bridge.js:onRequest"
+      ]
+    },
+    {
+      "routePath": "/api/stats",
+      "mountPath": "/api",
+      "method": "",
+      "module": [
+        "api/stats.js:onRequest"
+      ]
+    },
+    {
+      "routePath": "/api",
+      "mountPath": "/api",
+      "method": "",
+      "middleware": [
+        "api/_middleware.js:onRequest"
+      ]
+    }
+  ],
+  "baseURL": "/"
+}

@@ -52,6 +52,7 @@ WORKLOADS = {
     "tab9-oracle-arm-2": {"tier": "oracle_arm_2", "duration_h": 4.0, "description": "Oracle ARM #2 — corpus building"},
     "runpod-master": {"tier": "runpod_h100", "duration_h": 2.0, "description": "55-model master stage on H100"},
     "runpod-grpo": {"tier": "runpod_a40", "duration_h": 4.0, "description": "GRPO training on A40"},
+    "distributed-evolve": {"tier": "local_m4", "duration_h": 0.5, "description": "Distributed evolution across all free tiers"},
 }
 
 
@@ -107,21 +108,43 @@ def deploy(workload):
     print(f"  Estimated cost: ${cost:.2f}")
     print(f"  Savings vs H100: ${savings:.2f}")
     
-    tier_info = TIERS.get(wl["tier"], {})
-    tab_script = tier_info.get("tab")
-    if tab_script:
-        tab_path = FREE_GPU_DIR / tab_script
-        if tab_path.exists():
-            print(f"  Running {tab_script}...")
+    if workload == "distributed-evolve":
+        dist_script = FREE_GPU_DIR / "distributed_evolution.py"
+        if dist_script.exists():
+            print(f"  Running distributed evolution across all free tiers...")
             result = subprocess.run(
-                ["python3", str(tab_path)],
-                capture_output=True, text=True, timeout=3600
+                ["python3", str(dist_script), "run"],
+                capture_output=True, text=True, timeout=7200
             )
-            ok = result.returncode == 0
             out = result.stdout + result.stderr
-            print(f"  Script output:\n{out[:1000]}")
+            print(f"  Script output:\n{out[:2000]}")
+            # Sync and merge after run
+            subprocess.run(
+                ["python3", str(dist_script), "sync"],
+                capture_output=True, text=True, timeout=60
+            )
+            subprocess.run(
+                ["python3", str(dist_script), "merge"],
+                capture_output=True, text=True, timeout=120
+            )
         else:
-            print(f"  Tab script not found: {tab_path}")
+            print(f"  Distributed evolution script not found: {dist_script}")
+    else:
+        tier_info = TIERS.get(wl["tier"], {})
+        tab_script = tier_info.get("tab")
+        if tab_script:
+            tab_path = FREE_GPU_DIR / tab_script
+            if tab_path.exists():
+                print(f"  Running {tab_script}...")
+                result = subprocess.run(
+                    ["python3", str(tab_path)],
+                    capture_output=True, text=True, timeout=3600
+                )
+                ok = result.returncode == 0
+                out = result.stdout + result.stderr
+                print(f"  Script output:\n{out[:1000]}")
+            else:
+                print(f"  Tab script not found: {tab_path}")
     
     entry = {
         "workload": workload,
