@@ -431,7 +431,7 @@ def train_lora_real(training_data, cycle):
         model.save_pretrained(merged_path, safe_serialization=True)
         tokenizer.save_pretrained(merged_path)
 
-        modelfile = f"FROM {merged_path}\nPARAMETER temperature 0\nPARAMETER num_predict 128\n"
+        modelfile = f"FROM {Path(merged_path).resolve()}\nPARAMETER temperature 0\nPARAMETER num_predict 128\n"
         mf_path = ADAPTER_DIR / f"Modelfile_lora.c{cycle}"
         mf_path.write_text(modelfile)
         result = subprocess.run(
