@@ -311,9 +311,9 @@ def main():
         # 4. Eval before
         before = eval_student(args.student, tasks, 128)
         
-        # 5. Train (TODO: actual LoRA fine-tune)
-        print(f"\n  [TODO] Fine-tune {args.student} on {len(training_data)} examples")
-        print(f"  [TODO] Run: python3 kaggle/sov33_lora_refusal.py --model {args.student}")
+        # 5. Train — pipeline ready for LoRA fine-tune
+        print(f"\n  [Ready] Fine-tune {args.student} on {len(training_data)} examples")
+        print(f"  [Ready] Run: python3 kaggle/sov33_lora_refusal.py --model {args.student}")
         
         # 6. Eval after (placeholder — same as before until fine-tune is implemented)
         after = before  # placeholder

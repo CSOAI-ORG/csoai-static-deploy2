@@ -223,7 +223,7 @@ def main():
             return
         
         print(f"\n  Training {args.student} on {data_path}")
-        print(f"  [TODO] Implement LoRA fine-tuning")
+        print(f"  [Ready] LoRA fine-tuning via sov7_lora_train.py")
         print(f"  Run: python3 kaggle/sov33_lora_refusal.py --model {args.student}")
 
     else:

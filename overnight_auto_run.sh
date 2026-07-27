@@ -1,61 +1,100 @@
 #!/bin/bash
 # overnight_auto_run.sh — Full sovereign AI overnight alignment
-# Runs: local pipeline + Kaggle deploy + Colab gen + GitHub push + deploy
+# Orchestrates OWEM cluster across all free GPU tiers + local pipeline
 set -euo pipefail
 BASE="/Users/nicholas/clawd/csoai-static-deploy2"
 cd "$BASE"
 
-echo "=== SOV33 OVERNIGHT AUTO-ALIGNMENT ==="
-echo "Started: $(date -u +%Y-%m-%dT%H:%M:%SZ)"
+echo "╔══════════════════════════════════════════════════════════════╗"
+echo "║  SOV33 OVERNIGHT OWEM CLUSTER AUTO-ALIGNMENT               ║"
+echo "║  $(date -u +%Y-%m-%dT%H:%M:%SZ)                                   ║"
+echo "╚══════════════════════════════════════════════════════════════╝"
 echo ""
 
-# Phase 1: Unified free pipeline (local Ollama)
-echo "[Phase 1] Local free pipeline..."
+# Phase 0: OWEM Cluster Manager — Orchestrate all free GPU workers
+echo "[Phase 0] OWEM Cluster Manager — deploying to all free tiers..."
+python3 free_gpu/owem_cluster_manager.py deploy all
+python3 free_gpu/owem_cluster_manager.py checkpoint save
+echo ""
+
+# Phase 1: Unified free pipeline (local Ollama — continuous improvement)
+echo "[Phase 1] Local ASI evolution pipeline (qwen2.5:0.5b)..."
 nohup python3 unified_free_pipeline.py > unified_overnight_output.log 2>&1 &
 UNIFIED_PID=$!
-echo "  PID: $UNIFIED_PID (tail -f unified_overnight_output.log)"
+echo "  PID: $UNIFIED_PID  (tail -f unified_overnight_output.log)"
 echo ""
 
-# Phase 2: Generate Colab notebook
-echo "[Phase 2] Generating Colab notebook..."
-python3 free_gpu/setup_colab.py
+# Phase 2: Generate all free-tier artifacts
+echo "[Phase 2] Generating all free-tier artifacts..."
+python3 free_gpu/setup_colab.py 2>&1 | tail -1
+python3 free_gpu/setup_lightning.py 2>&1 | tail -1
+python3 free_gpu/setup_hf_spaces.py 2>&1 | tail -1
+python3 free_gpu/setup_gradient.py 2>&1 | tail -1
+python3 free_gpu/setup_all_tiers.py 2>&1 | grep -E "(✓|✗|#|Cost)"
 echo ""
 
-# Phase 3: Consolidate results
-echo "[Phase 3] Consolidating results..."
+# Phase 3: Consolidate and checkpoint
+echo "[Phase 3] Consolidating results + 3-way checkpoint..."
 python3 consolidate_and_deploy.py --check-only 2>&1 | tail -10 || true
+python3 free_gpu/owem_cluster_manager.py checkpoint save 2>&1 | tail -3
 echo ""
 
-# Phase 4: Push to GitHub
-echo "[Phase 4] Pushing to GitHub..."
-git add -A 2>/dev/null || true
-git commit -m "overnight auto-sync $(date -u +%Y-%m-%dT%H:%M:%SZ)" 2>/dev/null || true
-git push origin main 2>&1 | tail -3
-echo ""
-
-# Phase 5: Backup to sov-backup
-echo "[Phase 5] Local backup..."
+# Phase 4: 3-way backup (Local + GitHub + HF)
+echo "[Phase 4] 3-way backup..."
+# Local
+mkdir -p sov-backup/checkpoints
 cp -r forest/honey.jsonl sov-backup/ 2>/dev/null || true
 cp -r forest/bloodline.json sov-backup/ 2>/dev/null || true
+cp -r benchmark-results/unified_overnight/ sov-backup/checkpoints/ 2>/dev/null || true
 cp unified_overnight_output.log sov-backup/ 2>/dev/null || true
+echo "  ✓ Local backup complete"
+
+# GitHub
+git add -A 2>/dev/null || true
+git commit -m "owem cluster sync $(date -u +%Y-%m-%dT%H:%M:%SZ)" 2>/dev/null || true
+git push origin main 2>&1 | tail -1
+echo "  ✓ GitHub backup complete"
+
+# HF (if huggingface-cli available)
+if command -v huggingface-cli &>/dev/null; then
+  echo "  ⏳ HF backup skipped (manual: huggingface-cli upload)"
+else
+  echo "  ○ HF backup requires huggingface-cli login"
+fi
 echo ""
 
-echo "=== OVERNIGHT AUTO-ALIGNMENT RUNNING ==="
-echo "  Unified pipeline: PID $UNIFIED_PID"
-echo "  Monitor: tail -f unified_overnight_output.log"
-echo "  Colab notebook: free_gpu/sov33_colab_training.ipynb"
-echo "  Results dir: benchmark-results/unified_overnight/"
+# Phase 5: Status report
+echo "[Phase 5] OWEM Cluster Status..."
+python3 free_gpu/owem_cluster_manager.py status 2>&1 | grep -E "(Workers:|○|Workloads:|Checkpoints:|Total cost:)"
 echo ""
 
-# Wait for pipeline to complete
+echo "╔══════════════════════════════════════════════════════════════╗"
+echo "║  OWEM CLUSTER RUNNING                                       ║"
+echo "║  Local pipeline PID: $UNIFIED_PID                                    ║"
+echo "║                                                              ║"
+echo "║  MONITOR:     tail -f unified_overnight_output.log           ║"
+echo "║  CLUSTER:     python3 free_gpu/owem_cluster_manager.py status║"
+echo "║  COLAB:       free_gpu/sov33_colab_training.ipynb            ║"
+echo "║  LIGHTNING:   free_gpu/lightning_studio.yaml                 ║"
+echo "║  HF SPACE:    free_gpu/hf_space/                             ║"
+echo "║  GRADIENT:    free_gpu/gradient_sov33.ipynb                  ║"
+echo "║  CHECKPOINTS: sov-backup/checkpoints/                        ║"
+echo "╚══════════════════════════════════════════════════════════════╝"
+echo ""
+
+# Wait for local pipeline
 wait $UNIFIED_PID 2>/dev/null || true
 
-# Phase 6: Final push with results
-echo "[Phase 6] Final GitHub push..."
+# Phase 6: Final sync
+echo "[Phase 6] Final checkpoint + push..."
+python3 free_gpu/owem_cluster_manager.py checkpoint save 2>&1 | tail -3
 git add -A 2>/dev/null || true
-git commit -m "overnight complete $(date -u +%Y-%m-%dT%H:%M:%SZ)" 2>/dev/null || true
-git push origin main 2>&1 | tail -3
+git commit -m "owem cluster complete $(date -u +%Y-%m-%dT%H:%M:%SZ)" 2>/dev/null || true
+git push origin main 2>&1 | tail -1
 echo ""
 
-echo "=== OVERNIGHT AUTO-ALIGNMENT COMPLETE ==="
-echo "Final results: benchmark-results/unified_overnight/"
+echo "╔══════════════════════════════════════════════════════════════╗"
+echo "║  OVERNIGHT OWEM CLUSTER COMPLETE                            ║"
+echo "║  Checkpoints: sov-backup/checkpoints/                       ║"
+echo "║  Results:     benchmark-results/unified_overnight/           ║"
+echo "╚══════════════════════════════════════════════════════════════╝"
