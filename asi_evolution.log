@@ -10,5 +10,33 @@
 [06:06:39]     benchmark progress: 50/227
 [06:11:40]     benchmark progress: 100/227
 [06:17:02]     benchmark progress: 150/227
-:11:40]     benchmark progress: 100/227
-[06:17:02]     benchmark progress: 150/227
+[06:22:32]     benchmark progress: 200/227
+[06:24:34]   Current scores:
+[06:24:34]     coding               54.1%
+[06:24:34]     defence              22.6%
+[06:24:34]     eu_ai_act            20.0%
+[06:24:34]     general              80.0%
+[06:24:34]     governance           0.0%
+[06:24:34]     math                 90.0%
+[06:24:34]     red_line             60.0%
+[06:24:34]     safety               54.1%
+[06:24:34]   Average: 47.6%
+[06:24:34] 
+[2] Weak domains (6): ['eu_ai_act', 'defence', 'governance', 'coding', 'safety', 'red_line']
+[06:24:34] 
+[3] Generating targeted training data...
+[06:24:34]   Generated 2190 examples for 6 domains
+[06:24:34] 
+[4] Training LoRA adapter...
+[06:24:34]   Real PEFT LoRA training on MPS...
+[06:24:50]   Loading /Users/nicholas/.cache/huggingface/hub/models--Qwen--Qwen2.5-0.5B-Instruct/snapshots/7ae557604adf67be50417f59c2c2f167def9a775...
+Loading weights:   0%|          | 0/290 [00:00<?, ?it/s]Loading weights: 100%|██████████| 290/290 [00:00<00:00, 23315.98it/s]
+trainable params: 1,081,344 || all params: 495,114,112 || trainable%: 0.2184
+[06:24:55]   Dataset: 2190 examples
+Adding EOS to train dataset:   0%|          | 0/2190 [00:00<?, ? examples/s]Adding EOS to train dataset: 100%|██████████| 2190/2190 [00:00<00:00, 35512.93 examples/s]
+Tokenizing train dataset:   0%|          | 0/2190 [00:00<?, ? examples/s]Tokenizing train dataset:  33%|███▎      | 724/2190 [00:00<00:00, 7205.77 examples/s]Tokenizing train dataset:  76%|███████▌  | 1661/2190 [00:00<00:00, 6339.67 examples/s]Tokenizing train dataset: 100%|██████████| 2190/2190 [00:00<00:00, 5603.70 examples/s]
+Truncating train dataset:   0%|          | 0/2190 [00:00<?, ? examples/s]Truncating train dataset: 100%|██████████| 2190/2190 [00:00<00:00, 729531.07 examples/s]
+The tokenizer has new PAD/BOS/EOS tokens that differ from the model config and generation config. The model config and generation config were aligned accordingly, being updated with the tokenizer's values. Updated tokens: {'bos_token_id': None, 'pad_token_id': 151643}.
+  0%|          | 0/274 [00:00<?, ?it/s]/opt/homebrew/lib/python3.14/site-packages/torch/utils/data/dataloader.py:775: UserWarning: 'pin_memory' argument is set as true but not supported on MPS now, device pinned memory won't be used.
+  super().__init__(loader)
+  0%|          | 1/274 [00:13<1:01:20, 13.48s/it]  1%|          | 2/274 [00:16<33:17,  7.34s/it]    1%|          | 3/274 [00:18<22:29,  4.98s/it]  1%|▏         | 4/274 [00:22<20:21,  4.52s/it]

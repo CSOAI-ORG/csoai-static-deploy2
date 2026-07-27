@@ -35,7 +35,7 @@ RESULTS_DIR.mkdir(parents=True, exist_ok=True)
 REPO_URL = os.environ.get(
     "REPO_URL", "https://github.com/CSOAI-ORG/sov5v2"
 )
-MODEL_NAME = "nicholasgriffintn/sov33-unified"
+MODEL_NAME = "nicholasgriffintn/sov33-sovereign"
 
 _log_buffer: list[str] = []
 _log_lock = threading.Lock()

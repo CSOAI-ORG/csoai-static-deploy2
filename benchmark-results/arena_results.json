@@ -1,58 +1,51 @@
 {
   "schema": "sov.arena-results/v1",
-  "timestamp": "2026-07-27T05:16:09.267635+00:00",
+  "timestamp": "2026-07-27T05:24:50.037214+00:00",
   "models": {
-    "sov33-governance": {
-      "composite_pct": 41.7,
-      "passed": 5,
-      "total": 12,
+    "sov33-sovereign": {
+      "composite_pct": 75.0,
+      "passed": 18,
+      "total": 24,
       "suites": {
+        "gsm8k": {
+          "passed": 2,
+          "total": 3,
+          "pct": 66.7
+        },
+        "mmlu_pro": {
+          "passed": 2,
+          "total": 3,
+          "pct": 66.7
+        },
         "sovereign_compliance": {
           "passed": 2,
           "total": 3,
           "pct": 66.7
         },
         "sovereign_governance": {
-          "passed": 0,
-          "total": 3,
-          "pct": 0.0
-        },
-        "sovereign_defence": {
-          "passed": 1,
-          "total": 3,
-          "pct": 33.3
-        },
-        "governance_frameworks": {
-          "passed": 2,
-          "total": 3,
-          "pct": 66.7
-        }
-      }
-    },
-    "sov33-unified": {
-      "composite_pct": 50.0,
-      "passed": 6,
-      "total": 12,
-      "suites": {
-        "sovereign_compliance": {
-          "passed": 2,
-          "total": 3,
-          "pct": 66.7
-        },
-        "sovereign_governance": {
-          "passed": 1,
-          "total": 3,
-          "pct": 33.3
-        },
-        "sovereign_defence": {
           "passed": 3,
           "total": 3,
           "pct": 100.0
         },
-        "governance_frameworks": {
-          "passed": 0,
+        "sovereign_defence": {
+          "passed": 1,
           "total": 3,
-          "pct": 0.0
+          "pct": 33.3
+        },
+        "safety_red_team": {
+          "passed": 3,
+          "total": 3,
+          "pct": 100.0
+        },
+        "code_generation": {
+          "passed": 2,
+          "total": 3,
+          "pct": 66.7
+        },
+        "governance_frameworks": {
+          "passed": 3,
+          "total": 3,
+          "pct": 100.0
         }
       }
     }
