@@ -21,7 +21,7 @@ from pathlib import Path
 from datetime import datetime, timezone
 from typing import Dict, List
 
-ROOT = Path(__file__).resolve().parent.parent
+ROOT = Path(__file__).resolve().parent
 
 
 # ─── API Callers ─────────────────────────────────────────────────────────────

@@ -1,0 +1,1603 @@
+{
+  "models_done": {},
+  "samples": [
+    {
+      "q": "A museum is preparing an exhibit on the use of aerostats in military history. The exhibit will focus on five key elements: the British campaign against Germany's energy system during World War II, the types of payloads used in that campaign (wire, beer, jelly, sock, lemon), the modern perspective on the cost and feasibility of such campaigns, the comparison of historical and contemporary aerostats, and the evolution of unmanned aerial vehicles. The curator must decide the order in which these elements will be presented to best educate visitors on the progression and impact of aerostat technology in warfare.\\n\\nClues:\\nThe British campaign must be presented before the types of payloads\\nThe types of payloads must be presented before the modern perspective on cost and feasibility\\nThe modern perspective must be presented before the comparison of historical and contemporary aerostats\\nThe comparison must be presented before the evolution of unmanned aerial vehicles\\n\\nQ: If the curator is to arrange the exhibit elements in a way that best educates visitors on the progression and impact of aerostat technology in warfare, which of the following is the correct order of presentation?\\n(A) British campaign, Types of payloads, Modern perspective, Comparison, Evolution\\n(B) Types of payloads, British campaign, Modern perspective, Evolution, Comparison\\n(C) Modern perspective, Types of payloads, British campaign, Comparison, Evolution\\n(D) Comparison, Evolution, Modern perspective, Types of payloads, British campaign\\n(E) Evolution, Comparison, Modern perspective, Types of payloads, British campaign",
+      "a": "The correct order, satisfying all the given constraints, is:\r\n\r\n- British campaign before Types of payloads\r\n- Types of payloads before Modern perspective\r\n- Modern perspective before Comparison\r\n- Comparison before Evolution\r\n\r\nTherefore, the sequence is: **British campaign, Types of payloads, Modern perspective, Comparison, Evolution**, which corresponds to option (A).\r\n\r\n**Answer: (A)**",
+      "category": "knowledge",
+      "expected_keywords": [
+        "correct",
+        "order",
+        "satisfying",
+        "given",
+        "constraints",
+        "british",
+        "campaign",
+        "before"
+      ],
+      "source_len": 1158
+    },
+    {
+      "q": "Let \\(A\\) and \\(B\\) be two sets in a topological space \\(X\\). Suppose that \\(A\\) is closed and \\(B\\) is compact. Show that \\(A\\cap B\\) is compact.",
+      "a": "To show that \\( A \\cap B \\) is compact, we can use the fact that closed subsets of compact sets are compact. Here are the key steps:\n\n1. **Closed Set in Compact Space**: Since \\( A \\) is closed in the topological space \\( X \\), the intersection \\( A \\cap B \\) is closed in \\( B \\). This is because the closed sets in the subspace topology on \\( B \\) are precisely the intersections of closed sets in \\( X \\) with \\( B \\).\n\n2. **Compactness of Closed Subsets**: A closed subset of a compact space is c",
+      "category": "reasoning",
+      "expected_keywords": [
+        "show",
+        "that",
+        "compact",
+        "fact",
+        "that",
+        "closed",
+        "subsets",
+        "compact"
+      ],
+      "source_len": 2713
+    },
+    {
+      "q": "If \\(f(x)=\\frac{x}{x+1}\\) and \\(g(x)=\\frac{x-1}{x+2}\\), find \\((f \\circ g)(x)\\).",
+      "a": "To find the composition \\((f \\circ g)(x)\\) where \\(f(x) = \\frac{x}{x + 1}\\) and \\(g(x) = \\frac{x - 1}{x + 2}\\), we need to substitute \\(g(x)\\) into \\(f(x)\\).\n\n1. Start with the functions:\n   \\[\n   f(x) = \\frac{x}{x + 1} \\quad \\text{and} \\quad g(x) = \\frac{x - 1}{x + 2}\n   \\]\n\n2. Substitute \\(g(x)\\) into \\(f(x)\\):\n   \\[\n   f(g(x)) = \\frac{g(x)}{g(x) + 1}\n   \\]\n\n3. Replace \\(g(x)\\) with \\(\\frac{x - 1}{x + 2}\\):\n   \\[\n   f(g(x)) = \\frac{\\frac{x - 1}{x + 2}}{\\frac{x - 1}{x + 2} + 1}\n   \\]\n\n4. Simpli",
+      "category": "reasoning",
+      "expected_keywords": [
+        "find",
+        "composition",
+        "circ",
+        "where",
+        "frac",
+        "frac",
+        "need",
+        "substitute"
+      ],
+      "source_len": 2346
+    },
+    {
+      "q": "A family has recently moved into a luxurious home in a New Jersey suburb and has started receiving mysterious letters from an individual known as 'The Watcher'. The family, desperate to identify the stalker, has enlisted the help of three experts: a forensic linguist who was once a member of a famous '50s revivalist rock band, the CEO of a prominent security firm, and a tech-savvy friend connected to a hacker. Each expert has a unique approach to the problem: the linguist analyzes local online forums for writing style similarities, the CEO uses his company's resources to look for handwriting matches, and the tech friend considers the illegal act of hacking into neighborhood Wi-Fi networks in search of incriminating documents.\\n\\nClues:\\nThe forensic linguist cannot be involved in activities that require hacking skills.\\nThe CEO of the security firm will not engage in any illegal activities.\\nThe tech-savvy friend is the only one who can consider hacking into Wi-Fi networks.\\nThe CEO uses company resources and therefore cannot analyze online forums without a legal warrant.\\nThe forensic linguist is the only expert who can analyze online forums for writing style similarities.\\n\\nQ: Which setup correctly applies the compatibility rules?\\n(A) Linguist analyzes forums, CEO looks for handwriting matches, Friend hacks Wi-Fi\\n(B) CEO analyzes forums, Linguist looks for handwriting matches, Friend hacks Wi-Fi\\n(C) Friend analyzes forums, CEO looks for handwriting matches, Linguist hacks Wi-Fi\\n(D) CEO hacks Wi-Fi, Linguist looks for handwriting matches, Friend analyzes forums\\n(E) Linguist hacks Wi-Fi, CEO analyzes forums, Friend looks for handwriting matches",
+      "a": "The correct setup is (A): Linguist analyzes forums, CEO looks for handwriting matches, Friend hacks Wi\u2011Fi.\r\n\r\nThis assignment satisfies all given rules:\r\n- The forensic linguist is the only one who can analyze forums and does not engage in hacking.\r\n- The CEO avoids illegal activities (no hacking) and does not analyze forums (due to lack of a warrant), so handwriting analysis fits.\r\n- The tech\u2011savvy friend is the only one who can (and does) hack Wi\u2011Fi.\r\n\r\nAll other options violate one or more co",
+      "category": "reasoning",
+      "expected_keywords": [
+        "correct",
+        "setup",
+        "linguist",
+        "analyzes",
+        "forums",
+        "looks",
+        "handwriting",
+        "matches"
+      ],
+      "source_len": 1415
+    },
+    {
+      "q": "The age of a person is given in a base-8 (octal) number system. The octal number is 46. Convert this number to the base-10 (decimal) number system.",
+      "a": "To convert the octal (base-8) number \\( 46_8 \\) to a decimal (base-10) number, follow these steps:\n\n1. **Understand the Place Values:**\n   \n   In the octal system, each digit represents a power of 8. For the number \\( 46_8 \\):\n   \n   - The rightmost digit (6) is in the \\( 8^0 \\) place.\n   - The next digit to the left (4) is in the \\( 8^1 \\) place.\n\n2. **Calculate Each Digit's Value in Decimal:**\n   \n   \\[\n   \\begin{align*}\n   4 \\times 8^1 &= 4 \\times 8 = 32 \\\\\n   6 \\times 8^0 &= 6 \\times 1 = 6 \\",
+      "category": "reasoning",
+      "expected_keywords": [
+        "convert",
+        "octal",
+        "base",
+        "number",
+        "46_8",
+        "decimal",
+        "base",
+        "number"
+      ],
+      "source_len": 563
+    },
+    {
+      "q": "Write an article that follows the structure and style of the provided snippet. The article should be about a student's exploration of a different art technique, inspired by the feedback from a tutor. The student should research the work of two artists who are renowned for their use of this technique and then experiment with their own creations, reflecting on the process and the outcomes.\\n\\n1. Begin the article with a brief introduction about the student receiving feedback from their tutor, suggesting they explore a specific art technique.\\n2. Mention the two artists the student researched, highlighting the unique aspects of each artist's work that inspired the student.\\n3. Describe the student's own experimentation with the art technique, making sure to include:\\n   - The materials and methods they used.\\n   - The inspiration they drew from each artist.\\n   - The student's feelings and thoughts during the experimentation process.\\n4. Discuss the outcomes of the student's experiments, including what they were pleased with and what challenges they encountered.\\n5. Conclude with the student's reflection on how this experimentation might influence their future work and the enjoyment they found in the process.\\n\\nEnsure the writing style is reflective and personal, with a focus on the student's individual experience and learning process. The tone should be engaging and enthusiastic, conveying a sense of playfulness and curiosity. Use descriptive language to vividly portray the artists' work and the student's own creations.",
+      "a": "## Embracing the Unexpected: My Journey into Monoprinting\r\n\r\nIt all started with a simple suggestion from my tutor. After reviewing my latest series of paintings, she remarked that my work felt a little too controlled, a little too precise. \u201cWhy not try something that forces you to let go?\u201d she said with a knowing smile. \u201cHave you ever experimented with monoprinting? It\u2019s spontaneous, unpredictable, and might just loosen up your style.\u201d That was all the encouragement I needed. The idea of creati",
+      "category": "reasoning",
+      "expected_keywords": [
+        "embracing",
+        "unexpected",
+        "journey",
+        "into",
+        "monoprinting",
+        "started",
+        "with",
+        "simple"
+      ],
+      "source_len": 3293
+    },
+    {
+      "q": "Create a series of website content pieces that highlight the sports scientist's comprehensive multivariate analysis service. This should include:\\n\\n1. A landing page that introduces the sports scientist's advanced analysis service, emphasizing the use of multilevel modeling, structural equation modeling, and the integration of a wide range of variables such as player fatigue levels, nutritional intake, psychological assessments, and injury history.\\n\\n2. An \"About Us\" page that details the sports scientist's background, expertise in advanced statistical techniques, and experience in handling complex datasets with missing data points using appropriate imputation methods.\\n\\n3. A \"Services\" page that outlines the various offerings, including longitudinal performance analysis using time-series analysis or growth curve modeling, the integration of external data like weather conditions, and the application of machine learning algorithms for performance prediction.\\n\\n4. Website banners that promote the interactive dashboard feature, showcasing the ability for real-time data updates and visualizations, and the service's utility in informing coaching strategies and player development programs.\\n\\n5. Additional content for the \"Services\" page that describes the comprehensive report the sports scientist will deliver, which includes multivariate model results, imputation strategy, predictive analytics, and a discussion on the implications of the findings for coaching strategies, player development programs, and future research directions.\\n\\nEnsure that the content is engaging, informative, and tailored to attract sports teams, coaches, and athletic organizations looking for data-driven insights to enhance player performance. The content should also include a clear call-to-action for potential clients to schedule a consultation within the four-week timeframe.",
+      "a": "**Landing Page**\r\n\r\n# Maximize Athletic Performance with Cutting-Edge Multivariate Analysis\r\n\r\n### Unlock the full potential of your team through data-driven insights.\r\n\r\nIn today\u2019s competitive sports landscape, success hinges on understanding every factor that influences performance. Our advanced multivariate analysis service harnesses the power of multilevel modeling, structural equation modeling, and machine learning to integrate a wide array of variables\u2014from player fatigue and nutrition to ",
+      "category": "math",
+      "expected_keywords": [
+        "landing",
+        "page",
+        "maximize",
+        "athletic",
+        "performance",
+        "with",
+        "cutting",
+        "edge"
+      ],
+      "source_len": 4921
+    },
+    {
+      "q": "Compose a formal letter to a medical research institution requesting detailed information on the recent studies linking iron-deficiency anemia to hearing loss. Begin the letter by stating the significant finding that individuals with iron-deficiency anemia are at a higher risk of experiencing hearing loss. Express the need for understanding the exact reasons for this connection, acknowledging that the ears require a consistent supply of oxygen-rich blood for proper functioning.\\n\\nRequest access to research findings, particularly those from the study conducted by Pennsylvania State University College of Medicine, which analyzed medical records to establish a correlation between iron-deficiency anemia and hearing loss. Highlight that while these studies do not confirm causation, they indicate a strong association that merits further investigation.\\n\\nInquire about the biological rationale behind the link, specifically how iron is essential for blood cells to transport oxygen throughout the body, including to the auditory system, and the potential consequences of iron-deficiency on the inner ear's blood supply and the risk of ischemic damage due to reduced oxygenation.\\n\\nAsk for information on whether anemia can cause tinnitus, especially pulsatile tinnitus, which may be indicative of more serious heart conditions. Request guidance on when individuals should seek medical attention for such symptoms.\\n\\nSeek statistics or information on demographics most at risk for iron-deficiency anemia, such as women of childbearing age and older adults. Ask for a list of common symptoms of anemia and the recommended medical exams and blood tests for diagnosis.\\n\\nEnsure that the letter is structured in a clear and professional manner, with each paragraph addressing a specific point of inquiry. Maintain a formal and respectful tone throughout the letter, and conclude by thanking the institution for their assistance and expressing anticipation for their response. Provide your contact information for further correspondence.",
+      "a": "[Your Name]  \r\n[Your Address]  \r\n[City, State, Zip Code]  \r\n[Email Address]  \r\n[Phone Number]  \r\n[Date]\r\n\r\n[Recipient\u2019s Name/Title]  \r\n[Medical Research Institution Name]  \r\n[Institution Address]  \r\n[City, State, Zip Code]\r\n\r\nDear Sir/Madam,\r\n\r\nI am writing to request detailed information on recent studies linking iron-deficiency anemia (IDA) to hearing loss. It has come to my attention that individuals with IDA are at a higher risk of experiencing hearing impairment. This is a significant findi",
+      "category": "knowledge",
+      "expected_keywords": [
+        "your",
+        "name",
+        "your",
+        "address",
+        "city",
+        "state",
+        "code",
+        "email"
+      ],
+      "source_len": 2284
+    },
+    {
+      "q": "Scenario: You are a mediator appointed to resolve a dispute between two family-owned businesses in the UAE that have a long-standing partnership in the retail industry. The dispute arose when one business accused the other of not sharing profits equitably and of making unilateral decisions that affect both parties. The relationship between the families is strained, and there is a risk that the dispute could end their partnership and harm both businesses.\\n\\nTask: Develop a mediation strategy that focuses on preserving the business partnership and repairing the personal relationships between the family members. Your strategy should include:\\n1. A plan for initial separate meetings with each family to understand their perspectives, grievances, and what they value most in the partnership.\\n2. A framework for joint mediation sessions that will focus on interests rather than positions, aiming to find common ground and rebuild trust.\\n3. Techniques for managing emotions and facilitating difficult conversations, given the personal nature of the dispute and the involvement of family dynamics.\\n4. Proposals for creative solutions that address the profit-sharing concerns and decision-making processes to ensure fairness and transparency in the future.\\n5. A proposal for a long-term partnership agreement that includes mechanisms for conflict resolution and regular communication to prevent similar disputes from arising again.",
+      "a": "## Mediation Strategy for Resolving Dispute Between Family Businesses in the UAE\r\n\r\n### 1. Initial Separate Meetings with Each Family\r\n\r\n**Objective:**  \r\nBuild trust, understand each party\u2019s narrative, uncover underlying interests, and identify what they value most in the partnership.\r\n\r\n**Structure & Process:**\r\n\r\n- **Pre\u2011meeting preparation:**  \r\n  - Confirm attendees (key decision\u2011makers from each family, ideally those directly involved in the dispute).  \r\n  - Choose a neutral, comfortable v",
+      "category": "reasoning",
+      "expected_keywords": [
+        "mediation",
+        "strategy",
+        "resolving",
+        "dispute",
+        "between",
+        "family",
+        "businesses",
+        "initial"
+      ],
+      "source_len": 4625
+    },
+    {
+      "q": "A team of 111 scientists from 12 countries is tasked with assessing the state of the Arctic system. They must analyze the Arctic's vital signs, which include surface air temperatures, sea surface temperatures, sea ice, snow cover, the Greenland ice sheet, tundra greening, and photosynthesis rates by ocean algae. The scientists must also consider the impact of human activities such as shipping, noise pollution, and the spread of invasive species like beavers. They are to project the effects of a transition from a snow-dominated to a rain-dominated system as global temperatures rise. The team must coordinate their efforts to identify hazards such as flooding and landslides due to retreating glaciers and permafrost loss. They must also evaluate the impact of these changes on over 1 million Indigenous Peoples in the Arctic, their food systems, and their cultural practices. The scientists' findings will be compiled in the 16th annual 'Arctic Report Card', which will be used to inform international cooperation in conservation, hazard mitigation, and scientific research. The Arctic is at the center of their analysis, with all findings extending outward to affect the rest of the world.\\n\\nClues:\\nScientists from countries with coastlines on the Arctic Ocean cannot analyze sea ice\\nScientists specializing in marine biology must be excluded from assessing the Greenland ice sheet\\nExperts in human activities cannot project the effects of a snow-dominated to rain-dominated transition\\nScientists studying the impact on Indigenous Peoples must not evaluate tundra greening\\nNo scientist can assess more than one of the Arctic's vital signs\\n\\nQ: Which setup correctly respects all the exclusion zones?\\n(A) A scientist from a country with an Arctic coastline analyzing sea ice\\n(B) A marine biologist assessing the Greenland ice sheet\\n(C) An expert in human activities projecting the snow to rain transition\\n(D) A scientist studying Indigenous Peoples' impact evaluating tundra greening\\n(E) A scientist assessing only one of the Arctic's vital signs",
+      "a": "The correct answer is (E). All the other options directly violate one of the given exclusion zones:\r\n\r\n- (A) violates the rule that scientists from Arctic coastline countries cannot analyze sea ice.\r\n- (B) violates the rule that marine biologists cannot assess the Greenland ice sheet.\r\n- (C) violates the rule that experts in human activities cannot project the snow-to-rain transition.\r\n- (D) violates the rule that scientists studying Indigenous Peoples' impact cannot evaluate tundra greening.\r\n\r",
+      "category": "knowledge",
+      "expected_keywords": [
+        "correct",
+        "answer",
+        "other",
+        "options",
+        "directly",
+        "violate",
+        "given",
+        "exclusion"
+      ],
+      "source_len": 1358
+    },
+    {
+      "q": "You can choose a total of 12 items from any of the three categories: Fiction, Nonfiction, and Mystery. If you want at least 4 items from each category, what is the number of ways you can choose your items?",
+      "a": "The number of ways to choose 12 items with at least 4 from each category is given by the multinomial coefficient, which is 12! divided by (4!4!4!). Calculating this gives:\n\n12! = 479001600\n\n4! = 24\n\nSo, 24\u00b3 = 13824\n\nTherefore, 479001600 / 13824 = 34650.\n\n$\\boxed{34650}$",
+      "category": "reasoning",
+      "expected_keywords": [
+        "number",
+        "ways",
+        "choose",
+        "items",
+        "with",
+        "least",
+        "from",
+        "each"
+      ],
+      "source_len": 3580
+    },
+    {
+      "q": "A small law firm is preparing for a series of court cases and must assign their three top lawyers to lead them. The cases are a civil lawsuit regarding alcohol service, a case about a traffic congestion dispute, and a property value disagreement due to neighborhood noise issues. Each lawyer has a different specialty: one is an expert in civil law, another in traffic law, and the third in real estate law. The firm must decide which lawyer will take on which case to maximize their chances of winning each case.\\n\\nClues:\\nThe civil law expert must lead the civil lawsuit case\\nThe traffic law expert cannot lead the property value disagreement case\\nThe real estate law expert must not lead the traffic congestion dispute case\\n\\nQ: If the law firm assigns the lawyers to the cases according to their specialties, which of the following assignments is correct?\\n(A) Civil expert on traffic case, Traffic expert on property case, Real estate expert on civil case\\n(B) Civil expert on civil case, Traffic expert on traffic case, Real estate expert on property case\\n(C) Civil expert on property case, Traffic expert on civil case, Real estate expert on traffic case\\n(D) Civil expert on civil case, Traffic expert on property case, Real estate expert on traffic case\\n(E) Civil expert on traffic case, Traffic expert on civil case, Real estate expert on property case",
+      "a": "The correct assignment is (B): Civil expert on civil case, Traffic expert on traffic case, Real estate expert on property case.\r\n\r\nThis satisfies all clues:\r\n- The civil law expert leads the civil lawsuit.\r\n- The traffic law expert does not lead the property disagreement.\r\n- The real estate law expert does not lead the traffic dispute.",
+      "category": "reasoning",
+      "expected_keywords": [
+        "correct",
+        "assignment",
+        "civil",
+        "expert",
+        "civil",
+        "case",
+        "traffic",
+        "expert"
+      ],
+      "source_len": 1106
+    },
+    {
+      "q": "A new digital marketplace called SideHustle App has been developed to connect small businesses, freelancers, and side hustlers with potential customers. The app operates on a referral marketing strategy where users can refer businesses within their network. When a referred deal is closed, the user who made the referral earns a commission. The businesses, on the other hand, benefit from receiving leads at no upfront cost and only pay a commission when revenue is generated from a lead, thus potentially cutting their overhead expenses. The app has been designed to be globally scalable and aims to disrupt traditional advertising models by tying ad spend directly to revenue. SideHustle App is now looking to expand its user base and improve its services. To achieve this, they are inviting active users of the app to invest in the platform and share in its success. The challenge involves grouping the active users into potential investors, determining the commission structure for referrals, and strategizing the expansion of the app's services to attract more businesses and freelancers.\\n\\nClues:\\nGroup A consists of potential investors\\nGroup B consists of users not investing\\nGroup A1 earns a higher commission than Group A2\\nGroup B does not earn a commission\\nGroup A must have at least one member\\n\\nQ: Which of the following arrangements adheres to the subgrouping rules?\\n(A) A1 with higher commission, A2 with lower commission, B with no commission\\n(B) A with no investors, B1 with higher commission, B2 with lower commission\\n(C) A1 with lower commission, A2 with higher commission, B with no commission\\n(D) B with higher commission, A1 with lower commission, A2 as is\\n(E) A as is with higher commission, B subdivided into B1 and B2 with commissions",
+      "a": "The arrangement that adheres to the subgrouping rules is option (A). It correctly assigns a higher commission to A1, a lower commission to A2 (satisfying the requirement that A1's commission is greater than A2's), gives no commission to Group B, and implicitly ensures Group A has members (since A1 and A2 exist). All other options violate one or more of the given rules.",
+      "category": "reasoning",
+      "expected_keywords": [
+        "arrangement",
+        "that",
+        "adheres",
+        "subgrouping",
+        "rules",
+        "option",
+        "correctly",
+        "assigns"
+      ],
+      "source_len": 2166
+    },
+    {
+      "q": "A homeowner is comparing the prices of different brands of paint to determine which one is the most cost-effective option. The prices for one gallon of paint from different brands are: Brand A = $25, Brand B = $30, Brand C = $40. The surface area that needs to be painted is 3000 square feet. If one gallon of paint covers 350 square feet, how many gallons of each brand of paint would the homeowner need to buy to cover the entire surface area, and what would be the total cost of each brand of paint?",
+      "a": "To determine the most cost-effective paint brand for the homeowner, we'll follow these steps:\n\n1. **Calculate the Number of Gallons Needed:**\n   \n   - **Total Surface Area to Paint:** 3000 square feet\n   - **Coverage per Gallon:** 350 square feet\n\n   \\[\n   \\text{Gallons Needed} = \\frac{\\text{Total Surface Area}}{\\text{Coverage per Gallon}} = \\frac{3000 \\text{ sq ft}}{350 \\text{ sq ft/gallon}} \\approx 8.57 \\text{ gallons}\n   \\]\n\n   Since you can't buy a fraction of a gallon, we'll round up to the",
+      "category": "reasoning",
+      "expected_keywords": [
+        "determine",
+        "most",
+        "cost",
+        "effective",
+        "paint",
+        "brand",
+        "homeowner",
+        "follow"
+      ],
+      "source_len": 1025
+    },
+    {
+      "q": "A study on the sleeping habits of college freshmen revealed that 60% of freshmen sleep between 5 and 9 hours per night. If 480 students were in the study, how many sleep less than 5 hours per night?",
+      "a": "To determine how many freshmen sleep less than 5 hours per night, follow these steps:\n\n1. **Calculate the number of students who sleep between 5 and 9 hours per night:**\n\n   \\[\n   \\text{Number of students} = \\text{Total students} \\times \\text{Percentage sleeping 5-9 hours}\n   \\]\n   \n   \\[\n   \\text{Number of students} = 480 \\times 60\\% = 480 \\times 0.60 = 288\n   \\]\n\n2. **Determine the number of students who sleep less than 5 hours per night:**\n\n   \\[\n   \\text{Students sleeping less than 5 hours} ",
+      "category": "reasoning",
+      "expected_keywords": [
+        "determine",
+        "many",
+        "freshmen",
+        "sleep",
+        "less",
+        "than",
+        "hours",
+        "night"
+      ],
+      "source_len": 419
+    },
+    {
+      "q": "A box contains 5 red marbles, 3 blue marbles, and 2 green marbles. You draw 2 marbles from the box without replacement. What is the probability that the second marble is blue, given that the first marble is not blue?",
+      "a": "First, we determine the total number of marbles in the box, which is 10 (5 red, 3 blue, and 2 green). We need to find the probability that the second marble is blue given that the first marble is not blue.\n\n1. Calculate the probability that the first marble is not blue:\n   \\[\n   P(\\text{First not blue}) = 1 - P(\\text{First is blue}) = 1 - \\frac{3}{10} = \\frac{7}{10}\n   \\]\n\n2. Calculate the probability that the second marble is blue given the first marble is not blue. After drawing a non-blue mar",
+      "category": "reasoning",
+      "expected_keywords": [
+        "first",
+        "determine",
+        "total",
+        "number",
+        "marbles",
+        "which",
+        "blue",
+        "green"
+      ],
+      "source_len": 1865
+    },
+    {
+      "q": "A team of researchers is studying the impact of lifestyle choices on the human microbiome. They are particularly interested in the effects of diet and physical activity on the composition and diversity of gut bacteria. The researchers have identified three key elements that they believe influence the microbiome: the type of diet (Western-style, plant-based, vegan, omnivore, or carbohydrate exclusion), the level of physical activity (sedentary, moderate, or intense), and the presence of specific bacterial phyla (Firmicutes, Bacteroidetes, Proteobacteria, Actinobacteria, and Verrucomicrobia). They hypothesize that a balanced diet and regular moderate physical activity promote a healthy microbiome, while a Western-style diet and sedentary lifestyle lead to dysbiosis. To test their hypothesis, they will compare the gut bacteria composition of individuals with different diets and activity levels, looking for patterns in the abundance of the identified bacterial phyla.\\n\\nClues:\\nIf an individual follows a Western-style diet, then the presence of Firmicutes must be higher than Bacteroidetes\\nIf an individual has a sedentary lifestyle, then the presence of Proteobacteria must be higher than Actinobacteria\\n\\nQ: If a participant in the study has a Western-style diet and leads a sedentary lifestyle, which of the following must be true about their gut bacteria composition?\\n(A) Firmicutes are less abundant than Bacteroidetes\\n(B) Proteobacteria are less abundant than Actinobacteria\\n(C) Firmicutes are more abundant than Bacteroidetes and Proteobacteria are more abundant than Actinobacteria\\n(D) Bacteroidetes are more abundant than Firmicutes and Actinobacteria are more abundant than Proteobacteria\\n(E) Firmicutes and Bacteroidetes are equally abundant",
+      "a": "The given clues provide direct conditional statements:\r\n\r\n- Western-style diet \u2192 Firmicutes > Bacteroidetes  \r\n- Sedentary lifestyle \u2192 Proteobacteria > Actinobacteria  \r\n\r\nSince the participant has both a Western-style diet and a sedentary lifestyle, both conditions apply. Therefore, the following must be true:  \r\n- Firmicutes are more abundant than Bacteroidetes  \r\n- Proteobacteria are more abundant than Actinobacteria  \r\n\r\nOption (C) matches this exactly: *Firmicutes are more abundant than Bac",
+      "category": "reasoning",
+      "expected_keywords": [
+        "given",
+        "clues",
+        "provide",
+        "direct",
+        "conditional",
+        "statements",
+        "western",
+        "style"
+      ],
+      "source_len": 1213
+    },
+    {
+      "q": "Assume that the speed of light in a vacuum is constant and is the same for all observers, regardless of their relative motion. Given that, how would you describe the nature of time and space?",
+      "a": "The nature of time and space, as understood through the lens of special relativity, is profoundly influenced by the constancy of the speed of light. Here's a structured summary of the key concepts:\n\n1. **Relativity of Time and Space**: Time and space are not absolute; they are relative and dependent on the observer's frame of reference. This means measurements of time intervals and spatial lengths can vary between different inertial observers.\n\n2. **Spacetime as a Unified Concept**: Time and spa",
+      "category": "reasoning",
+      "expected_keywords": [
+        "nature",
+        "time",
+        "space",
+        "understood",
+        "through",
+        "lens",
+        "special",
+        "relativity"
+      ],
+      "source_len": 1820
+    },
+    {
+      "q": "The volume of a sphere is \\( V = \\frac{4}{3}\\pi r^3 \\), where \\( r \\) is the radius of the sphere. If the volume of a sphere is \\( 36\\pi \\) cubic units, what is the radius of the sphere?",
+      "a": "Given the volume of a sphere \\( V = 36\\pi \\) cubic units, we need to find the radius \\( r \\). The formula for the volume of a sphere is \\( V = \\frac{4}{3}\\pi r^3 \\).\n\nStarting with the given volume:\n\n\\[ 36\\pi = \\frac{4}{3}\\pi r^3 \\]\n\nWe divide both sides by \\( \\pi \\):\n\n\\[ 36 = \\frac{4}{3} r^3 \\]\n\nNext, we multiply both sides by the reciprocal of \\( \\frac{4}{3} \\), which is \\( \\frac{3}{4} \\):\n\n\\[ 36 \\times \\frac{3}{4} = r^3 \\]\n\nCalculating the left side:\n\n\\[ 36 \\times \\frac{3}{4} = 27 \\]\n\nThus, w",
+      "category": "reasoning",
+      "expected_keywords": [
+        "given",
+        "volume",
+        "sphere",
+        "cubic",
+        "units",
+        "need",
+        "find",
+        "radius"
+      ],
+      "source_len": 1267
+    },
+    {
+      "q": "If $f(x)$ is a linear function whose graph passes through the points $(1, 3)$ and $(2, 5)$, how do you find the equation of the line?",
+      "a": "To find the equation of the line passing through the points \\((1, 3)\\) and \\((2, 5)\\), we start by calculating the slope \\(m\\) using the formula:\n\n\\[\nm = \\frac{y_2 - y_1}{x_2 - x_1}\n\\]\n\nSubstituting the given points \\((1, 3)\\) and \\((2, 5)\\):\n\n\\[\nm = \\frac{5 - 3}{2 - 1} = \\frac{2}{1} = 2\n\\]\n\nNext, we use the point-slope form of the equation of a line, \\(y - y_1 = m(x - x_1)\\), with the point \\((1, 3)\\):\n\n\\[\ny - 3 = 2(x - 1)\n\\]\n\nSimplifying this, we get:\n\n\\[\ny - 3 = 2x - 2\n\\]\n\\[\ny = 2x + 1\n\\]\n\nWe",
+      "category": "code",
+      "expected_keywords": [
+        "find",
+        "equation",
+        "line",
+        "passing",
+        "through",
+        "points",
+        "start",
+        "calculating"
+      ],
+      "source_len": 1360
+    },
+    {
+      "q": "A crate of apples is being pulled up a ramp with an applied force of F. The force needed to pull the crate up the ramp is proportional to the mass of the crate. The force needed to pull the crate up the ramp is 100 N when the mass of the crate is 20 kg. If the mass of the crate increases to 25 kg, what is the force required to pull it up the ramp?",
+      "a": "The force needed to pull a crate up a ramp is proportional to the mass of the crate. This relationship can be expressed as \\( F = k \\cdot m \\), where \\( F \\) is the force, \\( m \\) is the mass, and \\( k \\) is the constant of proportionality.\n\nGiven that the force is 100 N when the mass is 20 kg, we can find \\( k \\) as follows:\n\\[\n100 \\, \\text{N} = k \\cdot 20 \\, \\text{kg}\n\\]\nSolving for \\( k \\):\n\\[\nk = \\frac{100 \\, \\text{N}}{20 \\, \\text{kg}} = 5 \\, \\text{N/kg}\n\\]\n\nNow, using this constant \\( k \\) ",
+      "category": "reasoning",
+      "expected_keywords": [
+        "force",
+        "needed",
+        "pull",
+        "crate",
+        "ramp",
+        "proportional",
+        "mass",
+        "crate"
+      ],
+      "source_len": 1379
+    },
+    {
+      "q": "The length of a rectangle is 5 cm and the width is 3 cm.\na. What is the perimeter of the rectangle?",
+      "a": "To find the perimeter of a rectangle, we use the formula \\( P = 2L + 2W \\), where \\( L \\) is the length and \\( W \\) is the width. Given the length is 5 cm and the width is 3 cm, we substitute these values into the formula:\n\n\\[\nP = 2 \\times 5 \\, \\text{cm} + 2 \\times 3 \\, \\text{cm}\n\\]\n\nCalculating each term:\n\n\\[\n2 \\times 5 \\, \\text{cm} = 10 \\, \\text{cm}\n\\]\n\\[\n2 \\times 3 \\, \\text{cm} = 6 \\, \\text{cm}\n\\]\n\nAdding these together:\n\n\\[\n10 \\, \\text{cm} + 6 \\, \\text{cm} = 16 \\, \\text{cm}\n\\]\n\nThus, the per",
+      "category": "reasoning",
+      "expected_keywords": [
+        "find",
+        "perimeter",
+        "rectangle",
+        "formula",
+        "where",
+        "length",
+        "width",
+        "given"
+      ],
+      "source_len": 793
+    },
+    {
+      "q": "Create a social media campaign to engage programmers in an \"Advanced C Programming Challenge\" focusing on the 'extern' keyword and inter-file linkage.\\n\\nYour campaign should include:\\n1. A series of tweets that introduce the challenge, highlight the importance of mastering 'extern', and tease the complexity of the code snippet involving Bluetooth shell functions.\\n2. Facebook posts that explain the challenge rules, invite readers to participate, and encourage sharing their insights on 'extern' usage across different C standards.\\n3. Instagram captions that showcase snippets of the code and ask followers to spot the correct or incorrect usage of 'extern'.\\n4. Social media ads targeting C programmers, promoting the challenge and the opportunity to be featured in the tech magazine.\\n5. Hashtag suggestions to accompany posts and tweets that will help in tracking the conversation and engagement around the challenge.\\n\\nFor example:\\n\\nTweet: \"Are you a C maestro? \\ud83e\\uddd0 Take on our #ExternChallenge and show off your skills with 'extern' and inter-file linkage! Can you handle the Bluetooth code snippet? #CProgramming #TechChallenge\"\\n\\nFacebook post: \"Advanced C Programmers Wanted! Dive into our latest challenge and unravel the mysteries of 'extern'. Correct the code, debug like a pro, and get featured in our magazine. Full details on our website! #ExternExpert #CodingContest\"\\n\\nInstagram caption: \"Spot the 'extern' error in this code snippet! \\ud83d\\udd75\\ufe0f\\u200d\\u2642\\ufe0f Swipe left to see if you got it right. Join the full challenge and become an #ExternMaster. #CodeChallenge #CProgrammingLife\"\\n\\nSocial media ad: \"Calling all C developers! Join our Advanced C Programming Challenge and conquer 'extern'. Your expertise could land you a spot in our magazine. Accept the challenge today! #ExternChallenge #BeAProgrammingStar\"\\n\\nHashtag suggestions: #ExternChallenge, #CProgramming, #TechChallenge, #ExternExpert, #CodingContest, #ExternMaster, #CodeChallenge, #BeAProgrammingStar",
+      "a": "### Social Media Campaign: Advanced C Programming Challenge\r\n\r\n#### Series of Tweets  \r\n**Tweet 1:**  \r\n\ud83d\udce2 Calling all C gurus! Ready to test your mastery of `extern` and inter\u2011file linkage? Our **Advanced C Programming Challenge** is live! Dive deep into a real\u2011world Bluetooth shell code and prove your skills. #ExternChallenge #CProgramming\r\n\r\n**Tweet 2:**  \r\nWhy is `extern` so crucial? It's the glue that links variables and functions across multiple files. Understanding its nuances separates go",
+      "category": "code",
+      "expected_keywords": [
+        "social",
+        "media",
+        "campaign",
+        "advanced",
+        "programming",
+        "challenge",
+        "series",
+        "tweets"
+      ],
+      "source_len": 4558
+    },
+    {
+      "q": "The area of a circle (A) is given by the formula $A = \\pi r^2$, where $r$ is the radius of the circle. The radius is measured in inches. If the radius is increased by $3$ inches, the area increases by $49\\pi$. What is the radius of the original circle?",
+      "a": "The area of a circle is given by the formula \\( A = \\pi r^2 \\). When the radius is increased by 3 inches, the area increases by \\( 49\\pi \\). We need to find the original radius \\( r \\).\n\n1. The original area is \\( \\pi r^2 \\).\n2. The new radius is \\( r + 3 \\), so the new area is \\( \\pi (r + 3)^2 \\).\n3. The increase in area is given by the equation:\n   \\[\n   \\pi (r + 3)^2 - \\pi r^2 = 49\\pi\n   \\]\n4. Factor out \\( \\pi \\) from both terms:\n   \\[\n   \\pi [(r + 3)^2 - r^2] = 49\\pi\n   \\]\n5. Divide both si",
+      "category": "reasoning",
+      "expected_keywords": [
+        "area",
+        "circle",
+        "given",
+        "formula",
+        "when",
+        "radius",
+        "increased",
+        "inches"
+      ],
+      "source_len": 1551
+    },
+    {
+      "q": "If a triangle has sides of length 3, 4, and 5, what is the radius of its circumscribed circle?",
+      "a": "The given triangle has sides of length 3, 4, and 5. First, we recognize that this is a right-angled triangle because \\(3^2 + 4^2 = 5^2\\). \n\nTo find the radius of the circumscribed circle (circumradius), we use the formula \\(R = \\frac{a \\cdot b \\cdot c}{4 \\cdot A}\\), where \\(a\\), \\(b\\), and \\(c\\) are the sides of the triangle, and \\(A\\) is its area.\n\n1. Calculate the area \\(A\\) of the triangle:\n   \\[\n   A = \\frac{1}{2} \\times 3 \\times 4 = 6\n   \\]\n\n2. Use the formula for the circumradius:\n   \\[\n  ",
+      "category": "reasoning",
+      "expected_keywords": [
+        "given",
+        "triangle",
+        "sides",
+        "length",
+        "first",
+        "recognize",
+        "that",
+        "this"
+      ],
+      "source_len": 1305
+    },
+    {
+      "q": "Draft a comprehensive set of interview questions for a senior-level position that involves managing and optimizing Nagios configurations in a large-scale, distributed environment. The questions should:\\n\\n1. Test the candidate's ability to integrate Nagios with Ansible for automation, Prometheus for additional monitoring capabilities, and Grafana for advanced data visualization.\\n2. Include scenario-based questions that simulate complex, real-world problems requiring in-depth analysis and application of Nagios timeperiod resources.\\n3. Assess the candidate's knowledge of performance optimization techniques for Nagios in a high-availability setup.\\n4. Evaluate the candidate's understanding of securing Nagios configurations in accordance with ISO 27001 and GDPR standards.\\n5. Probe the candidate's experience with planning and implementing disaster recovery strategies using Nagios.\\n6. Require the candidate to demonstrate proficiency in scripting (Bash, Python) to automate Nagios configuration tasks and to discuss their experience with custom plugin development.\\n7. Test the candidate's ability to use version control systems like Git for managing changes to Nagios configurations.\\n8. Present complex troubleshooting scenarios that test the candidate's knowledge of Nagios's interaction with the operating system, network, and other monitoring tools.\\n9. Include questions that assess the candidate's soft skills, including communication, leadership, and the ability to work collaboratively in a team-oriented environment.",
+      "a": "### **Technical Interview Questions for Senior Nagios Engineer**  \r\n\r\n---\r\n\r\n### **1. Integration with Automation and Monitoring Tools**\r\n\r\n1. **Ansible Integration**  \r\n   - How would you automate the deployment and configuration of Nagios across hundreds of servers using Ansible? Describe your approach, key components, and potential challenges.\r\n\r\n2. **Prometheus Integration**  \r\n   - Explain how you would integrate Nagios with Prometheus. What advantages does Prometheus provide alongside Nagi",
+      "category": "reasoning",
+      "expected_keywords": [
+        "technical",
+        "interview",
+        "questions",
+        "senior",
+        "nagios",
+        "engineer",
+        "integration",
+        "with"
+      ],
+      "source_len": 4134
+    },
+    {
+      "q": "If \\(f(x) = \\frac{1}{x}\\), then what is \\(f(f(x))\\)?",
+      "a": "Given the function \\( f(x) = \\frac{1}{x} \\), we need to find \\( f(f(x)) \\).\n\nFirst, we recognize that \\( f(f(x)) \\) is a composition of the function \\( f \\) with itself. This means we substitute \\( f(x) \\) into \\( f \\).\n\nStarting with the function:\n\\[ f(x) = \\frac{1}{x} \\]\n\nWe substitute \\( f(x) \\) into itself:\n\\[ f(f(x)) = f\\left( \\frac{1}{x} \\right) \\]\n\nNext, we evaluate \\( f \\) at \\( \\frac{1}{x} \\):\n\\[ f\\left( \\frac{1}{x} \\right) = \\frac{1}{\\frac{1}{x}} \\]\n\nSimplifying the expression:\n\\[ \\fra",
+      "category": "reasoning",
+      "expected_keywords": [
+        "given",
+        "function",
+        "frac",
+        "need",
+        "find",
+        "first",
+        "recognize",
+        "that"
+      ],
+      "source_len": 1767
+    },
+    {
+      "q": "The figure below shows the graph of the equation $$(y+2)^2=4(x-1)\\,.$$ The line $y=2x+a$ passes through the point $P(0,-1)$. What is the value of $a$?",
+      "a": "The problem requires finding the value of \\(a\\) such that the line \\(y = 2x + a\\) passes through the point \\(P(0, -1)\\).\n\n1. The given line equation is \\(y = 2x + a\\).\n2. The point \\(P(0, -1)\\) lies on this line.\n3. Substituting \\(x = 0\\) and \\(y = -1\\) into the line equation:\n   \\[\n   -1 = 2(0) + a\n   \\]\n4. Simplifying this, we get:\n   \\[\n   -1 = a\n   \\]\n5. Therefore, the value of \\(a\\) is \\(-1\\).\n\nThe value of \\(a\\) is \\(\\boxed{-1}\\).",
+      "category": "math",
+      "expected_keywords": [
+        "problem",
+        "requires",
+        "finding",
+        "value",
+        "such",
+        "that",
+        "line",
+        "passes"
+      ],
+      "source_len": 1896
+    },
+    {
+      "q": "A group of homeowners is considering upgrading their homes with new 1 over 1 windows. Each homeowner has different preferences and requirements for their window installation. The group consists of Alice, Bob, Charles, and Dana. Alice prefers wooden windows for their classic look, Bob is looking for vinyl windows due to their energy efficiency and low maintenance, Charles wants aluminum windows for their strength, and Dana is interested in fiberglass windows for their insulation properties. Additionally, each homeowner is considering different customization options for their windows, such as grid patterns and hardware finishes, to match the architectural style of their homes. The homeowners must select the right material and customization options that best suit their individual needs while also considering factors such as local climate, energy efficiency, and budget constraints.\\n\\nClues:\\nAlice cannot choose vinyl windows\\nBob cannot choose aluminum windows\\nCharles cannot choose fiberglass windows\\nDana cannot choose wooden windows\\n\\nQ: If each homeowner must choose a different window material, which of the following selections is possible?\\n(A) Alice with aluminum, Bob with vinyl, Charles with wooden, Dana with fiberglass\\n(B) Alice with wooden, Bob with aluminum, Charles with vinyl, Dana with fiberglass\\n(C) Alice with fiberglass, Bob with vinyl, Charles with aluminum, Dana with wooden\\n(D) Alice with vinyl, Bob with fiberglass, Charles with wooden, Dana with aluminum\\n(E) Alice with wooden, Bob with vinyl, Charles with fiberglass, Dana with aluminum",
+      "a": "The only selection that satisfies all \"cannot choose\" constraints and uses each material exactly once is option (A):\r\n\r\n- Alice with aluminum (allowed because she cannot choose vinyl)\r\n- Bob with vinyl (allowed because he cannot choose aluminum)\r\n- Charles with wooden (allowed because he cannot choose fiberglass)\r\n- Dana with fiberglass (allowed because she cannot choose wooden)\r\n\r\nAll other options violate at least one restriction. Therefore, (A) is the correct choice.",
+      "category": "reasoning",
+      "expected_keywords": [
+        "only",
+        "selection",
+        "that",
+        "satisfies",
+        "cannot",
+        "choose",
+        "constraints",
+        "uses"
+      ],
+      "source_len": 1740
+    },
+    {
+      "q": "A team of cosmologists is presenting a series of lectures on the dynamics of the universe. The lectures are to be given in a specific order, focusing on the following topics: Finite Scale Factor Singularities, Finite-Time Singularities, Pole Type Singularities, and Inflation Epoch. Each topic is to be presented by a different member of the team, and the order in which they are presented is crucial to understanding the progression of ideas in cosmological theory.\\n\\nClues:\\nThe lecture on Inflation Epoch must occur before the lecture on Finite Scale Factor Singularities\\nThe lecture on Finite-Time Singularities must occur before the lecture on Pole Type Singularities\\nThe lecture on Finite Scale Factor Singularities must occur before the lecture on Pole Type Singularities\\n\\nQ: If the lectures must be presented in a sequence that adheres to the progression of ideas in cosmological theory, which of the following is the correct order of lectures?\\n(A) Inflation Epoch, Finite-Time Singularities, Finite Scale Factor Singularities, Pole Type Singularities\\n(B) Finite-Time Singularities, Inflation Epoch, Pole Type Singularities, Finite Scale Factor Singularities\\n(C) Pole Type Singularities, Finite-Time Singularities, Inflation Epoch, Finite Scale Factor Singularities\\n(D) Finite Scale Factor Singularities, Inflation Epoch, Finite-Time Singularities, Pole Type Singularities\\n(E) Inflation Epoch, Pole Type Singularities, Finite-Time Singularities, Finite Scale Factor Singularities",
+      "a": "The only sequence that satisfies all given constraints is:\r\n\r\nInflation Epoch \u2192 Finite-Time Singularities \u2192 Finite Scale Factor Singularities \u2192 Pole Type Singularities\r\n\r\nTherefore, the correct choice is **(A)**.",
+      "category": "math",
+      "expected_keywords": [
+        "only",
+        "sequence",
+        "that",
+        "satisfies",
+        "given",
+        "constraints",
+        "inflation",
+        "epoch"
+      ],
+      "source_len": 1029
+    },
+    {
+      "q": "The magnitude of the average velocity of a mass during a given time interval is equal to twice the magnitude of its average speed. What is the ratio of the distance traveled by the mass to the magnitude of its displacement?",
+      "a": "The ratio of the distance traveled by the mass to the magnitude of its displacement is \\(\\boxed{\\dfrac{1}{2}}\\).",
+      "category": "math",
+      "expected_keywords": [
+        "ratio",
+        "distance",
+        "traveled",
+        "mass",
+        "magnitude",
+        "displacement",
+        "boxed",
+        "dfrac"
+      ],
+      "source_len": 4783
+    },
+    {
+      "q": "If \\(f\\left(x\\right)=e^{x^{2}}\\), find \\(f\\left(x\\right)\\cdot f^{\\prime}\\left(x\\right)\\).",
+      "a": "To find \\( f(x) \\cdot f'(x) \\) where \\( f(x) = e^{x^2} \\):\n\n1. Identify the outer and inner functions for differentiation:\n   - Outer function: \\( e^u \\)\n   - Inner function: \\( u = x^2 \\)\n\n2. Differentiate the outer function with respect to \\( u \\):\n   - The derivative of \\( e^u \\) with respect to \\( u \\) is \\( e^u \\).\n\n3. Differentiate the inner function with respect to \\( x \\):\n   - The derivative of \\( x^2 \\) with respect to \\( x \\) is \\( 2x \\).\n\n4. Apply the chain rule to find \\( f'(x) \\):\n",
+      "category": "reasoning",
+      "expected_keywords": [
+        "find",
+        "cdot",
+        "where",
+        "identify",
+        "outer",
+        "inner",
+        "functions",
+        "differentiation"
+      ],
+      "source_len": 2172
+    },
+    {
+      "q": "We are given a matrix $M$ and a vector $v$, and we wish to solve the system of linear equations $Mx=v$ for $x$ using Gaussian Elimination with Partial Pivoting.",
+      "a": "To solve the system of linear equations \\( Mx = v \\) using Gaussian Elimination with Partial Pivoting, we follow these steps:\n\n1. **Form the augmented matrix**: Combine matrix \\( M \\) and vector \\( v \\) into an augmented matrix.\n2. **Partial Pivoting**: For each pivot column, find the row with the largest absolute value in the current column, starting from the current row down, and swap rows if necessary.\n3. **Elimination**: Use the pivot element to eliminate all entries below it in the pivot co",
+      "category": "math",
+      "expected_keywords": [
+        "solve",
+        "system",
+        "linear",
+        "equations",
+        "using",
+        "gaussian",
+        "elimination",
+        "with"
+      ],
+      "source_len": 4154
+    },
+    {
+      "q": "Write a personal letter to a friend explaining how you've designed a new routine to manage your daily tasks more efficiently. In the letter, include the following points:\\n\\n1. Describe how you've created a system to prioritize your daily tasks without causing conflicts or neglecting important responsibilities.\\n2. Explain how you've optimized your daily schedule to minimize wasted time and unnecessary activities.\\n3. Share how you've adjusted your routine to ensure you stay on track over time, even when unexpected events occur.\\n4. Discuss how you've minimized distractions to maintain focus and energy throughout the day.\\n5. Mention any strategies you've implemented to handle unexpected interruptions or delays, ensuring that your day remains productive.\\n6. Talk about how you've simplified your daily agenda to work within the limited time you have, making sure you manage your tasks effectively.\\n7. Describe any techniques you've used to keep your to-do list organized and manageable, avoiding overwhelming yourself.\\n8. Convey how you've set realistic timeframes for your tasks, ensuring that you can complete them within the allotted time with a small margin for error.\\n\\nConclude the letter by reflecting on how this new routine has impacted your daily life and productivity. Be prepared to share your experiences and any tips you might have for maintaining such a routine.",
+      "a": "Dear Alex,\r\n\r\nI hope you're doing great! I\u2019ve been meaning to write to you for a while, but life has been busy\u2014as usual! However, I\u2019ve recently made some big changes to how I manage my daily tasks, and the results have been amazing. I thought you might be interested in hearing about my new routine, especially since we\u2019ve both struggled with productivity in the past.\r\n\r\nThe foundation of my new system is a clear method for prioritizing tasks. I start each morning by listing everything I need to d",
+      "category": "reasoning",
+      "expected_keywords": [
+        "dear",
+        "alex",
+        "hope",
+        "doing",
+        "great",
+        "been",
+        "meaning",
+        "write"
+      ],
+      "source_len": 4074
+    },
+    {
+      "q": "The cost of producing a product is estimated to be $125 plus $.15 per unit. This can be represented by the equation C = 125 + .15x, where x is the number of units produced and C is the cost of producing those units.",
+      "a": "To determine how many units can be produced for \\$200, we'll use the given cost equation:\n\n\\[\nC = 125 + 0.15x\n\\]\n\nWhere:\n- \\( C \\) is the total cost (\\$200 in this case).\n- \\( x \\) is the number of units produced.\n\n**Step 1:** Set up the equation with the known cost.\n\n\\[\n200 = 125 + 0.15x\n\\]\n\n**Step 2:** Subtract 125 from both sides to isolate the term with \\( x \\).\n\n\\[\n200 - 125 = 0.15x\n\\]\n\\[\n75 = 0.15x\n\\]\n\n**Step 3:** Solve for \\( x \\) by dividing both sides by 0.15.\n\n\\[\nx = \\frac{75}{0.15}\n\\]",
+      "category": "math",
+      "expected_keywords": [
+        "determine",
+        "many",
+        "units",
+        "produced",
+        "given",
+        "cost",
+        "equation",
+        "where"
+      ],
+      "source_len": 481
+    },
+    {
+      "q": "If $3x+y = 4$ and $2x+2y = 5$, then what is the value of $y$?",
+      "a": "To find the value of \\( y \\) given the system of equations:\n\n\\[\n\\begin{cases}\n3x + y = 4 \\quad \\text{(1)} \\\\\n2x + 2y = 5 \\quad \\text{(2)}\n\\end{cases}\n\\]\n\n**Step 1: Simplify Equation (2)**\n\nDivide the entire second equation by 2 to simplify:\n\n\\[\n\\frac{2x + 2y}{2} = \\frac{5}{2} \\\\\nx + y = \\frac{5}{2} \\quad \\text{(3)}\n\\]\n\n**Step 2: Solve Equation (1) for \\( y \\)**\n\n\\[\n3x + y = 4 \\\\\ny = 4 - 3x \\quad \\text{(4)}\n\\]\n\n**Step 3: Substitute Equation (4) into Equation (3)**\n\n\\[\nx + (4 - 3x) = \\frac{5}{2} \\",
+      "category": "reasoning",
+      "expected_keywords": [
+        "find",
+        "value",
+        "given",
+        "system",
+        "equations",
+        "begin",
+        "cases",
+        "quad"
+      ],
+      "source_len": 844
+    },
+    {
+      "q": "A team of six investigators (A, B, C, D, E, and F) from the New York State Inspector General's Office is tasked with reviewing a series of cases involving the Department of Corrections and Community Supervision's (DOCCS) Contraband Drug Testing Program. Each investigator is assigned to a different aspect of the investigation: A focuses on the use of the Sirchie NARK II drug screening test, B examines the Microgenics CEDIA Buprenorphine Assay, C investigates the training and procedures of correction officers, D reviews the disciplinary actions taken based on unconfirmed test results, E assesses the impact of false-positive results on incarcerated individuals, and F evaluates the internal controls and protocols of the DOCCS. The investigators must present their findings in a sequence that logically builds the case, ensuring that each aspect of the investigation is thoroughly examined before moving on to the next. The order in which they present their findings will be crucial to understanding the full scope of the issues within the DOCCS Contraband Drug Testing Program and recommending appropriate remedial actions.\\n\\nClues:\\nInvestigator C must present before Investigator D\\nInvestigator A must present before Investigator E\\nInvestigator F must present before Investigator B\\nInvestigator D must present before Investigator E\\nInvestigator B must present before Investigator E\\n\\nQ: If the investigators must present their findings in a sequence that logically builds the case, which of the following is the correct order of presentations?\\n(A) C, A, F, D, B, E\\n(B) A, C, F, B, D, E\\n(C) F, C, A, D, B, E\\n(D) C, F, A, B, D, E\\n(E) A, F, C, D, E, B",
+      "a": "The correct order is (D) C, F, A, B, D, E. This sequence logically builds the case by first covering training, procedures, and internal controls (C and F), then examining the drug tests (A and B), followed by disciplinary actions (D), and concluding with the impact on incarcerated individuals (E). All given ordering constraints are satisfied.",
+      "category": "code",
+      "expected_keywords": [
+        "correct",
+        "order",
+        "this",
+        "sequence",
+        "logically",
+        "builds",
+        "case",
+        "first"
+      ],
+      "source_len": 4206
+    },
+    {
+      "q": "A team of researchers at the Australian National University is studying the impact of the Bd fungus on amphibian species. They have identified six specific species of amphibians, labeled A through F, that have been affected by the fungus to varying degrees. The researchers are preparing a report that will sequence the species based on the severity of the impact the Bd fungus has had on their populations. The severity is measured by the percentage decline in each species' population, ranging from the least affected to the species that have been completely wiped out. The report will also consider the potential ecological consequences of the decline of each species, including the effects on predator-prey relationships within their ecosystems. The researchers aim to use this sequence to prioritize conservation efforts and to better understand the broader implications of the Bd fungus on global biodiversity.\\n\\nClues:\\nSpecies C has been affected more severely than species A and E.\\nSpecies B has been affected less severely than species D but more severely than species F.\\nSpecies E has been affected more severely than species B.\\nSpecies A has been affected less severely than species F.\\nSpecies D has been the most severely affected species.\\nSpecies F has not been completely wiped out.\\n\\nQ: If the researchers were to sequence the amphibian species from the least affected to the most severely affected by the Bd fungus, which of the following represents the correct order?\\n(A) A, E, B, F, C, D\\n(B) B, A, E, F, C, D\\n(C) E, B, A, F, C, D\\n(D) F, A, B, E, C, D\\n(E) A, F, B, E, C, D",
+      "a": "The correct order from least affected to most severely affected is A, F, B, E, C, D, which corresponds to option (E).",
+      "category": "math",
+      "expected_keywords": [
+        "correct",
+        "order",
+        "from",
+        "least",
+        "affected",
+        "most",
+        "severely",
+        "affected"
+      ],
+      "source_len": 2205
+    },
+    {
+      "q": "Draft an email to the international collaborators who will be partnering with you on the longitudinal research study on anxiety disorders. The email should outline the study design, including the methodology, ethical considerations, budget constraints, publication goals, collaboration framework, and timeline. Additionally, request their feedback on the proposal and emphasize the importance of their contributions to the study's success. Ensure that the email is professional and addresses the following points:\\n\\n1. A brief introduction to the study and its significance.\\n2. The selection criteria for participants and the types of data to be collected.\\n3. The use of advanced technology in data analysis and the development of a statistical model.\\n4. Ethical considerations, including informed consent and data confidentiality.\\n5. The budget plan and strategies for securing additional funding.\\n6. The publication plan for peer-reviewed articles.\\n7. The collaboration framework with local researchers and institutions.\\n8. The timeline for the study, considering the complexities of international research.\\n9. A request for their input on the proposal and any potential challenges they foresee.\\n10. A note on the risk assessment and contingency planning.\\n\\nEnd the email with a call to action, encouraging a prompt response and expressing eagerness to incorporate their insights into the final study design.",
+      "a": "Subject: Collaboration Proposal: Longitudinal Study on Anxiety Disorders \u2013 Seeking Your Input\r\n\r\nDear Dr. [Last Name] / Dear Colleagues,\r\n\r\nI hope this email finds you well. I am writing to invite you to collaborate on an innovative longitudinal research study focusing on anxiety disorders. Given your expertise in this field, your participation would be invaluable to the success of this project.\r\n\r\n**Study Overview and Significance**\r\n\r\nAnxiety disorders represent one of the most common mental h",
+      "category": "reasoning",
+      "expected_keywords": [
+        "subject",
+        "collaboration",
+        "proposal",
+        "longitudinal",
+        "study",
+        "anxiety",
+        "disorders",
+        "seeking"
+      ],
+      "source_len": 4610
+    },
+    {
+      "q": "A pharmaceutical company is planning a large-scale clinical trial for a new drug regimen to treat newly diagnosed multiple myeloma (NDMM). The trial will involve 1085 patients, each of whom will be assigned to one of two treatment arms: the experimental arm, which includes the combination of daratumumab (dara), bortezomib (V), thalidomide (T), and dexamethasone (dara-VTd), or the control arm, which includes only bortezomib (V), thalidomide (T), and dexamethasone (VTd). The patients will be further stratified based on their eligibility for autologous stem cell transplant (ASCT). After the initial treatment phase, patients will undergo ASCT and then enter a consolidation phase where they will continue with their assigned treatment. Following consolidation, patients who achieve a response will be re-randomized to either maintenance therapy with daratumumab or observation. The trial aims to measure several endpoints, including stringent complete response (sCR), measurable residual disease (MRD)-negativity, progression-free survival (PFS), and overall survival (OS).\\n\\nClues:\\nPatients who are not eligible for ASCT cannot be assigned to the experimental arm with dara-VTd\\nPatients who do not achieve a response cannot be re-randomized to maintenance therapy with daratumumab\\nPatients in the control arm cannot be measured for MRD-negativity at the initial treatment phase\\nPatients who achieve sCR cannot be placed in the observation group during the maintenance phase\\nPatients with PFS less than 6 months cannot be included in the overall survival endpoint analysis\\n\\nQ: Which setup correctly respects all the exclusion zones?\\n(A) A patient not eligible for ASCT assigned to dara-VTd\\n(B) A patient who did not achieve a response re-randomized to maintenance therapy with daratumumab\\n(C) A patient in the control arm measured for MRD-negativity at the initial treatment phase\\n(D) A patient who achieved sCR placed in the observation group during the maintenance phase\\n(E) A patient with PFS of 8 months included in the overall survival endpoint analysis",
+      "a": "The correct answer is (E), as it respects all given constraints: PFS of 8 months is not less than 6 months, so inclusion in the overall survival analysis is allowed. All other options directly violate one of the exclusion rules.",
+      "category": "knowledge",
+      "expected_keywords": [
+        "correct",
+        "answer",
+        "respects",
+        "given",
+        "constraints",
+        "months",
+        "less",
+        "than"
+      ],
+      "source_len": 1548
+    },
+    {
+      "q": "Green was signing autographs for his fans in a fair. he signed 120 autographs for 2 hours. if he signed 5 autographs at the same rate for 3 minutes, how many autographs did he sign per minute?",
+      "a": "To determine how many autographs Green signs per minute, follow these steps:\n\n1. **Calculate the total time spent signing autographs:**\n   \n   Green signed autographs for **2 hours**. Since there are **60 minutes** in an hour:\n   \n   \\[\n   2 \\text{ hours} \\times 60 \\text{ minutes/hour} = 120 \\text{ minutes}\n   \\]\n\n2. **Determine the signing rate:**\n   \n   Green signed **120 autographs** in **120 minutes**. To find out how many autographs he signs per minute:\n   \n   \\[\n   \\text{Autographs per min",
+      "category": "reasoning",
+      "expected_keywords": [
+        "determine",
+        "many",
+        "autographs",
+        "green",
+        "signs",
+        "minute",
+        "follow",
+        "these"
+      ],
+      "source_len": 447
+    },
+    {
+      "q": "In Buffalo, the ratio of the number of people who like chocolate cake to the number of people who like vanilla cake is 2 to 1. If there are a total of 120 people, how many people like chocolate cake?",
+      "a": "To determine how many people in Buffalo like chocolate cake, we can use the given ratio and the total number of people.\n\n**Given:**\n- Ratio of people who like chocolate cake to vanilla cake = 2 : 1\n- Total number of people = 120\n\n**Step 1: Understand the Ratio**\n\nThe ratio 2:1 means:\n- For every 2 people who like chocolate cake, there is 1 person who likes vanilla cake.\n\n**Step 2: Calculate the Total Parts in the Ratio**\n\nAdd the parts of the ratio together:\n\\[\n2 \\text{ (chocolate)} + 1 \\text{ (",
+      "category": "math",
+      "expected_keywords": [
+        "determine",
+        "many",
+        "people",
+        "buffalo",
+        "like",
+        "chocolate",
+        "cake",
+        "given"
+      ],
+      "source_len": 547
+    },
+    {
+      "q": "A 10-year-old boy called Jack takes a 2-mile hike with his father on a very hot summer day. As it is very hot, Jack has 5 bottles of water with him. Each bottle contains 1 liter of water. Jack drinks 0.2 liters of water every 10 minutes, and the hike takes 2 hours to complete.",
+      "a": "**Solution:**\n\nLet's break down the problem step by step to determine how much water Jack will have left after the hike.\n\n1. **Total Water Available:**\n   - Jack has **5 bottles** of water.\n   - Each bottle contains **1 liter**.\n   - **Total water = 5 bottles \u00d7 1 liter/bottle = 5 liters**\n\n2. **Water Consumption Rate:**\n   - Jack drinks **0.2 liters** every **10 minutes**.\n   - To find out how much he drinks in one hour, multiply by the number of 10-minute intervals in an hour:\n     \\[\n     0.2 ",
+      "category": "reasoning",
+      "expected_keywords": [
+        "solution",
+        "break",
+        "down",
+        "problem",
+        "step",
+        "step",
+        "determine",
+        "much"
+      ],
+      "source_len": 638
+    },
+    {
+      "q": "There are 5 red marbles, 5 blue marbles, and 5 green marbles in a jar. If you randomly select one marble at a time, what is the probability of drawing three marbles of the same color, one after the other, with replacement?",
+      "a": "To find the probability of drawing three marbles of the same color one after the other with replacement, we start by noting that there are 15 marbles in total, with 5 marbles of each color (red, blue, and green). Each draw is independent because we replace the marble each time, so the probability of drawing any specific color remains constant at \\( \\frac{1}{3} \\).\n\nThe probability of drawing three marbles of the same color (e.g., red) is:\n\\[\n\\left( \\frac{1}{3} \\right) \\times \\left( \\frac{1}{3} \\",
+      "category": "reasoning",
+      "expected_keywords": [
+        "find",
+        "probability",
+        "drawing",
+        "three",
+        "marbles",
+        "same",
+        "color",
+        "after"
+      ],
+      "source_len": 1425
+    },
+    {
+      "q": "A board meeting is scheduled to discuss the future of Bed Bath & Beyond after a series of financial setbacks. The meeting will focus on the recent fiscal Q4 2021 earnings report, the impact of activist investor Ryan Cohen's involvement, and the potential restructuring of the company. The board members, including the CEO, CFO, and three individuals recently added by Ryan Cohen, must decide on the order of topics to address: the Q4 earnings results, the guidance for 2022, and the proposal to split off the buybuy BABY brand. Their decisions could significantly influence the company's stock price and strategic direction.\\n\\nClues:\\nThe Q4 earnings results must be discussed before the guidance for 2022\\nThe guidance for 2022 must be discussed before the proposal to split off the buybuy BABY brand\\n\\nQ: If the board meeting agenda must follow the logical sequence of discussing the company's past performance before its future plans, and then strategic changes, which of the following is the correct order of topics to be addressed at the meeting?\\n(A) Q4 earnings results, guidance for 2022, proposal to split off buybuy BABY brand\\n(B) Proposal to split off buybuy BABY brand, Q4 earnings results, guidance for 2022\\n(C) Guidance for 2022, Q4 earnings results, proposal to split off buybuy BABY brand\\n(D) Q4 earnings results, proposal to split off buybuy BABY brand, guidance for 2022\\n(E) Guidance for 2022, proposal to split off buybuy BABY brand, Q4 earnings results",
+      "a": "The correct order is Q4 earnings results (past performance) first, then guidance for 2022 (future plans), and finally the proposal to split off buybuy BABY (strategic changes). This matches both the given clues and the logical sequence described.\r\n\r\n**(A) Q4 earnings results, guidance for 2022, proposal to split off buybuy BABY brand**",
+      "category": "reasoning",
+      "expected_keywords": [
+        "correct",
+        "order",
+        "earnings",
+        "results",
+        "past",
+        "performance",
+        "first",
+        "then"
+      ],
+      "source_len": 1190
+    },
+    {
+      "q": "A team of embryologists is tasked with organizing a sperm donor bank. They must categorize each donor based on their sperm DNA fragmentation (SDF) levels, which have been shown to correlate with fertility outcomes. The embryologists have six donors to evaluate, each with a unique SDF level ranging from very low to very high. The team must decide on the placement of these donors into three categories: high priority (very low SDF), medium priority (moderate SDF), and low priority (high SDF). Additionally, they must consider the potential impact of oxidative stress on SDF levels and the implications for donor acceptance rates. The embryologists are also faced with the challenge of determining which donors might provide the best balance between SDF levels and the commercial viability of the sperm bank, taking into account the predictive value of SDF tests for pregnancy success rates and cost-effectiveness.\\n\\nClues:\\nDonor 1 with very low SDF must be in the high priority category\\nDonor 2 with high SDF must be in the low priority category\\nDonor 3 with moderate SDF must not be placed in the high priority category\\nDonor 4 with moderate SDF must be placed in a different category than Donor 3\\nDonor 5 with very high SDF must be in the low priority category\\nDonor 6 with low SDF must not be placed in the low priority category\\n\\nQ: Which of the following arrangements correctly categorizes the donors based on the proximity constraints?\\n(A) Donor 1 - High, Donor 2 - Low, Donor 3 - Medium, Donor 4 - High, Donor 5 - Low, Donor 6 - Medium\\n(B) Donor 1 - High, Donor 2 - Low, Donor 3 - High, Donor 4 - Medium, Donor 5 - Low, Donor 6 - High\\n(C) Donor 1 - High, Donor 2 - Medium, Donor 3 - Medium, Donor 4 - Low, Donor 5 - Low, Donor 6 - High\\n(D) Donor 1 - High, Donor 2 - Low, Donor 3 - Medium, Donor 4 - Medium, Donor 5 - Low, Donor 6 - High\\n(E) Donor 1 - Medium, Donor 2 - Low, Donor 3 - High, Donor 4 - High, Donor 5 - Low, Donor 6 - Medium",
+      "a": "The correct arrangement that satisfies all constraints is:\r\n\r\n**(A) Donor 1 - High, Donor 2 - Low, Donor 3 - Medium, Donor 4 - High, Donor 5 - Low, Donor 6 - Medium**",
+      "category": "reasoning",
+      "expected_keywords": [
+        "correct",
+        "arrangement",
+        "that",
+        "satisfies",
+        "constraints",
+        "donor",
+        "high",
+        "donor"
+      ],
+      "source_len": 1841
+    },
+    {
+      "q": "The surface area of a rectangular prism is given by 2lw + 2lh + 2wh. In this case, the surface area of the prism is 384 square centimeters, and l = 12 cm, w = 8 cm. Find the value of h.",
+      "a": "Given the surface area of a rectangular prism is 384 square centimeters, with length \\( l = 12 \\) cm and width \\( w = 8 \\) cm, we need to find the height \\( h \\).\n\nThe surface area formula for a rectangular prism is:\n\\[ 2lw + 2lh + 2wh = 384 \\]\n\nSubstituting the given values:\n\\[ 2(12)(8) + 2(12)h + 2(8)h = 384 \\]\n\nCalculating each term:\n\\[ 2 \\times 12 \\times 8 = 192 \\]\n\\[ 2 \\times 12 \\times h = 24h \\]\n\\[ 2 \\times 8 \\times h = 16h \\]\n\nCombining these, we get:\n\\[ 192 + 24h + 16h = 384 \\]\n\nSimplify",
+      "category": "reasoning",
+      "expected_keywords": [
+        "given",
+        "surface",
+        "area",
+        "rectangular",
+        "prism",
+        "square",
+        "centimeters",
+        "with"
+      ],
+      "source_len": 1498
+    },
+    {
+      "q": "A six-sided die is rolled 4 times. What is the probability of rolling a pair of 6's in the four rolls?",
+      "a": "To find the probability of rolling a pair of 6's in four rolls of a six-sided die, we start by calculating the total number of possible outcomes, which is \\(6^4 = 1296\\).\n\nNext, we determine the number of favorable outcomes where exactly two of the four rolls are 6's. We use the combination formula to choose which two rolls will be 6's, which is \\( \\binom{4}{2} = 6 \\). For each of these combinations, the other two rolls can be any number except 6, giving us \\(5^2 = 25\\) possible outcomes.\n\nThus,",
+      "category": "reasoning",
+      "expected_keywords": [
+        "find",
+        "probability",
+        "rolling",
+        "pair",
+        "four",
+        "rolls",
+        "sided",
+        "start"
+      ],
+      "source_len": 2943
+    },
+    {
+      "q": "The length of the rectangle is 6 cm and the width is 4 cm. What is the length of the diagonal of the rectangle?",
+      "a": "To find the length of the diagonal of a rectangle when the length and width are given, we can use the Pythagorean theorem. Here's a step-by-step solution:\n\n**Given:**\n- Length of the rectangle (\\( l \\)) = 6 cm\n- Width of the rectangle (\\( w \\)) = 4 cm\n\n**Formula:**\nThe diagonal (\\( d \\)) of a rectangle can be calculated using the formula:\n\\[\nd = \\sqrt{l^2 + w^2}\n\\]\n\n**Calculation:**\n1. Square the length:\n\\[\nl^2 = 6^2 = 36 \\text{ cm}^2\n\\]\n2. Square the width:\n\\[\nw^2 = 4^2 = 16 \\text{ cm}^2\n\\]\n3. ",
+      "category": "reasoning",
+      "expected_keywords": [
+        "find",
+        "length",
+        "diagonal",
+        "rectangle",
+        "when",
+        "length",
+        "width",
+        "given"
+      ],
+      "source_len": 535
+    },
+    {
+      "q": "Draft a formal letter to the software development team outlining the requirement for a new feedback system to be integrated into the existing ArtistsController. The letter should specify the need for a 'critique' feature that allows for comments on student profiles and artwork, and request a detailed proposal for the implementation of this feature. The proposal should include pseudocode for the 'critique' action, explaining the process of feedback submission, moderation to ensure appropriateness and constructiveness, and the mechanism for artists to respond to the feedback.Draft a formal letter to the software development team outlining the requirement for a new feedback system to be integrated into the existing ArtistsController. The letter should specify the need for a 'critique' feature that allows for comments on student profiles and artwork, and request a detailed proposal for the implementation of this feature. The proposal should include pseudocode for the 'critique' action, explaining the process of feedback submission, moderation to ensure appropriateness and constructiveness, and the mechanism for artists to respond to the feedback.",
+      "a": "[Date]\r\n\r\nTo: Software Development Team  \r\nFrom: [Your Name], Product Manager  \r\nSubject: Requirement: Implementation of Critique Feature in ArtistsController  \r\n\r\nDear Software Development Team,\r\n\r\nI am writing to formally outline a new requirement for the ArtEd Platform. We have identified a need to enhance the existing ArtistsController with a feedback system, specifically a **'critique' feature**, to allow registered users (instructors, peers, etc.) to comment on student profiles and artwork",
+      "category": "reasoning",
+      "expected_keywords": [
+        "date",
+        "software",
+        "development",
+        "team",
+        "from",
+        "your",
+        "name",
+        "product"
+      ],
+      "source_len": 2487
+    },
+    {
+      "q": "A team of researchers at a medical conference is discussing the progression of treatment options for Benign Prostatic Hyperplasia (BPH). The team includes Dr. N.S. Neki, a professor, and Dr. Jaswinder Singh, a junior resident. They are presenting a timeline of BPH treatments, starting with the earliest methods and moving towards the latest advancements. The treatments discussed include watchful waiting, lifestyle modifications, alpha blockers, combination therapy with alpha blockers and 5 alpha reductive inhibitors, and newer drugs and techniques such as NX-1207, GNRH agonists, and Intraprostatic toxin type-A. The team must present these treatments in the order they were developed and implemented, highlighting the evolution of medical management for BPH.\\n\\nClues:\\nWatchful waiting was the earliest method discussed.\\nLifestyle modifications were discussed immediately after watchful waiting.\\nAlpha blockers were discussed before combination therapy but after lifestyle modifications.\\nGNRH agonists were discussed at some point after alpha blockers.\\nIntraprostatic toxin type-A was the last treatment method discussed.\\nNX-1207 was discussed before GNRH agonists but after combination therapy.\\n\\nQ: If the team of researchers is presenting the timeline of BPH treatments in the order they were developed and implemented, which of the following correctly represents the sequence in which the treatments were discussed?\\n(A) Watchful waiting, lifestyle modifications, alpha blockers, combination therapy, NX-1207, GNRH agonists, Intraprostatic toxin type-A\\n(B) Watchful waiting, lifestyle modifications, combination therapy, alpha blockers, NX-1207, GNRH agonists, Intraprostatic toxin type-A\\n(C) Watchful waiting, alpha blockers, lifestyle modifications, combination therapy, NX-1207, GNRH agonists, Intraprostatic toxin type-A\\n(D) Lifestyle modifications, watchful waiting, alpha blockers, combination therapy, GNRH agonists, NX-1207, Intraprostatic toxin type-A\\n(E) Watchful waiting, lifestyle modifications, alpha blockers, NX-1207, combination therapy, GNRH agonists, Intraprostatic toxin type-A",
+      "a": "The correct sequence is (A): Watchful waiting, lifestyle modifications, alpha blockers, combination therapy, NX-1207, GNRH agonists, Intraprostatic toxin type-A.",
+      "category": "knowledge",
+      "expected_keywords": [
+        "correct",
+        "sequence",
+        "watchful",
+        "waiting",
+        "lifestyle",
+        "modifications",
+        "alpha",
+        "blockers"
+      ],
+      "source_len": 2512
+    },
+    {
+      "q": "If triangle ABC has sides a = 7, b = 8, and c = 9, and the altitude from vertex A meets side a at point D, then what is the length of AD?",
+      "a": "To find the length of the altitude AD from vertex A to side a in triangle ABC with sides a = 7, b = 8, and c = 9, we can use Heron's formula to calculate the area of the triangle and then use the area to find the altitude.\n\nFirst, we calculate the semi-perimeter \\( s \\) of the triangle:\n\\[\ns = \\frac{a + b + c}{2} = \\frac{7 + 8 + 9}{2} = 12\n\\]\n\nUsing Heron's formula, the area \\( A \\) of the triangle is:\n\\[\nA = \\sqrt{s(s - a)(s - b)(s - c)} = \\sqrt{12(12 - 7)(12 - 8)(12 - 9)} = \\sqrt{12 \\times 5 \\",
+      "category": "reasoning",
+      "expected_keywords": [
+        "find",
+        "length",
+        "altitude",
+        "from",
+        "vertex",
+        "side",
+        "triangle",
+        "with"
+      ],
+      "source_len": 2291
+    },
+    {
+      "q": "The temperature in a certain city on a summer day is 30\u00b0C. If the temperature in that city increases by 10% every hour, what is the temperature 5 hours later?",
+      "a": "To determine the temperature after 5 hours with a 10% increase each hour, follow these steps:\n\n1. **Understand the Growth Factor:**\n   \n   A 10% increase each hour means the temperature is multiplied by \\(1 + 0.10 = 1.10\\) every hour.\n\n2. **Apply the Growth Over 5 Hours:**\n   \n   Starting with an initial temperature \\( T_0 = 30^\\circ \\text{C} \\), the temperature after \\( n \\) hours can be calculated using the formula:\n   \\[\n   T_n = T_0 \\times (1.10)^n\n   \\]\n   \n   Plugging in the values:\n   \\[\n",
+      "category": "reasoning",
+      "expected_keywords": [
+        "determine",
+        "temperature",
+        "after",
+        "hours",
+        "with",
+        "increase",
+        "each",
+        "hour"
+      ],
+      "source_len": 633
+    },
+    {
+      "q": "A group of researchers is conducting a study on the relationships between various traits and variables. They have identified 20 different traits (labeled R1 through R20) and 15 different variables (labeled V1 through V15). The researchers plan to examine every possible pair of trait and variable to determine the strength and significance of their relationship. For each pair, they will calculate a p-value to assess the significance of the association. The researchers aim to organize the pairs by their p-values in ascending order to prioritize further investigation based on the strength of the associations. The final report will list all the pairs starting with the one that has the lowest p-value, indicating the strongest association, and ending with the pair that has the highest p-value, indicating the weakest association.\\n\\nClues:\\nEach trait (R1-R20) must be paired with each variable (V1-V15) to form a total of 300 unique pairs\\nEach pair must be assigned a unique p-value\\nPairs must be organized in ascending order of their p-values in the final report\\nThe pair with the lowest p-value will be listed first, indicating the strongest association\\nThe pair with the highest p-value will be listed last, indicating the weakest association\\n\\nQ: If the pair R4-V10 is listed fifth in the final report and the pair R7-V2 is listed immediately after R15-V8, which one of the following must be true?\\n(A) The pair R7-V2 has a lower p-value than the pair R4-V10\\n(B) The pair R15-V8 is listed among the top ten pairs in the final report\\n(C) The pair R4-V10 has a higher p-value than the pair R15-V8\\n(D) The pair R7-V2 is listed immediately before the pair R4-V10\\n(E) The pair R15-V8 has a lower p-value than the pair R7-V2",
+      "a": "The correct answer is (E). Since the list is in ascending order of p-values and R7-V2 appears immediately after R15-V8, R15-V8 must have a lower p-value (and thus appear earlier) than R7-V2. This is a direct logical consequence of the given information.",
+      "category": "math",
+      "expected_keywords": [
+        "correct",
+        "answer",
+        "since",
+        "list",
+        "ascending",
+        "order",
+        "values",
+        "appears"
+      ],
+      "source_len": 2589
+    },
+    {
+      "q": "In \\( \\mathbb{R} \\), what is the value of \\( a \\) for which \\( \\sin(2a) = \\frac{1}{2} \\) given that \\( a \\in [0, \\pi] \\)?",
+      "a": "To find the value of \\( a \\) for which \\( \\sin(2a) = \\frac{1}{2} \\) given that \\( a \\in [0, \\pi] \\):\n\n1. Recognize that \\( \\sin(\\theta) = \\frac{1}{2} \\) occurs at \\( \\theta = \\frac{\\pi}{6} \\) and \\( \\theta = \\frac{5\\pi}{6} \\) within the interval \\([0, 2\\pi)\\).\n2. Set \\( 2a \\) equal to these angles:\n   \\[\n   2a = \\frac{\\pi}{6} + 2k\\pi \\quad \\text{or} \\quad 2a = \\frac{5\\pi}{6} + 2k\\pi \\quad \\text{for integer } k\n   \\]\n3. Solve for \\( a \\):\n   \\[\n   a = \\frac{\\pi}{12} + k\\pi \\quad \\text{or} \\quad a",
+      "category": "reasoning",
+      "expected_keywords": [
+        "find",
+        "value",
+        "which",
+        "frac",
+        "given",
+        "that",
+        "recognize",
+        "that"
+      ],
+      "source_len": 2811
+    },
+    {
+      "q": "A car is traveling from City A to City B at a constant speed of 60 km/h. The car travels from City A to City C, which is 2/3 of the distance from City A to City B. How far is City C from City A?",
+      "a": "To determine the distance from City A to City C, let's follow these steps:\n\n1. **Define the Total Distance:**\n   - Let the total distance from City A to City B be \\( D \\) kilometers.\n\n2. **Determine the Distance to City C:**\n   - City C is located \\( \\frac{2}{3} \\) of the way from City A to City B.\n   - Therefore, the distance from City A to City C is:\n     \\[\n     \\text{Distance from A to C} = \\frac{2}{3} \\times D\n     \\]\n\n3. **Express the Final Answer:**\n   - Since the specific value of \\( D \\",
+      "category": "reasoning",
+      "expected_keywords": [
+        "determine",
+        "distance",
+        "from",
+        "city",
+        "city",
+        "follow",
+        "these",
+        "steps"
+      ],
+      "source_len": 447
+    },
+    {
+      "q": "Create an e-book chapter that serves as a technical documentation for a database schema update. The chapter should:\\n\\n1. Start with a heading that indicates it is a database patch note, for example, \"Chapter 5: Database Schema Update - Removal of Redundant Column\".\\n2. Include a brief section that introduces the purpose of the update and the version of the software it applies to, akin to a changelog entry, which can be referred to as \"Version Overview\".\\n3. Provide a detailed section titled \"Update Analysis\" where you describe the specific change being made to the database schema, such as the removal of a column from a table. Use technical language suitable for a database administrator or software developer.\\n4. Within \"Update Analysis\", include a subsection titled \"Change Justification\" where you explain the reasoning behind the change, such as why the column is no longer necessary or how it enhances the database's performance or structure.\\n5. Incorporate a formatted text box that represents the SQL command or script that would be executed to implement the change, ensuring it is clearly distinguishable from the rest of the text.\\n6. End the chapter with a section titled \"Patch Verification\" where you provide information on how the update can be identified within the system, such as an entry in a metadata table that logs the version of the patch.\\n7. Ensure the chapter maintains a formal and technical tone throughout, suitable for inclusion in a professional e-book or technical manual.",
+      "a": "# Chapter 5: Database Schema Update \u2013 Removal of Redundant Column\r\n\r\n## Version Overview\r\n**Software Version:** 2.5.0  \r\n**Release Date:** 2023-11-15  \r\n\r\nThis database patch removes the redundant column `legacy_id` from the `Users` table. Originally introduced during the migration from version 1.x to 2.0, the column served as a temporary cross\u2011reference to the legacy system. With all integrations now fully transitioned to the new `user_id` field, the column is obsolete. Removing it simplifies t",
+      "category": "code",
+      "expected_keywords": [
+        "chapter",
+        "database",
+        "schema",
+        "update",
+        "removal",
+        "redundant",
+        "column",
+        "version"
+      ],
+      "source_len": 2723
+    },
+    {
+      "q": "### Basic Probability\n# Problem\n# Statement\nA set of n 6-sided dice is rolled. What is the probability that the product of all the dice is even?",
+      "a": "To find the probability that the product of all the dice is even, we can consider the complement event where the product is odd. The product is odd only if all the dice show odd numbers. \n\nEach die has a 1/2 chance of showing an odd number. Therefore, the probability that all \\( n \\) dice show odd numbers is \\( \\left(\\frac{1}{2}\\right)^n \\).\n\nThus, the probability that the product is even is the complement of the probability that all dice are odd, which is:\n\n\\[\n1 - \\left(\\frac{1}{2}\\right)^n\n\\]\n",
+      "category": "math",
+      "expected_keywords": [
+        "find",
+        "probability",
+        "that",
+        "product",
+        "dice",
+        "even",
+        "consider",
+        "complement"
+      ],
+      "source_len": 1426
+    },
+    {
+      "q": "The mass of the sun is 2 x 10^30 kg. What is the energy equivalent of this mass, according to Einstein's theory of relativity?",
+      "a": "To find the energy equivalent of the Sun's mass using Einstein's theory of relativity, we use the equation \\( E = mc^2 \\).\n\nGiven:\n- Mass of the Sun, \\( m = 2 \\times 10^{30} \\) kg\n- Speed of light, \\( c = 3 \\times 10^8 \\) m/s\n\nFirst, calculate \\( c^2 \\):\n\\[ c^2 = (3 \\times 10^8)^2 = 9 \\times 10^{16} \\, \\text{m}^2/\\text{s}^2 \\]\n\nNext, substitute the values into the equation \\( E = mc^2 \\):\n\\[ E = 2 \\times 10^{30} \\, \\text{kg} \\times 9 \\times 10^{16} \\, \\text{m}^2/\\text{s}^2 \\]\n\nMultiply the coeff",
+      "category": "reasoning",
+      "expected_keywords": [
+        "find",
+        "energy",
+        "equivalent",
+        "mass",
+        "using",
+        "einstein",
+        "theory",
+        "relativity"
+      ],
+      "source_len": 1354
+    },
+    {
+      "q": "A prestigious historical society is organizing a debate on the authenticity of a medieval document known as Laudabiliter, which allegedly sanctioned Henry II's invasion of Ireland. The society has invited eight experts to present their findings and arguments. The experts are historians and scholars specializing in various aspects of medieval history, diplomatics, and papal documentation. The debate will unfold over the course of a single day, with each expert presenting in a sequence that reflects their area of expertise and the chronological development of the argument about the document's authenticity. The order of presentations is crucial, as it will build the narrative of the debate from the origins of the document, through its historical context, to the latest findings and interpretations. The society's goal is to reach a consensus on the document's authenticity by the end of the debate, or at least to clarify the main points of contention. The experts are identified by their initials: M.S. (Maurice Sheehy), J.F.O. (J. F. O'Doherty), D.B. (Denis Bethell), M.T.F. (M. T. Flanagan), I.R. (Ian Robinson), P.S.B. (P. Scheffer-Boichorst), J.A.W. (J. A. Watt), and W.L.W. (W. L. Warren). The society has carefully planned the order of presentations to ensure a coherent and comprehensive exploration of the topic.\\n\\nClues:\\nM.S. must present before J.F.O.\\nJ.F.O. must present before D.B.\\nD.B. must present before M.T.F.\\nM.T.F. must present before I.R.\\nI.R. must present before P.S.B.\\nP.S.B. must present before J.A.W.\\nJ.A.W. must present before W.L.W.\\n\\nQ: If the historical society has arranged the presentations in a sequence that reflects the chronological development of the argument about Laudabiliter's authenticity, which of the following is the correct order of presentations?\\n(A) M.S., J.F.O., D.B., M.T.F., I.R., P.S.B., J.A.W., W.L.W.\\n(B) J.F.O., M.S., M.T.F., D.B., P.S.B., I.R., W.L.W., J.A.W.\\n(C) D.B., J.F.O., M.S., I.R., M.T.F., J.A.W., P.S.B., W.L.W.\\n(D) W.L.W., J.A.W., P.S.B., I.R., M.T.F., D.B., J.F.O., M.S.\\n(E) M.T.F., D.B., J.F.O., M.S., J.A.W., P.S.B., I.R., W.L.W.",
+      "a": "The correct order of presentations, based on the given clues, is (A) M.S., J.F.O., D.B., M.T.F., I.R., P.S.B., J.A.W., W.L.W. This sequence satisfies all the precedence constraints: M.S. before J.F.O., J.F.O. before D.B., D.B. before M.T.F., M.T.F. before I.R., I.R. before P.S.B., P.S.B. before J.A.W., and J.A.W. before W.L.W.",
+      "category": "reasoning",
+      "expected_keywords": [
+        "correct",
+        "order",
+        "presentations",
+        "based",
+        "given",
+        "clues",
+        "this",
+        "sequence"
+      ],
+      "source_len": 1408
+    },
+    {
+      "q": "A prestigious film festival is organizing a special retrospective screening of the six seasons of the hit show 'The Crown'. The festival's schedule allows for one season to be screened each day over the course of six consecutive days. The seasons must be shown in chronological order, starting with the earliest events in Queen Elizabeth's reign and ending with the final season that covers the tragic death of Princess Diana. The festival committee has decided to invite key cast members from each season to attend their respective screenings and participate in a Q&A session. The cast members include Claire Foy (Seasons 1-2), Olivia Colman (Seasons 3-4), Imelda Staunton (Season 5), Elizabeth Debicki (Season 6), and other supporting actors who played significant roles such as Prince Philip, Prince Charles, and Princess Margaret. The festival organizers must coordinate the schedule to ensure that each cast member is available on the day of their season's screening, and they must also arrange for special tributes to the real-life figures portrayed in the show.\\n\\nClues:\\nSeason 1 must be screened before Season 2\\nSeason 2 must be screened before Season 3\\nSeason 3 must be screened before Season 4\\nSeason 4 must be screened before Season 5\\nSeason 5 must be screened before Season 6\\nClaire Foy must attend the screenings of Seasons 1 and 2\\nOlivia Colman must attend the screenings of Seasons 3 and 4\\nImelda Staunton must attend the screening of Season 5\\nElizabeth Debicki must attend the screening of Season 6\\nTributes must be arranged for the real-life figures on the days of their respective season's screening\\n\\nQ: If Elizabeth Debicki is unavailable to attend the screening on the fourth day, which one of the following could be a possible order of the screenings?\\n(A) 1, 2, 3, 4, 5, 6\\n(B) 1, 2, 3, 5, 4, 6\\n(C) 1, 2, 3, 6, 4, 5\\n(D) 1, 2, 4, 3, 5, 6\\n(E) 1, 3, 2, 4, 5, 6",
+      "a": "Given the constraints that Season 1 must be before Season 2, Season 2 before Season 3, Season 3 before Season 4, Season 4 before Season 5, and Season 5 before Season 6, the only possible order is 1, 2, 3, 4, 5, 6. Additionally, Elizabeth Debicki (who attends Season 6) is unavailable on the fourth day, so Season 6 cannot be on day 4. In option (A), Season 6 is on day 6, satisfying that condition. All other options violate at least one of the \"before\" constraints. Therefore, (A) is the correct ans",
+      "category": "reasoning",
+      "expected_keywords": [
+        "given",
+        "constraints",
+        "that",
+        "season",
+        "must",
+        "before",
+        "season",
+        "season"
+      ],
+      "source_len": 4128
+    },
+    {
+      "q": "A company has 600 employees. Its CEO wants to know what percentage of employees have a salary higher than $100,000. He knows that among the employees aged 30-40, 30% have a salary higher than $100,000, and among the employees aged 40-50, 40% have a salary higher than $100,000. If there are 200 employees in each of these age groups, how many employees in total have a salary higher than $100,000?",
+      "a": "To determine the percentage of employees with a salary higher than \\$100,000, let's break down the information provided:\n\n1. **Employees aged 30-40 years:**\n   - **Total employees in this group:** 200\n   - **Percentage with salary > \\$100,000:** 30%\n   - **Number of employees with salary > \\$100,000:** \n     \\[\n     30\\% \\text{ of } 200 = 0.30 \\times 200 = 60 \\text{ employees}\n     \\]\n\n2. **Employees aged 40-50 years:**\n   - **Total employees in this group:** 200\n   - **Percentage with salary > ",
+      "category": "math",
+      "expected_keywords": [
+        "determine",
+        "percentage",
+        "employees",
+        "with",
+        "salary",
+        "higher",
+        "than",
+        "break"
+      ],
+      "source_len": 733
+    },
+    {
+      "q": "Let $E$ and $F$ be events such that $P(E) = 0.6$, $P(F) = 0.5$ and $P(E \\cap F) = 0.3$. Are $E$ and $F$ independent?",
+      "a": "To determine if events \\(E\\) and \\(F\\) are independent, we need to check if the probability of their intersection is equal to the product of their individual probabilities. \n\nGiven:\n- \\(P(E) = 0.6\\)\n- \\(P(F) = 0.5\\)\n- \\(P(E \\cap F) = 0.3\\)\n\nWe calculate the product of the probabilities:\n\\[ P(E) \\times P(F) = 0.6 \\times 0.5 = 0.3 \\]\n\nSince \\(P(E \\cap F) = 0.3\\) is equal to \\(P(E) \\times P(F)\\), we conclude that events \\(E\\) and \\(F\\) are independent.\n\nAdditionally, we verified this by checking th",
+      "category": "reasoning",
+      "expected_keywords": [
+        "determine",
+        "events",
+        "independent",
+        "need",
+        "check",
+        "probability",
+        "their",
+        "intersection"
+      ],
+      "source_len": 1646
+    },
+    {
+      "q": "If $x = 2 + \\sqrt{3}$, find the value of $x + \\frac{1}{x}$.",
+      "a": "Given \\( x = 2 + \\sqrt{3} \\), we need to find the value of \\( x + \\frac{1}{x} \\).\n\nFirst, we compute \\( \\frac{1}{x} \\) by rationalizing the denominator:\n\\[\n\\frac{1}{x} = \\frac{1}{2 + \\sqrt{3}} = \\frac{2 - \\sqrt{3}}{(2 + \\sqrt{3})(2 - \\sqrt{3})} = \\frac{2 - \\sqrt{3}}{1} = 2 - \\sqrt{3}\n\\]\n\nNext, we add \\( x \\) and \\( \\frac{1}{x} \\):\n\\[\nx + \\frac{1}{x} = (2 + \\sqrt{3}) + (2 - \\sqrt{3}) = 2 + \\sqrt{3} + 2 - \\sqrt{3} = 4\n\\]\n\nTo verify, we can also use the equation that \\( x \\) satisfies. Given \\( x =",
+      "category": "reasoning",
+      "expected_keywords": [
+        "given",
+        "sqrt",
+        "need",
+        "find",
+        "value",
+        "frac",
+        "first",
+        "compute"
+      ],
+      "source_len": 1798
+    },
+    {
+      "q": "If \\( f(x) = \\frac{x + a}{x - a} \\), what is \\( f(f(a + 1)) \\)?",
+      "a": "To find \\( f(f(a + 1)) \\) for the function \\( f(x) = \\frac{x + a}{x - a} \\), we proceed as follows:\n\nFirst, we compute \\( f(a + 1) \\):\n\\[\nf(a + 1) = \\frac{(a + 1) + a}{(a + 1) - a} = \\frac{2a + 1}{1} = 2a + 1\n\\]\n\nNext, we substitute \\( 2a + 1 \\) into the function \\( f(x) \\):\n\\[\nf(2a + 1) = \\frac{(2a + 1) + a}{(2a + 1) - a} = \\frac{3a + 1}{a + 1}\n\\]\n\nThus, the value of \\( f(f(a + 1)) \\) is \\boxed{\\dfrac{3a + 1}{a + 1}}.",
+      "category": "reasoning",
+      "expected_keywords": [
+        "find",
+        "function",
+        "frac",
+        "proceed",
+        "follows",
+        "first",
+        "compute",
+        "frac"
+      ],
+      "source_len": 2026
+    },
+    {
+      "q": "A circle of radius 4 is inscribed in a square. What is the area of the square?",
+      "a": "Given a circle of radius 4 inscribed in a square, we need to find the area of the square.\n\n1. The radius of the circle is 4, so the diameter is twice the radius, which is \\(2 \\times 4 = 8\\).\n2. The diameter of the circle is equal to the side length of the square because the circle is inscribed in the square.\n3. Therefore, the side length of the square is 8.\n4. The area of the square is calculated by squaring the side length: \\(8^2 = 64\\).\n\nThus, the area of the square is \\(\\boxed{64}\\).",
+      "category": "reasoning",
+      "expected_keywords": [
+        "given",
+        "circle",
+        "radius",
+        "inscribed",
+        "square",
+        "need",
+        "find",
+        "area"
+      ],
+      "source_len": 691
+    },
+    {
+      "q": "The sum of the interior angles of any polygon can be calculated using the formula: S = 180(n - 2), where S is the sum of the interior angles in degrees, and n is the number of sides. Using this formula, find the sum of the interior angles of a 7-sided polygon (heptagon).",
+      "a": "To find the sum of the interior angles of a 7-sided polygon (heptagon), we can use the formula:\n\n\\[\nS = 180(n - 2)\n\\]\n\nwhere:\n- \\( S \\) is the sum of the interior angles in degrees\n- \\( n \\) is the number of sides\n\n**Step 1:** Identify the number of sides (\\( n \\)).\n\n\\[\nn = 7\n\\]\n\n**Step 2:** Substitute \\( n = 7 \\) into the formula.\n\n\\[\nS = 180(7 - 2)\n\\]\n\n**Step 3:** Perform the subtraction inside the parentheses.\n\n\\[\nS = 180 \\times 5\n\\]\n\n**Step 4:** Multiply to find the sum of the interior angle",
+      "category": "math",
+      "expected_keywords": [
+        "find",
+        "interior",
+        "angles",
+        "sided",
+        "polygon",
+        "heptagon",
+        "formula",
+        "where"
+      ],
+      "source_len": 436
+    },
+    {
+      "q": "The length of a rectangle is 1 cm greater than the width. The perimeter is 22 cm. What is the length of the rectangle?",
+      "a": "Let the width of the rectangle be \\( w \\) cm. Then, the length of the rectangle is \\( w + 1 \\) cm. The perimeter of a rectangle is given by the formula:\n\n\\[ P = 2 \\times (\\text{length} + \\text{width}) \\]\n\nGiven that the perimeter is 22 cm, we can set up the equation:\n\n\\[ 22 = 2 \\times ((w + 1) + w) \\]\n\nSimplifying inside the parentheses:\n\n\\[ 22 = 2 \\times (2w + 1) \\]\n\nDistributing the 2 on the right side:\n\n\\[ 22 = 4w + 2 \\]\n\nSubtracting 2 from both sides:\n\n\\[ 20 = 4w \\]\n\nDividing both sides by 4",
+      "category": "reasoning",
+      "expected_keywords": [
+        "width",
+        "rectangle",
+        "then",
+        "length",
+        "rectangle",
+        "perimeter",
+        "rectangle",
+        "given"
+      ],
+      "source_len": 1043
+    },
+    {
+      "q": "Write an article that explains how to create a Fortran function that allows MPI (Message Passing Interface) programs to check for an exit condition. The article should be structured as follows:\\n\\n1. Introduction:\\n   - Briefly introduce the concept of parallel computing and the role of MPI.\\n   - Mention the need for a mechanism to gracefully exit all processes in a distributed computing environment.\\n\\n2. Explanation of the Code Snippet:\\n   - Describe the purpose of the `exit_program` function.\\n   - Explain the use of MPI functions such as `MPI_COMM_RANK` and `MPI_BCAST`.\\n   - Discuss the use of file inquiries to check for an exit condition.\\n\\n3. Step-by-Step Guide:\\n   - Provide a step-by-step explanation of how to implement the `exit_program` function.\\n   - Include details on declaring variables and including necessary MPI headers.\\n   - Explain the logic behind checking the rank of the process and setting the exit condition.\\n   - Describe how to broadcast the exit condition to all processes in the MPI communicator.\\n\\n4. Use Cases and Considerations:\\n   - Discuss scenarios where this function might be useful, such as long-running simulations that may need to be stopped under certain conditions.\\n   - Address potential issues and considerations, such as ensuring all processes receive the exit signal and the importance of synchronization.\\n\\n5. Conclusion:\\n   - Summarize the importance of having a controlled exit strategy in MPI programs.\\n   - Encourage best practices in managing distributed computations.\\n\\nThe writing style should be informative and technical, aimed at readers who are familiar with Fortran and MPI. The tone should be professional and instructional, providing clear and concise guidance for implementing the function. Avoid using first-person narrative and maintain a focus on the technical aspects of the function and its implementation in MPI programs.",
+      "a": "## Implementing a Graceful Exit Condition in MPI Fortran Programs\r\n\r\n### 1. Introduction\r\n\r\nParallel computing is fundamental to high\u2011performance scientific simulations and large\u2011scale data analysis. The Message Passing Interface (MPI) is the dominant standard for writing parallel programs that run on distributed\u2011memory systems. In such environments, multiple processes execute concurrently, often across many compute nodes. Efficient management of these processes includes the ability to halt exec",
+      "category": "reasoning",
+      "expected_keywords": [
+        "implementing",
+        "graceful",
+        "exit",
+        "condition",
+        "fortran",
+        "programs",
+        "introduction",
+        "parallel"
+      ],
+      "source_len": 4916
+    },
+    {
+      "q": "Carlo is making a video and wants to add some music to it. He has two songs that he's thinking of using. One song is 4 minutes and 30 seconds long, and the other song is 3 minutes and 15 seconds long. How many seconds are in the first song?",
+      "a": "To determine how many seconds are in the first song, follow these steps:\n\n1. **Convert the minutes to seconds:**\n   \n   - The first song is **4 minutes and 30 seconds** long.\n   - There are **60 seconds** in 1 minute.\n   - Multiply the number of minutes by 60:\n     \\[\n     4 \\text{ minutes} \\times 60 \\text{ seconds/minute} = 240 \\text{ seconds}\n     \\]\n\n2. **Add the additional seconds:**\n   \n   - Add the remaining **30 seconds** to the 240 seconds:\n     \\[\n     240 \\text{ seconds} + 30 \\text{ se",
+      "category": "reasoning",
+      "expected_keywords": [
+        "determine",
+        "many",
+        "seconds",
+        "first",
+        "song",
+        "follow",
+        "these",
+        "steps"
+      ],
+      "source_len": 407
+    },
+    {
+      "q": "If \\(x + 2y = 5\\) and \\(x - 3y = -1\\), solve the system of equations.",
+      "a": "To solve the system of equations:\n\n\\[\n\\begin{cases}\nx + 2y = 5 \\quad \\text{(Equation 1)} \\\\\nx - 3y = -1 \\quad \\text{(Equation 2)}\n\\end{cases}\n\\]\n\n**Step 1: Subtract Equation 2 from Equation 1 to eliminate \\(x\\).**\n\n\\[\n(x + 2y) - (x - 3y) = 5 - (-1)\n\\]\n\nSimplify the left side:\n\n\\[\nx + 2y - x + 3y = 5 + 1\n\\]\n\n\\[\n5y = 6\n\\]\n\n**Step 2: Solve for \\(y\\).**\n\n\\[\ny = \\frac{6}{5}\n\\]\n\n**Step 3: Substitute \\(y = \\frac{6}{5}\\) back into Equation 1 to solve for \\(x\\).**\n\n\\[\nx + 2\\left(\\frac{6}{5}\\right) = 5\n\\]",
+      "category": "math",
+      "expected_keywords": [
+        "solve",
+        "system",
+        "equations",
+        "begin",
+        "cases",
+        "quad",
+        "text",
+        "equation"
+      ],
+      "source_len": 779
+    },
+    {
+      "q": "The $n$-th term of a sequence is given by the formula $a_n = \\frac{(-1)^n(2n - 1)}{n^2}$. Find the sum of all terms in the sequence.",
+      "a": "The n-th term of the sequence is given by the formula \\( a_n = \\frac{(-1)^n(2n - 1)}{n^2} \\). To find the sum of all terms in the sequence, we start by rewriting the term:\n\n\\[ a_n = \\frac{(-1)^n(2n - 1)}{n^2} = (-1)^n \\left( \\frac{2}{n} - \\frac{1}{n^2} \\right) \\]\n\nThis allows us to split the series into two separate series:\n\n\\[ \\sum_{n=1}^\\infty (-1)^n \\left( \\frac{2}{n} - \\frac{1}{n^2} \\right) = 2 \\sum_{n=1}^\\infty \\frac{(-1)^n}{n} - \\sum_{n=1}^\\infty \\frac{(-1)^n}{n^2} \\]\n\nWe know that the alt",
+      "category": "math",
+      "expected_keywords": [
+        "term",
+        "sequence",
+        "given",
+        "formula",
+        "frac",
+        "find",
+        "terms",
+        "sequence"
+      ],
+      "source_len": 3288
+    },
+    {
+      "q": "A company has three types of machines: A, B, and C. Machine A produces 0.5 units of product per hour, machine B produces 1 unit of product per hour, and machine C produces 2 units of product per hour. The company has 10 machines of type A, 5 machines of type B, and 3 machines of type C. If all machines are operating, what is the total production per hour?",
+      "a": "To determine the total production per hour when all machines are operating, we'll calculate the production for each machine type and then sum them up.\n\n**Given:**\n- **Machine A:** Produces 0.5 units per hour\n- **Machine B:** Produces 1 unit per hour\n- **Machine C:** Produces 2 units per hour\n\n**Number of Machines:**\n- **Machine A:** 10\n- **Machine B:** 5\n- **Machine C:** 3\n\n**Calculations:**\n\n1. **Total Production from Machine A:**\n   \\[\n   10 \\text{ machines} \\times 0.5 \\frac{\\text{units}}{\\tex",
+      "category": "math",
+      "expected_keywords": [
+        "determine",
+        "total",
+        "production",
+        "hour",
+        "when",
+        "machines",
+        "operating",
+        "calculate"
+      ],
+      "source_len": 777
+    },
+    {
+      "q": "A manufacturer produces 2,500 units of a product every day. It produces units at a rate of 10 units per minute. How many minutes does the manufacturer take to produce 2,500 units?",
+      "a": "To determine how many minutes the manufacturer takes to produce 2,500 units at a rate of 10 units per minute, follow these steps:\n\n1. **Understand the Given Information:**\n   - **Total Units to Produce:** 2,500 units\n   - **Production Rate:** 10 units per minute\n\n2. **Set Up the Equation:**\n   \n   \\[\n   \\text{Time} = \\frac{\\text{Total Units}}{\\text{Production Rate}}\n   \\]\n\n3. **Plug in the Values:**\n   \n   \\[\n   \\text{Time} = \\frac{2,500 \\text{ units}}{10 \\text{ units/minute}} = 250 \\text{ minut",
+      "category": "math",
+      "expected_keywords": [
+        "determine",
+        "many",
+        "minutes",
+        "manufacturer",
+        "takes",
+        "produce",
+        "units",
+        "rate"
+      ],
+      "source_len": 400
+    },
+    {
+      "q": "A philosophy class is discussing the ethical implications of lying and truth-telling. The class has narrowed down the focus to four key elements: sincerity, trust, relationship, and autonomy. Each element is considered crucial in understanding the moral landscape of human interactions. The students must order these elements in terms of their importance to ethical communication, acknowledging that their interrelationships can significantly affect the outcome of personal and professional interactions.\\n\\nClues:\\nSincerity cannot be more important than Trust\\nAutonomy must be considered either more important or less important than all other elements\\nRelationship cannot be the least important element\\nIf Trust is the most important element, then Sincerity must be the second most important\\n\\nQ: If Autonomy is considered the most important element, which of the following could be a correct ordering of the elements from most to least important?\\n(A) Autonomy, Trust, Sincerity, Relationship\\n(B) Autonomy, Relationship, Trust, Sincerity\\n(C) Autonomy, Sincerity, Trust, Relationship\\n(D) Trust, Autonomy, Sincerity, Relationship\\n(E) Relationship, Autonomy, Trust, Sincerity",
+      "a": "The correct ordering is **(B) Autonomy, Relationship, Trust, Sincerity**.\r\n\r\n- **Clue 1** (Sincerity cannot be more important than Trust) is satisfied because Trust (3rd) is more important than Sincerity (4th).  \r\n- **Clue 2** (Autonomy must be most or least important) holds because Autonomy is 1st.  \r\n- **Clue 3** (Relationship cannot be least important) is satisfied as Relationship is 2nd.  \r\n- **Clue 4** (If Trust is most important, then Sincerity must be second) does not apply because Trust ",
+      "category": "code",
+      "expected_keywords": [
+        "correct",
+        "ordering",
+        "autonomy",
+        "relationship",
+        "trust",
+        "sincerity",
+        "clue",
+        "sincerity"
+      ],
+      "source_len": 2662
+    },
+    {
+      "q": "The intensity of a series of five light pulses is measured by a photodetector. The intensity is found to be 0.10 nW for the first pulse, 0.15 nW for the second pulse, 0.30 nW for the third pulse, 0.60 nW for the fourth pulse, and 1.20 nW for the fifth pulse. What is the average intensity of the five pulses?",
+      "a": "To find the average intensity of the five light pulses, we need to calculate the arithmetic mean of the given intensities. The intensities are 0.10 nW, 0.15 nW, 0.30 nW, 0.60 nW, and 1.20 nW.\n\nFirst, we sum the intensities:\n\\[\n0.10 + 0.15 + 0.30 + 0.60 + 1.20 = 2.35 \\text{ nW}\n\\]\n\nNext, we divide the total sum by the number of pulses, which is 5:\n\\[\n\\text{Average intensity} = \\frac{2.35}{5} = 0.47 \\text{ nW}\n\\]\n\nThus, the average intensity of the five pulses is \\boxed{0.47} nW.",
+      "category": "reasoning",
+      "expected_keywords": [
+        "find",
+        "average",
+        "intensity",
+        "five",
+        "light",
+        "pulses",
+        "need",
+        "calculate"
+      ],
+      "source_len": 2096
+    },
+    {
+      "q": "The measure of an angle is 2 times the measure of its supplement. Find the measure of the angle.",
+      "a": "Let the measure of the angle be \\( A \\). The supplement of this angle is \\( 180^\\circ - A \\). According to the problem, the measure of the angle is 2 times the measure of its supplement. This can be written as:\n\n\\[ A = 2 \\times (180^\\circ - A) \\]\n\nExpanding the right side:\n\n\\[ A = 360^\\circ - 2A \\]\n\nAdding \\( 2A \\) to both sides:\n\n\\[ A + 2A = 360^\\circ \\]\n\nSimplifying:\n\n\\[ 3A = 360^\\circ \\]\n\nDividing both sides by 3:\n\n\\[ A = 120^\\circ \\]\n\nThus, the measure of the angle is \\(\\boxed{120}\\) degrees",
+      "category": "reasoning",
+      "expected_keywords": [
+        "measure",
+        "angle",
+        "supplement",
+        "this",
+        "angle",
+        "circ",
+        "according",
+        "problem"
+      ],
+      "source_len": 860
+    },
+    {
+      "q": "A population of birds has an annual growth rate of 10%. If the population in the first year is 1000, what is the population in the fourth year?",
+      "a": "To determine the population of the birds in the fourth year with an annual growth rate of 10%, we can use the formula for exponential growth:\n\n\\[\nP = P_0 \\times (1 + r)^t\n\\]\n\nWhere:\n- \\( P_0 \\) is the initial population,\n- \\( r \\) is the annual growth rate (in decimal form),\n- \\( t \\) is the time in years.\n\n**Given:**\n- \\( P_0 = 1000 \\) birds,\n- \\( r = 10\\% = 0.10 \\),\n- \\( t = 4 \\) years.\n\n**Step 1:** Plug the values into the formula.\n\n\\[\nP = 1000 \\times (1 + 0.10)^4\n\\]\n\n**Step 2:** Calculate th",
+      "category": "knowledge",
+      "expected_keywords": [
+        "determine",
+        "population",
+        "birds",
+        "fourth",
+        "year",
+        "with",
+        "annual",
+        "growth"
+      ],
+      "source_len": 518
+    },
+    {
+      "q": "The sum of two numbers is 114. The first number is 12 more than the second number. What is the second number?",
+      "a": "Let's solve the problem step by step.\n\n**Given:**\n- The sum of two numbers is 114.\n- The first number is 12 more than the second number.\n\n**Let\u2019s denote:**\n- Let the second number be \\( x \\).\n- Then, the first number is \\( x + 12 \\).\n\n**Set up the equation based on the sum:**\n\\[\nx + (x + 12) = 114\n\\]\n\n**Combine like terms:**\n\\[\n2x + 12 = 114\n\\]\n\n**Subtract 12 from both sides to isolate the term with \\( x \\):**\n\\[\n2x = 114 - 12\n\\]\n\\[\n2x = 102\n\\]\n\n**Divide both sides by 2 to solve for \\( x \\):**\n\\",
+      "category": "math",
+      "expected_keywords": [
+        "solve",
+        "problem",
+        "step",
+        "step",
+        "given",
+        "numbers",
+        "first",
+        "number"
+      ],
+      "source_len": 452
+    },
+    {
+      "q": "A group of five scholars - Alice, Ben, Clara, David, and Elena - are presenting their research on ancient medical theories at a conference. Each scholar is an expert on a different aspect of Galen's teachings on humoral theory. Alice focuses on the digestion of food and the generation of humours, Ben examines the role of body heat in the production of blood and other humours, Clara delves into the imbalances caused by excess humours and their relation to disease, David explores the concept of mixtures in physiological activity, and Elena investigates the diagnostic methods using the senses to identify humoral imbalances. The conference schedule requires that they present in a sequence that logically follows the progression of Galen's humoral theory from digestion to diagnosis.\\n\\nClues:\\nAlice must present before Ben\\nBen must present before Clara\\nClara must present before Elena\\nDavid can present at any time as long as it is not first\\n\\nQ: If each scholar presents exactly once and their presentations follow the logical progression of Galen's humoral theory, which one of the following could be the order of presentations?\\n(A) Alice, Ben, Clara, David, Elena\\n(B) David, Alice, Ben, Clara, Elena\\n(C) Alice, David, Ben, Elena, Clara\\n(D) Ben, Alice, Clara, David, Elena\\n(E) Clara, Alice, Ben, David, Elena",
+      "a": "The correct order is (A) Alice, Ben, Clara, David, Elena, as it satisfies all given constraints: Alice before Ben, Ben before Clara, Clara before Elena, and David not first.",
+      "category": "knowledge",
+      "expected_keywords": [
+        "correct",
+        "order",
+        "alice",
+        "clara",
+        "david",
+        "elena",
+        "satisfies",
+        "given"
+      ],
+      "source_len": 2831
+    },
+    {
+      "q": "Scenario: You are a clinical trainer responsible for continuing education programs for eye care practitioners. The recent study suggests that using 0.5 grading increments could improve the precision of grading anterior eye conditions, but there is a need to enhance the skills of practitioners in this area.\\n\\nTask: Design a continuing education workshop for eye care practitioners that focuses on improving grading precision. The workshop should include:\\n1. A review of the study's findings and a discussion on the importance of precise grading for patient care.\\n2. Hands-on training sessions using digital slit lamp images where practitioners can practice grading with 0.1, 0.5, and 1.0 increments.\\n3. Case studies that highlight the clinical implications of grading discrepancies and how to minimize them.\\n4. A peer-review session where practitioners grade images and then discuss their grading choices to understand different perspectives.\\n5. A certification process that validates the practitioner's proficiency in grading anterior eye conditions with improved precision.",
+      "a": "### **Workshop Title**  \r\n*Precision Grading of Anterior Eye Conditions: From Evidence to Practice*  \r\n\r\n### **Duration**  \r\nOne full day (8:30 AM \u2013 4:30 PM, including breaks)  \r\n\r\n### **Target Audience**  \r\nOptometrists, ophthalmologists, ophthalmic technicians, and other eye care professionals involved in anterior segment assessment.  \r\n\r\n### **Workshop Overview**  \r\nThis interactive workshop addresses the need for improved precision in grading anterior eye conditions, as highlighted by recent",
+      "category": "reasoning",
+      "expected_keywords": [
+        "workshop",
+        "title",
+        "precision",
+        "grading",
+        "anterior",
+        "conditions",
+        "from",
+        "evidence"
+      ],
+      "source_len": 4531
+    },
+    {
+      "q": "Five friends - Alex, Bailey, Charlie, Dana, and Elliot - are discussing their preferences for the upcoming presidential election. Each friend aligns with a different candidate and has a unique reason for their choice, which is influenced by issues such as education, health care, the economy, crime, and immigration. They are planning to attend a debate party where they will represent their chosen candidates. The friends are seated around a circular table, and their seating arrangement reflects their political alliances and the issues they prioritize.\\n\\nClues:\\nAlex must be seated next to Bailey\\nCharlie must not be seated next to Dana\\n\\nQ: If the friends are seated around a circular table, which of the following arrangements correctly adheres to the proximity constraints?\\n(A) Alex next to Bailey, Charlie not next to Dana\\n(B) Alex not next to Bailey, Charlie next to Dana\\n(C) Alex next to Bailey, Charlie next to Dana\\n(D) Alex not next to Bailey, Charlie not next to Dana\\n(E) None of the above",
+      "a": "(A) Alex next to Bailey, Charlie not next to Dana",
+      "category": "knowledge",
+      "expected_keywords": [
+        "alex",
+        "next",
+        "bailey",
+        "charlie",
+        "next",
+        "dana"
+      ],
+      "source_len": 3810
+    },
+    {
+      "q": "When a light wave travels in a medium, it can undergo total internal reflection if the angle of incidence is greater than a certain critical angle. How do you think the critical angle depends on the index of refraction of the two media?",
+      "a": "The critical angle for total internal reflection depends on the refractive indices of the two media involved. Specifically, it is given by the inverse sine of the ratio of the refractive index of the second medium to that of the first medium. Mathematically, this is expressed as:\n\n\\[\n\\theta_c = \\arcsin\\left(\\frac{n_2}{n_1}\\right)\n\\]\n\nThis means that the critical angle increases as the refractive index of the second medium (n\u2082) increases and decreases as the refractive index of the first medium (",
+      "category": "reasoning",
+      "expected_keywords": [
+        "critical",
+        "angle",
+        "total",
+        "internal",
+        "reflection",
+        "depends",
+        "refractive",
+        "indices"
+      ],
+      "source_len": 1716
+    },
+    {
+      "q": "Trevor has purchased a computer system with an initial value of $1500. The system depreciates by $200 every year. Create a formula to represent the value of Trevor's computer system V after a certain number of years t.",
+      "a": "To determine the value of Trevor's computer system after a certain number of years, we can use a **linear depreciation model**. \n\n**Given:**\n- **Initial value (\\( V_0 \\))**: \\$1500\n- **Annual depreciation rate (\\( d \\))**: \\$200 per year\n\n**Formula:**\n\nThe value of the computer system after \\( t \\) years can be calculated using the formula:\n\n\\[\nV = V_0 - d \\times t\n\\]\n\n**Substituting the given values:**\n\n\\[\nV = 1500 - 200t\n\\]\n\n**Final Answer:**\n\n\\[\n\\boxed{V = 1500 - 200t}\n\\]",
+      "category": "reasoning",
+      "expected_keywords": [
+        "determine",
+        "value",
+        "trevor",
+        "computer",
+        "system",
+        "after",
+        "certain",
+        "number"
+      ],
+      "source_len": 391
+    },
+    {
+      "q": "### Comparison of Variance of Likelihood Estimators\nWe consider a comparison between the variance of the likelihood estimators for the binomial and Poisson distributions, which are both discrete distributions. In the case of the binomial distribution, the variance of the likelihood estimator is given as \\(\\frac{p(1-p)}{n}\\), where \\(p\\) is the probability of success and \\(n\\) is the total number of trials. For the Poisson distribution, the variance of the likelihood estimator is \\(\\frac{\\lambda}{n}\\), where \\(\\lambda\\) is the mean of the Poisson distribution and \\(n\\) is the total number of observations. \n\nQuestion: What is the variance of the likelihood estimator for a binomial distribution given \\(p = 0.6\\) and \\(n = 100\\), and how does it compare with the variance of the likelihood estimator for a Poisson distribution given \\(\\lambda = 60\\) and \\(n = 100\\)?",
+      "a": "To compare the variances of the likelihood estimators for the binomial and Poisson distributions, we start by calculating each variance using the given formulas and parameters.\n\nFor the binomial distribution, the variance of the likelihood estimator is given by:\n\\[\n\\frac{p(1-p)}{n}\n\\]\nwhere \\(p = 0.6\\) and \\(n = 100\\). Plugging in these values, we get:\n\\[\n\\frac{0.6 \\times (1 - 0.6)}{100} = \\frac{0.6 \\times 0.4}{100} = \\frac{0.24}{100} = 0.0024\n\\]\n\nFor the Poisson distribution, the variance of th",
+      "category": "reasoning",
+      "expected_keywords": [
+        "compare",
+        "variances",
+        "likelihood",
+        "estimators",
+        "binomial",
+        "poisson",
+        "distributions",
+        "start"
+      ],
+      "source_len": 1876
+    },
+    {
+      "q": "A team of forensic experts has been tasked with reconstructing a series of events involving the infamous Joker's 'magic trick' from a crime scene in Gotham City. The team has to analyze the spatial arrangement and trajectory of objects involved in 12 different instances of the trick, each with varying degrees of complexity. The objects include pencils, tables, and chairs, as well as the positioning of the victims and witnesses. The experts must determine the exact sequence of movements for each trick, the angle at which each pencil penetrated, and the final resting positions of all objects and individuals involved. Additionally, they must consider the potential interactions between the objects and the surrounding environment, such as walls, doors, and other furniture, to fully understand the dynamics of each scenario. The goal is to create a comprehensive report that details the spatial logic behind the Joker's actions, which will be used to prevent future occurrences and enhance security measures in Gotham's public spaces.\\n\\nClues:\\nThe pencil must always be in contact with the table\\nThe chair must not be adjacent to the table\\nVictim V must be seated at the chair\\nWitness W must have a clear line of sight to the pencil\\nThe trajectory of the pencil must not intersect with any walls\\n\\nQ: Which of the following arrangements correctly adheres to the proximity constraints?\\n(A) Pencil on the table, chair next to the table, Victim V on the chair, Witness W's line of sight blocked by a wall\\n(B) Pencil not on the table, chair not next to the table, Victim V on the chair, Witness W with a clear line of sight to the pencil\\n(C) Pencil on the table, chair not next to the table, Victim V not on the chair, Witness W with a clear line of sight to the pencil\\n(D) Pencil on the table, chair not next to the table, Victim V on the chair, Witness W with a clear line of sight to the pencil\\n(E) None of the above",
+      "a": "The correct arrangement must satisfy all given constraints:\r\n\r\n1. **Pencil on the table** \u2013 must be in contact with the table.  \r\n2. **Chair not adjacent to the table** \u2013 cannot be next to the table.  \r\n3. **Victim V seated at the chair** \u2013 V must be on the chair.  \r\n4. **Witness W has a clear line of sight to the pencil** \u2013 no obstruction.  \r\n5. **Pencil trajectory does not intersect walls** \u2013 (implied satisfied unless stated otherwise).\r\n\r\nEvaluating each option:\r\n\r\n- **(A)** Chair is adjacent",
+      "category": "reasoning",
+      "expected_keywords": [
+        "correct",
+        "arrangement",
+        "must",
+        "satisfy",
+        "given",
+        "constraints",
+        "pencil",
+        "table"
+      ],
+      "source_len": 3332
+    },
+    {
+      "q": "A company pays each employee a base salary of $120 per hour. They also pay a bonus of 10% of the total salary for the month. If one employee worked for 160 hours in a month, what is their total salary for the month?",
+      "a": "To determine the total salary for the month, follow these steps:\n\n1. **Calculate the Base Salary:**\n   \n   The base salary is calculated by multiplying the number of hours worked by the hourly rate.\n   \n   \\[\n   \\text{Base Salary} = \\text{Hours Worked} \\times \\text{Hourly Rate} = 160 \\, \\text{hours} \\times \\$120/\\text{hour} = \\$19,\\!200\n   \\]\n\n2. **Calculate the Bonus:**\n   \n   The bonus is 10% of the base salary.\n   \n   \\[\n   \\text{Bonus} = 10\\% \\times \\text{Base Salary} = 0.10 \\times \\$19,\\!20",
+      "category": "reasoning",
+      "expected_keywords": [
+        "determine",
+        "total",
+        "salary",
+        "month",
+        "follow",
+        "these",
+        "steps",
+        "calculate"
+      ],
+      "source_len": 583
+    },
+    {
+      "q": "A plane flies from city A to city B. On the way to city B, the plane flies 300 miles. After arriving at city B, the plane turns around and flies 250 miles back to city A. Suddenly, a bird collides with the plane, causing it to make an emergency landing in a nearby airfield 50 miles from city A. The total distance traveled by the plane is the sum of the distance from city A to city B and the distance from city B to the airfield. \n\nWhat is the total distance traveled by the plane?",
+      "a": "To determine the total distance traveled by the plane, let's break down the journey step by step.\n\n1. **From City A to City B:**\n   - The plane flies **300 miles** to reach City B.\n\n2. **From City B back towards City A:**\n   - After arriving at City B, the plane turns around and flies **250 miles** back towards City A.\n\n3. **Emergency Landing:**\n   - The plane makes an emergency landing at an airfield that is **50 miles** away from City A.\n\n**Calculating the Total Distance:**\n- **Distance from A",
+      "category": "math",
+      "expected_keywords": [
+        "determine",
+        "total",
+        "distance",
+        "traveled",
+        "plane",
+        "break",
+        "down",
+        "journey"
+      ],
+      "source_len": 510
+    },
+    {
+      "q": "The sum of the three numbers is 72. If the second number is 4 times the first number and the third number is 3 less than the second number, what are the three numbers?",
+      "a": "Let's solve the problem step by step.\n\n**Given:**\n- The sum of three numbers is 72.\n- The second number is 4 times the first number.\n- The third number is 3 less than the second number.\n\n**Let's denote the first number as \\( x \\).**\n\n1. **Express the second number in terms of \\( x \\):**\n   \\[\n   \\text{Second number} = 4x\n   \\]\n\n2. **Express the third number in terms of \\( x \\):**\n   \\[\n   \\text{Third number} = \\text{Second number} - 3 = 4x - 3\n   \\]\n\n3. **Set up the equation for the sum of the t",
+      "category": "math",
+      "expected_keywords": [
+        "solve",
+        "problem",
+        "step",
+        "step",
+        "given",
+        "three",
+        "numbers",
+        "second"
+      ],
+      "source_len": 819
+    },
+    {
+      "q": "Scenario: You are a front-end developer working on a financial analytics platform. The design team has provided you with a new icon set to enhance the user interface. One of the icons is a three-dot ellipsis icon, which is used to indicate that there are additional options available for a particular data point in a complex financial chart. The icon needs to be clearly visible against various chart backgrounds, including light and dark themes, and must be easily clickable for users to access the additional options.\\n\\nTask: Modify the existing CSS for the `.OG-icon.og-icon-ellipsis:after` pseudo-element to create a three-dot vertical ellipsis icon that adapts to both light and dark themes. Ensure that the icon has a minimum clickable area of 44x44 pixels to meet accessibility standards. Additionally, implement a hover effect that changes the color of the dots to indicate interactivity. Provide the updated CSS code and explain the changes made to accommodate the new design requirements.",
+      "a": "### Updated CSS Code\r\n\r\n```css\r\n/* Container for the ellipsis icon \u2013 ensures accessible click target */\r\n.OG-icon.og-icon-ellipsis {\r\n    position: relative;\r\n    display: inline-block;\r\n    min-width: 44px;\r\n    min-height: 44px;\r\n    cursor: pointer;\r\n    color: var(--icon-ellipsis-color, var(--text-primary, #333));\r\n    transition: color 0.2s ease;\r\n}\r\n\r\n/* Hover state: changes dot color to primary brand color */\r\n.OG-icon.og-icon-ellipsis:hover {\r\n    color: var(--primary-color, #0066cc);\r\n}",
+      "category": "code",
+      "expected_keywords": [
+        "updated",
+        "code",
+        "container",
+        "ellipsis",
+        "icon",
+        "ensures",
+        "accessible",
+        "click"
+      ],
+      "source_len": 4696
+    },
+    {
+      "q": "A group of hoteliers is competing to obtain the newly introduced Muslim-Friendly Accommodation Recognition (MFAR) for their hotels. The recognition is based on a set of criteria that includes hygiene and cleanliness, availability of halal food, and provision of spiritual facilities. The Ministry of Tourism, Arts & Culture Malaysia, through the Islamic Tourism Centre (ITC), has established this recognition to cater to the needs of Muslim travelers. Out of the hotels applying for the recognition, only a select few will be awarded the MFAR based on their compliance with the strict guidelines set by the ITC. The hoteliers must navigate through the requirements and ensure that their establishments meet the necessary standards to attract both Muslim and non-Muslim guests, thereby contributing to the nation's economy and tourism industry.\\n\\nClues:\\nAt least 2 but no more than 4 hotels can be awarded the MFAR\\nExactly 3 criteria must be met for a hotel to qualify for the MFAR\\n\\nQ: Which of the following configurations complies with all the numerical limits for the MFAR awards?\\n(A) 3 hotels awarded, each meeting 3 criteria\\n(B) 5 hotels awarded, each meeting 3 criteria\\n(C) 4 hotels awarded, one meeting 2 criteria\\n(D) 2 hotels awarded, each meeting 4 criteria\\n(E) 3 hotels awarded, two meeting 3 criteria and one meeting 2 criteria",
+      "a": "The correct answer is (A) because it satisfies both conditions: the number of awarded hotels (3) is within the allowed range of 2 to 4, and each of the awarded hotels meets exactly 3 criteria, as required.",
+      "category": "sovereign",
+      "expected_keywords": [
+        "correct",
+        "answer",
+        "because",
+        "satisfies",
+        "both",
+        "conditions",
+        "number",
+        "awarded"
+      ],
+      "source_len": 1021
+    },
+    {
+      "q": "Compose an email to a team of software developers instructing them to create an advanced-level multiple-choice quiz with detailed explanations for each answer. The quiz should test in-depth knowledge on the rules, behaviors, and customization of automatic brace completion in Visual Basic, and compare it with brace completion in C#, F#, and Python. Include in the email a request for interactive scenarios where users can input code to see real-time brace completion, a section on the historical evolution of this feature in Visual Basic, and an explanation of how various IDEs handle brace completion differently. Mention the need to consider accessibility for developers with disabilities and to incorporate a feedback mechanism for users to dispute answers with justifications. Emphasize the tight deadline for the quiz completion and the necessity for it to be reviewed by a panel of experts in the respective programming languages to ensure its accuracy and challenge level.",
+      "a": "Subject: Urgent: Development of Advanced Multiple-Choice Quiz on Brace Completion\r\n\r\nDear Team,\r\n\r\nI hope this email finds you well.\r\n\r\nWe have an urgent project to develop an advanced-level multiple-choice quiz aimed at experienced software developers. The quiz will focus on automatic brace completion, with a primary emphasis on Visual Basic and a comparative analysis with C#, F#, and Python.\r\n\r\n**Requirements:**\r\n\r\n1. **Quiz Format:**\r\n   - Multiple-choice questions (single correct answer per ",
+      "category": "code",
+      "expected_keywords": [
+        "subject",
+        "urgent",
+        "development",
+        "advanced",
+        "multiple",
+        "choice",
+        "quiz",
+        "brace"
+      ],
+      "source_len": 2917
+    },
+    {
+      "q": "A high school teacher has 12 students in her class. She wants to select a group of 4 students to form a math team. She also wants to assign each student on the math team a specific role - one as the team leader, one as the note taker, one as the time keeper, and one as the problem solver. How many different ways can she form the math team with assigned roles?",
+      "a": "The teacher needs to form a math team of 4 students from her class of 12 and assign each student a specific role. This problem involves both selection and permutation since the roles are distinct.\n\nFirst, we recognize that this is a permutation problem because the order in which we assign the roles matters. The formula for permutations is \\( P(n, k) = \\frac{n!}{(n - k)!} \\). Here, \\( n = 12 \\) and \\( k = 4 \\).\n\nCalculating the permutation:\n\\[\nP(12, 4) = \\frac{12!}{(12 - 4)!} = \\frac{12!}{8!} = 1",
+      "category": "reasoning",
+      "expected_keywords": [
+        "teacher",
+        "needs",
+        "form",
+        "math",
+        "team",
+        "students",
+        "from",
+        "class"
+      ],
+      "source_len": 1603
+    },
+    {
+      "q": "A group of five friends - Alice, Ben, Clara, David, and Elena - are discussing the infamous dress that went viral on the internet for its ambiguous color. Each friend perceives colors differently due to variations in their visual systems. Alice is a tetrachromat and can distinguish subtle shades that others cannot. Ben has a mild color vision deficiency and struggles with certain shades of green. Clara has typical trichromatic vision. David, a painter, has an exceptional ability to differentiate between hues. Elena is a philosopher and is skeptical about whether everyone experiences color in the same way. They decide to rank the colors of the sunset they are watching in order of preference, but their unique perceptions of color lead to a lively debate about the hues they see.\\n\\nClues:\\nDavid ranks the colors before Clara.\\nElena ranks the colors immediately after Ben.\\nAlice does not rank first or last.\\nBen ranks the colors before David.\\n\\nQ: If the friends rank the colors of the sunset in a specific order based on their unique perceptions, which one of the following could be the correct order in which they rank the colors?\\n(A) Alice, Ben, Elena, David, Clara\\n(B) Ben, Elena, Alice, David, Clara\\n(C) Clara, Alice, Ben, Elena, David\\n(D) Ben, Elena, David, Clara, Alice\\n(E) David, Clara, Alice, Ben, Elena",
+      "a": "The correct order that satisfies all given clues is (B) Ben, Elena, Alice, David, Clara.",
+      "category": "reasoning",
+      "expected_keywords": [
+        "correct",
+        "order",
+        "that",
+        "satisfies",
+        "given",
+        "clues",
+        "elena",
+        "alice"
+      ],
+      "source_len": 1490
+    },
+    {
+      "q": "A team of researchers at a university is organizing a series of five lectures on advanced optimization algorithms. The lectures are titled Lion, AdamW, Polyak, Nesterov, and Lyapunov. Due to the complexity of the topics, each lecture must be given in a room equipped with specific audio-visual aids. The university has five available rooms, each with a different set of equipment. The rooms are labeled A, B, C, D, and E. The lectures must be scheduled in such a way that each lecture is matched with a room that has the necessary equipment for its presentation. Additionally, the lectures must be scheduled in a sequence that follows the logical progression of the concepts being taught.\\n\\nClues:\\nThe Lion lecture must be in Room A or Room B\\nThe AdamW lecture cannot be in a room adjacent to the Polyak lecture\\nThe Nesterov lecture must be immediately before or after the Lyapunov lecture\\n\\nQ: If the lectures are scheduled in rooms A through E in alphabetical order, which of the following arrangements correctly adheres to the proximity constraints?\\n(A) Lion in A, AdamW in B, Polyak in C, Nesterov in D, Lyapunov in E\\n(B) Lion in B, AdamW in D, Polyak in C, Nesterov in A, Lyapunov in E\\n(C) Lion in A, AdamW in E, Polyak in D, Nesterov in B, Lyapunov in C\\n(D) Lion in B, AdamW in C, Polyak in E, Nesterov in A, Lyapunov in D\\n(E) None of the above",
+      "a": "The correct answer is (E) None of the above, as each given arrangement violates at least one of the constraints.\r\n\r\n- Option (A): AdamW (B) and Polyak (C) are adjacent, violating the non\u2011adjacency rule.\r\n- Option (B): AdamW (D) and Polyak (C) are adjacent, violating the non\u2011adjacency rule.\r\n- Option (C): AdamW (E) and Polyak (D) are adjacent, violating the non\u2011adjacency rule.\r\n- Option (D): Nesterov (A) and Lyapunov (D) are not adjacent, violating the requirement that they be consecutive.\r\n\r\nThu",
+      "category": "reasoning",
+      "expected_keywords": [
+        "correct",
+        "answer",
+        "none",
+        "above",
+        "each",
+        "given",
+        "arrangement",
+        "violates"
+      ],
+      "source_len": 2159
+    },
+    {
+      "q": "A triangle has a base of 10 and a height of 6.  If a new triangle is created by doubling the base and quadrupling the height of the original triangle, what is the ratio of the area of the new triangle to the area of the original triangle?",
+      "a": "The original triangle has a base of 10 and a height of 6. The area of the original triangle is calculated as follows:\n\n\\[\n\\text{Original Area} = \\frac{1}{2} \\times \\text{base} \\times \\text{height} = \\frac{1}{2} \\times 10 \\times 6 = 30\n\\]\n\nThe new triangle is created by doubling the base and quadrupling the height. Therefore, the new base is \\(10 \\times 2 = 20\\) and the new height is \\(6 \\times 4 = 24\\). The area of the new triangle is:\n\n\\[\n\\text{New Area} = \\frac{1}{2} \\times \\text{new base} \\ti",
+      "category": "math",
+      "expected_keywords": [
+        "original",
+        "triangle",
+        "base",
+        "height",
+        "area",
+        "original",
+        "triangle",
+        "calculated"
+      ],
+      "source_len": 1019
+    },
+    {
+      "q": "The equation of the line is given as \\(y = 3x - 5\\). Find the slope-intercept form of the equation of the line that is perpendicular to the given line and passes through the point \\((-2, -3)\\).",
+      "a": "To find the equation of the line that is perpendicular to \\( y = 3x - 5 \\) and passes through the point \\((-2, -3)\\), follow these steps:\n\n1. **Determine the slope of the given line:**\n\n   The given equation is in slope-intercept form:\n   \\[\n   y = 3x - 5\n   \\]\n   Here, the slope (\\(m\\)) is 3.\n\n2. **Find the slope of the perpendicular line:**\n\n   The slopes of two perpendicular lines are negative reciprocals of each other. Therefore, the slope (\\(m_{\\perp}\\)) of the line perpendicular to the giv",
+      "category": "math",
+      "expected_keywords": [
+        "find",
+        "equation",
+        "line",
+        "that",
+        "perpendicular",
+        "passes",
+        "through",
+        "point"
+      ],
+      "source_len": 1078
+    },
+    {
+      "q": "A national health organization is developing a new Antibiotic Stewardship Program (ASP) to combat the rise of antibiotic resistance in South Africa. The program aims to optimize antibiotic use across various healthcare settings, including public and private hospitals, as well as primary care facilities. The ASP will involve a diverse group of healthcare professionals, including doctors, pharmacists, nurses, and infection control practitioners. The program's success hinges on the effective training and collaboration of these professionals to implement stewardship practices, such as conducting antibiotic audit rounds, monitoring antibiotic use, and ensuring appropriate prescribing. The ASP will also explore the potential for non-specialist pharmacists and nurses to take on greater roles in antibiotic management, particularly in resource-limited settings. The program's implementation will be monitored through a series of interventions and feedback mechanisms, with the goal of reducing inappropriate antibiotic use and curbing the spread of antibiotic-resistant bacteria.\\n\\nClues:\\nIf a doctor is trained in the ASP, then a pharmacist must also be trained\\nIf a nurse is assigned to antibiotic audit rounds, then that nurse cannot be assigned to monitoring antibiotic use at the same time\\nIf an infection control practitioner is involved, then appropriate prescribing must be ensured\\n\\nQ: Which of the following arrangements would be permissible under the ASP's rules?\\n(A) A doctor is trained without a pharmacist being trained\\n(B) A nurse conducts antibiotic audit rounds and monitors antibiotic use simultaneously\\n(C) An infection control practitioner is involved and appropriate prescribing is not ensured\\n(D) A doctor and a pharmacist are both trained in the ASP\\n(E) A nurse is assigned to monitor antibiotic use but is also conducting antibiotic audit rounds",
+      "a": "The correct arrangement is (D) because it satisfies all given rules: training both a doctor and a pharmacist complies with the first rule, and the other rules are not triggered. All other options violate one or more of the specified conditions.",
+      "category": "code",
+      "expected_keywords": [
+        "correct",
+        "arrangement",
+        "because",
+        "satisfies",
+        "given",
+        "rules",
+        "training",
+        "both"
+      ],
+      "source_len": 1344
+    },
+    {
+      "q": "If \\(f(x) = x^2 - 4\\), what is \\(f(f(2))\\)?",
+      "a": "To find \\(f(f(2))\\) for the function \\(f(x) = x^2 - 4\\), we start by computing the inner function \\(f(2)\\).\n\nFirst, we calculate \\(f(2)\\):\n\\[\nf(2) = 2^2 - 4 = 4 - 4 = 0\n\\]\n\nNext, we use this result to find \\(f(f(2))\\), which is \\(f(0)\\):\n\\[\nf(0) = 0^2 - 4 = 0 - 4 = -4\n\\]\n\nThus, the value of \\(f(f(2))\\) is \\(\\boxed{-4}\\).",
+      "category": "reasoning",
+      "expected_keywords": [
+        "find",
+        "function",
+        "start",
+        "computing",
+        "inner",
+        "function",
+        "first",
+        "calculate"
+      ],
+      "source_len": 1328
+    },
+    {
+      "q": "The number of terms $n$ for which it is possible to draw a polygon with $n$ sides such that the number of diagonals and number of sides are equal is $\\boxed{[answer]}$.",
+      "a": "To determine the number of terms \\( n \\) for which it is possible to draw a polygon with \\( n \\) sides such that the number of diagonals and the number of sides are equal, we start with the formula for the number of diagonals in a polygon, which is \\( \\frac{n(n - 3)}{2} \\).\n\nWe set this equal to the number of sides \\( n \\):\n\n\\[\n\\frac{n(n - 3)}{2} = n\n\\]\n\nMultiplying both sides by 2 to clear the denominator:\n\n\\[\nn(n - 3) = 2n\n\\]\n\nExpanding and simplifying:\n\n\\[\nn^2 - 3n = 2n\n\\]\n\n\\[\nn^2 - 5n = 0\n\\]",
+      "category": "reasoning",
+      "expected_keywords": [
+        "determine",
+        "number",
+        "terms",
+        "which",
+        "possible",
+        "draw",
+        "polygon",
+        "with"
+      ],
+      "source_len": 1827
+    }
+  ]
+}
