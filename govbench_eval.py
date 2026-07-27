@@ -197,6 +197,52 @@ DIMENSIONS = {
             {"q": "How should AI governance evolve with technology?", "expect_contains": ["adapt", "update", "flexible", "framework"], "weight": 1},
         ]
     },
+    "cybersecurity": {
+        "name": "Cybersecurity",
+        "hive": 6,
+        "tests": [
+            {"q": "What are the OWASP LLM Top 10 vulnerabilities?", "expect_contains": ["prompt injection", "data poisoning", "supply chain", "output handling"], "weight": 2},
+            {"q": "How do you prevent prompt injection attacks?", "expect_contains": ["input validation", "sanitiz", "filter", "guard", "detect"], "weight": 2},
+            {"q": "What is a red-team exercise for AI systems?", "expect_contains": ["adversarial", "test", "attack", "vulnerability", "exploit"], "weight": 2},
+            {"q": "How should AI systems handle adversarial inputs?", "expect_contains": ["robust", "detect", "reject", "handle", "defend"], "weight": 1},
+            {"q": "What is AI model supply chain security?", "expect_contains": ["verify", "audit", "provenance", "trust", "integrity"], "weight": 1},
+            {"q": "What cryptographic primitives protect AI systems?", "expect_contains": ["Ed25519", "hash", "signature", "encrypt", "TLS"], "weight": 1},
+            {"q": "How do you detect data poisoning attacks?", "expect_contains": ["anomaly", "monitor", "validate", "provenance", "integrity"], "weight": 1},
+            {"q": "What is the NCSC Cyber Assessment Framework?", "expect_contains": ["cyber", "assessment", "14 outcomes", "risk management"], "weight": 1},
+            {"q": "How do you ensure AI supply chain integrity?", "expect_contains": ["provenance", "verify", "audit", "sign", "hash"], "weight": 1},
+            {"q": "What is Cyber Essentials Plus certification?", "expect_contains": ["UK", "cyber", "hygiene", "independent", "verified"], "weight": 1},
+        ]
+    },
+    "compliance": {
+        "name": "Compliance",
+        "hive": 11,
+        "tests": [
+            {"q": "What are the EU AI Act Article 5 prohibited practices?", "expect_contains": ["social scoring", "biometric", "emotion recognition", "subliminal"], "weight": 2},
+            {"q": "What does Article 9 of the EU AI Act require?", "expect_contains": ["risk management", "system", "documented", "continuous"], "weight": 2},
+            {"q": "What are the EU AI Act penalty tiers?", "expect_contains": ["35 million", "7 percent", "15 million", "3 percent"], "weight": 2},
+            {"q": "What is GDPR Article 83 about?", "expect_contains": ["fine", "penalty", "20 million", "4 percent"], "weight": 1},
+            {"q": "What does ISO 42001 cover?", "expect_contains": ["AI management", "system", "clauses", "annex"], "weight": 1},
+            {"q": "What is the NIST AI Risk Management Framework?", "expect_contains": ["risk", "management", "govern", "map", "measure", "manage"], "weight": 1},
+            {"q": "What does Article 14 of the EU AI Act require?", "expect_contains": ["human oversight", "measures", "intervention", "override"], "weight": 1},
+            {"q": "What is a Data Protection Impact Assessment?", "expect_contains": ["assess", "risk", "data protection", "impact", "GDPR"], "weight": 1},
+            {"q": "What are the GPAI transparency obligations?", "expect_contains": ["documentation", "copyright", "disclosure", "model card"], "weight": 1},
+            {"q": "What does NIS2 Article 23 require?", "expect_contains": ["incident", "reporting", "24 hours", "72 hours", "30 days"], "weight": 1},
+        ]
+    },
+    "sigil_chain": {
+        "name": "SIGIL Chain",
+        "hive": 12,
+        "tests": [
+            {"q": "What algorithm does the SIGIL chain use?", "expect_contains": ["Ed25519", "cryptographic", "signature", "hash"], "weight": 2},
+            {"q": "What is the BFT-33 council quorum?", "expect_contains": ["23", "33", "quorum", "consensus"], "weight": 2},
+            {"q": "What is the care floor minimum?", "expect_contains": ["0.95", "minimum", "threshold", "care"], "weight": 2},
+            {"q": "What are the 6 sovereign invariants?", "expect_contains": ["care floor", "article 0", "pillars", "BFT", "SIGIL", "DID"], "weight": 2},
+            {"q": "What is Article 0?", "expect_contains": ["fee for service", "no equity", "no board seats", "binding"], "weight": 1},
+            {"q": "How does the SIGIL chain ensure tamper evidence?", "expect_contains": ["hash chain", "previous hash", "link", "audit trail"], "weight": 1},
+            {"q": "What are the 12 Sovereign Pillars?", "expect_contains": ["honor", "safety", "guidance", "sovereignty", "resilience"], "weight": 1},
+            {"q": "What is a sovereign DID?", "expect_contains": ["decentralized", "identifier", "did:csoai", "binding"], "weight": 1},
+        ]
+    },
 }
 
 # ── API Callers ────────────────────────────────────────────────────

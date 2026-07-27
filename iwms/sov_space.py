@@ -39,9 +39,11 @@ from pathlib import Path
 from datetime import datetime
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from .owem_brain import OWEMBrain
-from .stigmergy import StigmergyLayer, SpineDrum
+from .stigmergy import DistributedStigmergy
 from .constitutional_ai import ConstitutionalAI
 from .rag_pipeline import RAGPipeline
+from .arena_integration import ArenaIntegration
+from .unified_gnn import UnifiedGNN
 
 IWM_DIR = Path(__file__).resolve().parent
 
@@ -110,10 +112,11 @@ class SOVSpace:
 
     def __init__(self, lazy=True):
         self.hives = {}
-        self.stigmergy = StigmergyLayer()
-        self.spine_drum = SpineDrum()
+        self.stigmergy = DistributedStigmergy()
         self.constitutional_ai = ConstitutionalAI()
         self.rag_pipeline = RAGPipeline()
+        self.arena = ArenaIntegration()
+        self.gnn = UnifiedGNN()
         self.task_log = []
         self.lazy = lazy
         self._brain_cache = {}
@@ -121,6 +124,8 @@ class SOVSpace:
             self._build_hives()
         else:
             self._build_hive_skeleton()
+        # Init distributed stigmergy for all hive names
+        self.stigmergy.init_hives(list(HIVE_CLUSTERS.keys()))
 
     def _build_hive_skeleton(self):
         """Build hive structure without creating all brains (lazy mode)."""
@@ -177,46 +182,61 @@ class SOVSpace:
 
     def process(self, task, competitor=None):
         """
-        Full SOV-Space processing:
-        1. Constitutional AI safety check
-        RAG pipeline for knowledge retrieval
-        3. Route to best hive(s)
-        4. Each hive's clans process in parallel
-        5. Each clan's 12 families process (frozen + fluid)
-        6. Stigmergy propagates signals
-        7. Spine Drum synchronizes
-        8. Aggregate into master C-space
+        Full SOV-Space processing with GNN dreaming:
+        1. Dream competition before entering
+        2. Constitutional AI safety check
+        3. RAG pipeline for knowledge retrieval
+        4. Route to best hive(s) using dream insights
+        5. Each hive's clans process in parallel
+        6. Each clan's families process (frozen + fluid)
+        7. Stigmergy propagates signals (distributed)
+        8. Gossip round: peer-to-peer propagation
+        9. Aggregate into master C-space
+        10. Update GNN with results
         """
-        # Safety check
+        desc = task if isinstance(task, str) else task.get("description", str(task))
+
+        # Step 1: Dream competition before entering
+        dream = self.gnn.dream_before_competing("arena", desc, competitor)
+
+        # Step 2: Safety check
         safety_result = self.constitutional_ai.check(task)
         if not safety_result["safe"]:
             return {"error": "Constitutional AI blocked task", "reason": safety_result["reason"]}
 
-        # RAG knowledge retrieval
+        # Step 3: RAG knowledge retrieval
         rag_context = self.rag_pipeline.retrieve(task)
 
-        # Route to best hive(s)
+        # Step 4: Route to best hive(s) using dream insights
         target_hives = self._route_to_hives(task)
 
-        # Process through target hives
+        # Step 5-6: Process through target hives
         all_results = {}
         for hive_name in target_hives:
             hive = self.hives[hive_name]
             hive_results = self._process_hive(hive, task, competitor, rag_context)
             all_results[hive_name] = hive_results
 
-        # Stigmergy propagation
-        self.stigmergy.propagate_hive(all_results)
+        # Step 7-8: Distributed stigmergy propagation
+        for hive_name, hive_results in all_results.items():
+            self.stigmergy.propagate(hive_name, hive_results)
+        self.stigmergy.gossip_round()
 
-        # Spine Drum heartbeat
-        self.spine_drum.beat(all_results)
-
-        # Aggregate into master C-space
+        # Step 9: Aggregate into master C-space
         master_cspace = self._aggregate_cspace(all_results)
+
+        # Step 10: Update GNN with results
+        self.gnn.inner.update_pdca({
+            "task": desc[:100],
+            "confidence": master_cspace.get("avg_confidence", 0),
+            "hives": len(target_hives),
+        })
+        self.gnn.bridge_update("inner", "outer", {"confidence": master_cspace.get("avg_confidence", 0)})
 
         # Compile strategy
         strategy = {
             "task": task,
+            "dream": dream,
             "hives_activated": len(target_hives),
             "total_clans": sum(len(self.hives[h]["clans"]) for h in target_hives),
             "total_brains": sum(len(self.hives[h]["clans"]) * 12 for h in target_hives),
@@ -224,6 +244,7 @@ class SOVSpace:
             "master_cspace": master_cspace,
             "rag_context": rag_context[:200] if rag_context else None,
             "safety": safety_result,
+            "gnn_status": self.gnn.get_status(),
             "timestamp": datetime.now().isoformat(),
         }
         self.task_log.append(strategy)
@@ -332,8 +353,8 @@ class SOVSpace:
             "total_brains": total_brains,
             "total_models": total_brains * 4,
             "tasks_processed": len(self.task_log),
-            "spine_drum": self.spine_drum.get_status(),
-            "stigmergy": self.stigmergy.get_signal_summary(),
+            "stigmergy": self.stigmergy.get_status(),
+            "cached_brains": len(self._brain_cache),
         }
 
     def get_topology(self):

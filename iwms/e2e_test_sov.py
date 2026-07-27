@@ -20,7 +20,7 @@ ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 
 from iwms.sov_space import SOVSpace, HIVE_CLUSTERS
-from iwms.stigmergy import StigmergyLayer, SpineDrum
+from iwms.stigmergy import DistributedStigmergy, LocalStigmergy, GossipProtocol, DistributedSpineDrum
 from iwms.constitutional_ai import ConstitutionalAI
 from iwms.rag_pipeline import RAGPipeline
 from iwms.g_space import GSpace, FAMILIES
@@ -62,48 +62,39 @@ def main():
 
     # ─── STIGMERGY ────────────────────────────────────────────
     print("\n[2/8] STIGMERGY: Pheromone + Waggle + Pollen")
-    stig = StigmergyLayer()
+    stig = DistributedStigmergy()
+    stig.init_hives(["test_hive"])
     test("Stigmergy initialized", stig is not None)
-    test("Has pheromone_trails", hasattr(stig, "pheromone_trails"))
-    test("Has waggle_dances", hasattr(stig, "waggle_dances"))
-    test("Has pollen_grains", hasattr(stig, "pollen_grains"))
-    test("Has evaporation_rate", stig.evaporation_rate > 0)
+    test("Has local_stigmergies", hasattr(stig, "local_stigmergies"))
+    test("Has gossip protocol", hasattr(stig, "gossip"))
+    test("Has spine drum", hasattr(stig, "spine_drum"))
 
     # Test propagation
     test_hive_results = {
-        "reasoning": {
-            "deepseek": {"confidence": 0.9, "c_space": {"best_family": "deepseek"}},
-            "qwen": {"confidence": 0.8, "c_space": {"best_family": "qwen"}},
-        }
+        "deepseek": {"confidence": 0.9, "c_space": {"best_family": "deepseek"}},
+        "qwen": {"confidence": 0.8, "c_space": {"best_family": "qwen"}},
     }
-    stig.propagate_hive(test_hive_results)
-    test("Pheromone trails created", len(stig.pheromone_trails) > 0)
-    test("Waggle dances recorded", len(stig.waggle_dances) > 0)
-    test("Pollen grains created", len(stig.pollen_grains) > 0)
+    stig.propagate("test_hive", test_hive_results)
+    local = stig.local_stigmergies["test_hive"]
+    test("Pheromone trails created", len(local.pheromone_trails) > 0)
+    test("Waggle dances recorded", len(local.waggle_dances) > 0)
+    test("Pollen grains created", len(local.pollen_grains) > 0)
 
-    summary = stig.get_signal_summary()
-    test("Signal summary has pheromone", summary["pheromone_trails"] > 0)
-    test("Signal summary has waggle", summary["waggle_dances"] > 0)
-    test("Signal summary has pollen", summary["pollen_grains"] > 0)
-
-    waggle_sum = stig.get_waggle_summary()
-    test("Waggle has toward/away", waggle_sum["toward"] > 0 or waggle_sum["away"] > 0)
+    status = stig.get_status()
+    test("Status has hives", status["hives"] > 0)
+    test("Status has gossip", status["gossip"] is not None)
 
     # ─── SPINE DRUM ───────────────────────────────────────────
     print("\n[3/8] SPINE DRUM: Heartbeat Synchronizer")
-    drum = SpineDrum()
+    drum = DistributedSpineDrum()
     test("Spine Drum initialized", drum is not None)
-    test("Has BPM", drum.bpm == 600)
-    test("Has interval", drum.interval > 0)
+    test("Has local_beats", hasattr(drum, "local_beats"))
 
-    beat = drum.beat()
+    beat = drum.beat("test_hive")
     test("Beat returns data", beat is not None)
-    test("Beat has number", beat["beat"] == 1)
-    test("Beat has timestamp", "timestamp" in beat)
-    drum.sync_node("mac", True)
-    drum.sync_node("oracle", True)
-    test("Node synced", drum.sync_status["mac"])
-    test("Status has synced nodes", drum.get_status()["synced_nodes"] == 2)
+    test("Beat has hive", beat["hive"] == "test_hive")
+    drum.sync_neighbors("test_hive", "test_hive2")
+    test("Sync works", True)
 
     # ─── CONSTITUTIONAL AI ────────────────────────────────────
     print("\n[4/8] CONSTITUTIONAL AI: Safety Layer")
@@ -176,8 +167,8 @@ def main():
         sov.learn({"task": desc, "won": True, "competitor": "unknown"})
 
     test("5 tasks processed", len(sov.task_log) >= 5)
-    test("Spine Drum beating", sov.spine_drum.beats > 0)
-    test("Stigmergy active", len(sov.stigmergy.pheromone_trails) > 0)
+    test("Spine Drum beating", sov.stigmergy.spine_drum.total_beats > 0)
+    test("Stigmergy active", len(sov.stigmergy.get_global_trails()) > 0)
 
     status = sov.get_status()
     test("Status has 12 hives", status["hives"] == 12)

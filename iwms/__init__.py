@@ -28,12 +28,15 @@ from .owem_brain import OWEMBrain
 from .owem_hive import OWEMHive
 from .sov_router import SOVRouter
 from .sov_space import SOVSpace
-from .stigmergy import StigmergyLayer, SpineDrum
+from .stigmergy import DistributedStigmergy, LocalStigmergy, GossipProtocol, DistributedSpineDrum
 from .constitutional_ai import ConstitutionalAI
 from .rag_pipeline import RAGPipeline
+from .arena_integration import ArenaIntegration
+from .arena_trainer import ArenaTrainer
 
 __all__ = [
     "GSpace", "JSpace", "ClanEngine", "BFTQuorum", "OWM", "IWM",
     "OWEMBrain", "OWEMHive", "SOVRouter", "SOVSpace",
-    "StigmergyLayer", "SpineDrum", "ConstitutionalAI", "RAGPipeline",
+    "DistributedStigmergy", "LocalStigmergy", "GossipProtocol", "DistributedSpineDrum",
+    "ConstitutionalAI", "RAGPipeline", "ArenaIntegration", "ArenaTrainer",
 ]
