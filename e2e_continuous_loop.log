@@ -1,0 +1,27 @@
+[2026-07-27 13:56:05] [INFO] ============================================================
+[2026-07-27 13:56:05] [INFO]   E2E CONTINUOUS IMPROVEMENT PIPELINE
+[2026-07-27 13:56:05] [INFO]   Target: 95.0% across all domains
+[2026-07-27 13:56:05] [INFO]   Max Cycles: 100
+[2026-07-27 13:56:05] [INFO]   Domains: 9
+[2026-07-27 13:56:05] [INFO]   Teacher Models: 10
+[2026-07-27 13:56:05] [INFO]   Student Model: qwen2.5:0.5b
+[2026-07-27 13:56:05] [INFO]   Started: 2026-07-27T12:56:05.303558+00:00
+[2026-07-27 13:56:05] [INFO] ============================================================
+[2026-07-27 13:56:05] [INFO] 
+Validating DashScope API connectivity...
+[2026-07-27 13:56:11] [ERROR] All 3 retries failed for deepseek-v4-pro
+[2026-07-27 13:56:11] [WARN] API connectivity issue — will retry during distillation
+[2026-07-27 13:56:11] [INFO] 
+############################################################
+[2026-07-27 13:56:11] [INFO] #  CYCLE 1 START
+[2026-07-27 13:56:11] [INFO] ############################################################
+
+[2026-07-27 13:56:11] [INFO] ============================================================
+[2026-07-27 13:56:11] [INFO] PHASE 1: DISTILLATION (Cycle 1)
+[2026-07-27 13:56:11] [INFO] ============================================================
+[2026-07-27 13:56:11] [INFO] Existing records loaded: 8
+[2026-07-27 13:56:11] [INFO] Target domains: ['eu_ai_act', 'defence', 'governance', 'math', 'reasoning', 'coding', 'safety', 'agentic', 'sovereign']
+[2026-07-27 13:56:11] [INFO] Models: 10
+[2026-07-27 13:56:11] [INFO] Prompts per domain per model: 8
+[2026-07-27 13:56:11] [INFO] 
+  [eu_ai_act] Distilling 8 prompts x 10 models...
