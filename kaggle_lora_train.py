@@ -28,6 +28,7 @@ def main():
     BASE_MODEL = "mistralai/Mistral-7B-Instruct-v0.3"
     # Try multiple possible paths
     possible_paths = [
+        "/kaggle/input/datasets/nicktempleman/sov7-training-v2/honey_mistral.jsonl",
         "/kaggle/input/sov7-training-v2/honey_mistral.jsonl",
         "/kaggle/input/sov-training-data/honey_mistral.jsonl",
         "/kaggle/input/honey_mistral.jsonl",
@@ -40,7 +41,7 @@ def main():
     if DATA_PATH is None:
         # Try to find it dynamically
         import glob
-        candidates = glob.glob("/kaggle/input/*/honey_mistral.jsonl")
+        candidates = glob.glob("/kaggle/input/**/honey_mistral.jsonl", recursive=True)
         if candidates:
             DATA_PATH = candidates[0]
         else:
