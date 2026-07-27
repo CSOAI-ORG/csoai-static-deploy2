@@ -140,6 +140,7 @@ class JSpace:
 
     def _identify_strengths(self, task):
         """Identify family's strengths for this task type."""
+        task = self._normalize_task(task)
         from .g_space import FAMILY_CAPABILITIES
         caps = FAMILY_CAPABILITIES.get(self.family, {})
         task_lower = task.lower()
@@ -158,6 +159,7 @@ class JSpace:
 
     def _identify_weaknesses(self, task):
         """Identify family's weaknesses for this task type."""
+        task = self._normalize_task(task)
         from .g_space import FAMILY_CAPABILITIES
         caps = FAMILY_CAPABILITIES.get(self.family, {})
         task_lower = task.lower()
