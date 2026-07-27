@@ -108,14 +108,47 @@ ALL_FAMILIES = [
 class SOVSpace:
     """SOV-Space: The complete fractal hive architecture."""
 
-    def __init__(self):
+    def __init__(self, lazy=True):
         self.hives = {}
         self.stigmergy = StigmergyLayer()
         self.spine_drum = SpineDrum()
         self.constitutional_ai = ConstitutionalAI()
         self.rag_pipeline = RAGPipeline()
         self.task_log = []
-        self._build_hives()
+        self.lazy = lazy
+        self._brain_cache = {}
+        if not lazy:
+            self._build_hives()
+        else:
+            self._build_hive_skeleton()
+
+    def _build_hive_skeleton(self):
+        """Build hive structure without creating all brains (lazy mode)."""
+        for hive_id, (hive_name, config) in enumerate(HIVE_CLUSTERS.items()):
+            clans = {}
+            for clan_id, clan_name in enumerate(config["clans"]):
+                families = [clan_name] + [f for f in ALL_FAMILIES if f != clan_name][:11]
+                clans[clan_name] = {
+                    "id": clan_id,
+                    "name": clan_name,
+                    "specialist": clan_name,
+                    "families": families,
+                    "brains": {},  # Lazy — created on demand
+                    "c_space": {},
+                }
+            self.hives[hive_name] = {
+                "id": hive_id,
+                "name": hive_name,
+                "specialist": config["specialist"],
+                "clans": clans,
+            }
+
+    def _get_brain(self, hive_name, clan_name, family):
+        """Get or create a brain (lazy loading)."""
+        key = f"{hive_name}:{clan_name}:{family}"
+        if key not in self._brain_cache:
+            self._brain_cache[key] = OWEMBrain(family=family, clan_id=self.hives[hive_name]["clans"][clan_name]["id"])
+        return self._brain_cache[key]
 
     def _build_hives(self):
         """Build all 12 hive clusters."""
@@ -234,7 +267,10 @@ class SOVSpace:
         clan_results = {}
         for clan_name, clan in hive["clans"].items():
             family_results = {}
-            for fam, brain in clan["brains"].items():
+            # Only process specialist + top3 families (not all 12)
+            active_families = clan["families"][:4]  # specialist + top 3
+            for fam in active_families:
+                brain = self._get_brain(hive["name"], clan_name, fam)
                 j_card = brain.process(task, competitor)
                 family_results[fam] = j_card
             # Build clan C-space
