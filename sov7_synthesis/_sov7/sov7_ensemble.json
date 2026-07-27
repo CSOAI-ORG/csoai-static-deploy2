@@ -1,0 +1,45 @@
+{
+  "name": "SOV7 5-Clan Ensemble",
+  "version": "0.1.0",
+  "description": "Voting ensemble of 5 decorrelated architectures",
+  "clans": [
+    {
+      "name": "Dense Anchor",
+      "architecture": "Transformer",
+      "recommended": "Qwen3-4B",
+      "weight": 0.25,
+      "strength": "Quality baseline"
+    },
+    {
+      "name": "Hybrid SSM",
+      "architecture": "Mamba2 + Attention",
+      "recommended": "Zamba2-7B",
+      "weight": 0.2,
+      "strength": "Long context + efficiency"
+    },
+    {
+      "name": "Pure RNN",
+      "architecture": "Linear Attention",
+      "recommended": "RWKV-7-2.9B",
+      "weight": 0.2,
+      "strength": "Infinite context, zero attention"
+    },
+    {
+      "name": "MoE Specialist",
+      "architecture": "Mixture of Experts",
+      "recommended": "Qwen3-30B-A3B",
+      "weight": 0.2,
+      "strength": "Efficient scaling, 3B active"
+    },
+    {
+      "name": "SOV Sovereign",
+      "architecture": "OWEM + Pillars",
+      "recommended": "sov5v2",
+      "weight": 0.15,
+      "strength": "12-pillar sovereign alignment"
+    }
+  ],
+  "voting": "Weighted majority + BFT quorum (23/33)",
+  "decorrelation_rho": -0.725,
+  "status": "design"
+}
