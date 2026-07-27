@@ -46,3 +46,34 @@ Validating DashScope API connectivity...
 [2026-07-27 14:13:04] [INFO]     [safety] +8 records
 [2026-07-27 14:13:04] [INFO] 
   [agentic] Distilling 8 prompts x 10 models...
+[2026-07-27 14:16:25] [INFO]     [agentic] +8 records
+[2026-07-27 14:16:25] [INFO] 
+  [sovereign] Distilling 8 prompts x 10 models...
+[2026-07-27 14:18:37] [INFO]     [sovereign] +8 records
+[2026-07-27 14:18:37] [INFO] 
+Distillation complete: 72 new records, 0 errors
+[2026-07-27 14:18:37] [INFO] Domain breakdown: {
+  "eu_ai_act": 8,
+  "defence": 8,
+  "governance": 8,
+  "math": 8,
+  "reasoning": 8,
+  "coding": 8,
+  "safety": 8,
+  "agentic": 8,
+  "sovereign": 8
+}
+[2026-07-27 14:18:37] [INFO] Loaded 304 unique distillation records
+[2026-07-27 14:18:37] [INFO] ============================================================
+[2026-07-27 14:18:37] [INFO] PHASE 2: LoRA TRAINING (Cycle 1)
+[2026-07-27 14:18:37] [INFO] ============================================================
+[2026-07-27 14:18:37] [INFO] Prepared 304 training records at /Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/unified_overnight/training/cycle_1_training.jsonl
+[2026-07-27 14:18:37] [INFO] Running LoRA training with 304 records...
+[2026-07-27 14:18:37] [INFO] Base model: qwen2.5:0.5b
+[2026-07-27 14:18:37] [INFO] Checkpoint: /Users/nicholas/clawd/csoai-static-deploy2/sov-backup/checkpoints/cycle_1
+[2026-07-27 14:18:56] [ERROR] Training failed (exit 1)
+[2026-07-27 14:18:56] [ERROR] Stderr: 
+[2026-07-27 14:18:56] [INFO] ============================================================
+[2026-07-27 14:18:56] [INFO] PHASE 3: EVALUATION (Cycle 1)
+[2026-07-27 14:18:56] [INFO] ============================================================
+[2026-07-27 14:18:56] [INFO]   Evaluating [eu_ai_act]...
