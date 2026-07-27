@@ -21,5 +21,8 @@ from .clan_engine import ClanEngine
 from .bft_quorum import BFTQuorum
 from .owm import OWM
 from .iwm import IWM
+from .owem_brain import OWEMBrain
+from .owem_hive import OWEMHive
+from .sov_router import SOVRouter
 
-__all__ = ["GSpace", "JSpace", "ClanEngine", "BFTQuorum", "OWM", "IWM"]
+__all__ = ["GSpace", "JSpace", "ClanEngine", "BFTQuorum", "OWM", "IWM", "OWEMBrain", "OWEMHive", "SOVRouter"]

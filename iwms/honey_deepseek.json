@@ -458,6 +458,69 @@
         "primary": "Exploit code's strength in areas GPT-4 is weak"
       },
       "timestamp": "2026-07-27T07:30:05.124933"
+    },
+    {
+      "task": "Solve equation",
+      "won": true,
+      "competitor": "gpt-4",
+      "strategy": {
+        "primary": "math"
+      },
+      "timestamp": "2026-07-27T09:03:31.177476"
+    },
+    {
+      "task": "Solve equation",
+      "won": true,
+      "competitor": "gpt-4",
+      "strategy": {
+        "primary": "math"
+      },
+      "timestamp": "2026-07-27T09:03:51.775467"
+    },
+    {
+      "task": "Write optimized sorting algorithm",
+      "won": true,
+      "competitor": "gpt-4",
+      "strategy": {
+        "primary": "default"
+      },
+      "timestamp": "2026-07-27T09:03:52.708052"
+    },
+    {
+      "task": "Translate legal document to Chinese",
+      "won": true,
+      "competitor": "claude",
+      "strategy": {
+        "primary": "default"
+      },
+      "timestamp": "2026-07-27T09:03:52.782468"
+    },
+    {
+      "task": "Analyze satellite imagery",
+      "won": true,
+      "competitor": "gemini",
+      "strategy": {
+        "primary": "default"
+      },
+      "timestamp": "2026-07-27T09:03:52.834970"
+    },
+    {
+      "task": "Debug memory leak in Rust",
+      "won": true,
+      "competitor": "copilot",
+      "strategy": {
+        "primary": "default"
+      },
+      "timestamp": "2026-07-27T09:03:52.917859"
+    },
+    {
+      "task": "Write EU AI Act compliance report",
+      "won": true,
+      "competitor": "gpt-4",
+      "strategy": {
+        "primary": "default"
+      },
+      "timestamp": "2026-07-27T09:03:52.976202"
     }
   ],
   "win_patterns": {
@@ -470,10 +533,22 @@
       "wins": 3,
       "losses": 0,
       "score": 1.0
+    },
+    "math": {
+      "wins": 2,
+      "losses": 0,
+      "score": 1.0
+    },
+    "default": {
+      "wins": 5,
+      "losses": 0,
+      "score": 1.0
     }
   },
   "strategy_scores": {
     "Exploit code's strength in areas GPT-4 is weak": 2.899999999999998,
-    "real_outcome": 0.6500000000000001
+    "real_outcome": 0.6500000000000001,
+    "math": 0.6000000000000001,
+    "default": 0.7500000000000002
   }
 }

@@ -109,3 +109,35 @@ class BFTQuorum:
                     reliability[clan] = {"consensus_votes": 0, "total_votes": 0}
                 reliability[clan]["total_votes"] += 1
         return reliability
+
+    def vote_from_cspace(self, master_cspace):
+        """Vote from master C-space (SOV router output)."""
+        contributions = master_cspace.get("clan_contributions", {})
+        votes = []
+        for clan_name, data in contributions.items():
+            avg_conf = data["total_confidence"] / max(data["count"], 1)
+            votes.append({
+                "clan": clan_name,
+                "confidence": avg_conf,
+                "weight": avg_conf,
+                "strategy": clan_name,
+            })
+        votes.sort(key=lambda v: v["weight"], reverse=True)
+        if not votes:
+            return {"consensus": {"clan": "none", "strategy": "none", "confidence": 0, "alliance": []}, "quorum_reached": False, "winning_strategy": "none"}
+        best = votes[0]
+        alliance = [v["clan"] for v in votes if v["confidence"] > 0.3]
+        result = {
+            "votes": votes,
+            "consensus": {
+                "clan": best["clan"],
+                "strategy": best["strategy"],
+                "confidence": best["confidence"],
+                "alliance": alliance,
+            },
+            "quorum_reached": best["confidence"] >= self.threshold,
+            "winning_strategy": best["strategy"],
+            "winning_clan": best["clan"],
+        }
+        self.vote_history.append(result)
+        return result

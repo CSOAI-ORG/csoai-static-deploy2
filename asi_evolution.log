@@ -1,35 +1,42 @@
-[08:45:39] ======================================================================
-[08:45:39]   SOV33 ASI EVOLUTION MODE v2 — Real LoRA Training on MPS
-[08:45:39] ======================================================================
-[08:45:39] 
+[09:17:49] ======================================================================
+[09:17:49]   SOV33 ASI EVOLUTION MODE v2 — Real LoRA Training on MPS
+[09:17:49] ======================================================================
+[09:17:49] 
 ======================================================================
-[08:45:39]   CYCLE 1
-[08:45:39] ======================================================================
-[08:45:39] 
+[09:17:49]   CYCLE 1
+[09:17:49] ======================================================================
+[09:17:49] 
 [1] Benchmarking current model...
-[08:45:40]     benchmark progress: 50/227
-[08:45:40]     benchmark progress: 100/227
-[08:45:40]     benchmark progress: 150/227
-[08:45:40]     benchmark progress: 200/227
-[08:45:40]   Current scores:
-[08:45:40]     coding               0.0%
-[08:45:40]     defence              0.0%
-[08:45:40]     eu_ai_act            0.0%
-[08:45:40]     general              0.0%
-[08:45:40]     governance           0.0%
-[08:45:40]     math                 0.0%
-[08:45:40]     red_line             0.0%
-[08:45:40]     safety               0.0%
-[08:45:40]   Average: 0.0%
-[08:45:40] 
+[09:17:50]     benchmark progress: 50/227
+[09:17:50]     benchmark progress: 100/227
+[09:17:50]     benchmark progress: 150/227
+[09:17:50]     benchmark progress: 200/227
+[09:17:50]   Current scores:
+[09:17:50]     coding               0.0%
+[09:17:50]     defence              0.0%
+[09:17:50]     eu_ai_act            0.0%
+[09:17:50]     general              0.0%
+[09:17:50]     governance           0.0%
+[09:17:50]     math                 0.0%
+[09:17:50]     red_line             0.0%
+[09:17:50]     safety               0.0%
+[09:17:50]   Average: 0.0%
+[09:17:50] 
 [2] Weak domains (8): ['eu_ai_act', 'defence', 'governance', 'math', 'general', 'coding', 'safety', 'red_line']
-[08:45:40] 
+[09:17:50] 
 [3] Generating targeted training data...
-[08:45:40]   Generated 2270 examples for 8 domains
-[08:45:40] 
+[09:17:50]   Generated 2270 examples for 8 domains
+[09:17:50] 
 [4] Training LoRA adapter...
-[08:45:40]   Real PEFT LoRA training on MPS...
-[08:45:49]   Loading Qwen/Qwen2.5-0.5B-Instruct...
- Training LoRA adapter...
-[08:45:40]   Real PEFT LoRA training on MPS...
-[08:45:49]   Loading Qwen/Qwen2.5-0.5B-Instruct...
+[09:17:50]   Real PEFT LoRA training on MPS...
+[09:18:01]   Loading /Users/nicholas/.cache/huggingface/hub/models--Qwen--Qwen2.5-0.5B-Instruct/snapshots/7ae557604adf67be50417f59c2c2f167def9a775...
+Loading weights:   0%|          | 0/290 [00:00<?, ?it/s]Loading weights: 100%|██████████| 290/290 [00:00<00:00, 43142.09it/s]
+trainable params: 1,081,344 || all params: 495,114,112 || trainable%: 0.2184
+[09:18:10]   Dataset: 2270 examples
+Adding EOS to train dataset:   0%|          | 0/2270 [00:00<?, ? examples/s]Adding EOS to train dataset:  44%|████▍     | 1000/2270 [00:00<00:00, 7802.98 examples/s]Adding EOS to train dataset: 100%|██████████| 2270/2270 [00:00<00:00, 10735.50 examples/s]
+Tokenizing train dataset:   0%|          | 0/2270 [00:00<?, ? examples/s]Tokenizing train dataset:  20%|██        | 465/2270 [00:00<00:00, 4615.89 examples/s]Tokenizing train dataset:  44%|████▍     | 1005/2270 [00:00<00:00, 5071.80 examples/s]Tokenizing train dataset:  70%|███████   | 1590/2270 [00:00<00:00, 4404.23 examples/s]Tokenizing train dataset:  91%|█████████▏| 2077/2270 [00:00<00:00, 3008.93 examples/s]Tokenizing train dataset: 100%|██████████| 2270/2270 [00:00<00:00, 3563.70 examples/s]
+Truncating train dataset:   0%|          | 0/2270 [00:00<?, ? examples/s]Truncating train dataset: 100%|██████████| 2270/2270 [00:00<00:00, 504801.98 examples/s]
+The tokenizer has new PAD/BOS/EOS tokens that differ from the model config and generation config. The model config and generation config were aligned accordingly, being updated with the tokenizer's values. Updated tokens: {'bos_token_id': None, 'pad_token_id': 151643}.
+  0%|          | 0/284 [00:00<?, ?it/s]/opt/homebrew/lib/python3.14/site-packages/torch/utils/data/dataloader.py:775: UserWarning: 'pin_memory' argument is set as true but not supported on MPS now, device pinned memory won't be used.
+  super().__init__(loader)
+  0%|          | 1/284 [00:04<18:56,  4.02s/it]  1%|          | 2/284 [00:07<16:13,  3.45s/it]  1%|          | 3/284 [00:09<13:57,  2.98s/it]

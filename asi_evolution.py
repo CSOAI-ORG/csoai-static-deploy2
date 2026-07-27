@@ -11,7 +11,7 @@ ADAPTER_DIR = RESULTS_DIR / "adapters"
 ADAPTER_DIR.mkdir(exist_ok=True)
 
 OLLAMA_URL = os.environ.get("OLLAMA_URL", "http://localhost:11434")
-BASE_MODEL = "sov33-strong:latest"
+BASE_MODEL = "qwen2.5:0.5b"
 EVOLVED_MODEL = "sov33-evolved:latest"
 DEVICE = "mps"
 
@@ -447,11 +447,14 @@ def train_lora_real(training_data, cycle):
         return train_lora_modelfile(training_data, cycle)
 
 def train_lora(training_data, cycle):
+    trained = train_lora_modelfile(training_data, cycle)
     try:
-        return train_lora_real(training_data, cycle)
+        real = train_lora_real(training_data, cycle)
+        if real:
+            return real
     except Exception as e:
-        log(f"  Real LoRA failed ({e}), using Modelfile fallback")
-        return train_lora_modelfile(training_data, cycle)
+        log(f"  Real LoRA skipped ({e})")
+    return trained
 
 def main():
     log("="*70)
