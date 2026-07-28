@@ -112,6 +112,37 @@ def render(d: dict) -> str:
 <table><thead><tr><th>Dimension</th><th>n</th><th>Leader</th><th>95% CI</th><th>Interval</th>
 <th>Tied</th></tr></thead><tbody>{"".join(body)}</tbody></table>
 
+<div class="sys">
+  <h3>System result — the composed pipeline vs a direct model call</h3>
+  <p>The board above scores individual models. This scores what actually ships:
+  <code>gate → retrieve → answer → verify</code>, against the same items answered by the raw
+  base model. n=186, paired, judged by an analysis written <em>before</em> the run.</p>
+  <table class="mini"><thead><tr><th>layer</th><th>n</th><th>Δ</th><th>95% CI</th></tr></thead>
+  <tbody>
+  <tr><td>deterministic gate</td><td>31</td><td class="pos">+34.84</td><td>[+17.50, +52.18]</td></tr>
+  <tr><td>knowledge base</td><td>14</td><td class="pos">+19.64</td><td>[+6.87, +32.41]</td></tr>
+  <tr><td>tuned model</td><td>141</td><td class="pos">+9.42</td><td>[+4.82, +14.03]</td></tr>
+  <tr class="tot"><td><strong>whole system</strong></td><td>186</td><td class="pos"><strong>+14.43</strong></td><td><strong>[+9.63, +19.23]</strong></td></tr>
+  </tbody></table>
+  <p>Wins 64 · losses 20 · ties 102 · sign test p&lt;0.0001. Dropping the single largest item
+  moves the headline to +13.96, so it does not rest on one case.</p>
+
+  <h3>…and the control that refutes our own architecture claim</h3>
+  <p>That <code>+9.42</code> changes two things at once: the query goes to a governance-tuned
+  model <em>at all</em>, and to <em>the particular one</em> a per-dimension classifier chose.
+  Holding the first fixed and varying only the second:</p>
+  <table class="mini"><thead><tr><th>selection rule</th><th>score</th><th>vs routed</th></tr></thead>
+  <tbody>
+  <tr><td>per-dimension routing</td><td>43.7%</td><td>—</td></tr>
+  <tr><td>always the best single model</td><td>42.8%</td><td class="neg">Δ +0.90 &nbsp; [-1.99, +3.79] &nbsp; no effect</td></tr>
+  <tr><td>random expert (seeded)</td><td>34.5%</td><td class="pos">Δ +9.18 &nbsp; [+4.21, +14.14]</td></tr>
+  </tbody></table>
+  <p><strong>Per-dimension routing beats chance but does not beat one good model.</strong> The
+  gain was the tuned model, not the routing — so routing ships <strong>off</strong>. The cause
+  is on this page: routing selects on per-dimension differences, and 0 of 15 dimensions here
+  have a resolved winner. It is selecting on noise.</p>
+</div>
+
 <section>
 <h3>Why a tied set instead of a winner</h3>
 <p>Reporting a per-dimension winner when intervals overlap manufactures a ranking out of noise.

@@ -163,6 +163,45 @@ def build_expert_table() -> tuple[dict, dict]:
 
 
 # ── TIER 3: attestation ──────────────────────────────────────────────────────
+def select_expert(dim: str, per_dimension: bool = False) -> tuple[str, str]:
+    """Pick the model that answers. Returns (model, why).
+
+    ═══════════════════════════════════════════════════════════════════════════════
+    PER-DIMENSION ROUTING IS OFF BY DEFAULT, AND THAT IS A MEASURED DECISION
+    ═══════════════════════════════════════════════════════════════════════════════
+    `router_control.py`, n=136, same items and same wrapper pool, only the selection rule
+    varying:
+
+        ROUTED 43.7%    FIXED (best single) 42.8%    RANDOM 34.5%
+
+        ROUTED vs FIXED   Δ +0.90  95% CI [-1.99, +3.79]   crosses zero — no effect shown
+        ROUTED vs RANDOM  Δ +9.18  95% CI [+4.21, +14.14]  real
+
+    So the classifier beats chance but does NOT beat always using the best single model. The
+    +9.42 the routed arm scored against raw base in the n=186 system run was the WRAPPER —
+    going to a governance-tuned model at all — not the routing.
+
+    The cause is legible: the expert table is derived from a board where **0 of 15 dimensions
+    have a resolved winner**. The router selects on differences that are themselves noise, so
+    it cannot beat ignoring them. This is the same constraint that blocks `mitosis` — no cell
+    split clears its minimum detectable effect either. Item expansion unblocks both.
+
+    Routing therefore stays available but OFF. Shipping it on would mean deploying a
+    configuration our own measurement does not support, which is the failure this estate keeps
+    having to retract. Turn it on when a re-run of `router_control.py` shows ROUTED > FIXED
+    with a CI clear of zero — not before.
+    """
+    table, models = build_expert_table()
+    if not models:
+        return BASE, "no board — falling back to base"
+    if per_dimension:
+        e = table.get(dim, {}).get("expert")
+        if e:
+            return e, f"per-dimension routing (EXPERIMENTAL — not supported by router_control)"
+    best = max(models, key=lambda m: sum(models[m].values()) / len(models[m]))
+    return best, "best single model (routing off: ROUTED vs FIXED CI [-1.99, +3.79])"
+
+
 def attest(query: str, dim: str, expert: str, response: str) -> dict:
     """Sign the ROUTING DECISION, not just the output. Without this, "the cluster chose the best
     expert" is an unverifiable claim — exactly the class of claim this estate keeps having to retract."""

@@ -165,10 +165,11 @@ def run_system(question: str, test: dict) -> dict:
         return {"answer": hit, "trace": trace, "blocked": False}
     trace["kb_hit"] = False
 
-    # SOV33 — surface expert for that dimension
-    table, _ = build_expert_table()
-    expert = table.get(dim, {}).get("expert", BASE)
-    trace["expert"] = expert
+    # SOV33 — the model that answers. Routing is OFF by default: router_control.py measured
+    # ROUTED vs FIXED at Δ +0.90, CI [-1.99, +3.79]. See owem_cluster.select_expert.
+    from owem_cluster import select_expert
+    expert, why = select_expert(dim)
+    trace["expert"], trace["selection"] = expert, why
     ans = ask(expert, question)
 
     # citation check — recorded, not used to alter the answer
