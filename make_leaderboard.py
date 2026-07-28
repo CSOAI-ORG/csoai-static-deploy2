@@ -137,6 +137,22 @@ def render(d: dict) -> str:
   <tr><td>always the best single model</td><td>42.8%</td><td class="neg">Δ +0.90 &nbsp; [-1.99, +3.79] &nbsp; no effect</td></tr>
   <tr><td>random expert (seeded)</td><td>34.5%</td><td class="pos">Δ +9.18 &nbsp; [+4.21, +14.14]</td></tr>
   </tbody></table>
+  <h3>…and a second layer we built, measured, and switched off</h3>
+  <p>The system answered <em>"does Article 27 apply to a private credit-scoring deployer?"</em>
+  wrongly — from its weights. So we added retrieval over 404 real statute articles (AI Act,
+  GDPR, NIS2, DORA, CRA, CSRD). It fixed that question. Then we measured it:</p>
+  <table class="mini"><thead><tr><th>configuration</th><th>Δ vs weights</th><th>95% CI</th></tr></thead>
+  <tbody>
+  <tr><td>naive top-k retrieval</td><td class="neg">-9.16</td><td class="neg">[-17.64, -0.69] &nbsp; significant <strong>harm</strong></td></tr>
+  <tr><td>with a relevance gate</td><td>-5.26</td><td>[-12.66, +2.13] &nbsp; no effect shown</td></tr>
+  </tbody></table>
+  <p>Asked <em>"how should AI systems handle personal data?"</em>, BM25 returned GDPR Article 47
+  — binding corporate rules. Instructed to answer only from retrieved text, the model produced a
+  confident answer about corporate rules and scored <strong>0</strong> where its own weights
+  scored 50. The grounding instruction turns a retrieval <em>miss</em> into a wrong <em>answer</em>.
+  The gate removed that harm but did not demonstrate benefit, so <strong>retrieval ships off too</strong>.
+  The Article 27 fix stays one corrected item.</p>
+
   <p><strong>Per-dimension routing beats chance but does not beat one good model.</strong> The
   gain was the tuned model, not the routing — so routing ships <strong>off</strong>. The cause
   is on this page: routing selects on per-dimension differences, and 0 of 15 dimensions here
