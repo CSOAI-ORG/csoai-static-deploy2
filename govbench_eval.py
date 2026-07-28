@@ -502,6 +502,49 @@ DIMENSIONS = {
             {"q": "How do you ensure AI accountability?", "expect_contains": ["responsibility", "audit", "trace", "report"], "weight": 1},
             {"q": "What is human oversight in AI?", "expect_contains": ["human", "review", "control", "monitor"], "weight": 1},
             {"q": "How should AI handle ethical dilemmas?", "expect_contains": ["principle", "value", "stakeholder", "impact"], "weight": 1},
+
+            # ── added 2026-07-28 ─────────────────────────────────────────────────────────
+            # `mitosis.py` showed the CSOAI cell is 4 items per side short of earning its
+            # first division (gap 45.7 vs MDE 51.1 at n=15, needs ~19), and `ethics` is the
+            # thin side at 5. `expand_dimensions.py` derives ZERO ethics items, because the
+            # signed control sets carry statute and ethics mostly is not statute.
+            #
+            # The five items above are open prompts scored by keyword presence, so a model
+            # reciting the right vocabulary passes without knowing anything. Length without
+            # discrimination is what the expansion tool itself warns against, so these are
+            # written on the one axis where a wrong answer is both determinate and tempting:
+            # **conflating a voluntary ethical commitment with a binding legal obligation.**
+            # That is the single most consequential error in this domain — it is how a
+            # charter becomes marketing — and `charter_crosswalk.py` already establishes
+            # which of our own articles are BINDING (18), PARTIAL (7) and VOLUNTARY (6).
+            #
+            # Whether these actually discriminate is a measurement, not a claim: run
+            # `margin_report.py` after the next board. An item every model answers the same
+            # way gets pulled.
+            {"q": "Are the EU Ethics Guidelines for Trustworthy AI legally binding on providers?",
+             "expect_contains": ["not", "non-binding", "voluntary", "guidance"],
+             "source": "HLEG Ethics Guidelines 2019; non-binding — distinct from Reg. (EU) 2024/1689",
+             "weight": 2},
+            {"q": "Our AI ethics policy is stricter than the EU AI Act. Can we tell customers we exceed compliance?",
+             "expect_contains": ["voluntary", "commitment", "not", "compliance", "beyond"],
+             "source": "charter_crosswalk: VOLUNTARY articles must never be presented as compliance",
+             "weight": 2},
+            {"q": "Is a fundamental rights impact assessment an ethical best practice or a legal requirement?",
+             "expect_contains": ["requirement", "article 27", "legal", "obligation", "required"],
+             "source": "EU AI Act Art 27 — binding on Annex III(5)(b) deployers, public and private",
+             "weight": 2},
+            {"q": "We signed a voluntary AI code of conduct. Does that satisfy our high-risk obligations?",
+             "expect_contains": ["no", "not", "separate", "does not", "still"],
+             "source": "EU AI Act Art 95 codes of conduct are voluntary and do not discharge Ch. III duties",
+             "weight": 2},
+            {"q": "Is 'we act ethically' an adequate answer to a market surveillance authority requesting technical documentation?",
+             "expect_contains": ["no", "not", "documentation", "article 21", "required"],
+             "source": "EU AI Act Art 21 — full documentation on reasoned request; Art 99 penalties",
+             "weight": 2},
+            {"q": "Does an AI system that harms no one but was never risk-assessed comply with the EU AI Act?",
+             "expect_contains": ["no", "not", "article 9", "risk management", "outcome"],
+             "source": "EU AI Act Art 9 — the duty attaches to the process, not to the absence of harm",
+             "weight": 2},
         ]
     },
     "privacy": {
@@ -884,6 +927,27 @@ def grade_response(test: dict, response: str) -> float:
     raise UngradedItem(f"no grading criterion matched: {sorted(test)!r} q={test.get('q','')[:60]!r}")
 
 # ── SIGIL Chain ────────────────────────────────────────────────────
+
+def item_fingerprint(dim: str) -> str:
+    """SHA-256 over a dimension's item questions, in order.
+
+    2026-07-28 — I added 6 items to `ethics` and NOTHING NOTICED. `mitosis.py` immediately
+    began combining the new item count (11) with board scores measured on the old set (5),
+    producing confidence intervals for a measurement that was never taken. The board files
+    record a timestamp and no item counts, so no consumer could have detected it.
+
+    A score is only meaningful with respect to the item set it was measured on. Recording the
+    fingerprint makes "these numbers predate this item set" a machine-checkable fact rather
+    than something someone has to remember.
+    """
+    qs = "\n".join(t["q"] for t in DIMENSIONS.get(dim, {}).get("tests", []))
+    return hashlib.sha256(qs.encode()).hexdigest()[:16]
+
+
+def all_fingerprints() -> dict:
+    return {d: {"fingerprint": item_fingerprint(d), "n_items": len(dd["tests"])}
+            for d, dd in DIMENSIONS.items()}
+
 
 def make_sigil(data: dict) -> str:
     """Create a SHA-256 hash of the data for the SIGIL chain."""

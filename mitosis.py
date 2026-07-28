@@ -180,6 +180,22 @@ def main() -> int:
     n_items = {d: len(dd["tests"]) for d, dd in DIMENSIONS.items()}
     scores = board_scores()          # raises rather than silently emptying — see board_scores
 
+    # A score and an item count from different item sets must never be combined. Adding 6
+    # items to `ethics` silently changed every interval this tool computes, because n came
+    # from DIMENSIONS (live) and the score came from the board (2026-07-27). Nothing caught
+    # it. Dimensions whose item set moved after the board run are dropped, loudly.
+    fp = HERE / "benchmark-results" / "board_fingerprints.json"
+    stale = {}
+    if fp.exists():
+        stale = json.loads(fp.read_text()).get("stale_vs_board", {})
+    if stale:
+        print(f"  ⚠️  {len(stale)} dimension(s) changed after the board run — EXCLUDED:")
+        for d, why in stale.items():
+            print(f"        {d}: {why}")
+        print(f"      Re-benchmark them before they can inform a division.\n")
+    for d in stale:
+        scores.pop(d, None)
+
     print(f"  MITOSIS — division rule over {len(cells)} master cells\n")
     print(f"  A cell divides only when the split is RESOLVED, SEPARATED and LOAD-BEARING.")
     print(f"  Default is to stay whole. Structure without evidence is not capability.\n")
