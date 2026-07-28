@@ -100,12 +100,26 @@ def preflight(models: list[str]) -> set[str]:
          with BASE on both arms, contributes a guaranteed Δ=0 to the paired mean — diluting
          the effect toward zero while looking like a measurement. Those dimensions are
          DROPPED and reported as unmeasured, which is what they are.
+
+    2026-07-28, SAME DAY, SECOND TIME — the first version of this function asked "did the call
+    return a string?" I had meanwhile repaired `sov33-evolved-c2`'s chat template, so it began
+    returning strings again — strings reading "1\n1\n1\n1", because the underlying blob is
+    corrupt. It sailed through this preflight. The check I wrote to catch a model reporting
+    success on a path it did not complete was itself reporting success on a path it did not
+    complete.
+
+    Reachability is not health. The gate is `_substantive` — the same liveness predicate the
+    grader now uses, so a model that cannot pass the benchmark's own floor cannot be routed to.
     """
+    from govbench_eval import _substantive
     dead = set()
     for m in models:
         try:
-            ask(m, "hi", timeout=90, retries=1)
+            out = ask(m, "Name one obligation the EU AI Act places on high-risk systems.",
+                      timeout=90, retries=1)
         except Unreachable:
+            dead.add(m); continue
+        if not _substantive(out):
             dead.add(m)
     return dead
 
