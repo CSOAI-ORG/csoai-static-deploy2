@@ -45,7 +45,7 @@ def ci(ds: list[float]) -> tuple[float, float, float]:
 def main() -> int:
     from govbench_eval import DIMENSIONS, grade_response
     from owem_cluster import ask as call_model, select_expert
-    from statute_retrieval import search, NoStatuteFound
+    from statute_retrieval import search, NoStatuteFound, relevant
 
     model, _ = select_expert("compliance")
     items = [(d, t) for d in DIMS if d in DIMENSIONS for t in DIMENSIONS[d]["tests"]]
@@ -59,6 +59,13 @@ def main() -> int:
         q = t["q"]
         try:
             hits = search(q, 4)
+            # Retrieving SOMETHING is not retrieving the RIGHT thing. Without this gate the
+            # layer measured Δ -9.16 [-17.64, -0.69]: BM25 always returns its top-k, and the
+            # grounding instruction then turned every miss into a confident wrong answer.
+            ok, _why = relevant(q, hits)
+            if not ok:
+                no_statute += 1
+                hits = None
         except NoStatuteFound:
             no_statute += 1
             hits = None
@@ -97,11 +104,21 @@ def main() -> int:
     print(f"    Δ {mu:+6.2f}  95% CI [{lo:+6.2f}, {hi:+6.2f}]  "
           f"{'✅ real' if real else '❌ CI crosses zero'}")
     print(f"    wins {wins} · losses {losses} · ties {n-wins-losses}\n")
+
+    # 2026-07-28 — the first version branched on `real` alone and printed "Retrieval beats
+    # answering from weights" for a Δ of **-9.16**. Significance is not direction. A verdict
+    # that reads only the CI's distance from zero and never its sign will announce a win for
+    # any large enough loss, which is this session's defect wearing a statistics costume.
     if not real:
         print(f"  ⚠️  THE RETRIEVAL LAYER IS NOT DEMONSTRATED ON THIS BOARD.")
         print(f"     The Article 27 fix remains a single corrected case, not a system result.")
+    elif mu < 0:
+        print(f"  ❌ RETRIEVAL MAKES IT SIGNIFICANTLY WORSE — Δ {mu:+.2f}, CI excludes zero.")
+        print(f"     Naive top-k stuffing into a 0.5B context is a REGRESSION, not an upgrade.")
+        print(f"     Do not ship this layer on. The Art 27 case it fixed was real and")
+        print(f"     unrepresentative; {losses} items got worse against {wins} better.")
     else:
-        print(f"  Retrieval beats answering from weights on statute-answerable items.")
+        print(f"  ✅ Retrieval beats answering from weights on statute-answerable items.")
 
     out = {"timestamp": datetime.now(timezone.utc).isoformat(), "n": n, "model": model,
            "dimensions": DIMS, "no_statute_retrieved": no_statute,

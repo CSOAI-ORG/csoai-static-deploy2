@@ -37,6 +37,29 @@ DESIGN — three refusals, each earned by a specific failure this session
    dimension that measures whether a model sticks to provided context; this makes that
    measurable end to end rather than per-prompt.
 
+═══════════════════════════════════════════════════════════════════════════════
+⚠️ MEASURED VERDICT — THIS LAYER SHIPS **OFF**
+═══════════════════════════════════════════════════════════════════════════════
+`retrieval_bench.py`, n=38, paired, same model on both arms:
+
+    ungated   Δ -9.16  95% CI [-17.64, -0.69]   significant HARM
+    gated     Δ -5.26  95% CI [-12.66, +2.13]   no effect shown
+
+The relevance gate removed the significant regression — that is a real repair, and the
+diagnostic case ("how should AI handle personal data" retrieving GDPR Art 47 on binding
+corporate rules) no longer poisons the answer. But removing harm is not demonstrating
+benefit. Retrieval is still trending negative: 5 wins, 8 losses, 25 ties.
+
+So it is **available and off**, exactly as per-dimension routing is. Turn it on when a
+re-run clears zero — not before, and not because the Article 27 case is compelling. That
+case is real and it is one item.
+
+The likely reason is the same one behind every other failure measured today: a 0.5B model
+cannot reliably *use* 6KB of statute text even when the right statute is in front of it.
+Every deterministic component in this stack works; every judgement-based one has failed or
+is unproven. Retrieval-then-reason is judgement. The gate, the classifier and the citation
+registry are not, and they are what holds.
+
     python3 statute_retrieval.py --search "fundamental rights impact assessment"
     python3 statute_retrieval.py --ask "Does Article 27 apply to a private credit scorer?"
 """
@@ -99,6 +122,48 @@ def _cited(answer: str) -> set[str]:
     return {m.group(1) for m in re.finditer(r"\bArticles?\s+(\d+)", answer, re.I)}
 
 
+def relevant(question: str, hits: list[dict]) -> tuple[bool, str]:
+    """Did retrieval return the RIGHT thing, or merely something?
+
+    ═══════════════════════════════════════════════════════════════════════════
+    MEASURED 2026-07-28 — this check is the difference between +25 and -50
+    ═══════════════════════════════════════════════════════════════════════════
+    `retrieval_bench` scored the retrieval layer at **Δ -9.16, CI [-17.64, -0.69]** — a
+    significant REGRESSION. The diagnostic case: asked *"How should AI systems handle personal
+    data?"*, BM25 returned **GDPR Article 47, binding corporate rules** — intra-group transfer
+    machinery, nothing to do with the question. The model, instructed to answer ONLY from the
+    retrieved text, produced a confident answer about corporate rules and scored 0 where
+    answering from its weights scored 50.
+
+    So the grounding instruction converts a retrieval MISS into a wrong answer. And the root
+    cause is this session's defect once more: I treated "BM25 returned rows" as "we have the
+    statutory basis". **Returning results is not the same as returning relevant results** —
+    BM25 always returns its top-k, however poor the match.
+
+    Two ways a hit earns the right to ground an answer:
+      • the question NAMES the article — an explicit reference is its own relevance proof
+      • the question's content words actually appear in the retrieved text, above a floor
+
+    Failing both, retrieval ABSTAINS and the caller answers from weights **with that recorded**.
+    That is not the silent fallback refusal #1 forbids: the silent version claims grounding it
+    does not have, this one states plainly that no statute was applicable.
+    """
+    if not hits:
+        return False, "nothing retrieved"
+    if re.search(r"\barticles?\s+\d+", question, re.I):
+        return True, "question names a specific article"
+    words = {w for w in re.findall(r"[a-z]{4,}", question.lower()) if w not in STOP}
+    if not words:
+        return False, "no content words to match on"
+    top = hits[0]["text"].lower()
+    overlap = {w for w in words if w in top}
+    frac = len(overlap) / len(words)
+    if frac >= 0.5:
+        return True, f"{len(overlap)}/{len(words)} content words present in top hit"
+    return False, (f"only {len(overlap)}/{len(words)} content words in top hit "
+                   f"({sorted(words - overlap)[:4]} absent) — topically adjacent, not on point")
+
+
 def ask(question: str, model: str | None = None, k: int = 4) -> dict:
     """Retrieve, then answer ONLY from what was retrieved."""
     from owem_cluster import ask as call_model, select_expert, classify_dimension
@@ -109,6 +174,13 @@ def ask(question: str, model: str | None = None, k: int = 4) -> dict:
         return {"answer": "No statutory basis was retrieved for this question, so I can't "
                           "answer it from the regulation text.",
                 "grounded": False, "retrieved": [], "reason": str(e), "abstained": True}
+
+    ok, why = relevant(question, hits)
+    if not ok:
+        # Retrieval abstains. Recorded, never silent — see `relevant()`.
+        return {"answer": None, "grounded": False, "retrieval_abstained": True,
+                "reason": why, "retrieved": [h["id"] for h in hits],
+                "note": "no applicable statute — caller should answer from weights and say so"}
 
     if model is None:
         model, _ = select_expert(classify_dimension(question))
