@@ -117,6 +117,41 @@ def search(question: str, k: int = 4) -> list[dict]:
             for c, n, t, s in rows]
 
 
+def get_article(celex: str, number: int) -> dict | None:
+    """Fetch ONE named article by (regulation, number). No ranking, no guessing.
+
+    ═══════════════════════════════════════════════════════════════════════════
+    WHY THIS EXISTS — a KB harvest wrote 54 wrong entries before it was caught
+    ═══════════════════════════════════════════════════════════════════════════
+    Six regulations are indexed and **each has an Article 1**. Asking BM25 for "GDPR
+    Article 1" scores on the terms, not on the identity, so it happily returned CSRD's
+    Article 1 — and the model then answered "Article 1 GDPR requires automatic logging",
+    which is not what GDPR Article 1 says at all.
+
+    The grounding check passed it, because that check asked only whether the answer CITED
+    the number it was asked about. It did. From the wrong statute. Verifying the citation
+    without verifying the SOURCE is the same defect as every other one today: confirming the
+    shape of an answer rather than the thing the answer is about.
+
+    When the question names a specific provision, that provision is a lookup, not a search.
+    """
+    if not DB.exists():
+        return None
+    con = sqlite3.connect(f"file:{DB}?mode=ro", uri=True)
+    try:
+        row = con.execute(
+            "SELECT celex, article_number, content FROM articles "
+            "WHERE celex = ? AND article_number = ?", (celex, number)).fetchone()
+    finally:
+        con.close()
+    if not row:
+        return None
+    c, n, t = row
+    return {"celex": c, "regulation": NAMES.get(c, c), "article": n,
+            "id": f"{NAMES.get(c, c)} Article {n}", "text": t, "score": 0.0,
+            "exact_lookup": True}
+
+
 def _cited(answer: str) -> set[str]:
     """Article references the answer actually makes."""
     return {m.group(1) for m in re.finditer(r"\bArticles?\s+(\d+)", answer, re.I)}
