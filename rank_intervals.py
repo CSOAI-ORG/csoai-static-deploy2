@@ -84,6 +84,26 @@ def items_to_resolve(p1: float, p2: float) -> int | None:
     half-width, which is close enough to plan with and always stated as approximate.
 
     Returns None when the scores are equal — no n fixes an exact tie in the observed data.
+
+    ═══════════════════════════════════════════════════════════════════════════
+    ⚠️ MEASURED 2026-07-29 — ESTIMATES FROM SMALL n ARE SYSTEMATICALLY OPTIMISTIC
+    ═══════════════════════════════════════════════════════════════════════════
+    This priced `robustness` at ~24 items/model from a 100.0-vs-85.7 gap observed at n=5.
+    Robustness was expanded to 24 and re-measured on all 10 models. Result:
+
+        top-two gap   14.3 -> 8.4 points
+        tied for first          10 of 10 — STILL UNRESOLVED
+        re-priced               ~230 items/model
+
+    **The estimate was ~10x optimistic**, and the reason is structural rather than bad luck:
+    at n=5 a single item is worth 20 points, so observed gaps are inflated by the coarseness
+    of the score space. Expanding the item set does not merely add precision — it reveals the
+    gap was smaller than it looked, and a smaller gap needs quadratically more items.
+
+    So: a price computed from n<20 is a LOWER BOUND, not a target. Treat it as "at least
+    this many", re-price after every expansion, and trust the estimate derived from the
+    largest n available. The priced list published on 2026-07-29 carries this caveat for
+    every dimension still at n=5.
     """
     gap = abs(p1 - p2)
     if gap <= 0:
