@@ -64,6 +64,39 @@ def wilson(k: float, n: int, z: float = Z95) -> tuple[float, float]:
     return (max(0.0, (c - m) / d), min(1.0, (c + m) / d))
 
 
+
+def items_to_resolve(p1: float, p2: float) -> int | None:
+    """Items per model needed for the top TWO Wilson intervals to separate.
+
+    ═══════════════════════════════════════════════════════════════════════════
+    WHY THIS IS NOT THE MARGIN TEST
+    ═══════════════════════════════════════════════════════════════════════════
+    `margin_report` asks a weaker question — is the winner decided by more than one item's
+    worth of score? Three dimensions pass that. `rank_intervals` asks whether the top two
+    confidence intervals actually separate, and **zero** pass it.
+
+    Both are honest; they are not the same bar, and the stricter one is what gates a public
+    ranking. Reporting "3 of 15 have a credible winner" without also saying "0 of 15 resolve"
+    would be choosing the friendlier statistic after seeing both.
+
+    This prices the gap: given the observed top-two scores, how many items would each model
+    need before the intervals stop overlapping? Uses the normal approximation to the Wilson
+    half-width, which is close enough to plan with and always stated as approximate.
+
+    Returns None when the scores are equal — no n fixes an exact tie in the observed data.
+    """
+    gap = abs(p1 - p2)
+    if gap <= 0:
+        return None
+    # separation requires roughly: gap > z*(se1 + se2), se_i = sqrt(p_i(1-p_i)/n)
+    z = 1.96
+    import math
+    spread = math.sqrt(p1 * (1 - p1)) + math.sqrt(p2 * (1 - p2))
+    if spread == 0:
+        return None
+    n = (z * spread / gap) ** 2
+    return int(math.ceil(n))
+
 def load() -> dict:
     """Every downstream consumer of the board comes through here, so this is where a
     withdrawn model must be dropped — once, rather than in each caller. The raw result
