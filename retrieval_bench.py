@@ -45,7 +45,7 @@ def ci(ds: list[float]) -> tuple[float, float, float]:
 def main() -> int:
     from govbench_eval import DIMENSIONS, grade_response
     from owem_cluster import ask as call_model, select_expert
-    from statute_retrieval import search, NoStatuteFound, relevant
+    from statute_retrieval import search, NoStatuteFound, relevant, expand_crossrefs
 
     model, _ = select_expert("compliance")
     items = [(d, t) for d in DIMS if d in DIMENSIONS for t in DIMENSIONS[d]["tests"]]
@@ -66,6 +66,11 @@ def main() -> int:
             if not ok:
                 no_statute += 1
                 hits = None
+            else:
+                # 2026-07-29 — follow the edges. Art 27 retrieves correctly but delegates to
+                # Annex III, which was absent from the corpus entirely until today and is
+                # still not retrieved by term-frequency for the credit-scoring phrasing.
+                hits = expand_crossrefs(hits)
         except NoStatuteFound:
             no_statute += 1
             hits = None
