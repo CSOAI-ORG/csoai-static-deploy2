@@ -203,6 +203,12 @@ def stage_honey(st: dict, budget_s: int = 5400) -> None:
         kb["entries"].append({
             "question": q, "answer": ans, "dimension": "compliance",
             "citations": sorted(cited), "fabricated": 0,
+            # The KB's provenance schema is TOP-LEVEL source_clan + sha256 + verified. The
+            # first harvest wrote only a nested `provenance` dict, so 48 correct entries read
+            # as unprovenanced to run_stack's poison check. Write both.
+            "source_clan": f"statute:{celex}",
+            "sha256": __import__("hashlib").sha256(ans.encode()).hexdigest(),
+            "verified": True,
             "captured": datetime.now(timezone.utc).isoformat(),
             "provenance": {"source": "statute_exact_lookup", "regulation": reg,
                            "article": num, "celex": celex, "model": model,
