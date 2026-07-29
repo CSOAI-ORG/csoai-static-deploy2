@@ -159,6 +159,30 @@ def render(d: dict) -> str:
   have a resolved winner. It is selecting on noise.</p>
 </div>
 
+<div class="sys">
+  <h3>…and a third: the quorum has 1.21 effective votes</h3>
+  <p>The architecture called for a 3-leg Byzantine-fault-tolerant quorum. We measured the
+  pairwise error correlation across all three legs on 174 items:</p>
+  <table class="mini"><thead><tr><th>pair</th><th>phi</th></tr></thead><tbody>
+  <tr><td>leg 1 ↔ leg 2</td><td class="neg">+0.730</td></tr>
+  <tr><td>leg 1 ↔ leg 3</td><td class="neg">+0.697</td></tr>
+  <tr><td>leg 2 ↔ leg 3</td><td class="neg">+0.803</td></tr>
+  <tr class="tot"><td><strong>Kish effective votes</strong></td><td class="neg"><strong>1.21 of 3</strong></td></tr>
+  </tbody></table>
+  <p>The three legs are system prompts over one shared base, so they are wrong in the same
+  places. Three nominal votes are worth 1.21 independent ones; the rest is latency.
+  <strong>"Byzantine fault tolerant" has been removed from every document we publish.</strong>
+  More legs or prompts cannot fix this — only a different architecture can.</p>
+
+  <h3>What it costs to resolve a dimension — and why our first estimate was 10× wrong</h3>
+  <p>We priced <code>robustness</code> at ~24 items per model from a gap observed at n=5,
+  expanded it to 24, and re-measured. The gap narrowed from 14.3 to 8.4 points and the true
+  price is <strong>~230</strong>. At n=5 a single item is worth 20 points, so small-n gaps are
+  inflated by the coarseness of the score space — expanding does not just add precision, it
+  reveals the gap was smaller than it looked, and a smaller gap needs quadratically more items.
+  <strong>Every price computed from n&lt;20 on this page is a lower bound, not a target.</strong></p>
+</div>
+
 <section>
 <h3>Why a tied set instead of a winner</h3>
 <p>Reporting a per-dimension winner when intervals overlap manufactures a ranking out of noise.
