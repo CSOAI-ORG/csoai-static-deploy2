@@ -103,7 +103,7 @@ def search(question: str, k: int = 4) -> list[dict]:
     q = _fts_query(question)
     try:
         rows = con.execute(
-            "SELECT celex, article_number, content, bm25(articles_fts) AS score "
+            "SELECT celex, article_number, content, bm25(articles_fts) AS score, article_id "
             "FROM articles_fts WHERE articles_fts MATCH ? ORDER BY score LIMIT ?",
             (q, k)).fetchall()
     except sqlite3.OperationalError as e:
@@ -112,9 +112,28 @@ def search(question: str, k: int = 4) -> list[dict]:
         con.close()
     if not rows:
         raise NoStatuteFound(f"no article matched: {q[:70]}")
-    return [{"celex": c, "regulation": NAMES.get(c, c), "article": n,
-             "id": f"{NAMES.get(c, c)} Article {n}", "text": t, "score": round(s, 2)}
-            for c, n, t, s in rows]
+    return [_row(c, n, t, s, aid) for c, n, t, s, aid in rows]
+
+
+def _label(celex: str, number: int, article_id: str | None) -> str:
+    """Render a citation label. Annexes carry NEGATIVE article_number (see ingest_annexes.py),
+    so the naive f"Article {n}" produced 'EU AI Act Article -3' for Annex III — a citation
+    that is not merely ugly but wrong, and would be handed to the model as context and copied
+    into answers."""
+    reg = NAMES.get(celex, celex)
+    if number is not None and number < 0:
+        return f"{reg} {article_id or f'ANNEX {-number}'}"
+    return f"{reg} Article {number}"
+
+
+def _row(celex: str, number: int, text: str, score: float, article_id: str | None) -> dict:
+    return {"celex": celex, "regulation": NAMES.get(celex, celex), "article": number,
+            "article_id": article_id, "is_annex": number is not None and number < 0,
+            "id": _label(celex, number, article_id), "text": text,
+            "score": round(score, 2),
+            # 62 of 113 AI Act articles exceed the 1800-char window callers ship. Nothing
+            # recorded that the context was partial, so a truncated answer looked complete.
+            "text_truncated": len(text) > 1800}
 
 
 def get_article(celex: str, number: int) -> dict | None:
@@ -140,16 +159,63 @@ def get_article(celex: str, number: int) -> dict | None:
     con = sqlite3.connect(f"file:{DB}?mode=ro", uri=True)
     try:
         row = con.execute(
-            "SELECT celex, article_number, content FROM articles "
+            "SELECT celex, article_number, content, article_id FROM articles "
             "WHERE celex = ? AND article_number = ?", (celex, number)).fetchone()
     finally:
         con.close()
     if not row:
         return None
-    c, n, t = row
-    return {"celex": c, "regulation": NAMES.get(c, c), "article": n,
-            "id": f"{NAMES.get(c, c)} Article {n}", "text": t, "score": 0.0,
-            "exact_lookup": True}
+    c, n, t, aid = row
+    return {**_row(c, n, t, 0.0, aid), "exact_lookup": True}
+
+
+ROMAN_TO_INT = {"I": 1, "II": 2, "III": 3, "IV": 4, "V": 5, "VI": 6, "VII": 7,
+                "VIII": 8, "IX": 9, "X": 10, "XI": 11, "XII": 12, "XIII": 13}
+
+
+def expand_crossrefs(hits: list[dict], max_added: int = 2) -> list[dict]:
+    """Follow the cross-references the retrieved text actually makes.
+
+    ═══════════════════════════════════════════════════════════════════════════
+    WHY RETRIEVING THE RIGHT ARTICLE IS STILL NOT ENOUGH
+    ═══════════════════════════════════════════════════════════════════════════
+    BM25 retrieves Article 27 for "does Article 27 apply to a private credit-scoring
+    deployer?" — correctly, it is the top hit. But Article 27(1) does not contain the answer.
+    It says the duty falls on *"deployers of high-risk AI systems referred to in points 5 (b)
+    and (c) of **Annex III**"*, and it is Annex III 5(b) that says "AI systems intended to be
+    used to evaluate the **creditworthiness** of natural persons".
+
+    Verified after ingesting the annexes: the Art 27 query returns Article 27, ANNEX VIII,
+    DORA 23 and Article 26 — **Annex III is not among them**, because the query's terms score
+    against Art 27's own wording, not against the text it delegates to.
+
+    Statute is a graph, and a term-frequency retriever walks nodes, not edges. Following the
+    edge is a deterministic operation on text we already hold — no judgement, no model — which
+    is exactly the class of component that has worked in this estate.
+
+    Bounded to `max_added` per query so a chain cannot blow the context window, and additions
+    are marked `via_crossref` so a grounding check can tell what was asked for from what was
+    followed to.
+    """
+    if not hits:
+        return hits
+    have = {(h["celex"], h["article"]) for h in hits}
+    added: list[dict] = []
+    for h in hits:
+        if len(added) >= max_added:
+            break
+        for m in re.finditer(r"\bAnnex\s+([IVXLC]{1,5})\b", h["text"], re.I):
+            n = ROMAN_TO_INT.get(m.group(1).upper())
+            if n is None or (h["celex"], -n) in have:
+                continue
+            got = get_article(h["celex"], -n)
+            if got:
+                got["via_crossref"] = f"cited by {h['id']}"
+                added.append(got)
+                have.add((h["celex"], -n))
+            if len(added) >= max_added:
+                break
+    return hits + added
 
 
 def _cited(answer: str) -> set[str]:
