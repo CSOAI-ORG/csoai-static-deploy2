@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-07-28T12:57:20.770841+00:00",
+  "timestamp": "2026-07-28T17:49:05.670292+00:00",
   "rule": "divide iff RESOLUTION and SEPARATION and LOAD",
   "cells_examined": 5,
   "cells_may_divide": 0,
@@ -17,34 +17,34 @@
         "compliance"
       ],
       "divides": false,
-      "reason": "RESOLUTION: gap 45.7 < minimum detectable effect 51.1 at n=15 \u2014 the gap is noise",
+      "reason": "RESOLUTION: gap 42.6 < minimum detectable effect 62.6 at n=10 \u2014 the gap is noise",
       "split": {
         "a": [
-          "governance",
-          "safety",
-          "fairness",
-          "transparency",
-          "accountability"
+          "safety"
         ],
         "b": [
+          "governance",
           "ethics",
+          "fairness",
+          "transparency",
+          "accountability",
           "compliance"
         ],
-        "n_a": 30,
-        "n_b": 15,
-        "score_a": 81.7,
-        "score_b": 36.0,
-        "gap": 45.7,
+        "n_a": 10,
+        "n_b": 53,
+        "score_a": 100.0,
+        "score_b": 57.4,
+        "gap": 42.6,
         "ci_a": [
-          64.5,
-          91.6
+          72.2,
+          100.0
         ],
         "ci_b": [
-          17.0,
-          60.7
+          44.0,
+          69.7
         ]
       },
-      "items_needed_per_side": 19
+      "items_needed_per_side": 22
     },
     {
       "cell": "DEFONEOS",
@@ -126,7 +126,7 @@
         "transparency"
       ],
       "divides": false,
-      "reason": "RESOLUTION: gap 28.3 < minimum detectable effect 88.5 at n=5 \u2014 the gap is noise",
+      "reason": "RESOLUTION: gap 30.7 < minimum detectable effect 88.5 at n=5 \u2014 the gap is noise",
       "split": {
         "a": [
           "sovereignty"
@@ -138,20 +138,20 @@
           "transparency"
         ],
         "n_a": 5,
-        "n_b": 23,
+        "n_b": 29,
         "score_a": 30.0,
-        "score_b": 58.3,
-        "gap": 28.3,
+        "score_b": 60.7,
+        "gap": 30.7,
         "ci_a": [
           7.3,
           70.1
         ],
         "ci_b": [
-          38.4,
-          75.8
+          42.7,
+          76.2
         ]
       },
-      "items_needed_per_side": 49
+      "items_needed_per_side": 42
     },
     {
       "cell": "SOVEREIGNTY",
@@ -163,7 +163,7 @@
         "ethics"
       ],
       "divides": false,
-      "reason": "RESOLUTION: gap 33.8 < minimum detectable effect 88.5 at n=5 \u2014 the gap is noise",
+      "reason": "RESOLUTION: gap 31.2 < minimum detectable effect 88.5 at n=5 \u2014 the gap is noise",
       "split": {
         "a": [
           "sovereignty"
@@ -175,20 +175,20 @@
           "ethics"
         ],
         "n_a": 5,
-        "n_b": 20,
+        "n_b": 38,
         "score_a": 30.0,
-        "score_b": 63.8,
-        "gap": 33.8,
+        "score_b": 61.2,
+        "gap": 31.2,
         "ci_a": [
           7.3,
           70.1
         ],
         "ci_b": [
-          42.1,
-          81.0
+          45.4,
+          75.0
         ]
       },
-      "items_needed_per_side": 35
+      "items_needed_per_side": 41
     }
   ]
 }
