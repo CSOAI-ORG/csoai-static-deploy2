@@ -55,13 +55,27 @@ from __future__ import annotations
 
 import argparse, hashlib, json, subprocess, sys
 from datetime import datetime, timezone
+import os
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
 
-VENV = Path("/tmp/c2pa-venv/bin/python")
-KEYS = Path("/tmp/c2pa-keys")
+# 2026-07-29 — moved off /tmp. This is the Article 50 signer: if its venv and credential live
+# in a directory the OS clears, then the marking pipeline stops working between one run and the
+# next, silently, and the failure looks like "C2PA is broken" rather than "the disk was wiped".
+# Kept as a fallback read so an existing /tmp venv is reused, never created.
+_CACHE = Path(os.environ.get("XDG_CACHE_HOME", Path.home() / ".cache")) / "csoai"
+
+
+def _pick(name: str) -> Path:
+    durable, legacy = _CACHE / name, Path("/tmp") / name
+    return legacy if (not durable.exists() and legacy.exists()) else durable
+
+
+VENV_DIR = _pick("c2pa-venv")
+VENV = VENV_DIR / "bin" / "python"
+KEYS = _pick("c2pa-keys")
 TRAINED_ALGORITHMIC_MEDIA = "trainedAlgorithmicMedia"
 
 
@@ -117,8 +131,8 @@ import c2pa
 from c2pa import Builder, Signer, C2paSignerInfo, C2paSigningAlg
 
 mj   = json.loads(sys.argv[1])
-cert = open("/tmp/c2pa-keys/chain.pem","rb").read()
-key  = open("/tmp/c2pa-keys/leaf.key.pem","rb").read()
+cert = open(sys.argv[2] + "/chain.pem","rb").read()
+key  = open(sys.argv[2] + "/leaf.key.pem","rb").read()
 
 info = C2paSignerInfo(alg=b"ed25519", sign_cert=cert, private_key=key,
                       ta_url=b"http://timestamp.digicert.com")
@@ -171,7 +185,7 @@ def selftest() -> int:
     print(f"    model             : {prov['model']}")
     print(f"    base blob         : {prov['base_blob_sha256_prefix']}")
     print(f"    selection         : {prov['selection_rule']}\n")
-    r = subprocess.run([str(VENV), "-c", SELFTEST, json.dumps(mj)],
+    r = subprocess.run([str(VENV), "-c", SELFTEST, json.dumps(mj), str(KEYS)],
                        capture_output=True, text=True, timeout=180)
     if r.returncode != 0:
         print(f"  ❌ signing failed:\n{r.stderr[-1400:]}")
@@ -192,7 +206,8 @@ def selftest() -> int:
     print(f"     This makes Article 50 marking WORK. It does not confer conformity — that")
     print(f"     needs a production certificate from a CA on the C2PA trust list.")
     out = HERE / "benchmark-results" / "c2pa_selftest.json"
-    out.write_text(json.dumps({"manifest": mj, "stdout": r.stdout[-2000:]}, indent=2))
+    from anchored_write import write_result
+    out = write_result("c2pa_selftest.json", {"manifest": mj, "stdout": r.stdout[-2000:]})
     print(f"  -> {out}")
     return 0
 

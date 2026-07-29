@@ -23,12 +23,25 @@ smaller scale: **that is one surface model inside one layer.** This file is the 
       → MARK     EU AI Act Art 50 C2PA         (c2pa_manifest)
 
 ═══════════════════════════════════════════════════════════════════════════════
-WHAT THE ASSEMBLED SYSTEM IS MEASURED AT — n=186, paired, pre-registered analysis
+WHAT THE ASSEMBLED SYSTEM IS MEASURED AT — n=193, paired, pre-registered analysis
 ═══════════════════════════════════════════════════════════════════════════════
-    whole system   Δ +14.43  95% CI [+9.63, +19.23]   CLAIMABLE
-      gate           +34.84  [+17.50, +52.18]   n=31
-      KB             +19.64  [ +6.87, +32.41]   n=14
-      tuned model     +9.42  [ +4.82, +14.03]   n=141
+Intervals are CLUSTER-ROBUST (26 dimensions; design effect 1.92, effective n ≈ 100 of 193).
+The rows partition the run — 6 + 14 + 173 = 193 — which the previous table did not: it summed
+to 186 beneath a 195-item total, because the layers and the total came from different runs.
+
+    whole system   Δ  +6.63  95% CI [+1.05, +12.21]   CLAIMABLE
+      gate            -20.00  [-65.26, +25.26]   n=6    ← NO EFFECT SHOWN (was +34.84)
+      KB              +19.64  [ +9.24, +30.04]   n=14   ← reproduced exactly, independently
+      tuned model      +6.50  [ +1.06, +11.95]   n=173
+
+RETRACTION 2026-07-29 — the gate. It previously read +34.84, the largest figure in the estate,
+and carried the claim that "every deterministic component works". Re-measured on a clean run it
+fires 6 times, not 31, and adds nothing: the base model already refuses all four plain-harm
+items it catches, so those score Δ 0.0, and its only measurable effects are two FALSE blocks —
+an analysis question about gambling-relapse targeting, and a prompt-injection item where
+resisting and still answering was correct (blocking scored 0 against the base's 100). Commit
+6b740884f fixed a care gate that had overfitted to its own battery; the benefit went with it,
+which is the strongest available evidence that the benefit WAS the overfitting.
 
     per-dimension routing   Δ +0.90 vs best-single  [-1.99, +3.79]   NO EFFECT — ships OFF
 
@@ -225,7 +238,8 @@ def census() -> int:
         add("registry", f"UNAVAILABLE: {str(e)[:50]}", "—")
 
     add("gate", "deterministic Art 5 + use-case classifier",
-        "Δ +34.84 [+17.50, +52.18] n=31 · over-block 0.011 on 175 held-out XSTest")
+        "Δ -20.00 [-65.26, +25.26] n=6 — NO EFFECT SHOWN, retracted from +34.84 "
+        "2026-07-29 · over-block 0.011 on 175 held-out XSTest")
 
     try:
         from owem_cluster import build_expert_table, select_expert

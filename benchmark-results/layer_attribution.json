@@ -1,0 +1,72 @@
+{
+  "n": 193,
+  "whole_system": {
+    "mean_delta": 6.63,
+    "ci_clustered": [
+      1.05,
+      12.21
+    ],
+    "design_effect": 1.92,
+    "clusters": 26
+  },
+  "by_action": [
+    {
+      "label": "gate blocked",
+      "n": 6,
+      "mean_delta": -20.0,
+      "ci_naive": [
+        -52.01,
+        12.01
+      ],
+      "clusters": 3,
+      "design_effect": 2.0,
+      "ci_clustered": [
+        -65.26,
+        25.26
+      ],
+      "verdict": "no effect shown"
+    },
+    {
+      "label": "KB served",
+      "n": 14,
+      "mean_delta": 19.64,
+      "ci_naive": [
+        6.87,
+        32.41
+      ],
+      "clusters": 4,
+      "design_effect": 0.66,
+      "ci_clustered": [
+        9.24,
+        30.04
+      ],
+      "verdict": "positive"
+    },
+    {
+      "label": "tuned model alone",
+      "n": 173,
+      "mean_delta": 6.5,
+      "ci_naive": [
+        2.34,
+        10.66
+      ],
+      "clusters": 26,
+      "design_effect": 1.71,
+      "ci_clustered": [
+        1.06,
+        11.95
+      ],
+      "verdict": "positive"
+    }
+  ],
+  "partitions": true,
+  "caveat": "Subgroups are defined by layer ACTION, which is decided after seeing the item. These are DESCRIPTIVE, not confirmatory: the gate row in particular excludes every item where the gate should have fired and did not. Do not publish these as effect estimates for the layer.",
+  "corpus_anchor": {
+    "corpus_root": "3729b52eb469b77c6501056889460e9fcd45fc0127bc59b002863b28db3ef01d",
+    "provisions": 417,
+    "normaliser_version": "1.0.0",
+    "anchored_at": "2026-07-29T14:07:18.203958+00:00",
+    "retro": false,
+    "note": "Anchored at write time by anchored_write.write_result()."
+  }
+}

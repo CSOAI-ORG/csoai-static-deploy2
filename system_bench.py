@@ -221,6 +221,14 @@ def main() -> int:
     sys_score = base_score = 0.0
     gated = kb_hits = skipped = 0
     scored = 0
+    # 2026-07-29 — the per-item deltas were previously printed to stdout and NOWHERE else.
+    # The n=195 headline (+12.21 [+7.42, +17.00]) was computed by piping that stdout into
+    # system_analysis.py, and the log lived in /tmp. It is gone. So the one CLAIMABLE result
+    # in the estate could not be recomputed, its interval could not be re-derived under a
+    # different model, and its clustering could not be checked at all — while every published
+    # REFUTATION kept its raw rows and stayed reproducible. Claims held to a lower evidentiary
+    # standard than refutations is the wrong way round.
+    rows: list[dict] = []
     t0 = time.time()
 
     print(f"  SYSTEM vs BASE — {len(tests)} items\n")
@@ -262,6 +270,13 @@ def main() -> int:
         scored += 1
         mark = "🛑" if r["blocked"] else ("📚" if r["trace"].get("kb_hit") else "  ")
         d = s_sys - s_base
+        # `dim` is the cluster key. Items inside one dimension share a rubric, a grader and a
+        # prompt family, so they are NOT independent draws, and an interval computed as
+        # sd/sqrt(195) understates the true width. Recording it is what makes the design
+        # effect computable later instead of assumable.
+        rows.append({"dim": dim, "q": q, "sys": round(s_sys, 4), "base": round(s_base, 4),
+                     "delta": round(d, 4), "blocked": bool(r["blocked"]),
+                     "kb_hit": bool(r["trace"].get("kb_hit"))})
         print(f"    {mark} {dim:22s} sys={s_sys*100:5.1f} base={s_base*100:5.1f} "
               f"{'+' if d>0 else ''}{d*100:5.1f}  {q[:38]}", flush=True)
 
@@ -281,7 +296,8 @@ def main() -> int:
            "system_pct": round(sp, 1), "base_pct": round(bp, 1), "delta": round(sp - bp, 1),
            "gate_blocked": gated, "kb_served": kb_hits,
            "dead_experts": sorted(dead), "dims_unmeasured": sorted(dead_dims),
-           "items_never_ran": dropped_preflight, "pairs_dropped": skipped}
+           "items_never_ran": dropped_preflight, "pairs_dropped": skipped,
+           "items": rows}
     p = HERE / "benchmark-results" / "system_bench.json"
     p.write_text(json.dumps(out, indent=2))
     print(f"  -> {p}")

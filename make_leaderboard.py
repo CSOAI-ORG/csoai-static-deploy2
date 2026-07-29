@@ -116,19 +116,32 @@ def render(d: dict) -> str:
   <h3>System result — the composed pipeline vs a direct model call</h3>
   <p>The board above scores individual models. This scores what actually ships:
   <code>gate → retrieve → answer → verify</code>, against the same items answered by the raw
-  base model. n=186, paired, judged by an analysis written <em>before</em> the run.</p>
-  <table class="mini"><thead><tr><th>layer</th><th>n</th><th>Δ</th><th>95% CI</th></tr></thead>
+  base model. n=193, paired, judged by an analysis written <em>before</em> the run.
+  Intervals are <strong>cluster-robust</strong>: items inside a dimension share a rubric and a
+  grader, so treating 193 items as 193 independent draws overstates precision. Measured design
+  effect <strong>1.92</strong> &mdash; honest effective n is <strong>&asymp;100 of 193</strong>.
+  Every row is computed from the same run and they partition it: 6 + 14 + 173 = 193.</p>
+  <table class="mini"><thead><tr><th>layer</th><th>n</th><th>&Delta;</th><th>95% CI (clustered)</th></tr></thead>
   <tbody>
-  <tr><td>deterministic gate</td><td>31</td><td class="pos">+34.84</td><td>[+17.50, +52.18]</td></tr>
-  <tr><td>knowledge base</td><td>14</td><td class="pos">+19.64</td><td>[+6.87, +32.41]</td></tr>
-  <tr><td>tuned model</td><td>141</td><td class="pos">+9.42</td><td>[+4.82, +14.03]</td></tr>
-  <tr class="tot"><td><strong>whole system</strong></td><td>186</td><td class="pos"><strong>+14.43</strong></td><td><strong>[+9.63, +19.23]</strong></td></tr>
+  <tr><td>deterministic gate</td><td>6</td><td class="neg">&minus;20.00</td><td>[&minus;65.26, +25.26]</td></tr>
+  <tr><td>knowledge base</td><td>14</td><td class="pos">+19.64</td><td>[+9.24, +30.04]</td></tr>
+  <tr><td>tuned model</td><td>173</td><td class="pos">+6.50</td><td>[+1.06, +11.95]</td></tr>
+  <tr class="tot"><td><strong>whole system</strong></td><td>193</td><td class="pos"><strong>+6.63</strong></td><td><strong>[+1.05, +12.21]</strong></td></tr>
   </tbody></table>
-  <p>Wins 64 · losses 20 · ties 102 · sign test p&lt;0.0001. Dropping the single largest item
-  moves the headline to +13.96, so it does not rest on one case.</p>
+  <p>Wins 55 · losses 25 · ties 113 · sign test p=0.0011. Dropping the single largest item
+  moves the headline to +6.15, so it does not rest on one case.</p>
+  <p><strong>Retraction, 2026-07-29.</strong> The gate row previously read <code>+34.84</code>
+  and was the largest number we published. Re-measured on a clean, self-consistent run it fires
+  <strong>6 times, not 31</strong>, and contributes nothing: the base model already refuses all
+  four plain-harm items it catches, and its only measurable effects are two false blocks &mdash;
+  an analysis question about gambling-relapse targeting, and a prompt-injection item where
+  resisting and still answering was correct. The earlier figure was measured on a gate that had
+  overfitted to its own battery; fixing the overfitting removed the benefit. The previous table
+  was also a splice &mdash; its rows summed to 186 beneath a 195-item total.</p>
 
   <h3>…and the control that refutes our own architecture claim</h3>
-  <p>That <code>+9.42</code> changes two things at once: the query goes to a governance-tuned
+  <p>That tuned-model row (<code>+6.50</code> now, <code>+9.42</code> when the router control
+  was run) changes two things at once: the query goes to a governance-tuned
   model <em>at all</em>, and to <em>the particular one</em> a per-dimension classifier chose.
   Holding the first fixed and varying only the second:</p>
   <table class="mini"><thead><tr><th>selection rule</th><th>score</th><th>vs routed</th></tr></thead>
