@@ -114,7 +114,10 @@ _ENTRY = re.compile(
 
 def parse_registry(app: Path) -> dict[str, str] | None:
     """route -> nature. None means the registry itself is unreadable (→ UNMEASURED)."""
-    f = app / "src" / "lib" / "ai-surfaces.ts"
+    return parse_registry_at(app / "src" / "lib" / "ai-surfaces.ts")
+
+
+def parse_registry_at(f: Path) -> dict[str, str] | None:
     if not f.is_file():
         return None
     text = f.read_text(encoding="utf-8", errors="replace")
@@ -196,20 +199,172 @@ def reaches_model(files: set[Path]) -> str | None:
     return None
 
 
-def is_interactive(files: set[Path]) -> bool:
-    """A surface is interactive if it or a local dependency is a client component with input."""
+def is_interactive(files: set[Path], require_use_client: bool = True) -> bool:
+    """
+    Does this surface take input from a person and return something?
+
+    `require_use_client` is the Next.js gate: there, a component without the directive renders on
+    the server and cannot hold an interaction. In a Vite SPA there is no such split — every
+    component is a client component — so requiring the directive there matches nothing.
+
+    That is not hypothetical. Run against the live Vite site with the gate on, this reported
+    0 interactive surfaces out of 311 routes, on a site with an assessment tool and a contact
+    form. A detector that answers "none" for the whole app is not a clean bill of health; it is
+    a broken detector, and it would have produced a COMPLIANT verdict covering nothing at all.
+    """
     for f in files:
         text = f.read_text(encoding="utf-8", errors="replace")
-        if '"use client"' not in text and "'use client'" not in text:
+        if require_use_client and '"use client"' not in text and "'use client'" not in text:
             continue
         if re.search(r"<(input|textarea|select|form)\b", text, re.I):
             return True
-        if "onSubmit" in text or "useState" in text and "fetch(" in text:
+        if "onSubmit" in text or ("useState" in text and "fetch(" in text):
             return True
     return False
 
 
+_ROUTE = re.compile(r'<Route\s+path="(?P<path>[^"]+)"\s+component=\{(?P<comp>\w+)\}')
+_LAZY = re.compile(r'const\s+(?P<comp>\w+)\s*=\s*lazy\(\s*\(\)\s*=>\s*import\("(?P<spec>[^"]+)"\)')
+_PLAIN_IMPORT = re.compile(r'import\s+(?P<comp>\w+)\s+from\s+"(?P<spec>[^"]+)"')
+
+
+def declared_model_sdks(app: Path) -> list[str]:
+    """
+    Model SDKs in package.json that are never imported anywhere.
+
+    This is not a violation — a dependency is not a call. But it is the shortest possible
+    distance to becoming one: the package is installed, so adding inference is a single import
+    with no install step and no review of this file. Reported as a watch condition, separately
+    from R1, because collapsing "declared" into "called" would either cry wolf on every repo that
+    once tried an SDK, or say nothing at all.
+    """
+    pkg = app / "package.json"
+    if not pkg.is_file():
+        return []
+    try:
+        deps = json.loads(pkg.read_text()).get("dependencies", {})
+    except (json.JSONDecodeError, OSError):
+        return []
+    return sorted(d for d in deps if any(p in d.lower() for p in MODEL_PROVIDERS))
+
+
+def vite_surfaces(app: Path) -> dict[str, Path] | None:
+    """route -> page file, for a Vite + wouter app. None if this is not that shape."""
+    app_tsx = app / "client" / "src" / "App.tsx"
+    if not app_tsx.is_file():
+        return None
+    text = app_tsx.read_text(encoding="utf-8", errors="replace")
+
+    comp_to_file: dict[str, Path] = {}
+    for m in list(_LAZY.finditer(text)) + list(_PLAIN_IMPORT.finditer(text)):
+        spec = m.group("spec")
+        if not spec.startswith("."):
+            continue
+        base = (app_tsx.parent / spec).resolve()
+        for cand in (base.with_suffix(".tsx"), base.with_suffix(".ts")):
+            if cand.is_file():
+                comp_to_file[m.group("comp")] = cand
+                break
+
+    out: dict[str, Path] = {}
+    for m in _ROUTE.finditer(text):
+        f = comp_to_file.get(m.group("comp"))
+        if f:
+            out[m.group("path")] = f
+    return out
+
+
+def check_vite(app: Path) -> Report:
+    """Same four rules, applied to the wouter route table instead of the Next file tree."""
+    surfaces = vite_surfaces(app)
+    if not surfaces:
+        return Report(VERDICT_UNMEASURED, reason="no client/src/App.tsx route table found")
+
+    registry = parse_registry_at(app / "client" / "src" / "lib" / "ai-surfaces.ts")
+    if registry is None:
+        return Report(
+            VERDICT_UNMEASURED, reason="client/src/lib/ai-surfaces.ts absent or unparseable"
+        )
+
+    violations: list[Violation] = []
+    checked = 0
+
+    for route, page in sorted(surfaces.items()):
+        deps = local_deps_vite(page, app)
+        interactive = is_interactive(deps, require_use_client=False)
+        registered = route in registry
+        if not (interactive or registered):
+            continue
+        checked += 1
+
+        mounts = any(NOTICE in d.read_text(errors="replace") for d in deps)
+        provider = reaches_model(deps)
+        nature = registry.get(route)
+
+        if not registered:
+            violations.append(
+                Violation("R4-unregistered", route, "interactive surface missing from registry")
+            )
+            continue
+        if provider and nature != "ai_system":
+            violations.append(
+                Violation(
+                    "R1-undisclosed-inference", route, f"reaches {provider} but registered '{nature}'"
+                )
+            )
+        # R2 only. R3 — "every registered surface mounts the notice" — was right for a 14-surface
+        # app and is wrong here: this site has 135 interactive surfaces and none is an AI system,
+        # so requiring the banner on all of them would put a legally meaningless notice on 135
+        # pages and teach readers to ignore it. For non-AI surfaces the disclosure lives in one
+        # place, /ai-transparency, which lists every route. The obligation is unchanged: the
+        # notice is mandatory exactly where Article 50(1) applies.
+        if nature == "ai_system" and not mounts:
+            violations.append(
+                Violation("R2-missing-notice", route, f"registered 'ai_system' but no <{NOTICE}>")
+            )
+
+    return Report(
+        verdict=VERDICT_NOT_COMPLIANT if violations else VERDICT_COMPLIANT,
+        reason="" if violations else "all rules checked and passed",
+        checked_surfaces=checked,
+        registered=len(registry),
+        ai_systems=sum(1 for n in registry.values() if n == "ai_system"),
+        violations=violations,
+    )
+
+
+def local_deps_vite(file: Path, app_root: Path, seen: set[Path] | None = None) -> set[Path]:
+    """As local_deps, but `@/` resolves to client/src in this app."""
+    seen = seen if seen is not None else set()
+    if file in seen or not file.is_file():
+        return seen
+    seen.add(file)
+    text = file.read_text(encoding="utf-8", errors="replace")
+    for spec in re.findall(r'from\s+"([^"]+)"', text):
+        if spec.startswith("@/"):
+            base = app_root / "client" / "src" / spec[2:]
+        elif spec.startswith("."):
+            base = (file.parent / spec).resolve()
+        else:
+            continue
+        for cand in (
+            base.with_suffix(".ts"),
+            base.with_suffix(".tsx"),
+            base / "index.ts",
+            base / "index.tsx",
+        ):
+            if cand.is_file():
+                local_deps_vite(cand, app_root, seen)
+                break
+    return seen
+
+
 def check(app: Path) -> Report:
+    # Dispatch on app shape. A Next-only guard pointed at the Vite app would find no page.tsx
+    # and report UNMEASURED, which is honest but useless — and the live site is the Vite one.
+    if (app / "client" / "src" / "App.tsx").is_file():
+        return check_vite(app)
+
     app_dir = app / "src" / "app"
     if not app_dir.is_dir():
         return Report(VERDICT_UNMEASURED, reason=f"no app tree at {app_dir}")
