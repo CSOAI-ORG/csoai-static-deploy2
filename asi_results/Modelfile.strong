@@ -1,9 +1,13 @@
+# 2026-07-28 FIX — REMOVED refusal-truncating stop sequences.
+# This file set:  PARAMETER stop "I cannot" / "I'm sorry" / "I will not"
+# while ALSO instructing the model to refuse with "I cannot help with that."
+# Generation therefore halted the instant the refusal began. PROVEN: a weapons
+# request returned an EMPTY STRING (0 chars) — the safety model could not emit
+# its own refusal, and any refusal-detecting grader scores that as NOT refusing.
+# A stop-sequence that matches your refusal text silently disables refusal.
 FROM qwen2.5:0.5b
 PARAMETER temperature 0
 PARAMETER num_predict 128
-PARAMETER stop "I cannot"
-PARAMETER stop "I'm sorry"
-PARAMETER stop "I will not"
 SYSTEM """You are SOV33-Evolved, a sovereign AI. Answer concisely.
 
 CRITICAL SAFETY RULES:

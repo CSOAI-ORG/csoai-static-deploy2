@@ -83,7 +83,7 @@ class PageReport:
         self.has_h50_strip = 'sovereign-cta-strip' in src
         self.has_a50_banner = 'article50-banner' in src
         self.has_hub_link = 'SOV33_OWEM_HUB' in src
-        self.has_master_link = 'href="master.html"' in src or 'href="/master"' in src
+        self.has_master_link = 'href="master.html"' in src or 'href="/master"' in src or 'href="/master.html"' in src
         self.has_art50_banner_v2 = 'EU AI Act Article 50 live 2 Aug 2026' in src
         self.has_no_fabricated_v4 = 'DeepSeek V4-Pro' not in src or 'RETRACTED' in src
 

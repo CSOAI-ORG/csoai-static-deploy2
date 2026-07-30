@@ -85,3 +85,51 @@ Ran 6 tests in 0.067s
 
 OK
 [2026-07-27T13:02:54Z] === EAT CYCLE DONE — sleeping 2h ===
+[2026-07-27T15:02:54Z] === EAT CYCLE START ===
+[2026-07-27T15:02:54Z] Phase 1: Overnight EAT benchmarks...
+=== SOV OVERNIGHT EAT PIPELINE ===
+
+{
+  "timestamp": "2026-07-27T15:02:54.401068+00:00",
+  "benchmarks": {
+    "mmlu_pro": {
+      "passed": 3,
+      "tested": 3,
+      "score_pct": 100.0
+    },
+    "gsm8k": {
+      "passed": 3,
+      "tested": 3,
+      "score_pct": 100.0
+    },
+    "arc_challenge": {
+      "passed": 1,
+      "tested": 2,
+      "score_pct": 50.0
+    },
+    "hellaswag": {
+      "passed": 2,
+      "tested": 2,
+      "score_pct": 100.0
+    },
+    "gaia": {
+      "passed": 2,
+      "tested": 2,
+      "score_pct": 100.0
+    },
+    "hotpotqa": {
+      "passed": 2,
+      "tested": 2,
+      "score_pct": 100.0
+    }
+  },
+  "sigil": "468361b15f2ff958"
+}
+[2026-07-27T15:03:29Z] Phase 2: Full EAT pipeline (12 OWEM)...
+tee: eat_loop.log: No space left on device
+tee: stdout: No space left on device
+Traceback (most recent call last):
+  File "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/eat_full_pipeline.py", line 734, in <module>
+    with open(out_path, "w") as f:
+         ~~~~^^^^^^^^^^^^^^^
+OSError: [Errno 28] No space left on device: '/tmp/eat_full_pipeline.json'

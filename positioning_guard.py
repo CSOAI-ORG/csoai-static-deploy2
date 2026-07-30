@@ -46,6 +46,17 @@ ROOT = Path("/Users/nicholas/clawd")
 # Surfaces a reader or a regulator could actually see. Internal working notes are excluded —
 # the guard governs what we PUBLISH, not what we think out loud while measuring.
 SURFACES = [
+    # The LIVE site first, because it is the only one of these a reader actually reaches.
+    # This entry was missing until 2026-07-30: the guard governs "what we publish" and had
+    # never once scanned the thing that publishes. It reported 396 surfaces clean while the
+    # live site was outside its view entirely — a clean bill of health for the wrong tree.
+    ROOT / "councilof-ai/client/src/pages",
+    # Static HTML ships to visitors exactly like TSX does. globe3d.html carried "121M ungoverned
+    # crimes / 1.45B signed episodes / 73% Art 50 readiness" — fabricated counters, live, that
+    # the guard never saw because it only read the React tree. Found 2026-07-30 by screenshot.
+    ROOT / "councilof-ai/public",
+    ROOT / "councilof-ai/client/public",
+    ROOT / "councilof-ai/client/src/components",
     ROOT / "csoai-dashboard-master/client/src/pages",
     ROOT / "csoai-static-deploy2/make_leaderboard.py",
     ROOT / "csoai-org-v2/src/app",

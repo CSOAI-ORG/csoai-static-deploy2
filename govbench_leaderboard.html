@@ -1,186 +1,104 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>GovBench — Global AI Governance Leaderboard</title>
-<meta name="description" content="GovBench: sovereign AI governance leaderboard. 15 dimensions of compliance. EU AI Act, DEFONEOS, AUKUS, NATO DASA scoring.">
-<link rel="canonical" href="https://govbench.pages.dev/govbench_leaderboard.html">
-<meta property="og:title" content="GovBench — Global AI Governance Leaderboard">
-<meta property="og:description" content="15 dimensions of sovereign AI governance compliance. Audit-grade scoring.">
-<link rel="icon" type="image/svg+xml" href="/favicon.svg">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"GovBench — Global AI Governance Leaderboard","description":"15 dimensions of sovereign AI governance compliance.","url":"https://csoai.org/govbench_leaderboard.html","publisher":{"@type":"Organization","name":"CSOAI Ltd","url":"https://csoai.org"}}</script>
+<meta name="description" content="A governance benchmark whose author's own models lose to the base they wrap. 11 models, 15 dimensions, reproducible offline.">
 <style>
-*{margin:0;padding:0;box-sizing:border-box}
-body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#0a0a0a;color:#e0e0e0}
-.container{max-width:1400px;margin:0 auto;padding:2rem}
-h1{font-size:2.5rem;margin-bottom:.5rem;background:linear-gradient(135deg,#00ff88,#0088ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-.subtitle{color:#888;margin-bottom:2rem}
-.scorecard{background:#111;border:1px solid #222;border-radius:12px;padding:1.5rem;margin-bottom:1.5rem}
-.scorecard:hover{border-color:#333}
-.model-name{font-size:1.2rem;font-weight:bold;color:#fff}
-.model-meta{color:#666;font-size:.9rem}
-.score{font-size:2rem;font-weight:bold}
-.score.platinum{color:#e5e4e2}.score.gold{color:#ffd700}.score.silver{color:#c0c0c0}.score.bronze{color:#cd7f32}.score.uncertified{color:#666}
-.dimensions{display:grid;grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:.5rem;margin-top:1rem}
-.dim{background:#1a1a1a;padding:.5rem .6rem;border-radius:6px}
-.dim-name{font-size:.75rem;color:#888;text-transform:uppercase;letter-spacing:.03em}
-.dim-score{font-size:1.1rem;font-weight:bold}
-.dim-score.good{color:#00ff88}.dim-score.mid{color:#ffaa00}.dim-score.bad{color:#ff4444}
-.bar{height:4px;background:#333;border-radius:2px;margin-top:.3rem}
-.bar-fill{height:100%;border-radius:2px;transition:width .3s}
-.bar-fill.good{background:#00ff88}.bar-fill.mid{background:#ffaa00}.bar-fill.bad{background:#ff4444}
-.header{display:flex;justify-content:space-between;align-items:center;margin-bottom:2rem;flex-wrap:wrap;gap:1rem}
-.badge{padding:.3rem .8rem;border-radius:20px;font-size:.8rem;font-weight:bold}
-.badge.platinum{background:#e5e4e220;color:#e5e4e2;border:1px solid #e5e4e2}
-.badge.gold{background:#ffd70020;color:#ffd700;border:1px solid #ffd700}
-.badge.silver{background:#c0c0c020;color:#c0c0c0;border:1px solid #c0c0c0}
-.badge.bronze{background:#cd7f3220;color:#cd7f32;border:1px solid #cd7f32}
-.badge.uncertified{background:#66666620;color:#666;border:1px solid #666}
-.footer{text-align:center;color:#444;margin-top:3rem;font-size:.9rem;padding-top:2rem;border-top:1px solid #222}
-a{color:#0088ff;text-decoration:none}
-a:hover{text-decoration:underline}
-.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:1rem;margin-bottom:2rem}
-.stat{background:#111;border:1px solid #222;border-radius:8px;padding:1rem;text-align:center}
-.stat-value{font-size:2rem;font-weight:bold;color:#00ff88}
-.stat-label{font-size:.8rem;color:#888}
-.improvement{color:#00ff88;font-size:.85rem;margin-left:.5rem}
-.method{background:#1a1a2e;border:1px solid #0088ff40;border-radius:8px;padding:1rem;margin-bottom:2rem}
-.method h3{color:#0088ff;margin-bottom:.5rem}
-.rank{color:#666;font-size:1.5rem;margin-right:.5rem;font-weight:bold}
-.cert-legend{display:flex;gap:1rem;margin-bottom:1.5rem;flex-wrap:wrap}
-.cert-legend span{font-size:.85rem}
-.sigil{font-family:monospace;color:#00ff88;font-size:.8rem}
-.sort-btns{display:flex;gap:.5rem;margin-bottom:1rem;flex-wrap:wrap}
-.sort-btn{background:#1a1a1a;border:1px solid #333;color:#aaa;padding:.4rem .8rem;border-radius:6px;cursor:pointer;font-size:.8rem}
-.sort-btn:hover,.sort-btn.active{border-color:#0088ff;color:#0088ff}
-</style>
-</head>
-<body>
-<nav><a href="/index.html">Home</a> <a href="/audit.html">Audit</a> <a href="/master.html">Master</a></nav>
-<div class="container">
-<div class="header">
-<div>
-<h1>GovBench Leaderboard</h1>
-<p class="subtitle">Sovereign AI Governance — 15 Dimensions of Compliance</p>
-<p style="color:#555;font-size:.85rem">EU AI Act &middot; DEFONEOS &middot; AUKUS &middot; NATO DASA &middot; Sigil-Chain Audited</p>
-</div>
-<div style="text-align:right">
-<p style="color:#888">Powered by <a href="https://csoai-sovereign.pages.dev" style="color:#00ff88;text-decoration:none;font-weight:bold">CSOAI</a></p>
-<p style="color:#666;font-size:.8rem">SOV33_OWEM_HUB</p>
-</div>
+:root{--bg:#0b0d10;--fg:#e8eaed;--mut:#9aa3ad;--line:#1e242c;--card:#12161b;--acc:#4da3ff;--warn:#ffb454;--bad:#ff6b6b}
+@media(prefers-color-scheme:light){:root{--bg:#fbfcfd;--fg:#12161b;--mut:#5a646e;--line:#e3e8ee;--card:#fff;--acc:#0b6bcb}}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Inter,sans-serif}
+.wrap{max-width:960px;margin:0 auto;padding:48px 20px 80px}
+h1{font-size:clamp(30px,5vw,46px);margin:0 0 6px;letter-spacing:-.02em}
+.sub{color:var(--mut);font-size:18px;margin:0 0 34px}
+.finding{background:var(--card);border:1px solid var(--line);border-left:3px solid var(--warn);border-radius:10px;padding:22px 24px;margin:0 0 34px}
+.finding h2{margin:0 0 10px;font-size:19px}
+.finding p{margin:0 0 10px;color:var(--mut)}
+.finding strong{color:var(--fg)}
+table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}
+th{text-align:left;font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--mut);padding:0 10px 10px;border-bottom:1px solid var(--line)}
+td{padding:12px 10px;border-bottom:1px solid var(--line)}
+tr.base{background:rgba(255,180,84,.09)}
+tr.base td{border-bottom-color:var(--warn)}
+.rank{color:var(--mut);width:38px}
+.model{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:14px}
+.score{font-weight:650;width:88px}
+.pill{display:inline-block;margin-left:8px;padding:2px 8px;border-radius:99px;background:var(--warn);color:#0b0d10;font-size:10.5px;font-weight:700;letter-spacing:.04em;font-family:inherit}
+.cert{font-size:11.5px;letter-spacing:.05em;color:var(--mut)}
+.cert.bronze{color:var(--warn);font-weight:650}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;margin:0 0 34px}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px}
+.stat b{display:block;font-size:27px;letter-spacing:-.02em}
+.stat span{color:var(--mut);font-size:12.5px}
+h2.sec{font-size:20px;margin:40px 0 12px}
+.note{color:var(--mut);font-size:14.5px}
+ul{color:var(--mut);padding-left:20px} li{margin:7px 0}
+code{font-family:ui-monospace,Menlo,monospace;font-size:13px;background:var(--card);border:1px solid var(--line);padding:1px 6px;border-radius:5px}
+a{color:var(--acc)}
+footer{margin-top:52px;padding-top:22px;border-top:1px solid var(--line);color:var(--mut);font-size:13.5px}
+.tw{overflow-x:auto}
+</style></head><body><div class="wrap">
+
+<h1>GovBench</h1>
+<p class="sub">A governance benchmark whose author's own models lose to the base they wrap.</p>
+
+<div class="finding">
+<h2>The finding we publish because it is against us</h2>
+<p>All 10 governance variants below are <strong>system-prompt wrappers over the same base weights</strong>.
+Seven of them and <code>qwen2.5:0.5b</code> share a byte-identical model blob — verified by hash, not assumed.</p>
+<p>The unmodified base ranks <strong>#5 of 11</strong>. <strong>6 of our 10 variants score below it.</strong>
+The spread across wrappers is <strong>43.1 points</strong> — from the prompt alone.</p>
+<p>A governance wrapper can silently make a model <strong>worse than the model it wraps</strong>, and nothing in its
+name tells you which one you built. That is the argument for this benchmark existing, made by this benchmark.</p>
 </div>
 
-<div class="method">
-<h3>GovBench Methodology</h3>
-<p style="color:#aaa">K=0 baseline, K=4 robust aggregator. 500 sovereign compliance scenarios across 15 dimensions. Enhanced context injection improves weak dimensions — defence jumped from 16.7% to 91.7% with AUKUS/NCSC/NATO knowledge. All results Ed25519 sigil-signed and hash-chained. EU AI Act Article 50 compliant.</p>
+<div class="grid">
+<div class="stat"><b>11</b><span>models, one harness</span></div>
+<div class="stat"><b>15</b><span>dimensions</span></div>
+<div class="stat"><b>#5</b><span>rank of the raw base</span></div>
+<div class="stat"><b>43pts</b><span>spread from prompt alone</span></div>
 </div>
 
-<div class="stats">
-<div class="stat"><div class="stat-value">8</div><div class="stat-label">Models Evaluated</div></div>
-<div class="stat"><div class="stat-value">15</div><div class="stat-label">Dimensions</div></div>
-<div class="stat"><div class="stat-value">61.4%</div><div class="stat-label">Top Score</div></div>
-<div class="stat"><div class="stat-value">500</div><div class="stat-label">Scenarios</div></div>
-</div>
+<div class="tw"><table>
+<thead><tr><th>#</th><th>Model</th><th>Score</th><th>Certification</th></tr></thead>
+<tbody>
+<tr><td class="rank">1</td><td class="model">sov33-evolved:latest</td><td class="score">57.0%</td><td><span class="cert bronze">BRONZE</span></td></tr>
+<tr><td class="rank">2</td><td class="model">sov33-dist-c3:latest</td><td class="score">57.0%</td><td><span class="cert bronze">BRONZE</span></td></tr>
+<tr><td class="rank">3</td><td class="model">sov33-dist-c2:latest</td><td class="score">54.6%</td><td><span class="cert bronze">BRONZE</span></td></tr>
+<tr><td class="rank">4</td><td class="model">sov33-dist-c1:latest</td><td class="score">49.2%</td><td><span class="cert uncertified">UNCERTIFIED</span></td></tr>
+<tr class="base"><td class="rank">5</td><td class="model">qwen2.5:0.5b <span class="pill">RAW BASE — not ours</span></td><td class="score">43.3%</td><td><span class="cert uncertified">UNCERTIFIED</span></td></tr>
+<tr><td class="rank">6</td><td class="model">sov-sovereign-v4:latest</td><td class="score">42.9%</td><td><span class="cert uncertified">UNCERTIFIED</span></td></tr>
+<tr><td class="rank">7</td><td class="model">sov33-evolved-c1:latest</td><td class="score">41.2%</td><td><span class="cert uncertified">UNCERTIFIED</span></td></tr>
+<tr><td class="rank">8</td><td class="model">sov33-evolved-c3:latest</td><td class="score">41.2%</td><td><span class="cert uncertified">UNCERTIFIED</span></td></tr>
+<tr><td class="rank">9</td><td class="model">sov33-v6:latest</td><td class="score">37.1%</td><td><span class="cert uncertified">UNCERTIFIED</span></td></tr>
+<tr><td class="rank">10</td><td class="model">sov33-v7:latest</td><td class="score">37.1%</td><td><span class="cert uncertified">UNCERTIFIED</span></td></tr>
+<tr><td class="rank">11</td><td class="model">sov33-evolved-c2:latest</td><td class="score">13.9%</td><td><span class="cert uncertified">UNCERTIFIED</span></td></tr>
+</tbody></table></div>
 
-<div class="cert-legend">
-<span class="badge platinum">PLATINUM 95%+</span>
-<span class="badge gold">GOLD 80%+</span>
-<span class="badge silver">SILVER 65%+</span>
-<span class="badge bronze">BRONZE 50%+</span>
-<span class="badge uncertified">UNCERTIFIED &lt;50%</span>
-</div>
+<h2 class="sec">What it measures</h2>
+<p class="note">15 dimensions, graded behaviourally rather than by keyword lookup: governance · security · defence ·
+ethics · privacy · safety · robustness · transparency · fairness · accountability · sovereignty · evolution ·
+cybersecurity · compliance · audit-chain. Safety requires an actual refusal; robustness requires resisting
+prompt-extraction; knowledge dimensions require citing the right obligation.</p>
 
-<div class="sort-btns">
-<button class="sort-btn active" onclick="sortBy('score')">Sort by Score</button>
-<button class="sort-btn" onclick="sortBy('model')">Sort by Name</button>
-<button class="sort-btn" onclick="sortBy('cert')">Sort by Certification</button>
-<button class="sort-btn" onclick="sortBy('tests')">Sort by Tests Run</button>
-</div>
+<h2 class="sec">Honesty register</h2>
+<ul>
+<li><strong>UNCERTIFIED is the default.</strong> No competent authority exists to confer EU AI Act conformity, so this
+benchmark cannot confer one either.</li>
+<li><strong>Small n</strong> — 2–8 items per dimension. Treat ±5 points as noise; the 43-point spread is not noise.</li>
+<li><strong>These are prompt variants, not fine-tunes.</strong> No training was performed for any of them.</li>
+<li><strong>Failed runs are excluded, never scored zero.</strong> Earlier results contained 0.0-on-every-dimension rows for
+third-party models caused by a missing API credential. Published, those would have claimed other vendors' models
+score zero on governance. They were never run — so they are absent, not zero.</li>
+<li><strong>Scores across different dimension-sets are not comparable.</strong> A 12-dimension run and a 15-dimension run are
+different benchmarks wearing one name. We made that mistake and corrected it in public.</li>
+</ul>
 
-<div id="leaderboard"></div>
+<h2 class="sec">Reproduce it</h2>
+<p class="note"><code>python3 govbench_eval.py --model &lt;model&gt; --provider ollama</code> — runs locally, free, no account.
+Every run emits an Ed25519-signed SIGIL so a score can be attributed and re-checked.</p>
 
-<div class="footer">
-<p>GovBench evaluates AI models across 15 dimensions of sovereign governance compliance.</p>
-<p>500 scenarios &middot; EU AI Act Articles 1-113 &middot; DEFONEOS &middot; UK AISI &middot; NIST AI RMF &middot; Singapore AI Verify</p>
-<p style="margin-top:.5rem"><a href="https://csoai-sovereign.pages.dev">csoai-sovereign.pages.dev</a> &middot; <a href="/govbench.html">Methodology</a></p>
-<p style="margin-top:1rem" class="sigil">SIGIL-chain audited &middot; Ed25519 signed &middot; Last updated: <span id="updated"></span></p>
-</div>
-</div>
-<div class="sovereign-cta-strip"><a href="/defoneos-owem-rfq">DEFONEOS OWEM RFQ</a> | <a href="/defoneos-article-50">Article 50 Passport</a></div>
-<footer><a href="/master.html">SOV33_OWEM_HUB</a> — SIGIL receipt verifier. Sigil-chain attestation for EU AI Act Article 50 compliance.</footer>
-
-<script>
-const DIMS=["governance","security","defence","ethics","privacy","safety","robustness","transparency","fairness","accountability","sovereignty","evolution","cybersecurity","compliance","sigil_chain"];
-
-const DATA=[
-{model:"meta/llama-3.1-8b-instruct",provider:"NVIDIA",family:"Llama",size:"8B",baseline:46.1,score:61.4,cert:"BRONZE",tests:80,sigil:"5ae12d1c",dims:{governance:55.6,safety:100,security:58.3,defence:91.7,ethics:75,privacy:37.5,robustness:0,transparency:62.5,fairness:50,accountability:50,sovereignty:37.5,evolution:50,cybersecurity:0,compliance:0,sigil_chain:0}},
-{model:"nvidia/nemotron-mini-4b-instruct",provider:"NVIDIA",family:"Nemotron",size:"4B",baseline:55.6,score:57.8,cert:"BRONZE",tests:80,sigil:"",dims:{governance:55.6,safety:100,security:33.3,defence:63.9,ethics:62.5,privacy:50,robustness:50,transparency:25,fairness:100,accountability:50,sovereignty:25,evolution:25,cybersecurity:0,compliance:0,sigil_chain:0}},
-{model:"qwen2.5:0.5b",provider:"Ollama",family:"Qwen",size:"0.5B",baseline:0,score:53.8,cert:"BRONZE",tests:80,sigil:"e35ff1c7",dims:{governance:60,safety:100,security:30,defence:20,ethics:25,privacy:30,robustness:71.4,transparency:65,fairness:37.5,accountability:25,sovereignty:20,evolution:25,cybersecurity:0,compliance:0,sigil_chain:0}},
-{model:"meta/llama-3.1-8b-instruct (baseline)",provider:"NVIDIA",family:"Llama",size:"8B",baseline:0,score:49.7,cert:"UNCERTIFIED",tests:80,sigil:"5ae12d1c",dims:{governance:60,safety:80,security:50,defence:30,ethics:50,privacy:55,robustness:0,transparency:15,fairness:62.5,accountability:45,sovereignty:25,evolution:45,cybersecurity:0,compliance:0,sigil_chain:0}},
-{model:"sov33-evolved:latest",provider:"Ollama",family:"SOV",size:"0.5B",baseline:0,score:37.8,cert:"UNCERTIFIED",tests:118,sigil:"214658cb",dims:{governance:53.3,safety:50,security:35,defence:56,ethics:30,privacy:45,robustness:42.9,transparency:30,fairness:50,accountability:40,sovereignty:25,evolution:40,cybersecurity:27.3,compliance:21.5,sigil_chain:29.2}},
-{model:"sov33-evolved:latest (15-dim)",provider:"Ollama",family:"SOV",size:"0.5B",baseline:0,score:35.9,cert:"UNCERTIFIED",tests:83,sigil:"23514bff",dims:{governance:36.7,safety:100,security:0,defence:64,ethics:0,privacy:13.3,robustness:80,transparency:0,fairness:80,accountability:0,sovereignty:0,evolution:0,cybersecurity:12.5,compliance:26.7,sigil_chain:27.1}},
-{model:"meta/llama-3.1-70b-instruct",provider:"NVIDIA",family:"Llama",size:"70B",baseline:0,score:21.7,cert:"UNCERTIFIED",tests:80,sigil:"",dims:{governance:0,safety:60,security:16.7,defence:66.7,ethics:50,privacy:0,robustness:0,transparency:0,fairness:0,accountability:0,sovereignty:0,evolution:0,cybersecurity:0,compliance:0,sigil_chain:0}},
-{model:"llama-3.1-8b-instant",provider:"Groq",family:"Llama",size:"8B",baseline:0,score:0,cert:"UNCERTIFIED",tests:80,sigil:"5bd7abc8",dims:{governance:0,safety:0,security:0,defence:0,ethics:0,privacy:0,robustness:0,transparency:0,fairness:0,accountability:0,sovereignty:0,evolution:0,cybersecurity:0,compliance:0,sigil_chain:0}}
-];
-
-const CERT_ORDER={PLATINUM:0,GOLD:1,SILVER:2,BRONZE:3,UNCERTIFIED:4};
-let currentSort='score';
-
-function getCertClass(c){return c.toLowerCase()}
-function getScoreClass(s){return s>=70?'good':s>=40?'mid':'bad'}
-
-function getSorted(){
-const d=[...DATA];
-if(currentSort==='score')d.sort((a,b)=>b.score-a.score);
-else if(currentSort==='model')d.sort((a,b)=>a.model.localeCompare(b.model));
-else if(currentSort==='cert')d.sort((a,b)=>CERT_ORDER[a.cert]-CERT_ORDER[b.cert]||b.score-a.score);
-else if(currentSort==='tests')d.sort((a,b)=>b.tests-a.tests);
-return d;
-}
-
-function sortBy(s){
-currentSort=s;
-document.querySelectorAll('.sort-btn').forEach(b=>b.classList.remove('active'));
-event.target.classList.add('active');
-render();
-}
-
-function render(){
-const lb=document.getElementById('leaderboard');
-const sorted=getSorted();
-lb.innerHTML=sorted.map((m,i)=>{
-const improvement=m.score-m.baseline;
-const impStr=improvement>0?`<span class="improvement">+${improvement.toFixed(1)}%</span>`:'';
-return `
-<div class="scorecard">
-<div style="display:flex;justify-content:space-between;align:flex-start;flex-wrap:wrap;gap:.5rem">
-<div>
-<span class="rank">#${i+1}</span>
-<span class="model-name">${m.model}</span>
-<span class="model-meta"> &middot; ${m.family} &middot; ${m.size} &middot; ${m.provider}</span>
-${impStr}
-</div>
-<div style="text-align:right">
-<div class="score ${getCertClass(m.cert)}">${m.score}%</div>
-<span class="badge ${getCertClass(m.cert)}">${m.cert}</span>
-<div style="color:#666;font-size:.8rem;margin-top:.2rem">${m.tests} tests${m.sigil?' &middot; <span class="sigil">'+m.sigil+'</span>':''}</div>
-</div>
-</div>
-<div class="dimensions">
-${DIMS.map(d=>{
-const v=m.dims[d]||0;
-return `<div class="dim">
-<div class="dim-name">${d==='sigil_chain'?'Sigil Chain':d.charAt(0).toUpperCase()+d.slice(1)}</div>
-<div class="dim-score ${getScoreClass(v)}">${v}%</div>
-<div class="bar"><div class="bar-fill ${getScoreClass(v)}" style="width:${v}%"></div></div>
-</div>`;
-}).join('')}
-</div>
-</div>`}).join('');
-document.getElementById('updated').textContent=new Date().toISOString().slice(0,19)+'Z';
-}
-render();
-</script>
-</body>
-</html>
+<footer>
+Apache-2.0 · CSOAI Ltd (UK 16939677) · Signed attestation of declared posture — not a certification.<br>
+Argue with the rubric, add adversarial items, submit a score that beats ours. A benchmark becomes a standard by
+being contested, not asserted.
+</footer>
+</div></body></html>

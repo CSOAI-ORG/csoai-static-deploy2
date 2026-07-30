@@ -11,8 +11,13 @@ echo "║  $(date -u +%Y-%m-%dT%H:%M:%SZ)                                   ║"
 echo "╚══════════════════════════════════════════════════════════════╝"
 echo ""
 
-# Phase 0: OWEM Cluster Manager — Orchestrate all free GPU workers
-echo "[Phase 0] OWEM Cluster Manager — deploying to all free tiers..."
+# Phase 0: Sovereign API health check (cron-like)
+echo "[Phase 0a] Sovereign API health check..."
+bash "$BASE/sovereign_cron.sh" 2>&1 | tail -5
+echo ""
+
+# Phase 0b: OWEM Cluster Manager — Orchestrate all free GPU workers
+echo "[Phase 0b] OWEM Cluster Manager — deploying to all free tiers..."
 python3 free_gpu/owem_cluster_manager.py deploy all
 python3 free_gpu/owem_cluster_manager.py checkpoint save
 echo ""
