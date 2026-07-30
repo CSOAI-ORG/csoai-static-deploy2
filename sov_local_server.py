@@ -34,7 +34,7 @@ sys.path.insert(0, str(HERE))
 
 from sov_5d import export_5d
 from sov_local import (available_layers, layer_spec, query,
-                       iwm_query_through_db, ensure_db)
+                       iwm_query_through_db, ensure_db, DB_PATH)
 from sov_time import render_canvas
 from sov_zoom import render as zoom_render
 from sov_sync import ledger_summary
@@ -49,6 +49,60 @@ from sov_swarm import (BACKENDS as SWARM_BACKENDS, list_backends as swarm_backen
                       alloc_for_tier as swarm_alloc, tick as swarm_tick_now)
 from sov_portal_data import portal as get_portal
 from sov_ingest_all import audit_producers as producers_audit, ingest_all as producers_ingest
+
+
+def _backfill_honey_once():
+    """Ensure every ledger event has a row in the honey mirror.
+
+    Run once on server boot. Idempotent: re-runs are no-ops for rows
+    that already exist.
+    """
+    import hashlib, sqlite3
+    conn = sqlite3.connect(str(DB_PATH))
+    cur = conn.cursor()
+    cur.execute("""
+        CREATE TABLE IF NOT EXISTS honey (
+            event_id TEXT PRIMARY KEY,
+            timestamp REAL,
+            kind TEXT,
+            summary TEXT,
+            provenance TEXT,
+            seq INTEGER,
+            signature TEXT,
+            lens TEXT,
+            canvas_x REAL,
+            canvas_y REAL
+        )
+    """)
+    from sov_time import load_events
+    events = load_events()
+    existing = {r[0] for r in cur.execute("SELECT event_id FROM honey").fetchall()}
+    for ev in events:
+        eid = ev.get("event_id")
+        if eid in existing:
+            continue
+        cell = {
+            "event_id": eid,
+            "prev": ev.get("prev_event"),
+            "ts": ev.get("timestamp", 0),
+            "kind": ev.get("kind"),
+            "summary": ev.get("summary"),
+            "prov": ev.get("provenance"),
+        }
+        cch = hashlib.sha256(json.dumps(cell, sort_keys=True).encode()).hexdigest()
+        cur.execute(
+            "INSERT OR IGNORE INTO honey VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+            (eid, ev.get("timestamp", 0), ev.get("kind"),
+             (ev.get("summary") or "")[:1000], ev.get("provenance", ""),
+             0, cch, ev.get("lens"), ev.get("canvas_x", 0), ev.get("canvas_y", 0))
+        )
+    conn.commit()
+    n_db = cur.execute("SELECT COUNT(*) FROM honey").fetchone()[0]
+    n_led = len(events)
+    conn.close()
+    if n_db != n_led:
+        print(f"  honey mirror drift: db={n_db}, ledger={n_led}", file=__import__("sys").stderr)
+    return {"honey": n_db, "ledger": n_led, "drift": n_db - n_led}
 
 PORT = 8766  # different port from sov_sync_server.py (8765)
 
@@ -327,6 +381,7 @@ class LocalHandler(http.server.SimpleHTTPRequestHandler):
 if __name__ == '__main__':
     server = http.server.HTTPServer(('127.0.0.1', PORT), LocalHandler)
     ensure_db()  # pre-build
+    _backfill_honey_once()  # bring mirror in sync with ledger
     print('╔══════════════════════════════════════════════════════════════╗')
     print('║ GeoLibre-style local server for SOV-space inner-visualisation ║')
     print(f'║ http://localhost:{PORT}/                                          ║')
