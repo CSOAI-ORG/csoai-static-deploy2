@@ -34,6 +34,10 @@ jobs:
         run: python3 tools/capability_assert.py
       - name: Run orchestrator health check
         run: python3 sov_orchestrator.py
+      - name: Run decision_ledger selftest
+        run: python3 decision_ledger.py --selftest
+      - name: Run sov_instrument selftest
+        run: python3 sov_instrument.py --selftest
 
   bloodline-integrity:
     runs-on: ubuntu-latest
