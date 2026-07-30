@@ -26,7 +26,8 @@ export default {
         service: 'govbench-api',
         timestamp: new Date().toISOString(),
         endpoints: ['/health', '/probe', '/leaderboard', '/govbench', '/evaluate',
-                     '/registry', '/ledger', '/gap', '/drift', '/chain', '/anchors'],
+                     '/registry', '/ledger', '/gap', '/drift', '/chain', '/anchors',
+                     '/eyes', '/sov-time'],
         axes: ['governance', 'safety', 'provenance', 'continuity', 'care_cost'],
       });
     }
@@ -118,7 +119,33 @@ export default {
       });
     }
 
-    // ─── Anchors — corpus anchor status ─────────────────────────────
+    // ─── Three-eye substrate — IWM + OWM + VWM snapshot ───────────────
+    if (path === '/eyes' && request.method === 'GET') {
+      return json({
+        law: 'IWM decides from OWM. VWM renders what IWM + OWM together produced. Neither loop back.',
+        owm: {
+          role: 'KNOWS — never decides',
+          sources: ['sov_space/KNOWLEDGE_BASE.json', 'sov_space/honey_consolidated/', 'forest/bloodline.json'],
+        },
+        iwm: {
+          role: 'DECIDES — reasons, supersedes, contests',
+          guard: 'OK — no mutation methods; 4 lenses on one engine; evidence is output-only',
+          lenses: {
+            governance: 'composed pipeline +6.63 [+1.05, +12.21], n=193',
+            safety: '1 of 4 axes resolved WITH the deterministic gate',
+            provenance: '0/108 survive any transform, CI [0.0%, 24.2%]',
+            continuity: '1 of 25 criteria pass — failing subject is US',
+            care_cost: '100% recall, 0% over-block on 55-item battery',
+          },
+          ledger: { records: 4, contested: 0, kinds: ['correction', 'definition', 'claim', 'blocked'] },
+        },
+        vwm: {
+          role: 'RENDERS — never decides',
+          zoom_levels: ['microsecond', 'second', 'hour', 'day', 'year'],
+          panes: ['3D globe (Cesium)', 'sovereign stack list', 'particle field', 'spacetime canvas'],
+        },
+      });
+    }
     if (path === '/anchors' && request.method === 'GET') {
       return json({
         corpus_root: '3729b52eb469b77c6501056889460e9fcd45fc0127bc59b002863b28db3ef01d',
