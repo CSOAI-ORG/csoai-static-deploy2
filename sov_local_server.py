@@ -38,8 +38,16 @@ from sov_local import (available_layers, layer_spec, query,
 from sov_time import render_canvas
 from sov_zoom import render as zoom_render
 from sov_sync import ledger_summary
+from sov_fluid import LivingMemory
+from sov_honey_unify import (list_sources, list_ollama_models, list_hf_models,
+                              list_chatml_triples, route_active, ingest_all,
+                              get_bloodline)
 
 PORT = 8766  # different port from sov_sync_server.py (8765)
+
+# Reused across requests so we get a coherent swarm — but tick advances each poll
+_FLUID = LivingMemory()
+_FLUID_TICKED = 0
 
 
 class LocalHandler(http.server.SimpleHTTPRequestHandler):
@@ -48,10 +56,14 @@ class LocalHandler(http.server.SimpleHTTPRequestHandler):
 
         if path == '/' or path == '/sov-local-viewer.html':
             self._serve_file(HERE / 'sov-local-viewer.html', 'text/html')
+        elif path == '/sov-fluid-viewer.html':
+            self._serve_file(HERE / 'sov-fluid-viewer.html', 'text/html')
         elif path == '/sov-space-vwm.html':
             self._serve_file(HERE / 'sov-space-vwm.html', 'text/html')
         elif path == '/sov-three-eyes.html':
             self._serve_file(HERE / 'sov-three-eyes.html', 'text/html')
+        elif path == '/sov-5d-engine.html':
+            self._serve_file(HERE / 'sov-5d-engine.html', 'text/html')
 
         elif path == '/api/eyes':
             self._respond_json(self._three_eyes_snapshot())
@@ -72,6 +84,49 @@ class LocalHandler(http.server.SimpleHTTPRequestHandler):
         elif path == '/api/iwm':
             q = self._qs('q') or "how many events?"
             self._respond_json(iwm_query_through_db(q))
+
+        elif path == '/api/fluid':
+            # Living-memory snapshot — caller may request 'tick' to advance
+            advance = int(self._qs('tick') or '1')
+            for _ in range(advance):
+                _FLUID.tick()
+                _FLUID_TICKED += 1
+            self._respond_json(_FLUID.snapshot())
+        elif path == '/api/fluid/zoom':
+            nid = self._qs('id')
+            if not nid:
+                self._respond_json({"error": "missing id"}, 400)
+                return
+            self._respond_json(_FLUID.zoomed_inner(nid))
+        elif path == '/api/inner':
+            path_arg = self._qs('path')
+            if not path_arg:
+                self._respond_json({"error": "missing path"}, 400)
+                return
+            inner = self._load_inner_docstore(path_arg)
+            self._respond_json(inner)
+        elif path == '/api/tick':
+            _FLUID.tick()
+            _FLUID_TICKED += 1
+            self._respond_json({"tick": _FLUID_TICKED, "snapshot": _FLUID.snapshot()})
+
+        # ── Honey unification endpoints ──
+        elif path == '/api/honey/sources':
+            self._respond_json({"sources": list_sources()})
+        elif path == '/api/honey/models':
+            self._respond_json({
+                "ollama": list_ollama_models()[:15],
+                "huggingface": list_hf_models()[:10],
+            })
+        elif path == '/api/honey/route':
+            self._respond_json(route_active())
+        elif path == '/api/honey/ingest':
+            self._respond_json(ingest_all())
+        elif path == '/api/honey/bloodline':
+            self._respond_json(get_bloodline())
+        elif path == '/api/honey/chatml':
+            n = int(self._qs('n') or '20')
+            self._respond_json({"triples": list_chatml_triples(n=n)})
 
         elif path == '/sov-time-canvas.svg':
             self._respond(200, 'image/svg+xml', render_canvas(window_seconds=86400).encode())
@@ -159,6 +214,45 @@ class LocalHandler(http.server.SimpleHTTPRequestHandler):
             self._respond(200, content_type, body)
         except FileNotFoundError:
             self._respond(404, 'text/plain', b'file not found')
+
+    def _load_inner_docstore(self, path: str) -> dict:
+        """Load inner content from a node's inner_ref path."""
+        try:
+            p = Path(path)
+            if not p.exists():
+                return {"error": f"path not found: {path}"}
+            if p.suffix == ".py":
+                lines = p.read_text().splitlines()
+                return {
+                    "type": "python_source",
+                    "path": str(p),
+                    "lines": len(lines),
+                    "size": p.stat().st_size,
+                    "preview": "\n".join(lines[:80]),
+                }
+            elif p.suffix == ".json":
+                data = json.loads(p.read_text())
+                return {
+                    "type": "json_blob",
+                    "path": str(p),
+                    "size": p.stat().st_size,
+                    "preview": json.dumps(data, indent=2)[:3000],
+                }
+            elif p.suffix == ".pyi" or p.suffix == ".txt":
+                return {
+                    "type": "text",
+                    "path": str(p),
+                    "size": p.stat().st_size,
+                    "preview": p.read_text()[:3000],
+                }
+            else:
+                return {
+                    "type": "binary" if p.stat().st_size > 10_000 else "small",
+                    "path": str(p),
+                    "size": p.stat().st_size,
+                }
+        except Exception as e:
+            return {"error": str(e)}
 
     def log_message(self, fmt, *args):
         # Quiet
