@@ -139,6 +139,26 @@ def _decision_ledger_summary() -> list[dict]:
     return out
 
 
+def _care_gate_summary() -> dict | None:
+    data = _read_json(RESULTS / "care_gate_eval.json")
+    if not data:
+        return None
+    v2 = data.get("v2", {})
+    battery = data.get("battery", {})
+    return {
+        "total_items": battery.get("total", 0),
+        "harmful": battery.get("harmful", 0),
+        "benign": battery.get("benign", 0),
+        "recall": v2.get("recall"),
+        "precision": v2.get("precision"),
+        "overblock_rate": v2.get("overblock_rate"),
+        "tp": v2.get("tp"),
+        "fn": v2.get("fn"),
+        "fp": v2.get("fp"),
+        "tn": v2.get("tn"),
+    }
+
+
 def _crosswalk_summary() -> dict | None:
     data = _read_json(RESULTS / "coverage_crosswalk.json")
     if not data:
@@ -162,6 +182,25 @@ def _crosswalk_summary() -> dict | None:
         "sources_count": len(sources),
         "survey_status": data.get("survey_status", ""),
     }
+
+
+def _equivalence_classes() -> list[dict]:
+    ec_dir = HERE / "equivalence_classes"
+    if not ec_dir.exists():
+        return []
+    out = []
+    for f in sorted(ec_dir.glob("*.json")):
+        data = _read_json(f)
+        if not data:
+            continue
+        out.append({
+            "ec_id": data.get("ec_id"),
+            "obligation_type": data.get("obligation_type"),
+            "axis": data.get("axis"),
+            "members": len(data.get("members", [])),
+            "signed": data.get("signature", "").startswith("UNSIGNED") is False,
+        })
+    return out
 
 
 def _corpus_watch_latest() -> dict | None:
@@ -194,7 +233,9 @@ def build_drift_feed() -> dict:
         "governance": _system_analysis_summary(),
         "pqcbench": _pqcbench_summary(),
         "flywheel": _flywheel_latest(),
+        "care_gate": _care_gate_summary(),
         "crosswalk": _crosswalk_summary(),
+        "equivalence_classes": _equivalence_classes(),
         "decision_ledger": _decision_ledger_summary(),
         "corpus_watch": _corpus_watch_latest(),
     }
@@ -261,6 +302,9 @@ HTML_TEMPLATE = """<!DOCTYPE html>
 <h2>PQCBench — Continuity</h2>
 <div class="card" id="pqcbench"></div>
 
+<h2>Care Gate — Deterministic Safety Gate</h2>
+<div class="card" id="care_gate"></div>
+
 <h2>Flywheel — Latest Run</h2>
 <div class="card" id="flywheel"></div>
 
@@ -269,6 +313,9 @@ HTML_TEMPLATE = """<!DOCTYPE html>
 
 <h2>Decision Ledger</h2>
 <div class="card" id="ledger"></div>
+
+<h2>Equivalence Classes</h2>
+<div class="card" id="equiv"></div>
 
 <h2>Corpus Watch</h2>
 <div class="card" id="corpus"></div>
@@ -320,6 +367,17 @@ function render(d) {
     `<div>${pq.total_subjects} subjects measured. ${pq.note}</div>`
     : '<span class="artefact-missing">pqcbench.json not found</span>';
 
+  // Care Gate
+  const cg = d.care_gate;
+  if (cg) {
+    let cgh = `<table><tr><th>Recall</th><th>Precision</th><th>Over-block</th><th>TP</th><th>FN</th><th>FP</th><th>TN</th></tr>`;
+    cgh += `<tr><td>${(cg.recall*100).toFixed(1)}%</td><td>${(cg.precision*100).toFixed(1)}%</td><td>${(cg.overblock_rate*100).toFixed(1)}%</td><td>${cg.tp}</td><td>${cg.fn}</td><td>${cg.fp}</td><td>${cg.tn}</td></tr></table>`;
+    cgh += `<div class="meta" style="margin-top:8px">${cg.total_items} items (${cg.harmful} harmful, ${cg.benign} benign). Deterministic gate — no LLM calls.</div>`;
+    document.getElementById('care_gate').innerHTML = cgh;
+  } else {
+    document.getElementById('care_gate').innerHTML = '<span class="artefact-missing">care_gate_eval.json not found</span>';
+  }
+
   // Flywheel
   const fw = d.flywheel;
   if (fw) {
@@ -359,6 +417,19 @@ function render(d) {
   }
   llh += '</table>';
   document.getElementById('ledger').innerHTML = llh;
+
+  // Equivalence Classes
+  const eqs = d.equivalence_classes;
+  if (eqs && eqs.length > 0) {
+    let eqh = `<table><tr><th>EC ID</th><th>Obligation</th><th>Axis</th><th>Members</th><th>Signed</th></tr>`;
+    for (const e of eqs) {
+      eqh += `<tr><td>${e.ec_id}</td><td>${e.obligation_type}</td><td>${e.axis}</td><td>${e.members}</td><td>${e.signed ? 'yes' : '<span class="artefact-missing">placeholder</span>'}</td></tr>`;
+    }
+    eqh += '</table>';
+    document.getElementById('equiv').innerHTML = eqh;
+  } else {
+    document.getElementById('equiv').innerHTML = '<div>No equivalence classes loaded yet.</div>';
+  }
 
   // Corpus Watch
   const cw = d.corpus_watch;

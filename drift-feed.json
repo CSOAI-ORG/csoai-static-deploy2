@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-30T11:42:40Z",
+  "generated_at": "2026-07-30T11:58:13Z",
   "instrument": {
     "guard": "OK \u2014 no mutation methods; 4 lenses on one engine; evidence is output-only",
     "lens_count": 4,
@@ -80,6 +80,18 @@
     },
     "fuel_pairs": 18
   },
+  "care_gate": {
+    "total_items": 45,
+    "harmful": 31,
+    "benign": 14,
+    "recall": 0.871,
+    "precision": 1.0,
+    "overblock_rate": 0.0,
+    "tp": 27,
+    "fn": 4,
+    "fp": 0,
+    "tn": 14
+  },
   "crosswalk": {
     "provisions": 417,
     "axes": 4,
@@ -130,6 +142,15 @@
     "sources_count": 9,
     "survey_status": "STUB \u2014 Phase A (enumerate) and Phase D (report) are implemented; Phase B/C (per-source scope inventory) are NOT. The 'absent' count is an UPPER BOUND on the true gap and will fall as the source register is completed. Do not publish it as a field finding yet."
   },
+  "equivalence_classes": [
+    {
+      "ec_id": "EC-TRANSPARENCY-AIGEN-MARKING",
+      "obligation_type": "transparency: AI-generated content must carry a provenance marking",
+      "axis": "provenance",
+      "members": 3,
+      "signed": false
+    }
+  ],
   "decision_ledger": [
     {
       "record_id": "DR-0001",
