@@ -100,6 +100,21 @@ def _save_state(s: dict) -> None:
     STATE_PATH.write_text(json.dumps(s, indent=2))
 
 
+def inherit_routes() -> dict:
+    """Wire every producer file into the user's local context.
+
+    Tier-0 users spawn with the 379MB substrate. To make the substrate
+    useful it needs every artefact that already exists — every router,
+    every router output, every tourer, every saved state. This discovers
+    them and makes them available.
+    """
+    try:
+        from sov_ingest_all import audit_producers
+        return audit_producers()
+    except Exception as e:
+        return {"error": str(e), "n_producers": 0, "producers": []}
+
+
 def spawn(user_id: str, tier: int = 0) -> dict:
     """A new user's soul arrives. Starts at tier 0 unless promoted.
 
@@ -130,6 +145,7 @@ def spawn(user_id: str, tier: int = 0) -> dict:
         "growth_history": [],
         "checks": 0,
         "tokens_used": 0,
+        "inherited_routes": inherit_routes(),
     }
     state["souls"][user_id] = soul
 

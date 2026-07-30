@@ -43,10 +43,12 @@ from sov_honey_unify import (list_sources, list_ollama_models, list_hf_models,
                               list_chatml_triples, route_active, ingest_all,
                               get_bloodline)
 from sov_spawn import (TIERS as SOUL_TIERS, spawn as soul_spawn, grow as soul_grow,
-                       list_souls, swarms_status as soul_status)
+                       list_souls, swarms_status as soul_status,
+                       inherit_routes as soul_inherit_routes)
 from sov_swarm import (BACKENDS as SWARM_BACKENDS, list_backends as swarm_backends,
                       alloc_for_tier as swarm_alloc, tick as swarm_tick_now)
 from sov_portal_data import portal as get_portal
+from sov_ingest_all import audit_producers as producers_audit, ingest_all as producers_ingest
 
 PORT = 8766  # different port from sov_sync_server.py (8765)
 
@@ -158,6 +160,9 @@ class LocalHandler(http.server.SimpleHTTPRequestHandler):
             existing = list_souls()
             match = next((s for s in existing if s["user_id"] == uid), None)
             if match:
+                # Re-hydrate inherited routes (producers may have been added since spawn)
+                if "inherited_routes" not in match:
+                    match["inherited_routes"] = soul_inherit_routes()
                 self._respond_json({"soul": match, "spawned": False})
             else:
                 try:
@@ -181,6 +186,12 @@ class LocalHandler(http.server.SimpleHTTPRequestHandler):
                 self._respond_json(get_portal(uid))
             except Exception as e:
                 self._respond_json({"error": str(e)}, 500)
+
+        # ─── All producers → honey audit + ingest ───
+        elif path == '/api/producers/audit':
+            self._respond_json(producers_audit())
+        elif path == '/api/producers/ingest':
+            self._respond_json(producers_ingest())
 
         elif path == '/sov-time-canvas.svg':
             self._respond(200, 'image/svg+xml', render_canvas(window_seconds=86400).encode())

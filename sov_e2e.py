@@ -38,10 +38,13 @@ def e2e_full_cycle() -> dict:
         grow_result = grow(test_id, tgt)
         assert grow_result.get("grown"), f"grow to {tgt} failed: {grow_result}"
 
-    # 3. Soul state in pool
+    # 3. Soul state in pool — must include inherited routes
     souls = list_souls()
     soul = next(s for s in souls if s["user_id"] == test_id)
     assert soul["tier"] == 3 and soul["iwm"] and soul["vwm"] and soul["owem"]  # tier 3 = full stack
+    # Tier-0 must have inherited all producers
+    inh = soul.get("inherited_routes", {})
+    assert inh.get("n_producers", 0) >= 10, f"too few inherited routes: {inh}"
 
     # 4. Swarm allocates correctly per tier
     for tier in range(5):
