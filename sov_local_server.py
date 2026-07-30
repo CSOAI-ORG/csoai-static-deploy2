@@ -144,6 +144,14 @@ class LocalHandler(http.server.SimpleHTTPRequestHandler):
             uid = parts[3]
             tgt = int(parts[5]) if len(parts) > 5 and parts[5].isdigit() else 1
             self._respond_json(soul_grow(uid, tgt))
+
+        # ─── End-to-end test endpoint (proves the full pipeline is consistent) ───
+        elif path == '/api/e2e':
+            from sov_e2e import e2e_full_cycle
+            try:
+                self._respond_json(e2e_full_cycle())
+            except Exception as e:
+                self._respond_json({"error": str(e)}, 500)
         elif path.startswith('/api/soul/') and '/grow' not in path:
             # Soul spawn or fetch
             uid = path[len('/api/soul/'):]
