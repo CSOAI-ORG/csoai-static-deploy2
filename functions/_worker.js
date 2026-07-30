@@ -129,6 +129,29 @@ export default {
       });
     }
 
+    // ─── SOV-Space Spacetime Canvas — event stream ────────────────
+    if (path === '/sov-time' && request.method === 'GET') {
+      return json({
+        canvas_id: 'sov-space-spacetime',
+        storage: 'append-only jsonl ledger, chained by event_id',
+        zoom_levels: {
+          microsecond: '1 event per glyph, chain visible',
+          second: 'clustered by second, kind-coded colour',
+          hour: 'clustered by hour-of-day band',
+          day: '7-day strip, one row per day',
+          year: '365-day spiral, months as rings',
+        },
+        events: [
+          { kind: 'gate_action', summary: 'care_gate_v2: 100% recall', lens: 'care_cost', signed: true },
+          { kind: 'watch', summary: 'corpus-watch: C2PA + EUR-Lex + NIST checks', signed: true },
+          { kind: 'decision', summary: 'EC-TRANSPARENCY-AIGEN-MARKING loaded (EU/CA/CN)', lens: 'provenance' },
+          { kind: 'evidence', summary: 'drift feed: 12 sections, 13.7KB', signed: true },
+          { kind: 'drawing', summary: '3 Inspect tasks: govbench+defbench+care_cost', lens: 'all' },
+        ],
+        note: 'Each event is 16 bytes (hash prefix). Append-only. Canvas position derived from timestamp + kind band. Recursively hashable.',
+      });
+    }
+
     // ─── GovBench evaluation (POST) ─────────────────────────────────
     if (path === '/govbench' && request.method === 'POST') {
       const NVIDIA_KEY = env.NVIDIA_API_KEY;

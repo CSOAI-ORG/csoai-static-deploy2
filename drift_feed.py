@@ -203,6 +203,27 @@ def _equivalence_classes() -> list[dict]:
     return out
 
 
+def _sov_time_stats() -> dict:
+    """Read the spacetime canvas ledger if it exists."""
+    sys.path.insert(0, str(HERE))
+    try:
+        from sov_time import load_events
+        events = load_events()
+    except Exception:
+        return {"events": 0, "by_kind": {}}
+    by_kind = {}
+    for ev in events:
+        k = ev.get("kind", "?")
+        by_kind[k] = by_kind.get(k, 0) + 1
+    signed = sum(1 for ev in events if ev.get("canvas_cell_hash"))
+    return {
+        "events": len(events),
+        "signed": signed,
+        "by_kind": by_kind,
+        "ledger": "benchmark-results/sov_time_ledger.jsonl",
+    }
+
+
 def _corpus_watch_latest() -> dict | None:
     watch_file = HERE / "watch-result.json"
     return _read_json(watch_file)
@@ -237,6 +258,7 @@ def build_drift_feed() -> dict:
         "crosswalk": _crosswalk_summary(),
         "equivalence_classes": _equivalence_classes(),
         "decision_ledger": _decision_ledger_summary(),
+        "sov_time": _sov_time_stats(),
         "corpus_watch": _corpus_watch_latest(),
     }
 
@@ -316,6 +338,9 @@ HTML_TEMPLATE = """<!DOCTYPE html>
 
 <h2>Equivalence Classes</h2>
 <div class="card" id="equiv"></div>
+
+<h2>SOV-Space Spacetime Canvas</h2>
+<div class="card" id="sov_time"></div>
 
 <h2>Corpus Watch</h2>
 <div class="card" id="corpus"></div>
@@ -429,6 +454,21 @@ function render(d) {
     document.getElementById('equiv').innerHTML = eqh;
   } else {
     document.getElementById('equiv').innerHTML = '<div>No equivalence classes loaded yet.</div>';
+  }
+
+  // SOV-Space Spacetime Canvas
+  const st = d.sov_time;
+  if (st && st.events > 0) {
+    let sth = `<div>${st.events} events recorded, ${st.signed} c2pa-signed.`;
+    sth += ` <a href="./sov-time-canvas.html" target="_blank" style="color:#2F81F7">View canvas →</a></div>`;
+    sth += `<table style="margin-top:8px"><tr><th>Kind</th><th>Count</th></tr>`;
+    for (const [kind, n] of Object.entries(st.by_kind)) {
+      sth += `<tr><td>${kind}</td><td>${n}</td></tr>`;
+    }
+    sth += '</table>';
+    document.getElementById('sov_time').innerHTML = sth;
+  } else {
+    document.getElementById('sov_time').innerHTML = '<div class="artefact-missing">No events recorded yet.</div>';
   }
 
   // Corpus Watch
