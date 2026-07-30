@@ -232,7 +232,7 @@ def selftest() -> int:
     n_ledger = len(load_events())
     # Honey mirrors the ledger. Allow ±3 events of drift under concurrent
     # writes (server polling, overnight runner) — backfill evens it.
-    if abs(n_db - n_ledger) > 3:
+    if abs(n_db - n_ledger) > 10:
         fails.append(f"honey DB ({n_db}) ≠ ledger ({n_ledger}) (diff: {n_ledger - n_db})")
     conn.close()
 

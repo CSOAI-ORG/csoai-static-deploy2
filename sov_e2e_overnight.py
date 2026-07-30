@@ -42,7 +42,8 @@ def _http_get(url: str, timeout: int = 10) -> dict | None:
         return None
 
 
-def _http_post(url: str, timeout: int = 10) -> dict | None:
+def _http_post(url: str, timeout: int = 60) -> dict | None:
+    """POST → JSON. None on any error. Long timeout for run-once endpoints."""
     try:
         req = urllib.request.Request(url, method="POST")
         with urllib.request.urlopen(req, timeout=timeout) as r:
@@ -60,7 +61,15 @@ def phase_ingest() -> dict:
 
 
 def phase_e2e() -> dict:
-    return _http_get(f"{LOCAL_SERVER}/api/e2e") or {"error": "server unreachable"}
+    """Run the E2E locally (no HTTP) — fastest, no race."""
+    sys.path.insert(0, str(HERE))
+    try:
+        from sov_e2e import e2e_full_cycle
+        return e2e_full_cycle()
+    except Exception as e:
+        # Fallback to HTTP if direct import fails
+        out = _http_get(f"{LOCAL_SERVER}/api/e2e", timeout=120)
+        return out if out else {"error": f"direct E2E failed ({e}) and HTTP unreachable"}
 
 
 def phase_spawn_grow(user_id: str) -> dict:
