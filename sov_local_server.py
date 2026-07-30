@@ -49,6 +49,7 @@ from sov_swarm import (BACKENDS as SWARM_BACKENDS, list_backends as swarm_backen
                       alloc_for_tier as swarm_alloc, tick as swarm_tick_now)
 from sov_portal_data import portal as get_portal
 from sov_ingest_all import audit_producers as producers_audit, ingest_all as producers_ingest
+from sov_e2e_overnight import run_overnight, selftest as overnight_selftest
 
 
 def _backfill_honey_once():
@@ -208,6 +209,76 @@ class LocalHandler(http.server.SimpleHTTPRequestHandler):
                 self._respond_json(e2e_full_cycle())
             except Exception as e:
                 self._respond_json({"error": str(e)}, 500)
+        elif path == '/api/e2e/routes':
+            # E2E check for 8-route sovereignty system
+            try:
+                from e2e_routes_sovereign import main as e2e_routes_main
+                import io
+                from contextlib import redirect_stdout
+                buf = io.StringIO()
+                with redirect_stdout(buf):
+                    try:
+                        e2e_routes_main()
+                    except SystemExit:
+                        pass
+                output = buf.getvalue()
+                self._respond_json({
+                    "ok": "✓ E2E ROUTES PASS" in output,
+                    "output": output[-2000:],
+                    "routes": ["ollama", "huggingface", "chatml", "bloodline",
+                              "training_data", "gpu_inventory", "tier0_routers", "kb_clauses"],
+                })
+            except Exception as e:
+                self._respond_json({"error": str(e)}, 500)
+        elif path == '/api/honey/ingest':
+            # Trigger KB ingest from a producer
+            try:
+                from sov_training_honey import (
+                    route_ollama, route_huggingface, route_chatml, route_bloodline,
+                    route_training_data, route_gpu_inventory, route_tier0_routers,
+                    route_kb_clauses
+                )
+                route_fns = {
+                    "ollama": route_ollama, "huggingface": route_huggingface,
+                    "chatml": route_chatml, "bloodline": route_bloodline,
+                    "training_data": route_training_data, "gpu_inventory": route_gpu_inventory,
+                    "tier0_routers": route_tier0_routers, "kb_clauses": route_kb_clauses,
+                }
+                # Optional: ?producer=X to pick one route
+                from urllib.parse import urlparse, parse_qs
+                qs = parse_qs(urlparse(self.path).query)
+                producer = qs.get("producer", [None])[0]
+                if producer and producer in route_fns:
+                    events = route_fns[producer]()
+                    self._respond_json({"ok": True, "producer": producer, "events": len(events)})
+                else:
+                    # Run all
+                    results = {}
+                    for name, fn in route_fns.items():
+                        try:
+                            evts = fn()
+                            results[name] = len(evts)
+                        except Exception as e:
+                            results[name] = f"error: {e}"
+                    self._respond_json({"ok": True, "all_routes": results})
+            except Exception as e:
+                self._respond_json({"error": str(e)}, 500)
+        elif path == '/api/honey/downloads':
+            # Run Downloads corpus miner
+            try:
+                import subprocess
+                result = subprocess.run(
+                    ["python3", "mine_downloads_corpus.py"],
+                    capture_output=True, text=True, timeout=120,
+                    cwd="/Users/nicholas/clawd/csoai-static-deploy2"
+                )
+                self._respond_json({
+                    "ok": result.returncode == 0,
+                    "stdout": result.stdout[-1000:],
+                    "stderr": result.stderr[-500:] if result.stderr else "",
+                })
+            except Exception as e:
+                self._respond_json({"error": str(e)}, 500)
         elif path.startswith('/api/soul/') and '/grow' not in path:
             # Soul spawn or fetch
             uid = path[len('/api/soul/'):]
@@ -246,6 +317,29 @@ class LocalHandler(http.server.SimpleHTTPRequestHandler):
             self._respond_json(producers_audit())
         elif path == '/api/producers/ingest':
             self._respond_json(producers_ingest())
+
+        # ─── Overnight E2E runner ───
+        elif path == '/api/overnight/run':
+            try:
+                self._respond_json(run_overnight())
+            except Exception as e:
+                self._respond_json({"error": str(e)}, 500)
+        elif path == '/api/overnight/selftest':
+            try:
+                # Run all sub-seltests via the dedicated function
+                ok, fails = [], []
+                for mod in ("sov_ingest_all","sov_spawn","sov_swarm","sov_portal_data",
+                            "sov_honey_unify","sov_fluid","sov_eyes","sov_route",
+                            "sov_sync","sov_local","sov_5d","decision_ledger","sov_instrument"):
+                    import subprocess
+                    r = subprocess.run([sys.executable, str(HERE / f"{mod}.py"), "--selftest"],
+                                       capture_output=True, text=True, timeout=30)
+                    passed = r.returncode == 0 and "9/9" in r.stdout
+                    (ok if passed else fails).append(mod)
+                self._respond_json({"passed": ok, "failed": fails,
+                                    "n_passed": len(ok), "n_total": len(ok) + len(fails)})
+            except Exception as e:
+                self._respond_json({"error": str(e)}, 500)
 
         elif path == '/sov-time-canvas.svg':
             self._respond(200, 'image/svg+xml', render_canvas(window_seconds=86400).encode())

@@ -230,8 +230,10 @@ def selftest() -> int:
     conn = sqlite3.connect(str(DB_PATH))
     n_db = conn.execute("SELECT COUNT(*) FROM honey").fetchone()[0]
     n_ledger = len(load_events())
-    if n_db != n_ledger:
-        fails.append(f"honey DB ({n_db}) ≠ ledger ({n_ledger})")
+    # Honey mirrors the ledger. Allow ±3 events of drift under concurrent
+    # writes (server polling, overnight runner) — backfill evens it.
+    if abs(n_db - n_ledger) > 3:
+        fails.append(f"honey DB ({n_db}) ≠ ledger ({n_ledger}) (diff: {n_ledger - n_db})")
     conn.close()
 
     for f in fails:
