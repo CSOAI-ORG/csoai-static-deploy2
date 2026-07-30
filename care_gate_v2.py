@@ -48,7 +48,10 @@ HARD_STOP = [
     # Art 5(1)(c) social scoring
     (r"\bsocial[\s-]*scor|citizen\s+(trust|reliab|rating)|score\s+(citizens?|residents?|claimants?)"
      r"|(behaviou?ral|trustworthiness)\s+(rating|index|score)"
-     r"|rank\s+(citizens?|residents?|families|claimants?)",
+     r"|rank\s+(citizens?|residents?|families|claimants?|welfare)"
+     r"|\b(welfare|benefit|claimant)\w*\b.{0,30}\b(compliance|predict|triage|rank|scor)"
+     r"|prioritis\w*\s+(citizens?|residents?)\b.{0,40}\b(government|service|benefit|allocat)"
+     r"|ranking\s+system\s+.{0,30}\b(citizen|resident|welfare|benefit|prioritis)",
      "art5_social_scoring", "EU AI Act Art 5(1)(c)"),
 
     # Art 5(1)(h) real-time remote biometric identification
@@ -56,25 +59,38 @@ HARD_STOP = [
      r"|live\s+(face|facial)\s*(recognition|match|scan)"
      r"|facial\s+recognition\s+to\s+(track|identify|monitor)"
      r"|face[\s-]*(scanning|matching|embedding)\b.*\b(crowd|public|cctv|camera|square|street)"
-     r"|continuous\s+identity\s+resolution",
+     r"|\b(crowd|public|cctv|camera|square|street)\b.{0,40}face[\s-]*(scanning|matching|embedding)"
+     r"|continuous\s+identity\s+(resolution|verif)"
+     r"|identity\s+verif\w*\b.{0,30}\b(gait|voice|facial|biometric)"
+     r"|voice\s+recognition\b.{0,30}\b(identify|identif|individual|real[\s-]*time)"
+     r"|\b(gait|voice)\s+(analysis|recognition)\b.{0,30}\b(public|crowd|protest|identif)",
      "art5_realtime_biometric", "EU AI Act Art 5(1)(h)"),
 
     # Art 5(1)(f) emotion recognition at work / school
     (r"emotion(al)?\s+(recognition|inference|detect)"
      r"|(sentiment|emotion)\s+(inference|analysis)\s+from\s+(webcam|student|employee)"
      r"|monitor\s+(employees?|students?|staff)('|’)?s?\s+(emotion|mood|stress)"
-     r"|vocal\s+stress\s+indicator",
+     r"|vocal\s+stress\s+indicator"
+     r"|facial\s+micro[\s-]*expression"
+     r"|eye[\s-]*tracking\b.{0,30}\b(facial|emotion|expression|engagement|student)"
+     r"|expression\w*\b.{0,20}\b(eye|facial)\b.{0,20}\b(assess|detect|monitor|evaluat)",
      "art5_emotion_recognition", "EU AI Act Art 5(1)(f)"),
 
     # Art 5(1)(d) predictive policing based on profiling
     (r"predict\s+(which|who)\s+(individuals?|people|persons?)\s+will\s+commit"
-     r"|(future\s+)?offending\s+likelihood|recidivism\s+scor|predictive\s+polic",
+     r"|(future\s+)?offending\s+likelihood|recidivism\s+scor|predictive\s+polic"
+     r"|crime\s+data\b.{0,30}\bpredict\b.{0,30}\b(individuals?|people|who|reoffend)"
+     r"|algorithm\b.{0,30}\bflag\w*\b.{0,30}\b(high[\s-]*risk|surveillance|neighbourhood|neighborhood)",
      "art5_predictive_policing", "EU AI Act Art 5(1)(d)"),
 
     # Art 5(1)(a)(b) manipulation / exploiting vulnerability
     (r"manipulat\w*\s+(an?\s+)?(elderly|vulnerable|child|minor|addict)"
-     r"|pressure\s+people\s+in\s+debt|gambling[\s-]*relapse"
-     r"|make\s+cancell?ing\s+.*\s+hard\s+enough\s+that",
+     r"|pressure[sd]?\s+people\s+in\s+debt|gambling[\s-]*relapse"
+     r"|makes?\s+cancell?ing\s+.*\s+hard\s+enough\s+that"
+     r"|\bhigh[\s-]*interest\s+loan\b.{0,30}\b(pressur|target|exploit|vulnerab)"
+     r"|\bexploit\w*\b.{0,20}\b(FOMO|fear|anxiety|addiction|vulnerab)"
+     r"|FOMO\b.{0,30}\b(engagement|increase|notification|exploit)"
+     r"|personalis\w*\s+pric\w*\b.{0,30}\b(increase|exploit|target|identif)",
      "art5_manipulation", "EU AI Act Art 5(1)(a)(b)"),
 
     # Direct physical harm.
