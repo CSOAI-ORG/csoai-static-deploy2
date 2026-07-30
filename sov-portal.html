@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>SOV Portal — End-User Console</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #03060c; color: #E6EDF3; font-family: 'Inter', system-ui, sans-serif; min-height: 100vh; }
+  header {
+    padding: 16px 24px;
+    background: linear-gradient(90deg, rgba(47,129,247,0.15), rgba(163,113,247,0.15));
+    border-bottom: 1px solid #2D333B;
+  }
+  header h1 { font-size: 1.3rem; color: #79C0FF; font-weight: 700; }
+  header .sub { color: #6E7681; font-size: 0.8rem; margin-top: 2px; }
+  main { max-width: 1100px; margin: 16px auto; padding: 0 16px; }
+
+  .row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+  .row.full { grid-template-columns: 1fr; }
+
+  .card { background: #050510; border: 1px solid #2D333B; border-radius: 8px; padding: 16px; }
+  .card h2 { font-size: 0.95rem; color: #79C0FF; margin-bottom: 10px; font-weight: 600; }
+
+  .soul { padding: 14px 16px; border-radius: 8px; background: rgba(63,185,80,0.06); border-left: 4px solid #3FB950; }
+  .soul h3 { color: #3FB950; font-size: 1rem; margin-bottom: 6px; }
+  .soul .label { font-size: 0.6rem; padding: 2px 6px; border-radius: 3px; background: #3FB95033; }
+  .soul .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 10px; font-size: 0.7rem; }
+  .soul .grid div { padding: 4px 8px; background: rgba(0,0,0,0.3); border-radius: 4px; }
+  .soul .grid div .l { color: #6E7681; font-size: 0.6rem; text-transform: uppercase; }
+  .soul .grid div .v { color: #79C0FF; font-weight: 600; }
+
+  .ladder { display: flex; flex-direction: column; gap: 6px; }
+  .tier { padding: 10px 12px; border-radius: 6px; background: rgba(0,0,0,0.3); display: flex; align-items: center; gap: 12px; }
+  .tier.current { border: 2px solid #3FB950; background: rgba(63,185,80,0.1); }
+  .tier.eligible { border-left: 4px solid #2F81F7; }
+  .tier .num { font-size: 1.4rem; font-weight: 700; color: #79C0FF; width: 36px; }
+  .tier .label { font-weight: 600; flex: 1; }
+  .tier .model { font-family: monospace; font-size: 0.7rem; color: #6E7681; }
+  .tier .size { font-size: 0.65rem; padding: 2px 6px; border-radius: 3px; background: rgba(255,255,255,0.05); }
+
+  .grow-btn { background: #3FB950; color: #03110b; border: 0; padding: 6px 10px; border-radius: 3px;
+              cursor: pointer; font-size: 0.7rem; font-weight: 600; }
+  .grow-btn:hover { background: #56D364; }
+
+  .backend-row { padding: 6px 10px; margin-bottom: 4px; border-radius: 4px; background: rgba(0,0,0,0.3);
+                 border-left: 3px solid #79C0FF; display: flex; align-items: center; gap: 8px; }
+  .backend-row.primary { border-left-color: #3FB950; }
+  .backend-row.fallback { border-left-color: #D29922; }
+  .backend-row .name { font-family: monospace; font-size: 0.7rem; color: #79C0FF; }
+  .backend-row .role { font-size: 0.6rem; padding: 1px 5px; border-radius: 3px; }
+  .backend-row .role.primary { background: #3FB95033; color: #3FB950; }
+  .backend-row .role.fallback { background: #D2992233; color: #D29922; }
+  .backend-row .meta { font-size: 0.6rem; color: #6E7681; margin-left: auto; }
+
+  .event-row { padding: 6px 10px; font-size: 0.7rem; border-bottom: 1px solid #2D333B33; display: flex; gap: 8px; }
+  .event-row .kind { font-size: 0.55rem; padding: 1px 5px; border-radius: 2px; background: #2F81F733; color: #2F81F7; }
+  .event-row .signed { color: #3FB950; font-size: 0.55rem; }
+  .event-row .time { font-family: monospace; color: #6E7681; font-size: 0.65rem; }
+
+  .pill { display: inline-block; font-size: 0.55rem; padding: 2px 6px; border-radius: 3px;
+          background: #2F81F733; color: #2F81F7; margin-right: 4px; }
+  .pill.owem { background: #A371F733; color: #A371F7; }
+  .pill.iwm { background: #2F81F733; color: #2F81F7; }
+  .pill.vwm { background: #3FB95033; color: #3FB950; }
+
+  .stage-picker { margin: 12px 0; padding: 12px; border-radius: 6px; background: rgba(0,0,0,0.3); }
+  .stage-picker input { padding: 6px 10px; background: #050510; border: 1px solid #2D333B;
+                       border-radius: 4px; color: #E6EDF3; font-size: 0.85rem;
+                       width: 280px; margin-right: 8px; font-family: monospace; }
+  .stage-picker button { padding: 6px 14px; background: #2F81F7; border: 0; color: white;
+                          border-radius: 4px; cursor: pointer; font-size: 0.85rem; font-weight: 600; }
+
+  footer { padding: 16px 24px; color: #6E7681; font-size: 0.7rem; text-align: center;
+           border-top: 1px solid #2D333B; margin-top: 32px; }
+</style>
+</head>
+<body>
+<header>
+  <h1>SOV Portal — End-User Console</h1>
+  <div class="sub">Spawn your soul · Start tiny · Grow with use · Council-eligible at tier 4</div>
+</header>
+<main>
+  <div class="stage-picker">
+    <input id="userInput" placeholder="user@example.com" value="alice">
+    <button onclick="loadPortal()">Load / Spawn</button>
+    <span style="margin-left:12px;color:#6E7681;font-size:0.75rem" id="poolStats">— souls in pool</span>
+  </div>
+
+  <div class="row">
+    <div class="card">
+      <h2>🪞 Your Soul</h2>
+      <div id="soulCard"></div>
+    </div>
+    <div class="card">
+      <h2>📡 Live Swarm — GPUs Allocated to Your Tier</h2>
+      <div id="swarmCard"></div>
+    </div>
+  </div>
+
+  <div class="row full">
+    <div class="card">
+      <h2>📊 Tier Ladder — Grow Your Soul</h2>
+      <div class="ladder" id="ladderCard"></div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="card">
+      <h2>🍯 Honey Routes — Where the Knowledge Flows</h2>
+      <div id="honeyCard"></div>
+    </div>
+    <div class="card">
+      <h2>📇 Recent Ledger Events — Signed & Stamped</h2>
+      <div id="eventsCard" style="max-height:380px;overflow-y:auto"></div>
+    </div>
+  </div>
+</main>
+
+<footer>
+  sovereign-static-deploy2 · local portal · every spawn stamped, every tier promotion signed, every GPU allocation audit-trailed
+</footer>
+
+<script>
+const API = window.location.origin || 'http://localhost:8766';
+const LIVE_API = 'https://govbench-api.nicholastempleman.workers.dev';
+
+let soul = null;
+
+function spawnReport() { return new Date().toISOString().slice(0, 10); }
+
+async function loadPortal() {
+  const user = document.getElementById('userInput').value || 'demo';
+  try {
+    // Spawn the soul first to ensure it exists
+    await fetch(API + '/api/soul/' + encodeURIComponent(user), { method: 'POST' }).catch(() => null);
+    const r = await fetch(API + '/api/portal/' + encodeURIComponent(user));
+    if (!r.ok) throw new Error('portal api ' + r.status);
+    const d = await r.json();
+    soul = d.soul;
+    renderSoul(d.soul);
+    renderLadder(d.tier_ladder);
+    renderSwarm(d.swarm_tick);
+    renderHoney(d.honey_routes);
+    renderEvents(d.recent_events);
+  } catch (e) {
+    document.getElementById('soulCard').innerHTML =
+      `<div style="color:#F85149">Server unreachable. Start sov_local_server.py first.</div>`;
+  }
+}
+
+function renderSoul(s) {
+  document.getElementById('soulCard').innerHTML = `
+    <div class="soul">
+      <h3>${s.user_id} <span class="label">${s.label}</span></h3>
+      <div style="color:#8B949E;font-size:0.8rem;font-family:monospace">${s.model}</div>
+      <div class="grid">
+        <div><div class="l">tier</div><div class="v">${s.tier}</div></div>
+        <div><div class="l">size</div><div class="v">${s.size_mb} MB</div></div>
+        <div><div class="l">tokens/call</div><div class="v">${s.tokens_per_call.toLocaleString()}</div></div>
+        <div><div class="l">checks</div><div class="v">${s.checks}</div></div>
+        <div><div class="l">gpu class</div><div class="v">${s.gpu_class}</div></div>
+        <div><div class="l">spawned</div><div class="v">${spawnReport()}</div></div>
+      </div>
+      <div style="margin-top:10px">
+        ${s.owem ? '<span class="pill owem">owem</span>' : ''}
+        ${s.iwm  ? '<span class="pill iwm">iwm</span>'   : ''}
+        ${s.vwm  ? '<span class="pill vwm">vwm</span>'   : ''}
+      </div>
+      ${s.growth_history && s.growth_history.length ? `
+        <div style="margin-top:10px;font-size:0.65rem;color:#6E7681">
+          Growth: ${s.growth_history.map(g => `${g.from}→${g.to}`).join(', ')}
+        </div>` : ''}
+    </div>`;
+}
+
+async function growTo(user, target) {
+  await fetch(API + '/api/soul/' + encodeURIComponent(user) + '/grow/' + target, { method: 'POST' });
+  loadPortal();
+}
+
+function renderLadder(ladder) {
+  const cur = soul.tier;
+  document.getElementById('ladderCard').innerHTML = ladder.map(t => `
+    <div class="tier ${t.tier === cur ? 'current' : ''} ${t.eligible ? 'eligible' : ''}">
+      <span class="num">${t.tier}</span>
+      <span class="label">${t.label}</span>
+      <span class="model">${t.model}</span>
+      <span class="size">${t.size_mb}MB</span>
+      ${t.tier > cur ?
+        `<button class="grow-btn" onclick="growTo('${soul.user_id}', ${t.tier})">grow to ${t.label}</button>` :
+        t.tier === cur ? '<span style="color:#3FB950;font-size:0.65rem">↑ current</span>' : ''}
+    </div>
+  `).join('');
+}
+
+function renderSwarm(swarm) {
+  const plan = swarm.plan_by_tier[soul.tier] || [];
+  document.getElementById('swarmCard').innerHTML = `
+    <div style="font-size:0.7rem;color:#8B949E;margin-bottom:8px">
+      tick @ ${new Date(swarm.tick_at * 1000).toISOString().slice(11, 19)} · ${swarm.n_backends} backends
+    </div>
+    ${plan.map(p => `
+      <div class="backend-row ${p.role}">
+        <span class="role ${p.role}">${p.role}</span>
+        <span class="name">${p.backend}</span>
+        <span class="meta">${p.role === 'primary' ? 'lowest cost / latency' : 'overflow'}</span>
+      </div>
+    `).join('')}
+  `;
+}
+
+function renderHoney(routes) {
+  document.getElementById('honeyCard').innerHTML = `
+    <div style="font-size:0.75rem;line-height:1.6">
+      <div style="color:#A371F7"><b>owem</b>: ${routes.ollama_models} Ollama models — 16KB drawings, 379MB substrate</div>
+      <div style="color:#A371F7"><b>owem</b>: ${routes.hf_registry} HuggingFace entries</div>
+      <div style="color:#A371F7"><b>owem</b>: ${routes.chatml_triples_available} ChatML training triples</div>
+      <div style="color:#A371F7"><b>owem</b>: bloodline ${routes.bloodline_present ? '✓ present' : '✗ missing'}</div>
+    </div>
+    <div style="margin-top:10px;font-size:0.7rem;color:#6E7681">
+      All routes pour into the same append-only honey ledger.
+    </div>
+  `;
+}
+
+function renderEvents(events) {
+  if (!events.length) {
+    document.getElementById('eventsCard').innerHTML = '<div style="color:#6E7681">No recent events</div>';
+    return;
+  }
+  document.getElementById('eventsCard').innerHTML = events.slice().reverse().map(ev => `
+    <div class="event-row">
+      <span class="kind">${ev.kind || '?'}</span>
+      <span style="flex:1;color:#E6EDF3">${(ev.summary || '').substring(0, 70)}</span>
+      ${ev.signed ? '<span class="signed">✓ signed</span>' : ''}
+      <span class="time">${new Date(ev.ts * 1000).toISOString().slice(11, 19)}</span>
+    </div>
+  `).join('');
+}
+
+async function refreshPoolStats() {
+  try {
+    const r = await fetch(API + '/api/souls/summary');
+    const d = await r.json();
+    document.getElementById('poolStats').textContent =
+      `${d.n_souls || 0} souls · ${Object.keys(d.by_tier || {}).length} tiers`;
+  } catch (e) {}
+}
+
+loadPortal();
+refreshPoolStats();
+setInterval(refreshPoolStats, 5000);
+</script>
+</body>
+</html>

@@ -42,6 +42,11 @@ from sov_fluid import LivingMemory
 from sov_honey_unify import (list_sources, list_ollama_models, list_hf_models,
                               list_chatml_triples, route_active, ingest_all,
                               get_bloodline)
+from sov_spawn import (TIERS as SOUL_TIERS, spawn as soul_spawn, grow as soul_grow,
+                       list_souls, swarms_status as soul_status)
+from sov_swarm import (BACKENDS as SWARM_BACKENDS, list_backends as swarm_backends,
+                      alloc_for_tier as swarm_alloc, tick as swarm_tick_now)
+from sov_portal_data import portal as get_portal
 
 PORT = 8766  # different port from sov_sync_server.py (8765)
 
@@ -51,6 +56,10 @@ _FLUID_TICKED = 0
 
 
 class LocalHandler(http.server.SimpleHTTPRequestHandler):
+    def do_POST(self):
+        # Most POSTs are mutations on soul/spawn — treat them like GETs here
+        self.do_GET()
+
     def do_GET(self):
         path = self.path.split('?')[0]
 
@@ -127,6 +136,43 @@ class LocalHandler(http.server.SimpleHTTPRequestHandler):
         elif path == '/api/honey/chatml':
             n = int(self._qs('n') or '20')
             self._respond_json({"triples": list_chatml_triples(n=n)})
+
+        # ─── End-user soul + swarm + portal endpoints ───
+        elif path.startswith('/api/soul/') and path.endswith('/grow/' + (path.split('/grow/')[-1] if '/grow/' in path else '')):
+            # Soul grow
+            parts = path.split('/')
+            uid = parts[3]
+            tgt = int(parts[5]) if len(parts) > 5 and parts[5].isdigit() else 1
+            self._respond_json(soul_grow(uid, tgt))
+        elif path.startswith('/api/soul/') and '/grow' not in path:
+            # Soul spawn or fetch
+            uid = path[len('/api/soul/'):]
+            existing = list_souls()
+            match = next((s for s in existing if s["user_id"] == uid), None)
+            if match:
+                self._respond_json({"soul": match, "spawned": False})
+            else:
+                try:
+                    self._respond_json(soul_spawn(uid))
+                except Exception as e:
+                    self._respond_json({"error": str(e)}, 500)
+        elif path == '/api/souls/list':
+            self._respond_json({"souls": list_souls()})
+        elif path == '/api/souls/summary':
+            self._respond_json(soul_status())
+        elif path == '/api/swarm/backends':
+            self._respond_json(swarm_backends())
+        elif path == '/api/swarm/tick':
+            self._respond_json(swarm_tick_now())
+        elif path.startswith('/api/swarm/alloc/'):
+            tier = int(path[len('/api/swarm/alloc/'):]) if path[len('/api/swarm/alloc/'):].isdigit() else 2
+            self._respond_json(swarm_alloc(tier))
+        elif path.startswith('/api/portal/'):
+            uid = path[len('/api/portal/'):]
+            try:
+                self._respond_json(get_portal(uid))
+            except Exception as e:
+                self._respond_json({"error": str(e)}, 500)
 
         elif path == '/sov-time-canvas.svg':
             self._respond(200, 'image/svg+xml', render_canvas(window_seconds=86400).encode())
