@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-30T11:33:10Z",
+  "generated_at": "2026-07-30T11:42:40Z",
   "instrument": {
     "guard": "OK \u2014 no mutation methods; 4 lenses on one engine; evidence is output-only",
     "lens_count": 4,
@@ -79,6 +79,56 @@
       }
     },
     "fuel_pairs": 18
+  },
+  "crosswalk": {
+    "provisions": 417,
+    "axes": 4,
+    "modes": 2,
+    "cells": 3336,
+    "field_coverage": {
+      "absent": 3320,
+      "partial": 16,
+      "covered": 0
+    },
+    "gap_reasons": {
+      "no_benchmark": 3320,
+      "wrong_granularity": 8,
+      "speaker_only": 8
+    },
+    "by_instrument": {
+      "GDPR": {
+        "cells": 792,
+        "covered": 0,
+        "absent": 792
+      },
+      "CSRD": {
+        "cells": 88,
+        "covered": 0,
+        "absent": 88
+      },
+      "NIS2": {
+        "cells": 368,
+        "covered": 0,
+        "absent": 368
+      },
+      "DORA": {
+        "cells": 512,
+        "covered": 0,
+        "absent": 512
+      },
+      "EU AI Act": {
+        "cells": 1008,
+        "covered": 0,
+        "absent": 992
+      },
+      "Cyber Resilience Act": {
+        "cells": 568,
+        "covered": 0,
+        "absent": 568
+      }
+    },
+    "sources_count": 9,
+    "survey_status": "STUB \u2014 Phase A (enumerate) and Phase D (report) are implemented; Phase B/C (per-source scope inventory) are NOT. The 'absent' count is an UPPER BOUND on the true gap and will fall as the source register is completed. Do not publish it as a field finding yet."
   },
   "decision_ledger": [
     {

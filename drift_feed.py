@@ -139,6 +139,31 @@ def _decision_ledger_summary() -> list[dict]:
     return out
 
 
+def _crosswalk_summary() -> dict | None:
+    data = _read_json(RESULTS / "coverage_crosswalk.json")
+    if not data:
+        return None
+    fc = data.get("field_coverage", {})
+    by_inst = data.get("by_instrument", {})
+    sources = data.get("sources", [])
+    return {
+        "provisions": data.get("provisions", 0),
+        "axes": data.get("axes", 0),
+        "modes": data.get("modes", 0),
+        "cells": data.get("cells", 0),
+        "field_coverage": {
+            "absent": fc.get("absent", 0),
+            "partial": fc.get("partial", 0),
+            "covered": fc.get("covered", 0),
+        },
+        "gap_reasons": data.get("gap_reasons", {}),
+        "by_instrument": {k: {"cells": v["cells"], "covered": v["covered"], "absent": v["absent"]}
+                          for k, v in by_inst.items()},
+        "sources_count": len(sources),
+        "survey_status": data.get("survey_status", ""),
+    }
+
+
 def _corpus_watch_latest() -> dict | None:
     watch_file = HERE / "watch-result.json"
     return _read_json(watch_file)
@@ -169,6 +194,7 @@ def build_drift_feed() -> dict:
         "governance": _system_analysis_summary(),
         "pqcbench": _pqcbench_summary(),
         "flywheel": _flywheel_latest(),
+        "crosswalk": _crosswalk_summary(),
         "decision_ledger": _decision_ledger_summary(),
         "corpus_watch": _corpus_watch_latest(),
     }
@@ -238,6 +264,9 @@ HTML_TEMPLATE = """<!DOCTYPE html>
 <h2>Flywheel — Latest Run</h2>
 <div class="card" id="flywheel"></div>
 
+<h2>Crosswalk Gap Map — 417 Provisions × 4 Axes × 2 Modes</h2>
+<div class="card" id="crosswalk"></div>
+
 <h2>Decision Ledger</h2>
 <div class="card" id="ledger"></div>
 
@@ -304,6 +333,23 @@ function render(d) {
     document.getElementById('flywheel').innerHTML = fwh;
   } else {
     document.getElementById('flywheel').innerHTML = '<span class="artefact-missing">No flywheel results yet</span>';
+  }
+
+  // Crosswalk
+  const cw2 = d.crosswalk;
+  if (cw2) {
+    let cwh = `<div>${cw2.provisions} provisions across ${cw2.axes} axes × ${cw2.modes} modes = ${cw2.cells} cells. `;
+    cwh += `<strong>${cw2.field_coverage.covered} covered</strong>, ${cw2.field_coverage.partial} partial, ${cw2.field_coverage.absent} absent. `;
+    cwh += `${cw2.sources_count} benchmark sources surveyed.</div>`;
+    cwh += `<table><tr><th>Instrument</th><th>Cells</th><th>Covered</th><th>Absent</th></tr>`;
+    for (const [name, v] of Object.entries(cw2.by_instrument)) {
+      cwh += `<tr><td>${name}</td><td>${v.cells}</td><td>${v.covered}</td><td>${v.absent}</td></tr>`;
+    }
+    cwh += `</table>`;
+    cwh += `<div class="meta" style="margin-top:8px">${cw2.survey_status}</div>`;
+    document.getElementById('crosswalk').innerHTML = cwh;
+  } else {
+    document.getElementById('crosswalk').innerHTML = '<span class="artefact-missing">coverage_crosswalk.json not found</span>';
   }
 
   // Decision Ledger
