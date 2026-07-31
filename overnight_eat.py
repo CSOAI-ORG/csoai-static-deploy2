@@ -71,21 +71,52 @@ def mark(st: dict, name: str, status: str, **extra) -> None:
 
 
 # ── stage 1 ──────────────────────────────────────────────────────────────────
-def stage_reboard(st: dict) -> None:
+def stage_reboard(st: dict, model_filter: list | None = None,
+                  dim_filter: list | None = None,
+                  write_full: bool = True) -> None:
     from govbench_eval import DIMENSIONS, grade_response, UngradedItem, all_fingerprints
     from system_bench import ask, Unreachable, preflight
     from rank_intervals import load as load_board
 
+    # ── persist partial reboard state across runs ──────────────────────────
+    # reboard hits every board model × 174 items × Ollama round-trip. On CPU
+    # that's ~7 hours — past the auto-runner wrapper's 9000s budget. Without
+    # this checkpoint, a timed-out run loses ALL work; with it, each completed
+    # model is saved and a re-run picks up where it left off.
+    CACHE = HERE / "benchmark-results" / "reboard_partial.json"
+    cache: dict[str, dict] = {}
+    if CACHE.exists():
+        try:
+            cache = json.loads(CACHE.read_text())
+        except Exception:
+            cache = {}
+    print(f"    reboard cache: {len(cache)} models already graded", flush=True)
+
     models = sorted(load_board())
+    if model_filter:
+        models = [m for m in models if m in model_filter]
+        if not models:
+            print(f"    [BATCH] no models matched filter {model_filter}", flush=True)
     dead = preflight(models)
     live = [m for m in models if m not in dead]
     if dead:
         print(f"    dead at preflight, excluded: {sorted(dead)}", flush=True)
     items = [(d, t) for d, dd in DIMENSIONS.items() for t in dd["tests"]]
-    print(f"    {len(live)} models × {len(items)} items = {len(live)*len(items)} calls", flush=True)
+    if dim_filter:
+        items = [(d, t) for d, t in items if d in dim_filter]
+        if not items:
+            print(f"    [BATCH] no dims matched filter {dim_filter}", flush=True)
+    todo = [m for m in live if m not in cache]
+    print(f"    {len(live)} models × {len(items)} items = {len(live)*len(items)} calls "
+          f"({len(todo)} to grade, {len(live)-len(todo)} cached)", flush=True)
 
-    out, t0 = {}, time.time()
-    for m in live:
+    out, t0 = dict(cache), time.time()
+    BUDGET_S = 8000  # 2h 13m — leaves margin under the wrapper's 9000s cap
+    for m in todo:
+        if time.time() - t0 > BUDGET_S:
+            print(f"    ⏱  budget hit ({BUDGET_S}s) — partial reboard, {len(todo)-(todo.index(m))} models skipped",
+                  flush=True)
+            break
         per: dict[str, list[float]] = {}
         unreachable = 0
         for d, t in items:
@@ -99,6 +130,8 @@ def stage_reboard(st: dict) -> None:
                   "dimensions": {d: round(sum(v)/len(v)*100, 1) for d, v in per.items() if v},
                   "unreachable": unreachable,
                   "n_scored": sum(len(v) for v in per.values())}
+        # Checkpoint after every model — a timeout or crash loses at most one
+        CACHE.write_text(json.dumps(out, indent=2))
         dm = out[m]["dimensions"]
         print(f"    {m:30s} {len(dm)} dims · mean {sum(dm.values())/max(len(dm),1):5.1f}% "
               f"· {unreachable} unmeasured · {time.time()-t0:.0f}s", flush=True)
@@ -116,6 +149,16 @@ def stage_reboard(st: dict) -> None:
         d["fingerprints"] = all_fingerprints()
         fp.write_text(json.dumps(d, indent=2))
     mark(st, "reboard", "ran", models=len(out), seconds=round(time.time()-t0), out=str(p.name))
+    if not write_full:
+        # In batch mode, append to batch log instead of marking complete
+        bp = HERE / "benchmark-results" / "reboard_batch_marks.jsonl"
+        with bp.open("a") as f:
+            f.write(json.dumps({
+                "at": datetime.now(timezone.utc).isoformat(),
+                "models": len(out),
+                "of": len(live),
+                "secs": round(time.time()-t0),
+            }) + "\n")
 
 
 # ── stage 2 ──────────────────────────────────────────────────────────────────
@@ -264,10 +307,20 @@ def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--status", action="store_true")
     ap.add_argument("--only")
+    ap.add_argument("--models", help="Comma-separated model subset for reboard")
+    ap.add_argument("--dims", help="Comma-separated dimension subset for reboard")
+    ap.add_argument("--batch", type=int, help="Split models into N batches; run only this batch index (0-based)")
+    ap.add_argument("--reset-cache", action="store_true", help="Wipe reboard_partial.json before run")
     a = ap.parse_args()
     st = load_state()
     if a.status:
         print(json.dumps(st, indent=2)); return 0
+
+    if a.reset_cache:
+        p = HERE / "benchmark-results" / "reboard_partial.json"
+        if p.exists():
+            p.unlink()
+            print("  [RESET] reboard_partial.json wiped", flush=True)
 
     print(f"  OVERNIGHT EAT — {len(STAGES)} stages, checkpointed\n", flush=True)
     for name, fn in STAGES:
@@ -277,12 +330,34 @@ def main() -> int:
             print(f"  [SKIP   ] {name} — already completed in this run", flush=True)
             continue
         try:
-            fn(st)
+            if name == "reboard":
+                kws = {}
+                if a.models:
+                    kws["model_filter"] = [m.strip() for m in a.models.split(",") if m.strip()]
+                if a.dims:
+                    kws["dim_filter"] = [d.strip() for d in a.dims.split(",") if d.strip()]
+                if a.batch is not None:
+                    from rank_intervals import load as load_board
+                    from system_bench import preflight
+                    all_models = sorted(m for m in load_board() if m not in preflight(load_board()))
+                    if a.models:
+                        wanted = [m.strip() for m in a.models.split(",") if m.strip()]
+                        all_models = [m for m in all_models if m in wanted]
+                    n = max(1, a.batch)
+                    idx = max(0, min(a.batch, len(all_models) - 1))
+                    chunk = (len(all_models) + n - 1) // n
+                    start = idx * chunk
+                    end = min(start + chunk, len(all_models))
+                    batch_models = all_models[start:end]
+                    print(f"  [BATCH ] {idx}/{n}: models[{start}:{end}] = {batch_models}", flush=True)
+                    kws["model_filter"] = batch_models
+                    kws["write_full"] = (n == 1)
+                fn(st, **kws)
+            else:
+                fn(st)
         except KeyboardInterrupt:
             mark(st, name, "interrupted"); return 130
         except Exception as e:
-            # A stage that blew up must say so and let the rest continue. Silently
-            # proceeding would report a completed run that never happened.
             mark(st, name, "failed", error=f"{type(e).__name__}: {str(e)[:200]}")
     print(f"\n  done — see benchmark-results/OVERNIGHT_REPORT.md", flush=True)
     return 0
