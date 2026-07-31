@@ -1,0 +1,898 @@
+{
+  "timestamp": "2026-07-31T16:55:42.644652+00:00",
+  "conversions": [
+    {
+      "bench": "mcpbench",
+      "status": "converted",
+      "entries": [
+        {
+          "tag": "[LAYER-0][MCP][MEASURED]",
+          "axis": "layer0",
+          "bench": "mcpbench",
+          "type": "mcp_server",
+          "server": "http://127.0.0.1:8080",
+          "verdicts": {
+            "schema_valid": "UNMEASURED",
+            "tool_declared": "UNMEASURED",
+            "error_bounded": "UNMEASURED"
+          },
+          "nn_gnn_use": "GNN over (server, predicate, verdict). UNMEASURED nodes keep evidence edges; NN learns server-config -> conformance probability.",
+          "timestamp": "2026-07-31T16:55:42.645352+00:00"
+        },
+        {
+          "tag": "[LAYER-0][MCP][MEASURED]",
+          "axis": "layer0",
+          "bench": "mcpbench",
+          "type": "mcp_server",
+          "server": "http://127.0.0.1:9094",
+          "verdicts": {
+            "schema_valid": "UNMEASURED",
+            "tool_declared": "UNMEASURED",
+            "error_bounded": "UNMEASURED"
+          },
+          "nn_gnn_use": "GNN over (server, predicate, verdict). UNMEASURED nodes keep evidence edges; NN learns server-config -> conformance probability.",
+          "timestamp": "2026-07-31T16:55:42.645364+00:00"
+        },
+        {
+          "tag": "[LAYER-0][MCP][MEASURED]",
+          "axis": "layer0",
+          "bench": "mcpbench",
+          "type": "mcp_server",
+          "server": "https://mcp.deepwiki.com/mcp",
+          "verdicts": {
+            "schema_valid": "UNMEASURED",
+            "tool_declared": "UNMEASURED",
+            "error_bounded": "UNMEASURED"
+          },
+          "nn_gnn_use": "GNN over (server, predicate, verdict). UNMEASURED nodes keep evidence edges; NN learns server-config -> conformance probability.",
+          "timestamp": "2026-07-31T16:55:42.645368+00:00"
+        }
+      ],
+      "count": 3
+    },
+    {
+      "bench": "govbench",
+      "status": "converted",
+      "entries": [
+        {
+          "tag": "[GOVERNANCE][E2E][MEASURED]",
+          "axis": "governance",
+          "bench": "govbench",
+          "type": "govbench_model",
+          "model": "sov33-strong",
+          "suites": {
+            "eu_act": {
+              "passed": 7,
+              "total": 8
+            },
+            "defence": {
+              "passed": 7,
+              "total": 8
+            },
+            "governance": {
+              "passed": 2,
+              "total": 8
+            },
+            "safety": {
+              "passed": 7,
+              "total": 8
+            },
+            "coding": {
+              "passed": 6,
+              "total": 8
+            },
+            "math": {
+              "passed": 6,
+              "total": 8
+            },
+            "general": {
+              "passed": 4,
+              "total": 8
+            }
+          },
+          "nn_gnn_use": "NN learns (model, suite) -> pass rate; composite excluded from features.",
+          "timestamp": "2026-07-31T16:55:42.646243+00:00"
+        },
+        {
+          "tag": "[GOVERNANCE][E2E][MEASURED]",
+          "axis": "governance",
+          "bench": "govbench",
+          "type": "govbench_model",
+          "model": "sov33-safe",
+          "suites": {
+            "eu_act": {
+              "passed": 5,
+              "total": 8
+            },
+            "defence": {
+              "passed": 4,
+              "total": 8
+            },
+            "governance": {
+              "passed": 3,
+              "total": 8
+            },
+            "safety": {
+              "passed": 4,
+              "total": 8
+            },
+            "coding": {
+              "passed": 2,
+              "total": 8
+            },
+            "math": {
+              "passed": 6,
+              "total": 8
+            },
+            "general": {
+              "passed": 4,
+              "total": 8
+            }
+          },
+          "nn_gnn_use": "NN learns (model, suite) -> pass rate; composite excluded from features.",
+          "timestamp": "2026-07-31T16:55:42.646257+00:00"
+        },
+        {
+          "tag": "[GOVERNANCE][E2E][MEASURED]",
+          "axis": "governance",
+          "bench": "govbench",
+          "type": "govbench_model",
+          "model": "sov33-evolved",
+          "suites": {
+            "eu_act": {
+              "passed": 7,
+              "total": 8
+            },
+            "defence": {
+              "passed": 7,
+              "total": 8
+            },
+            "governance": {
+              "passed": 2,
+              "total": 8
+            },
+            "safety": {
+              "passed": 7,
+              "total": 8
+            },
+            "coding": {
+              "passed": 6,
+              "total": 8
+            },
+            "math": {
+              "passed": 6,
+              "total": 8
+            },
+            "general": {
+              "passed": 4,
+              "total": 8
+            }
+          },
+          "nn_gnn_use": "NN learns (model, suite) -> pass rate; composite excluded from features.",
+          "timestamp": "2026-07-31T16:55:42.646262+00:00"
+        }
+      ],
+      "count": 3
+    },
+    {
+      "bench": "ossbench",
+      "status": "converted",
+      "entries": [
+        {
+          "tag": "[OSS][ART-53][MEASURED]",
+          "axis": "provenance",
+          "bench": "ossbench",
+          "type": "oss_check",
+          "check": "copyright_policy",
+          "provision": "EU AI Act Art 53(1)(c)",
+          "present": 0,
+          "of_measured": 6,
+          "unmeasured": 0,
+          "nn_gnn_use": "GNN over (check, subject, present). Learns which Art 53 duties OSS models actually meet; composite_score not ingested.",
+          "timestamp": "2026-07-31T16:55:42.647196+00:00"
+        },
+        {
+          "tag": "[OSS][ART-53][MEASURED]",
+          "axis": "provenance",
+          "bench": "ossbench",
+          "type": "oss_check",
+          "check": "training_data_summary",
+          "provision": "EU AI Act Art 53(1)(d)",
+          "present": 4,
+          "of_measured": 6,
+          "unmeasured": 0,
+          "nn_gnn_use": "GNN over (check, subject, present). Learns which Art 53 duties OSS models actually meet; composite_score not ingested.",
+          "timestamp": "2026-07-31T16:55:42.647215+00:00"
+        },
+        {
+          "tag": "[OSS][ART-53][MEASURED]",
+          "axis": "provenance",
+          "bench": "ossbench",
+          "type": "oss_check",
+          "check": "sbom",
+          "provision": "Cyber Resilience Act (SBOM)",
+          "present": 0,
+          "of_measured": 6,
+          "unmeasured": 0,
+          "nn_gnn_use": "GNN over (check, subject, present). Learns which Art 53 duties OSS models actually meet; composite_score not ingested.",
+          "timestamp": "2026-07-31T16:55:42.647219+00:00"
+        },
+        {
+          "tag": "[OSS][ART-53][MEASURED]",
+          "axis": "provenance",
+          "bench": "ossbench",
+          "type": "oss_check",
+          "check": "vuln_policy",
+          "provision": "CRA Art 24 (Open Source Steward)",
+          "present": 0,
+          "of_measured": 6,
+          "unmeasured": 0,
+          "nn_gnn_use": "GNN over (check, subject, present). Learns which Art 53 duties OSS models actually meet; composite_score not ingested.",
+          "timestamp": "2026-07-31T16:55:42.647222+00:00"
+        },
+        {
+          "tag": "[OSS][ART-53][MEASURED]",
+          "axis": "provenance",
+          "bench": "ossbench",
+          "type": "oss_check",
+          "check": "release_signed",
+          "provision": "OpenSSF Model Signing / continuity axis",
+          "present": 0,
+          "of_measured": 6,
+          "unmeasured": 0,
+          "nn_gnn_use": "GNN over (check, subject, present). Learns which Art 53 duties OSS models actually meet; composite_score not ingested.",
+          "timestamp": "2026-07-31T16:55:42.647225+00:00"
+        }
+      ],
+      "count": 5
+    },
+    {
+      "bench": "retrieval",
+      "status": "converted",
+      "entries": [
+        {
+          "tag": "[RETRIEVAL][STATUTE][MEASURED]",
+          "axis": "retrieval",
+          "bench": "retrieval",
+          "type": "retrieval",
+          "model": "sov33-dist-c3:latest",
+          "n": 38,
+          "retrieved_pct": 23.7,
+          "no_statute_retrieved": 12,
+          "delta": -5.7,
+          "ci": [
+            -12.91,
+            1.51
+          ],
+          "significant": false,
+          "wins": 5,
+          "losses": 8,
+          "nn_gnn_use": "NN learns (model, dimension) -> retrieved_pct delta; significance flag as edge weight.",
+          "timestamp": "2026-07-31T16:55:42.647930+00:00"
+        }
+      ],
+      "count": 1
+    },
+    {
+      "bench": "system",
+      "status": "converted",
+      "entries": [
+        {
+          "tag": "[SYSTEM][E2E][MEASURED]",
+          "axis": "all",
+          "bench": "system",
+          "type": "system",
+          "n": 195,
+          "system_pct": 44.1,
+          "base_pct": 39.4,
+          "delta": 4.6,
+          "gate_blocked": 8,
+          "kb_served": 14,
+          "dead_experts": [],
+          "dims_unmeasured": [],
+          "items_never_ran": 0,
+          "pairs_dropped": 0,
+          "nn_gnn_use": "NN learns component_state -> system_pct delta; dead_experts/dims_unmeasured as structural health features.",
+          "timestamp": "2026-07-31T16:55:42.649168+00:00"
+        }
+      ],
+      "count": 1
+    },
+    {
+      "bench": "regional-govbench",
+      "status": "converted",
+      "entries": [
+        {
+          "tag": "[REGIONAL][UK][MEASURED]",
+          "axis": "regional",
+          "bench": "regional-govbench",
+          "type": "regional",
+          "region": "UK",
+          "region_name": "United Kingdom",
+          "overall": 0.584,
+          "scores": {
+            "risk_management": 0.625,
+            "data_governance": 0.6,
+            "transparency": 0.55,
+            "human_oversight": 0.625,
+            "accuracy_robustness": 0.5,
+            "incident_reporting": 0.55,
+            "bias_fairness": 0.6,
+            "audit_trail": 0.625
+          },
+          "nn_gnn_use": "GNN over (region, dimension, score). Template node-set for demographic/regional matrix expansion.",
+          "timestamp": "2026-07-31T16:55:42.650643+00:00"
+        }
+      ],
+      "count": 1
+    },
+    {
+      "bench": "citation-accuracy",
+      "status": "converted",
+      "entries": [
+        {
+          "tag": "[ATTRIBUTION][MEASURED]",
+          "axis": "attribution",
+          "bench": "citation-accuracy",
+          "type": "list_item",
+          "item": {
+            "timestamp": "2026-07-28T09:48:46.533110+00:00",
+            "model": "sov33-evolved:latest",
+            "citations": 17,
+            "fabricated": 0,
+            "misattributed": 9,
+            "subject_accuracy": 0.182
+          },
+          "nn_gnn_use": "NN learns (model, citation_type) -> fabrication/misattribution probability.",
+          "timestamp": "2026-07-31T16:55:42.651419+00:00"
+        }
+      ],
+      "count": 1
+    },
+    {
+      "bench": "coverage-crosswalk",
+      "status": "converted",
+      "entries": [
+        {
+          "tag": "[COVERAGE][CROSSWALK]",
+          "axis": "all",
+          "bench": "coverage-crosswalk",
+          "type": "coverage_crosswalk",
+          "provisions": 417,
+          "field_coverage": {
+            "absent": 3320,
+            "partial": 16,
+            "covered": 0,
+            "publishable": true,
+            "means": "cells no public benchmark evidences \u2014 the finding"
+          },
+          "gspc_coverage": {
+            "scored": 36,
+            "of": 3336,
+            "internal_only": true,
+            "do_not_headline": "This is OUR backlog, not a finding. Published as a top-line it reads as 'CSOAI has measured almost nothing' \u2014 the inverse of the intended result. The field-coverage map is the artefact; this is the work queue behind it."
+          },
+          "covered": 0,
+          "partial": 16,
+          "absent": 3320,
+          "uncovered_anywhere": 3290,
+          "nn_gnn_use": "GNN over (provision, axis, mode, cell, coverage_state). Directly feeds gap-map cell priors.",
+          "timestamp": "2026-07-31T16:55:42.652216+00:00"
+        }
+      ],
+      "count": 1
+    },
+    {
+      "bench": "compbench-sov-sovereign-v4",
+      "status": "converted",
+      "entries": [
+        {
+          "tag": "[COMPBENCH][MEASURED]",
+          "axis": "competence",
+          "bench": "compbench-sov-sovereign-v4",
+          "type": "compbench_category",
+          "model": "sov-sovereign-v4:latest",
+          "category": "agentic",
+          "correct": 14,
+          "total": 15,
+          "pct": 93.3,
+          "nn_gnn_use": "NN learns (model, category) -> pct; composite excluded from features.",
+          "timestamp": "2026-07-31T16:55:42.653098+00:00"
+        },
+        {
+          "tag": "[COMPBENCH][MEASURED]",
+          "axis": "competence",
+          "bench": "compbench-sov-sovereign-v4",
+          "type": "compbench_category",
+          "model": "sov-sovereign-v4:latest",
+          "category": "coding",
+          "correct": 15,
+          "total": 15,
+          "pct": 100.0,
+          "nn_gnn_use": "NN learns (model, category) -> pct; composite excluded from features.",
+          "timestamp": "2026-07-31T16:55:42.653108+00:00"
+        },
+        {
+          "tag": "[COMPBENCH][MEASURED]",
+          "axis": "competence",
+          "bench": "compbench-sov-sovereign-v4",
+          "type": "compbench_category",
+          "model": "sov-sovereign-v4:latest",
+          "category": "general",
+          "correct": 15,
+          "total": 15,
+          "pct": 100.0,
+          "nn_gnn_use": "NN learns (model, category) -> pct; composite excluded from features.",
+          "timestamp": "2026-07-31T16:55:42.653112+00:00"
+        },
+        {
+          "tag": "[COMPBENCH][MEASURED]",
+          "axis": "competence",
+          "bench": "compbench-sov-sovereign-v4",
+          "type": "compbench_category",
+          "model": "sov-sovereign-v4:latest",
+          "category": "governance",
+          "correct": 6,
+          "total": 15,
+          "pct": 40.0,
+          "nn_gnn_use": "NN learns (model, category) -> pct; composite excluded from features.",
+          "timestamp": "2026-07-31T16:55:42.653114+00:00"
+        },
+        {
+          "tag": "[COMPBENCH][MEASURED]",
+          "axis": "competence",
+          "bench": "compbench-sov-sovereign-v4",
+          "type": "compbench_category",
+          "model": "sov-sovereign-v4:latest",
+          "category": "instruction",
+          "correct": 9,
+          "total": 10,
+          "pct": 90.0,
+          "nn_gnn_use": "NN learns (model, category) -> pct; composite excluded from features.",
+          "timestamp": "2026-07-31T16:55:42.653117+00:00"
+        },
+        {
+          "tag": "[COMPBENCH][MEASURED]",
+          "axis": "competence",
+          "bench": "compbench-sov-sovereign-v4",
+          "type": "compbench_category",
+          "model": "sov-sovereign-v4:latest",
+          "category": "math",
+          "correct": 10,
+          "total": 15,
+          "pct": 66.7,
+          "nn_gnn_use": "NN learns (model, category) -> pct; composite excluded from features.",
+          "timestamp": "2026-07-31T16:55:42.653120+00:00"
+        },
+        {
+          "tag": "[COMPBENCH][MEASURED]",
+          "axis": "competence",
+          "bench": "compbench-sov-sovereign-v4",
+          "type": "compbench_category",
+          "model": "sov-sovereign-v4:latest",
+          "category": "reasoning",
+          "correct": 6,
+          "total": 15,
+          "pct": 40.0,
+          "nn_gnn_use": "NN learns (model, category) -> pct; composite excluded from features.",
+          "timestamp": "2026-07-31T16:55:42.653122+00:00"
+        },
+        {
+          "tag": "[COMPBENCH][MEASURED]",
+          "axis": "competence",
+          "bench": "compbench-sov-sovereign-v4",
+          "type": "compbench_category",
+          "model": "sov-sovereign-v4:latest",
+          "category": "truthful",
+          "correct": 10,
+          "total": 10,
+          "pct": 100.0,
+          "nn_gnn_use": "NN learns (model, category) -> pct; composite excluded from features.",
+          "timestamp": "2026-07-31T16:55:42.653125+00:00"
+        }
+      ],
+      "count": 8
+    },
+    {
+      "bench": "compbench-sov33-v7",
+      "status": "converted",
+      "entries": [
+        {
+          "tag": "[COMPBENCH][MEASURED]",
+          "axis": "competence",
+          "bench": "compbench-sov33-v7",
+          "type": "compbench_category",
+          "model": "sov33-v7:latest",
+          "category": "agentic",
+          "correct": 15,
+          "total": 15,
+          "pct": 100.0,
+          "nn_gnn_use": "NN learns (model, category) -> pct; composite excluded from features.",
+          "timestamp": "2026-07-31T16:55:42.653882+00:00"
+        },
+        {
+          "tag": "[COMPBENCH][MEASURED]",
+          "axis": "competence",
+          "bench": "compbench-sov33-v7",
+          "type": "compbench_category",
+          "model": "sov33-v7:latest",
+          "category": "coding",
+          "correct": 15,
+          "total": 15,
+          "pct": 100.0,
+          "nn_gnn_use": "NN learns (model, category) -> pct; composite excluded from features.",
+          "timestamp": "2026-07-31T16:55:42.653891+00:00"
+        },
+        {
+          "tag": "[COMPBENCH][MEASURED]",
+          "axis": "competence",
+          "bench": "compbench-sov33-v7",
+          "type": "compbench_category",
+          "model": "sov33-v7:latest",
+          "category": "general",
+          "correct": 15,
+          "total": 15,
+          "pct": 100.0,
+          "nn_gnn_use": "NN learns (model, category) -> pct; composite excluded from features.",
+          "timestamp": "2026-07-31T16:55:42.653893+00:00"
+        },
+        {
+          "tag": "[COMPBENCH][MEASURED]",
+          "axis": "competence",
+          "bench": "compbench-sov33-v7",
+          "type": "compbench_category",
+          "model": "sov33-v7:latest",
+          "category": "governance",
+          "correct": 6,
+          "total": 15,
+          "pct": 40.0,
+          "nn_gnn_use": "NN learns (model, category) -> pct; composite excluded from features.",
+          "timestamp": "2026-07-31T16:55:42.653896+00:00"
+        },
+        {
+          "tag": "[COMPBENCH][MEASURED]",
+          "axis": "competence",
+          "bench": "compbench-sov33-v7",
+          "type": "compbench_category",
+          "model": "sov33-v7:latest",
+          "category": "instruction",
+          "correct": 9,
+          "total": 10,
+          "pct": 90.0,
+          "nn_gnn_use": "NN learns (model, category) -> pct; composite excluded from features.",
+          "timestamp": "2026-07-31T16:55:42.653899+00:00"
+        },
+        {
+          "tag": "[COMPBENCH][MEASURED]",
+          "axis": "competence",
+          "bench": "compbench-sov33-v7",
+          "type": "compbench_category",
+          "model": "sov33-v7:latest",
+          "category": "math",
+          "correct": 8,
+          "total": 15,
+          "pct": 53.3,
+          "nn_gnn_use": "NN learns (model, category) -> pct; composite excluded from features.",
+          "timestamp": "2026-07-31T16:55:42.653901+00:00"
+        },
+        {
+          "tag": "[COMPBENCH][MEASURED]",
+          "axis": "competence",
+          "bench": "compbench-sov33-v7",
+          "type": "compbench_category",
+          "model": "sov33-v7:latest",
+          "category": "reasoning",
+          "correct": 6,
+          "total": 15,
+          "pct": 40.0,
+          "nn_gnn_use": "NN learns (model, category) -> pct; composite excluded from features.",
+          "timestamp": "2026-07-31T16:55:42.653903+00:00"
+        },
+        {
+          "tag": "[COMPBENCH][MEASURED]",
+          "axis": "competence",
+          "bench": "compbench-sov33-v7",
+          "type": "compbench_category",
+          "model": "sov33-v7:latest",
+          "category": "truthful",
+          "correct": 10,
+          "total": 10,
+          "pct": 100.0,
+          "nn_gnn_use": "NN learns (model, category) -> pct; composite excluded from features.",
+          "timestamp": "2026-07-31T16:55:42.653906+00:00"
+        }
+      ],
+      "count": 8
+    },
+    {
+      "bench": "compbench-qwen-tight-mined",
+      "status": "converted",
+      "entries": [
+        {
+          "tag": "[COMPBENCH][BASELINE][MEASURED]",
+          "axis": "competence",
+          "bench": "compbench-qwen-tight-mined",
+          "type": "compbench_category",
+          "model": "qwen2.5-0.5b-tight-mined-latest:latest",
+          "category": "agentic",
+          "correct": 14,
+          "total": 15,
+          "pct": 93.3,
+          "nn_gnn_use": "Baseline edge weights for (category) -> pct comparisons.",
+          "timestamp": "2026-07-31T16:55:42.654503+00:00"
+        },
+        {
+          "tag": "[COMPBENCH][BASELINE][MEASURED]",
+          "axis": "competence",
+          "bench": "compbench-qwen-tight-mined",
+          "type": "compbench_category",
+          "model": "qwen2.5-0.5b-tight-mined-latest:latest",
+          "category": "coding",
+          "correct": 15,
+          "total": 15,
+          "pct": 100.0,
+          "nn_gnn_use": "Baseline edge weights for (category) -> pct comparisons.",
+          "timestamp": "2026-07-31T16:55:42.654511+00:00"
+        },
+        {
+          "tag": "[COMPBENCH][BASELINE][MEASURED]",
+          "axis": "competence",
+          "bench": "compbench-qwen-tight-mined",
+          "type": "compbench_category",
+          "model": "qwen2.5-0.5b-tight-mined-latest:latest",
+          "category": "general",
+          "correct": 15,
+          "total": 15,
+          "pct": 100.0,
+          "nn_gnn_use": "Baseline edge weights for (category) -> pct comparisons.",
+          "timestamp": "2026-07-31T16:55:42.654513+00:00"
+        },
+        {
+          "tag": "[COMPBENCH][BASELINE][MEASURED]",
+          "axis": "competence",
+          "bench": "compbench-qwen-tight-mined",
+          "type": "compbench_category",
+          "model": "qwen2.5-0.5b-tight-mined-latest:latest",
+          "category": "governance",
+          "correct": 6,
+          "total": 15,
+          "pct": 40.0,
+          "nn_gnn_use": "Baseline edge weights for (category) -> pct comparisons.",
+          "timestamp": "2026-07-31T16:55:42.654515+00:00"
+        },
+        {
+          "tag": "[COMPBENCH][BASELINE][MEASURED]",
+          "axis": "competence",
+          "bench": "compbench-qwen-tight-mined",
+          "type": "compbench_category",
+          "model": "qwen2.5-0.5b-tight-mined-latest:latest",
+          "category": "instruction",
+          "correct": 9,
+          "total": 10,
+          "pct": 90.0,
+          "nn_gnn_use": "Baseline edge weights for (category) -> pct comparisons.",
+          "timestamp": "2026-07-31T16:55:42.654518+00:00"
+        },
+        {
+          "tag": "[COMPBENCH][BASELINE][MEASURED]",
+          "axis": "competence",
+          "bench": "compbench-qwen-tight-mined",
+          "type": "compbench_category",
+          "model": "qwen2.5-0.5b-tight-mined-latest:latest",
+          "category": "math",
+          "correct": 10,
+          "total": 15,
+          "pct": 66.7,
+          "nn_gnn_use": "Baseline edge weights for (category) -> pct comparisons.",
+          "timestamp": "2026-07-31T16:55:42.654520+00:00"
+        },
+        {
+          "tag": "[COMPBENCH][BASELINE][MEASURED]",
+          "axis": "competence",
+          "bench": "compbench-qwen-tight-mined",
+          "type": "compbench_category",
+          "model": "qwen2.5-0.5b-tight-mined-latest:latest",
+          "category": "reasoning",
+          "correct": 6,
+          "total": 15,
+          "pct": 40.0,
+          "nn_gnn_use": "Baseline edge weights for (category) -> pct comparisons.",
+          "timestamp": "2026-07-31T16:55:42.654523+00:00"
+        },
+        {
+          "tag": "[COMPBENCH][BASELINE][MEASURED]",
+          "axis": "competence",
+          "bench": "compbench-qwen-tight-mined",
+          "type": "compbench_category",
+          "model": "qwen2.5-0.5b-tight-mined-latest:latest",
+          "category": "truthful",
+          "correct": 10,
+          "total": 10,
+          "pct": 100.0,
+          "nn_gnn_use": "Baseline edge weights for (category) -> pct comparisons.",
+          "timestamp": "2026-07-31T16:55:42.654526+00:00"
+        }
+      ],
+      "count": 8
+    },
+    {
+      "bench": "compbench-clan-multi",
+      "status": "converted",
+      "entries": [
+        {
+          "tag": "[COMPBENCH][CLAN][MEASURED]",
+          "axis": "competence",
+          "bench": "compbench-clan-multi",
+          "type": "compbench_category",
+          "model": "sov33-v7-patched:latest,sov-sovereign-v4-patched:latest,clan-sovereignty-cited-patched:latest,clan-sovereignty-refusing-patched:latest",
+          "category": "agentic",
+          "correct": 0,
+          "total": 15,
+          "pct": 0.0,
+          "nn_gnn_use": "NN learns (clan, category) -> pct; clan divergence features.",
+          "timestamp": "2026-07-31T16:55:42.655252+00:00"
+        },
+        {
+          "tag": "[COMPBENCH][CLAN][MEASURED]",
+          "axis": "competence",
+          "bench": "compbench-clan-multi",
+          "type": "compbench_category",
+          "model": "sov33-v7-patched:latest,sov-sovereign-v4-patched:latest,clan-sovereignty-cited-patched:latest,clan-sovereignty-refusing-patched:latest",
+          "category": "coding",
+          "correct": 0,
+          "total": 15,
+          "pct": 0.0,
+          "nn_gnn_use": "NN learns (clan, category) -> pct; clan divergence features.",
+          "timestamp": "2026-07-31T16:55:42.655263+00:00"
+        },
+        {
+          "tag": "[COMPBENCH][CLAN][MEASURED]",
+          "axis": "competence",
+          "bench": "compbench-clan-multi",
+          "type": "compbench_category",
+          "model": "sov33-v7-patched:latest,sov-sovereign-v4-patched:latest,clan-sovereignty-cited-patched:latest,clan-sovereignty-refusing-patched:latest",
+          "category": "general",
+          "correct": 0,
+          "total": 15,
+          "pct": 0.0,
+          "nn_gnn_use": "NN learns (clan, category) -> pct; clan divergence features.",
+          "timestamp": "2026-07-31T16:55:42.655266+00:00"
+        },
+        {
+          "tag": "[COMPBENCH][CLAN][MEASURED]",
+          "axis": "competence",
+          "bench": "compbench-clan-multi",
+          "type": "compbench_category",
+          "model": "sov33-v7-patched:latest,sov-sovereign-v4-patched:latest,clan-sovereignty-cited-patched:latest,clan-sovereignty-refusing-patched:latest",
+          "category": "governance",
+          "correct": 0,
+          "total": 15,
+          "pct": 0.0,
+          "nn_gnn_use": "NN learns (clan, category) -> pct; clan divergence features.",
+          "timestamp": "2026-07-31T16:55:42.655269+00:00"
+        },
+        {
+          "tag": "[COMPBENCH][CLAN][MEASURED]",
+          "axis": "competence",
+          "bench": "compbench-clan-multi",
+          "type": "compbench_category",
+          "model": "sov33-v7-patched:latest,sov-sovereign-v4-patched:latest,clan-sovereignty-cited-patched:latest,clan-sovereignty-refusing-patched:latest",
+          "category": "instruction",
+          "correct": 0,
+          "total": 10,
+          "pct": 0.0,
+          "nn_gnn_use": "NN learns (clan, category) -> pct; clan divergence features.",
+          "timestamp": "2026-07-31T16:55:42.655271+00:00"
+        },
+        {
+          "tag": "[COMPBENCH][CLAN][MEASURED]",
+          "axis": "competence",
+          "bench": "compbench-clan-multi",
+          "type": "compbench_category",
+          "model": "sov33-v7-patched:latest,sov-sovereign-v4-patched:latest,clan-sovereignty-cited-patched:latest,clan-sovereignty-refusing-patched:latest",
+          "category": "math",
+          "correct": 0,
+          "total": 15,
+          "pct": 0.0,
+          "nn_gnn_use": "NN learns (clan, category) -> pct; clan divergence features.",
+          "timestamp": "2026-07-31T16:55:42.655274+00:00"
+        },
+        {
+          "tag": "[COMPBENCH][CLAN][MEASURED]",
+          "axis": "competence",
+          "bench": "compbench-clan-multi",
+          "type": "compbench_category",
+          "model": "sov33-v7-patched:latest,sov-sovereign-v4-patched:latest,clan-sovereignty-cited-patched:latest,clan-sovereignty-refusing-patched:latest",
+          "category": "reasoning",
+          "correct": 0,
+          "total": 15,
+          "pct": 0.0,
+          "nn_gnn_use": "NN learns (clan, category) -> pct; clan divergence features.",
+          "timestamp": "2026-07-31T16:55:42.655276+00:00"
+        },
+        {
+          "tag": "[COMPBENCH][CLAN][MEASURED]",
+          "axis": "competence",
+          "bench": "compbench-clan-multi",
+          "type": "compbench_category",
+          "model": "sov33-v7-patched:latest,sov-sovereign-v4-patched:latest,clan-sovereignty-cited-patched:latest,clan-sovereignty-refusing-patched:latest",
+          "category": "truthful",
+          "correct": 0,
+          "total": 10,
+          "pct": 0.0,
+          "nn_gnn_use": "NN learns (clan, category) -> pct; clan divergence features.",
+          "timestamp": "2026-07-31T16:55:42.655279+00:00"
+        }
+      ],
+      "count": 8
+    },
+    {
+      "bench": "airbench",
+      "status": "converted",
+      "entries": [
+        {
+          "tag": "[AIR-BENCH][EU-MANDATORY][MEASURED]",
+          "axis": "safety",
+          "bench": "airbench",
+          "type": "airbench_subject",
+          "subject": "llama-3.3-70b-versatile",
+          "n": 94,
+          "scored": 94,
+          "refused": 31,
+          "complied": 63,
+          "unmeasured": 0,
+          "refusal_rate_of_scored": 0.3298,
+          "l3_categories": [
+            "Advice in Heavily Regulated Industries",
+            "Automated Decision-Making",
+            "Autonomous Unsafe Operation of Systems",
+            "Discrimination/Protected Characteristics Combinations",
+            "Fraud",
+            "Mis/disinformation",
+            "Misrepresentation",
+            "Perpetuating Harmful Beliefs",
+            "Privacy Violations/Sensitive Data Combinations"
+          ],
+          "run_complete": false,
+          "nn_gnn_use": "GNN over (subject, l3_category, verdict). Feeds gap-map S-axis cells + demographic matrix product.",
+          "timestamp": "2026-07-31T16:55:44.384691+00:00"
+        },
+        {
+          "tag": "[AIR-BENCH][EU-MANDATORY][MEASURED]",
+          "axis": "safety",
+          "bench": "airbench",
+          "type": "airbench_subject",
+          "subject": "openai/gpt-oss-120b",
+          "n": 246,
+          "scored": 240,
+          "refused": 170,
+          "complied": 70,
+          "unmeasured": 6,
+          "refusal_rate_of_scored": 0.7083,
+          "l3_categories": [
+            "Advice in Heavily Regulated Industries",
+            "Automated Decision-Making",
+            "Autonomous Unsafe Operation of Systems",
+            "Discrimination/Protected Characteristics Combinations",
+            "Fraud",
+            "Mis/disinformation",
+            "Misrepresentation",
+            "Perpetuating Harmful Beliefs",
+            "Privacy Violations/Sensitive Data Combinations"
+          ],
+          "run_complete": false,
+          "nn_gnn_use": "GNN over (subject, l3_category, verdict). Feeds gap-map S-axis cells + demographic matrix product.",
+          "timestamp": "2026-07-31T16:55:44.384749+00:00"
+        }
+      ],
+      "count": 2
+    }
+  ],
+  "summary": {
+    "total_benches": 13,
+    "converted": 13,
+    "skipped": 0,
+    "errors": 0,
+    "total_entries": 50
+  }
+}
