@@ -36,6 +36,7 @@ from sov_5d import export_5d
 from sov_local import (available_layers, layer_spec, query,
                        iwm_query_through_db, ensure_db, DB_PATH)
 from sov_live import live_query
+from sov_wifi_sensing import sense_once as wifi_sense, route_to_ledger as wifi_route
 from sov_time import render_canvas
 from sov_zoom import render as zoom_render
 from sov_sync import ledger_summary
@@ -183,6 +184,15 @@ class LocalHandler(http.server.SimpleHTTPRequestHandler):
             try:
                 result = live_query(q)
                 self._respond_json(result)
+            except Exception as e:
+                self._respond_json({"error": str(e)}, 500)
+
+        # ─── WiFi sensing (Layer 0 perception) ───
+        elif path == '/api/wifi/sense':
+            try:
+                presence = wifi_sense()
+                routed = wifi_route(presence)
+                self._respond_json({"presence": presence, "routed": routed})
             except Exception as e:
                 self._respond_json({"error": str(e)}, 500)
 

@@ -97,6 +97,26 @@ print(f'honey={d.get(\"honey_created\", False)} models={len(d.get(\"models_queri
     CYCLE_RESULTS="$CYCLE_RESULTS,\"phase_f_live\":\"$F_OUT\""
     echo "[$CYCLE_START] F done: $F_OUT" | tee -a "$LOG"
 
+    # ─── PHASE G: WiFi sensing (Layer 0 perception) ───
+    echo "[$CYCLE_START] G: WiFi sensing" | tee -a "$LOG"
+    G_OUT=$(curl -s "http://localhost:8766/api/wifi/sense" 2>&1 | python3 -c "
+import sys, json
+d = json.load(sys.stdin)
+p = d.get('presence', {})
+r = d.get('routed', {})
+print(f'presence={p.get(\"presence_detected\")} routed={r.get(\"routed\")} privacy={p.get(\"privacy\")}')" 2>&1 || echo "fail")
+    CYCLE_RESULTS="$CYCLE_RESULTS,\"phase_g_wifi\":\"$G_OUT\""
+    echo "[$CYCLE_START] G done: $G_OUT" | tee -a "$LOG"
+
+    # ─── PHASE H: auto-convert to honey KB (NN/GNN training pairs) ───
+    echo "[$CYCLE_START] H: auto-convert to honey KB" | tee -a "$LOG"
+    H_OUT=$(cd "$HERE" && python3 sov_auto_convert.py --convert 2>&1 | python3 -c "
+import sys, json
+d = json.load(sys.stdin)
+print(f'{d.get(\"total_unique\", 0)} pairs ({d.get(\"ledger_pairs\", 0)} ledger + {d.get(\"producer_pairs\", 0)} producer)')" 2>&1 || echo "fail")
+    CYCLE_RESULTS="$CYCLE_RESULTS,\"phase_h_autoconvert\":\"$H_OUT\""
+    echo "[$CYCLE_START] H done: $H_OUT" | tee -a "$LOG"
+
     CYCLE_END=$(date -u +%Y-%m-%dT%H:%M:%SZ)
     CYCLE_RESULTS="$CYCLE_RESULTS,\"ended_at\":\"$CYCLE_END\"}"
     echo "$CYCLE_RESULTS" >> "$RUN_LOG"
