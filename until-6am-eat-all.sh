@@ -117,6 +117,17 @@ print(f'{d.get(\"total_unique\", 0)} pairs ({d.get(\"ledger_pairs\", 0)} ledger 
     CYCLE_RESULTS="$CYCLE_RESULTS,\"phase_h_autoconvert\":\"$H_OUT\""
     echo "[$CYCLE_START] H done: $H_OUT" | tee -a "$LOG"
 
+    # ─── PHASE I: PC snooper — every activity becomes honey ───
+    echo "[$CYCLE_START] I: PC snooper" | tee -a "$LOG"
+    I_OUT=$(curl -s "http://localhost:8766/api/snoop/scan" 2>&1 | python3 -c "
+import sys, json
+d = json.load(sys.stdin)
+t = d.get('terminal_entries', 0)
+f = d.get('file_entries', 0)
+print(f'{t} terminal + {f} files captured')" 2>&1 || echo "fail")
+    CYCLE_RESULTS="$CYCLE_RESULTS,\"phase_i_snoop\":\"$I_OUT\""
+    echo "[$CYCLE_START] I done: $I_OUT" | tee -a "$LOG"
+
     CYCLE_END=$(date -u +%Y-%m-%dT%H:%M:%SZ)
     CYCLE_RESULTS="$CYCLE_RESULTS,\"ended_at\":\"$CYCLE_END\"}"
     echo "$CYCLE_RESULTS" >> "$RUN_LOG"
