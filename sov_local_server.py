@@ -35,6 +35,7 @@ sys.path.insert(0, str(HERE))
 from sov_5d import export_5d
 from sov_local import (available_layers, layer_spec, query,
                        iwm_query_through_db, ensure_db, DB_PATH)
+from sov_live import live_query
 from sov_time import render_canvas
 from sov_zoom import render as zoom_render
 from sov_sync import ledger_summary
@@ -175,6 +176,15 @@ class LocalHandler(http.server.SimpleHTTPRequestHandler):
             _FLUID.tick()
             _FLUID_TICKED += 1
             self._respond_json({"tick": _FLUID_TICKED, "snapshot": _FLUID.snapshot()})
+
+        # ─── Live multi-model query (creates NEW honey) ───
+        elif path == '/api/live':
+            q = self._qs('q') or "What is the EU AI Act?"
+            try:
+                result = live_query(q)
+                self._respond_json(result)
+            except Exception as e:
+                self._respond_json({"error": str(e)}, 500)
 
         # ── Honey unification endpoints ──
         elif path == '/api/honey/sources':
