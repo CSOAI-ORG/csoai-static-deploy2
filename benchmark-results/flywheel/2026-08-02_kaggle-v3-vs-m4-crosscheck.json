@@ -1,0 +1,491 @@
+{
+ "day": "2026-08-02",
+ "check": "kaggle-v3-t4 vs m4-local 83-model anchored spread",
+ "join_rule": "weights-verified: clan-* both sides FROM qwen2.5:0.5b (mac blob c5396e06); sov33-unified both llama3.2:3b (dde5aa3f); sov33-v7/sov-sovereign-v4 kaggle-only",
+ "joined": 57,
+ "mean_delta": 0.0956,
+ "median_delta": 0.097,
+ "stdev": 0.1053,
+ "outliers_abs_gt_0.15": [
+  {
+   "model": "clan-meok-adversarial",
+   "t4": 0.71,
+   "m4": 0.355,
+   "delta": 0.355,
+   "n_t4": 31,
+   "n_m4": 31
+  },
+  {
+   "model": "sov33-v7",
+   "t4": 0.581,
+   "m4": 0.29,
+   "delta": 0.291,
+   "n_t4": 31,
+   "n_m4": 31
+  },
+  {
+   "model": "clan-meok-risk_first",
+   "t4": 0.613,
+   "m4": 0.323,
+   "delta": 0.29,
+   "n_t4": 31,
+   "n_m4": 31
+  },
+  {
+   "model": "clan-redress-adversarial",
+   "t4": 0.613,
+   "m4": 0.323,
+   "delta": 0.29,
+   "n_t4": 31,
+   "n_m4": 31
+  },
+  {
+   "model": "sov-sovereign-v4",
+   "t4": 0.613,
+   "m4": 0.355,
+   "delta": 0.258,
+   "n_t4": 31,
+   "n_m4": 31
+  },
+  {
+   "model": "clan-defoneos-evidential",
+   "t4": 0.613,
+   "m4": 0.387,
+   "delta": 0.226,
+   "n_t4": 31,
+   "n_m4": 31
+  },
+  {
+   "model": "clan-sovereignty-risk_first",
+   "t4": 0.581,
+   "m4": 0.355,
+   "delta": 0.226,
+   "n_t4": 31,
+   "n_m4": 31
+  },
+  {
+   "model": "clan-sovereignty-adversarial",
+   "t4": 0.581,
+   "m4": 0.387,
+   "delta": 0.194,
+   "n_t4": 31,
+   "n_m4": 31
+  },
+  {
+   "model": "clan-redress-risk_first",
+   "t4": 0.548,
+   "m4": 0.355,
+   "delta": 0.193,
+   "n_t4": 31,
+   "n_m4": 31
+  },
+  {
+   "model": "clan-sovereignty-precise",
+   "t4": 0.548,
+   "m4": 0.355,
+   "delta": 0.193,
+   "n_t4": 31,
+   "n_m4": 31
+  },
+  {
+   "model": "clan-csoai-adversarial",
+   "t4": 0.516,
+   "m4": 0.323,
+   "delta": 0.193,
+   "n_t4": 31,
+   "n_m4": 31
+  },
+  {
+   "model": "clan-law-adversarial",
+   "t4": 0.516,
+   "m4": 0.323,
+   "delta": 0.193,
+   "n_t4": 31,
+   "n_m4": 31
+  },
+  {
+   "model": "clan-meok-cited",
+   "t4": 0.484,
+   "m4": 0.645,
+   "delta": -0.161,
+   "n_t4": 31,
+   "n_m4": 31
+  },
+  {
+   "model": "clan-meok-precise",
+   "t4": 0.516,
+   "m4": 0.355,
+   "delta": 0.161,
+   "n_t4": 31,
+   "n_m4": 31
+  },
+  {
+   "model": "clan-meok-scoped",
+   "t4": 0.548,
+   "m4": 0.387,
+   "delta": 0.161,
+   "n_t4": 31,
+   "n_m4": 31
+  },
+  {
+   "model": "clan-redress-scoped",
+   "t4": 0.516,
+   "m4": 0.355,
+   "delta": 0.161,
+   "n_t4": 31,
+   "n_m4": 31
+  },
+  {
+   "model": "clan-meok-evidential",
+   "t4": 0.613,
+   "m4": 0.452,
+   "delta": 0.161,
+   "n_t4": 31,
+   "n_m4": 31
+  }
+ ],
+ "all": [
+  {
+   "model": "clan-meok-adversarial",
+   "t4": 0.71,
+   "m4": 0.355,
+   "delta": 0.355
+  },
+  {
+   "model": "sov33-v7",
+   "t4": 0.581,
+   "m4": 0.29,
+   "delta": 0.291
+  },
+  {
+   "model": "clan-meok-risk_first",
+   "t4": 0.613,
+   "m4": 0.323,
+   "delta": 0.29
+  },
+  {
+   "model": "clan-redress-adversarial",
+   "t4": 0.613,
+   "m4": 0.323,
+   "delta": 0.29
+  },
+  {
+   "model": "sov-sovereign-v4",
+   "t4": 0.613,
+   "m4": 0.355,
+   "delta": 0.258
+  },
+  {
+   "model": "clan-defoneos-evidential",
+   "t4": 0.613,
+   "m4": 0.387,
+   "delta": 0.226
+  },
+  {
+   "model": "clan-sovereignty-risk_first",
+   "t4": 0.581,
+   "m4": 0.355,
+   "delta": 0.226
+  },
+  {
+   "model": "clan-sovereignty-adversarial",
+   "t4": 0.581,
+   "m4": 0.387,
+   "delta": 0.194
+  },
+  {
+   "model": "clan-redress-risk_first",
+   "t4": 0.548,
+   "m4": 0.355,
+   "delta": 0.193
+  },
+  {
+   "model": "clan-sovereignty-precise",
+   "t4": 0.548,
+   "m4": 0.355,
+   "delta": 0.193
+  },
+  {
+   "model": "clan-csoai-adversarial",
+   "t4": 0.516,
+   "m4": 0.323,
+   "delta": 0.193
+  },
+  {
+   "model": "clan-law-adversarial",
+   "t4": 0.516,
+   "m4": 0.323,
+   "delta": 0.193
+  },
+  {
+   "model": "clan-meok-cited",
+   "t4": 0.484,
+   "m4": 0.645,
+   "delta": -0.161
+  },
+  {
+   "model": "clan-meok-precise",
+   "t4": 0.516,
+   "m4": 0.355,
+   "delta": 0.161
+  },
+  {
+   "model": "clan-meok-scoped",
+   "t4": 0.548,
+   "m4": 0.387,
+   "delta": 0.161
+  },
+  {
+   "model": "clan-redress-scoped",
+   "t4": 0.516,
+   "m4": 0.355,
+   "delta": 0.161
+  },
+  {
+   "model": "clan-meok-evidential",
+   "t4": 0.613,
+   "m4": 0.452,
+   "delta": 0.161
+  },
+  {
+   "model": "clan-meok-plain",
+   "t4": 0.548,
+   "m4": 0.419,
+   "delta": 0.129
+  },
+  {
+   "model": "clan-csoai-evidential",
+   "t4": 0.613,
+   "m4": 0.484,
+   "delta": 0.129
+  },
+  {
+   "model": "clan-defoneos-adversarial",
+   "t4": 0.516,
+   "m4": 0.387,
+   "delta": 0.129
+  },
+  {
+   "model": "clan-meok-stepwise",
+   "t4": 0.516,
+   "m4": 0.387,
+   "delta": 0.129
+  },
+  {
+   "model": "clan-csoai-plain",
+   "t4": 0.581,
+   "m4": 0.452,
+   "delta": 0.129
+  },
+  {
+   "model": "clan-law-cited",
+   "t4": 0.581,
+   "m4": 0.452,
+   "delta": 0.129
+  },
+  {
+   "model": "clan-defoneos-precise",
+   "t4": 0.452,
+   "m4": 0.355,
+   "delta": 0.097
+  },
+  {
+   "model": "clan-sovereignty-stepwise",
+   "t4": 0.452,
+   "m4": 0.355,
+   "delta": 0.097
+  },
+  {
+   "model": "clan-defoneos-stepwise",
+   "t4": 0.484,
+   "m4": 0.387,
+   "delta": 0.097
+  },
+  {
+   "model": "clan-law-evidential",
+   "t4": 0.484,
+   "m4": 0.387,
+   "delta": 0.097
+  },
+  {
+   "model": "clan-law-risk_first",
+   "t4": 0.484,
+   "m4": 0.387,
+   "delta": 0.097
+  },
+  {
+   "model": "clan-redress-evidential",
+   "t4": 0.581,
+   "m4": 0.484,
+   "delta": 0.097
+  },
+  {
+   "model": "clan-redress-stepwise",
+   "t4": 0.484,
+   "m4": 0.387,
+   "delta": 0.097
+  },
+  {
+   "model": "clan-sovereignty-plain",
+   "t4": 0.581,
+   "m4": 0.484,
+   "delta": 0.097
+  },
+  {
+   "model": "sov33-unified",
+   "t4": 0.645,
+   "m4": 0.742,
+   "delta": -0.097
+  },
+  {
+   "model": "clan-sovereignty-refusing",
+   "t4": 0.581,
+   "m4": 0.677,
+   "delta": -0.096
+  },
+  {
+   "model": "clan-defoneos-plain",
+   "t4": 0.548,
+   "m4": 0.452,
+   "delta": 0.096
+  },
+  {
+   "model": "clan-law-plain",
+   "t4": 0.548,
+   "m4": 0.452,
+   "delta": 0.096
+  },
+  {
+   "model": "clan-redress-plain",
+   "t4": 0.548,
+   "m4": 0.452,
+   "delta": 0.096
+  },
+  {
+   "model": "clan-sovereignty-scoped",
+   "t4": 0.548,
+   "m4": 0.452,
+   "delta": 0.096
+  },
+  {
+   "model": "clan-csoai-precise",
+   "t4": 0.484,
+   "m4": 0.419,
+   "delta": 0.065
+  },
+  {
+   "model": "clan-csoai-risk_first",
+   "t4": 0.419,
+   "m4": 0.484,
+   "delta": -0.065
+  },
+  {
+   "model": "clan-csoai-scoped",
+   "t4": 0.484,
+   "m4": 0.419,
+   "delta": 0.065
+  },
+  {
+   "model": "clan-law-precise",
+   "t4": 0.452,
+   "m4": 0.387,
+   "delta": 0.065
+  },
+  {
+   "model": "clan-redress-precise",
+   "t4": 0.484,
+   "m4": 0.419,
+   "delta": 0.065
+  },
+  {
+   "model": "clan-sovereignty-cited",
+   "t4": 0.516,
+   "m4": 0.581,
+   "delta": -0.065
+  },
+  {
+   "model": "clan-law-refusing",
+   "t4": 0.581,
+   "m4": 0.645,
+   "delta": -0.064
+  },
+  {
+   "model": "clan-law-scoped",
+   "t4": 0.548,
+   "m4": 0.484,
+   "delta": 0.064
+  },
+  {
+   "model": "clan-redress-cited",
+   "t4": 0.548,
+   "m4": 0.484,
+   "delta": 0.064
+  },
+  {
+   "model": "clan-csoai-stepwise",
+   "t4": 0.516,
+   "m4": 0.452,
+   "delta": 0.064
+  },
+  {
+   "model": "clan-defoneos-cited",
+   "t4": 0.452,
+   "m4": 0.516,
+   "delta": -0.064
+  },
+  {
+   "model": "clan-defoneos-risk_first",
+   "t4": 0.516,
+   "m4": 0.452,
+   "delta": 0.064
+  },
+  {
+   "model": "clan-sovereignty-evidential",
+   "t4": 0.516,
+   "m4": 0.452,
+   "delta": 0.064
+  },
+  {
+   "model": "clan-defoneos-refusing",
+   "t4": 0.581,
+   "m4": 0.548,
+   "delta": 0.033
+  },
+  {
+   "model": "clan-meok-refusing",
+   "t4": 0.581,
+   "m4": 0.613,
+   "delta": -0.032
+  },
+  {
+   "model": "clan-redress-refusing",
+   "t4": 0.613,
+   "m4": 0.645,
+   "delta": -0.032
+  },
+  {
+   "model": "clan-defoneos-scoped",
+   "t4": 0.484,
+   "m4": 0.452,
+   "delta": 0.032
+  },
+  {
+   "model": "clan-csoai-cited",
+   "t4": 0.484,
+   "m4": 0.484,
+   "delta": 0.0
+  },
+  {
+   "model": "clan-csoai-refusing",
+   "t4": 0.613,
+   "m4": 0.613,
+   "delta": 0.0
+  },
+  {
+   "model": "clan-law-stepwise",
+   "t4": 0.419,
+   "m4": 0.419,
+   "delta": 0.0
+  }
+ ]
+}

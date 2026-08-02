@@ -1,0 +1,83 @@
+{
+ "benchmark": "cross-substrate-check",
+ "day": "2026-08-02",
+ "substrates": [
+  "mac-m4-ollama (2026-08-01_full-local-spread-83models)",
+  "kaggle-t4 (2026-08-02_clan-full-spread-v3-kaggle)"
+ ],
+ "join_rule": "same weight blob both sides (ollama show --modelfile); name match alone is NOT sufficient (register: substrate alias honesty)",
+ "valid_rows": 57,
+ "excluded": {
+  "sov33-v7": "local blob sha256-9c63daaf.. != qwen2.5:0.5b blob; Kaggle builds v7 FROM qwen2.5:0.5b \u2014 not the same model"
+ },
+ "notes": [
+  "sov33-unified valid: local blob = llama3.2:3b blob, Kaggle FROM llama3.2:3b",
+  "sov-sovereign-v4 valid on weights (local blob = qwen2.5:0.5b blob); persona prompts may still differ",
+  "54/54 clan models verified on the qwen2.5:0.5b blob locally"
+ ],
+ "held_out": {
+  "pearson": 0.211,
+  "spearman": 0.172,
+  "mean_abs_delta": 0.115,
+  "m4_mean": 0.45,
+  "t4_mean": 0.539
+ },
+ "m4_winner": {
+  "model": "sov33-unified",
+  "held": 0.742
+ },
+ "t4_winner": {
+  "model": "clan-meok-adversarial",
+  "held": 0.7096774193548387
+ },
+ "largest_divergences": [
+  {
+   "model": "clan-meok-adversarial",
+   "m4_held": 0.355,
+   "t4_held": 0.7096774193548387,
+   "delta": 0.355
+  },
+  {
+   "model": "clan-meok-risk_first",
+   "m4_held": 0.323,
+   "t4_held": 0.6129032258064516,
+   "delta": 0.29
+  },
+  {
+   "model": "clan-redress-adversarial",
+   "m4_held": 0.323,
+   "t4_held": 0.6129032258064516,
+   "delta": 0.29
+  },
+  {
+   "model": "sov-sovereign-v4",
+   "m4_held": 0.355,
+   "t4_held": 0.6129032258064516,
+   "delta": 0.258
+  },
+  {
+   "model": "clan-defoneos-evidential",
+   "m4_held": 0.387,
+   "t4_held": 0.6129032258064516,
+   "delta": 0.226
+  },
+  {
+   "model": "clan-sovereignty-risk_first",
+   "m4_held": 0.355,
+   "t4_held": 0.5806451612903226,
+   "delta": 0.226
+  },
+  {
+   "model": "clan-sovereignty-adversarial",
+   "m4_held": 0.387,
+   "t4_held": 0.5806451612903226,
+   "delta": 0.194
+  },
+  {
+   "model": "clan-redress-risk_first",
+   "m4_held": 0.355,
+   "t4_held": 0.5483870967741935,
+   "delta": 0.193
+  }
+ ]
+}

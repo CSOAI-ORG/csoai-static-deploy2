@@ -1,0 +1,311 @@
+{
+  "timestamp": "2026-07-31T04:28:10.049035+00:00",
+  "n_sites": 12,
+  "sites": [
+    {
+      "site": "HuggingFace",
+      "url": "https://huggingface.co/Nicholastempleman",
+      "artifacts": [
+        "sov33-unified",
+        "sov-sovereign-v4",
+        "sov33-evolved"
+      ],
+      "status": "model cards written",
+      "type": "distribution"
+    },
+    {
+      "site": "Kaggle",
+      "url": "https://kaggle.com/nicktempleman",
+      "artifacts": [
+        "18 modelfiles in kaggle_eat/batch_all/modelfiles/"
+      ],
+      "status": "ready to upload",
+      "type": "distribution"
+    },
+    {
+      "site": "csoai.org (master site)",
+      "url": "https://www.csoai.org",
+      "artifacts": [
+        "hub-tour",
+        "/ledger",
+        "/repos",
+        "/mythology"
+      ],
+      "status": "live",
+      "type": "frontend"
+    },
+    {
+      "site": "csoai.org-v2 (secondary)",
+      "url": "https://csoai.org",
+      "artifacts": [
+        "whitepapers",
+        "/verify",
+        "/anchors"
+      ],
+      "status": "live",
+      "type": "frontend"
+    },
+    {
+      "site": "councilof-ai",
+      "url": "https://www.csoai.org",
+      "artifacts": [
+        "/ledger",
+        "/repos"
+      ],
+      "status": "live (vite+react)",
+      "type": "frontend"
+    },
+    {
+      "site": "sov-space",
+      "url": "internal",
+      "artifacts": [
+        "sov_space/flywheel_kb_queue.jsonl",
+        "28 items"
+      ],
+      "status": "live (5D canvas + CesiumJS)",
+      "type": "render"
+    },
+    {
+      "site": "flywheel-runner",
+      "url": "http://localhost:9094",
+      "artifacts": [
+        "/health",
+        "/selftest",
+        "/board",
+        "/latest",
+        "/keystone/*"
+      ],
+      "status": "live (4 axes + 5 greenfields)",
+      "type": "backend"
+    },
+    {
+      "site": "sov-gateway",
+      "url": "http://localhost:8080",
+      "artifacts": [
+        "/v1/chat/completions",
+        "/v1/models",
+        "/metrics"
+      ],
+      "status": "live (98 models, OpenAI-compatible)",
+      "type": "backend"
+    },
+    {
+      "site": "mcp-gateway",
+      "url": "http://localhost:3000",
+      "artifacts": [
+        "/discover",
+        "/mcps",
+        "/mcp/:name"
+      ],
+      "status": "live (MCP 2026-07-28 compliant, 14 MCPs)",
+      "type": "backend"
+    },
+    {
+      "site": "GSPC composite dashboard",
+      "url": "http://localhost:3001/gspc.html",
+      "artifacts": [
+        "4 axes + 5 greenfields + 6 walls + 5-bench self-test"
+      ],
+      "status": "live (hub-tour + sov-space render integrated)",
+      "type": "render"
+    },
+    {
+      "site": "Hub-Tour",
+      "url": "internal",
+      "artifacts": [
+        "hub-tour/index.html",
+        "hub-tour/gspc.html"
+      ],
+      "status": "live (globe + SovSpace + GSPC + 7-service hub)",
+      "type": "render"
+    },
+    {
+      "site": "POC bundle",
+      "url": "internal",
+      "artifacts": [
+        "5 evidence files + 11 manifests + README"
+      ],
+      "status": "live (coai-dashboard/poc-bundle/)",
+      "type": "evidence"
+    }
+  ],
+  "live_metrics": {
+    "service": "flywheel-runner",
+    "timestamp": "2026-07-31T04:28:10.044Z",
+    "flywheel": {
+      "present": true,
+      "selftest": "9/9",
+      "split_salt": "csoai-flywheel-v1"
+    },
+    "keystone": {
+      "present": true,
+      "guards": "no adjudicate/resolve"
+    },
+    "laws": [
+      "anti-Goodhart: salted PRACTICE/HELD_OUT split + FlywheelLeak guard",
+      "equivalence: engine can only APPLY signed ECs",
+      "survival_matrix: identity survives all bindings"
+    ]
+  },
+  "hub_legs": {
+    "generatedAt": "2026-07-31T04:27:48Z",
+    "legs": [
+      {
+        "name": "sov-gateway",
+        "status": "verified",
+        "latencyMs": 186
+      },
+      {
+        "name": "mcp-gateway",
+        "status": "verified",
+        "latencyMs": 90
+      },
+      {
+        "name": "flywheel",
+        "status": "verified",
+        "latencyMs": 94
+      },
+      {
+        "name": "flywheel-split-salt",
+        "status": "verified",
+        "latencyMs": 77
+      },
+      {
+        "name": "mysql",
+        "status": "verified",
+        "latencyMs": 59
+      },
+      {
+        "name": "ollama",
+        "status": "verified",
+        "latencyMs": 107
+      },
+      {
+        "name": "sov-roundtrip",
+        "status": "verified",
+        "latencyMs": 26526,
+        "note": "LLM call through sov-gateway succeeded"
+      }
+    ]
+  },
+  "poc_bundle": {
+    "evidence_count": 5,
+    "manifests_count": 11,
+    "evidence_files": [
+      "split-salt.json",
+      "flywheel-selftest.json",
+      "keystone-guards.json",
+      "decision-ledger-selftest.json",
+      "decision-ledger-list.json"
+    ],
+    "manifest_files": [
+      "pqcbench.json",
+      "care_gate_eval.json",
+      "diversity_e2e.json",
+      "hub-manifest.json",
+      "find_besT_2026-07-30.json",
+      "defbench.json",
+      "production_ready.json",
+      "hub-status.json",
+      "provbench-15asset-2026-07-30.json",
+      "provbench-canonical-bound.json",
+      "ml_dsa_65_measure.json"
+    ]
+  },
+  "kaggle_modelfiles": 0,
+  "hf_model_cards": 4,
+  "bench_files": {
+    "asi_evolve_cycle_1.json": 871,
+    "clan_ledger.json": 20020,
+    "sov_benchmark_results.json": 2356,
+    "ip_registration_root.json": 846,
+    "overnight_e2e_20260730_164744.json": 3839,
+    "expanded_items.json": 40087,
+    "defoneos_depth_items.json": 7662,
+    "full_arena_results.json": 1559,
+    "stigmergy_trails.json": 25370,
+    "phase1_witness_root.json": 1961,
+    "arena_champion.json": 1520,
+    "e2e_api_openrouter.json": 17848,
+    "board_preflight.json": 2024,
+    "overnight-warmups.json": 137,
+    "e2e_overnight_2026-07-31.json": 1470,
+    "n_eff.json": 945,
+    "50q_benchmark.json": 619,
+    "length_controlled_eval.json": 1358,
+    "overnight_state.json": 1612,
+    "pqcbench.json": 7759,
+    "arena_dashscope_benchmark.json": 740,
+    "e2e_api_groq.json": 25181,
+    "task_registry.json": 92237,
+    "robustness_depth_items.json": 1825,
+    "regional_govbench.json": 3730,
+    "snapshot_overnight_2026-07-30.json": 1692,
+    "capability_registry.json": 2089,
+    "care_gate_eval.json": 1383,
+    "csoai_safety_depth_items.json": 3561,
+    "board_fingerprints.json": 3365,
+    "e2e_api_nvidia.json": 30913,
+    "csoai_4_axis_grade_a_plus_plus_plus_plus.json": 4194,
+    "provbench_arxiv_table.json": 6179,
+    "system_bench.json": 44770,
+    "arena_final.json": 1501,
+    "eat_final_report.json": 2655,
+    "layer_attribution.json": 1663,
+    "training_stages.json": 2624,
+    "sov33_kaggle_results.json": 14623,
+    "diversity_e2e.json": 5319,
+    "n_eff_diversity_scan.json": 58618,
+    "provbench-n20.json": 72613,
+    "overnight-surfaces.json": 7768,
+    "contbench_items.json": 3518,
+    "goal_hit_e2e_test.json": 6182,
+    "evaluation_scores.json": 6383,
+    "find_besT_2026-07-30.json": 54145,
+    "defbench.json": 27410,
+    "full_benchmark_leaderboard.json": 2927,
+    "rescore_absence_dims.json": 3036,
+    "router_control.json": 1228,
+    "kb_split.json": 86845,
+    "care_gate_experiment.json": 2982,
+    "overnight_e2e_20260730_165133.json": 3839,
+    "mcpbench.json": 2298,
+    "auto_run.json": 50758,
+    "ossbench.json": 10614,
+    "cad_analysis.json": 1395,
+    "arena_analysis.json": 3690,
+    "patent_filing_manifest_2026-07-30.json": 1138,
+    "mitosis.json": 3960,
+    "production_ready.json": 2008,
+    "retrieval_bench.json": 887,
+    "e2e_groq_v2.json": 32385,
+    "rescore_robustness.json": 2563,
+    "provbench.json": 72613,
+    "overnight_gates.json": 2503,
+    "e2e_nvidia_v4.json": 37302,
+    "FULL_CONSOLIDATION_REPORT.json": 6149,
+    "arena_results.json": 1554,
+    "prereg_retrieval_annex.json": 1760,
+    "overnight-mining-gaps.json": 632,
+    "overnight-asi-evolve.json": 117,
+    "citation_accuracy.json": 197,
+    "arena_full_results.json": 1533,
+    "board_models_broken.json": 30,
+    "overnight_improvement.json": 696,
+    "overnight_run.json": 990,
+    "pqcbench_25_of_25_report.json": 3528,
+    "reboard_174.json": 11853,
+    "corpus_anchor.json": 37444,
+    "c2pa_selftest.json": 1998,
+    "seed_v2.json": 7502,
+    "govbench_results.json": 4811,
+    "E2E_STATUS_REPORT.json": 1881,
+    "system_analysis.json": 332,
+    "provbench-15asset-2026-07-30.json": 3632,
+    "provbench-canonical-bound.json": 628,
+    "sov_space_drawings.json": 2135,
+    "ml_dsa_65_measure.json": 839,
+    "stack_checklist.json": 3285,
+    "coverage_crosswalk.json": 7434
+  }
+}

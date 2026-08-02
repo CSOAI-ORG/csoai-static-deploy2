@@ -1,0 +1,42 @@
+{
+  "timestamp": "2026-07-31T04:28:09.755978+00:00",
+  "reference": "Apple WWDC 2026 \u2014 Explore distributed inference and training with MLX",
+  "published": "2026-07-30",
+  "local_node": {
+    "hostname": "Mac",
+    "ip": "192.168.50.167",
+    "role": "controller",
+    "memory_gb": 17.2,
+    "usable_gb": 13.2
+  },
+  "hostfile": {
+    "path": "/Users/nicholas/clawd/csoai-static-deploy2/mlx_cluster/hosts.txt",
+    "hosts": [
+      "Mac",
+      "m2-mac.local"
+    ],
+    "count": 2
+  },
+  "probes": [
+    {
+      "host": "Mac",
+      "reachable": false,
+      "note": "M2 Mac is offline. Will be probed when connected to same network.",
+      "expected": {
+        "memory_gb": 8,
+        "usable_gb": 4,
+        "mlx_installed": "(verify when online)"
+      }
+    },
+    {
+      "host": "m2-mac.local",
+      "reachable": false,
+      "note": "M2 Mac is offline. Will be probed when connected to same network.",
+      "expected": {
+        "memory_gb": 8,
+        "usable_gb": 4,
+        "mlx_installed": "(verify when online)"
+      }
+    }
+  ]
+}

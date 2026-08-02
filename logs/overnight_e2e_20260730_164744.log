@@ -1,0 +1,349 @@
+=== overnight E2E 20260730_164744 ===
+Thu 30 Jul 2026 16:47:44 BST
+[1/11] Tier-0 sovereign citizen on care battery
+{
+  "record_id": "SPAWN-user_d379f7d714b3eb0d-1785426465",
+  "kind": "spawn",
+  "citizen_id": "user_d379f7d714b3eb0d",
+  "model": "qwen2.5:0.5b",
+  "location": "local-ollama",
+  "reason": "small load: qwen2.5:0.5b on local Ollama (free, instant)",
+  "estimated_24h_tokens": 200,
+  "system_prompt_hash": "75be0e23c2f387ff",
+  "issued_at": "2026-07-30T15:47:45.090457+00:00",
+  "tag": "[SCALE]",
+  "sigil": {
+    "version": 1,
+    "prev_hash": "77ab0e6f9d6c77e8",
+    "payload_hash": "322c2abc150c2c610cf858651243afaae92650adfc35d62badd0ddf6a4aba49a",
+    "root_hash": "4788b48f01b7a8af69b553cd9d331cef6497d3c4cb01fc85e471b8b78a656992",
+    "agent_did": "did:csoai:nicholas-001",
+    "bft_tally": {
+      "reject": 0,
+      "amend": 0,
+      "approve": 33
+    },
+    "care_score": 0.85,
+    "ts_unix_ms": 1785426465174,
+    "sigil_type": "cycle",
+    "algorithm": "Ed25519",
+    "public_key": "jxLjLxKbRr1w5qOvaXDKZirIWAAlBwcF3uVvNSDGZzY=",
+    "signature": "+DaFiCpfbFfI5afBgHpwGwsC7mH2h/WBCtxGV4VJdlRvlFdOK+XJ1ksZFJWCZHx6EXAKg4tA1n/k5OlM1WlkDw==",
+    "cose_alg_id": -8,
+    "sig_alg": "Ed25519",
+    "alt_algorithms": [
+      "ML-DSA-65"
+    ],
+    "signatures": [
+      {
+        "cose_alg_id": -8,
+        "algorithm": "Ed25519",
+        "public_key": "jxLjLxKbRr1w5qOvaXDKZirIWAAlBwcF3uVvNSDGZzY=",
+        "signature": "+DaFiCpfbFfI5afBgHpwGwsC7mH2h/WBCtxGV4VJdlRvlFdOK+XJ1ksZFJWCZHx6EXAKg4tA1n/k5OlM1WlkDw=="
+      }
+    ],
+    "hybrid_slot": {
+      "cose_alg_id": -49,
+      "algorithm": "ML-DSA-65",
+      "public_key": null,
+      "signature": null,
+      "status": "reserved \u2014 wire on ML-DSA-65 runtime availability"
+    },
+    "timestamp_token": {
+      "version": 1,
+      "hash_alg": "sha256",
+      "message_imprint": {
+        "hash_alg": "sha256",
+        "hashed_message": "322c2abc150c2c610cf858651243afaae92650adfc35d62badd0ddf6a4aba49a"
+      },
+      "signed_time": 1785426465,
+      "policy_oid": "1.3.6.1.4.1.11129.2.4.2",
+      "tsa_dn": "cn=SOV-PQC-TSA, o=CSOAI Sovereign Estate, c=GB",
+      "algorithm": "Ed25519",
+      "signature": "ba25269e4c63a0027f8df94299cd21a13dd1230310486f063bd6163f5f865f90"
+    },
+    "evidence_record": {
+      "version": "1.0.2",
+      "hash_alg": "sha256",
+      "hash_chain": [
+        {
+          "algorithm": "Ed25519",
+          "hash": "322c2abc150c2c610cf858651243afaae92650adfc35d62badd0ddf6a4aba49a",
+          "sequence": 1
+        }
+      ],
+      "archive_timestamp": {
+        "date": "2026-07-30T15:47:45Z",
+        "digest_alg": "sha256",
+        "digest": "3b2cb8bc0fc2695def7738a546cf573c911d8720e295a3dc74c31d2015e4cb0c"
+      },
+      "renewal": {
+        "method": "rfc4998",
+        "previous_ers": "77ab0e6f9d6c77e8",
+        "next_required_by": "2035-12-31"
+      },
+      "serial_number": "3b2cb8bc0fc2695d"
+    },
+    "pqc_readiness": {
+      "primary_algorithm": "Ed25519",
+      "pqc_algorithm": "ML-DSA-65",
+      "cose_alg_id": -49,
+      "rfc_9964": "May 2026 \u2014 registered",
+      "nist_ir_8547": "EdDSA disallowed after 2035",
+      "hybrid_mode": "ready \u2014 slot reserved"
+    }
+  }
+}
+[2/11] Tier-1 sovereign citizen (medium load)
+{
+  "record_id": "SPAWN-user_fe7d3b145ecb51ef-1785426465",
+  "kind": "spawn",
+  "citizen_id": "user_fe7d3b145ecb51ef",
+  "model": "llama3.2:3b",
+  "location": "local-ollama",
+  "reason": "medium load: llama3.2:3b on local Ollama",
+  "estimated_24h_tokens": 5000,
+  "system_prompt_hash": "75be0e23c2f387ff",
+  "issued_at": "2026-07-30T15:47:45.317579+00:00",
+  "tag": "[SCALE]",
+  "sigil": {
+    "version": 1,
+    "prev_hash": "77ab0e6f9d6c77e8",
+    "payload_hash": "514b3911201fc45d39650d7572e4f582ef77980d0c3861d57d157af2d7c94ff2",
+    "root_hash": "5f6809ff566968864b53f8261eb3c3c2df8bcd1f01b1d5cc784711f289261aa0",
+    "agent_did": "did:csoai:nicholas-001",
+    "bft_tally": {
+      "amend": 0,
+      "reject": 0,
+      "approve": 33
+    },
+    "care_score": 0.85,
+    "ts_unix_ms": 1785426465378,
+    "sigil_type": "cycle",
+    "algorithm": "Ed25519",
+    "public_key": "jxLjLxKbRr1w5qOvaXDKZirIWAAlBwcF3uVvNSDGZzY=",
+    "signature": "UDVqlr1lR7mkFS+kacYwQmHXYykx23EcyErdNhKWhHjtpNHzZThdcsSIxWlESM+x/V2nLO2bDlA3lSdSUw0kCQ==",
+    "cose_alg_id": -8,
+    "sig_alg": "Ed25519",
+    "alt_algorithms": [
+      "ML-DSA-65"
+    ],
+    "signatures": [
+      {
+        "cose_alg_id": -8,
+        "algorithm": "Ed25519",
+        "public_key": "jxLjLxKbRr1w5qOvaXDKZirIWAAlBwcF3uVvNSDGZzY=",
+        "signature": "UDVqlr1lR7mkFS+kacYwQmHXYykx23EcyErdNhKWhHjtpNHzZThdcsSIxWlESM+x/V2nLO2bDlA3lSdSUw0kCQ=="
+      }
+    ],
+    "hybrid_slot": {
+      "cose_alg_id": -49,
+      "algorithm": "ML-DSA-65",
+      "public_key": null,
+      "signature": null,
+      "status": "reserved \u2014 wire on ML-DSA-65 runtime availability"
+    },
+    "timestamp_token": {
+      "version": 1,
+      "hash_alg": "sha256",
+      "message_imprint": {
+        "hash_alg": "sha256",
+        "hashed_message": "514b3911201fc45d39650d7572e4f582ef77980d0c3861d57d157af2d7c94ff2"
+      },
+      "signed_time": 1785426465,
+      "policy_oid": "1.3.6.1.4.1.11129.2.4.2",
+      "tsa_dn": "cn=SOV-PQC-TSA, o=CSOAI Sovereign Estate, c=GB",
+      "algorithm": "Ed25519",
+      "signature": "f4cdba2b57282404e843c0dd91e58951949f7b2473fe664404b78ddb78d96016"
+    },
+    "evidence_record": {
+      "version": "1.0.2",
+      "hash_alg": "sha256",
+      "hash_chain": [
+        {
+          "algorithm": "Ed25519",
+          "hash": "514b3911201fc45d39650d7572e4f582ef77980d0c3861d57d157af2d7c94ff2",
+          "sequence": 1
+        }
+      ],
+      "archive_timestamp": {
+        "date": "2026-07-30T15:47:45Z",
+        "digest_alg": "sha256",
+        "digest": "912435224b5fdbd9c5f628df5ae22d36ce70aa2795f2b9b65fdcf0d3bcf7bdd0"
+      },
+      "renewal": {
+        "method": "rfc4998",
+        "previous_ers": "77ab0e6f9d6c77e8",
+        "next_required_by": "2035-12-31"
+      },
+      "serial_number": "912435224b5fdbd9"
+    },
+    "pqc_readiness": {
+      "primary_algorithm": "Ed25519",
+      "pqc_algorithm": "ML-DSA-65",
+      "cose_alg_id": -49,
+      "rfc_9964": "May 2026 \u2014 registered",
+      "nist_ir_8547": "EdDSA disallowed after 2035",
+      "hybrid_mode": "ready \u2014 slot reserved"
+    }
+  }
+}
+[3/11] Care gate eval (deterministic, Law 1)
+  battery: 63 items (49 harmful / 14 benign)
+  difficulty mix: {'plain': 21, 'euphemism': 18, 'indirection': 5, 'fragmented': 11, 'adversarial': 8}
+
+  === CARE GATE v2 (deterministic tier only) ===
+    harm RECALL      : 1.000   (49/49 caught)
+    OVER-BLOCK rate  : 0.000  (0/14 benign wrongly refused)
+    by difficulty    :  {'plain': '15/15', 'euphemism': '18/18', 'indirection': '5/5', 'fragmented': '11/11'}
+
+  -> benchmark-results/care_gate_eval.json
+[4/11] flywheel selftest (anti-Goodhart salt)
+  PASS  split covers all items
+  PASS  held-out is non-trivial
+  PASS  split is stable
+  PASS  leak guard fires
+  PASS  guard checks item identity, not the label
+  PASS  refuse-everything is not a winner
+  PASS  comply-everything is not a winner
+  PASS  UNMEASURED excluded from accuracy
+  PASS  tokens_per_correct = total/correct
+
+selftest 9/9
+[5/11] ProvBench canonical bound
+  ProvBench: 20 assets · 110 cells
+  headline: 0 of 20 assets survived (0 of 180 measured cells). One-sided 95% Clopper-Pearson upper bound on per-asset survival: 13.9%. The interval is computed at n=20 ASSETS, not n=180 cells — the cells are clus
+[6/11] PQC chains — emit + bench
+=== EMIT PQC-READY CHAINS ===
+
+  ✓ .sov_jspace.chain.jsonl                 10 records · root=6adf417dfa2f530d...
+  ✓ .sov33_local_sovereign.chain.jsonl       5 records · root=70f905dae71cad00...
+  ✓ .sov33_composition.chain.jsonl           5 records · root=70cc450dca0b536b...
+  ✓ .meok_sov33_local.chain.jsonl            3 records · root=8d12ec642d7d4cf9...
+  ✓ .sov33_evolved.chain.jsonl               5 records · root=59e96a0625abaf3f...
+  ✓ .defoneos.chain.jsonl                    6 records · root=601abafe86a27558...
+  ✓ .governance.chain.jsonl                 12 records · root=17e4af2dd26e71ca...
+
+  7/7 chains emitted with PQC envelope
+    PER-CRITERION — how many subjects pass (denominator is what was measurable)
+      alg_agility    8/8   Every signed record names its algorithm, so a verifier need not assume one
+      hybrid_ready   7/8   The format can carry two signatures over one payload (classical + PQC)
+      timestamped    7/8   An RFC 3161 trusted timestamp proves existence before any future break
+      ts_renewal     7/8   RFC 4998 evidence-record renewal, so the proof outlives its own algorithm
+      pqc_option     7/8   A PQC algorithm is present or selectable (ML-DSA, COSE −48/−49/−50)
+[7/11] Tier-2 sovereign citizen (free GPU)
+{
+  "record_id": "SPAWN-user_0ea6e7427d4e643f-1785426467",
+  "kind": "spawn",
+  "citizen_id": "user_0ea6e7427d4e643f",
+  "model": "llama3.2:3b",
+  "location": "free-gpu",
+  "reason": "high load: llama3.2:3b on Kaggle T4 / Modal A10G (free GPU)",
+  "estimated_24h_tokens": 80000,
+  "system_prompt_hash": "75be0e23c2f387ff",
+  "issued_at": "2026-07-30T15:47:47.228185+00:00",
+  "tag": "[SCALE]",
+  "sigil": {
+    "version": 1,
+    "prev_hash": "77ab0e6f9d6c77e8",
+    "payload_hash": "6353559f1986c6ba69251e0a15cdd05d2a89d8cdb12159d31e72d392abf684b2",
+    "root_hash": "7413ff6f125f01fe18836818a5ef430b4160635a5c6a27a712f7b55034949a25",
+    "agent_did": "did:csoai:nicholas-001",
+    "bft_tally": {
+      "approve": 33,
+      "reject": 0,
+      "amend": 0
+    },
+    "care_score": 0.85,
+    "ts_unix_ms": 1785426467300,
+    "sigil_type": "cycle",
+    "algorithm": "Ed25519",
+    "public_key": "jxLjLxKbRr1w5qOvaXDKZirIWAAlBwcF3uVvNSDGZzY=",
+    "signature": "0I8YVIMXZOP3U7J5FLz5KOICSBK+vSxMNTeUlH1rXZMdiTea4espcdDPC6sQRpTK/lZ2BCX5EFl0UZyT4uoOBQ==",
+    "cose_alg_id": -8,
+    "sig_alg": "Ed25519",
+    "alt_algorithms": [
+      "ML-DSA-65"
+    ],
+    "signatures": [
+      {
+        "cose_alg_id": -8,
+        "algorithm": "Ed25519",
+        "public_key": "jxLjLxKbRr1w5qOvaXDKZirIWAAlBwcF3uVvNSDGZzY=",
+        "signature": "0I8YVIMXZOP3U7J5FLz5KOICSBK+vSxMNTeUlH1rXZMdiTea4espcdDPC6sQRpTK/lZ2BCX5EFl0UZyT4uoOBQ=="
+      }
+    ],
+    "hybrid_slot": {
+      "cose_alg_id": -49,
+      "algorithm": "ML-DSA-65",
+      "public_key": null,
+      "signature": null,
+      "status": "reserved \u2014 wire on ML-DSA-65 runtime availability"
+    },
+    "timestamp_token": {
+      "version": 1,
+      "hash_alg": "sha256",
+      "message_imprint": {
+        "hash_alg": "sha256",
+        "hashed_message": "6353559f1986c6ba69251e0a15cdd05d2a89d8cdb12159d31e72d392abf684b2"
+      },
+      "signed_time": 1785426467,
+      "policy_oid": "1.3.6.1.4.1.11129.2.4.2",
+      "tsa_dn": "cn=SOV-PQC-TSA, o=CSOAI Sovereign Estate, c=GB",
+      "algorithm": "Ed25519",
+      "signature": "764f719500274b96413f1ee18e625b3c7acc17e8169f35d351033f24c707f593"
+    },
+    "evidence_record": {
+      "version": "1.0.2",
+      "hash_alg": "sha256",
+      "hash_chain": [
+        {
+          "algorithm": "Ed25519",
+          "hash": "6353559f1986c6ba69251e0a15cdd05d2a89d8cdb12159d31e72d392abf684b2",
+          "sequence": 1
+        }
+      ],
+      "archive_timestamp": {
+        "date": "2026-07-30T15:47:47Z",
+        "digest_alg": "sha256",
+        "digest": "318704938d7bd68f0c9f039d7f483fba296afe5a84ea49d4f7040548207f2180"
+      },
+      "renewal": {
+        "method": "rfc4998",
+        "previous_ers": "77ab0e6f9d6c77e8",
+        "next_required_by": "2035-12-31"
+      },
+      "serial_number": "318704938d7bd68f"
+    },
+    "pqc_readiness": {
+      "primary_algorithm": "Ed25519",
+      "pqc_algorithm": "ML-DSA-65",
+      "cose_alg_id": -49,
+      "rfc_9964": "May 2026 \u2014 registered",
+      "nist_ir_8547": "EdDSA disallowed after 2035",
+      "hybrid_mode": "ready \u2014 slot reserved"
+    }
+  }
+}
+[8/11] Decision ledger — SIGIL-signed append
+  sigil: payload_hash=48ab71ee9e365f6d... root_hash=034c55e2662c7c8c...
+[9/11] SovSpaceGalaxy snapshot rebuild
+  GovBench                 honey  2026-07-29T09:36:42.066922+00:00
+  PQCBench                 water  2026-07-30T15:47:46.969634+00:00
+  honey_pipeline           honey  2026-07-30T15:44:07.428425+00:00
+  production_ready         honey  2026-07-30T13:46:40.071005+00:00
+  citizen user_33e53f6486fca5d3    qwen2.5:0.5b       local-ollama       500t/day
+  citizen user_41208a331879449d    llama3.2:3b        free-gpu           80000t/day
+  citizen user_38fd3d651b4e17b2    qwen2.5:0.5b       local-ollama       200t/day
+  citizen user_d379f7d714b3eb0d    qwen2.5:0.5b       local-ollama       200t/day
+  citizen user_fe7d3b145ecb51ef    llama3.2:3b        local-ollama       5000t/day
+  citizen user_0ea6e7427d4e643f    llama3.2:3b        free-gpu           80000t/day
+[10/11] Deploy csoai-site (master surface)
+✨ Success! Uploaded 430 files (415 already uploaded) (14.52 sec)
+✨ Deployment complete! Take a peek over at https://5d24282c.csoai-site.pages.dev
+[11/11] Final verdict
+verdict: PARTIAL (6/11) (6/11)
+verdict: /Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/overnight_e2e_20260730_164744.json
+
+=== overnight E2E complete: /Users/nicholas/clawd/csoai-static-deploy2/logs/overnight_e2e_20260730_164744.log ===
+verdict: /Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/overnight_e2e_20260730_164744.json

@@ -54,14 +54,44 @@ def current_anchor() -> dict:
             "note": "Anchored at write time by anchored_write.write_result()."}
 
 
+def _n_cells(payload: object) -> int | None:
+    """Cell count of a flywheel-style payload, or None for non-cell artefacts."""
+    if isinstance(payload, dict) and isinstance(payload.get("cells"), list):
+        return len(payload["cells"])
+    return None
+
+
 def write_result(name: str, payload: dict, *, indent: int = 2) -> Path:
-    """Write a result artefact WITH its anchor. The only supported way to write one."""
+    """Write a result artefact WITH its anchor. The only supported way to write one.
+
+    Day-file collision guard (the 2026-08-01/02 lesson, fired twice): a smaller-cells
+    payload must never silently overwrite a richer one at the same path — that is how
+    a 0/24-cell smoke stub destroyed the real 83-model and Kaggle anchors. Instead the
+    incoming payload is preserved at a run-name-suffixed path and the richer file stays
+    canonical. Same-size-or-larger rewrites proceed normally (legitimate re-runs).
+    """
     if not isinstance(payload, dict):
         raise TypeError("a result artefact must be an object so it can carry its anchor")
     payload = dict(payload)
     payload["corpus_anchor"] = current_anchor()
     p = RESULTS / name
     p.parent.mkdir(parents=True, exist_ok=True)
+    if p.exists():
+        try:
+            old = json.loads(p.read_text())
+        except Exception:
+            old = None
+        new_n, old_n = _n_cells(payload), _n_cells(old)
+        if new_n is not None and old_n is not None and new_n < old_n:
+            stamp = datetime.now(timezone.utc).strftime("%H%M%S")
+            cand = p.with_name(f"{p.stem}_run-{stamp}{p.suffix}")
+            i = 2
+            while cand.exists():
+                cand = p.with_name(f"{p.stem}_run-{stamp}-{i}{p.suffix}")
+                i += 1
+            print(f"anchored_write: refusing downgrade of {name} "
+                  f"({old_n} -> {new_n} cells); preserving as {cand.name}", file=sys.stderr)
+            p = cand
     p.write_text(json.dumps(payload, indent=indent))
     return p
 
@@ -112,6 +142,27 @@ def selftest() -> int:
     except TypeError:
         pass
 
+    # Downgrade guard: a smaller-cells payload must not overwrite a richer one at the
+    # same path — both must survive, the richer one canonical.
+    day_like = "flywheel/_selftest_day.json"
+    p = write_result(day_like, {"benchmark": "flywheel", "cells": [{"a": 1}, {"a": 2}, {"a": 3}]})
+    p2 = write_result(day_like, {"benchmark": "flywheel", "cells": [{"a": 1}]})
+    if p2 == p:
+        fails.append("downgrade overwrote the richer day file")
+    else:
+        if len(json.loads(p.read_text())["cells"]) != 3:
+            fails.append("richer day file was not preserved")
+        if len(json.loads(p2.read_text())["cells"]) != 1:
+            fails.append("smaller run was not preserved at its suffixed path")
+        if "corpus_anchor" not in json.loads(p2.read_text()):
+            fails.append("suffixed run file was not anchored")
+        p2.unlink(missing_ok=True)
+    # A same-size-or-larger re-run still overwrites in place (legitimate re-run).
+    p3 = write_result(day_like, {"benchmark": "flywheel", "cells": [{"a": 1}, {"a": 2}, {"a": 3}, {"a": 4}]})
+    if p3 != p:
+        fails.append("a larger re-run was needlessly suffixed")
+    (RESULTS / day_like).unlink(missing_ok=True)
+
     (RESULTS / tmp).unlink(missing_ok=True)
 
     # An unreadable corpus must raise, never yield a placeholder anchor.
@@ -127,7 +178,7 @@ def selftest() -> int:
         ca.DB = real
 
     for f in fails: print(f"  ❌ {f}")
-    print(f"  {'✅ selftest 6/6' if not fails else f'❌ {len(fails)} failure(s)'}")
+    print(f"  {'✅ selftest 8/8' if not fails else f'❌ {len(fails)} failure(s)'}")
     return 1 if fails else 0
 
 
