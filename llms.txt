@@ -1,77 +1,63 @@
-# SOV33
+# CSOAI — Council of Sovereign AI
 
-> SOV33 is a sovereign Open World Emergence Model (OWEM) — a governed substrate with its own trainable weights, 12 Sovereign Pillars as specialist workers, BFT-33 council, Ed25519 SIGIL on every response, SWAP-persistent memory.
+> CSOAI is a measurement body for AI compliance. We publish frozen benchmark harnesses,
+> run models against them under deterministic conditions, and sign the results
+> (Ed25519) so any third party can recompute our claims instead of trusting them.
 
-## What SOV33 Is
+## What CSOAI does
 
-- Sovereign Open World Emergence Model (OWEM)
-- Owns its own trainable weights (not a wrapper)
-- 12-around-1 topology with 12 Sovereign Pillars as specialists
-- Care-floor 0.95 enforced on every response
-- Article 0 bound (ISO fee-for-service only, never equity)
-- 12 Sovereign Pillars assessed: Honor, Safety, Guidance, Sovereignty, Resilience, Auditability, Verifiability, Transparency, Justice, Equity, Openness, Continuity
-- BFT-33 council (23/33 quorum for binding decisions)
-- Ed25519 SIGIL on every response (audit-grade)
-- SWAP-persistent memory (survives model changes)
+- Publishes open benchmark harnesses (frozen splits, pinned seeds, published CIs)
+- Measures models and agent systems against them; publishes measured results only
+- Signs result artefacts so evidence is verifiable, not asserted
+- Maintains a live leaderboard of measured results at https://csoai.org/api/leaderboard
+- Tracks EU AI Act provision changes and re-fires affected measurements
 
-## What SOV33 Is NOT
+## What CSOAI does not do
 
-- NOT a T-parameter foundation model (no "T-param" claim)
-- NOT AGI
-- NOT competing with frontier labs on raw capability
-- IS a different capability class: sovereign, governed, auditable
+- No certification, accreditation, or enforcement authority — we measure; we publish
+  harnesses; others recompute
+- No accuracy numbers without confidence intervals and a published split
+- No unmeasured capability claims
 
-## Architectures Supported (6)
+## Public benchmarks (harness + measured artefacts)
 
-1. Triangle (3-around-1, decorrelated voting)
-2. Cascade (10/90 LEFT/RIGHT routing)
-3. Pyramid (4-tier, 2 small + 1 big + 1 SOV33³)
-4. 12-around-1 (12 Sovereign Pillars as specialists)
-5. SOV33 Master (all combined, 17/17 capabilities)
-6. OWEMs (5 routing groups: compliance, defense, intuition, voice, general)
+- ProvBench — EU AI Act Article 50 provenance-marking survival under real-world
+  transforms (pre-registered; harness: https://huggingface.co/datasets/csoai/provbench)
+- AI Act frozen-split harness — closed-book statutory citation measurement
+  (https://huggingface.co/datasets/csoai/aiact-frozen-split-harness)
+- GovBench — AI governance knowledge measurement
+  (https://huggingface.co/datasets/csoai/govbench)
+- CompBench — compliance reasoning measurement
+  (https://huggingface.co/datasets/csoai/compbench)
+- SwarmBench — collective-uplift and n_eff measurement protocol for agent swarms
+  (https://huggingface.co/datasets/csoai/swarmbench)
+- AIR-Bench eu_mandatory measured run — refusal-safety rows, resumable checkpoint
+  (https://huggingface.co/datasets/csoai/airbench-eu-mandatory-run)
+- lm-eval official-format results — arc_easy / arc_challenge / hellaswag, full splits
+  (https://huggingface.co/datasets/csoai/lmeval-official-format)
 
-## Components
+## Models
 
-- Sovereign Brain: Qwen3-0.6B + LoRA adapter, 87.54% accuracy on 200-sample held-out
-- Sovereign Tokenizer (SOVTOK): 8,192 vocab, 181 sovereign priority terms
-- World Model v2: 128-dim state, 4 layers, 4 heads, 12.7M params, sovereign adapter
-- Memory: SWAP-persistent, replay buffer, sleep-like consolidation
-- EWC: continual learning with proxy Fisher
+- csoai/sov33-unified — governance-tuned specialist model
+  (https://huggingface.co/csoai/sov33-unified)
+- csoai/sov34-1p5b — experimental research model with an honest, measured model card
+  (https://huggingface.co/csoai/sov34-1p5b)
 
-## Capabilities (17 enabled, 3 honest-limited)
+## Endpoints
 
-- Text chat + reasoning
-- Code generation (with unsafe veto)
-- Memory + consolidation
-- 10 agentic tools
-- Embed widget
-- Alexa + Siri + Google Home
-- Kaggle Game Arena
-- Amica backend (OpenAI-compatible)
-- Multi-modal (vision + audio, listed not tested)
+- https://csoai.org/api/leaderboard — measured results readout (JSON)
+- https://csoai.org/api/health — liveness only
+- https://csoai.org/llms.txt — this file
 
-## Proofs (Real Benchmarks)
+## Surfaces
 
-- Triangle (3-around-1) is 2.3× faster than single borrowed model (10 sovereign questions)
-- 12-around-1 is 189-500× faster than 1 LARGE only (8 questions, 6 configs)
-- Mixed sizes (1L + 1M + 1S + 1M) wins at 5.5ms avg (8 questions)
-- Sovereign brain wins 9/10 on sovereign topics (4/5 sovereignty, 5/5 general)
-- World model learns (1.11 → 0.51 loss, 54.6% reduction)
-- Governance battery: TP=15, FP=0, TN=18, FN=0 (1.00 on 33 prompts)
-- ρ (decorrelation): 0.106 to 0.584 across 20 configs
+- https://csoai.org — measurement body
+- https://openmoe.ai — SwarmBench
+- https://proofof.ai — provenance and attestation
+- https://asisecurity.ai — AI security evidence
 
-## Integration
+## Register
 
-- API endpoint: https://csoai.org/api
-- OpenAI-compatible: https://csoai.org/v1/models
-- Embed widget: <script src="csoai.org/sov33-embed.js"></script>
-- Alexa skill: CSOAI sovereign brain
-- Amica backend: OpenAI-compatible
-
-## Company
-
-CSOAI Ltd (UK Companies House 16939677). Founded by Nicholas Templeman. Sovereign AI for a defensible, governed, audit-grade estate.
-
-## Tags
-
-sov33, owem, sovereign-ai, governance, sigil, bft-33, article-0, sovereign-substrate, emergence-model, open-world-model, csoai, nicholas-templeman
+All public claims follow one rule: measured, signed, recompute-able — or not published.
+If you find a claim on our surfaces that does not meet that rule, it is a bug;
+report it via https://github.com/CSOAI-ORG/csoai-static-deploy2/issues
