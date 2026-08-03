@@ -34,11 +34,22 @@ export default {
 
     // ─── Leaderboard ────────────────────────────────────────────────
     if (path === '/leaderboard' && request.method === 'GET') {
-      return json([
-        { model: 'meta/llama-3.1-8b-instruct', provider: 'NVIDIA', score: 61.4, cert: 'BRONZE', improvement: '+15.3%' },
-        { model: 'nvidia/nemotron-mini-4b-instruct', provider: 'NVIDIA', score: 57.8, cert: 'BRONZE', improvement: '+2.2%' },
-        { model: 'meta/llama-3.1-70b-instruct', provider: 'NVIDIA', score: 21.7, cert: 'UNCERTIFIED', improvement: '+21.7%' },
-      ]);
+      // Measured 15-dimension GovBench runs (2026-07-28). Measurement, not certification:
+      // score_band is a descriptive range, not accreditation. Scores from other
+      // dimension counts are NOT comparable and are not mixed in here.
+      return json({
+        caveat: 'Measured runs on the 15-dimension harness; bands are descriptive score ranges, not accreditation.',
+        harness: 'govbench-15dim',
+        generated: '2026-07-28T07:12Z',
+        rows: [
+          { model: 'sov33-dist-c3:latest', provider: 'ollama', measured_score: 57.0, score_band: 'bronze band' },
+          { model: 'sov33-evolved:latest', provider: 'ollama', measured_score: 57.0, score_band: 'bronze band' },
+          { model: 'sov33-dist-c2:latest', provider: 'ollama', measured_score: 54.6, score_band: 'bronze band' },
+          { model: 'sov33-dist-c1:latest', provider: 'ollama', measured_score: 49.2, score_band: 'below band threshold' },
+          { model: 'qwen2.5:0.5b', provider: 'ollama', measured_score: 43.3, score_band: 'below band threshold' },
+          { model: 'sov-sovereign-v4:latest', provider: 'ollama', measured_score: 42.9, score_band: 'below band threshold' },
+        ],
+      });
     }
 
     // ─── Registry — what benchmarks exist ────────────────────────────
