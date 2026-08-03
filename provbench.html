@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>ProvBench — Article 50 provenance survival, measured | CSOAI</title>
+<meta name="description" content="Pre-registered benchmark: does an EU AI Act Article 50 provenance marking survive real-world transforms? 0 of 20 embedded manifests survived any measured transform. Harness and data published.">
+<link rel="canonical" href="https://csoai.org/provbench">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="stylesheet" href="/sovereign-2026.css">
+</head>
+<body>
+<nav><a href="/index.html">Home</a> <a href="/products.html">Products</a> <a href="/govbench.html">GovBench</a> <a href="/docs.html">Docs</a> <a href="/faq.html">FAQ</a></nav>
+<h1>ProvBench</h1>
+<p><strong>Research question:</strong> does an EU AI Act Article 50 provenance marking survive
+real-world transforms? ProvBench is a <strong>pre-registered</strong> benchmark — every prediction
+was written down before measurement, and disagreements are published.</p>
+
+<section>
+<h2>Headline measured result</h2>
+<ul>
+<li><strong>0 of 20</strong> assets' embedded manifests survived any of the measured transform cells
+(0 of 180 cells, <code>manifest_present</code>, embedded-only configuration).</li>
+<li>One-sided 95% Clopper–Pearson upper bound on per-asset survival: <strong>13.9%</strong> (asset-clustered).</li>
+<li>Sidecar configuration: <strong>100%</strong> survival — the embedded/sidecar gap is separated by
++100 points with non-overlapping clustered confidence intervals.</li>
+</ul>
+<p>Conclusion: embedded metadata does not survive the real world. If Article 50 compliance
+matters to you, the marking architecture — not the model — is the decision.</p>
+</section>
+
+<section>
+<h2>Recompute it</h2>
+<ul>
+<li>Harness + canonical results + paper: <a href="https://huggingface.co/datasets/csoai/provbench">huggingface.co/datasets/csoai/provbench</a></li>
+<li>Frontier-model closed-book citation spray: <a href="https://huggingface.co/datasets/csoai/aiact-frozen-split-harness">csoai/aiact-frozen-split-harness</a></li>
+<li>Measured-results readout: <a href="/api/leaderboard">/api/leaderboard</a></li>
+</ul>
+</section>
+
+<section>
+<h2>Register</h2>
+<p>CSOAI is a measurement body. We publish harnesses and measured results; we hold no
+certification, accreditation, or enforcement authority. Every figure on this page traces to
+the published canonical results file.</p>
+</section>
+<footer>CSOAI Ltd · UK company 16939677 · Every published figure traces to a signed, verifiable record.</footer>
+</body>
+</html>
