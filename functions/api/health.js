@@ -1,5 +1,6 @@
 // Cloudflare Pages Function — Health check
 // GET /api/health
+// Honest liveness only: no invented page counts, phases, or tickers.
 
 export async function onRequest(context) {
   const headers = {
@@ -17,11 +18,9 @@ export async function onRequest(context) {
     JSON.stringify({
       status: 'ok',
       platform: 'cloudflare-pages',
-      project: 'csoai-static-deploy2',
-      pages: parseInt(context.env?.PAGE_COUNT || '752', 10),
-      phase: 100,
-      sigil: 'tick-180',
-      deployed: new Date().toISOString(),
+      project: 'csoai-org',
+      timestamp: new Date().toISOString(),
+      note: 'liveness check only — no usage or content metrics are reported here',
     }),
     { status: 200, headers },
   );
