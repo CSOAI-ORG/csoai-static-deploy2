@@ -100,6 +100,11 @@ def wilson(k: int, n: int, z: float = 1.96):
 def run_cell(model: str, grounded: bool, ctx: str):
     correct = unparse = 0
     per_axis = {}
+    # 2026-08-04 — the first run saved only aggregates, so when sov34 turned out to produce 35
+    # unparseable answers against the control's zero, the four cells had different denominators
+    # (55/69/90/90) and no intersection analysis was possible without re-running. Per-item
+    # outcomes are now retained so every cell can be restricted to the items ALL cells answered.
+    per_item = {}
     for axis in G.AXES:
         items, field, labels = G.load_axis(axis)
         a_c = a_n = 0
@@ -108,13 +113,17 @@ def run_cell(model: str, grounded: bool, ctx: str):
             prompt = (f"{head}{it[field]}\n\nAnswer with EXACTLY ONE of these labels and "
                       f"nothing else: {' | '.join(labels)}")
             resp = ask(model, prompt)
+            key = f"{axis}:{items.index(it)}"
             if resp is None:
                 unparse += 1
+                per_item[key] = None
                 continue
             hits = [l for l in labels if re.search(rf"\b{re.escape(l)}\b", resp.upper())]
             if len(hits) != 1:
                 unparse += 1
+                per_item[key] = None
                 continue
+            per_item[key] = (hits[0] == it["expected"])
             ok = hits[0] == it["expected"]
             correct += ok
             a_c += ok
@@ -122,7 +131,8 @@ def run_cell(model: str, grounded: bool, ctx: str):
         per_axis[axis] = (a_c, a_n)
     total_n = sum(n for _, n in per_axis.values())
     return {"correct": correct, "n_measured": total_n, "unparseable": unparse,
-            "wilson": wilson(correct, total_n), "per_axis": per_axis}
+            "wilson": wilson(correct, total_n), "per_axis": per_axis,
+            "per_item": per_item}
 
 
 def main():
@@ -153,6 +163,23 @@ def main():
           f"{'SUPPORTED' if lt > lc else 'NOT SUPPORTED'}")
     print("  (both lifts overlapping their own baselines means neither is individually resolved)")
 
+    # INTERSECTION ANALYSIS — the fix for the differing-denominator confound. Restrict every
+    # cell to the items ALL FOUR answered parseably, so the comparison is strictly like-for-like.
+    common = set.intersection(*[{k for k, v in c["per_item"].items() if v is not None}
+                                for c in cells.values()])
+    inter = {}
+    for k, c in cells.items():
+        ok = sum(1 for i in common if c["per_item"][i])
+        inter[k] = {"correct": ok, "n": len(common), "wilson": wilson(ok, len(common))}
+    print(f"\n  INTERSECTION — {len(common)} items answered parseably by ALL four cells:")
+    for k, v in inter.items():
+        p_, lo_, hi_ = v["wilson"]
+        print(f"    {k:22s} {v['correct']:3d}/{v['n']:3d} = {p_:.3f} [{lo_:.3f}-{hi_:.3f}]")
+    lt_i = round(inter["trained/grounded"]["wilson"][0] - inter["trained/closed_book"]["wilson"][0], 4)
+    lc_i = round(inter["control/grounded"]["wilson"][0] - inter["control/closed_book"]["wilson"][0], 4)
+    print(f"    lift TRAINED {lt_i:+.3f}   lift CONTROL {lc_i:+.3f}   "
+          f"moat claim: {'SUPPORTED' if lt_i > lc_i else 'NOT SUPPORTED'}")
+
     out = HERE / "evidence/harness/freeze/latest/grounding-2x2.json"
     out.write_text(json.dumps({
         "measured_at": datetime.now(timezone.utc).isoformat(), "substrate": OLLAMA,
@@ -160,6 +187,12 @@ def main():
         "context_chars": len(ctx), "models": MODELS, "cells": cells,
         "grounding_lift_trained": lt, "grounding_lift_control": lc,
         "moat_claim_supported": bool(lt > lc),
+        "intersection_analysis": {"n_common_items": len(common), "cells": inter,
+                                  "lift_trained": lt_i, "lift_control": lc_i,
+                                  "moat_claim_supported": bool(lt_i > lc_i),
+                                  "why": ("restricts every cell to items ALL FOUR answered "
+                                          "parseably, removing the differing-denominator confound "
+                                          "caused by sov34's 39% unparseable rate")},
         "interpretation": (
             "The moat claim requires the TRAINED model to gain MORE from the signed corpus than "
             "an untrained size-matched control does. If both gain equally, the corpus is doing "

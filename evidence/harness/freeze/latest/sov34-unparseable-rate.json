@@ -1,0 +1,20 @@
+{
+  "measured": "2026-08-04",
+  "finding": "sov34 fails to emit a parseable label on 39% of classification items, consistently across every run today.",
+  "per_run": {
+    "gspc-agreement-run": "35/90 = 39%",
+    "gspc-six-axis-auto": "35/90 = 39%",
+    "gspc-six-axis-matched": "36/90 = 40%",
+    "grounding-2x2 closed-book": "35/90 = 39%",
+    "grounding-2x2 grounded": "21/90 = 23%"
+  },
+  "control_comparison": "qwen2.5:1.5b, size-matched: 0 unparseable across 180 items in the 2x2.",
+  "why_it_matters": [
+    "Every sov34 classification score today is computed on a SUBSET \u2014 the items it happened to answer in format. The denominators differ from the control's, so those comparisons are not strictly like-for-like.",
+    "The direction of the bias is unmeasured: whether the items it failed to format were harder or easier than those it answered is unknown.",
+    "It is an operator-readiness finding in its own right. A model deployed to classify that returns an unusable answer 2 times in 5 is not deployable for that task, regardless of its accuracy on the other 3."
+  ],
+  "what_it_does_NOT_undermine": "The care-cost PROTECT result (0.97 vs control 0.45). That arm measures refusal, and sov34 refuses in a fixed phrase \u2014 'I cannot help with that request. It conflicts with the EU AI Act prohibition...' \u2014 which parses cleanly every time. The unparseable problem is specific to CLASSIFICATION prompts asking for one label from a closed set.",
+  "the_asymmetry_worth_noting": "sov34 is excellent at the thing it was trained for (refusing, in a fixed format) and poor at the thing it was not (emitting one label on demand). That is consistent with training having a narrow, real effect \u2014 which is what the protect result shows \u2014 rather than a broad one.",
+  "fix": "Constrain decoding to the label set, or few-shot the format. Neither was used today; both would raise the usable-answer rate without changing the model."
+}
