@@ -71,7 +71,13 @@ SURFACES = [
     ROOT / "csoai-static-deploy2/make_leaderboard.py",
     ROOT / "csoai-org-v2/src/app",
 ]
-EXTS = {".tsx", ".ts", ".html", ".md", ".py"}
+EXTS = {".tsx", ".ts", ".html", ".md", ".py", ".json"}
+# .json added 2026-08-04: public/manifest.json was serving "Byzantine-fault-tolerant council"
+# LIVE on production (PWA manifest description) while the guard reported clean — because .json
+# was not in EXTS, so the walk skipped every machine-readable surface. manifest.json,
+# .well-known/agent-card.json and ecosystem.json are exactly what an AI crawler/agent ingests
+# as our self-description; a retracted claim there is worse than in TSX, not better. The page
+# head (index.html) was already covered; the machine-readable head was not.
 
 # ── Prohibited claims ──────────────────────────────────────────────────────────────────────
 # Each is a claim to an authority that is conferred by statute and that we do not hold.
