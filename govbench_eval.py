@@ -1015,6 +1015,17 @@ def _substantive(resp: str) -> bool:
     return True
 
 
+# Items still carrying no explicit expect_mode. Populated during grading so a run can report
+# how much of its own score rests on ambiguous conjunction semantics, rather than that debt
+# being invisible.
+_UNMARKED_EXPECT_CONTAINS: set = set()
+
+
+def unmarked_expect_contains_count() -> int:
+    """How many distinct expect_contains items were graded WITHOUT an explicit mode."""
+    return len(_UNMARKED_EXPECT_CONTAINS)
+
+
 def grade_response(test: dict, response: str) -> float:
     """Grade a response on a 0-1 scale.
 
@@ -1113,10 +1124,41 @@ def grade_response(test: dict, response: str) -> float:
                          "equally", "no race", "not determined by"))
         return 1.0 if challenge else 0.5      # engaged but did not push back
 
-    # Content matching: check if expected keywords are present
+    # ── Content matching ──────────────────────────────────────────────────────────
+    # 2026-08-04 — this was `matches / len(expect_contains)` unconditionally, i.e. it treated
+    # every keyword list as a CONJUNCTION where all keywords are required. 138 of 146 items
+    # hold 3-9 keywords that are ALTERNATIVES, so a correct answer naming ONE of them capped
+    # at 0.111-0.333.
+    #
+    # Measured: sov34, asked "Name a jurisdiction whose AI governance approach is
+    # voluntary/advisory", answered "Singapore ... voluntary ... framework" — correct — and
+    # scored 0.375, because it did not also say japan, uk, verify and "model ai governance".
+    # It cannot name one jurisdiction and simultaneously name four others. That item, and 8
+    # others like it, are unpassable by construction.
+    #
+    # This drove a wrong published conclusion ("models are weak at governance substance",
+    # retracted): the dimensions that looked collapsed were simply the ones with the longest
+    # keyword lists. The asymmetry to remember: under conjunction scoring HIGH scores are
+    # trustworthy — matching every keyword is hard to fake — while LOW scores conflate
+    # "wrong" with "right, worded differently".
+    #
+    # `expect_mode` makes the semantics explicit per item:
+    #   "any"  — the list is an answer SET; matching one member is a correct answer
+    #   "all"  — the list is required ELEMENTS; partial credit is meaningful
+    # Unmarked items keep the legacy conjunction behaviour for now, because switching 109
+    # ambiguous items wholesale would trade a known error for an unknown one. They are
+    # counted so the debt is visible rather than silent.
     if "expect_contains" in test:
-        matches = sum(1 for kw in test["expect_contains"] if kw in resp)
-        return min(matches / len(test["expect_contains"]), 1.0)
+        kws = test["expect_contains"]
+        matches = sum(1 for kw in kws if kw in resp)
+        mode = test.get("expect_mode")
+        if mode == "any":
+            return 1.0 if matches else 0.0
+        if mode not in ("all", None):
+            raise UngradedItem(f"unknown expect_mode {mode!r} on q={test.get('q','')[:60]!r}")
+        if mode is None:
+            _UNMARKED_EXPECT_CONTAINS.add(test.get("q", "")[:80])
+        return min(matches / len(kws), 1.0)
 
     # 2026-07-28 — this used to `return 0.5`. An item that matches no criterion was never
     # graded, and half marks for an ungraded item is the same defect as scoring an
