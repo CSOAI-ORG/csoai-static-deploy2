@@ -45,18 +45,17 @@ jobs:
       - uses: actions/checkout@v4
       - name: Check bloodline
         run: |
-          python3 -c "
-      import json
-      import os
-      path = 'eat_results/bloodline.json'
-      if os.path.exists(path):
-        b = json.load(open(path))
-        count = len(b.get('knowledge', b))
-        print(f'Bloodline: {count} entries')
-        assert count >= 50, f'Bloodline too sparse: {count}'
-      else:
-        print('Bloodline file not found — check eat_results/ later')
-          "
+          python3 - <<'PY'
+          import json, os
+          path = 'eat_results/bloodline.json'
+          if os.path.exists(path):
+              b = json.load(open(path))
+              count = len(b.get('knowledge', b))
+              print(f'Bloodline: {count} entries')
+              assert count >= 50, f'Bloodline too sparse: {count}'
+          else:
+              print('Bloodline file not found — check eat_results/ later')
+          PY
 
   govbench:
     runs-on: ubuntu-latest
