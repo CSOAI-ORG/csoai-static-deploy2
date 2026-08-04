@@ -56,6 +56,12 @@ SURFACES = [
     # the guard never saw because it only read the React tree. Found 2026-07-30 by screenshot.
     ROOT / "councilof-ai/public",
     ROOT / "councilof-ai/client/public",
+    # index.html carries the meta tags and JSON-LD that Google and every AI crawler ingest as
+    # our official self-description. It lives in client/ — inside NO directory listed here —
+    # so it was never scanned. On 2026-08-04 the live JSON-LD still described a "33-agent
+    # Byzantine-fault-tolerant council" that our own measurement retracted (n_eff 1.21 of 3),
+    # while the guard reported 757 surfaces clean. The page head is a surface.
+    ROOT / "councilof-ai/client/index.html",
     ROOT / "councilof-ai/client/src/components",
     ROOT / "csoai-dashboard-master/client/src/pages",
     ROOT / "csoai-static-deploy2/make_leaderboard.py",
@@ -66,6 +72,12 @@ EXTS = {".tsx", ".ts", ".html", ".md", ".py"}
 # ── Prohibited claims ──────────────────────────────────────────────────────────────────────
 # Each is a claim to an authority that is conferred by statute and that we do not hold.
 PROHIBITED: list[tuple[str, re.Pattern, str]] = [
+    ("retracted byzantine fault tolerance",
+     re.compile(r"(?<!design )(?<!designed )(?<!intended )\b(byzantine[ -]?fault[ -]?toleran\w*|"
+                r"\bPBFT\b|tolerate[sd]? up to \d+ byzantine)", re.I),
+     "Byzantine fault tolerance was MEASURED AND RETRACTED on 2026-07-29: n_eff came out at "
+     "1.21 of 3 nominal legs, so the legs are not independent and the property does not hold. "
+     "Say 'designed 33-agent council' and state the measurement, or say nothing."),
     ("enforcement authority",
      re.compile(r"\b(we|csoai|defoneos|gspc|sov)\b[^.]{0,60}\b(enforce[sr]?|enforcement (?:body|authority|powers?))\b", re.I),
      "Enforcement powers are conferred by statute on market-surveillance authorities and the "
