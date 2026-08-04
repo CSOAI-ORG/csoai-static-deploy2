@@ -1,0 +1,31 @@
+{
+  "checked": "2026-08-04",
+  "claim": "grounded 88% vs closed-book 69% = +19pt grounding lift (n=8, keyword grader, no control)",
+  "verdict": "NOT RESOLVED \u2014 the intervals overlap heavily and the lift is 1.5 items",
+  "arithmetic": {
+    "grounded 7/8": "0.88, 95% CI [0.53-0.98], half-width +/-22 pts",
+    "closed_book 6/8": "0.75, 95% CI [0.41-0.93], half-width +/-26 pts",
+    "overlap": "[0.53-0.98] vs [0.41-0.93] \u2014 substantial",
+    "lift_in_items": "19% of 8 = 1.5 items"
+  },
+  "grader_sensitivity": {
+    "keyword_grader_accuracy_measured_today": "88.0% (81/92), 11 false-refusals",
+    "expected_misgrades_per_8_item_arm": 1.0,
+    "points_moved_by_one_misgrade_at_n8": 12.5,
+    "implication": "A single mis-graded item moves an n=8 arm by 12.5 points, and roughly one mis-grade per arm is EXPECTED at the keyword grader's measured accuracy. The claimed +19pt lift is inside the noise the grader alone introduces."
+  },
+  "n_required": {
+    "8": "+/-22pts, cannot resolve",
+    "20": "+/-14, cannot",
+    "40": "+/-10, cannot",
+    "80": "+/-7, RESOLVES",
+    "120": "+/-6, RESOLVES"
+  },
+  "what_would_fix_it": [
+    "n>=80 per arm",
+    "the hedge-aware grader (98.9% measured) instead of keyword (88.0%)",
+    "a control arm \u2014 the same test on the UNTRAINED base, to separate 'the KB helps' from 'this model reads context well'"
+  ],
+  "what_is_NOT_disputed": "The DIRECTION is plausible and the per-item pattern is suggestive \u2014 AI-generated-images 0%->100% and register 50%->100% are the cases where grounding should help most. This is a well-designed pilot. It is not yet a measurement.",
+  "why_this_matters_here": "The 'out-ground not out-think' thesis is the estate's central claim. It is the LAST claim that should rest on n=8 with a grader measured at 88% and no control \u2014 those three conditions produced four withdrawn conclusions today."
+}
