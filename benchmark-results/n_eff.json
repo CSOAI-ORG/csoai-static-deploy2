@@ -1,29 +1,56 @@
 {
-  "timestamp": "2026-07-29T05:38:59.020296+00:00",
+ "timestamp": "2026-08-04T07:58:07.243753+00:00",
+ "legs": [
+  "sov34:latest",
+  "qwen2.5:1.5b",
+  "falcon3:7b"
+ ],
+ "n_items": 39,
+ "pairwise_phi": [
+  0.6757,
+  0.3011,
+  0.3893
+ ],
+ "undefined_pairs": [],
+ "phi_bar": 0.4554,
+ "nominal_votes": 3,
+ "n_eff": 1.57,
+ "gate_passed": false,
+ "gate": "n_eff > 2.0 required before claiming quorum value",
+ "prediction_before_running": "shared blob -> phi_bar > 0.5, n_eff near 1",
+ "cross_family_run_2026_08_04": {
   "legs": [
-    "sov33-dist-c1:latest",
-    "sov33-dist-c2:latest",
-    "sov33-dist-c3:latest"
+   "sov34:latest (CSOAI)",
+   "qwen2.5:1.5b (Alibaba)",
+   "falcon3:7b (TII)"
   ],
-  "n_items": 174,
-  "pairwise_phi": [
-    0.7296,
-    0.6965,
-    0.8028
-  ],
-  "undefined_pairs": [],
-  "phi_bar": 0.743,
+  "shared_weights": false,
+  "note_on_legs": "Three models from three different organisations. They share no weights, no training run and no architecture lineage.",
+  "items_scored_by_every_leg": 39,
+  "error_rates": {
+   "sov34": 0.72,
+   "qwen2.5": 0.62,
+   "falcon3": 0.51
+  },
+  "phi": {
+   "sov34_qwen2.5": 0.676,
+   "sov34_falcon3": 0.301,
+   "qwen2.5_falcon3": 0.389
+  },
+  "phi_bar": 0.455,
   "nominal_votes": 3,
-  "n_eff": 1.207,
-  "gate_passed": false,
-  "gate": "n_eff > 2.0 required before claiming quorum value",
-  "prediction_before_running": "shared blob -> phi_bar > 0.5, n_eff near 1",
-  "corpus_anchor": {
-    "corpus_root": "3729b52eb469b77c6501056889460e9fcd45fc0127bc59b002863b28db3ef01d",
-    "provisions": 417,
-    "normaliser_version": "1.0.0",
-    "anchored_at": "2026-07-29T09:36:42.048884+00:00",
-    "retro": true,
-    "note": "Anchored retrospectively on 2026-07-29. This records the corpus as it stands NOW; it does not prove what the text said when the result was produced. Runs from this point forward anchor at measurement time."
-  }
+  "n_eff": 1.57,
+  "gate": "FAILED (needs > 2)",
+  "two_leg_control": {
+   "legs": [
+    "sov34",
+    "qwen2.5"
+   ],
+   "phi_bar": 0.676,
+   "n_eff": 1.19
+  },
+  "finding": "The pre-registered prediction in n_eff.py attributes the low n_eff to the legs sharing one 397MB blob. This run REFUTES that as the sole cause: three models from three different organisations, sharing no weights, still correlate at phi_bar +0.455. Architectural and vendor diversity is real and it helps \u2014 n_eff moved 1.19 -> 1.57 by adding a third family \u2014 but it does not reach the gate. Correlated error is therefore driven substantially by ITEM DIFFICULTY, not only by shared parameters: when legs err on 51-72% of items, overlap is expected even between independent systems.",
+  "consequence": "Byzantine-fault-tolerance still MAY NOT be claimed. The retraction stands, and its stated cause needs widening: swapping in a different architecture is necessary but not sufficient. Raising n_eff above 2 likely requires legs that are individually STRONGER (lower error rates), not merely different \u2014 you cannot decorrelate three systems that are each wrong most of the time.",
+  "measured_on": "RunPod RTX 3090 pod sov-brain-2, Ollama, GovBench DIMENSIONS, limit 40"
+ }
 }
