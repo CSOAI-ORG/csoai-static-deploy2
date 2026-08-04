@@ -1,0 +1,1194 @@
+[
+ {
+  "model": "falcon3:7b",
+  "parent": "",
+  "params": "7.5B",
+  "family": "llama",
+  "has_system": false,
+  "quant": "Q4_K_M"
+ },
+ {
+  "model": "sov-refusal-v2:latest",
+  "parent": "",
+  "params": "494.03M",
+  "family": "qwen2",
+  "has_system": false,
+  "quant": "F16"
+ },
+ {
+  "model": "sov-refusal-combo:latest",
+  "parent": "sov-refusal-balanced:latest",
+  "params": "494.03M",
+  "family": "qwen2",
+  "has_system": true,
+  "quant": "F16"
+ },
+ {
+  "model": "sov-refusal-balanced:latest",
+  "parent": "",
+  "params": "494.03M",
+  "family": "qwen2",
+  "has_system": false,
+  "quant": "F16"
+ },
+ {
+  "model": "sov-refusal-lora:latest",
+  "parent": "",
+  "params": "494.03M",
+  "family": "qwen2",
+  "has_system": false,
+  "quant": "F16"
+ },
+ {
+  "model": "sov-ethics-art5:latest",
+  "parent": "sov-ethics:latest",
+  "params": "494.03M",
+  "family": "qwen2",
+  "has_system": true,
+  "quant": "Q4_K_M"
+ },
+ {
+  "model": "sov-compliance-art5:latest",
+  "parent": "sov-compliance:latest",
+  "params": "494.03M",
+  "family": "qwen2",
+  "has_system": true,
+  "quant": "Q4_K_M"
+ },
+ {
+  "model": "gpt-oss:20b",
+  "parent": "",
+  "params": "20.9B",
+  "family": "gptoss",
+  "has_system": false,
+  "quant": "MXFP4"
+ },
+ {
+  "model": "qwen2.5:1.5b",
+  "parent": "",
+  "params": "1.5B",
+  "family": "qwen2",
+  "has_system": true,
+  "quant": "Q4_K_M"
+ },
+ {
+  "model": "sov34:latest",
+  "parent": "",
+  "params": "1.5B",
+  "family": "qwen2",
+  "has_system": false,
+  "quant": "F16"
+ },
+ {
+  "model": "sov-deepseek:latest",
+  "parent": "qwen2.5:0.5b",
+  "params": "494.03M",
+  "family": "qwen2",
+  "has_system": true,
+  "quant": "Q4_K_M"
+ },
+ {
+  "model": "sov-math:latest",
+  "parent": "qwen2.5:0.5b",
+  "params": "494.03M",
+  "family": "qwen2",
+  "has_system": true,
+  "quant": "Q4_K_M"
+ },
+ {
+  "model": "sov-knowledge:latest",
+  "parent": "qwen2.5:0.5b",
+  "params": "494.03M",
+  "family": "qwen2",
+  "has_system": true,
+  "quant": "Q4_K_M"
+ },
+ {
+  "model": "sov-mistral:latest",
+  "parent": "qwen2.5:0.5b",
+  "params": "494.03M",
+  "family": "qwen2",
+  "has_system": true,
+  "quant": "Q4_K_M"
+ },
+ {
+  "model": "sov-reasoning-v2:latest",
+  "parent": "qwen2.5:0.5b",
+  "params": "494.03M",
+  "family": "qwen2",
+  "has_system": true,
+  "quant": "Q4_K_M"
+ },
+ {
+  "model": "sov33-oracle-c2:latest",
+  "parent": "qwen2.5:0.5b",
+  "params": "494.03M",
+  "family": "qwen2",
+  "has_system": true,
+  "quant": "Q4_K_M"
+ },
+ {
+  "model": "sov-embedding:latest",
+  "parent": "qwen2.5:0.5b",
+  "params": "494.03M",
+  "family": "qwen2",
+  "has_system": true,
+  "quant": "Q4_K_M"
+ },
+ {
+  "model": "sov-code:latest",
+  "parent": "qwen2.5:0.5b",
+  "params": "494.03M",
+  "family": "qwen2",
+  "has_system": true,
+  "quant": "Q4_K_M"
+ },
+ {
+  "model": "sov-code-v2:latest",
+  "parent": "qwen2.5:0.5b",
+  "params": "494.03M",
+  "family": "qwen2",
+  "has_system": true,
+  "quant": "Q4_K_M"
+ },
+ {
+  "model": "sov33-oracle-c1:latest",
+  "parent": "qwen2.5:0.5b",
+  "params": "494.03M",
+  "family": "qwen2",
+  "has_system": true,
+  "quant": "Q4_K_M"
+ },
+ {
+  "model": "sov-infra:latest",
+  "parent": "qwen2.5:0.5b",
+  "params": "494.03M",
+  "family": "qwen2",
+  "has_system": true,
+  "quant": "Q4_K_M"
+ },
+ {
+  "model": "sov-arch:latest",
+  "parent": "qwen2.5:0.5b",
+  "params": "494.03M",
+  "family": "qwen2",
+  "has_system": true,
+  "quant": "Q4_K_M"
+ },
+ {
+  "model": "sov-vision:latest",
+  "parent": "qwen2.5:0.5b",
+  "params": "494.03M",
+  "family": "qwen2",
+  "has_system": true,
+  "quant": "Q4_K_M"
+ },
+ {
+  "model": "sov-sovereign-v2:latest",
+  "parent": "qwen2.5:0.5b",
+  "params": "494.03M",
+  "family": "qwen2",
+  "has_system": true,
+  "quant": "Q4_K_M"
+ },
+ {
+  "model": "sov-compliance-v2:latest",
+  "parent": "qwen2.5:0.5b",
+  "params": "494.03M",
+  "family": "qwen2",
+  "has_system": true,
+  "quant": "Q4_K_M"
+ },
+ {
+  "model": "sov-qwen:latest",
+  "parent": "qwen2.5:0.5b",
+  "params": "494.03M",
+  "family": "qwen2",
+  "has_system": true,
+  "quant": "Q4_K_M"
+ },
+ {
+  "model": "sov-general:latest",
+  "parent": "qwen2.5:0.5b",
+  "params": "494.03M",
+  "family": "qwen2",
+  "has_system": true,
+  "quant": "Q4_K_M"
+ },
+ {
+  "model": "sov33-v7-mined-honey-latest:latest",
+  "parent": "sov33-v7:latest",
+  "params": "494.03M",
+  "family": "qwen2",
+  "has_system": true,
+  "quant": "Q4_K_M"
+ },
+ {
+  "model": "sov-gpt-oss:latest",
+  "parent": "qwen2.5:0.5b",
+  "params": "494.03M",
+  "family": "qwen2",
+  "has_system": true,
+  "quant": "Q4_K_M"
+ },
+ {
+  "model": "sov33-oracle-c3:latest",
+  "parent": "qwen2.5:0.5b",
+  "params": "494.03M",
+  "family": "qwen2",
+  "has_system": true,
+  "quant": "Q4_K_M"
+ },
+ {
+  "model": "sov-llama:latest",
+  "parent": "qwen2.5:0.5b",
+  "params": "494.03M",
+  "family": "qwen2",
+  "has_system": true,
+  "quant": "Q4_K_M"
+ },
+ {
+  "model": "sov-gemma:latest",
+  "parent": "qwen2.5:0.5b",
+  "params": "494.03M",
+  "family": "qwen2",
+  "has_system": true,
+  "quant": "Q4_K_M"
+ },
+ {
+  "model": "sov-minimax:latest",
+  "parent": "qwen2.5:0.5b",
+  "params": "494.03M",
+  "family": "qwen2",
+  "has_system": true,
+  "quant": "Q4_K_M"
+ },
+ {
+  "model": "sov-math-v2:latest",
+  "parent": "qwen2.5:0.5b",
+  "params": "494.03M",
+  "family": "qwen2",
+  "has_system": true,
+  "quant": "Q4_K_M"
+ },
+ {
+  "model": "sov-ethics:latest",
+  "parent": "qwen2.5:0.5b",
+  "params": "494.03M",
+  "family": "qwen2",
+  "has_system": true,
+  "quant": "Q4_K_M"
+ },
+ {
+  "model": "sov-research:latest",
+  "parent": "qwen2.5:0.5b",
+  "params": "494.03M",
+  "family": "qwen2",
+  "has_system": true,
+  "quant": "Q4_K_M"
+ },
+ {
+  "model": "sov-core:latest",
+  "parent": "qwen2.5:0.5b",
+  "params": "494.03M",
+  "family": "qwen2",
+  "has_system": true,
+  "quant": "Q4_K_M"
+ },
+ {
+  "model": "sov-sovereign:latest",
+  "parent": "qwen2.5:0.5b",
+  "params": "494.03M",
+  "family": "qwen2",
+  "has_system": true,
+  "quant": "Q4_K_M"
+ },
+ {
+  "model": "sov-phi:latest",
+  "parent": "qwen2.5:0.5b",
+  "params": "494.03M",
+  "family": "qwen2",
+  "has_system": true,
+  "quant": "Q4_K_M"
+ },
+ {
+  "model": "sov-sovereign-v4-mined-latest:latest",
+  "parent": "sov-sovereign-v4:latest",
+  "params": "494.03M",
+  "family": "qwen2",
+  "has_system": true,
+  "quant": "Q4_K_M"
+ },
+ {
+  "model": "clan-sovereignty-refusing-mined-latest:latest",
+  "parent": "clan-sovereignty-refusing:latest",
+  "params": "494.03M",
+  "family": "qwen2",
+  "has_system": true,
+  "quant": "Q4_K_M"
+ },
+ {
+  "model": "sov-reasoning:latest",
+  "parent": "qwen2.5:0.5b",
+  "params": "494.03M",
+  "family": "qwen2",
+  "has_system": true,
+  "quant": "Q4_K_M"
+ },
+ {
+  "model": "sov-defense-v2:latest",
+  "parent": "qwen2.5:0.5b",
+  "params": "494.03M",
+  "family": "qwen2",
+  "has_system": true,
+  "quant": "Q4_K_M"
+ },
+ {
+  "model": "clan-sovereignty-cited-mined-latest:latest",
+  "parent": "clan-sovereignty-cited:latest",
+  "params": "494.03M",
+  "family": "qwen2",
+  "has_system": true,
+  "quant": "Q4_K_M"
+ },
+ {
+  "model": "sov-qwen-vision:latest",
+  "parent": "qwen2.5:0.5b",
+  "params": "494.03M",
+  "family": "qwen2",
+  "has_system": true,
+  "quant": "Q4_K_M"
+ },
+ {
+  "model": "sov-distribution:latest",
+  "parent": "qwen2.5:0.5b",
+  "params": "494.03M",
+  "family": "qwen2",
+  "has_system": true,
+  "quant": "Q4_K_M"
+ },
+ {
+  "model": "sov-compliance:latest",
+  "parent": "qwen2.5:0.5b",
+  "params": "494.03M",
+  "family": "qwen2",
+  "has_system": true,
+  "quant": "Q4_K_M"
+ },
+ {
+  "model": "sov-nemotron:latest",
+  "parent": "qwen2.5:0.5b",
+  "params": "494.03M",
+  "family": "qwen2",
+  "has_system": true,
+  "quant": "Q4_K_M"
+ },
+ {
+  "model": "sov33-oracle:latest",
+  "parent": "qwen2.5:0.5b",
+  "params": "494.03M",
+  "family": "qwen2",
+  "has_system": true,
+  "quant": "Q4_K_M"
+ },
+ {
+  "model": "qwen2.5-0.5b-mined:latest",
+  "parent": "qwen2.5:0.5b",
+  "params": "494.03M",
+  "family": "qwen2",
+  "has_system": true,
+  "quant": "Q4_K_M"
+ },
+ {
+  "model": "nomic-embed-text:latest",
+  "parent": "",
+  "params": "137M",
+  "family": "nomic-bert",
+  "has_system": false,
+  "quant": "F16"
+ },
+ {
+  "model": "qwen2.5-mined-honey-latest:latest",
+  "parent": "qwen2.5:0.5b",
+  "params": "494.03M",
+  "family": "qwen2",
+  "has_system": true,
+  "quant": "Q4_K_M"
+ },
+ {
+  "model": "qwen2.5-0.5b-tight-mined-latest:latest",
+  "parent": "qwen2.5:0.5b",
+  "params": "494.03M",
+  "family": "qwen2",
+  "has_system": true,
+  "quant": "Q4_K_M"
+ },
+ {
+  "model": "qwen2.5-0.5b-mined-honey-clan-latest:latest",
+  "parent": "qwen2.5:0.5b",
+  "params": "494.03M",
+  "family": "qwen2",
+  "has_system": true,
+  "quant": "Q4_K_M"
+ },
+ {
+  "model": "clan-sovereignty-refusing-patched:latest",
+  "parent": "clan-sovereignty-refusing:latest",
+  "params": "494.03M",
+  "family": "qwen2",
+  "has_system": true,
+  "quant": "Q4_K_M"
+ },
+ {
+  "model": "sov-sovereign-v4-patched:latest",
+  "parent": "sov-sovereign-v4:latest",
+  "params": "494.03M",
+  "family": "qwen2",
+  "has_system": true,
+  "quant": "Q4_K_M"
+ },
+ {
+  "model": "clan-sovereignty-cited-patched:latest",
+  "parent": "clan-sovereignty-cited:latest",
+  "params": "494.03M",
+  "family": "qwen2",
+  "has_system": true,
+  "quant": "Q4_K_M"
+ },
+ {
+  "model": "sov33-v7-patched:latest",
+  "parent": "sov33-v7:latest",
+  "params": "494.03M",
+  "family": "qwen2",
+  "has_system": true,
+  "quant": "Q4_K_M"
+ },
+ {
+  "model": "sov33-evolved-patched:latest",
+  "parent": "sov33-evolved:latest",
+  "params": "494.03M",
+  "family": "qwen2",
+  "has_system": true,
+  "quant": "Q4_K_M"
+ },
+ {
+  "model": "clan-sovereignty-refusing:latest",
+  "parent": "qwen2.5:0.5b",
+  "params": "494.03M",
+  "family": "qwen2",
+  "has_system": true,
+  "quant": "Q4_K_M"
+ },
+ {
+  "model": "clan-sovereignty-scoped:latest",
+  "parent": "qwen2.5:0.5b",
+  "params": "494.03M",
+  "family": "qwen2",
+  "has_system": true,
+  "quant": "Q4_K_M"
+ },
+ {
+  "model": "clan-sovereignty-stepwise:latest",
+  "parent": "qwen2.5:0.5b",
+  "params": "494.03M",
+  "family": "qwen2",
+  "has_system": true,
+  "quant": "Q4_K_M"
+ },
+ {
+  "model": "clan-sovereignty-precise:latest",
+  "parent": "qwen2.5:0.5b",
+  "params": "494.03M",
+  "family": "qwen2",
+  "has_system": true,
+  "quant": "Q4_K_M"
+ },
+ {
+  "model": "clan-sovereignty-operational:latest",
+  "parent": "qwen2.5:0.5b",
+  "params": "494.03M",
+  "family": "qwen2",
+  "has_system": true,
+  "quant": "Q4_K_M"
+ },
+ {
+  "model": "clan-sovereignty-comparative:latest",
+  "parent": "qwen2.5:0.5b",
+  "params": "494.03M",
+  "family": "qwen2",
+  "has_system": true,
+  "quant": "Q4_K_M"
+ },
+ {
+  "model": "clan-sovereignty-adversarial:latest",
+  "parent": "qwen2.5:0.5b",
+  "params": "494.03M",
+  "family": "qwen2",
+  "has_system": true,
+  "quant": "Q4_K_M"
+ },
+ {
+  "model": "clan-sovereignty-plain:latest",
+  "parent": "qwen2.5:0.5b",
+  "params": "494.03M",
+  "family": "qwen2",
+  "has_system": true,
+  "quant": "Q4_K_M"
+ },
+ {
+  "model": "clan-sovereignty-evidential:latest",
+  "parent": "qwen2.5:0.5b",
+  "params": "494.03M",
+  "family": "qwen2",
+  "has_system": true,
+  "quant": "Q4_K_M"
+ },
+ {
+  "model": "clan-sovereignty-escalating:latest",
+  "parent": "qwen2.5:0.5b",
+  "params": "494.03M",
+  "family": "qwen2",
+  "has_system": true,
+  "quant": "Q4_K_M"
+ },
+ {
+  "model": "clan-sovereignty-cited:latest",
+  "parent": "qwen2.5:0.5b",
+  "params": "494.03M",
+  "family": "qwen2",
+  "has_system": true,
+  "quant": "Q4_K_M"
+ },
+ {
+  "model": "clan-sovereignty-risk_first:latest",
+  "parent": "qwen2.5:0.5b",
+  "params": "494.03M",
+  "family": "qwen2",
+  "has_system": true,
+  "quant": "Q4_K_M"
+ },
+ {
+  "model": "clan-redress-operational:latest",
+  "parent": "qwen2.5:0.5b",
+  "params": "494.03M",
+  "family": "qwen2",
+  "has_system": true,
+  "quant": "Q4_K_M"
+ },
+ {
+  "model": "clan-redress-refusing:latest",
+  "parent": "qwen2.5:0.5b",
+  "params": "494.03M",
+  "family": "qwen2",
+  "has_system": true,
+  "quant": "Q4_K_M"
+ },
+ {
+  "model": "clan-redress-plain:latest",
+  "parent": "qwen2.5:0.5b",
+  "params": "494.03M",
+  "family": "qwen2",
+  "has_system": true,
+  "quant": "Q4_K_M"
+ },
+ {
+  "model": "clan-redress-evidential:latest",
+  "parent": "qwen2.5:0.5b",
+  "params": "494.03M",
+  "family": "qwen2",
+  "has_system": true,
+  "quant": "Q4_K_M"
+ },
+ {
+  "model": "clan-redress-risk_first:latest",
+  "parent": "qwen2.5:0.5b",
+  "params": "494.03M",
+  "family": "qwen2",
+  "has_system": true,
+  "quant": "Q4_K_M"
+ },
+ {
+  "model": "clan-law-refusing:latest",
+  "parent": "qwen2.5:0.5b",
+  "params": "494.03M",
+  "family": "qwen2",
+  "has_system": true,
+  "quant": "Q4_K_M"
+ },
+ {
+  "model": "clan-redress-adversarial:latest",
+  "parent": "qwen2.5:0.5b",
+  "params": "494.03M",
+  "family": "qwen2",
+  "has_system": true,
+  "quant": "Q4_K_M"
+ },
+ {
+  "model": "clan-redress-precise:latest",
+  "parent": "qwen2.5:0.5b",
+  "params": "494.03M",
+  "family": "qwen2",
+  "has_system": true,
+  "quant": "Q4_K_M"
+ },
+ {
+  "model": "clan-redress-escalating:latest",
+  "parent": "qwen2.5:0.5b",
+  "params": "494.03M",
+  "family": "qwen2",
+  "has_system": true,
+  "quant": "Q4_K_M"
+ },
+ {
+  "model": "clan-redress-stepwise:latest",
+  "parent": "qwen2.5:0.5b",
+  "params": "494.03M",
+  "family": "qwen2",
+  "has_system": true,
+  "quant": "Q4_K_M"
+ },
+ {
+  "model": "clan-law-risk_first:latest",
+  "parent": "qwen2.5:0.5b",
+  "params": "494.03M",
+  "family": "qwen2",
+  "has_system": true,
+  "quant": "Q4_K_M"
+ },
+ {
+  "model": "clan-redress-comparative:latest",
+  "parent": "qwen2.5:0.5b",
+  "params": "494.03M",
+  "family": "qwen2",
+  "has_system": true,
+  "quant": "Q4_K_M"
+ },
+ {
+  "model": "clan-law-plain:latest",
+  "parent": "qwen2.5:0.5b",
+  "params": "494.03M",
+  "family": "qwen2",
+  "has_system": true,
+  "quant": "Q4_K_M"
+ },
+ {
+  "model": "clan-redress-cited:latest",
+  "parent": "qwen2.5:0.5b",
+  "params": "494.03M",
+  "family": "qwen2",
+  "has_system": true,
+  "quant": "Q4_K_M"
+ },
+ {
+  "model": "clan-redress-scoped:latest",
+  "parent": "qwen2.5:0.5b",
+  "params": "494.03M",
+  "family": "qwen2",
+  "has_system": true,
+  "quant": "Q4_K_M"
+ },
+ {
+  "model": "clan-law-evidential:latest",
+  "parent": "qwen2.5:0.5b",
+  "params": "494.03M",
+  "family": "qwen2",
+  "has_system": true,
+  "quant": "Q4_K_M"
+ },
+ {
+  "model": "clan-law-operational:latest",
+  "parent": "qwen2.5:0.5b",
+  "params": "494.03M",
+  "family": "qwen2",
+  "has_system": true,
+  "quant": "Q4_K_M"
+ },
+ {
+  "model": "clan-law-scoped:latest",
+  "parent": "qwen2.5:0.5b",
+  "params": "494.03M",
+  "family": "qwen2",
+  "has_system": true,
+  "quant": "Q4_K_M"
+ },
+ {
+  "model": "clan-law-cited:latest",
+  "parent": "qwen2.5:0.5b",
+  "params": "494.03M",
+  "family": "qwen2",
+  "has_system": true,
+  "quant": "Q4_K_M"
+ },
+ {
+  "model": "clan-law-stepwise:latest",
+  "parent": "qwen2.5:0.5b",
+  "params": "494.03M",
+  "family": "qwen2",
+  "has_system": true,
+  "quant": "Q4_K_M"
+ },
+ {
+  "model": "clan-law-adversarial:latest",
+  "parent": "qwen2.5:0.5b",
+  "params": "494.03M",
+  "family": "qwen2",
+  "has_system": true,
+  "quant": "Q4_K_M"
+ },
+ {
+  "model": "clan-law-escalating:latest",
+  "parent": "qwen2.5:0.5b",
+  "params": "494.03M",
+  "family": "qwen2",
+  "has_system": true,
+  "quant": "Q4_K_M"
+ },
+ {
+  "model": "clan-law-comparative:latest",
+  "parent": "qwen2.5:0.5b",
+  "params": "494.03M",
+  "family": "qwen2",
+  "has_system": true,
+  "quant": "Q4_K_M"
+ },
+ {
+  "model": "clan-law-precise:latest",
+  "parent": "qwen2.5:0.5b",
+  "params": "494.03M",
+  "family": "qwen2",
+  "has_system": true,
+  "quant": "Q4_K_M"
+ },
+ {
+  "model": "clan-meok-operational:latest",
+  "parent": "qwen2.5:0.5b",
+  "params": "494.03M",
+  "family": "qwen2",
+  "has_system": true,
+  "quant": "Q4_K_M"
+ },
+ {
+  "model": "clan-meok-refusing:latest",
+  "parent": "qwen2.5:0.5b",
+  "params": "494.03M",
+  "family": "qwen2",
+  "has_system": true,
+  "quant": "Q4_K_M"
+ },
+ {
+  "model": "clan-meok-risk_first:latest",
+  "parent": "qwen2.5:0.5b",
+  "params": "494.03M",
+  "family": "qwen2",
+  "has_system": true,
+  "quant": "Q4_K_M"
+ },
+ {
+  "model": "clan-meok-plain:latest",
+  "parent": "qwen2.5:0.5b",
+  "params": "494.03M",
+  "family": "qwen2",
+  "has_system": true,
+  "quant": "Q4_K_M"
+ },
+ {
+  "model": "clan-meok-escalating:latest",
+  "parent": "qwen2.5:0.5b",
+  "params": "494.03M",
+  "family": "qwen2",
+  "has_system": true,
+  "quant": "Q4_K_M"
+ },
+ {
+  "model": "clan-meok-scoped:latest",
+  "parent": "qwen2.5:0.5b",
+  "params": "494.03M",
+  "family": "qwen2",
+  "has_system": true,
+  "quant": "Q4_K_M"
+ },
+ {
+  "model": "clan-meok-evidential:latest",
+  "parent": "qwen2.5:0.5b",
+  "params": "494.03M",
+  "family": "qwen2",
+  "has_system": true,
+  "quant": "Q4_K_M"
+ },
+ {
+  "model": "clan-meok-comparative:latest",
+  "parent": "qwen2.5:0.5b",
+  "params": "494.03M",
+  "family": "qwen2",
+  "has_system": true,
+  "quant": "Q4_K_M"
+ },
+ {
+  "model": "clan-meok-stepwise:latest",
+  "parent": "qwen2.5:0.5b",
+  "params": "494.03M",
+  "family": "qwen2",
+  "has_system": true,
+  "quant": "Q4_K_M"
+ },
+ {
+  "model": "clan-defoneos-plain:latest",
+  "parent": "qwen2.5:0.5b",
+  "params": "494.03M",
+  "family": "qwen2",
+  "has_system": true,
+  "quant": "Q4_K_M"
+ },
+ {
+  "model": "clan-defoneos-refusing:latest",
+  "parent": "qwen2.5:0.5b",
+  "params": "494.03M",
+  "family": "qwen2",
+  "has_system": true,
+  "quant": "Q4_K_M"
+ },
+ {
+  "model": "clan-meok-adversarial:latest",
+  "parent": "qwen2.5:0.5b",
+  "params": "494.03M",
+  "family": "qwen2",
+  "has_system": true,
+  "quant": "Q4_K_M"
+ },
+ {
+  "model": "clan-meok-precise:latest",
+  "parent": "qwen2.5:0.5b",
+  "params": "494.03M",
+  "family": "qwen2",
+  "has_system": true,
+  "quant": "Q4_K_M"
+ },
+ {
+  "model": "clan-defoneos-escalating:latest",
+  "parent": "qwen2.5:0.5b",
+  "params": "494.03M",
+  "family": "qwen2",
+  "has_system": true,
+  "quant": "Q4_K_M"
+ },
+ {
+  "model": "clan-defoneos-risk_first:latest",
+  "parent": "qwen2.5:0.5b",
+  "params": "494.03M",
+  "family": "qwen2",
+  "has_system": true,
+  "quant": "Q4_K_M"
+ },
+ {
+  "model": "clan-meok-cited:latest",
+  "parent": "qwen2.5:0.5b",
+  "params": "494.03M",
+  "family": "qwen2",
+  "has_system": true,
+  "quant": "Q4_K_M"
+ },
+ {
+  "model": "clan-defoneos-operational:latest",
+  "parent": "qwen2.5:0.5b",
+  "params": "494.03M",
+  "family": "qwen2",
+  "has_system": true,
+  "quant": "Q4_K_M"
+ },
+ {
+  "model": "clan-defoneos-comparative:latest",
+  "parent": "qwen2.5:0.5b",
+  "params": "494.03M",
+  "family": "qwen2",
+  "has_system": true,
+  "quant": "Q4_K_M"
+ },
+ {
+  "model": "clan-defoneos-evidential:latest",
+  "parent": "qwen2.5:0.5b",
+  "params": "494.03M",
+  "family": "qwen2",
+  "has_system": true,
+  "quant": "Q4_K_M"
+ },
+ {
+  "model": "clan-defoneos-scoped:latest",
+  "parent": "qwen2.5:0.5b",
+  "params": "494.03M",
+  "family": "qwen2",
+  "has_system": true,
+  "quant": "Q4_K_M"
+ },
+ {
+  "model": "clan-csoai-evidential:latest",
+  "parent": "qwen2.5:0.5b",
+  "params": "494.03M",
+  "family": "qwen2",
+  "has_system": true,
+  "quant": "Q4_K_M"
+ },
+ {
+  "model": "clan-csoai-plain:latest",
+  "parent": "qwen2.5:0.5b",
+  "params": "494.03M",
+  "family": "qwen2",
+  "has_system": true,
+  "quant": "Q4_K_M"
+ },
+ {
+  "model": "clan-defoneos-cited:latest",
+  "parent": "qwen2.5:0.5b",
+  "params": "494.03M",
+  "family": "qwen2",
+  "has_system": true,
+  "quant": "Q4_K_M"
+ },
+ {
+  "model": "clan-csoai-escalating:latest",
+  "parent": "qwen2.5:0.5b",
+  "params": "494.03M",
+  "family": "qwen2",
+  "has_system": true,
+  "quant": "Q4_K_M"
+ },
+ {
+  "model": "clan-csoai-refusing:latest",
+  "parent": "qwen2.5:0.5b",
+  "params": "494.03M",
+  "family": "qwen2",
+  "has_system": true,
+  "quant": "Q4_K_M"
+ },
+ {
+  "model": "clan-defoneos-adversarial:latest",
+  "parent": "qwen2.5:0.5b",
+  "params": "494.03M",
+  "family": "qwen2",
+  "has_system": true,
+  "quant": "Q4_K_M"
+ },
+ {
+  "model": "clan-defoneos-precise:latest",
+  "parent": "qwen2.5:0.5b",
+  "params": "494.03M",
+  "family": "qwen2",
+  "has_system": true,
+  "quant": "Q4_K_M"
+ },
+ {
+  "model": "clan-csoai-operational:latest",
+  "parent": "qwen2.5:0.5b",
+  "params": "494.03M",
+  "family": "qwen2",
+  "has_system": true,
+  "quant": "Q4_K_M"
+ },
+ {
+  "model": "clan-csoai-risk_first:latest",
+  "parent": "qwen2.5:0.5b",
+  "params": "494.03M",
+  "family": "qwen2",
+  "has_system": true,
+  "quant": "Q4_K_M"
+ },
+ {
+  "model": "clan-defoneos-stepwise:latest",
+  "parent": "qwen2.5:0.5b",
+  "params": "494.03M",
+  "family": "qwen2",
+  "has_system": true,
+  "quant": "Q4_K_M"
+ },
+ {
+  "model": "clan-csoai-stepwise:latest",
+  "parent": "qwen2.5:0.5b",
+  "params": "494.03M",
+  "family": "qwen2",
+  "has_system": true,
+  "quant": "Q4_K_M"
+ },
+ {
+  "model": "clan-csoai-cited:latest",
+  "parent": "qwen2.5:0.5b",
+  "params": "494.03M",
+  "family": "qwen2",
+  "has_system": true,
+  "quant": "Q4_K_M"
+ },
+ {
+  "model": "clan-csoai-comparative:latest",
+  "parent": "qwen2.5:0.5b",
+  "params": "494.03M",
+  "family": "qwen2",
+  "has_system": true,
+  "quant": "Q4_K_M"
+ },
+ {
+  "model": "clan-csoai-adversarial:latest",
+  "parent": "qwen2.5:0.5b",
+  "params": "494.03M",
+  "family": "qwen2",
+  "has_system": true,
+  "quant": "Q4_K_M"
+ },
+ {
+  "model": "clan-csoai-scoped:latest",
+  "parent": "qwen2.5:0.5b",
+  "params": "494.03M",
+  "family": "qwen2",
+  "has_system": true,
+  "quant": "Q4_K_M"
+ },
+ {
+  "model": "clan-csoai-precise:latest",
+  "parent": "qwen2.5:0.5b",
+  "params": "494.03M",
+  "family": "qwen2",
+  "has_system": true,
+  "quant": "Q4_K_M"
+ },
+ {
+  "model": "sov-draw-sovereignty-terse:latest",
+  "parent": "qwen2.5:0.5b",
+  "params": "494.03M",
+  "family": "qwen2",
+  "has_system": true,
+  "quant": "Q4_K_M"
+ },
+ {
+  "model": "sov-draw-compliance-terse:latest",
+  "parent": "qwen2.5:0.5b",
+  "params": "494.03M",
+  "family": "qwen2",
+  "has_system": true,
+  "quant": "Q4_K_M"
+ },
+ {
+  "model": "sov-draw-cybersecurity-terse:latest",
+  "parent": "qwen2.5:0.5b",
+  "params": "494.03M",
+  "family": "qwen2",
+  "has_system": true,
+  "quant": "Q4_K_M"
+ },
+ {
+  "model": "sov-draw-compliance:latest",
+  "parent": "qwen2.5:0.5b",
+  "params": "494.03M",
+  "family": "qwen2",
+  "has_system": true,
+  "quant": "Q4_K_M"
+ },
+ {
+  "model": "sov-draw-cybersecurity:latest",
+  "parent": "qwen2.5:0.5b",
+  "params": "494.03M",
+  "family": "qwen2",
+  "has_system": true,
+  "quant": "Q4_K_M"
+ },
+ {
+  "model": "sov-draw-sovereignty:latest",
+  "parent": "qwen2.5:0.5b",
+  "params": "494.03M",
+  "family": "qwen2",
+  "has_system": true,
+  "quant": "Q4_K_M"
+ },
+ {
+  "model": "sov33-unified:latest",
+  "parent": "llama3.2:3b",
+  "params": "3.2B",
+  "family": "llama",
+  "has_system": true,
+  "quant": "Q4_K_M"
+ },
+ {
+  "model": "llama3.2:3b",
+  "parent": "",
+  "params": "3.2B",
+  "family": "llama",
+  "has_system": false,
+  "quant": "Q4_K_M"
+ },
+ {
+  "model": "sov33-dist-c3:latest",
+  "parent": "qwen2.5:0.5b",
+  "params": "494.03M",
+  "family": "qwen2",
+  "has_system": true,
+  "quant": "Q4_K_M"
+ },
+ {
+  "model": "sov33-evolved:latest",
+  "parent": "qwen2.5:0.5b",
+  "params": "494.03M",
+  "family": "qwen2",
+  "has_system": true,
+  "quant": "Q4_K_M"
+ },
+ {
+  "model": "sov33-dist-c2:latest",
+  "parent": "qwen2.5:0.5b",
+  "params": "494.03M",
+  "family": "qwen2",
+  "has_system": true,
+  "quant": "Q4_K_M"
+ },
+ {
+  "model": "sov33-dist-c1:latest",
+  "parent": "qwen2.5:0.5b",
+  "params": "494.03M",
+  "family": "qwen2",
+  "has_system": true,
+  "quant": "Q4_K_M"
+ },
+ {
+  "model": "sov33-evolved-c3:latest",
+  "parent": "qwen2.5:0.5b",
+  "params": "494.03M",
+  "family": "qwen2",
+  "has_system": true,
+  "quant": "Q4_K_M"
+ },
+ {
+  "model": "sov33-evolved-c1:latest",
+  "parent": "qwen2.5:0.5b",
+  "params": "494.03M",
+  "family": "qwen2",
+  "has_system": true,
+  "quant": "Q4_K_M"
+ },
+ {
+  "model": "sov-sovereign-v4:latest",
+  "parent": "qwen2.5:0.5b",
+  "params": "494.03M",
+  "family": "qwen2",
+  "has_system": true,
+  "quant": "Q4_K_M"
+ },
+ {
+  "model": "sov33-v7:latest",
+  "parent": "",
+  "params": "494.03M",
+  "family": "qwen2",
+  "has_system": true,
+  "quant": "Q4_K_M"
+ },
+ {
+  "model": "sov33-v6:latest",
+  "parent": "",
+  "params": "494.03M",
+  "family": "qwen2",
+  "has_system": true,
+  "quant": "Q4_K_M"
+ },
+ {
+  "model": "qwen2.5:0.5b",
+  "parent": "",
+  "params": "494.03M",
+  "family": "qwen2",
+  "has_system": true,
+  "quant": "Q4_K_M"
+ }
+]
