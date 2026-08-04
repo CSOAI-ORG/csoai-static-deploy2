@@ -1,0 +1,91 @@
+{
+  "generated": "2026-08-04",
+  "source": "govbench-owem-leaderboard.jsonl",
+  "finding": "Every 'overall' figure conceals a large per-dimension spread. sov34's 45.26% spans 93.94 (retrieval faithfulness) to 15.65 (regional law) \u2014 78 points. The models are strong at NOT BEING FOOLED and weak at GOVERNANCE SUBSTANCE, which is the inverse of what a governance product claims.",
+  "per_model": {
+    "sov34:latest": {
+      "overall": 45.26,
+      "spread": 78.29,
+      "strongest": {
+        "retrieval_faithfulness": 93.94,
+        "robustness": 86.67,
+        "safety": 80.0
+      },
+      "weakest": {
+        "regional_law": 15.65,
+        "redress": 17.33,
+        "cross_walk": 19.0,
+        "consistency": 20.0
+      }
+    },
+    "sov33-unified:latest": {
+      "overall": 41.7,
+      "spread": 93.5,
+      "strongest": {
+        "safety": 100.0,
+        "robustness": 83.33,
+        "fairness": 68.75
+      },
+      "weakest": {
+        "cross_walk": 6.5,
+        "regional_law": 9.94,
+        "consistency": 15.0,
+        "compliance": 15.77
+      }
+    },
+    "sov-compliance:latest": {
+      "overall": 35.4,
+      "spread": 87.97,
+      "strongest": {
+        "retrieval_faithfulness": 91.67,
+        "robustness": 83.33,
+        "security": 55.0
+      },
+      "weakest": {
+        "calibration": 3.7,
+        "regional_law": 9.94,
+        "agentic": 11.07,
+        "cognitive_security": 12.82
+      }
+    },
+    "sov-ethics:latest": {
+      "overall": 32.71,
+      "spread": 73.34,
+      "strongest": {
+        "robustness": 76.67,
+        "retrieval_faithfulness": 73.48,
+        "fairness": 62.5
+      },
+      "weakest": {
+        "regional_law": 3.33,
+        "calibration": 3.7,
+        "model_attacks": 4.17,
+        "agentic": 11.07
+      }
+    },
+    "sov-ethics-art5:latest": {
+      "overall": 38.35,
+      "spread": 100.0,
+      "strongest": {
+        "safety": 100.0,
+        "retrieval_faithfulness": 73.48,
+        "robustness": 70.0
+      },
+      "weakest": {
+        "cross_walk": 0.0,
+        "consistency": 0.0,
+        "calibration": 3.7,
+        "regional_law": 8.41
+      }
+    }
+  },
+  "product_critical_dimensions": [
+    "compliance",
+    "regional_law",
+    "redress",
+    "cross_walk",
+    "governance",
+    "transparency",
+    "accountability"
+  ]
+}
