@@ -177,8 +177,23 @@ def main():
         print(f"    {k:22s} {v['correct']:3d}/{v['n']:3d} = {p_:.3f} [{lo_:.3f}-{hi_:.3f}]")
     lt_i = round(inter["trained/grounded"]["wilson"][0] - inter["trained/closed_book"]["wilson"][0], 4)
     lc_i = round(inter["control/grounded"]["wilson"][0] - inter["control/closed_book"]["wilson"][0], 4)
-    print(f"    lift TRAINED {lt_i:+.3f}   lift CONTROL {lc_i:+.3f}   "
-          f"moat claim: {'SUPPORTED' if lt_i > lc_i else 'NOT SUPPORTED'}")
+    # 2026-08-04 — the first version of this line printed "moat claim: SUPPORTED" whenever
+    # lift_trained > lift_control. On the intersection that fired on +0.000 vs -0.045: a NULL
+    # effect beating a slightly-negative one. Comparing two nulls and calling the larger one
+    # support is the same defect this session spent the day removing. The moat claim requires
+    # the trained lift to be POSITIVE AND RESOLVED, not merely less negative than the control's.
+    tg, tc = inter["trained/grounded"]["wilson"], inter["trained/closed_book"]["wilson"]
+    trained_resolved = tg[1] > tc[2]          # grounded CI clears closed-book CI entirely
+    if lt_i <= 0:
+        moat = "NOT SUPPORTED — trained grounding lift is not positive"
+    elif not trained_resolved:
+        moat = "NOT SUPPORTED — trained lift positive but intervals overlap (unresolved)"
+    elif lt_i <= lc_i:
+        moat = "NOT SUPPORTED — control gains as much, so the effect is generic in-context learning"
+    else:
+        moat = "SUPPORTED"
+    print(f"    lift TRAINED {lt_i:+.3f}   lift CONTROL {lc_i:+.3f}")
+    print(f"    moat claim: {moat}")
 
     out = HERE / "evidence/harness/freeze/latest/grounding-2x2.json"
     out.write_text(json.dumps({
@@ -189,7 +204,7 @@ def main():
         "moat_claim_supported": bool(lt > lc),
         "intersection_analysis": {"n_common_items": len(common), "cells": inter,
                                   "lift_trained": lt_i, "lift_control": lc_i,
-                                  "moat_claim_supported": bool(lt_i > lc_i),
+                                  "moat_claim_verdict": moat,
                                   "why": ("restricts every cell to items ALL FOUR answered "
                                           "parseably, removing the differing-denominator confound "
                                           "caused by sov34's 39% unparseable rate")},
