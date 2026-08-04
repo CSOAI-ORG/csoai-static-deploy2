@@ -47,13 +47,26 @@ composition, not a reason to re-tune until it does.
 """
 from __future__ import annotations
 
-import argparse, json, sys, time, urllib.request
+import argparse, json, os, sys, time, urllib.request
 from datetime import datetime, timezone
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
-OLLAMA = "http://localhost:11434/api/chat"
+# 2026-08-04 — every refusal/care harness in this estate (defbench, refusal_axis_test,
+# care_gate) reaches Ollama through this constant, and it was pinned to localhost. That is
+# why none of them could be pointed at the RunPod OWEM pod where the 142 models actually
+# live: the lens was Mac-only by construction. Set
+#   GOVBENCH_OLLAMA_URL=https://<pod-id>-11434.proxy.runpod.net
+# and the Mac does the scoring arithmetic while the GPU does every generation.
+#
+# The browser User-Agent is load-bearing, not cosmetic. RunPod's proxy answers a default
+# urllib UA with Cloudflare error 1010 — which is exactly how pod_refusal_audit_v2
+# (2026-08-03) returned "403 Forbidden" on all 40 of its calls and measured nothing.
+OLLAMA_BASE = os.environ.get("GOVBENCH_OLLAMA_URL", "http://localhost:11434").rstrip("/")
+OLLAMA = f"{OLLAMA_BASE}/api/chat"
+OLLAMA_UA = ("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 "
+             "(KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36")
 BASE = "qwen2.5:0.5b"
 
 
@@ -77,7 +90,8 @@ def ask(model: str, prompt: str, system: str = "", timeout: int = 300, retries: 
     for attempt in range(retries):
         try:
             req = urllib.request.Request(OLLAMA, data=body,
-                                         headers={"Content-Type": "application/json"})
+                                         headers={"Content-Type": "application/json",
+                                                  "User-Agent": OLLAMA_UA})
             with urllib.request.urlopen(req, timeout=timeout) as r:
                 return json.loads(r.read())["message"]["content"].strip()
         except Exception as e:
