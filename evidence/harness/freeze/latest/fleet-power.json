@@ -1,0 +1,69 @@
+{
+  "built_at": "2026-08-04T14:50:52.119589+00:00",
+  "purpose": "establishes the minimum model-fleet size at which a dead-item count is trustworthy, after a measured failure: 90 items at N=8 gave 35 dead; the same 90 items at N=30 gave governance 1 and safety 1.",
+  "formula": "P(looks dead) = p^N + (1-p)^N",
+  "corrects": "DISCRIMINATING_ITEMS_SPEC claimed the dead-item count was the robust statistic requiring no correlation. It is the MOST fleet-sensitive statistic, because deadness is decided by unanimity and unanimity is cheap at small N.",
+  "min_fleet_5pct_at_p085": 19,
+  "min_fleet_1pct_at_p090": 44,
+  "table": {
+    "8": {
+      "0.5": 0.007812,
+      "0.6": 0.017452,
+      "0.7": 0.057714,
+      "0.8": 0.167775,
+      "0.85": 0.272491,
+      "0.9": 0.430467,
+      "0.95": 0.66342
+    },
+    "13": {
+      "0.5": 0.000244,
+      "0.6": 0.001313,
+      "0.7": 0.009689,
+      "0.8": 0.054976,
+      "0.85": 0.120905,
+      "0.9": 0.254187,
+      "0.95": 0.513342
+    },
+    "20": {
+      "0.5": 2e-06,
+      "0.6": 3.7e-05,
+      "0.7": 0.000798,
+      "0.8": 0.011529,
+      "0.85": 0.03876,
+      "0.9": 0.121577,
+      "0.95": 0.358486
+    },
+    "30": {
+      "0.5": 0.0,
+      "0.6": 0.0,
+      "0.7": 2.3e-05,
+      "0.8": 0.001238,
+      "0.85": 0.007631,
+      "0.9": 0.042391,
+      "0.95": 0.214639
+    },
+    "50": {
+      "0.5": 0.0,
+      "0.6": 0.0,
+      "0.7": 0.0,
+      "0.8": 1.4e-05,
+      "0.85": 0.000296,
+      "0.9": 0.005154,
+      "0.95": 0.076945
+    },
+    "80": {
+      "0.5": 0.0,
+      "0.6": 0.0,
+      "0.7": 0.0,
+      "0.8": 0.0,
+      "0.85": 2e-06,
+      "0.9": 0.000218,
+      "0.95": 0.016515
+    }
+  },
+  "certifications": {
+    "8": false,
+    "13": false,
+    "30": true
+  }
+}

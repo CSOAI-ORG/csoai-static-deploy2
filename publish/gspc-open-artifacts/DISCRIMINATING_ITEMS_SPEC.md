@@ -190,5 +190,34 @@ a judge, and a judge needs a key this estate does not currently hold.
 weighted toward larger models could shift difficulty upward and revive some dead items. The
 `spread` figures are across these 8 only. Discrimination at n=8 models is noisy — an r of 0.2 is
 not resolved at that sample — so the negative-discrimination flags are **screening signals for
-audit, not verdicts**. What is robust is the dead-item count, which needs no correlation at all:
-an item passed by all 8 or none of 8 is carrying no information about these models regardless.
+audit, not verdicts**.
+
+> **CORRECTION, same day.** This section originally continued: *"What is robust is the dead-item
+> count, which needs no correlation at all."* **That is backwards, and the tables in §1 above are
+> inflated because of it.**
+>
+> An item is called dead on *unanimity*, and unanimity is cheap when N is small:
+>
+> ```
+> P(a live item looks dead) = p^N + (1−p)^N
+>          p=0.85     N=8 → 0.272     N=19 → 0.045     N=30 → 0.008
+> ```
+>
+> At N=8, **27% of genuinely usable items are misread as dead**. The dead-item count is not the
+> robust statistic — it is the *most* fleet-sensitive statistic in the set.
+>
+> Re-running the identical 90 items across **30** models:
+>
+> | axis | dead @ N=8 | dead @ N=30 | usable @ N=8 | usable @ N=30 |
+> |---|---|---|---|---|
+> | governance | 5 | **1** | 15 | **23** |
+> | safety | 12 | **1** | 2 | **12** |
+>
+> `safety` was never a 2-item axis. It was under-sampled. **`fleet_power.py` now certifies or
+> refuses a dead-item count by fleet size — N ≥ 19 for a 5% false-dead rate at p=0.85 — and it
+> refuses both the N=8 run and the N=13 care-battery run.**
+>
+> **What survives unchanged:** *"no axis is saturated."* `spread` is a between-model statistic
+> and it got **larger** at N=30, not smaller (governance 0.275 → 0.440). The saturation claim was
+> never the fragile part. What was fragile was my estimate of how much of the battery is scrap —
+> and it is far less than I said.
