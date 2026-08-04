@@ -128,6 +128,41 @@ PREREGISTERED = {
 }
 
 
+# ── Per-arm control selection ─────────────────────────────────────────────────────
+# 2026-08-04 — the first six-axis run used ONE control (qwen2.5:0.5b) against arms of 0.5B,
+# 1.5B and 3.2B. That is size-confounded: a larger model beating a smaller control
+# demonstrates SCALE, not training, and any verdict from such a pair is uninterpretable.
+#
+# The fleet census makes the right control obvious. 137 of 149 pod models are PROMPT
+# CONFIGURATIONS carrying a parent_model — identical weights, different system prompt. For
+# those the correct control is THEIR OWN PARENT: it isolates the prompt, which is the only
+# thing that differs. For models with their own weights, the control is the same-size stock
+# base. An arm whose control cannot be identified is NOT SCORED rather than compared against
+# a mismatched one.
+CENSUS = HERE / "evidence/harness/freeze/latest/fleet-census.json"
+SIZE_CONTROL = {"494.03M": "qwen2.5:0.5b", "1.5B": "qwen2.5:1.5b", "3.2B": "llama3.2:3b"}
+
+
+def control_for(model: str) -> tuple[str | None, str]:
+    """(control_model, rationale). None when no defensible control exists."""
+    try:
+        rows = json.loads(CENSUS.read_text())
+    except Exception:
+        return None, "fleet census unavailable — cannot choose a defensible control"
+    rec = next((r for r in rows if r["model"] == model), None)
+    if rec is None:
+        return None, "model absent from census"
+    parent = rec.get("parent") or ""
+    if parent:
+        return parent, f"prompt variant — control is its own parent ({parent}), isolating the prompt"
+    ctrl = SIZE_CONTROL.get(rec.get("params") or "")
+    if ctrl and ctrl != model:
+        return ctrl, f"own weights — size-matched stock base for {rec.get('params')}"
+    if ctrl == model:
+        return None, "this model IS the control"
+    return None, f"no stock base registered for size {rec.get('params')}"
+
+
 class Unreachable(Exception):
     """Transport failed. NOT a score of zero — the absence of a measurement."""
 
@@ -218,14 +253,17 @@ def verdict(m: dict, ctrl: dict) -> str:
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--models", nargs="+", required=True)
-    ap.add_argument("--control", required=True,
-                    help="UNTRAINED base model. Mandatory — see module docstring rule 1.")
+    ap.add_argument("--control", default=None,
+                    help="DEPRECATED. Controls are now selected PER ARM from the fleet census: "
+                         "a prompt variant is compared against its own parent, an own-weights "
+                         "model against a size-matched stock base. A single global control was "
+                         "size-confounded (0.5B control vs 1.5B and 3.2B arms).")
     ap.add_argument("--axes", nargs="+", default=list(AXES))
     ap.add_argument("--out", default=str(OUT / "gspc-six-axis-e2e.jsonl"))
     args = ap.parse_args()
 
-    if args.control in args.models:
-        raise SystemExit("the control must not also be a treatment arm")
+    if args.control:
+        print("NOTE: --control is deprecated and ignored; controls are chosen per arm.\n")
 
     stamp = datetime.now(timezone.utc).isoformat()
     rows, dropped = [], {}
@@ -235,25 +273,39 @@ def main():
         items, field, labels = load_axis(axis)
         fp = hashlib.sha256("".join(i[field] for i in items).encode()).hexdigest()[:12]
         print(f"[{axis}] {len(items)} frozen items · labels {labels} · items@{fp}")
+        # Per-arm control: each treatment is compared against ITS OWN parent (prompt
+        # variants) or a size-matched stock base (own-weights models). Collect the union so
+        # each control is measured once per axis, then compare pairwise.
+        needed = {}
+        for m in args.models:
+            c, why = control_for(m)
+            needed[m] = (c, why)
+        all_models = list(dict.fromkeys(
+            [c for c, _ in needed.values() if c] + args.models))
         arms = {}
-        for m in [args.control] + args.models:
+        for m in all_models:
             try:
                 arms[m] = score_axis(m, items, field, labels)
             except Unreachable as e:
                 dropped.setdefault(axis, {})[m] = str(e)
                 print(f"    {m:26s} DROPPED — {e}")
-        ctrl = arms.get(args.control)
-        if not ctrl:
-            print(f"    control unreachable on {axis} — axis UNMEASURED, no verdicts emitted\n")
-            continue
-        for m, s in arms.items():
-            v = "CONTROL" if m == args.control else verdict(s, ctrl)
+        for m in args.models:
+            s = arms.get(m)
+            if s is None:
+                continue
+            cname, why = needed[m]
+            ctrl = arms.get(cname) if cname else None
+            if ctrl is None:
+                v = "UNMEASURED — no defensible control"
+            else:
+                v = verdict(s, ctrl)
             rows.append({"measured_at": stamp, "axis": axis, "items_fingerprint": fp,
-                         "substrate": OLLAMA, "control": args.control,
+                         "substrate": OLLAMA, "control": cname, "control_rationale": why,
                          "grader": "exact-label match (closed answer set)", **s, "verdict": v})
             ci = ("  n/a" if s["accuracy"] is None
                   else f"{s['accuracy']:.3f} [{s['ci95_low']:.3f}-{s['ci95_high']:.3f}]")
-            print(f"    {m:26s} {ci}  unparseable={s['unparseable']:2d}  {v}")
+            cs = f" vs {cname}" if cname else ""
+            print(f"    {m:26s} {ci}{cs:22s} {v}")
         print()
 
     Path(args.out).parent.mkdir(parents=True, exist_ok=True)
