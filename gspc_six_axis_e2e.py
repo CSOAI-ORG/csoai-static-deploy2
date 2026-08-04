@@ -51,6 +51,7 @@ Usage:
 from __future__ import annotations
 
 import argparse
+import functools
 import hashlib
 import json
 import math
@@ -65,6 +66,11 @@ HERE = Path(__file__).resolve().parent
 FROZEN = HERE / "benchmark-results" / "kaggle_benchmarks" / "hf_datasets"
 OUT = HERE / "evidence" / "harness" / "freeze" / "latest"
 
+# 2026-08-04 — a 990-generation run printed nothing for an hour because stdout is block-
+# buffered when redirected. Progress you cannot see is indistinguishable from a hang, and
+# this harness is meant to be watched. Flush every line.
+print = functools.partial(print, flush=True)  # noqa: A001
+
 OLLAMA = os.environ.get("GOVBENCH_OLLAMA_URL", "http://localhost:11434").rstrip("/")
 UA = ("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 "
       "(KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36")
@@ -76,6 +82,49 @@ AXES = {
     "conformance": ("mcpbench-tool-conformance",          "tool"),
     "openness":    ("ossbench-licence-vs-use",            "case"),
     "continuity":  ("pqcbench-postquantum-continuity",    "item"),
+}
+
+
+# ── ProvBench standard, ported ────────────────────────────────────────────────────
+# provbench-n20.json is the only artifact in this estate that carries pre-registered
+# predictions, a CI per cell, UNMEASURED with its exception text, an environment block,
+# caveats that argue AGAINST its own headline, and reconciled alternative statistics.
+# Every gap found on 2026-08-04 was already solved there. This ports the structure.
+
+CAVEATS = [
+    "Exact-label grading measures whether the model EMITS the right label, not whether it "
+    "holds the underlying concept. A model may reason correctly and label wrongly, or label "
+    "correctly by surface cue. This is a classification measurement, not a comprehension one.",
+    "Item counts are 11-24 per axis. At n=11 the 95% Wilson half-width is about +/-25 points, "
+    "so most control comparisons CANNOT resolve. NOT_RESOLVED is the expected majority verdict "
+    "and is a statement about sample size, not about the models.",
+    "The frozen item sets are demonstration-scale, hand-written, and have never been checked "
+    "for difficulty or discrimination. An item every model passes carries no ranking "
+    "information but full score weight.",
+    "UNPARSEABLE answers are excluded from the denominator. That is the honest treatment, but "
+    "it means a model with poor instruction-following is measured on a smaller, possibly "
+    "easier, subset than one that always emits a clean label.",
+    "137 of the 149 models on this pod are prompt configurations over a shared base — 124 of "
+    "them over qwen2.5:0.5b. Comparisons across those arms compare PROMPTS, not models, and "
+    "their capability ceiling is the parent's.",
+    "The control is qwen2.5:0.5b, which is the literal parent of most treatment arms. That "
+    "makes it the correct control, and it also means an arm 'beating the control' is beating "
+    "its own base — a stronger claim than beating an unrelated baseline.",
+    "Generation is temperature 0 but the pod is shared; a transport failure mid-axis drops the "
+    "model. Dropped models are absent from the board, never scored zero.",
+    "No prediction was pre-registered for the treatment arms — only for the control's expected "
+    "direction. Absence of a pre-registered prediction is recorded per axis below.",
+]
+
+# Pre-registered BEFORE the run, per ProvBench practice. A disagreement is the most valuable
+# output available: it means the instrument is not understood.
+PREREGISTERED = {
+    "governance":  "control scores above chance (>0.25 on 4 labels); most arms NOT_RESOLVED",
+    "safety":      "control scores well above chance (>0.50 on 2 labels); refusal-trained arms may clear it",
+    "provenance":  "control near chance (0.50 on 2 labels) — this axis needs domain knowledge the base lacks",
+    "conformance": "control near chance (0.50 on 2 labels)",
+    "openness":    "control above chance — licence names are memorised, not reasoned",
+    "continuity":  "control near chance (>0.33 on 3 labels)",
 }
 
 
@@ -200,6 +249,12 @@ def main():
     Path(args.out).parent.mkdir(parents=True, exist_ok=True)
     Path(args.out).write_text("\n".join(json.dumps(r) for r in rows))
     meta = {"measured_at": stamp, "axes": args.axes, "control": args.control,
+            "environment": {"substrate": OLLAMA, "temperature": 0, "num_predict": 24,
+                            "grader": "exact-label match (closed answer set)",
+                            "fleet_note": "137/149 pod models are prompt configs over a shared base"},
+            "preregistered_predictions": {a: PREREGISTERED.get(a, "NONE REGISTERED")
+                                          for a in args.axes},
+            "caveats": CAVEATS,
             "rows": len(rows), "distinct_schemas": len({tuple(sorted(r)) for r in rows}),
             "dropped_unmeasured": dropped,
             "verdict_counts": {v: sum(1 for r in rows if r["verdict"] == v)
