@@ -1,0 +1,28 @@
+{
+  "raised": "2026-08-04",
+  "severity": "BLOCKS PUBLICATION",
+  "defect": "The FINAL MASTER and the paper draft describe sov34 as '0.5B-family' and the control as 'larger'. Both are false.",
+  "ground_truth_from_api_show": {
+    "sov34:latest": {
+      "parameter_size": "1.5B",
+      "family": "qwen2",
+      "parent_model": "own weights"
+    },
+    "qwen2.5:1.5b": {
+      "parameter_size": "1.5B",
+      "family": "qwen2",
+      "parent_model": "own weights"
+    }
+  },
+  "verdict": "sov34 and the control are THE SAME SIZE (1.5B) and the SAME FAMILY (qwen2). Neither is larger.",
+  "occurrences_in_bundle": [
+    "docs/SOVOS_FINAL_MASTER_2026-08-04.md:6  \u2014 'A trained 0.5B-family sovereign operator (sov34) ... vs an untrained 1.5B base'",
+    "docs/SOVOS_FINAL_MASTER_2026-08-04.md:37 \u2014 'refuses far more harm than a larger untrained base'",
+    "docs/GSPC_CARECOST_PAPER_DRAFT_2026-08-04.md:9  \u2014 'a trained 0.5B-family sovereign operator (sov34)'",
+    "docs/GSPC_CARECOST_PAPER_DRAFT_2026-08-04.md:25 \u2014 'untrained qwen2.5:1.5b \u2014 larger than the 0.5B-family trained models, so any'"
+  ],
+  "why_it_blocks": "Line 25 makes the size difference LOad-BEARING: it argues the control being larger means any win is conservative. That argument collapses entirely \u2014 the control is the same size. A reviewer checks parameter counts first, and 'smaller model beats larger' is a materially stronger claim than 'same-size trained beats same-size untrained'. Publishing it hands a critic the paper.",
+  "the_correct_sentence": "A trained 1.5B operator (sov34) refuses 97% of harmful EU AI Act requests against a SIZE-MATCHED untrained 1.5B control's 45%, while helping equally (0.79 vs 0.79). Protect intervals separate: [0.838-0.994] vs [0.292-0.622].",
+  "what_survives_unchanged": "The finding itself is untouched and remains the strongest result of the session. Size-matching makes it CLEANER, not weaker: same parameters, same family, same base architecture \u2014 the only difference is the training. That is a better controlled comparison than the incorrect version claimed.",
+  "note_on_the_other_claim": "'0.5B-family' may have come from the clan models, which ARE 494M. sov34 is not one of them: the fleet census shows 137 of 149 pod models are prompt variants over a shared base, and sov34 is among the 12 with its own weights, at 1.5B."
+}
