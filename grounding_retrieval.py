@@ -131,8 +131,14 @@ def retrieve(anchor: str) -> str | None:
         L = m.group(1)
         return (f"EU AI ACT — ARTICLE 5(1)({L}), verbatim from the signed snapshot:\n\n"
                 f"({L}) {ART5[L]}")
-    if re.search(r'Annex\s*III\s*4\(a\)', a):
-        return _file("annex-iii-employment", "ANNEX III POINT 4(a)")
+    # The snapshot file is NAMED annex-iii-employment, and I first routed only `Annex III 4(a)`
+    # to it on the strength of that name. Reading it: it carries Annex III points 1-4 in full
+    # and states in its own footer that points 5-8 are omitted. Trusting the filename cost two
+    # HIGH_RISK items — education access (3(a)) and critical infrastructure (2) — a false
+    # "missing from corpus" verdict, and I had already committed the inflated gap.
+    m = re.search(r'Annex\s*III\s*([1-8])\b', a)
+    if m and m.group(1) in "1234":
+        return _file("annex-iii-employment", "ANNEX III, POINTS 1-4 (high-risk areas)")
     if re.search(r'Art\s*50\(', a):
         return _file("art50", "ARTICLE 50, TRANSPARENCY OBLIGATIONS")
     if re.search(r'Art\s*6\(', a):
@@ -148,8 +154,6 @@ def _file(stem: str, title: str) -> str:
 # Provisions the governance items turn on that the SIGNED CORPUS DOES NOT CONTAIN. Listed
 # explicitly so the coverage hole is a named artefact rather than a silent None.
 CORPUS_GAPS = {
-    r'Annex\s*III\s*2\b': "Annex III point 2 — critical infrastructure",
-    r'Annex\s*III\s*3\(a\)': "Annex III point 3(a) — education access",
     r'Annex\s*III\s*5\(a\)': "Annex III point 5(a) — essential services / emergency triage",
     r'Annex\s*III\s*5\(b\)': "Annex III point 5(b) — creditworthiness",
     r'Annex\s*III\s*5\(c\)': "Annex III point 5(c) — life and health insurance",

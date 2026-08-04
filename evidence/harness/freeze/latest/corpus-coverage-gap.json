@@ -1,44 +1,69 @@
 {
-  "measured_at": "2026-08-04T13:08:00.372056+00:00",
-  "method": "static audit of item anchors against the signed snapshot. No model calls, no substrate needed.",
-  "corpus": "regarena/packages/packs/eu-ai-act@1.0.0 + snapshots/EU-AI-ACT/202608 (21 provisions, 21/21 hash-verified)",
-  "scope": "GSPC governance axis, n=24, every item carrying a ground-truth provision anchor",
+  "measured_at": "2026-08-04T13:09:42.941604+00:00",
+  "SUPERSEDES": "the first version of this file, committed 2dc2093 earlier today, reported 14 groundable / 8 missing and '6 of 8 HIGH_RISK ungroundable'. Those numbers were WRONG.",
+  "why_the_first_version_was_wrong": "The snapshot file is named `annex-iii-employment.txt`. I routed only `Annex III 4(a)` to it on the strength of that name and never opened it. It contains Annex III points 1 THROUGH 4 in full and says so in its own header and footer. Education access (point 3(a)) and critical infrastructure (point 2) \u2014 both HIGH_RISK items \u2014 were in the corpus the whole time and I recorded them as missing. I inferred coverage from a filename in the middle of an audit whose entire purpose was to stop inferring and check.",
+  "method": "static audit of item anchors against the snapshot CONTENTS. No model calls.",
+  "corpus": "regarena/packages/packs/eu-ai-act@1.0.0 + snapshots/EU-AI-ACT/202608",
+  "scope": "GSPC governance axis, n=24",
   "counts": {
-    "groundable_from_corpus": 14,
-    "cited_but_missing_from_corpus": 8,
+    "groundable_from_corpus": 16,
+    "cited_but_missing_from_corpus": 6,
     "no_provision_applies_by_design": 2
   },
-  "THE_HOLE": {
-    "what": "Annex III is present in the signed pack as ONE point \u2014 4(a), recruitment and selection. The Act defines eight Annex III categories, and the item bank cites six others: points 2, 3(a), 5(a), 5(b), 5(c) and 7. None are in the corpus.",
-    "consequence": "6 of 8 HIGH_RISK items cannot be grounded at all. Annex III IS the high-risk classification mechanism \u2014 Art 6(2) says an AI system is high-risk if it falls under Annex III. A corpus holding Art 6(2) but not the Annex it points to contains the rule and not the list the rule resolves against.",
-    "high_risk_items_ungroundable": [
-      "Annex III 5(a) essential services / emergency triage",
-      "Annex III 5(b) creditworthiness",
-      "Annex III 3(a) education access",
-      "Annex III 7 migration and asylum",
-      "Annex III 2 critical infrastructure safety component",
-      "Annex III 5(c) life/health insurance risk assessment"
+  "THE_HOLE_CORRECTED": {
+    "what": "Annex III points 1-4 ARE in the signed snapshot. Points 5-8 are not \u2014 the file's own footer records them as deliberately out of scope: 'Points 5-8 (law enforcement, migration, justice/democratic processes) omitted from this snapshot scope'. So the gap is a documented scoping decision, not an accident.",
+    "genuinely_missing": [
+      {
+        "item": 5,
+        "expected": "HIGH_RISK",
+        "anchor": "Annex III 5(a) essential services / emergency triage"
+      },
+      {
+        "item": 6,
+        "expected": "HIGH_RISK",
+        "anchor": "Annex III 5(b) creditworthiness"
+      },
+      {
+        "item": 8,
+        "expected": "HIGH_RISK",
+        "anchor": "Annex III 7 migration and asylum"
+      },
+      {
+        "item": 10,
+        "expected": "HIGH_RISK",
+        "anchor": "Annex III 5(c) life/health insurance risk assessment"
+      },
+      {
+        "item": 16,
+        "expected": "MINIMAL_RISK",
+        "anchor": "Recital ic \u2014 AI in video games, minimal risk"
+      },
+      {
+        "item": 21,
+        "expected": "MINIMAL_RISK",
+        "anchor": "Art 2(6) \u2014 scientific research and development is out of scope"
+      }
     ],
+    "high_risk_ungroundable": "4 of 8 \u2014 items 5, 6, 8, 10, all of them Annex III point 5 or point 7",
     "also_missing": [
-      "Article 2(6) \u2014 the scientific R&D scope exclusion",
-      "Recitals \u2014 the snapshot captures no recital text at all"
+      "Article 2(6) \u2014 scientific R&D scope exclusion",
+      "Recitals \u2014 none captured"
     ]
   },
-  "SELECTION_EFFECT_THIS_CREATES": {
-    "groundable_subset_labels": {
+  "SELECTION_EFFECT": {
+    "groundable_label_mix": {
       "PROHIBITED": 7,
-      "HIGH_RISK": 2,
+      "HIGH_RISK": 4,
       "LIMITED_RISK": 3,
       "MINIMAL_RISK": 2
     },
-    "full_axis_labels": {
+    "full_axis_label_mix": {
       "PROHIBITED": 7,
       "HIGH_RISK": 8,
       "LIMITED_RISK": 3,
       "MINIMAL_RISK": 6
     },
-    "why_it_matters": "PROHIBITED is 29% of the axis but 50% of what the corpus can ground. Any grounded-arm score computed on 'the items we could retrieve for' is measured on an easier, differently-shaped subset than the closed-book arm. Reporting the two against each other without pairing on identical items would manufacture a lift out of the coverage hole."
+    "why_it_matters": "PROHIBITED is 29% of the axis but 44% of what the corpus can ground. Scoring a grounded arm on 'items we could retrieve for' against closed-book on everything would manufacture a lift out of the coverage hole. The harness pairs on identical items."
   },
-  "what_this_means_for_the_thesis": "'Out-ground, not out-think' is a claim about a corpus. Before asking whether the corpus helps a model, the corpus has to contain the law the questions turn on. On the axis built to test governance knowledge, it contains it for 14 of 24 items and for only 2 of the 8 highest-stakes ones. This is fixable \u2014 the missing text is public, and adding it is retrieval work, not research \u2014 but it must be fixed BEFORE any grounding result is quoted, because right now a null result is confounded with a corpus that lacks the answer.",
-  "fix": "ingest the remaining Annex III points, Article 2, and the cited recitals into the signed snapshot, re-verify hashes, re-run."
+  "what_this_means_for_the_thesis": "Two thirds of the axis is groundable, and the remaining third is missing by an explicit scoping decision rather than by neglect. That is a materially better position than the first audit claimed. It does NOT change the blocker: a grounding result quoted today would still be computed with 4 of 8 HIGH_RISK items unanswerable from the corpus, and the fix \u2014 ingest Annex III points 5-8, Article 2, and the cited recitals \u2014 is public-text ingestion, not research."
 }
