@@ -1,7 +1,12 @@
 {
-  "canon_metric": 5,
-  "metric": "GovBench items",
+  "metric": "govbench_items",
   "canonical_value": 193,
+  "public_phrasing": "193 GovBench items",
+  "evidence_source": "kaggle_results/reboard/reboard-193-govbench.ipynb ('193 total governance probes')",
+  "frozen_at": "2026-08-03T13:35:53.825432+00:00",
+  "note": "hf_dataset/govbench_items.jsonl holds 156 items (earlier slice); the measured frozen run scored 193",
+  "canon_doc": "SOV-Counter-Canon.md row 5",
+  "canon_metric": 5,
   "dimensions": 26,
   "weighted_total": 284,
   "per_dimension": {
@@ -39,5 +44,10 @@
   "canon_candidate": 193,
   "matches_candidate": true,
   "contradiction_found": "HF dataset card csoai/govbench publishes '174 items, 26 dimensions'. The counted value is 193. The csoai/govbench card is WRONG and must be corrected to match Nicholastempleman/govbench, which already states 193.",
-  "frozen_at": "2026-08-04T06:36:36.640042+00:00"
+  "corroboration_2026-08-04": {
+    "method": "counted from govbench_eval.py DIMENSIONS at freeze time",
+    "value": 193,
+    "agrees_with_prior_freeze": true,
+    "note": "Independent re-derivation by a DIFFERENT method than the 2026-08-03 freeze. That freeze cited an artifact; this one counts the live source at runtime. Two methods agreeing is worth more than one method restated \u2014 which matters here because a THIRD count exists (hf_dataset/govbench_items.jsonl, 156 items)."
+  }
 }

@@ -23,6 +23,33 @@ EXCLUDE_PARTS = {".backups", ".git", "node_modules", "defoneos", "kaggle_results
 SCAN_GLOBS = ("*.html", "*.js", "*.md")
 SKIP_FILES = {"check_counters.py", "SOV-Counter-Canon.md"}
 
+# 2026-08-04 — the gate blocked STALE numbers but let UNEVIDENCED ones publish freely.
+# The canon's law is not "don't use the old number", it is "no number exists without a file
+# on disk". An audit found three canon counters whose evidence file does not exist anywhere
+# on this machine — and one of them, "30 frameworks", appears 78 times across the estate.
+# A gate that catches 349-instead-of-417 while waving through a number with no evidence at
+# all is enforcing the easy half of the law.
+#
+# Matched as exact PHRASES, not bare digits: "30" alone appears innocently everywhere, so a
+# digit-level block would drown the gate in false positives and get it switched off — which
+# is how gates die. Each entry mirrors the canon's "exact public phrasing" column.
+UNEVIDENCED_PHRASES = {
+    "30 frameworks": "canon #4 — 4 framework control-sets on disk; no artifact enumerates 30",
+    "30 regulatory frameworks": "canon #4 — same",
+    "19 signed agents": "canon #6 — largest registry export found holds 7",
+    "9 MCP tools": "canon #9 — largest registry found holds 7",
+}
+
+# Register-locked strings: the canon fixes exact wording for findings whose meaning collapses
+# when paraphrased. Dropping the denominator or the interval turns a careful result into a
+# marketing claim.
+FORBIDDEN_VARIANTS = {
+    "0 of 12 assets survived": ("ProvBench register-lock — the only permitted phrasing is "
+                                "'0 of 20 assets survived (95% CI, clustered by asset)'"),
+    "0% survival rate": "ProvBench register-lock — drops denominator and interval",
+    "all 20 assets failed": "ProvBench register-lock — drops the interval and clustering note",
+}
+
 REQUIRED_EVIDENCE = [
     "evidence/harness/freeze/latest/statutory-provisions.json",
     "evidence/harness/freeze/latest/govbench-results.json",
@@ -49,6 +76,16 @@ def main() -> int:
             text = p.read_text(errors="ignore")
         except OSError:
             continue
+        for phrase, reason in UNEVIDENCED_PHRASES.items():
+            if phrase in text:
+                failures.append(
+                    f"{rel}: UNEVIDENCED counter '{phrase}' — {reason}. "
+                    f"G3: produce evidence/harness/freeze/latest/ for it, or remove the claim.")
+
+        for variant, reason in FORBIDDEN_VARIANTS.items():
+            if variant in text:
+                failures.append(f"{rel}: FORBIDDEN VARIANT '{variant}' — {reason}")
+
         for bad, reason in QUARANTINED.items():
             # match the quarantined number only in a counter-like context
             for token in (f"{bad} legal provisions", f"{bad} provisions", f"{bad}-item", f"{bad} frameworks"):
