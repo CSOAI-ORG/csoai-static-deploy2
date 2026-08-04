@@ -593,5 +593,13 @@
     "trained_equals_control_again": "On both runs, trained closed-book EQUALS control closed-book (0.523/0.523 inventory run, 0.467/0.467 text run). Three separate measurements today put sov34 and its untrained size-matched control at identical classification accuracy.",
     "what_this_means_for_the_thesis": "'Out-ground, not out-think' as currently built does not hold for a 1.5B operator on classification. Supplying the signed corpus makes it WORSE, and more corpus makes it worse faster. The thesis is not refuted in general \u2014 it may hold for a larger operator, for retrieval of the SINGLE relevant provision rather than a whole article, or for generative rather than classification tasks. All three are untested and all three are cheap to test.",
     "the_obvious_next_experiment": "RETRIEVE, do not dump. Supply only the provision the item actually concerns (roughly 500 chars) rather than all of Article 5 (11,708). If the dose-response is the mechanism, targeted retrieval should recover the lift. That is the difference between a KB and a context stuffer, and it is what 'Honey KB' should mean."
+  },
+  "CORRECTION_2026-08-04_SAME_DAY": {
+    "what_i_got_wrong": "I ran this 2x2 by prepending EU AI Act Article 5 to ALL 90 GSPC items and reported the negative lift as evidence against 'out-ground, not out-think'. Article 5 is irrelevant to 66 of those 90 items \u2014 they concern post-quantum crypto migration, software licence compatibility, MCP tool-contract conformance and C2PA manifest survival.",
+    "what_the_run_actually_measured": "distractor tolerance. Whether a 1.5B model degrades when given a wall of off-topic legal text. It does, monotonically in length \u2014 which is a real result and the dose-response stands, but it is NOT a test of whether the signed corpus helps.",
+    "status_of_the_headline_claim": "WITHDRAWN as stated. The thesis is neither supported nor refuted by this run. It has not yet been tested on items the corpus is about.",
+    "what_survives": "(1) the dose-response finding, re-labelled: irrelevant context degrades this model in proportion to its length; (2) trained closed-book == control closed-book on both runs (0.523/0.523 and 0.467/0.467), which is a genuine null on governance classification and does not depend on any context arm at all.",
+    "how_it_was_caught": "reading the item banks to build a retriever, after committing the claim.",
+    "superseded_by": "grounding-retrieval.json (harness built, self-test 9/9, blocked on substrate) and corpus-coverage-gap.json"
   }
 }

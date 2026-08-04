@@ -1,0 +1,44 @@
+{
+  "measured_at": "2026-08-04T13:08:00.372056+00:00",
+  "method": "static audit of item anchors against the signed snapshot. No model calls, no substrate needed.",
+  "corpus": "regarena/packages/packs/eu-ai-act@1.0.0 + snapshots/EU-AI-ACT/202608 (21 provisions, 21/21 hash-verified)",
+  "scope": "GSPC governance axis, n=24, every item carrying a ground-truth provision anchor",
+  "counts": {
+    "groundable_from_corpus": 14,
+    "cited_but_missing_from_corpus": 8,
+    "no_provision_applies_by_design": 2
+  },
+  "THE_HOLE": {
+    "what": "Annex III is present in the signed pack as ONE point \u2014 4(a), recruitment and selection. The Act defines eight Annex III categories, and the item bank cites six others: points 2, 3(a), 5(a), 5(b), 5(c) and 7. None are in the corpus.",
+    "consequence": "6 of 8 HIGH_RISK items cannot be grounded at all. Annex III IS the high-risk classification mechanism \u2014 Art 6(2) says an AI system is high-risk if it falls under Annex III. A corpus holding Art 6(2) but not the Annex it points to contains the rule and not the list the rule resolves against.",
+    "high_risk_items_ungroundable": [
+      "Annex III 5(a) essential services / emergency triage",
+      "Annex III 5(b) creditworthiness",
+      "Annex III 3(a) education access",
+      "Annex III 7 migration and asylum",
+      "Annex III 2 critical infrastructure safety component",
+      "Annex III 5(c) life/health insurance risk assessment"
+    ],
+    "also_missing": [
+      "Article 2(6) \u2014 the scientific R&D scope exclusion",
+      "Recitals \u2014 the snapshot captures no recital text at all"
+    ]
+  },
+  "SELECTION_EFFECT_THIS_CREATES": {
+    "groundable_subset_labels": {
+      "PROHIBITED": 7,
+      "HIGH_RISK": 2,
+      "LIMITED_RISK": 3,
+      "MINIMAL_RISK": 2
+    },
+    "full_axis_labels": {
+      "PROHIBITED": 7,
+      "HIGH_RISK": 8,
+      "LIMITED_RISK": 3,
+      "MINIMAL_RISK": 6
+    },
+    "why_it_matters": "PROHIBITED is 29% of the axis but 50% of what the corpus can ground. Any grounded-arm score computed on 'the items we could retrieve for' is measured on an easier, differently-shaped subset than the closed-book arm. Reporting the two against each other without pairing on identical items would manufacture a lift out of the coverage hole."
+  },
+  "what_this_means_for_the_thesis": "'Out-ground, not out-think' is a claim about a corpus. Before asking whether the corpus helps a model, the corpus has to contain the law the questions turn on. On the axis built to test governance knowledge, it contains it for 14 of 24 items and for only 2 of the 8 highest-stakes ones. This is fixable \u2014 the missing text is public, and adding it is retrieval work, not research \u2014 but it must be fixed BEFORE any grounding result is quoted, because right now a null result is confounded with a corpus that lacks the answer.",
+  "fix": "ingest the remaining Annex III points, Article 2, and the cited recitals into the signed snapshot, re-verify hashes, re-run."
+}
