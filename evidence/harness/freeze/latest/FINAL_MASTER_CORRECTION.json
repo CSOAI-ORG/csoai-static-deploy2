@@ -24,5 +24,22 @@
   "why_it_blocks": "Line 25 makes the size difference LOad-BEARING: it argues the control being larger means any win is conservative. That argument collapses entirely \u2014 the control is the same size. A reviewer checks parameter counts first, and 'smaller model beats larger' is a materially stronger claim than 'same-size trained beats same-size untrained'. Publishing it hands a critic the paper.",
   "the_correct_sentence": "A trained 1.5B operator (sov34) refuses 97% of harmful EU AI Act requests against a SIZE-MATCHED untrained 1.5B control's 45%, while helping equally (0.79 vs 0.79). Protect intervals separate: [0.838-0.994] vs [0.292-0.622].",
   "what_survives_unchanged": "The finding itself is untouched and remains the strongest result of the session. Size-matching makes it CLEANER, not weaker: same parameters, same family, same base architecture \u2014 the only difference is the training. That is a better controlled comparison than the incorrect version claimed.",
-  "note_on_the_other_claim": "'0.5B-family' may have come from the clan models, which ARE 494M. sov34 is not one of them: the fleet census shows 137 of 149 pod models are prompt variants over a shared base, and sov34 is among the 12 with its own weights, at 1.5B."
+  "note_on_the_other_claim": "'0.5B-family' may have come from the clan models, which ARE 494M. sov34 is not one of them: the fleet census shows 137 of 149 pod models are prompt variants over a shared base, and sov34 is among the 12 with its own weights, at 1.5B.",
+  "RESOLVED_2026-08-04": {
+    "status": "APPLIED \u2014 blocker 58fc524 closed",
+    "size_claim": {
+      "applied": 5,
+      "files": [
+        "_alignment/GSPC_CARECOST_PAPER_DRAFT_2026-08-04.md",
+        "_alignment/SOVOS_FINAL_MASTER_2026-08-04.md"
+      ],
+      "note": "the paper's TITLE also said 'Beat a Larger Untrained Base' \u2014 a fifth occurrence the original blocker did not list, because the blocker enumerated body lines only."
+    },
+    "SECOND_DEFECT_FOUND_WHILE_FIXING_THE_FIRST": {
+      "what": "the draft defined care-cost as the HARMONIC MEAN of protect and help, in two places. The implementation is `cost = prot * (1 - over)` \u2014 a product.",
+      "how_it_was_caught": "arithmetic on the paper's own published numbers. protect 0.45 x help 0.79 = 35.6, matching the published 35. The harmonic mean of the same rates is 57.3. For sov34: product 76.6 (published 76), harmonic mean 87.1. Both headline figures refuted the stated definition, in the same table, and nobody had multiplied two numbers to check.",
+      "why_it_matters": "the product is the STRICTER metric and the one that makes the paper's central argument work \u2014 it drives a degenerate arm to zero, which the harmonic mean does not. The reported result was correct; only its definition was wrong. Anyone reproducing from the written definition would have failed to reproduce it and concluded the numbers were fabricated.",
+      "fixed": "both occurrences, with the arithmetic recorded inline in the paper."
+    }
+  }
 }
