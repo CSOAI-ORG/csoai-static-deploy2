@@ -62,16 +62,32 @@ PACK = Path("/Users/nicholas/projects/coai-dashboard/regarena/packages/packs/eu-
 MODELS = {"trained": "sov34:latest", "control": "qwen2.5:1.5b"}
 
 
-def load_context() -> str:
-    """The grounding context, from the signed pack. Excerpt pointers only — the snapshot is
-    article-level, so we supply the provision inventory, not full statutory text."""
+SNAP = Path("/Users/nicholas/projects/coai-dashboard/regarena/packages/snapshots/EU-AI-ACT/202608")
+
+
+def load_context(mode: str = "text") -> str:
+    """Grounding context from the SIGNED pack.
+
+    2026-08-04 — the first run supplied only the provision INVENTORY (a list of article names
+    and anchors, 1441 chars) and the trained model's grounding lift came out at exactly 0.000
+    on the like-for-like intersection. That tested whether knowing WHICH provisions exist
+    helps. It does not.
+
+    This supplies the actual STATUTORY TEXT, hash-verified against the signed pack (21/21
+    match, 0 mismatch). Art 5 alone is 11,580 bytes; the full corpus is 92,156. We use Art 5
+    because it is the prohibited-practices article the item sets actually concern, and because
+    the full corpus (~23k tokens) exceeds what a 1.5B model handles usefully — a limit worth
+    stating rather than discovering mid-run.
+    """
     p = json.loads((PACK / "provisions.json").read_text())
-    lines = []
-    for pid, rec in p["provisions"].items():
-        anchor = rec.get("excerpt_pointer", {}).get("anchor", "")
-        lines.append(f"- {pid}: {anchor}")
-    return ("EU AI ACT PROVISION INVENTORY (signed snapshot "
-            f"{p['snapshot_manifest']['set_id']}):\n" + "\n".join(lines))
+    if mode == "inventory":
+        lines = [f"- {pid}: {rec.get('excerpt_pointer', {}).get('anchor', '')}"
+                 for pid, rec in p["provisions"].items()]
+        return ("EU AI ACT PROVISION INVENTORY (signed snapshot "
+                f"{p['snapshot_manifest']['set_id']}):\n" + "\n".join(lines))
+    art5 = (SNAP / "art05.txt").read_text()
+    return ("EU AI ACT — ARTICLE 5, PROHIBITED PRACTICES (verbatim, from signed snapshot "
+            f"{p['snapshot_manifest']['set_id']}, sha256-verified):\n\n{art5}")
 
 
 def ask(model: str, prompt: str) -> str | None:
@@ -136,9 +152,10 @@ def run_cell(model: str, grounded: bool, ctx: str):
 
 
 def main():
-    ctx = load_context()
+    mode = os.environ.get("GROUNDING_MODE", "text")
+    ctx = load_context(mode)
     print(f"GROUNDING 2x2 — control-armed, hedge-aware, n=90 items per cell")
-    print(f"  context: {len(ctx)} chars from the signed pack\n", flush=True)
+    print(f"  context mode: {mode.upper()} — {len(ctx):,} chars from the signed pack\n", flush=True)
     cells = {}
     for role, model in MODELS.items():
         for cond, grounded in (("closed_book", False), ("grounded", True)):
