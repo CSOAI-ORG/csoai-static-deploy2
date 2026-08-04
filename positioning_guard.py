@@ -62,6 +62,10 @@ SURFACES = [
     # Byzantine-fault-tolerant council" that our own measurement retracted (n_eff 1.21 of 3),
     # while the guard reported 757 surfaces clean. The page head is a surface.
     ROOT / "councilof-ai/client/index.html",
+    # Pages Functions ship WITH the site and render live output (e.g. the /api/og social
+    # card). A retracted claim here reaches every link-share, but this dir was unscanned —
+    # the "33-agent Byzantine council" card on 2026-08-04 slipped through because of it.
+    ROOT / "councilof-ai/functions",
     ROOT / "councilof-ai/client/src/components",
     ROOT / "csoai-dashboard-master/client/src/pages",
     ROOT / "csoai-static-deploy2/make_leaderboard.py",
