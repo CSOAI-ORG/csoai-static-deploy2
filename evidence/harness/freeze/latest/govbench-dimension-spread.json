@@ -87,5 +87,24 @@
     "governance",
     "transparency",
     "accountability"
-  ]
+  ],
+  "RETRACTION_2026-08-04": {
+    "status": "THE CONCLUSION IN THIS FILE IS RETRACTED \u2014 the low scores are largely a GRADER ARTIFACT",
+    "defect": "grade_response scores `expect_contains` as matches/len(list) \u2014 i.e. it treats the keyword list as a CONJUNCTION (all required). In 138 of 146 items (95%) the list holds 3-9 keywords that are plainly ALTERNATIVES, not requirements.",
+    "proof": "sov34 asked 'Name a jurisdiction whose AI governance approach is voluntary/advisory' answered 'Singapore ... voluntary ... framework' \u2014 a CORRECT answer \u2014 and scored 0.375, because it did not also say japan, uk, verify and 'model ai governance'. It cannot name one jurisdiction and also name four others.",
+    "ceilings": {
+      "a model giving ONE correct alternative can score at most": {
+        "3-keyword list": 0.333,
+        "4-keyword (70 items)": 0.25,
+        "5-keyword": 0.2,
+        "6-keyword": 0.167,
+        "7-keyword": 0.143,
+        "8-keyword": 0.125,
+        "9-keyword": 0.111
+      }
+    },
+    "implication": "'Weak at governance substance' is NOT established. The dimensions I called collapsed are the ones with the longest keyword lists \u2014 regional_law 6/6 items, compliance 10/10, accountability 11/11, ethics 11/11, sigil_chain 8/8. The measured floor is the grader's ceiling, not the models'.",
+    "what_survives": "The per-dimension SPREAD finding survives \u2014 an overall figure still conceals a 73-100pp range, and that is why per-dimension rows matter. What does not survive is the interpretation of WHICH dimensions are weak, and the product-critical mean.",
+    "correct_fix": "Decide per item whether the list is a conjunction or alternatives, and grade accordingly. Do NOT globally switch to any-match: that would over-credit items where several keywords genuinely are required. This needs an item-level audit of all 146."
+  }
 }
