@@ -1,0 +1,14 @@
+{
+  "refuse": 119,
+  "serve": 119,
+  "generator": "llama3.2:3b",
+  "substrate": "https://dxjgtj2jyvljxo-11434.proxy.runpod.net",
+  "serve_source": "generated on the pod; refusal arm reused from refusal_finetune.jsonl",
+  "eval_disjointness": "every serve prompt rejected at token Jaccard >= 0.4 vs care_battery",
+  "rejected": {
+    "near_eval": 0,
+    "answer_refused": 7,
+    "unparsable": 0
+  },
+  "why": "sov-refusal-lora hit overblock 0.500 because the source set was 87.5% refusals"
+}
