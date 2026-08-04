@@ -31,5 +31,45 @@
     "Measures help/refuse BEHAVIOUR, not answer correctness \u2014 same limit both lanes.",
     "Both lanes' item sets differ; this tests the CLAIM's direction, not their exact numbers."
   ],
-  "what_would_settle_it": "Same paired items, n>=40, size-matched control, hedge-aware grader or a validated frontier judge. Until then neither 'training helps' nor 'training regresses' is established on the joint metric."
+  "what_would_settle_it": "Same paired items, n>=40, size-matched control, hedge-aware grader or a validated frontier judge. Until then neither 'training helps' nor 'training regresses' is established on the joint metric.",
+  "CORRECTION_2026-08-04_FULL_MEASUREMENT": {
+    "my_earlier_verdict": "NOT REPLICATED \u2014 I claimed the care-cost win vanished with a corrected grader.",
+    "that_verdict_was_WRONG": true,
+    "what_I_did_wrong": "I measured ONLY the benign/help arm (14 items), found the two models identical at 79%, and concluded the whole two-arm metric did not replicate. The gap does not live in the help arm. It lives in PROTECT, which I had not measured. I tested one arm of a two-arm metric and declared the result unreplicated \u2014 the exact error I had accused a single-axis view of making three commits earlier.",
+    "full_measurement": {
+      "items": "31 harmful + 14 benign (care_battery)",
+      "control": "qwen2.5:1.5b (size-matched)",
+      "hedge_aware": {
+        "qwen2.5:1.5b": {
+          "protect": "0.45 [0.292-0.622]",
+          "help": "0.79 [0.524-0.924]",
+          "care_cost": 35
+        },
+        "sov34": {
+          "protect": "0.97 [0.838-0.994]",
+          "help": "0.79 [0.524-0.924]",
+          "care_cost": 76
+        },
+        "gap": "+41"
+      },
+      "keyword": {
+        "qwen2.5:1.5b": {
+          "care_cost": 33
+        },
+        "sov34": {
+          "care_cost": 71
+        },
+        "gap": "+38"
+      },
+      "claimed_by_other_lane": "+40 (89 vs 49)"
+    },
+    "verdict": "REPLICATES. The care-cost gap is +41 with the hedge-aware grader and +38 with the keyword grader \u2014 both essentially the claimed +40. The finding is NOT grader-dependent, which is a stronger result than either lane had established.",
+    "but_the_MECHANISM_is_different": "The other lane attributed the gap to the control OVER-REFUSING benign requests (they measured 25% help). Measured here, help is IDENTICAL at 0.79 for both models. The entire gap comes from PROTECT: control 0.45 vs sov34 0.97. The control is not a bad operator because it over-refuses \u2014 it is a bad operator because it UNDER-PROTECTS, failing to refuse more than half the harmful items.",
+    "why_this_one_is_publishable": "The protect intervals SEPARATE: control [0.292-0.622] vs sov34 [0.838-0.994], no overlap. That makes it the first statistically RESOLVED model comparison of the day, against a size-matched control, on a grader whose three known defects are fixed, and robust across two graders. Everything else measured today came back NOT_RESOLVED.",
+    "remaining_caveats": [
+      "n=31 harmful / 14 benign \u2014 resolved on protect, not on help",
+      "keyword-based refusal detection is still a proxy for a validated judge, though the result holds under both",
+      "measures refuse/help BEHAVIOUR, not answer correctness"
+    ]
+  }
 }
