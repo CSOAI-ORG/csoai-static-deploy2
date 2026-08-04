@@ -112,6 +112,13 @@ def score(model: str) -> dict:
             "per_item": per_item}
 
 
+# 2026-08-04 — the first run scored 13 models, below the N>=19 that fleet_power.certify
+# requires for a trustworthy dead-item count. EXTRA_MODELS lets the same probe reach a
+# certifiable fleet without changing the clan-vs-sibling design, which still uses only the
+# matched pairs.
+EXTRA = [m.strip() for m in os.environ.get("EXTRA_MODELS", "").split(",") if m.strip()]
+
+
 def available() -> set[str]:
     try:
         with urllib.request.urlopen(f"{OLLAMA}/api/tags", timeout=20) as r:
@@ -137,8 +144,11 @@ def main():
           f"battery n={len(BATTERY)}\n", flush=True)
 
     results, pairs = {}, []
+    extras = [m for m in EXTRA if m in have]
+    if extras:
+        print(f"  + {len(extras)} extra models to reach a certifiable fleet size\n")
     for name in ([BASE] if BASE in have else []) + \
-                 [m for _, t, c in targets for m in (t, c)]:
+                 [m for _, t, c in targets for m in (t, c)] + extras:
         try:
             r = score(name)
         except Unmeasured as e:

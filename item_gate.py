@@ -47,14 +47,34 @@ def wilson_halfwidth(n: int, p: float = 0.5, z: float = 1.96) -> float:
     return round(z * math.sqrt(p * (1 - p) / n + z * z / (4 * n * n)) / d, 4)
 
 
-def gate_item(rec: dict) -> tuple[str, str]:
-    """-> (verdict, reason). Verdicts: ACCEPT | REJECT | ADJUDICATE | UNGRADED."""
+def fleet_competent(axis_mean_difficulty: float | None,
+                    lo: float = 0.30, hi: float = 0.85) -> bool:
+    """Is this fleet able to judge item difficulty on this axis at all?
+
+    DIFFICULTY IS NOT A PROPERTY OF AN ITEM. It is a property of item x fleet. An item at
+    measured difficulty 0.15 against a fleet of 494M models may sit at 0.60 against a competent
+    one. Rejecting it as "too hard" would be blaming the item for the fleet.
+
+    2026-08-04: this check was missing, and its absence made the gate reject 24 of 24 governance
+    items — the entire axis — on a fleet whose mean difficulty there was 0.227. The items were
+    not bad. The fleet cannot do EU AI Act classification, which is separately measured: Article
+    5 themes sit at 0.158 mean difficulty while generic harm sits at 0.545. A gate that converts
+    "our models are too weak for this subject" into "delete the whole subject" is worse than no
+    gate, because it destroys exactly the items a stronger fleet would need.
+    """
+    return axis_mean_difficulty is not None and lo <= axis_mean_difficulty <= hi
+
+
+def gate_item(rec: dict, axis_mean_difficulty: float | None = None) -> tuple[str, str]:
+    """-> (verdict, reason). ACCEPT | REJECT | ADJUDICATE | UNGRADED | UNGRADED_FLEET."""
     d = rec.get("difficulty")
     r = rec.get("discrimination")
     pred = rec.get("predicted_difficulty")
 
     if d is None:
         return "UNGRADED", "no measured difficulty — an unpiloted item cannot be accepted"
+    # Deadness and negative discrimination are still meaningful on a weak fleet — they say
+    # something happened or nothing did. A difficulty BAND is not, so it is gated below.
     if d in (0.0, 1.0):
         return "REJECT", f"dead item (difficulty {d}) — carries zero information"
     if r is not None and r < -0.2:
@@ -63,6 +83,11 @@ def gate_item(rec: dict) -> tuple[str, str]:
                               f"adjudicator; do NOT reject. May be capability-correlated model "
                               f"error rather than a bad key.")
     if not (D_MIN <= d <= D_MAX):
+        if not fleet_competent(axis_mean_difficulty):
+            return "UNGRADED_FLEET", (
+                f"difficulty {d:.2f} is outside [{D_MIN}, {D_MAX}], but the fleet's mean on this "
+                f"axis is {axis_mean_difficulty} — the fleet is at floor/ceiling here, so this "
+                f"measures the FLEET, not the item. Re-pilot on a competent fleet.")
         return "REJECT", f"difficulty {d:.2f} outside [{D_MIN}, {D_MAX}] — do not tune, replace"
     if r is None:
         return "UNGRADED", "discrimination not computed — needs >= 3 gradable models"
@@ -74,19 +99,23 @@ def gate_item(rec: dict) -> tuple[str, str]:
     return "ACCEPT", f"difficulty {d:.2f}, discrimination {r:+.3f}"
 
 
-def gate_axis(name: str, items: list[dict]) -> dict:
+def gate_axis(name: str, items: list[dict], axis_mean_difficulty: float | None = None) -> dict:
     verdicts = {}
     for it in items:
-        v, why = gate_item(it)
+        v, why = gate_item(it, axis_mean_difficulty)
         verdicts.setdefault(v, []).append({"item": it.get("item"), "why": why})
     accept = len(verdicts.get("ACCEPT", []))
     adjud = len(verdicts.get("ADJUDICATE", []))
+    fleet_blocked = len(verdicts.get("UNGRADED_FLEET", []))
     # usable_n counts ACCEPT plus items pending adjudication, because an adjudicated-and-kept
     # item is usable. Counting only ACCEPT would understate an axis mid-review.
     usable = accept + adjud
     return {"axis": name, "n": len(items), "accept": accept, "adjudicate": adjud,
             "reject": len(verdicts.get("REJECT", [])),
             "ungraded": len(verdicts.get("UNGRADED", [])),
+            "ungraded_fleet": fleet_blocked,
+            "fleet_competent": fleet_competent(axis_mean_difficulty),
+            "axis_mean_difficulty": axis_mean_difficulty,
             "usable_n": usable, "meets_target": usable >= USABLE_TARGET,
             "resolvable_halfwidth": wilson_halfwidth(usable),
             "quotable": usable >= USABLE_TARGET,
@@ -99,13 +128,21 @@ def selftest() -> bool:
         ("dead-1", {"difficulty": 1.0, "discrimination": 0.5}, "REJECT"),
         ("negative-disc goes to ADJUDICATE not REJECT",
          {"difficulty": 0.5, "discrimination": -0.6}, "ADJUDICATE"),
-        ("too easy", {"difficulty": 0.9, "discrimination": 0.5}, "REJECT"),
-        ("too hard", {"difficulty": 0.1, "discrimination": 0.5}, "REJECT"),
+        # difficulty-band verdicts are only meaningful when the fleet is competent on the
+        # axis, so these carry an explicit competent axis mean (0.55).
+        ("too easy, competent fleet", {"difficulty": 0.9, "discrimination": 0.5}, "REJECT", 0.55),
+        ("too hard, competent fleet", {"difficulty": 0.1, "discrimination": 0.5}, "REJECT", 0.55),
+        ("too hard, WEAK fleet -> blame the fleet not the item",
+         {"difficulty": 0.1, "discrimination": 0.5}, "UNGRADED_FLEET", 0.227),
+        ("unknown fleet competence cannot reject on difficulty",
+         {"difficulty": 0.1, "discrimination": 0.5}, "UNGRADED_FLEET", None),
         ("low disc", {"difficulty": 0.5, "discrimination": 0.05}, "REJECT"),
         ("bad prediction", {"difficulty": 0.7, "discrimination": 0.5,
                             "predicted_difficulty": 0.2}, "REJECT"),
         ("good", {"difficulty": 0.5, "discrimination": 0.4,
                   "predicted_difficulty": 0.45}, "ACCEPT"),
+        ("in-band item is judged even on a weak fleet",
+         {"difficulty": 0.5, "discrimination": 0.4}, "ACCEPT", 0.227),
         ("no difficulty", {"discrimination": 0.4}, "UNGRADED"),
         ("no discrimination", {"difficulty": 0.5}, "UNGRADED"),
         # a dead item that is ALSO negative must reject on deadness first: difficulty 0/1 means
@@ -113,8 +150,10 @@ def selftest() -> bool:
         ("dead beats negative", {"difficulty": 0.0, "discrimination": -0.9}, "REJECT"),
     ]
     ok = True
-    for name, rec, want in cases:
-        got, _ = gate_item(rec)
+    for case in cases:
+        name, rec, want = case[0], case[1], case[2]
+        axis_mean = case[3] if len(case) > 3 else 0.55
+        got, _ = gate_item(rec, axis_mean)
         good = got == want
         ok &= good
         print(f"  [{'PASS' if good else 'FAIL'}] {name}: {got} (want {want})")
@@ -136,16 +175,21 @@ def main():
         return
     axes = json.loads(src.read_text())["axes"]
     print(f"\nAPPLYING THE GATE to the current banks ({src.name}):\n")
-    print(f"  {'axis':12s} {'n':>3s} {'acc':>4s} {'adj':>4s} {'rej':>4s} {'ungr':>5s} "
-          f"{'usable':>7s} {'+-':>6s}  quotable")
-    tot = {"n": 0, "accept": 0, "adjudicate": 0, "reject": 0, "usable_n": 0}
+    print(f"  {'axis':12s} {'n':>3s} {'acc':>4s} {'adj':>4s} {'rej':>4s} {'fleet':>6s} "
+          f"{'usable':>7s} {'+-':>6s}  standing")
+    tot = {"n": 0, "accept": 0, "adjudicate": 0, "reject": 0, "usable_n": 0,
+           "ungraded_fleet": 0}
     for name, a in axes.items():
-        g = gate_axis(name, a["items"])
+        g = gate_axis(name, a["items"], a.get("mean_difficulty"))
         for k in tot:
             tot[k] += g[k]
+        note = ("YES" if g["quotable"] else
+                f"FLEET TOO WEAK (axis mean {g['axis_mean_difficulty']}) — verdicts on "
+                f"{g['ungraded_fleet']} items measure the fleet, not the items"
+                if not g["fleet_competent"] else
+                "NO — do not quote intervals on this axis")
         print(f"  {name:12s} {g['n']:3d} {g['accept']:4d} {g['adjudicate']:4d} {g['reject']:4d} "
-              f"{g['ungraded']:5d} {g['usable_n']:7d} {g['resolvable_halfwidth']:6.3f}  "
-              f"{'YES' if g['quotable'] else 'NO — do not quote intervals on this axis'}")
+              f"{g['ungraded_fleet']:6d} {g['usable_n']:7d} {g['resolvable_halfwidth']:6.3f}  {note}")
     print(f"\n  TOTAL n={tot['n']} accept={tot['accept']} adjudicate={tot['adjudicate']} "
           f"reject={tot['reject']} usable={tot['usable_n']}")
     print(f"  items to author to reach usable_n>={USABLE_TARGET} on every axis: "
