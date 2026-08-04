@@ -106,5 +106,20 @@
     "implication": "'Weak at governance substance' is NOT established. The dimensions I called collapsed are the ones with the longest keyword lists \u2014 regional_law 6/6 items, compliance 10/10, accountability 11/11, ethics 11/11, sigil_chain 8/8. The measured floor is the grader's ceiling, not the models'.",
     "what_survives": "The per-dimension SPREAD finding survives \u2014 an overall figure still conceals a 73-100pp range, and that is why per-dimension rows matter. What does not survive is the interpretation of WHICH dimensions are weak, and the product-critical mean.",
     "correct_fix": "Decide per item whether the list is a conjunction or alternatives, and grade accordingly. Do NOT globally switch to any-match: that would over-credit items where several keywords genuinely are required. This needs an item-level audit of all 146."
+  },
+  "RETRACTION_VALIDATED_2026-08-04": {
+    "question": "Was the retraction of 'models are weak at governance substance' correct?",
+    "test": "Re-scored the same models on the same 193 items with expect_mode active (63 any / 83 all).",
+    "result": {
+      "sov-ethics-art5": {
+        "before_expect_mode": 38.35,
+        "after_expect_mode": 51.47,
+        "delta": 13.12
+      },
+      "sov34": "DROPPED \u2014 read timeout during re-measure; UNMEASURED, not scored"
+    },
+    "verdict": "RETRACTION CONFIRMED CORRECT. Correcting answer-set semantics moved one model +13.12 points on identical items. The published board understated the fleet by roughly that margin wherever long keyword lists dominated a dimension.",
+    "caveat": "One model, one re-run. sov34 timed out so the comparison is n=1. The direction and rough magnitude are established; the per-dimension detail is not, and the +13.12 should not be quoted as a fleet-wide correction until more arms are re-measured.",
+    "consequence": "Every GovBench figure published before this fix \u2014 including the 45.26/41.70/38.35/35.40/32.71 board and the per-dimension spread analysis \u2014 was measured on an instrument with a known floor. They are superseded, not merely caveated."
   }
 }
