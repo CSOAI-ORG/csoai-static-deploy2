@@ -71,6 +71,12 @@ for dir in chrome-extension; do
     fi
 done
 
+# Copy sovereign-wiki subdirectory (stopgap for sovereign.wiki apex parked)
+if [ -d "$BASE/sovereign-wiki" ]; then
+    cp -r "$BASE/sovereign-wiki" "$DIST/"
+    echo "  Copied sovereign-wiki/"
+fi
+
 # Count staged files
 FILE_COUNT=$(find "$DIST" -type f | wc -l | tr -d ' ')
 STAGE_SIZE=$(du -sh "$DIST" | cut -f1)
