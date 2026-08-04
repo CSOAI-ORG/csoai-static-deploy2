@@ -45,6 +45,10 @@ sys.path.insert(0, str(HERE))
 import gspc_six_axis_e2e as G  # noqa: E402
 
 OLLAMA = os.environ.get("GOVBENCH_OLLAMA_URL", "http://localhost:11434").rstrip("/")
+# The RunPod proxy rejects requests with no User-Agent, which made every pod call fail and
+# the overnight run report "no substrate" against a pod that was serving 149 models fine.
+UA_HDR = {"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 "
+                        "(KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36"}
 
 # Deliberately spans architectures and sizes: if an axis fails to separate THESE, it is not
 # separating anything. A saturation claim measured only on same-size same-family siblings
@@ -74,7 +78,7 @@ def ask(model: str, prompt: str) -> str | None:
                        "options": {"temperature": 0, "num_predict": 24},
                        "messages": [{"role": "user", "content": prompt}]}).encode()
     req = urllib.request.Request(f"{OLLAMA}/api/chat", data=body,
-                                 headers={"Content-Type": "application/json"})
+                                 headers={"Content-Type": "application/json", **UA_HDR})
     try:
         with urllib.request.urlopen(req, timeout=180) as r:
             return json.loads(r.read())["message"]["content"].strip()
@@ -96,7 +100,8 @@ def pearson(xs, ys):
 
 def available() -> set[str]:
     try:
-        with urllib.request.urlopen(f"{OLLAMA}/api/tags", timeout=20) as r:
+        req = urllib.request.Request(f"{OLLAMA}/api/tags", headers=UA_HDR)
+        with urllib.request.urlopen(req, timeout=30) as r:
             return {m["name"] for m in json.loads(r.read())["models"]}
     except Exception:
         return set()
