@@ -113,7 +113,18 @@ def main():
     if len(models) < 4:
         sys.exit(f"only {len(models)} models present — discrimination needs a real spread")
 
-    print(f"AXIS SATURATION — {len(models)} models x 6 axes\n", flush=True)
+    # 2026-08-04 — the first run reported 35 dead items across 90 on a fleet of 8. At N=8 and a
+    # true pass-rate of 0.85, 27% of LIVE items look dead by unanimity alone, so most of that
+    # count was an artefact. The tool now states its own standing before reporting a number that
+    # depends on fleet size, rather than leaving the reader to discover the limit afterwards.
+    from fleet_power import certify  # noqa: E402
+    certified, why = certify(len(models))
+    print(f"AXIS SATURATION — {len(models)} models x 6 axes")
+    print(f"  dead-item count: {'CERTIFIED' if certified else 'NOT CERTIFIED'}")
+    print(f"  {why}")
+    if not certified:
+        print("  -> dead/usable figures below are UPPER BOUNDS on deadness, not measurements.")
+    print(flush=True)
     report = {}
     for axis in G.AXES:
         items, field, labels = G.load_axis(axis)

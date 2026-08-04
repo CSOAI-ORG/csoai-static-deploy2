@@ -110,8 +110,18 @@ def main():
     neg = [r for r in scored if r["flag"].startswith("NEGATIVE")]
     low = [r for r in scored if r["flag"] == "low discrimination"]
 
+    # See fleet_power.py. A dead-item count taken on a small fleet is dominated by unanimity
+    # noise, and this tool's first run (13 models) was below the certification threshold.
+    import sys as _s; _s.path.insert(0, str(HERE))
+    from fleet_power import certify
+    ok, why = certify(len(models))
     print(f"ITEM QUALITY — {len(models)} models x {n_items} items "
-          f"(care_battery, from clan-refusal-probe)\n")
+          f"(care_battery, from clan-refusal-probe)")
+    print(f"  dead-item count: {'CERTIFIED' if ok else 'NOT CERTIFIED'} — {why}")
+    if not ok:
+        print("  -> DEAD counts below are UPPER BOUNDS on deadness, not measurements.\n")
+    else:
+        print()
     print(f"  DEAD items (0% or 100% pass — zero information): {len(dead)}/{len(scored)}")
     for r in dead:
         print(f"    [{r['item']:2d}] diff {r['difficulty']:.2f}  "
