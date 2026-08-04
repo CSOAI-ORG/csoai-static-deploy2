@@ -169,6 +169,12 @@ def wilson(k: int, n: int, z: float = 1.96) -> tuple[float, float, float]:
 def score_axis(model: str, items: list[dict], field: str, labels: list[str]) -> dict:
     correct = unparseable = 0
     per_label = {}
+    # Per-item answers are retained so INTER-MODEL AGREEMENT can be computed without a
+    # second run. Existing over-refusal and legal-benchmark work (XSTest, OR-Bench,
+    # LegalBench, Vals) reports per-model ACCURACY; none reports the agreement RATE between
+    # models on the same statutory question. Accuracy without agreement hides the case that
+    # matters to a buyer: models that score the same by disagreeing on different items.
+    answers = []
     for it in items:
         prompt = (f"{it[field]}\n\n"
                   f"Answer with EXACTLY ONE of these labels and nothing else: "
@@ -178,7 +184,9 @@ def score_axis(model: str, items: list[dict], field: str, labels: list[str]) -> 
         hits = [l for l in labels if re.search(rf"\b{re.escape(l)}\b", up)]
         if len(hits) != 1:
             unparseable += 1                           # NOT wrong — unmeasured for this item
+            answers.append(None)
             continue
+        answers.append(hits[0])
         ok = hits[0] == it["expected"]
         correct += ok
         d = per_label.setdefault(it["expected"], [0, 0])
@@ -191,7 +199,9 @@ def score_axis(model: str, items: list[dict], field: str, labels: list[str]) -> 
             "accuracy": None if measured == 0 else round(p, 4),
             "ci95_low": None if measured == 0 else round(lo, 4),
             "ci95_high": None if measured == 0 else round(hi, 4),
-            "per_label": {k: {"correct": v[0], "n": v[1]} for k, v in per_label.items()}}
+            "per_label": {k: {"correct": v[0], "n": v[1]} for k, v in per_label.items()},
+            "answers": answers,
+            "expected": [i["expected"] for i in items]}
 
 
 def verdict(m: dict, ctrl: dict) -> str:
