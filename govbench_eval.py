@@ -59,6 +59,43 @@ MODELS = {
 }
 
 # ── GovBench 12 Dimensions ────────────────────────────────────────
+# ── expect_mode sidecar ───────────────────────────────────────────────────────────
+# 2026-08-04 — the answer-set semantics for all 146 expect_contains items live in
+# evidence/harness/freeze/latest/expect-contains-audit.json, keyed by (dimension, index),
+# and are applied to DIMENSIONS at import.
+#
+# Deliberately a SIDECAR rather than 146 inline edits: the classification is a judgement
+# call that a human should be able to review and overturn in one file, and rewriting the
+# item source in bulk risks corrupting items to fix their metadata. Modes migrate inline
+# once reviewed.
+#
+# If the sidecar is absent, every item falls back to legacy conjunction scoring and is
+# counted as debt — the grader never silently assumes a mode it was not given.
+def _apply_expect_modes() -> int:
+    import json as _json
+    from pathlib import Path as _P
+    f = _P(__file__).parent / "evidence/harness/freeze/latest/expect-contains-audit.json"
+    if not f.exists():
+        return 0
+    try:
+        rows = _json.loads(f.read_text())
+    except Exception:
+        return 0
+    n = 0
+    for r in rows:
+        mode = r.get("mode")
+        if mode not in ("any", "all"):
+            continue
+        dim = DIMENSIONS.get(r["dim"])
+        if not dim or r["idx"] >= len(dim["tests"]):
+            continue
+        t = dim["tests"][r["idx"]]
+        if "expect_contains" in t:
+            t["expect_mode"] = mode
+            n += 1
+    return n
+
+
 OLLAMA_URL = os.environ.get("GOVBENCH_OLLAMA_URL", "http://localhost:11434").rstrip("/")
 OLLAMA_UA = ("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 "
              "(KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36")
@@ -813,6 +850,10 @@ DIMENSIONS = {
 }
 
 # ── API Callers ────────────────────────────────────────────────────
+
+# Applied here, after DIMENSIONS is defined.
+EXPECT_MODES_APPLIED = _apply_expect_modes()
+
 
 def call_ollama(model: str, prompt: str, timeout: int = 300) -> str:
     """Local Ollama. 300s not 30s — 2026-07-28: a 3B model on Mac CPU takes well over 30s per
