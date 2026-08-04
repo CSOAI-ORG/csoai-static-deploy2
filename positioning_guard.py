@@ -72,6 +72,12 @@ EXTS = {".tsx", ".ts", ".html", ".md", ".py"}
 # ── Prohibited claims ──────────────────────────────────────────────────────────────────────
 # Each is a claim to an authority that is conferred by statute and that we do not hold.
 PROHIBITED: list[tuple[str, re.Pattern, str]] = [
+    ("invented customer/trust counts",
+     re.compile(r"\b(join|trusted by|used by|over)\s+[\d,]+\+?\s*"
+                r"(compan|organi[sz]ation|enterprise|client|customer|team)", re.I),
+     "A customer or trust count was asserted. The measured customer count is ZERO. "
+     "Inventing a trust signal is the exact failure a governance body exists to catch — "
+     "and it is the first thing a regulator checks. State a real number or state nothing."),
     ("retracted byzantine fault tolerance",
      re.compile(r"(?<!design )(?<!designed )(?<!intended )\b(byzantine[ -]?fault[ -]?toleran\w*|"
                 r"\bPBFT\b|tolerate[sd]? up to \d+ byzantine)", re.I),
