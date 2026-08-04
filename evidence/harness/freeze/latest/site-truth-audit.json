@@ -1,0 +1,204 @@
+{
+  "measured_at": "2026-08-04T16:10:33.600562+00:00",
+  "method": "unauthenticated GET as browser and as GPTBot; no cached state",
+  "classes": {
+    "UNREACHABLE": "URL does not serve",
+    "SOFT_404": "200 for an impossible path \u2014 nothing ever deindexes",
+    "INVISIBLE": "200 but no content without JS execution",
+    "UNBACKED_CLAIM": "a number on the page with no evidence file behind it"
+  },
+  "n_urls": 21,
+  "n_findings": 12,
+  "summary": {
+    "INVISIBLE": 9,
+    "SOFT_404": 3
+  },
+  "findings": [
+    {
+      "class": "INVISIBLE",
+      "url": "https://csoai.org/",
+      "detail": "HTTP 200 but 60 visible chars \u2014 a crawler that does not execute JS sees nothing"
+    },
+    {
+      "class": "INVISIBLE",
+      "url": "https://csoai.org/benchmarks",
+      "detail": "HTTP 200 but 60 visible chars \u2014 a crawler that does not execute JS sees nothing"
+    },
+    {
+      "class": "INVISIBLE",
+      "url": "https://csoai.org/gspc-verify",
+      "detail": "HTTP 200 but 60 visible chars \u2014 a crawler that does not execute JS sees nothing"
+    },
+    {
+      "class": "INVISIBLE",
+      "url": "https://csoai.org/models",
+      "detail": "HTTP 200 but 60 visible chars \u2014 a crawler that does not execute JS sees nothing"
+    },
+    {
+      "class": "INVISIBLE",
+      "url": "https://csoai.org/evidence",
+      "detail": "HTTP 200 but 60 visible chars \u2014 a crawler that does not execute JS sees nothing"
+    },
+    {
+      "class": "INVISIBLE",
+      "url": "https://csoai.org/pricing",
+      "detail": "HTTP 200 but 60 visible chars \u2014 a crawler that does not execute JS sees nothing"
+    },
+    {
+      "class": "INVISIBLE",
+      "url": "https://csoai.org/article-50",
+      "detail": "HTTP 200 but 60 visible chars \u2014 a crawler that does not execute JS sees nothing"
+    },
+    {
+      "class": "INVISIBLE",
+      "url": "https://csoai.org/compare",
+      "detail": "HTTP 200 but 60 visible chars \u2014 a crawler that does not execute JS sees nothing"
+    },
+    {
+      "class": "INVISIBLE",
+      "url": "https://csoai.org/certification",
+      "detail": "HTTP 200 but 60 visible chars \u2014 a crawler that does not execute JS sees nothing"
+    },
+    {
+      "class": "SOFT_404",
+      "url": "https://csoai.org/this-path-cannot-exist-9f3a2b7c1d",
+      "detail": "HTTP 200 for a path that cannot exist \u2014 every stale link and crawler probe looks valid, so nothing is ever deindexed"
+    },
+    {
+      "class": "SOFT_404",
+      "url": "https://www.meok.ai/this-path-cannot-exist-9f3a2b7c1d",
+      "detail": "HTTP 200 for a path that cannot exist \u2014 every stale link and crawler probe looks valid, so nothing is ever deindexed"
+    },
+    {
+      "class": "SOFT_404",
+      "url": "https://os.meok.ai/this-path-cannot-exist-9f3a2b7c1d",
+      "detail": "HTTP 200 for a path that cannot exist \u2014 every stale link and crawler probe looks valid, so nothing is ever deindexed"
+    }
+  ],
+  "pages": {
+    "https://csoai.org/": {
+      "status": 200,
+      "visible_chars": 60,
+      "ctype": "text/html; charset=utf-8"
+    },
+    "https://csoai.org/benchmarks": {
+      "status": 200,
+      "visible_chars": 60,
+      "ctype": "text/html; charset=utf-8"
+    },
+    "https://csoai.org/gspc-verify": {
+      "status": 200,
+      "visible_chars": 60,
+      "ctype": "text/html; charset=utf-8"
+    },
+    "https://csoai.org/models": {
+      "status": 200,
+      "visible_chars": 60,
+      "ctype": "text/html; charset=utf-8"
+    },
+    "https://csoai.org/evidence": {
+      "status": 200,
+      "visible_chars": 60,
+      "ctype": "text/html; charset=utf-8"
+    },
+    "https://csoai.org/pricing": {
+      "status": 200,
+      "visible_chars": 60,
+      "ctype": "text/html; charset=utf-8"
+    },
+    "https://csoai.org/article-50": {
+      "status": 200,
+      "visible_chars": 60,
+      "ctype": "text/html; charset=utf-8"
+    },
+    "https://csoai.org/compare": {
+      "status": 200,
+      "visible_chars": 60,
+      "ctype": "text/html; charset=utf-8"
+    },
+    "https://csoai.org/certification": {
+      "status": 200,
+      "visible_chars": 60,
+      "ctype": "text/html; charset=utf-8"
+    },
+    "https://csoai.org/.well-known/security.txt": {
+      "status": 200,
+      "visible_chars": 251,
+      "ctype": "text/plain; charset=utf-8"
+    },
+    "https://csoai.org/api/tools": {
+      "status": 200,
+      "visible_chars": 2193,
+      "ctype": "application/json"
+    },
+    "https://csoai.org/robots.txt": {
+      "status": 200,
+      "visible_chars": 2067,
+      "ctype": "text/plain; charset=utf-8"
+    },
+    "https://csoai.org/sitemap.xml": {
+      "status": 200,
+      "visible_chars": 18573,
+      "ctype": "application/xml"
+    },
+    "https://www.meok.ai/": {
+      "status": 200,
+      "visible_chars": 1215,
+      "ctype": "text/html; charset=utf-8"
+    },
+    "https://www.meok.ai/badges": {
+      "status": 200,
+      "visible_chars": 793,
+      "ctype": "text/html; charset=utf-8"
+    },
+    "https://www.meok.ai/registry": {
+      "status": 200,
+      "visible_chars": 823,
+      "ctype": "text/html; charset=utf-8"
+    },
+    "https://www.meok.ai/systemcard": {
+      "status": 200,
+      "visible_chars": 3198,
+      "ctype": "text/html; charset=utf-8"
+    },
+    "https://www.meok.ai/council": {
+      "status": 200,
+      "visible_chars": 1342,
+      "ctype": "text/html; charset=utf-8"
+    },
+    "https://os.meok.ai/": {
+      "status": 200,
+      "visible_chars": 1215,
+      "ctype": "text/html; charset=utf-8"
+    },
+    "https://os.meok.ai/arena": {
+      "status": 200,
+      "visible_chars": 5977,
+      "ctype": "text/html; charset=utf-8"
+    },
+    "https://os.meok.ai/sovspace": {
+      "status": 200,
+      "visible_chars": 503,
+      "ctype": "text/html; charset=utf-8"
+    }
+  },
+  "THE_ANSWER": {
+    "question": "do meok.ai and csoai.org truly work, matching what we say?",
+    "MEOK": "WORKS. Every route server-renders readable content \u2014 www.meok.ai 793-3,198 chars per page, os.meok.ai/arena 5,977. A crawler that executes no JavaScript sees the substance.",
+    "CSOAI_human_surfaces": "DO NOT WORK. Every one of 9 HTML routes tested returns HTTP 200 with 60 visible characters. The sitemap advertises 350 URLs and 10 of 10 sampled are content-free shells. csoai.org is instructing every search engine and AI retrieval system to index 350 pages that contain nothing.",
+    "CSOAI_machine_surfaces": "WORK, AND ARE HONEST. /api/tools returns application/json reporting total=7 tools across server_count=3 \u2014 which matches the independently measured census exactly (7 live tools, 3 servers). robots.txt and sitemap.xml serve correctly.",
+    "THE_INVERSION": "The API tells the truth and the website says nothing. For a measurement company that is a strange failure to have: the surface built for machines is accurate and the surface built for humans is empty. It also means the estate's honesty problem is NOT on csoai.org \u2014 there are no false claims there because there are no claims at all.",
+    "why_UNBACKED_CLAIM_is_zero": "This audit found ZERO unbacked numeric claims on csoai.org. That is not a pass. It is a direct consequence of the 9 INVISIBLE findings \u2014 a checker cannot find a false claim on a page with no text. The claim-checking arm of this audit is currently untestable against csoai.org and will only become meaningful once pages render.",
+    "SOFT_404": "csoai.org, www.meok.ai and os.meok.ai all return HTTP 200 for a path that cannot exist. Nothing is ever deindexed, and every stale link, typo and crawler probe looks valid. This affects BOTH estates, including the one that otherwise renders correctly.",
+    "still_broken_from_earlier_today": {
+      "security.txt": "Expires 2027-12-31 = 514 days, violates RFC 9116 \u00a72.5.5; fix committed in 49bf3ed, undeployed",
+      "security_contact": "security@meok.ai \u2014 meok.ai has NO MX record, so the advertised contact cannot receive mail",
+      "councilof.ai": "also no MX"
+    },
+    "sitemap_sample": {
+      "advertised_urls": 350,
+      "sampled": 10,
+      "shells": 10
+    }
+  }
+}
