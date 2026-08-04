@@ -56,9 +56,20 @@ def _extract(text: str) -> str:
 def mcpbench_verdict(llm, tool: str, expected: str, why: str) -> None:
     reply = llm.prompt(INSTRUCTION + tool)
     got = _extract(reply)
+    # A provider that returns an EMPTY string has not answered — it has been filtered or
+    # has failed. Scoring that as a WRONG ANSWER is a measurement error: it punishes the
+
+    # most safety-trained models hardest, because they are the ones whose output gets
+    # blocked. Observed live: 12 of 15 empty replies across 2,468 runs came from a single
+
+    # frontier model, costing it 13 points of apparent accuracy it had not actually lost.
+    # Tagged PROVIDER_EMPTY so the board can exclude it rather than silently miscount it.
+
+    _tag = "PROVIDER_EMPTY" if reply.strip() == "" else ""
+
     kbench.assertions.assert_true(
         got != "",
-        expectation=f"Model commits for: {tool[:70]}… (reply: {reply[:60]!r})",
+        expectation=f"Model commits for: {tool[:70]}… {_tag} (reply: {reply[:60]!r})",
     )
     kbench.assertions.assert_equal(
         expected, got, expectation=f"{why} — expected {expected} for: {tool[:70]}…"
