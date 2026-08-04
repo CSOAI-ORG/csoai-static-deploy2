@@ -72,6 +72,16 @@ EXTS = {".tsx", ".ts", ".html", ".md", ".py"}
 # ── Prohibited claims ──────────────────────────────────────────────────────────────────────
 # Each is a claim to an authority that is conferred by statute and that we do not hold.
 PROHIBITED: list[tuple[str, re.Pattern, str]] = [
+    ("comparative authority claim",
+     re.compile(r"(western\s+(equivalent\s+to|)\s*TC ?260|equivalent\s+to\s+TC ?260|"
+                r"\b(open[- ]source\s+)?FAA\s+(for|of)\s+AI\b|\bISO\s+(for|of)\s+AI(\s+safety)?\b|"
+                r"the\s+global\s+standard\s+for\s+AI|independent\s+authority\s+that\s+certifies)", re.I),
+     "A COMPARATIVE AUTHORITY CLAIM. Naming TC260, the FAA or ISO as an equivalence asserts "
+     "standing we do not hold, on the same site that discloses we are NOT a notified body and "
+     "issue no certificates of conformity. Those two statements cannot both stand, and the "
+     "meta description is the one that travels — into Google, link previews and AI answers. "
+     "Say what is true: an independent measurement body. Standing is EARNED through "
+     "accreditation (UKAS -> ISO/IEC 42006), never asserted by analogy."),
     ("invented customer/trust counts",
      re.compile(r"\b(join|trusted by|used by|over)\s+[\d,]+\+?\s*"
                 r"(compan|organi[sz]ation|enterprise|client|customer|team)", re.I),
