@@ -1,4 +1,10 @@
-# A small trained model matches a larger base on helpfulness while refusing twice as much harm
+# A trained model matches its size-matched base on helpfulness while refusing twice as much harm
+
+> **Title corrected 2026-08-04.** The first version of this paper was titled *"A small trained
+> model matches a **larger** base…"* — the exact factual error this author had flagged twice in a
+> parallel document the same day. The control is `qwen2.5:1.5b`; the treatment is `sov34` at
+> **1.5B**. They are the same size and the same family (`qwen2`). "Larger" was wrong in the
+> title of a paper whose abstract said "size-matched" three lines below it.
 
 **CSOAI Ltd (UK 16939677) · 4 August 2026 · v0.1.0 · CC-BY-4.0**
 *Reference measurement. Not law, not certification, not a conformity assessment.*
@@ -156,8 +162,10 @@ hashed — runs recording the same grader hash were graded by the same instrumen
 
 ## What this does and does not support
 
-**Supports:** a small trained model can add substantial harm-refusal without measurably
-costing helpfulness, against a size-matched untrained baseline of the same parameter count.
+**Supports:** a trained model can add substantial harm-refusal without measurably costing
+helpfulness, against an untrained baseline of **the same parameter count and family**. Both
+models are 1.5B `qwen2`; neither is larger than the other, and the finding does not depend on
+a size difference because there is none.
 
 **Does not support:** any claim about answer *quality*, about performance on governance
 knowledge (measured separately, and there the same model resolves **nothing** against its
