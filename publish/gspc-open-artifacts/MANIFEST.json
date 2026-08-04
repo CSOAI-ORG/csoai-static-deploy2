@@ -22,6 +22,18 @@
       "description": "OSCAL-shaped crosswalk, hash-anchored provisions to multi-framework controls",
       "bytes": 11372,
       "sha256": "bd65168ab52b3133c3a469a9be149a0addb1b82bc2d9186747df8def0769aa3e"
+    },
+    {
+      "file": "art5-sublimb-hashes-v0.1.0.json",
+      "description": "Article 5(1)(a)-(h) sub-limb content hashes, chained to the parent article hash and set_id (additive; does not alter the signed set)",
+      "bytes": 5191,
+      "sha256": "08be88bcbbc389b1ef19db979e91dfb8b772d8a74eee304f0608b5cd577f0054"
+    },
+    {
+      "file": "CARE_COST_FINDING.md",
+      "description": "Care-cost result: a 1.5B trained model vs a SIZE-MATCHED 1.5B control, protect 0.97 vs 0.45, help identical at 0.79",
+      "bytes": 7898,
+      "sha256": "c6b7e0e1c5b4edd95109e65857c9bef04f56368aa96e1ba17b3fc547a6af8d84"
     }
   ],
   "honest_scope": "All three artifacts derive from ONE provision pack (eu-ai-act@1.0.0, 21 content-hashed provisions). They are NOT built on a 417-provision corpus or 30 frameworks \u2014 those figures appear in estate documents and have no artifact behind them on disk. Sample sizes are 11-45 items; every rate carries a 95% Wilson interval and most comparisons are NOT statistically resolved at this scale. Published as a reference instrument, not as a leaderboard.",
@@ -33,7 +45,17 @@
   "known_limitations": [
     "Item discrimination is unmeasured \u2014 a shared bias may be an item-set artifact rather than a model property.",
     "Grading is exact-label or a hedge-aware refusal regex, not a validated frontier judge.",
-    "The provision snapshot is ARTICLE-level; Art 5(1) sub-limbs are named in prose, not hashed.",
-    "12 of ORPA's 45 items are generic harm and are marked UNANCHORED rather than given a provision they do not engage."
-  ]
+    "12 of ORPA's 45 items are generic harm and are marked UNANCHORED rather than given a provision they do not engage.",
+    "The 'out-ground, not out-think' grounding claim is UNTESTED, not supported. The 2026-08-04 2x2 that appeared to test it fed Article 5 to 66 items concerning post-quantum crypto, licensing, MCP conformance and C2PA \u2014 a distractor test. See evidence/harness/freeze/latest/grounding-2x2.json (CORRECTION block) and corpus-coverage-gap.json.",
+    "The signed corpus cannot ground 4 of 8 HIGH_RISK governance items: Annex III points 5-8 are outside the snapshot's declared scope, as are Article 2(6) and all recitals."
+  ],
+  "limitations_closed": [
+    {
+      "was": "The provision snapshot is ARTICLE-level; Art 5(1) sub-limbs are named in prose, not hashed.",
+      "closed_by": "art5-sublimb-hashes-v0.1.0.json",
+      "date": "2026-08-04",
+      "note": "Art 5(1)(a)-(h) are now individually hashed. An item turning on 5(1)(c) anchors to 729 verifiable characters instead of 11,580, and an amendment to an unrelated limb no longer invalidates its anchor. Sub-points 5(1)(c)(i) and 5(1)(h)(i)-(iii) are retained inside their parent limb \u2014 a letter-blind split invents a non-existent Article 5(1)(i)."
+    }
+  ],
+  "version_note": "v0.1.1 \u2014 2026-08-04: sub-limb hashes added; grounding claim withdrawn as untested; corpus coverage gap disclosed."
 }
