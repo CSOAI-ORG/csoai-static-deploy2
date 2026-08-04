@@ -61,6 +61,14 @@ MODELS = [
 ]
 
 
+# 2026-08-04 — the first run used 8 models and flagged 18 items at r < -0.2. At n=8 a
+# correlation of 0.2 is not resolved, so those flags were screening signals rather than
+# verdicts, and the spec said so. GSPC_MODELS lets the same harness re-run at a fleet size
+# where discrimination actually resolves, without editing the list in source.
+if os.environ.get("GSPC_MODELS"):
+    MODELS = [m.strip() for m in os.environ["GSPC_MODELS"].split(",") if m.strip()]
+
+
 def ask(model: str, prompt: str) -> str | None:
     body = json.dumps({"model": model, "stream": False,
                        "options": {"temperature": 0, "num_predict": 24},

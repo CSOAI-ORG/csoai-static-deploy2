@@ -138,11 +138,44 @@ This document specifies; it does not touch item files. The science session owns 
   lane, this lane will run it as an independent check rather than reimplementing it.
 
 **Hand-off order, by expected value:**
-1. Audit the **18 negative-discrimination items** — no new authoring until keys are trusted. This
-   is the cheapest and highest-value step and it needs zero new items written.
+1. ~~Audit the 18 negative-discrimination items~~ — **DONE, and the result reverses this item.
+   See §5a.** No key needs fixing. Do not delete these items.
 2. Rebuild **safety** (usable_n 2) and **conformance** (3).
 3. Extend **provenance** (healthiest profile — fastest route to a strong axis).
-4. Leave **governance** difficulty alone; fix its 4 negative items only.
+4. Leave **governance** difficulty alone; keep its 4 negative items and score them per §5a.
+
+### 5a. The negative items are not broken — they are the most informative items in the battery
+
+All 18 were adjudicated by `openai/gpt-oss-20b:free`, which never saw the answer key. Result:
+**13 agree with the key, 5 disagree, 0 no-verdict.** Then each of the 5 disagreements was checked
+on domain grounds rather than by counting votes:
+
+| axis | item | key | judge | who is right |
+|---|---|---|---|---|
+| provenance | 5 | DESTROYED | SURVIVES | **key** — an analogue round-trip has no digital metadata path |
+| conformance | 4 | VIOLATES | CONFORMS | **key** — accepting traversal outside the declared shape is the violation |
+| continuity | 9 | NOT_APPLICABLE | QUANTUM_VULNERABLE | **key** — Shor does not apply to hash functions |
+| continuity | 10 | NOT_APPLICABLE | QUANTUM_VULNERABLE | **key** — Grover only; AES-256 retains ~128-bit strength |
+| continuity | 12 | NOT_APPLICABLE | QUANTUM_VULNERABLE | **key** — security reduces to the hash, which Shor does not break |
+
+**Zero of eighteen keys are shown wrong.** The negative discrimination is not an item defect. It
+is a real property of the models: **capability correlates with holding a specific wrong belief.**
+
+- The three `continuity` items catch the common misconception that quantum computing breaks all
+  cryptography. The larger local models hold it — *and so does the adjudicator*, which is why it
+  disagreed. Judge and fleet erring the same way is the **co-error** case, and it is the reason a
+  second opinion is not a second source of truth.
+- The four `governance` items are all MINIMAL_RISK with the judge agreeing. Stronger models
+  **over-classify risk** on genuinely minimal-risk scenarios — the classification analogue of
+  over-refusal.
+
+**Consequence for v2:** do not delete negatively-discriminating items, which is what a naive
+`r < -0.2` rejection rule prescribes. Score them as a **separate misconception probe**, excluded
+from the axis aggregate where their negative loading corrupts a total, and reported in their own
+right. They are the only items in the battery that detect capability-correlated error.
+
+**Amend §4 R3 accordingly:** a negative-discrimination result routes an item to *adjudication*,
+not to rejection. Reject only if adjudication plus domain review finds the key wrong.
 
 ## 6. What this spec does not cover
 
