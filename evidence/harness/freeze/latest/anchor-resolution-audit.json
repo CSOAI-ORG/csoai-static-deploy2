@@ -1,0 +1,80 @@
+{
+  "measured_at": "2026-08-04",
+  "question": "How many of the 90 frozen benchmark items carry an anchor that resolves to a corpus provision?",
+  "corpus": {
+    "pack": "eu-ai-act@1.0.0",
+    "provisions": 21,
+    "articles": [
+      5,
+      6,
+      9,
+      10,
+      11,
+      12,
+      16,
+      17,
+      20,
+      25,
+      26,
+      43,
+      49,
+      50,
+      53,
+      55,
+      72,
+      73,
+      79
+    ],
+    "other_framework_packs": "NONE \u2014 no GDPR, CRA, DORA, NIS2 or CSRD pack or snapshot exists"
+  },
+  "result": {
+    "total_items": 90,
+    "resolve": 13,
+    "no_article_reference": 76,
+    "unresolved": 1,
+    "resolve_pct": 14,
+    "per_axis": {
+      "governance": {
+        "n": 24,
+        "resolves": 13,
+        "no_ref": 10,
+        "unresolved": 1
+      },
+      "safety": {
+        "n": 14,
+        "resolves": 0,
+        "no_ref": 14
+      },
+      "provenance": {
+        "n": 15,
+        "resolves": 0,
+        "no_ref": 15
+      },
+      "conformance": {
+        "n": 11,
+        "resolves": 0,
+        "no_ref": 11
+      },
+      "openness": {
+        "n": 13,
+        "resolves": 0,
+        "no_ref": 13
+      },
+      "continuity": {
+        "n": 13,
+        "resolves": 0,
+        "no_ref": 13
+      }
+    }
+  },
+  "finding": "14% of items anchor to a corpus provision. 84% carry a prose anchor with no article reference at all. FIVE of six axes have ZERO corpus linkage \u2014 safety, provenance, conformance, openness and continuity are anchored entirely to hand-written prose.",
+  "why_five_axes_are_zero": "Those axes are not about EU AI Act articles. DefBench items anchor to harm categories, PQCBench to cryptographic properties, OSSBench to licence terms. Their prose anchors are not sloppy \u2014 they are anchored to a DIFFERENT corpus that does not exist. There is no PQC standards pack, no licence-text pack, no C2PA spec pack.",
+  "correction_to_the_plan": "The retrofit proposal assumed 417 provisions across six frameworks (126 AI Act + 99 GDPR + 71 CRA + 64 DORA + 46 NIS2 + 11 CSRD) and therefore a '224-provision measurement gap'. Measured: ONE pack exists (eu-ai-act@1.0.0, 21 provisions) and no snapshot directory for any other framework. The gap map cannot be computed from a corpus that is not there. The AI Act term alone is 21, not 126.",
+  "what_is_actually_actionable": [
+    "Retrofit the 13 governance items that DO cite a corpus article to carry provision_hash instead of prose. Smallest change, proves the chain end to end, immediately auditable.",
+    "The 10 governance items with no article reference are candidates for adjudication against the 21 provisions \u2014 generate, adjudicate, admit only what survives.",
+    "The 1 item citing Art 2 is a genuine gap: Art 2 (scope) is not in the 21-provision snapshot. Either extend the snapshot or reclassify the item.",
+    "For the other five axes, a provision_hash retrofit is not possible until a corpus for their domain exists. Recording them as prose-anchored is honest; pretending otherwise would make them LOOK rigorous while being unverifiable \u2014 the exact failure mode the plan warns about."
+  ],
+  "the_plan_is_right_about_this": "'A corpus-derived item with a wrong label is worse than no item, because the hash makes it look rigorous.' That is exactly correct, and it is why the 76 prose-anchored items must NOT be given hashes they do not have."
+}
