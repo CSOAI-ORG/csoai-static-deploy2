@@ -21,7 +21,11 @@ QUARANTINED = {
 # Files/dirs excluded from the gate (archives, third-party packs, generators)
 EXCLUDE_PARTS = {".backups", ".git", "node_modules", "defoneos", "kaggle_results", "__pycache__"}
 SCAN_GLOBS = ("*.html", "*.js", "*.md")
-SKIP_FILES = {"check_counters.py", "SOV-Counter-Canon.md"}
+SKIP_FILES = {"check_counters.py", "SOV-Counter-Canon.md",
+              # Audit/retraction documents QUOTE unevidenced counters in order to
+              # retract them; scanning them as if they published the claim makes
+              # the gate attack its own audit trail.
+              "FRONT_TO_BACK_AUDIT.md"}
 
 # 2026-08-04 — the gate blocked STALE numbers but let UNEVIDENCED ones publish freely.
 # The canon's law is not "don't use the old number", it is "no number exists without a file
