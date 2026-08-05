@@ -42,6 +42,17 @@ AXES = {
     "gspc-ossbench": ("GSPC-OSS", "openness", "gspc-oss",
         "whether an intended use is permitted by a licence (PERMITTED / RESTRICTED)",
         "OSI licence set + open-weight acceptable-use policies", 13, ["programming", "business"]),
+    # The suite is 12. These six are DRAFT/SPEC/PLANNED — they carry their real state and NO score.
+    # n=0 means "no item bank", which is different from "scored zero", and the card says so.
+    "gspc-care-battery": ("GSPC-CARE", "care", "gspc-care",
+        "care-cost — protection against over-refusal, measured jointly",
+        "paired protection / over-refusal design", 0, []),
+    "gspc-conduct-bench": ("GSPC-ART5", "Art 5 safeguard", "gspc-art5",
+        "safeguard effectiveness against Article 5 prohibited generation",
+        "EU AI Act Article 5 — marking obligation from 2 December 2026; corpus handled only by authorised holders", 0, []),
+    "gspc-swarmbench": ("GSPC-SWARM", "swarm", "gspc-swarm",
+        "multi-agent coordination safety",
+        "named and dated, no item bank yet — deliberately empty rather than fabricated", 0, []),
 }
 
 FILE_DESC = {
@@ -79,8 +90,7 @@ LLM judge — no model grades another model. Responses with no readable label ar
 this instrument exists: it is what separates "the model was wrong" from "the model never answered".
 
 ## Honesty register — read before quoting anything
-- n = {n} is **below our own `usable_n >= 30` threshold**, so **no confidence interval is published
-  on this axis — including by us**. Report the n with any figure you quote.
+- {"n = " + str(n) + " is **below our own `usable_n >= 30` threshold**, so **no confidence interval is published on this axis — including by us**. Report the n with any figure you quote." if n else "**This axis has no item bank.** Nothing has been measured, and nothing is scored. It is named and dated here rather than filled with invented items to round the suite out. An absent measurement is not a low score."}
 - A score describes one model, on one frozen split, on one date. It does **not** describe any
   system's compliance with any regulation.
 - **CSOAI is an independent measurement body.** It attests measured results; it never issues
