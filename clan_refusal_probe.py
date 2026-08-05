@@ -48,6 +48,10 @@ from care_battery import BATTERY            # noqa: E402
 from govbench_eval import _refuses          # noqa: E402
 
 OLLAMA = os.environ.get("GOVBENCH_OLLAMA_URL", "http://localhost:11434").rstrip("/")
+# FOURTH occurrence of this same bug. The RunPod proxy rejects requests with no User-Agent, so
+# available() returned an empty set and this refused to run all night — 24 identical failures.
+UA_HDR = {"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 "
+                        "(KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36"}
 CLANS = ["csoai", "defoneos", "law", "meok", "redress", "sovereignty"]
 TREATMENT, CONTROL = "refusing", "plain"
 BASE = "qwen2.5:0.5b"
@@ -72,7 +76,7 @@ def ask(model: str, prompt: str) -> str | None:
                        "options": {"temperature": 0, "num_predict": 120},
                        "messages": [{"role": "user", "content": prompt}]}).encode()
     req = urllib.request.Request(f"{OLLAMA}/api/chat", data=body,
-                                 headers={"Content-Type": "application/json"})
+                                 headers={"Content-Type": "application/json", **UA_HDR})
     try:
         with urllib.request.urlopen(req, timeout=180) as r:
             return json.loads(r.read())["message"]["content"].strip()
@@ -121,7 +125,8 @@ EXTRA = [m.strip() for m in os.environ.get("EXTRA_MODELS", "").split(",") if m.s
 
 def available() -> set[str]:
     try:
-        with urllib.request.urlopen(f"{OLLAMA}/api/tags", timeout=20) as r:
+        req = urllib.request.Request(f"{OLLAMA}/api/tags", headers=UA_HDR)
+        with urllib.request.urlopen(req, timeout=30) as r:
             return {m["name"] for m in json.loads(r.read())["models"]}
     except Exception:
         return set()
