@@ -165,10 +165,21 @@ def main():
                 q=(it.get("scenario") or it.get("request") or it.get("operation") or it.get("item")
                    or it.get("tool") or it.get("case") or it.get("input") or "")
                 try:
-                    r=api("/chat/completions",{"model":model,"temperature":0,"max_tokens":24,
+                    # REASONING MODELS BURN max_tokens ON HIDDEN THOUGHT.
+                    # Gemini 3.6 returned content=None with finish_reason=length and 21 reasoning
+                    # tokens against a 24-token budget — it never got to emit an answer. Scored
+                    # naively that reads as "100% unreadable", i.e. OUR parameter choice reported as
+                    # the model's failure. Budget generously and treat a truncation as UNMEASURED.
+                    r=api("/chat/completions",{"model":model,"temperature":0,"max_tokens":512,
+                        "reasoning":{"effort":"low"},
                         "messages":[{"role":"user","content":
                             f"{instr} Answer with exactly one of: {', '.join(labels)}.\n\n{q}\n\nLabel only."}]})
-                    pairs.append((gold, extract(r["choices"][0]["message"]["content"], labels)))
+                    ch=r["choices"][0]
+                    txt=(ch.get("message") or {}).get("content")
+                    if not txt and ch.get("finish_reason")=="length":
+                        pairs.append((gold, None))     # truncated before answering: UNMEASURED, not wrong
+                    else:
+                        pairs.append((gold, extract(txt, labels)))
                 except Exception:
                     pairs.append((gold, None))      # a failed call is UNREADABLE, not wrong
             s=score(pairs,labels); s["items_without_key_excluded"]=nokey
