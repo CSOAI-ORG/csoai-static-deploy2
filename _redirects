@@ -1,0 +1,10 @@
+# CSOAI csoai.org — redirect rules
+# Static redirects placed before dynamic ones.
+# Generated 2026-08-05 by JEEVES (K3 lane) to close the 13-route 404 audit.
+# Cloudflare Pages applies these to static-asset responses only.
+
+# SPA-render-404 routes (200 shell + 404 component) → real canonical pages
+# These return 200 today but the React route renders a "Not found" component.
+# 301 to the canonical hub so users and crawlers land somewhere real.
+# (NOTE: clean-trailing-slash is handled by the default Pages 308 to drop the .html)
+# Empty file causes no harm; keep the comment so future-me knows this was reviewed.
