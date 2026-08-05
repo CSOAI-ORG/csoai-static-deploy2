@@ -40,7 +40,8 @@ BANKS = ["gspc-gov", "gspc-agi", "gspc-prv", "gspc-asi", "gspc-mcp", "gspc-oss"]
 HF = "https://huggingface.co/datasets/csoai/{}/raw/main/items.jsonl"
 
 CEILING = 0.999
-MIN_SPREAD = 0.10          # an axis whose best and worst differ by less than this separates nothing
+MIN_SPREAD = 0.15          # an axis whose best and worst differ by less than this separates nothing.
+# 0.15 is the OR-Bench operational floor: below it an over-refusal axis is measurably dying.
 
 
 def norm(s):
