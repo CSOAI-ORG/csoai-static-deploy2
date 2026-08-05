@@ -1,0 +1,15 @@
+{
+  "suite": "GSPC",
+  "note": "Canonical greenfield names — domain-tied (unique by construction, unforgeable, each mention markets a CSOAI domain). Single source of truth; every surface (HF, Kaggle, arenas, PRs, globe) reads from this. Sprawl folded into the 6.",
+  "locked": "2026-08-05",
+  "axes": [
+    {"axis": "governance", "name": "COAI-Bench",   "domain": "councilof.ai",   "old": "govbench",  "measures": "EU AI Act risk-tier classification", "folds_in": ["ConductBench (agent actions)", "CompBench (compliance crosswalk)"]},
+    {"axis": "safety",      "name": "AGISafe-Bench","domain": "agisafe.ai",     "old": "defbench",  "measures": "calibrated refusal + robustness (protect without over-refusing)", "folds_in": ["CareBench (protection + over-refusal)"]},
+    {"axis": "provenance",  "name": "POAI-Bench",   "domain": "proofof.ai",     "old": "provbench", "measures": "C2PA / Article-50 marking survival through transforms", "folds_in": ["AIRBench (mandatory disclosure)"]},
+    {"axis": "continuity",  "name": "ASISec-Bench", "domain": "asisecurity.ai", "old": "pqcbench",  "measures": "post-quantum signing-agility (chain survives a PQ migration)", "folds_in": []},
+    {"axis": "conformance", "name": "MCP-Scoreboard","domain": "mcp",           "old": "mcpbench",  "measures": "MCP protocol conformance (Ed25519-signed)", "folds_in": []},
+    {"axis": "openness",    "name": "OMAI-Bench",   "domain": "openmoe.ai",     "old": "ossbench",  "measures": "presence of openness artefacts the OSS exemption does not waive", "folds_in": []}
+  ],
+  "retired": ["SwarmBench (a protocol, not an axis)"],
+  "held_domains": ["safetyof.ai (safety-topic redirect / landing)"]
+}
