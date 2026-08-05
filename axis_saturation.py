@@ -28,6 +28,18 @@ discrimination  point-biserial of item-correct against the model's REST-score on
 spread          max - min of model totals on the axis, with the SD across models
 usable_n        items that are neither dead nor negatively discriminating — the effective
                 sample size, which is what an interval should really be computed on
+unparsed        the model never emitted a usable label. NOT the same as a wrong answer, and not
+                the same as a dead endpoint — the three are recorded separately
+
+WHAT IT RECORDS PER MODEL PER ITEM
+----------------------------------
+Earlier versions kept only per-item statistics across the fleet and per-model totals. That is
+enough to say an axis discriminates, but it cannot answer "which items did THIS model fail?" —
+so it could neither debug a single model nor be reconciled against an independently-written
+harness. The output now carries the full matrix, the label each model actually emitted, and
+why an answer was ungradable, and it reports accuracy under BOTH denominator conventions
+(excluding ungradable answers, and counting them wrong) because harnesses differ on that and
+the difference is not a disagreement about the model.
 """
 from __future__ import annotations
 
@@ -73,10 +85,38 @@ if os.environ.get("GSPC_MODELS"):
     MODELS = [m.strip() for m in os.environ["GSPC_MODELS"].split(",") if m.strip()]
 
 
-def ask(model: str, prompt: str) -> str | None:
-    body = json.dumps({"model": model, "stream": False,
-                       "options": {"temperature": 0, "num_predict": 24},
-                       "messages": [{"role": "user", "content": prompt}]}).encode()
+# 2026-08-05 — three separate measurements agreed that these models' dominant failure is
+# instruction-following, not knowledge: they wrap the answer in prose and often never emit the
+# bare label, which this harness then has to score as ungradable. The obvious fix is to restrict
+# the decoder to the label set, and it was proposed as the cheapest available experiment.
+#
+# IT IS NOT A HARNESS FIX. A 10-item probe before running it found that constraining the decoder
+# CHANGES the answer rather than merely revealing it:
+#
+#     sov34:latest          agree 1   flipped 7   rescued-from-unparsed 2
+#     sov33-unified:latest  agree 2   flipped 6   rescued-from-unparsed 2
+#     qwen2.5:1.5b          agree 9   flipped 1   rescued-from-unparsed 0
+#
+# The trained models disagree with themselves most of the time; the untrained stock model, which
+# already emitted bare labels, is stable. That is consistent with WHERE the label is forced:
+# free-form these models reason in prose and state a label last, while the enum forces a label
+# at the first token, so the label is no longer conditioned on the reasoning.
+#
+# So the two arms are DIFFERENT MEASUREMENTS, not a biased one and a corrected one. The
+# difference between them may not be read as "the share of the score that was the harness".
+CONSTRAIN = os.environ.get("GOVBENCH_CONSTRAIN") == "1"
+
+
+def ask(model: str, prompt: str, labels: list[str] | None = None) -> str | None:
+    payload = {"model": model, "stream": False,
+               "options": {"temperature": 0, "num_predict": 24},
+               "messages": [{"role": "user", "content": prompt}]}
+    if CONSTRAIN and labels:
+        # Ollama accepts a JSON Schema here and constrains decoding to match it. An enum of the
+        # axis labels makes "no_label" structurally impossible, which is the point: it converts
+        # a formatting failure into a real answer that can be graded right or wrong.
+        payload["format"] = {"type": "string", "enum": list(labels)}
+    body = json.dumps(payload).encode()
     req = urllib.request.Request(f"{OLLAMA}/api/chat", data=body,
                                  headers={"Content-Type": "application/json", **UA_HDR})
     try:
@@ -134,24 +174,67 @@ def main():
     for axis in G.AXES:
         items, field, labels = G.load_axis(axis)
         # correct[model] = [1|0|None per item]
+        # given[model]   = [extracted label | None per item] — lets a reader re-grade under a
+        #                  different rule without re-running the fleet
+        # reasons[model] = [ok | no_response | no_label | multi_label per item]
         correct = {}
+        given = {}
+        reasons = {}
         for m in models:
-            row = []
+            row, lab, rsn = [], [], []
             for it in items:
                 prompt = (f"{it[field]}\n\nAnswer with EXACTLY ONE of these labels and "
                           f"nothing else: {' | '.join(labels)}")
-                resp = ask(m, prompt)
+                resp = ask(m, prompt, labels)
                 if resp is None:
                     row.append(None)
+                    lab.append(None)
+                    rsn.append("no_response")
                     continue
                 hits = [l for l in labels if re.search(rf"\b{re.escape(l)}\b", resp.upper())]
-                row.append((hits[0] == it["expected"]) if len(hits) == 1 else None)
-            correct[m] = row
+                if len(hits) == 1:
+                    row.append(hits[0] == it["expected"])
+                    lab.append(hits[0])
+                    rsn.append("ok")
+                else:
+                    row.append(None)
+                    lab.append(None)
+                    rsn.append("no_label" if not hits else "multi_label")
+            correct[m], given[m], reasons[m] = row, lab, rsn
 
         totals = {}
         for m in models:
             got = [c for c in correct[m] if c is not None]
             totals[m] = (sum(got) / len(got)) if got else None
+
+        # 2026-08-05 — reconciling against an independently-written harness stalled here: it
+        # scored unparsed answers WRONG, this one EXCLUDES them, so the two accuracies were not
+        # comparable and there was no way to tell a real disagreement from a denominator
+        # difference. Reporting both denominators, and splitting "ungradable" into its causes,
+        # removes the ambiguity instead of leaving the reader to guess at it. A dead endpoint
+        # (no_response) and a model that never emits the label (no_label) are not the same
+        # failure and must not share a number.
+        model_stats = {}
+        for m in models:
+            rsn = reasons[m]
+            n = len(rsn)
+            n_ok = rsn.count("ok")
+            n_right = sum(1 for c in correct[m] if c)
+            unparsed = rsn.count("no_label") + rsn.count("multi_label")
+            model_stats[m] = {
+                "n_items": n,
+                "n_gradable": n_ok,
+                "n_correct": n_right,
+                # this harness's convention: ungradable answers are excluded
+                "accuracy_gradable_only": round(n_right / n_ok, 4) if n_ok else None,
+                # the other convention: ungradable answers count as wrong
+                "accuracy_ungradable_as_wrong": round(n_right / n, 4) if n else None,
+                "ungradable": {"no_response": rsn.count("no_response"),
+                               "no_label": rsn.count("no_label"),
+                               "multi_label": rsn.count("multi_label")},
+                # instruction-following failure only — excludes substrate failure
+                "unparsed_rate": round(unparsed / n, 4) if n else None,
+            }
 
         rows = []
         for i in range(len(items)):
@@ -167,12 +250,28 @@ def main():
                 other = [c for j, c in enumerate(correct[m]) if j != i and c is not None]
                 ys.append(sum(other) / len(other) if other else 0.0)
             disc = pearson(xs, ys)
+            # 2026-08-05 — deadness is decided by unanimity among the models that actually
+            # produced a gradable answer on THIS item, which is not the fleet size. gpt-oss:20b
+            # returned no usable label on 100% of governance items, so it inflated the fleet
+            # count that certification was granted on while contributing nothing to any item's
+            # unanimity. Certifying per item against its own gradable N closes that gap — a
+            # fleet of 22 does not certify an item only 6 models answered.
+            is_dead = diff in (0.0, 1.0)
             rows.append({"item": i, "difficulty": round(diff, 4), "discrimination": disc,
                          "expected": items[i]["expected"], "anchor": items[i].get("anchor"),
-                         "dead": diff in (0.0, 1.0)})
+                         "n_gradable": len(vals),
+                         "dead": is_dead,
+                         "dead_certified": bool(is_dead and certify(len(vals))[0])})
 
         scored = [r for r in rows if "difficulty" in r]
         dead = [r for r in scored if r["dead"]]
+        dead_cert = [r for r in dead if r["dead_certified"]]
+        # the effective fleet actually answering this axis — the number certification should be
+        # read against, not len(models)
+        eff_n = [r["n_gradable"] for r in scored]
+        eff_min = min(eff_n) if eff_n else None
+        eff_med = sorted(eff_n)[len(eff_n) // 2] if eff_n else None
+        mute = [m for m in models if model_stats[m]["n_gradable"] == 0]
         neg = [r for r in scored if r["discrimination"] is not None and r["discrimination"] < -0.2]
         usable = [r for r in scored if not r["dead"]
                   and not (r["discrimination"] is not None and r["discrimination"] < -0.2)]
@@ -191,26 +290,70 @@ def main():
                    else "DISCRIMINATES")
 
         report[axis] = {"n_items": len(items), "n_scored": len(scored), "n_dead": len(dead),
+                        "n_dead_certified": len(dead_cert),
+                        "effective_fleet_min": eff_min, "effective_fleet_median": eff_med,
+                        "models_mute_on_axis": mute,
                         "n_negative_disc": len(neg), "usable_n": len(usable),
                         "mean_difficulty": mean_diff, "spread": spread, "sd_across_models": sd,
                         "difficulty_mode": mode, "verdict": verdict,
-                        "model_totals": totals, "items": rows}
-        print(f"  {axis:12s} n={len(items):2d}  mean_diff {mean_diff}  dead {len(dead):2d}  "
-              f"neg {len(neg)}  usable {len(usable):2d}  spread {spread}  sd {sd}")
+                        "model_totals": totals, "model_stats": model_stats,
+                        # the per-model-per-item matrix. Without it this file could report that
+                        # an axis discriminates but not WHICH items a given model failed, so
+                        # neither debugging one model nor reconciling against another harness
+                        # was possible from the output alone.
+                        "model_items": {m: {"correct": correct[m], "given": given[m],
+                                            "why": reasons[m]} for m in models},
+                        "items": rows}
+        print(f"  {axis:12s} n={len(items):2d}  mean_diff {mean_diff}  dead {len(dead):2d}"
+              f"(cert {len(dead_cert)})  neg {len(neg)}  usable {len(usable):2d}  "
+              f"spread {spread}  sd {sd}")
+        print(f"               effective fleet on this axis: min {eff_min}, median {eff_med} "
+              f"of {len(models)}" + (f" — MUTE: {', '.join(mute)}" if mute else ""))
         print(f"               {mode}")
-        print(f"               {verdict}\n", flush=True)
+        print(f"               {verdict}")
+        # An axis can look FLOOR purely because models never emit the label. Printing the worst
+        # unparsed rates next to the verdict keeps that alternative explanation visible rather
+        # than leaving it to be discovered later.
+        worst = sorted(models, key=lambda m: model_stats[m]["unparsed_rate"] or 0, reverse=True)[:3]
+        loud = [f"{m} {model_stats[m]['unparsed_rate']:.0%}" for m in worst
+                if (model_stats[m]["unparsed_rate"] or 0) > 0]
+        if loud:
+            print(f"               unparsed (never emitted a label): {', '.join(loud)}")
+        print(flush=True)
 
-    out = HERE / "evidence/harness/freeze/latest/axis-saturation.json"
+    # The constrained arm writes beside the baseline, never over it — the whole value of the
+    # experiment is the DIFFERENCE between the two files, which an overwrite would destroy.
+    name = "axis-saturation-constrained.json" if CONSTRAIN else "axis-saturation.json"
+    out = HERE / "evidence/harness/freeze/latest" / name
     out.write_text(json.dumps({
         "measured_at": datetime.now(timezone.utc).isoformat(), "substrate": OLLAMA,
         "models": models, "excluded_absent": missing,
+        "arm": "format-constrained (decoder restricted to the label enum)" if CONSTRAIN
+               else "free-form (label requested in the prompt only)",
+        # 2026-08-05 — the console printed "NOT CERTIFIED" while the JSON published n_dead with
+        # no caveat attached, so anyone reading the file downstream saw a bare number and had no
+        # way to know the tool had refused to stand behind it. The caveat now travels with the
+        # data it qualifies.
+        "dead_item_count_certified": certified,
+        "certification": why,
+        "fleet_n": len(models),
         "grader": "exact-label, single-hit; ambiguous or multi-label answers are UNGRADABLE not wrong",
         "definitions": {
             "dead": "difficulty 0.0 or 1.0 — zero information for any ranking",
             "usable_n": "items neither dead nor negatively discriminating — the effective sample size",
             "FLOOR vs CEILING": ("both look like 'no spread' in a mean, and need OPPOSITE fixes. "
                                  "A floor axis does not need harder items; it needs items its "
-                                 "models can engage with at all.")},
+                                 "models can engage with at all."),
+            "model_items": ("per-model-per-item matrix. correct = 1|0|null, given = the label the "
+                            "model actually emitted, why = ok|no_response|no_label|multi_label. "
+                            "Present so a reader can ask WHICH items a model failed, re-grade "
+                            "under a different rule, or reconcile against another harness."),
+            "two accuracies": ("accuracy_gradable_only EXCLUDES ungradable answers; "
+                               "accuracy_ungradable_as_wrong COUNTS THEM WRONG. Harnesses differ "
+                               "on this and the gap between the two is not a disagreement about "
+                               "the model — comparing across conventions is the error."),
+            "unparsed_rate": ("no_label + multi_label over all items — instruction-following "
+                              "failure. EXCLUDES no_response, which is substrate failure.")},
         "axes": report}, indent=2))
     print(f"  -> {out}")
 
