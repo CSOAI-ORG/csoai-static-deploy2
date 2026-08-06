@@ -41,8 +41,17 @@
   function colour(g) {
     if (g.status === "INSTRUMENT_FAILED") return "#C9A84C";          // instrument, not model
     if (g.status && g.status !== "MEASURED") return "#8FB3A5";       // SPEC or DRAFT — no score
-    if (g.macro_f1 == null) return "#60a5fa";                        // published, unmeasured
-    return g.macro_f1 >= 0.6 ? "#34d399" : g.macro_f1 >= 0.4 ? "#fbbf24" : "#f87171";
+    if (g.macro_f1 != null) {
+      return g.macro_f1 >= 0.6 ? "#34d399" : g.macro_f1 >= 0.4 ? "#fbbf24" : "#f87171";
+    }
+    // generic score fallback: acc-scored axes carry a numeric score in score_value (metric labelled).
+    // Ramp on it WITHOUT coercing acc into macro_f1 (different metric, kept distinct).
+    // score_value may be "0.515 acc" — parseFloat reads the leading number, ignores the metric suffix.
+    var sv = (g.score_value != null) ? parseFloat(String(g.score_value)) : (g.acc != null ? g.acc : NaN);
+    if (!isNaN(sv)) {
+      return sv >= 0.6 ? "#34d399" : sv >= 0.4 ? "#fbbf24" : "#f87171";
+    }
+    return "#60a5fa";                                                // published, no numeric score
   }
 
   function fc() {

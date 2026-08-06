@@ -18,7 +18,7 @@ them are visible at once, so the honest form of it is a leaderboard, not a singl
 import json, pathlib, html, datetime
 
 HERE = pathlib.Path(__file__).parent
-ARENA = json.loads(pathlib.Path("/home/claude/estate/sovspace/arena.json").read_text(encoding="utf-8"))
+ARENA = json.loads((HERE / "arena.json").read_text(encoding="utf-8"))
 OUT = HERE / "arena-hub.html"
 
 COLS = [("dataset", "items"), ("card", "card"), ("space", "Space"), ("spaceTool", "Space tool"),

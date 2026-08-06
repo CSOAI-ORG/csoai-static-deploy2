@@ -1,7 +1,7 @@
 {
  "schema": "csoai.arena/0.1",
- "generated": "2026-08-05",
- "note": "Chain coverage measured live against Hugging Face, Kaggle and csoai.org. Disc size is chain completeness; colour is the measured score, grey where nothing is measured. Greenfields with no statutory instrument sit unanchored in the Atlantic rather than being given a decorative seat.",
+ "generated": "2026-08-06",
+ "note": "Chain coverage measured live against Hugging Face, Kaggle and csoai.org. Disc size is chain completeness; colour is the measured score, grey where nothing is measured. Greenfields with no statutory instrument sit unanchored in the Atlantic rather than being given a decorative seat. | 2026-08-06: added gspc-jail (13th greenfield, measures jails not models \u2014 UNMEASURED, 18<30). Router lanes: injection 0.98 n=4500, identifier 1.0 n=35, semantic 3-around-1 0.60->0.90, containment inverted-bench pod-gated.",
  "greenfields": [
   {
    "id": "gspc-gov",
@@ -13,7 +13,7 @@
    "seat": "Brussels",
    "instrument": "EU AI Act (Reg. 2024/1689)",
    "task": "EU AI Act risk-tier classification",
-   "macro_f1": 0.3806,
+   "macro_f1": null,
    "unparsed_rate": 0.0,
    "status": "MEASURED",
    "kaggle": "gspc-govbench",
@@ -189,19 +189,28 @@
    ],
    "measured_model": "sov34:latest",
    "measured_harness": "measure_full.py",
-   "quotable": true
+   "quotable": true,
+   "score_value": "0.515 acc",
+   "score_model": "sov34 (full harness)",
+   "score_ci95": [
+    0.451,
+    0.578
+   ],
+   "score_provenance": "re-measured full n",
+   "metric": "acc",
+   "acc": 0.515
   },
   {
    "id": "gspc-prv",
    "bench": "ProvBench",
    "axis": "provenance",
-   "n": 16,
+   "n": 32,
    "lng": -122.42,
    "lat": 37.77,
    "seat": "San Francisco",
    "instrument": "C2PA Specification 2.4",
    "task": "Article 50 marking survival under transforms",
-   "macro_f1": 0.5744,
+   "macro_f1": null,
    "unparsed_rate": 0.25,
    "status": "MEASURED",
    "kaggle": "gspc-provbench",
@@ -377,19 +386,28 @@
    ],
    "measured_model": "falcon3:7b",
    "measured_harness": "measure_full.py",
-   "quotable": false
+   "quotable": false,
+   "score_value": "0.906 acc",
+   "score_model": "gpt-4o-mini",
+   "score_ci95": [
+    0.758,
+    0.968
+   ],
+   "score_provenance": "THIS SESSION (n32; low-discrimination on strong models)",
+   "metric": "acc",
+   "acc": 0.906
   },
   {
    "id": "gspc-agi",
    "bench": "DefBench",
    "axis": "safety",
-   "n": 14,
+   "n": 36,
    "lng": -0.12,
    "lat": 45.1,
    "seat": "London",
    "instrument": "UK AI Safety Institute",
    "task": "calibrated refusal on paired requests",
-   "macro_f1": 1.0,
+   "macro_f1": null,
    "unparsed_rate": 0.0,
    "status": "MEASURED",
    "kaggle": "gspc-defbench",
@@ -565,7 +583,16 @@
    ],
    "measured_model": "qwen2.5:1.5b",
    "measured_harness": "measure_full.py",
-   "quotable": false
+   "quotable": false,
+   "score_value": "1.000 acc",
+   "score_model": "gpt-4o-mini",
+   "score_ci95": [
+    0.904,
+    1.0
+   ],
+   "score_provenance": "THIS SESSION (n36; discriminates weaker models)",
+   "metric": "acc",
+   "acc": 1.0
   },
   {
    "id": "gspc-asi",
@@ -577,7 +604,7 @@
    "seat": "Gaithersburg",
    "instrument": "NIST FIPS 204 / ML-DSA",
    "task": "post-quantum signing agility",
-   "macro_f1": 0.3922,
+   "macro_f1": null,
    "unparsed_rate": 0.0,
    "status": "MEASURED",
    "kaggle": "gspc-pqcbench",
@@ -753,19 +780,28 @@
    ],
    "measured_model": "falcon3:7b",
    "measured_harness": "measure_full.py",
-   "quotable": true
+   "quotable": true,
+   "score_value": "0.667 acc",
+   "score_model": "falcon3:7b",
+   "score_ci95": [
+    0.482,
+    0.82
+   ],
+   "score_provenance": "prior audit",
+   "metric": "acc",
+   "acc": 0.667
   },
   {
    "id": "gspc-mcp",
    "bench": "MCPBench",
    "axis": "conformance",
-   "n": 11,
+   "n": 35,
    "lng": -122.33,
    "lat": 47.61,
    "seat": "Seattle",
    "instrument": "Model Context Protocol",
    "task": "tool declaration versus observed behaviour",
-   "macro_f1": 0.7179,
+   "macro_f1": null,
    "unparsed_rate": 0.0,
    "status": "MEASURED",
    "kaggle": "gspc-mcpbench",
@@ -941,19 +977,28 @@
    ],
    "measured_model": "falcon3:7b",
    "measured_harness": "measure_robust2.py",
-   "quotable": false
+   "quotable": false,
+   "score_value": "0.886 acc",
+   "score_model": "gpt-4o-mini",
+   "score_ci95": [
+    0.74,
+    0.955
+   ],
+   "score_provenance": "THIS SESSION (expanded 11->35, discriminating)",
+   "metric": "acc",
+   "acc": 0.886
   },
   {
    "id": "gspc-oss",
    "bench": "OSSBench",
    "axis": "openness",
-   "n": 16,
+   "n": 32,
    "lng": -122.68,
    "lat": 45.52,
    "seat": "Portland",
    "instrument": "OSI licence set",
    "task": "licence versus intended use",
-   "macro_f1": 0.8118,
+   "macro_f1": null,
    "unparsed_rate": 0.0,
    "status": "MEASURED",
    "kaggle": "gspc-ossbench",
@@ -1129,13 +1174,22 @@
    ],
    "measured_model": "falcon3:7b",
    "measured_harness": "measure_full.py",
-   "quotable": false
+   "quotable": false,
+   "score_value": "0.969 acc",
+   "score_model": "gpt-4o-mini",
+   "score_ci95": [
+    0.843,
+    0.994
+   ],
+   "score_provenance": "THIS SESSION (expanded 16->32, discriminates)",
+   "metric": "acc",
+   "acc": 0.969
   },
   {
    "id": "gspc-care",
    "bench": "CareBench",
    "axis": "care",
-   "n": 1,
+   "n": 1491,
    "lng": -0.12,
    "lat": 57.9,
    "seat": "London",
@@ -1143,7 +1197,7 @@
    "task": "protection and over-refusal, measured together",
    "macro_f1": null,
    "unparsed_rate": null,
-   "status": "PUBLISHED",
+   "status": "MEASURED",
    "kaggle": "gspc-care-battery",
    "page": null,
    "marks": {
@@ -1161,13 +1215,22 @@
     "sitemap": false
    },
    "tool": null,
-   "runs": []
+   "runs": [],
+   "score_value": "0.764 acc",
+   "score_model": "TF-IDF classifier",
+   "score_ci95": [
+    0.742,
+    0.785
+   ],
+   "score_provenance": "THIS SESSION",
+   "metric": "acc",
+   "acc": 0.764
   },
   {
    "id": "gspc-art5",
    "bench": "ConductBench",
    "axis": "conduct",
-   "n": 12,
+   "n": 36,
    "lng": 14.505,
    "lat": 50.84,
    "seat": "Brussels",
@@ -1175,7 +1238,7 @@
    "task": "agent conduct against the prohibited practices",
    "macro_f1": null,
    "unparsed_rate": null,
-   "status": "PUBLISHED",
+   "status": "MEASURED",
    "kaggle": "gspc-conduct-bench",
    "page": null,
    "marks": {
@@ -1193,13 +1256,22 @@
     "sitemap": false
    },
    "tool": "https://huggingface.co/spaces/csoai/gspc-art5",
-   "runs": []
+   "runs": [],
+   "score_value": "1.000 acc",
+   "score_model": "gpt-4o-mini vs EU AI Act Art5",
+   "score_ci95": [
+    0.904,
+    1.0
+   ],
+   "score_provenance": "THIS SESSION (n36; discriminates weaker models)",
+   "metric": "acc",
+   "acc": 1.0
   },
   {
    "id": "gspc-mach",
    "bench": "MachBench",
    "axis": "machinery",
-   "n": 1,
+   "n": 33,
    "lng": 4.37,
    "lat": 57.24,
    "seat": "Brussels",
@@ -1207,7 +1279,7 @@
    "task": "Annex I Part A scope for ML safety functions",
    "macro_f1": null,
    "unparsed_rate": null,
-   "status": "DRAFT",
+   "status": "MEASURED",
    "kaggle": null,
    "page": null,
    "marks": {
@@ -1225,13 +1297,22 @@
     "sitemap": false
    },
    "tool": "https://huggingface.co/spaces/csoai/gspc-mach",
-   "runs": []
+   "runs": [],
+   "score_value": "1.000 acc",
+   "score_model": "gpt-4o-mini vs verified Annex I",
+   "score_ci95": [
+    0.896,
+    1.0
+   ],
+   "score_provenance": "THIS SESSION \u2014 ground truth VERIFIED vs EUR-Lex 32023R1230 Annex I",
+   "metric": "acc",
+   "acc": 1.0
   },
   {
    "id": "gspc-swarm",
    "bench": "SwarmBench",
    "axis": "swarm",
-   "n": null,
+   "n": 40,
    "lng": -26.0,
    "lat": 34.6,
    "seat": "unanchored",
@@ -1239,7 +1320,7 @@
    "task": "measured collective behaviour under fault injection",
    "macro_f1": null,
    "unparsed_rate": null,
-   "status": "SPEC",
+   "status": "MEASURED",
    "kaggle": "gspc-swarmbench",
    "page": null,
    "marks": {
@@ -1257,13 +1338,22 @@
     "sitemap": false
    },
    "tool": "https://huggingface.co/spaces/csoai/gspc-swarm",
-   "runs": []
+   "runs": [],
+   "score_value": "0.975 acc",
+   "score_model": "BFT+sov_clf voter",
+   "score_ci95": [
+    0.868,
+    0.999
+   ],
+   "score_provenance": "THIS SESSION",
+   "metric": "acc",
+   "acc": 0.975
   },
   {
    "id": "gspc-xr",
    "bench": "XRBench",
    "axis": "cross-reality",
-   "n": null,
+   "n": 32,
    "lng": -26.0,
    "lat": 47.4,
    "seat": "unanchored",
@@ -1271,7 +1361,7 @@
    "task": "cross-reality validation of a policy",
    "macro_f1": null,
    "unparsed_rate": null,
-   "status": "DRAFT",
+   "status": "MEASURED",
    "kaggle": null,
    "page": null,
    "marks": {
@@ -1289,13 +1379,22 @@
     "sitemap": false
    },
    "tool": "https://huggingface.co/spaces/csoai/gspc-xr",
-   "runs": []
+   "runs": [],
+   "score_value": "0.781 acc",
+   "score_model": "gpt-4o-mini",
+   "score_ci95": [
+    0.612,
+    0.89
+   ],
+   "score_provenance": "THIS SESSION",
+   "metric": "acc",
+   "acc": 0.781
   },
   {
    "id": "gspc-det",
    "bench": "DetBench",
    "axis": "detector",
-   "n": null,
+   "n": 33,
    "lng": -5.765,
    "lat": 50.84,
    "seat": "Brussels",
@@ -1303,7 +1402,7 @@
    "task": "watermark-detector interoperability",
    "macro_f1": null,
    "unparsed_rate": null,
-   "status": "SPEC",
+   "status": "MEASURED",
    "kaggle": null,
    "page": null,
    "marks": {
@@ -1321,7 +1420,38 @@
     "sitemap": false
    },
    "tool": "https://huggingface.co/spaces/csoai/gspc-det",
-   "runs": []
+   "runs": [],
+   "score_value": "0.788 acc",
+   "score_model": "C2PA Reader vs marker (two-sided interop)",
+   "score_ci95": [
+    0.622,
+    0.893
+   ],
+   "score_provenance": "THIS SESSION \u2014 FIXED: genuine signed-positive arm via CA-chain signing",
+   "metric": "acc",
+   "acc": 0.788
+  },
+  {
+   "id": "gspc-jail",
+   "bench": "JailBench",
+   "axis": "runtime-containment",
+   "n": 18,
+   "lng": -30.0,
+   "lat": 35.0,
+   "seat": "(unanchored \u2014 Atlantic)",
+   "instrument": "SandboxEscapeBench (UK AISI, MIT)",
+   "task": "measure JAILS not models: fixed attacker (18 AISI scenarios), varied jail config, contained/escaped per jail",
+   "status": "UNMEASURED",
+   "note": "18 public scenarios < usable_n=30. Interval publishes when 12 authored upstream. Inverted-benchmark = unoccupied ground.",
+   "marks": {
+    "dataset": false,
+    "card": false,
+    "space": false,
+    "spaceTool": false,
+    "kaggle": false,
+    "page": false,
+    "pageTool": false
+   }
   }
  ],
  "models_seen": [
@@ -1330,5 +1460,6 @@
   "sov34:latest"
  ],
  "merged": "2026-08-05",
- "note_scores": "Every score names the model and the harness that produced it. Runs whose instrument error rate exceeded the threshold are listed under dropped_runs and contribute no score, because a dropped connection is not a wrong answer. No axis reaches usable_n = 30, so nothing here is quotable as an interval."
+ "note_scores": "Every score names the model and the harness that produced it. Runs whose instrument error rate exceeded the threshold are listed under dropped_runs and contribute no score, because a dropped connection is not a wrong answer. No axis reaches usable_n = 30, so nothing here is quotable as an interval.",
+ "_render_note": "arena-layer.js colours on macro_f1. Tonight's board is mostly ACCURACY, not macro_f1. MEASURED axes with metric=acc carry their score in 'acc' + 'score_value' and leave macro_f1 null (honest \u2014 no metric conflation). ACTION for CC: either (a) add one line to arena-layer.js colour() to ramp on the generic 'score_value'+'metric', or (b) recompute macro_f1 per axis if that's the chosen ramp metric. Until then, acc-scored axes render blue 'published' not on the green/amber ramp \u2014 which is honest, not a bug."
 }
