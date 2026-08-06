@@ -116,8 +116,8 @@ ths = "".join(f'<th class="rot"><span>{E(l)}</span></th>' for _, l in COLS)
 
 jsonld = {
     "@context": "https://schema.org", "@type": "Dataset",
-    "name": "GSPC — 12 greenfields, chain coverage and model board",
-    "description": f"Twelve AI-governance measurement greenfields with end-to-end chain "
+    "name": "GSPC — 13 greenfields, chain coverage and model board",
+    "description": f"Thirteen AI-governance measurement greenfields with end-to-end chain "
                    f"coverage measured live. Chain {pct}% complete. "
                    f"Scored against {len(models)} models: {', '.join(models)}.",
     "creator": {"@type": "Organization", "name": "CSOAI Ltd", "identifier": "UK 16939677"},
@@ -133,8 +133,8 @@ jsonld = {
 
 OUT.write_text(f'''<!doctype html><html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Arena — 12 greenfields, chain coverage and model board | CSOAI</title>
-<meta name="description" content="Twelve AI-governance measurement greenfields, with end-to-end chain coverage measured live and every measured model run on each of them.">
+<title>Arena — 13 greenfields, chain coverage and model board | CSOAI</title>
+<meta name="description" content="Thirteen AI-governance measurement greenfields, with end-to-end chain coverage measured live and every measured model run on each of them.">
 <style>
 :root{{--bg:#0b1220;--panel:#16233d;--ink:#eaf2ff;--mut:#8fa6c8;--line:#1e293b;--acc:#10b981}}
 *{{box-sizing:border-box;margin:0;padding:0}}
