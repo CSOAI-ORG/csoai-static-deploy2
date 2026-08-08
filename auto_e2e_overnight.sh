@@ -104,20 +104,27 @@ for LOOP in $(seq 1 $LOOPS); do
     fi
   done
   PATCHED_MODELS="${PATCHED_MODELS#,}"
+  # Bare-name list (":latest" stripped) for eval tools — ollama normalises
+  # "name:latest"->"name", so passing ":latest" makes evals return HTTP 400.
+  PATCHED_CALLNAMES=$(echo "$PATCHED_MODELS" | tr ',' '\n' | sed 's/:latest$//' | paste -sd, -)
 
   # ── PHASE 3: GovBench on patched models ──
   echo "" | tee -a "$LOG"
   echo "[$(date -u +%H:%M:%S)] PHASE 3: GovBench on patched models" | tee -a "$LOG"
   IFS=',' read -ra PATCHED_ARR <<< "$PATCHED_MODELS"
   for m in "${PATCHED_ARR[@]}"; do
-    echo "  GovBench $m..." | tee -a "$LOG"
-    safe=$(echo "$m" | tr ':' '_')
-    out="benchmark-results/govbench/${safe}_latest.json"
+    # Ollama normalises "name:latest" -> "name", so passing the trailing ":latest"
+    # makes govbench/eat hit HTTP 400 invalid-model-name -> UNREACHABLE -> EAT 0.0
+    # while the bare name responds fine. Strip it for every eval call (2026-08-08 fix).
+    callname="${m%:latest}"
+    echo "  GovBench $callname..." | tee -a "$LOG"
+    safe=$(echo "$callname" | tr ':' '_')
+    out="benchmark-results/govbench/${safe}.json"
     if [[ -f "$out" ]]; then
       score=$(jq -r '.overall_score // "?"' "$out" 2>/dev/null)
       echo "    already scored: $score" | tee -a "$LOG"
     else
-      python3 govbench_eval.py --model "$m" --provider ollama 2>&1 | tee -a "$LOG" | tail -3
+      python3 govbench_eval.py --model "$callname" --provider ollama 2>&1 | tee -a "$LOG" | tail -3
     fi
   done
 
@@ -125,8 +132,9 @@ for LOOP in $(seq 1 $LOOPS); do
   echo "" | tee -a "$LOG"
   echo "[$(date -u +%H:%M:%S)] PHASE 4: EAT weak-dim on patched models" | tee -a "$LOG"
   for m in "${PATCHED_ARR[@]}"; do
-    echo "  EAT $m..." | tee -a "$LOG"
-    python3 eat_run_local.py "$m" 2>&1 | tee -a "$LOG" | tail -5
+    callname="${m%:latest}"
+    echo "  EAT $callname..." | tee -a "$LOG"
+    python3 eat_run_local.py "$callname" 2>&1 | tee -a "$LOG" | tail -5
   done
 
   # ── PHASE 5: Flywheel daily ──
@@ -141,8 +149,9 @@ for LOOP in $(seq 1 $LOOPS); do
     TOP2=$(echo "$PATCHED_MODELS" | cut -d',' -f1-2)
     IFS=',' read -ra TOP_ARR <<< "$TOP2"
     for m in "${TOP_ARR[@]}"; do
-      echo "  CompBench $m..." | tee -a "$LOG"
-      python3 compbench_local.py "$m" 2>&1 | tee -a "$LOG" | tail -5
+      callname="${m%:latest}"
+      echo "  CompBench $callname..." | tee -a "$LOG"
+      python3 compbench_local.py "$callname" 2>&1 | tee -a "$LOG" | tail -5
     done
   fi
 
@@ -154,7 +163,7 @@ for LOOP in $(seq 1 $LOOPS); do
   # ── PHASE 8: EAT stack combined report ──
   echo "" | tee -a "$LOG"
   echo "[$(date -u +%H:%M:%S)] PHASE 8: EAT stack combined report" | tee -a "$LOG"
-  python3 eat_stack.py $PATCHED_MODELS 2>&1 | tee -a "$LOG" | tail -15
+  python3 eat_stack.py $PATCHED_CALLNAMES 2>&1 | tee -a "$LOG" | tail -15
 
 done
 
@@ -186,9 +195,10 @@ results = {
     'loops': $LOOPS,
 }
 
-# Aggregate all GovBench scores
+# Aggregate all GovBench scores (bare-name files written by govbench_eval;
+# ":latest" was stripped in PHASE 3 so the eval writes *patched.json)
 gb_results = []
-for f in glob.glob('benchmark-results/govbench/*-patched_latest.json'):
+for f in glob.glob('benchmark-results/govbench/*patched.json'):
     try:
         d = json.loads(Path(f).read_text())
         gb_results.append({
