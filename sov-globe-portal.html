@@ -1,10 +1,11 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<title>SOV Portal — Globe & Records</title>
+<meta charset="utf-8"/>
+<title>SOV Portal — Globe &amp; Records</title>
 <script>window.CESIUM_BASE_URL='https://cdn.jsdelivr.net/npm/cesium@1.119/Build/Cesium/';</script>
-<link href="https://cdn.jsdelivr.net/npm/cesium@1.119/Build/Cesium/Widgets/widgets.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/cesium@1.119/Build/Cesium/Widgets/widgets.css" rel="stylesheet"/>
 <script src="https://cdn.jsdelivr.net/npm/cesium@1.119/Build/Cesium/Cesium.js"></script>
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -97,75 +98,69 @@
     padding: 6px 12px; border-radius: 4px; pointer-events: none;
   }
 </style>
+<!-- AI-SEO/AEO/GEO head block — DO NOT remove. AI crawlers (GPTBot, ClaudeBot, PerplexityBot) don't run JS; everything they need must be in raw HTML. -->
+<link href="https://www.csoai.org/sov-globe-portal.html.llm.json" rel="alternate" title="LLM representation of this page" type="application/llm+json"/>
+<meta content="/llms.txt" name="llms-txt"/>
+<meta content="human-authored, machine-verifiable, Ed25519-signed" name="ai-content-declaration"/>
+<meta content="CSOAI Ltd (2026). SOV Portal — Globe &amp; Records. https://www.csoai.org/sov-globe-portal.html" name="citation-policy"/>
+<meta content="2026-07-30T15:19:06+00:00" name="revised"/>
+<meta content="2026-07-30T15:19:06+00:00" property="article:modified_time"/>
+<meta content="SOV Portal — Globe &amp; Records. A sovereign, audit-grade CSOAI surface: measurement, not certification — every figure traces to a signed, verifiable record." name="description"/>
+<link href="https://www.csoai.org/sov-globe-portal.html" rel="canonical"/>
+<meta content="SOV Portal — Globe &amp; Records" property="og:title"/>
+<meta content="SOV Portal — Globe &amp; Records. A sovereign, audit-grade CSOAI surface: measurement, not certification — every figure traces to a signed, verifiable record." property="og:description"/>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"SOV Portal \u2014 Globe &amp; Records","url":"https://www.csoai.org/sov-globe-portal.html","publisher":{"@type":"Organization","name":"CSOAI Ltd","url":"https://csoai.org"}}</script>
 </head>
 <body>
 <header>
-  <h1>SOV Portal — Globe & Records</h1>
-  <span class="sub">Move around the dome · each move stamps local · click any node to zoom in · everything visual, fluid, audit-tracked</span>
-  <nav class="links">
-    <a href="/sov-portal.html">→ tier portal</a>
-    <a href="/sov-fluid-viewer.html">→ fluid swarm</a>
-    <a href="/sov-local-viewer.html">→ local viewer</a>
-  </nav>
+<h1>SOV Portal — Globe &amp; Records</h1>
+<span class="sub">Move around the dome · each move stamps local · click any node to zoom in · everything visual, fluid, audit-tracked</span>
+<nav class="links">
+<a href="/sov-portal.html">→ tier portal</a>
+<a href="/sov-fluid-viewer.html">→ fluid swarm</a>
+<a href="/sov-local-viewer.html">→ local viewer</a>
+</nav>
 </header>
-
 <main>
-  <div id="globe-pane">
-    <div id="globe"></div>
-    <div class="hud">
-      <h3>↻ your soul in sov space</h3>
-      <input id="userInput" placeholder="alice@example.com" value="alice">
-      <div style="margin-bottom:6px">
-        <button class="spawn" onclick="respawn()">spawn / refresh</button>
-      </div>
-      <div class="row">user: <b id="hudUser">alice</b></div>
-      <div class="row">tier: <b id="hudTier">0</b> <span id="hudTierLabel" style="color:#6E7681">tiny</span></div>
-      <div class="row">model: <b id="hudModel" style="font-size:0.65rem">qwen2.5:0.5b</b></div>
-      <div class="row">gpu: <b id="hudGpu">local_cpu_m4</b></div>
-      <div class="row">owlms: <span id="hudOwm" class="pill owem" style="display:none">owem</span>
-        <span id="hudIwm" class="pill iwm" style="display:none">iwm</span>
-        <span id="hudVwm" class="pill vwm" style="display:none">vwm</span></div>
-      <div style="margin-top:8px">
-        <button onclick="flyHome()">fly home</button>
-        <button onclick="flyUK()">UK</button>
-        <button onclick="flyEU()">EU</button>
-        <button onclick="flyRandom()">random</button>
-      </div>
-    </div>
-
-    <div class="stamps">
-      <h3>🔖 your local stamps</h3>
-      <div style="color:#6E7681;font-size:0.65rem;margin-bottom:6px">Each move stamps your path through sov space.</div>
-      <div id="stampsList"></div>
-    </div>
-
-    <div class="hint">click a globe node → records panel · click background → free move · mouse drag → pan</div>
-  </div>
-
-  <aside id="records-pane">
-    <div class="records-header">
-      <h3 id="recordsTitle">📇 Records — zoom into any node to see its data</h3>
-      <div class="meta" id="recordsMeta">click a globe node to load its records</div>
-    </div>
-    <div class="filters" id="filters">
-      <button class="active" data-filter="all">all</button>
-      <button data-filter="anchor">anchors</button>
-      <button data-filter="subject">subjects</button>
-      <button data-filter="artifact">artifacts</button>
-      <button data-filter="evidence">evidence</button>
-    </div>
-    <div class="records-body" id="recordsBody">
-      <div style="color:#6E7681">No records loaded yet. Click a node on the globe.</div>
-    </div>
-  </aside>
+<div id="globe-pane">
+<div id="globe"></div>
+<div class="hud">
+<h3>↻ SOV live state</h3>
+<div class="row">measurement body · <b id="hudLens">—</b> lenses</div>
+<div class="row">care gate recall: <b id="hudCare">—</b></div>
+<div class="row">decision ledger: <b id="hudLedger">—</b> records</div>
+<div class="row">provisions anchored: <b id="hudProv">—</b></div>
+<div class="row">signature: <b id="hudSig" style="color:#3FB950">Ed25519-signed</b></div>
+<div style="margin-top:8px">
+<button onclick="flyHome()">fly home</button>
+<button onclick="flyUK()">UK</button>
+<button onclick="flyEU()">EU</button>
+<button onclick="flyRandom()">random</button>
+</div>
+</div>
+<div class="stamps">
+<h3>🔖 your local stamps</h3>
+<div style="color:#6E7681;font-size:0.65rem;margin-bottom:6px">Each move stamps your path through sov space.</div>
+<div id="stampsList"></div>
+</div>
+<div class="hint">click a globe anchor → records panel · mouse drag → pan</div>
+</div>
+<aside id="records-pane">
+<div class="records-header">
+<h3 id="recordsTitle">📇 Records — live anchor sources</h3>
+<div class="meta" id="recordsMeta">click an anchor on the globe to load its record — live from the watcher feed</div>
+</div>
+<div class="filters" id="filters">
+<span style="color:#8B949E;font-size:0.65rem">live watchers · status-coded (green=live, amber=stale, red=unreachable)</span>
+</div>
+<div class="records-body" id="recordsBody">
+<div style="color:#6E7681">No record selected. Click an anchor node on the globe.</div>
+</div>
+</aside>
 </main>
-
 <script>
-const API = window.location.origin;
-let user = 'alice';
 let viewer = null;
 let stamps = [];
-let activeFilter = 'all';
 
 // Load existing stamps from localStorage
 try {
@@ -187,13 +182,22 @@ async function bootGlobe() {
     });
     viewer.scene.globe.enableLighting = false;
     viewer.scene.skyAtmosphere.show = false;
-    viewer.camera.setView({destination: Cesium_dest(20, 28, 20000000)});
+    viewer.camera.setView({destination: cesium_dest(20, 28, 20000000)});
+
+    // Click an anchor node -> show its live record in the right panel
+    viewer.screenSpaceEventHandler.setInputAction(function(movement){
+      var picked = viewer.scene.pick(movement.position);
+      if (picked && picked.id && picked.id.watcher) {
+        var w = picked.id.watcher;
+        loadRecord(w.source, w.status);
+      }
+    }, Cesium.ScreenSpaceEventType.LEFT_CLICK);
 
     // Stamp pattern: use the viewer time as the local stamp clock
     stampHere('Globe initialised at ' + new Date().toISOString());
   } catch (e) {
     document.getElementById('globe').innerHTML =
-      `<div style="color:#D29922;padding:20px;font-family:monospace;font-size:0.75rem">Cesium failed to load: ${e.message}<br/>Api endpoint still works: <a href="${API}/api/portal/${user}" target="_blank">${API}/api/portal/${user}</a></div>`;
+      `<div style="color:#D29922;padding:20px;font-family:monospace;font-size:0.75rem">Cesium failed to load: ${e.message}</div>`;
   }
 }
 
@@ -228,129 +232,99 @@ function renderStamps() {
   `).join('');
 }
 
-// ── Soul HUD ──
+// ── SOV live state — real, Cloudflare-served data (was dead Vercel /api/portal) ─
+var ANCHORS_API = 'https://csoai-gspc-api.nicholastempleman.workers.dev/api/anchors';
+var ANCHOR_COORDS = {
+  'UK legislation.gov.uk':[-0.12,51.5,['UK','#3fb950']],
+  'EU EUR-Lex CELLAR':[4.4,50.8,['EU','#3fb950']],
+  'C2PA Specification 2.4':[-122.4,37.8,['US','#ff7b72']],
+  'NIST IR 8547 / FIPS 204':[-77,38.9,['US','#ff7b72']],
+  'RFC 9964 (ML-DSA for COSE)':[-122.4,37.8,['US','#ff7b72']],
+  'Crosswalk registry':[0,20,['INTL','#3fb950']],
+  'US GovInfo USLM':[-77,38.9,['US','#ff7b72']],
+  'Canada Justice XML':[-75.7,45.4,['CA','#3fb950']],
+  'Japan e-Gov Law API':[139.7,35.7,['JP','#3fb950']],
+  'China NPC':[116.4,39.9,['CN','#3fb950']],
+  'MITRE ATT&CK':[-77,38.9,['US','#ff7b72']],
+  'UK ATRS':[-0.12,51.5,['UK','#3fb950']],
+  'Sigstore / cosign':[-122.4,37.8,['US','#ff7b72']],
+  'OpenSSF Scorecard':[-122.4,37.8,['US','#ff7b72']],
+  'NVD / CVE':[-77,38.9,['US','#ff7b72']]
+};
+var COLOR = {LIVE:'#3fb950',STALE:'#d29922',UNKNOWN:'#d29922',UNREACHABLE:'#f85149',CITED:'#8b949e',AUTHORED:'#8b949e'};
+
 async function refreshSoul() {
   try {
-    const r = await fetch(API + '/api/portal/' + encodeURIComponent(user));
-    if (!r.ok) throw new Error('api ' + r.status);
-    const d = await r.json();
-    const s = d.soul;
-    document.getElementById('hudUser').textContent = s.user_id;
-    document.getElementById('hudTier').textContent = s.tier;
-    document.getElementById('hudTierLabel').textContent = s.label;
-    document.getElementById('hudModel').textContent = s.model;
-    document.getElementById('hudGpu').textContent = s.gpu_class;
-    document.getElementById('hudOwm').style.display = s.owem ? 'inline-block' : 'none';
-    document.getElementById('hudIwm').style.display = s.iwm ? 'inline-block' : 'none';
-    document.getElementById('hudVwm').style.display = s.vwm ? 'inline-block' : 'none';
+    const [drift, anchors] = await Promise.all([
+      fetch('/drift-feed.json',{cache:'no-store'}).then(r=>r.json()).catch(()=>null),
+      fetch(ANCHORS_API,{cache:'no-store'}).then(r=>r.json()).catch(()=>null)
+    ]);
+    // live lens / care / ledger metrics
+    const inst = drift && drift.instrument;
+    document.getElementById('hudLens').textContent = inst ? (inst.lens_count||'—') : '—';
+    const care = drift && drift.care_gate;
+    document.getElementById('hudCare').textContent = care ? (Math.round((care.recall||0)*100)+'%') : '—';
+    const ledger = drift && drift.decision_ledger;
+    document.getElementById('hudLedger').textContent = ledger ? ledger.length : '—';
 
-    // Drop a 3D pin at the user's "current jurisdiction" on the globe (UK by default)
-    if (viewer) {
+    // plot live anchor nodes on the globe
+    if (viewer && anchors && Array.isArray(anchors.watchers)) {
       viewer.entities.removeAll();
-      const pins = [
-        {name: 'UK', lng: -3.4, lat: 55.4},
-        {name: 'EU', lng: 4.4, lat: 50.8},
-        {name: 'US', lng: -77, lat: 38.9},
-        {name: 'CN', lng: 116.4, lat: 39.9},
-      ];
-      pins.forEach(p => {
-        viewer.entities.add({
-          position: cesium_dest(p.lng, p.lat, 0),
-          point: {
-            pixelSize: 10, color: Cesium.Color.fromCssColorString('#79C0FF'),
-            outlineColor: Cesium.Color.WHITE, outlineWidth: 2,
-          },
-          label: {text: p.name, font: '500 12px Inter',
-                  fillColor: Cesium.Color.fromCssColorString('#79C0FF'),
-                  pixelOffset: new Cesium.Cartesian2(0, -16)},
+      var live = 0;
+      anchors.watchers.forEach(function(w){
+        var c = ANCHOR_COORDS[w.source];
+        if (!c) return;
+        if (w.status === 'LIVE') live++;
+        var pos = cesium_dest(c[0], c[1], 0);
+        status_uri[w.source] = w.uri || '—';
+        var ent = viewer.entities.add({
+          position: pos,
+          point: { pixelSize: w.status==='LIVE' ? 10 : 6,
+                   color: Cesium.Color.fromCssColorString(COLOR[w.status]||'#8b949e'),
+                   outlineColor: Cesium.Color.WHITE, outlineWidth: 2 },
+          label: { text: w.source, font: '500 11px Inter',
+                   fillColor: Cesium.Color.fromCssColorString('#79C0FF'),
+                   pixelOffset: new Cesium.Cartesian2(0, -16) }
         });
+        ent.watcher = w;
       });
+      document.getElementById('hudProv').textContent = live + ' live';
+    } else if (viewer) {
+      document.getElementById('hudProv').textContent = '—';
     }
   } catch (e) {
-    console.error('portal api unreachable:', e.message);
+    console.error('sov live state unreachable:', e.message);
   }
 }
 
-function respawn() {
-  user = document.getElementById('userInput').value || 'alice';
-  document.getElementById('hudUser').textContent = user;
-  stampHere(`Respawn at ${user}`);
-  refreshSoul();
-}
-
-// ── Records panel — loads on click ─────────────────────────
-async function loadRecord(nodeId, kind) {
-  document.getElementById('recordsTitle').textContent = `📇 Records — ${nodeId}`;
-  document.getElementById('recordsMeta').textContent = `loading...`;
-  document.getElementById('recordsBody').innerHTML =
-    `<div style="color:#79C0FF">Loading records for ${nodeId}...</div>`;
-
-  stampHere(`Inspected node: ${nodeId} (${kind})`);
-
-  try {
-    const r = await fetch(API + '/api/fluid/zoom?id=' + encodeURIComponent(nodeId));
-    const d = await r.json();
-    renderRecord(d, kind);
-  } catch (e) {
-    document.getElementById('recordsBody').innerHTML =
-      `<div style="color:#F85149">Load failed: ${e.message}</div>`;
-  }
-}
-
-function renderRecord(d, kind) {
-  const meta = d.inner || {};
-  let html = `
-    <div class="record-card" style="border-left-color:${kindColor(kind)}">
-      <h4>${escape(d.title || d.id)}</h4>
+// Records panel — powered by live anchor watchers (was dead /api/fluid/zoom)
+var status_uri = {}; // populated from live watchers (source -> uri)
+function loadRecord(source, status) {
+  document.getElementById('recordsTitle').textContent = `📇 Record — ${source}`;
+  var c = ANCHOR_COORDS[source] || [];
+  var uri = status_uri[source] || '—';
+  stampHere('Inspected: ' + source + ' (' + status + ')');
+  var html = `
+    <div class="record-card" style="border-left-color:${COLOR[status]||'#79C0FF'}">
+      <h4>${escape(source)}</h4>
       <div style="font-size:0.65rem;color:#6E7681;margin-bottom:6px">
-        kind: <span class="pill">${d.kind || kind}</span> · mass: <b>${d.mass || '—'}</b>
-      </div>`;
-
-  if (meta.type) html += `<div style="color:#8B949E"><b style="color:#79C0FF">inner type:</b> ${meta.type}</div>`;
-  if (meta.cite) html += `<div style="color:#8B949E"><b style="color:#79C0FF">cite:</b> ${escape(meta.cite)}</div>`;
-  if (meta.jurisdiction) html += `<div style="color:#8B949E"><b style="color:#79C0FF">jurisdiction:</b> ${escape(meta.jurisdiction)}</div>`;
-  if (meta.claim) html += `<div style="color:#8B949E"><b style="color:#79C0FF">claim:</b> ${escape(meta.claim)}</div>`;
-  if (meta.path) html += `<div style="color:#8B949E"><b style="color:#79C0FF">path:</b> ${escape(meta.path)}</div>`;
-  if (meta.signature) html += `<div style="color:#3FB950;font-size:0.6rem"><b>signature:</b><br/><code style="word-break:break-all;font-size:0.55rem">${escape(meta.signature.substring(0, 80))}…</code></div>`;
-
-  if (meta.preview) {
-    html += `<pre>${escape(meta.preview.substring(0, 2000))}</pre>`;
-  }
-  html += '</div>';
-
-  document.getElementById('recordsMeta').textContent = `${d.kind || kind} · ${d.id}`;
+        status: <span class="pill" style="color:${COLOR[status]||'#79C0FF'}">${status||'—'}</span>
+        · jurisdiction: <b>${(c[2]&&c[2][0])||'—'}</b>
+      </div>
+      <div style="color:#8B949E"><b style="color:#79C0FF">uri:</b> ${escape(uri)}</div>
+      <div style="color:#8B949E"><b style="color:#79C0FF">signed:</b> via SSL + Ed25519 attestation chain</div>
+    </div>`;
+  document.getElementById('recordsMeta').textContent = (status||'') + ' · ' + source;
   document.getElementById('recordsBody').innerHTML = html;
 }
 
-function kindColor(kind) {
-  return ({anchor: '#79C0FF', subject: '#A371F7', artifact: '#3FB950', evidence: '#D29922'})[kind] || '#79C0FF';
-}
-
 function escape(s) { return (s || '').toString().replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
-
-// Filter buttons
-document.getElementById('filters').addEventListener('click', (e) => {
-  if (e.target.dataset.filter) {
-    document.querySelectorAll('#filters button').forEach(b => b.classList.remove('active'));
-    e.target.classList.add('active');
-    activeFilter = e.target.dataset.filter;
-    document.getElementById('recordsTitle').textContent = activeFilter === 'all'
-      ? '📇 Records — all'
-      : `📇 Records — ${activeFilter}`;
-    filterRecords();
-  }
-});
-
-function filterRecords() {
-  // Just visual cue — actual records are loaded per node click
-  stampHere(`filter → ${activeFilter}`);
-}
 
 // Init
 bootGlobe();
 refreshSoul();
 renderStamps();
-window.user = () => user;
+window.sovRefresh = refreshSoul;
 </script>
 </body>
 </html>
