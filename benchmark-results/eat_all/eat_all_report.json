@@ -1,19 +1,19 @@
 {
-  "run_id": "eat_all_1786198188",
-  "finished_at": "2026-08-08T14:09:48.639734+00:00",
+  "run_id": "eat_all_1786198782",
+  "finished_at": "2026-08-08T14:19:42.690672+00:00",
   "phases": {
     "PHASE_0_HEALTH": {
       "status": "ran",
-      "duration_s": 22.4,
+      "duration_s": 25.9,
       "artifacts": [],
       "error": null,
       "sov_local_status": "unreachable: <urlopen error [Errno 61] Connection refused>",
       "ollama_models": 3,
-      "kb_entries": 328070
+      "kb_entries": 328078
     },
     "PHASE_1_REBOARD": {
       "status": "ran",
-      "duration_s": 5.1,
+      "duration_s": 5.5,
       "artifacts": [],
       "error": null,
       "exit_code": 0,
@@ -21,15 +21,15 @@
     },
     "PHASE_2_KB_GROW": {
       "status": "ran",
-      "duration_s": 32.8,
+      "duration_s": 44.0,
       "artifacts": [],
       "error": null,
       "exit_code": 0,
-      "stdout_tail": "Loading KB from /Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/sov_kb.json...\n  Initial entries: 328070\n\nDone. Added 0 entries, skipped 0.\nFinal entry count: 328070\nKB saved to /Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/sov_kb.json\n"
+      "stdout_tail": "Loading KB from /Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/sov_kb.json...\n  Initial entries: 328078\n\nDone. Added 0 entries, skipped 0.\nFinal entry count: 328078\nKB saved to /Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/sov_kb.json\n"
     },
     "PHASE_3_PROBES": {
       "status": "ran",
-      "duration_s": 0.1,
+      "duration_s": 0.2,
       "artifacts": [],
       "error": null,
       "chatml": 1,
@@ -48,7 +48,7 @@
     },
     "PHASE_5_HONEY": {
       "status": "ran",
-      "duration_s": 1.5,
+      "duration_s": 6.2,
       "artifacts": [
         "/Users/nicholas/clawd/csoai-static-deploy2/forest/honey_all_producers.jsonl"
       ],
@@ -59,18 +59,18 @@
     },
     "PHASE_6_DOWNLOADS": {
       "status": "ran",
-      "duration_s": 3.7,
+      "duration_s": 6.6,
       "artifacts": [
         "/Users/nicholas/clawd/csoai-static-deploy2/forest/honey_downloads.jsonl"
       ],
       "error": null,
-      "exit_code": 0,
-      "stdout_tail": "Mining /Users/nicholas/Downloads...\n  Output: /Users/nicholas/clawd/csoai-static-deploy2/forest/honey_downloads.jsonl\n  sov_route available: True\n  Total files: 310\n  Matched: 158\n    code/producer: 12\n    data/config: 9\n    spec: 137\n  Cache loaded: 158 entries\n\n  Total emitted: 0 (cache hits: 158)\n  Saved to: /Users/nicholas/clawd/csoai-static-deploy2/forest/honey_downloads.jsonl\n  Cache saved to: /Users/nicholas/clawd/csoai-static-deploy2/forest/mine_downloads_cache.json\n",
+      "exit_code": 1,
+      "stdout_tail": "Mining /Users/nicholas/Downloads...\n  Output: /Users/nicholas/clawd/csoai-static-deploy2/forest/honey_downloads.jsonl\n  sov_route available: True\n",
       "files_mined": 158
     },
     "PHASE_7_PORTAL": {
       "status": "ran",
-      "duration_s": 0.8,
+      "duration_s": 3.9,
       "artifacts": [],
       "error": null,
       "exit_code": 0,
@@ -78,7 +78,7 @@
     },
     "PHASE_9_ARTIFACTS": {
       "status": "ran",
-      "duration_s": 2.6,
+      "duration_s": 10.1,
       "artifacts": [
         "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/eat_all/sov_kb.json",
         "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/eat_all/honey_all_producers.jsonl",
@@ -91,7 +91,7 @@
     },
     "PHASE_9B_EXTERNAL_HARNESS": {
       "status": "ran",
-      "duration_s": 15.3,
+      "duration_s": 58.9,
       "artifacts": [
         "/Users/nicholas/clawd/csoai-static-deploy2/forest/external_framework_harness.json",
         "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/sov_kb.json",
@@ -99,11 +99,11 @@
       ],
       "error": null,
       "clans_routed": 0,
-      "swarm_id": "owem-clans-1786197989"
+      "swarm_id": "owem-clans-1786198364"
     },
     "PHASE_9C_OWEM_CLUSTER": {
       "status": "ran",
-      "duration_s": 10.3,
+      "duration_s": 17.5,
       "artifacts": [
         "/Users/nicholas/clawd/csoai-static-deploy2/forest/owem_cluster_config.json",
         "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/sov_kb.json"
@@ -113,7 +113,7 @@
     },
     "PHASE_9D_BENCHMARKS_HARNESS": {
       "status": "ran",
-      "duration_s": 14.3,
+      "duration_s": 38.4,
       "artifacts": [
         "/Users/nicholas/clawd/csoai-static-deploy2/forest/benchmarks_harness.json",
         "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/sov_kb.json"
@@ -122,82 +122,73 @@
       "benchmarks_routed": 0
     },
     "PHASE_9E_TRAINING_DATA_HARNESS": {
-      "status": "ran",
-      "duration_s": 20.5,
+      "status": "failed",
+      "duration_s": 42.0,
       "artifacts": [
-        "/Users/nicholas/clawd/csoai-static-deploy2/forest/training_data_harness.json",
-        "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/sov_kb.json"
+        "/Users/nicholas/clawd/csoai-static-deploy2/forest/training_data_harness.json"
       ],
-      "error": null,
+      "error": "[Errno 28] No space left on device",
       "data_sources_routed": 0
     },
     "PHASE_9F_SOVEREIGN_TRAINING_PIPELINE": {
-      "status": "ran",
-      "duration_s": 9.3,
+      "status": "failed",
+      "duration_s": 6.0,
       "artifacts": [
-        "/Users/nicholas/clawd/csoai-static-deploy2/forest/sovereign_training_pipeline.json",
-        "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/sov_kb.json"
+        "/Users/nicholas/clawd/csoai-static-deploy2/forest/sovereign_training_pipeline.json"
       ],
-      "error": null,
+      "error": "Expecting value: line 5996183 column 21 (char 205012992)",
       "stages_routed": 0
     },
     "PHASE_9G_AUDIENCE_HARNESS": {
-      "status": "ran",
-      "duration_s": 29.1,
+      "status": "failed",
+      "duration_s": 6.0,
       "artifacts": [
-        "/Users/nicholas/clawd/csoai-static-deploy2/forest/audience_harness.json",
-        "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/sov_kb.json"
+        "/Users/nicholas/clawd/csoai-static-deploy2/forest/audience_harness.json"
       ],
-      "error": null,
+      "error": "Expecting value: line 5996183 column 21 (char 205012992)",
       "audiences_routed": 0
     },
     "PHASE_9H_SOV_HIVE_HARNESS": {
-      "status": "ran",
-      "duration_s": 24.4,
-      "artifacts": [
-        "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/sov_kb.json"
-      ],
-      "error": null,
-      "kb_entries_added": 7,
-      "exit_code": 0,
-      "stdout_tail": "sov_hive_to_honey.py \u2014 auto-convert hive output \u2192 honey KB\n\n  KB: 328070 \u2192 328077 entries (+7)\n  Saved to: /Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/sov_kb.json\n\n  Auto-routes via EAT_ALL Phase 10B (model routing)\n  Both repos pushed via EAT_ALL Phase 11 (git push)\n"
+      "status": "failed",
+      "duration_s": 3.2,
+      "artifacts": [],
+      "error": "Expecting value: line 5996183 column 21 (char 205012992)",
+      "kb_entries_added": 0
     },
     "PHASE_9I_SOV_CAPTURE": {
       "status": "failed",
-      "duration_s": 60.2,
+      "duration_s": 300.3,
       "artifacts": [],
-      "error": "Command '['python3', '/Users/nicholas/clawd/csoai-static-deploy2/sov_capture.py', '--refine']' timed out after 60 seconds",
+      "error": "Command '['python3', '/Users/nicholas/clawd/csoai-static-deploy2/sov_capture.py', '--refine']' timed out after 300 seconds",
       "events_processed": 0,
       "skills_extracted": 0
     },
     "PHASE_9J_IWM_BOOTSTRAP": {
       "status": "ran",
-      "duration_s": 17.2,
+      "duration_s": 2.3,
       "artifacts": [
         "/Users/nicholas/.sov/iwm/iwm_schema.json",
-        "/Users/nicholas/.sov/iwm/sovereign_bootstrap_20260808_140919.jsonl",
+        "/Users/nicholas/.sov/iwm/sovereign_bootstrap_20260808_141939.jsonl",
         "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/sov_kb.json"
       ],
       "error": null,
       "iwm_records": 0,
       "kb_entries_added": 0,
-      "exit_code": 0,
-      "stdout_tail": ": 328077 \u2192 328077 entries (+0)\n  Saved to: /Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/sov_kb.json\n\n\u2554\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2557\n\u2551  IWM Bootstrap Complete                                   \u2551\n\u2551  Records:     0 | KB entries: +   0                  \u2551\n\u2551  Schema:  /Users/nicholas/.sov/iwm/iwm_schema.json\n\u2551  Shard:   /Users/nicholas/.sov/iwm/sovereign_bootstrap_20260808_140919.jsonl\n\u255a\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u255d\n"
+      "exit_code": 1,
+      "stdout_tail": "M schema...\n  IWM schema: /Users/nicholas/.sov/iwm/iwm_schema.json\n\nStep 2: Feed /tmp/csoai-sovereign-system...\n  Scanning /tmp/csoai-sovereign-system...\n  Found 0 files\n  IWM records: 0\n  KB entries: 0\n  Errors: 0\n\nStep 3: Feed csoai_repos.json...\n  Added: 0 IWM records, 0 KB entries\n\nStep 4: Feed 79K dataset metadata...\n  Added: 0 IWM records, 0 KB entries\n\nStep 5: Write IWM shard...\n  IWM shard: /Users/nicholas/.sov/iwm/sovereign_bootstrap_20260808_141939.jsonl\n\nStep 6: Update sov_kb.json...\n"
     },
     "PHASE_10B_MODEL_ROUTING": {
-      "status": "ran",
-      "duration_s": 12.6,
-      "artifacts": [
-        "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/sov_kb.json"
-      ],
-      "error": null,
+      "status": "failed",
+      "duration_s": 1.5,
+      "artifacts": [],
+      "error": "Expecting value: line 5996183 column 21 (char 205012992)",
       "models_routed": 0,
-      "specs_routed": 1
+      "specs_routed": 0
     }
   },
   "phase_summary": {
-    "ran": 18,
-    "failed": 1,
+    "ran": 13,
+    "failed": 6,
     "skipped": 0
   }
 }
