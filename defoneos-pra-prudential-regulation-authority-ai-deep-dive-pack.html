@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<title>DEFONEOS — PRA prudential regulation authority AI Deep-Dive Pack</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#0a0a0a;color:#e0e0e0;font-family:system-ui,sans-serif;line-height:1.6}
+a{color:#00ff88;text-decoration:none}a:hover{text-decoration:underline}
+.hero{background:linear-gradient(135deg,#0a0a0a,#1a1a2e,#0d1117);padding:40px 20px;text-align:center;border-bottom:2px solid #00ff88}
+.hero h1{font-size:2em;color:#00ff88;margin-bottom:6px}
+.sub{color:#888;font-size:.95em;margin-bottom:10px}
+.bg{display:inline-block;background:#1a1a2e;border:1px solid #00ff88;padding:4px 12px;border-radius:20px;color:#00ff88;font-size:.8em;margin:3px}
+nav{background:#111;padding:10px 20px;border-bottom:1px solid #222;position:sticky;top:0;z-index:100;overflow-x:auto;white-space:nowrap}
+nav a{display:inline-block;padding:4px 10px;margin:2px;background:#1a1a2e;border:1px solid #333;border-radius:6px;font-size:.75em;color:#00ff88;transition:all .2s}
+nav a:hover{background:#00ff88;color:#0a0a0a;text-decoration:none}
+.c{max-width:1200px;margin:0 auto;padding:20px}
+.s{margin:28px 0;background:#1a1a2e;border:1px solid #222;border-radius:12px;overflow:hidden}
+.sh{background:linear-gradient(90deg,#1a1a2e,#0d1117);padding:14px 18px;border-bottom:1px solid #333}
+.sh h2{color:#00ff88;font-size:1.2em;margin-bottom:2px}
+.en{color:#666;font-size:.78em}
+.sb{padding:18px}
+.g{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px;margin-bottom:14px}
+.p{background:#0d1117;border:1px solid #222;border-radius:8px;padding:12px;transition:border-color .2s}
+.p:hover{border-color:#00ff88}
+.p h3{color:#00ff88;font-size:.84em;margin-bottom:5px}
+.p p{color:#aaa;font-size:.78em;line-height:1.5}
+.mt{background:#111;border:1px solid #222;border-radius:8px;padding:12px;margin-top:10px}
+.mt h4{color:#00ff88;font-size:.82em;margin-bottom:6px}
+.ml{display:flex;flex-wrap:wrap;gap:5px}
+.t{background:#1a1a2e;border:1px solid #00ff88;padding:2px 9px;border-radius:16px;font-size:.72em;color:#00ff88}
+footer{background:#111;border-top:2px solid #00ff88;padding:20px;text-align:center;margin-top:28px}
+.br{font-size:1.1em;color:#00ff88;font-weight:700;margin-bottom:5px}
+footer p{color:#666;font-size:.75em;line-height:1.5}
+.cr{margin-top:10px;padding-top:10px;border-top:1px solid #222;color:#555;font-size:.72em}
+@media(max-width:768px){.hero h1{font-size:1.4em}.g{grid-template-columns:1fr}}
+</style>
+<link href="https://www.csoai.org/defoneos-pra-prudential-regulation-authority-ai-deep-dive-pack.llm.json" rel="alternate" title="LLM representation of this page" type="application/llm+json"/>
+<meta content="/llms.txt" name="llms-txt"/>
+<meta content="human-authored, machine-verifiable, Ed25519-signed" name="ai-content-declaration"/>
+<meta content="CSOAI Ltd (2026). DEFONEOS — PRA prudential regulation authority AI Deep-Dive Pack. https://www.csoai.org/defoneos-pra-prudential-regulation-authority-ai-deep-dive-pack" name="citation-policy"/>
+<meta content="2026-08-08T16:30:00+00:00" name="revised"/>
+<meta content="2026-08-08T16:30:00+00:00" property="article:modified_time"/>
+<meta content="DEFONEOS — PRA prudential regulation authority AI Deep-Dive Pack. A sovereign, audit-grade CSOAI surface: measurement, not certification — every figure traces to a signed, verifiable record." name="description"/>
+<link href="https://www.csoai.org/defoneos-pra-prudential-regulation-authority-ai-deep-dive-pack.html" rel="canonical"/>
+<meta content="DEFONEOS — PRA prudential regulation authority AI Deep-Dive Pack" property="og:title"/>
+<meta content="DEFONEOS — PRA prudential regulation authority AI Deep-Dive Pack. A sovereign, audit-grade CSOAI surface: measurement, not certification — every figure traces to a signed, verifiable record." property="og:description"/>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"DEFONEOS \u2014 PRA prudential regulation authority AI Deep-Dive Pack","url":"https://www.csoai.org/defoneos-pra-prudential-regulation-authority-ai-deep-dive-pack.html","publisher":{"@type":"Organization","name":"CSOAI Ltd","url":"https://csoai.org"}}</script>
+</head>
+<body>
+<div class="hero">
+<h1>🏦 PRA — prudential regulation authority AI Deep-Dive Pack</h1>
+<p class="sub">DEFONEOS — UK Sovereign Public Services OS</p>
+<div><span class="bg">12 Entry Points</span><span class="bg">8 AI Priorities</span><span class="bg">6 MCP Tools</span></div>
+<p>96 AI capability mappings × 6 MCP integrations — PRA</p>
+</div>
+<nav>
+<a href="#ep1">Capital Adequacy</a>
+<a href="#ep2">Supervisory Review SREP</a>
+<a href="#ep3">Resolution Planning</a>
+<a href="#ep4">Liquidity Risk</a>
+<a href="#ep5">Model Risk & Validation</a>
+<a href="#ep6">Insurance Solvency II</a>
+<a href="#ep7">Market & Conduct</a>
+<a href="#ep8">Authorisation & Licensing</a>
+<a href="#ep9">Data & Regulatory Report</a>
+<a href="#ep10">Operational Resilience</a>
+<a href="#ep11">Climate & Environ Risk</a>
+<a href="#ep12">Governance & Parlia</a>
+</nav>
+<div class="c">
+<div class="s" id="ep1"><div class="sh"><span class="en">Entry Point 01</span><h2>Capital Adequacy Framework</h2></div><div class="sb"><div class="g">
+<div class="p"><h3>Compliance Automation</h3><p>Automated Capital Adequacy Framework validation checking Basel III/Capital Requirements Regulation (CRR) rules, PRA capital buffers, and minimum capital requirements under FSMA 2000.</p></div>
+<div class="p"><h3>Risk Detection & Early Warning</h3><p>Detection of capital ratio breaches, buffer erosion, and risk-weight inconsistencies affecting Capital Adequacy Framework performance and accountability.</p></div>
+<div class="p"><h3>Natural Language Policy Analysis</h3><p>NLP analysis of CRR rulebook, PRA capital statements, Basel III standards, and supervisory statements against Capital Adequacy Framework policy and statutory requirements.</p></div>
+<div class="p"><h3>Predictive Analytics</h3><p>Capital Adequacy Framework risk scoring from capital ratio trends, buffer headroom, and risk density indicators for decision support.</p></div>
+<div class="p"><h3>Evidence Synthesis</h3><p>Capital Adequacy Framework evidence, ICAAP submissions, capital returns, and supervisory data into decision dossiers for review.</p></div>
+<div class="p"><h3>Document Intelligence</h3><p>Extraction from capital returns, ICAAP documents, and Pillar 3 disclosures for Capital Adequacy Framework lifecycle tracking.</p></div>
+<div class="p"><h3>Stakeholder Reporting</h3><p>Capital Adequacy Framework dashboards showing capital ratios, buffers, and ICAAP status.</p></div>
+<div class="p"><h3>Real-time Monitoring</h3><p>Capital Adequacy Framework pipeline tracking, capital return cycles, and ratio surveillance.</p></div>
+</div><div class="mt"><h4>MCP Tools</h4><div class="ml"><span class="t">mcp-govuk-search</span><span class="t">mcp-uk-legislation</span><span class="t">mcp-uk-regulator-intel</span><span class="t">mcp-hansard-search</span><span class="t">mcp-bank-of-england</span><span class="t">mcp-cabinet-office-resilience</span></div></div></div></div>
+<div class="s" id="ep2"><div class="sh"><span class="en">Entry Point 02</span><h2>Supervisory Review and Evaluation (SREP)</h2></div><div class="sb"><div class="g">
+<div class="p"><h3>Compliance Automation</h3><p>Automated Supervisory Review and Evaluation (SREP) validation checking PRA SREP methodology, risk framework alignment, and Pillar 2 capital assessment under CRD framework.</p></div>
+<div class="p"><h3>Risk Detection & Early Warning</h3><p>Detection of SREP score drifts, risk framework gaps, and Pillar 2 setting inconsistencies affecting Supervisory Review and Evaluation (SREP) performance and accountability.</p></div>
+<div class="p"><h3>Natural Language Policy Analysis</h3><p>NLP analysis of PRA SREP methodology, supervisory statements, and EBA guidelines against Supervisory Review and Evaluation (SREP) policy and statutory requirements.</p></div>
+<div class="p"><h3>Predictive Analytics</h3><p>Supervisory Review and Evaluation (SREP) risk scoring from scoring trends, business model viability, and risk governance indicators for decision support.</p></div>
+<div class="p"><h3>Evidence Synthesis</h3><p>Supervisory Review and Evaluation (SREP) evidence, risk assessments, supervisory dialogues, and Pillar 2 returns into decision dossiers for review.</p></div>
+<div class="p"><h3>Document Intelligence</h3><p>Extraction from SREP reports, business model analyses, and risk framework documents for Supervisory Review and Evaluation (SREP) lifecycle tracking.</p></div>
+<div class="p"><h3>Stakeholder Reporting</h3><p>Supervisory Review and Evaluation (SREP) dashboards showing scores, capital add-ons, and supervisory priorities.</p></div>
+<div class="p"><h3>Real-time Monitoring</h3><p>Supervisory Review and Evaluation (SREP) pipeline tracking, review cycles, and risk surveillance.</p></div>
+</div><div class="mt"><h4>MCP Tools</h4><div class="ml"><span class="t">mcp-govuk-search</span><span class="t">mcp-uk-legislation</span><span class="t">mcp-uk-regulator-intel</span><span class="t">mcp-hansard-search</span><span class="t">mcp-bank-of-england</span><span class="t">mcp-cabinet-office-resilience</span></div></div></div></div>
+<div class="s" id="ep3"><div class="sh"><span class="en">Entry Point 03</span><h2>Resolution Planning and Recovery</h2></div><div class="sb"><div class="g">
+<div class="p"><h3>Compliance Automation</h3><p>Automated Resolution Planning and Recovery validation checking Bank Recovery and Resolution Directive mapping, resolution plan completeness, and PRA resolution expectations.</p></div>
+<div class="p"><h3>Risk Detection & Early Warning</h3><p>Detection of resolution plan gaps, bail-in readiness shortfalls, and recovery trigger weaknesses affecting Resolution Planning and Recovery performance and accountability.</p></div>
+<div class="p"><h3>Natural Language Policy Analysis</h3><p>NLP analysis of BRRD/UK resolution framework, PRA resolution policy, and Bank of England resolution approach against Resolution Planning and Recovery policy and statutory requirements.</p></div>
+<div class="p"><h3>Predictive Analytics</h3><p>Resolution Planning and Recovery risk scoring from bail-in readiness, trigger calibration, and resolvability indicators for decision support.</p></div>
+<div class="p"><h3>Evidence Synthesis</h3><p>Resolution Planning and Recovery evidence, resolution plans, resolvability assessments, and recovery plans into decision dossiers for review.</p></div>
+<div class="p"><h3>Document Intelligence</h3><p>Extraction from resolution plans, recovery plans, and resolvability reports for Resolution Planning and Recovery lifecycle tracking.</p></div>
+<div class="p"><h3>Stakeholder Reporting</h3><p>Resolution Planning and Recovery dashboards showing resolvability, plan completeness, and trigger readiness.</p></div>
+<div class="p"><h3>Real-time Monitoring</h3><p>Resolution Planning and Recovery pipeline tracking, plan review cycles, and resolvability surveillance.</p></div>
+</div><div class="mt"><h4>MCP Tools</h4><div class="ml"><span class="t">mcp-govuk-search</span><span class="t">mcp-uk-legislation</span><span class="t">mcp-uk-regulator-intel</span><span class="t">mcp-hansard-search</span><span class="t">mcp-bank-of-england</span><span class="t">mcp-cabinet-office-resilience</span></div></div></div></div>
+<div class="s" id="ep4"><div class="sh"><span class="en">Entry Point 04</span><h2>Liquidity and Funding Risk</h2></div><div class="sb"><div class="g">
+<div class="p"><h3>Compliance Automation</h3><p>Automated Liquidity and Funding Risk validation checking Liquidity Coverage Ratio (LCR), Net Stable Funding Ratio (NSFR), and PRA liquidity reporting standards.</p></div>
+<div class="p"><h3>Risk Detection & Early Warning</h3><p>Detection of LCR breaches, funding concentration risk, and liquidity buffer shortfalls affecting Liquidity and Funding Risk performance and accountability.</p></div>
+<div class="p"><h3>Natural Language Policy Analysis</h3><p>NLP analysis of LCR/NSFR rules, PRA liquidity statements, and Basel liquidity standards against Liquidity and Funding Risk policy and statutory requirements.</p></div>
+<div class="p"><h3>Predictive Analytics</h3><p>Liquidity and Funding Risk risk scoring from LCR trends, funding concentration metrics, and stress testing indicators for decision support.</p></div>
+<div class="p"><h3>Evidence Synthesis</h3><p>Liquidity and Funding Risk evidence, liquidity returns, funding plans, and stress test outputs into decision dossiers for review.</p></div>
+<div class="p"><h3>Document Intelligence</h3><p>Extraction from liquidity returns, funding plans, and ILAAP documents for Liquidity and Funding Risk lifecycle tracking.</p></div>
+<div class="p"><h3>Stakeholder Reporting</h3><p>Liquidity and Funding Risk dashboards showing LCR, NSFR, and funding concentration.</p></div>
+<div class="p"><h3>Real-time Monitoring</h3><p>Liquidity and Funding Risk pipeline tracking, liquidity return cycles, and ratio surveillance.</p></div>
+</div><div class="mt"><h4>MCP Tools</h4><div class="ml"><span class="t">mcp-govuk-search</span><span class="t">mcp-uk-legislation</span><span class="t">mcp-uk-regulator-intel</span><span class="t">mcp-hansard-search</span><span class="t">mcp-bank-of-england</span><span class="t">mcp-cabinet-office-resilience</span></div></div></div></div>
+<div class="s" id="ep5"><div class="sh"><span class="en">Entry Point 05</span><h2>Model Risk Management and Validation</h2></div><div class="sb"><div class="g">
+<div class="p"><h3>Compliance Automation</h3><p>Automated Model Risk Management and Validation validation checking PRA SS1/23 model risk expectations, internal model approval, and independent model validation standards.</p></div>
+<div class="p"><h3>Risk Detection & Early Warning</h3><p>Detection of model validation gaps, internal ratings weaknesses, and model risk appetite breaches affecting Model Risk Management and Validation performance and accountability.</p></div>
+<div class="p"><h3>Natural Language Policy Analysis</h3><p>NLP analysis of SS1/23, model risk management principles, and internal model approval criteria against Model Risk Management and Validation policy and statutory requirements.</p></div>
+<div class="p"><h3>Predictive Analytics</h3><p>Model Risk Management and Validation risk scoring from validation findings, model performance decay, and approval status indicators for decision support.</p></div>
+<div class="p"><h3>Evidence Synthesis</h3><p>Model Risk Management and Validation evidence, validation reports, model inventories, and approval decisions into decision dossiers for review.</p></div>
+<div class="p"><h3>Document Intelligence</h3><p>Extraction from model validation reports, model inventories, and change assessments for Model Risk Management and Validation lifecycle tracking.</p></div>
+<div class="p"><h3>Stakeholder Reporting</h3><p>Model Risk Management and Validation dashboards showing model coverage, issues, and approval status.</p></div>
+<div class="p"><h3>Real-time Monitoring</h3><p>Model Risk Management and Validation pipeline tracking, validation cycles, and model surveillance.</p></div>
+</div><div class="mt"><h4>MCP Tools</h4><div class="ml"><span class="t">mcp-govuk-search</span><span class="t">mcp-uk-legislation</span><span class="t">mcp-uk-regulator-intel</span><span class="t">mcp-hansard-search</span><span class="t">mcp-bank-of-england</span><span class="t">mcp-cabinet-office-resilience</span></div></div></div></div>
+<div class="s" id="ep6"><div class="sh"><span class="en">Entry Point 06</span><h2>Insurance Supervision and Solvency II</h2></div><div class="sb"><div class="g">
+<div class="p"><h3>Compliance Automation</h3><p>Automated Insurance Supervision and Solvency II validation checking Solvency II directive mapping, SCR/MCR capital requirements, and ORSA obligations under PRA insurance supervision.</p></div>
+<div class="p"><h3>Risk Detection & Early Warning</h3><p>Detection of SCR/MCR breaches, ORSA gaps, and technical provision inconsistencies affecting Insurance Supervision and Solvency II performance and accountability.</p></div>
+<div class="p"><h3>Natural Language Policy Analysis</h3><p>NLP analysis of Solvency II rules, PRA insurance statements, and EIOPA guidelines against Insurance Supervision and Solvency II policy and statutory requirements.</p></div>
+<div class="p"><h3>Predictive Analytics</h3><p>Insurance Supervision and Solvency II risk scoring from solvency ratio trends, ORSA adequacy, and capital stress indicators for decision support.</p></div>
+<div class="p"><h3>Evidence Synthesis</h3><p>Insurance Supervision and Solvency II evidence, ORSA submissions, solvency returns, and technical provision reports into decision dossiers for review.</p></div>
+<div class="p"><h3>Document Intelligence</h3><p>Extraction from ORSA documents, Solvency II returns, and actuarial reports for Insurance Supervision and Solvency II lifecycle tracking.</p></div>
+<div class="p"><h3>Stakeholder Reporting</h3><p>Insurance Supervision and Solvency II dashboards showing solvency ratios, ORSA status, and capital position.</p></div>
+<div class="p"><h3>Real-time Monitoring</h3><p>Insurance Supervision and Solvency II pipeline tracking, ORSA cycles, and solvency surveillance.</p></div>
+</div><div class="mt"><h4>MCP Tools</h4><div class="ml"><span class="t">mcp-govuk-search</span><span class="t">mcp-uk-legislation</span><span class="t">mcp-uk-regulator-intel</span><span class="t">mcp-hansard-search</span><span class="t">mcp-bank-of-england</span><span class="t">mcp-cabinet-office-resilience</span></div></div></div></div>
+<div class="s" id="ep7"><div class="sh"><span class="en">Entry Point 07</span><h2>Market Infrastructure and Stability</h2></div><div class="sb"><div class="g">
+<div class="p"><h3>Compliance Automation</h3><p>Automated Market Infrastructure and Stability validation checking central counterparty supervision, financial market infrastructure resilience, and macroprudential policy alignment.</p></div>
+<div class="p"><h3>Risk Detection & Early Warning</h3><p>Detection of CCP risk gaps, settlement infrastructure stress, and systemic risk build-up affecting Market Infrastructure and Stability performance and accountability.</p></div>
+<div class="p"><h3>Natural Language Policy Analysis</h3><p>NLP analysis of PRA FMI supervision, Bank of England financial stability framework, and CPMI-IOSCO principles against Market Infrastructure and Stability policy and statutory requirements.</p></div>
+<div class="p"><h3>Predictive Analytics</h3><p>Market Infrastructure and Stability risk scoring from market stress indicators, CCP default resources, and systemic risk metrics for decision support.</p></div>
+<div class="p"><h3>Evidence Synthesis</h3><p>Market Infrastructure and Stability evidence, FMI assessments, stress test outputs, and systemic risk reports into decision dossiers for review.</p></div>
+<div class="p"><h3>Document Intelligence</h3><p>Extraction from FMI assessment reports, CCP stress tests, and financial stability papers for Market Infrastructure and Stability lifecycle tracking.</p></div>
+<div class="p"><h3>Stakeholder Reporting</h3><p>Market Infrastructure and Stability dashboards showing CCP risk, stability indicators, and systemic risk.</p></div>
+<div class="p"><h3>Real-time Monitoring</h3><p>Market Infrastructure and Stability pipeline tracking, stress test cycles, and stability surveillance.</p></div>
+</div><div class="mt"><h4>MCP Tools</h4><div class="ml"><span class="t">mcp-govuk-search</span><span class="t">mcp-uk-legislation</span><span class="t">mcp-uk-regulator-intel</span><span class="t">mcp-hansard-search</span><span class="t">mcp-bank-of-england</span><span class="t">mcp-cabinet-office-resilience</span></div></div></div></div>
+<div class="s" id="ep8"><div class="sh"><span class="en">Entry Point 08</span><h2>Authorisation and Licensing</h2></div><div class="sb"><div class="g">
+<div class="p"><h3>Compliance Automation</h3><p>Automated Authorisation and Licensing validation checking PRA threshold conditions, senior manager approval, and authorisation criteria under FSMA 2000.</p></div>
+<div class="p"><h3>Risk Detection & Early Warning</h3><p>Detection of authorisation application gaps, threshold condition breaches, and fit-and-proper shortfalls affecting Authorisation and Licensing performance and accountability.</p></div>
+<div class="p"><h3>Natural Language Policy Analysis</h3><p>NLP analysis of PRA threshold conditions, authorisation guidance, and SM&CR rules against Authorisation and Licensing policy and statutory requirements.</p></div>
+<div class="p"><h3>Predictive Analytics</h3><p>Authorisation and Licensing risk scoring from application trends, approval outcomes, and threshold condition indicators for decision support.</p></div>
+<div class="p"><h3>Evidence Synthesis</h3><p>Authorisation and Licensing evidence, application files, fit-and-proper assessments, and approval decisions into decision dossiers for review.</p></div>
+<div class="p"><h3>Document Intelligence</h3><p>Extraction from authorisation applications, threshold condition assessments, and SM&CR files for Authorisation and Licensing lifecycle tracking.</p></div>
+<div class="p"><h3>Stakeholder Reporting</h3><p>Authorisation and Licensing dashboards showing application pipeline, approvals, and threshold condition status.</p></div>
+<div class="p"><h3>Real-time Monitoring</h3><p>Authorisation and Licensing pipeline tracking, application milestones, and approval surveillance.</p></div>
+</div><div class="mt"><h4>MCP Tools</h4><div class="ml"><span class="t">mcp-govuk-search</span><span class="t">mcp-uk-legislation</span><span class="t">mcp-uk-regulator-intel</span><span class="t">mcp-hansard-search</span><span class="t">mcp-bank-of-england</span><span class="t">mcp-cabinet-office-resilience</span></div></div></div></div>
+<div class="s" id="ep9"><div class="sh"><span class="en">Entry Point 09</span><h2>Data and Regulatory Reporting</h2></div><div class="sb"><div class="g">
+<div class="p"><h3>Compliance Automation</h3><p>Automated Data and Regulatory Reporting validation checking COREP/FINREP returns, PRA data quality standards, and Bank of England statistical reporting alignment.</p></div>
+<div class="p"><h3>Risk Detection & Early Warning</h3><p>Detection of regulatory return errors, data quality lapses, and submission deadline breaches affecting Data and Regulatory Reporting performance and accountability.</p></div>
+<div class="p"><h3>Natural Language Policy Analysis</h3><p>NLP analysis of COREP/FINREP frameworks, PRA data items, and Bank of England data collection rules against Data and Regulatory Reporting policy and statutory requirements.</p></div>
+<div class="p"><h3>Predictive Analytics</h3><p>Data and Regulatory Reporting risk scoring from data quality metrics, submission timeliness, and error rates for decision support.</p></div>
+<div class="p"><h3>Evidence Synthesis</h3><p>Data and Regulatory Reporting evidence, regulatory returns, data quality checks, and submission audits into decision dossiers for review.</p></div>
+<div class="p"><h3>Document Intelligence</h3><p>Extraction from COREP/FINREP returns, data dictionaries, and validation reports for Data and Regulatory Reporting lifecycle tracking.</p></div>
+<div class="p"><h3>Stakeholder Reporting</h3><p>Data and Regulatory Reporting dashboards showing submission status, data quality, and error rates.</p></div>
+<div class="p"><h3>Real-time Monitoring</h3><p>Data and Regulatory Reporting pipeline tracking, return cycles, and submission surveillance.</p></div>
+</div><div class="mt"><h4>MCP Tools</h4><div class="ml"><span class="t">mcp-govuk-search</span><span class="t">mcp-uk-legislation</span><span class="t">mcp-uk-regulator-intel</span><span class="t">mcp-hansard-search</span><span class="t">mcp-bank-of-england</span><span class="t">mcp-cabinet-office-resilience</span></div></div></div></div>
+<div class="s" id="ep10"><div class="sh"><span class="en">Entry Point 10</span><h2>Operational Resilience</h2></div><div class="sb"><div class="g">
+<div class="p"><h3>Compliance Automation</h3><p>Automated Operational Resilience validation checking PRA operational resilience policies, important business services mapping, and impact tolerance setting.</p></div>
+<div class="p"><h3>Risk Detection & Early Warning</h3><p>Detection of resilience testing gaps, important business service shortfalls, and third-party dependency risks affecting Operational Resilience performance and accountability.</p></div>
+<div class="p"><h3>Natural Language Policy Analysis</h3><p>NLP analysis of PRA operational resilience expectations, Bank of England guidance, and incident reporting rules against Operational Resilience policy and statutory requirements.</p></div>
+<div class="p"><h3>Predictive Analytics</h3><p>Operational Resilience risk scoring from resilience testing outcomes, impact tolerance breaches, and disruption indicators for decision support.</p></div>
+<div class="p"><h3>Evidence Synthesis</h3><p>Operational Resilience evidence, resilience test results, impact tolerance assessments, and incident reports into decision dossiers for review.</p></div>
+<div class="p"><h3>Document Intelligence</h3><p>Extraction from resilience test reports, business impact analyses, and incident reports for Operational Resilience lifecycle tracking.</p></div>
+<div class="p"><h3>Stakeholder Reporting</h3><p>Operational Resilience dashboards showing test outcomes, impact tolerance status, and disruption risk.</p></div>
+<div class="p"><h3>Real-time Monitoring</h3><p>Operational Resilience pipeline tracking, testing cycles, and resilience surveillance.</p></div>
+</div><div class="mt"><h4>MCP Tools</h4><div class="ml"><span class="t">mcp-govuk-search</span><span class="t">mcp-uk-legislation</span><span class="t">mcp-uk-regulator-intel</span><span class="t">mcp-hansard-search</span><span class="t">mcp-bank-of-england</span><span class="t">mcp-cabinet-office-resilience</span></div></div></div></div>
+<div class="s" id="ep11"><div class="sh"><span class="en">Entry Point 11</span><h2>Climate and Environmental Risk</h2></div><div class="sb"><div class="g">
+<div class="p"><h3>Compliance Automation</h3><p>Automated Climate and Environmental Risk validation checking PRA SS3/19 climate expectations, climate scenario analysis, and TCFD disclosure alignment.</p></div>
+<div class="p"><h3>Risk Detection & Early Warning</h3><p>Detection of climate risk measurement gaps, scenario analysis shortfalls, and transition risk exposure affecting Climate and Environmental Risk performance and accountability.</p></div>
+<div class="p"><h3>Natural Language Policy Analysis</h3><p>NLP analysis of SS3/19, Bank of England climate stress tests, and TCFD recommendations against Climate and Environmental Risk policy and statutory requirements.</p></div>
+<div class="p"><h3>Predictive Analytics</h3><p>Climate and Environmental Risk risk scoring from climate scenario outcomes, transition risk metrics, and disclosure completeness for decision support.</p></div>
+<div class="p"><h3>Evidence Synthesis</h3><p>Climate and Environmental Risk evidence, climate risk assessments, scenario analyses, and TCFD disclosures into decision dossiers for review.</p></div>
+<div class="p"><h3>Document Intelligence</h3><p>Extraction from climate risk reports, scenario analysis outputs, and TCFD disclosures for Climate and Environmental Risk lifecycle tracking.</p></div>
+<div class="p"><h3>Stakeholder Reporting</h3><p>Climate and Environmental Risk dashboards showing scenario outcomes, risk metrics, and disclosure status.</p></div>
+<div class="p"><h3>Real-time Monitoring</h3><p>Climate and Environmental Risk pipeline tracking, scenario cycles, and risk surveillance.</p></div>
+</div><div class="mt"><h4>MCP Tools</h4><div class="ml"><span class="t">mcp-govuk-search</span><span class="t">mcp-uk-legislation</span><span class="t">mcp-uk-regulator-intel</span><span class="t">mcp-hansard-search</span><span class="t">mcp-bank-of-england</span><span class="t">mcp-cabinet-office-resilience</span></div></div></div></div>
+<div class="s" id="ep12"><div class="sh"><span class="en">Entry Point 12</span><h2>Governance and Parliamentary Accountability</h2></div><div class="sb"><div class="g">
+<div class="p"><h3>Compliance Automation</h3><p>Automated Governance and Parliamentary Accountability validation checking PRA Board oversight, Bank of England governance, and Treasury Select Committee accountability under FSMA 2000.</p></div>
+<div class="p"><h3>Risk Detection & Early Warning</h3><p>Detection of governance framework deviations, accountability gaps, and supervisory approach inconsistencies affecting Governance and Parliamentary Accountability performance and accountability.</p></div>
+<div class="p"><h3>Natural Language Policy Analysis</h3><p>NLP analysis of PRA Annual Report, Bank of England governance framework, and parliamentary accountability rules against Governance and Parliamentary Accountability policy and statutory requirements.</p></div>
+<div class="p"><h3>Predictive Analytics</h3><p>Governance and Parliamentary Accountability risk scoring from governance effectiveness, supervisory approach metrics, and accountability indicators for decision support.</p></div>
+<div class="p"><h3>Evidence Synthesis</h3><p>Governance and Parliamentary Accountability evidence, board papers, annual reports, and supervisory reviews into decision dossiers for review.</p></div>
+<div class="p"><h3>Document Intelligence</h3><p>Extraction from board minutes, annual reports, and supervisory policy documents for Governance and Parliamentary Accountability lifecycle tracking.</p></div>
+<div class="p"><h3>Stakeholder Reporting</h3><p>Governance and Parliamentary Accountability dashboards showing governance effectiveness, supervisory approach, and accountability status.</p></div>
+<div class="p"><h3>Real-time Monitoring</h3><p>Governance and Parliamentary Accountability pipeline tracking, board cycles, and supervisory surveillance.</p></div>
+</div><div class="mt"><h4>MCP Tools</h4><div class="ml"><span class="t">mcp-govuk-search</span><span class="t">mcp-uk-legislation</span><span class="t">mcp-uk-regulator-intel</span><span class="t">mcp-hansard-search</span><span class="t">mcp-bank-of-england</span><span class="t">mcp-cabinet-office-resilience</span></div></div></div></div>
+</div>
+<footer>
+<div class="br">DEFONEOS — UK Sovereign Public Services OS</div>
+<p>Open-source sovereign AI governance for PRA. Built for audit-grade, signed, neutral UK-sovereign compliance.</p>
+<p>AUKUS-compatible. FSMA 2000 / CRR / Solvency II / PRA rulebook backbone.</p>
+<div class="cr">© 2026 CSOAI Ltd (UK 16939677) · meok-defoneos · csoai-defoneos · DEFONEOS-SEAL</div>
+</footer>
+</body>
+</html>

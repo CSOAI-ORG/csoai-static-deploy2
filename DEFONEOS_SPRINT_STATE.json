@@ -1,19 +1,19 @@
 {
   "started_at": "2026-07-04",
   "current_day": 36,
-  "current_tick": 242,
-  "current_phase": 198,
+  "current_tick": 243,
+  "current_phase": 201,
   "total_mcp_built": 30,
-  "total_pages_built": 938,
+  "total_pages_built": 941,
   "total_repos_cloned": 15,
-  "sitemap_urls": 299,
-  "sitemap_bytes": 41931,
-  "last_action": "Sprint tick 242 — 3 regulator packs (PSED Equality Duty, Housing Ombudsman, GRO Registrar General) built, sitemap regenerated (299 URLs), and deployed to Cloudflare Pages (csoai-site). All 3 new files + .llm.json siblings committed and pushed to govbench-kaggle branch.",
+  "sitemap_urls": 310,
+  "sitemap_bytes": 43312,
+  "last_action": "Sprint tick 243 - 3 new UK regulator deep-dive packs (ONS Office for National Statistics, HSE Health & Safety Executive, PRA Prudential Regulation Authority) built (29.7/30.2/30.0KB), .llm.json companions generated, sitemap regenerated (310 URLs), built allowlist _site (666 files, 7.1MB, 0 missing, no leaks), deployed to Cloudflare Pages csoai-site. All 3 new pages fully verified live (12 entry points each). Disk freed ~100MB in .backups trim.",
   "next_actions": [
-    "Build next 3 uncovered UK regulator packs",
-    "Diagnose CF Pages .llm.json + HTML SPA fallback (csoai.org serves 11297-byte homepage for all paths)"
+    "Build next 3 uncovered UK regulator packs (Bank of England, UK Export Finance, Law Commission)",
+    "Diagnose apex csoai.org SPA fallback (now serves new CSOAI measurement-body site - verify deep-dive packs reachable on canonical domain)"
   ],
-  "milestone": "Sprint targets exceeded. 30/30 MCPs, 938 pages, 15/15 repos. Tick 242 shipped 3 regulator packs. Sitemap 299 URLs (266→269 .html files).",
+  "milestone": "Sprint targets exceeded. 30/30 MCPs, 941 pages, 15/15 repos. Tick 243 shipped 3 regulator packs (ONS/HSE/PRA). Sitemap 310 URLs. 206 deep-dive packs.",
   "targets_status": {
     "mcps": "achieved",
     "pages": "ongoing",
@@ -22,6 +22,6 @@
   "vercel_deploy_status": "blocked_billing",
   "cloudflare_deploy_status": "live",
   "deploy_domain": "csoai.org",
-  "deploy_id": "18db69b6.csoai-site.pages.dev",
-  "disk_free_gb": 1.0
+  "deploy_id": "fa4bed0e.csoai-site.pages.dev",
+  "disk_free_gb": 1.3
 }
