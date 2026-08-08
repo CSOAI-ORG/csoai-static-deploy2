@@ -1604,11 +1604,23 @@ def phase_10b_model_routing() -> dict:
     return result
 
 
+#!/usr/bin/env python3
 def phase_11_git_push() -> dict:
     """Phase 11: Commit + push both repos with the run results.
 
     Memory: NEVER `git add -A` from home-root. Stage specific paths only.
     Memory: check for stale index locks before any git add into home git.
+
+    2026-08-08 fix (JEEVES): the push target was hardcoded `git push origin
+    main` while commits land on the CHECKED-OUT branch (`git commit` writes
+    to HEAD). On any repo whose checked-out branch isn't main — e.g. the
+    sibling-lane `govbench-kaggle` branch here — this pushed the wrong ref
+    and failed (non-fast-forward / "behind its remote"), or worse, implied a
+    force-push of a diverged main. Now we push the checked-out branch to its
+    own configured upstream (fast-forward only), never hardcoded main.
+    Also: `forest/honey_all_producers.jsonl` is gitignored by design
+    (canonical honey lives on gdrive:SOV/training/honey) — drop it from the
+    staged list; the trackable layer0/downloads variants carry the slice.
     """
     result = {"status": "ran", "artifacts": [], "repos": {}}
 
@@ -1650,7 +1662,9 @@ def phase_11_git_push() -> dict:
         (Path.home() / "clawd" / "csoai-static-deploy2", "csoai-static-deploy2", [
             "benchmark-results/overnight_state.json",
             "benchmark-results/eat_all/",
-            "forest/honey_all_producers.jsonl",
+            # NOTE: forest/honey_all_producers.jsonl removed — gitignored by
+            # design (canonical honey on gdrive:SOV/training/honey). The
+            # layer0/downloads variants below are the trackable slices.
             "forest/honey_layer0.jsonl",
             "forest/honey_downloads.jsonl",
             "forest/gpu_inventory.json",
@@ -1658,6 +1672,13 @@ def phase_11_git_push() -> dict:
             "forest/mine_downloads_cache.json",
         ], 30),
         # Home-root: stage SPECIFIC FILES only (never -A)
+        # 2026-08-08 hardening (JEEVES): the home mega-repo (/Users/nicholas)
+        # holds 1000+ cross-lane dirty files and sibling-lane staged
+        # changesets; any git op there can hang for minutes or worse. We
+        # gate it behind a *bounded* fast check (dirty-file count) so the
+        # daily flywheel never blocks on it — even if EAT_ALL_SKIP_HOME=0
+        # is forced. Skip cleanly with a log line when the repo is in a
+        # chaotic state; do not attempt the add/diff/push loop.
         (Path.home(), "home-root", [
             # coai-dashboard API JSON outputs
             "projects/coai-dashboard/csoai-web/public/api/anchors.json",
@@ -1682,7 +1703,42 @@ def phase_11_git_push() -> dict:
         if not (repo_dir / ".git").exists():
             result["repos"][name] = f"skipped (no .git at {repo_dir})"
             continue
+        # 2026-08-08 hardening (JEEVES): bounded dirty-count guard for the
+        # home mega-repo. If the repo has >1000 changed files it is in a
+        # cross-lane chaotic state (sibling staged changesets, .backups
+        # cleanup, etc.) and git add/diff/push can hang for minutes. Refuse
+        # to run the commit loop and log it instead of blocking the whole
+        # EAT phase. This is a hard floor, not a tuning knob.
+        dirty_probe = subprocess.run(
+            ["git", "status", "--porcelain"],
+            capture_output=True, text=True, timeout=15,
+            cwd=str(repo_dir)
+        )
+        dirty_count = dirty_probe.stdout.count("\n") if dirty_probe.returncode == 0 else 0
+        if dirty_count > 1000:
+            log(f"  {name}: {dirty_count} dirty files — chaotic cross-lane state, skipping commit loop (hard guard)")
+            result["repos"][name] = f"skipped (dirty_count={dirty_count} > 1000 hard guard)"
+            continue
         try:
+            # Determine the checked-out branch + its upstream. We commit to
+            # HEAD, so we MUST push HEAD's upstream — not hardcoded `main`.
+            cur = subprocess.run(
+                ["git", "rev-parse", "--abbrev-ref", "HEAD"],
+                capture_output=True, text=True, timeout=15,
+                cwd=str(repo_dir)
+            ).stdout.strip()
+            if cur == "HEAD":  # detached
+                result["repos"][name] = "skipped (detached HEAD)"
+                continue
+            up = subprocess.run(
+                ["git", "rev-parse", "--abbrev-ref", "--symbolic-full-name", "@{upstream}"],
+                capture_output=True, text=True, timeout=15,
+                cwd=str(repo_dir)
+            ).stdout.strip()
+            if not up or "@{upstream}" in up:
+                up = f"origin/{cur}"
+            log(f"  {name}: on branch {cur}, pushing to {up}")
+
             staged_count = 0
             for p in paths:
                 full = repo_dir / p
@@ -1716,8 +1772,17 @@ def phase_11_git_push() -> dict:
                 )
                 committed = commit.returncode == 0
 
+            # Push the CURRENT branch to ITS OWN upstream (fast-forward via
+            # default push semantics; we never force). Use `git push` which
+            # targets the tracking branch when configured, else push HEAD
+            # to the upstream branch name we resolved above.
+            push_cmd = ["git", "push"]
+            if up and up != "origin/" + cur:
+                # upstream is not the default tracking ref name; push HEAD
+                # explicitly to that branch
+                push_cmd = ["git", "push", "origin", f"HEAD:{up.split('/')[-1]}"]
             push = subprocess.run(
-                ["git", "push", "origin", "main"],
+                push_cmd,
                 capture_output=True, text=True, timeout=120,
                 cwd=str(repo_dir)
             )
@@ -1725,6 +1790,8 @@ def phase_11_git_push() -> dict:
                 "pushed": push.returncode == 0,
                 "committed": committed,
                 "staged_count": staged_count,
+                "branch": cur,
+                "upstream": up,
                 "stdout_tail": push.stdout[-200:] if push.stdout else "",
                 "stderr_tail": push.stderr[-200:] if push.stderr else "",
             }
