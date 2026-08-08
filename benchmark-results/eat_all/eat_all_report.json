@@ -1,31 +1,31 @@
 {
-  "run_id": "eat_all_1786192523",
-  "finished_at": "2026-08-08T12:35:23.771598+00:00",
+  "run_id": "eat_all_1786192776",
+  "finished_at": "2026-08-08T12:39:36.076706+00:00",
   "phases": {
     "PHASE_0_HEALTH": {
       "status": "ran",
-      "duration_s": 0.2,
+      "duration_s": 0.3,
       "artifacts": [],
       "error": null,
       "sov_local_status": "unreachable: <urlopen error [Errno 61] Connection refused>",
       "ollama_models": 2,
-      "kb_entries": 65
+      "kb_entries": 87
     },
     "PHASE_1_REBOARD": {
       "status": "ran",
-      "duration_s": 0.2,
+      "duration_s": 0.3,
       "artifacts": [],
       "error": null,
       "exit_code": 0,
-      "stdout_tail": "{\n  \"started\": \"2026-08-08T12:17:18.108692+00:00\",\n  \"stages\": {\n    \"report\": {\n      \"status\": \"ran\",\n      \"at\": \"2026-08-08T12:17:18.161870+00:00\",\n      \"out\": \"OVERNIGHT_REPORT.md\"\n    }\n  }\n}\n"
+      "stdout_tail": "als\": 2\n    },\n    \"honey\": {\n      \"status\": \"failed\",\n      \"at\": \"2026-08-08T12:37:10.854824+00:00\",\n      \"error\": \"NameError: name 'BASE' is not defined\"\n    },\n    \"system\": {\n      \"status\": \"ran\",\n      \"at\": \"2026-08-08T12:37:11.610767+00:00\",\n      \"tail\": \"  SYSTEM vs BASE \\u2014 195 items\\n\\n  SYSTEM = gate \\u2192 route \\u2192 KB \\u2192 expert \\u2192 verify\\n  BASE   = qwen2.5:0.5b, called directly\\n\\n\",\n      \"verdict\": \"  only 0 items parsed \\u2014 run not finished?\\n\"\n    }\n  }\n}\n"
     },
     "PHASE_2_KB_GROW": {
       "status": "failed",
-      "duration_s": 0.1,
+      "duration_s": 0.2,
       "artifacts": [],
       "error": "",
       "exit_code": 1,
-      "stdout_tail": "Loading KB from /Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/sov_kb.json...\n  Initial entries: 65\nScreenshots dir not found: /tmp/screenshots\n"
+      "stdout_tail": "Loading KB from /Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/sov_kb.json...\n  Initial entries: 87\nScreenshots dir not found: /tmp/screenshots\n"
     },
     "PHASE_3_PROBES": {
       "status": "ran",
@@ -48,7 +48,7 @@
     },
     "PHASE_5_HONEY": {
       "status": "ran",
-      "duration_s": 0.3,
+      "duration_s": 0.5,
       "artifacts": [
         "/Users/nicholas/clawd/csoai-static-deploy2/forest/honey_all_producers.jsonl"
       ],
@@ -59,18 +59,18 @@
     },
     "PHASE_6_DOWNLOADS": {
       "status": "ran",
-      "duration_s": 0.2,
+      "duration_s": 0.3,
       "artifacts": [
         "/Users/nicholas/clawd/csoai-static-deploy2/forest/honey_downloads.jsonl"
       ],
       "error": null,
       "exit_code": 0,
-      "stdout_tail": "Mining /Users/nicholas/Downloads...\n  Output: /Users/nicholas/clawd/csoai-static-deploy2/forest/honey_downloads.jsonl\n  sov_route available: True\n  Total files: 305\n  Matched: 153\n    code/producer: 12\n    data/config: 9\n    spec: 132\n  Cache loaded: 153 entries\n\n  Total emitted: 0 (cache hits: 153)\n  Saved to: /Users/nicholas/clawd/csoai-static-deploy2/forest/honey_downloads.jsonl\n  Cache saved to: /Users/nicholas/clawd/csoai-static-deploy2/forest/mine_downloads_cache.json\n",
-      "files_mined": 153
+      "stdout_tail": "Mining /Users/nicholas/Downloads...\n  Output: /Users/nicholas/clawd/csoai-static-deploy2/forest/honey_downloads.jsonl\n  sov_route available: True\n  Total files: 306\n  Matched: 154\n    code/producer: 12\n    data/config: 9\n    spec: 133\n  Cache loaded: 153 entries\n\n  Total emitted: 1 (cache hits: 153)\n  Saved to: /Users/nicholas/clawd/csoai-static-deploy2/forest/honey_downloads.jsonl\n  Cache saved to: /Users/nicholas/clawd/csoai-static-deploy2/forest/mine_downloads_cache.json\n",
+      "files_mined": 154
     },
     "PHASE_7_PORTAL": {
       "status": "failed",
-      "duration_s": 0.2,
+      "duration_s": 0.3,
       "artifacts": [],
       "error": null,
       "exit_code": 1,
@@ -99,7 +99,7 @@
       ],
       "error": null,
       "clans_routed": 0,
-      "swarm_id": "owem-clans-1786192516"
+      "swarm_id": "owem-clans-1786192767"
     },
     "PHASE_9C_OWEM_CLUSTER": {
       "status": "ran",
@@ -164,7 +164,7 @@
     },
     "PHASE_9I_SOV_CAPTURE": {
       "status": "ran",
-      "duration_s": 6.8,
+      "duration_s": 8.1,
       "artifacts": [
         "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/sov_kb.json",
         "/Users/nicholas/.sov/iwm/skills_20260731.jsonl",
@@ -174,22 +174,22 @@
       "error": null,
       "events_processed": 256,
       "skills_extracted": 1,
-      "refine_output": "KB Refinery \u2014 processing today's capture events...\n  terminal: 20 events\n  browser: 0 events\n  files: 0 events\n  chat: 0 events\n  KB: 65 \u2192 85 entries (+20 new)\n  Saved to: /Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/sov_kb.json\n",
-      "extract_output": "GNN Spine \u2014 extracting patterns from capture events...\n  Extracted 1 unique skills\n  Skills file: /Users/nicholas/.sov/iwm/skills_20260808.jsonl\n  KB updated: 86 entries total\n"
+      "refine_output": "KB Refinery \u2014 processing today's capture events...\n  terminal: 40 events\n  browser: 0 events\n  files: 0 events\n  chat: 0 events\n  KB: 87 \u2192 127 entries (+40 new)\n  Saved to: /Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/sov_kb.json\n",
+      "extract_output": "GNN Spine \u2014 extracting patterns from capture events...\n  Extracted 1 unique skills\n  Skills file: /Users/nicholas/.sov/iwm/skills_20260808.jsonl\n  KB updated: 128 entries total\n"
     },
     "PHASE_9J_IWM_BOOTSTRAP": {
       "status": "ran",
-      "duration_s": 0.1,
+      "duration_s": 0.2,
       "artifacts": [
         "/Users/nicholas/.sov/iwm/iwm_schema.json",
-        "/Users/nicholas/.sov/iwm/sovereign_bootstrap_20260808_123523.jsonl",
+        "/Users/nicholas/.sov/iwm/sovereign_bootstrap_20260808_123936.jsonl",
         "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/sov_kb.json"
       ],
       "error": null,
       "iwm_records": 0,
       "kb_entries_added": 0,
       "exit_code": 0,
-      "stdout_tail": "...\n  KB: 86 \u2192 86 entries (+0)\n  Saved to: /Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/sov_kb.json\n\n\u2554\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2557\n\u2551  IWM Bootstrap Complete                                   \u2551\n\u2551  Records:     0 | KB entries: +   0                  \u2551\n\u2551  Schema:  /Users/nicholas/.sov/iwm/iwm_schema.json\n\u2551  Shard:   /Users/nicholas/.sov/iwm/sovereign_bootstrap_20260808_123523.jsonl\n\u255a\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u255d\n"
+      "stdout_tail": ".\n  KB: 128 \u2192 128 entries (+0)\n  Saved to: /Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/sov_kb.json\n\n\u2554\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2557\n\u2551  IWM Bootstrap Complete                                   \u2551\n\u2551  Records:     0 | KB entries: +   0                  \u2551\n\u2551  Schema:  /Users/nicholas/.sov/iwm/iwm_schema.json\n\u2551  Shard:   /Users/nicholas/.sov/iwm/sovereign_bootstrap_20260808_123936.jsonl\n\u255a\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u255d\n"
     },
     "PHASE_10B_MODEL_ROUTING": {
       "status": "ran",
