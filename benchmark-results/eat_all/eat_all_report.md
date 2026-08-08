@@ -1,23 +1,23 @@
 # EAT_ALL Run Report
 
-**Run ID**: eat_all_1786215690
-**Finished**: 2026-08-08T19:01:30.701757+00:00
+**Run ID**: eat_all_1786215768
+**Finished**: 2026-08-08T19:02:48.874815+00:00
 **Phase summary**: {'ran': 19, 'failed': 0, 'skipped': 0}
 
 ## Phases
 
 | Phase | Status | Duration | Notes |
 |---|---|---|---|
-| PHASE_0_HEALTH | ran | 0.1s | souls=73; ollama_models=4; kb_entries=982 |
+| PHASE_0_HEALTH | ran | 0.1s | souls=79; ollama_models=4; kb_entries=990 |
 | PHASE_1_REBOARD | ran | 0.0s | exit_code=0 |
 | PHASE_2_KB_GROW | ran | 0.0s | exit_code=0 |
 | PHASE_3_PROBES | ran | 0.0s | chatml=1; bloodline=1 |
 | PHASE_4_TRAINING | ran | 0.0s | training_scripts_available=['sov_groq_distill.py', 'sov_grpo_train.py', 'sov_minimal_train.py'] |
 | PHASE_5_HONEY | ran | 0.1s | exit_code=0; events=407 |
-| PHASE_6_DOWNLOADS | ran | 5.7s | exit_code=1; files_mined=158 |
+| PHASE_6_DOWNLOADS | ran | 5.8s | exit_code=1; files_mined=158 |
 | PHASE_7_PORTAL | ran | 0.2s | exit_code=0 |
 | PHASE_9_ARTIFACTS | ran | 0.0s |  |
-| PHASE_9B_EXTERNAL_HARNESS | ran | 0.0s | clans_routed=0; swarm_id=owem-clans-1786215690 |
+| PHASE_9B_EXTERNAL_HARNESS | ran | 0.0s | clans_routed=0; swarm_id=owem-clans-1786215768 |
 | PHASE_9C_OWEM_CLUSTER | ran | 0.0s | clusters_routed=0 |
 | PHASE_9D_BENCHMARKS_HARNESS | ran | 0.0s | benchmarks_routed=0 |
 | PHASE_9E_TRAINING_DATA_HARNESS | ran | 0.0s | data_sources_routed=0 |
