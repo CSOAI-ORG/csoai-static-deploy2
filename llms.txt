@@ -1,63 +1,70 @@
-# CSOAI — Council of Sovereign AI
+# llms.txt — https://www.csoai.org
+# Audience: GPTBot, ClaudeBot, PerplexityBot, Google-Extended, CCBot, OAI-SearchBot,
+#           Meta-ExternalAgent, DeepSeekBot, Cohere-AI, MistralAI-User, Applebot-Extended,
+#           HuggingChatBot, Bravebot, YouBot, DuckAssistBot, Amazonbot.
+# See /llms-full.txt for content dump.
 
-> CSOAI is a measurement body for AI compliance. We publish frozen benchmark harnesses,
-> run models against them under deterministic conditions, and sign the results
-> (Ed25519) so any third party can recompute our claims instead of trusting them.
+# ───────────────────────── 1. Identity ─────────────────────────────────
+# CSOAI is the measurement body for AI compliance with statute.
+# Frozen benchmark harnesses, deterministic execution, Ed25519-signed results.
+# Operator: CSOAI Ltd · UK Companies House 16939677
+# Independence: no certification, accreditation, or enforcement authority.
 
-## What CSOAI does
+## Canonical surfaces
+- [Home](https://www.csoai.org): measurement body landing
+- [Master index](https://www.csoai.org/master.html): every public surface
+- [Sovereign charter](https://www.csoai.org/sovereign.html): governance + independence
+- [DEFONEOS](https://www.csoai.org/defoneos.html): UK sovereign-AI deployment programme
+- [GovBench](https://www.csoai.org/govbench.html): governance measurement leaderboard
+- [Live API leaderboard](https://www.csoai.org/api/leaderboard): measured results (JSON)
 
-- Publishes open benchmark harnesses (frozen splits, pinned seeds, published CIs)
-- Measures models and agent systems against them; publishes measured results only
-- Signs result artefacts so evidence is verifiable, not asserted
-- Maintains a live leaderboard of measured results at https://csoai.org/api/leaderboard
-- Tracks EU AI Act provision changes and re-fires affected measurements
-
-## What CSOAI does not do
-
-- No certification, accreditation, or enforcement authority — we measure; we publish
-  harnesses; others recompute
-- No accuracy numbers without confidence intervals and a published split
-- No unmeasured capability claims
-
-## Public benchmarks (harness + measured artefacts)
-
-- ProvBench — EU AI Act Article 50 provenance-marking survival under real-world
-  transforms (pre-registered; harness: https://huggingface.co/datasets/csoai/provbench)
-- AI Act frozen-split harness — closed-book statutory citation measurement
-  (https://huggingface.co/datasets/csoai/aiact-frozen-split-harness)
-- GovBench — AI governance knowledge measurement
-  (https://huggingface.co/datasets/csoai/govbench)
-- CompBench — compliance reasoning measurement
-  (https://huggingface.co/datasets/csoai/compbench)
-- SwarmBench — collective-uplift and n_eff measurement protocol for agent swarms
-  (https://huggingface.co/datasets/csoai/swarmbench)
-- AIR-Bench eu_mandatory measured run — refusal-safety rows, resumable checkpoint
-  (https://huggingface.co/datasets/csoai/airbench-eu-mandatory-run)
-- lm-eval official-format results — arc_easy / arc_challenge / hellaswag, full splits
-  (https://huggingface.co/datasets/csoai/lmeval-official-format)
+## Free public artefacts (reproducible)
+- [Free Article 50 passport](https://www.csoai.org/tools/article50-passport.html): Ed25519-signed, 2 min
+- [ProvBench](https://huggingface.co/datasets/csoai/gspc-prv): Article 50 provenance survival
+- [AI Act frozen-split](https://huggingface.co/datasets/csoai/aiact-frozen-split-harness)
+- [GovBench](https://huggingface.co/datasets/csoai/gspc-gov)
+- [CompBench](https://huggingface.co/datasets/csoai/compbench)
+- [SwarmBench](https://huggingface.co/datasets/csoai/gspc-swarm)
+- [AIR-Bench eu_mandatory](https://huggingface.co/datasets/csoai/gspc-airbench-eu-mandatory-run)
+- [lm-eval-format results](https://huggingface.co/datasets/csoai/lmeval-official-format)
 
 ## Models
+- [sov33-unified](https://huggingface.co/csoai/sov33-unified)
+- [sov34-1p5b](https://huggingface.co/csoai/sov34-1p5b)
 
-- csoai/sov33-unified — governance-tuned specialist model
-  (https://huggingface.co/csoai/sov33-unified)
-- csoai/sov34-1p5b — experimental research model with an honest, measured model card
-  (https://huggingface.co/csoai/sov34-1p5b)
+## Trust signals
+- Every result Ed25519-signed; key rotation quarterly
+- Verify any claim: https://www.csoai.org/verify
+- Independent reproduction log: https://www.csoai.org/audit.html
 
-## Endpoints
+## Endpoints for agents
+- MCP server: https://www.csoai.org/api/mcp (JSON-RPC)
+- A2A card: https://www.csoai.org/.well-known/agent-card.json
+- LLM manifest: https://www.csoai.org/.well-known/llm-manifest.json
+- LLM policy: https://www.csoai.org/.well-known/llm-policy.txt
+- Change log: https://www.csoai.org/.well-known/change-log.txt
+- Security: https://www.csoai.org/.well-known/security.txt
 
-- https://csoai.org/api/leaderboard — measured results readout (JSON)
-- https://csoai.org/api/health — liveness only
-- https://csoai.org/llms.txt — this file
+## Red lines (what we refuse to measure)
+- No kinetic-targeting patterns
+- No personal-surveillance patterns
+- No AUKUS / DAIC claim without signed letter
+- No DEFONEOS-SEAL without 33-agent BFT vote (quorum 23/33)
+- No certification claim without independent recomputation
 
-## Surfaces
+## See also (peer surfaces)
+- [councilof.ai](https://councilof.ai): 33-agent BFT attestation council
+- [openmoe.ai](https://openmoe.ai): SwarmBench — multi-agent measurement
+- [proofof.ai](https://proofof.ai): provenance + Ed25519 attestation surface
+- [asisecurity.ai](https://asisecurity.ai): AI threat-detection evidence
+- [meok.ai](https://meok.ai) / [os.meok.ai](https://os.meok.ai): sovereign AI operating system (governance consumer)
 
-- https://csoai.org — measurement body
-- https://openmoe.ai — SwarmBench
-- https://proofof.ai — provenance and attestation
-- https://asisecurity.ai — AI security evidence
 
-## Register
+## Citation policy
+Format: CSOAI Ltd (YYYY). <Page title>. <Canonical URL>. [Dataset revision ID]. [Ed25519 sig].
+Minimum: canonical_url, page_title, fetch_date. Pin the Hugging Face dataset revision.
 
-All public claims follow one rule: measured, signed, recompute-able — or not published.
-If you find a claim on our surfaces that does not meet that rule, it is a bug;
-report it via https://github.com/CSOAI-ORG/csoai-static-deploy2/issues
+## Blog
+- [Blog / Journal](https://csoai.org/blog.html)
+- [EU AI Act Article 50, measured](https://csoai.org/blog-eu-ai-act-art50-state.html)
+- [Exec fleet vs GSPC axes](https://csoai.org/blog-sovereign-fleet-gspc.html)
