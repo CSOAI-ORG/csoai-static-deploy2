@@ -1,14 +1,15 @@
 <!DOCTYPE html>
+
 <html>
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>SOV33 Chrome Extension</title>
-<link rel="icon" href="/favicon.svg" type="image/svg+xml">
-<link rel="canonical" href="https://csoai.org/chrome-extension/popup.html">
-<meta property="og:title" content="SOV33 Chrome Extension">
-<meta property="og:description" content="CSOAI SOV33 Chrome extension — sovereign AI governance.">
-<meta name="description" content="CSOAI: SOV33 Chrome Extension — EU AI Act Article 50 compliant sovereign AI.">
+<link href="/favicon.svg" rel="icon" type="image/svg+xml"/>
+<link href="https://csoai.org/chrome-extension/popup.html" rel="canonical"/>
+<meta content="SOV33 Chrome Extension" property="og:title"/>
+<meta content="CSOAI SOV33 Chrome extension — sovereign AI governance." property="og:description"/>
+<meta content="CSOAI: SOV33 Chrome Extension — EU AI Act Article 50 compliant sovereign AI." name="description"/>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"SOV33 Chrome Extension","url":"https://csoai.org/chrome-extension/popup.html","publisher":{"@type":"Organization","name":"CSOAI Ltd","url":"https://csoai.org"}}</script>
 <style>
   * { margin:0; padding:0; box-sizing:border-box; }
@@ -39,66 +40,68 @@
   .family { text-align:center; padding:0.3rem; background:#1a1a3a; border-radius:4px; font-size:1rem; }
   .family .name { font-size:0.55rem; color:#888; margin-top:0.1rem; }
 </style>
+<!-- AI-SEO/AEO/GEO head block — DO NOT remove. AI crawlers (GPTBot, ClaudeBot, PerplexityBot) don't run JS; everything they need must be in raw HTML. -->
+<link href="https://csoai.org/chrome-extension/popup.html.llm.json" rel="alternate" title="LLM representation of this page" type="application/llm+json"/>
+<meta content="/llms.txt" name="llms-txt"/>
+<meta content="human-authored, machine-verifiable, Ed25519-signed" name="ai-content-declaration"/>
+<meta content="CSOAI Ltd (2026). SOV33 Chrome Extension. https://csoai.org/chrome-extension/popup.html" name="citation-policy"/>
+<meta content="2026-07-27T13:57:18+00:00" name="revised"/>
+<meta content="2026-07-27T13:57:18+00:00" property="article:modified_time"/>
 </head>
 <body>
 <div class="article50-banner" style="background:linear-gradient(90deg,#3a0f1a,#7a1f33,#3a0f1a);border-bottom:1px solid #ff5470;padding:10px 16px;text-align:center;font-size:13px;color:#ffd5dd;font-weight:500">EU AI Act Article 50 live 2 Aug 2026 — C2PA passport ready | <a href="/tools/article50-passport.html" style="color:#fff;text-decoration:underline;font-weight:700">Get yours →</a></div>
 <div class="header">
-  <h1>SOV-SPACE PORTAL</h1>
-  <div class="stats">
-    <div class="stat"><div class="dot green"></div> 53 Models</div>
-    <div class="stat"><div class="dot green"></div> 33 MCPs</div>
-    <div class="stat"><div class="dot green"></div> 7,983 Honey</div>
-    <div class="stat"><div class="dot yellow"></div> 95.8% WM</div>
-  </div>
+<h1>SOV-SPACE PORTAL</h1>
+<div class="stats">
+<div class="stat"><div class="dot green"></div> 53 Models</div>
+<div class="stat"><div class="dot green"></div> 33 MCPs</div>
+<div class="stat"><div class="dot green"></div> 7,983 Honey</div>
+<div class="stat"><div class="dot yellow"></div> 95.8% WM</div>
 </div>
-
+</div>
 <div class="content">
-  <!-- 12 OWEM Families -->
-  <div class="panel">
-    <h3>12 OWEM Families</h3>
-    <div class="family-grid">
-      <div class="family" style="color:#00d4ff">∞<div class="name">abstract</div></div>
-      <div class="family" style="color:#ff6bcb">✦<div class="name">aesthetic</div></div>
-      <div class="family" style="color:#00ff88">⚡<div class="name">agency</div></div>
-      <div class="family" style="color:#ffaa00">♡<div class="name">care</div></div>
-      <div class="family" style="color:#7b2ff7">✧<div class="name">creation</div></div>
-      <div class="family" style="color:#ff4444">⊗<div class="name">destruct</div></div>
-      <div class="family" style="color:#44ccff">◎<div class="name">embody</div></div>
-      <div class="family" style="color:#aa66ff">⚖<div class="name">ethics</div></div>
-      <div class="family" style="color:#00d4ff">◉<div class="name">identity</div></div>
-      <div class="family" style="color:#88aacc">⊢<div class="name">logic</div></div>
-      <div class="family" style="color:#44cc88">⛨<div class="name">preserve</div></div>
-      <div class="family" style="color:#ff88cc">⇔<div class="name">relate</div></div>
-    </div>
-  </div>
-
-  <!-- Top Models -->
-  <div class="panel">
-    <h3>Top Models</h3>
-    <div class="model-grid">
-      <div class="model-item"><span class="model-name">sov-sovereign-v2</span><span class="model-score">70%</span></div>
-      <div class="model-item"><span class="model-name">sov-math</span><span class="model-score">57%</span></div>
-      <div class="model-item"><span class="model-name">sov-general</span><span class="model-score">90%basic</span></div>
-      <div class="model-item"><span class="model-name">sov-code</span><span class="model-score">100%code</span></div>
-    </div>
-  </div>
-
-  <!-- Chat -->
-  <div class="panel">
-    <h3>Ask SOV</h3>
-    <div class="chat">
-      <textarea class="chat-input" id="chatInput" rows="2" placeholder="Ask SOV-space anything..."></textarea>
-      <div class="chat-output" id="chatOutput">SOV-space ready. Ask a question.</div>
-    </div>
-  </div>
-
-  <!-- Actions -->
-  <div class="action-row">
-    <button class="btn primary" onclick="askSOV()">Ask SOV</button>
-    <button class="btn" onclick="openPortal()">Open Portal</button>
-  </div>
+<!-- 12 OWEM Families -->
+<div class="panel">
+<h3>12 OWEM Families</h3>
+<div class="family-grid">
+<div class="family" style="color:#00d4ff">∞<div class="name">abstract</div></div>
+<div class="family" style="color:#ff6bcb">✦<div class="name">aesthetic</div></div>
+<div class="family" style="color:#00ff88">⚡<div class="name">agency</div></div>
+<div class="family" style="color:#ffaa00">♡<div class="name">care</div></div>
+<div class="family" style="color:#7b2ff7">✧<div class="name">creation</div></div>
+<div class="family" style="color:#ff4444">⊗<div class="name">destruct</div></div>
+<div class="family" style="color:#44ccff">◎<div class="name">embody</div></div>
+<div class="family" style="color:#aa66ff">⚖<div class="name">ethics</div></div>
+<div class="family" style="color:#00d4ff">◉<div class="name">identity</div></div>
+<div class="family" style="color:#88aacc">⊢<div class="name">logic</div></div>
+<div class="family" style="color:#44cc88">⛨<div class="name">preserve</div></div>
+<div class="family" style="color:#ff88cc">⇔<div class="name">relate</div></div>
 </div>
-
+</div>
+<!-- Top Models -->
+<div class="panel">
+<h3>Top Models</h3>
+<div class="model-grid">
+<div class="model-item"><span class="model-name">sov-sovereign-v2</span><span class="model-score">70%</span></div>
+<div class="model-item"><span class="model-name">sov-math</span><span class="model-score">57%</span></div>
+<div class="model-item"><span class="model-name">sov-general</span><span class="model-score">90%basic</span></div>
+<div class="model-item"><span class="model-name">sov-code</span><span class="model-score">100%code</span></div>
+</div>
+</div>
+<!-- Chat -->
+<div class="panel">
+<h3>Ask SOV</h3>
+<div class="chat">
+<textarea class="chat-input" id="chatInput" placeholder="Ask SOV-space anything..." rows="2"></textarea>
+<div class="chat-output" id="chatOutput">SOV-space ready. Ask a question.</div>
+</div>
+</div>
+<!-- Actions -->
+<div class="action-row">
+<button class="btn primary" onclick="askSOV()">Ask SOV</button>
+<button class="btn" onclick="openPortal()">Open Portal</button>
+</div>
+</div>
 <script>
 function askSOV() {
   const input = document.getElementById('chatInput').value;
@@ -123,7 +126,7 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
 });
 </script>
 <div class="sovereign-cta-strip" style="padding:0.3rem 0.5rem;background:#0a0a1a;text-align:center;font-size:0.6rem;border-top:1px solid #2a2a5a;">
-  <a href="/master.html" style="color:#00d4ff;text-decoration:none;">SOV33_OWEM_HUB</a> &middot;
+<a href="/master.html" style="color:#00d4ff;text-decoration:none;">SOV33_OWEM_HUB</a> ·
   <a href="/defoneos-article-50" style="color:#7b2ff7;text-decoration:none;">Article 50</a>
 </div>
 </body>

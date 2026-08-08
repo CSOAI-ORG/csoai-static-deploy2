@@ -83,8 +83,16 @@ def selftest() -> int:
         fails.append(f"no swarm plan: {p['swarm_tick']}")
 
     # honey routes present
-    if p["honey_routes"].get("ollama_models", 0) < 50:
-        fails.append(f"too few ollama models: {p['honey_routes']}")
+    # 2026-08-08 fix (JEEVES): the 50-model threshold was set when the fleet
+    # was meant to live locally on the Mac. AGENTS.md 2026-08-02 ruled that
+    # the Mac is terminal-only — models live on oracle micros / RunPod /
+    # Kaggle. A 2-model Mac is the new normal. Default the threshold to 2,
+    # allow override via env var for the rare case when this Mac IS the
+    # fleet host (e.g. local-only dev box).
+    import os
+    ollama_min = int(os.environ.get("SOV_PORTAL_OLLAMA_MIN", "2"))
+    if p["honey_routes"].get("ollama_models", 0) < ollama_min:
+        fails.append(f"too few ollama models (have {p['honey_routes'].get('ollama_models', 0)}, need {ollama_min}): {p['honey_routes']}")
 
     # recent_events capped at 20
     if len(p["recent_events"]) > 20:

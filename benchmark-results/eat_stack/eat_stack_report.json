@@ -1,0 +1,38 @@
+{
+  "timestamp": "2026-08-08T17:29:11.651718+00:00",
+  "backend": "ollama-local",
+  "cost_usd": 0.0,
+  "models": {
+    "qwen2.5:1.5b-patched,qwen2.5:0.5b-patched": {
+      "compbench_composite": null,
+      "compbench_categories": null,
+      "eat_baseline": 0.0,
+      "eat_context": 0.0,
+      "eat_rag_lift": 0.0
+    }
+  },
+  "runs": [
+    {
+      "cmd": "/opt/homebrew/opt/python@3.14/bin/python3.14 compbench_local.py qwen2.5:1.5b-patched,qwen2.5:0.5b-patched",
+      "rc": 1,
+      "secs": 0.1,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/Users/nicholas/clawd/csoai-static-deploy2/compbench_local.py\", line 24, in <module>\n    import comprehensive_e2e as CE\nModuleNotFoundError: No module named 'comprehensive_e2e'\n"
+    },
+    {
+      "cmd": "/opt/homebrew/opt/python@3.14/bin/python3.14 eat_run_local.py qwen2.5:1.5b-patched,qwen2.5:0.5b-patched",
+      "rc": 0,
+      "secs": 0.2,
+      "stdout": "================================================================\n  EAT GOVBENCH (offline) \u2014 model: qwen2.5:1.5b-patched,qwen2.5:0.5b-patched\n================================================================\n  defence          baseline   0.0%  context   0.0%   +0.0%\n  sovereignty      baseline   0.0%  context   0.0%   +0.0%\n  ethics           baseline   0.0%  context   0.0%   +0.0%\n  privacy          baseline   0.0%  context   0.0%   +0.0%\n  accountability   baseline   0.0%  context   0.0%   +0.0%\n----------------------------------------------------------------\n  AVERAGE          baseline   0.0%  context   0.0%\n  -> benchmark-results/eat_govbench/eat_local_qwen2.5_1.5b-patched,qwen2.5_0.5b-patched.json\n",
+      "stderr": ""
+    },
+    {
+      "cmd": "/opt/homebrew/opt/python@3.14/bin/python3.14 govbench_eval.py --model qwen2.5:1.5b-patched,qwen2.5:0.5b-patched --provider ollama",
+      "rc": 0,
+      "secs": 0.2,
+      "stdout": "\n  Evaluating: qwen2.5:1.5b-patched,qwen2.5:0.5b-patched (ollama)...\n\n  \u23ed\ufe0f  qwen2.5:1.5b-patched,qwen2.5:0.5b-patched UNREACHABLE \u2014 no result written.\n     ERROR: HTTP Error 400: Bad Request\n     A failed call is not a measurement. Restore access, then re-run.\n",
+      "stderr": ""
+    }
+  ],
+  "sigil": "df50cd17f776e2b996e110d3176894f7623b76116b543f21f0ff6c1041afd8e5"
+}

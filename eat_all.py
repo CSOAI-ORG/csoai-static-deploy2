@@ -290,36 +290,47 @@ def phase_7_portal() -> dict:
 
 
 def phase_8_deploy() -> dict:
-    """Phase 8: Push to Cloudflare Pages (master site)."""
+    """Phase 8: Push to Cloudflare Pages (canonical static surface).
+
+    Repointed 2026-08-08 (Nick directive): previously built the sibling Next.js
+    dashboard ~/projects/coai-dashboard/csoai-web (which has no node_modules) and
+    deployed to the sidecar `csoai-gspc` project. The canonical csoai.org surface is
+    the ALLOWLIST static build (`_site`) → Cloudflare Pages project `csoai-site`,
+    exactly like SOVEREIGN_DEPLOY.sh. Publishing the repo root would leak .env /
+    wrangler.toml (SIGIL_SECRET) / red-team transcripts — build_site.py asserts none
+    of those are in the output and exits non-zero otherwise.
+    """
     result = {"status": "skipped", "artifacts": []}
-    # Deploy csoai-web (the new dashboard) to csoai-gspc
-    web_dir = Path("/Users/nicholas/projects/coai-dashboard/csoai-web")
-    if not web_dir.exists():
-        return {"status": "skipped", "error": "csoai-web not found"}
-    try:
-        out = subprocess.run(
-            ["npm", "run", "build"],
-            capture_output=True, text=True, timeout=600,  # 10 min for build
-            cwd=str(web_dir)
-        )
-        result["build_exit_code"] = out.returncode
-        if out.returncode != 0:
-            result["status"] = "failed"
-            result["error"] = out.stderr[-500:]
-            return result
-        # Deploy
-        out = subprocess.run(
-            ["npx", "wrangler", "pages", "deploy", "out",
-             "--project-name=csoai-gspc", "--commit-dirty=true"],
-            capture_output=True, text=True, timeout=600,  # 10 min for deploy
-            cwd=str(web_dir)
-        )
-        result["deploy_exit_code"] = out.returncode
-        result["status"] = "ran" if out.returncode == 0 else "failed"
-        result["stdout_tail"] = out.stdout[-500:]
-    except Exception as e:
-        result["status"] = "failed"
-        result["error"] = str(e)
+    env = dict(os.environ)
+    env["PATH"] = f"{Path.home()}/.local/node/bin:" + env.get("PATH", "")
+
+    def sh(cmd, timeout=600, cwd=None):
+        return subprocess.run(cmd, capture_output=True, text=True, timeout=timeout,
+                              cwd=cwd or ROOT, env=env)
+
+    # 1. Machine-readable llm.json companions (generated, never drift from pages)
+    r = sh(["python3", str(ROOT / "make_llm_json.py")])
+    if r.returncode != 0:
+        result.update({"status": "failed", "error": f"make_llm_json: {r.stderr[-500:]}"})
+        return result
+    # 2. Allowlisted publish dir (asserts no .env / wrangler.toml / *.py / *.jsonl / runs/)
+    r = sh(["python3", str(ROOT / "build_site.py")])
+    if r.returncode != 0:
+        result.update({"status": "failed", "error": f"build_site: {r.stderr[-500:]}"})
+        return result
+    # 3. DEFONEOS math-integrity widget (idempotent)
+    r = sh(["python3", str(ROOT / "inject_math_check.py")])
+    if r.returncode != 0:
+        result.update({"status": "failed", "error": f"inject_math_check: {r.stderr[-500:]}"})
+        return result
+
+    deploy_dir = ROOT / "_site"
+    # 4. Deploy the allowlist build to Cloudflare Pages project csoai-site (canonical)
+    r = sh(["npx", "wrangler", "pages", "deploy", str(deploy_dir),
+            "--project-name=csoai-site", "--branch=main", "--commit-dirty=true"])
+    result["deploy_exit_code"] = r.returncode
+    result["status"] = "ran" if r.returncode == 0 else "failed"
+    result["stdout_tail"] = (r.stdout or r.stderr)[-800:]
     return result
 
 

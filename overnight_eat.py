@@ -58,6 +58,16 @@ def load_state() -> dict:
     return {"started": datetime.now(timezone.utc).isoformat(), "stages": {}}
 
 
+def _ollama_reachable(timeout_s: float = 2.0) -> bool:
+    """Cheap TCP check on the ollama port. No HTTP call — just connect."""
+    import socket
+    try:
+        with socket.create_connection(("localhost", 11434), timeout=timeout_s):
+            return True
+    except OSError:
+        return False
+
+
 def save(st: dict) -> None:
     STATE.parent.mkdir(parents=True, exist_ok=True)
     STATE.write_text(json.dumps(st, indent=2))
@@ -369,6 +379,13 @@ def selftest() -> int:
               reloaded.get("stages", {}).get("selftest_stage", {}).get("status") == "ran")
             t("mark() persists extra kwargs to disk",
               reloaded.get("stages", {}).get("selftest_stage", {}).get("probe") is True)
+            # The 3-state contract is ran / failed / skipped. Verify 'skipped'
+            # round-trips too — cron-running EAT depends on ollama-gated stages
+            # marking as 'skipped' (not 'failed') when ollama is unreachable.
+            _self.mark(st, "ollama_gated_stage", "skipped", reason="ollama unreachable")
+            reloaded2 = json.loads(_self.STATE.read_text())
+            t("mark() persists status='skipped' to disk (3-state contract)",
+              reloaded2.get("stages", {}).get("ollama_gated_stage", {}).get("status") == "skipped")
         finally:
             import overnight_eat as _self
             _self.STATE = backup
@@ -432,11 +449,29 @@ def main() -> int:
             print("  REFUSED: selftest failed. Set EAT_SKIP_SELFTEST=1 to bypass "
                   "(not recommended).", file=sys.stderr, flush=True)
             return 2
+
+    # Ollama preflight: if no local ollama is reachable, mark the ollama-gated
+    # stages (reboard + system + honey) as 'skipped' with a reason, and let the
+    # deterministic stages (gates + report) run. The 3-state contract
+    # (ran / failed / skipped) is the only honest signal a cron-running EAT can
+    # emit when the substrate is empty.
+    ollama_up = _ollama_reachable()
+    if not ollama_up:
+        print("  ollama preflight: not reachable — REBOARD / HONEY / SYSTEM will mark 'skipped'",
+              flush=True)
+    # Stages that require a live ollama (or any external compute). When ollama is
+    # unreachable these should record 'skipped' so the cron-running EAT produces
+    # an honest signal — 'ran' with 0 models would look identical to a successful
+    # empty-board run, which is a lie.
+    OLLAMA_GATED = {"reboard", "honey", "system"}
     for name, fn in STAGES:
         if a.only and a.only != name:
             continue
         if st["stages"].get(name, {}).get("status") == "ran":
             print(f"  [SKIP   ] {name} — already completed in this run", flush=True)
+            continue
+        if name in OLLAMA_GATED and not ollama_up:
+            mark(st, name, "skipped", reason="ollama not reachable")
             continue
         try:
             if name == "reboard":

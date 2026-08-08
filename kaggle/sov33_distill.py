@@ -25,6 +25,7 @@ BENCH = ROOT / "benchmark-results"
 TRAINING = BENCH / "training"
 TRAINING.mkdir(exist_ok=True)
 sys.path.insert(0, str(ROOT / "kaggle"))
+sys.path.insert(0, str(ROOT / "huggingface"))
 
 from harness_loader import APICall
 from sov33_e2e_orchestrator_v2 import PROVIDERS

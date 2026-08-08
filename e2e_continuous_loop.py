@@ -28,8 +28,10 @@ from typing import Any, Optional
 PROJECT_ROOT = Path(__file__).resolve().parent
 LOG_FILE = PROJECT_ROOT / "e2e_continuous_loop.log"
 
-# DashScope API
-DASHSCOPE_API_KEY = "sk-ws-H.XRYHLX.7ers.MEQCIFJkERM9O8foBHyO9bIt8impHjl2HkL7x-PEVwxGtm2SAiB_4WKwRifRfchjfI9LpEPZT5njOOwTM7l8YpZ7ELgzIQ"
+# DashScope API — key sourced from env (never commit a live key to source).
+# Rotate the leaked key and export:  export DASHSCOPE_API_KEY=...
+import os as _os
+DASHSCOPE_API_KEY = _os.environ.get("DASHSCOPE_API_KEY", "")
 DASHSCOPE_ENDPOINT = "https://ws-gmuls9hk2vwqzi2n.ap-southeast-1.maas.aliyuncs.com/compatible-mode/v1/chat/completions"
 
 # Models to distill from

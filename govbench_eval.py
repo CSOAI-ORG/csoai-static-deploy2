@@ -22,11 +22,21 @@ RESULTS_DIR = ROOT / "benchmark-results" / "govbench"
 RESULTS_DIR.mkdir(parents=True, exist_ok=True)
 
 # ── API Keys ──────────────────────────────────────────────────────
+# ~/.env is read when present and skipped when absent. It used to be read
+# unconditionally, so importing this module ANYWHERE without that file raised
+# FileNotFoundError at import time. That made every downstream consumer
+# unrunnable off this laptop — including inspect_tasks/govbench_inspect.py,
+# which imports DIMENSIONS from here and so could not be published in a public
+# harness at all: no external user can supply our ~/.env, and they should never
+# be asked to. Keys still come from the environment when the file is missing.
 ENV = {}
-for line in Path(os.path.expanduser("~/.env")).read_text().splitlines():
-    if "=" in line:
-        k, v = line.split("=", 1)
-        ENV[k.strip()] = v.strip()
+_envfile = Path(os.path.expanduser("~/.env"))
+if _envfile.exists():
+    for line in _envfile.read_text().splitlines():
+        if "=" in line:
+            k, v = line.split("=", 1)
+            ENV[k.strip()] = v.strip()
+ENV = {**ENV, **{k: v for k, v in os.environ.items() if k.endswith("_API_KEY")}}
 
 NVIDIA_KEY = ENV.get("NVIDIA_API_KEY", "")
 GROQ_KEY = ENV.get("GROQ_API_KEY", "")

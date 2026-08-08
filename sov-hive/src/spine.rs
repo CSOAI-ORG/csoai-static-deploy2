@@ -6,7 +6,6 @@
 //! The spine runs on your M4 Mac at 2ms per reasoning step. It doesn't need cloud GPU.
 //! It's a small, fast, local brain that orchestrates the big cloud models.
 
-use serde::{Deserialize, Serialize};
 use crate::phlabet::Glyph;
 
 /// One layer of the GNN — message passing + aggregation.

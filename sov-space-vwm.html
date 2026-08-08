@@ -1,9 +1,10 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-<meta charset="utf-8">
+<meta charset="utf-8"/>
 <title>SOV-Space — Visual KB (VWM)</title>
-<meta name="description" content="SOV-Space Visual Workspace Memory: globe + sovereign stack + spacetime canvas, one integrated view.">
+<meta content="SOV-Space Visual Workspace Memory: globe + sovereign stack + spacetime canvas, one integrated view." name="description"/>
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body { background: #050510; color: #e0e0e0; font-family: 'Inter', system-ui, sans-serif; overflow: hidden; height: 100vh; }
@@ -72,76 +73,82 @@
   #sov .stats .row { display: flex; justify-content: space-between; padding: 2px 0; }
   #sov .stats .row b { color: #79C0FF; }
 </style>
+<!-- AI-SEO/AEO/GEO head block — DO NOT remove. AI crawlers (GPTBot, ClaudeBot, PerplexityBot) don't run JS; everything they need must be in raw HTML. -->
+<link href="https://www.csoai.org/sov-space-vwm.html.llm.json" rel="alternate" title="LLM representation of this page" type="application/llm+json"/>
+<meta content="/llms.txt" name="llms-txt"/>
+<meta content="human-authored, machine-verifiable, Ed25519-signed" name="ai-content-declaration"/>
+<meta content="CSOAI Ltd (2026). SOV-Space — Visual KB (VWM). https://www.csoai.org/sov-space-vwm.html" name="citation-policy"/>
+<meta content="2026-07-30T14:12:41+00:00" name="revised"/>
+<meta content="2026-07-30T14:12:41+00:00" property="article:modified_time"/>
+<link href="https://www.csoai.org/sov-space-vwm.html" rel="canonical"/>
+<meta content="SOV-Space — Visual KB (VWM)" property="og:title"/>
+<meta content="SOV-Space — Visual KB (VWM). A sovereign, audit-grade CSOAI surface: measurement, not certification — every figure traces to a signed, verifiable record." property="og:description"/>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"SOV-Space \u2014 Visual KB (VWM)","url":"https://www.csoai.org/sov-space-vwm.html","publisher":{"@type":"Organization","name":"CSOAI Ltd","url":"https://csoai.org"}}</script>
 </head>
 <body>
 <header>
-  <h1>SOV-SPACE</h1>
-  <span class="subtitle">Visual Workspace Memory · VWM window · 4 panes</span>
-  <nav class="links">
-    <a href="/sov_space_visual.html">particle field →</a>
-    <a href="/globe3d.html">3D globe →</a>
-    <a href="/sovereign.html">sovereign stack →</a>
-    <a href="/sov-infinite-zoom.html">time canvas →</a>
-    <a href="/drift-feed.html">drift feed →</a>
-  </nav>
+<h1>SOV-SPACE</h1>
+<span class="subtitle">Visual Workspace Memory · VWM window · 4 panes</span>
+<nav class="links">
+<a href="/sov_space_visual.html">particle field →</a>
+<a href="/globe3d.html">3D globe →</a>
+<a href="/sovereign.html">sovereign stack →</a>
+<a href="/sov-infinite-zoom.html">time canvas →</a>
+<a href="/drift-feed.html">drift feed →</a>
+</nav>
 </header>
-
 <main>
-  <!-- Top-left: 3D globe + sovereign governance earth -->
-  <section class="pane" id="globe">
-    <div class="pane-header">
-      <span class="label">⏱ Globe — sovereign nodes</span>
-      <span class="meta" id="globeStatus">loading…</span>
-    </div>
-    <div class="pane-body">
-      <div class="globe-fallback" id="globeFallback">
+<!-- Top-left: 3D globe + sovereign governance earth -->
+<section class="pane" id="globe">
+<div class="pane-header">
+<span class="label">⏱ Globe — sovereign nodes</span>
+<span class="meta" id="globeStatus">loading…</span>
+</div>
+<div class="pane-body">
+<div class="globe-fallback" id="globeFallback">
         Loading 3D Governance Earth…<br/>
-        <small>Requires Cesium CDN + WebGL. If unavailable, see <a href="/sovereign.html">sovereign.html</a> for the flat stack.</small>
-      </div>
-    </div>
-  </section>
-
-  <!-- Top-right: sovereign stack list -->
-  <section class="pane" id="sovereign">
-    <div class="pane-header">
-      <span class="label">🜏 Sovereign stack</span>
-      <span class="meta">open-core · audit-grade · UK-sovereign</span>
-    </div>
-    <div class="pane-body">
-      <div class="stack-list" id="stackList"></div>
-    </div>
-  </section>
-
-  <!-- Bottom-left: sov-space particle field -->
-  <section class="pane" id="sov">
-    <div class="pane-header">
-      <span class="label">∞ SOV-space particle field</span>
-      <span class="meta" id="eventCount">counting…</span>
-    </div>
-    <div class="pane-body">
-      <canvas id="sovField"></canvas>
-      <div class="stats">
-        <div class="row"><span>Guard:</span><b id="g1">—</b></div>
-        <div class="row"><span>Lenses:</span><b id="g2">—</b></div>
-        <div class="row"><span>Provisions:</span><b id="g3">—</b></div>
-        <div class="row"><span>Care gate recall:</span><b id="g4">—</b></div>
-        <div class="row"><span>Event ledger:</span><b id="g5">—</b></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Bottom-right: spacetime time-zoom -->
-  <section class="pane" id="time">
-    <div class="pane-header">
-      <span class="label">⏳ Spacetime canvas</span>
-      <span class="meta">5 zoom levels · click to expand</span>
-    </div>
-    <div class="pane-body">
-      <div class="zoom-grid" id="zoomGrid"></div>
-    </div>
-  </section>
+<small>Requires Cesium CDN + WebGL. If unavailable, see <a href="/sovereign.html">sovereign.html</a> for the flat stack.</small>
+</div>
+</div>
+</section>
+<!-- Top-right: sovereign stack list -->
+<section class="pane" id="sovereign">
+<div class="pane-header">
+<span class="label">🜏 Sovereign stack</span>
+<span class="meta">open-core · audit-grade · UK-sovereign</span>
+</div>
+<div class="pane-body">
+<div class="stack-list" id="stackList"></div>
+</div>
+</section>
+<!-- Bottom-left: sov-space particle field -->
+<section class="pane" id="sov">
+<div class="pane-header">
+<span class="label">∞ SOV-space particle field</span>
+<span class="meta" id="eventCount">counting…</span>
+</div>
+<div class="pane-body">
+<canvas id="sovField"></canvas>
+<div class="stats">
+<div class="row"><span>Guard:</span><b id="g1">—</b></div>
+<div class="row"><span>Lenses:</span><b id="g2">—</b></div>
+<div class="row"><span>Provisions:</span><b id="g3">—</b></div>
+<div class="row"><span>Care gate recall:</span><b id="g4">—</b></div>
+<div class="row"><span>Event ledger:</span><b id="g5">—</b></div>
+</div>
+</div>
+</section>
+<!-- Bottom-right: spacetime time-zoom -->
+<section class="pane" id="time">
+<div class="pane-header">
+<span class="label">⏳ Spacetime canvas</span>
+<span class="meta">5 zoom levels · click to expand</span>
+</div>
+<div class="pane-body">
+<div class="zoom-grid" id="zoomGrid"></div>
+</div>
+</section>
 </main>
-
 <script>
 // ── SOVEREIGN STACK — populate from instrument + benchmarks ──────────
 const STACK = [
@@ -158,6 +165,8 @@ const STACK = [
   { name: 'pqcbench', desc: 'Continuity lens. 1/25 criteria pass — failing subject is US.', status: 'MEASURED', color: '#D29922' },
   { name: 'govbench-api worker', desc: '7 endpoints (probe/registry/ledger/gap/drift/chain/anchors).', status: 'LIVE', color: '#3FB950' },
   { name: 'corpus-watch.yml', desc: 'GH Actions daily 06:17 UTC. Checks C2PA, EUR-Lex, NIST IR 8547.', status: 'LIVE', color: '#3FB950' },
+  { name: 'oowm-v9', desc: '2-config dataset (12 dual-signed train + 778 SOV_SIGNAL). Ed25519+ML-DSA-65.', status: 'LIVE', color: '#3FB950', link: 'https://huggingface.co/datasets/csoai/oowm-ground-truth-v9' },
+  { name: 'oowm_score', desc: 'Sovereign scoring on csoai.org/api/eat-tick. 60-doc MMR seed, 12/12 domains.', status: 'LIVE', color: '#3FB950', link: 'https://csoai.org/api/eat-tick' },
 ];
 
 const list = document.getElementById('stackList');
@@ -309,6 +318,42 @@ zoomGrid.querySelectorAll('.zoom-cell').forEach(cell => {
     window.open(`/sov-zoom-${z}.svg?window=${cell.dataset.window}`, '_blank');
   });
 });
+
+// ── v11: OOWM top-N sovereign scoring viz ─────────────────────────────
+// Renders the top aligned OOWM docs for a rotating topic set into the
+// sovereign stack first-row as a live mini-leaderboard (from the apex).
+const OOWM_TOPICS = [
+  'Maternal Covenant', 'HARNESS model', 'EU AI Act risk tier',
+  'OOWM substrate', 'refusal policy', 'BFT council',
+];
+const sovereignBody = document.querySelector('#sovereign .pane-body');
+const leader = document.createElement('div');
+leader.className = 'stack-list';
+leader.style.cssText = 'padding:12px;overflow-y:auto;height:100%;';
+leader.innerHTML = `<div class="pane-header"><span class="label">🐉 OOWM top-aligned docs</span>
+  <span class="meta">live /api/eat-tick oowm_score</span></div><div id="oowmTopN"></div>`;
+sovereignBody?.appendChild(leader);
+
+(async function loadOowmTopN() {
+  const el = document.getElementById('oowmTopN');
+  if (!el) return;
+  const topic = OOWM_TOPICS[Math.floor(Math.random() * OOWM_TOPICS.length)];
+  try {
+    const r = await fetch('/api/eat-tick', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ task: 'oowm_topn', topic, top_n: 4 }),
+    });
+    const j = await r.json();
+    const res = j?.tick?.result?.results || [];
+    el.innerHTML = `<h4 style="color:#79C0FF;margin-bottom:6px">${topic}</h4>`
+      + res.map(x => `<div class="stack-item">
+          <h4>${x.domain}<span class="status" style="background:#3FB95022;color:#3FB950;border:1px solid #3FB95055">${x.score}</span></h4>
+          <p>${(x.text || '').slice(0, 80)}</p></div>`).join('')
+      + (res.length ? '' : `<p style="color:#6E7681;font-size:0.7rem">no match — try another topic</p>`);
+  } catch (e) {
+    el.innerHTML = `<p style="color:#D29922;font-size:0.7rem">oowm_topn unreachable: ${e.message}</p>`;
+  }
+})();
 </script>
 </body>
 </html>

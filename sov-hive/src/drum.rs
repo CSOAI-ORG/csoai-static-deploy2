@@ -24,9 +24,12 @@ pub enum AttackVector {
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub enum ComplianceFramework {
-    NIST_RMF,
-    EU_AI_ACT,
-    ISO_42001,
+    #[serde(rename = "NIST_RMF")]
+    NistRmf,
+    #[serde(rename = "EU_AI_ACT")]
+    EuAiAct,
+    #[serde(rename = "ISO_42001")]
+    Iso42001,
     SOC2,
 }
 
@@ -52,19 +55,19 @@ impl Drum {
                 name: "synthetic_healthcare_prompt_injection".to_string(),
                 attack_vector: AttackVector::PromptInjection,
                 target: "synthetic_healthcare_agent".to_string(),
-                compliance_framework: ComplianceFramework::NIST_RMF,
+                compliance_framework: ComplianceFramework::NistRmf,
             },
             Scenario {
                 name: "synthetic_finance_data_exfiltration".to_string(),
                 attack_vector: AttackVector::DataExfiltration,
                 target: "synthetic_finance_model".to_string(),
-                compliance_framework: ComplianceFramework::EU_AI_ACT,
+                compliance_framework: ComplianceFramework::EuAiAct,
             },
             Scenario {
                 name: "synthetic_governance_gap_audit".to_string(),
                 attack_vector: AttackVector::ComplianceGap,
                 target: "synthetic_governance_decision".to_string(),
-                compliance_framework: ComplianceFramework::ISO_42001,
+                compliance_framework: ComplianceFramework::Iso42001,
             },
         ];
         Self { tempo_hz, scenarios }

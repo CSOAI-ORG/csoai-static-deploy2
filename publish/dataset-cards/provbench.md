@@ -23,7 +23,7 @@ size_categories:
 
 One of the **six axes** of the GSPC instrument, published by **CSOAI Ltd** (UK 16939677) — an
 independent AI **measurement** body. **Not a certifier, and this is not a conformity
-assessment.** DOI [10.5281/zenodo.21755657](https://doi.org/10.5281/zenodo.21755657)
+assessment.** DOI [10.5281/zenodo.21755656](https://doi.org/10.5281/zenodo.21755656)
 
 ## Labels
 

@@ -7,8 +7,9 @@ import json
 import subprocess
 import sys
 
-# Install dependencies
-subprocess.run([sys.executable, "-m", "pip", "install", "-q", "transformers", "peft", "trl", "datasets", "bitsandbytes", "accelerate"], check=True)
+# Install dependencies (skip on help/parse-only invocation so --help works without pip/net)
+if not any(a in ("-h", "--help") for a in sys.argv[1:]):
+    subprocess.run([sys.executable, "-m", "pip", "install", "-q", "transformers", "peft", "trl", "datasets", "bitsandbytes", "accelerate"], check=True)
 
 import torch
 from transformers import AutoTokenizer, AutoModelForCausalLM, BitsAndBytesConfig, TrainingArguments

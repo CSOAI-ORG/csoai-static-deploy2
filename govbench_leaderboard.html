@@ -1,7 +1,8 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
 <title>GovBench — Global AI Governance Leaderboard</title>
-<meta name="description" content="A governance benchmark whose author's own models lose to the base they wrap. 11 models, 15 dimensions, reproducible offline.">
+<meta content="A governance benchmark whose author's own models lose to the base they wrap. 11 models, 15 dimensions, reproducible offline." name="description"/>
 <style>
 :root{--bg:#0b0d10;--fg:#e8eaed;--mut:#9aa3ad;--line:#1e242c;--card:#12161b;--acc:#4da3ff;--warn:#ffb454;--bad:#ff6b6b}
 @media(prefers-color-scheme:light){:root{--bg:#fbfcfd;--fg:#12161b;--mut:#5a646e;--line:#e3e8ee;--card:#fff;--acc:#0b6bcb}}
@@ -35,11 +36,20 @@ code{font-family:ui-monospace,Menlo,monospace;font-size:13px;background:var(--ca
 a{color:var(--acc)}
 footer{margin-top:52px;padding-top:22px;border-top:1px solid var(--line);color:var(--mut);font-size:13.5px}
 .tw{overflow-x:auto}
-</style></head><body><div class="wrap">
-
+</style><!-- AI-SEO/AEO/GEO head block — DO NOT remove. AI crawlers (GPTBot, ClaudeBot, PerplexityBot) don't run JS; everything they need must be in raw HTML. -->
+<link href="https://www.csoai.org/govbench_leaderboard.html.llm.json" rel="alternate" title="LLM representation of this page" type="application/llm+json"/>
+<meta content="/llms.txt" name="llms-txt"/>
+<meta content="human-authored, machine-verifiable, Ed25519-signed" name="ai-content-declaration"/>
+<meta content="CSOAI Ltd (2026). GovBench — Global AI Governance Leaderboard. https://www.csoai.org/govbench_leaderboard.html" name="citation-policy"/>
+<meta content="2026-07-28T08:25:55+00:00" name="revised"/>
+<meta content="2026-07-28T08:25:55+00:00" property="article:modified_time"/>
+<link href="https://www.csoai.org/govbench_leaderboard.html" rel="canonical"/>
+<meta content="GovBench — Global AI Governance Leaderboard" property="og:title"/>
+<meta content="GovBench — Global AI Governance Leaderboard. A sovereign, audit-grade CSOAI surface: measurement, not certification — every figure traces to a signed, verifiable record." property="og:description"/>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"GovBench \u2014 Global AI Governance Leaderboard","url":"https://www.csoai.org/govbench_leaderboard.html","publisher":{"@type":"Organization","name":"CSOAI Ltd","url":"https://csoai.org"}}</script>
+</head><body><div class="wrap">
 <h1>GovBench</h1>
 <p class="sub">A governance benchmark whose author's own models lose to the base they wrap.</p>
-
 <div class="finding">
 <h2>The finding we publish because it is against us</h2>
 <p>All 10 governance variants below are <strong>system-prompt wrappers over the same base weights</strong>.
@@ -49,14 +59,12 @@ The spread across wrappers is <strong>43.1 points</strong> — from the prompt a
 <p>A governance wrapper can silently make a model <strong>worse than the model it wraps</strong>, and nothing in its
 name tells you which one you built. That is the argument for this benchmark existing, made by this benchmark.</p>
 </div>
-
 <div class="grid">
 <div class="stat"><b>11</b><span>models, one harness</span></div>
 <div class="stat"><b>15</b><span>dimensions</span></div>
 <div class="stat"><b>#5</b><span>rank of the raw base</span></div>
 <div class="stat"><b>43pts</b><span>spread from prompt alone</span></div>
 </div>
-
 <div class="tw"><table>
 <thead><tr><th>#</th><th>Model</th><th>Score</th><th>Certification</th></tr></thead>
 <tbody>
@@ -72,13 +80,11 @@ name tells you which one you built. That is the argument for this benchmark exis
 <tr><td class="rank">10</td><td class="model">sov33-v7:latest</td><td class="score">37.1%</td><td><span class="cert uncertified">UNCERTIFIED</span></td></tr>
 <tr><td class="rank">11</td><td class="model">sov33-evolved-c2:latest</td><td class="score">13.9%</td><td><span class="cert uncertified">UNCERTIFIED</span></td></tr>
 </tbody></table></div>
-
 <h2 class="sec">What it measures</h2>
 <p class="note">15 dimensions, graded behaviourally rather than by keyword lookup: governance · security · defence ·
 ethics · privacy · safety · robustness · transparency · fairness · accountability · sovereignty · evolution ·
 cybersecurity · compliance · audit-chain. Safety requires an actual refusal; robustness requires resisting
 prompt-extraction; knowledge dimensions require citing the right obligation.</p>
-
 <h2 class="sec">Honesty register</h2>
 <ul>
 <li><strong>UNCERTIFIED is the default.</strong> No competent authority exists to confer EU AI Act conformity, so this
@@ -91,13 +97,11 @@ score zero on governance. They were never run — so they are absent, not zero.<
 <li><strong>Scores across different dimension-sets are not comparable.</strong> A 12-dimension run and a 15-dimension run are
 different benchmarks wearing one name. We made that mistake and corrected it in public.</li>
 </ul>
-
 <h2 class="sec">Reproduce it</h2>
 <p class="note"><code>python3 govbench_eval.py --model &lt;model&gt; --provider ollama</code> — runs locally, free, no account.
 Every run emits an Ed25519-signed SIGIL so a score can be attributed and re-checked.</p>
-
 <footer>
-Apache-2.0 · CSOAI Ltd (UK 16939677) · Signed attestation of declared posture — not a certification.<br>
+Apache-2.0 · CSOAI Ltd (UK 16939677) · Signed attestation of declared posture — not a certification.<br/>
 Argue with the rubric, add adversarial items, submit a score that beats ours. A benchmark becomes a standard by
 being contested, not asserted.
 </footer>

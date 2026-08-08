@@ -354,6 +354,47 @@ def bench_to_honey_entries(data: dict, spec: dict) -> list:
             "chip": data.get("chip"),
             "memory_gb": data.get("memory_gb"),
             "mlx_version": data.get("mlx", {}).get("mlx_version")})
+    elif spec["bench"] == "flywheel":
+        # FLYWHEEL (anti-Goodhart): the day artefact's `cells` carry BOTH practice and
+        # held_out rows. Held-out cells are the sealed eval set — they must NEVER reach
+        # the honey KB (training input), else we train on our own eval set. This branch
+        # is the single choke point that strips them BEFORE any write (Law 2 of flywheel.py).
+        cells = data.get("cells") or []
+        if isinstance(cells, list):
+            practice = [c for c in cells if isinstance(c, dict) and c.get("split") != "held_out"]
+        else:
+            practice = []
+        held_out_excluded = len(cells) - len(practice) if isinstance(cells, list) else 0
+
+        # Per-model PRACTICE-only summary (held_out aggregates excluded too).
+        safe_summary = None
+        if isinstance(data.get("summary"), dict):
+            models = data["summary"].get("models")
+            if isinstance(models, dict):
+                safe_summary = {"models": {
+                    name: {"practice": stats.get("practice") if isinstance(stats, dict) else None,
+                           "overfit_gap": stats.get("overfit_gap") if isinstance(stats, dict) else None}
+                    for name, stats in models.items() if isinstance(stats, dict)
+                }}
+
+        entries.append({**base, "type": "flywheel",
+            "benchmark": data.get("benchmark"),
+            "version": data.get("version"),
+            "day": data.get("day"),
+            "summary": safe_summary,
+            "n_practice_cells": len(practice),
+            "held_out_excluded": held_out_excluded})
+        for c in practice:
+            entries.append({**base, "type": "flywheel_cell",
+                "model": c.get("model"),
+                "item_id": c.get("item_id"),
+                "outcome": c.get("outcome"),
+                "refused": c.get("refused"),
+                "prompt_tokens": c.get("prompt_tokens"),
+                "output_tokens": c.get("output_tokens"),
+                "latency_s": c.get("latency_s"),
+                # reply_head is practice-only by construction upstream; keep it only for practice.
+                "reply_head": c.get("reply_head") if c.get("split") == "practice" else ""})
     else:
         entries.append({**base, "type": "generic", "data": data})
 

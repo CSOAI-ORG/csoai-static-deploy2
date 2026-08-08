@@ -1,15 +1,39 @@
 name = "csoai-static-deploy2"
 compatibility_date = "2024-01-01"
-pages_build_output_dir = "."
+
+# Was ".", i.e. the whole repository was the publish directory. That is why
+# /.env, /wrangler.toml, /govbench_eval.py and /runs/**.jsonl were all live on
+# www.csoai.org (verified 2026-08-05: a real 200 with real bytes, distinct from
+# the 4,164-byte homepage that every non-existent path returns).
+# _site is assembled by build_site.py from an ALLOWLIST, so a new file added to
+# this repo is not published unless it is explicitly allowed. A denylist fails
+# open; in a directory that also holds keys, only fail-closed is acceptable.
+pages_build_output_dir = "_site"
 
 # Cloudflare Pages Functions configuration
-# Deploy with: npx wrangler pages deploy
+# Deploy with: python3 build_site.py && npx wrangler pages deploy _site
 
 [vars]
-SIGIL_SECRET = "csoai-sovereign-orchestrate"
+# SIGIL_SECRET was here in plaintext and this file was served publicly at
+# https://www.csoai.org/wrangler.toml — so that value is disclosed and must be
+# ROTATED, then set as a secret, never as a var:
+#     npx wrangler pages secret put SIGIL_SECRET
+# [vars] is for non-sensitive configuration only.
 OLLAMA_URL = "http://localhost:11434"
 
 # Environment variables (set via dashboard or wrangler secret put)
 # FREE_GPU_SIGIL_SECRET = ""
 # FREE_GPU_TAB_STATE_JSON = ""
 # FREE_GPU_JOB_LOG = ""
+
+# KV namespace bindings (added 2026-08-08, JEEVES lane).
+# SOV_TOWN_STATE feeds the /api/sov-town/state.jsonl Pages Function from
+# the MicropolisJ engine on oracle-micro-2 (every 5 min via the Mac-side
+# sync-sov-town-kv.sh cron). Migrations: this binding was previously only
+# in councilof-ai/wrangler.jsonc, but the live apex is csoai-static-deploy2
+# (D105), so the function lived in the wrong repo. Adding the binding here
+# so the new functions/api/sov-town/state.jsonl.js (added 2026-08-08) can
+# actually reach the KV.
+[[kv_namespaces]]
+binding = "SOV_TOWN_STATE"
+id = "26aa5ea5223d40f5bb30f2d3e661cc81"

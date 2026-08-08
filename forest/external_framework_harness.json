@@ -1,0 +1,94 @@
+{
+  "mastra": {
+    "clan_id": "clan-mastra",
+    "language": "typescript",
+    "routing_path": "src/mastra/",
+    "best_for": "TypeScript-first agent framework with 4-tier memory",
+    "key_features": [
+      ".network() method \u2014 any agent becomes a routing agent",
+      "4-tier memory: message history, working memory, semantic recall, RAG",
+      "Replit Agent 3 uses it (80% \u2192 96% task success)",
+      "Marsh McLennan: 75K employees on Mastra",
+      "1.77M monthly NPM downloads"
+    ],
+    "joining_strategy": "Wire Mastra agents into sov-training-honey as a router \u2014 every Mastra agent becomes a peer in the swarm.",
+    "audience_match": "TS-heavy CSOAI stack (Next.js, React)",
+    "use_case": "agent_routing"
+  },
+  "langgraph": {
+    "clan_id": "clan-langgraph",
+    "language": "python+typescript",
+    "routing_path": "src/langgraph/",
+    "best_for": "Stateful cyclic multi-agent orchestration with human-in-the-loop",
+    "key_features": [
+      "33.9K GitHub stars",
+      "34.5M downloads",
+      "Klarna, Uber, Cisco, LinkedIn, BlackRock use it",
+      "Human-in-the-loop suspend/resume",
+      "Audit trails and approval gates"
+    ],
+    "joining_strategy": "Use LangGraph for compliance workflows with audit trails \u2014 every refutation ledger entry is a LangGraph state node.",
+    "audience_match": "CSOAI compliance workflows (audit trails, approval gates)",
+    "use_case": "compliance_orchestration"
+  },
+  "ag2": {
+    "clan_id": "clan-ag2",
+    "language": "python",
+    "routing_path": "src/ag2/",
+    "best_for": "AutoGen fork with Docker-sandboxed code execution (research community favorite)",
+    "key_features": [
+      "Forked from AutoGen November 2024 by original creators",
+      "Docker-sandboxed code execution",
+      "Diverging from Microsoft's path",
+      "Strong in research community"
+    ],
+    "joining_strategy": "Wire AG2 into hive as the research/clan \u2014 every AG2 swarm becomes a peer in the substrate.",
+    "audience_match": "research teams",
+    "use_case": "research_swarm"
+  },
+  "microsoft_agent_framework": {
+    "clan_id": "clan-msaf",
+    "language": "python+dotnet",
+    "routing_path": "src/msaf/",
+    "best_for": "AutoGen + Semantic Kernel merged v1.0 (April 2026)",
+    "key_features": [
+      "v1.0 GA April 2026",
+      "Graph-based workflows, Magentic-One multi-agent",
+      "Azure AI Foundry integration",
+      "Python + .NET SDKs",
+      "AutoGen is now maintenance mode"
+    ],
+    "joining_strategy": "Harness MSAF as the enterprise-grade agent runtime \u2014 Microsoft brings the Azure backbone.",
+    "audience_match": "enterprise customers",
+    "use_case": "enterprise_runtime"
+  },
+  "google_adk": {
+    "clan_id": "clan-google-adk",
+    "language": "python",
+    "routing_path": "src/google_adk/",
+    "best_for": "Opinionated GCP-native agent framework with browser debugging UI",
+    "key_features": [
+      "19K GitHub stars",
+      "Built-in session management, browser debugging UI",
+      "MCP + A2A protocol support",
+      "Deploys to Cloud Run, GKE, Vertex AI"
+    ],
+    "joining_strategy": "Wire Google ADK as the GCP lane \u2014 vertex AI + A2A protocol bridge into the hive.",
+    "audience_match": "GCP-native customers",
+    "use_case": "gcp_lane"
+  },
+  "dify": {
+    "clan_id": "clan-dify",
+    "language": "python+visual",
+    "routing_path": "src/dify/",
+    "best_for": "Low-code visual workflow builder (non-engineer friendly)",
+    "key_features": [
+      "144K GitHub stars",
+      "Built-in RAG, ReAct, 100+ LLM support",
+      "Low-code visual workflow builder"
+    ],
+    "joining_strategy": "Expose dify workflows as a no-code front-end to the hive \u2014 non-engineers build on top of the substrate.",
+    "audience_match": "non-engineers, ops teams",
+    "use_case": "low_code_workflows"
+  }
+}
