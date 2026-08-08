@@ -52,17 +52,24 @@ cd "$SOV" && python3 flywheel.py --selftest 2>&1 | tee -a "$LOG"
 
 # 5. ProvBench canonical bound (regenerate)
 echo "[5/11] ProvBench canonical bound" | tee -a "$LOG"
-python3 -c "
-import json, os
+PB_FILE=$(ls -t $SOV/benchmark-results/provbench*.json 2>/dev/null | head -1)
+if [ -n "$PB_FILE" ]; then
+  python3 -c "
+import json
 from pathlib import Path
-p = Path('$SOV/benchmark-results/provbench.json')
-if p.exists():
-    d = json.loads(p.read_text())
-    print(f'  ProvBench: {d.get(\"n_assets_marked\", 0)} assets · {len(d.get(\"cells\", []))} cells')
-    # Just print the headline
-    for entry in d.get('pooled_by_check', [])[:1]:
-        print(f'  headline: {entry.get(\"headline\", \"\")[:200]}')
+d = json.loads(Path('$PB_FILE').read_text())
+n_assets = d.get('n_assets', 0)
+n_cells = d.get('n_cells', 0)
+ts = d.get('timestamp', '')[:19]
+print('  ProvBench: ' + str(n_assets) + ' assets · ' + str(n_cells) + ' cells · ts=' + ts)
+hl = d.get('headline', '')
+if not hl:
+    hl = str(n_cells) + ' cells across ' + str(n_assets) + ' assets'
+print('  headline: ' + hl[:200])
 " 2>&1 | tee -a "$LOG"
+else
+  echo "  ProvBench: NO FILE FOUND" | tee -a "$LOG"
+fi
 
 # 6. PQC chains — emit + bench (25/25)
 echo "[6/11] PQC chains — emit + bench" | tee -a "$LOG"
