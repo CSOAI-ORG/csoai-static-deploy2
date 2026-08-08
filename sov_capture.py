@@ -489,9 +489,15 @@ def install():
 # SOVOS Honey Capture
 export SOV_SNOOPER=1
 export SOV_HONEY_PATH="$HOME/.sov/honey"
+# 2026-08-08 (JEEVES): cap the daily capture file so the preexec hook can't
+# flood the disk (grew to 787MB one day). Stop appending past 10MB/day; the
+# cap is ~free and refine/gO readers are window-bounded anyway.
 preexec() {
     if [ -n "$1" ]; then
-        echo "{\\\"epoch\\\":\\\"$(date -u +%Y-%m-%dT%H:%M:%SZ)\\\",\\\"cmd\\\":\\\"$(echo $1 | sed 's/"/\\\\\"/g')\\\",\\\"pwd\\\":\\\"$PWD\\\"}" >> ~/.sov/honey/terminal/$(date -u +%Y%m%d).jsonl 2>/dev/null
+        local _cap=~/.sov/honey/terminal/$(date -u +%Y%m%d).jsonl
+        if [ ! -f "$_cap" ] || [ $(wc -c < "$_cap" 2>/dev/null || echo 0) -lt 10485760 ]; then
+            echo "{\\\"epoch\\\":\\\"$(date -u +%Y-%m-%dT%H:%M:%SZ)\\\",\\\"cmd\\\":\\\"$(echo $1 | sed 's/"/\\\\\"/g')\\\",\\\"pwd\\\":\\\"$PWD\\\"}" >> "$_cap" 2>/dev/null
+        fi
     fi
 }
 """
