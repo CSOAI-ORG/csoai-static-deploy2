@@ -103,3 +103,36 @@ payloads are staged.
 - **Known remaining: sov-portal.html, sov-fluid-viewer.html, sov-local-viewer.html
   still call the dead Vercel API paths** (SPA-fallback HTML on prod). Same unification
   treatment applies; queued as next slice.
+
+## UPDATE — SLICE 2b COMPLETE: FULL sov-* VIEWER FAMILY UNIFIED (deploy cc595033)
+- **sov-portal.html, sov-fluid-viewer.html, sov-local-viewer.html** all consumed
+  Vercel-only / local-runtime APIs (`/api/portal /soul /fluid /inner /iwm /layer
+  /layers /query /substrate /souls`). All now source the ONE live public story —
+  the `csoai-gspc-api` anchor watcher feed (and govbench-api for the portal).
+  - sov-portal: soul/tier/GPU console honestly labelled local-runtime-only; honey +
+    events panels render the live watcher feed (status-coded, live/stale counts).
+  - sov-fluid-viewer: 4-class fluid canvas now seeded from live anchor nodes
+    (real sources, jurisdictions, status-coded charge); dead /api/inner docstore
+    lookup degraded to the live watcher record.
+  - sov-local-viewer: OWM/IWM query + layer panels honestly marked
+    local-runtime-only; live feed drives meta + layer list.
+- **All 4 viewers + globe:** JS clean (node --check), **0 dead /api calls**,
+  E2E suite 111/0. Commits: `c408460` (portal+drift-feed), `eb75c61` (family).
+- Deployed `cc595033` — verified on deployment URL: sov-fluid-viewer + sov-portal
+  wire to live feeds, /drift-feed.json = real JSON.
+
+## 🚨 INFRASTRUCTURE CONFLICT FOUND (needs Nick — not a code fix)
+Two deployers race for the SAME Cloudflare Pages project `csoai-site`:
+1. **This static estate** (`csoai-static-deploy2`): 657-file master surface
+   (DEFONEOS packs, arena, globe, sov-* viewers) — deploys via `wrangler pages deploy _site`.
+2. **`~/clawd/councilof-ai`** (sibling lane): `overnight_e2e.py` step n=10
+   `deploy_csoai_site` runs `npm run build:client && wrangler pages deploy dist/client
+   --project-name=csoai-site`. Its HEAD `7e54036` (2026-08-06) is a DIFFERENT,
+   older build (26M, 6 HTML, its own /api/* functions + ai.txt).
+Every deploy from #2 re-claims the apex alias and **silently regresses /api/* to the
+SPA-fallback HTML shell** — exactly the "200-but-HTML" dead-API I found and fixed.
+This is why the apex flapped all session (my deploy at T, councilof's at T+minutes).
+**Proposed fixes (your call):** (a) point councilof-ai at its own project/domain, or
+(b) make `csoai-site` the static estate only and give councilof `csoai-council` — or
+(c) accept the flapping and always verify on the deployment hash, not the apex.
+Recommend (a)/(b): one repo per Pages project, end the alias war.
