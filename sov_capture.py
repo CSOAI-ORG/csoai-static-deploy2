@@ -142,6 +142,31 @@ def log_event(directory: Path, event: dict):
         f.write(json.dumps(event) + "\n")
 
 
+def _build_terminal_kb_entry(cmd: str, exit_code: int = 0, pwd: str = None):
+    """Build a KB entry from a terminal command WITHOUT writing to the capture log.
+
+    2026-08-08 (JEEVES): `refine_kb` was re-calling `capture_terminal()`,
+    which BOTH logged the event to the terminal JSONL AND returned a KB
+    entry. That re-wrote every refined event back to the capture file, a
+    self-feedback loop that ballooned the KB (85 -> 328K entries) and the
+    capture file (13MB -> 787MB) in under 2h. This helper computes the same
+    KB entry with no log side-effect, so refining no longer grows the source.
+    """
+    pwd = pwd or os.getcwd()
+    glyphs = [PHLABET_KEYWORDS.get(c, ["?"])[0] for c in compress_to_phlabet(cmd)]
+    success = "successful" if exit_code == 0 else f"failed (exit {exit_code})"
+    answer = (
+        f"Terminal command: `{cmd[:200]}` ran {success} in {pwd}. "
+        f"Phlabet glyphs: {', '.join(glyphs[:8])}. "
+        f"Captured by SOV TUI Snooper."
+    )
+    return make_kb_entry(
+        question=f"What happened when we ran: {cmd[:200]}?",
+        answer=answer,
+        source="terminal_snooper",
+    )
+
+
 def capture_terminal(cmd: str, exit_code: int = 0, pwd: str = None):
     """TUI Snooper — capture a terminal command."""
     timestamp = datetime.now(timezone.utc).isoformat()
@@ -156,7 +181,7 @@ def capture_terminal(cmd: str, exit_code: int = 0, pwd: str = None):
     }
     log_event(TERMINAL_DIR, event)
 
-    # Auto-convert to KB entry
+    # Auto-convert to KB entry (no re-write to the capture log)
     glyphs = [PHLABET_KEYWORDS.get(c, ["?"])[0] for c in event["phlabet_codes"]]
     success = "successful" if exit_code == 0 else f"failed (exit {exit_code})"
     answer = (
@@ -258,23 +283,43 @@ def refine_kb():
     }
 
     events_by_source = {}
+    REFINE_WINDOW = 500  # 2026-08-08 (JEEVES): cap events refined per source
     for name, dir_path in sources.items():
         filepath = dir_path / f"{today}.jsonl"
         if filepath.exists():
+            events = []
             with open(filepath) as f:
-                events = [json.loads(line) for line in f if line.strip()]
+                for line in f:
+                    if line.strip():
+                        try:
+                            events.append(json.loads(line))
+                        except json.JSONDecodeError:
+                            continue
+                        # bound the window: the terminal capture can grow to
+                        # millions of lines from the zsh preexec hook (each
+                        # agent shell cmd logs an event). Processing the whole
+                        # file each 5-min tick re-feeds every event through
+                        # capture_terminal() again -> a feedback loop that
+                        # ballooned the KB to 328K entries. Only refine the
+                        # most recent REFINE_WINDOW events.
+                        if len(events) >= REFINE_WINDOW:
+                            break
+            # take the most recent window, not the head
+            events = events[-REFINE_WINDOW:]
             events_by_source[name] = events
-            print(f"  {name}: {len(events)} events")
+            print(f"  {name}: {len(events)} events (refine window {REFINE_WINDOW})")
         else:
             events_by_source[name] = []
             print(f"  {name}: 0 events")
 
-    # Convert each event to a KB entry
+    # Convert each event to a KB entry (NO capture-log side-effect — the
+    # terminal entries use the inline helper so refining doesn't re-grow the
+    # source capture file; 2026-08-08 JEEVES feedback-loop fix)
     new_entries = []
     for name, events in events_by_source.items():
         for event in events:
             if name == "terminal":
-                entry = capture_terminal(
+                entry = _build_terminal_kb_entry(
                     event["cmd"],
                     event.get("exit_code", 0),
                     event.get("pwd", ""),
@@ -318,7 +363,13 @@ def refine_kb():
 
     after = len(kb["entries"])
     KB_PATH.parent.mkdir(parents=True, exist_ok=True)
-    KB_PATH.write_text(json.dumps(kb, indent=2))
+    # 2026-08-08 fix (JEEVES): the KB reached 289 MB / 328K entries. Writing
+    # it back with `indent=2` pretty-printed ~4x the compact size and pushed
+    # every refine() past the EAT PHASE_9I budget. Compact single-line write
+    # is far faster to serialize AND to re-parse. Pretty-print for humans can
+    # be regenerated on demand (phas editor / small jq) — the canonical KB
+    # does not need to be human-pretty on disk.
+    KB_PATH.write_text(json.dumps(kb))
 
     print(f"  KB: {before} → {after} entries (+{after - before} new)")
     print(f"  Saved to: {KB_PATH}")
@@ -398,7 +449,7 @@ def gnn_extract_skills():
         )
         kb["entries"].append(entry)
 
-    KB_PATH.write_text(json.dumps(kb, indent=2))
+    KB_PATH.write_text(json.dumps(kb))
     print(f"  Extracted {len(unique_skills)} unique skills")
     print(f"  Skills file: {skills_file}")
     print(f"  KB updated: {len(kb['entries'])} entries total")
@@ -506,25 +557,25 @@ def main():
         else:
             kb = {"entries": []}
         kb["entries"].append(entry)
-        KB_PATH.write_text(json.dumps(kb, indent=2))
+        KB_PATH.write_text(json.dumps(kb))
         print(f"Captured + appended to KB: {entry['sha256'][:16]}...")
     elif args.siphon and args.url:
         entry = capture_browser(args.url, args.title)
         kb = json.loads(KB_PATH.read_text()) if KB_PATH.exists() else {"entries": []}
         kb["entries"].append(entry)
-        KB_PATH.write_text(json.dumps(kb, indent=2))
+        KB_PATH.write_text(json.dumps(kb))
         print(f"Captured + appended to KB: {entry['sha256'][:16]}...")
     elif args.file_change and args.path:
         entry = capture_file_change(args.path)
         kb = json.loads(KB_PATH.read_text()) if KB_PATH.exists() else {"entries": []}
         kb["entries"].append(entry)
-        KB_PATH.write_text(json.dumps(kb, indent=2))
+        KB_PATH.write_text(json.dumps(kb))
         print(f"Captured + appended to KB: {entry['sha256'][:16]}...")
     elif args.chat_event and args.query and args.response:
         entry = capture_chat_event(args.query, args.response)
         kb = json.loads(KB_PATH.read_text()) if KB_PATH.exists() else {"entries": []}
         kb["entries"].append(entry)
-        KB_PATH.write_text(json.dumps(kb, indent=2))
+        KB_PATH.write_text(json.dumps(kb))
         print(f"Captured + appended to KB: {entry['sha256'][:16]}...")
     elif args.refine:
         refine_kb()

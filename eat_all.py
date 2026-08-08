@@ -1945,7 +1945,7 @@ def phase_9i_sov_capture() -> dict:
 
         refine = subprocess.run(
             ["python3", str(script), "--refine"],
-            capture_output=True, text=True, timeout=60,
+            capture_output=True, text=True, timeout=300,
             cwd=str(ROOT)
         )
         if refine.returncode == 0:
@@ -1953,7 +1953,7 @@ def phase_9i_sov_capture() -> dict:
 
         extract = subprocess.run(
             ["python3", str(script), "--gnn-extract"],
-            capture_output=True, text=True, timeout=60,
+            capture_output=True, text=True, timeout=300,
             cwd=str(ROOT)
         )
         if extract.returncode == 0:
@@ -1977,7 +1977,9 @@ def phase_9i_sov_capture() -> dict:
                         parts = line.split()
                         events_idx = parts.index("events")
                         if events_idx > 0:
-                            result["events_processed"] = int(parts[events_idx - 1])
+                            # strip any trailing '+' from the bounded-scan
+                            # marker (e.g. "164667+") — keep the parsed number
+                            result["events_processed"] = int(parts[events_idx - 1].rstrip("+"))
                     except (ValueError, IndexError):
                         pass
 
