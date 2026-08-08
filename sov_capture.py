@@ -355,18 +355,33 @@ def refine_kb():
         print("  No events to refine.")
         return 0
 
-    # Dedup by sha256
+    # Dedup by sha256 AND by normalized question
+    # 2026-08-08 (JEEVES): the KB had ballooned to 7,124 entries of which
+    # only 56 were unique facts — the epoch-based entry generation produced a
+    # different sha256 per write, so exact-hash dedup missed ~99% redundancy
+    # and the SAME ~56 questions re-appended every 5-min tick. Dedup by
+    # normalized question text so only genuinely-new knowledge is appended.
     if KB_PATH.exists():
         kb = json.loads(KB_PATH.read_text())
     else:
         kb = {"entries": []}
 
+    import re as _re
+    def _norm_question(q):
+        return _re.sub(r"[^a-z0-9]", " ", (q or "").lower())
+
     existing_hashes = {e.get("sha256") for e in kb.get("entries", [])}
+    existing_q = {_norm_question(e.get("question", "")) for e in kb.get("entries", [])}
     before = len(kb.get("entries", []))
 
+    added = 0
     for entry in new_entries:
-        if entry["sha256"] not in existing_hashes:
+        qn = _norm_question(entry.get("question", ""))
+        if entry["sha256"] not in existing_hashes and qn not in existing_q:
             kb["entries"].append(entry)
+            existing_hashes.add(entry["sha256"])
+            existing_q.add(qn)
+            added += 1
 
     after = len(kb["entries"])
     KB_PATH.parent.mkdir(parents=True, exist_ok=True)
@@ -378,9 +393,9 @@ def refine_kb():
     # does not need to be human-pretty on disk.
     KB_PATH.write_text(json.dumps(kb))
 
-    print(f"  KB: {before} → {after} entries (+{after - before} new)")
+    print(f"  KB: {before} → {after} entries (+{added} new, dedup by normalized question)")
     print(f"  Saved to: {KB_PATH}")
-    return after - before
+    return added
 
 
 def gnn_extract_skills():
