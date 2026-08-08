@@ -454,10 +454,15 @@ def show_status():
                             ("files", FILES_DIR), ("chat", CHAT_DIR)]:
         files = list(dir_path.glob("*.jsonl"))
         total_lines = 0
+        big = 0
         for f in files:
+            if f.stat().st_size > 100 * 1024 * 1024:
+                big += 1
+                continue
             with open(f) as fh:
                 total_lines += sum(1 for _ in fh)
-        print(f"  {name:10} {len(files):3} files  {total_lines:5} events")
+        suffix = f"  (+{big} large file{'s' if big != 1 else ''} not full-counted)" if big else ""
+        print(f"  {name:10} {len(files):3} files  {total_lines:5}+ events{suffix}")
 
     if KB_PATH.exists():
         kb = json.loads(KB_PATH.read_text())
