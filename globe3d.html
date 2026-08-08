@@ -1,8 +1,9 @@
-<!doctype html>
+<!DOCTYPE html>
+
 <html lang="en">
 <head>
 <meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
 <title>CSOAI Sovereign 3D — Photorealistic Governance Earth (beta)</title>
 <script>window.CESIUM_BASE_URL='https://cdn.jsdelivr.net/npm/cesium@1.119/Build/Cesium/';</script>
 <link href="https://cdn.jsdelivr.net/npm/cesium@1.119/Build/Cesium/Widgets/widgets.css" rel="stylesheet"/>
@@ -41,42 +42,45 @@
   #back{position:fixed;left:12px;bottom:14px;z-index:25;text-decoration:none;color:var(--em2);font:500 11px var(--sans);background:var(--panel);border:1px solid var(--line);border-radius:9px;padding:7px 12px}
   .load{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;z-index:40;background:#03060c;color:var(--mut);font-family:var(--mono);font-size:13px;letter-spacing:1px}
 </style>
+<!-- AI-SEO/AEO/GEO head block — DO NOT remove. AI crawlers (GPTBot, ClaudeBot, PerplexityBot) don't run JS; everything they need must be in raw HTML. -->
+<link href="https://www.csoai.org/globe3d.html.llm.json" rel="alternate" title="LLM representation of this page" type="application/llm+json"/>
+<meta content="/llms.txt" name="llms-txt"/>
+<meta content="human-authored, machine-verifiable, Ed25519-signed" name="ai-content-declaration"/>
+<meta content="CSOAI Ltd (2026). CSOAI Sovereign 3D — Photorealistic Governance Earth (beta). https://www.csoai.org/globe3d.html" name="citation-policy"/>
+<meta content="2026-07-30T06:37:54+00:00" name="revised"/>
+<meta content="2026-07-30T06:37:54+00:00" property="article:modified_time"/>
 </head>
 <body>
 <div class="load" id="load">building photorealistic governance earth…</div>
 <div id="c"></div>
-
 <div id="hud">
-  <div class="brand"><span class="dot"></span>CSOAI · Sovereign <small>3D Governance Earth</small> <span class="beta">BETA</span></div>
-  <div class="stats">
-    <div class="stat"><b>417</b><span>Frozen provisions</span></div>
-    <div class="stat"><b id="s-nodes">15</b><span>Live anchor nodes</span></div>
-    <div class="stat"><b>531</b><span>MCPs catalogued</span></div>
-    <div class="stat sov"><b id="s-ung">—</b><span>Watchers UNKNOWN</span></div>
-    <div class="stat sov"><b>0/20</b><span>Marks survived (CP 13.9%)</span></div>
-  </div>
+<div class="brand"><span class="dot"></span>CSOAI · Sovereign <small>3D Governance Earth</small> <span class="beta">BETA</span></div>
+<div class="stats">
+<div class="stat"><b>417</b><span>Frozen provisions</span></div>
+<div class="stat"><b id="s-nodes">…</b><span id="s-nodes-l">Live anchor nodes</span></div>
+<div class="stat"><b>531</b><span>MCPs catalogued</span></div>
+<div class="stat sov"><b id="s-ung">—</b><span>Watchers UNKNOWN</span></div>
+<div class="stat sov"><b>0/20</b><span>Marks survived (CP 13.9%)</span></div>
 </div>
-
-<div id="rail" class="card">
-  <h3>Data layers</h3>
-  <div class="lyr" data-layer="nodes"><span class="sw on"><i></i></span><span class="nm">Sovereign nodes<small>12 civilizations</small></span></div>
-  <div class="lyr" data-layer="arcs"><span class="sw on"><i></i></span><span class="nm">Cross-region mesh<small>L0-D handoff arcs</small></span></div>
-  <div class="lyr" data-layer="swarm"><span class="sw"><i></i></span><span class="nm">Agent swarm<small>governed agents</small></span></div>
-  <div id="ring">
-    <svg width="52" height="52" viewBox="0 0 52 52"><circle cx="26" cy="26" r="22" fill="none" stroke="rgba(255,255,255,.08)" stroke-width="5"></circle><circle id="ring-arc" cx="26" cy="26" r="22" fill="none" stroke="#34d399" stroke-width="5" stroke-linecap="round" stroke-dasharray="138.2" stroke-dashoffset="138.2" transform="rotate(-90 26 26)"></circle></svg>
-    <div class="rtxt"><b id="ring-pct">0%</b><small>Art 50 marking survival — CP upper bound 13.9%</small></div>
-  </div>
-  <button id="spin">⟳ Toggle auto-rotate</button>
-  <h3 style="margin-top:12px">Fly to</h3>
-  <div id="jumps"></div>
 </div>
-
+<div class="card" id="rail">
+<h3>Data layers</h3>
+<div class="lyr" data-layer="nodes"><span class="sw on"><i></i></span><span class="nm">Sovereign nodes<small>12 civilizations</small></span></div>
+<div class="lyr" data-layer="arcs"><span class="sw on"><i></i></span><span class="nm">Cross-region mesh<small>L0-D handoff arcs</small></span></div>
+<div class="lyr" data-layer="swarm"><span class="sw"><i></i></span><span class="nm">Agent swarm<small>governed agents</small></span></div>
+<div id="ring">
+<svg height="52" viewbox="0 0 52 52" width="52"><circle cx="26" cy="26" fill="none" r="22" stroke="rgba(255,255,255,.08)" stroke-width="5"></circle><circle cx="26" cy="26" fill="none" id="ring-arc" r="22" stroke="#34d399" stroke-dasharray="138.2" stroke-dashoffset="138.2" stroke-linecap="round" stroke-width="5" transform="rotate(-90 26 26)"></circle></svg>
+<div class="rtxt"><b id="ring-pct">0%</b><small>Art 50 marking survival — CP upper bound 13.9%</small></div>
+</div>
+<button id="spin">⟳ Toggle auto-rotate</button>
+<h3 style="margin-top:12px">Fly to</h3>
+<div id="jumps"></div>
+</div>
 <div id="legend">
-  <span><i style="background:#e2574c"></i>Binding</span><span><i style="background:#f5b942"></i>Emerging</span>
-  <span><i style="background:#3b9ad8"></i>Voluntary</span><span><i style="background:#34d399"></i>Agent</span>
+<span><i style="background:#e2574c"></i>Binding</span><span><i style="background:#f5b942"></i>Emerging</span>
+<span><i style="background:#3b9ad8"></i>Voluntary</span><span><i style="background:#34d399"></i>Agent</span>
 </div>
-<a id="back" href="/globe.html">← 2.5D map view</a>
-
+<a href="#" id="back">← 2.5D map view</a>
 <script>
 var NODES=[
  {n:'European Union',c:[4.4,50.8],tier:'binding',tools:84},
@@ -202,17 +206,21 @@ if(viewer){
       });
       // Send to globe via postMessage (self-hosted, same window)
       window.postMessage({cmd:'layer0',nodes:nodes},'*');
-      // Update HUD stats
+      // Update HUD stats from the LIVE feed (not hardcoded)
       var live=d.watchers.filter(function(w){return w.status==='LIVE';}).length;
-      var unknown=d.watchers.filter(function(w){return w.status!=='LIVE'&&w.status!=='STALE';}).length;
-      var el=document.getElementById('s-ung');if(el)el.textContent=unknown;
-    }).catch(function(){});
+      var stale=d.watchers.filter(function(w){return w.status==='STALE';}).length;
+      var unk=d.watchers.filter(function(w){return w.status!=='LIVE'&&w.status!=='STALE';}).length;
+      var nn=document.getElementById('s-nodes'); if(nn)nn.textContent=live;
+      var nl=document.getElementById('s-nodes-l');
+      if(nl) nl.textContent = stale+unk>0 ? 'anchors · '+live+' live / '+stale+' stale / '+unk+' unk' : 'live anchor nodes';
+      var el=document.getElementById('s-ung'); if(el)el.textContent=unk;
+    }).catch(function(){ /* feed unreachable — leave HUD as-is */ });
   })();
 
-  // sovereign town live feed
-  function fmt(n){if(n>=1e9)return (n/1e9).toFixed(2).replace(/\.?0+$/,'')+'B';if(n>=1e6)return Math.round(n/1e6)+'M';if(n>=1e3)return Math.round(n/1e3)+'k';return String(n);}
-  fetch('https://proofof-site.vercel.app/sovereign-town/status.json',{cache:'no-store'}).then(function(r){return r.json();}).then(function(d){
-  }).catch(function(){});
+  // sovereign town live feed — replaced 2026-08-08: proofof-site.vercel.app is
+  // dead (402, billing-gated). The live anchors API above is the canonical
+  // liveness source; nothing else needs a second cross-origin poll.
+  (function(){ /* retired — see anchors fetch */ })();
 
   viewer.scene.globe.tileLoadProgressEvent.addEventListener(function(){ var l=document.getElementById('load'); if(l)l.style.display='none'; });
   setTimeout(function(){ var l=document.getElementById('load'); if(l)l.style.display='none'; },3500);
