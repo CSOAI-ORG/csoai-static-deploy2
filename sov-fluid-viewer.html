@@ -1,7 +1,8 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-<meta charset="utf-8">
+<meta charset="utf-8"/>
 <title>SOV-Space — Living Visual Reasoning Memory</title>
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -80,53 +81,62 @@
 
   canvas.node-hover { cursor: pointer; }
 </style>
+<!-- AI-SEO/AEO/GEO head block — DO NOT remove. AI crawlers (GPTBot, ClaudeBot, PerplexityBot) don't run JS; everything they need must be in raw HTML. -->
+<link href="https://www.csoai.org/sov-fluid-viewer.html.llm.json" rel="alternate" title="LLM representation of this page" type="application/llm+json"/>
+<meta content="/llms.txt" name="llms-txt"/>
+<meta content="human-authored, machine-verifiable, Ed25519-signed" name="ai-content-declaration"/>
+<meta content="CSOAI Ltd (2026). SOV-Space — Living Visual Reasoning Memory. https://www.csoai.org/sov-fluid-viewer.html" name="citation-policy"/>
+<meta content="2026-07-30T15:00:19+00:00" name="revised"/>
+<meta content="2026-07-30T15:00:19+00:00" property="article:modified_time"/>
+<meta content="SOV-Space — Living Visual Reasoning Memory. A sovereign, audit-grade CSOAI surface: measurement, not certification — every figure traces to a signed, verifiable record." name="description"/>
+<link href="https://www.csoai.org/sov-fluid-viewer.html" rel="canonical"/>
+<meta content="SOV-Space — Living Visual Reasoning Memory" property="og:title"/>
+<meta content="SOV-Space — Living Visual Reasoning Memory. A sovereign, audit-grade CSOAI surface: measurement, not certification — every figure traces to a signed, verifiable record." property="og:description"/>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"SOV-Space \u2014 Living Visual Reasoning Memory","url":"https://www.csoai.org/sov-fluid-viewer.html","publisher":{"@type":"Organization","name":"CSOAI Ltd","url":"https://csoai.org"}}</script>
 </head>
 <body>
 <header>
-  <h1>SOV-SPACE — Living Memory</h1>
-  <span class="badge">FLUID · re-poured at every tick</span>
-  <span class="subtitle">4-class swarm · anchors + subjects + artifacts + evidence · zoom into a node to see its honey</span>
-  <div class="stats" id="headStats">— nodes</div>
-  <nav class="links">
-    <a href="/sov-local-viewer.html">local viewer →</a>
-    <a href="/sov-three-eyes.html">three-eyes →</a>
-    <a href="/sov-5d-engine.html">5D engine →</a>
-    <a href="/sov-space-vwm.html">vwm →</a>
-  </nav>
+<h1>SOV-SPACE — Living Memory</h1>
+<span class="badge">FLUID · re-poured at every tick</span>
+<span class="subtitle">4-class swarm · anchors + subjects + artifacts + evidence · zoom into a node to see its honey</span>
+<div class="stats" id="headStats">— nodes</div>
+<nav class="links">
+<a href="/sov-local-viewer.html">local viewer →</a>
+<a href="/sov-three-eyes.html">three-eyes →</a>
+<a href="/sov-5d-engine.html">5D engine →</a>
+<a href="/sov-space-vwm.html">vwm →</a>
+</nav>
 </header>
-
 <main>
-  <div id="canvas-host">
-    <canvas id="main-canvas"></canvas>
-    <div class="hint">click any node to zoom in → docstore honey · drag to pan · 60Hz tick</div>
-  </div>
-  <aside id="side">
-    <div class="side-header">
-      <h3 id="sideTitle">Hover or click a node</h3>
-      <div id="sideKind"></div>
-    </div>
-    <div class="side-body" id="sideBody">
-      <div style="color:#6E7681">The 4-class fluid:
-        <ul style="margin:8px 0 0 16px;line-height:1.6">
-          <li><b style="color:#79C0FF">ANCHORS</b> — statutes, standards (heavy, slow)</li>
-          <li><b style="color:#A371F7">SUBJECTS</b> — models, quantised (drift toward anchors)</li>
-          <li><b style="color:#3FB950">ARTIFACTS</b> — tools, harnesses (cluster near subjects)</li>
-          <li><b style="color:#D29922">EVIDENCE</b> — ledger events (pop up on c2pa-sign)</li>
-        </ul>
-      </div>
-    </div>
-  </aside>
-</main>
-
-<div id="tick-ribbon">
-  <span>tick: <span class="tick-num" id="tickNum">0</span></span>
-  <span>nodes: <span id="nodeCount">—</span></span>
-  <span>avg charge: <span id="avgCharge">—</span></span>
-  <span id="nextEvent" style="color:#3FB950;margin-left:auto">streaming from ledger…</span>
+<div id="canvas-host">
+<canvas id="main-canvas"></canvas>
+<div class="hint">click any node to zoom in → docstore honey · drag to pan · 60Hz tick</div>
 </div>
-
+<aside id="side">
+<div class="side-header">
+<h3 id="sideTitle">Hover or click a node</h3>
+<div id="sideKind"></div>
+</div>
+<div class="side-body" id="sideBody">
+<div style="color:#6E7681">The 4-class fluid:
+        <ul style="margin:8px 0 0 16px;line-height:1.6">
+<li><b style="color:#79C0FF">ANCHORS</b> — statutes, standards (heavy, slow)</li>
+<li><b style="color:#A371F7">SUBJECTS</b> — models, quantised (drift toward anchors)</li>
+<li><b style="color:#3FB950">ARTIFACTS</b> — tools, harnesses (cluster near subjects)</li>
+<li><b style="color:#D29922">EVIDENCE</b> — ledger events (pop up on c2pa-sign)</li>
+</ul>
+</div>
+</div>
+</aside>
+</main>
+<div id="tick-ribbon">
+<span>tick: <span class="tick-num" id="tickNum">0</span></span>
+<span>nodes: <span id="nodeCount">—</span></span>
+<span>avg charge: <span id="avgCharge">—</span></span>
+<span id="nextEvent" style="color:#3FB950;margin-left:auto">streaming from ledger…</span>
+</div>
 <script>
-const API = window.location.origin;
+function escape(s) { return (s || '').toString().replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
 const KIND_COLORS = {
   anchor:   '#79C0FF',
   subject:  '#A371F7',
@@ -247,26 +257,14 @@ function renderSelected(n) {
   if (inner.path) html += `<div class="meta"><span class="label">path:</span> ${inner.path}</div>`;
   if (inner.signature) html += `<div class="meta"><span class="label">signature:</span><br/><code style="font-size:0.6rem;color:#3FB950">${inner.signature.substring(0, 60)}…</code></div>`;
 
-  // Inner docstore preview
+  // Inner docstore preview — anchors carry their live watcher record, not a
+  // dead /api/inner lookup (Vercel-only, gone on Cloudflare)
   if (inner.preview || inner.full) {
     html += `<pre>${(inner.preview || inner.full).substring(0, 2000)}</pre>`;
-  } else if (inner.path) {
-    // Fetch the full inner content from the local server
-    html += `<div id="innerLoad">loading inner docstore...</div>`;
-    fetch(API + '/api/inner?path=' + encodeURIComponent(inner.path))
-      .then(r => r.json())
-      .then(d => {
-        if (d.error) {
-          document.getElementById('innerLoad').innerHTML =
-            `<span style="color:#F85149">${d.error}</span>`;
-          return;
-        }
-        const preview = d.preview || JSON.stringify(d, null, 2).substring(0, 2000);
-        document.getElementById('innerLoad').innerHTML = `<pre>${preview.replace(/</g, '&lt;')}</pre>`;
-      })
-      .catch(e => {
-        document.getElementById('innerLoad').innerHTML = `<span style="color:#F85149">${e.message}</span>`;
-      });
+  } else if (inner.cite && inner.cite !== '—') {
+    const live = liveCache.find(w => w.source === n.title);
+    html += `<pre>${escape(JSON.stringify(live || {source: inner.cite,
+      jurisdiction: inner.jurisdiction, status: inner.claim}, null, 2))}</pre>`;
   }
   document.getElementById('sideBody').innerHTML = html;
 }
@@ -276,25 +274,55 @@ function selectNode(n) {
   renderSelected(n);
 }
 
-// Polling: fetch snapshot, render at 60Hz
+// Polling: fetch live anchor feed, render at 60Hz
+// (Was dead Vercel /api/fluid; now seeds the fluid from the live watcher feed —
+//  every node on screen is a real, watched statute/standard, status-coded.)
+var FLUID_SOURCE = 'https://csoai-gspc-api.nicholastempleman.workers.dev/api/anchors';
+var ANCHOR_JURIS = {
+  'UK legislation.gov.uk':'UK', 'EU EUR-Lex CELLAR':'EU', 'C2PA Specification 2.4':'US',
+  'NIST IR 8547 / FIPS 204':'US', 'RFC 9964 (ML-DSA for COSE)':'US', 'Crosswalk registry':'INTL',
+  'US GovInfo USLM':'US', 'Canada Justice XML':'CA', 'Japan e-Gov Law API':'JP',
+  'China NPC':'CN', 'MITRE ATT&CK':'US', 'UK ATRS':'UK',
+  'Sigstore / cosign':'US', 'OpenSSF Scorecard':'US', 'NVD / CVE':'US'
+};
+var liveCache = [];
+
 async function fetchAndRender() {
   try {
-    const r = await fetch(API + '/api/fluid?ts=' + Date.now());
-    const d = await r.json();
-    nodes = d.nodes;
-    tick = d.tick;
+    var fallback = nodes.length === 0;
+    var r = await fetch(FLUID_SOURCE + '?ts=' + Date.now(), {cache:'no-store'});
+    if (!r.ok) throw new Error('feed ' + r.status);
+    var d = await r.json();
+    if (!d || !Array.isArray(d.watchers)) throw new Error('bad feed');
+    liveCache = d.watchers;
+    nodes = d.watchers.map(function (w, i) {
+      var off = (i % 5) * 0.13;
+      return {
+        id: w.source, kind: 'anchor', title: w.source,
+        x: 0.18 + (i * 0.11) + off, y: 0.5, z: 0.2 + (i * 0.09),
+        vx: 0, vy: 0, vz: 0,
+        charge: w.status === 'LIVE' ? 0.9 : (w.status === 'STALE' ? 0.5 : 0.2),
+        mass: w.status === 'LIVE' ? 2.2 : 1.2, version: 1,
+        inner: { type: 'anchor', cite: w.uri || '—',
+                 jurisdiction: ANCHOR_JURIS[w.source] || '—',
+                 claim: 'live watcher · status ' + w.status,
+                 path: w.uri || w.source, signature: null }
+      };
+    });
+    tick = (tick + 1) % 100000;
     document.getElementById('tickNum').textContent = tick;
     document.getElementById('nodeCount').textContent = nodes.length;
-    if (nodes.length > 0) {
-      const avg = nodes.reduce((s, n) => s + n.charge, 0) / nodes.length;
-      document.getElementById('avgCharge').textContent = avg.toFixed(2);
-    }
-    const by = d.by_kind || {};
+    var live = d.watchers.filter(function (w) { return w.status === 'LIVE'; }).length;
+    document.getElementById('avgCharge').textContent = live + '/' + d.watchers.length + ' live';
     document.getElementById('headStats').innerHTML =
-      `${nodes.length} · ${(by.anchor || 0)}a · ${(by.subject || 0)}s · ${(by.artifact || 0)}r · ${(by.evidence || 0)}e`;
+      nodes.length + ' anchors · ' + live + ' live · ' +
+      (d.watchers.length - live) + ' stale/unreachable';
+    document.getElementById('nextEvent').textContent = 'live anchor feed — ' +
+      d.watchers.filter(function (w) { return w.status === 'LIVE'; }).length + ' sources reachable';
     updateSide();
   } catch (e) {
-    document.getElementById('nextEvent').textContent = 'connection lost';
+    // Last resort: keep whatever we have; retry next interval
+    document.getElementById('nextEvent').textContent = 'feed unavailable — retrying';
   }
 }
 
