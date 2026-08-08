@@ -83,3 +83,23 @@ payloads are staged.
 - **Commits:** `fae118b` (E2E batch 1), `d906be9` (globe polish), `65dc922` (report).
 - **Remaining gated (unchanged):** full-n routing, legal/IAW, jail axis, LoRA SFT,
   Kaggle spray, meok HF firewall — all owner-gated, not engineering gaps.
+
+## UPDATE — GLOBE-OS SLICE 2 COMPLETE (deploy 5a9ba293)
+- **sov-globe-portal.html unified onto live Cloudflare data.** The portal (and the
+  whole sov-* viewer family) pointed at dead Vercel-only APIs (`/api/portal/{user}`,
+  `/api/fluid/zoom`) that return SPA-fallback HTML on Cloudflare — the "200s" were a
+  lie. Now it sources: `/drift-feed.json` (real instrument/care/ledger metrics) +
+  the `csoai-gspc-api` anchor Worker (live watcher nodes, status-coded, click-to-inspect).
+- **build_site.py: drift-feed.json now ships** (JSON_ALLOW). Was SPA-fallback HTML on
+  prod; the VWM's `loadStats()` and the portal's live HUD silently no-opped. Now real.
+- Fixed latent `Cesium_dest`/`cesium_dest` case bug; removed dead soul/tier/filter HUD
+  and renderRecord flow; fixed `&amp;amp;` double-escape in the AEO head block.
+- **Apex verified:** /arena, /globe3d, /sov-space-vwm, /sov-globe-portal, /gspc-care,
+  /defoneos-index all 200; /drift-feed.json = real JSON (care 1.0, ledger 4, lenses 4);
+  anchor Worker = 6 watchers (LIVE/LIVE/STALE/LIVE).
+- **Plumbing note:** a concurrent EAT_ALL-cron deploy temporarily reassigned the prod
+  alias to an older snapshot (the known alias-drift pattern); re-verified apex after —
+  current e2e state confirmed on the live production URL.
+- **Known remaining: sov-portal.html, sov-fluid-viewer.html, sov-local-viewer.html
+  still call the dead Vercel API paths** (SPA-fallback HTML on prod). Same unification
+  treatment applies; queued as next slice.
