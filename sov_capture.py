@@ -48,6 +48,14 @@ IWM_DIR = SOV_ROOT / "iwm"
 CLOUDFARE_ROOT = Path("/Users/nicholas/clawd/csoai-static-deploy2")
 KB_PATH = CLOUDFARE_ROOT / "benchmark-results" / "sov_kb.json"
 
+# 2026-08-08 (JEEVES): the zsh preexec hook writes every terminal command to
+# ~/.sov/honey/terminal/<date>.jsonl, which can grow to hundreds of MB /
+# millions of lines. Every capture-derived reader (refine_kb, gnn_extract)
+# must process only the most recent window, never the whole file — a full
+# scan stalled PHASE_9I to 227s and, compounded over ticks, ballooned the
+# KB from 85 to 328K entries. Shared bounded window for all capture readers.
+REFINE_WINDOW = 500
+
 # Phlabet — same encoding as sov-hive Rust crate
 PHLABET_KEYWORDS = {
     0x00: ["governance", "balance", "justice", "regulation", "compliance", "audit"],
@@ -283,7 +291,6 @@ def refine_kb():
     }
 
     events_by_source = {}
-    REFINE_WINDOW = 500  # 2026-08-08 (JEEVES): cap events refined per source
     for name, dir_path in sources.items():
         filepath = dir_path / f"{today}.jsonl"
         if filepath.exists():
@@ -389,9 +396,19 @@ def gnn_extract_skills():
 
     events = []
     with open(terminal_file) as f:
+        # 2026-08-08 (JEEVES): bound to the most recent window — the zsh
+        # preexec hook can grow this file to hundreds of MB / millions of
+        # lines; a full read here stalled PHASE_9I (227s). Same learning as
+        # refine_kb: refine only the recent window, never the whole file.
         for line in f:
             if line.strip():
-                events.append(json.loads(line))
+                try:
+                    events.append(json.loads(line))
+                except json.JSONDecodeError:
+                    continue
+                if len(events) >= REFINE_WINDOW:
+                    break
+        events = events[-REFINE_WINDOW:]
 
     # Group by success/failure
     success_commands = [e for e in events if e.get("exit_code") == 0]
