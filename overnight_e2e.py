@@ -71,9 +71,9 @@ PLAN = {
         {
             "n": 4,
             "name": "flywheel_selftest",
-            "description": "Anti-Goodhart guards + FlywheelLeak + salted split. 9/9 must pass.",
+            "description": "Anti-Goodhart guards + FlywheelLeak + salted split. Count-agnostic: matches any N/N pass count (selftest grew 9/9 → 15/15 on 2026-08-08 when 6 new guard tests were added).",
             "command": "python3 flywheel.py --selftest",
-            "expected_pass_regex": r"selftest\s+9/9",
+            "expected_pass_regex": r"selftest\s+\d+/\d+",
             "outputs": ["stdout confirmation only — guards re-verified each run"],
             "duration_s_estimate": 10,
         },
@@ -125,10 +125,10 @@ PLAN = {
         {
             "n": 10,
             "name": "deploy_csoai_site",
-            "description": "Deploy csoai-site (master surface) to Cloudflare Pages.",
-            "command": "npx wrangler pages deploy dist/client --project-name=csoai-site --branch=main --commit-dirty=true",
+            "description": "Rebuild councilof-ai THEN deploy to its OWN Cloudflare project (councilof-ai.pages.dev / councilof.ai). 2026-08-08 JEEVES: was misconfigured to --project-name=csoai-site, racing the static estate for the csoai.org alias every run. Rebuild still required so /api/* Functions and ai.txt always ship (a stale dist/client drops the Functions routing and silently regresses /api/* to the HTML SPA shell).",
+            "command": "cd ~/clawd/councilof-ai && npm run build:client && npx wrangler pages deploy dist/client --project-name=councilof-ai --branch=main --commit-dirty=true",
             "expected_pass_regex": r"Deployment complete",
-            "outputs": ["https://<deployment>.csoai-site.pages.dev"],
+            "outputs": ["https://<deployment>.councilof-ai.pages.dev"],
             "duration_s_estimate": 60,
         },
         {

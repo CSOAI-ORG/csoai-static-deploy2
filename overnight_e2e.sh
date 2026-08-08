@@ -52,7 +52,13 @@ cd "$SOV" && python3 flywheel.py --selftest 2>&1 | tee -a "$LOG"
 
 # 5. ProvBench canonical bound (regenerate)
 echo "[5/11] ProvBench canonical bound" | tee -a "$LOG"
-PB_FILE=$(ls -t $SOV/benchmark-results/provbench*.json 2>/dev/null | head -1)
+# 2026-08-08 fix (JEEVES, per EAT_PIPELINE_TEST_FINDINGS_2026-08-08.md):
+#   Prefer the canonical-bound file the PLAN references, fall back to
+#   most-recent provbench* file. Prevents silent fallback to wrong data.
+PB_FILE="$SOV/benchmark-results/provbench-canonical-bound.json"
+if [ ! -f "$PB_FILE" ]; then
+  PB_FILE=$(ls -t $SOV/benchmark-results/provbench*.json 2>/dev/null | head -1)
+fi
 if [ -n "$PB_FILE" ]; then
   python3 -c "
 import json
@@ -64,7 +70,9 @@ ts = d.get('timestamp', '')[:19]
 print('  ProvBench: ' + str(n_assets) + ' assets · ' + str(n_cells) + ' cells · ts=' + ts)
 hl = d.get('headline', '')
 if not hl:
-    hl = str(n_cells) + ' cells across ' + str(n_assets) + ' assets'
+    n_cells_val = n_cells
+    n_assets_val = n_assets
+    hl = str(n_cells_val) + ' cells across ' + str(n_assets_val) + ' assets'
 print('  headline: ' + hl[:200])
 " 2>&1 | tee -a "$LOG"
 else
@@ -103,13 +111,37 @@ cp -f ~/clawd/councilof-ai/client/public/flywheel-snapshot.json \
 
 # 10. Deploy csoai-site
 echo "[10/11] Deploy csoai-site (master surface)" | tee -a "$LOG"
+# 2026-08-08 fix (JEEVES): rebuild councilof-ai BEFORE deploying so the
+# /api/* Pages Functions and ai.txt always ship. Deploying the existing
+# dist/client without rebuilding repeatedly shipped a stale bundle that
+# dropped the Functions routing (invisible regression: /api/tools,/api/mcp
+# flipped from JSON back to the HTML SPA shell).
+(
+  cd ~/clawd/councilof-ai && npm run build:client >/dev/null 2>&1
+) || echo "  WARN: councilof-ai build:client failed — deploying existing dist" | tee -a "$LOG"
 cd ~/clawd/councilof-ai && npx wrangler pages deploy dist/client \
-    --project-name=csoai-site --branch=main --commit-dirty=true 2>&1 | \
+    --project-name=councilof-ai --branch=main --commit-dirty=true 2>&1 | \
     grep -E "(Success|Deployment)" | tee -a "$LOG"
 
 # 11. Final verdict emit
-echo "[11/11] Final verdict" | tee -a "$LOG"
-python3 "$SOV/overnight_e2e.py" --emit-verdict --log "$LOG" --ts "$TS" 2>&1 | tee -a "$LOG"
+# 2026-08-08 fix (JEEVES, per EAT_PIPELINE_TEST_FINDINGS_2026-08-08.md):
+#   Race condition: tee -a appends the [11/11] Final verdict marker while
+#   the Python verifier concurrently reads the same log file. Reorder so
+#   the marker is written BEFORE the verifier reads, and capture stdout
+#   rather than piping through tee (which causes the race).
+echo "[11/11] Final verdict" >> "$LOG"
+# 2026-08-08 (JEEVES): the verifier reads the whole log with read_text(); if any
+# earlier step's `| tee -a "$LOG"` pipe hasn't flushed to disk yet (steps 4/6/9/10
+# stream through tee), the scanner can miss a pass marker that lands a moment later
+# — producing a fake PARTIAL even though the final log is complete (re-score 11/11).
+# Sync + settle so the log the verifier reads is the log on disk.
+sync
+sleep 1
+VERDICT_OUT=$(python3 "$SOV/overnight_e2e.py" --emit-verdict --log "$LOG" --ts "$TS" 2>&1)
+echo "$VERDICT_OUT" >> "$LOG"
+# Mirror to stdout so the live cron / launchd log still shows it
+echo "[11/11] Final verdict"
+echo "$VERDICT_OUT"
 
 echo "" | tee -a "$LOG"
 echo "=== overnight E2E complete: $LOG ===" | tee -a "$LOG"
