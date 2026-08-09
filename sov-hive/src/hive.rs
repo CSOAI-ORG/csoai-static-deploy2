@@ -15,7 +15,7 @@ use serde::{Deserialize, Serialize};
 use crate::jcard::{JSpaceCard, JSuit, CardEffect};
 use crate::phlabet::{Glyph, compress_to_phlabet, glyphs_to_text};
 use crate::spine::Spine;
-use crate::iwm::{IwmAddress, SovRecord, W_GOVERNANCE, W_SECURITY, W_PRIVACY, W_COMMERCE};
+use crate::iwm::{IwmAddress, W_GOVERNANCE, W_SECURITY, W_PRIVACY, W_COMMERCE};
 
 /// The scale constants — same node, different zoom levels.
 pub const SCALE_TOKEN: u8 = 0;      // Single token / embedding

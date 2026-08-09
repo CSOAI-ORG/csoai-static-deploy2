@@ -1,0 +1,36 @@
+name: API Stability Guard — /api/* must stay JSON
+
+on:
+  push:
+    branches: [main]
+  schedule:
+    - cron: '23 * * * *'   # hourly, off :00
+  workflow_dispatch:
+
+jobs:
+  guard:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check /api/tools and /api/mcp return JSON on csoai.org
+        id: api
+        run: |
+          set +e
+          T=$(curl -s -o /tmp/api_tools.json -w '%{content_type}' --max-time 30 https://csoai.org/api/tools)
+          M=$(curl -s -o /tmp/api_mcp.json    -w '%{content_type}' --max-time 30 https://csoai.org/api/mcp)
+          echo "content_types: tools=$T mcp=$M"
+          echo "tools_is_json=$([ "$T" = "application/json" ] && echo true || echo false)" >> "$GITHUB_OUTPUT"
+          echo "mcp_is_json=$([ "$M" = "application/json" ] && echo true || echo false)" >> "$GITHUB_OUTPUT"
+          if [ "$T" != "application/json" ] || [ "$M" != "application/json" ]; then
+            echo "❌ /api/* regressed to $T / $M — a static deploy wiped the Functions routing."
+            echo "   Fix: deploy the councilof-ai client (Functions + ai.txt) to csoai-site:"
+            echo "   cd ~/clawd/councilof-ai && npm run build:client && npx wrangler pages deploy dist/client --project-name=csoai-site --branch=main"
+            exit 1
+          fi
+          python3 -c "import json; d=json.load(open('/tmp/api_tools.json')); t=d.get('tools') or []; assert len(t)>0, 'api/tools payload malformed'; print('OK api/tools JSON tools=%d' % len(t))"
+      - name: ai.txt must be plain text (not SPA shell)
+        run: |
+          CT=$(curl -s -o /dev/null -w '%{content_type}' --max-time 30 https://csoai.org/ai.txt)
+          echo "ai.txt: $CT"
+          [ "$CT" = "text/plain" ] || [ "$CT" = "text/plain; charset=utf-8" ] || { echo "❌ ai.txt not plain text: $CT"; exit 1; }
+          echo "✅ ai.txt plain text"

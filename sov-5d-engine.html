@@ -1,10 +1,11 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-<meta charset="utf-8">
+<meta charset="utf-8"/>
 <title>SOV-Space 5D — UE5 representation</title>
 <script>window.CESIUM_BASE_URL='https://cdn.jsdelivr.net/npm/cesium@1.119/Build/Cesium/';</script>
-<link href="https://cdn.jsdelivr.net/npm/cesium@1.119/Build/Cesium/Widgets/widgets.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/cesium@1.119/Build/Cesium/Widgets/widgets.css" rel="stylesheet"/>
 <script src="https://cdn.jsdelivr.net/npm/cesium@1.119/Build/Cesium/Cesium.js"></script>
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -89,87 +90,94 @@
   /* Time-canvas (already rendered as SVG elsewhere) */
   #time-svg-host { background: #050510; padding: 4px; border-radius: 4px; }
 </style>
+<!-- AI-SEO/AEO/GEO head block — DO NOT remove. AI crawlers (GPTBot, ClaudeBot, PerplexityBot) don't run JS; everything they need must be in raw HTML. -->
+<link href="https://www.csoai.org/sov-5d-engine.html.llm.json" rel="alternate" title="LLM representation of this page" type="application/llm+json"/>
+<meta content="/llms.txt" name="llms-txt"/>
+<meta content="human-authored, machine-verifiable, Ed25519-signed" name="ai-content-declaration"/>
+<meta content="CSOAI Ltd (2026). SOV-Space 5D — UE5 representation. https://www.csoai.org/sov-5d-engine.html" name="citation-policy"/>
+<meta content="2026-07-30T14:48:31+00:00" name="revised"/>
+<meta content="2026-07-30T14:48:31+00:00" property="article:modified_time"/>
+<meta content="SOV-Space 5D — UE5 representation. A sovereign, audit-grade CSOAI surface: measurement, not certification — every figure traces to a signed, verifiable record." name="description"/>
+<link href="https://www.csoai.org/sov-5d-engine.html" rel="canonical"/>
+<meta content="SOV-Space 5D — UE5 representation" property="og:title"/>
+<meta content="SOV-Space 5D — UE5 representation. A sovereign, audit-grade CSOAI surface: measurement, not certification — every figure traces to a signed, verifiable record." property="og:description"/>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"SOV-Space 5D \u2014 UE5 representation","url":"https://www.csoai.org/sov-5d-engine.html","publisher":{"@type":"Organization","name":"CSOAI Ltd","url":"https://csoai.org"}}</script>
 </head>
 <body>
 <header>
-  <h1>SOV-SPACE 5D</h1>
-  <span class="subtitle">UE5 engine · 5 axes (x=lng, y=lat, z=water→milk→honey, t=ledger, C=lens)</span>
-  <nav class="links">
-    <a href="/sov-three-eyes.html">three-eye view →</a>
-    <a href="/sov_space_visual.html">particle field →</a>
-    <a href="/sov-sync-proof.html">live sync →</a>
-  </nav>
+<h1>SOV-SPACE 5D</h1>
+<span class="subtitle">UE5 engine · 5 axes (x=lng, y=lat, z=water→milk→honey, t=ledger, C=lens)</span>
+<nav class="links">
+<a href="/sov-three-eyes.html">three-eye view →</a>
+<a href="/sov_space_visual.html">particle field →</a>
+<a href="/sov-sync-proof.html">live sync →</a>
+</nav>
 </header>
-
 <main>
-  <!-- 5D Cesium globe + lens cards as 3D entities -->
-  <section class="pane" id="cesium-pane">
-    <div class="pane-header">
-      <span class="label">🗺 5D Cesium cards</span>
-      <span class="meta" id="cesiumMeta">loading 5D points…</span>
-    </div>
-    <div class="pane-body">
-      <div id="cesium"></div>
-    </div>
-  </section>
-
-  <!-- C-space stack — water → milk → honey cascade -->
-  <section class="pane" id="c-pane">
-    <div class="pane-header">
-      <span class="label">🜏 C-space stack</span>
-      <span class="meta">water → milk → honey cascade</span>
-    </div>
-    <div class="pane-body">
-      <div class="c-stack">
-        <div class="c-layer water">
-          <h4>💧 WATER (raw OWM)</h4>
-          <p>Observations from watchers: EUR-Lex, NIST IR 8547, C2PA releases, UK GDPR, corpus anchor.</p>
-          <p style="color:#6E7681;font-size:0.65rem;margin-top:4px">No judgement. Just what was seen.</p>
-        </div>
-        <div class="arrow">↓ distilled through ↓</div>
-        <div class="c-layer milk">
-          <h4>🥛 MILK (IWM reasoning)</h4>
-          <p>4 lenses on 1 engine. Evidence cells chained by hash. Decision ledger append-only.</p>
-          <p style="color:#6E7681;font-size:0.65rem;margin-top:4px">Decisions produced. Never read prior cells as input.</p>
-        </div>
-        <div class="arrow">↓ crystallised into ↓</div>
-        <div class="c-layer honey">
-          <h4>🍯 HONEY (VWM render)</h4>
-          <p>Spacetime canvas: 5 zoom levels from microsecond to year. 1 append-only ledger feeding all panes.</p>
-          <p style="color:#6E7681;font-size:0.65rem;margin-top:4px">Render of what IWM + OWM together produced.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- j-space cards — ledger events as 2D grid -->
-  <section class="pane" id="j-pane">
-    <div class="pane-header">
-      <span class="label">📇 j-space cards</span>
-      <span class="meta" id="jMeta">loading…</span>
-    </div>
-    <div class="pane-body">
-      <div class="layer-legend">
-        <span><span class="swatch water-sw"></span>water (raw)</span>
-        <span><span class="swatch milk-sw"></span>milk (decision)</span>
-        <span><span class="swatch honey-sw"></span>honey (render)</span>
-      </div>
-      <div class="j-grid" id="jGrid"></div>
-    </div>
-  </section>
-
-  <!-- Time-canvas — the append-only ledger axis -->
-  <section class="pane" id="time-pane">
-    <div class="pane-header">
-      <span class="label">⏳ Time-zoom (5 levels)</span>
-      <span class="meta" id="timeMeta">appending from the same ledger</span>
-    </div>
-    <div class="pane-body">
-      <div id="time-svg-host" style="width:100%;height:100%;overflow:hidden"></div>
-    </div>
-  </section>
+<!-- 5D Cesium globe + lens cards as 3D entities -->
+<section class="pane" id="cesium-pane">
+<div class="pane-header">
+<span class="label">🗺 5D Cesium cards</span>
+<span class="meta" id="cesiumMeta">loading 5D points…</span>
+</div>
+<div class="pane-body">
+<div id="cesium"></div>
+</div>
+</section>
+<!-- C-space stack — water → milk → honey cascade -->
+<section class="pane" id="c-pane">
+<div class="pane-header">
+<span class="label">🜏 C-space stack</span>
+<span class="meta">water → milk → honey cascade</span>
+</div>
+<div class="pane-body">
+<div class="c-stack">
+<div class="c-layer water">
+<h4>💧 WATER (raw OWM)</h4>
+<p>Observations from watchers: EUR-Lex, NIST IR 8547, C2PA releases, UK GDPR, corpus anchor.</p>
+<p style="color:#6E7681;font-size:0.65rem;margin-top:4px">No judgement. Just what was seen.</p>
+</div>
+<div class="arrow">↓ distilled through ↓</div>
+<div class="c-layer milk">
+<h4>🥛 MILK (IWM reasoning)</h4>
+<p>4 lenses on 1 engine. Evidence cells chained by hash. Decision ledger append-only.</p>
+<p style="color:#6E7681;font-size:0.65rem;margin-top:4px">Decisions produced. Never read prior cells as input.</p>
+</div>
+<div class="arrow">↓ crystallised into ↓</div>
+<div class="c-layer honey">
+<h4>🍯 HONEY (VWM render)</h4>
+<p>Spacetime canvas: 5 zoom levels from microsecond to year. 1 append-only ledger feeding all panes.</p>
+<p style="color:#6E7681;font-size:0.65rem;margin-top:4px">Render of what IWM + OWM together produced.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- j-space cards — ledger events as 2D grid -->
+<section class="pane" id="j-pane">
+<div class="pane-header">
+<span class="label">📇 j-space cards</span>
+<span class="meta" id="jMeta">loading…</span>
+</div>
+<div class="pane-body">
+<div class="layer-legend">
+<span><span class="swatch water-sw"></span>water (raw)</span>
+<span><span class="swatch milk-sw"></span>milk (decision)</span>
+<span><span class="swatch honey-sw"></span>honey (render)</span>
+</div>
+<div class="j-grid" id="jGrid"></div>
+</div>
+</section>
+<!-- Time-canvas — the append-only ledger axis -->
+<section class="pane" id="time-pane">
+<div class="pane-header">
+<span class="label">⏳ Time-zoom (5 levels)</span>
+<span class="meta" id="timeMeta">appending from the same ledger</span>
+</div>
+<div class="pane-body">
+<div id="time-svg-host" style="width:100%;height:100%;overflow:hidden"></div>
+</div>
+</section>
 </main>
-
 <script>
 // ── Cesium 5D cards ─────────────────────────────────────────────────
 async function bootCesium() {

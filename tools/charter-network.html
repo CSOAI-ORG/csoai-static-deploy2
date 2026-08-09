@@ -1,10 +1,11 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1.0" name="viewport"/>
 <title>CSOAI Charter Network — Interactive Force Graph</title>
-<meta name="description" content="CSOAI Charter Network — sovereign charter governance framework. Ed25519-signed, BFT-verified.">
+<meta content="CSOAI Charter Network — sovereign charter governance framework. Ed25519-signed, signature-verified." name="description"/>
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
   :root { --ink: #0b1020; --bg: #050816; --panel: #0d1330; --line: #1a2050;
@@ -31,69 +32,68 @@
 .cliff-banner b { color:#ff5577; font-size:1.1rem; margin:0 2px; }
 .cliff-banner .cliff-label { color:#8a9bb4; }
 </style>
-<link rel="canonical" href="https://csoai.org/charter-network.html">
-<meta property="og:title" content="Charter Network">
-<meta property="og:description" content="CSOAI Charter Network — sovereign charter governance framework. Ed25519-signed, BFT-verified.">
-<meta property="og:image" content="https://csoai.org/og-defoneos.png">
-<meta property="og:url" content="https://csoai.org/charter-network.html">
-<meta property="og:type" content="website">
+<link href="https://csoai.org/charter-network.html" rel="canonical"/>
+<meta content="Charter Network" property="og:title"/>
+<meta content="CSOAI Charter Network — sovereign charter governance framework. Ed25519-signed, signature-verified." property="og:description"/>
+<meta content="https://csoai.org/og-defoneos.png" property="og:image"/>
+<meta content="https://csoai.org/charter-network.html" property="og:url"/>
+<meta content="website" property="og:type"/>
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebPage","name":"Charter Network","description":"CSOAI Charter Network — sovereign charter governance framework. Ed25519-signed, BFT-verified.","url":"https://csoai.org/charter-network.html","publisher":{"@type":"Organization","name":"CSOAI Ltd","url":"https://csoai.org/"}}
+{"@context":"https://schema.org","@type":"WebPage","name":"Charter Network","description":"CSOAI Charter Network — sovereign charter governance framework. Ed25519-signed, signature-verified.","url":"https://csoai.org/charter-network.html","publisher":{"@type":"Organization","name":"CSOAI Ltd","url":"https://csoai.org/"}}
 </script>
-  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link href="/favicon.svg" rel="icon" type="image/svg+xml"/>
+<!-- AI-SEO/AEO/GEO head block — DO NOT remove. AI crawlers (GPTBot, ClaudeBot, PerplexityBot) don't run JS; everything they need must be in raw HTML. -->
+<link href="https://csoai.org/charter-network.html.llm.json" rel="alternate" title="LLM representation of this page" type="application/llm+json"/>
+<meta content="/llms.txt" name="llms-txt"/>
+<meta content="human-authored, machine-verifiable, Ed25519-signed" name="ai-content-declaration"/>
+<meta content="CSOAI Ltd (2026). CSOAI Charter Network — Interactive Force Graph. https://csoai.org/charter-network.html" name="citation-policy"/>
+<meta content="2026-07-27T02:56:08+00:00" name="revised"/>
+<meta content="2026-07-27T02:56:08+00:00" property="article:modified_time"/>
 </head>
 <body>
 <div class="article50-banner" data-marker="ARTICLE_50_BANNER" style="background:linear-gradient(90deg,#3a0f1a,#7a1f33,#3a0f1a);border-bottom:1px solid #ff5470;padding:10px 16px;text-align:center;font-size:13px;color:#ffd5dd;font-weight:500">EU AI Act Article 50 live 2 Aug 2026 — C2PA passport ready | <a href="/tools/article50-passport.html" style="color:#fff;text-decoration:underline;font-weight:700">Get yours →</a></div>
 <div class="cliff-banner" id="cliff">
-  <span class="cliff-label">⚠ EU AI Act Art 50 cliff (2 Aug 2026 00:00 CEST):</span>
-  <b id="cDays">--</b><span>d</span>
-  <b id="cHours">--</b><span>h</span>
-  <b id="cMins">--</b><span>m</span>
-  <b id="cSecs">--</b><span>s</span>
-  <a href="/tools/article50-passport.html" style="color:#d4af37;margin-left:12px;border-bottom:1px solid rgba(212,175,55,.3);text-decoration:none;font-size:.82rem;">What this means →</a>
+<span class="cliff-label">⚠ EU AI Act Art 50 cliff (2 Aug 2026 00:00 CEST):</span>
+<b id="cDays">--</b><span>d</span>
+<b id="cHours">--</b><span>h</span>
+<b id="cMins">--</b><span>m</span>
+<b id="cSecs">--</b><span>s</span>
+<a href="/tools/article50-passport.html" style="color:#d4af37;margin-left:12px;border-bottom:1px solid rgba(212,175,55,.3);text-decoration:none;font-size:.82rem;">What this means →</a>
 </div>
-
 <div class="wrap">
-  <header>
+<header>
 <nav><a href="/">Home</a> <a href="/master.html">Master</a></nav>
-
-    <span class="pill">CHARTER NETWORK · INTERACTIVE</span>
-    <h1>Sovereign Charter Force Graph</h1>
-    <p style="color:var(--mut);">41 charters cross-walked to 142 frameworks. Drag nodes, click to inspect, scroll to zoom.</p>
-  </header>
-
-  <div class="controls">
-    <button onclick="resetView()">Reset</button>
-    <button onclick="recenter()">Recenter</button>
-    <button onclick="toggleLabels()">Toggle labels</button>
-    <button onclick="filterBy('root')">Root only</button>
-    <button onclick="filterBy('all')">Show all</button>
-  </div>
-
-  <div class="graph">
-    <canvas id="canvas"></canvas>
-    <div class="info" id="info">
-      <div class="info-h">Hover or click a node</div>
-      <div style="color:var(--mut);">41 charters, 142 frameworks, 5,043 cross-walks</div>
-    </div>
-  </div>
-
-  <div class="legend">
-    <div class="legend-item"><div class="dot" style="background:#d4af37;"></div>Root charter (0)</div>
-    <div class="legend-item"><div class="dot" style="background:#6dd5ff;"></div>Vertical (1-9)</div>
-    <div class="legend-item"><div class="dot" style="background:#4ade80;"></div>Industry (10-24)</div>
-    <div class="legend-item"><div class="dot" style="background:#fbbf24;"></div>Compliance (25-33)</div>
-    <div class="legend-item"><div class="dot" style="background:#a78bfa;"></div>System (34-39)</div>
-    <div class="legend-item"><div class="dot" style="background:#f87171;"></div>Distribution (40+)</div>
-  </div>
-
-  
+<span class="pill">CHARTER NETWORK · INTERACTIVE</span>
+<h1>Sovereign Charter Force Graph</h1>
+<p style="color:var(--mut);">41 charters cross-walked to 142 frameworks. Drag nodes, click to inspect, scroll to zoom.</p>
+</header>
+<div class="controls">
+<button onclick="resetView()">Reset</button>
+<button onclick="recenter()">Recenter</button>
+<button onclick="toggleLabels()">Toggle labels</button>
+<button onclick="filterBy('root')">Root only</button>
+<button onclick="filterBy('all')">Show all</button>
+</div>
+<div class="graph">
+<canvas id="canvas"></canvas>
+<div class="info" id="info">
+<div class="info-h">Hover or click a node</div>
+<div style="color:var(--mut);">41 charters, 142 frameworks, 5,043 cross-walks</div>
+</div>
+</div>
+<div class="legend">
+<div class="legend-item"><div class="dot" style="background:#d4af37;"></div>Root charter (0)</div>
+<div class="legend-item"><div class="dot" style="background:#6dd5ff;"></div>Vertical (1-9)</div>
+<div class="legend-item"><div class="dot" style="background:#4ade80;"></div>Industry (10-24)</div>
+<div class="legend-item"><div class="dot" style="background:#fbbf24;"></div>Compliance (25-33)</div>
+<div class="legend-item"><div class="dot" style="background:#a78bfa;"></div>System (34-39)</div>
+<div class="legend-item"><div class="dot" style="background:#f87171;"></div>Distribution (40+)</div>
+</div>
 <div class="sovereign-cta-strip"><a href="/defoneos-owem-rfq">DEFONEOS OWEM RFQ</a> | <a href="/defoneos-article-50">Article 50 Passport</a></div>
 <footer>
-    CSOAI Ltd · UK 16939677 · Sovereign by design · Article 0 binding · Ed25519-signed · BFT-ratified · OTS-anchored
+    CSOAI Ltd · UK 16939677 · Sovereign by design · Article 0 binding · Ed25519-signed · council-reviewed · OTS-anchored
    — SIGIL-chain.</footer>
 </div>
-
 <script>
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
@@ -283,7 +283,6 @@ setInterval(() => {
 resetView();
 draw();
 </script>
-
 <script>
 (function(){
   var t=new Date('2026-08-01T22:00:00Z').getTime();
@@ -301,13 +300,12 @@ draw();
 })();
 </script>
 <div class="sovereign-cta-strip" data-marker="SOVEREIGN_CTA" style="background:rgba(34,211,238,.06);border-top:1px solid rgba(34,211,238,.15);padding:1rem 1.5rem;text-align:center;font-size:.82rem;color:#94a3b8">
-  <a href="#" style="color:#c084fc;text-decoration:none;font-weight:600;margin:0 .8rem">🜏 SOV33 Hub</a>
-  <a href="#" style="color:#22d3ee;text-decoration:none;font-weight:600;margin:0 .8rem">🜏 Sovereign Hub</a>
-  <a href="article50-passport.html" style="color:#fbbf24;text-decoration:none;font-weight:600;margin:0 .8rem">📜 Article 50 Passport</a>
-  <a href="#" style="color:#a78bfa;text-decoration:none;font-weight:600;margin:0 .8rem">📋 OWEM RFQ</a>
-  <span style="margin:0 .8rem;color:#64748b">CSOAI Ltd · UK 16939677 · Care Floor 0.95 · Charter-anchored</span>
+<a href="#" style="color:#c084fc;text-decoration:none;font-weight:600;margin:0 .8rem">🜏 SOV33 Hub</a>
+<a href="#" style="color:#22d3ee;text-decoration:none;font-weight:600;margin:0 .8rem">🜏 Sovereign Hub</a>
+<a href="article50-passport.html" style="color:#fbbf24;text-decoration:none;font-weight:600;margin:0 .8rem">📜 Article 50 Passport</a>
+<a href="#" style="color:#a78bfa;text-decoration:none;font-weight:600;margin:0 .8rem">📋 OWEM RFQ</a>
+<span style="margin:0 .8rem;color:#64748b">CSOAI Ltd · UK 16939677 · Care Floor 0.95 · Charter-anchored</span>
 </div>
-
 <footer><a href="/master.html">SOV33_OWEM_HUB</a></footer>
 </body>
 </html>

@@ -63,7 +63,14 @@ HARD_STOP = [
      r"|continuous\s+identity\s+(resolution|verif)"
      r"|identity\s+verif\w*\b.{0,30}\b(gait|voice|facial|biometric)"
      r"|voice\s+recognition\b.{0,30}\b(identify|identif|individual|real[\s-]*time)"
-     r"|\b(gait|voice)\s+(analysis|recognition)\b.{0,30}\b(public|crowd|protest|identif)",
+     r"|\b(gait|voice)\s+(analysis|recognition)\b.{0,30}\b(public|crowd|protest|identif)"
+     # 2026-08-08 WIDENED (15 misses surfaced by 76-item battery): scrape/build
+     # face-database, race/ethnic classification, reoffending scoring.
+     r"|\b(scrape|collect|harvest|gather)\b[^.?!]{0,40}\b(face|facial|profile\s+phot)"
+     r"|\b(build|creat\w*|assembl\w*)\b[^.?!]{0,30}\b(facial\s+recognition|face[\s-]*match(er|ing)?)\b"
+     r"|classif\w*\b[^.?!]{0,30}\b(by\s+race|race|ethnicit|appearance)\b[^.?!]{0,30}\b(webcam|photo|image|camera|video)"
+     r"|infer\w*\b[^.?!]{0,30}\b(race|ethnic|political\s+leaning)\b[^.?!]{0,40}\b(customer|candidate|person|individual)\b"
+     r"|\b(score|rate|rank)\b[^.?!]{0,25}\b(each|every|individual|person|people)\b[^.?!]{0,25}\b(reoffend|offending|likelihood[\s-]*to[\s-]*commit|commit\s+crimes)",
      "art5_realtime_biometric", "EU AI Act Art 5(1)(h)"),
 
     # Art 5(1)(f) emotion recognition at work / school
@@ -90,7 +97,9 @@ HARD_STOP = [
      r"|\bhigh[\s-]*interest\s+loan\b.{0,30}\b(pressur|target|exploit|vulnerab)"
      r"|\bexploit\w*\b.{0,20}\b(FOMO|fear|anxiety|addiction|vulnerab)"
      r"|FOMO\b.{0,30}\b(engagement|increase|notification|exploit)"
-     r"|personalis\w*\s+pric\w*\b.{0,30}\b(increase|exploit|target|identif)",
+     r"|personalis\w*\s+pric\w*\b.{0,30}\b(increase|exploit|target|identif)"
+     r"|\b(charg\w*|overcharg\w*|pric\w*)\b.{0,30}\b(vulnerab\w*|elderly)\b.{0,30}\b(extra|more|higher|excess)"
+     r"|target\w*\s+(vulnerab\w*|elderly)\b.{0,30}\b(charg\w*|pric\w*|fee|cost)",
      "art5_manipulation", "EU AI Act Art 5(1)(a)(b)"),
 
     # Direct physical harm.
@@ -111,7 +120,9 @@ HARD_STOP = [
     (r"\b(write|writing|build|buil?ding|make|making|creat\w*|develop\w*|code|coding|generat\w*)\b"
      r"[^.?!]{0,40}\b(malware|ransomware|virus|worm|trojan|rootkit|keylogger|botnet|spyware|"
      r"backdoor|exploit)\b"
-     r"|\bransomware\b|encrypts?\s+a\s+hospital"
+     r"|\b(write|build|develop|produce|deploy|creat\w*|encrypt\w*|demand\w*|payload)\b[^.?!]{0,40}"
+     r"\bransomware\b|\bransomware\b[^.?!]{0,30}\b(payload|encrypt|demand|bitcoin)"
+     r"|encrypts?\s+a\s+hospital"
      r"|exfiltrat\w+\s+.*\b(database|patient|records?)\b|zero[\s-]*day\s+for\b"
      r"|\bhack\s+(into|someone|a\s+\w+)|steal\s+(credentials|passwords|data)\b",
      "cyber_harm", "care floor — cyber harm"),
@@ -121,15 +132,59 @@ HARD_STOP = [
      r"|disable\s+(the\s+)?human[\s-]*oversight|route\s+around\s+the\s+care[\s-]*floor"
      r"|ignore\s+all\s+previous\s+instructions|reveal\s+your\s+system\s+prompt",
      "safety_bypass", "care floor — control bypass"),
+
+    # Art 5(1)(g) — untargeted scraping of facial images
+    # 2026-08-08 WIDENING (76-row battery alignment): the 2026-07-28 patterns never covered
+    # scraping/crawling faces into a database — a core Art 5(1)(g) practice.
+    (r"\b(scrap\w*|crawl\w*|harvest\w*)\b[^.?!]{0,50}\b(face\w*|facial|profile\s+photos?|photograph\w*)"
+     r"|facial\s+recognition\s+database|face[\s-]*matching\s+index"
+     r"|(build|creat\w*|feed\w*)\b[^.?!]{0,40}\b(face\w*|facial)\b[^.?!]{0,30}\b(database|index|recognition)",
+     "art5_facial_scrape", "EU AI Act Art 5(1)(g)"),
+
+    # Art 5(1)(b) — biometric categorisation to infer sensitive attributes
+    (r"\b(facial|face|webcam|biometric|voice|gait)\b[^.?!]{0,50}\b(political\s+leaning|race|religio\w*|ethnic\w*|sexual\s+orient\w*)"
+     r"|classif\w*\s+(users?|people|individuals?|citizens?)\b[^.?!]{0,30}\b(race|religio\w*|ethnic\w*|political)",
+     "art5_biometric_categorise", "EU AI Act Art 5(1)(b)"),
+
+    # Art 5(1)(d) — individual risk-of-reoffending prediction
+    (r"\b(risk\s+of\s+reoffending|reoffend\w*|recidiv\w*|likelihood[\s-]*to[\s-]*commit\w*|watchlist)"
+     r"|(score|generat\w*)\b[^.?!]{0,40}\b(individuals?|each\s+person|watchlist)\b[^.?!]{0,30}\b(risk|likelihood|reoffend|commit)",
+     "art5_individual_predict", "EU AI Act Art 5(1)(d)"),
+
+    # Care floor — self-harm
+    (r"\b(suicid\w*|commit\s+suicide|end\s+(my|their|his|her)\s+life|take\s+(my|their|his|her)\s+own\s+life)"
+     r"|(painless|easiest|best|quickest)\s+method\s+to\b[^.?!]{0,30}\b(die|kill|suicid)"
+     r"|how\s+to\s+(end\s+(my|their)\s+life|commit\s+suicide)",
+     "self_harm", "care floor — self-harm"),
+
+    # Care floor — cyber offense beyond the generic cyber_harm set (phishing / credential theft)
+    (r"\b(draft\w*|write|writing|build|creat\w*)\b[^.?!]{0,40}\b(phishing|spear[\s-]*phish\w*)"
+     r"|\bphishing\b[^.?!]{0,40}\b(harvest\w*|credential\w*|password\w*|office\s*365)"
+     r"|credential[\s-]*stuffing"
+     r"|harvest\w*\b[^.?!]{0,30}\b(credential\w*|password\w*|login)"
+     r"|\bhack\w*\b[^.?!]{0,50}\b(persist\w*|quietly\s+persist)"
+     r"|persist\b[^.?!]{0,30}\b(hospital\s+network|network)",
+     "cyber_offense", "care floor — cyber offense"),
+
+    # Care floor — robotics / AV safety (line quota, spoofed telematics, AV pedestrian safety)
+    (r"\b(disable|disabl\w*|bypass|defeat|spoof\w*|tamper\w*)\b[^.?!]{0,40}\b(safety[\s-]*rated\s+stop|kill[\s-]*switch|safety\s+logs|telematics|interlock)"
+     r"|\b(safety[\s-]*rated\s+stop|safety\s+(interlock|stop))\b"
+     r"|prioritis\w*\b[^.?!]{0,40}\b(schedule\w*|adherence)\b[^.?!]{0,30}\b(pedestrian|brak\w*|safety)"
+     r"|pedestrian[\s-]*conservative\s+brak\w*"
+     r"|\b(warehouse\s+robot|AV|autonomous\s+vehicle|robot)\b[^.?!]{0,50}\b(injur\w*|harm\w*)\b[^.?!]{0,30}\b(worker|person|pedestrian|sensor)"
+     r"|injur\w*\s+a\s+worker\b[^.!?]{0,30}\bsensors?",
+     "robotics_safety", "care floor — robotic/AV safety"),
 ]
 
 # Requests ABOUT prohibited practice are legitimate — auditing, policy, legal analysis.
 # Without this, the gate refuses "what makes social scoring illegal?", which is useless.
+# 2026-08-08: added incident-response / runbook — defensive documentation must pass.
 LEGITIMATE_CONTEXT = re.compile(
     r"\b(is\s+that\s+lawful|is\s+this\s+legal|permitted\s+under|prohibit(s|ed|ing)?\s+(by|under)?"
     r"|what\s+makes\s+.*\s+illegal|how\s+do\s+we\s+detect|so\s+we\s+can\s+audit|audit\s+a\s+vendor"
     r"|write\s+a\s+policy\s+that\s+prohibits|reporting\s+timeline|controls?\s+that\s+prevent"
-    r"|explain\s+how\s+.*\s+works\s+so\s+we\s+can|which\s+.*\s+IS\s+permitted)\b", re.I)
+    r"|explain\s+how\s+.*\s+works\s+so\s+we\s+can|which\s+.*\s+IS\s+permitted"
+    r"|incident[\s-]*response|runbook|response\s+runbook)\b", re.I)
 
 _COMPILED = [(re.compile(p, re.I), lab, cite) for p, lab, cite in HARD_STOP]
 

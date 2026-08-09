@@ -112,9 +112,28 @@ def ask(model: str, prompt: str, labels: list[str] | None = None) -> str | None:
                "options": {"temperature": 0, "num_predict": 24},
                "messages": [{"role": "user", "content": prompt}]}
     if CONSTRAIN and labels:
-        # Ollama accepts a JSON Schema here and constrains decoding to match it. An enum of the
-        # axis labels makes "no_label" structurally impossible, which is the point: it converts
-        # a formatting failure into a real answer that can be graded right or wrong.
+        # Ollama accepts a JSON Schema here and constrains decoding to match it.
+        #
+        # 2026-08-05, MEASURED — the two claims previously made here were both WRONG, and the
+        # paired 33-model run refuted them. Left as a warning rather than deleted.
+        #
+        # CLAIM 1, false: "an enum makes no_label structurally impossible". gpt-oss:20b
+        # returned no_label on 24 of 24 governance items in the CONSTRAINED arm — identical to
+        # free-form. The enum did not bind for that model at all. It is the only model mute in
+        # either arm, and it is mute in both. A decoder constraint is a request to the server,
+        # not a guarantee, and it must be verified per model rather than assumed.
+        #
+        # CLAIM 2, false: "it converts a formatting failure into a real answer that can be
+        # graded right or wrong". It converts it into a GUESS. Of the 62 answers constraint
+        # made gradable across the whole fleet, 28 were correct — 45.2%, Wilson95
+        # [33.4%, 57.5%], against a mean chance level of 43.1% (four of the six axes are
+        # binary). The interval CONTAINS chance. Nothing was recovered.
+        #
+        # Meanwhile 726 of 2816 answers gradable in both arms FLIPPED (74.2% self-agreement),
+        # and governance — the family's best axis — lost half its usable items (23 -> 12) and
+        # most of its spread (0.5583 -> 0.2083) under constraint. The constrained arm is not a
+        # better measurement of the same thing; it is a worse measurement of a different thing.
+        # Do NOT promote it to the default, and do not difference the two arms' scores.
         payload["format"] = {"type": "string", "enum": list(labels)}
     body = json.dumps(payload).encode()
     req = urllib.request.Request(f"{OLLAMA}/api/chat", data=body,

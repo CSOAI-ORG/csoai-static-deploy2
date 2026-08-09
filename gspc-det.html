@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>GSPC-DET — detector interoperability | CSOAI GSPC</title>
+<meta name="description" content="The Code of Practice quality criteria for watermark detection, as machine-readable predicates. A protocol, not a measured matrix — no score exists yet.">
+<link rel="canonical" href="https://csoai.org/gspc-det.html">
+<link rel="alternate" type="application/llm+json" href="https://csoai.org/gspc-det.html.llm.json">
+<meta property="og:title" content="GSPC-DET — detector interoperability">
+<meta property="og:description" content="The Code of Practice quality criteria for watermark detection, as machine-readable predicates. A protocol, not a measured matrix — no score exists yet.">
+<meta property="og:url" content="https://csoai.org/gspc-det.html">
+<style>
+ body{margin:0;background:#0D0B21;color:#e8e6f0;font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif}
+ .wrap{max-width:860px;margin:0 auto;padding:2.5rem 1.25rem 4rem}
+ h1{font-size:1.9rem;line-height:1.25;margin:.2rem 0 .4rem}
+ a{color:#D4A843}
+ .badge{display:inline-block;font-size:.72rem;letter-spacing:.08em;padding:.25rem .6rem;
+        border:1px solid #D4A843;color:#D4A843;border-radius:3px;margin-bottom:.8rem}
+ .meta{color:#a9a4c0;font-size:.95rem}
+ .reg{margin-top:2.5rem;padding:1rem 1.15rem;border-left:3px solid #6dd5ff;background:#141130;
+      font-size:.92rem;color:#c9c5dd}
+ nav a{margin-right:1rem;font-size:.9rem}
+ table{width:100%;border-collapse:collapse;margin:1rem 0}
+ td,th{border-bottom:1px solid #2a2550;padding:.45rem .3rem;text-align:left;font-size:.92rem}
+ @media(max-width:420px){ .wrap{padding:1.5rem .9rem 3rem} h1{font-size:1.5rem} }
+</style>
+<script type="application/ld+json">{
+ "@context": "https://schema.org",
+ "@type": "Dataset",
+ "name": "GSPC-DET \u2014 detector interoperability",
+ "description": "The Code of Practice quality criteria for watermark detection, as machine-readable predicates. A protocol, not a measured matrix \u2014 no score exists yet.",
+ "url": "https://csoai.org/gspc-det.html",
+ "license": "https://www.apache.org/licenses/LICENSE-2.0",
+ "creator": {
+  "@type": "Organization",
+  "name": "CSOAI",
+  "url": "https://csoai.org"
+ },
+ "distribution": {
+  "@type": "DataDownload",
+  "contentUrl": "https://huggingface.co/datasets/csoai/gspc-det"
+ },
+ "isAccessibleForFree": true,
+ "size": "6 items"
+}</script>
+</head><body>
+<div class="wrap">
+<nav><a href="/">CSOAI</a><a href="/govbench.html">GovBench</a><a href="/provbench.html">ProvBench</a><a href="/defoneos-index.html">Department packs</a></nav>
+<span class="badge">SPEC</span>
+<h1>GSPC-DET — detector interoperability</h1>
+<p class="meta">Axis: <b>detector</b> · items: <b>6</b> · status: <b>SPEC</b></p>
+<p>The Code of Practice quality criteria for watermark detection, as machine-readable predicates. A protocol, not a measured matrix — no score exists yet.</p>
+<p class="meta">Dataset: <a href="https://huggingface.co/datasets/csoai/gspc-det">csoai/gspc-det</a>
+ · Runnable Space: <a href="https://csoai-gspc-det.static.hf.space/">csoai-gspc-det</a>
+ · Licence Apache-2.0</p>
+<!-- GSPC-RUNNABLE-TOOL -->
+<section id="run-gspc-det" style="max-width:900px;margin:3rem auto;padding:0 1.25rem">
+  <p style="display:inline-block;border:1px solid #f5a623;color:#f5a623;border-radius:999px;padding:2px 12px;
+     font-size:11px;letter-spacing:.1em;margin-bottom:.6rem">SPEC · NO SCORE EXISTS YET</p>
+  <h2 style="font-size:1.5rem;margin-bottom:.4rem">DetBench — the protocol</h2>
+  <p style="color:#8fa6c8;max-width:72ch;line-height:1.6;margin-bottom:1.2rem">A published protocol, not a measured matrix. No score exists yet. By 2 February 2027 the ~190 signatories of the EU Code of Practice must make watermark detection interoperable, and the Code concedes common evaluation standards have yet to emerge.</p>
+  <div style="overflow-x:auto"><table style="width:100%;border-collapse:collapse;font-size:.86rem">
+    <thead><tr><th>id</th><th>criterion</th><th>predicate</th><th>question</th><th>labels</th><th>why</th></tr></thead><tbody><tr><td class="pid">det-001</td><td>effectiveness</td><td>detects_own_marking</td><td>Given an asset marked by provider P, does P&#x27;s own detector return DETECTED?</td><td>DETECTED, NOT_DETECTED, ERROR</td><td>Baseline. A detector that cannot read its own marking fails before interoperability is in question.</td></tr>
+<tr><td class="pid">det-002</td><td>interoperability</td><td>detects_foreign_marking</td><td>Given an asset marked by provider Q, does P&#x27;s detector return DETECTED?</td><td>DETECTED, NOT_DETECTED, ERROR</td><td>This is the Commitment 2 obligation. It is the one nobody currently measures.</td></tr>
+<tr><td class="pid">det-003</td><td>interoperability</td><td>agrees_on_negative</td><td>Given an unmarked asset, do P and Q both return NOT_DETECTED?</td><td>AGREE, DISAGREE, ERROR</td><td>False positives are the failure mode that destroys trust in a detector network.</td></tr>
+<tr><td class="pid">det-004</td><td>robustness</td><td>survives_transform</td><td>After a declared transform (recompress, crop, resize, screenshot, re-encode), does the detector still return DETECTED?</td><td>SURVIVES, DESTROYED, ERROR</td><td>Shares its transform ladder with GSPC provenance (ProvBench), so the two axes are comparable.</td></tr>
+<tr><td class="pid">det-005</td><td>reliability</td><td>stable_across_runs</td><td>Across k repeated runs on the identical asset, is the verdict identical every time?</td><td>STABLE, UNSTABLE, ERROR</td><td>A non-deterministic detector cannot support a compliance claim.</td></tr>
+<tr><td class="pid">det-006</td><td>effectiveness</td><td>declares_absence_honestly</td><td>Where no marking is present, does the detector say so rather than guessing?</td><td>DECLARES_ABSENT, GUESSES, ERROR</td><td>The UNMEASURED discipline, applied to detectors.</td></tr></tbody></table></div>
+  <p style="font-size:12px;color:#5f7196;margin-top:1rem">
+    6 predicates · <a href="https://huggingface.co/datasets/csoai/gspc-det">csoai/gspc-det</a> ·
+    published as data so a harness can consume it before any measurement exists ·
+    measurement, not certification.</p>
+</section>
+<style>
+#run-gspc-det th{text-align:left;padding:.5rem .6rem;border-bottom:1px solid #1e293b;color:#8fa6c8;
+  font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;font-weight:600;white-space:nowrap}
+#run-gspc-det td{padding:.55rem .6rem;border-bottom:1px solid #131c2e;vertical-align:top;line-height:1.5}
+#run-gspc-det td.pid{color:#10b981;font-variant-numeric:tabular-nums;white-space:nowrap}
+</style>
+<!-- GSPC-RUNNABLE-TOOL -->
+<div class="reg">
+<b>What this is, and is not.</b> CSOAI <b>measures</b>. It issues no conformity marks, holds
+no accreditation, and has no enforcement powers — those are conferred by statute on
+market-surveillance authorities and the AI Office. Nothing on this page is a certification,
+an attestation of compliance, or legal advice.
+<br><br><b>Denominator.</b> This axis has 6 items, below the usable_n = 30 floor CSOAI requires before attaching a confidence interval to a number. No score is quoted here, for any model including our own.
+</div>
+</div>
+</body></html>

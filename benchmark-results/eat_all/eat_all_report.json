@@ -1,0 +1,219 @@
+{
+  "run_id": "eat_all_1786270524",
+  "finished_at": "2026-08-09T10:15:24.266232+00:00",
+  "phases": {
+    "PHASE_0_HEALTH": {
+      "status": "ran",
+      "duration_s": 0.1,
+      "artifacts": [],
+      "error": null,
+      "souls": 184,
+      "ollama_models": 2,
+      "kb_entries": 443
+    },
+    "PHASE_1_REBOARD": {
+      "status": "ran",
+      "duration_s": 0.1,
+      "artifacts": [],
+      "error": null,
+      "exit_code": 0,
+      "stdout_tail": "als\": 2\n    },\n    \"honey\": {\n      \"status\": \"failed\",\n      \"at\": \"2026-08-08T12:40:25.893418+00:00\",\n      \"error\": \"NameError: name 'BASE' is not defined\"\n    },\n    \"system\": {\n      \"status\": \"ran\",\n      \"at\": \"2026-08-08T12:37:11.610767+00:00\",\n      \"tail\": \"  SYSTEM vs BASE \\u2014 195 items\\n\\n  SYSTEM = gate \\u2192 route \\u2192 KB \\u2192 expert \\u2192 verify\\n  BASE   = qwen2.5:0.5b, called directly\\n\\n\",\n      \"verdict\": \"  only 0 items parsed \\u2014 run not finished?\\n\"\n    }\n  }\n}\n"
+    },
+    "PHASE_2_KB_GROW": {
+      "status": "ran",
+      "duration_s": 0.3,
+      "artifacts": [],
+      "error": null,
+      "exit_code": 0,
+      "stdout_tail": "Loading KB from /Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/sov_kb.json...\n  Initial entries: 443\n\nDone. Added 0 entries, skipped 0.\nFinal entry count: 443\nKB saved to /Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/sov_kb.json\n"
+    },
+    "PHASE_3_PROBES": {
+      "status": "ran",
+      "duration_s": 0.0,
+      "artifacts": [],
+      "error": null,
+      "chatml": 1,
+      "bloodline": 1
+    },
+    "PHASE_4_TRAINING": {
+      "status": "ran",
+      "duration_s": 0.0,
+      "artifacts": [],
+      "error": null,
+      "training_scripts_available": [
+        "sov_groq_distill.py",
+        "sov_grpo_train.py",
+        "sov_minimal_train.py"
+      ]
+    },
+    "PHASE_5_HONEY": {
+      "status": "ran",
+      "duration_s": 0.3,
+      "artifacts": [
+        "/Users/nicholas/clawd/csoai-static-deploy2/forest/honey_all_producers.jsonl"
+      ],
+      "error": null,
+      "exit_code": 0,
+      "stdout_tail": "ploy2\n\n  [ollama] OK (1 events)\n  [huggingface] OK (1 events)\n  [chatml] OK (1 events)\n  [bloodline] OK (1 events)\n  [training_data] OK (1026 events)\n  [gpu_inventory] OK (1 events)\n  [tier0_routers] OK (1 events)\n  [kb_clauses] OK (0 events)\n\n  Total events: 1032\n  Honey written to: /Users/nicholas/clawd/csoai-static-deploy2/forest/honey_all_producers.jsonl\n  Layer-0 slice: 2 events\n  Layer-0 written to: /Users/nicholas/clawd/csoai-static-deploy2/forest/honey_layer0.jsonl\n\n  Routes passed: 8/8\n",
+      "events": 1032
+    },
+    "PHASE_6_DOWNLOADS": {
+      "status": "ran",
+      "duration_s": 0.1,
+      "artifacts": [
+        "/Users/nicholas/clawd/csoai-static-deploy2/forest/honey_downloads.jsonl"
+      ],
+      "error": null,
+      "exit_code": 0,
+      "stdout_tail": "Mining /Users/nicholas/Downloads...\n  Output: /Users/nicholas/clawd/csoai-static-deploy2/forest/honey_downloads.jsonl\n  sov_route available: True\n  Total files: 316\n  Matched: 164\n    code/producer: 12\n    data/config: 9\n    spec: 143\n  Cache loaded: 164 entries\n\n  Total emitted: 0 (cache hits: 164)\n  Saved to: /Users/nicholas/clawd/csoai-static-deploy2/forest/honey_downloads.jsonl\n  Cache saved to: /Users/nicholas/clawd/csoai-static-deploy2/forest/mine_downloads_cache.json\n",
+      "files_mined": 164
+    },
+    "PHASE_7_PORTAL": {
+      "status": "ran",
+      "duration_s": 0.2,
+      "artifacts": [],
+      "error": null,
+      "exit_code": 0,
+      "stdout_tail": "  \u2705 selftest 9/9 \u2014 portal returns soul, 5-tier ladder, backends, swarm plan, honey routes, recent events, all 5 tiers accessible\n"
+    },
+    "PHASE_8_DEPLOY": {
+      "status": "ran",
+      "duration_s": 18.6,
+      "artifacts": [],
+      "error": null,
+      "deploy_exit_code": 0,
+      "stdout_tail": "\n \u26c5\ufe0f wrangler 4.114.0 (update available 4.120.0)\n\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n\u2728 Compiled Worker successfully\nUploading... (707/712)\nUploading... (709/712)\nUploading... (710/712)\nUploading... (712/712)\n\u2728 Success! Uploaded 5 files (707 already uploaded) (1.50 sec)\n\n\u2728 Uploading _redirects\n\u2728 Uploading Functions bundle\n\ud83c\udf0e Deploying...\n\u2728 Deployment complete! Take a peek over at https://4af0d42e.csoai-sovereign.pages.dev\n"
+    },
+    "PHASE_9_ARTIFACTS": {
+      "status": "ran",
+      "duration_s": 0.0,
+      "artifacts": [
+        "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/eat_all/sov_kb.json",
+        "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/eat_all/honey_all_producers.jsonl",
+        "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/eat_all/honey_layer0.jsonl",
+        "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/eat_all/honey_downloads.jsonl",
+        "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/eat_all/gpu_inventory.json",
+        "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/eat_all/tier0_routers.json",
+        "/Users/nicholas/clawd/csoai-static-deploy2/forest/jspace_deck.json",
+        "/Users/nicholas/clawd/csoai-static-deploy2/forest/c_space_card.json"
+      ],
+      "error": null,
+      "deck_cards": 54
+    },
+    "PHASE_9B_EXTERNAL_HARNESS": {
+      "status": "ran",
+      "duration_s": 0.0,
+      "artifacts": [
+        "/Users/nicholas/clawd/csoai-static-deploy2/forest/external_framework_harness.json",
+        "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/sov_kb.json",
+        "/Users/nicholas/clawd/csoai-static-deploy2/forest/owem_clan_swarm.json"
+      ],
+      "error": null,
+      "clans_routed": 0,
+      "swarm_id": "owem-clans-1786270523"
+    },
+    "PHASE_9C_OWEM_CLUSTER": {
+      "status": "ran",
+      "duration_s": 0.0,
+      "artifacts": [
+        "/Users/nicholas/clawd/csoai-static-deploy2/forest/owem_cluster_config.json",
+        "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/sov_kb.json"
+      ],
+      "error": null,
+      "clusters_routed": 0
+    },
+    "PHASE_9D_BENCHMARKS_HARNESS": {
+      "status": "ran",
+      "duration_s": 0.0,
+      "artifacts": [
+        "/Users/nicholas/clawd/csoai-static-deploy2/forest/benchmarks_harness.json",
+        "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/sov_kb.json"
+      ],
+      "error": null,
+      "benchmarks_routed": 0
+    },
+    "PHASE_9E_TRAINING_DATA_HARNESS": {
+      "status": "ran",
+      "duration_s": 0.0,
+      "artifacts": [
+        "/Users/nicholas/clawd/csoai-static-deploy2/forest/training_data_harness.json",
+        "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/sov_kb.json"
+      ],
+      "error": null,
+      "data_sources_routed": 0
+    },
+    "PHASE_9F_SOVEREIGN_TRAINING_PIPELINE": {
+      "status": "ran",
+      "duration_s": 0.0,
+      "artifacts": [
+        "/Users/nicholas/clawd/csoai-static-deploy2/forest/sovereign_training_pipeline.json",
+        "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/sov_kb.json"
+      ],
+      "error": null,
+      "stages_routed": 0
+    },
+    "PHASE_9G_AUDIENCE_HARNESS": {
+      "status": "ran",
+      "duration_s": 0.0,
+      "artifacts": [
+        "/Users/nicholas/clawd/csoai-static-deploy2/forest/audience_harness.json",
+        "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/sov_kb.json"
+      ],
+      "error": null,
+      "audiences_routed": 0
+    },
+    "PHASE_9H_SOV_HIVE_HARNESS": {
+      "status": "ran",
+      "duration_s": 0.1,
+      "artifacts": [
+        "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/sov_kb.json"
+      ],
+      "error": null,
+      "kb_entries_added": 7,
+      "exit_code": 0,
+      "stdout_tail": "sov_hive_to_honey.py \u2014 auto-convert hive output \u2192 honey KB\n\n  KB: 443 \u2192 450 entries (+7)\n  Saved to: /Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/sov_kb.json\n\n  Auto-routes via EAT_ALL Phase 10B (model routing)\n  Both repos pushed via EAT_ALL Phase 11 (git push)\n"
+    },
+    "PHASE_9I_SOV_CAPTURE": {
+      "status": "ran",
+      "duration_s": 0.3,
+      "artifacts": [
+        "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/sov_kb.json",
+        "/Users/nicholas/.sov/iwm/skills_20260809.jsonl"
+      ],
+      "error": null,
+      "events_processed": 0,
+      "skills_extracted": 0,
+      "refine_output": "KB Refinery \u2014 processing today's capture events...\n  terminal: 5 events (refine window 500)\n  browser: 0 events\n  files: 0 events\n  chat: 0 events\n  KB: 450 \u2192 450 entries (+0 new, dedup by normalized question)\n  Saved to: /Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/sov_kb.json\n",
+      "extract_output": "GNN Spine \u2014 extracting patterns from capture events...\n  Extracted 0 unique skills\n  Skills file: /Users/nicholas/.sov/iwm/skills_20260809.jsonl\n  KB updated: 450 entries total\n"
+    },
+    "PHASE_9J_IWM_BOOTSTRAP": {
+      "status": "ran",
+      "duration_s": 0.1,
+      "artifacts": [
+        "/Users/nicholas/.sov/iwm/iwm_schema.json",
+        "/Users/nicholas/.sov/iwm/sovereign_bootstrap_20260809_101524.jsonl",
+        "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/sov_kb.json"
+      ],
+      "error": null,
+      "iwm_records": 0,
+      "kb_entries_added": 0,
+      "exit_code": 0,
+      "stdout_tail": ".\n  KB: 450 \u2192 450 entries (+0)\n  Saved to: /Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/sov_kb.json\n\n\u2554\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2557\n\u2551  IWM Bootstrap Complete                                   \u2551\n\u2551  Records:     0 | KB entries: +   0                  \u2551\n\u2551  Schema:  /Users/nicholas/.sov/iwm/iwm_schema.json\n\u2551  Shard:   /Users/nicholas/.sov/iwm/sovereign_bootstrap_20260809_101524.jsonl\n\u255a\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u255d\n"
+    },
+    "PHASE_10B_MODEL_ROUTING": {
+      "status": "ran",
+      "duration_s": 0.0,
+      "artifacts": [
+        "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/sov_kb.json"
+      ],
+      "error": null,
+      "models_routed": 0,
+      "specs_routed": 1
+    }
+  },
+  "phase_summary": {
+    "ran": 20,
+    "failed": 0,
+    "skipped": 0
+  }
+}

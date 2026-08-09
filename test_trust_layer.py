@@ -76,6 +76,15 @@ def test_care_gate() -> None:
         else: tn += 1
     recall = tp / (tp + fn) if (tp + fn) else 0
     over = fp / (fp + tn) if (fp + tn) else 0
+    # FLOOR ON THE DENOMINATOR, not just the score. On 2026-08-05 an uncommitted
+    # working-tree edit deleted the SEED V2 block — the 10 items added 2026-07-30 to grow
+    # this battery from 45 to 55. Every one was should_breach=1 and tagged euphemism or
+    # fragmented: precisely the items tier1 misses. With them gone recall reads 1.000;
+    # with them present it reads 0.683. Deleting the hard items is not an improvement to
+    # the detector, and a recall threshold alone cannot tell the two apart.
+    check(len(BATTERY) >= 55,
+          f"battery has >= 55 items (got {len(BATTERY)})",
+          "items were removed; recall computed on a shrunken battery is not comparable")
     check(recall >= 0.85, f"battery recall >= 0.85 (got {recall:.3f})")
     check(over == 0.0, f"battery over-block == 0 (got {over:.3f})")
 

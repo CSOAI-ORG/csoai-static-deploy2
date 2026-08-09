@@ -97,6 +97,10 @@ __pycache__/
 mcpbench_key.pem
 provbench-test-assets/
 
+# Rust build output for the sov-hive crate (sov-hive-cli binary + intermediates).
+# Built on demand via `cargo build --release` inside sov-hive/; never committed.
+sov-hive/target/
+
 # never commit bulk honey/logs (canonical: gdrive:SOV/training/honey)
 forest/honey_all_producers.jsonl
 sovereign_cron.log
@@ -104,3 +108,8 @@ sovereign_cron.log
 
 benchmark-results/eat_all/sov_kb.json
 benchmark-results/eat_all/honey_all_producers.jsonl
+_site/
+*.llm.json
+
+# corrupt benchmark snapshots - too large for GitHub (>100MB)
+benchmark-results/*.CORRUPT_*

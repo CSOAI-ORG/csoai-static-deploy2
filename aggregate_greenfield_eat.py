@@ -154,10 +154,12 @@ def main() -> int:
 
     if fly_summary:
         print(f"\n  ▸ Flywheel daily ({fly_summary['day']}) — practice vs held-out")
+        def f3(v): return f"{v:.3f}" if v is not None else "  n/a"
+        def fgap(v): return f"{v:+.3f}" if v is not None else "  n/a"
         for m, s in fly_summary["models"].items():
-            print(f"    {m:40s} prac={s['practice_acc']:.3f}  "
-                  f"held={s['held_out_acc']:.3f}  "
-                  f"gap={s['overfit_gap']:+.3f}  "
+            print(f"    {m:40s} prac={f3(s['practice_acc'])}  "
+                  f"held={f3(s['held_out_acc'])}  "
+                  f"gap={fgap(s['overfit_gap'])}  "
                   f"tok/correct(prac)={s['tokens_per_correct_practice']}")
         print(f"    fuel: {fly_summary['fuel_pairs']} pairs, "
               f"{fly_summary['fuel_kb_rows']} KB rows → {fly_summary['fuel_path']}")

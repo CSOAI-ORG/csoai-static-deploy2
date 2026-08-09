@@ -1,0 +1,55 @@
+{
+  "$schema": "https://llmstxt.org/schemas/llm-manifest/v1.json",
+  "spec_version": "1.0",
+  "name": "CSOAI",
+  "url": "https://www.csoai.org",
+  "canonical": "https://www.csoai.org",
+  "operator": {
+    "legal_name": "CSOAI Ltd",
+    "country": "United Kingdom",
+    "company_number": "16939677",
+    "contact_email": "nicholas@csoai.org",
+    "jurisdiction": "England & Wales"
+  },
+  "primary_language": "en-GB",
+  "supported_languages": [
+    "en-GB",
+    "en-US"
+  ],
+  "updated": "2026-08-05",
+  "discovery_files": {
+    "llms_txt": "https://www.csoai.org/llms.txt",
+    "llms_full_txt": "https://www.csoai.org/llms-full.txt",
+    "robots_txt": "https://www.csoai.org/robots.txt",
+    "sitemap_xml": "https://www.csoai.org/sitemap.xml",
+    "sitemap_ai_xml": "https://www.csoai.org/sitemap-ai.xml",
+    "agents_txt": "https://www.csoai.org/agents.txt",
+    "ai_plugin_json": "https://www.csoai.org/.well-known/ai-plugin.json",
+    "llm_policy_txt": "https://www.csoai.org/.well-known/llm-policy.txt",
+    "security_txt": "https://www.csoai.org/.well-known/security.txt",
+    "change_log_txt": "https://www.csoai.org/.well-known/change-log.txt",
+    "agent_card_json": "https://www.csoai.org/.well-known/agent-card.json",
+    "llm_manifest_json": "https://www.csoai.org/.well-known/llm-manifest.json"
+  },
+  "crawl_policy": {
+    "ai_crawlers": "allowed (see robots.txt for full list of 25+ bots)",
+    "javascript_required": false,
+    "static_html_required": true,
+    "rate_limit_rps": 10,
+    "contact_for_bulk": "nicholas@csoai.org"
+  },
+  "citation_policy": {
+    "preferred_format": "CSOAI Ltd (YYYY). <Page title>. <URL>. Ed25519 signature in JSON-LD.",
+    "minimum_citation": [
+      "canonical_url",
+      "page_title",
+      "fetch_date"
+    ],
+    "tracking": "We track uncited reproduction; we do not gate access on citation."
+  },
+  "last_known_good": {
+    "verified_on": "2026-08-05",
+    "verified_by": "JEEVES (CSOAI ops)",
+    "verification_method": "RunPod runpod_ai_seo_kit.py"
+  }
+}

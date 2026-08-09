@@ -43,6 +43,22 @@ from pathlib import Path
 
 ROOT = Path("/Users/nicholas/clawd")
 
+
+def _deployed_surfaces():
+    """Every file csoai-static-deploy2 actually publishes, from the deploy's own allowlist.
+
+    The guard and the deploy must not disagree about what is public. build_site.py owns
+    that list; this asks it rather than keeping a parallel copy that drifts. If it cannot
+    be imported the guard FAILS LOUD instead of quietly scanning less — a guard that
+    silently narrows its own scope is how the same claim stayed live through six fixes.
+    """
+    import importlib.util
+    spec = importlib.util.spec_from_file_location(
+        "_build_site", ROOT / "csoai-static-deploy2" / "build_site.py")
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    return [p for p in mod.publishable() if p.suffix.lower() in {".html", ".json", ".txt", ".xml"}]
+
 # Surfaces a reader or a regulator could actually see. Internal working notes are excluded —
 # the guard governs what we PUBLISH, not what we think out loud while measuring.
 SURFACES = [
@@ -66,9 +82,45 @@ SURFACES = [
     # card). A retracted claim here reaches every link-share, but this dir was unscanned —
     # the "33-agent Byzantine council" card on 2026-08-04 slipped through because of it.
     ROOT / "councilof-ai/functions",
-    ROOT / "councilof-ai/client/src/components",
+    # 2026-08-05 — the FOURTH repetition of this exact failure. The guard listed
+    # client/src/pages and client/src/components but NOT client/src/data, and the whole
+    # blog ships from client/src/data/blog-content.ts. Live on www.csoai.org, inside the
+    # served bundle, the article "Byzantine Consensus Explained" states that "at the heart
+    # of CSOAI's governance architecture lies a novel and rigorous application of Byzantine
+    # Fault Tolerance" — the property MEASURED AND RETRACTED on 2026-07-29 (n_eff 1.21 of
+    # 3). The pattern below matches that sentence 9 times; the guard simply never opened
+    # the file, and reported councilof-ai clean.
+    # The lesson each previous entry re-learns one directory at a time: enumerate what
+    # SHIPS, not what we remember writing. client/src is the build input in its entirety,
+    # so scan client/src — not a hand-list of its subdirectories.
+    ROOT / "councilof-ai/client/src",
     ROOT / "csoai-dashboard-master/client/src/pages",
     ROOT / "csoai-static-deploy2/make_leaderboard.py",
+    # 2026-08-05 — the FIFTH repetition, and the worst of them. www.csoai.org no longer
+    # serves the React app at all: it serves THIS repository as static HTML, and the guard
+    # read exactly one .py from it. So the guard reported councilof-ai clean, which was
+    # true and irrelevant — the live site was never in scope.
+    # Measured live while unscanned: /tools/bft-council.html titled "CSOAI 41-Agent BFT
+    # Council" (41-agent x6, BFT x15, quorum x9) and /tools/bft-vote-log.html titled
+    # "33-Agent Council". The property was retracted on 2026-07-29 at n_eff 1.21 of 3, and
+    # the published figure has since GROWN to 41 on one page while the other still says 33
+    # — the same page pairs "41-agent" with "Quorum 23/33", so it is incoherent as well as
+    # unmeasured.
+    # The deployed tree is the surface. Scan it.
+    #
+    # 2026-08-05, SIXTH iteration — and this one is mine. The fix above added
+    # `tools/`: a hand-listed subdirectory, the exact move whose failure the
+    # councilof-ai entry had just finished describing ("enumerate what SHIPS, not a
+    # hand-list of its subdirectories"). The guard then reported 0 while seal.html and
+    # sov7_synthesis_dashboard.html — both at the repo ROOT, both deployed — still ran
+    # the retracted claim. A second front-end audit found them; the guard could not,
+    # because it was still looking at a list of directories instead of at the deploy.
+    #
+    # There is only one durable answer: scan WHAT THE DEPLOY PUBLISHES. build_site.py
+    # is the allowlist that defines the published set, so the guard and the deploy now
+    # read from the same source of truth. Add a page to the site and it is guarded
+    # automatically; that is the property every previous fix lacked.
+    *_deployed_surfaces(),
     ROOT / "csoai-org-v2/src/app",
 ]
 EXTS = {".tsx", ".ts", ".html", ".md", ".py", ".json"}
@@ -105,7 +157,14 @@ PROHIBITED: list[tuple[str, re.Pattern, str]] = [
      "1.21 of 3 nominal legs, so the legs are not independent and the property does not hold. "
      "Say 'designed 33-agent council' and state the measurement, or say nothing."),
     ("enforcement authority",
-     re.compile(r"\b(we|csoai|defoneos|gspc|sov)\b[^.]{0,60}\b(enforce[sr]?|enforcement (?:body|authority|powers?))\b", re.I),
+     # The negative lookahead exempts DENIALS. provbench.html says "we publish harnesses
+     # and measured results; we hold no certification, accreditation, or enforcement
+     # power" — the honest disclaimer this guard exists to protect — and the guard flagged
+     # it. A guard that fires on its own register teaches people to skim past it, which is
+     # exactly how six fixes went by with the claim still live. Precision is not laxity.
+     re.compile(r"\b(we|csoai|defoneos|gspc|sov)\b(?![^.]{0,40}\b(?:hold no|have no|has no|"
+                r"holds no|is not|are not|not an?|never)\b)"
+                r"[^.]{0,60}\b(enforce[sr]?|enforcement (?:body|authority|powers?))\b", re.I),
      "Enforcement powers are conferred by statute on market-surveillance authorities and the "
      "AI Office. Say 'the instrument regulators enforce with' — never 'the enforcer'."),
     ("the enforcer",
@@ -124,7 +183,10 @@ PROHIBITED: list[tuple[str, re.Pattern, str]] = [
     # Conflating them would flag 11 legitimate training statements and train the reader to
     # dismiss the guard, so the person-sense is excluded by the negative lookahead.
     ("system-certification claim",
-     re.compile(r"\b(we|csoai)\b[^.]{0,40}\bcertif(?:y|ies|ied)\b"
+     # Same exemption for denials: _CLAIM_TICK55.txt's honesty register says "CSOAI not
+     # yet CE+ certified, not an authorised CB" and was flagged for saying so.
+     re.compile(r"\b(we|csoai)\b(?![^.]{0,40}\b(?:not yet|not|no|never|cannot|hold no|"
+                r"holds no)\b)[^.]{0,40}\bcertif(?:y|ies|ied)\b"
                 r"(?![^.]{0,30}\b(professional|analyst|practitioner|people|staff|student|"
                 r"candidate|workforce|individual)s?\b)"
                 r"|\bCSOAI[- ]certified\b(?![^.]{0,20}\b(analyst|professional)s?\b)", re.I),

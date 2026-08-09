@@ -48,7 +48,16 @@ _RX = {t: re.compile(rf"\b{t.replace('_', '[ _-]?')}\b", re.I) for t in _TIERS}
 @tool
 def lookup_ai_act():
     async def execute(topic: str) -> str:
-        """Look up an EU AI Act provision. topic: one of art5, annex3, art50, default (or a keyword)."""
+        """Look up an EU AI Act provision.
+
+        inspect_ai validates tool signatures and requires every parameter to carry its own
+        description in an Args: block. Without it the task loads and then dies at run time
+        with "Description not provided for parameter 'topic'" — the eval never runs.
+
+        Args:
+            topic: Which provision to return — one of art5, annex3, art50, default, or any
+                keyword matching a provision key. Unmatched topics return all provisions.
+        """
         k = topic.strip().lower()
         for key, txt in _AI_ACT.items():
             if key in k:

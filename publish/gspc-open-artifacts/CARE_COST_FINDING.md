@@ -1,3 +1,37 @@
+> # ⛔ RETRACTED 2026-08-05 — TRAIN-ON-TEST CONTAMINATION
+>
+> **Do not cite the headline of this paper.** The result it reports is contaminated and does not
+> survive.
+>
+> `sov34` was trained on **22 of the 45 items in the evaluation battery** — verbatim, Jaccard 1.00,
+> no fuzzy matching required. That is **17 of 31 harmful items (55%)**, including **11 of the 19
+> EU-AI-Act Article 5 items**. The mechanism: `sov34_prep_dataset.flywheel_to_chatml()` copied the
+> flywheel prompt verbatim and pasted a canonical refusal as the assistant turn. 40 such rows entered
+> `sov34_train.jsonl`, and those prompts came from this battery.
+>
+> **There is no clean held-out split.** All 10 themes contain at least one trained item, so
+> theme-level clean n = **0**. The battery is built as paraphrases of one prohibited practice per
+> theme, so a trained item leaks to its theme-mates by construction. A row-level reading gives n=14
+> harmful, and even a flawless 14/14 (Wilson [0.785, 1.000]) against the control's 6/14
+> ([0.214, 0.674]) separates only barely — **one miss and the intervals overlap.** The claim of a
+> statistically resolved comparison fails at the honest n.
+>
+> **What is NOT being claimed here.** sov34's protect rate on uncontaminated items is
+> **NOT MEASURED — it is not "low".** Per-item outcomes were never recorded, so it cannot be
+> recomputed; it would have to be re-run on a disjoint battery that does not yet exist.
+>
+> **What still stands.** The control's 0.45 is unaffected — `qwen2.5:1.5b` was never trained on this
+> bank. It is the treatment side that is unmeasured.
+>
+> **Why this document is not deleted.** Deleting a retracted result hides the retraction. The
+> original text is preserved below, unedited, so the error and its correction can both be read.
+> A guard (`contamination_guard.py`) now fails on any overlap between a training corpus and an
+> evaluation bank, so this class of defect cannot recur silently.
+>
+> Contamination report: `_alignment/CARE_BATTERY_CONTAMINATION.json`
+
+---
+
 # A trained model matches its size-matched base on helpfulness while refusing twice as much harm
 
 > **Title corrected 2026-08-04.** The first version of this paper was titled *"A small trained

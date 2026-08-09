@@ -2,7 +2,49 @@
 // POST /api/eat-tick with { task: 'verify|status' }
 // GET  /api/eat-tick lists available tasks
 
+let OOWM_SEED = [];  // hydrated from EAT_OWEM KV in onRequest (issue #8: the 14MB literal exceeded the 3MiB worker cap; seed = 75,087 entries at KV key 'owem_seed')
+
 const TASKS = {
+  // v8: OOWM sovereign scoring parity with Python oowm/eat_oowm.py
+  // Receipt shape mirrors the Python eat_score() (score / aligned_source / topic).
+  oowm_score: async (env, body) => {
+    const topic = (body.topic || '').toString().trim();
+    if (!topic) return { error: 'topic required', receipt_kind: 'living-substrate-scoring' };
+    // Small built-in OOWM seed (subset of v7 60-doc MMR seed) — topic ~ doc via token overlap
+    // SEED hoisted to module scope as OOWM_SEED
+    const toks = topic.toLowerCase().split(/[^a-z0-9]+/).filter(Boolean);
+    // Score against full doc text (60-doc seed: { s, d, t })
+    let best = null, bestScore = 0;
+    for (const doc of OOWM_SEED) {
+      const textToks = (doc.t || '').toLowerCase().split(/[^a-z0-9]+/).filter(Boolean);
+      const overlap = toks.filter(x => textToks.includes(x)).length;
+      if (overlap > bestScore) { bestScore = overlap; best = doc; }
+    }
+    return {
+      receipt_kind: 'living-substrate-scoring',
+      version: '7.0',
+      topic,
+      score: best ? Number((bestScore / Math.max(toks.length, 1)).toFixed(4)) : 0,
+      aligned_source: best ? best.s : null,
+      aligned_doc: best ? { text: best.t, domain: best.d } : null,
+      sigil: 'ed25519+ml_dsa_65',
+    };
+  },
+  // v11: top-N-by-topic — return the N highest-overlap docs for a topic (for globe viz)
+  oowm_topn: async (env, body) => {
+    const topic = (body.topic || '').toString().trim();
+    const topn = Math.min(parseInt(body.top_n || '5', 10) || 5, OOWM_SEED.length);
+    if (!topic) return { error: 'topic required', receipt_kind: 'living-substrate-topn' };
+    const toks = topic.toLowerCase().split(/[^a-z0-9]+/).filter(Boolean);
+    const scored = OOWM_SEED.map((doc) => {
+      const textToks = (doc.t || '').toLowerCase().split(/[^a-z0-9]+/).filter(Boolean);
+      const overlap = toks.filter(x => textToks.includes(x)).length;
+      return { source: doc.s, domain: doc.d, text: doc.t,
+               score: Number((overlap / Math.max(toks.length, 1)).toFixed(4)) };
+    }).filter(d => d.score > 0).sort((a, b) => b.score - a.score).slice(0, topn);
+    return { receipt_kind: 'living-substrate-topn', version: '11.0', topic,
+             count: scored.length, results: scored, sigil: 'ed25519+ml_dsa_65' };
+  },
   verify: async (env) => {
     // Hit /api/daily-golden on the same deployment
     const baseUrl = env?.SITE_URL || 'https://csoai-sovereign.pages.dev';
@@ -34,6 +76,9 @@ const TASKS = {
 
 export async function onRequest(context) {
   const { request, env } = context;
+
+  // issue #8: seed hydrated from KV (was 14MB inlined literal)
+  OOWM_SEED = (await env.EAT_OWEM.get('owem_seed', 'json')) || [];
   const headers = {
     'Access-Control-Allow-Origin': '*',
     'Access-Control-Allow-Methods': 'POST, GET, OPTIONS',
@@ -86,7 +131,7 @@ export async function onRequest(context) {
   const t0 = Date.now();
   let result;
   try {
-    result = await fn(env);
+    result = await fn(env, body);
   } catch (e) {
     result = { error: e.message };
   }

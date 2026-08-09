@@ -6,11 +6,13 @@ Train 12 OWEM specialists with LoRA adapters.
 import json
 import os
 import subprocess
+import sys
 import time
 from pathlib import Path
 
-# Install dependencies
-subprocess.run(["pip", "install", "-q", "transformers", "peft", "trl", "datasets", "bitsandbytes"], check=True)
+# Install dependencies (skip on help/parse-only invocation so --help works without pip/net)
+if not any(a in ("-h", "--help") for a in sys.argv[1:]):
+    subprocess.run(["pip", "install", "-q", "transformers", "peft", "trl", "datasets", "bitsandbytes"], check=True)
 
 import torch
 from transformers import AutoTokenizer, AutoModelForCausalLM, BitsAndBytesConfig

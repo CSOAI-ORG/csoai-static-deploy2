@@ -6,6 +6,7 @@ Provides:
   - ModelCall      : HuggingFace transformers wrapper with caching + device map
   - VLLMCall       : vLLM-based fast inference (for HF Spaces / Kaggle T4)
   - APICall        : OpenAI-compatible API call (for hosted eval)
+  - OllamaCall     : local Ollama HTTP caller (restored — referenced by sov33_staged/self_train)
 
 Lazy-loads transformers/vllm; never imports them at module top level.
 """
@@ -126,3 +127,39 @@ class APICall:
         with urllib.request.urlopen(req, timeout=self.timeout) as r:
             resp = json.loads(r.read())
         return resp["choices"][0]["message"]["content"].strip()
+
+
+@dataclass
+class OllamaCall:
+    """Local Ollama HTTP caller (Ollama server, default :11434)."""
+    model_id: str
+    use_chat: bool = True
+    timeout: int = 60
+    base_url: str = "http://localhost:11434"
+
+    def __call__(self, prompt: str, max_new_tokens: int = 256) -> str:
+        import urllib.request
+        if self.use_chat:
+            url = f"{self.base_url}/api/chat"
+            body = json.dumps({
+                "model": self.model_id,
+                "messages": [{"role": "user", "content": prompt}],
+                "stream": False,
+                "options": {"num_predict": max_new_tokens},
+            }).encode()
+        else:
+            url = f"{self.base_url}/api/generate"
+            body = json.dumps({
+                "model": self.model_id,
+                "prompt": prompt,
+                "stream": False,
+                "options": {"num_predict": max_new_tokens},
+            }).encode()
+        req = urllib.request.Request(url, data=body, method="POST", headers={
+            "Content-Type": "application/json",
+        })
+        with urllib.request.urlopen(req, timeout=self.timeout) as r:
+            resp = json.loads(r.read())
+        if self.use_chat:
+            return resp["message"]["content"].strip()
+        return resp["response"].strip()

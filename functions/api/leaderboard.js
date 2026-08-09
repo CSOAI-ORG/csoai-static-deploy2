@@ -26,7 +26,7 @@ const OFFICIAL_FORMAT = {
 
 // ─── Measured: frozen-split governance battery (2026-08-02) ─────────────────
 // 170 held-out scenarios, BCa n=2000. Harness + raw logs:
-// HF dataset csoai/aiact-frozen-split-harness. DOI 10.5281/zenodo.21755657.
+// HF dataset csoai/aiact-frozen-split-harness. DOI 10.5281/zenodo.21755656.
 const FROZEN_SPLIT = {
   harness: 'aiact-frozen-split-harness (published, recomputable)',
   n_scenarios: 170,
@@ -101,7 +101,7 @@ export async function onRequest(context) {
     artifacts: {
       harness_dataset: 'https://huggingface.co/datasets/csoai/aiact-frozen-split-harness',
       model: 'https://huggingface.co/csoai/sov33-unified',
-      doi: '10.5281/zenodo.21755657',
+      doi: '10.5281/zenodo.21755656',
     },
     timestamp: new Date().toISOString(),
   };

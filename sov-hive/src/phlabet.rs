@@ -79,7 +79,7 @@ pub enum Phoneme {
     Genesis = 0xFF,     // 🌅 origin, start, the beginning
 }
 
-/// A single Phlabet glyph — 273 bytes.
+/// A single Phlabet glyph — 326 bytes (2 header + 64×f32 vector + 64 provenance pad + f32 confidence).
 #[derive(Debug, Clone)]
 pub struct Glyph {
     pub phoneme: u8,
@@ -186,7 +186,7 @@ impl Glyph {
         }
     }
 
-    /// Compact to 273 bytes.
+    /// Compact to 326 bytes.
     pub fn to_bytes(&self) -> Vec<u8> {
         let mut buf = Vec::with_capacity(273);
         buf.push(self.phoneme);
@@ -323,7 +323,7 @@ mod tests {
     fn test_glyph_roundtrip() {
         let g = Glyph::new(0x00, 200, "test_prov", 0.95);
         let bytes = g.to_bytes();
-        assert_eq!(bytes.len(), 273);
+        assert_eq!(bytes.len(), 326);
         let g2 = Glyph::from_bytes(&bytes);
         assert_eq!(g2.phoneme, 0x00);
         assert_eq!(g2.intensity, 200);

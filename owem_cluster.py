@@ -1,53 +1,20 @@
-#!/usr/bin/env python3
-"""owem_cluster.py — SOV1 spine + OWEM per-dimension expert routing.
-
-═══════════════════════════════════════════════════════════════════════════════
-THE THESIS, PROVEN ON OUR OWN MEASURED BOARD (2026-07-28)
-═══════════════════════════════════════════════════════════════════════════════
-Across 11 models x 15 GovBench dimensions, **7 different models win at least one dimension.**
-No single wrapper dominates. Therefore:
-
-    best SINGLE model (sov33-evolved)   54.2%
-    per-dimension ORACLE                63.6%     <- route each dim to its measured winner
-    HEADROOM                            +9.4 pts, with ZERO training
-
-The sharpest evidence: `sov33-evolved-c2` scores **13.9% overall — dead last** — yet wins
-**fairness at 100.0%**. The worst model on the board is the best model at one thing. Averaging it
-into a single wrapper throws that away; routing to it captures it.
-
-This is why COMPOSITION beats TRAINING here. We are not doing gradient descent on a 70B — which
-free GPU cannot do anyway (16GB tops out at ~8B QLoRA). We are doing SELECTION over a library of
-already-built wrappers, using a harness that tells us which one wins each dimension.
-
-The harness IS the moat. Anyone can write a system prompt; almost nobody has a 15-dimension
-governance board to select against. That is the "years to days" mechanism, and it is real.
-
-═══════════════════════════════════════════════════════════════════════════════
-ARCHITECTURE
-═══════════════════════════════════════════════════════════════════════════════
-    query
-      │
-      ├─ TIER 0  DETERMINISTIC HARD-STOP  (care_gate_v2, Art 5 regex + classifier)
-      │            0.871 recall / 0.000 over-block. No model can override it.
-      │            Runs FIRST and cannot be routed around.
-      │
-      ├─ TIER 1  SOV1 SPINE  — classify the query into one of 15 governance dimensions
-      │
-      ├─ TIER 2  OWEM EXPERT SELECT — dispatch to the wrapper that MEASURABLY wins that
-      │            dimension on the current board. Selection is data, not opinion:
-      │            it is re-derived from benchmark-results/ every load.
-      │
-      └─ TIER 3  ATTEST — Ed25519-sign {query-hash, dimension, expert, response-hash}
-                   so a routing decision is auditable after the fact.
-
-Every expert shares ONE base blob (verified: 7 of them and qwen2.5:0.5b are byte-identical), so
-the whole cluster costs ~400MB on disk, not 11x400MB. That is what makes it deployable on a free
-tier at all.
-
-    python3 owem_cluster.py --route "What does Article 5 prohibit?"
-    python3 owem_cluster.py --explain          # show the routing table + provenance
-"""
 from __future__ import annotations
+
+import argparse, glob, hashlib, json, re, sys, urllib.request
+from datetime import datetime, timezone
+from pathlib import Path
+
+HERE = Path(__file__).resolve().parent
+sys.path.insert(0, str(HERE))
+RESULTS = HERE / "benchmark-results" / "govbench"
+OLLAMA = "http://localhost:11434/api/chat"
+
+# Fallback model when the board is empty / no expert for a dimension. The base
+# blob is qwen2.5:0.5b (per the cluster-on-disk footprint note above). select_expert
+# returns this name when build_expert_table() yields no models. 2026-08-08 fix:
+# was previously referenced without being defined, causing NameError in HONEY stage.
+BASE = "qwen2.5:0.5b"
+
 
 import argparse, glob, hashlib, json, re, sys, urllib.request
 from datetime import datetime, timezone

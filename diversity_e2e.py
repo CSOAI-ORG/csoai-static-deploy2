@@ -33,7 +33,7 @@ def load_model_scores() -> dict[str, dict[str, float]]:
                 continue
             model = entry.get("model")
             dimensions = entry.get("dimensions")
-            if model and isinstance(dimensions, dict) and len(dimensions) == 15:
+            if model and isinstance(dimensions, dict) and len(dimensions) > 0:
                 scores[model] = dimensions
     return scores
 

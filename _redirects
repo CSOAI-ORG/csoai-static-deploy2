@@ -3,8 +3,27 @@
 # Generated 2026-08-05 by JEEVES (K3 lane) to close the 13-route 404 audit.
 # Cloudflare Pages applies these to static-asset responses only.
 
-# SPA-render-404 routes (200 shell + 404 component) → real canonical pages
-# These return 200 today but the React route renders a "Not found" component.
-# 301 to the canonical hub so users and crawlers land somewhere real.
+# /about used to 301 to /index.html (my pre-C3 audit fix). Now /about has its own
+# page. Remove the rule so the real /about.html serves.
 # (NOTE: clean-trailing-slash is handled by the default Pages 308 to drop the .html)
-# Empty file causes no harm; keep the comment so future-me knows this was reviewed.
+
+# /arena and /gspc-arena must resolve to the real 12-greenfields page.
+# Without these, Cloudflare Pages serves index.html for the bare path, which
+# is the "4-axis GSPC stub hydration crash" observed 2026-08-01.
+# The arena-hub page itself is fully static HTML — no JS to hydrate — so a
+# correct route + the file = no crash.
+/arena       /arena-hub.html  301
+/gspc-arena  /arena-hub.html  301
+/arena/      /arena-hub.html  301
+/gspc-arena/ /arena-hub.html  301
+
+# /gate is the refusal-gate demo page; Cloudflare Pages default clean-trailing-slash
+# handles /gate/ automatically.
+/gate        /gate.html       301
+/gate/       /gate.html       301
+
+# /prv and /gspc-prv resolve to the provenance axis page.
+# gspc-prv.html is a REAL file. Cloudflare's clean URLs serve it at /gspc-prv
+# and /prv natively (same as /master and /provbench). No _redirect rule is
+# needed — and the previous 301-to-.html rule created an infinite loop
+# (301 → .html → 308 back → 301). Removed 2026-08-08.

@@ -31,8 +31,9 @@ jobs:
       - name: Check C2PA spec releases
         id: c2pa
         run: |
-          # C2PA spec is on GitHub — check latest release tag
-          LATEST=$(curl -sf https://api.github.com/repos/c2pa-org/c2pa-spec/releases/latest | python3 -c "
+          # C2PA spec is published from c2pa-org/specifications (the old
+          # c2pa-org/c2pa-spec repo 404s — moved). 2026-08-08 fix.
+          LATEST=$(curl -sf https://api.github.com/repos/c2pa-org/specifications/releases/latest | python3 -c "
           import sys, json
           d = json.load(sys.stdin)
           print(d.get('tag_name', 'unknown'))
