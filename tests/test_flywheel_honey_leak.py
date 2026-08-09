@@ -80,10 +80,15 @@ def main():
             failures.append(f"{fp.name}: {len(leaked)} held_out cell(s) leaked into honey")
 
     # 3. Structure: flywheel branch must report how many held_out it excluded.
-    sample = bench_to_honey_entries(json.load(open(ARTEFACT)), spec)
+    #    (Synthetic artefact — offload moved the old hardcoded day file to Oracle; the
+    #    structure contract must not depend on a specific historical file existing.)
+    synth = build_artefact()
+    sample = bench_to_honey_entries(synth, spec)
     flywheels = [e for e in sample if e.get("type") == "flywheel"]
     if not flywheels or "held_out_excluded" not in flywheels[0]:
         failures.append("flywheel branch missing held_out_excluded counter")
+    if flywheels and flywheels[0].get("held_out_excluded") != 1:
+        failures.append(f"held_out_excluded wrong on synthetic (got {flywheels[0].get('held_out_excluded')})")
 
     print(f"\nP1 honey-leak guard: {len(failures)} failure(s) across {n_artefacts} real artefacts.")
     if failures:
