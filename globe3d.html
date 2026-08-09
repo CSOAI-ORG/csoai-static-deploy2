@@ -73,6 +73,7 @@
 <div class="lyr" data-layer="nodes"><span class="sw on"><i></i></span><span class="nm">Sovereign nodes<small>12 civilizations</small></span></div>
 <div class="lyr" data-layer="arcs"><span class="sw on"><i></i></span><span class="nm">Cross-region mesh<small>L0-D handoff arcs</small></span></div>
 <div class="lyr" data-layer="swarm"><span class="sw"><i></i></span><span class="nm">Agent swarm<small>governed agents</small></span></div>
+<div class="lyr" data-layer="clans"><span class="sw on"><i></i></span><span class="nm">AI clans<small>Kimi · Claude · DeepSeek · Grok · Local</small></span></div>
 <div id="ring">
 <svg height="52" viewbox="0 0 52 52" width="52"><circle cx="26" cy="26" fill="none" r="22" stroke="rgba(255,255,255,.08)" stroke-width="5"></circle><circle cx="26" cy="26" fill="none" id="ring-arc" r="22" stroke="#34d399" stroke-dasharray="138.2" stroke-dashoffset="138.2" stroke-linecap="round" stroke-width="5" transform="rotate(-90 26 26)"></circle></svg>
 <div class="rtxt"><b id="ring-pct">0%</b><small>Art 50 marking survival — CP upper bound 13.9%</small></div>
@@ -84,6 +85,9 @@
 <div id="legend">
 <span><i style="background:#e2574c"></i>Binding</span><span><i style="background:#f5b942"></i>Emerging</span>
 <span><i style="background:#3b9ad8"></i>Voluntary</span><span><i style="background:#34d399"></i>Agent</span>
+<span><i style="background:#f0abfc"></i>Kimi</span><span><i style="background:#3b82f6"></i>Claude</span>
+<span><i style="background:#38bdf8"></i>DeepSeek</span><span><i style="background:#a3e635"></i>Grok</span>
+<span><i style="background:#fbbf24"></i>SOV3</span>
 </div>
 <a href="#" id="back">← 2.5D map view</a>
 <script>
@@ -156,6 +160,33 @@ if(viewer){
       position:Cesium.Cartesian3.fromDegrees(b.c[0]+Math.cos(a)*r, b.c[1]+Math.sin(a)*r*0.7, 120000),
       point:{pixelSize:2.4, color:Cesium.Color.fromCssColorString('#a7f3d0').withAlpha(.8)}});
   }
+
+  // ----- AI clans (SOV-SPACE layer: the five model clans per the goal doc).
+  // Substrate (:3101) is billing-gated, so energy is honest code-derived:
+  // lens_count from drift-feed is the live measurement anchor; beyond that we
+  // show the clan's seat + reach — never fabricate a live vector.
+  var CLANS=[
+    {name:'Kimi K3',seat:[4.4,50.8],clan:'kimi',reach:86,note:'frontier clan · EU seat'},
+    {name:'Claude',seat:[-77,38.9],clan:'claude',reach:82,note:'frontier clan · US seat'},
+    {name:'DeepSeek',seat:[116.4,39.9],clan:'deepseek',reach:74,note:'open clan · CN seat'},
+    {name:'Grok',seat:[-77,38.9],clan:'grok',reach:70,note:'frontier clan · US seat'},
+    {name:'Local / SOV3',seat:[-0.12,51.5],clan:'local',reach:66,note:'sovereign clan · UK seat'}
+  ];
+  var clanC={kimi:'#f0abfc',claude:'#3b82f6',deepseek:'#38bdf8',grok:'#a3e635',local:'#fbbf24'};
+  CLANS.forEach(function(cl){
+    viewer.entities.add({
+      layerTag:'clans',
+      position:Cesium.Cartesian3.fromDegrees(cl.seat[0], cl.seat[1]),
+      point:{pixelSize:11, color:Cesium.Color.fromCssColorString(clanC[cl.clan]),
+        outlineColor:Cesium.Color.WHITE, outlineWidth:1,
+        scaleByDistance:new Cesium.NearFarScalar(1.5e6,1.6,2.0e7,.6)},
+      label:{text:cl.name, font:'700 12px Inter, sans-serif',
+        fillColor:Cesium.Color.fromCssColorString(clanC[cl.clan]),
+        outlineColor:Cesium.Color.fromCssColorString('#05080e'), outlineWidth:3,
+        style:Cesium.LabelStyle.FILL_AND_OUTLINE, pixelOffset:new Cesium.Cartesian2(0,-20),
+        translucencyByDistance:new Cesium.NearFarScalar(1.5e6,1,2.0e7,0)}
+    });
+  });
 
   // layer toggles
   document.querySelectorAll('.lyr').forEach(function(el){
