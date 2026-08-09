@@ -420,6 +420,23 @@ def phase_9_artifacts() -> dict:
         log(f"  jspace deck refreshed: {m.get('count')} cards + C-card (move 33)")
     except Exception as e:
         log(f"  jspace deck refresh failed (non-fatal): {e}")
+    # Wave-8 move 46: KB-size alert — surface when the KB approaches the
+    # compaction threshold so the report flags it (anti-D113 class: KB
+    # ballooning must be visible, not silent).
+    try:
+        kb_path = ROOT / "benchmark-results" / "sov_kb.json"
+        if kb_path.exists():
+            kb = json.loads(kb_path.read_text())
+            n = len(kb.get("entries", []))
+            result["kb_entries"] = n
+            if n > 50000:
+                result["kb_warning"] = f"KB at {n} entries — exceeds compaction threshold (50K); review normalize-question dedup"
+                log(f"  ⚠ KB at {n} entries — compaction threshold exceeded")
+            else:
+                result["kb_ok"] = True
+                log(f"  KB {n} entries (ok, <50K)")
+    except Exception as e:
+        log(f"  KB-size alert failed (non-fatal): {e}")
     return result
 
 
