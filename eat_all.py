@@ -362,6 +362,21 @@ def phase_9_artifacts() -> dict:
                 result["artifacts"].append(str(target))
             except Exception as e:
                 log(f"  failed to copy {src}: {e}")
+    # Wave-3 move 33: refresh the visual-mind deck + C-space card each EAT
+    # tick so the live /api/deck surface stays current with the KB.
+    try:
+        sys.path.insert(0, str(ROOT))
+        import jspace_cards
+        m = jspace_cards.save_deck()
+        c = jspace_cards.save_c_card()
+        deck_art = ROOT / "forest" / "jspace_deck.json"
+        ccard_art = ROOT / "forest" / "c_space_card.json"
+        result["artifacts"].append(str(deck_art))
+        result["artifacts"].append(str(ccard_art))
+        result["deck_cards"] = m.get("count", 0)
+        log(f"  jspace deck refreshed: {m.get('count')} cards + C-card (move 33)")
+    except Exception as e:
+        log(f"  jspace deck refresh failed (non-fatal): {e}")
     return result
 
 
