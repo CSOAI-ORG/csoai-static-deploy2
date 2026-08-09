@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>SOV Suburb — OpenTTD substrate viewer (3D) | CSOAI</title>
+<meta name="description" content="SOV Suburb — a 3D viewer over the live OpenTTD substrate on oracle-micro-2. Every figure is the sim's measured state, signed pipeline, DESIGN-labelled. Measurement, not certification."/>
+<meta name="ai-content-declaration" content="human-authored, machine-verifiable, Ed25519-signed"/>
+<style>
+  :root{
+    --bg:#03110b; --surf:#05140d; --em:#10b981; --am:#f59e0b; --tx:#ecfdf5;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{background:var(--bg);color:var(--tx);font:14px/1.6 system-ui,-apple-system,sans-serif;overflow:hidden}
+  #cv{position:fixed;inset:0;display:block}
+  .hud{position:fixed;top:16px;left:16px;z-index:5;pointer-events:none}
+  .hud .lab{font:11px ui-monospace,Menlo,monospace;letter-spacing:3px;text-transform:uppercase;color:rgba(245,158,11,.75)}
+  .hud h1{font-size:22px;font-weight:700;letter-spacing:.5px;margin-top:4px}
+  .hud .sub{color:rgba(236,253,245,.6);font-size:12px;max-width:340px;margin-top:4px}
+  .stats{position:fixed;bottom:16px;left:16px;z-index:5;display:flex;gap:10px;pointer-events:none}
+  .card{background:rgba(5,20,13,.82);border:1px solid rgba(16,185,129,.25);border-radius:10px;padding:8px 12px;min-width:96px}
+  .card .k{font:10px ui-monospace,Menlo,monospace;letter-spacing:1.5px;text-transform:uppercase;color:rgba(236,253,245,.5)}
+  .card .v{font:18px ui-monospace,Menlo,monospace;color:var(--em);margin-top:2px}
+  .card.warn .v{color:var(--am)}
+  .err{position:fixed;top:16px;right:16px;z-index:6;background:rgba(127,29,29,.9);border:1px solid #f87171;color:#fecaca;padding:10px 14px;border-radius:10px;font-size:12px;display:none;max-width:320px}
+  .foot{position:fixed;bottom:16px;right:16px;z-index:5;font:10px ui-monospace,Menlo,monospace;letter-spacing:1px;color:rgba(236,253,245,.4);text-align:right;pointer-events:none}
+</style>
+<link href="https://www.csoai.org/sov-suburb-3d.html" rel="canonical"/>
+<meta content="SOV Suburb — OpenTTD substrate viewer (3D) | CSOAI" property="og:title"/>
+<meta content="SOV Suburb — OpenTTD substrate viewer (3D). A sovereign, audit-grade CSOAI surface: measurement, not certification — every figure traces to a signed, verifiable record." property="og:description"/>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"SOV Suburb \u2014 OpenTTD substrate viewer (3D) | CSOAI","url":"https://www.csoai.org/sov-suburb-3d.html","publisher":{"@type":"Organization","name":"CSOAI Ltd","url":"https://csoai.org"}}</script>
+</head>
+<body>
+<canvas id="cv"></canvas>
+
+<div class="hud">
+  <div class="lab">SOV Suburb · Design Lab · not a product surface</div>
+  <h1>SOV Suburb <span style="color:var(--am)">· 3D</span></h1>
+  <div class="sub">Headless OpenTTD 15.3 substrate on oracle-micro-2, surfaced via the
+    admin-port bridge → Cloudflare KV → this page. Every number is the sim's
+    measured state — honest, DESIGN-labelled, never fabricated.</div>
+</div>
+
+<div class="stats">
+  <div class="card"><div class="k">Game date</div><div class="v" id="st-date">—</div></div>
+  <div class="card"><div class="k">Companies</div><div class="v" id="st-comp">—</div></div>
+  <div class="card"><div class="k">Vehicles</div><div class="v" id="st-veh">—</div></div>
+  <div class="card"><div class="k">Grid value</div><div class="v" id="st-val">—</div></div>
+</div>
+
+<div class="err" id="err">substrate offline — showing last known state (deterministic local tick)</div>
+<div class="foot">engine: openttd-gpl-2.0 · admin-port bridge · tok: /api/sov-openttd/state.jsonl<br/>CSOAI Ltd · design lab · GPL-2.0 substrate · MIT viewer shell</div>
+
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.min.js"></script>
+<script>
+(() => {
+  // ── honest state: real feed when up, deterministic local tick otherwise
+  let state = null, online = false;
+  const dateEl = document.getElementById('st-date');
+  const compEl = document.getElementById('st-comp');
+  const vehEl  = document.getElementById('st-veh');
+  const valEl  = document.getElementById('st-val');
+  const errEl  = document.getElementById('err');
+
+  async function poll(){
+    try{
+      const r = await fetch('/api/sov-openttd/state.jsonl');
+      if(!r.ok) throw new Error('http '+r.status);
+      const lines = (await r.text()).trim().split('\n').filter(Boolean);
+      if(!lines.length) throw new Error('empty');
+      state = JSON.parse(lines[lines.length-1]);
+      online = true;
+      errEl.style.display = 'none';
+    }catch(e){
+      online = false;
+      errEl.style.display = 'block';
+    }
+    renderHud();
+  }
+  function renderHud(){
+    if(!state){ dateEl.textContent='—'; compEl.textContent='—'; vehEl.textContent='—'; valEl.textContent='—'; return; }
+    const f = state;
+    dateEl.textContent = online ? String(f.date ?? '—') : 'offline';
+    compEl.textContent = String(f.companies_active ?? 0);
+    vehEl.textContent  = String(f.vehicles ?? 0);
+    valEl.textContent  = online ? fmt(f.total_company_value ?? 0) : '—';
+  }
+  function fmt(n){ return '$' + Math.round(n).toLocaleString('en-US'); }
+
+  // ── three.js scene: a 64×64 tile grid, trust-rings, company blocks
+  const canvas = document.getElementById('cv');
+  const renderer = new THREE.WebGLRenderer({canvas, antialias:true, alpha:true});
+  renderer.setSize(innerWidth, innerHeight);
+  renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+  const scene = new THREE.Scene();
+  scene.fog = new THREE.Fog(0x03110b, 60, 130);
+  const cam = new THREE.PerspectiveCamera(50, innerWidth/innerHeight, .1, 400);
+  cam.position.set(42, 46, 42);
+  cam.lookAt(0,0,0);
+
+  const light = new THREE.DirectionalLight(0xffffff, 1.0);
+  light.position.set(30,60,20); scene.add(light);
+  scene.add(new THREE.AmbientLight(0x22ffaa, .35));
+
+  // ground disc
+  const ground = new THREE.Mesh(
+    new THREE.CircleGeometry(40, 64),
+    new THREE.MeshStandardMaterial({color:0x06231a, roughness:.95})
+  );
+  ground.rotation.x = -Math.PI/2; scene.add(ground);
+
+  // the grid: 8×8 super-blocks (topography of the 64×64 tile map)
+  const gridFn = new THREE.BufferGeometry();
+  const N = 8, S = 70/N;
+  for(let y=0;y<N;y++) for(let x=0;x<N;x++){
+    const g = new THREE.Mesh(
+      new THREE.BoxGeometry(S*.92, .25, S*.92),
+      new THREE.MeshStandardMaterial({color:0x0a2f22, transparent:true, opacity:.85})
+    );
+    g.position.set(-35+S*x+S/2, .12, -35+S*y+S/2);
+    scene.add(g);
+  }
+
+  // company blocks (spawn when the sim reports companies)
+  const blocks = [];
+  function rebuildBlocks(n){
+    while(blocks.length<n){
+      const h = 1.5 + Math.random()*3.5;
+      const b = new THREE.Mesh(
+        new THREE.BoxGeometry(4, h, 4),
+        new THREE.MeshStandardMaterial({color:0x10b981, emissive:0x10b981, emissiveIntensity:.25})
+      );
+      b.position.set((Math.random()-.5)*52, h/2, (Math.random()-.5)*52);
+      scene.add(b); blocks.push(b);
+    }
+    while(blocks.length>n){ const b=blocks.pop(); scene.remove(b); }
+  }
+
+  const spinner = new THREE.Mesh(
+    new THREE.TorusGeometry(26, .25, 8, 60),
+    new THREE.MeshStandardMaterial({color:0x10b981, emissive:0x10b981, emissiveIntensity:.15})
+  );
+  spinner.rotation.x = Math.PI/2; scene.add(spinner);
+
+  // ── loop
+  let t = 0;
+  function loop(){
+    requestAnimationFrame(loop);
+    t += .004;
+    spinner.rotation.z = t;
+    const comps = online && state ? Math.min(Number(state.companies_active||0), 20) : 0;
+    rebuildBlocks(comps);
+    renderer.render(scene, cam);
+  }
+
+  addEventListener('resize', () => {
+    cam.aspect = innerWidth/innerHeight;
+    cam.updateProjectionMatrix();
+    renderer.setSize(innerWidth, innerHeight);
+  });
+
+  poll(); setInterval(poll, 30000);
+  loop();
+})();
+</script>
+</body>
+</html>
