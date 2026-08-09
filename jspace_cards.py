@@ -258,3 +258,44 @@ def render_sigil_svg(card: dict, size: int = 256) -> str:
 if __name__ == "__main__" and "--deck" in sys.argv:
     m = save_deck()
     print(f"saved {m['count']} cards -> forest/jspace_deck.json")
+
+
+def c_space_fold(deck: list[dict] | None = None) -> dict:
+    """Fold the J-space deck into ONE C-space card (Wave-3 move 30).
+
+    Canon: '3-to-1 water/milk/honey fold = C-card; C-cards over time =
+    SOV signal' (MEMORY-fusion-vwm). The sov model reads the C-card in ~3KB.
+    Deterministic: hash-concatenate all card sigils, fold by the 3:1 rule.
+    """
+    deck = deck if deck is not None else build_deck()
+    if not deck:
+        return {"error": "no deck"}
+    n = len(deck)
+    # deterministic aggregate: concat sigils + fold weights
+    joined = "".join(c.get("sigil", "0x0") for c in deck)
+    axis_count = {}
+    for c in deck:
+        a = c.get("axis", "OSS")
+        axis_count[a] = axis_count.get(a, 0) + 1
+    # 3:1 fold: honey units = sum of card units / 3 (milk->honey consolidation)
+    total_units = sum(c.get("value_score", 1) for c in deck)
+    honey_units = max(1, int(total_units / 3))
+    c_card = {
+        "schema": "c-space-card/1.0",
+        "deck_count": n,
+        "axis_distribution": axis_count,
+        "honey_units": honey_units,
+        "sigil": "0x" + hashlib.sha256(joined.encode()).hexdigest()[:32],
+        "summary": f"Folded {n} J-space cards (water/milk) -> honey C-card ({honey_units} units).",
+    }
+    return c_card
+
+
+def save_c_card(path: str = "forest/c_space_card.json") -> dict:
+    import os, time
+    c = c_space_fold()
+    c["generated_at"] = time.time()
+    os.makedirs(os.path.dirname(path), exist_ok=True)
+    with open(path, "w") as f:
+        json.dump(c, f, indent=1)
+    return c
