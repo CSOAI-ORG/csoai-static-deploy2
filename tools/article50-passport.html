@@ -146,19 +146,20 @@
 <select name="tier">
 <option value="free">Free (HMAC-signed, verifiable at proofof.ai)</option>
 <option value="pro">Pro (Ed25519-signed, audit-grade)</option>
-<option value="governance">Governance (Ed25519 + 23/33 threshold + OTS, court-admissible)</option>
+<option value="governance">Governance (Ed25519-signed + OTS, offline-verifiable)</option>
 </select>
 <button class="cta" id="submit-btn" type="submit">Generate Passport →</button>
 </form>
 </div>
 <div class="passport" id="passport-result">
 <div class="passport-h">✓ PASSPORT ISSUED</div>
+<p style="font-size:13px;color:#5a6478">This is a self-attested measurement — evidence you can verify offline. It is not a compliance certificate.</p>
 <pre id="passport-json"></pre>
 <a class="verify-link" href="#" id="passport-verify" target="_blank">Verify at proofof.ai →</a>
 </div>
 <div class="sovereign-cta-strip"><a href="/defoneos-owem-rfq">DEFONEOS OWEM RFQ</a> | <a href="/defoneos-article-50">Article 50 Passport</a></div>
 <footer>
-    CSOAI Ltd · UK Companies House 16939677 · Sovereign by design · Article 0 binding · Ed25519-signed · council-reviewed · OTS-anchored
+    CSOAI Ltd · UK Companies House 16939677 · Sovereign by design · Article 0 binding · Ed25519-signed · OTS-anchored
    — SIGIL-chain.</footer>
 </div>
 <script>
