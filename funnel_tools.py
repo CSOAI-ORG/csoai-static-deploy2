@@ -56,6 +56,12 @@ def advance(pid: str, stage: str) -> int:
             r["stage"] = stage
             r["updated_at"] = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
             save(rows)
+            # Move 121: entering 'sent' must also leave an append-only, hash-chained
+            # dispatch record — the tracker says WHERE it is, the log proves WHEN.
+            if stage == "sent":
+                from dispatch_log import log_dispatch
+                log_dispatch(pid, "email", f"outreach {r['sector']} pack",
+                             target=r.get("draft", ""))
             print(f"{pid}: {r['type']}/{r['sector']} → [{stage}] (recorded; dispatch still owner-gated)")
             return 0
     print(f"no prospect {pid}")
