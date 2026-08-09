@@ -57,6 +57,22 @@ jobs:
               print('Bloodline file not found — check eat_results/ later')
           PY
 
+  visual-mind:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: jspace_chess selftest (J-Space board core)
+        run: python3 jspace_chess.py --selftest
+      - name: jspace_cards selftest (KB -> deck derivation)
+        run: python3 jspace_cards.py --selftest
+      - name: EAT pipeline selftest (integrity gate)
+        run: python3 overnight_eat.py --selftest
+      - name: flywheel selftest (anti-Goodhart)
+        run: python3 flywheel.py --selftest
+
   govbench:
     runs-on: ubuntu-latest
     if: github.event_name == 'workflow_dispatch'
