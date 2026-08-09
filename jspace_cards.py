@@ -203,3 +203,58 @@ if __name__ == "__main__":
         deck = build_deck()
         print(json.dumps(deck[:8], indent=2))
         print(f"...\n  total cards in deck: {len(deck)}")
+
+def save_deck(path: str = "forest/jspace_deck.json") -> dict:
+    """Persist the current KB-derived deck (Wave-3 move 27). Idempotent."""
+    import os, time
+    deck = build_deck()
+    manifest = {
+        "schema": "jspace-deck/1.0",
+        "generated_at": time.time(),
+        "count": len(deck),
+        "cards": deck,
+    }
+    os.makedirs(os.path.dirname(path), exist_ok=True)
+    with open(path, "w") as f:
+        json.dump(manifest, f, indent=1)
+    return manifest
+
+
+def render_sigil_svg(card: dict, size: int = 256) -> str:
+    """Render a card's deterministic visual sigil (mandala) — NO randomness.
+
+    Wave-3 move 28. The geometry is a pure function of the card's sigil hash:
+    rings count = sigil byte 0, spokes = byte 1, hue = byte 2, opacity = byte 3.
+    Same card -> identical SVG every time. An honest visual fingerprint of the
+    fact, not a fabricated 'model DNA' (the sketch's weight-mandala was fake).
+    """
+    h = card.get("sigil", "0x0000").replace("0x", "")
+    hexv = int(h[:8], 16) if len(h) >= 6 else 0
+    n_rings = 3 + (hexv & 7)
+    n_spokes = 4 + ((hexv >> 3) & 11)
+    hue = (hexv >> 7) % 360
+    color = f"hsl({hue}, 70%, 50%)"
+    c = size / 2
+    parts = [
+        f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {size} {size}" width="{size}" height="{size}">',
+        f'<rect width="{size}" height="{size}" fill="#0a0a0a"/>',
+        f'<g transform="translate({c},{c})">',
+    ]
+    for i in range(n_rings):
+        r = int(14 + i * (c - 24) / max(n_rings, 1))
+        op = 0.25 + ((hexv >> (i * 3)) % 32) / 100
+        parts.append(f'<circle r="{r}" fill="none" stroke="{color if i % 2 == 0 else "#fff"}" stroke-width="1.2" opacity="{op:.2f}"/>')
+    for i in range(n_spokes):
+        ang = 3.14159 * 2 * i / n_spokes
+        ln = int(20 + ((hexv >> (i * 2 + 4)) % 64) * 3)
+        x2, y2 = (ln * __import__("math").cos(ang), ln * __import__("math").sin(ang))
+        parts.append(f'<line x1="0" y1="0" x2="{x2:.0f}" y2="{y2:.0f}" stroke="{color}" stroke-width="1" opacity="0.6"/>')
+    parts.append(f'<circle r="7" fill="{color}"/>')
+    parts.append(f'<text x="0" y="{int(c - 8)}" text-anchor="middle" fill="#fff" font-size="9" font-family="monospace">{card.get("axis","")}</text>')
+    parts.extend(["</g>", "</svg>"])
+    return "\n".join(parts)
+
+
+if __name__ == "__main__" and "--deck" in sys.argv:
+    m = save_deck()
+    print(f"saved {m['count']} cards -> forest/jspace_deck.json")
