@@ -226,21 +226,44 @@ def selftest() -> int:
     if not found:
         fails.append("routed event not found after reload")
 
-    # 7. IWM/VWM tools get the data via API
+    # 7. Mirror contract (route's own guarantee): every event THIS module routed is
+    #    present in honey with matching signature+seq. NOT a blanket ledger-vs-honey
+    #    count: the ledger is written by several producers (sov_sync, sov_sync_server,
+    #    decision_ledger) that do not mirror into honey — `honey` is additionally a
+    #    multi-producer sink for rows from sov_pipeline/IWM/portal. route() promises
+    #    per-event mirroring of ITS OWN writes; that is what this check enforces.
     conn = sqlite3.connect(str(DB_PATH))
-    n_db = conn.execute("SELECT COUNT(*) FROM honey").fetchone()[0]
-    n_ledger = len(load_events())
-    # Honey mirrors the ledger. Allow ±3 events of drift under concurrent
-    # writes (server polling, overnight runner) — backfill evens it.
-    if abs(n_db - n_ledger) > 10:
-        fails.append(f"honey DB ({n_db}) ≠ ledger ({n_ledger}) (diff: {n_ledger - n_db})")
+    cur = conn.cursor()
+    honey_rows = {r[0]: (r[1], r[2]) for r in
+                  cur.execute("SELECT event_id, signature, seq FROM honey").fetchall()}
+    routed_events = [ev for ev in load_events()
+                     if ev.get("event_id") == routed.get("event_id")
+                     or ev.get("provenance") == "sov_route.py"]
+    unmirrored = 0
+    checked = 0
+    for ev in routed_events:
+        eid = ev.get("event_id")
+        row = honey_rows.get(eid)
+        if row is None:
+            unmirrored += 1
+            continue
+        checked += 1
+        if ev.get("signature") is not None and row[0] != ev.get("signature"):
+            unmirrored += 1
+        if ev.get("seq") is not None and row[1] != ev.get("seq"):
+            unmirrored += 1
+    if routed_events and unmirrored > 0:
+        fails.append(
+            f"route mirror contract violated: {unmirrored}/{len(routed_events)} "
+            f"sov_route events missing/mismatched in honey")
     conn.close()
 
     for f in fails:
         print(f"  ❌ {f}")
     if not fails:
         print(f"  ✅ selftest 9/9 — capture→stamp→sign→route→honey works, "
-              f"chain intact, ledger ({n_ledger}) == honey ({n_db})")
+              f"chain intact, {checked}/{len(routed_events)} routed events mirrored "
+              f"with matching signature+seq")
     return 1 if fails else 0
 
 
