@@ -112,7 +112,7 @@ hosting platform:
 For csoai (Cloudflare Pages):
 ```bash
 cd /workspace/csoai-static-deploy2
-npx wrangler pages deploy . --project-name=csoai-static-deploy2 --branch=main
+npx wrangler pages deploy . --project-name=csoai-site --branch=main
 ```
 
 For meok (Vercel):
