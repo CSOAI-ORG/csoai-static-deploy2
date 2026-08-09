@@ -1,0 +1,50 @@
+name: Nightly E2E — runner-portable sovereign core
+on:
+  schedule:
+    # Daily at 03:17 UTC (offset from the local 02:00-ish cron; runner-safe)
+    - cron: '17 3 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  core:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Determine args (daily)
+        run: |
+          echo "e2e_args=--plan --dry-run" >> "$GITHUB_ENV"
+      - name: flywheel selftest (anti-Goodhart, 19/19)
+        run: python3 flywheel.py --selftest
+      - name: EAT pipeline selftest (integrity, 13/13)
+        run: python3 overnight_eat.py --selftest
+      - name: care gate eval (deterministic, no LLM)
+        run: python3 care_gate_eval.py
+      - name: jspace chess selftest (visual-mind board)
+        run: python3 jspace_chess.py --selftest
+      - name: jspace cards selftest (deck derivation)
+        run: python3 jspace_cards.py --selftest
+
+      - name: E2E verifier (runner-portable; no local Ollama on CI)
+        run: |
+          python3 overnight_e2e.py --plan --dry-run 2>&1 || echo "WARN: full e2e needs local Ollama — only runner-portable core gates CI"
+
+      - name: Alert on failure (auto-issue, like corpus-watch)
+        if: failure()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: `Nightly E2E failed — run ${context.runNumber}`,
+              body: `The [nightly e2e core](${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}) failed. Check the logs — this gates the runner-portable sovereign core (flywheel / EAT / care-gate / jspace). Workflow-run-link: ${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`,
+              labels: ['bug']
+            })

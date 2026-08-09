@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+from __future__ import annotations  # py3.11 runner compat (CI gate; D118 class)
 """jspace_cards.py — derive REAL signed J-space chess cards from estate facts.
 
 Canon: _alignment/JSPACE_CHESS_BOARD_CANON_2026-08-08.md

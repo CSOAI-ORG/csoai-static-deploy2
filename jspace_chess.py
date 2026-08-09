@@ -24,6 +24,8 @@ container containment. Per register rule: never claim microVM isolation the
 estate does not provide.
 """
 
+from __future__ import annotations  # py3.11 runner compat (CI gate; D118 class)
+
 import hashlib
 import json
 import time
