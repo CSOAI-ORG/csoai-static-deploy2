@@ -1,31 +1,31 @@
 {
-  "run_id": "eat_all_1786253410",
-  "finished_at": "2026-08-09T05:30:10.731456+00:00",
+  "run_id": "eat_all_1786253708",
+  "finished_at": "2026-08-09T05:35:08.434852+00:00",
   "phases": {
     "PHASE_0_HEALTH": {
       "status": "ran",
-      "duration_s": 0.3,
+      "duration_s": 0.1,
       "artifacts": [],
       "error": null,
       "souls": 0,
       "ollama_models": 4,
-      "kb_entries": 142
+      "kb_entries": 150
     },
     "PHASE_1_REBOARD": {
       "status": "ran",
-      "duration_s": 0.7,
+      "duration_s": 0.2,
       "artifacts": [],
       "error": null,
       "exit_code": 0,
-      "stdout_tail": "{\n  \"started\": \"2026-08-09T05:30:02.217007+00:00\",\n  \"stages\": {}\n}\n"
+      "stdout_tail": "{\n  \"started\": \"2026-08-09T05:35:01.517236+00:00\",\n  \"stages\": {}\n}\n"
     },
     "PHASE_2_KB_GROW": {
       "status": "ran",
-      "duration_s": 0.4,
+      "duration_s": 0.1,
       "artifacts": [],
       "error": null,
       "exit_code": 0,
-      "stdout_tail": "Loading KB from /Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/sov_kb.json...\n  Initial entries: 142\n\nDone. Added 0 entries, skipped 0.\nFinal entry count: 142\nKB saved to /Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/sov_kb.json\n"
+      "stdout_tail": "Loading KB from /Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/sov_kb.json...\n  Initial entries: 150\n\nDone. Added 0 entries, skipped 0.\nFinal entry count: 150\nKB saved to /Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/sov_kb.json\n"
     },
     "PHASE_3_PROBES": {
       "status": "ran",
@@ -48,18 +48,18 @@
     },
     "PHASE_5_HONEY": {
       "status": "ran",
-      "duration_s": 0.4,
+      "duration_s": 0.2,
       "artifacts": [
         "/Users/nicholas/clawd/csoai-static-deploy2/forest/honey_all_producers.jsonl"
       ],
       "error": null,
       "exit_code": 0,
-      "stdout_tail": "deploy2\n\n  [ollama] OK (1 events)\n  [huggingface] OK (1 events)\n  [chatml] OK (1 events)\n  [bloodline] OK (1 events)\n  [training_data] OK (678 events)\n  [gpu_inventory] OK (1 events)\n  [tier0_routers] OK (1 events)\n  [kb_clauses] OK (0 events)\n\n  Total events: 684\n  Honey written to: /Users/nicholas/clawd/csoai-static-deploy2/forest/honey_all_producers.jsonl\n  Layer-0 slice: 2 events\n  Layer-0 written to: /Users/nicholas/clawd/csoai-static-deploy2/forest/honey_layer0.jsonl\n\n  Routes passed: 8/8\n",
-      "events": 684
+      "stdout_tail": "deploy2\n\n  [ollama] OK (1 events)\n  [huggingface] OK (1 events)\n  [chatml] OK (1 events)\n  [bloodline] OK (1 events)\n  [training_data] OK (698 events)\n  [gpu_inventory] OK (1 events)\n  [tier0_routers] OK (1 events)\n  [kb_clauses] OK (0 events)\n\n  Total events: 704\n  Honey written to: /Users/nicholas/clawd/csoai-static-deploy2/forest/honey_all_producers.jsonl\n  Layer-0 slice: 2 events\n  Layer-0 written to: /Users/nicholas/clawd/csoai-static-deploy2/forest/honey_layer0.jsonl\n\n  Routes passed: 8/8\n",
+      "events": 704
     },
     "PHASE_6_DOWNLOADS": {
       "status": "ran",
-      "duration_s": 5.5,
+      "duration_s": 5.7,
       "artifacts": [
         "/Users/nicholas/clawd/csoai-static-deploy2/forest/honey_downloads.jsonl"
       ],
@@ -70,7 +70,7 @@
     },
     "PHASE_7_PORTAL": {
       "status": "ran",
-      "duration_s": 1.1,
+      "duration_s": 0.2,
       "artifacts": [],
       "error": null,
       "exit_code": 0,
@@ -99,7 +99,7 @@
       ],
       "error": null,
       "clans_routed": 0,
-      "swarm_id": "owem-clans-1786253409"
+      "swarm_id": "owem-clans-1786253707"
     },
     "PHASE_9C_OWEM_CLUSTER": {
       "status": "ran",
@@ -160,11 +160,11 @@
       "error": null,
       "kb_entries_added": 7,
       "exit_code": 0,
-      "stdout_tail": "sov_hive_to_honey.py \u2014 auto-convert hive output \u2192 honey KB\n\n  KB: 142 \u2192 149 entries (+7)\n  Saved to: /Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/sov_kb.json\n\n  Auto-routes via EAT_ALL Phase 10B (model routing)\n  Both repos pushed via EAT_ALL Phase 11 (git push)\n"
+      "stdout_tail": "sov_hive_to_honey.py \u2014 auto-convert hive output \u2192 honey KB\n\n  KB: 150 \u2192 157 entries (+7)\n  Saved to: /Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/sov_kb.json\n\n  Auto-routes via EAT_ALL Phase 10B (model routing)\n  Both repos pushed via EAT_ALL Phase 11 (git push)\n"
     },
     "PHASE_9I_SOV_CAPTURE": {
       "status": "ran",
-      "duration_s": 0.7,
+      "duration_s": 0.3,
       "artifacts": [
         "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/sov_kb.json"
       ],
@@ -176,17 +176,17 @@
     },
     "PHASE_9J_IWM_BOOTSTRAP": {
       "status": "ran",
-      "duration_s": 0.1,
+      "duration_s": 0.2,
       "artifacts": [
         "/Users/nicholas/.sov/iwm/iwm_schema.json",
-        "/Users/nicholas/.sov/iwm/sovereign_bootstrap_20260809_053010.jsonl",
+        "/Users/nicholas/.sov/iwm/sovereign_bootstrap_20260809_053508.jsonl",
         "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/sov_kb.json"
       ],
       "error": null,
       "iwm_records": 0,
       "kb_entries_added": 0,
       "exit_code": 0,
-      "stdout_tail": ".\n  KB: 149 \u2192 149 entries (+0)\n  Saved to: /Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/sov_kb.json\n\n\u2554\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2557\n\u2551  IWM Bootstrap Complete                                   \u2551\n\u2551  Records:     0 | KB entries: +   0                  \u2551\n\u2551  Schema:  /Users/nicholas/.sov/iwm/iwm_schema.json\n\u2551  Shard:   /Users/nicholas/.sov/iwm/sovereign_bootstrap_20260809_053010.jsonl\n\u255a\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u255d\n"
+      "stdout_tail": ".\n  KB: 157 \u2192 157 entries (+0)\n  Saved to: /Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/sov_kb.json\n\n\u2554\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2557\n\u2551  IWM Bootstrap Complete                                   \u2551\n\u2551  Records:     0 | KB entries: +   0                  \u2551\n\u2551  Schema:  /Users/nicholas/.sov/iwm/iwm_schema.json\n\u2551  Shard:   /Users/nicholas/.sov/iwm/sovereign_bootstrap_20260809_053508.jsonl\n\u255a\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u255d\n"
     },
     "PHASE_10B_MODEL_ROUTING": {
       "status": "ran",
