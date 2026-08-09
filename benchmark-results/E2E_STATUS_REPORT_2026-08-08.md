@@ -142,3 +142,11 @@ Recommend (a)/(b): one repo per Pages project, end the alias war.
 - councilof-ai → councilof.ai/www.councilof.ai (independent 200). Conflict fix held.
 - csoai-sovereign / csoai-org / csoai-gspc / csoai-dashboard / csoai-web-slice1: each a distinct project (2+ days quiet — no cross-deployers).
 - Alias-drift guard: built into overnight_e2e_loop.py Phase B (csoai_root_status + independence_ok + 23-route live sweep every cycle).
+
+## UPDATE — 2026-08-09 07:35: FULL-ESTATE AEO MILESTONE
+- **295/295 csoai estate pages carry the complete AEO stack** (description +
+  canonical + JSON-LD + og:title). From ~57 missing at session start to 100%.
+- Backfill tooling (backfill_aeo.py) idempotent; sibling-lane pages that arrive
+  with their own full AEO (founder.html, recompute.html) verified clean.
+- meok.ai estate: 34/34 full AEO; apex-unified canonicals/sitemaps; real ai.txt;
+  all AI-crawler surfaces (llms/agents/.well-known) live.
