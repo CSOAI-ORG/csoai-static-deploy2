@@ -37,3 +37,18 @@ OLLAMA_URL = "http://localhost:11434"
 [[kv_namespaces]]
 binding = "SOV_TOWN_STATE"
 id = "26aa5ea5223d40f5bb30f2d3e661cc81"
+
+# SOV_OPENTTD_STATE feeds /api/sov-openttd/state.jsonl (OpenTTD 15.3 substrate
+# on oracle-micro-2, 60s tick via ~/sov-openttd/tick_loop.sh + Mac-side
+# sync-sov-openttd-kv.sh). Created 2026-08-09 (JEEVES lane).
+[[kv_namespaces]]
+binding = "SOV_OPENTTD_STATE"
+id = "37d73165e65b41d085876178e0e2df87"
+
+# EAT_OWEM feeds /api/eat-tick (the OOWM sovereign scoring seed), replacing
+# the 14MB inlined OOWM_SEED that exceeded the 3MiB free-plan worker cap
+# (issue #8). The 14.86MB seed (75,087 entries) lives in KV at key
+# `owem_seed` (under the 25MiB ceiling per D113). Created 2026-08-09.
+[[kv_namespaces]]
+binding = "EAT_OWEM"
+id = "22f96280dfdf414ab39506336f925280"
