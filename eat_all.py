@@ -294,11 +294,16 @@ def phase_8_deploy() -> dict:
 
     Repointed 2026-08-08 (Nick directive): previously built the sibling Next.js
     dashboard ~/projects/coai-dashboard/csoai-web (which has no node_modules) and
-    deployed to the sidecar `csoai-gspc` project. The canonical csoai.org surface is
-    the ALLOWLIST static build (`_site`) → Cloudflare Pages project `csoai-site`,
-    exactly like SOVEREIGN_DEPLOY.sh. Publishing the repo root would leak .env /
-    wrangler.toml (SIGIL_SECRET) / red-team transcripts — build_site.py asserts none
-    of those are in the output and exits non-zero otherwise.
+    deployed to the sidecar `csoai-gspc` project.
+
+    2026-08-09 correction (JEEVES, wave W1-18, evidence-led): the static allowlist
+    build (`_site`) deploys to project `csoai-sovereign` — its canonical home per
+    SOVEREIGN_DEPLOY.sh / deploy-cloudflare.sh — NOT to `csoai-site`. `csoai-site`
+    carries the councilof-ai master surface with Pages Functions; pushing `_site`
+    there wipes the /api/* Functions routing (verified 2026-08-09: static deploy
+    c7c6e21a -> /api/tools = text/html; councilof-ai redeploy d302ed9b -> JSON).
+    This patch keeps the allowlist safety (no .env / wrangler.toml leaks) while
+    stopping the recurring /api regression.
     """
     result = {"status": "skipped", "artifacts": []}
     env = dict(os.environ)
@@ -325,9 +330,11 @@ def phase_8_deploy() -> dict:
         return result
 
     deploy_dir = ROOT / "_site"
-    # 4. Deploy the allowlist build to Cloudflare Pages project csoai-site (canonical)
+    # 4. Deploy the allowlist build to Cloudflare Pages project csoai-sovereign
+    #    (static estate's canonical home; do NOT push to csoai-site — that would
+    #    wipe the /api/* Functions routing of the councilof-ai master surface).
     r = sh(["npx", "wrangler", "pages", "deploy", str(deploy_dir),
-            "--project-name=csoai-site", "--branch=main", "--commit-dirty=true"])
+            "--project-name=csoai-sovereign", "--branch=main", "--commit-dirty=true"])
     result["deploy_exit_code"] = r.returncode
     result["status"] = "ran" if r.returncode == 0 else "failed"
     result["stdout_tail"] = (r.stdout or r.stderr)[-800:]

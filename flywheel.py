@@ -256,9 +256,61 @@ def summarise(cells: list[Cell]) -> dict:
 
 # ── the fuel path — the ONLY writer, with the leak guard ──────────────────────
 
+class OverfitGateTrip(RuntimeError):
+    """practice-accuracy persistence above held-out blocked the fuel write."""
+
+
+def overfit_gate(lookback_days: int = 3, gap_threshold: float = 0.05,
+                 require_consecutive: int = 3) -> dict:
+    """Moves 46-50: fail-closed training gate.
+
+    Scan flywheel day artefacts; if ANY model shows practice accuracy persistently above
+    held-out (overfit_gap > gap_threshold) for `require_consecutive` of the last
+    `lookback_days` days, the fuel path must stop — the loop is teaching to the test
+    despite the split. Returns {"blocked": bool, "details": [...], "days_scanned": n}.
+    """
+    days = sorted(RESULTS_DIR.glob("*.json"))
+    details = []
+    days_scanned = 0
+    recent = days[-lookback_days:]
+    for fp in recent:
+        try:
+            data = json.loads(fp.read_text())
+        except Exception:
+            continue
+        summary = data.get("summary", {})
+        if not isinstance(summary, dict):
+            continue
+        days_scanned += 1
+        for model, s in summary.get("models", {}).items():
+            gap = s.get("overfit_gap")
+            if gap is not None and gap > gap_threshold:
+                label = f"{fp.stem}:{model}:gap={gap:+.3f}"
+                details.append(label)
+
+    # require_consecutive alarm: the LAST days_scanned windows must all be tripped for
+    # the same model, OR count distinct tripped days >= require_consecutive.
+    tripped_days = {d.split(":", 1)[0] for d in details}
+    blocked = len(tripped_days) >= require_consecutive if require_consecutive else bool(details)
+    if days_scanned == 0 or not details:
+        blocked = False
+    return {"blocked": blocked, "details": details,
+            "days_scanned": days_scanned,
+            "lookback_days": lookback_days,
+            "require_consecutive": require_consecutive}
+
+
 def export_fuel(cells: list[Cell], probes: list[Probe]) -> dict:
     by_id = {p.item_id: p for p in probes}
     held = {p.item_id for p in probes if p.split == "held_out"}
+
+    # Overfit gate (moves 46-50): persist overfitting is a training-floor stop, not a
+    # report line. Failing closed here is the difference between a pause and a poison.
+    gate = overfit_gate()
+    if gate["blocked"]:
+        raise OverfitGateTrip(
+            f"overfit gate tripped across {gate['require_consecutive']}+ days: "
+            f"{'; '.join(gate['details'])} — refusing to write training fuel")
 
     pairs, kb = [], []
     for c in cells:
@@ -375,6 +427,42 @@ def selftest() -> int:
     sg = summarise(good)["models"]["g"]["practice"]["two_sided"]
     t("working gate: TPR 1.0 AND FPR 0.0",
       sg["refusal_tpr"] == 1.0 and sg["false_refusal_fpr"] == 0.0, f"{sg}")
+
+    # 10 — overfit gate (moves 46-50): fail-closed on persistent practice>held_out.
+    import tempfile
+    from pathlib import Path as _P
+    with tempfile.TemporaryDirectory() as td:
+        old_dir, old_results = RESULTS_DIR, RESULTS_DIR
+        # point RESULTS_DIR at a scratch dir for the gate test
+        globals()["RESULTS_DIR"] = _P(td)
+        try:
+            def _art(day, gap):
+                (globals()["RESULTS_DIR"] / f"{day}.json").write_text(json.dumps({
+                    "summary": {"models": {"m1": {"overfit_gap": gap}}}}))
+            _art("2026-08-01", 0.20)
+            _art("2026-08-02", 0.22)
+            _art("2026-08-03", 0.19)
+            g = overfit_gate(require_consecutive=3)
+            t("overfit gate trips after 3 days", g["blocked"] is True, f"{g}")
+            t("overfit gate reports tripped days", len(g["details"]) >= 3, f"{g}")
+            # clean history -> no block
+            (globals()["RESULTS_DIR"] / "2026-08-03.json").write_text(json.dumps({
+                "summary": {"models": {"m1": {"overfit_gap": -0.1}}}}))
+            g2 = overfit_gate(require_consecutive=3)
+            t("overfit gate clears when gap closes", g2["blocked"] is False, f"{g2}")
+            # OverfitGateTrip raised from export_fuel — re-arm the tripped history first
+            _art("2026-08-01", 0.20)
+            _art("2026-08-02", 0.22)
+            _art("2026-08-03", 0.19)
+            leak_try = None
+            try:
+                export_fuel([Cell("x", prac[0].item_id, "practice", "correct", True, 1, 1, 0.1)],
+                            probes[:1])
+            except OverfitGateTrip as e:
+                leak_try = e
+            t("export_fuel raises OverfitGateTrip when open", isinstance(leak_try, OverfitGateTrip))
+        finally:
+            globals()["RESULTS_DIR"] = old_results
 
     print(f"\nselftest {ok}/{ok + fail}")
     return 0 if fail == 0 else 1
