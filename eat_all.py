@@ -85,27 +85,70 @@ def log(msg: str):
         f.write(line + "\n")
 
 
+# Per-phase timeout budget (seconds). The flywheel must NEVER hang — a
+# single stuck phase blocks all 21. Default 600s (10 min); long phases get
+# generous budgets from the known costs (HONEY ~300s, DOWNLOADS ~1800s).
+# 2026-08-09 (JEEVES wave-8 production item).
+PHASE_TIMEOUTS = {
+    "PHASE_5_HONEY": 600,
+    "PHASE_6_DOWNLOADS": 2100,
+    "PHASE_9I_SOV_CAPTURE": 300,
+    "PHASE_1_REBOARD": 300,
+    "PHASE_0_HEALTH": 120,
+}
+PHASE_TIMEOUT_DEFAULT = 600
+
+
 def run_phase(name: str, fn, state: dict) -> dict:
-    """Run a single phase. Returns {status, duration_s, artifacts, error}."""
+    """Run a single phase under a hard timeout. Never hangs.
+
+    Returns {status, duration_s, artifacts, error} — on timeout the phase is
+    marked 'failed' with a clear 'timeout' error so the flywheel continues to
+    the next phase (per the D118/phase-9i lesson: a stuck phase must surface,
+    never block the cron).
+    """
     log(f"━━ {name} ━━")
     started = time.time()
     result = {"status": "skipped", "duration_s": 0, "artifacts": [], "error": None}
+    budget = PHASE_TIMEOUTS.get(name, PHASE_TIMEOUT_DEFAULT)
     try:
-        out = fn()
-        if isinstance(out, dict):
-            result.update(out)
+        # Run the phase in a DAEMON thread + timed join. If it exceeds the
+        # budget, mark TIMEOUT and return — the daemon thread is killed when
+        # the cron process exits, so the flywheel can NEVER hang. (A plain
+        # daemon thread is correct here; ThreadPoolExecutor's threads are
+        # non-daemon and would still block interpreter exit.)
+        import threading
+        box = {}
+        def _run():
+            try:
+                box["out"] = fn()
+            except Exception as e:
+                box["err"] = e
+        t = threading.Thread(target=_run, daemon=True)
+        t.start()
+        t.join(budget)
+        if t.is_alive():
+            result["status"] = "failed"
+            result["error"] = f"PHASE TIMEOUT after {budget}s (daemon worker left to die with process)"
+            log(f"  {name}: TIMEOUT after {budget}s — marked failed, flywheel continues")
+        elif "err" in box:
+            raise box["err"]
         else:
-            result["status"] = "ran"
-            result["artifacts"] = [out] if out else []
-        if result["status"] == "skipped":
-            log(f"  {name}: SKIPPED")
-        else:
-            log(f"  {name}: {result['status'].upper()} ({result['duration_s']:.1f}s)")
+            out = box.get("out")
+            if isinstance(out, dict):
+                result.update(out)
+            else:
+                result["status"] = "ran"
+                result["artifacts"] = [out] if out else []
     except Exception as e:
         result["status"] = "failed"
         result["error"] = f"{type(e).__name__}: {e}"
         result["traceback"] = traceback.format_exc()
         log(f"  {name}: FAILED — {result['error']}")
+    if result["status"] == "skipped":
+        log(f"  {name}: SKIPPED")
+    elif "TIMEOUT" not in (result.get("error") or ""):
+        log(f"  {name}: {result['status'].upper()} ({round(time.time() - started, 1)}s)")
     result["duration_s"] = round(time.time() - started, 1)
     state["phases"][name] = result
     save_state(state)
@@ -377,6 +420,23 @@ def phase_9_artifacts() -> dict:
         log(f"  jspace deck refreshed: {m.get('count')} cards + C-card (move 33)")
     except Exception as e:
         log(f"  jspace deck refresh failed (non-fatal): {e}")
+    # Wave-8 move 46: KB-size alert — surface when the KB approaches the
+    # compaction threshold so the report flags it (anti-D113 class: KB
+    # ballooning must be visible, not silent).
+    try:
+        kb_path = ROOT / "benchmark-results" / "sov_kb.json"
+        if kb_path.exists():
+            kb = json.loads(kb_path.read_text())
+            n = len(kb.get("entries", []))
+            result["kb_entries"] = n
+            if n > 50000:
+                result["kb_warning"] = f"KB at {n} entries — exceeds compaction threshold (50K); review normalize-question dedup"
+                log(f"  ⚠ KB at {n} entries — compaction threshold exceeded")
+            else:
+                result["kb_ok"] = True
+                log(f"  KB {n} entries (ok, <50K)")
+    except Exception as e:
+        log(f"  KB-size alert failed (non-fatal): {e}")
     return result
 
 
