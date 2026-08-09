@@ -207,8 +207,10 @@ and the refutation ledger proves we correct, not conceal.</p>
 Enterprise audit, not at the first enterprise hire.</p>
 
 <h2>9 · Ask</h2>
-<p>£1.5M for the seed bridge. Commitments tracked in the <a href="/series-a-data-room">data room</a>.
-Use of funds: productize the audit packs → first 3 enterprise pilots → Series A evidence.</p>
+<p><strong>£1.5M Seed Bridge @ £4.5M pre — 25% dilution, 75% retained</strong> → Seed Q4
+(£2M @ £8M) → Series A Q2-2027 (£15–30M). Lead investor, you ship the ask <em>to</em>
+your own compliance review. Use of funds: productize the three audit packs →
+first 3 enterprise pilots → the Series-A evidence creates the uplisting, not the reverse.</p>
 
 <h2>10 · Vision</h2>
 <p>The SimCity-of-the-world: every governance decision observable, every play a signed
