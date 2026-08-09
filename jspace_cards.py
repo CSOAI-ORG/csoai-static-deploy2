@@ -204,8 +204,13 @@ if __name__ == "__main__":
         print(json.dumps(deck[:8], indent=2))
         print(f"...\n  total cards in deck: {len(deck)}")
 
-def save_deck(path: str = "forest/jspace_deck.json") -> dict:
-    """Persist the current KB-derived deck (Wave-3 move 27). Idempotent."""
+def save_deck(path: str = "forest/jspace_deck.json", deploy_root: str = ".") -> dict:
+    """Persist the current KB-derived deck (Wave-3 move 27). Idempotent.
+
+    Also writes a LIBRARY copy to deploy_root (default repo root .) so the
+    build allowlist ships it live (same pattern as drift-feed.json). The
+    forest/ copy is canonical; the root copy is the deployable mirror.
+    """
     import os, time
     deck = build_deck()
     manifest = {
@@ -216,6 +221,8 @@ def save_deck(path: str = "forest/jspace_deck.json") -> dict:
     }
     os.makedirs(os.path.dirname(path), exist_ok=True)
     with open(path, "w") as f:
+        json.dump(manifest, f, indent=1)
+    with open(os.path.join(deploy_root, "jspace_deck.json"), "w") as f:
         json.dump(manifest, f, indent=1)
     return manifest
 
@@ -291,11 +298,13 @@ def c_space_fold(deck: list[dict] | None = None) -> dict:
     return c_card
 
 
-def save_c_card(path: str = "forest/c_space_card.json") -> dict:
+def save_c_card(path: str = "forest/c_space_card.json", deploy_root: str = ".") -> dict:
     import os, time
     c = c_space_fold()
     c["generated_at"] = time.time()
     os.makedirs(os.path.dirname(path), exist_ok=True)
     with open(path, "w") as f:
+        json.dump(c, f, indent=1)
+    with open(os.path.join(deploy_root, "c_space_card.json"), "w") as f:
         json.dump(c, f, indent=1)
     return c
