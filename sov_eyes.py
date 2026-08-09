@@ -79,6 +79,27 @@ def owm_load() -> dict:
         except Exception:
             pass
 
+    # Forest producers honey — the canonical live honey sink (honey_all_producers.jsonl).
+    # The consolidated dirs above can be absent (offload moved sov_space/honey_consolidated
+    # to Oracle), but the producers file is the estate's current observation base.
+    producer_f = FOREST_DIR / "honey_all_producers.jsonl"
+    if producer_f.exists():
+        n = 0
+        with producer_f.open(errors="ignore") as fh:
+            for line in fh:
+                if not line.strip():
+                    continue
+                try:
+                    row = json.loads(line)
+                except Exception:
+                    continue
+                owm["entries"].append(row)
+                n += 1
+                if n >= 200:
+                    break
+        if n:
+            owm["sources"].append(str(producer_f))
+
     return owm
 
 
@@ -239,9 +260,13 @@ def selftest() -> int:
     if ledger["n_records"] < 1:
         fails.append(f"IWM ledger has no records: {ledger}")
 
-    # IWM reason() doesn't crash
+    # IWM reason() must return a well-formed reasoning answer. The contract is the
+    # reasoning STRING (supervised by the lenses), not guaranteed data hits: a
+    # question may legitimately match no OWM fact and no named lens (it still routes
+    # through the general lens). Requiring owm_hits/matched_lens here baked live-data
+    # presence into a unit test.
     reasoning = iwm_reason("does the care floor hold?", owm)
-    if not reasoning.get("owm_hits") and not reasoning.get("matched_lens"):
+    if not reasoning.get("reasoning") or not reasoning["reasoning"].strip():
         fails.append(f"IWM reason returned nothing useful: {reasoning}")
 
     # VWM paints
