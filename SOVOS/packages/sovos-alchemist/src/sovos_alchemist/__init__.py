@@ -206,3 +206,17 @@ class Alchemist:
 
 
 __all__ = ["Alchemist", "AlchemistConfig", "ClanPosition"]
+
+
+# =========================================================================
+# v0.2.0 — geometry mutation operators are in mutations.py.
+# Re-exported here so callers can `from sovos_alchemist import MutableAlchemist`.
+# =========================================================================
+from .mutations import (
+    MutationOp, MutationRecord, MutationConfig, MutableAlchemist,
+)
+
+__all__ = [
+    "Alchemist", "AlchemistConfig", "ClanPosition",
+    "MutationOp", "MutationRecord", "MutationConfig", "MutableAlchemist",
+]
