@@ -25,7 +25,7 @@ assets/ ──► tools/projector ──► exports/{huggingface,kaggle,pypi,are
 
 | Asset | Status | Verified |
 |---|---|---|
-| SOVOS monorepo | `SOVOS/` directory in `csoai-static-deploy2` | ✅ **97/97 tests pass** |
+| SOVOS monorepo | `SOVOS/` directory in `csoai-static-deploy2` | ✅ **107/107 tests pass** |
 | sovos-core (GSPC + OWM) | `packages/sovos-core/src/sovos_core/` | ✅ 26/26 |
 | jspace-move-arithmetic | `packages/sovos-jspace-move/src/jspace/` | ✅ 7/7 |
 | jspace-hyperbolic (Poincaré + Procrustes) | `packages/sovos-jspace-hyperbolic/` | ✅ 10/10 |
@@ -36,10 +36,11 @@ assets/ ──► tools/projector ──► exports/{huggingface,kaggle,pypi,are
 | sovos-mcp-servers (6 packages) | `packages/sovos-mcp-servers/` | ✅ 26/26 |
 | **sovos-quantum-bridge** (PennyLane simulator) | `packages/sovos-quantum-bridge/` | ✅ **10/10 on GPU pod** |
 | frontends/cli | `frontends/cli/` | ✅ 4/4 |
+| **sovos-mind** (One Mind orchestrator) | `packages/sovos-mind/` | ✅ **10/10 on Mac + pod** |
 | **assets/MANIFEST.md** (single source of truth) | `SOVOS/assets/` | ✅ real assets migrated |
 | ATTRIBUTIONS.md + LICENSE | Legal protection files | ✅ Real, accurate |
 | pyproject.toml + Makefile + docker-compose.yml | Build manifest | ✅ Valid |
-| GitHub push to `jv-wave8-production` | Commits visible | ✅ `b23a1b8` latest |
+| GitHub push to `jv-wave8-production` | Commits visible | ✅ `07cce39` latest |
 
 ## GPU benchmarks (sov-brain-2 RTX 3090)
 
