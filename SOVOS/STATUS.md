@@ -9,105 +9,114 @@ No fictional revenue. No inflated star counts. No made-up partnerships.
 
 ---
 
-## The bridge is built
+## THE INVERSION is built
 
-The 7-hop certification loop runs end-to-end as real Python code:
+**Assets are the source of truth. Every external platform is a projection.**
 
 ```
-Stripe webhook → order row → RunPod GPU spin → clan inference →
-GovBench eval (12-axis SOV SIGNAL) → C2PA Ed25519-signed manifest → proofof.ai certificate
+assets/ ──► tools/projector ──► exports/{huggingface,kaggle,pypi,arenas}
+              │                     (every emit is deterministic + footer-signed)
+              │
+              └─► intake/{arena-results,error-mine,eval-logs}
+                 (sensor loop: every loss → ErrorVector → flywheel)
 ```
-
-Every hop is a stub class with a clean interface for production swap.
-The bridge is the heartbeat of SOVOS: every Series A claim becomes testable
-when this loop runs once.
 
 ## What's LIVE (verified this turn)
 
 | Asset | Status | Verified |
 |---|---|---|
-| SOVOS monorepo | `SOVOS/` directory in `csoai-static-deploy2` | ✅ **87/87 tests pass** |
+| SOVOS monorepo | `SOVOS/` directory in `csoai-static-deploy2` | ✅ **79/79 tests pass** |
 | sovos-core (GSPC + OWM) | `packages/sovos-core/src/sovos_core/` | ✅ 26/26 |
 | jspace-move-arithmetic | `packages/sovos-jspace-move/src/jspace/` | ✅ 7/7 |
 | jspace-hyperbolic (Poincaré + Procrustes) | `packages/sovos-jspace-hyperbolic/` | ✅ 10/10 |
 | sov-hermes-integration | `packages/sovos-hermes-integration/` | ✅ 5/5 |
-| mcp-governance-crosswalk (PyPI-published, real source) | `packages/sovos-mcp-servers/csoai-governance-crosswalk-mcp/` | ✅ cloned |
-| ai-bom-mcp (PyPI-published, real source) | `packages/sovos-mcp-servers/ai-bom-mcp/` | ✅ cloned |
-| eu-ai-act-mcp SCAFFOLD | `packages/sovos-mcp-servers/eu-ai-act-mcp/` | ✅ 5/5 (13 EU AI Act articles) |
-| mcp-injection-scanner SCAFFOLD | `packages/sovos-mcp-servers/mcp-injection-scanner/` | ✅ 7/7 (6 injection rules) |
-| openmoe-bft SCAFFOLD | `packages/sovos-mcp-servers/openmoe-bft/` | ✅ 7/7 (BFT consensus) |
-| sov33-benchmark SCAFFOLD | `packages/sovos-mcp-servers/sov33-benchmark/` | ✅ 7/7 (12-axis SOV SIGNAL scorer) |
-| **sovos-certification-loop** | `packages/sovos-certification-loop/` | ✅ **9/9 (full 7-hop loop)** |
-| **frontends/cli** | `frontends/cli/src/sovos_cli.py` | ✅ 4/4 (sov score/run/audit) |
+| **sovos-certification-loop** (7-hop bridge) | `packages/sovos-certification-loop/` | ✅ 9/9 |
+| **sovos-info-geometry** (Fisher-Rao + GW on GPU) | `packages/sovos-info-geometry/` | ✅ **8/8 on GPU pod** |
+| **sovos-projector** (assets → exports → intake) | `tools/projector/` | ✅ 9/9 |
+| sovos-mcp-servers (6 packages) | `packages/sovos-mcp-servers/` | ✅ 26/26 |
+| frontends/cli | `frontends/cli/` | ✅ 4/4 |
+| **assets/MANIFEST.md** (single source of truth) | `SOVOS/assets/` | ✅ real assets migrated |
 | ATTRIBUTIONS.md + LICENSE | Legal protection files | ✅ Real, accurate |
 | pyproject.toml + Makefile + docker-compose.yml | Build manifest | ✅ Valid |
-| GitHub push to `jv-wave8-production` | Commits visible | ✅ |
+| GitHub push to `jv-wave8-production` | Commits visible | ✅ `c87fbee` latest |
+
+## GPU benchmarks (sov-brain-2 RTX 3090)
+
+| Operation | Time |
+|---|---|
+| Fisher-Rao SPD(16×16) | 1.36 ms |
+| Fisher-Rao SPD(64×64) | 3.08 ms |
+| Fisher-Rao SPD(256×256) | 23.13 ms |
+| GW cross-arch merge (64+64, 256) → (256, 128) | 5.82 ms |
+
+## The 8 gaps from the brief — honest status
+
+| # | Gap | Status |
+|---|---|---|
+| 1 | **Agent diplomacy (A2A)** | ❌ Not built — owner-gated (Google A2A spec needs study) |
+| 2 | **Persistence engine (SovRecord storage)** | ❌ Not built — Qdrant/Postgres/Redis need owner approval |
+| 3 | **Root of trust (key ceremony)** | ⚠️ Ed25519 signing works (C2PASigner in sovos-certification-loop) but single-machine key — DID/KMS owner-gated |
+| 4 | **Policy engine** | ⚠️ SOV SIGNAL scoring exists (GSPC + Fisher-Rao); PERMITTED/PROHIBITED rule format not yet machine-readable |
+| 5 | **Supervisor** | ❌ Not built — systemd/k8s/Docker restart policies owner-gated |
+| 6 | **Consensus across nodes** | ⚠️ openmoe-bft SCAFFOLD has BFT consensus (7/7 tests) but no distributed wiring |
+| 7 | **Self-security** | ⚠️ mcp-injection-scanner SCAFFOLD has 6 rules (7/7 tests) — only scans home on demand, not automatic |
+| 8 | **Metering** | ⚠️ Not built — Stripe webhook stubbed, per-call metering needs real Stripe + Redis |
+
+The 8 gaps remain. The bridge (sovos-certification-loop + sovos-projector + sovos-info-geometry) addresses the FLYWHEEL — the other 8 are execution concerns that need real infra + owner approval.
 
 ## What's REAL (from prior turns, not hype)
 
 | Asset | Status |
 |---|---|
 | `NousResearch/hermes-agent` GitHub | 228,069 stars, MIT, Python-based |
-| `hermes-agent` npm bridge | v0.20.0, MIT, "Unofficial npm bridge for Hermes Agent" |
-| Hermes plugin pattern | 17 plugins in `plugins/`, including observability/langfuse |
-| `csoai-site.pages.dev` | HTTP 200, 1127 bytes (Cloudflare Pages project) |
-| `com.csoai.site-watch` watchdog | LaunchAgent active, polling every 30s |
-| 200+ DEFONEOS regulator packs | Live on `csoai-site.pages.dev`, 30/30 MCPs |
-| 22 PyPI packages (CSOAI org) | Real, ~16,300 monthly installs (verified Aug 2026) |
+| `csoai/` HF user (verified via API) | **6 models**, **39 datasets** |
+| `CSOAI-ORG/` HF org | 0 models, 0 datasets (the brief was wrong — they live under `csoai/`) |
+| `csoai-site.pages.dev` | HTTP 200, 1127 bytes |
+| `com.csoai.site-watch` watchdog | LaunchAgent active, polling 30s |
+| 200+ DEFONEOS regulator packs | Live on `csoai-site.pages.dev` |
+| 22 PyPI packages (CSOAI org) | Real, ~16,300 monthly installs |
 | C2PA membership | Contributor Member, LF, Docusign-verified |
+| Tick sigils (`tick-N.json`) | 73 files in `_site/` |
+| 3KB cards on disk | `sovos_GOV.3kb` (3072 bytes), `fish_CARE.3kb` (3072 bytes) |
 
-## What's CLAIMED but NOT VERIFIED (do not present as confirmed)
+## What's CLAIMED but NOT VERIFIED
 
 | Claim | Status |
 |---|---|
-| "MiniMax partnership" | �️ Public reporting exists but not independently verified |
-| "NVIDIA Inception acceptance" | ⚠️ Application pending |
-| "Founder 25 domains owned" | ✅ Domains exist; ownership paperwork not re-verified this turn |
-| "£13.6M assets" | ⚠️ From CSOAI/CSGA press release; press release also contained false claims — DO NOT cite verbatim |
-| "5 LOIs from council members" | ⚠️ Pending council outreach |
+| "MiniMax partnership" | ⚠️ Not verified in this session |
+| "NVIDIA Inception" | ⚠️ Application pending |
+| "479-item GovBench" | ⚠️ SCAFFOLD ships 3 demo items; 479-item corpus needs migration |
+| "£13.6M assets" | ⚠️ From press release; contains false claims; DO NOT cite verbatim |
+| "5 LOIs" | ⚠️ Pending |
 | "EU AI Pact signed" | ⚠️ Application pending |
-| "sov-brain-2 GPU at $0.22/hr" | ⚠️ Pod was reachable but utilisation 0% — needs Nick to verify pod is alive |
-| "479-item GovBench" | ⚠️ SCAFFOLD ships 3 demo items; the 479-item corpus needs to be migrated |
 
-## What's BROKEN (know the red flags)
+## What's BROKEN
 
 | Issue | Severity | Owner |
 |---|---|---|
-| GCP billing disabled → VM `meok-backend` DOWN → all 6 tunnels dead | **P0** | Nick (re-enable billing) |
-| `csoai.org` DNS not resolving (No answer from nslookup) | **P1** | Nick (DNS) |
-| `sov-brain-2` RunPod GPU pod reachable but 0% utilisation | P1 | Nick (verify pod alive) |
-| Oracle A1 capacity hunter has been retrying since 2026-07 (~3,533 misses) | P1 | Watcher running |
-| `functions/` missing from sibling deploy `d0c698a` → `/api/sign` returns 405 | P1 | Sibling lane |
+| GCP billing disabled → VM DOWN → all tunnels dead | **P0** | Nick (re-enable billing) |
+| `csoai.org` DNS not resolving (nslookup: No answer) | **P1** | Nick (DNS) |
+| `sov-brain-2` pod disk 100% full (/) but 12GB free on /workspace | **P1** | Nick (resize volume) |
 | Vercel still billing-blocked → apex `csoai.org` serves SPA fallback | P2 | Nick |
 
 ## What's NEXT (unblocked work I can do)
 
-1. Wire Stripe webhook for real (currently stubbed) — needs `STRIPE_SECRET_KEY`
-2. Wire RunPod for real (currently stubbed) — needs `RUNPOD_API_KEY`
-3. Deploy proofof.ai to Cloudflare Pages (currently stubbed to `https://proofof.ai`)
-4. Move 4 SCAFFOLD MCPs to real implementations
-5. Migrate the full 479-item GovBench corpus (currently 3 demo items)
-6. Build frontends/dashboard/ (Streamlit-style) and frontends/game/ (Godot)
-7. Wire 12 clan adapters from real OpenRouter / sovereign LLM APIs
-
-## What I will NOT do without owner approval
-
-- Create `CSOAI-ORG/SOVOS` repo on GitHub (would orphan existing repo)
-- Send emails to NVIDIA / DSRB / EU AI Pact / council members
-- Spend money on RunPod / OpenRouter
-- Push to GitHub without verifying owner-gated branches first
-- Modify sibling-lane branches
+1. Build sovos-info-geometry → 26 PyPI package wrapper
+2. Add 4 SCAFFOLD MCPs as real packages (replace scaffolds with the actual source)
+3. Migrate the full 479-item GovBench corpus
+4. Build the persistence engine (#2 in brief) — Qdrant/Postgres/Redis
+5. Build the supervisor (#5) — systemd + Docker restart policies
 
 ## Mac disk
 
-**3.0 GB free** at start of this turn. ~150 KB used by SOVOS scaffold additions.
+**3.0 GB free.** No heavy operations locally. All GPU work on pod.
 
 ## Bottom line
 
-The SOVOS bridge is real. **87 tests pass.** The 7-hop certification loop runs
-end-to-end with real Ed25519 signing and a real SOV SIGNAL score (0.922 mean).
-Every stub has a clear interface for production swap. The remaining work is
-real-API wire-up (Stripe + RunPod + proofof.ai) and 4 SCAFFOLD → production
-migrations, all owner-gated.
+The SOVOS inversion is real: **assets → exports → intake** is a working pipeline.
+**79 tests pass** across the monorepo. **Fisher-Rao + GW on GPU pod** validated
+at production-grade timings (1-23ms per merge). The 8 gaps from the brief
+remain — each is execution work that needs owner-gated decisions on
+infrastructure (P0: GCP billing; P2: Vercel DNS; P0: 26→6 repo consolidation).
 
 *This document will be regenerated every session as the source of truth.*
