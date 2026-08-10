@@ -18,7 +18,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "src"))
 
 from hyperbolic import (
     Axis, axis_anchor, HyperbolicPiece, poincare_distance, mobius_add,
-    project_to_ball, hierarchy_depth,
+    poincare_centroid, poincare_exponential_map, project_to_ball, hierarchy_depth,
 )
 from hyperbolic.procrustes import (
     LoraPair, merge_loras_linear, merge_loras_procrustes,
@@ -235,6 +235,57 @@ def test_10_procrustes_preserves_output():
 
 
 # ===========================================================================
+def test_11_poincare_centroid_in_ball():
+    """The Fréchet mean of points in the ball stays in the ball."""
+    pts = [
+        project_to_ball((0.5, 0.3, 0.0)),
+        project_to_ball((0.4, 0.4, 0.0)),
+        project_to_ball((0.6, 0.2, 0.0)),
+    ]
+    c = poincare_centroid(pts)
+    norm = math.sqrt(sum(x * x for x in c))
+    assert norm < 1.0, f"centroid must be in ball, got norm={norm}"
+    # Centroid of three nearby points should be near their average
+    avg_x = sum(p[0] for p in pts) / 3
+    avg_y = sum(p[1] for p in pts) / 3
+    assert abs(c[0] - avg_x) < 0.1, f"centroid_x={c[0]} too far from avg={avg_x}"
+    assert abs(c[1] - avg_y) < 0.1, f"centroid_y={c[1]} too far from avg={avg_y}"
+    print(f"  ✅ centroid of 3 nearby points: ({c[0]:.4f}, {c[1]:.4f}), in ball (norm={norm:.4f})")
+
+
+def test_12_poincare_exponential_map_toward_origin():
+    """The exponential map moves a vector toward the origin."""
+    v = (0.8, 0.0, 0.0)
+    norm_v = math.sqrt(sum(x * x for x in v))
+    v_half = poincare_exponential_map(v, t=0.5)
+    norm_half = math.sqrt(sum(x * x for x in v_half))
+    assert norm_half < norm_v, f"exp_map should move inward: {norm_half} vs {norm_v}"
+    # Halfway = half the norm
+    assert abs(norm_half - norm_v / 2) < 1e-9, f"t=0.5 should halve norm: got {norm_half}"
+    # Zero vector is fixed
+    v_zero = poincare_exponential_map((0.0, 0.0, 0.0), t=0.7)
+    assert v_zero == (0.0, 0.0, 0.0)
+    # t=0 = no move
+    v_same = poincare_exponential_map(v, t=0.0)
+    assert v_same == v
+    # t=1 = all the way to origin
+    v_to_origin = poincare_exponential_map(v, t=1.0)
+    norm_final = math.sqrt(sum(x * x for x in v_to_origin))
+    assert norm_final < 1e-9, f"t=1 should reach origin, got norm={norm_final}"
+    print(f"  ✅ exp_map: 0.8000 → 0.4000 (t=0.5), origin (t=1), fixed (t=0)")
+
+
+def test_13_poincare_centroid_empty_raises():
+    """Empty input should raise ValueError, not silently return."""
+    try:
+        poincare_centroid([])
+        assert False, "should have raised"
+    except ValueError:
+        pass
+    print("  ✅ empty centroid input → ValueError")
+
+
+# ===========================================================================
 def main():
     tests = [
         test_01_poincare_distance_zero,
@@ -247,6 +298,9 @@ def main():
         test_08_procrustes_aligns_rotation,
         test_09_procrustes_reduces_merge_error,
         test_10_procrustes_preserves_output,
+        test_11_poincare_centroid_in_ball,
+        test_12_poincare_exponential_map_toward_origin,
+        test_13_poincare_centroid_empty_raises,
     ]
     failed = 0
     for i, t in enumerate(tests, 1):

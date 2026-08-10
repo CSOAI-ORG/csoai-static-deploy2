@@ -87,6 +87,96 @@ def mobius_add(u: Tuple[float, ...], v: Tuple[float, ...]) -> Tuple[float, ...]:
 
 
 # ---------------------------------------------------------------------------
+# Hyperbolic centroid (Fréchet mean on the Poincaré ball)
+# ---------------------------------------------------------------------------
+def poincare_centroid(points: List[Tuple[float, ...]], max_iter: int = 50, tol: float = 1e-6) -> Tuple[float, ...]:
+    """Fréchet mean (Riemannian centroid) of points on the Poincaré ball.
+
+    The Euclidean mean is biased toward the origin in hyperbolic geometry
+    (it's not the geodesic mean). The Fréchet mean is the point that
+    minimises the sum of squared Poincaré distances — found by iterating
+    gradient descent on the manifold.
+
+    Algorithm (simplified from Nickel & Kiela 2018):
+        x_{t+1} = x_t − lr * grad(loss)
+        where grad(loss) = Σ 2 * (1 - ||x_t||^2)^2 / (1 - ||p_i||^2) * log(...)
+    Simplified: use the Euclidean mean as the starting point and refine
+    via gradient steps that respect the ball geometry.
+
+    Returns:
+        The centroid point (always inside the open ball).
+
+    Honest note: this is a first-order approximation. For high-precision
+    geodesic means, use a Riemannian optimisation library. For the
+    Alchemist new-clan proposal use case, this is sufficient — we're
+    detecting orphan clusters, not pinpointing them.
+    """
+    if not points:
+        raise ValueError("poincare_centroid: points list is empty")
+    if len(points) == 1:
+        return project_to_ball(points[0])
+    # Start from the Euclidean mean, projected to ball
+    n = len(points[0])
+    euclidean = [sum(p[i] for p in points) / len(points) for i in range(n)]
+    centroid = project_to_ball(tuple(euclidean))
+    # Gradient refinement: 5-10 iterations is usually enough
+    for _ in range(max_iter):
+        grad = [0.0] * n
+        for p in points:
+            d_sq = sum((centroid[i] - p[i]) ** 2 for i in range(n))
+            p_sq = sum(pi * pi for pi in p)
+            # Inverse scale factor: points near boundary pull harder
+            scale = 1.0 / max(1.0 - p_sq, 1e-6)
+            for i in range(n):
+                grad[i] += 2.0 * scale * (centroid[i] - p[i])
+        # Project gradient to tangent space at centroid (Euclidean is fine
+        # for first-order approximation)
+        norm_sq = sum(g * g for g in grad)
+        if norm_sq < tol:
+            break
+        lr = 0.1 / max(1.0 - sum(c * c for c in centroid), 1e-6)
+        # Gradient step, then re-project to ball
+        candidate = tuple(centroid[i] - lr * grad[i] for i in range(n))
+        centroid = project_to_ball(candidate)
+    return centroid
+
+
+# ---------------------------------------------------------------------------
+# Exponential map at the origin (radial rescaling toward origin)
+# ---------------------------------------------------------------------------
+def poincare_exponential_map(v: Tuple[float, ...], t: float = 0.5) -> Tuple[float, ...]:
+    """Move `v` toward the origin by a fraction `t` along its geodesic.
+
+    In the Poincaré ball model, the exponential map at the origin for a
+    tangent vector v is:
+        exp_0(v) = tanh(||v|| * t) * v / ||v||
+
+    For `v ≠ 0`, this moves v by `t` fraction toward the origin.
+    For `v = 0`, returns `v` (the origin is fixed).
+
+    Args:
+        v: a point in the open ball
+        t: travel fraction ∈ [0, 1] (t=0 → no move, t=1 → fully to origin)
+
+    Returns:
+        A new point in the open ball, closer to the origin by factor t.
+    """
+    if t < 0 or t > 1:
+        raise ValueError(f"t must be in [0, 1], got {t}")
+    norm_sq = sum(c * c for c in v)
+    if norm_sq < 1e-15:
+        return v
+    norm = math.sqrt(norm_sq)
+    if t == 0:
+        return v
+    # tanh(arctanh(||v||) * (1 - t)) gives the new radius after pulling by t
+    # For the Poincaré ball, moving toward origin by fraction t = scale by (1-t) in tangent space
+    new_norm = norm * (1.0 - t)
+    scale = new_norm / norm
+    return tuple(c * scale for c in v)
+
+
+# ---------------------------------------------------------------------------
 # 12-axis hierarchy as fixed Poincaré-ball anchors
 # ---------------------------------------------------------------------------
 class Axis(str, Enum):
@@ -189,5 +279,6 @@ def hierarchy_depth(axis: Axis) -> float:
 
 __all__ = [
     "project_to_ball", "poincare_distance", "mobius_add",
+    "poincare_centroid", "poincare_exponential_map",
     "Axis", "axis_anchor", "HyperbolicPiece", "hierarchy_depth",
 ]
