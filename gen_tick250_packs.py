@@ -1,13 +1,16 @@
 #!/usr/bin/env python3
 """Tick 250 — 3 new DEFONEOS regulator deep-dive packs.
 
-Bodies chosen for coverage gap (verified uncovered on disk + sitemap):
-1. Health and Safety Executive (HSE) — occupational health & safety regulator
-2. HM Inspectorate of Constabulary & Fire & Rescue Services (HMICFRS) — police/fire inspection
-3. Criminal Cases Review Commission (CCRC) — miscarriage of justice review body
+CORRECTED after dedup pivot (tick-128 pattern): tick-243 HSE pack
+(defoneos-hse-health-safety-executive-ai-deep-dive-pack.html) confirmed on
+disk+sitemap, so HSE was REPLACED with the genuinely-uncovered Pensions
+Ombudsman. Final bodies:
+1. Pensions Ombudsman — statutory pensions dispute-resolution body
+2. HM Inspectorate of Constabulary & Fire & Rescue (HMICFRS) — police/fire inspection
+3. Criminal Cases Review Commission (CCRC) — miscarriage of justice review
 
 Same 12-entry-points × 8-priorities × 6-MCPs structure as tick 249/248/247.
-JSON-LD fixed to canonical form (schema.org, not the mangled artifact).
+JSON-LD fixed to canonical schema.org form (mangled artifact corrected).
 """
 import html as htmlmod
 from pathlib import Path
@@ -163,28 +166,28 @@ def build_pack(cfg):
 
 PACKS = [
     {
-        "name": "defoneos-hse-health-safety-executive-occupational-safety-ai-deep-dive-pack",
-        "title": "Health &amp; Safety Executive Occupational Safety AI Deep-Dive Pack",
-        "desc": "DEFONEOS — Health &amp; Safety Executive Occupational Safety AI Deep-Dive Pack. A sovereign, audit-grade CSOAI surface: measurement, not certification — every figure traces to a signed, verifiable record.",
-        "domain": "Health &amp; Safety Executive",
-        "body": "Health &amp; Safety Executive",
-        "legislation_backbone": "Health and Safety at Work etc. Act 1974 / Management of Health and Safety at Work Regulations 1999 / CDM Regulations 2015 / COMAH Regulations 2015",
+        "name": "defoneos-pensions-ombudsman-pensions-disputes-redress-ai-deep-dive-pack",
+        "title": "Pensions Ombudsman Disputes &amp; Redress AI Deep-Dive Pack",
+        "desc": "DEFONEOS — Pensions Ombudsman Disputes &amp; Redress AI Deep-Dive Pack. A sovereign, audit-grade CSOAI surface: measurement, not certification — every figure traces to a signed, verifiable record.",
+        "domain": "Pensions Ombudsman",
+        "body": "Pensions Ombudsman",
+        "legislation_backbone": "Pension Schemes Act 1993 / Pensions Act 1995 / Pensions Act 2004 / Financial Guidance and Claims Act 2018",
         "nav_labels": [
-            "Workplace Duty &amp; Employ", "Risk Assessment &amp; Manag", "Worker Consultation &amp; S", "COMAH Major Hazard Sites", "Construction &amp; CDM", "Chemicals &amp; COSHH", "Asbestos &amp; Work Health", "Welfare &amp; Conditions", "RIDDOR &amp; Investigation", "Notices &amp; Enforcement", "Prosecution &amp; Corporate", "Governance &amp; Parlia",
+            "Jurisdiction &amp; Eligibility", "Auto-Enrolment Disputes", "DB Scheme Disputes", "DC &amp; Money Purchase", "Misselling &amp; Transfers", "Scams &amp; Liberation", "Employer &amp; Trustee Duties", "Contributions &amp; Arrears", "Ill-Health &amp; Death Ben", "Determinations &amp; Awards", "Maladministration &amp; Syst", "Governance &amp; Parlia",
         ],
         "entries": [
-            {"topic": "Workplace Duty &amp; Employer Obligations", "region": "Workplace Duty & Employer Obligations", "legislation": "Health and Safety at Work etc. Act 1974 s.2"},
-            {"topic": "Risk Assessment &amp; Management (6-Pack)", "region": "Risk Assessment & Management", "legislation": "Management of Health and Safety at Work Regulations 1999 reg 3"},
-            {"topic": "Worker Consultation &amp; Safety Representatives", "region": "Worker Consultation & Safety", "legislation": "Safety Representatives and Safety Committees Regulations 1977 / HSWA 1974 ss.7-8"},
-            {"topic": "COMAH Major Hazard &amp; Seveso Sites", "region": "COMAH Major Hazard Sites", "legislation": "Control of Major Accident Hazards Regulations 2015"},
-            {"topic": "Construction &amp; CDM 2015", "region": "Construction & CDM", "legislation": "Construction (Design and Management) Regulations 2015 / HSWA 1974 s.3"},
-            {"topic": "Hazardous Substances &amp; COSHH", "region": "Chemicals & COSHH", "legislation": "Control of Substances Hazardous to Health Regulations 2002 / CLP Regulation"},
-            {"topic": "Asbestos &amp; Occupational Health", "region": "Asbestos & Occupational Health", "legislation": "Control of Asbestos Regulations 2012 / Occupational Health guidance"},
-            {"topic": "Workplace Welfare &amp; Working Conditions", "region": "Welfare & Working Conditions", "legislation": "Workplace (Health, Safety and Welfare) Regulations 1992"},
-            {"topic": "Incident Investigation &amp; RIDDOR Reporting", "region": "Incident Investigation & RIDDOR", "legislation": "Reporting of Injuries, Diseases and Dangerous Occurrences Regulations 2013"},
-            {"topic": "Improvement &amp; Prohibition Notices", "region": "Notices & Enforcement", "legislation": "Health and Safety at Work etc. Act 1974 ss.21-25"},
-            {"topic": "Prosecution &amp; Corporate Manslaughter", "region": "Prosecution & Corporate", "legislation": "Health and Safety at Work etc. Act 1974 s.33 / Corporate Manslaughter Act 2007"},
-            {"topic": "Governance &amp; Parliamentary Accountability", "region": "Governance & Parliamentary Accountability", "legislation": "HSWA 1974 / DWP sponsorship / HSE Board / NAO"},
+            {"topic": "Jurisdiction &amp; Complaint Eligibility", "region": "Jurisdiction & Complaint Eligibility", "legislation": "Pension Schemes Act 1993 / Financial Guidance and Claims Act 2018"},
+            {"topic": "Auto-Enrolment &amp; Workplace Pension Disputes", "region": "Auto-Enrolment Disputes", "legislation": "Pensions Act 2008 / Pensions Act 2004"},
+            {"topic": "Defined Benefit (DB) Scheme Disputes", "region": "DB Scheme Disputes", "legislation": "Pensions Act 1995 / Pensions Schemes Act 1993"},
+            {"topic": "Defined Contribution (DC) &amp; Money Purchase", "region": "DC & Money Purchase", "legislation": "Pensions Act 2004 / FCA conduct rules"},
+            {"topic": "Misselling &amp; Transfer Value Complaints", "region": "Misselling & Transfers", "legislation": "Financial Services and Markets Act 2000 / COBS"},
+            {"topic": "Pension Scams &amp; Liberation Fraud", "region": "Scams & Liberation Fraud", "legislation": "Financial Services Act 2012 / Pension Schemes Act 2015"},
+            {"topic": "Employer &amp; Trustee Duties", "region": "Employer & Trustee Duties", "legislation": "Pensions Act 2004 / TPR Codes of Practice"},
+            {"topic": "Contributions &amp; Non-Payment Disputes", "region": "Contributions & Arrears", "legislation": "Pensions Act 2008 / Pension Schemes Act 1993"},
+            {"topic": "Ill-Health &amp; Death Benefit Adjudication", "region": "Ill-Health & Death Benefits", "legislation": "Pension Scheme Rules / Pension Schemes Act 1993"},
+            {"topic": "Ombudsman Determinations &amp; Awards", "region": "Determinations & Awards", "legislation": "Pension Schemes Act 1993 / enforcement regime"},
+            {"topic": "Maladministration &amp; Systemic Learning", "region": "Maladministration & Systemic Learning", "legislation": "Pensions Ombudsman casework / Pensions Dashboard Programme"},
+            {"topic": "Governance &amp; Parliamentary Accountability", "region": "Governance & Parliamentary Accountability", "legislation": "Pension Schemes Act 1993 / DWP sponsorship / NAO"},
         ],
     },
     {
