@@ -3,6 +3,16 @@
 # Generated 2026-08-05 by JEEVES (K3 lane) to close the 13-route 404 audit.
 # Cloudflare Pages applies these to static-asset responses only.
 
+# 2026-08-10 ~09:00 — apex + every deep path 301s to councilof.ai.
+# csoai.org custom domain has been returning Cloudflare error 1034 since the
+# Vercel billing cutover (verified 10 Aug 09:00 BST: HTTP 403 via 1.1.1.1
+# resolve; error code 1034). Pack content lives on csoai-site.pages.dev
+# deployments (latest 1c329852) but the apex itself is unreachable.
+# Wildcard /:path 301s to https://councilof.ai/ per Nick directive ("csoai is
+# borken, just redirect it"). Existing /arena, /gate, /about, /prv rules
+# below are superseded by the wildcard — but I leave them in for now so the
+# behaviour is obvious if the wildcard is ever removed.
+/*            https://councilof.ai/   301
 # /about used to 301 to /index.html (my pre-C3 audit fix). Now /about has its own
 # page. Remove the rule so the real /about.html serves.
 # (NOTE: clean-trailing-slash is handled by the default Pages 308 to drop the .html)
