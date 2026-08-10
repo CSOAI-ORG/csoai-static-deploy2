@@ -1,0 +1,65 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "sovos"
+version = "0.1.0"
+description = "The first governance operating system for AI. Task-vector composition over software architecture."
+readme = "README.md"
+license = { text = "MIT" }
+authors = [{ name = "CSOAI Ltd", email = "governance@csoai.org" }]
+requires-python = ">=3.10"
+keywords = ["governance", "compliance", "ai", "merging", "sovereign", "task-vector"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+
+dependencies = [
+    "pydantic>=2.0",
+    "httpx>=0.25",
+    "pynacl>=1.5",
+    "fastapi>=0.110",
+    "uvicorn>=0.27",
+    "pyyaml>=6.0",
+    "click>=8.1",
+]
+
+[project.optional-dependencies]
+core = ["sovos-core"]
+clans = ["sovos-clans"]
+signal = ["sovos-signal"]
+harness = ["sovos-harness"]
+c2pa = ["sovos-c2pa"]
+three-kb = ["sovos-3kb"]
+error-mergekit = ["sovos-error-mergekit"]
+mcp = ["sovos-mcp"]
+all = [
+    "sovos-core",
+    "sovos-clans",
+    "sovos-signal",
+    "sovos-harness",
+    "sovos-c2pa",
+    "sovos-3kb",
+    "sovos-error-mergekit",
+    "sovos-mcp",
+]
+
+[project.urls]
+Homepage = "https://csoai.org"
+Repository = "https://github.com/CSOAI-ORG/SOVOS"
+Paper = "https://arxiv.org/abs/2608.SOVOS"
+Sovereign = "https://csoai.org/sovereign"
+
+[tool.setuptools.packages.find]
+where = ["packages"]
+
+[tool.pytest.ini_options]
+testpaths = ["packages/*/tests", "tests"]
+pythonpath = ["packages", "src"]
