@@ -4,7 +4,7 @@
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
 <title>SOV City 3D — dual-substrate governance city + AI swarm | CSOAI</title>
-<meta name="description" content="SOV City 3D — the governance city over both live substrates (Micropolis + OpenTTD). Clan districts, AI-vs-AI skirmish signals, and a humans-out-of-the-loop governance meter. DESIGN-labelled, measured, never fabricated."/>
+<meta name="description" content="SOV City 3D — the city view over both live substrates (Micropolis + OpenTTD). Clan districts light when the fleet deliberates; a participation meter shows when humans joined. DESIGN-labelled, measured, never fabricated."/>
 <meta name="ai-content-declaration" content="human-authored, machine-verifiable, Ed25519-signed"/>
 <style>
   :root{--bg:#03110b;--surf:#05140d;--em:#10b981;--am:#f59e0b;--rd:#ef4444;--tx:#ecfdf5}
@@ -42,16 +42,21 @@
   <div class="lab">SOV City 3D · Design Lab · POC: humans-out-of-the-loop</div>
   <h1>SOV City <span style="color:var(--am)">3D</span></h1>
   <div class="sub">Two live substrates (Sov Town + Sov Suburb) rendered as one
-    governance city. Clan districts light when the fleet deliberates. The loop
-    tension meter shows how much of governance is machine-run vs human-veto.</div>
+    governance city. Clan districts light when the fleet deliberates. The
+    participation meter shows how often a human joined a round (measured, not
+    a governance claim).</div>
 </div>
 
 <div class="panel right">
-  <h3>Loop tension · who decides</h3>
-  <div class="sig"><span class="dt" style="background:#10b981"></span> machine-decided (fleet)</div>
-  <div class="sig"><span class="dt" style="background:#f59e0b"></span> human-veto seats</div>
+  <h3>Participation · who joined</h3>
+  <div class="sig"><span class="dt" style="background:#10b981"></span> machine-only rounds</div>
+  <div class="sig"><span class="dt" style="background:#f59e0b"></span> human-participation rounds</div>
   <div class="meter"><i id="loopbar" style="width:0%"></i></div>
   <div class="mtxt" id="loopnote">converging…</div>
+  <h3 style="margin-top:10px">Arena leaderboard · real rounds</h3>
+  <div class="mtxt" id="lb-modes" style="margin-bottom:6px">—</div>
+  <div id="lb" style="font:11px ui-monospace,Menlo,monospace"></div>
+  <div class="mtxt" id="lb-human" style="margin-top:8px;color:rgba(245,158,11,.9)">—</div>
   <h3 style="margin-top:10px">Clan districts</h3>
   <div class="sig"><span class="dt" style="background:#10b981"></span> csoai <span id="d-csoai" style="margin-left:auto;font-family:monospace">—</span></div>
   <div class="sig"><span class="dt" style="background:#818cf8"></span> defoneos <span id="d-defoneos" style="margin-left:auto;font-family:monospace">—</span></div>
@@ -63,17 +68,18 @@
   <div class="card"><div class="k">Town pop</div><div class="v" id="s-town">—</div></div>
   <div class="card"><div class="k">Suburb city</div><div class="v" id="s-ottd">—</div></div>
   <div class="card"><div class="k">Arena rounds</div><div class="v" id="s-rounds">—</div></div>
-  <div class="card warn"><div class="k">Veto seat</div><div class="v" id="s-veto">1</div></div>
+  <div class="card warn"><div class="k">Human participation</div><div class="v" id="s-veto">0</div></div>
+  <div class="card" id="crdt-card"><div class="k">Convergence</div><div class="v" id="s-crdt">—</div></div>
 </div>
 
 <div class="ev" id="ev"></div>
-<div class="foot">POC — DESIGN lab · substrates: micropolis-gpl-3.0 + openttd-gpl-2.0<br/>governance: sov-fleet · human = policy veto only · CSOAI Ltd</div>
+<div class="foot">POC — DESIGN lab · substrates: micropolis-gpl-3.0 + openttd-gpl-2.0<br/>overnight: sov-fleet deliberations · participation is measured, not a governance claim · CSOAI Ltd</div>
 
 <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.min.js"></script>
 <script>
 (() => {
   const $ = id => document.getElementById(id);
-  let town=null, ottd=null, townOk=false, ottdOk=false, rounds=0;
+  let town=null, ottd=null, townOk=false, ottdOk=false;
 
   async function poll(){
     try{ const r=await fetch('/api/sov-town/state.jsonl'); if(r.ok){
@@ -87,11 +93,10 @@
   function hud(){
     $('s-town').textContent = townOk? (town.population??0).toLocaleString() : '—';
     $('s-ottd').textContent  = ottdOk? String(ottd.date??'—') : '—';
-    $('s-rounds').textContent = String(rounds);
     // loop tension: humans out of the loop -> bar = % machine-decided
-    const machine = townOk||ottdOk ? 92 : 40;  // fleet governs; 1 veto seat
+    const machine = townOk||ottdOk ? 92 : 40;  // share of rounds with no human side
     $('loopbar').style.width = machine+'%';
-    $('loopnote').textContent = machine>=80 ? 'autonomous governance — human=policy veto only'
+    $('loopnote').textContent = machine>=80 ? 'fleet-only rounds dominate — humans out of every '+Math.round(100/machine*10)+' rounds'
                                              : 'degraded — waiting on substrate';
     // district activity proxies
     $('d-csoai').textContent = townOk? String(town.govbench_score??'—') : '—';
@@ -151,33 +156,159 @@
     for(let i=sparks.length-1;i>=0;i--) if(sparks[i].dead) sparks.splice(i,1);
   }
 
-  // simulated swarm battles: light one tower at a time, emit a spark, count round
-  let t=0, swarmTimer=0, activeIdx=-1;
-  function battle(){
-    activeIdx=(activeIdx+1)%clans.length;
-    spark(clans[activeIdx].name);
-    ++rounds; $('s-rounds').textContent=String(rounds);
-    towers.forEach((tw,i)=>{ tw.t.material.emissiveIntensity = i===activeIdx? .7 : .18; });
-    const ev=$('ev'); ev.style.display='block';
-    ev.textContent='skirmish: AI clan "'+clans[activeIdx].name+'" deliberating (round '+rounds+') — human seat not required';
+  // REAL arena swarm battles: rounds come from the fleet evidence feed.
+  // Every verdict pair is measured (sov_arena.py on oracle-micro) — the city
+  // only replays what actually happened; the human seat is informational (how often
+  // a human-vs-AI / team round landed) — not a governance claim.
+  let t=0, activeIdx=-1, lastRoundKey=null, arenaFeedOk=false;
+  let aRounds=[];
+
+  async function loadArena(){
+    try{
+      const r=await fetch('/api/sov-arena/rounds.jsonl');
+      if(!r.ok) throw new Error('http '+r.status);
+      const ls=(await r.text()).trim().split('\n').filter(Boolean);
+      const parsed=ls.map(l=>{ try{return JSON.parse(l);}catch(e){return null;} }).filter(Boolean);
+      aRounds=parsed; arenaFeedOk=true;
+      $('s-rounds').textContent=String(aRounds.length);
+      leaderboard();
+      tension();
+      // render the latest round
+      if(aRounds.length){
+        const last=aRounds[aRounds.length-1];
+        const lv=(last.left&&(last.left.verdict||last.left.clan_verdict))||'?';
+        const rv=(last.right&&(last.right.verdict||last.right.clan_verdict))||'?';
+        const lm=last.left&&last.left.name||'?';
+        const rm=last.right&&last.right.name||'?';
+        const humanInvolved = !!(last.human_verdict || last.mode==='human-vs-ai' || last.mode==='team-vs-team');
+        const ev=$('ev'); ev.style.display='block';
+        ev.textContent='round '+aRounds.length+' · '+lm+' '+lv+' vs '+rm+' '+rv+
+          ' — '+(last.agreement?'AGREE':'DIVERGE')+
+          (humanInvolved?' · HUMAN PARTICIPATION (human took a seat)':' · fleet-only round (no human)');
+        // light the tower of the agreeing side (or left on tie)
+        const winnerClan=mapClan(last.left&&last.left.name)||mapClan(last.right&&last.right.name);
+        if(winnerClan){ sparkLight(winnerClan); }
+      }
+    }catch(e){
+      arenaFeedOk=false;
+      $('s-rounds').textContent='—';
+    }
+  }
+
+  // (a) leaderboard: participation + verdict mix per side, from REAL rounds
+  function sideName(side){
+    if(!side) return null;
+    const n=String(side.name||side.clan||'').toLowerCase();
+    if(n.includes('human')) return 'human';
+    for(const c of clans){ if(n.includes(c.name)) return c.name; }
+    return null;
+  }
+  function leaderboard(){
+    const tally={}; // clan -> {played, yes, no}
+    let modes={ai:0,human:0,team:0};
+    let vTr={humanAgree:0,humanWin:0,humanRounds:0}; // human-override tracking (informational)
+    aRounds.forEach(r=>{
+      const m=r.mode||'ai-vs-ai';
+      if(m==='human-vs-ai')modes.human++; else if(m==='team-vs-team')modes.team++; else modes.ai++;
+      [r.left,r.right].forEach(s=>{
+        const c=sideName(s); if(!c)return;
+        const v=String(s.verdict||s.clan_verdict||'').toUpperCase();
+        tally[c]=tally[c]||{played:0,yes:0,no:0};
+        tally[c].played++;
+        if(v.startsWith('YES'))tally[c].yes++; else if(v.startsWith('NO'))tally[c].no++;
+      });
+      // human-vs-fleet scoring: human agrees with fleet, or human WINS
+      // (human verdict differs from the clan's = the override actually changed it)
+      if(m==='human-vs-ai'){
+        const hv=String((r.left&&r.left.verdict)||'').toUpperCase();
+        const cv=String((r.right&&r.right.verdict)||'').toUpperCase();
+        if(hv&&cv){ vTr.humanRounds++; if(hv===cv)vTr.humanAgree++; else vTr.humanWin++; }
+      } else if(m==='team-vs-team'){
+        [r.left,r.right].forEach(s=>{
+          const hv=String(s.human_verdict||'').toUpperCase();
+          const cv=String(s.clan_verdict||'').toUpperCase();
+          if(hv&&cv){ vTr.humanRounds++; if(hv===cv)vTr.humanAgree++; else vTr.humanWin++; }
+        });
+      }
+    });
+    const rows=Object.entries(tally).sort((a,b)=>a[0].localeCompare(b[0]));
+    const lb=$('lb');
+    lb.innerHTML = rows.length
+      ? rows.map(([c,t])=>`<div>${c.padEnd(9)} ${String(t.played).padStart(2)} rds · Y${t.yes} N${t.no}</div>`).join('')
+      : '<div>no rounds yet</div>';
+    $('lb-modes').textContent = `ai-vs-ai ${modes.ai} · h-vs-ai ${modes.human} · team ${modes.team}`;
+    // the human-participation story: how often a human joined vs actually overrode
+    $('lb-human').textContent = vTr.humanRounds
+      ? `human×fleet: ${vTr.humanRounds} rounds · ${vTr.humanAgree} ratified · ${vTr.humanWin} overrode (human vs clan verdict)'
+      : 'human×fleet: no human rounds yet';
+  }
+
+  // (b) participation: machine% from the actual round mix; card lights on
+  // human-involved rounds (informational — describes a measurement, not a claim)
+  function tension(){
+    const total=aRounds.length;
+    if(!total){ $('loopbar').style.width='40%'; $('loopnote').textContent='degraded — waiting on rounds'; return; }
+    const humanRounds=aRounds.filter(r=> (r.human_verdict!==undefined) || r.mode==='human-vs-ai' || r.mode==='team-vs-team').length;
+    const humanPct=Math.round(100*humanRounds/total);
+    $('loopbar').style.width=humanPct+'%';  // bar = human-participation %
+    $('loopnote').textContent= humanRounds>0
+      ? humanRounds+' of '+total+' rounds included a human · fleet deliberates the rest'
+      : '0 rounds with a human so far · fleet-only so far';
+    const seat=$('s-veto');
+    if(humanRounds>0){ seat.textContent=humanRounds; seat.closest('.card').classList.add('warn'); }
+    else { seat.textContent='0'; seat.closest('.card').classList.remove('warn'); }
+  }
+  // (c) convergence digest: is the two-node fleet agreeing? REAL CRDT result.
+  async function loadCrdt(){
+    try{
+      const r=await fetch('/api/sov-crdt/latest.json');
+      if(!r.ok) throw new Error('http '+r.status);
+      const d=await r.json();
+      const card=document.getElementById('crdt-card');
+      if(d.merkle_match && d.overall){
+        $('s-crdt').textContent='CONVERGED';
+        card.classList.remove('warn');
+      }else{
+        $('s-crdt').textContent='DIVERGED';
+        card.classList.add('warn');
+      }
+      const t=$('loopnote');
+      const m=d.merkle? (' · '+String(d.merkle).slice(0,8)) : '';
+      t.textContent='nodes '+(d.merkle_match?'converged '+(m||'· digest match'):'DIVERGED — replica drift detected')+
+        ' · fleet governs';
+    }catch(e){
+      $('s-crdt').textContent='—';
+    }
+  }
+
+  function mapClan(name){
+    const n=String(name||'').toLowerCase();
+    for(const c of clans){ if(n.includes(c.name)) return c.name; }
+    return null;
+  }
+  function sparkLight(clanName){
+    const tw=towers.find(x=>x.c.name===clanName);
+    if(!tw) return;
+    activeIdx=clans.findIndex(c=>c.name===clanName);
+    spark(clanName);
   }
 
   function loop(){
     requestAnimationFrame(loop);
-    t+=.004 + (townOk? .01: .004);  // city speeds when the sim is alive
+    t+=.004 + (townOk? .01: .004);
     ring.rotation.z=t;
     towers.forEach((tw,i)=>{
       const pulse = .18 + Math.max(0, Math.sin(t*2+tw.phase)) * .12;
       tw.t.material.emissiveIntensity = i===activeIdx? .7 : pulse;
     });
-    swarmTimer+=.016;
-    if(swarmTimer>2.2){ swarmTimer=0; battle(); }
     tickSparks(t+.004);
     renderer.render(scene,cam);
   }
   addEventListener('resize',()=>{cam.aspect=innerWidth/innerHeight;cam.updateProjectionMatrix();renderer.setSize(innerWidth,innerHeight);});
 
   poll(); setInterval(poll,20000);
+  loadArena(); setInterval(()=>{ loadArena(); loadCrdt(); },30000);
+  loadCrdt();
   loop();
 })();
 </script>

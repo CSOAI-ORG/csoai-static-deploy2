@@ -1,0 +1,27 @@
+{
+  "timestamp": "2026-08-09T06:44:00.185564+00:00",
+  "scheme": "SIGIL hybrid hardening (Z12.26)",
+  "ed25519_only": {
+    "manifest_bytes": 547,
+    "signature_b64_chars": 88,
+    "algorithm": "Ed25519"
+  },
+  "hybrid_ED25519_MLDSA44": {
+    "manifest_bytes": 5907,
+    "signature_b64_chars": 3316,
+    "cose_algs": "-8,-44",
+    "algorithms": [
+      "ED25519",
+      "MLDSA44"
+    ]
+  },
+  "delta_bytes": 5360,
+  "delta_pct": 979.9,
+  "cose_alg_mldsa44": -44,
+  "measured_sig_bytes": {
+    "ed25519": 64,
+    "mldsa44": 2420
+  },
+  "rfc3161_slot": "present (null until TSA attach)",
+  "rfc4998_slot": "present (null until evidence-record attach)"
+}

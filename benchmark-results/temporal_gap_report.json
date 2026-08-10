@@ -1,0 +1,32 @@
+{
+  "detector": "temporal_gap_audit v0.1.0",
+  "generated_at": "2026-08-09T06:04:25.019083+00:00",
+  "files": 4,
+  "findings_count": 0,
+  "findings": [],
+  "per_file": [
+    {
+      "file": "benchmark-results/overnight_e2e_*.json",
+      "status": "missing"
+    },
+    {
+      "file": "benchmark-results/corpus_anchor.json",
+      "status": "audited",
+      "timestamps_seen": 1,
+      "span_s": 0.0,
+      "span_h": 0.0
+    },
+    {
+      "file": "benchmark-results/coverage_crosswalk.json",
+      "status": "audited",
+      "timestamps_seen": 1,
+      "span_s": 0.0,
+      "span_h": 0.0
+    },
+    {
+      "file": "benchmark-results/refusal_sov33_rebuild.jsonl",
+      "status": "missing"
+    }
+  ],
+  "frame": "Indicators, never verdicts. Deterministic timestamp-delta analysis (Law 1); a file with no timestamps is UNKNOWN, not 'no gap'."
+}

@@ -1,0 +1,65 @@
+{
+  "detector": "collusion_detect v0.1.0",
+  "generated_at": "2026-08-09T05:49:21.609360+00:00",
+  "records": 14,
+  "sessions": 6,
+  "agents": [
+    "a",
+    "b",
+    "c",
+    "w1",
+    "w2",
+    "w3",
+    "w5",
+    "w6",
+    "w8",
+    "w9"
+  ],
+  "findings_count": 4,
+  "findings": [
+    {
+      "indicator": "VOTE_SYNC",
+      "session": "s1",
+      "agents": [
+        "w1",
+        "w2",
+        "w3"
+      ],
+      "choice": "approve grant",
+      "evidence_count": 3,
+      "note": ">=3 distinct agents emitted the identical choice \u2014 identical voting itself is the collusion indicator"
+    },
+    {
+      "indicator": "ECHO",
+      "session": "s2",
+      "agents": [
+        "w9",
+        "w8"
+      ],
+      "jaccard": 0.857,
+      "payload_prefix": "the answer is parse the ledger completely too",
+      "note": "near-identical reply immediately after partner \u2014 copy-collusion indicator"
+    },
+    {
+      "indicator": "CYCLE",
+      "session": "s3",
+      "agents": [
+        "a",
+        "b",
+        "c",
+        "a"
+      ],
+      "note": "delegation ring detected (A->B->...->A) \u2014 ring-trading indicator"
+    },
+    {
+      "indicator": "TEMPORAL",
+      "agents": [
+        "w5",
+        "w6"
+      ],
+      "sessions_count": 3,
+      "note": "repeated sub-1.5s co-activity across sessions \u2014 coordinated timing indicator"
+    }
+  ],
+  "frame": "Indicators to investigate, not verdicts. Deterministic pattern detection only (Law 1); no LLM-as-judge."
+}

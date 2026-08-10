@@ -39,12 +39,12 @@
 
 <h1>csoai/oowm-router-demo <span class="badge sovereign">OOWM</span></h1>
 
-<p>The <b>OOWM router</b> is CSOAI's master substrate for sovereign AI. It does not generate text itself — it decides which sovereign model handles a given task, then wraps the response in BFT + SIGIL attestation per CSOAI's canon.</p>
+<p>The <b>OOWM router</b> is CSOAI's master substrate for sovereign AI. It does not generate text itself — it decides which sovereign model handles a given task, then wraps the response in SIGIL attestation per CSOAI's canon.</p>
 
 <p>This Space lets you probe the router. The routing matrix below is grounded in the <b>2026-08-08 overnight benchmark spray</b> (Ed25519-signed, verifiable).</p>
 
 <div class="router">
-  <b>Live router</b>: given a task type, the OOWM router picks the highest-scoring sovereign from the open-source pool. Care Floor 0.95 is enforced. BFT 12-around-1 deliberates on every consequential action.
+  <b>Live router</b>: given a task type, the OOWM router picks the highest-scoring sovereign from the open-source pool. Care Floor 0.95 is enforced. Deliberation on every consequential action.
 </div>
 
 <h2>12-Benchmark Routing Matrix (click row for details)</h2>
@@ -135,7 +135,7 @@
 
 <div class="footer">
   CSOAI Ltd · UK company 16939677 · Apache-2.0 (this repo) · MIT (oowm_runtime.py source) · Apache-2.0 (sov34-1p5b weights).<br>
-  Router is the master substrate; sovereign models are interchangeable. Care Floor 0.95 enforced. BFT 12-around-1 (threshold 8).<br>
+  Router is the master substrate; sovereign models are interchangeable. Care Floor 0.95 enforced.<br>
   Living-training-attestation, not a certification.
 </div>
 
