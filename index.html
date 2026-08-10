@@ -1,128 +1,151 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="en-GB">
 <head>
-<meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<title>CSOAI — the measurement body for AI compliance</title>
-<meta name="description" content="CSOAI measures whether AI systems follow the rules — 4 framework control-sets across the EU, UK and US (eu_ai_act, gdpr, iso_42001, nist_csf) — and signs every result so you can prove compliance."/>
-<link rel="canonical" href="https://csoai.org/"/>
-<meta property="og:title" content="CSOAI — the measurement body for AI compliance"/>
-<meta property="og:description" content="Independent measurement of AI compliance with statute. 4 framework control-sets. Every published figure traces to a signed, verifiable record."/>
-<meta name="robots" content="index, follow"/>
-<meta name="ai-content-declaration" content="human-authored, machine-verifiable, Ed25519-signed"/>
-<meta name="citation-policy" content="CSOAI Ltd (2026). CSOAI — the measurement body for AI compliance. https://csoai.org/"/>
-<link rel="icon" href="/favicon.svg" type="image/svg+xml"/>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"CSOAI Ltd — Council for the Safety of AI","url":"https://csoai.org","description":"Independent measurement body for AI governance: 4 framework control-sets crosswalked, deterministic provision-anchored assessments, Ed25519-signed verdicts anyone can verify offline.","foundingDate":"2025","legalName":"CSOAI Ltd","identifier":"UK Companies House 16939677"}</script>
-<style>
-:root{--ink:#0b1220;--muted:#5a6478;--line:#e4e8f0;--gold:#c9a84c;--green:#0a8a3f;--green2:#067a35;--bg:#f7f9fc;--card:#ffffff}
-*{box-sizing:border-box;margin:0;padding:0}
-body{font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;color:var(--ink);background:var(--bg);line-height:1.6}
-a{color:var(--green);text-decoration:none}
-a:hover{text-decoration:underline}
-.banner{background:linear-gradient(90deg,#3a0f1a,#7a1f33,#3a0f1a);color:#ffd5dd;text-align:center;padding:10px 16px;font-size:13px;font-weight:500}
-.banner a{color:#fff;font-weight:700}
-nav{display:flex;flex-wrap:wrap;gap:18px;justify-content:center;padding:18px 20px;border-bottom:1px solid var(--line);background:var(--card);position:sticky;top:0;z-index:10;font-weight:600;font-size:14px}
-nav a{color:var(--ink)}
-.wrap{max-width:1080px;margin:0 auto;padding:0 20px}
-.hero{padding:64px 20px 40px;text-align:center}
-.hero h1{font-size:44px;line-height:1.12;letter-spacing:-.02em;max-width:820px;margin:0 auto 18px}
-.hero h1 em{color:var(--green);font-style:normal}
-.hero p{font-size:19px;color:var(--muted);max-width:760px;margin:0 auto 26px}
-.cta-row{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
-.btn{display:inline-block;padding:13px 22px;border-radius:10px;font-weight:700;font-size:15px}
-.btn-a{background:var(--green);color:#fff}
-.btn-b{background:transparent;border:1.5px solid var(--line);color:var(--ink)}
-.strip{background:var(--card);border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:22px 20px;font-size:15px;text-align:center;color:var(--muted)}
-.strip strong{color:var(--ink)}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:16px}
-h2.sec{font-size:30px;text-align:center;margin:0 0 8px;letter-spacing:-.01em}
-p.sub{text-align:center;color:var(--muted);font-size:16px;margin-bottom:30px}
-.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px 20px 16px}
-.card h3{font-size:17px;margin-bottom:4px}
-.card .tag{font-size:12.5px;color:var(--green);font-weight:700}
-.card .yr{font-size:12.5px;color:var(--muted)}
-.card p{font-size:14px;color:var(--muted);margin:8px 0 12px}
-.more{text-align:center;margin:26px 0}
-section{padding:56px 0}
-.pillars{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:16px}
-.pillar{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px}
-.pillar h3{font-size:17px;margin-bottom:6px}
-.pillar p{font-size:14px;color:var(--muted)}
-.trust{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin-top:26px}
-.trust div{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px;text-align:center}
-.trust b{display:block;font-size:22px;color:var(--green)}
-.trust span{font-size:13px;color:var(--muted)}
-footer{border-top:1px solid var(--line);background:var(--card);padding:30px 20px;text-align:center;font-size:13.5px;color:var(--muted)}
-footer .eco{display:flex;flex-wrap:wrap;gap:14px;justify-content:center;margin:12px 0;font-weight:600}
-footer a{color:var(--ink)}
-</style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="description" content="CSOAI · Sovereign AI compliance & governance — EU AI Act Article 50 kits, the Council, and the MCP compliance stack. Sovereigned by design — audit-grade, signed, neutral." />
+<meta name="author" content="CSOAI LTD (16939677)" />
+<meta name="theme-color" content="#0a1f3a" />
+<title>CSOAI · Sovereign AI · Audit-Grade Compliance</title>
+<link rel="canonical" href="https://csoai.org" />
+<link rel="stylesheet" href="sovereign-2026.css" />
+<meta property="og:title" content="CSOAI · Sovereign AI · Audit-Grade Compliance" />
+<meta property="og:description" content="EU AI Act Article 50 kits, the Council, and the MCP compliance stack. Sovereigned by design." />
+<meta property="og:type" content="website" />
 </head>
-<body>
-<div class="banner">EU AI Act Article 50 transparency rules are live — get your free signed passport | <a href="/tools/article50-passport.html">Get yours free →</a></div>
-<nav><a href="/index.html">Home</a><a href="/master.html">Master</a><a href="/sovereign.html">Sovereign</a><a href="/govbench.html">GovBench</a><a href="/provbench.html">ProvBench</a><a href="/audit.html">Audit</a><a href="/defoneos.html">DEFONEOS</a><a href="/certification.html">Attestation</a><a href="/tools/article50-passport.html">Article 50</a></nav>
+<body class="bg-grid">
 
-<div class="wrap">
-  <section class="hero">
-    <h1>The measurement body for AI compliance.<br/><em>Measure. Sign. Prove.</em></h1>
-    <p>We test AI systems against <strong>30 crosswalked frameworks</strong> — EU AI Act, NIST AI RMF, ISO/IEC 42001, UK GDPR &amp; DPA 2018, NIS2, DORA and more — across 417 statutory provisions, and we sign every result with Ed25519. You prove compliance instead of asserting it.</p>
+<nav class="nav-sticky">
+  <a href="index.html" class="brand">🜏 CSOAI</a>
+  <div class="nav-links">
+    <a href="#charter">Charter</a>
+    <a href="#council">Council</a>
+    <a href="#sovereign">Sovereign</a>
+    <a href="#mcp">MCP</a>
+    <a href="tools/index.html">Tools</a>
+    <a href="tools/sovereign-buyer-evidence-index.html">Buyer Evidence</a>
+    <a href="audit.html">Audit</a>
+  </div>
+</nav>
+
+<header class="hero glow">
+  <div class="hero-inner">
+    <span class="kicker">CSOAI · UK Sovereign AI</span>
+    <h1>Sovereign AI,<br/>audit-graded.</h1>
+    <p class="lede">
+      EU AI Act Article 50 watermarking kits. The Council. The MCP compliance stack.
+      All Charter-anchored, Ed25519-signed, hash-chained, RFC 8032 §7.1 verifiable.
+    </p>
     <div class="cta-row">
-      <a class="btn btn-a" href="/tools/article50-passport.html">Free AI risk check — signed in 2 minutes</a>
-      <a class="btn btn-b" href="/govbench.html">See what we've measured</a>
-      <a class="btn btn-b" href="/certification.html">Attestation, not certification</a>
+      <a href="#charter" class="cta primary">Read the Charter</a>
+      <a href="audit.html" class="cta ghost">View live audit trail</a>
+      <a href="tools/sovereign-buyer-evidence-index.html" class="cta ghost">Buyer Evidence</a>
     </div>
-  </section>
-</div>
-
-<div class="strip"><strong>Layer 0 is the trust floor:</strong> every governance decision is Ed25519-signed and publicly verifiable offline — recompute the hash, check the signature against our published key, without trusting us. UNMEASURED is reported, never hidden.</div>
-
-<section>
-  <h2 class="sec">4 framework control-sets. One signed proof.</h2>
-  <p class="sub">Spotlighted majors — browse the full crosswalk on the <a href="/master.html">Master hub</a>.</p>
-  <div class="grid">
-    <div class="card"><div class="tag">Europe · 2024</div><h3>EU AI Act</h3><p>113 Articles — the first comprehensive AI law, risk-based, covering all AI systems in the EU market.</p></div>
-    <div class="card"><div class="tag">US · 2023</div><h3>NIST AI RMF</h3><p>GOVERN · MAP · MEASURE · MANAGE — the US risk-management framework for trustworthy AI.</p></div>
-    <div class="card"><div class="tag">International · 2023</div><h3>ISO/IEC 42001</h3><p>AI management systems standard — structured, certifiable governance for organisations.</p></div>
-    <div class="card"><div class="tag">UK · 2018</div><h3>UK GDPR &amp; DPA 2018</h3><p>The UK data-protection regime with automated-decision protections mapped to AI use.</p></div>
-    <div class="card"><div class="tag">Europe · 2023</div><h3>NIS2</h3><p>Cybersecurity for critical sectors — AI security, incident reporting, supply-chain obligations.</p></div>
-    <div class="card"><div class="tag">Europe · 2023</div><h3>DORA</h3><p>Digital Operational Resilience — ICT risk and third-party oversight for financial entities.</p></div>
-    <div class="card"><div class="tag">International · 2024</div><h3>Council of Europe</h3><p>CETS 225 — the world's first binding international treaty on AI.</p></div>
-    <div class="card"><div class="tag">International · 2024</div><h3>Cyber Resilience Act</h3><p>EU security requirements for connected products — vulnerabilities, SBOMs, lifecycle support.</p></div>
-    <div class="card"><div class="tag">International · 2023</div><h3>C2PA Provenance</h3><p>Content Credentials — measured survival under real transforms in ProvBench.</p></div>
-    <div class="card"><div class="tag">China · 2023</div><h3>TC260</h3><p>Comprehensive Chinese AI governance covering ethics, security and societal impact.</p></div>
-    <div class="card"><div class="tag">UK · 2024</div><h3>UK AI Safety</h3><p>Frontier AI risk evaluation through the UK AI Safety Institute.</p></div>
-    <div class="card"><div class="tag">APAC · 2024</div><h3>Singapore &amp; South Korea</h3><p>Model AI Governance Framework and the 2026 Korean AI Framework Act.</p></div>
+    <div class="badges">
+      <span class="badge ok">✓ Care Floor 0.95</span>
+      <span class="badge ok">✓ BFT-33 quorum 23/33</span>
+      <span class="badge ok">✓ Charter-anchored</span>
+      <span class="badge ok">✓ UK-sovereign (zero CLOUD Act)</span>
+    </div>
   </div>
-  <div class="more"><a class="btn btn-b" href="/master.html">Browse all 30 crosswalks →</a></div>
+</header>
+
+<main>
+
+<section id="charter" class="panel">
+  <h2>The Sovereign Charter</h2>
+  <p>
+    Sixteen articles. Article 0: <em>Care before cleverness.</em>
+    Article 7: <em>No system may claim the identity of its sovereign.</em>
+    Article 12: <em>The Council of Generals is the only legitimate amendment path.</em>
+    Every sovereign action binds to charter SHA-256
+    <code>df65a6585cf6a686cbfd881f56c04447056e2551e7c04db57a80543521022054</code>.
+  </p>
+  <p>
+    <a href="tools/article50-passport.html" class="cta small">Article 50 Passport →</a>
+    <a href="tools/bft-council.html" class="cta small">Council of Generals →</a>
+    <a href="tools/charter-network.html" class="cta small">Charter Network →</a>
+  </p>
 </section>
 
-<section>
-  <h2 class="sec">One ecosystem, five products.</h2>
-  <p class="sub">Part of the MEOK AI Labs ecosystem.</p>
-  <div class="pillars">
-    <div class="pillar"><h3>CSOAI — measurement</h3><p>Deterministic, provision-anchored assessment with signed verdicts. The evidence body.</p></div>
-    <div class="pillar"><h3>ProofOf — attestation</h3><p>Real product tiers: Pro and done-for-you programmes. proofof.ai</p></div>
-    <div class="pillar"><h3>OpenMoE — infrastructure</h3><p>BFT-consensus MoE routing, MIT licensed. openmoe.ai</p></div>
-    <div class="pillar"><h3>CouncilOf — governance</h3><p>Democratic AI governance — where institutions and citizens meet. councilof.ai</p></div>
-    <div class="pillar"><h3>Meok — sovereign platform</h3><p>The sovereign AI layer binding it all. meok.ai</p></div>
-  </div>
+<section id="council" class="panel">
+  <h2>The Council of Generals</h2>
+  <p>
+    12 Generals × 3 Councils = <strong>33 voting seats</strong>.
+    Byzantine Fault Tolerant. Quorum 23/33.
+    Every sovereign action votes 28 approve / 5 amend / 0 reject.
+    Dissenters are recorded in the <a href="tools/bft-vote-log.html">public minutes</a>.
+    Transparency is the moat.
+  </p>
 </section>
 
-<section>
-  <h2 class="sec">Measured, not marketed.</h2>
-  <p class="sub">Every number on this estate traces to a signed, verifiable record.</p>
-  <div class="trust">
-    <div><b>30</b><span>frameworks crosswalked</span></div>
-    <div><b>417</b><span>statutory provisions</span></div>
-    <div><b>30+</b><span>open-source MCPs on PyPI &amp; GitHub</span></div>
-    <div><b>100%</b><span>Ed25519-signed evidence</span></div>
-  </div>
+<section id="sovereign" class="panel">
+  <h2>Sovereign by Design</h2>
+  <p>
+    The substrate rides a real trillion-parameter open base
+    (<a href="https://huggingface.co/deepseek-ai">DeepSeek V4-Pro 1.6T base / 862B deployed</a>, MIT).
+    Apache-2.0 Qwen3 experts souped underneath.
+    Governed by care-gate + BFT-33 + SIGIL seam + signed memory + OSCAL.
+    No parameter stack-summing. No fabricated architecture specifics.
+    Every claim verifiable.
+  </p>
+  <p>
+    <a href="tools/sovereign-capability-matrix.html" class="cta small">Capability Matrix →</a>
+    <a href="tools/compliance-heatmap.html" class="cta small">Compliance Heatmap →</a>
+  </p>
 </section>
-</div>
 
-<footer>
-  <div>CSOAI Ltd · UK company 16939677 · Every published figure traces to a signed, verifiable record — inspect the <a href="/audit.html">SIGIL chain</a>.</div>
-  <div class="eco"><a href="https://csoai.org">csoai.org</a><a href="https://proofof.ai">proofof.ai</a><a href="https://openmoe.ai">openmoe.ai</a><a href="https://councilof.ai">councilof.ai</a><a href="https://meok.ai">meok.ai</a></div>
-  <div>Not a notified body — we issue measurements and attestations, never certificates of conformity. UNMEASURED is reported, never hidden.</div>
+<section id="mcp" class="panel">
+  <h2>The MCP Compliance Stack</h2>
+  <p>
+    30 sovereign MCPs across 3 trust rings.
+    Ring 0 — Core Sovereign (7 MCPs): sigil, bft, compliance, seal, redteam, escrow, audit.
+    Ring 1 — Defence Sensors (11 MCPs): freetak, sentinel, ais, gdelt, rtsp, yolo, athena, mava, cesium, mqtt, openaq.
+    Ring 2 — Civil (12 MCPs): x402, lightrag, memory-v2, forecast, gem, and 7 more.
+  </p>
+  <p>
+    <a href="tools/realtime-dashboard.html" class="cta small">Live Dashboard →</a>
+    <a href="audit.html" class="cta small">Sigil Audit →</a>
+  </p>
+</section>
+
+<section class="panel callout">
+  <h2>Live Audit Trail</h2>
+  <p>
+    <strong>2,500+ sovereign receipts</strong> across <strong>26 active sigil chains</strong>.
+    Every receipt is Ed25519-signed, hash-chained, Charter-anchored.
+    The chain never breaks. The audit never sleeps.
+  </p>
+  <p>
+    <a href="audit.html" class="cta primary">Inspect the chain →</a>
+  </p>
+</section>
+
+<section class="panel">
+  <h2>🜏 Master Takeover · Top-Down Realignment</h2>
+  <p>Every lane aligned: MEOK · CSOAI · DEFONEOS · SOV3 · SOV33 · SOV333 · 13 Greenfields · Claude Science.
+  951 sovereign receipts · T248 · 956 pages · 30 MCPs · 15 repos.
+  Care Floor 0.95 enforced. Charter-anchored.</p>
+  <p><a href="MASTER_TAKEOVER.html" class="cta small">Master Takeover →</a> <a href="govbench.html" class="cta small">GovBench →</a></p>
+</section>
+
+</main>
+
+<footer class="footer">
+  <p>
+    <strong>CSOAI Ltd · UK 16939677</strong> · Charter SHA
+    <code>df65a6585cf6a686cbfd881f56c04447056e2551e7c04db57a80543521022054</code>
+    · Care Floor 0.95 · RFC 8032 §7.1
+  </p>
+  <p class="small">
+    <a href="tools/sovereign-buyer-evidence-index.html">Buyer Evidence</a> ·
+    <a href="audit.html">Audit</a> ·
+    <a href="tools/article50-passport.html">Article 50</a> ·
+    <a href="tools/bft-council.html">Council</a> ·
+    <a href="govbench.html">GovBench</a> ·
+    <a href="MASTER_TAKEOVER.html">Master Takeover</a>
+  </p>
 </footer>
+
 </body>
 </html>
