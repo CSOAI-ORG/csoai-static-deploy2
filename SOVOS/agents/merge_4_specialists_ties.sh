@@ -62,6 +62,17 @@ fi
 
 echo "  found $N specialists: $SPECS_AVAILABLE" | tee -a "$LOG"
 
+# mergekit's ShardedTensorIndex.from_disk() only looks for
+# 'model.safetensors' or 'pytorch_model.bin'. PEFT adapters save
+# 'adapter_model.safetensors'. Symlink it for mergekit to find.
+for s in $SPECS_AVAILABLE; do
+  AD="$SPEC/$s/adapter"
+  if [ -f "$AD/adapter_model.safetensors" ] && [ ! -e "$AD/model.safetensors" ]; then
+    ln -sf adapter_model.safetensors "$AD/model.safetensors"
+    echo "  $s: symlinked adapter_model.safetensors -> model.safetensors" | tee -a "$LOG"
+  fi
+done
+
 # Dynamic mergekit config (TIES, density 0.5, base = local Qwen2.5-0.5B)
 # mergekit requires a real HF model dir as base_model, NOT an Ollama tag
 # like "qwen2.5:0.5b-instruct". Auto-detect: prefer /root/base_models/
