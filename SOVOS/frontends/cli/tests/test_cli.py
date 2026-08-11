@@ -31,7 +31,9 @@ def _run(args, expect_code=0):
         f"{pkg_root}/sovos-crosswalk/src:"
         f"{pkg_root}/sovos-oscal/src:"
         f"{pkg_root}/sovos-chain/src:"
-        f"{pkg_root}/sovos-fisher-rao/src"
+        f"{pkg_root}/sovos-fisher-rao/src:"
+        f"{pkg_root}/sovos-arena/src:"
+        f"{pkg_root}/sovos-signal-index/src"
     )
     import os
     env = {**os.environ, "PYTHONPATH": env_path}
@@ -56,9 +58,9 @@ def test_score():
 def test_run():
     rc, out, _ = _run(["run", "cli@test.com", "--amount", "49900"])
     assert rc == 0
-    assert "cert_id" in out
+    assert "assessment_id" in out
     assert "cert_" in out
-    assert "status" in out
+    assert "status: certified" in out
     print("  ✅ sov run works (full certification loop)")
 
 
@@ -77,7 +79,9 @@ def test_ras_offline():
         f"{pkg_root}/sovos-crosswalk/src:"
         f"{pkg_root}/sovos-oscal/src:"
         f"{pkg_root}/sovos-chain/src:"
-        f"{pkg_root}/sovos-fisher-rao/src"
+        f"{pkg_root}/sovos-fisher-rao/src:"
+        f"{pkg_root}/sovos-arena/src:"
+        f"{pkg_root}/sovos-signal-index/src"
     )
     import os
     env = {**os.environ, "PYTHONPATH": extra}
@@ -90,8 +94,18 @@ def test_ras_offline():
     print(f"  ✅ sov ras --offline works (law→crosswalk→chain→OSCAL)")
 
 
+def test_ras_help_lists_measure():
+    """The ras subcommand advertises --measure mode."""
+    rc, out, _ = _run(["ras", "--help"])
+    assert rc == 0
+    assert "--measure" in out
+    assert "REAL measurement" in out
+    print("  ✅ sov ras --help shows --measure mode")
+
+
 def main():
-    tests = [test_help, test_score, test_run, test_audit, test_ras_offline]
+    tests = [test_help, test_score, test_run, test_audit,
+             test_ras_offline, test_ras_help_lists_measure]
     failed = 0
     for t in tests:
         try:
