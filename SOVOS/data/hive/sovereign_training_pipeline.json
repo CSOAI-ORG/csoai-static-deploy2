@@ -1,0 +1,44 @@
+{
+  "stages": [
+    {
+      "stage": "1B-sov",
+      "params_b": 1,
+      "compute_hours_m4": 6,
+      "compute_hours_m2": 6,
+      "use_case": "tier-0 sovereign agent (qwen2.5:0.5b successor)",
+      "deployable": true
+    },
+    {
+      "stage": "3B-sov",
+      "params_b": 3,
+      "compute_hours_m4": 12,
+      "compute_hours_m2": 12,
+      "use_case": "tier-1 compliance classifier",
+      "deployable": true
+    },
+    {
+      "stage": "7B-sov",
+      "params_b": 7,
+      "compute_hours_m4": 36,
+      "compute_hours_m2": 36,
+      "use_case": "tier-2 audit analyzer",
+      "deployable": true
+    },
+    {
+      "stage": "13B-sov",
+      "params_b": 13,
+      "compute_hours_m4": 96,
+      "compute_hours_m2": 96,
+      "use_case": "tier-3 reasoning + compliance",
+      "deployable": true
+    }
+  ],
+  "base_model": "unsloth/Qwen3-30B-A3B-4bit",
+  "method": "MLX distributed LoRA via mlx.launch + Unsloth MoE",
+  "pruning": "REAP 50% experts after each stage",
+  "quantization": "4-bit (mlx-lm)",
+  "data": "Phase 9E synthetic corpus (Groq + Kimi K3 + DeepSeek V4)",
+  "binding": "sov_route.route() \u2014 every checkpoint \u2192 same ledger",
+  "compute_savings_vs_full_train": "25% (Tohoku progressive)",
+  "monthly_cost_usd": 0
+}

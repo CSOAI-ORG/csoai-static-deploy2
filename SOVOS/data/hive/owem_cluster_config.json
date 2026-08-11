@@ -1,0 +1,95 @@
+{
+  "cluster_id": "owem-desk-cluster-2026",
+  "nodes": [
+    {
+      "id": "m4-controller",
+      "role": "controller",
+      "unified_memory_gb": 24,
+      "mlx_installed": true,
+      "tools": [
+        "mlx-lm",
+        "mlx-metal",
+        "unsloth"
+      ]
+    },
+    {
+      "id": "m2-worker",
+      "role": "sparse-expert-worker",
+      "unified_memory_gb": 8,
+      "mlx_installed": true,
+      "tools": [
+        "mlx-lm",
+        "ollama"
+      ]
+    }
+  ],
+  "interconnect": "Thunderbolt 5 / Ethernet (RDMA)",
+  "combined_effective_gb": 32,
+  "sovereign_base": "Kimi K3 (1.56TB)",
+  "pruning": {
+    "method": "REAP",
+    "ratio": 0.5,
+    "result": "~1.4T params, ~52B active (still larger than GPT-4)"
+  },
+  "quantization": {
+    "method": "unsloth-moe",
+    "bits": 4,
+    "speedup": "12\u00d7",
+    "vram_reduction": "35%"
+  },
+  "progressive_training": {
+    "method": "tohoku-2026",
+    "stages": [
+      "1B",
+      "3B",
+      "7B",
+      "13B"
+    ],
+    "compute_savings": "25% vs training 13B from scratch"
+  },
+  "tier_routing": {
+    "0": [
+      "m4-controller"
+    ],
+    "1": [
+      "m4-controller"
+    ],
+    "2": [
+      "m4-controller"
+    ],
+    "3": [
+      "kaggle-gpu",
+      "groq-free"
+    ],
+    "4": [
+      "kimi-k3-api",
+      "deepseek-v4-pro",
+      "claude-fable-5",
+      "consensus-mcp"
+    ]
+  },
+  "benchmarks_joined": [
+    "MMLU",
+    "HumanEval",
+    "SWE-Bench Pro",
+    "GovBench (per memory)",
+    "Arena Agent board",
+    "WebDev board",
+    "Terminal-Bench (per Claude Fable 5)"
+  ],
+  "training_data_sources": [
+    "huggingface (Nicholastempleman registry \u2014 8 models per memory)",
+    "kaggle datasets (30h/week free T4)",
+    "groq free API",
+    "kimi K3 API ($3/$15)",
+    "deepseek V4-Pro ($0.87/M out)",
+    "ollama local corpus (95+ models per memory)"
+  ],
+  "sovspace_bindings": [
+    "5D evidence points: each Mac node = own X,Y,Z,T,C",
+    "fluid swarm: tier-0 \u2192 tier-4 ladder across nodes",
+    "IWM lens routing: governance/safety/provenance/continuity/care_cost",
+    "honey DB: every training event \u2192 same ledger"
+  ],
+  "templeos_note": "TempleOS / HolyC speedup was 4000\u00d7 because HolyC compiled to raw x86-64 with zero abstraction layers \u2014 no OS, no garbage collector, no runtime. Our equivalent: MLX + Metal GPU shaders + Apple Silicon AMX = same hardware-level compute path. We don't need to reimplement TempleOS; we use Apple's compiler stack that achieves the same end (no abstraction)."
+}
