@@ -83,14 +83,46 @@ def _import_redis():
         return (None, True)
 
 
-def _make_client(_import_redis):
-    """Return a Redis-like client. Always returns something usable."""
+def _make_client(_import_redis, force_fake: bool = False):
+    """Return a Redis-like client. Always returns something usable.
+
+    For fakeredis, we create a FRESH FakeServer per call so each
+    RedisBus instance is fully isolated — fakeredis otherwise shares a
+    single global in-memory server across all FakeStrictRedis instances
+    (caught by the full-suite run: successive buses leaked vectors into
+    each other). Passing an explicit FakeServer fixes that isolation.
+
+    `force_fake=True` (from RedisBus(use_fakeredis=True)) OVERRIDES
+    connectivity detection: a live Redis on localhost must NOT win when
+    the caller explicitly asked for fake — otherwise tests write into
+    the real server and state persists across processes (caught on this
+    Mac: redis-server IS up on 6379, and identical sv_ids reappeared
+    across pytest invocations).
+    """
+    if force_fake:
+        try:
+            import fakeredis as _fkr
+            server = _fkr.FakeServer()
+            return _fkr.FakeStrictRedis(server=server, decode_responses=True), True
+        except ImportError:
+            raise RuntimeError(
+                "sovos_bus_redis: fakeredis required for use_fakeredis=True. "
+                "Install with `pip install fakeredis`."
+            )
     factory, is_fake = _import_redis()
     if factory is None:
         raise RuntimeError(
             "sovos_bus_redis requires `redis` or `fakeredis`. "
             "Install with `pip install redis` or `pip install fakeredis`."
         )
+    if is_fake:
+        # fakeredis.FakeStrictRedis(server=...) gives per-bus isolation
+        try:
+            import fakeredis as _fkr
+            server = _fkr.FakeServer()
+            return _fkr.FakeStrictRedis(server=server, decode_responses=True), True
+        except Exception:
+            pass
     return factory(decode_responses=True), is_fake
 
 
@@ -151,7 +183,7 @@ class RedisBus:
 
         # If caller wants fake, or no redis URL given, try fakeredis first.
         if use_fakeredis or url.startswith("fakeredis://"):
-            client, is_fake = _make_client(_import_redis)
+            client, is_fake = _make_client(_import_redis, force_fake=True)
             self._client = client
             self._is_fake = True
             logger.info("RedisBus: fakeredis (in-memory, no server)")
