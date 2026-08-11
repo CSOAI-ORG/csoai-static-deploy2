@@ -4,13 +4,13 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "sovos"
-version = "0.1.0"
-description = "The first governance operating system for AI. Task-vector composition over software architecture."
+version = "0.2.0"
+description = "SOVOS — the first governance operating system for AI. Task-vector composition over software architecture. 17 packages, 119 tests, 8 mathematical weapons."
 readme = "README.md"
 license = { text = "MIT" }
 authors = [{ name = "CSOAI Ltd", email = "governance@csoai.org" }]
 requires-python = ">=3.10"
-keywords = ["governance", "compliance", "ai", "merging", "sovereign", "task-vector"]
+keywords = ["governance", "compliance", "ai", "merging", "sovereign", "task-vector", "monorepo"]
 classifiers = [
     "Development Status :: 4 - Beta",
     "Intended Audience :: Developers",
@@ -29,26 +29,53 @@ dependencies = [
     "uvicorn>=0.27",
     "pyyaml>=6.0",
     "click>=8.1",
+    "numpy>=1.24",
+    "scipy>=1.10",
 ]
 
 [project.optional-dependencies]
-core = ["sovos-core"]
-clans = ["sovos-clans"]
-signal = ["sovos-signal"]
-harness = ["sovos-harness"]
-c2pa = ["sovos-c2pa"]
-three-kb = ["sovos-3kb"]
-error-mergekit = ["sovos-error-mergekit"]
-mcp = ["sovos-mcp"]
-all = [
+core = [
     "sovos-core",
-    "sovos-clans",
-    "sovos-signal",
-    "sovos-harness",
-    "sovos-c2pa",
-    "sovos-3kb",
-    "sovos-error-mergekit",
-    "sovos-mcp",
+    "sovos-mind",
+    "sovos-jspace-hyperbolic",
+    "sovos-jspace-pipeline",
+    "sovos-jspace-move",
+]
+geometry = ["sovos-info-geometry"]
+quantum = [
+    "sovos-quantum-bridge",
+    "sovos-quantum-router",
+    "sovos-qtask-converter",
+]
+governance = [
+    "sovos-cpo-calculator",
+    "sovos-certification-loop",
+    "sovos-alchemist",
+    "sovos-stigmergy",
+    "sovos-alphabet",
+]
+agents = [
+    "sovos-a2a-swarm",
+]
+mcp = [
+    "sovos-mcp-injection-scanner",
+    "sovos-csoai-governance-crosswalk-mcp",
+    "sovos-eu-ai-act-mcp",
+    "sovos-openmoe-bft",
+    "sovos-sov33-benchmark",
+]
+gpu = ["torch", "geomstats", "pennylane", "ot"]
+dev = ["pytest>=7.0", "pytest-cov"]
+all = [
+    "sovos-core", "sovos-mind",
+    "sovos-jspace-hyperbolic", "sovos-jspace-pipeline", "sovos-jspace-move",
+    "sovos-info-geometry",
+    "sovos-quantum-bridge", "sovos-quantum-router", "sovos-qtask-converter",
+    "sovos-cpo-calculator", "sovos-certification-loop",
+    "sovos-alchemist", "sovos-stigmergy", "sovos-alphabet",
+    "sovos-a2a-swarm",
+    "sovos-mcp-injection-scanner", "sovos-csoai-governance-crosswalk-mcp",
+    "sovos-eu-ai-act-mcp", "sovos-openmoe-bft", "sovos-sov33-benchmark",
 ]
 
 [project.urls]
@@ -57,9 +84,54 @@ Repository = "https://github.com/CSOAI-ORG/SOVOS"
 Paper = "https://arxiv.org/abs/2608.SOVOS"
 Sovereign = "https://csoai.org/sovereign"
 
+# All 21 packages as explicit paths (setuptools doesn't support globs)
 [tool.setuptools.packages.find]
-where = ["packages"]
+where = [
+    "packages/sovos-core/src",
+    "packages/sovos-mind/src",
+    "packages/sovos-jspace-hyperbolic/src",
+    "packages/sovos-jspace-pipeline/src",
+    "packages/sovos-jspace-move/src",
+    "packages/sovos-info-geometry/src",
+    "packages/sovos-quantum-bridge/src",
+    "packages/sovos-quantum-router/src",
+    "packages/sovos-qtask-converter/src",
+    "packages/sovos-cpo-calculator/src",
+    "packages/sovos-certification-loop/src",
+    "packages/sovos-alchemist/src",
+    "packages/sovos-stigmergy/src",
+    "packages/sovos-alphabet/src",
+    "packages/sovos-a2a-swarm/src",
+    "packages/sovos-mcp-servers/mcp-injection-scanner/src",
+    "packages/sovos-mcp-servers/csoai-governance-crosswalk-mcp/src",
+    "packages/sovos-mcp-servers/eu-ai-act-mcp/src",
+    "packages/sovos-mcp-servers/openmoe-bft/src",
+    "packages/sovos-mcp-servers/sov33-benchmark/src",
+]
+include = ["sovos*"]
 
 [tool.pytest.ini_options]
-testpaths = ["packages/*/tests", "tests"]
-pythonpath = ["packages", "src"]
+testpaths = ["packages"]
+pythonpath = [
+    "packages/sovos-core/src",
+    "packages/sovos-mind/src",
+    "packages/sovos-jspace-hyperbolic/src",
+    "packages/sovos-jspace-pipeline/src",
+    "packages/sovos-jspace-move/src",
+    "packages/sovos-info-geometry/src",
+    "packages/sovos-quantum-bridge/src",
+    "packages/sovos-quantum-router/src",
+    "packages/sovos-qtask-converter/src",
+    "packages/sovos-cpo-calculator/src",
+    "packages/sovos-certification-loop/src",
+    "packages/sovos-alchemist/src",
+    "packages/sovos-stigmergy/src",
+    "packages/sovos-alphabet/src",
+    "packages/sovos-a2a-swarm/src",
+    "packages/sovos-mcp-servers/mcp-injection-scanner/src",
+    "packages/sovos-mcp-servers/csoai-governance-crosswalk-mcp/src",
+    "packages/sovos-mcp-servers/eu-ai-act-mcp/src",
+    "packages/sovos-mcp-servers/openmoe-bft/src",
+    "packages/sovos-mcp-servers/sov33-benchmark/src",
+]
+addopts = "-ra"
