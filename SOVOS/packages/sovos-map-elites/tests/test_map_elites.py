@@ -126,6 +126,7 @@ def test_me09_safe_mutate_rejects_catastrophic():
 
 def test_me10_iterate_grows_archive():
     """The iterate() loop grows the archive over iterations."""
+    np.random.seed(42)
     me = HyperbolicMapElites(grid_size=8, coord_dim=4)
     for _ in range(5):
         v = np.random.randn(4) * 0.3
@@ -155,6 +156,7 @@ def test_me11_chain_id_audit():
 
 def test_me12_stats_report():
     """stats() returns a complete picture."""
+    np.random.seed(42)  # ensure reproducibility regardless of prior tests
     me = HyperbolicMapElites(grid_size=4, coord_dim=4)
     for _ in range(3):
         v = np.random.randn(4) * 0.3
