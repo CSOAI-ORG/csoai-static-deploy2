@@ -64,12 +64,30 @@ echo "  found $N specialists: $SPECS_AVAILABLE" | tee -a "$LOG"
 
 # mergekit's ShardedTensorIndex.from_disk() only looks for
 # 'model.safetensors' or 'pytorch_model.bin'. PEFT adapters save
-# 'adapter_model.safetensors'. Symlink it for mergekit to find.
+# 'adapter_model.safetensors'. We pre-merge each adapter into the base
+# model via PEFT into <spec>/<s>/merged_full/ which mergekit can read.
+# Run that materialize step first if missing.
 for s in $SPECS_AVAILABLE; do
   AD="$SPEC/$s/adapter"
-  if [ -f "$AD/adapter_model.safetensors" ] && [ ! -e "$AD/model.safetensors" ]; then
-    ln -sf adapter_model.safetensors "$AD/model.safetensors"
-    echo "  $s: symlinked adapter_model.safetensors -> model.safetensors" | tee -a "$LOG"
+  MF="$SPEC/$s/merged_full"
+  if [ -f "$AD/adapter_model.safetensors" ] && [ ! -f "$MF/model.safetensors" ]; then
+    echo "  $s: materializing PEFT adapter into full model..." | tee -a "$LOG"
+    BASE_MODEL="$BASE_MODEL" ADAPTER_PATH="$AD" OUT_PATH="$MF" /usr/bin/python3 << 'PYEOF'
+import os, shutil
+from peft import PeftModel
+from transformers import AutoModelForCausalLM
+import torch
+base = AutoModelForCausalLM.from_pretrained(os.environ["BASE_MODEL"], dtype=torch.float16, low_cpu_mem_usage=True)
+pm = PeftModel.from_pretrained(base, os.environ["ADAPTER_PATH"], is_trainable=False)
+m = pm.merge_and_unload()
+os.makedirs(os.environ["OUT_PATH"], exist_ok=True)
+m.save_pretrained(os.environ["OUT_PATH"], safe_serialization=True)
+for fn in ["tokenizer.json", "tokenizer_config.json", "chat_template.jinja", "generation_config.json"]:
+    src = os.path.join(os.environ["ADAPTER_PATH"], fn)
+    if os.path.exists(src):
+        shutil.copy2(src, os.environ["OUT_PATH"])
+print(f"  materialized -> {os.environ['OUT_PATH']}")
+PYEOF
   fi
 done
 
@@ -113,7 +131,7 @@ CFG_TMP=/workspace/.mergekit_$(date +%H%M%S).yml
       care)       w=0.30 ;;
       *)          w=0.25 ;;
     esac
-    echo "  - model: $SPEC/$s/adapter"
+    echo "  - model: $SPEC/$s/merged_full"
     echo "    weight: $w"
   done
 } > "$CFG_TMP"
