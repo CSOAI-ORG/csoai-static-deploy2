@@ -1,56 +1,71 @@
 #!/usr/bin/env bash
-# Inject model_type= into each specialist's adapter config so mergekit can
-# recognise it as Qwen2 when loading from AutoConfig.
-#
-# mergekit refuses adapters that lack model_type: "ValueError:
-# Unrecognized model in /root/specialists_v1/<S>/adapter. Should have a
-# `model_type` key in its config.json." The adapter trainer omits
-# model_type when saving PEFT adapters; this script patches the
-# adapter_config.json (which is now JSON) to include it, so mergekit
-# can resolve them as Qwen2Architecture.
+# Create config.json alongside adapter_config.json for each specialist.
+# mergekit's AutoConfig.from_pretrained looks for config.json, NOT
+# adapter_config.json. So we synthesise a Qwen2-shaped config.json
+# so mergekit can resolve the architecture.
 set -e
 set -u
 
 SPEC="/root/specialists_v1"
-LOG="/workspace/fix_adapter_config_$(date +%Y%m%d_%H%M%S).log"
+LOG="/workspace/fix_adapter_config_full_$(date +%Y%m%d_%H%M%S).log"
 
-echo "[$(date -Iseconds)] patching adapter configs → add model_type=qwen2" | tee -a "$LOG"
-
-# Pre-flight: also ensure the SYSTEM mergekit python is on PATH (not the venv).
-PYTHON_FOR_MERGE="/usr/bin/python3"
-if ! "$PYTHON_FOR_MERGE" -c 'from mergekit.scripts.run_yaml import main' 2>/dev/null; then
-  echo "  WARN: system python lacks mergekit — skipping merge verification" | tee -a "$LOG"
-fi
+echo "[$(date -Iseconds)] patching adapter configs: model_type + config.json" | tee -a "$LOG"
 
 for s in governance safety privacy care; do
-  CFG="$SPEC/$s/adapter/adapter_config.json"
-  [ -f "$CFG" ] || { echo "  $s: no adapter_config.json — skipping" | tee -a "$LOG"; continue; }
+  ACFG="$SPEC/$s/adapter/adapter_config.json"
+  CFG="$SPEC/$s/adapter/config.json"
+  [ -f "$ACFG" ] || { echo "  $s: no adapter_config.json — skipping" | tee -a "$LOG"; continue; }
 
-  # If already has model_type, skip
-  if grep -q '"model_type"' "$CFG"; then
-    echo "  $s: already has model_type — skipping" | tee -a "$LOG"
+  if [ -f "$CFG" ] && grep -q '"model_type"' "$CFG" 2>/dev/null; then
+    echo "  $s: config.json already exists with model_type — skipping" | tee -a "$LOG"
     continue
   fi
 
-  echo "  $s: patching $CFG" | tee -a "$LOG"
-
-  # Inline python via env var (avoids heredoc-quoting issues entirely)
-  CFG_PATH="$CFG" "$PYTHON_FOR_MERGE" -c '
-import json, os, sys
-path = os.environ["CFG_PATH"]
-d = json.load(open(path))
-d["model_type"] = "qwen2"
-d["architectures"] = ["Qwen2ForCausalLM"]
-# peft adapter_config.json omits the base-model shape; mergekit needs
-# these to resolve AutoConfig via qwen2.AutoConfig.
-d.setdefault("hidden_size", 896)
-d.setdefault("intermediate_size", 4864)
-d.setdefault("num_hidden_layers", 24)
-d.setdefault("num_attention_heads", 14)
-d.setdefault("vocab_size", 151936)
-json.dump(d, open(path, "w"), indent=2, sort_keys=True)
-print(f"  patched {path}")
+  echo "  $s: writing config.json from qwen2 model shape" | tee -a "$LOG"
+  CFG_PATH="$CFG" ACFG_PATH="$ACFG" /usr/bin/python3 -c '
+import json, os
+cfg_path = os.environ["CFG_PATH"]
+acfg_path = os.environ["ACFG_PATH"]
+# PEFT adapter_config.json has the LoRA hyperparams; build a parallel
+# config.json with the qwen2 base-model shape (Qwen2.5-0.5B-Instruct
+# defaults from the transformers source).
+config = {
+    "architectures": ["Qwen2ForCausalLM"],
+    "attention_dropout": 0.0,
+    "bos_token_id": 151643,
+    "eos_token_id": 151645,
+    "hidden_act": "silu",
+    "hidden_size": 896,
+    "initializer_range": 0.02,
+    "intermediate_size": 4864,
+    "max_position_embeddings": 32768,
+    "max_window_layers": 24,
+    "model_type": "qwen2",
+    "num_attention_heads": 14,
+    "num_hidden_layers": 24,
+    "num_key_value_heads": 2,
+    "rms_norm_eps": 1e-06,
+    "rope_theta": 1000000.0,
+    "sliding_window": 32768,
+    "tie_word_embeddings": True,
+    "torch_dtype": "float16",
+    "transformers_version": "4.46.0",
+    "use_cache": True,
+    "use_sliding_window": False,
+    "vocab_size": 151936,
+}
+# Carry through base-model_name_or_path if present
+try:
+    a = json.load(open(acfg_path))
+    if "base_model_name_or_path" in a:
+        config["base_model_name_or_path"] = a["base_model_name_or_path"]
+except Exception:
+    pass
+with open(cfg_path, "w") as f:
+    json.dump(config, f, indent=2, sort_keys=True)
+    f.write("\n")
+print(f"  wrote {cfg_path}")
 '
 done
 
-echo "[$(date -Iseconds)] done — adapter configs are now qwen2" | tee -a "$LOG"
+echo "[$(date -Iseconds)] done — every adapter now has model_type + config.json" | tee -a "$LOG"
