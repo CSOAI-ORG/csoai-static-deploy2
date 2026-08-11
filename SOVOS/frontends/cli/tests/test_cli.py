@@ -10,11 +10,10 @@ _THIS_DIR = Path(__file__).resolve().parent          # .../frontends/cli/tests
 _CLI_DIR = _THIS_DIR.parent                          # .../frontends/cli
 CLI = _CLI_DIR / "src" / "sovos_cli.py"
 ROOT = _CLI_DIR.parent.parent                         # SOVOS/
-sys.path.insert(0, str(ROOT))  # so test_cli.py can be imported from CLI dir
+sys.path.insert(0, str(ROOT))
 
 
 def _run(args, expect_code=0):
-    """Run sov CLI as subprocess, return (returncode, stdout, stderr)."""
     cmd = ["python3", str(CLI)] + args
     pkg_root = ROOT / "packages"
     env_path = (
@@ -66,7 +65,6 @@ def test_run():
 
 def test_audit():
     rc, out, _ = _run(["audit"])
-    # audit may return non-zero if tests fail; we just check it RAN
     assert "pytest" in out or "passed" in out.lower() or "failed" in out.lower()
     print(f"  ✅ sov audit ran (exit={rc})")
 
@@ -94,23 +92,47 @@ def test_ras_offline():
     print(f"  ✅ sov ras --offline works (law→crosswalk→chain→OSCAL)")
 
 
-def test_ras_help_lists_measure():
-    """The ras subcommand advertises --measure mode."""
+def test_ras_help_lists_modes():
+    """The ras subcommand advertises --measure + --canary."""
     rc, out, _ = _run(["ras", "--help"])
     assert rc == 0
     assert "--measure" in out
     assert "REAL measurement" in out
-    print("  ✅ sov ras --help shows --measure mode")
+    assert "--canary" in out
+    print("  ✅ sov ras --help shows --measure mode + --canary gate")
+
+
+def test_ras_canary_gate_passes():
+    """sov ras --canary: instrument discriminates known-good vs known-bad."""
+    pkg_root = ROOT / "packages"
+    extra = (
+        f"{pkg_root}/sovos-arena/src:"
+        f"{pkg_root}/sovos-signal-index/src"
+    )
+    import os
+    env = {**os.environ, "PYTHONPATH": extra}
+    cmd = ["python3", str(CLI), "ras", "--canary", "--per-axis", "32",
+           "--threshold", "1.0"]
+    r = subprocess.run(cmd, capture_output=True, text=True, env=env)
+    out = r.stdout
+    assert r.returncode == 0, (
+        f"canary failed rc={r.returncode} stderr={r.stderr}\nstdout={out}"
+    )
+    assert "CANARY GATE PASSED" in out
+    assert "disjoint" in out
+    print(f"  ✅ sov ras --canary gate passed (good vs bad separated)")
 
 
 def main():
     tests = [test_help, test_score, test_run, test_audit,
-             test_ras_offline, test_ras_help_lists_measure]
+             test_ras_offline, test_ras_help_lists_modes,
+             test_ras_canary_gate_passes]
     failed = 0
     for t in tests:
         try:
             t()
         except Exception as e:
+            import traceback; traceback.print_exc()
             print(f"  ❌ FAIL: {e}")
             failed += 1
     if failed:
