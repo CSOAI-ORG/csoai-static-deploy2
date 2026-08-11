@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<title>Single Source Regulations Office AI Deep-Dive Pack</title>
+<style>*{margin:0;padding:0;box-sizing:border-box}
+body{background:#0a0a0a;color:#e0e0e0;font-family:system-ui,sans-serif;line-height:1.6}
+a{color:#00ff88;text-decoration:none}a:hover{text-decoration:underline}
+.hero{background:linear-gradient(135deg,#0a0a0a,#1a1a2e,#0d1117);padding:40px 20px;text-align:center;border-bottom:2px solid #00ff88}
+.hero h1{font-size:2em;color:#00ff88;margin-bottom:6px}
+.sub{color:#888;font-size:.95em;margin-bottom:10px}
+.bg{display:inline-block;background:#1a1a2e;border:1px solid #00ff88;padding:4px 12px;border-radius:20px;color:#00ff88;font-size:.8em;margin:3px}
+nav{background:#111;padding:10px 20px;border-bottom:1px solid #222;position:sticky;top:0;z-index:100;overflow-x:auto;white-space:nowrap}
+nav a{display:inline-block;padding:4px 10px;margin:2px;background:#1a1a2e;border:1px solid #333;border-radius:6px;font-size:.75em;color:#00ff88;transition:all .2s}
+nav a:hover{background:#00ff88;color:#0a0a0a;text-decoration:none}
+.c{max-width:1200px;margin:0 auto;padding:20px}
+.s{margin:28px 0;background:#1a1a2e;border:1px solid #222;border-radius:12px;overflow:hidden}
+.sh{background:linear-gradient(90deg,#1a1a2e,#0d1117);padding:14px 18px;border-bottom:1px solid #333}
+.sh h2{color:#00ff88;font-size:1.2em;margin-bottom:2px}
+.en{color:#666;font-size:.78em}
+.sb{padding:18px}
+.g{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px;margin-bottom:14px}
+.p{background:#0d1117;border:1px solid #222;border-radius:8px;padding:12px;transition:border-color .2s}
+.p:hover{border-color:#00ff88}
+.p h3{color:#00ff88;font-size:.84em;margin-bottom:5px}
+.p p{color:#aaa;font-size:.78em;line-height:1.5}
+.mt{background:#111;border:1px solid #222;border-radius:8px;padding:12px;margin-top:10px}
+.mt h4{color:#00ff88;font-size:.82em;margin-bottom:6px}
+.ml{display:flex;flex-wrap:wrap;gap:5px}
+.t{background:#1a1a2e;border:1px solid #00ff88;padding:2px 9px;border-radius:16px;font-size:.72em;color:#00ff88}
+footer{background:#111;border-top:2px solid #00ff88;padding:20px;text-align:center;margin-top:28px}
+.br{font-size:1.1em;color:#00ff88;font-weight:700;margin-bottom:5px}
+footer p{color:#666;font-size:.75em;line-height:1.5}
+.cr{margin-top:10px;padding-top:10px;border-top:1px solid #222;color:#555;font-size:.72em}
+@media(max-width:768px){.hero h1{font-size:1.4em}.g{grid-template-columns:1fr}}</style>
+<link href="https://www.csoai.org/defoneos-ssro-single-source-regulations-office-ai-deep-dive-pack.html.llm.json" rel="alternate" title="LLM representation of this page" type="application/llm+json"/>
+<meta content="/llms.txt" name="llms-txt"/>
+<meta content="human-authored, machine-verifiable, Ed25519-signed" name="ai-content-declaration"/>
+<meta content="CSOAI Ltd (2026). Single Source Regulations Office AI Deep-Dive Pack. https://www.csoai.org/defoneos-ssro-single-source-regulations-office-ai-deep-dive-pack.html" name="citation-policy"/>
+<meta content="2026-08-11T03:10:56+00:00" name="revised"/>
+<meta content="2026-08-11T03:10:56+00:00" property="article:modified_time"/>
+<meta content="DEFONEOS — Single Source Regulations Office AI Deep-Dive Pack. A sovereign, audit-grade CSOAI surface: measurement, not certification — every figure traces to a signed, verifiable record." name="description"/>
+<link href="https://www.csoai.org/defoneos-ssro-single-source-regulations-office-ai-deep-dive-pack.html" rel="canonical"/>
+<meta content="Single Source Regulations Office AI Deep-Dive Pack" property="og:title"/>
+<meta content="DEFONEOS — Single Source Regulations Office AI Deep-Dive Pack. A sovereign, audit-grade CSOAI surface: measurement, not certification — every figure traces to a signed, verifiable record." property="og:description"/>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"Single Source Regulations Office AI Deep-Dive Pack","url":"https://www.csoai.org/defoneos-ssro-single-source-regulations-office-ai-deep-dive-pack.html","publisher":{"@type":"Organization","name":"CSOAI Ltd","url":"https://csoai.org"}}</script>
+</head>
+<body>
+<div class="hero">
+<h1>🛡️ Single Source Regulations Office AI Deep-Dive Pack</h1>
+<p class="sub">DEFONEOS — UK Sovereign Public Services OS</p>
+<div><span class="bg">12 Entry Points</span><span class="bg">8 AI Priorities</span><span class="bg">6 MCP Tools</span></div>
+<p>96 AI capability mappings × 6 MCP integrations — regulation of single-source defence procurement, pricing, profit rates and contract reporting for UK Defence</p>
+</div>
+<nav>
+<a href="#ep1">Single Source Contract </a><a href="#ep2">Pricing & Profit Rate D</a><a href="#ep3">Cost Accounting & Allow</a><a href="#ep4">Contract Reporting & Da</a><a href="#ep5">Referral & Dispute Dete</a><a href="#ep6">Contract Profit Rate Me</a><a href="#ep7">Quarterly Reporting Fra</a><a href="#ep8">Independent Review & St</a><a href="#ep9">Defence Procurement Ove</a><a href="#ep10">Benchmarking & Market E</a><a href="#ep11">Statutory Compliance & </a><a href="#ep12">Governance & Parliament</a>
+</nav>
+<div class="c">
+<div class="s" id="ep1"><div class="sh"><span class="en">Entry Point 01</span><h2>Single Source Contract Regulation</h2></div><div class="sb"><div class="g"><div class="p"><h3>Compliance Automation</h3><p>Automated Single Source Regulations Office regulation Single Source Contract Regulation validation checking Defence Reform Act 2014 against Single Source Contract Regulation statutory and rulebook requirements. No Single Source Regulations Office regulation activity proceeds without a signed, auditable compliance record.</p></div>
+<div class="p"><h3>Risk Detection & Early Warning</h3><p>Detection of Single Source Contract Regulation risk breaches, control gaps, and early-warning indicators affecting Single Source Regulations Office regulation performance and accountability to Parliament.</p></div>
+<div class="p"><h3>Natural Language Policy Analysis</h3><p>NLP analysis of Single Source Contract Regulation legislation, policy statements, guidance, and parliamentary record against the full statutory framework and regulatory expectations.</p></div>
+<div class="p"><h3>Predictive Analytics</h3><p>Single Source Contract Regulation risk and workload forecasting from trend indicators, demand signals, and operational metrics to support prioritisation and decision-support.</p></div>
+<div class="p"><h3>Evidence Synthesis</h3><p>Single Source Contract Regulation evidence, inspection findings, returns, and stakeholder submissions assembled into decision dossiers for review by accountable officers and the BFT council.</p></div>
+<div class="p"><h3>Document Intelligence</h3><p>Extraction from Single Source Contract Regulation documents, statutory returns, and correspondence for end-to-end Single Source Regulations Office regulation lifecycle tracking and audit trails.</p></div>
+<div class="p"><h3>Stakeholder Reporting</h3><p>Single Source Contract Regulation dashboards reporting coverage, performance, and outcomes to ministers, the board, and Parliament.</p></div>
+<div class="p"><h3>Real-time Monitoring</h3><p>Single Source Contract Regulation pipeline tracking, submission cycles, and continuous surveillance of Single Source Regulations Office regulation activity for sovereign, verifiable oversight.</p></div></div><div class="mt"><h4>MCP Tools</h4><div class="ml"><span class="t">mcp-bailii</span>
+<span class="t">mcp-govuk-search</span>
+<span class="t">mcp-hansard-search</span>
+<span class="t">mcp-uk-courts</span>
+<span class="t">mcp-uk-legislation</span>
+<span class="t">mcp-uk-regulator-intel</span></div></div></div></div><div class="s" id="ep2"><div class="sh"><span class="en">Entry Point 02</span><h2>Pricing & Profit Rate Determination</h2></div><div class="sb"><div class="g"><div class="p"><h3>Compliance Automation</h3><p>Automated Single Source Regulations Office regulation Pricing & Profit Rate Determination validation checking Defence Reform Act 2014 against Pricing & Profit Rate Determination statutory and rulebook requirements. No Single Source Regulations Office regulation activity proceeds without a signed, auditable compliance record.</p></div>
+<div class="p"><h3>Risk Detection & Early Warning</h3><p>Detection of Pricing & Profit Rate Determination risk breaches, control gaps, and early-warning indicators affecting Single Source Regulations Office regulation performance and accountability to Parliament.</p></div>
+<div class="p"><h3>Natural Language Policy Analysis</h3><p>NLP analysis of Pricing & Profit Rate Determination legislation, policy statements, guidance, and parliamentary record against the full statutory framework and regulatory expectations.</p></div>
+<div class="p"><h3>Predictive Analytics</h3><p>Pricing & Profit Rate Determination risk and workload forecasting from trend indicators, demand signals, and operational metrics to support prioritisation and decision-support.</p></div>
+<div class="p"><h3>Evidence Synthesis</h3><p>Pricing & Profit Rate Determination evidence, inspection findings, returns, and stakeholder submissions assembled into decision dossiers for review by accountable officers and the BFT council.</p></div>
+<div class="p"><h3>Document Intelligence</h3><p>Extraction from Pricing & Profit Rate Determination documents, statutory returns, and correspondence for end-to-end Single Source Regulations Office regulation lifecycle tracking and audit trails.</p></div>
+<div class="p"><h3>Stakeholder Reporting</h3><p>Pricing & Profit Rate Determination dashboards reporting coverage, performance, and outcomes to ministers, the board, and Parliament.</p></div>
+<div class="p"><h3>Real-time Monitoring</h3><p>Pricing & Profit Rate Determination pipeline tracking, submission cycles, and continuous surveillance of Single Source Regulations Office regulation activity for sovereign, verifiable oversight.</p></div></div><div class="mt"><h4>MCP Tools</h4><div class="ml"><span class="t">mcp-bailii</span>
+<span class="t">mcp-govuk-search</span>
+<span class="t">mcp-hansard-search</span>
+<span class="t">mcp-uk-courts</span>
+<span class="t">mcp-uk-legislation</span>
+<span class="t">mcp-uk-regulator-intel</span></div></div></div></div><div class="s" id="ep3"><div class="sh"><span class="en">Entry Point 03</span><h2>Cost Accounting & Allowable Costs</h2></div><div class="sb"><div class="g"><div class="p"><h3>Compliance Automation</h3><p>Automated Single Source Regulations Office regulation Cost Accounting & Allowable Costs validation checking Defence Reform Act 2014 against Cost Accounting & Allowable Costs statutory and rulebook requirements. No Single Source Regulations Office regulation activity proceeds without a signed, auditable compliance record.</p></div>
+<div class="p"><h3>Risk Detection & Early Warning</h3><p>Detection of Cost Accounting & Allowable Costs risk breaches, control gaps, and early-warning indicators affecting Single Source Regulations Office regulation performance and accountability to Parliament.</p></div>
+<div class="p"><h3>Natural Language Policy Analysis</h3><p>NLP analysis of Cost Accounting & Allowable Costs legislation, policy statements, guidance, and parliamentary record against the full statutory framework and regulatory expectations.</p></div>
+<div class="p"><h3>Predictive Analytics</h3><p>Cost Accounting & Allowable Costs risk and workload forecasting from trend indicators, demand signals, and operational metrics to support prioritisation and decision-support.</p></div>
+<div class="p"><h3>Evidence Synthesis</h3><p>Cost Accounting & Allowable Costs evidence, inspection findings, returns, and stakeholder submissions assembled into decision dossiers for review by accountable officers and the BFT council.</p></div>
+<div class="p"><h3>Document Intelligence</h3><p>Extraction from Cost Accounting & Allowable Costs documents, statutory returns, and correspondence for end-to-end Single Source Regulations Office regulation lifecycle tracking and audit trails.</p></div>
+<div class="p"><h3>Stakeholder Reporting</h3><p>Cost Accounting & Allowable Costs dashboards reporting coverage, performance, and outcomes to ministers, the board, and Parliament.</p></div>
+<div class="p"><h3>Real-time Monitoring</h3><p>Cost Accounting & Allowable Costs pipeline tracking, submission cycles, and continuous surveillance of Single Source Regulations Office regulation activity for sovereign, verifiable oversight.</p></div></div><div class="mt"><h4>MCP Tools</h4><div class="ml"><span class="t">mcp-bailii</span>
+<span class="t">mcp-govuk-search</span>
+<span class="t">mcp-hansard-search</span>
+<span class="t">mcp-uk-courts</span>
+<span class="t">mcp-uk-legislation</span>
+<span class="t">mcp-uk-regulator-intel</span></div></div></div></div><div class="s" id="ep4"><div class="sh"><span class="en">Entry Point 04</span><h2>Contract Reporting & Data Return Compliance</h2></div><div class="sb"><div class="g"><div class="p"><h3>Compliance Automation</h3><p>Automated Single Source Regulations Office regulation Contract Reporting & Data Return Compliance validation checking Defence Reform Act 2014 against Contract Reporting & Data Return Compliance statutory and rulebook requirements. No Single Source Regulations Office regulation activity proceeds without a signed, auditable compliance record.</p></div>
+<div class="p"><h3>Risk Detection & Early Warning</h3><p>Detection of Contract Reporting & Data Return Compliance risk breaches, control gaps, and early-warning indicators affecting Single Source Regulations Office regulation performance and accountability to Parliament.</p></div>
+<div class="p"><h3>Natural Language Policy Analysis</h3><p>NLP analysis of Contract Reporting & Data Return Compliance legislation, policy statements, guidance, and parliamentary record against the full statutory framework and regulatory expectations.</p></div>
+<div class="p"><h3>Predictive Analytics</h3><p>Contract Reporting & Data Return Compliance risk and workload forecasting from trend indicators, demand signals, and operational metrics to support prioritisation and decision-support.</p></div>
+<div class="p"><h3>Evidence Synthesis</h3><p>Contract Reporting & Data Return Compliance evidence, inspection findings, returns, and stakeholder submissions assembled into decision dossiers for review by accountable officers and the BFT council.</p></div>
+<div class="p"><h3>Document Intelligence</h3><p>Extraction from Contract Reporting & Data Return Compliance documents, statutory returns, and correspondence for end-to-end Single Source Regulations Office regulation lifecycle tracking and audit trails.</p></div>
+<div class="p"><h3>Stakeholder Reporting</h3><p>Contract Reporting & Data Return Compliance dashboards reporting coverage, performance, and outcomes to ministers, the board, and Parliament.</p></div>
+<div class="p"><h3>Real-time Monitoring</h3><p>Contract Reporting & Data Return Compliance pipeline tracking, submission cycles, and continuous surveillance of Single Source Regulations Office regulation activity for sovereign, verifiable oversight.</p></div></div><div class="mt"><h4>MCP Tools</h4><div class="ml"><span class="t">mcp-bailii</span>
+<span class="t">mcp-govuk-search</span>
+<span class="t">mcp-hansard-search</span>
+<span class="t">mcp-uk-courts</span>
+<span class="t">mcp-uk-legislation</span>
+<span class="t">mcp-uk-regulator-intel</span></div></div></div></div><div class="s" id="ep5"><div class="sh"><span class="en">Entry Point 05</span><h2>Referral & Dispute Determination</h2></div><div class="sb"><div class="g"><div class="p"><h3>Compliance Automation</h3><p>Automated Single Source Regulations Office regulation Referral & Dispute Determination validation checking Defence Reform Act 2014 against Referral & Dispute Determination statutory and rulebook requirements. No Single Source Regulations Office regulation activity proceeds without a signed, auditable compliance record.</p></div>
+<div class="p"><h3>Risk Detection & Early Warning</h3><p>Detection of Referral & Dispute Determination risk breaches, control gaps, and early-warning indicators affecting Single Source Regulations Office regulation performance and accountability to Parliament.</p></div>
+<div class="p"><h3>Natural Language Policy Analysis</h3><p>NLP analysis of Referral & Dispute Determination legislation, policy statements, guidance, and parliamentary record against the full statutory framework and regulatory expectations.</p></div>
+<div class="p"><h3>Predictive Analytics</h3><p>Referral & Dispute Determination risk and workload forecasting from trend indicators, demand signals, and operational metrics to support prioritisation and decision-support.</p></div>
+<div class="p"><h3>Evidence Synthesis</h3><p>Referral & Dispute Determination evidence, inspection findings, returns, and stakeholder submissions assembled into decision dossiers for review by accountable officers and the BFT council.</p></div>
+<div class="p"><h3>Document Intelligence</h3><p>Extraction from Referral & Dispute Determination documents, statutory returns, and correspondence for end-to-end Single Source Regulations Office regulation lifecycle tracking and audit trails.</p></div>
+<div class="p"><h3>Stakeholder Reporting</h3><p>Referral & Dispute Determination dashboards reporting coverage, performance, and outcomes to ministers, the board, and Parliament.</p></div>
+<div class="p"><h3>Real-time Monitoring</h3><p>Referral & Dispute Determination pipeline tracking, submission cycles, and continuous surveillance of Single Source Regulations Office regulation activity for sovereign, verifiable oversight.</p></div></div><div class="mt"><h4>MCP Tools</h4><div class="ml"><span class="t">mcp-bailii</span>
+<span class="t">mcp-govuk-search</span>
+<span class="t">mcp-hansard-search</span>
+<span class="t">mcp-uk-courts</span>
+<span class="t">mcp-uk-legislation</span>
+<span class="t">mcp-uk-regulator-intel</span></div></div></div></div><div class="s" id="ep6"><div class="sh"><span class="en">Entry Point 06</span><h2>Contract Profit Rate Methodology</h2></div><div class="sb"><div class="g"><div class="p"><h3>Compliance Automation</h3><p>Automated Single Source Regulations Office regulation Contract Profit Rate Methodology validation checking Defence Reform Act 2014 against Contract Profit Rate Methodology statutory and rulebook requirements. No Single Source Regulations Office regulation activity proceeds without a signed, auditable compliance record.</p></div>
+<div class="p"><h3>Risk Detection & Early Warning</h3><p>Detection of Contract Profit Rate Methodology risk breaches, control gaps, and early-warning indicators affecting Single Source Regulations Office regulation performance and accountability to Parliament.</p></div>
+<div class="p"><h3>Natural Language Policy Analysis</h3><p>NLP analysis of Contract Profit Rate Methodology legislation, policy statements, guidance, and parliamentary record against the full statutory framework and regulatory expectations.</p></div>
+<div class="p"><h3>Predictive Analytics</h3><p>Contract Profit Rate Methodology risk and workload forecasting from trend indicators, demand signals, and operational metrics to support prioritisation and decision-support.</p></div>
+<div class="p"><h3>Evidence Synthesis</h3><p>Contract Profit Rate Methodology evidence, inspection findings, returns, and stakeholder submissions assembled into decision dossiers for review by accountable officers and the BFT council.</p></div>
+<div class="p"><h3>Document Intelligence</h3><p>Extraction from Contract Profit Rate Methodology documents, statutory returns, and correspondence for end-to-end Single Source Regulations Office regulation lifecycle tracking and audit trails.</p></div>
+<div class="p"><h3>Stakeholder Reporting</h3><p>Contract Profit Rate Methodology dashboards reporting coverage, performance, and outcomes to ministers, the board, and Parliament.</p></div>
+<div class="p"><h3>Real-time Monitoring</h3><p>Contract Profit Rate Methodology pipeline tracking, submission cycles, and continuous surveillance of Single Source Regulations Office regulation activity for sovereign, verifiable oversight.</p></div></div><div class="mt"><h4>MCP Tools</h4><div class="ml"><span class="t">mcp-bailii</span>
+<span class="t">mcp-govuk-search</span>
+<span class="t">mcp-hansard-search</span>
+<span class="t">mcp-uk-courts</span>
+<span class="t">mcp-uk-legislation</span>
+<span class="t">mcp-uk-regulator-intel</span></div></div></div></div><div class="s" id="ep7"><div class="sh"><span class="en">Entry Point 07</span><h2>Quarterly Reporting Framework</h2></div><div class="sb"><div class="g"><div class="p"><h3>Compliance Automation</h3><p>Automated Single Source Regulations Office regulation Quarterly Reporting Framework validation checking Defence Reform Act 2014 against Quarterly Reporting Framework statutory and rulebook requirements. No Single Source Regulations Office regulation activity proceeds without a signed, auditable compliance record.</p></div>
+<div class="p"><h3>Risk Detection & Early Warning</h3><p>Detection of Quarterly Reporting Framework risk breaches, control gaps, and early-warning indicators affecting Single Source Regulations Office regulation performance and accountability to Parliament.</p></div>
+<div class="p"><h3>Natural Language Policy Analysis</h3><p>NLP analysis of Quarterly Reporting Framework legislation, policy statements, guidance, and parliamentary record against the full statutory framework and regulatory expectations.</p></div>
+<div class="p"><h3>Predictive Analytics</h3><p>Quarterly Reporting Framework risk and workload forecasting from trend indicators, demand signals, and operational metrics to support prioritisation and decision-support.</p></div>
+<div class="p"><h3>Evidence Synthesis</h3><p>Quarterly Reporting Framework evidence, inspection findings, returns, and stakeholder submissions assembled into decision dossiers for review by accountable officers and the BFT council.</p></div>
+<div class="p"><h3>Document Intelligence</h3><p>Extraction from Quarterly Reporting Framework documents, statutory returns, and correspondence for end-to-end Single Source Regulations Office regulation lifecycle tracking and audit trails.</p></div>
+<div class="p"><h3>Stakeholder Reporting</h3><p>Quarterly Reporting Framework dashboards reporting coverage, performance, and outcomes to ministers, the board, and Parliament.</p></div>
+<div class="p"><h3>Real-time Monitoring</h3><p>Quarterly Reporting Framework pipeline tracking, submission cycles, and continuous surveillance of Single Source Regulations Office regulation activity for sovereign, verifiable oversight.</p></div></div><div class="mt"><h4>MCP Tools</h4><div class="ml"><span class="t">mcp-bailii</span>
+<span class="t">mcp-govuk-search</span>
+<span class="t">mcp-hansard-search</span>
+<span class="t">mcp-uk-courts</span>
+<span class="t">mcp-uk-legislation</span>
+<span class="t">mcp-uk-regulator-intel</span></div></div></div></div><div class="s" id="ep8"><div class="sh"><span class="en">Entry Point 08</span><h2>Independent Review & Statutory Guidance</h2></div><div class="sb"><div class="g"><div class="p"><h3>Compliance Automation</h3><p>Automated Single Source Regulations Office regulation Independent Review & Statutory Guidance validation checking Defence Reform Act 2014 against Independent Review & Statutory Guidance statutory and rulebook requirements. No Single Source Regulations Office regulation activity proceeds without a signed, auditable compliance record.</p></div>
+<div class="p"><h3>Risk Detection & Early Warning</h3><p>Detection of Independent Review & Statutory Guidance risk breaches, control gaps, and early-warning indicators affecting Single Source Regulations Office regulation performance and accountability to Parliament.</p></div>
+<div class="p"><h3>Natural Language Policy Analysis</h3><p>NLP analysis of Independent Review & Statutory Guidance legislation, policy statements, guidance, and parliamentary record against the full statutory framework and regulatory expectations.</p></div>
+<div class="p"><h3>Predictive Analytics</h3><p>Independent Review & Statutory Guidance risk and workload forecasting from trend indicators, demand signals, and operational metrics to support prioritisation and decision-support.</p></div>
+<div class="p"><h3>Evidence Synthesis</h3><p>Independent Review & Statutory Guidance evidence, inspection findings, returns, and stakeholder submissions assembled into decision dossiers for review by accountable officers and the BFT council.</p></div>
+<div class="p"><h3>Document Intelligence</h3><p>Extraction from Independent Review & Statutory Guidance documents, statutory returns, and correspondence for end-to-end Single Source Regulations Office regulation lifecycle tracking and audit trails.</p></div>
+<div class="p"><h3>Stakeholder Reporting</h3><p>Independent Review & Statutory Guidance dashboards reporting coverage, performance, and outcomes to ministers, the board, and Parliament.</p></div>
+<div class="p"><h3>Real-time Monitoring</h3><p>Independent Review & Statutory Guidance pipeline tracking, submission cycles, and continuous surveillance of Single Source Regulations Office regulation activity for sovereign, verifiable oversight.</p></div></div><div class="mt"><h4>MCP Tools</h4><div class="ml"><span class="t">mcp-bailii</span>
+<span class="t">mcp-govuk-search</span>
+<span class="t">mcp-hansard-search</span>
+<span class="t">mcp-uk-courts</span>
+<span class="t">mcp-uk-legislation</span>
+<span class="t">mcp-uk-regulator-intel</span></div></div></div></div><div class="s" id="ep9"><div class="sh"><span class="en">Entry Point 09</span><h2>Defence Procurement Oversight</h2></div><div class="sb"><div class="g"><div class="p"><h3>Compliance Automation</h3><p>Automated Single Source Regulations Office regulation Defence Procurement Oversight validation checking Defence Reform Act 2014 against Defence Procurement Oversight statutory and rulebook requirements. No Single Source Regulations Office regulation activity proceeds without a signed, auditable compliance record.</p></div>
+<div class="p"><h3>Risk Detection & Early Warning</h3><p>Detection of Defence Procurement Oversight risk breaches, control gaps, and early-warning indicators affecting Single Source Regulations Office regulation performance and accountability to Parliament.</p></div>
+<div class="p"><h3>Natural Language Policy Analysis</h3><p>NLP analysis of Defence Procurement Oversight legislation, policy statements, guidance, and parliamentary record against the full statutory framework and regulatory expectations.</p></div>
+<div class="p"><h3>Predictive Analytics</h3><p>Defence Procurement Oversight risk and workload forecasting from trend indicators, demand signals, and operational metrics to support prioritisation and decision-support.</p></div>
+<div class="p"><h3>Evidence Synthesis</h3><p>Defence Procurement Oversight evidence, inspection findings, returns, and stakeholder submissions assembled into decision dossiers for review by accountable officers and the BFT council.</p></div>
+<div class="p"><h3>Document Intelligence</h3><p>Extraction from Defence Procurement Oversight documents, statutory returns, and correspondence for end-to-end Single Source Regulations Office regulation lifecycle tracking and audit trails.</p></div>
+<div class="p"><h3>Stakeholder Reporting</h3><p>Defence Procurement Oversight dashboards reporting coverage, performance, and outcomes to ministers, the board, and Parliament.</p></div>
+<div class="p"><h3>Real-time Monitoring</h3><p>Defence Procurement Oversight pipeline tracking, submission cycles, and continuous surveillance of Single Source Regulations Office regulation activity for sovereign, verifiable oversight.</p></div></div><div class="mt"><h4>MCP Tools</h4><div class="ml"><span class="t">mcp-bailii</span>
+<span class="t">mcp-govuk-search</span>
+<span class="t">mcp-hansard-search</span>
+<span class="t">mcp-uk-courts</span>
+<span class="t">mcp-uk-legislation</span>
+<span class="t">mcp-uk-regulator-intel</span></div></div></div></div><div class="s" id="ep10"><div class="sh"><span class="en">Entry Point 10</span><h2>Benchmarking & Market Efficiency</h2></div><div class="sb"><div class="g"><div class="p"><h3>Compliance Automation</h3><p>Automated Single Source Regulations Office regulation Benchmarking & Market Efficiency validation checking Defence Reform Act 2014 against Benchmarking & Market Efficiency statutory and rulebook requirements. No Single Source Regulations Office regulation activity proceeds without a signed, auditable compliance record.</p></div>
+<div class="p"><h3>Risk Detection & Early Warning</h3><p>Detection of Benchmarking & Market Efficiency risk breaches, control gaps, and early-warning indicators affecting Single Source Regulations Office regulation performance and accountability to Parliament.</p></div>
+<div class="p"><h3>Natural Language Policy Analysis</h3><p>NLP analysis of Benchmarking & Market Efficiency legislation, policy statements, guidance, and parliamentary record against the full statutory framework and regulatory expectations.</p></div>
+<div class="p"><h3>Predictive Analytics</h3><p>Benchmarking & Market Efficiency risk and workload forecasting from trend indicators, demand signals, and operational metrics to support prioritisation and decision-support.</p></div>
+<div class="p"><h3>Evidence Synthesis</h3><p>Benchmarking & Market Efficiency evidence, inspection findings, returns, and stakeholder submissions assembled into decision dossiers for review by accountable officers and the BFT council.</p></div>
+<div class="p"><h3>Document Intelligence</h3><p>Extraction from Benchmarking & Market Efficiency documents, statutory returns, and correspondence for end-to-end Single Source Regulations Office regulation lifecycle tracking and audit trails.</p></div>
+<div class="p"><h3>Stakeholder Reporting</h3><p>Benchmarking & Market Efficiency dashboards reporting coverage, performance, and outcomes to ministers, the board, and Parliament.</p></div>
+<div class="p"><h3>Real-time Monitoring</h3><p>Benchmarking & Market Efficiency pipeline tracking, submission cycles, and continuous surveillance of Single Source Regulations Office regulation activity for sovereign, verifiable oversight.</p></div></div><div class="mt"><h4>MCP Tools</h4><div class="ml"><span class="t">mcp-bailii</span>
+<span class="t">mcp-govuk-search</span>
+<span class="t">mcp-hansard-search</span>
+<span class="t">mcp-uk-courts</span>
+<span class="t">mcp-uk-legislation</span>
+<span class="t">mcp-uk-regulator-intel</span></div></div></div></div><div class="s" id="ep11"><div class="sh"><span class="en">Entry Point 11</span><h2>Statutory Compliance & Enforcement</h2></div><div class="sb"><div class="g"><div class="p"><h3>Compliance Automation</h3><p>Automated Single Source Regulations Office regulation Statutory Compliance & Enforcement validation checking Defence Reform Act 2014 against Statutory Compliance & Enforcement statutory and rulebook requirements. No Single Source Regulations Office regulation activity proceeds without a signed, auditable compliance record.</p></div>
+<div class="p"><h3>Risk Detection & Early Warning</h3><p>Detection of Statutory Compliance & Enforcement risk breaches, control gaps, and early-warning indicators affecting Single Source Regulations Office regulation performance and accountability to Parliament.</p></div>
+<div class="p"><h3>Natural Language Policy Analysis</h3><p>NLP analysis of Statutory Compliance & Enforcement legislation, policy statements, guidance, and parliamentary record against the full statutory framework and regulatory expectations.</p></div>
+<div class="p"><h3>Predictive Analytics</h3><p>Statutory Compliance & Enforcement risk and workload forecasting from trend indicators, demand signals, and operational metrics to support prioritisation and decision-support.</p></div>
+<div class="p"><h3>Evidence Synthesis</h3><p>Statutory Compliance & Enforcement evidence, inspection findings, returns, and stakeholder submissions assembled into decision dossiers for review by accountable officers and the BFT council.</p></div>
+<div class="p"><h3>Document Intelligence</h3><p>Extraction from Statutory Compliance & Enforcement documents, statutory returns, and correspondence for end-to-end Single Source Regulations Office regulation lifecycle tracking and audit trails.</p></div>
+<div class="p"><h3>Stakeholder Reporting</h3><p>Statutory Compliance & Enforcement dashboards reporting coverage, performance, and outcomes to ministers, the board, and Parliament.</p></div>
+<div class="p"><h3>Real-time Monitoring</h3><p>Statutory Compliance & Enforcement pipeline tracking, submission cycles, and continuous surveillance of Single Source Regulations Office regulation activity for sovereign, verifiable oversight.</p></div></div><div class="mt"><h4>MCP Tools</h4><div class="ml"><span class="t">mcp-bailii</span>
+<span class="t">mcp-govuk-search</span>
+<span class="t">mcp-hansard-search</span>
+<span class="t">mcp-uk-courts</span>
+<span class="t">mcp-uk-legislation</span>
+<span class="t">mcp-uk-regulator-intel</span></div></div></div></div><div class="s" id="ep12"><div class="sh"><span class="en">Entry Point 12</span><h2>Governance & Parliamentary Accountability</h2></div><div class="sb"><div class="g"><div class="p"><h3>Compliance Automation</h3><p>Automated Single Source Regulations Office regulation Governance & Parliamentary Accountability validation checking Defence Reform Act 2014 against Governance & Parliamentary Accountability statutory and rulebook requirements. No Single Source Regulations Office regulation activity proceeds without a signed, auditable compliance record.</p></div>
+<div class="p"><h3>Risk Detection & Early Warning</h3><p>Detection of Governance & Parliamentary Accountability risk breaches, control gaps, and early-warning indicators affecting Single Source Regulations Office regulation performance and accountability to Parliament.</p></div>
+<div class="p"><h3>Natural Language Policy Analysis</h3><p>NLP analysis of Governance & Parliamentary Accountability legislation, policy statements, guidance, and parliamentary record against the full statutory framework and regulatory expectations.</p></div>
+<div class="p"><h3>Predictive Analytics</h3><p>Governance & Parliamentary Accountability risk and workload forecasting from trend indicators, demand signals, and operational metrics to support prioritisation and decision-support.</p></div>
+<div class="p"><h3>Evidence Synthesis</h3><p>Governance & Parliamentary Accountability evidence, inspection findings, returns, and stakeholder submissions assembled into decision dossiers for review by accountable officers and the BFT council.</p></div>
+<div class="p"><h3>Document Intelligence</h3><p>Extraction from Governance & Parliamentary Accountability documents, statutory returns, and correspondence for end-to-end Single Source Regulations Office regulation lifecycle tracking and audit trails.</p></div>
+<div class="p"><h3>Stakeholder Reporting</h3><p>Governance & Parliamentary Accountability dashboards reporting coverage, performance, and outcomes to ministers, the board, and Parliament.</p></div>
+<div class="p"><h3>Real-time Monitoring</h3><p>Governance & Parliamentary Accountability pipeline tracking, submission cycles, and continuous surveillance of Single Source Regulations Office regulation activity for sovereign, verifiable oversight.</p></div></div><div class="mt"><h4>MCP Tools</h4><div class="ml"><span class="t">mcp-bailii</span>
+<span class="t">mcp-govuk-search</span>
+<span class="t">mcp-hansard-search</span>
+<span class="t">mcp-uk-courts</span>
+<span class="t">mcp-uk-legislation</span>
+<span class="t">mcp-uk-regulator-intel</span></div></div></div></div>
+</div>
+<footer>
+<div class="br">DEFONEOS — UK Sovereign Public Services OS</div>
+<p>Open-source sovereign AI governance for Single Source Regulations Office. Built for audit-grade, signed, neutral UK-sovereign compliance.</p>
+<p>AUKUS-compatible. Defence Reform Act 2014 / Single Source Contract Regulations 2014 / Public Contracts Regulations 2015 / Defence and Security Public Contracts Regulations 2011.</p>
+<div class="cr">© 2026 CSOAI Ltd (UK 16939677) · meok-defoneos · csoai-defoneos · DEFONEOS-SEAL</div>
+</footer>
+</body>
+</html>

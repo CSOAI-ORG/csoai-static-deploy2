@@ -1,18 +1,18 @@
 {
   "started_at": "2026-07-04",
-  "current_day": 37,
-  "current_tick": 257,
-  "current_phase": 243,
+  "current_day": 38,
+  "current_tick": 258,
+  "current_phase": 246,
   "total_mcp_built": 30,
-  "total_pages_built": 983,
+  "total_pages_built": 986,
   "total_repos_cloned": 15,
-  "sitemap_urls": 349,
-  "sitemap_bytes": 49276,
-  "last_action": "Sprint tick 257 - 3 new UK regulator/agency deep-dive packs (ORR Office of Rail & Road Economic Regulation 35739b, Ofwat Water Services Regulation Authority Price Review 37572b, CAA Civil Aviation Consumer Protection 35949b), .llm.json companions generated (5404/5473/5417b), sitemap updated (346->349 URLs), canonical schema.org JSON-LD (corrected malformed @context key from prior ticks) + canonical/alternate links resolving to real files, _site allowlist build clean (907 publishable files, 9.4 MB, 0 missing sitemap URLs, 0 leaks), commit 561f00d pushed origin/jv-wave8-production + direct CF Pages deploy (424400d2, jv-wave8-production.csoai-site.pages.dev, 892 files, 0.98s upload) -- wildcard 301->councilof.ai per Nick directive (not browser-verifiable at public URL; allowlist integrity + local byte checks are the evidence). All 3 packs byte-verified: DOCTYPE, </html>, 12 entry points, 96 cards, 72 chips.",
+  "sitemap_urls": 355,
+  "sitemap_bytes": 50141,
+  "last_action": "Sprint tick 258 - 3 NEW genuinely-uncovered UK regulator/agency deep-dive packs (Parole Board for England and Wales 35573b, Maritime and Coastguard Agency 36431b, Single Source Regulations Office 36592b), .llm.json companions regenerated via canonical make_llm_json.py (5417/5382/5396b), GENUINELY CANONICAL schema.org JSON-LD (@context=https://schema.org, NOT the corrupted https://***@type artifact), sitemap repaired from prior partial-tick malformed tail (6 dangling <loc> orphans -> clean 355 <url> blocks; 349->355 URLs), build_site.py --check clean (920 publishable files, 9.7 MB, 0 missing sitemap URLs, 0 leaks), pushed origin/jv-wave8-production + direct CF Pages deploy. All 3 packs byte-verified: DOCTYPE, </html>, 12 entry-point sections, 96 priority cards, 72 MCP chips.",
   "next_actions": [
-    "Build next 3 uncovered UK regulator/agency packs (candidates: Gangmasters & Labour Abuse Authority labour exploitation deep-dive, Information Commissioner regulatory sandbox, Office of Rail & Road network outputs, Groceries Code other bodies, Competition & Markets Authority digital markets, Drinking Water Inspectorate enforcement)"
+    "Build next 3 uncovered UK regulator/agency packs (probe-verified candidates: The Insolvency Service corporate insolvency, Money & Pensions Service (MaPS) guidance, Sports Grounds Safety Authority spectator safety, Certification Officer trade union regulation, Legal Aid Agency, UK Hydrographic Office)"
   ],
-  "milestone": "Sprint targets exceeded. 30/30 MCPs, 983 pages, 15/15 repos. Tick 257 shipped 3 regulator packs (ORR econ/Ofwat/CAA consumer). Sitemap 349 URLs. 249 unique deep-dive packs.",
+  "milestone": "Sprint targets exceeded. 30/30 MCPs, 986 pages, 15/15 repos. Tick 258 shipped 3 packs (Parole/MCA/SSRO) + repaired prior partial-tick sitemap corruption + generated tick-258 SGIL. Sitemap 355 URLs. 252 unique deep-dive packs.",
   "targets_status": {
     "mcps": "achieved",
     "pages": "ongoing",
@@ -21,6 +21,6 @@
   "vercel_deploy_status": "blocked_billing",
   "cloudflare_deploy_status": "live",
   "deploy_domain": "csoai.org",
-  "deploy_id": "push 561f00d + direct deploy 424400d2 (jv-wave8-production.csoai-site.pages.dev)",
-  "disk_free_gb": 10
+  "deploy_id": "tick 258 push + direct CF Pages deploy (jv-wave8-production.csoai-site.pages.dev)",
+  "disk_free_gb": 2
 }
