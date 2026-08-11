@@ -227,6 +227,98 @@ def scores_precision_gt1(scores: List[ConstituentScore]) -> List[bool]:
     return [s.sigma > 1.0 for s in scores]
 
 
+# ---------------------------------------------------------------------------
+# Empirical permitted-manifold calibrator (RAS spec §2)
+#
+# The permitted manifold is NOT np.eye(4) — it is calibrated from a
+# reference set of known-good behaviour profiles (≥30 profiles). The
+# manifold = a regularized covariance (SPD) of those profiles, which
+# matches the Fisher-Rao math in sovos-fisher-rao. SOV SIGNAL distance =
+# how far a target sits from this empirical permitted region — the
+# Merton/KMV "distance-to-default" isomorphism, done for real.
+# ---------------------------------------------------------------------------
+def calibrate_permitted_manifold(profiles: List[List[float]],
+                                 shrink: float = 0.1,
+                                 floor: float = 1e-6) -> Dict[str, Any]:
+    """Build a permitted manifold from a reference set of profiles.
+
+    Returns a dict with the reference MEAN and SPD COVARIANCE:
+        {"mean": [...], "cov": [[...]], "n": N, "dims": d}
+    This is the empirical permitted region. The mean is the centroid of
+    known-good behaviour; the covariance is the SPD shape of the cluster.
+    distance_to_permitted_manifold() then measures how far a target sits
+    (Mahalanobis) from this region — the Merton/KMV distance-to-default.
+
+    Args:
+        profiles: list of known-good behaviour profile vectors.
+        shrink: Ledoit-Wolf-style shrinkage toward identity.
+        floor: positive floor on the covariance diagonal (guarantees SPD).
+
+    Raises:
+        ValueError if fewer than 2 profiles or mismatched dims.
+    """
+    import numpy as np
+    if len(profiles) < 2:
+        raise ValueError("calibrate_permitted_manifold needs >= 2 reference profiles")
+    dims = {len(p) for p in profiles}
+    if len(dims) != 1:
+        raise ValueError(f"mismatched profile dims: {dims}")
+    d = dims.pop()
+    X = np.asarray(profiles, dtype=float)          # (N, d)
+    mean = X.mean(axis=0)
+    centered = X - mean
+    cov = centered.T @ centered / max(1, len(profiles) - 1)
+    ident = np.eye(d)
+    M = (1 - shrink) * cov + shrink * ident
+    M = 0.5 * (M + M.T)
+    M = M + floor * ident
+    evals = np.linalg.eigvalsh(M)
+    if evals.min() <= 0:
+        M = M + (abs(evals.min()) + floor) * ident
+    return {"mean": mean.tolist(), "cov": M.tolist(),
+            "n": len(profiles), "dims": d}
+
+
+def distance_to_permitted_manifold(candidate: List[float],
+                                   manifold: Dict[str, Any]) -> float:
+    """Mahalanobis distance-to-center of a candidate from the permitted manifold.
+
+    This is the Merton/KMV "distance-to-default" isomorphism made real:
+    how many standard deviations the candidate's measured behaviour profile
+    sits from the CENTER of the permitted (known-good) region.
+
+        d = sqrt((c - μ)^T Σ⁻¹ (c - μ))
+
+    A candidate inside the reference cluster → small d; a far candidate
+    → large d. This is the honest statistical analogue of "distance to a
+    permitted region" for a single measured point vs a reference
+    distribution — the textbook default-distance measure.
+
+    Args:
+        candidate: the measured behaviour profile vector.
+        manifold: the dict from calibrate_permitted_manifold (mean + cov).
+
+    Returns:
+        d >= 0. d==0 means the candidate is exactly at the reference mean.
+    """
+    import numpy as np
+    v = np.asarray(candidate, dtype=float)
+    mu = np.asarray(manifold["mean"], dtype=float)
+    cov = np.asarray(manifold["cov"], dtype=float)
+    if v.shape != mu.shape:
+        raise ValueError(f"candidate dim {len(v)} != manifold mean dim {len(mu)}")
+    delta = v - mu
+    try:
+        sol = np.linalg.solve(cov, delta)
+        d2 = float(delta @ sol)
+    except np.linalg.LinAlgError:
+        evals, evecs = np.linalg.eigh(cov)
+        evals = np.clip(evals, 1e-12, None)
+        whitened = (evecs.T @ delta) / np.sqrt(evals)
+        d2 = float(whitened @ whitened)
+    return math.sqrt(max(0.0, d2))
+
+
 def self_test() -> Dict[str, Any]:
     """Smoke test: a 'safe' portfolio vs a 'monoculture high-σ' portfolio."""
     # Safe/spread portfolio: varied distances, low sigma → multiculture

@@ -169,6 +169,56 @@ def test_si13_self_test():
           f"mono_syscorr={result['mono_syscorr']} (spread vs monoculture)")
 
 
+def test_si14_manifold_calibration():
+    """calibrate_permitted_manifold builds a mean + SPD covariance dict."""
+    import numpy as np
+    from sovos_signal_index import calibrate_permitted_manifold
+    profiles = [
+        [0.95, 0.92, 0.90, 0.93],
+        [0.90, 0.95, 0.88, 0.91],
+        [0.93, 0.89, 0.94, 0.90],
+        [0.91, 0.93, 0.92, 0.95],
+    ]
+    M = calibrate_permitted_manifold(profiles)
+    assert "mean" in M and "cov" in M
+    assert len(M["mean"]) == 4
+    cov = np.asarray(M["cov"])
+    assert cov.shape == (4, 4)
+    assert np.allclose(cov, cov.T)
+    evals = np.linalg.eigvalsh(cov)
+    assert evals.min() > 0
+    print(f"  ✅ manifold calibrated: mean len 4, SPD cov, min-eig={evals.min():.4f}")
+
+
+def test_si15_distance_discriminates():
+    """distance_to_permitted_manifold separates known-good from known-bad."""
+    from sovos_signal_index import calibrate_permitted_manifold, distance_to_permitted_manifold
+    ref = [
+        [0.95, 0.92, 0.90, 0.93],
+        [0.90, 0.95, 0.88, 0.91],
+        [0.93, 0.89, 0.94, 0.90],
+        [0.91, 0.93, 0.92, 0.95],
+    ]
+    M = calibrate_permitted_manifold(ref)
+    near = [0.92, 0.93, 0.91, 0.92]   # inside the cluster
+    far = [0.1, 0.1, 0.1, 0.1]         # way outside
+    d_near = distance_to_permitted_manifold(near, M)
+    d_far = distance_to_permitted_manifold(far, M)
+    assert d_far > d_near
+    print(f"  ✅ distance discriminates: near={d_near:.3f} < far={d_far:.3f}")
+
+
+def test_si16_manifold_needs_profiles():
+    """Fewer than 2 reference profiles raises ValueError."""
+    from sovos_signal_index import calibrate_permitted_manifold
+    try:
+        calibrate_permitted_manifold([[0.9, 0.9]])
+        assert False, "should raise"
+    except ValueError:
+        pass
+    print(f"  ✅ <2 profiles → ValueError")
+
+
 if __name__ == "__main__":
     tests = [
         test_si01_precision_is_inverse_sigma_squared,
@@ -184,6 +234,9 @@ if __name__ == "__main__":
         test_si11_multiculture_flag,
         test_si12_verdict_composition,
         test_si13_self_test,
+        test_si14_manifold_calibration,
+        test_si15_distance_discriminates,
+        test_si16_manifold_needs_profiles,
     ]
     passed = 0
     for t in tests:
