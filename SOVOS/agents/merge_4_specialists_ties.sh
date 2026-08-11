@@ -81,24 +81,20 @@ CFG_TMP=/workspace/.mergekit_$(date +%H%M%S).yml
 } > "$CFG_TMP"
 cat "$CFG_TMP" | tee -a "$LOG"
 
-# Run mergekit. Pod version (verify #mergekit merge) exposes
-# `mergekit-yaml` as the entry point into mergekit.scripts.run_yaml.
-# Older docs name `mergekit.mergekit_cli`, which no longer exists.
-# Try (in order): the mergekit binary on PATH, then python -m mergekit.scripts.run_yaml
-# with the system python (preferred) or whichever python we found.
+# Run mergekit. `mergekit-yaml CONFIG_FILE OUT_PATH` takes the OUT_PATH
+# as an explicit positional arg (not via the YAML's `out_path:` field).
+# We pass the YAML as the first arg + the path as the second.
 if command -v mergekit-yaml >/dev/null 2>&1; then
   MERGE_CMD="mergekit-yaml"
-  "$MERGE_CMD" "$CFG_TMP" >> "$LOG" 2>&1 || true
+  echo "[$(date -Iseconds)] running $MERGE_CMD $CFG_TMP $OUT_DIR" | tee -a "$LOG"
+  "$MERGE_CMD" "$CFG_TMP" "$OUT_DIR" >> "$LOG" 2>&1 || true
 elif command -v mergekit >/dev/null 2>&1; then
   MERGE_CMD="mergekit"
-  "$MERGE_CMD" "$CFG_TMP" >> "$LOG" 2>&1 || true
+  echo "[$(date -Iseconds)] running $MERGE_CMD $CFG_TMP $OUT_DIR" | tee -a "$LOG"
+  "$MERGE_CMD" "$CFG_TMP" "$OUT_DIR" >> "$LOG" 2>&1 || true
 else
-  "$PY" -m mergekit.scripts.run_yaml "$CFG_TMP" >> "$LOG" 2>&1 || true
-fi
-# If still empty, try forcing with /usr/local/bin/python3 explicitly
-if [ ! -d "$OUT_DIR" ] || [ -z "$(ls -A $OUT_DIR 2>/dev/null)" ]; then
-  echo "  retrying with /usr/local/bin/python3 + mergekit.scripts.run_yaml" | tee -a "$LOG"
-  /usr/local/bin/python3 -m mergekit.scripts.run_yaml "$CFG_TMP" >> "$LOG" 2>&1 || true
+  echo "[$(date -Iseconds)] running $PY -m mergekit.scripts.run_yaml $CFG_TMP $OUT_DIR" | tee -a "$LOG"
+  "$PY" -m mergekit.scripts.run_yaml "$CFG_TMP" "$OUT_DIR" >> "$LOG" 2>&1 || true
 fi
 
 echo "[$(date -Iseconds)] merge complete → $OUT_DIR" | tee -a "$LOG"
