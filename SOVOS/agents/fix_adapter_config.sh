@@ -29,26 +29,22 @@ for s in governance safety privacy care; do
   # Patch: add model_type and architectures (peft always writes peft
   # only). We add the Qwen2 architecture marker so the AutoConfig
   # resolution goes through qwen2.AutoConfig.
-  # Done as a sed rewrite that preserves JSON syntax.
-  echo "  $s: patching $CFG" | tee -a "$LOG"
+  echo "  $s: patching \$CFG" | tee -a "\$LOG"
   /usr/bin/python3 - << PY
-import json, sys
-p = "$CFG"
-d = json.load(open(p))
+import json, sys, os
+path = "\$CFG"
+d = json.load(open(path))
 if "model_type" not in d:
     d["model_type"] = "qwen2"
 if "architectures" not in d:
     d["architectures"] = ["Qwen2ForCausalLM"]
-# peft adapter_config.json doesn't have the full base model spec;
-# pull the missing keys from the base HF repo at merge-time. For
-# now, stub the keys mergekit's get_architecture_info() needs.
 d.setdefault("hidden_size", 896)
 d.setdefault("intermediate_size", 4864)
 d.setdefault("num_hidden_layers", 24)
 d.setdefault("num_attention_heads", 14)
 d.setdefault("vocab_size", 151936)
-json.dump(d, open(p, "w"), indent=2, sort_keys=True)
-print(f"  patched $p", flush=True)
+json.dump(d, open(path, "w"), indent=2, sort_keys=True)
+print("  patched " + path, flush=True)
 PY
 done
 
