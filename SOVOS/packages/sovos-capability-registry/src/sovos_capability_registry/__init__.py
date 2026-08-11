@@ -30,6 +30,19 @@ REGISTRY_PATH_DEFAULT = (
     / "sov33-capability-registry.json"
 )
 
+JSPACE_DECK_PATH_DEFAULT = (
+    Path(__file__).resolve().parents[5]
+    / "SOVOS"
+    / "data"
+    / "hive"
+    / "jspace_deck.json"
+)
+
+CSPACE_CARD_PATH_DEFAULT = (
+    Path(__file__).resolve().parents[5]
+    / "c_space_card.json"
+)
+
 
 @dataclass(frozen=True)
 class Layer:
@@ -220,12 +233,116 @@ def load_registry(path: Optional[Path] = None) -> Registry:
     )
 
 
+@dataclass(frozen=True)
+class JSpaceCard:
+    card_id: str
+    axis: str
+    piece_type: str  # "Rook" | "Pawn" | "Knight" | "King" | "Queen" | "Bishop"
+    owner: str
+    color: str
+    jspace_position: Dict[str, int]
+    sigil: str
+    size_bytes: int
+    honey_rank: str  # "water" | "milk" | "honey"
+    question: str
+    answer_hash: str
+    source: str
+    value_score: float
+
+
+@dataclass(frozen=True)
+class JSpaceDeck:
+    schema: str
+    count: int
+    cards: List[JSpaceCard]
+
+    @property
+    def axis_distribution(self) -> Dict[str, int]:
+        from collections import Counter
+        return dict(Counter(c.axis for c in self.cards))
+
+    @property
+    def piece_distribution(self) -> Dict[str, int]:
+        from collections import Counter
+        return dict(Counter(c.piece_type for c in self.cards))
+
+    @property
+    def total_value(self) -> float:
+        return sum(c.value_score for c in self.cards)
+
+    def cards_for_axis(self, axis: str) -> List[JSpaceCard]:
+        return [c for c in self.cards if c.axis == axis]
+
+    def cards_for_piece(self, piece: str) -> List[JSpaceCard]:
+        return [c for c in self.cards if c.piece_type == piece]
+
+
+@dataclass(frozen=True)
+class CSpaceCard:
+    """The folded 'honey' C-card — one C-card per J-space deck."""
+    schema: str
+    deck_count: int
+    axis_distribution: Dict[str, int]
+    honey_units: int
+    sigil: str
+    summary: str
+
+
+def load_jspace_deck(path: Optional[Path] = None) -> JSpaceDeck:
+    p = path or JSPACE_DECK_PATH_DEFAULT
+    if not p.exists():
+        raise FileNotFoundError(f"J-space deck not found at {p}")
+    d = json.loads(p.read_text())
+    cards = [JSpaceCard(
+        card_id=c["card_id"],
+        axis=c["axis"],
+        piece_type=c["piece_type"],
+        owner=c["owner"],
+        color=c.get("color", ""),
+        jspace_position=c.get("jspace_position", {}),
+        sigil=c.get("sigil", ""),
+        size_bytes=c.get("size_bytes", 0),
+        honey_rank=c.get("honey_rank", "water"),
+        question=c.get("question", ""),
+        answer_hash=c.get("answer_hash", ""),
+        source=c.get("source", ""),
+        value_score=c.get("value_score", 0.0),
+    ) for c in d.get("cards", [])]
+    return JSpaceDeck(
+        schema=d.get("schema", ""),
+        count=d.get("count", len(cards)),
+        cards=cards,
+    )
+
+
+def load_cspace_card(path: Optional[Path] = None) -> CSpaceCard:
+    p = path or CSPACE_CARD_PATH_DEFAULT
+    if not p.exists():
+        raise FileNotFoundError(f"C-space card not found at {p}")
+    d = json.loads(p.read_text())
+    return CSpaceCard(
+        schema=d.get("schema", "c-space-card/1.0"),
+        deck_count=d.get("deck_count", 0),
+        axis_distribution=d.get("axis_distribution", {}),
+        honey_units=d.get("honey_units", 0),
+        sigil=d.get("sigil", ""),
+        summary=d.get("summary", ""),
+    )
+
+
 __all__ = [
     "Layer",
     "OwemGroup",
     "General",
     "Mcp",
     "Registry",
+    "JSpaceCard",
+    "JSpaceDeck",
+    "CSpaceCard",
     "load_registry",
+    "load_jspace_deck",
+    "load_cspace_card",
     "REGISTRY_PATH_DEFAULT",
+    "JSPACE_DECK_PATH_DEFAULT",
+    "CSPACE_CARD_PATH_DEFAULT",
 ]
