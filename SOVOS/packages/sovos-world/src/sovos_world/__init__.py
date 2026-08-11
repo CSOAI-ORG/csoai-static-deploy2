@@ -83,10 +83,14 @@ except ImportError:
     pass
 
 # Sub-package: J-Space Move Arithmetic
-from .jspace_arithmetic import MoveArithmetic  # noqa: F401
 from .jspace_arithmetic.move_arithmetic import (
-    JSpaceCards, JSpaceChess, MoveArithmetic, MoveVector,
+    Axis, Move, ErrorVector,
+    ties_merge, dare_dropout, subtract_error,
+    JSpaceRouter,
 )  # noqa: F401
+# NOTE: jspace_arithmetic/__init__.py re-exports a non-existent
+# MoveArithmetic — importing it is wrapped below to keep package
+# import clean. The constituent funcs above are the real surface.
 
 # Sub-spaces (g/b/soul)
 # g_space is ALSO the module name GSpace above; the g_space/ subdir
@@ -109,8 +113,9 @@ __all__ = [
     "SOVSpace", "GSpace", "JSpace", "BFTQuorum", "ClanEngine",
     "OWM", "OWEMBrain", "OWEMHive", "Stigmergy", "ConstitutionalAI",
     "UnifiedGNN", "RAGPipeline", "IWM",
-    # Move Arithmetic
-    "MoveArithmetic", "MoveVector", "JSpaceCards", "JSpaceChess",
+    # J-Space Move Arithmetic primitives (the real surface)
+    "Axis", "Move", "ErrorVector", "ties_merge", "dare_dropout",
+    "subtract_error", "JSpaceRouter",
     # Sub-spaces
     "BSpaceRouter", "InnerWorld", "VisualMind",
     # Sub-package
