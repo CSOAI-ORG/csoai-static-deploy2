@@ -17,6 +17,13 @@ set -u
 SPEC="/root/specialists_v1"
 OUT_DIR="/root/merge/oowm_4way_$(date +%Y%m%d_%H%M%S)"
 LOG="/workspace/merge_4way_$(date +%Y%m%d_%H%M%S).log"
+
+# Pre-flight: mergekit refuses adapters without model_type in
+# adapter_config.json. The saved PEFT configs omit it; patch them
+# in-place before building the YAML.
+if [ -x "$(dirname $0)/fix_adapter_config.sh" ]; then
+  bash "$(dirname $0)/fix_adapter_config.sh"
+fi
 # Use the system python / mergekit binary for the merge itself —
 # mergekit's working install is at /usr/local/lib/python3.11/dist-packages
 # (system python 3.11); it is NOT pip-installed into the canonical venv.
