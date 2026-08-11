@@ -62,11 +62,31 @@ fi
 
 echo "  found $N specialists: $SPECS_AVAILABLE" | tee -a "$LOG"
 
-# Dynamic mergekit config (TIES, density 0.5, base = qwen2.5:0.5b-instruct)
+# Dynamic mergekit config (TIES, density 0.5, base = local Qwen2.5-0.5B)
+# mergekit requires a real HF model dir as base_model, NOT an Ollama tag
+# like "qwen2.5:0.5b-instruct". Auto-detect: prefer /root/base_models/
+# (git clone of Qwen2.5-0.5B-Instruct), fall back to other known locations.
+BASE_MODEL=""
+for cand in \
+  /root/base_models/Qwen2.5-0.5B-Instruct \
+  /workspace/base_models/Qwen2.5-0.5B-Instruct \
+  /root/Qwen2.5-0.5B-Instruct; do
+  if [ -f "$cand/config.json" ]; then
+    BASE_MODEL="$cand"
+    break
+  fi
+done
+if [ -z "$BASE_MODEL" ]; then
+  echo "FATAL: no base_model dir with config.json found" | tee -a "$LOG"
+  echo "  expected one of: /root/base_models/Qwen2.5-0.5B-Instruct" | tee -a "$LOG"
+  echo "  fix: git clone https://huggingface.co/Qwen/Qwen2.5-0.5B-Instruct /root/base_models/" | tee -a "$LOG"
+  exit 1
+fi
+echo "  base_model: $BASE_MODEL" | tee -a "$LOG"
 CFG_TMP=/workspace/.mergekit_$(date +%H%M%S).yml
 {
   echo "merge_method: ties"
-  echo "base_model: qwen2.5:0.5b-instruct"
+  echo "base_model: $BASE_MODEL"
   echo "parameters:"
   echo "  density: 0.5"
   echo "  weight: 0.5"
