@@ -43,6 +43,13 @@ if [ -z "$PY" ]; then
 fi
 echo "  python: $PY ($(basename $(dirname $PY)))" | tee -a "$LOG"
 
+# mergekit uses pydantic forward refs (ConfiguredModuleArchitecture
+# contains a torch.dtype field) — importing torch FIRST and calling
+# model_rebuild() avoids 'not fully defined; define `torch`' error.
+"$PY" -c "import torch; from mergekit.plan import ConfiguredModuleArchitecture; ConfiguredModuleArchitecture.model_rebuild(); print('  mergekit pydantic warm-up OK')" 2>&1 | tee -a "$LOG" || {
+  echo "  WARN: pydantic warm-up failed; merge may fail with forward-ref error" | tee -a "$LOG"
+}
+
 mkdir -p /root/merge
 echo "[$(date -Iseconds)] starting 4-way TIES merge → $OUT_DIR" | tee -a "$LOG"
 
