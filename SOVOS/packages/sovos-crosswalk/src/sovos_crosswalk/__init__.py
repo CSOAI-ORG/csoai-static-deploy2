@@ -114,6 +114,31 @@ def load_crosswalk_json(data: List[Dict[str, Any]]) -> CrosswalkAtlas:
     return atlas
 
 
+def from_cellar_docs(docs: List[Any]) -> CrosswalkAtlas:
+    """Seed an atlas from sovos-cellar-ingest LawDocuments (jurisdiction-as-clan).
+
+    Each LawDocument becomes a ControlRow whose `local` is the CELEX (the
+    regulation as a task-vector identity axis) and whose `target` is the
+    legal instrument type + year (a coarse generic mapping — enough to run
+    the obstruction math on "which regulations does each jurisdiction
+    carry", the jurisdiction-as-clan layer of the RAS isomorphism).
+
+    This is the loop-completion: law ingestion (CELLAR) → atlas chart →
+    obstruction analytics. Accepts any object with .celex / .instrument_type
+    / .publication_year (duck-typed), so it works standalone or after
+    ingest_celex().
+    """
+    atlas = CrosswalkAtlas(name="cellar-jurisdiction", source="cellar")
+    for d in docs:
+        celex = getattr(d, "celex", None)
+        if not celex:
+            continue
+        itype = getattr(d, "instrument_type", "Regulation")
+        year = getattr(d, "publication_year", "?")
+        atlas.add(local=celex, target=f"{itype}-{year}", framework="EU-CELLAR")
+    return atlas
+
+
 # ---------------------------------------------------------------------------
 # Alignment analytics (the crosswalk-as-computation)
 # ---------------------------------------------------------------------------

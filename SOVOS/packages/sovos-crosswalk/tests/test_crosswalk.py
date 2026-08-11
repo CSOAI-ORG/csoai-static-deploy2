@@ -8,8 +8,8 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "src"))
 
 from sovos_crosswalk import (
     BUILTIN_EUAI, ControlRow, CrosswalkAtlas,
-    align_cost, builtin_euai_atlas, load_crosswalk_json, obstruction_set,
-    self_test,
+    align_cost, builtin_euai_atlas, from_cellar_docs, load_crosswalk_json,
+    obstruction_set, self_test,
 )
 
 
@@ -141,6 +141,49 @@ def test_cw10_empty_atlas():
     print(f"  ✅ empty atlas: shared=0, obstructed=0")
 
 
+def test_cw11_from_cellar_docs_seeds_atlas():
+    """CELLAR LawDocuments seed an atlas (jurisdiction-as-clan loop)."""
+    class Doc:
+        def __init__(self, celex, itype, year):
+            self.celex = celex
+            self.instrument_type = itype
+            self.publication_year = year
+    docs = [
+        Doc("32024R1689", "Regulation", 2024),   # AI Act
+        Doc("32016R0679", "Regulation", 2016),   # GDPR
+        Doc("32022L2555", "Directive", 2022),    # NIS2
+    ]
+    atlas = from_cellar_docs(docs)
+    assert atlas.name == "cellar-jurisdiction"
+    assert atlas.source == "cellar"
+    assert atlas.controls_covered() == 3
+    # The CELEX is the local (regulation-as-task-vector identity)
+    locals_set = {r.local for r in atlas.rows}
+    assert "32024R1689" in locals_set
+    print(f"  ✅ Cellar docs → atlas: 3 regulations, CELEX as local")
+
+
+def test_cw12_cellar_atlas_obstruction_with_builtin():
+    """Obstruction math runs against a Cellar-derived chart."""
+    class Doc:
+        def __init__(self, celex, itype, year):
+            self.celex = celex
+            self.instrument_type = itype
+            self.publication_year = year
+    cellar = from_cellar_docs([
+        Doc("32024R1689", "Regulation", 2024),
+    ])
+    eu = builtin_euai_atlas()
+    res = obstruction_set(eu, cellar)
+    # The builtin atlas has 13 unique article locals (Art5…) that don't
+    # match CELEX strings, so all 13 obstruct — the sheaf-structure is
+    # computed over unique locals, not row count.
+    assert res["n_obstructed"] == 13
+    assert res["n_shared"] == 0
+    assert res["chain_id"] and len(res["chain_id"]) == 24
+    print(f"  ✅ Cellar vs builtin: obstruction set computed ({res['n_obstructed']} locals obstructed)")
+
+
 if __name__ == "__main__":
     tests = [
         test_cw01_builtin_has_real_content,
@@ -153,6 +196,8 @@ if __name__ == "__main__":
         test_cw08_controlrow_dataclass,
         test_cw09_self_test,
         test_cw10_empty_atlas,
+        test_cw11_from_cellar_docs_seeds_atlas,
+        test_cw12_cellar_atlas_obstruction_with_builtin,
     ]
     passed = 0
     for t in tests:
