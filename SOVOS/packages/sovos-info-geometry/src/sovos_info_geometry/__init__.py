@@ -81,9 +81,16 @@ def spd_geodesic_distance(A: np.ndarray, B: np.ndarray,
     Returns float. CPU fallback if geomstats/torch unavailable.
     """
     if not _HAS_GEOMSTATS:
-        # CPU fallback: log-Euclidean distance
-        # d = ||log(A) - log(B)||_F  (only an approximation of AIRM but valid)
-        return float(np.linalg.norm(np.log(A) - np.log(B)))
+        # CPU fallback: log-Euclidean distance via MATRIX log (not elementwise!)
+        # d = ||logm(A) - logm(B)||_F  (only an approximation of AIRM but valid)
+        # NB: use scipy.linalg.logm — np.log is elementwise and breaks on off-diag
+        from scipy.linalg import logm
+        log_A = logm(np.asarray(A, dtype=np.float64))
+        log_B = logm(np.asarray(B, dtype=np.float64))
+        # Real-part only (logm can return tiny imag parts from numerical noise)
+        log_A = log_A.real
+        log_B = log_B.real
+        return float(np.linalg.norm(log_A - log_B))
     if use_gpu and _HAS_TORCH and torch.cuda.is_available():
         # GPU path: torch eigendecomp is fast; AIRM via eigendecomposition
         A_t = torch.as_tensor(A, dtype=torch.float64, device="cuda")
