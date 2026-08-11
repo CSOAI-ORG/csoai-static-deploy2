@@ -1,118 +1,35 @@
-# SOVOS — The Governance Operating System for AI
+# SOVOS — Sovereign Open World Operating Stack
 
-> **CSOAI Ltd · UK Companies House #16939677**
-> **Series A: £5M at £25M pre-money**
-> **18-month runway to £1M ARR, 50 paying customers**
-
----
-
-## What it is
-
-SOVOS is the first open-source governance operating system that treats **software architecture and neural architecture as isomorphic mathematical objects**.
-
-The same task-vector arithmetic that MergeKit uses to fuse AI models (Ilharco 2023, Yadav 2023, Yu 2023) is applied here to **routing decisions**, **software modules**, and **governance scoring** — producing a self-healing, composable, and visually governable AI infrastructure.
-
-## Why now
-
-EU AI Act Article 50 enforcement began **2 August 2026**. Every AI company that ships into Europe now requires automated, auditable, signed compliance infrastructure. **Zero open-source alternatives exist.**
-
-## The product — three surfaces
-
-| Surface | Audience | Mode |
-|---|---|---|
-| **SOVOS Shell** | Power users, founders | CLI / text-first (no avatar) |
-| **SOVOS Dashboard** | Enterprise compliance officers | Grafana-style J-Space board + audit |
-| **SOVOS Game** | Consumer / mass market | Godot/WebGL 3D chess board |
-
-All three surfaces call the same backend (`api.csoai.org/v1`).
-
-## The technology
-
-| Layer | Component | License |
-|---|---|---|
-| L0 Hardware | NVIDIA H100 (RunPod), DGX Spark, Jetson | n/a |
-| L1 Models | SOVOS Fusion T — MergeKit blend (DeepSeek V4, Kimi K2.6, Llama 3.3, Qwen 2.5, Mistral, Nemotron) | MIT (recipe) |
-| L2 Router | OOWM chess-board router — deterministic, no recursion | MIT |
-| L3 Tools | 26 MCP servers (PyPI-published, 16,300 installs/mo) | MIT |
-| L4 Evaluation | SOV SIGNAL — 12-axis governance index + GovBench 479-item benchmark | MIT |
-| L5 Visual | 3KB converter — model → visual sigil | MIT |
-| L6 Interface | Hermes UI fork — stripped of memory layers, injected with SOVOS brain | MIT |
-
-## The novel IP
-
-**Task vectors for software architecture** — unpublished in academic literature.
-The J-Space Move Arithmetic paper (`papers/arxiv-jspace-move-arithmetic.md`)
-demonstrates TIES-Merge, DARE-Move, and Error-Vector Subtraction applied to
-routing decisions (not neural-network weights). 7/7 tests pass; the algorithm
-eliminates wasted inference on doomed queries.
-
-## The monorepo
+The canonical substrate of CSOAI. **See [`MASTER_MANIFEST.md`](./MASTER_MANIFEST.md) for the complete inventory of all 38 packages, the data layer, the api layer, the deploy layer, the published layer, and the wiring topology.**
 
 ```
 SOVOS/
-├── packages/
-│   ├── sovos-core/             # Router + GSPC + J-Space
-│   ├── sovos-clans/            # 12 clan adapters
-│   ├── sovos-signal/           # 12-axis scoring
-│   ├── sovos-harness/          # GovBench + eval
-│   ├── sovos-c2pa/             # C2PA signing
-│   ├── sovos-3kb/              # Sigil converter
-│   ├── sovos-error-mergekit/   # Crash mining + avoidance
-│   └── sovos-mcp/              # 26 MCP servers
-├── clans/                      # GPU serverless configs (RunPod)
-├── mcp-servers/                # MCP deployment manifests
-├── frontends/                  # CLI / Dashboard / Game skins
-├── models/                     # MergeKit recipes + weights (Git LFS)
-├── infra/                      # Docker / Terraform / Edge
-├── papers/                     # arXiv preprints
-└── docs/                       # One docs site
+├── MASTER_MANIFEST.md           ← start here
+├── packages/                    ← 38 runtime packages (pip install -e .)
+├── data/                        ← operational data (charters, hive)
+├── api/                         ← Vercel serverless endpoints (7)
+├── deploy/                      ← host configs (a100/, m2-deployment-kit/)
+├── frontends/                   ← public HTML surfaces (arenas.html, etc.)
+├── published/                   ← published artefacts (sovereign-wiki/)
+├── pyproject.toml               ← unified install for all 38 packages
+└── README.md                    ← this file
 ```
 
-One repo. One build. `make build && docker compose up`.
+## How a new agent picks this up
 
-## What ships today
+1. **Read `MASTER_MANIFEST.md`** — it tells you every package, where it was absorbed from, where it lives, and what it does.
+2. **Clone the repo** at branch `jv-wave8-production`. Anything you find on a pod under `/workspace/csoai-static-deploy2/` is a **mirror** of this repo. Any pod-side edits that contradict this tree are bugs.
+3. **For A100 pod**: `SOVOS/deploy/a100/README.md` has the bring-up recipe (single command).
+4. **For measurement**: `SOVOS/packages/sovos-arena/` is the measurement front; `SOVOS/packages/sovos-signal-index/` is the Mahalanobis-to-permitted calibration; `SOVOS/packages/sovos-chain/` + `sovos-fisher-rao/` + `sovos-jspace-hyperbolic/` is the chain math; `SOVOS/packages/sovos-oscal/` emits the attestation.
+5. **For the hive kernel (Rust)**: `SOVOS/packages/sovos-hive/rust-kernel/`.
+6. **For public-facing tools**: `arenas.html`, `cpo-calculator.html`, `injection-scanner.html`, `birth.html`, `bus-portal.html`.
 
-- ✅ GSPC scoring engine (12 axes, 5 lifecycle phases, ETSI EN 304 223 backbone)
-- ✅ FastAPI HTTP API for governance evaluation (`/health`, `/matrix`, `/score`)
-- ✅ OOWM router with Nemotron Dream Engine (cloud) + Ollama local fallback
-- ✅ 26 MCP servers published on PyPI (16,300 monthly installs)
-- ✅ J-Space Move Arithmetic: 7/7 tests passing
-- ✅ SOV Hermes plugin (governance hooks for NousResearch/hermes-agent)
-- ✅ 200+ DEFONEOS regulator deep-dive packs on csoai.org
-- ✅ C2PA Contributor Membership (Linux Foundation, Docusign-verified)
+## The 12 GSPC axes (the contract)
 
-## What's pending owner-gated
+`gov, prv, agi, asi, mcp, oss, mach, care, xr, det, art5, swarm` — these
+are the substrate-wide measurement axes. Every package that emits a
+score, an attestation, a chain verdict, or a SIGIL uses this set.
 
-- 🔒 GCP billing re-enable (blocks SOV3 coordination, evac to Oracle)
-- 🔒 sovereign.wiki DNS A-record (1-click)
-- 🔒 OpenRouter API key for Nemotron 3 Ultra live dreams
-- 🔒 GitHub `CSOAI-ORG/SOVOS` repo creation (waiting on owner approval)
-- 🔒 5 LOIs from founding council
-- 🔒 £200K NVIDIA Inception credit (application pending)
+*For the rest, see MASTER_MANIFEST.md.*
 
-## The ask
-
-**£5M Series A at £25M pre-money.**
-
-| Use | Amount | Rationale |
-|---|---|---|
-| Engineering (4 × 12 mo) | £2.0M | Router, clans, MCPs, harness |
-| Sales + BD (2 + 1) | £1.0M | 50 paying customers in 18 mo |
-| Infrastructure (DB, GPU persistent) | £1.0M | PostgreSQL, Qdrant, Redis, GPU |
-| Operations (legal, accounting, council) | £0.5M | UK + EU regulatory coverage |
-| Reserve | £0.5M | 18-month runway |
-
-**18-month milestone:** £1M ARR, 50 paying customers, C2PA SEAL certification, 12 clans live.
-
-## The council
-
-22 members across 6 continents. A global regulatory embassy, not an advisory board.
-
-## Contact
-
-**Nicholas Templeman** · Founder & CEO · governance@csoai.org
-CSOAI Ltd · UK Companies House #16939677 · csoai.org
-
----
-
-*Sovereign by design. Audit-grade by construction. UK-sovereign, AUKUS-compatible.*
+*One tree. One truth. One substrate.*
