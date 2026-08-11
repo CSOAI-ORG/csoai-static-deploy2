@@ -214,15 +214,29 @@ def finding(obs: ChainObservation, implementer_uuid: str) -> Dict[str, Any]:
 def assessment_results(observations: List[ChainObservation],
                        title: str = "SOVOS continuous compliance assessment",
                        implementer_uuid: str = DEFAULT_IMPLEMENTER_UUID,
-                       run_id: Optional[str] = None) -> Dict[str, Any]:
-    """Compose a complete OSCAL `assessment-results` document."""
+                       run_id: Optional[str] = None,
+                       article_zero: bool = False) -> Dict[str, Any]:
+    """Compose a complete OSCAL `assessment-results` document.
+
+    Since v0.2.0 the SSP chain-id is DETERMINISTIC: it hashes the result
+    content (findings/observations structure + title + article-zero),
+    not the random run uuid, so identical assessments reproduce the same
+    audit anchor. The results entry carries article-zero + passed/
+    assessed props for the regulator/insurer reader.
+    """
     ts = datetime.now(timezone.utc).isoformat()
     rid = run_id or _uuid()
+    passed = sum(1 for o in observations if o.is_permitted)
     results_entry = {
         "uuid": rid,
         "title": title,
         "start": ts,
         "end": ts,
+        "props": [
+            {"name": "assessed-entities", "value": str(len(observations))},
+            {"name": "passed", "value": str(passed)},
+            {"name": "article-zero", "value": str(article_zero).lower()},
+        ],
         "local-definitions": {
             "subjects": [
                 {"uuid": str(pyuuid.uuid5(pyuuid.NAMESPACE_URL, o.source)),
@@ -234,10 +248,21 @@ def assessment_results(observations: List[ChainObservation],
         "findings": [finding(o, implementer_uuid) for o in observations],
         "observations": [observation(o, implementer_uuid) for o in observations],
     }
+    # Deterministic chain-id over the content (not the random uuid) —
+    # SOFR-style: the anchor is reproducible from the assessment itself.
+    chain_body = json.dumps({
+        "title": title,
+        "n": len(observations),
+        "passed": passed,
+        "statuses": [("satisfied" if o.is_permitted else "not-satisfied") for o in observations],
+        "article_zero": article_zero,
+    }, sort_keys=True).encode()
+    ssp_chain = hashlib.sha256(chain_body).hexdigest()[:24]
     doc = {
         "oscal-version": OSCAL_VERSION,
         "system-security-plan": {
             "uuid": _uuid(),
+            "chain-id": ssp_chain,
             "metadata": _metadata(implementer_uuid, title, ts),
         },
         "results": [results_entry],
@@ -255,11 +280,13 @@ def dump(doc: Dict[str, Any], pretty: bool = True) -> str:
 def export(observations: List[ChainObservation],
            title: str = "SOVOS continuous compliance assessment",
            implementer_uuid: str = DEFAULT_IMPLEMENTER_UUID,
-           run_id: Optional[str] = None) -> str:
+           run_id: Optional[str] = None,
+           article_zero: bool = False) -> str:
     """Produce an OSCAL assessment-results document as a JSON string."""
     return dump(assessment_results(observations, title=title,
                                    implementer_uuid=implementer_uuid,
-                                   run_id=run_id))
+                                   run_id=run_id,
+                                   article_zero=article_zero))
 
 
 def self_test() -> Dict[str, Any]:

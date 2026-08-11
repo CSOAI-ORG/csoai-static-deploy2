@@ -165,6 +165,38 @@ def test_o12_self_test():
           f"{info['dump_chars']} chars")
 
 
+def test_o13_ssp_chain_id_deterministic():
+    """The SSP chain-id hashes content (not uuid) — reproducible audits."""
+    a = assessment_results([_obs_ok(), _obs_bad()], title="t")
+    b = assessment_results([_obs_ok(), _obs_bad()], title="t")
+    assert a["system-security-plan"]["chain-id"] == b["system-security-plan"]["chain-id"]
+    assert len(a["system-security-plan"]["chain-id"]) == 24
+    print(f"  ✅ SSP chain-id is 24-char hex, deterministic per identical content")
+
+
+def test_o14_article_zero_and_counts_props():
+    """The results entry carries assessed-entities/passed/article-zero props."""
+    doc = assessment_results([_obs_ok(), _obs_bad()], article_zero=True)
+    props = {p["name"]: p["value"] for p in doc["results"][0]["props"]}
+    assert props["assessed-entities"] == "2"
+    assert props["passed"] == "1"
+    assert props["article-zero"] == "true"
+    # Non-article-zero default
+    doc2 = assessment_results([_obs_ok()])
+    p2 = {p["name"]: p["value"] for p in doc2["results"][0]["props"]}
+    assert p2["article-zero"] == "false"
+    print(f"  ✅ props: assessed=2, passed=1, article-zero=true")
+
+
+def test_o15_export_passes_article_zero():
+    """export() propagates article_zero into the JSON."""
+    text = export([_obs_ok(), _obs_bad()], article_zero=True)
+    doc = json.loads(text)
+    props = {p["name"]: p["value"] for p in doc["results"][0]["props"]}
+    assert props["article-zero"] == "true"
+    print(f"  ✅ export() propagates article-zero flag")
+
+
 if __name__ == "__main__":
     tests = [
         test_o01_document_shape,
@@ -179,6 +211,9 @@ if __name__ == "__main__":
         test_o10_missing_distance_raises,
         test_o11_observer_subjects,
         test_o12_self_test,
+        test_o13_ssp_chain_id_deterministic,
+        test_o14_article_zero_and_counts_props,
+        test_o15_export_passes_article_zero,
     ]
     passed = 0
     for t in tests:
