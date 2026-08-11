@@ -9,11 +9,15 @@ import subprocess
 import sys
 import re
 
-proc = subprocess.run(
-    ["python3", "/workspace/a100spec6.sh"] if __file__.endswith("test_spec6.py")
-    else ["python3", "SOVOS/deploy/a100/spec6-e2e.py"],
-    capture_output=True, text=True, cwd="/workspace/csoai-static-deploy2"
-)
+def _run_spec6():
+    """Run the absorbed spec6-e2e.py directly."""
+    return subprocess.run(
+        ["python3", "SOVOS/deploy/a100/spec6-e2e.py"],
+        capture_output=True, text=True,
+        cwd="/workspace/csoai-static-deploy2",
+    )
+
+proc = _run_spec6()
 print(proc.stdout)
 if proc.returncode != 0:
     print("STDERR:", proc.stderr)
