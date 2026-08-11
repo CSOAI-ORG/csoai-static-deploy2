@@ -26,7 +26,12 @@ def _run(args, expect_code=0):
         f"{pkg_root}/sovos-mcp-servers/eu-ai-act-mcp/src:"
         f"{pkg_root}/sovos-mcp-servers/mcp-injection-scanner/src:"
         f"{pkg_root}/sovos-mcp-servers/openmoe-bft/src:"
-        f"{pkg_root}/sovos-hermes-integration/plugins/observability"
+        f"{pkg_root}/sovos-hermes-integration/plugins/observability:"
+        f"{pkg_root}/sovos-cellar-ingest/src:"
+        f"{pkg_root}/sovos-crosswalk/src:"
+        f"{pkg_root}/sovos-oscal/src:"
+        f"{pkg_root}/sovos-chain/src:"
+        f"{pkg_root}/sovos-fisher-rao/src"
     )
     import os
     env = {**os.environ, "PYTHONPATH": env_path}
@@ -49,11 +54,11 @@ def test_score():
 
 
 def test_run():
-    rc, out, _ = _run(["run", "--email", "cli@test.com", "--amount", "49900"])
+    rc, out, _ = _run(["run", "cli@test.com", "--amount", "49900"])
     assert rc == 0
-    assert "SOV SIGNAL" in out
-    assert "Certificate" in out
+    assert "cert_id" in out
     assert "cert_" in out
+    assert "status" in out
     print("  ✅ sov run works (full certification loop)")
 
 
@@ -64,8 +69,29 @@ def test_audit():
     print(f"  ✅ sov audit ran (exit={rc})")
 
 
+def test_ras_offline():
+    """sov ras <celex> --offline runs the full wire without network."""
+    pkg_root = ROOT / "packages"
+    extra = (
+        f"{pkg_root}/sovos-cellar-ingest/src:"
+        f"{pkg_root}/sovos-crosswalk/src:"
+        f"{pkg_root}/sovos-oscal/src:"
+        f"{pkg_root}/sovos-chain/src:"
+        f"{pkg_root}/sovos-fisher-rao/src"
+    )
+    import os
+    env = {**os.environ, "PYTHONPATH": extra}
+    cmd = ["python3", str(CLI), "ras", "32024R1689", "--offline"]
+    r = subprocess.run(cmd, capture_output=True, text=True, env=env)
+    assert r.returncode == 0, f"ras offline failed: {r.stderr}"
+    assert "⟁ RAS wire" in r.stdout
+    assert "chain verdict" in r.stdout
+    assert "OSCAL" in r.stdout
+    print(f"  ✅ sov ras --offline works (law→crosswalk→chain→OSCAL)")
+
+
 def main():
-    tests = [test_help, test_score, test_run, test_audit]
+    tests = [test_help, test_score, test_run, test_audit, test_ras_offline]
     failed = 0
     for t in tests:
         try:

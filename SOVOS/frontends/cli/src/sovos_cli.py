@@ -6,6 +6,8 @@ Commands:
   sov score <text>             Auto-build a record from keywords in <text>
   sov run <email>              Run the certification loop with a customer email
   sov audit                    Run all monorepo tests
+  sov ras <celex> [--offline]  Run the full RAS wire: law → crosswalk → chain
+                                 → OSCAL assessment-results
 
 v0.2.0 changes:
 - Fixed `--keys` flag that prints the 13 ETSI principle keys + a sample record
@@ -125,9 +127,10 @@ def cmd_run(args: argparse.Namespace) -> int:
     govbench = GovBenchRunner()
     c2pa = C2PASigner()
     proof = ProofOfAIStub()
-    result = run_certification_loop(stripe, orders, runpod, clan, govbench, c2pa, proof, payload)
-    print(f"  cert_id: {result.get('cert_id', 'N/A')}")
-    print(f"  status: {result.get('status', 'N/A')}")
+    result = run_certification_loop(payload, stripe, orders, runpod, clan,
+                                    govbench, c2pa, proof)
+    print(f"  cert_id: {result.certificate.certificate_id}")
+    print(f"  status: {result.order.status}")
     return 0
 
 
@@ -145,6 +148,69 @@ def cmd_audit(args: argparse.Namespace) -> int:
         print(f"  FAIL: pytest exit {result.returncode}")
         return result.returncode
     print("  ✅ All tests pass")
+    return 0
+
+
+def cmd_ras(args: argparse.Namespace) -> int:
+    """Run the full RAS wire: law → crosswalk → chain → OSCAL.
+
+    sov ras 32024R1689 [--offline]
+
+    Steps:
+      1. Ingest the CELEX from CELLAR (live) or build a stub (offline).
+      2. Seed a crosswalk atlas from the law document.
+      3. Run a chain verdict against a permitted manifold.
+      4. Export the verdict to an OSCAL assessment-results document.
+    """
+    try:
+        import numpy as np
+        from sovos_cellar_ingest import ingest_celex
+        from sovos_crosswalk import from_cellar_docs, builtin_euai_atlas, obstruction_set
+        from sovos_chain import chain
+        from sovos_oscal import ChainObservation, assessment_results, dump
+    except ImportError as e:
+        print(f"  ❌ RAS wire needs the RAS packages (are they on PYTHONPATH?): {e}")
+        return 2
+
+    celex = args.celex.upper()
+    offline = bool(getattr(args, "offline", False))
+    print(f"⟁ RAS wire — {celex} ({'offline stub' if offline else 'live CELLAR'})")
+
+    # 1. Law
+    doc = ingest_celex(celex, fetch=not offline, lang="EN")
+    print(f"  1. law: {doc.instrument_type} {doc.publication_year} — {doc.title[:60]}")
+
+    # 2. Crosswalk
+    atlas = from_cellar_docs([doc])
+    eu = builtin_euai_atlas()
+    obs = obstruction_set(eu, atlas)
+    print(f"  2. crosswalk: {len(atlas.rows)} cellar row(s); "
+          f"obstructed vs builtin={obs['n_obstructed']} shared={obs['n_shared']}")
+
+    # 3. Chain verdict
+    #    A deployer at the permitted manifold (near identity) → compliant.
+    permitted = np.eye(4)
+    candidate = {"vector": [0.95, 0.95, 0.95, 0.95],
+                 "source": "deployer:acme", "layer": "milk"}
+    r = chain(candidate, permitted_state=permitted, threshold=1.0)
+    print(f"  3. chain verdict: d={r.fisher_rao_distance:.4f} "
+          f"permitted={r.is_permitted}")
+
+    # 4. OSCAL
+    obs_o = ChainObservation(
+        chain_id=r.chain_id, source="deployer:acme", layer="milk",
+        vector=list(candidate["vector"]),
+        distance=r.fisher_rao_distance, threshold=1.0,
+        is_permitted=bool(r.is_permitted),
+        control_id=f"CELEX-{celex}",
+    )
+    pkg = assessment_results([obs_o],
+                             title=f"{celex} conformity assessment")
+    print(f"  4. OSCAL: oscal-version={pkg['oscal-version']}, "
+          f"ssp-chain-id={pkg['system-security-plan'].get('chain-id','')}")
+    if offline:
+        print()
+        print(dump(pkg))
     return 0
 
 
@@ -169,6 +235,11 @@ def main() -> int:
 
     p_audit = sub.add_parser("audit", help="Run all monorepo tests")
     p_audit.set_defaults(func=cmd_audit)
+
+    p_ras = sub.add_parser("ras", help="Run the full RAS wire: law → crosswalk → chain → OSCAL")
+    p_ras.add_argument("celex", help="CELEX id, e.g. 32024R1689 (EU AI Act)")
+    p_ras.add_argument("--offline", action="store_true", help="Use an offline law stub (no CELLAR fetch)")
+    p_ras.set_defaults(func=cmd_ras)
 
     args = parser.parse_args()
     return args.func(args)
