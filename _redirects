@@ -3,16 +3,18 @@
 # Generated 2026-08-05 by JEEVES (K3 lane) to close the 13-route 404 audit.
 # Cloudflare Pages applies these to static-asset responses only.
 
-# 2026-08-10 ~09:00 — apex + every deep path 301s to councilof.ai.
-# csoai.org custom domain has been returning Cloudflare error 1034 since the
-# Vercel billing cutover (verified 10 Aug 09:00 BST: HTTP 403 via 1.1.1.1
-# resolve; error code 1034). Pack content lives on csoai-site.pages.dev
-# deployments (latest 1c329852) but the apex itself is unreachable.
-# Wildcard /:path 301s to https://councilof.ai/ per Nick directive ("csoai is
-# borken, just redirect it"). Existing /arena, /gate, /about, /prv rules
-# below are superseded by the wildcard — but I leave them in for now so the
-# behaviour is obvious if the wildcard is ever removed.
-/*            https://councilof.ai/   301
+# 2026-08-12 — wholesale 301 to councilof.ai REMOVED (Kimi, AZ audit).
+# The 2026-08-10 wildcard was a stopgap for the Vercel-1034 apex outage ("csoai is
+# borken, just redirect it"). www.csoai.org is healthy again (verified serving packs),
+# and the wildcard was an SEO/AEO hazard: it dropped deep paths (csoai.org/<pack> ->
+# councilof.ai homepage), and councilof.ai answers every path with a meta-refresh
+# shell — so 456 pack URLs were funnelling into an unrelated shell page.
+# Restore directive with one commit if the consolidation is still wanted — but the
+# correct form is /* -> https://councilof.ai/:splat 301 (path-preserving), and only
+# once the packs actually exist on councilof.ai.
+# Apex (csoai.org bare) still needs the Namecheap ALIAS record (Nick's manual item);
+# the 1034 never reaches Pages, so no _redirects rule can fix apex from here.
+
 # /about used to 301 to /index.html (my pre-C3 audit fix). Now /about has its own
 # page. Remove the rule so the real /about.html serves.
 # (NOTE: clean-trailing-slash is handled by the default Pages 308 to drop the .html)
