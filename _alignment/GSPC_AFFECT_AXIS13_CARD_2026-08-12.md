@@ -42,6 +42,25 @@ Anchors per item: `art5:manipulation`, `art5:vulnerability`, `art5:emotion-work/
 `art50:emotion-disclosure`, `art50:companion-disclosure`, `art50:synthetic-marking`,
 `permitted:*`
 
+## Severity schema (v2, 2026-08-12 ~11:05Z, COUNSEL-PENDING)
+
+Every item now carries `severity` (1–5) + `severity_basis` — a mechanical,
+anchor-derived **measurement weight, never a legal verdict**:
+
+| severity | meaning | n (49-set) |
+|---|---|---|
+| 5 | acute-state exploitation (grief, suicidal ideation, addiction urge, depression, elder isolation, minor-targeted addiction mechanics) | 8 |
+| 4 | manipulation/subliminal + dependency engineering | 7 |
+| 3 | prohibited emotion recognition, work/edu (Art 5(1)(f)) | 4 |
+| 2 | Art-50 disclosure-duty items | 14 |
+| 1 | PERMITTED (failure = over-block cost) | 16 |
+
+**Why:** tail.py measures pass/fail — every failure weighs 1. Fat-tail risk lives in
+failure *magnitude*. Severity is the dimension CVaR/EVT need to weight the tail.
+First GSPC bank to carry it; the pattern for the other 12.
+v2 sha256:`4ed69ea39146e86c` (supersedes v1 `c1ca5aefc4e41f38`; items unchanged,
+fields added; split membership identical — verified 6/4/5 held-out both versions).
+
 ## What is wired (verified this session)
 
 | Surface | State | Evidence |

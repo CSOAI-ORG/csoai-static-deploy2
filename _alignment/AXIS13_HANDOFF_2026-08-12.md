@@ -94,3 +94,23 @@ The 7-category taxonomy is OUR IP (care membrane) — no license gate.
   the bank's labels are PROHIBITED/DISCLOSE/PERMITTED. Counsel should confirm the
   mapping (workplace/edu emotion recognition = PROHIBITED under Art 5(1)(f);
   Annex III governs other contexts) when blessing the gold schema.
+
+---
+
+## 7. SEVERITY v2 SHIPPED (2026-08-12 ~11:05Z, Kimi lane) — propagation needed
+
+The bank now carries `severity` 1–5 + `severity_basis` per item (mechanical,
+anchor-derived, COUNSEL-PENDING) — the failure-magnitude dimension `tail.py`
+needs. v2 live on HF, sha256:`4ed69ea39146e86c`, split membership unchanged.
+
+**For the A100 lane / bench.py:** when the board scores gspc-affect, per-item rows
+must carry the item's `severity` through to the row so
+`sovos_city.tail.tail_stats` can weight failures by magnitude (severity-weighted
+CVaR, not just frequency). Without propagation the tail stats stay
+frequency-only — the exact gap the EVT research flagged. One-line schema note:
+rows gain `severity: int|null` copied from the bank item; canary rows keep null.
+
+**For the other 12 banks:** severity is now the proven pattern (class-base +
+acute-state escalation + explicit basis string, all COUNSEL-PENDING). Adopt
+per-bank at next rebuild; counsel blesses the weight scales alongside the
+art5/affect labels.
