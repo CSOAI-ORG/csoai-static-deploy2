@@ -170,7 +170,7 @@ def ask_openrouter(model: str, prompt: str, key: str, budget: Budget,
                 "Content-Type": "application/json",
                 "Authorization": f"Bearer {key}",
                 "HTTP-Referer": "https://councilof.ai",
-                "X-Title": "SOV City — governed multi-agent arena",
+                "X-Title": "SOV City - governed multi-agent arena",  # ASCII only: HTTP headers are latin-1
             })
         try:
             with urllib.request.urlopen(req, timeout=timeout) as r:
