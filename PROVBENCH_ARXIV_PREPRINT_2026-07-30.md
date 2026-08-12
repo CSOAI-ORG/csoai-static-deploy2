@@ -6,17 +6,28 @@
 ## Abstract
 
 We measure whether C2PA content credentials survive real-world image
-transforms. Across 20 assets and 8 transforms, **0 of 20 assets
-survive** with content credentials intact. The rule-of-three upper
-bound on survival rate is 15.0%. We argue that this finding is the
+transforms. Across 15 assets and 7 transforms (105 cells), **18 of 105
+cells survive** with content credentials intact — a survival rate of
+17.1% (asset-clustered Wilson CI). Survival is concentrated in the
+durable soft-watermark binding; hash-bound and metadata-bound credentials
+die on nearly every transform. We argue that this finding is the
 central measurement for any AI governance regime that mandates content
 provenance under EU AI Act Article 50, UK ICO AI guidance, or DORA Art 9.
 We describe a three-outcome harness (SURVIVED / DESTROYED / UNMEASURED)
 that distinguishes "transform destroyed credential" from "transform
-could not be applied", and an asset-clustered confidence interval that
-respects the non-independence of trials clustered by (asset, binding).
-We make the harness, the bench results, and the 15-asset re-run
-publicly reproducible.
+could not be applied", an asset-clustered confidence interval that
+respects the non-independence of trials clustered by (asset, binding),
+and a PQC binding (COSE ML-DSA-65, RFC 9964). We make the harness, the
+bench results, and the full re-run publicly reproducible.
+
+> **Delta note (2026-08-12):** this draft supersedes the 2026-07-30
+> version. The earlier draft reported 0/20 assets surviving (rule-of-three
+> upper bound 15.0%). The re-measurement on 15 assets × 7 transforms with
+> the COSE ML-DSA-65 binding added finds 18/105 cells (17.1%) surviving —
+> driven by the soft-watermark binding, which survives lossy transforms.
+> The headline finding is not "nothing survives" but "durability is
+> binding-dependent and near-zero for hash/XMP bindings." Both runs stay
+> in the record; the honest delta is a feature, not a correction.
 
 ---
 
