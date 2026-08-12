@@ -15,9 +15,11 @@ This runner makes durability the default, not an afterthought:
   * The run RESUMES from HF: an axis whose board already exists on HF is skipped.
     A reboot costs at most the single in-flight axis, never the finished ones.
 
-There is no local durability claim here. The only durable store is HF. That is
-the point: "never lose a piece" is true only when the pieces land somewhere that
-outlives the pod, and they do — one axis at a time, the moment it is earned.
+Two durable stores, not one: the persistent VOLUME (/runpod, survives reboots)
+and HF (survives the pod being deleted). Each finished axis lands on the volume,
+then HF — safe on two machines. "Never lose a piece" is true only when the
+pieces land somewhere that outlives the pod, and now they land in two such
+places, one axis at a time, the moment it is earned.
 """
 
 from __future__ import annotations
