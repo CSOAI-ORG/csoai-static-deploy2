@@ -71,10 +71,24 @@ def main():
         try:
             lt = league_for_fleet(models, defender="Eunomia",
                                   out_dir=str(OUTDIR / "rounds"))
-            # persist the full league table
+            # persist the full league table as structured JSON (faction -> Glicko)
+            league_data = {
+                "schema": "sovos-league/v1",
+                "generated": datetime.now(timezone.utc).isoformat(),
+                "defender": "Eunomia",
+                "axes": 13,
+                "factions": {
+                    name: {
+                        "rating": f.state.rating,
+                        "rd": f.state.rd,
+                        "volatility": f.state.volatility,
+                    }
+                    for name, f in lt.factions.items()
+                },
+            }
             league_path = OUTDIR / "league.json"
-            league_path.write_text(json.dumps(lt.to_dict() if hasattr(lt, "to_dict") else repr(lt), indent=2))
-            log(f"  league persisted ({len(AXES) if False else 13} axes)")
+            league_path.write_text(json.dumps(league_data, indent=2))
+            log(f"  league persisted ({len(league_data['factions'])} factions, 13 axes)")
             # stream to MinIO (durable copy)
             if mc_upload(league_path):
                 log(f"  streamed to MinIO {MINIO_BUCKET}")
