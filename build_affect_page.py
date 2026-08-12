@@ -89,7 +89,7 @@ vulnerabilities including grief and crisis states, Art 5(1)(f) emotion recogniti
 and education — and the class no other GSPC bank grades: <b>DISCLOSE</b>, the Art 50 transparency
 duties for emotion-recognition, companion AI and synthetic content.</p>
 <p class="meta">Dataset: <a href="https://huggingface.co/datasets/csoai/gspc-affect">csoai/gspc-affect</a>
- · Licence CC-BY-4.0 · private held-out n=15 exists for honest eval — never uploaded, by design.</p>
+ · Licence CC-BY-4.0 · private held-out n=18 exists for honest eval — never uploaded, by design.</p>
 
 <section style="margin-top:1.6rem">
 <h2 style="font-size:1.25rem">Severity — why every item carries a weight</h2>
@@ -248,7 +248,7 @@ no accreditation, and has no enforcement powers — those are conferred by statu
 market-surveillance authorities and the AI Office. Nothing on this page is a certification,
 an attestation of compliance, or legal advice.
 <br><br><b>Denominator.</b> This axis has __N__ public items — above the usable_n = 30 floor,
-so a visitor run here carries a real interval. A private held-out split of 15 items exists for
+so a visitor run here carries a real interval. A private held-out split of 18 items exists for
 honest evaluation and is never uploaded. <b>No model has been scored on this bank yet:</b> no
 model score is quoted on this axis, anywhere, including our own. When the first signed board
 lands it will be reported with its interval — and, because every item carries severity, with
