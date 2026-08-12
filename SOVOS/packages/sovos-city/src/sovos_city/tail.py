@@ -37,7 +37,13 @@ def load_rows(path: str | Path) -> List[Dict[str, Any]]:
 
 
 def _item_key(r: Dict[str, Any]) -> str:
-    return str(r.get("axis_item") or r.get("item") or "")
+    # Item identity = the item TEXT, not the anchor. bench.py writes
+    # axis_item = anchor (provenance, SHARED across items — e.g. the asi board
+    # has 12 anchors over 33 items). Keying by anchor collapses distinct items
+    # into one bucket, undercounts n, and averages the tail away. Fall back to
+    # axis_item only when no item text exists. (Caught 2026-08-12: asi keyed
+    # by anchor gave n=12; keyed by item gives the true n=33.)
+    return str(r.get("item") or r.get("axis_item") or "")
 
 
 def item_pass_rates(rows: List[Dict[str, Any]]) -> Dict[str, float]:
@@ -70,6 +76,59 @@ def cvar(values: List[float], alpha: float = 0.05) -> float:
     vals = sorted(values)
     k = max(1, int(math.ceil(alpha * len(vals))))
     return sum(vals[:k]) / k
+
+
+# ── severity-weighted tail (C3, handoff §7) ────────────────────────────────────
+# Frequency tail stats (above) measure HOW OFTEN things fail. Fat-tail risk
+# lives in failure MAGNITUDE: a 5%-likely catastrophic item outweighs a
+# 50%-likely benign one. bench.py now propagates bank-item `severity` (1-5,
+# COUNSEL-PENDING) into every per-item row; this derives harm from it.
+#
+#   harm_i = (1 - pass_rate_i) × severity_i        (named, one line, rerunnable)
+#
+# Items with no severity default to 1.0, so a severity-free bank reduces
+# EXACTLY to the frequency tail — backwards compatible by construction.
+
+def item_severity(rows: List[Dict[str, Any]]) -> Dict[str, float]:
+    """Max explicit severity per item; absent or None → 1.0."""
+    sev: Dict[str, float] = {}
+    for r in rows:
+        s = r.get("severity")
+        if s is None:
+            continue
+        k = _item_key(r)
+        sev[k] = max(sev.get(k, 0.0), float(s))
+    return sev
+
+
+def severity_tail(rows: List[Dict[str, Any]], alpha: float = 0.05) -> Dict[str, Any]:
+    """Severity-weighted harm stats over per-item rows.
+
+    Returns mean harm, CVaR over harm, the highest-harm items, and the
+    severity coverage (share of items carrying an explicit severity) — so a
+    reader can see when the stat is mostly defaulted. Same n>=N_TAIL rule as
+    the frequency CVaR: computed below it, quotable only at/above it.
+    """
+    rates = item_pass_rates(rows)
+    sev = item_severity(rows)
+    if not rates:
+        return {"n_items": 0, "mean_harm": 0.0, "cvar05_harm": 0.0,
+                "max_harm_items": [], "severity_coverage": 0.0,
+                "tail_quotable": False,
+                "formula": "harm_i = (1 - pass_rate_i) x severity_i (default 1.0)"}
+    harm = {k: (1.0 - rates[k]) * sev.get(k, 1.0) for k in rates}
+    vals = sorted(harm.values())
+    n = len(vals)
+    ranked = sorted(harm.items(), key=lambda kv: (-kv[1], kv[0]))
+    return {
+        "n_items": n,
+        "mean_harm": round(sum(vals) / n, 4),
+        "cvar05_harm": round(cvar(vals, alpha), 4),
+        "max_harm_items": [k for k, _ in ranked[:10]],
+        "severity_coverage": round(len(sev) / n, 4),
+        "tail_quotable": n >= N_TAIL,
+        "formula": "harm_i = (1 - pass_rate_i) x severity_i (default 1.0)",
+    }
 
 
 # ── quotability thresholds (Part BV: the tail is n-hungry) ─────────────────────
