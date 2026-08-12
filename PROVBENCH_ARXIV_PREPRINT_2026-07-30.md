@@ -6,28 +6,32 @@
 ## Abstract
 
 We measure whether C2PA content credentials survive real-world image
-transforms. Across 15 assets and 7 transforms (105 cells), **18 of 105
-cells survive** with content credentials intact — a survival rate of
-17.1% (asset-clustered Wilson CI). Survival is concentrated in the
-durable soft-watermark binding; hash-bound and metadata-bound credentials
-die on nearly every transform. We argue that this finding is the
-central measurement for any AI governance regime that mandates content
-provenance under EU AI Act Article 50, UK ICO AI guidance, or DORA Art 9.
-We describe a three-outcome harness (SURVIVED / DESTROYED / UNMEASURED)
-that distinguishes "transform destroyed credential" from "transform
-could not be applied", an asset-clustered confidence interval that
-respects the non-independence of trials clustered by (asset, binding),
-and a PQC binding (COSE ML-DSA-65, RFC 9964). We make the harness, the
-bench results, and the full re-run publicly reproducible.
+transforms. At the **asset level** (does any asset come out of the whole
+transform battery with its credential intact), the finding is stark: in the
+original 20-asset run, **0 of 20 assets survive** (rule-of-three upper bound
+15.0%). At the **cell level** (does an individual asset-transform cell preserve
+the credential), the 15-asset re-run with a PQC binding added finds
+**18 of 105 cells survive (17.1%)**, concentrated in the durable
+soft-watermark binding. These are different quantities — asset survival asks
+whether an artifact survives the pipeline intact; cell survival asks whether a
+single transform preserves the mark. Both matter for a governance regime that
+mandates content provenance under EU AI Act Article 50, UK ICO AI guidance, or
+DORA Art 9, and this is the first systematic measurement of either. We describe
+a three-outcome harness (SURVIVED / DESTROYED / UNMEASURED) that distinguishes
+"transform destroyed credential" from "transform could not be applied", an
+asset-clustered confidence interval, and a PQC binding (COSE ML-DSA-65,
+RFC 9964). We make the harness, the bench results, and both runs publicly
+reproducible.
 
-> **Delta note (2026-08-12):** this draft supersedes the 2026-07-30
-> version. The earlier draft reported 0/20 assets surviving (rule-of-three
-> upper bound 15.0%). The re-measurement on 15 assets × 7 transforms with
-> the COSE ML-DSA-65 binding added finds 18/105 cells (17.1%) surviving —
-> driven by the soft-watermark binding, which survives lossy transforms.
-> The headline finding is not "nothing survives" but "durability is
-> binding-dependent and near-zero for hash/XMP bindings." Both runs stay
-> in the record; the honest delta is a feature, not a correction.
+> **Delta note (2026-08-12):** this draft restates the two runs precisely.
+> The 2026-07-30 draft reported asset-level survival: 0/20 assets (rule-of-three
+> upper bound 15.0%). The 15-asset re-run (7 transforms, COSE ML-DSA-65 added)
+> reports cell-level survival: 18/105 cells (17.1%). **These are not the same
+> event and neither supersedes the other.** An asset surviving all transforms is
+> a stricter event than a single cell surviving; consistent with that, the
+> asset-level result remains near-zero while cell survival is higher. The units
+> are named on every number so the reader never conflates them. Both runs stay
+> in the record; the honest distinction is a feature, not a correction.
 
 ---
 
