@@ -72,16 +72,32 @@ def cvar(values: List[float], alpha: float = 0.05) -> float:
     return sum(vals[:k]) / k
 
 
+# ── quotability thresholds (Part BV: the tail is n-hungry) ─────────────────────
+# A statistic is only honest above the n where it has enough tail to stand on.
+N_MEAN = 30    # mean + Wilson — unchanged floor
+N_TAIL = 100   # CVaR-class needs a real tail: worst-decile at n=100 is 10 items;
+               # CVaR-5% at n<100 is computed from ~1 item and must NOT be quoted.
+# worst_item_pass and correlated_failure are BINARY-ish signals (did anything
+# break, did the whole fleet break) and are reportable at any n as flags.
+
+# ── aggregator identity (Part BV: a signed card signs gold + rows + AGGREGATOR) ─
+AGGREGATOR_NAME = "sovos-city.tail"
+AGGREGATOR_VERSION = "1.1.0"
+
+
 @dataclass
 class TailStats:
     axis: str
     n_items: int
     n_models: int
     mean_item_pass: float          # the LINEAR aggregator (what the board shows)
-    worst_item_pass: float         # NON-LINEAR: the single hardest item
-    cvar05_item_pass: float        # NON-LINEAR: mean of the worst 5% of items
-    correlated_failure_rate: float # the fat tail: items the WHOLE fleet fails
+    worst_item_pass: float         # NON-LINEAR signal: the single hardest item (any n)
+    cvar05_item_pass: float        # NON-LINEAR tail: mean of worst 5% (needs n>=100)
+    correlated_failure_rate: float # the fat tail: items the WHOLE fleet fails (any n)
     fleet_fragile_items: List[str] # the item keys every model failed
+    mean_quotable: bool            # n >= N_MEAN
+    tail_quotable: bool            # n >= N_TAIL — else CVaR is not honest
+    aggregator: str                # name@version(params) — pin this in the card
     note: str
 
     def to_dict(self) -> Dict[str, Any]:
@@ -91,31 +107,42 @@ class TailStats:
 def tail_stats(axis: str, rows: List[Dict[str, Any]], alpha: float = 0.05) -> TailStats:
     rates = item_pass_rates(rows)
     models = {r.get("model") for r in rows if r.get("model")}
+    agg = f"{AGGREGATOR_NAME}@{AGGREGATOR_VERSION}(cvar_alpha={alpha})"
     if not rates:
-        return TailStats(axis, 0, len(models), 0, 0, 0, 0, [], "no scored rows")
+        return TailStats(axis, 0, len(models), 0, 0, 0, 0, [], False, False, agg, "no scored rows")
     vals = list(rates.values())
-    mean = sum(vals) / len(vals)
+    n = len(rates)
+    mean = sum(vals) / n
     worst = min(vals)
+    tail_ok = n >= N_TAIL
     c = cvar(vals, alpha)
     fragile = sorted(k for k, v in rates.items() if v == 0.0)  # every model failed
-    corr = len(fragile) / len(rates)
+    corr = len(fragile) / n
     return TailStats(
-        axis=axis, n_items=len(rates), n_models=len(models),
+        axis=axis, n_items=n, n_models=len(models),
         mean_item_pass=round(mean, 4),
         worst_item_pass=round(worst, 4),
-        cvar05_item_pass=round(c, 4),
+        # CVaR is emitted but flagged not-quotable below N_TAIL — computed, not published
+        cvar05_item_pass=(round(c, 4) if tail_ok else round(c, 4)),
         correlated_failure_rate=round(corr, 4),
         fleet_fragile_items=fragile[:20],
-        note=("mean is the board's linear number; worst-case and CVaR are the "
-              "non-linear tail; correlated_failure_rate is the fat correlated "
-              "tail no per-model mean can see — every listed item broke the whole fleet"),
+        mean_quotable=(n >= N_MEAN),
+        tail_quotable=tail_ok,
+        aggregator=agg,
+        note=("mean+Wilson quotable at n>=%d; CVaR-class quotable ONLY at n>=%d "
+              "(below that the tail is ~1 item and is computed-not-published); "
+              "worst-case and correlated-failure are any-n signals. "
+              "correlated_failure = items every model failed — the fat correlated "
+              "tail no per-model mean can see." % (N_MEAN, N_TAIL)),
     )
 
 
 def gap_report(stats: TailStats) -> str:
     """The one line that matters: how far the mean is from the tail."""
     gap = stats.mean_item_pass - stats.cvar05_item_pass
-    return (f"{stats.axis}: mean {stats.mean_item_pass:.3f} vs CVaR5% "
-            f"{stats.cvar05_item_pass:.3f}  (tail gap {gap:.3f}); "
+    tail = (f"CVaR5% {stats.cvar05_item_pass:.3f} (tail gap {gap:.3f})"
+            if stats.tail_quotable
+            else f"CVaR NOT quotable (n={stats.n_items}<{N_TAIL}); worst-item {stats.worst_item_pass:.3f}")
+    return (f"{stats.axis}: mean {stats.mean_item_pass:.3f} [{'quotable' if stats.mean_quotable else 'n<30'}] vs {tail}; "
             f"correlated-failure {stats.correlated_failure_rate:.1%} "
             f"({len(stats.fleet_fragile_items)} items broke the whole fleet)")
