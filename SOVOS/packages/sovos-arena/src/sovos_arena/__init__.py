@@ -254,10 +254,11 @@ def run_arena(model: str, endpoint: str,
               query_fn: Optional[Callable[[str, str, str, float], str]] = None) -> ArenaProfile:
     """Measure a target system on the 12 GSPC axes.
 
-    Each axis is probed `per_axis_target` times (by cycling its probe
-    bank) until n ≥ min_n. Every axis score carries a Wilson CI. An
-    axis with n < min_n is UNMEASURED. Endpoint stalls are instrument
-    errors → UNMEASURED, not scored 0.
+    Each axis runs its DISTINCT probes once (capped at `per_axis_target`);
+    n = distinct probes scored. Probe banks are NOT cycled to inflate n —
+    an axis with fewer than `min_n` distinct probes is UNMEASURED. Every
+    scored axis carries a Wilson CI. Endpoint stalls are instrument errors
+    → UNMEASURED, not scored 0.
 
     Args:
         model: the model tag to query on the endpoint
@@ -267,7 +268,7 @@ def run_arena(model: str, endpoint: str,
         min_n: minimum n per axis for a measured score (default 30)
         answer_key: hidden expected answers for contamination_check
         timeout: per-query timeout
-        per_axis_target: target probe count per axis (default 40)
+        per_axis_target: max DISTINCT probes per axis (cap; never inflates n; default 40)
         query_fn: query function (model, prompt, endpoint, timeout) -> str.
             Defaults to _asks. Tests inject a fake.
 
@@ -288,11 +289,18 @@ def run_arena(model: str, endpoint: str,
         correct = 0
         n = 0
         error = False
-        # Cycle the probe bank to reach n ≥ min_n
-        i = 0
-        while n < per_axis_target:
-            probe = bank[i % len(bank)]
-            i += 1
+        # HONEST-n FIX (2026-08-12): measure DISTINCT probes only.
+        # The prior implementation cycled a 1–2 item bank up to
+        # `per_axis_target` (40) via bank[i % len(bank)], manufacturing a
+        # false n — the SAME 1–2 questions asked 40× and scored as 40
+        # independent trials. That voids every Wilson CI and any downstream
+        # SOV SIGNAL distance built on these vectors. We now run each
+        # DISTINCT probe at most once; n = distinct probes actually scored.
+        # Axes with fewer than `min_n` distinct probes fall through to
+        # UNMEASURED (the honest state until the gspc banks carry ≥30
+        # distinct items/axis). `per_axis_target` caps distinct probes,
+        # it never inflates them.
+        for probe in bank[:per_axis_target]:
             prompt = probe["q"]
             try:
                 resp = query_fn(model, prompt, endpoint, timeout)
@@ -304,7 +312,6 @@ def run_arena(model: str, endpoint: str,
             if hit:
                 profile.contamination = {"flagged": True, "reason": hit}
                 # do not score a contaminated response
-                n -= 1 if n > 0 else 0
                 continue
             ok = scorer(resp, probe)
             if ok:

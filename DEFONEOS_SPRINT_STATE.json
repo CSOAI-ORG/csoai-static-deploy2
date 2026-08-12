@@ -1,18 +1,19 @@
 {
   "started_at": "2026-07-04",
-  "current_day": 38,
-  "current_tick": 258,
-  "current_phase": 246,
+  "current_day": 40,
+  "current_tick": 264,
+  "current_phase": 253,
   "total_mcp_built": 30,
-  "total_pages_built": 986,
+  "total_pages_built": 1004,
   "total_repos_cloned": 15,
-  "sitemap_urls": 355,
-  "sitemap_bytes": 50141,
-  "last_action": "Sprint tick 258 - 3 NEW genuinely-uncovered UK regulator/agency deep-dive packs (Parole Board for England and Wales 35573b, Maritime and Coastguard Agency 36431b, Single Source Regulations Office 36592b), .llm.json companions regenerated via canonical make_llm_json.py (5417/5382/5396b), GENUINELY CANONICAL schema.org JSON-LD (@context=https://schema.org, NOT the corrupted https://***@type artifact), sitemap repaired from prior partial-tick malformed tail (6 dangling <loc> orphans -> clean 355 <url> blocks; 349->355 URLs), build_site.py --check clean (920 publishable files, 9.7 MB, 0 missing sitemap URLs, 0 leaks), pushed origin/jv-wave8-production + direct CF Pages deploy. All 3 packs byte-verified: DOCTYPE, </html>, 12 entry-point sections, 96 priority cards, 72 MCP chips.",
+  "sitemap_urls": 779,
+  "sitemap_bytes": 200809,
+  "last_action": "Sprint tick 264 - 3 NEW defence-domain specialist deep-dive packs (Ministry of Defence Central / British Army / Royal Air Force), each 12 entry points x 8 priorities x 6 MCPs with canonical schema.org JSON-LD (verified json.loads-parseable on all 3), .llm.json companions via canonical make_llm_json (12 headings, 4000-char text, url field correct). Sitemap 779 URLs (+3 in sitemap.xml 776->779 entries; +3 in sitemap-ai.xml 576->579 entries). build_site.py: 967 publishable files, 10.8 MB. SIGIL hash: 9694d05381acf54444f8dc34367703c914d35dd8cc7a9507abfbc138b5f47b1f",
   "next_actions": [
-    "Build next 3 uncovered UK regulator/agency packs (probe-verified candidates: The Insolvency Service corporate insolvency, Money & Pensions Service (MaPS) guidance, Sports Grounds Safety Authority spectator safety, Certification Officer trade union regulation, Legal Aid Agency, UK Hydrographic Office)"
+    "Build next 3 uncovered body packs from probe-verified open candidates (still open: Dstl, Supreme Court, Court of Appeal, High Court, Crown Court, Magistrates Court, Probation Service, Prison Service, Sentencing Council, Judicial Appointments Commission, Royal Society, British Academy, Channel 4, S4C, Press Recognition Panel, Investigatory Powers Tribunal, Surveillance Commissioner)",
+    "Next pick (post-tick-264 priority queue): Dstl / Supreme Court / Royal Society — defence-science + senior judiciary + learned society cross-cut"
   ],
-  "milestone": "Sprint targets exceeded. 30/30 MCPs, 986 pages, 15/15 repos. Tick 258 shipped 3 packs (Parole/MCA/SSRO) + repaired prior partial-tick sitemap corruption + generated tick-258 SGIL. Sitemap 355 URLs. 252 unique deep-dive packs.",
+  "milestone": "Sprint targets exceeded. 30/30 MCPs, 1004 pages (+3), 15/15 repos. Tick 264 shipped 3 NEW defence-domain specialist packs (Ministry of Defence Central / British Army / Royal Air Force). Sitemap 779 URLs. 264+ unique deep-dive packs. JSON-LD confirmed genuinely canonical (json.loads passes on all 3 new packs).",
   "targets_status": {
     "mcps": "achieved",
     "pages": "ongoing",
@@ -21,6 +22,6 @@
   "vercel_deploy_status": "blocked_billing",
   "cloudflare_deploy_status": "live",
   "deploy_domain": "csoai.org",
-  "deploy_id": "tick 258 push + direct CF Pages deploy (jv-wave8-production.csoai-site.pages.dev)",
-  "disk_free_gb": 2
+  "deploy_id": "tick 264 push + CF Pages deploy (pending)",
+  "disk_free_gb": 4
 }

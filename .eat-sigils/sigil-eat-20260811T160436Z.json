@@ -1,0 +1,96 @@
+{
+  "cycle_id": "eat-20260811T160436Z",
+  "timestamp_utc": "2026-08-11T16:04:36Z",
+  "doctrine_version": "DEFONEOS v2.0 (2026-06-27)",
+  "operator": "JEEVES/Hermes",
+  "results": {
+    "1_vcsai_static_deploy2_http": {
+      "url": "https://csoai-static-deploy2.vercel.app/",
+      "http_code": 402,
+      "status": "BLOCKED_BILLING_SUSPENDED",
+      "note": "Vercel account suspended (no payment method). Public mirror unavailable at this hostname; CF Pages mirror is canonical live surface."
+    },
+    "2_meok_backend_ssh_uptime": {
+      "exit_code": 255,
+      "status": "SSH_HOST_KEY_CHANGED",
+      "note": "Remote host key for 35.242.143.249 has rotated since last successful check. Do NOT auto-accept \u2014 escalation required before removing old key from known_hosts."
+    },
+    "3_localhost_3101_mcp_sov3": {
+      "http_code": null,
+      "status": "DOWN_CONNECTION_REFUSED",
+      "note": "Port 3101 (SOV3 MCP) not listening. No process bound. Service outage."
+    },
+    "4_localhost_3000_meok_os": {
+      "http_code": 404,
+      "status": "UP_BUT_404",
+      "note": "Express service responding at :3000 (PID 1496, node) but root path returns 404. App alive, route surface degraded."
+    },
+    "5_html_page_count_live": {
+      "live_html_pages": 773,
+      "unique_slugs": 773,
+      "sitemap_xml_urls": 773,
+      "sitemap_ai_urls": 573,
+      "note": "Excludes .backups/ and dotfiles."
+    },
+    "6_broken_link_scan": {
+      "total_links_scanned": 30744,
+      "broken_links_found": 19,
+      "all_in_backups": true,
+      "decision": "NO_REPAIR_NEEDED",
+      "rationale": "All 19 broken links live inside .backups/ snapshots (doctrine: backups are immutable). Live surfaces clean."
+    },
+    "7_sitemap_updated": {
+      "sitemap_xml_bytes": 168296,
+      "sitemap_ai_bytes": 131098,
+      "sitemap_xml_parse": "OK",
+      "sitemap_ai_parse": "OK",
+      "urls_added": 8,
+      "urls_removed": 1,
+      "new_pages": [
+        "https://csoai.org/SOVOS/published/sovereign-wiki/index.html",
+        "https://csoai.org/_site/arenas.html",
+        "https://csoai.org/_site/defoneos-innovate-uk-business-innovation-ai-deep-dive-pack.html",
+        "https://csoai.org/_site/defoneos-uk-space-agency-civil-space-programme-ai-deep-dive-pack.html",
+        "https://csoai.org/_site/defoneos-ukaea-fusion-energy-r-and-d-ai-deep-dive-pack.html",
+        "https://csoai.org/defoneos-innovate-uk-business-innovation-ai-deep-dive-pack.html",
+        "https://csoai.org/defoneos-uk-space-agency-civil-space-programme-ai-deep-dive-pack.html",
+        "https://csoai.org/defoneos-ukaea-fusion-energy-r-and-d-ai-deep-dive-pack.html"
+      ]
+    },
+    "8_deploy_attempt": {
+      "vercel": {
+        "status": "BLOCKED",
+        "reason": "ACCOUNT_SUSPENDED (no payment method)"
+      },
+      "cloudflare_pages": {
+        "status": "BLOCKED",
+        "reason": "models/sov-refusal/.sov-refusal-combo-lora-v2.f16.gguf (31.3 MiB) exceeds 25 MiB Pages limit"
+      },
+      "decision": "DEFER_DEPLOY",
+      "next_action": "Move .gguf out of publish root OR raise CF Pages upload limit OR restore Vercel billing"
+    },
+    "9_sigil_emit": {
+      "endpoint_attempted": "http://localhost:3101/mcp",
+      "endpoint_status": "DOWN",
+      "fallback": "SIGIL_PERSISTED_TO_DISK",
+      "sigil_hash": "e56818953bd05e83",
+      "sigil_id": "eat-defoneos-20260811T160436Z",
+      "post_result": "FAILED",
+      "post_error": "<urlopen error [Errno 61] Connection refused>"
+    }
+  },
+  "tick_progression": {
+    "tick": "262",
+    "phase": "252"
+  },
+  "status": "DEGRADED_NON_BLOCKING",
+  "compartment_integrity": "GREEN",
+  "red_line_crossings": 0,
+  "next_cycle_actions": [
+    "Restore SOV3 MCP at :3101 (restart service)",
+    "Re-anchor SSH host key for meok-backend (manual confirmation required)",
+    "Restore Vercel billing OR relocate sov-refusal model out of publish root for CF Pages",
+    "Repair :3000 root route (currently 404)",
+    "Verify CF Pages last successful deploy still serving apex csoai.org"
+  ]
+}
