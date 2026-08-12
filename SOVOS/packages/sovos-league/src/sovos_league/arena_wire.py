@@ -59,6 +59,18 @@ def ollama_query(model: str, prompt: str, timeout: float = 60.0) -> str:
         return f"<error: {e}>"
 
 
+def is_infra_tainted(text: str) -> bool:
+    """Broken-GGUF '?????' signature detection (Part BB doctrine).
+
+    Matches where a contestant emitted this signature are classified
+    INFRA-TAINTED and excluded from Glicko — they are NOT model losses.
+    """
+    t = text.strip()
+    if not t:
+        return False
+    return t.startswith("?") and len(set(t)) <= 3
+
+
 def score_response(text: str, axis: str) -> float:
     """Score a response on a single GSPC axis.
 
