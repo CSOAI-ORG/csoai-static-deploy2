@@ -36,3 +36,11 @@ batch across all 13 cards.
   Annex III anchors, deterministic grading) — not just a card
 - councilof.ai/assess → HTTP 200 (the live signed-assessment surface exists)
 - councilof.ai/sign → 200 · councilof.ai/system-card → 200
+- **HF collection "GSPC Governance Benchmark Suite" exists** but holds only 4
+  domain benches (coai/poai/asisec/agisafe-bench). The 13 GSPC axis banks
+  (gspc-gov/agi/asi/prv/xr/det/art5/care/mcp/oss/mach/swarm/affect) are NOT in
+  it — the suite should contain the governance suite. STAGED: add all 13 when
+  the O2 HF token clears (same batch as the Space CTA).
+- arena page links to HF + Kaggle (K5 surface present); the 13 banks are all
+  live on HF (200), so the "every item set is public on HF" claim is now true
+  for the GSPC suite.
