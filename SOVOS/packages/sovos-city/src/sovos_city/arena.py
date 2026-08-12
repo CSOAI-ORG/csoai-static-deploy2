@@ -37,6 +37,7 @@ from typing import Any, Dict, Iterable, List, Optional, Tuple
 
 from .chain import Chain
 from .judge import verify as verify_judge
+from .openrouter import Budget, ask_openrouter, load_key
 from .law import ALLOWED, BLOCKED, UNMEASURED, ART5, ACTS, BASES, CONTEXTS, Action, gate
 
 OLLAMA = "http://127.0.0.1:11434"
@@ -320,6 +321,10 @@ class CityRun:
     epochs: int = 3
     host: str = OLLAMA
     seed: int = 7
+    # OpenRouter lane. Citizens are generator-side (Part AV), so swapping their
+    # bloodline changes nothing about the judge: same brief, same grammar, same gate.
+    or_key: Optional[str] = None
+    budget: Optional[Budget] = None
 
     def __post_init__(self) -> None:
         self.out_dir = Path(self.out_dir)
@@ -330,7 +335,11 @@ class CityRun:
 
     # one citizen, one epoch
     def _turn(self, c: Citizen, goal: str, epoch: int) -> Dict[str, Any]:
-        raw, err, tries = ask(c.model, c.brief(goal), host=self.host, fmt=ACTION_FORMAT)
+        if self.or_key and "/" in c.model:      # an OpenRouter slug, e.g. "openai/gpt-4o-mini"
+            raw, err, tries = ask_openrouter(c.model, c.brief(goal), self.or_key,
+                                             self.budget or Budget(cap_usd=1.0), fmt=ACTION_FORMAT)
+        else:
+            raw, err, tries = ask(c.model, c.brief(goal), host=self.host, fmt=ACTION_FORMAT)
         if err is None and raw.strip() and "}" not in raw:
             # Valid JSON was being emitted and our num_predict cut it off mid-object.
             # That is our budget, not their capability, so it must not be scored
@@ -474,6 +483,7 @@ class CityRun:
             "turns": n_total,
             "usable_n": usable,
             "unmeasured": counts[UNMEASURED],
+            "spend": (self.budget.report() if self.budget else None),
             "serving_health": {
                 "turns_needing_retry": sum(1 for r in rows if (r.get("attempts") or 1) > 1),
                 "total_attempts": sum((r.get("attempts") or 1) for r in rows),
