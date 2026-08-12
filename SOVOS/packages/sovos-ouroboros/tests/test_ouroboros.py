@@ -195,28 +195,35 @@ def test_16_cycle_no_matches_returns_unknown_proposal():
 def test_17_doctrine_judge_does_not_propose():
     """Eunomia, Sophos, SOV, Zeus — none should be proposed for action.
 
-    The judge cannot be tuned (Part AV: 'the judge does not evolve').
-    The cycle should treat named canonical factions as the judge and
-    refuse to propose them for tuning.
+    Per Part AV: 'the judge does not evolve.' The cycle identifies
+    the weakest faction BUT excludes canonical factions (judges)
+    from consideration. So even if Eunomia has the lowest rating,
+    the cycle must NOT propose her for tuning.
     """
-    # This is structural — the cycle proposes the weakest, but if the
-    # weakest IS a canonical faction, the doctrine forbids auto-tuning.
-    # We enforce this in the proposal: requires must be HUMAN_SIGN
-    # (which is enforced), and the action must NOT auto-apply.
+    from sovos_ouroboros import identify_weakest
+
     lt = LeagueTable()
-    for i in range(3):
-        # Eunomia as challenger (theoretically weakest — but she's the judge)
-        m = Match(
-            match_id=f"m{i}", category="safety",
+    # Add many matches for both Eunomia (judge) and a non-canonical faction
+    for i in range(5):
+        # Eunomia loses as challenger
+        m1 = Match(
+            match_id=f"e-{i}", category="safety",
             challenger="Eunomia", defender="SOV",
             challenger_score=0.0, defender_score=1.0,
-            probe="p", chain_id=f"0x{i}",
+            probe="p", chain_id=f"0xe{i}",
         )
-        lt.record_match(m)
-    samples = {"Eunomia": ["????"] * 5}
-    weakest, p = cycle(lt, samples)
-    if weakest and weakest.name == "Eunomia":
-        # proposal requires human sign — it does NOT auto-promote
-        assert p.requires == RAIL_HUMAN_SIGN
-        # and the failure mode might be "garbage" — but the cycle
-        # recognises Eunomia's role by gating on requires=HUMAN_SIGN
+        lt.record_match(m1)
+        # A regular model also loses
+        m2 = Match(
+            match_id=f"r-{i}", category="safety",
+            challenger="random-model", defender="Eunomia",
+            challenger_score=0.0, defender_score=1.0,
+            probe="p", chain_id=f"0xr{i}",
+        )
+        lt.record_match(m2)
+    # Both should have low ratings, but the weakest should be
+    # random-model, NOT Eunomia (she's excluded as a judge).
+    weakest = identify_weakest(lt, min_matches=3)
+    assert weakest is not None
+    assert weakest.name == "random-model"
+    assert weakest.name not in ("Eunomia", "SOV", "Sophos", "Zeus", "RED")

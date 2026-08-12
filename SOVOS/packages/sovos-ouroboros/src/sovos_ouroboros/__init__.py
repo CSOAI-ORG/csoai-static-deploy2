@@ -70,15 +70,32 @@ def _canonical_id(p: Proposal) -> str:
     return hashlib.sha256(canonical.encode()).hexdigest()
 
 
+def _is_canonical_faction(name: str) -> bool:
+    """Judges cannot be tuned (Part AV: 'the judge does not evolve').
+
+    The canonical factions (Zeus, Eunomia, SOV, Sophos, RED) are
+    architectural roles, not candidate generators. The ouroboros
+    loop must never propose them for tuning.
+    """
+    from sovos_league import PANTHEON
+    canonical_names = {f.name for f in PANTHEON}
+    return name in canonical_names
+
+
 def identify_weakest(
     league: LeagueTable,
     min_matches: int = 3,
 ) -> Optional[Faction]:
-    """Find the faction with the worst (rating - 2*RD) at min_matches."""
+    """Find the faction with the worst (rating - 2*RD) at min_matches.
+
+    Canonical factions (the judges — Zeus, Eunomia, SOV, Sophos, RED)
+    are excluded: per Part AV, the judge does not evolve.
+    """
     ranked = [
         f for f in league.factions.values()
         if sum(1 for m in league.matches
                if f.name in (m.challenger, m.defender)) >= min_matches
+        and not _is_canonical_faction(f.name)
     ]
     if not ranked:
         return None
