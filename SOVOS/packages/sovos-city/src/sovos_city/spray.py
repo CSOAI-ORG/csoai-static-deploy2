@@ -44,6 +44,24 @@ def disclosures(board: Dict[str, Any], a: BankAssessment) -> str:
     """The caveats that travel with every publication, generated from the run."""
     out: List[str] = []
 
+    # The judge hash goes FIRST and is not optional. A number without the ruler it
+    # was measured against cannot be compared with anything, including its own
+    # earlier self — so an unratified run says so at the top of its own card
+    # rather than letting a reader assume continuity that was never established.
+    j = board.get("judge_integrity") or {}
+    jid = j.get("judge_id")
+    if jid and j.get("ratified") and not j.get("drift"):
+        out.append(f"**Measured against ratified judge `{jid}`** — the gate, canaries and "
+                   f"paraphrase probes were byte-identical to the ratified lock at run time. "
+                   f"Any result carrying a different judge_id is not comparable with this one.")
+    elif jid and j.get("drift"):
+        out.append(f"**JUDGE DRIFT — judge `{jid}` does not match the ratified lock.** This run "
+                   "was measured against a ruler that has since changed, or was never the "
+                   "ratified one. It must NOT be compared with runs that carry the ratified id.")
+    else:
+        out.append("**No ratified judge.** Nothing attests which ruler measured this, so these "
+                   "numbers stand alone and cannot be compared across runs.")
+
     design = (board.get("design") or {}).get("kind")
     if design == "stratified":
         out.append(
