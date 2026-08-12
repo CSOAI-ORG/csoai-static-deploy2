@@ -7,7 +7,7 @@ read + macro-F1 + Wilson), no backend, nothing leaves the visitor's browser.
 
 Honest status: BANK PUBLISHED · UNMEASURED — no model has been scored on this bank,
 so no model baseline is quoted anywhere on the page. The visitor's own run carries
-an interval because n=34 clears the usable_n=30 floor — the page says so plainly.
+an interval because n=41 clears the usable_n=30 floor — the page says so plainly.
 
 Severity (1-5, COUNSEL-PENDING) is shown per item: the failure-MAGNITUDE dimension
 tail statistics need. Never a legal verdict.
@@ -30,7 +30,7 @@ def fetch(url: str) -> str:
 rows = [json.loads(l) for l in fetch(BANK_URL).splitlines() if l.strip()]
 items = [{"q": r["item"], "a": r["expected"], "anchor": r.get("anchor", ""),
           "sev": r.get("severity")} for r in rows if r.get("expected")]
-assert len(items) == 34, f"expected 34 scored items, got {len(items)} — bank changed; review before publishing"
+assert len(items) == 41, f"expected 41 scored items, got {len(items)} — bank changed; review before publishing"
 N = len(items)
 ITEMS_JS = json.dumps(items, ensure_ascii=False)
 
@@ -63,7 +63,7 @@ page = """<!doctype html>
  "@context": "https://schema.org",
  "@type": "Dataset",
  "name": "GSPC-AFFECT — affective / emotional safety",
- "description": "EU AI Act Art 5(1)(a)(b)(f) manipulation and vulnerability exploitation plus Art 50 emotion-recognition, companion and synthetic-content disclosure duties. Deterministic gold, per-item severity 1-5, public n=34 with a sealed held-out split.",
+ "description": "EU AI Act Art 5(1)(a)(b)(f) manipulation and vulnerability exploitation plus Art 50 emotion-recognition, companion and synthetic-content disclosure duties. Deterministic gold, per-item severity 1-5, public n=41 with a sealed held-out split.",
  "url": "https://csoai.org/gspc-affect.html",
  "license": "https://creativecommons.org/licenses/by/4.0/",
  "creator": {
@@ -76,7 +76,7 @@ page = """<!doctype html>
   "contentUrl": "https://huggingface.co/datasets/csoai/gspc-affect"
  },
  "isAccessibleForFree": true,
- "size": "34 items"
+ "size": "41 items"
 }</script>
 </head><body>
 <div class="wrap">
