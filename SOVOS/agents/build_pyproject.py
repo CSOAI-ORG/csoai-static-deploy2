@@ -44,10 +44,11 @@ print(f"discovered {len(packages)} packages:")
 for p in packages:
     print(f"  - {p}")
 
-# Build pyproject packages list
+# Build pyproject packages list (use single quotes for inner strings
+# to avoid breaking the outer TOML double-quoted string)
 pkg_lines = []
 for p in packages:
-    line = '    "' + p + ' = { include = ["' + p + '*"], from = "src" }"'
+    line = "    '" + p + " = { include = ['" + p + "*'], from = 'src' }'"
     pkg_lines.append(line)
 new_pkgs = ',\n'.join(pkg_lines)
 

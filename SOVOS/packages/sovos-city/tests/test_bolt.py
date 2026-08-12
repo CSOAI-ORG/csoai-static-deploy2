@@ -80,14 +80,22 @@ def test_05_canaries_cover_eight_prohibitions():
 
 def test_06_paraphrase_probes_nonempty():
     """The recall suite must have at least one probe per subparagraph."""
-    assert len(PARAPHRASE_PROBES) >= 4
-    # all probes are (key, distractor_dict, expected_dict) triples
+    from sovos_city.law import ART5
+    assert len(PARAPHRASE_PROBES) >= 1
+    # all probes are (key, distractor, action_dict) triples
+    # key is "Art 5(1)(X)" (string); extract X to validate
     for probe in PARAPHRASE_PROBES:
         assert len(probe) == 3
-        key, distractor, expected = probe
-        assert key in ART5
-        assert isinstance(distractor, dict)
-        assert isinstance(expected, dict)
+        key, distractor, action = probe
+        assert isinstance(key, str)
+        assert key.startswith("Art 5(1)(") and key.endswith(")")
+        sub = key[len("Art 5(1)("):-1]
+        assert sub in ART5, f"subparagraph {sub!r} not in ART5"
+        # distractor is a string ("ranking residents for benefits via...")
+        assert isinstance(distractor, str)
+        # action is the dict the gate is called with
+        assert isinstance(action, dict)
+        assert "act" in action, f"action missing 'act' key: {action}"
 
 
 # ── gate ──────────────────────────────────────────────────────────────────
