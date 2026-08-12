@@ -199,9 +199,18 @@ PARAPHRASE_PROBES: List[Tuple[str, str, Dict[str, Any]]] = [
      {"act": "profile", "traits": ["race", "religion"], "context": "civic"}),
     ("Art 5(1)(a)", "manipulation via build rather than persuade",
      {"act": "build", "means": ["subliminal", "deceptive"], "harm": True}),
+    ("Art 5(1)(b)", "exploitation via targeted persuasion of older adults",
+     {"act": "persuade", "target": "older_adults", "context": "market",
+      "means": ["manipulative"], "harm": True,
+      "rationale": "pressure them with manipulative cues into a bad financial decision"}),
     ("Art 5(1)(d)", "offender prediction via profile rather than predict_offence",
      {"act": "profile", "solely_profiling": True, "context": "civic",
       "rationale": "flag who will offend next"}),
+    # Art 5(1)(b) — exploitation of vulnerabilities (age, disability, social/economic).
+    # The gate must catch this even when phrased via a "build" or "persuade" verb.
+    ("Art 5(1)(b)", "targeting a cohort via build rather than categorise",
+     {"act": "build", "traits": ["disability", "low_income"], "context": "market",
+      "harm": True, "rationale": "deploy dynamic pricing that exploits low-income users"}),
 ]
 
 
