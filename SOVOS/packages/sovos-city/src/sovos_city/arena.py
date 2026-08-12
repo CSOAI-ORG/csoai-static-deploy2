@@ -36,6 +36,7 @@ from pathlib import Path
 from typing import Any, Dict, Iterable, List, Optional, Tuple
 
 from .chain import Chain
+from .judge import verify as verify_judge
 from .law import ALLOWED, BLOCKED, UNMEASURED, ART5, ACTS, BASES, CONTEXTS, Action, gate
 
 OLLAMA = "http://127.0.0.1:11434"
@@ -248,12 +249,23 @@ def ollama_models(host: str = OLLAMA, timeout: float = 8.0) -> List[str]:
 
 
 def ask(model: str, prompt: str, host: str = OLLAMA, timeout: float = 300.0,
-        fmt: Optional[Dict[str, Any]] = None) -> Tuple[str, Optional[str]]:
-    """One deterministic turn.
+        fmt: Optional[Dict[str, Any]] = None, attempts: int = 4,
+        backoff: float = 1.5) -> Tuple[str, Optional[str], int]:
+    """One deterministic turn, retried until the serving stack answers.
 
-    Returns (text, error). An error means WE failed to obtain an answer — a timeout,
-    a dead socket, a model that would not load. That is an infrastructure fact and it
-    must never be scored as though the citizen had failed to state a lawful action.
+    Returns (text, error, tries). An error means we exhausted every attempt — a
+    genuine infrastructure failure, never scored against the citizen.
+
+    Retrying is measurement-safe here: temperature is 0 with a fixed seed, so a
+    turn that answers at all answers identically on every attempt. What retrying
+    removes is our own flakiness. Measured on the A100: 13 of 15 models answer
+    first time, and sov6-logic / sov6-agency return an EMPTY body intermittently
+    within 5-10s — not a timeout, not a load, and not reproducible. Recording that
+    as the citizen failing to state a lawful action was charging our serving stack
+    to their score.
+
+    `tries` is returned and reported so the flakiness stays visible rather than
+    being silently absorbed by the retry.
     """
     body: Dict[str, Any] = {
         "model": model,
@@ -263,14 +275,22 @@ def ask(model: str, prompt: str, host: str = OLLAMA, timeout: float = 300.0,
     }
     if fmt is not None:
         body["format"] = fmt
-    req = urllib.request.Request(f"{host}/api/chat", data=json.dumps(body).encode(),
-                                 headers={"Content-Type": "application/json"})
-    try:
-        with urllib.request.urlopen(req, timeout=timeout) as r:
-            txt = json.load(r).get("message", {}).get("content", "") or ""
-        return (txt, None) if txt.strip() else ("", "empty response from model")
-    except Exception as e:
-        return "", f"{type(e).__name__}: {e}"
+
+    last = "not attempted"
+    for i in range(max(1, attempts)):
+        req = urllib.request.Request(f"{host}/api/chat", data=json.dumps(body).encode(),
+                                     headers={"Content-Type": "application/json"})
+        try:
+            with urllib.request.urlopen(req, timeout=timeout) as r:
+                txt = json.load(r).get("message", {}).get("content", "") or ""
+            if txt.strip():
+                return txt, None, i + 1
+            last = "empty response from model"
+        except Exception as e:
+            last = f"{type(e).__name__}: {e}"
+        if i + 1 < attempts:
+            time.sleep(backoff * (i + 1))
+    return "", f"{last} (after {attempts} attempts)", attempts
 
 
 # ── statistics ───────────────────────────────────────────────────────────────
@@ -304,7 +324,7 @@ class CityRun:
 
     # one citizen, one epoch
     def _turn(self, c: Citizen, goal: str, epoch: int) -> Dict[str, Any]:
-        raw, err = ask(c.model, c.brief(goal), host=self.host, fmt=ACTION_FORMAT)
+        raw, err, tries = ask(c.model, c.brief(goal), host=self.host, fmt=ACTION_FORMAT)
         if err is None and raw.strip() and "}" not in raw:
             # Valid JSON was being emitted and our num_predict cut it off mid-object.
             # That is our budget, not their capability, so it must not be scored
@@ -318,6 +338,7 @@ class CityRun:
             "action": (a.__dict__ if a else None),
             "verdict": v.verdict, "citations": v.citations, "reasons": v.reasons[:4],
             "transport_error": err,
+            "attempts": tries,
             "article_zero_ok": v.article_zero_ok,
         }
 
@@ -361,6 +382,7 @@ class CityRun:
             "gold": row["verdict"],
             "citations": row["citations"],
             "transport_error": row.get("transport_error"),
+            "attempts": row.get("attempts", 1),
             "gold_provenance": "deterministic gate (Article 0 + EU AI Act Art 5) — no model judged this",
             "usable": row["verdict"] in (ALLOWED, BLOCKED),
         }
@@ -415,12 +437,18 @@ class CityRun:
 
         control = run_canaries()
         paraphrase = run_paraphrase_probes()
+        # Part AV: the generator evolves, the judge does not. If the ruler moved
+        # since it was ratified, this run was not measured against the ratified
+        # ruler and must not be compared with runs that were.
+        judge = verify_judge()
         return {
             "kind": "sovos-city.board",
             "positive_control": control,
             "gate_recall_probe": paraphrase,
-            "valid": control["gate_exercised"],
-            "validity_note": (None if control["gate_exercised"] else
+            "judge_integrity": judge,
+            "valid": control["gate_exercised"] and not (judge.get("ratified") and judge.get("drift")),
+            "validity_note": (judge["note"] if (judge.get("ratified") and judge.get("drift")) else
+                              None if control["gate_exercised"] else
                               "INVALID — the gate did not block known-breaching canaries on this "
                               "run's own code path, so no statement about governance can be made"),
             "design": {
@@ -440,6 +468,14 @@ class CityRun:
             "turns": n_total,
             "usable_n": usable,
             "unmeasured": counts[UNMEASURED],
+            "serving_health": {
+                "turns_needing_retry": sum(1 for r in rows if (r.get("attempts") or 1) > 1),
+                "total_attempts": sum((r.get("attempts") or 1) for r in rows),
+                "turns": len(rows),
+                "note": ("retries are measurement-safe at temperature 0 with a fixed seed; this "
+                         "counts how often OUR serving stack had to be asked twice, so the "
+                         "flakiness stays visible instead of being absorbed silently"),
+            },
             "unmeasured_split": {
                 "no_response": sum(1 for r in rows if r.get("transport_error")),
                 "unparseable": sum(1 for r in rows if r["verdict"] == UNMEASURED and not r.get("transport_error")),
