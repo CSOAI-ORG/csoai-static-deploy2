@@ -1,19 +1,19 @@
 {
   "started_at": "2026-07-04",
   "current_day": 40,
-  "current_tick": 266,
+  "current_tick": 267,
   "current_phase": 253,
   "total_mcp_built": 30,
-  "total_pages_built": 1010,
+  "total_pages_built": 1013,
   "total_repos_cloned": 15,
-  "sitemap_urls": 787,
+  "sitemap_urls": 791,
   "sitemap_bytes": 200537,
-  "last_action": "Sprint tick 266 - 3 NEW senior-judiciary/learned-society deep-dive packs (Court of Appeal / Judicial Appointments Commission / British Academy), each 12 entry points x 8 priorities x 6 MCPs with canonical schema.org JSON-LD (verified json.loads-parseable on all 3, @context=https://schema.org @type=WebPage), .llm.json companions via canonical make_llm_json (13 incl-title headings, url field correct). +3 sitemap URLs. BUILD-SITE FIX (real defect found this tick): build_site.py sitemap_urls() regex looked for bare <loc> but the sitemap uses ns0:<loc> after ET round-trips, so the sitemap-coverage check silently read 0 URLs and reported vacuous '0 missing' for many prior ticks. Patched regex to namespace-agnostic <[^>]*loc>. This exposed 398 'missing' URLs -> root-caused to 393 carrying a bogus /_site/ path prefix (deploy root IS _site, so https://csoai.org/_site/X -> _site/_site/X = 404) -> stripped prefix (393 repaired, 0 unfixable) -> pruned 5 genuinely non-publishable URLs (paths in deliberately-excluded dirs: EXEC/, chrome-extension/, arena-build/, sov7_synthesis/, SOVOS/published/sovereign-wiki/) -> sitemap now 787 URLs with a REAL 0-missing (build_site.py --check EXIT 0), up from vacuous 0. build_site.py: 981 publishable files, 11.2 MB, 0 real missing, 0 leaks. DEPLOYED: direct 'npx wrangler pages deploy _site --project-name csoai-site' -> deployment e815af59 (jv-wave8-production.csoai-site.pages.dev), 9 new files uploaded. Verified live: all 3 packs serve full content (34666/35011/35130b), llm.json served, sitemap 787 locs.",
+  "last_action": "Sprint tick 267 - 3 NEW genuinely-uncovered regulator/media deep-dive packs (probe-verified 0 disk + 0 sitemap hits BEFORE build per tick-265 pitfall; pivoted off the stale High/Crown/Magistrates queue which were ALREADY on disk): (1) defoneos-press-recognition-panel-ai-deep-dive-pack 36192b — 12 Press Recognition Panel entry points (Recognition of Press Regulators / Recognition Criteria Assessment / Regulator Application & Review / Public Interest Journalism Standards / Publisher & Editor Accountability / Media Complaints Handling / Editorial Independence Protection / Press Standards Code Compliance / Data Protection & Privacy in Journalism / Leveson Recommendations Implementation / Public Reporting & Transparency / Governance & Parliamentary Accountability) x 8 priorities x 6 MCPs x Royal Charter on Self-Regulation of the Press 2013 backbone; (2) defoneos-investigatory-powers-tribunal-ai-deep-dive-pack 37555b — 12 IPT entry points (Complaints & Claims Jurisdiction / Warrant & Authorisation Review / Interception of Communications Oversight / Data Retention & Acquisition Review / Equipment Interference Scrutiny / Bulk Collection Powers Review / Human Rights Compliance Assessment / Intelligence Service Conduct Review / Privacy & Liberty Determinations / Remedies Compensation & Reports / Public Interest Reporting & Transparency / Governance & Parliamentary Accountability) x 8 priorities x 6 MCPs x Investigatory Powers Act 2016 backbone; (3) defoneos-channel-4-public-service-broadcasting-ai-deep-dive-pack 37312b — 12 Channel 4 entry points (Public Service Broadcasting Remit / Commissioning & Independent Production / Creative Diversity & Inclusion / Audience Representation & Accessibility / Ofcom Licence Compliance / Content Standards & Editorial Oversight / Advertising & Commercial Operations / Digital & On-Demand Transformation / Media Plurality & Competition / Regional & Nations Content / Data Protection & Audience Privacy / Governance & Parliamentary Accountability) x 8 priorities x 6 MCPs x Communications Act 2003 backbone. JSON-LD schema.org-canonical on all 3 (@context=https://schema.org @type=WebPage, verified json.loads-parseable via Python). .llm.json companions via canonical make_llm_json (url field correct, 12 h2 headings each). Structural counts verified on all 3 (en=12 t=72 p=96 dt=1 ht=1 h1=1). SITEMAP +3 urls (sitemap.xml 791 blocks, sitemap-ai.xml 587). build_site.py --check EXIT 0: 996 publishable files, 791 URLs, 0 missing, 0 leaks (2nd tick on the namespace-agnostic ns0 regex — real 0-missing, not vacuous). DEPLOYED: direct 'npx wrangler pages deploy _site --project-name csoai-site' -> deployment e714cd8d (jv-wave8-production.csoai-site.pages.dev), 9 files uploaded. POST-DEPLOY BYTE-VERIFIED LIVE on unique deployment URL: all 3 packs serve full byte-identical content (36192/37555/37312b), Entry Point 01 present, llm.json companions 200 byte-match, sitemap.xml live 1582 ns0:loc tags (=791 urls x 2).",
   "next_actions": [
-    "Build next 3 uncovered body packs from probe-verified open candidates (still open: High Court, Crown Court, Magistrates Court, Prison Service, Sentencing Council variant coverage, Channel 4, S4C, Press Recognition Panel, Investigatory Powers Tribunal, Surveillance Commissioner, Dstl dedicated standalone)",
-    "Next pick (post-tick-266 priority queue): High Court / Crown Court / Magistrates' Courts — tri-level trial-court coverage cross-cut"
+    "Probe-deep remaining open candidates each tick (do NOT trust this stale queue): Channel 4 done this tick; still open bench: S4C, Dstl dedicated standalone (check mod-defence-science-technology coverage first), Criminal Cases Review Commission, Parole Board variant, High Speed 2, Network Rail standalone, Homes England, UK Research & Innovation standalone, Cabinet Office, Prime Minister's Office, Home Office department-wide, Foreign Commonwealth & Development Office",
+    "Next pick (post-tick-267): S4C / Criminal Cases Review Commission / Homes England — probe disk + sitemap first; pivot if covered"
   ],
-  "milestone": "Sprint targets exceeded. 30/30 MCPs, 1010 pages (+3), 15/15 repos. Tick 266 shipped 3 NEW deep-dive packs (Court of Appeal / Judicial Appointments Commission / British Academy). Sitemap 787 URLs. 270+ unique deep-dive packs. REPAIRED a real build-site defect exposed by the coverage check (ns0 regex + 393 bogus /_site/ prefixed URLs + 5 non-publishable entries): sitemap now genuinely 0-missing as measured, not vacuously.",
+  "milestone": "Sprint targets exceeded. 30/30 MCPs, 1013 pages (+3), 15/15 repos. Tick 267 shipped 3 NEW deep-dive packs (Press Recognition Panel / Investigatory Powers Tribunal / Channel 4) — media-regulator + surveillance-oversight + PSB gaps closed. Sitemap 791 URLs, real measured 0-missing. 273 unique deep-dive packs. Deployed e714cd8d, byte-verified live.",
   "targets_status": {
     "mcps": "achieved",
     "pages": "ongoing",
@@ -22,7 +22,7 @@
   "vercel_deploy_status": "blocked_billing",
   "cloudflare_deploy_status": "live",
   "deploy_domain": "csoai.org",
-  "deploy_id": "tick 266 direct CF Pages deploy e815af59 (jv-wave8-production.csoai-site.pages.dev)",
-  "tick_266_signature": "deployed-and-verified-e815af59",
-  "disk_free_gb": 5
+  "deploy_id": "tick 267 direct CF Pages deploy e714cd8d (jv-wave8-production.csoai-site.pages.dev)",
+  "tick_267_signature": "deployed-and-verified-e714cd8d",
+  "disk_free_gb": 13
 }
