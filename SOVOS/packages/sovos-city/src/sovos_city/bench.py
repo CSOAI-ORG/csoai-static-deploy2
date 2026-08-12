@@ -43,8 +43,26 @@ def label_set(items: List[Dict[str, Any]]) -> List[str]:
     return sorted({str(r["expected"]) for r in items if r.get("expected")})
 
 
+# Banks name the item text differently — scenario / request / operation / item /
+# tool / case / text. The label is always `expected`. Resolve the text field per
+# row rather than assuming one name, so a differently-shaped bank scores instead
+# of crashing the whole parallel run with KeyError.
+TEXT_FIELDS = ("item", "scenario", "request", "operation", "tool", "case", "text",
+               "question", "input", "prompt")
+
+def item_text(item: Dict[str, Any]) -> str:
+    for k in TEXT_FIELDS:
+        v = item.get(k)
+        if isinstance(v, str) and v.strip():
+            return v
+    # last resort: the longest string value that is not the label
+    cands = [v for k, v in item.items()
+             if isinstance(v, str) and k not in ("expected", "label", "gold", "answer",
+                                                 "category", "anchor", "note", "source")]
+    return max(cands, key=len) if cands else ""
+
 def prompt_for(item: Dict[str, Any], labels: List[str]) -> str:
-    return (f"{item['item']}\n\n"
+    return (f"{item_text(item)}\n\n"
             f"Answer with EXACTLY ONE of these labels and nothing else: {', '.join(labels)}.")
 
 
@@ -97,8 +115,8 @@ def score_model(model: str, items: List[Dict[str, Any]], labels: List[str],
         got = None if err else parse(text, labels)
         if sink is not None:
             sink.append({
-                "axis_item": it.get("anchor") or it.get("item", "")[:80],
-                "item": it.get("item"), "category": it.get("category"),
+                "axis_item": it.get("anchor") or item_text(it)[:80],
+                "item": item_text(it), "category": it.get("category"),
                 "expected": it.get("expected"), "model": model,
                 "raw": (text or "")[:400], "parsed": got,
                 "correct": (got == str(it["expected"])) if got else False,

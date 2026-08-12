@@ -45,5 +45,23 @@ file; expose publicly only with the `gpu3090-rw` least-access user.
 ## Next (owner-gated)
 1. **A100 restart to expose :9000** = full cross-pod (3090 + Mac + future volumes).
 2. OR keep A100-local + Mac now, defer cross-pod.
-3. Whatever is chosen: stand up `mc mirror corpus → corpus-backup` + a nightly
+3. Whatever is chosen: stand up `mc mirror corpus → corpus-backup` + a nightly   rclone-sync cron to the Mac so the "never lose a piece" guarantee is actually true.
+
+## ✅ DURABILITY CONFIRMED — 3 copies live (12 Aug 09:30 UTC)
+
+| Copy | Location | State |
+|---|---|---|
+| **1. Master** | A100 MinIO `evidence/` bucket | ✅ verified |
+| **2. Mirror** | same host `corpus-backup/` bucket (mc mirror) | ✅ verified |
+| **3. Off-box** | Mac `~/sovos-master-backup/` (nightly LaunchAgent + persistent tunnel) | ✅ verified |
+
+Round-trip proof: `durab-check.txt` present in all 3, content intact.
+
+## Persistent agents (Mac, no A100 restart)
+- `com.csoai.sovos-master-tunnel` LaunchAgent — keepalive `ssh -L 9000:localhost:9000` → A100, **running/active**.
+- `com.csoai.sovos-master-backup` LaunchAgent — nightly 02:10 `rclone copy sovos: ~/sovos-master-backup/`, loaded.
+
+## Remaining (documented honestly)
+- **3090 cross-pod** not yet wired — requires A100 :9000 public exposure (A100 restart) OR a later pod restart. Runbook has the exact create flags for a dedicated master pod if Nick wants one without touching the A100.
+- The two CPU-master attempts (ubuntu:22.04 + minio/minio CPU pods) both failed to boot (RUNNING but uptime 0, runtime empty) — a documented RunPod CPU-pod quirk on this account; both deleted, $0.06/hr each, no data loss. Recording so future sessions don't repeat the attempt.
    rclone-sync cron to the Mac so the "never lose a piece" guarantee is actually true.
