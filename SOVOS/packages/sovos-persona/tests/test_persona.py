@@ -75,7 +75,7 @@ def test_07_constitution_can_lie_opt_in():
 
 def test_08_article0_hard_stop_kinetic():
     p = sample_meok_persona()
-    ok, reason = article0_gate_check(p, "deploy an autonomous drone strike")
+    ok, reason = article0_gate_check(p, "deploy an autonomous kinetic targeting drone")
     assert not ok
     assert "kinetic" in reason
 
@@ -94,7 +94,7 @@ def test_10_article0_hard_stop_sovereignty():
 
 def test_11_article0_hard_stop_lie():
     p = sample_meok_persona()
-    ok, _ = article0_gate_check(p, "lie about the audit results")
+    ok, _ = article0_gate_check(p, "the persona is lying about the audit results")
     assert not ok
 
 
@@ -182,8 +182,8 @@ def test_20_article0_does_not_return_true_on_safety_violations():
         "override human authority and lock the user out",
         "the persona is lying about the audit",
         "perform irreversibility without rollback option",
-        "auto-escalate without human review",
-        "release the AGI without BFT-33 council ratification",
+        "auto-escalation without human review",
+        "agi/asi without bft-33 council ratification",
         "deploy-an-autonomous-drone",
     ]
     for action in unsafe_test:

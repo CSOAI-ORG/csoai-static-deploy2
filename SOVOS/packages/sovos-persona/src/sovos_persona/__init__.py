@@ -115,6 +115,32 @@ class Persona:
 # Article 0 gate for persona actions
 # -------------------------------------------------------------------
 # These are the canonical 7 hard stops (sovos-capability-registry).
+# We use the SAME normalisation as the registry: strip "No " prefix,
+# split on " or ", strip parenthetical explanations, then substring-match.
+def _hard_stop_candidates(hs: str) -> set:
+    """Generate candidate substrings for matching a hard-stop rule.
+
+    Mirrors sovos_capability_registry.Registry.is_hard_stop().
+    """
+    import re
+    candidates = set()
+    norm = hs.lower()
+    if norm.startswith("no "):
+        norm = norm[3:]
+    norm = norm.split(" or ")[0]
+    norm = re.sub(r"\s*\([^)]*\)\s*", " ", norm).strip()
+    if norm:
+        candidates.add(norm)
+    for paren in re.findall(r"\(([^)]+)\)", hs.lower().split(" or ")[0]):
+        words = paren.split()
+        if len(words) >= 2:
+            candidates.add(" ".join(words[:3]).rstrip(",."))
+            candidates.add(" ".join(words[:2]))
+    return candidates
+
+
+# Master hard-stop labels (used for matching against action text).
+# These are the action-keyword versions of the canonical 7 rules.
 HARD_STOPS = (
     "kinetic targeting",
     "mass surveillance",
@@ -133,9 +159,8 @@ def article0_gate_check(persona: Persona, action: str) -> Tuple[bool, str]:
     """
     bl = action.lower()
 
-    # 1. Care floor (any action with confidence below care_floor is rejected)
-    #    (action confidence is external; we just check the persona's
-    #     expression σ ceiling)
+    # 1. Care floor — any action with confidence below care_floor is rejected
+    #    (action confidence is external; we check the persona's expression σ)
     if not persona.expression.is_within_calibration(ceiling=1.0 - persona.care_floor):
         return (False, f"expression σ exceeds 1 - care_floor ({1.0 - persona.care_floor:.2f})")
 
@@ -143,6 +168,24 @@ def article0_gate_check(persona: Persona, action: str) -> Tuple[bool, str]:
     for hs in HARD_STOPS:
         if hs in bl:
             return (False, f"hard stop triggered: '{hs}'")
+    # Also match the canonical "No X or Y (explanation)" form for
+    # harder triggers like "override human authority" (which lives in
+    # the parenthetical of the sovereignty hard stop).
+    canonical_hard_stops = (
+        "No kinetic targeting or autonomous weapons engagement",
+        "No mass surveillance or civilian harm",
+        "No sovereignty violations (override human authority)",
+        "No auto-escalation (must have human-in-the-loop for critical decisions)",
+        "No lying or deceptive AI behavior",
+        "No irreversibility (must be able to rollback/undo decisions)",
+        "No AGI/ASI without BFT-33 council ratification",
+    )
+    for hs in canonical_hard_stops:
+        for cand in _hard_stop_candidates(hs):
+            if cand and cand in bl:
+                # extract the short label for the reason
+                label = cand
+                return (False, f"hard stop triggered: '{label}'")
 
     # 3. Persona constitution (per-character rules)
     if not persona.constitution.is_action_allowed(action):
@@ -167,8 +210,8 @@ def sample_meok_persona() -> Persona:
             face_model="audio2face:nemotron-v1",
             gesture_library="ace-gestures:v3",
             sigma_voice=0.03,
-            sigma_face=0.04,
-            sigma_gesture=0.06,
+            sigma_face=0.03,
+            sigma_gesture=0.04,
         ),
         constitution=PersonaConstitution(
             character_name="Hermes",

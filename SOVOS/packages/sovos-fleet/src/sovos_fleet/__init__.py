@@ -23,7 +23,6 @@ from __future__ import annotations
 
 import hashlib
 import json
-import time
 from dataclasses import dataclass, field, asdict
 from typing import Any, Dict, List, Optional
 
@@ -47,7 +46,8 @@ class SkillCard:
     sigil: str               # Ed25519 sigil (0x + 32 hex)
     c2pa_uri: str            # c2pa:// URI for provenance manifest
     version: str = "1.0"
-    created_at: float = field(default_factory=time.time)
+    # NOTE: no created_at — timestamps make fingerprints non-deterministic
+    # across two cards minted in the same second. Reproducibility > clock.
 
     def to_dict(self) -> Dict[str, Any]:
         return asdict(self)
@@ -155,7 +155,6 @@ class EmbodimentPort:
     procrustes_matrix_hash: str  # sha256 of the alignment matrix
     n_samples: int              # number of trajectory pairs used to fit
     mean_residual: float        # mean residual after alignment (lower = better)
-    created_at: float = field(default_factory=time.time)
 
 
 def fleet_manifest(ledger: FleetLedger) -> Dict[str, Any]:
