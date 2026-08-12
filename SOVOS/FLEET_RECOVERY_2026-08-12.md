@@ -52,6 +52,14 @@ recoverable via Modelfiles; sov34 via HF; gemma3/llama3.2 are public pulls.
 So **the full 15-model board fleet IS recoverable** — the "ephemeral" label
 was wrong; the recipes survived on the never-rebooted 3090.
 
+## ✅ RECOVERY COMPLETE — verified 2026-08-12 (live)
+- **A100 re-provisioned** (port 11703, NVIDIA A100 80GB, 81GB VRAM)
+- **All 13 sov6-v3-light specialists rebuilt** from Modelfiles (all `success`)
+- **5 bases pulled** (mistral:7b, llama3.2:3b, qwen2.5:3b, gemma3:12b, deepseek-r1:8b)
+- **20 models total on A100** (13 sov6 + 6 bases + qwen2.5:0.5b)
+- **Inference verified:** sov6-ethics → "2+2 equals 4." (real text, no `?????` taint)
+- **MinIO master + board data intact** (boards-sov6 fully readable)
+
 ## Lesson (canon)
 Modelfiles ARE backups. Before any pod teardown, always:
 1. Copy `/workspace/sovos-repo/Modelfiles-*` + `/root/.ollama/models` to the
