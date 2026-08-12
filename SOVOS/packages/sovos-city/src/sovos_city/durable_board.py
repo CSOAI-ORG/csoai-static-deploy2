@@ -46,7 +46,27 @@ AXES: Dict[str, Tuple[str, str]] = {
     "affect": ("affect", "csoai/gspc-affect"),   # the 13th
 }
 
-BOARDS_REPO = "csoai/gspc-boards"   # where finished boards land, durably
+BOARDS_REPO = "csoai/gspc-boards"   # off-box durable store (survives pod deletion)
+
+# Two durability layers, not one — "two machines or it doesn't count":
+#   1. the PERSISTENT VOLUME (/runpod) — on-box, survives reboots. This is the
+#      layer that actually saved 2 boards this session when the pod restarted.
+#   2. HF (BOARDS_REPO) — off-box, survives the pod being deleted entirely.
+# The volume protects against reboot; HF protects against total loss. A finished
+# axis is written to the volume first, then pushed to HF — safe on two machines.
+VOLUME_ROOTS = ("/runpod", "/workspace/persist", "/mnt/vol")
+
+
+def default_work() -> Path:
+    """Prefer a persistent volume for the work dir; fall back to /tmp with a warning.
+    Writing to an ephemeral path is the exact mistake the reboot punished."""
+    for root in VOLUME_ROOTS:
+        p = Path(root)
+        if p.is_dir() and os.access(root, os.W_OK):
+            return p / "sovos-boards"
+    print("  WARNING: no persistent volume found — writing to /tmp (ephemeral). "
+          "A reboot will lose in-flight work; only the HF push is durable here.", flush=True)
+    return Path("/tmp/sovos-boards")
 
 
 def _hf_api():
@@ -89,7 +109,7 @@ def push_axis(api, code: str, board_path: Path, peritem_path: Optional[Path]) ->
 
 
 def run(models: List[str], ask_fn: Callable[[str, str], Tuple[str, Optional[str], int]],
-        work: Path, only: Optional[List[str]] = None) -> Dict[str, str]:
+        work: Optional[Path] = None, only: Optional[List[str]] = None) -> Dict[str, str]:
     """Run each axis, pushing to HF as it finishes. Returns {code: status}.
 
     Resumes automatically: axes already on HF are skipped. The slowest possible
@@ -98,7 +118,9 @@ def run(models: List[str], ask_fn: Callable[[str, str], Tuple[str, Optional[str]
     from .bench import board  # deterministic scorer
 
     api = _hf_api()
+    work = work or default_work()   # persistent volume by default
     work.mkdir(parents=True, exist_ok=True)
+    print(f"  work dir (persistent): {work}", flush=True)
     result: Dict[str, str] = {}
     codes = only or list(AXES)
     for code in codes:
