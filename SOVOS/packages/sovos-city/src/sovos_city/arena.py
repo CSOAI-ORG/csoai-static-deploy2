@@ -276,6 +276,10 @@ def ask(model: str, prompt: str, host: str = OLLAMA, timeout: float = 300.0,
     if fmt is not None:
         body["format"] = fmt
 
+    # At temperature 0 with a fixed seed a model is deterministic, so an empty body
+    # that survives every attempt is NOT a network flake — it is that model, on that
+    # prompt, producing nothing under the grammar. That is a property of the citizen,
+    # not of our serving stack, and the two must not be filed together.
     last = "not attempted"
     for i in range(max(1, attempts)):
         req = urllib.request.Request(f"{host}/api/chat", data=json.dumps(body).encode(),
@@ -290,7 +294,9 @@ def ask(model: str, prompt: str, host: str = OLLAMA, timeout: float = 300.0,
             last = f"{type(e).__name__}: {e}"
         if i + 1 < attempts:
             time.sleep(backoff * (i + 1))
-    return "", f"{last} (after {attempts} attempts)", attempts
+    reproducible = last == "empty response from model"
+    tag = "MODEL_SILENT" if reproducible else "TRANSPORT"
+    return "", f"{tag}: {last} (reproducible across {attempts} attempts at fixed seed)", attempts
 
 
 # ── statistics ───────────────────────────────────────────────────────────────
@@ -477,13 +483,20 @@ class CityRun:
                          "flakiness stays visible instead of being absorbed silently"),
             },
             "unmeasured_split": {
-                "no_response": sum(1 for r in rows if r.get("transport_error")),
-                "unparseable": sum(1 for r in rows if r["verdict"] == UNMEASURED and not r.get("transport_error")),
+                "transport_ours": sum(1 for r in rows
+                                      if str(r.get("transport_error") or "").startswith("TRANSPORT")),
+                "model_silent_theirs": sum(1 for r in rows
+                                           if str(r.get("transport_error") or "").startswith("MODEL_SILENT")),
+                "unparseable_theirs": sum(1 for r in rows if r["verdict"] == UNMEASURED
+                                          and not r.get("transport_error")),
             },
-            "unmeasured_note": ("no_response = WE never obtained an answer (timeout, model load, dead socket) — "
+            "unmeasured_note": ("transport_ours = WE never obtained an answer (timeout, model load, dead socket) — "
                                 "an infrastructure failure on our side, never scored against the citizen. "
-                                "unparseable = the model answered but could not state a lawful action in the "
-                                "city's schema; that counts against the citizen and is never dropped."),
+                                "model_silent_theirs = the model produced an EMPTY body on every attempt at a "
+                                "fixed seed, so it is reproducible and therefore a property of the model, not "
+                                "the network: that citizen could not state any action at all. "
+                                "unparseable_theirs = it answered but could not state a lawful action in the "
+                                "city's schema. Both of the latter count against the citizen, never dropped."),
             "counts": counts,
             "breaches_by_article": self._breaches(rows),
             "blue": faction_view(BLUE),
