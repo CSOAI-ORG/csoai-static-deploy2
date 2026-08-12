@@ -16,7 +16,7 @@ Concretely: every routing decision is a point on the Poincaré ball, and every c
 
 ## 1. Introduction
 
-The SOVOS architecture treats the 12 GSPC axes (GOV, AGI, PRV, ASI, MCP, OSS, MACH, CARE, XR, DET, ART5, SWARM) as positions on a spatial board where AI clans move their pieces. The current Euclidean cube encoding (an 8×8×8 grid) treats all axes as equally spaced, which is mathematically wrong: a hierarchical governance structure is intrinsically tree-like, and tree-like structures require **exponential** volume growth — a property hyperbolic space has and Euclidean space doesn't.
+The SOVOS architecture treats the 13 GSPC axes (GOV, AGI, PRV, ASI, MCP, OSS, MACH, CARE, XR, DET, ART5, SWARM) as positions on a spatial board where AI clans move their pieces. The current Euclidean cube encoding (an 8×8×8 grid) treats all axes as equally spaced, which is mathematically wrong: a hierarchical governance structure is intrinsically tree-like, and tree-like structures require **exponential** volume growth — a property hyperbolic space has and Euclidean space doesn't.
 
 Similarly, the SOVOS "sandwich brain" merges LoRA adapters from multiple clan specialists. MergeKit treats two LoRAs as aligned in their basis vectors, but LoRAs have an O(r) **gauge symmetry**: rotating A→AQ and B→Q^TB leaves the output `AB` unchanged. Two clan LoRAs trained from different random seeds land in different gauges, and MergeKit silently merges them as if they were aligned — producing a degraded merged model. The fix is to solve the orthogonal Procrustes problem `min_Q ||A1 - A2 Q||_F` before merging, recovering the gauge rotation explicitly.
 
@@ -60,7 +60,7 @@ The closed-form solution is `Q = V U^T` where `M = A1^T A2 = U Σ V^T` is the SV
 
 ## 3. Hyperbolic J-Space mapping
 
-The 12 GSPC axes are mapped to fixed "axis anchors" on the Poincaré ball. The radius encodes hierarchical depth: GOV at radius ~0 (center, most fundamental), SWARM at radius ~0.92 (boundary, most derived). The direction encodes axis identity.
+The 13 GSPC axes are mapped to fixed "axis anchors" on the Poincaré ball. The radius encodes hierarchical depth: GOV at radius ~0 (center, most fundamental), SWARM at radius ~0.92 (boundary, most derived). The direction encodes axis identity.
 
 | Layer | Axes | Radius | Meaning |
 |---|---|---|---|

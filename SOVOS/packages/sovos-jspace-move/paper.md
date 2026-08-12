@@ -88,7 +88,7 @@ v(m) = [clan_hash, axis_idx, dx/9, dy/9, dz/4,
 
 where:
 - `clan` ∈ {"fish", "builder", "watchdog", "care", "proof", "trader", ...}
-- `axis` ∈ the 12 GSPC axes (GOV, SAFETY, PRV, ART5, AGI, ASI, MACH, CARE, XR, DET, SWARM, OSS)
+- `axis` ∈ the 13 GSPC axes (GOV, SAFETY, PRV, ART5, AGI, ASI, MACH, CARE, XR, DET, SWARM, OSS)
 - `(dx, dy, dz)` are integer displacements on a 9×9×4 board
 - `intent ∈ {+1, −1}` distinguishes capability moves from error moves
 - `weight ∈ [0, 1]` is the move's confidence

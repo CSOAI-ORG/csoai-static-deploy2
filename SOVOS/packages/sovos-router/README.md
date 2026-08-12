@@ -42,7 +42,7 @@ python3 SOVOS/packages/sovos-router/src/sovos_router/fleet_monitor.py
 ## Cross-link
 
 - The orchestrator's wiring of `sov_router` → pipelines feeds into
-  `sovos-arena` (12-axis measurement) + `sovos-chain` (Fisher-Rao
+  `sovos-arena` (13-axis measurement) + `sovos-chain` (Fisher-Rao
   compliance chain).
 - `fleet_dashboard.py` reads from `SOVOS/data/hive/` operational
   JSON (the absorbed `forest/` data).

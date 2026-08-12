@@ -64,5 +64,5 @@ print(lt.to_markdown())
 ## Honest scope
 
 - The math is canonical (Glickman 2013).
-- The 12 probes are scenario-describing placeholders. Real probes plug in via the existing `sovos-arena` 12 GSPC axes.
+- The 12 probes are scenario-describing placeholders. Real probes plug in via the existing `sovos-arena` 13 GSPC axes.
 - The league is the *infrastructure*; the first published ratings come when v4 lands and the probes are real.

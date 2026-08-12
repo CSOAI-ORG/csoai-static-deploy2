@@ -7,7 +7,7 @@ Yes, with a named ceiling: you get **motion parallax** on any LCD, true stereops
 ## What it ships
 
 - `GlassConfig`, `GlassFrame`, `HaloPoint` — typed scene model
-- `halos_from_signal_axis(vector, axis_names)` — projects a 12-axis GSPC measurement onto a 4×3 halo grid
+- `halos_from_signal_axis(vector, axis_names)` — projects a 13-axis GSPC measurement onto a 4×3 halo grid
 - `render_glass_html(config)` — generates the Tier-0 Three.js parallax HTML
 - σ-halo shader (embedded in HTML) — uncertainty field per object
 - CalibrationGate (ECE ≤ 0.05) — refuses to ship until the σ-field is calibrated

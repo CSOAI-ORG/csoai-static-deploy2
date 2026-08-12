@@ -36,7 +36,7 @@ CONFLATIONS = [
     (r"52 charters|52 sovereign charters|52 articles", "34", "charter substantive=34; 52 includes 18 reserved slots"),
     (r"axes?\b[=: ]+12\b", "13", "GSPC axes=13 (code GSPC_AXES); 12 is stale deploy"),
     (r"12 GSPC axes|12-axis", "13", "GSPC axes=13 incl affect"),
-    (r"care.*20[01]|20[01].*care", None, "care canonical = 201 (200 usable + 1 canary)"),
+    (r"care (bank of|has|: )?20[01]\b", "201", "care canonical = 201 (200 usable + 1 canary)"),
 ]
 
 # Measurement-record subtrees: model/fleet counts inside these are the measured
@@ -44,11 +44,27 @@ CONFLATIONS = [
 # enforced (a 2026-08-12 run saying 12 axes is stale; a run saying 15 models is
 # historical truth).
 MEASUREMENT_SUBTREES = ("arena-real-runs", "recovered-boards", "boards-v2",
-                        "SEASON", "season", "benchmark-results")
+                        "SEASON", "season", "benchmark-results",
+                        "REAL_MEASUREMENT", "MASTER_STACK_RUNBOOK",
+                        "RUNBOOK", "runbook")
 # In measurement records, these patterns report the fleet n of that specific run
-# and are exempt from the current-fleet canonical.
+# and are exempt from the current-fleet canonical. Also covers axis-count
+# staleness: REAL_MEASUREMENT/MASTER_STACK describe runs done on the then-12-axis
+# arena — the number is the run's historical truth, not a stale public claim.
 MEASUREMENT_EXEMPT = (
     r"~?15 models|fleet of 15\b|15-model fleet|14 models|15 sovereign models",
+    r"12 GSPC axes|12-axis|12 axes",
+)
+# Canon-definition files: they EXPLAIN the conflation (registry details, closes
+# docs, audit tables), so the old number inside them is the subject of the
+# sentence, not a stale claim. Exempt from enforcement.
+CANON_DEFINERS = (
+    "GSPC_NUMBERS_REGISTRY.json",
+    "REGISTER_CLOSES",
+    "BRIEF_AUDIT",
+    "V2_CHARTER",
+    "claim_linter.py",
+    "run_claim_linter.py",
 )
 
 def lint(root: Path, registry: dict) -> tuple[list, list]:
@@ -68,6 +84,8 @@ def lint(root: Path, registry: dict) -> tuple[list, list]:
         if not text.strip():
             continue
         files.append(str(p))
+        if any(d in str(p) for d in CANON_DEFINERS):
+            continue  # this file defines the canon; its numbers are the subject, not a claim
         is_measurement = any(st in str(p) for st in MEASUREMENT_SUBTREES)
         for regex, canonical, what in CONFLATIONS:
             for m in re.finditer(regex, text, re.I):

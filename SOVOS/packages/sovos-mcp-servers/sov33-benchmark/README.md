@@ -9,7 +9,7 @@ from the original source.
 Implements the canonical GovBench loader and scoring engine:
 1. Load governance items from a JSONL file
 2. For each item, run a model query (or use the SOV SIGNAL API)
-3. Score the response on the 12-axis rubric
+3. Score the response on the 13-axis rubric
 4. Aggregate into a per-item score + per-axis SOV SIGNAL
 
 The scaffold ships with 3 demo items (EU AI Act Article 5, NIST RMF GOVERN-1.1,
