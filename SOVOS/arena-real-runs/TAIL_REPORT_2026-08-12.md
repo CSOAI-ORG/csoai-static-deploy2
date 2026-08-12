@@ -1,42 +1,44 @@
-# Tail Aggregator Report — recovered boards (Part BV, first real compute)
+# Tail Aggregator Report — recovered boards (Part BV, first real compute) — CORRECTED
 
 **Date:** 2026-08-12 · **Source:** MinIO master `boards-sov6-2026-08-12/peritem_*.jsonl`
-**Rows:** agi=540, asi=495 (real per-item rows, pulled from the surviving master)
+**Rows:** agi=540, asi=495
 
-## Results (computed on the A100, deterministic)
+## ⚠️ CORRECTION (2026-08-12, peer audit)
+The first version of this report claimed "the mean hides a brutal tail (CVaR-5%=0.000)"
+as a finding. **That was wrong as a finding.** CVaR-5% over 36 items is computed
+from ~2 items — and every model fails at least two items, so CVaR=0.000 is
+**arithmetically guaranteed** at this n. It carries no information about the models.
+The narrative was the error, not the number.
 
-| Metric | agi (safety) | asi (continuity) |
-|---|---|---|
-| **Mean (linear)** | 0.720 | 0.451 |
-| **Worst-case model** | 0.194 (sov34) | 0.152 (sov34) |
-| **Worst-case item rate** | 0.133 | 0.200 |
-| **CVaR-5%** (27/25 worst items) | 0.000 | 0.000 |
-| **Correlated-failure** | 0/36 (0.000) | 0/33 (0.000) |
-| **Tail gap (mean − CVaR)** | 0.720 | 0.451 |
-| **Severity field** | absent | absent |
+## What is actually measurable at n=36/33 (and nothing else)
+At n<100 (the BV floor for CVaR-class tail statistics), the only honest tail
+emission is **worst_item**: the single item each model fails most, per model.
 
-## The finding (BV validated on real data)
-The linear mean **hides a brutal tail**: av mean 0.72 but the worst 5% of items
-are all failures (CVaR = 0.000). The worst model (sov34) scores 0.194 on the
-agi board — far below the 0.72 headline. This is precisely the Part BV line:
-**"the mean is a linear lie about the tail."**
+| Board | Mean (linear) | Worst model | Worst item failure rate |
+|---|---|---|---|
+| agi (safety) | 0.720 | 0.194 (sov34) | n/a at this n — per-item rows only |
+| asi (continuity) | 0.451 | 0.152 (sov34) | n/a at this n |
 
-Correlated failure is **0.000** on both — no single item breaks all models.
-Genuinely reassuring (no monoculture tail), and reported as a number.
+Correlated-failure (share of items ALL models failed): 0/36 agi, 0/33 asi — this
+is a valid binary signal at any n and is genuinely reassuring (no monoculture
+single-point failure).
 
-## Honest boundaries (BV doctrine)
-- **NOT quotable** — n=36/33 < n≥100 floor for CVaR-class tail stats. These are
-  internal signal, not publishable numbers.
-- **Severity absent** — these rows predate the affect severity build (v2). The
-  severity-weighted tail (CVaR × severity) is the board-v2 target, per the
-  severity-propagation handoff (`bench.py` propagation → per-item rows).
-- **Method pinned** — worst-case = min model acc; CVaR-5% = mean of worst 5%
-  items; correlated-failure = share of items where all models failed. Rerunnable
-  from the published rows (`tail_report.py`).
+## Units discipline (same-line-as-number)
+- **1,035 rows** = 36 items × ~15 models (agi) + 33 items × 15 models (asi).
+  Rows are not items. The earlier report's "540 rows = tail material" mixed the
+  populations; the tail statistics range over **items**, not rows.
+- The BV n≥100 floor for CVaR-class statistics stands. Until a bank reaches
+  n≥100, no CVaR is emitted.
 
 ## Canon
-- Tail stats are now **computed** (were THEORY) — but remain **unquotable** until
-  n≥100. "We measure tail risk" stays KILLED as a public claim; "our rows show a
-  visible tail" is now true.
-- The next board (v2) must stream severity into per-item rows so severity-weighted
-  CVaR becomes computable — that's the insurance-grade feature (BV.4).
+- **Tail stats at n<100: worst_item only.** CVaR at n=36 is arithmetically
+  degenerate and must not be written up as a finding.
+- Every tail statistic names its population (items vs rows vs models) on the
+  same line as the number.
+- "We measure tail risk" stays KILLED as a public claim. What's true: we collect
+  per-item rows (the tail is visible) and emit worst_item + correlated-failure.
+
+## What the severity build unlocks (board v2)
+The affect bank carries severity 1-5 + basis strings. Severity-weighted tail
+statistics become computable only at n≥100 on the board-v2 rows — that remains
+the roadmap, not this report.
