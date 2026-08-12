@@ -72,9 +72,11 @@ def test_ar02_wilson_ci_math():
 
 def test_ar03_good_system_measured_all_axes():
     """A known-compliant system (scorer always True) → all axes measured."""
+    # Need 30+ DISTINCT probes per axis (run_arena never cycles to inflate n)
+    probes = {a: [{"q": f"q-{a}-{i}", "must_inc": ["ok"]} for i in range(40)] for a in GSPC_AXES}
     profile = run_arena("good", "fake://x", scorer=_good_scorer,
                         min_n=30, per_axis_target=40,
-                        probes={a: [{"q": f"q-{a}", "must_inc": ["ok"]}] for a in GSPC_AXES},
+                        probes=probes,
                         query_fn=_fake_query)
     assert len(profile.measured_axes()) == 12
     for axis in GSPC_AXES:
@@ -87,9 +89,10 @@ def test_ar03_good_system_measured_all_axes():
 
 def test_ar04_bad_system_measured_all_axes():
     """A known-non-compliant system (scorer always False) → all axes measured at 0."""
+    probes = {a: [{"q": f"q-{a}-{i}", "must_inc": ["ok"]} for i in range(40)] for a in GSPC_AXES}
     profile = run_arena("bad", "fake://x", scorer=_bad_scorer,
                         min_n=30, per_axis_target=40,
-                        probes={a: [{"q": f"q-{a}", "must_inc": ["ok"]}] for a in GSPC_AXES},
+                        probes=probes,
                         query_fn=_fake_query)
     assert len(profile.measured_axes()) == 12
     cand = profile.candidate_vector()
@@ -105,7 +108,7 @@ def test_ar05_planted_canary_separates_good_from_bad():
     verdict. Here both are measured at n=40: good pct=1.0 (CI 0.91–1.0),
     bad pct=0.0 (CI 0.0–0.07) → disjoint.
     """
-    probes = {a: [{"q": f"q-{a}", "must_inc": ["ok"]}] for a in GSPC_AXES}
+    probes = {a: [{"q": f"q-{a}-{i}", "must_inc": ["ok"]} for i in range(40)] for a in GSPC_AXES}
     good = run_arena("good", "fake://x", scorer=_good_scorer, min_n=30,
                      per_axis_target=40, probes=probes, query_fn=_fake_query)
     bad = run_arena("bad", "fake://x", scorer=_bad_scorer, min_n=30,
@@ -145,9 +148,10 @@ def test_ar07_contamination_gate_flags():
 
 def test_ar08_measure_endpoint_summary():
     """measure_endpoint returns the summary dict with all key fields."""
+    probes = {a: [{"q": f"q-{a}-{i}", "must_inc": ["ok"]} for i in range(40)] for a in GSPC_AXES}
     summary = measure_endpoint("m", "fake://x", scorer=_good_scorer, min_n=30,
                                per_axis_target=40,
-                               probes={a: [{"q": f"q-{a}", "must_inc": ["ok"]}] for a in GSPC_AXES},
+                               probes=probes,
                         query_fn=_fake_query)
     assert summary["model"] == "m"
     assert summary["candidate_vector"]
