@@ -53,6 +53,16 @@ def test_severity_tail_empty_rows():
     assert st["n_items"] == 0 and st["tail_quotable"] is False
 
 
+def test_severity_cvar_none_below_floor():
+    # Peer-audit doctrine (dcbeda28): CVaR at n<100 is degenerate, not a finding.
+    rows = [_row(f"i{i}", "m1", i % 2 == 0, severity=3) for i in range(50)]
+    st = severity_tail(rows)
+    assert st["cvar05_harm"] is None and st["tail_quotable"] is False
+    big = [_row(f"i{i}", "m1", i % 2 == 0, severity=3) for i in range(120)]
+    st2 = severity_tail(big)
+    assert st2["cvar05_harm"] is not None and st2["tail_quotable"] is True
+
+
 def test_item_key_uses_item_text_not_shared_anchor():
     # Regression (2026-08-12): the asi board has 12 anchors over 33 items.
     # Keying by axis_item collapsed variants into 12 buckets; item text is identity.

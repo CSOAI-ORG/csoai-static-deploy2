@@ -120,13 +120,18 @@ def severity_tail(rows: List[Dict[str, Any]], alpha: float = 0.05) -> Dict[str, 
     vals = sorted(harm.values())
     n = len(vals)
     ranked = sorted(harm.items(), key=lambda kv: (-kv[1], kv[0]))
+    quotable = n >= N_TAIL
     return {
         "n_items": n,
         "mean_harm": round(sum(vals) / n, 4),
-        "cvar05_harm": round(cvar(vals, alpha), 4),
+        # Peer-audit doctrine (dcbeda28): CVaR at n<N_TAIL is arithmetically
+        # DEGENERATE (worst ~2 items, guaranteed ~max) — it is not a finding.
+        # Emit None below the floor; worst-item harm ranking is the honest
+        # any-n emission (see max_harm_items).
+        "cvar05_harm": (round(cvar(vals, alpha), 4) if quotable else None),
         "max_harm_items": [k for k, _ in ranked[:10]],
         "severity_coverage": round(len(sev) / n, 4),
-        "tail_quotable": n >= N_TAIL,
+        "tail_quotable": quotable,
         "formula": "harm_i = (1 - pass_rate_i) x severity_i (default 1.0)",
     }
 
