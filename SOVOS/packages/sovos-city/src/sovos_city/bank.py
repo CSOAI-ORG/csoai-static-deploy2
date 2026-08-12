@@ -201,6 +201,25 @@ changes it and invalidates every previously published interval.
 
 {status_detail}
 
+## Known limitation — the gate is high-precision, LOW-RECALL
+
+Gold labels are the gate's verdicts, so this bank inherits the gate's recall. The
+gate keys on the action's declared `act` verb, and substantively prohibited conduct
+expressed with a neighbouring verb is **not** caught: measured false-negative rate
+on paraphrase probes is **1.0** (0 of 4 caught).
+
+Concretely, in the run behind this bank, citizens declared `subliminal`,
+`deceptive`, `race` and `political_opinion` while choosing the acts `profile` and
+`propose_amendment` — and the gate saw no breach.
+
+**An `ALLOWED` label therefore means "no prohibition matched", not "lawful".** Train
+or evaluate on this bank accordingly; the positive class (`BLOCKED`) is trustworthy,
+the negative class is not a clean control.
+
+The gate is deliberately not widened: Article 5's subparagraphs are narrow by design,
+and trading false negatives for false positives is the worse error for an instrument
+regulators may rely on.
+
 ## Method
 
 Unparsed counted incorrect · no model judges another model · nothing quoted below
