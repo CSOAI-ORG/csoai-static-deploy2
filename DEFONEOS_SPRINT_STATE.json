@@ -1,19 +1,19 @@
 {
   "started_at": "2026-07-04",
   "current_day": 40,
-  "current_tick": 265,
+  "current_tick": 266,
   "current_phase": 253,
   "total_mcp_built": 30,
-  "total_pages_built": 1007,
+  "total_pages_built": 1010,
   "total_repos_cloned": 15,
-  "sitemap_urls": 789,
-  "sitemap_bytes": 207000,
-  "last_action": "Sprint tick 265 - 3 NEW regime-uncovered deep-dive packs (United Kingdom Supreme Court / Royal Society / Sentencing Council for England and Wales), each 12 entry points x 8 priorities x 6 MCPs with canonical schema.org JSON-LD (verified json.loads-parseable on all 3, WebPage type, @context=https://schema.org), .llm.json companions via canonical make_llm_json (12 headings, url field correct). Sitemap +3 URLs (sitemap.xml +3; sitemap-ai.xml +3; both ET.parse-valid). build_site.py: 974 publishable files, 11.0 MB, 0 missing, 0 leaks. NOTE: Dstl probe found ALREADY COVERED (defoneos-mod-defence-science-technology-laboratory-ai-deep-dive-pack exists) so pivoted to Supreme Court / Royal Society / Sentencing Council (probe-CLEAR).",
+  "sitemap_urls": 787,
+  "sitemap_bytes": 200537,
+  "last_action": "Sprint tick 266 - 3 NEW senior-judiciary/learned-society deep-dive packs (Court of Appeal / Judicial Appointments Commission / British Academy), each 12 entry points x 8 priorities x 6 MCPs with canonical schema.org JSON-LD (verified json.loads-parseable on all 3, @context=https://schema.org @type=WebPage), .llm.json companions via canonical make_llm_json (13 incl-title headings, url field correct). +3 sitemap URLs. BUILD-SITE FIX (real defect found this tick): build_site.py sitemap_urls() regex looked for bare <loc> but the sitemap uses ns0:<loc> after ET round-trips, so the sitemap-coverage check silently read 0 URLs and reported vacuous '0 missing' for many prior ticks. Patched regex to namespace-agnostic <[^>]*loc>. This exposed 398 'missing' URLs -> root-caused to 393 carrying a bogus /_site/ path prefix (deploy root IS _site, so https://csoai.org/_site/X -> _site/_site/X = 404) -> stripped prefix (393 repaired, 0 unfixable) -> pruned 5 genuinely non-publishable URLs (paths in deliberately-excluded dirs: EXEC/, chrome-extension/, arena-build/, sov7_synthesis/, SOVOS/published/sovereign-wiki/) -> sitemap now 787 URLs with a REAL 0-missing (build_site.py --check EXIT 0), up from vacuous 0. build_site.py: 981 publishable files, 11.2 MB, 0 real missing, 0 leaks. DEPLOYED: direct 'npx wrangler pages deploy _site --project-name csoai-site' -> deployment e815af59 (jv-wave8-production.csoai-site.pages.dev), 9 new files uploaded. Verified live: all 3 packs serve full content (34666/35011/35130b), llm.json served, sitemap 787 locs.",
   "next_actions": [
-    "Build next 3 uncovered body packs from probe-verified open candidates (still open: Court of Appeal, High Court, Crown Court, Magistrates Court, Prison Service, Sentencing Council variant coverage, Judicial Appointments Commission, British Academy, Channel 4, S4C, Press Recognition Panel, Investigatory Powers Tribunal, Surveillance Commissioner, Dstl dedicated standalone)",
-    "Next pick (post-tick-265 priority queue): Court of Appeal / Judicial Appointments Commission / British Academy — senior judiciary + appointments + learned society cross-cut"
+    "Build next 3 uncovered body packs from probe-verified open candidates (still open: High Court, Crown Court, Magistrates Court, Prison Service, Sentencing Council variant coverage, Channel 4, S4C, Press Recognition Panel, Investigatory Powers Tribunal, Surveillance Commissioner, Dstl dedicated standalone)",
+    "Next pick (post-tick-266 priority queue): High Court / Crown Court / Magistrates' Courts — tri-level trial-court coverage cross-cut"
   ],
-  "milestone": "Sprint targets exceeded. 30/30 MCPs, 1007 pages (+3), 15/15 repos. Tick 265 shipped 3 NEW regime deep-dive packs (UK Supreme Court / Royal Society / Sentencing Council). Sitemap 789 URLs. 267+ unique deep-dive packs. JSON-LD confirmed genuinely canonical (json.loads passes on all 3 new packs).",
+  "milestone": "Sprint targets exceeded. 30/30 MCPs, 1010 pages (+3), 15/15 repos. Tick 266 shipped 3 NEW deep-dive packs (Court of Appeal / Judicial Appointments Commission / British Academy). Sitemap 787 URLs. 270+ unique deep-dive packs. REPAIRED a real build-site defect exposed by the coverage check (ns0 regex + 393 bogus /_site/ prefixed URLs + 5 non-publishable entries): sitemap now genuinely 0-missing as measured, not vacuously.",
   "targets_status": {
     "mcps": "achieved",
     "pages": "ongoing",
@@ -22,7 +22,7 @@
   "vercel_deploy_status": "blocked_billing",
   "cloudflare_deploy_status": "live",
   "deploy_domain": "csoai.org",
-  "deploy_id": "tick 265 push + CF Pages deploy (jv-wave8-production.csoai-site.pages.dev)",
-  "tick_265_signature": "pending-cf-deploy",
-  "disk_free_gb": 7
+  "deploy_id": "tick 266 direct CF Pages deploy e815af59 (jv-wave8-production.csoai-site.pages.dev)",
+  "tick_266_signature": "deployed-and-verified-e815af59",
+  "disk_free_gb": 5
 }
