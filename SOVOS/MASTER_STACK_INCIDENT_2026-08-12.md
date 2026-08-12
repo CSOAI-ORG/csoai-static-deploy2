@@ -62,3 +62,27 @@ curl -s -o /dev/null -w "%{http_code}\n" http://127.0.0.1:9000/minio/health/live
 3. **CPU pods don't boot on this account** (RUNNING/uptime 0) — don't use them for master.
 4. Master data must be considered ON THE PERSISTED VOLUME = safe across reprovision, but
    independent-host copies make "never lose a piece" actually true.
+
+---
+
+## RESOLUTION ADDENDUM (12 Aug 2026 ~11:35 UTC, Kimi lane)
+
+**A100 re-provisioned** (~11:10 UTC) — machineId 4o02unscakdn. Recovery executed and verified:
+
+| Step | Result |
+|---|---|
+| Port remap discovered | SSH now **11736** (was 11737); **public MinIO = 104.255.9.187:11737** (private :9000); console :11738 |
+| /runpod intact | all buckets' data present |
+| /root + /usr/local WIPED | minio/mc binaries + root creds gone (ephemeral) — root cause of re-init failure |
+| **Full legacy extraction** | entire old master tar'd to Mac (`~/sovos-master-backup/master-legacy.tar.gz`); all 21 boards-sov6 objects recovered incl. peritem_agi (540 rows) + peritem_asi (495 rows) via xl.meta/part extraction; only all12c.log lost (redundant log) |
+| Fresh MinIO v2 | new data dir `/runpod/sovos-master-v2`, new root creds |
+| **Creds hardened (lesson applied)** | root creds in 3 places: `/runpod/sovos-master-config/credentials.env` (PERSISTENT, 600) + `/root/.sovos-master/` + Mac Keychain `meok-keystone/SOVOS_MASTER_MINIO_ROOT_*`. GCP keystone path dead (BILLING_DISABLED) |
+| Buckets/users/policy | 7 buckets + `a100rw-GDiniQ` + `gpu3090rw-11lvAw` (same keys, `sovos-rw` policy) recreated |
+| Re-seeded | 20 boards objects + 3 evidence objects via public endpoint; corpus→corpus-backup mirror synced |
+| Mac client | rclone `sovos:` → `http://104.255.9.187:11737` (NO tunnel needed) — list/write/read verified; tunnel LaunchAgent removed; nightly backup agent (02:10) now runs over public endpoint |
+
+**New canon:** (5) `/root` and `/usr/local` are ephemeral on pod re-provision — anything
+that must survive lives on `/runpod` or off-box. (6) After any pod restart, SSH/HTTP
+public ports may REMAP — always query the API for current mappings before assuming.
+(7) Full rclone/tar of ALL buckets to Mac BEFORE any pod config change (was learning #1;
+the boards' peritem rows existed nowhere else at restart time — now they do).
