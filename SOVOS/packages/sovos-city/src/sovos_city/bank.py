@@ -81,8 +81,11 @@ def build(rows: Iterable[Dict[str, Any]]) -> tuple[List[Dict[str, Any]], BankAss
         # Prefer the recorded error. Older runs did not carry it into the item, so
         # derive: an UNMEASURED turn with an EMPTY response is a transport failure by
         # construction — an answer we could not parse is, by definition, non-empty.
+        resp = str(r.get("response") or "")
         transport = bool(r.get("transport_error")) or (
-            gold == UNMEASURED and not str(r.get("response") or "").strip())
+            gold == UNMEASURED and (
+                not resp.strip()                      # never answered — ours
+                or "}" not in resp))                  # answered, our budget cut it off — ours
         if transport:
             excluded_transport += 1
             continue

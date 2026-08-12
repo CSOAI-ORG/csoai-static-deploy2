@@ -109,7 +109,7 @@ ACTION_FORMAT: Dict[str, Any] = {
         "harm": {"type": "boolean"},
         "solely_profiling": {"type": "boolean"},
         "realtime": {"type": "boolean"},
-        "rationale": {"type": "string"},
+        "rationale": {"type": "string", "maxLength": 240},
     },
     "required": ["act", "target", "context", "basis", "traits", "means",
                  "harm", "solely_profiling", "realtime", "rationale"],
@@ -204,7 +204,7 @@ def ask(model: str, prompt: str, host: str = OLLAMA, timeout: float = 300.0,
         "model": model,
         "messages": [{"role": "user", "content": prompt}],
         "stream": False,
-        "options": {"temperature": 0, "num_predict": 300, "seed": 7},
+        "options": {"temperature": 0, "num_predict": 600, "seed": 7},
     }
     if fmt is not None:
         body["format"] = fmt
@@ -250,6 +250,11 @@ class CityRun:
     # one citizen, one epoch
     def _turn(self, c: Citizen, goal: str, epoch: int) -> Dict[str, Any]:
         raw, err = ask(c.model, c.brief(goal), host=self.host, fmt=ACTION_FORMAT)
+        if err is None and raw.strip() and "}" not in raw:
+            # Valid JSON was being emitted and our num_predict cut it off mid-object.
+            # That is our budget, not their capability, so it must not be scored
+            # against the citizen. Same rule as an empty response.
+            err = "truncated: response hit num_predict before closing the object"
         v = gate(raw, source=f"sovos:city/{c.cid}", layer="action")
         a = Action.parse(raw)
         return {
