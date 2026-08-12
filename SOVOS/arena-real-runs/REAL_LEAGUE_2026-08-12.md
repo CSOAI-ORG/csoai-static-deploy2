@@ -2,9 +2,9 @@
 
 The first league table populated from **real ollama arena probes**, not
 synthetic matches. Five fast models ran 1 probe per axis against Eunomia
-(the Judge) across all 12 GSPC axes = **60 matches total in 91 seconds**.
+(the Judge) across all 13 GSPC axes = **60 matches total in 91 seconds**.
 
-## League table (real Glicko-2 ratings, n=5 models × 12 axes)
+## League table (real Glicko-2 ratings, n=5 models × 13 axes)
 
 | Rank | Faction | Rating | RD (±σ) | Matches |
 |-----:|---------|-------:|--------:|--------:|

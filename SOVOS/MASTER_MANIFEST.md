@@ -51,7 +51,7 @@ the A100 pod (SOV SIGNAL d = 4.2053σ, OSCAL v1.1.0).
 | Package | What | Absorbed from |
 |---|---|---|
 | **sovos-core**                | G-S-P-C 4-axis score (ETSI EN 304 223)          | top-level |
-| **sovos-arena**               | 12-axis Wilson-CI measurement (12 GSPC axes)   | new build   |
+| **sovos-arena**               | 13-axis Wilson-CI measurement (13 GSPC axes)   | new build   |
 | **sovos-signal-index**        | Mahalanobis distance-to-permitted manifold     | new build   |
 | **sovos-chain**               | Fisher-Rao + Poincaré + Hyperbolic chain      | top-level   |
 | **sovos-fisher-rao**          | Standalone Fisher-Rao kernel                   | top-level   |
@@ -205,7 +205,7 @@ as sovos-info-geometry; cross-clean intended.)*
 - All 4 lanes share `sovos-invariants` (the SIGIL/CARE floor): every sign-via-anything calls `emit_sigil()` which uses the local Ed25519 key
 
 ### Public pages (the auditor-reproducible surface)
-- `arenas.html` — public SOVOS Arena tool: 12 GSPC axes, Wilson CI, canary gate (the auditor-reproducible instrument)
+- `arenas.html` — public SOVOS Arena tool: 13 GSPC axes, Wilson CI, canary gate (the auditor-reproducible instrument)
 - `cpo-calculator.html` — co-packaged optics power-savings calculator
 - `injection-scanner.html` — 18-rule MCP prompt-injection scanner
 - `birth.html` — Mode 0 birth encoder for new sovereign users
@@ -227,7 +227,7 @@ as sovos-info-geometry; cross-clean intended.)*
 
 ## How a new agent picks this up (one paragraph)
 
-Clone `github.com/CSOAI-ORG/csoai-static-deploy2` branch `jv-wave8-production`. The substrate is in `SOVOS/`. Read this MANIFEST first, then `SOVOS/README.md`, then jump to `SOVOS/packages/sovos-hive/README.md` if you want to understand the hive kernel, or to `SOVOS/packages/sovos-arena/` if you want the measurement front. For the A100 pod, follow `SOVOS/deploy/a100/README.md`. For the public audit surface, open `arenas.html` in a browser. The 12 GSPC axes (gov/prv/agi/asi/mcp/oss/mach/care/xr/det/art5/swarm) are the contract between everything.
+Clone `github.com/CSOAI-ORG/csoai-static-deploy2` branch `jv-wave8-production`. The substrate is in `SOVOS/`. Read this MANIFEST first, then `SOVOS/README.md`, then jump to `SOVOS/packages/sovos-hive/README.md` if you want to understand the hive kernel, or to `SOVOS/packages/sovos-arena/` if you want the measurement front. For the A100 pod, follow `SOVOS/deploy/a100/README.md`. For the public audit surface, open `arenas.html` in a browser. The 13 GSPC axes (gov/prv/agi/asi/mcp/oss/mach/care/xr/det/art5/swarm/affect) are the contract between everything.
 
 **Do not invent new parts.** Before adding a new package, check whether one of the 38 already covers it. Before adding a new folder at SOVOS/ root, check whether it should be `packages/` (runtime) or `data/` (operational) or `deploy/` (host config) or `api/` (Vercel) or `frontends/` (HTML). Before adding a new python module at top-level, PUT IT IN A PACKAGE.
 
@@ -250,7 +250,7 @@ Clone `github.com/CSOAI-ORG/csoai-static-deploy2` branch `jv-wave8-production`. 
 The SOVOS monorepo at `jv-wave8-production`/`SOVOS/` is now the **single
 canonical substrate**. The Rust kernel of `sovos-hive` is the
 Ring-0 governance brain. The Python packages around it are the
-measurable, chain-rated, OSCAL-attestable substrate the 12 GSPC axes
+measurable, chain-rated, OSCAL-attestable substrate the 13 GSPC axes
 inspect. The A100 pod is the heavy-lift server. The 3090 pod is
 the merge-and-merge-bench server. RunPod connects them to Claude
 Science, Kimi, Kaggle, Oracle. The maths (Fisher-Rao, Poincaré,

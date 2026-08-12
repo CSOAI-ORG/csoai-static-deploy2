@@ -14,7 +14,7 @@ orchestrates; the pod does the heavy compute.
   `qwen2.5:0.5b-instruct` base. Writes a fresh directory
   `/root/merge/oowm_4way_<ts>/` per run.
 - **`bench_merge_v_parents.py`** — measure the merged model + each
-  specialist + base on the 12 GSPC axes via ollama, and apply the
+  specialist + base on the 13 GSPC axes via ollama, and apply the
   **doctrine gate**: each specialist must beat base on its OWN axis
   before any merge claim is creditable. The merge inherits the
   doctrine per TIES-amplifies-what's-there rules.
