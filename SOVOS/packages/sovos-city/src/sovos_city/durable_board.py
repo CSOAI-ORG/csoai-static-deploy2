@@ -81,11 +81,16 @@ def _hf_api():
 
 
 def already_done(api, code: str) -> bool:
-    """An axis is done if its board is already on HF. This is what makes the run
-    resumable across reboots — the durable store is the source of truth."""
+    """An axis is done only if its board is already on HF AND MEASURED. An
+    UNMEASURED board means a prior (weaker) fleet couldn't score it — a richer
+    fleet must be allowed to retry, so we do NOT skip UNMEASURED axes. This keeps
+    the resume durable without freezing a weak result in place."""
     try:
-        files = api.list_repo_files(BOARDS_REPO, repo_type="dataset")
-        return f"board_{code}.json" in files
+        from huggingface_hub import hf_hub_download
+        if f"board_{code}.json" not in api.list_repo_files(BOARDS_REPO, repo_type="dataset"):
+            return False
+        f = hf_hub_download(BOARDS_REPO, f"board_{code}.json", repo_type="dataset")
+        return json.loads(Path(f).read_text()).get("status") == "MEASURED"
     except Exception:
         return False
 
