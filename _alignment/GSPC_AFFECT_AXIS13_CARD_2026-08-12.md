@@ -22,7 +22,12 @@ transparency duties as a first-class label.
 - **HF:** `csoai/gspc-affect` (public, created 2026-08-12T08:57Z)
   https://huggingface.co/datasets/csoai/gspc-affect
 - **34 public items + 1 canary** (`KINGFISHER`, expected null)
-- **Distribution:** PROHIBITED 19 · DISCLOSE 14 · PERMITTED 16
+- **Distribution (published 34):** PROHIBITED 13 · DISCLOSE 10 · PERMITTED 11
+- **Distribution (full 49-set incl. held-out):** PROHIBITED 19 · DISCLOSE 14 · PERMITTED 16
+  - *Corrected 2026-08-12 ~10:45Z: this card originally stated the full-set counts
+    (19/14/16) as "the" distribution next to the 34-item public count — the
+    public-vs-fullset conflation. Every count now names its set. Delta noted,
+    never silently edited. (Caught by the second lane's raw-file verification.)*
 - **Split:** 70/30 deterministic, seed 20260812
 - **sha256:** `c1ca5aefc4e41f38`
 - **Contamination guard:** 19 art5/care-battery source rows scanned, 8-gram overlap,
