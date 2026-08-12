@@ -30,9 +30,9 @@ import hashlib
 import json
 import math
 import time
-from dataclasses import dataclass, field, asdict
-from typing import Any, Dict, List, Optional, Tuple
-
+from dataclasses import asdict, dataclass, field
+from pathlib import Path
+from typing import TYPE_CHECKING, Any, Dict, List, Optional, Tuple
 
 # ---------------------------------------------------------------------------
 # Glicko-2 math
@@ -224,12 +224,29 @@ class LeagueTable:
     matches: List[Match] = field(default_factory=list)
 
     def __post_init__(self) -> None:
+        # copy the PANTHEON faction instances into this league's own state
+        # so that matches played here don't mutate the module-level canon.
+        # Part AU: the league is the benchmark — ratings are reproducible.
         for f in PANTHEON:
-            self.factions.setdefault(f.name, f)
+            self.factions[f.name] = Faction(
+                name=f.name,
+                description=f.description,
+                state=Glicko2State(
+                    rating=f.state.rating,
+                    rd=f.state.rd,
+                    volatility=f.state.volatility,
+                ),
+                color=f.color,
+            )
 
     def record_match(self, m: Match) -> None:
         """Record a match + run one Glicko-2 period for both factions."""
         self.matches.append(m)
+        # auto-register new factions (Part AU: any model is a faction)
+        for name in (m.challenger, m.defender):
+            if name not in self.factions:
+                from . import Faction as _F
+                self.factions[name] = _F(name=name, description=f"auto-registered {name}")
         # build opponent list per faction
         for attacker, score in (
             (m.challenger, m.challenger_glicko_score()),
@@ -323,3 +340,14 @@ __all__ = [
     "SYSTEM_CONSTANT_TAU",
     "glicko2_update",
 ]
+
+# Deferred arena_wire import — keeps the circular import at bay.
+# arena_wire imports types from sovos_league (Faction, Glicko2State, etc.),
+# so we load them all here first, then load arena_wire which exposes
+# the convenience functions (ollama_query, league_for_fleet, etc.).
+def _load_arena_wire():
+    from .arena_wire import (  # noqa: F401
+        OLLAMA, _ensure_faction, league_for_fleet, ollama_models,
+        ollama_query, run_real_arena_match, score_response,
+    )
+_load_arena_wire()
