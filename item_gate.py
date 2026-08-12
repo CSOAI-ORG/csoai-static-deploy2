@@ -31,6 +31,7 @@ from __future__ import annotations
 import json
 import math
 import sys
+from datetime import datetime, timezone
 from pathlib import Path
 
 D_MIN, D_MAX = 0.20, 0.80
@@ -110,16 +111,37 @@ def gate_axis(name: str, items: list[dict], axis_mean_difficulty: float | None =
     # usable_n counts ACCEPT plus items pending adjudication, because an adjudicated-and-kept
     # item is usable. Counting only ACCEPT would understate an axis mid-review.
     usable = accept + adjud
-    return {"axis": name, "n": len(items), "accept": accept, "adjudicate": adjud,
-            "reject": len(verdicts.get("REJECT", [])),
-            "ungraded": len(verdicts.get("UNGRADED", [])),
-            "ungraded_fleet": fleet_blocked,
-            "fleet_competent": fleet_competent(axis_mean_difficulty),
-            "axis_mean_difficulty": axis_mean_difficulty,
-            "usable_n": usable, "meets_target": usable >= USABLE_TARGET,
-            "resolvable_halfwidth": wilson_halfwidth(usable),
-            "quotable": usable >= USABLE_TARGET,
-            "detail": verdicts}
+    result = {"axis": name, "n": len(items), "accept": accept, "adjudicate": adjud,
+              "reject": len(verdicts.get("REJECT", [])),
+              "ungraded": len(verdicts.get("UNGRADED", [])),
+              "ungraded_fleet": fleet_blocked,
+              "fleet_competent": fleet_competent(axis_mean_difficulty),
+              "axis_mean_difficulty": axis_mean_difficulty,
+              "usable_n": usable, "meets_target": usable >= USABLE_TARGET,
+              "resolvable_halfwidth": wilson_halfwidth(usable),
+              "quotable": usable >= USABLE_TARGET,
+              "detail": verdicts}
+    # V3 fix (2026-08-12): ADJUDICATE previously dead-ended — nothing ever picked the
+    # flagged items up. Wire a durable review manifest so an independent adjudicator
+    # (or the owner) has a concrete queue to act on. The gate verdict itself is
+    # unchanged; this only makes the ADJUDICATE class resolvable instead of lost.
+    adjud_items = verdicts.get("ADJUDICATE", [])
+    if adjud_items:
+        out_dir = Path(__file__).resolve().parent / "evidence" / "adjudication"
+        out_dir.mkdir(parents=True, exist_ok=True)
+        manifest = {
+            "axis": name,
+            "generated": datetime.now(timezone.utc).isoformat(),
+            "count": len(adjud_items),
+            "adjudicate": adjud_items,
+            "note": "ADJUDICATE = negative discrimination; may be a real shared blind spot or a bad "
+                    "key. An adjudicator decides keep/revise/drop. Do not auto-reject.",
+            "status": "PENDING",
+        }
+        out = out_dir / f"{name}-adjudication.json"
+        out.write_text(json.dumps(manifest, indent=2))
+        result["adjudication_manifest"] = str(out)
+    return result
 
 
 def selftest() -> bool:
