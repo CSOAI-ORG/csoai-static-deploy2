@@ -65,6 +65,9 @@ class BankAssessment:
     excluded_unparseable: int
     fingerprint: str
     majority_baseline: float
+    article_coverage: Dict[str, int]
+    articles_covered: int
+    articles_missing: List[str]
 
     def to_dict(self) -> Dict[str, Any]:
         return asdict(self)
@@ -108,9 +111,17 @@ def build(rows: Iterable[Dict[str, Any]]) -> tuple[List[Dict[str, Any]], BankAss
     n = len(items)
     fp = item_fingerprint(items) if items else ""
 
+    # Per-subparagraph coverage. A bank that names "Article 5" but only exercises
+    # half of it cannot support a claim about the half it never touched, and must
+    # say which half that is rather than let the name imply full coverage.
+    cov = Counter(c for it in items for c in it.get("citations", []))
+    all_articles = [f"Art 5(1)({k})" for k in "abcdefgh"]
+    missing = [a for a in all_articles if not cov.get(a)]
+
     if not n:
         return items, BankAssessment(False, "no usable items", 0, dict(labels), None, 0, 0.0,
-                                     excluded_transport, excluded_unparseable, fp, 0.0)
+                                     excluded_transport, excluded_unparseable, fp, 0.0,
+                                     {}, 0, all_articles)
 
     minority_label, minority_n = (min(labels.items(), key=lambda kv: kv[1]) if len(labels) > 1
                                   else (None, 0))
@@ -132,8 +143,13 @@ def build(rows: Iterable[Dict[str, Any]]) -> tuple[List[Dict[str, Any]], BankAss
                   f"majority baseline {majority_baseline:.1%}")
         ok = True
 
+    if ok and missing:
+        reason += (f" — but only {8 - len(missing)}/8 Article 5 subparagraphs are exercised; "
+                   f"the bank says nothing about {', '.join(missing)}")
+
     return items, BankAssessment(ok, reason, n, dict(labels), minority_label, minority_n, frac,
-                                 excluded_transport, excluded_unparseable, fp, majority_baseline)
+                                 excluded_transport, excluded_unparseable, fp, majority_baseline,
+                                 dict(sorted(cov.items())), 8 - len(missing), missing)
 
 
 README = """# GSPC · swarm — SwarmBench v{version}
@@ -170,6 +186,12 @@ items admissible as benchmark gold rather than synthetic noise.
 * majority baseline: **{majority_baseline:.1%}** — any accuracy claim must beat this
 * `item_fingerprint`: `{fingerprint}`
 
+### Article 5 coverage — **{articles_covered}/8 subparagraphs**
+
+{coverage_table}
+
+{missing_line}
+
 A score computed on this bank is valid **only** for this fingerprint. Adding items
 changes it and invalidates every previously published interval.
 
@@ -200,7 +222,14 @@ def render_readme(a: BankAssessment, version: str = "0") -> str:
                   "labelled — but the swarm axis stays UNMEASURED until the bank can discriminate. "
                   "Publishing an accuracy figure on this set would be reporting a number the "
                   "instrument has not earned.")
+    cov_rows = ("\n".join(f"* `{k}` — {v} item(s)" for k, v in a.article_coverage.items())
+                or "* none — no prohibited action was proposed")
+    missing_line = ("**Not exercised:** " + ", ".join(f"`{m}`" for m in a.articles_missing) +
+                    ". No claim from this bank extends to those prohibitions."
+                    if a.articles_missing else
+                    "All eight subparagraphs are exercised.")
     return README.format(
+        articles_covered=a.articles_covered, coverage_table=cov_rows, missing_line=missing_line,
         version=version, excluded_transport=a.excluded_transport,
         excluded_unparseable=a.excluded_unparseable, n_items=a.n_items,
         labels=", ".join(f"{k} {v}" for k, v in sorted(a.labels.items())),
