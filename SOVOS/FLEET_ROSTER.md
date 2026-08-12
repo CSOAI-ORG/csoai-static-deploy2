@@ -44,3 +44,13 @@ mutation (register V7 / incident doctrine). Verify before scaling or killing a p
 - Never kill a sibling's running job (board owns A100 GPU, arena owns 3090)
 - MinIO master buckets private (C5 sealed); per-axis board rows durable on /runpod
 - Verify GPU liveness via `runtime.uptimeInSeconds` or SSH, NOT `uptimeSeconds:0`
+## 2026-08-12 late — arena persist durability fix (sync discrepancy)
+- **Bug found:** pod's arena_24x7_loop.py was a STALE copy — fell back to `repr(lt)`
+  when persisting league.json (wrote a Python repr string, not JSON).
+- **Root cause:** repo had the fix (league_data dict → JSON, `sovos-league/v1`);
+  pod was running a pre-fix copy. Sync drift, not a new bug.
+- **Fix:** pushed the clean repo version to the pod, restarted the loop.
+  Verified live: league.json = `{schema: sovos-league/v1, generated, defender,
+  axes:13, factions:10}` — machine-readable.
+- **Doctrine:** before trusting a pod's runtime behavior, diff the pod's file
+  against the repo (git status / diff) — the pod can drift silently.
