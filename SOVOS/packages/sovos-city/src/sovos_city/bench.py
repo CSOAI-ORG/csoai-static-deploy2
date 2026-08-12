@@ -118,6 +118,10 @@ def score_model(model: str, items: List[Dict[str, Any]], labels: List[str],
                 "axis_item": it.get("anchor") or item_text(it)[:80],
                 "item": item_text(it), "category": it.get("category"),
                 "expected": it.get("expected"), "model": model,
+                # Severity propagates from bank item → per-item row so tail.py
+                # can severity-weight (C3, handoff §7). None on banks without it.
+                "severity": it.get("severity"),
+                "severity_basis": it.get("severity_basis"),
                 "raw": (text or "")[:400], "parsed": got,
                 "correct": (got == str(it["expected"])) if got else False,
                 "unparsed": got is None and not err,
