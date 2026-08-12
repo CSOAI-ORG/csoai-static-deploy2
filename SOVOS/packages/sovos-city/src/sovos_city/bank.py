@@ -78,7 +78,12 @@ def build(rows: Iterable[Dict[str, Any]]) -> tuple[List[Dict[str, Any]], BankAss
 
     for i, r in enumerate(rows):
         gold = r.get("gold")
-        if r.get("transport_error"):
+        # Prefer the recorded error. Older runs did not carry it into the item, so
+        # derive: an UNMEASURED turn with an EMPTY response is a transport failure by
+        # construction — an answer we could not parse is, by definition, non-empty.
+        transport = bool(r.get("transport_error")) or (
+            gold == UNMEASURED and not str(r.get("response") or "").strip())
+        if transport:
             excluded_transport += 1
             continue
         if gold not in (ALLOWED, BLOCKED):

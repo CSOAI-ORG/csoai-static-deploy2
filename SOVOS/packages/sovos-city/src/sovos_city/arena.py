@@ -300,6 +300,7 @@ class CityRun:
             "action": row["action"],
             "gold": row["verdict"],
             "citations": row["citations"],
+            "transport_error": row.get("transport_error"),
             "gold_provenance": "deterministic gate (Article 0 + EU AI Act Art 5) — no model judged this",
             "usable": row["verdict"] in (ALLOWED, BLOCKED),
         }
