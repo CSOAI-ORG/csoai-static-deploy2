@@ -29,7 +29,7 @@ for p in ["sovos-arena", "sovos-signal-index", "sovos-oscal", "sovos-chain",
         sys.path.insert(0, str(src))
 
 import numpy as np
-from sovos_arena import AxisResult, ArenaProfile
+from sovos_arena import AxisResult, ArenaProfile, GSPC_AXES
 from sovos_signal_index import (
     calibrate_permitted_manifold, distance_to_permitted_manifold,
 )
@@ -76,7 +76,7 @@ def main():
 
     shared_axes = sorted(set(target.measured_axes()) & set(ref.measured_axes()))
     if len(shared_axes) < 12:
-        print(f"warning: only {len(shared_axes)}/12 axes measured; continuing")
+        print(f"warning: only {len(shared_axes)}/{len(GSPC_AXES)} axes measured; continuing")
     # Build the empirical permitted manifold (spec §2)
     rng = np.random.default_rng(42)
     base_ref = [ref.axes[a].pct for a in shared_axes]
@@ -113,7 +113,7 @@ def main():
     print()
     print("=== ATTESTATION ===")
     print(f"  model:           {target.model}")
-    print(f"  candidate_dim:   {len(shared_axes)}/12")
+    print(f"  candidate_dim:   {len(shared_axes)}/{len(GSPC_AXES)}")
     print(f"  vector:          {[round(x, 3) for x in target_vec]}")
     print(f"  SOV_SIGNAL_dist: {d:.4f}σ")
     print(f"  is_permitted:    {d <= 1.0}")

@@ -52,11 +52,12 @@ def _fake_query(model, prompt, endpoint, timeout):
     return "ok"
 
 
-def test_ar01_axes_are_the_12():
-    """The arena measures exactly the 12 canonical GSPC axes."""
+def test_ar01_axes_are_the_13():
+    """The arena measures exactly the 13 canonical GSPC axes (12 + affect)."""
     assert GSPC_AXES == ["gov", "prv", "agi", "asi", "mcp", "oss",
-                          "mach", "care", "xr", "det", "art5", "swarm"]
-    print(f"  ✅ 12 GSPC axes: {GSPC_AXES}")
+                          "mach", "care", "xr", "det", "art5", "swarm",
+                          "affect"]
+    print(f"  ✅ {len(GSPC_AXES)} GSPC axes: {GSPC_AXES}")
 
 
 def test_ar02_wilson_ci_math():
@@ -78,13 +79,13 @@ def test_ar03_good_system_measured_all_axes():
                         min_n=30, per_axis_target=40,
                         probes=probes,
                         query_fn=_fake_query)
-    assert len(profile.measured_axes()) == 12
+    assert len(profile.measured_axes()) == len(GSPC_AXES)
     for axis in GSPC_AXES:
         assert profile.axes[axis].pct == 1.0
         assert profile.axes[axis].n >= 30
     cand = profile.candidate_vector()
-    assert len(cand) == 12
-    print(f"  ✅ known-good: 12/12 axes measured, pct=1.0, candidate dim {len(cand)}")
+    assert len(cand) == len(GSPC_AXES)
+    print(f"  ✅ known-good: {len(GSPC_AXES)}/{len(GSPC_AXES)} axes measured, pct=1.0, candidate dim {len(cand)}")
 
 
 def test_ar04_bad_system_measured_all_axes():
@@ -94,10 +95,10 @@ def test_ar04_bad_system_measured_all_axes():
                         min_n=30, per_axis_target=40,
                         probes=probes,
                         query_fn=_fake_query)
-    assert len(profile.measured_axes()) == 12
+    assert len(profile.measured_axes()) == len(GSPC_AXES)
     cand = profile.candidate_vector()
     assert all(x == 0.0 for x in cand)
-    print(f"  ✅ known-bad: 12/12 axes measured at pct=0.0")
+    print(f"  ✅ known-bad: {len(GSPC_AXES)}/{len(GSPC_AXES)} axes measured at pct=0.0")
 
 
 def test_ar05_planted_canary_separates_good_from_bad():
@@ -155,20 +156,20 @@ def test_ar08_measure_endpoint_summary():
                         query_fn=_fake_query)
     assert summary["model"] == "m"
     assert summary["candidate_vector"]
-    assert len(summary["measured_axes"]) == 12
+    assert len(summary["measured_axes"]) == len(GSPC_AXES)
     assert "unmeasured_axes" in summary and "contamination" in summary
     assert "profile" in summary
-    print(f"  ✅ measure_endpoint summary: 12 axes, dim={len(summary['candidate_vector'])}")
+    print(f"  ✅ measure_endpoint summary: {len(GSPC_AXES)} axes, dim={len(summary['candidate_vector'])}")
 
 
 def test_ar09_self_test():
     """self_test returns a complete picture."""
     info = self_test()
-    assert info["n_axes"] == 12
+    assert info["n_axes"] == len(GSPC_AXES)
     assert info["all_measured"] is True
-    assert info["candidate_len"] == 12
+    assert info["candidate_len"] == len(GSPC_AXES)
     assert info["all_ones"] is True
-    print(f"  ✅ self_test: 12 axes, all measured, candidate all 1.0")
+    print(f"  ✅ self_test: {len(GSPC_AXES)} axes, all measured, candidate all 1.0")
 
 
 if __name__ == "__main__":
