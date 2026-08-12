@@ -1,14 +1,14 @@
 # EAT_ALL Run Report
 
-**Run ID**: eat_all_1786562703
-**Finished**: 2026-08-12T19:25:03.571336+00:00
+**Run ID**: eat_all_1786563003
+**Finished**: 2026-08-12T19:30:03.338969+00:00
 **Phase summary**: {'ran': 19, 'failed': 0, 'skipped': 0}
 
 ## Phases
 
 | Phase | Status | Duration | Notes |
 |---|---|---|---|
-| PHASE_0_HEALTH | ran | 0.1s | sov_local_status=unreachable: <urlopen error [Errno 61] Connection refused>; ollama_models=2; kb_entries=6152 |
+| PHASE_0_HEALTH | ran | 0.1s | sov_local_status=unreachable: <urlopen error [Errno 61] Connection refused>; ollama_models=2; kb_entries=6160 |
 | PHASE_1_REBOARD | ran | 0.1s | exit_code=0 |
 | PHASE_2_KB_GROW | ran | 0.1s | exit_code=0 |
 | PHASE_3_PROBES | ran | 0.0s | chatml=1; bloodline=1 |
@@ -16,8 +16,8 @@
 | PHASE_5_HONEY | ran | 0.2s | exit_code=0; events=3396 |
 | PHASE_6_DOWNLOADS | ran | 0.1s | exit_code=0; files_mined=240 |
 | PHASE_7_PORTAL | ran | 0.2s | exit_code=0 |
-| PHASE_9_ARTIFACTS | ran | 0.2s | deck_cards=55; kb_entries=6152; kb_ok=True |
-| PHASE_9B_EXTERNAL_HARNESS | ran | 0.1s | clans_routed=0; swarm_id=owem-clans-1786562701 |
+| PHASE_9_ARTIFACTS | ran | 0.2s | deck_cards=55; kb_entries=6160; kb_ok=True |
+| PHASE_9B_EXTERNAL_HARNESS | ran | 0.1s | clans_routed=0; swarm_id=owem-clans-1786563001 |
 | PHASE_9C_OWEM_CLUSTER | ran | 0.1s | clusters_routed=0 |
 | PHASE_9D_BENCHMARKS_HARNESS | ran | 0.1s | benchmarks_routed=0 |
 | PHASE_9E_TRAINING_DATA_HARNESS | ran | 0.1s | data_sources_routed=0 |
@@ -29,12 +29,12 @@
   browser: 0 events
   files: 0 events
   chat: 0 events
-  KB: 6159 → 6159 entries (+0 new, dedup by normalized question)
+  KB: 6167 → 6167 entries (+0 new, dedup by normalized question)
   Saved to: /Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/sov_kb.json
 ; extract_output=GNN Spine — extracting patterns from capture events...
   Extracted 0 unique skills
   Skills file: /Users/nicholas/.sov/iwm/skills_20260812.jsonl
-  KB updated: 6159 entries total
+  KB updated: 6167 entries total
  |
 | PHASE_9J_IWM_BOOTSTRAP | ran | 0.2s | iwm_records=0; kb_entries_added=0; exit_code=0 |
 | PHASE_10B_MODEL_ROUTING | ran | 0.1s | models_routed=0; specs_routed=1 |
