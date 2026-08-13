@@ -267,7 +267,7 @@
     r.innerHTML =
       '<h3 style="font-size:1.35rem;margin-bottom:.2rem">' + s.macroF1.toFixed(3) + ' macro-F1 ' +
         '<span style="font-size:.85rem;color:' + (beat?"#3ddc97":"#8fa6c8") + '">' +
-        (MODEL_F1 ? (beat ? "ahead of" : "behind") + ' sov34 (' + MODEL_F1.toFixed(3) + ')' : 'no published baseline yet') +
+        (MODEL_F1 ? (beat ? "ahead of" : "behind") + ' Council-34 (' + MODEL_F1.toFixed(3) + ')' : 'no published baseline yet') +
         '</span></h3>' +
       '<div class="gb-kv"><span>items</span><span>'+s.n+'</span></div>' +
       '<div class="gb-kv"><span>correct</span><span>'+s.correct+'</span></div>' +
@@ -298,7 +298,7 @@ no accreditation, and has no enforcement powers — those are conferred by statu
 market-surveillance authorities and the AI Office. Nothing on this page is a certification,
 an attestation of compliance, or legal advice.
 <br><br><b>Denominator.</b> This axis has <b>40 items</b>, which meets the usable_n = 30 floor. With your n of 40 you may see a 95% CI quoted; it is your interval, on the same scale as the measured intervals published for other axes.
-<br><br><b>Sandwich pattern enforced.</b> Each item runs through three stages: (1) <b>gate</b> — the sovereign refusal-classifier (sov_refusal_combo) gets the case first; (2) <b>frontier</b> — only if the gate said PASS, the frontier reasoner runs (sov34, gpt-oss:20b); (3) <b>re-validation</b> — the offline re-validator confirms the frontier output matches ground truth. Every stage is SIGIL-signed. Each bank item already encodes the ground-truth outcome at each stage (<code>_bft</code>, <code>_clf</code>, <code>_gt</code>, <code>_correct</code>); the widget reports the per-stage agreement rate so you can see where the sandwich caught what and where it missed.
+<br><br><b>Sandwich pattern enforced.</b> Each item runs through three stages: (1) <b>gate</b> — the sovereign refusal-classifier (sov_refusal_combo) gets the case first; (2) <b>frontier</b> — only if the gate said PASS, the frontier reasoner runs (Council-34, gpt-oss:20b); (3) <b>re-validation</b> — the offline re-validator confirms the frontier output matches ground truth. Every stage is SIGIL-signed. Each bank item already encodes the ground-truth outcome at each stage (<code>_bft</code>, <code>_clf</code>, <code>_gt</code>, <code>_correct</code>); the widget reports the per-stage agreement rate so you can see where the sandwich caught what and where it missed.
 </div>
 </div>
 </body></html>
