@@ -16,6 +16,7 @@
 set -uo pipefail
 cd /workspace
 export OLLAMA_HOST=127.0.0.1:11434
+export PYTHONPATH="/workspace/SOVOS/packages/sovos-city/src:${PYTHONPATH:-}"
 TS=$(date -u +%Y%m%dT%H%M%SZ)
 D=/workspace/nightly/$TS; mkdir -p "$D"
 exec > >(tee -a "$D/loop.log") 2>&1
@@ -75,7 +76,7 @@ JAIL_BANK="SOVOS/banks/gspc-jail/items.jsonl"
 if [ "${NIGHTLY_JAIL:-1}" = "1" ] && [ -f "$JAIL_BANK" ] && [ -f jailboard.py ]; then
   echo "--- JAIL BOARD: $(wc -l < "$JAIL_BANK") trap items × $(echo $MODELS | wc -w) models ---"
   for m in $MODELS; do
-    python3 jailboard.py --model "$m" --bank "$JAIL_BANK" \
+    python3 jailboard.py --backend ollama --model "$m" --bank "$JAIL_BANK" \
         --out "$D/jail_${m//[:\/]/_}.jsonl" >> "$D/jail.log" 2>&1 || echo "  jail: $m failed"
   done
   echo "  jail: done → $D/jail.log"
