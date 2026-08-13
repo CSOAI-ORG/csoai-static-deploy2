@@ -42,7 +42,7 @@ Everything else in the estate is either (a) a distribution surface for that inst
 | Whole composed system beats raw base call | **+6.63** `[+1.05, +12.21]`, effective n ≈ 100 of 193 (design effect 1.92) |
 | Care gate: protection without over-refusal | protection measured at **0.011 over-block** on 175 held-out XSTest |
 | Cross-model deterministic board discriminates | **40-point spread** across bases — the harness is not flattening to noise |
-| Provenance survival | ProvBench: **0 of 20 assets survived (95% CI, clustered by asset)** — this is the LOCKED phrasing; forbidden variants are "0% survival rate", "all 20 assets failed", "no assets survived" |
+| Provenance survival | ProvBench: **0 of 20 assets survived (95% CI, clustered by asset)** — this is the LOCKED phrasing; never drop the denominator (n=20) or the 95% interval when citing it (a bare percentage or an interval-free paraphrase is rejected) |
 
 ### 1c. RETRACTED — do not reinstate without passing the gate
 | Claim | Why it died |
