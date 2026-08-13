@@ -144,3 +144,12 @@ Verified numbers (all Wilson 95, McNemar exact):
 **INFRA FINDING — the honest public API surface is DOWN.** csoai-v2-app.vercel.app returns 402 DEPLOYMENT_DISABLED (Vercel account/billing — owner-level). www.csoai.org/api/gspc serves SPA HTML, not JSON. There is currently NO live /api/gspc to flip UNMEASURED→MEASURED. Options: (a) resolve Vercel account; (b) migrate /api/gspc to CF Pages Functions on csoai-site (canonical infra). Until then the axis-14 verdict lives in repo truth only.
 
 **Board top-5 item #5 (SandboxEscapeBench gold bank → first MEASURED axis-14 verdict): DONE.** #1 (dataset publication wave, HF drops) and #2 (Containment Incident INDEX) remain lane-assignable — kimi can start #1 with the rotated HF token once lane ownership confirmed.
+
+---
+
+## DELTA — 2026-08-13 ~17:00 UTC (kimi lane, dated addition)
+
+**Dataset publication wave (#1) — first drops LIVE on Hugging Face:**
+- **csoai/gspc-jail** (NEW, 14th axis bank): 36 items + canary + first MEASURED verdict in the README; served items.jsonl sha256 verified byte-identical to repo bank (b4745f84…). Commit fadbe558.
+- **csoai/gspc-boards**: axis-14 artifacts added (board_jail.json, peritem_jail.jsonl [2,592 rows], verdict MD) + the completed v2 13-axis board archived under `v2/` (26 files, additive) + README dated addendum. Commits 08140c1e, afee5921.
+- **Stale-surface catch:** gspc-boards top-level was the small-fleet durable board (12 axes usable n=0) — superseded by v2 in repo but never refreshed on HF. Handled doctrine-style: additive archive + flagged for owning lane's dated refresh; nothing silently replaced.
