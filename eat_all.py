@@ -1762,6 +1762,20 @@ def phase_11_git_push() -> dict:
     """
     result = {"status": "ran", "artifacts": [], "repos": {}}
 
+    # G2 fix (2026-08-13): make honey durable to a second machine. The canonical
+    # forest/honey_all_producers.jsonl is git-ignored (2.4 MB) and its intended
+    # gdrive uploader does not exist, so honey never leaves the Mac ("doesn't
+    # count"). Write a bounded window of the most-recent events as a trackable
+    # slice that rides the git push below — a real second machine, no new creds.
+    try:
+        _honey_all = ROOT / "forest" / "honey_all_producers.jsonl"
+        if _honey_all.exists():
+            _tail = _honey_all.read_text(errors="replace").splitlines()[-1000:]
+            (ROOT / "forest" / "honey_window.jsonl").write_text("\n".join(_tail) + "\n")
+            log(f"  G2: honey_window.jsonl ← last {len(_tail)} events (durable via git push)")
+    except Exception as _e:
+        log(f"  G2: honey window write failed: {_e}")
+
     # Check for stale git locks first (memory: home-root lock can persist)
     try:
         ps_check = subprocess.run(
@@ -1819,6 +1833,7 @@ def phase_11_git_push() -> dict:
             # layer0/downloads variants below are the trackable slices.
             "forest/honey_layer0.jsonl",
             "forest/honey_downloads.jsonl",
+            "forest/honey_window.jsonl",  # G2: bounded canonical-honey snapshot
             "forest/gpu_inventory.json",
             "forest/tier0_routers.json",
             "forest/mine_downloads_cache.json",
