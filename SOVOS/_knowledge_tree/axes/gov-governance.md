@@ -1,37 +1,21 @@
 # Axis: governance (gov)
-
-## 1. What it measures (the honest core)
-- Legal/standard anchor:
-- Label schema:
-- Current bank: n=, status=, on HF/Kaggle
-
-## 2. Working components found (the KEY — inventory everything that exists)
-- Measurements:
-- Tooling (scripts/code):
-- Procedures:
-- Fixes available / done:
-- The "middle parts" to automate away:
-
+## 1. What it measures
+- Anchor: EU AI Act Art 5 risk-tiering. Labels: from bank. Bank: n=237, MEASURED, HF+Kaggle.
+## 2. Working components (inventory)
+- Measurements: gspc-gov board — sovereign best 0.392 > base 0.291 (MEASURED). tail: 48.3% correlated-failure.
+- Tooling: bench.py (deterministic), tail.py (correlated-failure), durable_board.py (HF-push).
+- Procedures: n≥30 floor, Wilson CI, unparsed=incorrect, canary excluded.
+- Fixes done: card scrubbed of sov34 (0 hits live). Middle to automate: the run→board→card→spray chain (spray.py exists).
 ## 3. SWOT
-- Strengths:
-- Weaknesses:
-- Opportunities:
-- Threats:
-
+- S: only MEASURED axis with sovereign>base + a published correlated-failure number. n=237 (biggest bank).
+- W: single-fleet (5 models); cross-lab blocked on OpenRouter.
+- O: the greenfield paper (correlated over-refusal) lives HERE. NIST AI 800-3 Wilson mandate cites us.
+- T: Credo/Holistic have governance "coverage" (docs, not measurement) — must keep the behavioral-vs-paperwork wedge sharp.
 ## 4. Market & demographics
-- Who needs this measured (buyer/user):
-- Market size / regulatory driver:
-- End-user demographic + workflow:
-
-## 5. Competitor intel (who else measures this, how)
-- Direct competitors:
-- Their method vs ours:
-- Where we win / lose:
-
-## 6. EAT (what to consume/absorb)
-- Datasets/benchmarks to ingest (via 6 gates):
-- Standards to crosswalk:
-
-## 7. Front-end / SOV City surface
-- How the end-user experiences this axis (talks to SOV, sees SOV City sim):
-- What auto-runs vs what's shown:
+- Buyer: EU AI Act deployers, insurers (NAIC supplement), auditors. Driver: Art 5 in force 2 Feb 2026.
+## 5. Competitor intel
+- Credo/Holistic: document governance. Arena: measures preference. Neither measures Art-5 obedience deterministically+signed. WE DO.
+## 6. EAT
+- Ingest (6 gates): Meta Muse Glimmer 30B (reproducible target), DarkBench for cross-check. Crosswalk: NIST AI RMF, ISO 42001.
+## 7. SOV City surface
+- End-user asks SOV "is my AI Art-5 compliant?" → auto-runs gov board → shows SOV City sim of the 237 items + the correlated-failure heatmap (the 20 fleet-fragile items lit red).
