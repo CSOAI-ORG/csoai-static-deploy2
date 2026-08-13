@@ -142,6 +142,25 @@ def lint(root: Path, registry: dict) -> tuple[list, list]:
                         "canonical_or_note": "public-codename exile (SOVOS kill)",
                         "hit": snippet[:110],
                     })
+            # GATE3 — pooled-rows masquerading as per-(axis,model) quotable n.
+            # Recurring 495-vs-33 class: "usable_n 517" (= items x models) quoted
+            # as if each model were measured on 517 items. A Wilson interval on a
+            # card is PER MODEL and needs n = items for THAT model.
+            for m in re.finditer(
+                r"(usable[ _-]?n|items?|per[ -]model n|quotable)[^\n]{0,40}"
+                r"(\d{3,})\b(?!\s*(models|×\d| x \d))", text, re.I
+            ):
+                snip = text[max(0, m.start()-40):m.end()+40].replace("\n", " ")
+                # heuristic guard: 3-digit n with no "models" divisor on the same
+                # sentence is a pooled-count smoke signal on PUBLIC copy.
+                contrad.append({
+                    "file": str(p),
+                    "pattern": "GATE3:POOLED_N",
+                    "canonical_or_note": "n>=30 is per-(axis,model) items, "
+                                          "never pooled rows (items x models) "
+                                          "; divide by the model count",
+                    "hit": snip[:120],
+                })
     return contrad, files
 
 def main(argv=None) -> int:
