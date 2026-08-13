@@ -1,30 +1,30 @@
 # EAT_ALL Run Report
 
-**Run ID**: eat_all_1786585808
-**Finished**: 2026-08-13T01:50:08.838642+00:00
+**Run ID**: eat_all_1786586109
+**Finished**: 2026-08-13T01:55:09.672479+00:00
 **Phase summary**: {'ran': 18, 'failed': 1, 'skipped': 0}
 
 ## Phases
 
 | Phase | Status | Duration | Notes |
 |---|---|---|---|
-| PHASE_0_HEALTH | ran | 0.2s | sov_local_status=unreachable: <urlopen error [Errno 61] Connection refused>; ollama_models=2; kb_entries=6768 |
+| PHASE_0_HEALTH | ran | 0.2s | sov_local_status=unreachable: <urlopen error [Errno 61] Connection refused>; ollama_models=2; kb_entries=6776 |
 | PHASE_1_REBOARD | ran | 0.1s | exit_code=0 |
 | PHASE_2_KB_GROW | ran | 0.1s | exit_code=0 |
 | PHASE_3_PROBES | ran | 0.0s | chatml=1; bloodline=1 |
 | PHASE_4_TRAINING | ran | 0.0s | training_scripts_available=['sov_groq_distill.py', 'sov_grpo_train.py', 'sov_minimal_train.py'] |
 | PHASE_5_HONEY | ran | 0.2s | exit_code=0; events=3656 |
-| PHASE_6_DOWNLOADS | failed | 5.4s | (no error message) |
+| PHASE_6_DOWNLOADS | failed | 5.8s | (no error message) |
 | PHASE_7_PORTAL | ran | 0.2s | exit_code=0 |
-| PHASE_9_ARTIFACTS | ran | 0.2s | deck_cards=55; kb_entries=6768; kb_ok=True |
-| PHASE_9B_EXTERNAL_HARNESS | ran | 0.1s | clans_routed=0; swarm_id=owem-clans-1786585807 |
-| PHASE_9C_OWEM_CLUSTER | ran | 0.2s | clusters_routed=0 |
+| PHASE_9_ARTIFACTS | ran | 0.5s | deck_cards=55; kb_entries=6776; kb_ok=True |
+| PHASE_9B_EXTERNAL_HARNESS | ran | 0.2s | clans_routed=0; swarm_id=owem-clans-1786586107 |
+| PHASE_9C_OWEM_CLUSTER | ran | 0.1s | clusters_routed=0 |
 | PHASE_9D_BENCHMARKS_HARNESS | ran | 0.1s | benchmarks_routed=0 |
 | PHASE_9E_TRAINING_DATA_HARNESS | ran | 0.1s | data_sources_routed=0 |
 | PHASE_9F_SOVEREIGN_TRAINING_PIPELINE | ran | 0.1s | stages_routed=0 |
 | PHASE_9G_AUDIENCE_HARNESS | ran | 0.1s | audiences_routed=0 |
-| PHASE_9H_SOV_HIVE_HARNESS | ran | 0.3s | kb_entries_added=7; exit_code=0 |
-| PHASE_9I_SOV_CAPTURE | ran | 0.4s | events_processed=0; skills_extracted=0; refine_output=KB Refinery — processing today's capture events...
+| PHASE_9H_SOV_HIVE_HARNESS | ran | 0.4s | kb_entries_added=7; exit_code=0 |
+| PHASE_9I_SOV_CAPTURE | ran | 0.5s | events_processed=0; skills_extracted=0; refine_output=KB Refinery — processing today's capture events...
   terminal: 0 events
   browser: 0 events
   files: 0 events
