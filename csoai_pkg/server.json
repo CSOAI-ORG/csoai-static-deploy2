@@ -1,7 +1,7 @@
 {
   "$schema": "https://static.modelcontextprotocol.io/schemas/2025-09-29/server.schema.json",
   "name": "io.github.CSOAI-ORG/csoai",
-  "description": "Signed, deterministic AI-governance measurement. council_measure returns a signed EU AI Act Article 50 transparency card for a public model; verify_record verifies any signed record offline — the first agent-callable signed-record verifier. Public artifacts only; measurement, not certification.",
+  "description": "Signed deterministic AI-governance measurement: EU AI Act cards + agent-callable record verify.",
   "version": "0.1.1",
   "repository": {
     "url": "https://github.com/CSOAI-ORG/councilof-ai",
@@ -14,11 +14,22 @@
       "registryBaseUrl": "https://pypi.org",
       "identifier": "csoai",
       "version": "0.1.1",
-      "transport": { "type": "stdio" },
+      "transport": {
+        "type": "stdio"
+      },
       "runtimeHint": "uvx",
       "runtimeArguments": [
-        { "type": "named", "name": "--from", "value": "csoai[mcp]", "description": "install with the MCP extra (fastmcp)" },
-        { "type": "positional", "value": "csoai-mcp", "description": "the MCP server entry point" }
+        {
+          "type": "named",
+          "name": "--from",
+          "value": "csoai[mcp]",
+          "description": "install with the MCP extra (fastmcp)"
+        },
+        {
+          "type": "positional",
+          "value": "csoai-mcp",
+          "description": "the MCP server entry point"
+        }
       ]
     }
   ]
