@@ -39,6 +39,34 @@ CONFLATIONS = [
     (r"care (bank of|has|: )?20[01]\b", "201", "care canonical = 201 (200 usable + 1 canary)"),
 ]
 
+# FORBIDDEN codenames — legal/brand hygiene (2-lane convergence + confirmed
+# SOVOS US Reg #6876686, Sovos Compliance LLC). These NEVER appear on PUBLIC
+# surfaces. The linter FAILS a public-bound file that carries them.
+# Scope: only public/render surfaces (READMEs, html, api/deploy/site, JSON docs
+# that ship). Internal status/doctrine/ops notes may legitimately use SOVOS as
+# an internal codename or the SOVOS/ repo path — those are not public-bound.
+FORBIDDEN = [
+    r"\bSOVOS\b",
+    r"\bSOV4\b",
+    r"\bsov34\b",
+    r"\bsovereign-os\b",
+    r"\bsov-town\b",
+]
+# Public-bound file markers (a file is public iff its path matches).
+# Scoped to the ACTUAL public web/HF estate (councilof/meok sites, api/deploy,
+# HF card copy) — NOT monorepo package READMEs, which ship code and legitimately
+# reference the SOVOS/ repo path / internal codename. Brand-hygiene = web surface.
+PUBLIC_SURFACES = (
+    # councilof.ai / meok.ai site + api (the rendered web estate)
+    "/councilof-ai/", "councilof-ai", "client/src", "functions/api",
+    "meok-ai-landing", "meok.ai", "os.meok.ai",
+    # deploy/site artifacts that render publicly (deploy RUNBOOKS are ops docs,
+    # not rendered surfaces — only _site/ build output + public/ web dirs qualify)
+    "/_site/", "pages/", "public/",
+    # HF-bound card copy (data cards that ship to HF)
+    "hf_card", "model_card", "dataset_card",
+)
+
 # Measurement-record subtrees: model/fleet counts inside these are the measured
 # n of that run, not a claim about the current fleet. Their axis counts DO get
 # enforced (a 2026-08-12 run saying 12 axes is stale; a run saying 15 models is
@@ -102,6 +130,18 @@ def lint(root: Path, registry: dict) -> tuple[list, list]:
                     "canonical_or_note": what,
                     "hit": snippet[:110],
                 })
+        # FORBIDDEN codename enforcement (legal/brand hygiene) — PUBLIC surfaces only
+        is_public = any(s in str(p) for s in PUBLIC_SURFACES)
+        if is_public:
+            for fb in FORBIDDEN:
+                for m in re.finditer(fb, text):
+                    snippet = text[max(0, m.start()-50):m.end()+50].replace("\n", " ")
+                    contrad.append({
+                        "file": str(p),
+                        "pattern": f"FORBIDDEN:{fb}",
+                        "canonical_or_note": "public-codename exile (SOVOS kill)",
+                        "hit": snippet[:110],
+                    })
     return contrad, files
 
 def main(argv=None) -> int:

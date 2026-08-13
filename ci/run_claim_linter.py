@@ -16,7 +16,8 @@ from claim_linter import lint, load_registry  # noqa: E402
 def main() -> int:
     registry = load_registry(ROOT / "SOVOS" / "GSPC_NUMBERS_REGISTRY.json")
     contrad, files = lint(ROOT / "SOVOS", registry)
-    real = [c for c in contrad if "superseded" not in c["canonical_or_note"]]
+    # FORBIDDEN public-codename hits are ALWAYS real (legal/brand): fail CI
+    real = [c for c in contrad if c["pattern"].startswith("FORBIDDEN") or "superseded" not in c["canonical_or_note"]]
     if real:
         for x in real[:25]:
             print(f"::error::CONFLATION {x['file']}: {x['pattern']} -> {x['canonical_or_note']}")
