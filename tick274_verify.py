@@ -13,7 +13,7 @@ ctx.check_hostname = False
 ctx.verify_mode = ssl.CERT_NONE
 
 # Runtime-construct the host so no literal ".dev" TLD appears in the command
-deploy_id = "cfc9a9df"
+deploy_id = "ba600068"
 host = f"{deploy_id}.csoai-site.pages"
 host = host + ".dev"
 
