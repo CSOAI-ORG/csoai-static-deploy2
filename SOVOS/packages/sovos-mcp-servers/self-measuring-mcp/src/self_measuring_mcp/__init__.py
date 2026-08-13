@@ -2,12 +2,12 @@
 
 The Layer-1 discovery + forcing-function surface: an MCP server exposing a
 `self_measure` tool that runs deterministic transparency checks on the caller's
-own metrics, emits an Ed25519-signed card via the sovos-city Chain, and returns
+own metrics, emits an Ed25519-signed card via the canonical measurement Chain, and returns
 it. Lists an agent card + llms.txt + .well-known for machine discovery.
 
 Design:
   * DSELF  Deterministic self-measurement (no LLM judge — the ruler is code).
-  * Imports sovos-city CouncilSignal/Chain rather than duplicating them.
+  * Imports the canonical CouncilSignal/Chain when present; standalone fallback otherwise.
   * Lawful: measures what the caller *provides* (self-attested public metrics)
     or public artifacts; never a private/surprise scan.
   * Forcing function: returns a signed card an agent/CI/marketplace can REQUIRE.
@@ -26,8 +26,20 @@ try:
     from sovos_city.council_signal import CouncilSignal, ArtifactFact
     from sovos_city.chain import Chain
     HAS_SOVOS = True
-except Exception:  # pragma: no cover — standalone mode without sovos-city
+except Exception:  # pragma: no cover — standalone mode without the canonical core
     HAS_SOVOS = False
+    from dataclasses import dataclass
+
+    @dataclass
+    class ArtifactFact:  # standalone fallback, mirrors the canonical signature
+        axis: str
+        label: str
+        score: float
+        threshold: float = 0.5
+        source: str = "self_measure"
+
+        def verdict(self) -> str:
+            return "PASS" if self.score >= self.threshold else "FAIL"
 
 # The transparent self-measurement schema: what an agent can assert about itself.
 # Each key maps to a deterministic predicate an agent can truthfully fill in.
@@ -74,7 +86,7 @@ def self_measure(entity: str, metrics: Dict[str, Any],
             "standalone": True,
             "facts": [{"axis": f.axis, "label": f.label, "score": f.score,
                        "verdict": f.verdict()} for f in facts],
-            "note": "sovos-city not importable; unsigned standalone card",
+            "note": "canonical measurement core not importable; unsigned standalone card",
         }
     cs = CouncilSignal(Chain(chain_path), store=store)
     facts = [_fact(k, metrics.get(k)) for k in SELF_METRICS]

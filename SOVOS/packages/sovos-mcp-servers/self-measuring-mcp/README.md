@@ -1,5 +1,7 @@
 # self-measuring-mcp — the Layer-1 discovery + forcing-function surface
 
+<!-- mcp-name: io.github.csoai-org/council-signal-mcp -->
+
 Title: Self-Measuring MCP Server — signed measurement an agent calls on itself.
 
 An orchestrating agent finds us the way it finds any tool in 2026, but THIS
@@ -11,4 +13,4 @@ llms.txt, .well-known) makes us findable; the signed-card forcing function
 
 Lane note: this is a NEW surface (agent-facing plumbing that wraps the
 canonical measurement), not a third copy of council_signal.py. It imports the
-sovos-city CouncilSignal/Chain rather than reimplementing them.
+canonical Council measurement core (CouncilSignal/Chain) rather than reimplementing them.
