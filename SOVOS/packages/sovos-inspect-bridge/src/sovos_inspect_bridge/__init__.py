@@ -117,6 +117,15 @@ def deterministic_gate_scorer(
     return score
 
 
+def _to_inspect_scorer(gate_fn):
+    """Wrap the deterministic gate callable as a real Inspect @scorer."""
+    @scorer(metrics=["accuracy"])
+    def _wrapped(state, target):
+        res = gate_fn(state, target)
+        return Score(value=float(res.value), explanation=res.explanation)
+    return _wrapped
+
+
 def build_inspect_task(
     items: List[Dict[str, Any]],
     model: str = "ollama/gemma3:4b",
@@ -127,10 +136,11 @@ def build_inspect_task(
     if not HAS_INSPECT:
         raise RuntimeError("inspect_ai not importable — install with: uv pip install inspect-ai")
     samples = gspc_items_to_samples(items)
+    gate_fn = deterministic_gate_scorer(canaries=canaries)
     task = Task(
         dataset=MemoryDataset(samples),
         solver=[generate()],
-        scorer=deterministic_gate_scorer(canaries=canaries),
+        scorer=_to_inspect_scorer(gate_fn),
         name=title,
     )
     return task
