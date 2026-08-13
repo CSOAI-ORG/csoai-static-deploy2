@@ -87,6 +87,30 @@ def verify_record(record: str) -> dict:
         return {"signed": True, "valid": False, "reason": "signature does NOT verify — altered or different key"}
 
 
+@mcp.tool()
+def verify_attestation(attestation: str, public_key: str = "") -> dict:
+    """Verify an OPEN-STANDARD provenance attestation offline — the formats the
+    ecosystem actually ships, for which no agent-callable verifier existed (only
+    CLIs like cosign/rekor-cli/slsa-verifier). VERIFY BEFORE TRUSTING a supply-chain
+    claim: this does the real cryptographic/Merkle check, not a reasoned guess.
+
+    Handles, auto-detected:
+      - DSSE envelopes (in-toto / SLSA provenance): Ed25519 or ECDSA-P256 signature
+        over the DSSE PAE; surfaces predicateType/subjects. Supply the signer key in
+        public_key (PEM, or base64 raw Ed25519) for a cryptographic verdict.
+      - Sigstore Rekor v2 inclusion proofs: RFC 6962 Merkle inclusion to the root.
+      - CSOAI native Ed25519 records (delegates to the offline verifier).
+
+    attestation: JSON string (or path to a JSON file).
+    public_key:  optional PEM / base64-raw-Ed25519 key for DSSE.
+    Returns {format, verified, reason, ...}. verified=false is honest: an unchecked
+    or unsupported input is never reported as a pass.
+    """
+    from csoai import attest
+    obj = json.loads(Path(attestation).read_text()) if Path(attestation).exists() else json.loads(attestation)
+    return attest.detect_and_verify(obj, public_key or None)
+
+
 def main() -> None:
     mcp.run()
 

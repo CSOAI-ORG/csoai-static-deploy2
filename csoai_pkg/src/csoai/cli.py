@@ -67,6 +67,21 @@ def cmd_verify(a) -> int:
         return int(e.code) if isinstance(e.code, int) else 1
 
 
+def cmd_verify_attestation(a) -> int:
+    from csoai import attest
+    key = None
+    if a.public_key:
+        key = Path(a.public_key).read_text() if Path(a.public_key).exists() else a.public_key
+    obj = json.loads(Path(a.attestation).read_text()) if Path(a.attestation).exists() else json.loads(a.attestation)
+    res = attest.detect_and_verify(obj, key)
+    if a.json:
+        print(json.dumps(res, indent=2))
+    else:
+        mark = "✅ VERIFIED" if res.get("verified") else "❌ NOT VERIFIED"
+        print(f"  {mark}  [{res.get('format')}]  {res.get('reason')}")
+    return 0 if res.get("verified") else 1
+
+
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser(prog="csoai", description=__doc__)
     sub = ap.add_subparsers(dest="cmd", required=True)
@@ -77,9 +92,15 @@ def main(argv=None) -> int:
     c.add_argument("--json", action="store_true")
     c.add_argument("--out")
     c.set_defaults(fn=cmd_check)
-    v = sub.add_parser("verify", help="verify a signed record offline")
+    v = sub.add_parser("verify", help="verify a signed CSOAI record offline")
     v.add_argument("--record", required=True)
     v.set_defaults(fn=cmd_verify)
+    va = sub.add_parser("verify-attestation",
+                        help="verify an open-standard attestation (DSSE/SLSA, Rekor v2) offline")
+    va.add_argument("--attestation", required=True, help="JSON string or path")
+    va.add_argument("--public-key", default="", help="PEM or base64 raw Ed25519 key (for DSSE)")
+    va.add_argument("--json", action="store_true")
+    va.set_defaults(fn=cmd_verify_attestation)
     a = ap.parse_args(argv)
     return a.fn(a)
 
