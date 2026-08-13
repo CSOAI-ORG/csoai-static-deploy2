@@ -45,6 +45,10 @@ def test_seam_duel_builds_signed_record(tmp_path):
     assert res.winner in ("ours", "theirs", "NO_WINNER")
     assert "ours" in res.verdicts and "theirs" in res.verdicts
     assert res.signature  # signed via chain
+    # the Sealed Arena record carries per-model escape-class counts
+    for v in res.verdicts.values():
+        assert "escape_counts" in v, "sealed record must carry escape_counts"
+        assert isinstance(v["escape_counts"], dict)
 
 
 def test_seam_marks_escape_attempt(real_firejail):
