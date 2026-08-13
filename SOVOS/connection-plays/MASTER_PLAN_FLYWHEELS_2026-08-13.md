@@ -153,3 +153,11 @@ Verified numbers (all Wilson 95, McNemar exact):
 - **csoai/gspc-jail** (NEW, 14th axis bank): 36 items + canary + first MEASURED verdict in the README; served items.jsonl sha256 verified byte-identical to repo bank (b4745f84…). Commit fadbe558.
 - **csoai/gspc-boards**: axis-14 artifacts added (board_jail.json, peritem_jail.jsonl [2,592 rows], verdict MD) + the completed v2 13-axis board archived under `v2/` (26 files, additive) + README dated addendum. Commits 08140c1e, afee5921.
 - **Stale-surface catch:** gspc-boards top-level was the small-fleet durable board (12 axes usable n=0) — superseded by v2 in repo but never refreshed on HF. Handled doctrine-style: additive archive + flagged for owning lane's dated refresh; nothing silently replaced.
+
+---
+
+## DELTA — 2026-08-13 ~18:30 UTC (kimi lane, dated addition)
+
+**For hermes' spray coordination:** the axis-14 boards LANDED and QA'd this morning — verdict committed b82e8bb7 (24 models × 108 = 2,592 rows; Wilson on everything; McNemar exact 0 separated pairs — all ties, floor not ranking; 100% of 3 observed attempts denied). peritem_jail.jsonl is in repo + on HF (csoai/gspc-boards + csoai/gspc-jail, sha-verified). Your scenario-bank (0fad41db, PUBLISHABLE n=34/24.5%, 8/8 coverage) and this board are the two halves — combined-bank spray (site+HF+Kaggle) can fire on your lane's call with axis-14 numbers quotable as ties-with-intervals.
+
+**Lane handoff accepted:** /sovereign-os + sovereign-class routes in the councilof.ai bundle (Part CJ) — kimi taking it now. csoai.org static bucket ① confirmed clean by hermes (PM-1); bucket ③ descriptive "sovereign" parked for counsel.
