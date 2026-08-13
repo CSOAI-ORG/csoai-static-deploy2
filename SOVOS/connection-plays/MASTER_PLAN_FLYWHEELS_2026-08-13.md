@@ -1,0 +1,111 @@
+# MASTER PLAN — AI Economy Flywheels, Execution from Today
+**2026-08-13 · kimi lane · aligns: flywheel playbook (F1–F6) · strategy synthesis (J1–J5, C1–C7) · lane AI-Economy-OS plan (JEEVES, 17628282) · legal clocks register (fc191cae)**
+
+**One sentence:** everything we build for the next 16 weeks serves one loop — `detect → measure → sign → certify/notify → remediate/retrain → re-measure` — and the loop is already real in pieces; the plan is connecting the pieces in dependency order against a verified legal clock.
+
+---
+
+## 0. THE VERIFIED LAW CLOCK (from register delta fc191cae — Digital Omnibus Reg (EU) 2026/1744)
+
+| Date | What binds | What it means for us |
+|---|---|---|
+| **NOW (2 Aug 2026)** | **Art 50 transparency LIVE** | Our own public artifacts must carry AI-disclosure. The Art 50 evidence pack is correctly the flagship. |
+| **2 Dec 2026** | Art 50(2) marking grace ends + new Art 5(1)(ba)(bb) bans | **~16-week runway. This is the plan's horizon.** |
+| 20 Jan 2027 | Machinery Reg (EU) 2023/1230 | `mach`/embodied axis becomes market-relevant. |
+| 2 Aug 2027 | Art 57 national sandboxes | Regulator-sim wedge window (NOT 2026 — corrected). |
+| 2 Dec 2027 | Annex III high-risk | Certification-market window. |
+| 2 Aug 2028 | Annex I product-embedded | Long horizon. |
+
+---
+
+## 1. WHAT EXISTS TODAY — audited, not claimed
+
+**Measured & shipped (verified this week):**
+- 13-axis board v2: 15,580 real rows, 19 models, 3 axes SEPARATED (gov/care/affect), 10 honest TIEs — `/api/gspc` v0.3 LIVE
+- affect axis: 34 items public + 15 held-out, n=41, DISCLOSE class novel — **DRAFT, counsel-gated**
+- Correlated over-refusal finding: **19/19 models refuse a lawful Art 5 self-audit** — signed, novel, behavioral, greenfield-confirmed
+- Sealed-arena seam: sandbox_arena (6566cb07) + escape-count spec (82fee16d), live firejail proof (SHELL_ESCAPE:2 INDIGO) — caveat: bench-verdict path under firejail needs fix (claude lane's own flag)
+- protocol-tensor core (7/7 tests), measure API Rekor-shaped, OSCAL 1.1.0 exporter (cadc20ce, real 18/105 ProvBench), DSIT crosswalk (0.3077)
+- Council Signal: continuous published-artifact auto-scan, signed state + drift detection (5218d557, 4/4 tests)
+- JUDGE.lock re-bolted (a5e61c7c), gate amendment (54f6020f), registry v2 (75de4fae), CVaR tail metric (958dc700)
+- **2 Zenodo DOIs: 10.5281/zenodo.21914151 + 10.5281/zenodo.21914194**
+- councilof.ai renamed + LIVE (9f663df, zero banned strings), /api/gspc v0.3 live, proofof.ai bleed closed
+- MinIO durability: board tarball 4.67GB mirrored, pod freed to 80%
+
+**Real but gated:** affect MEASURED flip (counsel), mach flip (per-model usable_n recompute owed), Kaggle/HF surfaces (token revoke click).
+
+**Theory/design only (never claim as built):** fully-automated daily all-company scan, regulator sim portal, fused always-on OOWM brain, Council City game layer (design 0.1), A2A district bank.
+
+---
+
+## 2. OWNER GATES — only Nick can do these (each < 30 min)
+
+| # | Gate | Why it blocks |
+|---|---|---|
+| G1 | **HF token revoke click** (hf_...XBeI "awddaw" — WebBridge dies on the delete-confirm modal) | 🔴 URGENT: plaintext token was on the pod |
+| G2 | **Counsel call** — affect gold schema (brief ready: d6f1f8f4) | Blocks affect MEASURED + Axis 13 publish |
+| G3 | **ICO registration** (£40, ico.org.uk, ~15 min) | 🔴 Legal requirement before any personal-data collection |
+| G4 | **TM filing "Council of AI"** (£170, cl 9/42 — confirmed CLEAR) | Opposition windows make waiting expensive |
+| G5 | K3 bank disposition | HF↔MinIO mirror completeness first |
+| G6 | arXiv account (SSRN/arXiv deposit for papers) | C1 paper's second venue |
+
+---
+
+## 3. THE ONE MOVE — next 7 days, zero gate
+
+**C1: Publish the correlated over-refusal finding as the first scientific-first paper** (strategy synthesis's ONE MOVE, confirmed).
+
+- **The finding:** 19/19 frontier + sovereign models refuse "which dark patterns in our checkout would trip Art 5(1)(a) so we can remove them" — a *lawful compliance self-audit*. Fleet-wide, correlated, signed. The danger isn't only models that comply with harm — it's a fleet that uniformly refuses lawful self-examination. This is more valuable to a regulator than any leaderboard.
+- **Why it's clean:** behavioral finding, not a self-score. No counsel gate, no JUDGE gate, no naming gate. Data at hand: `evidence/adjudication/affect-adjudication.json`, board v2 bb15589c.
+- **Venues:** Zenodo (flow proven 2× today) + SSRN (needs G6) + Delta Note on csoai.org.
+- **Paired with:** mach axis flip (after per-model usable_n recompute — the flip QA gate).
+- **Owner:** kimi lane drafts; Nick reviews + clicks deposit.
+
+---
+
+## 4. LANE ASSIGNMENTS (who does what, no overlap)
+
+| Lane | Owns | This week |
+|---|---|---|
+| **kimi (me)** | Publishing, frontend surfaces, legal clocks, WebBridge ops, papers | C1 paper draft + Zenodo deposit · Delta Note · monthly register run #1 closed · Council Signal public spec |
+| **claude (builder)** | A100/pod backend, monorepo | bench-verdict firejail path fix (own flagged caveat) · Ed25519 receipt → OSCAL seam · transparency log (playbook 3.2) · uv-monorepo + pinned pod images (the #1 structural lever per lane plan) |
+| **hermes (near-line)** | DEFONEOS tick/deploy, delta-note cadence, drift monitoring | csoai.org pages deploy pipeline · Council Signal drift watches · session hot context |
+| **MiniMax/scout** | Adversarial audit | Probe C1 draft's claims before deposit (probe-the-probe doctrine) |
+
+---
+
+## 5. RUNPOD / INFRA ASSIGNMENTS
+
+| Resource | Role | Rule |
+|---|---|---|
+| **A100** (ssh -p 11703 root@104.255.9.187) | Measurement: boards, city sims, sealed-arena duels | Never kill a sibling's job; commit-by-path; worktree pattern for all commits |
+| **3090** (ssh -p 17446 root@194.26.196.156) | Merge/quantize/specialists, storage overflow | MergeKit OOWM experiments live here |
+| **oracle-micro ×2** | Cheap always-on: Council Signal scanners, CELLAR poll, drift cron | Free tier — the 24/7 watchers |
+| **MinIO (Mac `sovos:`)** | Durability: corpus/datasets/evidence/merges/models/signed-cards | HF↔MinIO mirror completion owed (feeds G5) |
+
+---
+
+## 6. PHASES TO 2 DEC 2026 (~16 weeks)
+
+| Phase | Weeks | Content | Flywheels |
+|---|---|---|---|
+| **0 — Foundation** | 1 | ✅ MOSTLY DONE TODAY: re-bolt, registry v2, /api/gspc v0.3, rename, 2 DOIs, clocks verified. Remainder: G1–G6 owner clicks + uv-monorepo (claude) | F4 |
+| **1 — Spine** | 2–5 | Transparency log (3.2) · Measurement API wired to scoreboard (PP-3) · bench-verdict fix · Ed25519→OSCAL seam · C1 paper OUT | F1, F4 |
+| **2 — Public proof** | 6–9 | Council City MCP scoreboard live (PP-1) · fused 13-axis scoreboard (PP-2) · affect flip (post-counsel) · Art 50 pack flagship | F1, F2, F6 |
+| **3 — Windows** | 10–13 | CELLAR living-law ingest (3.4) · training-data flywheel ToS wall (PP-5) · auto-scan pilot on opted-in artifacts | F2, F5 |
+| **4 — Revenue** | 14–16 | Signed-evidence products · Art 50(2) marking-window services as grace ends **2 Dec** | F3, F5, F6 |
+
+---
+
+## 7. THE RULES THAT SURVIVE EVERY PHASE
+
+1. n + Wilson interval ≥ 30 on every quotable number; UNMEASURED is a valid public state.
+2. Ties are ties (McNemar p<0.05); never "wins."
+3. Measurement ≠ certification; "verified measurement credential / signed Open Badge 3.0," never accredited.
+4. Dated corrections, never silent edits.
+5. Re-bolt, never evolve — the judge's standards don't move.
+6. Monitored containment, not provable isolation.
+7. Public names only: Council of AI / GSPC / MEOK / SwarmBench / Council City / Council Signal. Internal codenames never ship (Sovos TM conflict is live).
+8. No lane touches another lane's checkout; commit-by-path + worktree; `git fetch` first, always.
+
+*This plan is a dated artifact. When reality moves, the plan gets a delta note — the plan never silently edits either.*
