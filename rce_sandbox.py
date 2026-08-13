@@ -55,8 +55,16 @@ def _sandbox_cmd(script: Path, sandbox_dir: Path, profile: Path) -> list[str] | 
         return ["sandbox-exec", "-f", str(profile),
                 "python3", str(script)]
     if shutil.which("firejail"):
-        return ["firejail", "--quiet", "--net=none", "--private",
-                str(Path(sandbox_dir) / "firejail_do.py"), str(script)]
+        # Network-isolated containment via firejail. IMPORTANT (fix 2026-08-13):
+        # we do NOT use `--private` here. --private mounts a private tmpfs that
+        # hides the script AND its output dir, and the previous code referenced a
+        # `firejail_do.py` runner that is never created — so the jail was a silent
+        # no-op (rc=1, empty stdout, every run mislabelled "CONFINED"). Keep
+        # --net=none (the isolation that matters for NETWORK_EGRESS detection) and
+        # run python3 directly on the script so its stdout + out/ stay host-
+        # observable. Posture stays honest: monitored containment, not isolation.
+        return ["firejail", "--quiet", "--net=none", "--noprofile",
+                "python3", str(script)]
     return None
 
 
