@@ -35,3 +35,23 @@
 - **HF bank backups outside HF:** banks are on HF + MinIO (boards) but the HF→MinIO bank-level mirror is partial — complete it (affects K3 disposition too).
 
 ## Next run: 2026-09-13 (monthly). Close-more-than-open rule applies from run #2.
+
+---
+
+## Delta — EU AI Act dates verified against Digital Omnibus (2026-08-13, two independent web searches, consistent)
+
+The Omnibus Regulation (EU) 2026/1744 entered into force 27 Jul 2026 and moved several AI Act clocks. Verified positions, now canonical for planning:
+
+| Provision | Date | Status |
+|---|---|---|
+| **Art 50 transparency obligations** | **2 Aug 2026** | 🔴 **LIVE NOW — enforceable.** Any public genAI artifact must carry AI-disclosure per Art 50; our own pages/papers/banks are in scope. |
+| **Art 50(2) marking grace** (genAI systems placed on market before 2 Aug 2026) + **new Art 5(1)(ba)(bb)** NCII/CSAM prohibitions | **2 Dec 2026** | ~16-week runway from 2026-08-13. This is the playbook's Phase-4 horizon. |
+| **Art 57 national regulatory sandboxes** (member states must establish) | **2 Aug 2027** | ⚠️ CORRECTION: any line saying "states owe a sandbox in 2026" is stale — Omnibus moved it to Aug 2027. |
+| **Annex III high-risk obligations** | **2 Dec 2027** | Post-Omnibus date. |
+| **Annex I product-embedded AI** | **2 Aug 2028** | Post-Omnibus date. |
+| Notified-body designation (Art 43(3)) | 28 Jan 2028 | |
+| Machinery Regulation (EU) 2023/1230 | 20 Jan 2027 | Sectoral, unchanged — relevant to `mach`/embodied axis. |
+
+**Planning consequences:** (1) Art 50 compliance is not a future item — it binds today; the Art 50 evidence pack is the correct flagship. (2) The 2 Dec 2026 marking window is the real near-term deadline for the public artifact estate. (3) Sandbox-window language in the flywheel playbook §2 confirmed accurate post-verification; sandbox timing is 2027, not 2026.
+
+*Verified by kimi lane via live web search 2026-08-13; sources consistent across two independent queries. Dated addition, not a silent edit.*
