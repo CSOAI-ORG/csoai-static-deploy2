@@ -24,6 +24,27 @@ from pathlib import Path
 from datetime import datetime, timezone
 
 
+def sanitize_name(m: str) -> str:
+    """Public-safe model label: strip banned codename prefixes for public copy.
+
+    The naming lock (Council of AI / Council City / Council Signal only; no
+    SOVOS/SOV/sov6 on public surfaces) applies to generated artifacts even
+    though the internal board uses sov6-* model names. Keep the descriptive
+    suffix (e.g. ethics-v3-light) so the identity is preserved and verifiable,
+    but never print the codename prefix. Non-codename names pass through unchanged.
+    """
+    if not isinstance(m, str) or not m:
+        return m
+    # strip a leading sov6-/sov34-/sov4-/sov- codename prefix, keep the rest
+    lower = m.lower()
+    for pre in ("sov6-", "sov34-", "sov4-", "sovos-", "sov-", "sov/"):
+        if lower.startswith(pre):
+            rest = m[len(pre):]
+            # if nothing descriptive remains, fall back to neutral label
+            return rest if rest.strip() else "sovereign-specialist"
+    return m
+
+
 def load_board(p: Path) -> dict:
     d = json.loads(p.read_text())
     if "results" not in d:
@@ -70,7 +91,7 @@ def scorecard_html(board, title):
         vtxt, vcol = verdict(mean, cmean)
         tag = " control" if m == control else ""
         mtxt = f"{mean*100:.0f}%" if mean is not None else "—"
-        body += (f"<tr><td class='m'>{html.escape(m)}{tag}</td>{cells}"
+        body += (f"<tr><td class='m'>{html.escape(sanitize_name(m))}{tag}</td>{cells}"
                  f"<td class='mean'>{mtxt}</td><td style='color:{vcol}'>{vtxt}</td></tr>")
     return f"""<!doctype html><meta charset=utf-8><title>{html.escape(title)} — CSOAI</title>
 <style>body{{font-family:ui-sans-serif,system-ui,sans-serif;max-width:1100px;margin:2rem auto;padding:0 1rem;color:#16211d;background:#eef0ee}}
@@ -78,14 +99,15 @@ h1{{font-family:ui-serif,Georgia,serif}} .banner{{background:#2c7d6e14;border:1p
 table{{border-collapse:collapse;width:100%;font-size:13px;font-variant-numeric:tabular-nums}} th,td{{padding:5px 8px;border-bottom:1px solid #cdd6d1;text-align:right}}
 th:first-child,td.m{{text-align:left}} td.m{{font-family:ui-monospace,monospace;font-weight:600}} td.mean{{font-weight:700}} td.u{{color:#9aa}} .foot{{color:#5c6d66;font-size:12px;margin-top:1rem}}</style>
 <h1>{html.escape(title)}</h1>
-<div class=banner><b>Measurement, not certification.</b> Every cell is an accuracy on a fixed item set, control-anchored to <code>{html.escape(str(control))}</code>. A model at or below the untrained control learned nothing measurable. Blank = UNMEASURED (never counted as zero). A regulator certifies; we measure.</div>
+<div class=banner><b>Measurement, not certification.</b> Every cell is an accuracy on a fixed item set, control-anchored to <code>{html.escape(sanitize_name(str(control)))}</code>. A model at or below the untrained control learned nothing measurable. Blank = UNMEASURED (never counted as zero). A regulator certifies; we measure.</div>
 <table><thead><tr><th>model</th>{head}<th>MEAN</th><th>vs base</th></tr></thead><tbody>{body}</tbody></table>
-<p class=foot>Measured {html.escape(when)} · control = {html.escape(str(control))} ({(cmean*100 if cmean else 0):.0f}%) · CSOAI GSPC flywheel · signed board attached (board.json).</p>"""
+<p class=foot>Measured {html.escape(when)} · control = {html.escape(sanitize_name(str(control)))} ({(cmean*100 if cmean else 0):.0f}%) · CSOAI GSPC flywheel · signed board attached (board.json).</p>"""
 
 
 def readme_md(board, title):
     control, cmean, rows = rank(board)
     beats = [m for m, mean, _ in rows if mean is not None and cmean is not None and (mean - cmean) > 0.01 and m != control]
+    beat_lbl = ', '.join(f'`{sanitize_name(b)}`' for b in beats[:8]) if beats else '(none — the honest result)'
     return f"""---
 license: apache-2.0
 tags: [ai-governance, gspc, measurement, eu-ai-act]
@@ -94,9 +116,9 @@ tags: [ai-governance, gspc, measurement, eu-ai-act]
 
 Control-anchored GSPC measurement of a model fleet. **Measurement, not certification.**
 
-- **Control (untrained baseline):** `{control}` — {(cmean*100 if cmean else 0):.0f}% mean
+- **Control (untrained baseline):** `{sanitize_name(str(control))}` — {(cmean*100 if cmean else 0):.0f}% mean
 - **Models measured:** {len(rows)}
-- **Models that beat the control by >1pt:** {len(beats)} {'— ' + ', '.join(f'`{b}`' for b in beats[:8]) if beats else '(none — the honest result)'}
+- **Models that beat the control by >1pt:** {len(beats)} — {beat_lbl}
 - **Measured:** {board.get('measured_at','')}
 
 Each score is an accuracy on a fixed item set with an untrained control on the same axes.
@@ -112,7 +134,7 @@ def jsonld(board, title, url=""):
         "@type": "Dataset",
         "name": title,
         "description": f"Control-anchored GSPC measurement of {len(rows)} models "
-                       f"vs untrained control {control}. Measurement, not certification.",
+                       f"vs untrained control {sanitize_name(str(control))}. Measurement, not certification.",
         "creator": {"@type": "Organization", "name": "CSOAI — Council of AI"},
         "license": "https://www.apache.org/licenses/LICENSE-2.0",
         "dateModified": board.get("measured_at", ""),
@@ -140,13 +162,17 @@ def main():
 Everything in this folder is generated + honest. To publish (needs the rotated HF token):
 
 ```bash
-# 1. HF dataset (board + card + JSON-LD)
-huggingface-cli upload {a.hf_repo} {out}/ . --repo-type=dataset
+# 1. HF dataset (board + card + JSON-LD) — PUBLIC artifacts only.
+#    board.json is the RAW SIGNED EVIDENCE and may contain internal model
+#    codenames; it is NOT auto-published. Upload only the clean files:
+huggingface-cli upload {a.hf_repo} {out}/scorecard.html {out}/README.md {out}/dataset.jsonld --repo-type=dataset
 
 # 2. scorecard page → the site (Cloudflare Pages), then IndexNow ping
 cp {out}/scorecard.html <site>/boards/{Path(a.hf_repo).name}.html
 
-# 3. (optional) Zenodo deposition of board.json for a citable DOI
+# 3. raw signed board.json → GATED location (not the public dataset), e.g. a
+#    private/org-only repo OR strip codenames first. Never push it to the
+#    public HF dataset as-is.
 ```
 Nothing here is a certification. The scorecard carries the "measurement, not
 certification" banner and reports ties as ties.
