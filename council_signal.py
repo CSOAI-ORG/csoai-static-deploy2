@@ -103,6 +103,60 @@ def diff(prev: Dict[str, Any], curr: Dict[str, Any]) -> Dict[str, Any]:
     }
 
 
+def scan_list(entities: list[str]) -> Dict[str, Any]:
+    """Scan several public entities in one pass → one batch report.
+
+    Each entity gets its own deterministic state; a fetch that fails is recorded as
+    an error entry (never fabricated), so a broken source is visible, not silent.
+    The batch hash is over the per-entity (entity, state_hash) pairs, so the batch
+    itself drifts iff any member's transparency state changed.
+    """
+    states, errors = [], []
+    for e in entities:
+        try:
+            states.append(state_record(e))
+        except (urllib.error.URLError, urllib.error.HTTPError, TimeoutError, json.JSONDecodeError) as exc:
+            errors.append({"entity": e, "error": str(exc)})
+    members = sorted((s["entity"], s["state_hash"]) for s in states)
+    batch_hash = hashlib.sha256(json.dumps(members).encode()).hexdigest()
+    return {
+        "kind": "council_signal.batch",
+        "version": VERSION,
+        "scanned_at": datetime.now(timezone.utc).isoformat(),
+        "n_requested": len(entities),
+        "n_scanned": len(states),
+        "n_errors": len(errors),
+        "batch_hash": batch_hash,
+        "states": states,
+        "errors": errors,
+        "frame": ("Batch of deterministic transparency states over PUBLIC artifacts. "
+                  "Fetch failures are recorded, not hidden. Measurement, not certification."),
+    }
+
+
+def batch_diff(prev: Dict[str, Any], curr: Dict[str, Any]) -> Dict[str, Any]:
+    """Drift-report: which entities changed transparency state since the prior batch."""
+    pstate = {s["entity"]: s for s in prev.get("states", [])}
+    cstate = {s["entity"]: s for s in curr.get("states", [])}
+    drifted, added, removed = [], [], []
+    for e, cs in cstate.items():
+        if e not in pstate:
+            added.append(e)
+        elif pstate[e]["state_hash"] != cs["state_hash"]:
+            drifted.append({"entity": e, "changes": diff(pstate[e], cs)["changes"]})
+    removed = [e for e in pstate if e not in cstate]
+    return {
+        "kind": "council_signal.drift_report",
+        "prev_scanned_at": prev.get("scanned_at"),
+        "curr_scanned_at": curr.get("scanned_at"),
+        "batch_drifted": prev.get("batch_hash") != curr.get("batch_hash"),
+        "drifted": drifted,          # entities whose transparency predicates changed
+        "added": added,              # newly-scanned entities
+        "removed": removed,          # entities no longer in the batch
+        "notify": bool(drifted or added or removed),   # the hook the notify channel fires on
+    }
+
+
 def sign_record(record: Dict[str, Any], out_path: str | Path) -> Dict[str, Any]:
     """Ed25519-sign iff the key exists on this node; else emit UNSIGNED, labelled."""
     Path(out_path).write_text(json.dumps(record, indent=2), encoding="utf-8")
@@ -143,12 +197,32 @@ def selftest() -> int:
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--scan", metavar="ENTITY", help="public HF model repo id, e.g. meta-llama/Llama-3.1-8B-Instruct")
+    ap.add_argument("--scan-list", metavar="FILE", help="file of public entity ids (one per line) to scan as a batch")
     ap.add_argument("--against", metavar="PRIOR.json", help="prior signed state to diff for drift")
+    ap.add_argument("--against-batch", metavar="PRIOR_BATCH.json", help="prior batch to diff for a drift-report")
     ap.add_argument("--out", default="benchmark-results/council_signal_state.json")
     ap.add_argument("--selftest", action="store_true")
     a = ap.parse_args()
     if a.selftest:
         return selftest()
+    if a.scan_list:
+        entities = [l.strip() for l in Path(a.scan_list).read_text().splitlines() if l.strip() and not l.startswith("#")]
+        batch = sign_record(scan_list(entities), a.out)
+        print(f"  batch: {batch['n_scanned']}/{batch['n_requested']} scanned, "
+              f"{batch['n_errors']} errors, hash {batch['batch_hash'][:16]}…, signed={batch.get('signed')}")
+        for s in batch["states"]:
+            # `gated` is a neutral observed attribute (False = not gated = normal), not a
+            # deficiency — exclude it. Flag only absent transparency signals.
+            flags = [k for k, v in s["predicates"].items() if not v and k != "gated"]
+            print(f"    {s['entity']:40} missing: {flags or 'none'}")
+        for e in batch["errors"]:
+            print(f"    {e['entity']:40} FETCH ERROR: {e['error']}")
+        if a.against_batch and Path(a.against_batch).exists():
+            rep = batch_diff(json.loads(Path(a.against_batch).read_text()), batch)
+            print("\n--- DRIFT REPORT ---")
+            print(f"  batch_drifted={rep['batch_drifted']} · notify={rep['notify']}")
+            print(f"  drifted={[d['entity'] for d in rep['drifted']]} added={rep['added']} removed={rep['removed']}")
+        return 0
     if a.scan:
         try:
             rec = sign_record(state_record(a.scan), a.out)
