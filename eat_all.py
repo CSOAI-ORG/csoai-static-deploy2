@@ -1880,14 +1880,27 @@ def phase_11_git_push() -> dict:
         # cleanup, etc.) and git add/diff/push can hang for minutes. Refuse
         # to run the commit loop and log it instead of blocking the whole
         # EAT phase. This is a hard floor, not a tuning knob.
-        dirty_probe = subprocess.run(
-            ["git", "status", "--porcelain"],
-            capture_output=True, text=True, timeout=15,
-            cwd=str(repo_dir)
-        )
+        # G1 fix (2026-08-13): scope the dirty probe to the STAGED paths only.
+        # The full-tree `git status --porcelain` timed out at 15s on
+        # csoai-static-deploy2's perpetually-chaotic benchmark tree, raising
+        # TimeoutExpired and failing PHASE_11 every cycle — so the harvest never
+        # reached a second machine (violating "two machines or it doesn't count").
+        # We only ever `git add` these paths, so counting dirtiness across just
+        # them is both faster and the relevant signal. Timeout raised + guarded so
+        # a slow probe skips the repo (chaotic) instead of failing the whole phase.
+        try:
+            dirty_probe = subprocess.run(
+                ["git", "status", "--porcelain", "--"] + list(paths),
+                capture_output=True, text=True, timeout=60,
+                cwd=str(repo_dir)
+            )
+        except subprocess.TimeoutExpired:
+            log(f"  {name}: scoped dirty-probe timed out — skipping (chaotic)")
+            result["repos"][name] = "skipped (scoped dirty-probe timeout)"
+            continue
         dirty_count = dirty_probe.stdout.count("\n") if dirty_probe.returncode == 0 else 0
         if dirty_count > 1000:
-            log(f"  {name}: {dirty_count} dirty files — chaotic cross-lane state, skipping commit loop (hard guard)")
+            log(f"  {name}: {dirty_count} dirty files in staged paths — chaotic, skipping commit loop (hard guard)")
             result["repos"][name] = f"skipped (dirty_count={dirty_count} > 1000 hard guard)"
             continue
         try:
