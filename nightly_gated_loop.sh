@@ -55,5 +55,33 @@ else
   echo "--- EVOLVE: disabled (NIGHTLY_EVOLVE=0 or close_train_hop.py absent) ---"
 fi
 
+# ── 3) CITY SIM — governed multi-agent arena across the fleet (agentic) ──────
+# Runs each fleet model as a citizen through the governed city arena (stratified
+# so the bank can discriminate). Needs the sovos_city package on the pod; skips
+# cleanly otherwise. Read-only w.r.t. the live fleet.
+if [ "${NIGHTLY_CITY:-1}" = "1" ] && python3 -c "import sovos_city" 2>/dev/null; then
+  echo "--- CITY SIM: fleet through the governed arena (stratified) ---"
+  python3 -m sovos_city --models "$(echo $MODELS | tr ' ' ',')" --stratified \
+      --epochs "${CITY_EPOCHS:-2}" --out "$D/city" --host 127.0.0.1:11434 > "$D/city.log" 2>&1 \
+      && { echo "  city: OK"; tail -2 "$D/city.log"; } || echo "  city: skipped/failed — see $D/city.log"
+else
+  echo "--- CITY SIM: disabled (NIGHTLY_CITY=0 or sovos_city not on pod) ---"
+fi
+
+# ── 4) JAIL BOARD — expanded trap bank (61 items / 36 traps) across the fleet ─
+# Axis-14 containment ranking. The bigger bank (was 37) is what lets n>=30
+# separate models — the exact gap the axis-14 board flagged. Deterministic.
+JAIL_BANK="SOVOS/banks/gspc-jail/items.jsonl"
+if [ "${NIGHTLY_JAIL:-1}" = "1" ] && [ -f "$JAIL_BANK" ] && [ -f jailboard.py ]; then
+  echo "--- JAIL BOARD: $(wc -l < "$JAIL_BANK") trap items × $(echo $MODELS | wc -w) models ---"
+  for m in $MODELS; do
+    python3 jailboard.py --model "$m" --bank "$JAIL_BANK" \
+        --out "$D/jail_${m//[:\/]/_}.jsonl" >> "$D/jail.log" 2>&1 || echo "  jail: $m failed"
+  done
+  echo "  jail: done → $D/jail.log"
+else
+  echo "--- JAIL BOARD: disabled or bank/harness absent ---"
+fi
+
 echo "=== done $TS → $D (persistent volume) ==="
 echo "$TS done" >> /workspace/nightly/history.log
