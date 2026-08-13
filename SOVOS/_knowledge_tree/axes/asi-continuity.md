@@ -1,37 +1,20 @@
 # Axis: continuity (asi)
-
-## 1. What it measures (the honest core)
-- Legal/standard anchor:
-- Label schema:
-- Current bank: n=, status=, on HF/Kaggle
-
-## 2. Working components found (the KEY — inventory everything that exists)
-- Measurements:
-- Tooling (scripts/code):
-- Procedures:
-- Fixes available / done:
-- The "middle parts" to automate away:
-
+## 1. What it measures
+- Anchor: post-quantum cryptography (Falcon/FrodoKEM -> quantum-safe/vulnerable). Bank: n=33, labels={'NOT_APPLICABLE': 11, 'QUANTUM_SAFE': 13, 'QUANTUM_VULNERABLE': 9}. On HF+Kaggle (13/13).
+## 2. Working components
+- Measurements: gspc-asi board — UNMEASURED (weak fleet; richer-fleet re-run owed via durable_board resume, which skips only MEASURED).
+- Tooling: bench.py (field-resolver handles this schema), tail.py (correlated-failure), durable_board.py.
+- Middle to automate: run->board->card->spray (all built; needs a stable fleet).
 ## 3. SWOT
-- Strengths:
-- Weaknesses:
-- Opportunities:
-- Threats:
-
+- S: bank public, n=33 clears n>=30 floor; law-anchored deterministic gold.
+- W: UNMEASURED; bank ok.
+- O: post-quantum cryptography is a live regulatory driver.
+- T: NIST PQC migration guidance; no signed law-anchored bank like ours.
 ## 4. Market & demographics
-- Who needs this measured (buyer/user):
-- Market size / regulatory driver:
-- End-user demographic + workflow:
-
-## 5. Competitor intel (who else measures this, how)
-- Direct competitors:
-- Their method vs ours:
-- Where we win / lose:
-
-## 6. EAT (what to consume/absorb)
-- Datasets/benchmarks to ingest (via 6 gates):
-- Standards to crosswalk:
-
-## 7. Front-end / SOV City surface
-- How the end-user experiences this axis (talks to SOV, sees SOV City sim):
-- What auto-runs vs what's shown:
+- Buyer: deployers/auditors under post-quantum cryptography (Falcon. Delivery: paygo SaaS + A2A API.
+## 5. Competitor intel
+- NIST PQC migration guidance; no signed law-anchored bank like ours.
+## 6. EAT (6 gates)
+- Ingest named domain benchmarks; author items to n>=60 where thin; crosswalk to the standard.
+## 7. SOV City surface
+- End-user asks SOV about continuity; SOV auto-runs the board, shows the continuity sim (fleet-fragile items highlighted red).

@@ -1,37 +1,20 @@
 # Axis: care (care)
-
-## 1. What it measures (the honest core)
-- Legal/standard anchor:
-- Label schema:
-- Current bank: n=, status=, on HF/Kaggle
-
-## 2. Working components found (the KEY — inventory everything that exists)
-- Measurements:
-- Tooling (scripts/code):
-- Procedures:
-- Fixes available / done:
-- The "middle parts" to automate away:
-
+## 1. What it measures
+- Anchor: care-cost / over-refusal. Bank: n=200, labels={'1': 100, '0': 100}. On HF+Kaggle (13/13).
+## 2. Working components
+- Measurements: gspc-care board — UNMEASURED (weak fleet; richer-fleet re-run owed via durable_board resume, which skips only MEASURED).
+- Tooling: bench.py (field-resolver handles this schema), tail.py (correlated-failure), durable_board.py.
+- Middle to automate: run->board->card->spray (all built; needs a stable fleet).
 ## 3. SWOT
-- Strengths:
-- Weaknesses:
-- Opportunities:
-- Threats:
-
+- S: bank public, n=200 clears n>=30 floor; law-anchored deterministic gold.
+- W: UNMEASURED; bank ok.
+- O: care-cost / over-refusal is a live regulatory driver.
+- T: SycoBench/OR-Bench measure over-refusal; ours ties to care-cost + seve
 ## 4. Market & demographics
-- Who needs this measured (buyer/user):
-- Market size / regulatory driver:
-- End-user demographic + workflow:
-
-## 5. Competitor intel (who else measures this, how)
-- Direct competitors:
-- Their method vs ours:
-- Where we win / lose:
-
-## 6. EAT (what to consume/absorb)
-- Datasets/benchmarks to ingest (via 6 gates):
-- Standards to crosswalk:
-
-## 7. Front-end / SOV City surface
-- How the end-user experiences this axis (talks to SOV, sees SOV City sim):
-- What auto-runs vs what's shown:
+- Buyer: deployers/auditors under care-cost. Delivery: paygo SaaS + A2A API.
+## 5. Competitor intel
+- SycoBench/OR-Bench measure over-refusal; ours ties to care-cost + severity.
+## 6. EAT (6 gates)
+- Ingest named domain benchmarks; author items to n>=60 where thin; crosswalk to the standard.
+## 7. SOV City surface
+- End-user asks SOV about care; SOV auto-runs the board, shows the care sim (fleet-fragile items highlighted red).
