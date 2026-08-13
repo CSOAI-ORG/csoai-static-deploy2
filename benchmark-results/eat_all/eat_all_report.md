@@ -1,23 +1,23 @@
 # EAT_ALL Run Report
 
-**Run ID**: eat_all_1786586709
-**Finished**: 2026-08-13T02:05:09.541909+00:00
+**Run ID**: eat_all_1786587009
+**Finished**: 2026-08-13T02:10:09.985279+00:00
 **Phase summary**: {'ran': 18, 'failed': 1, 'skipped': 0}
 
 ## Phases
 
 | Phase | Status | Duration | Notes |
 |---|---|---|---|
-| PHASE_0_HEALTH | ran | 0.2s | sov_local_status=unreachable: <urlopen error [Errno 61] Connection refused>; ollama_models=2; kb_entries=6792 |
-| PHASE_1_REBOARD | ran | 0.1s | exit_code=0 |
+| PHASE_0_HEALTH | ran | 0.2s | sov_local_status=unreachable: <urlopen error [Errno 61] Connection refused>; ollama_models=2; kb_entries=6800 |
+| PHASE_1_REBOARD | ran | 0.2s | exit_code=0 |
 | PHASE_2_KB_GROW | ran | 0.1s | exit_code=0 |
 | PHASE_3_PROBES | ran | 0.0s | chatml=1; bloodline=1 |
 | PHASE_4_TRAINING | ran | 0.0s | training_scripts_available=['sov_groq_distill.py', 'sov_grpo_train.py', 'sov_minimal_train.py'] |
 | PHASE_5_HONEY | ran | 0.3s | exit_code=0; events=3696 |
-| PHASE_6_DOWNLOADS | failed | 5.6s | (no error message) |
-| PHASE_7_PORTAL | ran | 0.3s | exit_code=0 |
-| PHASE_9_ARTIFACTS | ran | 0.3s | deck_cards=55; kb_entries=6792; kb_ok=True |
-| PHASE_9B_EXTERNAL_HARNESS | ran | 0.1s | clans_routed=0; swarm_id=owem-clans-1786586707 |
+| PHASE_6_DOWNLOADS | failed | 5.9s | (no error message) |
+| PHASE_7_PORTAL | ran | 0.2s | exit_code=0 |
+| PHASE_9_ARTIFACTS | ran | 0.2s | deck_cards=55; kb_entries=6800; kb_ok=True |
+| PHASE_9B_EXTERNAL_HARNESS | ran | 0.1s | clans_routed=0; swarm_id=owem-clans-1786587008 |
 | PHASE_9C_OWEM_CLUSTER | ran | 0.2s | clusters_routed=0 |
 | PHASE_9D_BENCHMARKS_HARNESS | ran | 0.1s | benchmarks_routed=0 |
 | PHASE_9E_TRAINING_DATA_HARNESS | ran | 0.1s | data_sources_routed=0 |
@@ -34,7 +34,7 @@
   No terminal events today.
  |
 | PHASE_9J_IWM_BOOTSTRAP | ran | 0.2s | iwm_records=0; kb_entries_added=0; exit_code=0 |
-| PHASE_10B_MODEL_ROUTING | ran | 0.2s | models_routed=0; specs_routed=1 |
+| PHASE_10B_MODEL_ROUTING | ran | 0.1s | models_routed=0; specs_routed=1 |
 
 ## Artifacts
 
