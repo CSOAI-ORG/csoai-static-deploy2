@@ -21,7 +21,7 @@ def main():
     ap.add_argument("--budget", type=float, default=2.00)
     ap.add_argument("--epochs", type=int, default=2)
     ap.add_argument("--citizens", type=int, default=30)
-    ap.add_argument("--frontier", default="nvidia/nemotron-3.5-lightning,qwen/qwen3.5-35b-a3b,deepseek/deepseek-v4-pro-0813")
+    ap.add_argument("--frontier", default="nvidia/nemotron-3.5-lightning,qwen/qwen3.5-35b-a3b,deepseek/deepseek-v4-pro")
     ap.add_argument("--out", default="/workspace/cross-lab-city-2026-08-12")
     ap.add_argument("--local-models", default="")
     a = ap.parse_args()
