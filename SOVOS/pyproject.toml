@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "sovos"
 version = "0.3.0"
-description = "SOVOS — the first governance operating system for AI. 53 packages."
+description = "SOVOS — the first governance operating system for AI. 54 packages."
 readme = "README.md"
 license = { text = "MIT" }
 authors = [{ name = "CSOAI Ltd", email = "governance@csoai.org" }]
@@ -76,6 +76,7 @@ packages = [
     "sovos_fleet_manifest",
     "sovos_fleet",
     "sovos_glass",
+    "sovos_gprobe",
     "sovos_harvest",
     "sovos_hive",
     "sovos_info_geometry",
@@ -132,6 +133,7 @@ packages = [
 "sovos_fleet_manifest" = "packages/sovos-fleet-manifest/src"
 "sovos_fleet" = "packages/sovos-fleet/src"
 "sovos_glass" = "packages/sovos-glass/src"
+"sovos_gprobe" = "packages/sovos-gprobe/src"
 "sovos_harvest" = "packages/sovos-harvest/src"
 "sovos_hive" = "packages/sovos-hive/src"
 "sovos_info_geometry" = "packages/sovos-info-geometry/src"
