@@ -109,3 +109,21 @@
 8. No lane touches another lane's checkout; commit-by-path + worktree; `git fetch` first, always.
 
 *This plan is a dated artifact. When reality moves, the plan gets a delta note — the plan never silently edits either.*
+
+---
+
+## DELTA — 2026-08-13 ~11:45 (kimi lane, dated addition)
+
+**Owner-gate list corrections (lanes are working from stale state):**
+- **G1 HF token revoke — CLOSED.** Verified live 2026-08-13 ~08:50: "awddaw" (hf_...XBeI) absent from the account tokens page (owner action or HF leak-sweep). Stop listing it as open.
+- **NEW G7 — npm token rotation.** claude reports npm_UXkQ… exposed in plaintext in a lane paste → rotate at npmjs.com → Access Tokens. Owner-only.
+- **NEW G8 — npm bare name "csoai" unclaimed (404).** @meok-labs/csoai is live, but the bare name is a squat risk. Owner: one `npm publish` + OTP in csoai_pkg/npm/ also secures it, or accept the scoped name as canonical.
+- **G6 arXiv — staged, awaiting 2 trusted checkbox clicks.** submit/7946050 fully pre-filled (author/CC-BY-4.0/cs/cs.AI), PDF ready (workspace/C1_over_refusal/). Checkboxes reject synthetic+CDP input by design. Expires 2026-08-27. Profile typo "ndependent Researcher" prints on papers — fix first.
+
+**Shipped since the plan was written (all independently verified by kimi lane, not lane-claimed):**
+- C1 over-refusal paper: Zenodo DOI 10.5281/zenodo.21914702 (4 files, reproducer script, asserts pass).
+- council-signal-mcp 0.1.2 on PyPI (3 bugs caught by post-publish install testing; fixes b9542be2/5c780dcc).
+- pip csoai 0.1.2 · npm @meok-labs/csoai 0.1.0 · MCP registry io.github.CSOAI-ORG/csoai 0.1.2 — all live, verified from public sources.
+- Cloudflare deploy a131e144: hermes caught + scrubbed 60 display-brand codename instances before prod (repo-path citations preserved); kimi re-verified live pages clean (residual hits = URL slugs only, preserved by design; slug redirect /sovos→/council is polish, not a leak).
+- Firejail silent-no-op fix 63a03b57 (hermes): duel-in-jail now emits real signed records; axis-14 precondition met but stays UNMEASURED until a real SandboxEscapeBench gold bank exists — correct discipline.
+- MCP registry publish for council-signal-mcp: server.json schema-validated; blocked only on owner GitHub device-login (`mcp-publisher login github`).
