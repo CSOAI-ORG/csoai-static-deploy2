@@ -6,7 +6,7 @@
     python3 sign.py --verify verdict.json     # verify against the published public key (no private key needed)
 
 WHY
-SOVOS's whole claim is verifiable measurement. Until now a verdict carried a sha256 of its body — a
+Council OS's whole claim is verifiable measurement. Until now a verdict carried a sha256 of its body — a
 checksum, honestly labelled as "not signed on this host". A checksum proves integrity, not authorship.
 This module signs the body with Ed25519 (a real signature: anyone with the PUBLIC key can verify a
 verdict was issued by the holder of the private key, and was not altered). The path to post-quantum is
@@ -14,7 +14,7 @@ one swap: ML-DSA-65 via liboqs (Open Quantum Safe) — the ASI axis, applied to 
 
 THE ONE DISCIPLINE
 The private key lives on the SIGNING NODE and never on a developer laptop. --keygen refuses to write a
-key on a host it does not recognise as a signing node (SOVOS_SIGNING_NODE=1 must be set), and --sign
+key on a host it does not recognise as a signing node (CSOAI_SIGNING_NODE=1 must be set), and --sign
 refuses if the key is absent (it will NOT silently fall back to a fake signature — an unsigned verdict
 is labelled unsigned, never dressed as signed). The public key is published for verification.
 
@@ -22,9 +22,9 @@ Requires `cryptography` (pure-python-friendly, no GPU). ML-DSA path noted where 
 """
 import argparse, json, os, sys, base64, hashlib
 
-KEY_DIR = os.path.expanduser(os.environ.get("SOVOS_KEY_DIR", "~/.sovos_keys"))
-PRIV = os.path.join(KEY_DIR, "sovos_ed25519.key")
-PUB = os.path.join(KEY_DIR, "sovos_ed25519.pub")
+KEY_DIR = os.path.expanduser(os.environ.get("CSOAI_KEY_DIR", "~/.csoai_keys"))
+PRIV = os.path.join(KEY_DIR, "csoai_ed25519.key")
+PUB = os.path.join(KEY_DIR, "csoai_ed25519.pub")
 
 
 def _lib():
@@ -39,8 +39,8 @@ def _lib():
 
 def keygen():
     Ed25519PrivateKey, _, serialization = _lib()
-    if os.environ.get("SOVOS_SIGNING_NODE") != "1":
-        sys.exit("REFUSING to generate a key here: set SOVOS_SIGNING_NODE=1 only on the real signing "
+    if os.environ.get("CSOAI_SIGNING_NODE") != "1":
+        sys.exit("REFUSING to generate a key here: set CSOAI_SIGNING_NODE=1 only on the real signing "
                  "node (Oracle/pod), never on a developer laptop. The private key must never touch the Mac.")
     os.makedirs(KEY_DIR, exist_ok=True)
     if os.path.exists(PRIV):
@@ -97,7 +97,7 @@ def verify(path):
 
 
 def main():
-    ap = argparse.ArgumentParser(description="SOVOS real signature layer (Ed25519; ML-DSA path)")
+    ap = argparse.ArgumentParser(description="Council OS real signature layer (Ed25519; ML-DSA path)")
     ap.add_argument("--keygen", action="store_true")
     ap.add_argument("--sign")
     ap.add_argument("--verify")
