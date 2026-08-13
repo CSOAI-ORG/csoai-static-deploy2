@@ -10,12 +10,18 @@
 | **Companies House — CSOAI Ltd (16939677)** | ✅ ACTIVE, no urgent clock | Incorporated 2 Jan 2026, private limited, model articles, GBP 1 capital. Only filing on record: NEWINC. **Confirmation statement: first due by ~16 Jan 2027** (12-month review period ends 1 Jan 2027 + 14 days). **First accounts: ARD defaults to 31 Jan 2027, due by 2 Oct 2027** (21-month first-accounts rule). Nothing due in 2026. |
 | **proofof.ai domain** | ✅ bleed closed | Domain serves a 470-byte meta-refresh redirect to councilof.ai; zero SOV4/sovereign strings (live-verified 2026-08-13). The owner-gate item from Part AX–CK is effectively resolved; formal "archive/kill" decision remains Nick's, but there is nothing left to scrub. |
 
+## Verified this run — browser pass (2026-08-13 ~07:10, webbridge, Nick's sessions)
+
+| Clock | Status | Evidence (verified live 2026-08-13) |
+|---|---|---|
+| **ICO registration** | 🔴 **GAP — not registered** | ICO register searched under both "Council for the Safety of Artificial Intelligence" and "CSOAI" → *"There are no entries that match your search criteria"* (both). If CSOAI Ltd processes personal data (waitlist/signup emails count), the UK data-protection fee (from £40/yr) is almost certainly owed — registration is a legal requirement, not optional. **Action: register at ico.org.uk before any personal-data collection is publicly claimed; ~15 min online.** |
+| **UK IPO — "Council of AI"** | ✅ CLEAR | Zero UK marks matching "Council of AI" (Similar search) and zero for "Council for the Safety of Artificial Intelligence". The rename target is registrable. **Action: file ~£170/1 class (cl 9/42) before public launch locks the name; opposition windows make waiting the expensive option.** |
+| **UK IPO — "GSPC"** | ⚠️ OCCUPIED, classes clear | 20 marks match "GSPC". Live Registered: UK00003193446 (cl 16,35,36,40,41 · filed 2016), UK00003407104 (cl 35 · 2019), UK00003413505 (cl 35,36,43 · 2019). **Class 9/42 "GSPC" marks are EXPIRED (2006 filings)** — software/scientific classes appear unoccupied among live marks seen (7 of 20 reviewed; remaining 13 = page-2, next run). GSPC usable in cl 9/42 with a clearance opinion; "Council of AI" is the cleaner mark. |
+
 ## Not verifiable without browser session (queued for webbridge)
 
 | Clock | What to check | Where |
 |---|---|---|
-| **ICO registration** | Is CSOAI Ltd (or Nicholas Templeman) on the data-protection register? Handling user data (signups, Stripe) without ICO registration is a fee/fine exposure. | ico.org.uk register search — JS-driven, curl blind |
-| **UK IPO trademarks** | "Council of AI", "GSPC" — any conflicting registrations; decide file-or-monitor. Trademarks have opposition windows — a clock you can't pause. | trademarks.ipo.gov.uk |
 | **Registrar billing** | Which registrar holds the 5 domains, auto-renew on/off, card validity | registrar account (webbridge) |
 | **Stripe catalogue audit** | £1/£9/£29 ladder live in public READMEs (X4) vs Stripe products — mismatch = billing disputes | dashboard.stripe.com |
 | **PyPI/npm token security** | eu-ai-act-compliance-mcp 1.8.15 + meok-attestation-verify 1.0.4 (X3: installable code carrying £199/mo attestation + proofof.ai verify endpoint claims) | pypi.org/npmjs.com account pages |
