@@ -161,7 +161,11 @@ def sign_record(record: Dict[str, Any], out_path: str | Path) -> Dict[str, Any]:
     """Ed25519-sign iff the key exists on this node; else emit UNSIGNED, labelled."""
     Path(out_path).write_text(json.dumps(record, indent=2), encoding="utf-8")
     try:
-        import os, sign
+        import os
+        try:
+            import sign  # repo-root context
+        except ModuleNotFoundError:
+            from csoai import sign  # installed-package context
         if os.path.exists(sign.PRIV):
             sign.sign(str(out_path))
             return json.loads(Path(out_path).read_text())
