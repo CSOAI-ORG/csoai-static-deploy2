@@ -44,7 +44,24 @@ from typing import Any, Callable, Dict, List, Optional, Tuple
 
 import numpy as np
 
-# Import the real J-Space primitives
+# --- hyperbolic sibling-path hook (durable seam fix, 2026-08-13) ---
+# The pipeline's core math lives in the `hyperbolic` package inside
+# sovos-jspace-hyperbolic/src. Root pyproject ships it namespaced as
+# `sovos_jspace_hyperbolic`, so bare `from hyperbolic import ...`
+# only resolves when that source dir is on sys.path. We add it here so
+# the pipeline works in every context (monorepo, pod, raw pytest) without
+# requiring PYTHONPATH surgery. Honest scope: if the sibling is genuinely
+# absent this falls through to the ImportError rather than faking a stub.
+import os
+import sys
+_HYPERBOLIC_SRC = os.path.join(
+    os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
+    "..", "..", "sovos-jspace-hyperbolic", "src",
+)
+if os.path.isdir(_HYPERBOLIC_SRC) and _HYPERBOLIC_SRC not in sys.path:
+    sys.path.insert(0, _HYPERBOLIC_SRC)
+# --- end hook ---
+
 from hyperbolic import poincare_distance, mobius_add, project_to_ball, procrustes_alignment
 
 
