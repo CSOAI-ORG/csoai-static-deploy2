@@ -1,5 +1,7 @@
 # Affect Axis — Gate Run + Adjudication Queue (2026-08-13)
 
+> **DELTA NOTE (2026-08-13, later same day):** The gate amendment proposed below was **approved by the owner and shipped**. `item_gate.py` now routes d=0.0 with a concentrated (≥3/4 share, n≥5) wrong fleet label to **ADJUDICATE / BLIND_SPOT** instead of REJECT (selftest GREEN, 7 new cases). Re-run result: **17 accept / 3 adjudicate / 21 reject, usable_n 20** — the over-refusal item is now in the gate-native manifest `evidence/adjudication/affect-adjudication.json` (3 items). The standalone blind-spot manifest below is superseded but kept as the original record. Everything else in this document stands as written.
+
 **Data:** `SOVOS/boards-v2-2026-08-12/peritem_affect.jsonl` (41 items × 19 models, 0 transport errors) · **Gate:** `item_gate.py` (DISCRIMINATING_ITEMS_SPEC §4 R3) · **Axis mean difficulty:** 0.605 (fleet competent)
 
 ## Gate verdicts
