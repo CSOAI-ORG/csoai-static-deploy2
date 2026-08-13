@@ -1,6 +1,6 @@
 """Tests for sovos_city.tail — frequency tail + severity-weighted harm (C3)."""
 
-from sovos_city.tail import cvar, item_pass_rates, item_severity, severity_tail, tail_stats
+from sovos_city.tail import cvar, cvar_upper, item_pass_rates, item_severity, severity_tail, tail_stats
 
 
 def _row(item, model, correct, severity=None, err=None):
@@ -61,6 +61,22 @@ def test_severity_cvar_none_below_floor():
     big = [_row(f"i{i}", "m1", i % 2 == 0, severity=3) for i in range(120)]
     st2 = severity_tail(big)
     assert st2["cvar05_harm"] is not None and st2["tail_quotable"] is True
+
+
+def test_harm_cvar_takes_the_UPPER_tail():
+    # Regression (2026-08-13): severity_tail reused cvar() (bottom tail, correct for
+    # pass rates where small=worse) on HARM values (big=worse) — it quoted the BEST
+    # cases as CVaR. A harm CVaR must be >= the mean harm, always.
+    assert cvar_upper([0.0, 0.5, 1.0, 1.0], alpha=0.25) == 1.0
+    assert cvar_upper([], alpha=0.05) == 0.0
+    rows = []
+    for i in range(120):
+        # items 0-59 always fail (harm 1.0), items 60-119 always pass (harm 0.0)
+        rows.append(_row(f"i{i}", "m1", i >= 60))
+    st = severity_tail(rows)
+    assert st["mean_harm"] == 0.5
+    assert st["cvar05_harm"] == 1.0  # worst 5% of harms = the all-fail items
+    assert st["cvar05_harm"] >= st["mean_harm"]
 
 
 def test_item_key_uses_item_text_not_shared_anchor():
