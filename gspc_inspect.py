@@ -105,12 +105,23 @@ def _gspc_task(bank_path: str) -> Task:
 
 
 # ── axis tasks (point each at its bank; paths are the only axis-specific input) ──
-_BANKS = {
-    "mcp": "/Users/nicholas/clawd/oowm-v7-e2e/pod-corpus/gspc_banks_2026-08-05/gspc-mcp.items.jsonl",
+# Resolve the bank across the known locations (pod volume first, then Mac corpus).
+_BANK_CANDIDATES = {
+    "mcp": [
+        "/runpod/board/banks/gspc-mcp.items.jsonl",
+        "/Users/nicholas/clawd/oowm-v7-e2e/pod-corpus/gspc_banks_2026-08-05/gspc-mcp.items.jsonl",
+    ],
 }
+
+
+def _bank(axis: str) -> str:
+    for p in _BANK_CANDIDATES[axis]:
+        if Path(p).exists():
+            return p
+    raise SystemExit(f"no bank found for axis {axis}; looked in {_BANK_CANDIDATES[axis]}")
 
 
 @task
 def gspc_mcp() -> Task:
     """GSPC mcp axis (CONFORMS/VIOLATES) as an Inspect eval — deterministic grading."""
-    return _gspc_task(_BANKS["mcp"])
+    return _gspc_task(_bank("mcp"))
