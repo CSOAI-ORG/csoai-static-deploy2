@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<title>DEFONEOS — Serious Fraud Office AI Deep-Dive Pack</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#0a0a0a;color:#e0e0e0;font-family:system-ui,sans-serif;line-height:1.6}
+a{color:#00ff88;text-decoration:none}a:hover{text-decoration:underline}
+.hero{background:linear-gradient(135deg,#0a0a0a,#1a1a2e,#0d1117);padding:40px 20px;text-align:center;border-bottom:2px solid #00ff88}
+.hero h1{font-size:2em;color:#00ff88;margin-bottom:6px}
+.sub{color:#888;font-size:.95em;margin-bottom:10px}
+.bg{display:inline-block;background:#1a1a2e;border:1px solid #00ff88;padding:4px 12px;border-radius:20px;color:#00ff88;font-size:.8em;margin:3px}
+nav{background:#111;padding:10px 20px;border-bottom:1px solid #222;position:sticky;top:0;z-index:100;overflow-x:auto;white-space:nowrap}
+nav a{display:inline-block;padding:4px 10px;margin:2px;background:#1a1a2e;border:1px solid #333;border-radius:6px;font-size:.75em;color:#00ff88;transition:all .2s}
+nav a:hover{background:#00ff88;color:#0a0a0a;text-decoration:none}
+.c{max-width:1200px;margin:0 auto;padding:20px}
+.s{margin:28px 0;background:#1a1a2e;border:1px solid #222;border-radius:12px;overflow:hidden}
+.sh{background:linear-gradient(90deg,#1a1a2e,#0d1117);padding:14px 18px;border-bottom:1px solid #333}
+.sh h2{color:#00ff88;font-size:1.2em;margin-bottom:2px}
+.en{color:#666;font-size:.78em}
+.sb{padding:18px}
+.g{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px;margin-bottom:14px}
+.p{background:#0d1117;border:1px solid #222;border-radius:8px;padding:12px;transition:border-color .2s}
+.p:hover{border-color:#00ff88}
+.p h3{color:#00ff88;font-size:.84em;margin-bottom:5px}
+.p p{color:#aaa;font-size:.78em;line-height:1.5}
+.mt{background:#111;border:1px solid #222;border-radius:8px;padding:12px;margin-top:10px}
+.mt h4{color:#00ff88;font-size:.82em;margin-bottom:6px}
+.ml{display:flex;flex-wrap:wrap;gap:5px}
+.t{background:#1a1a2e;border:1px solid #00ff88;padding:2px 9px;border-radius:16px;font-size:.72em;color:#00ff88}
+footer{background:#111;border-top:2px solid #00ff88;padding:20px;text-align:center;margin-top:28px}
+.br{font-size:1.1em;color:#00ff88;font-weight:700;margin-bottom:5px}
+footer p{color:#666;font-size:.75em;line-height:1.5}
+.cr{margin-top:10px;padding-top:10px;border-top:1px solid #222;color:#555;font-size:.72em}
+@media(max-width:768px){.hero h1{font-size:1.4em}.g{grid-template-columns:1fr}}
+</style>
+<!-- AI-SEO/AEO/GEO head block — DO NOT remove. AI crawlers (GPTBot, ClaudeBot, PerplexityBot) don't run JS; everything they need must be in raw HTML. -->
+<link href="https://www.csoai.org/defoneos-sfo-serious-fraud-office-ai-deep-dive-pack.html.llm.json" rel="alternate" title="LLM representation of this page" type="application/llm+json"/>
+<meta content="/llms.txt" name="llms-txt"/>
+<meta content="human-authored, machine-verifiable, Ed25519-signed" name="ai-content-declaration"/>
+<meta content="CSOAI Ltd (2026). DEFONEOS — Serious Fraud Office AI Deep-Dive Pack. https://www.csoai.org/defoneos-sfo-serious-fraud-office-ai-deep-dive-pack.html" name="citation-policy"/>
+<meta content="2026-08-03T11:19:50+00:00" name="revised"/>
+<meta content="2026-08-03T11:19:50+00:00" property="article:modified_time"/>
+<meta content="DEFONEOS — Serious Fraud Office AI Deep-Dive Pack. A sovereign, audit-grade CSOAI surface: measurement, not certification — every figure traces to a signed, verifiable record." name="description"/>
+<link href="https://www.csoai.org/defoneos-sfo-serious-fraud-office-ai-deep-dive-pack.html" rel="canonical"/>
+<meta content="DEFONEOS — Serious Fraud Office AI Deep-Dive Pack" property="og:title"/>
+<meta content="DEFONEOS — Serious Fraud Office AI Deep-Dive Pack. A sovereign, audit-grade CSOAI surface: measurement, not certification — every figure traces to a signed, verifiable record." property="og:description"/>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"DEFONEOS \u2014 Serious Fraud Office AI Deep-Dive Pack","url":"https://www.csoai.org/defoneos-sfo-serious-fraud-office-ai-deep-dive-pack.html","publisher":{"@type":"Organization","name":"CSOAI Ltd","url":"https://csoai.org"}}</script>
+</head>
+<body>
+<div class="hero">
+<h1>🔍 SFO — Serious Fraud Office AI Deep-Dive Pack</h1>
+<p class="sub">DEFONEOS — UK Sovereign Public Services OS</p>
+<div><span class="bg">12 Entry Points</span><span class="bg">8 AI Priorities</span><span class="bg">6 MCP Tools</span></div>
+<p>96 AI capability mappings × 6 MCP integrations — Serious Fraud Office</p>
+</div>
+<nav>
+<a href="#ep1">Complex Fraud</a><a href="#ep2">Bribery</a><a href="#ep3">Corruption</a>
+<a href="#ep4">Asset Recovery</a><a href="#ep5">Whistleblowing</a><a href="#ep6">Int'l MLA</a>
+<a href="#ep7">Digital Forensics</a><a href="#ep8">Case Mgmt</a><a href="#ep9">Witness</a>
+<a href="#ep10">DPA</a><a href="#ep11">Govern</a><a href="#ep12">Parliament</a>
+</nav>
+<div class="c">
+<div class="s" id="ep1"><div class="sh"><span class="en">Entry Point 01</span><h2>Complex Fraud Investigation</h2></div><div class="sb"><div class="g">
+<div class="p"><h3>Compliance Automation</h3><p>Fraud Act 2006 and Theft Act 1968 compliance validation for complex multi-jurisdictional fraud investigations including false representation, failing to disclose, and abuse of position offences.</p></div>
+<div class="p"><h3>Risk Detection &amp; Early Warning</h3><p>Detection of investigation risks via financial transaction analysis, entity relationship mapping, and cross-border asset tracing indicators.</p></div>
+<div class="p"><h3>Natural Language Policy Analysis</h3><p>NLP analysis of financial reports, audit trails, and corporate communications against SFO complex fraud prosecution guidance.</p></div>
+<div class="p"><h3>Predictive Analytics</h3><p>Fraud prosecution success prediction from evidence complexity scoring, defendant cooperation likelihood, and jury comprehension factors.</p></div>
+<div class="p"><h3>Evidence Synthesis</h3><p>Financial records, witness testimony, and forensic accounting data into prosecution-ready case dossiers.</p></div>
+<div class="p"><h3>Document Intelligence</h3><p>Extraction from financial statements, corporate records, and banking transaction logs for investigation case files.</p></div>
+<div class="p"><h3>Stakeholder Reporting</h3><p>Complex fraud investigation dashboards showing case progression, evidence collection milestones, and prosecution timelines.</p></div>
+<div class="p"><h3>Real-time Monitoring</h3><p>Financial transaction monitoring, investigation milestone tracking, and cross-border cooperation status.</p></div>
+</div><div class="mt"><h4>MCP Tools</h4><div class="ml"><span class="t">mcp-govuk-search</span><span class="t">mcp-uk-legislation</span><span class="t">mcp-uk-regulator-intel</span><span class="t">mcp-hansard-search</span><span class="t">mcp-dsit-ai-safety</span><span class="t">mcp-cabinet-office-resilience</span></div></div></div></div>
+<div class="s" id="ep2"><div class="sh"><span class="en">Entry Point 02</span><h2>Bribery &amp; Corruption Prosecution</h2></div><div class="sb"><div class="g">
+<div class="p"><h3>Compliance Automation</h3><p>Bribery Act 2010 compliance validation including sections 1-6 offences and the corporate failure to prevent bribery defence under s.7.</p></div>
+<div class="p"><h3>Risk Detection &amp; Early Warning</h3><p>Detection of bribery indicators via payment pattern analysis, third-party due diligence gaps, and facilitation payment anomalies.</p></div>
+<div class="p"><h3>Natural Language Policy Analysis</h3><p>Analysis of compliance programmes, anti-bribery policies, and third-party contracts against SFO guidance on adequate procedures.</p></div>
+<div class="p"><h3>Predictive Analytics</h3><p>Bribery prosecution outcome prediction from corporate compliance programme adequacy, cooperation level, and evidence chain strength.</p></div>
+<div class="p"><h3>Evidence Synthesis</h3><p>Financial records, communications intercepts, and compliance audit data into bribery prosecution dossiers.</p></div>
+<div class="p"><h3>Document Intelligence</h3><p>Extraction from contracts, payment records, and compliance programme documentation for bribery investigations.</p></div>
+<div class="p"><h3>Stakeholder Reporting</h3><p>Bribery prosecution dashboards showing case volumes, Deferred Prosecution Agreement outcomes, and corporate compliance trends.</p></div>
+<div class="p"><h3>Real-time Monitoring</h3><p>Bribery risk indicator monitoring, compliance programme effectiveness tracking, and DPA obligation compliance.</p></div>
+</div><div class="mt"><h4>MCP Tools</h4><div class="ml"><span class="t">mcp-govuk-search</span><span class="t">mcp-uk-legislation</span><span class="t">mcp-uk-regulator-intel</span><span class="t">mcp-hansard-search</span><span class="t">mcp-dsit-ai-safety</span><span class="t">mcp-cabinet-office-resilience</span></div></div></div></div>
+<div class="s" id="ep3"><div class="sh"><span class="en">Entry Point 03</span><h2>Public Sector Corruption</h2></div><div class="sb"><div class="g">
+<div class="p"><h3>Compliance Automation</h3><p>Public sector corruption compliance under the Public Bodies Corrupt Practices Act 1889 and Prevention of Corruption Act 1916.</p></div>
+<div class="p"><h3>Risk Detection &amp; Early Warning</h3><p>Detection of public procurement corruption, insider dealing, and conflicts of interest via declaration analysis and tender pattern monitoring.</p></div>
+<div class="p"><h3>Natural Language Policy Analysis</h3><p>Analysis of procurement documents, declaration of interest forms, and contract awards against anti-corruption standards.</p></div>
+<div class="p"><h3>Predictive Analytics</h3><p>Corruption risk scoring from procurement value, competition level, and contractor relationship analysis.</p></div>
+<div class="p"><h3>Evidence Synthesis</h3><p>Procurement records, financial declarations, and communications into public sector corruption investigation dossiers.</p></div>
+<div class="p"><h3>Document Intelligence</h3><p>Extraction from procurement records, contract variations, and financial interest declarations for investigation support.</p></div>
+<div class="p"><h3>Stakeholder Reporting</h3><p>Public sector corruption investigation dashboards showing case outcomes, recovery amounts, and systemic risk indicators.</p></div>
+<div class="p"><h3>Real-time Monitoring</h3><p>Procurement red flag monitoring, declaration of interest compliance tracking, and whistleblower report triage.</p></div>
+</div><div class="mt"><h4>MCP Tools</h4><div class="ml"><span class="t">mcp-govuk-search</span><span class="t">mcp-uk-legislation</span><span class="t">mcp-uk-regulator-intel</span><span class="t">mcp-hansard-search</span><span class="t">mcp-dsit-ai-safety</span><span class="t">mcp-cabinet-office-resilience</span></div></div></div></div>
+<div class="s" id="ep4"><div class="sh"><span class="en">Entry Point 04</span><h2>Asset Recovery &amp; Proceeds of Crime</h2></div><div class="sb"><div class="g">
+<div class="p"><h3>Compliance Automation</h3><p>Proceeds of Crime Act 2002 confiscation order compliance including restraint orders, confiscation calculations, and enforcement mechanisms.</p></div>
+<div class="p"><h3>Risk Detection &amp; Early Warning</h3><p>Detection of asset dissipation, hidden wealth indicators, and enforcement gaps in confiscation order compliance.</p></div>
+<div class="p"><h3>Natural Language Policy Analysis</h3><p>Analysis of confiscation orders, financial statements, and asset disclosure certificates against POCA requirements.</p></div>
+<div class="p"><h3>Predictive Analytics</h3><p>Asset recovery success from hidden asset probability scoring, international cooperation status, and enforcement resource allocation.</p></div>
+<div class="p"><h3>Evidence Synthesis</h3><p>Financial analysis, asset tracing records, and enforcement intelligence into confiscation compliance dossiers.</p></div>
+<div class="p"><h3>Document Intelligence</h3><p>Extraction from restraint orders, confiscation certificates, and asset disclosure records for enforcement proceedings.</p></div>
+<div class="p"><h3>Stakeholder Reporting</h3><p>Asset recovery dashboards showing confiscation order volumes, recovery rates, and outstanding enforcement cases.</p></div>
+<div class="p"><h3>Real-time Monitoring</h3><p>Confiscation payment schedule tracking, asset restraint compliance, and enforcement action monitoring.</p></div>
+</div><div class="mt"><h4>MCP Tools</h4><div class="ml"><span class="t">mcp-govuk-search</span><span class="t">mcp-uk-legislation</span><span class="t">mcp-uk-regulator-intel</span><span class="t">mcp-hansard-search</span><span class="t">mcp-dsit-ai-safety</span><span class="t">mcp-cabinet-office-resilience</span></div></div></div></div>
+<div class="s" id="ep5"><div class="sh"><span class="en">Entry Point 05</span><h2>Whistleblowing &amp; Self-Reporting</h2></div><div class="sb"><div class="g">
+<div class="p"><h3>Compliance Automation</h3><p>SFO self-reporting and cooperation framework compliance including corporate cooperation credit eligibility and self-report submission requirements.</p></div>
+<div class="p"><h3>Risk Detection &amp; Early Warning</h3><p>Detection of whistleblowing retaliation indicators, disclosure quality issues, and self-report completeness gaps.</p></div>
+<div class="p"><h3>Natural Language Policy Analysis</h3><p>Analysis of whistleblower disclosures, self-reports, and corporate cooperation submissions against SFO evaluation criteria.</p></div>
+<div class="p"><h3>Predictive Analytics</h3><p>Self-report outcome prediction from disclosure completeness, cooperation level, and remediation evidence scoring.</p></div>
+<div class="p"><h3>Evidence Synthesis</h3><p>Whistleblower disclosures, internal investigation findings, and remediation records into cooperation assessment dossiers.</p></div>
+<div class="p"><h3>Document Intelligence</h3><p>Extraction from whistleblower reports, internal audit findings, and compliance remediation evidence for SFO evaluation.</p></div>
+<div class="p"><h3>Stakeholder Reporting</h3><p>Whistleblowing and self-reporting dashboards showing disclosure volumes, investigation outcomes, and cooperation credit decisions.</p></div>
+<div class="p"><h3>Real-time Monitoring</h3><p>Self-report processing status, whistleblower protection monitoring, and corporate cooperation milestone tracking.</p></div>
+</div><div class="mt"><h4>MCP Tools</h4><div class="ml"><span class="t">mcp-govuk-search</span><span class="t">mcp-uk-legislation</span><span class="t">mcp-uk-regulator-intel</span><span class="t">mcp-hansard-search</span><span class="t">mcp-dsit-ai-safety</span><span class="t">mcp-cabinet-office-resilience</span></div></div></div></div>
+<div class="s" id="ep6"><div class="sh"><span class="en">Entry Point 06</span><h2>International Cooperation &amp; Mutual Legal Assistance</h2></div><div class="sb"><div class="g">
+<div class="p"><h3>Compliance Automation</h3><p>MLA Treaty and European Investigation Order compliance for cross-border fraud investigations including evidence admissibility and dual criminality requirements.</p></div>
+<div class="p"><h3>Risk Detection &amp; Early Warning</h3><p>Detection of MLA request delays, evidence inadmissibility risks, and cross-jurisdictional legal conflict indicators.</p></div>
+<div class="p"><h3>Natural Language Policy Analysis</h3><p>Analysis of MLA requests, foreign evidence packages, and extradition documentation against UK admissibility standards.</p></div>
+<div class="p"><h3>Predictive Analytics</h3><p>International cooperation success from jurisdiction cooperation history, treaty framework strength, and evidence translation quality scoring.</p></div>
+<div class="p"><h3>Evidence Synthesis</h3><p>Foreign evidence, translated documents, and mutual legal assistance records into cross-border prosecution dossiers.</p></div>
+<div class="p"><h3>Document Intelligence</h3><p>Extraction from MLA requests, rogatory letters, and foreign judicial documents for UK prosecution proceedings.</p></div>
+<div class="p"><h3>Stakeholder Reporting</h3><p>International cooperation dashboards showing MLA request volumes, response times, and cross-border case outcomes.</p></div>
+<div class="p"><h3>Real-time Monitoring</h3><p>MLA request processing tracking, extradition status monitoring, and cross-border evidence chain compliance.</p></div>
+</div><div class="mt"><h4>MCP Tools</h4><div class="ml"><span class="t">mcp-govuk-search</span><span class="t">mcp-uk-legislation</span><span class="t">mcp-uk-regulator-intel</span><span class="t">mcp-hansard-search</span><span class="t">mcp-dsit-ai-safety</span><span class="t">mcp-cabinet-office-resilience</span></div></div></div></div>
+<div class="s" id="ep7"><div class="sh"><span class="en">Entry Point 07</span><h2>Digital Forensics &amp; E-Discovery</h2></div><div class="sb"><div class="g">
+<div class="p"><h3>Compliance Automation</h3><p>Digital evidence handling compliance under PACE 1984 and Criminal Procedure Rules including device seizure protocols, forensic imaging integrity, and chain of custody documentation.</p></div>
+<div class="p"><h3>Risk Detection &amp; Early Warning</h3><p>Detection of digital evidence integrity risks, e-discovery completeness gaps, and forensic disclosure failures.</p></div>
+<div class="p"><h3>Natural Language Policy Analysis</h3><p>Analysis of digital forensic reports, e-discovery protocols, and expert testimony against CPS/SFO digital evidence standards.</p></div>
+<div class="p"><h3>Predictive Analytics</h3><p>Digital evidence admissibility scoring from forensic methodology compliance, chain of custody completeness, and expert qualification verification.</p></div>
+<div class="p"><h3>Evidence Synthesis</h3><p>Digital forensic images, e-discovery productions, and communications metadata into prosecution evidence packages.</p></div>
+<div class="p"><h3>Document Intelligence</h3><p>Extraction from forensic examination reports, device analysis logs, and e-discovery indexing records for case preparation.</p></div>
+<div class="p"><h3>Stakeholder Reporting</h3><p>Digital forensics dashboards showing evidence processing volumes, forensic quality scores, and disclosure compliance rates.</p></div>
+<div class="p"><h3>Real-time Monitoring</h3><p>Forensic laboratory throughput, evidence processing queue monitoring, and disclosure deadline compliance tracking.</p></div>
+</div><div class="mt"><h4>MCP Tools</h4><div class="ml"><span class="t">mcp-govuk-search</span><span class="t">mcp-uk-legislation</span><span class="t">mcp-uk-regulator-intel</span><span class="t">mcp-hansard-search</span><span class="t">mcp-dsit-ai-safety</span><span class="t">mcp-cabinet-office-resilience</span></div></div></div></div>
+<div class="s" id="ep8"><div class="sh"><span class="en">Entry Point 08</span><h2>Case Management &amp; Investigation Strategy</h2></div><div class="sb"><div class="g">
+<div class="p"><h3>Compliance Automation</h3><p>SFO investigation governance compliance including case acceptance criteria, investigation strategy approval, and resource allocation decision documentation.</p></div>
+<div class="p"><h3>Risk Detection &amp; Early Warning</h3><p>Detection of investigation scope creep, resource overruns, and strategy drift via case management data analysis.</p></div>
+<div class="p"><h3>Natural Language Policy Analysis</h3><p>Analysis of investigation strategies, case reviews, and resource applications against SFO Director case acceptance criteria.</p></div>
+<div class="p"><h3>Predictive Analytics</h3><p>Investigation outcome prediction from evidence strength, resource efficiency, and prosecution success probability scoring.</p></div>
+<div class="p"><h3>Evidence Synthesis</h3><p>Investigation milestones, resource allocation data, and evidence collection records into case strategy performance dossiers.</p></div>
+<div class="p"><h3>Document Intelligence</h3><p>Extraction from case management records, investigation strategy documents, and resource allocation proposals.</p></div>
+<div class="p"><h3>Stakeholder Reporting</h3><p>Case management dashboards showing investigation timelines, resource utilisation, and case outcome forecasting.</p></div>
+<div class="p"><h3>Real-time Monitoring</h3><p>Investigation milestone tracking, resource allocation monitoring, and case strategy compliance verification.</p></div>
+</div><div class="mt"><h4>MCP Tools</h4><div class="ml"><span class="t">mcp-govuk-search</span><span class="t">mcp-uk-legislation</span><span class="t">mcp-uk-regulator-intel</span><span class="t">mcp-hansard-search</span><span class="t">mcp-dsit-ai-safety</span><span class="t">mcp-cabinet-office-resilience</span></div></div></div></div>
+<div class="s" id="ep9"><div class="sh"><span class="en">Entry Point 09</span><h2>Witness &amp; Expert Evidence Management</h2></div><div class="sb"><div class="g">
+<div class="p"><h3>Compliance Automation</h3><p>Expert witness and witness management compliance including CPIA disclosure obligations, special measures, and vulnerable witness provisions.</p></div>
+<div class="p"><h3>Risk Detection &amp; Early Warning</h3><p>Detection of witness intimidation risks, expert evidence reliability concerns, and witness availability issues via case monitoring.</p></div>
+<div class="p"><h3>Natural Language Policy Analysis</h3><p>Analysis of expert reports, witness statements, and cross-examination preparation against SFO evidence quality standards.</p></div>
+<div class="p"><h3>Predictive Analytics</h3><p>Witness credibility scoring from statement consistency, corroboration strength, and cross-examination resilience prediction.</p></div>
+<div class="p"><h3>Evidence Synthesis</h3><p>Expert reports, witness testimony, and corroborative evidence into witness management dossiers for prosecution teams.</p></div>
+<div class="p"><h3>Document Intelligence</h3><p>Extraction from witness statements, expert qualifications, and cross-examination preparation notes for trial preparation.</p></div>
+<div class="p"><h3>Stakeholder Reporting</h3><p>Witness management dashboards showing statement readiness, expert evidence quality, and special measures applications.</p></div>
+<div class="p"><h3>Real-time Monitoring</h3><p>Witness availability tracking, expert evidence submission monitoring, and special measures compliance verification.</p></div>
+</div><div class="mt"><h4>MCP Tools</h4><div class="ml"><span class="t">mcp-govuk-search</span><span class="t">mcp-uk-legislation</span><span class="t">mcp-uk-regulator-intel</span><span class="t">mcp-hansard-search</span><span class="t">mcp-dsit-ai-safety</span><span class="t">mcp-cabinet-office-resilience</span></div></div></div></div>
+<div class="s" id="ep10"><div class="sh"><span class="en">Entry Point 10</span><h2>Deferred Prosecution Agreements &amp; Corporate Resolution</h2></div><div class="sb"><div class="g">
+<div class="p"><h3>Compliance Automation</h3><p>Crime and Courts Act 2013 DPA compliance validation including statement of facts, judicial preliminary findings, and DPA term monitoring.</p></div>
+<div class="p"><h3>Risk Detection &amp; Early Warning</h3><p>Detection of DPA term breach indicators, corporate compliance programme deficiencies, and monitor effectiveness concerns.</p></div>
+<div class="p"><h3>Natural Language Policy Analysis</h3><p>Analysis of DPA statements of facts, corporate compliance programmes, and independent monitor reports against SFO DPA guidance.</p></div>
+<div class="p"><h3>Predictive Analytics</h3><p>DPA suitability assessment from corporate cooperation scoring, compliance programme adequacy, and public interest factor analysis.</p></div>
+<div class="p"><h3>Evidence Synthesis</h3><p>Corporate cooperation evidence, compliance programme records, and monitor findings into DPA compliance assessment dossiers.</p></div>
+<div class="p"><h3>Document Intelligence</h3><p>Extraction from DPA terms, compliance programme documentation, and independent monitor reports for SFO oversight.</p></div>
+<div class="p"><h3>Stakeholder Reporting</h3><p>DPA management dashboards showing term compliance status, monitor findings, and corporate remediation progress.</p></div>
+<div class="p"><h3>Real-time Monitoring</h3><p>DPA term compliance tracking, corporate remediation milestone monitoring, and independent monitor report scheduling.</p></div>
+</div><div class="mt"><h4>MCP Tools</h4><div class="ml"><span class="t">mcp-govuk-search</span><span class="t">mcp-uk-legislation</span><span class="t">mcp-uk-regulator-intel</span><span class="t">mcp-hansard-search</span><span class="t">mcp-dsit-ai-safety</span><span class="t">mcp-cabinet-office-resilience</span></div></div></div></div>
+<div class="s" id="ep11"><div class="sh"><span class="en">Entry Point 11</span><h2>SFO Workforce &amp; Organisational Governance</h2></div><div class="sb"><div class="g">
+<div class="p"><h3>Compliance Automation</h3><p>SFO organisational governance compliance including HM Crown Prosecution Inspectorate recommendations, spending controls, and workforce competency standards.</p></div>
+<div class="p"><h3>Risk Detection &amp; Early Warning</h3><p>Detection of workforce capability gaps, governance recommendation implementation delays, and organisational risk indicators.</p></div>
+<div class="p"><h3>Natural Language Policy Analysis</h3><p>Analysis of HMCPSI inspection reports, SFO annual reports, and workforce development strategies against SFO operational standards.</p></div>
+<div class="p"><h3>Predictive Analytics</h3><p>Organisational performance trends from caseload analysis, workforce retention, and investigation outcome metrics.</p></div>
+<div class="p"><h3>Evidence Synthesis</h3><p>HMCPSI findings, workforce data, and investigation quality metrics into SFO governance performance dossiers.</p></div>
+<div class="p"><h3>Document Intelligence</h3><p>Extraction from HMCPSI inspection reports, SFO annual reports, and workforce development records.</p></div>
+<div class="p"><h3>Stakeholder Reporting</h3><p>SFO governance dashboards showing inspection outcomes, workforce metrics, and investigation performance KPIs.</p></div>
+<div class="p"><h3>Real-time Monitoring</h3><p>HMCPSI recommendation implementation tracking, workforce development milestones, and investigation performance monitoring.</p></div>
+</div><div class="mt"><h4>MCP Tools</h4><div class="ml"><span class="t">mcp-govuk-search</span><span class="t">mcp-uk-legislation</span><span class="t">mcp-uk-regulator-intel</span><span class="t">mcp-hansard-search</span><span class="t">mcp-dsit-ai-safety</span><span class="t">mcp-cabinet-office-resilience</span></div></div></div></div>
+<div class="s" id="ep12"><div class="sh"><span class="en">Entry Point 12</span><h2>Parliamentary Accountability &amp; Oversight</h2></div><div class="sb"><div class="g">
+<div class="p"><h3>Compliance Automation</h3><p>SFO obligations under the Criminal Justice Act 1987, Justice Committee oversight requirements, and Attorney General superintendence obligations.</p></div>
+<div class="p"><h3>Risk Detection &amp; Early Warning</h3><p>PQs, select committee inquiries, and AG correspondence for SFO investigation policy and performance scrutiny.</p></div>
+<div class="p"><h3>Natural Language Policy Analysis</h3><p>Hansard debates, committee transcripts, and SFO annual reports for parliamentary accountability themes.</p></div>
+<div class="p"><h3>Predictive Analytics</h3><p>Parliamentary scrutiny directions from committee composition, justice policy priorities, and public concern trends.</p></div>
+<div class="p"><h3>Evidence Synthesis</h3><p>Committee evidence, NAO reports, and SFO annual report data into parliamentary briefings.</p></div>
+<div class="p"><h3>Document Intelligence</h3><p>Annual reports, government responses to committee recommendations, and AG correspondence extraction.</p></div>
+<div class="p"><h3>Stakeholder Reporting</h3><p>Committee briefings, PQ drafting, and SFO policy submissions.</p></div>
+<div class="p"><h3>Real-time Monitoring</h3><p>Hansard SFO mentions, committee schedules, and criminal justice legislation tracking.</p></div>
+</div><div class="mt"><h4>MCP Tools</h4><div class="ml"><span class="t">mcp-govuk-search</span><span class="t">mcp-uk-legislation</span><span class="t">mcp-uk-regulator-intel</span><span class="t">mcp-hansard-search</span><span class="t">mcp-dsit-ai-safety</span><span class="t">mcp-cabinet-office-resilience</span></div></div></div></div>
+</div>
+<footer>
+<div class="br">🛡️ DEFONEOS</div>
+<p>UK Sovereign Public Services OS — Serious Fraud Office Deep-Dive</p>
+<p>12 Entry Points × 8 AI Priorities × 6 MCP Tools = 96 Sovereign AI Capability Mappings</p>
+<p style="margin-top:6px;color:#555">Open-Source Sovereign Infrastructure for the UK</p>
+<div class="cr">
+<p>© Crown Copyright 2026 — Published under the Open Government Licence v3.0</p>
+<p>Contains public sector information licensed under the Open Government Licence v3.0</p>
+<p>DEFONEOS is not affiliated with the SFO or HM Government.</p>
+</div>
+</footer>
+</body>
+</html>

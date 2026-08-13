@@ -1,0 +1,24 @@
+{
+ "@context": "https://csoai.org/llm-context.json",
+ "type": "LLMPageSummary",
+ "url": "https://csoai.org/experiments.html",
+ "title": "🧪 Sovereign Experiments — A/B Test Dashboard · MEOK OS",
+ "description": "",
+ "headings": [
+  "🧪 Sovereign Experiments",
+  "📊 Live Arena — Sovereign vs Base Qwen",
+  "🧬 Experimental Design — how the harness decides",
+  "🔬 Active experiments (canonical)",
+  "🔌 What powers this"
+ ],
+ "text": "🧪 Sovereign Experiments — A/B Test Dashboard · MEOK OS 🧪 MEOK OS Home Hub Sovereign OS Arena Pulse Experiments Tour 🧪 Sovereign Experiments A/B test dashboard — Wilson 95% CI + McNemar exact test on discordant pairs. UNMEASURED below n=30. 📊 Live Arena — Sovereign vs Base Qwen From the frozen Cowork CPU harness sweep.py . Each axis has its own labels (governance questions ≠ care questions). McNemar exact test on discordant pairs (where one model is right and the other is wrong). Honest wins only. MEASURED axes 9 UNMEASURED 3 care / swarm / det · n<30 Base Qwen wins 8 Sovereign wins 0 Ties 1 Axis n Sovereign Base Qwen Winner McNemar p governance 237 0.249 [0.198, 0.308] 0.540 [0.476, 0.602] base (sep) ≈0.000 art5-safeguard 36 0.500 [0.345, 0.655] 0.944 [0.819, 0.985] base (sep) 0.0001 provenance 32 0.562 [0.393, 0.718] 0.656 [0.483, 0.796] base 0.65 safety-agi 36 0.694 [0.531, 0.820] 0.833 [0.681, 0.921] base 0.18 security-asi 33 0.333 [0.198, 0.504] 0.364 [0.222, 0.534] base 1.0 conformance 35 0.600 [0.436, 0.744] 0.629 [0.463, 0.768] base 1.0 openness 32 0.600 [0.423, 0.754] 0.594 [0.423, 0.745] tie 1.0 machinery 33 0.214 [0.076, 0.476] 0.273 [0.151, 0.442] base 1.0 cross-reality 32 0.281 [0.156, 0.454] 0.344 [0.204, 0.517] base 0.81 UNMEASURED: gspc-care (n=1), gspc-swarm (n=6), gspc-det (n=6) — below usable_n=30, no label column, not scored. Method: Wilson 95% interval for both control (base Qwen2.5) and variant (sovereign fine-tune) win-rates. McNemar exact test on discordant pairs. A win requires the p95 CI not overlap and McNemar p<0.05. ⚠ This is the honest answer: Base Qwen2.5-0.5B beats every sovereign fine-tune we own on every governance axis we can measure. The path forward is retrieval over statute text (base Qwen + small-model retrieval router), not weight-merge of weak specialists. The instrument wins, not the model. 🧬 Experimental Design — how the harness decides Wilson 95% CI for the win-rate: k/n ± 1.96·√(p(1-p)/n + 1.96²/(4n²)) / (1 + 1.96²/n) — proper for small n, asymmetric around the point estimate. McNemar exact test on discordant pairs: p = min(1, 2·Σ Binom(n=k..b+c, p=0.5)) — only counts items where one model is right and the other is wrong. Both-right and both-wrong cancel out. Verdict logic : requires (a) n ≥ usable_n=30 and (b) McNemar p < 0.05. Otherwise UNMEASURED or NO_SIGNIFICANT_DIFFERENCE. exp_register Register control + variant + axis + items. Returns eid. exp_record Record one comparison (winner, both-correct flags). Discordants feed McNemar. exp_analyze Wilson CI for both + McNemar p + verdict. MEASURED only at n≥30. exp_list All experiments with current state (n, label, status). exp_conclude Signed conclusion (32-char sig) — only valid if MEASURED. All 11 tests pass on the pod. Ed25519-style hash sigs (sha256 truncated). For Ed25519 true-crypto, swap _sign() for nacl.signing. 🔬 Active experiments (canonical) EID Control Variant Axis n Label e-gov-001 qwen2.5:0.5b sov-refusal-combo-lora governance 237 MEASURED e-art5-002 qwen2.5:0.5b sov-refusal-combo-lora art5 36 MEASURED e-prv-003 qwen2.5:0.5b sov-refusal-combo-lora provenance 32 MEASURED e-care-004 qwen2.5:0.5b sov-refusal-combo-lora care 12 UNMEASURED e-swarm-005 qwen2.5:0.5b sov-refusal-combo-lora swarm 6 UNMEASURED e-det-006 qwen2.5:0.5b sov-refusal-combo-lora detection 6 UNMEASURED 🔌 What powers this This dashboard reads from meok-sovereign-experiment-mcp — 5 tools, 11 tests pass. The arena numbers are from the frozen Cowork CPU harness sweep.py (verifiable, reproducible). The McNemar gate is the only place we declare a winner. 🧪 MEOK OS · Sovereign Experiments · powered by experiment-mcp · CSOAI Ltd (UK 16939677)",
+ "text_truncated": false,
+ "register": {
+  "role": "measurement_and_attestation_support",
+  "csoai_certifies_systems": false,
+  "csoai_is_a_notified_body": false,
+  "csoai_has_enforcement_powers": false,
+  "note": "CSOAI measures and publishes evidence. It issues no conformity marks and holds no accreditation. Nothing here is certification or legal advice."
+ },
+ "generated_by": "make_llm_json.py"
+}

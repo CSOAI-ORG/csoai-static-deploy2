@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1.0" name="viewport"/>
+<title>DEFONEOS — DESNZ Energy AI Governance Deep-Dive Pack</title>
+<meta content="Sovereign AI governance for DESNZ energy sector. 12 entry points × 8 transformation priorities × 6 MCPs. UK-sovereign, audit-grade, energy-sector compatible. EU AI Act Article 50 compliant." name="description"/>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  :root{--ink:#0b1020;--bg:#050816;--panel:#0d1330;--line:#1a2050;--gold:#d4af37;--sov:#6dd5ff;--care:#4ade80;--warn:#fbbf24;--bad:#f87171;--fg:#e8eefc;--mut:#8a93b8}
+  html,body{background:var(--bg);color:var(--fg);font:16px/1.6 -apple-system,system-ui,sans-serif}
+  body{background:radial-gradient(ellipse 80% 50% at 50% -10%,rgba(109,213,255,0.12),transparent),var(--bg);min-height:100vh}
+  .wrap{max-width:1280px;margin:0 auto;padding:48px 24px}
+  header{text-align:center;margin-bottom:32px}
+  .pill{display:inline-block;padding:4px 14px;border:1px solid var(--gold);border-radius:999px;font-size:12px;letter-spacing:0.1em;color:var(--gold);margin-bottom:16px}
+  h1{font-size:clamp(36px,5vw,56px);line-height:1.1;letter-spacing:-0.02em;margin-bottom:16px;background:linear-gradient(180deg,#fff,#b8c2e8);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+  .sub{font-size:18px;color:var(--mut);max-width:820px;margin:0 auto 24px}
+  .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin:32px 0;padding:24px;background:var(--panel);border:1px solid var(--line);border-radius:16px}
+  @media(max-width:800px){.stats{grid-template-columns:repeat(2,1fr)}}
+  .stat{text-align:center}.stat .num{font-size:32px;font-weight:800;color:var(--sov)}.stat .label{font-size:11px;letter-spacing:0.15em;text-transform:uppercase;color:var(--mut);margin-top:4px}
+  h2{margin:48px 0 24px;padding-bottom:12px;border-bottom:1px solid var(--line);font-size:28px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:20px;transition:all .2s;position:relative;overflow:hidden}
+  .card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--accent,#6dd5ff)}
+  .card:hover{transform:translateY(-3px);border-color:var(--accent);box-shadow:0 8px 24px rgba(0,0,0,0.3)}
+  .card h3{font-size:17px;font-weight:700;margin-bottom:8px}
+  .card p{font-size:13px;color:var(--mut);line-height:1.5}
+  .tag{display:inline-block;background:rgba(109,213,255,0.1);border:1px solid rgba(109,213,255,0.3);color:var(--sov);padding:2px 8px;border-radius:4px;font-size:10px;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:8px}
+  .redline{margin:48px 0;padding:24px;background:rgba(248,113,113,0.08);border:1px solid rgba(248,113,113,0.3);border-radius:12px}
+  .redline h3{color:var(--bad);margin-bottom:12px;font-size:18px}
+  .redline li{color:var(--fg);margin:8px 0 8px 20px;font-size:14px}
+  .engagement{margin:48px 0;padding:24px;background:var(--panel);border:1px solid var(--line);border-radius:12px}
+  .engagement h3{color:var(--sov);margin-bottom:12px;font-size:18px}
+  .step{display:flex;align-items:flex-start;gap:12px;margin:12px 0;padding:12px;background:rgba(109,213,255,0.05);border-radius:8px}
+  .step .num{width:32px;height:32px;border-radius:50%;background:var(--sov);color:var(--bg);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px;flex-shrink:0}
+  footer{margin-top:64px;text-align:center;font-size:12px;color:var(--mut);padding-top:32px;border-top:1px solid var(--line)}
+  footer a{color:var(--sov);text-decoration:none}
+</style>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "TechArticle", "headline": "DESNZ Energy AI Deep-Dive Pack — DEFONEOS by CSOAI", "description": "Independent AI governance mapping and measurement analysis for DESNZ Energy. Measurement, not certification — every figure traces to a signed, verifiable record.", "author": {"@type": "Organization", "name": "CSOAI Ltd", "url": "https://csoai.org"}, "publisher": {"@type": "Organization", "name": "CSOAI Ltd", "url": "https://csoai.org"}, "isAbout": {"@type": "GovernmentOrganization", "name": "DESNZ Energy"}, "url": "https://www.csoai.org/defoneos-desnz-energy-ai-governance-deep-dive-pack.html"}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "CSOAI", "item": "https://www.csoai.org/"}, {"@type": "ListItem", "position": 2, "name": "DEFONEOS", "item": "https://www.csoai.org/arena-hub.html"}, {"@type": "ListItem", "position": 3, "name": "DESNZ Energy AI Deep-Dive Pack"}]}</script>
+<link href="https://csoai.org/defoneos-desnz-energy-ai-governance-deep-dive-pack.html" rel="canonical"/>
+<meta content="DEFONEOS — DESNZ Energy AI Governance Deep-Dive Pack" property="og:title"/>
+<meta content="CSOAI sovereign AI governance deep-dive: DEFONEOS — DESNZ Energy AI Governance Deep-Dive Pack" property="og:description"/>
+<link href="/favicon.svg" rel="icon" type="image/svg+xml"/>
+<!-- AI-SEO/AEO/GEO head block — DO NOT remove. AI crawlers (GPTBot, ClaudeBot, PerplexityBot) don't run JS; everything they need must be in raw HTML. -->
+<link href="https://csoai.org/defoneos-desnz-energy-ai-governance-deep-dive-pack.html.llm.json" rel="alternate" title="LLM representation of this page" type="application/llm+json"/>
+<meta content="/llms.txt" name="llms-txt"/>
+<meta content="human-authored, machine-verifiable, Ed25519-signed" name="ai-content-declaration"/>
+<meta content="CSOAI Ltd (2026). DEFONEOS — DESNZ Energy AI Governance Deep-Dive Pack. https://csoai.org/defoneos-desnz-energy-ai-governance-deep-dive-pack.html" name="citation-policy"/>
+<meta content="2026-07-27T13:57:10+00:00" name="revised"/>
+<meta content="2026-07-27T13:57:10+00:00" property="article:modified_time"/>
+</head>
+<body>
+<div class="article50-banner" style="background:linear-gradient(90deg,#3a0f1a,#7a1f33,#3a0f1a);border-bottom:1px solid #ff5470;padding:10px 16px;text-align:center;font-size:13px;color:#ffd5dd;font-weight:500">EU AI Act Article 50 live 2 Aug 2026 — C2PA passport ready | <a href="/tools/article50-passport.html" style="color:#fff;text-decoration:underline;font-weight:700">Get yours →</a></div>
+<div class="wrap">
+<header>
+<nav><a href="/">Home</a> <a href="/master.html">Master</a> <a href="/govbench.html">GovBench</a> <a href="/tools/article50-passport.html">Article 50</a></nav>
+<div class="pill">DEFONEOS × DESNZ</div>
+<h1>Energy AI Governance<br/>Deep-Dive Pack</h1>
+<p class="sub">Sovereign AI governance for DESNZ energy sector transformation — covering smart grid AI, nuclear safety, offshore wind, hydrogen, and critical energy infrastructure. Audit-grade. Signed. UK-sovereign.</p>
+<div class="stats">
+<div class="stat"><div class="num">12</div><div class="label">Entry Points</div></div>
+<div class="stat"><div class="num">8</div><div class="label">Transformation Priorities</div></div>
+<div class="stat"><div class="num">6</div><div class="label">MCP Servers</div></div>
+<div class="stat"><div class="num">4</div><div class="label">Backbone Orgs</div></div>
+</div>
+</header>
+<h2>🏛️ 12 Entry Points</h2>
+<div class="grid">
+<div class="card"><span class="tag">Smart Grid</span><h3>DESNZ Smart Grid Programme</h3><p>National smart grid AI governance. Demand forecasting, load balancing, and grid resilience AI. Ofgem interface. Smart meter data governance across 34M+ UK households.</p></div>
+<div class="card"><span class="tag">Nuclear Safety</span><h3>ONR Nuclear AI Governance</h3><p>Office for Nuclear Regulation AI safety assessment. Nuclear facility AI systems licensing. Radiological monitoring AI. Safety-critical AI validation for Sellafield, Hinkley Point C, and legacy sites.</p></div>
+<div class="card"><span class="tag">Offshore Wind</span><h3>DESNZ Offshore Wind AI</h3><p>Offshore wind farm AI operations and maintenance. Predictive turbine failure detection. Marine spatial planning AI. Wind resource forecasting across 14GW+ installed capacity.</p></div>
+<div class="card"><span class="tag">Hydrogen</span><h3>UK Hydrogen Strategy AI</h3><p>Hydrogen production, storage, and distribution AI governance. Green hydrogen electrolyser optimisation. Hydrogen safety monitoring. Industrial decarbonisation AI.</p></div>
+<div class="card"><span class="tag">Grid Resilience</span><h3>National Grid ESO AI</h3><p>Energy System Operator AI for grid balancing. Frequency response AI. Capacity market optimisation. Ancillary services AI governance. System operator decision support.</p></div>
+<div class="card"><span class="tag">Consumer Protection</span><h3>OFGEM AI Governance</h3><p>Energy market AI oversight. Consumer billing AI compliance. Vulnerable customer identification. Price cap enforcement AI. Tariff comparison AI governance.</p></div>
+<div class="card"><span class="tag">CCUS</span><h3>CCUS AI Monitoring</h3><p>Carbon capture, usage, and storage AI governance. Emissions monitoring AI. Storage site integrity monitoring. CO₂ transport network AI optimisation.</p></div>
+<div class="card"><span class="tag">Critical Infrastructure</span><h3>DESNZ Energy CNI AI</h3><p>Critical national infrastructure AI risk assessment. Cyber-physical security of energy AI systems. Supply chain resilience for energy components. National emergency energy AI.</p></div>
+<div class="card"><span class="tag">Data</span><h3>UK Energy Data Strategy</h3><p>Energy data governance and sharing. DDEC (Digitalisation of Energy Data) programme. Smart meter data access. Open energy data quality assurance.</p></div>
+<div class="card"><span class="tag">Research</span><h3>UKRI-EPSRC Energy AI</h3><p>Energy AI research funding governance. University-industry AI collaboration. EPSRC Energy AI centres. Innovation pipeline tracking.</p></div>
+<div class="card"><span class="tag">International</span><h3>FCDO Energy Transition AI</h3><p>International energy transition AI cooperation. Climate finance AI governance. COP commitments tracking. Developing country energy AI support.</p></div>
+<div class="card"><span class="tag">Parliamentary</span><h3>Energy Security &amp; Net Zero Committee</h3><p>Parliamentary scrutiny of energy AI policy. Select committee evidence generation. Ministerial accountability. BEIS successor oversight.</p></div>
+</div>
+<h2>⚡ 8 Transformation Priorities</h2>
+<div class="grid">
+<div class="card"><h3>1. Smart Grid AI Safety</h3><p>Governed AI for national grid balancing and demand forecasting. Bias testing for demand prediction across regions and demographics. Safety-critical AI validation. 34M+ smart meters.</p></div>
+<div class="card"><h3>2. Nuclear AI Compliance</h3><p>Safety-critical AI governance for nuclear facilities. ONR licensing compliance for AI systems. Radiological monitoring AI validation. Legacy site decommissioning AI governance.</p></div>
+<div class="card"><h3>3. Offshore Wind Predictive Maintenance</h3><p>AI-governed turbine failure prediction. Marine biodiversity AI monitoring. Wind resource forecasting. Supply chain AI governance for offshore wind components.</p></div>
+<div class="card"><h3>4. Hydrogen Safety AI</h3><p>Hydrogen production and distribution AI governance. Safety monitoring AI for electrolysis plants. Green hydrogen certification AI. Industrial decarbonisation tracking.</p></div>
+<div class="card"><h3>5. Energy Data Sovereignty</h3><p>Governed energy data sharing frameworks. Smart meter data privacy compliance. Open energy data quality assurance. Cross-sector data integration governance.</p></div>
+<div class="card"><h3>6. CCUS Monitoring Governance</h3><p>AI-governed emissions monitoring for CCUS facilities. Storage site integrity AI validation. CO₂ accounting AI compliance. International CCUS reporting standards.</p></div>
+<div class="card"><h3>7. Energy CNI Cyber-Physical Security</h3><p>AI threat detection for energy critical national infrastructure. SCADA/ICS AI security governance. Supply chain integrity for energy AI components. National resilience AI coordination.</p></div>
+<div class="card"><h3>8. Parliamentary Energy AI Accountability</h3><p>Automated evidence generation for Energy Security and Net Zero Committee. Energy AI spending transparency. Net zero progress AI reporting. Ministerial accountability dashboards.</p></div>
+</div>
+<h2>🔧 6 MCP Servers</h2>
+<div class="grid">
+<div class="card"><span class="tag">Grid AI</span><h3>desnz-smart-grid-ai-mcp</h3><p>Smart grid AI governance. Demand forecasting bias detection. Load balancing AI safety. Smart meter data governance across 34M+ households.</p></div>
+<div class="card"><span class="tag">Nuclear Safety</span><h3>desnz-nuclear-ai-safety-mcp</h3><p>ONR nuclear AI compliance. Safety-critical AI validation. Radiological monitoring governance. Legacy site AI decommissioning oversight.</p></div>
+<div class="card"><span class="tag">Wind &amp; Hydrogen</span><h3>desnz-renewable-ai-governance-mcp</h3><p>Offshore wind predictive maintenance AI governance. Hydrogen safety monitoring. Green energy AI compliance. Renewable certification automation.</p></div>
+<div class="card"><span class="tag">CCUS Monitoring</span><h3>desnz-ccus-monitoring-mcp</h3><p>CCUS emissions AI monitoring. Storage site integrity governance. CO₂ accounting compliance. International reporting automation.</p></div>
+<div class="card"><span class="tag">Energy CNI</span><h3>desnz-energy-cni-security-mcp</h3><p>Critical national infrastructure AI security. SCADA/ICS governance. Supply chain integrity monitoring. National resilience coordination.</p></div>
+<div class="card"><span class="tag">Accountability</span><h3>desnz-energy-accountability-mcp</h3><p>Parliamentary evidence generation. Energy AI spending transparency. Net zero progress dashboards. Ministerial accountability reporting.</p></div>
+</div>
+<div class="redline">
+<h3>🚫 Red Lines (Never Crossed)</h3>
+<ul>
+<li>❌ No automated nuclear safety decisions without human ONR inspector review and sign-off</li>
+<li>❌ No smart grid AI that discriminates by postcode, income, or protected characteristics</li>
+<li>❌ No hydrogen safety AI overrides without mandatory human safety engineer authorisation</li>
+<li>❌ No sharing of individual household energy consumption data without explicit consent</li>
+<li>❌ No energy AI that undermines national grid stability or creates systemic resilience risk</li>
+<li>❌ No automated energy tariff changes without consumer notification and cooling-off period</li>
+</ul>
+</div>
+<div class="engagement">
+<h3>📋 5-Step Engagement Model</h3>
+<div class="step"><div class="num">1</div><div><strong>Discovery:</strong> Map DESNZ energy AI landscape — smart grid, nuclear, offshore wind, hydrogen, CCUS, and CNI domains. Identify safety-critical and regulated AI systems.</div></div>
+<div class="step"><div class="num">2</div><div><strong>Audit:</strong> Assess current AI governance maturity across energy sectors. Benchmark against ONR safety standards, Ofgem consumer protection, and net zero requirements.</div></div>
+<div class="step"><div class="num">3</div><div><strong>Pilot:</strong> Deploy MCP servers on a single energy domain (e.g., smart grid demand forecasting). Demonstrate bias detection and safety compliance to DESNZ energy team.</div></div>
+<div class="step"><div class="num">4</div><div><strong>Scale:</strong> Roll out across all DESNZ energy sectors. Integrate with National Grid ESO, Ofgem, and ONR systems. Train energy AI governance officers.</div></div>
+<div class="step"><div class="num">5</div><div><strong>Assure:</strong> Continuous energy AI compliance monitoring. Parliamentary accountability reporting. Net zero progress tracking. DEFONEOS-SEAL certification for energy governance.</div></div>
+</div>
+<h2>🎯 Buyer-Type Matrix</h2>
+<div class="grid">
+<div class="card"><span class="tag">Energy Dept</span><h3>DESNZ Digital &amp; AI Team</h3><p>Primary buyer. Energy AI governance owner. Cross-sector coordination authority. Budget for energy AI compliance and safety systems.</p></div>
+<div class="card"><span class="tag">Regulator</span><h3>Ofgem AI Governance Unit</h3><p>Consumer protection AI oversight. Energy market AI compliance. Vulnerable customer identification. Contact via Ofgem Digital Strategy lead.</p></div>
+<div class="card"><span class="tag">Nuclear</span><h3>ONR Digital Safety Team</h3><p>Nuclear AI safety licensing. Safety-critical AI assessment. Nuclear facility AI governance. Contact via ONR Chief Digital Officer.</p></div>
+<div class="card"><span class="tag">Parliamentary</span><h3>Energy Security &amp; Net Zero Committee</h3><p>Energy AI scrutiny. Net zero AI accountability. Inquiry evidence. Contact via Committee Clerk.</p></div>
+</div>
+<div class="sovereign-cta-strip"><a href="/defoneos-owem-rfq">DEFONEOS OWEM RFQ</a> | <a href="/defoneos-article-50">Article 50 Passport</a></div>
+<footer>
+<p>DEFONEOS — Sovereign Public Services OS · UK-sovereign · AUKUS-compatible · Audit-grade · Signed · Neutral</p>
+<p>Built by <a href="https://csoai.org">CSOAI Ltd</a> (UK 16939677) · <a href="https://meok.ai">MEOK AI Labs</a></p>
+<p style="margin-top:8px;font-size:11px;color:#4a5280">This is a sovereign compliance surface. All MCPs produce Ed25519-signed audit evidence. OTS-anchored. DEFONEOS-SEAL ready.</p>
+ — SIGIL-chain verified.</footer>
+</div>
+<footer><a href="/master.html">SOV33_OWEM_HUB</a></footer>
+</body>
+</html>

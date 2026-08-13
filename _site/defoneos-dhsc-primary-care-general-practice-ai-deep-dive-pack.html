@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1.0" name="viewport"/>
+<title>DEFONEOS — DHSC Primary Care &amp; General Practice AI Governance Deep-Dive Pack</title>
+<meta content="Sovereign AI governance of UK primary care, general practice, GP access, community health, and primary care networks. 12 entry points × 8 transformation priorities × 6 MCPs. UK-sovereign, audit-grade, AUKUS-compatible." name="description"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--ink:#0b1020;--bg:#050816;--panel:#0d1330;--line:#1a2050;--gold:#d4af37;--sov:#6dd5ff;--care:#4ade80;--warn:#fbbf24;--bad:#f87171;--fg:#e8eefc;--mut:#8a93b8}
+html,body{background:var(--bg);color:var(--fg);font:16px/1.6 -apple-system,system-ui,sans-serif}
+body{background:radial-gradient(ellipse 80% 50% at 50% -10%,rgba(109,213,255,0.12),transparent),var(--bg);min-height:100vh}
+.wrap{max-width:1280px;margin:0 auto;padding:48px 24px}
+header{text-align:center;margin-bottom:32px}
+.pill{display:inline-block;padding:4px 14px;border:1px solid var(--gold);border-radius:999px;font-size:12px;letter-spacing:0.1em;color:var(--gold);margin-bottom:16px}
+h1{font-size:clamp(36px,5vw,56px);line-height:1.1;letter-spacing:-0.02em;margin-bottom:16px;background:linear-gradient(180deg,#fff,#b8c2e8);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.sub{font-size:18px;color:var(--mut);max-width:820px;margin:0 auto 24px}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin:32px 0;padding:24px;background:var(--panel);border:1px solid var(--line);border-radius:16px}
+@media(max-width:800px){.stats{grid-template-columns:repeat(2,1fr)}}
+.stat{text-align:center}.stat .num{font-size:32px;font-weight:800;color:var(--sov)}.stat .label{font-size:11px;letter-spacing:0.15em;text-transform:uppercase;color:var(--mut);margin-top:4px}
+h2{margin:48px 0 24px;padding-bottom:12px;border-bottom:1px solid var(--line);font-size:28px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:20px;transition:all .2s;position:relative;overflow:hidden}
+.card::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:var(--accent,#6dd5ff)}
+.card:hover{transform:translateY(-3px);border-color:var(--accent);box-shadow:0 8px 24px rgba(0,0,0,0.3)}
+.card h3{font-size:17px;font-weight:700;margin-bottom:8px}
+.card p{font-size:13px;color:var(--mut);line-height:1.5}
+.tag{display:inline-block;background:rgba(109,213,255,0.1);border:1px solid rgba(109,213,255,0.3);color:var(--sov);padding:2px 8px;border-radius:4px;font-size:10px;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:8px}
+.redline{margin:48px 0;padding:24px;background:rgba(248,113,113,0.08);border:1px solid rgba(248,113,113,0.3);border-radius:12px}
+.redline h3{color:var(--bad);margin-bottom:12px;font-size:18px}
+.redline li{color:var(--fg);margin:8px 0 8px 20px;font-size:14px}
+.engagement{margin:48px 0;padding:24px;background:var(--panel);border:1px solid var(--line);border-radius:12px}
+.engagement h3{color:var(--sov);margin-bottom:12px;font-size:18px}
+.step{display:flex;align-items:flex-start;gap:12px;margin:12px 0;padding:12px;background:rgba(109,213,255,0.05);border-radius:8px}
+.step .num{width:32px;height:32px;border-radius:50%;background:var(--sov);color:var(--bg);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px;flex-shrink:0}
+footer{margin-top:64px;text-align:center;font-size:12px;color:var(--mut);padding-top:32px;border-top:1px solid var(--line)}
+footer a{color:var(--sov);text-decoration:none}
+</style>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "TechArticle", "headline": "DHSC Primary Care & General Practice AI Deep-Dive Pack — DEFONEOS by CSOAI", "description": "Independent AI governance mapping and measurement analysis for DHSC Primary Care & General Practice. Measurement, not certification — every figure traces to a signed, verifiable record.", "author": {"@type": "Organization", "name": "CSOAI Ltd", "url": "https://csoai.org"}, "publisher": {"@type": "Organization", "name": "CSOAI Ltd", "url": "https://csoai.org"}, "isAbout": {"@type": "GovernmentOrganization", "name": "DHSC Primary Care & General Practice"}, "url": "https://www.csoai.org/defoneos-dhsc-primary-care-general-practice-ai-deep-dive-pack.html"}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "CSOAI", "item": "https://www.csoai.org/"}, {"@type": "ListItem", "position": 2, "name": "DEFONEOS", "item": "https://www.csoai.org/arena-hub.html"}, {"@type": "ListItem", "position": 3, "name": "DHSC Primary Care & General Practice AI Deep-Dive Pack"}]}</script>
+<link href="https://csoai.org/defoneos-dhsc-primary-care-general-practice-ai-deep-dive-pack.html" rel="canonical"/>
+<meta content="DEFONEOS — DHSC Primary Care &amp; General Practice AI Governance Deep-Dive Pack" property="og:title"/>
+<meta content="CSOAI sovereign AI governance deep-dive: primary care, GP access, PCNs, community health. 12 entry points × 8 priorities × 6 MCPs." property="og:description"/>
+<link href="/favicon.svg" rel="icon" type="image/svg+xml"/>
+<!-- AI-SEO/AEO/GEO head block — DO NOT remove. AI crawlers (GPTBot, ClaudeBot, PerplexityBot) don't run JS; everything they need must be in raw HTML. -->
+<link href="https://csoai.org/defoneos-dhsc-primary-care-general-practice-ai-deep-dive-pack.html.llm.json" rel="alternate" title="LLM representation of this page" type="application/llm+json"/>
+<meta content="/llms.txt" name="llms-txt"/>
+<meta content="human-authored, machine-verifiable, Ed25519-signed" name="ai-content-declaration"/>
+<meta content="CSOAI Ltd (2026). DEFONEOS — DHSC Primary Care &amp; General Practice AI Governance Deep-Dive Pack. https://csoai.org/defoneos-dhsc-primary-care-general-practice-ai-deep-dive-pack.html" name="citation-policy"/>
+<meta content="2026-07-28T13:05:48+00:00" name="revised"/>
+<meta content="2026-07-28T13:05:48+00:00" property="article:modified_time"/>
+</head>
+<body>
+<div class="article50-banner" style="background:linear-gradient(90deg,#3a0f1a,#7a1f33,#3a0f1a);border-bottom:1px solid #ff5470;padding:10px 16px;text-align:center;font-size:13px;color:#ffd5dd;font-weight:500">EU AI Act Article 50 live 2 Aug 2026 — C2PA passport ready | <a href="/tools/article50-passport.html" style="color:#fff;text-decoration:underline;font-weight:700">Get yours →</a></div>
+<div class="wrap">
+<nav><a href="/">Home</a> <a href="/master.html">Master</a> <a href="/govbench.html">GovBench</a> <a href="/defoneos.html">Index</a> <a href="/sitemap.xml">Sitemap</a></nav>
+<header>
+<div class="pill">DEFONEOS × DHSC × PRIMARY CARE &amp; GENERAL PRACTICE</div>
+<h1>DHSC Primary Care &amp; General<br/>Practice AI Governance Deep-Dive Pack</h1>
+<p class="sub">Sovereign AI governance of UK primary care delivery, GP access, Primary Care Networks, community diagnostics, and general practice workforce. 12 entry points × 8 transformation priorities × 6 MCPs. Audit-grade. Signed. UK-sovereign.</p>
+<div class="stats">
+<div class="stat"><div class="num">12</div><div class="label">Entry Points</div></div>
+<div class="stat"><div class="num">8</div><div class="label">Transformation Priorities</div></div>
+<div class="stat"><div class="num">6</div><div class="label">MCP Servers</div></div>
+<div class="stat"><div class="num">7</div><div class="label">Backbone Orgs</div></div>
+</div>
+</header>
+<h2>🏥 12 Entry Points</h2>
+<div class="grid">
+<div class="card"><span class="tag">GP Access</span><h3>GP Access &amp; Appointment AI Governance</h3><p>Appointment booking automation. Triage AI governance. Same-day access analytics. Remote consultation intelligence. Patient flow optimisation. Access inequality monitoring.</p></div>
+<div class="card"><span class="tag">PCN</span><h3>Primary Care Network AI Governance</h3><p>PCN workforce planning intelligence. Additional roles reimbursement scheme analytics. Network contract DES compliance. PCN leadership governance. Population health management. Integrated neighbourhood team coordination.</p></div>
+<div class="card"><span class="tag">Chronic Disease</span><h3>Chronic Disease Management AI</h3><p>Diabetes care pathway analytics. Hypertension monitoring intelligence. COPD management governance. Heart failure surveillance. Asthma control analytics. Long-term condition QOF compliance.</p></div>
+<div class="card"><span class="tag">Community Diagnostic</span><h3>Community Diagnostic Centre AI</h3><p>CDC capacity planning intelligence. Diagnostic pathway analytics. Imaging service governance. Blood test workflow optimisation. Point-of-care testing intelligence. CDC performance monitoring.</p></div>
+<div class="card"><span class="tag">GP Workforce</span><h3>GP Workforce &amp; Recruitment AI</h3><p>GP recruitment pipeline analytics. GP retention intelligence. Portfolio career governance. Salaried GP workforce planning. GP partner succession analytics. International GP recruitment compliance.</p></div>
+<div class="card"><span class="tag">Pharmacy</span><h3>Community Pharmacy &amp; Pharmacy First AI</h3><p>Pharmacy First pathway analytics. Community pharmacy clinical governance. Pharmacy prescribing intelligence. Minor ailment service monitoring. Pharmacy integration analytics. Medicines optimisation AI.</p></div>
+<div class="card"><span class="tag">Mental Health</span><h3>Primary Care Mental Health AI</h3><p>IAPT access intelligence. Mental health triage analytics. Talking therapy outcome monitoring. Crisis prevention governance. Mental health practitioner deployment. Psychological wellbeing pathway AI.</p></div>
+<div class="card"><span class="tag">Prevention</span><h3>Prevention &amp; Public Health in Primary Care AI</h3><p>Health check programme analytics. Screening programme governance. Vaccination programme intelligence. Smoking cessation monitoring. Weight management analytics. Health inequality surveillance.</p></div>
+<div class="card"><span class="tag">Digital</span><h3>Digital Primary Care &amp; EMIS/SystmOne AI</h3><p>Electronic health record governance. Clinical decision support analytics. Digital-first primary care intelligence. NHS App integration monitoring. Online consultation workflow. Data sharing preference governance.</p></div>
+<div class="card"><span class="tag">Out of Hours</span><h3>Out-of-Hours &amp; Urgent Primary Care AI</h3><p>OOH service capacity analytics. 111 clinical assessment intelligence. Same-day emergency care governance. Walk-in centre performance. Urgent care workforce planning. Diversion pathway analytics.</p></div>
+<div class="card"><span class="tag">Data</span><h3>Primary Care Data &amp; Research AI</h3><p>QOF data governance. CPRD research analytics. Primary care data sharing. Pseudonymisation compliance. Research recruitment intelligence. Population health data analytics.</p></div>
+<div class="card"><span class="tag">Parliamentary</span><h3>Primary Care Parliamentary Accountability</h3><p>GP access statistics reporting. Primary care funding transparency. Workforce data evidence. Health inequality reporting. Select Committee preparation. Ministerial briefing analytics.</p></div>
+</div>
+<h2>⚡ 8 Transformation Priorities</h2>
+<div class="grid">
+<div class="card"><h3>1. Access Revolution</h3><p>Same-day access AI. Triage-first workflows. Online booking intelligence. Remote consultation governance. Patient flow analytics. Access inequality reduction.</p></div>
+<div class="card"><h3>2. PCN Excellence</h3><p>PCN workforce optimisation. ARRS role deployment. Population health AI. Neighbourhood team coordination. Network DES compliance. Leadership development analytics.</p></div>
+<div class="card"><h3>3. Chronic Disease Innovation</h3><p>Multi-condition pathway AI. Remote monitoring governance. Self-management support. QOF outcome analytics. Clinical pharmacist deployment. Shared decision-making intelligence.</p></div>
+<div class="card"><h3>4. Community Diagnostics Expansion</h3><p>CDC capacity planning. Diagnostic pathway AI. Imaging governance. Point-of-care testing. Performance monitoring. Workforce development analytics.</p></div>
+<div class="card"><h3>5. Workforce Sustainability</h3><p>GP recruitment AI. Retention analytics. Portfolio career governance. Partner succession planning. International recruitment compliance. Wellbeing monitoring intelligence.</p></div>
+<div class="card"><h3>6. Pharmacy Integration</h3><p>Pharmacy First expansion. Clinical governance AI. Prescribing analytics. Minor ailment service. Medicines optimisation. Pharmacy workforce development.</p></div>
+<div class="card"><h3>7. Digital-First Primary Care</h3><p>EHR governance AI. Clinical decision support. NHS App integration. Online consultation analytics. Data sharing intelligence. Digital exclusion monitoring.</p></div>
+<div class="card"><h3>8. Prevention at Scale</h3><p>Health check AI. Screening programme analytics. Vaccination governance. Health inequality surveillance. Lifestyle intervention intelligence. Population health management.</p></div>
+</div>
+<h2>🔧 6 MCP Servers</h2>
+<div class="grid">
+<div class="card"><span class="tag">Access</span><h3>dhsc-gp-access-triage-mcp</h3><p>Appointment booking AI. Triage governance. Same-day access. Remote consultation. Patient flow. Access inequality monitoring.</p></div>
+<div class="card"><span class="tag">PCN</span><h3>dhsc-pcn-workforce-mcp</h3><p>PCN workforce planning. ARRS deployment. Network DES compliance. Population health. Neighbourhood team. Leadership governance.</p></div>
+<div class="card"><span class="tag">Chronic</span><h3>dhsc-chronic-disease-management-mcp</h3><p>Diabetes pathway analytics. Hypertension monitoring. COPD governance. Heart failure surveillance. QOF compliance. Remote monitoring.</p></div>
+<div class="card"><span class="tag">Diagnostic</span><h3>dhsc-community-diagnostic-mcp</h3><p>CDC capacity planning. Diagnostic pathways. Imaging governance. Point-of-care testing. Performance monitoring. Workforce analytics.</p></div>
+<div class="card"><span class="tag">Workforce</span><h3>dhsc-gp-workforce-mcp</h3><p>GP recruitment pipeline. Retention analytics. Portfolio careers. Partner succession. International recruitment. Wellbeing monitoring.</p></div>
+<div class="card"><span class="tag">Digital</span><h3>dhsc-digital-primary-care-mcp</h3><p>EHR governance. Clinical decision support. NHS App analytics. Online consultation. Data sharing. Digital exclusion monitoring.</p></div>
+</div>
+<div class="redline">
+<h3>🚫 Red Lines (Never Crossed)</h3>
+<ul>
+<li>❌ No primary care AI triage without GMC-registered clinician override and patient safety case review</li>
+<li>❌ No GP patient data processing without explicit lawful basis under UK GDPR and NHS Data Security Standards</li>
+<li>❌ No chronic disease management recommendation without NICE guideline compliance and clinical audit</li>
+<li>❌ No workforce deployment algorithm without NHS Employers equality impact assessment</li>
+<li>❌ No community diagnostic AI without MHRA medical device classification and UKCA marking</li>
+<li>❌ No primary care research data access without CPRD/NHSD ethics approval and patient consent</li>
+</ul>
+</div>
+<div class="engagement">
+<h3>🤝 5-Step Engagement Model</h3>
+<div class="step"><div class="num">1</div><div><strong>Discovery:</strong> Map primary care maturity across ICB areas. Assess GP access performance. Benchmark PCN workforce deployment. Identify chronic disease management gaps.</div></div>
+<div class="step"><div class="num">2</div><div><strong>Governance Design:</strong> Deploy DEFONEOS MCP servers against DHSC primary care use cases. Configure GP access and PCN compliance. Establish DHSC-NHSE-ICB oversight protocols.</div></div>
+<div class="step"><div class="num">3</div><div><strong>Pilot:</strong> Run 90-day pilot across 3 ICB areas and 2 PCN federations. Measure access improvement. Collect DHSC, NHSE, and GP feedback.</div></div>
+<div class="step"><div class="num">4</div><div><strong>Scale:</strong> Roll out across all DHSC primary care transformation streams. Integrate with national NHS systems. Deploy across ICB primary care services.</div></div>
+<div class="step"><div class="num">5</div><div><strong>Assure:</strong> Continuous audit-grade primary care governance reporting. Access transparency. Parliamentary evidence generation. Annual Primary Care Select Committee review.</div></div>
+</div>
+<div class="sovereign-cta-strip"><a href="/defoneos-owem-rfq">DEFONEOS OWEM RFQ</a> | <a href="/defoneos-article-50">Article 50 Passport</a></div>
+<footer>
+<p>DEFONEOS — Sovereign Public Services OS · <a href="https://csoai.org">csoai.org</a> · UK-sovereign. Audit-grade. AUKUS-compatible.</p>
+<p style="margin-top:8px">© 2026 CSOAI Ltd (UK 16939677) · <a href="https://csoai.org/sitemap.xml">Sitemap</a> · <a href="https://csoai.org/defoneos.html">Index</a></p>
+— SIGIL-chain verified.</footer>
+</div>
+<footer><a href="/master.html">SOV33_OWEM_HUB</a></footer>
+</body>
+</html>

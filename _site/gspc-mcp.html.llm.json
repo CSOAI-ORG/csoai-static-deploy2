@@ -1,0 +1,21 @@
+{
+ "@context": "https://csoai.org/llm-context.json",
+ "type": "LLMPageSummary",
+ "url": "https://csoai.org/gspc-mcp.html",
+ "title": "GSPC-MCP — conformance | CSOAI GSPC",
+ "description": "Whether a Model Context Protocol server conforms to the specification it claims: transport, capability declaration, error contract. 35 measured items across DECLARED_READONLY, FAITHFUL_SCHEMA and BOUNDED_EGRESS defense families.",
+ "headings": [
+  "GSPC-MCP — conformance",
+  "Run MCPBench yourself"
+ ],
+ "text": "GSPC-MCP — conformance | CSOAI GSPC CSOAI GovBench ProvBench Department packs MEASURED GSPC-MCP — conformance Axis: conformance · items: 35 · status: MEASURED Whether a Model Context Protocol server conforms to the specification it claims: transport, capability declaration, error contract. Items cover three defense families: DECLARED_READONLY (annotations actually honored), FAITHFUL_SCHEMA (input validation actually rejects), and BOUNDED_EGRESS (declared network scope actually respected). Dataset: csoai/gspc-mcp · Runnable Space: csoai-gspc-mcp · Licence Apache-2.0 Run MCPBench yourself All 35 items in the bank, graded by the same deterministic rule. No model baseline is published on this axis yet, so there is nothing to beat — your score stands alone. The result panel reports per-defense-family accuracy, not just overall macro-F1, so an MCP server that passes one family but fails another shows the risk surface, not a single number. No sign-up, nothing leaves your browser. Back Next Items: csoai/gspc-mcp · grading is a regex label read plus macro-F1, identical to the published harness · measurement, not certification, and not legal advice. What this is, and is not. CSOAI measures . It issues no conformity marks, holds no accreditation, and has no enforcement powers — those are conferred by statute on market-surveillance authorities and the AI Office. Nothing on this page is a certification, an attestation of compliance, or legal advice. Denominator. This axis has 35 items , which meets the usable_n = 30 floor. With your n of 35 you may see a 95% CI quoted; it is your interval, on the same scale as the measured intervals published for other axes. Defense families measured. The bank is partitioned across three families: DECLARED_READONLY (readOnlyHint / destructiveHint / idempotentHint annotations actually honored), FAITHFUL_SCHEMA (typed parameters validated, schema-declared limits enforced, declared return shapes returned), and BOUNDED_EGRESS (declared network scope actually respected, error paths do not leak data). A pass/fail per item is not enough — an MCP server that passes READONLY but fails SCHEMA is a different risk than one that fails only EGRESS. The result panel reports per-family macro-F1.",
+ "text_truncated": false,
+ "register": {
+  "role": "measurement_and_attestation_support",
+  "csoai_certifies_systems": false,
+  "csoai_is_a_notified_body": false,
+  "csoai_has_enforcement_powers": false,
+  "note": "CSOAI measures and publishes evidence. It issues no conformity marks and holds no accreditation. Nothing here is certification or legal advice."
+ },
+ "generated_by": "make_llm_json.py"
+}

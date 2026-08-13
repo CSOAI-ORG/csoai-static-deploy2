@@ -1,0 +1,24 @@
+{
+ "@context": "https://csoai.org/llm-context.json",
+ "type": "LLMPageSummary",
+ "url": "https://csoai.org/cra.html",
+ "title": "CRA — Cyber Resilience Act compliance measured | CSOAI",
+ "description": "EU Cyber Resilience Act (CRA): Reg 2024/2847 covers products with digital elements. CSOAI measures vulnerabilities, secure-by-default, and post-market monitoring. The CRA covers connected devices, NOT AI systems as such — but AI components embedded in regulated products inherit the obligation.",
+ "headings": [
+  "CRA — Cyber Resilience Act",
+  "What the CRA covers",
+  "Where AI meets CRA",
+  "What CSOAI measures for CRA",
+  "Boundary"
+ ],
+ "text": "CRA — Cyber Resilience Act compliance measured | CSOAI Home EU AI Act Products Docs CRA — Cyber Resilience Act The EU Cyber Resilience Act (Regulation (EU) 2024/2847) is the EU's horizontal cybersecurity law for products with digital elements. It applies from 11 December 2027 (the headline date depends on the obligation — see Article 71). This page is the CSOAI measurement surface for CRA compliance. What the CRA covers Products with digital elements — any connected device, software, or embedded system placed on the EU market, with limited exceptions (medical devices, automotive, aviation, etc., which are covered by sectoral law). Mandatory baselines — secure-by-default, secure-by-design, vulnerability handling, transparent security documentation. Conformity routes — self-assessment for most products; third-party assessment (via notified body) for critical-product categories enumerated in Annex III. Post-market — vulnerability disclosure obligations, secure update channels for the support period of the product. Where AI meets CRA The CRA does not directly regulate AI. It regulates products with digital elements. AI components embedded in a regulated product (e.g. an AI safety component of a device, or an AI model made available as a separately-marketed component) inherit the CRA obligations. The interaction with the EU AI Act is governed by Reg 2026/1744 , which moved the AI Act's high-risk regime into the existing product-safety framework in Annex I Section B. The single CSOAI view: one gate, not two . A high-risk AI safety component under the AI Act cannot be placed on the market unless the embedded product passes the CRA — and the CRA cannot be met unless the AI component has the AI Act's conformity assessment. We measure against both surfaces and report one combined result. What CSOAI measures for CRA Vulnerability disclosure — does the vendor publish a vulnerability disclosure policy and a contact path? Secure-by-default configuration — does the product's default configuration follow the CRA's secure-by-default baseline? Update channel integrity — does the product deliver security updates through a signed, verifiable channel? Article 50 marking survival — if the AI component generates synthetic content, does the CRA Article 50 marking survive the real-world transforms? (See ProvBench : 0 of 20 embedded manifests survive.) Boundary CSOAI is not a CRA notified body. Where the CRA mandates a third-party conformity assessment for an Annex III product, you need an accredited notified body. We make the evidence layer cheaper and verifiable; the conformity call is the regulator's plus the notified body's. Nothing on this page is legal advice. CSOAI Ltd · UK company 16939677 · Every published figure traces to a signed, verifiable record.",
+ "text_truncated": false,
+ "register": {
+  "role": "measurement_and_attestation_support",
+  "csoai_certifies_systems": false,
+  "csoai_is_a_notified_body": false,
+  "csoai_has_enforcement_powers": false,
+  "note": "CSOAI measures and publishes evidence. It issues no conformity marks and holds no accreditation. Nothing here is certification or legal advice."
+ },
+ "generated_by": "make_llm_json.py"
+}

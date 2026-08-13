@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1.0" name="viewport"/>
+<title>DEFONEOS — DfE Schools AI Safeguarding Deep-Dive Pack</title>
+<meta content="Sovereign AI governance of UK schools safeguarding. 12 entry points × 8 transformation priorities × 6 MCPs. UK-sovereign, audit-grade, AUKUS-compatible. EU AI Act Article 50 compliant." name="description"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--ink:#0b1020;--bg:#050816;--panel:#0d1330;--line:#1a2050;--gold:#d4af37;--sov:#6dd5ff;--care:#4ade80;--warn:#fbbf24;--bad:#f87171;--fg:#e8eefc;--mut:#8a93b8}
+html,body{background:var(--bg);color:var(--fg);font:16px/1.6 -apple-system,system-ui,sans-serif}
+body{background:radial-gradient(ellipse 80% 50% at 50% -10%,rgba(109,213,255,0.12),transparent),var(--bg);min-height:100vh}
+.wrap{max-width:1280px;margin:0 auto;padding:48px 24px}
+header{text-align:center;margin-bottom:32px}
+.pill{display:inline-block;padding:4px 14px;border:1px solid var(--gold);border-radius:999px;font-size:12px;letter-spacing:0.1em;color:var(--gold);margin-bottom:16px}
+h1{font-size:clamp(36px,5vw,56px);line-height:1.1;letter-spacing:-0.02em;margin-bottom:16px;background:linear-gradient(180deg,#fff,#b8c2e8);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.sub{font-size:18px;color:var(--mut);max-width:820px;margin:0 auto 24px}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin:32px 0;padding:24px;background:var(--panel);border:1px solid var(--line);border-radius:16px}
+@media(max-width:800px){.stats{grid-template-columns:repeat(2,1fr)}}
+.stat{text-align:center}.stat .num{font-size:32px;font-weight:800;color:var(--sov)}.stat .label{font-size:11px;letter-spacing:0.15em;text-transform:uppercase;color:var(--mut);margin-top:4px}
+h2{margin:48px 0 24px;padding-bottom:12px;border-bottom:1px solid var(--line);font-size:28px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:20px;transition:all .2s;position:relative;overflow:hidden}
+.card::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:var(--accent,#6dd5ff)}
+.card:hover{transform:translateY(-3px);border-color:var(--accent);box-shadow:0 8px 24px rgba(0,0,0,0.3)}
+.card h3{font-size:17px;font-weight:700;margin-bottom:8px}
+.card p{font-size:13px;color:var(--mut);line-height:1.5}
+.tag{display:inline-block;background:rgba(109,213,255,0.1);border:1px solid rgba(109,213,255,0.3);color:var(--sov);padding:2px 8px;border-radius:4px;font-size:10px;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:8px}
+.redline{margin:48px 0;padding:24px;background:rgba(248,113,113,0.08);border:1px solid rgba(248,113,113,0.3);border-radius:12px}
+.redline h3{color:var(--bad);margin-bottom:12px;font-size:18px}
+.redline li{color:var(--fg);margin:8px 0 8px 20px;font-size:14px}
+.engagement{margin:48px 0;padding:24px;background:var(--panel);border:1px solid var(--line);border-radius:12px}
+.engagement h3{color:var(--sov);margin-bottom:12px;font-size:18px}
+.step{display:flex;align-items:flex-start;gap:12px;margin:12px 0;padding:12px;background:rgba(109,213,255,0.05);border-radius:8px}
+.step .num{width:32px;height:32px;border-radius:50%;background:var(--sov);color:var(--bg);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px;flex-shrink:0}
+footer{margin-top:64px;text-align:center;font-size:12px;color:var(--mut);padding-top:32px;border-top:1px solid var(--line)}
+footer a{color:var(--sov);text-decoration:none}
+</style>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "TechArticle", "headline": "DfE Schools AI Safeguarding AI Deep-Dive Pack — DEFONEOS by CSOAI", "description": "Independent AI governance mapping and measurement analysis for DfE Schools AI Safeguarding. Measurement, not certification — every figure traces to a signed, verifiable record.", "author": {"@type": "Organization", "name": "CSOAI Ltd", "url": "https://csoai.org"}, "publisher": {"@type": "Organization", "name": "CSOAI Ltd", "url": "https://csoai.org"}, "isAbout": {"@type": "GovernmentOrganization", "name": "DfE Schools AI Safeguarding"}, "url": "https://www.csoai.org/defoneos-dfe-schools-ai-safeguarding-deep-dive-pack.html"}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "CSOAI", "item": "https://www.csoai.org/"}, {"@type": "ListItem", "position": 2, "name": "DEFONEOS", "item": "https://www.csoai.org/arena-hub.html"}, {"@type": "ListItem", "position": 3, "name": "DfE Schools AI Safeguarding AI Deep-Dive Pack"}]}</script>
+<link href="https://csoai.org/defoneos-dfe-schools-ai-safeguarding-deep-dive-pack.html" rel="canonical"/>
+<meta content="DEFONEOS — DfE Schools AI Safeguarding Deep-Dive Pack" property="og:title"/>
+<meta content="CSOAI sovereign AI governance deep-dive: DEFONEOS — DfE Schools AI Safeguarding Deep-Dive Pack" property="og:description"/>
+<link href="/favicon.svg" rel="icon" type="image/svg+xml"/>
+<!-- AI-SEO/AEO/GEO head block — DO NOT remove. AI crawlers (GPTBot, ClaudeBot, PerplexityBot) don't run JS; everything they need must be in raw HTML. -->
+<link href="https://csoai.org/defoneos-dfe-schools-ai-safeguarding-deep-dive-pack.html.llm.json" rel="alternate" title="LLM representation of this page" type="application/llm+json"/>
+<meta content="/llms.txt" name="llms-txt"/>
+<meta content="human-authored, machine-verifiable, Ed25519-signed" name="ai-content-declaration"/>
+<meta content="CSOAI Ltd (2026). DEFONEOS — DfE Schools AI Safeguarding Deep-Dive Pack. https://csoai.org/defoneos-dfe-schools-ai-safeguarding-deep-dive-pack.html" name="citation-policy"/>
+<meta content="2026-07-27T13:57:10+00:00" name="revised"/>
+<meta content="2026-07-27T13:57:10+00:00" property="article:modified_time"/>
+</head>
+<body>
+<div class="article50-banner" style="background:linear-gradient(90deg,#3a0f1a,#7a1f33,#3a0f1a);border-bottom:1px solid #ff5470;padding:10px 16px;text-align:center;font-size:13px;color:#ffd5dd;font-weight:500">EU AI Act Article 50 live 2 Aug 2026 — C2PA passport ready | <a href="/tools/article50-passport.html" style="color:#fff;text-decoration:underline;font-weight:700">Get yours →</a></div>
+<div class="wrap">
+<header>
+<nav><a href="/">Home</a> <a href="/master.html">Master</a> <a href="/govbench.html">GovBench</a> <a href="/tools/article50-passport.html">Article 50</a></nav>
+<div class="pill">DEFONEOS × DfE × SCHOOLS SAFEGUARDING</div>
+<h1>DfE Schools AI<br/>Safeguarding Deep-Dive Pack</h1>
+<p class="sub">Sovereign AI governance of UK schools safeguarding — multi-agency risk assessment, attendance analytics, child exploitation detection, online safety monitoring, SEND safeguarding, and school improvement governance. Audit-grade. Signed. UK-sovereign.</p>
+<div class="stats">
+<div class="stat"><div class="num">12</div><div class="label">Entry Points</div></div>
+<div class="stat"><div class="num">8</div><div class="label">Transformation Priorities</div></div>
+<div class="stat"><div class="num">6</div><div class="label">MCP Servers</div></div>
+<div class="stat"><div class="num">5</div><div class="label">Backbone Orgs</div></div>
+</div>
+</header>
+<h2>🏛️ 12 Entry Points</h2>
+<div class="grid">
+<div class="card"><span class="tag">LADO</span><h3>Local Authority Designated Officer (LADO) Case Management</h3><p>Allegations against adults working with children. Multi-agency strategy discussion coordination. DBS referral tracking. Threshold decision support. Case lifecycle management from allegation through investigation to resolution. 12,000+ LADO referrals processed annually across 153 local authorities.</p></div>
+<div class="card"><span class="tag">MASH</span><h3>Multi-Agency Safeguarding Hub (MASH) Intelligence</h3><p>Information sharing across police, health, education, and social care. Risk threshold assessment. Early help escalation pathway. Chronology compilation from multi-source records. 500,000+ referrals processed annually through 80+ MASH operations in England.</p></div>
+<div class="card"><span class="tag">Attendance</span><h3>School Attendance &amp; Persistent Absence Analytics</h3><p>Real-time attendance monitoring across 22,000+ state schools. Persistent absence early warning. Missing in Education tracking. Elective home education monitoring. Part-time timetable governance. 8.9M+ pupils tracked. 22.3% persistent absence rate (2023-24) requiring intervention.</p></div>
+<div class="card"><span class="tag">CSE/CCE</span><h3>Child Sexual &amp; Criminal Exploitation Detection</h3><p>County lines pattern recognition. Online grooming detection. Child exploitation warning indicators. Trafficking risk assessment. NRM referral intelligence. 17,000+ potential CSE cases identified annually. CCE indicators tracked across education, health, and police data.</p></div>
+<div class="card"><span class="tag">Online Safety</span><h3>Online Safety in Schools Monitoring</h3><p>KCSIE-compliant filtering and monitoring system oversight. Harmful content detection. Peer-on-peer online abuse indicators. Radicalisation online risk (Prevent duty). Cyberbullying pattern detection. 22,000+ schools' filtering compliance monitored under Ofsted framework.</p></div>
+<div class="card"><span class="tag">SEND</span><h3>SEND Safeguarding &amp; EHCP Governance</h3><p>Education, Health and Care Plan safeguarding integration. SEND tribunal case management. Annual review compliance monitoring. Placement suitability assessment. Therapeutic provision oversight. 576,000+ EHCPs in England (2024). 31.6% year-on-year growth in EHC plans requiring governance.</p></div>
+<div class="card"><span class="tag">Governance</span><h3>School Governance &amp; MAT Oversight</h3><p>Multi-academy trust safeguarding audit. Board safeguarding training compliance. Single central record verification. Governor DBS checking. 24,000+ governing boards across England. 1,800+ academy trusts. Safeguarding leadership effectiveness monitoring.</p></div>
+<div class="card"><span class="tag">Early Help</span><h3>Early Help &amp; Family Support Assessment</h3><p>Early Help Assessment (EHA) pathway management. Family support plan tracking. CAF legacy system migration. Early intervention tier threshold support. Children in Need prevention analytics. 350,000+ children supported via early help annually.</p></div>
+<div class="card"><span class="tag">Prevent</span><h3>Prevent Duty &amp; Channel Referral Intelligence</h3><p>Radicalisation risk assessment in education settings. Channel programme referral analytics. ERG 22+ indicator monitoring. British values curriculum compliance. 6,000+ Channel referrals annually from education sector. Ideology-neutral threat assessment framework.</p></div>
+<div class="card"><span class="tag">Inspection</span><h3>Ofsted Safeguarding Inspection Intelligence</h3><p>Pre-inspection safeguarding evidence compilation. Section 175/157 compliance monitoring. Safeguarding audit trail automation. Post-inspection action plan tracking. Safeguarding concerns escalation pathway. 5,000+ Section 8 and full inspections annually.</p></div>
+<div class="card"><span class="tag">Data</span><h3>DfE Children's Data &amp; Analytics Hub</h3><p>National Pupil Database integration. Children in Need census processing. Schools census safeguarding flag analytics. CIN/CLA/PPU data linkage. Cross-departmental data sharing governance. 8.9M+ pupil records with safeguarding overlays.</p></div>
+<div class="card"><span class="tag">Parliamentary</span><h3>Education Select Committee Safeguarding</h3><p>Safeguarding effectiveness scrutiny. CSE inquiry evidence. SEND safeguarding reform accountability. Online safety implementation progress. Children's social care oversight. Annual safeguarding data reporting to Parliament.</p></div>
+</div>
+<h2>⚡ 8 Transformation Priorities</h2>
+<div class="grid">
+<div class="card"><h3>1. MASH Decision Intelligence</h3><p>AI-powered multi-agency risk threshold assessment. Automated information compilation from education, health, police, and social care records. Chronology generation. Early help vs. Section 47 threshold support. 500,000+ annual referral decision quality improvement.</p></div>
+<div class="card"><h3>2. Attendance Pattern Detection</h3><p>Machine learning models for persistent absence prediction. Missing education early warning. Safeguarding-linked absence pattern recognition. EHE registration analytics. Part-time timetable compliance monitoring across 8.9M+ pupils and 22,000+ schools.</p></div>
+<div class="card"><h3>3. Exploitation Risk Scoring</h3><p>County lines indicators from multi-agency data fusion. Online grooming NLP detection. CSE/CCE risk factor aggregation. Trafficking pattern recognition. NRM referral outcome prediction. 17,000+ annual case identification with explainable risk methodology.</p></div>
+<div class="card"><h3>4. Online Safety Compliance Monitoring</h3><p>Automated KCSIE filtering and monitoring compliance verification. Harmful content category tracking. Peer-on-peer online abuse detection. Prevent duty online radicalisation monitoring. 22,000+ school filtering system governance under Ofsted framework.</p></div>
+<div class="card"><h3>5. SEND Safeguarding Governance</h3><p>EHCP safeguarding section quality assessment. Annual review compliance automation. Placement suitability risk modelling. SEND tribunal case prediction. Therapeutic provision outcome tracking across 576,000+ active EHCPs.</p></div>
+<div class="card"><h3>6. LADO Case Lifecycle Automation</h3><p>Multi-agency strategy discussion scheduling. DBS outcome tracking. Allegation categorisation. Investigation timeline management. Case closure quality assurance. 12,000+ annual LADO referral lifecycle governance across 153 local authorities.</p></div>
+<div class="card"><h3>7. Early Help Effectiveness Analytics</h3><p>Early Help Assessment outcome tracking. Family support plan progress monitoring. CIN escalation prediction from early help tier. Multi-agency EHA coordination. Intervention effectiveness measurement across 350,000+ children in early help.</p></div>
+<div class="card"><h3>8. Parliamentary Safeguarding Accountability</h3><p>Automated safeguarding statistics generation for Education Select Committee. CSE inquiry evidence compilation. SEND reform progress reporting. Online safety implementation dashboard. Annual safeguarding data transparency publication.</p></div>
+</div>
+<h2>🔧 6 MCP Servers</h2>
+<div class="grid">
+<div class="card"><span class="tag">MASH</span><h3>dfe-mash-intelligence-mcp</h3><p>Multi-agency risk assessment. Information sharing. Chronology generation. Threshold decision support. 500,000+ annual referral governance.</p></div>
+<div class="card"><span class="tag">Attendance</span><h3>dfe-attendance-analytics-mcp</h3><p>Real-time attendance monitoring. Persistent absence prediction. Missing education tracking. EHE monitoring. 8.9M+ pupil governance.</p></div>
+<div class="card"><span class="tag">Exploitation</span><h3>dfe-exploitation-detection-mcp</h3><p>CSE/CCE risk scoring. County lines detection. Online grooming NLP. Trafficking assessment. 17,000+ annual case identification.</p></div>
+<div class="card"><span class="tag">Online Safety</span><h3>dfe-online-safety-monitoring-mcp</h3><p>KCSIE compliance verification. Filtering system oversight. Prevent duty monitoring. Cyberbullying detection. 22,000+ school governance.</p></div>
+<div class="card"><span class="tag">SEND</span><h3>dfe-send-safeguarding-mcp</h3><p>EHCP safeguarding governance. Annual review compliance. Placement suitability. Tribunal case tracking. 576,000+ EHCP governance.</p></div>
+<div class="card"><span class="tag">Accountability</span><h3>dfe-safeguarding-accountability-mcp</h3><p>Select Committee evidence. CSE inquiry support. SEND reform reporting. Online safety dashboard. Parliamentary data transparency.</p></div>
+</div>
+<div class="redline">
+<h3>🚫 Red Lines (Never Crossed)</h3>
+<ul>
+<li>❌ No child protection plan decision without social worker assessment and multi-agency strategy discussion</li>
+<li>❌ No exclusion from school without governing board hearing, parental right of appeal, and SEND assessment consideration</li>
+<li>❌ No Channel/Prevent referral without education welfare officer and police Prevent officer joint assessment</li>
+<li>❌ No EHCP placement change without annual review, parental consultation, and SEND tribunal right of appeal</li>
+<li>❌ No LADO decision to take no further action without multi-agency discussion and rationale documentation</li>
+<li>❌ No pupil data sharing beyond education setting without parental consent, lawful basis, or child protection necessity</li>
+</ul>
+</div>
+<div class="engagement">
+<h3>🤝 5-Step Engagement Model</h3>
+<div class="step"><div class="num">1</div><div><strong>Discovery:</strong> Map DfE safeguarding digital maturity across MASH, LADO, and school domains. Identify MIS, Capita, and Locate integration gaps. Benchmark against Keeping Children Safe in Education (KCSIE) 2024 and Working Together 2023.</div></div>
+<div class="step"><div class="num">2</div><div><strong>Governance Design:</strong> Deploy DEFONEOS MCP servers against schools safeguarding use cases. Configure red-line enforcement for CP decisions and exclusions. Establish DfE-LA-MAT oversight protocols.</div></div>
+<div class="step"><div class="num">3</div><div><strong>Pilot:</strong> Run 90-day pilot across 3 multi-academy trusts and 2 local authorities. Measure MASH decision quality, attendance prediction accuracy, and exploitation risk detection rate. Collect DSL and LADO feedback.</div></div>
+<div class="step"><div class="num">4</div><div><strong>Scale:</strong> Roll out across 22,000+ state schools and 153 local authorities. Integrate with DfE data platform. Deploy across all MAT safeguarding teams and regional DfE offices.</div></div>
+<div class="step"><div class="num">5</div><div><strong>Assure:</strong> Continuous audit-grade compliance reporting. Safeguarding outcome measurement. Parliamentary evidence generation. Annual Education Select Committee review of schools AI safeguarding governance.</div></div>
+</div>
+<div class="sovereign-cta-strip"><a href="/defoneos-owem-rfq">DEFONEOS OWEM RFQ</a> | <a href="/defoneos-article-50">Article 50 Passport</a></div>
+<footer>
+<p>DEFONEOS — Sovereign Public Services OS · <a href="https://csoai.org">csoai.org</a> · UK-sovereign. Audit-grade. AUKUS-compatible.</p>
+<p style="margin-top:8px">© 2026 CSOAI Ltd (UK 16939677) · <a href="https://csoai.org/sitemap.xml">Sitemap</a> · <a href="https://csoai.org/defoneos.html">Index</a></p>
+ — SIGIL-chain verified.</footer>
+</div>
+<footer><a href="/master.html">SOV33_OWEM_HUB</a></footer>
+</body>
+</html>

@@ -1,0 +1,24 @@
+{
+ "@context": "https://csoai.org/llm-context.json",
+ "type": "LLMPageSummary",
+ "url": "https://csoai.org/provbench.html",
+ "title": "ProvBench — Article 50 provenance survival, measured | CSOAI",
+ "description": "Pre-registered benchmark: does an EU AI Act Article 50 provenance marking survive real-world transforms? 0 of 20 embedded manifests survived any measured transform. Harness and data published.",
+ "headings": [
+  "ProvBench",
+  "Headline measured result",
+  "Recompute it",
+  "Register",
+  "Run ProvBench yourself"
+ ],
+ "text": "ProvBench — Article 50 provenance survival, measured | CSOAI Home Products GovBench Docs FAQ ProvBench Research question: does an EU AI Act Article 50 provenance marking survive real-world transforms? ProvBench is a pre-registered benchmark — every prediction was written down before measurement, and disagreements are published. Headline measured result 0 of 20 assets' embedded manifests survived any of the measured transform cells (0 of 180 cells, manifest_present , embedded-only configuration). One-sided 95% Clopper–Pearson upper bound on per-asset survival: 13.9% (asset-clustered). Sidecar configuration: 100% survival — the embedded/sidecar gap is separated by +100 points with non-overlapping clustered confidence intervals. Conclusion: embedded metadata does not survive the real world. If Article 50 compliance matters to you, the marking architecture — not the model — is the decision. Recompute it Harness + canonical results + paper: huggingface.co/datasets/csoai/provbench Frontier-model closed-book citation spray: csoai/aiact-frozen-split-harness Measured-results readout: /api/leaderboard Register CSOAI is a measurement body. We publish harnesses and measured results; we hold no certification, accreditation, or enforcement authority. Every figure on this page traces to the published canonical results file. CSOAI Ltd · UK company 16939677 · Every published figure traces to a signed, verifiable record. Run ProvBench yourself The same 15 items Council-34 answered, graded by the same deterministic rule. Council-34 scored 0.273 macro-F1 on these. No sign-up, nothing leaves your browser. Back Next Items: csoai/gspc-prv · grading is a regex label read plus macro-F1, identical to the published harness · measurement, not certification, and not legal advice.",
+ "text_truncated": false,
+ "register": {
+  "role": "measurement_and_attestation_support",
+  "csoai_certifies_systems": false,
+  "csoai_is_a_notified_body": false,
+  "csoai_has_enforcement_powers": false,
+  "note": "CSOAI measures and publishes evidence. It issues no conformity marks and holds no accreditation. Nothing here is certification or legal advice."
+ },
+ "generated_by": "make_llm_json.py"
+}

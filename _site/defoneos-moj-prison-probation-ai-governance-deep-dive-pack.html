@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1.0" name="viewport"/>
+<title>DEFONEOS — MOJ Prison &amp; Probation AI Governance Deep-Dive Pack</title>
+<meta content="Sovereign AI governance of UK prison reform, probation modernisation, offender rehabilitation, and criminal justice digital transformation. 12 entry points × 8 transformation priorities × 6 MCPs. UK-sovereign, audit-grade, AUKUS-compatible." name="description"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--ink:#0b1020;--bg:#050816;--panel:#0d1330;--line:#1a2050;--gold:#d4af37;--sov:#6dd5ff;--care:#4ade80;--warn:#fbbf24;--bad:#f87171;--fg:#e8eefc;--mut:#8a93b8}
+html,body{background:var(--bg);color:var(--fg);font:16px/1.6 -apple-system,system-ui,sans-serif}
+body{background:radial-gradient(ellipse 80% 50% at 50% -10%,rgba(109,213,255,0.12),transparent),var(--bg);min-height:100vh}
+.wrap{max-width:1280px;margin:0 auto;padding:48px 24px}
+header{text-align:center;margin-bottom:32px}
+.pill{display:inline-block;padding:4px 14px;border:1px solid var(--gold);border-radius:999px;font-size:12px;letter-spacing:0.1em;color:var(--gold);margin-bottom:16px}
+h1{font-size:clamp(36px,5vw,56px);line-height:1.1;letter-spacing:-0.02em;margin-bottom:16px;background:linear-gradient(180deg,#fff,#b8c2e8);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.sub{font-size:18px;color:var(--mut);max-width:820px;margin:0 auto 24px}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin:32px 0;padding:24px;background:var(--panel);border:1px solid var(--line);border-radius:16px}
+@media(max-width:800px){.stats{grid-template-columns:repeat(2,1fr)}}
+.stat{text-align:center}.stat .num{font-size:32px;font-weight:800;color:var(--sov)}.stat .label{font-size:11px;letter-spacing:0.15em;text-transform:uppercase;color:var(--mut);margin-top:4px}
+h2{margin:48px 0 24px;padding-bottom:12px;border-bottom:1px solid var(--line);font-size:28px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:20px;transition:all .2s;position:relative;overflow:hidden}
+.card::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:var(--accent,#6dd5ff)}
+.card:hover{transform:translateY(-3px);border-color:var(--accent);box-shadow:0 8px 24px rgba(0,0,0,0.3)}
+.card h3{font-size:17px;font-weight:700;margin-bottom:8px}
+.card p{font-size:13px;color:var(--mut);line-height:1.5}
+.tag{display:inline-block;background:rgba(109,213,255,0.1);border:1px solid rgba(109,213,255,0.3);color:var(--sov);padding:2px 8px;border-radius:4px;font-size:10px;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:8px}
+.redline{margin:48px 0;padding:24px;background:rgba(248,113,113,0.08);border:1px solid rgba(248,113,113,0.3);border-radius:12px}
+.redline h3{color:var(--bad);margin-bottom:12px;font-size:18px}
+.redline li{color:var(--fg);margin:8px 0 8px 20px;font-size:14px}
+.engagement{margin:48px 0;padding:24px;background:var(--panel);border:1px solid var(--line);border-radius:12px}
+.engagement h3{color:var(--sov);margin-bottom:12px;font-size:18px}
+.step{display:flex;align-items:flex-start;gap:12px;margin:12px 0;padding:12px;background:rgba(109,213,255,0.05);border-radius:8px}
+.step .num{width:32px;height:32px;border-radius:50%;background:var(--sov);color:var(--bg);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px;flex-shrink:0}
+footer{margin-top:64px;text-align:center;font-size:12px;color:var(--mut);padding-top:32px;border-top:1px solid var(--line)}
+footer a{color:var(--sov);text-decoration:none}
+</style>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "TechArticle", "headline": "MOJ Prison & Probation AI Deep-Dive Pack — DEFONEOS by CSOAI", "description": "Independent AI governance mapping and measurement analysis for MOJ Prison & Probation. Measurement, not certification — every figure traces to a signed, verifiable record.", "author": {"@type": "Organization", "name": "CSOAI Ltd", "url": "https://csoai.org"}, "publisher": {"@type": "Organization", "name": "CSOAI Ltd", "url": "https://csoai.org"}, "isAbout": {"@type": "GovernmentOrganization", "name": "MOJ Prison & Probation"}, "url": "https://www.csoai.org/defoneos-moj-prison-probation-ai-governance-deep-dive-pack.html"}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "CSOAI", "item": "https://www.csoai.org/"}, {"@type": "ListItem", "position": 2, "name": "DEFONEOS", "item": "https://www.csoai.org/arena-hub.html"}, {"@type": "ListItem", "position": 3, "name": "MOJ Prison & Probation AI Deep-Dive Pack"}]}</script>
+<link href="https://csoai.org/defoneos-moj-prison-probation-ai-governance-deep-dive-pack.html" rel="canonical"/>
+<meta content="DEFONEOS — MOJ Prison &amp; Probation AI Governance Deep-Dive Pack" property="og:title"/>
+<meta content="CSOAI sovereign AI governance deep-dive: MOJ prison reform, probation modernisation, offender rehabilitation, criminal justice digital transformation. 12 entry points × 8 priorities × 6 MCPs." property="og:description"/>
+<link href="/favicon.svg" rel="icon" type="image/svg+xml"/>
+<!-- AI-SEO/AEO/GEO head block — DO NOT remove. AI crawlers (GPTBot, ClaudeBot, PerplexityBot) don't run JS; everything they need must be in raw HTML. -->
+<link href="https://csoai.org/defoneos-moj-prison-probation-ai-governance-deep-dive-pack.html.llm.json" rel="alternate" title="LLM representation of this page" type="application/llm+json"/>
+<meta content="/llms.txt" name="llms-txt"/>
+<meta content="human-authored, machine-verifiable, Ed25519-signed" name="ai-content-declaration"/>
+<meta content="CSOAI Ltd (2026). DEFONEOS — MOJ Prison &amp; Probation AI Governance Deep-Dive Pack. https://csoai.org/defoneos-moj-prison-probation-ai-governance-deep-dive-pack.html" name="citation-policy"/>
+<meta content="2026-07-28T02:23:57+00:00" name="revised"/>
+<meta content="2026-07-28T02:23:57+00:00" property="article:modified_time"/>
+</head>
+<body>
+<div class="article50-banner" style="background:linear-gradient(90deg,#3a0f1a,#7a1f33,#3a0f1a);border-bottom:1px solid #ff5470;padding:10px 16px;text-align:center;font-size:13px;color:#ffd5dd;font-weight:500">EU AI Act Article 50 live 2 Aug 2026 — C2PA passport ready | <a href="/tools/article50-passport.html" style="color:#fff;text-decoration:underline;font-weight:700">Get yours →</a></div>
+<div class="wrap">
+<header>
+<nav><a href="/">Home</a> <a href="/master.html">Master</a> <a href="/govbench.html">GovBench</a> <a href="/defoneos.html">Index</a> <a href="/sitemap.xml">Sitemap</a></nav>
+<div class="pill">DEFONEOS × MOJ × PRISON × PROBATION</div>
+<h1>MOJ Prison &amp; Probation AI<br/>Governance Deep-Dive Pack</h1>
+<p class="sub">Sovereign AI governance of UK prison reform, probation modernisation, offender rehabilitation, and criminal justice digital transformation. 12 entry points × 8 transformation priorities × 6 MCPs. Audit-grade. Signed. UK-sovereign.</p>
+<div class="stats">
+<div class="stat"><div class="num">12</div><div class="label">Entry Points</div></div>
+<div class="stat"><div class="num">8</div><div class="label">Transformation Priorities</div></div>
+<div class="stat"><div class="num">6</div><div class="label">MCP Servers</div></div>
+<div class="stat"><div class="num">6</div><div class="label">Backbone Orgs</div></div>
+</div>
+</header>
+<h2>🏛️ 12 Entry Points</h2>
+<div class="grid">
+<div class="card"><span class="tag">Prison Reform</span><h3>Prison Population Management AI</h3><p>AI governance of prison capacity planning. Population forecasting and demand modelling. Remand and sentencing analytics. Category allocation optimisation. Early release scheme compliance monitoring. Parole Board decision support governance.</p></div>
+<div class="card"><span class="tag">Probation</span><h3>Probation Service Modernisation Governance</h3><p>Probation officer caseload optimisation. Risk of Serious Harm (RoSH) assessment governance. Recall prediction and prevention. Community order compliance monitoring. Unpaid work allocation intelligence. Probation region performance analytics.</p></div>
+<div class="card"><span class="tag">Rehabilitation</span><h3>Offender Rehabilitation &amp; Reducing Reoffending AI</h3><p>Reoffending risk prediction governance. Prison education and skills programme intelligence. Substance misuse treatment outcome monitoring. Employment pathway tracking. Housing stability prediction. Through-the-gate service effectiveness analytics.</p></div>
+<div class="card"><span class="tag">Youth Justice</span><h3>Youth Custody &amp; Youth Justice AI Governance</h3><p>Youth Offending Team performance monitoring. Secure children's home placement governance. Custodial education outcome tracking. Youth rehabilitation order compliance. Restorative justice programme analytics. Child First strategy implementation monitoring.</p></div>
+<div class="card"><span class="tag">Courts</span><h3>HMCTS Court &amp; Tribunal AI Governance</h3><p>Court scheduling and listing optimisation. Case management system intelligence. Digital case file governance. Jury service management AI. Court reporting and transcript analytics. Open justice and transparency monitoring.</p></div>
+<div class="card"><span class="tag">Legal Aid</span><h3>Legal Aid &amp; Access to Justice AI</h3><p>Legal aid eligibility assessment automation. Case outcome prediction governance. Provider allocation intelligence. Exceptional case funding decision support. Advice deserts monitoring. Access to justice gap analytics.</p></div>
+<div class="card"><span class="tag">Victims</span><h3>Victim &amp; Witness Support AI Governance</h3><p>Victim notification system intelligence. Restorative justice referral analytics. Victim Personal Statement support. Witness care programme monitoring. Special measures allocation governance. Victim satisfaction tracking.</p></div>
+<div class="card"><span class="tag">Prison Safety</span><h3>Prison Safety &amp; Violence Reduction AI</h3><p>Violence incident prediction and prevention. Self-harm risk assessment governance. Drug supply detection intelligence. Contraband interdiction analytics. Prison officer safety monitoring. Safety intervention effectiveness tracking.</p></div>
+<div class="card"><span class="tag">Estate</span><h3>Prison Estate &amp; Infrastructure AI</h3><p>Prison building condition monitoring. Estate maintenance prioritisation. New prison programme governance. Cell capacity optimisation. Environmental sustainability tracking. Infrastructure investment analytics.</p></div>
+<div class="card"><span class="tag">Data</span><h3>Criminal Justice Data &amp; Interoperability AI</h3><p>NOMS data governance framework. Cross-agency data sharing compliance. PNC data quality assurance. Criminal justice system interoperability. Data analytics platform governance. Open justice data transparency.</p></div>
+<div class="card"><span class="tag">Workforce</span><h3>MOJ Workforce &amp; Prison Officer Development AI</h3><p>Prison officer recruitment and retention analytics. Probation officer training programme governance. Workforce diversity monitoring. Leadership development tracking. Staff wellbeing and burnout prediction. Skills pipeline intelligence.</p></div>
+<div class="card"><span class="tag">Parliamentary</span><h3>Justice Select Committee Scrutiny</h3><p>Prison performance statistics reporting. Probation outcome metrics. Reoffending rate transparency. Court efficiency dashboards. Legal aid expenditure accountability. Justice system capacity reporting.</p></div>
+</div>
+<h2>⚡ 8 Transformation Priorities</h2>
+<div class="grid">
+<div class="card"><h3>1. Prison Population Intelligence Automation</h3><p>Real-time population forecasting and capacity management. Sentencing analytics and demand modelling. Category placement optimisation. Early release scheme compliance. Parole Board analytics. Prison performance benchmarking.</p></div>
+<div class="card"><h3>2. Probation Service Digital Transformation</h3><p>Caseload optimisation and risk assessment automation. Recall prediction and prevention. Community order compliance monitoring. Unpaid work allocation. Regional performance analytics. Through-the-gate integration.</p></div>
+<div class="card"><h3>3. Reducing Reoffending AI Platform</h3><p>Reoffending risk prediction and intervention targeting. Education and skills outcome tracking. Substance misuse treatment monitoring. Employment pathway analytics. Housing stability prediction. Multi-agency rehabilitation coordination.</p></div>
+<div class="card"><h3>4. Youth Justice Intelligence System</h3><p>Youth Offending Team performance monitoring. Custodial placement optimisation. Education outcome tracking. Rehabilitation order compliance. Restorative justice analytics. Child First strategy metrics.</p></div>
+<div class="card"><h3>5. Court &amp; Tribunal Modernisation AI</h3><p>Scheduling and listing optimisation. Case management intelligence. Digital case file governance. Court reporting analytics. Open justice monitoring. Cross-jurisdiction case tracking.</p></div>
+<div class="card"><h3>6. Prison Safety &amp; Violence Reduction</h3><p>Violence prediction and prevention analytics. Self-harm risk assessment. Drug supply detection. Contraband interdiction. Officer safety monitoring. Intervention effectiveness tracking.</p></div>
+<div class="card"><h3>7. Victim &amp; Witness Support Automation</h3><p>Victim notification intelligence. Restorative justice referrals. Special measures allocation. Witness care monitoring. Satisfaction tracking. Cross-agency victim support coordination.</p></div>
+<div class="card"><h3>8. Parliamentary Accountability &amp; Justice Reporting</h3><p>Justice Select Committee evidence automation. Prison performance dashboards. Probation outcome transparency. Reoffending statistics. Court efficiency metrics. Expenditure accountability.</p></div>
+</div>
+<h2>🔧 6 MCP Servers</h2>
+<div class="grid">
+<div class="card"><span class="tag">Prison</span><h3>moj-prison-population-intelligence-mcp</h3><p>Population forecasting. Capacity management. Category allocation. Early release compliance. Parole analytics. Performance benchmarking.</p></div>
+<div class="card"><span class="tag">Probation</span><h3>moj-probation-service-modernisation-mcp</h3><p>Caseload optimisation. Risk assessment. Recall prediction. Community order compliance. Unpaid work allocation. Through-the-gate integration.</p></div>
+<div class="card"><span class="tag">Rehabilitation</span><h3>moj-reducing-reoffending-ai-mcp</h3><p>Reoffending risk prediction. Education tracking. Substance misuse monitoring. Employment pathways. Housing prediction. Multi-agency coordination.</p></div>
+<div class="card"><span class="tag">Courts</span><h3>moj-hmcts-court-governance-mcp</h3><p>Scheduling optimisation. Case management. Digital case files. Court reporting. Open justice monitoring. Cross-jurisdiction tracking.</p></div>
+<div class="card"><span class="tag">Safety</span><h3>moj-prison-safety-violence-reduction-mcp</h3><p>Violence prediction. Self-harm assessment. Drug detection. Contraband interdiction. Officer safety. Intervention effectiveness.</p></div>
+<div class="card"><span class="tag">Victims</span><h3>moj-victim-witness-support-mcp</h3><p>Victim notification. Restorative justice. Special measures. Witness care. Satisfaction tracking. Cross-agency coordination.</p></div>
+</div>
+<div class="redline">
+<h3>🚫 Red Lines (Never Crossed)</h3>
+<ul>
+<li>❌ No offender risk assessment without MOJ accredited tool validation and HMPPS governance approval</li>
+<li>❌ No prison surveillance system without independent privacy impact assessment and MOJ ministerial sign-off</li>
+<li>❌ No probation recall decision automation without human officer final authority and appeal mechanism</li>
+<li>❌ No youth justice AI without Youth Justice Board governance approval and Children's Rights impact assessment</li>
+<li>❌ No legal aid eligibility automation without Legal Aid Agency quality assurance and appeal pathway</li>
+<li>❌ No prison AI deployment without HMIP inspection readiness and Prison Officers' Association consultation</li>
+</ul>
+</div>
+<div class="engagement">
+<h3>🤝 5-Step Engagement Model</h3>
+<div class="step"><div class="num">1</div><div><strong>Discovery:</strong> Map UK criminal justice AI maturity across prison, probation, courts, and youth justice. Identify reoffending gaps. Benchmark against EU Criminal Justice AI Standards. Assess prison estate resilience.</div></div>
+<div class="step"><div class="num">2</div><div><strong>Governance Design:</strong> Deploy DEFONEOS MCP servers against justice use cases. Configure safety and compliance enforcement. Establish MOJ-HMPPS-HMCTS oversight protocols.</div></div>
+<div class="step"><div class="num">3</div><div><strong>Pilot:</strong> Run 90-day pilot across 3 prison intelligence cases and 2 probation modernisation scenarios. Measure rehabilitation effectiveness. Collect MOJ and HMIP feedback.</div></div>
+<div class="step"><div class="num">4</div><div><strong>Scale:</strong> Roll out across all justice governance streams. Integrate with HMCTS monitoring. Deploy across probation region and prison estate intelligence network.</div></div>
+<div class="step"><div class="num">5</div><div><strong>Assure:</strong> Continuous audit-grade justice governance reporting. Safety and compliance transparency. Parliamentary evidence generation. Annual Justice Select Committee review.</div></div>
+</div>
+<div class="sovereign-cta-strip"><a href="/defoneos-owem-rfq">DEFONEOS OWEM RFQ</a> | <a href="/defoneos-article-50">Article 50 Passport</a></div>
+<footer>
+<p>DEFONEOS — Sovereign Public Services OS · <a href="https://csoai.org">csoai.org</a> · UK-sovereign. Audit-grade. AUKUS-compatible.</p>
+<p style="margin-top:8px">© 2026 CSOAI Ltd (UK 16939677) · <a href="https://csoai.org/sitemap.xml">Sitemap</a> · <a href="https://csoai.org/defoneos.html">Index</a></p>
+— SIGIL-chain verified.</footer>
+</div>
+<footer><a href="/master.html">SOV33_OWEM_HUB</a></footer>
+</body>
+</html>

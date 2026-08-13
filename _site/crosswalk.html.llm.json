@@ -1,0 +1,24 @@
+{
+ "@context": "https://csoai.org/llm-context.json",
+ "type": "LLMPageSummary",
+ "url": "https://csoai.org/crosswalk.html",
+ "title": "Crosswalk — CSOAI 417-provision registry | CSOAI",
+ "description": "CSOAI crosswalk: 417 statutory provisions crosswalked across the EU AI Act, UK and US. Every provision is a frozen anchor with a measured run, Ed25519-signed, and a public recompute path.",
+ "headings": [
+  "Crosswalk — 417 statutory provisions",
+  "What is in the crosswalk",
+  "How the crosswalk is used",
+  "Where to see it",
+  "Boundary"
+ ],
+ "text": "Crosswalk — CSOAI 417-provision registry | CSOAI Home Products ProvBench Docs FAQ Crosswalk — 417 statutory provisions CSOAI's measurement surface is anchored to statute. The crosswalk is the single source of truth for which legal provisions we measure against, which framework they come from, and which of our benchmarks tests compliance with each. What is in the crosswalk EU AI Act — Regulation (EU) 2024/1689. 113 provisions with zero-contiguity scope: every Article, every Annex III use case, every Art 50 transparency obligation. Article anchors become the spine of every CSOAI benchmark item. UK GDPR + DPA 2018 — 38 provisions crosswalked to the EU AI Act where the same data subject is engaged. Unique Article references for the carve-outs (e.g. Art 22 UK GDPR automated decision-making). US — NIST AI RMF (1.0), the Colorado SB 24-205 high-risk consumer AI statute, the FTC Act §5 unfairness/deception hooks. 26 provisions crosswalked. International — ISO/IEC 42001 (AI management system), ISO/IEC 23894 (AI risk management), C2PA §2.4 (provenance assertion), the Council of Europe's AI Framework Convention. 14 provisions. How the crosswalk is used Each anchor is a tuple: (framework, article, scope, item_count, last_measured_run) . The harness items are pinned to the anchor by SHA-256 of the canonical provision text plus a scenario that exercises it. Re-running the benchmark produces a measurement against the same anchor; the result is signed and a citation is generated. Where to see it AI Act frozen-split harness — 24 items, statute-anchored, GitHub-pinned SHA. ProvBench — Article 50 provenance survival, measured. Products — GovBench + the Article 50 Passport flow. Boundary The crosswalk is a measurement instrument. It does not opine on what the law means. A regulator who reads our crosswalk sees the same provision IDs and article numbers the regulator already uses; the crosswalk lets us reproduce our numbers against the same anchors. Legal interpretation is its own layer (notified bodies, regulators, counsel). Nothing on this page is legal advice. CSOAI Ltd · UK company 16939677 · Every published figure traces to a signed, verifiable record.",
+ "text_truncated": false,
+ "register": {
+  "role": "measurement_and_attestation_support",
+  "csoai_certifies_systems": false,
+  "csoai_is_a_notified_body": false,
+  "csoai_has_enforcement_powers": false,
+  "note": "CSOAI measures and publishes evidence. It issues no conformity marks and holds no accreditation. Nothing here is certification or legal advice."
+ },
+ "generated_by": "make_llm_json.py"
+}

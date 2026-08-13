@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<title>DEFONEOS — Crown Prosecution Service AI Deep-Dive Pack</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#0a0a0a;color:#e0e0e0;font-family:system-ui,sans-serif;line-height:1.6}
+a{color:#00ff88;text-decoration:none}a:hover{text-decoration:underline}
+.hero{background:linear-gradient(135deg,#0a0a0a,#1a1a2e,#0d1117);padding:40px 20px;text-align:center;border-bottom:2px solid #00ff88}
+.hero h1{font-size:2em;color:#00ff88;margin-bottom:6px}
+.sub{color:#888;font-size:.95em;margin-bottom:10px}
+.bg{display:inline-block;background:#1a1a2e;border:1px solid #00ff88;padding:4px 12px;border-radius:20px;color:#00ff88;font-size:.8em;margin:3px}
+nav{background:#111;padding:10px 20px;border-bottom:1px solid #222;position:sticky;top:0;z-index:100;overflow-x:auto;white-space:nowrap}
+nav a{display:inline-block;padding:4px 10px;margin:2px;background:#1a1a2e;border:1px solid #333;border-radius:6px;font-size:.75em;color:#00ff88;transition:all .2s}
+nav a:hover{background:#00ff88;color:#0a0a0a;text-decoration:none}
+.c{max-width:1200px;margin:0 auto;padding:20px}
+.s{margin:28px 0;background:#1a1a2e;border:1px solid #222;border-radius:12px;overflow:hidden}
+.sh{background:linear-gradient(90deg,#1a1a2e,#0d1117);padding:14px 18px;border-bottom:1px solid #333}
+.sh h2{color:#00ff88;font-size:1.2em;margin-bottom:2px}
+.en{color:#666;font-size:.78em}
+.sb{padding:18px}
+.g{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px;margin-bottom:14px}
+.p{background:#0d1117;border:1px solid #222;border-radius:8px;padding:12px;transition:border-color .2s}
+.p:hover{border-color:#00ff88}
+.p h3{color:#00ff88;font-size:.84em;margin-bottom:5px}
+.p p{color:#aaa;font-size:.78em;line-height:1.5}
+.mt{background:#111;border:1px solid #222;border-radius:8px;padding:12px;margin-top:10px}
+.mt h4{color:#00ff88;font-size:.82em;margin-bottom:6px}
+.ml{display:flex;flex-wrap:wrap;gap:5px}
+.t{background:#1a1a2e;border:1px solid #00ff88;padding:2px 9px;border-radius:16px;font-size:.72em;color:#00ff88}
+footer{background:#111;border-top:2px solid #00ff88;padding:20px;text-align:center;margin-top:28px}
+.br{font-size:1.1em;color:#00ff88;font-weight:700;margin-bottom:5px}
+footer p{color:#666;font-size:.75em;line-height:1.5}
+.cr{margin-top:10px;padding-top:10px;border-top:1px solid #222;color:#555;font-size:.72em}
+@media(max-width:768px){.hero h1{font-size:1.4em}.g{grid-template-columns:1fr}}
+</style>
+<!-- AI-SEO/AEO/GEO head block — DO NOT remove. AI crawlers (GPTBot, ClaudeBot, PerplexityBot) don't run JS; everything they need must be in raw HTML. -->
+<link href="https://www.csoai.org/defoneos-cps-crown-prosecution-service-ai-deep-dive-pack.html.llm.json" rel="alternate" title="LLM representation of this page" type="application/llm+json"/>
+<meta content="/llms.txt" name="llms-txt"/>
+<meta content="human-authored, machine-verifiable, Ed25519-signed" name="ai-content-declaration"/>
+<meta content="CSOAI Ltd (2026). DEFONEOS — Crown Prosecution Service AI Deep-Dive Pack. https://www.csoai.org/defoneos-cps-crown-prosecution-service-ai-deep-dive-pack.html" name="citation-policy"/>
+<meta content="2026-08-03T11:19:50+00:00" name="revised"/>
+<meta content="2026-08-03T11:19:50+00:00" property="article:modified_time"/>
+<meta content="DEFONEOS — Crown Prosecution Service AI Deep-Dive Pack. A sovereign, audit-grade CSOAI surface: measurement, not certification — every figure traces to a signed, verifiable record." name="description"/>
+<link href="https://www.csoai.org/defoneos-cps-crown-prosecution-service-ai-deep-dive-pack.html" rel="canonical"/>
+<meta content="DEFONEOS — Crown Prosecution Service AI Deep-Dive Pack" property="og:title"/>
+<meta content="DEFONEOS — Crown Prosecution Service AI Deep-Dive Pack. A sovereign, audit-grade CSOAI surface: measurement, not certification — every figure traces to a signed, verifiable record." property="og:description"/>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"DEFONEOS \u2014 Crown Prosecution Service AI Deep-Dive Pack","url":"https://www.csoai.org/defoneos-cps-crown-prosecution-service-ai-deep-dive-pack.html","publisher":{"@type":"Organization","name":"CSOAI Ltd","url":"https://csoai.org"}}</script>
+</head>
+<body>
+<div class="hero">
+<h1>⚖️ CPS — Crown Prosecution Service AI Deep-Dive Pack</h1>
+<p class="sub">DEFONEOS — UK Sovereign Public Services OS</p>
+<div><span class="bg">12 Entry Points</span><span class="bg">8 AI Priorities</span><span class="bg">6 MCP Tools</span></div>
+<p>96 AI capability mappings × 6 MCP integrations — Crown Prosecution Service</p>
+</div>
+<nav>
+<a href="#ep1">Charging</a><a href="#ep2">Disclosure</a><a href="#ep3">Victims</a>
+<a href="#ep4">POCA</a><a href="#ep5">Appeals</a><a href="#ep6">Terrorism</a>
+<a href="#ep7">Fraud</a><a href="#ep8">Hate</a><a href="#ep9">Cyber</a>
+<a href="#ep10">Organised</a><a href="#ep11">Govern</a><a href="#ep12">Parliament</a>
+</nav>
+<div class="c">
+<div class="s" id="ep1"><div class="sh"><span class="en">Entry Point 01</span><h2>Case Review &amp; Charging Decisions</h2></div><div class="sb"><div class="g">
+<div class="p"><h3>Compliance Automation</h3><p>Automated validation of charging decisions against the Full Code Test, evidential stage sufficiency, and public interest stage criteria under CPS Code for Crown Prosecutors.</p></div>
+<div class="p"><h3>Risk Detection &amp; Early Warning</h3><p>Detection of weak prosecution cases, disclosure failures, and evidential gaps via case file quality analysis against CPS digital case file standards.</p></div>
+<div class="p"><h3>Natural Language Policy Analysis</h3><p>NLP analysis of case summaries, witness statements, and expert reports against CPS evidential sufficiency thresholds.</p></div>
+<div class="p"><h3>Predictive Analytics</h3><p>Charging decision outcome prediction from evidence quality scoring, witness reliability assessment, and legal precedent analysis.</p></div>
+<div class="p"><h3>Evidence Synthesis</h3><p>Police evidence, witness testimony, and expert reports into prosecution decision dossiers.</p></div>
+<div class="p"><h3>Document Intelligence</h3><p>Extraction from case files, evidential reviews, and pre-charge advice records for case management.</p></div>
+<div class="p"><h3>Stakeholder Reporting</h3><p>Charging decision dashboards showing case throughput, acceptance rates, and evidential sufficiency trends.</p></div>
+<div class="p"><h3>Real-time Monitoring</h3><p>Case file submission tracking, charging decision timeline monitoring, and police-CPS interface management.</p></div>
+</div><div class="mt"><h4>MCP Tools</h4><div class="ml"><span class="t">mcp-govuk-search</span><span class="t">mcp-uk-legislation</span><span class="t">mcp-uk-regulator-intel</span><span class="t">mcp-hansard-search</span><span class="t">mcp-dsit-ai-safety</span><span class="t">mcp-cabinet-office-resilience</span></div></div></div></div>
+<div class="s" id="ep2"><div class="sh"><span class="en">Entry Point 02</span><h2>Disclosure &amp; Unused Material</h2></div><div class="sb"><div class="g">
+<div class="p"><h3>Compliance Automation</h3><p>Criminal Procedure and Investigations Act 1996 disclosure compliance validation including schedules of non-sensitive/sensitive material and defence statement obligations.</p></div>
+<div class="p"><h3>Risk Detection &amp; Early Warning</h3><p>Detection of disclosure failures, material non-disclosure risks, and CPIA schedule deficiencies via case file review automation.</p></div>
+<div class="p"><h3>Natural Language Policy Analysis</h3><p>Analysis of disclosure schedules, prosecution statements, and defence statements against CPIA Code of Practice requirements.</p></div>
+<div class="p"><h3>Predictive Analytics</h3><p>Disclosure failure risk from case complexity, material volume, and officer compliance history scoring.</p></div>
+<div class="p"><h3>Evidence Synthesis</h3><p>Disclosure schedules, unused material lists, and defence statement analysis into disclosure compliance dossiers.</p></div>
+<div class="p"><h3>Document Intelligence</h3><p>Extraction from CPIA schedules, disclosure management documents, and court disclosure rulings.</p></div>
+<div class="p"><h3>Stakeholder Reporting</h3><p>Disclosure compliance dashboards showing schedule completion rates, late disclosure incidents, and judicial criticism trends.</p></div>
+<div class="p"><h3>Real-time Monitoring</h3><p>Disclosure deadline tracking, defence statement submission monitoring, and court disclosure direction compliance.</p></div>
+</div><div class="mt"><h4>MCP Tools</h4><div class="ml"><span class="t">mcp-govuk-search</span><span class="t">mcp-uk-legislation</span><span class="t">mcp-uk-regulator-intel</span><span class="t">mcp-hansard-search</span><span class="t">mcp-dsit-ai-safety</span><span class="t">mcp-cabinet-office-resilience</span></div></div></div></div>
+<div class="s" id="ep3"><div class="sh"><span class="en">Entry Point 03</span><h2>Victim &amp; Witness Care</h2></div><div class="sb"><div class="g">
+<div class="p"><h3>Compliance Automation</h3><p>Victims Code of Practice compliance validation including needs assessment, special measures applications, and victim communication obligations.</p></div>
+<div class="p"><h3>Risk Detection &amp; Early Warning</h3><p>Detection of victim disengagement risks, witness intimidation indicators, and victim communication failures via case management data.</p></div>
+<div class="p"><h3>Natural Language Policy Analysis</h3><p>Analysis of victim impact statements, needs assessments, and special measures applications against Victims Code requirements.</p></div>
+<div class="p"><h3>Predictive Analytics</h3><p>Victim disengagement prediction from communication patterns, court attendance history, and case complexity scoring.</p></div>
+<div class="p"><h3>Evidence Synthesis</h3><p>Victim needs assessments, witness care reports, and special measures evidence into victim/witness care dossiers.</p></div>
+<div class="p"><h3>Document Intelligence</h3><p>Extraction from victim correspondence, needs assessments, and special measures applications.</p></div>
+<div class="p"><h3>Stakeholder Reporting</h3><p>Victim care dashboards showing communication compliance, special measures usage, and victim satisfaction metrics.</p></div>
+<div class="p"><h3>Real-time Monitoring</h3><p>Victim communication timeline tracking, special measures application processing, and court attendance monitoring.</p></div>
+</div><div class="mt"><h4>MCP Tools</h4><div class="ml"><span class="t">mcp-govuk-search</span><span class="t">mcp-uk-legislation</span><span class="t">mcp-uk-regulator-intel</span><span class="t">mcp-hansard-search</span><span class="t">mcp-dsit-ai-safety</span><span class="t">mcp-cabinet-office-resilience</span></div></div></div></div>
+<div class="s" id="ep4"><div class="sh"><span class="en">Entry Point 04</span><h2>Proceeds of Crime &amp; Asset Recovery</h2></div><div class="sb"><div class="g">
+<div class="p"><h3>Compliance Automation</h3><p>Proceeds of Crime Act 2002 compliance validation including confiscation order applications, restraint orders, and financial investigation cooperation.</p></div>
+<div class="p"><h3>Risk Detection &amp; Early Warning</h3><p>Detection of proceeds of crime dissipation risks, confiscation order non-compliance, and hidden asset indicators.</p></div>
+<div class="p"><h3>Natural Language Policy Analysis</h3><p>Analysis of financial investigation reports, confiscation certificates, and benefit/criminal lifestyle calculations against POCA requirements.</p></div>
+<div class="p"><h3>Predictive Analytics</h3><p>Confiscation order recovery likelihood from asset identification, criminal lifestyle assessment, and enforcement capacity analysis.</p></div>
+<div class="p"><h3>Evidence Synthesis</h3><p>Financial investigation evidence, asset tracing reports, and confiscation calculations into POCA prosecution dossiers.</p></div>
+<div class="p"><h3>Document Intelligence</h3><p>Extraction from restraint orders, confiscation certificates, and financial investigation reports.</p></div>
+<div class="p"><h3>Stakeholder Reporting</h3><p>POCA dashboards showing confiscation order values, recovery rates, and financial investigation pipeline.</p></div>
+<div class="p"><h3>Real-time Monitoring</h3><p>Restraint order tracking, confiscation compliance monitoring, and asset recovery payment processing.</p></div>
+</div><div class="mt"><h4>MCP Tools</h4><div class="ml"><span class="t">mcp-govuk-search</span><span class="t">mcp-uk-legislation</span><span class="t">mcp-uk-regulator-intel</span><span class="t">mcp-hansard-search</span><span class="t">mcp-dsit-ai-safety</span><span class="t">mcp-cabinet-office-resilience</span></div></div></div></div>
+<div class="s" id="ep5"><div class="sh"><span class="en">Entry Point 05</span><h2>Appeals &amp; Post-Conviction Review</h2></div><div class="sb"><div class="g">
+<div class="p"><h3>Compliance Automation</h3><p>Criminal Appeal Act 1968 compliance validation for prosecution appeal submissions, Attorney General reference cases, and unduly lenient sentence referrals.</p></div>
+<div class="p"><h3>Risk Detection &amp; Early Warning</h3><p>Detection of appeal risks via conviction safety indicators, sentence disparity analysis, and legal error pattern recognition.</p></div>
+<div class="p"><h3>Natural Language Policy Analysis</h3><p>Analysis of appeal grounds, court transcripts, and sentencing remarks against appeal criteria and precedent.</p></div>
+<div class="p"><h3>Predictive Analytics</h3><p>Appeal outcome prediction from grounds of appeal strength, judicial composition, and precedent analysis scoring.</p></div>
+<div class="p"><h3>Evidence Synthesis</h3><p>Trial evidence, sentencing data, and legal submissions into appeal response dossiers.</p></div>
+<div class="p"><h3>Document Intelligence</h3><p>Extraction from appeal notices, Court of Appeal judgments, and ULS referral decisions.</p></div>
+<div class="p"><h3>Stakeholder Reporting</h3><p>Appeals dashboards showing appeal volumes, success rates, and sentence uplift metrics.</p></div>
+<div class="p"><h3>Real-time Monitoring</h3><p>Appeal deadline tracking, ULS referral timeline monitoring, and Court of Appeal judgment publication.</p></div>
+</div><div class="mt"><h4>MCP Tools</h4><div class="ml"><span class="t">mcp-govuk-search</span><span class="t">mcp-uk-legislation</span><span class="t">mcp-uk-regulator-intel</span><span class="t">mcp-hansard-search</span><span class="t">mcp-dsit-ai-safety</span><span class="t">mcp-cabinet-office-resilience</span></div></div></div></div>
+<div class="s" id="ep6"><div class="sh"><span class="en">Entry Point 06</span><h2>Counter-Terrorism Prosecutions</h2></div><div class="sb"><div class="g">
+<div class="p"><h3>Compliance Automation</h3><p>Terrorism Act 2000/2006 prosecution compliance validation including terrorism offences charging, TPIM evidence, and sensitive material handling.</p></div>
+<div class="p"><h3>Risk Detection &amp; Early Warning</h3><p>Detection of terrorism prosecution risks via intelligence assessment, evidential challenges, and national security sensitivity indicators.</p></div>
+<div class="p"><h3>Natural Language Policy Analysis</h3><p>Analysis of terrorism case evidence, intelligence reports, and legal submissions against CPS Counter-Terrorism Division guidance.</p></div>
+<div class="p"><h3>Predictive Analytics</h3><p>Terrorism prosecution success probability from evidence type, defendant profile, and legal precedent analysis.</p></div>
+<div class="p"><h3>Evidence Synthesis</h3><p>Intelligence evidence, surveillance material, and expert testimony into counter-terrorism prosecution dossiers.</p></div>
+<div class="p"><h3>Document Intelligence</h3><p>Extraction from TPIM applications, terrorism prosecution case files, and sensitive material schedules.</p></div>
+<div class="p"><h3>Stakeholder Reporting</h3><p>Counter-terrorism prosecution dashboards showing case volumes, conviction rates, and sentencing trends.</p></div>
+<div class="p"><h3>Real-time Monitoring</h3><p>Terrorism case progress tracking, TPIM renewal monitoring, and sensitive material handling compliance.</p></div>
+</div><div class="mt"><h4>MCP Tools</h4><div class="ml"><span class="t">mcp-govuk-search</span><span class="t">mcp-uk-legislation</span><span class="t">mcp-uk-regulator-intel</span><span class="t">mcp-hansard-search</span><span class="t">mcp-dsit-ai-safety</span><span class="t">mcp-cabinet-office-resilience</span></div></div></div></div>
+<div class="s" id="ep7"><div class="sh"><span class="en">Entry Point 07</span><h2>Fraud &amp; Economic Crime</h2></div><div class="sb"><div class="g">
+<div class="p"><h3>Compliance Automation</h3><p>Fraud Act 2006 prosecution compliance validation including fraud by false representation, failing to disclose information, and abuse of position charging criteria.</p></div>
+<div class="p"><h3>Risk Detection &amp; Early Warning</h3><p>Detection of complex fraud prosecution challenges via evidence volume, multi-jurisdictional issues, and expert witness availability analysis.</p></div>
+<div class="p"><h3>Natural Language Policy Analysis</h3><p>Analysis of fraud case documentation, financial analysis reports, and expert witness statements against CPS Fraud Division standards.</p></div>
+<div class="p"><h3>Predictive Analytics</h3><p>Fraud prosecution success probability from evidence complexity, defendant resources, and jury comprehension risk scoring.</p></div>
+<div class="p"><h3>Evidence Synthesis</h3><p>Financial evidence, digital forensics, and expert analysis into fraud prosecution dossiers.</p></div>
+<div class="p"><h3>Document Intelligence</h3><p>Extraction from fraud case files, financial investigation reports, and SFO/CPS joint prosecution records.</p></div>
+<div class="p"><h3>Stakeholder Reporting</h3><p>Fraud prosecution dashboards showing case pipeline, conviction rates, and value of assets recovered.</p></div>
+<div class="p"><h3>Real-time Monitoring</h3><p>Complex fraud case progress tracking, multi-agency coordination monitoring, and court listing management.</p></div>
+</div><div class="mt"><h4>MCP Tools</h4><div class="ml"><span class="t">mcp-govuk-search</span><span class="t">mcp-uk-legislation</span><span class="t">mcp-uk-regulator-intel</span><span class="t">mcp-hansard-search</span><span class="t">mcp-dsit-ai-safety</span><span class="t">mcp-cabinet-office-resilience</span></div></div></div></div>
+<div class="s" id="ep8"><div class="sh"><span class="en">Entry Point 08</span><h2>Hate Crime &amp; Community Impact</h2></div><div class="sb"><div class="g">
+<div class="p"><h3>Compliance Automation</h3><p>CPS hate crime prosecution compliance validation including aggravated offence charging, hostility evidence, and enhanced victim support obligations.</p></div>
+<div class="p"><h3>Risk Detection &amp; Early Warning</h3><p>Detection of hate crime prosecution gaps via reporting-to-conviction attrition analysis, undercharging patterns, and community intelligence.</p></div>
+<div class="p"><h3>Natural Language Policy Analysis</h3><p>Analysis of hate crime case evidence, community impact assessments, and victim statements against CPS Hate Crime Strategy.</p></div>
+<div class="p"><h3>Predictive Analytics</h3><p>Hate crime conviction prediction from hostility evidence type, witness reliability, and community impact scoring.</p></div>
+<div class="p"><h3>Evidence Synthesis</h3><p>Hate crime evidence, community impact statements, and victim support records into hate crime prosecution dossiers.</p></div>
+<div class="p"><h3>Document Intelligence</h3><p>Extraction from hate crime case files, community impact assessments, and CPS hate crime monitoring reports.</p></div>
+<div class="p"><h3>Stakeholder Reporting</h3><p>Hate crime prosecution dashboards showing case volumes, conviction rates, and protected characteristic breakdown.</p></div>
+<div class="p"><h3>Real-time Monitoring</h3><p>Hate crime case tracking, community monitoring group reporting, and victim communication compliance.</p></div>
+</div><div class="mt"><h4>MCP Tools</h4><div class="ml"><span class="t">mcp-govuk-search</span><span class="t">mcp-uk-legislation</span><span class="t">mcp-uk-regulator-intel</span><span class="t">mcp-hansard-search</span><span class="t">mcp-dsit-ai-safety</span><span class="t">mcp-cabinet-office-resilience</span></div></div></div></div>
+<div class="s" id="ep9"><div class="sh"><span class="en">Entry Point 09</span><h2>Digital &amp; Cyber Crime</h2></div><div class="sb"><div class="g">
+<div class="p"><h3>Compliance Automation</h3><p>Computer Misuse Act 1990 and digital evidence handling compliance validation including device seizure, forensic imaging, and continuity documentation.</p></div>
+<div class="p"><h3>Risk Detection &amp; Early Warning</h3><p>Detection of digital evidence integrity risks, cyber crime prosecution challenges, and forensic disclosure deficiencies.</p></div>
+<div class="p"><h3>Natural Language Policy Analysis</h3><p>Analysis of digital forensic reports, cyber crime case files, and expert testimony against CPS digital evidence standards.</p></div>
+<div class="p"><h3>Predictive Analytics</h3><p>Cyber crime prosecution success from evidence preservation quality, forensic analysis depth, and attribution certainty scoring.</p></div>
+<div class="p"><h3>Evidence Synthesis</h3><p>Digital forensic evidence, network analysis, and expert testimony into cyber crime prosecution dossiers.</p></div>
+<div class="p"><h3>Document Intelligence</h3><p>Extraction from digital forensic reports, device examination records, and cyber crime case management files.</p></div>
+<div class="p"><h3>Stakeholder Reporting</h3><p>Cyber crime prosecution dashboards showing case volumes, evidence processing timelines, and conviction rates.</p></div>
+<div class="p"><h3>Real-time Monitoring</h3><p>Digital evidence processing tracking, cyber crime case progress monitoring, and forensic disclosure compliance.</p></div>
+</div><div class="mt"><h4>MCP Tools</h4><div class="ml"><span class="t">mcp-govuk-search</span><span class="t">mcp-uk-legislation</span><span class="t">mcp-uk-regulator-intel</span><span class="t">mcp-hansard-search</span><span class="t">mcp-dsit-ai-safety</span><span class="t">mcp-cabinet-office-resilience</span></div></div></div></div>
+<div class="s" id="ep10"><div class="sh"><span class="en">Entry Point 10</span><h2>Organised Crime &amp; Gang Prosecutions</h2></div><div class="sb"><div class="g">
+<div class="p"><h3>Compliance Automation</h3><p>Serious Crime Act 2007 prosecution compliance validation including conspiracy charges, gang injunctions, and organised crime group prosecution strategies.</p></div>
+<div class="p"><h3>Risk Detection &amp; Early Warning</h3><p>Detection of organised crime prosecution risks via intelligence assessment, witness intimidation indicators, and evidence chain vulnerabilities.</p></div>
+<div class="p"><h3>Natural Language Policy Analysis</h3><p>Analysis of organised crime case strategies, intelligence packages, and prosecution submissions against CPS Serious Organised Crime guidance.</p></div>
+<div class="p"><h3>Predictive Analytics</h3><p>Organised crime prosecution success from evidence type, co-defendant cooperation, and jury trial complexity scoring.</p></div>
+<div class="p"><h3>Evidence Synthesis</h3><p>Intelligence evidence, surveillance material, and financial analysis into organised crime prosecution dossiers.</p></div>
+<div class="p"><h3>Document Intelligence</h3><p>Extraction from organised crime group mapping, prosecution strategies, and multi-agency coordination records.</p></div>
+<div class="p"><h3>Stakeholder Reporting</h3><p>Organised crime prosecution dashboards showing OCG disruption rates, prosecution outcomes, and asset recovery.</p></div>
+<div class="p"><h3>Real-time Monitoring</h3><p>Organised crime case progress tracking, witness protection monitoring, and multi-agency coordination compliance.</p></div>
+</div><div class="mt"><h4>MCP Tools</h4><div class="ml"><span class="t">mcp-govuk-search</span><span class="t">mcp-uk-legislation</span><span class="t">mcp-uk-regulator-intel</span><span class="t">mcp-hansard-search</span><span class="t">mcp-dsit-ai-safety</span><span class="t">mcp-cabinet-office-resilience</span></div></div></div></div>
+<div class="s" id="ep11"><div class="sh"><span class="en">Entry Point 11</span><h2>Workforce Development &amp; CPS Governance</h2></div><div class="sb"><div class="g">
+<div class="p"><h3>Compliance Automation</h3><p>CPS governance compliance validation including prosecutor competence standards, CPS Business Plan targets, and HM Crown Prosecution Inspectorate recommendation implementation.</p></div>
+<div class="p"><h3>Risk Detection &amp; Early Warning</h3><p>Detection of workforce capability gaps, prosecution quality concerns, and governance recommendation implementation delays.</p></div>
+<div class="p"><h3>Natural Language Policy Analysis</h3><p>Analysis of HMCPSI inspection reports, CPS business plans, and workforce development strategies against CPS operational standards.</p></div>
+<div class="p"><h3>Predictive Analytics</h3><p>Prosecution quality trends from caseload analysis, prosecutor experience levels, and case complexity metrics.</p></div>
+<div class="p"><h3>Evidence Synthesis</h3><p>HMCPSI findings, workforce data, and prosecution quality metrics into CPS governance performance dossiers.</p></div>
+<div class="p"><h3>Document Intelligence</h3><p>Extraction from HMCPSI inspection reports, CPS annual reports, and workforce development records.</p></div>
+<div class="p"><h3>Stakeholder Reporting</h3><p>CPS governance dashboards showing inspection outcomes, workforce metrics, and business plan target achievement.</p></div>
+<div class="p"><h3>Real-time Monitoring</h3><p>HMCPSI recommendation implementation tracking, workforce development milestone monitoring, and business plan KPI reporting.</p></div>
+</div><div class="mt"><h4>MCP Tools</h4><div class="ml"><span class="t">mcp-govuk-search</span><span class="t">mcp-uk-legislation</span><span class="t">mcp-uk-regulator-intel</span><span class="t">mcp-hansard-search</span><span class="t">mcp-dsit-ai-safety</span><span class="t">mcp-cabinet-office-resilience</span></div></div></div></div>
+<div class="s" id="ep12"><div class="sh"><span class="en">Entry Point 12</span><h2>Parliamentary Accountability &amp; Oversight</h2></div><div class="sb"><div class="g">
+<div class="p"><h3>Compliance Automation</h3><p>CPS obligations under Prosecution of Offences Act 1985, Justice Committee oversight requirements, and Attorney General superintendence obligations.</p></div>
+<div class="p"><h3>Risk Detection &amp; Early Warning</h3><p>PQs, select committee inquiries, and Attorney General correspondence for CPS prosecution policy and performance scrutiny.</p></div>
+<div class="p"><h3>Natural Language Policy Analysis</h3><p>Hansard debates, committee transcripts, and CPS annual reports for parliamentary accountability themes.</p></div>
+<div class="p"><h3>Predictive Analytics</h3><p>Parliamentary scrutiny directions from committee composition, justice policy priorities, and public concern trends.</p></div>
+<div class="p"><h3>Evidence Synthesis</h3><p>Committee evidence, NAO reports, and CPS annual report data into parliamentary briefings.</p></div>
+<div class="p"><h3>Document Intelligence</h3><p>Annual reports, government responses to committee recommendations, and Attorney General correspondence extraction.</p></div>
+<div class="p"><h3>Stakeholder Reporting</h3><p>Committee briefings, PQ drafting, and prosecution policy submissions.</p></div>
+<div class="p"><h3>Real-time Monitoring</h3><p>Hansard CPS mentions, committee schedules, and prosecution legislation tracking.</p></div>
+</div><div class="mt"><h4>MCP Tools</h4><div class="ml"><span class="t">mcp-govuk-search</span><span class="t">mcp-uk-legislation</span><span class="t">mcp-uk-regulator-intel</span><span class="t">mcp-hansard-search</span><span class="t">mcp-dsit-ai-safety</span><span class="t">mcp-cabinet-office-resilience</span></div></div></div></div>
+</div>
+<footer>
+<div class="br">🛡️ DEFONEOS</div>
+<p>UK Sovereign Public Services OS — Crown Prosecution Service Deep-Dive</p>
+<p>12 Entry Points × 8 AI Priorities × 6 MCP Tools = 96 Sovereign AI Capability Mappings</p>
+<p style="margin-top:6px;color:#555">Open-Source Sovereign Infrastructure for the UK</p>
+<div class="cr">
+<p>© Crown Copyright 2026 — Published under the Open Government Licence v3.0</p>
+<p>Contains public sector information licensed under the Open Government Licence v3.0</p>
+<p>DEFONEOS is not affiliated with the CPS or HM Government.</p>
+</div>
+</footer>
+</body>
+</html>

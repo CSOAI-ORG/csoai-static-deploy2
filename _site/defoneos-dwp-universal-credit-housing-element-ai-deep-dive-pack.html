@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1.0" name="viewport"/>
+<title>DEFONEOS — DWP Universal Credit Housing Element AI Deep-Dive Pack</title>
+<meta content="Sovereign AI governance of UK DWP Universal Credit Housing Element: LHA rate calculation, housing cost verification, direct payment to landlords, rent arrears prevention, supported housing, shared accommodation rates, benefit cap interaction. 12 entry points × 8 transformation priorities × 6 MCPs. UK-sovereign, audit-grade, AUKUS-compatible." name="description"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--ink:#0b1020;--bg:#050816;--panel:#0d1330;--line:#1a2050;--gold:#d4af37;--sov:#6dd5ff;--care:#4ade80;--warn:#fbbf24;--bad:#f87171;--fg:#e8eefc;--mut:#8a93b8}
+html,body{background:var(--bg);color:var(--fg);font:16px/1.6 -apple-system,system-ui,sans-serif}
+body{background:radial-gradient(ellipse 80% 50% at 50% -10%,rgba(109,213,255,0.12),transparent),var(--bg);min-height:100vh}
+.wrap{max-width:1280px;margin:0 auto;padding:48px 24px}
+header{text-align:center;margin-bottom:32px}
+.pill{display:inline-block;padding:4px 14px;border:1px solid var(--gold);border-radius:999px;font-size:12px;letter-spacing:0.1em;color:var(--gold);margin-bottom:16px}
+h1{font-size:clamp(36px,5vw,56px);line-height:1.1;letter-spacing:-0.02em;margin-bottom:16px;background:linear-gradient(180deg,#fff,#b8c2e8);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.sub{font-size:18px;color:var(--mut);max-width:820px;margin:0 auto 24px}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin:32px 0;padding:24px;background:var(--panel);border:1px solid var(--line);border-radius:16px}
+@media(max-width:800px){.stats{grid-template-columns:repeat(2,1fr)}}
+.stat{text-align:center}.stat .num{font-size:32px;font-weight:800;color:var(--sov)}.stat .label{font-size:11px;letter-spacing:0.15em;text-transform:uppercase;color:var(--mut);margin-top:4px}
+h2{margin:48px 0 24px;padding-bottom:12px;border-bottom:1px solid var(--line);font-size:28px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:20px;transition:all .2s;position:relative;overflow:hidden}
+.card::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:var(--accent,#6dd5ff)}
+.card:hover{transform:translateY(-3px);border-color:var(--accent);box-shadow:0 8px 24px rgba(0,0,0,0.3)}
+.card h3{font-size:17px;font-weight:700;margin-bottom:8px}
+.card p{font-size:13px;color:var(--mut);line-height:1.5}
+.tag{display:inline-block;background:rgba(109,213,255,0.1);border:1px solid rgba(109,213,255,0.3);color:var(--sov);padding:2px 8px;border-radius:4px;font-size:10px;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:8px}
+.redline{margin:48px 0;padding:24px;background:rgba(248,113,113,0.08);border:1px solid rgba(248,113,113,0.3);border-radius:12px}
+.redline h3{color:var(--bad);margin-bottom:12px;font-size:18px}
+.redline li{color:var(--fg);margin:8px 0 8px 20px;font-size:14px}
+.engagement{margin:48px 0;padding:24px;background:var(--panel);border:1px solid var(--line);border-radius:12px}
+.engagement h3{color:var(--sov);margin-bottom:12px;font-size:18px}
+.step{display:flex;align-items:flex-start;gap:12px;margin:12px 0;padding:12px;background:rgba(109,213,255,0.05);border-radius:8px}
+.step .num{width:32px;height:32px;border-radius:50%;background:var(--sov);color:var(--bg);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px;flex-shrink:0}
+footer{margin-top:64px;text-align:center;font-size:12px;color:var(--mut);padding-top:32px;border-top:1px solid var(--line)}
+footer a{color:var(--sov);text-decoration:none}
+</style>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Article","headline":"DEFONEOS — DWP Universal Credit Housing Element AI Deep-Dive Pack","url":"https://csoai.org/defoneos-dwp-universal-credit-housing-element-ai-deep-dive-pack.html","publisher":{"@type":"Organization","name":"CSOAI Ltd","url":"https://csoai.org"}}
+</script>
+<link href="https://csoai.org/defoneos-dwp-universal-credit-housing-element-ai-deep-dive-pack.html" rel="canonical"/>
+<meta content="DEFONEOS — DWP Universal Credit Housing Element AI Deep-Dive Pack" property="og:title"/>
+<meta content="Sovereign AI governance of UK DWP Universal Credit Housing Element: LHA rate calculation, housing cost verification, direct payment to landlords, rent arrears prevention, supported housing, shared accommodation rates, benefit cap interaction. 12 entry points × 8 transformation priorities × 6 MCPs. UK-sovereign, audit-grade, AUKUS-compatible." property="og:description"/>
+<link href="/favicon.svg" rel="icon" type="image/svg+xml"/>
+<!-- AI-SEO/AEO/GEO head block — DO NOT remove. AI crawlers (GPTBot, ClaudeBot, PerplexityBot) don't run JS; everything they need must be in raw HTML. -->
+<link href="https://csoai.org/defoneos-dwp-universal-credit-housing-element-ai-deep-dive-pack.html.llm.json" rel="alternate" title="LLM representation of this page" type="application/llm+json"/>
+<meta content="/llms.txt" name="llms-txt"/>
+<meta content="human-authored, machine-verifiable, Ed25519-signed" name="ai-content-declaration"/>
+<meta content="CSOAI Ltd (2026). DEFONEOS — DWP Universal Credit Housing Element AI Deep-Dive Pack. https://csoai.org/defoneos-dwp-universal-credit-housing-element-ai-deep-dive-pack.html" name="citation-policy"/>
+<meta content="2026-08-03T11:19:50+00:00" name="revised"/>
+<meta content="2026-08-03T11:19:50+00:00" property="article:modified_time"/>
+</head>
+<body>
+<div class="article50-banner" style="background:linear-gradient(90deg,#3a0f1a,#7a1f33,#3a0f1a);border-bottom:1px solid #ff5470;padding:10px 16px;text-align:center;font-size:13px;color:#ffd5dd;font-weight:500">EU AI Act Article 50 live 2 Aug 2026 — C2PA passport ready | <a href="/tools/article50-passport.html" style="color:#fff;text-decoration:underline;font-weight:700">Get yours →</a></div>
+<div class="wrap">
+<nav><a href="/">Home</a> <a href="/master.html">Master</a> <a href="/govbench.html">GovBench</a> <a href="/defoneos.html">Index</a> <a href="/sitemap.xml">Sitemap</a></nav>
+<header>
+<div class="pill">DEFONEOS × DWP × HOUSING ELEMENT</div>
+<h1>DWP Universal Credit Housing Element AI Deep-Dive Pack</h1>
+<p class="sub">Sovereign AI governance of UK DWP Universal Credit Housing Element: LHA rate calculation, housing cost verification, direct payment to landlords, rent arrears prevention, supported housing, shared accommodation rates, benefit cap interaction. 12 entry points × 8 transformation priorities × 6 MCPs. UK-sovereign, audit-grade, AUKUS-compatible.</p>
+<div class="stats">
+<div class="stat"><div class="num">12</div><div class="label">Entry Points</div></div>
+<div class="stat"><div class="num">8</div><div class="label">Transformation Priorities</div></div>
+<div class="stat"><div class="num">6</div><div class="label">MCP Servers</div></div>
+<div class="stat"><div class="num">6</div><div class="label">Red Lines</div></div>
+</div>
+</header>
+<h2>📋 12 Entry Points</h2>
+<div class="grid">
+<div class="card"><span class="tag">LHA Rates</span><h3>Local Housing Allowance Rate AI</h3><p>LHA rate calculation by broad rental market area. 30th percentile benchmarking. Annual LHA review automation. Room rate categorisation. Rent officer determination. Market evidence analysis. Exceptional circumstances review.</p></div>
+<div class="card"><span class="tag">Housing Verification</span><h3>Housing Cost Verification AI</h3><p>Tenancy agreement validation. Rent reasonableness assessment. UC housing element entitlement. Landlord verification. Duplicate claim detection. Evidence document OCR. Self-employed housing cost modelling.</p></div>
+<div class="card"><span class="tag">Direct Payments</span><h3>Landlord Direct Payment AI</h3><p>Managed payment to landlord eligibility. Alternative payment arrangement triggers. Tenant consent management. Landlord registration. Payment scheduling. Arrears threshold monitoring. Split payment calculation.</p></div>
+<div class="card"><span class="tag">Rent Arrears</span><h3>Rent Arrears Prevention AI</h3><p>Arrears early warning system. Housing cost shortfall detection. Discretionary Housing Payment routing. Landlord notification automation. Repayment plan generation. Tenant support signposting. Eviction risk scoring.</p></div>
+<div class="card"><span class="tag">Supported Housing</span><h3>Supported Housing Governance AI</h3><p>Refuge/short-term accommodation exemption. Specified accommodation verification. Intensive housing management cost. Care/support cost separation. Quality standard compliance. Local authority referral. Landlord accreditation check.</p></div>
+<div class="card"><span class="tag">Shared Accommodation</span><h3>Shared Accommodation Rate AI</h3><p>SAR eligibility determination (under 35). Room rate vs one-bedroom rate. Exempt category identification (care leavers, disabled, over 35). Joint tenant liability. HMO compliance verification. Bedroom entitlement calculation.</p></div>
+<div class="card"><span class="tag">Benefit Cap</span><h3>Benefit Cap Housing Interaction AI</h3><p>Housing element cap calculation. Exemption identification (working, disability, carer). Cap reduction sequencing. Grace period management. Cap impact modelling. Earnings threshold monitoring. Household composition tracking.</p></div>
+<div class="card"><span class="tag">Migration</span><h3>Housing Benefit to UC Migration AI</h3><p>HB-to-UC transition risk assessment. Housing cost gap identification. Transitional protection calculation. Run-on payment management. Legacy benefit interaction. Migration notice tracking. Digital claim support.</p></div>
+<div class="card"><span class="tag">Overpayments</span><h3>Housing Overpayment Recovery AI</h3><p>Housing element overpayment detection. Recovery from ongoing UC. Landlord recovery routes. Fraud vs error classification. Write-off criteria assessment. Hardship payment interaction. Cross-benefit recovery.</p></div>
+<div class="card"><span class="tag">Social Housing</span><h3>Social Housing Allocation AI</h3><p>Social housing rent calculation. Bedroom entitlement (spare room subsidy). Size criteria assessment. Disability-related adaptations. Foster carer exemption. Armed forces exemption. UC housing cost modelling.</p></div>
+<div class="card"><span class="tag">Data Governance</span><h3>Housing Data Governance AI</h3><p>DWP-HMRC landlord data exchange. Rent registration data quality. LHA data transparency. Housing claim audit trail. GDPR housing data compliance. Tenant privacy protection. Cross-department data sharing protocol.</p></div>
+<div class="card"><span class="tag">Parliamentary</span><h3>Housing Policy Parliamentary AI</h3><p>Housing benefit expenditure forecasting. Homelessness prevention metrics. LHA adequacy reporting. Regional rent gap analysis. Housing cost burden reporting. Select Committee evidence. Policy reform impact modelling.</p></div>
+</div>
+<h2>⚡ 8 Transformation Priorities</h2>
+<div class="grid">
+<div class="card"><h3>1. Compassionate LHA Communication</h3><p>Advance LHA rate change notification (minimum 3 months). No surprise housing cost reductions. Clear personalised impact statements. Area-specific rent market information. Support pathways for shortfalls.</p></div>
+<div class="card"><h3>2. Full Housing Cost Transparency</h3><p>Real-time housing element calculation visibility. LHA rate comparison tools. Rent reasonableness evidence. Bedroom entitlement explanation. No hidden deductions without notice.</p></div>
+<div class="card"><h3>3. Digital-First Housing Claims</h3><p>Pre-populated housing element from tenancy data. Landlord verification via HMRC integration. Rent amount self-declaration with spot-check. 48-hour housing element payment setup. Paper-free evidence submission.</p></div>
+<div class="card"><h3>4. Arrears Prevention Priority</h3><p>Proactive rent shortfall alerting before arrears accrue. Automatic DHP referral at risk threshold. Landlord engagement before rent default. Emergency housing cost support pathway. Eviction prevention as measurable outcome.</p></div>
+<div class="card"><h3>5. Supported Housing Protection</h3><p>Zero tolerance for losing supported housing placement due to UC delays. Priority payment processing for refuge/supported accommodation. Landlord accreditation verification before payment. Care cost separation transparency.</p></div>
+<div class="card"><h3>6. Shared Accommodation Fairness</h3><p>Age-appropriate housing rate communication. Clear exemption pathway for care leavers and disabled claimants. Room rate vs one-bedroom rate transparency. No homelessness caused by SAR application.</p></div>
+<div class="card"><h3>7. Migration Safety Net</h3><p>No housing cost gap during HB-to-UC transition. Transitional protection for housing element. 2-week HB run-on to UC bridge. Migration support claimant commitment relaxation.</p></div>
+<div class="card"><h3>8. Social Housing Dignity</h3><p>No bedroom tax without full disability assessment. Spare room subsidy explanation with alternatives. Foster carer and armed forces exemption awareness. Housing cost modelling before move.</p></div>
+</div>
+<h2>🔧 6 MCP Servers</h2>
+<div class="grid">
+<div class="card"><span class="tag">LHA Engine</span><h3>lha-rate-mcp</h3><p>LHA rate calculation. BRMA mapping. 30th percentile. Annual review. Room rate. Rent officer. Market evidence.</p></div>
+<div class="card"><span class="tag">Housing Verification</span><h3>housing-verification-mcp</h3><p>Tenancy validation. Rent reasonableness. Landlord check. Duplicate detection. OCR evidence. Self-employment modelling.</p></div>
+<div class="card"><span class="tag">Direct Payment</span><h3>landlord-direct-payment-mcp</h3><p>Managed payment eligibility. Alternative arrangement. Consent. Registration. Scheduling. Arrears threshold. Split payment.</p></div>
+<div class="card"><span class="tag">Arrears Prevention</span><h3>rent-arrears-mcp</h3><p>Early warning. Shortfall detection. DHP routing. Landlord notification. Repayment plan. Support signposting. Risk scoring.</p></div>
+<div class="card"><span class="tag">Migration</span><h3>hb-uc-migration-mcp</h3><p>Transition risk. Gap identification. Transitional protection. Run-on. Legacy interaction. Migration notice. Digital support.</p></div>
+<div class="card"><span class="tag">Parliamentary</span><h3>housing-parliamentary-mcp</h3><p>Expenditure forecasting. Homelessness metrics. LHA adequacy. Regional gap analysis. Cost burden. Committee evidence. Reform modelling.</p></div>
+</div>
+<div class="redline">
+<h3>🚫 Red Lines (Never Crossed)</h3>
+<ul>
+<li>❌ No LHA rate reduction notified less than 3 months in advance — tenants need planning time for housing costs</li>
+<li>❌ No housing element suspended without alternative payment arrangement — no homelessness by administrative error</li>
+<li>❌ No supported housing placement lost due to UC processing delays — priority processing mandatory</li>
+<li>❌ No rent arrears accrued without proactive DHP referral — prevention is the standard, not recovery</li>
+<li>❌ No bedroom tax applied without full disability-related needs assessment — dignity over arithmetic</li>
+<li>❌ No HB-to-UC migration without transitional housing cost protection — zero gap is the standard</li>
+</ul>
+</div>
+<div class="engagement">
+<h3>🤝 5-Step Engagement Model</h3>
+<div class="step"><div class="num">1</div><div><strong>Discovery:</strong> Map UC housing element caseload complexity. Assess LHA adequacy across BRMAs. Benchmark housing claim processing times. Identify rent arrears hotspots.</div></div>
+<div class="step"><div class="num">2</div><div><strong>Governance Design:</strong> Deploy DEFONEOS MCP servers against housing element use cases. Configure arrears prevention automation. Establish housing cost governance framework.</div></div>
+<div class="step"><div class="num">3</div><div><strong>Pilot:</strong> Run 90-day pilot across 3 BRMAs. Measure arrears prevention rates. Collect landlord and tenant satisfaction feedback.</div></div>
+<div class="step"><div class="num">4</div><div><strong>Scale:</strong> Roll out nationally across all UC housing element operations. Integrate with HMRC landlord data. Deploy LHA automation nationally.</div></div>
+<div class="step"><div class="num">5</div><div><strong>Assure:</strong> Continuous audit-grade housing governance reporting. LHA adequacy transparency. Parliamentary homelessness metrics. Housing cost burden monitoring.</div></div>
+</div>
+<div class="sovereign-cta-strip"><a href="/defoneos-owem-rfq">DEFONEOS OWEM RFQ</a> | <a href="/defoneos-article-50">Article 50 Passport</a></div>
+<footer>
+<p>DEFONEOS — Sovereign Public Services OS · <a href="https://csoai.org">csoai.org</a> · UK-sovereign. Audit-grade. AUKUS-compatible.</p>
+<p style="margin-top:8px">© 2026 CSOAI Ltd (UK 16939677) · <a href="https://csoai.org/sitemap.xml">Sitemap</a> · <a href="https://csoai.org/defoneos.html">Index</a></p>
+— SIGIL-chain verified.</footer>
+</div>
+<footer><a href="/master.html">SOV33_OWEM_HUB</a></footer>
+</body>
+</html>

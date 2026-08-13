@@ -1,0 +1,21 @@
+{
+ "@context": "https://csoai.org/llm-context.json",
+ "type": "LLMPageSummary",
+ "url": "https://csoai.org/gspc-det.html",
+ "title": "GSPC-DET — detector interoperability | CSOAI GSPC",
+ "description": "The Code of Practice quality criteria for watermark detection, as machine-readable predicates. A protocol, not a measured matrix — no score exists yet.",
+ "headings": [
+  "GSPC-DET — detector interoperability",
+  "DetBench — the protocol"
+ ],
+ "text": "GSPC-DET — detector interoperability | CSOAI GSPC CSOAI GovBench ProvBench Department packs SPEC GSPC-DET — detector interoperability Axis: detector · items: 6 · status: SPEC The Code of Practice quality criteria for watermark detection, as machine-readable predicates. A protocol, not a measured matrix — no score exists yet. Dataset: csoai/gspc-det · Runnable Space: csoai-gspc-det · Licence Apache-2.0 SPEC · NO SCORE EXISTS YET DetBench — the protocol A published protocol, not a measured matrix. No score exists yet. By 2 February 2027 the ~190 signatories of the EU Code of Practice must make watermark detection interoperable, and the Code concedes common evaluation standards have yet to emerge. id criterion predicate question labels why det-001 effectiveness detects_own_marking Given an asset marked by provider P, does P's own detector return DETECTED? DETECTED, NOT_DETECTED, ERROR Baseline. A detector that cannot read its own marking fails before interoperability is in question. det-002 interoperability detects_foreign_marking Given an asset marked by provider Q, does P's detector return DETECTED? DETECTED, NOT_DETECTED, ERROR This is the Commitment 2 obligation. It is the one nobody currently measures. det-003 interoperability agrees_on_negative Given an unmarked asset, do P and Q both return NOT_DETECTED? AGREE, DISAGREE, ERROR False positives are the failure mode that destroys trust in a detector network. det-004 robustness survives_transform After a declared transform (recompress, crop, resize, screenshot, re-encode), does the detector still return DETECTED? SURVIVES, DESTROYED, ERROR Shares its transform ladder with GSPC provenance (ProvBench), so the two axes are comparable. det-005 reliability stable_across_runs Across k repeated runs on the identical asset, is the verdict identical every time? STABLE, UNSTABLE, ERROR A non-deterministic detector cannot support a compliance claim. det-006 effectiveness declares_absence_honestly Where no marking is present, does the detector say so rather than guessing? DECLARES_ABSENT, GUESSES, ERROR The UNMEASURED discipline, applied to detectors. 6 predicates · csoai/gspc-det · published as data so a harness can consume it before any measurement exists · measurement, not certification. What this is, and is not. CSOAI measures . It issues no conformity marks, holds no accreditation, and has no enforcement powers — those are conferred by statute on market-surveillance authorities and the AI Office. Nothing on this page is a certification, an attestation of compliance, or legal advice. Denominator. This axis has 6 items, below the usable_n = 30 floor CSOAI requires before attaching a confidence interval to a number. No score is quoted here, for any model including our own.",
+ "text_truncated": false,
+ "register": {
+  "role": "measurement_and_attestation_support",
+  "csoai_certifies_systems": false,
+  "csoai_is_a_notified_body": false,
+  "csoai_has_enforcement_powers": false,
+  "note": "CSOAI measures and publishes evidence. It issues no conformity marks and holds no accreditation. Nothing here is certification or legal advice."
+ },
+ "generated_by": "make_llm_json.py"
+}

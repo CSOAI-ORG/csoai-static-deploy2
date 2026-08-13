@@ -1,0 +1,26 @@
+{
+ "@context": "https://csoai.org/llm-context.json",
+ "type": "LLMPageSummary",
+ "url": "https://csoai.org/oowm-demo.html",
+ "title": "csoai/oowm-router-demo",
+ "description": "csoai/oowm-router-demo. A sovereign, audit-grade CSOAI surface: measurement, not certification — every figure traces to a signed, verifiable record.",
+ "headings": [
+  "csoai/oowm-router-demo OOWM",
+  "12-Benchmark Routing Matrix (click row for details)",
+  "How to probe",
+  "Sovereign wins (where the router earns its keep)",
+  "Honest ties (no sovereign lead)",
+  "Why this is a \"living-training-attestation\", not a certification",
+  "Companion artifacts"
+ ],
+ "text": "csoai/oowm-router-demo csoai/oowm-router-demo OOWM The OOWM router is CSOAI's master substrate for sovereign AI. It does not generate text itself — it decides which sovereign model handles a given task, then wraps the response in SIGIL attestation per CSOAI's canon. This Space lets you probe the router. The routing matrix below is grounded in the 2026-08-08 overnight benchmark spray (Ed25519-signed, verifiable). Live router : given a task type, the OOWM router picks the highest-scoring sovereign from the open-source pool. Care Floor 0.95 is enforced. Deliberation on every consequential action. 12-Benchmark Routing Matrix (click row for details) Benchmark sov-gate-ft2 qwen2.5:1.5b falcon3:7b Route xstest-v2-copy 0.770 0.360 0.600 sov-gate-ft2 AgentHarm 0.980 0.810 0.990 falcon3:7b BeaverTails 0.540 0.490 0.680 falcon3:7b civil_comments 0.920 0.920 0.920 sov-gate-ft2 (tie) hh-rlhf 1.000 1.000 0.810 sov-gate-ft2 (tie) toxic-chat 0.520 0.520 0.520 any (3-way tie) truthful_qa 0.010 0.030 0.010 qwen2.5:1.5b super_glue (boolq) 0.450 0.480 0.490 falcon3:7b race 0.000 0.060 0.020 qwen2.5:1.5b legalbench 0.180 0.240 0.070 qwen2.5:1.5b gspc-art5 (sovereign) 0.056 0.111 0.028 qwen2.5:1.5b Aggregate (n=1131) 0.477 0.441 0.454 sov-gate-ft2 How to probe Pick a task type. The router returns the model it would select, the predicted win-condition, and the SIGIL wrapper format. (This is a static demo — the real router at sov-brain-2 pod executes against the full model pool.) Task type selector Refusal calibration (safe vs unsafe prompts) Safety classification (BeaverTails-style) Agentic refusal (multi-step tasks) Toxicity detection Factual Q&A (world knowledge) Reading comprehension Legal reasoning Compliance classification (gspc-art5) Route Routed model Predicted n_measured Predicted accuracy SIGIL wrapper Care Floor check Sovereign wins (where the router earns its keep) xstest-v2-copy : +41 pts over qwen2.5 baseline. DECISIVE AgentHarm : +17 pts over qwen2.5 baseline, ties falcon3. DEFENSIBLE Honest ties (no sovereign lead) civil_comments, hh-rlhf, toxic-chat — 3-way tie, all models competent on these truthful_qa, race, legalbench, gspc-art5 — all models weak; 494M class can't do world-knowledge tasks Why this is a \"living-training-attestation\", not a certification Per CSOAI register canon: Capability claims come from post-training measurement, never from training data UNMEASURED ≠ fail — three outcomes (correct, wrong, UNMEASURED), never two No claim of certification, accreditation, or enforcement authority Every figure traces to a signed, verifiable record (Ed25519 in companion repo) Companion artifacts csoai/oowm-router — the router model card csoai/oowm-runtime — the runtime code csoai/oowm-substrate-v4 — the 33-doc v4 seed csoai/gspc-normalized — unified governance schema csoai/Council-34-1p5b-vs-baseline — side-by-side predictions csoai/Council-34-1p5b — primary sovereign referenced CSOAI Ltd · UK company 16939677 · Apache-2.0 (this repo) · MIT (oowm_runtime.py source) · Apache-2.0 (Council-34-1p5b weights). Router is the master substrate; sovereign models are interchangeable. Care Floor 0.95 enforced. Living-training-attestation, not a certification.",
+ "text_truncated": false,
+ "register": {
+  "role": "measurement_and_attestation_support",
+  "csoai_certifies_systems": false,
+  "csoai_is_a_notified_body": false,
+  "csoai_has_enforcement_powers": false,
+  "note": "CSOAI measures and publishes evidence. It issues no conformity marks and holds no accreditation. Nothing here is certification or legal advice."
+ },
+ "generated_by": "make_llm_json.py"
+}

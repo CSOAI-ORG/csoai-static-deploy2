@@ -1,0 +1,24 @@
+{
+ "@context": "https://csoai.org/llm-context.json",
+ "type": "LLMPageSummary",
+ "url": "https://csoai.org/blog-eu-ai-act-art50-state.html",
+ "title": "EU AI Act Article 50, measured: what the signed-passport instrumentation shows | CSOAI",
+ "description": "CSOAI runs an EU AI Act Article 50 passport instrument over 417 statutory provisions. What it found, and what",
+ "headings": [
+  "EU AI Act Article 50, measured",
+  "The instrument",
+  "What the measurement shows",
+  "Why the honest answer matters",
+  "Boundary"
+ ],
+ "text": "EU AI Act Article 50, measured: what the signed-passport instrumentation shows | CSOAI Home Blog ProvBench Audit EU AI Act Article 50, measured This is a measurement note , not a prediction. It describes the instrument CSOAI runs and the most useful thing the instrument has produced so far — a concrete, verifiable answer to the question \"what actually survives a real publish-and-distribute pipeline in the wild?\" The instrument CSOAI maintains a signed Article 50 passport instrument that evaluates AI outputs against 417 statutory provisions , crosswalked across the EU, UK and US. Every result is Ed25519-signed so a third party can verify the record without trusting us. The harness is frozen before the run and the split between practice and held-out items is dictated by a public, stable salt — not chosen by us after the fact. What the measurement shows The most useful single result is ProvBench : our pre-registered measure of whether an Article 50 provenance marking survives the transformations an asset actually goes through (renaming, re-embedding, re-wrapping, re-distribution). The headline is deliberately blunt rather than promotional: 0 of 20 embedded provenance manifests survived any measured transform. That is a failure result, and it is the point. A transparency obligation that can be stripped by a trivial transformation, without detection, is not yet a transparency obligation in practice. Measuring the failure is the first step toward an instrument that detects it. Why the honest answer matters For a market launch, the temptation is to publish only the strong accuracy numbers. We publish the failure because the whole thesis of the measurement body is routing each layer to its measured strength rather than asserting relative superiority. A provenance system that cannot be stripped is useful; one that merely claims it cannot be stripped is not. The signed, recompute-able record is what lets a buyer check both claims for themselves. Boundary This is an engineering measurement, not legal advice. The Article 50 passport is an instrument we built; it is not a legal certification and CSOAI does not claim to issue certifications. We make the evidence layer cheaper and auditable. CSOAI Ltd · UK company 16939677 · Every published figure traces to a signed, verifiable record.",
+ "text_truncated": false,
+ "register": {
+  "role": "measurement_and_attestation_support",
+  "csoai_certifies_systems": false,
+  "csoai_is_a_notified_body": false,
+  "csoai_has_enforcement_powers": false,
+  "note": "CSOAI measures and publishes evidence. It issues no conformity marks and holds no accreditation. Nothing here is certification or legal advice."
+ },
+ "generated_by": "make_llm_json.py"
+}

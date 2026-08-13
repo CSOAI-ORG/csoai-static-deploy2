@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1.0" name="viewport"/>
+<title>DEFONEOS — DWP Pension Credit AI Deep-Dive Pack</title>
+<meta content="Sovereign AI governance of UK DWP Pension Credit entitlement, Guarantee Credit, Savings Credit, housing costs, mixed-age couple rules, and take-up strategy. 12 entry points × 8 priorities × 6 MCPs. UK-sovereign, audit-grade, AUKUS-compatible." name="description"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--ink:#0b1020;--bg:#050816;--panel:#0d1330;--line:#1a2050;--gold:#d4af37;--sov:#6dd5ff;--care:#4ade80;--warn:#fbbf24;--bad:#f87171;--fg:#e8eefc;--mut:#8a93b8}
+html,body{background:var(--bg);color:var(--fg);font:16px/1.6 -apple-system,system-ui,sans-serif}
+body{background:radial-gradient(ellipse 80% 50% at 50% -10%,rgba(109,213,255,0.12),transparent),var(--bg);min-height:100vh}
+.wrap{max-width:1280px;margin:0 auto;padding:48px 24px}
+header{text-align:center;margin-bottom:32px}
+.pill{display:inline-block;padding:4px 14px;border:1px solid var(--gold);border-radius:999px;font-size:12px;letter-spacing:0.1em;color:var(--gold);margin-bottom:16px}
+h1{font-size:clamp(36px,5vw,56px);line-height:1.1;letter-spacing:-0.02em;margin-bottom:16px;background:linear-gradient(180deg,#fff,#b8c2e8);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.sub{font-size:18px;color:var(--mut);max-width:820px;margin:0 auto 24px}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin:32px 0;padding:24px;background:var(--panel);border:1px solid var(--line);border-radius:16px}
+@media(max-width:800px){.stats{grid-template-columns:repeat(2,1fr)}}
+.stat{text-align:center}.stat .num{font-size:32px;font-weight:800;color:var(--sov)}.stat .label{font-size:11px;letter-spacing:0.15em;text-transform:uppercase;color:var(--mut);margin-top:4px}
+h2{margin:48px 0 24px;padding-bottom:12px;border-bottom:1px solid var(--line);font-size:28px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:20px;transition:all .2s;position:relative;overflow:hidden}
+.card::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:var(--accent,#6dd5ff)}
+.card:hover{transform:translateY(-3px);border-color:var(--accent);box-shadow:0 8px 24px rgba(0,0,0,0.3)}
+.card h3{font-size:17px;font-weight:700;margin-bottom:8px}
+.card p{font-size:13px;color:var(--mut);line-height:1.5}
+.tag{display:inline-block;background:rgba(109,213,255,0.1);border:1px solid rgba(109,213,255,0.3);color:var(--sov);padding:2px 8px;border-radius:4px;font-size:10px;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:8px}
+.redline{margin:48px 0;padding:24px;background:rgba(248,113,113,0.08);border:1px solid rgba(248,113,113,0.3);border-radius:12px}
+.redline h3{color:var(--bad);margin-bottom:12px;font-size:18px}
+.redline li{color:var(--fg);margin:8px 0 8px 20px;font-size:14px}
+.engagement{margin:48px 0;padding:24px;background:var(--panel);border:1px solid var(--line);border-radius:12px}
+.engagement h3{color:var(--sov);margin-bottom:12px;font-size:18px}
+.step{display:flex;align-items:flex-start;gap:12px;margin:12px 0;padding:12px;background:rgba(109,213,255,0.05);border-radius:8px}
+.step .num{width:32px;height:32px;border-radius:50%;background:var(--sov);color:var(--bg);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px;flex-shrink:0}
+footer{margin-top:64px;text-align:center;font-size:12px;color:var(--mut);padding-top:32px;border-top:1px solid var(--line)}
+footer a{color:var(--sov);text-decoration:none}
+</style>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "TechArticle", "headline": "DWP Pension Credit AI Deep-Dive Pack — DEFONEOS by CSOAI", "description": "Independent AI governance mapping and measurement analysis for DWP Pension Credit. Measurement, not certification — every figure traces to a signed, verifiable record.", "author": {"@type": "Organization", "name": "CSOAI Ltd", "url": "https://csoai.org"}, "publisher": {"@type": "Organization", "name": "CSOAI Ltd", "url": "https://csoai.org"}, "isAbout": {"@type": "GovernmentOrganization", "name": "DWP Pension Credit"}, "url": "https://www.csoai.org/defoneos-dwp-pension-credit-ai-deep-dive-pack.html"}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "CSOAI", "item": "https://www.csoai.org/"}, {"@type": "ListItem", "position": 2, "name": "DEFONEOS", "item": "https://www.csoai.org/arena-hub.html"}, {"@type": "ListItem", "position": 3, "name": "DWP Pension Credit AI Deep-Dive Pack"}]}</script>
+<link href="https://csoai.org/defoneos-dwp-pension-credit-ai-deep-dive-pack.html" rel="canonical"/>
+<meta content="DEFONEOS — DWP Pension Credit AI Deep-Dive Pack" property="og:title"/>
+<meta content="CSOAI sovereign AI governance deep-dive: Pension Credit, Guarantee Credit, Savings Credit, take-up strategy. 12 entry points × 8 priorities × 6 MCPs." property="og:description"/>
+<link href="/favicon.svg" rel="icon" type="image/svg+xml"/>
+<!-- AI-SEO/AEO/GEO head block — DO NOT remove. AI crawlers (GPTBot, ClaudeBot, PerplexityBot) don't run JS; everything they need must be in raw HTML. -->
+<link href="https://csoai.org/defoneos-dwp-pension-credit-ai-deep-dive-pack.html.llm.json" rel="alternate" title="LLM representation of this page" type="application/llm+json"/>
+<meta content="/llms.txt" name="llms-txt"/>
+<meta content="human-authored, machine-verifiable, Ed25519-signed" name="ai-content-declaration"/>
+<meta content="CSOAI Ltd (2026). DEFONEOS — DWP Pension Credit AI Deep-Dive Pack. https://csoai.org/defoneos-dwp-pension-credit-ai-deep-dive-pack.html" name="citation-policy"/>
+<meta content="2026-08-02T10:26:43+00:00" name="revised"/>
+<meta content="2026-08-02T10:26:43+00:00" property="article:modified_time"/>
+</head>
+<body>
+<div class="article50-banner" style="background:linear-gradient(90deg,#3a0f1a,#7a1f33,#3a0f1a);border-bottom:1px solid #ff5470;padding:10px 16px;text-align:center;font-size:13px;color:#ffd5dd;font-weight:500">EU AI Act Article 50 live 2 Aug 2026 — C2PA passport ready | <a href="/tools/article50-passport.html" style="color:#fff;text-decoration:underline;font-weight:700">Get yours →</a></div>
+<div class="wrap">
+<nav><a href="/">Home</a> <a href="/master.html">Master</a> <a href="/govbench.html">GovBench</a> <a href="/defoneos.html">Index</a> <a href="/sitemap.xml">Sitemap</a></nav>
+<header>
+<div class="pill">DEFONEOS × DWP × PENSION CREDIT</div>
+<h1>DWP Pension Credit AI Deep-Dive Pack</h1>
+<p class="sub">Sovereign AI governance of DWP Pension Credit entitlement, Guarantee Credit and Savings Credit calculation, housing costs integration, mixed-age couple rules, and take-up strategy. 12 entry points × 8 transformation priorities × 6 MCPs. Audit-grade. Signed. UK-sovereign.</p>
+<div class="stats">
+<div class="stat"><div class="num">12</div><div class="label">Entry Points</div></div>
+<div class="stat"><div class="num">8</div><div class="label">Transformation Priorities</div></div>
+<div class="stat"><div class="num">6</div><div class="label">MCP Servers</div></div>
+<div class="stat"><div class="num">7</div><div class="label">Backbone Orgs</div></div>
+</div>
+</header>
+<h2>📋 12 Entry Points</h2>
+<div class="grid">
+<div class="card"><span class="tag">Guarantee Credit</span><h3>Guarantee Credit Calculation AI</h3><p>Minimum income guarantee assessment. Applicable amount calculation. Dependent addition. Severe disability addition. Carer addition. Savings credit taper automation.</p></div>
+<div class="card"><span class="tag">Savings Credit</span><h3>Savings Credit Assessment AI</h3><p>Qualifying income calculation. Savings credit threshold. Earnings disregard. Pension income assessment. Capital rules compliance. Savings credit maximum calculation.</p></div>
+<div class="card"><span class="tag">Housing Costs</span><h3>Housing Costs Integration AI</h3><p>Housing benefit passporting. Service charges assessment. Eligible rent calculation. Non-dependant deductions. Supported housing rules. Council tax reduction linkage.</p></div>
+<div class="card"><span class="tag">Mixed-Age Couples</span><h3>Mixed-Age Couple Rules AI</h3><p>State Pension age verification. Mixed-age couple UC transition. Transitional protection calculation. Partner income assessment. Claim timing optimisation. Legacy benefit protection.</p></div>
+<div class="card"><span class="tag">Take-Up Strategy</span><h3>Pension Credit Take-Up AI</h3><p>Eligibility estimation engine. Non-claimant identification. Outreach targeting. Application simplification. Evidence requirements reduction. Proxy eligibility scoring.</p></div>
+<div class="card"><span class="tag">Capital &amp; Savings</span><h3>Capital Assessment AI</h3><p>Tariff income calculation. Deprivation of capital rules. Notional capital assessment. Property disregard. Business asset disregard. Investment valuation.</p></div>
+<div class="card"><span class="tag">Pension Integration</span><h3>State Pension Integration AI</h3><p>State Pension amount verification. Deferral credit assessment. Occupational pension assessment. Pension credit top-up calculation. Winter fuel payment eligibility. Christmas bonus routing.</p></div>
+<div class="card"><span class="tag">Overpayment Recovery</span><h3>Pension Credit Overpayment AI</h3><p>Overpayment detection. Recovery rate assessment. Administrative error identification. Fraud referral routing. Hardship assessment. Write-off criteria evaluation.</p></div>
+<div class="card"><span class="tag">Fraud &amp; Error</span><h3>Pension Credit Counter-Fraud AI</h3><p>Risk scoring automation. Capital undeclaration detection. Relationship status verification. Income mismatch alerts. Cross-benefit consistency. Compliance action routing.</p></div>
+<div class="card"><span class="tag">Appeals &amp; MR</span><h3>Pension Credit Appeals AI</h3><p>Appeal merit assessment. Evidence compilation support. Tribunal preparation. Decision reversal tracking. Outcome analytics. Systemic error identification.</p></div>
+<div class="card"><span class="tag">Data</span><h3>Pension Credit Data Governance AI</h3><p>Entitlement dashboard. Take-up rate monitoring. Award accuracy metrics. Caseload forecasting. Regional disparity analysis. Privacy compliance reporting.</p></div>
+<div class="card"><span class="tag">Parliamentary</span><h3>Pension Credit Parliamentary AI</h3><p>Statistics publication automation. Poverty impact assessment. Policy change modelling. Select Committee evidence. Winter fuel integration reporting. Reform effectiveness metrics.</p></div>
+</div>
+<h2>⚡ 8 Transformation Priorities</h2>
+<div class="grid">
+<div class="card"><h3>1. Take-Up Maximisation</h3><p>Identify and contact all eligible non-claimants. Simplify application process. Remove barriers to claiming. Target 100% take-up of Guarantee Credit.</p></div>
+<div class="card"><h3>2. Digital Inclusion</h3><p>Accessible digital services for older claimants. Telephone and paper alternatives maintained. Assisted digital support. Trusted person access.</p></div>
+<div class="card"><h3>3. Fraud Prevention Without Harassment</h3><p>Evidence-based risk scoring. No blanket investigations of pensioners. Proportionate compliance. Dignity-first approach.</p></div>
+<div class="card"><h3>4. Housing Cost Protection</h3><p>Full housing costs passported. No pensioner evicted due to benefit errors. Supported housing rules simplified. Service charges covered.</p></div>
+<div class="card"><h3>5. Mixed-Age Couple Fairness</h3><p>Clear transition rules. No cliff-edge benefit drops. Transitional protection honoured. Timing advice available.</p></div>
+<div class="card"><h3>6. Overpayment Compassion</h3><p>Reasonable recovery rates. No hardship from recovery. Administrative error write-off. Dignified debt recovery.</p></div>
+<div class="card"><h3>7. Parliamentary Transparency</h3><p>Real-time take-up dashboard. Regional disparity reporting. Poverty impact metrics. Policy change modelling.</p></div>
+<div class="card"><h3>8. Interoperability</h3><p>Seamless State Pension integration. Council tax reduction linkage. Winter fuel automatic routing. NHS prescription passport.</p></div>
+</div>
+<h2>🔧 6 MCP Servers</h2>
+<div class="grid">
+<div class="card"><span class="tag">Guarantee Credit</span><h3>dwp-guarantee-credit-calculator-mcp</h3><p>Minimum income guarantee. Applicable amounts. Additions. Taper. Assessment periods.</p></div>
+<div class="card"><span class="tag">Savings Credit</span><h3>dwp-savings-credit-assessment-mcp</h3><p>Qualifying income. Threshold. Disregards. Capital rules. Maximum calculation.</p></div>
+<div class="card"><span class="tag">Take-Up</span><h3>dwp-pension-credit-take-up-mcp</h3><p>Eligibility estimation. Non-claimant identification. Outreach targeting. Proxy scoring.</p></div>
+<div class="card"><span class="tag">Capital</span><h3>dwp-pension-capital-assessment-mcp</h3><p>Tariff income. Deprivation rules. Notional capital. Property. Investments.</p></div>
+<div class="card"><span class="tag">Counter-Fraud</span><h3>dwp-pension-credit-counter-fraud-mcp</h3><p>Risk scoring. Capital detection. Relationship verification. Income mismatch.</p></div>
+<div class="card"><span class="tag">Accountability</span><h3>dwp-pension-credit-accountability-mcp</h3><p>Take-up dashboard. Award accuracy. Caseload forecast. Parliamentary reporting.</p></div>
+</div>
+<div class="redline">
+<h3>🚫 Red Lines (Never Crossed)</h3>
+<ul>
+<li>❌ No pensioner left without income — Guarantee Credit entitlement must be auto-assessed for all State Pension recipients</li>
+<li>❌ No recovery of overpayments caused by DWP administrative error without full write-off consideration</li>
+<li>❌ No mixed-age couple transition without written transitional protection calculation and 90-day notice</li>
+<li>❌ No capital deprivation allegation without evidence of intentional deprivation and claimant interview</li>
+<li>❌ No compliance investigation targeting pensioners without risk-scored evidence threshold and dignity protocol</li>
+<li>❌ No Winter Fuel Payment disconnection from Pension Credit without explicit claimant consent and alternative routing</li>
+</ul>
+</div>
+<div class="engagement">
+<h3>🤝 5-Step Engagement Model</h3>
+<div class="step"><div class="num">1</div><div><strong>Discovery:</strong> Map Pension Credit caseload. Assess take-up rates. Benchmark award accuracy. Identify eligibility gaps.</div></div>
+<div class="step"><div class="num">2</div><div><strong>Governance Design:</strong> Deploy DEFONEOS MCP servers against Pension Credit use cases. Configure entitlement and take-up protocols. Establish fairness governance.</div></div>
+<div class="step"><div class="num">3</div><div><strong>Pilot:</strong> Run 90-day pilot across 3 Pension Credit centres. Measure take-up uplift and award accuracy. Collect claimant and assessor feedback.</div></div>
+<div class="step"><div class="num">4</div><div><strong>Scale:</strong> Roll out across all Pension Credit operations. Integrate with DWP Digital platform. Deploy across the pensioner benefit ecosystem.</div></div>
+<div class="step"><div class="num">5</div><div><strong>Assure:</strong> Continuous audit-grade Pension Credit governance reporting. Take-up transparency. Parliamentary evidence generation. Poverty impact metrics.</div></div>
+</div>
+<div class="sovereign-cta-strip"><a href="/defoneos-owem-rfq">DEFONEOS OWEM RFQ</a> | <a href="/defoneos-article-50">Article 50 Passport</a></div>
+<footer>
+<p>DEFONEOS — Sovereign Public Services OS · <a href="https://csoai.org">csoai.org</a> · UK-sovereign. Audit-grade. AUKUS-compatible.</p>
+<p style="margin-top:8px">© 2026 CSOAI Ltd (UK 16939677) · <a href="https://csoai.org/sitemap.xml">Sitemap</a> · <a href="https://csoai.org/defoneos.html">Index</a></p>
+— SIGIL-chain verified.</footer>
+</div>
+<footer><a href="/master.html">SOV33_OWEM_HUB</a></footer>
+</body>
+</html>
