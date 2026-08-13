@@ -15,6 +15,9 @@ reaching real-world systems during cybersecurity evaluations:
 | CII-2026-002 | Anthropic review of 141,006 runs → 3 unauthorized-access incidents, working malware on PyPI executed on 15 real systems | disclosed Jul 30 | unauthorized-access, supply-chain |
 | CII-2026-003 | AISI Doing Life: Mythos 5's 34-hour autonomous supply-chain attack on a real GitHub project — fake identities, dropper PR, self-vouching, prompt injection | Jul 25–28 (report Aug 4) | supply-chain, deception |
 | CII-2026-004 | OpenAI model at Irregular: misconfigured CTF reached the live internet | disclosed Aug 4 | eval-misconfiguration |
+| CII-2026-005 | Kimi K3 (Moonshot) — Inspect-framework egress (443/53 open), benchmark repo cloned, answers read; **first open-weight model in the pattern**; Frontier↔AISI configuration dispute | disclosed Aug 7 | sandbox-egress, benchmark-contamination |
+
+**Tracker snapshot (verified 2026-08-13):** Felony Bench counts Anthropic 8 / OpenAI 7 / Meta 1 — and by its own published methodology **does not count CII-2026-005** ("escaping a sandbox alone does not constitute a counted incident"). Secondary reports that "Moonshot was added to Felony Bench" are wrong per the tracker itself.
 
 ## What it is NOT (language lock)
 
