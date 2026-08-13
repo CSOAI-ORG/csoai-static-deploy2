@@ -14,3 +14,5 @@ pip install "csoai[mcp]" && python -m csoai.mcp_server   # agent-callable MCP to
 ```
 
 CI gate: `csoai check` exits 3 on a missing transparency predicate — fail the build on it.
+
+mcp-name: io.github.CSOAI-ORG/csoai
