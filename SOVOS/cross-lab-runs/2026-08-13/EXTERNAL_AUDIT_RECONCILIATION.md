@@ -20,7 +20,7 @@ otherwise, the endpoint wins.
 | MCP registry `io.github.CSOAI-ORG/csoai` | UNVERIFIED | 404 on documented paths; versioned API also unreachable this pass | **UNVERIFIED (unchanged)** — do not cite as live |
 | `meek-3-and-sov3-connection-mcp` (PyPI) | leaked SOV3/sovereign strings (HIGH) | **HTTP 200, v1.0.0, org-owned** (author MEOK AI Labs <nicholas@csoai.org>, homepage csoai.org); tarball inspected → **77 banned-string hits** incl. server.py, pyproject, PKG-INFO; payload includes "SOV3³", "33-hive BFT", "341 MCPs", "DEF ONE OS", severed-brand gate | **CONFIRMED — liability #1 REAL** |
 | arXiv 2603.14011 "Sovereign-OS" | NOT estate work (USC/UMD) | Not re-probed (web tools flaky); audit's evidence is credible | **Accepted — never cite as ours** |
-| EU AI Act "410/404 verbatim articles" | Factually wrong; Reg 2024/1689 = **113 Articles** / 180 recitals / 13 chapters | Not re-counted this pass; audit's statutory count is authoritative | **Accepted — do not repeat 410/404** |
+| EU AI Act "verbatim article count" | Factually wrong; Reg 2024/1689 = **113 Articles** / 180 recitals / 13 chapters | Not re-counted this pass; audit's statutory count is authoritative | **Accepted — canonical count is 113** |
 | csoai.org apex | REAL, title "CSOAI — the measurement body" | **200**; our naming-clean deploy live (Council / Council City 3D / Council OS) | **REAL** |
 
 ## What this lane does NEXT (already in motion / done)

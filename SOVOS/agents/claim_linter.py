@@ -37,6 +37,22 @@ CONFLATIONS = [
     (r"axes?\b[=: ]+12\b", "13", "GSPC axes=13 (code GSPC_AXES); 12 is stale deploy"),
     (r"12 GSPC axes|12-axis", "13", "GSPC axes=13 incl affect"),
     (r"care (bank of|has|: )?20[01]\b", "201", "care canonical = 201 (200 usable + 1 canary)"),
+    # -- fleet-count / statutory reconciliation (external audit 2026-08-13) --
+    # The audit flagged "300+ MCP servers", "81-MCP fleet", "38 governance MCPs",
+    # "26 PyPI packages", "475 repos", "410/404 verbatim articles" as inconsistent
+    # and un-repeatable until reconciled. Canonical truths below. These are
+    # REGEX MATCHES ON THE WRONG CLAIM -> the linter fires if public copy repeats
+    # a stale/non-canonical figure. (Measurement records cite their own measured
+    # n at time-of-run and are exempt via the CONTEXT rule above.)
+    (r"\b4(10|04)\b[^.,;\n]{0,20}(articles|recitals|verbatim)", "113",
+     "Regulation (EU) 2024/1689 = 113 Articles / 180 recitals / 13 chapters; 410/404 is factually wrong"),
+    (r"4(10|04) verbatim articles", "113", "EU AI Act has 113 articles, not 410/404"),
+    (r"\b300\+ MCP servers?\b", "RECONCILE",
+     "fleet count differs across surfaces (475 repos w/ ~100 MCP-registry entries); do not repeat until one canon"),
+    (r"\b81-MCP fleet\b", "RECONCILE", "fleet count not canonical across surfaces"),
+    (r"\b38? governance MCPs?\b", "RECONCILE", "governance-MCP count not canonical across surfaces"),
+    (r"\b26 PyPI packages\b", "RECONCILE", "PyPI footprint far broader (dozens of *-mcp pkgs); count not canonical"),
+    (r"\b475 repos?itor\w*\b", "RECONCILE", "475 repos is the org's public count, not a fleet/MCP number; do not conflate"),
 ]
 
 # FORBIDDEN codenames — legal/brand hygiene (2-lane convergence + confirmed
@@ -72,6 +88,7 @@ PUBLIC_SURFACES = (
 # enforced (a 2026-08-12 run saying 12 axes is stale; a run saying 15 models is
 # historical truth).
 MEASUREMENT_SUBTREES = ("arena-real-runs", "recovered-boards", "boards-v2",
+                         "cross-lab-runs", "measure-", "EXTERNAL_AUDIT_RECONCILIATION",
                         "SEASON", "season", "benchmark-results",
                         "REAL_MEASUREMENT", "MASTER_STACK_RUNBOOK",
                         "RUNBOOK", "runbook")

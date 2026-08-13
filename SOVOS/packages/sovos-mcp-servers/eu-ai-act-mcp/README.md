@@ -20,7 +20,7 @@ Exposes one MCP tool, `eu_ai_act_query`, that:
 3. Returns the matching article + cross-reference to NIST RMF GOVERN-1.1
 
 This is enough to prove the MCP plumbing works end-to-end. The full EU AI
-Act corpus (~410 articles) needs to be added when the real source lands.
+Act corpus (all 113 Articles) needs to be added when the real source lands.
 
 ## License
 
