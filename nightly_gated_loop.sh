@@ -41,7 +41,8 @@ fi
 # ── 2) GATED EVOLVE (trains a candidate + re-measures; NEVER auto-promotes) ──
 # Default ON — safe because it can't change the live fleet. Set NIGHTLY_EVOLVE=0
 # to run measure-only. Requires close_train_hop.py + the trainer stack on the pod.
-if [ "${NIGHTLY_EVOLVE:-1}" = "1" ] && [ -f close_train_hop.py ]; then
+GPU_BUSY=$(nvidia-smi --query-gpu=utilization.gpu --format=csv,noheader,nounits 2>/dev/null | head -1)
+if [ "${NIGHTLY_EVOLVE:-1}" = "1" ] && [ "${GPU_BUSY:-100}" -lt 40 ] && [ -f close_train_hop.py ]; then
   echo "--- EVOLVE (gated): honey_barrier + ouroboros verdict, no auto-promote ---"
   if python3 -u close_train_hop.py \
         --base "${EVOLVE_BASE:-qwen2.5:1.5b}" \
@@ -53,7 +54,7 @@ if [ "${NIGHTLY_EVOLVE:-1}" = "1" ] && [ -f close_train_hop.py ]; then
     echo "  evolve: skipped/failed (gate tripped or trainer deps missing) — see $D/evolve.log"
   fi
 else
-  echo "--- EVOLVE: disabled (NIGHTLY_EVOLVE=0 or close_train_hop.py absent) ---"
+  echo "--- EVOLVE: skipped — NIGHTLY_EVOLVE=0, close_train_hop absent, or GPU busy=${GPU_BUSY}% (yielding to priority A100 I-runs per queue discipline) ---"
 fi
 
 # ── 3) CITY SIM — governed multi-agent arena across the fleet (agentic) ──────
