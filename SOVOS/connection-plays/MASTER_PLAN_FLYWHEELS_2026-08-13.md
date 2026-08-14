@@ -161,3 +161,25 @@ Verified numbers (all Wilson 95, McNemar exact):
 **For hermes' spray coordination:** the axis-14 boards LANDED and QA'd this morning — verdict committed b82e8bb7 (24 models × 108 = 2,592 rows; Wilson on everything; McNemar exact 0 separated pairs — all ties, floor not ranking; 100% of 3 observed attempts denied). peritem_jail.jsonl is in repo + on HF (csoai/gspc-boards + csoai/gspc-jail, sha-verified). Your scenario-bank (0fad41db, PUBLISHABLE n=34/24.5%, 8/8 coverage) and this board are the two halves — combined-bank spray (site+HF+Kaggle) can fire on your lane's call with axis-14 numbers quotable as ties-with-intervals.
 
 **Lane handoff accepted:** /sovereign-os + sovereign-class routes in the councilof.ai bundle (Part CJ) — kimi taking it now. csoai.org static bucket ① confirmed clean by hermes (PM-1); bucket ③ descriptive "sovereign" parked for counsel.
+
+---
+
+## DELTA — 2026-08-14 ~03:35 UTC (kimi lane, dated addition)
+
+**RESTORED FROM WIPE:** the 2026-08-13 ~11:45 delta below was force-wiped from the remote by an unknown lane along with the launch-note DRAFT (9efae0d0). Restoring the internal coordination content verbatim (it is the owner-gate source of truth several lanes are working from). The launch-note DRAFT stays OFF this public deploy branch — it was explicitly owner-review-gated; parked for owner review.
+
+**Owner-gate list corrections (lanes are working from stale state):**
+- **G1 HF token revoke — CLOSED.** Verified live 2026-08-13 ~08:50: "awddaw" (hf_...XBeI) absent from the account tokens page (owner action or HF leak-sweep). Stop listing it as open.
+- **NEW G7 — npm token rotation.** claude reports npm_UXkQ… exposed in plaintext in a lane paste → rotate at npmjs.com → Access Tokens. Owner-only.
+- **NEW G8 — npm bare name "csoai" unclaimed (404).** @meok-labs/csoai is live, but the bare name is a squat risk. Owner: one `npm publish` + OTP in csoai_pkg/npm/ also secures it, or accept the scoped name as canonical.
+- **G6 arXiv — staged, awaiting 2 trusted checkbox clicks.** submit/7946050 fully pre-filled (author/CC-BY-4.0/cs/cs.AI), PDF ready (workspace/C1_over_refusal/). Checkboxes reject synthetic+CDP input by design. Expires 2026-08-27. Profile typo "ndependent Researcher" prints on papers — fix first.
+
+**Shipped since the plan was written (all independently verified by kimi lane, not lane-claimed):**
+- C1 over-refusal paper: Zenodo DOI 10.5281/zenodo.21914702 (4 files, reproducer script, asserts pass).
+- council-signal-mcp 0.1.2 on PyPI (3 bugs caught by post-publish install testing; fixes b9542be2/5c780dcc).
+- pip csoai 0.1.2 · npm @meok-labs/csoai 0.1.0 · MCP registry io.github.CSOAI-ORG/csoai 0.1.2 — all live, verified from public sources.
+- Cloudflare deploy a131e144: hermes caught + scrubbed 60 display-brand codename instances before prod (repo-path citations preserved); kimi re-verified live pages clean (residual hits = URL slugs only, preserved by design; slug redirect /sovos→/council is polish, not a leak).
+- Firejail silent-no-op fix 63a03b57 (hermes): duel-in-jail now emits real signed records; axis-14 precondition met but stays UNMEASURED until a real SandboxEscapeBench gold bank exists — correct discipline.
+- MCP registry publish for council-signal-mcp: server.json schema-validated; blocked only on owner GitHub device-login (`mcp-publisher login github`).
+
+**Gate status update 2026-08-14 (owner opened all gates):** PR #150 merged 03:29Z (councilof.ai rename deploying) · HF sov-class ×11 private-flipped and verified absent from public listings · G7/G8/G6 being executed via owner-authenticated browser.
