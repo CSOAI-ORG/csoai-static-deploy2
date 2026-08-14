@@ -13,7 +13,7 @@
       "publicKeyJwk": {
         "kty": "OKP",
         "crv": "Ed25519",
-        "x": "j5oAooz8duNgKf6AXz5CGVj019QsTxFIZZGKEAExORI",
+        "x": "9LQnjdwhbC8GCyc6_P2e8AhWOZNzsjsJd5T-cvs2w0I",
         "kid": "csoai-city-ed25519-1",
         "use": "sig"
       }
@@ -22,7 +22,7 @@
       "id": "did:web:csoai.org#keys-2",
       "type": "Ed25519VerificationKey2020",
       "controller": "did:web:csoai.org",
-      "publicKeyMultibase": "z6Mkp7pYfoTkT4ErCpSheRZzEeHrrZefhC4jjKRdCtR9NJWM"
+      "publicKeyMultibase": "zHUDorVFGvKoSDZqdLHrKP2pLRD6phzGA3nZakF47En3s"
     }
   ],
   "assertionMethod": [
@@ -36,8 +36,8 @@
     {
       "id": "did:web:csoai.org#verifier",
       "type": "AttestationVerifier",
-      "serviceEndpoint": "https://csoai.org/verify"
+      "serviceEndpoint": "https://csoai.org/.well-known/did.json"
     }
   ],
-  "_note": "CSOAI signing identity. Ed25519 today (ML-DSA-65 is roadmap, not present). Cards sign the content_id; resolve this key and verify offline \u2014 you do not trust CSOAI, you trust that this domain controls this DID. C2PA-trust-list / CA recognition is a separate owner-gated step and is NOT claimed here."
+  "_note": "CSOAI signing identity. Ed25519 today (ML-DSA-65 is roadmap, not present). Cards sign the content_id; resolve this key and verify offline — you do not trust CSOAI, you trust that this domain controls this DID. C2PA-trust-list / CA recognition is a separate owner-gated step and is NOT claimed here. Repointed 2026-08-14 to the actual signing pubkey (was mismatched: did.json key differed from the key signing cards — the signer-identity gap)."
 }
