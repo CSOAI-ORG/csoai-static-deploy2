@@ -20,7 +20,7 @@ fix/seller into the neutral core poisons neutrality — the one asset every mark
         ▲ consume, never merge ▲
    ┌────┴─────────┬──────────────┬───────────────┬─────────────────┬──────────────────┐
    crosswalk-mcp  ai-bom-mcp     injection-       watermark-attest  compliance-gateway  CobolBridge
-   (→30 frameworks, (supply-chain  scanner         (Art 50 mark)     (AWS/Azure/Smithery (COBOL fix —
+   (→frameworks,   (supply-chain  scanner         (Art 50 mark)     (AWS/Azure/Smithery (COBOL fix —
     M2 evidence pack) provenance)  (agent security)                   + x402 pay)         SEPARATE)
 ```
 
@@ -42,8 +42,10 @@ fix/seller into the neutral core poisons neutrality — the one asset every mark
    every card. Then delete the OTS overclaim from the CobolBridge charter.
 4. **corpus-watch → re-measure trigger** *(in-lane)* — a drift event (statute changed) triggers a
    re-measure + re-sign, so the SOV signal has a freshness guarantee, not a stale snapshot.
-5. **crosswalk-mcp evidence pack** *(in-lane)* — GSPC board → crosswalk (5,013 LOC, →30 frameworks)
-   → signed **EU AI Act evidence pack**. The showable M2 artifact.
+5. **crosswalk-mcp evidence pack** *(in-lane)* — GSPC board → crosswalk (5,013 LOC; maps to
+   regulatory frameworks — note only 4 framework control-sets are on disk today, the "~30" is a
+   named target, not evidenced) → signed **EU AI Act evidence pack**. The showable M2 artifact
+   (`evidence_pack.py`, built; covers the 6 mandated EU AI Act obligations).
 6. **ai-bom + injection-scanner as axis inputs** *(in-lane)* — fold supply-chain provenance and
    agent-security into the board so the SOV signal covers them.
 7. **Externally-verifiable signer** *(SPLIT)* — in-lane: embed pubkey in every card + one-command
