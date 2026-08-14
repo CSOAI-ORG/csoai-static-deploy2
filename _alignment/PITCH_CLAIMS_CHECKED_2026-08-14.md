@@ -72,6 +72,20 @@ Legend: ✅ VERIFIED (code/artifact ref) · ⚠️ HONEST-FORM (was overclaimed;
   verified that the geometric code emits a *signed* distance or that those pass-counts are current.
   Ground it (does `Procrustes`/`Fisher-Rao` code produce a signed artifact?) before any pitch use.
 
+## Verified lane claims (2026-08-14 — grounded, with sources)
+- ⚙️ **External verifier — BUILT + proven byte-identical, NOT yet live.** The Cloudflare Worker
+  (`workers/attest-verify`) does real WebCrypto Ed25519 verification with no secret; node 22 confirms
+  its JS canonicalization is byte-identical to Python (`content_id` matches) and it verifies a real
+  card VALID. But it is **not routed/deployed** — `csoai.org/verify` currently hits the SPA. Say
+  *"the external verifier is built and proven; deployment pending"* — never "live" — until
+  `deploy_attest_and_did.sh` runs (token-gated). Pairs with the did:web root (also pending hosting).
+- ✅ **EU high-risk clock slipped to 2 Dec 2027 — CONFIRMED.** Regulation (EU) 2026/1744 (Digital
+  Omnibus, OJ 24 Jul 2026): standalone Annex III high-risk deferred 2 Aug 2026 → **2 Dec 2027**
+  (Annex I-embedded → 2 Aug 2028). **Article 50 marking, GPAI, and Article 5 did NOT slip.** So
+  Diamond 2 (EU high-risk credit/insurance) has a longer runway — **do not lead with it**; the
+  near-term EU hook is **Article 50 marking (still 2 Aug 2026)**. Any deck saying "high-risk bites
+  Aug 2026" is now wrong. (Sources: Cooley, Gibson Dunn, DLA Piper, Pinsent Masons, CSA.)
+
 ## The moat, stated truthfully
 Neutrality (we measure, never fix or certify) · **self-refutation** (we publish our own resolution
 limits — the one thing a regulator trusts) · **content-verifiable signatures** (an underwriter can
