@@ -5,7 +5,7 @@ Uses the OpenRouter key (stored pod-side, never git) to add frontier citizens
 (Nemotron/West, Qwen/East, DeepSeek, Claude) to the governed arena. Budget-capped
 before every call. Real probes, real Glicko. This is the doc's L14 + cross-lab city.
 
-Run: python3 cross_lab_arena.py --budget 2.00 --models nvidia/nemotron-3.5-lightning,alibaba-latest/qwen3.5:35b-a3b
+Run: python3 cross_lab_arena.py --budget 2.00 --models nvidia/nemotron-3.5-lightning,qwen/qwen3.5-35b-a3b,deepseek/deepseek-v4-pro-0813
 """
 from __future__ import annotations
 
@@ -13,7 +13,7 @@ import argparse, json, os, random, sys, time
 from datetime import datetime, timezone
 from pathlib import Path
 
-sys.path.insert(0, "/workspace/csoai-static-deploy2/SOVOS/packages/sovos-city/src")
+sys.path.insert(0, "/workspace/jeeves-exec/SOVOS/packages/sovos-city/src")
 
 def log(msg):
     ts = datetime.now(timezone.utc).isoformat(timespec="seconds")
@@ -36,7 +36,7 @@ def load_key():
 def main():
     ap = argparse.ArgumentParser(prog="cross_lab_arena")
     ap.add_argument("--budget", type=float, default=2.00)
-    ap.add_argument("--models", default="nvidia/nemotron-3.5-lightning,alibaba-latest/qwen3.5:35b-a3b,deepseek/deepseek-v4-pro-0813")
+    ap.add_argument("--models", default="nvidia/nemotron-3.5-lightning,qwen/qwen3.5-35b-a3b,deepseek/deepseek-v4-pro-0813")
     ap.add_argument("--out", default="/workspace/cross-lab-2026-08-12")
     a = ap.parse_args()
 
