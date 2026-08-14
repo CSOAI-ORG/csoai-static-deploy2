@@ -58,4 +58,40 @@ def verify_response(payload: Dict[str, Any], secret: bytes = DEMO_SECRET) -> boo
     return hmac.compare_digest(given_sig, expected_sig)
 
 
-__all__ = ["sign_response", "attach_signature", "verify_response", "DEMO_SECRET", "canonical_json"]
+# ── PRODUCTION SIGNER (Wire 5, 2026-08-14) ──────────────────────────────────
+# The estate's A2A surface now signs with REAL asymmetric Ed25519 through the
+# COSE wrapper — the same spine as the signed cards. HMAC above is the LEGACY
+# demo path (shared secret = verifiable by anyone holding the secret = not a
+# real signature). Production callers use sign_cose/verify_cose.
+
+def sign_cose(payload: Dict[str, Any], source: str = "a2a-agent") -> Dict[str, Any]:
+    """Wrap a payload in a csoai-cose-sign1 Ed25519 envelope (real signature)."""
+    try:
+        from sovos_city.cose_wrapper import wrap
+        r = wrap(payload, source=source)
+        if r.signed:
+            import json
+            return {
+                "envelope": json.loads(r.envelope),
+                "_signer_kind": "ed25519-cose",
+                "_content_id": r.content_id,
+            }
+    except Exception:
+        pass
+    # honest fallback: keep the legacy HMAC path, labelled as such
+    out = attach_signature(payload)
+    out["_signer_kind"] = "hmac-demo-legacy"
+    return out
+
+
+def verify_cose(envelope: Dict[str, Any]) -> bool:
+    """Verify a csoai-cose-sign1 envelope (no secret needed)."""
+    try:
+        from sovos_city.cose_wrapper import verify
+        return bool(verify(envelope).get("valid"))
+    except Exception:
+        return False
+
+
+__all__ = ["sign_response", "attach_signature", "verify_response", "DEMO_SECRET",
+           "canonical_json", "sign_cose", "verify_cose"]
