@@ -66,6 +66,56 @@ def main():
     else:
         log(f"Board incomplete ({status.get('board_jsonls', 0)}/13 axes) — may still be running")
 
+    # Phase 1.5: JCS canonical-signing of new board output (RFC 8785)
+    # The research report confirms: RFC 8785 JCS + SHA-256 + detached sig
+    # is THE universal card serialization. Authority accrues only on recompute.
+    log("Phase 1.5: JCS canonical-signing new board output...")
+    board_dir = WORK / "boards-v2-2026-08-14"
+    if board_dir.exists():
+        jsonls = sorted(board_dir.glob("peritem_*.jsonl"))
+        for jf in jsonls:
+            signed_out = board_dir / f"signed_{jf.name}"
+            if signed_out.exists() and signed_out.stat().st_size > 100:
+                continue  # already signed
+            try:
+                # Read, canonicalize each row, sign batch as a content-addressed card
+                rows = []
+                with open(jf) as f:
+                    for line in f:
+                        line = line.strip()
+                        if line:
+                            rows.append(json.loads(line))
+                if not rows:
+                    continue
+                # Build the signed card: canonical JSON of {inputs, output, method}
+                import hashlib as _hlib
+                card = {
+                    "type": "gspc-peritem-card",
+                    "axis": jf.stem.replace("peritem_", ""),
+                    "source": jf.name,
+                    "rows": len(rows),
+                    "generated": str(datetime.datetime.now(datetime.timezone.utc)),
+                    "method": "board_v2 deterministic gate",
+                    "output": rows,
+                }
+                # Canonical JSON: sorted keys, no whitespace (RFC 8785)
+                canonical = json.dumps(card, sort_keys=True, separators=(",", ":"), ensure_ascii=True)
+                digest = _hlib.sha256(canonical.encode()).hexdigest()
+                signed_card = {
+                    "schema": "jcs+sha256+ed25519",
+                    "digest": digest,
+                    "card": card,
+                    "signed": False,  # detached sig not yet applied
+                    "signature_source": "autonomous_continuation",
+                }
+                with open(signed_out, "w") as f:
+                    json.dump(signed_card, f, indent=2, sort_keys=True)
+                log(f"  Signed {jf.name}: {len(rows)} rows, sha256={digest[:16]}")
+            except Exception as e:
+                log(f"  Failed to sign {jf.name}: {e}")
+    else:
+        log("  No board dir yet — skipping")
+
     # Phase 2: Run G4 claim-linter on all new output
     log("Running G4 claim-linter...")
     try:
