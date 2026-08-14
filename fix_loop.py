@@ -127,7 +127,11 @@ def main():
     (run / "report.json").write_text(json.dumps(report, indent=2))
     print(f"\n== VERDICT: {m0} → {m1}  ({delta:+} pts)  {verdict} ==")
     print(f"   report → {run/'report.json'} · adapter → {run/'adapter'}")
-    print("   This is a TRUE fix: the model measurably improved on what it got wrong.")
+    if delta > 1:
+        print("   TRUE fix: the model measurably improved on what it got wrong — promote.")
+    else:
+        print("   Honest reject: this run did NOT improve — not promoted. The gate works "
+              "(overfit on a tiny failure set is expected; needs more failures + gentler training).")
 
 
 if __name__ == "__main__":
