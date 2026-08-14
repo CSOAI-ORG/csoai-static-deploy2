@@ -42,9 +42,12 @@ and why is there more than one key" answer for is a measurement layer they can't
    other signing files (`measure_api`, `sandbox_arena`, `council_signal`, `arena`, `simulator`) hold no
    key and sign via `Chain`. **So "one signer, one key" is already achieved — there is no second signer
    to reconcile.** Residual: (a) if k3 holds a real unpushed `card_issuer.py`, push it and point its
-   `_load_key` at `keystone.load_signing_key` (a one-line change — the loader is ready); (b)
-   **`jv-wave8-production` predates `keystone.py`** and still carries the old scattered/auto-generating
-   loaders — merge the unification into it if that branch is still active.
+   `_load_key` at `keystone.load_signing_key` (a one-line change — the loader is ready); (b) ✅ **DONE
+   (2026-08-14, commit `fc560b4f`)** — `jv-wave8-production` reconciled: `keystone.py` added + its
+   `chain.py` (the only one of the six unified files present there) pointed at it, replacing the old
+   silent auto-generate. Verified on that branch: temp generates, real loads, missing-prod fail-closes.
+   Merged surgically via an isolated worktree — only `keystone.py` + `chain.py`, none of the 335
+   unrelated commits.
 3. **MinIO write anomaly — EXPLAIN, don't just route around.** Object key `05ceba671e597e04.json`
    refused writes ("insufficient permissions") while every other write to the same prefix succeeded;
    no lock/version marker explained it; k3 stored the rejection cert under a different key and noted
