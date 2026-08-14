@@ -51,7 +51,7 @@ DEFAULT_REFERENCE_PRICES = {
 }
 
 # Default key path (macOS-friendly, overridable). Wrap generates on first use.
-DEFAULT_KEY_PATH = os.path.join(os.path.expanduser("~"), ".sovos", "city_ed25519")
+from .keystone import DEFAULT_KEY_PATH  # ONE canonical key path (ADR_ONE_SIGNER) — was ~/.sovos, now unified
 
 
 def _today() -> str:

@@ -26,7 +26,7 @@ from .cose_wrapper import canonical
 
 # Estate default signing key — same path the rest of the spine uses. On pods
 # where the path is unwritable, pass an explicit writable key_path.
-DEFAULT_KEY = "/root/.sovos/city_ed25519"
+from .keystone import DEFAULT_KEY_PATH as DEFAULT_KEY  # ONE canonical key path (ADR_ONE_SIGNER)
 
 # Deterministic, closed CycloneDX ML-BOM-ish schema identifiers.
 BOM_FORMAT = "CycloneDX"

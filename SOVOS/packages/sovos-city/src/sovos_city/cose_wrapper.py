@@ -43,19 +43,11 @@ def canonical(obj: Any) -> bytes:
 
 
 def _load_key(key_path: Optional[str] = None):
-    from pathlib import Path
-    p = Path(key_path or "/root/.sovos/city_ed25519")
+    # ONE loader (ADR_ONE_SIGNER): fail-closed on the production identity, never a rogue key.
+    # cose_wrapper stays honest-UNSIGNED on a missing key rather than raising.
+    from .keystone import load_signing_key
     try:
-        if p.exists():
-            return serialization.load_pem_private_key(p.read_bytes(), password=None)
-        k = Ed25519PrivateKey.generate()
-        p.parent.mkdir(parents=True, exist_ok=True)
-        p.write_bytes(k.private_bytes(
-            encoding=serialization.Encoding.PEM,
-            format=serialization.PrivateFormat.PKCS8,
-            encryption_algorithm=serialization.NoEncryption()))
-        p.chmod(0o600)
-        return k
+        return load_signing_key(key_path)
     except Exception:
         return None
 
