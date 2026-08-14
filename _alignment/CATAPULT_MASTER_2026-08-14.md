@@ -60,7 +60,10 @@ We sign. The signal aggregates. Everyone else proves *who* an agent is — we pr
 20. AI-BOM + signed measurement bundle ("provenance + behaviour") for high-risk AI.
 21. Measured governance score as insurance-underwriting INPUT (feed, not policy).
 22. Self-instrumentation: engine emits SIGNED telemetry about its own operation
-    (cards issued, axes run, drift) — NOT self-awareness claims.
+    (cards issued, axes run, drift) — NOT self-awareness claims. ✅ DONE
+    (telemetry.py, Ed25519 frames, tamper-detected, honest unsigned, 6/6).
+    + Fleet ramp: 20→22 models (qwen3:4b, phi4:14b added, verified). ✅
+    + Master verify: 8/8 wires PASS, exit 0, pod-side. ✅
 
 ## PART 5 — THE THREE DIAMONDS (buyers with deadlines)
 
