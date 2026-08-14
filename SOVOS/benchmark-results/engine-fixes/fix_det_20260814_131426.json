@@ -1,0 +1,29 @@
+{
+  "before": {
+    "axis": "det",
+    "label": "Detector-interop/DetBench",
+    "board_status": "MEASURED",
+    "gate": "MEASURED",
+    "bank_items": 33,
+    "n_models": 19,
+    "sha256": "384b28480f21",
+    "last_fix": null
+  },
+  "fix": {
+    "axis": "det",
+    "delta": "det gap: sov6-logic-v3-light scores 0.000 (floor) on DetBench - light 3B partition lacks detector-interop task comprehension; honest fix candidate = swap 3B light partition for 8B logic partition on the det axis and re-measure, expected lift off floor (do not claim provable isolation; monitored containment only)",
+    "gaps_before": [
+      "weakest model sov6-logic-v3-light at 0.000 \u2014 near-chance floor, check bank quality"
+    ],
+    "applied_at": "2026-08-14T13:14:26.945054+00:00",
+    "promoted": null,
+    "reverted": null
+  },
+  "signature": {
+    "kind": "ed25519",
+    "sig": "kKMfoSYcyCJi6IkcilwIEbf7a3iXXGqOPVn+vWKsSDfLENSIIT2esq8Zk3nPL+EAbJimluiPZ+JSGlFyChNeCA==",
+    "body_sha256": "5d7e9f89fd44fe1f2a3841765d0410538922ef86418b76d82843b142aaf2a68c",
+    "pubkey": "ZnF3DZUFc5QOoy+y07rvzNUyxJgza2kUQmn1nv4S9SY=",
+    "note": "Ed25519 over the canonical body; verify with sign.py --verify. PQC upgrade: ML-DSA-65 via liboqs \u2014 same body, swap the primitive."
+  }
+}
