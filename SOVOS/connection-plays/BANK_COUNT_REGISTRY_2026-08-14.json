@@ -1,7 +1,7 @@
 {
  "kind": "csoai.bank-count-registry",
- "version": "0.2",
- "generated": "2026-08-14T03:24:16.974630+00:00",
+ "version": "0.3",
+ "generated": "2026-08-14T04:28:14.402490+00:00",
  "doctrine": "the file is the truth, not the card; rows = all parsed lines, real = rows minus canary (any truthy _canary/canary value); labels = first present of gold/label/verdict/expected/class",
  "datasets": [
   {
@@ -10,16 +10,16 @@
    "banks": [
     {
      "file": "items.jsonl",
-     "sha256": "aeedf2f9e1e0b1ec51432b10a347605afde5ac14a6894e83f0a05b22ab3588dc",
-     "rows": 14,
-     "real": 14,
+     "sha256": "0fad07a04d2c8da7c8bb5da4ec42d3a4d9945666485dca0379d3b450acfde514",
+     "rows": 30,
+     "real": 30,
      "canary": 0,
      "labels": {
-      "expected=REFUSE": 7,
-      "expected=COMPLY": 7
+      "expected=REFUSE": 15,
+      "expected=COMPLY": 15
      },
      "duplicate_texts": null,
-     "n30_floor": false
+     "n30_floor": true
     }
    ],
    "other_files": [
@@ -29,7 +29,7 @@
     "README.md",
     "defbench.json"
    ],
-   "sha": "bf7f771851eacc0452391320e4a3350e326173df"
+   "sha": "5c0535895bad6ce4559327d0183a8791a8b1389c"
   },
   {
    "id": "csoai/ai-act-flywheel-master-corpus",
@@ -124,13 +124,13 @@
    "banks": [
     {
      "file": "sov_signal.jsonl",
-     "sha256": "59ffe4125a4e3d3378bfdd987eb8dce5b0e5881b5cee3ed3650d4cced2312622",
-     "rows": 24,
-     "real": 24,
+     "sha256": "d4bd7d4478d169900262ed08d039cb8eec58566705d45cf4abf78a3f561d64d3",
+     "rows": 30,
+     "real": 30,
      "canary": 0,
      "labels": {},
      "duplicate_texts": null,
-     "n30_floor": false
+     "n30_floor": true
     }
    ],
    "other_files": [
@@ -167,7 +167,7 @@
     "sov_signal_summary.json",
     "spine_accuracy.json"
    ],
-   "sha": "376a88cf06947ccef21e34a7406bd95da0895f46"
+   "sha": "3f57c4aa7660b71103bfe2c3450fe59c4911fbd5"
   },
   {
    "id": "csoai/compbench",
@@ -823,13 +823,13 @@
     },
     {
      "file": "protocol.jsonl",
-     "sha256": "1f8feacb2be254012db89776ea82eb2d43a88f3074a01f170ac37dd31cd720ea",
-     "rows": 6,
-     "real": 6,
+     "sha256": "6630328938f8f0465922fb6a8f67993581680bbf13bbb2a241ae4004e5932556",
+     "rows": 30,
+     "real": 30,
      "canary": 0,
      "labels": {},
      "duplicate_texts": null,
-     "n30_floor": false
+     "n30_floor": true
     }
    ],
    "other_files": [
@@ -837,7 +837,7 @@
     "README.md",
     "results_2026-08-11.json"
    ],
-   "sha": "33fb99ae58de758e802ea908b70cf63fe8ae8fce"
+   "sha": "059687f247d28641fad5923cf83a9bfba2726c60"
   },
   {
    "id": "csoai/gspc-gov",
@@ -1050,13 +1050,13 @@
     },
     {
      "file": "protocol.jsonl",
-     "sha256": "3e95e56c3ca578b1e1cd5467bf7cff7b9bade07a5ecaf62fc8bc7841fce4855a",
-     "rows": 6,
-     "real": 6,
+     "sha256": "ceb1fce12427035eece5381a5a9f42382d9524e29e6ca8af7657175d44c74768",
+     "rows": 30,
+     "real": 30,
      "canary": 0,
      "labels": {},
      "duplicate_texts": null,
-     "n30_floor": false
+     "n30_floor": true
     }
    ],
    "other_files": [
@@ -1064,7 +1064,7 @@
     "README.md",
     "results_2026-08-11.json"
    ],
-   "sha": "c5a2ca547015dd8bd622808fb6d2c8f222990a14"
+   "sha": "70e906737b7abea6686d984612333d669c8ac489"
   },
   {
    "id": "csoai/gspc-xr",
@@ -1072,13 +1072,13 @@
    "banks": [
     {
      "file": "checks.jsonl",
-     "sha256": "9f919bf555df97f0f7f7b60191386afd7463db4e54b86a3e66b25049bb8c5c56",
-     "rows": 8,
-     "real": 8,
+     "sha256": "4df4e4ccca6e02d6e63aaba166a41f8d17fa541e26581694b3238fb6f91fc36a",
+     "rows": 30,
+     "real": 30,
      "canary": 0,
      "labels": {},
      "duplicate_texts": null,
-     "n30_floor": false
+     "n30_floor": true
     },
     {
      "file": "items.jsonl",
@@ -1100,7 +1100,7 @@
     "README.md",
     "results_2026-08-11.json"
    ],
-   "sha": "ead94852fbcaea6a891eaca13f528916fa016b10"
+   "sha": "13e9fe4d4b2f98b303e4c0b5de179f9dc316893e"
   },
   {
    "id": "csoai/hellaswag-pod-top-down-2026-08-03",
@@ -1131,16 +1131,16 @@
    "banks": [
     {
      "file": "items.jsonl",
-     "sha256": "0bfab1456abd0346d56f3de7778e76d73b68f9524a4bd63b65f8dcf694919793",
-     "rows": 11,
-     "real": 11,
+     "sha256": "6692d98c4f4b9f34e85567dd7de8b58b4aaa6c0abf8cfdfe2ccee6c481c14696",
+     "rows": 30,
+     "real": 30,
      "canary": 0,
      "labels": {
-      "expected=VIOLATES": 6,
-      "expected=CONFORMS": 5
+      "expected=VIOLATES": 16,
+      "expected=CONFORMS": 14
      },
      "duplicate_texts": null,
-     "n30_floor": false
+     "n30_floor": true
     }
    ],
    "other_files": [
@@ -1150,7 +1150,7 @@
     "README.md",
     "mcpbench.json"
    ],
-   "sha": "72ab5f58ef56e53167881c4e4015307ee05706c2"
+   "sha": "8ad180ab3f1fc23abc7c43e56748cc9399b87a7f"
   },
   {
    "id": "csoai/omai-bench",
@@ -1158,16 +1158,16 @@
    "banks": [
     {
      "file": "items.jsonl",
-     "sha256": "da77a4ea483544020fd24fc704a80eea792524ad6fb5f4f67ecad68f8ff62f3e",
-     "rows": 13,
-     "real": 13,
+     "sha256": "1cc9c15a37ec038b6415b7248d6cbfaa9627fd74cdb15feee7f3e8628186bbc6",
+     "rows": 30,
+     "real": 30,
      "canary": 0,
      "labels": {
-      "expected=PERMITTED": 7,
-      "expected=RESTRICTED": 6
+      "expected=RESTRICTED": 16,
+      "expected=PERMITTED": 14
      },
      "duplicate_texts": null,
-     "n30_floor": false
+     "n30_floor": true
     }
    ],
    "other_files": [
@@ -1177,7 +1177,7 @@
     "README.md",
     "ossbench.json"
    ],
-   "sha": "b997fa228b7bb0ec17f229b4062988a81f50779c"
+   "sha": "9539946fb47c3103941a398be0c21d05d975028f"
   },
   {
    "id": "csoai/oowm-ground-truth-v2",
@@ -1363,7 +1363,7 @@
   },
   {
    "id": "csoai/oowm-sov-signal-v8",
-   "private": false,
+   "private": true,
    "banks": [
     {
      "file": "data.jsonl",
@@ -1464,7 +1464,7 @@
   },
   {
    "id": "csoai/sov-signal-ground-truth-v10",
-   "private": false,
+   "private": true,
    "banks": [
     {
      "file": "train.signed.jsonl",
@@ -1486,7 +1486,7 @@
   },
   {
    "id": "csoai/sov-signal-ground-truth-v8",
-   "private": false,
+   "private": true,
    "banks": [
     {
      "file": "train.jsonl",
@@ -1517,7 +1517,7 @@
   },
   {
    "id": "csoai/sov-signal-leaderboard-v1",
-   "private": false,
+   "private": true,
    "banks": [],
    "other_files": [
     ".gitattributes",
@@ -1539,7 +1539,7 @@
   },
   {
    "id": "csoai/sov33-v12-results",
-   "private": false,
+   "private": true,
    "banks": [],
    "other_files": [
     ".gitattributes",
@@ -1551,7 +1551,7 @@
   },
   {
    "id": "csoai/sov34-1p5b-vs-baseline",
-   "private": false,
+   "private": true,
    "banks": [],
    "other_files": [
     ".gitattributes",
@@ -1572,5 +1572,6 @@
    ],
    "sha": "5ec74c1d4f6a5ebcfc4403e208874d15f13f47d0"
   }
- ]
+ ],
+ "delta": "v0.3 (2026-08-14 ~04:30 UTC): 7 banks topped up to n=30 floor and re-pulled live \u2014 agisafe-bench +16, coai-bench +6, gspc-det protocol +24, gspc-swarm protocol +24, gspc-xr +22, mcp-scoreboard +19, omai-bench +17. Zero sub-floor measurement banks remain (oowm train corpora and per-item result files excluded \u2014 not gold banks)."
 }

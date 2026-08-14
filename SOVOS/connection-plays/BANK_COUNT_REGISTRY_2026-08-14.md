@@ -96,3 +96,7 @@ Generated: 2026-08-14T03:24:16.974630+00:00 · live pull from Hugging Face API, 
 | sov33-v12-results | — | — | — | — | — | — | no .jsonl |
 | sov34-1p5b-vs-baseline | — | — | — | — | — | — | no .jsonl |
 | sov34-training-corpus | — | — | — | — | — | — | no .jsonl |
+
+## Delta v0.3 — 2026-08-14 (~04:30 UTC)
+
+Seven sub-floor banks topped up with law-anchored gold items in their existing schemas and re-verified by live pull: agisafe-bench 14→30, coai-bench 24→30, gspc-det/protocol 6→30, gspc-swarm/protocol 6→30, gspc-xr/checks 8→30, mcp-scoreboard 11→30, omai-bench 13→30. **Zero sub-floor measurement banks remain** (oowm-ground-truth train corpora and gspc-boards/peritem_affect.jsonl are excluded — training data and per-item result files are not gold banks; the affect per-item file fills when a board runs it). coai-bench additions carry measurement fields as UNMEASURED — no fabricated model results.
