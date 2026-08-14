@@ -19,7 +19,7 @@ QUARANTINED = {
 }
 
 # Files/dirs excluded from the gate (archives, third-party packs, generators)
-EXCLUDE_PARTS = {".backups", ".git", "node_modules", "defoneos", "kaggle_results", "__pycache__",
+EXCLUDE_PARTS = {".backups", ".git", "node_modules", "defoneos", "kaggle_results", "__pycache__", "_archive",
                  ".claude"}  # ephemeral agent worktrees — not part of the repo, not shipped
 SCAN_GLOBS = ("*.html", "*.js", "*.md")
 SKIP_FILES = {"check_counters.py", "SOV-Counter-Canon.md",
@@ -33,7 +33,9 @@ SKIP_FILES = {"check_counters.py", "SOV-Counter-Canon.md",
               "GOVBENCH_PAPER_2026-08-09.md", "ARXIV_ABSTRACT_HONEST_DRAFT_2026-08-14.md",
               # The claims-checked pitch names the forbidden phrases precisely in order to
               # forbid them — same quote-to-retract rule as the audit above.
-              "PITCH_CLAIMS_CHECKED_2026-08-14.md"}
+              "PITCH_CLAIMS_CHECKED_2026-08-14.md",
+              # The frontend audit manifest lists the breaches it found (incl. quoted BFT/cert phrases) to fix them.
+              "FRONTEND_AUDIT_2026-08-14.md"}
 
 # 2026-08-04 — the gate blocked STALE numbers but let UNEVIDENCED ones publish freely.
 # The canon's law is not "don't use the old number", it is "no number exists without a file

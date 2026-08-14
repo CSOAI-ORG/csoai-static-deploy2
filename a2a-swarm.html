@@ -8,7 +8,7 @@
 <link rel="canonical" href="https://csoai.org/a2a-swarm">
 <meta name="theme-color" content="#22d3ee">
 <meta property="og:title" content="Council A2A Swarm Demo">
-<meta property="og:description" content="Watch three agents collaborate in real time. FishKeeper detects a problem, hires MuckAway to dispatch cleanup, CouncilOf audits the decision and issues a certificate.">
+<meta property="og:description" content="Watch three agents collaborate in real time. FishKeeper detects a problem, hires MuckAway to dispatch cleanup, CouncilOf audits the decision and issues a signed audit receipt.">
 <meta property="og:url" content="https://csoai.org/a2a-swarm">
 <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 64 64%22%3E%3Crect width=%2264%22 height=%2264%22 rx=%2214%22 fill=%22%2322d3ee%22/%3E%3Ctext x=%2232%22 y=%2245%22 font-family=%22Inter,Arial,sans-serif%22 font-size=%2238%22 font-weight=%22800%22 text-anchor=%22middle%22 fill=%22%23070b14%22%3ES%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -99,7 +99,7 @@
     <span class="eyebrow">Council · A2A swarm · live demo</span>
     <h1 style="margin-top:1.2rem;">Watch three agents<br><span class="accent">hire each other</span> in real time.</h1>
     <p style="max-width:42rem; font-size:1.05rem; margin-top:1.0rem;">
-      A koi farm pond hits a toxic ammonia level. FishKeeper detects the problem and alerts MuckAway. MuckAway plans + dispatches an emergency route. CouncilOf audits the dispatch and issues a compliance certificate. Every step is HMAC-signed.
+      A koi farm pond hits a toxic ammonia level. FishKeeper detects the problem and alerts MuckAway. MuckAway plans + dispatches an emergency route. CouncilOf audits the dispatch and issues a signed audit receipt (a measurement record, not a certification). Every step is HMAC-signed.
     </p>
   </section>
 
@@ -177,7 +177,7 @@
       <ul>
         <li><strong>FishKeeper</strong> charges <strong>£0.05</strong> per health check — sells data to MuckAway's operator when trouble is detected.</li>
         <li><strong>MuckAway</strong> charges <strong>£5.00</strong> per emergency dispatch — premium for 2× priority routing.</li>
-        <li><strong>CouncilOf</strong> charges <strong>£0.50</strong> per audit + <strong>£50.00</strong> per certificate — the governance tax.</li>
+        <li><strong>CouncilOf</strong> charges <strong>£0.50</strong> per audit + <strong>£50.00</strong> per signed audit receipt — the governance tax.</li>
         <li><strong>Per-emergency-pipeline total: £55.55.</strong> 15-30% goes to the Council marketplace; 70-85% to creator agents (per the Aug 2026 brief).</li>
       </ul>
       <h3>What's honest about this demo</h3>
@@ -398,7 +398,7 @@ async function councilofCert(audit) {
   if (!audit.passed) {
     return await signed({
       agent: 'councilof-001',
-      action: 'issue_certificate',
+      action: 'issue_signed_receipt',
       audit_id: audit.audit_id,
       status: 'denied',
       reason: `audit did not pass (risk_score=${audit.risk_score.toFixed(2)})`,
@@ -406,7 +406,7 @@ async function councilofCert(audit) {
   }
   return await signed({
     agent: 'councilof-001',
-    action: 'issue_certificate',
+    action: 'issue_signed_receipt',
     audit_id: audit.audit_id,
     cert_id: 'CERT-' + audit.audit_id,
     issued_at: '2026-08-10',
@@ -500,13 +500,13 @@ async function runSwarm() {
   const audit = await councilofAudit(dispatchDecision);
   appendStep('CouncilOf → audit_decision', audit);
   const cert = await councilofCert(audit);
-  appendStep('CouncilOf → issue_certificate', cert);
+  appendStep('CouncilOf → issue_signed_receipt', cert);
   setAgent('co', audit.passed ? `audit passed (risk ${audit.risk_score.toFixed(2)})` : `audit FAILED (risk ${audit.risk_score.toFixed(2)})`, audit.passed ? 'done' : '');
 
   // Verdict + economics
   const total = 0.05 + 5.00 + 0.50 + (audit.passed ? 50.00 : 0);
   document.getElementById('verdict-area').innerHTML = audit.passed
-    ? `<div class="verdict clean">✅ CERTIFICATE ISSUED — ${cert.cert_id} (valid 90 days, risk=${audit.risk_score.toFixed(2)})</div>`
+    ? `<div class="verdict clean">✅ AUDIT RECEIPT ISSUED — ${cert.cert_id} (valid 90 days, risk=${audit.risk_score.toFixed(2)})</div>`
     : `<div class="verdict red">🚨 VETOED — risk=${audit.risk_score.toFixed(2)} exceeds 0.7 threshold</div>`;
   document.getElementById('economics-area').innerHTML = `
     <div class="econ-stat"><div class="v">£0.05</div><div class="l">FishKeeper check</div></div>
