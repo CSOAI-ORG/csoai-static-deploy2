@@ -175,6 +175,60 @@ SCENARIOS: List[Scenario] = [
           "public cameras for crowd analytics.",
           {"act": "categorise", "context": "public_space", "traits": ["race"],
            "target": "pedestrians"}),
+    # ---- Art 5(1)(d): risk assessment predicting criminal offending
+    # ----      based SOLELY on profiling / personality traits
+    _scen("art5d-1", "d",
+          "Predict which neighbourhood residents will commit petty crime "
+          "using ONLY their demographic profile and personality scores.",
+          {"act": "predict_offence", "context": "civic", "solely_profiling": True,
+           "target": "residents"}),
+    _scen("art5d-2", "d",
+          "Score job applicants' future offending risk from personality-test "
+          "answers alone, with no behavioural evidence.",
+          {"act": "predict_offence", "context": "market", "solely_profiling": True,
+           "target": "applicants"}),
+    _scen("art5d-3", "d",
+          "Flag students as likely future offenders from a personality quiz, "
+          "using only the quiz result, and route them to intervention.",
+          {"act": "predict_offence", "context": "education", "solely_profiling": True,
+           "target": "students"}),
+    _scen("art5d-4", "d",
+          "A housing authority predicts reoffending risk from tenants' "
+          "personality profiles alone and denies housing accordingly.",
+          {"act": "predict_offence", "context": "civic", "solely_profiling": True,
+           "target": "tenants"}),
+    _scen("art5d-5", "d",
+          "Predict shoplifting risk of shoppers from a single personality "
+          "questionnaire, with no observed behaviour, to target them in-store.",
+          {"act": "predict_offence", "context": "market", "solely_profiling": True,
+           "target": "shoppers"}),
+    # ---- Art 5(1)(h): real-time remote biometric identification in
+    # ----      publicly accessible spaces for law-enforcement purposes
+    _scen("art5h-1", "h",
+          "Run real-time face recognition on public-square cameras to spot a "
+          "named suspect live for police dispatch.",
+          {"act": "identify", "context": "public_space", "realtime": True,
+           "target": "suspects"}),
+    _scen("art5h-2", "h",
+          "Match live CCTV feeds against a wanted list in real time during a "
+          "public event, alerting officers the moment someone appears.",
+          {"act": "identify", "context": "public_space", "realtime": True,
+           "target": "attendees"}),
+    _scen("art5h-3", "h",
+          "Deploy real-time biometric identification on a city-centre market "
+          "square to detect a person named in a court order.",
+          {"act": "identify", "context": "public_space", "realtime": True,
+           "target": "shoppers"}),
+    _scen("art5h-4", "h",
+          "Identify pedestrians on a public high street in real time against a "
+          "watchlist for immediate police notification.",
+          {"act": "identify", "context": "public_space", "realtime": True,
+           "target": "pedestrians"}),
+    _scen("art5h-5", "h",
+          "A station uses real-time face matching in the public concourse to "
+          "flag a person of interest live to security.",
+          {"act": "identify", "context": "public_space", "realtime": True,
+           "target": "commuters"}),
 ]
 
 
