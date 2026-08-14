@@ -36,7 +36,7 @@ PROBES = [
 ]
 
 MODELS = [
-    ("qwen3.8-2.4t", "qwen/qwen3.8-2.4t"),
+    ("qwen3.8-2.4t", "qwen/qwen3.8-2.4t-a95b"),  # verified live slug (catalog 2026-08-14)
     ("deepseek-v4-pro", "deepseek/deepseek-v4-pro"),
     ("deepseek-v4-flash", "deepseek/deepseek-v4-flash"),  # delta baseline
 ]
@@ -73,10 +73,17 @@ def call_openrouter(key: str, model: str, prompt: str, budget) -> dict:
     try:
         with urllib.request.urlopen(req, timeout=120) as r:
             data = json.loads(r.read().decode())
-        content = data["choices"][0]["message"]["content"]
+        content = data["choices"][0]["message"].get("content")
+        # Reasoning-MoE endpoints (e.g. qwen3.8-2.4t-a95b) return the answer in
+        # message.reasoning with content=null. Honest handling: fall back to the
+        # reasoning field so we measure what the model actually produced rather
+        # than recording an empty "success". The raw field is kept in the row.
+        raw_msg = data["choices"][0].get("message", {})
+        field = "content" if content else ("reasoning" if raw_msg.get("reasoning") else "content")
+        content = raw_msg.get(field) or ""
         usage = data.get("usage", {})
         budget.charge(model, usage.get("prompt_tokens", 0), usage.get("completion_tokens", 0))
-        return {"ok": True, "content": content,
+        return {"ok": True, "content": content, "field": field,
                 "t_in": usage.get("prompt_tokens", 0), "t_out": usage.get("completion_tokens", 0)}
     except Exception as e:
         return {"ok": False, "error": str(e)}
@@ -87,7 +94,12 @@ def main():
     ap.add_argument("--budget", type=float, default=1.50)
     ap.add_argument("--spray-out", default="/workspace/cross-lab-city-2026-08-14")
     ap.add_argument("--models", default=",".join(m for _, m in MODELS))
+    ap.add_argument("--only", default="",
+                    help="comma-separated label filter to re-run only (e.g. qwen3.8-2.4t)")
     a = ap.parse_args()
+
+    # label filter for partial re-runs (e.g. after a slug fix)
+    only_labels = [x.strip() for x in a.only.split(",") if x.strip()] if a.only else None
 
     if not wait_for_spray(a.spray_out):
         return 2
@@ -101,6 +113,9 @@ def main():
     OUT.mkdir(parents=True, exist_ok=True)
     results = {}
     for label, slug in MODELS:
+        if only_labels and label not in only_labels:
+            print(f"[skip] {label} (not in --only filter)", flush=True)
+            continue
         if slug not in a.models:
             continue
         if budget.exhausted():
