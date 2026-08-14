@@ -111,3 +111,14 @@ mattered. What's left to first invoice: **publish the 19/19 over-refusal anchor,
 resolve affect with one word, point Diamond 3 at an underwriter.**
 
 Status legend: ✅ done · 🟡 built/live · 🔴 owner-gated · ⚠️ flag
+
+## STATUS UPDATES (2026-08-14 late session — all committed/pushed)
+- Red-team scanner (garak/PyRIT) ✅ — redteam_scanner.py, 21/21
+- AI-BOM signed spine ✅ — bom_signer.py, 16/16 (grounded signs, ungrounded refuses)
+- Diamond-3 underwriting input ✅ — underwriting_pack.py, 15/15, real board data
+- Self-instrumentation ✅ — telemetry.py, 6/6
+- Master verify: 11/11 wires, exit 0, pod-side
+- did:web RECONCILED to keystone production key (make_did on A100) — signer identity closed
+- Fleet 19→22 (nemotron-30b, qwen3:4b, phi4:14b); SOV recalc tool ready (baseline 0.703037)
+- AI-BOM MCP "sign" = Stripe upsell, not real signing — flagged
+- Watermark MCP C2PA refs exist but signing is HMAC+template placeholder — flagged (cross-lane)
