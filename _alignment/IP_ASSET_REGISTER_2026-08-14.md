@@ -99,6 +99,15 @@ inventory + arXiv draft BEFORE the arXiv deadline.** Candidate inventions first 
 > its own 12-mo US clocks. Any invention you decide NOT to patent after counsel → pivot to
 > **defensive publication** (TDCommons/Zenodo/IP.com) to lock prior-art blocking value.
 
+> **FTO LANDSCAPE (2026-08-14, live Google Patents — see `PRIOR_ART_FTO_2026-08-14.md`):**
+> The strongest US-provisional angle is **agent competence/compliance credential (theme 4) —
+> genuinely unoccupied** in the patent record (all 46k hits are generic human/FIDO auth).
+> Theme-3 "AI governance scoring" is a **minefield (84k results; Talisai, Cerebri, Qomplx,
+> Citibank, Cognitive Scale)** — any claim must be NARROW (the *signed, gated, third-party-
+> recomputable measurement credential*, NOT "score a model"). Avoid watermarking (Trufo/
+> Digimarc/Qualcomm) and time-anchoring (Artema/Intel/Bitmark) as claim sets — both are
+> crowded prior art we use, not invent. Bring these patent numbers to counsel with PP-01..04.
+
 ## §6 DEFENSIVE PRIOR ART (already live — free value) — REAL
 
 | Asset | Dated proof | Function |
