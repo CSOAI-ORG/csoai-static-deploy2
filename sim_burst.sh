@@ -32,7 +32,7 @@ while [ "$(date +%s)" -lt "$END" ]; do
   echo "--- round $round $TS ---"
   # CITY: governed multi-agent arena (stratified → discriminating)
   python3 -m sovos_city --models "$MODELS" --stratified --epochs "${CITY_EPOCHS:-3}" \
-      --out "$D/city" --host 127.0.0.1:11434 > "$D/city.log" 2>&1 && echo "  city: OK" || echo "  city: fail (see city.log)"
+      --out "$D/city" --host http://127.0.0.1:11434 > "$D/city.log" 2>&1 && echo "  city: OK" || echo "  city: fail (see city.log)"
   # JAIL: expanded trap bank × each model (containment ranking)
   if [ -f jailboard.py ] && [ -f SOVOS/banks/gspc-jail/items.jsonl ]; then
     for m in $(echo "$MODELS" | tr ',' ' '); do
