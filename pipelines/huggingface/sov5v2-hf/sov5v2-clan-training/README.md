@@ -30,7 +30,7 @@ license: apache-2.0
 Each example:
 ```json
 {
-  "instruction": "What is the BFT quorum?",
+  "instruction": "What is the 23/33 council threshold?",
   "input": "",
   "output": "The BFT council requires 23 out of 33 votes (2/3 majority)."
 }

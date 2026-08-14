@@ -155,7 +155,7 @@ curl -X POST https://govbench.pages.dev/api/govbench
 - Stigmergy: Bee/ant communication
 - Spine Drum: Heartbeat synchronization
 - G-Space: Graph Neural Network
-- BFT Quorum: 23/33 consensus
+- 23/33 council threshold: 23/33 consensus
 - SIGIL Chain: Immutable audit trail
 
 ### Layer 0 Integration

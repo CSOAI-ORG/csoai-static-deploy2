@@ -14,7 +14,7 @@ license: mit
 # SOV33 Sovereign AI — GovBench
 
 ## Overview
-SOV33 is a sovereign AI architecture with 12 OWEM families, BFT-33 council governance, and Ed25519 SIGIL chain.
+SOV33 is a sovereign AI architecture with 12 OWEM families, designed 33-agent council governance, and Ed25519 SIGIL chain.
 
 ## GovBench Scores
 - Qwen-Max: 60.5% overall (15 dimensions)

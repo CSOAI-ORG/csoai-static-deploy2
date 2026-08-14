@@ -69,13 +69,13 @@ SWAP-persistent memory. Even when models change, sovereign memory persists. Iden
 
 ---
 
-## BFT-33 Council (Byzantine Fault Tolerance)
+## 33-seat council Council (designed-council structure (fault tolerance retracted 2026-07-29))
 
 **23 of 33 voters** must agree for binding decisions.
 
 - **33 voters** represent different architectures, lineages, and specializations
 - **23/33 quorum** prevents single-model takeover
-- **Byzantine fault tolerant**: even if 10 voters are malicious, the system continues correctly
+- **designed-council (fault tolerance retracted 2026-07-29)**: even if 10 voters are malicious, the system continues correctly
 - **Used for**: sovereign brain selection, hard rule enforcement, capability passport issuance, memory writes to L3 sovereign layer
 
 ---
@@ -91,7 +91,7 @@ Every SOV33 response is signed with **Ed25519**:
 - **Hash-chained**: each SIGIL includes the previous hash (tamper-evident)
 - **Ed25519 signed**: cryptographic guarantee of origin
 - **7+ year retention**: UK regulation compliant
-- **BFT-33 attested**: critical decisions cross-signed by 23+ voters
+- **33-seat council attested**: critical decisions cross-signed by 23+ voters
 
 ---
 
@@ -128,10 +128,10 @@ Every SOV33 response is signed with **Ed25519**:
 
 - **L1 Episodic** (0-7d, 10,000 entries)
 - **L2 Semantic** (7-90d, 50,000 entries)
-- **L3 Sovereign** (permanent, unlimited, BFT-33 bound)
+- **L3 Sovereign** (permanent, unlimited, 33-seat council bound)
 - **L4 Replay** (1000 capacity, continual learning)
 
-All SIGIL-signed. L3 writes require BFT-33 vote. Article 0 bound (no deletion without human escalation).
+All SIGIL-signed. L3 writes require 33-seat council vote. Article 0 bound (no deletion without human escalation).
 
 ---
 
@@ -146,7 +146,7 @@ All SIGIL-signed. L3 writes require BFT-33 vote. Article 0 bound (no deletion wi
 
 **Capabilities (13):** text chat, reasoning, code, memory, tools, embed, voice, multi-OWEM, sovereign brain, Mamba-2, world model, fluid pyramid, OWEM registry
 
-**Sovereignty Bindings (7):** BFT-33, Mamba-2, Ed25519 SIGIL, Article 0, Care-floor 0.95, 12 Pillars, Split-conformal
+**Sovereignty Bindings (7):** 33-seat council, Mamba-2, Ed25519 SIGIL, Article 0, Care-floor 0.95, 12 Pillars, Split-conformal
 
 ---
 
@@ -155,7 +155,7 @@ All SIGIL-signed. L3 writes require BFT-33 vote. Article 0 bound (no deletion wi
 Most AI is ungoverned, opaque, and not sovereign. SOV33 is the answer:
 
 - **Sovereign**: own weights, own tokenizer, own world model
-- **Governed**: 12 Pillars + BFT-33 + Article 0 + care-floor 0.95
+- **Governed**: 12 Pillars + 33-seat council + Article 0 + care-floor 0.95
 - **Auditable**: SIGIL chain on every response
 
 **Three sentences no other solo-built agent stack can say:**

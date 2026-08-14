@@ -4,7 +4,7 @@
 // Returns the current sovereign substrate swarm state — the substrate-side
 // half of the SOV SPACE ↔ J SPACE bridge. Numbers are the canonical
 // substrate counters (33 active agents, 13 model classes, 1Hz SIGIL rate,
-// BFT quorum of 23, 511 OOWM evolution cycles, 251 memory episodes).
+// 23/33 council threshold of 23, 511 OOWM evolution cycles, 251 memory episodes).
 //
 // The 16-dim intuition_state vector is a placeholder for the Mamba-2 SSM
 // hidden state — the actual live vector is produced inside the SOV3

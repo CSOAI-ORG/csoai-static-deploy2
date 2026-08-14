@@ -21,12 +21,12 @@ base_model:
 
 ## Model Description
 
-SOV33 is a governed AI substrate with 12 Sovereign Pillars, BFT-33 council (23/33 quorum), Ed25519 SIGIL on every response, and care-floor 0.95. It is not a foundation model competing with frontier labs — it is a different capability class: sovereign, governed, auditable.
+SOV33 is a governed AI substrate with 12 Sovereign Pillars, designed 33-agent council (23/33 quorum), Ed25519 SIGIL on every response, and care-floor 0.95. It is not a foundation model competing with frontier labs — it is a different capability class: sovereign, governed, auditable.
 
 ## Architecture
 
 - **Base**: Qwen3-0.6B + LoRA adapters (Qwen2.5-0.5B-Instruct for lightweight)
-- **Governance**: BFT-33 council with HotStuff consensus
+- **Governance**: designed 33-agent council with HotStuff consensus
 - **Audit**: Ed25519 SIGIL chain on every response
 - **Safety**: Care Floor 0.95 (split-conformal calibrated)
 - **Training**: GRPO with process rewards

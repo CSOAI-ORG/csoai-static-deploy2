@@ -34,7 +34,7 @@ against any uploaded model.
 ## GovBench — Byzantine Safety Benchmark
 
 GovBench tests AI governance resilience against adversarial attacks on safety
-councils. It simulates a 33-member BFT (Byzantine Fault Tolerant) council
+councils. It simulates a 33-member BFT (designed-council (fault tolerance retracted 2026-07-29)) council
 evaluating harmful vs benign prompts under 5 attack types:
 
 | Attack | Description |

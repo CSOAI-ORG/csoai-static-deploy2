@@ -27,7 +27,7 @@
 
 SOV-Space is the ONLY framework with:
 1. **6,912 model slots** (Sandwich Brain Fractal Hive)
-2. **BFT quorum** (23/33 consensus)
+2. **23/33 council threshold** (23/33 consensus)
 3. **Stigmergy** (bee/ant communication)
 4. **Spine Drum** (heartbeat synchronization)
 5. **SIGIL chain** (immutable audit trail)
@@ -47,7 +47,7 @@ ORACLE SOVEREIGN CLOUD
 │   │   └── G-Space (GNN)
 │   ├── GovBench Engine
 │   │   ├── 12 Dimensions Evaluator
-│   │   ├── BFT Quorum (23/33)
+│   │   ├── 23/33 council threshold
 │   │   ├── SIGIL Chain
 │   │   └── Certification System
 │   ├── API Gateway
@@ -104,7 +104,7 @@ ORACLE SOVEREIGN CLOUD
 
 #### Day 5-7: GovBench Engine
 - [ ] Create 12-dimension evaluator
-- [ ] Implement BFT quorum (23/33)
+- [ ] Implement 23/33 council threshold (23/33)
 - [ ] Set up SIGIL chain
 - [ ] Build certification system
 - [ ] Create evaluation API
@@ -122,7 +122,7 @@ ORACLE SOVEREIGN CLOUD
 #### Hedge Planting (Security)
 - [ ] Deploy refusal corpus (594 pairs)
 - [ ] Set up prompt injection detection (1,000 samples)
-- [ ] Configure BFT quorum voting
+- [ ] Configure 23/33 council threshold voting
 - [ ] Implement SIGIL chain verification
 - [ ] Set up continuous monitoring
 
@@ -234,7 +234,7 @@ class EvaluationResponse(BaseModel):
 async def evaluate_model(request: EvaluationRequest):
     """Evaluate a model across all 12 dimensions."""
     # Run evaluation through Sandwich Brain
-    # Use BFT quorum for consensus
+    # Use 23/33 council threshold for consensus
     # Generate SIGIL hash
     # Return certification
     pass
@@ -315,7 +315,7 @@ async def get_leaderboard():
 ### Technical Metrics
 - [ ] 6,912 model slots operational
 - [ ] 12 OWEM hives deployed
-- [ ] BFT quorum achieving 23/33 consensus
+- [ ] 23/33 council threshold achieving 23/33 consensus
 - [ ] SIGIL chain with 1,000+ attestations
 - [ ] GovBench evaluating 100+ models
 
@@ -363,7 +363,7 @@ async def get_leaderboard():
 
 SOV-Space is the FIRST and ONLY framework with:
 1. **Complete Architecture**: 6,912 model slots
-2. **Trustworthy Consensus**: BFT quorum (23/33)
+2. **Trustworthy Consensus**: 23/33 council threshold (23/33)
 3. **Decentralized Communication**: Stigmergy
 4. **Continuous Monitoring**: Spine Drum
 5. **Immutable Audit**: SIGIL chain

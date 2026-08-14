@@ -134,7 +134,7 @@
 1. iwms/sov_router.py - Main SOV router
 2. iwms/owem_hive.py - OWEM Hive (12 clans)
 3. iwms/owem_brain.py - OWEM Brain (sandwich)
-4. iwms/bft_quorum.py - BFT Quorum (23/33)
+4. iwms/bft_quorum.py - 23/33 council threshold
 5. iwms/g_space.py - G-Space (Graph Neural Network)
 6. iwms/j_space.py - J-Space (Joint reasoning)
 7. iwms/owm.py - OWM (Outer World Model)

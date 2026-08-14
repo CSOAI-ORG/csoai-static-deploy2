@@ -2,7 +2,7 @@
 // GET /api/hermes-stream?limit=N
 //
 // Returns the last N SIGIL emissions from the chain, with care-floor
-// invariant + BFT quorum health envelope.
+// invariant + 23/33 council threshold health envelope.
 //
 // HONESTY:
 //  - Reads from /tmp/sigil.log (primary) + /tmp/hermes-delegations.jsonl

@@ -7,7 +7,7 @@
 | GAIA Level 1 | 90.0% |
 | HumanEval | 88.0% |
 | Sovereign Compliance (EU AI Act) | 90.0% |
-| GovBench V6 (BFT-33 adversarial) | 92.0% |
+| GovBench V6 (33-seat council adversarial) | 92.0% |
 
 ## Evaluation
 ```bash

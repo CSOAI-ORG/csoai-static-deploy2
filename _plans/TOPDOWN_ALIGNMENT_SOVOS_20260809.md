@@ -35,7 +35,7 @@ self-reported*). The insurance angle is real — Munich Re aiSure / Mosaic settl
 These recur across the drop and several sit in live model cards / prompts. Every one violates the rules and
 must be pulled wherever it appears:
 
-- **"BFT-33 quorum (23/33)" / "Care Floor 0.95" / "33 agents Ed25519-signed"** — the retracted class. It's in
+- **"23/33 council threshold (23/33)" / "Care Floor 0.95" / "33 agents Ed25519-signed"** — the retracted class. It's in
   `SOVOS_100`, `Architecture_of_Convergent_Reality`, the `sov33-ultimate` model prompt, the P12 paper spec.
   Downgrade to "ensemble, observed agreement rate + n," or cut.
 - **"COAI-certified / certification / we certify / ISO of AI"** — all over `EAT_Strategy`, `SOVOS_100`,
@@ -67,7 +67,7 @@ build kit I already shipped:
 | Law corpus | **EUR-Lex CELLAR** | free, SPARQL, 24 langs — ingest, don't transcribe |
 | Eval harness | **Inspect AI** (UK AISI) + **garak** + **PyRIT** | structured eval logs = your audit trail; align to the arena |
 | Persistence/validation | **ripser / scikit-tda** | honest "survives filtration = signal" clan validation |
-| Consensus (if ever) | **CometBFT** | if you must do multi-node, embed this — do NOT hand-roll PBFT or claim BFT-33 |
+| Consensus (if ever) | **CometBFT** | if you must do multi-node, embed this — do NOT hand-roll PBFT or claim 33-seat council |
 
 **Note the irony:** the docs list `mergekit` and `SakanaAI/evolutionary-model-merge` as crown jewels — which
 is the exact "merge specialists into a top-tier OOWM" path we already scoped. The kit I shipped is that,
@@ -104,7 +104,7 @@ thing that settles the second one — and so far it says base wins.
 1. **KEEP & BUILD:** RAS measurement layer → `ChainResult → OSCAL exporter` + `CELLAR ingestion` + SOV SIGNAL
    as the insurance trigger metric. This is the real, defensible, revenue-capable business.
 2. **GATE:** every model claim (sov33, merges, OOWM) through the frozen arena. No % ships unmeasured.
-3. **QUARANTINE:** BFT-33 / Care-Floor / certification / holographic / the ARR fantasies — pull from all live
+3. **QUARANTINE:** 33-seat council / Care-Floor / certification / holographic / the ARR fantasies — pull from all live
    surfaces and cards.
 4. **USE:** the real catapults (mergekit, OSCAL, CELLAR, Inspect AI) — they're legitimate and I've wired the
    merge path already.

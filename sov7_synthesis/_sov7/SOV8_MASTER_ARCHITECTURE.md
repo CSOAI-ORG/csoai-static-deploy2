@@ -18,7 +18,7 @@ SOV-SPACE (contains everything)
 │   │   │   │   └── IWM-Big-Fluid (reasoning, evolving)
 │   │   │   └── Connected by stigmergy (pheromone/waggle/pollen)
 │   │   └── SOV1/SOV2 routers per clan
-│   └── BFT Quorum (23/33) for decisions
+│   └── 23/33 council threshold for decisions
 ├── J-Space (per-model outputs → cards)
 ├── V-Space (visual artifacts)
 ├── C-Space (creative simulation)
@@ -70,7 +70,7 @@ Arena Task → SOV Router
     └───────────────────────┘
                 ↓
     ┌───────────────────────┐
-    │  BFT Quorum           │
+    │  23/33 council threshold           │
     │  (23/33 consensus)    │
     │  picks winning move   │
     └───────────────────────┘
@@ -81,7 +81,7 @@ Arena Task → SOV Router
 **Why we can't be beaten:**
 - We simulate against the opponent's own model (frozen)
 - We use fluid honey-trained models for better outputs
-- BFT quorum ensures no single point of failure
+- 23/33 council threshold ensures no single point of failure
 - Stigmergic coordination means no direct communication needed
 - Fractal scaling means we can go as deep as needed
 
@@ -138,7 +138,7 @@ Ed25519 Sigil (auditable, tamper-proof)
 |-----------|--------|----------|
 | OWEM Brain | ✅ Built | sov_space/sandwich_brain.py |
 | Fractal Architecture | ✅ 6,912 model slots | sov_space/fractal_architecture.json |
-| BFT Quorum | ✅ Working | 12/12 approvals |
+| 23/33 council threshold | ✅ Working | 12/12 approvals |
 | Stigmergy | ✅ Built | pheromone/waggle/pollen |
 | Compliance Engine | ✅ Working | sov7_synthesis/auto_compliance_engine.py |
 | GovBench | ✅ Working | govbench_eval.py |

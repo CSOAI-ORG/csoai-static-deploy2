@@ -17,7 +17,7 @@
 
 | Mode | SimCity lineage | The human does | What it trains/tests |
 |---|---|---|---|
-| **MAYOR** (god view) | SimCity | Sets policy — proposes Article 0 amendments, zones the 14 districts, allocates enforcement. The council (BFT-33) votes on your proposals; the city reacts | Governance trade-offs; *why* the gates exist |
+| **MAYOR** (god view) | SimCity | Sets policy — proposes Article 0 amendments, zones the 14 districts, allocates enforcement. The council (33-seat council) votes on your proposals; the city reacts | Governance trade-offs; *why* the gates exist |
 | **CITIZEN** (embodied) | The Sims | Plays a clan character among AI citizens — build a career in the Signal Exchange, run for a council seat, ally with a faction | The rules from inside; empathy for the governed |
 | **RED** (adversary) | *no lineage — new* | Your explicit job: **break the constitution.** Bribe agents, capture markets, jailbreak the GM, exploit gate gaps | Crowdsourced adversarial testing — every human exploit becomes an Article 0 patch and a signed ChainResult |
 
@@ -83,7 +83,7 @@ AI Town fork (MIT) ──► SOVOS adapter:
 
 1. **Clone AI Town, run it against the local Ollama fleet** — 30 minutes to a living town; screenshot becomes the game's first artifact
 2. **Write the RED mode one-pager** — "Break Our Constitution" — the bounty-leaderboard design that turns adversarial testing into gameplay
-3. **Sketch Mayor mode's policy loop** — propose → BFT-33 vote → city reacts → signed ChainResult — the loop that teaches governance by playing it
+3. **Sketch Mayor mode's policy loop** — propose → 33-seat council vote → city reacts → signed ChainResult — the loop that teaches governance by playing it
 
 ---
 

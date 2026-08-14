@@ -47,7 +47,7 @@ Everything else in the estate is either (a) a distribution surface for that inst
 ### 1c. RETRACTED — do not reinstate without passing the gate
 | Claim | Why it died |
 |---|---|
-| 3-leg Byzantine quorum | `[KILLED]` n_eff **1.21 of 3**, phi **+0.743** — legs are system prompts over one shared blob. "Byzantine fault tolerant" removed from every doc. Gate to reinstate: **n_eff ≥ 2.0 of 3** |
+| 3-leg Byzantine quorum | `[KILLED]` n_eff **1.21 of 3**, phi **+0.743** — legs are system prompts over one shared blob. "designed-council (fault tolerance retracted 2026-07-29)" removed from every doc. Gate to reinstate: **n_eff ≥ 2.0 of 3** |
 | Deterministic gate = +34.84 | `[KILLED]` re-measured: fires 6× not 31, contributes nothing. Retracted 2026-07-29 |
 | Per-dimension expert routing | `[KILLED]` +0.90 `[-1.99, +3.79]` — off |
 | Statute retrieval (ungated) | `[KILLED]` **−9.16** `[-17.64, -0.69]` — significant *harm* |

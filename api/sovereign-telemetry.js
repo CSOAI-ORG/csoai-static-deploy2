@@ -174,7 +174,7 @@ async function bftState() {
     last_actions: tail.map((l) => { try { return JSON.parse(l); } catch { return l; }; }),
     chains: {
       bft_count: tail.length,
-      note: 'Council is Byzantine Fault Tolerant at 2/3 supermajority threshold (23/33). 5 agent archetypes: regime-core, regime-edge, swarm, tissue, oversee.',
+      note: 'Council is designed-council (fault tolerance retracted 2026-07-29) at 2/3 supermajority threshold (23/33). 5 agent archetypes: regime-core, regime-edge, swarm, tissue, oversee.',
     },
   };
 }
@@ -298,7 +298,7 @@ module.exports = async function handler(req, res) {
     kpi('MCP substrate',   mcp_substrate.substrate_status, '', mcp_substrate.primary_reachable ? 'live' : 'unreached'),
     kpi('Sigil rate (24h)', sigil_rate.last_24h, 'sigils', sigil_rate.heartbeat_healthy ? 'ok' : 'low'),
     kpi('Sigil rate (1m)',  sigil_rate.per_min,  'sigils', sigil_rate.per_min > 0 ? 'ok' : 'idle'),
-    kpi('BFT quorum',      '23/33', '', bft.quorum_status === 'IDLE' ? 'idle' : 'ok'),
+    kpi('23/33 council threshold',      '23/33', '', bft.quorum_status === 'IDLE' ? 'idle' : 'ok'),
     kpi('BIG BRAIM cats',  models.big_braim_categories, '', 'ok'),
     kpi('Ollama',          models.ollama_probe.substrate_status, '', models.ollama_probe.reachable ? 'live' : 'unreached'),
     kpi('Total harvest',   total_ms, 'ms', total_ms < 3000 ? 'ok' : 'slow'),

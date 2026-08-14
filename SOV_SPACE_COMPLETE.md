@@ -18,7 +18,7 @@ SOV-SPACE
 │   │   │   │   └── IWM-Big-Fluid (reasoning, evolving)
 │   │   │   └── Sandwich Brain per family
 │   │   └── Clan Router + C-Space per clan
-│   └── Hive Router + BFT Quorum per hive
+│   └── Hive Router + 23/33 council threshold per hive
 ├── Stigmergy Layer (bee/ant communication)
 │   ├── Pheromone Trails (success/failure signals)
 │   ├── Waggle Dances (scout messages)
@@ -165,7 +165,7 @@ When SOV enters an arena/competition:
 1. G-Space spawns swarms of family agents
 2. Each agent runs internal simulations in their J-space
 3. Agents dream and evolve in C-space
-4. BFT quorum votes on best outcome
+4. 23/33 council threshold votes on best outcome
 5. Fluid honey memory updates in real-time
 6. The winning strategy emerges from clan consensus
 

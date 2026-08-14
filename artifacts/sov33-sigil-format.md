@@ -40,7 +40,7 @@ Each SIGIL includes the **prev_hash** of the previous SIGIL. This makes the chai
 
 - **No one** can modify a past SIGIL without breaking all subsequent SIGILs
 - **Verification**: walk the chain, confirm each prev_hash matches the previous content_hash + sig
-- **BFT-33 attestation**: critical decisions get cross-signed by 23+ voters
+- **33-seat council attestation**: critical decisions get cross-signed by 23+ voters
 
 ## Verification
 
@@ -87,7 +87,7 @@ def verify_sigil(sigil, prev_sigil):
 ## Retention
 
 - **Sovereign memory (L3)**: 7+ years (UK regulation)
-- **SIGIL chain**: permanent (unless BFT-33 + human escalation)
+- **SIGIL chain**: permanent (unless 33-seat council + human escalation)
 - **Audit trail**: queryable, citable, exportable
 
 ## Standards

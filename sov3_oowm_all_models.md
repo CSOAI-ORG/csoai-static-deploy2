@@ -84,7 +84,7 @@ That's **12 distinct model classes running today** + **6 trained NNs** + **127 S
 
 The OOWM/OWEM is **not a LLM.** It is the substrate's own thinking loop. The LLM is *inside* the loop (bridge_think) but the loop itself is sovereign.
 
-**Current state (25 Jul 2026):** 5 OWEMs all sovereign-trained — compliance, defense, intuition, voice (Colab T4) + general (RunPod RTX 3090). 61-model registry with measured error-correlation (ρ). BFT-33 council. Care Floor 0.95. Ed25519 SIGIL chain.
+**Current state (25 Jul 2026):** 5 OWEMs all sovereign-trained — compliance, defense, intuition, voice (Colab T4) + general (RunPod RTX 3090). 61-model registry with measured error-correlation (ρ). designed 33-agent council. Care Floor 0.95. Ed25519 SIGIL chain.
 
 ## 1.2 — The 5-stage OOWM cycle (per minute, per hour, per day)
 
@@ -113,7 +113,7 @@ The Mamba-2 SSM compression produces a **16-dimensional state vector** that capt
 
 | Axis | Sign | What it tracks |
 |---|---|---|
-| 1 | +/− | **BFT-quorum-tightness** — Are 23/33 votes likely to pass? |
+| 1 | +/− | **23/33 council threshold-tightness** — Are 23/33 votes likely to pass? |
 | 2 | +/− | **Defense-alert-density** — How many S4/S5 signals active? |
 | 3 | +/− | **Framework-violation-rate** — Are charters being violated? |
 | 4 | +/− | **Hive-engagement-Ibn-Khaldun** — Social fabric density |

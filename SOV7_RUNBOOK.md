@@ -43,7 +43,7 @@ All work, models, and data are on the RunPod network volume at `/workspace/sov-s
 - **sov4-sov7-lora** — LoRA-fine-tuned Mistral-7B (4.5GB via adapter, 15GB via merged)
   - Trained on 143 sovereign + general Q→A pairs
   - 2 epochs, LoRA r=32 alpha=64
-  - Test scores: math 1.0, code 1.0, reasoning 0.6+, BFT-33 correct, all broad benchmarks above 0.5
+  - Test scores: math 1.0, code 1.0, reasoning 0.6+, 33-seat council correct, all broad benchmarks above 0.5
 
 ## How to (re-)start the system
 

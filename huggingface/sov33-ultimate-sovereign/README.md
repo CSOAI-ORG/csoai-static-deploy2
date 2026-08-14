@@ -33,14 +33,14 @@ model_name: SOV33-Ultimate-Sovereign
 - NIST AI RMF (Govern, Map, Measure, Manage)
 - OECD AI Principles (inclusive growth, human-centered)
 - GDPR Articles 15-22, 33, 35
-- BFT-33 (23/33 quorum, Ed25519 SIGIL chain)
+- 33-seat council (23/33 quorum, Ed25519 SIGIL chain)
 - Care Floor (0.95 threshold)
 - 12 Sovereign Pillars
 
 ### Security Stack
 - 2,740 safety entries (refusal, prompt injection, red-teaming)
 - 594 refusal training pairs
-- BFT Quorum (2/3+1 threshold, cross-clan voting)
+- 23/33 council threshold (2/3+1 threshold, cross-clan voting)
 - God's Eye omniscient scanner
 - 71 sigil attestations, 20 critic heartbeats
 - PyRIT red-teaming results

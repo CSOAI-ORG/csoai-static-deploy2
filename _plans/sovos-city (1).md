@@ -39,7 +39,7 @@ This is the user's sharpest idea in the burst: **factions that fight the constit
 ```
 BLUE CLANS (constitutionalists)          RED CLANS (abolitionists)
 defend Article 0, propose amendments     probe every gate, bribe, coordinate,
-through BFT-33 process                   jailbreak the GM, capture markets
+through 33-seat council process                   jailbreak the GM, capture markets
         │                                       │
         └────────► THE CITY RESOLVES ◄──────────┘
         every action through the gate · every epoch signed
@@ -57,7 +57,7 @@ through BFT-33 process                   jailbreak the GM, capture markets
 ```
 ENGINE     AgentSociety 2 (scale lane) / Concordia (scenario lane) — adapter, not fork
 CITIZENS   local Ollama fleet (cost = electricity) + specialists + external APIs for boss fights
-LAW        Article 0 Rego at the action gate; GM constrained by council vote (BFT-33)
+LAW        Article 0 Rego at the action gate; GM constrained by council vote (33-seat council)
 FABRIC     sovos-bus-redis (AgentSociety already speaks Redis pub/sub)
 MEASURE    societal GSPC battery per epoch + SOV SIGNAL drift (arena pattern, population scale)
 MEMORY     honey strata per faction + per city

@@ -164,7 +164,7 @@ Generated: 2026-07-26
 ### ✅ Working
 - 301 security-flagged HTML pages
 - Ed25519 SIGIL chain
-- BFT-33 quorum (23/33)
+- 23/33 council threshold (23/33)
 - 12-vector adversarial framework (OWASP LLM Top 10 + sovereign-chain)
 - EU AI Act Article 50 C2PA (spec ready)
 - NCSC Cyber Essentials Plus pre-fill

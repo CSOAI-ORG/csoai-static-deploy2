@@ -40,7 +40,7 @@ SOV33 ships with three cryptographic guarantees that no other solo-built agent s
 - **Inside each pillar**: Mixture-of-Experts (4 experts) + Mixture-of-Models (3 model families)
 - **Care-floor 0.95** enforced at the pre-call gate, before any model call
 - **Article 0 bound** — ISO fee-for-service only, never equity
-- **BFT-33 quorum** — 23 of 33 voters must agree for binding decisions
+- **23/33 council threshold** — 23 of 33 voters must agree for binding decisions
 - **Ed25519 SIGIL** on every response, hash-chained, 7+ year retention
 - **SWAP-persistent memory** — survives model changes
 - **Fluid Pyramid** — 12 hybrid OWEMs that can grow/shrink based on live load

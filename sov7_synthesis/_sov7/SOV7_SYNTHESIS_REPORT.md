@@ -21,7 +21,7 @@
 ### Phase 3: 5-Clan Voting Ensemble
 - 5 decorrelated architectures for robust voting
 - ρ = -0.725 decorrelation between transformer and SSM
-- BFT quorum (23/33) for sovereign decision-making
+- 23/33 council threshold (23/33) for sovereign decision-making
 
 ### Phase 4: Visual Dashboard
 - Interactive synthesis dashboard at `sov7_synthesis_dashboard.html`

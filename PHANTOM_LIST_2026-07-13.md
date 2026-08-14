@@ -47,7 +47,7 @@
 | 24 | defoneos-aukus-proposal | 80 | CLAIM | Hermes/JEEVES | REBUILD | 13.5 | Rebuild AUKUS 5-nation expansion proposal (3 phased rollout + £22M 5y). Reference: T80 RELEASED, verified 13539b. |
 | 25 | defoneos-iso-42001-deep-dive | 81 | CLAIM | Hermes/JEEVES | REBUILD | 13.7 | Rebuild ISO 42001 AIMS deep-dive (6 clauses + 134 controls + 94% coverage + £60-80k 3y cert). Reference: T81 RELEASED 13:15, verified 13732b. |
 | 26 | defoneos-eu-ai-act-deep-dive | 81 | CLAIM | Hermes/JEEVES | REBUILD | 16.0 | Rebuild EU AI Act deep-dive (Article 50 deadline 2 Aug 2026 + 67 articles + 89% coverage). Reference: T81 RELEASED, verified 15952b. |
-| 27 | defoneos-five-eyes-proposal | 81 | CLAIM | Hermes/JEEVES | REBUILD | 15.2 | Rebuild 5-nation BFT-33 + 12-month rollout + £5.58M 5y proposal. Reference: T81 RELEASED, verified 15237b. |
+| 27 | defoneos-five-eyes-proposal | 81 | CLAIM | Hermes/JEEVES | REBUILD | 15.2 | Rebuild 5-nation 33-seat council + 12-month rollout + £5.58M 5y proposal. Reference: T81 RELEASED, verified 15237b. |
 | 28 | defoneos-mod-ceo-letter | 82 | CLAIM | Hermes/JEEVES | REBUILD | 10.0 | Rebuild CEO letter to MOD decision-makers. Reference: T82 RELEASED 14:18, verified 9977b. |
 | 29 | defoneos-mod-champion-bio | 82 | CLAIM | Hermes/JEEVES | REBUILD | 12.9 | Rebuild internal champion bio template. Reference: T82 RELEASED, verified 12868b. |
 | 30 | defoneos-mod-investor-pitch | 82 | CLAIM | Hermes/JEEVES | REBUILD | 16.1 | Rebuild compressed investor angle for sovereign buyers. Reference: T82 RELEASED, verified 16121b. |

@@ -27,13 +27,13 @@ SOV33 is a UK-sovereign AI substrate built by CSOAI Ltd (UK Companies House 1693
 │  96 emergence nodes, 10,992 bloodline records, 4 lineages       │
 ├─────────────────────────────────────────────────────────────────┤
 │  SOV4 — Fluid Layer (Router / Water→Milk→Honey)                 │
-│  Cross-family merging, BFT-33 governance, J-Space               │
+│  Cross-family merging, 33-seat council governance, J-Space               │
 ├─────────────────────────────────────────────────────────────────┤
 │  SOV3 — Sovereign Substrate (Foundation Layer)                  │
 │  127 tools, 6 NNs, MCP mesh, 12 mindsets                       │
 ├─────────────────────────────────────────────────────────────────┤
 │  SOV33 — Public Surface (61-Model Registry)                     │
-│  5 routing groups, SIGIL, BFT-33, Care Floor 0.95              │
+│  5 routing groups, SIGIL, 33-seat council, Care Floor 0.95              │
 ├─────────────────────────────────────────────────────────────────┤
 │  SOV333 — Capstone / Deep Tier (Aspiration)                     │
 │  30B-70B models, 10 OWEM components (7/10 built)               │
@@ -95,7 +95,7 @@ SOV33 is a UK-sovereign AI substrate built by CSOAI Ltd (UK Companies House 1693
 - 4-brain split: LEFT (fast/offline) + RIGHT (deep/online)
 - Triangle topology: 3 small OWEMs + 1 SOV33-cubed center
 - 12 Sovereign Pillars as specialists
-- Care-floor 0.95, Ed25519 SIGIL, BFT-33 quorum (23/33)
+- Care-floor 0.95, Ed25519 SIGIL, 23/33 council threshold (23/33)
 
 **Key Files:**
 - `SOV33_INDEX.html`, `SOV33_MASTER_INDEX.html`
@@ -270,7 +270,7 @@ SOV33 is a UK-sovereign AI substrate built by CSOAI Ltd (UK Companies House 1693
 1. **Open Source**: Only sovereign AI platform that is fully open-source
 2. **UK Sovereign**: UK-based sovereign AI substrate
 3. **Auditability**: Ed25519 SIGIL on every response
-4. **Governance**: BFT-33 Byzantine consensus (23/33 quorum)
+4. **Governance**: 33-seat council Byzantine consensus (23/33 quorum)
 5. **Cost**: £0-£6K/month (vs £100K+/year for proprietary alternatives)
 6. **EU AI Act**: Article 50 compliance built-in
 

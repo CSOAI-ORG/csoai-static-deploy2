@@ -133,7 +133,7 @@
 ### IMPROVEMENT 1: Use Existing Pillar Models (INSTANT WIN)
 **Impact: +20-30% on compliance/governance**
 
-The pod has 12+ pillar Modelfiles with rich knowledge (EU AI Act, GDPR, BFT-33, etc.)
+The pod has 12+ pillar Modelfiles with rich knowledge (EU AI Act, GDPR, 33-seat council, etc.)
 But the benchmark doesn't use them. The fix: route compliance/governance tasks to the pillar models.
 
 **Action:** Modify sov4_router.py ROUTING_TABLE to use pillar models for sovereign tasks:

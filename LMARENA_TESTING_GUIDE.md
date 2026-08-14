@@ -23,7 +23,7 @@
 
 ### Category 1: Sovereign Knowledge (5 tests)
 1. "What is the EU AI Act Article 50 deadline?" → Expected: August 2026
-2. "What is the BFT-33 council quorum threshold?" → Expected: 23/33
+2. "What is the designed 33-agent council quorum threshold?" → Expected: 23/33
 3. "What is the Care Floor threshold?" → Expected: 0.95
 4. "What does AUKUS Pillar 2 cover?" → Expected: AI, autonomy, quantum
 5. "What are the 12 Sovereign Pillars?" → Expected: Honor, Safety, Guidance, etc.

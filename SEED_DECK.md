@@ -33,7 +33,7 @@
 |---|---|
 | **12 Dimensions** | Governance, Security, Defence, Ethics, Privacy, Safety, Robustness, Transparency, Fairness, Accountability, Sovereignty, Evolution |
 | **500 Scenarios** | EU AI Act, GDPR, ISO 42001, NIST AI RMF, AUKUS, NCSC CAF |
-| **BFT Consensus** | 23/33 Byzantine Fault Tolerant quorum on every evaluation |
+| **BFT Consensus** | 23/33 designed-council (fault tolerance retracted 2026-07-29) quorum on every evaluation |
 | **SIGIL Chain** | Ed25519 hash-chained attestations — immutable audit trail |
 | **Free API** | OpenAI-compatible endpoint at sov33-api.nicholastempleman.workers.dev |
 
@@ -66,7 +66,7 @@ SOV-Space
 │   │   │       ├── IWM-Big-Frozen (reasoning, stable)
 │   │   │       └── IWM-Big-Fluid (reasoning, evolving)
 │   │   └── Sandwich Brain per family
-│   └── Hive Router + BFT Quorum per hive
+│   └── Hive Router + 23/33 council threshold per hive
 ├── Stigmergy Layer (bee/ant communication)
 ├── Spine Drum (heartbeat synchronization)
 ├── G-Space (Graph Neural Network)

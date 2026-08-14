@@ -45,7 +45,7 @@ For the substrate to be sovereign-bound AND grow, certain things must NEVER chan
 - Cannot reorder their priority
 - **How it grows:** the INTERPRETATION of each pillar can deepen (e.g., "Continuity" could add sub-principles for migration) but the LIST stays fixed
 
-### Invariant 4: BFT-33 quorum (23/33)
+### Invariant 4: 23/33 council threshold (23/33)
 - 23 of 33 voters must agree
 - Cannot lower the quorum
 - Cannot use a smaller BFT council
@@ -224,7 +224,7 @@ The substrate is **MIT + Apache-2.0 + CC0** — no proprietary deps. It runs on:
 | 5 | Wire sovereign-finance hive (banking MCPs) | 500+ new memory entries |
 | 6 | Cross-platform packaging (Docker + pip + WASM) | Runs anywhere |
 | 7 | Federation expansion (Together.ai, Modal) | 5× model diversity |
-| 8 | BFT-33 expansion (33 voters, diverse lineages) | Real fault tolerance |
+| 8 | 33-seat council expansion (33 voters, diverse lineages) | Real fault tolerance |
 | 9 | Memory tiering (hot/warm/cold) | 10× memory capacity |
 | 10 | Sovereign OS kernel (boot from a sigil) | Portable sovereign |
 | 11 | Auto-scaling cron jobs (every 5min) | Self-managing |
@@ -254,7 +254,7 @@ The key is the **invariants** — they ensure the growth preserves sovereignty. 
 
 ## The 1-line honest answer
 
-**Yes — OWEM grows across 5 dimensions (brains, hives, GPUs, lineages, memory) and doesn't forget, because learning goes to memory + replay-based adapters on a frozen base, not to the base weights. The 6 invariants (Care-Floor, Article 0, 12 Pillars, BFT-33, SIGIL, sovereign-bound) stay constant. Auto-scaling is partially built (label-driven retrain + license audit RUNNING) and partially designed (traffic-driven brain addition, memory tiering — NOT yet built; GPU provisioning stays owner-gated). The growth is structured: without the invariants it would be cancer (uncontrolled); with them it is evolution (controlled + improving), sovereign-bound to a person who can carry it across platforms.**
+**Yes — OWEM grows across 5 dimensions (brains, hives, GPUs, lineages, memory) and doesn't forget, because learning goes to memory + replay-based adapters on a frozen base, not to the base weights. The 6 invariants (Care-Floor, Article 0, 12 Pillars, 33-seat council, SIGIL, sovereign-bound) stay constant. Auto-scaling is partially built (label-driven retrain + license audit RUNNING) and partially designed (traffic-driven brain addition, memory tiering — NOT yet built; GPU provisioning stays owner-gated). The growth is structured: without the invariants it would be cancer (uncontrolled); with them it is evolution (controlled + improving), sovereign-bound to a person who can carry it across platforms.**
 
 ## Honest register (RUNNING vs DESIGNED)
 - RUNNING: substrate growth is real and monotonic (verified overnight: sigils 17,049→17,197, labels 1,327→1,589, OWEM world-sigils 0→87); 6/6 invariants held on every cron tick; growth controller measures all 5 dimensions live (10 distinct lineages across the 70-entry model registry).

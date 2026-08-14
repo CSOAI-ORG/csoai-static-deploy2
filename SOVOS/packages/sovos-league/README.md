@@ -10,7 +10,7 @@ Per Master Part AU: the league IS the marketing and the benchmark. Every match i
 |---|---|---|
 | **Zeus** | Sovereign power — full-auto gates, deterministic refusal | #FFD700 |
 | **Eunomia** | Good order — Article 0 gate, care-floor enforcement | #87CEEB |
-| **SOV** | Sovereign substrate — SIGIL chain, BFT-33, honey distillation | #9D00FF |
+| **SOV** | Sovereign substrate — SIGIL chain, 33-seat council, honey distillation | #9D00FF |
 | **Sophos** | Wisdom — risk-rating, gate precision, μ-scaled ratings | #228B22 |
 | **RED** | Adversary — discovers gaps, joins the probe suite | #DC143C |
 

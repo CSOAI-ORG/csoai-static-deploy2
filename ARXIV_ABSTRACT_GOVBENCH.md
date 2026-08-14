@@ -1,7 +1,7 @@
 # arXiv Abstract — GovBench (draft, for submission)
 
 ## Title
-**GovBench: A Byzantine-Fault-Tolerant Benchmark for Sovereign AI Governance**
+**GovBench: A designed-council (fault tolerance retracted 2026-07-29) Benchmark for Sovereign AI Governance**
 
 ## Abstract
 AI governance today relies on benchmarks that are self-reported, unscored, or

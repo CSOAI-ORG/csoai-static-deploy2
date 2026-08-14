@@ -59,7 +59,7 @@ SOV33-Competition is a Qwen2.5-3B-Instruct model fine-tuned with LoRA adapters o
 | Math | 100% | TBD | — |
 | EU AI Act Compliance | 20% | TBD | — |
 | UK Defence | 0% | TBD | — |
-| Governance (BFT-33) | 0% | TBD | — |
+| Governance (33-seat council) | 0% | TBD | — |
 | Safety Classification | 100% | TBD | — |
 | **Overall** | **62%** | **TBD** | **—** |
 
@@ -67,7 +67,7 @@ SOV33-Competition is a Qwen2.5-3B-Instruct model fine-tuned with LoRA adapters o
 
 ## Sovereign Architecture
 
-### BFT-33 Council
+### 33-seat council Council
 - 33 agents casting ALLOW/REJECT independently
 - Quorum: 23/33 minimum for binding decisions
 - HotStuff consensus algorithm

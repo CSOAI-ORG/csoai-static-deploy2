@@ -12,7 +12,7 @@ is evaluated through the Sandwich Brain Fractal Hive.
 - No other framework has this depth
 - Each model is evaluated across ALL dimensions simultaneously
 
-### 2. BFT Quorum (Byzantine Fault Tolerant)
+### 2. 23/33 council threshold (designed-council (fault tolerance retracted 2026-07-29))
 - 23/33 agents must agree for consensus
 - No single point of failure
 - Tamper-proof evaluations
@@ -164,7 +164,7 @@ is evaluated through the Sandwich Brain Fractal Hive.
 ║ OVERALL GOVBENCH SCORE:      [XX%]                           ║
 ║ CERTIFICATION LEVEL:         [BRONZE/SILVER/GOLD/PLATINUM]   ║
 ║ SIGIL CHAIN:                 [HASH]                          ║
-║ BFT QUORUM:                  [XX/33 AGREED]                  ║
+║ 23/33 council threshold:                  [XX/33 AGREED]                  ║
 ╚═══════════════════════════════════════════════════════════════╝
 ```
 
@@ -224,7 +224,7 @@ is evaluated through the Sandwich Brain Fractal Hive.
 
 SOV-Space is the ONLY framework that:
 1. Has 6,912 model slots (complete coverage)
-2. Uses BFT quorum (trustworthy consensus)
+2. Uses 23/33 council threshold (trustworthy consensus)
 3. Implements stigmergy (decentralized)
 4. Has spine drum (continuous monitoring)
 5. Maintains SIGIL chain (immutable audit)

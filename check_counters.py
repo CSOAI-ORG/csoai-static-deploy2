@@ -19,13 +19,18 @@ QUARANTINED = {
 }
 
 # Files/dirs excluded from the gate (archives, third-party packs, generators)
-EXCLUDE_PARTS = {".backups", ".git", "node_modules", "defoneos", "kaggle_results", "__pycache__"}
+EXCLUDE_PARTS = {".backups", ".git", "node_modules", "defoneos", "kaggle_results", "__pycache__",
+                 ".claude"}  # ephemeral agent worktrees — not part of the repo, not shipped
 SCAN_GLOBS = ("*.html", "*.js", "*.md")
 SKIP_FILES = {"check_counters.py", "SOV-Counter-Canon.md",
               # Audit/retraction documents QUOTE unevidenced counters in order to
               # retract them; scanning them as if they published the claim makes
               # the gate attack its own audit trail.
-              "FRONT_TO_BACK_AUDIT.md"}
+              "FRONT_TO_BACK_AUDIT.md",
+              # Same rule for the BFT/quorum retraction trail: these documents name
+              # the retracted claim precisely in order to withdraw it or reframe it.
+              "QUORUM_PROBE_FINDING_2026-08-13.md", "QUORUM_RETRACTION_2026-07-29.md",
+              "GOVBENCH_PAPER_2026-08-09.md", "ARXIV_ABSTRACT_HONEST_DRAFT_2026-08-14.md"}
 
 # 2026-08-04 — the gate blocked STALE numbers but let UNEVIDENCED ones publish freely.
 # The canon's law is not "don't use the old number", it is "no number exists without a file
@@ -52,6 +57,24 @@ FORBIDDEN_VARIANTS = {
                                 "'0 of 20 assets survived (95% CI, clustered by asset)'"),
     "0% survival rate": "ProvBench register-lock — drops denominator and interval",
     "all 20 assets failed": "ProvBench register-lock — drops the interval and clustering note",
+}
+
+# Formally RETRACTED claims. The council's Byzantine-fault-tolerance claim was withdrawn
+# 2026-07-29 (QUORUM_RETRACTION_2026-07-29.md): measured effective independence n_eff ≈ 1.21
+# of 3 nominal legs — the votes are correlated, so the panel is NOT fault-tolerant. The
+# structure (a designed 33-agent council with a 23/33 threshold) is real and may be stated;
+# the FAULT-TOLERANCE claim may not. Matched case-insensitively so a re-capitalised reappearance
+# ("BFT QUORUM") cannot slip the gate. The design parameter "23/33 threshold" is deliberately
+# NOT listed — only the retracted claim is forbidden, not the real voting rule.
+RETRACTED_CLAIMS = {
+    "byzantine fault tolerant": "RETRACTED 2026-07-29 — n_eff≈1.21/3, votes correlated, NOT fault-tolerant. Use 'designed 33-agent council' + '23/33 threshold'.",
+    "byzantine-fault-tolerant": "RETRACTED — same",
+    "byzantine fault tolerance": "RETRACTED — same",
+    "byzantine-fault-tolerance": "RETRACTED — same",
+    "bft-33 quorum": "RETRACTED — 'BFT-33' asserts the withdrawn fault-tolerance claim",
+    "bft quorum": "RETRACTED — asserts the withdrawn fault-tolerance claim",
+    "bft-33 council": "RETRACTED — 'BFT' asserts fault tolerance; say 'designed 33-agent council'",
+    "23/33 court-admissible": "OVERCLAIM — court-admissibility not established; pull",
 }
 
 REQUIRED_EVIDENCE = [
@@ -89,6 +112,11 @@ def main() -> int:
         for variant, reason in FORBIDDEN_VARIANTS.items():
             if variant in text:
                 failures.append(f"{rel}: FORBIDDEN VARIANT '{variant}' — {reason}")
+
+        low = text.lower()
+        for phrase, reason in RETRACTED_CLAIMS.items():
+            if phrase in low:
+                failures.append(f"{rel}: RETRACTED CLAIM '{phrase}' — {reason}")
 
         for bad, reason in QUARANTINED.items():
             # match the quarantined number only in a counter-like context

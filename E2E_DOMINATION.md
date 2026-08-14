@@ -47,7 +47,7 @@
 3. Users can vote on your model
 
 ### Our Advantages
-- Sovereign knowledge (EU AI Act, GDPR, BFT-33)
+- Sovereign knowledge (EU AI Act, GDPR, 33-seat council)
 - Safety refusals (100% on red-team)
 - Code generation (100%)
 - Math (80%)
@@ -162,7 +162,7 @@
 3. **Spaces GPU**: Deploy on free GPU
 
 ### Differentiation
-- **Sovereign knowledge**: EU AI Act, GDPR, BFT-33
+- **Sovereign knowledge**: EU AI Act, GDPR, 33-seat council
 - **Safety**: 100% refusal on harmful requests
 - **Code**: 100% on code generation
 - **Math**: 80% on GSM8K
@@ -257,7 +257,7 @@
 
 1. **Small model**: 0.5B params = fast inference, low cost
 2. **Strong scores**: 72.5% arena composite, 100% safety, 100% code
-3. **Unique knowledge**: Sovereign governance, EU AI Act, BFT-33
+3. **Unique knowledge**: Sovereign governance, EU AI Act, 33-seat council
 4. **Free infrastructure**: Always Free Oracle, $0/month
 5. **First mover**: AI-audits-AI for free
 6. **Black swan**: Remove middle men (AIGN, AIGP, CREDO)

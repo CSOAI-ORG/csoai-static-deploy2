@@ -70,7 +70,7 @@ export default {
         } else if (lowerPrompt.includes('nist') || lowerPrompt.includes('risk management')) {
           response = 'NIST AI RMF (Risk Management Framework) has 4 functions: Govern (establish governance), Map (context and risks), Measure (assess and monitor), Manage (treat risks). It provides a structured approach to AI risk management.';
         } else if (lowerPrompt.includes('bft') || lowerPrompt.includes('quorum')) {
-          response = 'BFT-33 is the Byzantine Fault Tolerant consensus mechanism with 23/33 quorum requirement. It uses cross-clan voting with weighted confidence scores. The Ed25519 SIGIL chain provides append-only audit trail.';
+          response = '33-seat council is the designed-council (fault tolerance retracted 2026-07-29) consensus mechanism with 23/33 quorum requirement. It uses cross-clan voting with weighted confidence scores. The Ed25519 SIGIL chain provides append-only audit trail.';
         } else if (lowerPrompt.includes('care floor')) {
           response = 'The Care Floor threshold is 0.95. This is the minimum acceptable level of care in sovereign AI operations. All decisions must meet or exceed this threshold.';
         } else if (lowerPrompt.includes('defoneos') || lowerPrompt.includes('defence')) {
@@ -100,7 +100,7 @@ export default {
         } else if (lowerPrompt.includes('dog') && lowerPrompt.includes('cat')) {
           response = 'The cat was scared. The dog chased the cat because the cat was scared of the dog.';
         } else {
-          response = `I am SOV33-Ultimate-Sovereign, a sovereign AI with integrated governance, security, and defence capabilities. I can help with EU AI Act, GDPR, ISO 42001, NIST AI RMF, BFT-33, DEFONEOS, coding, math, and more. How can I assist you?`;
+          response = `I am SOV33-Ultimate-Sovereign, a sovereign AI with integrated governance, security, and defence capabilities. I can help with EU AI Act, GDPR, ISO 42001, NIST AI RMF, 33-seat council, DEFONEOS, coding, math, and more. How can I assist you?`;
         }
 
         return new Response(JSON.stringify({

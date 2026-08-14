@@ -100,7 +100,7 @@ print(response.json()["choices"][0]["message"]["content"])
 const response = await fetch("https://sov33-api.nicholastempleman.workers.dev/v1/chat/completions", {
   method: "POST",
   headers: {"Content-Type": "application/json"},
-  body: JSON.stringify({messages: [{role: "user", content: "What is BFT-33?"}]})
+  body: JSON.stringify({messages: [{role: "user", content: "What is 33-seat council?"}]})
 });
 const data = await response.json();
 console.log(data.choices[0].message.content);
@@ -124,7 +124,7 @@ curl -X POST https://sov33-api.nicholastempleman.workers.dev/v1/chat/completions
 
 ### Security
 - 2,740 safety entries (refusal, prompt injection, red-teaming)
-- BFT Quorum (2/3+1 threshold)
+- 23/33 council threshold (2/3+1 threshold)
 - God's Eye omniscient scanner
 - 71 sigil attestations
 

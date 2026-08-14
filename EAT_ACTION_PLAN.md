@@ -18,7 +18,7 @@
 - Run `tools/live_mcp_test.py` against live endpoints
 
 ### Decision Making (80% → 95%)
-- BFT-33 council routing: 23/33 quorum, Ed25519 SIGIL chain
+- designed 33-agent council routing: 23/33 quorum, Ed25519 SIGIL chain
 - Sov4 router pillar-aware routing for sovereign compliance/defence suites
 - Expand `sov_master_scenarios.py` with more decision-making task scenarios
 

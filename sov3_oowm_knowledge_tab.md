@@ -111,7 +111,7 @@ The sovereign AI's OOWM. A continuous-learning, embodied world model that:
 
 | Axis | Sign | Magnitude | What it tracks |
 |---|---|---|---|
-| 1 | +/− | BFT-quorum-tightness | Are 23/33 votes likely to pass? |
+| 1 | +/− | 23/33 council threshold-tightness | Are 23/33 votes likely to pass? |
 | 2 | +/− | Defense-alert-density | How many S4/S5 signals active? |
 | 3 | +/− | Framework-violation-rate | Are charters being violated? |
 | 4 | +/− | Hive-engagement-Ibn-Khaldun | Social fabric density |

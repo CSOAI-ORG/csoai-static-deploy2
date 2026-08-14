@@ -255,7 +255,7 @@ inspect. The A100 pod is the heavy-lift server. The 3090 pod is
 the merge-and-merge-bench server. RunPod connects them to Claude
 Science, Kimi, Kaggle, Oracle. The maths (Fisher-Rao, Poincaré,
 task vectors, Procrustes, TIES, GW cross-architecture fusion,
-hyperbolic frozen/fluid geometry, BFT-33, SIGIL chains) is real and
+hyperbolic frozen/fluid geometry, 33-seat council, SIGIL chains) is real and
 shipped. The missing pieces (real CPO hardware, real holographic
 substrate, a true SOV4 capability-gain merge, the live TTT layer)
 are honestly absent — they are the next round of work, not yet built

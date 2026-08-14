@@ -42,7 +42,7 @@ Every layer above ships without answers to: *Is this skill card what it claims? 
 | Missing layer | SOVOS asset (built) |
 |---|---|
 | **Signed skill cards** | 3KB card + SIGIL Ed25519 sign/verify (sovos-invariants 6/6) + C2PA provenance — the skill that can prove its own lineage |
-| **The fleet gate** | doctrine gate / FitnessGate (CARE 0.95, BFT-33) — **already caught a real regression on your own fleet (Part V)**. A skill that degrades governance axes never reaches one body, let alone a million |
+| **The fleet gate** | doctrine gate / FitnessGate (CARE 0.95, 33-seat council) — **already caught a real regression on your own fleet (Part V)**. A skill that degrades governance axes never reaches one body, let alone a million |
 | **σ per skill** | sovos-sigma-calibration — every card carries calibrated confidence: the fleet knows *how sure* a skill is before it runs |
 | **Cross-manufacturer port** | Procrustes + GW fusion — Optimus-skill → Unitree-body translation. The industry's stated impossibility [^2257^] is your math |
 | **Skill experience compounds** | water→milk→honey — fleet experience descends to distilled strata, shareable, auditable |

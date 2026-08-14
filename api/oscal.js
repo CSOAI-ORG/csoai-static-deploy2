@@ -61,7 +61,7 @@ function buildOSCAL(framework = 'eu-ai-act') {
           { name: 'system-id', value: 'defoneos-substrate-v4.7.2' },
           { name: 'sovereign-tag', value: 'sigil-7d15a9ed' },
           { name: 'care-floor', value: '0.95' },
-          { name: 'bft-quorum', value: '23/33' },
+          { name: '23/33 council threshold', value: '23/33' },
         ],
       },
       'system-characteristics': {

@@ -28,7 +28,7 @@ base_model:
 
 ## Overview
 
-SOV33 is a governed AI substrate with 12 Sovereign Pillars, BFT-33 council (23/33 quorum), Ed25519 SIGIL on every response, and care-floor 0.95. The model family spans 4 base model families × 5 OWEM specializations = 20 core adapters, plus governance models.
+SOV33 is a governed AI substrate with 12 Sovereign Pillars, designed 33-agent council (23/33 quorum), Ed25519 SIGIL on every response, and care-floor 0.95. The model family spans 4 base model families × 5 OWEM specializations = 20 core adapters, plus governance models.
 
 ## Model Family
 
@@ -146,7 +146,7 @@ python3 merge_export.py --adapter sovereign_lora_adapter \
 
 ## Architecture
 
-### BFT-33 Council
+### 33-seat council Council
 
 - 33 agents casting ALLOW/REJECT independently
 - Quorum: 23/33 minimum for binding decisions

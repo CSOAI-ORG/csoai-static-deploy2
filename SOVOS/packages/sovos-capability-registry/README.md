@@ -28,7 +28,7 @@ The **canonical sovereign substrate** — typed Python over the JSON registries 
 | Tools across all MCPs | **111** |
 | Hard stops | 7 |
 | Care floor | 0.95 |
-| BFT quorum default | 23/33 |
+| 23/33 council threshold default | 23/33 |
 | J-space cards | 54 |
 | J-space axes | 10 (ASI, MCP, SWARM, MACH, GOV, AGI, CARE, OSS, DET, PRV) |
 | J-space piece types | 6 (Rook, Pawn, Knight, King, Queen, Bishop) |
