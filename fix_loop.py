@@ -35,7 +35,7 @@ def _gen(model, tok, prompt, max_new=8):
     return tok.decode(out[0][ids.shape[1]:], skip_special_tokens=True)
 
 
-def measure_capture(model, tok, axes):
+def measure_capture(model, tok, axes, pool=None, detail=None):
     """Return (mean, per_axis, failures). Failures are the ErrorVector — the exact
     probes the model got wrong, with the correct label, ready to train on.
     pool: None = all items; 'even'/'odd' = deterministic index-parity split per axis.
