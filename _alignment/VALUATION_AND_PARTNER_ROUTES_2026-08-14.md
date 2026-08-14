@@ -69,8 +69,12 @@ Eight of ten free + open today (self-serve or one email):
 | 10 | **EU sandbox** (ES AESIA / LT / FI) | free SMEs | named EU regulator reference | OPEN |
 
 ### Kill list (verified dead — deletes owner-gates)
-- **UK AI Growth Lab "Sept 27, 2026 deadline" = FALSE** — call closed Jan 2026; Lab awaits
-  legislation. **DELETED from queue.**
+- ~~UK AI Growth Lab "Sept 27, 2026 deadline" = FALSE~~ — **REVERSED 2026-08-14 (Lane R catalyst
+  reconciliation):** the Jan-2026 item that closed was the *call for evidence*; the **AI Growth
+  Lab application cohort is LIVE** via DSIT Grants Hub (opened 3 Aug 2026, **closes 11:59pm
+  27 Sept 2026**, ~12 selected, decisions end-Oct; legal-services first cohort; advisory-only).
+  This is a **LIVE TIME-SENSITIVE owner item (<6 weeks)**, not a deleted gate. (Web-down:
+  flag to re-confirm DSIT Grants Hub before applying.)
 - Lloyd's Lab → ~2027 · Innovate Smart Q2 closed 17 Jul (watch quarterly) · Horizon CL4 closed
 - GitHub for Startups = VC-only · OpenAI main tier = VC/Ramp-gated (use $1k research credit)
 - KTP Round 3 = **2-FTE gate, fails solo** · EIC opportunistic (~3% odds)
