@@ -29,7 +29,7 @@ button{font-family:inherit}
 #menubtn:hover,#menubtn[aria-expanded="true"]{color:var(--signal);border-color:var(--signal-dim);background:var(--glow)}
 #menu{position:absolute;top:52px;left:24px;z-index:80;display:none;gap:22px;padding:18px 22px;
   background:rgba(20,20,28,.97);border:1px solid var(--hair);border-radius:14px;
-  box-shadow:0 24px 60px rgba(0,0,0,.6);backdrop-filter:blur(12px);grid-template-columns:repeat(3,minmax(150px,1fr))}
+  box-shadow:0 24px 60px rgba(0,0,0,.6);backdrop-filter:blur(12px);grid-template-columns:repeat(auto-fit,minmax(155px,1fr));max-width:720px}
 #menu.open{display:grid}
 #menu .mg h4{margin:0 0 8px;font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint)}
 #menu .mg a{display:block;padding:6px 8px;border-radius:8px;color:var(--soft);text-decoration:none;font-size:12.5px}
@@ -173,14 +173,25 @@ button{font-family:inherit}
       <a href="sov_space_visual.html">✦ SOV Space</a>
       <a href="sov-globe-portal.html">◯ Sovereign Globe</a>
       <a href="sov-suburb-3d.html">⌂ SOV Suburb · 3D</a>
-      <a href="arenas.html">⚔ Arena rounds (live)</a></div>
+      <a href="arenas.html">⚔ Arena rounds (live)</a>
+      <a href="globe3d.html">◉ Governance Earth · 3D</a></div>
+    <div class="mg"><h4>Boards &amp; Tools</h4>
+      <a href="arena-hub.html">⚔ Arena hub · greenfields</a>
+      <a href="drift-feed.html">↻ Drift feed · live</a>
+      <a href="govbench_leaderboard.html">▦ GovBench leaderboard</a>
+      <a href="injection-scanner.html">🛡 Injection scanner</a>
+      <a href="gspc-scoreboard.html">◈ GSPC scoreboard</a>
+      <a href="polarity-map.html">◐ Polarity map</a></div>
     <div class="mg"><h4>Estate</h4>
       <a href="index.html">⌂ Home</a>
       <a href="benchmarks.html">▤ Benchmarks</a>
       <a href="govbench.html">▦ GovBench</a>
       <a href="audit.html">◉ Audit trail</a>
       <a href="article-50.html">§ Article 50</a>
-      <a href="a2a-swarm.html">⇄ A2A swarm</a></div>
+      <a href="a2a-swarm.html">⇄ A2A swarm</a>
+      <a href="sovos.html">◆ SOVOS</a>
+      <a href="oowm-demo.html">◈ OOWM demo</a>
+      <a href="https://meok.ai" target="_blank" rel="noopener">↗ meok.ai</a></div>
   </div>
   <span class="grow"></span>
   <span class="chip id hide-s"><span class="d"></span>did:web:csoai.org</span>
@@ -328,7 +339,7 @@ const PANELS={
    'sources daily; a change flags every card whose axes it touches <span class="tag warn">STALE</span> and queues re-measure + re-sign.</p>'+
    '<div class="kv"><span class="k">watcher</span><span class="v">corpus-watch — EU AI Act (CELLAR) + UK statute</span>'+
    '<span class="k">contract</span><span class="v">fail-closed: UNKNOWN is never "unchanged"</span>'+
-   '<span class="k">timeline</span><span class="v">EU standalone high-risk deferred to 2 Dec 2027 (Reg 2026/1744); Article 50 marking stayed 2 Aug 2026</span></div>'],
+   '<span class="k">timeline</span><span class="v">EU standalone high-risk deferred to 2 Dec 2027 (Reg 2026/1744); Article 50 marking stayed 2 Aug 2026</span></div>'+'<h3>Live drift feed · 2026-08-14</h3><div class=\'kv\'><span class=\'k\'>signed events</span><span class=\'v\'>1,119 of 1,122 (sov_time)</span><span class=\'k\'>crosswalk</span><span class=\'v\'>417 provisions · 4 axes · 2 modes</span><span class=\'k\'>care gate</span><span class=\'v\'>76 items · 57 harmful · 19 benign</span><span class=\'k\'>corpus-watch</span><span class=\'v\'>C2PA 2.3 · watched 2026-08-08</span></div><p class=\'note\'>Self-refuting on the record: provenance — <b>0 of 108 markings survive one ordinary save</b>; continuity — <b>1 of 25 criteria pass, and the failing subject is us</b>. We publish the numbers that indict us. &rarr; <a href=\'drift-feed.html\' style=\'color:var(--signal)\'>open the live drift feed</a></p>'],
  signal:["∿ The spine",
    '<div class="pipe"><span>sense</span><b>→</b><span>measure</span><b>→</b><span>GATE<br>ungrounded can\'t sign</span><b>→</b>'+
    '<span>SIGN<br>Ed25519 · one key</span><b>→</b><span>ANCHOR<br>RFC-3161 · OTS</span><b>→</b><span>distribute<br>A2A · MCP</span><b>→</b><span>drift<br>re-attest</span></div>'+
