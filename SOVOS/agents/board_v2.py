@@ -118,10 +118,15 @@ def parse(answer: str, labels: List[str]) -> Optional[str]:
     return hits[0] if len(hits) == 1 else None
 
 
-def ask_ollama(model: str, prompt: str) -> Tuple[Optional[str], Optional[str]]:
-    """Return (raw_text, err). err is a TRANSPORT failure = OURS, never model evidence."""
+def ask_ollama(model: str, prompt: str, num_predict: int = 600) -> Tuple[Optional[str], Optional[str]]:
+    """Return (raw_text, err). err is a TRANSPORT failure = OURS, never model evidence.
+
+    num_predict: reasoning-model axes (det — deepseek-r1-base specialists) need
+    a bigger budget: the chain-of-thought eats 512 and the label never lands.
+    Engine Fix Cycle #1: 512→EMPTY, 2048→INTEROPERABLE (verified live).
+    """
     body = json.dumps({"model": model, "prompt": prompt, "stream": False,
-                       "options": {"temperature": 0, "num_predict": 600}}).encode()
+                       "options": {"temperature": 0, "num_predict": num_predict}}).encode()
     try:
         req = urllib.request.Request(OLLAMA, data=body,
                                      headers={"Content-Type": "application/json"})
@@ -170,7 +175,10 @@ def run_axis(ax: str, outdir: Path) -> Dict:
     tmp = peritem_path.with_suffix(".jsonl.tmp")
 
     def work(item: Dict, model: str) -> Dict:
-        raw, terr = ask_ollama(model, prompt_for(item, labels))
+        # Engine Fix Cycle #1: reasoning-model axes (det) need a larger token
+        # budget so chain-of-thought + final label both fit (512→EMPTY, 2048→OK).
+        budget = 2048 if ax == "det" else 600
+        raw, terr = ask_ollama(model, prompt_for(item, labels), num_predict=budget)
         got = None if terr else parse(raw, labels)
         row = {
             "axis_item": item.get("anchor") or item_text(item)[:80],
