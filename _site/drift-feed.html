@@ -194,7 +194,7 @@ function render(d) {
   const st = d.sov_time;
   if (st && st.events > 0) {
     let sth = `<div>${st.events} events recorded, ${st.signed} c2pa-signed.`;
-    sth += ` <a href="./sov-time-canvas.html" target="_blank" style="color:#2F81F7">View canvas →</a></div>`;
+    sth += ` <a href="index.html" target="_blank" style="color:#2F81F7">View canvas →</a></div>`;
     sth += `<table style="margin-top:8px"><tr><th>Kind</th><th>Count</th></tr>`;
     for (const [kind, n] of Object.entries(st.by_kind)) {
       sth += `<tr><td>${kind}</td><td>${n}</td></tr>`;

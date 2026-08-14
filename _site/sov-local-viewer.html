@@ -89,9 +89,9 @@
 <span class="badge">LOCAL ONLY · no cloud · no API key</span>
 <span class="subtitle">GeoLibre-style: sqlite + HTML5 canvas + deck.gl-equivalent layers + time-zoom canvas</span>
 <nav class="links">
-<a href="/sov-space-vwm.html">vwm →</a>
-<a href="/sov-three-eyes.html">three-eye →</a>
-<a href="/sov-5d-engine.html">5d →</a>
+<a href="index.html">vwm →</a>
+<a href="index.html">three-eye →</a>
+<a href="index.html">5d →</a>
 </nav>
 </header>
 <main>
@@ -207,7 +207,7 @@ function renderSphere(canvasId, n, color, opacity=0.6) {
 function localOnly() {
   return `<div style="color:#6E7681;font-family:monospace;font-size:0.65rem">
     Runs against the LOCAL OWM·IWM runtime — not exposed on this public host.
-    See <a href="/sov-space-vwm.html" style="color:#2F81F7">sov-space-vwm</a> for the live public view.</div>`;
+    See <a href="index.html" style="color:#2F81F7">sov-space-vwm</a> for the live public view.</div>`;
 }
 function runSQL() { document.getElementById('owmResults').innerHTML = localOnly(); }
 function askIWM() { document.getElementById('iwmResults').innerHTML = localOnly(); }
@@ -264,7 +264,7 @@ async function boot() {
     const el = document.getElementById(id);
     if (el) el.innerHTML = `<div style="color:#6E7681;font-family:monospace;font-size:0.65rem">
       SQL / NL-queries run against the LOCAL OWM·IWM runtime — not exposed on this public host.\n
-      See <a href="/sov-space-vwm.html" style="color:#2F81F7">sov-space-vwm</a> for the live public view.
+      See <a href="index.html" style="color:#2F81F7">sov-space-vwm</a> for the live public view.
     </div>`;
   });
 
