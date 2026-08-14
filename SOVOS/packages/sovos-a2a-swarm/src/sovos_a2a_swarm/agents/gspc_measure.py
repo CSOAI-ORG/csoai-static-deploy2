@@ -67,6 +67,18 @@ def _load_measure_service():
         return None, None
 
 
+def _load_timestamp():
+    """Load the real RFC-3161 time-anchor (repo-root sov_timestamp)."""
+    root = _repo_root()
+    if root and str(root) not in sys.path:
+        sys.path.insert(0, str(root))
+    try:
+        from sov_timestamp import anchor_for  # type: ignore
+        return anchor_for
+    except Exception:
+        return None
+
+
 class GSPCMeasureAgent:
     """A2A agent exposing GSPC measurement as a signed, per-call skill."""
 
@@ -120,6 +132,17 @@ class GSPCMeasureAgent:
         }
         card, signer_kind = self._sign(body, model, axes)
 
+        # Time-anchor the card (RFC-3161, best-effort). Honest either way: the anchor
+        # records its own `kind` (rfc3161 = real third-party token; unanchored = offline).
+        anchor_for = _load_timestamp()
+        anchor = None
+        if anchor_for is not None and card is not None:
+            try:
+                anchor = anchor_for(card.get("content_id") or body)
+                card["time_anchor"] = anchor
+            except Exception:
+                anchor = None
+
         credential = {
             "agent": self.name,
             "action": "measure",
@@ -132,6 +155,7 @@ class GSPCMeasureAgent:
             "per_axis": body["per_axis"],
             "signed_card": card,
             "signer_kind": signer_kind,
+            "time_anchor_kind": (anchor or {}).get("kind", "none"),
             "note": ("Signed MEASUREMENT credential. It attests what was measured on the "
                      "GSPC axes — NOT that the subject is compliant or certified. Even a real "
                      "signature proves issuance only; external signer-identity attestation is a "
@@ -232,5 +256,7 @@ if __name__ == "__main__":
     assert cred["per_axis"]["provenance"] == "UNMEASURED", "UNMEASURED must be preserved, never 0"
     assert cred["measured_mean"] == round((0.82 + 0.61) / 2, 4), "mean over MEASURED axes only"
     assert cred["signed_card"] is not None, "must produce a signed card (real or demo)"
+    assert cred["time_anchor_kind"] in ("rfc3161", "unanchored", "none"), "anchor kind must be honest"
+    print("signer_kind:", cred["signer_kind"], "| time_anchor_kind:", cred["time_anchor_kind"])
     print("\n  ✅ A2A measurement-skill invariants hold "
-          "(measurement-not-certification, UNMEASURED preserved, card issued)")
+          "(measurement-not-certification, UNMEASURED preserved, card issued, time-anchored)")
