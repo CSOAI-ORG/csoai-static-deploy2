@@ -5,7 +5,8 @@ compatibility_date = "2024-11-01"
 # Route the verifier at csoai.org/verify so it is reachable live (Pages serves everything else).
 # Only this exact path hits the worker; the SPA/site is untouched.
 routes = [
-  { pattern = "csoai.org/verify", zone_name = "csoai.org" }
+  { pattern = "csoai.org/verify", zone_name = "csoai.org" },
+  { pattern = "csoai.org/.well-known/did.json", zone_name = "csoai.org" }
 ]
 
 [observability]
