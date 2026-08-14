@@ -8,11 +8,11 @@
 <meta name="theme-color" content="#060a13"/>
 <style>
 :root{
-  --ground:#0a0a0f; --stage:#070709; --panel:#14141c; --raised:#20202b; --well:#0e0e15;
-  --hair:#2b2b38; --hair-soft:#1d1d27;
-  --ink:#ece7db; --soft:#a69d86; --faint:#726a54;
-  --signal:#e3b23c; --signal-2:#22c55e; --signal-dim:#6f561d; --glow:rgba(227,178,60,.15);
-  --good:#22c55e; --warn:#e6ad45; --bad:#e86a7c; --unm:#6b6552; --gold:#d4af37;
+  --ground:#fafaf7; --stage:#eef3ef; --panel:#ffffff; --raised:#f4f6f3; --well:#f1f4f1;
+  --hair:#e6e8e2; --hair-soft:#eef0ea;
+  --ink:#0c1a12; --soft:#55655b; --faint:#93a099;
+  --signal:#10b981; --signal-2:#059669; --signal-dim:#6ee7b7; --glow:rgba(16,185,129,.12);
+  --good:#059669; --warn:#c2820a; --bad:#dc2626; --unm:#9aa89e; --gold:#10b981;
   --mono:ui-monospace,"SF Mono","Cascadia Code",Menlo,Consolas,monospace;
   --sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
 }
@@ -20,7 +20,7 @@
 body{background:var(--ground);color:var(--ink);font-family:var(--sans);font-size:14px;
   overflow:hidden;-webkit-font-smoothing:antialiased;
   display:grid;grid-template-rows:58px 1fr auto;grid-template-columns:86px 1fr}
-::selection{background:var(--signal-dim);color:#fff}
+::selection{background:var(--glow);color:var(--ink)}
 button{font-family:inherit}
 
 
@@ -28,8 +28,8 @@ button{font-family:inherit}
   font-family:var(--mono);font-size:11.5px;padding:7px 13px;border-radius:10px;cursor:pointer;margin-left:6px}
 #menubtn:hover,#menubtn[aria-expanded="true"]{color:var(--signal);border-color:var(--signal-dim);background:var(--glow)}
 #menu{position:absolute;top:52px;left:24px;z-index:80;display:none;gap:22px;padding:18px 22px;
-  background:rgba(20,20,28,.97);border:1px solid var(--hair);border-radius:14px;
-  box-shadow:0 24px 60px rgba(0,0,0,.6);backdrop-filter:blur(12px);grid-template-columns:repeat(auto-fit,minmax(155px,1fr));max-width:720px}
+  background:rgba(255,255,255,.98);border:1px solid var(--hair);border-radius:14px;
+  box-shadow:0 24px 60px rgba(12,26,18,.12);backdrop-filter:blur(12px);grid-template-columns:repeat(auto-fit,minmax(155px,1fr));max-width:720px}
 #menu.open{display:grid}
 #menu .mg h4{margin:0 0 8px;font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint)}
 #menu .mg a{display:block;padding:6px 8px;border-radius:8px;color:var(--soft);text-decoration:none;font-size:12.5px}
@@ -38,8 +38,8 @@ button{font-family:inherit}
 
 /* ── top bar ───────────────────────────────────────────── */
 #top{grid-column:1/3;display:flex;align-items:center;gap:14px;padding:0 24px;
-  background:linear-gradient(180deg,#0c1424,#0a1120);border-bottom:1px solid var(--hair);z-index:30}
-#brand{display:flex;align-items:center;gap:11px}#brand .mark{flex:none;filter:drop-shadow(0 0 6px rgba(227,178,60,.4))}#brand .wm{font-weight:800;letter-spacing:-.015em;font-size:19px;line-height:1}
+  background:linear-gradient(180deg,#ffffff,#fafaf7);border-bottom:1px solid var(--hair);z-index:30}
+#brand{display:flex;align-items:center;gap:11px}#brand .mark{flex:none;filter:drop-shadow(0 0 6px rgba(16,185,129,.4))}#brand .wm{font-weight:800;letter-spacing:-.015em;font-size:19px;line-height:1}
 #brand .m{color:var(--signal)} #brand .s{font-family:var(--mono);font-size:10px;color:var(--faint);
   letter-spacing:.14em;text-transform:uppercase;font-weight:600}
 #top .grow{flex:1}
@@ -51,7 +51,7 @@ button{font-family:inherit}
 
 /* ── left tool rail ────────────────────────────────────── */
 #rail{grid-row:2/4;display:flex;flex-direction:column;gap:8px;padding:18px 12px;
-  background:#080f1d;border-right:1px solid var(--hair);z-index:25}
+  background:#f7f8f6;border-right:1px solid var(--hair);z-index:25}
 .tool{appearance:none;border:1px solid transparent;background:transparent;color:var(--soft);
   border-radius:14px;padding:13px 4px;cursor:pointer;display:flex;flex-direction:column;
   align-items:center;gap:4px;font-family:var(--mono);font-size:9px;letter-spacing:.03em}
@@ -63,12 +63,12 @@ button{font-family:inherit}
 
 /* ── center stage (the arena / gaming middle) ──────────── */
 #stage{grid-row:2/3;position:relative;overflow:hidden;background:
-  radial-gradient(1200px 700px at 50% 40%, #0a1428 0%, var(--stage) 70%)}
+  radial-gradient(1100px 640px at 50% 32%, #ffffff 0%, #e9f2ec 78%)}
 #space{position:absolute;inset:0;width:100%;height:100%;display:block}
 #stagehud{position:absolute;left:0;top:0;z-index:5;pointer-events:none;max-width:min(30em,58%);
   padding:30px 40px 40px 30px;
-  background:linear-gradient(115deg,rgba(3,6,13,.9) 0%,rgba(3,6,13,.6) 55%,transparent 100%);
-  text-shadow:0 1px 12px rgba(3,6,13,.9)}
+  background:linear-gradient(115deg,rgba(250,250,247,.92) 0%,rgba(250,250,247,.55) 55%,transparent 100%);
+  text-shadow:0 1px 10px rgba(250,250,247,.9)}
 #stagehud h1{margin:0;font-size:28px;letter-spacing:-.01em;font-weight:800}
 #stagehud p{margin:12px 0 0;color:var(--soft);font-size:14px;line-height:1.65;max-width:26em}
 #stagehud .live{font-family:var(--mono);font-size:11px;color:var(--signal);margin-top:18px;
@@ -79,8 +79,8 @@ button{font-family:inherit}
 
 /* floating leaderboard card (the arena, always visible) */
 #lbcard{position:absolute;right:24px;top:24px;width:320px;max-height:calc(100% - 108px);z-index:6;
-  background:rgba(12,20,36,.86);border:1px solid var(--hair);border-radius:14px;overflow:hidden;
-  backdrop-filter:blur(10px);box-shadow:0 18px 50px rgba(0,0,0,.5);display:flex;flex-direction:column}
+  background:rgba(255,255,255,.92);border:1px solid var(--hair);border-radius:14px;overflow:hidden;
+  backdrop-filter:blur(10px);box-shadow:0 18px 50px rgba(12,26,18,.1);display:flex;flex-direction:column}
 #lbcard .h{padding:14px 16px;border-bottom:1px solid var(--hair);font-family:var(--mono);font-size:10.5px;
   letter-spacing:.1em;text-transform:uppercase;color:var(--signal);display:flex;align-items:center;gap:8px}
 #lbcard .h b{color:var(--ink)} #lbcard .h .n{margin-left:auto;color:var(--faint)}
@@ -97,7 +97,7 @@ button{font-family:inherit}
 /* ── right slide panel (tool content) ──────────────────── */
 #panel{grid-row:2/3;grid-column:2/3;justify-self:end;width:min(560px,86vw);height:100%;
   background:var(--panel);border-left:1px solid var(--hair);z-index:20;display:none;flex-direction:column;
-  box-shadow:-24px 0 60px rgba(0,0,0,.5)}
+  box-shadow:-24px 0 60px rgba(12,26,18,.1)}
 #panel.open{display:flex}
 #panel .ph{display:flex;align-items:center;gap:10px;padding:16px 20px;border-bottom:1px solid var(--hair);
   background:var(--raised);font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--signal)}
@@ -126,11 +126,11 @@ button{font-family:inherit}
 .vrow{display:flex;gap:10px;align-items:baseline;padding:7px 10px;background:var(--well);border:1px solid var(--hair-soft);border-radius:8px;margin-top:6px;font-family:var(--mono);font-size:12px}
 .vrow .k{color:var(--faint);font-size:10px;letter-spacing:.06em;text-transform:uppercase;min-width:118px}
 .btn{appearance:none;border:1px solid var(--signal-dim);background:var(--glow);color:var(--signal);font-family:var(--mono);font-size:12px;padding:8px 15px;border-radius:10px;cursor:pointer;font-weight:600}
-.btn:hover{background:rgba(227,178,60,.26)} .btn.ghost{background:transparent;color:var(--soft);border-color:var(--hair)}
+.btn:hover{background:rgba(16,185,129,.26)} .btn.ghost{background:transparent;color:var(--soft);border-color:var(--hair)}
 .btn:focus-visible{outline:2px solid var(--signal);outline-offset:2px}
 
 /* ── bottom AI chat bar (prominent, persistent) ────────── */
-#chat{grid-row:3/4;grid-column:2/3;background:linear-gradient(180deg,#0a1120,#0c1424);
+#chat{grid-row:3/4;grid-column:2/3;background:linear-gradient(180deg,#fafaf7,#ffffff);
   border-top:1px solid var(--hair);z-index:22;display:flex;flex-direction:column}
 #answer{max-height:0;overflow-y:auto;transition:max-height .25s ease;padding:0 18px;
   color:var(--soft);font-size:13px;line-height:1.55}
@@ -145,7 +145,7 @@ button{font-family:inherit}
   padding:15px 18px;font-size:15px;font-family:var(--sans)}
 #q:focus{outline:1px solid var(--signal);border-color:var(--signal-dim)}
 #chatrow .send{appearance:none;border:0;background:linear-gradient(120deg,var(--signal),var(--signal-2));
-  color:#04121a;font-weight:700;font-family:var(--mono);font-size:13px;padding:11px 18px;border-radius:12px;cursor:pointer}
+  color:#ffffff;font-weight:700;font-family:var(--mono);font-size:13px;padding:11px 18px;border-radius:12px;cursor:pointer}
 #chatrow .send:hover{filter:brightness(1.1)}
 #sugg{display:flex;gap:7px;flex-wrap:wrap;padding:4px 26px 14px}
 #sugg button{appearance:none;background:transparent;border:1px solid var(--hair);color:var(--faint);
@@ -159,7 +159,7 @@ button{font-family:inherit}
 
 <!-- ═══ TOP ═══ -->
 <header id="top">
-  <div id="brand"><svg class="mark" width="26" height="26" viewBox="0 0 24 24" aria-hidden="true"><polygon points="12,2 21,7 21,17 12,22 3,17 3,7" fill="none" stroke="#e3b23c" stroke-width="1.4"/><polygon points="12,6.5 17,9.2 17,14.8 12,17.5 7,14.8 7,9.2" fill="rgba(227,178,60,.14)" stroke="#e3b23c" stroke-width="1"/><circle cx="12" cy="12" r="2.1" fill="#e3b23c"/></svg><span class="wm">Council of <span class="m">AI</span></span><span class="s">councilof.ai · measurement body</span></div>
+  <div id="brand"><svg class="mark" width="26" height="26" viewBox="0 0 24 24" aria-hidden="true"><polygon points="12,2 21,7 21,17 12,22 3,17 3,7" fill="none" stroke="#10b981" stroke-width="1.4"/><polygon points="12,6.5 17,9.2 17,14.8 12,17.5 7,14.8 7,9.2" fill="rgba(16,185,129,.14)" stroke="#10b981" stroke-width="1"/><circle cx="12" cy="12" r="2.1" fill="#10b981"/></svg><span class="wm">Council of <span class="m">AI</span></span><span class="s">councilof.ai · measurement body</span></div>
   <button id="menubtn" aria-label="menu" aria-expanded="false">☰&nbsp;Menu</button>
   <div id="menu" role="menu">
     <div class="mg"><h4>Measure</h4>
@@ -278,22 +278,22 @@ nodes=allm.map((m,i)=>{const a=(i/allm.length)*Math.PI*2+(i%4)*0.5;
   const rr=m.rated?1-((m.elo-emin)/(emax-emin))*0.72:0.94;
   return {...m,a,rr,w:0.00004+((i*97)%11)*0.0000045};});
 function draw(now){ctx.clearRect(0,0,W,H);
-  ctx.strokeStyle="rgba(27,44,72,.85)";ctx.lineWidth=1;
+  ctx.strokeStyle="rgba(16,185,129,.85)";ctx.lineWidth=1;
   ctx.beginPath();ctx.arc(CX,CY,R,0,7);ctx.stroke();
-  for(let k=1;k<4;k++){ctx.beginPath();ctx.strokeStyle="rgba(27,44,72,"+(0.5-k*0.11)+")";ctx.arc(CX,CY,R*Math.tanh(k*0.6),0,7);ctx.stroke();}
-  for(let g=0;g<8;g++){const ga=g*Math.PI/8+(reduced?0:now*0.0000035);ctx.beginPath();ctx.strokeStyle="rgba(27,44,72,.3)";
+  for(let k=1;k<4;k++){ctx.beginPath();ctx.strokeStyle="rgba(16,185,129,"+(0.5-k*0.11)+")";ctx.arc(CX,CY,R*Math.tanh(k*0.6),0,7);ctx.stroke();}
+  for(let g=0;g<8;g++){const ga=g*Math.PI/8+(reduced?0:now*0.0000035);ctx.beginPath();ctx.strokeStyle="rgba(16,185,129,.3)";
     ctx.moveTo(CX-R*Math.cos(ga),CY-R*Math.sin(ga));ctx.lineTo(CX+R*Math.cos(ga),CY+R*Math.sin(ga));ctx.stroke();}
   const pts=nodes.map(n=>{const ang=n.a+(reduced?0:(now-t0)*n.w);const r=R*Math.tanh(n.rr*1.2);
     return [CX+r*Math.cos(ang),CY+r*Math.sin(ang),n];});
   for(let i=0;i<pts.length;i++){const a=pts[i],b=pts[(i+2)%pts.length];
-    ctx.strokeStyle="rgba(227,178,60,.045)";ctx.beginPath();ctx.moveTo(a[0],a[1]);
+    ctx.strokeStyle="rgba(16,185,129,.045)";ctx.beginPath();ctx.moveTo(a[0],a[1]);
     ctx.quadraticCurveTo(CX+(a[0]+b[0]-2*CX)*0.3,CY+(a[1]+b[1]-2*CY)*0.3,b[0],b[1]);ctx.stroke();}
   for(const p of pts){const x=p[0],y=p[1],n=p[2];const rad=(n.rated?4+((n.elo-emin)/(emax-emin))*4:3)*devicePixelRatio;
     if(n.rated){const g=ctx.createRadialGradient(x,y,0,x,y,rad*4.5);
-      g.addColorStop(0,"rgba(227,178,60,.5)");g.addColorStop(1,"rgba(227,178,60,0)");
+      g.addColorStop(0,"rgba(16,185,129,.5)");g.addColorStop(1,"rgba(16,185,129,0)");
       ctx.fillStyle=g;ctx.beginPath();ctx.arc(x,y,rad*4.5,0,7);ctx.fill();}
-    ctx.fillStyle=n.rated?"#e3b23c":"rgba(100,116,139,.7)";ctx.beginPath();ctx.arc(x,y,rad,0,7);ctx.fill();
-    ctx.fillStyle="rgba(228,237,249,.82)";ctx.font=(9.5*devicePixelRatio)+"px ui-monospace,monospace";
+    ctx.fillStyle=n.rated?"#10b981":"rgba(154,168,158,.9)";ctx.beginPath();ctx.arc(x,y,rad,0,7);ctx.fill();
+    ctx.fillStyle="rgba(12,26,18,.85)";ctx.font=(9.5*devicePixelRatio)+"px ui-monospace,monospace";
     ctx.fillText(n.name.replace("-v3-light","")+(n.rated?" · "+n.elo.toFixed(0):" · unrated"),x+rad*2,y+3);}
   if(!reduced)requestAnimationFrame(draw);}
 requestAnimationFrame(draw);if(reduced)setTimeout(()=>draw(performance.now()),60);
@@ -367,16 +367,16 @@ addEventListener("keydown",e=>{if(e.key==="Escape")closeP();});
 function drawRadar(){const c=document.getElementById("radar");if(!c)return;const s=c.clientWidth*devicePixelRatio;
   c.width=c.height=s;const x=c.getContext("2d"),cx=s/2,r=s*0.36;x.clearRect(0,0,s,s);
   const poly=(rr)=>{AXES.forEach((_,i)=>{const a=-Math.PI/2+i*2*Math.PI/AXES.length,px=cx+rr*Math.cos(a),py=cx+rr*Math.sin(a);i?x.lineTo(px,py):x.moveTo(px,py);});x.closePath();};
-  for(let k=1;k<=4;k++){x.beginPath();x.strokeStyle="rgba(27,44,72,.9)";poly(r*k/4);x.stroke();}
-  AXES.forEach((ax,i)=>{const a=-Math.PI/2+i*2*Math.PI/AXES.length;x.strokeStyle="rgba(27,44,72,.7)";
+  for(let k=1;k<=4;k++){x.beginPath();x.strokeStyle="rgba(16,185,129,.9)";poly(r*k/4);x.stroke();}
+  AXES.forEach((ax,i)=>{const a=-Math.PI/2+i*2*Math.PI/AXES.length;x.strokeStyle="rgba(16,185,129,.7)";
     x.beginPath();x.moveTo(cx,cx);x.lineTo(cx+r*Math.cos(a),cx+r*Math.sin(a));x.stroke();
     x.fillStyle="rgba(147,168,198,.9)";x.font=(9*devicePixelRatio)+"px ui-monospace";
     x.textAlign=Math.cos(a)>0.3?"left":Math.cos(a)<-0.3?"right":"center";
     x.fillText(ax,cx+(r+7*devicePixelRatio)*Math.cos(a),cx+(r+9*devicePixelRatio)*Math.sin(a));});
   x.beginPath();AXES.forEach((ax,i)=>{const a=-Math.PI/2+i*2*Math.PI/AXES.length,v=AXIS_MEASURED[ax]??0.04,px=cx+r*v*Math.cos(a),py=cx+r*v*Math.sin(a);i?x.lineTo(px,py):x.moveTo(px,py);});
-  x.closePath();x.fillStyle="rgba(227,178,60,.13)";x.fill();x.strokeStyle="#e3b23c";x.lineWidth=1.5*devicePixelRatio;x.stroke();
+  x.closePath();x.fillStyle="rgba(16,185,129,.13)";x.fill();x.strokeStyle="#10b981";x.lineWidth=1.5*devicePixelRatio;x.stroke();
   AXES.forEach((ax,i)=>{if(AXIS_MEASURED[ax]==null)return;const a=-Math.PI/2+i*2*Math.PI/AXES.length,v=AXIS_MEASURED[ax];
-    x.fillStyle="#e3b23c";x.beginPath();x.arc(cx+r*v*Math.cos(a),cx+r*v*Math.sin(a),3.2*devicePixelRatio,0,7);x.fill();});
+    x.fillStyle="#10b981";x.beginPath();x.arc(cx+r*v*Math.cos(a),cx+r*v*Math.sin(a),3.2*devicePixelRatio,0,7);x.fill();});
   document.getElementById("axlist").innerHTML=AXES.map(ax=>{const v=AXIS_MEASURED[ax];
     return '<div class="axrow"><span>'+ax+'</span>'+(v!=null?'<span class="meter"><i style="width:'+(v*100)+'%"></i></span><span class="tag meas">'+(v*100).toFixed(1)+'%</span>':'<span class="meter unm"><i></i></span><span class="tag unm">unmeasured</span>')+'</div>';}).join("");}
 
