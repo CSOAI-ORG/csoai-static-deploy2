@@ -124,16 +124,31 @@ patents for disclosed matter.
 
 ## §8 Open follow-ups from THIS register
 - [ ] **TS-01/TS-02**: mint OpenTimestamps proofs for corpus + unpublished axis docs
-  (Step 3) — `.ots` file stored beside originals.
-- [ ] **TM-01/02/03**: run the three clearance searches, record findings, retire "SOVOS"
-  from all external materials (Step 2 + AGENTS.md REPLACE).
+  (Step 3) — `.ots` file stored beside originals. **Done 2026-08-14 for 5 crown jewels**
+  (`_ip/ots/`); extend to full corpus versions + axis docs.
+- [x] **TM-01/02/03**: USPTO clearance RUN complete 2026-08-14 — SOVOS confirmed conflict
+  (retire), Council of AI + MEOK clear in 9/42 (see §3 findings). **Todo:** UK IPO + EUIPO
+  TMview sweeps remain + UK filing (£205/1st class + £60/extra from 1 Apr 2026 — **UNVERIFIED
+  on web, quoting plan**).
 - [ ] **DB-01**: assemble the "substantial investment" evidence pack for the corpus (Step 4).
-- [ ] **Trade-secret program**: register + access-control list + `CONFIDENTIAL — TRADE
-  SECRET` marking + NDA/assignment clauses (Step 4).
+- [ ] **Trade-secret program**: live (`TRADE_SECRET_PROGRAM_2026-08-14.md` on disk — blocked
+  from git by global `*_secret*` rule, intentionally); NDA + contractor assignment templates
+  committed (`LEGAL_TEMPLATES_2026-08-14.md`).
 - [ ] **PP-01..04**: package candidate inventions + dates + arXiv draft for counsel (Stage 2).
 - [ ] **Valuation (Stage 4, when raising)**: IVS-compliant cost-approach by a recognised firm
   (Inngot/EverEdge/Metis/Stout/Kroll); supply THIS register + R&D cost + corpus
   cost-to-recreate. Reject instant-calculator outputs for investor use.
+
+## §9 Verification status (honesty ledger — what's confirmed vs cited)
+| Fact | Status 2026-08-14 |
+|------|-------------------|
+| SOVOS live US conflict (Sovos Compliance, cl.9/35/42) | ✅ **VERIFIED** via live USPTO tmsearch |
+| Council of AI / MEOK clear in US 9/42 | ✅ **VERIFIED** via USPTO tmsearch |
+| Uk IPO fee £205/£60 from 1 Apr 2026 | ⚠️ UNVERIFIED (web down) — cite plan |
+| WIPO PROOF discontinued 2022-01-31 | ⚠️ UNVERIFIED (web down) — cite plan |
+| GSPC MCP endpoint live + healthy | ✅ VERIFIED (probe 2026-08-14) |
+| Dated OTS proof-of-existence minted | ✅ VERIFIED (5 stamps, calendar_commit) |
+| FTO/prior-art patent landscape | 🔄 **DELEGATED** — subagent running; results pending |
 
 ---
 *Layout intentionally matches IP Plan §H columns so a valuer/counsel/investor can consume
