@@ -71,11 +71,14 @@ We sign. The signal aggregates. Everyone else proves *who* an agent is — we pr
     Munich Re aiSure, Armilla+Lloyd's, AIUC-1 (score→premium). They already pay.
 24. **Diamond 1 — Post-quantum migration attestation. LIVE URGENCY.** ML-DSA-65
     (FIPS 204); NIST deprecates RSA/ECC post-2030. Signed equivalence attestation.
-25. **Diamond 2 — EU AI Act high-risk. ⚠️ DATE FLAG.** Estate brief says high-risk
-    obligations **2 Aug 2027**; catapult draft says **2 Dec 2027** (Digital
-    Omnibus Reg 2026/1744). BOTH confirm 2027 (longer runway — don't lead).
-    Exact day UNVERIFIED (web tools down 2026-08-14) — verify before quoting.
-    Article 50 marking: 2 Aug / 2 Dec 2026 (near-term cliff — watermark plays).
+25. **Diamond 2 — EU AI Act high-risk. ✅ DATE RESOLVED 2026-08-14:** multi-lane
+    verification + Go-Machine (web-sourced) converge on **2 Dec 2027** for Annex III
+    high-risk conformity assessment (Digital Omnibus Reg 2026/1744, in force
+    2026-07-27). GPAI enforcement + Art 50 transparency duties LIVE (2 Aug 2026;
+    fines to 3%/€15M). Embedded AI (machinery/robots) = 2 Aug 2028.
+    Do NOT quote either Aug/Dec without the 2027 qualifier; the catapult's earlier
+    "2 Aug 2027" flag is superseded. COLORADO IS DEAD: SB 24-205 sued (xAI), stayed,
+    reenacted as narrower ADMT regime SB 26-189 (2027-01-01) — do not build on it.
 26. **Bonus — A2A signed-agent-card slot** (150+ orgs, Linux Foundation, v1.0).
     Fill before anyone else.
 
