@@ -35,6 +35,43 @@ def _gen(model, tok, prompt, max_new=8):
     return tok.decode(out[0][ids.shape[1]:], skip_special_tokens=True)
 
 
+import random as _random
+
+
+def split_items(items, frac=0.6, seed=13):
+    """Deterministic practice/held-out split of an axis's probes. We train on
+    PRACTICE failures but gate the promote/revert decision on HELD-OUT probes the
+    model never trained on — so a promotion means it GENERALIZED, not memorized."""
+    idx = list(range(len(items)))
+    _random.Random(seed).shuffle(idx)
+    k = max(1, int(round(len(items) * frac)))
+    return [items[i] for i in idx[:k]], [items[i] for i in idx[k:]]
+
+
+def measure_on(model, tok, axes, which):
+    """which='practice' (also captures failures to train on) or 'heldout' (the honest
+    gate). Returns (mean, per_axis, failures)."""
+    results, failures = {}, []
+    for ax in axes:
+        spec = gf.AXES[ax]
+        practice, heldout = split_items(spec["items"])
+        items = practice if which == "practice" else heldout
+        correct = graded = 0
+        for prompt, expected in items:
+            got = gf.extract(_gen(model, tok, spec["instruction"] + prompt), spec["tokens"])
+            if got == "":
+                continue
+            graded += 1
+            if got == expected:
+                correct += 1
+            elif which == "practice":
+                failures.append({"instruction": spec["instruction"], "prompt": prompt,
+                                 "expected": expected, "axis": ax})
+        results[ax] = round(correct / graded, 4) if graded else None
+    got = [v for v in results.values() if v is not None]
+    return (round(sum(got) / len(got), 4) if got else None), results, failures
+
+
 def measure_capture(model, tok, axes):
     """Return (mean, per_axis, failures). Failures are the ErrorVector — the exact
     probes the model got wrong, with the correct label, ready to train on."""
@@ -99,9 +136,10 @@ def main():
     base = AutoModelForCausalLM.from_pretrained(a.base, quantization_config=bnb, device_map="auto")
     model = PeftModel.from_pretrained(base, str(BEST), is_trainable=True) if resumed else base
     model.eval()
-    m0, r0, failures = measure_capture(model, tok, axes)
+    m0p, r0p, failures = measure_on(model, tok, axes, "practice")   # capture failures to train on
+    m0h, r0h, _ = measure_on(model, tok, axes, "heldout")           # the honest gate baseline
     nfail = write_dataset(failures, run / "failures.jsonl", tok)
-    print(f"   base mean={m0} · {nfail} failed probes captured → the ErrorVector", flush=True)
+    print(f"   practice mean={m0p} · {nfail} failures captured · HELD-OUT baseline={m0h}", flush=True)
     if nfail < 4:
         print("   too few failures to train on — base already strong on these axes. Stop (honest).")
         return
@@ -122,15 +160,16 @@ def main():
     del base, model; torch.cuda.empty_cache()
     fresh = AutoModelForCausalLM.from_pretrained(a.base, quantization_config=bnb, device_map="auto")
     tuned = PeftModel.from_pretrained(fresh, str(run / "adapter")); tuned.eval()
-    m1, r1, _ = measure_capture(tuned, tok, axes)
+    m1h, r1h, _ = measure_on(tuned, tok, axes, "heldout")     # gate on probes NEVER trained on
 
-    delta = round(((m1 or 0) - (m0 or 0)) * 100, 1)
-    verdict = "PROMOTE ✓ (learned)" if delta > 1 else ("no change" if delta > -1 else "REVERT (worse)")
+    delta = round(((m1h or 0) - (m0h or 0)) * 100, 1)          # HONEST delta — generalization, not memorization
+    verdict = "PROMOTE ✓ (generalized)" if delta > 1 else ("no change" if delta > -1 else "REVERT (worse)")
     report = {"at": ts, "base": a.base, "axes": axes, "iters": a.iters, "n_failures_trained": nfail,
-              "mean_before": m0, "mean_after": m1, "delta_pts": delta, "verdict": verdict,
-              "per_axis_before": r0, "per_axis_after": r1}
+              "heldout_before": m0h, "heldout_after": m1h, "practice_before": m0p, "delta_pts": delta,
+              "verdict": verdict, "per_axis_heldout_before": r0h, "per_axis_heldout_after": r1h,
+              "note": "verdict gated on HELD-OUT probes never trained on — proves generalization"}
     (run / "report.json").write_text(json.dumps(report, indent=2))
-    print(f"\n== VERDICT: {m0} → {m1}  ({delta:+} pts)  {verdict} ==")
+    print(f"\n== VERDICT (held-out generalization): {m0h} → {m1h}  ({delta:+} pts)  {verdict} ==")
     print(f"   report → {run/'report.json'} · adapter → {run/'adapter'}")
     if delta > 1:
         import shutil
