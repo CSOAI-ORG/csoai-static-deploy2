@@ -143,23 +143,27 @@ def main():
             cwd=str(WORK)
         )
 
-    # Phase 4: Try Oracle mesh activation (if oci CLI available)
-    log("Phase 4: Oracle mesh activation...")
-    oracle_script = WORK / "agents" / "oracle-mesh-activate.sh"
-    if oracle_script.exists():
+    # Phase 4: Oracle mesh activation (IPs now known via fleet-guardian default profile)
+    log("Phase 4: Oracle mesh heartbeat...")
+    # Micro IPs resolved 2026-08-14: micro1=145.241.232.16, micro2=141.147.73.85
+    # Both RUNNING, Ubuntu, SSH via ~/.ssh/id_ed25519. Free mesh is LIVE on
+    # micro1 (city-report daily cron, 05:00 UTC). This phase just heartbeats.
+    for _ip in ("145.241.232.16", "141.147.73.85"):
         try:
-            r = subprocess.run(
-                ["bash", str(oracle_script)],
-                capture_output=True, text=True, timeout=60
+            _h = subprocess.run(
+                ["ssh", "-o", "ConnectTimeout=10", "-o", "BatchMode=yes",
+                 "-o", "StrictHostKeyChecking=accept-new",
+                 "-i", os.path.expanduser("~/.ssh/id_ed25519"),
+                 f"ubuntu@{_ip}", "echo alive"],
+                capture_output=True, text=True, timeout=15
             )
-            if "Oracle micro found" in r.stdout:
-                log(f"Oracle mesh activate SUCCESS: {r.stdout.strip()[-200:]}")
+            if "alive" in _h.stdout:
+                log(f"oracle micro {_ip}: ALIVE (free mesh)")
             else:
-                log(f"Oracle mesh: no micros reachable this cycle — will retry")
+                log(f"oracle micro {_ip}: unreachable this cycle")
         except Exception as e:
-            log(f"Oracle mesh activation error: {e}")
-    else:
-        log("Oracle script not on pod — skipping")
+            log(f"oracle micro {_ip}: {e}")
+    log("Oracle free mesh: city-report cron on micro1, micro2 sibling-lane work")
 
     # Phase 5: Write checkpoint with honest status
     # 3090 reachability probe (honest: did it reconnect or not?)
