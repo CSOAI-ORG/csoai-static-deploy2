@@ -145,10 +145,15 @@ def _verify_obj(card: dict) -> bool:
         if sig["kid"] != "ed25519:" + hashlib.sha256(
                 base64.b64decode(sig["pubkey"])).hexdigest()[:16]:
             return False
-        # card_id is the hash of the content WITHOUT the card_id field
-        # (the signature above covers the payload WITH card_id, so it can't be swapped)
-        content = {k: v for k, v in payload.items() if k != "card_id"}
-        return payload["card_id"] == hashlib.sha256(
+        # identity field: card_id (fix-loop cards) or certificate_id (council
+        # certificates) — hash of the content WITHOUT the identity field
+        # (the signature above covers the payload WITH it, so it can't be swapped)
+        id_field = next((f for f in ("card_id", "certificate_id") if f in payload),
+                        None)
+        if id_field is None:
+            return False
+        content = {k: v for k, v in payload.items() if k != id_field}
+        return payload[id_field] == hashlib.sha256(
             _canonical(content)).hexdigest()[:16]
     except Exception:
         return False
@@ -157,7 +162,8 @@ def _verify_obj(card: dict) -> bool:
 def verify(card: str) -> int:
     obj = json.loads(Path(card).read_text())
     ok = _verify_obj(obj)
-    print(json.dumps({"card": card, "card_id": obj.get("card_id"),
+    print(json.dumps({"card": card,
+                      "card_id": obj.get("card_id") or obj.get("certificate_id"),
                       "valid": ok}, indent=1))
     return 0 if ok else 1
 
