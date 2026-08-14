@@ -1,0 +1,15 @@
+{
+  "slug": "aeo-council-signal",
+  "title": "What is Council Signal?",
+  "question": "What is Council Signal?",
+  "answer": "Council Signal is the Council of AI's dated, machine-readable digest of the current fleet-state: the evaluation boards that shipped this period, their gates, and the measured outcome each gate records. It is not a scorecard that claims a model is safe; it is a statement of what was measured, under which regime, and what the gate decided accordingly. Every line of a Council Signal is backed by a signed board manifest, so the digest does not have to be trusted on its own \u2014 you can re-run each signature against the published key. The language is deliberate: monitored containment, not provable isolation, and each board carries a verified measurement credential rather than a claim of guaranteed behaviour.",
+  "ref": "Council of AI Council Signal digest; signed boards v2 (2026-08-12 manifests, 2026-08-14 build)",
+  "compiled_at": "2026-08-14T11:38:50.041094+00:00",
+  "signature": {
+    "kind": "ed25519",
+    "sig": "s3St5Ae1c/Lsz/fOxgkSUiuUuIr95umTD1IAQj8NoyArTcgY2ESCz6tASpaRfWTjpbWzssw6n0pBl3SM6DvoCQ==",
+    "body_sha256": "72487eb6cc0a73e8786b58c495f0b347e615ae2423c3fba8bd8c5b58de88f6f0",
+    "pubkey": "ZnF3DZUFc5QOoy+y07rvzNUyxJgza2kUQmn1nv4S9SY=",
+    "note": "Ed25519 over the canonical body; verify with sign.py --verify. PQC upgrade: ML-DSA-65 via liboqs \u2014 same body, swap the primitive."
+  }
+}

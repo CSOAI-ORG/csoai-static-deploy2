@@ -1,0 +1,15 @@
+{
+  "slug": "aeo-issuance-chain",
+  "title": "What is the Council of AI issuance chain?",
+  "question": "What is the Council of AI issuance chain?",
+  "answer": "The Council of AI issuance chain is an append-only, signed ledger of every credential, certificate, card and measure the Council has issued. Each entry records what was issued, to whom or for which artifact, when, and by which signing node, and each entry carries the issuer's Ed25519 signature over the prior entry so the whole sequence is tamper-evident end to end. Because the chain is signed rather than silently mutable, an auditor can walk it from genesis forward and confirm that nothing was inserted, reordered or retro-edited. It is the accountability surface behind the verified measurement credential \u2014 the point where a signature becomes an attributable, dateable record of what the Council actually published.",
+  "ref": "Council of AI issuance-chain ledger (2026-08-14 build)",
+  "compiled_at": "2026-08-14T11:38:50.041094+00:00",
+  "signature": {
+    "kind": "ed25519",
+    "sig": "3SQjtPNRxgUaaOPdFgJp5W3Rm5z81sygRnA3l+vB5Dm1Gt6X1DcLuF+VtDdMVogVbEwxoqN7ztCDAD+m90M9Cg==",
+    "body_sha256": "0703edbac056fd01dfc63e47bdb8d7ff841ab7729d0485e2a17a3807685f3d8b",
+    "pubkey": "ZnF3DZUFc5QOoy+y07rvzNUyxJgza2kUQmn1nv4S9SY=",
+    "note": "Ed25519 over the canonical body; verify with sign.py --verify. PQC upgrade: ML-DSA-65 via liboqs \u2014 same body, swap the primitive."
+  }
+}
