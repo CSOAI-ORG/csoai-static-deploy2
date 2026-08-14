@@ -1,0 +1,15 @@
+{
+  "slug": "aeo-board-gating",
+  "title": "How does a Council of AI board gate a model before deployment?",
+  "question": "How does a Council of AI board gate a model before deployment?",
+  "answer": "A Council of AI board gates a model by measuring it against a fixed, signed capability bank and then issuing a named gate verdict from that measurement. The flow is: (1) the model runs against the board bank and the raw score is recorded; (2) that measured result is turned into a gate status \u2014 measured and gated, being measured, or not promoted; (3) the manifest holding the result is signed so the number cannot be silently edited after the fact. Two language locks keep the claim honest: containment is described as monitored, not provable isolation, and a credential is described as a verified measurement credential, not a guarantee of safety. The dated hook here is the 2026-08-14 board set: fourteen boards, each with a gate status, each signed, and each exposing its weakest model so a reader can see the floor as well as the headline. Anyone can reproduce the verdict by re-running the same bank against the same model.",
+  "ref": "Council of AI \u2014 board gating and verification series (2026-08-14 build)",
+  "compiled_at": "2026-08-14T10:02:00.000000+00:00",
+  "signature": {
+    "kind": "ed25519",
+    "sig": "d1chdPmoIFMENqeLLY8walzlylFmLUICm10vbbyt7XOhvOnVSPwpgpJO/sP75XTPGhVKo5A8rLtfz6ytmiNMBQ==",
+    "body_sha256": "3ec062d2851ee82a02adbe2bcf7ad81002f0b540e64cc65e3d77ae72b17ed1cd",
+    "pubkey": "ZnF3DZUFc5QOoy+y07rvzNUyxJgza2kUQmn1nv4S9SY=",
+    "note": "Ed25519 over the canonical body; verify with sign.py --verify. PQC upgrade: ML-DSA-65 via liboqs \u2014 same body, swap the primitive."
+  }
+}

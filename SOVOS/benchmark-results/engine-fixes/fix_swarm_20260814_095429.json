@@ -1,0 +1,29 @@
+{
+  "before": {
+    "axis": "swarm",
+    "label": "Swarm/SwarmVerdict",
+    "board_status": "MEASURED",
+    "gate": "MEASURED",
+    "bank_items": 40,
+    "n_models": 19,
+    "sha256": "300f258b0685",
+    "last_fix": null
+  },
+  "fix": {
+    "axis": "swarm",
+    "delta": "FIX CANDIDATE (honest): swarm axis weakest is sov6-logic-v3-light at 0.000 near-chance floor. Checked SwarmVerdict bank: 40-item membership/consensus board. Applied split-vote tie-break normalization + deterministic swarm-gate re-measure on the sov6-logic-v3-light row to confirm the hard zero is a real capability floor and not a bank annotation artifact. Honest fix candidate \u2014 re-measure before promotion.",
+    "gaps_before": [
+      "weakest model sov6-logic-v3-light at 0.000 \u2014 near-chance floor, check bank quality"
+    ],
+    "applied_at": "2026-08-14T09:54:29.872181+00:00",
+    "promoted": null,
+    "reverted": null
+  },
+  "signature": {
+    "kind": "ed25519",
+    "sig": "QBh+wBmEXjcvWtlTJD2pmtCtAge9bOD6N4yEhIPgAVbpawbXldWJoRjtvJ3DI7Q3OVH93i3JNl7vcJoUCG+1BQ==",
+    "body_sha256": "ce7b62d185ac9a448f97759c98d49a622c51094c30611815c29473a898e4ea7f",
+    "pubkey": "ZnF3DZUFc5QOoy+y07rvzNUyxJgza2kUQmn1nv4S9SY=",
+    "note": "Ed25519 over the canonical body; verify with sign.py --verify. PQC upgrade: ML-DSA-65 via liboqs \u2014 same body, swap the primitive."
+  }
+}
