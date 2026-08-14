@@ -20,6 +20,7 @@ WIRES = [
     ("sovos_city.measure_api",         "Enforced issuance choke point"),
     ("sovos_city.telemetry",           "Self-instrumentation (signed telemetry)"),
     ("sovos_city.underwriting_pack",   "Diamond-3 underwriting input"),
+    ("sovos_city.redteam_scanner",     "Red-team scanner (garak/PyRIT adapter)"),
 ]
 
 results = []
