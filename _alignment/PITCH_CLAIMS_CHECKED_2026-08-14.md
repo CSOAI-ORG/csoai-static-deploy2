@@ -72,6 +72,21 @@ Legend: ✅ VERIFIED (code/artifact ref) · ⚠️ HONEST-FORM (was overclaimed;
   verified that the geometric code emits a *signed* distance or that those pass-counts are current.
   Ground it (does `Procrustes`/`Fisher-Rao` code produce a signed artifact?) before any pitch use.
 
+## Naming & register discipline (align with the Council-of-AI thesis lane)
+- ⚠️ **Public name is "Council of AI" (CSOAI) — SOVOS NEVER surfaces publicly.** SOVOS is a live
+  trademark conflict (Sovos Compliance), counsel-flagged. `sovos_city` etc. are internal package
+  names only; every public doc, deck, page, and pitch says Council of AI / CSOAI. A "clean world
+  play" with SOVOS in it is the first line a VC's lawyer catches.
+- ⚠️ **The AI Economy Index number (e.g. 8.04) is a DEMO, not a finding.** It is a real computed
+  Poincaré governance-gap on the pod, but it is NOT a validated result — never quote it as one.
+  Same rule as "keep improvement directional": say *"the index engine is live; the number is a
+  working demo, not a finding."*
+- ⚠️ **Revenue is zero; the distance to money is ONE named design partner** (Diamond 3, an
+  underwriter). Say the commercial state plainly — spine live, index engine live, revenue zero,
+  one design partner is the gap. That's the version that survives a skeptical reader.
+- **Register-tag everything** REAL / PARTIALLY-REAL / BEAUTIFUL-IDEA. A doc that blurs those is the
+  one that detonates in the room. [[naming-sovos-vs-sov34]] · [[legal-gates-widen-only-via-counsel]]
+
 ## Verified lane claims (2026-08-14 — grounded, with sources)
 - ⚙️ **External verifier — BUILT + proven byte-identical, NOT yet live.** The Cloudflare Worker
   (`workers/attest-verify`) does real WebCrypto Ed25519 verification with no secret; node 22 confirms
