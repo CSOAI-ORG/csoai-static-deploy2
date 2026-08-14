@@ -1,0 +1,28 @@
+{
+  "tick": 283,
+  "phase": 253,
+  "date": "2026-08-14",
+  "sigil": "tick-283-defoneos-2026-08-14",
+  "type": "expansion_phase_devolved_public_services",
+  "built": [
+    "defoneos-transport-for-wales-ai-deep-dive-pack (34589b, 12 eps, leg=the Senedd)",
+    "defoneos-dwr-cymru-welsh-water-ai-deep-dive-pack (35198b, 12 eps, leg=the Senedd)",
+    "defoneos-environmental-standards-scotland-ai-deep-dive-pack (35160b, 12 eps, leg=the Scottish Parliament)"
+  ],
+  "pages_total": 1061,
+  "mcp_total": 30,
+  "repos_total": 15,
+  "sitemap_urls": 839,
+  "unique_deep_dive_packs": 321,
+  "deploy": {
+    "platform": "cloudflare_pages",
+    "project": "csoai-site",
+    "deployment_id": "b4a95ec8",
+    "alias": "feat-sandbox-arena-seam.csoai-site.pages.dev",
+    "verification": "POST-DEPLOY byte-verified live via python urllib: all 6 files HTTP 200 MD5/size-match; sitemap.xml(839) + sitemap-ai.xml(638) with all 3 slugs + llm.json companions present; VERIFY_RESULT ALL_OK + SITEMAP_CHECK PASS"
+  },
+  "verify": "all_ok",
+  "note": "3 NEW genuinely-uncovered devolved public-services deep-dive packs (probe-verified 0 disk + 0 sitemap BEFORE build per tick-265 pitfall; Transport for Wales != Network Rail/ORR/DfT-England, Dwr Cymru Welsh Water != Ofwat/Defra-DWI-England + != Scottish Water, Environmental Standards Scotland != SEPA and != OEP-England; parametric legislature per body - the Senedd (2 Wales) / the Scottish Parliament (1 Scotland)). Wales devolved gap-fill opens (ticks 276-282 covered Scotland+NI; 283 adds Wales).",
+  "human_gates": "unchanged - DSP registration / SC application / Cyber Essentials still need Nick's personal info; documented, never blocking build.",
+  "known": "Vercel still billing-blocked (blocked_billing); production main-branch lags preview alias. ~62 pre-existing stale sitemap URLs (birth.html, MASTER_TAKEOVER, sov-*, etc.) - not from this tick (my edit only ADDED 3); left untouched to avoid sweeping other lanes. DISK free dropped to ~2.2Gi (from 5.7Gi) - monitor; cleanup (prune .backups/_site/node caches) is a candidate next-tick action."
+}
