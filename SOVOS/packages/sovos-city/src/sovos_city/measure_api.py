@@ -220,3 +220,52 @@ class MeasureService:
     def _load_card(self, job_id: str) -> Optional[Dict[str, Any]]:
         p = self.store / f"{job_id}.card.json"
         return json.loads(p.read_text()) if p.exists() else None
+
+
+def self_test() -> int:
+    """Choke-point enforcement proof: grounded -> signed+anchored; ungrounded -> refused."""
+    import tempfile
+    ok = fail = 0
+
+    def t(name, cond, extra=""):
+        nonlocal ok, fail
+        if cond:
+            ok += 1; print(f"  PASS  {name}")
+        else:
+            fail += 1; print(f"  FAIL  {name} {extra}")
+
+    tmp = Path(tempfile.mkdtemp(prefix="measure-selftest-"))
+    chain = Chain(tmp / "chain.jsonl", key_path=tmp / "key.pem")
+    svc = MeasureService(chain, store=tmp / "jobs")
+
+    # 1. grounded board -> signed + anchored
+    board = {"axis": "art5", "protocol": "gspc-board-v2", "bank_items": 36,
+             "n": 36, "quotable": True, "accuracy": 0.8333,
+             "best": "sov6-relationality-v3-light",
+             "labels": ["ALLOWED", "BLOCKED"],
+             "gold_provenance": "deterministic gate — no model judged this"}
+    job = svc.measure(protocol="gspc-board-v2", model="m", bank_version="art5",
+                      axes=["art5"], run_fn=lambda *a: board)
+    card = job.card or {}
+    t("grounded card signed", card.get("signed") is True)
+    t("grounded gate GROUNDED", card.get("correctness_gate", {}).get("state") == "GROUNDED")
+    t("grounded time-anchored", card.get("time_anchor", {}).get("state") in
+      ("calendar_commit", "failed", "pending"),
+      str(card.get("time_anchor", {}).get("state")))
+    t("grounded content_id", bool(card.get("content_id")))
+
+    # 2. ungrounded board -> refused, never signed
+    bad = {"axis": "care", "bank_items": 36, "note": "this AI is fully compliant"}
+    job2 = svc.measure(protocol="gspc-board-v2", model="x", bank_version="care",
+                       axes=["care"], run_fn=lambda *a: bad)
+    c2 = job2.card or {}
+    t("ungrounded refused", c2.get("signed") is False)
+    t("ungrounded gate UNGROUNDED", c2.get("correctness_gate", {}).get("state") == "UNGROUNDED")
+
+    print(f"selftest {ok}/{ok+fail}")
+    return 0 if fail == 0 else 1
+
+
+if __name__ == "__main__":
+    import sys
+    sys.exit(self_test())
