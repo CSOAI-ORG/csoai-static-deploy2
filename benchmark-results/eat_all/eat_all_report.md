@@ -1,43 +1,43 @@
 # EAT_ALL Run Report
 
-**Run ID**: eat_all_1786703720
-**Finished**: 2026-08-14T10:35:20.913979+00:00
+**Run ID**: eat_all_1786704228
+**Finished**: 2026-08-14T10:43:48.420646+00:00
 **Phase summary**: {'ran': 18, 'failed': 1, 'skipped': 0}
 
 ## Phases
 
 | Phase | Status | Duration | Notes |
 |---|---|---|---|
-| PHASE_0_HEALTH | ran | 0.9s | sov_local_status=unreachable: <urlopen error [Errno 61] Connection refused>; ollama_models=2; kb_entries=8866 |
-| PHASE_1_REBOARD | ran | 0.4s | exit_code=0 |
-| PHASE_2_KB_GROW | ran | 0.3s | exit_code=0 |
+| PHASE_0_HEALTH | ran | 1.7s | sov_local_status=unreachable: <urlopen error [Errno 61] Connection refused>; ollama_models=2; kb_entries=8874 |
+| PHASE_1_REBOARD | ran | 1.1s | exit_code=0 |
+| PHASE_2_KB_GROW | ran | 0.8s | exit_code=0 |
 | PHASE_3_PROBES | ran | 0.0s | chatml=1; bloodline=1 |
 | PHASE_4_TRAINING | ran | 0.0s | training_scripts_available=['sov_groq_distill.py', 'sov_grpo_train.py', 'sov_minimal_train.py'] |
-| PHASE_5_HONEY | ran | 0.8s | exit_code=0; events=4536 |
-| PHASE_6_DOWNLOADS | failed | 5.6s | (no error message) |
-| PHASE_7_PORTAL | ran | 0.8s | exit_code=0 |
-| PHASE_9_ARTIFACTS | ran | 0.8s | deck_cards=55; kb_entries=8866; kb_ok=True |
-| PHASE_9B_EXTERNAL_HARNESS | ran | 0.5s | clans_routed=0; swarm_id=owem-clans-1786703711 |
-| PHASE_9C_OWEM_CLUSTER | ran | 0.4s | clusters_routed=0 |
-| PHASE_9D_BENCHMARKS_HARNESS | ran | 0.5s | benchmarks_routed=0 |
-| PHASE_9E_TRAINING_DATA_HARNESS | ran | 0.4s | data_sources_routed=0 |
-| PHASE_9F_SOVEREIGN_TRAINING_PIPELINE | ran | 0.4s | stages_routed=0 |
-| PHASE_9G_AUDIENCE_HARNESS | ran | 0.6s | audiences_routed=0 |
-| PHASE_9H_SOV_HIVE_HARNESS | ran | 1.5s | kb_entries_added=7; exit_code=0 |
-| PHASE_9I_SOV_CAPTURE | ran | 3.0s | events_processed=0; skills_extracted=0; refine_output=KB Refinery — processing today's capture events...
+| PHASE_5_HONEY | ran | 2.9s | exit_code=0; events=4536 |
+| PHASE_6_DOWNLOADS | failed | 8.3s | (no error message) |
+| PHASE_7_PORTAL | ran | 8.2s | exit_code=0 |
+| PHASE_9_ARTIFACTS | ran | 6.1s | deck_cards=55; kb_entries=8874; kb_ok=True |
+| PHASE_9B_EXTERNAL_HARNESS | ran | 24.3s | clans_routed=0; swarm_id=owem-clans-1786704045 |
+| PHASE_9C_OWEM_CLUSTER | ran | 29.7s | clusters_routed=0 |
+| PHASE_9D_BENCHMARKS_HARNESS | ran | 10.4s | benchmarks_routed=0 |
+| PHASE_9E_TRAINING_DATA_HARNESS | ran | 18.1s | data_sources_routed=0 |
+| PHASE_9F_SOVEREIGN_TRAINING_PIPELINE | ran | 23.1s | stages_routed=0 |
+| PHASE_9G_AUDIENCE_HARNESS | ran | 1.2s | audiences_routed=0 |
+| PHASE_9H_SOV_HIVE_HARNESS | ran | 54.1s | kb_entries_added=7; exit_code=0 |
+| PHASE_9I_SOV_CAPTURE | ran | 27.5s | events_processed=0; skills_extracted=0; refine_output=KB Refinery — processing today's capture events...
   terminal: 9 events (refine window 500)
   browser: 0 events
   files: 0 events
   chat: 0 events
-  KB: 8873 → 8873 entries (+0 new, dedup by normalized question)
+  KB: 8881 → 8881 entries (+0 new, dedup by normalized question)
   Saved to: /Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/sov_kb.json
 ; extract_output=GNN Spine — extracting patterns from capture events...
   Extracted 0 unique skills
   Skills file: /Users/nicholas/.sov/iwm/skills_20260814.jsonl
-  KB updated: 8873 entries total
+  KB updated: 8881 entries total
  |
-| PHASE_9J_IWM_BOOTSTRAP | ran | 2.0s | iwm_records=0; kb_entries_added=0; exit_code=0 |
-| PHASE_10B_MODEL_ROUTING | ran | 0.5s | models_routed=0; specs_routed=1 |
+| PHASE_9J_IWM_BOOTSTRAP | ran | 3.4s | iwm_records=0; kb_entries_added=0; exit_code=0 |
+| PHASE_10B_MODEL_ROUTING | ran | 2.2s | models_routed=0; specs_routed=1 |
 
 ## Artifacts
 
