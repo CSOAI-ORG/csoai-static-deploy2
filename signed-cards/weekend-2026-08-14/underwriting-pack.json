@@ -1,0 +1,50 @@
+{
+  "content_id": "447bf784e8dd5a5e1729187666f2732843209155a5edfc67bffa66fa2dd25d3c",
+  "epoch": 4,
+  "body": {
+    "kind": "gspc-card",
+    "protocol": "gspc-weekend",
+    "model": "estate-artifacts",
+    "bank_version": "2026-08-14",
+    "board": {
+      "claim_type": "measurement_credential",
+      "axis": "care+det+gov+art5 composite (MEASURED-only)",
+      "pack": {
+        "module": "sovos_city.underwriting_pack",
+        "selftest": "15/15 pod-verified",
+        "note": "pack builder entrypoint not found; credential covers the selftested module"
+      },
+      "source_artifact": "SOVOS/packages/sovos-city/src/sovos_city/underwriting_pack.py",
+      "source_sha256": "cabc9897e3589e98ae518fc6763a847cc414f0dc29f529bb870421f8a20338df",
+      "honest_note": "measured-score input record for underwriting; not a policy, certification, or legal advice; unmeasured axes excluded, never zero-filled"
+    },
+    "gold_provenance": "deterministic gate (Article 0 + law) \u2014 no model judged this",
+    "prev": "03d751142de7a2d2baf4aaf347ca5dca1ff8fd9e58e4c242a5270e87b603fc95",
+    "epoch": 4
+  },
+  "signature": "41d13471f05d86391b1de096a20a968eaf7e619600ed5b7a1813bf99086be89e6bcf5a5d0f7e9687135e31ca911300847c6605563802868eb6df4c9cb1d51e06",
+  "signer": "f4b4278ddc216c2f060b273afcfd9ef00856399373b23b097794fe72fb36c342",
+  "signed": true,
+  "correctness_gate": {
+    "state": "GROUNDED",
+    "attestable": true,
+    "citations": [
+      "art5-composite-(measured-only)"
+    ]
+  },
+  "inclusion_proof": {
+    "chain_tip": "03d751142de7a2d2baf4aaf347ca5dca1ff8fd9e58e4c242a5270e87b603fc95",
+    "epoch": 4,
+    "chain_path": "/workspace/weekend_chain_2026-08-14.jsonl"
+  },
+  "time_anchor": {
+    "content_id": "447bf784e8dd5a5e1729187666f2732843209155a5edfc67bffa66fa2dd25d3c",
+    "state": "calendar_commit",
+    "ots_path": "/tmp/ots-anchors/447bf784e8dd5a5e1729187666f2732843209155a5edfc67bffa66fa2dd25d3c.ots",
+    "bytes_len": 172,
+    "calendar_used": "https://a.pool.opentimestamps.org/digest",
+    "btc_anchored": false,
+    "btc_block": null,
+    "note": "calendar commitment written; BTC-block anchor PENDING verification (never claimed as Bitcoin proof until checked)"
+  }
+}

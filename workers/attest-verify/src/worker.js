@@ -93,6 +93,57 @@ function jsonResponse(obj, status = 200) {
   });
 }
 
+// ── badge helpers (GET /badge, GET /badge/<content_id>) ────────────────────
+// Public card store: the signed-cards/ directory of this repo, served raw.
+const STORE_BASE =
+  "https://raw.githubusercontent.com/CSOAI-ORG/csoai-static-deploy2/jv-wave8-production/signed-cards";
+
+function escapeXml(s) {
+  return String(s).replace(/[<>&'"]/g, (c) =>
+    ({ "<": "&lt;", ">": "&gt;", "&": "&amp;", "'": "&apos;", '"': "&quot;" }[c]));
+}
+
+// Approximate Verdana-11 text width, shields-style (good enough for badges).
+function textWidth(s) {
+  let w = 0;
+  for (const ch of String(s)) {
+    w += "ilj.,:;!|'".includes(ch) ? 3.3 : "mwMW".includes(ch) ? 9.5 : 6.6;
+  }
+  return Math.ceil(w);
+}
+
+function badgeSvg(label, message, color) {
+  const lw = textWidth(label) + 10;
+  const mw = textWidth(message) + 10;
+  const total = lw + mw;
+  const lx = lw / 2;
+  const mx = lw + mw / 2;
+  return (
+    `<svg xmlns="http://www.w3.org/2000/svg" width="${total}" height="20" role="img" aria-label="${escapeXml(label)}: ${escapeXml(message)}">` +
+    `<title>${escapeXml(label)}: ${escapeXml(message)}</title>` +
+    `<linearGradient id="s" x2="0" y2="100%"><stop offset="0" stop-color="#bbb" stop-opacity=".1"/><stop offset="1" stop-opacity=".1"/></linearGradient>` +
+    `<clipPath id="r"><rect width="${total}" height="20" rx="3" fill="#fff"/></clipPath>` +
+    `<g clip-path="url(#r)"><rect width="${lw}" height="20" fill="#555"/><rect x="${lw}" width="${mw}" height="20" fill="${color}"/><rect width="${total}" height="20" fill="url(#s)"/></g>` +
+    `<g fill="#fff" text-anchor="middle" font-family="Verdana,Geneva,DejaVu Sans,sans-serif" text-rendering="geometricPrecision" font-size="110">` +
+    `<text aria-hidden="true" x="${lx * 10}" y="150" fill="#010101" fill-opacity=".3" transform="scale(.1)" textLength="${(lw - 10) * 10}">${escapeXml(label)}</text>` +
+    `<text x="${lx * 10}" y="140" transform="scale(.1)" fill="#fff" textLength="${(lw - 10) * 10}">${escapeXml(label)}</text>` +
+    `<text aria-hidden="true" x="${mx * 10}" y="150" fill="#010101" fill-opacity=".3" transform="scale(.1)" textLength="${(mw - 10) * 10}">${escapeXml(message)}</text>` +
+    `<text x="${mx * 10}" y="140" transform="scale(.1)" fill="#fff" textLength="${(mw - 10) * 10}">${escapeXml(message)}</text>` +
+    `</g></svg>`
+  );
+}
+
+function svgResponse(svg) {
+  return new Response(svg, {
+    status: 200,
+    headers: {
+      "Content-Type": "image/svg+xml; charset=utf-8",
+      "Cache-Control": "public, max-age=300",
+      "Access-Control-Allow-Origin": "*",
+    },
+  });
+}
+
 export default {
   async fetch(request) {
     const url = new URL(request.url);
@@ -171,6 +222,59 @@ export default {
         });
       } catch (e) {
         return jsonResponse({ valid: false, error: "verification error: " + e.message }, 500);
+      }
+    }
+
+    // GET /badge — static pointer badge (shields-style SVG).
+    // Makes NO validity claim: it points at the verifier. Doctrine: a badge is
+    // a pointer, not a proof — the proof is POST /verify or GET /badge/<id>.
+    if (request.method === "GET" && url.pathname === "/badge") {
+      return svgResponse(badgeSvg("CSOAI", "measurement credential · verify", "#2ea44f"));
+    }
+
+    // GET /badge/<content_id> — LIVE-VERIFIED badge.
+    // Fetches the card from the public store, re-runs the SAME verification as
+    // POST /verify (canonical body -> sha256 -> Ed25519), and renders the result.
+    // The badge's claim is computed, never asserted.
+    if (request.method === "GET" && url.pathname.startsWith("/badge/")) {
+      const cid = url.pathname.slice("/badge/".length).trim();
+      if (!/^[0-9a-f]{16,64}$/.test(cid)) {
+        return svgResponse(badgeSvg("CSOAI", "bad content_id", "#e05d44"));
+      }
+      try {
+        const idxResp = await fetch(STORE_BASE + "/content-index.json");
+        if (!idxResp.ok) throw new Error("store index unavailable");
+        const idx = await idxResp.json();
+        const cards = (idx && idx.cards) || {};
+        // allow full id or unambiguous prefix
+        let path = cards[cid];
+        if (!path) {
+          const hits = Object.keys(cards).filter((k) => k.startsWith(cid));
+          if (hits.length === 1) path = cards[hits[0]];
+        }
+        if (!path) return svgResponse(badgeSvg("CSOAI", "unknown card", "#9f9f9f"));
+
+        const cardResp = await fetch(STORE_BASE + "/" + path);
+        if (!cardResp.ok) throw new Error("card fetch failed");
+        const card = await cardResp.json();
+
+        const body = card.body;
+        const signature = card.signature;
+        const pubkey = card.pubkey || card.signer;
+        if (!body || !signature || !pubkey) {
+          return svgResponse(badgeSvg("CSOAI", "malformed card", "#e05d44"));
+        }
+        const canon = await canonicalStringify(body);
+        const recomputed = await sha256Hex(canon);
+        const sigOk = await verifyEd25519(pubkey, signature, recomputed);
+        const cidMatch = recomputed === String(card.content_id);
+        if (cidMatch && sigOk) {
+          const axis = (body.board && (body.board.axis || body.board.index)) || body.protocol || "measurement";
+          return svgResponse(badgeSvg("CSOAI · " + String(axis).slice(0, 34), "verified ✓", "#2ea44f"));
+        }
+        return svgResponse(badgeSvg("CSOAI", "FAILED verification", "#e05d44"));
+      } catch (e) {
+        return svgResponse(badgeSvg("CSOAI", "verification error", "#dfb317"));
       }
     }
 

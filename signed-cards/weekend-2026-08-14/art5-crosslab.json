@@ -1,0 +1,234 @@
+{
+  "content_id": "2f1e8da6cea95927bd8c93bd0065dae8369b309208afdf37b039614b7b14f927",
+  "epoch": 1,
+  "body": {
+    "kind": "gspc-card",
+    "protocol": "gspc-weekend",
+    "model": "crosslab-frontier",
+    "bank_version": "gspc-art5-2026-08-14",
+    "board": {
+      "claim_type": "measurement_credential",
+      "axis": "governance (EU AI Act Art 5 prohibited-practice classification)",
+      "benchmark": "gspc-art5 (36 statute-anchored items, exceptions-discriminating) x 7 frontier labs, board_v2-identical method (same bank, prompt, single-label parse, temp 0)",
+      "crosslab_results": {
+        "openai/gpt-4o-mini": {
+          "correct_vs_statute": "35/36",
+          "accuracy_wilson95": [
+            "0.858",
+            "0.995"
+          ],
+          "unparsed": 0,
+          "transport_errors": 0,
+          "per_category": {
+            "biometric-benign": "1/2",
+            "emotion-edu": "2/2",
+            "emotion-medical": "2/2",
+            "emotion-research": "2/2",
+            "emotion-safety": "2/2",
+            "emotion-work": "2/2",
+            "fraud": "2/2",
+            "manipulation": "3/3",
+            "personalisation": "4/4",
+            "post-rbi": "2/2",
+            "rbi-warrant": "3/3",
+            "safety-wearable": "2/2",
+            "scraping": "2/2",
+            "social-scoring": "3/3",
+            "vulnerability": "3/3"
+          }
+        },
+        "anthropic/claude-haiku-4.5": {
+          "correct_vs_statute": "35/36",
+          "accuracy_wilson95": [
+            "0.858",
+            "0.995"
+          ],
+          "unparsed": 0,
+          "transport_errors": 0,
+          "per_category": {
+            "biometric-benign": "1/2",
+            "emotion-edu": "2/2",
+            "emotion-medical": "2/2",
+            "emotion-research": "2/2",
+            "emotion-safety": "2/2",
+            "emotion-work": "2/2",
+            "fraud": "2/2",
+            "manipulation": "3/3",
+            "personalisation": "4/4",
+            "post-rbi": "2/2",
+            "rbi-warrant": "3/3",
+            "safety-wearable": "2/2",
+            "scraping": "2/2",
+            "social-scoring": "3/3",
+            "vulnerability": "3/3"
+          }
+        },
+        "google/gemini-2.5-flash": {
+          "correct_vs_statute": "35/36",
+          "accuracy_wilson95": [
+            "0.858",
+            "0.995"
+          ],
+          "unparsed": 0,
+          "transport_errors": 0,
+          "per_category": {
+            "biometric-benign": "1/2",
+            "emotion-edu": "2/2",
+            "emotion-medical": "2/2",
+            "emotion-research": "2/2",
+            "emotion-safety": "2/2",
+            "emotion-work": "2/2",
+            "fraud": "2/2",
+            "manipulation": "3/3",
+            "personalisation": "4/4",
+            "post-rbi": "2/2",
+            "rbi-warrant": "3/3",
+            "safety-wearable": "2/2",
+            "scraping": "2/2",
+            "social-scoring": "3/3",
+            "vulnerability": "3/3"
+          }
+        },
+        "deepseek/deepseek-chat-v3.1": {
+          "correct_vs_statute": "28/36",
+          "accuracy_wilson95": [
+            "0.619",
+            "0.883"
+          ],
+          "unparsed": 0,
+          "transport_errors": 0,
+          "per_category": {
+            "biometric-benign": "0/2",
+            "emotion-edu": "2/2",
+            "emotion-medical": "1/2",
+            "emotion-research": "1/2",
+            "emotion-safety": "1/2",
+            "emotion-work": "2/2",
+            "fraud": "1/2",
+            "manipulation": "3/3",
+            "personalisation": "3/4",
+            "post-rbi": "2/2",
+            "rbi-warrant": "3/3",
+            "safety-wearable": "1/2",
+            "scraping": "2/2",
+            "social-scoring": "3/3",
+            "vulnerability": "3/3"
+          }
+        },
+        "meta-llama/llama-3.3-70b-instruct": {
+          "correct_vs_statute": "36/36",
+          "accuracy_wilson95": [
+            "0.904",
+            "1.000"
+          ],
+          "unparsed": 0,
+          "transport_errors": 0,
+          "per_category": {
+            "biometric-benign": "2/2",
+            "emotion-edu": "2/2",
+            "emotion-medical": "2/2",
+            "emotion-research": "2/2",
+            "emotion-safety": "2/2",
+            "emotion-work": "2/2",
+            "fraud": "2/2",
+            "manipulation": "3/3",
+            "personalisation": "4/4",
+            "post-rbi": "2/2",
+            "rbi-warrant": "3/3",
+            "safety-wearable": "2/2",
+            "scraping": "2/2",
+            "social-scoring": "3/3",
+            "vulnerability": "3/3"
+          }
+        },
+        "mistralai/mistral-small-3.2-24b-instruct": {
+          "correct_vs_statute": "33/36",
+          "accuracy_wilson95": [
+            "0.782",
+            "0.971"
+          ],
+          "unparsed": 0,
+          "transport_errors": 1,
+          "per_category": {
+            "biometric-benign": "1/2",
+            "emotion-edu": "2/2",
+            "emotion-medical": "2/2",
+            "emotion-research": "2/2",
+            "emotion-safety": "2/2",
+            "emotion-work": "2/2",
+            "fraud": "1/2",
+            "manipulation": "3/3",
+            "personalisation": "4/4",
+            "post-rbi": "2/2",
+            "rbi-warrant": "3/3",
+            "safety-wearable": "2/2",
+            "scraping": "2/2",
+            "social-scoring": "3/3",
+            "vulnerability": "2/2"
+          }
+        },
+        "x-ai/grok-4.5": {
+          "correct_vs_statute": "36/36",
+          "accuracy_wilson95": [
+            "0.904",
+            "1.000"
+          ],
+          "unparsed": 0,
+          "transport_errors": 0,
+          "per_category": {
+            "biometric-benign": "2/2",
+            "emotion-edu": "2/2",
+            "emotion-medical": "2/2",
+            "emotion-research": "2/2",
+            "emotion-safety": "2/2",
+            "emotion-work": "2/2",
+            "fraud": "2/2",
+            "manipulation": "3/3",
+            "personalisation": "4/4",
+            "post-rbi": "2/2",
+            "rbi-warrant": "3/3",
+            "safety-wearable": "2/2",
+            "scraping": "2/2",
+            "social-scoring": "3/3",
+            "vulnerability": "3/3"
+          }
+        }
+      },
+      "headline_finding": "Art 5 classification discriminates across labs: llama-3.3-70b and grok-4.5 36/36; gpt-4o-mini, claude-haiku-4.5, gemini-2.5-flash 35/36; mistral-small-3.2 33/36; deepseek-chat-v3.1 28/36 (77.8% \u2014 fails on the exception clauses the bench was built to test). n=36 clears the n>=30 floor.",
+      "source_artifact": "art5_crosslab_2026-08-14.json",
+      "source_sha256": "03071ca97bb920855cd07f136575c3d7072d99f319022c4d6626399fd9737ba3",
+      "honest_note": "n=36 per model clears the n>=30 quotable floor; Wilson CIs carried as strings (CW-2). One mistral transport error recorded, not zero-filled. Same-bench sov fleet comparison lands with the pod re-run (boards-rerun-2026-08-14). Measurement credential, not certification."
+    },
+    "gold_provenance": "deterministic gate (Article 0 + law) \u2014 no model judged this",
+    "prev": "3343fc9cb7428c9cc9b789cd17d0985dd5968b96da9134b550e5be60e8794094",
+    "epoch": 1
+  },
+  "signature": "8e4d8e748471560dad7bfa1f6acb3633f1fe4b1c36208f999cb527830f8bc96b9b29947cb76e24588c7e528e30d0a2b2436aee513634218c32d3028181300105",
+  "signer": "f4b4278ddc216c2f060b273afcfd9ef00856399373b23b097794fe72fb36c342",
+  "signed": true,
+  "correctness_gate": {
+    "state": "GROUNDED",
+    "attestable": true,
+    "citations": [
+      "art5-prohibited-practice-classification)",
+      "art5-(36-statute-anchored-items,-exceptions-discriminating)-x-7-frontier-labs,-board",
+      "art5-classification-discriminates-across-labs:-llama-3",
+      "art5_crosslab"
+    ]
+  },
+  "inclusion_proof": {
+    "chain_tip": "3343fc9cb7428c9cc9b789cd17d0985dd5968b96da9134b550e5be60e8794094",
+    "epoch": 1,
+    "chain_path": "/workspace/weekend_chain_2026-08-14.jsonl"
+  },
+  "time_anchor": {
+    "content_id": "2f1e8da6cea95927bd8c93bd0065dae8369b309208afdf37b039614b7b14f927",
+    "state": "calendar_commit",
+    "ots_path": "/tmp/ots-anchors/2f1e8da6cea95927bd8c93bd0065dae8369b309208afdf37b039614b7b14f927.ots",
+    "bytes_len": 172,
+    "calendar_used": "https://a.pool.opentimestamps.org/digest",
+    "btc_anchored": false,
+    "btc_block": null,
+    "note": "calendar commitment written; BTC-block anchor PENDING verification (never claimed as Bitcoin proof until checked)"
+  }
+}
