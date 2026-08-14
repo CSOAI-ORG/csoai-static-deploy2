@@ -1,17 +1,17 @@
 {
-  "run_id": "eat_all_1786726541",
-  "finished_at": "2026-08-14T16:55:41.201047+00:00",
+  "run_id": "eat_all_1786726883",
+  "finished_at": "2026-08-14T17:01:23.706498+00:00",
   "phases": {
     "PHASE_0_HEALTH": {
       "status": "failed",
-      "duration_s": 9.7,
+      "duration_s": 0.7,
       "artifacts": [],
       "error": "JSONDecodeError: Extra data: line 298535 column 2 (char 12816009)",
       "traceback": "Traceback (most recent call last):\n  File \"/Users/nicholas/clawd/csoai-static-deploy2/eat_all.py\", line 135, in run_phase\n    raise box[\"err\"]\n  File \"/Users/nicholas/clawd/csoai-static-deploy2/eat_all.py\", line 124, in _run\n    box[\"out\"] = fn()\n                 ~~^^\n  File \"/Users/nicholas/clawd/csoai-static-deploy2/eat_all.py\", line 222, in phase_0_health\n    kb = json.loads(kb_path.read_text())\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/lib/python3.14/json/__init__.py\", line 352, in loads\n    return _default_decoder.decode(s)\n           ~~~~~~~~~~~~~~~~~~~~~~~^^^\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/lib/python3.14/json/decoder.py\", line 348, in decode\n    raise JSONDecodeError(\"Extra data\", s, end)\njson.decoder.JSONDecodeError: Extra data: line 298535 column 2 (char 12816009)\n"
     },
     "PHASE_1_REBOARD": {
       "status": "ran",
-      "duration_s": 5.1,
+      "duration_s": 0.3,
       "artifacts": [],
       "error": null,
       "exit_code": 0,
@@ -19,7 +19,7 @@
     },
     "PHASE_2_KB_GROW": {
       "status": "failed",
-      "duration_s": 1.8,
+      "duration_s": 0.5,
       "artifacts": [],
       "error": "ts-to-kb.py\", line 196, in main\n    kb = json.loads(kb_path.read_text())\n  File \"/Library/Frameworks/Python.framework/Versions/3.14/lib/python3.14/json/__init__.py\", line 352, in loads\n    return _default_decoder.decode(s)\n           ~~~~~~~~~~~~~~~~~~~~~~~^^^\n  File \"/Library/Frameworks/Python.framework/Versions/3.14/lib/python3.14/json/decoder.py\", line 348, in decode\n    raise JSONDecodeError(\"Extra data\", s, end)\njson.decoder.JSONDecodeError: Extra data: line 298535 column 2 (char 12816009)\n",
       "exit_code": 1,
@@ -27,7 +27,7 @@
     },
     "PHASE_3_PROBES": {
       "status": "ran",
-      "duration_s": 0.3,
+      "duration_s": 0.1,
       "artifacts": [],
       "error": null,
       "chatml": 1,
@@ -35,7 +35,7 @@
     },
     "PHASE_4_TRAINING": {
       "status": "ran",
-      "duration_s": 0.1,
+      "duration_s": 0.0,
       "artifacts": [],
       "error": null,
       "training_scripts_available": [
@@ -46,7 +46,7 @@
     },
     "PHASE_5_HONEY": {
       "status": "ran",
-      "duration_s": 11.8,
+      "duration_s": 0.9,
       "artifacts": [
         "/Users/nicholas/clawd/csoai-static-deploy2/forest/honey_all_producers.jsonl"
       ],
@@ -57,18 +57,18 @@
     },
     "PHASE_6_DOWNLOADS": {
       "status": "ran",
-      "duration_s": 1.1,
+      "duration_s": 12.6,
       "artifacts": [
         "/Users/nicholas/clawd/csoai-static-deploy2/forest/honey_downloads.jsonl"
       ],
       "error": null,
       "exit_code": 0,
-      "stdout_tail": "Mining /Users/nicholas/Downloads...\n  Output: /Users/nicholas/clawd/csoai-static-deploy2/forest/honey_downloads.jsonl\n  sov_route available: True\n  Total files: 467\n  Matched: 290\n    archive: 1\n    code/producer: 12\n    data/config: 9\n    spec: 268\n  Cache loaded: 288 entries\n\n  Total emitted: 2 (cache hits: 288)\n  Saved to: /Users/nicholas/clawd/csoai-static-deploy2/forest/honey_downloads.jsonl\n  Cache saved to: /Users/nicholas/clawd/csoai-static-deploy2/forest/mine_downloads_cache.json\n",
+      "stdout_tail": "Mining /Users/nicholas/Downloads...\n  Output: /Users/nicholas/clawd/csoai-static-deploy2/forest/honey_downloads.jsonl\n  sov_route available: True\n  Total files: 467\n  Matched: 290\n    archive: 1\n    code/producer: 12\n    data/config: 9\n    spec: 268\n  Cache loaded: 290 entries\n\n  Total emitted: 0 (cache hits: 290)\n  Saved to: /Users/nicholas/clawd/csoai-static-deploy2/forest/honey_downloads.jsonl\n  Cache saved to: /Users/nicholas/clawd/csoai-static-deploy2/forest/mine_downloads_cache.json\n",
       "files_mined": 290
     },
     "PHASE_7_PORTAL": {
       "status": "ran",
-      "duration_s": 4.7,
+      "duration_s": 7.3,
       "artifacts": [],
       "error": null,
       "exit_code": 0,
@@ -76,7 +76,7 @@
     },
     "PHASE_9_ARTIFACTS": {
       "status": "ran",
-      "duration_s": 1.5,
+      "duration_s": 8.6,
       "artifacts": [
         "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/eat_all/sov_kb.json",
         "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/eat_all/honey_all_producers.jsonl",
@@ -92,7 +92,7 @@
     },
     "PHASE_9B_EXTERNAL_HARNESS": {
       "status": "failed",
-      "duration_s": 0.1,
+      "duration_s": 1.9,
       "artifacts": [
         "/Users/nicholas/clawd/csoai-static-deploy2/forest/external_framework_harness.json"
       ],
@@ -101,7 +101,7 @@
     },
     "PHASE_9C_OWEM_CLUSTER": {
       "status": "failed",
-      "duration_s": 0.2,
+      "duration_s": 1.1,
       "artifacts": [
         "/Users/nicholas/clawd/csoai-static-deploy2/forest/owem_cluster_config.json"
       ],
@@ -110,7 +110,7 @@
     },
     "PHASE_9D_BENCHMARKS_HARNESS": {
       "status": "failed",
-      "duration_s": 0.2,
+      "duration_s": 0.8,
       "artifacts": [
         "/Users/nicholas/clawd/csoai-static-deploy2/forest/benchmarks_harness.json"
       ],
@@ -119,7 +119,7 @@
     },
     "PHASE_9E_TRAINING_DATA_HARNESS": {
       "status": "failed",
-      "duration_s": 0.2,
+      "duration_s": 0.8,
       "artifacts": [
         "/Users/nicholas/clawd/csoai-static-deploy2/forest/training_data_harness.json"
       ],
@@ -128,7 +128,7 @@
     },
     "PHASE_9F_SOVEREIGN_TRAINING_PIPELINE": {
       "status": "failed",
-      "duration_s": 0.2,
+      "duration_s": 3.9,
       "artifacts": [
         "/Users/nicholas/clawd/csoai-static-deploy2/forest/sovereign_training_pipeline.json"
       ],
@@ -137,7 +137,7 @@
     },
     "PHASE_9G_AUDIENCE_HARNESS": {
       "status": "failed",
-      "duration_s": 0.3,
+      "duration_s": 1.7,
       "artifacts": [
         "/Users/nicholas/clawd/csoai-static-deploy2/forest/audience_harness.json"
       ],
@@ -146,14 +146,14 @@
     },
     "PHASE_9H_SOV_HIVE_HARNESS": {
       "status": "failed",
-      "duration_s": 0.2,
+      "duration_s": 2.0,
       "artifacts": [],
       "error": "Extra data: line 298535 column 2 (char 12816009)",
       "kb_entries_added": 0
     },
     "PHASE_9I_SOV_CAPTURE": {
       "status": "ran",
-      "duration_s": 1.8,
+      "duration_s": 21.0,
       "artifacts": [
         "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/sov_kb.json",
         "/Users/nicholas/.sov/iwm/skills_20260812.jsonl",
@@ -168,21 +168,21 @@
     },
     "PHASE_9J_IWM_BOOTSTRAP": {
       "status": "ran",
-      "duration_s": 0.4,
+      "duration_s": 8.1,
       "artifacts": [
         "/Users/nicholas/.sov/iwm/iwm_schema.json",
-        "/Users/nicholas/.sov/iwm/sovereign_bootstrap_20260814_165540.jsonl",
+        "/Users/nicholas/.sov/iwm/sovereign_bootstrap_20260814_170118.jsonl",
         "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/sov_kb.json"
       ],
       "error": null,
       "iwm_records": 0,
       "kb_entries_added": 0,
       "exit_code": 1,
-      "stdout_tail": "M schema...\n  IWM schema: /Users/nicholas/.sov/iwm/iwm_schema.json\n\nStep 2: Feed /tmp/csoai-sovereign-system...\n  Scanning /tmp/csoai-sovereign-system...\n  Found 0 files\n  IWM records: 0\n  KB entries: 0\n  Errors: 0\n\nStep 3: Feed csoai_repos.json...\n  Added: 0 IWM records, 0 KB entries\n\nStep 4: Feed 79K dataset metadata...\n  Added: 0 IWM records, 0 KB entries\n\nStep 5: Write IWM shard...\n  IWM shard: /Users/nicholas/.sov/iwm/sovereign_bootstrap_20260814_165540.jsonl\n\nStep 6: Update sov_kb.json...\n"
+      "stdout_tail": "M schema...\n  IWM schema: /Users/nicholas/.sov/iwm/iwm_schema.json\n\nStep 2: Feed /tmp/csoai-sovereign-system...\n  Scanning /tmp/csoai-sovereign-system...\n  Found 0 files\n  IWM records: 0\n  KB entries: 0\n  Errors: 0\n\nStep 3: Feed csoai_repos.json...\n  Added: 0 IWM records, 0 KB entries\n\nStep 4: Feed 79K dataset metadata...\n  Added: 0 IWM records, 0 KB entries\n\nStep 5: Write IWM shard...\n  IWM shard: /Users/nicholas/.sov/iwm/sovereign_bootstrap_20260814_170118.jsonl\n\nStep 6: Update sov_kb.json...\n"
     },
     "PHASE_10B_MODEL_ROUTING": {
       "status": "failed",
-      "duration_s": 0.1,
+      "duration_s": 0.7,
       "artifacts": [],
       "error": "Extra data: line 298535 column 2 (char 12816009)",
       "models_routed": 0,
