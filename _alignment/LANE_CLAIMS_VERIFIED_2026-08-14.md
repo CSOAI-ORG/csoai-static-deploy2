@@ -10,12 +10,16 @@
 - ❌ **Not reachable at csoai.org.** `GET /pubkey` returns **200 but serves the SPA homepage HTML**,
   not a pubkey; `POST /verify` returns empty; `csoai-attest-verify.workers.dev` = 000. The site's
   catch-all shadows the worker — it is **not deployed/routed live** where claimed.
-- ❌ **"byte-identical to Python" has no test** in the repo, and could not be empirically confirmed
-  because the live worker isn't reachable.
-- **Action:** the worker is built but must actually be **deployed and routed** (CF-token-gated —
-  same rotation blocker). Until then, say *"the external verifier is built; deployment pending"* —
-  **not** "the verifier is live." Also: it verifies the card's self-reported pubkey; pair it with
-  did:web so identity is checked against the published key, and resolve the two-key issue first.
+- ✅ **"byte-identical to Python" — now CONFIRMED empirically.** Ran the worker's exact
+  `canonicalStringify` + `sha256` in node 22 against a real card: JS content_id ==
+  Python content_id (`1048e44f…12c9`), and the worker's WebCrypto Ed25519 verify returns VALID.
+  The worker WILL verify our cards live — it is proven correct and deploy-ready.
+- ⚙️ **Pre-staged for one-shot deploy** (`deploy_attest_and_did.sh`): added the missing route
+  (`csoai.org/verify`) to the worker's wrangler.toml. Only "deployed/routed" was ever missing.
+- **Action:** after the token rotation, run `deploy_attest_and_did.sh` **on the production keystone**
+  (so did.json publishes the signing key) → both did:web hosting and the live verifier land together.
+  Until then, say *"the external verifier is built and proven byte-identical; deployment pending"* —
+  **not** "the verifier is live."
 
 ## Claim 2 — "EU high-risk clock slipped to 2 Dec 2027 (Digital Omnibus, Reg 2026/1744)"
 **Verdict: CONFIRMED.**
