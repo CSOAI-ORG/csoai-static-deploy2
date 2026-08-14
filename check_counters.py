@@ -30,7 +30,10 @@ SKIP_FILES = {"check_counters.py", "SOV-Counter-Canon.md",
               # Same rule for the BFT/quorum retraction trail: these documents name
               # the retracted claim precisely in order to withdraw it or reframe it.
               "QUORUM_PROBE_FINDING_2026-08-13.md", "QUORUM_RETRACTION_2026-07-29.md",
-              "GOVBENCH_PAPER_2026-08-09.md", "ARXIV_ABSTRACT_HONEST_DRAFT_2026-08-14.md"}
+              "GOVBENCH_PAPER_2026-08-09.md", "ARXIV_ABSTRACT_HONEST_DRAFT_2026-08-14.md",
+              # The claims-checked pitch names the forbidden phrases precisely in order to
+              # forbid them — same quote-to-retract rule as the audit above.
+              "PITCH_CLAIMS_CHECKED_2026-08-14.md"}
 
 # 2026-08-04 — the gate blocked STALE numbers but let UNEVIDENCED ones publish freely.
 # The canon's law is not "don't use the old number", it is "no number exists without a file
