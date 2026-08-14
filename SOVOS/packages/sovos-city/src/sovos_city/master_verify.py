@@ -21,6 +21,7 @@ WIRES = [
     ("sovos_city.telemetry",           "Self-instrumentation (signed telemetry)"),
     ("sovos_city.underwriting_pack",   "Diamond-3 underwriting input"),
     ("sovos_city.redteam_scanner",     "Red-team scanner (garak/PyRIT adapter)"),
+    ("sovos_city.bom_signer",          "AI-BOM signed spine"),
 ]
 
 results = []
