@@ -71,8 +71,9 @@ def write_dataset(failures, path, tok):
 def main():
     ap = argparse.ArgumentParser(description="Measured-failures → real QLoRA adapter → re-measure (RunPod CUDA).")
     ap.add_argument("--base", default="Qwen/Qwen2.5-1.5B-Instruct")
-    ap.add_argument("--axes", nargs="+", default=["governance", "safety", "art5"])
-    ap.add_argument("--iters", type=int, default=60)
+    ap.add_argument("--axes", nargs="+", default=None)   # None = ALL axes the harness carries
+    ap.add_argument("--iters", type=int, default=25)      # gentler: generalize, don't memorize
+    ap.add_argument("--lr", type=float, default=5e-5)     # 4x lower than the overfit run
     ap.add_argument("--out", default="fix_runs")
     a = ap.parse_args()
 
@@ -82,7 +83,7 @@ def main():
     from datasets import load_dataset
     from trl import SFTConfig, SFTTrainer
 
-    axes = [x for x in a.axes if x in gf.AXES]
+    axes = [x for x in (a.axes or list(gf.AXES)) if x in gf.AXES]
     ts = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
     run = Path(a.out) / ts; run.mkdir(parents=True, exist_ok=True)
     bnb = BitsAndBytesConfig(load_in_4bit=True, bnb_4bit_quant_type="nf4",
@@ -106,7 +107,7 @@ def main():
     lora = LoraConfig(r=8, lora_alpha=16, lora_dropout=0.05, bias="none", task_type="CAUSAL_LM",
                       target_modules=["q_proj", "k_proj", "v_proj", "o_proj"])
     cfg = SFTConfig(output_dir=str(run / "adapter"), per_device_train_batch_size=1,
-                    gradient_accumulation_steps=4, max_steps=a.iters, learning_rate=2e-4,
+                    gradient_accumulation_steps=4, max_steps=a.iters, learning_rate=a.lr,
                     logging_steps=10, save_strategy="no", report_to=[], bf16=True,
                     dataset_text_field="text", max_seq_length=512)
     trainer = SFTTrainer(model=base, args=cfg, train_dataset=ds, peft_config=lora)
