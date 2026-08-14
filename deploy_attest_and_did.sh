@@ -29,6 +29,20 @@ run() {  # execute normally; in --dry-run just print what WOULD run
 
 [ "$DRY" = 1 ] && echo "== DRY RUN — no files written, no deploy, no token needed =="
 [ "$DRY" = 0 ] && : "${CLOUDFLARE_API_TOKEN:?rotate + export CLOUDFLARE_API_TOKEN first (no angle brackets)}"
+
+# 0. APEX PREFLIGHT — everything below routes on csoai.org. If the apex is 522 (recurring
+#    missing @ record) the verifier + did.json are unreachable no matter how cleanly they deploy.
+#    fix_apex.sh (idempotent) adds the flattened apex CNAME @ -> csoai-site.pages.dev. Run it FIRST
+#    if this reports a broken apex. It needs a token with Zone:DNS:Edit (the deploy token may not
+#    have that scope); it is a no-op if the record already exists.
+echo "== 0. apex preflight (csoai.org must resolve before /verify + did.json can be reached) =="
+apex=$(curl -s -o /dev/null -m 8 -w "%{http_code}" "https://csoai.org" 2>/dev/null || echo 000)
+echo "   https://csoai.org -> $apex"
+if [ "$apex" = "522" ] || [ "$apex" = "000" ]; then
+  echo "   ⚠️  apex is broken — run ./fix_apex.sh --apply (Zone:DNS:Edit token) BEFORE deploying, else"
+  echo "       step 5 (VERIFY LIVE) will fail even though the Pages/worker deploy succeeds."
+  [ "$DRY" = 0 ] && echo "   (continuing; deploy still stages the worker + did.json, but verify will 522 until apex is fixed.)"
+fi
 # 1. Publish the COMMITTED did.json. We do NOT auto-regenerate it here: regenerating from the
 #    local keystone would clobber the production identity (f4b4, on the pod) with a dev key if
 #    run on the wrong machine. To CHANGE the identity, run make_did.py on the PRODUCTION keystone
