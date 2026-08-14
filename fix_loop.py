@@ -109,9 +109,9 @@ def main():
                     gradient_accumulation_steps=4, max_steps=a.iters, learning_rate=2e-4,
                     logging_steps=10, save_strategy="no", report_to=[], bf16=True,
                     dataset_text_field="text", max_seq_length=512)
-    SFTTrainer(model=base, args=cfg, train_dataset=ds, peft_config=lora).train()
-    (run / "adapter").mkdir(exist_ok=True)
-    base.save_pretrained(run / "adapter")
+    trainer = SFTTrainer(model=base, args=cfg, train_dataset=ds, peft_config=lora)
+    trainer.train()
+    trainer.model.save_pretrained(str(run / "adapter"))   # the PEFT-wrapped model → adapter_config.json + weights
 
     print("3) RE-MEASURE base+adapter on the same frozen probes…", flush=True)
     del base; torch.cuda.empty_cache()
