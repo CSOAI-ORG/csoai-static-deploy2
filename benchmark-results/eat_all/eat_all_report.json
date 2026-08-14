@@ -1,6 +1,6 @@
 {
-  "run_id": "eat_all_1786732211",
-  "finished_at": "2026-08-14T18:30:11.712428+00:00",
+  "run_id": "eat_all_1786732511",
+  "finished_at": "2026-08-14T18:35:11.573291+00:00",
   "phases": {
     "PHASE_0_HEALTH": {
       "status": "failed",
@@ -57,7 +57,7 @@
     },
     "PHASE_6_DOWNLOADS": {
       "status": "failed",
-      "duration_s": 6.1,
+      "duration_s": 5.6,
       "artifacts": [
         "/Users/nicholas/clawd/csoai-static-deploy2/forest/honey_downloads.jsonl"
       ],
@@ -76,7 +76,7 @@
     },
     "PHASE_9_ARTIFACTS": {
       "status": "ran",
-      "duration_s": 0.9,
+      "duration_s": 0.7,
       "artifacts": [
         "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/eat_all/sov_kb.json",
         "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/eat_all/honey_all_producers.jsonl",
@@ -128,7 +128,7 @@
     },
     "PHASE_9F_SOVEREIGN_TRAINING_PIPELINE": {
       "status": "failed",
-      "duration_s": 0.2,
+      "duration_s": 0.1,
       "artifacts": [
         "/Users/nicholas/clawd/csoai-static-deploy2/forest/sovereign_training_pipeline.json"
       ],
@@ -153,7 +153,7 @@
     },
     "PHASE_9I_SOV_CAPTURE": {
       "status": "ran",
-      "duration_s": 1.0,
+      "duration_s": 1.1,
       "artifacts": [
         "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/sov_kb.json",
         "/Users/nicholas/.sov/iwm/skills_20260812.jsonl",
@@ -171,18 +171,18 @@
       "duration_s": 0.3,
       "artifacts": [
         "/Users/nicholas/.sov/iwm/iwm_schema.json",
-        "/Users/nicholas/.sov/iwm/sovereign_bootstrap_20260814_183011.jsonl",
+        "/Users/nicholas/.sov/iwm/sovereign_bootstrap_20260814_183511.jsonl",
         "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/sov_kb.json"
       ],
       "error": null,
       "iwm_records": 0,
       "kb_entries_added": 0,
       "exit_code": 1,
-      "stdout_tail": "M schema...\n  IWM schema: /Users/nicholas/.sov/iwm/iwm_schema.json\n\nStep 2: Feed /tmp/csoai-sovereign-system...\n  Scanning /tmp/csoai-sovereign-system...\n  Found 0 files\n  IWM records: 0\n  KB entries: 0\n  Errors: 0\n\nStep 3: Feed csoai_repos.json...\n  Added: 0 IWM records, 0 KB entries\n\nStep 4: Feed 79K dataset metadata...\n  Added: 0 IWM records, 0 KB entries\n\nStep 5: Write IWM shard...\n  IWM shard: /Users/nicholas/.sov/iwm/sovereign_bootstrap_20260814_183011.jsonl\n\nStep 6: Update sov_kb.json...\n"
+      "stdout_tail": "M schema...\n  IWM schema: /Users/nicholas/.sov/iwm/iwm_schema.json\n\nStep 2: Feed /tmp/csoai-sovereign-system...\n  Scanning /tmp/csoai-sovereign-system...\n  Found 0 files\n  IWM records: 0\n  KB entries: 0\n  Errors: 0\n\nStep 3: Feed csoai_repos.json...\n  Added: 0 IWM records, 0 KB entries\n\nStep 4: Feed 79K dataset metadata...\n  Added: 0 IWM records, 0 KB entries\n\nStep 5: Write IWM shard...\n  IWM shard: /Users/nicholas/.sov/iwm/sovereign_bootstrap_20260814_183511.jsonl\n\nStep 6: Update sov_kb.json...\n"
     },
     "PHASE_10B_MODEL_ROUTING": {
       "status": "failed",
-      "duration_s": 0.1,
+      "duration_s": 0.2,
       "artifacts": [],
       "error": "Extra data: line 298535 column 2 (char 12816009)",
       "models_routed": 0,
