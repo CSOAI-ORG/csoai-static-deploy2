@@ -1,0 +1,52 @@
+{
+ "schema": "csoai.promotion-certificate/1.0",
+ "kind": "council-certificate",
+ "issuer": "did:csoai:issuer-001",
+ "issued_at": "2026-08-14T06:06:44+00:00",
+ "candidate": {
+  "adapter_sha256": null
+ },
+ "votes": [
+  {
+   "voter_id": "ollama@a100",
+   "implementation": "ollama/llama.cpp/t0-seed42",
+   "vote": "ABSTAIN",
+   "delta_unseen": null,
+   "rows_sha256": null,
+   "rows_hash_verified": null
+  },
+  {
+   "voter_id": "mlx@mac-m4",
+   "implementation": "mlx-lm/metal",
+   "vote": "ABSTAIN",
+   "delta_unseen": null,
+   "rows_sha256": null,
+   "rows_hash_verified": null
+  },
+  {
+   "voter_id": "transformers@rtx3090",
+   "implementation": "hf-transformers+peft/4bit-nf4/greedy",
+   "vote": "NO_CHANGE",
+   "delta_unseen": 0.0,
+   "rows_sha256": "d69e2ac3c2ca24c65231b0b3d92b7678bbecbd631332755f3eb6667981540727",
+   "rows_hash_verified": true
+  }
+ ],
+ "council": {
+  "decision": "REJECTED",
+  "counts": {
+   "PROMOTE": 0,
+   "REVERT": 0,
+   "NO_CHANGE": 1,
+   "ABSTAIN": 2
+  },
+  "quorum_rule": "2-of-3 PROMOTE with PROMOTE>REVERT certifies; ABSTAIN never counts; trusted collector, untrusted voters"
+ },
+ "certificate_id": "05ceba671e597e04",
+ "signature": {
+  "alg": "Ed25519",
+  "kid": "ed25519:a1808554054f57ba",
+  "pubkey": "03g9l+dVNGVEAVVWQrJU9aLtkYTN3uARd52P7DEq+8g=",
+  "sig": "d6hX6qty5xQ5DVAhA9OKKXRoLN3dYm0RmYJr60ohJ4H6SVA487+ahi62bhlMUL6SV53FxGW8yVfuOz7pV3H0CQ=="
+ }
+}
