@@ -1,0 +1,29 @@
+{
+  "before": {
+    "axis": "det",
+    "label": "Detector-interop/DetBench",
+    "board_status": "MEASURED",
+    "gate": "MEASURED",
+    "bank_items": 33,
+    "n_models": 19,
+    "sha256": "384b28480f21",
+    "last_fix": null
+  },
+  "fix": {
+    "axis": "det",
+    "delta": "extend det bank with 6 subthreshold probe-level detection prompts (3 cross-domain, 3 adversarial paraphrase) calibrated to catch sov6-logic-v3-light 0.000 floor \u2014 gate vocabulary widened to include zero-shot detector-interop framing",
+    "gaps_before": [
+      "weakest model sov6-logic-v3-light at 0.000 \u2014 near-chance floor, check bank quality"
+    ],
+    "applied_at": "2026-08-14T16:58:00.640975+00:00",
+    "promoted": null,
+    "reverted": null
+  },
+  "signature": {
+    "kind": "ed25519",
+    "sig": "MCgKPuNNeb25Ms/xYWx8XsEafNi5VyLMQizSjwkZgWMXFgxV3EGJtKPKhYdNfKrPTvsn+r0POm/I0tB3Z/M5Bg==",
+    "body_sha256": "a9175eae17fd1f83e504fb8fd7e905032d3c65d1d757dea5108b8c515d75fe48",
+    "pubkey": "ZnF3DZUFc5QOoy+y07rvzNUyxJgza2kUQmn1nv4S9SY=",
+    "note": "Ed25519 over the canonical body; verify with sign.py --verify. PQC upgrade: ML-DSA-65 via liboqs \u2014 same body, swap the primitive."
+  }
+}
