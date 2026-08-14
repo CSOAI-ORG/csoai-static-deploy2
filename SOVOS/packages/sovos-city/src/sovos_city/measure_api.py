@@ -169,7 +169,7 @@ class MeasureService:
             "gold_provenance": "deterministic gate (Article 0 + law) — no model judged this",
         }
         result = self.chain.append(epoch, body)  # Ed25519, appends to chain
-        return {
+        card = {
             "content_id": result.id,
             "epoch": result.epoch,
             "body": result.body,
@@ -186,6 +186,20 @@ class MeasureService:
                 "chain_path": str(self.chain.path),
             },
         }
+        # ── TIME-ANCHOR (Wire 3): attach the OTS calendar commitment so the
+        # card carries its "when" alongside the signature's "who". Non-fatal:
+        # a calendar outage must not block issuance — the card stays signed,
+        # and the anchor is recorded as pending if the commit fails.
+        try:
+            from .timestamping import stamp_content_id, record_anchor
+            anchor = stamp_content_id(result.id)
+            card = record_anchor(card, anchor)
+        except Exception:
+            card["time_anchor"] = {
+                "content_id": result.id, "state": "failed",
+                "note": "calendar commit unavailable at issuance; anchor pending",
+            }
+        return card
 
     # ── persistence (jobs survive pod resets — the durability doctrine) ──────
     def _persist(self, job: MeasureJob) -> None:
