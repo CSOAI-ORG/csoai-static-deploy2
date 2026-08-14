@@ -79,6 +79,18 @@ def _load_timestamp():
         return None
 
 
+def _load_didbind():
+    """Load the did:web binder (repo-root verify_via_didweb.bind_did)."""
+    root = _repo_root()
+    if root and str(root) not in sys.path:
+        sys.path.insert(0, str(root))
+    try:
+        from verify_via_didweb import bind_did  # type: ignore
+        return bind_did
+    except Exception:
+        return None
+
+
 class GSPCMeasureAgent:
     """A2A agent exposing GSPC measurement as a signed, per-call skill."""
 
@@ -155,6 +167,7 @@ class GSPCMeasureAgent:
             "per_axis": body["per_axis"],
             "signed_card": card,
             "signer_kind": signer_kind,
+            "signer_did": (card or {}).get("signer_did"),   # did:web:csoai.org when key is published
             "time_anchor_kind": (anchor or {}).get("kind", "none"),
             "note": ("Signed MEASUREMENT credential. It attests what was measured on the "
                      "GSPC axes — NOT that the subject is compliant or certified. Even a real "
@@ -201,6 +214,9 @@ class GSPCMeasureAgent:
                     v = svc.verify(card)
                     card["_verify"] = {"valid": v.get("valid"),
                                        "content_id_matches": v.get("content_id_matches")}
+                    bind_did = _load_didbind()          # stamp the resolvable did:web signer
+                    if bind_did is not None:
+                        card = bind_did(card)
                     return card, "ed25519-measureservice"
             except Exception:
                 pass  # key absent off-keystone → honest fallback below
@@ -257,6 +273,9 @@ if __name__ == "__main__":
     assert cred["measured_mean"] == round((0.82 + 0.61) / 2, 4), "mean over MEASURED axes only"
     assert cred["signed_card"] is not None, "must produce a signed card (real or demo)"
     assert cred["time_anchor_kind"] in ("rfc3161", "unanchored", "none"), "anchor kind must be honest"
-    print("signer_kind:", cred["signer_kind"], "| time_anchor_kind:", cred["time_anchor_kind"])
+    if cred["signer_kind"].startswith("ed25519"):
+        assert cred["signer_did"] == "did:web:csoai.org", "ed25519 card must carry its resolvable did:web signer"
+    print("signer_kind:", cred["signer_kind"], "| signer_did:", cred["signer_did"],
+          "| time_anchor_kind:", cred["time_anchor_kind"])
     print("\n  ✅ A2A measurement-skill invariants hold "
           "(measurement-not-certification, UNMEASURED preserved, card issued, time-anchored)")

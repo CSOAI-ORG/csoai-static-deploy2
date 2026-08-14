@@ -96,6 +96,34 @@ def verify_card(card: dict, did_doc: dict) -> dict:
     return {"verified": False, "reason": "signature does not verify against any published DID key"}
 
 
+def signer_did(pubkey_hex: str, did_src: str = DEFAULT_DID) -> dict | None:
+    """Return the DID that PUBLISHES this Ed25519 pubkey, or None if it isn't published there.
+    Honest by construction: an identity is asserted only when the key genuinely resolves."""
+    try:
+        doc = _load_did(did_src)
+        raw = bytes.fromhex(pubkey_hex)
+    except Exception:
+        return None
+    if raw in resolve_ed25519_keys(doc):
+        return {"signer_did": doc.get("id"), "verification_method": f"{doc.get('id')}#keys-1"}
+    return None
+
+
+def bind_did(card: dict, did_src: str = DEFAULT_DID) -> dict:
+    """Stamp a signed card with its resolvable did:web signer IFF its key is published there.
+    Does nothing for demo/unpublished keys — it never asserts an identity that can't be resolved."""
+    signer = (card or {}).get("signer")
+    if not signer:
+        return card
+    b = signer_did(signer, did_src)
+    if b:
+        card["signer_did"] = b["signer_did"]
+        card["verification_method"] = b["verification_method"]
+        card["verify_hint"] = ("resolve signer via did:web (.well-known/did.json) and verify the "
+                               "Ed25519 signature over content_id — do not trust the card's own signer field")
+    return card
+
+
 def _selftest() -> int:
     # Issue a fresh REAL card, then verify it against the published DID (not the card's claim).
     sys.path.insert(0, str(ROOT / "SOVOS" / "packages" / "sovos-city" / "src"))

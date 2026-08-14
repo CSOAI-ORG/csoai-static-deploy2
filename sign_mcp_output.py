@@ -103,6 +103,13 @@ def sign_mcp_output(source: str, tool: str, value, args: dict | None = None,
     if card is None:
         card, signer_kind = _demo_signature(body), "demo-content-hash (NOT Ed25519; real key on keystone)"
 
+    # Bind the resolvable signer identity — only stamps did:web when the key is actually published.
+    try:
+        from verify_via_didweb import bind_did
+        card = bind_did(card)
+    except Exception:
+        pass
+
     anchor_for = _load_anchor()
     anchor = None
     if anchor_for is not None:
@@ -121,6 +128,7 @@ def sign_mcp_output(source: str, tool: str, value, args: dict | None = None,
         "depends_on": depends_on or [],
         "signed_card": card,
         "signer_kind": signer_kind,
+        "signer_did": card.get("signer_did"),      # did:web:csoai.org when the key is published; else None
         "time_anchor_kind": (anchor or {}).get("kind", "none"),
         "note": ("Signs that THIS value was returned by THIS source at THIS time — "
                  "content-verifiable offline. Does NOT assert the value is correct, nor that CSOAI "
@@ -151,6 +159,8 @@ def _selftest() -> int:
     if att["signer_kind"].startswith("ed25519"):
         assert att["signed_card"].get("_verify", {}).get("content_id_matches") is True, \
             "signed card content must re-verify (content_id_matches)"
+        assert att["signer_did"] == "did:web:csoai.org", \
+            "ed25519 card must carry its resolvable did:web signer"
     # firewall: never claims correctness/certification affirmatively
     blob = json.dumps(att).lower()
     assert "certif" not in blob or "not" in blob, "must not assert certification"
