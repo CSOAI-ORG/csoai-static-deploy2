@@ -48,7 +48,7 @@ MODELS = [
     "sov6-synthesis-v3-light", "sov6-embodiment-v3-light", "sov6-aesthetics-v3-light",
     "sov6-abstraction-v3-light",
     "gemma3:12b", "llama3.2:3b", "qwen2.5:3b", "qwen2.5:0.5b-instruct",
-    "mistral:7b", "deepseek-r1:8b", "nemotron-3-nano:30b",
+    "mistral:7b", "deepseek-r1:8b", "nemotron-3-nano:30b", "qwen3:4b", "phi4:14b",
 ]
 
 WORKERS = 4

@@ -18,6 +18,7 @@ WIRES = [
     ("sovos_city.cose_wrapper",        "Wire 5 COSE signing wrapper"),
     ("sovos_city.adoption_space",      "J-Space 1 adoption leg"),
     ("sovos_city.measure_api",         "Enforced issuance choke point"),
+    ("sovos_city.telemetry",           "Self-instrumentation (signed telemetry)"),
 ]
 
 results = []
