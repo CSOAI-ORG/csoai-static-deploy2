@@ -15,21 +15,30 @@
   do **not** trust CSOAI's word about who signed. Ed25519 today — **ML-DSA-65 is roadmap, not
   present, not claimed.**
 
-## ⚠️ Two-key finding — reconcile before deploy (owner)
-Wiring did:web surfaced that **the estate has more than one signing key.** The local Mac keystone
-(`~/.sovos/city_ed25519`) signs with `8f9a…313912`; a lane had published `f4b4…c342` in `did.json`.
-`bind_did` correctly **refused** to stamp the local card (its key wasn't the published one) — the
-honesty guard working. Consequences:
-- `make_did.py` now generates `did.json` from whatever keystone it runs on (single source of truth).
-  The committed `did.json` is the **local-dev** key (`8f9a…`) so the demo/selftests are self-consistent.
-- **Before hosting at csoai.org, regenerate `did.json` on the PRODUCTION keystone (the A100).** The
-  published identity MUST equal the key that actually signs production cards, or verification fails.
-- **Owner decision:** which key is the canonical CSOAI identity — the A100 key (`f4b4…`?) or another?
-  All production signing must use that ONE key; the Mac dev key must never be the published identity.
-  (Firewall: the private key lives only on the keystone — a dev Mac holding a signing key is itself
-  worth reviewing.)
-- Cards carry `signer_did` only when their key is the published one, so nothing falsely claims the
-  identity in the meantime.
+## ✅ Two-key question — RESOLVED (2026-08-14): `f4b4…` is canonical
+Wiring did:web surfaced two signing keys in the estate. It is now settled:
+
+- **Canonical production identity = `f4b4278d…c342`.** This is the key the committed
+  `.well-known/did.json` publishes AND the key the pod/production signs with (cards, `cose_wrapper`,
+  A2A, `underwriting_pack`). Published identity and production signer agree — verification holds.
+- **`8f9a00a2…313912` is the Mac DEV key only.** It never gets published and correctly never
+  resolves to the DID. `_resolve_signer_did`/`bind_did` refuse to stamp it (proven), so a dev-signed
+  envelope honestly carries `signer_did: None` — nothing falsely claims the identity.
+- **Every signed surface now stamps `signer_did` when it signs with the published key.** Wired at the
+  choke point via `cose_wrapper._resolve_signer_did` (one place → MCP / A2A / underwriting envelopes)
+  and via `verify_via_didweb.bind_did` for cards. On the pod (f4b4 signs = f4b4 published), every
+  artifact carries `signer_did: did:web:csoai.org`.
+
+**Operating rules (settled):**
+- Sign production ONLY on the pod/keystone (key `f4b4…`). The Mac dev key must never sign a
+  production artifact and must never be published.
+- **Do NOT regenerate `did.json` off the production keystone.** `deploy_attest_and_did.sh` no longer
+  auto-runs `make_did.py` (that would clobber `f4b4` with the Mac dev key); it publishes the committed
+  `did.json`. To *deliberately* change the identity, run `make_did.py` on the production keystone,
+  commit, then redeploy.
+- Residual hygiene (minor, owner): a dev Mac holding any signing key is worth reviewing against the
+  "private key lives only on the keystone" firewall — but it is dev-only and unpublished, so it is
+  not a verification risk.
 
 ## Owner-gated — the two steps I cannot do
 1. **Host the DID document** at `https://csoai.org/.well-known/did.json` (deploy). The file is
