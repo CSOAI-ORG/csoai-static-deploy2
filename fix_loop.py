@@ -56,9 +56,14 @@ def measure_capture(model, tok, axes):
     return (round(sum(got) / len(got), 4) if got else None), results, failures
 
 
-def write_dataset(failures, path):
-    rows = [{"messages": [{"role": "user", "content": f["instruction"] + f["prompt"]},
-                          {"role": "assistant", "content": f["expected"]}]} for f in failures]
+def write_dataset(failures, path, tok):
+    # Emit a plain "text" field (chat template pre-applied) — trl's SFTTrainer
+    # trains on dataset_text_field="text" without needing conversational parsing.
+    rows = []
+    for f in failures:
+        msgs = [{"role": "user", "content": f["instruction"] + f["prompt"]},
+                {"role": "assistant", "content": f["expected"]}]
+        rows.append({"text": tok.apply_chat_template(msgs, tokenize=False)})
     Path(path).write_text("\n".join(json.dumps(r) for r in rows) + "\n")
     return len(rows)
 
@@ -90,7 +95,7 @@ def main():
     base = AutoModelForCausalLM.from_pretrained(a.base, quantization_config=bnb, device_map="auto")
     base.eval()
     m0, r0, failures = measure_capture(base, tok, axes)
-    nfail = write_dataset(failures, run / "failures.jsonl")
+    nfail = write_dataset(failures, run / "failures.jsonl", tok)
     print(f"   base mean={m0} · {nfail} failed probes captured → the ErrorVector", flush=True)
     if nfail < 4:
         print("   too few failures to train on — base already strong on these axes. Stop (honest).")
@@ -102,7 +107,8 @@ def main():
                       target_modules=["q_proj", "k_proj", "v_proj", "o_proj"])
     cfg = SFTConfig(output_dir=str(run / "adapter"), per_device_train_batch_size=1,
                     gradient_accumulation_steps=4, max_steps=a.iters, learning_rate=2e-4,
-                    logging_steps=10, save_strategy="no", report_to=[], bf16=True)
+                    logging_steps=10, save_strategy="no", report_to=[], bf16=True,
+                    dataset_text_field="text", max_seq_length=512)
     SFTTrainer(model=base, args=cfg, train_dataset=ds, peft_config=lora).train()
     (run / "adapter").mkdir(exist_ok=True)
     base.save_pretrained(run / "adapter")
