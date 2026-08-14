@@ -33,8 +33,18 @@ and why is there more than one key" answer for is a measurement layer they can't
 ## Follow-ups (the "explain / fix before it recurs" list)
 1. **Unify key loading to one helper** (the keystone loader); delete the five per-module defaults so
    there is a single place the identity is read.
-2. **Reconcile `card_issuer.py` (jv-wave8)** with MeasureService: confirm same `f4b4` key, then make
-   the rail *call* the keystone issuer — one signer implementation, not two.
+2. ~~Reconcile `card_issuer.py` (jv-wave8) with MeasureService~~ — **RESOLVED / MOOT (2026-08-14).**
+   Recon finding: **`card_issuer.py` does not exist** on `origin/jv-wave8-production` (its attributed
+   branch), on `feat/sandbox-arena-seam`, or anywhere findable. The "second signer" it named is not a
+   real file in the accessible repo. What IS real: the actual card issuer is `SOVOS/issue_signed_card.py`
+   → `MeasureService` → `Chain` → `keystone`, i.e. the ONE path. And every private-key-handling file in
+   the package (`keystone`, `chain`, `telemetry`, `cose_wrapper`) routes through the one loader; the
+   other signing files (`measure_api`, `sandbox_arena`, `council_signal`, `arena`, `simulator`) hold no
+   key and sign via `Chain`. **So "one signer, one key" is already achieved — there is no second signer
+   to reconcile.** Residual: (a) if k3 holds a real unpushed `card_issuer.py`, push it and point its
+   `_load_key` at `keystone.load_signing_key` (a one-line change — the loader is ready); (b)
+   **`jv-wave8-production` predates `keystone.py`** and still carries the old scattered/auto-generating
+   loaders — merge the unification into it if that branch is still active.
 3. **MinIO write anomaly — EXPLAIN, don't just route around.** Object key `05ceba671e597e04.json`
    refused writes ("insufficient permissions") while every other write to the same prefix succeeded;
    no lock/version marker explained it; k3 stored the rejection cert under a different key and noted
