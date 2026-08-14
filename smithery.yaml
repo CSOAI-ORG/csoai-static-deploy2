@@ -1,0 +1,7 @@
+# Smithery registry config — csoai MCP server (PyPI: csoai, MCP registry: io.github.CSOAI-ORG/csoai)
+# stdio server shipped in the csoai Python package; no config required.
+startCommand:
+  type: stdio
+  configSchema: {}
+  commandFunction: |-
+    (config) => ({ command: 'uvx', args: ['--from', 'csoai', 'csoai-mcp'] })
