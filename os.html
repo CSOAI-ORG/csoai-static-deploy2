@@ -8,11 +8,11 @@
 <meta name="theme-color" content="#060a13"/>
 <style>
 :root{
-  --ground:#060a13; --stage:#03060d; --panel:#0c1424; --raised:#12203a; --well:#070e1c;
-  --hair:#1b2c48; --hair-soft:#12203a;
-  --ink:#e4edf9; --soft:#93a8c6; --faint:#5d738f;
-  --signal:#3ad0e6; --signal-2:#7c8cff; --signal-dim:#1c6f80; --glow:rgba(58,208,230,.16);
-  --good:#43dd97; --warn:#e6ad45; --bad:#e86a7c; --unm:#64748b; --gold:#e9c46a;
+  --ground:#0a0a0f; --stage:#070709; --panel:#14141c; --raised:#20202b; --well:#0e0e15;
+  --hair:#2b2b38; --hair-soft:#1d1d27;
+  --ink:#ece7db; --soft:#a69d86; --faint:#726a54;
+  --signal:#e3b23c; --signal-2:#22c55e; --signal-dim:#6f561d; --glow:rgba(227,178,60,.15);
+  --good:#22c55e; --warn:#e6ad45; --bad:#e86a7c; --unm:#6b6552; --gold:#d4af37;
   --mono:ui-monospace,"SF Mono","Cascadia Code",Menlo,Consolas,monospace;
   --sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
 }
@@ -23,10 +23,23 @@ body{background:var(--ground);color:var(--ink);font-family:var(--sans);font-size
 ::selection{background:var(--signal-dim);color:#fff}
 button{font-family:inherit}
 
+
+#menubtn{appearance:none;border:1px solid var(--hair);background:var(--well);color:var(--soft);
+  font-family:var(--mono);font-size:11.5px;padding:7px 13px;border-radius:10px;cursor:pointer;margin-left:6px}
+#menubtn:hover,#menubtn[aria-expanded="true"]{color:var(--signal);border-color:var(--signal-dim);background:var(--glow)}
+#menu{position:absolute;top:52px;left:24px;z-index:80;display:none;gap:22px;padding:18px 22px;
+  background:rgba(20,20,28,.97);border:1px solid var(--hair);border-radius:14px;
+  box-shadow:0 24px 60px rgba(0,0,0,.6);backdrop-filter:blur(12px);grid-template-columns:repeat(3,minmax(150px,1fr))}
+#menu.open{display:grid}
+#menu .mg h4{margin:0 0 8px;font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint)}
+#menu .mg a{display:block;padding:6px 8px;border-radius:8px;color:var(--soft);text-decoration:none;font-size:12.5px}
+#menu .mg a:hover{background:var(--raised);color:var(--signal)}
+@media(max-width:700px){#menu{grid-template-columns:1fr;left:12px}}
+
 /* ── top bar ───────────────────────────────────────────── */
 #top{grid-column:1/3;display:flex;align-items:center;gap:14px;padding:0 24px;
   background:linear-gradient(180deg,#0c1424,#0a1120);border-bottom:1px solid var(--hair);z-index:30}
-#brand{display:flex;align-items:center;gap:11px}#brand .mark{flex:none;filter:drop-shadow(0 0 6px rgba(58,208,230,.4))}#brand .wm{font-weight:800;letter-spacing:-.015em;font-size:19px;line-height:1}
+#brand{display:flex;align-items:center;gap:11px}#brand .mark{flex:none;filter:drop-shadow(0 0 6px rgba(227,178,60,.4))}#brand .wm{font-weight:800;letter-spacing:-.015em;font-size:19px;line-height:1}
 #brand .m{color:var(--signal)} #brand .s{font-family:var(--mono);font-size:10px;color:var(--faint);
   letter-spacing:.14em;text-transform:uppercase;font-weight:600}
 #top .grow{flex:1}
@@ -113,7 +126,7 @@ button{font-family:inherit}
 .vrow{display:flex;gap:10px;align-items:baseline;padding:7px 10px;background:var(--well);border:1px solid var(--hair-soft);border-radius:8px;margin-top:6px;font-family:var(--mono);font-size:12px}
 .vrow .k{color:var(--faint);font-size:10px;letter-spacing:.06em;text-transform:uppercase;min-width:118px}
 .btn{appearance:none;border:1px solid var(--signal-dim);background:var(--glow);color:var(--signal);font-family:var(--mono);font-size:12px;padding:8px 15px;border-radius:10px;cursor:pointer;font-weight:600}
-.btn:hover{background:rgba(58,208,230,.26)} .btn.ghost{background:transparent;color:var(--soft);border-color:var(--hair)}
+.btn:hover{background:rgba(227,178,60,.26)} .btn.ghost{background:transparent;color:var(--soft);border-color:var(--hair)}
 .btn:focus-visible{outline:2px solid var(--signal);outline-offset:2px}
 
 /* ── bottom AI chat bar (prominent, persistent) ────────── */
@@ -146,7 +159,29 @@ button{font-family:inherit}
 
 <!-- ═══ TOP ═══ -->
 <header id="top">
-  <div id="brand"><svg class="mark" width="26" height="26" viewBox="0 0 24 24" aria-hidden="true"><polygon points="12,2 21,7 21,17 12,22 3,17 3,7" fill="none" stroke="#3ad0e6" stroke-width="1.4"/><polygon points="12,6.5 17,9.2 17,14.8 12,17.5 7,14.8 7,9.2" fill="rgba(58,208,230,.14)" stroke="#3ad0e6" stroke-width="1"/><circle cx="12" cy="12" r="2.1" fill="#3ad0e6"/></svg><span class="wm">Council of <span class="m">AI</span></span><span class="s">councilof.ai · measurement body</span></div>
+  <div id="brand"><svg class="mark" width="26" height="26" viewBox="0 0 24 24" aria-hidden="true"><polygon points="12,2 21,7 21,17 12,22 3,17 3,7" fill="none" stroke="#e3b23c" stroke-width="1.4"/><polygon points="12,6.5 17,9.2 17,14.8 12,17.5 7,14.8 7,9.2" fill="rgba(227,178,60,.14)" stroke="#e3b23c" stroke-width="1"/><circle cx="12" cy="12" r="2.1" fill="#e3b23c"/></svg><span class="wm">Council of <span class="m">AI</span></span><span class="s">councilof.ai · measurement body</span></div>
+  <button id="menubtn" aria-label="menu" aria-expanded="false">☰&nbsp;Menu</button>
+  <div id="menu" role="menu">
+    <div class="mg"><h4>Measure</h4>
+      <a href="#" data-tool="arena">⚔ Arena — battles &amp; ratings</a>
+      <a href="#" data-tool="instrument">◈ GSPC axes</a>
+      <a href="#" data-tool="verify">✓ Verify a signed card</a>
+      <a href="#" data-tool="drift">↻ Drift re-attestation</a>
+      <a href="#" data-tool="signal">∿ The spine</a></div>
+    <div class="mg"><h4>Worlds</h4>
+      <a href="sov-city-3d.html">◱ SOV City · 3D</a>
+      <a href="sov_space_visual.html">✦ SOV Space</a>
+      <a href="sov-globe-portal.html">◯ Sovereign Globe</a>
+      <a href="sov-suburb-3d.html">⌂ SOV Suburb · 3D</a>
+      <a href="arenas.html">⚔ Arena rounds (live)</a></div>
+    <div class="mg"><h4>Estate</h4>
+      <a href="index.html">⌂ Home</a>
+      <a href="benchmarks.html">▤ Benchmarks</a>
+      <a href="govbench.html">▦ GovBench</a>
+      <a href="audit.html">◉ Audit trail</a>
+      <a href="article-50.html">§ Article 50</a>
+      <a href="a2a-swarm.html">⇄ A2A swarm</a></div>
+  </div>
   <span class="grow"></span>
   <span class="chip id hide-s"><span class="d"></span>did:web:csoai.org</span>
   <span class="chip"><span class="d"></span>gate: enforced</span>
@@ -240,13 +275,13 @@ function draw(now){ctx.clearRect(0,0,W,H);
   const pts=nodes.map(n=>{const ang=n.a+(reduced?0:(now-t0)*n.w);const r=R*Math.tanh(n.rr*1.2);
     return [CX+r*Math.cos(ang),CY+r*Math.sin(ang),n];});
   for(let i=0;i<pts.length;i++){const a=pts[i],b=pts[(i+2)%pts.length];
-    ctx.strokeStyle="rgba(58,208,230,.045)";ctx.beginPath();ctx.moveTo(a[0],a[1]);
+    ctx.strokeStyle="rgba(227,178,60,.045)";ctx.beginPath();ctx.moveTo(a[0],a[1]);
     ctx.quadraticCurveTo(CX+(a[0]+b[0]-2*CX)*0.3,CY+(a[1]+b[1]-2*CY)*0.3,b[0],b[1]);ctx.stroke();}
   for(const p of pts){const x=p[0],y=p[1],n=p[2];const rad=(n.rated?4+((n.elo-emin)/(emax-emin))*4:3)*devicePixelRatio;
     if(n.rated){const g=ctx.createRadialGradient(x,y,0,x,y,rad*4.5);
-      g.addColorStop(0,"rgba(58,208,230,.5)");g.addColorStop(1,"rgba(58,208,230,0)");
+      g.addColorStop(0,"rgba(227,178,60,.5)");g.addColorStop(1,"rgba(227,178,60,0)");
       ctx.fillStyle=g;ctx.beginPath();ctx.arc(x,y,rad*4.5,0,7);ctx.fill();}
-    ctx.fillStyle=n.rated?"#3ad0e6":"rgba(100,116,139,.7)";ctx.beginPath();ctx.arc(x,y,rad,0,7);ctx.fill();
+    ctx.fillStyle=n.rated?"#e3b23c":"rgba(100,116,139,.7)";ctx.beginPath();ctx.arc(x,y,rad,0,7);ctx.fill();
     ctx.fillStyle="rgba(228,237,249,.82)";ctx.font=(9.5*devicePixelRatio)+"px ui-monospace,monospace";
     ctx.fillText(n.name.replace("-v3-light","")+(n.rated?" · "+n.elo.toFixed(0):" · unrated"),x+rad*2,y+3);}
   if(!reduced)requestAnimationFrame(draw);}
@@ -328,9 +363,9 @@ function drawRadar(){const c=document.getElementById("radar");if(!c)return;const
     x.textAlign=Math.cos(a)>0.3?"left":Math.cos(a)<-0.3?"right":"center";
     x.fillText(ax,cx+(r+7*devicePixelRatio)*Math.cos(a),cx+(r+9*devicePixelRatio)*Math.sin(a));});
   x.beginPath();AXES.forEach((ax,i)=>{const a=-Math.PI/2+i*2*Math.PI/AXES.length,v=AXIS_MEASURED[ax]??0.04,px=cx+r*v*Math.cos(a),py=cx+r*v*Math.sin(a);i?x.lineTo(px,py):x.moveTo(px,py);});
-  x.closePath();x.fillStyle="rgba(58,208,230,.13)";x.fill();x.strokeStyle="#3ad0e6";x.lineWidth=1.5*devicePixelRatio;x.stroke();
+  x.closePath();x.fillStyle="rgba(227,178,60,.13)";x.fill();x.strokeStyle="#e3b23c";x.lineWidth=1.5*devicePixelRatio;x.stroke();
   AXES.forEach((ax,i)=>{if(AXIS_MEASURED[ax]==null)return;const a=-Math.PI/2+i*2*Math.PI/AXES.length,v=AXIS_MEASURED[ax];
-    x.fillStyle="#3ad0e6";x.beginPath();x.arc(cx+r*v*Math.cos(a),cx+r*v*Math.sin(a),3.2*devicePixelRatio,0,7);x.fill();});
+    x.fillStyle="#e3b23c";x.beginPath();x.arc(cx+r*v*Math.cos(a),cx+r*v*Math.sin(a),3.2*devicePixelRatio,0,7);x.fill();});
   document.getElementById("axlist").innerHTML=AXES.map(ax=>{const v=AXIS_MEASURED[ax];
     return '<div class="axrow"><span>'+ax+'</span>'+(v!=null?'<span class="meter"><i style="width:'+(v*100)+'%"></i></span><span class="tag meas">'+(v*100).toFixed(1)+'%</span>':'<span class="meter unm"><i></i></span><span class="tag unm">unmeasured</span>')+'</div>';}).join("");}
 
@@ -375,6 +410,13 @@ document.getElementById("q").addEventListener("keydown",e=>{if(e.key==="Enter")a
 const SUGGS=["Which article prohibits social scoring?","What does Article 50 require?","GDPR right to erasure?","Article 999 of the EU AI Act","Which article requires human oversight?","Solvency II internal model approval"];
 document.getElementById("sugg").innerHTML=SUGGS.map(s=>"<button>"+s+"</button>").join("");
 document.querySelectorAll("#sugg button").forEach(b=>b.addEventListener("click",()=>{document.getElementById("q").value=b.textContent;ask();}));
+
+
+/* header menu */
+const menu=document.getElementById("menu"),menubtn=document.getElementById("menubtn");
+menubtn.addEventListener("click",e=>{e.stopPropagation();const o=menu.classList.toggle("open");menubtn.setAttribute("aria-expanded",o);});
+document.addEventListener("click",e=>{if(!menu.contains(e.target)&&e.target!==menubtn){menu.classList.remove("open");menubtn.setAttribute("aria-expanded","false");}});
+menu.querySelectorAll("a[data-tool]").forEach(a=>a.addEventListener("click",e=>{e.preventDefault();openP(a.dataset.tool);menu.classList.remove("open");menubtn.setAttribute("aria-expanded","false");}));
 
 setInterval(()=>{document.getElementById("clock").textContent=new Date().toISOString().slice(11,19)+"Z";},1000);
 </script>
