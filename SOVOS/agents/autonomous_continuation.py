@@ -93,7 +93,25 @@ def main():
             cwd=str(WORK)
         )
 
-    # Phase 4: Write checkpoint
+    # Phase 4: Try Oracle mesh activation (if oci CLI available)
+    log("Phase 4: Oracle mesh activation...")
+    oracle_script = WORK / "agents" / "oracle-mesh-activate.sh"
+    if oracle_script.exists():
+        try:
+            r = subprocess.run(
+                ["bash", str(oracle_script)],
+                capture_output=True, text=True, timeout=60
+            )
+            if "Oracle micro found" in r.stdout:
+                log(f"Oracle mesh activate SUCCESS: {r.stdout.strip()[-200:]}")
+            else:
+                log(f"Oracle mesh: no micros reachable this cycle — will retry")
+        except Exception as e:
+            log(f"Oracle mesh activation error: {e}")
+    else:
+        log("Oracle script not on pod — skipping")
+
+    # Phase 5: Write checkpoint
     checkpoint = WORK / "cross-lab-runs" / "2026-08-14" / "autonomous_checkpoint.json"
     checkpoint.write_text(json.dumps({
         "timestamp": datetime.datetime.now().isoformat(),
