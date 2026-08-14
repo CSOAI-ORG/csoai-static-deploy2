@@ -91,11 +91,15 @@ def main():
     tok = AutoTokenizer.from_pretrained(a.base)
     if tok.pad_token is None: tok.pad_token = tok.eos_token
 
-    print(f"== fix_loop {ts} · base={a.base} · axes={axes} ==", flush=True)
-    print("1) MEASURE base + capture failures…", flush=True)
+    BEST = Path(a.out) / "BEST"                      # the single accumulating adapter
+    resumed = (BEST / "adapter_config.json").exists()
+    print(f"== fix_loop {ts} · base={a.base} · axes={axes} · "
+          f"{'RESUME from BEST (compounding)' if resumed else 'fresh from base'} ==", flush=True)
+    print("1) MEASURE current model + capture failures…", flush=True)
     base = AutoModelForCausalLM.from_pretrained(a.base, quantization_config=bnb, device_map="auto")
-    base.eval()
-    m0, r0, failures = measure_capture(base, tok, axes)
+    model = PeftModel.from_pretrained(base, str(BEST), is_trainable=True) if resumed else base
+    model.eval()
+    m0, r0, failures = measure_capture(model, tok, axes)
     nfail = write_dataset(failures, run / "failures.jsonl", tok)
     print(f"   base mean={m0} · {nfail} failed probes captured → the ErrorVector", flush=True)
     if nfail < 4:
@@ -110,12 +114,12 @@ def main():
                     gradient_accumulation_steps=4, max_steps=a.iters, learning_rate=a.lr,
                     logging_steps=10, save_strategy="no", report_to=[], bf16=True,
                     dataset_text_field="text", max_seq_length=512)
-    trainer = SFTTrainer(model=base, args=cfg, train_dataset=ds, peft_config=lora)
+    trainer = SFTTrainer(model=model, args=cfg, train_dataset=ds, peft_config=(None if resumed else lora))
     trainer.train()
     trainer.model.save_pretrained(str(run / "adapter"))   # the PEFT-wrapped model → adapter_config.json + weights
 
     print("3) RE-MEASURE base+adapter on the same frozen probes…", flush=True)
-    del base; torch.cuda.empty_cache()
+    del base, model; torch.cuda.empty_cache()
     fresh = AutoModelForCausalLM.from_pretrained(a.base, quantization_config=bnb, device_map="auto")
     tuned = PeftModel.from_pretrained(fresh, str(run / "adapter")); tuned.eval()
     m1, r1, _ = measure_capture(tuned, tok, axes)
@@ -129,10 +133,13 @@ def main():
     print(f"\n== VERDICT: {m0} → {m1}  ({delta:+} pts)  {verdict} ==")
     print(f"   report → {run/'report.json'} · adapter → {run/'adapter'}")
     if delta > 1:
-        print("   TRUE fix: the model measurably improved on what it got wrong — promote.")
+        import shutil
+        if BEST.exists():
+            shutil.rmtree(BEST)
+        shutil.copytree(run / "adapter", BEST)
+        print("   TRUE fix: improved — PROMOTED + saved as new BEST (compounds; next cycle resumes here).")
     else:
-        print("   Honest reject: this run did NOT improve — not promoted. The gate works "
-              "(overfit on a tiny failure set is expected; needs more failures + gentler training).")
+        print("   Honest reject: did NOT improve — not promoted; BEST unchanged. The gate works.")
 
 
 if __name__ == "__main__":
