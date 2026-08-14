@@ -94,8 +94,20 @@ def item_text(item: Dict) -> str:
 
 
 def prompt_for(item: Dict, labels: List[str]) -> str:
-    return (f"{item_text(item)}\n\n"
-            f"Answer with EXACTLY ONE of these labels and nothing else: {', '.join(labels)}.")
+    base = f"{item_text(item)}\n\n"
+    # Reachability preamble for DENSE SYMBOLIC axes (det/interop).
+    # Fix class: small logic-specialist models (sov6-logic/synthesis/relationality)
+    # returned EMPTY on raw symbolic items ("Detector-A(...)=PROV. GT=SIGNED.").
+    # This preamble explains the NOTATION once, class-level, identical for every
+    # item — it never encodes per-item answers, so it is not bank leakage.
+    text = item_text(item)
+    if "GT=" in text and ("Detector" in text or "detector" in text):
+        base += ("Notation: 'Detector-X(reader)=SIGNAL' means that detector read the "
+                 "asset as SIGNAL. 'GT=SIGNAL' is the ground truth. If the detectors' "
+                 "signals match each other and the ground truth, that is INTEROPERABLE; "
+                 "if they diverge from the ground truth or each other, that is "
+                 "DIVERGENT.\n\n")
+    return base + f"Answer with EXACTLY ONE of these labels and nothing else: {', '.join(labels)}."
 
 
 def parse(answer: str, labels: List[str]) -> Optional[str]:
