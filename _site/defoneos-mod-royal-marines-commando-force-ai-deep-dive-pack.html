@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1.0" name="viewport"/>
+<title>DEFONEOS — MOD Royal Marines Commando Force AI Deep-Dive Pack</title>
+<meta content="Sovereign AI governance of UK MOD Royal Marines Commando Force: 3 Commando Brigade, littoral strike, Future Commando Force, Arctic warfare, amphibious operations. 12 entry points × 8 transformation priorities × 6 MCPs. UK-sovereign, audit-grade, AUKUS-compatible." name="description"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--ink:#0b1020;--bg:#050816;--panel:#0d1330;--line:#1a2050;--gold:#d4af37;--sov:#6dd5ff;--care:#4ade80;--warn:#fbbf24;--bad:#f87171;--fg:#e8eefc;--mut:#8a93b8}
+html,body{background:var(--bg);color:var(--fg);font:16px/1.6 -apple-system,system-ui,sans-serif}
+body{background:radial-gradient(ellipse 80% 50% at 50% -10%,rgba(109,213,255,0.12),transparent),var(--bg);min-height:100vh}
+.wrap{max-width:1280px;margin:0 auto;padding:48px 24px}
+header{text-align:center;margin-bottom:32px}
+.pill{display:inline-block;padding:4px 14px;border:1px solid var(--gold);border-radius:999px;font-size:12px;letter-spacing:0.1em;color:var(--gold);margin-bottom:16px}
+h1{font-size:clamp(36px,5vw,56px);line-height:1.1;letter-spacing:-0.02em;margin-bottom:16px;background:linear-gradient(180deg,#fff,#b8c2e8);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.sub{font-size:18px;color:var(--mut);max-width:820px;margin:0 auto 24px}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin:32px 0;padding:24px;background:var(--panel);border:1px solid var(--line);border-radius:16px}
+@media(max-width:800px){.stats{grid-template-columns:repeat(2,1fr)}}
+.stat{text-align:center}.stat .num{font-size:32px;font-weight:800;color:var(--sov)}.stat .label{font-size:11px;letter-spacing:0.15em;text-transform:uppercase;color:var(--mut);margin-top:4px}
+h2{margin:48px 0 24px;padding-bottom:12px;border-bottom:1px solid var(--line);font-size:28px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:20px;transition:all .2s;position:relative;overflow:hidden}
+.card::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:var(--accent,#6dd5ff)}
+.card:hover{transform:translateY(-3px);border-color:var(--accent);box-shadow:0 8px 24px rgba(0,0,0,0.3)}
+.card h3{font-size:17px;font-weight:700;margin-bottom:8px}
+.card p{font-size:13px;color:var(--mut);line-height:1.5}
+.tag{display:inline-block;background:rgba(109,213,255,0.1);border:1px solid rgba(109,213,255,0.3);color:var(--sov);padding:2px 8px;border-radius:4px;font-size:10px;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:8px}
+.redline{margin:48px 0;padding:24px;background:rgba(248,113,113,0.08);border:1px solid rgba(248,113,113,0.3);border-radius:12px}
+.redline h3{color:var(--bad);margin-bottom:12px;font-size:18px}
+.redline li{color:var(--fg);margin:8px 0 8px 20px;font-size:14px}
+.engagement{margin:48px 0;padding:24px;background:var(--panel);border:1px solid var(--line);border-radius:12px}
+.engagement h3{color:var(--sov);margin-bottom:12px;font-size:18px}
+.step{display:flex;align-items:flex-start;gap:12px;margin:12px 0;padding:12px;background:rgba(109,213,255,0.05);border-radius:8px}
+.step .num{width:32px;height:32px;border-radius:50%;background:var(--sov);color:var(--bg);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px;flex-shrink:0}
+footer{margin-top:64px;text-align:center;font-size:12px;color:var(--mut);padding-top:32px;border-top:1px solid var(--line)}
+footer a{color:var(--sov);text-decoration:none}
+</style>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Article","headline":"DEFONEOS — MOD Royal Marines Commando Force AI Deep-Dive Pack","url":"https://csoai.org/defoneos-mod-royal-marines-commando-force-ai-deep-dive-pack.html","publisher":{"@type":"Organization","name":"CSOAI Ltd","url":"https://csoai.org"}}
+</script>
+<link href="https://csoai.org/defoneos-mod-royal-marines-commando-force-ai-deep-dive-pack.html" rel="canonical"/>
+<meta content="DEFONEOS — MOD Royal Marines Commando Force AI Deep-Dive Pack" property="og:title"/>
+<meta content="Sovereign AI governance of UK MOD Royal Marines Commando Force: 3 Commando Brigade, littoral strike, Future Commando Force, Arctic warfare, amphibious operations. 12 entry points × 8 transformation priorities × 6 MCPs. UK-sovereign, audit-grade, AUKUS-compatible." property="og:description"/>
+<link href="/favicon.svg" rel="icon" type="image/svg+xml"/>
+<!-- AI-SEO/AEO/GEO head block — DO NOT remove. AI crawlers (GPTBot, ClaudeBot, PerplexityBot) don't run JS; everything they need must be in raw HTML. -->
+<link href="https://csoai.org/defoneos-mod-royal-marines-commando-force-ai-deep-dive-pack.html.llm.json" rel="alternate" title="LLM representation of this page" type="application/llm+json"/>
+<meta content="/llms.txt" name="llms-txt"/>
+<meta content="human-authored, machine-verifiable, Ed25519-signed" name="ai-content-declaration"/>
+<meta content="CSOAI Ltd (2026). DEFONEOS — MOD Royal Marines Commando Force AI Deep-Dive Pack. https://csoai.org/defoneos-mod-royal-marines-commando-force-ai-deep-dive-pack.html" name="citation-policy"/>
+<meta content="2026-08-03T11:19:50+00:00" name="revised"/>
+<meta content="2026-08-03T11:19:50+00:00" property="article:modified_time"/>
+</head>
+<body>
+<div class="article50-banner" style="background:linear-gradient(90deg,#3a0f1a,#7a1f33,#3a0f1a);border-bottom:1px solid #ff5470;padding:10px 16px;text-align:center;font-size:13px;color:#ffd5dd;font-weight:500">EU AI Act Article 50 live 2 Aug 2026 — C2PA passport ready | <a href="/tools/article50-passport.html" style="color:#fff;text-decoration:underline;font-weight:700">Get yours →</a></div>
+<div class="wrap">
+<nav><a href="/">Home</a> <a href="/master.html">Master</a> <a href="/govbench.html">GovBench</a> <a href="/defoneos.html">Index</a> <a href="/sitemap.xml">Sitemap</a></nav>
+<header>
+<div class="pill">DEFONEOS × MOD × ROYAL MARINES</div>
+<h1>MOD Royal Marines Commando Force AI Deep-Dive Pack</h1>
+<p class="sub">Sovereign AI governance of UK MOD Royal Marines Commando Force: 3 Commando Brigade, littoral strike operations, Future Commando Force transformation, Arctic warfare readiness, amphibious operations. 12 entry points × 8 transformation priorities × 6 MCPs. UK-sovereign, audit-grade, AUKUS-compatible.</p>
+<div class="stats">
+<div class="stat"><div class="num">12</div><div class="label">Entry Points</div></div>
+<div class="stat"><div class="num">8</div><div class="label">Transformation Priorities</div></div>
+<div class="stat"><div class="num">6</div><div class="label">MCP Servers</div></div>
+<div class="stat"><div class="num">6</div><div class="label">Red Lines</div></div>
+</div>
+</header>
+<h2>📋 12 Entry Points</h2>
+<div class="grid">
+<div class="card"><span class="tag">Amphibious Ops</span><h3>Amphibious Operations AI</h3><p>Ship-to-shore movement planning. Beach gradient and surf analysis. Landing craft scheduling and routing. Hydrographic intelligence fusion. Beachhead logistics sequencing. Force reconnaissance data integration. Tidal window optimisation.</p></div>
+<div class="card"><span class="tag">Arctic Warfare</span><h3>Arctic Warfare Readiness AI</h3><p>Cold-weather equipment performance prediction. Ice thickness and terrain modelling. Hypothermia risk monitoring. Arctic supply chain logistics. Northern flank deployment planning. Extreme weather forecasting. Norway operational integration.</p></div>
+<div class="card"><span class="tag">Littoral Strike</span><h3>Littoral Strike Group AI</h3><p>Future Commando Force littoral strike mission planning. Maritime interdiction coordination. Stand-in force deployment. Expeditionary advanced base operations. Maritime domain awareness. Anti-ship missile targeting. Littoral battlespace sensing.</p></div>
+<div class="card"><span class="tag">Commando Logistics</span><h3>Commando Logistics AI</h3><p>3 Commando Brigade supply chain optimisation. Forward operating base sustainment. Ammunition and fuel demand forecasting. Medical evacuation planning. Equipment pre-positioning. Multi-modal transport coordination. Shore logistics.</p></div>
+<div class="card"><span class="tag">Personnel Selection</span><h3>Commando Selection AI</h3><p>Recruit screening and aptitude analysis. Endurance course performance prediction. Injury risk modelling during selection. Specialist role matching (SBS, mountain leaders). Retention risk identification. Career pathway optimisation.</p></div>
+<div class="card"><span class="tag">Training Simulation</span><h3>Commando Training Simulation AI</h3><p>VR amphibious assault simulation. Arctic warfare scenario generation. Live-virtual-constructive training integration. After-action review analytics. Performance tracking. Adversary behaviour modelling. Urban combat simulation.</p></div>
+<div class="card"><span class="tag">Equipment Modernisation</span><h3>Commando Equipment AI</h3><p>Future Commando Force kit programme analytics. Lightweight equipment performance modelling. Autonomous systems integration. Body armour optimisation. Communications upgrade path. Weapons system selection. Vehicle fleet planning.</p></div>
+<div class="card"><span class="tag">C4ISR Integration</span><h3>Commando C4ISR AI</h3><p>Command and control data fusion for 3 Commando Brigade. Intelligence feed processing. Surveillance and reconnaissance tasking. ISR product generation for expeditionary ops. Secure communications management. Blue force tracking.</p></div>
+<div class="card"><span class="tag">Partner Interop</span><h3>Partner Interoperability AI</h3><p>NATO Allied Maritime Command integration. US Marine Corps interoperability. Joint Expeditionary Force coordination. Five Eyes intelligence sharing. Sovereign data filtering. Combined amphibious exercise planning.</p></div>
+<div class="card"><span class="tag">Cyber Resilience</span><h3>Commando Cyber AI</h3><p>Expeditionary network defence. Tactical communications encryption. Cyber threat intelligence for commando ops. Supply chain cyber risk assessment. Secure radio and satellite link protection. Insider threat detection.</p></div>
+<div class="card"><span class="tag">Data Governance</span><h3>Commando Data Sovereignty AI</h3><p>Classified operational data handling. UK-sovereign data storage enforcement. Alliance data sharing governance. Personnel data protection. Evidence-grade data chain. Audit trail for all AI recommendations. Parliamentary oversight.</p></div>
+<div class="card"><span class="tag">Parliamentary</span><h3>Royal Marines Parliamentary AI</h3><p>3 Commando Brigade readiness reporting. Future Commando Force programme transparency. Equipment procurement tracking. Budget allocation evidence. Capability gap identification. International benchmarking. Training pipeline reporting.</p></div>
+</div>
+<h2>⚡ 8 Transformation Priorities</h2>
+<div class="grid">
+<div class="card"><h3>1. Future Commando Force Transition</h3><p>AI-enabled transition to Future Commando Force structure. Littoral strike group optimisation. Stand-in force readiness. Expeditionary advanced base planning. Autonomous systems integration. Digital backbone for dispersed operations.</p></div>
+<div class="card"><h3>2. Arctic Warfare Excellence</h3><p>Cold-weather operational readiness year-round. AI-driven Arctic logistics. Ice and terrain intelligence fusion. Norway and High North deployment acceleration. Equipment performance prediction. NATO northern flank integration.</p></div>
+<div class="card"><h3>3. Amphibious Operations Modernisation</h3><p>Ship-to-shore movement AI for next-gen platforms. Beach gradient real-time analysis. Landing craft autonomous routing. Hydrographic intelligence automation. Beachhead logistics sequencing. Force reconnaissance drone integration.</p></div>
+<div class="card"><h3>4. Commando Logistics AI</h3><p>3 Commando Brigade supply chain visibility. Forward base sustainment prediction. Fuel and ammunition demand forecasting. Medical evacuation AI planning. Equipment pre-positioning for rapid deployment. Transport coordination.</p></div>
+<div class="card"><h3>5. Personnel Selection and Retention</h3><p>AI-driven recruit screening. Commando selection injury prediction. Specialist role matching. Retention risk identification. Career pathway guidance. Diversity and inclusion analytics.</p></div>
+<div class="card"><h3>6. C4ISR and Battlespace Awareness</h3><p>Commando C4ISR data fusion backbone. Real-time battlespace awareness for dispersed ops. ISR product automation. Secure tactical communications. Blue force tracking. Decision support for commanders.</p></div>
+<div class="card"><h3>7. Partner Interoperability Without Dependency</h3><p>Full NATO and USMC interoperability. Sovereign data filtering before alliance sharing. UK-eyes-only compartment preserved. Combined exercise planning. Partner capability benchmarking. Compliance monitoring.</p></div>
+<div class="card"><h3>8. Cyber Resilience for Expeditionary Ops</h3><p>Tactical network defence for deployed units. Cyber threat intelligence for expeditionary ops. Supply chain cyber risk. Secure radio protection. Incident response under 15 minutes. Insider threat detection.</p></div>
+</div>
+<h2>🔧 6 MCP Servers</h2>
+<div class="grid">
+<div class="card"><span class="tag">Amphibious Ops</span><h3>amphibious-ops-mcp</h3><p>Ship-to-shore planning. Beach gradient analysis. Landing craft routing. Hydrographic intel. Beachhead logistics. Force recon. Tidal windows.</p></div>
+<div class="card"><span class="tag">Arctic Warfare</span><h3>arctic-warfare-mcp</h3><p>Cold-weather prediction. Ice modelling. Hypothermia risk. Arctic logistics. Northern flank. Extreme weather. Norway integration.</p></div>
+<div class="card"><span class="tag">Littoral Strike</span><h3>littoral-strike-mcp</h3><p>Mission planning. Maritime interdiction. Stand-in force. Expeditionary bases. Maritime awareness. Anti-ship targeting. Battlespace sensing.</p></div>
+<div class="card"><span class="tag">Commando Logistics</span><h3>commando-logistics-mcp</h3><p>Supply chain. Forward sustainment. Demand forecasting. Medevac planning. Pre-positioning. Transport coordination. Shore logistics.</p></div>
+<div class="card"><span class="tag">C4ISR</span><h3>commando-c4isr-mcp</h3><p>Command fusion. Intel feeds. Surveillance tasking. ISR products. Secure comms. Decision support. Blue force tracking.</p></div>
+<div class="card"><span class="tag">Cyber Defence</span><h3>commando-cyber-mcp</h3><p>Network defence. Tactical encryption. Threat intel. Supply chain risk. Link protection. Incident response. Insider threat.</p></div>
+</div>
+<div class="redline">
+<h3>🚫 Red Lines (Never Crossed)</h3>
+<ul>
+<li>❌ No operational data processed on non-UK-sovereign infrastructure — commando operations sovereignty is non-negotiable</li>
+<li>❌ No engagement decision made without human-in-the-loop — AI recommends, commando commanders decide</li>
+<li>❌ No classified intelligence shared with allies without sovereign data filtering — UK-eyes-only compartment preserved</li>
+<li>❌ No personnel selection decision made without human override — AI supports, humans select and reject</li>
+<li>❌ No expeditionary network connected without cyber resilience verification — tactical communications security mandatory</li>
+<li>❌ No amphibious operation launched without multi-source deconfliction — zero fratricide standard for ship-to-shore movement</li>
+</ul>
+</div>
+<div class="engagement">
+<h3>🤝 5-Step Engagement Model</h3>
+<div class="step"><div class="num">1</div><div><strong>Discovery:</strong> Map 3 Commando Brigade operational architecture. Assess amphibious and Arctic warfare capability gaps. Benchmark logistics and sustainment. Identify C4ISR integration windows.</div></div>
+<div class="step"><div class="num">2</div><div><strong>Governance Design:</strong> Deploy DEFONEOS MCP servers against commando use cases. Configure littoral strike and Arctic warfare automation. Establish Royal Marines governance framework.</div></div>
+<div class="step"><div class="num">3</div><div><strong>Pilot:</strong> Run 90-day pilot across 40 Commando and 45 Commando. Measure amphibious ops and Arctic readiness improvement. Collect marine and officer feedback.</div></div>
+<div class="step"><div class="num">4</div><div><strong>Scale:</strong> Roll out across all 3 Commando Brigade units. Integrate with NATO Allied Maritime Command. Deploy Future Commando Force capabilities nationally.</div></div>
+<div class="step"><div class="num">5</div><div><strong>Assure:</strong> Continuous audit-grade commando governance reporting. Arctic and amphibious readiness transparency. Parliamentary capability evidence. Cyber resilience metrics for expeditionary forces.</div></div>
+</div>
+<div class="sovereign-cta-strip"><a href="/defoneos-owem-rfq">DEFONEOS OWEM RFQ</a> | <a href="/defoneos-article-50">Article 50 Passport</a></div>
+<footer>
+<p>DEFONEOS — Sovereign Public Services OS · <a href="https://csoai.org">csoai.org</a> · UK-sovereign. Audit-grade. AUKUS-compatible.</p>
+<p style="margin-top:8px">© 2026 CSOAI Ltd (UK 16939677) · <a href="https://csoai.org/sitemap.xml">Sitemap</a> · <a href="https://csoai.org/defoneos.html">Index</a></p>
+— SIGIL-chain verified.</footer>
+</div>
+<footer><a href="/master.html">SOV33_OWEM_HUB</a></footer>
+</body>
+</html>

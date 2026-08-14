@@ -143,6 +143,66 @@ def verify_text(text: str) -> dict:
     }
 
 
+# ── THE CORRECTNESS GATE — three states, never two ─────────────────────────────
+# The keystone bug: verify_text on a ZERO-citation answer returns fabricated=0,
+# misattributed=0 — which an attestor reads as CLEAN. So a wrong legal answer with
+# no citation could ship with a valid marking and a signed receipt. A component must
+# be structurally unable to report success on a path it did not complete. verdict()
+# returns exactly one of three states, and `verified` is True on ONLY one of them:
+#
+#   grounded        — has ≥1 checkable citation, none fabricated, none misattributed
+#   ungrounded      — a fabricated/misattributed cite, OR a legal claim with nothing
+#                     verifiable behind it (the zero-citation hole), OR cites only
+#                     instruments we cannot check → "unknown", never "success"
+#   not-applicable  — the question has no statutory answer; there is nothing to ground
+_LEGAL_MODAL = re.compile(
+    r"\b(prohibit|ban(?:s|ned|ning)?|require|mandat|oblig|must|shall|unlawful|illegal"
+    r"|high[- ]risk|permitted|penalt|fine[sd]?|comply|complian)\w*", re.I)
+_INSTRUMENTS = ("eu ai act", "ai act", "gdpr", "solvency", "data protection regulation")
+
+
+def _statutory_question(q: str) -> bool:
+    """Does the question have a checkable statutory answer? Conservative: name an
+    instrument, or ask which article/annex/provision governs a regulated thing."""
+    ql = (q or "").lower()
+    if any(i in ql for i in _INSTRUMENTS):
+        return True
+    return bool(re.search(
+        r"\b(which|what|does|is|are)\b[^?]{0,70}"
+        r"\b(article|annex|regulation|provision|prohibit|require|high[- ]risk|penalt)\w*",
+        ql))
+
+
+def _makes_legal_claim(text: str) -> bool:
+    tl = (text or "").lower()
+    return bool(_LEGAL_MODAL.search(tl)) and any(i in tl for i in _INSTRUMENTS)
+
+
+def verdict(text: str, question: str = "") -> dict:
+    """The gate. Reuses verify_text's registry check, then collapses to a 3-state
+    verdict whose `verified` flag cannot be True unless the answer is grounded."""
+    v = verify_text(text)
+    q_stat = _statutory_question(question)
+    claim = _makes_legal_claim(text) or (q_stat and bool(_LEGAL_MODAL.search(text or "")))
+
+    if v["fabricated"] or v["misattributed"]:
+        state, why = "ungrounded", "fabricated or misattributed citation"
+    elif v["citations"] == 0:
+        if q_stat or claim:
+            state, why = "ungrounded", "legal claim with no verifiable citation"
+        else:
+            state, why = "not-applicable", "no statutory answer to ground"
+    elif v["checkable"] == 0:
+        state, why = "ungrounded", "citations present but none checkable against ground truth"
+    else:
+        state, why = "grounded", "every checkable citation matched its subject"
+
+    return {"state": state, "verified": state == "grounded", "why": why,
+            "citations": v["citations"], "fabricated": v["fabricated"],
+            "misattributed": v["misattributed"], "checkable": v["checkable"],
+            "accuracy": v["accuracy"], "findings": v["findings"]}
+
+
 PROBES = [
     "Which article of the EU AI Act prohibits social scoring, and what else does it cover?",
     "What does Article 50 of the EU AI Act require?",
@@ -195,9 +255,13 @@ def score_model(model: str) -> dict:
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
     ap.add_argument("--text")
+    ap.add_argument("--question", default="", help="question context for --verdict")
+    ap.add_argument("--verdict", action="store_true", help="3-state gate (grounded/ungrounded/not-applicable)")
     ap.add_argument("--score-model")
     a = ap.parse_args()
-    if a.text:
+    if a.text and a.verdict:
+        print(json.dumps(verdict(a.text, a.question), indent=2))
+    elif a.text:
         print(json.dumps(verify_text(a.text), indent=2))
     elif a.score_model:
         score_model(a.score_model)

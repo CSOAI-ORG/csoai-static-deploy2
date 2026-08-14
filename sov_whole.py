@@ -131,7 +131,7 @@ def ask(question: str, mark: bool = False) -> dict:
     """
     from care_gate_v2 import tier1_hard_stop
     from owem_cluster import classify_dimension, select_expert, ask as call_model
-    from citation_verify import verify_text
+    from citation_verify import verdict
     from master_hives import HIVES
 
     t0 = time.time()
@@ -160,10 +160,12 @@ def ask(question: str, mark: bool = False) -> dict:
     trace["layers"]["kb"] = {"ran": True, "hit": bool(hit)}
     if hit:
         trace["layers"]["model"] = {"ran": False, "why": "KB served the answer"}
-        v = verify_text(hit)
-        trace["layers"]["verify"] = {"ran": True, "fabricated": v["fabricated"],
-                                     "misattributed": v["misattributed"]}
-        out = {"answer": hit, "blocked": False, "source": "kb", "trace": trace,
+        vd = verdict(hit, question)
+        trace["layers"]["verify"] = {"ran": True, "state": vd["state"],
+                                     "verified": vd["verified"], "why": vd["why"],
+                                     "fabricated": vd["fabricated"], "misattributed": vd["misattributed"]}
+        out = {"answer": hit, "blocked": False, "source": "kb", "verify": vd,
+               "verified": vd["verified"], "trace": trace,
                "elapsed_ms": int((time.time() - t0) * 1000)}
         return _attest_and_mark(question, out, mark)
 
@@ -179,18 +181,29 @@ def ask(question: str, mark: bool = False) -> dict:
         return {"answer": None, "unreachable": True, "trace": trace,
                 "elapsed_ms": int((time.time() - t0) * 1000)}
 
-    # ── VERIFY — recorded, never used to silently alter the answer ─────────────
-    v = verify_text(answer)
-    trace["layers"]["verify"] = {"ran": True, "fabricated": v["fabricated"],
-                                 "misattributed": v["misattributed"]}
+    # ── VERIFY — the gate: 3-state, never used to silently alter the answer ─────
+    vd = verdict(answer, question)
+    trace["layers"]["verify"] = {"ran": True, "state": vd["state"],
+                                 "verified": vd["verified"], "why": vd["why"],
+                                 "fabricated": vd["fabricated"], "misattributed": vd["misattributed"]}
     out = {"answer": answer, "blocked": False, "source": "model", "model": model,
-           "trace": trace, "elapsed_ms": int((time.time() - t0) * 1000)}
+           "verify": vd, "verified": vd["verified"], "trace": trace,
+           "elapsed_ms": int((time.time() - t0) * 1000)}
     return _attest_and_mark(question, out, mark)
 
 
 def _attest_and_mark(question: str, out: dict, mark: bool) -> dict:
-    """ATTEST always; MARK on request. Failures here are recorded, never swallowed."""
+    """ATTEST always; MARK on request. Failures here are recorded, never swallowed.
+
+    The correctness gate is enforced HERE: attestation and marking carry the verify
+    STATE, so an ungrounded answer is attested-but-not-verified. Nothing downstream
+    can read a clean/verified status off a wrong answer — attest ≠ verify, by design.
+    """
     import hashlib
+    vs = out.get("verify") or {"state": "not-applicable", "verified": False,
+                               "why": "no answer path (blocked or unreachable)"}
+    out["verified"] = bool(vs.get("verified"))
+    out["attested_not_verified"] = (not out["verified"]) and not out.get("blocked")
     try:
         from j_space import emit
         ev = emit("sov_whole.answer",
@@ -198,8 +211,11 @@ def _attest_and_mark(question: str, out: dict, mark: bool) -> dict:
                   reason=out["trace"]["layers"]["gate"].get("label") or "",
                   question_sha256=hashlib.sha256(question.encode()).hexdigest(),
                   answer_sha256=hashlib.sha256((out.get("answer") or "").encode()).hexdigest(),
+                  verified=out["verified"], verify_state=vs.get("state"),
                   dimension=out["trace"]["layers"].get("classify", {}).get("dimension"))
-        out["trace"]["layers"]["attest"] = {"ran": True, "event": bool(ev)}
+        out["trace"]["layers"]["attest"] = {"ran": True, "event": bool(ev),
+                                            "verified": out["verified"],
+                                            "note": "attested; 'verified' is the gate verdict, not the signature"}
     except Exception as e:
         out["trace"]["layers"]["attest"] = {"ran": False, "error": str(e)[:120]}
 
@@ -216,6 +232,10 @@ def _attest_and_mark(question: str, out: dict, mark: bool) -> dict:
         out["c2pa_manifest"] = manifest_json(prov)
         out["trace"]["layers"]["mark"] = {
             "ran": True, "digitalSourceType": "trainedAlgorithmicMedia",
+            "verified": out["verified"], "verify_state": vs.get("state"),
+            "provenance_only": True,
+            "note": ("marking asserts PROVENANCE (AI-generated), NOT correctness — "
+                     f"verify_state={vs.get('state')}; a mark on an ungrounded answer is not a clean bill"),
             "trust": "private root CA — NOT on the C2PA trust list, signer reads as unknown"}
     except Exception as e:
         out["trace"]["layers"]["mark"] = {"ran": False, "error": str(e)[:120]}

@@ -1,0 +1,25 @@
+{
+ "@context": "https://csoai.org/llm-context.json",
+ "type": "LLMPageSummary",
+ "url": "https://csoai.org/seal.html",
+ "title": "SEAL — measurement seal overview | CSOAI",
+ "description": "SEAL: CSOAI",
+ "headings": [
+  "SEAL",
+  "What SEAL means",
+  "What SEAL does not mean",
+  "How SEAL differs from DEFONEOS-SEAL",
+  "Verify a SEAL",
+  "Related"
+ ],
+ "text": "SEAL — measurement seal overview | CSOAI Home DEFONEOS-SEAL Audit Products SEAL The SEAL is the signature on every published CSOAI figure. It is an Ed25519 signature over a canonical representation of the measurement, anchored in a hash chain the public can recompute. What SEAL means Signed — Ed25519, with the public key published in /.well-known/agent.json . Hash-chained — every SEAL references the prior SEAL. Re-writing history breaks the chain. Recomputable — the harness is public; given the inputs, you can rerun the measurement. Council-ratified (for DEFONEOS-SEAL) — issued after a designed 33-agent council review. What SEAL does not mean Not a certification. We are a measurement body. Not a compliance statement. Only a regulator can say \"compliant.\" Not a guarantee of future behaviour. The SEAL is a snapshot. Not a substitute for legal counsel. How SEAL differs from DEFONEOS-SEAL SEAL — the lightweight signature on a single measurement. Used on every published figure. DEFONEOS-SEAL — the heavier sovereign governance credential. Requires a 23/33 threshold review by the designed 33-agent council. Used for sovereign-tier certifications. Verify a SEAL Every figure on csoai.org has a companion record with the unsigned payload, the signature, and the chain reference. The verifier is at /audit.html . Related DEFONEOS-SEAL — sovereign AI governance seal (heavier). Audit — SIGIL receipt verifier. CSOAI Ltd · UK company 16939677 · Every published figure traces to a signed, verifiable record.",
+ "text_truncated": false,
+ "register": {
+  "role": "measurement_and_attestation_support",
+  "csoai_certifies_systems": false,
+  "csoai_is_a_notified_body": false,
+  "csoai_has_enforcement_powers": false,
+  "note": "CSOAI measures and publishes evidence. It issues no conformity marks and holds no accreditation. Nothing here is certification or legal advice."
+ },
+ "generated_by": "make_llm_json.py"
+}

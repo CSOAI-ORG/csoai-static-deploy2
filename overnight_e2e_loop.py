@@ -31,7 +31,7 @@ KEY_ROUTES = ["arena", "arena-hub", "globe3d", "sov-space-vwm",
               "sov-local-viewer", "defoneos-index", "defoneos-bsi-british-standards-institution-ai-deep-dive-pack",
               "gspc-gov", "gspc-prv", "gspc-agi", "gspc-asi", "gspc-mcp",
               "gspc-oss", "gspc-care", "gspc-art5", "gspc-mach", "gspc-swarm",
-              "gspc-xr", "gspc-det", "gspc-jail"]
+              "gspc-xr", "gspc-det", "gspc-jail", "gspc-affect"]
 # .llm.json companions must exist for the AI-crawler layer
 LLM_COMPANIONS = ["arena-hub", "globe3d", "sov-space-vwm", "sov-globe-portal",
                   "sov-fluid-viewer"]

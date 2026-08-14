@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<title>DEFONEOS — Companies House AI Deep-Dive Pack</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#0a0a0a;color:#e0e0e0;font-family:system-ui,sans-serif;line-height:1.6}
+a{color:#00ff88;text-decoration:none}a:hover{text-decoration:underline}
+.hero{background:linear-gradient(135deg,#0a0a0a,#1a1a2e,#0d1117);padding:40px 20px;text-align:center;border-bottom:2px solid #00ff88}
+.hero h1{font-size:2em;color:#00ff88;margin-bottom:6px}
+.sub{color:#888;font-size:.95em;margin-bottom:10px}
+.bg{display:inline-block;background:#1a1a2e;border:1px solid #00ff88;padding:4px 12px;border-radius:20px;color:#00ff88;font-size:.8em;margin:3px}
+nav{background:#111;padding:10px 20px;border-bottom:1px solid #222;position:sticky;top:0;z-index:100;overflow-x:auto;white-space:nowrap}
+nav a{display:inline-block;padding:4px 10px;margin:2px;background:#1a1a2e;border:1px solid #333;border-radius:6px;font-size:.75em;color:#00ff88;transition:all .2s}
+nav a:hover{background:#00ff88;color:#0a0a0a;text-decoration:none}
+.c{max-width:1200px;margin:0 auto;padding:20px}
+.s{margin:28px 0;background:#1a1a2e;border:1px solid #222;border-radius:12px;overflow:hidden}
+.sh{background:linear-gradient(90deg,#1a1a2e,#0d1117);padding:14px 18px;border-bottom:1px solid #333}
+.sh h2{color:#00ff88;font-size:1.2em;margin-bottom:2px}
+.en{color:#666;font-size:.78em}
+.sb{padding:18px}
+.g{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px;margin-bottom:14px}
+.p{background:#0d1117;border:1px solid #222;border-radius:8px;padding:12px;transition:border-color .2s}
+.p:hover{border-color:#00ff88}
+.p h3{color:#00ff88;font-size:.84em;margin-bottom:5px}
+.p p{color:#aaa;font-size:.78em;line-height:1.5}
+.mt{background:#111;border:1px solid #222;border-radius:8px;padding:12px;margin-top:10px}
+.mt h4{color:#00ff88;font-size:.82em;margin-bottom:6px}
+.ml{display:flex;flex-wrap:wrap;gap:5px}
+.t{background:#1a1a2e;border:1px solid #00ff88;padding:2px 9px;border-radius:16px;font-size:.72em;color:#00ff88}
+footer{background:#111;border-top:2px solid #00ff88;padding:20px;text-align:center;margin-top:28px}
+.br{font-size:1.1em;color:#00ff88;font-weight:700;margin-bottom:5px}
+footer p{color:#666;font-size:.75em;line-height:1.5}
+.cr{margin-top:10px;padding-top:10px;border-top:1px solid #222;color:#555;font-size:.72em}
+@media(max-width:768px){.hero h1{font-size:1.4em}.g{grid-template-columns:1fr}}
+</style>
+<!-- AI-SEO/AEO/GEO head block — DO NOT remove. AI crawlers (GPTBot, ClaudeBot, PerplexityBot) don't run JS; everything they need must be in raw HTML. -->
+<link href="https://www.csoai.org/defoneos-companies-house-ai-deep-dive-pack.html.llm.json" rel="alternate" title="LLM representation of this page" type="application/llm+json"/>
+<meta content="/llms.txt" name="llms-txt"/>
+<meta content="human-authored, machine-verifiable, Ed25519-signed" name="ai-content-declaration"/>
+<meta content="CSOAI Ltd (2026). DEFONEOS — Companies House AI Deep-Dive Pack. https://www.csoai.org/defoneos-companies-house-ai-deep-dive-pack.html" name="citation-policy"/>
+<meta content="2026-08-03T11:19:50+00:00" name="revised"/>
+<meta content="2026-08-03T11:19:50+00:00" property="article:modified_time"/>
+<meta content="DEFONEOS — Companies House AI Deep-Dive Pack. A sovereign, audit-grade CSOAI surface: measurement, not certification — every figure traces to a signed, verifiable record." name="description"/>
+<link href="https://www.csoai.org/defoneos-companies-house-ai-deep-dive-pack.html" rel="canonical"/>
+<meta content="DEFONEOS — Companies House AI Deep-Dive Pack" property="og:title"/>
+<meta content="DEFONEOS — Companies House AI Deep-Dive Pack. A sovereign, audit-grade CSOAI surface: measurement, not certification — every figure traces to a signed, verifiable record." property="og:description"/>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"DEFONEOS \u2014 Companies House AI Deep-Dive Pack","url":"https://www.csoai.org/defoneos-companies-house-ai-deep-dive-pack.html","publisher":{"@type":"Organization","name":"CSOAI Ltd","url":"https://csoai.org"}}</script>
+</head>
+<body>
+<div class="hero">
+<h1>🏢 Companies House AI Deep-Dive Pack</h1>
+<p class="sub">DEFONEOS — UK Sovereign Public Services OS</p>
+<div><span class="bg">12 Entry Points</span><span class="bg">8 AI Priorities</span><span class="bg">6 MCP Tools</span></div>
+<p>96 AI capability mappings × 6 MCP integrations — Companies House</p>
+</div>
+<nav>
+<a href="#ep1">Incorporation</a><a href="#ep2">Filing</a><a href="#ep3">Identity</a>
+<a href="#ep4">Transparency</a><a href="#ep5">Enforcement</a><a href="#ep6">Data</a>
+<a href="#ep7">Dissolution</a><a href="#ep8">Overseas</a><a href="#ep9">Digital</a>
+<a href="#ep10">Fraud</a><a href="#ep11">Governance</a><a href="#ep12">Parliament</a>
+</nav>
+<div class="c">
+<div class="s" id="ep1"><div class="sh"><span class="en">Entry Point 01</span><h2>Company Incorporation &amp; Registration</h2></div><div class="sb"><div class="g">
+<div class="p"><h3>Compliance Automation</h3><p>Automated incorporation validation checking Companies House registration requirements, constitutional document compliance, and director/secretary appointment eligibility under the Companies Act 2006.</p></div>
+<div class="p"><h3>Risk Detection &amp; Early Warning</h3><p>Detection of incorporation application deficiencies, prohibited name conflicts, and registered address concerns via application pattern analysis.</p></div>
+<div class="p"><h3>Natural Language Policy Analysis</h3><p>NLP analysis of articles of association, memorandum of incorporation, and corporate governance documents against Companies Act 2006 requirements.</p></div>
+<div class="p"><h3>Predictive Analytics</h3><p>Incorporation risk scoring from applicant history, corporate structure complexity, beneficial ownership opacity, and sector risk profiles.</p></div>
+<div class="p"><h3>Evidence Synthesis</h3><p>Incorporation evidence, constitutional documents, and director declarations into registration decision dossiers for Registrar assessment.</p></div>
+<div class="p"><h3>Document Intelligence</h3><p>Extraction from incorporation applications, articles of association, and director appointment forms for Companies House processing.</p></div>
+<div class="p"><h3>Stakeholder Reporting</h3><p>Incorporation dashboards showing application volumes, processing times, sector-wise registrations, and geographic distribution.</p></div>
+<div class="p"><h3>Real-time Monitoring</h3><p>Incorporation application pipeline tracking, registration status monitoring, and company number allocation surveillance.</p></div>
+</div><div class="mt"><h4>MCP Tools</h4><div class="ml"><span class="t">mcp-govuk-search</span><span class="t">mcp-uk-legislation</span><span class="t">mcp-uk-regulator-intel</span><span class="t">mcp-hansard-search</span><span class="t">mcp-dsit-ai-safety</span><span class="t">mcp-cabinet-office-resilience</span></div></div></div></div>
+<div class="s" id="ep2"><div class="sh"><span class="en">Entry Point 02</span><h2>Annual Filing &amp; Confirmation Statements</h2></div><div class="sb"><div class="g">
+<div class="p"><h3>Compliance Automation</h3><p>Filing compliance validation checking annual accounts submission deadlines, confirmation statement requirements, and audit exemption criteria under Companies Act 2006.</p></div>
+<div class="p"><h3>Risk Detection &amp; Early Warning</h3><p>Detection of late filing patterns, accounts quality issues, and confirmation statement non-compliance via filing deadline monitoring.</p></div>
+<div class="p"><h3>Natural Language Policy Analysis</h3><p>NLP parsing of filed accounts, auditor reports, and director statements against Companies Act accounting and disclosure requirements.</p></div>
+<div class="p"><h3>Predictive Analytics</h3><p>Filing non-compliance risk scoring from historical filing patterns, company age, director changes, and accounts preparation indicators.</p></div>
+<div class="p"><h3>Evidence Synthesis</h3><p>Filing compliance evidence, accounts data, and statutory return records into compliance enforcement dossiers for Companies House action.</p></div>
+<div class="p"><h3>Document Intelligence</h3><p>Extraction from filed accounts, confirmation statements, and annual returns for data quality assessment and register accuracy.</p></div>
+<div class="p"><h3>Stakeholder Reporting</h3><p>Filing compliance dashboards showing on-time filing rates, late filing penalties, accounts quality metrics, and sector compliance benchmarks.</p></div>
+<div class="p"><h3>Real-time Monitoring</h3><p>Filing deadline monitoring, accounts submission tracking, and confirmation statement compliance surveillance across registered companies.</p></div>
+</div><div class="mt"><h4>MCP Tools</h4><div class="ml"><span class="t">mcp-govuk-search</span><span class="t">mcp-uk-legislation</span><span class="t">mcp-uk-regulator-intel</span><span class="t">mcp-hansard-search</span><span class="t">mcp-dsit-ai-safety</span><span class="t">mcp-cabinet-office-resilience</span></div></div></div></div>
+<div class="s" id="ep3"><div class="sh"><span class="en">Entry Point 03</span><h2>Identity Verification &amp; Authentication</h2></div><div class="sb"><div class="g">
+<div class="p"><h3>Compliance Automation</h3><p>Identity verification compliance checking ECCTA 2023 mandatory IDV requirements for directors, persons with significant control, and authorised corporate service providers.</p></div>
+<div class="p"><h3>Risk Detection &amp; Early Warning</h3><p>Detection of identity verification failures, fraudulent identity submissions, and IDV bypass attempts via verification data analysis.</p></div>
+<div class="p"><h3>Natural Language Policy Analysis</h3><p>NLP analysis of IDV procedures, verification provider standards, and authentication protocols against ECCTA 2023 identity verification regulations.</p></div>
+<div class="p"><h3>Predictive Analytics</h3><p>IDV risk scoring from identity document quality, biometric match confidence, historical verification outcomes, and fraud indicator data.</p></div>
+<div class="p"><h3>Evidence Synthesis</h3><p>Identity verification evidence, document validation records, and biometric data into IDV compliance dossiers for Registrar oversight.</p></div>
+<div class="p"><h3>Document Intelligence</h3><p>Extraction from identity verification submissions, document authentication reports, and provider compliance certifications for IDV assessment.</p></div>
+<div class="p"><h3>Stakeholder Reporting</h3><p>IDV compliance dashboards showing verification completion rates, rejection reasons, provider performance, and fraud detection metrics.</p></div>
+<div class="p"><h3>Real-time Monitoring</h3><p>Identity verification pipeline monitoring, biometric authentication tracking, and IDV provider compliance surveillance.</p></div>
+</div><div class="mt"><h4>MCP Tools</h4><div class="ml"><span class="t">mcp-govuk-search</span><span class="t">mcp-uk-legislation</span><span class="t">mcp-uk-regulator-intel</span><span class="t">mcp-hansard-search</span><span class="t">mcp-dsit-ai-safety</span><span class="t">mcp-cabinet-office-resilience</span></div></div></div></div>
+<div class="s" id="ep4"><div class="sh"><span class="en">Entry Point 04</span><h2>Beneficial Ownership &amp; PSC Register</h2></div><div class="sb"><div class="g">
+<div class="p"><h3>Compliance Automation</h3><p>PSC compliance validation checking persons with significant control registration, beneficial ownership disclosure requirements, and PSC notice obligations under Companies Act 2006 Part 21A.</p></div>
+<div class="p"><h3>Risk Detection &amp; Early Warning</h3><p>Detection of PSC register gaps, beneficial ownership opacity, and undisclosed control structures via corporate structure analysis.</p></div>
+<div class="p"><h3>Natural Language Policy Analysis</h3><p>NLP parsing of PSC notices, beneficial ownership declarations, and corporate structure disclosures against PSC registration requirements.</p></div>
+<div class="p"><h3>Predictive Analytics</h3><p>Beneficial ownership opacity risk scoring from corporate structure complexity, cross-border ownership layers, and PSC disclosure completeness.</p></div>
+<div class="p"><h3>Evidence Synthesis</h3><p>PSC registration evidence, beneficial ownership data, and corporate structure analysis into transparency compliance dossiers.</p></div>
+<div class="p"><h3>Document Intelligence</h3><p>Extraction from PSC notices, beneficial ownership declarations, and corporate structure filings for Companies House register accuracy.</p></div>
+<div class="p"><h3>Stakeholder Reporting</h3><p>Beneficial ownership dashboards showing PSC registration rates, disclosure quality metrics, and transparency compliance benchmarks.</p></div>
+<div class="p"><h3>Real-time Monitoring</h3><p>PSC register monitoring, beneficial ownership change tracking, and corporate structure disclosure compliance surveillance.</p></div>
+</div><div class="mt"><h4>MCP Tools</h4><div class="ml"><span class="t">mcp-govuk-search</span><span class="t">mcp-uk-legislation</span><span class="t">mcp-uk-regulator-intel</span><span class="t">mcp-hansard-search</span><span class="t">mcp-dsit-ai-safety</span><span class="t">mcp-cabinet-office-resilience</span></div></div></div></div>
+<div class="s" id="ep5"><div class="sh"><span class="en">Entry Point 05</span><h2>Enforcement &amp; Prosecution</h2></div><div class="sb"><div class="g">
+<div class="p"><h3>Compliance Automation</h3><p>Enforcement compliance validation checking Companies House prosecution powers, civil penalty frameworks, and director disqualification referral criteria under ECCTA 2023.</p></div>
+<div class="p"><h3>Risk Detection &amp; Early Warning</h3><p>Detection of enforcement trigger conditions, repeat non-compliance patterns, and serious filing offence indicators via compliance monitoring.</p></div>
+<div class="p"><h3>Natural Language Policy Analysis</h3><p>NLP analysis of enforcement notices, penalty decisions, and prosecution referrals against Companies House enforcement policy framework.</p></div>
+<div class="p"><h3>Predictive Analytics</h3><p>Enforcement action likelihood scoring from non-compliance history, filing offence severity, cooperation indicators, and remediation capacity.</p></div>
+<div class="p"><h3>Evidence Synthesis</h3><p>Enforcement evidence, non-compliance records, and remediation compliance into prosecution decision dossiers for Registrar action.</p></div>
+<div class="p"><h3>Document Intelligence</h3><p>Extraction from enforcement notices, penalty assessments, and director disqualification referrals for Companies House legal team.</p></div>
+<div class="p"><h3>Stakeholder Reporting</h3><p>Enforcement dashboards showing action volumes, penalty amounts, prosecution rates, and industry non-compliance trends.</p></div>
+<div class="p"><h3>Real-time Monitoring</h3><p>Enforcement action tracking, penalty payment compliance, and director disqualification referral monitoring.</p></div>
+</div><div class="mt"><h4>MCP Tools</h4><div class="ml"><span class="t">mcp-govuk-search</span><span class="t">mcp-uk-legislation</span><span class="t">mcp-uk-regulator-intel</span><span class="t">mcp-hansard-search</span><span class="t">mcp-dsit-ai-safety</span><span class="t">mcp-cabinet-office-resilience</span></div></div></div></div>
+<div class="s" id="ep6"><div class="sh"><span class="en">Entry Point 06</span><h2>Company Data &amp; Open Registers</h2></div><div class="sb"><div class="g">
+<div class="p"><h3>Compliance Automation</h3><p>Data compliance validation checking Companies House register accuracy, data quality obligations, and public access provisions under Companies Act 2006 and ECCTA 2023.</p></div>
+<div class="p"><h3>Risk Detection &amp; Early Warning</h3><p>Detection of register data inaccuracies, duplicate entries, and data quality degradation via automated register consistency checks.</p></div>
+<div class="p"><h3>Natural Language Policy Analysis</h3><p>NLP analysis of register data, company filings, and data access policies against Companies House data quality and openness standards.</p></div>
+<div class="p"><h3>Predictive Analytics</h3><p>Data quality risk scoring from filing accuracy trends, register consistency metrics, and data correction request volumes.</p></div>
+<div class="p"><h3>Evidence Synthesis</h3><p>Register data quality evidence, data correction records, and accessibility compliance into register accuracy improvement dossiers.</p></div>
+<div class="p"><h3>Document Intelligence</h3><p>Extraction from register data, bulk data products, and API usage reports for data quality assessment and open data compliance.</p></div>
+<div class="p"><h3>Stakeholder Reporting</h3><p>Data quality dashboards showing register accuracy rates, data correction volumes, API usage statistics, and open data compliance metrics.</p></div>
+<div class="p"><h3>Real-time Monitoring</h3><p>Register data quality monitoring, data correction request tracking, and public data access performance surveillance.</p></div>
+</div><div class="mt"><h4>MCP Tools</h4><div class="ml"><span class="t">mcp-govuk-search</span><span class="t">mcp-uk-legislation</span><span class="t">mcp-uk-regulator-intel</span><span class="t">mcp-hansard-search</span><span class="t">mcp-dsit-ai-safety</span><span class="t">mcp-cabinet-office-resilience</span></div></div></div></div>
+<div class="s" id="ep7"><div class="sh"><span class="en">Entry Point 07</span><h2>Dissolution &amp; Striking Off</h2></div><div class="sb"><div class="g">
+<div class="p"><h3>Compliance Automation</h3><p>Dissolution compliance validation checking voluntary strike-off conditions, compulsory striking off triggers, and restoration to register procedures under Companies Act 2006.</p></div>
+<div class="p"><h3>Risk Detection &amp; Early Warning</h3><p>Detection of improper strike-off applications, creditor objection risks, and dissolution fraud indicators via application analysis.</p></div>
+<div class="p"><h3>Natural Language Policy Analysis</h3><p>NLP parsing of strike-off applications, objection notices, and restoration applications against Companies House dissolution criteria.</p></div>
+<div class="p"><h3>Predictive Analytics</h3><p>Dissolution risk scoring from company dormancy indicators, filing non-compliance, asset disposition patterns, and creditor exposure data.</p></div>
+<div class="p"><h3>Evidence Synthesis</h3><p>Dissolution evidence, strike-off applications, and restoration records into company lifecycle compliance dossiers for Registrar review.</p></div>
+<div class="p"><h3>Document Intelligence</h3><p>Extraction from strike-off applications, objection notices, and restoration order documentation for Companies House processing.</p></div>
+<div class="p"><h3>Stakeholder Reporting</h3><p>Dissolution dashboards showing strike-off volumes, objection rates, restoration outcomes, and company lifecycle trend analysis.</p></div>
+<div class="p"><h3>Real-time Monitoring</h3><p>Strike-off Gazette publication monitoring, objection period tracking, and compulsory striking off pipeline surveillance.</p></div>
+</div><div class="mt"><h4>MCP Tools</h4><div class="ml"><span class="t">mcp-govuk-search</span><span class="t">mcp-uk-legislation</span><span class="t">mcp-uk-regulator-intel</span><span class="t">mcp-hansard-search</span><span class="t">mcp-dsit-ai-safety</span><span class="t">mcp-cabinet-office-resilience</span></div></div></div></div>
+<div class="s" id="ep8"><div class="sh"><span class="en">Entry Point 08</span><h2>Overseas Companies &amp; UK Establishments</h2></div><div class="sb"><div class="g">
+<div class="p"><h3>Compliance Automation</h3><p>Overseas company registration validation checking UK establishment requirements, BRSE filing obligations, and cross-border compliance duties under Companies Act 2006 Part 34.</p></div>
+<div class="p"><h3>Risk Detection &amp; Early Warning</h3><p>Detection of overseas company registration gaps, BRSE filing non-compliance, and UK establishment disclosure failures via cross-border monitoring.</p></div>
+<div class="p"><h3>Natural Language Policy Analysis</h3><p>NLP parsing of overseas company registration documents, constitutional filings, and UK establishment accounts against Part 34 requirements.</p></div>
+<div class="p"><h3>Predictive Analytics</h3><p>Overseas company compliance risk from jurisdiction risk scores, filing history, UK establishment activity levels, and beneficial ownership transparency.</p></div>
+<div class="p"><h3>Evidence Synthesis</h3><p>Overseas company registration evidence, BRSE filings, and UK establishment documentation into cross-border compliance dossiers.</p></div>
+<div class="p"><h3>Document Intelligence</h3><p>Extraction from overseas company registrations, UK establishment accounts, and jurisdiction equivalence determinations for Registrar assessment.</p></div>
+<div class="p"><h3>Stakeholder Reporting</h3><p>Overseas company dashboards showing registration volumes, jurisdiction distribution, BRSE compliance rates, and UK establishment metrics.</p></div>
+<div class="p"><h3>Real-time Monitoring</h3><p>Overseas company registration monitoring, BRSE filing deadline tracking, and UK establishment compliance surveillance.</p></div>
+</div><div class="mt"><h4>MCP Tools</h4><div class="ml"><span class="t">mcp-govuk-search</span><span class="t">mcp-uk-legislation</span><span class="t">mcp-uk-regulator-intel</span><span class="t">mcp-hansard-search</span><span class="t">mcp-dsit-ai-safety</span><span class="t">mcp-cabinet-office-resilience</span></div></div></div></div>
+<div class="s" id="ep9"><div class="sh"><span class="en">Entry Point 09</span><h2>Digital Transformation &amp; Registrar Powers</h2></div><div class="sb"><div class="g">
+<div class="p"><h3>Compliance Automation</h3><p>Digital compliance validation checking Companies House registrar powers, data matching authority, and proactive strike-off capability under ECCTA 2023.</p></div>
+<div class="p"><h3>Risk Detection &amp; Early Warning</h3><p>Detection of digital service failures, API reliability issues, and registrar power exercise risks via system performance monitoring.</p></div>
+<div class="p"><h3>Natural Language Policy Analysis</h3><p>NLP analysis of digital service specifications, registrar guidance, and API documentation against ECCTA 2023 digital transformation provisions.</p></div>
+<div class="p"><h3>Predictive Analytics</h3><p>Digital transformation success scoring from API adoption rates, digital filing percentages, service availability metrics, and user satisfaction data.</p></div>
+<div class="p"><h3>Evidence Synthesis</h3><p>Digital service performance evidence, registrar decision records, and technology implementation data into digital transformation dossiers.</p></div>
+<div class="p"><h3>Document Intelligence</h3><p>Extraction from digital service specifications, registrar decision notices, and technology procurement documentation for transformation oversight.</p></div>
+<div class="p"><h3>Stakeholder Reporting</h3><p>Digital transformation dashboards showing API usage, digital filing rates, service uptime, and registrar power exercise metrics.</p></div>
+<div class="p"><h3>Real-time Monitoring</h3><p>Digital service performance monitoring, API health tracking, and registrar power exercise surveillance across Companies House systems.</p></div>
+</div><div class="mt"><h4>MCP Tools</h4><div class="ml"><span class="t">mcp-govuk-search</span><span class="t">mcp-uk-legislation</span><span class="t">mcp-uk-regulator-intel</span><span class="t">mcp-hansard-search</span><span class="t">mcp-dsit-ai-safety</span><span class="t">mcp-cabinet-office-resilience</span></div></div></div></div>
+<div class="s" id="ep10"><div class="sh"><span class="en">Entry Point 10</span><h2>Fraud Prevention &amp; Economic Crime</h2></div><div class="sb"><div class="g">
+<div class="p"><h3>Compliance Automation</h3><p>Fraud prevention compliance checking ECCTA 2023 economic crime provisions, suspicious filing detection requirements, and corporate transparency obligations for Companies House.</p></div>
+<div class="p"><h3>Risk Detection &amp; Early Warning</h3><p>Detection of fraudulent filings, shell company formation patterns, and economic crime indicators via filing pattern analysis and cross-referencing.</p></div>
+<div class="p"><h3>Natural Language Policy Analysis</h3><p>NLP analysis of suspicious filing patterns, fraudulent document submissions, and corporate opacity indicators against Companies House fraud detection criteria.</p></div>
+<div class="p"><h3>Predictive Analytics</h3><p>Fraud risk scoring from filing anomaly patterns, beneficial ownership opacity, geographic risk factors, and corporate structure complexity indicators.</p></div>
+<div class="p"><h3>Evidence Synthesis</h3><p>Fraud detection evidence, suspicious filing records, and cross-referenced intelligence into economic crime prevention dossiers for law enforcement referral.</p></div>
+<div class="p"><h3>Document Intelligence</h3><p>Extraction from suspicious filing reports, fraud investigation case files, and law enforcement liaison records for Companies House intelligence team.</p></div>
+<div class="p"><h3>Stakeholder Reporting</h3><p>Fraud prevention dashboards showing suspicious filing volumes, detection rates, law enforcement referral outcomes, and economic crime trend analysis.</p></div>
+<div class="p"><h3>Real-time Monitoring</h3><p>Suspicious filing detection monitoring, shell company formation surveillance, and economic crime indicator tracking in real-time.</p></div>
+</div><div class="mt"><h4>MCP Tools</h4><div class="ml"><span class="t">mcp-govuk-search</span><span class="t">mcp-uk-legislation</span><span class="t">mcp-uk-regulator-intel</span><span class="t">mcp-hansard-search</span><span class="t">mcp-dsit-ai-safety</span><span class="t">mcp-cabinet-office-resilience</span></div></div></div></div>
+<div class="s" id="ep11"><div class="sh"><span class="en">Entry Point 11</span><h2>Companies House Governance</h2></div><div class="sb"><div class="g">
+<div class="p"><h3>Compliance Automation</h3><p>Governance compliance validation checking Companies House executive governance framework, Registrar accountability, and operational independence standards under Companies Act 2006.</p></div>
+<div class="p"><h3>Risk Detection &amp; Early Warning</h3><p>Detection of governance weaknesses, operational capacity constraints, and regulatory independence risks via organisational performance data.</p></div>
+<div class="p"><h3>Natural Language Policy Analysis</h3><p>NLP parsing of Companies House strategic plans, governance reviews, and operational reports against DBT governance expectations.</p></div>
+<div class="p"><h3>Predictive Analytics</h3><p>Governance effectiveness scoring from service delivery metrics, digital transformation progress, staff engagement, and stakeholder satisfaction.</p></div>
+<div class="p"><h3>Evidence Synthesis</h3><p>Governance performance evidence, operational metrics, and strategic plan progress into Companies House governance effectiveness dossiers.</p></div>
+<div class="p"><h3>Document Intelligence</h3><p>Extraction from Companies House annual reports, board minutes, and governance statements for DBT oversight and NAO review.</p></div>
+<div class="p"><h3>Stakeholder Reporting</h3><p>Governance dashboards showing service delivery KPIs, digital transformation milestones, operational efficiency, and stakeholder confidence metrics.</p></div>
+<div class="p"><h3>Real-time Monitoring</h3><p>Service performance monitoring, digital transformation milestone tracking, and governance action item completion surveillance.</p></div>
+</div><div class="mt"><h4>MCP Tools</h4><div class="ml"><span class="t">mcp-govuk-search</span><span class="t">mcp-uk-legislation</span><span class="t">mcp-uk-regulator-intel</span><span class="t">mcp-hansard-search</span><span class="t">mcp-dsit-ai-safety</span><span class="t">mcp-cabinet-office-resilience</span></div></div></div></div>
+<div class="s" id="ep12"><div class="sh"><span class="en">Entry Point 12</span><h2>Parliamentary &amp; Legislative Oversight</h2></div><div class="sb"><div class="g">
+<div class="p"><h3>Compliance Automation</h3><p>Parliamentary accountability compliance validation checking Companies House annual report requirements, PQ response protocols, and Select Committee evidence requirements.</p></div>
+<div class="p"><h3>Risk Detection &amp; Early Warning</h3><p>Detection of parliamentary scrutiny risks, legislative reform momentum, and public concern escalation via Hansard and stakeholder monitoring.</p></div>
+<div class="p"><h3>Natural Language Policy Analysis</h3><p>NLP parsing of parliamentary questions, BEIS/DBT Select Committee sessions, and ministerial statements on corporate transparency reform.</p></div>
+<div class="p"><h3>Predictive Analytics</h3><p>Legislative reform risk from PQ volume trends, ECCTA 2023 implementation pace, Select Committee interest, and cross-party reform proposals.</p></div>
+<div class="p"><h3>Evidence Synthesis</h3><p>Parliamentary evidence, ECCTA implementation reports, and stakeholder submissions into Companies House legislative response dossiers.</p></div>
+<div class="p"><h3>Document Intelligence</h3><p>Extraction from parliamentary debates, Select Committee reports, and government consultations for Companies House policy response.</p></div>
+<div class="p"><h3>Stakeholder Reporting</h3><p>Parliamentary accountability dashboards showing PQ response times, Committee engagement outcomes, and ECCTA implementation tracking.</p></div>
+<div class="p"><h3>Real-time Monitoring</h3><p>Hansard monitoring for corporate transparency mentions, PQ tracking, and ECCTA 2023 implementation progress surveillance.</p></div>
+</div><div class="mt"><h4>MCP Tools</h4><div class="ml"><span class="t">mcp-govuk-search</span><span class="t">mcp-uk-legislation</span><span class="t">mcp-uk-regulator-intel</span><span class="t">mcp-hansard-search</span><span class="t">mcp-dsit-ai-safety</span><span class="t">mcp-cabinet-office-resilience</span></div></div></div></div>
+</div>
+<footer>
+<div class="br">DEFONEOS — Sovereign by Design</div>
+<p>UK-sovereign, AUKUS-compatible. Audit-grade. Signed. Neutral.<br/>
+Companies House — Companies Act 2006 / ECCTA 2023<br/>
+CH / CompaniesAct2006 / ECCTA2023</p>
+<div class="cr">© 2026 CSOAI Ltd · DEFONEOS Deep-Dive Pack · Generated 02 Aug 2026</div>
+</footer>
+</body>
+</html>

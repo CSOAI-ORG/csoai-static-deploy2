@@ -1,0 +1,55 @@
+                                                                   
+                                                                   
+                                                                   
+                                                                   
+                                                                   
+                                                                   
+                                                                   
+                                                                   
+                                                                                                                                                                                                         
+                                                                   
+                                                                                                                                      
+                                                                   
+                                                                                                                                      
+                                                                   
+                                                                   
+                                                                   
+                                                                   
+                                                                   
+              █▀▄▀█ █ █▀▄▀█ █▀▀█   █▀▀ █▀▀█ █▀▀▄ █▀▀▀              
+              █ ▀ █ █ █ ▀ █ █  █   █   █  █ █  █ █▀▀               
+              ▀   ▀ ▀ ▀   ▀ ▀▀▀▀   ▀▀▀ ▀▀▀▀ ▀▀▀  ▀▀▀▀              
+                                                                   
+                                                                   
+        ┃                                                                                                                     
+                                                                                                                              
+                                                                                                                              
+                                                                                                                              
+                                                                                                                              
+                                                                                                                              
+                                                                                                                              
+                                                                                                                              
+                                                                                                                              
+                                                                                                                                                                                       
+                                                                                                                                                                                       
+                                                                                                                                                                                       
+                                                                                                                                                                                       
+                                                                                                                                                                                       
+                                                                                                                                                                                                                                                            
+                                                                                                                                                                                                                                                            
+                                                                                                                                                                                                                                                            
+                                                              === scp log ===                                          === live size ===                                        -rw-r--r--  1 nicholas  staff  662722560  8 Aug          16:34 /Users/nicholas/clawd/csoai-static-           
+     deploy2/models/sov-refusal/sov-refusal-combo-            lora-v2.f16.gguf                                         --- after 8s ---                                         -rw-r--r--  1 nicholas  staff  662722560  8 Aug          16:34 /Users/nicholas/clawd/csoai-static-           
+     deploy2/models/sov-refusal/sov-refusal-combo-            lora-v2                                                  …                                                                                                                 Click to expand                                     
+                                                                                                                       Confirmed stalled — same byte count. Killing             and retrying with rsync (which handles                   intermittent drops better and shows progress).      
+                                                              $ pkill -f "scp -i" 2>/dev/null; sleep 1                 cd ~/clawd/csoai-static-deploy2/models/sov-              refusal                                                  rm -f sov-refusal-combo-lora-v2.f16.gguf            
+     nohup rsync -av --partial --progress -e "ssh -i          /Users/nicholas/.runpod/ssh/runpodctl-ssh-key -          p 11982 -o StrictHostKeyChecking=no -o                   IdentitiesOnly=yes" \                                      root@213.144.200.240:/workspace/refusal-lora-     
+     v2-20260808/sov-refusal.f16.gguf \                         ./sov-refusal-combo-lora-v2.f16.gguf > /tmp/           gguf_rsync.log 2>&1 &                                    echo "rsync pid=$!"; sleep 30; tail -3 /tmp/             gguf_rsync.log; ls -la *.gguf 2>/dev/null           
+                                                                                                                       ▣  Build · DeepSeek V4 Flash Latest                                                                            ┃                                                      
+  ┃  △ Permission required                                 ┃    ✗ Confirm irreversible deletion                     ┃                                                        ┃  $ pkill -f "scp -i" 2>/dev/null; sleep 1              ┃  cd ~/clawd/csoai-static-deploy2/models/sov-         
+  ┃  refusal                                               ┃  rm -f sov-refusal-combo-lora-v2.f16.gguf              ┃                                                        ┃  -ermc-fdsov-refusal-combo-lora-v2.f16.gguf            ┃                                                      
+  ┃   Allow once   Reject                                  ┃                                                        ┃  ctrl+f fullscreen  ⇆ select  enter confirm            ┃                                                                                                               
+  [Restored 10 Aug 2026 at 04:34:29]
+Last login: Mon Aug 10 04:34:30 on ttys007
+You have new mail.
+nicholas@Mac ~ % 

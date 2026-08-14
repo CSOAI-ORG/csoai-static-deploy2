@@ -155,6 +155,50 @@ def run_phase(name: str, fn, state: dict) -> dict:
     return result
 
 
+# ---------------------------------------------------------------------------
+# Reusable git helper (2026-08-09, JEEVES) — extracted from phase_11_git_push.
+# Pushes the currently-checked-out branch to its own upstream, auto-setting
+# upstream on first use if none is configured. Never force-pushes, never
+# targets `main` by name. This is the single template that every EAT
+# pipeline (or any cron-driven git-driven harness) should reuse.
+# ---------------------------------------------------------------------------
+
+def _ensure_branch_upstream(repo_dir: Path, cur: str) -> tuple:
+    """Resolve the tracking upstream for the checked-out branch.
+
+    Returns (upstream_str, real_up_set, info_dict).
+      real_up_set == True  → an upstream ref already exists (normal path).
+      real_up_set == False → no upstream was configured; we ran a
+                              `git push --set-upstream origin <cur>` once so the
+                              cron no longer trips the same "as upstream, use…"
+                              failure forever.
+
+    Additive only (never force). safe across cross-lane branches because we
+    target the branch name we resolved from HEAD — not a hardcoded ref.
+    """
+    info = {"branch": cur, "upstream": "", "auto_set": False, "stderr": ""}
+    up_proc = subprocess.run(
+        ["git", "rev-parse", "--abbrev-ref", "--symbolic-full-name", "@{upstream}"],
+        capture_output=True, text=True, timeout=15, cwd=str(repo_dir)
+    )
+    up = up_proc.stdout.strip()
+    real_up = bool(up) and "@{upstream}" not in up
+    if not real_up:
+        # Auto-establish upstream. Safe: --set-upstream never rewrites
+        # history; it just records `origin/<cur>` as the push destination.
+        su = subprocess.run(
+            ["git", "push", "--set-upstream", "origin", cur],
+            capture_output=True, text=True, timeout=120, cwd=str(repo_dir)
+        )
+        info["auto_set"] = su.returncode == 0
+        info["stderr"] = (su.stderr or "")[-200:]
+        if su.returncode == 0:
+            up = f"origin/{cur}"
+            real_up = True
+    info["upstream"] = up or f"origin/{cur}"
+    return up or f"origin/{cur}", real_up, info
+
+
 def phase_0_health() -> dict:
     """Phase 0: Sovereign API + service health check."""
     result = {"status": "ran", "artifacts": []}
@@ -302,6 +346,7 @@ def phase_6_downloads() -> dict:
             cwd=str(ROOT)
         )
         result["exit_code"] = out.returncode
+        result["status"] = "ran" if out.returncode == 0 else "failed"
         result["stdout_tail"] = out.stdout[-500:]
         honey = ROOT / "forest" / "honey_downloads.jsonl"
         if honey.exists():
@@ -1717,6 +1762,20 @@ def phase_11_git_push() -> dict:
     """
     result = {"status": "ran", "artifacts": [], "repos": {}}
 
+    # G2 fix (2026-08-13): make honey durable to a second machine. The canonical
+    # forest/honey_all_producers.jsonl is git-ignored (2.4 MB) and its intended
+    # gdrive uploader does not exist, so honey never leaves the Mac ("doesn't
+    # count"). Write a bounded window of the most-recent events as a trackable
+    # slice that rides the git push below — a real second machine, no new creds.
+    try:
+        _honey_all = ROOT / "forest" / "honey_all_producers.jsonl"
+        if _honey_all.exists():
+            _tail = _honey_all.read_text(errors="replace").splitlines()[-1000:]
+            (ROOT / "forest" / "honey_window.jsonl").write_text("\n".join(_tail) + "\n")
+            log(f"  G2: honey_window.jsonl ← last {len(_tail)} events (durable via git push)")
+    except Exception as _e:
+        log(f"  G2: honey window write failed: {_e}")
+
     # Check for stale git locks first (memory: home-root lock can persist)
     try:
         ps_check = subprocess.run(
@@ -1751,6 +1810,20 @@ def phase_11_git_push() -> dict:
             pass
 
     # (repo_dir, name, staged_paths, add_timeout)
+    #
+    # 2026-08-09 template expansion (JEEVES): every repo below uses the
+    # shared `_ensure_branch_upstream` helper above. If a repo is on a
+    # checked-out branch with NO upstream yet, the first cron run will
+    # auto-establish `origin/<cur>` (additive — never force). After that,
+    # every subsequent run uses the normal fast-forward push.
+    #
+    # Adding a new repo here is safe ONLY if:
+    #   - its tracked paths are NON-OVERLAPPING with sibling-lane work
+    #   - the upstream remote already exists for `main` (so the
+    #     --set-upstream command can find the branch ref)
+    #   - the staged paths don't pull in large generated/honey data
+    #
+    # Each repo enforces the same 1000-file dirty-count hard guard.
     repos = [
         (Path.home() / "clawd" / "csoai-static-deploy2", "csoai-static-deploy2", [
             "benchmark-results/overnight_state.json",
@@ -1760,10 +1833,30 @@ def phase_11_git_push() -> dict:
             # layer0/downloads variants below are the trackable slices.
             "forest/honey_layer0.jsonl",
             "forest/honey_downloads.jsonl",
+            "forest/honey_window.jsonl",  # G2: bounded canonical-honey snapshot
             "forest/gpu_inventory.json",
             "forest/tier0_routers.json",
             "forest/mine_downloads_cache.json",
         ], 30),
+        # Companion repos that share the EAT substrate / FROZEN sandwich
+        # model with csoai-static-deploy2. Each gets the same auto-upstream
+        # treatment — first run establishes origin/<cur>, subsequent runs
+        # are normal fast-forward.
+        (Path.home() / "clawd" / "sov-os", "sov-os", [
+            "benchmark-results/eat_all_report.json",
+            "benchmark-results/eat_all/",
+        ], 20),
+        # TEMPLATE PLACEHOLDER — only add a repo here when:
+        #   1. `git remote -v` shows an `origin` remote
+        #   2. local HEAD is either equal-to or fast-forward of origin/<cur>
+        #   3. the staged paths are non-overlapping with sibling-lane work
+        # The helper above (auto-set-upstream) only handles "no upstream yet";
+        # it does NOT handle "behind remote" (that requires lane-specific
+        # pull/rebase discipline) or "no remote at all" (impossible to push).
+        # Removed 2026-08-09:
+        #   - csoai-dashboard-master: behind origin/main by 5 commits (FF
+        #     rejected). Lane work; not safe for the EAT cron to push.
+        #   - meok-os-deploy: no remote configured at all. Helper can't fix.
         # Home-root: stage SPECIFIC FILES only (never -A)
         # 2026-08-08 hardening (JEEVES): the home mega-repo (/Users/nicholas)
         # holds 1000+ cross-lane dirty files and sibling-lane staged
@@ -1802,14 +1895,27 @@ def phase_11_git_push() -> dict:
         # cleanup, etc.) and git add/diff/push can hang for minutes. Refuse
         # to run the commit loop and log it instead of blocking the whole
         # EAT phase. This is a hard floor, not a tuning knob.
-        dirty_probe = subprocess.run(
-            ["git", "status", "--porcelain"],
-            capture_output=True, text=True, timeout=15,
-            cwd=str(repo_dir)
-        )
+        # G1 fix (2026-08-13): scope the dirty probe to the STAGED paths only.
+        # The full-tree `git status --porcelain` timed out at 15s on
+        # csoai-static-deploy2's perpetually-chaotic benchmark tree, raising
+        # TimeoutExpired and failing PHASE_11 every cycle — so the harvest never
+        # reached a second machine (violating "two machines or it doesn't count").
+        # We only ever `git add` these paths, so counting dirtiness across just
+        # them is both faster and the relevant signal. Timeout raised + guarded so
+        # a slow probe skips the repo (chaotic) instead of failing the whole phase.
+        try:
+            dirty_probe = subprocess.run(
+                ["git", "status", "--porcelain", "--"] + list(paths),
+                capture_output=True, text=True, timeout=60,
+                cwd=str(repo_dir)
+            )
+        except subprocess.TimeoutExpired:
+            log(f"  {name}: scoped dirty-probe timed out — skipping (chaotic)")
+            result["repos"][name] = "skipped (scoped dirty-probe timeout)"
+            continue
         dirty_count = dirty_probe.stdout.count("\n") if dirty_probe.returncode == 0 else 0
         if dirty_count > 1000:
-            log(f"  {name}: {dirty_count} dirty files — chaotic cross-lane state, skipping commit loop (hard guard)")
+            log(f"  {name}: {dirty_count} dirty files in staged paths — chaotic, skipping commit loop (hard guard)")
             result["repos"][name] = f"skipped (dirty_count={dirty_count} > 1000 hard guard)"
             continue
         try:
@@ -1823,13 +1929,12 @@ def phase_11_git_push() -> dict:
             if cur == "HEAD":  # detached
                 result["repos"][name] = "skipped (detached HEAD)"
                 continue
-            up = subprocess.run(
-                ["git", "rev-parse", "--abbrev-ref", "--symbolic-full-name", "@{upstream}"],
-                capture_output=True, text=True, timeout=15,
-                cwd=str(repo_dir)
-            ).stdout.strip()
-            if not up or "@{upstream}" in up:
-                up = f"origin/{cur}"
+            # Use the shared helper — auto-set upstream if missing, then
+            # proceed with the normal push flow. Single template, reused by
+            # every entry in `repos` below.
+            up, real_up, up_info = _ensure_branch_upstream(repo_dir, cur)
+            if up_info["auto_set"]:
+                log(f"  {name}: no upstream for {cur} — auto-set origin/{cur}")
             log(f"  {name}: on branch {cur}, pushing to {up}")
 
             staged_count = 0
@@ -1866,16 +1971,11 @@ def phase_11_git_push() -> dict:
                 committed = commit.returncode == 0
 
             # Push the CURRENT branch to ITS OWN upstream (fast-forward via
-            # default push semantics; we never force). Use `git push` which
-            # targets the tracking branch when configured, else push HEAD
-            # to the upstream branch name we resolved above.
-            push_cmd = ["git", "push"]
-            if up and up != "origin/" + cur:
-                # upstream is not the default tracking ref name; push HEAD
-                # explicitly to that branch
-                push_cmd = ["git", "push", "origin", f"HEAD:{up.split('/')[-1]}"]
+            # default push semantics; we never force). The auto-set-upstream
+            # block above already established `up` for any branch that lacked
+            # one, so `git push` here is the normal fast-forward path.
             push = subprocess.run(
-                push_cmd,
+                ["git", "push"],
                 capture_output=True, text=True, timeout=120,
                 cwd=str(repo_dir)
             )

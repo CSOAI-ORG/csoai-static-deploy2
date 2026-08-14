@@ -1,0 +1,72 @@
+{
+  "tick": 259,
+  "timestamp": "2026-08-11T06:45:00+00:00",
+  "sigil": "259insolvencymapssgsa2026",
+  "phase": "EXPANSION PHASE 249 — UK REGULATOR DEEP-DIVE SERIES (Insolvency Service / MaPS / SGSA)",
+  "artefacts_built": [
+    {
+      "name": "defoneos-insolvency-service-corporate-insolvency-ai-deep-dive-pack.html",
+      "url": "https://www.csoai.org/defoneos-insolvency-service-corporate-insolvency-ai-deep-dive-pack.html",
+      "bytes": 35752,
+      "llm_json_bytes": 5464,
+      "description": "12 Insolvency Service entry points x 8 priorities x 6 MCPs — Insolvency Act 1986 / Company Directors Disqualification Act 1986 / Insolvency (England and Wales) Rules 2016 / Employment Rights Act 1996 backbone"
+    },
+    {
+      "name": "defoneos-money-pensions-service-guidance-ai-deep-dive-pack.html",
+      "url": "https://www.csoai.org/defoneos-money-pensions-service-guidance-ai-deep-dive-pack.html",
+      "bytes": 36099,
+      "llm_json_bytes": 5431,
+      "description": "12 Money and Pensions Service entry points x 8 priorities x 6 MCPs — Financial Guidance and Claims Act 2018 / FSMA 2000 / Pensions Act 2004 / Pensions Schemes Act 2015 backbone"
+    },
+    {
+      "name": "defoneos-sports-grounds-safety-authority-ai-deep-dive-pack.html",
+      "url": "https://www.csoai.org/defoneos-sports-grounds-safety-authority-ai-deep-dive-pack.html",
+      "bytes": 35913,
+      "llm_json_bytes": 5402,
+      "description": "12 Sports Grounds Safety Authority entry points x 8 priorities x 6 MCPs — Safety of Sports Grounds Act 1975 / Fire Safety and Safety of Places of Sport Act 1987 / Licensing Act 2003 / HSWA 1974 backbone"
+    }
+  ],
+  "legacy_repairs": [
+    "defoneos-office-for-students-higher-education-regulation-ai-deep-dive-pack.html -> JSON-LD repaired to canonical schema.org (was invalid: literal *** bytes, JSON.parse fail)",
+    "defoneos-valuation-office-agency-property-valuation-ai-deep-dive-pack.html -> JSON-LD repaired to canonical schema.org",
+    "defoneos-welsh-revenue-authority-welsh-taxes-ai-deep-dive-pack.html -> JSON-LD repaired to canonical schema.org"
+  ],
+  "counters": {
+    "total_mcp_built": 30,
+    "total_pages_built": 989,
+    "total_repos_cloned": 15,
+    "sitemap_urls": 358,
+    "sitemap_bytes": 50452,
+    "unique_deep_dive_packs": 255,
+    "publishable_files": 931
+  },
+  "red_lines_check": {
+    "kinetic_targeting": "clear",
+    "personal_surveillance": "clear",
+    "aukus_partnership_claim": "clear — no signed letter claimed",
+    "defoneos_seal_issuance": "clear — no credential issued",
+    "dsei_booth": "clear",
+    "defonos_io_domain": "clear",
+    "compartment_mixing": "clear — meok-defoneos/csoai-defoneos/dagon unmixed"
+  },
+  "bft_state": "No DEFONEOS-SEAL issued this tick; 33-agent BFT council quorum not invoked (routine content expansion).",
+  "human_gates": {
+    "dsp_registration": "blocked — needs Nick personal info (documented, not blocking)",
+    "sc_clearance": "blocked — needs Nick personal details (documented, not blocking)",
+    "cyber_essentials": "blocked — awaiting IASME assessment (documented, not blocking)",
+    "pyPI_publish": "blocked — needs Nick token (documented, not blocking)"
+  },
+  "deployment": {
+    "platform": "cloudflare_pages",
+    "project": "csoai-site",
+    "branch": "jv-wave8-production",
+    "deployment_id": "232f7726",
+    "alias": "jv-wave8-production.csoai-site.pages.dev",
+    "files_uploaded": 916,
+    "git_commit": "6e2a913 (+1988c1b initial tick-259 build)",
+    "verify": "wrangler deploy confirmed (916 files, upload 0.83s, deployment 232f7726 complete); redirect-disabled fetch confirms documented wildcard 301->councilof.ai active on pages.dev host (known state, not browser-verifiable at public URL; allowlist integrity + local byte checks + build_site.py --check EXIT:0 + wrangler output are the evidence)"
+  },
+  "next_actions": [
+    "Build next 3 uncovered UK regulator/agency packs (probe-verified candidates still open: Certification Officer trade union regulation, Legal Aid Agency, UK Hydrographic Office; also probe Security Industry Authority, Employment Agency Standards Inspectorate)"
+  ]
+}

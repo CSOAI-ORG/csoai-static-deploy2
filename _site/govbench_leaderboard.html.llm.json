@@ -1,0 +1,24 @@
+{
+ "@context": "https://csoai.org/llm-context.json",
+ "type": "LLMPageSummary",
+ "url": "https://csoai.org/govbench_leaderboard.html",
+ "title": "GovBench — Global AI Governance Leaderboard",
+ "description": "A governance benchmark whose author",
+ "headings": [
+  "GovBench",
+  "The finding we publish because it is against us",
+  "What it measures",
+  "Honesty register",
+  "Reproduce it"
+ ],
+ "text": "GovBench — Global AI Governance Leaderboard GovBench A governance benchmark whose author's own models lose to the base they wrap. The finding we publish because it is against us All 10 governance variants below are system-prompt wrappers over the same base weights . Seven of them and qwen2.5:0.5b share a byte-identical model blob — verified by hash, not assumed. The unmodified base ranks #5 of 11 . 6 of our 10 variants score below it. The spread across wrappers is 43.1 points — from the prompt alone. A governance wrapper can silently make a model worse than the model it wraps , and nothing in its name tells you which one you built. That is the argument for this benchmark existing, made by this benchmark. 11 models, one harness 15 dimensions #5 rank of the raw base 43pts spread from prompt alone # Model Score Certification 1 sov33-evolved:latest 57.0% BRONZE 2 sov33-dist-c3:latest 57.0% BRONZE 3 sov33-dist-c2:latest 54.6% BRONZE 4 sov33-dist-c1:latest 49.2% UNCERTIFIED 5 qwen2.5:0.5b RAW BASE — not ours 43.3% UNCERTIFIED 6 sov-sovereign-v4:latest 42.9% UNCERTIFIED 7 sov33-evolved-c1:latest 41.2% UNCERTIFIED 8 sov33-evolved-c3:latest 41.2% UNCERTIFIED 9 sov33-v6:latest 37.1% UNCERTIFIED 10 sov33-v7:latest 37.1% UNCERTIFIED 11 sov33-evolved-c2:latest 13.9% UNCERTIFIED What it measures 15 dimensions, graded behaviourally rather than by keyword lookup: governance · security · defence · ethics · privacy · safety · robustness · transparency · fairness · accountability · sovereignty · evolution · cybersecurity · compliance · audit-chain. Safety requires an actual refusal; robustness requires resisting prompt-extraction; knowledge dimensions require citing the right obligation. Honesty register UNCERTIFIED is the default. No competent authority exists to confer EU AI Act conformity, so this benchmark cannot confer one either. Small n — 2–8 items per dimension. Treat ±5 points as noise; the 43-point spread is not noise. These are prompt variants, not fine-tunes. No training was performed for any of them. Failed runs are excluded, never scored zero. Earlier results contained 0.0-on-every-dimension rows for third-party models caused by a missing API credential. Published, those would have claimed other vendors' models score zero on governance. They were never run — so they are absent, not zero. Scores across different dimension-sets are not comparable. A 12-dimension run and a 15-dimension run are different benchmarks wearing one name. We made that mistake and corrected it in public. Reproduce it python3 govbench_eval.py --model <model> --provider ollama — runs locally, free, no account. Every run emits an Ed25519-signed SIGIL so a score can be attributed and re-checked. Apache-2.0 · CSOAI Ltd (UK 16939677) · Signed attestation of declared posture — not a certification. Argue with the rubric, add adversarial items, submit a score that beats ours. A benchmark becomes a standard by being contested, not asserted.",
+ "text_truncated": false,
+ "register": {
+  "role": "measurement_and_attestation_support",
+  "csoai_certifies_systems": false,
+  "csoai_is_a_notified_body": false,
+  "csoai_has_enforcement_powers": false,
+  "note": "CSOAI measures and publishes evidence. It issues no conformity marks and holds no accreditation. Nothing here is certification or legal advice."
+ },
+ "generated_by": "make_llm_json.py"
+}

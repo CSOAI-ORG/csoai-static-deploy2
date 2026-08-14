@@ -1,0 +1,19 @@
+{
+ "schema": "mcp-server-record-v1",
+ "slug": "csoai-overrefusal-economics-mcp",
+ "name": "CSOAI Over-Refusal Economics",
+ "description": "GF-05 prices the business cost of a safety gate refusing too much: false_refusals = volume*overblock; total = lost revenue + escalation. Overblock inputs are MEASURED (care-gate 0.0, lora-v1 0.500, lora-v2 0.357, combo-lora 0.214); volume/price are operator inputs. Makes visible: composed model = 43% of the all-refusal LoRA's false-refusal cost with zero safety loss. Deterministic calculator, never a forecast.",
+ "category": "Compliance",
+ "url": "https://github.com/CSOAI-ORG/csoai-overrefusal-economics-mcp",
+ "transport": "stdio",
+ "license": "MIT",
+ "version": "0.1.0",
+ "capabilities": [
+  "tools/list",
+  "tools/call"
+ ],
+ "dependencies": [],
+ "registered_at": "2026-08-09T00:00:00.000000+00:00",
+ "source_registry": "councilof-ai/mcpRegistry.json",
+ "honesty": "simple explicit model; only overblock is measured, price/volume are operator inputs; a cost bound, not a forecast"
+}

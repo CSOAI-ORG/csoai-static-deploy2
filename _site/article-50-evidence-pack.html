@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Article 50 Evidence Pack — Signed Equivalence Evidence · CSOAI</title>
+<meta name="description" content="The Article 50 evidence pack for deployers and open-weights operators: signed, refutable, ledger-backed equivalence evidence that satisfies the 'adequate alternative means' obligation under the EU AI Act transparency Code of Practice. Compliance deadline: 2 December 2026." />
+<meta name="author" content="CSOAI LTD (UK 16939677)" />
+<meta property="og:title" content="Article 50 Evidence Pack — Every lab marks its own output. We prove the whole pipeline." />
+<meta property="og:description" content="Digitally signed, timestamped, tamper-evident measurement as the compliance primitive the EU Code of Practice endorses. For deployers and open-weights operators of generative AI." />
+<link rel="stylesheet" href="sovereign-2026.css" />
+</head>
+<body class="bg-grid">
+<nav class="nav-sticky">
+  <a href="index.html" class="brand">🜏 CSOAI</a>
+  <div class="nav-links">
+    <a href="index.html">Home</a>
+    <a href="article-50.html">Article 50</a>
+    <a href="provbench.html">ProvBench</a>
+    <a href="products.html">Products</a>
+  </div>
+</nav>
+<div class="wrap" style="max-width:1040px;margin:0 auto;padding:2rem 1.25rem">
+
+<div style="background:linear-gradient(135deg,#0a1f3a,#0d2a4d);border:1px solid #2a4a7a;border-radius:16px;padding:2rem;margin-bottom:2rem">
+  <div style="font-size:.8rem;letter-spacing:.08em;text-transform:uppercase;color:#88b3e8;margin-bottom:.6rem">EU AI Act · Art 50(2) &amp; Transparency Code of Practice · Deadline 2 Dec 2026</div>
+  <h1 style="font-size:clamp(1.6rem,3vw,2.4rem);line-height:1.12;margin:0 0 .6rem">Every lab now marks its own output.<br/><span style="color:#c9a84c">We prove the whole pipeline.</span></h1>
+  <p style="color:#cfdbe9;max-width:760px;line-height:1.6">The EU Transparency Code of Practice (final 10 Jun 2026, adequacy adopted 8–9 Jul) requires
+  <strong>digitally signed, timestamped, tamper-evident metadata</strong>. Cryptographic signing is now the
+  <em>endorsed compliance primitive</em>. For non-signatories and deployers of open-weights models, the burden
+  shifts to showing <strong>adequate alternative means</strong>. This evidence pack is that equivalence — signed,
+  refutable, ledger-backed, and independently verifiable.</p>
+</div>
+
+<section style="margin-bottom:2rem">
+  <h2 style="border-bottom:1px solid #2a4a7a;padding-bottom:.4rem">What the pack is</h2>
+  <p style="line-height:1.6">A machine-readable bundle proving that an AI system's <em>transparency and content-marking
+  obligations are met by measured evidence</em>, not by a supplier's self-attestation. Every artefact is:
+  <strong>Ed25519-signed</strong>, <strong>hash-chained</strong>, <strong>append-only</strong>, and carries a
+  <strong>Wilson 95% confidence interval</strong> with its n — or is explicitly marked UNMEASURED.</p>
+  <ul style="line-height:1.7">
+    <li><strong>Assessment record</strong> — the measurement result per control objective, `satisfied` / `not-satisfied`, with the evidence trail.</li>
+    <li><strong>Chain receipt</strong> — the signed, chronology-preserving ChainResult with Fisher–Rao distance and permitted-radius verdict.</li>
+    <li><strong>OSCAL 1.1.0 artifact</strong> — the audit world's native format; FedRAMP-accepted, CI-friendly.</li>
+    <li><strong>Refutation ledger</strong> — a public, never-silently-edited history of every correction and delta, dated.</li>
+  </ul>
+</section>
+
+<section style="margin-bottom:2rem">
+  <h2 style="border-bottom:1px solid #2a4a7a;padding-bottom:.4rem">Why it satisfies "adequate alternative means"</h2>
+  <table style="width:100%;border-collapse:collapse;font-size:.92rem">
+    <thead><tr style="border-bottom:2px solid #2a4a7a;text-align:left">
+      <th style="padding:.5rem">Code requirement</th><th style="padding:.5rem">How this pack meets it</th>
+    </tr></thead>
+    <tbody>
+      <tr style="border-bottom:1px solid #1d3a5f"><td style="padding:.5rem;color:#88b3e8">Digitally signed</td>
+        <td style="padding:.5rem">Ed25519 signature per artefact, verifiable offline against a published public key.</td></tr>
+      <tr style="border-bottom:1px solid #1d3a5f"><td style="padding:.5rem;color:#88b3e8">Timestamped</td>
+        <td style="padding:.5rem">Every artefact carries a UTC timestamp in its signed envelope; the append-only chain cannot be backdated.</td></tr>
+      <tr style="border-bottom:1px solid #1d3a5f"><td style="padding:.5rem;color:#88b3e8">Tamper-evident</td>
+        <td style="padding:.5rem">Hash-chained receipts; changing any byte breaks the chain and the signature. Auditable, replayable, refutable.</td></tr>
+      <tr><td style="padding:.5rem;color:#88b3e8">Third-party, not vendor self-attestation</td>
+        <td style="padding:.5rem">Measurement is independent and neutral — the marking is done by the vendor; the <em>verification of the pipeline</em> is ours.</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section style="margin-bottom:2rem">
+  <h2 style="border-bottom:1px solid #2a4a7a;padding-bottom:.4rem">The measurement discipline (why it holds)</h2>
+  <ul style="line-height:1.7">
+    <li><strong>Every figure carries its n and its interval, or is marked UNMEASURED.</strong> No number without a run.</li>
+    <li><strong>Deadline-anchored.</strong> Enforcement applies since 2 Aug 2026; the pre-existing-systems marking deadline is <strong>2 Dec 2026</strong>.</li>
+    <li><strong>Deltas are published, never silently edited.</strong> A self-caught under-report disclosed with a dated note is a credibility asset; a quiet edit is not.</li>
+  </ul>
+</section>
+
+<section style="margin-bottom:2rem">
+  <h2 style="border-bottom:1px solid #2a4a7a;padding-bottom:.4rem">What's measured so far (live, honest)</h2>
+  <p style="line-height:1.6">Latest clean run — <strong>Pantheon Season 1b</strong>, 12 GSPC axes per model, n=12, all six models CLEAN (0 infra-tainted).</p>
+  <table style="width:100%;border-collapse:collapse;font-size:.9rem">
+    <thead><tr style="border-bottom:2px solid #2a4a7a;text-align:left">
+      <th style="padding:.45rem">Candidate</th><th style="padding:.45rem;text-align:right">Rating</th><th style="padding:.45rem;text-align:right">RD (σ)</th><th style="padding:.45rem;text-align:right">Matches</th><th style="padding:.45rem">Status</th>
+    </tr></thead>
+    <tbody>
+      <tr style="border-bottom:1px solid #1d3a5f"><td style="padding:.45rem">oowm-4way-q4km (merged)</td><td style="padding:.45rem;text-align:right">1514.1</td><td style="padding:.45rem;text-align:right">±351.8</td><td style="padding:.45rem;text-align:right">12</td><td style="padding:.45rem;color:#9dbe9a">CLEAN</td></tr>
+      <tr style="border-bottom:1px solid #1d3a5f"><td style="padding:.45rem">spec-privacy-q4km</td><td style="padding:.45rem;text-align:right">1513.6</td><td style="padding:.45rem;text-align:right">±351.8</td><td style="padding:.45rem;text-align:right">12</td><td style="padding:.45rem;color:#9dbe9a">CLEAN</td></tr>
+      <tr style="border-bottom:1px solid #1d3a5f"><td style="padding:.45rem">spec-safety-q4km</td><td style="padding:.45rem;text-align:right">1513.3</td><td style="padding:.45rem;text-align:right">±351.8</td><td style="padding:.45rem;text-align:right">12</td><td style="padding:.45rem;color:#9dbe9a">CLEAN</td></tr>
+      <tr style="border-bottom:1px solid #1d3a5f"><td style="padding:.45rem">spec-governance-q4km</td><td style="padding:.45rem;text-align:right">1510.8</td><td style="padding:.45rem;text-align:right">±351.8</td><td style="padding:.45rem;text-align:right">12</td><td style="padding:.45rem;color:#9dbe9a">CLEAN</td></tr>
+      <tr><td style="padding:.45rem">qwen2.5:0.5b-instruct (base)</td><td style="padding:.45rem;text-align:right">1500.8</td><td style="padding:.45rem;text-align:right">±351.8</td><td style="padding:.45rem;text-align:right">12</td><td style="padding:.45rem;color:#9dbe9a">CLEAN</td></tr>
+    </tbody>
+  </table>
+  <p style="color:#88b3e8;font-size:.85rem;margin-top:.6rem">Honest scope: n=12 per model is a measured run, not yet a citable table (doctrine: quotable requires n ≥ 30 with an interval). Season 1c pushes each candidate to the quotable threshold.</p>
+</section>
+
+<div style="background:#0a1f3a;border:1px solid #2a4a7a;border-radius:12px;padding:1.5rem;text-align:center">
+  <p style="color:#cfdbe9;margin:0 0 .8rem">Providing / deploying a generative system covered by Article 50? Get your signed equivalence evidence before the marking deadline.</p>
+  <a href="https://csoai.org" style="display:inline-block;background:#c9a84c;color:#0a1f3a;font-weight:700;padding:.7rem 1.4rem;border-radius:8px;text-decoration:none">Request an assessment</a>
+  <p style="color:#88b3e8;font-size:.8rem;margin:1rem 0 0">CSOAI Ltd · UK company 16939677 · Measurement, not certification. We issue no conformity marks and hold no accreditation.</p>
+</div>
+
+</div>
+<footer style="border-top:1px solid #2a4a7a;margin-top:3rem;padding:1.5rem;color:#5a7ea8;font-size:.85rem;text-align:center">
+  Article 50 Evidence Pack · CSOAI · Every published figure traces to a signed, verifiable record.
+</footer>
+</body>
+</html>

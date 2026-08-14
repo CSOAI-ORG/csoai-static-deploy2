@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1.0" name="viewport"/>
+<title>Two-sided refusal: why a single accuracy number hides a broken AI gate | CSOAI Journal</title>
+<meta content="CSOAI measured the refusal behaviour of small models on a 76-item care battery and found single-sample accuracy hides both failure directions. Two-sided TPR/FPR, aggregated over temperature, is the honest number." name="description"/>
+<link href="https://csoai.org/blog-two-sided-refusal" rel="canonical"/>
+<link href="/favicon.svg" rel="icon" type="image/svg+xml"/>
+<link href="/sovereign-2026.css" rel="stylesheet"/>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"Two-sided refusal: why a single accuracy number hides a broken AI gate","url":"https://www.csoai.org/blog-two-sided-refusal.html","publisher":{"@type":"Organization","name":"CSOAI Ltd","url":"https://csoai.org"}}</script>
+<!-- AI-SEO/AEO/GEO head block -->
+<link href="https://csoai.org/blog-two-sided-refusal.llm.json" rel="alternate" title="LLM representation of this page" type="application/llm+json"/>
+<meta content="/llms.txt" name="llms-txt"/>
+<meta content="human-authored, machine-verifiable, Ed25519-signed" name="ai-content-declaration"/>
+<meta content="CSOAI Ltd (2026). Two-sided refusal. https://csoai.org/blog-two-sided-refusal" name="citation-policy"/>
+<meta content="2026-08-09T08:30:00+00:00" name="revised"/>
+<meta content="2026-08-09T08:30:00+00:00" property="article:modified_time"/>
+<meta content="Two-sided refusal: why a single accuracy number hides a broken AI gate | CSOAI Journal" property="og:title"/>
+<meta content="CSOAI measured model refusal on a 76-item battery. Single accuracy hides both failure directions; two-sided TPR/FPR over temperature is the honest number." property="og:description"/>
+</head>
+<body>
+<nav><a href="/index.html">Home</a> <a href="/blog.html">Journal</a> <a href="/benchmarks">Benchmarks</a> <a href="/scorecard">Scorecard</a></nav>
+<h1>Two-sided refusal: a single accuracy number hides a broken gate</h1>
+<p><em>2026-08-09 · CSOAI — measurement, not claim</em></p>
+
+<p>The care-gate battery is 76 items: <strong>57 that must be refused</strong> (Article 5
+prohibited practices and direct harm) and <strong>19 that must be answered</strong>
+(benign and benign-near — auditing, policy, legal questions). The deterministic gate scores
+<strong>recall 1.00, over-block 0.00</strong>. But what about the models underneath?</p>
+
+<section>
+<h2>What we measured</h2>
+<p>We ran small models through the same battery. A single-sample accuracy number cannot tell
+"catches all harm while refusing every benign request" apart from a working gate. Two rows
+from the measured flywheel board (2026-08-09, practice split):</p>
+<table>
+<thead><tr><th>Model</th><th>Accuracy</th><th>Refusal TPR</th><th>False-refusal FPR</th></tr></thead>
+<tbody>
+<tr><td>qwen2.5:1.5b</td><td>0.40</td><td>0.38</td><td><strong>0.50</strong></td></tr>
+<tr><td>qwen2.5:0.5b</td><td>0.50</td><td>0.38</td><td>0.00</td></tr>
+</tbody>
+</table>
+<p>The 1.5B model both <em>misses harm</em> and <em>refuses a benign request half the time</em>.
+Accuracy 0.40 says "weak". The two-sided view says precisely <em>why</em>: it is not refusing
+robustly, it is refusing randomly. The 0.5B model is safe but weak — never over-blocks, but
+catches only 38% of harm. Those are two completely different products, and accuracy 0.5 vs
+0.4 cannot tell you which is which.</p>
+</section>
+
+<section>
+<h2>Why single-sample refusal scores are noise</h2>
+<p>Refusal is unstable across seeds and temperature (see <em>The Instability of Safety</em>,
+arXiv 2512.12066). A single temperature-0 sample can flip a row. Our stable path probes a
+temperature sweep (0.0, 0.7, 1.0) and takes the majority verdict, reporting the refusal rate
+so the instability stays visible. Aggregation is not decoration — it is the measurement.</p>
+</section>
+
+<section>
+<h2>The law that keeps it honest</h2>
+<p>The fuel path (training material from these runs) is exported from <strong>practice items
+only</strong>; a held-out item reaching the writer raises. The split is salted and the salt is
+public — stability, not secrecy. The 76-item battery has a denominator floor in the
+regression suite: delete hard items to make recall read 1.0 and the test fails. The
+Leaderboard Illusion (<a href="https://arxiv.org/abs/2504.20879">arXiv 2504.20879</a>) is
+precisely this failure mode; our harness is built to make it detectable.</p>
+</section>
+
+<section>
+<h2>What you can do</h2>
+<ul>
+<li>Read the live numbers: <a href="/benchmarks">/benchmarks</a>.</li>
+<li>See the scorecard: <a href="/scorecard">/scorecard</a>.</li>
+<li>Run it yourself — the harness and battery are open; the result is the same number, up to
+model variability.</li>
+</ul>
+</section>
+
+<footer>CSOAI Ltd · UK company 16939677 · Every published figure traces to a signed, verifiable record.</footer>
+</body>
+</html>

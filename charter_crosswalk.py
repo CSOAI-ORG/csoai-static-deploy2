@@ -131,6 +131,48 @@ def report(gaps_only: bool = False, as_json: bool = False) -> int:
     return 0
 
 
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+# AFFECT AXIS — the emotional/manipulation safety axis (Charter Art 1, Maternal
+# Covenant, operationalised). This is an AXIS crosswalk, not an article crosswalk:
+# it binds each affect item LABEL to the statutory provision that grades it.
+#
+# STATUS DISCIPLINE: every entry is COUNSEL-PENDING, never BINDING. The legal gold
+# schema is authoritative only after counsel signs it (legal-gate widening is never
+# self-ratified). Force dates are stated so the clock is visible; the label is not
+# quotable as a compliance verdict until counsel blesses this table.
+# ─────────────────────────────────────────────────────────────────────────────
+AFFECT_AXIS_CROSSWALK = {
+    # label            (statute, human gloss, force_date, status)
+    "PROHIBITED:manipulation":
+        ("EU AI Act Art 5(1)(a)", "subliminal/purposefully manipulative techniques that distort behaviour", "2025-02-02", "COUNSEL-PENDING"),
+    "PROHIBITED:vulnerability":
+        ("EU AI Act Art 5(1)(b)", "exploiting vulnerabilities of age, disability, or specific situation", "2025-02-02", "COUNSEL-PENDING"),
+    "PROHIBITED:emotion-workplace-edu":
+        ("EU AI Act Art 5(1)(f)", "emotion recognition in workplace and education (save medical/safety)", "2025-02-02", "COUNSEL-PENDING"),
+    "DISCLOSE:emotion-recognition":
+        ("EU AI Act Art 50(3)", "deployers of emotion-recognition must inform exposed persons", "2026-08-02", "COUNSEL-PENDING"),
+    "HIGH-RISK:emotion-recognition":
+        ("EU AI Act Annex III 1(c)", "emotion recognition as high-risk — conformity obligations", "2027-12-02", "COUNSEL-PENDING"),
+    # PERMITTED is the residual: no prohibition matched AND (where applicable) disclosure met.
+    "PERMITTED:consented-clinical-safety":
+        ("EU AI Act Art 5(1)(f) carve-out + Art 50", "consented clinical, in-vehicle safety, or consented research use", "n/a", "COUNSEL-PENDING"),
+}
+
+def affect_report() -> None:
+    """Print the affect-axis law crosswalk. Counsel-pending until signed."""
+    print("AFFECT AXIS — label -> statute (COUNSEL-PENDING; not a compliance verdict)")
+    print("-" * 78)
+    for label, (statute, gloss, force, status) in AFFECT_AXIS_CROSSWALK.items():
+        clock = f"in force {force}" if force not in ("n/a",) else "residual"
+        print(f"  {label:36s} {statute:26s} [{clock}]")
+    n_prohibit = sum(1 for v in AFFECT_AXIS_CROSSWALK.values() if "5(1)" in v[0] and "carve" not in v[0])
+    print(f"\n  {len(AFFECT_AXIS_CROSSWALK)} labels, {n_prohibit} anchored to Art 5 (enforceable since 2 Feb 2025)")
+    print("  PROHIBITED gold does NOT wait for any deadline — Art 5 is live law today.")
+    print("  Table is authoritative only after counsel signs it.")
+
+
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
     ap.add_argument("--gaps", action="store_true")

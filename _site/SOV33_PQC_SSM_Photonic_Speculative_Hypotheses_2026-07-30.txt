@@ -1,0 +1,289 @@
+SOV33³ / CSOAI: A Rigorous Cross-Disciplinary Resolution of Six
+Speculative Hypotheses
+TL;DR
+     The n_eff decorrelation fix is unblocked: a state-space/linear-attention leg (Mamba-2,
+     RWKV-7, Falcon-Mamba, Kimi Linear) can be inferenced today on Apple Silicon via
+     llama.cpp/Metal and MLX; CUDA absence is a solvable inconvenience, not a blocker —
+     and the cheapest path to a distilled decorrelated leg is a one-off cloud GPU rental
+     (RunPod A100 80GB ≈ $1.39/hr), not local training.
+     The single highest-leverage move is ProvBench + PQC: C2PA has NO post-quantum
+     signature support (exclusively classical ES256/EdDSA/PS256 through v2.4), the enabling
+     COSE ML-DSA identifiers now exist (RFC 9964, published 22 May 2026: ML-DSA-44 =
+     COSE alg −48, ML-DSA-65 = −49, ML-DSA-87 = −50) but are unadopted by C2PA, and
+     C2PA manifests are designed to validate "indefinitely" — making "does your provenance
+     survive a signature-algorithm migration?" a genuine, defensible, deterministic
+     benchmark dimension nobody else occupies.
+     Photonic "light as compute" is NOT reachable for a solo founder now or in ~3 years
+     (lab/hyperscaler only); the real, reachable truth is optical interconnect economics, which
+     strengthen (not threaten) the small-model+KB thesis. UE5/VWM is a legitimate
+     deterministic rendering surface but a judgement-based cognitive "visual world model"
+     would fail like routing/quorum did.
+Key Findings
+Q1 — CUDA/Apple-Silicon kernel gap: PARTIALLY-REAL (real for training kernels,
+REFUTED as a blocker for obtaining a decorrelated leg). State-space and linear-attention
+models run on Apple Silicon today. mlx-lm has native Mamba v1 and Mamba v2
+implementations (contributed by Gökdeniz Gülmez per the mlx-lm ACKNOWLEDGMENTS),
+and mlx-community hosts converted Mamba checkpoints (e.g. mamba-1.4b-hf-f32 ).
+ llama.cpp lists Mamba, RWKV (6/7), Jamba, and Falcon-Mamba among supported
+architectures in GGUF with the Metal backend (device discovery loads CUDA or Metal).
+ mamba.py provides a "simple and efficient Mamba (state-space model) in pure PyTorch and
+MLX" selective-scan fallback. The genuine gap: the bespoke CUDA/Triton kernels — Mamba-
+2's hardware-aware selective scan, and Kimi Linear's KDA/FlashKDA kernels with their
+Diagonal-Plus-Low-Rank chunkwise algorithm (arXiv:2510.26692, open-sourced with vLLM
+integration, Triton-based) — are CUDA-first and have no optimized Metal port, so you lose the
+speed/efficiency advantage on Mac but not the ability to run the model. Verdict: CUDA
+absence is a solvable inconvenience. For a one-off distillation/fine-tune to produce an
+architecturally-distinct leg, rent cloud GPU (RunPod A100 80GB ≈ $1.39/hr community tier,
+per-second billing; H100 PCIe ≈ $2.89/hr); a short distillation run costs single-digit to low-tens
+of dollars. Do NOT attempt to train Mamba-2/KDA locally; DO inference the distilled SSM leg
+locally afterward via llama.cpp/Metal (GGUF) or MLX. MLX LoRA/QLoRA fine-tuning is real
+and unified-memory-native (docs report ≈250 tok/s LoRA on an M1 Max 32 GB; Apple's own
+WWDC 2025 numbers claim M5 is 3.5–4× faster than M4 at prompt processing — vendor
+figure).
+Q2a — Ed25519 is not post-quantum secure: REAL, but the threat model for signatures is
+materially different from encryption. Shor's algorithm breaks Ed25519/ECDSA/RSA alike
+(migrating ECC→RSA solves nothing — both fall to the same attack). Per NIST IR 8547 initial
+public draft (Nov 2024), Table 3: ECDSA and RSA at 112-bit security are "Deprecated after 2030
+/ Disallowed after 2035," and EdDSA is "Disallowed after 2035." NSA CNSA 2.0 (updated May
+2025): 1 Jan 2027 is the gate by which new National Security Systems acquisitions must
+support CNSA 2.0, with software/firmware signing (LMS/XMSS per SP 800-208) reaching
+exclusive use by 2030 — 2027 is a "support," not "exclusive-signing," milestone. UK NCSC sets a
+three-phase national migration: discovery/plan by 2028, high-priority upgrades 2028–2031, full
+migration by 2035. NIST standards: FIPS 203 (ML-KEM), FIPS 204 (ML-DSA/Dilithium), FIPS
+205 (SLH-DSA/SPHINCS+), all 13 Aug 2024; HQC selected March 2025 as a backup KEM.
+Crucial nuance for SIGIL: "harvest now, decrypt later" is a confidentiality threat and is largely
+IRRELEVANT to signatures — you cannot retroactively decrypt a signature. The real signature
+risk is future forgery of long-lived attestation chains: once a cryptographically-relevant
+quantum computer (CRQC) exists, an attacker could forge Ed25519 signatures on SIGIL-
+attested artifacts and backdate provenance claims. Correct countermeasures: (i) algorithm
+agility, (ii) hybrid signatures (classical + PQC), (iii) long-term timestamping — RFC 3161
+timestamps and RFC 4998 Evidence Record Syntax, which proves data "already existed
+before" a crypto break via hash-tree renewal and timestamp renewal. That is precisely the right
+design for a hash-chain attestation system. NIST + 5
+Q2b — D-Wave CEO's "quantum breaks Bitcoin" claim: PARTIALLY-REAL but deflated.
+What is actually threatened is ECDSA/Schnorr signatures on exposed secp256k1 public keys,
+not SHA-256 proof-of-work. Grover's algorithm only quadratically speeds hash search;
+commercially-viable Bitcoin PoW attack via Grover is "decades, possibly centuries away."
+Bitcoin has partial built-in resistance: unspent P2PKH addresses never reveal the pubkey until
+spend, so single-use addresses are not immediate targets. The resource bar is falling fast: Craig
+Gidney (Google Quantum AI), arXiv:2505.15917 (21 May 2025) — "a 2048 bit RSA integer could
+be factored in less than a week by a quantum computer with less than a million noisy qubits"
+(≈1,409 logical / ≈897,864 physical, 4.96 days), a 20× reduction from the Gidney+Ekerå 2019
+figure of 20M qubits / 8 hours (same assumptions: 0.1% gate error, 1 μs surface-code cycle, 10 μs
+reaction time). A Feb 2026 Iceberg Quantum estimate claims <100k physical qubits using
+qLDPC codes. But no such machine exists (Google Willow ≈105 qubits; IBM Condor ≈1,100).
+Two precision points for SIGIL: (1) D-Wave's annealers cannot run Shor's algorithm at all —
+invoking D-Wave for a factoring/signature threat is a category error; (2) a hash-chain's
+ordering/tamper-evidence (SHA-256) is NOT broken by quantum — only the signature layer
+needs migration. Forbes + 10
+Q2c — Quantum ML for routing/optimization/benchmarking: REFUTED. The
+dequantization literature (Ewin Tang; Cotler et al., arXiv:2112.00811) shows the purported
+exponential advantages of QML on classical data are matched by classical algorithms with
+sample-and-query access; genuine advantage is confined to quantum-native data and
+contrived tasks, and QML models must be both trainable and non-dequantizable to matter. For
+this venture's problems (routing, refusal scoring, governance benchmarking), QML offers no
+practical advantage. Verdict: do not pursue.
+Q3 — Photonic/optical "light as data": grand-slam hunch REFUTED for compute,
+PARTIALLY-REAL for interconnect. Photonic compute (Lightmatter Envise, photonic tensor
+cores, diffractive/analog ONNs — Feldmann Nature 589; Shen Nat. Photonics 11; Ahmed
+Nature 640 2025) remains lab/hyperscaler-only. The 2025–2026 commercial products are co-
+packaged optics/interconnect, not general compute: Lightmatter's Passage M1000 (press
+release, 31 Mar 2025) claims "a record-breaking 114 Tbps total optical bandwidth" on a 4,000
+mm² interposer with 256 fibers/1,024 SerDes; the Passage L200/L200X (34/64 Tbps) "enable
+more than 200 Tbps of total I/O bandwidth per chip package, resulting in up to 8x faster
+training time" (all vendor-reported bandwidth/speed figures, not independent benchmarks,
+and not FLOPS). Light is genuinely superior for transmission (chip-to-chip data movement at
+lower energy/latency); it is NOT a general-purpose faster/cheaper compute substrate for a solo
+builder. "Turning fibreoptic light into data" = transceivers + coherent detection + DSP —
+mature telecom engineering with nothing to "re-engineer" for an AI-governance stack.
+Verdict: not viable now or in ~3 years for this venture. Nearest true thing: optical-interconnect
+economics lower hyperscale inference cost over time, which strengthens the small-model+KB
+thesis — as frontier serving gets cheaper, the durable moat must be governance/provenance,
+not model size. In-sensor/edge optical preprocessing is a legitimate adjacent idea but not
+reachable for a solo founder today. Lightmatter® + 4
+Q4 — UE5 "SOV space" + VWM: deterministic rendering surface REAL; judgement-based
+"visual world model" would FAIL. UE5 as a data-visualization/digital-twin surface is well-
+precedented: Pixel Streaming delivers UE5 to browsers via WebRTC; enterprise digital twins
+stream live IoT/GIS/SCADA data (BizzTech Metaverse API; Cityscape Digital at Unreal Fest
+2024; SpaceForm's EDGE Liverpool Street twin). Integration UE5 ↔ REST/WebSocket ↔
+FastAPI/pgvector is standard. On the "world model" literature: IWM/OWM/VWM does NOT
+map onto JEPA/V-JEPA/Dreamer/Genie. In the literature a "world model" (LeCun's JEPA
+position paper; I-JEPA; V-JEPA; DreamerV3) is a predictive latent model used for planning — it
+predicts abstract representations of future states in latent space, explicitly not a
+rendering/visualization layer. Applying the venture's own rule: UE5 as a control/rendering
+plane (display the KB, stream graphs, spatial navigation) is deterministic, useful, buildable. A
+"visual world model" that performs cognition (inference/judgement/planning) would fail
+exactly like per-dimension routing (+0.90 [−1.99, +3.79]), ungated statute retrieval (−9.16,
+HARM), and the 3-leg quorum (n_eff 1.21) — because the 0.5B student cannot support
+judgement. Verdict: build frozen→fluid→live as a deterministic visualization/control surface
+(water→milk→honey = storage → KB retrieval → rendered view). Do not let it decide anything.
+The genuinely useful "seeing the KB" is UMAP/t-SNE embedding projection, graph layout, and
+tools like Nomic Atlas / Cosmograph over your pgvector space — deterministic and directly
+valuable for benchmark curation and contamination detection. WalkingTree Technologies
+Turing Post
+
+Q5 — Missing/under-used stack pieces (prioritized by leverage):
+  1. Inspect AI (UK AISI) — highest leverage. OSS gold standard for regulator-grade evals
+     (used by UK AISI, Anthropic, DeepMind, METR, Apollo); Task/Solver/Scorer model; runs
+     local Ollama/vLLM/llama.cpp; sandboxing + tool-approval; 200+ pre-built evals. UK AISI
+     publishes an Autonomous Systems Evaluation Standard requiring Inspect. For a UK
+     governance-benchmark operator, porting GovBench/DefBench/ProvBench to Inspect is
+     the single biggest credibility multiplier. Substack Ukgovernmentbeis
+  2. Real model diversity — "90 models = one 397 MB Qwen2.5-0.5B blob with system-
+     prompt variants" is a genuine methodological weakness for any diversity/quorum claim;
+     prompt-variants are correlated by construction — the mechanistic reason n_eff collapsed
+     to 1.21. A distilled SSM leg (Q1) is the fix.
+  3. Serving/hardware: MLX (unified-memory native) for fine-tuning/inference;
+     llama.cpp/Metal for GGUF; vLLM only on rented GPU. Apple Neural Engine is not
+     directly programmable for this workload — use the GPU via MLX/Metal.
+  4. Data versioning & benchmark provenance: DVC or HF datasets versioning + Croissant
+     metadata + dataset cards + contamination canaries — table stakes for a credible public
+     benchmark.
+  5. Observability: OpenTelemetry + W3C Trace Context across the MCP estate.
+  6. Statistical/pre-registration tooling for the n≥230 power requirement — you already do
+     effect-size CIs and pre-registration well; formalize with a registry.
+  7. Security posture: OAuth 2.1 + PKCE + DCR, SIGKILL-verified supervision, SIGIL
+     attestation are strong; add PQC agility (Q2a/Q6).
+Q6 — Synthesis: See Recommendations. Headline: the PQC/agility angle creates a NEW
+defensible ProvBench dimension; optical-interconnect economics reinforce (not threaten) the
+thesis; the highest-leverage next action is the distilled SSM leg to fix n_eff, closely followed by
+ProvBench-PQC.
+Details
+The C2PA PQC white space (the crown jewel). C2PA's signature list is exclusively classical
+across all spec versions through v2.4: ES256/ES384/ES512 (ECDSA), EdDSA (Ed25519),
+PS256/PS384/PS512 (RSA-PSS). The C2PA Implementation Guidance 2.2 (dated 2025-04-22)
+§6.2 states verbatim: "C2PA recommends: ES256 (ECDSA with SHA-256) … EdDSA (Ed25519)
+… or PS256 (RSASSA-PSS using SHA-256 …)" — no PQC option. No C2PA/CAI blog, GitHub
+issue, or working-group roadmap commits to PQC migration, and no C2PA document
+addresses "harvest now, decrypt later" versus signatures. Yet the enabling primitives now exist:
+RFC 9964 (Prorock & Steele, published 22 May 2026) registered ML-DSA-44 (COSE alg −48),
+ML-DSA-65 (−49), and ML-DSA-87 (−50) in the IANA COSE Algorithms registry (COSE is
+exactly C2PA's COSE_Sign1 signing envelope), all marked "Recommended: Yes"; and RFC
+9881 (Oct 2025) registered ML-DSA identifiers for X.509 (C2PA's certificate layer). Peer
+ecosystems have already moved (Sigstore added ML-DSA; OpenSSF Model Signing supports
+PQC selection; Google Cloud KMS offers ML-DSA/SLH-DSA). Because C2PA manifests are
+designed to validate "indefinitely," an Ed25519-signed manifest is forgeable once a CRQC
+exists — a documentable gap with no vendor mitigation. This is white space ProvBench can
+occupy immediately and deterministically. (Practical note: ML-DSA-44 signatures are ≈2,420 B
+vs Ed25519's 64 B — a manifest-size consideration, not a blocker.) C2pa + 6
+n_eff and decorrelation. The measured quorum failure (n_eff 1.21 of 3, phi +0.743, retracted) is
+exactly what correlation theory predicts when all three legs are prompt-variants of one 0.5B
+Transformer: their errors are near-identical, so effective independent votes collapse toward 1.
+The only real fix (task #18) is an architecturally distinct leg whose error structure decorrelates
+from the Transformer. A state-space model (Mamba-2, RWKV-7, Falcon-Mamba) or linear-
+attention model (Kimi Linear KDA — a finite-state recurrent memory with channel-wise
+gating) has a fundamentally different inductive bias (recurrent finite-state vs full attention)
+and thus different failure modes — the mechanism by which n_eff would rise above 1. This is a
+hypothesis to falsify empirically (measure post-distillation inter-leg error correlation), not an
+assumption to bank.
+Quantum timelines (primary sources), anchored for a UK venture: Gidney+Ekerå 2019
+(Quantum, 2021) — 20M qubits, 8 h. Gidney 2025 (arXiv:2505.15917) — <1M noisy qubits, 4.96
+days. NIST IR 8547 (deprecate 2030 / disallow 2035). NSA CNSA 2.0 (support 2027; signing
+exclusive by ~2030). UK NCSC (2028 / 2031 / 2035). These are planning anchors, not forecasts
+— no CRQC exists. arXiv Quantum Journal
+Recommendations
+(deterministic unless noted; the design rule "every deterministic component works, every
+judgement-based one failed" governs the ordering)
+  1. [Highest leverage · deterministic to build, judgement to validate] Distilled SSM
+     decorrelation leg for n_eff. Requires: one-off cloud GPU (RunPod A100 80 GB ≈ $1.39/hr)
+     to distill/fine-tune a small Mamba-2 / RWKV-7 / Falcon-Mamba student on your gate-
+     passing traces; convert to GGUF; inference locally via llama.cpp/Metal. Cost: ≈$10–50
+     compute + a few days. Falsifies if: measured inter-leg error correlation with the Qwen leg
+     stays high (n_eff still ≈1) — then SSM bias did not decorrelate on your task. Threshold to
+     adopt: n_eff ≥ 2.0 of 3 on held-out items.
+  2. [Highest leverage · deterministic] ProvBench-PQC dimension. Add an axis: "does a
+     provenance/attestation design survive a signature-algorithm migration?" Score third-
+     party C2PA/provenance systems on (a) algorithm agility, (b) hybrid-signature support, (c)
+     long-term timestamping (RFC 3161/4998), (d) any PQC option (ML-DSA per RFC 9964
+     COSE alg −48/−49/−50). Requires: your 417-provision corpus + C2PA spec + a scoring
+     rubric. Cost: near-zero, pure IP. Falsifies if: C2PA ships a mandatory PQC profile that
+     trivializes the axis (monitor github.com/c2pa-org). Currently unoccupied and defensible.
+  3. [High leverage · deterministic] Make SIGIL quantum-ready now — and make it the
+     ProvBench-PQC reference implementation. Add an algorithm-identifier field per hash-
+     chain link (agility); implement hybrid Ed25519 + ML-DSA-44 signing (COSE alg −48);
+     add RFC 3161 timestamps with RFC 4998 renewal so the chain "proves existence before"
+     any future break. Requires: liboqs/ML-DSA + a timestamp authority. Cost: low. Falsifies if:
+     ML-DSA-44's ≈2,420 B signatures break your storage/transport budget (measure first).
+ 4. [High leverage · deterministic] Port benchmarks to Inspect AI. Requires: rewriting
+    GovBench/DefBench/ProvBench as Inspect Tasks/Solvers/Scorers (runs local
+    Ollama/llama.cpp). Falsifies if: Inspect cannot express your 26-dim governance scoring
+    (unlikely). Payoff: regulator-grade credibility and interoperability with UK AISI's own
+    suite.
+ 5. [Medium · deterministic] UE5/VWM as rendering/control surface only. Build
+    frozen→fluid→live (storage → pgvector retrieval → rendered view) via FastAPI ↔
+    WebSocket ↔ UE5 + Pixel Streaming — but do the cheaper first step now: UMAP / Nomic
+    Atlas / Cosmograph visualization of the embedding space for benchmark curation and
+    contamination detection. Cost: UE5 pixel-streaming is GPU-hosting-heavy; start with 2D
+    embedding viz (near-free). Falsifies if: no analytic value beyond a 2D projection emerges
+    (then stop at Atlas). Do NOT let VWM perform cognition/judgement.
+ 6. [Medium · deterministic] Data-provenance hardening for the benchmarks
+    themselves. DVC/HF versioning + Croissant + dataset cards + contamination canaries.
+    Cost: low. Essential for public-benchmark credibility.
+ 7. [Do NOT pursue] Photonic compute; quantum ML. Both refuted for this venture.
+    Revisit photonic compute only if a genuine cloud dev-kit with a real SDK for solo builders
+    appears (none in 2026).
+What would change these: (i) if post-distillation n_eff stays ≈1, abandon quorum and double
+down on the single deterministic gate (already works: +34.84 [+17.50, +52.18]); (ii) if C2PA
+ships mandatory PQC, pivot ProvBench-PQC to "migration completeness" scoring; (iii) if a real
+photonic cloud dev-kit emerges, re-evaluate Q3.
+Caveats
+     Vendor/self-reported figures flagged: all Lightmatter numbers (114 Tbps M1000; 200
+     Tbps/8× L200) are vendor press-release claims, not independent benchmarks; Apple's
+     M4→M5 "3.5–4×" is Apple's own; MLX "≈250 tok/s LoRA on M1 Max" is from docs/blogs,
+     not audited.
+     Quantum timelines are estimates: Gidney's is a peer-reviewed resource estimate, not a
+     demonstration; no CRQC exists. Treat "Q-Day" dates as planning anchors.
+     The n_eff fix is a hypothesis: SSM decorrelation is theoretically motivated but must be
+     measured — architectural distinctness is necessary, not sufficient, for error decorrelation.
+     "C2PA has no PQC" is a strong negative corroborated across the Implementation
+     Guidance, the c2pa-rs–derived schema enum, and c2patool, and cross-checked against
+     RFC 9964/9881 — but a negative cannot be proven exhaustively; verify github.com/c2pa-
+     org issues before making the ProvBench-PQC claim commercially.
+     CNSA 2.0 nuance: 1 Jan 2027 is a "support" gate for new NSS acquisitions; exclusive PQC
+     software/firmware signing is ~2030 — do not overstate 2027 as a hard signing cutoff.
+      Netguardia
+
+     The design rule held throughout: every REAL/buildable recommendation here is
+     deterministic; every REFUTED item (per-dimension routing, quorum-by-prompt, QML,
+    VWM-as-cognition, photonic compute) is either judgement-based or physically
+    unreachable for this venture.
+References
+    Gidney, C. (2025). How to factor 2048 bit RSA integers with less than a million noisy
+    qubits. arXiv:2505.15917. https://arxiv.org/abs/2505.15917
+    Gidney, C. & Ekerå, M. (2021). How to factor 2048 bit RSA integers in 8 hours using 20
+    million noisy qubits. Quantum 5, 433. https://quantum-journal.org/papers/q-2021-04-15-
+    433/ arXiv
+    NIST IR 8547 ipd (Nov 2024), Transition to Post-Quantum Cryptography Standards.
+    https://nvlpubs.nist.gov/nistpubs/ir/2024/NIST.IR.8547.ipd.pdf
+    NIST FIPS 203 (ML-KEM), FIPS 204 (ML-DSA), FIPS 205 (SLH-DSA), 13 Aug 2024.
+    NSA CNSA 2.0 (updated May 2025). UK NCSC, Timelines for migration to post-quantum
+    cryptography (2025). https://www.ncsc.gov.uk/news/pqc-migration-roadmap-unveiled
+    RFC 9964 (May 2026), ML-DSA for JOSE and COSE. https://www.rfc-
+    editor.org/info/rfc9964 · RFC 9881 (Oct 2025), ML-DSA in X.509. · RFC 4998, Evidence
+    Record Syntax. https://www.rfc-editor.org/rfc/rfc4998 · RFC 8032 (EdDSA).
+    C2PA Technical Specification v2.x §13.2 (Digital Signatures); C2PA Implementation
+    Guidance 2.2 (2025-04-22) §6.2. https://spec.c2pa.org/
+    Kimi Team (2025). Kimi Linear: An Expressive, Efficient Attention Architecture.
+    arXiv:2510.26692. https://arxiv.org/abs/2510.26692 · MoonshotAI/Kimi-Linear (GitHub).
+    ml-explore/mlx-lm (Mamba v1/v2 support; ACKNOWLEDGMENTS; LORA.md).
+    https://github.com/ml-explore/mlx-lm · mamba.py.
+    ggml-org/llama.cpp (Mamba/RWKV/Jamba/Falcon-Mamba + Metal backend).
+    https://github.com/ggml-org/llama.cpp
+    Cotler, J. et al. (2021). Revisiting dequantization and quantum advantage in learning tasks.
+    arXiv:2112.00811. · Tang, E., Dequantizing algorithms… Nat. Rev. Phys. (2022).
+    LeCun, Y. (2022). A Path Towards Autonomous Machine Intelligence. Meta I-JEPA (2023);
+    V-JEPA (2024). https://ai.meta.com/blog/v-jepa-yann-lecun-ai-model-video-joint-
+    embedding-predictive-architecture/
+    Lightmatter press releases (31 Mar 2025): Passage M1000; Passage L200.
+    https://lightmatter.co/ · Feldmann et al., Nature 589 (2021); Shen et al., Nat. Photonics 11
+    (2017); Ahmed et al., Nature 640 (2025).
+    UK AISI Inspect AI. https://inspect.aisi.org.uk/ · UKGovernmentBEIS/inspect_ai (GitHub);
+    Autonomous Systems Evaluation Standard.
+    RunPod pricing (2026): A100 80 GB ≈ $1.39/hr, H100 PCIe ≈ $2.89/hr.
+    https://www.runpod.io/
+    Unreal Engine digital-twin / Pixel Streaming precedents: SpaceForm EDGE Liverpool
+    Street (unrealengine.com); BizzTech Metaverse API; Cityscape Digital (Unreal Fest
+    2024).
+    Bitcoin/quantum: en.bitcoin.it/wiki/Quantum_computing_and_Bitcoin; Forbes (31 Mar
+    2026, Google whitepaper on ECDSA/Schnorr exposure).
+

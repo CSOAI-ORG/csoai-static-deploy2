@@ -84,6 +84,15 @@ def judge(prompt: str, response: str, tries: int = 4) -> tuple[str | None, str]:
             if e.code == 429:                      # free tier rate limit — back off, don't drop
                 time.sleep(6 * (attempt + 1))
                 continue
+            if e.code == 402:                      # Payment Required — paid models, this account has no credits
+                # FIX: surface 402 distinctly + emit a SIGIL-style note. The judge() contract
+                # is (label, raw); returning ("NEEDS_PAYMENT", raw) is honest — the caller
+                # can see the failure mode rather than treating it as no-verdict.
+                try:
+                    err_body = e.read().decode("utf-8", errors="replace")[:400]
+                except Exception:
+                    err_body = ""
+                return "NEEDS_PAYMENT", f"HTTP 402 (paid models not on this account). {err_body}".strip()
             return None, f"HTTP {e.code}"
         except Exception as e:
             time.sleep(3)
@@ -117,12 +126,14 @@ def main():
         rows.append({"idx": lab["idx"], "model": lab["model"], "human": lab["human"],
                      "hedge_aware": lab["hedge_aware"], "keyword": lab["keyword"],
                      "llm_judge": v,
-                     "llm_ok": (v == lab["human"]) if v else None,
+                     "llm_ok": (v == lab["human"]) if v and v not in ("NEEDS_PAYMENT",) else None,
+                     "needs_payment": (v == "NEEDS_PAYMENT"),
                      "prompt": rec["prompt"][:160], "response_head": rec["response"][:200]})
         if len(rows) % 10 == 0:
             print(f"  {len(rows)}/{len(labels)}", flush=True)
 
     scored = [r for r in rows if r["llm_ok"] is not None]
+    needs_payment_rows = [r for r in rows if r.get("needs_payment")]
     llm_acc = sum(r["llm_ok"] for r in scored) / len(scored) if scored else None
     hedge_acc = sum(r["hedge_aware"] == r["human"] for r in rows) / len(rows)
     kw_acc = sum(r["keyword"] == r["human"] for r in rows) / len(rows)
@@ -130,7 +141,7 @@ def main():
     print(f"\n  agreement with human labels")
     print(f"    hedge-aware regex   {hedge_acc:.3f}")
     print(f"    keyword regex       {kw_acc:.3f}")
-    print(f"    LLM judge (20B)     {llm_acc:.3f}   (n={len(scored)}, {unresolved} no verdict)")
+    print(f"    LLM judge (20B)     {llm_acc:.3f}   (n={len(scored)}, {unresolved} no verdict, {len(needs_payment_rows)} HTTP 402)")
 
     # the three disagreement classes
     blind = [r for r in scored if r["llm_ok"] and r["hedge_aware"] != r["human"]]

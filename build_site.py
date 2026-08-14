@@ -118,7 +118,7 @@ def sitemap_urls():
     sm = ROOT / "sitemap.xml"
     if not sm.exists():
         return []
-    urls = re.findall(r"<loc>\s*([^<]+?)\s*</loc>", sm.read_text(errors="replace"))
+    urls = re.findall(r"<[^>]*loc>\s*([^<]+?)\s*</[^>]*loc>", sm.read_text(errors="replace"))
     out = []
     for u in urls:
         path = re.sub(r"^https?://[^/]+", "", u).split("?")[0].split("#")[0]

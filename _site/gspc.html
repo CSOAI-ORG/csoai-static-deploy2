@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>CSOAI GSPC — 13-axis governance, safety, provenance, continuity benchmark suite</title>
+<meta name="description" content="CSOAI's GSPC benchmark suite — 13 axes across governance, safety, provenance, continuity, conformance and openness. Built so measurement, not certification, is the public artefact. UNMEASURED is reported, never hidden.">
+<link rel="canonical" href="https://csoai.org/gspc.html">
+<meta property="og:title" content="CSOAI GSPC — 13-axis benchmark suite">
+<meta property="og:description" content="13 measurement axes across governance, safety, provenance, continuity, conformance and openness. Built so measurement, not certification, is the public artefact.">
+<meta property="og:url" content="https://csoai.org/gspc.html">
+<style>
+ body{margin:0;background:#0D0B21;color:#e8e6f0;font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif}
+ .wrap{max-width:920px;margin:0 auto;padding:2.5rem 1.25rem 4rem}
+ h1{font-size:2rem;line-height:1.2;margin:.2rem 0 .4rem}
+ h2{font-size:1.4rem;margin:2.5rem 0 .6rem}
+ h3{font-size:1.1rem;margin:1.5rem 0 .4rem}
+ a{color:#D4A843}
+ .badge{display:inline-block;font-size:.72rem;letter-spacing:.08em;padding:.25rem .6rem;
+        border:1px solid #D4A843;color:#D4A843;border-radius:3px;margin-bottom:.8rem}
+ .meta{color:#a9a4c0;font-size:.95rem}
+ .reg{margin-top:2.5rem;padding:1rem 1.15rem;border-left:3px solid #6dd5ff;background:#141130;
+      font-size:.92rem;color:#c9c5dd}
+ nav a{margin-right:1rem;font-size:.9rem}
+ table{width:100%;border-collapse:collapse;margin:1rem 0}
+ td,th{border-bottom:1px solid #2a2550;padding:.55rem .4rem;text-align:left;font-size:.92rem;vertical-align:top}
+ th{color:#D4A843;font-weight:600}
+ .axis-slug{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;color:#e8e6f0}
+ .axis-status{display:inline-block;padding:.1rem .45rem;font-size:.7rem;border-radius:2px;border:1px solid #2a2550}
+ .status-measured{color:#a8e0a0;border-color:#a8e0a0}
+ .status-spec{color:#a9a4c0;border-color:#a9a4c0}
+ .status-cross{color:#f0c477;border-color:#f0c477}
+ .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1rem;margin:1rem 0}
+ .card{padding:1rem;border:1px solid #2a2550;border-radius:6px;background:#141130}
+ .card h3{margin:0 0 .4rem}
+ .card .meta{font-size:.85rem}
+ @media(max-width:520px){ .grid{grid-template-columns:1fr} }
+</style>
+<script type="application/ld+json">{
+ "@context": "https://schema.org",
+ "@type": "Dataset",
+ "name": "CSOAI GSPC — 13-axis benchmark suite",
+ "description": "13-axis measurement suite across governance, safety, provenance, continuity, conformance and openness. Each axis measures a specific risk domain for AI systems. UNMEASURED is reported, never hidden.",
+ "url": "https://csoai.org/gspc.html",
+ "license": "https://www.apache.org/licenses/LICENSE-2.0",
+ "creator": {
+  "@type": "Organization",
+  "name": "CSOAI",
+  "url": "https://csoai.org"
+ },
+ "distribution": {
+  "@type": "DataDownload",
+  "contentUrl": "https://huggingface.co/datasets/csoai"
+ },
+ "isAccessibleForFree": true,
+ "size": "13 axes"
+}</script>
+</head><body>
+<div class="wrap">
+<nav><a href="/">CSOAI</a><a href="/govbench.html">GovBench</a><a href="/provbench.html">ProvBench</a><a href="/defoneos-index.html">Department packs</a></nav>
+<span class="badge">MEASURED, NOT CERTIFIED</span>
+<h1>CSOAI GSPC — 13-axis benchmark suite</h1>
+<p class="meta">13 axes · 6 canonical domains · published for measurement, not certification · UNMEASURED is reported, never hidden</p>
+
+<p>The <b>GSPC</b> suite is CSOAI's open benchmark library for AI governance measurement. Each axis is a distinct measurement of a specific risk domain that buyers, auditors and regulators have raised but open tools have not measured. The same 13 axes are mirrored on Hugging Face as <code>csoai/gspc-*</code> datasets and on Kaggle as <code>nicktempleman/gspc-*</code> datasets with the same axes. The canonical greenfield names are tuned to unforgeable domains (one per axis), so a citation in any paper, deployment, or audit can be checked against a single source of truth.</p>
+
+<h2>13 axes</h2>
+<table>
+ <thead>
+  <tr><th>#</th><th>Slug</th><th>Title</th><th>Domain</th><th>Status</th><th>Backbone</th></tr>
+ </thead>
+ <tbody>
+  <tr><td>1</td><td class="axis-slug">gspc-mach</td><td>Machinery Regulation safety classification</td><td>EU AI Act / Machinery Reg</td><td><span class="axis-status status-measured">MEASURED</span></td><td>GSPC / published</td></tr>
+  <tr><td>2</td><td class="axis-slug">gspc-asi</td><td>Post-quantum signing classification</td><td>continuity</td><td><span class="axis-status status-measured">MEASURED</span></td><td>GSPC / gspc-asi</td></tr>
+  <tr><td>3</td><td class="axis-slug">gspc-art5</td><td>Article 5 prohibited practices</td><td>EU AI Act Art 5</td><td><span class="axis-status status-measured">MEASURED</span></td><td>GSPC / gspc-art5</td></tr>
+  <tr><td>4</td><td class="axis-slug">gspc-det</td><td>Detector interoperability</td><td>conformance</td><td><span class="axis-status status-spec">SPEC</span></td><td>GSPC / gspc-det</td></tr>
+  <tr><td>5</td><td class="axis-slug">gspc-agi</td><td>Agentic safety refusal battery</td><td>safety</td><td><span class="axis-status status-measured">MEASURED</span></td><td>GSPC / gspc-agi</td></tr>
+  <tr><td>6</td><td class="axis-slug">gspc-prv</td><td>Article 50 provenance survival</td><td>EU AI Act Art 50</td><td><span class="axis-status status-measured">MEASURED</span></td><td>GSPC / gspc-prv</td></tr>
+  <tr><td>7</td><td class="axis-slug">gspc-oss</td><td>Open-source license scope battery</td><td>openness</td><td><span class="axis-status status-measured">MEASURED</span></td><td>GSPC / gspc-oss</td></tr>
+  <tr><td>8</td><td class="axis-slug">gspc-mcp</td><td>MCP tool conformance battery</td><td>conformance / MCP §5</td><td><span class="axis-status status-measured">MEASURED</span></td><td>GSPC / gspc-mcp</td></tr>
+  <tr><td>9</td><td class="axis-slug">gspc-swarm</td><td>Multi-agent coordination safety</td><td>swarm</td><td><span class="axis-status status-measured">MEASURED</span></td><td>GSPC / gspc-swarm</td></tr>
+  <tr><td>10</td><td class="axis-slug">gspc-arena-results</td><td>Per-model results across all 13 axes</td><td>composite</td><td><span class="axis-status status-measured">MEASURED</span></td><td>GSPC / gspc-arena-results</td></tr>
+  <tr><td>11</td><td class="axis-slug">gspc-gov</td><td>EU AI Act risk-tier battery</td><td>governance</td><td><span class="axis-status status-measured">MEASURED</span></td><td>GSPC / gspc-gov</td></tr>
+  <tr><td>12</td><td class="axis-slug">gspc-care</td><td>Care-cost over-refusal battery</td><td>care</td><td><span class="axis-status status-measured">MEASURED</span></td><td>GSPC / gspc-care</td></tr>
+  <tr><td>13</td><td class="axis-slug">gspc-xr</td><td>Cross-reality checks</td><td>cross-reality</td><td><span class="axis-status status-spec">SPEC</span></td><td>GSPC / gspc-xr</td></tr>
+ </tbody>
+</table>
+
+<p class="meta">11 axes are <span class="axis-status status-measured">MEASURED</span> with published batteries, 2 are <span class="axis-status status-spec">SPEC</span> stage (gspc-det, gspc-xr). Every axis has a corresponding page on this site and a corresponding dataset on Hugging Face + Kaggle.</p>
+
+<h2>Six canonical domains (the greenfield brand names)</h2>
+<p>The 13 axes fold into 6 canonical governance domains. Each domain has a unique domain name (so a citation in any paper is unforgeable) and a greenfield brand site.</p>
+<div class="grid">
+ <div class="card">
+  <h3>governance → COAI-Bench</h3>
+  <p class="meta">councilof.ai</p>
+  <p>EU AI Act risk-tier classification. Folds in ConductBench (agent actions) + CompBench (compliance crosswalk).</p>
+ </div>
+ <div class="card">
+  <h3>safety → AGISafe-Bench</h3>
+  <p class="meta">agisafe.ai</p>
+  <p>Calibrated refusal + robustness. Folds in CareBench (protection + over-refusal).</p>
+ </div>
+ <div class="card">
+  <h3>provenance → POAI-Bench</h3>
+  <p class="meta">proofof.ai</p>
+  <p>C2PA / Article 50 marking survival through transforms. Folds in AIRBench (mandatory disclosure).</p>
+ </div>
+ <div class="card">
+  <h3>continuity → ASISec-Bench</h3>
+  <p class="meta">asisecurity.ai</p>
+  <p>Post-quantum signing agility — chain survives a PQ migration.</p>
+ </div>
+ <div class="card">
+  <h3>conformance → MCP-Scoreboard</h3>
+  <p class="meta">mcp</p>
+  <p>MCP protocol conformance (Ed25519-signed).</p>
+ </div>
+ <div class="card">
+  <h3>openness → OMAI-Bench</h3>
+  <p class="meta">openmoe.ai</p>
+  <p>Presence of openness artefacts the OSS exemption does not waive.</p>
+ </div>
+</div>
+<p class="meta">The 6 domain names are stored in <code>GSPC_NAMES.json</code> (single source of truth). 7 axes map directly to one domain; the other 6 axes are specialised batteries within a domain.</p>
+
+<h2>What the suite is NOT</h2>
+<ul>
+  <li>It is <b>not a certification</b>. CSOAI does not certify safe. The site states this in plain prose on every axis page.</li>
+  <li>It is <b>not a leaderboard</b>. Per-model results are published as a table, not ranked — there is no single "winner" across governance, safety, provenance, continuity, conformance, openness.</li>
+  <li>It is <b>not a complete detector</b>. UNMEASURED is reported in every result, never hidden.</li>
+  <li>It is <b>not a 100% coverage claim</b>. Each axis has a finite battery size; the delta is in the published items.</li>
+</ul>
+
+<h2>How to run an axis</h2>
+<p>Every axis page on this site offers the same battery as a runnable grader that runs in the browser — no backend, no API key, no cost. The same items the canonical sovereign model (Council-34) answered are scored by the same deterministic rule, so the two numbers sit on one scale. The estate's own usable_n rule applies: below n=30 the page refuses to quote an interval, including for sovereign.</p>
+
+<h2>Cross-references</h2>
+<table>
+ <thead><tr><th>Surface</th><th>Field</th><th>Mirror</th></tr></thead>
+ <tbody>
+  <tr><td>Hugging Face</td><td>13 axis datasets + 12 axis Spaces</td><td><code>csoai/gspc-*</code> model + dataset org</td></tr>
+  <tr><td>Kaggle</td><td>12 active axis batteries + 1 SPEC + 8 deprecated stubs</td><td><code>nicktempleman/gspc-*</code></td></tr>
+  <tr><td>HF Spaces</td><td>15 axes (12 static + 3 demo)</td><td><code>csoai/oowm-router-demo</code>, <code>csoai/oowm-routing-matrix</code></td></tr>
+  <tr><td>OpenRouter</td><td>sweep harness (do not run unattended — costs credits)</td><td>see <code>scripts/openrouter_gspc_sweep.py</code></td></tr>
+ </tbody>
+</table>
+
+<h2>OpenRouter sweep — straight, not gamed</h2>
+<p>The full sweep across all 13 axes on every available OpenRouter model is the natural next step (we have credits, the harness is writeable). It is NOT run unattended. The harness is shipped at <code>scripts/openrouter_gspc_sweep.py</code> with the 13 axes wired to the public OpenRouter chat completions endpoint. To run it:</p>
+<ol>
+  <li>Set <code>OPENROUTER_API_KEY</code> in env.</li>
+  <li>Pick the model roster from <code>openrouter_gspc_sweep_config.json</code> (default: 8 frontier models).</li>
+  <li>Run, watch the JSONL log, stop if rates spike.</li>
+</ol>
+<p class="meta">Default behaviour: 13 axes × 8 models × 1 epoch per item = ~104 runs. Estimate at $0.002-$0.05 per run depending on model. Total ≈ $0.30-$5.00 per full sweep.</p>
+
+<h2>Honest caveats</h2>
+<ul>
+  <li>2 of 13 axes are SPEC (gspc-det, gspc-xr) — not yet measured. They are listed because the regulatory frame demands them; the suite admits the gap.</li>
+  <li>8 deprecated stub datasets on Kaggle still receive downloads (130 total since 6 Aug 2026 banner update). The deprecated URLs are valid redirects; do not cite them as canonical.</li>
+  <li>Per-axis arena results (gspc-arena-results) are n=20/cell with Wilson confidence intervals — about half the per-axis winners are statistical ties. Treat results as indicative of specialization, not final rankings.</li>
+  <li>There is no automated-kill switch for overclaiming. The rule is human-disciplinary: if you cite a score, cite the axis, the items, the seed, the model, the date.</li>
+</ul>
+
+<p class="meta">Provenance: this page is part of CSOAI's GSPC benchmark suite (13 axes). See <a href="https://huggingface.co/csoai">huggingface.co/csoai</a> for the full sovereign benchmark collection. The 13 axes are mirrored on Kaggle at <a href="https://www.kaggle.com/nicktempleman">kaggle.com/nicktempleman</a>.</p>
+
+</div>
+</body></html>

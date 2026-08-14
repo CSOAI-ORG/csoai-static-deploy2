@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1.0" name="viewport"/>
+<title>Article 50 provenance in the real world — a measurement, not a claim | CSOAI Journal</title>
+<meta content="ProvBench measured what happens to EU AI Act Article 50 provenance marks when an asset actually moves: embedded manifests do not survive. The signed record, the method, and what it means." name="description"/>
+<link href="https://csoai.org/blog-provenance-does-not-survive" rel="canonical"/>
+<link href="/favicon.svg" rel="icon" type="image/svg+xml"/>
+<link href="/sovereign-2026.css" rel="stylesheet"/>
+<link href="https://csoai.org/blog-provenance-does-not-survive.llm.json" rel="alternate" title="LLM representation of this page" type="application/llm+json"/>
+<meta content="/llms.txt" name="llms-txt"/>
+<meta content="human-authored, machine-verifiable, Ed25519-signed" name="ai-content-declaration"/>
+<meta content="CSOAI Ltd (2026). Article 50 provenance in the real world. https://csoai.org/blog-provenance-does-not-survive" name="citation-policy"/>
+<meta content="2026-08-08T00:00:00+00:00" name="revised"/>
+<meta content="Article 50 provenance in the real world — a measurement, not a claim | CSOAI Journal" property="og:title"/>
+<meta content="Article 50 provenance in the real world — a measurement, not a claim | CSOAI Journal. A sovereign, audit-grade CSOAI surface: measurement, not certification — every figure traces to a signed, verifiable record." property="og:description"/>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"Article 50 provenance in the real world \u2014 a measurement, not a claim | CSOAI Journal","url":"https://www.csoai.org/blog-provenance-does-not-survive.html","publisher":{"@type":"Organization","name":"CSOAI Ltd","url":"https://csoai.org"}}</script>
+</head>
+<body>
+<nav><a href="/index.html">Home</a> <a href="/blog.html">Journal</a> <a href="/provbench">ProvBench</a></nav>
+<h1>Article 50 provenance does not survive the real world — we measured it</h1>
+<p><em>2026-08-08 · CSOAI — measurement, not claim</em></p>
+<p>The EU AI Act Article 50 transparency rules require AI-generated content to be machine-readable
+and marked. The natural reading of that obligation includes provenance marking. The question no
+one had answered was the boring one: <strong>does a provenance mark survive the set of real-world
+transforms an asset actually goes through?</strong></p>
+<section>
+<h2>The experiment</h2>
+<p>ProvBench is a pre-registered harness. We embed a provenance manifest in an asset, then apply a
+sequence of ordinary transforms — a re-encode, a resize, an edit, a re-upload. We inspect the asset
+after each transform for whether any recognisable provenance survived.</p>
+<h2>The signed result</h2>
+<p>We embedded <strong>20 manifests</strong>. Across every measured transform chain,
+<strong>0 of 20 survived</strong>. That is not a claim about our skill at embedding; it is a
+statement about how fragile the current article-50-homologous marking surface is once content is
+really free to move.</p>
+<p>This is the kind of finding that has to be a number before it can be a policy. The full set,
+with fingerprints, is published as part of the <a href="/provbench">ProvBench</a> instrumentation and
+the signed result record.</p>
+</section>
+<section>
+<h2>What it means</h2>
+<ul>
+<li>Provenance that only lives in the file header is not protection against the copies that matter.</li>
+<li>If the rule is "AI content must be machine-readable as AI content," then a marking that does not
+survive a resize is not meeting the rule in the real world.</li>
+<li>Measurement is the only honest way to know which marking scheme is worth relying on.</li>
+</ul>
+</section>
+<section>
+<h2>Boundary</h2>
+<p>This is a measurement of our test assets under our transform set, not a legal opinion and not a
+finding about any deployed system. It is, though, the sort of evidence the Article 50 obligation
+will eventually be argued against.</p>
+</section>
+<footer>CSOAI Ltd · UK company 16939677 · Every published figure traces to a signed, verifiable record.</footer>
+</body>
+</html>

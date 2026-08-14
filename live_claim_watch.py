@@ -126,24 +126,44 @@ PROHIBITED: list[tuple[str, re.Pattern, str]] = [
 
 # ── Live fetch ────────────────────────────────────────────────────────────────────────
 def fetch_domain(url: str) -> tuple[str, str]:
-    """Fetch the live HTML for a domain. Returns (status, body)."""
-    # status ∈ {"OK", "BLOCKED", "TIMEOUT", "ERROR"}
+    """Fetch the live HTML for a domain. Returns (status, body).
+
+    status ∈ {"OK", "BLOCKED", "PAYMENT_REQUIRED", "TIMEOUT", "ERROR"}
+
+    402 (Payment Required) is now a FIRST-CLASS status — not lumped with BLOCKED.
+    Vercel's DEPLOYMENT_DISABLED is one specific cause; x402 paywalls, Coinbase
+    receipts, and Stripe-unpaid-tier cases are others. The distinction matters
+    for transition emits (we don't want to mark a domain BLOCKED just because
+    Vercel billing is paused — that would conflate "site is down" with
+    "billing gate is up").
+    """
     try:
         out = subprocess.run(
             ["curl", "-sL", "--max-time", str(FETCH_TIMEOUT), "--max-filesize", str(BYTES_BUDGET),
-             "-A", "CSOAI-LiveClaimWatch/1.0", url],
+             "-A", "CSOAI-LiveClaimWatch/1.0", "-w", "\n__HTTP_CODE__%{http_code}",
+             url],
             capture_output=True, text=True, timeout=FETCH_TIMEOUT + 5,
         )
         if out.returncode != 0:
             if "could not resolve" in out.stderr.lower():
                 return "BLOCKED", ""
             return "ERROR", ""
-        if not out.stdout:
+        # Split body from our injected http-code trailer
+        body, _, http_marker = out.stdout.rpartition("__HTTP_CODE__")
+        try:
+            http_code = int(http_marker.strip())
+        except (ValueError, AttributeError):
+            http_code = 0
+        # Real HTTP 402 (Payment Required) — distinct status
+        if http_code == 402:
+            return "PAYMENT_REQUIRED", body or ""
+        if not body:
             return "BLOCKED", ""
-        # crude 402 detection — the body is small in the Vercel-DEPLOYMENT-DISABLED case
-        if "DEPLOYMENT_DISABLED" in out.stdout or "Account is blocked" in out.stdout:
-            return "BLOCKED", ""
-        return "OK", out.stdout
+        # Vercel's DEPLOYMENT_DISABLED body shape (which IS a 402, but kept as
+        # an explicit secondary check for older Vercel without 402 status)
+        if "DEPLOYMENT_DISABLED" in body or "Account is blocked" in body:
+            return "PAYMENT_REQUIRED", body
+        return "OK", body
     except subprocess.TimeoutExpired:
         return "TIMEOUT", ""
     except Exception:
@@ -244,10 +264,12 @@ def check_once(state_path: Path) -> tuple[dict, list[str]]:
 
         # Emit on transition, both ways.
         if status != prev_status:
-            if status == "BLOCKED":
-                events.append(f"  ⚠️  {url} → BLOCKED (Vercel billing or DNS) — guard cannot verify")
-            elif prev_status == "BLOCKED" and status == "OK":
-                events.append(f"  ✅ {url} → RE-VERIFY after BLOCKED state released")
+            if status == "PAYMENT_REQUIRED":
+                events.append(f"  💳 {url} → PAYMENT_REQUIRED (HTTP 402: Vercel billing, x402 paywall, or Stripe tier gate) — guard cannot verify; check billing or pay tier")
+            elif status == "BLOCKED":
+                events.append(f"  ⚠️  {url} → BLOCKED (DNS / no body) — guard cannot verify")
+            elif prev_status in ("BLOCKED", "PAYMENT_REQUIRED") and status == "OK":
+                events.append(f"  ✅ {url} → RE-VERIFY after {prev_status} state released")
             elif status == "OK":
                 events.append(f"  ↻  {url} → OK (was {prev_status})")
             else:
@@ -293,10 +315,12 @@ def check_once_dry(state_path: Path) -> tuple[dict, list[str]]:
         new_keys = {make_key(url, h[0], h[2]) for h in hits}
 
         if status != prev_status:
-            if status == "BLOCKED":
-                events.append(f"  ⚠️  {url} → BLOCKED (Vercel billing or DNS) — guard cannot verify")
-            elif prev_status == "BLOCKED" and status == "OK":
-                events.append(f"  ✅ {url} → RE-VERIFY after BLOCKED state released")
+            if status == "PAYMENT_REQUIRED":
+                events.append(f"  💳 {url} → PAYMENT_REQUIRED (HTTP 402: Vercel billing, x402 paywall, or Stripe tier gate) — guard cannot verify; check billing or pay tier")
+            elif status == "BLOCKED":
+                events.append(f"  ⚠️  {url} → BLOCKED (DNS / no body) — guard cannot verify")
+            elif prev_status in ("BLOCKED", "PAYMENT_REQUIRED") and status == "OK":
+                events.append(f"  ✅ {url} → RE-VERIFY after {prev_status} state released")
             elif status == "OK":
                 events.append(f"  ↻  {url} → OK (was {prev_status})")
             else:

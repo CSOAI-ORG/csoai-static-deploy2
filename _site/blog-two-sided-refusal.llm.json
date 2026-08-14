@@ -1,0 +1,24 @@
+{
+ "@context": "https://csoai.org/llm-context.json",
+ "type": "LLMPageSummary",
+ "url": "https://csoai.org/blog-two-sided-refusal.html",
+ "title": "Two-sided refusal: why a single accuracy number hides a broken AI gate | CSOAI Journal",
+ "description": "CSOAI measured the refusal behaviour of small models on a 76-item care battery and found single-sample accuracy hides both failure directions. Two-sided TPR/FPR, aggregated over temperature, is the honest number.",
+ "headings": [
+  "Two-sided refusal: a single accuracy number hides a broken gate",
+  "What we measured",
+  "Why single-sample refusal scores are noise",
+  "The law that keeps it honest",
+  "What you can do"
+ ],
+ "text": "Two-sided refusal: why a single accuracy number hides a broken AI gate | CSOAI Journal Home Journal Benchmarks Scorecard Two-sided refusal: a single accuracy number hides a broken gate 2026-08-09 · CSOAI — measurement, not claim The care-gate battery is 76 items: 57 that must be refused (Article 5 prohibited practices and direct harm) and 19 that must be answered (benign and benign-near — auditing, policy, legal questions). The deterministic gate scores recall 1.00, over-block 0.00 . But what about the models underneath? What we measured We ran small models through the same battery. A single-sample accuracy number cannot tell \"catches all harm while refusing every benign request\" apart from a working gate. Two rows from the measured flywheel board (2026-08-09, practice split): Model Accuracy Refusal TPR False-refusal FPR qwen2.5:1.5b 0.40 0.38 0.50 qwen2.5:0.5b 0.50 0.38 0.00 The 1.5B model both misses harm and refuses a benign request half the time . Accuracy 0.40 says \"weak\". The two-sided view says precisely why : it is not refusing robustly, it is refusing randomly. The 0.5B model is safe but weak — never over-blocks, but catches only 38% of harm. Those are two completely different products, and accuracy 0.5 vs 0.4 cannot tell you which is which. Why single-sample refusal scores are noise Refusal is unstable across seeds and temperature (see The Instability of Safety , arXiv 2512.12066). A single temperature-0 sample can flip a row. Our stable path probes a temperature sweep (0.0, 0.7, 1.0) and takes the majority verdict, reporting the refusal rate so the instability stays visible. Aggregation is not decoration — it is the measurement. The law that keeps it honest The fuel path (training material from these runs) is exported from practice items only ; a held-out item reaching the writer raises. The split is salted and the salt is public — stability, not secrecy. The 76-item battery has a denominator floor in the regression suite: delete hard items to make recall read 1.0 and the test fails. The Leaderboard Illusion ( arXiv 2504.20879 ) is precisely this failure mode; our harness is built to make it detectable. What you can do Read the live numbers: /benchmarks . See the scorecard: /scorecard . Run it yourself — the harness and battery are open; the result is the same number, up to model variability. CSOAI Ltd · UK company 16939677 · Every published figure traces to a signed, verifiable record.",
+ "text_truncated": false,
+ "register": {
+  "role": "measurement_and_attestation_support",
+  "csoai_certifies_systems": false,
+  "csoai_is_a_notified_body": false,
+  "csoai_has_enforcement_powers": false,
+  "note": "CSOAI measures and publishes evidence. It issues no conformity marks and holds no accreditation. Nothing here is certification or legal advice."
+ },
+ "generated_by": "make_llm_json.py"
+}

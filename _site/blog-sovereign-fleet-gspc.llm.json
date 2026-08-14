@@ -1,0 +1,24 @@
+{
+ "@context": "https://csoai.org/llm-context.json",
+ "type": "LLMPageSummary",
+ "url": "https://csoai.org/blog-sovereign-fleet-gspc.html",
+ "title": "14 models × 12 GSPC governance axes — measured | CSOAI Journal",
+ "description": "We ran 14 sovereign models against the 12-axis GSPC governance battery and report real mean accuracy per model plus the per-axis signal that tells you which model to route each job to.",
+ "headings": [
+  "14 models × 12 GSPC governance axes — measured",
+  "Mean accuracy, 12 axes",
+  "The axis signal (why one mean is not the whole story)",
+  "Why we publish this",
+  "Boundary"
+ ],
+ "text": "14 models × 12 GSPC governance axes — measured | CSOAI Journal Home Journal Benchmarks GovBench 14 models × 12 GSPC governance axes — measured 2026-08-08 · CSOAI — a real table, no spin The single most useful thing a measurement body can do is publish a table of what each model actually scored, and the axis-level detail that says which model wins a given job . We ran 14 models on the 12-axis GSPC governance battery and here is the honest summary. Mean accuracy, 12 axes Model Mean acc Best axis sov33-unified 0.59 gspc-swarm 0.97 qwen2.5:1.5b 0.58 gspc-swarm 0.95 llama3.2:3b 0.58 gspc-swarm 0.97 falcon3:7b 0.56 gspc-art5 0.94 sov-ethics-art5 0.47 gspc-swarm 0.97 clan-sovereignty-refusing 0.46 gspc-swarm 0.97 sov-sovereign-v4 0.46 gspc-swarm 0.97 qwen2.5:0.5b 0.45 gspc-swarm 0.97 clan-sovereignty-cited 0.45 gspc-swarm 0.97 sov33-oracle-c1 0.45 gspc-swarm 0.97 sov33-v7 0.45 gspc-swarm 0.97 sov33-evolved 0.45 gspc-swarm 0.97 Council-34 0.41 gspc-art5 0.75 gpt-oss:20b 0.00 (no label matched) The 20B model scored 0 only because it returned no parseable label on our classification prompt — that is an honest \"unmeasured,\" not a performance statement about the family. The axis signal (why one mean is not the whole story) Every model dominates gspc-swarm (consensus, ~0.97) and most are strong on gspc-art5 (conduct battery, ~0.9). The axes that actually separate models — where routing matters — are gspc-asi and gspc-gov . A single leaderboard number hides this. The routing-to-strength reading: for swarm-type tasks nearly any sovereign model works; for hard governance tasks the choice of model is the whole difference. Why we publish this It is genuinely useful to a buyer, and it is honest. No model \"wins everything\"; a fleet that routes each axis to its measured best is worth more than a single average. The full per-axis table lives in the signed result under benchmark-results/flywheel/widened_L2_2026-08-08.json . The harness split is salted and public; the run is reproducible. Boundary A classification-accuracy number on a frozen harness is not a certification. It is, however, the kind of raw evidence a compliance conversation should be grounded in. CSOAI Ltd · UK company 16939677 · Every published figure traces to a signed, verifiable record. back to journal",
+ "text_truncated": false,
+ "register": {
+  "role": "measurement_and_attestation_support",
+  "csoai_certifies_systems": false,
+  "csoai_is_a_notified_body": false,
+  "csoai_has_enforcement_powers": false,
+  "note": "CSOAI measures and publishes evidence. It issues no conformity marks and holds no accreditation. Nothing here is certification or legal advice."
+ },
+ "generated_by": "make_llm_json.py"
+}
