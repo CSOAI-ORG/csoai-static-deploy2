@@ -1,34 +1,34 @@
 # EAT_ALL Run Report
 
-**Run ID**: eat_all_1786729473
-**Finished**: 2026-08-14T17:44:33.418960+00:00
-**Phase summary**: {'ran': 8, 'failed': 11, 'skipped': 0}
+**Run ID**: eat_all_1786729590
+**Finished**: 2026-08-14T17:46:30.107292+00:00
+**Phase summary**: {'ran': 9, 'failed': 10, 'skipped': 0}
 
 ## Phases
 
 | Phase | Status | Duration | Notes |
 |---|---|---|---|
-| PHASE_0_HEALTH | failed | 10.7s | JSONDecodeError: Extra data: line 298535 column 2 (char 12816009) |
-| PHASE_1_REBOARD | ran | 3.8s | exit_code=0 |
-| PHASE_2_KB_GROW | failed | 7.5s | ts-to-kb.py", line 196, in main
+| PHASE_0_HEALTH | failed | 4.3s | JSONDecodeError: Extra data: line 298535 column 2 (char 12816009) |
+| PHASE_1_REBOARD | ran | 2.4s | exit_code=0 |
+| PHASE_2_KB_GROW | failed | 4.2s | ts-to-kb.py", line 196, in main
     kb = json.loads(kb_path.read_text())
   File "/Library/Frameworks |
-| PHASE_3_PROBES | ran | 0.2s | chatml=1; bloodline=1 |
+| PHASE_3_PROBES | ran | 0.1s | chatml=1; bloodline=1 |
 | PHASE_4_TRAINING | ran | 0.0s | training_scripts_available=['sov_groq_distill.py', 'sov_grpo_train.py', 'sov_minimal_train.py'] |
-| PHASE_5_HONEY | ran | 17.7s | exit_code=0; events=4736 |
-| PHASE_6_DOWNLOADS | ran | 8.8s | exit_code=0; files_mined=296 |
-| PHASE_7_PORTAL | ran | 27.0s | exit_code=0 |
-| PHASE_9_ARTIFACTS | ran | 18.8s | deck_cards=0 |
-| PHASE_9B_EXTERNAL_HARNESS | failed | 4.8s | Extra data: line 298535 column 2 (char 12816009) |
-| PHASE_9C_OWEM_CLUSTER | failed | 2.4s | Extra data: line 298535 column 2 (char 12816009) |
-| PHASE_9D_BENCHMARKS_HARNESS | failed | 1.1s | Extra data: line 298535 column 2 (char 12816009) |
-| PHASE_9E_TRAINING_DATA_HARNESS | failed | 1.1s | Extra data: line 298535 column 2 (char 12816009) |
-| PHASE_9F_SOVEREIGN_TRAINING_PIPELINE | failed | 1.0s | Extra data: line 298535 column 2 (char 12816009) |
-| PHASE_9G_AUDIENCE_HARNESS | failed | 1.4s | Extra data: line 298535 column 2 (char 12816009) |
-| PHASE_9H_SOV_HIVE_HARNESS | failed | 1.2s | Extra data: line 298535 column 2 (char 12816009) |
-| PHASE_9I_SOV_CAPTURE | failed | 30.8s | Command '['python3', '/Users/nicholas/clawd/csoai-static-deploy2/sov_capture.py', '--status']' timed |
-| PHASE_9J_IWM_BOOTSTRAP | ran | 4.9s | iwm_records=0; kb_entries_added=0; exit_code=1 |
-| PHASE_10B_MODEL_ROUTING | failed | 1.3s | Extra data: line 298535 column 2 (char 12816009) |
+| PHASE_5_HONEY | ran | 9.1s | exit_code=0; events=4736 |
+| PHASE_6_DOWNLOADS | ran | 5.1s | exit_code=0; files_mined=296 |
+| PHASE_7_PORTAL | ran | 6.8s | exit_code=0 |
+| PHASE_9_ARTIFACTS | ran | 5.7s | deck_cards=0 |
+| PHASE_9B_EXTERNAL_HARNESS | failed | 1.2s | Extra data: line 298535 column 2 (char 12816009) |
+| PHASE_9C_OWEM_CLUSTER | failed | 3.6s | Extra data: line 298535 column 2 (char 12816009) |
+| PHASE_9D_BENCHMARKS_HARNESS | failed | 2.5s | Extra data: line 298535 column 2 (char 12816009) |
+| PHASE_9E_TRAINING_DATA_HARNESS | failed | 1.9s | Extra data: line 298535 column 2 (char 12816009) |
+| PHASE_9F_SOVEREIGN_TRAINING_PIPELINE | failed | 1.7s | Extra data: line 298535 column 2 (char 12816009) |
+| PHASE_9G_AUDIENCE_HARNESS | failed | 3.0s | Extra data: line 298535 column 2 (char 12816009) |
+| PHASE_9H_SOV_HIVE_HARNESS | failed | 5.1s | Extra data: line 298535 column 2 (char 12816009) |
+| PHASE_9I_SOV_CAPTURE | ran | 24.1s | events_processed=0; skills_extracted=0 |
+| PHASE_9J_IWM_BOOTSTRAP | ran | 3.1s | iwm_records=0; kb_entries_added=0; exit_code=1 |
+| PHASE_10B_MODEL_ROUTING | failed | 0.7s | Extra data: line 298535 column 2 (char 12816009) |
 
 ## Artifacts
 
