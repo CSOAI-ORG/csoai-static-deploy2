@@ -244,6 +244,7 @@ class Citizen:
     model: str
     faction: str
     probe: Optional[str] = None   # Article 5 subparagraph this citizen is assigned to probe
+    goal_override: Optional[str] = None  # scenario-bank prompt replaces the generic probe goal
 
     def brief(self, goal: str) -> str:
         head = BLUE_BRIEF if self.faction == BLUE else RED_BRIEF
@@ -376,7 +377,9 @@ class CityRun:
                 # Round-robining 15 models across 80 citizens made it swap weights every
                 # single turn, which is what produced the empty responses.
                 for c in sorted(self.citizens, key=lambda x: x.model):
-                    goal = (dict(PROBE_GOALS)[c.probe] if c.probe else self.rng.choice(GOALS))
+                    goal = (c.goal_override
+                            if c.goal_override
+                            else (dict(PROBE_GOALS)[c.probe] if c.probe else self.rng.choice(GOALS)))
                     row = self._turn(c, goal, epoch)
                     rows.append(row)
                     items.write(json.dumps(self._as_item(row), ensure_ascii=False) + "\n")
