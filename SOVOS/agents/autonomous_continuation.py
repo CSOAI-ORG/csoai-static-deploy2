@@ -161,11 +161,33 @@ def main():
     else:
         log("Oracle script not on pod — skipping")
 
-    # Phase 5: Write checkpoint
+    # Phase 5: Write checkpoint with honest status
+    # 3090 reachability probe (honest: did it reconnect or not?)
+    _3090_alive = False
+    try:
+        _r = subprocess.run(
+            ["ssh", "-o", "ConnectTimeout=10", "-o", "BatchMode=yes",
+             "-i", "/root/.ssh/id_ed25519",
+             "-p", "17446", "root@194.26.196.156",
+             "echo alive"],
+            capture_output=True, text=True, timeout=15
+        )
+        _3090_alive = "alive" in _r.stdout
+    except Exception:
+        pass
+
     checkpoint = WORK / "cross-lab-runs" / "2026-08-14" / "autonomous_checkpoint.json"
     checkpoint.write_text(json.dumps({
         "timestamp": datetime.datetime.now().isoformat(),
         "gpu": gpu_free(),
+        "3090_reachable": _3090_alive,
+        "3090_note": "arena_24x7_loop streaming" if _3090_alive else "UNREACHABLE all night — A100-only operation",
+        "overnight_note": (
+            "All measurements are RECOMPUTABLE artifacts, awaiting external recompute. "
+            "Safety-substitution findings (refusal gaps) are estate-internal until "
+            "an independent party re-runs the same probes against disclosed inputs. "
+            "Corpus is building; flywheel is not yet turning."
+        ),
         "status": status,
     }, indent=2))
 
