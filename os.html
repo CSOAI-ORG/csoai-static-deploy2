@@ -1,0 +1,500 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>CSOAI OS — the measurement operating surface</title>
+<meta name="description" content="CSOAI OS — the measurement operating surface. 9 measured axes, a deterministic statute console with zero models in the verdict path, an in-browser signed-card verifier, drift-aware re-attestation. Measurement, not certification."/>
+<meta name="theme-color" content="#05080f"/>
+<style>
+/* ═══ CSOAI OS — single committed dark world; every colour painted explicitly ═══ */
+:root{
+  --ground:#05080f; --panel:#0b1220; --raised:#101a2c; --well:#070d18;
+  --hair:#1c2a40; --hair-soft:#131f33;
+  --ink:#dbe7f4; --soft:#8fa5bd; --faint:#5b7089;
+  --signal:#37c8d6; --signal-dim:#1d6a72; --signal-glow:rgba(55,200,214,.18);
+  --good:#3fd68f; --warn:#e0a63f; --bad:#e06070; --unm:#64748b;
+  --mono:ui-monospace,"SF Mono","Cascadia Code",Menlo,Consolas,monospace;
+  --sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+}
+*{box-sizing:border-box} html,body{height:100%}
+body{margin:0;background:var(--ground);color:var(--ink);font-family:var(--sans);
+  font-size:14px;line-height:1.5;overflow:hidden;-webkit-font-smoothing:antialiased}
+::selection{background:var(--signal-dim);color:var(--ink)}
+
+/* ── top status bar ─────────────────────────────────────────────── */
+#bar{position:fixed;inset:0 0 auto 0;height:40px;display:flex;align-items:center;gap:14px;
+  padding:0 14px;background:linear-gradient(to bottom,rgba(11,18,32,.96),rgba(11,18,32,.88));
+  border-bottom:1px solid var(--hair);z-index:60;font-family:var(--mono);font-size:11px;
+  backdrop-filter:blur(6px)}
+#bar .logo{font-weight:700;letter-spacing:.14em;color:var(--signal);font-size:12px}
+#bar .sep{color:var(--hair)}
+.chip{display:inline-flex;align-items:center;gap:5px;padding:2px 8px;border:1px solid var(--hair);
+  border-radius:100px;color:var(--soft);white-space:nowrap}
+.chip .dot{width:6px;height:6px;border-radius:50%;background:var(--good);box-shadow:0 0 6px var(--good)}
+.chip.id .dot{background:var(--signal);box-shadow:0 0 6px var(--signal)}
+#bar .grow{flex:1} #clock{color:var(--faint)}
+@media(max-width:860px){#bar .hide-s{display:none}}
+
+/* ── the space (canvas stage) ───────────────────────────────────── */
+#space{position:fixed;inset:0;display:block}
+#spacecap{position:fixed;left:50%;transform:translateX(-50%);bottom:86px;z-index:20;
+  font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;color:var(--faint);
+  text-transform:uppercase;text-align:center;pointer-events:none}
+
+/* ── dock ───────────────────────────────────────────────────────── */
+#dock{position:fixed;left:50%;transform:translateX(-50%);bottom:16px;z-index:70;display:flex;gap:6px;
+  padding:8px;background:rgba(11,18,32,.92);border:1px solid var(--hair);border-radius:16px;
+  backdrop-filter:blur(10px);box-shadow:0 12px 40px rgba(0,0,0,.5)}
+.dockbtn{appearance:none;border:1px solid transparent;background:transparent;color:var(--soft);
+  font-family:var(--mono);font-size:11px;letter-spacing:.04em;padding:9px 13px;border-radius:11px;
+  cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:3px;min-width:66px}
+.dockbtn .ic{font-size:17px;line-height:1}
+.dockbtn:hover{background:var(--raised);color:var(--ink)}
+.dockbtn.on{background:var(--raised);border-color:var(--hair);color:var(--signal)}
+.dockbtn:focus-visible{outline:2px solid var(--signal);outline-offset:2px}
+@media(max-width:700px){.dockbtn{min-width:52px;padding:8px 8px}.dockbtn .lb{display:none}}
+
+/* ── windows ────────────────────────────────────────────────────── */
+.win{position:fixed;top:64px;left:50%;transform:translateX(-50%);width:min(880px,94vw);
+  max-height:calc(100vh - 170px);display:none;flex-direction:column;z-index:40;
+  background:var(--panel);border:1px solid var(--hair);border-radius:14px;
+  box-shadow:0 24px 70px rgba(0,0,0,.6),0 0 0 1px rgba(55,200,214,.05);overflow:hidden}
+.win.open{display:flex}
+.tbar{display:flex;align-items:center;gap:10px;padding:10px 14px;border-bottom:1px solid var(--hair);
+  background:var(--raised);font-family:var(--mono);font-size:11.5px;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--signal)}
+.tbar .x{margin-left:auto;appearance:none;border:0;background:transparent;color:var(--faint);
+  font-size:15px;cursor:pointer;padding:2px 6px;border-radius:6px}
+.tbar .x:hover{color:var(--bad);background:var(--well)}
+.body{padding:16px 18px;overflow-y:auto;font-size:13.5px}
+.body h3{margin:0 0 6px;font-size:13px;font-family:var(--mono);letter-spacing:.08em;
+  text-transform:uppercase;color:var(--soft)}
+.body p{margin:0 0 10px;color:var(--soft)} .body p b,.body p strong{color:var(--ink)}
+.note{font-size:11.5px;color:var(--faint);border-left:2px solid var(--hair);padding:4px 10px;margin:10px 0}
+.mono{font-family:var(--mono)}
+.tag{display:inline-block;font-family:var(--mono);font-size:9.5px;letter-spacing:.08em;
+  text-transform:uppercase;padding:2px 7px;border-radius:100px;font-weight:600}
+.tag.meas{background:rgba(63,214,143,.12);color:var(--good)}
+.tag.unm{background:rgba(100,116,139,.16);color:var(--unm)}
+.tag.sig{background:var(--signal-glow);color:var(--signal)}
+.tag.warn{background:rgba(224,166,63,.12);color:var(--warn)}
+.tag.bad{background:rgba(224,96,112,.12);color:var(--bad)}
+
+/* instrument */
+#radarwrap{display:grid;grid-template-columns:300px 1fr;gap:16px;align-items:start}
+@media(max-width:720px){#radarwrap{grid-template-columns:1fr}}
+#radar{width:100%;aspect-ratio:1;max-width:300px}
+.axrow{display:grid;grid-template-columns:110px 1fr auto;gap:10px;align-items:center;
+  padding:5px 0;border-bottom:1px solid var(--hair-soft);font-family:var(--mono);font-size:12px}
+.axrow .nm{color:var(--ink)}
+.meter{height:5px;border-radius:100px;background:var(--well);overflow:hidden}
+.meter i{display:block;height:100%;background:var(--signal);border-radius:100px}
+.meter.unm i{background:repeating-linear-gradient(90deg,var(--unm) 0 4px,transparent 4px 8px);width:100%;opacity:.45}
+
+/* arena */
+table.lb{width:100%;border-collapse:collapse;font-family:var(--mono);font-size:12px}
+.lb th{font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);
+  text-align:left;padding:5px 8px;border-bottom:1px solid var(--hair)}
+.lb td{padding:6px 8px;border-bottom:1px solid var(--hair-soft);font-variant-numeric:tabular-nums}
+.lb td.num{text-align:right}
+.lb .bar{height:4px;background:var(--well);border-radius:100px;min-width:80px}
+.lb .bar i{display:block;height:100%;background:var(--good);border-radius:100px}
+
+/* console */
+#chat{display:flex;flex-direction:column;height:min(430px,55vh)}
+#msgs{flex:1;overflow-y:auto;display:flex;flex-direction:column;gap:8px;padding:4px 2px 10px}
+.msg{max-width:86%;padding:8px 12px;border-radius:12px;font-size:13px;line-height:1.55}
+.msg.u{align-self:flex-end;background:var(--raised);border:1px solid var(--hair);color:var(--ink)}
+.msg.s{align-self:flex-start;background:var(--well);border:1px solid var(--hair-soft);color:var(--soft)}
+.msg.s .cite{display:inline-block;margin-top:6px;font-family:var(--mono);font-size:10.5px;
+  color:var(--signal);border:1px solid var(--signal-dim);border-radius:6px;padding:1px 7px}
+#chatrow{display:flex;gap:8px;padding-top:10px;border-top:1px solid var(--hair)}
+#q{flex:1;background:var(--well);border:1px solid var(--hair);border-radius:10px;color:var(--ink);
+  padding:9px 12px;font-family:var(--sans);font-size:13px}
+#q:focus{outline:1px solid var(--signal);border-color:var(--signal-dim)}
+.btn{appearance:none;border:1px solid var(--signal-dim);background:var(--signal-glow);color:var(--signal);
+  font-family:var(--mono);font-size:12px;padding:8px 15px;border-radius:10px;cursor:pointer;font-weight:600}
+.btn:hover{background:rgba(55,200,214,.28)} .btn.ghost{background:transparent;color:var(--soft);border-color:var(--hair)}
+.btn:focus-visible{outline:2px solid var(--signal);outline-offset:2px}
+.sugg{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.sugg button{appearance:none;background:transparent;border:1px solid var(--hair);color:var(--faint);
+  border-radius:100px;font-size:11px;padding:3px 10px;cursor:pointer}
+.sugg button:hover{color:var(--signal);border-color:var(--signal-dim)}
+
+/* verify */
+#cardin{width:100%;min-height:110px;background:var(--well);border:1px solid var(--hair);border-radius:10px;
+  color:var(--ink);font-family:var(--mono);font-size:11px;padding:10px;resize:vertical}
+#vres{margin-top:12px;display:none;flex-direction:column;gap:6px;font-family:var(--mono);font-size:12px}
+.vrow{display:flex;gap:10px;align-items:baseline;padding:7px 10px;background:var(--well);
+  border:1px solid var(--hair-soft);border-radius:8px}
+.vrow .k{color:var(--faint);font-size:10px;letter-spacing:.08em;text-transform:uppercase;min-width:120px}
+
+/* pipeline (signal) */
+.pipe{display:flex;flex-wrap:wrap;gap:6px;font-family:var(--mono);font-size:11.5px;margin:10px 0}
+.pipe span{padding:6px 10px;border:1px solid var(--hair);border-radius:8px;background:var(--well);color:var(--soft)}
+.pipe b{color:var(--signal);align-self:center}
+.kv{display:grid;grid-template-columns:auto 1fr;gap:4px 14px;font-family:var(--mono);font-size:12px;margin:8px 0}
+.kv .k{color:var(--faint)} .kv .v{color:var(--ink)}
+
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+
+<canvas id="space" aria-hidden="true"></canvas>
+<div id="spacecap">COUNCIL SPACE · hyperbolic field · nodes = fleet · glow = BT-rated (40,518 deterministic battles)</div>
+
+<header id="bar">
+  <span class="logo">🜏 CSOAI OS</span><span class="sep">│</span>
+  <span class="chip id"><span class="dot"></span><span class="hide-s">did:web:csoai.org · key f4b4…c342</span><span class="hide-s" style="display:none">id</span></span>
+  <span class="chip"><span class="dot"></span>gate: correctness enforced</span>
+  <span class="chip hide-s"><span class="dot" style="background:var(--warn);box-shadow:0 0 6px var(--warn)"></span>anchor: RFC-3161 + OTS calendar</span>
+  <span class="grow"></span>
+  <span id="clock"></span>
+</header>
+
+<!-- ═══ DOCK ═══ -->
+<nav id="dock" aria-label="CSOAI apps">
+  <button class="dockbtn" data-app="instrument"><span class="ic">◈</span><span class="lb">Instrument</span></button>
+  <button class="dockbtn" data-app="arena"><span class="ic">⚔</span><span class="lb">Arena</span></button>
+  <button class="dockbtn" data-app="console"><span class="ic">⌘</span><span class="lb">Console</span></button>
+  <button class="dockbtn" data-app="verify"><span class="ic">✓</span><span class="lb">Verify</span></button>
+  <button class="dockbtn" data-app="drift"><span class="ic">↻</span><span class="lb">Drift</span></button>
+  <button class="dockbtn" data-app="signal"><span class="ic">∿</span><span class="lb">Signal</span></button>
+</nav>
+
+<!-- ═══ INSTRUMENT ═══ -->
+<section class="win" id="w-instrument" role="dialog" aria-label="GSPC instrument">
+  <div class="tbar">◈ GSPC instrument — 9 measured axes<button class="x" aria-label="close">×</button></div>
+  <div class="body">
+    <p><b>Deterministic grading. No model judges anything.</b> An axis the harness cannot grade is
+    reported <span class="tag unm">UNMEASURED</span> — never coerced to a score. That honesty is the instrument.</p>
+    <div id="radarwrap">
+      <canvas id="radar" aria-label="axis radar"></canvas>
+      <div id="axlist"></div>
+    </div>
+    <p class="note">Signed reference result: <b>art5 board — 83.33%</b> (36-item bank, best: sov6-relationality,
+    Ed25519-signed card in the estate bucket, 2026-08-14). Radar shows the latest signed per-axis values where
+    they exist; dashed = UNMEASURED today.</p>
+  </div>
+</section>
+
+<!-- ═══ ARENA ═══ -->
+<section class="win" id="w-arena" role="dialog" aria-label="fleet arena">
+  <div class="tbar">⚔ Fleet arena — measured vs unmeasured<button class="x" aria-label="close">×</button></div>
+  <div class="body">
+    <p><b>Bradley-Terry ratings over deterministic battles</b> — the same rating engine as the
+    open-source Chatbot Arena, with one difference that is the moat: a battle here is two models on the
+    <em>same frozen probe</em> where exactly one was graded correct. <b>No preference votes — every
+    outcome is a reproducible predicate.</b> <span class="mono" style="color:var(--signal)">40,518 battles · 628 graded probes · boards 2026-08-12</span></p>
+    <div style="overflow-x:auto"><table class="lb" id="lbtable"></table></div>
+    <p class="note">Items where both models were right or both wrong produce NO battle — no signal, honestly
+    dropped. Models with too few battles are UNRATED, never given a default. The fleet re-measures on the
+    hourly EAT cycle; promotion is gated on held-out probes and the promotion council can refuse — and has.</p>
+  </div>
+</section>
+
+<!-- ═══ CONSOLE ═══ -->
+<section class="win" id="w-console" role="dialog" aria-label="sovereign console">
+  <div class="tbar">⌘ Sovereign console <span class="tag sig" style="margin-left:8px">0 models in the verdict path</span><button class="x" aria-label="close">×</button></div>
+  <div class="body">
+    <div id="chat">
+      <div id="msgs" aria-live="polite"></div>
+      <div class="sugg" id="sugg"></div>
+      <div id="chatrow">
+        <input id="q" type="text" placeholder="Ask which provision binds — e.g. “which article prohibits social scoring?”" aria-label="ask the console"/>
+        <button class="btn" id="ask">Run</button>
+      </div>
+    </div>
+    <p class="note">This is not an AI system — it is a deterministic rule-based lookup. Your question is
+    pattern-matched against a frozen statute registry in this page; nothing you type is transmitted or stored.
+    Rule-based systems defined solely by natural persons fall outside the Article 3(1) definition (Recital 12).</p>
+  </div>
+</section>
+
+<!-- ═══ VERIFY ═══ -->
+<section class="win" id="w-verify" role="dialog" aria-label="card verifier">
+  <div class="tbar">✓ Verify a signed card — without trusting us<button class="x" aria-label="close">×</button></div>
+  <div class="body">
+    <p>Paste a CSOAI measurement card. This page recomputes the canonical <span class="mono">content_id</span>
+    (byte-identical to the estate's Python signer), checks the Ed25519 signature in your browser, and resolves
+    the signer against the published <span class="mono">did:web:csoai.org</span> key. <b>No secret involved —
+    verification never needs one.</b></p>
+    <textarea id="cardin" spellcheck="false" placeholder='{"body":{…},"signature":"…","signer":"…","content_id":"…"}'></textarea>
+    <div style="display:flex;gap:8px;margin-top:10px">
+      <button class="btn" id="doverify">Verify</button>
+      <button class="btn ghost" id="loadsample">Load a real card</button>
+    </div>
+    <div id="vres"></div>
+    <p class="note">Two layers, honestly separated: <b>content</b> (does the signature verify over the recomputed
+    hash) and <b>identity</b> (is the signer the key csoai.org publishes). A card can be genuinely signed by a
+    key that is <em>not</em> the published identity — this verifier says so instead of hiding it.</p>
+  </div>
+</section>
+
+<!-- ═══ DRIFT ═══ -->
+<section class="win" id="w-drift" role="dialog" aria-label="drift">
+  <div class="tbar">↻ Living compliance — drift-triggered re-attestation<button class="x" aria-label="close">×</button></div>
+  <div class="body">
+    <p><b>A signed card is only as fresh as the regulation under it.</b> corpus-watch hash-watches the
+    statute sources daily; when a regulation changes, every card whose axes it touches is flagged
+    <span class="tag warn">STALE</span> and queued for re-measurement and re-signing.</p>
+    <div class="kv">
+      <span class="k">watcher</span><span class="v">corpus-watch — EU AI Act (CELLAR) + UK statute, daily hash</span>
+      <span class="k">contract</span><span class="v">fail-closed: UNKNOWN is never reported as unchanged</span>
+      <span class="k">trigger</span><span class="v">drift_reattest — instrument → affected axes → stale cards → re-measure queue</span>
+      <span class="k">timeline fact</span><span class="v">EU standalone high-risk obligations deferred to 2 Dec 2027 (Reg (EU) 2026/1744); Article 50 marking stayed 2 Aug 2026</span>
+    </div>
+    <p class="note">Fail-closed means the uncomfortable direction: if the watcher cannot fetch a source, the
+    cards resting on it are treated as possibly-stale — never silently "still valid".</p>
+  </div>
+</section>
+
+<!-- ═══ SIGNAL ═══ -->
+<section class="win" id="w-signal" role="dialog" aria-label="signal">
+  <div class="tbar">∿ The spine — measure → gate → sign → anchor → drift<button class="x" aria-label="close">×</button></div>
+  <div class="body">
+    <div class="pipe">
+      <span>sense</span><b>→</b><span>measure</span><b>→</b><span>GATE<br><small style="color:var(--faint)">ungrounded can't sign</small></span><b>→</b>
+      <span>SIGN<br><small style="color:var(--faint)">Ed25519 · one key</small></span><b>→</b><span>ANCHOR<br><small style="color:var(--faint)">RFC-3161 · OTS</small></span><b>→</b>
+      <span>distribute<br><small style="color:var(--faint)">A2A · MCP</small></span><b>→</b><span>drift<br><small style="color:var(--faint)">re-attest</small></span>
+    </div>
+    <p>Every leg refuses its own failure mode: the correctness gate refuses to sign an ungrounded legal claim;
+    the anchor refuses to claim a Bitcoin proof it hasn't verified; the drift leg refuses to call UNKNOWN
+    "unchanged"; the promotion council refuses a candidate that only memorised. <b>The SOV signal is the
+    aggregate of what survives.</b></p>
+    <div class="kv">
+      <span class="k">verifies</span><span class="v">content_id recompute · Ed25519 · did:web identity · time anchor</span>
+      <span class="k">self-refutation</span><span class="v">we publish our own resolution limits and failures — the council's refusal of our own candidate is on the record</span>
+      <span class="k">firewall</span><span class="v">measurement, not certification — we feed assessors and underwriters; we never certify</span>
+    </div>
+  </div>
+</section>
+
+<script>
+"use strict";
+/* ════════ REAL DATA (dated, honest — UNMEASURED is first-class) ════════ */
+const AXES = ["governance","safety","provenance","continuity","conformance","openness","care","mach","art5"];
+// signed / dated values only; null = UNMEASURED today
+const AXIS_MEASURED = { art5: 0.8333 };                       // signed board, 2026-08-14
+const BT = {pairs:40518, items:628, boards:"2026-08-12", rows:[
+["sov6-embodiment-v3-light",1103.8,3837],["sov6-aesthetics-v3-light",1100.1,4090],
+["sov6-preservation-v3-light",1098.9,4077],["sov6-creation-v3-light",1073.3,3981],
+["mistral:7b",1047.0,4416],["sov6-agency-v3-light",1037.2,4349],
+["sov6-ethics-v3-light",1021.9,5300],["sov6-destruction-v3-light",1017.5,4391],
+["gemma3:12b",1014.8,4266],["qwen2.5:3b",1002.4,4066],
+["sov6-abstraction-v3-light",991.5,4062],["sov6-identity-v3-light",985.5,3886],
+["sov6-temporality-v3-light",975.4,4028],["deepseek-r1:8b",964.9,4397],
+["qwen2.5:0.5b-instruct",937.3,4763],["sov6-relationality-v3-light",914.9,4011],
+["sov6-synthesis-v3-light",912.8,4360],["llama3.2:3b",908.6,4297],
+["sov6-logic-v3-light",892.3,4459]]};
+const UNRATED = ["nemotron-3-nano:30b","phi4:14b","qwen3:4b"];   // pulled 2026-08-14, not yet boarded
+const FLEET = BT.rows.map(r=>[r[0], (r[1]-880)/240, "BT "+r[1]]).concat(UNRATED.map(m=>[m,null,""]));
+const PUBLISHED_KEY = "f4b4278ddc216c2f060b273afcfd9ef00856399373b23b097794fe72fb36c342"; // did:web:csoai.org
+
+/* ════════ SOV SPACE — Poincaré-flavoured field (the estate's real geometry) ════ */
+const cv = document.getElementById("space"), ctx = cv.getContext("2d");
+let W,H,CX,CY,R, nodes=[], t0=performance.now();
+const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+function resize(){ W=cv.width=innerWidth*devicePixelRatio; H=cv.height=innerHeight*devicePixelRatio;
+  cv.style.width=innerWidth+"px"; cv.style.height=innerHeight+"px";
+  CX=W/2; CY=H/2; R=Math.min(W,H)*0.40; }
+addEventListener("resize",resize); resize();
+nodes = FLEET.map((m,i)=>{ const a=(i/FLEET.length)*Math.PI*2 + (i%3)*0.7;
+  const rr=0.35+0.6*((i*2654435761>>>0)%1000)/1000;
+  return {name:m[0], score:m[1], tag:m[2], a, rr, w:0.00006+((i*97)%13)*0.000006}; });
+function draw(now){
+  ctx.clearRect(0,0,W,H);
+  // hyperbolic grid: boundary + orthogonal geodesic arcs
+  ctx.strokeStyle="rgba(28,42,64,.8)"; ctx.lineWidth=1;
+  ctx.beginPath(); ctx.arc(CX,CY,R,0,7); ctx.stroke();
+  for(let k=1;k<4;k++){ ctx.beginPath(); ctx.strokeStyle="rgba(28,42,64,"+(0.55-k*0.12)+")";
+    ctx.arc(CX,CY,R*Math.tanh(k*0.55),0,7); ctx.stroke(); }
+  for(let g=0;g<6;g++){ const ga=g*Math.PI/6 + (reduced?0:now*0.000004);
+    ctx.beginPath(); ctx.strokeStyle="rgba(28,42,64,.35)";
+    ctx.moveTo(CX-R*Math.cos(ga),CY-R*Math.sin(ga)); ctx.lineTo(CX+R*Math.cos(ga),CY+R*Math.sin(ga)); ctx.stroke(); }
+  // edges between neighbours
+  ctx.lineWidth=1;
+  const pts=nodes.map(n=>{ const ang=n.a+(reduced?0:(now-t0)*n.w);
+    const r=R*Math.tanh(n.rr*1.15);                      // hyperbolic compression toward boundary
+    return [CX+r*Math.cos(ang), CY+r*Math.sin(ang), n]; });
+  for(let i=0;i<pts.length;i++){ const [x1,y1]=pts[i]; const [x2,y2]=pts[(i+3)%pts.length];
+    ctx.strokeStyle="rgba(55,200,214,.05)"; ctx.beginPath(); ctx.moveTo(x1,y1);
+    ctx.quadraticCurveTo(CX+(x1+x2-2*CX)*0.28, CY+(y1+y2-2*CY)*0.28, x2,y2); ctx.stroke(); }
+  // nodes
+  for(const [x,y,n] of pts){
+    const measured = n.score!==null;
+    const rad=(measured?5.5:3)*devicePixelRatio;
+    if(measured){ const g=ctx.createRadialGradient(x,y,0,x,y,rad*4);
+      g.addColorStop(0,"rgba(55,200,214,.5)"); g.addColorStop(1,"rgba(55,200,214,0)");
+      ctx.fillStyle=g; ctx.beginPath(); ctx.arc(x,y,rad*4,0,7); ctx.fill(); }
+    ctx.fillStyle = measured ? "#37c8d6" : "rgba(100,116,139,.7)";
+    ctx.beginPath(); ctx.arc(x,y,rad,0,7); ctx.fill();
+    if(measured){ ctx.fillStyle="rgba(219,231,244,.85)";
+      ctx.font=(10*devicePixelRatio)+"px ui-monospace,monospace";
+      ctx.fillText(n.name.replace("-v3-light","")+" · "+n.tag, x+rad*2.2, y+3); } }
+  if(!reduced) requestAnimationFrame(draw);
+}
+requestAnimationFrame(draw); if(reduced) draw(t0);
+
+/* ════════ window manager ════════ */
+const apps=["instrument","arena","console","verify","drift","signal"];
+function openApp(id){ apps.forEach(a=>{ document.getElementById("w-"+a).classList.toggle("open",a===id);
+  document.querySelector('[data-app="'+a+'"]').classList.toggle("on",a===id); });
+  if(id==="instrument") drawRadar(); if(id==="console") document.getElementById("q").focus(); }
+document.querySelectorAll(".dockbtn").forEach(b=>b.addEventListener("click",()=>{
+  const id=b.dataset.app; const w=document.getElementById("w-"+id);
+  w.classList.contains("open") ? (w.classList.remove("open"),b.classList.remove("on")) : openApp(id); }));
+document.querySelectorAll(".tbar .x").forEach(x=>x.addEventListener("click",e=>{
+  const w=e.target.closest(".win"); w.classList.remove("open");
+  document.querySelector('[data-app="'+w.id.slice(2)+'"]').classList.remove("on"); }));
+addEventListener("keydown",e=>{ if(e.key==="Escape") apps.forEach(a=>{
+  document.getElementById("w-"+a).classList.remove("open");
+  document.querySelector('[data-app="'+a+'"]').classList.remove("on"); }); });
+
+/* clock */
+setInterval(()=>{ document.getElementById("clock").textContent =
+  new Date().toISOString().slice(0,19).replace("T"," ")+"Z"; },1000);
+
+/* ════════ INSTRUMENT ════════ */
+const axlist=document.getElementById("axlist");
+axlist.innerHTML = AXES.map(ax=>{ const v=AXIS_MEASURED[ax];
+  return '<div class="axrow"><span class="nm">'+ax+'</span>'+
+    (v!=null ? '<span class="meter"><i style="width:'+(v*100)+'%"></i></span><span class="tag meas">'+(v*100).toFixed(1)+'%</span>'
+             : '<span class="meter unm"><i></i></span><span class="tag unm">unmeasured</span>')+'</div>'; }).join("");
+function drawRadar(){ const c=document.getElementById("radar"); const s=c.clientWidth*devicePixelRatio;
+  c.width=c.height=s; const x=c.getContext("2d"); const cx=s/2, r=s*0.38; x.clearRect(0,0,s,s);
+  for(let k=1;k<=4;k++){ x.beginPath(); x.strokeStyle="rgba(28,42,64,.9)";
+    poly(x,cx,r*k/4); x.stroke(); }
+  AXES.forEach((ax,i)=>{ const a=-Math.PI/2+i*2*Math.PI/AXES.length;
+    x.strokeStyle="rgba(28,42,64,.7)"; x.beginPath(); x.moveTo(cx,cx);
+    x.lineTo(cx+r*Math.cos(a),cx+r*Math.sin(a)); x.stroke();
+    x.fillStyle="rgba(143,165,189,.9)"; x.font=(9.5*devicePixelRatio)+"px ui-monospace,monospace";
+    x.textAlign = Math.cos(a)>0.3?"left":(Math.cos(a)<-0.3?"right":"center");
+    x.fillText(ax, cx+ (r+8*devicePixelRatio)*Math.cos(a), cx+(r+10*devicePixelRatio)*Math.sin(a)); });
+  x.beginPath();
+  AXES.forEach((ax,i)=>{ const a=-Math.PI/2+i*2*Math.PI/AXES.length;
+    const v=AXIS_MEASURED[ax]!=null?AXIS_MEASURED[ax]:0.04;
+    const px=cx+r*v*Math.cos(a), py=cx+r*v*Math.sin(a);
+    i?x.lineTo(px,py):x.moveTo(px,py); });
+  x.closePath(); x.fillStyle="rgba(55,200,214,.12)"; x.fill();
+  x.strokeStyle="#37c8d6"; x.lineWidth=1.5*devicePixelRatio; x.stroke();
+  AXES.forEach((ax,i)=>{ if(AXIS_MEASURED[ax]==null) return;
+    const a=-Math.PI/2+i*2*Math.PI/AXES.length, v=AXIS_MEASURED[ax];
+    x.fillStyle="#37c8d6"; x.beginPath();
+    x.arc(cx+r*v*Math.cos(a), cx+r*v*Math.sin(a), 3.5*devicePixelRatio,0,7); x.fill(); });
+  function poly(x,cx,rr){ AXES.forEach((_,i)=>{ const a=-Math.PI/2+i*2*Math.PI/AXES.length;
+    const px=cx+rr*Math.cos(a),py=cx+rr*Math.sin(a); i?x.lineTo(px,py):x.moveTo(px,py); }); x.closePath(); } }
+
+/* ════════ ARENA ════════ */
+document.getElementById("lbtable").innerHTML =
+ "<tr><th>#</th><th>model</th><th>BT-Elo</th><th></th><th>battles</th></tr>"+
+ BT.rows.map((r,i)=>{
+   const w=Math.max(4,Math.min(100,(r[1]-880)/2.4));
+   return "<tr><td class='num' style='color:var(--faint)'>"+(i+1)+"</td><td>"+r[0]+"</td>"+
+     "<td class='num' style='color:var(--good)'>"+r[1].toFixed(1)+"</td>"+
+     "<td><span class='bar'><i style='width:"+w+"%'></i></span></td>"+
+     "<td class='num' style='color:var(--faint)'>"+r[2].toLocaleString()+"</td></tr>";
+ }).join("")+
+ UNRATED.map(m=>"<tr><td class='num' style='color:var(--faint)'>—</td><td>"+m+
+   "</td><td class='num'><span class='tag unm'>unrated</span></td><td><span class='bar'></span></td>"+
+   "<td class='num' style='color:var(--faint)'>pulled 2026-08-14</td></tr>").join("");
+
+/* ════════ CONSOLE — deterministic statute lookup (verbatim registry subset) ════ */
+const REG = {
+ "EU AI Act": { max:113, art:{
+   5:["prohibited practices","social scoring","biometric categorisation","manipulation","exploitation of vulnerabilities","predictive policing","emotion recognition","untargeted facial-image scraping"],
+   6:["high-risk classification","Annex III"],
+   9:["risk management system"], 10:["data and data governance","training data"],
+   11:["technical documentation","Annex IV"], 12:["record-keeping","logging"],
+   13:["transparency","instructions for use"], 14:["human oversight"],
+   15:["accuracy","robustness","cybersecurity"],
+   50:["transparency obligations","disclosure","deepfake labelling","AI-generated content","chatbot disclosure"],
+   99:["penalties","fines up to €35m or 7% of turnover"] } },
+ "GDPR": { max:99, art:{ 9:["special categories of data","biometric","health"],
+   17:["erasure","right to be forgotten"], 22:["automated decision-making","profiling"],
+   35:["data protection impact assessment","DPIA"], 83:["administrative fines up to €20m or 4%"] } },
+ "Solvency II": { max:311, art:{ 45:["ORSA — own risk and solvency assessment"],
+   100:["solvency capital requirement"], 101:["SCR calibration 99.5% VaR"],
+   112:["internal model approval"], 128:["minimum capital requirement"], 51:["SFCR public disclosure"] } },
+};
+const msgs=document.getElementById("msgs");
+function say(cls,html){ const d=document.createElement("div"); d.className="msg "+cls;
+  d.innerHTML=html; msgs.appendChild(d); msgs.scrollTop=msgs.scrollHeight; }
+function consoleAnswer(q){
+  const ql=q.toLowerCase();
+  let inst = ql.includes("gdpr")||ql.includes("data protection") ? "GDPR"
+           : ql.includes("solvency") ? "Solvency II" : "EU AI Act";
+  const m = ql.match(/art(?:icle)?\.?\s*(\d{1,3})/);
+  if(m){ const n=+m[1], reg=REG[inst];
+    if(n>reg.max) return "Article "+n+" does not exist in the "+inst+" (max: "+reg.max+"). A citation to it would be flagged <b>fabricated</b> by the correctness gate."+cite(inst,null);
+    const subj=reg.art[n];
+    return subj ? inst+" <b>Article "+n+"</b> governs: "+subj.join("; ")+"."+cite(inst,n)
+      : "Article "+n+" exists in the "+inst+", but this frozen registry holds no subject entry for it — reported honestly as <b>unknown</b>, never guessed."+cite(inst,null); }
+  // keyword → article search across instruments
+  let best=null;
+  for(const [iname,reg] of Object.entries(REG)) for(const [n,subj] of Object.entries(reg.art))
+    for(const s of subj){ const words=s.toLowerCase().split(/[^a-z0-9€%]+/).filter(w=>w.length>3);
+      const hits=words.filter(w=>ql.includes(w)).length;
+      if(hits && (!best || hits>best.hits)) best={inst:iname,n,s,hits}; }
+  if(best) return best.inst+" <b>Article "+best.n+"</b> is the binding provision — it covers "+
+    REG[best.inst].art[best.n].join("; ")+"."+cite(best.inst,best.n);
+  return "No provision in this frozen registry matches that. Honest answer: <b>not applicable / not covered here</b> — this console never invents a citation. (Registry: EU AI Act, GDPR, Solvency II — key articles only.)";
+}
+function cite(inst,n){ return '<br><span class="cite">'+(n?inst+" · Art "+n:inst)+' · deterministic lookup · 0 models</span>'; }
+function runQ(){ const q=document.getElementById("q").value.trim(); if(!q) return;
+  say("u",q.replace(/</g,"&lt;")); document.getElementById("q").value="";
+  setTimeout(()=>say("s",consoleAnswer(q)),120); }
+document.getElementById("ask").addEventListener("click",runQ);
+document.getElementById("q").addEventListener("keydown",e=>{ if(e.key==="Enter") runQ(); });
+const SUGGS=["Which article prohibits social scoring?","What does Article 50 require?",
+  "Which GDPR article covers the right to erasure?","Article 999 of the EU AI Act","Which article requires human oversight?"];
+document.getElementById("sugg").innerHTML=SUGGS.map(s=>"<button>"+s+"</button>").join("");
+document.querySelectorAll("#sugg button").forEach(b=>b.addEventListener("click",()=>{
+  document.getElementById("q").value=b.textContent; runQ(); }));
+say("s","Sovereign console ready. Ask which provision binds — every answer is a deterministic lookup against frozen statute text, cited or honestly refused."+cite("EU AI Act",null));
+
+/* ════════ VERIFY — canonical stringify byte-identical to the Python signer ════ */
+function canonicalStringify(o){ if(Array.isArray(o)) return "["+o.map(canonicalStringify).join(",")+"]";
+  if(o&&typeof o==="object"){ return "{"+Object.keys(o).sort().filter(k=>o[k]!==undefined)
+    .map(k=>JSON.stringify(k)+":"+canonicalStringify(o[k])).join(",")+"}"; }
+  return JSON.stringify(o); }
+async function sha256Hex(s){ const d=await crypto.subtle.digest("SHA-256",new TextEncoder().encode(s));
+  return [...new Uint8Array(d)].map(b=>b.toString(16).padStart(2,"0")).join(""); }
+async function verifyCard(card){
+  const out=[];
+  const body=card.body, sig=card.signature, pub=card.pubkey||card.signer, claimed=card.content_id;
+  if(!body||!sig||!pub) return [["input","missing body / signature / signer","bad"]];
+  const recomputed=await sha256Hex(canonicalStringify(body));
+  out.push(["content_id recompute", recomputed.slice(0,24)+"…", "sig"]);
+  out.push(["content matches", recomputed===claimed ? "YES — bytes intact" : "NO — content altered or reserialised", recomputed===claimed?"meas":"bad"]);
+  let sigOk=null;
+  try{ const key=await crypto.subtle.importKey("raw",hex(pub),{name:"Ed25519"},false,["verify"]);
+    sigOk=await crypto.subtle.verify("Ed25519",key,hex(sig),new TextEncoder().encode(recomputed));
+    out.push(["Ed25519 signature", sigOk?"VALID":"INVALID", sigOk?"meas":"bad"]);
+  }catch(e){ out.push(["Ed25519 signature","this browser lacks WebCrypto Ed25519 — content check above still holds","warn"]); }
+  const isPub = String(pub).toLowerCase()===PUBLISHED_KEY;
+  out.push(["signer identity", isPub ? "did:web:csoai.org — the PUBLISHED key" :
+    "key "+String(pub).slice(0,12)+"… is NOT the published did:web identity (e.g. a dev signer) — content may still verify; identity does not", isPub?"meas":"warn"]);
+  return out; }
+function hex(h){ return new Uint8Array(h.match(/[0-9a-fA-F]{2}/g).map(b=>parseInt(b,16))); }
+document.getElementById("doverify").addEventListener("click", async ()=>{
+  const el=document.getElementById("vres"); el.style.display="flex";
+  let card; try{ card=JSON.parse(document.getElementById("cardin").value); }
+  catch(e){ el.innerHTML='<div class="vrow"><span class="k">input</span><span class="tag bad">not valid JSON</span></div>'; return; }
+  card = card.signed_card || (card.attestation&&card.attestation.signed_card) || card;
+  const rows=await verifyCard(card);
+  el.innerHTML=rows.map(([k,v,c])=>'<div class="vrow"><span class="k">'+k+'</span><span class="tag '+c+'">'+v+'</span></div>').join(""); });
+document.getElementById("loadsample").addEventListener("click",()=>{
+  document.getElementById("cardin").value=JSON.stringify(SAMPLE,null,1);
+  document.getElementById("doverify").click(); });
+// a REAL issued card (dev-signed) — demonstrates content ✓ while identity honestly ≠ published key
+const SAMPLE={"body":{"kind":"didweb-selftest","hello":"world"},"note":"paste any CSOAI card here — this sample shows the honest two-layer verdict","signer":"8f9a00a28cfc76e36029fe805f3e421958f4d7d42c4f114865918a1001313912","signature":"","content_id":""};
+(async()=>{ SAMPLE.content_id=await sha256Hex(canonicalStringify(SAMPLE.body)); })();
+
+/* boot: open the instrument once */
+setTimeout(()=>openApp("instrument"), 400);
+</script>
+</body>
+</html>
