@@ -6,6 +6,11 @@ Usage:
   python3 defoneos_sign.py --payload "output text"
   python3 defoneos_sign.py --file output.json --verify
 """
+# ⚠️ DEPRECATED (2026-08-14) — HASH-THEATER, NOT A REAL SIGNATURE.
+# This "signs" via hashlib.sha256 of hashes with NO private key, so nothing it
+# produces is verifiable by any third party. Do NOT sign new records with it.
+# Use the real Ed25519 signer: sign.py (--sign/--verify) or
+# SOVOS/agents/card_issuer.py. Kept only for decoding legacy sigil records.
 import json, sys, hashlib, argparse, time
 
 SIGIL_ROOT = "77ab0e6f9d6c77e8"
