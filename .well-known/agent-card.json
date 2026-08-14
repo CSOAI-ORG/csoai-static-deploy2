@@ -1,0 +1,80 @@
+{
+ "name": "Council of AI \u2014 GSPC Measurement Agent",
+ "description": "Neutral AI-governance measurement body. Measures models and agent systems on 14 GSPC axes under deterministic, frozen conditions; gates for groundedness; signs results (Ed25519) and time-anchors (open timestamps) so any third party can recompute and verify without trusting us. Issued artifact is a measurement credential, never a certification or a compliance claim.",
+ "url": "https://councilof.ai",
+ "version": "1.0.0",
+ "protocolVersion": "1.0.1",
+ "capabilities": {
+  "streaming": false,
+  "pushNotifications": false,
+  "conversationHandling": false,
+  "metadata": {
+   "auth": {
+    "schemes": [
+     {
+      "type": "none",
+      "description": "Read + verify are free and anonymous"
+     }
+    ],
+    "credentials": "https://councilof.ai/.well-known/did.json"
+   }
+  }
+ },
+ "skills": [
+  {
+   "id": "measure",
+   "name": "Measure a model or agent",
+   "description": "Runs a subject through the GSPC measurement axes and returns a signed, time-anchored measurement credential (NOT a certificate). Metadata: model or agent reference, axes requested.",
+   "tags": [
+    "measurement",
+    "gspc",
+    "attestation"
+   ],
+   "examples": [
+    "Measure the governance behaviour of model X",
+    "Run a signed GSPC assessment of this agent"
+   ],
+   "outputModes": [
+    "application/json"
+   ]
+  },
+  {
+   "id": "verify",
+   "name": "Verify a signed card",
+   "description": "Recomputes content_id and checks the Ed25519 signature + time-anchor on a card issued by the Council. Free, anonymous, no trust required.",
+   "tags": [
+    "verify",
+    "attestation",
+    "ed25519"
+   ],
+   "examples": [
+    "Is this card valid?",
+    "Verify this signature"
+   ],
+   "outputModes": [
+    "application/json"
+   ]
+  }
+ ],
+ "provider": {
+  "organization": "Council of AI (CSOAI Ltd, UK 16939677)",
+  "url": "https://councilof.ai"
+ },
+ "evidence": {
+  "register": "https://councilof.ai/llms.txt",
+  "harness_register": "https://huggingface.co/csoai",
+  "verifier": "https://csoai-attest-verify.nicholastempleman.workers.dev/verify"
+ },
+ "pricing": "free to verify; metered to issue (x402)",
+ "_register": {
+  "claim": "measurement",
+  "not_a_certification": true,
+  "note": "Issues signed measurement credentials. Does not certify, accredit, or claim compliance. Neutrality: measures all labs on one ruler, sells remediation to none."
+ },
+ "_signature": {
+  "content_id": "cb20927a12532902733f37e68f0efdbd4cf98e30c19c088f921c2235fa9a5db4",
+  "alg": "EdDSA",
+  "signer": "f4b4278ddc216c2f060b273afcfd9ef00856399373b23b097794fe72fb36c342",
+  "signature": "5a27d48ab2b00b30f7ed1d0475fb5e70172702c6dc42b6651846522258301a6336f31b733a77142f15072e79e83b705069651cf17a145aca651852b85917890e"
+ }
+}
