@@ -1,0 +1,12 @@
+{
+ "store": "CSOAI signed measurement cards \u2014 public store",
+ "verify": "POST any card JSON to https://csoai.org/verify",
+ "signer": "ed25519:f4b4278ddc216c2f",
+ "note": "Measurement credentials, not certifications. Each card carries its Ed25519 signature, hash-chain inclusion proof, and OTS time anchor. All decimal numbers are strings (CW-2).",
+ "series": {
+  "weekend-2026-08-14": "15 signed cards + 1 gate refusal (see refusals/)"
+ },
+ "refusals": {
+  "ip-conception-log": "refusals/ip-conception-log.REFUSED-UNGROUNDED.json \u2014 correctness gate refused to sign (UNGROUNDED legal assertion). Kept as evidence the gate works: no signed card over ungrounded content."
+ }
+}
