@@ -1,0 +1,43 @@
+{
+  "@context": [
+    "https://www.w3.org/ns/did/v1",
+    "https://w3id.org/security/suites/jws-2020/v1",
+    "https://w3id.org/security/suites/ed25519-2020/v1"
+  ],
+  "id": "did:web:csoai.org",
+  "verificationMethod": [
+    {
+      "id": "did:web:csoai.org#keys-1",
+      "type": "JsonWebKey2020",
+      "controller": "did:web:csoai.org",
+      "publicKeyJwk": {
+        "kty": "OKP",
+        "crv": "Ed25519",
+        "x": "j5oAooz8duNgKf6AXz5CGVj019QsTxFIZZGKEAExORI",
+        "kid": "csoai-city-ed25519-1",
+        "use": "sig"
+      }
+    },
+    {
+      "id": "did:web:csoai.org#keys-2",
+      "type": "Ed25519VerificationKey2020",
+      "controller": "did:web:csoai.org",
+      "publicKeyMultibase": "z6Mkp7pYfoTkT4ErCpSheRZzEeHrrZefhC4jjKRdCtR9NJWM"
+    }
+  ],
+  "assertionMethod": [
+    "did:web:csoai.org#keys-1",
+    "did:web:csoai.org#keys-2"
+  ],
+  "authentication": [
+    "did:web:csoai.org#keys-1"
+  ],
+  "service": [
+    {
+      "id": "did:web:csoai.org#verifier",
+      "type": "AttestationVerifier",
+      "serviceEndpoint": "https://csoai.org/verify"
+    }
+  ],
+  "_note": "CSOAI signing identity. Ed25519 today (ML-DSA-65 is roadmap, not present). Cards sign the content_id; resolve this key and verify offline \u2014 you do not trust CSOAI, you trust that this domain controls this DID. C2PA-trust-list / CA recognition is a separate owner-gated step and is NOT claimed here."
+}
