@@ -65,9 +65,24 @@ class Chain:
         if not CRYPTO:
             return None
         p = Path(key_path or os.environ.get("SOVOS_CITY_KEY", Path.home() / ".sovos" / "city_ed25519"))
-        try:
-            if p.exists():
+        if p.exists():
+            try:
                 return serialization.load_pem_private_key(p.read_bytes(), password=None)
+            except Exception:
+                return None
+        # FAIL-CLOSED (ADR_ONE_SIGNER_2026-08-14): never silently auto-generate the CANONICAL
+        # production identity — a generated key is an unpublished second identity, i.e. no identity.
+        # Auto-generation stays allowed for explicit non-production (temp/test) key paths.
+        prod = {Path("/root/.sovos/city_ed25519"), Path.home() / ".sovos" / "city_ed25519"}
+        env_key = os.environ.get("SOVOS_CITY_KEY")
+        if env_key:
+            prod.add(Path(env_key))
+        if p in prod:
+            raise FileNotFoundError(
+                f"production signing key missing at {p} — refusing to auto-generate a rogue identity "
+                "(one-key doctrine, ADR_ONE_SIGNER_2026-08-14). Provision the keystone key, or pass an "
+                "explicit temp key_path for tests.")
+        try:  # explicit non-production path → generation is allowed (tests/temp)
             k = Ed25519PrivateKey.generate()
             p.parent.mkdir(parents=True, exist_ok=True)
             p.write_bytes(k.private_bytes(
