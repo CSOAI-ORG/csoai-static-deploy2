@@ -74,6 +74,32 @@ class EnvelopeResult:
         return asdict(self)
 
 
+def _resolve_signer_did(pub_hex: str):
+    """Return {signer_did, verification_method} if this Ed25519 pubkey is PUBLISHED in the
+    estate's did:web document, else None. Self-contained (no cross-package import) and honest:
+    an identity is stamped only when the signing key is actually the one csoai.org publishes, so
+    a dev key that isn't published never falsely claims the DID."""
+    try:
+        import base64
+        from pathlib import Path as _P
+        for parent in _P(__file__).resolve().parents:
+            cand = parent / ".well-known" / "did.json"
+            if cand.exists():
+                doc = json.loads(cand.read_text())
+                want = bytes.fromhex(pub_hex)
+                for vm in doc.get("verificationMethod", []):
+                    jwk = vm.get("publicKeyJwk")
+                    if jwk and jwk.get("kty") == "OKP" and jwk.get("crv") == "Ed25519":
+                        x = jwk["x"] + "=" * (-len(jwk["x"]) % 4)
+                        if base64.urlsafe_b64decode(x) == want:
+                            did = doc.get("id")
+                            return {"signer_did": did, "verification_method": f"{did}#keys-1"}
+                return None      # found the doc; key not in it
+        return None              # no did.json anywhere up-tree
+    except Exception:
+        return None
+
+
 def wrap(output: Dict[str, Any], source: str,
          key_path: Optional[str] = None,
          observed_at: Optional[str] = None) -> EnvelopeResult:
@@ -118,6 +144,14 @@ def wrap(output: Dict[str, Any], source: str,
             "content_id": cid,
             "signer_pubkey": pub,
         }
+
+        # did:web signer (honest): stamp the resolvable identity ONLY when this signing key is
+        # the one published at csoai.org/.well-known/did.json — a verifier can then resolve the
+        # signer without trusting us. Never stamped for an unpublished dev key.
+        _did = _resolve_signer_did(pub)
+        if _did:
+            envelope["signer_did"] = _did["signer_did"]
+            envelope["verification_method"] = _did["verification_method"]
 
         # Time-anchor (non-fatal): attach OTS calendar commitment
         anchor_state = "pending"

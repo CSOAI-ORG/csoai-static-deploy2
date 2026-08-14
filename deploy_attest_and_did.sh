@@ -27,25 +27,21 @@ run() {  # execute normally; in --dry-run just print what WOULD run
   if [ "$DRY" = 1 ]; then echo "  [dry-run] would run: $*"; else "$@"; fi
 }
 
-if [ "$DRY" = 1 ]; then
-  echo "== DRY RUN — no files written, no deploy, no token needed =="
-  echo "== 1. did:web key that WOULD be published (from this machine's keystone) =="
-  python3 - <<'PY'
-import sys; sys.path.insert(0, "SOVOS/packages/sovos-city/src")
-try:
-    from make_did import keystone_pubkey_hex
-    pub = keystone_pubkey_hex("~/.sovos/city_ed25519")
-    print(f"     pubkey = {pub}")
-    print("     did    = did:web:csoai.org")
-    print("     ⚠️  is this the PRODUCTION signing key? if not, run on the A100 instead.")
-except Exception as e:
-    print(f"     (could not read keystone here: {str(e)[:80]})")
+[ "$DRY" = 1 ] && echo "== DRY RUN — no files written, no deploy, no token needed =="
+[ "$DRY" = 0 ] && : "${CLOUDFLARE_API_TOKEN:?rotate + export CLOUDFLARE_API_TOKEN first (no angle brackets)}"
+# 1. Publish the COMMITTED did.json. We do NOT auto-regenerate it here: regenerating from the
+#    local keystone would clobber the production identity (f4b4, on the pod) with a dev key if
+#    run on the wrong machine. To CHANGE the identity, run make_did.py on the PRODUCTION keystone
+#    deliberately, commit, then deploy.
+echo "== 1. publish the COMMITTED did.json — signing identity it carries: =="
+python3 - <<'PY'
+import json, base64
+d = json.load(open(".well-known/did.json"))
+x = next(v["publicKeyJwk"]["x"] for v in d["verificationMethod"] if "publicKeyJwk" in v)
+print("     published key:", base64.urlsafe_b64decode(x + "=" * (-len(x) % 4)).hex())
+print("     did          : did:web:csoai.org")
+print("     (to change identity: make_did.py on the PRODUCTION keystone, then commit + redeploy.)")
 PY
-else
-  : "${CLOUDFLARE_API_TOKEN:?rotate + export CLOUDFLARE_API_TOKEN first (no angle brackets)}"
-  echo "== 1. regenerate did.json from THIS machine's signing keystone =="
-  run python3 make_did.py
-fi
 
 echo "== 2. sync did.json into the Pages deploy dir (_site/.well-known/) =="
 run mkdir -p _site/.well-known
