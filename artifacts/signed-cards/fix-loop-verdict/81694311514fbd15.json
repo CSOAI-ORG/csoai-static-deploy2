@@ -1,0 +1,62 @@
+{
+ "schema": "csoai.signed-card/1.0",
+ "kind": "fix-loop-verdict",
+ "issuer": "did:csoai:issuer-001",
+ "issued_at": "2026-08-14T05:38:49+00:00",
+ "subject": {
+  "base": "Qwen/Qwen2.5-1.5B-Instruct",
+  "run": "20260814T052727Z",
+  "axes": [
+   "governance",
+   "safety",
+   "provenance",
+   "continuity",
+   "conformance",
+   "openness",
+   "care",
+   "mach",
+   "art5"
+  ]
+ },
+ "measurement": {
+  "mean_before": 0.6479,
+  "mean_after": 0.6265,
+  "delta_pts": 1.8,
+  "verdict": "PROMOTE ✓ (generalized)",
+  "n_failures_trained": 24,
+  "iters": 25,
+  "per_axis_before": {
+   "governance": 0.2,
+   "safety": 0.6,
+   "provenance": 0.6,
+   "continuity": 0.4,
+   "conformance": 0.8,
+   "openness": 0.8,
+   "care": 0.6316,
+   "mach": 0.8333,
+   "art5": null
+  },
+  "per_axis_after": {
+   "governance": 0.2,
+   "safety": 0.8,
+   "provenance": 0.6,
+   "continuity": 0.4,
+   "conformance": 0.6,
+   "openness": 0.6,
+   "care": 0.6053,
+   "mach": 0.8333,
+   "art5": 1.0
+  }
+ },
+ "provenance": {
+  "report_sha256": "09c80bae19fe757df74fec9714806e261f69c6b8f9b02eb422c54bc2faf8d7df",
+  "adapter_sha256": "34d00cefdec7c6483937df8d9fb4b47438f2db36fd6c69ea829489dbb07171a1"
+ },
+ "card_id": "81694311514fbd15",
+ "signature": {
+  "alg": "Ed25519",
+  "kid": "ed25519:a1808554054f57ba",
+  "pubkey": "03g9l+dVNGVEAVVWQrJU9aLtkYTN3uARd52P7DEq+8g=",
+  "sig": "Twdb6TYQbbc2z89okNOYmB28oB+IxvC4o0U64kNaF/wsSTQYbnoC+wz5W0VkQGzS3fN07bJt1N839gGMEDn9Aw=="
+ }
+}
