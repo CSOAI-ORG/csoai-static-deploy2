@@ -1,0 +1,15 @@
+{
+  "slug": "aeo-measurement-integrity",
+  "title": "How is a Council of AI measurement verified?",
+  "question": "How is a Council of AI measurement record verified?",
+  "answer": "A Council of AI measurement record is verified the same way every signed board and engine-fix record in the estate is verified: the canonical body is hashed (sha256) and signed with Ed25519 by the holder of the published public key, then re-checked on demand. Verification proves two things - authorship (the holder of the key issued it) and integrity (nothing in the body was altered since signing). The path ahead is one primitive swap to ML-DSA-65 via liboqs for post-quantum posture. A record that lacks the signature is honestly labelled unsigned, never dressed as signed. That discipline is what keeps a measurement claim auditable rather than asserted.",
+  "ref": "Council of AI signature layer (Ed25519; ML-DSA upgrade path), verified on this node 2026-08-14",
+  "compiled_at": "2026-08-14T15:00:00+00:00",
+  "signature": {
+    "kind": "ed25519",
+    "sig": "xpv/5hyIp1i5TVXXqnlFJEQF6FqjLCPVDD7PRFE2m0IukXJi+4vzHp5Mfa8BnhA+1XycVhqV5660SsWF5mTnDA==",
+    "body_sha256": "a3e1105d54e9117f4ca3dc320f9144209818b3fc137d5ff180a5074f210be74c",
+    "pubkey": "ZnF3DZUFc5QOoy+y07rvzNUyxJgza2kUQmn1nv4S9SY=",
+    "note": "Ed25519 over the canonical body; verify with sign.py --verify. PQC upgrade: ML-DSA-65 via liboqs \u2014 same body, swap the primitive."
+  }
+}

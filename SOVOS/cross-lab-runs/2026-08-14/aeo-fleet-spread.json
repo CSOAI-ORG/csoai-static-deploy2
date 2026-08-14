@@ -1,0 +1,15 @@
+{
+  "slug": "aeo-fleet-spread",
+  "title": "What does a spread across a model fleet tell you about a board?",
+  "question": "What does a spread across a model fleet tell you about a measurement board?",
+  "answer": "A board that usefully discriminates models shows a spread: the strongest model clears a healthy accuracy while the weakest sits near a chance floor. When one engine axis reports a weakest model at 0.000 alongside high performers, the honest reading is a bank-quality or vocabulary-gap flag - the axis cannot yet separate a weak model from noise on that cell set. That gap is recorded as a signed engine-fix candidate for the axis, and promotion is owner-gated: we keep the honest record either way. A narrow spread is the opposite signal, a board that barely discriminates anything. The measurement vocabulary is stable and language-locked - monitored containment, not provable isolation; verified measurement credential.",
+  "ref": "Council of AI 14-axis engine fleet diagnosis, 2026-08-14 (det axis 0.000 floor flagged, fix record signed)",
+  "compiled_at": "2026-08-14T15:00:00+00:00",
+  "signature": {
+    "kind": "ed25519",
+    "sig": "WAg/axfm0z2VCj6WH/vEBJZSqwWVfnPcdyWPi3E512WwV9Yl58jd10kr8DL7hVt24wakPp2jIrtIaO0Ivw0JAw==",
+    "body_sha256": "e5aa6638fa090562f5f77e95807881f8e8da68832dbceb8055fbc1fc2091a6a6",
+    "pubkey": "ZnF3DZUFc5QOoy+y07rvzNUyxJgza2kUQmn1nv4S9SY=",
+    "note": "Ed25519 over the canonical body; verify with sign.py --verify. PQC upgrade: ML-DSA-65 via liboqs \u2014 same body, swap the primitive."
+  }
+}
