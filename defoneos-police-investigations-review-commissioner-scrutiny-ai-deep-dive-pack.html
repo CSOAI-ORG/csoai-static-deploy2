@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Police Investigations & Review Commissioner (PIRC) — Police Scrutiny & Complaints AI Deep-Dive Governance Pack</title>
+<meta name="description" content="12-entry-point AI governance framework for the Police Investigations & Review Commissioner (PIRC) — Scotland's independent police oversight body — covering complaints handling, death investigations, serious incidents, firearms, custody, and use of force review.">
+<link rel="canonical" href="https://csoai.org/defoneos-police-investigations-review-commissioner-scrutiny-ai-deep-dive-pack.html">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Space+Grotesk:wght@700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#050816;--panel:#0d1330;--gold:#d4af37;--sov:#6dd5ff;--accent:#f97316;--text:#e2e8f0;--muted:#94a3b8;--border:#1e2954;--danger:#ef4444;--green:#4ade80}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;line-height:1.6;min-height:100vh}
+.eu-banner{background:linear-gradient(135deg,#991b1b,#7f1d1d);padding:12px 24px;text-align:center;font-size:13px;border-bottom:2px solid #dc2626}
+.eu-banner a{color:#fca5a5}
+nav{display:flex;gap:24px;padding:16px 24px;background:var(--panel);border-bottom:1px solid var(--border);flex-wrap:wrap}
+nav a{color:var(--muted);text-decoration:none;font-size:14px}
+nav a:hover{color:var(--sov)}
+.container{max-width:1200px;margin:0 auto;padding:40px 24px}
+h1{font-family:'Space Grotesk',monospace;font-size:2.2rem;background:linear-gradient(135deg,var(--gold),var(--sov));-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:8px}
+.subtitle{color:var(--muted);font-size:1rem;margin-bottom:32px}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:40px}
+.stat-card{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:20px;text-align:center}
+.stat-num{font-family:'Space Grotesk',monospace;font-size:2rem;color:var(--sov)}
+.stat-label{color:var(--muted);font-size:13px;margin-top:4px}
+h2{font-family:'Space Grotesk',monospace;font-size:1.5rem;color:var(--sov);margin:40px 0 20px;padding-bottom:8px;border-bottom:1px solid var(--border)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:16px}
+.card{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:20px}
+.card .tag{display:inline-block;padding:4px 12px;background:rgba(109,213,255,0.1);color:var(--sov);border-radius:20px;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:1px;margin-bottom:12px}
+.card h3{font-family:'Space Grotesk',monospace;font-size:1.05rem;color:var(--text);margin-bottom:8px}
+.card p{color:var(--muted);font-size:14px;line-height:1.5}
+.mcp-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:16px}
+.mcp-card{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:20px}
+.mcp-card .mcp-name{font-family:'Space Grotesk',monospace;font-size:1rem;color:var(--gold);margin-bottom:4px}
+.mcp-card .mcp-fn{color:var(--muted);font-size:13px;margin-bottom:8px}
+.mcp-card .mcp-use{color:var(--text);font-size:13px}
+.redline{background:rgba(239,68,68,0.08);border:1px solid rgba(239,68,68,0.25);border-radius:12px;padding:28px}
+.redline h3{color:var(--danger);margin-bottom:8px}
+.redline ul{list-style:none;padding:0}
+.redline li{color:var(--muted);font-size:14px;padding:6px 0;border-bottom:1px solid rgba(239,68,68,0.1)}
+.redline li:last-child{border-bottom:none}
+.redline li strong{color:var(--danger)}
+.engagement{display:flex;gap:16px;flex-wrap:wrap}
+.step{flex:1 1 180px;background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:20px;text-align:center;min-width:160px}
+.step .num{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,var(--gold),var(--sov));display:flex;align-items:center;justify-content:center;font-family:'Space Grotesk',monospace;font-weight:700;font-size:1.2rem;margin:0 auto 12px;color:var(--bg)}
+.step h4{font-family:'Space Grotesk',monospace;font-size:1rem;color:var(--text);margin-bottom:6px}
+.step p{color:var(--muted);font-size:13px}
+.cta{display:flex;gap:16px;margin-top:40px;flex-wrap:wrap}
+.cta a{display:inline-block;padding:14px 28px;background:linear-gradient(135deg,var(--gold),#b8860b);color:var(--bg);text-decoration:none;border-radius:8px;font-weight:600;font-family:'Space Grotesk',monospace}
+.cta a.secondary{background:rgba(109,213,255,0.1);border:1px solid var(--sov);color:var(--sov)}
+footer{text-align:center;padding:40px 24px;color:var(--muted);font-size:13px;border-top:1px solid var(--border);margin-top:40px}
+footer p{margin:4px 0}
+</style>
+</head>
+<body>
+<div class="eu-banner">⚖️ DEFONEOS sovereign AI governance framework. Not a certification. <a href="/governance-master.html">Governance Master Index →</a></div>
+<nav>
+<a href="/">🏠 Home</a>
+<a href="/defoneos.html">DEFONEOS</a>
+<a href="/governance-master.html">Governance</a>
+<a href="/compliance.html">Compliance</a>
+<a href="/sitemap.xml">Sitemap</a>
+</nav>
+<div class="container">
+<h1>👮 Police Investigations & Review Commissioner (PIRC) — Police Scrutiny & Complaints AI Deep-Dive Governance Pack</h1>
+<p class="subtitle">12 PIRC entry points · 8 transformation priorities · 6 DEFONEOS MCPs · Police and Fire Reform (Scotland) Act 2012 + Human Rights Act 1998 backbone</p>
+
+<div class="stats">
+<div class="stat-card"><div class="stat-num">12</div><div class="stat-label">Entry Points</div></div>
+<div class="stat-card"><div class="stat-num">8</div><div class="stat-label">Priorities</div></div>
+<div class="stat-card"><div class="stat-num">6</div><div class="stat-label">MCP Servers</div></div>
+<div class="stat-card"><div class="stat-num">2013</div><div class="stat-label">Established</div></div>
+</div>
+
+<p style="font-size:15px;color:var(--muted);margin-bottom:24px">The Police Investigations & Review Commissioner (PIRC) is Scotland's independent police oversight body — established under the Police and Fire Reform (Scotland) Act 2012 — responsible for investigating serious incidents involving Police Scotland, reviewing complaint handling, and conducting independent investigations into deaths in police custody, firearms discharges, and allegations of serious misconduct. This pack provides a sovereign AI governance framework for every PIRC scrutiny domain.</p>
+
+<h2>📋 12 Entry Points</h2>
+<div class="grid"><div class="card">
+<span class="tag">COMPLAINT</span>
+<h3>Complaint Handling Review (CHR)</h3>
+<p>Independent statutory review of Police Scotland's handling of public complaints — AI governance for complaint triage, categorisation consistency, and pattern-of-conduct detection across Scotland's 13 policing divisions.</p>
+</div><div class="card">
+<span class="tag">DEATH</span>
+<h3>Independent Death Investigations</h3>
+<p>Mandatory PIRC investigation of all deaths following police contact — deaths in custody, fatal road collisions, and deaths following police use of force — AI governance for case-file management and forensic evidence synthesis.</p>
+</div><div class="card">
+<span class="tag">SERIOUS</span>
+<h3>Serious Incident & Conduct Reviews</h3>
+<p>Investigation of serious incidents and allegations of misconduct against senior police officers — AI governance for evidence cataloguing, timeline reconstruction, and witness-interview pattern analysis.</p>
+</div><div class="card">
+<span class="tag">FIREARMS</span>
+<h3>Firearms Discharge Investigations</h3>
+<p>Mandatory PIRC investigation of every police firearm discharge in Scotland — conventional firearms, taser, AEP, and baton round — AI governance for forensic ballistics correlation, weapon-telemetry records, and use-of-force proportionality assessment.</p>
+</div><div class="card">
+<span class="tag">CUSTODY</span>
+<h3>Custody Death & Serious Injury Review</h3>
+<p>Investigation of all deaths and serious injuries in police custody suites — AI governance for CCTV timeline analysis, custody-log reconciliation, and PACE (Scotland) compliance verification across all Police Scotland custody centres.</p>
+</div><div class="card">
+<span class="tag">FORCE</span>
+<h3>Use of Force Oversight</h3>
+<p>Independent review of police use of force — restraint, spit-hoods, limb restraints — AI governance for use-of-force data analytics, de-escalation effectiveness measurement, and pattern-of-conduct trend reporting across divisions.</p>
+</div><div class="card">
+<span class="tag">AUDIT</span>
+<h3>Police Scotland & SPA Audit Interface</h3>
+<p>PIRC recommendations to Police Scotland and the Scottish Police Authority (SPA) — AI governance for recommendation-tracking, compliance monitoring, and follow-up audit-cycle management with Parliamentary accountability.</p>
+</div><div class="card">
+<span class="tag">WHISTLE</span>
+<h3>Whistleblowing & Protected Disclosures</h3>
+<p>Review of whistleblowing reports and protected disclosures within Police Scotland — AI governance for disclosure triage, reporter-protection verification, and investigation-outcome tracking under the Public Interest Disclosure Act 1998.</p>
+</div><div class="card">
+<span class="tag">CONFIDENCE</span>
+<h3>Public Confidence & Community Scrutiny</h3>
+<p>Community engagement on police legitimacy and accountability — AI governance for public-confidence sentiment analysis, demographic disparity detection in complaint outcomes, and community-trust measurement frameworks.</p>
+</div><div class="card">
+<span class="tag">LEGISLATIVE</span>
+<h3>Legislative Review & Policy Advisory</h3>
+<p>PIRC advice to Scottish Ministers and the Scottish Parliament on police oversight legislation — AI governance for legislative-impact modelling, international comparator analysis, and policy-option assessment.</p>
+</div><div class="card">
+<span class="tag">INTERNATIONAL</span>
+<h3>International Oversight Standards (OPCAT)</h3>
+<p>UN Optional Protocol to the Convention against Torture (OPCAT) compliance — AI governance for National Preventive Mechanism coordination, detention-inspection analytics, and international human rights reporting obligations.</p>
+</div><div class="card">
+<span class="tag">REPORTING</span>
+<h3>Scottish Parliament Accountability & Reporting</h3>
+<p>Annual reports, thematic reviews, and special reports to the Scottish Parliament — AI governance for investigation-statistics compilation, redaction assurance, and publication-quality report assembly under FOI (Scotland) Act 2002.</p>
+</div></div>
+
+<h2>🎯 8 Transformation Priorities</h2>
+<div class="grid"><div class="card">
+<span class="tag">P1</span>
+<h3>Complaint Triage & Categorisation Consistency</h3>
+<p>AI-Augmented complaint review — ensuring consistent statutory categorisation of all public complaints against Police Scotland while maintaining human caseworker determination of every classification.</p>
+</div><div class="card">
+<span class="tag">P2</span>
+<h3>Death & Serious Incident Investigation Workflow</h3>
+<p>AI governance for investigation case management — evidence indexing, timeline assembly, and witness-statement pattern detection with Crown Office and Procurator Fiscal Service (COPFS) interface.</p>
+</div><div class="card">
+<span class="tag">P3</span>
+<h3>Use-of-Force Data Analytics & Pattern Detection</h3>
+<p>Sovereign AI for use-of-force data — divisional pattern detection, disproportionality analysis, and de-escalation effectiveness measurement across all Police Scotland operational commands.</p>
+</div><div class="card">
+<span class="tag">P4</span>
+<h3>Firearms & Less-Lethal Weapon Incident Review</h3>
+<p>AI governance for firearms discharge investigation — ballistics correlation, timeline reconstruction, and use-of-force proportionality assessment with human-led final determination.</p>
+</div><div class="card">
+<span class="tag">P5</span>
+<h3>Custody Suite Surveillance & Compliance Monitoring</h3>
+<p>AI governance for custody CCTV analytics — welfare-check compliance, restraint-event detection, and custody-log reconciliation with PACE (Scotland) statutory requirements.</p>
+</div><div class="card">
+<span class="tag">P6</span>
+<h3>Recommendation Tracking & Police Scotland Compliance</h3>
+<p>Sovereign recommendation-tracking — monitoring Police Scotland and SPA implementation of PIRC recommendations with automated follow-up and Parliamentary reporting dashboards.</p>
+</div><div class="card">
+<span class="tag">P7</span>
+<h3>Whistleblowing Intelligence & Protected Disclosure Management</h3>
+<p>AI governance for whistleblowing report handling — disclosure triage, reporter safeguard verification, and cross-referral with Crown Office criminal investigation where applicable.</p>
+</div><div class="card">
+<span class="tag">P8</span>
+<h3>Public Confidence & Community Trust Analytics</h3>
+<p>AI governance for public confidence measurement — sentiment analysis, complaint-demographic analytics, and community-trust trend reporting across Scotland's diverse communities.</p>
+</div></div>
+
+<h2>🔧 6 MCP Servers</h2>
+<div class="mcp-grid"><div class="mcp-card">
+<div class="mcp-name">bft-council-probe</div>
+<div class="mcp-fn">33-agent Byzantine Fault Tolerant governance council</div>
+<div class="mcp-use">Governance attestation for investigation conclusions, complaint-handling reviews, and recommendation tracking — Ed25519 signed, 23/33 quorum for all oversight governance claims.</div>
+</div><div class="mcp-card">
+<div class="mcp-name">sovereign-keystore</div>
+<div class="mcp-fn">Sovereign cryptographic key management (HSM-backed)</div>
+<div class="mcp-use">Key management for investigation records, complaint files, and evidence chains — keys never leave UK-sovereign enclave.</div>
+</div><div class="mcp-card">
+<div class="mcp-name">sentinel-hub-mcp</div>
+<div class="mcp-fn">ESA Copernicus satellite imagery (sovereign caching)</div>
+<div class="mcp-use">Geospatial evidence for incident-scene reconstruction, custody-suite estate mapping, and major-incident environmental context — UK-resident satellite data.</div>
+</div><div class="mcp-card">
+<div class="mcp-name">data-gov-uk-mcp</div>
+<div class="mcp-fn">UK government open data portal (sovereign)</div>
+<div class="mcp-use">Scottish crime statistics, census demographics, and justice-system data for disproportionality analysis and community-trust measurement — no data leaves UK.</div>
+</div><div class="mcp-card">
+<div class="mcp-name">companies-house-mcp</div>
+<div class="mcp-fn">Companies House registry (UK registry sovereignty)</div>
+<div class="mcp-use">Supplier verification for forensic services, digital-evidence platforms, and investigation-support contractors — UK corporate data only.</div>
+</div><div class="mcp-card">
+<div class="mcp-name">gdelt-news-mcp</div>
+<div class="mcp-fn">Global news event database (sovereign caching)</div>
+<div class="mcp-use">Police oversight trend intelligence — international police-complaint body innovation, human-rights reporting, and custody-death monitoring — UK-resident caching.</div>
+</div></div>
+
+<h2>🚫 6 Non-Negotiable Red Lines</h2>
+<div class="redline">
+<ul>
+<li><strong>No AI-sole determination of complaints.</strong> All public complaint categorisation, investigation findings, and recommendations are human-determined. AI assists — it never decides complaint outcomes. Police and Fire Reform (Scotland) Act 2012 duty-of-independence.</li>
+<li><strong>No AI-sole death-investigation conclusions.</strong> All death-investigation findings, causation assessments, and Crown Office referrals are human-led with professional investigative judgment.</li>
+<li><strong>No AI surveillance of individual police officers.</strong> Workforce analytics assess divisional-level trends — no individual officer tracking, no automated performance scoring, no psychometric inference without explicit consent.</li>
+<li><strong>No automated disciplinary or conduct recommendations.</strong> AI governance tools may highlight patterns but never recommend specific disciplinary outcomes, fitness-to-practise findings, or conduct sanctions.</li>
+<li><strong>No legal-privilege breach.</strong> All investigation files, legal advice, and Crown Office communications remain privileged — AI tools operate only on non-privileged data with human privilege-review gates.</li>
+<li><strong>No investigation evidence leaves UK jurisdiction.</strong> All complaint files, death-investigation records, and forensic evidence remain UK-resident. DPA 2018 Part 3 (law enforcement processing) enforced by sovereign-keystore geographic binding.</li>
+</ul>
+</div>
+
+<h2>⚡ 5-Step Engagement Model</h2>
+<div class="engagement"><div class="step">
+<div class="num">1</div>
+<h4>Discovery</h4>
+<p>Map PIRC investigation domains, case-management systems, and statutory interfaces against the 12-entry-point framework.</p>
+</div><div class="step">
+<div class="num">2</div>
+<h4>Governance Design</h4>
+<p>Design AI governance architecture, investigation-integrity red-line enforcement, and BFT attestation aligned to Scottish police oversight statutory duties.</p>
+</div><div class="step">
+<div class="num">3</div>
+<h4>Pilot</h4>
+<p>Deploy 2-3 MCP servers in sandbox with PIRC investigation data; measure governance outcomes and investigation-integrity metrics.</p>
+</div><div class="step">
+<div class="num">4</div>
+<h4>Scale</h4>
+<p>Expand to full 6-MCP stack with organisation-wide deployment, CHR integration, and investigator governance training.</p>
+</div><div class="step">
+<div class="num">5</div>
+<h4>Assure</h4>
+<p>Continuous monitoring, 33-agent BFT council verification, DEFONEOS-SEAL credential issuance for police oversight AI governance.</p>
+</div></div>
+
+<div class="cta">
+<a href="/governance-master.html">📋 Request OWEM RFQ →</a>
+<a href="/article-50.html" class="secondary">⚖️ Article 50 Passport →</a>
+</div>
+
+<p style="font-size:12px;color:var(--muted);margin-top:24px">Legislation backbone: Police and Fire Reform (Scotland) Act 2012, Police (Scotland) Act 1967, Human Rights Act 1998, DPA 2018 Part 3 (law enforcement processing), FOI (Scotland) Act 2002, Equality Act 2010, Public Interest Disclosure Act 1998, UN OPCAT</p>
+<p style="font-size:12px;color:var(--muted);margin-top:8px">SIGIL: defoneos-tick293-defoneos-police-investigations-review-commissioner-scrutiny</p>
+</div>
+<footer>
+<p>CSOAI Ltd (UK 16939677) · csoai.org · compliance@csoai.org</p>
+<p>DEFONEOS is a UK-sovereign open-source AI governance framework built on the meok substrate. UK-sovereign. AUKUS-compatible. Audit-grade.</p>
+<p style="margin-top:8px;font-size:11px">© 2026 CSOAI Ltd. All trademarks acknowledged. This document is a governance-design artefact — not a compliance certification.</p>
+</footer>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": "Police Investigations & Review Commissioner (PIRC) — Police Scrutiny & Complaints AI Deep-Dive Governance Pack",
+  "description": "12-entry-point AI governance framework for the Police Investigations & Review Commissioner (PIRC) — Scotland's independent police oversight body — covering complaints handling, death investigations, serious incidents, firearms, custody, and use of force review.",
+  "url": "https://csoai.org/defoneos-police-investigations-review-commissioner-scrutiny-ai-deep-dive-pack.html",
+  "about": {
+    "@type": "GovernmentService",
+    "name": "Police Investigations & Review Commissioner",
+    "url": "https://www.pirc.scot/"
+  },
+  "provider": {
+    "@type": "Organization",
+    "name": "CSOAI Ltd",
+    "legalName": "CSOAI Ltd"
+  },
+  "datePublished": "2026-08-16"
+}
+</script>
+</body>
+</html>

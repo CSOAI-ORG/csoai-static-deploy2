@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Scottish Courts and Tribunals Service (SCTS) — Justice Administration AI Deep-Dive Governance Pack</title>
+<meta name="description" content="12-entry-point AI governance framework for the Scottish Courts and Tribunals Service (SCTS) — Scotland's independent court and tribunal administration body — covering sheriff courts, High Court, Court of Session, tribunals, fines enforcement, digital transformation, and judicial support.">
+<link rel="canonical" href="https://csoai.org/defoneos-scottish-courts-tribunals-service-justice-ai-deep-dive-pack.html">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Space+Grotesk:wght@700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#050816;--panel:#0d1330;--gold:#d4af37;--sov:#6dd5ff;--accent:#f97316;--text:#e2e8f0;--muted:#94a3b8;--border:#1e2954;--danger:#ef4444;--green:#4ade80}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;line-height:1.6;min-height:100vh}
+.eu-banner{background:linear-gradient(135deg,#991b1b,#7f1d1d);padding:12px 24px;text-align:center;font-size:13px;border-bottom:2px solid #dc2626}
+.eu-banner a{color:#fca5a5}
+nav{display:flex;gap:24px;padding:16px 24px;background:var(--panel);border-bottom:1px solid var(--border);flex-wrap:wrap}
+nav a{color:var(--muted);text-decoration:none;font-size:14px}
+nav a:hover{color:var(--sov)}
+.container{max-width:1200px;margin:0 auto;padding:40px 24px}
+h1{font-family:'Space Grotesk',monospace;font-size:2.2rem;background:linear-gradient(135deg,var(--gold),var(--sov));-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:8px}
+.subtitle{color:var(--muted);font-size:1rem;margin-bottom:32px}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:40px}
+.stat-card{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:20px;text-align:center}
+.stat-num{font-family:'Space Grotesk',monospace;font-size:2rem;color:var(--sov)}
+.stat-label{color:var(--muted);font-size:13px;margin-top:4px}
+h2{font-family:'Space Grotesk',monospace;font-size:1.5rem;color:var(--sov);margin:40px 0 20px;padding-bottom:8px;border-bottom:1px solid var(--border)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:16px}
+.card{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:20px}
+.card .tag{display:inline-block;padding:4px 12px;background:rgba(109,213,255,0.1);color:var(--sov);border-radius:20px;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:1px;margin-bottom:12px}
+.card h3{font-family:'Space Grotesk',monospace;font-size:1.05rem;color:var(--text);margin-bottom:8px}
+.card p{color:var(--muted);font-size:14px;line-height:1.5}
+.mcp-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:16px}
+.mcp-card{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:20px}
+.mcp-card .mcp-name{font-family:'Space Grotesk',monospace;font-size:1rem;color:var(--gold);margin-bottom:4px}
+.mcp-card .mcp-fn{color:var(--muted);font-size:13px;margin-bottom:8px}
+.mcp-card .mcp-use{color:var(--text);font-size:13px}
+.redline{background:rgba(239,68,68,0.08);border:1px solid rgba(239,68,68,0.25);border-radius:12px;padding:28px}
+.redline h3{color:var(--danger);margin-bottom:8px}
+.redline ul{list-style:none;padding:0}
+.redline li{color:var(--muted);font-size:14px;padding:6px 0;border-bottom:1px solid rgba(239,68,68,0.1)}
+.redline li:last-child{border-bottom:none}
+.redline li strong{color:var(--danger)}
+.engagement{display:flex;gap:16px;flex-wrap:wrap}
+.step{flex:1 1 180px;background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:20px;text-align:center;min-width:160px}
+.step .num{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,var(--gold),var(--sov));display:flex;align-items:center;justify-content:center;font-family:'Space Grotesk',monospace;font-weight:700;font-size:1.2rem;margin:0 auto 12px;color:var(--bg)}
+.step h4{font-family:'Space Grotesk',monospace;font-size:1rem;color:var(--text);margin-bottom:6px}
+.step p{color:var(--muted);font-size:13px}
+.cta{display:flex;gap:16px;margin-top:40px;flex-wrap:wrap}
+.cta a{display:inline-block;padding:14px 28px;background:linear-gradient(135deg,var(--gold),#b8860b);color:var(--bg);text-decoration:none;border-radius:8px;font-weight:600;font-family:'Space Grotesk',monospace}
+.cta a.secondary{background:rgba(109,213,255,0.1);border:1px solid var(--sov);color:var(--sov)}
+footer{text-align:center;padding:40px 24px;color:var(--muted);font-size:13px;border-top:1px solid var(--border);margin-top:40px}
+footer p{margin:4px 0}
+</style>
+</head>
+<body>
+<div class="eu-banner">⚖️ DEFONEOS sovereign AI governance framework. Not a certification. <a href="/governance-master.html">Governance Master Index →</a></div>
+<nav>
+<a href="/">🏠 Home</a>
+<a href="/defoneos.html">DEFONEOS</a>
+<a href="/governance-master.html">Governance</a>
+<a href="/compliance.html">Compliance</a>
+<a href="/sitemap.xml">Sitemap</a>
+</nav>
+<div class="container">
+<h1>⚖️ Scottish Courts and Tribunals Service (SCTS) — Justice Administration AI Deep-Dive Governance Pack</h1>
+<p class="subtitle">12 SCTS entry points · 8 transformation priorities · 6 DEFONEOS MCPs · Judiciary and Courts (Scotland) Act 2008 + Courts Reform (Scotland) Act 2014 backbone</p>
+
+<div class="stats">
+<div class="stat-card"><div class="stat-num">12</div><div class="stat-label">Entry Points</div></div>
+<div class="stat-card"><div class="stat-num">8</div><div class="stat-label">Priorities</div></div>
+<div class="stat-card"><div class="stat-num">6</div><div class="stat-label">MCP Servers</div></div>
+<div class="stat-card"><div class="stat-num">39</div><div class="stat-label">Court Locations</div></div>
+</div>
+
+<p style="font-size:15px;color:var(--muted);margin-bottom:24px">The Scottish Courts and Tribunals Service (SCTS) is Scotland's independent court and tribunal administration body — established under the Judiciary and Courts (Scotland) Act 2008 — responsible for providing the people, buildings and technology to support Scotland's judiciary across 39 court locations. SCTS administers the Supreme Courts (Court of Session and High Court of Justiciary), sheriff courts, justice of the peace courts, the Sheriff Appeal Court, and the Scottish Tribunals. This pack provides a sovereign AI governance framework for every SCTS administration domain.</p>
+
+<h2>📋 12 Entry Points</h2>
+<div class="grid"><div class="card">
+<span class="tag">SHERIFF</span>
+<h3>Sheriff Courts (6 Sheriffdoms, 39 Locations)</h3>
+<p>Civil and criminal sheriff court administration across 6 sheriffdoms — AI governance for case scheduling, listing management, and judicial-resource allocation across Scotland's busiest court tier.</p>
+</div><div class="card">
+<span class="tag">JP</span>
+<h3>Justice of the Peace Courts</h3>
+<p>Summary criminal justice — minor offences, statutory breaches, and licensing — AI governance for JP court scheduling, lay-justice training records, and case-flow optimisation.</p>
+</div><div class="card">
+<span class="tag">HIGH</span>
+<h3>High Court of Justiciary</h3>
+<p>Scotland's supreme criminal court — solemn cases including murder, rape, and serious organised crime — AI governance for High Court sitting management, juror administration, and case-progression tracking.</p>
+</div><div class="card">
+<span class="tag">SESSION</span>
+<h3>Court of Session & Sheriff Appeal Court</h3>
+<p>Scotland's supreme civil court and the Sheriff Appeal Court — AI governance for civil case management, Inner/Outer House listing, and appellate workflow across commercial, family, and judicial-review jurisdictions.</p>
+</div><div class="card">
+<span class="tag">TRIBUNALS</span>
+<h3>Scottish Tribunals (First-tier & Upper)</h3>
+<p>Devolved tribunals — Mental Health, Children's Hearings, Additional Support Needs, Council Tax, Social Security — AI governance for tribunal case management, panel-member scheduling, and decision-publication workflows under Tribunals (Scotland) Act 2014.</p>
+</div><div class="card">
+<span class="tag">JUDICIAL</span>
+<h3>Judicial Appointments Support & Training</h3>
+<p>Judicial Office for Scotland interface — AI governance for appointment-process administration, Judicial Institute training records, and judicial-sitting preference management.</p>
+</div><div class="card">
+<span class="tag">FINES</span>
+<h3>Fines Enforcement & Criminal Penalties</h3>
+<p>Scottish Courts and Tribunals Service fines collection — over £30M annually — AI governance for payment-compliance analytics, enforcement-order automation safeguards, and means-inquiry workflows.</p>
+</div><div class="card">
+<span class="tag">DIGITAL</span>
+<h3>Digital Transformation & Case Management</h3>
+<p>Digital Evidence Sharing Capability (DESC), Civil Online, and the Integrated Case Management System (ICMS) — AI governance for digital-court platform security, remote-hearing infrastructure, and evidence-chain integrity.</p>
+</div><div class="card">
+<span class="tag">SECURITY</span>
+<h3>Court Security & Custody Operations</h3>
+<p>Security across all 39 court locations and custody-suite operations — AI governance for threat-assessment analytics, custody-transport logistics, and multi-agency security coordination with Police Scotland and GEOAmey.</p>
+</div><div class="card">
+<span class="tag">CIVIL</span>
+<h3>Civil Justice Reform & Simple Procedure</h3>
+<p>Civil Online expansion, Simple Procedure, and case management reform under Courts Reform (Scotland) Act 2014 — AI governance for civil-justice user-experience analytics and procedural-rule compliance monitoring.</p>
+</div><div class="card">
+<span class="tag">CRIMINAL</span>
+<h3>Criminal Justice Reform & Summary Case Management</h3>
+<p>Summary case management reform, custody-court time targets, and evidence disclosure standards — AI governance for criminal-justice efficiency analytics and statutory-time-limit compliance monitoring.</p>
+</div><div class="card">
+<span class="tag">REPORTING</span>
+<h3>Public Reporting, Statistics & Parliament Accountability</h3>
+<p>Annual reports, quarterly criminal court statistics, and Scottish Parliament accountability — AI governance for court-statistics compilation, publication-redaction assurance, and FOI (Scotland) Act 2002 compliance.</p>
+</div></div>
+
+<h2>🎯 8 Transformation Priorities</h2>
+<div class="grid"><div class="card">
+<span class="tag">P1</span>
+<h3>Court Scheduling & Judicial Resource Optimisation</h3>
+<p>AI-Augmented court scheduling — reducing case adjournment rates while maintaining judicial independence, statutory custody-time limits, and human court-administrator oversight of all listing decisions.</p>
+</div><div class="card">
+<span class="tag">P2</span>
+<h3>Digital Case Management & Evidence Integrity</h3>
+<p>AI governance for ICMS, Civil Online, and DESC — digital-evidence chain-of-custody verification, case-file access-control enforcement, and remote-hearing platform security.</p>
+</div><div class="card">
+<span class="tag">P3</span>
+<h3>Fines Enforcement & Payment Compliance Analytics</h3>
+<p>Sovereign AI for fines enforcement — payment-behaviour modelling, enforcement-order proportionality assessment, and means-inquiry decision support with human enforcement-officer final determination.</p>
+</div><div class="card">
+<span class="tag">P4</span>
+<h3>Court Security & Threat Assessment Intelligence</h3>
+<p>AI governance for court security — threat-assessment analytics, custody-transport logistics optimisation, and multi-agency incident coordination with Police Scotland and SCTS security teams.</p>
+</div><div class="card">
+<span class="tag">P5</span>
+<h3>Tribunal Case Management & Decision Publication</h3>
+<p>AI governance for Scottish Tribunals — panel-member scheduling, decision-writing support, and anonymised decision-publication workflows under Tribunals (Scotland) Act 2014.</p>
+</div><div class="card">
+<span class="tag">P6</span>
+<h3>Juror Administration & Jury-Centre Operations</h3>
+<p>AI governance for juror summons, selection, and management — juror-data protection, excusal-request processing, and jury-centre logistics with statutory safeguards for jury independence.</p>
+</div><div class="card">
+<span class="tag">P7</span>
+<h3>Court-Statistics & Criminal Justice Performance Analytics</h3>
+<p>AI governance for Court Proceedings Database — quarterly statistics compilation, trend analytics, and statutory-report generation with automated data-quality verification.</p>
+</div><div class="card">
+<span class="tag">P8</span>
+<h3>Civil Justice User-Experience & Access-to-Justice Analytics</h3>
+<p>AI governance for civil-justice accessibility — user-journey analytics, Simple Procedure uptake monitoring, and access-to-justice gap detection across Scotland's geographic and demographic communities.</p>
+</div></div>
+
+<h2>🔧 6 MCP Servers</h2>
+<div class="mcp-grid"><div class="mcp-card">
+<div class="mcp-name">bft-council-probe</div>
+<div class="mcp-fn">33-agent Byzantine Fault Tolerant governance council</div>
+<div class="mcp-use">Governance attestation for court administration decisions, judicial-support systems, and case-management analytics — Ed25519 signed, 23/33 quorum for all justice governance claims.</div>
+</div><div class="mcp-card">
+<div class="mcp-name">sovereign-keystore</div>
+<div class="mcp-fn">Sovereign cryptographic key management (HSM-backed)</div>
+<div class="mcp-use">Key management for court records, case files, and judicial documents — keys never leave UK-sovereign enclave.</div>
+</div><div class="mcp-card">
+<div class="mcp-name">sentinel-hub-mcp</div>
+<div class="mcp-fn">ESA Copernicus satellite imagery (sovereign caching)</div>
+<div class="mcp-use">Geospatial analytics for court-estate planning, custody-transport routing, and court-catchment-area demographic modelling — UK-resident satellite data.</div>
+</div><div class="mcp-card">
+<div class="mcp-name">data-gov-uk-mcp</div>
+<div class="mcp-fn">UK government open data portal (sovereign)</div>
+<div class="mcp-use">Scottish crime statistics, census demographics, and justice-system data for court-demand forecasting and access-to-justice analytics — no data leaves UK.</div>
+</div><div class="mcp-card">
+<div class="mcp-name">companies-house-mcp</div>
+<div class="mcp-fn">Companies House registry (UK registry sovereignty)</div>
+<div class="mcp-use">Supplier verification for court IT systems, security contractors, and estates-maintenance procurement — UK corporate data only.</div>
+</div><div class="mcp-card">
+<div class="mcp-name">gdelt-news-mcp</div>
+<div class="mcp-fn">Global news event database (sovereign caching)</div>
+<div class="mcp-use">Justice-system trend intelligence — international court-administration innovation, prison-overcrowding monitoring, and legal-aid reform analysis — UK-resident caching.</div>
+</div></div>
+
+<h2>🚫 6 Non-Negotiable Red Lines</h2>
+<div class="redline">
+<ul>
+<li><strong>No AI judicial decision-making.</strong> All judicial decisions — verdicts, sentences, bail determinations, and case-management directions — remain exclusively judicial. AI assists court administration; it never decides case outcomes. Judiciary and Courts (Scotland) Act 2008 judicial independence guarantee.</li>
+<li><strong>No AI-sole sentencing or penalty determination.</strong> Fines, community payback orders, and custodial sentences are imposed by judges and magistrates — AI may provide analytical support but never recommends or calculates specific sentences.</li>
+<li><strong>No breach of legal privilege.</strong> All court filings, solicitor-client communications, and judicial deliberations remain privileged — AI governance tools operate only on administrative and non-privileged data with human privilege-review gates.</li>
+<li><strong>No court data leaves UK jurisdiction.</strong> All case files, court records, and judicial documents remain UK-resident. DPA 2018 + UK GDPR enforced by sovereign-keystore geographic binding.</li>
+<li><strong>No AI jury-interference or juror profiling.</strong> Jury selection, vetting, and management remain human-administered — no automated juror profiling, no AI-based excusal decisions, no algorithmic jury-composition analysis.</li>
+<li><strong>No AI-sole bail or custody decisions.</strong> All decisions affecting personal liberty — bail, remand, custody-time-limit extensions — are made by the judiciary with statutory prosecution and defence representations.</li>
+</ul>
+</div>
+
+<h2>⚡ 5-Step Engagement Model</h2>
+<div class="engagement"><div class="step">
+<div class="num">1</div>
+<h4>Discovery</h4>
+<p>Map SCTS court domains, case-management systems, and judicial interfaces against the 12-entry-point framework.</p>
+</div><div class="step">
+<div class="num">2</div>
+<h4>Governance Design</h4>
+<p>Design AI governance architecture, judicial-independence red-line enforcement, and BFT attestation aligned to SCTS statutory duties.</p>
+</div><div class="step">
+<div class="num">3</div>
+<h4>Pilot</h4>
+<p>Deploy 2-3 MCP servers in sandbox with SCTS administrative data; measure governance outcomes and court-administration integrity metrics.</p>
+</div><div class="step">
+<div class="num">4</div>
+<h4>Scale</h4>
+<p>Expand to full 6-MCP stack with service-wide deployment, ICMS integration, and court-staff governance training.</p>
+</div><div class="step">
+<div class="num">5</div>
+<h4>Assure</h4>
+<p>Continuous monitoring, 33-agent BFT council verification, DEFONEOS-SEAL credential issuance for justice-system AI governance.</p>
+</div></div>
+
+<div class="cta">
+<a href="/governance-master.html">📋 Request OWEM RFQ →</a>
+<a href="/article-50.html" class="secondary">⚖️ Article 50 Passport →</a>
+</div>
+
+<p style="font-size:12px;color:var(--muted);margin-top:24px">Legislation backbone: Judiciary and Courts (Scotland) Act 2008, Courts Reform (Scotland) Act 2014, Tribunals (Scotland) Act 2014, Criminal Procedure (Scotland) Act 1995, DPA 2018 + UK GDPR, FOI (Scotland) Act 2002, Equality Act 2010</p>
+<p style="font-size:12px;color:var(--muted);margin-top:8px">SIGIL: defoneos-tick293-defoneos-scottish-courts-tribunals-service-justice</p>
+</div>
+<footer>
+<p>CSOAI Ltd (UK 16939677) · csoai.org · compliance@csoai.org</p>
+<p>DEFONEOS is a UK-sovereign open-source AI governance framework built on the meok substrate. UK-sovereign. AUKUS-compatible. Audit-grade.</p>
+<p style="margin-top:8px;font-size:11px">© 2026 CSOAI Ltd. All trademarks acknowledged. This document is a governance-design artefact — not a compliance certification.</p>
+</footer>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": "Scottish Courts and Tribunals Service (SCTS) — Justice Administration AI Deep-Dive Governance Pack",
+  "description": "12-entry-point AI governance framework for the Scottish Courts and Tribunals Service (SCTS) — Scotland's independent court and tribunal administration body — covering sheriff courts, High Court, Court of Session, tribunals, fines enforcement, digital transformation, and judicial support.",
+  "url": "https://csoai.org/defoneos-scottish-courts-tribunals-service-justice-ai-deep-dive-pack.html",
+  "about": {
+    "@type": "GovernmentService",
+    "name": "Scottish Courts and Tribunals Service",
+    "url": "https://www.scotcourts.gov.uk/"
+  },
+  "provider": {
+    "@type": "Organization",
+    "name": "CSOAI Ltd",
+    "legalName": "CSOAI Ltd"
+  },
+  "datePublished": "2026-08-16"
+}
+</script>
+</body>
+</html>

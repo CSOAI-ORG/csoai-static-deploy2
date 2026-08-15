@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Scottish Fiscal Commission (SFC) — Economic & Fiscal Forecasting AI Deep-Dive Governance Pack</title>
+<meta name="description" content="12-entry-point AI governance framework for the Scottish Fiscal Commission (SFC) — Scotland's independent economic and fiscal forecasting institution — covering tax revenue, social security expenditure, GDP forecasting, fiscal sustainability, and budget scrutiny.">
+<link rel="canonical" href="https://csoai.org/defoneos-scottish-fiscal-commission-economic-forecasting-ai-deep-dive-pack.html">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Space+Grotesk:wght@700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#050816;--panel:#0d1330;--gold:#d4af37;--sov:#6dd5ff;--accent:#f97316;--text:#e2e8f0;--muted:#94a3b8;--border:#1e2954;--danger:#ef4444;--green:#4ade80}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;line-height:1.6;min-height:100vh}
+.eu-banner{background:linear-gradient(135deg,#991b1b,#7f1d1d);padding:12px 24px;text-align:center;font-size:13px;border-bottom:2px solid #dc2626}
+.eu-banner a{color:#fca5a5}
+nav{display:flex;gap:24px;padding:16px 24px;background:var(--panel);border-bottom:1px solid var(--border);flex-wrap:wrap}
+nav a{color:var(--muted);text-decoration:none;font-size:14px}
+nav a:hover{color:var(--sov)}
+.container{max-width:1200px;margin:0 auto;padding:40px 24px}
+h1{font-family:'Space Grotesk',monospace;font-size:2.2rem;background:linear-gradient(135deg,var(--gold),var(--sov));-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:8px}
+.subtitle{color:var(--muted);font-size:1rem;margin-bottom:32px}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:40px}
+.stat-card{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:20px;text-align:center}
+.stat-num{font-family:'Space Grotesk',monospace;font-size:2rem;color:var(--sov)}
+.stat-label{color:var(--muted);font-size:13px;margin-top:4px}
+h2{font-family:'Space Grotesk',monospace;font-size:1.5rem;color:var(--sov);margin:40px 0 20px;padding-bottom:8px;border-bottom:1px solid var(--border)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:16px}
+.card{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:20px}
+.card .tag{display:inline-block;padding:4px 12px;background:rgba(109,213,255,0.1);color:var(--sov);border-radius:20px;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:1px;margin-bottom:12px}
+.card h3{font-family:'Space Grotesk',monospace;font-size:1.05rem;color:var(--text);margin-bottom:8px}
+.card p{color:var(--muted);font-size:14px;line-height:1.5}
+.mcp-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:16px}
+.mcp-card{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:20px}
+.mcp-card .mcp-name{font-family:'Space Grotesk',monospace;font-size:1rem;color:var(--gold);margin-bottom:4px}
+.mcp-card .mcp-fn{color:var(--muted);font-size:13px;margin-bottom:8px}
+.mcp-card .mcp-use{color:var(--text);font-size:13px}
+.redline{background:rgba(239,68,68,0.08);border:1px solid rgba(239,68,68,0.25);border-radius:12px;padding:28px}
+.redline h3{color:var(--danger);margin-bottom:8px}
+.redline ul{list-style:none;padding:0}
+.redline li{color:var(--muted);font-size:14px;padding:6px 0;border-bottom:1px solid rgba(239,68,68,0.1)}
+.redline li:last-child{border-bottom:none}
+.redline li strong{color:var(--danger)}
+.engagement{display:flex;gap:16px;flex-wrap:wrap}
+.step{flex:1 1 180px;background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:20px;text-align:center;min-width:160px}
+.step .num{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,var(--gold),var(--sov));display:flex;align-items:center;justify-content:center;font-family:'Space Grotesk',monospace;font-weight:700;font-size:1.2rem;margin:0 auto 12px;color:var(--bg)}
+.step h4{font-family:'Space Grotesk',monospace;font-size:1rem;color:var(--text);margin-bottom:6px}
+.step p{color:var(--muted);font-size:13px}
+.cta{display:flex;gap:16px;margin-top:40px;flex-wrap:wrap}
+.cta a{display:inline-block;padding:14px 28px;background:linear-gradient(135deg,var(--gold),#b8860b);color:var(--bg);text-decoration:none;border-radius:8px;font-weight:600;font-family:'Space Grotesk',monospace}
+.cta a.secondary{background:rgba(109,213,255,0.1);border:1px solid var(--sov);color:var(--sov)}
+footer{text-align:center;padding:40px 24px;color:var(--muted);font-size:13px;border-top:1px solid var(--border);margin-top:40px}
+footer p{margin:4px 0}
+</style>
+</head>
+<body>
+<div class="eu-banner">⚖️ DEFONEOS sovereign AI governance framework. Not a certification. <a href="/governance-master.html">Governance Master Index →</a></div>
+<nav>
+<a href="/">🏠 Home</a>
+<a href="/defoneos.html">DEFONEOS</a>
+<a href="/governance-master.html">Governance</a>
+<a href="/compliance.html">Compliance</a>
+<a href="/sitemap.xml">Sitemap</a>
+</nav>
+<div class="container">
+<h1>📊 Scottish Fiscal Commission (SFC) — Economic & Fiscal Forecasting AI Deep-Dive Governance Pack</h1>
+<p class="subtitle">12 SFC entry points · 8 transformation priorities · 6 DEFONEOS MCPs · Scottish Fiscal Commission Act 2016 + Scotland Act 2016 Fiscal Framework backbone</p>
+
+<div class="stats">
+<div class="stat-card"><div class="stat-num">12</div><div class="stat-label">Entry Points</div></div>
+<div class="stat-card"><div class="stat-num">8</div><div class="stat-label">Priorities</div></div>
+<div class="stat-card"><div class="stat-num">6</div><div class="stat-label">MCP Servers</div></div>
+<div class="stat-card"><div class="stat-num">2017</div><div class="stat-label">Established</div></div>
+</div>
+
+<p style="font-size:15px;color:var(--muted);margin-bottom:24px">The Scottish Fiscal Commission (SFC) is Scotland's independent economic and fiscal forecasting institution — established under the Scottish Fiscal Commission Act 2016 — responsible for producing independent, impartial forecasts of Scottish tax revenues, social security expenditure, and Scotland's GDP. The SFC scrutinises Scottish Government forecasts for the Scottish Budget and reports directly to the Scottish Parliament. This pack provides a sovereign AI governance framework for every SFC forecasting domain.</p>
+
+<h2>📋 12 Entry Points</h2>
+<div class="grid"><div class="card">
+<span class="tag">TAX</span>
+<h3>Tax Revenue Forecasting (Income Tax, LBTT, Landfill)</h3>
+<p>Independent five-year forecasts for devolved Scottish taxes — Income Tax (over £15B annually), Land and Buildings Transaction Tax, and Scottish Landfill Tax — AI governance for revenue-model validation and scenario analysis.</p>
+</div><div class="card">
+<span class="tag">SOCIAL</span>
+<h3>Social Security Expenditure Forecasting</h3>
+<p>Forecasts for devolved Scottish social security — Adult Disability Payment, Scottish Child Payment, Carer's Allowance Supplement — AI governance for caseload-modelling, expenditure projection, and policy-costing analysis under Social Security (Scotland) Act 2018.</p>
+</div><div class="card">
+<span class="tag">GDP</span>
+<h3>GDP & Macroeconomic Forecasting</h3>
+<p>Scotland's GDP forecasting — output, productivity, employment, earnings — AI governance for macroeconomic-model validation, exogenous-shock simulation, and OBR-UK comparator analysis under the Fiscal Framework.</p>
+</div><div class="card">
+<span class="tag">SUSTAIN</span>
+<h3>Fiscal Sustainability & Long-term Projections</h3>
+<p>Long-term fiscal sustainability — demographic ageing, health spending, climate transition costs — AI governance for 50-year projection modelling, scenario-sensitivity analysis, and intergenerational-fairness assessment.</p>
+</div><div class="card">
+<span class="tag">BUDGET</span>
+<h3>Scottish Budget Scrutiny & Forecast Evaluation</h3>
+<p>Statutory scrutiny of Scottish Government economic and fiscal forecasts accompanying the Scottish Budget — AI governance for forecast-bias detection, assumption-review analytics, and reconciliation with outturn data.</p>
+</div><div class="card">
+<span class="tag">MINISTERIAL</span>
+<h3>Ministerial Forecast Review & Challenge</h3>
+<p>Independent review of Scottish Ministers' fiscal forecasts — AI governance for forecast-assumption documentation, policy-costing methodology audit, and transparency-report generation.</p>
+</div><div class="card">
+<span class="tag">PUBLIC</span>
+<h3>Public Finance Reporting & Transparency</h3>
+<p>Biannual Forecast Evaluation Reports and annual Fiscal Sustainability Reports — AI governance for report-data compilation, publication-quality-output assembly, and open-data release under the Code of Practice for Statistics.</p>
+</div><div class="card">
+<span class="tag">DATA</span>
+<h3>Data Governance & Model Input Management</h3>
+<p>Management of HMRC taxpayer data, DWP benefit data, and Scottish Government administrative data — AI governance for data-access controls, provenance tracking, and input-data quality verification under DPA 2018.</p>
+</div><div class="card">
+<span class="tag">PARLIAMENT</span>
+<h3>Scottish Parliament Accountability & Reporting</h3>
+<p>Direct reporting to the Scottish Parliament — Finance and Public Administration Committee evidence, parliamentary questions, and statutory annual reporting — AI governance for parliamentary-brief assembly and publication-workflow assurance.</p>
+</div><div class="card">
+<span class="tag">MODEL</span>
+<h3>Model Transparency & Methodology Publication</h3>
+<p>Publication of SFC forecasting models, assumptions, and methodology — open-science approach — AI governance for model-documentation generation, sensitivity-analysis disclosure, and reproducibility-assurance workflows.</p>
+</div><div class="card">
+<span class="tag">INTERNATIONAL</span>
+<h3>International Fiscal-Institution Comparators</h3>
+<p>OBR (UK), CBO (US), CPB (Netherlands), PBO (Canada) — international best-practice benchmarking — AI governance for comparative-methodology analysis, peer-review coordination, and international-standard alignment under OECD Principles for Independent Fiscal Institutions.</p>
+</div><div class="card">
+<span class="tag">RESEARCH</span>
+<h3>Research, Methodology & Continuous Improvement</h3>
+<p>Fiscal-forecasting research programme — model development, forecast-error analysis, and methodological innovation — AI governance for research-pipeline management, peer-review tracking, and forecast-accuracy continuous improvement.</p>
+</div></div>
+
+<h2>🎯 8 Transformation Priorities</h2>
+<div class="grid"><div class="card">
+<span class="tag">P1</span>
+<h3>Tax Revenue Model Validation & Forecast Accuracy</h3>
+<p>AI-Augmented revenue forecasting — model-specification testing, outturn-reconciliation analytics, and forecast-error decomposition while maintaining SFC independent professional judgment over all published forecasts.</p>
+</div><div class="card">
+<span class="tag">P2</span>
+<h3>Social Security Caseload & Expenditure Projection</h3>
+<p>Sovereign AI for social security forecasting — caseload-trend modelling, policy-costing analytics, and demographic-scenario testing with human-led final-forecast determination.</p>
+</div><div class="card">
+<span class="tag">P3</span>
+<h3>Macroeconomic Scenario Analysis & Stress Testing</h3>
+<p>AI governance for GDP forecasting — exogenous-shock simulation, scenario-sensitivity analysis, and fiscal-framework risk-assessment with transparent model-documentation.</p>
+</div><div class="card">
+<span class="tag">P4</span>
+<h3>Budget-Forecast Scrutiny & Bias Detection</h3>
+<p>AI governance for Scottish Government forecast review — systematic bias detection, assumption-audit analytics, and outturn-forecast reconciliation across all devolved tax and social-security streams.</p>
+</div><div class="card">
+<span class="tag">P5</span>
+<h3>Long-term Fiscal Sustainability Modelling</h3>
+<p>Sovereign AI for 50-year fiscal projections — demographic-change modelling, climate-transition cost estimation, and intergenerational-fairness analytics with UK-wide fiscal-framework compliance.</p>
+</div><div class="card">
+<span class="tag">P6</span>
+<h3>Data Governance & Confidentiality Enforcement</h3>
+<p>AI governance for HMRC/DWP administrative data — access-control enforcement, provenance tracking, and disclosure-control verification with DPA 2018 + UK GDPR statutory safeguards.</p>
+</div><div class="card">
+<span class="tag">P7</span>
+<h3>Forecast Publication & Parliamentary Reporting Automation</h3>
+<p>AI governance for report generation — data-to-publication pipeline with automated quality assurance, disclosure-control verification, and parliamentary-brief assembly.</p>
+</div><div class="card">
+<span class="tag">P8</span>
+<h3>Model Transparency & Open-Science Methodology</h3>
+<p>AI governance for model-documentation — automated methodology reporting, sensitivity-analysis publication, and reproducibility-assurance workflows under UK Statistics Authority Code of Practice.</p>
+</div></div>
+
+<h2>🔧 6 MCP Servers</h2>
+<div class="mcp-grid"><div class="mcp-card">
+<div class="mcp-name">bft-council-probe</div>
+<div class="mcp-fn">33-agent Byzantine Fault Tolerant governance council</div>
+<div class="mcp-use">Governance attestation for forecast publications, model-methodology documentation, and parliamentary reporting — Ed25519 signed, 23/33 quorum for all fiscal-governance claims.</div>
+</div><div class="mcp-card">
+<div class="mcp-name">sovereign-keystore</div>
+<div class="mcp-fn">Sovereign cryptographic key management (HSM-backed)</div>
+<div class="mcp-use">Key management for HMRC taxpayer microdata, DWP benefit records, and forecast-model inputs — keys never leave UK-sovereign enclave.</div>
+</div><div class="mcp-card">
+<div class="mcp-name">sentinel-hub-mcp</div>
+<div class="mcp-fn">ESA Copernicus satellite imagery (sovereign caching)</div>
+<div class="mcp-use">Geospatial analytics for land-transaction tax modelling, landfill-tax site monitoring, and regional-economic geography — UK-resident satellite data.</div>
+</div><div class="mcp-card">
+<div class="mcp-name">data-gov-uk-mcp</div>
+<div class="mcp-fn">UK government open data portal (sovereign)</div>
+<div class="mcp-use">ONS economic statistics, HMRC tax-outturn data, and OBR comparator forecasts for cross-validation and model-calibration — no data leaves UK.</div>
+</div><div class="mcp-card">
+<div class="mcp-name">companies-house-mcp</div>
+<div class="mcp-fn">Companies House registry (UK registry sovereignty)</div>
+<div class="mcp-use">Corporate-sector analytics for tax-base modelling, business-demography tracking, and economic-activity estimation — UK corporate data only.</div>
+</div><div class="mcp-card">
+<div class="mcp-name">gdelt-news-mcp</div>
+<div class="mcp-fn">Global news event database (sovereign caching)</div>
+<div class="mcp-use">Fiscal-policy trend intelligence — international tax-reform monitoring, macroeconomic-shock detection, and fiscal-institution innovation tracking — UK-resident caching.</div>
+</div></div>
+
+<h2>🚫 6 Non-Negotiable Red Lines</h2>
+<div class="redline">
+<ul>
+<li><strong>No AI-sole fiscal forecast.</strong> All published forecasts, projections, and evaluations are human-determined by SFC Commissioners and analysts. AI assists model specification and data analysis — it never independently publishes a forecast. Scottish Fiscal Commission Act 2016 independence guarantee.</li>
+<li><strong>No politicisation of independent forecasts.</strong> AI governance tools serve SFC's statutory duty of independence — no AI optimisation for politically-favourable forecast outcomes, no forecast-suppression, no selective release of favourable scenarios.</li>
+<li><strong>No AI manipulation of input data.</strong> All HMRC taxpayer microdata, DWP benefit records, and Scottish Government administrative data are used as-provided — AI tools may not impute, transform, or exclude data without documented human methodological approval.</li>
+<li><strong>No HMRC taxpayer-level data leaves UK jurisdiction.</strong> All taxpayer microdata, social security personal data, and benefit records remain UK-resident. DPA 2018 + UK GDPR + Commissioners for Revenue and Customs Act 2005 s.18 confidentiality enforcement.</li>
+<li><strong>No AI model opacity.</strong> Every AI-assisted forecast must disclose the model specification, assumptions, sensitivity analysis, and uncertainty intervals. SFC statutory transparency duty — no black-box forecasting.</li>
+<li><strong>No AI-automated parliamentary submission without Commissioner sign-off.</strong> All reports to the Scottish Parliament — Forecast Evaluation Reports, Fiscal Sustainability Reports, and committee evidence — are approved and signed by the Commissioners before publication.</li>
+</ul>
+</div>
+
+<h2>⚡ 5-Step Engagement Model</h2>
+<div class="engagement"><div class="step">
+<div class="num">1</div>
+<h4>Discovery</h4>
+<p>Map SFC forecasting domains, model infrastructure, and data-supplier interfaces against the 12-entry-point framework.</p>
+</div><div class="step">
+<div class="num">2</div>
+<h4>Governance Design</h4>
+<p>Design AI governance architecture, forecasting-integrity red-line enforcement, and BFT attestation aligned to SFC statutory independence and transparency duties.</p>
+</div><div class="step">
+<div class="num">3</div>
+<h4>Pilot</h4>
+<p>Deploy 2-3 MCP servers in sandbox with SFC model data; measure governance outcomes and forecast-integrity metrics.</p>
+</div><div class="step">
+<div class="num">4</div>
+<h4>Scale</h4>
+<p>Expand to full 6-MCP stack with organisation-wide deployment, model-documentation automation, and analyst governance training.</p>
+</div><div class="step">
+<div class="num">5</div>
+<h4>Assure</h4>
+<p>Continuous monitoring, 33-agent BFT council verification, DEFONEOS-SEAL credential issuance for fiscal-governance AI.</p>
+</div></div>
+
+<div class="cta">
+<a href="/governance-master.html">📋 Request OWEM RFQ →</a>
+<a href="/article-50.html" class="secondary">⚖️ Article 50 Passport →</a>
+</div>
+
+<p style="font-size:12px;color:var(--muted);margin-top:24px">Legislation backbone: Scottish Fiscal Commission Act 2016, Scotland Act 2016 (Fiscal Framework), Budget (Scotland) Act, DPA 2018 + UK GDPR, Commissioners for Revenue and Customs Act 2005, FOI (Scotland) Act 2002, UK Statistics Authority Code of Practice, OECD Principles for Independent Fiscal Institutions</p>
+<p style="font-size:12px;color:var(--muted);margin-top:8px">SIGIL: defoneos-tick293-defoneos-scottish-fiscal-commission-economic-forecasting</p>
+</div>
+<footer>
+<p>CSOAI Ltd (UK 16939677) · csoai.org · compliance@csoai.org</p>
+<p>DEFONEOS is a UK-sovereign open-source AI governance framework built on the meok substrate. UK-sovereign. AUKUS-compatible. Audit-grade.</p>
+<p style="margin-top:8px;font-size:11px">© 2026 CSOAI Ltd. All trademarks acknowledged. This document is a governance-design artefact — not a compliance certification.</p>
+</footer>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": "Scottish Fiscal Commission (SFC) — Economic & Fiscal Forecasting AI Deep-Dive Governance Pack",
+  "description": "12-entry-point AI governance framework for the Scottish Fiscal Commission (SFC) — Scotland's independent economic and fiscal forecasting institution — covering tax revenue, social security expenditure, GDP forecasting, fiscal sustainability, and budget scrutiny.",
+  "url": "https://csoai.org/defoneos-scottish-fiscal-commission-economic-forecasting-ai-deep-dive-pack.html",
+  "about": {
+    "@type": "GovernmentService",
+    "name": "Scottish Fiscal Commission",
+    "url": "https://www.fiscalcommission.scot/"
+  },
+  "provider": {
+    "@type": "Organization",
+    "name": "CSOAI Ltd",
+    "legalName": "CSOAI Ltd"
+  },
+  "datePublished": "2026-08-16"
+}
+</script>
+</body>
+</html>
