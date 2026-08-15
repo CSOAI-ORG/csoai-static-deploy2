@@ -1,113 +1,81 @@
-"""Tests for meok-sovereign-pulse-mcp."""
-import os, sys, tempfile, importlib, time
-_TEST = tempfile.mkdtemp(prefix="sov_pls_")
-os.environ["SOV_PLS_KEY"] = _TEST + "/k.pem"
+import sys, os
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
+import meok_sovereign_pulse_mcp as m
+from meok_sovereign_pulse_mcp import (
+    pulse_beat, pulse_summary, pulse_drift, pulse_bft_health,
+    pulse_dashboard, _BASELINE,
+)
 
-def get_fresh():
-    if "meok_sovereign_pulse_mcp" in sys.modules:
-        del sys.modules["meok_sovereign_pulse_mcp"]
-    import meok_sovereign_pulse_mcp as m
-    importlib.reload(m)
-    return m
+def setup():
+    m._PULSE_LOG.clear()
 
-def test_record_basic():
-    m = get_fresh()
-    r = m.pulse_record(0.95, "test_action")
-    assert r["pulse"]["care_floor"] == 0.95
-    assert r["pulse"]["compliant"] is True
+def test_beat_basic():
+    setup()
+    r = pulse_beat(kind="heartbeat", latency_ms=42.0, voter="voter_1")
+    assert r["emitted"]["kind"] == "heartbeat"
+    assert r["emitted"]["latency_ms"] == 42.0
+    assert "kid" in r and r["kid"].startswith("pulse-")
+    assert r["log_size"] >= 1
 
-def test_record_violation():
-    m = get_fresh()
-    r = m.pulse_record(0.50, "low_action")
-    assert r["pulse"]["compliant"] is False
-
-def test_record_default_care_floor():
-    m = get_fresh()
-    r = m.pulse_record()
-    assert r["pulse"]["care_floor"] == 0.95
-
-def test_bpm_empty():
-    m = get_fresh()
-    r = m.pulse_bpm()
-    assert r["bpm"] == 0
-
-def test_bpm_with_pulses():
-    m = get_fresh()
+def test_summary_with_beats():
+    setup()
     for _ in range(10):
-        m.pulse_record()
-        time.sleep(0.001)
-    r = m.pulse_bpm(window_seconds=10)
-    assert r["bpm"] > 0
-    assert r["pulses_in_window"] == 10
+        pulse_beat(kind="heartbeat", latency_ms=50.0)
+    s = pulse_summary(window_s=60)
+    assert s["n"] >= 10
+    assert s["bpm"] > 0
+    assert s["kind_counts"]["heartbeat"] >= 10
+    assert s["p50_latency_ms"] == 50.0
 
-def test_rhythm_empty():
-    m = get_fresh()
-    r = m.pulse_rhythm()
-    assert "error" in r
+def test_summary_p95():
+    setup()
+    for i in range(20):
+        pulse_beat(kind="model_call", latency_ms=float(i * 10))
+    s = pulse_summary(window_s=60)
+    assert s["p95_latency_ms"] >= 175.0
 
-def test_rhythm_perfect():
-    m = get_fresh()
-    for _ in range(10):
-        m.pulse_record(0.99)
-    r = m.pulse_rhythm()
-    assert r["rhythm_quality"] == "PERFECT"
-    assert r["compliance_rate"] == 1.0
+def test_drift_steady():
+    setup()
+    # Inject realistic traffic matching baseline bpm/p50/p95/sigil
+    # 12 sigils + 48 heartbeats spread over 60s window
+    # latencies: mix of p50 and p95 to match baseline
+    for _ in range(12):
+        pulse_beat(kind="sigil", latency_ms=_BASELINE["p50_latency_ms"])
+    # latencies for heartbeats: 80% near p50, 20% near p95
+    for i in range(48):
+        if i % 5 == 0:
+            pulse_beat(kind="heartbeat", latency_ms=_BASELINE["p95_latency_ms"])
+        else:
+            pulse_beat(kind="heartbeat", latency_ms=_BASELINE["p50_latency_ms"])
+    d = pulse_drift(window_s=60)
+    assert d["verdict"] == "STEADY", f"drifts: {d['drifts']}"
 
-def test_rhythm_strong():
-    m = get_fresh()
-    for _ in range(9):
-        m.pulse_record(0.96)
-    m.pulse_record(0.85)  # one violation
-    r = m.pulse_rhythm()
-    assert r["rhythm_quality"] in ["STRONG", "STEADY"]
-    assert r["compliance_rate"] == 0.9
+def test_drift_when_high():
+    setup()
+    for _ in range(60):
+        pulse_beat(kind="model_call", latency_ms=_BASELINE["p50_latency_ms"] * 5)
+    d = pulse_drift(window_s=60)
+    assert d["verdict"] == "DRIFT"
+    assert any(x["drift"] for x in d["drifts"])
 
-def test_rhythm_weak():
-    m = get_fresh()
-    for _ in range(5):
-        m.pulse_record(0.99)
-    for _ in range(5):
-        m.pulse_record(0.50)
-    r = m.pulse_rhythm()
-    assert r["rhythm_quality"] == "WEAK"
+def test_bft_health_ok():
+    h = pulse_bft_health(agreement_ratio=0.8)
+    assert h["voters"] == 4
+    assert h["verdict"] == "QUORUM_OK"
 
-def test_history():
-    m = get_fresh()
-    for i in range(15):
-        m.pulse_record(0.95, f"action_{i}")
-    r = m.pulse_history(limit=10)
-    assert r["total_pulses"] == 15
-    assert len(r["pulses"]) == 10
+def test_bft_health_below():
+    h = pulse_bft_health(agreement_ratio=0.4)
+    assert h["verdict"] == "BELOW_QUORUM"
 
-def test_status():
-    m = get_fresh()
-    m.pulse_record()
-    r = m.pulse_status()
-    assert r["total_pulses"] == 1
-    assert r["uptime_seconds"] >= 0
+def test_dashboard():
+    setup()
+    pulse_beat(kind="sigil")
+    d = pulse_dashboard(window_s=60)
+    assert "summary" in d and "drift" in d and "bft" in d
+    assert d["log_size"] >= 1
 
-def test_no_external_deps():
-    m = get_fresh()
-    src = open(m.__file__).read()
-    for blocked in ["ollama", "requests", "urllib.request", "httpx"]:
-        assert f"import {blocked}" not in src
-
-def test_signed_outputs():
-    m = get_fresh()
-    for r in [m.pulse_record(), m.pulse_bpm(), m.pulse_rhythm(), m.pulse_history(), m.pulse_status()]:
-        if "error" not in r:
-            assert "kid" in r and "sig" in r and "ts" in r
-
-def test_full_workflow():
-    """Record 50 → BPM → Rhythm → History → Status."""
-    m = get_fresh()
-    for i in range(50):
-        m.pulse_record(0.95 if i % 5 != 0 else 0.85, f"action_{i}")
-    b = m.pulse_bpm()
-    assert b["pulses_in_window"] == 50
-    r = m.pulse_rhythm()
-    assert r["total_pulses"] == 50
-    h = m.pulse_history(limit=10)
-    assert len(h["pulses"]) == 10
-    s = m.pulse_status()
-    assert s["total_pulses"] == 50
+def test_log_cap():
+    setup()
+    for _ in range(10_005):
+        pulse_beat(kind="heartbeat")
+    assert len(m._PULSE_LOG) <= 10_000

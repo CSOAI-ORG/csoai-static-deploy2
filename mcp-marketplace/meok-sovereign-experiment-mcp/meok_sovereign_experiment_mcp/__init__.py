@@ -1,29 +1,27 @@
-"""meok-sovereign-experiment-mcp — A/B Test Framework for Sovereign Experiments.
+"""meok-sovereign-experiment-mcp — A/B Testing Harness for Sovereign AI.
 
-Sovereign A/B testing for the AI economy.
-Track experiments, allocate traffic, measure outcomes.
+For comparing sovereign fine-tunes against base models on measured axes.
+Wilson 95% CI + McNemar exact test on discordant pairs.
 
 5 tools:
-  1. experiment_create  - create a sovereign A/B experiment
-  2. experiment_assign   - assign a citizen to a variant
-  3. experiment_record   - record an outcome
-  4. experiment_result   - get experiment results (with significance)
-  5. experiment_status   - get all experiments
+  1. exp_register   - register a new experiment (control + variant + axis + items)
+  2. exp_record     - record a comparison result (which item won, who was control)
+  3. exp_analyze    - Wilson 95% CI for both + McNemar p on discordants
+  4. exp_list       - list all experiments with current state
+  5. exp_conclude   - emit a signed conclusion if sample size is sufficient
 """
 from __future__ import annotations
 import json
 import hashlib
-import random
-import string
+import math
 from datetime import datetime, timezone
+from typing import Optional, List
 
 PROTOCOL = "sovereign-experiment/1.0"
 VERSION = "1.0.0"
-LICENSE = "MIT + CC0 1.0"
 
-# State
-_EXPERIMENTS = {}  # exp_id -> {variants, results, n, conversions}
-_HISTORY = []  # list of completed experiments
+EXPERIMENTS = {}   # eid -> {control, variant, axis, items[], results[]}
+USABLE_N = 30      # below this -> UNMEASURED label, never quote
 
 
 def _sign(payload):
@@ -34,108 +32,187 @@ def _sign(payload):
     return payload
 
 
-def _gen_id(prefix: str) -> str:
-    return f"{prefix}-{''.join(random.choices(string.hexdigits.lower(), k=8))}"
+def _wilson(k, n, z=1.96):
+    """Wilson 95% CI for a binomial proportion. k=wins, n=trials."""
+    if n == 0:
+        return (0.0, 0.0, 0.0)
+    p = k / n
+    denom = 1 + z*z/n
+    centre = (p + z*z/(2*n)) / denom
+    half = (z * math.sqrt(p*(1-p)/n + z*z/(4*n*n))) / denom
+    return (max(0.0, centre - half), min(1.0, centre + half), p)
 
 
-def experiment_create(name: str = "", variants: str = "control,treatment", metric: str = "conversion") -> dict:
-    """Create a sovereign A/B experiment."""
-    if not name:
-        return _sign({"error": "name required"})
-    exp_id = _gen_id("exp")
-    variant_list = [v.strip() for v in variants.split(",") if v.strip()]
-    _EXPERIMENTS[exp_id] = {
-        "exp_id": exp_id,
-        "name": name,
-        "variants": variant_list,
-        "metric": metric,
-        "n": 0,
-        "conversions": {v: 0 for v in variant_list},
-        "participants": {v: 0 for v in variant_list},
-        "started_at": datetime.now(timezone.utc).isoformat(),
-        "status": "active",
+def _mcnemar(b, c):
+    """McNemar exact test (two-sided) on discordant pairs (b,c)."""
+    if b + c == 0:
+        return 1.0
+    # binomial p=0.5, two-sided via min(1, 2*binom.cdf(min(b,c), b+c, 0.5))
+    n = b + c
+    k = min(b, c)
+    # binomial pmf cumulative from 0..k
+    from math import comb
+    p_le_k = sum(comb(n, i) * (0.5 ** n) for i in range(k + 1))
+    p_val = min(1.0, 2 * p_le_k)
+    return round(p_val, 6)
+
+
+# ---- tool 1: exp_register ----
+def exp_register(control: str, variant: str, axis: str, items: List[str],
+                 hypothesis: str = "", eid: Optional[str] = None) -> dict:
+    """Register a new A/B experiment."""
+    eid = eid or "e-" + hashlib.sha256(
+        (control + variant + axis + datetime.now().isoformat()).encode()
+    ).hexdigest()[:12]
+    payload = {
+        "eid": eid,
+        "control": control,         # baseline model name
+        "variant": variant,         # sovereign model name
+        "axis": axis,               # governance / art5 / prv / care ...
+        "items": items,             # list of item ids
+        "hypothesis": hypothesis,
+        "results": [],              # [{item_id, winner: control|variant, agree: bool}]
+        "status": "registered",
     }
-    return _sign({
-        "protocol": PROTOCOL, "version": VERSION,
-        "experiment": _EXPERIMENTS[exp_id],
-        "total_experiments": len(_EXPERIMENTS),
-        "doctrine": f"Experiment {exp_id} created: {name}. {len(variant_list)} variants. Sovereign by construction.",
-    })
+    EXPERIMENTS[eid] = payload
+    return _sign({"eid": eid, **payload})
 
 
-def experiment_assign(exp_id: str = "", citizen_id: str = "") -> dict:
-    """Assign a citizen to a variant (deterministic by hash)."""
-    if exp_id not in _EXPERIMENTS:
-        return _sign({"error": f"unknown exp_id: {exp_id}"})
-    if not citizen_id:
-        return _sign({"error": "citizen_id required"})
-    exp = _EXPERIMENTS[exp_id]
-    # Deterministic assignment via hash
-    h = int(hashlib.sha256((exp_id + citizen_id).encode()).hexdigest(), 16)
-    variant = exp["variants"][h % len(exp["variants"])]
-    exp["participants"][variant] = exp["participants"].get(variant, 0) + 1
-    exp["n"] += 1
-    return _sign({
-        "protocol": PROTOCOL, "version": VERSION,
-        "exp_id": exp_id,
-        "citizen_id": citizen_id,
-        "variant": variant,
-        "n": exp["n"],
-        "doctrine": f"Citizen {citizen_id} assigned to variant '{variant}'. Sovereign by construction.",
-    })
+# ---- tool 2: exp_record ----
+def exp_record(eid: str, item_id: str, winner: str, control_correct: bool,
+               variant_correct: bool) -> dict:
+    """Record one comparison result. discordants feed McNemar; both-correct count as ties."""
+    if eid not in EXPERIMENTS:
+        return _sign({"error": f"experiment {eid} not found"})
+    exp = EXPERIMENTS[eid]
+    rec = {
+        "item_id": item_id,
+        "winner": winner,
+        "control_correct": control_correct,
+        "variant_correct": variant_correct,
+        "agree": control_correct == variant_correct,
+        "ts": datetime.now(timezone.utc).isoformat(),
+    }
+    exp["results"].append(rec)
+    exp["status"] = "running"
+    return _sign({"eid": eid, "recorded": rec, "n": len(exp["results"])})
 
 
-def experiment_record(exp_id: str = "", citizen_id: str = "", converted: bool = True) -> dict:
-    """Record an outcome for a citizen."""
-    if exp_id not in _EXPERIMENTS:
-        return _sign({"error": f"unknown exp_id: {exp_id}"})
-    if not citizen_id:
-        return _sign({"error": "citizen_id required"})
-    exp = _EXPERIMENTS[exp_id]
-    # Find variant
-    h = int(hashlib.sha256((exp_id + citizen_id).encode()).hexdigest(), 16)
-    variant = exp["variants"][h % len(exp["variants"])]
-    if converted:
-        exp["conversions"][variant] = exp["conversions"].get(variant, 0) + 1
-    return _sign({
-        "protocol": PROTOCOL, "version": VERSION,
-        "exp_id": exp_id,
-        "citizen_id": citizen_id,
-        "variant": variant,
-        "converted": converted,
-        "doctrine": f"Outcome recorded for {citizen_id} in {variant}. Converted: {converted}. Sovereign.",
-    })
+# ---- tool 3: exp_analyze ----
+def exp_analyze(eid: str) -> dict:
+    """Wilson 95% CI for control & variant win-rate + McNemar exact p on discordants."""
+    if eid not in EXPERIMENTS:
+        return _sign({"error": f"experiment {eid} not found"})
+    exp = EXPERIMENTS[eid]
+    r = exp["results"]
+    n = len(r)
+    ctrl_wins = sum(1 for x in r if x["winner"] == "control")
+    var_wins = sum(1 for x in r if x["winner"] == "variant")
+    ties = sum(1 for x in r if x["winner"] in ("tie", "neither"))
+    # discordants: control correct but variant wrong (b), and the opposite (c)
+    b = sum(1 for x in r if x["control_correct"] and not x["variant_correct"])
+    c = sum(1 for x in r if not x["control_correct"] and x["variant_correct"])
+    ctrl_lo, ctrl_hi, ctrl_p = _wilson(ctrl_wins, n)
+    var_lo, var_hi, var_p = _wilson(var_wins, n)
+    mcnemar_p = _mcnemar(b, c)
+    usable = n >= USABLE_N
+    label = "MEASURED" if usable else "UNMEASURED"
+    # winner label
+    if not usable:
+        verdict = "INSUFFICIENT_SAMPLES"
+    elif mcnemar_p < 0.05:
+        if var_p > ctrl_p:
+            verdict = "VARIANT_WINS"
+        elif ctrl_p > var_p:
+            verdict = "CONTROL_WINS"
+        else:
+            verdict = "TIE"
+    else:
+        verdict = "NO_SIGNIFICANT_DIFFERENCE"
+    analysis = {
+        "eid": eid,
+        "n": n,
+        "usable_n": USABLE_N,
+        "label": label,
+        "control": {
+            "model": exp["control"],
+            "wins": ctrl_wins,
+            "win_rate": round(ctrl_p, 4),
+            "ci95": [round(ctrl_lo, 4), round(ctrl_hi, 4)],
+        },
+        "variant": {
+            "model": exp["variant"],
+            "wins": var_wins,
+            "win_rate": round(var_p, 4),
+            "ci95": [round(var_lo, 4), round(var_hi, 4)],
+        },
+        "ties": ties,
+        "discordants": {"b_control_only": b, "c_variant_only": c},
+        "mcnemar_p": mcnemar_p,
+        "verdict": verdict,
+        "axis": exp["axis"],
+    }
+    return _sign(analysis)
 
 
-def experiment_result(exp_id: str = "") -> dict:
-    """Get experiment results with conversion rates."""
-    if exp_id not in _EXPERIMENTS:
-        return _sign({"error": f"unknown exp_id: {exp_id}"})
-    exp = _EXPERIMENTS[exp_id]
-    rates = {}
-    for v in exp["variants"]:
-        n = exp["participants"].get(v, 0)
-        c = exp["conversions"].get(v, 0)
-        rate = c / n if n > 0 else 0
-        rates[v] = {"participants": n, "conversions": c, "rate": round(rate, 4)}
-    # Find winner (highest rate with min 30 participants)
-    winner = max(rates.items(), key=lambda x: x[1]["rate"] if x[1]["participants"] >= 30 else 0)
-    return _sign({
-        "protocol": PROTOCOL, "version": VERSION,
-        "exp_id": exp_id,
-        "rates": rates,
-        "winner": winner[0] if winner[1]["participants"] >= 30 else None,
-        "doctrine": f"Experiment {exp_id} results: winner = {winner[0] if winner[1]['participants'] >= 30 else 'inconclusive'}. Sovereign.",
-    })
+# ---- tool 4: exp_list ----
+def exp_list() -> dict:
+    """List all experiments with current state."""
+    out = []
+    for eid, exp in EXPERIMENTS.items():
+        n = len(exp["results"])
+        out.append({
+            "eid": eid,
+            "control": exp["control"],
+            "variant": exp["variant"],
+            "axis": exp["axis"],
+            "n": n,
+            "label": "MEASURED" if n >= USABLE_N else "UNMEASURED",
+            "status": exp["status"],
+        })
+    return _sign({"count": len(out), "experiments": out})
 
 
-def experiment_status() -> dict:
-    """Get all experiments."""
-    return _sign({
-        "protocol": PROTOCOL, "version": LICENSE,
-        "total_active": len([e for e in _EXPERIMENTS.values() if e["status"] == "active"]),
-        "total_completed": len([e for e in _EXPERIMENTS.values() if e["status"] == "completed"]),
-        "total_experiments": len(_EXPERIMENTS),
-        "experiments": list(_EXPERIMENTS.values()),
-        "doctrine": f"Sovereign experiments: {len(_EXPERIMENTS)} active. The dragon learns. Sovereign by construction.",
-    })
+# ---- tool 5: exp_conclude ----
+def exp_conclude(eid: str, signer: str = "sovereign-council") -> dict:
+    """Emit a signed conclusion. Only valid if MEASURED (n >= USABLE_N)."""
+    if eid not in EXPERIMENTS:
+        return _sign({"error": f"experiment {eid} not found"})
+    exp = EXPERIMENTS[eid]
+    if len(exp["results"]) < USABLE_N:
+        return _sign({"error": f"n={len(exp['results'])} < USABLE_N={USABLE_N}; cannot conclude"})
+    analysis = exp_analyze(eid)
+    body = json.dumps(analysis, sort_keys=True, default=str)
+    conclusion = {
+        "eid": eid,
+        "verdict": analysis["verdict"],
+        "axis": exp["axis"],
+        "signer": signer,
+        "analysis": analysis,
+        "conclusion_kid": "conc-" + hashlib.sha256(body.encode()).hexdigest()[:16],
+    }
+    conclusion["conclusion_sig"] = hashlib.sha256(
+        (conclusion["conclusion_kid"] + body).encode()
+    ).hexdigest()[:32]
+    return _sign(conclusion)
+
+
+# ---- MCP server entrypoint ----
+def main():
+    import sys
+    print(json.dumps({
+        "name": "meok-sovereign-experiment-mcp",
+        "version": VERSION,
+        "protocol": PROTOCOL,
+        "tools": [
+            {"name": "exp_register",  "fn": exp_register},
+            {"name": "exp_record",    "fn": exp_record},
+            {"name": "exp_analyze",   "fn": exp_analyze},
+            {"name": "exp_list",      "fn": exp_list},
+            {"name": "exp_conclude",  "fn": exp_conclude},
+        ],
+    }))
+
+
+if __name__ == "__main__":
+    main()
