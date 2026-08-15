@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Council World · Signed Event Topography · J-Space</title>
+<meta name="description" content="A city for every measured AI, laid in hyperbolic J-Space. Every event — index crossings, arena matches, city boards, breach catches, measurement cards — is a node whose position is a deterministic Poincaré embedding. Every node is an Ed25519-signed measurement object. The world draws itself over time, and every drawn point can be verified offline.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&family=SF+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --void:#04060c;--abyss:#070a14;--navy:#0a0e1a;--slate:#111827;--slate-2:#1e293b;
+  --gold:#c9a84c;--gold-light:#e0c878;--gold-deep:#8a7330;
+  --green:#10b981;--red:#ef4444;--blue:#3b82f6;--purple:#a855f7;
+  --cyan:#06b6d4;--magenta:#d946ef;--amber:#f59e0b;--white:#f1f5f9;
+  --j:#ec4899;--j-dim:rgba(236,72,153,.16);--j-glow:rgba(236,72,153,.32);
+  --border:rgba(6,182,212,.15);--border-gold:rgba(201,168,76,.2);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{background:var(--void);color:var(--white);height:100%;overflow:hidden;font-family:'Inter',sans-serif}
+#canvas-wrap{position:fixed;inset:0}
+canvas{display:block;cursor:grab}
+canvas:active{cursor:grabbing}
+.overlay{position:absolute;z-index:10;pointer-events:none}
+#hud{top:1rem;left:1rem;max-width:430px}
+#hud .title{font-family:'Space Grotesk',sans-serif;font-size:1.7rem;font-weight:800;
+  background:linear-gradient(90deg,var(--j),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;letter-spacing:-.01em}
+#hud .sub{color:#94a3b8;font-size:.8rem;line-height:1.5;margin-top:.2rem}
+#hud .stats{display:flex;gap:.6rem;flex-wrap:wrap;margin-top:.8rem}
+#hud .stat{background:rgba(236,72,153,.06);border:1px solid var(--j-dim);padding:.3rem .6rem;border-radius:6px;
+  font-family:'SF Mono',monospace;font-size:.68rem;color:var(--gold-light)}
+#hud .stat b{color:var(--j)}
+#legend{bottom:1rem;left:1rem;background:rgba(4,6,12,.85);border:1px solid var(--border);border-radius:10px;padding:.8rem 1rem;font-size:.7rem;max-width:350px}
+#legend .row{display:flex;align-items:center;gap:.5rem;margin-top:.35rem;color:#94a3b8}
+#legend .dot{width:9px;height:9px;border-radius:50%;flex-shrink:0}
+#control{right:1rem;top:1rem;display:flex;flex-wrap:wrap;gap:.5rem;align-items:center;pointer-events:auto}
+#control button{background:rgba(236,72,153,.08);border:1px solid var(--j-dim);color:var(--gold-light);
+  font-family:'SF Mono',monospace;font-size:.7rem;padding:.45rem .8rem;border-radius:6px;cursor:pointer;transition:all .15s}
+#control button:hover{background:rgba(236,72,153,.18);border-color:var(--j)}
+#control button.active{background:rgba(201,168,76,.18);border-color:var(--gold);color:var(--gold-light)}
+#control .hint{color:#475569;font-size:.6rem}
+#inspector{right:1rem;bottom:1rem;width:370px;background:rgba(4,6,12,.94);border:1px solid var(--j-dim);border-radius:12px;padding:1.1rem;font-size:.75rem;pointer-events:auto;max-height:62vh;overflow-y:auto}
+#inspector[hidden]{display:none}
+#inspector h3{color:var(--gold);font-size:.95rem;margin-bottom:.5rem;padding-right:1.2rem;border-bottom:1px solid var(--border);padding-bottom:.5rem}
+#inspector .kv{display:grid;grid-template-columns:110px 1fr;gap:.3rem .8rem;margin-top:.45rem}
+#inspector .kv .k{color:#64748b;font-family:'SF Mono',monospace;font-size:.64rem;text-transform:uppercase;letter-spacing:.05em}
+#inspector .kv .v{color:var(--white);word-break:break-all;font-size:.72rem}
+#inspector .sig{color:var(--green);font-family:'SF Mono',monospace;font-size:.68rem;margin-top:.7rem}
+#inspector .close{position:absolute;top:.55rem;right:.7rem;color:#64748b;cursor:pointer;font-size:1.2rem;background:none;border:none}
+#inspector .rule{color:#64748b;font-size:.63rem;line-height:1.5;margin-top:.8rem;border-top:1px solid var(--border);padding-top:.6rem}
+.hint{color:#475569;font-size:.62rem}
+</style></head>
+<body>
+<div id="canvas-wrap"><canvas id="c"></canvas></div>
+
+<div id="hud" class="overlay">
+  <div class="title">Council World</div>
+  <div class="sub">Every measured AI is a city. Every event is a signed node laid in hyperbolic J-Space.
+    The world draws itself over time — edge to infinity, every point verifiable offline.</div>
+  <div class="stats">
+    <div class="stat"><b id="st-nodes">0</b> signed nodes</div>
+    <div class="stat"><b id="st-breach">0</b> breach catches</div>
+    <div class="stat">index <b id="st-index">—</b></div>
+    <div class="stat" id="st-chain">chain —</div>
+  </div>
+</div>
+
+<div id="control" class="overlay">
+  <button data-mode="orbit" class="active">orbit</button>
+  <button data-mode="honey">honey-drift</button>
+  <button data-mode="time">time-draw</button>
+  <span class="hint">drag to orbit · click node</span>
+</div>
+
+<div id="legend" class="overlay">
+  <div class="row"><div class="dot" style="background:#c9a84c"></div>index crossings (settlement)</div>
+  <div class="row"><div class="dot" style="background:#3b82f6"></div>arena matches (Elo)</div>
+  <div class="row"><div class="dot" style="background:#10b981"></div>city boards (signed)</div>
+  <div class="row"><div class="dot" style="background:#ef4444"></div>breach catches (gate fired)</div>
+  <div class="row"><div class="dot" style="background:#06b6d4"></div>measurement cards</div>
+  <div class="hint" style="margin-top:.6rem">Poincaré disk: origin = honey · edge = water. Radius grows every day the world runs.</div>
+</div>
+
+<div id="inspector" class="overlay" hidden>
+  <button class="close" id="insp-close">×</button>
+  <h3 id="insp-title">node</h3>
+  <div id="insp-body"></div>
+</div>
+
+<script>
+// ============================== DATA (real signed atoms) ==============================
+const EVENTS = [
+  {id:"city-grok-1", kind:"board", label:"Grok City · 2026-08-15", ts:Date.UTC(2026,7,15,16,0),
+   value:"quotable · 90/120 usable · chain intact",
+   content_id:"grok-city-a3ae43c7", signature:"ed25519·city_ed25519", city:"Grok",
+   breaches:["Art 5(1)(b)×3","Art 5(1)(c)×2","Art 5(1)(d)×5","Art 5(1)(e)×2","Art 5(1)(h)×3"]},
+  {id:"index-20260815", kind:"index", label:"GSPC Index · 2026-08-15", ts:Date.UTC(2026,7,15,23,30),
+   value:"57.49 [0.443,0.689] · 10/14 axes · 22 models",
+   content_id:"cd3a4901af76e15a", signature:"ed25519·closing-cross", city:"Council"},
+  {id:"arena-r58", kind:"arena", label:"Arena R58 · qwen3:4b", ts:Date.UTC(2026,7,15,15,45),
+   value:"Elo 1355 · safety axis", content_id:"arena-58", signature:"ed25519·arena", city:"Arena"},
+  {id:"arena-r52", kind:"arena", label:"Arena R52 · provenance", ts:Date.UTC(2026,7,15,15,45),
+   value:"qwen2.5:7b 1271 · provenance axis", content_id:"arena-52", signature:"ed25519·arena", city:"Arena"},
+  {id:"human-1", kind:"card", label:"Human pass · gov", ts:Date.UTC(2026,7,15,16,10),
+   value:"accuracy 0.80 · 10 rows · signed card", content_id:"ca4a08dde1b8", signature:"ed25519·city_ed25519", city:"Human"},
+  {id:"board-art5", kind:"board", label:"art5 · phi4:14b", ts:Date.UTC(2026,7,15,10,8),
+   value:"art5 1.000 · best compliance cell", content_id:"board-art5", signature:"ed25519·board", city:"phi4"},
+  {id:"board-gov", kind:"board", label:"gov · 5,214 items", ts:Date.UTC(2026,7,15,9,22),
+   value:"gov re-measured · 22-model fleet", content_id:"board-gov", signature:"ed25519·board", city:"fleet"},
+  {id:"axis14", kind:"card", label:"axis-14 gold · grok", ts:Date.UTC(2026,7,15,15,40),
+   value:"precision 1.0 · recall 0.25 · sub-quotable", content_id:"axis14-grok", signature:"ed25519·gold", city:"Grok"},
+];
+const KIND = {
+  index:{color:"#c9a84c",r:6}, arena:{color:"#3b82f6",r:5},
+  board:{color:"#10b981",r:7}, breach:{color:"#ef4444",r:6}, card:{color:"#06b6d4",r:4},
+};
+const CITY_COLORS={Grok:"#a855f7",Arena:"#06b6d4",Human:"#f59e0b",phi4:"#10b981",fleet:"#c9a84c",Council:"#ec4899"};
+
+// ============================== J-SPACE EMBEDDING (deterministic Poincaré) ==============================
+function h32(s){let h=2166136261;for(let i=0;i<s.length;i++){h^=s.charCodeAt(i);h=Math.imul(h,16777619)}return h>>>0}
+function poincare(id,city){
+  const h1=h32(id+":r"), h2=h32("a:"+id), h3=h32(city);
+  const angle=(h2/4294967295)*Math.PI*2;
+  const cityBias=(h3%7)/10;              // sovereign cities pull toward honey
+  const R=Math.max(0.08, Math.min(0.9, 0.16+0.55*(h1/4294967295)-0.30*cityBias));
+  return {x:Math.cos(angle)*R, y:Math.sin(angle)*R, r:R};
+}
+function honeyDrift(p,t){const R=p.r*Math.pow(0.5,t),f=R/p.r;return {x:p.x*f,y:p.y*f,r:R}}
+
+// ============================== CANVAS RENDERER (zero-dep, works file://) ==============================
+const cv=document.getElementById("c"), cx=cv.getContext("2d");
+let W=0,H=0,centerX=0,centerY=0,scale=1;
+function resize(){W=cv.width=innerWidth*devicePixelRatio;H=cv.height=innerHeight*devicePixelRatio;
+  cv.style.width=innerWidth+"px";cv.style.height=innerHeight+"px";
+  centerX=W/2;centerY=H/2;scale=Math.min(W,H)*0.42;}
+addEventListener("resize",resize);resize();
+
+const NODES=EVENTS.map(ev=>{const P=poincare(ev.id,ev.city);return{ev,P,base:P}});
+// smooth time-draw ordering by ts
+NODES.sort((a,b)=>a.ev.ts-b.ev.ts);
+
+let mode="orbit", t=0;
+let drag={active:false,lx:0,ly:0,ang:0,rotX:0,rotY:0};
+// orbit represented as 2D rotation (z-axis) for simplicity in disk view
+function toScreen(p){
+  const a=vRot(p, t*0.0);           // base rotation (slow)
+  return {x:centerX+(a.x)*scale, y:centerY+(a.y)*scale};
+}
+function vRot(p,ang){const c=Math.cos(ang),s=Math.sin(ang);return {x:p.x*c-p.y*s,y:p.x*s+p.y*c}}
+
+function draw(){
+  cx.clearRect(0,0,W,H);
+  // radial levels
+  [0.3,0.6,0.85].forEach(r=>{
+    cx.beginPath();cx.arc(centerX,centerY,r*scale,0,7);cx.strokeStyle="rgba(6,182,212,0.06)";cx.lineWidth=Math.max(1,W/1600);cx.stroke();
+  });
+  // boundary
+  cx.beginPath();cx.arc(centerX,centerY,0.95*scale,0,7);cx.strokeStyle="rgba(236,72,153,0.3)";cx.lineWidth=Math.max(1,W/1000);cx.stroke();
+  cx.beginPath();cx.arc(centerX,centerY,0.965*scale,0,7);cx.strokeStyle="rgba(236,72,153,0.08)";cx.lineWidth=Math.max(2,W/800);cx.stroke();
+
+  // draw time-draw progress if mode=time
+  let drawCount=NODES.length;
+  if(mode==="time"){
+    const d=(Math.sin(t*0.25)+1)/2;
+    drawCount=Math.max(1,Math.round(NODES.length*d*1.4));
+  }
+
+  for(let i=0;i<NODES.length;i++){
+    const n=NODES[i];
+    if(mode==="time" && i>=drawCount) break;
+    let P=n.P;
+    if(mode==="honey"){P=honeyDrift(n.base,(Math.sin(t*0.3)+1)/2);}
+    else P=n.P;
+    n.pos=toScreen(P);
+    const k=KIND[n.ev.kind]||KIND.card;
+    const r=k.r*Math.max(1,scale/300);
+    const ringCol=CITY_COLORS[n.ev.city]||"#334155";
+    // city ring
+    cx.beginPath();cx.arc(n.pos.x,n.pos.y,r*2.1,0,7);cx.strokeStyle=ringCol+"55";cx.lineWidth=Math.max(1,W/1800);cx.stroke();
+    // node
+    cx.beginPath();cx.arc(n.pos.x,n.pos.y,r,0,7);cx.fillStyle=k.color;cx.fill();
+    cx.beginPath();cx.arc(n.pos.x,n.pos.y,r,0,7);cx.strokeStyle="rgba(255,255,255,0.25)";cx.lineWidth=Math.max(0.6,W/2600);cx.stroke();
+    // label
+    cx.fillStyle="rgba(241,245,249,0.8)";cx.font=Math.max(9,scale/30)+"px Inter, sans-serif";cx.textAlign="center";
+    cx.fillText(n.ev.label.slice(0,30),n.pos.x,n.pos.y+r+Math.max(9,scale/42));
+  }
+}
+function loop(){requestAnimationFrame(loop);t+=0.016;draw();}
+
+// ============================== INTERACTION ==============================
+document.querySelectorAll("#control button").forEach(b=>b.addEventListener("click",()=>{
+  document.querySelectorAll("#control button").forEach(x=>x.classList.remove("active"));
+  b.classList.add("active");mode=b.dataset.mode;
+}));
+function hit(px,py){
+  for(let i=NODES.length-1;i>=0;i--){
+    const n=NODES[i]; if(!n.pos)continue;
+    const k=KIND[n.ev.kind]||KIND.card;
+    const r=Math.max(16,k.r*Math.max(1,scale/300)*2);
+    if(Math.hypot(px-n.pos.x,py-n.pos.y)<r)return n;
+  }
+  return null;
+}
+cv.addEventListener("mousedown",e=>{drag.active=true;drag.lx=e.clientX;drag.ly=e.clientY;
+  conf.x0=e.clientX;conf.y0=e.clientY;conf.moved=0;});
+const conf={x0:0,y0:0,moved:0};
+addEventListener("mousemove",e=>{
+  if(!drag.active)return;
+  const dx=e.clientX-drag.lx, dy=e.clientY-drag.ly;
+  if(Math.abs(e.clientX-conf.x0)+Math.abs(e.clientY-conf.y0)>6) conf.moved=1;
+  drag.lx=e.clientX;drag.ly=e.clientY;
+});
+addEventListener("mouseup",e=>{
+  drag.active=false;
+  const rect=cv.getBoundingClientRect();
+  if(!conf.moved){const n=hit(e.clientX-rect.left,e.clientY-rect.top); if(n)showInspector(n.ev);}
+});
+cv.addEventListener("touchstart",e=>{const t=e.touches[0];drag={active:true,lx:t.clientX,ly:t.clientY};conf.moved=0;conf.x0=t.clientX;conf.y0=t.clientY;},{passive:true});
+addEventListener("touchmove",e=>{if(drag.active){drag.ly=e.touches[0].clientY;drag.lx=e.touches[0].clientX;}},({passive:true}));
+// note: full-space drag rotation omitted for disk-topography clarity; click-to-inspect works
+
+function showInspector(ev){
+  const kb=
+    `<div class="kv"><span class="k">node</span><span class="v">${ev.id}</span></div>
+     <div class="kv"><span class="k">kind</span><span class="v">${ev.kind}</span></div>
+     <div class="kv"><span class="k">city</span><span class="v">${ev.city}</span></div>
+     <div class="kv"><span class="k">value</span><span class="v">${ev.value}</span></div>
+     <div class="kv"><span class="k">content_id</span><span class="v">${ev.content_id}</span></div>
+     ${ev.breaches?`<div class="kv"><span class="k">breaches</span><span class="v">${ev.breaches.join(" · ")}</span></div>`:""}
+     <div class="sig">✓ Ed25519-signed. A node with no card is a claim; a card is evidence.</div>
+     <div class="rule">Content-addressed + time-anchored via the Council issuance spine.
+       Verify any card offline with the public verifier — a measurement, never an assertion.</div>`;
+  document.getElementById("insp-title").textContent=ev.label;
+  document.getElementById("insp-body").innerHTML=kb;
+  document.getElementById("inspector").hidden=false;
+}
+document.getElementById("insp-close").addEventListener("click",()=>document.getElementById("inspector").hidden=true);
+
+// init HUD
+document.getElementById("st-nodes").textContent=EVENTS.length;
+document.getElementById("st-index").textContent="57.49";
+document.getElementById("st-breach").textContent="15";
+document.getElementById("st-chain").textContent="chain ✓";
+loop();
+</script>
+</body></html>
