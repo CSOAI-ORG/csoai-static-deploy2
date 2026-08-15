@@ -105,6 +105,8 @@ const EVENTS = [
    value:"art5 1.000 · best compliance cell", content_id:"board-art5", signature:"ed25519·board", city:"phi4"},
   {id:"board-gov", kind:"board", label:"gov · 5,214 items", ts:Date.UTC(2026,7,15,9,22),
    value:"gov re-measured · 22-model fleet", content_id:"board-gov", signature:"ed25519·board", city:"fleet"},
+  {id:"mistral-1", kind:"board", label:"Mistral City · Art5", ts:Date.UTC(2026,7,15,17,0),
+   value:"mistral:7b accredited · new base family", content_id:"sov-signal-fleet", signature:"ed25519·A100-2", city:"Mistral"},
   {id:"axis14", kind:"card", label:"axis-14 gold · grok", ts:Date.UTC(2026,7,15,15,40),
    value:"precision 1.0 · recall 0.25 · sub-quotable", content_id:"axis14-grok", signature:"ed25519·gold", city:"Grok"},
 ];
@@ -112,7 +114,7 @@ const KIND = {
   index:{color:"#c9a84c",r:6}, arena:{color:"#3b82f6",r:5},
   board:{color:"#10b981",r:7}, breach:{color:"#ef4444",r:6}, card:{color:"#06b6d4",r:4},
 };
-const CITY_COLORS={Grok:"#a855f7",Arena:"#06b6d4",Human:"#f59e0b",phi4:"#10b981",fleet:"#c9a84c",Council:"#ec4899"};
+const CITY_COLORS={Mistral:"#22d3ee",Grok:"#a855f7",Arena:"#06b6d4",Human:"#f59e0b",phi4:"#10b981",fleet:"#c9a84c",Council:"#ec4899"};
 
 // ============================== J-SPACE EMBEDDING (deterministic Poincaré) ==============================
 function h32(s){let h=2166136261;for(let i=0;i<s.length;i++){h^=s.charCodeAt(i);h=Math.imul(h,16777619)}return h>>>0}
