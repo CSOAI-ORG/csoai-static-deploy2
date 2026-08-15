@@ -26,8 +26,10 @@ from pathlib import Path
 REPO = Path("/workspace/csoai-static-deploy2")
 sys.path.insert(0, str(REPO / "SOVOS" / "packages" / "sovos-arena" / "src"))
 
-# Canonical 12GSPC axes
-AXES = ["gov", "agi", "prv", "asi", "mcp", "oss", "mach", "care", "xr", "det", "art5", "swarm"]
+# Canonical 13 GSPC axes (incl. affect). SOURCE OF TRUTH = board_v2.py BANKS.
+# Keep this list in sync with BANKS; claim_linter enforces "13 incl affect".
+AXES = ["gov", "agi", "prv", "asi", "mcp", "oss", "mach", "care",
+        "xr", "det", "art5", "swarm", "affect"]
 
 # Test prompts (per-axis). Each prompt is designed to elicit a response
 # that scores high (or low) on its named axis.
@@ -121,7 +123,7 @@ def main():
     target_models = ["qwen2.5:0.5b-instruct", "oowm-4way:latest"]
     print(f"=== Arena Compare ===")
     print(f"models: {target_models}")
-    print(f"axes: 12 ({AXES})")
+    print(f"axes: {len(AXES)} ({AXES})")
     print()
 
     # Score each model on each axis

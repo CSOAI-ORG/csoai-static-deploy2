@@ -47,6 +47,62 @@ LOG_FILE = Path("/tmp/eat_all.log")
 RESULTS_DIR = ROOT / "benchmark-results" / "eat_all"
 RESULTS_DIR.mkdir(parents=True, exist_ok=True)
 
+
+# ── KB load/save hardening (fixes 2026-08-15 corruption) ──────────────────────
+# Root cause of the trailing-garbage corruption: `kb_path.write_text(...)` does
+# truncate-then-write, so an interrupt mid-write leaves a truncated/garbage file.
+# save_kb() writes to a temp file, re-parses it to PROVE valid JSON, fsyncs, then
+# os.replace() atomically over the target (never clobbers a good file on failure).
+# load_kb() validates and falls back to a .lastgood copy so the loop can't die on
+# a corrupt KB — and never silently loads garbage.
+def load_kb(kb_path: Path) -> dict:
+    import shutil
+    lb = kb_path.with_suffix(".json.lastgood")
+    try:
+        return json.loads(kb_path.read_text())
+    except (json.JSONDecodeError, OSError, ValueError):
+        if lb.exists():
+            try:
+                return json.loads(lb.read_text())
+            except Exception:
+                pass
+        if kb_path.exists():
+            bad = kb_path.with_suffix(".json.corrupt")
+            try:
+                shutil.move(str(kb_path), str(bad))
+            except Exception:
+                pass
+        return {"entries": [], "last_updated": None,
+                "last_ingest_source": None, "last_ingest_count": 0,
+                "corpus_anchor": {}}
+
+
+def save_kb(kb_path: Path, kb: dict) -> None:
+    import shutil
+    import tempfile
+    kb_path.parent.mkdir(parents=True, exist_ok=True)
+    fd, tmp = tempfile.mkstemp(dir=str(kb_path.parent), suffix=".tmp")
+    os.close(fd)
+    try:
+        with open(tmp, "w") as f:
+            f.write(json.dumps(kb, indent=2, ensure_ascii=False))
+            f.flush()
+            os.fsync(f.fileno())
+        with open(tmp) as f:
+            json.loads(f.read())  # prove valid before replace
+        os.replace(tmp, str(kb_path))
+    except Exception:
+        try:
+            os.unlink(tmp)
+        except OSError:
+            pass
+        raise
+    try:
+        if kb_path.exists():
+            shutil.copy2(str(kb_path), str(kb_path.with_suffix(".json.lastgood")))
+    except Exception:
+        pass
+
 ALL_PHASES = [
     "PHASE_0_HEALTH",
     "PHASE_1_REBOARD",
@@ -219,7 +275,7 @@ def phase_0_health() -> dict:
     # Check KB
     kb_path = ROOT / "benchmark-results" / "sov_kb.json"
     if kb_path.exists():
-        kb = json.loads(kb_path.read_text())
+        kb = load_kb(kb_path)
         result["kb_entries"] = len(kb.get("entries", []))
     return result
 
@@ -471,7 +527,7 @@ def phase_9_artifacts() -> dict:
     try:
         kb_path = ROOT / "benchmark-results" / "sov_kb.json"
         if kb_path.exists():
-            kb = json.loads(kb_path.read_text())
+            kb = load_kb(kb_path)
             n = len(kb.get("entries", []))
             result["kb_entries"] = n
             if n > 50000:
@@ -611,7 +667,7 @@ def phase_9b_external_harness() -> dict:
         # Route into KB
         kb_path = ROOT / "benchmark-results" / "sov_kb.json"
         if kb_path.exists():
-            kb = json.loads(kb_path.read_text())
+            kb = load_kb(kb_path)
             entries = kb.setdefault("entries", [])
 
             for fw_name, fw in EXTERNAL_FRAMEWORK_HARNESS.items():
@@ -654,7 +710,7 @@ def phase_9b_external_harness() -> dict:
                 entries.append(entry)
                 result["clans_routed"] += 1
 
-            kb_path.write_text(json.dumps(kb, indent=2))
+            save_kb(kb_path, kb)
             result["artifacts"].append(str(kb_path))
 
         # Build swarm routing entry — every clan becomes a peer
@@ -796,7 +852,7 @@ def phase_9c_owem_cluster() -> dict:
         # Route into KB
         kb_path = ROOT / "benchmark-results" / "sov_kb.json"
         if kb_path.exists():
-            kb = json.loads(kb_path.read_text())
+            kb = load_kb(kb_path)
             entries = kb.setdefault("entries", [])
 
             # Single consolidated entry for the cluster
@@ -903,7 +959,7 @@ def phase_9c_owem_cluster() -> dict:
                     entries.append(stage_entry)
                     result["clusters_routed"] += 1
 
-            kb_path.write_text(json.dumps(kb, indent=2))
+            save_kb(kb_path, kb)
             result["artifacts"].append(str(kb_path))
 
         # Bind to SovSpace — emit a swarm event so the dome planet reflects the cluster
@@ -1072,7 +1128,7 @@ def phase_9d_benchmarks_harness() -> dict:
         # Route into KB
         kb_path = ROOT / "benchmark-results" / "sov_kb.json"
         if kb_path.exists():
-            kb = json.loads(kb_path.read_text())
+            kb = load_kb(kb_path)
             entries = kb.setdefault("entries", [])
 
             for bench_name, bench in BENCHMARKS_HARNESS.items():
@@ -1113,7 +1169,7 @@ def phase_9d_benchmarks_harness() -> dict:
                 entries.append(entry)
                 result["benchmarks_routed"] += 1
 
-            kb_path.write_text(json.dumps(kb, indent=2))
+            save_kb(kb_path, kb)
             result["artifacts"].append(str(kb_path))
 
     except Exception as e:
@@ -1222,7 +1278,7 @@ def phase_9e_training_data_harness() -> dict:
         # Route into KB
         kb_path = ROOT / "benchmark-results" / "sov_kb.json"
         if kb_path.exists():
-            kb = json.loads(kb_path.read_text())
+            kb = load_kb(kb_path)
             entries = kb.setdefault("entries", [])
 
             for source_name, source in TRAINING_DATA_HARNESS.items():
@@ -1267,7 +1323,7 @@ def phase_9e_training_data_harness() -> dict:
                 entries.append(entry)
                 result["data_sources_routed"] += 1
 
-            kb_path.write_text(json.dumps(kb, indent=2))
+            save_kb(kb_path, kb)
             result["artifacts"].append(str(kb_path))
 
     except Exception as e:
@@ -1351,7 +1407,7 @@ def phase_9f_sovereign_training_pipeline() -> dict:
         # Route into KB
         kb_path = ROOT / "benchmark-results" / "sov_kb.json"
         if kb_path.exists():
-            kb = json.loads(kb_path.read_text())
+            kb = load_kb(kb_path)
             entries = kb.setdefault("entries", [])
 
             for stage in SOVEREIGN_TRAINING_PIPELINE["stages"]:
@@ -1390,7 +1446,7 @@ def phase_9f_sovereign_training_pipeline() -> dict:
                 entries.append(entry)
                 result["stages_routed"] += 1
 
-            kb_path.write_text(json.dumps(kb, indent=2))
+            save_kb(kb_path, kb)
             result["artifacts"].append(str(kb_path))
 
     except Exception as e:
@@ -1469,7 +1525,7 @@ def phase_9g_audience_harness() -> dict:
         # Route into KB
         kb_path = ROOT / "benchmark-results" / "sov_kb.json"
         if kb_path.exists():
-            kb = json.loads(kb_path.read_text())
+            kb = load_kb(kb_path)
             entries = kb.setdefault("entries", [])
 
             for audience_name, audience in AUDIENCE_HARNESS.items():
@@ -1508,7 +1564,7 @@ def phase_9g_audience_harness() -> dict:
                 entries.append(entry)
                 result["audiences_routed"] += 1
 
-            kb_path.write_text(json.dumps(kb, indent=2))
+            save_kb(kb_path, kb)
             result["artifacts"].append(str(kb_path))
 
     except Exception as e:
@@ -1649,7 +1705,7 @@ def phase_10b_model_routing() -> dict:
     try:
         kb_path = ROOT / "benchmark-results" / "sov_kb.json"
         if kb_path.exists():
-            kb = json.loads(kb_path.read_text())
+            kb = load_kb(kb_path)
             entries = kb.setdefault("entries", [])
 
             for model_id, info in MODEL_LANDSCAPE_JULY_2026.items():
@@ -1733,7 +1789,7 @@ def phase_10b_model_routing() -> dict:
             entries.append(mcp_entry)
             result["specs_routed"] += 1
 
-            kb_path.write_text(json.dumps(kb, indent=2))
+            save_kb(kb_path, kb)
             result["artifacts"].append(str(kb_path))
     except Exception as e:
         result["status"] = "failed"
@@ -2081,7 +2137,7 @@ def phase_9h_sov_hive_harness() -> dict:
         kb_path = ROOT / "benchmark-results" / "sov_kb.json"
         before = 0
         if kb_path.exists():
-            before = len(json.loads(kb_path.read_text()).get("entries", []))
+            before = len(load_kb(kb_path).get("entries", []))
 
         r = subprocess.run(
             ["python3", str(script), "--run"],
@@ -2093,7 +2149,7 @@ def phase_9h_sov_hive_harness() -> dict:
 
         after = 0
         if kb_path.exists():
-            after = len(json.loads(kb_path.read_text()).get("entries", []))
+            after = len(load_kb(kb_path).get("entries", []))
 
         result["kb_entries_added"] = after - before
         result["artifacts"].append(str(kb_path))
