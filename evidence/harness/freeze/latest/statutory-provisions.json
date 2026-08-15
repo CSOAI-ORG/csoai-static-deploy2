@@ -1,0 +1,38 @@
+{
+  "metric": "statutory_provisions_crosswalked",
+  "canonical_value": 417,
+  "public_phrasing": "417 statutory provisions crosswalked",
+  "evidence_source": "benchmark-results/coverage_crosswalk.json",
+  "frozen_at": "2026-08-03T13:35:53.825432+00:00",
+  "canon_doc": "SOV-Counter-Canon.md row 3",
+  "canon_metric": 3,
+  "method": "provisions field of benchmark-results/coverage_crosswalk.json",
+  "source_sha256_16": "e20a6a41e2cbfabc",
+  "status": "VERIFIED",
+  "canon_candidate": 417,
+  "matches_candidate": true,
+  "stale_variants_found_in_estate": {
+    "349 provisions": 3,
+    "328 provisions": 1,
+    "note": "417 is evidenced; 349 and 328 appear in prose with no evidence file and are stale."
+  },
+  "corroboration_2026-08-04": {
+    "method": "provisions field of benchmark-results/coverage_crosswalk.json",
+    "value": 417,
+    "agrees_with_prior_freeze": true,
+    "note": "Independent re-read of coverage_crosswalk.json at runtime, agreeing with the 2026-08-03 freeze."
+  },
+  "CORPUS_AUDIT_2026-08-04": {
+    "trigger": "A strategy report named the '417-provision AI Act corpus and crosswalks' as the crown jewel for CEN-CENELEC JTC21 / BSI comment submission. Checked whether that artifact exists.",
+    "what_exists_on_disk": {
+      "regarena/packages/packs/eu-ai-act@1.0.0/provisions.json": "21 provisions, signed (manifest.sig, golden.json, hints.json)",
+      "proofof-site/evals/eu_ai_act_corpus.json": "53 articles",
+      "benchmark-results/coverage_crosswalk.json": "the NUMBER 417, plus coverage percentages \u2014 no provision-level table",
+      "packs_present": "ONE (eu-ai-act@1.0.0). No second framework pack exists, so a multi-framework crosswalk cannot be assembled from disk either."
+    },
+    "verdict": "The count 417 has an evidence file and passes G3. The ARTIFACT it describes \u2014 an enumerated 417-provision corpus \u2014 does not exist on this machine. What exists is 21 signed provisions and 53 articles.",
+    "REFINEMENT_TO_G3": "This exposes a gap in the canon's own law. G3 says a number must have an evidence file; coverage_crosswalk.json satisfies that by CONTAINING the number 417. But nobody can point to 417 provisions. 'The number has an evidence file' is not the same as 'the artifact the number describes exists'. G3 needs a second clause: a number that counts things must resolve to the things.",
+    "strategic_consequence": "The recommended crown-jewel play \u2014 submit the corpus into JTC21 enquiry windows via the free BSI mirror committee \u2014 cannot be executed with 417. It CAN be executed with 21 signed, verifiable provisions, which is a real and unusual asset. Submitting 21 and saying 21 is credible; submitting under a 417 banner is the one thing a standards committee will check.",
+    "caveat": "Searched this Mac. If the 417-provision corpus lives elsewhere, produce it and re-freeze."
+  }
+}

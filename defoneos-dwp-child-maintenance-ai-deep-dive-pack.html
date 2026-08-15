@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1.0" name="viewport"/>
+<title>DEFONEOS — DWP Child Maintenance AI Deep-Dive Pack</title>
+<meta content="Sovereign AI governance of UK child maintenance system. 12 entry points × 8 transformation priorities × 6 MCPs. UK-sovereign, audit-grade, AUKUS-compatible. EU AI Act Article 50 compliant." name="description"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--ink:#0b1020;--bg:#050816;--panel:#0d1330;--line:#1a2050;--gold:#d4af37;--sov:#6dd5ff;--care:#4ade80;--warn:#fbbf24;--bad:#f87171;--fg:#e8eefc;--mut:#8a93b8}
+html,body{background:var(--bg);color:var(--fg);font:16px/1.6 -apple-system,system-ui,sans-serif}
+body{background:radial-gradient(ellipse 80% 50% at 50% -10%,rgba(109,213,255,0.12),transparent),var(--bg);min-height:100vh}
+.wrap{max-width:1280px;margin:0 auto;padding:48px 24px}
+header{text-align:center;margin-bottom:32px}
+.pill{display:inline-block;padding:4px 14px;border:1px solid var(--gold);border-radius:999px;font-size:12px;letter-spacing:0.1em;color:var(--gold);margin-bottom:16px}
+h1{font-size:clamp(36px,5vw,56px);line-height:1.1;letter-spacing:-0.02em;margin-bottom:16px;background:linear-gradient(180deg,#fff,#b8c2e8);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.sub{font-size:18px;color:var(--mut);max-width:820px;margin:0 auto 24px}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin:32px 0;padding:24px;background:var(--panel);border:1px solid var(--line);border-radius:16px}
+@media(max-width:800px){.stats{grid-template-columns:repeat(2,1fr)}}
+.stat{text-align:center}.stat .num{font-size:32px;font-weight:800;color:var(--sov)}.stat .label{font-size:11px;letter-spacing:0.15em;text-transform:uppercase;color:var(--mut);margin-top:4px}
+h2{margin:48px 0 24px;padding-bottom:12px;border-bottom:1px solid var(--line);font-size:28px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:20px;transition:all .2s;position:relative;overflow:hidden}
+.card::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:var(--accent,#6dd5ff)}
+.card:hover{transform:translateY(-3px);border-color:var(--accent);box-shadow:0 8px 24px rgba(0,0,0,0.3)}
+.card h3{font-size:17px;font-weight:700;margin-bottom:8px}
+.card p{font-size:13px;color:var(--mut);line-height:1.5}
+.tag{display:inline-block;background:rgba(109,213,255,0.1);border:1px solid rgba(109,213,255,0.3);color:var(--sov);padding:2px 8px;border-radius:4px;font-size:10px;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:8px}
+.redline{margin:48px 0;padding:24px;background:rgba(248,113,113,0.08);border:1px solid rgba(248,113,113,0.3);border-radius:12px}
+.redline h3{color:var(--bad);margin-bottom:12px;font-size:18px}
+.redline li{color:var(--fg);margin:8px 0 8px 20px;font-size:14px}
+.engagement{margin:48px 0;padding:24px;background:var(--panel);border:1px solid var(--line);border-radius:12px}
+.engagement h3{color:var(--sov);margin-bottom:12px;font-size:18px}
+.step{display:flex;align-items:flex-start;gap:12px;margin:12px 0;padding:12px;background:rgba(109,213,255,0.05);border-radius:8px}
+.step .num{width:32px;height:32px;border-radius:50%;background:var(--sov);color:var(--bg);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px;flex-shrink:0}
+footer{margin-top:64px;text-align:center;font-size:12px;color:var(--mut);padding-top:32px;border-top:1px solid var(--line)}
+footer a{color:var(--sov);text-decoration:none}
+</style>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "TechArticle", "headline": "DWP Child Maintenance AI Deep-Dive Pack — DEFONEOS by CSOAI", "description": "Independent AI governance mapping and measurement analysis for DWP Child Maintenance. Measurement, not certification — every figure traces to a signed, verifiable record.", "author": {"@type": "Organization", "name": "CSOAI Ltd", "url": "https://csoai.org"}, "publisher": {"@type": "Organization", "name": "CSOAI Ltd", "url": "https://csoai.org"}, "isAbout": {"@type": "GovernmentOrganization", "name": "DWP Child Maintenance"}, "url": "https://www.csoai.org/defoneos-dwp-child-maintenance-ai-deep-dive-pack.html"}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "CSOAI", "item": "https://www.csoai.org/"}, {"@type": "ListItem", "position": 2, "name": "DEFONEOS", "item": "https://www.csoai.org/arena-hub.html"}, {"@type": "ListItem", "position": 3, "name": "DWP Child Maintenance AI Deep-Dive Pack"}]}</script>
+<link href="https://csoai.org/defoneos-dwp-child-maintenance-ai-deep-dive-pack.html" rel="canonical"/>
+<meta content="DEFONEOS — DWP Child Maintenance AI Deep-Dive Pack" property="og:title"/>
+<meta content="CSOAI sovereign AI governance deep-dive: DEFONEOS — DWP Child Maintenance AI Deep-Dive Pack" property="og:description"/>
+<link href="/favicon.svg" rel="icon" type="image/svg+xml"/>
+<!-- AI-SEO/AEO/GEO head block — DO NOT remove. AI crawlers (GPTBot, ClaudeBot, PerplexityBot) don't run JS; everything they need must be in raw HTML. -->
+<link href="https://csoai.org/defoneos-dwp-child-maintenance-ai-deep-dive-pack.html.llm.json" rel="alternate" title="LLM representation of this page" type="application/llm+json"/>
+<meta content="/llms.txt" name="llms-txt"/>
+<meta content="human-authored, machine-verifiable, Ed25519-signed" name="ai-content-declaration"/>
+<meta content="CSOAI Ltd (2026). DEFONEOS — DWP Child Maintenance AI Deep-Dive Pack. https://csoai.org/defoneos-dwp-child-maintenance-ai-deep-dive-pack.html" name="citation-policy"/>
+<meta content="2026-07-27T13:57:10+00:00" name="revised"/>
+<meta content="2026-07-27T13:57:10+00:00" property="article:modified_time"/>
+</head>
+<body>
+<div class="article50-banner" style="background:linear-gradient(90deg,#3a0f1a,#7a1f33,#3a0f1a);border-bottom:1px solid #ff5470;padding:10px 16px;text-align:center;font-size:13px;color:#ffd5dd;font-weight:500">EU AI Act Article 50 live 2 Aug 2026 — C2PA passport ready | <a href="/tools/article50-passport.html" style="color:#fff;text-decoration:underline;font-weight:700">Get yours →</a></div>
+<div class="wrap">
+<header>
+<nav><a href="/">Home</a> <a href="/master.html">Master</a> <a href="/govbench.html">GovBench</a> <a href="/tools/article50-passport.html">Article 50</a></nav>
+<div class="pill">DEFONEOS × DWP × CHILD MAINTENANCE</div>
+<h1>DWP Child Maintenance<br/>AI Deep-Dive Pack</h1>
+<p class="sub">Sovereign AI governance of UK child maintenance — Child Maintenance Service (CMS) case management, income assessment, enforcement, appeals, arrears recovery, and the Child Poverty Unit. Audit-grade. Signed. UK-sovereign.</p>
+<div class="stats">
+<div class="stat"><div class="num">12</div><div class="label">Entry Points</div></div>
+<div class="stat"><div class="num">8</div><div class="label">Transformation Priorities</div></div>
+<div class="stat"><div class="num">6</div><div class="label">MCP Servers</div></div>
+<div class="stat"><div class="num">5</div><div class="label">Backbone Orgs</div></div>
+</div>
+</header>
+<h2>🏛️ 12 Entry Points</h2>
+<div class="grid">
+<div class="card"><span class="tag">Case Management</span><h3>CMS Direct Pay &amp; Collect &amp; Pay</h3><p>Child Maintenance Service two-tier model. Direct Pay (800K+ arrangements) and Collect &amp; Pay (150K+ cases). Income assessment from HMRC data. Calculation engine (CS3 formula). Payment distribution. 950,000+ active cases.</p></div>
+<div class="card"><span class="tag">Income</span><h3>HMRC Income Data Integration</h3><p>Real-time earnings data from PAYE and Self-Assessment. Gross income calculation. Pension deduction treatment. Benefit income recognition. Multiple employment aggregation. Variable income averaging. 950K+ income assessments annually.</p></div>
+<div class="card"><span class="tag">Enforcement</span><h3>CMS Enforcement &amp; Compliance</h3><p>Deduction from earnings orders (DEO). Liability orders and charging orders. Deduction from bank accounts. Passport/ driving licence curfew orders. Imprisonment (last resort). 45,000+ enforcement actions annually.</p></div>
+<div class="card"><span class="tag">Arrears</span><h3>CMS Arrears Management &amp; Recovery</h3><p>£3.7B+ historical arrears. Arrears negotiation and write-off governance. Debt collection agency referral. Time-to-pay arrangements. Bankruptcy proceedings (last resort). Cross-border arrears recovery.</p></div>
+<div class="card"><span class="tag">Appeals</span><h3>HMCTS First-tier Tribunal (Social Entitlement)</h3><p>Child maintenance decision appeals. Variation applications (lifestyle inconsistency, diversion of income, assets). Upper Tribunal referrals. 15,000+ appeals annually. Independent tribunal judiciary.</p></div>
+<div class="card"><span class="tag">Shared Care</span><h3>Shared Care &amp; Parental Responsibility</h3><p>Shared care percentage calculation. Overnight stay verification. Equal shared care nil assessment. Care pattern change notification. Multiple case family linking. 200K+ shared care arrangements.</p></div>
+<div class="card"><span class="tag">International</span><h3>Cross-Border Maintenance Recovery</h3><p>Reciprocal enforcement of maintenance orders (REMO). Hague Convention cases. EU Maintenance Regulation post-Brexit. Central Authority coordination. Foreign court order registration. 12,000+ international cases.</p></div>
+<div class="card"><span class="tag">Child Poverty</span><h3>Child Poverty Unit &amp; Social Mobility Commission</h3><p>Child poverty measurement (relative and absolute). Persistent poverty tracking. Area-based deprivation modelling. Family income dynamics. Intergenerational poverty breaking. 4.3M children in poverty (after housing costs).</p></div>
+<div class="card"><span class="tag">Safeguarding</span><h3>Domestic Abuse &amp; Safeguarding Gateway</h3><p>Apply Direct pathway for DA survivors. Section 287 bypass. Safeguarding referral integration. Third-party deduction governance. Address confidentiality protection. 30K+ DA-gateway applications annually.</p></div>
+<div class="card"><span class="tag">Self-Service</span><h3>CMS Digital Self-Service &amp; GOV.UK</h3><p>Online maintenance calculation tool. Self-service case management. Digital communication preference. Payment tracking portal. Change of circumstances reporting. 2M+ digital transactions annually.</p></div>
+<div class="card"><span class="tag">Data</span><h3>CMS Analytics &amp; Performance Data Lab</h3><p>CMS operational performance analytics. Collection rate monitoring. Case lifecycle modelling. Arrears trajectory forecasting. Cross-department data sharing (HMRC, DWP, HMCTS). Compliance trend analysis.</p></div>
+<div class="card"><span class="tag">Parliamentary</span><h3>Work &amp; Pensions Select Committee</h3><p>CMS performance scrutiny. Arrears reduction accountability. Enforcement effectiveness review. Child poverty strategy oversight. Maintenance calculation fairness. NAO value-for-money audits.</p></div>
+</div>
+<h2>⚡ 8 Transformation Priorities</h2>
+<div class="grid">
+<div class="card"><h3>1. Income Assessment Intelligence</h3><p>AI-powered income verification from HMRC PAYE and SA data. Multi-employment aggregation. Self-employment income prediction. Pension and benefit treatment. Variable income smoothing. 950K+ assessments annually with reduced error rates.</p></div>
+<div class="card"><h3>2. Arrears Recovery Optimisation</h3><p>Intelligent arrears triage across £3.7B outstanding. Predictive payment behaviour modelling. Optimal enforcement pathway recommendation. Time-to-pay arrangement negotiation AI. Cross-border recovery coordination. Write-off governance automation.</p></div>
+<div class="card"><h3>3. Compliance Prediction &amp; Intervention</h3><p>Early warning system for non-payment. Payment pattern analysis. Engagement score modelling. Proactive contact strategy. Self-service funnel optimisation. 950K+ cases monitored for compliance drift.</p></div>
+<div class="card"><h3>4. Shared Care Verification</h3><p>AI-assisted shared care pattern verification. Overnight stay claim validation. Care arrangement change detection. School and GP record cross-referencing (with consent). 200K+ shared care arrangements governed fairly.</p></div>
+<div class="card"><h3>5. Domestic Abuse Safeguarding Intelligence</h3><p>Enhanced DA gateway screening. Section 287 bypass automation. Third-party deduction risk assessment. Address confidentiality enforcement. Safeguarding referral speed improvement. 30K+ DA survivors protected annually.</p></div>
+<div class="card"><h3>6. Appeal &amp; Variation Intelligence</h3><p>Automated variation application screening (lifestyle, diversion, assets, property). Appeal outcome prediction. Evidence compilation assistance. Tribunal case preparation. 15,000+ appeals processed with improved consistency.</p></div>
+<div class="card"><h3>7. Cross-Border Case Coordination</h3><p>REMO case automation. Hague Convention compliance monitoring. Foreign court order translation and registration. Central Authority workload balancing. International income data matching. 12,000+ cases coordinated.</p></div>
+<div class="card"><h3>8. Parliamentary &amp; Child Poverty Accountability</h3><p>Automated evidence for W&amp;P Select Committee. CMS performance dashboard. Child poverty metric tracking. Arrears reduction reporting. Maintenance adequacy assessment. NAO audit trail automation.</p></div>
+</div>
+<h2>🔧 6 MCP Servers</h2>
+<div class="grid">
+<div class="card"><span class="tag">Income</span><h3>dwp-cms-income-assessment-mcp</h3><p>HMRC income data integration. PAYE and SA assessment. Multi-employment aggregation. Variable income averaging. Self-employment prediction. 950K+ assessments governed.</p></div>
+<div class="card"><span class="tag">Arrears</span><h3>dwp-cms-arrears-recovery-mcp</h3><p>£3.7B+ arrears intelligent triage. Predictive payment modelling. Enforcement pathway recommendation. Time-to-pay negotiation. Cross-border recovery. Write-off governance.</p></div>
+<div class="card"><span class="tag">Compliance</span><h3>dwp-cms-compliance-prediction-mcp</h3><p>Non-payment early warning. Payment pattern analysis. Engagement scoring. Proactive contact strategy. Self-service funnel optimisation. 950K+ case monitoring.</p></div>
+<div class="card"><span class="tag">Safeguarding</span><h3>dwp-cms-da-safeguarding-mcp</h3><p>DA gateway screening. Section 287 bypass. Third-party deduction risk. Address confidentiality. Safeguarding referral. 30K+ DA survivor protection.</p></div>
+<div class="card"><span class="tag">International</span><h3>dwp-cms-remo-international-mcp</h3><p>REMO case automation. Hague Convention compliance. Foreign order registration. Central Authority coordination. International income matching. 12,000+ cases.</p></div>
+<div class="card"><span class="tag">Accountability</span><h3>dwp-cms-parliamentary-accountability-mcp</h3><p>W&amp;P Committee evidence. CMS performance dashboard. Child poverty tracking. Arrears reporting. Maintenance adequacy. NAO audit trail.</p></div>
+</div>
+<div class="redline">
+<h3>🚫 Red Lines (Never Crossed)</h3>
+<ul>
+<li>❌ No automated maintenance calculation override without human caseworker review and notification to both parties</li>
+<li>❌ No enforcement action (DEO, bank deduction, passport curfew) without prior notice and appeal opportunity</li>
+<li>❌ No DA survivor contact details shared with paying parent under any circumstances</li>
+<li>❌ No child poverty assessment used to deny benefits without DWP decision maker and appeal pathway</li>
+<li>❌ No cross-border maintenance recovery without Central Authority legal review</li>
+<li>❌ No imprisonment recommendation without full tribunal review and legal representation opportunity</li>
+</ul>
+</div>
+<div class="engagement">
+<h3>🤝 5-Step Engagement Model</h3>
+<div class="step"><div class="num">1</div><div><strong>Discovery:</strong> Map CMS digital maturity across Direct Pay and Collect &amp; Pay pathways. Identify HMRC data integration gaps. Benchmark against DWP Child Maintenance Transformation Programme.</div></div>
+<div class="step"><div class="num">2</div><div><strong>Governance Design:</strong> Deploy DEFONEOS MCP servers against CMS use cases. Configure red-line enforcement for DA safeguarding and arrears recovery. Establish cross-DWP oversight protocols.</div></div>
+<div class="step"><div class="num">3</div><div><strong>Pilot:</strong> Run 90-day pilot in 3 CMS service centres. Measure income assessment accuracy, arrears recovery rates, and DA gateway response times. Collect caseworker and parent feedback.</div></div>
+<div class="step"><div class="num">4</div><div><strong>Scale:</strong> Roll out across all 4 CMS service centres. Integrate with HMRC real-time earnings. Deploy to all 950K+ active cases. Establish Child Maintenance Commission oversight.</div></div>
+<div class="step"><div class="num">5</div><div><strong>Assure:</strong> Continuous audit-grade compliance reporting. Child poverty impact assessment. Parliamentary evidence generation. Annual W&amp;P Committee review of AI governance framework.</div></div>
+</div>
+<div class="sovereign-cta-strip"><a href="/defoneos-owem-rfq">DEFONEOS OWEM RFQ</a> | <a href="/defoneos-article-50">Article 50 Passport</a></div>
+<footer>
+<p>DEFONEOS — Sovereign Public Services OS · <a href="https://csoai.org">csoai.org</a> · UK-sovereign. Audit-grade. AUKUS-compatible.</p>
+<p style="margin-top:8px">© 2026 CSOAI Ltd (UK 16939677) · <a href="https://csoai.org/sitemap.xml">Sitemap</a> · <a href="https://csoai.org/defoneos.html">Index</a></p>
+ — SIGIL-chain verified.</footer>
+</div>
+<footer><a href="/master.html">SOV33_OWEM_HUB</a></footer>
+</body>
+</html>

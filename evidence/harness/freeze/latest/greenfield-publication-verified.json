@@ -1,0 +1,83 @@
+{
+  "measured_at": "2026-08-04T16:06:17.624645+00:00",
+  "method": "unauthenticated HTTP GET as a browser UA \u2014 what a member of the public actually sees",
+  "claim_under_test": "the six GSPC greenfields are published and publicly reachable on both platforms",
+  "result": "12/12 return HTTP 200",
+  "verdict": "CONFIRMED",
+  "surfaces": [
+    {
+      "axis": "govbench",
+      "platform": "huggingface",
+      "url": "https://huggingface.co/datasets/csoai/govbench",
+      "status": 200
+    },
+    {
+      "axis": "govbench",
+      "platform": "kaggle",
+      "url": "https://www.kaggle.com/datasets/nicktempleman/gspc-govbench",
+      "status": 200
+    },
+    {
+      "axis": "defbench",
+      "platform": "huggingface",
+      "url": "https://huggingface.co/datasets/csoai/defbench",
+      "status": 200
+    },
+    {
+      "axis": "defbench",
+      "platform": "kaggle",
+      "url": "https://www.kaggle.com/datasets/nicktempleman/gspc-defbench",
+      "status": 200
+    },
+    {
+      "axis": "provbench",
+      "platform": "huggingface",
+      "url": "https://huggingface.co/datasets/csoai/provbench",
+      "status": 200
+    },
+    {
+      "axis": "provbench",
+      "platform": "kaggle",
+      "url": "https://www.kaggle.com/datasets/nicktempleman/gspc-provbench",
+      "status": 200
+    },
+    {
+      "axis": "pqcbench",
+      "platform": "huggingface",
+      "url": "https://huggingface.co/datasets/csoai/pqcbench",
+      "status": 200
+    },
+    {
+      "axis": "pqcbench",
+      "platform": "kaggle",
+      "url": "https://www.kaggle.com/datasets/nicktempleman/gspc-pqcbench",
+      "status": 200
+    },
+    {
+      "axis": "mcpbench",
+      "platform": "huggingface",
+      "url": "https://huggingface.co/datasets/csoai/mcpbench",
+      "status": 200
+    },
+    {
+      "axis": "mcpbench",
+      "platform": "kaggle",
+      "url": "https://www.kaggle.com/datasets/nicktempleman/gspc-mcpbench",
+      "status": 200
+    },
+    {
+      "axis": "ossbench",
+      "platform": "huggingface",
+      "url": "https://huggingface.co/datasets/csoai/ossbench",
+      "status": 200
+    },
+    {
+      "axis": "ossbench",
+      "platform": "kaggle",
+      "url": "https://www.kaggle.com/datasets/nicktempleman/gspc-ossbench",
+      "status": 200
+    }
+  ],
+  "note": "Six additional competition-packaged Kaggle datasets were created today (defbench-calibrated-refusal, govbench-eu-ai-act-risk-tier, mcpbench-tool-conformance, ossbench-licence-vs-intended-use, pqcbench-post-quantum-continuity, provbench-article-50-marking-survival). Kaggle creates datasets PRIVATE by default and offers no CLI flag to change visibility afterwards, so those six return 404 to the public and need flipping in the web UI. They are NOT counted in the 12/12 above.",
+  "what_is_NOT_claimed": "publication is not adoption. Download counts at time of measurement are in single digits, and a published dataset with no users is a distribution fact, not evidence the instrument is used."
+}

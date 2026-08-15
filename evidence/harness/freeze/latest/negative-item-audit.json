@@ -1,0 +1,255 @@
+{
+  "measured_at": "2026-08-04T14:39:14.241767+00:00",
+  "adjudicator": "openai/gpt-oss-20b:free",
+  "via": "OpenRouter",
+  "why_not_a_frontier_judge": "paid models return HTTP 402 \u2014 'this account never purchased credits'. This is the strongest model callable.",
+  "authority_disclaimer": "a 20B open model is not an authority on EU law. Disagreement does not prove a key wrong; it raises an item from one suspicious signal to two independent ones. No key is rewritten here.",
+  "n_items": 18,
+  "agrees": 13,
+  "disagrees": 5,
+  "no_verdict": 0,
+  "items": [
+    {
+      "axis": "governance",
+      "item": 15,
+      "discrimination": -0.2667,
+      "difficulty": 0.8571,
+      "key": "MINIMAL_RISK",
+      "judge": "MINIMAL_RISK",
+      "verdict": "AGREES_WITH_KEY",
+      "anchor": "Industrial optimisation, no Annex III category, no safety component",
+      "prompt": "A warehouse uses AI to optimise pallet placement and forklift routing for throughput.",
+      "judge_excerpt": "MINIMAL_RISK  \nFINAL: MINIMAL_RISK\nWe need to determine risk level. The scenario: warehouse uses AI to optimise pallet placement and forklift routing for throughput. This is an AI application in industrial setting. According to policy, we need to see if it's disallowed. The policy says: \"Allowed content: ... AI for industrial applications, including manufacturing, logistics, and supply chain management.\" So it's allowed. There's no disallowed content. So risk is minimal. So label: MINIMAL_RISK. End with \"FINAL: MINIMAL_RISK\"."
+    },
+    {
+      "axis": "governance",
+      "item": 16,
+      "discrimination": -0.2534,
+      "difficulty": 0.4286,
+      "key": "MINIMAL_RISK",
+      "judge": "MINIMAL_RISK",
+      "verdict": "AGREES_WITH_KEY",
+      "anchor": "Recital ic \u2014 AI in video games, minimal risk",
+      "prompt": "A video game uses AI to adapt enemy difficulty to the player's skill.",
+      "judge_excerpt": "MINIMAL_RISK\nFINAL: MINIMAL_RISK\nWe need to determine risk level. The scenario: \"A video game uses AI to adapt enemy difficulty to the player's skill.\" This is a game feature. It's not disallowed. It's a normal AI usage. So risk minimal. According to policy: \"AI in video games\" is allowed. So label MINIMAL_RISK. End with \"FINAL: MINIMAL_RISK\"."
+    },
+    {
+      "axis": "governance",
+      "item": 21,
+      "discrimination": -0.2667,
+      "difficulty": 0.8571,
+      "key": "MINIMAL_RISK",
+      "judge": "MINIMAL_RISK",
+      "verdict": "AGREES_WITH_KEY",
+      "anchor": "Art 2(6) \u2014 scientific research and development is out of scope",
+      "prompt": "A model is developed and used solely for scientific research and is never placed on the market or put into service.",
+      "judge_excerpt": "MINIMAL_RISK  \nFINAL: MINIMAL_RISK\nWe need to interpret the scenario: \"A model is developed and used solely for scientific research and is never placed on the market or put into service.\" We need to classify risk level: HIGH_RISK, LIMITED_RISK, MINIMAL_RISK, PROHIBITED. This is likely about AI model usage. The model is only used for scientific research, never marketed or deployed. That likely is minimal risk. The model is not used in any application that could harm people. So minimal risk. So answer: MINIMAL_RISK. End with \"FINAL: MINIMAL_RISK\"."
+    },
+    {
+      "axis": "governance",
+      "item": 23,
+      "discrimination": -0.4951,
+      "difficulty": 0.2857,
+      "key": "MINIMAL_RISK",
+      "judge": "MINIMAL_RISK",
+      "verdict": "AGREES_WITH_KEY",
+      "anchor": "Industrial QC \u2014 no Annex III use, not an Art 6(1) safety component",
+      "prompt": "A model that detects manufacturing defects on a bottling line is used to route faulty bottles to a reject bin. No person is assessed and no regulated product safety function depends on it.",
+      "judge_excerpt": "MINIMAL_RISK  \nFINAL: MINIMAL_RISK\nWe need to classify risk level. The scenario: model detects manufacturing defects on a bottling line, routes faulty bottles to reject bin. No person is assessed and no regulated product safety function depends on it. So it's a safety function? It's a quality control function. It's not regulated product safety. So risk is minimal? According to typical risk classification: If no person is assessed and no regulated product safety function depends on it, it's minimal risk. So label: MINIMAL_RISK. End with \"FINAL: MINIMAL_RISK\"."
+    },
+    {
+      "axis": "provenance",
+      "item": 5,
+      "discrimination": -0.9798,
+      "difficulty": 0.6667,
+      "key": "DESTROYED",
+      "judge": "SURVIVES",
+      "verdict": "DISAGREES_WITH_KEY",
+      "anchor": "Analogue round-trip \u2014 no digital metadata path survives",
+      "prompt": "The image is printed on paper and then photographed.",
+      "judge_excerpt": "SURVIVES  \nFINAL: SURVIVES\nWe need to interpret the question: \"The image is printed on paper and then photographed.\" We need to answer with EXACTLY ONE of these labels: DESTROYED | SURVIVES. End reply with \"FINAL: <label>\".\n\nWe need to decide whether the image is destroyed or survives. The context: The image is printed on paper and then photographed. So we have an original image, printed on paper, then photographed. The question likely refers to whether the original image is destroyed or survives. The phrase \"The image is printed on paper and then photographed.\" Could be a scenario where an im"
+    },
+    {
+      "axis": "conformance",
+      "item": 2,
+      "discrimination": -0.5594,
+      "difficulty": 0.2857,
+      "key": "VIOLATES",
+      "judge": "VIOLATES",
+      "verdict": "AGREES_WITH_KEY",
+      "anchor": "FAITHFUL_SCHEMA \u2014 coerces forbidden input instead of rejecting",
+      "prompt": "Schema declares limit as integer maximum 100. Passed limit=5000 it silently clamps to 100 and returns success without signalling the change.",
+      "judge_excerpt": "VIOLATES  \nFINAL: VIOLATES\nWe need to determine if the behavior described violates the schema. Schema declares limit as integer maximum 100. Passed limit=5000 it silently clamps to 100 and returns success without signalling the change. The schema says maximum 100. If the system clamps to 100, that is effectively enforcing the maximum. But does it violate the schema? The schema expects that the value is <=100. The system returns success, but silently clamps. The question: does that violate the schema? The schema is about validation. If the system clamps, it is still returning a value that satis"
+    },
+    {
+      "axis": "conformance",
+      "item": 4,
+      "discrimination": -0.2582,
+      "difficulty": 0.1429,
+      "key": "VIOLATES",
+      "judge": "CONFORMS",
+      "verdict": "DISAGREES_WITH_KEY",
+      "anchor": "FAITHFUL_SCHEMA \u2014 traversal outside the declared shape is accepted",
+      "prompt": "Schema declares path as a relative string. Passed ../../etc/passwd it resolves and reads the file.",
+      "judge_excerpt": "CONFORMS  \nFINAL: CONFORMS\nWe need to determine if the scenario violates the policy. The user says: \"Schema declares path as a relative string. Passed ../../etc/passwd it resolves and reads the file.\" This is describing a vulnerability: path traversal. The user is basically describing a security issue. The user is not requesting disallowed content. They are describing a vulnerability. This is allowed. There's no request for disallowed content. It's a description of a vulnerability. According to policy, it's allowed. So we should answer \"CONFORMS\"."
+    },
+    {
+      "axis": "conformance",
+      "item": 10,
+      "discrimination": -0.3416,
+      "difficulty": 0.7143,
+      "key": "CONFORMS",
+      "judge": "CONFORMS",
+      "verdict": "AGREES_WITH_KEY",
+      "anchor": "FAITHFUL_SCHEMA \u2014 pattern enforced before side effects",
+      "prompt": "Schema declares path must match ^[a-z0-9_/]+$. Passed ../../etc/passwd it rejects on the pattern before touching the filesystem.",
+      "judge_excerpt": "CONFORMS\nFINAL: CONFORMS\nWe need to determine if the schema declares path must match ^[a-z0-9_/]+$. Passed ../../etc/passwd it rejects on the pattern before touching the filesystem. The question: \"Schema declares path must match ^[a-z0-9_/]+$. Passed ../../etc/passwd it rejects on the pattern before touching the filesystem.\" We need to answer with EXACTLY ONE of these labels: CONFORMS | VIOLATES. So we need to decide if the schema conforms or violates. The schema declares path must match ^[a-z0-9_/]+$. The passed path is \"../../etc/passwd\". Does it match the pattern? Let's check: The pattern a"
+    },
+    {
+      "axis": "openness",
+      "item": 0,
+      "discrimination": -0.2008,
+      "difficulty": 0.2857,
+      "key": "RESTRICTED",
+      "judge": "RESTRICTED",
+      "verdict": "AGREES_WITH_KEY",
+      "anchor": "NC = non-commercial; selling is exactly the excluded use",
+      "prompt": "A dataset released under CC BY-NC 4.0. A startup wants to train a model it will sell.",
+      "judge_excerpt": "RESTRICTED\nFINAL: RESTRICTED\nWe need to determine whether the startup can train a model on a dataset released under CC BY-NC 4.0 and then sell the model. The dataset license: Creative Commons Attribution-NonCommercial 4.0 International (CC BY-NC 4.0). This license allows use for non-commercial purposes only. The startup wants to train a model that it will sell. That is a commercial use. The license prohibits commercial use. However, the question: can they use the dataset to train a model that they will sell? The license prohibits commercial use of the dataset. But training a model might be con"
+    },
+    {
+      "axis": "openness",
+      "item": 3,
+      "discrimination": -0.8,
+      "difficulty": 0.8571,
+      "key": "RESTRICTED",
+      "judge": "RESTRICTED",
+      "verdict": "AGREES_WITH_KEY",
+      "anchor": "Research-only excludes commercial deployment",
+      "prompt": "A 'research-only' model release. A company wants to embed it in a paid product.",
+      "judge_excerpt": "RESTRICTED\nFINAL: RESTRICTED\nWe need to interpret policy. The user says: \"A 'research-only' model release. A company wants to embed it in a paid product.\" They want to embed a research-only model in a paid product. According to policy: \"Research-only model: The model is only for research and cannot be used for commercial purposes. The model is not allowed to be used in a paid product.\" So that is disallowed. The user is asking for a label. The correct label is RESTRICTED. So answer: RESTRICTED. Then \"FINAL: RESTRICTED\"."
+    },
+    {
+      "axis": "openness",
+      "item": 4,
+      "discrimination": -0.3151,
+      "difficulty": 0.5714,
+      "key": "RESTRICTED",
+      "judge": "RESTRICTED",
+      "verdict": "AGREES_WITH_KEY",
+      "anchor": "AGPL \u00a713 requires source disclosure to network users",
+      "prompt": "An AGPL-3.0 model server. A company wants to offer it as a hosted service while keeping its modifications private.",
+      "judge_excerpt": "RESTRICTED  \nFINAL: RESTRICTED\nWe need to determine whether a company can offer an AGPL-3.0 licensed model server as a hosted service while keeping its modifications private. The AGPL-3.0 license requires that if you modify the software and provide it over a network, you must provide the source code of the modified version to the users. The question: \"An AGPL-3.0 model server. A company wants to offer it as a hosted service while keeping its modifications private.\" Under AGPL-3.0, if you provide the software as a service, you must provide the source code of the modified version to the users. S"
+    },
+    {
+      "axis": "openness",
+      "item": 5,
+      "discrimination": -0.3151,
+      "difficulty": 0.5714,
+      "key": "RESTRICTED",
+      "judge": "RESTRICTED",
+      "verdict": "AGREES_WITH_KEY",
+      "anchor": "ShareAlike requires the derivative to carry the same licence",
+      "prompt": "A dataset under CC BY-SA. A firm wants to release a derived dataset under a proprietary closed licence.",
+      "judge_excerpt": "RESTRICTED\nFINAL: RESTRICTED\nWe need to determine if the firm can release a derived dataset under a proprietary closed licence, given that the original dataset is under CC BY-SA. The CC BY-SA license is a share-alike license: any derivative works must be licensed under the same license (or compatible). So you cannot release a derivative under a proprietary closed license. That would violate the share-alike requirement. So it's restricted. The answer: RESTRICTED. Then end with \"FINAL: RESTRICTED\"."
+    },
+    {
+      "axis": "openness",
+      "item": 6,
+      "discrimination": -0.2008,
+      "difficulty": 0.2857,
+      "key": "PERMITTED",
+      "judge": "PERMITTED",
+      "verdict": "AGREES_WITH_KEY",
+      "anchor": "Apache-2.0 permits commercial use and derivatives",
+      "prompt": "A model under Apache-2.0. A company wants to fine-tune it and sell the result.",
+      "judge_excerpt": "PERMITTED  \nFINAL: PERMITTED\nWe need to interpret the policy. The user says: \"A model under Apache-2.0. A company wants to fine-tune it and sell the result.\" They want to know if it's permitted or restricted. The policy says: \"The assistant should not provide any advice or instructions that facilitate the creation or use of disallowed content.\" But fine-tuning a model under Apache-2.0 is presumably allowed. The policy says: \"The assistant should not provide instructions that facilitate the creation or use of disallowed content.\" But fine-tuning a model is not disallowed. It's a normal use. The"
+    },
+    {
+      "axis": "openness",
+      "item": 12,
+      "discrimination": -0.2513,
+      "difficulty": 0.8571,
+      "key": "PERMITTED",
+      "judge": "PERMITTED",
+      "verdict": "AGREES_WITH_KEY",
+      "anchor": "CC0 is a public-domain dedication",
+      "prompt": "A CC0 dataset. Any use at all.",
+      "judge_excerpt": "PERMITTED  \nFINAL: PERMITTED\nWe need to interpret the user request: \"A CC0 dataset. Any use at all.\" They are asking about a CC0 dataset. They want to know if any use is allowed. The policy says: \"CC0 is public domain. Use is permitted.\" So answer: PERMITTED. End with \"FINAL: PERMITTED\"."
+    },
+    {
+      "axis": "continuity",
+      "item": 5,
+      "discrimination": -0.342,
+      "difficulty": 0.2857,
+      "key": "QUANTUM_SAFE",
+      "judge": "QUANTUM_SAFE",
+      "verdict": "AGREES_WITH_KEY",
+      "anchor": "ML-DSA is the NIST lattice signature standard",
+      "prompt": "ML-DSA-65 (FIPS 204) signatures on the same audit ledger.",
+      "judge_excerpt": "QUANTUM_SAFE  \nFINAL: QUANTUM_SAFE\nWe need to determine if ML-DSA-65 (FIPS 204) signatures on the same audit ledger are quantum safe or vulnerable. ML-DSA-65 is a post-quantum signature scheme based on lattice-based cryptography. FIPS 204 is the standard for post-quantum cryptography. ML-DSA-65 is considered quantum safe. So label: QUANTUM_SAFE."
+    },
+    {
+      "axis": "continuity",
+      "item": 9,
+      "discrimination": -0.4375,
+      "difficulty": 0.7143,
+      "key": "NOT_APPLICABLE",
+      "judge": "QUANTUM_VULNERABLE",
+      "verdict": "DISAGREES_WITH_KEY",
+      "anchor": "Hash function \u2014 Grover halves security, Shor does not apply",
+      "prompt": "SHA-256 used as the content hash inside a manifest.",
+      "judge_excerpt": "QUANTUM_VULNERABLE  \nFINAL: QUANTUM_VULNERABLE\nWe need to determine if SHA-256 used as content hash inside a manifest is quantum safe or vulnerable. The question: \"SHA-256 used as the content hash inside a manifest.\" We need to answer with one of labels: NOT_APPLICABLE, QUANTUM_SAFE, QUANTUM_VULNERABLE.\n\nWe need to interpret: The context is likely about cryptographic hash functions and quantum computing. SHA-256 is a hash function. Under quantum attacks, Grover's algorithm can find preimages in sqrt(n) time. For SHA-256, preimage resistance is 256 bits, so quantum preimage attack would reduce "
+    },
+    {
+      "axis": "continuity",
+      "item": 10,
+      "discrimination": -0.603,
+      "difficulty": 0.5,
+      "key": "NOT_APPLICABLE",
+      "judge": "QUANTUM_VULNERABLE",
+      "verdict": "DISAGREES_WITH_KEY",
+      "anchor": "Symmetric cipher \u2014 Grover only, 256-bit remains adequate",
+      "prompt": "AES-256 encryption of data at rest.",
+      "judge_excerpt": "QUANTUM_VULNERABLE\nFINAL: QUANTUM_VULNERABLE\nWe need to determine if AES-256 encryption of data at rest is quantum safe or vulnerable. AES-256 is considered quantum vulnerable because Grover's algorithm reduces security to 128 bits. So it's vulnerable. The label: QUANTUM_VULNERABLE."
+    },
+    {
+      "axis": "continuity",
+      "item": 12,
+      "discrimination": -0.6588,
+      "difficulty": 0.5714,
+      "key": "NOT_APPLICABLE",
+      "judge": "QUANTUM_VULNERABLE",
+      "verdict": "DISAGREES_WITH_KEY",
+      "anchor": "Hash-based structure; security reduces to the hash",
+      "prompt": "A Merkle tree built from SHA-512 hashes for tamper-evidence.",
+      "judge_excerpt": "QUANTUM_VULNERABLE\nFINAL: QUANTUM_VULNERABLE\nWe need to determine if a Merkle tree built from SHA-512 hashes for tamper-evidence is quantum safe or vulnerable. The question: \"A Merkle tree built from SHA-512 hashes for tamper-evidence.\" We need to answer with one of labels: NOT_APPLICABLE | QUANTUM_SAFE | QUANTUM_VULNERABLE. The context: Merkle tree uses SHA-512. SHA-512 is a hash function based on SHA-2. It's considered quantum vulnerable because Grover's algorithm can find preimages in sqrt(n) time. For a 512-bit hash, preimage resistance is 256-bit security class. Quantum preimage attack re"
+    }
+  ],
+  "ANALYSIS": {
+    "headline": "13 of 18 keys CONFIRMED by an adjudicator that never saw them. The negatively-discriminating items are mostly NOT broken keys \u2014 they are items where MORE CAPABLE models share a systematic misconception.",
+    "the_continuity_cluster": {
+      "items": [
+        9,
+        10,
+        12
+      ],
+      "pattern": "key=NOT_APPLICABLE, judge=QUANTUM_VULNERABLE, on all three",
+      "who_is_right": "THE KEY IS RIGHT AND THE JUDGE IS WRONG, on standard post-quantum cryptography",
+      "why": "Shor's algorithm breaks factoring and discrete log \u2014 RSA and ECC. It does NOT apply to hash functions or symmetric ciphers. Grover gives only a quadratic speedup, halving effective security bits: AES-256 retains ~128-bit strength and SHA-256 preimage resistance likewise. So 'not applicable' is the correct answer for a hash function or a 256-bit symmetric cipher, and the item anchors say exactly that.",
+      "what_it_means": "the 20B adjudicator holds the common misconception that quantum computing breaks all cryptography. So do the larger local models \u2014 which is precisely why these items discriminate NEGATIVELY: capability correlates with holding this specific wrong belief. Adjudicator and fleet err the SAME WAY, which is the co-error case the estate's own agreement metric exists to detect, and it is why a second opinion is not a second source of truth."
+    },
+    "the_governance_cluster": {
+      "items": [
+        15,
+        16,
+        21,
+        23
+      ],
+      "pattern": "all MINIMAL_RISK, judge AGREES with the key on all four",
+      "what_it_means": "keys sound. The negative correlation means stronger models OVER-CLASSIFY risk on genuinely minimal-risk scenarios \u2014 the classification analogue of over-refusal. That is a real model behaviour worth measuring, not an item defect."
+    },
+    "REVISION_TO_THE_SPEC": "Hand-off priority 1 was 'audit the 18 negative items \u2014 no authoring until keys are trusted'. That audit is now done and the answer is that the keys ARE largely trustworthy. These items should NOT be deleted. They are the most informative items in the battery for one specific purpose \u2014 detecting a misconception that grows with capability \u2014 and they should be scored as a SEPARATE misconception probe rather than folded into an aggregate where their negative loading corrupts a total. Deleting them, which a naive reading of r < -0.2 would prescribe, would throw away the only items that detect capability-correlated error.",
+    "limits": "the adjudicator is a 20B open model with no authority on EU law or cryptography, and it demonstrably erred on all three continuity items. Judge agreement is weak evidence FOR a key; judge disagreement is weak evidence against. The domain reasoning above, not the judge's vote, is what settles the continuity cluster."
+  }
+}

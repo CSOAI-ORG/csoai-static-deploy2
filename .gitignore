@@ -1,0 +1,115 @@
+# Vercel build cache + project metadata
+.vercel/
+
+# OS / editor scratch
+.DS_Store
+*.swp
+*.swo
+*~
+
+# Local tmp scratch
+/tmp/
+
+# Snapshot runtime logs (but KEEP the snapshot dirs + manifests)
+.backups/snapshot.log
+.backups/*.log
+
+# Backups directory
+.backups/
+
+# Internal Python scripts (not deployed)
+_sigma_audit.py
+_sigma_patcher.py
+_e2e_tests.py
+_build_sigma_report.py
+_enrich_phantoms.py
+_gen_phantoms.py
+_rebuild_15.py
+
+# Internal markdown docs (not deployed)
+BEAUTY_PASS_LOG.md
+META_FIX_LOG.md
+PHANTOM_LIST_*.md
+PHANTOM_RECONCILIATION_*.md
+SIGMA_CHECK_*.md
+SOV33_BENCHMARK_E2E_PLAN.md
+SOV33_GROWTH_MODEL_*.md
+SOV33_OWEM_REALITY_*.md
+SOV3_OOWM_KNOWLEDGE_TAB_*.md
+COST_REDUCTION_MANIFESTO_*.md
+REGULATIONS_PIPELINE_EXPANSION_*.md
+LANE_TASKS_*.md
+distribution-pack.md
+distribution-tracker.md
+sov3_oowm_all_models.md
+sov3_oowm_knowledge_tab.md
+
+# Claim tickets and internal logs
+_CLAIM_TICK*.txt
+overnight-log.txt
+
+# Sigil JSON (audit receipts - internal)
+tick-*-sigil.json
+tick-*-eat-sigil.json
+.sigil-eat-*.json
+.sigma_audit_*.json
+.eat-*.json
+
+# Benchmark scripts and training data (not deployed)
+benchmark-results/*.py
+benchmark-results/*.sh
+benchmark-results/*.jsonl
+benchmark-results/*.log
+benchmark-results/Modelfile.*
+benchmark-results/__pycache__/
+benchmark-results/fluid-*/
+benchmark-results/fluid-*/checkpoints/
+.visual_sandbox/
+
+# macOS LaunchAgent plists
+com.meok.*.plist
+
+# Internal sprint state
+DEFONEOS_SPRINT_STATE.json
+DEFONEOS_SPRINT_STATE.json.bak*
+
+# Arena leaderboard (served via API)
+arena_lb.csv
+.vercel
+
+# Secrets and env files
+.env
+.env.*
+*.env
+**/*.env
+
+# Python bytecode
+__pycache__/
+*.pyc
+
+# API key files
+api_keys.json
+secrets.json
+credentials.json
+__pycache__/
+*.pyc
+.venv/
+mcpbench_key.pem
+provbench-test-assets/
+
+# Rust build output for the sov-hive crate (sov-hive-cli binary + intermediates).
+# Built on demand via `cargo build --release` inside sov-hive/; never committed.
+sov-hive/target/
+
+# never commit bulk honey/logs (canonical: gdrive:SOV/training/honey)
+forest/honey_all_producers.jsonl
+sovereign_cron.log
+*.log
+
+benchmark-results/eat_all/sov_kb.json
+benchmark-results/eat_all/honey_all_producers.jsonl
+_site/
+*.llm.json
+
+# corrupt benchmark snapshots - too large for GitHub (>100MB)
+benchmark-results/*.CORRUPT_*

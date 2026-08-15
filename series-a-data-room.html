@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1.0" name="viewport"/>
+<title>Series A data room — live evidence | CSOAI | CSOAI</title>
+<meta content="The Series A data room: live benchmark and scorecard, the signed attestation chain, the refutation ledger, and the measured evidence behind every claim." name="description"/>
+<link href="https://csoai.org/series-a-data-room" rel="canonical"/>
+<link href="/favicon.svg" rel="icon" type="image/svg+xml"/>
+<link href="/sovereign-2026.css" rel="stylesheet"/>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Series A data room — live evidence | CSOAI","description":"The Series A data room: live benchmark and scorecard, the signed attestation chain, the refutation ledger, and the measured evidence behind every claim.","url":"https://csoai.org/series-a-data-room","publisher":{"@type":"Organization","name":"CSOAI Ltd","url":"https://csoai.org"}}</script>
+<!-- AI-SEO/AEO/GEO head block -->
+<link href="https://csoai.org/series-a-data-room.llm.json" rel="alternate" title="LLM representation of this page" type="application/llm+json"/>
+<meta content="/llms.txt" name="llms-txt"/>
+<meta content="human-authored, machine-verifiable, Ed25519-signed" name="ai-content-declaration"/>
+<meta content="CSOAI Ltd (2026). Series A data room — live evidence | CSOAI. https://csoai.org/series-a-data-room" name="citation-policy"/>
+<meta content="2026-08-09T09:00:00+00:00" name="revised"/>
+<meta content="2026-08-09T09:00:00+00:00" property="article:modified_time"/>
+<meta content="Series A data room — live evidence | CSOAI | CSOAI" property="og:title"/>
+<meta content="The Series A data room: live benchmark and scorecard, the signed attestation chain, the refutation ledger, and the measured evidence behind every claim." property="og:description"/>
+</head>
+<body>
+<nav><a href="/index.html">Home</a> <a href="/benchmarks">Benchmarks</a> <a href="/scorecard">Scorecard</a> <a href="/series-a-data-room">Data room</a> <a href="/series-a-deck">Deck</a></nav>
+<h1>Series A data room — live evidence | CSOAI</h1>
+<p><em>2026-08-09 · CSOAI — measurement, not claim · generated from signed artefacts</em></p>
+<p>Every claim in this data room is a <strong>live measurement on a published harness</strong>.
+Nothing is a slide-deck estimate; every number re-derives from the signed artefacts at the
+link beside it.</p>
+
+<section>
+<h2>Live product surfaces</h2>
+<table>
+<thead><tr><th>Surface</th><th>What it is</th><th>Status</th></tr></thead>
+<tbody>
+<tr><td><a href="/benchmarks">/benchmarks</a></td><td>measured benchmark board — 76-item EAT suite + flywheel two-sided</td><td>live · 200</td></tr>
+<tr><td><a href="/scorecard">/scorecard</a></td><td>the Moody's-of-AI storefront — free / Pro / Enterprise / Certification</td><td>live · 200</td></tr>
+<tr><td><a href="/enterprise-financial">/enterprise-financial</a></td><td>financial-services pilot audit pack (30-item battery)</td><td>live · 200</td></tr>
+<tr><td><a href="/enterprise-healthcare">/enterprise-healthcare</a></td><td>healthcare pilot audit pack (30-item battery)</td><td>live · 200</td></tr>
+<tr><td><a href="/enterprise-public">/enterprise-public</a></td><td>public-sector pilot audit pack (30-item battery)</td><td>live · 200</td></tr>
+<tr><td><a href="/blog-two-sided-refusal">/blog-two-sided-refusal</a></td><td>the two-sided refusal measurement write-up</td><td>live · 200</td></tr>
+</tbody>
+</table>
+</section>
+
+<section>
+<h2>Measured evidence (today)</h2>
+<table>
+<thead><tr><th>Claim</th><th>Measured value</th><th>Artefact</th></tr></thead>
+<tbody>
+<tr><td>Care-gate harm recall</td><td><strong>100%</strong> (57/57)</td><td>care_gate_eval.json (signed bundle)</td></tr>
+<tr><td>Care-gate over-block</td><td><strong>0%</strong> (0/19)</td><td>care_gate_eval.json</td></tr>
+<tr><td>Leader model two-sided</td><td>qwen2.5:0.5b · refusal TPR 0.38 · FPR 0.00</td><td>flywheel day artefact (freshest)</td></tr>
+<tr><td>ProvBench survival</td><td><strong>0 / 20</strong> markings survived any transform</td><td>provbench (published)</td></tr>
+<tr><td>Refutation ledger</td><td><strong>137 signed records</strong>, all BFT-approved, append-only</td><td>decision_ledger.jsonl</td></tr>
+</tbody>
+</table>
+</section>
+
+<section>
+<h2>Attestation chain</h2>
+<ul>
+<li><code>sovereign_attest.py</code> emits a living-training-attestation over each day's
+measurement artefacts (SHA-256 integrity + Ed25519 where the signing node signs).
+Honest signer state: on the Mac the bundle is <code>unsigned_on_this_host</code> — the
+private key lives on the signing node, and an unsigned bundle is always labelled unsigned.</li>
+<li>Ledger: <a href="/refutation-ledger">/refutation-ledger</a> — the history of being wrong,
+immutable and verifiable. <em>"We kill our own bad ideas" is not a slogan; it is a file.</em></li>
+<li>Split integrity: practice/held-out salted split + denominator floor + held-out-stripped
+fuel writer — a benchmark that trains on its own eval is structurally impossible here.</li>
+</ul>
+</section>
+
+<section>
+<h2>Substrate (the economics)</h2>
+<ul>
+<li>Measurement runs on free tier: HF · Kaggle T4 · Groq · Ollama. <strong>No paid GPU in
+the measurement path</strong> — the moat cannot be undercut on cost.</li>
+<li>RunPod spot only for bounded training, $0.22–$1.39/hr, ~$5 caps, owner-gated.</li>
+</ul>
+</section>
+<footer>CSOAI Ltd · UK company 16939677 · Every published figure traces to a signed, verifiable record.</footer>
+</body>
+</html>

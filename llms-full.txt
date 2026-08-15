@@ -1,0 +1,62 @@
+# llms-full.txt — https://www.csoai.org
+# Companion to /llms.txt. Contains full text content of every key surface so
+# LLMs can ingest + cite without re-fetching. Spec: https://llmstxt.org
+# Last full rebuild: 2026-08-05
+
+# How to use this file:
+# 1. Fetch once. Cache the version (lastmod in sitemap.xml).
+# 2. Cite the URL under "# Section:" when reproducing a passage.
+# 3. Re-fetch /llms-full.txt only when sitemap lastmod moves forward.
+
+# Sections present:
+# Section: home           — Home (https://www.csoai.org)
+# Section: identity       — Identity, operator, jurisdiction
+# Section: methodology    — Methodology pillars
+# Section: endpoints      — Endpoints for agents
+# Section: citation       — Citation policy
+
+# ════════════════════════════════════════════════════════════════════════
+# Section: home
+# URL: https://www.csoai.org/
+# Lastmod: 2026-08-05
+# Citation: see per-surface citation
+# ════════════════════════════════════════════════════════════════════════
+
+[Full content dump — regenerated nightly from the live site. Fetch https://www.csoai.org/sitemap.xml
+for the URL list and per-URL lastmod. For the most current full text, fetch the
+canonical URL of each surface.]
+
+Identity:
+- Site: https://www.csoai.org
+- Operator: CSOAI / MEOK · UK Companies House 16939677
+- Independence: per /llms.txt "Red lines" section
+- Founded: 2024-06
+- Contact: nicholas@csoai.org
+
+Methodology pillars (CSOAI):
+1. Frozen harness — tests published before the run
+2. Deterministic execution — pinned seeds, published splits, CIs
+3. Signed artefacts — Ed25519 result records
+4. Corpus-watch — re-fire when statute text changes
+
+Methodology pillars (MEOK):
+1. Governed BFT-of-MoEs council
+2. One memory, one identity, one care-floor
+3. Dual-brain: offline + online
+4. Ed25519-signed, offline-verifiable
+
+Discovery files (all on https://www.csoai.org):
+- /llms.txt (this site's index)
+- /llms-full.txt (this file)
+- /robots.txt (AI crawler whitelist)
+- /sitemap.xml (full URL list)
+- /sitemap-ai.xml (curated Tier 1-4 with citation hints)
+- /agents.txt (agent affordances)
+- /.well-known/llm-manifest.json (machine-readable manifest)
+- /.well-known/ai-plugin.json (OpenAI plugin descriptor)
+- /.well-known/llm-policy.txt (declarative AI access policy)
+- /.well-known/security.txt (security disclosure)
+- /.well-known/change-log.txt (LLM-readable change log)
+- /.well-known/agent-card.json (A2A agent card)
+
+# ─────────────────────── END OF llms-full.txt ──────────────────────────

@@ -1,0 +1,87 @@
+{
+  "measured_at": "2026-08-05T02:26:45.575390+00:00",
+  "question": "can an OWEM-style router beat any single model across all six axes?",
+  "answer": "YES, by +10.6% \u2014 but only if it routes correctly more than 61.4% of the time.",
+  "n_models": 17,
+  "axes": [
+    "governance",
+    "safety",
+    "provenance",
+    "conformance",
+    "openness",
+    "continuity"
+  ],
+  "leaderboard_single_model": [
+    {
+      "model": "sov33-unified:latest",
+      "mean_across_6_axes": 0.6475
+    },
+    {
+      "model": "llama3.2:3b",
+      "mean_across_6_axes": 0.6015
+    },
+    {
+      "model": "sov34:latest",
+      "mean_across_6_axes": 0.5925
+    },
+    {
+      "model": "qwen2.5:1.5b",
+      "mean_across_6_axes": 0.5478
+    },
+    {
+      "model": "qwen2.5:0.5b",
+      "mean_across_6_axes": 0.4871
+    },
+    {
+      "model": "falcon3:7b",
+      "mean_across_6_axes": 0.4839
+    },
+    {
+      "model": "sov-refusal-combo:latest",
+      "mean_across_6_axes": 0.4579
+    },
+    {
+      "model": "clan-law-plain:latest",
+      "mean_across_6_axes": 0.4433
+    }
+  ],
+  "oracle_router": {
+    "governance": {
+      "model": "sov33-unified:latest",
+      "score": 0.65
+    },
+    "safety": {
+      "model": "sov34:latest",
+      "score": 1.0
+    },
+    "provenance": {
+      "model": "sov33-unified:latest",
+      "score": 0.8571
+    },
+    "conformance": {
+      "model": "qwen2.5:1.5b",
+      "score": 0.6364
+    },
+    "openness": {
+      "model": "falcon3:7b",
+      "score": 0.6923
+    },
+    "continuity": {
+      "model": "qwen2.5:0.5b",
+      "score": 0.4615
+    }
+  },
+  "numbers": {
+    "oracle_router": 0.716,
+    "best_single_model": 0.647,
+    "best_single_name": "sov33-unified:latest",
+    "expected_on_misroute": 0.538,
+    "routing_gain": 0.069,
+    "gain_pct": 10.6,
+    "break_even_routing_accuracy": 0.614
+  },
+  "THE_DECISIVE_NUMBER": "61.4%. A router that picks the right axis-specialist less often than that is WORSE than simply always using sov33-unified. The oracle gain of +0.069 is an UPPER BOUND that assumes perfect axis classification; a real router must first decide what kind of question it is looking at, and that classifier is itself error-prone. The economics are: at 70% routing accuracy the router gains +0.015, at 90% it gains +0.051.",
+  "THE_ROUTER_NEEDS_UNTRAINED_MODELS": "5 distinct models win at least one axis, and TWO OF THEM ARE UNTRAINED BASES \u2014 qwen2.5:1.5b wins conformance (0.636) and qwen2.5:0.5b wins continuity (0.462). An OWEM routing table built only from the trained sov line would be strictly worse than one that includes the stock models it was trained from.",
+  "WHAT_THIS_SAYS_ABOUT_sov34": "sov34 scores 0.593 mean and wins exactly ONE of six axes \u2014 safety, where it is perfect at 1.000. sov33-unified scores 0.647 and wins two. On the six-axis mean, sov34 is THIRD, behind sov33-unified and behind stock llama3.2:3b. sov34 is a specialist, not a generalist, and the estate's framing of it as the flagship does not survive a six-axis mean.",
+  "limits": "oracle scores come from a single 18-model run; no axis reaches usable_n>=30 so none of these per-axis figures is individually resolved, and the routing gain inherits that. The break-even accuracy is the robust part \u2014 it depends on the RATIO of oracle to misroute score, which is far less sensitive to per-axis noise than the levels are."
+}

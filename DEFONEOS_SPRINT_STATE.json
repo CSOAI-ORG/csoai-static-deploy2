@@ -1,0 +1,28 @@
+{
+  "started_at": "2026-07-04",
+  "current_day": 40,
+  "current_tick": 272,
+  "current_phase": 253,
+  "total_mcp_built": 30,
+  "total_pages_built": 1028,
+  "total_repos_cloned": 15,
+  "sitemap_urls": 806,
+  "sitemap_bytes": 205208,
+  "last_action": "Sprint tick 272 - 3 NEW genuinely-uncovered regulator/public-services/executive deep-dive packs (probe-verified 0 disk + 0 sitemap hits BEFORE build per tick-265 pitfall): (1) defoneos-hm-passport-office-ai-deep-dive-pack 34211b - 12 HMPO entry points (Passport Issuance & Customer Service / Identity Verification & Document Checking / Nationality & Citizenship Casework / Biometric Data & ePassport Security / Fraud Detection & Document Forgery / Application Processing & Turnaround / Renewals, Replacements & Corrections / Secure Production & Print / Data Protection & Privacy / Child, Family & Specialist Services / Digital Identity & Online Services / Governance & Parliamentary Accountability) x 8 priorities x 6 MCPs x British Nationality Act 1981 backbone; (2) defoneos-government-digital-service-ai-deep-dive-pack 33733b - 12 GDS entry points (GOV.UK Platform & Service Standard / Digital Identity & One Login / Government as a Platform / Accessibility & Inclusive Design / Open Standards & Interoperability / Data Sharing & Analytics / Service Design & User Research / Procurement & Technology Frameworks / Security & Cyber Resilience / APIs & Integration / Performance Measurement & Transparency / Governance & Parliamentary Accountability) x 8 priorities x 6 MCPs x Digital Economy Act 2017 backbone; (3) defoneos-phso-parliamentary-health-service-ombudsman-ai-deep-dive-pack 34508b - 12 PHSO entry points (NHS Complaint Investigation / Maladministration & Service-Failure Findings / Remedy & Redress Recommendations / National Government Complaint Oversight / Independent & Impartial Adjudication / Wider Public-Service Jurisdiction / Health Service Commissioner Powers / Complaint Triage & Enquiry / Public Report & Best-Practice Sharing / FOIA & Open Government / Equality & Fair Treatment / Governance & Parliamentary Accountability) x 8 priorities x 6 MCPs x Health Service Commissioners Act 1993 backbone. JSON-LD schema.org-CANONICAL on all 3 (verified json.loads-parseable, @type=WebPage, NO artifact). .LLM.JSON companions via canonical make_llm_json (url field correct, 12 headings each). Structural counts verified on all 3 (en=12 t=72 p=96 dt=1 ht=1 h1=1). SITEMAP +3 URLs each (sitemap.xml 806 / sitemap-ai.xml 602). Ran FULL python3 build_site.py -> EXIT 0: 1031 publishable files, 806 URLs, 0 missing, 0 leaks - assembled _site all 3 packs byte-identical to source (md5 match) + llm.json byte-match. Deployed: npx wrangler pages deploy _site --project-name csoai-site -> deployment 41c8185a (jv-wave8-production.csoai-site.pages.dev), 9 files uploaded. POST-DEPLOY BYTE-VERIFIED LIVE on unique deployment URL (urllib, not push-claimed): all 3 packs HTTP 200 with byte-identical MD5s, DOCTYPE + h1 + 12 entry-point sections + 72 MCP chips, llm.json 200 size-match (2081/2061/2220b), sitemap.xml live 806 / sitemap-ai.xml live 602.",
+  "next_actions": [
+    "Probe-deep remaining open candidates each tick (do NOT trust stale queue): now 0-disk/0-sitemap bench: Scottish Government (devolved admin - scotland-office IS covered but scottish-government devolved is distinct), devolved govts (NI Executive), GDS now covered tick 272, Cabinet Office standalone, Home Office dept-wide (asylum/border-force covered, dept-wide open), Dstl dedicated standalone, Crown Office & Procurator Fiscal Service, Public Services Ombudsman for Wales. Probe disk+sitemap first; pivot if covered.",
+    "Next pick (post-tick-272): Scottish Government (devolved) / Northern Ireland Executive / Cabinet Office dept-wide - probe disk + sitemap first; pivot if covered"
+  ],
+  "milestone": "Sprint targets exceeded. 30/30 MCPs, 1028 pages (+3), 15/15 repos. Tick 272 shipped 3 NEW deep-dive packs (HM Passport Office / Government Digital Service / Parliamentary and Health Service Ombudsman) - citizen-identity + digital-government + public-redress gaps closed. Sitemap 806 URLs, real measured 0-missing. 288 unique deep-dive packs. Deployed 41c8185a, byte-verified live.",
+  "targets_status": {
+    "mcps": "achieved",
+    "pages": "ongoing",
+    "repos": "achieved"
+  },
+  "vercel_deploy_status": "blocked_billing",
+  "cloudflare_deploy_status": "live",
+  "deploy_domain": "csoai.org",
+  "deploy_id": "tick 272 direct CF Pages deploy 41c8185a (jv-wave8-production.csoai-site.pages.dev)",
+  "tick_272_signature": "deployed-and-verified-41c8185a",
+  "disk_free_gb": 13
+}

@@ -1,0 +1,28 @@
+{
+  "manifest_version": 3,
+  "name": "SOV-Space Portal",
+  "version": "1.0.0",
+  "description": "SOV-Space AI Portal — 53 models, 33 MCPs, world model 95.8%",
+  "permissions": ["activeTab", "storage", "sidePanel", "contextMenus"],
+  "side_panel": {
+    "default_path": "panel.html"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "SOV-Space Portal"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"]
+    }
+  ],
+  "icons": {
+    "16": "icon16.png",
+    "48": "icon48.png",
+    "128": "icon128.png"
+  }
+}

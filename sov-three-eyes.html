@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>SOV-Space — Three-Eye Substrate (IWM/OWM/VWM)</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #050510; color: #E0EDF3; font-family: 'Inter', system-ui, sans-serif; overflow: hidden; height: 100vh; }
+  header {
+    position: fixed; top: 0; left: 0; right: 0; height: 48px;
+    display: flex; align-items: center; gap: 12px; padding: 0 16px;
+    background: rgba(5,5,16,0.95); border-bottom: 1px solid #2D333B; z-index: 100;
+    backdrop-filter: blur(8px);
+  }
+  header h1 { font-size: 1rem; color: #79C0FF; }
+  header .subtitle { color: #6E7681; font-size: 0.75rem; }
+  header .links { margin-left: auto; display: flex; gap: 14px; }
+  header .links a { color: #2F81F7; text-decoration: none; font-size: 0.7rem; }
+
+  main { position: absolute; top: 48px; left: 0; right: 0; bottom: 32px;
+         display: grid; grid-template-columns: 1.2fr 1fr 1fr; grid-template-rows: auto 1fr 1fr; gap: 1px;
+         background: #2D333B; }
+
+  .pane { background: #0E1116; position: relative; overflow: hidden; display: flex; flex-direction: column; }
+  .pane-header {
+    padding: 8px 12px; background: rgba(5,5,16,0.85);
+    border-bottom: 1px solid #2D333B; font-size: 0.7rem;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .pane-header .label { font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; }
+  .pane-header .role { font-size: 0.6rem; padding: 2px 6px; border-radius: 3px; }
+  .pane-header .meta { color: #6E7681; margin-left: auto; font-size: 0.6rem; }
+  .pane-body { padding: 12px; overflow-y: auto; flex: 1; }
+
+  /* IWM — inference, decisions */
+  .pane-iwm .label { color: #2F81F7; }
+  .pane-iwm .role { background: #2F81F733; color: #2F81F7; }
+  .pane-iwm .lens-card {
+    padding: 10px 12px; margin-bottom: 8px;
+    background: rgba(47,129,247,0.05); border-left: 3px solid #2F81F7;
+    border-radius: 0 4px 4px 0;
+  }
+  .pane-iwm .lens-card h4 { font-size: 0.85rem; color: #79C0FF; margin-bottom: 4px; font-weight: 600; }
+  .pane-iwm .lens-card .claim { font-size: 0.7rem; color: #E6EDF3; line-height: 1.4; }
+  .pane-iwm .lens-card .status {
+    display: inline-block; font-size: 0.55rem; padding: 2px 6px;
+    border-radius: 3px; margin-left: 6px; font-weight: 600;
+  }
+  .pane-iwm .ledger-row {
+    padding: 6px 10px; border-bottom: 1px solid #2D333B;
+    font-size: 0.7rem; display: flex; gap: 8px;
+  }
+  .pane-iwm .ledger-row .id { color: #FF7B72; font-family: monospace; }
+  .pane-iwm .ledger-row .verdict { color: #3FB950; }
+
+  /* OWM — knowledge, facts */
+  .pane-owm .label { color: #A371F7; }
+  .pane-owm .role { background: #A371F733; color: #A371F7; }
+  .pane-owm .owm-row {
+    padding: 6px 10px; border-bottom: 1px solid #2D333B;
+    font-size: 0.7rem; font-family: monospace; line-height: 1.4;
+  }
+  .pane-owm .owm-row .source { color: #6E7681; font-size: 0.65rem; }
+  .pane-owm .owm-row .score { color: #A371F7; font-weight: 700; }
+
+  /* VWM — render, canvas */
+  .pane-vwm .label { color: #3FB950; }
+  .pane-vwm .role { background: #3FB95033; color: #3FB950; }
+  .pane-vwm .vwm-canvas { width: 100%; height: 200px; }
+  .pane-vwm .zoom-row {
+    padding: 6px 10px; border-bottom: 1px solid #2D333B;
+    font-size: 0.7rem; display: flex; align-items: center; gap: 10px;
+  }
+  .pane-vwm .zoom-row .zoom-label { color: #79C0FF; width: 100px; }
+  .pane-vwm .zoom-row object { flex: 1; height: 40px; }
+
+  /* Top banner — the three-eye law */
+  .law-banner {
+    grid-column: 1 / -1; padding: 10px 16px;
+    background: linear-gradient(90deg, rgba(47,129,247,0.1), rgba(163,113,247,0.1), rgba(63,185,80,0.1));
+    border-bottom: 1px solid #2D333B;
+    font-family: monospace; font-size: 0.75rem; color: #E6EDF3;
+    display: flex; align-items: center; gap: 16px;
+  }
+  .law-banner .label { color: #79C0FF; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; }
+
+  footer {
+    position: fixed; bottom: 0; left: 0; right: 0; height: 32px;
+    padding: 8px 16px;
+    background: rgba(5,5,16,0.95); border-top: 1px solid #2D333B;
+    font-family: monospace; font-size: 0.65rem; color: #6E7681;
+    display: flex; align-items: center; gap: 16px;
+  }
+  footer .hash { color: #FF7B72; }
+
+  /* Visual node graph for the three-eye flow */
+  .eye-flow {
+    padding: 14px; background: rgba(255,255,255,0.02);
+    border-bottom: 1px solid #2D333B;
+  }
+  .eye-flow svg { display: block; max-width: 100%; height: auto; }
+  .eye-flow text { fill: #E6EDF3; font-family: monospace; font-size: 9px; }
+  .eye-flow .owm-text { fill: #A371F7; }
+  .eye-flow .iwm-text { fill: #2F81F7; }
+  .eye-flow .vwm-text { fill: #3FB950; }
+  .eye-flow .arrow { stroke: #6E7681; stroke-width: 1.5; fill: none; marker-end: url(#arrow); }
+</style>
+<!-- AI-SEO/AEO/GEO head block — DO NOT remove. AI crawlers (GPTBot, ClaudeBot, PerplexityBot) don't run JS; everything they need must be in raw HTML. -->
+<link href="https://www.csoai.org/sov-three-eyes.html.llm.json" rel="alternate" title="LLM representation of this page" type="application/llm+json"/>
+<meta content="/llms.txt" name="llms-txt"/>
+<meta content="human-authored, machine-verifiable, Ed25519-signed" name="ai-content-declaration"/>
+<meta content="CSOAI Ltd (2026). SOV-Space — Three-Eye Substrate (IWM/OWM/VWM). https://www.csoai.org/sov-three-eyes.html" name="citation-policy"/>
+<meta content="2026-07-30T14:31:14+00:00" name="revised"/>
+<meta content="2026-07-30T14:31:14+00:00" property="article:modified_time"/>
+<meta content="SOV-Space — Three-Eye Substrate (IWM/OWM/VWM). A sovereign, audit-grade CSOAI surface: measurement, not certification — every figure traces to a signed, verifiable record." name="description"/>
+<link href="https://www.csoai.org/sov-three-eyes.html" rel="canonical"/>
+<meta content="SOV-Space — Three-Eye Substrate (IWM/OWM/VWM)" property="og:title"/>
+<meta content="SOV-Space — Three-Eye Substrate (IWM/OWM/VWM). A sovereign, audit-grade CSOAI surface: measurement, not certification — every figure traces to a signed, verifiable record." property="og:description"/>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"SOV-Space \u2014 Three-Eye Substrate (IWM/OWM/VWM)","url":"https://www.csoai.org/sov-three-eyes.html","publisher":{"@type":"Organization","name":"CSOAI Ltd","url":"https://csoai.org"}}</script>
+</head>
+<body>
+<header>
+<h1>SOV-SPACE — three-eye substrate</h1>
+<span class="subtitle">IWM reasons · OWM knows · VWM renders · all on one append-only ledger</span>
+<nav class="links">
+<a href="/sov_space_visual.html">particle field →</a>
+<a href="/sov-sync-proof.html">live sync →</a>
+<a href="/globe3d.html">globe →</a>
+<a href="/drift-feed.html">drift →</a>
+</nav>
+</header>
+<main>
+<div class="law-banner">
+<span class="label">⚖ Law 6</span>
+<span><b style="color:#2F81F7">IWM</b> decides from <b style="color:#A371F7">OWM</b> observations. <b style="color:#3FB950">VWM</b> renders what they together produced. Neither loops back to influence the other.</span>
+<span style="margin-left:auto;color:#6E7681">hash: <span class="hash" id="ledgerHash">—</span></span>
+</div>
+<div class="eye-flow">
+<svg viewbox="0 0 600 80" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<marker id="arrow" markerheight="6" markerwidth="6" orient="auto" refx="6" refy="3">
+<path d="M0,0 L6,3 L0,6 z" fill="#6E7681"></path>
+</marker>
+</defs></svg>
+<rect fill="rgba(163,113,247,0.15)" height="40" rx="6" stroke="#A371F7" width="120" x="20" y="20"></rect>
+<text class="owm-text" text-anchor="middle" x="80" y="44">OWM</text>
+<text fill="#6E7681" font-size="7" text-anchor="middle" x="80" y="56">honey KB</text>
+<path class="arrow" d="M 140 40 L 220 40"></path>
+<text fill="#6E7681" font-size="7" text-anchor="middle" x="180" y="34">observes</text>
+<rect fill="rgba(47,129,247,0.15)" height="40" rx="6" stroke="#2F81F7" width="120" x="220" y="20"></rect>
+<text class="iwm-text" text-anchor="middle" x="280" y="44">IWM</text>
+<text fill="#6E7681" font-size="7" text-anchor="middle" x="280" y="56">4 lenses · 1 engine</text>
+<path class="arrow" d="M 340 40 L 420 40"></path>
+<text fill="#6E7681" font-size="7" text-anchor="middle" x="380" y="34">renders</text>
+<rect fill="rgba(63,185,80,0.15)" height="40" rx="6" stroke="#3FB950" width="160" x="420" y="20"></rect>
+<text class="vwm-text" text-anchor="middle" x="500" y="44">VWM</text>
+<text fill="#6E7681" font-size="7" text-anchor="middle" x="500" y="56">globe · sovereign · canvas</text>
+
+</div>
+<section class="pane pane-iwm">
+<div class="pane-header">
+<span class="label">IWM</span>
+<span class="role">DECIDES</span>
+<span class="meta">4 lenses · 1 engine · no train()</span>
+</div>
+<div class="pane-body" id="iwmPane">
+<div style="color:#6E7681;text-align:center;padding:40px">loading…</div>
+</div>
+</section>
+<section class="pane pane-owm">
+<div class="pane-header">
+<span class="label">OWM</span>
+<span class="role">KNOWS</span>
+<span class="meta" id="owmMeta">honey KB · live</span>
+</div>
+<div class="pane-body" id="owmPane">
+<div style="color:#6E7681;text-align:center;padding:40px">loading…</div>
+</div>
+</section>
+<section class="pane pane-vwm">
+<div class="pane-header">
+<span class="label">VWM</span>
+<span class="role">RENDERS</span>
+<span class="meta">5 zoom levels · append-only ledger</span>
+</div>
+<div class="pane-body" id="vwmPane">
+<div style="color:#6E7681;text-align:center;padding:40px">loading…</div>
+</div>
+</section>
+</main>
+<footer>
+<span>append-only ledger: <span id="footerEvents">—</span> events</span>
+<span>last sync: <span id="lastSync">—</span></span>
+<span style="margin-left:auto;color:#3FB950">all three eyes reading same source ✓</span>
+</footer>
+<script>
+const API = 'https://govbench-api.nicholastempleman.workers.dev';
+const LOCAL = window.location.origin;
+const SOVDASH = 'https://sov-sync-proof.html'; // not used directly
+
+async function loadThreeEyes() {
+  // ─── IWM: lens status + decision ledger ──────────────────────────
+  try {
+    const [eyes, drift] = await Promise.all([
+      fetch(API + '/eyes').then(r => r.json()),
+      fetch(LOCAL + '/drift-feed.json').then(r => r.json()),
+    ]);
+
+    const iwm = drift.instrument;
+    const ledger = drift.decision_ledger;
+
+    let html = `<div style="color:#79C0FF;font-family:monospace;font-size:0.7rem;margin-bottom:10px">
+                  guard: <span style="color:#3FB950">${iwm.guard.split(' — ')[0]}</span>
+                </div>`;
+
+    html += `<div style="font-size:0.65rem;color:#6E7681;margin-bottom:6px">LENSES</div>`;
+    for (const [name, lens] of Object.entries(iwm.lenses)) {
+      html += `<div class="lens-card">
+        <h4>${name}<span class="status" style="background:#3FB95022;color:#3FB950;border:1px solid #3FB95055">${lens.status}</span></h4>
+        <div class="claim">${lens.claim}</div>
+      </div>`;
+    }
+
+    html += `<div style="font-size:0.65rem;color:#6E7681;margin:12px 0 6px">DECISION LEDGER (${ledger.length} records)</div>`;
+    ledger.forEach(r => {
+      const verdictColor = r.verdict === 'OPEN' ? '#D29922' : r.verdict === 'CONFIRMED' ? '#3FB950' : '#79C0FF';
+      html += `<div class="ledger-row">
+        <span class="id">${r.record_id}</span>
+        <span style="flex:1;color:#8B949E">${r.claim.substring(0, 60)}…</span>
+        <span class="verdict" style="color:${verdictColor}">${r.verdict}</span>
+      </div>`;
+    });
+
+    document.getElementById('iwmPane').innerHTML = html;
+  } catch (e) {
+    document.getElementById('iwmPane').innerHTML = `<div style="color:#F85149">IWM unreachable: ${e.message}</div>`;
+  }
+
+  // ─── OWM: honey KB facts ──────────────────────────────────────────
+  try {
+    const [eyes, drift] = await Promise.all([
+      fetch(API + '/eyes').then(r => r.json()),
+      fetch(LOCAL + '/drift-feed.json').then(r => r.json()),
+    ]);
+
+    const lensStatus = eyes.iwm.lenses;
+    let html = `<div style="font-size:0.65rem;color:#6E7681;margin-bottom:6px">KNOWLEDGE — 4 lenses, evidence on disk</div>`;
+
+    for (const [name, claim] of Object.entries(lensStatus)) {
+      html += `<div class="owm-row">
+        <span class="score">[${name}]</span>
+        <div style="flex:1">${claim}</div>
+        <span class="source">benchmark-results/${name}.json</span>
+      </div>`;
+    }
+
+    html += `<div style="font-size:0.65rem;color:#6E7681;margin:14px 0 6px">CROSSWALK · 417 provisions</div>`;
+    html += `<div style="padding:8px;background:rgba(163,113,247,0.05);border-radius:4px;font-family:monospace;font-size:0.7rem;color:#A371F7">
+              ${drift.crosswalk.provisions} provisions × ${drift.crosswalk.axes} axes × ${drift.crosswalk.modes} modes = ${drift.crosswalk.cells} cells
+            </div>`;
+    html += `<div style="margin-top:8px;font-size:0.7rem;color:#8B949E">Field coverage: <b style="color:#3FB950">${drift.crosswalk.field_coverage.covered}</b> covered, <b style="color:#D29922">${drift.crosswalk.field_coverage.partial}</b> partial, <b style="color:#F85149">${drift.crosswalk.field_coverage.absent}</b> absent</div>`;
+
+    html += `<div style="font-size:0.65rem;color:#6E7681;margin:14px 0 6px">DECISION LEDGER (honey)</div>`;
+    drift.decision_ledger.forEach(r => {
+      html += `<div class="owm-row">
+        <span class="id" style="color:#FF7B72">${r.record_id}</span>
+        <span class="source" style="margin-left:8px">${r.kind}/${r.tag}/${r.verdict}</span>
+        <div style="flex:1;color:#E6EDF3;font-size:0.7rem;margin-top:4px">${r.claim.substring(0, 100)}</div>
+      </div>`;
+    });
+
+    document.getElementById('owmPane').innerHTML = html;
+    document.getElementById('owmMeta').textContent = `honey KB · ${drift.decision_ledger.length} records live`;
+  } catch (e) {
+    document.getElementById('owmPane').innerHTML = `<div style="color:#F85149">OWM unreachable: ${e.message}</div>`;
+  }
+
+  // ─── VWM: spacetime canvas ────────────────────────────────────────
+  try {
+    const r = await fetch(LOCAL + '/sov-time-canvas.svg?ts=' + Date.now());
+    const svg = await r.text();
+    const m = svg.match(/(\d+) events/);
+    const total = m ? m[1] : '?';
+
+    let html = `<div style="font-size:0.65rem;color:#6E7681;margin-bottom:6px">CURRENT CANVAS — last 24h (${total} events)</div>`;
+    html += `<div style="background:#050510;padding:4px;border-radius:4px;margin-bottom:12px">${svg.replace(/<\?xml[^?]*\?>/, '').replace(/<svg[^>]*>/, '<svg width="100%" height="160">')}</div>`;
+
+    html += `<div style="font-size:0.65rem;color:#6E7681;margin-bottom:6px">ZOOM LEVELS (fractal — same ledger)</div>`;
+    const zooms = [
+      ['microsecond', 86400, 'every event as separate glyph'],
+      ['second', 86400, 'clustered by integer second'],
+      ['hour', 86400, '24-bin hour-of-day histogram'],
+      ['day', 2592000, '7-day strip'],
+      ['year', 31536000, '12-sector year spiral'],
+    ];
+    for (const [name, window, desc] of zooms) {
+      html += `<div class="zoom-row">
+        <span class="zoom-label">${name}</span>
+        <object type="image/svg+xml" data="/sov-zoom-${name}.svg?ts=${Date.now()}"></object>
+        <span style="color:#6E7681;font-size:0.65rem">${desc}</span>
+      </div>`;
+    }
+
+    document.getElementById('vwmPane').innerHTML = html;
+  } catch (e) {
+    document.getElementById('vwmPane').innerHTML = `<div style="color:#F85149">VWM unreachable: ${e.message}</div>`;
+  }
+}
+
+async function refreshFooter() {
+  try {
+    const r = await fetch(LOCAL + '/sov-sync-summary.json?ts=' + Date.now()).catch(() => null);
+    if (r && r.ok) {
+      const s = await r.json();
+      document.getElementById('footerEvents').textContent = s.events;
+      document.getElementById('ledgerHash').textContent = s.hash;
+    }
+    document.getElementById('lastSync').textContent = new Date().toISOString().slice(11, 19) + 'Z';
+  } catch (e) {}
+}
+
+loadThreeEyes();
+refreshFooter();
+setInterval(refreshFooter, 2000);
+</script>
+</body>
+</html>

@@ -1,0 +1,65 @@
+{
+  "schema": "sov.oracle-cluster/v1",
+  "timestamp": "2026-07-27T08:02:00Z",
+  "cluster": {
+    "name": "sov33-owem-cluster",
+    "nodes": [
+      {
+        "name": "sov33-owem-micro",
+        "ip": "145.241.232.16",
+        "role": "primary",
+        "shape": "VM.Standard.E2.1.Micro",
+        "ram": "1GB",
+        "storage": "50GB"
+      },
+      {
+        "name": "sov33-owem-micro2",
+        "ip": "141.147.73.85",
+        "role": "secondary",
+        "shape": "VM.Standard.E2.1.Micro",
+        "ram": "1GB",
+        "storage": "50GB"
+      }
+    ],
+    "shared_storage": {
+      "location": "~/csoai-hub",
+      "sync_interval": 300
+    }
+  },
+  "services": {
+    "training": {
+      "node": "sov33-owem-micro2",
+      "schedule": "0 */4 * * *"
+    },
+    "inference": {
+      "node": "sov33-owem-micro",
+      "port": 11434
+    },
+    "api": {
+      "node": "sov33-owem-micro",
+      "port": 8080
+    }
+  },
+  "gpu_tiers": {
+    "oracle_gpu": {
+      "status": "pending_quota",
+      "shape": "VM.GPU.A10.1",
+      "gpu": "NVIDIA A10 24GB"
+    },
+    "kaggle": {
+      "status": "available",
+      "gpu": "T4 16GB",
+      "hours_per_week": 30
+    },
+    "colab": {
+      "status": "available",
+      "gpu": "T4 16GB",
+      "hours_per_session": 12
+    },
+    "lightning": {
+      "status": "available",
+      "gpu": "T4 16GB",
+      "hours_per_month": 22
+    }
+  }
+}

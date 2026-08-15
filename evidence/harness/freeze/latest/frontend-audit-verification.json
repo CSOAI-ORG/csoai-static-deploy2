@@ -1,0 +1,54 @@
+{
+  "verified_at": "2026-08-04",
+  "source_audit": "compass_artifact_wf-0448d507",
+  "CONFIRMED": {
+    "js_shell_csoai_councilof": "independently verified \u2014 60 chars crawler-visible text, 8 routes one document; crawler-view-gate.mjs fails all 4 rules",
+    "councilof_old_TC260_meta": "verified live: 'Western equivalent to TC260 ... 33-agent council' still served",
+    "402_domains": {
+      "safetyof.ai": 402,
+      "agisafe.ai": 402,
+      "accountabilityof.ai": 402,
+      "cobolbridge.ai": 402,
+      "note": "4 public surfaces hard-402. Matches the estate's known Vercel-billing failure mode."
+    },
+    "unreachable": {
+      "defoneos.com": "HTTP 000",
+      "sovereign.wiki": "HTTP 000"
+    },
+    "alive": {
+      "openmoe.ai": 200
+    },
+    "dmarc_spf_gap": "verified earlier: councilof.ai, meok.ai, proofof.ai, safetyof.ai, cobolbridge.ai have NO MX/SPF/DMARC; csoai.org has DMARC p=none only"
+  },
+  "REFUTED": {
+    "os.meok.ai_api_health_blocks_agents": "Audit says it returns ROBOTS_DISALLOWED, defeating an agent-facing API. Tested with GPTBot, ClaudeBot and PerplexityBot user-agents: all three receive {\"ok\":true,\"service\":\"sovereign-backend\"...}. The endpoint does NOT block agents.",
+    "hf_csoai_has_no_datasets": "Audit says huggingface.co/csoai lists one model and no datasets/spaces. Authenticated API lists SIXTEEN datasets including govbench, provbench, care-battery, pqcbench. The audit's scan was incomplete."
+  },
+  "NEW_DEFECT_FOUND": {
+    "security_txt_expires": {
+      "csoai.org": {
+        "expires": "2027-12-31T23:59:59z",
+        "months_out": 16.9,
+        "rfc9116_valid": false,
+        "note": "RFC 9116 \u00a72.5.5: Expires MUST be less than a year from publication.",
+        "format_note": "lowercase 'z' \u2014 RFC 3339 specifies uppercase 'Z'; strict parsers may reject"
+      },
+      "meok.ai": {
+        "expires": "2027-06-30T00:00:00.000Z",
+        "months_out": 10.8,
+        "rfc9116_valid": true,
+        "note": "within the one-year limit"
+      },
+      "proofof.ai": {
+        "expires": "2027-12-31T23:59:59Z",
+        "months_out": 16.9,
+        "rfc9116_valid": false,
+        "note": "RFC 9116 \u00a72.5.5: Expires MUST be less than a year from publication."
+      }
+    },
+    "summary": "The audit advised keeping Expires under a year but did not check. Two of three are INVALID: csoai.org and proofof.ai both expire 2027-12-31, ~17 months out, breaching RFC 9116 \u00a72.5.5. csoai.org additionally uses a lowercase 'z' where RFC 3339 specifies uppercase 'Z'."
+  },
+  "CORROBORATION": {
+    "provbench": "The audit independently reports that watermark robustness is fundamentally limited \u2014 paraphrase attacks collapse SynthID-Text and platforms strip C2PA on upload \u2014 and states this corroborates CSOAI's own ProvBench finding. External support for the register-locked '0 of 20 assets survived' result."
+  }
+}

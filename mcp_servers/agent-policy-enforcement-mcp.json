@@ -1,0 +1,18 @@
+{
+  "schema": "mcp-server-record-v1",
+  "slug": "agent-policy-enforcement-mcp",
+  "name": "Agent Policy Enforcement",
+  "description": "Per-agent-pair IAM for A2A. Define policies ('orchestrator may call billing only when amount<1000'), gate every A2A call via evaluate_call. EU AI Act Art 14 + ISO 42001 Annex A.7 evidence with signed policy-decision attestations.",
+  "category": "Policy",
+  "url": "https://github.com/CSOAI-ORG/agent-policy-enforcement-mcp",
+  "transport": "http+sse",
+  "license": "MIT",
+  "version": "0.1.0",
+  "capabilities": [
+    "tools/list",
+    "tools/call"
+  ],
+  "dependencies": [],
+  "registered_at": "2026-08-01T09:45:53.578297+00:00",
+  "source_registry": "councilof-ai/mcpRegistry.json"
+}

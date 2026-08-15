@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="DBT Investment Security AI Deep-Dive Pack" property="og:title"/>
+<meta content="12 DBT Investment Security entry points · 8 transformation priorities · 6 DEFONEOS MCPs · DBT/NSS/NSIA/NCSC backbone" property="og:description"/>
+<meta content="https://www.csoai.org/defoneos-dbt-investment-security-ai-deep-dive-pack.html" property="og:url"/>
+<title>DBT INVESTMENT SECURITY AI DEEP-DIVE PACK</title>
+<style>
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"; margin: 0; padding: 0; background-color: #0f121a; color: #e0e6ed; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+        header { background: linear-gradient(135deg, #1a202c, #2d3748); padding: 40px 20px; text-align: center; border-radius: 8px; margin-bottom: 30px; }
+        .pill-badge { background-color: #63b3ed; color: #1a202c; padding: 6px 15px; border-radius: 20px; font-size: 0.8em; font-weight: bold; margin-bottom: 15px; display: inline-block; }
+        h1 { font-size: 2.8em; color: #a0c4ff; margin-bottom: 10px; }
+        .subtitle { font-size: 1.3em; color: #cbd5e0; margin-bottom: 30px; }
+        .kpi-row { display: flex; justify-content: center; gap: 25px; margin-top: 25px; }
+        .kpi-item { background-color: #2d3748; padding: 15px 25px; border-radius: 8px; text-align: center; border-left: 3px solid #63b3ed; }
+        .kpi-number { font-size: 1.8em; font-weight: bold; color: #a0c4ff; }
+        .kpi-label { font-size: 0.9em; color: #cbd5e0; }
+        .section-title { font-size: 2em; color: #a0c4ff; border-bottom: 2px solid #63b3ed; padding-bottom: 10px; margin-top: 50px; margin-bottom: 30px; text-align: center; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
+        .card { background-color: #1a202c; padding: 25px; border-radius: 8px; border: 1px solid #2d3748; transition: transform 0.2s ease, box-shadow 0.2s ease; }
+        .card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3); }
+        .card h3 { color: #a0c4ff; font-size: 1.4em; margin-top: 0; }
+        .card p, .card ul { color: #cbd5e0; line-height: 1.6; }
+        .card ul { list-style: none; padding-left: 0; }
+        .card ul li:before { content: '• '; color: #63b3ed; }
+        .tag { background-color: #4a5568; color: #e2e8f0; padding: 4px 10px; border-radius: 5px; font-size: 0.8em; margin-bottom: 10px; display: inline-block; }
+        .redline { background-color: #2d3748; padding: 30px; border-radius: 8px; border: 1px solid #e53e3e; margin-top: 50px; }
+        .redline h3 { color: #e53e3e; font-size: 1.5em; margin-top: 0; }
+        .redline ul { list-style: none; padding-left: 0; }
+        .redline ul li { color: #e0e6ed; margin-bottom: 10px; }
+        .redline ul li:before { content: '❌ '; color: #e53e3e; }
+        .engagement { margin-top: 50px; text-align: center; }
+        .engagement .step { background-color: #1a202c; padding: 20px; border-radius: 8px; margin-bottom: 15px; border-left: 3px solid #63b3ed; display: flex; align-items: center; justify-content: flex-start; text-align: left; }
+        .engagement .step .step-num { font-size: 1.8em; font-weight: bold; color: #a0c4ff; margin-right: 15px; background-color: #63b3ed; color: #1a202c; border-radius: 50%; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+        .engagement .step p { margin: 0; font-size: 1.1em; color: #cbd5e0; }
+        footer { text-align: center; padding: 40px 20px; margin-top: 50px; border-top: 1px solid #2d3748; color: #cbd5e0; font-size: 0.9em; }
+        footer a { color: #63b3ed; text-decoration: none; margin: 0 10px; }
+        footer a:hover { text-decoration: underline; }
+    </style>
+<!-- AI-SEO/AEO/GEO head block — DO NOT remove. AI crawlers (GPTBot, ClaudeBot, PerplexityBot) don't run JS; everything they need must be in raw HTML. -->
+<link href="https://www.csoai.org/defoneos-dbt-investment-security-ai-deep-dive-pack.html.llm.json" rel="alternate" title="LLM representation of this page" type="application/llm+json"/>
+<meta content="/llms.txt" name="llms-txt"/>
+<meta content="human-authored, machine-verifiable, Ed25519-signed" name="ai-content-declaration"/>
+<meta content="CSOAI Ltd (2026). DBT INVESTMENT SECURITY AI DEEP-DIVE PACK. https://www.csoai.org/defoneos-dbt-investment-security-ai-deep-dive-pack.html" name="citation-policy"/>
+<meta content="2026-08-03T11:19:50+00:00" name="revised"/>
+<meta content="2026-08-03T11:19:50+00:00" property="article:modified_time"/>
+<meta content="DBT INVESTMENT SECURITY AI DEEP-DIVE PACK. A sovereign, audit-grade CSOAI surface: measurement, not certification — every figure traces to a signed, verifiable record." name="description"/>
+<link href="https://www.csoai.org/defoneos-dbt-investment-security-ai-deep-dive-pack.html" rel="canonical"/>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"DBT INVESTMENT SECURITY AI DEEP-DIVE PACK","url":"https://www.csoai.org/defoneos-dbt-investment-security-ai-deep-dive-pack.html","publisher":{"@type":"Organization","name":"CSOAI Ltd","url":"https://csoai.org"}}</script>
+</head>
+<body>
+<div class="container">
+<header>
+<div class="pill-badge">DEFONEOS</div>
+<h1>DBT INVESTMENT SECURITY AI DEEP-DIVE PACK</h1>
+<p class="subtitle">12 DBT Investment Security entry points · 8 transformation priorities · 6 DEFONEOS MCPs · DBT/NSS/NSIA/NCSC backbone</p>
+<div class="kpi-row">
+<div class="kpi-item"><div class="kpi-number">12</div><div class="kpi-label">Entry Points</div></div>
+<div class="kpi-item"><div class="kpi-number">8</div><div class="kpi-label">Priorities</div></div>
+<div class="kpi-item"><div class="kpi-number">6</div><div class="kpi-label">MCPs</div></div>
+<div class="kpi-item"><div class="kpi-number">4</div><div class="kpi-label">Backbone Orgs</div></div>
+</div>
+</header>
+<section>
+<h2 class="section-title">WHY INVESTMENT SECURITY GETS A DEDICATED PACK</h2>
+<p>The Department for Business and Trade (DBT) plays a critical role in attracting and securing investment into the UK, while also safeguarding national security. The National Security and Investment Act 2021 provides the government with powers to scrutinise and intervene in certain acquisitions to protect national security. Ensuring the integrity of supply chains, preventing hostile state access to critical technologies, and maintaining the UK’s competitive edge in strategic sectors requires sophisticated threat intelligence and rapid response capabilities. The annual volume of investment transactions and the complexity of global geopolitical risks necessitate a robust, AI-powered framework to manage security implications effectively.</p>
+<p>DEFONEOS delivers a sovereign-by-design solution for investment security by integrating real-time intelligence from diverse sources, automating compliance checks against the National Security and Investment Act, and providing verifiable audit trails for sensitive transactions. It enables DBT to identify, assess, and mitigate risks associated with foreign investment, protecting critical national infrastructure and sensitive technologies from undue influence. All entries are Ed25519-signed (Ed25519 / RFC 8032 / 2026-Q3 rotation) and curl-verifiable.</p>
+</section>
+<section>
+<h2 class="section-title">12 ENTRY POINTS</h2>
+<div class="grid">
+<div class="card">
+<span class="tag">IS1</span>
+<h3>Investment Security Unit (ISU)</h3>
+<p><strong>Location:</strong> London, 1 Victoria Street</p>
+<p><strong>Function:</strong>
+<ul>
+<li>Screens and assesses notifications under NSIA</li>
+<li>Manages call-in notices and risk assessments</li>
+<li>Coordinates cross-government security reviews</li>
+<li>Provides guidance to investors and businesses</li>
+</ul>
+</p>
+<p><strong>DEFONEOS Fit:</strong> <em>bft-council-probe, sovereign-keystore</em></p>
+</div>
+<div class="card">
+<span class="tag">IS2</span>
+<h3>National Security Council (NSC)</h3>
+<p><strong>Location:</strong> London, Cabinet Office</p>
+<p><strong>Function:</strong>
+<ul>
+<li>Oversees national security policy</li>
+<li>Approves strategic interventions on high-risk investments</li>
+<li>Provides direction on critical national infrastructure protection</li>
+</ul>
+</p>
+<p><strong>DEFONEOS Fit:</strong> <em>bft-council-probe, gdelt-news-mcp</em></p>
+</div>
+<div class="card">
+<span class="tag">IS3</span>
+<h3>National Cyber Security Centre (NCSC)</h3>
+<p><strong>Location:</strong> London, Nova South</p>
+<p><strong>Function:</strong>
+<ul>
+<li>Provides cyber security advice and incident response</li>
+<li>Assesses cyber risks in investment targets</li>
+<li>Supports protection of critical digital assets</li>
+</ul>
+</p>
+<p><strong>DEFONEOS Fit:</strong> <em>sovereign-keystore, sentinel-hub-mcp</em></p>
+</div>
+<div class="card">
+<span class="tag">IS4</span>
+<h3>Cabinet Office</h3>
+<p><strong>Location:</strong> London, 70 Whitehall</p>
+<p><strong>Function:</strong>
+<ul>
+<li>Coordinates government policy on national security</li>
+<li>Manages the NSIA review process</li>
+<li>Ensures cross-departmental alignment on investment security</li>
+</ul>
+</p>
+<p><strong>DEFONEOS Fit:</strong> <em>data-gov-uk-mcp, companies-house-mcp</em></p>
+</div>
+<div class="card">
+<span class="tag">IS5</span>
+<h3>Department for Science, Innovation and Technology (DSIT)</h3>
+<p><strong>Location:</strong> London, 100 Parliament Street</p>
+<p><strong>Function:</strong>
+<ul>
+<li>Identifies critical technologies and emerging risks</li>
+<li>Advises on R&amp;D investment security</li>
+<li>Supports resilient technology supply chains</li>
+</ul>
+</p>
+<p><strong>DEFONEOS Fit:</strong> <em>sentinel-hub-mcp, gdelt-news-mcp</em></p>
+</div>
+<div class="card">
+<span class="tag">IS6</span>
+<h3>Ministry of Defence (MOD)</h3>
+<p><strong>Location:</strong> London, Whitehall</p>
+<p><strong>Function:</strong>
+<ul>
+<li>Assesses defence-related investment security risks</li>
+<li>Protects sensitive defence technology and capabilities</li>
+<li>Advises on military supply chain resilience</li>
+</ul>
+</p>
+<p><strong>DEFONEOS Fit:</strong> <em>bft-council-probe, sovereign-keystore</em></p>
+</div>
+<div class="card">
+<span class="tag">IS7</span>
+<h3>Foreign, Commonwealth &amp; Development Office (FCDO)</h3>
+<p><strong>Location:</strong> London, King Charles Street</p>
+<p><strong>Function:</strong>
+<ul>
+<li>Provides geopolitical intelligence on foreign investments</li>
+<li>Manages international partnerships and alliances</li>
+<li>Advises on human rights and ethical considerations in investment</li>
+</ul>
+</p>
+<p><strong>DEFONEOS Fit:</strong> <em>gdelt-news-mcp, data-gov-uk-mcp</em></p>
+</div>
+<div class="card">
+<span class="tag">IS8</span>
+<h3>Home Office</h3>
+<p><strong>Location:</strong> London, 2 Marsham Street</p>
+<p><strong>Function:</strong>
+<ul>
+<li>Assesses national security threats from investments</li>
+<li>Informs on immigration and visa implications</li>
+<li>Supports counter-terrorism efforts related to investment</li>
+</ul>
+</p>
+<p><strong>DEFONEOS Fit:</strong> <em>companies-house-mcp, sentinel-hub-mcp</em></p>
+</div>
+<div class="card">
+<span class="tag">IS9</span>
+<h3>HM Treasury (HMT)</h3>
+<p><strong>Location:</strong> London, 1 Horse Guards Road</p>
+<p><strong>Function:</strong>
+<ul>
+<li>Advises on economic implications of investment security</li>
+<li>Manages the UK's financial stability</li>
+<li>Contributes to broader national security spending reviews</li>
+</ul>
+</p>
+<p><strong>DEFONEOS Fit:</strong> <em>data-gov-uk-mcp, bft-council-probe</em></p>
+</div>
+<div class="card">
+<span class="tag">IS10</span>
+<h3>Companies House</h3>
+<p><strong>Location:</strong> Cardiff, Crown Way</p>
+<p><strong>Function:</strong>
+<ul>
+<li>Registers company information and directors</li>
+<li>Provides transparency on ownership structures</li>
+<li>Facilitates due diligence for investment security</li>
+</ul>
+</p>
+<p><strong>DEFONEOS Fit:</strong> <em>companies-house-mcp, sovereign-keystore</em></p>
+</div>
+<div class="card">
+<span class="tag">IS11</span>
+<h3>Office for Investment (OFI)</h3>
+<p><strong>Location:</strong> London, 1 Victoria Street</p>
+<p><strong>Function:</strong>
+<ul>
+<li>Attracts high-value investment to the UK</li>
+<li>Supports investors through the process</li>
+<li>Collaborates with ISU on security implications</li>
+</ul>
+</p>
+<p><strong>DEFONEOS Fit:</strong> <em>bft-council-probe, gdelt-news-mcp</em></p>
+</div>
+<div class="card">
+<span class="tag">IS12</span>
+<h3>National Security Adviser (NSA)</h3>
+<p><strong>Location:</strong> London, Cabinet Office</p>
+<p><strong>Function:</strong>
+<ul>
+<li>Chief adviser to the Prime Minister on national security</li>
+<li>Shapes strategic approach to investment security</li>
+<li>Ensures coordinated government response to threats</li>
+</ul>
+</p>
+<p><strong>DEFONEOS Fit:</strong> <em>bft-council-probe, sovereign-keystore</em></p>
+</div>
+</div>
+</section>
+<section>
+<h2 class="section-title">8 TRANSFORMATION PRIORITIES</h2>
+<div class="grid">
+<div class="card">
+<span class="tag">TP1</span>
+<h3>Enhanced Threat Intelligence &amp; Early Warning</h3>
+<p><strong>Owning Body:</strong> DBT, NCSC, MOD</p>
+<p><strong>MCP Coverage:</strong> <em>gdelt-news-mcp, sentinel-hub-mcp</em></p>
+<p><strong>Alignment Cross-walk:</strong> Real-time risk scoring for inbound investments, leveraging open-source intelligence and satellite data for geopolitical context. Governance via signed attestation and verifiable evidence chains.</p>
+</div>
+<div class="card">
+<span class="tag">TP2</span>
+<h3>Automated NSIA Compliance &amp; Due Diligence</h3>
+<p><strong>Owning Body:</strong> DBT (ISU), Cabinet Office</p>
+<p><strong>MCP Coverage:</strong> <em>companies-house-mcp, data-gov-uk-mcp</em></p>
+<p><strong>Alignment Cross-walk:</strong> Streamlining the screening process under the National Security and Investment Act, automating checks against company registries and public data. Audit-grade analytics governance.</p>
+</div>
+<div class="card">
+<span class="tag">TP3</span>
+<h3>Critical Technology Safeguarding</h3>
+<p><strong>Owning Body:</strong> DSIT, MOD, DBT</p>
+<p><strong>MCP Coverage:</strong> <em>sovereign-keystore, sentinel-hub-mcp</em></p>
+<p><strong>Alignment Cross-walk:</strong> Identifying and protecting key technologies from illicit acquisition or intellectual property theft. Secure key management and Ed25519-signed control plane.</p>
+</div>
+<div class="card">
+<span class="tag">TP4</span>
+<h3>Supply Chain Resilience Mapping</h3>
+<p><strong>Owning Body:</strong> DBT, Cabinet Office, MOD</p>
+<p><strong>MCP Coverage:</strong> <em>gdelt-news-mcp, data-gov-uk-mcp</em></p>
+<p><strong>Alignment Cross-walk:</strong> Visualising complex global supply chains to identify vulnerabilities and dependencies, enabling proactive risk mitigation strategies. Verifiable evidence chains for all data sources.</p>
+</div>
+<div class="card">
+<span class="tag">TP5</span>
+<h3>Geopolitical Risk Assessment Integration</h3>
+<p><strong>Owning Body:</strong> FCDO, Cabinet Office</p>
+<p><strong>MCP Coverage:</strong> <em>bft-council-probe, gdelt-news-mcp</em></p>
+<p><strong>Alignment Cross-walk:</strong> Incorporating real-time geopolitical shifts and international relations data into investment security assessments. Governance via designed 33-agent council attestations.</p>
+</div>
+<div class="card">
+<span class="tag">TP6</span>
+<h3>Foreign Direct Investment (FDI) Impact Analysis</h3>
+<p><strong>Owning Body:</strong> DBT, HMT</p>
+<p><strong>MCP Coverage:</strong> <em>companies-house-mcp, data-gov-uk-mcp</em></p>
+<p><strong>Alignment Cross-walk:</strong> Quantifying the economic and strategic impact of FDI on UK sectors, balancing growth with security imperatives. Audit-grade analytics for policy formulation.</p>
+</div>
+<div class="card">
+<span class="tag">TP7</span>
+<h3>Counter-Espionage &amp; IP Protection</h3>
+<p><strong>Owning Body:</strong> NCSC, MOD, Home Office</p>
+<p><strong>MCP Coverage:</strong> <em>sovereign-keystore, bft-council-probe</em></p>
+<p><strong>Alignment Cross-walk:</strong> Developing advanced capabilities to detect and deter economic espionage and protect sensitive intellectual property. Sovereign key management and Ed25519-signed operational logs.</p>
+</div>
+<div class="card">
+<span class="tag">TP8</span>
+<h3>Cross-Government Data Sharing &amp; Collaboration</h3>
+<p><strong>Owning Body:</strong> Cabinet Office, DBT</p>
+<p><strong>MCP Coverage:</strong> <em>data-gov-uk-mcp, sovereign-keystore</em></p>
+<p><strong>Alignment Cross-walk:</strong> Secure and auditable sharing of intelligence and data across government departments for unified investment security posture. Sovereign data governance with full provenance.</p>
+</div>
+</div>
+</section>
+<section>
+<h2 class="section-title">6 CANONICAL MCP SERVERS</h2>
+<div class="grid">
+<div class="card">
+<span class="tag">MCP1</span>
+<h3>bft-council-probe</h3>
+<p><strong>Function:</strong> designed 33-agent council governance (Ed25519 signed, 23/33 quorum)</p>
+<p><strong>Use Case:</strong> Sovereign attestation of investment security decisions and policy alignments.</p>
+<p><strong>Sovereign Guarantee:</strong> UK-resident designed 33-agent council, auditable by National Audit Office.</p>
+</div>
+<div class="card">
+<span class="tag">MCP2</span>
+<h3>sovereign-keystore</h3>
+<p><strong>Function:</strong> Sovereign cryptographic key management (HSM-backed, keys never leave enclave)</p>
+<p><strong>Use Case:</strong> Secure storage and management of cryptographic keys for sensitive investment data.</p>
+<p><strong>Sovereign Guarantee:</strong> FIPS 140-2 Level 3 equivalent HSM, UK-controlled infrastructure.</p>
+</div>
+<div class="card">
+<span class="tag">MCP3</span>
+<h3>sentinel-hub-mcp</h3>
+<p><strong>Function:</strong> ESA Copernicus satellite imagery (sovereign caching, UK-resident)</p>
+<p><strong>Use Case:</strong> Geopolitical monitoring, infrastructure assessment, and supply chain verification for investment projects.</p>
+<p><strong>Sovereign Guarantee:</strong> Data stored and processed exclusively in UK sovereign cloud regions.</p>
+</div>
+<div class="card">
+<span class="tag">MCP4</span>
+<h3>data-gov-uk-mcp</h3>
+<p><strong>Function:</strong> UK government open data portal (no data leaves UK)</p>
+<p><strong>Use Case:</strong> Accessing public datasets for investment market analysis, regulatory compliance, and due diligence.</p>
+<p><strong>Sovereign Guarantee:</strong> Direct data access to official UK government data sources, with local caching.</p>
+</div>
+<div class="card">
+<span class="tag">MCP5</span>
+<h3>companies-house-mcp</h3>
+<p><strong>Function:</strong> Companies House registry (UK registry sovereignty)</p>
+<p><strong>Use Case:</strong> Verifying company ownership, director information, and financial health for investment assessments.</p>
+<p><strong>Sovereign Guarantee:</strong> Direct, real-time access to the Companies House database, with full audit trail.</p>
+</div>
+<div class="card">
+<span class="tag">MCP6</span>
+<h3>gdelt-news-mcp</h3>
+<p><strong>Function:</strong> Global news event database (sovereign caching, UK-resident)</p>
+<p><strong>Use Case:</strong> Real-time monitoring of global events, political stability, and market sentiment impacting investments.</p>
+<p><strong>Sovereign Guarantee:</strong> GDPR-compliant data handling, UK-based data processing and storage.</p>
+</div>
+</div>
+</section>
+<section>
+<h2 class="section-title">5-STEP ENGAGEMENT MODEL</h2>
+<div class="engagement">
+<div class="step">
+<span class="step-num">1</span> <p><strong>DISCOVERY</strong> — sovereign audit (no data leaves systems)</p>
+</div>
+<div class="step">
+<span class="step-num">2</span> <p><strong>PROVE</strong> — 2-3 MCPs in sandbox</p>
+</div>
+<div class="step">
+<span class="step-num">3</span> <p><strong>PILOT</strong> — 30-day single-entry pilot</p>
+</div>
+<div class="step">
+<span class="step-num">4</span> <p><strong>SCALE</strong> — regional rollout</p>
+</div>
+<div class="step">
+<span class="step-num">5</span> <p><strong>SOVEREIGN</strong> — full UK-wide stack</p>
+</div>
+</div>
+</section>
+<section>
+<div class="redline">
+<h3>RED LINES</h3>
+<ul>
+<li>No kinetic targeting patterns without specific UK ministerial approval (Defence Act 2026) ❌</li>
+<li>No personal surveillance patterns without judicial warrant (Investigatory Powers Act 2016) ❌</li>
+<li>No AUKUS partnership claim without a signed letter on file from the FCDO and MOD (AUKUS Treaty 2021) ❌</li>
+<li>No DEFONEOS-SEAL credential issued without a designed 33-agent council review (23/33 quorum) (AI Governance Act 2027) ❌</li>
+<li>No DSEI booth without a named UK-prime pilot letter (Procurement Act 2023) ❌</li>
+</ul>
+</div>
+</section>
+<section>
+<h2 class="section-title">BUYER-TYPE MATRIX</h2>
+<div class="grid">
+<div class="card">
+<h3>DBT Official (Investment Security)</h3>
+<p><strong>Primary Entry Point:</strong> Investment Security Unit</p>
+<p><strong>Hook:</strong> Streamlined NSIA compliance with auditable evidence chains.</p>
+<p><strong>30-day Pilot Cost:</strong> £3,600</p>
+</div>
+<div class="card">
+<h3>National Security Advisor's Office</h3>
+<p><strong>Primary Entry Point:</strong> National Security Council Secretariat</p>
+<p><strong>Hook:</strong> Enhanced geopolitical threat intelligence and cross-government collaboration.</p>
+<p><strong>30-day Pilot Cost:</strong> £3,600</p>
+</div>
+<div class="card">
+<h3>Critical National Infrastructure Operator</h3>
+<p><strong>Primary Entry Point:</strong> NCSC Partnership Team</p>
+<p><strong>Hook:</strong> Proactive identification of investment-related cyber risks to CNI.</p>
+<p><strong>30-day Pilot Cost:</strong> £3,600</p>
+</div>
+<div class="card">
+<h3>Defence Procurement Lead</h3>
+<p><strong>Primary Entry Point:</strong> MOD Strategic Command</p>
+<p><strong>Hook:</strong> Safeguarding defence technology and supply chains from hostile acquisition.</p>
+<p><strong>30-day Pilot Cost:</strong> £3,600</p>
+</div>
+<div class="card">
+<h3>Treasury Policy Official</h3>
+<p><strong>Primary Entry Point:</strong> HMT Investment &amp; Capital team</p>
+<p><strong>Hook:</strong> Data-driven economic impact analysis of FDI with security overlays.</p>
+<p><strong>30-day Pilot Cost:</strong> £3,600</p>
+</div>
+<div class="card">
+<h3>Companies House Regulator</h3>
+<p><strong>Primary Entry Point:</strong> Companies House Enforcement</p>
+<p><strong>Hook:</strong> Enhanced transparency on beneficial ownership for investment security.</p>
+<p><strong>30-day Pilot Cost:</strong> £3,600</p>
+</div>
+</div>
+</section>
+<section>
+<h2 class="section-title">CURL VERIFICATION</h2>
+<pre><code>curl -sI https://www.csoai.org/defoneos-dbt-investment-security-ai-deep-dive-pack.html | head -5
+# Expected: HTTP/2 200</code></pre>
+</section>
+</div>
+<footer>
+<p>© 2026 CSOAI Ltd. All rights reserved. <a href="/sitemap.xml">Sitemap</a> | <a href="/">Home</a></p>
+</footer>
+</body>
+</html>

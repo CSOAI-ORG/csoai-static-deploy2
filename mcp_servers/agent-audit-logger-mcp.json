@@ -1,0 +1,18 @@
+{
+  "schema": "mcp-server-record-v1",
+  "slug": "agent-audit-logger-mcp",
+  "name": "Agent Audit Logger",
+  "description": "Hash-chained HMAC-signed audit log MCP for A2A (agent-to-agent) calls. Every tool-call, agent-handoff, decision gets a tamper-evident signed record. EU AI Act Art 12 automatic logs, DORA Art 17 ICT incident logs, ISO 42001 clause 9 monitoring \u2014 auditor-ready end-of-day attestations. By MEOK AI Labs.",
+  "category": "Audit",
+  "url": "https://github.com/CSOAI-ORG/agent-audit-logger-mcp",
+  "transport": "http+sse",
+  "license": "MIT",
+  "version": "0.1.0",
+  "capabilities": [
+    "tools/list",
+    "tools/call"
+  ],
+  "dependencies": [],
+  "registered_at": "2026-08-01T09:45:53.577001+00:00",
+  "source_registry": "councilof-ai/mcpRegistry.json"
+}

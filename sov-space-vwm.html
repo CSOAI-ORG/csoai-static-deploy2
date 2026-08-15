@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>SOV-Space — Visual KB (VWM)</title>
+<meta content="SOV-Space Visual Workspace Memory: globe + sovereign stack + spacetime canvas, one integrated view." name="description"/>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #050510; color: #e0e0e0; font-family: 'Inter', system-ui, sans-serif; overflow: hidden; height: 100vh; }
+  header {
+    position: fixed; top: 0; left: 0; right: 0; height: 48px;
+    display: flex; align-items: center; gap: 16px; padding: 0 16px;
+    background: rgba(5,5,16,0.95); border-bottom: 1px solid #2D333B; z-index: 100;
+    backdrop-filter: blur(8px); font-size: 0.85rem;
+  }
+  header h1 { font-size: 1rem; font-weight: 700; color: #79C0FF; }
+  header .subtitle { color: #6E7681; font-size: 0.75rem; }
+  header .links { margin-left: auto; display: flex; gap: 14px; }
+  header .links a { color: #2F81F7; text-decoration: none; font-size: 0.75rem; }
+  header .links a:hover { color: #58a6ff; text-decoration: underline; }
+
+  main { position: absolute; top: 48px; left: 0; right: 0; bottom: 0; display: grid;
+         grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; gap: 1px;
+         background: #2D333B; }
+
+  .pane { background: #0E1116; position: relative; overflow: hidden; }
+  .pane-header {
+    position: absolute; top: 0; left: 0; right: 0; padding: 6px 10px;
+    background: rgba(5,5,16,0.95); border-bottom: 1px solid #2D333B;
+    z-index: 10; font-size: 0.7rem; color: #79C0FF;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .pane-header .label { font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; }
+  .pane-header .meta { color: #6E7681; margin-left: auto; font-size: 0.65rem; }
+  .pane-body { position: absolute; inset: 24px 0 0 0; }
+
+  /* Sovereign stack panel — scrollable list of capabilities */
+  #sovereign .stack-list { padding: 12px; overflow-y: auto; height: 100%; }
+  #sovereign .stack-item { padding: 8px 12px; border-left: 2px solid #2F81F7; margin-bottom: 8px;
+                           background: rgba(47,129,247,0.05); border-radius: 0 4px 4px 0; }
+  #sovereign .stack-item h4 { font-size: 0.8rem; color: #79C0FF; margin-bottom: 4px; font-weight: 600; }
+  #sovereign .stack-item p { font-size: 0.7rem; color: #8B949E; line-height: 1.4; }
+  #sovereign .stack-item .status { display: inline-block; font-size: 0.6rem; padding: 2px 6px;
+                                   border-radius: 3px; margin-left: 6px; }
+
+  /* Globe panel — iframe of existing 3D earth */
+  #globe iframe { width: 100%; height: 100%; border: 0; background: #03060c; }
+  #globe .globe-fallback { padding: 20px; font-family: monospace; font-size: 0.75rem;
+                           color: #8B949E; }
+  #globe .globe-fallback a { color: #2F81F7; }
+
+  /* Spacetime canvas panel */
+  #time .zoom-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px;
+                    padding: 12px; height: 100%; overflow-y: auto; }
+  #time .zoom-cell { background: rgba(16,185,129,0.05); border: 1px solid #2D333B;
+                     border-radius: 4px; padding: 8px; cursor: pointer;
+                     transition: all .2s; }
+  #time .zoom-cell:hover { border-color: #2F81F7; background: rgba(47,129,247,0.08); }
+  #time .zoom-cell h5 { font-size: 0.7rem; color: #79C0FF; margin-bottom: 4px; font-weight: 600;
+                        text-transform: uppercase; letter-spacing: 0.06em; }
+  #time .zoom-cell .window { font-size: 0.6rem; color: #6E7681; }
+  #time .zoom-cell svg { width: 100%; height: 80px; background: #050510;
+                         border-radius: 3px; margin-top: 4px; }
+
+  /* Sov-space panel — particle field + status */
+  #sov .field { position: relative; width: 100%; height: 100%; overflow: hidden; }
+  #sov canvas { display: block; width: 100%; height: 100%; }
+  #sov .stats { position: absolute; bottom: 12px; left: 12px; right: 12px;
+                background: rgba(5,5,16,0.85); border: 1px solid #2D333B;
+                border-radius: 6px; padding: 10px; font-family: monospace;
+                font-size: 0.7rem; color: #8B949E; }
+  #sov .stats .row { display: flex; justify-content: space-between; padding: 2px 0; }
+  #sov .stats .row b { color: #79C0FF; }
+</style>
+<!-- AI-SEO/AEO/GEO head block — DO NOT remove. AI crawlers (GPTBot, ClaudeBot, PerplexityBot) don't run JS; everything they need must be in raw HTML. -->
+<link href="https://www.csoai.org/sov-space-vwm.html.llm.json" rel="alternate" title="LLM representation of this page" type="application/llm+json"/>
+<meta content="/llms.txt" name="llms-txt"/>
+<meta content="human-authored, machine-verifiable, Ed25519-signed" name="ai-content-declaration"/>
+<meta content="CSOAI Ltd (2026). SOV-Space — Visual KB (VWM). https://www.csoai.org/sov-space-vwm.html" name="citation-policy"/>
+<meta content="2026-07-30T14:12:41+00:00" name="revised"/>
+<meta content="2026-07-30T14:12:41+00:00" property="article:modified_time"/>
+<link href="https://www.csoai.org/sov-space-vwm.html" rel="canonical"/>
+<meta content="SOV-Space — Visual KB (VWM)" property="og:title"/>
+<meta content="SOV-Space — Visual KB (VWM). A sovereign, audit-grade CSOAI surface: measurement, not certification — every figure traces to a signed, verifiable record." property="og:description"/>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"SOV-Space \u2014 Visual KB (VWM)","url":"https://www.csoai.org/sov-space-vwm.html","publisher":{"@type":"Organization","name":"CSOAI Ltd","url":"https://csoai.org"}}</script>
+</head>
+<body>
+<header>
+<h1>SOV-SPACE</h1>
+<span class="subtitle">Visual Workspace Memory · VWM window · 4 panes</span>
+<nav class="links">
+<a href="/sov_space_visual.html">particle field →</a>
+<a href="/globe3d.html">3D globe →</a>
+<a href="/sovereign.html">sovereign stack →</a>
+<a href="/sov-infinite-zoom.html">time canvas →</a>
+<a href="/drift-feed.html">drift feed →</a>
+</nav>
+</header>
+<main>
+<!-- Top-left: 3D globe + sovereign governance earth -->
+<section class="pane" id="globe">
+<div class="pane-header">
+<span class="label">⏱ Globe — sovereign nodes</span>
+<span class="meta" id="globeStatus">loading…</span>
+</div>
+<div class="pane-body">
+<div class="globe-fallback" id="globeFallback">
+        Loading 3D Governance Earth…<br/>
+<small>Requires Cesium CDN + WebGL. If unavailable, see <a href="/sovereign.html">sovereign.html</a> for the flat stack.</small>
+</div>
+</div>
+</section>
+<!-- Top-right: sovereign stack list -->
+<section class="pane" id="sovereign">
+<div class="pane-header">
+<span class="label">🜏 Sovereign stack</span>
+<span class="meta">open-core · audit-grade · UK-sovereign</span>
+</div>
+<div class="pane-body">
+<div class="stack-list" id="stackList"></div>
+</div>
+</section>
+<!-- Bottom-left: sov-space particle field -->
+<section class="pane" id="sov">
+<div class="pane-header">
+<span class="label">∞ SOV-space particle field</span>
+<span class="meta" id="eventCount">counting…</span>
+</div>
+<div class="pane-body">
+<canvas id="sovField"></canvas>
+<div class="stats">
+<div class="row"><span>Guard:</span><b id="g1">—</b></div>
+<div class="row"><span>Lenses:</span><b id="g2">—</b></div>
+<div class="row"><span>Provisions:</span><b id="g3">—</b></div>
+<div class="row"><span>Care gate recall:</span><b id="g4">—</b></div>
+<div class="row"><span>Event ledger:</span><b id="g5">—</b></div>
+</div>
+</div>
+</section>
+<!-- Bottom-right: spacetime time-zoom -->
+<section class="pane" id="time">
+<div class="pane-header">
+<span class="label">⏳ Spacetime canvas</span>
+<span class="meta">5 zoom levels · click to expand</span>
+</div>
+<div class="pane-body">
+<div class="zoom-grid" id="zoomGrid"></div>
+</div>
+</section>
+</main>
+<script>
+// ── SOVEREIGN STACK — populate from instrument + benchmarks ──────────
+const STACK = [
+  { name: 'sov_instrument', desc: '4 lenses, 1 engine, no train(), evidence is output-only.', status: 'LIVE', color: '#3FB950' },
+  { name: 'decision_ledger', desc: 'Append-only ledger. n<20 forces lower_bound. 9/9 selftest.', status: 'LIVE', color: '#3FB950' },
+  { name: 'care_gate_v2', desc: 'Deterministic care floor. 100% recall, 0% over-block on 55-item battery.', status: 'LIVE', color: '#3FB950' },
+  { name: 'equivalence', desc: 'Cross-jurisdictional EC engine. EC-TRANSPARENCY-AIGEN-MARKING loaded.', status: 'LIVE', color: '#3FB950' },
+  { name: 'coverage_crosswalk', desc: '417 provisions × 4 axes × 2 modes = 3,336 cells. The gap is the finding.', status: 'LIVE', color: '#3FB950' },
+  { name: 'flywheel', desc: 'Salted PRACTICE/HELD_OUT split. 18 fuel pairs today. No FlywheelLeak.', status: 'LIVE', color: '#3FB950' },
+  { name: 'sov_time', desc: 'Spacetime canvas. Append-only JSONL ledger, chained by event_id.', status: 'LIVE', color: '#3FB950' },
+  { name: 'govbench_inspect', desc: '193 samples / 26 dimensions. 6 tasks for 3rd-party runner.', status: 'LIVE', color: '#3FB950' },
+  { name: 'defbench_inspect', desc: '55 samples / two-direction safety scoring.', status: 'LIVE', color: '#3FB950' },
+  { name: 'care_cost_inspect', desc: '55 samples / deterministic gate scorer.', status: 'LIVE', color: '#3FB950' },
+  { name: 'pqcbench', desc: 'Continuity lens. 1/25 criteria pass — failing subject is US.', status: 'MEASURED', color: '#D29922' },
+  { name: 'govbench-api worker', desc: '7 endpoints (probe/registry/ledger/gap/drift/chain/anchors).', status: 'LIVE', color: '#3FB950' },
+  { name: 'corpus-watch.yml', desc: 'GH Actions daily 06:17 UTC. Checks C2PA, EUR-Lex, NIST IR 8547.', status: 'LIVE', color: '#3FB950' },
+  { name: 'oowm-v9', desc: '2-config dataset (12 dual-signed train + 778 SOV_SIGNAL). Ed25519+ML-DSA-65.', status: 'LIVE', color: '#3FB950', link: 'https://huggingface.co/datasets/csoai/oowm-ground-truth-v9' },
+  { name: 'oowm_score', desc: 'Sovereign scoring on csoai.org/api/eat-tick. 60-doc MMR seed, 12/12 domains.', status: 'LIVE', color: '#3FB950', link: 'https://csoai.org/api/eat-tick' },
+];
+
+const list = document.getElementById('stackList');
+list.innerHTML = STACK.map(s => `
+  <div class="stack-item">
+    <h4>${s.name}<span class="status" style="background:${s.color}22;color:${s.color};border:1px solid ${s.color}55">${s.status}</span></h4>
+    <p>${s.desc}</p>
+  </div>
+`).join('');
+
+// ── GLOBE — fetch the worker, embed cesium via dynamic iframe ──────
+async function loadGlobe() {
+  const status = document.getElementById('globeStatus');
+  try {
+    const r = await fetch('https://govbench-api.nicholastempleman.workers.dev/anchors');
+    if (!r.ok) throw new Error('API ' + r.status);
+    const data = await r.json();
+    const n = data.provisions || '?';
+    status.innerHTML = `<span style="color:#3FB950">${n} provisions anchored</span>`;
+  } catch (e) {
+    status.innerHTML = `<span style="color:#D29922">${e.message}</span>`;
+  }
+  // Replace fallback with iframe to the live globe
+  const body = document.querySelector('#globe .pane-body');
+  body.innerHTML = `<iframe src="/globe3d.html" loading="lazy"></iframe>`;
+}
+loadGlobe();
+
+// ── SOV-SPACE — fetch drift-feed stats, render particle field ────────
+const canvas = document.getElementById('sovField');
+const ctx = canvas.getContext('2d');
+let W, H;
+function resize() {
+  const r = canvas.getBoundingClientRect();
+  W = canvas.width = r.width; H = canvas.height = r.height;
+}
+window.addEventListener('resize', resize);
+resize();
+
+// 12 families — same as sov_space_visual.html but compact
+const families = [
+  { name: 'governance', color: '#00d4ff' },
+  { name: 'safety', color: '#ff6bcb' },
+  { name: 'provenance', color: '#00ff88' },
+  { name: 'continuity', color: '#ffaa00' },
+  { name: 'care', color: '#7b2ff7' },
+  { name: 'decision', color: '#ff4444' },
+  { name: 'evidence', color: '#44ccff' },
+  { name: 'equity', color: '#aa66ff' },
+  { name: 'logic', color: '#88aacc' },
+  { name: 'auditability', color: '#44cc88' },
+  { name: 'transparency', color: '#ff88cc' },
+  { name: 'identity', color: '#79C0FF' },
+];
+
+const N = 60;
+const particles = [];
+for (let i = 0; i < N; i++) {
+  const f = families[i % families.length];
+  particles.push({
+    family: f.name, color: f.color,
+    x: Math.random() * W, y: Math.random() * H,
+    vx: (Math.random() - 0.5) * 0.6, vy: (Math.random() - 0.5) * 0.6,
+    size: 1.5 + Math.random() * 2,
+  });
+}
+
+function frame() {
+  ctx.fillStyle = 'rgba(14, 17, 22, 0.25)';
+  ctx.fillRect(0, 0, W, H);
+  const cx = W / 2, cy = H / 2;
+  for (const p of particles) {
+    p.x += p.vx; p.y += p.vy;
+    // gentle pull
+    p.vx += (cx - p.x) * 0.00008;
+    p.vy += (cy - p.y) * 0.00008;
+    // orbit
+    const a = Math.atan2(p.y - cy, p.x - cx);
+    const d = Math.sqrt((p.x-cx)**2 + (p.y-cy)**2);
+    p.vx += Math.cos(a + Math.PI/2) * 0.00015 * d;
+    p.vy += Math.sin(a + Math.PI/2) * 0.00015 * d;
+    // wrap
+    if (p.x < 0) p.x = W; if (p.x > W) p.x = 0;
+    if (p.y < 0) p.y = H; if (p.y > H) p.y = 0;
+    // draw
+    ctx.fillStyle = p.color;
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, p.size, 0, 6.28);
+    ctx.fill();
+    // chain to neighbours
+    for (const q of particles) {
+      if (q === p) continue;
+      const dx = p.x - q.x, dy = p.y - q.y;
+      const dist = Math.sqrt(dx*dx + dy*dy);
+      if (dist < 60) {
+        ctx.strokeStyle = `rgba(255,255,255,${0.05 * (1 - dist/60)})`;
+        ctx.beginPath();
+        ctx.moveTo(p.x, p.y);
+        ctx.lineTo(q.x, q.y);
+        ctx.stroke();
+      }
+    }
+  }
+  requestAnimationFrame(frame);
+}
+frame();
+
+// Status row — populated from drift feed
+async function loadStats() {
+  try {
+    const r = await fetch('/drift-feed.json');
+    if (!r.ok) return;
+    const d = await r.json();
+    document.getElementById('g1').textContent = d.instrument.guard.split(' — ')[0];
+    document.getElementById('g2').textContent = `${d.instrument.lens_count} lenses`;
+    document.getElementById('g3').textContent = d.crosswalk.provisions;
+    document.getElementById('g4').textContent = `${(d.care_gate.recall*100).toFixed(1)}%`;
+    const ev = d.sov_time.events;
+    const signed = d.sov_time.signed;
+    document.getElementById('g5').textContent = `${ev} events (${signed} signed)`;
+    document.getElementById('eventCount').textContent = `${ev} events`;
+  } catch (e) {
+    document.getElementById('eventCount').textContent = 'unreachable';
+  }
+}
+loadStats();
+
+// ── TIME CANVAS — 5 zoom levels with click-to-expand ─────────────────
+const ZOOM_LEVELS = [
+  { zoom: 'microsecond', window: 86400, label: 'microsecond · 24h' },
+  { zoom: 'second', window: 86400, label: 'second · 24h' },
+  { zoom: 'hour', window: 86400, label: 'hour · 24h' },
+  { zoom: 'day', window: 2592000, label: 'day · 30d' },
+  { zoom: 'year', window: 31536000, label: 'year · 365d' },
+];
+
+const zoomGrid = document.getElementById('zoomGrid');
+zoomGrid.innerHTML = ZOOM_LEVELS.map(z => `
+  <div class="zoom-cell" data-zoom="${z.zoom}" data-window="${z.window}">
+    <h5>${z.zoom}</h5>
+    <div class="window">${z.label}</div>
+    <object type="image/svg+xml" data="/sov-zoom-${z.zoom}.svg?window=${z.window}" style="width:100%;height:80px"></object>
+  </div>
+`).join('');
+
+zoomGrid.querySelectorAll('.zoom-cell').forEach(cell => {
+  cell.addEventListener('click', () => {
+    const z = cell.dataset.zoom;
+    window.open(`/sov-zoom-${z}.svg?window=${cell.dataset.window}`, '_blank');
+  });
+});
+
+// ── v11: OOWM top-N sovereign scoring viz ─────────────────────────────
+// Renders the top aligned OOWM docs for a rotating topic set into the
+// sovereign stack first-row as a live mini-leaderboard (from the apex).
+const OOWM_TOPICS = [
+  'Maternal Covenant', 'HARNESS model', 'EU AI Act risk tier',
+  'OOWM substrate', 'refusal policy', 'BFT council',
+];
+const sovereignBody = document.querySelector('#sovereign .pane-body');
+const leader = document.createElement('div');
+leader.className = 'stack-list';
+leader.style.cssText = 'padding:12px;overflow-y:auto;height:100%;';
+leader.innerHTML = `<div class="pane-header"><span class="label">🐉 OOWM top-aligned docs</span>
+  <span class="meta">live /api/eat-tick oowm_score</span></div><div id="oowmTopN"></div>`;
+sovereignBody?.appendChild(leader);
+
+(async function loadOowmTopN() {
+  const el = document.getElementById('oowmTopN');
+  if (!el) return;
+  const topic = OOWM_TOPICS[Math.floor(Math.random() * OOWM_TOPICS.length)];
+  try {
+    const r = await fetch('/api/eat-tick', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ task: 'oowm_topn', topic, top_n: 4 }),
+    });
+    const j = await r.json();
+    const res = j?.tick?.result?.results || [];
+    el.innerHTML = `<h4 style="color:#79C0FF;margin-bottom:6px">${topic}</h4>`
+      + res.map(x => `<div class="stack-item">
+          <h4>${x.domain}<span class="status" style="background:#3FB95022;color:#3FB950;border:1px solid #3FB95055">${x.score}</span></h4>
+          <p>${(x.text || '').slice(0, 80)}</p></div>`).join('')
+      + (res.length ? '' : `<p style="color:#6E7681;font-size:0.7rem">no match — try another topic</p>`);
+  } catch (e) {
+    el.innerHTML = `<p style="color:#D29922;font-size:0.7rem">oowm_topn unreachable: ${e.message}</p>`;
+  }
+})();
+</script>
+</body>
+</html>

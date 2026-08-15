@@ -1,0 +1,69 @@
+{
+  "groq_free": {
+    "clan_id": "clan-groq-free",
+    "endpoint": "https://api.groq.com/openai/v1",
+    "rate_limit": "30 RPM free",
+    "cost_in_per_m": 0.0,
+    "cost_out_per_m": 0.0,
+    "best_for": "cheap bulk generation (Groq Llama 3.3 70B)",
+    "use_case": "bulk_synthesis",
+    "audience_match": "engineer"
+  },
+  "kimi_k3_api": {
+    "clan_id": "clan-kimi-k3-api",
+    "endpoint": "https://api.moonshot.cn/v1",
+    "rate_limit": "paid",
+    "cost_in_per_m": 3.0,
+    "cost_out_per_m": 15.0,
+    "best_for": "high-quality reasoning examples (sovereign base)",
+    "use_case": "reasoning_synthesis",
+    "audience_match": "engineer"
+  },
+  "deepseek_v4_pro": {
+    "clan_id": "clan-deepseek-v4-pro",
+    "endpoint": "https://api.deepseek.com/v1",
+    "rate_limit": "paid",
+    "cost_in_per_m": 0.435,
+    "cost_out_per_m": 0.87,
+    "best_for": "ultra-cheap frontier reasoning (34\u00d7 cheaper than GPT-5.5)",
+    "use_case": "mass_synthesis",
+    "audience_match": "engineer"
+  },
+  "deepseek_v4_flash": {
+    "clan_id": "clan-deepseek-v4-flash",
+    "endpoint": "https://api.deepseek.com/v1",
+    "rate_limit": "paid",
+    "cost_in_per_m": 0.28,
+    "cost_out_per_m": 0.28,
+    "best_for": "ultra-cheap bulk synthesis ($0.28/M both ways)",
+    "use_case": "bulk_synthesis",
+    "audience_match": "engineer"
+  },
+  "local_ollama": {
+    "clan_id": "clan-local-ollama",
+    "endpoint": "http://localhost:11434",
+    "rate_limit": "local-only",
+    "cost_in_per_m": 0.0,
+    "cost_out_per_m": 0.0,
+    "best_for": "zero-cost generation on M4 (95+ local models per memory)",
+    "use_case": "local_synthesis",
+    "audience_match": "engineer"
+  },
+  "existing_corpus": {
+    "clan_id": "clan-existing-corpus",
+    "files": [
+      "flywheel_pairs_2026-07-30.jsonl",
+      "honey_mistral.jsonl",
+      "honey_qa.jsonl",
+      "honey_sharegpt.jsonl",
+      "honey_training_data.jsonl",
+      "master_alpaca.jsonl",
+      "master_sharegpt.jsonl",
+      "synth_2026-07-30.jsonl"
+    ],
+    "total_lines": 78870,
+    "best_for": "harvest existing training corpus (per memory)",
+    "use_case": "corpus_reuse",
+    "audience_match": "engineer"
+  }
+}

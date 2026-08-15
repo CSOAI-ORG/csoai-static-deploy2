@@ -1,0 +1,79 @@
+{
+  "mcp": {
+    "name": "sov-citizen-mcp",
+    "version": "0.1.0",
+    "description": "Per-user sovereign citizen spawner (qwen2.5:0.5b → llama3.2:3b → free GPU). Read the decision ledger for live citizens.",
+    "tools": [
+      {
+        "name": "list_citizens",
+        "description": "List recent sovereign citizens from the decision ledger. Each entry has citizen_id, model, location, last handoff.",
+        "input_schema": {
+          "type": "object",
+          "properties": {
+            "limit": {
+              "type": "integer",
+              "description": "max entries to return",
+              "default": 50
+            }
+          }
+        }
+      },
+      {
+        "name": "spawn_citizen",
+        "description": "Spawn a sovereign AI citizen for an anonymous session. Returns the citizen_id, model, location. Appends a SIGIL-signed record to the decision ledger so the SovSpace Galaxy shows the new node.",
+        "input_schema": {
+          "type": "object",
+          "properties": {
+            "anon_session": {
+              "type": "string",
+              "description": "opaque session identifier (e.g. browser cookie hash)"
+            },
+            "estimated_24h_tokens": {
+              "type": "integer",
+              "description": "expected token usage in the next 24h; drives tier selection",
+              "default": 200
+            }
+          },
+          "required": ["anon_session"]
+        }
+      },
+      {
+        "name": "handoff_citizen",
+        "description": "Re-tier an existing citizen to a different model/location. The Galaxy node dims as it moves off-local and brightens as it lands on free GPU.",
+        "input_schema": {
+          "type": "object",
+          "properties": {
+            "citizen_id": {
+              "type": "string"
+            },
+            "new_estimated_24h_tokens": {
+              "type": "integer"
+            }
+          },
+          "required": ["citizen_id", "new_estimated_24h_tokens"]
+        }
+      }
+    ],
+    "resources": [
+      {
+        "uri": "sov://citizens/recent",
+        "name": "recent citizens",
+        "description": "last 50 spawn/handoff events from the decision ledger",
+        "mime_type": "application/json"
+      }
+    ]
+  },
+  "transport": {
+    "type": "stdio",
+    "command": "python3",
+    "args": ["~/clawd/csoai-static-deploy2/user_sovereign_launcher.py"]
+  },
+  "registry_meta": {
+    "added_at": "2026-07-30",
+    "added_by": "session_ses_04d73fe80ffeOdBnNbzqWoGUnL",
+    "category": "sov-runtime",
+    "primary_endpoint": "user_sovereign_launcher.py",
+    "ledger_path": "decision_ledger.jsonl",
+    "tags": ["sov-citizens", "fluid-scale", "free-gpu", "owem-cluster"]
+  }
+}

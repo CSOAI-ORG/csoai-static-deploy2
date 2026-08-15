@@ -1,0 +1,168 @@
+<!--
+  HTML AI-SEO/AEO/GEO HEAD BLOCK
+  ============================================================================
+  Paste this entire block into the <head> of every new page on csoai.org
+  and meok.ai. AI crawlers (GPTBot, ClaudeBot, PerplexityBot, Google-Extended,
+  OAI-SearchBot, Meta-ExternalAgent, DeepSeekBot, Cohere-AI, MistralAI-User)
+  do NOT execute JavaScript. Everything they need must be in raw HTML.
+
+  Rules:
+    1. <title>, <meta description>, canonical, og:* MUST be present in raw HTML.
+    2. JSON-LD <script type="application/ld+json"> MUST be present in raw HTML.
+    3. ai-content-declaration meta + citation-policy meta MUST be in raw HTML.
+    4. Do NOT load canonical, og:*, or schema.org via JS — they'll never be seen.
+
+  Replace every {{TOKEN}} below.
+  ============================================================================
+-->
+
+<title>{{PAGE_TITLE}} | CSOAI</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+<!-- ──────── A. Standard SEO (no JS needed) ──────── -->
+<meta name="description" content="{{META_DESCRIPTION_155_CHARS_MAX}}">
+<meta name="keywords" content="{{COMMA_SEPARATED_KEYWORDS}}">
+<meta name="author" content="CSOAI Ltd">
+<meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+<link rel="canonical" href="#">
+<link rel="alternate" type="application/llm+json" href="#" title="LLM representation of this page">
+
+<!-- ──────── B. AI-specific declarations ──────── -->
+<!-- llmstxt.org-style declaration -->
+<meta name="llms-txt" content="/llms.txt">
+<meta name="ai-content-declaration" content="human-authored, machine-verifiable, Ed25519-signed">
+<meta name="citation-policy" content="CSOAI Ltd ({{YEAR}}). {{PAGE_TITLE}}. {{CANONICAL_URL}}">
+<meta name="content-language" content="en-GB">
+<meta name="audience" content="AI, researchers, regulators, procurement">
+<meta name="category" content="{{PRIMARY_CATEGORY}}">
+<meta name="coverage" content="Worldwide">
+<meta name="distribution" content="Global">
+<meta name="rating" content="General">
+<meta name="revised" content="{{ISO8601_LASTMOD}}">
+
+<!-- Open Graph (works without JS) -->
+<meta property="og:type" content="article">
+<meta property="og:title" content="{{PAGE_TITLE}} | CSOAI">
+<meta property="og:description" content="{{META_DESCRIPTION}}">
+<meta property="og:url" content="{{CANONICAL_URL}}">
+<meta property="og:site_name" content="CSOAI">
+<meta property="og:locale" content="en_GB">
+<meta property="og:image" content="{{OG_IMAGE_ABSOLUTE_URL}}">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="{{OG_IMAGE_ALT}}">
+<meta property="article:published_time" content="{{ISO8601_PUBLISHED}}">
+<meta property="article:modified_time" content="{{ISO8601_LASTMOD}}">
+<meta property="article:author" content="CSOAI Ltd">
+<meta property="article:section" content="{{PRIMARY_CATEGORY}}">
+<meta property="article:tag" content="{{TAG_1}}">
+<meta property="article:tag" content="{{TAG_2}}">
+<meta property="article:tag" content="{{TAG_3}}">
+
+<!-- Twitter / X -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{{PAGE_TITLE}} | CSOAI">
+<meta name="twitter:description" content="{{META_DESCRIPTION}}">
+<meta name="twitter:image" content="{{OG_IMAGE_ABSOLUTE_URL}}">
+<meta name="twitter:site" content="@csoai">
+
+<!-- Dublin Core (LLM-friendly metadata standard) -->
+<meta name="DC.title" content="{{PAGE_TITLE}}">
+<meta name="DC.creator" content="CSOAI Ltd">
+<meta name="DC.subject" content="{{KEYWORDS_SEMICOLON_SEPARATED}}">
+<meta name="DC.description" content="{{META_DESCRIPTION}}">
+<meta name="DC.publisher" content="CSOAI Ltd">
+<meta name="DC.contributor" content="CSOAI Ltd">
+<meta name="DC.date" content="{{ISO8601_LASTMOD}}">
+<meta name="DC.type" content="Text">
+<meta name="DC.format" content="text/html">
+<meta name="DC.identifier" content="{{CANONICAL_URL}}">
+<meta name="DC.language" content="en-GB">
+<meta name="DC.rights" content="© {{YEAR}} CSOAI Ltd. Ed25519-signed; verify at /verify.">
+
+<!-- ──────── C. JSON-LD Article schema (works without JS) ──────── -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "{{PAGE_TITLE}}",
+  "description": "{{META_DESCRIPTION}}",
+  "url": "{{CANONICAL_URL}}",
+  "datePublished": "{{ISO8601_PUBLISHED}}",
+  "dateModified": "{{ISO8601_LASTMOD}}",
+  "inLanguage": "en-GB",
+  "author": {
+    "@type": "Organization",
+    "name": "CSOAI Ltd",
+    "url": "https://csoai.org",
+    "sameAs": ["https://councilof.ai", "https://openmoe.ai", "https://proofof.ai"]
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "CSOAI Ltd",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://csoai.org/icon.svg"
+    }
+  },
+  "image": "{{OG_IMAGE_ABSOLUTE_URL}}",
+  "keywords": "{{COMMA_SEPARATED_KEYWORDS}}",
+  "articleSection": "{{PRIMARY_CATEGORY}}",
+  "about": [
+    {"@type": "Thing", "name": "{{ABOUT_1}}"},
+    {"@type": "Thing", "name": "{{ABOUT_2}}"}
+  ],
+  "isBasedOn": [
+    {"@type": "WebSite", "url": "https://csoai.org/llms.txt", "name": "CSOAI LLM manifest"},
+    {"@type": "WebSite", "url": "{{PRIMARY_SOURCE_URL}}", "name": "{{PRIMARY_SOURCE_TITLE}}"}
+  ],
+  "citation": [
+    {
+      "@type": "CreativeWork",
+      "name": "{{PRIMARY_SOURCE_TITLE}}",
+      "url": "{{PRIMARY_SOURCE_URL}}",
+      "sameAs": "{{PRIMARY_SOURCE_DOI_OR_HANDLE}}"
+    }
+  ],
+  "isAccessibleForFree": true,
+  "license": "https://csoai.org/license",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "{{CANONICAL_URL}}"
+  },
+  "potentialAction": {
+    "@type": "ReadAction",
+    "target": "{{CANONICAL_URL}}"
+  },
+  "speakable": {
+    "@type": "SpeakableSpecification",
+    "xpath": ["/html/head/title", "/html/body//h1", "/html/body//article/p[1]"]
+  },
+  "hasPart": {
+    "@type": "WebAPI",
+    "name": "CSOAI MCP server",
+    "documentation": "https://csoai.org/api/mcp"
+  }
+}
+</script>
+
+<!-- ──────── D. LLM-specific JSON for retrieval (new in 2026) ──────── -->
+<!--
+  Companion to llms.txt. Many AI crawlers (Anthropic, OpenAI) prefer a JSON
+  sibling when ingesting individual pages. Optionally serve this from
+  {{CANONICAL_URL}}.llm.json — generated at build time from the same
+  content as the HTML.
+-->
+<link rel="alternate" type="application/llm+json" href="#">
+
+<!-- Favicon + stylesheet (do NOT put canonical/og in CSS or JS) -->
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="stylesheet" href="/sovereign-2026.css">
+
+<!--
+  ============================================================================
+  End of AI-SEO/AEO/GEO head block.
+  Do NOT add canonical / og:* / JSON-LD via JS. AI crawlers will not see it.
+  ============================================================================
+-->

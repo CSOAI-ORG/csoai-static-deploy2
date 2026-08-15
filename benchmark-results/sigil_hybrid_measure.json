@@ -1,0 +1,35 @@
+{
+  "timestamp": "2026-08-09T06:44:00.185564+00:00",
+  "scheme": "SIGIL hybrid hardening (Z12.26)",
+  "ed25519_only": {
+    "manifest_bytes": 547,
+    "signature_b64_chars": 88,
+    "algorithm": "Ed25519"
+  },
+  "hybrid_ED25519_MLDSA44": {
+    "manifest_bytes": 5907,
+    "signature_b64_chars": 3316,
+    "cose_algs": "-8,-44",
+    "algorithms": [
+      "ED25519",
+      "MLDSA44"
+    ]
+  },
+  "delta_bytes": 5360,
+  "delta_pct": 979.9,
+  "cose_alg_mldsa44": -44,
+  "measured_sig_bytes": {
+    "ed25519": 64,
+    "mldsa44": 2420
+  },
+  "rfc3161_slot": "present (null until TSA attach)",
+  "rfc4998_slot": "present (null until evidence-record attach)",
+  "corpus_anchor": {
+    "corpus_root": "37e2e10d53feaa9e12097f45113e1234510be0ca471e1a0848f5805db3e367c7",
+    "provisions": 417,
+    "normaliser_version": "1.0.0",
+    "anchored_at": "2026-08-10T05:22:27.751422+00:00",
+    "retro": true,
+    "note": "Anchored retrospectively on 2026-07-29. This records the corpus as it stands NOW; it does not prove what the text said when the result was produced. Runs from this point forward anchor at measurement time."
+  }
+}

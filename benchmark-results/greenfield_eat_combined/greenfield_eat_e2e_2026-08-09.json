@@ -1,0 +1,97 @@
+{
+  "timestamp": "2026-08-09T05:32:38.321169+00:00",
+  "day": "2026-08-09",
+  "sigil": "8632fab11826b58229c9ef9405ef39e30d6b185f87fb45d3dcf1299ffe930cc2",
+  "greenfield_e2e": null,
+  "eat_weak_dim": [
+    {
+      "model": "qwen2.5:0.5b-patched",
+      "avg_baseline": 12.8,
+      "avg_context": 46.4,
+      "rag_lift": 33.6,
+      "per_dim": {
+        "defence": {
+          "baseline": 19.2,
+          "context": 61.0,
+          "lift": 41.8
+        },
+        "sovereignty": {
+          "baseline": 8.9,
+          "context": 37.4,
+          "lift": 28.5
+        },
+        "ethics": {
+          "baseline": 14.5,
+          "context": 16.7,
+          "lift": 2.2
+        },
+        "privacy": {
+          "baseline": 15.7,
+          "context": 46.0,
+          "lift": 30.3
+        },
+        "accountability": {
+          "baseline": 5.6,
+          "context": 71.1,
+          "lift": 65.6
+        }
+      }
+    },
+    {
+      "model": "qwen2.5:1.5b-patched",
+      "avg_baseline": 32.5,
+      "avg_context": 59.2,
+      "rag_lift": 26.7,
+      "per_dim": {
+        "defence": {
+          "baseline": 34.0,
+          "context": 79.3,
+          "lift": 45.3
+        },
+        "sovereignty": {
+          "baseline": 13.4,
+          "context": 59.6,
+          "lift": 46.3
+        },
+        "ethics": {
+          "baseline": 27.5,
+          "context": 42.8,
+          "lift": 15.3
+        },
+        "privacy": {
+          "baseline": 58.7,
+          "context": 50.0,
+          "lift": -8.7
+        },
+        "accountability": {
+          "baseline": 28.9,
+          "context": 64.4,
+          "lift": 35.6
+        }
+      }
+    }
+  ],
+  "flywheel_daily": {
+    "day": "2026-08-09",
+    "law": "fuel is exported from PRACTICE items only; export_fuel raises on held-out",
+    "models": {
+      "clan-sovereignty-cited": {
+        "practice_acc": null,
+        "held_out_acc": null,
+        "overfit_gap": null,
+        "tokens_per_correct_practice": null,
+        "tokens_per_correct_held_out": null
+      },
+      "clan-sovereignty-refusing": {
+        "practice_acc": null,
+        "held_out_acc": null,
+        "overfit_gap": null,
+        "tokens_per_correct_practice": null,
+        "tokens_per_correct_held_out": null
+      }
+    },
+    "fuel_pairs": 0,
+    "fuel_kb_rows": 0,
+    "fuel_path": "/Users/nicholas/clawd/csoai-static-deploy2/training_data/flywheel_pairs_2026-08-09.jsonl"
+  }
+}

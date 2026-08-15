@@ -1,0 +1,72 @@
+# SOVOS Stack — Docker Compose
+# One command: docker compose up
+# Deploys: router + 4 representative MCPs + harness + signal API stub
+# The 12 clans run as serverless GPU workers (not containers) — see clans/*/sovos.yaml
+
+services:
+  router:
+    build: ./packages/sovos-core
+    ports:
+      - "8080:8080"
+    environment:
+      - SOV_SIGNAL_API=http://signal:8081
+      - SOV_C2PA_SIGNER=http://c2pa-signer:8082
+      - SOV_GOVERNANCE_THRESHOLD_G=0.50
+      - SOV_GOVERNANCE_THRESHOLD_S=0.60
+      - SOV_GOVERNANCE_HOLD_MODE=block
+    restart: unless-stopped
+
+  signal:
+    build: ./packages/sovos-signal
+    ports:
+      - "8081:8081"
+    environment:
+      - SOV_BENCHMARK_DB=/data/govbench-479.jsonl
+    volumes:
+      - ./data:/data:ro
+    restart: unless-stopped
+
+  c2pa-signer:
+    build: ./packages/sovos-c2pa
+    ports:
+      - "8082:8082"
+    volumes:
+      - ./keys:/keys:ro
+    restart: unless-stopped
+
+  mcp-governance-crosswalk:
+    build: ./packages/sovos-mcp/mcp-governance-crosswalk
+    ports:
+      - "3001:3001"
+    environment:
+      - FRAMEWORKS=EU_AI_ACT,NIST_RMF,ISO_42001,DORA,GDPR,NIS2
+    restart: unless-stopped
+
+  mcp-injection-scanner:
+    build: ./packages/sovos-mcp/mcp-injection-scanner
+    ports:
+      - "3002:3002"
+    restart: unless-stopped
+
+  mcp-c2pa-signer:
+    build: ./packages/sovos-mcp/mcp-c2pa-signer
+    ports:
+      - "3003:3003"
+    volumes:
+      - ./keys:/keys:ro
+    restart: unless-stopped
+
+  harness:
+    build: ./packages/sovos-harness
+    environment:
+      - MODEL_ENDPOINT=http://router:8080/v1
+      - BENCHMARK_PATH=/data/govbench-479.jsonl
+    volumes:
+      - ./data:/data:ro
+      - ./results:/results
+    command: python3 -m sovos_harness --continuous
+    restart: unless-stopped
+
+volumes:
+  keys:
+  results:

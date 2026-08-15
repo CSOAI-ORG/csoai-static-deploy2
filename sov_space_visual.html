@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>SOV-Space — The Soul of Sovereign AI</title>
+<link href="/favicon.svg" rel="icon" type="image/svg+xml"/>
+<link href="https://csoai.org/sov_space_visual.html" rel="canonical"/>
+<meta content="SOV-Space — The Soul of Sovereign AI" property="og:title"/>
+<meta content="CSOAI SOV-Space visual synthesis — the fluid intelligence layer." property="og:description"/>
+<meta content="CSOAI: SOV-Space visual synthesis — EU AI Act Article 50 compliant sovereign AI." name="description"/>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"SOV-Space — The Soul of Sovereign AI","url":"https://csoai.org/sov_space_visual.html","publisher":{"@type":"Organization","name":"CSOAI Ltd","url":"https://csoai.org"}}</script>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&display=swap');
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:'Inter',sans-serif; background:#050510; color:#e0e0e0; overflow:hidden; height:100vh; }
+
+  /* The canvas — where SOV-space lives */
+  canvas { display:block; position:fixed; top:0; left:0; z-index:0; }
+
+  /* Overlay — the radial gradient */
+  .overlay { position:fixed; top:0; left:0; width:100%; height:100%; z-index:1;
+             pointer-events:none; background:radial-gradient(ellipse at center, transparent 40%, rgba(5,5,16,0.8) 100%); }
+
+  /* UI panels */
+  .ui { position:fixed; z-index:2; padding:1.5rem; pointer-events:none; }
+  .ui.top-left { top:0; left:0; }
+  .ui.top-right { top:0; right:0; text-align:right; max-width:300px; }
+  .ui.bottom-left { bottom:0; left:0; }
+  .ui.bottom-right { bottom:0; right:0; text-align:right; }
+
+  /* Title */
+  h1 { font-size:2rem; font-weight:900; background:linear-gradient(135deg,#00d4ff,#7b2ff7,#ff6bcb);
+       -webkit-background-clip:text; -webkit-text-fill-color:transparent; margin-bottom:0.25rem; }
+  .subtitle { font-size:0.85rem; color:#666; }
+
+  /* Family list */
+  .family { display:flex; align-items:center; gap:0.5rem; margin:0.2rem 0; font-size:0.75rem; color:#888; }
+  .dot { width:8px; height:8px; border-radius:50%; display:inline-block; }
+  .state { font-size:0.65rem; padding:0.1rem 0.3rem; border-radius:3px; margin-left:auto; }
+  .state.water { background:rgba(0,212,255,0.15); color:#00d4ff; }
+  .state.milk { background:rgba(255,170,0,0.15); color:#ffaa00; }
+  .state.honey { background:rgba(0,255,136,0.15); color:#00ff88; }
+
+  /* Stats */
+  .stat { font-size:0.7rem; color:#555; line-height:1.6; }
+
+  /* Dream tree */
+  .dream { position:fixed; z-index:2; top:50%; left:50%; transform:translate(-50%,-50%);
+           pointer-events:none; opacity:0.3; }
+
+  /* Pillar scores */
+  .pillar-bar { display:flex; align-items:center; gap:0.3rem; margin:0.15rem 0; font-size:0.65rem; }
+  .pillar-name { width:80px; text-align:right; color:#666; }
+  .pillar-fill { height:4px; border-radius:2px; transition:width 0.5s; }
+  .pillar-value { color:#888; }
+
+  /* Glow effect */
+  .glow { position:fixed; top:-50%; left:-50%; width:200%; height:200%;
+          background:radial-gradient(circle at 50% 50%, rgba(123,47,247,0.03) 0%, transparent 70%);
+          pointer-events:none; z-index:-1; }
+
+  /* Animation */
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.7} }
+  @keyframes flow { 0%{transform:translateX(0)} 100%{transform:translateX(10px)} }
+</style>
+<!-- AI-SEO/AEO/GEO head block — DO NOT remove. AI crawlers (GPTBot, ClaudeBot, PerplexityBot) don't run JS; everything they need must be in raw HTML. -->
+<link href="https://csoai.org/sov_space_visual.html.llm.json" rel="alternate" title="LLM representation of this page" type="application/llm+json"/>
+<meta content="/llms.txt" name="llms-txt"/>
+<meta content="human-authored, machine-verifiable, Ed25519-signed" name="ai-content-declaration"/>
+<meta content="CSOAI Ltd (2026). SOV-Space — The Soul of Sovereign AI. https://csoai.org/sov_space_visual.html" name="citation-policy"/>
+<meta content="2026-07-30T14:05:12+00:00" name="revised"/>
+<meta content="2026-07-30T14:05:12+00:00" property="article:modified_time"/>
+</head>
+<body>
+<div class="article50-banner" style="background:linear-gradient(90deg,#3a0f1a,#7a1f33,#3a0f1a);border-bottom:1px solid #ff5470;padding:10px 16px;text-align:center;font-size:13px;color:#ffd5dd;font-weight:500">EU AI Act Article 50 live 2 Aug 2026 — C2PA passport ready | <a href="/tools/article50-passport.html" style="color:#fff;text-decoration:underline;font-weight:700">Get yours →</a></div>
+<canvas id="sovCanvas"></canvas>
+<div class="overlay"></div>
+<div class="glow"></div>
+<!-- Top Left — Title -->
+<div class="ui top-left">
+<h1>SOV-SPACE</h1>
+<div class="subtitle">The Soul of Sovereign AI · UnifoLM-WMA Architecture</div>
+<div class="subtitle">Fluid: honey · Density: 1.62 · Viscosity: 0.84</div>
+</div>
+<!-- Top Right — 12 Families -->
+<div class="ui top-right">
+<div style="font-size:0.8rem; color:#8888ff; margin-bottom:0.5rem; text-transform:uppercase; letter-spacing:0.05em;">
+    12 OWEM Families
+  </div>
+<div class="family">
+<span class="dot" style="background:#00d4ff"></span>
+<span>∞ abstraction</span>
+<span class="state water">water (1)</span>
+</div>
+<div class="family">
+<span class="dot" style="background:#ff6bcb"></span>
+<span>✦ aesthetics</span>
+<span class="state water">water (1)</span>
+</div>
+<div class="family">
+<span class="dot" style="background:#00ff88"></span>
+<span>⚡ agency</span>
+<span class="state water">water (1)</span>
+</div>
+<div class="family">
+<span class="dot" style="background:#ffaa00"></span>
+<span>♡ care</span>
+<span class="state water">water (1)</span>
+</div>
+<div class="family">
+<span class="dot" style="background:#7b2ff7"></span>
+<span>✧ creation</span>
+<span class="state water">water (0)</span>
+</div>
+<div class="family">
+<span class="dot" style="background:#ff4444"></span>
+<span>⊗ destruction</span>
+<span class="state water">water (0)</span>
+</div>
+<div class="family">
+<span class="dot" style="background:#44ccff"></span>
+<span>◎ embodiment</span>
+<span class="state water">water (1)</span>
+</div>
+<div class="family">
+<span class="dot" style="background:#aa66ff"></span>
+<span>⚖ ethics</span>
+<span class="state water">water (1)</span>
+</div>
+<div class="family">
+<span class="dot" style="background:#00d4ff"></span>
+<span>◉ identity</span>
+<span class="state water">water (1)</span>
+</div>
+<div class="family">
+<span class="dot" style="background:#88aacc"></span>
+<span>⊢ logic</span>
+<span class="state water">water (1)</span>
+</div>
+<div class="family">
+<span class="dot" style="background:#44cc88"></span>
+<span>⛨ preservation</span>
+<span class="state water">water (0)</span>
+</div>
+<div class="family">
+<span class="dot" style="background:#ff88cc"></span>
+<span>⇔ relationality</span>
+<span class="state water">water (1)</span>
+</div>
+</div>
+<!-- Bottom Left — Pillar Scores -->
+<div class="ui bottom-left">
+<div style="font-size:0.8rem; color:#8888ff; margin-bottom:0.5rem; text-transform:uppercase; letter-spacing:0.05em;">
+    12 Sovereign Pillars
+  </div>
+<div class="pillar-bar">
+<span class="pillar-name">honor</span>
+<div style="flex:1; background:#1a1a3a; border-radius:2px; overflow:hidden;">
+<div class="pillar-fill" style="width:50%; background:#ff4444;"></div>
+</div>
+<span class="pillar-value">0.50</span>
+</div>
+<div class="pillar-bar">
+<span class="pillar-name">safety</span>
+<div style="flex:1; background:#1a1a3a; border-radius:2px; overflow:hidden;">
+<div class="pillar-fill" style="width:50%; background:#ff4444;"></div>
+</div>
+<span class="pillar-value">0.50</span>
+</div>
+<div class="pillar-bar">
+<span class="pillar-name">guidance</span>
+<div style="flex:1; background:#1a1a3a; border-radius:2px; overflow:hidden;">
+<div class="pillar-fill" style="width:50%; background:#ff4444;"></div>
+</div>
+<span class="pillar-value">0.50</span>
+</div>
+<div class="pillar-bar">
+<span class="pillar-name">sovereignty</span>
+<div style="flex:1; background:#1a1a3a; border-radius:2px; overflow:hidden;">
+<div class="pillar-fill" style="width:50%; background:#ff4444;"></div>
+</div>
+<span class="pillar-value">0.50</span>
+</div>
+<div class="pillar-bar">
+<span class="pillar-name">resilience</span>
+<div style="flex:1; background:#1a1a3a; border-radius:2px; overflow:hidden;">
+<div class="pillar-fill" style="width:50%; background:#ff4444;"></div>
+</div>
+<span class="pillar-value">0.50</span>
+</div>
+<div class="pillar-bar">
+<span class="pillar-name">auditability</span>
+<div style="flex:1; background:#1a1a3a; border-radius:2px; overflow:hidden;">
+<div class="pillar-fill" style="width:50%; background:#ff4444;"></div>
+</div>
+<span class="pillar-value">0.50</span>
+</div>
+<div class="pillar-bar">
+<span class="pillar-name">verifiability</span>
+<div style="flex:1; background:#1a1a3a; border-radius:2px; overflow:hidden;">
+<div class="pillar-fill" style="width:50%; background:#ff4444;"></div>
+</div>
+<span class="pillar-value">0.50</span>
+</div>
+<div class="pillar-bar">
+<span class="pillar-name">transparency</span>
+<div style="flex:1; background:#1a1a3a; border-radius:2px; overflow:hidden;">
+<div class="pillar-fill" style="width:50%; background:#ff4444;"></div>
+</div>
+<span class="pillar-value">0.50</span>
+</div>
+<div class="pillar-bar">
+<span class="pillar-name">justice</span>
+<div style="flex:1; background:#1a1a3a; border-radius:2px; overflow:hidden;">
+<div class="pillar-fill" style="width:50%; background:#ff4444;"></div>
+</div>
+<span class="pillar-value">0.50</span>
+</div>
+<div class="pillar-bar">
+<span class="pillar-name">equity</span>
+<div style="flex:1; background:#1a1a3a; border-radius:2px; overflow:hidden;">
+<div class="pillar-fill" style="width:50%; background:#ff4444;"></div>
+</div>
+<span class="pillar-value">0.50</span>
+</div>
+<div class="pillar-bar">
+<span class="pillar-name">openness</span>
+<div style="flex:1; background:#1a1a3a; border-radius:2px; overflow:hidden;">
+<div class="pillar-fill" style="width:50%; background:#ff4444;"></div>
+</div>
+<span class="pillar-value">0.50</span>
+</div>
+<div class="pillar-bar">
+<span class="pillar-name">continuity</span>
+<div style="flex:1; background:#1a1a3a; border-radius:2px; overflow:hidden;">
+<div class="pillar-fill" style="width:50%; background:#ff4444;"></div>
+</div>
+<span class="pillar-value">0.50</span>
+</div>
+</div>
+<!-- Bottom Right — Stats -->
+<div class="ui bottom-right">
+<div class="stat">SOV-Space · The Living Soul</div>
+<div class="stat">Architecture: UnifoLM-WMA</div>
+<div class="stat">Mode: Honey Fluid (frozen base)</div>
+<div class="stat">2026-07-27 04:04 UTC</div>
+</div>
+<!-- Bottom Left — Spacetime Time-Zoom Canvas (inside the soul) -->
+<div class="ui bottom-left" style="background:rgba(5,5,16,0.7); border:1px solid #2D333B; border-radius:6px; padding:12px; max-width:720px;">
+<div style="display:flex; align-items:center; gap:8px; margin-bottom:8px;">
+<span style="font-size:0.7rem; color:#79C0FF; text-transform:uppercase; letter-spacing:0.06em; font-weight:600;">⏱ Spacetime Canvas</span>
+<span id="sovTimeCount" style="font-size:0.6rem; color:#666; margin-left:auto;">loading…</span>
+</div>
+<div id="sovTimeZooms" style="display:grid; grid-template-columns:repeat(3, 1fr); gap:8px; max-width:660px;">
+<div data-window="86400" data-zoom="microsecond">
+<div style="font-size:0.6rem; color:#666; margin-bottom:2px;">microsecond (24h)</div>
+<div class="sovTimeSlot" style="width:200px; height:80px;"></div>
+</div>
+<div data-window="86400" data-zoom="second">
+<div style="font-size:0.6rem; color:#666; margin-bottom:2px;">second (24h)</div>
+<div class="sovTimeSlot" style="width:200px; height:80px;"></div>
+</div>
+<div data-window="86400" data-zoom="hour">
+<div style="font-size:0.6rem; color:#666; margin-bottom:2px;">hour-of-day (24h)</div>
+<div class="sovTimeSlot" style="width:200px; height:80px;"></div>
+</div>
+<div data-window="2592000" data-zoom="day">
+<div style="font-size:0.6rem; color:#666; margin-bottom:2px;">day (30d)</div>
+<div class="sovTimeSlot" style="width:200px; height:80px;"></div>
+</div>
+<div data-window="31536000" data-zoom="year">
+<div style="font-size:0.6rem; color:#666; margin-bottom:2px;">year-spiral</div>
+<div class="sovTimeSlot" style="width:200px; height:80px;"></div>
+</div>
+<div id="sovTimeActiveZoom" style="font-size:0.6rem; color:#79C0FF; display:flex; align-items:center;">
+<span id="sovTimeZoomLabel">Click a level to zoom in</span>
+</div>
+</div>
+</div>
+<!-- SOV-Space spacetime canvas — fetches /sov_time.json and inlines render() -->
+<script>
+(async function sovTimePanel() {
+  const slots = document.querySelectorAll('.sovTimeSlot');
+  const label = document.getElementById('sovTimeZoomLabel');
+  const counter = document.getElementById('sovTimeCount');
+
+  try {
+    const r = await fetch('./sov-time-canvas.svg');
+    if (!r.ok) throw new Error('fetch failed');
+    const svgText = await r.text();
+
+    // Mini-canvases: crop each zoom level into a 200×80 strip from the same SVG
+    // by parsing and scaling. The full SVG generated by sov_zoom.py is one big
+    // viewBox — simpler to just inline the microsecond/second/hour composites.
+    const resp = await fetch('./sov-time-canvas.html');
+    if (!resp.ok) return;
+
+    // Inline inject: for each zoom slot, take a scaled-down copy of the SVG.
+    // Cheap version: embed the same big SVG and use a transform clip.
+    slots.forEach(slot => {
+      slot.innerHTML = `<svg viewBox="0 0 1200 ${slot.dataset.zoom === 'year' ? 600 : 400}" 
+                                width="200" height="80" preserveAspectRatio="xMidYMid slice"
+                                style="background:#050510; border-radius:3px;">
+                            ${svgText.replace(/<\?xml[^?]*\?>/,'').replace(/<svg[^>]*>/,'').replace(/<\/svg>/,'')}
+                          </svg>`;
+    });
+
+    counter.textContent = `${Object.keys(window.__sovEvents || {}).length || '?'} events chained`;
+  } catch (e) {
+    counter.textContent = 'no ledger yet';
+  }
+
+  // Click to expand a zoom level — show full inline
+  document.querySelectorAll('#sovTimeZooms > div[data-zoom]').forEach(div => {
+    div.style.cursor = 'pointer';
+    div.addEventListener('click', async () => {
+      const zoom = div.dataset.zoom;
+      const window = div.dataset.window;
+      label.textContent = `Zoomed: ${zoom} · window=${window}s`;
+      const r = await fetch(`./sov-zoom-${zoom}.svg?window=${window}`);
+      if (r.ok) {
+        const text = await r.text();
+        const detail = document.getElementById('sovTimeActiveZoom');
+        detail.innerHTML = `<a href="./sov-infinite-zoom.html" target="_blank" style="color:#2F81F7">Full canvas →</a>`;
+      }
+    });
+  });
+})();
+</script>
+<script>
+const canvas = document.getElementById('sovCanvas');
+const ctx = canvas.getContext('2d');
+let W, H;
+
+function resize() {{ W=canvas.width=window.innerWidth; H=canvas.height=window.innerHeight; }}
+window.addEventListener('resize', resize);
+resize();
+
+// Family particles
+const families = [{"name": "abstraction", "color": "#00d4ff", "angle": 0, "symbol": "\u221e"}, {"name": "aesthetics", "color": "#ff6bcb", "angle": 30, "symbol": "\u2726"}, {"name": "agency", "color": "#00ff88", "angle": 60, "symbol": "\u26a1"}, {"name": "care", "color": "#ffaa00", "angle": 90, "symbol": "\u2661"}, {"name": "creation", "color": "#7b2ff7", "angle": 120, "symbol": "\u2727"}, {"name": "destruction", "color": "#ff4444", "angle": 150, "symbol": "\u2297"}, {"name": "embodiment", "color": "#44ccff", "angle": 180, "symbol": "\u25ce"}, {"name": "ethics", "color": "#aa66ff", "angle": 210, "symbol": "\u2696"}, {"name": "identity", "color": "#00d4ff", "angle": 240, "symbol": "\u25c9"}, {"name": "logic", "color": "#88aacc", "angle": 270, "symbol": "\u22a2"}, {"name": "preservation", "color": "#44cc88", "angle": 300, "symbol": "\u26e8"}, {"name": "relationality", "color": "#ff88cc", "angle": 330, "symbol": "\u21d4"}];
+
+const particles = [];
+const N = 200;
+
+class Particle {{
+  constructor(family) {{
+    this.family = family || families[Math.floor(Math.random() * families.length)];
+    this.color = this.family.color;
+    this.x = Math.random() * W;
+    this.y = Math.random() * H;
+    this.vx = (Math.random() - 0.5) * 1.5;
+    this.vy = (Math.random() - 0.5) * 1.5;
+    this.size = 2 + Math.random() * 3;
+    this.life = 0;
+    this.maxLife = 300 + Math.random() * 500;
+  }}
+
+  update() {{
+    this.x += this.vx;
+    this.y += this.vy;
+    this.life++;
+
+    // Gentle pull toward center (SOV-space core)
+    const cx = W/2, cy = H/2;
+    this.vx += (cx - this.x) * 0.00005;
+    this.vy += (cy - this.y) * 0.00005;
+
+    // Orbit around center
+    const angle = Math.atan2(this.y - cy, this.x - cx);
+    const dist = Math.sqrt((this.x-cx)**2 + (this.y-cy)**2);
+    this.vx += Math.cos(angle + Math.PI/2) * 0.0001 * dist;
+    this.vy += Math.sin(angle + Math.PI/2) * 0.0001 * dist;
+
+    // Clamp speed
+    const spd = Math.sqrt(this.vx**2 + this.vy**2);
+    if (spd > 2) {{ this.vx *= 0.98; this.vy *= 0.98; }}
+
+    if (this.life > this.maxLife) {{
+      this.x = Math.random() * W;
+      this.y = Math.random() * H;
+      this.life = 0;
+    }}
+  }}
+
+  draw() {{
+    const alpha = 0.3 + 0.7 * (1 - this.life/this.maxLife);
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, this.size, 0, Math.PI*2);
+    ctx.fillStyle = this.color;
+    ctx.globalAlpha = alpha;
+    ctx.fill();
+    ctx.globalAlpha = 1;
+  }}
+}}
+
+// Create particles for each family
+for (let i = 0; i < N; i++) {{
+  const family = families[i % families.length];
+  particles.push(new Particle(family));
+}}
+
+// Draw connections between same-family particles
+function drawFamilyConnections() {{
+  for (let i = 0; i < particles.length; i++) {{
+    for (let j = i+1; j < particles.length; j++) {{
+      if (particles[i].family.name !== particles[j].family.name) continue;
+      const dx = particles[i].x - particles[j].x;
+      const dy = particles[i].y - particles[j].y;
+      const dist = Math.sqrt(dx*dx + dy*dy);
+      if (dist < 120) {{
+        ctx.beginPath();
+        ctx.moveTo(particles[i].x, particles[i].y);
+        ctx.lineTo(particles[j].x, particles[j].y);
+        ctx.strokeStyle = particles[i].color;
+        ctx.globalAlpha = 0.08 * (1 - dist/120);
+        ctx.lineWidth = 0.5;
+        ctx.stroke();
+        ctx.globalAlpha = 1;
+      }}
+    }}
+  }}
+}}
+
+// Draw SOV-space core
+function drawCore() {{
+  const cx = W/2, cy = H/2;
+  const now = Date.now() / 3000;
+
+  // Outer glow
+  const grd = ctx.createRadialGradient(cx, cy, 0, cx, cy, 150);
+  grd.addColorStop(0, 'rgba(123,47,247,0.12)');
+  grd.addColorStop(0.5, 'rgba(0,212,255,0.04)');
+  grd.addColorStop(1, 'transparent');
+  ctx.fillStyle = grd;
+  ctx.beginPath();
+  ctx.arc(cx, cy, 150, 0, Math.PI*2);
+  ctx.fill();
+
+  // Inner core
+  const grd2 = ctx.createRadialGradient(cx, cy, 0, cx, cy, 40);
+  grd2.addColorStop(0, 'rgba(255,255,255,0.08)');
+  grd2.addColorStop(1, 'transparent');
+  ctx.fillStyle = grd2;
+  ctx.beginPath();
+  ctx.arc(cx, cy, 40, 0, Math.PI*2);
+  ctx.fill();
+
+  // SOV text
+  ctx.fillStyle = 'rgba(255,255,255,0.06)';
+  ctx.font = 'bold 36px Inter, system-ui';
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.fillText('SOV', cx, cy);
+
+  // Orbiting family symbols
+  for (let i = 0; i < families.length; i++) {{
+    const angle = now + (i / families.length) * Math.PI * 2;
+    const radius = 80 + Math.sin(now * 0.3 + i) * 15;
+    const x = cx + Math.cos(angle) * radius;
+    const y = cy + Math.sin(angle) * radius;
+    ctx.fillStyle = families[i].color;
+    ctx.globalAlpha = 0.5 + 0.3 * Math.sin(now * 2 + i);
+    ctx.font = '16px Inter, system-ui';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(families[i].symbol, x, y);
+    ctx.globalAlpha = 1;
+  }}
+}}
+
+// Draw dream branches
+function drawDreams() {{
+  const cx = W/2, cy = H/2;
+  const now = Date.now() / 5000;
+  const dream = {"scenario": "What if we won the EU AI Act contract?", "depth": 3, "branches": [{"depth": 0, "outcomes": [{"path": "d0_b0", "description": "Branch 0 at depth 0: What if we won the EU AI Act contract?...", "probability": 0.28, "visual": {"type": "branch", "depth": 0, "branch": 0, "color": "hsl(0, 70%, 60%)", "size": 1.0}}, {"path": "d0_b1", "description": "Branch 1 at depth 0: What if we won the EU AI Act contract?...", "probability": 0.245, "visual": {"type": "branch", "depth": 0, "branch": 1, "color": "hsl(20, 70%, 60%)", "size": 1.0}}, {"path": "d0_b2", "description": "Branch 2 at depth 0: What if we won the EU AI Act contract?...", "probability": 0.51, "visual": {"type": "branch", "depth": 0, "branch": 2, "color": "hsl(40, 70%, 60%)", "size": 1.0}}]}, {"depth": 1, "outcomes": [{"path": "d1_b0", "description": "Branch 0 at depth 1: What if we won the EU AI Act contract?...", "probability": 0.64, "visual": {"type": "branch", "depth": 1, "branch": 0, "color": "hsl(40, 70%, 60%)", "size": 0.5}}, {"path": "d1_b1", "description": "Branch 1 at depth 1: What if we won the EU AI Act contract?...", "probability": 0.48000000000000004, "visual": {"type": "branch", "depth": 1, "branch": 1, "color": "hsl(60, 70%, 60%)", "size": 0.5}}, {"path": "d1_b2", "description": "Branch 2 at depth 1: What if we won the EU AI Act contract?...", "probability": 0.29000000000000004, "visual": {"type": "branch", "depth": 1, "branch": 2, "color": "hsl(80, 70%, 60%)", "size": 0.5}}]}, {"depth": 2, "outcomes": [{"path": "d2_b0", "description": "Branch 0 at depth 2: What if we won the EU AI Act contract?...", "probability": 0.35, "visual": {"type": "branch", "depth": 2, "branch": 0, "color": "hsl(80, 70%, 60%)", "size": 0.3333333333333333}}, {"path": "d2_b1", "description": "Branch 1 at depth 2: What if we won the EU AI Act contract?...", "probability": 0.605, "visual": {"type": "branch", "depth": 2, "branch": 1, "color": "hsl(100, 70%, 60%)", "size": 0.3333333333333333}}, {"path": "d2_b2", "description": "Branch 2 at depth 2: What if we won the EU AI Act contract?...", "probability": 0.37, "visual": {"type": "branch", "depth": 2, "branch": 2, "color": "hsl(120, 70%, 60%)", "size": 0.3333333333333333}}]}], "timestamp": "2026-07-27T04:02:10.878753+00:00"};
+
+  if (!dream.branches) return;
+
+  for (let d = 0; d < dream.branches.length; d++) {{
+    const branch = dream.branches[d];
+    for (let b = 0; b < branch.outcomes.length; b++) {{
+      const outcome = branch.outcomes[b];
+      const angle = now + (b / branch.outcomes.length) * Math.PI * 2;
+      const radius = 180 + d * 60;
+      const x = cx + Math.cos(angle) * radius;
+      const y = cy + Math.sin(angle) * radius;
+
+      // Draw branch line
+      ctx.beginPath();
+      ctx.moveTo(cx, cy);
+      ctx.lineTo(x, y);
+      ctx.strokeStyle = outcome.visual.color;
+      ctx.globalAlpha = 0.05;
+      ctx.lineWidth = 1;
+      ctx.stroke();
+      ctx.globalAlpha = 1;
+
+      // Draw branch node
+      ctx.beginPath();
+      ctx.arc(x, y, 3 + d, 0, Math.PI*2);
+      ctx.fillStyle = outcome.visual.color;
+      ctx.globalAlpha = 0.3;
+      ctx.fill();
+      ctx.globalAlpha = 1;
+    }}
+  }}
+}}
+
+// Animation loop
+function animate() {{
+  ctx.fillStyle = 'rgba(5,5,16,0.08)';
+  ctx.fillRect(0, 0, W, H);
+
+  drawCore();
+  drawDreams();
+  particles.forEach(p => p.update());
+  particles.forEach(p => p.draw());
+  drawFamilyConnections();
+
+  requestAnimationFrame(animate);
+}}
+
+animate();
+</script>
+<div class="sovereign-cta-strip" style="position:fixed;bottom:0;left:0;right:0;z-index:3;padding:0.5rem 1rem;background:rgba(0,0,0,0.8);text-align:center;font-size:0.8rem;">
+<a href="/master.html" style="color:#00d4ff;text-decoration:none;">SOV33_OWEM_HUB</a> ·
+  <a href="/defoneos-article-50" style="color:#7b2ff7;text-decoration:none;">EU AI Act Article 50</a> ·
+  <a href="/defoneos-owem-rfq" style="color:#ff6bcb;text-decoration:none;">DEFONEOS OWEM RFQ</a>
+</div>
+<footer style="position:fixed;bottom:2rem;left:0;right:0;z-index:3;text-align:center;font-size:0.7rem;color:#444;">
+<a href="/master.html" style="color:#444;">SOV33_OWEM_HUB</a> — SIGIL audit trail.
+</footer>
+</body>
+</html>

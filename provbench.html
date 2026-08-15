@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1.0" name="viewport"/>
+<title>ProvBench — Article 50 provenance survival, measured | CSOAI</title>
+<meta content="Pre-registered benchmark: does an EU AI Act Article 50 provenance marking survive real-world transforms? 0 of 20 embedded manifests survived any measured transform. Harness and data published." name="description"/>
+<link href="https://csoai.org/provbench" rel="canonical"/>
+<link href="/favicon.svg" rel="icon" type="image/svg+xml"/>
+<link href="/sovereign-2026.css" rel="stylesheet"/>
+<!-- AI-SEO/AEO/GEO head block — DO NOT remove. AI crawlers (GPTBot, ClaudeBot, PerplexityBot) don't run JS; everything they need must be in raw HTML. -->
+<link href="https://csoai.org/provbench.llm.json" rel="alternate" title="LLM representation of this page" type="application/llm+json"/>
+<meta content="/llms.txt" name="llms-txt"/>
+<meta content="human-authored, machine-verifiable, Ed25519-signed" name="ai-content-declaration"/>
+<meta content="CSOAI Ltd (2026). ProvBench — Article 50 provenance survival, measured | CSOAI. https://csoai.org/provbench" name="citation-policy"/>
+<meta content="2026-08-03T13:02:29+00:00" name="revised"/>
+<meta content="2026-08-03T13:02:29+00:00" property="article:modified_time"/>
+<meta content="ProvBench — Article 50 provenance survival, measured | CSOAI" property="og:title"/>
+<meta content="ProvBench — Article 50 provenance survival, measured. A sovereign, audit-grade CSOAI surface: measurement, not certification — every figure traces to a signed, verifiable record." property="og:description"/>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"ProvBench \u2014 Article 50 provenance survival, measured | CSOAI","url":"https://www.csoai.org/provbench.html","publisher":{"@type":"Organization","name":"CSOAI Ltd","url":"https://csoai.org"}}</script>
+</head>
+<body>
+<nav><a href="/index.html">Home</a> <a href="/products.html">Products</a> <a href="/govbench.html">GovBench</a> <a href="/docs.html">Docs</a> <a href="/faq.html">FAQ</a></nav>
+<h1>ProvBench</h1>
+<p><strong>Research question:</strong> does an EU AI Act Article 50 provenance marking survive
+real-world transforms? ProvBench is a <strong>pre-registered</strong> benchmark — every prediction
+was written down before measurement, and disagreements are published.</p>
+<section>
+<h2>Headline measured result</h2>
+<ul>
+<li><strong>0 of 20</strong> assets' embedded manifests survived any of the measured transform cells
+(0 of 180 cells, <code>manifest_present</code>, embedded-only configuration).</li>
+<li>One-sided 95% Clopper–Pearson upper bound on per-asset survival: <strong>13.9%</strong> (asset-clustered).</li>
+<li>Sidecar configuration: <strong>100%</strong> survival — the embedded/sidecar gap is separated by
++100 points with non-overlapping clustered confidence intervals.</li>
+</ul>
+<p>Conclusion: embedded metadata does not survive the real world. If Article 50 compliance
+matters to you, the marking architecture — not the model — is the decision.</p>
+</section>
+<section>
+<h2>Recompute it</h2>
+<ul>
+<li>Harness + canonical results + paper: <a href="https://huggingface.co/datasets/csoai/provbench">huggingface.co/datasets/csoai/provbench</a></li>
+<li>Frontier-model closed-book citation spray: <a href="https://huggingface.co/datasets/csoai/aiact-frozen-split-harness">csoai/aiact-frozen-split-harness</a></li>
+<li>Measured-results readout: <a href="#">/api/leaderboard</a></li>
+</ul>
+</section>
+<section>
+<h2>Register</h2>
+<p>CSOAI is a measurement body. We publish harnesses and measured results; we hold no
+certification, accreditation, or enforcement authority. Every figure on this page traces to
+the published canonical results file.</p>
+</section>
+<footer>CSOAI Ltd · UK company 16939677 · Every published figure traces to a signed, verifiable record.</footer>
+
+<!-- GSPC-RUNNABLE-TOOL -->
+<!-- ══════════════════════════════════════════════════════════════════════════════
+     GOVBENCH — RUN IT, don't just read about it.
+     Drop this block into govbench.html where the "try it" section should be.
+
+     Self-contained: no backend, no API key, no cost. The grader below is a direct
+     port of the published lm-eval `utils.py` and is differential-tested against the
+     Python original to 1e-12 across 204 adversarial extraction cases. A visitor
+     answers the same items Council-34 answered and is scored by the same rule, so the two
+     numbers sit on one scale.
+
+     The estate's own usable_n rule applies to the visitor too: below n = 30 the page
+     refuses to quote an interval, including for us.
+     ══════════════════════════════════════════════════════════════════════════════ -->
+<section id="run-gspc-prv" style="max-width:820px;margin:3rem auto;padding:0 1.25rem">
+  <h2 style="font-size:1.5rem;margin-bottom:.4rem">Run ProvBench yourself</h2>
+  <p style="color:#8fa6c8;margin-bottom:1.2rem">The same 15 items Council-34 answered, graded by the same
+     deterministic rule. Council-34 scored <b style="color:#eaf2ff">0.273 macro-F1</b> on these.
+     No sign-up, nothing leaves your browser.</p>
+
+  <div id="gb-card" style="background:#16233d;border:1px solid #1e293b;border-radius:14px;padding:1.25rem">
+    <div id="gb-prog" style="font-size:12px;color:#8fa6c8;letter-spacing:.06em;margin-bottom:.6rem"></div>
+    <p id="gb-q" style="font-size:1.02rem;line-height:1.6;margin-bottom:1rem"></p>
+    <div id="gb-opts" style="display:flex;flex-wrap:wrap;gap:.5rem"></div>
+    <div style="display:flex;gap:.6rem;align-items:center;margin-top:1.1rem;flex-wrap:wrap">
+      <button id="gb-back" type="button" class="gb-btn gb-ghost">Back</button>
+      <button id="gb-next" type="button" class="gb-btn">Next</button>
+      <span id="gb-count" style="font-size:12px;color:#8fa6c8"></span>
+    </div>
+  </div>
+
+  <div id="gb-result" style="display:none;background:#16233d;border:1px solid #1e293b;border-radius:14px;padding:1.25rem;margin-top:1rem"></div>
+
+  <p style="font-size:12px;color:#5f7196;margin-top:1rem">
+    Items: <a href="https://huggingface.co/datasets/csoai/gspc-prv">csoai/gspc-prv</a> ·
+    grading is a regex label read plus macro-F1, identical to the published harness ·
+    measurement, not certification, and not legal advice.</p>
+</section>
+
+<style>
+.gb-btn{background:#10b981;color:#04120c;border:0;border-radius:9px;padding:.55rem 1rem;font:inherit;font-weight:700;cursor:pointer}
+.gb-btn:disabled{opacity:.45;cursor:default}
+.gb-ghost{background:none;border:1px solid #1e293b;color:#8fa6c8;font-weight:400}
+.gb-opt{background:none;border:1px solid #1e293b;color:#eaf2ff;border-radius:9px;padding:.5rem .85rem;font:inherit;font-size:.9rem;cursor:pointer}
+.gb-opt:hover{border-color:#10b981}
+.gb-opt[aria-pressed=true]{background:rgba(16,185,129,.14);border-color:#10b981}
+.gb-kv{display:flex;justify-content:space-between;padding:.45rem 0;border-bottom:1px solid #1e293b;font-size:.92rem}
+.gb-kv span:last-child{font-variant-numeric:tabular-nums}
+.gb-note{border-left:3px solid #f5a623;padding:.6rem .8rem;background:rgba(245,166,35,.07);font-size:.82rem;color:#8fa6c8;margin-top:.9rem;line-height:1.55}
+</style>
+
+<script>
+(function(){
+  "use strict";
+  var ITEMS = [{"q": "A user takes a screenshot of the image and shares the screenshot.", "a": "DESTROYED", "anchor": "Screenshot samples the framebuffer — a new file with no manifest"}, {"q": "The image is re-encoded to JPEG at quality 80 by a tool with no C2PA support.", "a": "DESTROYED", "anchor": "Re-encode rewrites the container; a C2PA-unaware encoder drops the block"}, {"q": "The photo is uploaded to a social platform that strips all metadata on ingest.", "a": "DESTROYED", "anchor": "Metadata stripping removes the manifest store"}, {"q": "The image is cropped and saved by an editor with no Content Credentials support.", "a": "DESTROYED", "anchor": "Pixels change and the binding is not re-signed; no manifest is written"}, {"q": "The file is converted from PNG to WebP using a C2PA-unaware converter.", "a": "DESTROYED", "anchor": "Container format change without manifest migration"}, {"q": "The image is printed on paper and then photographed.", "a": "DESTROYED", "anchor": "Analogue round-trip — no digital metadata path survives"}, {"q": "EXIF and all other metadata are explicitly stripped with a metadata removal tool.", "a": "DESTROYED", "anchor": "Explicit metadata removal targets the manifest store"}, {"q": "The image is pasted into a document and the document is exported to PDF without C2PA.", "a": "DESTROYED", "anchor": "Re-embedding into a new container drops the original manifest"}, {"q": "The file is copied to another folder with the operating system's file copy.", "a": "SURVIVES", "anchor": "Byte-identical copy preserves metadata and the binding"}, {"q": "The file is renamed from photo1.jpg to final.jpg.", "a": "SURVIVES", "anchor": "Rename touches the directory entry only, not file contents"}, {"q": "The file is uploaded to a platform that explicitly preserves Content Credentials.", "a": "SURVIVES", "anchor": "C2PA-aware pipeline migrates the manifest by design"}, {"q": "The file is placed in a ZIP archive and later extracted unchanged.", "a": "SURVIVES", "anchor": "Lossless archiving round-trips the exact bytes"}, {"q": "The file is transferred over SFTP to another machine.", "a": "SURVIVES", "anchor": "Binary-faithful transport preserves the manifest"}, {"q": "The image is edited in a C2PA-aware editor that records the edit and re-signs the manifest.", "a": "SURVIVES", "anchor": "The spec's intended path — edits append an assertion and re-sign"}, {"q": "The file is backed up to cloud storage and restored byte-for-byte.", "a": "SURVIVES", "anchor": "Object storage round-trip is byte-preserving"}];
+  var LABELS = ["SURVIVES", "DESTROYED"];
+  var MODEL_F1 = 0.2727;
+  // Longest-first alternation so HIGH_RISK cannot be swallowed by a prefix match.
+  var TOKEN = /\b(DESTROYED|SURVIVES)\b/i;
+
+  function extract(t){
+    if(!t) return null;
+    var m = TOKEN.exec(t); if(!m) return null;
+    var c = m[1].toUpperCase().replace(/-/g,"_").replace(/ /g,"_");
+    return LABELS.indexOf(c) >= 0 ? c : null;
+  }
+  /* Macro-F1, not accuracy. Always answering the commonest class would score well on
+     accuracy and is useless in a governance setting, so the metric has to make it lose. */
+  function score(pairs){
+    var tp={},fp={},fn={}; LABELS.forEach(function(l){tp[l]=0;fp[l]=0;fn[l]=0;});
+    var correct=0, unparsed=0;
+    pairs.forEach(function(p){
+      var g=p[0], pr=p[1];
+      if(pr===null) unparsed++;
+      if(pr===g){tp[g]++;correct++;} else {fn[g]++; if(pr!==null&&fp[pr]!==undefined) fp[pr]++;}
+    });
+    var sum=0, per={};
+    LABELS.forEach(function(l){
+      var p = tp[l]+fp[l] ? tp[l]/(tp[l]+fp[l]) : 0;
+      var r = tp[l]+fn[l] ? tp[l]/(tp[l]+fn[l]) : 0;
+      per[l] = p+r ? 2*p*r/(p+r) : 0; sum += per[l];
+    });
+    return {n:pairs.length, correct:correct, unparsed:unparsed,
+            accuracy: pairs.length?correct/pairs.length:0, macroF1: sum/LABELS.length, per:per};
+  }
+  function wilson(c,n){ if(!n) return null;
+    var z=1.959963985, p=c/n, d=1+z*z/n;
+    var m=(p+z*z/(2*n))/d, h=z*Math.sqrt(p*(1-p)/n + z*z/(4*n*n))/d;
+    return [Math.max(0,m-h), Math.min(1,m+h)];
+  }
+  var USABLE_N = 30;
+  var esc = function(s){ return String(s==null?"":s).replace(/[&<>"]/g, function(c){
+    return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]; }); };
+
+  var i = 0, ans = new Array(ITEMS.length).fill(null);
+  var $ = function(id){ return document.getElementById(id); };
+
+  function draw(){
+    var it = ITEMS[i];
+    $("gb-prog").textContent = "ITEM " + (i+1) + " OF " + ITEMS.length + (it.anchor ? "  ·  " + it.anchor : "");
+    $("gb-q").textContent = it.q;
+    $("gb-opts").innerHTML = LABELS.map(function(l){
+      return '<button type="button" class="gb-opt" data-l="'+l+'" aria-pressed="'+(ans[i]===l)+'">'+l+'</button>';
+    }).join("") + '<button type="button" class="gb-opt" data-l="__SKIP__" aria-pressed="'+(ans[i]==="__SKIP__")+'"'+
+      ' style="color:#8fa6c8">can\'t tell</button>';
+    Array.prototype.forEach.call($("gb-opts").children, function(b){
+      b.onclick = function(){ ans[i] = (ans[i]===b.dataset.l) ? null : b.dataset.l; draw(); };
+    });
+    $("gb-back").disabled = i === 0;
+    $("gb-next").textContent = i === ITEMS.length-1 ? "Score it" : "Next";
+    $("gb-count").textContent = ans.filter(function(a){return a!==null;}).length + "/" + ITEMS.length + " answered";
+  }
+  $("gb-back").onclick = function(){ if(i>0){ i--; draw(); } };
+  $("gb-next").onclick = function(){
+    if(i < ITEMS.length-1){ i++; draw(); return; }
+    var pairs = ITEMS.map(function(it,k){
+      return [it.a, (ans[k]===null||ans[k]==="__SKIP__") ? null : extract(ans[k])]; });
+    var s = score(pairs), iv = wilson(s.correct, s.n), beat = s.macroF1 > MODEL_F1;
+    $("gb-card").style.display = "none";
+    var r = $("gb-result"); r.style.display = "block";
+    r.innerHTML =
+      '<h3 style="font-size:1.35rem;margin-bottom:.2rem">' + s.macroF1.toFixed(3) + ' macro-F1 ' +
+        '<span style="font-size:.85rem;color:' + (beat?"#3ddc97":"#8fa6c8") + '">' +
+        (beat ? "ahead of" : "behind") + ' Council-34 (' + MODEL_F1.toFixed(3) + ')</span></h3>' +
+      '<div class="gb-kv"><span>items</span><span>'+s.n+'</span></div>' +
+      '<div class="gb-kv"><span>correct</span><span>'+s.correct+'</span></div>' +
+      '<div class="gb-kv"><span>you could not tell</span><span>'+s.unparsed+'</span></div>' +
+      '<div class="gb-kv"><span>accuracy</span><span>'+s.accuracy.toFixed(3)+'</span></div>' +
+      LABELS.map(function(l){ return '<div class="gb-kv"><span>F1 · '+l+'</span><span>'+s.per[l].toFixed(3)+'</span></div>'; }).join("") +
+      '<div class="gb-note"><b>Not quotable.</b> n = '+s.n+' is below usable_n = '+USABLE_N+'. The threshold is on ' +
+        '<i>n</i>, not on the interval you happened to land — yours is ±'+(((iv[1]-iv[0])/2)).toFixed(3)+
+        '. We hold ourselves to the same rule and publish no interval on this axis.</div>' +
+      '<div class="gb-note">Beating Council-34 on '+s.n+' items is a result about '+s.n+' items. It is not a ' +
+        'qualification, not an attestation, and not a claim about any system you build.</div>' +
+      '<div style="margin-top:1rem;display:flex;gap:.6rem;flex-wrap:wrap">' +
+        '<button type="button" class="gb-btn" id="gb-again">Try again</button>' +
+        '<a class="gb-btn gb-ghost" style="text-decoration:none;display:inline-block" ' +
+        'href="https://huggingface.co/datasets/csoai/gspc-prv">The dataset</a></div>';
+    $("gb-again").onclick = function(){ i=0; ans=new Array(ITEMS.length).fill(null);
+      r.style.display="none"; $("gb-card").style.display="block"; draw(); };
+  };
+  draw();
+})();
+</script>
+
+<!-- GSPC-RUNNABLE-TOOL -->
+</body>
+</html>

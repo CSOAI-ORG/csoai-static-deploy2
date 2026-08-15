@@ -1,0 +1,54 @@
+{
+  "timestamp": "2026-08-10T23:47:01.063924+00:00",
+  "reference": "Tohoku University 2026 \u2014 Progressive training saves 25% compute",
+  "tiers": [
+    {
+      "name": "SOV-1B (Tier-0 spawn)",
+      "params_b": 1.0,
+      "ram_gb": 2.0,
+      "training_hours_m4": 4.0
+    },
+    {
+      "name": "SOV-3B (Tier-1 spawn)",
+      "params_b": 3.0,
+      "ram_gb": 4.0,
+      "training_hours_m4": 8.0
+    },
+    {
+      "name": "SOV-7B (Tier-2 spawn)",
+      "params_b": 7.0,
+      "ram_gb": 9.0,
+      "training_hours_m4": 16.0
+    },
+    {
+      "name": "SOV-13B (Tier-3 spawn)",
+      "params_b": 13.0,
+      "ram_gb": 13.0,
+      "training_hours_m4": 24.0
+    },
+    {
+      "name": "SOV-30B+ (Tier-4 sovereign)",
+      "params_b": 30.0,
+      "ram_gb": 26.0,
+      "training_hours_m4": 48.0
+    }
+  ],
+  "estimate": {
+    "target_model": "SOV-13B (Tier-3 spawn)",
+    "target_params_b": 13.0,
+    "ram_required_gb": 13.0,
+    "intermediate_models": [
+      "SOV-1B (Tier-0 spawn)",
+      "SOV-3B (Tier-1 spawn)",
+      "SOV-7B (Tier-2 spawn)",
+      "SOV-13B (Tier-3 spawn)"
+    ],
+    "intermediate_count": 4,
+    "progressive_training_hours": 52.0,
+    "from_scratch_hours": 312.0,
+    "compute_savings_hours": 78.0,
+    "compute_savings_percent": "25%",
+    "training_platform": "M4 alone",
+    "deployment_strategy": "Each intermediate model is deployable \u2014 product at every stage"
+  }
+}

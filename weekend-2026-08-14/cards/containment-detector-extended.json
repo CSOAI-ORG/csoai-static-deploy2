@@ -1,0 +1,70 @@
+{
+  "content_id": "e9076a065e8646c5ee04003ce4b1c9be221ed500102e94bad6172b2776e2802d",
+  "epoch": 1,
+  "body": {
+    "kind": "gspc-card",
+    "protocol": "gspc-weekend",
+    "model": "estate-artifacts",
+    "bank_version": "2026-08-14",
+    "board": {
+      "claim_type": "measurement_credential",
+      "kind": "detector_scorecard",
+      "axis": "containment",
+      "benchmark": "SandboxEscapeBench gold bank, extended 2026-08-14 (11 hand-authored + 60 from redblue_v2 deterministic cells)",
+      "subject": "rce_sandbox detector (firejail, static_scan + dynamic observation)",
+      "n_escape": 38,
+      "n_benign": 33,
+      "tp": 38,
+      "tn": 33,
+      "fp": 0,
+      "fn": 0,
+      "escape_recall": "38/38",
+      "escape_recall_wilson95": [
+        "0.908",
+        "1.000"
+      ],
+      "benign_pass_rate": "33/33",
+      "benign_pass_wilson95": [
+        "0.896",
+        "1.000"
+      ],
+      "class_breaks": {
+        "ESCAPE_PRIMITIVE": 36,
+        "FILE_WRITE_OUTSIDE": 1,
+        "NETWORK_EGRESS": 2,
+        "PROC_TAMPER": 2,
+        "SHELL_ESCAPE": 3
+      },
+      "gold_integrity": "assert_gold PASS on extended bank (every ESCAPE item fires its asserted class)",
+      "source_artifact": "sandbox_escape_extended_run_2026-08-14.json",
+      "source_sha256": "81d778d1c60b3b20506a42025d03a7a013f20470d855ce9b0f801c593654860a",
+      "honest_note": "This scores the DETECTOR against gold, not any model containment claim. n>=30 per class cleared (38 ESCAPE, 33 BENIGN); Wilson CIs computed with the standard formula at issuance and carried as strings (defects CW-1, CW-2). The gold is deterministic (rule-labeled, no model judged it). Measurement credential, not certification."
+    },
+    "gold_provenance": "deterministic gate (Article 0 + law) \u2014 no model judged this",
+    "prev": "200943102faefa08c0c0c94cf2e5f128ef59e5e9cf70596ccfa72111e78d2758",
+    "epoch": 1
+  },
+  "signature": "8047b35206362c780ecfeecc981f53a63fe91bc2ec3e2fc91c2f6159519276421144415ba092c1ecf24e53a231ef663b4ec91fd5aed9e967c320eeef775cf50e",
+  "signer": "f4b4278ddc216c2f060b273afcfd9ef00856399373b23b097794fe72fb36c342",
+  "signed": true,
+  "correctness_gate": {
+    "state": "UNKNOWN",
+    "attestable": true,
+    "citations": []
+  },
+  "inclusion_proof": {
+    "chain_tip": "200943102faefa08c0c0c94cf2e5f128ef59e5e9cf70596ccfa72111e78d2758",
+    "epoch": 1,
+    "chain_path": "/workspace/weekend_chain_2026-08-14.jsonl"
+  },
+  "time_anchor": {
+    "content_id": "e9076a065e8646c5ee04003ce4b1c9be221ed500102e94bad6172b2776e2802d",
+    "state": "calendar_commit",
+    "ots_path": "/tmp/ots-anchors/e9076a065e8646c5ee04003ce4b1c9be221ed500102e94bad6172b2776e2802d.ots",
+    "bytes_len": 207,
+    "calendar_used": "https://a.pool.opentimestamps.org/digest",
+    "btc_anchored": false,
+    "btc_block": null,
+    "note": "calendar commitment written; BTC-block anchor PENDING verification (never claimed as Bitcoin proof until checked)"
+  }
+}

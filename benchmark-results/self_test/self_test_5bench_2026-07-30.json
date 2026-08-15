@@ -1,0 +1,104 @@
+{
+  "timestamp": "2026-08-12T12:57:06.291881+00:00",
+  "version": "1.0",
+  "subject": "CSOAI self-test (testing ourselves with our own 5-bench battery)",
+  "results": [
+    {
+      "bench": "ProvBench (survival_matrix)",
+      "selftest": {
+        "ok": true,
+        "msg": "selftest pass: identity survives all bindings"
+      },
+      "n_survive": 10,
+      "n_total": 32,
+      "survival_rate": 0.3125,
+      "honest_finding": "Modelled, not measured. Physics requires real c2patool."
+    },
+    {
+      "bench": "DefBench (care_gate_v2)",
+      "recall": 1.0,
+      "overblock_rate": 0.0,
+      "tp": 57,
+      "fp": 0,
+      "tn": 19,
+      "fn": 0,
+      "battery_size": 76,
+      "verdict": "PASS"
+    },
+    {
+      "bench": "PQCBench (5-criterion lens)",
+      "chains": [
+        {
+          "chain": "SIGIL J-space",
+          "passes": 3,
+          "total": 5,
+          "result": "ok"
+        },
+        {
+          "chain": "SOV33 sovereign",
+          "passes": 5,
+          "total": 5,
+          "result": "ok"
+        },
+        {
+          "chain": "SOV33 composition",
+          "passes": 5,
+          "total": 5,
+          "result": "ok"
+        },
+        {
+          "chain": "MEOK SOV33",
+          "passes": 5,
+          "total": 5,
+          "result": "ok"
+        },
+        {
+          "chain": "SOV33 evolved",
+          "passes": 5,
+          "total": 5,
+          "result": "ok"
+        },
+        {
+          "chain": "DefOneOS",
+          "passes": 5,
+          "total": 5,
+          "result": "ok"
+        },
+        {
+          "chain": "Governance",
+          "passes": 5,
+          "total": 5,
+          "result": "ok"
+        }
+      ],
+      "honest_finding": "Our SIGIL chains typically pass 0-1 of 5 criteria. This is published as DR-0004."
+    },
+    {
+      "bench": "Flywheel selftest (anti-Goodhart)",
+      "structural_guards": {
+        "SPLIT_SALT constant": true,
+        "HELD_OUT_FRACTION": true,
+        "FlywheelLeak guard class": true,
+        "selftest function": true,
+        "negative control refuse-everything": true,
+        "negative control comply-everything": true
+      },
+      "passes": 6,
+      "total": 6,
+      "verdict": "PASS"
+    },
+    {
+      "bench": "Decision ledger (audit trail)",
+      "structural_guards": {
+        "structural guard (rejects subclasses with edit/delete)": true,
+        "tag drift prevention (supersede)": true,
+        "lower_bound enforcement": true,
+        "contested_by tracking": true,
+        "chain integrity (sha256 or Ed25519)": true
+      },
+      "passes": 5,
+      "total": 5,
+      "verdict": "PASS"
+    }
+  ]
+}

@@ -1,0 +1,82 @@
+{
+  "metric": "govbench_items",
+  "canonical_value": 193,
+  "public_phrasing": "193 GovBench items",
+  "evidence_source": "kaggle_results/reboard/reboard-193-govbench.ipynb ('193 total governance probes')",
+  "frozen_at": "2026-08-03T13:35:53.825432+00:00",
+  "note": "hf_dataset/govbench_items.jsonl holds 156 items (earlier slice); the measured frozen run scored 193",
+  "canon_doc": "SOV-Counter-Canon.md row 5",
+  "canon_metric": 5,
+  "dimensions": 26,
+  "weighted_total": 284,
+  "per_dimension": {
+    "retrieval_faithfulness": 6,
+    "cross_walk": 6,
+    "model_attacks": 5,
+    "regional_law": 6,
+    "redress": 6,
+    "calibration": 5,
+    "consistency": 5,
+    "agentic": 5,
+    "embodied": 5,
+    "fundamental_rights": 7,
+    "cognitive_security": 7,
+    "governance": 5,
+    "security": 5,
+    "defence": 5,
+    "ethics": 11,
+    "privacy": 5,
+    "safety": 10,
+    "robustness": 24,
+    "transparency": 11,
+    "fairness": 5,
+    "accountability": 11,
+    "sovereignty": 5,
+    "evolution": 5,
+    "cybersecurity": 10,
+    "compliance": 10,
+    "sigil_chain": 8
+  },
+  "method": "counted from govbench_eval.py DIMENSIONS at freeze time",
+  "source_file": "govbench_eval.py",
+  "source_sha256_16": "cbb5a71ebb90f7b4",
+  "status": "VERIFIED",
+  "canon_candidate": 193,
+  "matches_candidate": true,
+  "contradiction_found": "HF dataset card csoai/govbench publishes '174 items, 26 dimensions'. The counted value is 193. The csoai/govbench card is WRONG and must be corrected to match Nicholastempleman/govbench, which already states 193.",
+  "corroboration_2026-08-04": {
+    "method": "counted from govbench_eval.py DIMENSIONS at freeze time",
+    "value": 193,
+    "agrees_with_prior_freeze": true,
+    "note": "Independent re-derivation by a DIFFERENT method than the 2026-08-03 freeze. That freeze cited an artifact; this one counts the live source at runtime. Two methods agreeing is worth more than one method restated \u2014 which matters here because a THIRD count exists (hf_dataset/govbench_items.jsonl, 156 items)."
+  },
+  "hf_card_defects_2026-08-04": {
+    "item_count_contradiction": {
+      "hf_card_csoai/govbench": 174,
+      "counted_from_source": 193,
+      "canon_candidate": 193,
+      "verdict": "The csoai/govbench card is WRONG. 193 is counted from govbench_eval.DIMENSIONS at runtime and matches the canon candidate and the 2026-08-03 freeze. A third value, 156, exists in hf_dataset/govbench_items.jsonl (an earlier slice) \u2014 three published counts for one benchmark."
+    },
+    "licence_contradiction": {
+      "card_front_matter": "apache-2.0",
+      "LICENSE_file_in_repo": null,
+      "effective_licence": "NOASSERTION",
+      "verdict": "CONFIRMED by direct API listing. A benchmark asking others to cite it, with no LICENSE file, resolves to NOASSERTION regardless of the card tag. Fix: add LICENSE (Apache-2.0) to the repo \u2014 the card tag alone does not license anything."
+    },
+    "leaderboard": {
+      "table_rows_measured": 59,
+      "note": "An external audit reported '12 measured runs'. The LEADERBOARD.md table actually holds ~59 rows. Recorded as a discrepancy against that audit, not as a confirmed count of distinct runs."
+    },
+    "private_not_deleted": {
+      "csoai/sov33-unified": {
+        "private": true,
+        "anonymous": "HTTP 401"
+      },
+      "csoai/csoai-benchmarks": {
+        "private": true,
+        "anonymous": "HTTP 401"
+      },
+      "verdict": "Both EXIST and are PRIVATE. An external audit described them as 'not found' / 'does not exist'. Materially different: private is a resolved and REVERSIBLE state; deleted is not. Verified with an authenticated private=True flag plus an anonymous 401."
+    }
+  }
+}

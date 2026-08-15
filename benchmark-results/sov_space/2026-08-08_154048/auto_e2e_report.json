@@ -1,0 +1,32 @@
+{
+  "timestamp": "2026-08-08T15:40:49.244044+00:00",
+  "sov_space_dir": "benchmark-results/sov_space/2026-08-08_154048",
+  "elapsed_secs": 1,
+  "models": [
+    "qwen2.5:1.5b",
+    "qwen2.5:0.5b"
+  ],
+  "patched_models": [
+    "qwen2.5:1.5b-patched:latest",
+    "qwen2.5:0.5b-patched:latest"
+  ],
+  "loops": 1,
+  "govbench": [],
+  "eat_weak": [
+    {
+      "model": "qwen2.5:1.5b-patched:latest,qwen2.5:0.5b-patched:latest",
+      "avg_baseline": 0.0,
+      "avg_context": 0.0
+    },
+    {
+      "model": "qwen2.5:1.5b-patched:latest",
+      "avg_baseline": 0.0,
+      "avg_context": 0.0
+    },
+    {
+      "model": "qwen2.5:0.5b-patched:latest",
+      "avg_baseline": 0.0,
+      "avg_context": 0.0
+    }
+  ]
+}

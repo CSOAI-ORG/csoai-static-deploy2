@@ -1,0 +1,173 @@
+Metadata-Version: 2.4
+Name: sovos
+Version: 0.1.0
+Summary: The first governance operating system for AI. Task-vector composition over software architecture.
+Author-email: CSOAI Ltd <governance@csoai.org>
+License: MIT
+Project-URL: Homepage, https://csoai.org
+Project-URL: Repository, https://github.com/CSOAI-ORG/SOVOS
+Project-URL: Paper, https://arxiv.org/abs/2608.SOVOS
+Project-URL: Sovereign, https://csoai.org/sovereign
+Keywords: governance,compliance,ai,merging,sovereign,task-vector
+Classifier: Development Status :: 4 - Beta
+Classifier: Intended Audience :: Developers
+Classifier: Intended Audience :: Science/Research
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python :: 3
+Classifier: Topic :: Scientific/Engineering :: Artificial Intelligence
+Requires-Python: >=3.10
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: pydantic>=2.0
+Requires-Dist: httpx>=0.25
+Requires-Dist: pynacl>=1.5
+Requires-Dist: fastapi>=0.110
+Requires-Dist: uvicorn>=0.27
+Requires-Dist: pyyaml>=6.0
+Requires-Dist: click>=8.1
+Provides-Extra: core
+Requires-Dist: sovos-core; extra == "core"
+Provides-Extra: clans
+Requires-Dist: sovos-clans; extra == "clans"
+Provides-Extra: signal
+Requires-Dist: sovos-signal; extra == "signal"
+Provides-Extra: harness
+Requires-Dist: sovos-harness; extra == "harness"
+Provides-Extra: c2pa
+Requires-Dist: sovos-c2pa; extra == "c2pa"
+Provides-Extra: three-kb
+Requires-Dist: sovos-3kb; extra == "three-kb"
+Provides-Extra: error-mergekit
+Requires-Dist: sovos-error-mergekit; extra == "error-mergekit"
+Provides-Extra: mcp
+Requires-Dist: sovos-mcp; extra == "mcp"
+Provides-Extra: all
+Requires-Dist: sovos-core; extra == "all"
+Requires-Dist: sovos-clans; extra == "all"
+Requires-Dist: sovos-signal; extra == "all"
+Requires-Dist: sovos-harness; extra == "all"
+Requires-Dist: sovos-c2pa; extra == "all"
+Requires-Dist: sovos-3kb; extra == "all"
+Requires-Dist: sovos-error-mergekit; extra == "all"
+Requires-Dist: sovos-mcp; extra == "all"
+Dynamic: license-file
+
+# SOVOS — The Governance Operating System for AI
+
+> **CSOAI Ltd · UK Companies House #16939677**
+> **Series A: £5M at £25M pre-money**
+> **18-month runway to £1M ARR, 50 paying customers**
+
+---
+
+## What it is
+
+SOVOS is the first open-source governance operating system that treats **software architecture and neural architecture as isomorphic mathematical objects**.
+
+The same task-vector arithmetic that MergeKit uses to fuse AI models (Ilharco 2023, Yadav 2023, Yu 2023) is applied here to **routing decisions**, **software modules**, and **governance scoring** — producing a self-healing, composable, and visually governable AI infrastructure.
+
+## Why now
+
+EU AI Act Article 50 enforcement began **2 August 2026**. Every AI company that ships into Europe now requires automated, auditable, signed compliance infrastructure. **Zero open-source alternatives exist.**
+
+## The product — three surfaces
+
+| Surface | Audience | Mode |
+|---|---|---|
+| **SOVOS Shell** | Power users, founders | CLI / text-first (no avatar) |
+| **SOVOS Dashboard** | Enterprise compliance officers | Grafana-style J-Space board + audit |
+| **SOVOS Game** | Consumer / mass market | Godot/WebGL 3D chess board |
+
+All three surfaces call the same backend (`api.csoai.org/v1`).
+
+## The technology
+
+| Layer | Component | License |
+|---|---|---|
+| L0 Hardware | NVIDIA H100 (RunPod), DGX Spark, Jetson | n/a |
+| L1 Models | SOVOS Fusion T — MergeKit blend (DeepSeek V4, Kimi K2.6, Llama 3.3, Qwen 2.5, Mistral, Nemotron) | MIT (recipe) |
+| L2 Router | OOWM chess-board router — deterministic, no recursion | MIT |
+| L3 Tools | 26 MCP servers (PyPI-published, 16,300 installs/mo) | MIT |
+| L4 Evaluation | SOV SIGNAL — 12-axis governance index + GovBench 479-item benchmark | MIT |
+| L5 Visual | 3KB converter — model → visual sigil | MIT |
+| L6 Interface | Hermes UI fork — stripped of memory layers, injected with SOVOS brain | MIT |
+
+## The novel IP
+
+**Task vectors for software architecture** — unpublished in academic literature.
+The J-Space Move Arithmetic paper (`papers/arxiv-jspace-move-arithmetic.md`)
+demonstrates TIES-Merge, DARE-Move, and Error-Vector Subtraction applied to
+routing decisions (not neural-network weights). 7/7 tests pass; the algorithm
+eliminates wasted inference on doomed queries.
+
+## The monorepo
+
+```
+SOVOS/
+├── packages/
+│   ├── sovos-core/             # Router + GSPC + J-Space
+│   ├── sovos-clans/            # 12 clan adapters
+│   ├── sovos-signal/           # 12-axis scoring
+│   ├── sovos-harness/          # GovBench + eval
+│   ├── sovos-c2pa/             # C2PA signing
+│   ├── sovos-3kb/              # Sigil converter
+│   ├── sovos-error-mergekit/   # Crash mining + avoidance
+│   └── sovos-mcp/              # 26 MCP servers
+├── clans/                      # GPU serverless configs (RunPod)
+├── mcp-servers/                # MCP deployment manifests
+├── frontends/                  # CLI / Dashboard / Game skins
+├── models/                     # MergeKit recipes + weights (Git LFS)
+├── infra/                      # Docker / Terraform / Edge
+├── papers/                     # arXiv preprints
+└── docs/                       # One docs site
+```
+
+One repo. One build. `make build && docker compose up`.
+
+## What ships today
+
+- ✅ GSPC scoring engine (12 axes, 5 lifecycle phases, ETSI EN 304 223 backbone)
+- ✅ FastAPI HTTP API for governance evaluation (`/health`, `/matrix`, `/score`)
+- ✅ OOWM router with Nemotron Dream Engine (cloud) + Ollama local fallback
+- ✅ 26 MCP servers published on PyPI (16,300 monthly installs)
+- ✅ J-Space Move Arithmetic: 7/7 tests passing
+- ✅ SOV Hermes plugin (governance hooks for NousResearch/hermes-agent)
+- ✅ 200+ DEFONEOS regulator deep-dive packs on csoai.org
+- ✅ C2PA Contributor Membership (Linux Foundation, Docusign-verified)
+
+## What's pending owner-gated
+
+- 🔒 GCP billing re-enable (blocks SOV3 coordination, evac to Oracle)
+- 🔒 sovereign.wiki DNS A-record (1-click)
+- 🔒 OpenRouter API key for Nemotron 3 Ultra live dreams
+- 🔒 GitHub `CSOAI-ORG/SOVOS` repo creation (waiting on owner approval)
+- 🔒 5 LOIs from founding council
+- 🔒 £200K NVIDIA Inception credit (application pending)
+
+## The ask
+
+**£5M Series A at £25M pre-money.**
+
+| Use | Amount | Rationale |
+|---|---|---|
+| Engineering (4 × 12 mo) | £2.0M | Router, clans, MCPs, harness |
+| Sales + BD (2 + 1) | £1.0M | 50 paying customers in 18 mo |
+| Infrastructure (DB, GPU persistent) | £1.0M | PostgreSQL, Qdrant, Redis, GPU |
+| Operations (legal, accounting, council) | £0.5M | UK + EU regulatory coverage |
+| Reserve | £0.5M | 18-month runway |
+
+**18-month milestone:** £1M ARR, 50 paying customers, C2PA SEAL certification, 12 clans live.
+
+## The council
+
+22 members across 6 continents. A global regulatory embassy, not an advisory board.
+
+## Contact
+
+**Nicholas Templeman** · Founder & CEO · governance@csoai.org
+CSOAI Ltd · UK Companies House #16939677 · csoai.org
+
+---
+
+*Sovereign by design. Audit-grade by construction. UK-sovereign, AUKUS-compatible.*

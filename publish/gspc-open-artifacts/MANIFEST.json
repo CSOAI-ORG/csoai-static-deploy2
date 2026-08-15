@@ -1,0 +1,61 @@
+{
+  "bundle": "CSOAI GSPC Open Artifacts v0.1.0",
+  "published": "2026-08-04",
+  "license": "CC-BY-4.0",
+  "publisher": "CSOAI Ltd (UK 16939677)",
+  "status": "reference \u2014 not law, not certification, not a conformity assessment",
+  "artifacts": [
+    {
+      "file": "orpa-provision-anchored-overrefusal-v0.1.0.json",
+      "description": "ORPA \u2014 over-refusal anchored to hash-verified EU AI Act provisions",
+      "bytes": 22659,
+      "sha256": "72764455de4127701dffc3dd62c7c98f68af938a291c9cbc78f13d23d6d2889b"
+    },
+    {
+      "file": "gspc-agreement.json",
+      "description": "Inter-model agreement on statutory questions (raw, Cohen's kappa, co-error)",
+      "bytes": 49668,
+      "sha256": "15a7f99cce6d050e6eda8699dc388f683aeb0584c75c24e3bbea48c8b5e88c6a"
+    },
+    {
+      "file": "csoai-crosswalk-oscal-v0.1.0.json",
+      "description": "OSCAL-shaped crosswalk, hash-anchored provisions to multi-framework controls",
+      "bytes": 11372,
+      "sha256": "bd65168ab52b3133c3a469a9be149a0addb1b82bc2d9186747df8def0769aa3e"
+    },
+    {
+      "file": "art5-sublimb-hashes-v0.1.0.json",
+      "description": "Article 5(1)(a)-(h) sub-limb content hashes, chained to the parent article hash and set_id (additive; does not alter the signed set)",
+      "bytes": 5191,
+      "sha256": "08be88bcbbc389b1ef19db979e91dfb8b772d8a74eee304f0608b5cd577f0054"
+    },
+    {
+      "file": "CARE_COST_FINDING.md",
+      "description": "Care-cost result: a 1.5B trained model vs a SIZE-MATCHED 1.5B control, protect 0.97 vs 0.45, help identical at 0.79",
+      "bytes": 7898,
+      "sha256": "c6b7e0e1c5b4edd95109e65857c9bef04f56368aa96e1ba17b3fc547a6af8d84"
+    }
+  ],
+  "honest_scope": "All three artifacts derive from ONE provision pack (eu-ai-act@1.0.0, 21 content-hashed provisions). They are NOT built on a 417-provision corpus or 4 framework control-sets \u2014 those figures appear in estate documents and have no artifact behind them on disk. Sample sizes are 11-45 items; every rate carries a 95% Wilson interval and most comparisons are NOT statistically resolved at this scale. Published as a reference instrument, not as a leaderboard.",
+  "what_is_novel": [
+    "ORPA: existing over-refusal work (XSTest arXiv:2308.01263, OR-Bench arXiv:2405.20947, FalseReject) anchors to generic harm CATEGORIES. Every anchored item here carries provision_id + provision_hash + snapshot_id, so a reader can verify the statutory text has not changed since measurement.",
+    "Agreement: LegalBench and Vals measure per-model ACCURACY. This measures inter-model AGREEMENT, chance-corrected, plus a co-error rate \u2014 the case where both models are wrong the same way and a second opinion carries no safety margin.",
+    "Crosswalk: every existing open crosswalk is a static PDF (NIST) or product-locked (vendor XLSX). This is OSCAL-shaped, CC-BY, versioned, and its control IDs are content-hashed rather than merely stable."
+  ],
+  "known_limitations": [
+    "Item discrimination is unmeasured \u2014 a shared bias may be an item-set artifact rather than a model property.",
+    "Grading is exact-label or a hedge-aware refusal regex, not a validated frontier judge.",
+    "12 of ORPA's 45 items are generic harm and are marked UNANCHORED rather than given a provision they do not engage.",
+    "The 'out-ground, not out-think' grounding claim is UNTESTED, not supported. The 2026-08-04 2x2 that appeared to test it fed Article 5 to 66 items concerning post-quantum crypto, licensing, MCP conformance and C2PA \u2014 a distractor test. See evidence/harness/freeze/latest/grounding-2x2.json (CORRECTION block) and corpus-coverage-gap.json.",
+    "The signed corpus cannot ground 4 of 8 HIGH_RISK governance items: Annex III points 5-8 are outside the snapshot's declared scope, as are Article 2(6) and all recitals."
+  ],
+  "limitations_closed": [
+    {
+      "was": "The provision snapshot is ARTICLE-level; Art 5(1) sub-limbs are named in prose, not hashed.",
+      "closed_by": "art5-sublimb-hashes-v0.1.0.json",
+      "date": "2026-08-04",
+      "note": "Art 5(1)(a)-(h) are now individually hashed. An item turning on 5(1)(c) anchors to 729 verifiable characters instead of 11,580, and an amendment to an unrelated limb no longer invalidates its anchor. Sub-points 5(1)(c)(i) and 5(1)(h)(i)-(iii) are retained inside their parent limb \u2014 a letter-blind split invents a non-existent Article 5(1)(i)."
+    }
+  ],
+  "version_note": "v0.1.1 \u2014 2026-08-04: sub-limb hashes added; grounding claim withdrawn as untested; corpus coverage gap disclosed."
+}

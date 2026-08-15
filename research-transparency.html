@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Research Transparency | CSOAI</title>
+<meta name="description" content="What CSOAI publishes, what it withholds, and why.">
+<link rel="canonical" href="https://csoai.org/research-transparency">
+<link rel="alternate" type="application/llm+json" href="https://csoai.org/research-transparency.html.llm.json">
+<meta property="og:title" content="Research Transparency">
+<meta property="og:description" content="What CSOAI publishes, what it withholds, and why.">
+<style>
+ body{margin:0;background:#0D0B21;color:#e8e6f0;font:16px/1.65 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif}
+ .wrap{max-width:820px;margin:0 auto;padding:2.5rem 1.25rem 4rem}
+ h1{font-size:1.9rem;line-height:1.25;margin:.2rem 0 1rem}
+ h2{font-size:1.15rem;margin:2rem 0 .5rem;color:#D4A843}
+ a{color:#D4A843} li{margin:.3rem 0}
+ .reg{margin-top:2.5rem;padding:1rem 1.15rem;border-left:3px solid #6dd5ff;background:#141130;
+      font-size:.92rem;color:#c9c5dd}
+ nav a{margin-right:1rem;font-size:.9rem}
+ @media(max-width:420px){ .wrap{padding:1.5rem .9rem 3rem} h1{font-size:1.5rem} }
+</style>
+<script type="application/ld+json">{
+ "@context": "https://schema.org",
+ "@type": "WebPage",
+ "name": "Research Transparency",
+ "description": "What CSOAI publishes, what it withholds, and why.",
+ "url": "https://csoai.org/research-transparency",
+ "publisher": {
+  "@type": "Organization",
+  "name": "CSOAI",
+  "url": "https://csoai.org"
+ }
+}</script>
+</head><body>
+<div class="wrap">
+<nav><a href="/">CSOAI</a><a href="/about.html">About</a><a href="/govbench.html">GovBench</a><a href="/provbench.html">ProvBench</a></nav>
+<h1>Research Transparency</h1>
+<p>What CSOAI publishes, what it withholds, and why.</p>
+<p>A governance company that only publishes flattering results is not credible. Below is a running, honest account of research findings behind SOV3 and SOV3³ — including claims we made, then corrected or retracted after closer scrutiny. Confirmed findings link to the technical detail; retracted ones explain exactly what was wrong and why.</p>
+<p>Across three independent measurement passes, diverse model lineages (e.g. Qwen + Llama + DeepSeek + Gemma + Mistral) consistently outperformed identical-lineage configurations of the same size on a governance-quality battery. The gap between diverse and identical configurations was roughly 6× larger than the gap between different topology shapes (ring vs. pyramid vs. triangle). Practical upshot: which models you combine matters far more than how you arrange them.</p>
+<p>An early adversarial test reported perfect containment (1.00) even under a simulated majority attack. On review, the test was tautological — it hard-gated on a condition that was true of every attack by construction, so it proved nothing about actual robustness. We retracted the claim and reran a corrected test that separates &quot;obvious&quot; breaches (which are gated to zero regardless of votes, by design) from &quot;laundered&quot; harm that looks confident but is actually harmful (where the real result is 58–79% containment under 2–3 compromised voting nodes — real, useful, and explicitly not perfect).</p>
+<p>An internal research note once cited a named news publication in support of a claim. On review the citation did not exist — it was an invented reference. It has been struck from every downstream document. The underlying technical claim it was attached to stands on its own on running code and measured results, not on any citation, and is unaffected.</p>
+<p>A research note referenced an academic conference acceptance. This was overstated — the correct framing is that submission to that venue is a target, not a confirmed acceptance. The claim has been downgraded to aspirational language throughout.</p>
+<p>A separate research pass reported that diverse 5-model configurations won on both a clean-data metric and a containment metric, using a distinct code path from our own measurement. We could independently verify only one of the two measurement passes behind this finding on the tree at the time it was reported; the second is treated as a consistent but unverified secondary report until its source code is confirmed on disk. We flag this rather than quietly merging both into one number.</p>
+<p>We have not run a head-to-head capability benchmark (e.g. GSM8K, MMLU) of SOV3 against frontier models. The governance-topology results above measure decision-quality, safety, and cost under a stated error model — they are a real, useful, and different thing from a capability benchmark, and we do not present one as a substitute for the other. This is an open item, not a hidden one.</p>
+<p>If we cannot survive our own adversarial review, we have no business selling assurance to anyone else. Every finding above was caught and corrected before — or immediately after — it appeared in any customer-facing material. That correction loop, not a flawless research record, is the actual credibility signal.</p>
+<p>Updated as findings are confirmed or corrected. Last reviewed 2026-07-12.</p>
+<div class="reg">
+<b>What this is, and is not.</b> CSOAI <b>measures</b>. It issues no conformity marks, holds
+no accreditation, and has no enforcement powers. Nothing here is a certification, an
+attestation of compliance, or legal advice. Every published figure traces to an evidence
+file; where a number is absent it is because the measurement does not exist yet.
+</div>
+</div>
+</body></html>

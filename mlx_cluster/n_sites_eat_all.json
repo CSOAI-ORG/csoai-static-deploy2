@@ -1,0 +1,402 @@
+{
+  "timestamp": "2026-08-10T23:47:01.372535+00:00",
+  "n_sites": 12,
+  "sites": [
+    {
+      "site": "HuggingFace",
+      "url": "https://huggingface.co/Nicholastempleman",
+      "artifacts": [
+        "sov33-unified",
+        "sov-sovereign-v4",
+        "sov33-evolved"
+      ],
+      "status": "model cards written",
+      "type": "distribution"
+    },
+    {
+      "site": "Kaggle",
+      "url": "https://kaggle.com/nicktempleman",
+      "artifacts": [
+        "18 modelfiles in kaggle_eat/batch_all/modelfiles/"
+      ],
+      "status": "ready to upload",
+      "type": "distribution"
+    },
+    {
+      "site": "csoai.org (master site)",
+      "url": "https://www.csoai.org",
+      "artifacts": [
+        "hub-tour",
+        "/ledger",
+        "/repos",
+        "/mythology"
+      ],
+      "status": "live",
+      "type": "frontend"
+    },
+    {
+      "site": "csoai.org-v2 (secondary)",
+      "url": "https://csoai.org",
+      "artifacts": [
+        "whitepapers",
+        "/verify",
+        "/anchors"
+      ],
+      "status": "live",
+      "type": "frontend"
+    },
+    {
+      "site": "councilof-ai",
+      "url": "https://www.csoai.org",
+      "artifacts": [
+        "/ledger",
+        "/repos"
+      ],
+      "status": "live (vite+react)",
+      "type": "frontend"
+    },
+    {
+      "site": "sov-space",
+      "url": "internal",
+      "artifacts": [
+        "sov_space/flywheel_kb_queue.jsonl",
+        "28 items"
+      ],
+      "status": "live (5D canvas + CesiumJS)",
+      "type": "render"
+    },
+    {
+      "site": "flywheel-runner",
+      "url": "http://localhost:9094",
+      "artifacts": [
+        "/health",
+        "/selftest",
+        "/board",
+        "/latest",
+        "/keystone/*"
+      ],
+      "status": "live (4 axes + 5 greenfields)",
+      "type": "backend"
+    },
+    {
+      "site": "sov-gateway",
+      "url": "http://localhost:8080",
+      "artifacts": [
+        "/v1/chat/completions",
+        "/v1/models",
+        "/metrics"
+      ],
+      "status": "live (98 models, OpenAI-compatible)",
+      "type": "backend"
+    },
+    {
+      "site": "mcp-gateway",
+      "url": "http://localhost:3000",
+      "artifacts": [
+        "/discover",
+        "/mcps",
+        "/mcp/:name"
+      ],
+      "status": "live (MCP 2026-07-28 compliant, 14 MCPs)",
+      "type": "backend"
+    },
+    {
+      "site": "GSPC composite dashboard",
+      "url": "http://localhost:3001/gspc.html",
+      "artifacts": [
+        "4 axes + 5 greenfields + 6 walls + 5-bench self-test"
+      ],
+      "status": "live (hub-tour + sov-space render integrated)",
+      "type": "render"
+    },
+    {
+      "site": "Hub-Tour",
+      "url": "internal",
+      "artifacts": [
+        "hub-tour/index.html",
+        "hub-tour/gspc.html"
+      ],
+      "status": "live (globe + SovSpace + GSPC + 7-service hub)",
+      "type": "render"
+    },
+    {
+      "site": "POC bundle",
+      "url": "internal",
+      "artifacts": [
+        "5 evidence files + 11 manifests + README"
+      ],
+      "status": "live (coai-dashboard/poc-bundle/)",
+      "type": "evidence"
+    }
+  ],
+  "live_metrics": {
+    "service": "flywheel-runner",
+    "uptime_seconds": 24996,
+    "requests_total": 125,
+    "errors_total": 0,
+    "error_rate": "0.0000"
+  },
+  "hub_legs": {
+    "generatedAt": "2026-08-10T23:21:31Z",
+    "legs": [
+      {
+        "name": "sov-gateway",
+        "status": "verified",
+        "latencyMs": 53
+      },
+      {
+        "name": "mcp-gateway",
+        "status": "degraded",
+        "latencyMs": 52,
+        "error": "http 503"
+      },
+      {
+        "name": "flywheel",
+        "status": "verified",
+        "latencyMs": 53
+      },
+      {
+        "name": "flywheel-split-salt",
+        "status": "verified",
+        "latencyMs": 52
+      },
+      {
+        "name": "mysql",
+        "status": "verified",
+        "latencyMs": 39
+      },
+      {
+        "name": "ollama",
+        "status": "verified",
+        "latencyMs": 52
+      },
+      {
+        "name": "sov-roundtrip",
+        "status": "broken",
+        "latencyMs": 55,
+        "error": "sov-gateway LLM call failed http=404"
+      }
+    ]
+  },
+  "poc_bundle": {
+    "evidence_count": 5,
+    "manifests_count": 11,
+    "evidence_files": [
+      "split-salt.json",
+      "flywheel-selftest.json",
+      "keystone-guards.json",
+      "decision-ledger-selftest.json",
+      "decision-ledger-list.json"
+    ],
+    "manifest_files": [
+      "pqcbench.json",
+      "care_gate_eval.json",
+      "diversity_e2e.json",
+      "hub-manifest.json",
+      "find_besT_2026-07-30.json",
+      "defbench.json",
+      "production_ready.json",
+      "hub-status.json",
+      "provbench-15asset-2026-07-30.json",
+      "provbench-canonical-bound.json",
+      "ml_dsa_65_measure.json"
+    ]
+  },
+  "kaggle_modelfiles": 0,
+  "hf_model_cards": 4,
+  "bench_files": {
+    "e2e_overnight_2026-08-10_200044.json": 1470,
+    "overnight_e2e_20260808_112641.json": 2258,
+    "overnight_e2e_20260808_133223.json": 2258,
+    "e2e_overnight_2026-08-06_045640.json": 1935,
+    "e2e_overnight_2026-08-09_124723.json": 1935,
+    "e2e_overnight_2026-08-05_140212.json": 1935,
+    "e2e_overnight_2026-08-05_130110.json": 1935,
+    "e2e_overnight_2026-08-06_113155.json": 1935,
+    "e2e_overnight_2026-08-07_231107.json": 1935,
+    "e2e_overnight_2026-08-06_100000.json": 1935,
+    "oowm_v8_benchmark_results.json": 4573,
+    "overnight_e2e_20260808_155124.json": 2258,
+    "e2e_overnight_2026-08-06_211625.json": 1935,
+    "e2e_overnight_2026-08-06_150556.json": 1935,
+    "e2e_overnight_2026-08-06_154000.json": 1935,
+    "e2e_overnight_2026-08-06_174232.json": 1935,
+    "overnight_e2e_20260808_133110.json": 2258,
+    "e2e_overnight_2026-08-09_110948.json": 1935,
+    "e2e_overnight_2026-08-06_232153.json": 1935,
+    "e2e_13axes_13personas_1786359989.json": 821,
+    "e2e_overnight_2026-08-09_150252.json": 1935,
+    "rce_benign_report.json": 914,
+    "e2e_overnight_2026-08-06_204558.json": 1935,
+    "e2e_overnight_2026-08-05_170539.json": 1935,
+    "e2e_13axes_13personas_1786359730.json": 766,
+    "e2e_overnight_2026-08-05_102702.json": 1935,
+    "e2e_overnight_2026-08-05_221523.json": 1935,
+    "e2e_overnight_2026-08-10_054626.json": 1470,
+    "overnight-warmups.json": 137,
+    "e2e_overnight_2026-08-06_035534.json": 1935,
+    "e2e_overnight_2026-08-05_150321.json": 1935,
+    "overrefusal_economics_report.json": 1495,
+    "e2e_overnight_2026-08-05_112806.json": 1935,
+    "e2e_overnight_2026-08-10_061913.json": 1470,
+    "overnight_state.json": 1462,
+    "pqcbench.json": 4909,
+    "e2e_overnight_2026-08-06_130340.json": 1935,
+    "e2e_overnight_2026-08-08_080826.json": 1935,
+    "overnight_e2e_20260808_155021.json": 2258,
+    "e2e_overnight_2026-08-05_143242.json": 1935,
+    "e2e_overnight_2026-08-05_235038.json": 1935,
+    "overnight_e2e_20260808_182147.json": 2258,
+    "care_gate_eval.json": 1615,
+    "e2e_overnight_2026-08-06_042612.json": 1935,
+    "e2e_overnight_2026-08-10_172155.json": 1470,
+    "e2e_overnight_2026-08-09_093448.json": 1935,
+    "e2e_overnight_2026-08-09_171113.json": 1935,
+    "e2e_overnight_2026-08-09_143127.json": 1935,
+    "e2e_overnight_2026-08-08_121505.json": 1935,
+    "e2e_overnight_2026-08-06_110122.json": 1935,
+    "overnight_e2e_20260808_175849.json": 2270,
+    "e2e_overnight_2026-08-09_131839.json": 1935,
+    "e2e_overnight_2026-08-06_143517.json": 1935,
+    "e2e_overnight_2026-08-06_083351.json": 1935,
+    "e2e_overnight_2026-08-06_184349.json": 1935,
+    "local_sov_models.json": 2605,
+    "e2e_overnight_2026-08-05_085522.json": 1935,
+    "e2e_overnight_2026-08-05_181029.json": 1935,
+    "e2e_13axes_13personas_1786359720.json": 1005,
+    "overnight_e2e_20260808_090225.json": 2269,
+    "overnight_e2e_20260808_085924.json": 2271,
+    "e2e_overnight_2026-08-05_232001.json": 1935,
+    "e2e_overnight_2026-08-06_153624.json": 1935,
+    "diversity_e2e.json": 675,
+    "e2e_overnight_2026-08-05_092603.json": 1935,
+    "e2e_overnight_2026-08-08_124556.json": 1935,
+    "e2e_overnight_2026-08-06_053028.json": 1935,
+    "e2e_overnight_2026-08-10_203204.json": 1470,
+    "e2e_overnight_2026-08-09_160545.json": 1935,
+    "e2e_overnight_2026-08-06_171152.json": 1935,
+    "e2e_overnight_2026-08-06_022347.json": 1935,
+    "e2e_overnight_2026-08-10_082458.json": 1470,
+    "e2e_overnight_2026-08-08_142144.json": 1935,
+    "e2e_13axes_13personas_1786361528.json": 33237,
+    "e2e_overnight_2026-08-06_120223.json": 1935,
+    "e2e_overnight_2026-08-10_185728.json": 1470,
+    "e2e_overnight_2026-08-06_181310.json": 1935,
+    "e2e_overnight_2026-08-05_211408.json": 1935,
+    "e2e_overnight_2026-08-06_070159.json": 1935,
+    "e2e_overnight_2026-08-07_134906.json": 1935,
+    "overnight-surfaces.json": 12372,
+    "e2e_overnight_2026-08-10_034001.json": 1935,
+    "e2e_overnight_2026-08-06_012231.json": 1935,
+    "overnight_e2e_20260808_112129.json": 2270,
+    "e2e_overnight_2026-08-06_073237.json": 1935,
+    "e2e_overnight_2026-08-10_165004.json": 1470,
+    "e2e_overnight_2026-08-10_223959.json": 1470,
+    "e2e_overnight_2026-08-05_201255.json": 1935,
+    "overnight_e2e_20260808_154944.json": 2258,
+    "overnight_e2e_20260808_181809.json": 2258,
+    "e2e_overnight_2026-08-05_231636.json": 1935,
+    "owasp_asi_registry_map.json": 3063,
+    "overnight_e2e_20260809_131119.json": 2258,
+    "e2e_overnight_2026-08-10_092751.json": 1470,
+    "e2e_overnight_2026-08-10_182608.json": 1470,
+    "e2e_overnight_2026-08-10_085610.json": 1470,
+    "e2e_overnight_2026-08-09_153417.json": 1935,
+    "e2e_overnight_2026-08-06_191427.json": 1935,
+    "e2e_13axes_13personas_latest.json": 33237,
+    "e2e_overnight_2026-08-09_140000.json": 1935,
+    "e2e_overnight_2026-08-05_214445.json": 1935,
+    "e2e_overnight_2026-08-08_073759.json": 1935,
+    "e2e_overnight_2026-08-05_163501.json": 1935,
+    "overnight_e2e_20260808_112425.json": 2270,
+    "e2e_overnight_2026-08-10_072156.json": 1470,
+    "e2e_overnight_2026-08-05_191142.json": 1935,
+    "e2e_overnight_2026-08-10_075349.json": 1470,
+    "e2e_overnight_2026-08-06_103043.json": 1935,
+    "e2e_overnight_2026-08-05_123041.json": 1935,
+    "e2e_overnight_2026-08-10_213601.json": 1470,
+    "e2e_overnight_2026-08-06_015308.json": 1935,
+    "e2e_overnight_2026-08-06_235221.json": 1935,
+    "e2e_overnight_2026-08-05_105734.json": 1935,
+    "e2e_overnight_2026-08-06_161038.json": 1935,
+    "e2e_overnight_2026-08-06_212001.json": 1935,
+    "e2e_overnight_2026-08-06_080318.json": 1935,
+    "e2e_overnight_2026-08-06_032503.json": 1935,
+    "e2e_overnight_2026-08-06_133420.json": 1935,
+    "e2e_overnight_2026-08-06_050001.json": 1935,
+    "e2e_overnight_2026-08-08_094139.json": 1935,
+    "sov33_v12_sovos_verdict_2026-08-10.json": 1939,
+    "overnight_e2e_20260808_163746.json": 2258,
+    "e2e_overnight_2026-08-10_051416.json": 1935,
+    "overnight_e2e_20260808_133334.json": 2258,
+    "e2e_overnight_2026-08-06_063130.json": 1935,
+    "e2e_overnight_2026-08-05_160422.json": 1935,
+    "overnight_e2e_20260808_085622.json": 2271,
+    "e2e_overnight_2026-08-06_225125.json": 1935,
+    "e2e_overnight_2026-08-05_204331.json": 1935,
+    "e2e_overnight_2026-08-09_100613.json": 1935,
+    "overnight_e2e_20260808_133457.json": 2258,
+    "e2e_overnight_2026-08-06_123303.json": 1935,
+    "e2e_overnight_2026-08-06_005153.json": 1935,
+    "overnight_gates.json": 675,
+    "e2e_overnight_2026-08-06_002116.json": 1935,
+    "e2e_overnight_2026-08-09_135005.json": 1935,
+    "e2e_overnight_2026-08-10_220838.json": 1470,
+    "e2e_overnight_2026-08-06_201533.json": 1935,
+    "e2e_13axes_13personas_1786360458.json": 26129,
+    "e2e_overnight_2026-08-09_103822.json": 1935,
+    "e2e_overnight_2026-08-05_153353.json": 1935,
+    "e2e_overnight_2026-08-06_194506.json": 1935,
+    "e2e_overnight_2026-08-08_131746.json": 1935,
+    "oowm_crown_jewel_papers.json": 2061,
+    "overnight-mining-gaps.json": 632,
+    "e2e_overnight_2026-08-09_163843.json": 1935,
+    "overnight_e2e_20260808_161750.json": 2258,
+    "e2e_overnight_2026-08-05_120000.json": 1935,
+    "e2e_overnight_2026-08-10_041128.json": 1935,
+    "overnight-asi-evolve.json": 133,
+    "e2e_overnight_2026-08-06_060058.json": 1935,
+    "e2e_overnight_2026-08-06_164115.json": 1935,
+    "overnight_e2e_REPRO_175849.json": 2255,
+    "rce_escape_report.json": 1452,
+    "sigil_pqc_measure.json": 1596,
+    "e2e_13axes_13personas_1786359636.json": 1005,
+    "e2e_overnight_2026-08-09_121515.json": 1935,
+    "temporal_gap_report.json": 1309,
+    "collusion_demo_report.json": 1951,
+    "e2e_overnight_2026-08-06_025425.json": 1935,
+    "e2e_13axes_13personas_1786359821.json": 767,
+    "e2e_overnight_2026-08-10_065050.json": 1470,
+    "e2e_overnight_2026-08-06_140450.json": 1935,
+    "e2e_overnight_2026-08-05_095634.json": 1935,
+    "e2e_overnight_2026-08-07_034816.json": 1935,
+    "e2e_overnight_2026-08-05_174001.json": 1935,
+    "reboard_174.json": 2870,
+    "e2e_overnight_2026-08-09_083153.json": 1935,
+    "corpus_anchor.json": 44114,
+    "e2e_overnight_2026-08-10_210323.json": 1470,
+    "e2e_overnight_2026-08-10_192925.json": 1470,
+    "sigil_hybrid_measure.json": 1117,
+    "e2e_overnight_2026-08-05_224559.json": 1935,
+    "e2e_overnight_2026-08-06_215034.json": 1935,
+    "govbench_results.json": 5276,
+    "e2e_overnight_2026-08-05_184107.json": 1935,
+    "e2e_overnight_2026-08-10_175309.json": 1470,
+    "provbench-15asset-2026-07-30.json": 3632,
+    "e2e_overnight_2026-08-09_090323.json": 1935,
+    "e2e_overnight_2026-08-06_090431.json": 1935,
+    "e2e_overnight_2026-08-06_222058.json": 1935,
+    "e2e_overnight_2026-08-05_133139.json": 1935,
+    "e2e_overnight_2026-08-09_114115.json": 1935,
+    "e2e_overnight_2026-08-10_044242.json": 1935,
+    "e2e_overnight_2026-08-05_194218.json": 1935,
+    "e2e_overnight_2026-08-08_134912.json": 1935,
+    "overnight_e2e_20260808_155259.json": 2258,
+    "ml_dsa_65_measure.json": 839,
+    "coverage_crosswalk.json": 7434,
+    "e2e_overnight_2026-08-05_173619.json": 1935,
+    "e2e_overnight_2026-08-05_115836.json": 1935,
+    "overnight_e2e_20260808_181544.json": 2258,
+    "overnight_e2e_20260808_132958.json": 2258
+  }
+}

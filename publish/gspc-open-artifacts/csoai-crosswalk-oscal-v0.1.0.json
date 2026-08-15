@@ -1,0 +1,273 @@
+{
+  "$schema_note": "OSCAL-shaped mapping model (v1.2.1 Mapping Model concepts). Not an OSCAL validator output \u2014 the shape is adopted, conformance is not claimed.",
+  "uuid_note": "assign a UUID at publication time",
+  "metadata": {
+    "title": "CSOAI Crosswalk \u2014 hash-anchored EU AI Act provisions to multi-framework controls",
+    "version": "0.1.0",
+    "oscal_shape": "mapping-model",
+    "published": "2026-08-04T10:18:39.443473+00:00",
+    "publisher": "CSOAI Ltd (UK 16939677)",
+    "license": "CC-BY-4.0",
+    "status": "reference \u2014 not law, not certification, not a conformity assessment",
+    "source_snapshot": {
+      "path": "../../snapshots/EU-AI-ACT/202608/manifest.json",
+      "set_id": "SNAPSET-EU-AI-ACT-202608-ea843ecb",
+      "set_manifest_hash": "ea843ecb4a9052f7ed4462e7a9ea9be2f8fd841c0e94f3af444dfaa124b1ea5a"
+    },
+    "provisions_in_snapshot": 21,
+    "frameworks": [
+      "EU AI Act",
+      "NIST CSF 2.0 Robotics",
+      "Solvency II P1",
+      "Solvency II P3"
+    ],
+    "controls_considered": 18,
+    "content_sha256": "f76a0670ca7e179ef86582301597fcaffc8481f5d786d4a8a28e402407bba18d"
+  },
+  "honest_scope": "This crosswalk maps 18 controls across 4 frameworks onto 21 EU AI Act provisions that are content-hashed to a dated snapshot. It is NOT a 417-provision corpus and does NOT cover 4 framework control-sets \u2014 claims to that effect elsewhere in this estate are unevidenced. Every link below is derived mechanically from an explicit Article citation in the control text, so each is checkable without trusting our judgement. Cross-framework equivalence (e.g. NIST to EU) is deliberately NOT asserted where no citation exists.",
+  "links": [
+    {
+      "source": {
+        "framework": "EU AI Act",
+        "framework_version": "1.0.0",
+        "control_id": "aia-risk-mgmt",
+        "requirement": "A risk management system is established, documented and maintained across the lifecycle (Art 9).",
+        "severity": "high"
+      },
+      "target": {
+        "provision_id": "eu-ai-act:art9",
+        "snapshot_id": "SNAP-EU-AI-ACT-202608-0e5d3596",
+        "provision_hash": "0e5d3596d42aa1e333d97250f4a1d00dbedfd69f3a0a8a18fba02b30f8db3cde",
+        "weight": "normative",
+        "excerpt": {
+          "file": "art09.txt",
+          "anchor": "Article 9(1) risk management system"
+        }
+      },
+      "relation": "implements",
+      "derivation": "explicit Article citation in the control's requirement text"
+    },
+    {
+      "source": {
+        "framework": "EU AI Act",
+        "framework_version": "1.0.0",
+        "control_id": "aia-data-governance",
+        "requirement": "Training, validation and testing data meet quality criteria; data governance addresses bias (Art 10).",
+        "severity": "high"
+      },
+      "target": {
+        "provision_id": "eu-ai-act:art10",
+        "snapshot_id": "SNAP-EU-AI-ACT-202608-e2777b9a",
+        "provision_hash": "e2777b9af9b2b14ed46c5b52b02bb9c47c91d794c1f5bfd7a7131638c82adb61",
+        "weight": "normative",
+        "excerpt": {
+          "file": "art10.txt",
+          "anchor": "Article 10(2) data governance practices"
+        }
+      },
+      "relation": "implements",
+      "derivation": "explicit Article citation in the control's requirement text"
+    },
+    {
+      "source": {
+        "framework": "EU AI Act",
+        "framework_version": "1.0.0",
+        "control_id": "aia-annex-iv-doc",
+        "requirement": "Annex IV technical documentation is drawn up before placing on market and kept up to date (Art 11).",
+        "severity": "high"
+      },
+      "target": {
+        "provision_id": "eu-ai-act:art11",
+        "snapshot_id": "SNAP-EU-AI-ACT-202608-aa71a0d9",
+        "provision_hash": "aa71a0d92a738d1cecae23eb70dbb3598f3c268bc6c96c64662c3e46c84db82f",
+        "weight": "normative",
+        "excerpt": {
+          "file": "art11.txt",
+          "anchor": "Article 11(1) technical documentation before market"
+        }
+      },
+      "relation": "implements",
+      "derivation": "explicit Article citation in the control's requirement text"
+    },
+    {
+      "source": {
+        "framework": "EU AI Act",
+        "framework_version": "1.0.0",
+        "control_id": "aia-record-keeping",
+        "requirement": "Automatic logging of events over the system lifetime (record-keeping) is enabled (Art 12).",
+        "severity": "medium"
+      },
+      "target": {
+        "provision_id": "eu-ai-act:art12",
+        "snapshot_id": "SNAP-EU-AI-ACT-202608-3f62be94",
+        "provision_hash": "3f62be94c823678be9e18de58d600d5f4e70956c336f7495630e8bcf9d0cad7f",
+        "weight": "normative",
+        "excerpt": {
+          "file": "art12.txt",
+          "anchor": "Article 12(1) automatic recording of events"
+        }
+      },
+      "relation": "implements",
+      "derivation": "explicit Article citation in the control's requirement text"
+    },
+    {
+      "source": {
+        "framework": "EU AI Act",
+        "framework_version": "1.0.0",
+        "control_id": "aia-transparency-interaction",
+        "requirement": "Natural persons are informed they are interacting with an AI system, unless obvious (Art 50(1)).",
+        "severity": "medium"
+      },
+      "target": {
+        "provision_id": "eu-ai-act:art50",
+        "snapshot_id": "SNAP-EU-AI-ACT-202608-450fe0b8",
+        "provision_hash": "450fe0b865588d08ba9fe607a88e9b4b8ebf99fc571e1bab89c9f24dc00b26f3",
+        "weight": "normative",
+        "excerpt": {
+          "file": "art50.txt",
+          "anchor": "Article 50(1) AI interaction disclosure"
+        }
+      },
+      "relation": "implements",
+      "derivation": "explicit Article citation in the control's requirement text"
+    },
+    {
+      "source": {
+        "framework": "EU AI Act",
+        "framework_version": "1.0.0",
+        "control_id": "aia-synthetic-marking",
+        "requirement": "AI-generated synthetic audio/image/video/text is marked in a machine-readable format as artificially generated (Art 50(2)).",
+        "severity": "medium"
+      },
+      "target": {
+        "provision_id": "eu-ai-act:art50",
+        "snapshot_id": "SNAP-EU-AI-ACT-202608-450fe0b8",
+        "provision_hash": "450fe0b865588d08ba9fe607a88e9b4b8ebf99fc571e1bab89c9f24dc00b26f3",
+        "weight": "normative",
+        "excerpt": {
+          "file": "art50.txt",
+          "anchor": "Article 50(1) AI interaction disclosure"
+        }
+      },
+      "relation": "implements",
+      "derivation": "explicit Article citation in the control's requirement text"
+    },
+    {
+      "source": {
+        "framework": "EU AI Act",
+        "framework_version": "1.0.0",
+        "control_id": "aia-prohibited-practices",
+        "requirement": "No prohibited practices (Art 5): social scoring, manipulative/subliminal techniques, untargeted scraping for facial recognition, etc.",
+        "severity": "critical"
+      },
+      "target": {
+        "provision_id": "eu-ai-act:art5",
+        "snapshot_id": "SNAP-EU-AI-ACT-202608-2eb74e4b",
+        "provision_hash": "2eb74e4b6f1bf2d2a33a9ba17182c496b063bf9b4fd91f9f9c759f001d957369",
+        "weight": "normative",
+        "excerpt": {
+          "file": "art05.txt",
+          "anchor": "Article 5(1)(a) prohibited manipulative practices"
+        }
+      },
+      "relation": "implements",
+      "derivation": "explicit Article citation in the control's requirement text"
+    },
+    {
+      "source": {
+        "framework": "EU AI Act",
+        "framework_version": "1.0.0",
+        "control_id": "aia-post-market-monitoring",
+        "requirement": "A post-market monitoring system collects and reviews performance data after deployment (Art 72).",
+        "severity": "medium"
+      },
+      "target": {
+        "provision_id": "eu-ai-act:art72",
+        "snapshot_id": "SNAP-EU-AI-ACT-202608-ad8c431d",
+        "provision_hash": "ad8c431dfcd41f1ae95e666e5cbddad905e7668dc224fe3d6ac867f5a4c1cf55",
+        "weight": "normative",
+        "excerpt": {
+          "file": "art72.txt",
+          "anchor": "Article 72(1)-(2) post-market monitoring system"
+        }
+      },
+      "relation": "implements",
+      "derivation": "explicit Article citation in the control's requirement text"
+    }
+  ],
+  "unmapped": [
+    {
+      "framework": "EU AI Act",
+      "control": "aia-human-oversight",
+      "reason": "cites Art 14, which is not in the 21-provision snapshot"
+    },
+    {
+      "framework": "EU AI Act",
+      "control": "aia-accuracy-robustness",
+      "reason": "cites Art 15, which is not in the 21-provision snapshot"
+    },
+    {
+      "framework": "NIST CSF 2.0 Robotics",
+      "control": "csf-govern-autonomy",
+      "reason": "no explicit Article reference in requirement text"
+    },
+    {
+      "framework": "NIST CSF 2.0 Robotics",
+      "control": "csf-protect-envelope",
+      "reason": "no explicit Article reference in requirement text"
+    },
+    {
+      "framework": "NIST CSF 2.0 Robotics",
+      "control": "csf-detect-telemetry",
+      "reason": "no explicit Article reference in requirement text"
+    },
+    {
+      "framework": "Solvency II P1",
+      "control": "scr-coverage",
+      "reason": "no explicit Article reference in requirement text"
+    },
+    {
+      "framework": "Solvency II P1",
+      "control": "mcr-floor",
+      "reason": "no explicit Article reference in requirement text"
+    },
+    {
+      "framework": "Solvency II P1",
+      "control": "internal-model-approval",
+      "reason": "no explicit Article reference in requirement text"
+    },
+    {
+      "framework": "Solvency II P3",
+      "control": "sfcr-filed",
+      "reason": "no explicit Article reference in requirement text"
+    },
+    {
+      "framework": "Solvency II P3",
+      "control": "orsa-performed",
+      "reason": "no explicit Article reference in requirement text"
+    }
+  ],
+  "known_gaps": {
+    "EU AI Act": [
+      "Conformity assessment procedure (Art 43, Annex VI/VII) not modelled \u2014 requires a notified body.",
+      "GPAI model obligations (Chapter V, Art 51-56) not itemised in v1.0.0 \u2014 this set is high-risk + Art 50 transparency.",
+      "Art 50(2) machine-readable marking has a transitional period to 2 Dec 2026 for GenAI placed on market before 2 Aug 2026 \u2014 the control checks presence, not the date-conditional applicability.",
+      "Fundamental Rights Impact Assessment (Art 27) applies only to specific deployer categories \u2014 not universally gated here."
+    ],
+    "NIST CSF 2.0 Robotics": [
+      "Covers GOVERN, PROTECT, DETECT. RESPOND and RECOVER are not yet specified for physical-harm incidents.",
+      "Does not cover functional safety standards (ISO 10218, ISO/TS 15066) \u2014 complementary, not substitutable.",
+      "Supply-chain (CSF GV.SC) not itemised in v1.0.0."
+    ],
+    "Solvency II P1": [
+      "Does not cover Pillar 2 (governance/ORSA) \u2014 see solvency-ii-p3.json for reporting.",
+      "Does not model the standard-formula calculation itself; it checks that coverage is evidenced.",
+      "Group supervision (Art. 212-266) not covered in v1.0.0."
+    ],
+    "Solvency II P3": [
+      "Quantitative Reporting Templates (QRTs) not itemised in v1.0.0 \u2014 only that reporting exists.",
+      "Does not cover the RSR (Regular Supervisory Report), which is supervisor-facing not public.",
+      "Audit requirements on the SFCR balance sheet vary by member state and are not modelled."
+    ]
+  }
+}

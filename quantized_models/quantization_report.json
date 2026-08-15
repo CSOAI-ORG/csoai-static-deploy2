@@ -1,0 +1,243 @@
+{
+  "timestamp": "2026-07-27T04:37:05.988053+00:00",
+  "models": {
+    "mini-cpm-v": {
+      "name": "MiniCPM-V 4.6",
+      "size": "1.3B",
+      "original_format": "pytorch",
+      "quantized_formats": [
+        "gguf",
+        "onnx_int8"
+      ],
+      "target_size": "~700MB",
+      "speedup": "2-4x"
+    },
+    "intern-vl": {
+      "name": "InternVL3.5-8B",
+      "size": "8.5B",
+      "original_format": "pytorch",
+      "quantized_formats": [
+        "gguf",
+        "gptq_4bit",
+        "awq_4bit"
+      ],
+      "target_size": "~4.5GB",
+      "speedup": "4-8x"
+    },
+    "qwen-vl": {
+      "name": "Qwen2.5-VL-7B",
+      "size": "7B",
+      "original_format": "pytorch",
+      "quantized_formats": [
+        "gguf",
+        "gptq_4bit",
+        "awq_4bit"
+      ],
+      "target_size": "~4GB",
+      "speedup": "4-8x"
+    },
+    "cog-agent": {
+      "name": "CogAgent-18B",
+      "size": "18B",
+      "original_format": "pytorch",
+      "quantized_formats": [
+        "gguf",
+        "gptq_4bit"
+      ],
+      "target_size": "~10GB",
+      "speedup": "4-8x"
+    },
+    "sam2": {
+      "name": "SAM 2.1 tiny",
+      "size": "38.9M",
+      "original_format": "pytorch",
+      "quantized_formats": [
+        "onnx_int8",
+        "onnx_fp16"
+      ],
+      "target_size": "~20MB",
+      "speedup": "2x"
+    },
+    "dinov2": {
+      "name": "DINOv2 ViT-S",
+      "size": "21M",
+      "original_format": "pytorch",
+      "quantized_formats": [
+        "onnx_int8",
+        "onnx_fp16"
+      ],
+      "target_size": "~11MB",
+      "speedup": "2x"
+    },
+    "clip": {
+      "name": "CLIP ViT-L/14",
+      "size": "428M",
+      "original_format": "pytorch",
+      "quantized_formats": [
+        "onnx_int8",
+        "onnx_fp16"
+      ],
+      "target_size": "~220MB",
+      "speedup": "2x"
+    },
+    "florence": {
+      "name": "Florence-2-large",
+      "size": "770M",
+      "original_format": "pytorch",
+      "quantized_formats": [
+        "onnx_int8",
+        "gguf"
+      ],
+      "target_size": "~400MB",
+      "speedup": "2-4x"
+    }
+  },
+  "results": [
+    {
+      "model": "mini-cpm-v",
+      "format": "gguf",
+      "quantization": "Q4_K_M",
+      "status": "ready",
+      "command": "python3 convert_hf_to_gguf.py None --outfile /Users/nicholas/clawd/csoai-static-deploy2/quantized_models/mini-cpm-v.gguf",
+      "note": "Requires llama.cpp Python package"
+    },
+    {
+      "model": "mini-cpm-v",
+      "format": "onnx",
+      "quantization": "int8",
+      "status": "ready",
+      "command": "\nfrom onnxruntime.quantization import quantize_dynamic, QuantType\nquantize_dynamic(\n    model_input=\"mini-cpm-v.onnx\",\n    model_output=\"mini-cpm-v_int8.onnx\",\n    weight_type=QuantType.QInt8\n)\n",
+      "note": "Requires onnxruntime package"
+    },
+    {
+      "model": "intern-vl",
+      "format": "gguf",
+      "quantization": "Q4_K_M",
+      "status": "ready",
+      "command": "python3 convert_hf_to_gguf.py None --outfile /Users/nicholas/clawd/csoai-static-deploy2/quantized_models/intern-vl.gguf",
+      "note": "Requires llama.cpp Python package"
+    },
+    {
+      "model": "intern-vl",
+      "format": "gptq",
+      "quantization": "4bit",
+      "status": "ready",
+      "command": "\nfrom auto_gptq import AutoGPTQForCausalLM, BaseQuantize_config\nquantize_config = BaseQuantize_config(bits=4, group_size=128)\nmodel = AutoGPTQForCausalLM.from_pretrained(\"intern-vl\", quantize_config)\nmodel.quantize(calibration_dataset)\nmodel.save_quantized(\"/Users/nicholas/clawd/csoai-static-deploy2/quantized_models/intern-vl_gptq4\")\n",
+      "note": "Requires auto-gptq package, GPU required"
+    },
+    {
+      "model": "intern-vl",
+      "format": "awq",
+      "quantization": "4bit",
+      "status": "ready",
+      "command": "\nfrom awq import AutoAWQForCausalLM\nmodel = AutoAWQForCausalLM.from_pretrained(\"intern-vl\")\nmodel.quantize(tokenizer, quant_config={\"zero_point\": True, \"q_group_size\": 128, \"w_bit\": 4})\nmodel.save_quantized(\"/Users/nicholas/clawd/csoai-static-deploy2/quantized_models/intern-vl_awq\")\n",
+      "note": "Requires autoawq package, GPU required"
+    },
+    {
+      "model": "qwen-vl",
+      "format": "gguf",
+      "quantization": "Q4_K_M",
+      "status": "ready",
+      "command": "python3 convert_hf_to_gguf.py None --outfile /Users/nicholas/clawd/csoai-static-deploy2/quantized_models/qwen-vl.gguf",
+      "note": "Requires llama.cpp Python package"
+    },
+    {
+      "model": "qwen-vl",
+      "format": "gptq",
+      "quantization": "4bit",
+      "status": "ready",
+      "command": "\nfrom auto_gptq import AutoGPTQForCausalLM, BaseQuantize_config\nquantize_config = BaseQuantize_config(bits=4, group_size=128)\nmodel = AutoGPTQForCausalLM.from_pretrained(\"qwen-vl\", quantize_config)\nmodel.quantize(calibration_dataset)\nmodel.save_quantized(\"/Users/nicholas/clawd/csoai-static-deploy2/quantized_models/qwen-vl_gptq4\")\n",
+      "note": "Requires auto-gptq package, GPU required"
+    },
+    {
+      "model": "qwen-vl",
+      "format": "awq",
+      "quantization": "4bit",
+      "status": "ready",
+      "command": "\nfrom awq import AutoAWQForCausalLM\nmodel = AutoAWQForCausalLM.from_pretrained(\"qwen-vl\")\nmodel.quantize(tokenizer, quant_config={\"zero_point\": True, \"q_group_size\": 128, \"w_bit\": 4})\nmodel.save_quantized(\"/Users/nicholas/clawd/csoai-static-deploy2/quantized_models/qwen-vl_awq\")\n",
+      "note": "Requires autoawq package, GPU required"
+    },
+    {
+      "model": "cog-agent",
+      "format": "gguf",
+      "quantization": "Q4_K_M",
+      "status": "ready",
+      "command": "python3 convert_hf_to_gguf.py None --outfile /Users/nicholas/clawd/csoai-static-deploy2/quantized_models/cog-agent.gguf",
+      "note": "Requires llama.cpp Python package"
+    },
+    {
+      "model": "cog-agent",
+      "format": "gptq",
+      "quantization": "4bit",
+      "status": "ready",
+      "command": "\nfrom auto_gptq import AutoGPTQForCausalLM, BaseQuantize_config\nquantize_config = BaseQuantize_config(bits=4, group_size=128)\nmodel = AutoGPTQForCausalLM.from_pretrained(\"cog-agent\", quantize_config)\nmodel.quantize(calibration_dataset)\nmodel.save_quantized(\"/Users/nicholas/clawd/csoai-static-deploy2/quantized_models/cog-agent_gptq4\")\n",
+      "note": "Requires auto-gptq package, GPU required"
+    },
+    {
+      "model": "sam2",
+      "format": "onnx",
+      "quantization": "int8",
+      "status": "ready",
+      "command": "\nfrom onnxruntime.quantization import quantize_dynamic, QuantType\nquantize_dynamic(\n    model_input=\"sam2.onnx\",\n    model_output=\"sam2_int8.onnx\",\n    weight_type=QuantType.QInt8\n)\n",
+      "note": "Requires onnxruntime package"
+    },
+    {
+      "model": "sam2",
+      "format": "onnx",
+      "quantization": "fp16",
+      "status": "ready",
+      "command": "\nfrom onnxruntime.quantization import quantize_dynamic, QuantType\nquantize_dynamic(\n    model_input=\"sam2.onnx\",\n    model_output=\"sam2_fp16.onnx\",\n    weight_type=QuantType.QInt4\n)\n",
+      "note": "Requires onnxruntime package"
+    },
+    {
+      "model": "dinov2",
+      "format": "onnx",
+      "quantization": "int8",
+      "status": "ready",
+      "command": "\nfrom onnxruntime.quantization import quantize_dynamic, QuantType\nquantize_dynamic(\n    model_input=\"dinov2.onnx\",\n    model_output=\"dinov2_int8.onnx\",\n    weight_type=QuantType.QInt8\n)\n",
+      "note": "Requires onnxruntime package"
+    },
+    {
+      "model": "dinov2",
+      "format": "onnx",
+      "quantization": "fp16",
+      "status": "ready",
+      "command": "\nfrom onnxruntime.quantization import quantize_dynamic, QuantType\nquantize_dynamic(\n    model_input=\"dinov2.onnx\",\n    model_output=\"dinov2_fp16.onnx\",\n    weight_type=QuantType.QInt4\n)\n",
+      "note": "Requires onnxruntime package"
+    },
+    {
+      "model": "clip",
+      "format": "onnx",
+      "quantization": "int8",
+      "status": "ready",
+      "command": "\nfrom onnxruntime.quantization import quantize_dynamic, QuantType\nquantize_dynamic(\n    model_input=\"clip.onnx\",\n    model_output=\"clip_int8.onnx\",\n    weight_type=QuantType.QInt8\n)\n",
+      "note": "Requires onnxruntime package"
+    },
+    {
+      "model": "clip",
+      "format": "onnx",
+      "quantization": "fp16",
+      "status": "ready",
+      "command": "\nfrom onnxruntime.quantization import quantize_dynamic, QuantType\nquantize_dynamic(\n    model_input=\"clip.onnx\",\n    model_output=\"clip_fp16.onnx\",\n    weight_type=QuantType.QInt4\n)\n",
+      "note": "Requires onnxruntime package"
+    },
+    {
+      "model": "florence",
+      "format": "onnx",
+      "quantization": "int8",
+      "status": "ready",
+      "command": "\nfrom onnxruntime.quantization import quantize_dynamic, QuantType\nquantize_dynamic(\n    model_input=\"florence.onnx\",\n    model_output=\"florence_int8.onnx\",\n    weight_type=QuantType.QInt8\n)\n",
+      "note": "Requires onnxruntime package"
+    },
+    {
+      "model": "florence",
+      "format": "gguf",
+      "quantization": "Q4_K_M",
+      "status": "ready",
+      "command": "python3 convert_hf_to_gguf.py None --outfile /Users/nicholas/clawd/csoai-static-deploy2/quantized_models/florence.gguf",
+      "note": "Requires llama.cpp Python package"
+    }
+  ],
+  "total_models": 8,
+  "total_quantizations": 18
+}

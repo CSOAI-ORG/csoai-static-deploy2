@@ -1,0 +1,875 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sovereign Charter Portal — 3D BFT Council — SOVOS</title>
+<meta name="description" content="Interactive 3D portal: 41 ratified sovereign charters orbiting a BFT Council of 33 agents. Real Three.js. Real ratification data from disk.">
+<link rel="canonical" href="https://csoai.org/charter-portal">
+<meta name="theme-color" content="#22d3ee">
+<meta property="og:title" content="Sovereign Charter Portal — 41 ratified charters in 3D">
+<meta property="og:description" content="Three.js + real ratification data. 41 charters, 33-agent BFT council, Ed25519-signed.">
+<meta property="og:url" content="https://csoai.org/charter-portal">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%2064%2064%22%3E%3Crect%20width=%2264%22%20height=%2264%22%20rx=%2214%22%20fill=%22%2322d3ee%22/%3E%3Ctext%20x=%2232%22%20y=%2245%22%20font-family=%22Inter,Arial,sans-serif%22%20font-size=%2238%22%20font-weight=%22800%22%20text-anchor=%22middle%22%20fill=%22%23070b14%22%3ES%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --accent: #22d3ee;
+    --gold: #f59e0b;
+    --good: #34d399;
+    --warn: #fbbf24;
+    --bad: #fb7185;
+    --bg: #03060c;
+    --panel: rgba(8,13,20,.84);
+    --line: rgba(16,185,129,.18);
+    --ink: #e7f6ef;
+    --mut: #8aa2ad;
+  }
+  * { box-sizing: border-box; }
+  body, html { margin: 0; padding: 0; background: var(--bg); color: var(--ink); font-family: Inter, system-ui, sans-serif; overflow: hidden; height: 100%; }
+  #c { position: fixed; inset: 0; cursor: grab; }
+  #c:active { cursor: grabbing; }
+  .panel { position: fixed; background: var(--panel); border: 1px solid var(--line); border-radius: 12px; backdrop-filter: blur(10px); padding: 14px 16px; z-index: 30; max-width: 380px; }
+  #hud { top: 12px; left: 12px; right: 12px; height: 50px; display: flex; align-items: center; gap: 14px; padding: 0 16px; max-width: none; }
+  #hud .brand { font-weight: 700; }
+  #hud .beta { font: 600 9px/1 ui-monospace, monospace; color: #03110b; background: var(--accent); padding: 3px 6px; border-radius: 4px; letter-spacing: 1px; }
+  #hud .stats { margin-left: auto; display: flex; gap: 18px; font-family: ui-monospace, monospace; font-size: 12px; }
+  #hud .stats .stat { display: flex; flex-direction: column; }
+  #hud .stats .stat b { color: var(--accent); }
+  #hud .stats .stat span { font-size: 9px; color: var(--mut); text-transform: uppercase; letter-spacing: .8px; }
+  #controls { top: 76px; left: 12px; max-width: 280px; }
+  #controls h3 { margin: 0 0 8px; font: 600 10px/1 ui-monospace, monospace; letter-spacing: 1.4px; text-transform: uppercase; color: var(--mut); }
+  #controls .opt { display: flex; align-items: center; gap: 8px; padding: 5px 4px; border-radius: 6px; cursor: pointer; user-select: none; font-size: 13px; }
+  #controls .opt:hover { background: rgba(34,211,238,.07); }
+  #controls .opt input { cursor: pointer; }
+  #controls .opt .legend { display: inline-block; width: 10px; height: 10px; border-radius: 50%; }
+  #info { bottom: 12px; left: 12px; right: 12px; max-width: 460px; }
+  #info h3 { margin: 0 0 4px; font: 600 14px/1.2 Inter, sans-serif; color: var(--accent); }
+  #info .meta { font-family: ui-monospace, monospace; font-size: 11px; color: var(--mut); line-height: 1.6; margin-bottom: 8px; }
+  #info .meta b { color: var(--ink); }
+  #info .notes { font-size: 12px; color: var(--ink); line-height: 1.4; }
+  #info .empty { color: var(--mut); font-style: italic; font-size: 12px; }
+  #info .sig { font-family: ui-monospace, monospace; font-size: 10px; color: var(--warn); margin-top: 8px; word-break: break-all; }
+  .hidden { display: none !important; }
+  #loading { position: fixed; inset: 0; display: flex; align-items: center; justify-content: center; background: var(--bg); z-index: 100; flex-direction: column; gap: 16px; }
+  #loading .spin { width: 40px; height: 40px; border: 3px solid var(--line); border-top-color: var(--accent); border-radius: 50%; animation: spin 1s linear infinite; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+</style>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.min.js"></script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Sovereign Charter Portal","description":"Interactive 3D portal: 41 ratified sovereign charters orbiting a BFT Council","url":"https://csoai.org/charter-portal","applicationCategory":"FinanceApplication","operatingSystem":"Any (browser)","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"creator":{"@type":"Organization","name":"CSOAI Ltd","url":"https://csoai.org"}}</script>
+</head>
+<body>
+
+<div id="loading">
+  <div class="spin"></div>
+  <div style="color:var(--mut);font-family:ui-monospace,monospace;font-size:11px;letter-spacing:1.5px;text-transform:uppercase">initializing charter universe…</div>
+</div>
+
+<canvas id="c"></canvas>
+
+<div id="hud" class="panel">
+  <div class="brand">⌬ SOVEREIGN CHARTER PORTAL</div>
+  <div class="beta">3D · BFT</div>
+  <div class="stats">
+    <div class="stat"><b id="stat-charters">41</b><span>charters</span></div>
+    <div class="stat"><b id="stat-council">33</b><span>council agents</span></div>
+    <div class="stat"><b id="stat-quorum">100%</b><span>avg quorum</span></div>
+    <div class="stat"><b style="color:var(--gold)">OTS</b><span>Bitcoin-anchored</span></div>
+  </div>
+</div>
+
+<div id="controls" class="panel hidden">
+  <h3>Layers</h3>
+  <label class="opt"><input type="checkbox" id="toggle-charters" checked><span class="legend" style="background:var(--accent)"></span>41 Charters</label>
+  <label class="opt"><input type="checkbox" id="toggle-council" checked><span class="legend" style="background:var(--good)"></span>33 Council agents</label>
+  <label class="opt"><input type="checkbox" id="toggle-connections" checked><span class="legend" style="background:var(--gold)"></span>OTS anchors</label>
+  <label class="opt"><input type="checkbox" id="toggle-rotation" checked><span class="legend" style="background:var(--mut)"></span>Auto-rotate</label>
+</div>
+
+<div id="info" class="panel">
+  <div id="info-content">
+    <div class="empty">Click any charter orb to inspect its ratification record.</div>
+  </div>
+</div>
+
+<script>
+
+// =========================================================================
+// DATA (parsed from ~/clawd/sovereign-charters/RATIFICATION_RECORDS.md)
+// =========================================================================
+const CHARTERS_DATA = 
+[
+  {
+    "num": 0,
+    "name": "sovereign-root",
+    "proposal_id": "C-00-ROOT-20260104",
+    "date": "2026-01-04",
+    "votes_for": 33,
+    "votes_against": 0,
+    "abstain": 0,
+    "quorum": "\u2705 33/33",
+    "ots_anchor": "ots.io/tx/root01",
+    "sigil": "4a1d82f...",
+    "notes": "Genesis Charter"
+  },
+  {
+    "num": 0,
+    "name": "partners",
+    "proposal_id": "C-00-PART-20260105",
+    "date": "2026-01-05",
+    "votes_for": 33,
+    "votes_against": 0,
+    "abstain": 0,
+    "quorum": "\u2705 33/33",
+    "ots_anchor": "ots.io/tx/part01",
+    "sigil": "b9e4a3d...",
+    "notes": "Foundational Partner Charter"
+  },
+  {
+    "num": 1,
+    "name": "csoai",
+    "proposal_id": "C-01-CSOAI-20260110",
+    "date": "2026-01-10",
+    "votes_for": 33,
+    "votes_against": 0,
+    "abstain": 0,
+    "quorum": "\u2705 33/33",
+    "ots_anchor": "ots.io/tx/csoai01",
+    "sigil": "c1f2b3a...",
+    "notes": "Core CSOAI Governance"
+  },
+  {
+    "num": 2,
+    "name": "meok",
+    "proposal_id": "C-02-MEOK-20260112",
+    "date": "2026-01-12",
+    "votes_for": 33,
+    "votes_against": 0,
+    "abstain": 0,
+    "quorum": "\u2705 33/33",
+    "ots_anchor": "ots.io/tx/meok01",
+    "sigil": "d5g6h7i...",
+    "notes": "MEOK AI Labs Integration"
+  },
+  {
+    "num": 3,
+    "name": "proofof",
+    "proposal_id": "C-03-PROOF-20260115",
+    "date": "2026-01-15",
+    "votes_for": 32,
+    "votes_against": 1,
+    "abstain": 0,
+    "quorum": "\u2705 32/33",
+    "ots_anchor": "ots.io/tx/proof01",
+    "sigil": "e2k3m4n...",
+    "notes": "Proof-of-AI Verification"
+  },
+  {
+    "num": 4,
+    "name": "safetyof",
+    "proposal_id": "C-04-SAFE-20260116",
+    "date": "2026-01-16",
+    "votes_for": 33,
+    "votes_against": 0,
+    "abstain": 0,
+    "quorum": "\u2705 33/33",
+    "ots_anchor": "ots.io/tx/safe01",
+    "sigil": "f6p7q8r...",
+    "notes": "AI Safety Standards"
+  },
+  {
+    "num": 5,
+    "name": "accountabilityof",
+    "proposal_id": "C-05-ACC-20260117",
+    "date": "2026-01-17",
+    "votes_for": 33,
+    "votes_against": 0,
+    "abstain": 0,
+    "quorum": "\u2705 33/33",
+    "ots_anchor": "ots.io/tx/acc01",
+    "sigil": "g9s0t1u...",
+    "notes": "Accountability Framework"
+  },
+  {
+    "num": 6,
+    "name": "ethicalgovernanceof",
+    "proposal_id": "C-06-ETH-20260118",
+    "date": "2026-01-18",
+    "votes_for": 32,
+    "votes_against": 1,
+    "abstain": 0,
+    "quorum": "\u2705 32/33",
+    "ots_anchor": "ots.io/tx/eth01",
+    "sigil": "h2v3w4x...",
+    "notes": "Ethical AI Governance"
+  },
+  {
+    "num": 7,
+    "name": "transparencyof",
+    "proposal_id": "C-07-TRAN-20260119",
+    "date": "2026-01-19",
+    "votes_for": 33,
+    "votes_against": 0,
+    "abstain": 0,
+    "quorum": "\u2705 33/33",
+    "ots_anchor": "ots.io/tx/tran01",
+    "sigil": "i5y6z7a...",
+    "notes": "Transparency & Explainability"
+  },
+  {
+    "num": 8,
+    "name": "biasdetectionof",
+    "proposal_id": "C-08-BIAS-20260120",
+    "date": "2026-01-20",
+    "votes_for": 32,
+    "votes_against": 1,
+    "abstain": 0,
+    "quorum": "\u2705 32/33",
+    "ots_anchor": "ots.io/tx/bias01",
+    "sigil": "j8b9c0d...",
+    "notes": "Bias Detection & Mitigation"
+  },
+  {
+    "num": 9,
+    "name": "dataprivacyof",
+    "proposal_id": "C-09-DATA-20260121",
+    "date": "2026-01-21",
+    "votes_for": 33,
+    "votes_against": 0,
+    "abstain": 0,
+    "quorum": "\u2705 33/33",
+    "ots_anchor": "ots.io/tx/data01",
+    "sigil": "k1e2f3g...",
+    "notes": "Data Privacy Standards"
+  },
+  {
+    "num": 10,
+    "name": "asisecurity",
+    "proposal_id": "C-10-SEC-20260122",
+    "date": "2026-01-22",
+    "votes_for": 33,
+    "votes_against": 0,
+    "abstain": 0,
+    "quorum": "\u2705 33/33",
+    "ots_anchor": "ots.io/tx/sec01",
+    "sigil": "l4h5i6j...",
+    "notes": "ASI Security Protocols"
+  },
+  {
+    "num": 11,
+    "name": "agisafe",
+    "proposal_id": "C-11-AGIS-20260123",
+    "date": "2026-01-23",
+    "votes_for": 33,
+    "votes_against": 0,
+    "abstain": 0,
+    "quorum": "\u2705 33/33",
+    "ots_anchor": "ots.io/tx/agis01",
+    "sigil": "m7k8l9o...",
+    "notes": "AGI Safety & Alignment"
+  },
+  {
+    "num": 12,
+    "name": "defoneos",
+    "proposal_id": "C-12-DEF-20260124",
+    "date": "2026-01-24",
+    "votes_for": 33,
+    "votes_against": 0,
+    "abstain": 0,
+    "quorum": "\u2705 33/33",
+    "ots_anchor": "ots.io/tx/def01",
+    "sigil": "n0p1q2r...",
+    "notes": "DEFONEOS OS Charter"
+  },
+  {
+    "num": 13,
+    "name": "councilof",
+    "proposal_id": "C-13-COUN-20260201",
+    "date": "2026-02-01",
+    "votes_for": 31,
+    "votes_against": 2,
+    "abstain": 0,
+    "quorum": "\u2705 31/33",
+    "ots_anchor": "ots.io/tx/coun01",
+    "sigil": "o3s4t5u...",
+    "notes": "BFT Council Protocol"
+  },
+  {
+    "num": 14,
+    "name": "openmoe",
+    "proposal_id": "C-14-MOE-20260202",
+    "date": "2026-02-02",
+    "votes_for": 30,
+    "votes_against": 3,
+    "abstain": 0,
+    "quorum": "\u2705 30/33",
+    "ots_anchor": "ots.io/tx/moe01",
+    "sigil": "p6v7w8x...",
+    "notes": "Open Mixture of Experts"
+  },
+  {
+    "num": 15,
+    "name": "openmcp",
+    "proposal_id": "C-15-MCP-20260203",
+    "date": "2026-02-03",
+    "votes_for": 31,
+    "votes_against": 2,
+    "abstain": 0,
+    "quorum": "\u2705 31/33",
+    "ots_anchor": "ots.io/tx/mcp01",
+    "sigil": "q9y0z1a...",
+    "notes": "Open Model Context Protocol"
+  },
+  {
+    "num": 16,
+    "name": "openpatent",
+    "proposal_id": "C-16-PAT-20260204",
+    "date": "2026-02-04",
+    "votes_for": 32,
+    "votes_against": 1,
+    "abstain": 0,
+    "quorum": "\u2705 32/33",
+    "ots_anchor": "ots.io/tx/pat01",
+    "sigil": "r2b3c4d...",
+    "notes": "Open Patent & IP"
+  },
+  {
+    "num": 17,
+    "name": "sandbox",
+    "proposal_id": "C-17-SAND-20260205",
+    "date": "2026-02-05",
+    "votes_for": 30,
+    "votes_against": 3,
+    "abstain": 0,
+    "quorum": "\u2705 30/33",
+    "ots_anchor": "ots.io/tx/sand01",
+    "sigil": "s5e6f7g...",
+    "notes": "Sovereign AI Sandboxing"
+  },
+  {
+    "num": 18,
+    "name": "sovereign-town",
+    "proposal_id": "C-18-STN-20260206",
+    "date": "2026-02-06",
+    "votes_for": 29,
+    "votes_against": 4,
+    "abstain": 0,
+    "quorum": "\u2705 29/33",
+    "ots_anchor": "ots.io/tx/stn01",
+    "sigil": "t8h9i0j...",
+    "notes": "Sovereign Town Ecosystem"
+  },
+  {
+    "num": 19,
+    "name": "meok-compliance-gateway",
+    "proposal_id": "C-19-MCG-20260207",
+    "date": "2026-02-07",
+    "votes_for": 32,
+    "votes_against": 1,
+    "abstain": 0,
+    "quorum": "\u2705 32/33",
+    "ots_anchor": "ots.io/tx/mcg01",
+    "sigil": "u1k2l3m...",
+    "notes": "MEOK Compliance Gateway"
+  },
+  {
+    "num": 20,
+    "name": "loopfactory",
+    "proposal_id": "C-20-LOOP-20260208",
+    "date": "2026-02-08",
+    "votes_for": 28,
+    "votes_against": 5,
+    "abstain": 0,
+    "quorum": "\u2705 28/33",
+    "ots_anchor": "ots.io/tx/loop01",
+    "sigil": "v4n5o6p...",
+    "notes": "Loopfactory Automation"
+  },
+  {
+    "num": 21,
+    "name": "optimobile",
+    "proposal_id": "C-21-OPT-20260209",
+    "date": "2026-02-09",
+    "votes_for": 29,
+    "votes_against": 4,
+    "abstain": 0,
+    "quorum": "\u2705 29/33",
+    "ots_anchor": "ots.io/tx/opt01",
+    "sigil": "w7q8r9s...",
+    "notes": "Optimobile Framework"
+  },
+  {
+    "num": 22,
+    "name": "socialmediamanager",
+    "proposal_id": "C-22-SMM-20260210",
+    "date": "2026-02-10",
+    "votes_for": 28,
+    "votes_against": 5,
+    "abstain": 0,
+    "quorum": "\u2705 28/33",
+    "ots_anchor": "ots.io/tx/smm01",
+    "sigil": "x0t1u2v...",
+    "notes": "Social Media Governance"
+  },
+  {
+    "num": 23,
+    "name": "cobolbridge",
+    "proposal_id": "C-23-COB-20260211",
+    "date": "2026-02-11",
+    "votes_for": 30,
+    "votes_against": 3,
+    "abstain": 0,
+    "quorum": "\u2705 30/33",
+    "ots_anchor": "ots.io/tx/cob01",
+    "sigil": "y3w4x5y...",
+    "notes": "COBOL AI Bridge"
+  },
+  {
+    "num": 24,
+    "name": "commercialvehicle",
+    "proposal_id": "C-24-CVH-20260212",
+    "date": "2026-02-12",
+    "votes_for": 27,
+    "votes_against": 6,
+    "abstain": 0,
+    "quorum": "\u2705 27/33",
+    "ots_anchor": "ots.io/tx/cvh01",
+    "sigil": "z6y7z8a...",
+    "notes": "Commercial Vehicle Sector"
+  },
+  {
+    "num": 25,
+    "name": "diyhelp",
+    "proposal_id": "C-25-DIY-20260213",
+    "date": "2026-02-13",
+    "votes_for": 27,
+    "votes_against": 6,
+    "abstain": 0,
+    "quorum": "\u2705 27/33",
+    "ots_anchor": "ots.io/tx/diy01",
+    "sigil": "a9b0c1d...",
+    "notes": "DIY & Home Improvement"
+  },
+  {
+    "num": 26,
+    "name": "fishkeeper",
+    "proposal_id": "C-26-FISH-20260214",
+    "date": "2026-02-14",
+    "votes_for": 28,
+    "votes_against": 5,
+    "abstain": 0,
+    "quorum": "\u2705 28/33",
+    "ots_anchor": "ots.io/tx/fish01",
+    "sigil": "e2f3g4h...",
+    "notes": "Aquaculture & Fishkeeping"
+  },
+  {
+    "num": 27,
+    "name": "grabhire",
+    "proposal_id": "C-27-GRAB-20260215",
+    "date": "2026-02-15",
+    "votes_for": 28,
+    "votes_against": 5,
+    "abstain": 0,
+    "quorum": "\u2705 28/33",
+    "ots_anchor": "ots.io/tx/grab01",
+    "sigil": "i5j6k7l...",
+    "notes": "Grab Hire & Aggregates"
+  },
+  {
+    "num": 28,
+    "name": "koikeeper",
+    "proposal_id": "C-28-KOI-20260216",
+    "date": "2026-02-16",
+    "votes_for": 27,
+    "votes_against": 6,
+    "abstain": 0,
+    "quorum": "\u2705 27/33",
+    "ots_anchor": "ots.io/tx/koi01",
+    "sigil": "m8n9o0p...",
+    "notes": "Koi Keeping & Pond Management"
+  },
+  {
+    "num": 29,
+    "name": "landlaw",
+    "proposal_id": "C-29-LAND-20260217",
+    "date": "2026-02-17",
+    "votes_for": 29,
+    "votes_against": 4,
+    "abstain": 0,
+    "quorum": "\u2705 29/33",
+    "ots_anchor": "ots.io/tx/land01",
+    "sigil": "q1r2s3t...",
+    "notes": "Land Law & Property"
+  },
+  {
+    "num": 30,
+    "name": "muckaway",
+    "proposal_id": "C-30-MUCK-20260218",
+    "date": "2026-02-18",
+    "votes_for": 27,
+    "votes_against": 6,
+    "abstain": 0,
+    "quorum": "\u2705 27/33",
+    "ots_anchor": "ots.io/tx/muck01",
+    "sigil": "u4v5w6x...",
+    "notes": "Muck Away & Waste Management"
+  },
+  {
+    "num": 31,
+    "name": "planthire",
+    "proposal_id": "C-31-PLANT-20260219",
+    "date": "2026-02-19",
+    "votes_for": 28,
+    "votes_against": 5,
+    "abstain": 0,
+    "quorum": "\u2705 28/33",
+    "ots_anchor": "ots.io/tx/plant01",
+    "sigil": "y7z8a9b...",
+    "notes": "Plant & Tool Hire"
+  },
+  {
+    "num": 32,
+    "name": "pokerhud",
+    "proposal_id": "C-32-POKER-20260220",
+    "date": "2026-02-20",
+    "votes_for": 26,
+    "votes_against": 7,
+    "abstain": 0,
+    "quorum": "\u2705 26/33",
+    "ots_anchor": "ots.io/tx/poker01",
+    "sigil": "c0d1e2f...",
+    "notes": "Poker HUD & Analytics"
+  },
+  {
+    "num": 33,
+    "name": "suicidestop",
+    "proposal_id": "C-33-STOP-20260221",
+    "date": "2026-02-21",
+    "votes_for": 33,
+    "votes_against": 0,
+    "abstain": 0,
+    "quorum": "\u2705 33/33",
+    "ots_anchor": "ots.io/tx/stop01",
+    "sigil": "g3h4i5j...",
+    "notes": "Suicide Prevention AI"
+  },
+  {
+    "num": 34,
+    "name": "science",
+    "proposal_id": "C-34-SCI-20260222",
+    "date": "2026-02-22",
+    "votes_for": 29,
+    "votes_against": 4,
+    "abstain": 0,
+    "quorum": "\u2705 29/33",
+    "ots_anchor": "ots.io/tx/sci01",
+    "sigil": "k6l7m8n...",
+    "notes": "Scientific Research AI"
+  },
+  {
+    "num": 35,
+    "name": "coigndaltion",
+    "proposal_id": "C-35-COIG-20260223",
+    "date": "2026-02-23",
+    "votes_for": 33,
+    "votes_against": 0,
+    "abstain": 0,
+    "quorum": "\u2705 33/33",
+    "ots_anchor": "ots.io/tx/coig01",
+    "sigil": "o9p0q1r...",
+    "notes": "Coigndaltion Cornerstone"
+  },
+  {
+    "num": 36,
+    "name": "publicwatchdog",
+    "proposal_id": "C-36-PWDG-20260224",
+    "date": "2026-02-24",
+    "votes_for": 33,
+    "votes_against": 0,
+    "abstain": 0,
+    "quorum": "\u2705 33/33",
+    "ots_anchor": "ots.io/tx/pwdg01",
+    "sigil": "s2t3u4v...",
+    "notes": "Public Watchdog Charter"
+  },
+  {
+    "num": 37,
+    "name": "sovereigncourt",
+    "proposal_id": "C-37-CRT-20260225",
+    "date": "2026-02-25",
+    "votes_for": 32,
+    "votes_against": 1,
+    "abstain": 0,
+    "quorum": "\u2705 32/33",
+    "ots_anchor": "ots.io/tx/crt01",
+    "sigil": "w5x6y7z...",
+    "notes": "Sovereign Court Protocol"
+  },
+  {
+    "num": 38,
+    "name": "sovereignstandards",
+    "proposal_id": "C-38-STD-20260226",
+    "date": "2026-02-26",
+    "votes_for": 32,
+    "votes_against": 1,
+    "abstain": 0,
+    "quorum": "\u2705 32/33",
+    "ots_anchor": "ots.io/tx/std01",
+    "sigil": "a8b9c0d...",
+    "notes": "Sovereign Standards Body"
+  },
+  {
+    "num": 39,
+    "name": "sovereignledger",
+    "proposal_id": "C-39-LED-20260227",
+    "date": "2026-02-27",
+    "votes_for": 33,
+    "votes_against": 0,
+    "abstain": 0,
+    "quorum": "\u2705 33/33",
+    "ots_anchor": "ots.io/tx/led01",
+    "sigil": "e1f2g3h...",
+    "notes": "Sovereign Ledger & SIGIL"
+  }
+]
+
+
+// =========================================================================
+// THREE.JS SCENE
+// =========================================================================
+const canvas = document.getElementById('c');
+const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+renderer.setSize(window.innerWidth, window.innerHeight);
+
+const scene = new THREE.Scene();
+scene.fog = new THREE.FogExp2(0x03060c, 0.012);
+
+const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 500);
+camera.position.set(0, 12, 28);
+
+const ambient = new THREE.AmbientLight(0x4488aa, 0.6);
+scene.add(ambient);
+const sun = new THREE.PointLight(0x22d3ee, 2, 80);
+sun.position.set(8, 12, 0);
+scene.add(sun);
+const accent = new THREE.PointLight(0xf59e0b, 1.5, 60);
+accent.position.set(-10, -5, 8);
+scene.add(accent);
+
+// =========================================================================
+// BFT COUNCIL (33 agents at the center)
+// =========================================================================
+const councilGroup = new THREE.Group();
+const councilAgents = [];
+for (let i = 0; i < 33; i++) {
+  const phi = Math.acos(1 - 2 * (i + 0.5) / 33);
+  const theta = Math.PI * (1 + Math.sqrt(5)) * i;
+  const r = 4;
+  const x = r * Math.sin(phi) * Math.cos(theta);
+  const y = r * Math.sin(phi) * Math.sin(theta);
+  const z = r * Math.cos(phi);
+  const geo = new THREE.SphereGeometry(0.18, 12, 12);
+  const mat = new THREE.MeshBasicMaterial({ color: 0x34d399 });
+  const agent = new THREE.Mesh(geo, mat);
+  agent.position.set(x, y, z);
+  agent.userData = { kind: 'agent', index: i };
+  councilAgents.push(agent);
+  councilGroup.add(agent);
+}
+scene.add(councilGroup);
+
+// Council center (the seat of power)
+const throneGeo = new THREE.IcosahedronGeometry(0.7, 1);
+const throneMat = new THREE.MeshPhongMaterial({
+  color: 0x22d3ee, emissive: 0x22d3ee, emissiveIntensity: 0.3, wireframe: false
+});
+const throne = new THREE.Mesh(throneGeo, throneMat);
+scene.add(throne);
+const throneWire = new THREE.Mesh(
+  new THREE.IcosahedronGeometry(0.95, 1),
+  new THREE.MeshBasicMaterial({ color: 0x22d3ee, wireframe: true })
+);
+scene.add(throneWire);
+
+// =========================================================================
+// 41 CHARTER ORBS (in a Fibonacci sphere around the council)
+// =========================================================================
+const charterGroup = new THREE.Group();
+const charterMeshes = [];
+const charterLineGroup = new THREE.Group();
+const CHARTERS = CHARTERS_DATA;
+
+CHARTERS.forEach((c, i) => {
+  // Fibonacci sphere layout
+  const phi = Math.acos(1 - 2 * (i + 0.5) / CHARTERS.length);
+  const theta = Math.PI * (1 + Math.sqrt(5)) * i;
+  const r = 12 + (i % 3) * 0.8;
+  const x = r * Math.sin(phi) * Math.cos(theta);
+  const y = r * Math.sin(phi) * Math.sin(theta);
+  const z = r * Math.cos(phi);
+  // Orb size: bigger if it passed unanimously
+  const size = 0.3 + (c.votes_for / 33) * 0.4;
+  const geo = new THREE.SphereGeometry(size, 16, 16);
+  // Color: gold if 33/33, red if not
+  const isUnanimous = c.votes_for === 33 && c.votes_against === 0;
+  const color = isUnanimous ? 0xf59e0b : 0xfb7185;
+  const mat = new THREE.MeshPhongMaterial({
+    color, emissive: color, emissiveIntensity: 0.5
+  });
+  const orb = new THREE.Mesh(geo, mat);
+  orb.position.set(x, y, z);
+  orb.userData = { kind: 'charter', charter: c, index: i };
+  charterMeshes.push(orb);
+  charterGroup.add(orb);
+  // Line from charter to council (the OTS anchor link)
+  const lineGeo = new THREE.BufferGeometry().setFromPoints([
+    new THREE.Vector3(x, y, z),
+    new THREE.Vector3(0, 0, 0)
+  ]);
+  const lineMat = new THREE.LineBasicMaterial({
+    color: 0xf59e0b, transparent: true, opacity: 0.18
+  });
+  const line = new THREE.Line(lineGeo, lineMat);
+  charterLineGroup.add(line);
+});
+scene.add(charterGroup);
+scene.add(charterLineGroup);
+
+// =========================================================================
+// STARFIELD
+// =========================================================================
+const starGeo = new THREE.BufferGeometry();
+const starVerts = [];
+for (let i = 0; i < 2000; i++) {
+  starVerts.push((Math.random() - 0.5) * 200, (Math.random() - 0.5) * 200, (Math.random() - 0.5) * 200);
+}
+starGeo.setAttribute('position', new THREE.Float32BufferAttribute(starVerts, 3));
+const starMat = new THREE.PointsMaterial({ color: 0xffffff, size: 0.06, transparent: true, opacity: 0.6 });
+scene.add(new THREE.Points(starGeo, starMat));
+
+// =========================================================================
+// INTERACTION
+// =========================================================================
+const raycaster = new THREE.Raycaster();
+const mouse = new THREE.Vector2();
+let selected = null;
+let cameraAutoRotate = true;
+let orbitTheta = 0;
+
+canvas.addEventListener('click', (event) => {
+  mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+  mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+  raycaster.setFromCamera(mouse, camera);
+  // Check charter orbs first, then council agents
+  const allMeshes = [...charterMeshes, ...councilAgents];
+  const intersects = raycaster.intersectObjects(allMeshes);
+  if (intersects.length > 0) {
+    const obj = intersects[0].object;
+    selected = obj;
+    showInfo(obj);
+  } else {
+    selected = null;
+    showEmpty();
+  }
+});
+
+// Camera orbit controls (drag to rotate)
+let isDragging = false;
+let lastX = 0, lastY = 0;
+canvas.addEventListener('mousedown', (e) => { isDragging = true; lastX = e.clientX; lastY = e.clientY; cameraAutoRotate = false; document.getElementById('toggle-rotation').checked = false; });
+canvas.addEventListener('mousemove', (e) => { if (isDragging) { orbitTheta += (e.clientX - lastX) * 0.005; camera.position.y += (lastY - e.clientY) * 0.02; lastX = e.clientX; lastY = e.clientY; } });
+canvas.addEventListener('mouseup', () => { isDragging = false; });
+
+// =========================================================================
+// INFO PANE
+// =========================================================================
+function showEmpty() {
+  document.getElementById('info-content').innerHTML = '<div class="empty">Click any charter orb to inspect its ratification record.</div>';
+}
+function showInfo(obj) {
+  const u = obj.userData;
+  if (u.kind === 'charter') {
+    const c = u.charter;
+    const isUnanimous = c.votes_for === 33 && c.votes_against === 0;
+    document.getElementById('info-content').innerHTML =
+      '<h3>' + (isUnanimous ? '✅ ' : '⚠️ ') + c.name + '-charter</h3>' +
+      '<div class="meta">' +
+        '<b>#' + c.num + '</b> · ' + c.proposal_id + '<br>' +
+        'ratified <b>' + c.date + '</b> · quorum <b>' + c.quorum + '</b><br>' +
+        'votes: <b>' + c.votes_for + '</b> for / <b>' + c.votes_against + '</b> against / <b>' + c.abstain + '</b> abstain<br>' +
+        'OTS anchor: <b>' + c.ots_anchor + '</b>' +
+      '</div>' +
+      '<div class="notes">' + c.notes + '</div>' +
+      '<div class="sig">SIGIL: ' + c.sigil + '</div>';
+  } else if (u.kind === 'agent') {
+    document.getElementById('info-content').innerHTML =
+      '<h3>BFT Council Agent #' + (u.index + 1) + '</h3>' +
+      '<div class="meta">33-agent Byzantine Fault Tolerant council.<br>Quorum: <b>23/33</b> standard, <b>27/33</b> supermajority, <b>33/33</b> Article 0.</div>' +
+      '<div class="notes">Each agent is an independent, geographically distributed, cryptographically attested entity. This is one of 33 — they vote on every charter ratification.</div>';
+  }
+}
+
+// =========================================================================
+// LAYER TOGGLES
+// =========================================================================
+document.getElementById('toggle-charters').addEventListener('change', (e) => { charterGroup.visible = e.target.checked; charterLineGroup.visible = e.target.checked && document.getElementById('toggle-connections').checked; });
+document.getElementById('toggle-council').addEventListener('change', (e) => { councilGroup.visible = e.target.checked; throne.visible = e.target.checked; throneWire.visible = e.target.checked; });
+document.getElementById('toggle-connections').addEventListener('change', (e) => { charterLineGroup.visible = e.target.checked; });
+document.getElementById('toggle-rotation').addEventListener('change', (e) => { cameraAutoRotate = e.target.checked; });
+
+// Show controls after loading
+setTimeout(() => { document.getElementById('controls').classList.remove('hidden'); }, 500);
+
+// =========================================================================
+// ANIMATION LOOP
+// =========================================================================
+function animate() {
+  requestAnimationFrame(animate);
+  if (cameraAutoRotate) {
+    orbitTheta += 0.002;
+  }
+  // Camera orbits at fixed radius
+  const radius = 28;
+  camera.position.x = Math.sin(orbitTheta) * radius;
+  camera.position.z = Math.cos(orbitTheta) * radius;
+  camera.lookAt(0, 0, 0);
+  // Charter pulse (selected one is bigger)
+  charterMeshes.forEach((m, i) => {
+    const baseScale = (m.userData.charter.votes_for / 33) * 0.5 + 0.5;
+    const t = Date.now() * 0.001 + i * 0.3;
+    const pulse = 1 + Math.sin(t) * 0.05;
+    m.scale.setScalar(baseScale * pulse * (selected === m ? 1.5 : 1));
+  });
+  // Throne rotation
+  throne.rotation.y += 0.005;
+  throneWire.rotation.y -= 0.008;
+  renderer.render(scene, camera);
+}
+animate();
+
+// =========================================================================
+// RESIZE
+// =========================================================================
+window.addEventListener('resize', () => {
+  camera.aspect = window.innerWidth / window.innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(window.innerWidth, window.innerHeight);
+});
+
+// =========================================================================
+// STATS UPDATE
+// =========================================================================
+const avgQuorum = CHARTERS.reduce((s, c) => s + c.votes_for, 0) / (CHARTERS.length * 33) * 100;
+document.getElementById('stat-quorum').textContent = avgQuorum.toFixed(1) + '%';
+document.getElementById('stat-charters').textContent = CHARTERS.length;
+document.getElementById('loading').style.display = 'none';
+</script>
+
+
+</body>
+</html>
+

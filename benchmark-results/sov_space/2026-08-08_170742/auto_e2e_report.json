@@ -1,0 +1,47 @@
+{
+  "timestamp": "2026-08-08T17:29:11.732487+00:00",
+  "sov_space_dir": "benchmark-results/sov_space/2026-08-08_170742",
+  "elapsed_secs": 1289,
+  "models": [
+    "qwen2.5:1.5b",
+    "qwen2.5:0.5b"
+  ],
+  "patched_models": [
+    "qwen2.5:1.5b-patched:latest",
+    "qwen2.5:0.5b-patched:latest"
+  ],
+  "loops": 1,
+  "govbench": [],
+  "eat_weak": [
+    {
+      "model": "qwen2.5:1.5b-patched:latest,qwen2.5:0.5b-patched:latest",
+      "avg_baseline": 0.0,
+      "avg_context": 0.0
+    },
+    {
+      "model": "qwen2.5:1.5b-patched:latest",
+      "avg_baseline": 0.0,
+      "avg_context": 0.0
+    },
+    {
+      "model": "qwen2.5:1.5b-patched",
+      "avg_baseline": 32.5,
+      "avg_context": 59.2
+    },
+    {
+      "model": "qwen2.5:1.5b-patched,qwen2.5:0.5b-patched",
+      "avg_baseline": 0.0,
+      "avg_context": 0.0
+    },
+    {
+      "model": "qwen2.5:0.5b-patched",
+      "avg_baseline": 12.8,
+      "avg_context": 46.4
+    },
+    {
+      "model": "qwen2.5:0.5b-patched:latest",
+      "avg_baseline": 0.0,
+      "avg_context": 0.0
+    }
+  ]
+}

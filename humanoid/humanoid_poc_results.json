@@ -1,0 +1,1701 @@
+{
+  "simulation_results": [
+    {
+      "perception": {
+        "position": {
+          "x": 0.9999999999999999,
+          "y": 0.0,
+          "z": 0.8
+        },
+        "orientation": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0
+        },
+        "nearby_objects": [
+          {
+            "id": "table",
+            "type": "furniture",
+            "position": {
+              "x": 2,
+              "y": 0,
+              "z": 0.8
+            },
+            "distance": 2.0
+          },
+          {
+            "id": "chair",
+            "type": "furniture",
+            "position": {
+              "x": 1.5,
+              "y": 1,
+              "z": 0.5
+            },
+            "distance": 1.8
+          }
+        ],
+        "battery": 100.0,
+        "status": "standing"
+      },
+      "reasoning": {
+        "best_action": {
+          "type": "move",
+          "dx": 1,
+          "dy": 0,
+          "name": "forward",
+          "score": 0.5
+        },
+        "all_actions": [
+          {
+            "type": "move",
+            "dx": 1,
+            "dy": 0,
+            "name": "forward",
+            "score": 0.5
+          },
+          {
+            "type": "move",
+            "dx": -1,
+            "dy": 0,
+            "name": "backward",
+            "score": 0.5
+          },
+          {
+            "type": "move",
+            "dx": 0,
+            "dy": 1,
+            "name": "left",
+            "score": 0.5
+          },
+          {
+            "type": "move",
+            "dx": 0,
+            "dy": -1,
+            "name": "right",
+            "score": 0.5
+          },
+          {
+            "type": "turn",
+            "dtheta": 1,
+            "name": "turn_left",
+            "score": 0.5
+          },
+          {
+            "type": "turn",
+            "dtheta": -1,
+            "name": "turn_right",
+            "score": 0.5
+          },
+          {
+            "type": "stop",
+            "name": "stop",
+            "score": 0.5
+          }
+        ],
+        "reasoning": "Best action: forward (score: 0.50)"
+      },
+      "prediction": {
+        "future_position": {
+          "x": 0.1,
+          "y": 0.0,
+          "z": 0.8
+        },
+        "future_objects": [
+          {
+            "id": "table",
+            "type": "furniture",
+            "position": {
+              "x": 2,
+              "y": 0,
+              "z": 0.8
+            },
+            "distance": 1.9
+          },
+          {
+            "id": "chair",
+            "type": "furniture",
+            "position": {
+              "x": 1.5,
+              "y": 1,
+              "z": 0.5
+            },
+            "distance": 1.72
+          }
+        ],
+        "confidence": 0.8
+      },
+      "decision": {
+        "action": {
+          "type": "move",
+          "dx": 1,
+          "dy": 0,
+          "name": "forward",
+          "score": 0.5
+        },
+        "tally": {
+          "approve": 16,
+          "amend": 10,
+          "reject": 7
+        },
+        "quorum_met": false,
+        "decision": "revise"
+      },
+      "result": {
+        "action": "forward",
+        "position": {
+          "x": 0.9999999999999999,
+          "y": 0.0,
+          "z": 0.8
+        },
+        "status": "walking",
+        "step": 1,
+        "sigil": {
+          "payload_hash": "a4f5fa9dc6baa28e9148fdfebce7a514589f9e05f57d933f422d9a29cc68196c",
+          "prev_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+          "root_hash": "0cd02728bd443f0cff836b7eb06f9cc9c949483c892213629c79530251703e0a"
+        }
+      }
+    },
+    {
+      "perception": {
+        "position": {
+          "x": 0.9999999999999999,
+          "y": 0.0,
+          "z": 0.8
+        },
+        "orientation": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0
+        },
+        "nearby_objects": [
+          {
+            "id": "table",
+            "type": "furniture",
+            "position": {
+              "x": 2,
+              "y": 0,
+              "z": 0.8
+            },
+            "distance": 1.9
+          },
+          {
+            "id": "chair",
+            "type": "furniture",
+            "position": {
+              "x": 1.5,
+              "y": 1,
+              "z": 0.5
+            },
+            "distance": 1.72
+          }
+        ],
+        "battery": 100.0,
+        "status": "walking"
+      },
+      "reasoning": {
+        "best_action": {
+          "type": "move",
+          "dx": 1,
+          "dy": 0,
+          "name": "forward",
+          "score": 0.5
+        },
+        "all_actions": [
+          {
+            "type": "move",
+            "dx": 1,
+            "dy": 0,
+            "name": "forward",
+            "score": 0.5
+          },
+          {
+            "type": "move",
+            "dx": -1,
+            "dy": 0,
+            "name": "backward",
+            "score": 0.5
+          },
+          {
+            "type": "move",
+            "dx": 0,
+            "dy": 1,
+            "name": "left",
+            "score": 0.5
+          },
+          {
+            "type": "move",
+            "dx": 0,
+            "dy": -1,
+            "name": "right",
+            "score": 0.5
+          },
+          {
+            "type": "turn",
+            "dtheta": 1,
+            "name": "turn_left",
+            "score": 0.5
+          },
+          {
+            "type": "turn",
+            "dtheta": -1,
+            "name": "turn_right",
+            "score": 0.5
+          },
+          {
+            "type": "stop",
+            "name": "stop",
+            "score": 0.5
+          }
+        ],
+        "reasoning": "Best action: forward (score: 0.50)"
+      },
+      "prediction": {
+        "future_position": {
+          "x": 0.2,
+          "y": 0.0,
+          "z": 0.8
+        },
+        "future_objects": [
+          {
+            "id": "table",
+            "type": "furniture",
+            "position": {
+              "x": 2,
+              "y": 0,
+              "z": 0.8
+            },
+            "distance": 1.8
+          },
+          {
+            "id": "chair",
+            "type": "furniture",
+            "position": {
+              "x": 1.5,
+              "y": 1,
+              "z": 0.5
+            },
+            "distance": 1.64
+          }
+        ],
+        "confidence": 0.8
+      },
+      "decision": {
+        "action": {
+          "type": "move",
+          "dx": 1,
+          "dy": 0,
+          "name": "forward",
+          "score": 0.5
+        },
+        "tally": {
+          "approve": 16,
+          "amend": 10,
+          "reject": 7
+        },
+        "quorum_met": false,
+        "decision": "revise"
+      },
+      "result": {
+        "action": "forward",
+        "position": {
+          "x": 0.9999999999999999,
+          "y": 0.0,
+          "z": 0.8
+        },
+        "status": "walking",
+        "step": 2,
+        "sigil": {
+          "payload_hash": "aadc2fa43a1acf888c937c90de11b1a40dc816648ff4c1fa66328b01915e074f",
+          "prev_hash": "a4f5fa9dc6baa28e9148fdfebce7a514589f9e05f57d933f422d9a29cc68196c",
+          "root_hash": "d8d1bf93792d4e0e54fe0663c92608c728e6c7f614976ac8c6b5b8c8c23eefdf"
+        }
+      }
+    },
+    {
+      "perception": {
+        "position": {
+          "x": 0.9999999999999999,
+          "y": 0.0,
+          "z": 0.8
+        },
+        "orientation": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0
+        },
+        "nearby_objects": [
+          {
+            "id": "table",
+            "type": "furniture",
+            "position": {
+              "x": 2,
+              "y": 0,
+              "z": 0.8
+            },
+            "distance": 1.8
+          },
+          {
+            "id": "chair",
+            "type": "furniture",
+            "position": {
+              "x": 1.5,
+              "y": 1,
+              "z": 0.5
+            },
+            "distance": 1.64
+          }
+        ],
+        "battery": 100.0,
+        "status": "walking"
+      },
+      "reasoning": {
+        "best_action": {
+          "type": "move",
+          "dx": 1,
+          "dy": 0,
+          "name": "forward",
+          "score": 0.5
+        },
+        "all_actions": [
+          {
+            "type": "move",
+            "dx": 1,
+            "dy": 0,
+            "name": "forward",
+            "score": 0.5
+          },
+          {
+            "type": "move",
+            "dx": -1,
+            "dy": 0,
+            "name": "backward",
+            "score": 0.5
+          },
+          {
+            "type": "move",
+            "dx": 0,
+            "dy": 1,
+            "name": "left",
+            "score": 0.5
+          },
+          {
+            "type": "move",
+            "dx": 0,
+            "dy": -1,
+            "name": "right",
+            "score": 0.5
+          },
+          {
+            "type": "turn",
+            "dtheta": 1,
+            "name": "turn_left",
+            "score": 0.5
+          },
+          {
+            "type": "turn",
+            "dtheta": -1,
+            "name": "turn_right",
+            "score": 0.5
+          },
+          {
+            "type": "stop",
+            "name": "stop",
+            "score": 0.5
+          }
+        ],
+        "reasoning": "Best action: forward (score: 0.50)"
+      },
+      "prediction": {
+        "future_position": {
+          "x": 0.30000000000000004,
+          "y": 0.0,
+          "z": 0.8
+        },
+        "future_objects": [
+          {
+            "id": "table",
+            "type": "furniture",
+            "position": {
+              "x": 2,
+              "y": 0,
+              "z": 0.8
+            },
+            "distance": 1.7
+          },
+          {
+            "id": "chair",
+            "type": "furniture",
+            "position": {
+              "x": 1.5,
+              "y": 1,
+              "z": 0.5
+            },
+            "distance": 1.56
+          }
+        ],
+        "confidence": 0.8
+      },
+      "decision": {
+        "action": {
+          "type": "move",
+          "dx": 1,
+          "dy": 0,
+          "name": "forward",
+          "score": 0.5
+        },
+        "tally": {
+          "approve": 16,
+          "amend": 10,
+          "reject": 7
+        },
+        "quorum_met": false,
+        "decision": "revise"
+      },
+      "result": {
+        "action": "forward",
+        "position": {
+          "x": 0.9999999999999999,
+          "y": 0.0,
+          "z": 0.8
+        },
+        "status": "walking",
+        "step": 3,
+        "sigil": {
+          "payload_hash": "15adc6f80b83395c37c769372e754c3671aa96281d92a7441805cd591af059f6",
+          "prev_hash": "aadc2fa43a1acf888c937c90de11b1a40dc816648ff4c1fa66328b01915e074f",
+          "root_hash": "459566e43dc2bdffeee06cbc785f8510b8f9440e3fc75d605618c73e9124cd7a"
+        }
+      }
+    },
+    {
+      "perception": {
+        "position": {
+          "x": 0.9999999999999999,
+          "y": 0.0,
+          "z": 0.8
+        },
+        "orientation": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0
+        },
+        "nearby_objects": [
+          {
+            "id": "table",
+            "type": "furniture",
+            "position": {
+              "x": 2,
+              "y": 0,
+              "z": 0.8
+            },
+            "distance": 1.7
+          },
+          {
+            "id": "chair",
+            "type": "furniture",
+            "position": {
+              "x": 1.5,
+              "y": 1,
+              "z": 0.5
+            },
+            "distance": 1.56
+          }
+        ],
+        "battery": 100.0,
+        "status": "walking"
+      },
+      "reasoning": {
+        "best_action": {
+          "type": "move",
+          "dx": 1,
+          "dy": 0,
+          "name": "forward",
+          "score": 0.5
+        },
+        "all_actions": [
+          {
+            "type": "move",
+            "dx": 1,
+            "dy": 0,
+            "name": "forward",
+            "score": 0.5
+          },
+          {
+            "type": "move",
+            "dx": -1,
+            "dy": 0,
+            "name": "backward",
+            "score": 0.5
+          },
+          {
+            "type": "move",
+            "dx": 0,
+            "dy": 1,
+            "name": "left",
+            "score": 0.5
+          },
+          {
+            "type": "move",
+            "dx": 0,
+            "dy": -1,
+            "name": "right",
+            "score": 0.5
+          },
+          {
+            "type": "turn",
+            "dtheta": 1,
+            "name": "turn_left",
+            "score": 0.5
+          },
+          {
+            "type": "turn",
+            "dtheta": -1,
+            "name": "turn_right",
+            "score": 0.5
+          },
+          {
+            "type": "stop",
+            "name": "stop",
+            "score": 0.5
+          }
+        ],
+        "reasoning": "Best action: forward (score: 0.50)"
+      },
+      "prediction": {
+        "future_position": {
+          "x": 0.4,
+          "y": 0.0,
+          "z": 0.8
+        },
+        "future_objects": [
+          {
+            "id": "table",
+            "type": "furniture",
+            "position": {
+              "x": 2,
+              "y": 0,
+              "z": 0.8
+            },
+            "distance": 1.6
+          },
+          {
+            "id": "chair",
+            "type": "furniture",
+            "position": {
+              "x": 1.5,
+              "y": 1,
+              "z": 0.5
+            },
+            "distance": 1.49
+          }
+        ],
+        "confidence": 0.8
+      },
+      "decision": {
+        "action": {
+          "type": "move",
+          "dx": 1,
+          "dy": 0,
+          "name": "forward",
+          "score": 0.5
+        },
+        "tally": {
+          "approve": 16,
+          "amend": 10,
+          "reject": 7
+        },
+        "quorum_met": false,
+        "decision": "revise"
+      },
+      "result": {
+        "action": "forward",
+        "position": {
+          "x": 0.9999999999999999,
+          "y": 0.0,
+          "z": 0.8
+        },
+        "status": "walking",
+        "step": 4,
+        "sigil": {
+          "payload_hash": "8adc3b5adabc67fc27893401f7b808cc38e7e8256951aa80bcaa5a44d2563b6e",
+          "prev_hash": "15adc6f80b83395c37c769372e754c3671aa96281d92a7441805cd591af059f6",
+          "root_hash": "ba2a882ca69dd9290fd03240d9866331dc49169ab85971ca09a25e5e540285f9"
+        }
+      }
+    },
+    {
+      "perception": {
+        "position": {
+          "x": 0.9999999999999999,
+          "y": 0.0,
+          "z": 0.8
+        },
+        "orientation": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0
+        },
+        "nearby_objects": [
+          {
+            "id": "table",
+            "type": "furniture",
+            "position": {
+              "x": 2,
+              "y": 0,
+              "z": 0.8
+            },
+            "distance": 1.6
+          },
+          {
+            "id": "chair",
+            "type": "furniture",
+            "position": {
+              "x": 1.5,
+              "y": 1,
+              "z": 0.5
+            },
+            "distance": 1.49
+          }
+        ],
+        "battery": 100.0,
+        "status": "walking"
+      },
+      "reasoning": {
+        "best_action": {
+          "type": "move",
+          "dx": 1,
+          "dy": 0,
+          "name": "forward",
+          "score": 0.5
+        },
+        "all_actions": [
+          {
+            "type": "move",
+            "dx": 1,
+            "dy": 0,
+            "name": "forward",
+            "score": 0.5
+          },
+          {
+            "type": "move",
+            "dx": -1,
+            "dy": 0,
+            "name": "backward",
+            "score": 0.5
+          },
+          {
+            "type": "move",
+            "dx": 0,
+            "dy": 1,
+            "name": "left",
+            "score": 0.5
+          },
+          {
+            "type": "move",
+            "dx": 0,
+            "dy": -1,
+            "name": "right",
+            "score": 0.5
+          },
+          {
+            "type": "turn",
+            "dtheta": 1,
+            "name": "turn_left",
+            "score": 0.5
+          },
+          {
+            "type": "turn",
+            "dtheta": -1,
+            "name": "turn_right",
+            "score": 0.5
+          },
+          {
+            "type": "stop",
+            "name": "stop",
+            "score": 0.5
+          }
+        ],
+        "reasoning": "Best action: forward (score: 0.50)"
+      },
+      "prediction": {
+        "future_position": {
+          "x": 0.5,
+          "y": 0.0,
+          "z": 0.8
+        },
+        "future_objects": [
+          {
+            "id": "table",
+            "type": "furniture",
+            "position": {
+              "x": 2,
+              "y": 0,
+              "z": 0.8
+            },
+            "distance": 1.5
+          },
+          {
+            "id": "chair",
+            "type": "furniture",
+            "position": {
+              "x": 1.5,
+              "y": 1,
+              "z": 0.5
+            },
+            "distance": 1.41
+          }
+        ],
+        "confidence": 0.8
+      },
+      "decision": {
+        "action": {
+          "type": "move",
+          "dx": 1,
+          "dy": 0,
+          "name": "forward",
+          "score": 0.5
+        },
+        "tally": {
+          "approve": 16,
+          "amend": 10,
+          "reject": 7
+        },
+        "quorum_met": false,
+        "decision": "revise"
+      },
+      "result": {
+        "action": "forward",
+        "position": {
+          "x": 0.9999999999999999,
+          "y": 0.0,
+          "z": 0.8
+        },
+        "status": "walking",
+        "step": 5,
+        "sigil": {
+          "payload_hash": "c2e57ce91e25228171540fe77a697f1a43f3f173063582f27e46dc0f2a0a8fb6",
+          "prev_hash": "8adc3b5adabc67fc27893401f7b808cc38e7e8256951aa80bcaa5a44d2563b6e",
+          "root_hash": "4bd7bbc59f4eb9e6a8538d9c46b1a240c8172dd6aecc76dd6fd8cbae52dad558"
+        }
+      }
+    },
+    {
+      "perception": {
+        "position": {
+          "x": 0.9999999999999999,
+          "y": 0.0,
+          "z": 0.8
+        },
+        "orientation": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0
+        },
+        "nearby_objects": [
+          {
+            "id": "table",
+            "type": "furniture",
+            "position": {
+              "x": 2,
+              "y": 0,
+              "z": 0.8
+            },
+            "distance": 1.5
+          },
+          {
+            "id": "chair",
+            "type": "furniture",
+            "position": {
+              "x": 1.5,
+              "y": 1,
+              "z": 0.5
+            },
+            "distance": 1.41
+          }
+        ],
+        "battery": 100.0,
+        "status": "walking"
+      },
+      "reasoning": {
+        "best_action": {
+          "type": "move",
+          "dx": 1,
+          "dy": 0,
+          "name": "forward",
+          "score": 0.5
+        },
+        "all_actions": [
+          {
+            "type": "move",
+            "dx": 1,
+            "dy": 0,
+            "name": "forward",
+            "score": 0.5
+          },
+          {
+            "type": "move",
+            "dx": -1,
+            "dy": 0,
+            "name": "backward",
+            "score": 0.5
+          },
+          {
+            "type": "move",
+            "dx": 0,
+            "dy": 1,
+            "name": "left",
+            "score": 0.5
+          },
+          {
+            "type": "move",
+            "dx": 0,
+            "dy": -1,
+            "name": "right",
+            "score": 0.5
+          },
+          {
+            "type": "turn",
+            "dtheta": 1,
+            "name": "turn_left",
+            "score": 0.5
+          },
+          {
+            "type": "turn",
+            "dtheta": -1,
+            "name": "turn_right",
+            "score": 0.5
+          },
+          {
+            "type": "stop",
+            "name": "stop",
+            "score": 0.5
+          }
+        ],
+        "reasoning": "Best action: forward (score: 0.50)"
+      },
+      "prediction": {
+        "future_position": {
+          "x": 0.6,
+          "y": 0.0,
+          "z": 0.8
+        },
+        "future_objects": [
+          {
+            "id": "table",
+            "type": "furniture",
+            "position": {
+              "x": 2,
+              "y": 0,
+              "z": 0.8
+            },
+            "distance": 1.4
+          },
+          {
+            "id": "chair",
+            "type": "furniture",
+            "position": {
+              "x": 1.5,
+              "y": 1,
+              "z": 0.5
+            },
+            "distance": 1.35
+          },
+          {
+            "id": "box",
+            "type": "object",
+            "position": {
+              "x": 2.5,
+              "y": 0.5,
+              "z": 0.3
+            },
+            "distance": 1.96
+          }
+        ],
+        "confidence": 0.8
+      },
+      "decision": {
+        "action": {
+          "type": "move",
+          "dx": 1,
+          "dy": 0,
+          "name": "forward",
+          "score": 0.5
+        },
+        "tally": {
+          "approve": 16,
+          "amend": 10,
+          "reject": 7
+        },
+        "quorum_met": false,
+        "decision": "revise"
+      },
+      "result": {
+        "action": "forward",
+        "position": {
+          "x": 0.9999999999999999,
+          "y": 0.0,
+          "z": 0.8
+        },
+        "status": "walking",
+        "step": 6,
+        "sigil": {
+          "payload_hash": "4744304db7807763dff665f92d2f7850fb1fd97cdb5379391c1d1acf67ca06db",
+          "prev_hash": "c2e57ce91e25228171540fe77a697f1a43f3f173063582f27e46dc0f2a0a8fb6",
+          "root_hash": "b9c4c2c8f01f8518d28bd0b459115dc2e79f2ad79dfee645eac65c0c598b23b4"
+        }
+      }
+    },
+    {
+      "perception": {
+        "position": {
+          "x": 0.9999999999999999,
+          "y": 0.0,
+          "z": 0.8
+        },
+        "orientation": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0
+        },
+        "nearby_objects": [
+          {
+            "id": "table",
+            "type": "furniture",
+            "position": {
+              "x": 2,
+              "y": 0,
+              "z": 0.8
+            },
+            "distance": 1.4
+          },
+          {
+            "id": "chair",
+            "type": "furniture",
+            "position": {
+              "x": 1.5,
+              "y": 1,
+              "z": 0.5
+            },
+            "distance": 1.35
+          },
+          {
+            "id": "box",
+            "type": "object",
+            "position": {
+              "x": 2.5,
+              "y": 0.5,
+              "z": 0.3
+            },
+            "distance": 1.96
+          }
+        ],
+        "battery": 100.0,
+        "status": "walking"
+      },
+      "reasoning": {
+        "best_action": {
+          "type": "move",
+          "dx": 1,
+          "dy": 0,
+          "name": "forward",
+          "score": 0.5
+        },
+        "all_actions": [
+          {
+            "type": "move",
+            "dx": 1,
+            "dy": 0,
+            "name": "forward",
+            "score": 0.5
+          },
+          {
+            "type": "move",
+            "dx": -1,
+            "dy": 0,
+            "name": "backward",
+            "score": 0.5
+          },
+          {
+            "type": "move",
+            "dx": 0,
+            "dy": 1,
+            "name": "left",
+            "score": 0.5
+          },
+          {
+            "type": "move",
+            "dx": 0,
+            "dy": -1,
+            "name": "right",
+            "score": 0.5
+          },
+          {
+            "type": "turn",
+            "dtheta": 1,
+            "name": "turn_left",
+            "score": 0.5
+          },
+          {
+            "type": "turn",
+            "dtheta": -1,
+            "name": "turn_right",
+            "score": 0.5
+          },
+          {
+            "type": "stop",
+            "name": "stop",
+            "score": 0.5
+          }
+        ],
+        "reasoning": "Best action: forward (score: 0.50)"
+      },
+      "prediction": {
+        "future_position": {
+          "x": 0.7,
+          "y": 0.0,
+          "z": 0.8
+        },
+        "future_objects": [
+          {
+            "id": "table",
+            "type": "furniture",
+            "position": {
+              "x": 2,
+              "y": 0,
+              "z": 0.8
+            },
+            "distance": 1.3
+          },
+          {
+            "id": "chair",
+            "type": "furniture",
+            "position": {
+              "x": 1.5,
+              "y": 1,
+              "z": 0.5
+            },
+            "distance": 1.28
+          },
+          {
+            "id": "box",
+            "type": "object",
+            "position": {
+              "x": 2.5,
+              "y": 0.5,
+              "z": 0.3
+            },
+            "distance": 1.87
+          }
+        ],
+        "confidence": 0.8
+      },
+      "decision": {
+        "action": {
+          "type": "move",
+          "dx": 1,
+          "dy": 0,
+          "name": "forward",
+          "score": 0.5
+        },
+        "tally": {
+          "approve": 16,
+          "amend": 10,
+          "reject": 7
+        },
+        "quorum_met": false,
+        "decision": "revise"
+      },
+      "result": {
+        "action": "forward",
+        "position": {
+          "x": 0.9999999999999999,
+          "y": 0.0,
+          "z": 0.8
+        },
+        "status": "walking",
+        "step": 7,
+        "sigil": {
+          "payload_hash": "b55fbcd2257da6afe4c4efb26b6308cd92fc8d0ebaa05ef58dd122da34bee660",
+          "prev_hash": "4744304db7807763dff665f92d2f7850fb1fd97cdb5379391c1d1acf67ca06db",
+          "root_hash": "8d3c0522c5a9ffda22149fd9a0d5f91d8ad7ecb0239712c825fd811e121590cf"
+        }
+      }
+    },
+    {
+      "perception": {
+        "position": {
+          "x": 0.9999999999999999,
+          "y": 0.0,
+          "z": 0.8
+        },
+        "orientation": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0
+        },
+        "nearby_objects": [
+          {
+            "id": "table",
+            "type": "furniture",
+            "position": {
+              "x": 2,
+              "y": 0,
+              "z": 0.8
+            },
+            "distance": 1.3
+          },
+          {
+            "id": "chair",
+            "type": "furniture",
+            "position": {
+              "x": 1.5,
+              "y": 1,
+              "z": 0.5
+            },
+            "distance": 1.28
+          },
+          {
+            "id": "box",
+            "type": "object",
+            "position": {
+              "x": 2.5,
+              "y": 0.5,
+              "z": 0.3
+            },
+            "distance": 1.87
+          }
+        ],
+        "battery": 100.0,
+        "status": "walking"
+      },
+      "reasoning": {
+        "best_action": {
+          "type": "move",
+          "dx": 1,
+          "dy": 0,
+          "name": "forward",
+          "score": 0.5
+        },
+        "all_actions": [
+          {
+            "type": "move",
+            "dx": 1,
+            "dy": 0,
+            "name": "forward",
+            "score": 0.5
+          },
+          {
+            "type": "move",
+            "dx": -1,
+            "dy": 0,
+            "name": "backward",
+            "score": 0.5
+          },
+          {
+            "type": "move",
+            "dx": 0,
+            "dy": 1,
+            "name": "left",
+            "score": 0.5
+          },
+          {
+            "type": "move",
+            "dx": 0,
+            "dy": -1,
+            "name": "right",
+            "score": 0.5
+          },
+          {
+            "type": "turn",
+            "dtheta": 1,
+            "name": "turn_left",
+            "score": 0.5
+          },
+          {
+            "type": "turn",
+            "dtheta": -1,
+            "name": "turn_right",
+            "score": 0.5
+          },
+          {
+            "type": "stop",
+            "name": "stop",
+            "score": 0.5
+          }
+        ],
+        "reasoning": "Best action: forward (score: 0.50)"
+      },
+      "prediction": {
+        "future_position": {
+          "x": 0.7999999999999999,
+          "y": 0.0,
+          "z": 0.8
+        },
+        "future_objects": [
+          {
+            "id": "table",
+            "type": "furniture",
+            "position": {
+              "x": 2,
+              "y": 0,
+              "z": 0.8
+            },
+            "distance": 1.2
+          },
+          {
+            "id": "chair",
+            "type": "furniture",
+            "position": {
+              "x": 1.5,
+              "y": 1,
+              "z": 0.5
+            },
+            "distance": 1.22
+          },
+          {
+            "id": "box",
+            "type": "object",
+            "position": {
+              "x": 2.5,
+              "y": 0.5,
+              "z": 0.3
+            },
+            "distance": 1.77
+          }
+        ],
+        "confidence": 0.8
+      },
+      "decision": {
+        "action": {
+          "type": "move",
+          "dx": 1,
+          "dy": 0,
+          "name": "forward",
+          "score": 0.5
+        },
+        "tally": {
+          "approve": 16,
+          "amend": 10,
+          "reject": 7
+        },
+        "quorum_met": false,
+        "decision": "revise"
+      },
+      "result": {
+        "action": "forward",
+        "position": {
+          "x": 0.9999999999999999,
+          "y": 0.0,
+          "z": 0.8
+        },
+        "status": "walking",
+        "step": 8,
+        "sigil": {
+          "payload_hash": "55981630bfe6a632adb65a71fe502b73afd4bcff9a8d34a7be229cd8b5b14098",
+          "prev_hash": "b55fbcd2257da6afe4c4efb26b6308cd92fc8d0ebaa05ef58dd122da34bee660",
+          "root_hash": "ef6c8077a6c78680b0ffe564839cd06f4d7e6fe8fb7e1ee3a0f96f759b57ca49"
+        }
+      }
+    },
+    {
+      "perception": {
+        "position": {
+          "x": 0.9999999999999999,
+          "y": 0.0,
+          "z": 0.8
+        },
+        "orientation": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0
+        },
+        "nearby_objects": [
+          {
+            "id": "table",
+            "type": "furniture",
+            "position": {
+              "x": 2,
+              "y": 0,
+              "z": 0.8
+            },
+            "distance": 1.2
+          },
+          {
+            "id": "chair",
+            "type": "furniture",
+            "position": {
+              "x": 1.5,
+              "y": 1,
+              "z": 0.5
+            },
+            "distance": 1.22
+          },
+          {
+            "id": "box",
+            "type": "object",
+            "position": {
+              "x": 2.5,
+              "y": 0.5,
+              "z": 0.3
+            },
+            "distance": 1.77
+          }
+        ],
+        "battery": 100.0,
+        "status": "walking"
+      },
+      "reasoning": {
+        "best_action": {
+          "type": "move",
+          "dx": 1,
+          "dy": 0,
+          "name": "forward",
+          "score": 0.5
+        },
+        "all_actions": [
+          {
+            "type": "move",
+            "dx": 1,
+            "dy": 0,
+            "name": "forward",
+            "score": 0.5
+          },
+          {
+            "type": "move",
+            "dx": -1,
+            "dy": 0,
+            "name": "backward",
+            "score": 0.5
+          },
+          {
+            "type": "move",
+            "dx": 0,
+            "dy": 1,
+            "name": "left",
+            "score": 0.5
+          },
+          {
+            "type": "move",
+            "dx": 0,
+            "dy": -1,
+            "name": "right",
+            "score": 0.5
+          },
+          {
+            "type": "turn",
+            "dtheta": 1,
+            "name": "turn_left",
+            "score": 0.5
+          },
+          {
+            "type": "turn",
+            "dtheta": -1,
+            "name": "turn_right",
+            "score": 0.5
+          },
+          {
+            "type": "stop",
+            "name": "stop",
+            "score": 0.5
+          }
+        ],
+        "reasoning": "Best action: forward (score: 0.50)"
+      },
+      "prediction": {
+        "future_position": {
+          "x": 0.8999999999999999,
+          "y": 0.0,
+          "z": 0.8
+        },
+        "future_objects": [
+          {
+            "id": "table",
+            "type": "furniture",
+            "position": {
+              "x": 2,
+              "y": 0,
+              "z": 0.8
+            },
+            "distance": 1.1
+          },
+          {
+            "id": "chair",
+            "type": "furniture",
+            "position": {
+              "x": 1.5,
+              "y": 1,
+              "z": 0.5
+            },
+            "distance": 1.17
+          },
+          {
+            "id": "box",
+            "type": "object",
+            "position": {
+              "x": 2.5,
+              "y": 0.5,
+              "z": 0.3
+            },
+            "distance": 1.68
+          }
+        ],
+        "confidence": 0.8
+      },
+      "decision": {
+        "action": {
+          "type": "move",
+          "dx": 1,
+          "dy": 0,
+          "name": "forward",
+          "score": 0.5
+        },
+        "tally": {
+          "approve": 16,
+          "amend": 10,
+          "reject": 7
+        },
+        "quorum_met": false,
+        "decision": "revise"
+      },
+      "result": {
+        "action": "forward",
+        "position": {
+          "x": 0.9999999999999999,
+          "y": 0.0,
+          "z": 0.8
+        },
+        "status": "walking",
+        "step": 9,
+        "sigil": {
+          "payload_hash": "f3e3f16aef727ac3202c2a134e7972ff8c59c1bd302d977e20ad11a1c015425a",
+          "prev_hash": "55981630bfe6a632adb65a71fe502b73afd4bcff9a8d34a7be229cd8b5b14098",
+          "root_hash": "91d0da24f0002a3a7f34d146f17932ca1653b9e55fc5f08414cbdc79da9701aa"
+        }
+      }
+    },
+    {
+      "perception": {
+        "position": {
+          "x": 0.9999999999999999,
+          "y": 0.0,
+          "z": 0.8
+        },
+        "orientation": {
+          "roll": 0,
+          "pitch": 0,
+          "yaw": 0
+        },
+        "nearby_objects": [
+          {
+            "id": "table",
+            "type": "furniture",
+            "position": {
+              "x": 2,
+              "y": 0,
+              "z": 0.8
+            },
+            "distance": 1.1
+          },
+          {
+            "id": "chair",
+            "type": "furniture",
+            "position": {
+              "x": 1.5,
+              "y": 1,
+              "z": 0.5
+            },
+            "distance": 1.17
+          },
+          {
+            "id": "box",
+            "type": "object",
+            "position": {
+              "x": 2.5,
+              "y": 0.5,
+              "z": 0.3
+            },
+            "distance": 1.68
+          }
+        ],
+        "battery": 100.0,
+        "status": "walking"
+      },
+      "reasoning": {
+        "best_action": {
+          "type": "move",
+          "dx": 1,
+          "dy": 0,
+          "name": "forward",
+          "score": 0.5
+        },
+        "all_actions": [
+          {
+            "type": "move",
+            "dx": 1,
+            "dy": 0,
+            "name": "forward",
+            "score": 0.5
+          },
+          {
+            "type": "move",
+            "dx": -1,
+            "dy": 0,
+            "name": "backward",
+            "score": 0.5
+          },
+          {
+            "type": "move",
+            "dx": 0,
+            "dy": 1,
+            "name": "left",
+            "score": 0.5
+          },
+          {
+            "type": "move",
+            "dx": 0,
+            "dy": -1,
+            "name": "right",
+            "score": 0.5
+          },
+          {
+            "type": "turn",
+            "dtheta": 1,
+            "name": "turn_left",
+            "score": 0.5
+          },
+          {
+            "type": "turn",
+            "dtheta": -1,
+            "name": "turn_right",
+            "score": 0.5
+          },
+          {
+            "type": "stop",
+            "name": "stop",
+            "score": 0.5
+          }
+        ],
+        "reasoning": "Best action: forward (score: 0.50)"
+      },
+      "prediction": {
+        "future_position": {
+          "x": 0.9999999999999999,
+          "y": 0.0,
+          "z": 0.8
+        },
+        "future_objects": [
+          {
+            "id": "table",
+            "type": "furniture",
+            "position": {
+              "x": 2,
+              "y": 0,
+              "z": 0.8
+            },
+            "distance": 1.0
+          },
+          {
+            "id": "chair",
+            "type": "furniture",
+            "position": {
+              "x": 1.5,
+              "y": 1,
+              "z": 0.5
+            },
+            "distance": 1.12
+          },
+          {
+            "id": "door",
+            "type": "structure",
+            "position": {
+              "x": 3,
+              "y": 0,
+              "z": 1
+            },
+            "distance": 2.0
+          },
+          {
+            "id": "box",
+            "type": "object",
+            "position": {
+              "x": 2.5,
+              "y": 0.5,
+              "z": 0.3
+            },
+            "distance": 1.58
+          }
+        ],
+        "confidence": 0.8
+      },
+      "decision": {
+        "action": {
+          "type": "move",
+          "dx": 1,
+          "dy": 0,
+          "name": "forward",
+          "score": 0.5
+        },
+        "tally": {
+          "approve": 16,
+          "amend": 10,
+          "reject": 7
+        },
+        "quorum_met": false,
+        "decision": "revise"
+      },
+      "result": {
+        "action": "forward",
+        "position": {
+          "x": 0.9999999999999999,
+          "y": 0.0,
+          "z": 0.8
+        },
+        "status": "walking",
+        "step": 10,
+        "sigil": {
+          "payload_hash": "2eeb8eea4c991d599f83849ef230636609f7555b96de1ead0e84d1f74c6093e1",
+          "prev_hash": "f3e3f16aef727ac3202c2a134e7972ff8c59c1bd302d977e20ad11a1c015425a",
+          "root_hash": "437e96095c2008d389becb849a19a3c03d06462eac03e26c4e4a8c81ad096533"
+        }
+      }
+    }
+  ],
+  "final_state": {
+    "robot": {
+      "position": {
+        "x": 0.9999999999999999,
+        "y": 0.0,
+        "z": 0.8
+      },
+      "orientation": {
+        "roll": 0,
+        "pitch": 0,
+        "yaw": 0
+      },
+      "joints": {
+        "left_hip": 0,
+        "left_knee": 0,
+        "left_ankle": 0,
+        "right_hip": 0,
+        "right_knee": 0,
+        "right_ankle": 0,
+        "waist": 0,
+        "left_shoulder": 0,
+        "left_elbow": 0,
+        "left_wrist": 0,
+        "right_shoulder": 0,
+        "right_elbow": 0,
+        "right_wrist": 0
+      },
+      "battery": 100.0,
+      "status": "walking",
+      "timestamp": "2026-07-27T05:40:46.531055+00:00"
+    },
+    "step_count": 10,
+    "action_history": 10,
+    "sigil_chain_length": 10,
+    "environment_objects": 4
+  },
+  "timestamp": "2026-07-27T05:40:46.531068+00:00"
+}

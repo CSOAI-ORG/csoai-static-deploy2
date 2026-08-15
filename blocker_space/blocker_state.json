@@ -1,0 +1,123 @@
+{
+  "state": {
+    "total_nodes": 9,
+    "active_nodes": 7,
+    "active_list": [
+      "kaggle",
+      "huggingface",
+      "oracle",
+      "ollama_local",
+      "qwen_api",
+      "gemini_api",
+      "github"
+    ],
+    "status": {
+      "kaggle": true,
+      "huggingface": true,
+      "oracle": true,
+      "ollama_local": true,
+      "qwen_api": true,
+      "gemini_api": true,
+      "deepseek_api": false,
+      "github": true,
+      "cloudflare": false
+    },
+    "timestamp": "2026-07-27T13:04:25.099629+00:00"
+  },
+  "nodes": {
+    "kaggle": {
+      "provider": "Kaggle",
+      "type": "gpu",
+      "cost": "$0",
+      "capabilities": [
+        "training",
+        "competitions",
+        "datasets",
+        "leaderboard"
+      ]
+    },
+    "huggingface": {
+      "provider": "HuggingFace",
+      "type": "model_hub",
+      "cost": "$0",
+      "capabilities": [
+        "models",
+        "datasets",
+        "leaderboard",
+        "spaces"
+      ]
+    },
+    "oracle": {
+      "provider": "Oracle Cloud",
+      "type": "cpu",
+      "cost": "$0",
+      "capabilities": [
+        "inference",
+        "training",
+        "storage",
+        "always-on"
+      ]
+    },
+    "ollama_local": {
+      "provider": "Local",
+      "type": "inference",
+      "cost": "$0",
+      "capabilities": [
+        "inference",
+        "local_models"
+      ]
+    },
+    "qwen_api": {
+      "provider": "Alibaba Cloud",
+      "type": "api",
+      "cost": "$0",
+      "capabilities": [
+        "inference",
+        "reasoning",
+        "code",
+        "vision"
+      ]
+    },
+    "gemini_api": {
+      "provider": "Google",
+      "type": "api",
+      "cost": "$0",
+      "capabilities": [
+        "inference",
+        "reasoning",
+        "vision"
+      ]
+    },
+    "deepseek_api": {
+      "provider": "DeepSeek",
+      "type": "api",
+      "cost": "$0.14/M tokens",
+      "capabilities": [
+        "inference",
+        "reasoning",
+        "code"
+      ]
+    },
+    "github": {
+      "provider": "GitHub",
+      "type": "code",
+      "cost": "$0",
+      "capabilities": [
+        "code",
+        "ci_cd",
+        "storage"
+      ]
+    },
+    "cloudflare": {
+      "provider": "Cloudflare",
+      "type": "deployment",
+      "cost": "$0",
+      "capabilities": [
+        "deployment",
+        "cdn",
+        "functions"
+      ]
+    }
+  },
+  "timestamp": "2026-07-27T13:04:25.099651+00:00"
+}

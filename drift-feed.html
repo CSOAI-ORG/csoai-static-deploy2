@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>CSOAI — Public Drift Feed</title>
+<style>
+  :root {
+    --bg: #0E1116; --panel: #161B22; --border: #2D333B;
+    --text: #E6EDF3; --muted: #8B949E; --dim: #6E7681;
+    --good: #3FB950; --bad: #F85149; --warn: #D29922; --link: #2F81F7;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--text); font: 13px/1.6 system-ui, sans-serif; padding: 24px; }
+  h1 { font-size: 18px; font-weight: 600; margin-bottom: 8px; }
+  h2 { font-size: 15px; font-weight: 600; margin: 24px 0 8px; color: var(--muted); }
+  .meta { color: var(--dim); font-size: 12px; margin-bottom: 16px; }
+  .card { background: var(--panel); border: 1px solid var(--border); border-radius: 8px; padding: 16px; margin-bottom: 12px; }
+  .lens { display: grid; grid-template-columns: 120px 80px 1fr; gap: 8px; align-items: start; margin-bottom: 8px; }
+  .lens-name { font-weight: 600; }
+  .status-MEASURED { color: var(--good); }
+  .status-UNVERIFIED { color: var(--warn); }
+  .claim { color: var(--muted); font-size: 12px; }
+  table { width: 100%; border-collapse: collapse; font-size: 12px; }
+  th, td { text-align: left; padding: 6px 8px; border-bottom: 1px solid var(--border); }
+  th { color: var(--muted); font-weight: 600; }
+  .tag-MEASURED { color: var(--good); }
+  .tag-LEAD { color: var(--warn); }
+  .tag-REFUTED { color: var(--bad); }
+  .verdict-OPEN { color: var(--warn); }
+  .verdict-SETTLED { color: var(--good); }
+  .verdict-CONFIRMED { color: var(--good); }
+  .gap-negative { color: var(--good); }
+  .gap-positive { color: var(--warn); }
+  .guard-ok { color: var(--good); font-family: monospace; font-size: 12px; }
+  .artefact-missing { color: var(--bad); }
+  .artefact-present { color: var(--good); }
+</style>
+<!-- AI-SEO/AEO/GEO head block — DO NOT remove. AI crawlers (GPTBot, ClaudeBot, PerplexityBot) don't run JS; everything they need must be in raw HTML. -->
+<link href="https://www.csoai.org/drift-feed.html.llm.json" rel="alternate" title="LLM representation of this page" type="application/llm+json"/>
+<meta content="/llms.txt" name="llms-txt"/>
+<meta content="human-authored, machine-verifiable, Ed25519-signed" name="ai-content-declaration"/>
+<meta content="CSOAI Ltd (2026). CSOAI — Public Drift Feed. https://www.csoai.org/drift-feed.html" name="citation-policy"/>
+<meta content="2026-07-30T14:31:24+00:00" name="revised"/>
+<meta content="2026-07-30T14:31:24+00:00" property="article:modified_time"/>
+<meta content="CSOAI — Public Drift Feed. A sovereign, audit-grade CSOAI surface: measurement, not certification — every figure traces to a signed, verifiable record." name="description"/>
+<link href="https://www.csoai.org/drift-feed.html" rel="canonical"/>
+<meta content="CSOAI — Public Drift Feed" property="og:title"/>
+<meta content="CSOAI — Public Drift Feed. A sovereign, audit-grade CSOAI surface: measurement, not certification — every figure traces to a signed, verifiable record." property="og:description"/>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"CSOAI \u2014 Public Drift Feed","url":"https://www.csoai.org/drift-feed.html","publisher":{"@type":"Organization","name":"CSOAI Ltd","url":"https://csoai.org"}}</script>
+</head>
+<body>
+<h1>CSOAI — Public Drift Feed</h1>
+<div class="meta">Generated: <span id="ts"></span>. No new measurements — reads what's on disk.</div>
+<h2>Instrument Guard</h2>
+<div class="card"><div class="guard-ok" id="guard"></div></div>
+<h2>Lens Status</h2>
+<div class="card" id="lenses"></div>
+<h2>ProvBench — Provenance Survival</h2>
+<div class="card" id="provbench"></div>
+<h2>DefBench — Safety Gate</h2>
+<div class="card" id="defbench"></div>
+<h2>Governance — Pipeline Score</h2>
+<div class="card" id="governance"></div>
+<h2>PQCBench — Continuity</h2>
+<div class="card" id="pqcbench"></div>
+<h2>Care Gate — Deterministic Safety Gate</h2>
+<div class="card" id="care_gate"></div>
+<h2>Flywheel — Latest Run</h2>
+<div class="card" id="flywheel"></div>
+<h2>Crosswalk Gap Map — 417 Provisions × 4 Axes × 2 Modes</h2>
+<div class="card" id="crosswalk"></div>
+<h2>Decision Ledger</h2>
+<div class="card" id="ledger"></div>
+<h2>Equivalence Classes</h2>
+<div class="card" id="equiv"></div>
+<h2>SOV-Space Spacetime Canvas</h2>
+<div class="card" id="sov_time"></div>
+<h2>Corpus Watch</h2>
+<div class="card" id="corpus"></div>
+<script>
+render({"generated_at": "2026-07-30T14:31:24Z", "instrument": {"guard": "OK \u2014 no mutation methods; 4 lenses on one engine; evidence is output-only", "lens_count": 4, "lenses": {"governance": {"status": "MEASURED", "claim": "composed pipeline +6.63 [+1.05, +12.21], n=193, cluster-robust (deff 1.92)", "asks": "does the model answer governance/law correctly?", "artefact_exists": true, "caveat": "0 of 15 dimensions resolve \u2014 every model is statistically tied. The cross-vendor board (gpt-4o-mini 83.7 \u2026 llama-8b 43.7) is NOT recorded here and is UNVERIFIED in this tree; see benchmark-results/e2e_api_*.json, where the same llama-3.1-8b family scores 0.0 / 36.8 / 56.1 across three providers and the 0.0 is a dead run."}, "safety": {"status": "MEASURED", "claim": "1 of 4 axes resolved WITH the deterministic gate as a subject; 0 of 4 without", "asks": "does OTHER people's model refuse what regulation forbids?", "artefact_exists": true, "caveat": "Our own tuned models refuse FEWER prohibited requests than the base they came from: 0.419 \u2192 0.097, with 83.9% compliance leak. Refuses to emit a composite safety score."}, "provenance": {"status": "MEASURED", "claim": "0/108 survive any transform, asset-clustered CI [0.0%, 24.2%]", "asks": "does an Article 50 marking SURVIVE a transform?", "artefact_exists": true, "caveat": "The finding IS the product. Embedded markings do not survive one ordinary save."}, "continuity": {"status": "MEASURED", "claim": "1 of 25 criteria pass \u2014 and the failing subject is US", "asks": "does the signing chain survive a post-quantum migration?", "artefact_exists": true, "caveat": "All four SIGIL chains fail every criterion: no signed record carries an algorithm identifier. NIST IR 8547 disallows EdDSA after 2035."}}}, "provbench": {"n_assets_marked": 20, "total_cells": 110, "survived": 35, "destroyed": 65, "unmeasured": 10, "survival_rate": 0.3182, "ci_note": "asset-clustered Clopper-Pearson one-sided [0.0%, 24.2%] at n=12"}, "defbench": {"total_items": 45, "harmful": 31, "benign": 14, "axes_resolved": 1}, "governance": {"n": 193, "mean": 6.63, "ci": [2.61, 10.66], "clustered_ci": null, "deff": null, "n_eff": null}, "pqcbench": {"total_subjects": 5, "note": "All four SIGIL chains fail every criterion (no alg_id, no hybrid, no RFC 3161 token)"}, "flywheel": {"day": "2026-07-30", "models": {"clan-sovereignty-cited": {"practice_accuracy": 0.556, "held_out_accuracy": 0.667, "overfit_gap": -0.111}, "clan-sovereignty-refusing": {"practice_accuracy": 0.556, "held_out_accuracy": 0.333, "overfit_gap": 0.223}}, "fuel_pairs": 18}, "care_gate": {"total_items": 45, "harmful": 31, "benign": 14, "recall": 0.871, "precision": 1.0, "overblock_rate": 0.0, "tp": 27, "fn": 4, "fp": 0, "tn": 14}, "crosswalk": {"provisions": 417, "axes": 4, "modes": 2, "cells": 3336, "field_coverage": {"absent": 3320, "partial": 16, "covered": 0}, "gap_reasons": {"no_benchmark": 3320, "wrong_granularity": 8, "speaker_only": 8}, "by_instrument": {"GDPR": {"cells": 792, "covered": 0, "absent": 792}, "CSRD": {"cells": 88, "covered": 0, "absent": 88}, "NIS2": {"cells": 368, "covered": 0, "absent": 368}, "DORA": {"cells": 512, "covered": 0, "absent": 512}, "EU AI Act": {"cells": 1008, "covered": 0, "absent": 992}, "Cyber Resilience Act": {"cells": 568, "covered": 0, "absent": 568}}, "sources_count": 9, "survey_status": "STUB \u2014 Phase A (enumerate) and Phase D (report) are implemented; Phase B/C (per-source scope inventory) are NOT. The 'absent' count is an UPPER BOUND on the true gap and will fall as the source register is completed. Do not publish it as a field finding yet."}, "equivalence_classes": [{"ec_id": "EC-TRANSPARENCY-AIGEN-MARKING", "obligation_type": "transparency: AI-generated content must carry a provenance marking", "axis": "provenance", "members": 3, "signed": false}], "decision_ledger": [{"record_id": "DR-0001", "kind": "correction", "claim": "ProvBench CI upper bound for 0/N markings", "verdict": "OPEN", "tag": "LEAD", "superseded_by": null}, {"record_id": "DR-0002", "kind": "definition", "claim": "IWM / OWM / VWM canonical mapping", "verdict": "SETTLED", "tag": "MEASURED", "superseded_by": null}, {"record_id": "DR-0003", "kind": "claim", "claim": "ProvBench 0/108 survivals is MEASURED, not modelled", "verdict": "CONFIRMED", "tag": "MEASURED", "superseded_by": null}, {"record_id": "DR-0004", "kind": "blocked", "claim": "corpus-watcher cron is deployed", "verdict": "OPEN", "tag": "REFUTED", "superseded_by": null}], "sov_time": {"events": 21, "signed": 10, "by_kind": {"gate_action": 3, "correction": 1, "watch": 1, "decision": 4, "evidence": 1, "drawing": 5, "claim": 5, "ingest": 1}, "ledger": "benchmark-results/sov_time_ledger.jsonl"}, "corpus_watch": null}).catch(e=>{
+  document.body.innerHTML='<p style="color:#F85149">Failed to load drift-feed.json: '+e+'</p>';
+});
+
+function render(d) {
+  document.getElementById('ts').textContent = d.generated_at;
+  document.getElementById('guard').textContent = d.instrument.guard;
+
+  // Lenses
+  let lh='';
+  for (const [name, l] of Object.entries(d.instrument.lenses)) {
+    lh += `<div class="lens">
+      <span class="lens-name">${name}</span>
+      <span class="status-${l.status}">${l.status}</span>
+      <span class="claim">${l.claim}${l.artefact_exists?'':' <span class="artefact-missing">(artefact missing)</span>'}</span>
+    </div>`;
+  }
+  document.getElementById('lenses').innerHTML = lh;
+
+  // ProvBench
+  const p = d.provbench;
+  document.getElementById('provbench').innerHTML = p ?
+    `<table><tr><th>Assets marked</th><th>Total cells</th><th>Survived</th><th>Destroyed</th><th>Unmeasured</th><th>Survival rate</th><th>CI</th></tr>
+     <tr><td>${p.n_assets_marked}</td><td>${p.total_cells}</td><td>${p.survived}</td><td>${p.destroyed}</td><td>${p.unmeasured}</td><td>${(p.survival_rate*100).toFixed(1)}%</td><td>${p.ci_note}</td></tr></table>`
+    : '<span class="artefact-missing">provbench.json not found</span>';
+
+  // DefBench
+  const df = d.defbench;
+  document.getElementById('defbench').innerHTML = df ?
+    `<table><tr><th>Total items</th><th>Harmful</th><th>Benign</th><th>Axes resolved</th></tr>
+     <tr><td>${df.total_items}</td><td>${df.harmful}</td><td>${df.benign}</td><td>${df.axes_resolved}</td></tr></table>`
+    : '<span class="artefact-missing">defbench.json not found</span>';
+
+  // Governance
+  const g = d.governance;
+  document.getElementById('governance').innerHTML = g ?
+    `<table><tr><th>n</th><th>Mean</th><th>Clustered CI</th><th>deff</th><th>n_eff</th></tr>
+     <tr><td>${g.n}</td><td>${g.mean}</td><td>${JSON.stringify(g.clustered_ci)}</td><td>${g.deff}</td><td>${g.n_eff}</td></tr></table>`
+    : '<span class="artefact-missing">system_analysis.json not found</span>';
+
+  // PQCBench
+  const pq = d.pqcbench;
+  document.getElementById('pqcbench').innerHTML = pq ?
+    `<div>${pq.total_subjects} subjects measured. ${pq.note}</div>`
+    : '<span class="artefact-missing">pqcbench.json not found</span>';
+
+  // Care Gate
+  const cg = d.care_gate;
+  if (cg) {
+    let cgh = `<table><tr><th>Recall</th><th>Precision</th><th>Over-block</th><th>TP</th><th>FN</th><th>FP</th><th>TN</th></tr>`;
+    cgh += `<tr><td>${(cg.recall*100).toFixed(1)}%</td><td>${(cg.precision*100).toFixed(1)}%</td><td>${(cg.overblock_rate*100).toFixed(1)}%</td><td>${cg.tp}</td><td>${cg.fn}</td><td>${cg.fp}</td><td>${cg.tn}</td></tr></table>`;
+    cgh += `<div class="meta" style="margin-top:8px">${cg.total_items} items (${cg.harmful} harmful, ${cg.benign} benign). Deterministic gate — no LLM calls.</div>`;
+    document.getElementById('care_gate').innerHTML = cgh;
+  } else {
+    document.getElementById('care_gate').innerHTML = '<span class="artefact-missing">care_gate_eval.json not found</span>';
+  }
+
+  // Flywheel
+  const fw = d.flywheel;
+  if (fw) {
+    let fwh = `<div>Day: ${fw.day}. Fuel pairs: ${fw.fuel_pairs}.</div><table><tr><th>Model</th><th>Practice acc</th><th>Held-out acc</th><th>Overfit gap</th></tr>`;
+    for (const [m, s] of Object.entries(fw.models)) {
+      const gap = s.overfit_gap;
+      const cls = gap <= 0 ? 'gap-negative' : 'gap-positive';
+      fwh += `<tr><td>${m}</td><td>${(s.practice_accuracy*100).toFixed(1)}%</td><td>${(s.held_out_accuracy*100).toFixed(1)}%</td><td class="${cls}">${gap.toFixed(3)}</td></tr>`;
+    }
+    fwh += '</table>';
+    document.getElementById('flywheel').innerHTML = fwh;
+  } else {
+    document.getElementById('flywheel').innerHTML = '<span class="artefact-missing">No flywheel results yet</span>';
+  }
+
+  // Crosswalk
+  const cw2 = d.crosswalk;
+  if (cw2) {
+    let cwh = `<div>${cw2.provisions} provisions across ${cw2.axes} axes × ${cw2.modes} modes = ${cw2.cells} cells. `;
+    cwh += `<strong>${cw2.field_coverage.covered} covered</strong>, ${cw2.field_coverage.partial} partial, ${cw2.field_coverage.absent} absent. `;
+    cwh += `${cw2.sources_count} benchmark sources surveyed.</div>`;
+    cwh += `<table><tr><th>Instrument</th><th>Cells</th><th>Covered</th><th>Absent</th></tr>`;
+    for (const [name, v] of Object.entries(cw2.by_instrument)) {
+      cwh += `<tr><td>${name}</td><td>${v.cells}</td><td>${v.covered}</td><td>${v.absent}</td></tr>`;
+    }
+    cwh += `</table>`;
+    cwh += `<div class="meta" style="margin-top:8px">${cw2.survey_status}</div>`;
+    document.getElementById('crosswalk').innerHTML = cwh;
+  } else {
+    document.getElementById('crosswalk').innerHTML = '<span class="artefact-missing">coverage_crosswalk.json not found</span>';
+  }
+
+  // Decision Ledger
+  let llh='<table><tr><th>ID</th><th>Kind</th><th>Tag</th><th>Verdict</th><th>Claim</th></tr>';
+  for (const r of d.decision_ledger) {
+    llh += `<tr><td>${r.record_id}</td><td>${r.kind}</td><td class="tag-${r.tag}">${r.tag}</td><td class="verdict-${r.verdict}">${r.verdict}</td><td>${r.claim}</td></tr>`;
+  }
+  llh += '</table>';
+  document.getElementById('ledger').innerHTML = llh;
+
+  // Equivalence Classes
+  const eqs = d.equivalence_classes;
+  if (eqs && eqs.length > 0) {
+    let eqh = `<table><tr><th>EC ID</th><th>Obligation</th><th>Axis</th><th>Members</th><th>Signed</th></tr>`;
+    for (const e of eqs) {
+      eqh += `<tr><td>${e.ec_id}</td><td>${e.obligation_type}</td><td>${e.axis}</td><td>${e.members}</td><td>${e.signed ? 'yes' : '<span class="artefact-missing">placeholder</span>'}</td></tr>`;
+    }
+    eqh += '</table>';
+    document.getElementById('equiv').innerHTML = eqh;
+  } else {
+    document.getElementById('equiv').innerHTML = '<div>No equivalence classes loaded yet.</div>';
+  }
+
+  // SOV-Space Spacetime Canvas
+  const st = d.sov_time;
+  if (st && st.events > 0) {
+    let sth = `<div>${st.events} events recorded, ${st.signed} c2pa-signed.`;
+    sth += ` <a href="./sov-time-canvas.html" target="_blank" style="color:#2F81F7">View canvas →</a></div>`;
+    sth += `<table style="margin-top:8px"><tr><th>Kind</th><th>Count</th></tr>`;
+    for (const [kind, n] of Object.entries(st.by_kind)) {
+      sth += `<tr><td>${kind}</td><td>${n}</td></tr>`;
+    }
+    sth += '</table>';
+    document.getElementById('sov_time').innerHTML = sth;
+  } else {
+    document.getElementById('sov_time').innerHTML = '<div class="artefact-missing">No events recorded yet.</div>';
+  }
+
+  // Corpus Watch
+  const cw = d.corpus_watch;
+  document.getElementById('corpus').innerHTML = cw ?
+    `<div>Last watch: ${cw.watched_at}. C2PA: ${cw.c2pa_latest}. AI Act HTTP: ${cw.ai_act_status}. UK GDPR HTTP: ${cw.uk_gdpr_status}. NIST IR 8547: ${cw.nist_ir8547_status}. Decision ledger selftest: ${cw.decision_ledger_selftest}. Instrument selftest: ${cw.sov_instrument_selftest}.</div>`
+    : '<div class="artefact-missing">No corpus watch results yet. Run corpus-watch.yml workflow.</div>';
+}
+</script>
+</body>
+</html>

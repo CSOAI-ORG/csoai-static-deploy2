@@ -1,0 +1,34 @@
+{
+  "generated": "2026-08-04",
+  "tracker_item": 7,
+  "finding": "3 csoai HF datasets have viewer:false; the tracker listed 2 and missed provbench (the flagship).",
+  "datasets": {
+    "csoai/provbench": {
+      "cause": "RuntimeError: Dataset scripts are no longer supported, but found provbench.py",
+      "fix": "RENAME provbench.py -> provbench_harness.py. NON-DESTRUCTIVE.",
+      "why_not_delete": "README.md lists `provbench.py` as 'The full measurement harness (reproducible)' and the arXiv preprint points at it twice. Deleting it breaks the README table and removes the artifact the paper cites.",
+      "why_rename_works": "HF only treats a script named after the dataset (<repo>.py) as a loading script. Renaming breaks that association; the file stays, the viewer unblocks.",
+      "risk": "none \u2014 file retained, only its filename changes; update the README table row to match."
+    },
+    "csoai/govbench": {
+      "cause": "CastError \u2014 7 result documents, 6 different schemas",
+      "fix": "Replace repo contents with evidence/harness/freeze/latest/govbench-items.jsonl (193 rows, 1 schema)",
+      "note": "The repo holds RUN OUTPUTS, not the benchmark. nvidia_leaderboard.json holds ONE record (meta/llama-3.1-8b-instruct) under an NVIDIA-implying filename and must not become the public face."
+    },
+    "csoai/aiact-frozen-split-harness": {
+      "cause": "CastError \u2014 schema uses MODEL NAMES AS STRUCT KEYS (models.\"sov33-unified:latest\".n_scored)",
+      "fix": "Reshape to long form: one row per (model, metric, value). A wide schema keyed by model name can never share a schema across files.",
+      "status": "RESHAPED + FIDELITY-VERIFIED, not pushed",
+      "artifact": "evidence/harness/freeze/latest/aiact-frozen-split-long.jsonl",
+      "shape": "24 rows, 15 models, 2 runs, ONE schema (16 fields)",
+      "fidelity": "156 field comparisons against both source files: every value matches, 0 models dropped",
+      "note": "12 of 24 rows carry an explicit `unmeasured` count \u2014 the honest-measurement discipline is already IN this data. The wide schema was hiding it: keyed by model name, the field was a struct member nobody could query. In long form it is a column you can filter on."
+    }
+  },
+  "separate_defect_found": {
+    "what": "PROVBENCH_ARXIV_PREPRINT_2026-07-30.md cites the harness as `~/clawd/csoai-static-deploy2/provbench.py` \u2014 a local laptop path \u2014 in a PUBLIC preprint.",
+    "impact": "Not reproducible by any reader, and it leaks a local filesystem layout into a research artifact whose selling point is reproducibility.",
+    "fix": "Cite the HF repo path or a permalinked commit URL instead.",
+    "owner": "paper author"
+  }
+}

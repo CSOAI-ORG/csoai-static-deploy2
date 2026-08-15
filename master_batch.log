@@ -1,0 +1,67 @@
+[2026-07-27 14:12:34] ======================================================================
+[2026-07-27 14:12:34]   MASTER BATCH RUNNER — STARTING
+[2026-07-27 14:12:34] ======================================================================
+[2026-07-27 14:12:34]   Cycles:     10
+[2026-07-27 14:12:34]   Phases:     eat, govbench, asi_evolution, stigmergy, distributed, deploy
+[2026-07-27 14:12:34]   Mode:       sequential
+[2026-07-27 14:12:34]   Delay:      0s between cycles
+[2026-07-27 14:12:34]   PID:        74703
+[2026-07-27 14:12:34] ======================================================================
+[2026-07-27 14:12:34] 
+======================================================================
+[2026-07-27 14:12:34]   CYCLE 1 START
+[2026-07-27 14:12:34] ======================================================================
+[2026-07-27 14:12:34] ─── CYCLE 1 (sequential) ───
+[2026-07-27 14:12:34]   [EAT] Running overnight benchmarks...
+[2026-07-27 14:12:53]   [EAT] PASS (18.9s)
+[2026-07-27 14:12:53]   [GovBench] Running governance benchmarks...
+[2026-07-27 14:27:53]   [GovBench] FAIL (900.0s)
+[2026-07-27 14:27:53]   [ASI Evolution] Running evolution cycle...
+[2026-07-27 14:47:53]   [ASI Evolution] FAIL (1200.3s)
+[2026-07-27 14:47:54]   [Stigmergy] Running stigmergy cycle...
+[2026-07-27 14:47:54]   [Stigmergy] PASS (0.1s)
+[2026-07-27 14:47:54]   [Distributed] Syncing distributed evolution...
+[2026-07-27 14:47:54]   [Distributed] PASS (0.1s)
+[2026-07-27 14:47:54]   [Deploy] Deploying to Cloudflare Pages...
+[2026-07-27 14:52:22]   [Deploy] FAIL (268.4s)
+[2026-07-27 14:52:22]   [Report] Generating cycle report...
+[2026-07-27 14:52:22]   [Report] 3/6 phases passed (2387.8s total)
+[2026-07-27 14:52:22]   Saved: /Users/nicholas/clawd/csoai-static-deploy2/batch_results/cycle_1.json
+[2026-07-27 14:52:22] 
+  CYCLE 1 COMPLETE — 3/6 passed (2388.2s)
+[2026-07-27 14:52:22] 
+======================================================================
+[2026-07-27 14:52:22]   CYCLE 2 START
+[2026-07-27 14:52:22] ======================================================================
+[2026-07-27 14:52:22] ─── CYCLE 2 (sequential) ───
+[2026-07-27 14:52:22]   [EAT] Running overnight benchmarks...
+[2026-07-27 14:53:00]   [EAT] PASS (37.4s)
+[2026-07-27 14:53:00]   [GovBench] Running governance benchmarks...
+[2026-07-27 15:08:00]   [GovBench] FAIL (900.0s)
+[2026-07-27 15:08:00]   [ASI Evolution] Running evolution cycle...
+[2026-07-27 15:08:00]   [ASI Evolution] FAIL (0.1s)
+[2026-07-27 15:08:00]   [Stigmergy] Running stigmergy cycle...
+[2026-07-27 15:08:00]   [Stigmergy] FAIL (0.0s)
+[2026-07-27 15:08:00]   [Distributed] Syncing distributed evolution...
+[2026-07-27 15:08:00]   [Distributed] FAIL (0.0s)
+[2026-07-27 15:08:00]   [Deploy] Deploying to Cloudflare Pages...
+[2026-07-27 15:10:20]   [Deploy] FAIL (140.5s)
+[2026-07-27 15:10:20]   [Report] Generating cycle report...
+[2026-07-27 15:10:20]   [Report] 1/6 phases passed (1078.0s total)
+[2026-07-27 15:10:20] 
+  FATAL ERROR: [Errno 28] No space left on device: '/Users/nicholas/clawd/csoai-static-deploy2/batch_results/cycle_2.json'
+Traceback (most recent call last):
+  File "/Users/nicholas/clawd/csoai-static-deploy2/master_batch.py", line 384, in main
+    cycle_file.write_text(json.dumps(report, indent=2, default=str))
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 809, in write_text
+    with self.open(mode='w', encoding=encoding, errors=errors, newline=newline) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Traceback (most recent call last):
+object address  : 0x107d5ce40
+object refcount : 3
+
+lost sys.stderr

@@ -1,0 +1,62 @@
+name: API Stability Guard — /api/* must stay JSON
+
+on:
+  push:
+    branches: [main]
+  schedule:
+    - cron: '23 * * * *'   # hourly, off :00
+  workflow_dispatch:
+
+jobs:
+  guard:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      # 2026-08-10 (JEEVES lane): csoai.org apex now 301-redirects to councilof.ai
+      # (commit f1f1a47 + apex-to-Pages binding restored). The /api/* surface is
+      # served by the Next.js client at councilof.ai; the Functions path on
+      # csoai-site.pages.dev is also live. Probe the real public surface
+      # (councilof.ai) and assert the JSON body parses with the expected keys,
+      # rather than asserting a specific Content-Type — Next.js serves API
+      # route bodies with content-type: text/html (default catch-all) and the
+      # body itself is valid JSON. The semantic check is "parseable + shape".
+      - name: Check /api/tools and /api/mcp return JSON with expected shape
+        id: api
+        run: |
+          set +e
+          T=$(curl -sL -o /tmp/api_tools.json -w '%{http_code}|%{content_type}' --max-time 30 https://councilof.ai/api/tools)
+          M=$(curl -sL -o /tmp/api_mcp.json    -w '%{http_code}|%{content_type}' --max-time 30 https://councilof.ai/api/mcp)
+          TS=$(curl -sL -o /tmp/api_tools_pages.json -w '%{http_code}|%{content_type}' --max-time 30 https://csoai-site.pages.dev/api/tools)
+          echo "councilof.ai/api/tools       : $T"
+          echo "councilof.ai/api/mcp         : $M"
+          echo "csoai-site.pages.dev/api/tools: $TS"
+          python3 - <<'PY'
+          import json, sys
+          for path, fname in [
+            ("councilof.ai/api/tools",        "/tmp/api_tools.json"),
+            ("councilof.ai/api/mcp",          "/tmp/api_mcp.json"),
+            ("csoai-site.pages.dev/api/tools","/tmp/api_tools_pages.json"),
+          ]:
+            with open(fname) as f:
+              body = f.read()
+            try:
+              d = json.loads(body)
+            except Exception as e:
+              print(f"❌ {path}: body did not parse as JSON ({e})")
+              print(f"   first 200 bytes: {body[:200]!r}")
+              sys.exit(1)
+            if path.endswith("/api/tools"):
+              t = d.get("tools") or []
+              assert len(t) > 0, f"{path}: 'tools' array empty/missing"
+              print(f"✅ {path}: parsed, tools={len(t)}")
+            elif path.endswith("/api/mcp"):
+              s = d.get("servers") or []
+              assert len(s) > 0, f"{path}: 'servers' array empty/missing"
+              print(f"✅ {path}: parsed, servers={len(s)}")
+          PY
+      - name: ai.txt must be plain text (not SPA shell)
+        run: |
+          CT=$(curl -sL -o /dev/null -w '%{content_type}' --max-time 30 https://councilof.ai/ai.txt)
+          echo "ai.txt: $CT"
+          [ "$CT" = "text/plain" ] || [ "$CT" = "text/plain; charset=utf-8" ] || { echo "❌ ai.txt not plain text: $CT"; exit 1; }
+          echo "✅ ai.txt plain text"

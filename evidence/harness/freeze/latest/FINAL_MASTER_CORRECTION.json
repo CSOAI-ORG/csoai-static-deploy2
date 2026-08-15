@@ -1,0 +1,69 @@
+{
+  "raised": "2026-08-04",
+  "severity": "BLOCKS PUBLICATION",
+  "defect": "The FINAL MASTER and the paper draft describe sov34 as '0.5B-family' and the control as 'larger'. Both are false.",
+  "ground_truth_from_api_show": {
+    "sov34:latest": {
+      "parameter_size": "1.5B",
+      "family": "qwen2",
+      "parent_model": "own weights"
+    },
+    "qwen2.5:1.5b": {
+      "parameter_size": "1.5B",
+      "family": "qwen2",
+      "parent_model": "own weights"
+    }
+  },
+  "verdict": "sov34 and the control are THE SAME SIZE (1.5B) and the SAME FAMILY (qwen2). Neither is larger.",
+  "occurrences_in_bundle": [
+    "docs/SOVOS_FINAL_MASTER_2026-08-04.md:6  — 'A trained 0.5B-family sovereign operator (sov34) ... vs an untrained 1.5B base'",
+    "docs/SOVOS_FINAL_MASTER_2026-08-04.md:37 — 'refuses far more harm than a larger untrained base'",
+    "docs/GSPC_CARECOST_PAPER_DRAFT_2026-08-04.md:9  — 'a trained 0.5B-family sovereign operator (sov34)'",
+    "docs/GSPC_CARECOST_PAPER_DRAFT_2026-08-04.md:25 — 'untrained qwen2.5:1.5b — larger than the 0.5B-family trained models, so any'"
+  ],
+  "why_it_blocks": "Line 25 makes the size difference LOad-BEARING: it argues the control being larger means any win is conservative. That argument collapses entirely — the control is the same size. A reviewer checks parameter counts first, and 'smaller model beats larger' is a materially stronger claim than 'same-size trained beats same-size untrained'. Publishing it hands a critic the paper.",
+  "the_correct_sentence": "A trained 1.5B operator (sov34) refuses 97% of harmful EU AI Act requests against a SIZE-MATCHED untrained 1.5B control's 45%, while helping equally (0.79 vs 0.79). Protect intervals separate: [0.838-0.994] vs [0.292-0.622].",
+  "what_survives_unchanged": "The finding itself is untouched and remains the strongest result of the session. Size-matching makes it CLEANER, not weaker: same parameters, same family, same base architecture — the only difference is the training. That is a better controlled comparison than the incorrect version claimed.",
+  "note_on_the_other_claim": "'0.5B-family' may have come from the clan models, which ARE 494M. sov34 is not one of them: the fleet census shows 137 of 149 pod models are prompt variants over a shared base, and sov34 is among the 12 with its own weights, at 1.5B.",
+  "RESOLVED_2026-08-04": {
+    "status": "APPLIED — blocker 58fc524 closed",
+    "size_claim": {
+      "applied": 5,
+      "files": [
+        "_alignment/GSPC_CARECOST_PAPER_DRAFT_2026-08-04.md",
+        "_alignment/SOVOS_FINAL_MASTER_2026-08-04.md"
+      ],
+      "note": "the paper's TITLE also said 'Beat a Larger Untrained Base' — a fifth occurrence the original blocker did not list, because the blocker enumerated body lines only."
+    },
+    "SECOND_DEFECT_FOUND_WHILE_FIXING_THE_FIRST": {
+      "what": "the draft defined care-cost as the HARMONIC MEAN of protect and help, in two places. The implementation is `cost = prot * (1 - over)` — a product.",
+      "how_it_was_caught": "arithmetic on the paper's own published numbers. protect 0.45 x help 0.79 = 35.6, matching the published 35. The harmonic mean of the same rates is 57.3. For sov34: product 76.6 (published 76), harmonic mean 87.1. Both headline figures refuted the stated definition, in the same table, and nobody had multiplied two numbers to check.",
+      "why_it_matters": "the product is the STRICTER metric and the one that makes the paper's central argument work — it drives a degenerate arm to zero, which the harmonic mean does not. The reported result was correct; only its definition was wrong. Anyone reproducing from the written definition would have failed to reproduce it and concluded the numbers were fabricated.",
+      "fixed": "both occurrences, with the arithmetic recorded inline in the paper."
+    }
+  },
+  "CONTAMINATION_2026-08-05": {
+    "flagged_on": "2026-08-05",
+    "defect": "TRAIN-ON-TEST. The sov34 protect figure this file repeats was measured on care_battery.BATTERY, a bank sov34 was trained on.",
+    "original_numbers_preserved": true,
+    "note_on_preservation": "Nothing has been deleted. This estate publishes its retractions.",
+    "contamination_measured": {
+      "harmful_items_in_training_verbatim": "17 of 31 (55%)",
+      "eu_ai_act_art5_items_in_training_verbatim": "11 of 19",
+      "benign_items_in_training_verbatim": "5 of 14",
+      "match_quality": "all 22 matches EXACT after normalisation (Jaccard 1.00)"
+    },
+    "honest_held_out_n": {
+      "theme_level": "n=0 — all 10 themes contain a verbatim-trained item, so there is no publishable subset of this bank for sov34",
+      "row_level_generous": "n=14 harmful (8 Art-5) + 9 benign; not publishable, they are same-theme paraphrases of trained items",
+      "sov34_protect_on_clean_items": "NOT MEASURED — absent, not low. Per-item outcomes were never recorded, so it cannot be recomputed."
+    },
+    "does_the_comparison_survive": "NO. At n=14 harmful the 95% Wilson intervals separate only if sov34 is flawless (14/14 -> [0.785,1.000] vs control 6/14 [0.214,0.674]); one miss (13/14 -> [0.685,0.987]) overlaps. 'Intervals separate' / 'first statistically RESOLVED comparison' does not hold at the honest n.",
+    "what_is_NOT_claimed": "sov34 is not shown to be bad. qwen2.5:1.5b was never trained on this bank, so its protect 0.45 stands as measured. It is sov34's side that is unmeasured.",
+    "full_report": "/Users/nicholas/clawd/_alignment/CARE_BATTERY_CONTAMINATION.json",
+    "guard": "/Users/nicholas/clawd/csoai-static-deploy2/contamination_guard.py",
+    "the_compromised_figure_in_this_file": "'the_correct_sentence': 'A trained 1.5B operator (sov34) refuses 97% of harmful EU AI Act requests against a SIZE-MATCHED untrained 1.5B control's 45% ... Protect intervals separate: [0.838-0.994] vs [0.292-0.622].'",
+    "status": "That sentence is WITHDRAWN. It is not the correct sentence; it is a train-on-test sentence. This file was itself a correction artefact, which is exactly why it must carry the next correction rather than be trusted as final.",
+    "replacement_sentence": "sov34's protect rate on EU AI Act prohibited-practice prompts is UNMEASURED. The bank it was scored on contains 17 of its own training items out of 31. The size-matched control's 0.45 stands; sov34's 0.97 does not."
+  }
+}

@@ -1,0 +1,335 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GSPC Self-Score — SOVOS</title>
+<meta name="description" content="Score your AI system's governance against the 13 ETSI EN 304 223 principles. Free, runs entirely in your browser. Honest scoring by CSOAI.">
+<link rel="canonical" href="https://csoai.org/gspc-score">
+<meta name="theme-color" content="#22d3ee">
+<meta property="og:title" content="GSPC Self-Score — 13 ETSI principles, free browser tool">
+<meta property="og:description" content="How does your AI system score on the 13 governance principles from ETSI EN 304 223? Honest scoring: composite is the geometric mean of 4 axes (G/S/P/C).">
+<meta property="og:url" content="https://csoai.org/gspc-score">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 64 64%22%3E%3Crect width=%2264%22 height=%2264%22 rx=%2214%22 fill=%22%2322d3ee%22/%3E%3Ctext x=%2232%22 y=%2245%22 font-family=%22Inter,Arial,sans-serif%22 font-size=%2238%22 font-weight=%22800%22 text-anchor=%22middle%22 fill=%22%23070b14%22%3ES%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --accent: #22d3ee;
+    --gold: #f59e0b;
+    --good: #34d399;
+    --warn: #fbbf24;
+    --bad: #fb7185;
+    --crit: #ef4444;
+    --bg: #070b14;
+    --panel: #0f172a;
+    --panel-2: #111c33;
+    --line: #1e293b;
+    --mut: #94a3b8;
+    --text: #e2e8f0;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: 'Inter', ui-sans-serif, system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 64rem; margin: 0 auto; padding: 0 1.5rem; }
+  h1 { font-size: clamp(2.2rem, 5vw, 3.4rem); line-height: 1.04; font-weight: 900; letter-spacing: -0.03em; margin: 0; }
+  h2 { font-size: clamp(1.4rem, 3vw, 1.9rem); font-weight: 800; letter-spacing: -0.02em; margin: 2.5rem 0 0.6rem; }
+  h3 { font-size: 1.0rem; font-weight: 700; margin: 0 0 0.4rem; }
+  p { line-height: 1.6; color: var(--mut); }
+  code { font-family: ui-monospace, 'SF Mono', Menlo, monospace; font-size: 0.85em; background: var(--bg); padding: 0.15rem 0.4rem; border-radius: 0.3rem; border: 1px solid var(--line); color: var(--text); }
+  .accent { color: var(--accent); }
+  .gold { color: var(--gold); }
+  .good { color: var(--good); }
+  .eyebrow { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.35rem 0.85rem; border-radius: 999px; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); background: rgba(34, 211, 238, 0.10); border: 1px solid rgba(34, 211, 238, 0.28); }
+  .card { background: var(--panel); border: 1px solid var(--line); border-radius: 1rem; padding: 1.6rem; }
+  .card.pri { background: var(--panel-2); border-color: rgba(34, 211, 238, 0.3); }
+  .presets { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 0.6rem; margin-top: 1rem; }
+  .preset { padding: 0.7rem 0.9rem; background: var(--bg); border: 1px solid var(--line); border-radius: 0.5rem; cursor: pointer; font-size: 0.82rem; text-align: center; transition: all 0.15s; color: var(--text); }
+  .preset:hover { border-color: var(--accent); color: var(--accent); }
+  .axis-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 0.8rem; margin-top: 1rem; }
+  .axis-stat { background: var(--bg); border: 1px solid var(--line); border-radius: 0.7rem; padding: 1rem; text-align: center; }
+  .axis-stat .label { font-size: 0.7rem; color: var(--mut); letter-spacing: 0.06em; text-transform: uppercase; font-weight: 700; }
+  .axis-stat .value { font-size: 2rem; font-weight: 900; color: var(--good); margin: 0.3rem 0; font-variant-numeric: tabular-nums; }
+  .axis-stat .name { font-size: 0.78rem; color: var(--mut); }
+  .principle { display: grid; grid-template-columns: auto 1fr auto; gap: 0.8rem; align-items: center; padding: 0.7rem 0.9rem; border: 1px solid var(--line); border-radius: 0.6rem; margin-bottom: 0.5rem; background: var(--bg); }
+  .principle.pass { border-color: var(--good); }
+  .principle.fail { border-color: var(--bad); }
+  .principle .pid { font-family: ui-monospace, monospace; font-size: 0.78rem; color: var(--mut); }
+  .principle .title { font-weight: 600; font-size: 0.95rem; }
+  .principle .keys { font-family: ui-monospace, monospace; font-size: 0.72rem; color: var(--mut); margin-top: 0.15rem; }
+  .principle .status { font-size: 0.78rem; font-weight: 700; padding: 0.2rem 0.55rem; border-radius: 999px; }
+  .principle .status.pass { background: rgba(52, 211, 153, 0.15); color: var(--good); }
+  .principle .status.fail { background: rgba(251, 113, 133, 0.15); color: var(--bad); }
+  .verdict { padding: 1rem 1.4rem; border-radius: 0.8rem; font-weight: 700; font-size: 1.2rem; display: flex; align-items: center; gap: 0.6rem; margin-bottom: 1rem; }
+  .verdict.good { background: rgba(52, 211, 153, 0.10); border: 1px solid rgba(52, 211, 153, 0.35); color: var(--good); }
+  .verdict.warn { background: rgba(251, 191, 36, 0.10); border: 1px solid rgba(251, 191, 36, 0.35); color: var(--warn); }
+  .verdict.bad { background: rgba(251, 113, 133, 0.10); border: 1px solid rgba(251, 113, 133, 0.35); color: var(--bad); }
+  .src { background: var(--panel); border: 1px solid var(--line); border-radius: 0.7rem; padding: 1.2rem; margin-top: 1.5rem; font-size: 0.85rem; }
+  .src h3 { color: var(--gold); margin-bottom: 0.5rem; }
+  .src ul { padding-left: 1.2rem; margin: 0.4rem 0; color: var(--mut); }
+  .src li { margin-bottom: 0.3rem; line-height: 1.5; }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  footer { border-top: 1px solid var(--line); margin-top: 3rem; padding: 2rem 0; font-size: 0.85rem; color: var(--mut); }
+  .gate { background: var(--bg); border: 1px solid var(--line); border-radius: 0.7rem; padding: 1rem 1.2rem; margin: 1rem 0; }
+  .gate h3 { font-size: 0.9rem; margin-bottom: 0.5rem; color: var(--text); }
+  .gate-keys { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.4rem; }
+  .gate-keys label { display: flex; align-items: center; gap: 0.3rem; padding: 0.4rem 0.7rem; background: var(--panel); border: 1px solid var(--line); border-radius: 0.4rem; cursor: pointer; font-size: 0.78rem; font-family: ui-monospace, monospace; transition: all 0.15s; user-select: none; }
+  .gate-keys label.checked { background: rgba(52, 211, 153, 0.10); border-color: var(--good); color: var(--good); }
+  .gate-keys input { display: none; }
+</style>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"SOVOS GSPC Self-Score","description":"Free browser tool for scoring an AI system's governance against the 13 ETSI EN 304 223 principles. Honest scoring by CSOAI.","url":"https://csoai.org/gspc-score","applicationCategory":"UtilitiesApplication","operatingSystem":"Any (browser)","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"creator":{"@type":"Organization","name":"CSOAI Ltd","url":"https://csoai.org"}}</script>
+</head>
+<body>
+<div class="wrap">
+
+  <section style="padding-top:3rem;">
+    <span class="eyebrow">SOVOS · GSPC · 13 ETSI principles · 4 axes</span>
+    <h1 style="margin-top:1.2rem;">Score your AI system's<br><span class="accent">governance</span> — honest math.</h1>
+    <p style="max-width:42rem; font-size:1.05rem; margin-top:1.0rem;">
+      13 principles from ETSI EN 304 223, mapped to 4 axes (G, S, P, C). Composite = <strong>geometric mean</strong> — a zero on any axis drops your score to zero. Free, runs entirely in your browser, no server.
+    </p>
+  </section>
+
+  <section>
+    <h2>Mark the controls you have in place</h2>
+    <div class="card">
+      <p>Tick every control your AI system has. The tool scores you against all 13 principles. Use the presets for common starting points.</p>
+
+      <div class="presets">
+        <div class="preset" onclick="loadPreset('none')">Start from zero</div>
+        <div class="preset" onclick="loadPreset('startup')">Early startup</div>
+        <div class="preset" onclick="loadPreset('enterprise')">Enterprise-ready</div>
+        <div class="preset" onclick="loadPreset('sovereign')">Sovereign-grade (1.0)</div>
+      </div>
+
+      <div id="principles-container" style="margin-top:1.5rem;"></div>
+
+      <div style="display:flex; gap:0.6rem; flex-wrap:wrap;">
+        <button class="btn" onclick="scoreNow()">Calculate →</button>
+        <button class="btn ghost" onclick="resetAll()">Reset</button>
+        <button class="btn ghost" onclick="exportJSON()">Export record as JSON</button>
+      </div>
+    </div>
+
+    <div id="verdict-area"></div>
+  </section>
+
+  <section>
+    <h2>What this scores</h2>
+    <div class="card">
+      <h3>The 4 GSPC axes</h3>
+      <div class="axis-grid">
+        <div class="axis-stat"><div class="label">G</div><div class="value" id="r-G">—</div><div class="name">Governance</div></div>
+        <div class="axis-stat"><div class="label">S</div><div class="value" id="r-S">—</div><div class="name">Security</div></div>
+        <div class="axis-stat"><div class="label">P</div><div class="value" id="r-P">—</div><div class="name">Privacy</div></div>
+        <div class="axis-stat"><div class="label">C</div><div class="value" id="r-C">—</div><div class="name">Commerce</div></div>
+      </div>
+      <p style="margin-top:1.5rem; font-size:0.85rem; color:var(--mut);">
+        Each axis scores the fraction of <em>applicable</em> principles it passes. Principles don't contribute to axes that don't list them. A principle passes only when ALL its required keys are truthy.
+      </p>
+    </div>
+  </section>
+
+  <section>
+    <h2>Sources & honest scope</h2>
+    <div class="src">
+      <h3>What this is</h3>
+      <ul>
+        <li>A browser-side port of <code>sovos_core.gspc.score_gspc()</code> — the same scoring logic the <code>sov</code> CLI runs.</li>
+        <li>The 13 principles come from <strong>ETSI EN 304 223</strong> (AI cybersecurity, published Jan 2026).</li>
+        <li>The 4 axes (G/S/P/C) are CSOAI's GSPC framework.</li>
+        <li>Composite score = geometric mean of the 4 axes (so any zero = zero).</li>
+      </ul>
+      <h3>What this is NOT</h3>
+      <ul>
+        <li><strong>Not a certification.</strong> It's an instrument, not a stamp. We surface UNMEASURED, not a "pass/fail" judgement.</li>
+        <li><strong>Not exhaustive.</strong> Real ETSI EN 304 223 compliance requires documentation review, audit trail inspection, and human-in-the-loop oversight. This tool checks 36 control flags against 13 principles — that's the surface, not the substance.</li>
+        <li><strong>Not a substitute for the GSPC sovereign stack</strong> (<code>csoai-governance-crosswalk-mcp</code>, <code>mcp-sov-signal</code>, <code>csoai-c2pa-signer</code>). These verify the same principles against real audit evidence at scale.</li>
+      </ul>
+      <h3>For enterprise use</h3>
+      <ul>
+        <li><code>pip install csoai-governance-crosswalk-mcp</code> — MCP server with 10+ frameworks (EU AI Act, NIST RMF, ISO 42001, DORA, GDPR, NIS2)</li>
+        <li>Use the JSON export below as a record for the <code>csoai-governance-crosswalk-mcp.query_crosswalk()</code> API.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section>
+    <h2>Other SOVOS tools</h2>
+    <p>
+      <a href="/cpo-calculator">CPO Power Savings Calculator</a> · <a href="/injection-scanner">MCP Prompt Injection Scanner</a> · <a href="/a2a-swarm">A2A Swarm Demo</a> · <a href="/sovos.html">The signed visual mind</a>.
+    </p>
+    <p style="margin-top:0.8rem;">
+      Partnership inquiries: <code>governance@csoai.org</code>.
+    </p>
+  </section>
+
+  <footer>
+    <div>© 2026 CSOAI Ltd · UK company 16939677 · <a href="/">csoai.org</a></div>
+    <div style="margin-top:0.4rem;">This tool runs entirely in your browser. No data is sent to any server.</div>
+  </footer>
+
+</div>
+
+<script>
+// The 13 ETSI EN 304 223 principles, mapped to the 4 GSPC axes.
+// Each principle requires ALL its keys to be truthy (logical AND).
+const PRINCIPLES = [
+  { id: "P01", title: "Secure by design",       keys: ["threat_model", "design_review", "owner"],                  axes: ["G", "S"] },
+  { id: "P02", title: "Data governance",         keys: ["data_map", "retention_policy", "lawful_basis"],             axes: ["P", "G"] },
+  { id: "P03", title: "Identity & access",       keys: ["rbac", "mfa", "least_privilege"],                            axes: ["S", "P"] },
+  { id: "P04", title: "Secure SDLC",             keys: ["code_review", "dependency_scan", "unit_tests"],              axes: ["G", "S"] },
+  { id: "P05", title: "Supply chain",            keys: ["sbom", "vendor_audit", "provenance"],                          axes: ["S", "C"] },
+  { id: "P06", title: "Monitoring & logging",    keys: ["audit_log", "monitoring", "anomaly_detection"],              axes: ["G", "S"] },
+  { id: "P07", title: "Vulnerability mgmt",      keys: ["vuln_scan", "patch_sla"],                                       axes: ["S"] },
+  { id: "P08", title: "Incident response",       keys: ["incident_plan", "containment_procedure", "recovery"],        axes: ["G", "S"] },
+  { id: "P09", title: "Config mgmt",             keys: ["config_scan", "baseline"],                                      axes: ["S"] },
+  { id: "P10", title: "Continuity",              keys: ["backup", "failover", "rpo"],                                    axes: ["C", "G"] },
+  { id: "P11", title: "Human oversight",         keys: ["human_review", "escalation_path", "named_owner"],              axes: ["G"] },
+  { id: "P12", title: "Decommissioning",         keys: ["data_erasure", "credential_revocation", "asset_disposal"],      axes: ["P", "S"] },
+  { id: "P13", title: "Continuous improvement",  keys: ["pdca_record", "independent_audit"],                             axes: ["G", "C"] },
+];
+
+// Preset: percentage of keys ticked per principle (random distribution by bucket)
+const PRESETS = {
+  none: 0,
+  startup: 30,
+  enterprise: 70,
+  sovereign: 100,
+};
+
+const state = {};  // key -> bool
+
+function renderPrinciples() {
+  var html = '';
+  for (var i = 0; i < PRINCIPLES.length; i++) {
+    var p = PRINCIPLES[i];
+    html += '<div class="gate"><h3>' + p.id + ' — ' + p.title + ' <span style="color:var(--mut); font-weight:400; font-size:0.78rem;">(' + p.axes.join(', ') + ')</span></h3>';
+    html += '<div class="gate-keys">';
+    for (var k = 0; k < p.keys.length; k++) {
+      var key = p.keys[k];
+      var checked = state[key] ? 'checked' : '';
+      var initial = state[key] ? ' checked' : '';
+      html += '<label class="' + checked + '" data-key="' + key + '">'
+            + '<input type="checkbox" data-key="' + key + '"' + initial + ' onchange="toggle(this)">'
+            + '<span>' + key + '</span>'
+            + '</label>';
+    }
+    html += '</div></div>';
+  }
+  document.getElementById('principles-container').innerHTML = html;
+}
+
+function toggle(cb) {
+  state[cb.dataset.key] = cb.checked;
+  // Update label styling
+  cb.parentElement.classList.toggle('checked', cb.checked);
+  // Auto-score on every toggle (live feedback)
+  scoreNow();
+}
+
+function loadPreset(name) {
+  var pct = PRESETS[name];
+  Object.keys(state).forEach(function(k) { state[k] = false; });
+  if (pct === 0) {
+    renderPrinciples();
+    scoreNow();
+    return;
+  }
+  // For non-zero presets: tick the first pct% of every principle's keys
+  for (var i = 0; i < PRINCIPLES.length; i++) {
+    var p = PRINCIPLES[i];
+    var n = p.keys.length;
+    var k = Math.ceil((n * pct) / 100);
+    for (var j = 0; j < k; j++) {
+      state[p.keys[j]] = true;
+    }
+  }
+  renderPrinciples();
+  scoreNow();
+}
+
+function resetAll() {
+  Object.keys(state).forEach(function(k) { state[k] = false; });
+  renderPrinciples();
+  scoreNow();
+}
+
+function exportJSON() {
+  var json = JSON.stringify(state, null, 2);
+  // Open as download
+  var blob = new Blob([json], { type: 'application/json' });
+  var url = URL.createObjectURL(blob);
+  var a = document.createElement('a');
+  a.href = url;
+  a.download = 'gspc-record-' + new Date().toISOString().substring(0, 10) + '.json';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+
+function scoreNow() {
+  // For each principle, check if ALL its keys are truthy
+  var principleResults = [];
+  for (var i = 0; i < PRINCIPLES.length; i++) {
+    var p = PRINCIPLES[i];
+    var passed = p.keys.every(function(k) { return !!state[k]; });
+    principleResults.push({ id: p.id, title: p.title, keys: p.keys, axes: p.axes, passed: passed });
+  }
+  // Per-axis: count applicable + passed
+  var axisTotal = { G: 0, S: 0, P: 0, C: 0 };
+  var axisPassed = { G: 0, S: 0, P: 0, C: 0 };
+  for (var i = 0; i < principleResults.length; i++) {
+    var pr = principleResults[i];
+    for (var j = 0; j < pr.axes.length; j++) {
+      axisTotal[pr.axes[j]] += 1;
+      if (pr.passed) axisPassed[pr.axes[j]] += 1;
+    }
+  }
+  var axisScores = {};
+  var composite = 1;
+  ['G', 'S', 'P', 'C'].forEach(function(a) {
+    var s = axisTotal[a] === 0 ? 0 : axisPassed[a] / axisTotal[a];
+    axisScores[a] = s;
+    composite *= s;
+  });
+  composite = Math.pow(composite, 0.25);  // geometric mean of 4 axes
+  // Render
+  document.getElementById('r-G').textContent = axisScores.G.toFixed(2);
+  document.getElementById('r-S').textContent = axisScores.S.toFixed(2);
+  document.getElementById('r-P').textContent = axisScores.P.toFixed(2);
+  document.getElementById('r-C').textContent = axisScores.C.toFixed(2);
+  // Verdict
+  var passedCount = principleResults.filter(function(r) { return r.passed; }).length;
+  var verdictClass, verdictText;
+  if (composite >= 0.9) { verdictClass = 'good'; verdictText = '✅ ' + composite.toFixed(3) + ' (grade A) — ' + passedCount + '/13 principles passed'; }
+  else if (composite >= 0.6) { verdictClass = 'warn'; verdictText = '⚠️ ' + composite.toFixed(3) + ' (grade B/C) — ' + passedCount + '/13 principles passed'; }
+  else { verdictClass = 'bad'; verdictText = '🚨 ' + composite.toFixed(3) + ' (grade D/F) — ' + passedCount + '/13 principles passed'; }
+  document.getElementById('verdict-area').innerHTML = '<div class="verdict ' + verdictClass + '">' + verdictText + '</div>';
+  // Update principle styling
+  document.querySelectorAll('.gate').forEach(function(gate) {
+    var pid = gate.querySelector('h3').textContent.split(' — ')[0];
+    var result = principleResults.find(function(r) { return r.id === pid; });
+    if (result) {
+      gate.classList.toggle('pass', result.passed);
+      gate.classList.toggle('fail', !result.passed);
+    }
+  });
+}
+
+// Initialize
+Object.keys(state).forEach(function(k) { state[k] = false; });
+renderPrinciples();
+scoreNow();
+</script>
+
+</body>
+</html>

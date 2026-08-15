@@ -1,0 +1,17 @@
+name: counter-canon-gate
+on:
+  push:
+    branches: [main]
+  pull_request:
+jobs:
+  g3-counter-canon:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: G3 counter canon gate
+        run: python3 check_counters.py
+      - name: G4 claim-linter gate (count conflation against numbers registry)
+        run: python3 ci/run_claim_linter.py

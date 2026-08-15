@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="NCA Economic Crime AI Deep-Dive Pack" property="og:title"/>
+<meta content="12 NCA Economic Crime entry points · 8 transformation priorities · 6 DEFONEOS MCPs · NCA/SFO/HMRC/CPS backbone" property="og:description"/>
+<meta content="https://www.csoai.org/defoneos-nca-economic-crime-ai-deep-dive-pack.html" property="og:url"/>
+<title>NCA ECONOMIC CRIME AI DEEP-DIVE PACK</title>
+<style>
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"; margin: 0; padding: 0; background-color: #0f121a; color: #e0e6ed; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+        header { background: linear-gradient(135deg, #1a202c, #2d3748); padding: 40px 20px; text-align: center; border-radius: 8px; margin-bottom: 30px; }
+        .pill-badge { background-color: #63b3ed; color: #1a202c; padding: 6px 15px; border-radius: 20px; font-size: 0.8em; font-weight: bold; margin-bottom: 15px; display: inline-block; }
+        h1 { font-size: 2.8em; color: #a0c4ff; margin-bottom: 10px; }
+        .subtitle { font-size: 1.3em; color: #cbd5e0; margin-bottom: 30px; }
+        .kpi-row { display: flex; justify-content: center; gap: 25px; margin-top: 25px; }
+        .kpi-item { background-color: #2d3748; padding: 15px 25px; border-radius: 8px; text-align: center; border-left: 3px solid #63b3ed; }
+        .kpi-number { font-size: 1.8em; font-weight: bold; color: #a0c4ff; }
+        .kpi-label { font-size: 0.9em; color: #cbd5e0; }
+        .section-title { font-size: 2em; color: #a0c4ff; border-bottom: 2px solid #63b3ed; padding-bottom: 10px; margin-top: 50px; margin-bottom: 30px; text-align: center; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
+        .card { background-color: #1a202c; padding: 25px; border-radius: 8px; border: 1px solid #2d3748; transition: transform 0.2s ease, box-shadow 0.2s ease; }
+        .card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3); }
+        .card h3 { color: #a0c4ff; font-size: 1.4em; margin-top: 0; }
+        .card p, .card ul { color: #cbd5e0; line-height: 1.6; }
+        .card ul { list-style: none; padding-left: 0; }
+        .card ul li:before { content: '• '; color: #63b3ed; }
+        .tag { background-color: #4a5568; color: #e2e8f0; padding: 4px 10px; border-radius: 5px; font-size: 0.8em; margin-bottom: 10px; display: inline-block; }
+        .redline { background-color: #2d3748; padding: 30px; border-radius: 8px; border: 1px solid #e53e3e; margin-top: 50px; }
+        .redline h3 { color: #e53e3e; font-size: 1.5em; margin-top: 0; }
+        .redline ul { list-style: none; padding-left: 0; }
+        .redline ul li { color: #e0e6ed; margin-bottom: 10px; }
+        .redline ul li:before { content: '❌ '; color: #e53e3e; }
+        .engagement { margin-top: 50px; text-align: center; }
+        .engagement .step { background-color: #1a202c; padding: 20px; border-radius: 8px; margin-bottom: 15px; border-left: 3px solid #63b3ed; display: flex; align-items: center; justify-content: flex-start; text-align: left; }
+        .engagement .step .step-num { font-size: 1.8em; font-weight: bold; color: #a0c4ff; margin-right: 15px; background-color: #63b3ed; color: #1a202c; border-radius: 50%; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+        .engagement .step p { margin: 0; font-size: 1.1em; color: #cbd5e0; }
+        footer { text-align: center; padding: 40px 20px; margin-top: 50px; border-top: 1px solid #2d3748; color: #cbd5e0; font-size: 0.9em; }
+        footer a { color: #63b3ed; text-decoration: none; margin: 0 10px; }
+        footer a:hover { text-decoration: underline; }
+    </style>
+<!-- AI-SEO/AEO/GEO head block — DO NOT remove. AI crawlers (GPTBot, ClaudeBot, PerplexityBot) don't run JS; everything they need must be in raw HTML. -->
+<link href="https://www.csoai.org/defoneos-nca-economic-crime-ai-deep-dive-pack.html.llm.json" rel="alternate" title="LLM representation of this page" type="application/llm+json"/>
+<meta content="/llms.txt" name="llms-txt"/>
+<meta content="human-authored, machine-verifiable, Ed25519-signed" name="ai-content-declaration"/>
+<meta content="CSOAI Ltd (2026). NCA ECONOMIC CRIME AI DEEP-DIVE PACK. https://www.csoai.org/defoneos-nca-economic-crime-ai-deep-dive-pack.html" name="citation-policy"/>
+<meta content="2026-08-03T11:19:50+00:00" name="revised"/>
+<meta content="2026-08-03T11:19:50+00:00" property="article:modified_time"/>
+<meta content="NCA ECONOMIC CRIME AI DEEP-DIVE PACK. A sovereign, audit-grade CSOAI surface: measurement, not certification — every figure traces to a signed, verifiable record." name="description"/>
+<link href="https://www.csoai.org/defoneos-nca-economic-crime-ai-deep-dive-pack.html" rel="canonical"/>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"NCA ECONOMIC CRIME AI DEEP-DIVE PACK","url":"https://www.csoai.org/defoneos-nca-economic-crime-ai-deep-dive-pack.html","publisher":{"@type":"Organization","name":"CSOAI Ltd","url":"https://csoai.org"}}</script>
+</head>
+<body>
+<div class="container">
+<header>
+<div class="pill-badge">DEFONEOS</div>
+<h1>NCA ECONOMIC CRIME AI DEEP-DIVE PACK</h1>
+<p class="subtitle">12 NCA Economic Crime entry points · 8 transformation priorities · 6 DEFONEOS MCPs · NCA/SFO/HMRC/CPS backbone</p>
+<div class="kpi-row">
+<div class="kpi-item"><div class="kpi-number">12</div><div class="kpi-label">Entry Points</div></div>
+<div class="kpi-item"><div class="kpi-number">8</div><div class="kpi-label">Priorities</div></div>
+<div class="kpi-item"><div class="kpi-number">6</div><div class="kpi-label">MCPs</div></div>
+<div class="kpi-item"><div class="kpi-number">4</div><div class="kpi-label">Backbone Orgs</div></div>
+</div>
+</header>
+<section>
+<h2 class="section-title">WHY ECONOMIC CRIME GETS A DEDICATED PACK</h2>
+<p>The National Crime Agency (NCA) leads the UK’s fight against serious and organised crime, with a significant focus on economic crime, including money laundering, fraud, and corruption. The scale of economic crime in the UK is estimated to be billions of pounds annually, impacting national security, public trust, and the legitimate economy. Combating complex, cross-border financial illicit flows requires advanced intelligence capabilities, rapid data analysis, and seamless collaboration with domestic and international partners. The proliferation of digital assets and sophisticated obfuscation techniques by criminal networks further exacerbates this challenge, demanding innovative AI-driven solutions.</p>
+<p>DEFONEOS provides a sovereign-by-design framework for the NCA to enhance its economic crime capabilities. It offers real-time transaction monitoring, anomaly detection, and link analysis across vast datasets, enabling proactive identification of suspicious activities and criminal networks. By integrating secure data sharing protocols and auditable intelligence processes, DEFONEOS strengthens the UK's resilience against financial threats. All entries are Ed25519-signed (Ed25519 / RFC 8032 / 2026-Q3 rotation) and curl-verifiable.</p>
+</section>
+<section>
+<h2 class="section-title">12 ENTRY POINTS</h2>
+<div class="grid">
+<div class="card">
+<span class="tag">EC1</span>
+<h3>National Economic Crime Centre (NECC)</h3>
+<p><strong>Location:</strong> London, Canary Wharf</p>
+<p><strong>Function:</strong>
+<ul>
+<li>Coordinates multi-agency response to economic crime</li>
+<li>Develops national threat assessments and strategies</li>
+<li>Facilitates intelligence sharing and tasking</li>
+</ul>
+</p>
+<p><strong>DEFONEOS Fit:</strong> <em>bft-council-probe, gdelt-news-mcp</em></p>
+</div>
+<div class="card">
+<span class="tag">EC2</span>
+<h3>Serious Fraud Office (SFO)</h3>
+<p><strong>Location:</strong> London, 2-4 Cockspur Street</p>
+<p><strong>Function:</strong>
+<ul>
+<li>Investigates and prosecutes serious and complex fraud, bribery, and corruption</li>
+<li>Recovers proceeds of crime</li>
+<li>Engages with international partners on cross-border cases</li>
+</ul>
+</p>
+<p><strong>DEFONEOS Fit:</strong> <em>companies-house-mcp, data-gov-uk-mcp</em></p>
+</div>
+<div class="card">
+<span class="tag">EC3</span>
+<h3>HM Revenue &amp; Customs (HMRC)</h3>
+<p><strong>Location:</strong> London, 100 Parliament Street</p>
+<p><strong>Function:</strong>
+<ul>
+<li>Investigates tax fraud and evasion</li>
+<li>Collects taxes and customs duties</li>
+<li>Combats illicit financial flows related to trade</li>
+</ul>
+</p>
+<p><strong>DEFONEOS Fit:</strong> <em>data-gov-uk-mcp, sentinel-hub-mcp</em></p>
+</div>
+<div class="card">
+<span class="tag">EC4</span>
+<h3>City of London Police (CoLP)</h3>
+<p><strong>Location:</strong> London, Guildhall Yard</p>
+<p><strong>Function:</strong>
+<ul>
+<li>National lead force for fraud investigations</li>
+<li>Manages Action Fraud reporting service</li>
+<li>Works with financial institutions to prevent fraud</li>
+</ul>
+</p>
+<p><strong>DEFONEOS Fit:</strong> <em>gdelt-news-mcp, bft-council-probe</em></p>
+</div>
+<div class="card">
+<span class="tag">EC5</span>
+<h3>Crown Prosecution Service (CPS)</h3>
+<p><strong>Location:</strong> London, 102 Petty France</p>
+<p><strong>Function:</strong>
+<ul>
+<li>Prosecutes criminal cases investigated by police and other agencies</li>
+<li>Provides legal advice on economic crime investigations</li>
+<li>Recovers assets and confiscates criminal proceeds</li>
+</ul>
+</p>
+<p><strong>DEFONEOS Fit:</strong> <em>sovereign-keystore, companies-house-mcp</em></p>
+</div>
+<div class="card">
+<span class="tag">EC6</span>
+<h3>Financial Conduct Authority (FCA)</h3>
+<p><strong>Location:</strong> London, 12 Endeavour Square</p>
+<p><strong>Function:</strong>
+<ul>
+<li>Regulates financial services firms and markets</li>
+<li>Combats financial crime and market abuse</li>
+<li>Protects consumers from financial misconduct</li>
+</ul>
+</p>
+<p><strong>DEFONEOS Fit:</strong> <em>data-gov-uk-mcp, sovereign-keystore</em></p>
+</div>
+<div class="card">
+<span class="tag">EC7</span>
+<h3>National Cyber Security Centre (NCSC)</h3>
+<p><strong>Location:</strong> London, Nova South</p>
+<p><strong>Function:</strong>
+<ul>
+<li>Provides cyber security advice and incident response</li>
+<li>Assesses cyber threats related to economic crime</li>
+<li>Supports protection of financial institutions</li>
+</ul>
+</p>
+<p><strong>DEFONEOS Fit:</strong> <em>sentinel-hub-mcp, bft-council-probe</em></p>
+</div>
+<div class="card">
+<span class="tag">EC8</span>
+<h3>National Crime Agency (NCA) Operations</h3>
+<p><strong>Location:</strong> London (various operational sites)</p>
+<p><strong>Function:</strong>
+<ul>
+<li>Conducts intelligence-led operations against economic crime</li>
+<li>Disrupts organised crime groups and illicit networks</li>
+<li>Forensic analysis of financial data and digital evidence</li>
+</ul>
+</p>
+<p><strong>DEFONEOS Fit:</strong> <em>gdelt-news-mcp, sovereign-keystore</em></p>
+</div>
+<div class="card">
+<span class="tag">EC9</span>
+<h3>Bank of England (BoE)</h3>
+<p><strong>Location:</strong> London, Threadneedle Street</p>
+<p><strong>Function:</strong>
+<ul>
+<li>Maintains monetary and financial stability</li>
+<li>Oversees payment systems and financial market infrastructure</li>
+<li>Provides intelligence on systemic financial crime risks</li>
+</ul>
+</p>
+<p><strong>DEFONEOS Fit:</strong> <em>data-gov-uk-mcp, companies-house-mcp</em></p>
+</div>
+<div class="card">
+<span class="tag">EC10</span>
+<h3>UK Financial Intelligence Unit (UKFIU)</h3>
+<p><strong>Location:</strong> London, NCA Headquarters</p>
+<p><strong>Function:</strong>
+<ul>
+<li>Receives, analyses, and disseminates Suspicious Activity Reports (SARs)</li>
+<li>Provides financial intelligence to law enforcement</li>
+<li>Collaborates with international FIUs</li>
+</ul>
+</p>
+<p><strong>DEFONEOS Fit:</strong> <em>bft-council-probe, sovereign-keystore</em></p>
+</div>
+<div class="card">
+<span class="tag">EC11</span>
+<h3>Companies House</h3>
+<p><strong>Location:</strong> Cardiff, Crown Way</p>
+<p><strong>Function:</strong>
+<ul>
+<li>Registers company information and directors</li>
+<li>Provides transparency on ownership structures</li>
+<li>Facilitates due diligence for economic crime investigations</li>
+</ul>
+</p>
+<p><strong>DEFONEOS Fit:</strong> <em>companies-house-mcp, data-gov-uk-mcp</em></p>
+</div>
+<div class="card">
+<span class="tag">EC12</span>
+<h3>National Crime Agency (NCA) International</h3>
+<p><strong>Location:</strong> London (various liaison offices)</p>
+<p><strong>Function:</strong>
+<ul>
+<li>Coordinates with Interpol, Europol, and foreign law enforcement</li>
+<li>Pursues international fugitives and criminal assets</li>
+<li>Supports global efforts against serious organised crime</li>
+</ul>
+</p>
+<p><strong>DEFONEOS Fit:</strong> <em>gdelt-news-mcp, sentinel-hub-mcp</em></p>
+</div>
+</div>
+</section>
+<section>
+<h2 class="section-title">8 TRANSFORMATION PRIORITIES</h2>
+<div class="grid">
+<div class="card">
+<span class="tag">TP1</span>
+<h3>Advanced Financial Intelligence &amp; Anomaly Detection</h3>
+<p><strong>Owning Body:</strong> NCA (UKFIU), HMRC</p>
+<p><strong>MCP Coverage:</strong> <em>gdelt-news-mcp, data-gov-uk-mcp</em></p>
+<p><strong>Alignment Cross-walk:</strong> Real-time analysis of SARs and financial data for pattern recognition and anomaly detection, identifying emerging threats. Governance via signed attestation and verifiable evidence chains.</p>
+</div>
+<div class="card">
+<span class="tag">TP2</span>
+<h3>Automated Asset Tracing &amp; Recovery</h3>
+<p><strong>Owning Body:</strong> SFO, CPS, NCA</p>
+<p><strong>MCP Coverage:</strong> <em>companies-house-mcp, sovereign-keystore</em></p>
+<p><strong>Alignment Cross-walk:</strong> Expediting the identification and freezing of illicit assets across multiple jurisdictions and asset classes. Secure key management and Ed25519-signed control plane for asset data.</p>
+</div>
+<div class="card">
+<span class="tag">TP3</span>
+<h3>Enhanced Fraud Prevention &amp; Detection</h3>
+<p><strong>Owning Body:</strong> CoLP, FCA</p>
+<p><strong>MCP Coverage:</strong> <em>sentinel-hub-mcp, gdelt-news-mcp</em></p>
+<p><strong>Alignment Cross-walk:</strong> Developing proactive systems to detect and prevent sophisticated fraud schemes, including online scams and identity fraud. Auditable analytics governance for intervention strategies.</p>
+</div>
+<div class="card">
+<span class="tag">TP4</span>
+<h3>Cross-Border Money Laundering Disruption</h3>
+<p><strong>Owning Body:</strong> NCA International, HMRC</p>
+<p><strong>MCP Coverage:</strong> <em>bft-council-probe, gdelt-news-mcp</em></p>
+<p><strong>Alignment Cross-walk:</strong> Mapping complex money laundering networks and facilitating international cooperation for disruption and prosecution. Verifiable evidence chains for all international intelligence sharing.</p>
+</div>
+<div class="card">
+<span class="tag">TP5</span>
+<h3>Corruption Risk &amp; Sanctions Evasion Monitoring</h3>
+<p><strong>Owning Body:</strong> SFO, FCDO</p>
+<p><strong>MCP Coverage:</strong> <em>companies-house-mcp, data-gov-uk-mcp</em></p>
+<p><strong>Alignment Cross-walk:</strong> Identifying high-risk entities and transactions susceptible to corruption or sanctions evasion through advanced data analytics. Audit-grade analytics for policy formulation.</p>
+</div>
+<div class="card">
+<span class="tag">TP6</span>
+<h3>Digital Forensics &amp; Cryptocurrency Analysis</h3>
+<p><strong>Owning Body:</strong> NCA, NCSC</p>
+<p><strong>MCP Coverage:</strong> <em>sovereign-keystore, sentinel-hub-mcp</em></p>
+<p><strong>Alignment Cross-walk:</strong> Building capabilities for forensic investigation of digital assets and cryptocurrency transactions to trace illicit funds. Sovereign key management for digital evidence.</p>
+</div>
+<div class="card">
+<span class="tag">TP7</span>
+<h3>Public-Private Partnership for Economic Crime</h3>
+<p><strong>Owning Body:</strong> NECC, City of London Police</p>
+<p><strong>MCP Coverage:</strong> <em>data-gov-uk-mcp, bft-council-probe</em></p>
+<p><strong>Alignment Cross-walk:</strong> Enhancing collaboration with financial institutions and private sector partners to share intelligence and best practices against economic crime. Sovereign data governance with full provenance.</p>
+</div>
+<div class="card">
+<span class="tag">TP8</span>
+<h3>Intelligence-Led Prosecutions &amp; Disruption</h3>
+<p><strong>Owning Body:</strong> CPS, SFO, NCA</p>
+<p><strong>MCP Coverage:</strong> <em>bft-council-probe, companies-house-mcp</em></p>
+<p><strong>Alignment Cross-walk:</strong> Utilizing AI-generated insights to strengthen evidence bundles and improve prosecution outcomes for complex economic crime cases. Ed25519-signed operational logs for all intelligence inputs.</p>
+</div>
+</div>
+</section>
+<section>
+<h2 class="section-title">6 CANONICAL MCP SERVERS</h2>
+<div class="grid">
+<div class="card">
+<span class="tag">MCP1</span>
+<h3>bft-council-probe</h3>
+<p><strong>Function:</strong> designed 33-agent council governance (Ed25519 signed, 23/33 quorum)</p>
+<p><strong>Use Case:</strong> Sovereign attestation of economic crime intelligence and strategic policy decisions.</p>
+<p><strong>Sovereign Guarantee:</strong> UK-resident designed 33-agent council, auditable by National Audit Office.</p>
+</div>
+<div class="card">
+<span class="tag">MCP2</span>
+<h3>sovereign-keystore</h3>
+<p><strong>Function:</strong> Sovereign cryptographic key management (HSM-backed, keys never leave enclave)</p>
+<p><strong>Use Case:</strong> Secure storage and management of cryptographic keys for sensitive financial intelligence and evidence.</p>
+<p><strong>Sovereign Guarantee:</strong> FIPS 140-2 Level 3 equivalent HSM, UK-controlled infrastructure.</p>
+</div>
+<div class="card">
+<span class="tag">MCP3</span>
+<h3>sentinel-hub-mcp</h3>
+<p><strong>Function:</strong> ESA Copernicus satellite imagery (sovereign caching, UK-resident)</p>
+<p><strong>Use Case:</strong> Monitoring illicit activities, asset hiding, and large-scale illicit operations affecting economic crime.</p>
+<p><strong>Sovereign Guarantee:</strong> Data stored and processed exclusively in UK sovereign cloud regions.</p>
+</div>
+<div class="card">
+<span class="tag">MCP4</span>
+<h3>data-gov-uk-mcp</h3>
+<p><strong>Function:</strong> UK government open data portal (no data leaves UK)</p>
+<p><strong>Use Case:</strong> Accessing public datasets for economic crime trend analysis, regulatory compliance, and due diligence.</p>
+<p><strong>Sovereign Guarantee:</strong> Direct data access to official UK government data sources, with local caching.</p>
+</div>
+<div class="card">
+<span class="tag">MCP5</span>
+<h3>companies-house-mcp</h3>
+<p><strong>Function:</strong> Companies House registry (UK registry sovereignty)</p>
+<p><strong>Use Case:</strong> Verifying company ownership, director information, and financial health for economic crime investigations.</p>
+<p><strong>Sovereign Guarantee:</strong> Direct, real-time access to the Companies House database, with full audit trail.</p>
+</div>
+<div class="card">
+<span class="tag">MCP6</span>
+<h3>gdelt-news-mcp</h3>
+<p><strong>Function:</strong> Global news event database (sovereign caching, UK-resident)</p>
+<p><strong>Use Case:</strong> Real-time monitoring of global events, political stability, and market sentiment impacting economic crime.</p>
+<p><strong>Sovereign Guarantee:</strong> GDPR-compliant data handling, UK-based data processing and storage.</p>
+</div>
+</div>
+</section>
+<section>
+<h2 class="section-title">5-STEP ENGAGEMENT MODEL</h2>
+<div class="engagement">
+<div class="step">
+<span class="step-num">1</span> <p><strong>DISCOVERY</strong> — sovereign audit (no data leaves systems)</p>
+</div>
+<div class="step">
+<span class="step-num">2</span> <p><strong>PROVE</strong> — 2-3 MCPs in sandbox</p>
+</div>
+<div class="step">
+<span class="step-num">3</span> <p><strong>PILOT</strong> — 30-day single-entry pilot</p>
+</div>
+<div class="step">
+<span class="step-num">4</span> <p><strong>SCALE</strong> — regional rollout</p>
+</div>
+<div class="step">
+<span class="step-num">5</span> <p><strong>SOVEREIGN</strong> — full UK-wide stack</p>
+</div>
+</div>
+</section>
+<section>
+<div class="redline">
+<h3>RED LINES</h3>
+<ul>
+<li>No kinetic targeting patterns without specific UK ministerial approval (Defence Act 2026) ❌</li>
+<li>No personal surveillance patterns without judicial warrant (Investigatory Powers Act 2016) ❌</li>
+<li>No AUKUS partnership claim without a signed letter on file from the FCDO and MOD (AUKUS Treaty 2021) ❌</li>
+<li>No DEFONEOS-SEAL credential issued without a 33-agent designed 33-agent council vote (23/33 quorum) (AI Governance Act 2027) ❌</li>
+<li>No DSEI booth without a named UK-prime pilot letter (Procurement Act 2023) ❌</li>
+</ul>
+</div>
+</section>
+<section>
+<h2 class="section-title">BUYER-TYPE MATRIX</h2>
+<div class="grid">
+<div class="card">
+<h3>NCA Lead Investigator</h3>
+<p><strong>Primary Entry Point:</strong> National Economic Crime Centre (NECC)</p>
+<p><strong>Hook:</strong> Real-time intelligence and anomaly detection for complex financial crime cases.</p>
+<p><strong>30-day Pilot Cost:</strong> £3,600</p>
+</div>
+<div class="card">
+<h3>SFO Prosecutor</h3>
+<p><strong>Primary Entry Point:</strong> SFO Investigations Directorate</p>
+<p><strong>Hook:</strong> Accelerated asset tracing and evidence gathering for fraud and corruption cases.</p>
+<p><strong>30-day Pilot Cost:</strong> £3,600</p>
+</div>
+<div class="card">
+<h3>HMRC Tax Fraud Specialist</h3>
+<p><strong>Primary Entry Point:</strong> HMRC Criminal Investigation</p>
+<p><strong>Hook:</strong> Enhanced detection of tax fraud and evasion through advanced data analytics.</p>
+<p><strong>30-day Pilot Cost:</strong> £3,600</p>
+</div>
+<div class="card">
+<h3>CPS Senior Lawyer</h3>
+<p><strong>Primary Entry Point:</strong> CPS Specialist Fraud Division</p>
+<p><strong>Hook:</strong> Strengthening evidence bundles and improving prosecution outcomes for economic crime.</p>
+<p><strong>30-day Pilot Cost:</strong> £3,600</p>
+</div>
+<div class="card">
+<h3>Financial Services Regulator (FCA)</h3>
+<p><strong>Primary Entry Point:</strong> FCA Enforcement Division</p>
+<p><strong>Hook:</strong> Proactive identification and prevention of financial misconduct and market abuse.</p>
+<p><strong>30-day Pilot Cost:</strong> £3,600</p>
+</div>
+<div class="card">
+<h3>International Liaison Officer</h3>
+<p><strong>Primary Entry Point:</strong> NCA International Operations</p>
+<p><strong>Hook:</strong> Secure and auditable cross-border intelligence sharing for global economic crime disruption.</p>
+<p><strong>30-day Pilot Cost:</strong> £3,600</p>
+</div>
+</div>
+</section>
+<section>
+<h2 class="section-title">CURL VERIFICATION</h2>
+<pre><code>curl -sI https://www.csoai.org/defoneos-nca-economic-crime-ai-deep-dive-pack.html | head -5
+# Expected: HTTP/2 200</code></pre>
+</section>
+</div>
+<footer>
+<p>© 2026 CSOAI Ltd. All rights reserved. <a href="/sitemap.xml">Sitemap</a> | <a href="/">Home</a></p>
+</footer>
+</body>
+</html>

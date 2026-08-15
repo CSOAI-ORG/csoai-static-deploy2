@@ -1,0 +1,30 @@
+{
+  "timestamp": "2026-08-10T23:47:00.895648+00:00",
+  "prune_ratio": 0.5,
+  "approach": "REAP (Router-weighted Expert Activation Pruning)",
+  "reference": "Cerebras + U. Calgary, May 2026",
+  "github": "https://github.com/CerebrasResearch/REAP-MoE",
+  "claim": "Prune 50% of MoE experts with \u0394acc \u2264 2% on code generation",
+  "ollama_simulate": {
+    "model": "sov33-unified",
+    "is_moe": false,
+    "approach": "LoRA rank reduction (REAP N/A for non-MoE)",
+    "prune_ratio": 0.5,
+    "size_gb_pre": 0.379,
+    "size_gb_post": 0.19,
+    "note": "SOV models are dense (qwen2.5:0.5b substrate + SOV3 drawing). REAP applies to MoE only. For dense models, LoRA rank reduction is the analog."
+  },
+  "kimi_k3_pruned_estimate": {
+    "model": "Kimi K3 (after REAP)",
+    "total_params_B_pre": 2800,
+    "active_params_B_pre": 104,
+    "total_params_B_post": 1400.0,
+    "num_experts": 256,
+    "num_experts_post": 128,
+    "prune_ratio": 0.5,
+    "bits": 4,
+    "estimated_size_gb": 700.0,
+    "fits_m4_alone": false,
+    "fits_m2_m4_cluster": false
+  }
+}

@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<title>DEFONEOS — NCA Organised Crime Enforcement AI Deep-Dive Pack</title>
+<meta content="DEFONEOS sovereign AI deep-dive pack for the National Crime Agency — 12 entry points, 8 transformation priorities, 6 MCP servers, 6 red lines for UK organised crime enforcement." name="description"/>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "TechArticle", "headline": "NCA Organised Crime Enforcement AI Deep-Dive Pack — DEFONEOS by CSOAI", "description": "Independent AI governance mapping and measurement analysis for NCA Organised Crime Enforcement. Measurement, not certification — every figure traces to a signed, verifiable record.", "author": {"@type": "Organization", "name": "CSOAI Ltd", "url": "https://csoai.org"}, "publisher": {"@type": "Organization", "name": "CSOAI Ltd", "url": "https://csoai.org"}, "isAbout": {"@type": "GovernmentOrganization", "name": "NCA Organised Crime Enforcement"}, "url": "https://www.csoai.org/defoneos-nca-organised-crime-enforcement-ai-deep-dive-pack.html"}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "CSOAI", "item": "https://www.csoai.org/"}, {"@type": "ListItem", "position": 2, "name": "DEFONEOS", "item": "https://www.csoai.org/arena-hub.html"}, {"@type": "ListItem", "position": 3, "name": "NCA Organised Crime Enforcement AI Deep-Dive Pack"}]}</script>
+<style>*{box-sizing:border-box;margin:0;padding:0}:root{--ink:#0b1020;--bg:#050816;--panel:#0d1330;--line:#1a2050;--gold:#d4af37;--sov:#6dd5ff;--care:#4ade80;--warn:#fbbf24;--bad:#f87171;--fg:#e8eefc;--mut:#8a93b8}html,body{background:var(--bg);color:var(--fg);font:16px/1.6 -apple-system,system-ui,sans-serif}body{background:radial-gradient(ellipse 80% 50% at 50% -10%,rgba(109,213,255,0.12),transparent),var(--bg);min-height:100vh}.wrap{max-width:1280px;margin:0 auto;padding:48px 24px}header{text-align:center;margin-bottom:32px}.pill{display:inline-block;padding:4px 14px;border:1px solid var(--gold);border-radius:999px;font-size:12px;letter-spacing:0.1em;color:var(--gold);margin-bottom:16px}h1{font-size:clamp(36px,5vw,56px);line-height:1.1;letter-spacing:-0.02em;margin-bottom:16px;background:linear-gradient(180deg,#fff,#b8c2e8);-webkit-background-clip:text;-webkit-text-fill-color:transparent}.sub{font-size:18px;color:var(--mut);max-width:820px;margin:0 auto 24px}.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin:32px 0;padding:24px;background:var(--panel);border:1px solid var(--line);border-radius:16px}@media(max-width:800px){.stats{grid-template-columns:repeat(2,1fr)}}.stat{text-align:center}.stat .num{font-size:32px;font-weight:800;color:var(--sov)}.stat .label{font-size:11px;letter-spacing:0.15em;text-transform:uppercase;color:var(--mut);margin-top:4px}h2{margin:48px 0 24px;padding-bottom:12px;border-bottom:1px solid var(--line);font-size:28px}.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px}.card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:20px;transition:all .2s;position:relative;overflow:hidden}.card::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:var(--accent,#6dd5ff)}.card:hover{transform:translateY(-3px);border-color:var(--accent);box-shadow:0 8px 24px rgba(0,0,0,0.3)}.card h3{font-size:17px;font-weight:700;margin-bottom:8px}.card p{font-size:14px;color:var(--mut);line-height:1.5}.tag{display:inline-block;font-size:10px;letter-spacing:0.12em;text-transform:uppercase;padding:2px 8px;border-radius:6px;background:rgba(109,213,255,0.12);color:var(--sov);margin-bottom:10px}.redline{background:rgba(248,113,113,0.06);border:1px solid rgba(248,113,113,0.25);border-radius:14px;padding:28px;margin:48px 0}.redline h3{color:var(--bad);margin-bottom:16px;font-size:20px}.redline ul{list-style:none;padding:0}.redline li{padding:10px 0;border-bottom:1px solid rgba(248,113,113,0.1);font-size:15px}.redline li:last-child{border:none}.engagement{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:28px;margin:48px 0}.engagement h3{color:var(--care);margin-bottom:20px;font-size:20px}.step{display:flex;gap:16px;align-items:flex-start;padding:14px 0;border-bottom:1px solid var(--line)}.step:last-child{border:none}.step .num{flex-shrink:0;width:36px;height:36px;display:flex;align-items:center;justify-content:center;border-radius:50%;background:rgba(74,222,128,0.12);color:var(--care);font-weight:800;font-size:16px}.step strong{color:var(--fg)}.step div:last-child{font-size:14px;color:var(--mut);line-height:1.5}.sovereign-cta-strip{text-align:center;padding:20px;margin:32px 0;font-size:14px}.sovereign-cta-strip a{color:var(--sov);text-decoration:none;font-weight:700;margin:0 12px;border-bottom:1px solid var(--sov)}.sovereign-cta-strip a:hover{color:#fff}footer{text-align:center;padding:32px 0 24px;font-size:13px;color:var(--mut);border-top:1px solid var(--line);margin-top:48px}footer a{color:var(--sov);text-decoration:none}nav{display:flex;gap:18px;justify-content:center;margin-bottom:32px}nav a{color:var(--mut);text-decoration:none;font-size:13px;letter-spacing:0.05em}nav a:hover{color:var(--sov)}.banner{background:linear-gradient(90deg,#dc2626,#991b1b);color:#fff;text-align:center;padding:12px 16px;font-size:13px;letter-spacing:0.04em}.banner a{color:#fecaca;text-decoration:underline}</style>
+<!-- AI-SEO/AEO/GEO head block — DO NOT remove. AI crawlers (GPTBot, ClaudeBot, PerplexityBot) don't run JS; everything they need must be in raw HTML. -->
+<link href="https://www.csoai.org/defoneos-nca-organised-crime-enforcement-ai-deep-dive-pack.html.llm.json" rel="alternate" title="LLM representation of this page" type="application/llm+json"/>
+<meta content="/llms.txt" name="llms-txt"/>
+<meta content="human-authored, machine-verifiable, Ed25519-signed" name="ai-content-declaration"/>
+<meta content="CSOAI Ltd (2026). DEFONEOS — NCA Organised Crime Enforcement AI Deep-Dive Pack. https://www.csoai.org/defoneos-nca-organised-crime-enforcement-ai-deep-dive-pack.html" name="citation-policy"/>
+<meta content="2026-08-03T11:19:50+00:00" name="revised"/>
+<meta content="2026-08-03T11:19:50+00:00" property="article:modified_time"/>
+<link href="https://www.csoai.org/defoneos-nca-organised-crime-enforcement-ai-deep-dive-pack.html" rel="canonical"/>
+<meta content="DEFONEOS — NCA Organised Crime Enforcement AI Deep-Dive Pack" property="og:title"/>
+<meta content="DEFONEOS — NCA Organised Crime Enforcement AI Deep-Dive Pack. A sovereign, audit-grade CSOAI surface: measurement, not certification — every figure traces to a signed, verifiable record." property="og:description"/>
+</head>
+<body>
+<div class="banner">⚠ EU AI Act Article 50 — Transparency &amp; Governance Obligations Apply to High-Risk Law Enforcement AI Systems. <a href="https://csoai.org/eu-ai-act-compliance.html">Read the CSOAI compliance passport →</a></div>
+<div class="wrap">
+<nav>
+<a href="https://csoai.org/">Home</a>
+<a href="https://csoai.org/defoneos.html">Master</a>
+<a href="https://csoai.org/defoneos-governance-benchmark.html">GovBench</a>
+<a href="https://csoai.org/defoneos-index.html">Index</a>
+<a href="https://csoai.org/sitemap.html">Sitemap</a>
+</nav>
+<header>
+<div class="pill">DEFONEOS × NCA × Organised Crime × Law Enforcement</div>
+<h1>NCA Organised Crime Enforcement</h1>
+<p class="sub">Sovereign AI governance deep-dive pack for the National Crime Agency — covering OCG disruption, economic crime, cyber, child protection, border policing, and international cooperation under UK law enforcement mandate.</p>
+<div class="stats">
+<div class="stat"><div class="num">12</div><div class="label">Entry Points</div></div>
+<div class="stat"><div class="num">8</div><div class="label">Transformation Priorities</div></div>
+<div class="stat"><div class="num">6</div><div class="label">MCP Servers</div></div>
+<div class="stat"><div class="num">6</div><div class="label">Red Lines</div></div>
+</div>
+</header>
+<h2>12 Entry Points — NCA Organised Crime</h2>
+<div class="grid">
+<div class="card" style="--accent:#f87171">
+<div class="tag">Entry Point 01</div>
+<h3>Serious Organised Crime</h3>
+<p>Drug trafficking networks, firearms supply, OCG disruption operations, county lines exploitation, modern slavery and human trafficking. NCA leads UK SOC strategy through tasking and coordination of NCA, police, and partner agencies against the highest-harm organised crime groups.</p>
+</div>
+<div class="card" style="--accent:#fbbf24">
+<div class="tag">Entry Point 02</div>
+<h3>Economic Crime</h3>
+<p>Fraud (including APP fraud, investment fraud, romance scams), money laundering via UKFIU SAR regime (2.4M+ SARs/yr), asset recovery through ARO/POCA frameworks, bribery and corruption investigations. NCA Economic Crime Command targets professional enablers and laundering infrastructure.</p>
+</div>
+<div class="card" style="--accent:#6dd5ff">
+<div class="tag">Entry Point 03</div>
+<h3>Cyber Crime</h3>
+<p>National Cyber Crime Unit operations — ransomware response, business email compromise, dark web marketplace disruption, botnet takedowns, cryptocurrency seizure under POCA. NCA coordinates with NCSC on critical national infrastructure protection and international cyber partnerships.</p>
+</div>
+<div class="card" style="--accent:#4ade80">
+<div class="tag">Entry Point 04</div>
+<h3>Child Exploitation</h3>
+<p>CEOP command — online child sexual abuse detection, grooming pattern analysis, indecent image identification at scale, victim identification and safeguarding. NCA child protection operations work with international partners to disrupt CSA networks and rescue victims across jurisdictions.</p>
+</div>
+<div class="card" style="--accent:#d4af37">
+<div class="tag">Entry Point 05</div>
+<h3>Immigration Crime</h3>
+<p>Clandestine entry facilitation networks, small boats Channel crossings, NCA/Border Force joint operations targeting organised immigration crime groups. Intelligence-led disruption of facilitators, logistics networks, and financial flows underpinning illegal migration to the UK.</p>
+</div>
+<div class="card" style="--accent:#a78bfa">
+<div class="tag">Entry Point 06</div>
+<h3>Border Policing</h3>
+<p>UK port security — freight screening, postal interception, cash courier detection, Border Crime Policing liaison officers at major ports. NCA coordinates with Border Force on high-risk consignments, containerised drug imports, and firearms concealment across maritime and aviation routes.</p>
+</div>
+<div class="card" style="--accent:#f472b6">
+<div class="tag">Entry Point 07</div>
+<h3>Intelligence</h3>
+<p>UKHTC (Human Trafficking Centre), CHIS handling under RIPA, INTERPOL/Europol coordination, Five Eyes intelligence sharing, covert surveillance authorisation. NCA intelligence infrastructure underpins all operational commands with classified and sensitive source material.</p>
+</div>
+<div class="card" style="--accent:#34d399">
+<div class="tag">Entry Point 08</div>
+<h3>Proceeds of Crime</h3>
+<p>Asset confiscation orders, civil recovery under POCA, unexplained wealth orders (UWOs), cash seizure at borders, account freezing orders. NCA Proceeds of Crime Command targets criminal wealth with financial investigation as a core disruption tool against OCGs.</p>
+</div>
+<div class="card" style="--accent:#fb923c">
+<div class="tag">Entry Point 09</div>
+<h3>Firearms &amp; Explosives</h3>
+<p>NABIS (ballistics intelligence), illegal firearms trafficking, IED precursor supply chains, explosive importation detection. NCA works with regional ROCUs and international partners to disrupt weapons pipelines from source to street-level criminal use across the UK.</p>
+</div>
+<div class="card" style="--accent:#38bdf8">
+<div class="tag">Entry Point 10</div>
+<h3>International Cooperation</h3>
+<p>NCA liaison officers posted globally, mutual legal assistance treaties (MLATs), joint investigation teams (JITs), fugitive extradition under UK Extradition Act 2003. International partnerships are central to NCA's ability to pursue transnational organised crime beyond UK borders.</p>
+</div>
+<div class="card" style="--accent:#c084fc">
+<div class="tag">Entry Point 11</div>
+<h3>Threat Assessment</h3>
+<p>NCA Strategic Assessment, National Tasking Force Process (NTFP), UK threat picture from serious organised crime, county lines mapping and hotspot analysis. Threat assessment drives NCA operational priorities and resource allocation through evidence-based strategic planning.</p>
+</div>
+<div class="card" style="--accent:#94a3b8">
+<div class="tag">Entry Point 12</div>
+<h3>Parliamentary &amp; Governance</h3>
+<p>NCA Director General accountability, oversight by Intelligence and Security Committee (ISC), Home Affairs Select Committee (HASC), annual plan publication, HMICFRS inspection regime. Governance structures ensure NCA operates within legal mandate and democratic accountability.</p>
+</div>
+</div>
+<h2>8 Transformation Priorities</h2>
+<div class="grid">
+<div class="card" style="--accent:#6dd5ff">
+<div class="tag">Priority 01</div>
+<h3>OCG Network Disruption Intelligence</h3>
+<p>AI-powered network mapping and social graph analysis to visualise OCG hierarchies, identify key nominals, and predict disruption leverage points. Integrates CHIS intelligence, financial data, and communications data to build comprehensive OCG profiles. Target: network mapping time weeks→hours, disruption operations 40% faster.</p>
+</div>
+<div class="card" style="--accent:#fbbf24">
+<div class="tag">Priority 02</div>
+<h3>Economic Crime Detection Engine</h3>
+<p>Automated SAR triage and prioritisation across 2.4M+ annual submissions, anomaly detection for fraud typologies, money laundering pattern recognition, and professional enabler identification. Target: SAR analysis 2.4M→prioritised actionable cases, fraud detection rates +60%.</p>
+</div>
+<div class="card" style="--accent:#f87171">
+<div class="tag">Priority 03</div>
+<h3>Cyber Crime Automated Response</h3>
+<p>Rapid ransomware containment and attribution, dark web marketplace monitoring, cryptocurrency blockchain analysis for seizure, automated botnet infrastructure mapping and takedown coordination. Target: ransomware containment 72h→4h, crypto seizure rate +80%.</p>
+</div>
+<div class="card" style="--accent:#4ade80">
+<div class="tag">Priority 04</div>
+<h3>Child Exploitation AI Shield</h3>
+<p>Advanced image and video analysis for CSA material detection at scale, grooming pattern recognition in online communications, victim identification acceleration through biometric and contextual matching. Target: CSA image detection accuracy 95%→99.5%, victim identification time -70%.</p>
+</div>
+<div class="card" style="--accent:#a78bfa">
+<div class="tag">Priority 05</div>
+<h3>Border Intelligence Fusion</h3>
+<p>Multi-modal threat detection at UK ports — freight manifest analysis, passenger risk scoring, cash courier identification, clandestine entry pattern recognition. Integrates Border Force and NCA intelligence streams. Target: threat detection at ports 30%→70%, freight risk scoring automated.</p>
+</div>
+<div class="card" style="--accent:#34d399">
+<div class="tag">Priority 06</div>
+<h3>Proceeds of Crime Recovery Accelerator</h3>
+<p>Automated financial investigation, hidden asset identification, UWO case preparation, cross-border asset tracing. AI-assisted civil recovery and confiscation order preparation to maximise criminal asset recovery. Target: asset recovery value +50%, UWO processing 12mo→3mo.</p>
+</div>
+<div class="card" style="--accent:#38bdf8">
+<div class="tag">Priority 07</div>
+<h3>International Cooperation Platform</h3>
+<p>Digital MLAT processing, JIT coordination workspace, evidence sharing automation, fugitive tracking intelligence fusion. Secure platform for real-time collaboration with INTERPOL/Europol and Five Eyes partners. Target: MLAT processing 6mo→6wk, JIT coordination time -60%.</p>
+</div>
+<div class="card" style="--accent:#c084fc">
+<div class="tag">Priority 08</div>
+<h3>Threat Assessment Automation</h3>
+<p>Automated NCA Strategic Assessment production from multi-source intelligence, real-time SOC threat mapping, county lines hotspot prediction, resource allocation optimisation based on threat picture. Target: Strategic Assessment production 4wk→1wk, real-time SOC mapping enabled.</p>
+</div>
+</div>
+<h2>6 MCP Servers</h2>
+<div class="grid">
+<div class="card" style="--accent:#f87171">
+<div class="tag">MCP Server</div>
+<h3>nca-organised-crime-mcp</h3>
+<p>OCG intelligence analysis, social network mapping, county lines detection and tracking, disruption operation planning and coordination against organised crime groups.</p>
+</div>
+<div class="card" style="--accent:#fbbf24">
+<div class="tag">MCP Server</div>
+<h3>nca-economic-crime-mcp</h3>
+<p>Fraud detection and typology classification, SAR analysis and prioritisation, AML pattern recognition, asset recovery support, UWO case preparation tools.</p>
+</div>
+<div class="card" style="--accent:#6dd5ff">
+<div class="tag">MCP Server</div>
+<h3>nca-cyber-crime-mcp</h3>
+<p>Ransomware incident response, dark web marketplace monitoring, cryptocurrency blockchain analysis for seizure, botnet infrastructure mapping and takedown.</p>
+</div>
+<div class="card" style="--accent:#4ade80">
+<div class="tag">MCP Server</div>
+<h3>nca-child-protection-mcp</h3>
+<p>CEOP operational support, CSA material detection and classification, online grooming pattern analysis, victim identification and safeguarding coordination.</p>
+</div>
+<div class="card" style="--accent:#a78bfa">
+<div class="tag">MCP Server</div>
+<h3>nca-border-policing-mcp</h3>
+<p>UK port threat detection, freight manifest risk scoring, cash courier identification, clandestine entry network analysis, border intelligence fusion.</p>
+</div>
+<div class="card" style="--accent:#38bdf8">
+<div class="tag">MCP Server</div>
+<h3>nca-intelligence-sharing-mcp</h3>
+<p>INTERPOL/Europol secure messaging, MLAT request processing, JIT coordination workspace, Five Eyes intelligence fusion, covert surveillance data management.</p>
+</div>
+</div>
+<div class="redline">
+<h3>🚫 6 Red Lines — Non-Negotiable Governance Boundaries</h3>
+<ul>
+<li><strong>1. Covert Surveillance:</strong> No covert surveillance authorised without RIPA/IPC warrant — all CHIS and interception requires judicial authorisation.</li>
+<li><strong>2. Child Exploitation Images:</strong> No child exploitation image processed by AI without NCA CEOP officer human review at decision point.</li>
+<li><strong>3. Asset Seizure:</strong> No asset seizure without POCA court order — algorithmic flagging only; confiscation requires judicial process.</li>
+<li><strong>4. Intelligence Sharing:</strong> No intelligence shared with foreign agencies without NCA Director General authorisation and data protection assessment.</li>
+<li><strong>5. Facial Recognition:</strong> No automated facial recognition deployed at border without Home Secretary approval and DPIA.</li>
+<li><strong>6. Disruption Operations:</strong> No disruption operation authorised without Gold Commander — all tactical operations require human chain of command.</li>
+</ul>
+</div>
+<div class="engagement">
+<h3>✅ 5-Step Engagement Model</h3>
+<div class="step">
+<div class="num">1</div>
+<div><strong>Discovery</strong></div>
+<div>NCA operational audit — map current intelligence workflows, identify automation opportunities across SOC, economic crime, cyber, and child protection commands. Assess RIPA/POCA compliance posture and data governance maturity.</div>
+</div>
+<div class="step">
+<div class="num">2</div>
+<div><strong>Governance Design</strong></div>
+<div>Co-design Article 50-compliant governance framework — define red lines, human-in-the-loop protocols, CHIS handling safeguards, and POCA judicial process gates aligned with NCA accountability structures.</div>
+</div>
+<div class="step">
+<div class="num">3</div>
+<div><strong>Pilot</strong></div>
+<div>Deploy 2-3 MCP servers in controlled NCA pilot environment — OCG network mapping, SAR triage, or cyber response. Measure against KPIs: time-to-disruption, detection rates, asset recovery value.</div>
+</div>
+<div class="step">
+<div class="num">4</div>
+<div><strong>Scale</strong></div>
+<div>Roll out to additional NCA commands — border policing, child protection, international cooperation. Integrate with existing NCA systems (Jigsaw, HOLMES2, financial investigation platforms).</div>
+</div>
+<div class="step">
+<div class="num">5</div>
+<div><strong>Assure</strong></div>
+<div>Continuous governance assurance — Article 50 compliance monitoring, HMICFRS inspection readiness, red line audit trail, NCA Director General reporting dashboards, annual governance review.</div>
+</div>
+</div>
+<div class="sovereign-cta-strip">
+<a href="https://csoai.org/defoneos-owem-rfq.html">DEFONEOS OWEM RFQ</a>
+<a href="https://csoai.org/eu-ai-act-compliance.html">Article 50 Passport</a>
+</div>
+<footer>
+<p>© 2025 CSOAI Ltd — Sovereign AI Compliance · <a href="https://csoai.org">csoai.org</a></p>
+<p style="margin-top:8px">DEFONEOS is a sovereign AI governance framework. All AI systems operating in UK law enforcement must comply with the EU AI Act Article 50, UK GDPR, RIPA 2000, and POCA 2002.</p>
+</footer>
+</div>
+</body>
+</html>

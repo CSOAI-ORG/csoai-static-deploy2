@@ -1,0 +1,28 @@
+{
+  "measured_at": "2026-08-04T17:43:33.975755+00:00",
+  "what": "cross-check of an independent sov34 GSPC baseline against my own axis-saturation run",
+  "same": {
+    "model": "sov34:latest",
+    "substrate": "sov-brain-2 via RunPod proxy",
+    "items": "the same 90 frozen GSPC items"
+  },
+  "different": {
+    "their_harness": "regex extraction + macro-F1, unparsed scored as WRONG",
+    "my_harness": "exact single-label match, unparsed excluded as UNMEASURED"
+  },
+  "EXACT_AGREEMENT_ON_CORRECT_COUNT": {
+    "governance": "11 = 11",
+    "provenance": "3 = 3",
+    "continuity": "3 = 3",
+    "note": "three of six axes agree to the item on how many sov34 got right, from two harnesses written independently. provenance is the strongest: both agree only 3 items were answered correctly, and their run shows why \u2014 73.3% of responses had no readable label at all."
+  },
+  "DIVERGENT": {
+    "safety": "theirs 9, mine 13",
+    "conformance": "theirs 7, mine 5",
+    "openness": "theirs 7, mine 6"
+  },
+  "A_FLAW_IN_MY_RECONCILIATION": "I derived 'implied gradable' from THEIR unparsed rate and applied it to MY accuracy. That is only valid if both harnesses find the same responses ungradable, and they plainly do not \u2014 mine requires exactly one label match, theirs extracts by regex. The three divergences may be entirely explained by different parse rules rather than different measurement, and I cannot tell, because MY harness does not store per-model per-item outcomes. It records aggregated model_totals only.",
+  "THE_GAP_THIS_EXPOSES_IN_MY_INSTRUMENT": "axis_saturation.py keeps per-ITEM statistics across models and per-MODEL totals, but not the per-model-per-item matrix. So it cannot answer 'which items did THIS model fail?' \u2014 which is exactly the question needed to reconcile with any other harness, or to debug a single model. item_quality.py stores that matrix; axis_saturation should too.",
+  "WHAT_BOTH_RUNS_AGREE_ON": "sov34's headline problem is INSTRUCTION FOLLOWING, not knowledge. Their mean unparsed rate is 23.3% and 73.3% on provenance. I independently measured 39% unparseable on classification items and 8 unparseable in the grounding retrieval arm against the control's 0. Three separate measurements, same conclusion: the model wraps answers in conversational scaffolding and often never emits the label.",
+  "their_fix_is_right": "constrain the output \u2014 Ollama supports format/grammar constraints. A large share of current errors are formatting, not reasoning, so this would lift every axis without touching the weights. It is also the cheapest experiment available and needs no training run."
+}

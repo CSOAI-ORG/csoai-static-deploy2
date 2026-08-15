@@ -1,0 +1,19 @@
+{
+ "schema": "mcp-server-record-v1",
+ "slug": "csoai-universal-evaluator-mcp",
+ "name": "CSOAI Universal Evaluator",
+ "description": "Thin orchestrator MCP: composes the estate's evidence engines (ProvBench, C2PA manifest, corpus anchor/drift, governance crosswalk) into one structured, understandable evaluation. No new measurements — every field names its source engine; unmeasured stays null. Audit-trail sigil appended per call.",
+ "category": "Orchestration",
+ "url": "https://github.com/CSOAI-ORG/csoai-universal-evaluator-mcp",
+ "transport": "stdio",
+ "license": "MIT",
+ "version": "0.1.0",
+ "capabilities": [
+  "tools/list",
+  "tools/call"
+ ],
+ "dependencies": [],
+ "registered_at": "2026-08-09T00:00:00.000000+00:00",
+ "source_registry": "councilof-ai/mcpRegistry.json",
+ "honesty": "field is null 'unmeasured' when its engine did not run or its artifact is missing; orchestrator adds no judgement"
+}

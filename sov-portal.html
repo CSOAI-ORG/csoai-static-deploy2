@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>SOV Portal — End-User Console</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #03060c; color: #E6EDF3; font-family: 'Inter', system-ui, sans-serif; min-height: 100vh; }
+  header {
+    padding: 16px 24px;
+    background: linear-gradient(90deg, rgba(47,129,247,0.15), rgba(163,113,247,0.15));
+    border-bottom: 1px solid #2D333B;
+  }
+  header h1 { font-size: 1.3rem; color: #79C0FF; font-weight: 700; }
+  header .sub { color: #6E7681; font-size: 0.8rem; margin-top: 2px; }
+  main { max-width: 1100px; margin: 16px auto; padding: 0 16px; }
+
+  .row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+  .row.full { grid-template-columns: 1fr; }
+
+  .card { background: #050510; border: 1px solid #2D333B; border-radius: 8px; padding: 16px; }
+  .card h2 { font-size: 0.95rem; color: #79C0FF; margin-bottom: 10px; font-weight: 600; }
+
+  .soul { padding: 14px 16px; border-radius: 8px; background: rgba(63,185,80,0.06); border-left: 4px solid #3FB950; }
+  .soul h3 { color: #3FB950; font-size: 1rem; margin-bottom: 6px; }
+  .soul .label { font-size: 0.6rem; padding: 2px 6px; border-radius: 3px; background: #3FB95033; }
+  .soul .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 10px; font-size: 0.7rem; }
+  .soul .grid div { padding: 4px 8px; background: rgba(0,0,0,0.3); border-radius: 4px; }
+  .soul .grid div .l { color: #6E7681; font-size: 0.6rem; text-transform: uppercase; }
+  .soul .grid div .v { color: #79C0FF; font-weight: 600; }
+
+  .ladder { display: flex; flex-direction: column; gap: 6px; }
+  .tier { padding: 10px 12px; border-radius: 6px; background: rgba(0,0,0,0.3); display: flex; align-items: center; gap: 12px; }
+  .tier.current { border: 2px solid #3FB950; background: rgba(63,185,80,0.1); }
+  .tier.eligible { border-left: 4px solid #2F81F7; }
+  .tier .num { font-size: 1.4rem; font-weight: 700; color: #79C0FF; width: 36px; }
+  .tier .label { font-weight: 600; flex: 1; }
+  .tier .model { font-family: monospace; font-size: 0.7rem; color: #6E7681; }
+  .tier .size { font-size: 0.65rem; padding: 2px 6px; border-radius: 3px; background: rgba(255,255,255,0.05); }
+
+  .grow-btn { background: #3FB950; color: #03110b; border: 0; padding: 6px 10px; border-radius: 3px;
+              cursor: pointer; font-size: 0.7rem; font-weight: 600; }
+  .grow-btn:hover { background: #56D364; }
+
+  .backend-row { padding: 6px 10px; margin-bottom: 4px; border-radius: 4px; background: rgba(0,0,0,0.3);
+                 border-left: 3px solid #79C0FF; display: flex; align-items: center; gap: 8px; }
+  .backend-row.primary { border-left-color: #3FB950; }
+  .backend-row.fallback { border-left-color: #D29922; }
+  .backend-row .name { font-family: monospace; font-size: 0.7rem; color: #79C0FF; }
+  .backend-row .role { font-size: 0.6rem; padding: 1px 5px; border-radius: 3px; }
+  .backend-row .role.primary { background: #3FB95033; color: #3FB950; }
+  .backend-row .role.fallback { background: #D2992233; color: #D29922; }
+  .backend-row .meta { font-size: 0.6rem; color: #6E7681; margin-left: auto; }
+
+  .event-row { padding: 6px 10px; font-size: 0.7rem; border-bottom: 1px solid #2D333B33; display: flex; gap: 8px; }
+  .event-row .kind { font-size: 0.55rem; padding: 1px 5px; border-radius: 2px; background: #2F81F733; color: #2F81F7; }
+  .event-row .signed { color: #3FB950; font-size: 0.55rem; }
+  .event-row .time { font-family: monospace; color: #6E7681; font-size: 0.65rem; }
+
+  .pill { display: inline-block; font-size: 0.55rem; padding: 2px 6px; border-radius: 3px;
+          background: #2F81F733; color: #2F81F7; margin-right: 4px; }
+  .pill.owem { background: #A371F733; color: #A371F7; }
+  .pill.iwm { background: #2F81F733; color: #2F81F7; }
+  .pill.vwm { background: #3FB95033; color: #3FB950; }
+
+  .stage-picker { margin: 12px 0; padding: 12px; border-radius: 6px; background: rgba(0,0,0,0.3); }
+  .stage-picker input { padding: 6px 10px; background: #050510; border: 1px solid #2D333B;
+                       border-radius: 4px; color: #E6EDF3; font-size: 0.85rem;
+                       width: 280px; margin-right: 8px; font-family: monospace; }
+  .stage-picker button { padding: 6px 14px; background: #2F81F7; border: 0; color: white;
+                          border-radius: 4px; cursor: pointer; font-size: 0.85rem; font-weight: 600; }
+
+  footer { padding: 16px 24px; color: #6E7681; font-size: 0.7rem; text-align: center;
+           border-top: 1px solid #2D333B; margin-top: 32px; }
+</style>
+<!-- AI-SEO/AEO/GEO head block — DO NOT remove. AI crawlers (GPTBot, ClaudeBot, PerplexityBot) don't run JS; everything they need must be in raw HTML. -->
+<link href="https://www.csoai.org/sov-portal.html.llm.json" rel="alternate" title="LLM representation of this page" type="application/llm+json"/>
+<meta content="/llms.txt" name="llms-txt"/>
+<meta content="human-authored, machine-verifiable, Ed25519-signed" name="ai-content-declaration"/>
+<meta content="CSOAI Ltd (2026). SOV Portal — End-User Console. https://www.csoai.org/sov-portal.html" name="citation-policy"/>
+<meta content="2026-08-02T10:26:44+00:00" name="revised"/>
+<meta content="2026-08-02T10:26:44+00:00" property="article:modified_time"/>
+<meta content="SOV Portal — End-User Console. A sovereign, audit-grade CSOAI surface: measurement, not certification — every figure traces to a signed, verifiable record." name="description"/>
+<link href="https://www.csoai.org/sov-portal.html" rel="canonical"/>
+<meta content="SOV Portal — End-User Console" property="og:title"/>
+<meta content="SOV Portal — End-User Console. A sovereign, audit-grade CSOAI surface: measurement, not certification — every figure traces to a signed, verifiable record." property="og:description"/>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"SOV Portal \u2014 End-User Console","url":"https://www.csoai.org/sov-portal.html","publisher":{"@type":"Organization","name":"CSOAI Ltd","url":"https://csoai.org"}}</script>
+</head>
+<body>
+<header>
+<h1>SOV Portal — End-User Console</h1>
+<div class="sub">Spawn your soul · Start tiny · Grow with use · Council-eligible at tier 4</div>
+</header>
+<main>
+<div class="stage-picker">
+<input id="userInput" placeholder="user@example.com" value="alice"/>
+<button onclick="loadPortal()">Load / Spawn</button>
+<span id="poolStats" style="margin-left:12px;color:#6E7681;font-size:0.75rem">— souls in pool</span>
+</div>
+<div class="row">
+<div class="card">
+<h2>🪞 Your Soul</h2>
+<div id="soulCard"></div>
+</div>
+<div class="card">
+<h2>📡 Live Swarm — GPUs Allocated to Your Tier</h2>
+<div id="swarmCard"></div>
+</div>
+</div>
+<div class="row full">
+<div class="card">
+<h2>📊 Tier Ladder — Grow Your Soul</h2>
+<div class="ladder" id="ladderCard"></div>
+</div>
+</div>
+<div class="row">
+<div class="card">
+<h2>🍯 Honey Routes — Where the Knowledge Flows</h2>
+<div id="honeyCard"></div>
+</div>
+<div class="card">
+<h2>📇 Recent Ledger Events — Signed &amp; Stamped</h2>
+<div id="eventsCard" style="max-height:380px;overflow-y:auto"></div>
+</div>
+</div>
+</main>
+<footer>
+  sovereign-static-deploy2 · local portal · every spawn stamped, every tier promotion signed, every GPU allocation audit-trailed
+</footer>
+<script>
+const LIVE_API = 'https://govbench-api.nicholastempleman.workers.dev';
+
+async function loadPortal() {
+  // 2026-08-08: soul/tier/GPU scaling runs on the LOCAL sov server (not on
+  // this public host). The honey/events panels now pull the ONE live public
+  // story — the anchor watcher feed — instead of dead /api/portal JSON.
+  try {
+    const r = await fetch(LIVE_API + '/anchors', {cache:'no-store'});
+    if (!r.ok) throw new Error('live feed ' + r.status);
+    const d = await r.json();
+    const watchers = d.watchers || [];
+    const live = watchers.filter(w => w.status === 'LIVE').length;
+    const stale = watchers.filter(w => w.status === 'STALE').length;
+
+    document.getElementById('soulCard').innerHTML = `
+      <div class="soul">
+        <h3>Local soul runtime <span class="label">not on this host</span></h3>
+        <div style="color:#8B949E;font-size:0.8rem;font-family:monospace">sov_local_server.py</div>
+        <div style="margin-top:10px;color:#8B949E;font-size:0.8rem">
+          Soul spawn / tier growth / GPU allocation run on your local runtime —
+          the public host serves the measurement surface below.
+        </div>
+      </div>`;
+
+    document.getElementById('swarmCard').innerHTML = `
+      <div style="font-size:0.75rem;line-height:1.8">
+        <div><b style="color:#79C0FF">${watchers.length}</b> anchored statute/standard sources</div>
+        <div><b style="color:#3FB950">${live}</b> reachable now · <b style="color:#D29922">${stale}</b> stale</div>
+        <div style="color:#6E7681;margin-top:6px">sources watched by the corpus feed — the real "swarm".</div>
+      </div>`;
+
+    document.getElementById('honeyCard').innerHTML = `
+      <div style="font-size:0.75rem;line-height:1.8">
+        ${watchers.map(w => `
+          <div style="padding:4px 0;border-bottom:1px solid #2D333B33">
+            <span style="color:${w.status==='LIVE' ? '#3FB950' : '#D29922'}">●</span>
+            <span style="color:#E6EDF3">${w.source}</span>
+            <span style="float:right;color:#6E7681;font-family:monospace">${w.last_checked || ''}</span>
+          </div>`).join('')}
+      </div>`;
+
+    document.getElementById('eventsCard').innerHTML = `
+      <div style="color:#6E7681;font-size:0.75rem;line-height:1.8">
+        Signed ledger events stream from the local runtime. Live chain health:
+        ${live}/${watchers.length} upstream sources reachable.
+      </div>`;
+
+    document.getElementById('poolStats').textContent =
+      `${watchers.length} anchored sources · ${live} live`;
+  } catch (e) {
+    document.getElementById('soulCard').innerHTML =
+      `<div style="color:#F85149">Live feed unreachable: ${e.message}</div>`;
+  }
+}
+
+function renderSoul(s) { /* local-runtime only — see loadPortal */ }
+function growTo(user, target) { loadPortal(); }
+function renderLadder(ladder) { /* local-runtime only */ }
+function renderSwarm(swarm) { /* local-runtime only */ }
+function renderHoney(routes) { /* local-runtime only */ }
+function renderEvents(events) { /* local-runtime only */ }
+
+loadPortal();
+setInterval(loadPortal, 60000); // refresh the live feed once a minute
+</script>
+</body>
+</html>

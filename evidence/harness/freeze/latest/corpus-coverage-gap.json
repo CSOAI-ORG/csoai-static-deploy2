@@ -1,0 +1,69 @@
+{
+  "measured_at": "2026-08-04T13:09:42.941604+00:00",
+  "SUPERSEDES": "the first version of this file, committed 2dc2093 earlier today, reported 14 groundable / 8 missing and '6 of 8 HIGH_RISK ungroundable'. Those numbers were WRONG.",
+  "why_the_first_version_was_wrong": "The snapshot file is named `annex-iii-employment.txt`. I routed only `Annex III 4(a)` to it on the strength of that name and never opened it. It contains Annex III points 1 THROUGH 4 in full and says so in its own header and footer. Education access (point 3(a)) and critical infrastructure (point 2) \u2014 both HIGH_RISK items \u2014 were in the corpus the whole time and I recorded them as missing. I inferred coverage from a filename in the middle of an audit whose entire purpose was to stop inferring and check.",
+  "method": "static audit of item anchors against the snapshot CONTENTS. No model calls.",
+  "corpus": "regarena/packages/packs/eu-ai-act@1.0.0 + snapshots/EU-AI-ACT/202608",
+  "scope": "GSPC governance axis, n=24",
+  "counts": {
+    "groundable_from_corpus": 16,
+    "cited_but_missing_from_corpus": 6,
+    "no_provision_applies_by_design": 2
+  },
+  "THE_HOLE_CORRECTED": {
+    "what": "Annex III points 1-4 ARE in the signed snapshot. Points 5-8 are not \u2014 the file's own footer records them as deliberately out of scope: 'Points 5-8 (law enforcement, migration, justice/democratic processes) omitted from this snapshot scope'. So the gap is a documented scoping decision, not an accident.",
+    "genuinely_missing": [
+      {
+        "item": 5,
+        "expected": "HIGH_RISK",
+        "anchor": "Annex III 5(a) essential services / emergency triage"
+      },
+      {
+        "item": 6,
+        "expected": "HIGH_RISK",
+        "anchor": "Annex III 5(b) creditworthiness"
+      },
+      {
+        "item": 8,
+        "expected": "HIGH_RISK",
+        "anchor": "Annex III 7 migration and asylum"
+      },
+      {
+        "item": 10,
+        "expected": "HIGH_RISK",
+        "anchor": "Annex III 5(c) life/health insurance risk assessment"
+      },
+      {
+        "item": 16,
+        "expected": "MINIMAL_RISK",
+        "anchor": "Recital ic \u2014 AI in video games, minimal risk"
+      },
+      {
+        "item": 21,
+        "expected": "MINIMAL_RISK",
+        "anchor": "Art 2(6) \u2014 scientific research and development is out of scope"
+      }
+    ],
+    "high_risk_ungroundable": "4 of 8 \u2014 items 5, 6, 8, 10, all of them Annex III point 5 or point 7",
+    "also_missing": [
+      "Article 2(6) \u2014 scientific R&D scope exclusion",
+      "Recitals \u2014 none captured"
+    ]
+  },
+  "SELECTION_EFFECT": {
+    "groundable_label_mix": {
+      "PROHIBITED": 7,
+      "HIGH_RISK": 4,
+      "LIMITED_RISK": 3,
+      "MINIMAL_RISK": 2
+    },
+    "full_axis_label_mix": {
+      "PROHIBITED": 7,
+      "HIGH_RISK": 8,
+      "LIMITED_RISK": 3,
+      "MINIMAL_RISK": 6
+    },
+    "why_it_matters": "PROHIBITED is 29% of the axis but 44% of what the corpus can ground. Scoring a grounded arm on 'items we could retrieve for' against closed-book on everything would manufacture a lift out of the coverage hole. The harness pairs on identical items."
+  },
+  "what_this_means_for_the_thesis": "Two thirds of the axis is groundable, and the remaining third is missing by an explicit scoping decision rather than by neglect. That is a materially better position than the first audit claimed. It does NOT change the blocker: a grounding result quoted today would still be computed with 4 of 8 HIGH_RISK items unanswerable from the corpus, and the fix \u2014 ingest Annex III points 5-8, Article 2, and the cited recitals \u2014 is public-text ingestion, not research."
+}

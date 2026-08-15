@@ -1,0 +1,37 @@
+{
+  "ec_id": "EC-TRANSPARENCY-AIGEN-MARKING",
+  "obligation_type": "transparency: AI-generated content must carry a provenance marking",
+  "axis": "provenance",
+  "version": "1.0.0",
+  "predicate": "does the system's output carry a machine-readable provenance marking (C2PA manifest, watermark, or equivalent) that survives at least one ordinary transform?",
+  "criteria_doc": "EU AI Act Art 50(2): 'AI-generated content shall be marked in a machine-readable format and detectable as artificially generated'. California SB 942 (California AI Transparency Act): 'GenAI providers shall make available a provenance tool that outputs a manifest'. China GB 45438-2025: 'Synthesized content shall carry tamper-resistant labels'.",
+  "members": [
+    {
+      "jurisdiction": "EU",
+      "instrument": "EU AI Act",
+      "provision": "Art 50(2)",
+      "celex": "32024R1689",
+      "as_of": "2024-08-01",
+      "corpus_hash": "3729b52eb469b77c6501056889460e9fcd45fc0127bc59b002863b28db3ef01d",
+      "obligation_summary": "Machine-readable marking of AI-generated content; detectable as artificially generated."
+    },
+    {
+      "jurisdiction": "California",
+      "instrument": "SB 942 (CA AI Transparency Act)",
+      "provision": "§22757.1(a)",
+      "as_of": "2026-01-01",
+      "corpus_hash": null,
+      "obligation_summary": "GenAI providers with >1M monthly users shall make available a provenance tool that outputs a manifest identifying content as AI-generated."
+    },
+    {
+      "jurisdiction": "China",
+      "instrument": "GB 45438-2025",
+      "provision": "§5.1",
+      "as_of": "2025-09-01",
+      "corpus_hash": null,
+      "obligation_summary": "Synthesized content shall carry tamper-resistant labels; service providers shall embed identifiers in metadata."
+    }
+  ],
+  "divergence_note": "All three jurisdictions require provenance marking but differ on: (1) scope (EU: all AI content; CA: GenAI providers >1M users; China: all synthesized content), (2) mechanism (EU: machine-readable; CA: provenance tool; China: tamper-resistant labels), (3) enforcement (EU: fines up to 7M EUR; CA: AG enforcement; China: CAC enforcement). The EC measures whether a system's marking SURVIVES — the mechanism differences are for the crosswalk, not the EC.",
+  "signature": "UNSIGNED_PLACEHOLDER — human curator must sign before loading into measure_divergence(). The engine rejects unsigned ECs."
+}

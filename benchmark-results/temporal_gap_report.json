@@ -1,0 +1,40 @@
+{
+  "detector": "temporal_gap_audit v0.1.0",
+  "generated_at": "2026-08-09T06:04:25.019083+00:00",
+  "files": 4,
+  "findings_count": 0,
+  "findings": [],
+  "per_file": [
+    {
+      "file": "benchmark-results/overnight_e2e_*.json",
+      "status": "missing"
+    },
+    {
+      "file": "benchmark-results/corpus_anchor.json",
+      "status": "audited",
+      "timestamps_seen": 1,
+      "span_s": 0.0,
+      "span_h": 0.0
+    },
+    {
+      "file": "benchmark-results/coverage_crosswalk.json",
+      "status": "audited",
+      "timestamps_seen": 1,
+      "span_s": 0.0,
+      "span_h": 0.0
+    },
+    {
+      "file": "benchmark-results/refusal_sov33_rebuild.jsonl",
+      "status": "missing"
+    }
+  ],
+  "frame": "Indicators, never verdicts. Deterministic timestamp-delta analysis (Law 1); a file with no timestamps is UNKNOWN, not 'no gap'.",
+  "corpus_anchor": {
+    "corpus_root": "37e2e10d53feaa9e12097f45113e1234510be0ca471e1a0848f5805db3e367c7",
+    "provisions": 417,
+    "normaliser_version": "1.0.0",
+    "anchored_at": "2026-08-10T05:22:27.951879+00:00",
+    "retro": true,
+    "note": "Anchored retrospectively on 2026-07-29. This records the corpus as it stands NOW; it does not prove what the text said when the result was produced. Runs from this point forward anchor at measurement time."
+  }
+}

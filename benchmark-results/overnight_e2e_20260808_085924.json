@@ -1,0 +1,91 @@
+{
+  "plan_id": "overnight_e2e_v1",
+  "ts": "20260808_085924",
+  "issued_at": "2026-08-08T08:00:09.676793+00:00",
+  "verdict": "PARTIAL (7/11)",
+  "steps": [
+    {
+      "n": 1,
+      "name": "tier0_citizen_spawn",
+      "passed": true
+    },
+    {
+      "n": 2,
+      "name": "tier1_citizen_spawn",
+      "passed": true
+    },
+    {
+      "n": 3,
+      "name": "care_gate_eval",
+      "passed": false
+    },
+    {
+      "n": 4,
+      "name": "flywheel_selftest",
+      "passed": true
+    },
+    {
+      "n": 5,
+      "name": "provbench_canonical",
+      "passed": false
+    },
+    {
+      "n": 6,
+      "name": "pqc_chains_emit_and_bench",
+      "passed": false
+    },
+    {
+      "n": 7,
+      "name": "tier2_citizen_spawn_free_gpu",
+      "passed": true
+    },
+    {
+      "n": 8,
+      "name": "decision_ledger_sigiled_append",
+      "passed": true
+    },
+    {
+      "n": 9,
+      "name": "sovspace_snapshot_rebuild",
+      "passed": true
+    },
+    {
+      "n": 10,
+      "name": "deploy_csoai_site",
+      "passed": true
+    },
+    {
+      "n": 11,
+      "name": "verdict_emit",
+      "passed": false
+    }
+  ],
+  "passed": 7,
+  "total": 11,
+  "sigil": {
+    "version": 1,
+    "prev_hash": "77ab0e6f9d6c77e8",
+    "payload_hash": "c16619e6e6639d4234a6912b73f380ac767e311119b9033f77723e591af65139",
+    "root_hash": "45fd21ecd3ddbdd46cef91375ba1aee62d266d76f988e9f5f675be9672955a1d",
+    "agent_did": "did:csoai:nicholas-001",
+    "bft_tally": {
+      "approve": 33,
+      "reject": 0,
+      "amend": 0
+    },
+    "care_score": 0.96,
+    "ts_unix_ms": 1786176010013,
+    "sigil_type": "cycle",
+    "algorithm": "Ed25519",
+    "public_key": "jxLjLxKbRr1w5qOvaXDKZirIWAAlBwcF3uVvNSDGZzY=",
+    "signature": "9+sBc653J3ohFvlbVSUeCM5s621Ycbn5CTGxEvKaq4itWC0Y6qYUB1SEFt/oo5Mlv5XXRTnwCw69VziJasLvBw=="
+  },
+  "corpus_anchor": {
+    "corpus_root": "37e2e10d53feaa9e12097f45113e1234510be0ca471e1a0848f5805db3e367c7",
+    "provisions": 417,
+    "normaliser_version": "1.0.0",
+    "anchored_at": "2026-08-10T05:22:27.735449+00:00",
+    "retro": true,
+    "note": "Anchored retrospectively on 2026-07-29. This records the corpus as it stands NOW; it does not prove what the text said when the result was produced. Runs from this point forward anchor at measurement time."
+  }
+}

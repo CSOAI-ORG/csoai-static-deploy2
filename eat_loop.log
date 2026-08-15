@@ -1,0 +1,135 @@
+[2026-07-27T12:59:11Z] === EAT CYCLE START ===
+[2026-07-27T12:59:11Z] Phase 1: Overnight EAT benchmarks...
+=== SOV OVERNIGHT EAT PIPELINE ===
+
+{
+  "timestamp": "2026-07-27T12:59:12.479812+00:00",
+  "benchmarks": {
+    "mmlu_pro": {
+      "passed": 3,
+      "tested": 3,
+      "score_pct": 100.0
+    },
+    "gsm8k": {
+      "passed": 3,
+      "tested": 3,
+      "score_pct": 100.0
+    },
+    "arc_challenge": {
+      "passed": 1,
+      "tested": 2,
+      "score_pct": 50.0
+    },
+    "hellaswag": {
+      "passed": 1,
+      "tested": 2,
+      "score_pct": 50.0
+    },
+    "gaia": {
+      "passed": 2,
+      "tested": 2,
+      "score_pct": 100.0
+    },
+    "hotpotqa": {
+      "passed": 2,
+      "tested": 2,
+      "score_pct": 100.0
+    }
+  },
+  "sigil": "8ec36ff01e54b0ff"
+}
+[2026-07-27T13:00:03Z] Phase 2: Full EAT pipeline (12 OWEM)...
+============================================================
+=== SOV33 EAT FULL PIPELINE ===
+Query → 12 OWEM → J-Space → V-Space → C-Space → Sov-Space → Honey
+============================================================
+=== EAT FULL PIPELINE BENCHMARK ===
+Tasks: 8
+OWEMs: 12
+============================================================
+  [ 1/8] PASS What is 15% of 200? (j=1, honey=0.25)
+  [ 2/8] FAIL If all roses are flowers, and some flowers fade qu (j=0, honey=0.00)
+  [ 3/8] FAIL What is the DEFONEOS care floor value? (j=1, honey=0.25)
+  [ 4/8] FAIL How many agents are in the BFT council? (j=1, honey=0.25)
+  [ 5/8] PASS What is the capital of Japan? (j=1, honey=0.25)
+  [ 6/8] FAIL Write a Python function is_palindrome(s). (j=0, honey=0.00)
+  [ 7/8] FAIL Can you catch a cold from being cold? (j=0, honey=0.00)
+  [ 8/8] FAIL A bat and a ball cost $1.10. The bat costs $1.00 m (j=1, honey=0.25)
+
+============================================================
+=== EAT RESULT: 2/8 = 25.0% ===
+
+Honey Stats:
+  Total memories: 5
+  Honey score: 0.25
+  J-Space entries: 5
+  V-Space artifacts: 5
+  C-Space simulations: 0
+
+Saved: /tmp/eat_full_pipeline.json
+[2026-07-27T13:02:52Z] Phase 3: E2E checks...
+  ✅ Training data benchmark-results/sov5_training_dataset.jsonl exists
+  ✅ Training data benchmark-results/sovereign_corpus_e2e.jsonl exists
+
+============================================================
+RESULTS: 124 passed, 0 failed, 0 warnings
+PAGES: 46 HTML files, 46 passing 8/8 signals
+LINKS: 436 checked, 0 broken
+============================================================
+
+✅ ALL 124 TESTS PASSED
+[2026-07-27T13:02:53Z] Phase 4: Runtime alignment tests...
+......
+----------------------------------------------------------------------
+Ran 6 tests in 0.067s
+
+OK
+[2026-07-27T13:02:54Z] === EAT CYCLE DONE — sleeping 2h ===
+[2026-07-27T15:02:54Z] === EAT CYCLE START ===
+[2026-07-27T15:02:54Z] Phase 1: Overnight EAT benchmarks...
+=== SOV OVERNIGHT EAT PIPELINE ===
+
+{
+  "timestamp": "2026-07-27T15:02:54.401068+00:00",
+  "benchmarks": {
+    "mmlu_pro": {
+      "passed": 3,
+      "tested": 3,
+      "score_pct": 100.0
+    },
+    "gsm8k": {
+      "passed": 3,
+      "tested": 3,
+      "score_pct": 100.0
+    },
+    "arc_challenge": {
+      "passed": 1,
+      "tested": 2,
+      "score_pct": 50.0
+    },
+    "hellaswag": {
+      "passed": 2,
+      "tested": 2,
+      "score_pct": 100.0
+    },
+    "gaia": {
+      "passed": 2,
+      "tested": 2,
+      "score_pct": 100.0
+    },
+    "hotpotqa": {
+      "passed": 2,
+      "tested": 2,
+      "score_pct": 100.0
+    }
+  },
+  "sigil": "468361b15f2ff958"
+}
+[2026-07-27T15:03:29Z] Phase 2: Full EAT pipeline (12 OWEM)...
+tee: eat_loop.log: No space left on device
+tee: stdout: No space left on device
+Traceback (most recent call last):
+  File "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/eat_full_pipeline.py", line 734, in <module>
+    with open(out_path, "w") as f:
+         ~~~~^^^^^^^^^^^^^^^
+OSError: [Errno 28] No space left on device: '/tmp/eat_full_pipeline.json'

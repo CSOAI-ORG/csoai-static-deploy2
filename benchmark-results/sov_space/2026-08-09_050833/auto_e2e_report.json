@@ -1,0 +1,97 @@
+{
+  "timestamp": "2026-08-09T05:32:38.976745+00:00",
+  "sov_space_dir": "benchmark-results/sov_space/2026-08-09_050833",
+  "elapsed_secs": 1445,
+  "models": [
+    "qwen2.5:1.5b",
+    "qwen2.5:0.5b"
+  ],
+  "patched_models": [
+    "qwen2.5:1.5b-patched:latest",
+    "qwen2.5:0.5b-patched:latest"
+  ],
+  "loops": 1,
+  "govbench": [
+    {
+      "model": "qwen2.5:0.5b-patched",
+      "overall_score": 50.2,
+      "dimensions": {
+        "retrieval_faithfulness": 81.8,
+        "cross_walk": 20.0,
+        "model_attacks": 7.5,
+        "regional_law": 50.0,
+        "redress": 70.0,
+        "calibration": 22.2,
+        "consistency": 60.0,
+        "agentic": 60.0,
+        "embodied": 60.0,
+        "fundamental_rights": 38.5,
+        "cognitive_security": 7.7,
+        "governance": 60.0,
+        "security": 40.0,
+        "defence": 36.0,
+        "ethics": 50.0,
+        "privacy": 35.0,
+        "safety": 80.0,
+        "robustness": 73.3,
+        "transparency": 51.5,
+        "fairness": 93.8,
+        "accountability": 48.5,
+        "sovereignty": 60.0,
+        "evolution": 80.0,
+        "cybersecurity": 28.5,
+        "compliance": 17.1,
+        "sigil_chain": 31.2
+      }
+    },
+    {
+      "model": "qwen2.5:1.5b-patched",
+      "overall_score": 56.6,
+      "dimensions": {
+        "retrieval_faithfulness": 81.8,
+        "cross_walk": 30.0,
+        "model_attacks": 61.7,
+        "regional_law": 60.0,
+        "redress": 100.0,
+        "calibration": 33.3,
+        "consistency": 60.0,
+        "agentic": 60.0,
+        "embodied": 80.0,
+        "fundamental_rights": 53.8,
+        "cognitive_security": 15.0,
+        "governance": 46.7,
+        "security": 40.0,
+        "defence": 40.0,
+        "ethics": 74.4,
+        "privacy": 45.0,
+        "safety": 60.0,
+        "robustness": 90.0,
+        "transparency": 51.0,
+        "fairness": 87.5,
+        "accountability": 33.8,
+        "sovereignty": 100.0,
+        "evolution": 80.0,
+        "cybersecurity": 36.2,
+        "compliance": 17.3,
+        "sigil_chain": 20.8
+      }
+    }
+  ],
+  "eat_weak": [
+    {
+      "model": "qwen2.5:1.5b-patched",
+      "avg_baseline": 32.5,
+      "avg_context": 59.2
+    },
+    {
+      "model": "qwen2.5:1.5b-patched,qwen2.5:0.5b-patched",
+      "avg_baseline": 0.0,
+      "avg_context": 0.0
+    },
+    {
+      "model": "qwen2.5:0.5b-patched",
+      "avg_baseline": 12.8,
+      "avg_context": 46.4
+    }
+  ]
+}

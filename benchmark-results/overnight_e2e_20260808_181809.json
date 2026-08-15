@@ -1,0 +1,91 @@
+{
+  "plan_id": "overnight_e2e_v1",
+  "ts": "20260808_181809",
+  "issued_at": "2026-08-08T17:21:09.607258+00:00",
+  "verdict": "PASS",
+  "steps": [
+    {
+      "n": 1,
+      "name": "tier0_citizen_spawn",
+      "passed": true
+    },
+    {
+      "n": 2,
+      "name": "tier1_citizen_spawn",
+      "passed": true
+    },
+    {
+      "n": 3,
+      "name": "care_gate_eval",
+      "passed": true
+    },
+    {
+      "n": 4,
+      "name": "flywheel_selftest",
+      "passed": true
+    },
+    {
+      "n": 5,
+      "name": "provbench_canonical",
+      "passed": true
+    },
+    {
+      "n": 6,
+      "name": "pqc_chains_emit_and_bench",
+      "passed": true
+    },
+    {
+      "n": 7,
+      "name": "tier2_citizen_spawn_free_gpu",
+      "passed": true
+    },
+    {
+      "n": 8,
+      "name": "decision_ledger_sigiled_append",
+      "passed": true
+    },
+    {
+      "n": 9,
+      "name": "sovspace_snapshot_rebuild",
+      "passed": true
+    },
+    {
+      "n": 10,
+      "name": "deploy_csoai_site",
+      "passed": true
+    },
+    {
+      "n": 11,
+      "name": "verdict_emit",
+      "passed": true
+    }
+  ],
+  "passed": 11,
+  "total": 11,
+  "sigil": {
+    "version": 1,
+    "prev_hash": "77ab0e6f9d6c77e8",
+    "payload_hash": "1cf8cb31de43f9dc035caeb1a44c0c2d0cc270d349f90b598935e38cdd187829",
+    "root_hash": "43e0948792815fff0a24662cc12c189aa6c485c1d97b85ebd617a7ea849d0b2a",
+    "agent_did": "did:csoai:nicholas-001",
+    "bft_tally": {
+      "approve": 33,
+      "amend": 0,
+      "reject": 0
+    },
+    "care_score": 0.96,
+    "ts_unix_ms": 1786209669785,
+    "sigil_type": "cycle",
+    "algorithm": "Ed25519",
+    "public_key": "jxLjLxKbRr1w5qOvaXDKZirIWAAlBwcF3uVvNSDGZzY=",
+    "signature": "gHqiXWNiiZ0pO+SX088WAGl8L+f1BV88ae69k3FksMa8Pm4zaSktM5DvDgbb/5cpmdqJhSuBNcePb8FFl81hDw=="
+  },
+  "corpus_anchor": {
+    "corpus_root": "37e2e10d53feaa9e12097f45113e1234510be0ca471e1a0848f5805db3e367c7",
+    "provisions": 417,
+    "normaliser_version": "1.0.0",
+    "anchored_at": "2026-08-10T05:22:27.743216+00:00",
+    "retro": true,
+    "note": "Anchored retrospectively on 2026-07-29. This records the corpus as it stands NOW; it does not prove what the text said when the result was produced. Runs from this point forward anchor at measurement time."
+  }
+}
