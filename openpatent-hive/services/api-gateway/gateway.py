@@ -272,6 +272,18 @@ class VerifyRequest(BaseModel):
     document_hash: Optional[str] = None
 
 
+class ReadinessRequest(BaseModel):
+    """Patent-readiness check — the 'what to protect' front half of OpenPatent.ai.
+    Given an invention, classify patentability + OIN scope + provisional triage."""
+    invention_name: str = Field("", max_length=200, example="Signed measurement index")
+    invention_text: str = Field(..., max_length=5000,
+        example="A recomputable measurement index computing statistical distance to an "
+                "empirical permitted-operating-region with canary contamination gating "
+                "and signed Wilson confidence intervals along an attestation chain.")
+    tier_hint: str = Field("defensive", pattern="^(starter|defensive|full|premium|enterprise)$",
+        description="Suggested OpenPatent.ai tier to disclose on after the check.")
+
+
 class SearchRequest(BaseModel):
     query: str = ""
     classification: str = ""
@@ -291,6 +303,7 @@ async def root():
         "tagline": "Disclose First. AI Second.",
         "usp": "Protect your inventions from AI before you use AI.",
         "endpoints": [
+            "/v1/readiness",  # FREE — what to protect + OIN scope + provisional triage
             "/v1/disclosure",
             "/v1/verify",
             "/v1/search",
@@ -392,6 +405,81 @@ async def proxy_bft_stats():
             return JSONResponse(content=upstream, status_code=r.status_code)
         except httpx.HTTPError as e:
             raise HTTPException(502, f"bft-council unreachable: {e}")
+
+
+@app.post("/v1/readiness")
+async def readiness_check(req: ReadinessRequest, request: Request):
+    """
+    FREE patent-readiness check — the 'what to protect' front half of OpenPatent.ai.
+
+    Given an invention (name + description), classify:
+      1. patent_priority (CRITICAL/HIGH/MED/LOW)   — what to protect
+      2. oin_scope (out/adjacent)                   — is it clean to file?
+      3. category                                   — which estate surface
+      4. recommended_action                         — provisional vs trade-secret vs disclose
+    Returns a signed readiness card.
+    """
+    # Small heuristic engine (stdlib-only; inlined so the gateway has no hard dep
+    # on the monorepo path). Deterministic — recomputable by anyone.
+    blob = (req.invention_name + " " + req.invention_text).lower()
+    hits = lambda arr: sum(1 for k in arr if k in blob)
+
+    # OIN Linux-System scope check (enforced rule — AGENTS.md Patent & IP Governance)
+    oin_adjacent = hits([
+        "linux", "kernel", "filesystem driver", "device driver", "scheduler",
+        "memory management", "netfilter", "ip stack", "system call", "bootloader",
+        "gcc", "toolchain", "systemd", "container runtime", "vfs",
+    ]) > 0
+
+    # Patent priority
+    crit = hits(["distance", "manifold", "permitted", "measurement", "recomputable",
+        "contamination", "canary", "wilson", "confidence interval", "signed chain",
+        "attestation chain", "sigil", "sheaf", "world model", "owem"])
+    high = hits(["quantum", "amplitude", "merkle", "provenance", "ranked league",
+        "elo", "information cell", "skill card", "ledger", "conformity", "rego", "gate"])
+    med = hits(["map-elites", "merging", "redis", "inspect", "ouroboros",
+        "stigmergy", "router", "crosswalk", "oscal"])
+    if crit >= 2 or (crit >= 1 and high >= 1):
+        priority = "CRITICAL"
+    elif high >= 1 or crit >= 1:
+        priority = "HIGH"
+    elif med >= 1:
+        priority = "MED"
+    else:
+        priority = "LOW"
+
+    if oin_adjacent:
+        action = ("HOLD: Linux-kernel-adjacent. Run an OIN Limitation Election BEFORE any "
+                  "filing, or consciously accept it gets licensed back (AGENTS.md rule).")
+    elif priority == "CRITICAL":
+        action = ("PROVISIONAL PATENT FIRST — crown-jewel surface. Draft a provisional, "
+                  "run prior-art attestation (TDCommons), file within 6 months. Then disclose "
+                  "on OpenPatent.ai for court-admissible priority.")
+    elif priority == "HIGH":
+        action = ("PROTECT NOW — provisional or trade-secret + disclosure. Register priority "
+                  "on OpenPatent.ai at the $149 defensive tier before using AI on it.")
+    elif priority == "MED":
+        action = ("INCLUDE IN BROAD CLAIM — fold into an umbrella provisional or protect as "
+                  "a signed credential; optional early disclosure.")
+    else:
+        action = ("TRADE-SECRET / UI — protect as trade secret or design; not a standalone "
+                  "patent. Disclose on the free tier for a low-cost paper trail.")
+
+    card = {
+        "schema": "openpatent-readiness-v1",
+        "invention_name": req.invention_name,
+        "classification": {
+            "patent_priority": priority,
+            "oin_scope": "adjacent" if oin_adjacent else "out",
+            "oin_note": ("Linux-kernel-adjacent — OIN scope gate required."
+                         if oin_adjacent else
+                         "Clean to file — not Linux-kernel-adjacent, OIN grant-back does not apply."),
+        },
+        "recommended_action": action,
+        "suggested_tier": req.tier_hint,
+        "next_step": "POST /v1/disclosure to file court-admissible priority on this invention.",
+    }
+    return _sig_envelope(card, action="POST /v1/readiness")
 
 
 @app.post("/v1/disclosure")
