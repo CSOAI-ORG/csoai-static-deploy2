@@ -1,0 +1,450 @@
+{
+  "generated": "2026-08-15",
+  "inventory_count": 42,
+  "by_category": {
+    "INFRA": [
+      "sovos-a2a-swarm",
+      "sovos-alchemist",
+      "sovos-brain-chain",
+      "sovos-bus-redis",
+      "sovos-glass",
+      "sovos-map-elites",
+      "sovos-mind",
+      "sovos-ouroboros",
+      "sovos-qtask-converter",
+      "sovos-stigmergy"
+    ],
+    "MEASUREMENT-SPINE": [
+      "sovos-arena",
+      "sovos-gprobe",
+      "sovos-harvest",
+      "sovos-league",
+      "sovos-merge-arena",
+      "sovos-signal-index"
+    ],
+    "GOVERNANCE": [
+      "sovos-article-zero",
+      "sovos-certification-loop",
+      "sovos-council",
+      "sovos-crosswalk",
+      "sovos-oscal"
+    ],
+    "WORLD-OWEM": [
+      "sovos-asi-evolve",
+      "sovos-capability-registry",
+      "sovos-dream",
+      "sovos-fleet",
+      "sovos-fleet-manifest",
+      "sovos-persona",
+      "sovos-robot-ras",
+      "sovos-world"
+    ],
+    "SIGNED-CARD": [
+      "sovos-birth",
+      "sovos-sheaf-gate",
+      "sovos-x402-gate"
+    ],
+    "SIGNED-RAIL": [
+      "sovos-chain",
+      "sovos-inspect-bridge",
+      "sovos-invariants"
+    ],
+    "J-SPACE": [
+      "sovos-fisher-rao",
+      "sovos-info-geometry",
+      "sovos-jspace-hyperbolic",
+      "sovos-jspace-move",
+      "sovos-jspace-pipeline"
+    ],
+    "QUANTUM-BRIDGE": [
+      "sovos-quantum-bridge",
+      "sovos-quantum-router"
+    ]
+  },
+  "by_priority": {
+    "CRITICAL": 5,
+    "HIGH": 14,
+    "MED": 17,
+    "LOW": 6
+  },
+  "components": [
+    {
+      "component": "sovos-a2a-swarm",
+      "category": "INFRA",
+      "oin_scope": "out",
+      "patent_priority": "LOW",
+      "src_exists": true,
+      "description": "A2A swarm with HMAC + signing.",
+      "protection_action": "Low novelty; protect as part of broader distributed-signed claim."
+    },
+    {
+      "component": "sovos-alchemist",
+      "category": "INFRA",
+      "oin_scope": "out",
+      "patent_priority": "LOW",
+      "src_exists": true,
+      "description": "Materialization/transmutation of representations.",
+      "protection_action": "Low novelty; trade-secret."
+    },
+    {
+      "component": "sovos-arena",
+      "category": "MEASUREMENT-SPINE",
+      "oin_scope": "out",
+      "patent_priority": "CRITICAL",
+      "src_exists": true,
+      "description": "Cossover/arena: signable measurement with Wilson CIs, contamination gate, canary separation.",
+      "protection_action": "PROVISIONAL \u2014 the contaminated-sample-gating + Wilson-CI-on-signed-rows method."
+    },
+    {
+      "component": "sovos-article-zero",
+      "category": "GOVERNANCE",
+      "oin_scope": "out",
+      "patent_priority": "HIGH",
+      "src_exists": true,
+      "description": "Article 0 foundational Rego governance policy + runtime.",
+      "protection_action": "Patent the foundation-governance-Rego-gate method."
+    },
+    {
+      "component": "sovos-asi-evolve",
+      "category": "WORLD-OWEM",
+      "oin_scope": "out",
+      "patent_priority": "MED",
+      "src_exists": true,
+      "description": "GAIR ASI-Evolve wrapper: signed LEARN\u2192DESIGN\u2192EXPERIMENT\u2192ANALYZE loop.",
+      "protection_action": "Patent the signed-researcher-loop with honest predicate scoring."
+    },
+    {
+      "component": "sovos-birth",
+      "category": "SIGNED-CARD",
+      "oin_scope": "out",
+      "patent_priority": "MED",
+      "src_exists": true,
+      "description": "Mode-0 birth encoder: deterministic J-space coordinate for new state vectors.",
+      "protection_action": "Patent the deterministic-birth-coordinate method."
+    },
+    {
+      "component": "sovos-brain-chain",
+      "category": "INFRA",
+      "oin_scope": "out",
+      "patent_priority": "LOW",
+      "src_exists": true,
+      "description": "Brain-chain orchestration.",
+      "protection_action": "Trade-secret."
+    },
+    {
+      "component": "sovos-bus-redis",
+      "category": "INFRA",
+      "oin_scope": "out",
+      "patent_priority": "MED",
+      "src_exists": true,
+      "description": "Redis-backed StateBus persistence (drop-in replacement).",
+      "protection_action": "Utility; protect as part of signed-bus claim."
+    },
+    {
+      "component": "sovos-capability-registry",
+      "category": "WORLD-OWEM",
+      "oin_scope": "out",
+      "patent_priority": "HIGH",
+      "src_exists": true,
+      "description": "Typed wrapper over capability/fleet manifests with hard-stop logic.",
+      "protection_action": "Utility; patent the hard-stop-negation-normalizer."
+    },
+    {
+      "component": "sovos-certification-loop",
+      "category": "GOVERNANCE",
+      "oin_scope": "out",
+      "patent_priority": "MED",
+      "src_exists": true,
+      "description": "Certification/measurement loop.",
+      "protection_action": "Protect the loop as part of the broad reassessment-rent claim."
+    },
+    {
+      "component": "sovos-chain",
+      "category": "SIGNED-RAIL",
+      "oin_scope": "out",
+      "patent_priority": "CRITICAL",
+      "src_exists": true,
+      "description": "StateBus + Poincar\u00e9 + Fisher-Rao + FitnessGate wired into signed chain.",
+      "protection_action": "PROVISIONAL \u2014 the signed-measurement-chain (each node sigil-signed, recomputable)."
+    },
+    {
+      "component": "sovos-council",
+      "category": "GOVERNANCE",
+      "oin_scope": "out",
+      "patent_priority": "HIGH",
+      "src_exists": true,
+      "description": "Council/BFT-style governance weight layer.",
+      "protection_action": "Careful: BFT is prior art; protect the application as measurement-governance."
+    },
+    {
+      "component": "sovos-crosswalk",
+      "category": "GOVERNANCE",
+      "oin_scope": "out",
+      "patent_priority": "MED",
+      "src_exists": true,
+      "description": "Regime crosswalk mapping.",
+      "protection_action": "Data/looking-territory \u2014 protect as signed crosswalk credential."
+    },
+    {
+      "component": "sovos-dream",
+      "category": "WORLD-OWEM",
+      "oin_scope": "out",
+      "patent_priority": "MED",
+      "src_exists": true,
+      "description": "Dream-loop harness for humanoid imagination.",
+      "protection_action": "Protect as embodied-sim; low commercial novelty alone."
+    },
+    {
+      "component": "sovos-fisher-rao",
+      "category": "J-SPACE",
+      "oin_scope": "out",
+      "patent_priority": "MED",
+      "src_exists": true,
+      "description": "Canonical Fisher-Rao kernel package.",
+      "protection_action": "Trade-secret application; core math public."
+    },
+    {
+      "component": "sovos-fleet",
+      "category": "WORLD-OWEM",
+      "oin_scope": "out",
+      "patent_priority": "HIGH",
+      "src_exists": true,
+      "description": "3KB skill-card schema + FleetLedger.",
+      "protection_action": "Patent the skill-card + ledger method; the 3KB card is a format claim."
+    },
+    {
+      "component": "sovos-fleet-manifest",
+      "category": "WORLD-OWEM",
+      "oin_scope": "out",
+      "patent_priority": "MED",
+      "src_exists": true,
+      "description": "Typed fleet manifest wrapper.",
+      "protection_action": "Low novelty; protect as part of broader fleet claim."
+    },
+    {
+      "component": "sovos-glass",
+      "category": "INFRA",
+      "oin_scope": "out",
+      "patent_priority": "LOW",
+      "src_exists": true,
+      "description": "Tier-0 Glass OS (\u2127-halo face-mesh parallax).",
+      "protection_action": "Low novelty; visual \u2014 protect as design/UI not patient."
+    },
+    {
+      "component": "sovos-gprobe",
+      "category": "MEASUREMENT-SPINE",
+      "oin_scope": "out",
+      "patent_priority": "HIGH",
+      "src_exists": true,
+      "description": "Axis\u00d7model measurement graph + highest-information cell predictor.",
+      "protection_action": "Patent the information-cell-selection-for-measurement method."
+    },
+    {
+      "component": "sovos-harvest",
+      "category": "MEASUREMENT-SPINE",
+      "oin_scope": "out",
+      "patent_priority": "HIGH",
+      "src_exists": true,
+      "description": "License-Rego intake machine: SPDX allow/deny/quarantine via Rego policy engine.",
+      "protection_action": "Trade-secret the rule corpus + method; patent the quarantine-gate method."
+    },
+    {
+      "component": "sovos-info-geometry",
+      "category": "J-SPACE",
+      "oin_scope": "out",
+      "patent_priority": "HIGH",
+      "src_exists": true,
+      "description": "Fisher-Rao information geometry; CPU fallback + KPOT.",
+      "protection_action": "Trade-secret the application; math itself is prior art."
+    },
+    {
+      "component": "sovos-inspect-bridge",
+      "category": "SIGNED-RAIL",
+      "oin_scope": "out",
+      "patent_priority": "MED",
+      "src_exists": true,
+      "description": "Bridges external Inspect harness to the deterministic gate scorer (signed gold labels).",
+      "protection_action": "Utility/protection via signed-recompute claim; low novelty alone."
+    },
+    {
+      "component": "sovos-invariants",
+      "category": "SIGNED-RAIL",
+      "oin_scope": "out",
+      "patent_priority": "HIGH",
+      "src_exists": true,
+      "description": "Invariant enforcement over the measurement rail.",
+      "protection_action": "Patent the invariant-signed-gate method."
+    },
+    {
+      "component": "sovos-jspace-hyperbolic",
+      "category": "J-SPACE",
+      "oin_scope": "out",
+      "patent_priority": "HIGH",
+      "src_exists": true,
+      "description": "Poincar\u00e9 ball primitives (distance, M\u00f6bius add, projection, procrustes).",
+      "protection_action": "Math cleanroom (Gaussian prior art) \u2014 protect as trade-secret application, not raw math."
+    },
+    {
+      "component": "sovos-jspace-move",
+      "category": "J-SPACE",
+      "oin_scope": "out",
+      "patent_priority": "MED",
+      "src_exists": true,
+      "description": "Move-arithmetic vector composition in J-space.",
+      "protection_action": "Patent the J-space vector-composition method."
+    },
+    {
+      "component": "sovos-jspace-pipeline",
+      "category": "J-SPACE",
+      "oin_scope": "out",
+      "patent_priority": "HIGH",
+      "src_exists": true,
+      "description": "Poincar\u00e9 pipeline wrapping hyperbolic into StateBus Water/Milk/Honey distillation.",
+      "protection_action": "Patent the geodesic-distillation-as-certainty-journey method."
+    },
+    {
+      "component": "sovos-league",
+      "category": "MEASUREMENT-SPINE",
+      "oin_scope": "out",
+      "patent_priority": "HIGH",
+      "src_exists": true,
+      "description": "Glicko-2 league over measured arena results; faction auto-registration.",
+      "protection_action": "Patent the league-over-signed-measurement ranking; trade-secret the Elo internals."
+    },
+    {
+      "component": "sovos-map-elites",
+      "category": "INFRA",
+      "oin_scope": "out",
+      "patent_priority": "MED",
+      "src_exists": true,
+      "description": "Hyperbolic MAP-Elites fitness gate for safe mutation.",
+      "protection_action": "Patent the hyperbolic-MAP-Elites-safe-mutation gate."
+    },
+    {
+      "component": "sovos-merge-arena",
+      "category": "MEASUREMENT-SPINE",
+      "oin_scope": "out",
+      "patent_priority": "MED",
+      "src_exists": true,
+      "description": "MAP-Elites over merge space with Wilson CIs + ChainResults regression.",
+      "protection_action": "Patent the MAP-Elites-over-merge-space-with-CI gate."
+    },
+    {
+      "component": "sovos-mind",
+      "category": "INFRA",
+      "oin_scope": "out",
+      "patent_priority": "LOW",
+      "src_exists": true,
+      "description": "StateBus pipeline (Euclidean water/milk/honey).",
+      "protection_action": "Trade-secret pipeline; math prior art."
+    },
+    {
+      "component": "sovos-oscal",
+      "category": "GOVERNANCE",
+      "oin_scope": "out",
+      "patent_priority": "MED",
+      "src_exists": true,
+      "description": "OSCAL generation/compliance.",
+      "protection_action": "OSCAL is a standard \u2014 protect the signed-OSCAL variant."
+    },
+    {
+      "component": "sovos-ouroboros",
+      "category": "INFRA",
+      "oin_scope": "out",
+      "patent_priority": "MED",
+      "src_exists": true,
+      "description": "Bounded self-improvement loop (probe\u2192run\u2192measure\u2192adjust\u2192revert).",
+      "protection_action": "Patent the bounded-improvement-with-revert method."
+    },
+    {
+      "component": "sovos-persona",
+      "category": "WORLD-OWEM",
+      "oin_scope": "out",
+      "patent_priority": "MED",
+      "src_exists": true,
+      "description": "Persona/embodiment + Article-0 gate.",
+      "protection_action": "Patent the article-0-gate + persona embodiment seam."
+    },
+    {
+      "component": "sovos-qtask-converter",
+      "category": "INFRA",
+      "oin_scope": "out",
+      "patent_priority": "LOW",
+      "src_exists": true,
+      "description": "Q-task conversion.",
+      "protection_action": "Trade-secret."
+    },
+    {
+      "component": "sovos-quantum-bridge",
+      "category": "QUANTUM-BRIDGE",
+      "oin_scope": "out",
+      "patent_priority": "HIGH",
+      "src_exists": true,
+      "description": "Task-vector\u2192quantum-amplitude encoding; hive circuit; PennyLane hybrid.",
+      "protection_action": "PROVISIONAL \u2014 measuring via quantum-amplitude encoding (genuinely novel angle)."
+    },
+    {
+      "component": "sovos-quantum-router",
+      "category": "QUANTUM-BRIDGE",
+      "oin_scope": "out",
+      "patent_priority": "HIGH",
+      "src_exists": true,
+      "description": "Quantum-circuit routing/selection across backends.",
+      "protection_action": "Patent the backend-routing with measurement-selection method."
+    },
+    {
+      "component": "sovos-robot-ras",
+      "category": "WORLD-OWEM",
+      "oin_scope": "out",
+      "patent_priority": "HIGH",
+      "src_exists": true,
+      "description": "Physical-AI RAS for EU Machinery Reg + ISO 10218 crosswalk.",
+      "protection_action": "Patent the robot-conformity-assessment-against-Machinery-Reg method (regulatory-clock aligned)."
+    },
+    {
+      "component": "sovos-sheaf-gate",
+      "category": "SIGNED-CARD",
+      "oin_scope": "out",
+      "patent_priority": "CRITICAL",
+      "src_exists": true,
+      "description": "Sheaf pre-merge gate for bus federation (federation-theorem-backed consistency).",
+      "protection_action": "PROVISIONAL \u2014 the sheaf-consistency gate before federating signed buses."
+    },
+    {
+      "component": "sovos-signal-index",
+      "category": "MEASUREMENT-SPINE",
+      "oin_scope": "out",
+      "patent_priority": "CRITICAL",
+      "src_exists": true,
+      "description": "SOV SIGNAL \u2014 Mahalanobis distance from empirical permitted manifold. The core metric. Deterministic, recomputable, signed. The headline defensible number.",
+      "protection_action": "PROVISIONAL PATENT \u2014 the empirical-manifold distance-to-permitted-region as a machine-measured safety index. High prior-art novelty (not in existing evals)."
+    },
+    {
+      "component": "sovos-stigmergy",
+      "category": "INFRA",
+      "oin_scope": "out",
+      "patent_priority": "MED",
+      "src_exists": true,
+      "description": "Pheromone-trail stigmergy for social/swarm physics.",
+      "protection_action": "Patent the signed-pheromone-social-measurement method."
+    },
+    {
+      "component": "sovos-world",
+      "category": "WORLD-OWEM",
+      "oin_scope": "out",
+      "patent_priority": "CRITICAL",
+      "src_exists": true,
+      "description": "Inner World Model: SOV Space \u2192 12 OWEM hives \u2192 clans \u2192 families. The sovereign substrate.",
+      "protection_action": "PROVISIONAL \u2014 the hierarchical OWEM world-model with embedded measurement."
+    },
+    {
+      "component": "sovos-x402-gate",
+      "category": "SIGNED-CARD",
+      "oin_scope": "out",
+      "patent_priority": "MED",
+      "src_exists": true,
+      "description": "Intentional HTTP 402 paywall for paid endpoints.",
+      "protection_action": "Utility patent (402 as the metering signal is a small but interesting method)."
+    }
+  ]
+}
