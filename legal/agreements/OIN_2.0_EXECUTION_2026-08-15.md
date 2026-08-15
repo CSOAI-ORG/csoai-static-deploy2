@@ -61,8 +61,10 @@ OIN 2.0 is a **patent non-aggression pact** around the **Linux System**:
 - Keep archive + this record in `legal/`.
 - File OIN alongside **LOT Network** signature (DK.1 second half) — LOT network further
   non-aggresses against patent trolls. Confirm LOT signup separately.
-- Before any future patent filing: run a Linux-System-scope check against OIN "Linux System"
-  definition to confirm the patent is either (a) outside scope or (b) acceptable to license.
+- **Before any future patent filing, run the OIN Linux-System scope check (now an enforced
+  rule in root `AGENTS.md` → "Patent & IP Governance").** If a filing is Linux-kernel-adjacent,
+  either (a) keep it out of scope via a Limitation Election before filing, or
+  (b) consciously accept it gets licensed back — never default silently. Escalate to Nick if unsure.
 - Revisit the Participation Fee tier at each revenue milestone.
 
 ## Register tags
