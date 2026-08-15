@@ -1,0 +1,86 @@
+{
+  "sigil": "tick-287",
+  "emitted": "2026-08-15T06:00:00+00:00",
+  "agent": "JEEVES",
+  "sprint": "DEFONEOS 10-day sprint (day 43, expansion phase 255)",
+  "packs": [
+    {
+      "slug": "defoneos-road-safety-scotland-road-safety-education-ai-deep-dive-pack",
+      "name": "Road Safety Scotland (RSS)",
+      "bytes": 36078,
+      "entry_points": 12,
+      "priorities": 8,
+      "mcps": 6,
+      "legis": [
+        "Road Safety Act 2006",
+        "Road Traffic Act 1988",
+        "Roads (Scotland) Act 1984",
+        "Transport (Scotland) Act 2019",
+        "Scotland Act 1998",
+        "Data Protection Act 2018"
+      ],
+      "leg2": "the Scottish Parliament",
+      "distinctness": "Scotland's national road safety education body \u2014 distinct from THINK!/DfT (England), Road Safety Wales"
+    },
+    {
+      "slug": "defoneos-healthcare-improvement-scotland-health-quality-regulator-ai-deep-dive-pack",
+      "name": "Healthcare Improvement Scotland (HIS)",
+      "bytes": 36862,
+      "entry_points": 12,
+      "priorities": 8,
+      "mcps": 6,
+      "legis": [
+        "National Health Service (Scotland) Act 1978",
+        "Public Services Reform (Scotland) Act 2010",
+        "Patient Rights (Scotland) Act 2011",
+        "Scotland Act 1998",
+        "Data Protection Act 2018"
+      ],
+      "leg2": "the Scottish Parliament",
+      "distinctness": "Scotland's national healthcare improvement body \u2014 distinct from CQC/NICE (England), HIW (Wales), RQIA (NI)"
+    },
+    {
+      "slug": "defoneos-qualifications-wales-welsh-qualifications-regulation-ai-deep-dive-pack",
+      "name": "Qualifications Wales (QW)",
+      "bytes": 36153,
+      "entry_points": 12,
+      "priorities": 8,
+      "mcps": 6,
+      "legis": [
+        "Qualifications Wales Act 2015",
+        "Curriculum and Assessment (Wales) Act 2021",
+        "Government of Wales Act 2006",
+        "Wales Act 2017",
+        "Data Protection Act 2018"
+      ],
+      "leg2": "the Senedd",
+      "distinctness": "Wales' independent qualifications regulator \u2014 distinct from Ofqual (England), SQA (Scotland), CCEA (NI). PIVOT from 'Education Authority Wales' (no such body; QW is the statutory Welsh education-qualifications authority)"
+    }
+  ],
+  "sitemap": {
+    "xml_urls": 1302,
+    "xml_bytes": 209000,
+    "sitemap_ai_ns0_locs": 1302,
+    "sitemap_ai_bytes": 322286,
+    "added": 6,
+    "note": "full regen from on-disk estate (Pitfall 31) after 05:29 wave reverted sitemaps to git-HEAD (558/647). Now 1302 URLs each, 0 missing in allowlist."
+  },
+  "jsonld_canonical": true,
+  "verified": "12 ep, 72 MCP chips, DOCTYPE, tail </html> on all 3",
+  "next_actions": [
+    "Probe disk+sitemap BEFORE build (tick-265 pitfall): Scottish Police Authority, Sport Scotland, Creative Scotland, Scottish Enterprise, South of Scotland Enterprise, Education Scotland \u2014 pick 3 genuinely uncovered per tick",
+    "DISK: 5.2 GiB free"
+  ],
+  "milestone": "Tick 287. 30/30 MCPs, 15/15 repos. Pages 1070\u21921073. Phase 254\u2192255. 2 Scotland + 1 Wales devolved packs shipped. Qualifications Wales pivot from 'Education Authority Wales' (real body with statutory backing under Qualifications Wales Act 2015).",
+  "deploy": {
+    "cf_pages_id": "9e3e8c50.csoai-site.pages.dev",
+    "alias": "feat-sandbox-arena-seam.csoai-site.pages.dev",
+    "first_deploy": "3085733b.csoai-site.pages.dev"
+  },
+  "build_site": {
+    "publishable_files": 1303,
+    "total_mb": 17.9,
+    "sitemap_missing": 0
+  },
+  "hash": "c0af3eb29786aec9cc5f55d3d14759650e0b04206f4161dd001762ce63c343cd"
+}
