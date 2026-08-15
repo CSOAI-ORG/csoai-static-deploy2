@@ -39,7 +39,7 @@
       "model": "sov6-agency-v3-light",
       "n": 36,
       "correct": 34,
-      "unparsed": 0,
+      "unparsed": 1,
       "accuracy": 0.9444,
       "ci95": [
         0.8186,
@@ -78,7 +78,7 @@
       "model": "sov6-destruction-v3-light",
       "n": 36,
       "correct": 29,
-      "unparsed": 3,
+      "unparsed": 5,
       "accuracy": 0.8056,
       "ci95": [
         0.6497,
@@ -255,11 +255,50 @@
       ],
       "quotable": true,
       "note": null
+    },
+    {
+      "model": "nemotron-3-nano:30b",
+      "n": 36,
+      "correct": 35,
+      "unparsed": 0,
+      "accuracy": 0.9722,
+      "ci95": [
+        0.8583,
+        0.9951
+      ],
+      "quotable": true,
+      "note": null
+    },
+    {
+      "model": "qwen3:4b",
+      "n": 36,
+      "correct": 28,
+      "unparsed": 8,
+      "accuracy": 0.7778,
+      "ci95": [
+        0.6192,
+        0.8828
+      ],
+      "quotable": true,
+      "note": null
+    },
+    {
+      "model": "phi4:14b",
+      "n": 36,
+      "correct": 36,
+      "unparsed": 0,
+      "accuracy": 1.0,
+      "ci95": [
+        0.9036,
+        1.0
+      ],
+      "quotable": true,
+      "note": null
     }
   ],
-  "best": "sov6-relationality-v3-light",
+  "best": "phi4:14b",
   "status": "MEASURED",
   "status_note": null,
-  "per_item_count": 684,
+  "per_item_count": 792,
   "method": "unparsed counted incorrect · transport failures excluded as ours · canaries excluded · deterministic exact-label grading, no model judges another model · nothing quoted below usable n>=30"
 }

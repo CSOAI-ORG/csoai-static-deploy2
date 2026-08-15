@@ -25,12 +25,12 @@
     {
       "model": "sov6-logic-v3-light",
       "n": 36,
-      "correct": 29,
+      "correct": 30,
       "unparsed": 1,
-      "accuracy": 0.8056,
+      "accuracy": 0.8333,
       "ci95": [
-        0.6497,
-        0.9025
+        0.6811,
+        0.9213
       ],
       "quotable": true,
       "note": null
@@ -38,12 +38,12 @@
     {
       "model": "sov6-agency-v3-light",
       "n": 36,
-      "correct": 30,
+      "correct": 31,
       "unparsed": 1,
-      "accuracy": 0.8333,
+      "accuracy": 0.8611,
       "ci95": [
-        0.6811,
-        0.9213
+        0.7134,
+        0.9392
       ],
       "quotable": true,
       "note": null
@@ -77,12 +77,12 @@
     {
       "model": "sov6-destruction-v3-light",
       "n": 36,
-      "correct": 30,
+      "correct": 29,
       "unparsed": 1,
-      "accuracy": 0.8333,
+      "accuracy": 0.8056,
       "ci95": [
-        0.6811,
-        0.9213
+        0.6497,
+        0.9025
       ],
       "quotable": true,
       "note": null
@@ -116,12 +116,12 @@
     {
       "model": "sov6-temporality-v3-light",
       "n": 36,
-      "correct": 18,
+      "correct": 19,
       "unparsed": 0,
-      "accuracy": 0.5,
+      "accuracy": 0.5278,
       "ci95": [
-        0.3447,
-        0.6553
+        0.3701,
+        0.6801
       ],
       "quotable": true,
       "note": null
@@ -207,12 +207,12 @@
     {
       "model": "qwen2.5:3b",
       "n": 36,
-      "correct": 32,
+      "correct": 33,
       "unparsed": 0,
-      "accuracy": 0.8889,
+      "accuracy": 0.9167,
       "ci95": [
-        0.7469,
-        0.9559
+        0.7817,
+        0.9713
       ],
       "quotable": true,
       "note": null
@@ -255,11 +255,50 @@
       ],
       "quotable": true,
       "note": null
+    },
+    {
+      "model": "nemotron-3-nano:30b",
+      "n": 36,
+      "correct": 34,
+      "unparsed": 0,
+      "accuracy": 0.9444,
+      "ci95": [
+        0.8186,
+        0.9846
+      ],
+      "quotable": true,
+      "note": null
+    },
+    {
+      "model": "qwen3:4b",
+      "n": 36,
+      "correct": 19,
+      "unparsed": 14,
+      "accuracy": 0.5278,
+      "ci95": [
+        0.3701,
+        0.6801
+      ],
+      "quotable": true,
+      "note": null
+    },
+    {
+      "model": "phi4:14b",
+      "n": 36,
+      "correct": 34,
+      "unparsed": 1,
+      "accuracy": 0.9444,
+      "ci95": [
+        0.8186,
+        0.9846
+      ],
+      "quotable": true,
+      "note": null
     }
   ],
   "best": "gemma3:12b",
   "status": "MEASURED",
   "status_note": null,
-  "per_item_count": 684,
+  "per_item_count": 792,
   "method": "unparsed counted incorrect · transport failures excluded as ours · canaries excluded · deterministic exact-label grading, no model judges another model · nothing quoted below usable n>=30"
 }

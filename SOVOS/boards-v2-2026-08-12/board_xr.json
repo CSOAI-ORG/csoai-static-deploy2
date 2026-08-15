@@ -26,12 +26,12 @@
     {
       "model": "sov6-logic-v3-light",
       "n": 32,
-      "correct": 14,
-      "unparsed": 4,
-      "accuracy": 0.4375,
+      "correct": 11,
+      "unparsed": 2,
+      "accuracy": 0.3438,
       "ci95": [
-        0.2817,
-        0.6067
+        0.2041,
+        0.5169
       ],
       "quotable": true,
       "note": null
@@ -78,12 +78,12 @@
     {
       "model": "sov6-destruction-v3-light",
       "n": 32,
-      "correct": 14,
+      "correct": 12,
       "unparsed": 0,
-      "accuracy": 0.4375,
+      "accuracy": 0.375,
       "ci95": [
-        0.2817,
-        0.6067
+        0.2293,
+        0.5475
       ],
       "quotable": true,
       "note": null
@@ -256,11 +256,50 @@
       ],
       "quotable": true,
       "note": null
+    },
+    {
+      "model": "nemotron-3-nano:30b",
+      "n": 32,
+      "correct": 16,
+      "unparsed": 1,
+      "accuracy": 0.5,
+      "ci95": [
+        0.3363,
+        0.6637
+      ],
+      "quotable": true,
+      "note": null
+    },
+    {
+      "model": "qwen3:4b",
+      "n": 32,
+      "correct": 10,
+      "unparsed": 21,
+      "accuracy": 0.3125,
+      "ci95": [
+        0.1795,
+        0.4857
+      ],
+      "quotable": true,
+      "note": null
+    },
+    {
+      "model": "phi4:14b",
+      "n": 32,
+      "correct": 17,
+      "unparsed": 1,
+      "accuracy": 0.5312,
+      "ci95": [
+        0.3645,
+        0.6913
+      ],
+      "quotable": true,
+      "note": null
     }
   ],
   "best": "mistral:7b",
   "status": "MEASURED",
   "status_note": null,
-  "per_item_count": 608,
+  "per_item_count": 704,
   "method": "unparsed counted incorrect · transport failures excluded as ours · canaries excluded · deterministic exact-label grading, no model judges another model · nothing quoted below usable n>=30"
 }

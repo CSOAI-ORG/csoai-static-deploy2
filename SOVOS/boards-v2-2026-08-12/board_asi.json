@@ -26,12 +26,12 @@
     {
       "model": "sov6-logic-v3-light",
       "n": 33,
-      "correct": 18,
-      "unparsed": 5,
-      "accuracy": 0.5455,
+      "correct": 19,
+      "unparsed": 4,
+      "accuracy": 0.5758,
       "ci95": [
-        0.3799,
-        0.7016
+        0.4081,
+        0.7276
       ],
       "quotable": true,
       "note": null
@@ -39,12 +39,12 @@
     {
       "model": "sov6-agency-v3-light",
       "n": 33,
-      "correct": 18,
-      "unparsed": 3,
-      "accuracy": 0.5455,
+      "correct": 19,
+      "unparsed": 4,
+      "accuracy": 0.5758,
       "ci95": [
-        0.3799,
-        0.7016
+        0.4081,
+        0.7276
       ],
       "quotable": true,
       "note": null
@@ -52,12 +52,12 @@
     {
       "model": "sov6-identity-v3-light",
       "n": 33,
-      "correct": 10,
+      "correct": 9,
       "unparsed": 0,
-      "accuracy": 0.303,
+      "accuracy": 0.2727,
       "ci95": [
-        0.1738,
-        0.4734
+        0.1507,
+        0.4422
       ],
       "quotable": true,
       "note": null
@@ -78,12 +78,12 @@
     {
       "model": "sov6-destruction-v3-light",
       "n": 33,
-      "correct": 20,
-      "unparsed": 2,
-      "accuracy": 0.6061,
+      "correct": 19,
+      "unparsed": 3,
+      "accuracy": 0.5758,
       "ci95": [
-        0.4368,
-        0.7532
+        0.4081,
+        0.7276
       ],
       "quotable": true,
       "note": null
@@ -117,12 +117,12 @@
     {
       "model": "sov6-temporality-v3-light",
       "n": 33,
-      "correct": 9,
+      "correct": 10,
       "unparsed": 0,
-      "accuracy": 0.2727,
+      "accuracy": 0.303,
       "ci95": [
-        0.1507,
-        0.4422
+        0.1738,
+        0.4734
       ],
       "quotable": true,
       "note": null
@@ -169,12 +169,12 @@
     {
       "model": "sov6-abstraction-v3-light",
       "n": 33,
-      "correct": 11,
+      "correct": 10,
       "unparsed": 0,
-      "accuracy": 0.3333,
+      "accuracy": 0.303,
       "ci95": [
-        0.1975,
-        0.5039
+        0.1738,
+        0.4734
       ],
       "quotable": true,
       "note": null
@@ -208,12 +208,12 @@
     {
       "model": "qwen2.5:3b",
       "n": 33,
-      "correct": 13,
+      "correct": 12,
       "unparsed": 0,
-      "accuracy": 0.3939,
+      "accuracy": 0.3636,
       "ci95": [
-        0.2468,
-        0.5632
+        0.2219,
+        0.5338
       ],
       "quotable": true,
       "note": null
@@ -256,11 +256,50 @@
       ],
       "quotable": true,
       "note": null
+    },
+    {
+      "model": "nemotron-3-nano:30b",
+      "n": 33,
+      "correct": 20,
+      "unparsed": 3,
+      "accuracy": 0.6061,
+      "ci95": [
+        0.4368,
+        0.7532
+      ],
+      "quotable": true,
+      "note": null
+    },
+    {
+      "model": "qwen3:4b",
+      "n": 33,
+      "correct": 4,
+      "unparsed": 29,
+      "accuracy": 0.1212,
+      "ci95": [
+        0.0482,
+        0.2733
+      ],
+      "quotable": true,
+      "note": null
+    },
+    {
+      "model": "phi4:14b",
+      "n": 33,
+      "correct": 16,
+      "unparsed": 0,
+      "accuracy": 0.4848,
+      "ci95": [
+        0.325,
+        0.6478
+      ],
+      "quotable": true,
+      "note": null
     }
   ],
-  "best": "sov6-destruction-v3-light",
+  "best": "gemma3:12b",
   "status": "MEASURED",
   "status_note": null,
-  "per_item_count": 627,
+  "per_item_count": 726,
   "method": "unparsed counted incorrect · transport failures excluded as ours · canaries excluded · deterministic exact-label grading, no model judges another model · nothing quoted below usable n>=30"
 }

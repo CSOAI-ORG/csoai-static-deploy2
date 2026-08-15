@@ -14,12 +14,12 @@
     {
       "model": "sov6-ethics-v3-light",
       "n": 237,
-      "correct": 88,
+      "correct": 89,
       "unparsed": 1,
-      "accuracy": 0.3713,
+      "accuracy": 0.3755,
       "ci95": [
-        0.3123,
-        0.4344
+        0.3163,
+        0.4387
       ],
       "quotable": true,
       "note": null
@@ -27,12 +27,12 @@
     {
       "model": "sov6-logic-v3-light",
       "n": 237,
-      "correct": 109,
-      "unparsed": 17,
-      "accuracy": 0.4599,
+      "correct": 107,
+      "unparsed": 24,
+      "accuracy": 0.4515,
       "ci95": [
-        0.3976,
-        0.5235
+        0.3894,
+        0.5151
       ],
       "quotable": true,
       "note": null
@@ -41,7 +41,7 @@
       "model": "sov6-agency-v3-light",
       "n": 237,
       "correct": 118,
-      "unparsed": 19,
+      "unparsed": 23,
       "accuracy": 0.4979,
       "ci95": [
         0.4348,
@@ -79,12 +79,12 @@
     {
       "model": "sov6-destruction-v3-light",
       "n": 237,
-      "correct": 103,
-      "unparsed": 26,
-      "accuracy": 0.4346,
+      "correct": 115,
+      "unparsed": 18,
+      "accuracy": 0.4852,
       "ci95": [
-        0.373,
-        0.4983
+        0.4223,
+        0.5486
       ],
       "quotable": true,
       "note": null
@@ -104,13 +104,13 @@
     },
     {
       "model": "sov6-relationality-v3-light",
-      "n": 237,
-      "correct": 93,
-      "unparsed": 14,
-      "accuracy": 0.3924,
+      "n": 227,
+      "correct": 89,
+      "unparsed": 13,
+      "accuracy": 0.3921,
       "ci95": [
-        0.3324,
-        0.4558
+        0.3309,
+        0.4569
       ],
       "quotable": true,
       "note": null
@@ -130,13 +130,13 @@
     },
     {
       "model": "sov6-synthesis-v3-light",
-      "n": 237,
-      "correct": 94,
-      "unparsed": 29,
-      "accuracy": 0.3966,
+      "n": 227,
+      "correct": 90,
+      "unparsed": 23,
+      "accuracy": 0.3965,
       "ci95": [
-        0.3365,
-        0.4601
+        0.3351,
+        0.4613
       ],
       "quotable": true,
       "note": null
@@ -170,12 +170,12 @@
     {
       "model": "sov6-abstraction-v3-light",
       "n": 237,
-      "correct": 103,
+      "correct": 101,
       "unparsed": 0,
-      "accuracy": 0.4346,
+      "accuracy": 0.4262,
       "ci95": [
-        0.373,
-        0.4983
+        0.3649,
+        0.4898
       ],
       "quotable": true,
       "note": null
@@ -195,13 +195,13 @@
     },
     {
       "model": "llama3.2:3b",
-      "n": 237,
-      "correct": 110,
-      "unparsed": 14,
-      "accuracy": 0.4641,
+      "n": 228,
+      "correct": 105,
+      "unparsed": 12,
+      "accuracy": 0.4605,
       "ci95": [
-        0.4017,
-        0.5277
+        0.397,
+        0.5253
       ],
       "quotable": true,
       "note": null
@@ -209,12 +209,12 @@
     {
       "model": "qwen2.5:3b",
       "n": 237,
-      "correct": 102,
+      "correct": 103,
       "unparsed": 0,
-      "accuracy": 0.4304,
+      "accuracy": 0.4346,
       "ci95": [
-        0.3689,
-        0.494
+        0.373,
+        0.4983
       ],
       "quotable": true,
       "note": null
@@ -248,20 +248,59 @@
     {
       "model": "deepseek-r1:8b",
       "n": 237,
-      "correct": 128,
-      "unparsed": 21,
-      "accuracy": 0.5401,
+      "correct": 131,
+      "unparsed": 20,
+      "accuracy": 0.5527,
       "ci95": [
-        0.4765,
-        0.6024
+        0.4891,
+        0.6147
+      ],
+      "quotable": true,
+      "note": null
+    },
+    {
+      "model": "nemotron-3-nano:30b",
+      "n": 237,
+      "correct": 150,
+      "unparsed": 2,
+      "accuracy": 0.6329,
+      "ci95": [
+        0.5699,
+        0.6917
+      ],
+      "quotable": true,
+      "note": null
+    },
+    {
+      "model": "qwen3:4b",
+      "n": 236,
+      "correct": 2,
+      "unparsed": 234,
+      "accuracy": 0.0085,
+      "ci95": [
+        0.0023,
+        0.0304
+      ],
+      "quotable": true,
+      "note": null
+    },
+    {
+      "model": "phi4:14b",
+      "n": 237,
+      "correct": 171,
+      "unparsed": 10,
+      "accuracy": 0.7215,
+      "ci95": [
+        0.6613,
+        0.7747
       ],
       "quotable": true,
       "note": null
     }
   ],
-  "best": "sov6-embodiment-v3-light",
+  "best": "phi4:14b",
   "status": "MEASURED",
   "status_note": null,
-  "per_item_count": 4503,
+  "per_item_count": 5214,
   "method": "unparsed counted incorrect · transport failures excluded as ours · canaries excluded · deterministic exact-label grading, no model judges another model · nothing quoted below usable n>=30"
 }
