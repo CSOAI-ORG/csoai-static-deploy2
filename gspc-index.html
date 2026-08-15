@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GSPC Daily Index — Council of AI</title>
+<meta name="description" content="The GSPC Daily Index — one signed agent-economy
+settlement value per day, computed from measured 14-axis board data.">
+<style>
+:root { --accent:#5a9; --bg:#0d0f12; --card:#15181d; --line:#232830; }
+* { box-sizing:border-box; } body { margin:0; font-family:-apple-system,Segoe UI,Roboto,sans-serif;
+background:var(--bg); color:#e8edf2; } .wrap { max-width:760px; margin:0 auto; padding:2rem 1.2rem; }
+h1 { font-size:1.6rem; border-bottom:1px solid var(--line); padding-bottom:.6rem; }
+.big { font-size:4rem; font-weight:700; color:#ccffdd; letter-spacing:.02em; }
+.meta { color:#9fb0c0; } .card { background:var(--card); border:1px solid var(--line); border-radius:10px;
+padding:1.4rem; margin-top:1.4rem; } table { width:100%; border-collapse:collapse; font-size:.85rem; }
+th,td { border:1px solid var(--line); padding:.3rem .45rem; text-align:left; }
+.ax { color:#8cd; font-weight:600; } .n { color:#ccffdd; font-weight:600; }
+.miss { color:#556; } .dim { color:#79889a; font-size:.8rem; }
+.foot { margin-top:2rem; color:#6a7a8a; font-size:.74rem; line-height:1.5; }
+a { color:#8cd; }
+</style></head><body><div class="wrap">
+<h1>GSPC Daily Index <span style="font-size:.9rem;color:#7f90a0">— settlement infrastructure for the agent economy</span></h1>
+<p class="meta">One official signed value per day, computed at the closing cross from
+the day's measured 14-axis board. Research statistic — not a financial benchmark.
+<a href="https://github.com/CSAOI-ORG/csoai-static-deploy2/tree/main/SOVOS/register/indexes">Source records.</a></p>
+
+<div class="card">
+  <div class="meta">Closing value · 2026-08-15</div>
+  <div class="big">57.49</div>
+  <div class="meta">95% CI [0.443, 0.689] · 10/14 axes measured · signed + time-anchored</div>
+</div>
+
+<div class="card">
+  <h2>Axis cells</h2>
+  <table><thead><tr><th>axis</th><th>accuracy</th><th>detail</th></tr></thead>
+  <tbody><tr><td class="ax">gov</td><td class="n">0.4877</td><td class="dim">n=5184 · CI 0.429–0.547</td></tr><tr><td class="ax">prv</td><td class="n">0.5511</td><td class="dim">n=704 · CI 0.394–0.698</td></tr><tr><td class="ax">care</td><td class="n">0.2926</td><td class="dim">n=3800 · CI 0.237–0.356</td></tr><tr><td class="ax">safety</td><td class="miss">UNMEASURED</td><td class="dim">—</td></tr><tr><td class="ax">art5</td><td class="n">0.8422</td><td class="dim">n=792 · CI 0.702–0.916</td></tr><tr><td class="ax">mcp</td><td class="n">0.5368</td><td class="dim">n=665 · CI 0.383–0.684</td></tr><tr><td class="ax">jail</td><td class="miss">UNMEASURED</td><td class="dim">—</td></tr><tr><td class="ax">affect</td><td class="n">0.6046</td><td class="dim">n=779 · CI 0.460–0.732</td></tr><tr><td class="ax">agn</td><td class="miss">UNMEASURED</td><td class="dim">—</td></tr><tr><td class="ax">agi</td><td class="n">0.7462</td><td class="dim">n=792 · CI 0.597–0.848</td></tr><tr><td class="ax">xr</td><td class="n">0.4347</td><td class="dim">n=704 · CI 0.283–0.600</td></tr><tr><td class="ax">oss</td><td class="n">0.6957</td><td class="dim">n=608 · CI 0.529–0.821</td></tr><tr><td class="ax">det</td><td class="n">0.5576</td><td class="dim">n=724 · CI 0.414–0.689</td></tr><tr><td class="ax">log</td><td class="miss">UNMEASURED</td><td class="dim">—</td></tr></tbody></table>
+</div>
+
+<div class="card"><h2>History</h2><p>One closing-cross recorded — <b>index history builds daily.</b></p></div>
+
+<div class="card">
+  <h2>Constitution</h2>
+  <p style="color:#9fb0c0;font-size:.9rem">equal-weighted mean of axis accuracies, 14 axes, fixed weights, change via methodology policy</p>
+  <p class="meta">Measured by deterministic gates only — no model judges another. Issuance policy,
+  revocation ladder, appeals and error statistics are public.
+  This is measurement, not certification.</p>
+</div>
+
+<div class="foot">Council of AI (CSOAI Ltd, UK 16939677) · daily index produced by a 23:30 UTC cron ·
+each value signed with the estate Ed25519 spine + SCITT/RFC 9943 anchor · the daily root hash
+is the closing. Generated 2026-08-15T16:07:12Z.</div>
+</div></body></html>
