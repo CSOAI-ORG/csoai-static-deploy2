@@ -63,7 +63,7 @@ def main():
         models = [m for m in ollama_models() if ":" in m or m in
                   ("sov-safety-v1", "sov-merge-slerp-gguf", "sov-merge-dare-gguf",
                    "sov-refusal-combo-lora")]
-        log(f"ROUND {round_n}: league across {len(models)} models × 13 axes")
+        log(f"ROUND {round_n}: league across {len(models)} models × 14 axes (incl. jail)")
         if not models:
             log("  no models — sleeping 300s")
             time.sleep(300)
@@ -76,7 +76,7 @@ def main():
                 "schema": "sovos-league/v1",
                 "generated": datetime.now(timezone.utc).isoformat(),
                 "defender": "Eunomia",
-                "axes": 13,
+                "axes": 14,
                 "factions": {
                     name: {
                         "rating": f.state.rating,
@@ -88,7 +88,7 @@ def main():
             }
             league_path = OUTDIR / "league.json"
             league_path.write_text(json.dumps(league_data, indent=2))
-            log(f"  league persisted ({len(league_data['factions'])} factions, 13 axes)")
+            log(f"  league persisted ({len(league_data['factions'])} factions, 14 axes)")
             # stream to MinIO (durable copy)
             if mc_upload(league_path):
                 log(f"  streamed to MinIO {MINIO_BUCKET}")
