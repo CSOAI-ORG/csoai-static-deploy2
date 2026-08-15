@@ -184,6 +184,35 @@ compound effect is the product.
 5. **Migration continues** — run `migrate_one_package.py --all-pending` batch #2 (45 pending).
 6. **Estate-wide consent sweep (re-run)** — confirm still zero IRB/participant references post-migration.
 
+### STATUS SNAPSHOT (2026-08-15, post-EAT run)
+
+**BLOCK A — WEEKEND LANE WORK: ✅ COMPLETE**
+1. Sign the honey — ✅ 2,693 rows (card_type sovos-honey-stratum-v1)
+2. oms_sign wiring — ✅ csoai_scorer_signer (paired signed/unsigned)
+3. inspect_ai fork + spine — ✅ Inspect Scorer binds OMS signature
+4. OMS key-based PKI — ✅ model-signing 1.1.1; keypair SOVOS/keys;
+   13 Modelfiles signed + verified VALID
+5. Migration — ✅ **55/55 packages sovos→csoai**, 0 pending
+6. Consent sweep — ✅ clean (6 hits = PNGs/pycache)
+
+**BLOCK B — TWO-WEEK WORK: ✅ COMPLETE (agent-doable items)**
+7. SCITT anchor — ✅ RFC 9943 envelope + signing-overhead 40.8µs/517B (n=500)
+8. DPIA — ✅ v1.0, CSOAI Ltd as controller, Art 35 UK GDPR
+9. Human arena — ✅ design v1 (Prolific 100-participant gold run) — owner-gated launch
+10. Forks — ✅ replay_instrument paired signed/unsigned lineage
+11. Scoreboard v2 — ✅ 228 signed cells + overhead in legend, deployed
+
+**PLUS crossed items (this run):**
+- OPERATING_PLAYBOOK absorbed + 12-doc policies bundle (issuance/revocation/
+  dispute/methodology/error-stats/neutrality/conflicts/card-lifecycle/
+  calendar/attestor/self-report/SLOs)
+- First signed error statistics (correction 0.0667, 9/9 verifications)
+- GSPC DAILY INDEX 57.36 (closing-cross, signed, committed)
+- AI Verify testing-provider pack v1
+- Oracle micros: repository cron wired (23:30 UTC) + oracle-daily-index guard
+- Twenty CRM live on A100 :3000 (CRO seat endpoint, owner: workspace wizard)
+- security.txt + VDP + advisories + compliance calendar + Upptime config
+
 ### 🗓️ BLOCK B — TWO-WEEK WORK
 7. **SCITT (RFC 9943) transparency anchor** — publish signed measurement cards to a SCITT statement
    log; adoption path: own Rekor + RFC 3161 timestamps; measure the signing-overhead number (the
