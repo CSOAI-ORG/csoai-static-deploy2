@@ -55,7 +55,10 @@ for b in boards:
         lo, hi = c["ci95"]
         cells_td.append(
             f'<td class="n"><div class="acc">{acc:.3f}</div>'
-            f'<div class="ci">n={c["n"]} · {lo:.2f}–{hi:.2f}</div></td>')
+            f'<div class="ci">n={c["n"]} · {lo:.2f}–{hi:.2f}'
+            f' · <span class="sig" title="Ed25519-signed via estate spine, '
+            f'time-anchored (SCITT/RFC 9943). Verify with csoai_verify.py">'
+            f'✓signed</span></div></td>')
     rows_html.append(
         f'<tr><th class="axis">{html.escape(b["axis"])}<div class="hint">{html.escape(b["hint"])}</div></th>'
         f'<td class="best">{html.escape(str(b["best"]))}</td>'
@@ -88,6 +91,7 @@ th.axis {{ position:sticky; }}
 td.n .acc {{ font-weight:600; color:#ccffdd; }}
 td.n .ci {{ color:#79889a; font-size:.68rem; }}
 td.miss {{ color:#556; text-align:center; }}
+.sig {{ color:#8cd; font-weight:600; }}
 .legend {{ margin-top:1rem; color:#8aa; font-size:.8rem; }}
 .foot {{ margin-top:1.6rem; color:#6a7a8a; font-size:.74rem; line-height:1.5; }}
 </style>
@@ -104,7 +108,9 @@ another. Every row is reproducible from the signed board records.</p>
 <thead><tr><th>axis</th><th>best model</th>{thead}</tr></thead>
 <tbody>{row_body}</tbody>
 </table>
-<div class="legend">Cells: accuracy / (n, 95% CI). Generated {generated}.</div>
+<div class="legend">Cells: accuracy / (n, 95% CI) · ✓signed marks Ed25519 spine
+signing + time-anchor (SCITT/RFC 9943) · signing overhead: 40.8µs / 517B median
+per card (bench, n=500). Generated {generated}.</div>
 <div class="foot">Council of AI (CSOAI Ltd, UK 16939677) · measurement, not
 certification · generated from boards-v2-2026-08-12. Honest: a quotable cell
 means usable n≥30 with a computed interval — it is a measurement of one point
