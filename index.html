@@ -1,157 +1,64 @@
-<!doctype html>
-<html lang="en-GB">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<meta name="description" content="CSOAI — the measurement body for AI governance. Deterministic, signed, recomputable evidence. Measurement, not certification. EU AI Act Article 50 kits, the GSPC instrument, and the MCP measurement stack. UK-sovereign, open-source." />
-<meta name="author" content="CSOAI LTD (16939677)" />
-<meta name="theme-color" content="#0a1f3a" />
-<title>CSOAI — the measurement body for AI governance</title>
-<link rel="canonical" href="https://csoai.org" />
-<link rel="stylesheet" href="sovereign-2026.css" />
-<meta property="og:title" content="CSOAI — measurement, not certification" />
-<meta property="og:description" content="Deterministic, signed, recomputable AI-governance measurement. Every verdict cited and signed; every failure published." />
-<meta property="og:type" content="website" />
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"CSOAI","url":"https://csoai.org","description":"CSOAI — Council for the Safety of Artificial Intelligence. A measurement body for AI governance, safety, provenance and continuity. Measurement, not certification."}</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Council of AI — the measurement body for AI compliance</title>
+<meta name="description" content="Council of AI (CSOAI Ltd · UK 16939677) — independent AI-governance measurement. 13 GSPC axes, Ed25519-signed credentials, live MCP verification. Measurement, not certification.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://www.csoai.org/">
+<style>
+:root{--bg:#0a0e27;--panel:#121530;--ink:#e2e8f0;--dim:#94a3b8;--gold:#fbbf24;--cyan:#06b6d4;--mint:#10b981;--line:rgba(148,163,184,.15)}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--ink);line-height:1.6;padding:32px 20px}
+.container{max-width:920px;margin:0 auto}
+.top{display:flex;align-items:center;gap:12px;margin-bottom:8px}
+.seal{font-size:2rem}
+h1{font-size:2.2rem;background:linear-gradient(135deg,#fbbf24,#06b6d4);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:4px}
+.sub{color:var(--dim);margin-bottom:20px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:20px;margin:16px 0}
+.card h2{color:var(--gold);font-size:1.15rem;margin-bottom:10px}
+.card p{color:var(--dim);margin-bottom:8px}
+.badge{display:inline-block;padding:3px 10px;background:rgba(6,182,212,.12);border:1px solid rgba(6,182,212,.4);border-radius:99px;color:var(--cyan);font-size:.8rem;margin:2px 4px 2px 0}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
+.stat{font-size:1.8rem;font-weight:700;color:var(--mint)}
+.stat-label{font-size:.85rem;color:var(--dim)}
+a{color:#7dd3fc;text-decoration:none}
+a:hover{text-decoration:underline}
+.btn{display:inline-block;background:linear-gradient(135deg,#06b6d4,#8b5cf6);color:#fff;padding:10px 20px;border-radius:8px;font-weight:600;margin:4px 8px 4px 0;text-decoration:none}
+.btn:hover{opacity:.9;text-decoration:none}
+.footer{margin-top:32px;padding-top:16px;border-top:1px solid var(--line);color:var(--dim);font-size:.85rem}
+code{background:rgba(255,255,255,.08);padding:2px 6px;border-radius:4px;font-size:.9em}
+</style>
 </head>
-<body class="bg-grid">
+<body>
+<div class="container">
+  <div class="top"><span class="seal">🛡️</span><h1>Council of AI</h1></div>
+  <p class="sub">CSOAI Ltd · UK 16939677 — an independent measurement body. We measure AI systems against the rules that govern them, sign the result (Ed25519), and publish what we cannot yet measure.</p>
 
-<nav class="nav-sticky">
-  <a href="index.html" class="brand">🜏 CSOAI</a>
-  <div class="nav-links">
-    <a href="os.html" style="color:var(--gold,#37c8d6);font-weight:700">⚡ CSOAI OS</a>
-    <a href="#instrument">Instrument</a>
-    <a href="#spine">The spine</a>
-    <a href="#council">Council</a>
-    <a href="#mcp">MCP stack</a>
-    <a href="tools/index.html">Tools</a>
-    <a href="audit.html">Audit</a>
+  <div class="grid">
+    <div class="card"><div class="stat">13</div><div class="stat-label">GSPC measurement axes — governance, safety, provenance, continuity, conformance, openness, machinery, care, cross-reality, detector-interop, art5-safeguard, swarm, affect</div></div>
+    <div class="card"><div class="stat">2</div><div class="stat-label">Live verification surfaces — measure + verify via streaming MCP endpoint</div></div>
+    <div class="card"><div class="stat">30+</div><div class="stat-label">measurement banks on Kaggle, 29+ on HuggingFace, 57-file boards</div></div>
   </div>
-</nav>
 
-<header class="hero glow">
-  <div class="hero-inner">
-    <span class="kicker">CSOAI · UK AI governance</span>
-    <h1>Measured,<br/>not modelled.</h1>
-    <p class="lede">
-      CSOAI is a measurement body for AI governance — deterministic, signed, and recomputable.
-      Every verdict is cited against frozen statute and Ed25519-signed; every failure is published.
-      <strong>We measure. We do not certify.</strong>
-    </p>
-    <div class="cta-row">
-      <a href="audit.html" class="cta primary">View the live audit trail</a>
-      <a href="#instrument" class="cta ghost">See the instrument</a>
-      <a href="#spine" class="cta ghost">How it's signed</a>
-    </div>
-    <div class="badges">
-      <span class="badge ok">✓ 0 models in the verdict path</span>
-      <span class="badge ok">✓ Ed25519-signed · RFC 8032 §7.1 verifiable</span>
-      <span class="badge ok">✓ Open-source core (Apache-2.0 / MIT)</span>
-      <span class="badge ok">✓ UK-sovereign (zero CLOUD Act)</span>
-    </div>
+  <div class="card">
+    <h2>Live MCP endpoint</h2>
+    <p>Streamable HTTP MCP — <code>https://csoai-gspc-mcp.nicholastempleman.workers.dev/mcp</code></p>
+    <p>Tools: <span class="badge">measure</span><span class="badge">verify</span> Free to verify · metered to issue.</p>
+    <a class="btn" href="https://csoai-gw.vercel.app">API docs</a>
+    <a class="btn" href="https://www.csoai.org/defoneos.html">DEFONEOS globe</a>
   </div>
-</header>
 
-<main>
+  <div class="card">
+    <h2>Measurement, not certification</h2>
+    <p>We are not a certifier or accreditation body — the measurement instrument is the moat. Every number is recomputable from its rows; missing cells are <b>UNMEASURED</b>, never zero; corrections are published, never silently edited.</p>
+  </div>
 
-<section id="instrument" class="panel">
-  <h2>The GSPC instrument</h2>
-  <p>
-    Describe an AI system and the instrument reads it against frozen statutory provisions across
-    four lenses — <strong>Governance, Safety, Provenance, Continuity</strong> — and tells you which
-    bind, deterministically, with the provision cited. There is no inference call in the verdict
-    path: the score is a predicate an auditor can recompute from the published harness.
-  </p>
-  <p>
-    An axis that cannot be measured is reported <strong>UNMEASURED</strong> — never coerced to a
-    score. That honesty is the point: a benchmark whose first result flatters its author is not a
-    benchmark.
-  </p>
-  <p>
-    <a href="govbench.html" class="cta small">GovBench →</a>
-    <a href="benchmarks.html" class="cta small">The instruments →</a>
-    <a href="tools/index.html" class="cta small">Run a check →</a>
-  </p>
-</section>
-
-<section id="spine" class="panel">
-  <h2>The signed-measurement spine</h2>
-  <p>
-    Every result rides one spine: <em>measure → gate → sign → time-anchor → verify → track drift.</em>
-  </p>
-  <ul>
-    <li><strong>Correctness gate</strong> — a wrong answer cannot leave the pipeline carrying a clean
-      receipt. Legal claims are checked against exact statute; an ungrounded claim is attested
-      <em>but not verified</em>, and cannot be signed as a clean measurement.</li>
-    <li><strong>Signed cards</strong> — every measurement is Ed25519-signed and carries an RFC-3161
-      time anchor, so anyone can recompute the content and confirm when it was issued.</li>
-    <li><strong>Drift-triggered re-attestation</strong> — when a regulation changes, every card that
-      depended on the old statute text is flagged stale and queued for re-measurement. Living
-      compliance, fail-closed: an unknown regulation is never reported as unchanged.</li>
-    <li><strong>Agent-callable</strong> — an A2A agent can call the measurement and walk away with a
-      signed <em>measurement credential</em> (never a certificate).</li>
-  </ul>
-  <p><a href="audit.html" class="cta small">Inspect the chain →</a></p>
-</section>
-
-<section id="council" class="panel">
-  <h2>The Council — and its measured limits</h2>
-  <p>
-    The Council structure records governance decisions across a 33-seat panel with public minutes.
-    We publish what we measure about it, including where it falls short: the panel's measured
-    <em>effective independence is low</em> (correlated judges), so <strong>we do not claim Byzantine
-    fault tolerance</strong> — an earlier claim to that effect was retracted and is not made here.
-    Publishing our own resolution limit is the moat, not a footnote.
-  </p>
-  <p>
-    <a href="tools/bft-vote-log.html" class="cta small">Public minutes →</a>
-    <a href="audit.html" class="cta small">Refutation ledger →</a>
-  </p>
-</section>
-
-<section id="mcp" class="panel">
-  <h2>The MCP measurement stack</h2>
-  <p>
-    A stack of open, inspectable MCP servers that consume the spine as a signed attestation
-    service — governance crosswalk, AI-bill-of-materials, injection scanning, Article 50
-    watermarking, and regulatory-drift watching. Each is a consumer of the neutral spine; none of
-    them certifies anyone.
-  </p>
-  <p>
-    <a href="a2a-swarm.html" class="cta small">A2A swarm →</a>
-    <a href="audit.html" class="cta small">Sigil audit →</a>
-  </p>
-</section>
-
-<section class="panel callout">
-  <h2>Honest by design</h2>
-  <p>
-    We show what is true and verifiable, not badges we don't hold. We are <strong>not a notified
-    body and do not issue certificates</strong>; formal accreditations (e.g. ISO/IEC 42001) are a
-    separate, multi-year track pursued as the platform matures. Rule-based tools defined solely by
-    natural persons fall outside the Article 3(1) definition (Recital 12) — we say so rather than
-    leave it unsaid.
-  </p>
-  <p>
-    <a href="audit.html" class="cta primary">Inspect the evidence →</a>
-  </p>
-</section>
-
-</main>
-
-<footer class="footer">
-  <p>
-    <strong>CSOAI Ltd · UK 16939677</strong> · Ed25519 · RFC 8032 §7.1 ·
-    measurement, not certification · open-source core
-  </p>
-  <p class="small">
-    <a href="audit.html">Audit</a> ·
-    <a href="tools/article50-passport.html">Article 50</a> ·
-    <a href="govbench.html">GovBench</a> ·
-    <a href="benchmarks.html">Instruments</a> ·
-    <a href="a2a-swarm.html">A2A</a>
-  </p>
-</footer>
-
+  <div class="footer">
+    Council of AI (CSOAI Ltd · UK 16939677) · <a href="https://councilof.ai">councilof.ai</a> · <a href="https://www.csoai.org/defoneos.html">Defence AI</a> · Ed25519-signed + time-anchored
+    <br>© 2026 Council of AI. Public. Auditable. Sovereign.
+  </div>
+</div>
 </body>
 </html>
