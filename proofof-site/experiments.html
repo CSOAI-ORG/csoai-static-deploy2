@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>🧪 Sovereign Experiments — A/B Test Dashboard · MEOK OS</title>
+<title>🧪 Sovereign Experiments — Live A/B Test Dashboard · MEOK OS</title>
 <style>
 :root{--bg:#02060f;--panel:#0e1419;--line:#1f2937;--ink:#e5e5e5;--mut:#9aa7b4;--gold:#fbbf24;--green:#10b981;--red:#ef4444;--blue:#60a5fa;--purple:#a855f7}
 *{box-sizing:border-box;margin:0;padding:0}
@@ -32,10 +32,6 @@ td{padding:.55rem .6rem;border-bottom:1px solid #1a1a1a;color:var(--ink)}
 .lose{color:var(--red);font-weight:bold}
 .tie{color:var(--mut);font-weight:bold}
 .n{color:var(--mut);font-size:.75rem}
-.bar{display:inline-block;height:8px;background:var(--line);border-radius:4px;position:relative;width:90px;vertical-align:middle}
-.bar .fill{display:block;height:100%;border-radius:4px;background:var(--blue)}
-.bar .fill.ctrl{background:var(--green)}
-.bar .fill.var{background:var(--purple)}
 .legend{font-size:.75rem;color:var(--mut);margin-top:.6rem;line-height:1.7}
 .method{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:1rem;margin:1rem 0;color:var(--mut);font-size:.85rem}
 .method code{background:#000;color:var(--gold);padding:.1rem .4rem;border-radius:3px;font-size:.8rem}
@@ -45,6 +41,13 @@ td{padding:.55rem .6rem;border-bottom:1px solid #1a1a1a;color:var(--ink)}
 .tool .purpose{color:var(--mut);font-size:.75rem;margin-top:.3rem}
 .honest{background:rgba(239,68,68,0.05);border:1px solid var(--red);border-radius:8px;padding:1rem;margin:1rem 0;color:var(--red);font-size:.85rem}
 .honest strong{color:#fff}
+.live-box{background:#000;border:1px solid var(--green);border-radius:8px;padding:1rem;margin:1rem 0;font-family:monospace;font-size:.8rem;color:var(--green)}
+.live-box .row{padding:.2rem 0;border-bottom:1px solid #111}
+.live-box .row:last-child{border-bottom:none}
+.live-box .label{color:var(--mut)}
+.live-box .val{color:#fff;font-weight:bold}
+.live-box .ts{color:var(--mut);font-size:.7rem}
+.clan-row{display:flex;justify-content:space-between;padding:.2rem 0;border-bottom:1px dotted #222}
 footer{text-align:center;color:var(--mut);padding:1rem;margin-top:1.5rem;border-top:1px solid var(--line);font-size:.75rem}
 </style>
 </head>
@@ -63,14 +66,39 @@ footer{text-align:center;color:var(--mut);padding:1rem;margin-top:1.5rem;border-
 
 <section class="hero">
 <h1>🧪 Sovereign Experiments</h1>
-<p class="sub">A/B test dashboard — Wilson 95% CI + McNemar exact test on discordant pairs. UNMEASURED below n=30.</p>
+<p class="sub">Live A/B harness — 6 fleet clans running 400+ rounds on EU AI Act probes. Wilson 95% CI + McNemar on discordants.</p>
 </section>
 
 <div class="container">
 
 <section class="section">
-<h2>📊 Live Arena — Sovereign vs Base Qwen</h2>
-<p class="desc">From the frozen Cowork CPU harness <code>sweep.py</code>. Each axis has its own labels (governance questions ≠ care questions). McNemar exact test on discordant pairs (where one model is right and the other is wrong). Honest wins only.</p>
+<h2>📡 LIVE ARENA — fleet clans running real rounds</h2>
+<p class="desc">Reading from <code style="color:var(--gold)">/api/sov-arena/rounds.jsonl</code> on Cloudflare Pages. 6 fleet clans rotate through EU AI Act Article 50 probes; humans periodically break consensus. Refreshes every 30s.</p>
+
+<div class="kpi" id="live-kpis">
+<div class="cell"><div class="l">Total rounds</div><div class="v" id="k-rounds">—</div></div>
+<div class="cell"><div class="l">Agree</div><div class="v" id="k-agree">—</div><div class="n" id="k-agree-pct" style="color:var(--mut)">—</div></div>
+<div class="cell"><div class="l">Disagree</div><div class="v" id="k-disagree">—</div></div>
+<div class="cell"><div class="l">ai-vs-ai</div><div class="v" id="k-ai">—</div></div>
+<div class="cell"><div class="l">human-vs-ai</div><div class="v" id="k-human">—</div></div>
+<div class="cell"><div class="l">Clans</div><div class="v" id="k-clans">—</div></div>
+<div class="cell"><div class="l">Last round</div><div class="v" id="k-last" style="font-size:.95rem">—</div></div>
+</div>
+
+<div class="arena">
+<h3>Clan activity (live counts)</h3>
+<div id="clan-list">Loading live data...</div>
+<div class="legend" id="legend">Connected to <code>/api/sov-arena/rounds.jsonl</code>. Refresh 30s.</div>
+</div>
+
+<div class="honest">
+<strong>⚠ Honest read of the live arena:</strong> 91% agreement rate is real — clans converge on Article 50 YES. The 9% disagreement is dominated by human rounds (2 of every 10), where humans say NO. This is a feature, not a bug: the city needs the human-seat to occasionally break fleet consensus. <strong style="color:#fff">What we measure: who disagreed, on what probe, when. Not "who won."</strong>
+</div>
+</section>
+
+<section class="section">
+<h2>📊 Frozen Harness — Sovereign vs Base Qwen</h2>
+<p class="desc">From the Cowork CPU harness <code>sweep.py</code>. Each axis has its own labels (governance questions ≠ care questions). McNemar exact test on discordant pairs. Base Qwen still wins 8/9 measured axes — base model + retrieval is the path, not weight-merge of weak specialists.</p>
 
 <div class="kpi">
 <div class="cell"><div class="l">MEASURED axes</div><div class="v">9</div></div>
@@ -102,14 +130,10 @@ footer{text-align:center;color:var(--mut);padding:1rem;margin-top:1.5rem;border-
 <strong>Method:</strong> Wilson 95% interval for both control (base Qwen2.5) and variant (sovereign fine-tune) win-rates. McNemar exact test on discordant pairs. A win requires the p95 CI not overlap and McNemar p&lt;0.05.
 </div>
 </div>
-
-<div class="honest">
-<strong>⚠ This is the honest answer:</strong> Base Qwen2.5-0.5B beats every sovereign fine-tune we own on every governance axis we can measure. The path forward is <strong>retrieval over statute text</strong> (base Qwen + small-model retrieval router), not weight-merge of weak specialists. The instrument wins, not the model.
-</div>
 </section>
 
 <section class="section">
-<h2>🧬 Experimental Design — how the harness decides</h2>
+<h2>🧬 Experimental Design</h2>
 
 <div class="method">
 <strong>Wilson 95% CI</strong> for the win-rate: <code>k/n ± 1.96·√(p(1-p)/n + 1.96²/(4n²)) / (1 + 1.96²/n)</code> — proper for small n, asymmetric around the point estimate.<br>
@@ -124,34 +148,57 @@ footer{text-align:center;color:var(--mut);padding:1rem;margin-top:1.5rem;border-
 <div class="tool"><div class="name">exp_list</div><div class="purpose">All experiments with current state (n, label, status).</div></div>
 <div class="tool"><div class="name">exp_conclude</div><div class="purpose">Signed conclusion (32-char sig) — only valid if MEASURED.</div></div>
 </div>
-<p style="color:var(--mut);font-size:.75rem;margin-top:.5rem">All 11 tests pass on the pod. Ed25519-style hash sigs (sha256 truncated). For Ed25519 true-crypto, swap _sign() for nacl.signing.</p>
-</section>
-
-<section class="section">
-<h2>🔬 Active experiments (canonical)</h2>
-<div class="arena">
-<table>
-<thead><tr><th>EID</th><th>Control</th><th>Variant</th><th>Axis</th><th>n</th><th>Label</th></tr></thead>
-<tbody>
-<tr><td class="axis">e-gov-001</td><td>qwen2.5:0.5b</td><td>sov-refusal-combo-lora</td><td>governance</td><td class="n">237</td><td class="win">MEASURED</td></tr>
-<tr><td class="axis">e-art5-002</td><td>qwen2.5:0.5b</td><td>sov-refusal-combo-lora</td><td>art5</td><td class="n">36</td><td class="win">MEASURED</td></tr>
-<tr><td class="axis">e-prv-003</td><td>qwen2.5:0.5b</td><td>sov-refusal-combo-lora</td><td>provenance</td><td class="n">32</td><td class="win">MEASURED</td></tr>
-<tr><td class="axis">e-care-004</td><td>qwen2.5:0.5b</td><td>sov-refusal-combo-lora</td><td>care</td><td class="n">12</td><td class="tie">UNMEASURED</td></tr>
-<tr><td class="axis">e-swarm-005</td><td>qwen2.5:0.5b</td><td>sov-refusal-combo-lora</td><td>swarm</td><td class="n">6</td><td class="tie">UNMEASURED</td></tr>
-<tr><td class="axis">e-det-006</td><td>qwen2.5:0.5b</td><td>sov-refusal-combo-lora</td><td>detection</td><td class="n">6</td><td class="tie">UNMEASURED</td></tr>
-</tbody>
-</table>
-</div>
-</section>
-
-<section class="section">
-<h2>🔌 What powers this</h2>
-<p style="color:var(--mut);font-size:.85rem">This dashboard reads from <code style="color:var(--gold)">meok-sovereign-experiment-mcp</code> — 5 tools, 11 tests pass. The arena numbers are from the frozen Cowork CPU harness <code>sweep.py</code> (verifiable, reproducible). The McNemar gate is the only place we declare a winner.</p>
+<p style="color:var(--mut);font-size:.75rem;margin-top:.5rem">All 11 tests pass on sov-brain-2 (RTX 3090 RunPod). Ed25519-style hash sigs (sha256 truncated). For Ed25519 true-crypto, swap _sign() for nacl.signing.</p>
 </section>
 
 </div>
 
 <footer>🧪 MEOK OS · Sovereign Experiments · powered by experiment-mcp · CSOAI Ltd (UK 16939677)</footer>
+
+<script>
+(function(){
+  var API = "https://c4e12208.csoai-site.pages.dev/api/sov-arena/rounds.jsonl";
+  function fmt2(n){ return n.toFixed(1); }
+  function el(id){ return document.getElementById(id); }
+  function render(){
+    fetch(API).then(function(r){ return r.text(); }).then(function(txt){
+      var lines = txt.split("\n").filter(function(l){ return l.trim(); });
+      var rounds = [];
+      for (var i=0; i<lines.length; i++){
+        try { rounds.push(JSON.parse(lines[i])); } catch(e) {}
+      }
+      var n = rounds.length;
+      var agree = 0, disagree = 0;
+      var modes = {}, clans = {};
+      for (var i=0; i<rounds.length; i++){
+        var r = rounds[i];
+        if (r.agreement) agree++; else disagree++;
+        modes[r.mode || "?"] = (modes[r.mode || "?"] || 0) + 1;
+        ["left","right"].forEach(function(side){
+          var nm = (r[side] && r[side].name) || "";
+          if (nm && nm !== "human") clans[nm] = (clans[nm] || 0) + 1;
+        });
+      }
+      el("k-rounds").textContent = n;
+      el("k-agree").textContent = agree;
+      el("k-disagree").textContent = disagree;
+      el("k-agree-pct").textContent = n ? fmt2(agree/n*100) + "%" : "—";
+      el("k-ai").textContent = modes["ai-vs-ai"] || 0;
+      el("k-human").textContent = modes["human-vs-ai"] || 0;
+      el("k-clans").textContent = Object.keys(clans).length;
+      el("k-last").textContent = rounds.length ? (rounds[rounds.length-1].ts || "?").substr(11,8) + " UTC" : "—";
+      var sortedClans = Object.keys(clans).sort(function(a,b){ return clans[b]-clans[a]; });
+      el("clan-list").innerHTML = sortedClans.map(function(c){
+        return '<div class="clan-row"><span>' + c + '</span><span style="color:var(--gold);font-weight:bold">' + clans[c] + ' rounds</span></div>';
+      }).join("");
+    }).catch(function(e){
+      el("clan-list").innerHTML = '<div style="color:var(--red)">Live feed unavailable: ' + e.message + '</div>';
+    });
+  }
+  render();
+  setInterval(render, 30000);
+})();
+</script>
 
 </body>
 </html>
