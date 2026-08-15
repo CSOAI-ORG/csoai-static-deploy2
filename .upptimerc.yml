@@ -1,0 +1,39 @@
+# Upptime config — status page for the Council of AI measurement fabric
+# Zero-infra: GitHub Actions checks endpoints, Pages hosts the status page.
+# Docs: https://upptime.js.org/docs
+
+owner: CSOAI-ORG
+repo: upptime
+sites:
+  - name: csoai.org
+    url: https://csoai.org/
+  - name: Releases page
+    url: https://csoai.org/releases
+  - name: Verify endpoint (worker)
+    url: https://csoai-gspc-mcp.nicholastempleman.workers.dev/mcp
+  - name: Attest verify worker
+    url: https://csoai-attest-verify.nicholastempleman.workers.dev/verify
+  - name: Kaggle dataset
+    url: https://www.kaggle.com/datasets/nicktempleman/csoai-signed-measurement-cards
+  - name: GitHub releases
+    url: https://github.com/CSAOI-ORG/csoai-static-deploy2/releases
+  - name: Twenty CRM (internal)
+    url: http://localhost:3000/healthz
+
+status-website:
+  cname: status.csoai.org
+  logoUrl: https://csoai.org/icon.png
+  name: "Council of AI — Status"
+  introTitle: "Council of AI measurement infrastructure"
+  introMessage: |
+    Signed cards, verification endpoints, and the public register. Every
+    check is public; mixed news is the trust signal.
+  navbar:
+    - title: Status
+      href: /
+    - title: Releases
+      href: https://csoai.org/releases
+    - title: Policies
+      href: https://csoai.org/policies
+    - title: GitHub
+      href: https://github.com/CSAOI-ORG

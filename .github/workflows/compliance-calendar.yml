@@ -1,0 +1,42 @@
+name: compliance-calendar
+on:
+  schedule:
+    - cron: "0 6 1 * *"   # 1st of each month, 06:00 UTC
+  workflow_dispatch:
+
+jobs:
+  open-reminders:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check upcoming obligations
+        shell: bash
+        run: |
+          set -e
+          # Read key dates from the compliance calendar (YYYY-MM-DD format, one per line: label|date)
+          # Example entries: arXiv endorsement expiry|2026-08-27
+          while IFS='|' read -r label date; do
+            [ -z "$label" ] && continue
+            due=$(date -d "$date" +%s)
+            now=$(date +%s)
+            window=$((30 * 86400))
+            if [ $due -ge $now ] && [ $((due - now)) -le $window ]; then
+              echo "⏰ ${label} due ${date} (within 30 days)"
+              echo "REMAINDER=${label}|${date}" >> "$GITHUB_ENV"
+            fi
+          done < .github/obligations.txt
+      - name: Create reminder issue
+        if: env.REMAINDER != ''
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const lines = process.env.REMAINDER ? process.env.REMAINDER.split('\n') : [];
+            for (const line of lines) {
+              const [label, date] = line.split('|');
+              await github.rest.issues.create({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                title: `⏰ ${label} (${date})`,
+                body: `Compliance reminder from the obligations calendar.\n\n**Item:** ${label}\n**Due:** ${date}\n\nSee \`SOVOS/policies/COMPLIANCE_CALENDAR.md\` for context. Check it off by linking the signed evidence commit in a comment.`
+              });
+            }
