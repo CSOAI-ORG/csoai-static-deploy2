@@ -10,10 +10,13 @@
 
 Three mechanisms, run separately, because running them together is where the confusion creeps in:
 
-1. **OMS as the front door** — every model entering the estate gets licence-recorded, checked for upstream
-   signature, then signed by us as custodian (weights + config + tokenizer as one unit) → **one digest**.
+1. **SCITT (RFC 9943 + RFC 9942) as the signing spine** — every model entering the estate gets licence-recorded, checked for upstream
+   signature (via SCITT where available), then signed by us as custodian (weights + config + tokenizer as one unit) → **one digest**.
    From then on the model is not "Hy3" — it is a pinned artifact. The catapult: cheap, one pip install,
    converts every downstream number from a claim into something bound to a fact.
+   **Canon note: OMS v1.0 does NOT exist as an SDO standard** — the real target is SCITT RFC 9943
+   (architecture, June 2026) + RFC 9942 (receipts), which are published IETF standards.
+   The OpenSSF model-signing library is useful code but carries no SDO weight.
 2. **The harness merge** — `sovos_chain.py` already runs router → clan council → gate chain. What changes:
    the router dispatches to **digests rather than model names**. Same code path, one field swapped.
 3. **The paired J-Space records (the real invention)** — run the same benchmark item TWICE: once through
