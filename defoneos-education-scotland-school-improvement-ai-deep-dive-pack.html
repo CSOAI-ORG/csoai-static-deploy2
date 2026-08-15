@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Education Scotland — AI Governance Deep-Dive Pack</title>
+<meta name="description" content="Education Scotland is the national improvement agency for Scottish education, supporting quality and improvement in learning from early years to adult learning,">
+<link rel="canonical" href="https://csoai.org/defoneos-education-scotland-school-improvement-ai-deep-dive-pack.html">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Space+Grotesk:wght@700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#050816;--panel:#0d1330;--gold:#d4af37;--sov:#6dd5ff;--accent:#f97316;--text:#e2e8f0;--muted:#94a3b8;--border:#1e2954;--danger:#ef4444;--green:#4ade80}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;line-height:1.6;min-height:100vh}
+.eu-banner{background:linear-gradient(135deg,#991b1b,#7f1d1d);padding:12px 24px;text-align:center;font-size:13px;border-bottom:2px solid #dc2626}
+.eu-banner a{color:#fca5a5}
+nav{display:flex;gap:24px;padding:16px 24px;background:var(--panel);border-bottom:1px solid var(--border);flex-wrap:wrap}
+nav a{color:var(--muted);text-decoration:none;font-size:14px}
+nav a:hover{color:var(--sov)}
+.container{max-width:1200px;margin:0 auto;padding:40px 24px}
+h1{font-family:'Space Grotesk',monospace;font-size:2.2rem;background:linear-gradient(135deg,var(--gold),var(--sov));-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:8px}
+.subtitle{color:var(--muted);font-size:1rem;margin-bottom:32px}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:40px}
+.stat-card{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:20px;text-align:center}
+.stat-num{font-family:'Space Grotesk',monospace;font-size:2rem;color:var(--sov)}
+.stat-label{color:var(--muted);font-size:13px;margin-top:4px}
+h2{font-family:'Space Grotesk',monospace;font-size:1.5rem;color:var(--sov);margin:40px 0 20px;padding-bottom:8px;border-bottom:1px solid var(--border)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:16px}
+.card{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:20px}
+.card .tag{display:inline-block;background:var(--accent);color:#000;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:700;margin-bottom:10px}
+.card h3{font-size:1rem;margin-bottom:8px;color:#fff}
+.card p{font-size:13px;color:var(--muted);line-height:1.5}
+.priority .tag{background:var(--green)}
+.mcp .tag{background:#fbbf24;color:#000}
+.red-lines{border:1px solid var(--danger);border-radius:12px;padding:24px;margin-bottom:40px}
+.red-lines h3{color:var(--danger);margin-bottom:16px;font-size:1.1rem}
+.red-lines ul{list-style:none}
+.red-lines li{padding:10px 0;border-bottom:1px solid var(--border);font-size:13px}
+.red-lines li:last-child{border-bottom:none}
+.red-lines li::before{content:'🚫 '}
+.engagement{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:40px}
+.engagement .step{flex:1;min-width:180px;background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:20px;text-align:center}
+.engagement .step .num{display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:50%;background:var(--green);color:#000;font-weight:700;font-size:16px;margin-bottom:10px}
+.engagement .step h4{font-size:14px;color:#fff;margin-bottom:6px}
+.engagement .step p{font-size:12px;color:var(--muted)}
+.cta{display:flex;gap:16px;flex-wrap:wrap;margin:40px 0}
+.cta a{display:inline-block;padding:14px 28px;background:var(--gold);color:#000;border-radius:8px;text-decoration:none;font-weight:700;font-size:15px}
+.cta a.secondary{border:1px solid var(--gold);background:transparent;color:var(--gold)}
+footer{background:var(--panel);border-top:1px solid var(--border);padding:24px;text-align:center;font-size:12px;color:var(--muted);margin-top:40px}
+</style>
+</head>
+<body>
+<div class="eu-banner">
+⚖️ EU AI Act — Article 50 Transparency + Annex III High-Risk classification applies to public-sector AI deployment. This pack is a governance-design document — not a compliance certification. <a href="/governance-master.html">Read the governance framework →</a>
+</div>
+<nav>
+<a href="/">🜏 Home</a>
+<a href="/governance-master.html">Master</a>
+<a href="/govbench.html">GovBench</a>
+<a href="/sitemap.html">Index</a>
+<a href="/sitemap.xml">Sitemap</a>
+</nav>
+<div class="container">
+<h1>Education Scotland — AI Governance Deep-Dive Pack</h1>
+<p class="subtitle">School Improvement & Curriculum · Education Scotland · 2026-08-15</p>
+
+<div class="stats">
+<div class="stat-card"><div class="stat-num">12</div><div class="stat-label">Entry Points</div></div>
+<div class="stat-card"><div class="stat-num">8</div><div class="stat-label">Transformation Priorities</div></div>
+<div class="stat-card"><div class="stat-num">6</div><div class="stat-label">MCP Servers</div></div>
+<div class="stat-card"><div class="stat-num">6</div><div class="stat-label">Red Lines</div></div>
+</div>
+
+<h2>📋 12 Entry Points</h2>
+<div class="grid"><div class="card">
+<span class="tag">INSPECTION</span>
+<h3>School Inspection & Quality Improvement</h3>
+<p>HM Inspectors of Education conduct inspections across Scottish schools, early learning, and community learning. AI inspection scheduling, evidence synthesis, and quality indicator benchmarking.</p>
+</div><div class="card">
+<span class="tag">CURRICULUM</span>
+<h3>Curriculum for Excellence (CfE) Support</h3>
+<p>National curriculum framework for ages 3-18. AI curriculum mapping, resource recommendation, and CfE outcomes tracking.</p>
+</div><div class="card">
+<span class="tag">ATTAINMENT</span>
+<h3>Attainment & Achievement Data</h3>
+<p>Scottish Survey of Literacy and Numeracy (SSLN), National Qualifications data, and attainment gap monitoring. AI attainment analytics with SIMD correlation.</p>
+</div><div class="card">
+<span class="tag">PROFESSIONAL</span>
+<h3>Practitioner Professional Learning</h3>
+<p>Teacher professional development, leadership programmes, and SCEL (Scottish College for Educational Leadership). AI CPD matching and professional-learning needs analysis.</p>
+</div><div class="card">
+<span class="tag">DIGITAL</span>
+<h3>Digital Learning & Technology Strategy</h3>
+<p>Scottish digital learning strategy, Glow platform, and edtech adoption. AI digital-skills gap analysis and technology-impact evaluation.</p>
+</div><div class="card">
+<span class="tag">ASL</span>
+<h3>Additional Support for Learning (ASL)</h3>
+<p>Support for pupils with additional support needs under the Education (Additional Support for Learning) (Scotland) Act 2004. AI ASL needs identification and support-plan monitoring.</p>
+</div><div class="card">
+<span class="tag">EARLY</span>
+<h3>Early Learning & Childcare</h3>
+<p>Quality improvement in early learning and childcare settings. AI quality indicator tracking and early-intervention analytics.</p>
+</div><div class="card">
+<span class="tag">COMMUNITY</span>
+<h3>Community Learning & Development</h3>
+<p>Adult learning, youth work, and community capacity building. AI participation analytics and social-outcome measurement.</p>
+</div><div class="card">
+<span class="tag">EQUALITY</span>
+<h3>Equality & Inclusion in Education</h3>
+<p>Equalities monitoring including gender, race, disability, and socio-economic background. AI equality analytics and closing-the-gap tracking.</p>
+</div><div class="card">
+<span class="tag">GOVERNANCE</span>
+<h3>School Governance & Parental Engagement</h3>
+<p>Parent councils, school leadership governance, and community engagement. AI parental-engagement analytics and governance compliance tracking.</p>
+</div><div class="card">
+<span class="tag">DATA</span>
+<h3>Data Protection & Pupil Records</h3>
+<p>Pupil data management under DPA 2018 and Pupils' Educational Records (Scotland) Regulations 2003. AI data-protection compliance and secure-record management.</p>
+</div><div class="card">
+<span class="tag">PARLIAMENT</span>
+<h3>Governance & Scottish Parliament Accountability</h3>
+<p>Education Scotland's accountability to Scottish Ministers, Scottish Parliament Education Committee, and COSLA. AI governance reporting and parliamentary evidence automation.</p>
+</div></div>
+
+<h2>🎯 8 Transformation Priorities</h2>
+<div class="grid"><div class="card priority">
+<span class="tag">Priority 1</span>
+<p style="font-size:13px;color:var(--muted)">AI inspection evidence synthesis replacing manual inspector review → 60% report writing reduction, consistent quality indicators</p>
+</div><div class="card priority">
+<span class="tag">Priority 2</span>
+<p style="font-size:13px;color:var(--muted)">AI curriculum mapping for CfE outcomes replacing manual teacher mapping → personalised learning pathways, outcomes tracking</p>
+</div><div class="card priority">
+<span class="tag">Priority 3</span>
+<p style="font-size:13px;color:var(--muted)">AI attainment gap analytics with real-time SIMD correlation replacing annual manual reports → early intervention triggers, live dashboards</p>
+</div><div class="card priority">
+<span class="tag">Priority 4</span>
+<p style="font-size:13px;color:var(--muted)">AI professional learning matching replacing generic CPD catalogues → personalised development pathways, skill-gap closure tracking</p>
+</div><div class="card priority">
+<span class="tag">Priority 5</span>
+<p style="font-size:13px;color:var(--muted)">AI digital-skills gap analysis replacing periodic surveys → continuous monitoring, school-level technology readiness indices</p>
+</div><div class="card priority">
+<span class="tag">Priority 6</span>
+<p style="font-size:13px;color:var(--muted)">AI ASL needs identification and support-plan monitoring replacing paper-based reviews → proactive intervention, outcome tracking</p>
+</div><div class="card priority">
+<span class="tag">Priority 7</span>
+<p style="font-size:13px;color:var(--muted)">AI equality analytics replacing manual annual equalities returns → real-time protected-characteristic monitoring, intersectional gap analysis</p>
+</div><div class="card priority">
+<span class="tag">Priority 8</span>
+<p style="font-size:13px;color:var(--muted)">AI governance reporting replacing manual parliamentary return compilation → automated compliance evidence packs, Committee-ready briefings</p>
+</div></div>
+
+<h2>🔧 6 MCP Servers</h2>
+<div class="grid"><div class="card mcp">
+<span class="tag">MCP 1 · Education</span>
+<h3>defoneos-school-inspection-mcp</h3>
+<p>School inspection scheduling, quality indicator benchmarking, evidence synthesis, inspection-report generation</p>
+</div><div class="card mcp">
+<span class="tag">MCP 2 · Education</span>
+<h3>defoneos-attainment-analytics-mcp</h3>
+<p>SSLN and National Qualifications analytics, SIMD correlation, attainment-gap monitoring, predictive intervention</p>
+</div><div class="card mcp">
+<span class="tag">MCP 3 · Education</span>
+<h3>defoneos-curriculum-mapping-mcp</h3>
+<p>CfE outcomes mapping, personalised learning pathways, resource recommendation, progression tracking</p>
+</div><div class="card mcp">
+<span class="tag">MCP 4 · Education</span>
+<h3>defoneos-asl-support-mcp</h3>
+<p>ASL needs identification, support plan monitoring, intervention tracking, outcome evaluation</p>
+</div><div class="card mcp">
+<span class="tag">MCP 5 · Compliance</span>
+<h3>defoneos-education-equality-mcp</h3>
+<p>Protected-characteristic monitoring, PSED compliance, intersectional gap analysis, equalities return automation</p>
+</div><div class="card mcp">
+<span class="tag">MCP 6 · Governance</span>
+<h3>defoneos-education-governance-mcp</h3>
+<p>School governance compliance, parental engagement analytics, parliamentary return automation, Audit Scotland reporting</p>
+</div></div>
+
+<h2>🚫 6 Non-Negotiable Red Lines</h2>
+<div class="red-lines">
+<h3>Governance Red Lines — Anchored in Statute</h3>
+<ul><li>Education (Scotland) Act 1980 — Duties of education authorities, provision of education. AI must not replace professional teacher judgement or HM Inspector discretion.</li><li>Standards in Scotland's Schools etc. Act 2000 — Right to education, improvement objectives. AI must not narrow the curriculum or reduce education to algorithmic optimisation.</li><li>Education (Additional Support for Learning) (Scotland) Act 2004 — ASL duties, CSP coordination. AI must identify but not gatekeep ASL provision.</li><li>Data Protection Act 2018 — Pupil records, special category data (children). AI must operate within the strictest data-protection regime for children's educational data.</li><li>Equality Act 2010 (Public Sector Equality Duty) — Scotland-specific education duties. AI must not introduce or amplify attainment disparities across protected characteristics.</li><li>Scotland Act 1998 — Devolved education, curriculum, inspection, and qualifications. AI must respect Scottish devolved competence and CfE autonomy.</li></ul>
+</div>
+
+<h2>⚡ 5-Step Engagement Model</h2>
+<div class="engagement"><div class="step">
+<div class="num">1</div>
+<h4>Discovery</h4>
+<p>Map the agency's statutory duties, data flows, and governance gaps against the 12-entry-point framework.</p>
+</div><div class="step">
+<div class="num">2</div>
+<h4>Governance Design</h4>
+<p>Design AI governance architecture, risk appetite, and red-line enforcement aligned to devolved legislation.</p>
+</div><div class="step">
+<div class="num">3</div>
+<h4>Pilot</h4>
+<p>Deploy 2-3 MCP servers in a sandboxed environment with agency data; measure governance outcomes against baseline.</p>
+</div><div class="step">
+<div class="num">4</div>
+<h4>Scale</h4>
+<p>Expand to the full 6-MCP stack with agency-wide deployment, training, and change management.</p>
+</div><div class="step">
+<div class="num">5</div>
+<h4>Assure</h4>
+<p>Continuous monitoring, 33-agent BFT council verification, and DEFONEOS-SEAL credential issuance.</p>
+</div></div>
+
+<div class="cta">
+<a href="/governance-master.html">📋 Request OWEM RFQ →</a>
+<a href="/article-50.html" class="secondary">⚖️ Article 50 Passport →</a>
+</div>
+
+<p style="font-size:12px;color:var(--muted);margin-top:24px">Legislation backbone: Education (Scotland) Act 1980 / Standards in Scotland's Schools etc. Act 2000 / Education (Additional Support for Learning) (Scotland) Act 2004 / DPA 2018 / Equality Act 2010 / Scotland Act 1998 / Children and Young People (Scotland) Act 2014</p>
+<p style="font-size:12px;color:var(--muted);margin-top:8px">SIGIL: defoneos-tick288-defoneos-education-scotland-sc-5617d727f507d085</p>
+</div>
+<footer>
+<p>CSOAI Ltd (UK 16939677) · csoai.org · compliance@csoai.org</p>
+<p>DEFONEOS is a UK-sovereign open-source AI governance framework built on the meok substrate. UK-sovereign. AUKUS-compatible. Audit-grade.</p>
+<p style="margin-top:8px;font-size:11px">© 2026 CSOAI Ltd. All trademarks acknowledged. This document is a governance-design artefact — not a compliance certification.</p>
+</footer>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": "Education Scotland \u2014 AI Governance Deep-Dive Pack",
+  "description": "Education Scotland is the national improvement agency for Scottish education, supporting quality and improvement in learning from early years to adult learning, including school inspection, curriculum development, and practitioner support. This deep-dive pack maps 12 entry points for AI governance, 8 transformation priorities, 6 MCP servers, and 6 non-negotiable red lines anchored in devolved Scottish education legislation.",
+  "url": "https://csoai.org/defoneos-education-scotland-school-improvement-ai-deep-dive-pack.html",
+  "about": {
+    "@type": "GovernmentService",
+    "name": "Education Scotland",
+    "url": "https://education.gov.scot/"
+  },
+  "provider": {
+    "@type": "Organization",
+    "name": "CSOAI Ltd",
+    "legalName": "CSOAI Ltd"
+  },
+  "datePublished": "2026-08-15"
+}
+</script>
+</body>
+</html>

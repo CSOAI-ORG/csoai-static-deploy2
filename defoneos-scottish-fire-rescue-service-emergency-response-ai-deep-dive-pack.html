@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Scottish Fire and Rescue Service — AI Governance Deep-Dive Pack</title>
+<meta name="description" content="The Scottish Fire and Rescue Service is the national fire and rescue service for Scotland, providing prevention, protection, and emergency response across all 3">
+<link rel="canonical" href="https://csoai.org/defoneos-scottish-fire-rescue-service-emergency-response-ai-deep-dive-pack.html">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Space+Grotesk:wght@700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#050816;--panel:#0d1330;--gold:#d4af37;--sov:#6dd5ff;--accent:#f97316;--text:#e2e8f0;--muted:#94a3b8;--border:#1e2954;--danger:#ef4444;--green:#4ade80}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;line-height:1.6;min-height:100vh}
+.eu-banner{background:linear-gradient(135deg,#991b1b,#7f1d1d);padding:12px 24px;text-align:center;font-size:13px;border-bottom:2px solid #dc2626}
+.eu-banner a{color:#fca5a5}
+nav{display:flex;gap:24px;padding:16px 24px;background:var(--panel);border-bottom:1px solid var(--border);flex-wrap:wrap}
+nav a{color:var(--muted);text-decoration:none;font-size:14px}
+nav a:hover{color:var(--sov)}
+.container{max-width:1200px;margin:0 auto;padding:40px 24px}
+h1{font-family:'Space Grotesk',monospace;font-size:2.2rem;background:linear-gradient(135deg,var(--gold),var(--sov));-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:8px}
+.subtitle{color:var(--muted);font-size:1rem;margin-bottom:32px}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:40px}
+.stat-card{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:20px;text-align:center}
+.stat-num{font-family:'Space Grotesk',monospace;font-size:2rem;color:var(--sov)}
+.stat-label{color:var(--muted);font-size:13px;margin-top:4px}
+h2{font-family:'Space Grotesk',monospace;font-size:1.5rem;color:var(--sov);margin:40px 0 20px;padding-bottom:8px;border-bottom:1px solid var(--border)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:16px}
+.card{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:20px}
+.card .tag{display:inline-block;background:var(--accent);color:#000;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:700;margin-bottom:10px}
+.card h3{font-size:1rem;margin-bottom:8px;color:#fff}
+.card p{font-size:13px;color:var(--muted);line-height:1.5}
+.priority .tag{background:var(--green)}
+.mcp .tag{background:#fbbf24;color:#000}
+.red-lines{border:1px solid var(--danger);border-radius:12px;padding:24px;margin-bottom:40px}
+.red-lines h3{color:var(--danger);margin-bottom:16px;font-size:1.1rem}
+.red-lines ul{list-style:none}
+.red-lines li{padding:10px 0;border-bottom:1px solid var(--border);font-size:13px}
+.red-lines li:last-child{border-bottom:none}
+.red-lines li::before{content:'🚫 '}
+.engagement{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:40px}
+.engagement .step{flex:1;min-width:180px;background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:20px;text-align:center}
+.engagement .step .num{display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:50%;background:var(--green);color:#000;font-weight:700;font-size:16px;margin-bottom:10px}
+.engagement .step h4{font-size:14px;color:#fff;margin-bottom:6px}
+.engagement .step p{font-size:12px;color:var(--muted)}
+.cta{display:flex;gap:16px;flex-wrap:wrap;margin:40px 0}
+.cta a{display:inline-block;padding:14px 28px;background:var(--gold);color:#000;border-radius:8px;text-decoration:none;font-weight:700;font-size:15px}
+.cta a.secondary{border:1px solid var(--gold);background:transparent;color:var(--gold)}
+footer{background:var(--panel);border-top:1px solid var(--border);padding:24px;text-align:center;font-size:12px;color:var(--muted);margin-top:40px}
+</style>
+</head>
+<body>
+<div class="eu-banner">
+⚖️ EU AI Act — Article 50 Transparency + Annex III High-Risk classification applies to public-sector AI deployment. This pack is a governance-design document — not a compliance certification. <a href="/governance-master.html">Read the governance framework →</a>
+</div>
+<nav>
+<a href="/">🜏 Home</a>
+<a href="/governance-master.html">Master</a>
+<a href="/govbench.html">GovBench</a>
+<a href="/sitemap.html">Index</a>
+<a href="/sitemap.xml">Sitemap</a>
+</nav>
+<div class="container">
+<h1>Scottish Fire and Rescue Service — AI Governance Deep-Dive Pack</h1>
+<p class="subtitle">Fire, Rescue & Emergency Response · Scottish Fire and Rescue Service (SFRS) · 2026-08-15</p>
+
+<div class="stats">
+<div class="stat-card"><div class="stat-num">12</div><div class="stat-label">Entry Points</div></div>
+<div class="stat-card"><div class="stat-num">8</div><div class="stat-label">Transformation Priorities</div></div>
+<div class="stat-card"><div class="stat-num">6</div><div class="stat-label">MCP Servers</div></div>
+<div class="stat-card"><div class="stat-num">6</div><div class="stat-label">Red Lines</div></div>
+</div>
+
+<h2>📋 12 Entry Points</h2>
+<div class="grid"><div class="card">
+<span class="tag">RESPONSE</span>
+<h3>Emergency Response Operations</h3>
+<p>24/7 emergency response including fires, road traffic collisions, water rescue, hazardous materials, and urban search and rescue. AI dispatch optimisation, resource allocation, and real-time incident intelligence.</p>
+</div><div class="card">
+<span class="tag">PREVENTION</span>
+<h3>Fire Prevention & Community Safety</h3>
+<p>Home fire safety visits, school education programmes, and community engagement. AI risk-profiling for targeted prevention and vulnerability mapping.</p>
+</div><div class="card">
+<span class="tag">ENFORCEMENT</span>
+<h3>Fire Safety Enforcement & Regulation</h3>
+<p>Enforcement of fire safety legislation under the Fire (Scotland) Act 2005, including premises inspection and enforcement notices. AI inspection scheduling and compliance analytics.</p>
+</div><div class="card">
+<span class="tag">ALARMS</span>
+<h3>Unwanted Fire Alarm Reduction</h3>
+<p>Reducing unnecessary callouts from automatic fire alarms — a major resource drain. AI alarm-signal pattern classification for false-alarm prediction.</p>
+</div><div class="card">
+<span class="tag">RESCUE</span>
+<h3>Specialist Rescue Capability</h3>
+<p>Water rescue, line rescue, heavy rescue, and USAR. AI resource modelling for specialist-team positioning across Scottish geography.</p>
+</div><div class="card">
+<span class="tag">WILDFIRE</span>
+<h3>Wildfire & Rural Fire Management</h3>
+<p>Scotland's vast rural landscape and increasing wildfire risk. AI satellite-based fire-risk prediction, fuel-load modelling, and resource pre-positioning.</p>
+</div><div class="card">
+<span class="tag">CLIMATE</span>
+<h3>Climate Adaptation & Resilience</h3>
+<p>Climate change impacts on fire and rescue demand — flooding, wildfires, extreme weather. AI climate-risk modelling and adaptive-resource planning.</p>
+</div><div class="card">
+<span class="tag">WORKFORCE</span>
+<h3>Workforce Health, Safety & Wellbeing</h3>
+<p>Firefighter occupational health, fitness standards, mental health support, and exposure monitoring. AI health-surveillance analytics and early-warning systems.</p>
+</div><div class="card">
+<span class="tag">FLEET</span>
+<h3>Fleet & Asset Management</h3>
+<p>SFRS fleet of 380+ fire appliances, 3,500+ operational personnel, 356 fire stations. AI fleet maintenance prediction and asset-lifecycle optimisation.</p>
+</div><div class="card">
+<span class="tag">RISK</span>
+<h3>Community Risk Management Planning</h3>
+<p>Strategic assessment of fire and rescue risk across Scottish communities. AI multi-factor risk modelling and resource-distribution optimisation.</p>
+</div><div class="card">
+<span class="tag">DATA</span>
+<h3>Data Protection & Incident Records</h3>
+<p>Incident data management, fire investigation records, and personal data handling. AI secure incident-data analytics with DPA-compliant anonymisation.</p>
+</div><div class="card">
+<span class="tag">GOVERNANCE</span>
+<h3>Governance & Scottish Parliament Accountability</h3>
+<p>SFRS Board governance, Scottish Ministers oversight, and Scottish Parliament accountability. AI governance reporting and Audit Scotland compliance.</p>
+</div></div>
+
+<h2>🎯 8 Transformation Priorities</h2>
+<div class="grid"><div class="card priority">
+<span class="tag">Priority 1</span>
+<p style="font-size:13px;color:var(--muted)">AI dispatch optimisation replacing manual resource allocation → dynamic stationing, 20% faster first-appliance arrival in rural areas</p>
+</div><div class="card priority">
+<span class="tag">Priority 2</span>
+<p style="font-size:13px;color:var(--muted)">AI risk-profiling for targeted prevention replacing blanket home safety visits → 5x more effective resource targeting, vulnerable-person prioritisation</p>
+</div><div class="card priority">
+<span class="tag">Priority 3</span>
+<p style="font-size:13px;color:var(--muted)">AI wildfire prediction replacing reactive rural-resource positioning → satellite-informed fuel-load modelling, pre-season prepositioning</p>
+</div><div class="card priority">
+<span class="tag">Priority 4</span>
+<p style="font-size:13px;color:var(--muted)">AI false-alarm classification replacing generic callout response → 30% reduction in unnecessary appliance movements, station availability gain</p>
+</div><div class="card priority">
+<span class="tag">Priority 5</span>
+<p style="font-size:13px;color:var(--muted)">AI climate-risk modelling replacing periodic climate-adaptation reports → continuous risk monitoring, live resource redistribution triggers</p>
+</div><div class="card priority">
+<span class="tag">Priority 6</span>
+<p style="font-size:13px;color:var(--muted)">AI firefighter health surveillance replacing annual medicals → continuous exposure monitoring, early-warning cancer/respiratory alerts</p>
+</div><div class="card priority">
+<span class="tag">Priority 7</span>
+<p style="font-size:13px;color:var(--muted)">AI fleet maintenance prediction replacing scheduled replacement cycles → condition-based maintenance, 15% fleet downtime reduction</p>
+</div><div class="card priority">
+<span class="tag">Priority 8</span>
+<p style="font-size:13px;color:var(--muted)">AI governance reporting replacing quarterly manual Board reports → automated SPCB-ready evidence, live operational dashboards</p>
+</div></div>
+
+<h2>🔧 6 MCP Servers</h2>
+<div class="grid"><div class="card mcp">
+<span class="tag">MCP 1 · Emergency</span>
+<h3>defoneos-fire-dispatch-mcp</h3>
+<p>Emergency call triage, dynamic resource allocation, rural response optimisation, incident intelligence</p>
+</div><div class="card mcp">
+<span class="tag">MCP 2 · Public Safety</span>
+<h3>defoneos-fire-prevention-mcp</h3>
+<p>Home fire risk profiling, vulnerability mapping, targeted prevention scheduling, community safety analytics</p>
+</div><div class="card mcp">
+<span class="tag">MCP 3 · Compliance</span>
+<h3>defoneos-fire-enforcement-mcp</h3>
+<p>Fire safety inspection scheduling, premises compliance tracking, enforcement notice management, audit trail</p>
+</div><div class="card mcp">
+<span class="tag">MCP 4 · Environment</span>
+<h3>defoneos-wildfire-prediction-mcp</h3>
+<p>Satellite-based fire risk, fuel-load modelling, resource prepositioning, climate-correlated risk forecasting</p>
+</div><div class="card mcp">
+<span class="tag">MCP 5 · Health</span>
+<h3>defoneos-firefighter-health-mcp</h3>
+<p>Occupational exposure monitoring, health surveillance, cancer/respiratory early warning, fitness-for-duty analytics</p>
+</div><div class="card mcp">
+<span class="tag">MCP 6 · Governance</span>
+<h3>defoneos-fire-governance-mcp</h3>
+<p>SFRS Board reporting, Audit Scotland compliance, performance indicators, parliamentary evidence packs</p>
+</div></div>
+
+<h2>🚫 6 Non-Negotiable Red Lines</h2>
+<div class="red-lines">
+<h3>Governance Red Lines — Anchored in Statute</h3>
+<ul><li>Fire (Scotland) Act 2005 — Statutory duties for firefighting, fire prevention, and fire safety enforcement. AI must not override Incident Commander operational discretion at scene.</li><li>Police and Fire Reform (Scotland) Act 2012 — SFRS establishment, Board governance, and Chief Officer accountability. AI must operate within the statutory command structure.</li><li>Fire (Scotland) Act 2005 Part 3 — Fire safety enforcement powers including prohibition and enforcement notices. AI must not issue or modify enforcement notices autonomously.</li><li>Health and Safety at Work etc. Act 1974 — Firefighter safety at operational incidents. AI must not compromise responder safety for efficiency gains.</li><li>Data Protection Act 2018 — Incident records, personal data, fire investigation reports. AI must maintain strict DPA-compliant data handling and anonymisation.</li><li>Scotland Act 1998 — Devolved fire and rescue services, community safety, and emergency planning. AI must respect Scottish devolved competence and Parliamentary accountability.</li></ul>
+</div>
+
+<h2>⚡ 5-Step Engagement Model</h2>
+<div class="engagement"><div class="step">
+<div class="num">1</div>
+<h4>Discovery</h4>
+<p>Map the agency's statutory duties, data flows, and governance gaps against the 12-entry-point framework.</p>
+</div><div class="step">
+<div class="num">2</div>
+<h4>Governance Design</h4>
+<p>Design AI governance architecture, risk appetite, and red-line enforcement aligned to devolved legislation.</p>
+</div><div class="step">
+<div class="num">3</div>
+<h4>Pilot</h4>
+<p>Deploy 2-3 MCP servers in a sandboxed environment with agency data; measure governance outcomes against baseline.</p>
+</div><div class="step">
+<div class="num">4</div>
+<h4>Scale</h4>
+<p>Expand to the full 6-MCP stack with agency-wide deployment, training, and change management.</p>
+</div><div class="step">
+<div class="num">5</div>
+<h4>Assure</h4>
+<p>Continuous monitoring, 33-agent BFT council verification, and DEFONEOS-SEAL credential issuance.</p>
+</div></div>
+
+<div class="cta">
+<a href="/governance-master.html">📋 Request OWEM RFQ →</a>
+<a href="/article-50.html" class="secondary">⚖️ Article 50 Passport →</a>
+</div>
+
+<p style="font-size:12px;color:var(--muted);margin-top:24px">Legislation backbone: Fire (Scotland) Act 2005 / Police and Fire Reform (Scotland) Act 2012 / Health and Safety at Work etc. Act 1974 / DPA 2018 / Equality Act 2010 / Scotland Act 1998 / Civil Contingencies Act 2004</p>
+<p style="font-size:12px;color:var(--muted);margin-top:8px">SIGIL: defoneos-tick288-defoneos-scottish-fire-rescue--5617d727f507d085</p>
+</div>
+<footer>
+<p>CSOAI Ltd (UK 16939677) · csoai.org · compliance@csoai.org</p>
+<p>DEFONEOS is a UK-sovereign open-source AI governance framework built on the meok substrate. UK-sovereign. AUKUS-compatible. Audit-grade.</p>
+<p style="margin-top:8px;font-size:11px">© 2026 CSOAI Ltd. All trademarks acknowledged. This document is a governance-design artefact — not a compliance certification.</p>
+</footer>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": "Scottish Fire and Rescue Service \u2014 AI Governance Deep-Dive Pack",
+  "description": "The Scottish Fire and Rescue Service is the national fire and rescue service for Scotland, providing prevention, protection, and emergency response across all 32 local authority areas. It is the largest fire and rescue service in the UK by territory covered. This deep-dive pack maps 12 entry points for AI governance, 8 transformation priorities, 6 MCP servers, and 6 non-negotiable red lines anchored in devolved Scottish fire safety legislation.",
+  "url": "https://csoai.org/defoneos-scottish-fire-rescue-service-emergency-response-ai-deep-dive-pack.html",
+  "about": {
+    "@type": "GovernmentService",
+    "name": "Scottish Fire and Rescue Service (SFRS)",
+    "url": "https://www.firescotland.gov.uk/"
+  },
+  "provider": {
+    "@type": "Organization",
+    "name": "CSOAI Ltd",
+    "legalName": "CSOAI Ltd"
+  },
+  "datePublished": "2026-08-15"
+}
+</script>
+</body>
+</html>
