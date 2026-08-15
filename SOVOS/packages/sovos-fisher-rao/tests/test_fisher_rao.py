@@ -91,7 +91,7 @@ def test_fr07_sov_signal_gate_close():
     assert r.is_permitted, f"close should be permitted, d={r.distance}"
     assert r.threshold == 1.0
     assert r.matrix_shape == (3, 3)
-    assert r.backend in ("geomstats", "scipy-logm"), f"unknown backend: {r.backend}"
+    assert r.backend in ("geomstats", "scipy-logm", "torch-gpu"), f"unknown backend: {r.backend}"
     print(f"  ✅ close: d={r.distance:.4f} permitted={r.is_permitted} backend={r.backend}")
 
 
