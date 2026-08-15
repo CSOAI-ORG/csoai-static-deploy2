@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Scottish Land Commission — Land Reform & Community Empowerment AI Deep-Dive Governance Pack</title>
+<meta name="description" content="12-entry-point AI governance framework for the Scottish Land Commission (SLC) — the statutory body for land reform, community empowerment, and land rights in Scotland — covering land value capture, vacant and derelict land, common good assets, ownership transparency, tenant farming, and land use governance. DEFONEOS sovereign governance pack.">
+<link rel="canonical" href="https://csoai.org/defoneos-scottish-land-commission-land-reform-ai-deep-dive-pack.html">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Space+Grotesk:wght@700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#050816;--panel:#0d1330;--gold:#d4af37;--sov:#6dd5ff;--accent:#f97316;--text:#e2e8f0;--muted:#94a3b8;--border:#1e2954;--danger:#ef4444;--green:#4ade80}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;line-height:1.6;min-height:100vh}
+.eu-banner{background:linear-gradient(135deg,#991b1b,#7f1d1d);padding:12px 24px;text-align:center;font-size:13px;border-bottom:2px solid #dc2626}
+.eu-banner a{color:#fca5a5}
+nav{display:flex;gap:24px;padding:16px 24px;background:var(--panel);border-bottom:1px solid var(--border);flex-wrap:wrap}
+nav a{color:var(--muted);text-decoration:none;font-size:14px}
+nav a:hover{color:var(--sov)}
+.container{max-width:1200px;margin:0 auto;padding:40px 24px}
+h1{font-family:'Space Grotesk',monospace;font-size:2.2rem;background:linear-gradient(135deg,var(--gold),var(--sov));-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:8px}
+.subtitle{color:var(--muted);font-size:1rem;margin-bottom:32px}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:40px}
+.stat-card{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:20px;text-align:center}
+.stat-num{font-family:'Space Grotesk',monospace;font-size:2rem;color:var(--sov)}
+.stat-label{color:var(--muted);font-size:13px;margin-top:4px}
+h2{font-family:'Space Grotesk',monospace;font-size:1.5rem;color:var(--sov);margin:40px 0 20px;padding-bottom:8px;border-bottom:1px solid var(--border)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:16px}
+.card{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:20px}
+.card .tag{display:inline-block;padding:4px 12px;background:rgba(109,213,255,0.1);color:var(--sov);border-radius:20px;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:1px;margin-bottom:12px}
+.card h3{font-family:'Space Grotesk',monospace;font-size:1.05rem;color:var(--text);margin-bottom:8px}
+.card p{color:var(--muted);font-size:14px;line-height:1.5}
+.mcp-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:16px}
+.mcp-card{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:20px}
+.mcp-card .mcp-name{font-family:'Space Grotesk',monospace;font-size:1rem;color:var(--gold);margin-bottom:4px}
+.mcp-card .mcp-fn{color:var(--muted);font-size:13px;margin-bottom:8px}
+.mcp-card .mcp-use{color:var(--text);font-size:13px}
+.redline{background:rgba(239,68,68,0.08);border:1px solid rgba(239,68,68,0.25);border-radius:12px;padding:28px}
+.redline h3{color:var(--danger);margin-bottom:8px}
+.redline ul{list-style:none;padding:0}
+.redline li{color:var(--muted);font-size:14px;padding:6px 0;border-bottom:1px solid rgba(239,68,68,0.1)}
+.redline li:last-child{border-bottom:none}
+.redline li strong{color:var(--danger)}
+.engagement{display:flex;gap:16px;flex-wrap:wrap}
+.step{flex:1 1 180px;background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:20px;text-align:center;min-width:160px}
+.step .num{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,var(--gold),var(--sov));display:flex;align-items:center;justify-content:center;font-family:'Space Grotesk',monospace;font-weight:700;font-size:1.2rem;margin:0 auto 12px;color:var(--bg)}
+.step h4{font-family:'Space Grotesk',monospace;font-size:1rem;color:var(--text);margin-bottom:6px}
+.step p{color:var(--muted);font-size:13px}
+.cta{display:flex;gap:16px;margin-top:40px;flex-wrap:wrap}
+.cta a{display:inline-block;padding:14px 28px;background:linear-gradient(135deg,var(--gold),#b8860b);color:var(--bg);text-decoration:none;border-radius:8px;font-weight:600;font-family:'Space Grotesk',monospace}
+.cta a.secondary{background:rgba(109,213,255,0.1);border:1px solid var(--sov);color:var(--sov)}
+footer{text-align:center;padding:40px 24px;color:var(--muted);font-size:13px;border-top:1px solid var(--border);margin-top:40px}
+footer p{margin:4px 0}
+</style>
+</head>
+<body>
+<div class="eu-banner">⚖️ DEFONEOS sovereign AI governance framework. Not a certification. <a href="/governance-master.html">Governance Master Index →</a></div>
+<nav>
+<a href="/">🏠 Home</a>
+<a href="/defoneos.html">DEFONEOS</a>
+<a href="/governance-master.html">Governance</a>
+<a href="/compliance.html">Compliance</a>
+<a href="/sitemap.xml">Sitemap</a>
+</nav>
+<div class="container">
+<h1>🌍 Scottish Land Commission — Land Reform & Community Empowerment AI Deep-Dive Governance Pack</h1>
+<p class="subtitle">12 SLC entry points · 8 transformation priorities · 6 DEFONEOS MCPs · Land Reform (Scotland) Act 2016 + Community Empowerment Act 2015 backbone</p>
+
+<div class="stats">
+<div class="stat-card"><div class="stat-num">12</div><div class="stat-label">Entry Points</div></div>
+<div class="stat-card"><div class="stat-num">8</div><div class="stat-label">Priorities</div></div>
+<div class="stat-card"><div class="stat-num">6</div><div class="stat-label">MCP Servers</div></div>
+<div class="stat-card"><div class="stat-num">11K+</div><div class="stat-label">Hectares VDL</div></div>
+</div>
+
+<p style="font-size:15px;color:var(--muted);margin-bottom:24px">The Scottish Land Commission (SLC) was established under the Land Reform (Scotland) Act 2016 as the statutory body for land reform. It advises Scottish Ministers on land rights and responsibilities, investigates land ownership patterns, reviews the impact of land law and policy, and promotes public awareness of land governance. Scotland has 11,000+ hectares of vacant and derelict land and one of the most concentrated patterns of land ownership in Europe. This pack provides a sovereign AI governance framework for every SLC statutory function.</p>
+
+<h2>📋 12 Entry Points</h2>
+<div class="grid"><div class="card">
+<span class="tag">LRRS</span>
+<h3>Land Rights & Responsibilities Statement</h3>
+<p>Statutory guidance under the Land Reform (Scotland) Act 2016 — AI governance for statement implementation monitoring, compliance assessment, and multi-stakeholder evidence synthesis across public bodies, private landowners and communities.</p>
+</div><div class="card">
+<span class="tag">COMMUNITY</span>
+<h3>Land & Communities Engagement</h3>
+<p>Community right to buy, asset transfer, and participation requests under the Community Empowerment (Scotland) Act 2015 — AI governance for community engagement analytics, land-use negotiation tracking and empowerment-outcome measurement.</p>
+</div><div class="card">
+<span class="tag">VALUE</span>
+<h3>Land Value & Taxation Research</h3>
+<p>Reviews of land value capture mechanisms, development land taxation, and fiscal levers — AI governance for land-value modelling, market-data analytics and fiscal-impact assessment without automated valuations.</p>
+</div><div class="card">
+<span class="tag">VDL</span>
+<h3>Vacant & Derelict Land (VDL)</h3>
+<p>Scotland's 11,000+ hectares of VDL — the Scottish Vacant and Derelict Land Survey (SVDLS) — AI governance for site prioritisation, reuse-opportunity scoring, and community-benefit analytics using geospatial data.</p>
+</div><div class="card">
+<span class="tag">COMMON</span>
+<h3>Common Good Land & Assets</h3>
+<p>Protection and registration of common good land and property — AI governance for common good asset registers, disposal-consent tracking, and public-interest analytics under the Community Empowerment Act 2015.</p>
+</div><div class="card">
+<span class="tag">HOUSING</span>
+<h3>Housing Land & Supply Governance</h3>
+<p>Land for housing delivery — including housing land audits, development pipeline analytics, and affordable housing land supply — AI governance for site-readiness assessment and land-release scheduling.</p>
+</div><div class="card">
+<span class="tag">TRANSPARENCY</span>
+<h3>Ownership Transparency & Land Register</h3>
+<p>Land ownership concentration analysis, beneficial ownership transparency, and the Register of Persons Holding a Controlled Interest in Land (RCI) — AI governance for ownership-pattern analytics and transparency-enforcement monitoring.</p>
+</div><div class="card">
+<span class="tag">ADVISORY</span>
+<h3>Good Practice Advisory & Guidance</h3>
+<p>Protocols on community engagement in land-use decisions, landlord-tenant relations, and landowner accountability — AI governance for guidance-impact measurement, case-study analytics and best-practice dissemination.</p>
+</div><div class="card">
+<span class="tag">RESEARCH</span>
+<h3>Research, Evidence & Policy Review</h3>
+<p>Statutory reviews of land law and policy impact, commissioned research on land markets, and evidence submission to Scottish Parliament — AI governance for research synthesis, data quality assurance and policy-evidence mapping.</p>
+</div><div class="card">
+<span class="tag">CODE</span>
+<h3>Code of Practice on Land Rights & Responsibilities</h3>
+<p>Land Rights and Responsibilities Statement compliance code — AI governance for code-adoption tracking, performance measurement against six principles, and multi-sector compliance analytics.</p>
+</div><div class="card">
+<span class="tag">TENANT</span>
+<h3>Tenant Farming & Agricultural Holdings</h3>
+<p>Tenant farming commissioner liaison, agricultural holdings governance, and landlord-tenant mediation — AI governance for tenancy-dispute analytics, rent-review modelling, and agricultural-land-use optimisation.</p>
+</div><div class="card">
+<span class="tag">PARLIAMENT</span>
+<h3>Scottish Parliament & Ministerial Accountability</h3>
+<p>Statutory reporting to Scottish Parliament, ministerial advice on land reform, and cross-portfolio coordination with Scottish Government — AI governance for reporting analytics, policy-tracking and parliamentary evidence submission.</p>
+</div></div>
+
+<h2>🎯 8 Transformation Priorities</h2>
+<div class="grid"><div class="card">
+<span class="tag">P1</span>
+<h3>Land Reform Governance Modernisation</h3>
+<p>AI for Land Rights and Responsibilities Statement implementation tracking — multi-stakeholder compliance measurement, evidence synthesis and progress dashboarding across 32 local authorities.</p>
+</div><div class="card">
+<span class="tag">P2</span>
+<h3>Community Engagement & Empowerment Analytics</h3>
+<p>Sovereign AI for community right-to-buy and asset-transfer outcome measurement — participation analytics, empowerment scoring, and community-benefit quantification under the Community Empowerment Act 2015.</p>
+</div><div class="card">
+<span class="tag">P3</span>
+<h3>Land Value Capture & Fiscal Intelligence</h3>
+<p>AI-Augmented land-value modelling — development land taxation analysis, uplift-capture mechanism design, and market-data analytics to inform Scottish Government fiscal policy on land.</p>
+</div><div class="card">
+<span class="tag">P4</span>
+<h3>Vacant & Derelict Land Prioritisation Platform</h3>
+<p>Sovereign geospatial AI for VDL site prioritisation — integrating Copernicus satellite data, SVDLS survey records, community need indices, and climate resilience scoring for land reuse targeting.</p>
+</div><div class="card">
+<span class="tag">P5</span>
+<h3>Common Good Asset Protection & Registration</h3>
+<p>AI governance for common good asset-register integrity — ownership-change detection, disposal-consent verification, and public-interest alerting for community assets at risk.</p>
+</div><div class="card">
+<span class="tag">P6</span>
+<h3>Housing Land Delivery & Supply Analytics</h3>
+<p>AI for housing-land pipeline modelling — site-readiness assessment, affordable-housing land supply forecasting, and development-plan alignment analysis across all planning authorities.</p>
+</div><div class="card">
+<span class="tag">P7</span>
+<h3>Land Ownership Transparency & Pattern Analysis</h3>
+<p>AI for beneficial ownership analytics — concentration mapping, foreign-ownership tracking, and RCI completeness auditing — with BFT-attested governance and UK-data residency.</p>
+</div><div class="card">
+<span class="tag">P8</span>
+<h3>Natural Capital & Climate-Ready Land Use</h3>
+<p>AI governance for land-use change analytics — peatland restoration monitoring, woodland creation tracking, biodiversity net gain measurement, and natural capital accounting aligned to Climate Change (Scotland) Act 2009.</p>
+</div></div>
+
+<h2>🔧 6 MCP Servers</h2>
+<div class="mcp-grid"><div class="mcp-card">
+<div class="mcp-name">bft-council-probe</div>
+<div class="mcp-fn">33-agent Byzantine Fault Tolerant governance council</div>
+<div class="mcp-use">Governance attestation for land ownership analytics and community asset decisions — Ed25519 signed, 23/33 quorum for all land-governance claims.</div>
+</div><div class="mcp-card">
+<div class="mcp-name">sovereign-keystore</div>
+<div class="mcp-fn">Sovereign cryptographic key management (HSM-backed)</div>
+<div class="mcp-use">Key management for land-register data, ownership analytics and valuation integrity — keys never leave UK-sovereign enclave.</div>
+</div><div class="mcp-card">
+<div class="mcp-name">sentinel-hub-mcp</div>
+<div class="mcp-fn">ESA Copernicus satellite imagery (sovereign caching)</div>
+<div class="mcp-use">Geospatial analytics for vacant and derelict land survey, land-use change detection, peatland monitoring and natural capital accounting — UK-resident satellite data.</div>
+</div><div class="mcp-card">
+<div class="mcp-name">data-gov-uk-mcp</div>
+<div class="mcp-fn">UK government open data portal (sovereign)</div>
+<div class="mcp-use">Deprivation indices, population statistics, agricultural census data, and housing-market data for land-governance analytics — no data leaves UK.</div>
+</div><div class="mcp-card">
+<div class="mcp-name">companies-house-mcp</div>
+<div class="mcp-fn">Companies House registry (UK registry sovereignty)</div>
+<div class="mcp-use">Corporate land ownership, beneficial ownership, and overseas entity registration verification — UK corporate data for land-ownership transparency analytics.</div>
+</div><div class="mcp-card">
+<div class="mcp-name">gdelt-news-mcp</div>
+<div class="mcp-fn">Global news event database (sovereign caching)</div>
+<div class="mcp-use">International land-reform trend intelligence — global land-governance innovation, community land trust models, land-value capture mechanisms — UK-resident caching.</div>
+</div></div>
+
+<h2>🚫 6 Non-Negotiable Red Lines</h2>
+<div class="redline">
+<ul>
+<li><strong>No AI-sole determination of land ownership or rights.</strong> All ownership classifications, title determinations and beneficial-ownership conclusions remain human-made — AI provides analytical support only. Land Registration etc. (Scotland) Act 2012 statutory authority retained by the Keeper of the Registers of Scotland.</li>
+<li><strong>No automated land valuation for statutory purposes.</strong> Land value assessments for taxation, compulsory purchase or development contributions are human-determined — AI models provide data inputs but never the final valuation.</li>
+<li><strong>No AI-based surveillance of individual landowners or tenants.</strong> Ownership pattern analysis is aggregated and anonymised — no individual-level tracking, no surveillance of lawful landownership activity, no profiling of tenant farmers or community groups.</li>
+<li><strong>No AI-sole compulsory purchase or land-acquisition recommendation.</strong> Compulsory purchase orders (CPOs) and land assembly decisions involve human judgment per the Land Reform (Scotland) Act 2016 and Acquisition of Land (Authorisation Procedure) (Scotland) Act 1947.</li>
+<li><strong>No AI-sole community asset transfer decisions.</strong> Community asset transfer and right-to-buy decisions under the Community Empowerment (Scotland) Act 2015 remain human-determined — AI tools assist evidence-gathering but never decide outcomes.</li>
+<li><strong>No sensitive land-tenure or ownership data leaves UK jurisdiction.</strong> All land-ownership, tenancy, and valuation data remains UK-resident — data residency enforced by sovereign-keystore geographic binding per DPA 2018 + UK GDPR.</li>
+</ul>
+</div>
+
+<h2>⚡ 5-Step Engagement Model</h2>
+<div class="engagement"><div class="step">
+<div class="num">1</div>
+<h4>Discovery</h4>
+<p>Map SLC statutory functions, data flows, and governance gaps against the 12-entry-point framework.</p>
+</div><div class="step">
+<div class="num">2</div>
+<h4>Governance Design</h4>
+<p>Design AI governance architecture, red-line enforcement, and BFT attestation aligned to the Land Reform (Scotland) Act 2016 and Community Empowerment Act 2015.</p>
+</div><div class="step">
+<div class="num">3</div>
+<h4>Pilot</h4>
+<p>Deploy 2-3 MCP servers in sandbox with SLC land-governance data; measure governance outcomes against baseline.</p>
+</div><div class="step">
+<div class="num">4</div>
+<h4>Scale</h4>
+<p>Expand to full 6-MCP stack with commission-wide deployment, register-system integration, and governance training.</p>
+</div><div class="step">
+<div class="num">5</div>
+<h4>Assure</h4>
+<p>Continuous monitoring, 33-agent BFT council verification, DEFONEOS-SEAL credential issuance for land-governance AI.</p>
+</div></div>
+
+<div class="cta">
+<a href="/governance-master.html">📋 Request OWEM RFQ →</a>
+<a href="/article-50.html" class="secondary">⚖️ Article 50 Passport →</a>
+</div>
+
+<p style="font-size:12px;color:var(--muted);margin-top:24px">Legislation backbone: Land Reform (Scotland) Act 2016, Community Empowerment (Scotland) Act 2015, Land Registration etc. (Scotland) Act 2012, DPA 2018 + UK GDPR, FOI (Scotland) Act 2002, Climate Change (Scotland) Act 2009, Equality Act 2010, Acquisition of Land (Authorisation Procedure) (Scotland) Act 1947</p>
+<p style="font-size:12px;color:var(--muted);margin-top:8px">SIGIL: defoneos-tick292-defoneos-scottish-land-commission-77e31c92a84d5f0b</p>
+</div>
+<footer>
+<p>CSOAI Ltd (UK 16939677) · csoai.org · compliance@csoai.org</p>
+<p>DEFONEOS is a UK-sovereign open-source AI governance framework built on the meok substrate. UK-sovereign. AUKUS-compatible. Audit-grade.</p>
+<p style="margin-top:8px;font-size:11px">© 2026 CSOAI Ltd. All trademarks acknowledged. This document is a governance-design artefact — not a compliance certification.</p>
+</footer>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": "Scottish Land Commission — Land Reform & Community Empowerment AI Deep-Dive Governance Pack",
+  "description": "12-entry-point AI governance framework for the Scottish Land Commission (SLC) — the statutory body for land reform and land rights in Scotland — covering land rights and responsibilities, community empowerment, land value capture, vacant and derelict land, common good assets, housing land, ownership transparency, tenant farming, and natural capital governance.",
+  "url": "https://csoai.org/defoneos-scottish-land-commission-land-reform-ai-deep-dive-pack.html",
+  "about": {
+    "@type": "GovernmentService",
+    "name": "Scottish Land Commission",
+    "url": "https://www.landcommission.gov.scot/"
+  },
+  "provider": {
+    "@type": "Organization",
+    "name": "CSOAI Ltd",
+    "legalName": "CSOAI Ltd"
+  },
+  "datePublished": "2026-08-15"
+}
+</script>
+</body>
+</html>

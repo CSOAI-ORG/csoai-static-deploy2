@@ -1,0 +1,47 @@
+{
+  "tick": 292,
+  "phase": "EXPANSION_PHASE_260",
+  "timestamp": "2026-08-15T20:05:00+00:00",
+  "artefacts_built": [
+    {
+      "name": "defoneos-scottish-ambulance-service-emergency-care-ai-deep-dive-pack",
+      "url": "https://csoai.org/defoneos-scottish-ambulance-service-emergency-care-ai-deep-dive-pack.html",
+      "bytes": 19454,
+      "description": "12 SAS entry points (3 EOCs / Air Ambulance / PTS / CFR / Trauma / Resus / OOH / Telehealth / Fleet / Wellbeing / Data / Resilience) x 8 priorities x 6 MCPs x NHS (Scotland) Act 1978 + Emergency Workers (Scotland) Act 2005 + Civil Contingencies Act 2004 backbone. Red lines: no AI-sole clinical triage/dispatch; no patient data outside UK; no AI staff surveillance."
+    },
+    {
+      "name": "defoneos-scottish-land-commission-land-reform-ai-deep-dive-pack",
+      "url": "https://csoai.org/defoneos-scottish-land-commission-land-reform-ai-deep-dive-pack.html",
+      "bytes": 20172,
+      "description": "12 SLC entry points (LRRS / Community / Land Value / VDL / Common Good / Housing / Transparency / Advisory / Research / Code / Tenant / Parliament) x 8 priorities x 6 MCPs x Land Reform (Scotland) Act 2016 + Community Empowerment (Scotland) Act 2015 backbone. Red lines: no AI-sole ownership determinations; no automated valuation; no landowner surveillance."
+    },
+    {
+      "name": "defoneos-nhs-education-for-scotland-health-workforce-ai-deep-dive-pack",
+      "url": "https://csoai.org/defoneos-nhs-education-for-scotland-health-workforce-ai-deep-dive-pack.html",
+      "bytes": 19394,
+      "description": "12 NES entry points (Medical / Nursing / Pharmacy / Dental / AHP / Psychology / Science / Digital-Turas / Leadership / Public Health / Remote / Workforce) x 8 priorities x 6 MCPs x NHS (Scotland) Act 1978 + DPA 2018 backbone. Red lines: no AI-sole training assessment; no automated special-category processing; no AI credential issuance without human ratification."
+    }
+  ],
+  "counters_snapshot": {
+    "total_mcp_built": 30,
+    "total_pages_built": 1088,
+    "total_repos_cloned": 15,
+    "sitemap_urls": 1343,
+    "sitemap_bytes": 216426,
+    "sitemap_ai_bytes": 333279
+  },
+  "red_lines_check": "clear — all 3 packs carry 6 red lines each, DEFONEOS hard-stop compliant (no kinetic, no personal surveillance, no false partnership claims)",
+  "bft_state": "33-agent council nominal — no vote required this tick (no SEAL issuance)",
+  "deployment": {
+    "provider": "cloudflare-pages",
+    "deployment_id": "03ba7a97",
+    "project": "csoai-site",
+    "branch_alias": "feat-sandbox-arena-seam.csoai-site.pages.dev",
+    "verify": "PASS 4/4 — 3 packs 200 + sitemap 1343 URLs via socket+SSL (DNS workaround: dig @1.1.1.1 + /tmp/cf-dns-preload.js + OAuth manual refresh)"
+  },
+  "next_actions": [
+    "Probe disk+sitemap BEFORE build: Scottish Housing Regulator ALREADY COVERED (defoneos-shr-* exists on disk) — queue replaced this tick. Next candidates: Police Investigations & Review Commissioner (PIRC), Scottish Courts and Tribunals Service, Scottish Fiscal Commission.",
+    "Continue committing tick-292 files by name; never git add -A.",
+    "Monitor DNS recovery; fall back to dig @1.1.1.1 + preload script if resolver still dead."
+  ]
+}

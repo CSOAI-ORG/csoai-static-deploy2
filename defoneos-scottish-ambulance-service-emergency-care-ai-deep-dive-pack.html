@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Scottish Ambulance Service — Emergency & Pre-Hospital Care AI Deep-Dive Governance Pack</title>
+<meta name="description" content="12-entry-point AI governance framework for the Scottish Ambulance Service (SAS) — the national NHS ambulance service for Scotland — covering emergency operations centres, air ambulance, patient transport, community first responders, trauma, resuscitation, telehealth, and CBRN resilience. DEFONEOS sovereign governance pack.">
+<link rel="canonical" href="https://csoai.org/defoneos-scottish-ambulance-service-emergency-care-ai-deep-dive-pack.html">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Space+Grotesk:wght@700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#050816;--panel:#0d1330;--gold:#d4af37;--sov:#6dd5ff;--accent:#f97316;--text:#e2e8f0;--muted:#94a3b8;--border:#1e2954;--danger:#ef4444;--green:#4ade80}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;line-height:1.6;min-height:100vh}
+.eu-banner{background:linear-gradient(135deg,#991b1b,#7f1d1d);padding:12px 24px;text-align:center;font-size:13px;border-bottom:2px solid #dc2626}
+.eu-banner a{color:#fca5a5}
+nav{display:flex;gap:24px;padding:16px 24px;background:var(--panel);border-bottom:1px solid var(--border);flex-wrap:wrap}
+nav a{color:var(--muted);text-decoration:none;font-size:14px}
+nav a:hover{color:var(--sov)}
+.container{max-width:1200px;margin:0 auto;padding:40px 24px}
+h1{font-family:'Space Grotesk',monospace;font-size:2.2rem;background:linear-gradient(135deg,var(--gold),var(--sov));-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:8px}
+.subtitle{color:var(--muted);font-size:1rem;margin-bottom:32px}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:40px}
+.stat-card{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:20px;text-align:center}
+.stat-num{font-family:'Space Grotesk',monospace;font-size:2rem;color:var(--sov)}
+.stat-label{color:var(--muted);font-size:13px;margin-top:4px}
+h2{font-family:'Space Grotesk',monospace;font-size:1.5rem;color:var(--sov);margin:40px 0 20px;padding-bottom:8px;border-bottom:1px solid var(--border)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:16px}
+.card{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:20px}
+.card .tag{display:inline-block;padding:4px 12px;background:rgba(109,213,255,0.1);color:var(--sov);border-radius:20px;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:1px;margin-bottom:12px}
+.card h3{font-family:'Space Grotesk',monospace;font-size:1.05rem;color:var(--text);margin-bottom:8px}
+.card p{color:var(--muted);font-size:14px;line-height:1.5}
+.mcp-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:16px}
+.mcp-card{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:20px}
+.mcp-card .mcp-name{font-family:'Space Grotesk',monospace;font-size:1rem;color:var(--gold);margin-bottom:4px}
+.mcp-card .mcp-fn{color:var(--muted);font-size:13px;margin-bottom:8px}
+.mcp-card .mcp-use{color:var(--text);font-size:13px}
+.redline{background:rgba(239,68,68,0.08);border:1px solid rgba(239,68,68,0.25);border-radius:12px;padding:28px}
+.redline h3{color:var(--danger);margin-bottom:8px}
+.redline ul{list-style:none;padding:0}
+.redline li{color:var(--muted);font-size:14px;padding:6px 0;border-bottom:1px solid rgba(239,68,68,0.1)}
+.redline li:last-child{border-bottom:none}
+.redline li strong{color:var(--danger)}
+.engagement{display:flex;gap:16px;flex-wrap:wrap}
+.step{flex:1 1 180px;background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:20px;text-align:center;min-width:160px}
+.step .num{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,var(--gold),var(--sov));display:flex;align-items:center;justify-content:center;font-family:'Space Grotesk',monospace;font-weight:700;font-size:1.2rem;margin:0 auto 12px;color:var(--bg)}
+.step h4{font-family:'Space Grotesk',monospace;font-size:1rem;color:var(--text);margin-bottom:6px}
+.step p{color:var(--muted);font-size:13px}
+.cta{display:flex;gap:16px;margin-top:40px;flex-wrap:wrap}
+.cta a{display:inline-block;padding:14px 28px;background:linear-gradient(135deg,var(--gold),#b8860b);color:var(--bg);text-decoration:none;border-radius:8px;font-weight:600;font-family:'Space Grotesk',monospace}
+.cta a.secondary{background:rgba(109,213,255,0.1);border:1px solid var(--sov);color:var(--sov)}
+footer{text-align:center;padding:40px 24px;color:var(--muted);font-size:13px;border-top:1px solid var(--border);margin-top:40px}
+footer p{margin:4px 0}
+</style>
+</head>
+<body>
+<div class="eu-banner">⚖️ DEFONEOS sovereign AI governance framework. Not a certification. <a href="/governance-master.html">Governance Master Index →</a></div>
+<nav>
+<a href="/">🏠 Home</a>
+<a href="/defoneos.html">DEFONEOS</a>
+<a href="/governance-master.html">Governance</a>
+<a href="/compliance.html">Compliance</a>
+<a href="/sitemap.xml">Sitemap</a>
+</nav>
+<div class="container">
+<h1>🚑 Scottish Ambulance Service — Emergency & Pre-Hospital Care AI Deep-Dive Governance Pack</h1>
+<p class="subtitle">12 SAS entry points · 8 transformation priorities · 6 DEFONEOS MCPs · NHS (Scotland) Act 1978 + Civil Contingencies Act 2004 backbone</p>
+
+<div class="stats">
+<div class="stat-card"><div class="stat-num">12</div><div class="stat-label">Entry Points</div></div>
+<div class="stat-card"><div class="stat-num">8</div><div class="stat-label">Priorities</div></div>
+<div class="stat-card"><div class="stat-num">6</div><div class="stat-label">MCP Servers</div></div>
+<div class="stat-card"><div class="stat-num">1.8M</div><div class="stat-label">Calls / Year</div></div>
+</div>
+
+<p style="font-size:15px;color:var(--muted);margin-bottom:24px">The Scottish Ambulance Service (SAS) is the national NHS ambulance service for Scotland — a Special Health Board handling over 1.8 million calls per year through three Emergency Operations Centres (EOCs) in Inverness, Cardonald and South Queensferry. SAS operates Scotland's Air Ambulance (fixed-wing and rotary), a fleet of over 1,400 vehicles, and Scotland's only dedicated Trauma Desks. This pack provides a sovereign AI governance framework for every SAS operational domain.</p>
+
+<h2>📋 12 Entry Points</h2>
+<div class="grid"><div class="card">
+<span class="tag">EOC</span>
+<h3>Emergency Operations Centres (3 EOCs)</h3>
+<p>Inverness, Cardonald, South Queensferry — triaging all NHS 999 calls and coordinating emergency response — AI governance for call prioritisation, dispatch decision support and resource allocation analytics.</p>
+</div><div class="card">
+<span class="tag">AIR</span>
+<h3>Scottish Air Ambulance Service</h3>
+<p>Fixed-wing aircraft (King Air B200C) and rotary-wing (EC135/EC145 helicopters) — AI governance for flight tasking, weather-risk assessment, and inter-hospital transfer coordination across Scotland's islands and remote mainland.</p>
+</div><div class="card">
+<span class="tag">PTS</span>
+<h3>Patient Transport Service (PTS)</h3>
+<p>Non-emergency transport for over 1 million patient journeys annually — AI governance for scheduling optimisation, eligibility assessment, and fleet deployment across all 14 territorial health boards.</p>
+</div><div class="card">
+<span class="tag">CFR</span>
+<h3>Community First Responders & Resilience</h3>
+<p>Volunteer-led first response in remote and rural communities — AI governance for deployment coordination, training compliance, and defibrillator network management linked to Save a Life for Scotland.</p>
+</div><div class="card">
+<span class="tag">TRAUMA</span>
+<h3>Trauma & Major Incident Response</h3>
+<p>Scotland's Trauma Network integration — SAS Trauma Desks coordinate pre-hospital trauma care across four major trauma centres — AI governance for trauma bypass decision support and mass-casualty triage.</p>
+</div><div class="card">
+<span class="tag">RESUS</span>
+<h3>Clinical Response & Resuscitation Strategy</h3>
+<p>Save a Life for Scotland — out-of-hospital cardiac arrest (OHCA) strategy — AI governance for bystander CPR deployment analytics, defibrillator location optimisation, and resuscitation outcome measurement.</p>
+</div><div class="card">
+<span class="tag">OOH</span>
+<h3>Out-of-Hours & Urgent Care Integration</h3>
+<p>NHS 24 integration, urgent care pathways, and Clinical Assessment Service partnerships — AI governance for call-stream coordination, clinical-decision support and referral routing.</p>
+</div><div class="card">
+<span class="tag">TELE</span>
+<h3>Telehealth & Clinical Advice (NHS 24 Interface)</h3>
+<p>Clinical advisors, advanced practitioners and the Scottish Centre for Telehealth — AI governance for remote clinical assessment tools, advice algorithms and call-back prioritisation.</p>
+</div><div class="card">
+<span class="tag">FLEET</span>
+<h3>Fleet, Estates & Vehicle Operations</h3>
+<p>1,400+ vehicle fleet across 150+ stations — AI governance for vehicle maintenance scheduling, fuel/emissions analytics, EV transition planning, and station deployment optimisation.</p>
+</div><div class="card">
+<span class="tag">WELLBEING</span>
+<h3>Workforce Wellbeing & Mental Health</h3>
+<p>Staff resilience, psychological support and TRiM (Trauma Risk Management) — AI governance for wellbeing analytics, crisis-support deployment and shift-welfare optimisation without intrusive surveillance.</p>
+</div><div class="card">
+<span class="tag">DATA</span>
+<h3>Data, Analytics & Clinical Audit</h3>
+<p>Clinical outcome measurement, call-cycle analytics, and AMPDS compliance auditing — AI governance for performance dashboards, trend detection and statutory reporting to Scottish Government.</p>
+</div><div class="card">
+<span class="tag">RESILIENCE</span>
+<h3>Counter-Terrorism, CBRN & Major Events Resilience</h3>
+<p>Special Operations Response Teams (SORT), multi-agency CBRN response, and major event medical planning (Commonwealth Games 2026, COP) — AI governance for resource modelling, chemical-agent detection integration and inter-agency coordination.</p>
+</div></div>
+
+<h2>🎯 8 Transformation Priorities</h2>
+<div class="grid"><div class="card">
+<span class="tag">P1</span>
+<h3>Call-to-Dispatch Speed & Accuracy Optimisation</h3>
+<p>AI-Augmented triage at 3 EOCs — reducing call-to-dispatch intervals while maintaining AMPDS clinical safety standards and human clinical oversight of all prioritisation decisions.</p>
+</div><div class="card">
+<span class="tag">P2</span>
+<h3>Clinical Decision Support for Pre-Hospital Care</h3>
+<p>AI governance for paramedic clinical decision support — protocol adherence, drug-interaction checking, and real-time major trauma centre routing with human clinical override.</p>
+</div><div class="card">
+<span class="tag">P3</span>
+<h3>Fleet & Resource Deployment Intelligence</h3>
+<p>Sovereign AI for ambulance deployment modelling — demand forecasting, dynamic redeployment, and rural coverage optimisation while maintaining safety-critical human dispatch authority.</p>
+</div><div class="card">
+<span class="tag">P4</span>
+<h3>Workforce Resilience, Rostering & Wellbeing</h3>
+<p>AI-Aware rostering for paramedic shift patterns — fatigue-risk analytics, skill-mix optimisation, and mental-health support allocation with DPA 2018 special-category data protection.</p>
+</div><div class="card">
+<span class="tag">P5</span>
+<h3>Community & Volunteer First Response Network</h3>
+<p>AI governance for community responder coordination — real-time availability mapping, defibrillator location optimisation, and training-compliance tracking for the Save a Life for Scotland programme.</p>
+</div><div class="card">
+<span class="tag">P6</span>
+<h3>Multi-Agency Interoperability & Data Sharing</h3>
+<p>Sovereign data exchange with Police Scotland, Scottish Fire and Rescue, NHS 24, and territorial boards — BFT-attested governance for real-time multi-agency incident coordination.</p>
+</div><div class="card">
+<span class="tag">P7</span>
+<h3>Data-Driven Clinical Audit & Quality Improvement</h3>
+<p>AI governance for clinical outcome analytics — OHCA survival rates, stroke time-to-CT, STEMI diagnosis-to-treatment intervals, and continuous quality improvement cycles.</p>
+</div><div class="card">
+<span class="tag">P8</span>
+<h3>Fleet Sustainability & Carbon Reduction</h3>
+<p>AI governance for EV ambulance transition — charging infrastructure modelling, range-confidence analytics, and carbon-footprint tracking aligned to NHSScotland net zero 2040 target.</p>
+</div></div>
+
+<h2>🔧 6 MCP Servers</h2>
+<div class="mcp-grid"><div class="mcp-card">
+<div class="mcp-name">bft-council-probe</div>
+<div class="mcp-fn">33-agent Byzantine Fault Tolerant governance council</div>
+<div class="mcp-use">Governance attestation for dispatch decisions and clinical outcome analytics — Ed25519 signed, 23/33 quorum for all safety-critical governance claims.</div>
+</div><div class="mcp-card">
+<div class="mcp-name">sovereign-keystore</div>
+<div class="mcp-fn">Sovereign cryptographic key management (HSM-backed)</div>
+<div class="mcp-use">Key management for patient data, dispatch records, and clinical audit integrity — keys never leave UK-sovereign enclave.</div>
+</div><div class="mcp-card">
+<div class="mcp-name">sentinel-hub-mcp</div>
+<div class="mcp-fn">ESA Copernicus satellite imagery (sovereign caching)</div>
+<div class="mcp-use">Geospatial analytics for rural response optimisation, weather-risk assessment for air ambulance tasking, and major incident environmental monitoring — UK-resident satellite data.</div>
+</div><div class="mcp-card">
+<div class="mcp-name">data-gov-uk-mcp</div>
+<div class="mcp-fn">UK government open data portal (sovereign)</div>
+<div class="mcp-use">Population density, transport network, and health deprivation data for demand modelling and station deployment optimisation — no data leaves UK.</div>
+</div><div class="mcp-card">
+<div class="mcp-name">companies-house-mcp</div>
+<div class="mcp-fn">Companies House registry (UK registry sovereignty)</div>
+<div class="mcp-use">Supplier verification for fleet procurement, medical equipment contracts, and private ambulance service due diligence — UK corporate data only.</div>
+</div><div class="mcp-card">
+<div class="mcp-name">gdelt-news-mcp</div>
+<div class="mcp-fn">Global news event database (sovereign caching)</div>
+<div class="mcp-use">Emergency services trend intelligence — global ambulance innovation, CBRN incident pattern monitoring, major event medical planning — UK-resident caching.</div>
+</div></div>
+
+<h2>🚫 6 Non-Negotiable Red Lines</h2>
+<div class="redline">
+<ul>
+<li><strong>No AI-sole clinical triage or dispatch decisions.</strong> All 999 call prioritisation, resource dispatch, and clinical decision support is human-overridden. AI assists — it never decides patient priority. Emergency Workers (Scotland) Act 2005 duty-of-care.</li>
+<li><strong>No AI overrides of safety-critical clinical protocols.</strong> AMPDS, JRCALC, and major trauma triage protocols remain human-executed — AI decision support is advisory and always auditable.</li>
+<li><strong>No patient-identifiable data leaves UK jurisdiction.</strong> All patient data — 999 call recordings, clinical records, dispatch logs — remains UK-resident. DPA 2018 Part 2 + UK GDPR enforced by sovereign-keystore geographic binding.</li>
+<li><strong>No AI-based mental health call routing without clinical review.</strong> Mental health crises, suicide risk, and psychological-distress calls are routed to human clinical advisors — AI tools may suggest but never decide.</li>
+<li><strong>No AI surveillance of staff performance or wellbeing.</strong> Workforce analytics assess population-level trends — no individual staff tracking, no automated performance scoring, no psychometric inference without explicit consent.</li>
+<li><strong>No AI-sole emergency vehicle routing in live operations.</strong> Dynamic deployment suggestions are human-validated — no automated vehicle redirection without EOC dispatcher confirmation.</li>
+</ul>
+</div>
+
+<h2>⚡ 5-Step Engagement Model</h2>
+<div class="engagement"><div class="step">
+<div class="num">1</div>
+<h4>Discovery</h4>
+<p>Map SAS operational domains, EOC call flows, and digital systems against the 12-entry-point framework.</p>
+</div><div class="step">
+<div class="num">2</div>
+<h4>Governance Design</h4>
+<p>Design AI governance architecture, safety-critical red-line enforcement, and BFT attestation aligned to NHS Scotland emergency care strategy.</p>
+</div><div class="step">
+<div class="num">3</div>
+<h4>Pilot</h4>
+<p>Deploy 2-3 MCP servers in sandbox with SAS operational data; measure governance outcomes and clinical safety metrics.</p>
+</div><div class="step">
+<div class="num">4</div>
+<h4>Scale</h4>
+<p>Expand to full 6-MCP stack with service-wide deployment, EOC integration, and paramedic governance training.</p>
+</div><div class="step">
+<div class="num">5</div>
+<h4>Assure</h4>
+<p>Continuous monitoring, 33-agent BFT council verification, DEFONEOS-SEAL credential issuance for emergency services AI governance.</p>
+</div></div>
+
+<div class="cta">
+<a href="/governance-master.html">📋 Request OWEM RFQ →</a>
+<a href="/article-50.html" class="secondary">⚖️ Article 50 Passport →</a>
+</div>
+
+<p style="font-size:12px;color:var(--muted);margin-top:24px">Legislation backbone: NHS (Scotland) Act 1978, Emergency Workers (Scotland) Act 2005, Civil Contingencies Act 2004, DPA 2018 + UK GDPR, FOI (Scotland) Act 2002, Equality Act 2010, Health and Care (Staffing) (Scotland) Act 2019</p>
+<p style="font-size:12px;color:var(--muted);margin-top:8px">SIGIL: defoneos-tick292-defoneos-scottish-ambulance-service-e-9a38d56b1c4f72e1</p>
+</div>
+<footer>
+<p>CSOAI Ltd (UK 16939677) · csoai.org · compliance@csoai.org</p>
+<p>DEFONEOS is a UK-sovereign open-source AI governance framework built on the meok substrate. UK-sovereign. AUKUS-compatible. Audit-grade.</p>
+<p style="margin-top:8px;font-size:11px">© 2026 CSOAI Ltd. All trademarks acknowledged. This document is a governance-design artefact — not a compliance certification.</p>
+</footer>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": "Scottish Ambulance Service — Emergency & Pre-Hospital Care AI Deep-Dive Governance Pack",
+  "description": "12-entry-point AI governance framework for the Scottish Ambulance Service (SAS) — the national NHS ambulance service for Scotland — covering emergency operations centres, air ambulance, patient transport, community first responders, trauma, resuscitation, telehealth, fleet, workforce wellbeing, data analytics, and CBRN resilience.",
+  "url": "https://csoai.org/defoneos-scottish-ambulance-service-emergency-care-ai-deep-dive-pack.html",
+  "about": {
+    "@type": "GovernmentService",
+    "name": "Scottish Ambulance Service",
+    "url": "https://www.scottishambulance.com/"
+  },
+  "provider": {
+    "@type": "Organization",
+    "name": "CSOAI Ltd",
+    "legalName": "CSOAI Ltd"
+  },
+  "datePublished": "2026-08-15"
+}
+</script>
+</body>
+</html>

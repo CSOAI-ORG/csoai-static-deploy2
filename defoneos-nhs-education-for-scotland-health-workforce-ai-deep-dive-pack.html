@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>NHS Education for Scotland — Health Workforce Development & Digital Learning AI Deep-Dive Governance Pack</title>
+<meta name="description" content="12-entry-point AI governance framework for NHS Education for Scotland (NES) — the national body for NHS Scotland education, training, and workforce development — covering medical training, nursing & midwifery, pharmacy, digital learning (Turas), remote & rural healthcare, and workforce intelligence. DEFONEOS sovereign governance pack.">
+<link rel="canonical" href="https://csoai.org/defoneos-nhs-education-for-scotland-health-workforce-ai-deep-dive-pack.html">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Space+Grotesk:wght@700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#050816;--panel:#0d1330;--gold:#d4af37;--sov:#6dd5ff;--accent:#f97316;--text:#e2e8f0;--muted:#94a3b8;--border:#1e2954;--danger:#ef4444;--green:#4ade80}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;line-height:1.6;min-height:100vh}
+.eu-banner{background:linear-gradient(135deg,#991b1b,#7f1d1d);padding:12px 24px;text-align:center;font-size:13px;border-bottom:2px solid #dc2626}
+.eu-banner a{color:#fca5a5}
+nav{display:flex;gap:24px;padding:16px 24px;background:var(--panel);border-bottom:1px solid var(--border);flex-wrap:wrap}
+nav a{color:var(--muted);text-decoration:none;font-size:14px}
+nav a:hover{color:var(--sov)}
+.container{max-width:1200px;margin:0 auto;padding:40px 24px}
+h1{font-family:'Space Grotesk',monospace;font-size:2.2rem;background:linear-gradient(135deg,var(--gold),var(--sov));-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:8px}
+.subtitle{color:var(--muted);font-size:1rem;margin-bottom:32px}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:40px}
+.stat-card{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:20px;text-align:center}
+.stat-num{font-family:'Space Grotesk',monospace;font-size:2rem;color:var(--sov)}
+.stat-label{color:var(--muted);font-size:13px;margin-top:4px}
+h2{font-family:'Space Grotesk',monospace;font-size:1.5rem;color:var(--sov);margin:40px 0 20px;padding-bottom:8px;border-bottom:1px solid var(--border)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:16px}
+.card{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:20px}
+.card .tag{display:inline-block;padding:4px 12px;background:rgba(109,213,255,0.1);color:var(--sov);border-radius:20px;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:1px;margin-bottom:12px}
+.card h3{font-family:'Space Grotesk',monospace;font-size:1.05rem;color:var(--text);margin-bottom:8px}
+.card p{color:var(--muted);font-size:14px;line-height:1.5}
+.mcp-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:16px}
+.mcp-card{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:20px}
+.mcp-card .mcp-name{font-family:'Space Grotesk',monospace;font-size:1rem;color:var(--gold);margin-bottom:4px}
+.mcp-card .mcp-fn{color:var(--muted);font-size:13px;margin-bottom:8px}
+.mcp-card .mcp-use{color:var(--text);font-size:13px}
+.redline{background:rgba(239,68,68,0.08);border:1px solid rgba(239,68,68,0.25);border-radius:12px;padding:28px}
+.redline h3{color:var(--danger);margin-bottom:8px}
+.redline ul{list-style:none;padding:0}
+.redline li{color:var(--muted);font-size:14px;padding:6px 0;border-bottom:1px solid rgba(239,68,68,0.1)}
+.redline li:last-child{border-bottom:none}
+.redline li strong{color:var(--danger)}
+.engagement{display:flex;gap:16px;flex-wrap:wrap}
+.step{flex:1 1 180px;background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:20px;text-align:center;min-width:160px}
+.step .num{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,var(--gold),var(--sov));display:flex;align-items:center;justify-content:center;font-family:'Space Grotesk',monospace;font-weight:700;font-size:1.2rem;margin:0 auto 12px;color:var(--bg)}
+.step h4{font-family:'Space Grotesk',monospace;font-size:1rem;color:var(--text);margin-bottom:6px}
+.step p{color:var(--muted);font-size:13px}
+.cta{display:flex;gap:16px;margin-top:40px;flex-wrap:wrap}
+.cta a{display:inline-block;padding:14px 28px;background:linear-gradient(135deg,var(--gold),#b8860b);color:var(--bg);text-decoration:none;border-radius:8px;font-weight:600;font-family:'Space Grotesk',monospace}
+.cta a.secondary{background:rgba(109,213,255,0.1);border:1px solid var(--sov);color:var(--sov)}
+footer{text-align:center;padding:40px 24px;color:var(--muted);font-size:13px;border-top:1px solid var(--border);margin-top:40px}
+footer p{margin:4px 0}
+</style>
+</head>
+<body>
+<div class="eu-banner">⚖️ DEFONEOS sovereign AI governance framework. Not a certification. <a href="/governance-master.html">Governance Master Index →</a></div>
+<nav>
+<a href="/">🏠 Home</a>
+<a href="/defoneos.html">DEFONEOS</a>
+<a href="/governance-master.html">Governance</a>
+<a href="/compliance.html">Compliance</a>
+<a href="/sitemap.xml">Sitemap</a>
+</nav>
+<div class="container">
+<h1>🏥 NHS Education for Scotland — Health Workforce Development & Digital Learning AI Deep-Dive Governance Pack</h1>
+<p class="subtitle">12 NES entry points · 8 transformation priorities · 6 DEFONEOS MCPs · NHS (Scotland) Act 1978 + DPA 2018 backbone</p>
+
+<div class="stats">
+<div class="stat-card"><div class="stat-num">12</div><div class="stat-label">Entry Points</div></div>
+<div class="stat-card"><div class="stat-num">8</div><div class="stat-label">Priorities</div></div>
+<div class="stat-card"><div class="stat-num">6</div><div class="stat-label">MCP Servers</div></div>
+<div class="stat-card"><div class="stat-num">50K+</div><div class="stat-label">NHSScotland Staff</div></div>
+</div>
+
+<p style="font-size:15px;color:var(--muted);margin-bottom:24px">NHS Education for Scotland (NES) is the national education and training body for NHSScotland — a Special Health Board responsible for developing and delivering education, training, and workforce development for over 50,000 NHS staff across all professions. NES operates the Turas digital platform, Scotland's single digital gateway for health and care learning. This pack provides a sovereign AI governance framework for every NES training domain.</p>
+
+<h2>📋 12 Entry Points</h2>
+<div class="grid"><div class="card">
+<span class="tag">MEDICAL</span>
+<h3>Medical Training & Postgraduate Deaneries</h3>
+<p>Scotland Deanery — overseeing foundation, specialty and GP training for doctors — AI governance for training assessment, portfolio review, ARCP decision support and remediation tracking.</p>
+</div><div class="card">
+<span class="tag">NURSING</span>
+<h3>Nursing & Midwifery Workforce Development</h3>
+<p>Pre-registration and post-registration nursing and midwifery education, CPD, and advanced practice — AI governance for competency tracking, learning pathway recommendations, and clinical skills verification.</p>
+</div><div class="card">
+<span class="tag">PHARMACY</span>
+<h3>Pharmacy Education & Training</h3>
+<p>Foundation pharmacist training, independent prescribing, and pharmacy technician development — AI governance for programme delivery, pre-registration assessment, and clinical governance assurance.</p>
+</div><div class="card">
+<span class="tag">DENTAL</span>
+<h3>Dental Education & Vocational Training</h3>
+<p>Dental foundation training, dental core training, and specialist training pathways — AI governance for clinical competency assessment, remediation planning, and training-record integrity.</p>
+</div><div class="card">
+<span class="tag">AHP</span>
+<h3>Allied Health Professions (AHP) Education</h3>
+<p>Physiotherapy, occupational therapy, radiography, dietetics, podiatry, speech therapy and paramedic CPD — AI governance for multi-profession competency frameworks and skill-mix analytics.</p>
+</div><div class="card">
+<span class="tag">PSYCHOLOGY</span>
+<h3>Psychology Workforce Development</h3>
+<p>Clinical psychology, applied psychology, and psychological therapies training — AI governance for supervision tracking, clinical-competence assurance and ethical practice monitoring.</p>
+</div><div class="card">
+<span class="tag">SCIENCE</span>
+<h3>Healthcare Science Education</h3>
+<p>Life sciences, physiological sciences, physical sciences and bioinformatics training — AI governance for technical competency verification, accreditation tracking, and proficiency standards.</p>
+</div><div class="card">
+<span class="tag">DIGITAL</span>
+<h3>Digital & Data (Turas Platform)</h3>
+<p>NES Digital — the Turas platform for learning, appraisal, workforce planning and analytics serving 200K+ users — AI governance for learning analytics, recommendation algorithms and workforce intelligence.</p>
+</div><div class="card">
+<span class="tag">LEADERSHIP</span>
+<h3>Leadership, OD & Management Development</h3>
+<p>Leadership programmes from foundation to executive, organisational development and coaching — AI governance for leadership competency assessment and development-needs analytics.</p>
+</div><div class="card">
+<span class="tag">PUBLIC-HEALTH</span>
+<h3>Public Health & Health Protection Workforce</h3>
+<p>Public health specialty training, health protection workforce development, and community health education — AI governance for epidemiological training, outbreak response readiness and population health education.</p>
+</div><div class="card">
+<span class="tag">REMOTE</span>
+<h3>Remote & Rural Healthcare Education</h3>
+<p>Scottish Rural Medicine Collaborative and remote practice training — AI governance for distributed learning delivery, connectivity-adaptive platforms, and rural retention analytics.</p>
+</div><div class="card">
+<span class="tag">WORKFORCE</span>
+<h3>Workforce Intelligence & Planning</h3>
+<p>National workforce modelling, supply-and-demand analytics, and succession planning — AI governance for predictive workforce analytics, demographic modelling and skills-gap forecasting.</p>
+</div></div>
+
+<h2>🎯 8 Transformation Priorities</h2>
+<div class="grid"><div class="card">
+<span class="tag">P1</span>
+<h3>National Workforce Planning Optimisation</h3>
+<p>AI-Augmented workforce supply-demand modelling across 14 territorial health boards — predictive analytics for specialty shortages, demographic shifts, and service redesign.</p>
+</div><div class="card">
+<span class="tag">P2</span>
+<h3>Digital Learning & Simulation Platform Modernisation</h3>
+<p>Modernise Turas with AI governance — adaptive learning pathways, virtual simulation, competency-based progression, and outcome measurement while maintaining human educational oversight.</p>
+</div><div class="card">
+<span class="tag">P3</span>
+<h3>Training Quality & Outcome Assurance</h3>
+<p>AI governance for training quality measurement — consistent assessment standards, GMC/NMC/HCPC regulator alignment, and remediation-outcome tracking across all professions.</p>
+</div><div class="card">
+<span class="tag">P4</span>
+<h3>Recruitment, Retention & Widening Access</h3>
+<p>AI-informed recruitment analytics and retention risk modelling — diversity monitoring, widening access evaluation, and workforce stability analytics without algorithmic discrimination.</p>
+</div><div class="card">
+<span class="tag">P5</span>
+<h3>Interprofessional & Integrated Care Training</h3>
+<p>AI governance for multi-profession learning pathways — joint training across primary, secondary and social care, integrated care competencies and shared decision-making frameworks.</p>
+</div><div class="card">
+<span class="tag">P6</span>
+<h3>Workforce Wellbeing & Mental Health</h3>
+<p>AI-Aware wellbeing analytics — burnout risk detection, support resource allocation, and psychological safety monitoring without intrusive surveillance or special-category data exposure.</p>
+</div><div class="card">
+<span class="tag">P7</span>
+<h3>Data-Driven Workforce Intelligence Platform</h3>
+<p>Sovereign AI analytics for workforce data — skills taxonomy, training ROI analysis, career pathway modelling, and workforce foresight — with UK-data-residency and BFT-attested governance.</p>
+</div><div class="card">
+<span class="tag">P8</span>
+<h3>Sustainability & Net Zero Workforce Strategy</h3>
+<p>AI governance for green-skills training, sustainable healthcare education, carbon-literacy programmes and low-carbon learning delivery aligned to NHSScotland net zero targets.</p>
+</div></div>
+
+<h2>🔧 6 MCP Servers</h2>
+<div class="mcp-grid"><div class="mcp-card">
+<div class="mcp-name">bft-council-probe</div>
+<div class="mcp-fn">33-agent Byzantine Fault Tolerant governance council</div>
+<div class="mcp-use">Governance attestation for workforce analytics decisions — Ed25519 signed, 23/33 quorum for all training-assessment governance claims.</div>
+</div><div class="mcp-card">
+<div class="mcp-name">sovereign-keystore</div>
+<div class="mcp-fn">Sovereign cryptographic key management (HSM-backed)</div>
+<div class="mcp-use">Key management for trainee data protection, assessment integrity and credential issuance — keys never leave UK-sovereign enclave.</div>
+</div><div class="mcp-card">
+<div class="mcp-name">sentinel-hub-mcp</div>
+<div class="mcp-fn">ESA Copernicus satellite imagery (sovereign caching)</div>
+<div class="mcp-use">Remote & rural training delivery analytics — population distribution mapping, connectivity assessment, and healthcare access modelling with UK-resident satellite data.</div>
+</div><div class="mcp-card">
+<div class="mcp-name">data-gov-uk-mcp</div>
+<div class="mcp-fn">UK government open data portal (sovereign)</div>
+<div class="mcp-use">Wider determinants of health — deprivation indices, education statistics, labour market data for workforce planning — no data leaves UK.</div>
+</div><div class="mcp-card">
+<div class="mcp-name">companies-house-mcp</div>
+<div class="mcp-fn">Companies House registry (UK registry sovereignty)</div>
+<div class="mcp-use">Supplier verification for training contracts, procurement due diligence, and education provider registration — UK corporate data only.</div>
+</div><div class="mcp-card">
+<div class="mcp-name">gdelt-news-mcp</div>
+<div class="mcp-fn">Global news event database (sovereign caching)</div>
+<div class="mcp-use">Healthcare workforce trend intelligence — global health workforce migration patterns, training innovation monitoring — UK-resident caching.</div>
+</div></div>
+
+<h2>🚫 6 Non-Negotiable Red Lines</h2>
+<div class="redline">
+<ul>
+<li><strong>No AI-sole training assessment decisions.</strong> All ARCP outcomes, competency pass/fail determinations and fitness-to-practise recommendations remain human-made — AI provides decision support only.</li>
+<li><strong>No automated processing of trainee special-category health data.</strong> Under DPA 2018 Part 2, trainee health, disability, and occupational-health data is processed only with explicit consent and human oversight — never by AI alone.</li>
+<li><strong>No AI discrimination in recruitment or training access.</strong> All AI-informed recruitment, selection, and widening-access analytics are audited for bias under Equality Act 2010 (protected characteristics: age, disability, sex, race, religion, sexual orientation, gender reassignment, marriage, pregnancy).</li>
+<li><strong>No AI credential issuance without human ratification.</strong> Professional qualifications, CPD certificates, and training completion records are human-signed — AI tools assist verification but never issue credentials independently.</li>
+<li><strong>No trainee-identifiable data leaves UK jurisdiction.</strong> Turas data, trainee records and workforce analytics data remain UK-resident — data residency enforced by sovereign-keystore geographic binding.</li>
+<li><strong>No AI surveillance of staff wellbeing or performance.</strong> Workforce analytics assess population trends only — no individual tracking, no automated performance scoring, no psychometric inference without explicit opt-in.</li>
+</ul>
+</div>
+
+<h2>⚡ 5-Step Engagement Model</h2>
+<div class="engagement"><div class="step">
+<div class="num">1</div>
+<h4>Discovery</h4>
+<p>Map NES training domains, Turas data flows, and governance gaps against the 12-entry-point framework.</p>
+</div><div class="step">
+<div class="num">2</div>
+<h4>Governance Design</h4>
+<p>Design AI governance architecture, red-line enforcement, and BFT attestation aligned to NHS Scotland digital strategy.</p>
+</div><div class="step">
+<div class="num">3</div>
+<h4>Pilot</h4>
+<p>Deploy 2-3 MCP servers in sandbox with NES training data; measure governance outcomes against baseline.</p>
+</div><div class="step">
+<div class="num">4</div>
+<h4>Scale</h4>
+<p>Expand to the full 6-MCP stack with board-wide deployment, Turas integration, and training for NES staff.</p>
+</div><div class="step">
+<div class="num">5</div>
+<h4>Assure</h4>
+<p>Continuous monitoring, 33-agent BFT council verification, DEFONEOS-SEAL credential issuance for workforce AI governance.</p>
+</div></div>
+
+<div class="cta">
+<a href="/governance-master.html">📋 Request OWEM RFQ →</a>
+<a href="/article-50.html" class="secondary">⚖️ Article 50 Passport →</a>
+</div>
+
+<p style="font-size:12px;color:var(--muted);margin-top:24px">Legislation backbone: NHS (Scotland) Act 1978, Public Services Reform (Scotland) Act 2010, DPA 2018 + UK GDPR, Equality Act 2010, FOI (Scotland) Act 2002, Patient Rights (Scotland) Act 2011, Health and Care (Staffing) (Scotland) Act 2019</p>
+<p style="font-size:12px;color:var(--muted);margin-top:8px">SIGIL: defoneos-tick292-defoneos-nhs-education-for-scotland-health-62bf14a17d8e3fa2</p>
+</div>
+<footer>
+<p>CSOAI Ltd (UK 16939677) · csoai.org · compliance@csoai.org</p>
+<p>DEFONEOS is a UK-sovereign open-source AI governance framework built on the meok substrate. UK-sovereign. AUKUS-compatible. Audit-grade.</p>
+<p style="margin-top:8px;font-size:11px">© 2026 CSOAI Ltd. All trademarks acknowledged. This document is a governance-design artefact — not a compliance certification.</p>
+</footer>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": "NHS Education for Scotland \u2014 Health Workforce Development & Digital Learning AI Deep-Dive Governance Pack",
+  "description": "12-entry-point AI governance framework for NHS Education for Scotland (NES) \u2014 the national body for NHS Scotland education, training, and workforce development \u2014 covering medical training, nursing & midwifery, pharmacy, dental, AHP, psychology, healthcare science, digital learning (Turas), leadership, public health, remote & rural healthcare, and workforce intelligence.",
+  "url": "https://csoai.org/defoneos-nhs-education-for-scotland-health-workforce-ai-deep-dive-pack.html",
+  "about": {
+    "@type": "GovernmentService",
+    "name": "NHS Education for Scotland",
+    "url": "https://www.nes.scot.nhs.uk/"
+  },
+  "provider": {
+    "@type": "Organization",
+    "name": "CSOAI Ltd",
+    "legalName": "CSOAI Ltd"
+  },
+  "datePublished": "2026-08-15"
+}
+</script>
+</body>
+</html>
