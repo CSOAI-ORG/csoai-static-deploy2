@@ -26,7 +26,7 @@ from pathlib import Path
 REPO = Path("/workspace/csoai-static-deploy2")
 sys.path.insert(0, str(REPO / "SOVOS" / "packages" / "sovos-arena" / "src"))
 
-# Canonical 13 GSPC axes (incl. affect). SOURCE OF TRUTH = board_v2.py BANKS.
+# Canonical 14 measured axes (13 GSPC + jail). SOURCE OF TRUTH = board_v2.py BANKS.
 # Keep this list in sync with BANKS; claim_linter enforces "13 incl affect".
 AXES = ["gov", "agi", "prv", "asi", "mcp", "oss", "mach", "care",
         "xr", "det", "art5", "swarm", "affect"]

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Cross-lab arena — East-vs-West + sovereign fleet through the 13-axis harness.
+"""Cross-lab arena — East-vs-West + sovereign fleet through the 14-axis harness (13 GSPC + jail).
 
 Uses the OpenRouter key (stored pod-side, never git) to add frontier citizens
 (Nemotron/West, Qwen/East, DeepSeek, Claude) to the governed arena. Budget-capped

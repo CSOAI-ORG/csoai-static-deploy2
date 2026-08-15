@@ -11,7 +11,7 @@ Expression of Interest — AI Tester Accreditation Programme (AI TAP)
 Dear AI Verify Foundation,
 
 CSOAI LTD (UK 16939677) is an independent AI measurement body. We operate the
-GSPC (Governance, Safety, Privacy, Care) measurement suite — a 13-axis signed
+GSPC (Governance, Safety, Privacy, Care) measurement suite — a 14-axis signed (13 GSPC + jail)
 benchmark that produces cryptographically attestable measurement cards for AI
 systems.
 
@@ -20,7 +20,7 @@ announced at ISE 2026. Our signed measurement card format (Ed25519 over SCITT
 RFC 9943 transparency) maps directly onto both the technical-testing and
 process-check dimensions of the AI Verify Testing Framework:
 
-- Technical tests: our 13 GSPC axes cover fairness, robustness, transparency,
+- Technical tests: our 14 measured axes (13 GSPC + jail) cover fairness, robustness, transparency,
   safety, and governance — corresponding to the technical toolboxes in the
   AI Verify Toolkit.
 - Process checks: we emit OSCAL Assessment Results (NIST SAR format) that

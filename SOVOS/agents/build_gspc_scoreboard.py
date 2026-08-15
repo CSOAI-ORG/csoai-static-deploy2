@@ -71,7 +71,7 @@ page = f"""<!DOCTYPE html>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Council Scoreboard — 13 axes × {len(models)} models, measured &amp; signed</title>
-<meta name="description" content="Fused 13-axis GSPC scoreboard from measured board data. Every cell shows n, accuracy and 95% confidence interval. A cell shows a number only if quotable (usable n≥30).">
+<meta name="description" content="Fused 14-axis GSPC scoreboard from measured board data (13 GSPC + jail). Every cell shows n, accuracy and 95% confidence interval. A cell shows a number only if quotable (usable n≥30).">
 <style>
 :root {{ --accent:#5a9; --bg:#0d0f12; --card:#15181d; --line:#232830; }}
 * {{ box-sizing:border-box; }}

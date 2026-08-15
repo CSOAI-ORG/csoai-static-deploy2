@@ -3,7 +3,7 @@
 jail, via OpenRouter, as one signed record per duel.
 
 WHAT THIS IS
-The 13 GSPC axes are measured by asking a model to answer a governance probe
+The 13 GSPC axes + jail axis are measured by asking a model to answer a governance probe
 and scoring the deterministic verdict. Axis 14 (gspc-jail / ASI05 / the seam)
 is qualitatively different: it measures whether a model *acting as an agent*
 emits code that stays inside the rails or attempts to escape the sandbox we
