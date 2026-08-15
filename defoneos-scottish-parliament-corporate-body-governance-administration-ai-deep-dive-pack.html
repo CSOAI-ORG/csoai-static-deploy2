@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Scottish Parliament Corporate Body — Parliamentary Governance and Administration AI Deep-Dive Governance Pack</title>
+<meta name="description" content="12-entry-point AI governance framework for the Scottish Parliament Corporate Body (SPCB) — the body responsible for the Scottish Parliament's staff, property, s">
+<link rel="canonical" href="https://csoai.org/defoneos-scottish-parliament-corporate-body-governance-administration-ai-deep-dive-pack.html">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Space+Grotesk:wght@700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#050816;--panel:#0d1330;--gold:#d4af37;--sov:#6dd5ff;--accent:#f97316;--text:#e2e8f0;--muted:#94a3b8;--border:#1e2954;--danger:#ef4444;--green:#4ade80}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;line-height:1.6;min-height:100vh}
+.eu-banner{background:linear-gradient(135deg,#991b1b,#7f1d1d);padding:12px 24px;text-align:center;font-size:13px;border-bottom:2px solid #dc2626}
+.eu-banner a{color:#fca5a5}
+nav{display:flex;gap:24px;padding:16px 24px;background:var(--panel);border-bottom:1px solid var(--border);flex-wrap:wrap}
+nav a{color:var(--muted);text-decoration:none;font-size:14px}
+nav a:hover{color:var(--sov)}
+.container{max-width:1200px;margin:0 auto;padding:40px 24px}
+h1{font-family:'Space Grotesk',monospace;font-size:2.2rem;background:linear-gradient(135deg,var(--gold),var(--sov));-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:8px}
+.subtitle{color:var(--muted);font-size:1rem;margin-bottom:32px}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:40px}
+.stat-card{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:20px;text-align:center}
+.stat-num{font-family:'Space Grotesk',monospace;font-size:2rem;color:var(--sov)}
+.stat-label{color:var(--muted);font-size:13px;margin-top:4px}
+h2{font-family:'Space Grotesk',monospace;font-size:1.5rem;color:var(--sov);margin:40px 0 20px;padding-bottom:8px;border-bottom:1px solid var(--border)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:16px}
+.card{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:20px}
+.card .tag{display:inline-block;background:var(--accent);color:#000;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:700;margin-bottom:10px}
+.card h3{font-size:1rem;margin-bottom:8px;color:#fff}
+.card p{font-size:13px;color:var(--muted);line-height:1.5}
+.priority .tag{background:var(--green)}
+.mcp .tag{background:#fbbf24;color:#000}
+.red-lines{border:1px solid var(--danger);border-radius:12px;padding:24px;margin-bottom:40px}
+.red-lines h3{color:var(--danger);margin-bottom:16px;font-size:1.1rem}
+.red-lines ul{list-style:none}
+.red-lines li{padding:10px 0;border-bottom:1px solid var(--border);font-size:13px}
+.red-lines li:last-child{border-bottom:none}
+.red-lines li::before{content:'🚫 '}
+.engagement{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:40px}
+.engagement .step{flex:1;min-width:180px;background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:20px;text-align:center}
+.engagement .step .num{display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:50%;background:var(--green);color:#000;font-weight:700;font-size:16px;margin-bottom:10px}
+.engagement .step h4{font-size:14px;color:#fff;margin-bottom:6px}
+.engagement .step p{font-size:12px;color:var(--muted)}
+.cta{display:flex;gap:16px;flex-wrap:wrap;margin:40px 0}
+.cta a{display:inline-block;padding:14px 28px;background:var(--gold);color:#000;border-radius:8px;text-decoration:none;font-weight:700;font-size:15px}
+.cta a.secondary{border:1px solid var(--gold);background:transparent;color:var(--gold)}
+footer{background:var(--panel);border-top:1px solid var(--border);padding:24px;text-align:center;font-size:12px;color:var(--muted);margin-top:40px}
+</style>
+</head>
+<body>
+<div class="eu-banner">
+⚖️ EU AI Act — Article 50 Transparency + Annex III High-Risk classification applies to public-sector AI deployment. This pack is a governance-design document — not a compliance certification. <a href="/governance-master.html">Read the governance framework →</a>
+</div>
+<nav>
+<a href="/">🜏 Home</a>
+<a href="/governance-master.html">Master</a>
+<a href="/govbench.html">GovBench</a>
+<a href="/sitemap.html">Index</a>
+<a href="/sitemap.xml">Sitemap</a>
+</nav>
+<div class="container">
+<h1>Scottish Parliament Corporate Body — Parliamentary Governance and Administration AI Deep-Dive Governance Pack</h1>
+<p class="subtitle">Devolved Scottish Parliamentary Body — Governance, Administration & Security · Scottish Parliament Corporate Body · 2026-08-15</p>
+
+<div class="stats">
+<div class="stat-card"><div class="stat-num">12</div><div class="stat-label">Entry Points</div></div>
+<div class="stat-card"><div class="stat-num">8</div><div class="stat-label">Transformation Priorities</div></div>
+<div class="stat-card"><div class="stat-num">6</div><div class="stat-label">MCP Servers</div></div>
+<div class="stat-card"><div class="stat-num">6</div><div class="stat-label">Red Lines</div></div>
+</div>
+
+<h2>📋 12 Entry Points</h2>
+<div class="grid"><div class="card">
+<span class="tag">CLERK</span>
+<h3>Parliamentary Services & Clerking</h3>
+<p>Support for MSPs, committees, and chamber business — AI governance for legislative drafting assistance, amendment tracking, and procedural-advice automation.</p>
+</div><div class="card">
+<span class="tag">DIGITAL</span>
+<h3>Digital Transformation & ICT</h3>
+<p>Parliamentary network, systems, and digital services — AI governance for privileged-communications security, network segmentation, and supply-chain assurance.</p>
+</div><div class="card">
+<span class="tag">SECURITY</span>
+<h3>Parliamentary Security</h3>
+<p>Physical security, cyber defence, and personnel vetting — AI governance for threat detection, access-control systems, and SC/DV clearance management.</p>
+</div><div class="card">
+<span class="tag">PROCUREMENT</span>
+<h3>Procurement & Commercial</h3>
+<p>Public procurement for parliamentary goods and services — AI governance for tender evaluation, fraud detection, and Procurement Reform (Scotland) Act 2014 compliance.</p>
+</div><div class="card">
+<span class="tag">HR</span>
+<h3>Human Resources & Workforce</h3>
+<p>Parliamentary staff employment, diversity, and wellbeing — AI governance for fair-recruitment algorithms, pay-gap analysis, and employee-data protection.</p>
+</div><div class="card">
+<span class="tag">FINANCE</span>
+<h3>Finance & Audit</h3>
+<p>Scottish Parliament budget, accounts, and audit — AI governance for financial-control automation, fraud-risk assessment, and Public Audit Committee reporting.</p>
+</div><div class="card">
+<span class="tag">ESTATES</span>
+<h3>Property, Facilities & Estates</h3>
+<p>Holyrood building, constituency offices, and parliamentary estate — AI governance for building-management systems, energy optimisation, and physical-access logging.</p>
+</div><div class="card">
+<span class="tag">DATA</span>
+<h3>Data Governance & Information Management</h3>
+<p>Parliamentary records, MSP correspondence, and official data — AI governance for records retention, classification, and FOI (Scotland) Act 2002 compliance.</p>
+</div><div class="card">
+<span class="tag">MEDIA</span>
+<h3>Broadcasting, Media & Public Engagement</h3>
+<p>Parliamentary broadcasting, webcasting, and public information — AI governance for content moderation, accessibility, and disinformation detection.</p>
+</div><div class="card">
+<span class="tag">PUBLICATIONS</span>
+<h3>Official Report & Publications</h3>
+<p>Official Report (Hansard), legislation, and committee reports — AI governance for transcription accuracy, metadata integrity, and authenticated-publication workflows.</p>
+</div><div class="card">
+<span class="tag">LEGAL</span>
+<h3>Legal Services</h3>
+<p>Parliamentary legal advice, legislative competence, and litigation — AI governance for legal-research assistance, privilege protection, and ECHR compliance verification.</p>
+</div><div class="card">
+<span class="tag">GOVERNANCE</span>
+<h3>Public Accountability & Governance</h3>
+<p>SPCB governance, audit committee, and public accountability — AI governance for board-decision support, conflict-of-interest detection, and Nolan Principles compliance.</p>
+</div></div>
+
+<h2>🎯 8 Transformation Priorities</h2>
+<div class="grid"><div class="card priority">
+<span class="tag">Priority 1</span>
+<p style="font-size:13px;color:var(--muted)">AI-assisted legislative drafting with automated amendment-tracking, competence-verification against the Scotland Act 1998, and procedural-rule compliance checking</p>
+</div><div class="card priority">
+<span class="tag">Priority 2</span>
+<p style="font-size:13px;color:var(--muted)">Parliamentary cybersecurity transformation — AI-driven threat detection, privileged-communications segmentation, and supply-chain risk assessment aligned to NCSC CAF</p>
+</div><div class="card priority">
+<span class="tag">Priority 3</span>
+<p style="font-size:13px;color:var(--muted)">Smart-procurement platform with AI tender evaluation, Subsidy Control Act compliance, and automated fraud-risk scoring — reducing procurement cycle from 18 weeks to 8 weeks</p>
+</div><div class="card priority">
+<span class="tag">Priority 4</span>
+<p style="font-size:13px;color:var(--muted)">Data-governance automation — AI classification of parliamentary records, automated FOI (Scotland) Act response drafting, and retention-schedule enforcement</p>
+</div><div class="card priority">
+<span class="tag">Priority 5</span>
+<p style="font-size:13px;color:var(--muted)">Accessible broadcasting and webcasting — AI-real-time transcription, BSL interpretation routing, and content-moderation against disinformation</p>
+</div><div class="card priority">
+<span class="tag">Priority 6</span>
+<p style="font-size:13px;color:var(--muted)">Workforce-analytics platform — AI-driven pay-gap analysis, diversity-monitoring dashboards, and fair-recruitment algorithm auditing</p>
+</div><div class="card priority">
+<span class="tag">Priority 7</span>
+<p style="font-size:13px;color:var(--muted)">Holyrood estate smart-building optimisation — AI energy management, occupancy analytics, and physical-access anomaly detection</p>
+</div><div class="card priority">
+<span class="tag">Priority 8</span>
+<p style="font-size:13px;color:var(--muted)">Official Report automation — AI transcription verification, metadata enrichment, and authenticated-publication workflows with digital-signature chaining</p>
+</div></div>
+
+<h2>🔧 6 MCP Servers</h2>
+<div class="grid"><div class="card mcp">
+<span class="tag">MCP 1 · Legislative & Committee</span>
+<h3>spcb-legislative-drafting-mcp</h3>
+<p>AI-assisted legislative drafting, amendment tracking, competence verification, and procedural-rule compliance — anchored to Scotland Act 1998 and Standing Orders.</p>
+</div><div class="card mcp">
+<span class="tag">MCP 2 · Parliamentary Security</span>
+<h3>spcb-parliamentary-security-mcp</h3>
+<p>Threat detection, privileged-communications segmentation, personnel-vetting management, and NCSC CAF-aligned cyber defence for parliamentary networks.</p>
+</div><div class="card mcp">
+<span class="tag">MCP 3 · Procurement & Commercial</span>
+<h3>spcb-procurement-mcp</h3>
+<p>AI tender evaluation, fraud detection, Subsidy Control Act compliance, and Procurement Reform (Scotland) Act 2014 statutory-report automation.</p>
+</div><div class="card mcp">
+<span class="tag">MCP 4 · Data & Records</span>
+<h3>spcb-data-governance-mcp</h3>
+<p>Parliamentary record classification, FOI (Scotland) Act 2002 response automation, retention-schedule enforcement, and data-protection impact assessment.</p>
+</div><div class="card mcp">
+<span class="tag">MCP 5 · Broadcasting & Media</span>
+<h3>spcb-broadcasting-accessibility-mcp</h3>
+<p>Real-time transcription, BSL interpretation routing, content moderation, disinformation detection, and webcasting-accessibility compliance.</p>
+</div><div class="card mcp">
+<span class="tag">MCP 6 · Finance, Audit & Governance</span>
+<h3>spcb-finance-audit-governance-mcp</h3>
+<p>Financial-control automation, fraud-risk assessment, Public Audit Committee reporting, and Nolan Principles compliance monitoring for SPCB governance.</p>
+</div></div>
+
+<h2>🚫 6 Non-Negotiable Red Lines</h2>
+<div class="red-lines">
+<h3>Governance Red Lines — Anchored in Statute</h3>
+<ul><li>No AI processing of MSP privileged communications — parliamentary privilege is absolute under Scotland Act 1998 s.41 and Article 9 of the Bill of Rights 1689; no AI system may access, process, or analyse privileged material without explicit SPCB resolution.</li><li>No AI-driven access to parliamentary security systems (CCTV, access control, personnel vetting data) without human authorisation and SC/DV clearance — Official Secrets Act 1989 and SPCB Security Directions apply.</li><li>No automated decisions on FOI (Scotland) Act 2002 responses — all FOI determinations require human assessment of public-interest tests, exemptions, and prejudice tests per the Scottish Information Commissioner's guidance.</li><li>No AI transcription of committee proceedings that substitutes for the Official Report's human-verified process — AI may assist but final Official Report text must be human-authenticated per SPCB publishing standards.</li><li>No AI-driven procurement decisions without human verification of conflict-of-interest declarations, equalities impact, and Sustainability Duty compliance under Procurement Reform (Scotland) Act 2014.</li><li>No AI processing of MSP casework data (constituent personal data) without explicit consent and DPA 2018 Schedule 1 Part 2 conditions — MSPs are data controllers for casework; SPCB systems must maintain data-controller separation.</li></ul>
+</div>
+
+<h2>⚡ 5-Step Engagement Model</h2>
+<div class="engagement"><div class="step">
+<div class="num">1</div>
+<h4>Discovery</h4>
+<p>Map the body's statutory duties, data flows, and governance gaps against the 12-entry-point framework.</p>
+</div><div class="step">
+<div class="num">2</div>
+<h4>Governance Design</h4>
+<p>Design AI governance architecture, risk appetite, and red-line enforcement aligned to devolved legislation.</p>
+</div><div class="step">
+<div class="num">3</div>
+<h4>Pilot</h4>
+<p>Deploy 2-3 MCP servers in a sandboxed environment with body data; measure governance outcomes against baseline.</p>
+</div><div class="step">
+<div class="num">4</div>
+<h4>Scale</h4>
+<p>Expand to the full 6-MCP stack with body-wide deployment, training, and change management.</p>
+</div><div class="step">
+<div class="num">5</div>
+<h4>Assure</h4>
+<p>Continuous monitoring, 33-agent BFT council verification, and DEFONEOS-SEAL credential issuance.</p>
+</div></div>
+
+<div class="cta">
+<a href="/governance-master.html">📋 Request OWEM RFQ →</a>
+<a href="/article-50.html" class="secondary">⚖️ Article 50 Passport →</a>
+</div>
+
+<p style="font-size:12px;color:var(--muted);margin-top:24px">Legislation backbone: Scotland Act 1998 ss.21-22 sch.2, Scottish Parliamentary Corporate Body (Crown Status) Order 1999, Public Finance and Accountability (Scotland) Act 2000, FOI (Scotland) Act 2002, Official Secrets Act 1989, Equality Act 2010, Procurement Reform (Scotland) Act 2014, DPA 2018 + UK GDPR, Scottish Parliament (Assistance for Political Parties) Act 2021</p>
+<p style="font-size:12px;color:var(--muted);margin-top:8px">SIGIL: defoneos-tick290-defoneos-scottish-parliament-c-21f574fe867e74f5</p>
+</div>
+<footer>
+<p>CSOAI Ltd (UK 16939677) · csoai.org · compliance@csoai.org</p>
+<p>DEFONEOS is a UK-sovereign open-source AI governance framework built on the meok substrate. UK-sovereign. AUKUS-compatible. Audit-grade.</p>
+<p style="margin-top:8px;font-size:11px">© 2026 CSOAI Ltd. All trademarks acknowledged. This document is a governance-design artefact — not a compliance certification.</p>
+</footer>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": "Scottish Parliament Corporate Body \u2014 Parliamentary Governance and Administration AI Deep-Dive Governance Pack",
+  "description": "12-entry-point AI governance framework for the Scottish Parliament Corporate Body (SPCB) \u2014 the body responsible for the Scottish Parliament's staff, property, security, and resources \u2014 covering parliamentary services, digital transformation, security, procurement, data governance, broadcasting, and public accountability.",
+  "url": "https://csoai.org/defoneos-scottish-parliament-corporate-body-governance-administration-ai-deep-dive-pack.html",
+  "about": {
+    "@type": "GovernmentService",
+    "name": "Scottish Parliament Corporate Body",
+    "url": "https://www.parliament.scot/"
+  },
+  "provider": {
+    "@type": "Organization",
+    "name": "CSOAI Ltd",
+    "legalName": "CSOAI Ltd"
+  },
+  "datePublished": "2026-08-15"
+}
+</script>
+</body>
+</html>

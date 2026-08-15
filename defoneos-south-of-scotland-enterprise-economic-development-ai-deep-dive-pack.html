@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>South of Scotland Enterprise — Economic Development and Community Wealth-Building AI Deep-Dive Governance Pack</title>
+<meta name="description" content="12-entry-point AI governance framework for South of Scotland Enterprise (SOSE) — the economic development agency for Dumfries & Galloway and the Scottish Border">
+<link rel="canonical" href="https://csoai.org/defoneos-south-of-scotland-enterprise-economic-development-ai-deep-dive-pack.html">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Space+Grotesk:wght@700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#050816;--panel:#0d1330;--gold:#d4af37;--sov:#6dd5ff;--accent:#f97316;--text:#e2e8f0;--muted:#94a3b8;--border:#1e2954;--danger:#ef4444;--green:#4ade80}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;line-height:1.6;min-height:100vh}
+.eu-banner{background:linear-gradient(135deg,#991b1b,#7f1d1d);padding:12px 24px;text-align:center;font-size:13px;border-bottom:2px solid #dc2626}
+.eu-banner a{color:#fca5a5}
+nav{display:flex;gap:24px;padding:16px 24px;background:var(--panel);border-bottom:1px solid var(--border);flex-wrap:wrap}
+nav a{color:var(--muted);text-decoration:none;font-size:14px}
+nav a:hover{color:var(--sov)}
+.container{max-width:1200px;margin:0 auto;padding:40px 24px}
+h1{font-family:'Space Grotesk',monospace;font-size:2.2rem;background:linear-gradient(135deg,var(--gold),var(--sov));-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:8px}
+.subtitle{color:var(--muted);font-size:1rem;margin-bottom:32px}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:40px}
+.stat-card{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:20px;text-align:center}
+.stat-num{font-family:'Space Grotesk',monospace;font-size:2rem;color:var(--sov)}
+.stat-label{color:var(--muted);font-size:13px;margin-top:4px}
+h2{font-family:'Space Grotesk',monospace;font-size:1.5rem;color:var(--sov);margin:40px 0 20px;padding-bottom:8px;border-bottom:1px solid var(--border)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:16px}
+.card{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:20px}
+.card .tag{display:inline-block;background:var(--accent);color:#000;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:700;margin-bottom:10px}
+.card h3{font-size:1rem;margin-bottom:8px;color:#fff}
+.card p{font-size:13px;color:var(--muted);line-height:1.5}
+.priority .tag{background:var(--green)}
+.mcp .tag{background:#fbbf24;color:#000}
+.red-lines{border:1px solid var(--danger);border-radius:12px;padding:24px;margin-bottom:40px}
+.red-lines h3{color:var(--danger);margin-bottom:16px;font-size:1.1rem}
+.red-lines ul{list-style:none}
+.red-lines li{padding:10px 0;border-bottom:1px solid var(--border);font-size:13px}
+.red-lines li:last-child{border-bottom:none}
+.red-lines li::before{content:'🚫 '}
+.engagement{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:40px}
+.engagement .step{flex:1;min-width:180px;background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:20px;text-align:center}
+.engagement .step .num{display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:50%;background:var(--green);color:#000;font-weight:700;font-size:16px;margin-bottom:10px}
+.engagement .step h4{font-size:14px;color:#fff;margin-bottom:6px}
+.engagement .step p{font-size:12px;color:var(--muted)}
+.cta{display:flex;gap:16px;flex-wrap:wrap;margin:40px 0}
+.cta a{display:inline-block;padding:14px 28px;background:var(--gold);color:#000;border-radius:8px;text-decoration:none;font-weight:700;font-size:15px}
+.cta a.secondary{border:1px solid var(--gold);background:transparent;color:var(--gold)}
+footer{background:var(--panel);border-top:1px solid var(--border);padding:24px;text-align:center;font-size:12px;color:var(--muted);margin-top:40px}
+</style>
+</head>
+<body>
+<div class="eu-banner">
+⚖️ EU AI Act — Article 50 Transparency + Annex III High-Risk classification applies to public-sector AI deployment. This pack is a governance-design document — not a compliance certification. <a href="/governance-master.html">Read the governance framework →</a>
+</div>
+<nav>
+<a href="/">🜏 Home</a>
+<a href="/governance-master.html">Master</a>
+<a href="/govbench.html">GovBench</a>
+<a href="/sitemap.html">Index</a>
+<a href="/sitemap.xml">Sitemap</a>
+</nav>
+<div class="container">
+<h1>South of Scotland Enterprise — Economic Development and Community Wealth-Building AI Deep-Dive Governance Pack</h1>
+<p class="subtitle">Devolved Scottish Public Body — Regional Economic Development · South of Scotland Enterprise · 2026-08-15</p>
+
+<div class="stats">
+<div class="stat-card"><div class="stat-num">12</div><div class="stat-label">Entry Points</div></div>
+<div class="stat-card"><div class="stat-num">8</div><div class="stat-label">Transformation Priorities</div></div>
+<div class="stat-card"><div class="stat-num">6</div><div class="stat-label">MCP Servers</div></div>
+<div class="stat-card"><div class="stat-num">6</div><div class="stat-label">Red Lines</div></div>
+</div>
+
+<h2>📋 12 Entry Points</h2>
+<div class="grid"><div class="card">
+<span class="tag">BUSINESS</span>
+<h3>Business Growth & Innovation</h3>
+<p>Grants, loans, and advisory for SMEs and social enterprises across the South of Scotland — AI governance for fair-credit assessment, fraud detection, and impact measurement.</p>
+</div><div class="card">
+<span class="tag">COMMUNITY</span>
+<h3>Community Wealth-Building</h3>
+<p>Community-led economic development, community ownership, and local procurement — AI governance for participatory budgeting, community benefit clauses, and democratic accountability.</p>
+</div><div class="card">
+<span class="tag">NETZERO</span>
+<h3>Net-Zero Transition</h3>
+<p>Green jobs, renewable energy, and just transition planning — AI governance for carbon accounting, supply-chain decarbonisation, and transition-risk modelling.</p>
+</div><div class="card">
+<span class="tag">SKILLS</span>
+<h3>Skills & Employability</h3>
+<p>Workforce development, apprenticeship pipelines, and digital skills — AI governance for skills-gap analysis, fair-access algorithms, and qualification-matching.</p>
+</div><div class="card">
+<span class="tag">LAND</span>
+<h3>Land & Assets</h3>
+<p>Strategic land acquisition, development sites, and property portfolio — AI governance for Land Register integration, compulsory-purchase safeguards, and community right-to-buy compliance.</p>
+</div><div class="card">
+<span class="tag">TOURISM</span>
+<h3>Tourism & Visitor Economy</h3>
+<p>Destination development, visitor data, and seasonal-economy resilience — AI governance for visitor-impact modelling, privacy-compliant footfall analytics, and carrying-capacity assessment.</p>
+</div><div class="card">
+<span class="tag">NATURE</span>
+<h3>Natural Capital & Environment</h3>
+<p>Ecosystem services, peatland restoration, and biodiversity net-gain — AI governance for natural-capital accounting, satellite monitoring, and environmental-impact assessment.</p>
+</div><div class="card">
+<span class="tag">DIGITAL</span>
+<h3>Digital & Connectivity</h3>
+<p>Rural broadband, 5G, and digital inclusion — AI governance for digital-poverty mapping, infrastructure ROI modelling, and equitable-access prioritisation.</p>
+</div><div class="card">
+<span class="tag">SOCIAL</span>
+<h3>Social Enterprise & Third Sector</h3>
+<p>Support for social enterprises, cooperatives, and community interest companies — AI governance for social-impact measurement, fair-work compliance, and charitable-status verification.</p>
+</div><div class="card">
+<span class="tag">INVESTMENT</span>
+<h3>Investment & Finance</h3>
+<p>Equity investment, loan funds, and blended finance — AI governance for investment-committee decision support, portfolio-risk modelling, and Subsidy Control Act 2022 compliance.</p>
+</div><div class="card">
+<span class="tag">POLICY</span>
+<h3>Policy, Research & Intelligence</h3>
+<p>Regional economic data, labour-market analysis, and policy evaluation — AI governance for data ethics, open-data publication, and statistical-disclosure control.</p>
+</div><div class="card">
+<span class="tag">ACCOUNTABILITY</span>
+<h3>Scottish Parliament Accountability</h3>
+<p>Annual report, ministerial directions, and Public Audit Committee scrutiny — AI governance for transparency, audit trails, and statutory-report automation.</p>
+</div></div>
+
+<h2>🎯 8 Transformation Priorities</h2>
+<div class="grid"><div class="card priority">
+<span class="tag">Priority 1</span>
+<p style="font-size:13px;color:var(--muted)">AI-assisted business-grant assessment with fair-credit modelling and fraud detection — reducing SME application-to-decision time from 12 weeks to 4 weeks</p>
+</div><div class="card priority">
+<span class="tag">Priority 2</span>
+<p style="font-size:13px;color:var(--muted)">Community wealth-building platform — AI-moderated participatory budgeting, community-benefit tracking, and local-supply-chain multiplier analysis</p>
+</div><div class="card priority">
+<span class="tag">Priority 3</span>
+<p style="font-size:13px;color:var(--muted)">Natural-capital accounting engine — satellite-based ecosystem-services valuation with AI-driven biodiversity net-gain monitoring and peatland-carbon verification</p>
+</div><div class="card priority">
+<span class="tag">Priority 4</span>
+<p style="font-size:13px;color:var(--muted)">Rural skills-matching system — AI-powered gap analysis linking employer demand to training provision across Dumfries & Galloway and Scottish Borders</p>
+</div><div class="card priority">
+<span class="tag">Priority 5</span>
+<p style="font-size:13px;color:var(--muted)">Land-asset intelligence platform — AI integration with Registers of Scotland, compulsory-purchase compliance automation, and community right-to-buy notification workflows</p>
+</div><div class="card priority">
+<span class="tag">Priority 6</span>
+<p style="font-size:13px;color:var(--muted)">Tourism carrying-capacity model — AI-driven visitor-footfall prediction, environmental-impact assessment, and seasonal-economy resilience planning</p>
+</div><div class="card priority">
+<span class="tag">Priority 7</span>
+<p style="font-size:13px;color:var(--muted)">Just-transition workforce modelling — AI forecasting of green-job creation against fossil-fuel job displacement with retraining-pathway optimisation</p>
+</div><div class="card priority">
+<span class="tag">Priority 8</span>
+<p style="font-size:13px;color:var(--muted)">Digital-poverty mapping and connectivity ROI — AI-driven spatial analysis of broadband deprivation against infrastructure investment scenarios</p>
+</div></div>
+
+<h2>🔧 6 MCP Servers</h2>
+<div class="grid"><div class="card mcp">
+<span class="tag">MCP 1 · Business & Investment</span>
+<h3>sose-business-growth-mcp</h3>
+<p>AI-assisted business grant and loan assessment with fair-credit modelling, fraud detection, and Subsidy Control Act 2022 compliance verification.</p>
+</div><div class="card mcp">
+<span class="tag">MCP 2 · Community & Place</span>
+<h3>sose-community-wealth-mcp</h3>
+<p>Participatory budgeting support, community-benefit clause tracking, local procurement multiplier analysis, and Community Empowerment Act compliance.</p>
+</div><div class="card mcp">
+<span class="tag">MCP 3 · Natural Capital</span>
+<h3>sose-natural-capital-mcp</h3>
+<p>Satellite-based ecosystem-services valuation, peatland-carbon verification, biodiversity net-gain monitoring, and natural-capital accounting automation.</p>
+</div><div class="card mcp">
+<span class="tag">MCP 4 · Land & Property</span>
+<h3>sose-land-asset-mcp</h3>
+<p>Land Register integration, compulsory-purchase compliance, community right-to-buy notification, and strategic-development-site intelligence.</p>
+</div><div class="card mcp">
+<span class="tag">MCP 5 · Tourism & Visitor Economy</span>
+<h3>sose-tourism-economy-mcp</h3>
+<p>Visitor-footfall prediction, carrying-capacity modelling, privacy-compliant analytics, and seasonal-economy resilience assessment.</p>
+</div><div class="card mcp">
+<span class="tag">MCP 6 · Skills & Employability</span>
+<h3>sose-skills-workforce-mcp</h3>
+<p>Skills-gap analysis, fair-access algorithms, apprenticeship-pathway optimisation, and just-transition workforce modelling.</p>
+</div></div>
+
+<h2>🚫 6 Non-Negotiable Red Lines</h2>
+<div class="red-lines">
+<h3>Governance Red Lines — Anchored in Statute</h3>
+<ul><li>No AI sole-decision on compulsory-purchase orders or land acquisition — all land-transaction determinations require human-in-the-loop review per Land Reform (Scotland) Act 2016 and SOSE Act 2019 s.9.</li><li>No automated refusal of community right-to-buy applications — community-ownership rights under the Community Empowerment (Scotland) Act 2015 and Land Reform (Scotland) Act 2016 are protected statutory entitlements.</li><li>No processing of personal financial data (SME loan applications, credit assessments) without explicit consent and DPA 2018 Schedule 1 conditions for automated decision-making under Article 22 UK GDPR.</li><li>No AI profiling for investment decisions that could result in indirect discrimination against protected characteristics under the Equality Act 2010 — all investment-committee decisions require equality-impact assessment.</li><li>No automated Subsidy Control Act 2022 determinations — all subsidy decisions must include human verification of market-impact assessment and Competition & Markets Authority referral triggers.</li><li>No AI-driven natural-capital valuation that substitutes for statutory Environmental Impact Assessment (EIA) or Strategic Environmental Assessment (SEA) — AI outputs are inputs to, not replacements for, statutory assessment processes.</li></ul>
+</div>
+
+<h2>⚡ 5-Step Engagement Model</h2>
+<div class="engagement"><div class="step">
+<div class="num">1</div>
+<h4>Discovery</h4>
+<p>Map the body's statutory duties, data flows, and governance gaps against the 12-entry-point framework.</p>
+</div><div class="step">
+<div class="num">2</div>
+<h4>Governance Design</h4>
+<p>Design AI governance architecture, risk appetite, and red-line enforcement aligned to devolved legislation.</p>
+</div><div class="step">
+<div class="num">3</div>
+<h4>Pilot</h4>
+<p>Deploy 2-3 MCP servers in a sandboxed environment with body data; measure governance outcomes against baseline.</p>
+</div><div class="step">
+<div class="num">4</div>
+<h4>Scale</h4>
+<p>Expand to the full 6-MCP stack with body-wide deployment, training, and change management.</p>
+</div><div class="step">
+<div class="num">5</div>
+<h4>Assure</h4>
+<p>Continuous monitoring, 33-agent BFT council verification, and DEFONEOS-SEAL credential issuance.</p>
+</div></div>
+
+<div class="cta">
+<a href="/governance-master.html">📋 Request OWEM RFQ →</a>
+<a href="/article-50.html" class="secondary">⚖️ Article 50 Passport →</a>
+</div>
+
+<p style="font-size:12px;color:var(--muted);margin-top:24px">Legislation backbone: South of Scotland Enterprise Act 2019, Enterprise and New Towns (Scotland) Act 1990 (as amended), Community Empowerment (Scotland) Act 2015, Land Reform (Scotland) Act 2016, Climate Change (Scotland) Act 2009, Equality Act 2010, FOI (Scotland) Act 2002, DPA 2018 + UK GDPR</p>
+<p style="font-size:12px;color:var(--muted);margin-top:8px">SIGIL: defoneos-tick290-defoneos-south-of-scotland-ent-21f574fe867e74f5</p>
+</div>
+<footer>
+<p>CSOAI Ltd (UK 16939677) · csoai.org · compliance@csoai.org</p>
+<p>DEFONEOS is a UK-sovereign open-source AI governance framework built on the meok substrate. UK-sovereign. AUKUS-compatible. Audit-grade.</p>
+<p style="margin-top:8px;font-size:11px">© 2026 CSOAI Ltd. All trademarks acknowledged. This document is a governance-design artefact — not a compliance certification.</p>
+</footer>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": "South of Scotland Enterprise \u2014 Economic Development and Community Wealth-Building AI Deep-Dive Governance Pack",
+  "description": "12-entry-point AI governance framework for South of Scotland Enterprise (SOSE) \u2014 the economic development agency for Dumfries & Galloway and the Scottish Borders \u2014 covering business growth, community wealth-building, net-zero transition, skills, land, tourism, natural capital, and Parliamentary accountability.",
+  "url": "https://csoai.org/defoneos-south-of-scotland-enterprise-economic-development-ai-deep-dive-pack.html",
+  "about": {
+    "@type": "GovernmentService",
+    "name": "South of Scotland Enterprise",
+    "url": "https://www.southofscotlandenterprise.com/"
+  },
+  "provider": {
+    "@type": "Organization",
+    "name": "CSOAI Ltd",
+    "legalName": "CSOAI Ltd"
+  },
+  "datePublished": "2026-08-15"
+}
+</script>
+</body>
+</html>

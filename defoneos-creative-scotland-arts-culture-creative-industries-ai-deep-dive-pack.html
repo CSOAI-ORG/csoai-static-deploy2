@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Creative Scotland — Arts, Culture, and Creative Industries AI Deep-Dive Governance Pack</title>
+<meta name="description" content="12-entry-point AI governance framework for Creative Scotland — the public body that supports Scotland's arts, screen, and creative industries — covering funding">
+<link rel="canonical" href="https://csoai.org/defoneos-creative-scotland-arts-culture-creative-industries-ai-deep-dive-pack.html">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Space+Grotesk:wght@700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#050816;--panel:#0d1330;--gold:#d4af37;--sov:#6dd5ff;--accent:#f97316;--text:#e2e8f0;--muted:#94a3b8;--border:#1e2954;--danger:#ef4444;--green:#4ade80}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;line-height:1.6;min-height:100vh}
+.eu-banner{background:linear-gradient(135deg,#991b1b,#7f1d1d);padding:12px 24px;text-align:center;font-size:13px;border-bottom:2px solid #dc2626}
+.eu-banner a{color:#fca5a5}
+nav{display:flex;gap:24px;padding:16px 24px;background:var(--panel);border-bottom:1px solid var(--border);flex-wrap:wrap}
+nav a{color:var(--muted);text-decoration:none;font-size:14px}
+nav a:hover{color:var(--sov)}
+.container{max-width:1200px;margin:0 auto;padding:40px 24px}
+h1{font-family:'Space Grotesk',monospace;font-size:2.2rem;background:linear-gradient(135deg,var(--gold),var(--sov));-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:8px}
+.subtitle{color:var(--muted);font-size:1rem;margin-bottom:32px}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:40px}
+.stat-card{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:20px;text-align:center}
+.stat-num{font-family:'Space Grotesk',monospace;font-size:2rem;color:var(--sov)}
+.stat-label{color:var(--muted);font-size:13px;margin-top:4px}
+h2{font-family:'Space Grotesk',monospace;font-size:1.5rem;color:var(--sov);margin:40px 0 20px;padding-bottom:8px;border-bottom:1px solid var(--border)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:16px}
+.card{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:20px}
+.card .tag{display:inline-block;background:var(--accent);color:#000;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:700;margin-bottom:10px}
+.card h3{font-size:1rem;margin-bottom:8px;color:#fff}
+.card p{font-size:13px;color:var(--muted);line-height:1.5}
+.priority .tag{background:var(--green)}
+.mcp .tag{background:#fbbf24;color:#000}
+.red-lines{border:1px solid var(--danger);border-radius:12px;padding:24px;margin-bottom:40px}
+.red-lines h3{color:var(--danger);margin-bottom:16px;font-size:1.1rem}
+.red-lines ul{list-style:none}
+.red-lines li{padding:10px 0;border-bottom:1px solid var(--border);font-size:13px}
+.red-lines li:last-child{border-bottom:none}
+.red-lines li::before{content:'🚫 '}
+.engagement{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:40px}
+.engagement .step{flex:1;min-width:180px;background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:20px;text-align:center}
+.engagement .step .num{display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:50%;background:var(--green);color:#000;font-weight:700;font-size:16px;margin-bottom:10px}
+.engagement .step h4{font-size:14px;color:#fff;margin-bottom:6px}
+.engagement .step p{font-size:12px;color:var(--muted)}
+.cta{display:flex;gap:16px;flex-wrap:wrap;margin:40px 0}
+.cta a{display:inline-block;padding:14px 28px;background:var(--gold);color:#000;border-radius:8px;text-decoration:none;font-weight:700;font-size:15px}
+.cta a.secondary{border:1px solid var(--gold);background:transparent;color:var(--gold)}
+footer{background:var(--panel);border-top:1px solid var(--border);padding:24px;text-align:center;font-size:12px;color:var(--muted);margin-top:40px}
+</style>
+</head>
+<body>
+<div class="eu-banner">
+⚖️ EU AI Act — Article 50 Transparency + Annex III High-Risk classification applies to public-sector AI deployment. This pack is a governance-design document — not a compliance certification. <a href="/governance-master.html">Read the governance framework →</a>
+</div>
+<nav>
+<a href="/">🜏 Home</a>
+<a href="/governance-master.html">Master</a>
+<a href="/govbench.html">GovBench</a>
+<a href="/sitemap.html">Index</a>
+<a href="/sitemap.xml">Sitemap</a>
+</nav>
+<div class="container">
+<h1>Creative Scotland — Arts, Culture, and Creative Industries AI Deep-Dive Governance Pack</h1>
+<p class="subtitle">Devolved Scottish Public Body — Arts, Culture & Creative Industries · Creative Scotland · 2026-08-15</p>
+
+<div class="stats">
+<div class="stat-card"><div class="stat-num">12</div><div class="stat-label">Entry Points</div></div>
+<div class="stat-card"><div class="stat-num">8</div><div class="stat-label">Transformation Priorities</div></div>
+<div class="stat-card"><div class="stat-num">6</div><div class="stat-label">MCP Servers</div></div>
+<div class="stat-card"><div class="stat-num">6</div><div class="stat-label">Red Lines</div></div>
+</div>
+
+<h2>📋 12 Entry Points</h2>
+<div class="grid"><div class="card">
+<span class="tag">FUNDING</span>
+<h3>Regular Funding Portfolio</h3>
+<p>Multi-year funding to 121 arts organisations — AI governance across funding allocation, outcomes measurement, and compliance monitoring.</p>
+</div><div class="card">
+<span class="tag">LOTTERY</span>
+<h3>National Lottery Distribution</h3>
+<p>Distribution of National Lottery funds for arts, screen, and creative projects — AI-optimised grant assessment while maintaining the additionality principle.</p>
+</div><div class="card">
+<span class="tag">SCREEN</span>
+<h3>Screen Scotland</h3>
+<p>Scotland's screen sector development unit — AI governance for film/TV production incentives, location scouting, crew databases, and IP exploitation.</p>
+</div><div class="card">
+<span class="tag">INDUSTRIES</span>
+<h3>Creative Industries Development</h3>
+<p>Support for games, design, publishing, music, and digital content — AI governance for IP protection, fair remuneration, and market access.</p>
+</div><div class="card">
+<span class="tag">PLACE</span>
+<h3>Place-Based Partnerships</h3>
+<p>Cultural regeneration and place-making across Scotland — AI governance for community engagement, environmental impact, and equitable distribution.</p>
+</div><div class="card">
+<span class="tag">LEARNING</span>
+<h3>Creative Learning & Young People</h3>
+<p>Youth arts, education partnerships, and talent pipelines — AI governance for safeguarding, data protection, and equitable access.</p>
+</div><div class="card">
+<span class="tag">INTERNATIONAL</span>
+<h3>International Strategy</h3>
+<p>Export support, international festivals, and cultural diplomacy — AI governance for cross-border data flows, sanctions compliance, and IP protection.</p>
+</div><div class="card">
+<span class="tag">EQUALITIES</span>
+<h3>Equalities, Diversity & Inclusion</h3>
+<p>EDI duty across all funding and programmes — AI governance for bias detection, inclusive procurement, and protected characteristics monitoring.</p>
+</div><div class="card">
+<span class="tag">DATA</span>
+<h3>Research, Data & Evidence</h3>
+<p>Sector intelligence, economic impact analysis, and audience data — AI governance for data ethics, anonymisation, and open data publication.</p>
+</div><div class="card">
+<span class="tag">CAPITAL</span>
+<h3>Capital & Venues Investment</h3>
+<p>Capital grants for cultural infrastructure — AI governance for procurement compliance, sustainability assessment, and whole-life costing.</p>
+</div><div class="card">
+<span class="tag">CLIMATE</span>
+<h3>Climate & Environmental Action</h3>
+<p>Net-zero alignment across the cultural sector — AI governance for carbon accounting, sustainable touring, and green procurement.</p>
+</div><div class="card">
+<span class="tag">ACCOUNTABILITY</span>
+<h3>Scottish Parliament Accountability</h3>
+<p>Annual report, ministerial directions, and Public Audit Committee scrutiny — AI governance for transparency, audit trails, and FOI compliance.</p>
+</div></div>
+
+<h2>🎯 8 Transformation Priorities</h2>
+<div class="grid"><div class="card priority">
+<span class="tag">Priority 1</span>
+<p style="font-size:13px;color:var(--muted)">AI-assisted grant assessment with explainable scoring, bias detection, and human-in-the-loop decision gates — reducing cycle time from 16 weeks to 6 weeks</p>
+</div><div class="card priority">
+<span class="tag">Priority 2</span>
+<p style="font-size:13px;color:var(--muted)">Screen Scotland production pipeline optimisation — AI-moderated crew database, location intelligence, and co-production treaty compliance automation</p>
+</div><div class="card priority">
+<span class="tag">Priority 3</span>
+<p style="font-size:13px;color:var(--muted)">Audience data platform with privacy-first analytics — federated learning across venues without centralising personal data, aligned to GDPR/DPA 2018</p>
+</div><div class="card priority">
+<span class="tag">Priority 4</span>
+<p style="font-size:13px;color:var(--muted)">EDI monitoring automation — real-time protected characteristics analysis across funding portfolio with automated pay-gap and representation dashboards</p>
+</div><div class="card priority">
+<span class="tag">Priority 5</span>
+<p style="font-size:13px;color:var(--muted)">Creative IP rights management — AI-assisted rights clearance, royalty tracking, and fair-remuneration enforcement across digital platforms</p>
+</div><div class="card priority">
+<span class="tag">Priority 6</span>
+<p style="font-size:13px;color:var(--muted)">Climate impact measurement — embedded carbon tracking for funded organisations with AI-optimised green-touring and venue-energy recommendations</p>
+</div><div class="card priority">
+<span class="tag">Priority 7</span>
+<p style="font-size:13px;color:var(--muted)">Place-based cultural investment modelling — AI-driven spatial analysis of cultural provision against SIMD deprivation indices to target underserved communities</p>
+</div><div class="card priority">
+<span class="tag">Priority 8</span>
+<p style="font-size:13px;color:var(--muted)">International cultural export pipeline — AI-moderated market intelligence, sanctions screening, and bilateral co-production compliance routing</p>
+</div></div>
+
+<h2>🔧 6 MCP Servers</h2>
+<div class="grid"><div class="card mcp">
+<span class="tag">MCP 1 · Grant & Funding</span>
+<h3>creativescotland-grants-mcp</h3>
+<p>Explainable AI grant assessment with bias detection, additionality verification, and outcomes tracking across 121 funded organisations.</p>
+</div><div class="card mcp">
+<span class="tag">MCP 2 · Screen & Production</span>
+<h3>screen-scotland-production-mcp</h3>
+<p>Film/TV production pipeline governance — crew accreditation, location intelligence, co-production treaty compliance, and IP rights management.</p>
+</div><div class="card mcp">
+<span class="tag">MCP 3 · Audience & Data</span>
+<h3>creative-audience-data-mcp</h3>
+<p>Privacy-first audience analytics via federated learning — venue benchmarking, demographic mapping, and DPA 2018 compliance across the cultural sector.</p>
+</div><div class="card mcp">
+<span class="tag">MCP 4 · Place & Equity</span>
+<h3>creative-place-equity-mcp</h3>
+<p>Spatial analysis of cultural provision, SIMD-aligned funding targeting, EDI monitoring, and community-engagement impact measurement.</p>
+</div><div class="card mcp">
+<span class="tag">MCP 5 · Climate & Sustainability</span>
+<h3>creative-climate-culture-mcp</h3>
+<p>Embedded carbon tracking for arts organisations, green-touring optimisation, and net-zero venue transition roadmaps.</p>
+</div><div class="card mcp">
+<span class="tag">MCP 6 · Export & Compliance</span>
+<h3>creative-export-compliance-mcp</h3>
+<p>International cultural export governance — sanctions screening, bilateral treaty routing, cross-border data flow compliance, and IP exploitation monitoring.</p>
+</div></div>
+
+<h2>🚫 6 Non-Negotiable Red Lines</h2>
+<div class="red-lines">
+<h3>Governance Red Lines — Anchored in Statute</h3>
+<ul><li>No AI sole-decision on grant awards — all funding determinations must include human-in-the-loop review per Scottish Public Finance Manual and Ministerial Directions (Public Services Reform (Scotland) Act 2010).</li><li>No processing of special-category data (artistic content preferences, political expression through art) without explicit consent and DPA 2018 Schedule 1 Part 1 conditions.</li><li>No automated restrictions on artistic expression — AI governance frameworks must respect Article 10 ECHR (freedom of expression) as incorporated by the Human Rights Act 1998 and Scotland Act 1998 s.29.</li><li>No cross-border data transfer of cultural audience data without UK adequacy assessment and ICO-compliant transfer mechanisms under UK GDPR Articles 44-49.</li><li>No National Lottery distribution decisions delegated to AI — lottery additionality principle requires human judgment per National Lottery etc. Act 1993 s.25 and Creative Scotland Directions.</li><li>No AI profiling of children and young people under 18 in creative learning programmes — enhanced protections per Age of Criminal Responsibility (Scotland) Act 2019 and UNCRC (Incorporation) (Scotland) Act 2024.</li></ul>
+</div>
+
+<h2>⚡ 5-Step Engagement Model</h2>
+<div class="engagement"><div class="step">
+<div class="num">1</div>
+<h4>Discovery</h4>
+<p>Map the body's statutory duties, data flows, and governance gaps against the 12-entry-point framework.</p>
+</div><div class="step">
+<div class="num">2</div>
+<h4>Governance Design</h4>
+<p>Design AI governance architecture, risk appetite, and red-line enforcement aligned to devolved legislation.</p>
+</div><div class="step">
+<div class="num">3</div>
+<h4>Pilot</h4>
+<p>Deploy 2-3 MCP servers in a sandboxed environment with body data; measure governance outcomes against baseline.</p>
+</div><div class="step">
+<div class="num">4</div>
+<h4>Scale</h4>
+<p>Expand to the full 6-MCP stack with body-wide deployment, training, and change management.</p>
+</div><div class="step">
+<div class="num">5</div>
+<h4>Assure</h4>
+<p>Continuous monitoring, 33-agent BFT council verification, and DEFONEOS-SEAL credential issuance.</p>
+</div></div>
+
+<div class="cta">
+<a href="/governance-master.html">📋 Request OWEM RFQ →</a>
+<a href="/article-50.html" class="secondary">⚖️ Article 50 Passport →</a>
+</div>
+
+<p style="font-size:12px;color:var(--muted);margin-top:24px">Legislation backbone: Public Services Reform (Scotland) Act 2010, National Lottery etc. Act 1993, Scotland Act 1998 s.89, Equality Act 2010, FOI (Scotland) Act 2002, DPA 2018 + UK GDPR, Scottish Ministerial Directions on Public Bodies, Creative Scotland Act 2025 (Bill)</p>
+<p style="font-size:12px;color:var(--muted);margin-top:8px">SIGIL: defoneos-tick290-defoneos-creative-scotland-art-21f574fe867e74f5</p>
+</div>
+<footer>
+<p>CSOAI Ltd (UK 16939677) · csoai.org · compliance@csoai.org</p>
+<p>DEFONEOS is a UK-sovereign open-source AI governance framework built on the meok substrate. UK-sovereign. AUKUS-compatible. Audit-grade.</p>
+<p style="margin-top:8px;font-size:11px">© 2026 CSOAI Ltd. All trademarks acknowledged. This document is a governance-design artefact — not a compliance certification.</p>
+</footer>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": "Creative Scotland \u2014 Arts, Culture, and Creative Industries AI Deep-Dive Governance Pack",
+  "description": "12-entry-point AI governance framework for Creative Scotland \u2014 the public body that supports Scotland's arts, screen, and creative industries \u2014 covering funding distribution, screen sector development, cultural venues, place partnerships, creative learning, international promotion, equalities, data, and Parliamentary accountability.",
+  "url": "https://csoai.org/defoneos-creative-scotland-arts-culture-creative-industries-ai-deep-dive-pack.html",
+  "about": {
+    "@type": "GovernmentService",
+    "name": "Creative Scotland",
+    "url": "https://www.creativescotland.com/"
+  },
+  "provider": {
+    "@type": "Organization",
+    "name": "CSOAI Ltd",
+    "legalName": "CSOAI Ltd"
+  },
+  "datePublished": "2026-08-15"
+}
+</script>
+</body>
+</html>
