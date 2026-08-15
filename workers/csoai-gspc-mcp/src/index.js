@@ -92,6 +92,19 @@ export default {
               required: ["card"],
             },
           },
+          {
+            name: "jail-probe",
+            description: "Submit a jail-break attempt against a model. Returns the verdict contract; sandbox execution + signed card issuance happens on the measurement fleet (A100/3090). Consent-gated; never certifies.",
+            inputSchema: {
+              type: "object",
+              properties: {
+                model: { type: "string", description: "model to attack" },
+                prompt: { type: "string", description: "the jailbreak attempt" },
+                family: { type: "string", description: "attack family (1-16)" },
+              },
+              required: ["model", "prompt"],
+            },
+          },
         ],
       });
     }
@@ -103,6 +116,20 @@ export default {
       }
       if (name === "measure") {
         return respond({ content: [{ type: "text", text: JSON.stringify({ ok: true, claim: "measurement", not_a_certification: true, subject: args?.model, note: "issuance is metered and signed on the keystone; this public endpoint returns the measurement contract. Contact councilof.ai for paid signed issuance." }) }] });
+      }
+      if (name === "jail-probe") {
+        // Verdict contract — sandbox execution + signed card issuance happens on the fleet.
+        // The escape-room game reads this and shows the real verdict when the backend is wired.
+        return respond({ content: [{ type: "text", text: JSON.stringify({
+          ok: true,
+          axis: "jail",
+          not_a_certification: true,
+          model: args?.model,
+          family: args?.family || "unknown",
+          verdict: "contract",
+          note: "jail-probe contract received. Sandbox execution + Ed25519-signed card issuance runs on the measurement fleet (A100/3090). Connect the fleet endpoint for live verdicts.",
+          verify: "python3 -m csoai_core.verify --card <signed-card>",
+        }) }] });
       }
       return respondError(-32602, "tool not found");
     }
