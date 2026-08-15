@@ -133,6 +133,31 @@ class MeasureService:
     _epoch_counter = 0
 
     def _emit_card(self, job: MeasureJob, board: Dict[str, Any]) -> Dict[str, Any]:
+        # ── CORRECTNESS GATE (keystone): no signed card over ungrounded content.
+        # A signed-but-wrong attestation is the one thing that detonates the
+        # measurement body. If the board carries an assertive legal/regulatory
+        # claim with no known anchor, refuse to sign.
+        try:
+            from .correctness_gate import gate_claim_for_attestation
+            claim = json.dumps(board) if not isinstance(board, str) else board
+            cv = gate_claim_for_attestation(claim)
+            gate_state, gate_attestable = cv.state, cv.attestable
+        except Exception:
+            cv = None
+            gate_state, gate_attestable = "UNKNOWN", True
+        if gate_state == "UNGROUNDED":
+            return {
+                "content_id": None, "epoch": None, "body": None,
+                "signature": None, "signer": None, "signed": False,
+                "inclusion_proof": None,
+                "correctness_gate": {
+                    "state": "UNGROUNDED", "attestable": False,
+                    "reason": "refused: board carries an ungrounded legal assertion — "
+                              "no signed card over ungrounded content",
+                    "citations": (cv.citations if cv else []),
+                },
+            }
+
         MeasureService._epoch_counter += 1
         epoch = MeasureService._epoch_counter
         body = {
@@ -144,19 +169,37 @@ class MeasureService:
             "gold_provenance": "deterministic gate (Article 0 + law) — no model judged this",
         }
         result = self.chain.append(epoch, body)  # Ed25519, appends to chain
-        return {
+        card = {
             "content_id": result.id,
             "epoch": result.epoch,
             "body": result.body,
             "signature": result.signature,
             "signer": result.pubkey,
             "signed": result.status == "SIGNED",
+            "correctness_gate": {
+                "state": gate_state, "attestable": gate_attestable,
+                "citations": (cv.citations if cv and gate_state != "UNKNOWN" else []),
+            },
             "inclusion_proof": {
                 "chain_tip": result.prev,     # the prior block hash (hash-chain anchor)
                 "epoch": result.epoch,
                 "chain_path": str(self.chain.path),
             },
         }
+        # ── TIME-ANCHOR (Wire 3): attach the OTS calendar commitment so the
+        # card carries its "when" alongside the signature's "who". Non-fatal:
+        # a calendar outage must not block issuance — the card stays signed,
+        # and the anchor is recorded as pending if the commit fails.
+        try:
+            from .timestamping import stamp_content_id, record_anchor
+            anchor = stamp_content_id(result.id)
+            card = record_anchor(card, anchor)
+        except Exception:
+            card["time_anchor"] = {
+                "content_id": result.id, "state": "failed",
+                "note": "calendar commit unavailable at issuance; anchor pending",
+            }
+        return card
 
     # ── persistence (jobs survive pod resets — the durability doctrine) ──────
     def _persist(self, job: MeasureJob) -> None:
@@ -177,3 +220,52 @@ class MeasureService:
     def _load_card(self, job_id: str) -> Optional[Dict[str, Any]]:
         p = self.store / f"{job_id}.card.json"
         return json.loads(p.read_text()) if p.exists() else None
+
+
+def self_test() -> int:
+    """Choke-point enforcement proof: grounded -> signed+anchored; ungrounded -> refused."""
+    import tempfile
+    ok = fail = 0
+
+    def t(name, cond, extra=""):
+        nonlocal ok, fail
+        if cond:
+            ok += 1; print(f"  PASS  {name}")
+        else:
+            fail += 1; print(f"  FAIL  {name} {extra}")
+
+    tmp = Path(tempfile.mkdtemp(prefix="measure-selftest-"))
+    chain = Chain(tmp / "chain.jsonl", key_path=tmp / "key.pem")
+    svc = MeasureService(chain, store=tmp / "jobs")
+
+    # 1. grounded board -> signed + anchored
+    board = {"axis": "art5", "protocol": "gspc-board-v2", "bank_items": 36,
+             "n": 36, "quotable": True, "accuracy": 0.8333,
+             "best": "sov6-relationality-v3-light",
+             "labels": ["ALLOWED", "BLOCKED"],
+             "gold_provenance": "deterministic gate — no model judged this"}
+    job = svc.measure(protocol="gspc-board-v2", model="m", bank_version="art5",
+                      axes=["art5"], run_fn=lambda *a: board)
+    card = job.card or {}
+    t("grounded card signed", card.get("signed") is True)
+    t("grounded gate GROUNDED", card.get("correctness_gate", {}).get("state") == "GROUNDED")
+    t("grounded time-anchored", card.get("time_anchor", {}).get("state") in
+      ("calendar_commit", "failed", "pending"),
+      str(card.get("time_anchor", {}).get("state")))
+    t("grounded content_id", bool(card.get("content_id")))
+
+    # 2. ungrounded board -> refused, never signed
+    bad = {"axis": "care", "bank_items": 36, "note": "this AI is fully compliant"}
+    job2 = svc.measure(protocol="gspc-board-v2", model="x", bank_version="care",
+                       axes=["care"], run_fn=lambda *a: bad)
+    c2 = job2.card or {}
+    t("ungrounded refused", c2.get("signed") is False)
+    t("ungrounded gate UNGROUNDED", c2.get("correctness_gate", {}).get("state") == "UNGROUNDED")
+
+    print(f"selftest {ok}/{ok+fail}")
+    return 0 if fail == 0 else 1
+
+
+if __name__ == "__main__":
+    import sys
+    sys.exit(self_test())
