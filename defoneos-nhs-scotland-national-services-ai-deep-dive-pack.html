@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>NHS Scotland — National Services Governance AI Deep-Dive Pack</title>
+<meta name="description" content="National Services Scotland (NSS) is the national board providing shared services to NHS Scotland: national procurement, IT infrastructure, counter-fraud, practi">
+<link rel="canonical" href="https://csoai.org/defoneos-nhs-scotland-national-services-ai-deep-dive-pack.html">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Space+Grotesk:wght@700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#050816;--panel:#0d1330;--gold:#d4af37;--sov:#6dd5ff;--accent:#f97316;--text:#e2e8f0;--muted:#94a3b8;--border:#1e2954;--danger:#ef4444;--green:#4ade80}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;line-height:1.6;min-height:100vh}
+.eu-banner{background:linear-gradient(135deg,#991b1b,#7f1d1d);padding:12px 24px;text-align:center;font-size:13px;border-bottom:2px solid #dc2626}
+.eu-banner a{color:#fca5a5}
+nav{display:flex;gap:24px;padding:16px 24px;background:var(--panel);border-bottom:1px solid var(--border);flex-wrap:wrap}
+nav a{color:var(--muted);text-decoration:none;font-size:14px}
+nav a:hover{color:var(--sov)}
+.container{max-width:1200px;margin:0 auto;padding:40px 24px}
+h1{font-family:'Space Grotesk',monospace;font-size:2.2rem;background:linear-gradient(135deg,var(--gold),var(--sov));-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:8px}
+.subtitle{color:var(--muted);font-size:1rem;margin-bottom:32px}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:40px}
+.stat-card{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:20px;text-align:center}
+.stat-num{font-family:'Space Grotesk',monospace;font-size:2rem;color:var(--sov)}
+.stat-label{color:var(--muted);font-size:13px;margin-top:4px}
+h2{font-family:'Space Grotesk',monospace;font-size:1.5rem;color:var(--sov);margin:40px 0 20px;padding-bottom:8px;border-bottom:1px solid var(--border)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:16px}
+.card{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:20px}
+.card .tag{display:inline-block;background:var(--accent);color:#000;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:700;margin-bottom:10px}
+.card h3{font-size:1rem;margin-bottom:8px;color:#fff}
+.card p{font-size:13px;color:var(--muted);line-height:1.5}
+.priority .tag{background:var(--green)}
+.mcp .tag{background:#fbbf24;color:#000}
+.red-lines{border:1px solid var(--danger);border-radius:12px;padding:24px;margin-bottom:40px}
+.red-lines h3{color:var(--danger);margin-bottom:16px;font-size:1.1rem}
+.red-lines ul{list-style:none}
+.red-lines li{padding:10px 0;border-bottom:1px solid var(--border);font-size:13px}
+.red-lines li:last-child{border-bottom:none}
+.red-lines li::before{content:'🚫 '}
+.engagement{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:40px}
+.engagement .step{flex:1;min-width:180px;background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:20px;text-align:center}
+.engagement .step .num{display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:50%;background:var(--green);color:#000;font-weight:700;font-size:16px;margin-bottom:10px}
+.engagement .step h4{font-size:14px;color:#fff;margin-bottom:6px}
+.engagement .step p{font-size:12px;color:var(--muted)}
+.cta{display:flex;gap:16px;flex-wrap:wrap;margin:40px 0}
+.cta a{display:inline-block;padding:14px 28px;background:var(--gold);color:#000;border-radius:8px;text-decoration:none;font-weight:700;font-size:15px}
+.cta a.secondary{border:1px solid var(--gold);background:transparent;color:var(--gold)}
+footer{background:var(--panel);border-top:1px solid var(--border);padding:24px;text-align:center;font-size:12px;color:var(--muted);margin-top:40px}
+</style>
+</head>
+<body>
+<div class="eu-banner">
+⚖️ EU AI Act — Article 50 Transparency + Annex III High-Risk classification applies to public-sector AI deployment. This pack is a governance-design document — not a compliance certification. <a href="/governance-master.html">Read the governance framework →</a>
+</div>
+<nav>
+<a href="/">🜏 Home</a>
+<a href="/governance-master.html">Master</a>
+<a href="/govbench.html">GovBench</a>
+<a href="/sitemap.html">Index</a>
+<a href="/sitemap.xml">Sitemap</a>
+</nav>
+<div class="container">
+<h1>NHS Scotland — National Services Governance AI Deep-Dive Pack</h1>
+<p class="subtitle">National Health Service Shared Services · NHS Scotland — National Services Scotland (NSS) · 2026-08-15</p>
+
+<div class="stats">
+<div class="stat-card"><div class="stat-num">12</div><div class="stat-label">Entry Points</div></div>
+<div class="stat-card"><div class="stat-num">8</div><div class="stat-label">Transformation Priorities</div></div>
+<div class="stat-card"><div class="stat-num">6</div><div class="stat-label">MCP Servers</div></div>
+<div class="stat-card"><div class="stat-num">6</div><div class="stat-label">Red Lines</div></div>
+</div>
+
+<h2>📋 12 Entry Points</h2>
+<div class="grid"><div class="card">
+<span class="tag">PROCUREMENT</span>
+<h3>National Procurement & Supply Chain</h3>
+<p>NHS National Procurement delivers ~£1.3bn annual spend across 22 NHS boards. AI spend analytics, demand forecasting, and supplier risk screening.</p>
+</div><div class="card">
+<span class="tag">DIGITAL</span>
+<h3>National IT Infrastructure & Digital</h3>
+<p>NSS operates national NHS Scotland digital infrastructure including the SWAN network and national systems. AI capacity planning, incident response analytics, and system health monitoring.</p>
+</div><div class="card">
+<span class="tag">ASSURE</span>
+<h3>NHS Scotland Assure — Built Environment</h3>
+<p>Healthcare built-environment assurance: estates risk, infection control standards, and capital project governance. AI estate condition modelling and capital prioritisation.</p>
+</div><div class="card">
+<span class="tag">FRAUD</span>
+<h3>Counter Fraud Services</h3>
+<p>NHS Scotland Counter Fraud Services investigates fraud against the health service. AI anomaly detection, network analytics, and fraud-pattern classification.</p>
+</div><div class="card">
+<span class="tag">PRACTITIONER</span>
+<h3>Practitioner Services</h3>
+<p>Payments to GPs, dentists, pharmacists, and ophthalmic practitioners; primary care contractor governance. AI payment integrity checks and contract compliance analytics.</p>
+</div><div class="card">
+<span class="tag">BLOOD</span>
+<h3>Scottish National Blood Transfusion Service</h3>
+<p>SNBTS supplies blood, tissues, and cellular therapies to all Scottish hospitals. AI blood-stock modelling, donor recruitment analytics, and expiry-loss minimisation.</p>
+</div><div class="card">
+<span class="tag">ORGAN</span>
+<h3>Organ & Tissue Donation Services</h3>
+<p>Organ and tissue donation under opt-out legislation. AI donor-register matching, theatre coordination, and consent-record verification.</p>
+</div><div class="card">
+<span class="tag">DATA</span>
+<h3>Data, Intelligence & Statistics</h3>
+<p>National health data services supporting NHS boards and research. AI health-data linkage, pseudonymisation governance, and statistical disclosure control.</p>
+</div><div class="card">
+<span class="tag">CYBER</span>
+<h3>Information Governance & Cyber Security</h3>
+<p>NHS Scotland cyber operations, incident response, and IG assurance. AI threat intelligence triage, phishing detection, and security-log analytics.</p>
+</div><div class="card">
+<span class="tag">WORKFORCE</span>
+<h3>Workforce & HR Shared Services</h3>
+<p>NHS Scotland employs ~180,000 staff; national workforce systems and pay. AI workforce analytics, roster optimisation, and wellbeing early-warning analytics.</p>
+</div><div class="card">
+<span class="tag">CLIMATE</span>
+<h3>Sustainability & Net Zero</h3>
+<p>NHS Scotland climate emergency strategy — net zero by 2040. AI carbon analytics for estates, fleet, and anaesthetic gases.</p>
+</div><div class="card">
+<span class="tag">GOVERNANCE</span>
+<h3>Governance & Scottish Parliament Accountability</h3>
+<p>NSS accountability to Scottish Ministers, Scottish Parliament Health Committee, and Audit Scotland. AI governance reporting and parliamentary evidence automation.</p>
+</div></div>
+
+<h2>🎯 8 Transformation Priorities</h2>
+<div class="grid"><div class="card priority">
+<span class="tag">Priority 1</span>
+<p style="font-size:13px;color:var(--muted)">AI procurement spend analytics replacing quarterly manual returns → live category dashboards, 15% addressable savings identification</p>
+</div><div class="card priority">
+<span class="tag">Priority 2</span>
+<p style="font-size:13px;color:var(--muted)">AI blood-stock demand forecasting replacing static rotation tables → 30% expiry-loss reduction, emergency-reserve integrity</p>
+</div><div class="card priority">
+<span class="tag">Priority 3</span>
+<p style="font-size:13px;color:var(--muted)">AI counter-fraud anomaly detection replacing sample-based audit → continuous transaction screening, earlier intervention</p>
+</div><div class="card priority">
+<span class="tag">Priority 4</span>
+<p style="font-size:13px;color:var(--muted)">AI payment integrity checks replacing manual post-payment review → 90% faster contract-compliance verification</p>
+</div><div class="card priority">
+<span class="tag">Priority 5</span>
+<p style="font-size:13px;color:var(--muted)">AI cyber threat-intelligence triage replacing manual alert queues → 40% faster mean-time-to-respond, analyst focus on real threats</p>
+</div><div class="card priority">
+<span class="tag">Priority 6</span>
+<p style="font-size:13px;color:var(--muted)">AI estate condition modelling replacing quinquennial surveys → continuous condition monitoring, evidence-based capital prioritisation</p>
+</div><div class="card priority">
+<span class="tag">Priority 7</span>
+<p style="font-size:13px;color:var(--muted)">AI pseudonymisation governance replacing manual disclosure review → safer national data linkage, auditable statistical disclosure control</p>
+</div><div class="card priority">
+<span class="tag">Priority 8</span>
+<p style="font-size:13px;color:var(--muted)">AI workforce wellbeing early-warning replacing annual staff surveys → proactive intervention, absence-pattern analytics</p>
+</div></div>
+
+<h2>🔧 6 MCP Servers</h2>
+<div class="grid"><div class="card mcp">
+<span class="tag">MCP 1 · Procurement</span>
+<h3>defoneos-nhs-procurement-mcp</h3>
+<p>Spend analytics, demand forecasting, supplier risk screening, category dashboards</p>
+</div><div class="card mcp">
+<span class="tag">MCP 2 · Compliance</span>
+<h3>defoneos-nhs-data-governance-mcp</h3>
+<p>Pseudonymisation governance, statistical disclosure control, data-sharing audit, Caldicott alignment</p>
+</div><div class="card mcp">
+<span class="tag">MCP 3 · Security</span>
+<h3>defoneos-nhs-cyber-mcp</h3>
+<p>Threat intelligence triage, phishing detection, security-log analytics, incident response support</p>
+</div><div class="card mcp">
+<span class="tag">MCP 4 · Finance</span>
+<h3>defoneos-nhs-fraud-mcp</h3>
+<p>Anomaly detection, fraud-pattern classification, network analytics, investigation support</p>
+</div><div class="card mcp">
+<span class="tag">MCP 5 · Health</span>
+<h3>defoneos-nhs-blood-supply-mcp</h3>
+<p>Blood-stock modelling, donor recruitment analytics, expiry-loss minimisation, reserve monitoring</p>
+</div><div class="card mcp">
+<span class="tag">MCP 6 · HR</span>
+<h3>defoneos-nhs-workforce-mcp</h3>
+<p>Workforce analytics, roster optimisation, wellbeing early-warning, absence-pattern analytics</p>
+</div></div>
+
+<h2>🚫 6 Non-Negotiable Red Lines</h2>
+<div class="red-lines">
+<h3>Governance Red Lines — Anchored in Statute</h3>
+<ul><li>National Health Service (Scotland) Act 1978 — Duties of Scottish Ministers and health boards. AI must not ration, triage, or gate clinical care outside clinical governance structures.</li><li>Data Protection Act 2018 / UK GDPR — Health data is special-category data; NHS Caldicott principles apply. AI must operate under the strictest health-data regime with documented lawful basis.</li><li>Human Tissue (Authorisation) (Scotland) Act 2019 — Deemed-authorisation organ donation. AI must never auto-finalise consent records; the register and family contact remain human-governed.</li><li>NHS Scotland Clinical Governance — DCB-style clinical-safety standards for health software. AI must not provide diagnostic or treatment recommendations without clinical safety assurance.</li><li>Equality Act 2010 (Public Sector Equality Duty) — AI must not introduce or amplify health-outcome disparities across protected characteristics.</li><li>Scotland Act 1998 — Devolved health and social care. AI must respect Scottish devolved competence, NHS Scotland Board autonomy, and Scottish Parliament accountability.</li></ul>
+</div>
+
+<h2>⚡ 5-Step Engagement Model</h2>
+<div class="engagement"><div class="step">
+<div class="num">1</div>
+<h4>Discovery</h4>
+<p>Map the agency's statutory duties, data flows, and governance gaps against the 12-entry-point framework.</p>
+</div><div class="step">
+<div class="num">2</div>
+<h4>Governance Design</h4>
+<p>Design AI governance architecture, risk appetite, and red-line enforcement aligned to devolved legislation.</p>
+</div><div class="step">
+<div class="num">3</div>
+<h4>Pilot</h4>
+<p>Deploy 2-3 MCP servers in a sandboxed environment with agency data; measure governance outcomes against baseline.</p>
+</div><div class="step">
+<div class="num">4</div>
+<h4>Scale</h4>
+<p>Expand to the full 6-MCP stack with agency-wide deployment, training, and change management.</p>
+</div><div class="step">
+<div class="num">5</div>
+<h4>Assure</h4>
+<p>Continuous monitoring, 33-agent BFT council verification, and DEFONEOS-SEAL credential issuance.</p>
+</div></div>
+
+<div class="cta">
+<a href="/governance-master.html">📋 Request OWEM RFQ →</a>
+<a href="/article-50.html" class="secondary">⚖️ Article 50 Passport →</a>
+</div>
+
+<p style="font-size:12px;color:var(--muted);margin-top:24px">Legislation backbone: National Health Service (Scotland) Act 1978 / NHS Reform (Scotland) Act 2004 / Public Bodies (Joint Working) (Scotland) Act 2014 / Human Tissue (Authorisation) (Scotland) Act 2019 / DPA 2018 + UK GDPR / Equality Act 2010 / Scotland Act 1998 / Climate Change (Scotland) Act 2009</p>
+<p style="font-size:12px;color:var(--muted);margin-top:8px">SIGIL: defoneos-tick289-defoneos-nhs-scotland-national-b52dc5437fc25bc9</p>
+</div>
+<footer>
+<p>CSOAI Ltd (UK 16939677) · csoai.org · compliance@csoai.org</p>
+<p>DEFONEOS is a UK-sovereign open-source AI governance framework built on the meok substrate. UK-sovereign. AUKUS-compatible. Audit-grade.</p>
+<p style="margin-top:8px;font-size:11px">© 2026 CSOAI Ltd. All trademarks acknowledged. This document is a governance-design artefact — not a compliance certification.</p>
+</footer>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": "NHS Scotland \u2014 National Services Governance AI Deep-Dive Pack",
+  "description": "National Services Scotland (NSS) is the national board providing shared services to NHS Scotland: national procurement, IT infrastructure, counter-fraud, practitioner services, and the Scottish National Blood Transfusion Service. This deep-dive pack maps 12 entry points for AI governance, 8 transformation priorities, 6 MCP servers, and 6 non-negotiable red lines anchored in Scottish health legislation.",
+  "url": "https://csoai.org/defoneos-nhs-scotland-national-services-ai-deep-dive-pack.html",
+  "about": {
+    "@type": "GovernmentService",
+    "name": "NHS Scotland \u2014 National Services Scotland (NSS)",
+    "url": "https://www.nhsnss.org/"
+  },
+  "provider": {
+    "@type": "Organization",
+    "name": "CSOAI Ltd",
+    "legalName": "CSOAI Ltd"
+  },
+  "datePublished": "2026-08-15"
+}
+</script>
+</body>
+</html>

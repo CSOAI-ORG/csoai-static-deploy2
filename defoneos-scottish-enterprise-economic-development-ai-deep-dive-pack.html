@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Scottish Enterprise — Economic Development AI Deep-Dive Pack</title>
+<meta name="description" content="Scottish Enterprise is Scotland's national economic development agency, supporting business growth, innovation, exports, and inward investment. This deep-dive p">
+<link rel="canonical" href="https://csoai.org/defoneos-scottish-enterprise-economic-development-ai-deep-dive-pack.html">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Space+Grotesk:wght@700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#050816;--panel:#0d1330;--gold:#d4af37;--sov:#6dd5ff;--accent:#f97316;--text:#e2e8f0;--muted:#94a3b8;--border:#1e2954;--danger:#ef4444;--green:#4ade80}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;line-height:1.6;min-height:100vh}
+.eu-banner{background:linear-gradient(135deg,#991b1b,#7f1d1d);padding:12px 24px;text-align:center;font-size:13px;border-bottom:2px solid #dc2626}
+.eu-banner a{color:#fca5a5}
+nav{display:flex;gap:24px;padding:16px 24px;background:var(--panel);border-bottom:1px solid var(--border);flex-wrap:wrap}
+nav a{color:var(--muted);text-decoration:none;font-size:14px}
+nav a:hover{color:var(--sov)}
+.container{max-width:1200px;margin:0 auto;padding:40px 24px}
+h1{font-family:'Space Grotesk',monospace;font-size:2.2rem;background:linear-gradient(135deg,var(--gold),var(--sov));-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:8px}
+.subtitle{color:var(--muted);font-size:1rem;margin-bottom:32px}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:40px}
+.stat-card{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:20px;text-align:center}
+.stat-num{font-family:'Space Grotesk',monospace;font-size:2rem;color:var(--sov)}
+.stat-label{color:var(--muted);font-size:13px;margin-top:4px}
+h2{font-family:'Space Grotesk',monospace;font-size:1.5rem;color:var(--sov);margin:40px 0 20px;padding-bottom:8px;border-bottom:1px solid var(--border)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:16px}
+.card{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:20px}
+.card .tag{display:inline-block;background:var(--accent);color:#000;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:700;margin-bottom:10px}
+.card h3{font-size:1rem;margin-bottom:8px;color:#fff}
+.card p{font-size:13px;color:var(--muted);line-height:1.5}
+.priority .tag{background:var(--green)}
+.mcp .tag{background:#fbbf24;color:#000}
+.red-lines{border:1px solid var(--danger);border-radius:12px;padding:24px;margin-bottom:40px}
+.red-lines h3{color:var(--danger);margin-bottom:16px;font-size:1.1rem}
+.red-lines ul{list-style:none}
+.red-lines li{padding:10px 0;border-bottom:1px solid var(--border);font-size:13px}
+.red-lines li:last-child{border-bottom:none}
+.red-lines li::before{content:'🚫 '}
+.engagement{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:40px}
+.engagement .step{flex:1;min-width:180px;background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:20px;text-align:center}
+.engagement .step .num{display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:50%;background:var(--green);color:#000;font-weight:700;font-size:16px;margin-bottom:10px}
+.engagement .step h4{font-size:14px;color:#fff;margin-bottom:6px}
+.engagement .step p{font-size:12px;color:var(--muted)}
+.cta{display:flex;gap:16px;flex-wrap:wrap;margin:40px 0}
+.cta a{display:inline-block;padding:14px 28px;background:var(--gold);color:#000;border-radius:8px;text-decoration:none;font-weight:700;font-size:15px}
+.cta a.secondary{border:1px solid var(--gold);background:transparent;color:var(--gold)}
+footer{background:var(--panel);border-top:1px solid var(--border);padding:24px;text-align:center;font-size:12px;color:var(--muted);margin-top:40px}
+</style>
+</head>
+<body>
+<div class="eu-banner">
+⚖️ EU AI Act — Article 50 Transparency + Annex III High-Risk classification applies to public-sector AI deployment. This pack is a governance-design document — not a compliance certification. <a href="/governance-master.html">Read the governance framework →</a>
+</div>
+<nav>
+<a href="/">🜏 Home</a>
+<a href="/governance-master.html">Master</a>
+<a href="/govbench.html">GovBench</a>
+<a href="/sitemap.html">Index</a>
+<a href="/sitemap.xml">Sitemap</a>
+</nav>
+<div class="container">
+<h1>Scottish Enterprise — Economic Development AI Deep-Dive Pack</h1>
+<p class="subtitle">Economic Development & Innovation · Scottish Enterprise · 2026-08-15</p>
+
+<div class="stats">
+<div class="stat-card"><div class="stat-num">12</div><div class="stat-label">Entry Points</div></div>
+<div class="stat-card"><div class="stat-num">8</div><div class="stat-label">Transformation Priorities</div></div>
+<div class="stat-card"><div class="stat-num">6</div><div class="stat-label">MCP Servers</div></div>
+<div class="stat-card"><div class="stat-num">6</div><div class="stat-label">Red Lines</div></div>
+</div>
+
+<h2>📋 12 Entry Points</h2>
+<div class="grid"><div class="card">
+<span class="tag">GROWTH</span>
+<h3>Business Growth & Account Management</h3>
+<p>Account-managed support for high-growth Scottish companies. AI growth-potential scoring, intervention matching, and outcome tracking.</p>
+</div><div class="card">
+<span class="tag">INNOVATION</span>
+<h3>Innovation & R&D Support</h3>
+<p>Grants and support for company R&D, academic collaboration, and commercialisation. AI project-screening analytics and innovation-mapping.</p>
+</div><div class="card">
+<span class="tag">FDI</span>
+<h3>Investment & Foreign Direct Investment</h3>
+<p>Inward investment attraction and investor pipeline for Scotland. AI FDI opportunity matching, site-selection analytics, and investor-intelligence.</p>
+</div><div class="card">
+<span class="tag">EXPORT</span>
+<h3>Export Support & Trade (SDI)</h3>
+<p>Scottish Development International supports exporters across global markets. AI export-market opportunity mapping and trade-barrier intelligence.</p>
+</div><div class="card">
+<span class="tag">ENERGY</span>
+<h3>Energy Transition & Low Carbon</h3>
+<p>Support for offshore wind, hydrogen, and net-zero supply chains. AI project-readiness screening and supply-chain gap analytics.</p>
+</div><div class="card">
+<span class="tag">MANUFACTURING</span>
+<h3>Digital & Advanced Manufacturing</h3>
+<p>Digital adoption, Industry 4.0, and advanced manufacturing transformation. AI adoption-readiness assessment and productivity analytics.</p>
+</div><div class="card">
+<span class="tag">LIFESCIENCES</span>
+<h3>Life Sciences & Health Innovation</h3>
+<p>Scottish life sciences cluster support and company growth. AI clinical-trial pipeline mapping and cluster analytics.</p>
+</div><div class="card">
+<span class="tag">FUNDING</span>
+<h3>Financial Readiness & Funding</h3>
+<p>Grant, loan, and equity-readiness support with public funds. AI subsidy-control compliance screening and fund-integrity analytics.</p>
+</div><div class="card">
+<span class="tag">PLACE</span>
+<h3>Place, Property & Infrastructure</h3>
+<p>Scottish Enterprise property portfolio, speculative buildings, and site regeneration. AI portfolio performance analytics and place-based impact modelling.</p>
+</div><div class="card">
+<span class="tag">INTELLIGENCE</span>
+<h3>Data Analytics & Economic Intelligence</h3>
+<p>Scottish economic data, company intelligence, and evaluation. AI economic forecasting and intervention counterfactual analysis.</p>
+</div><div class="card">
+<span class="tag">FAIRWORK</span>
+<h3>Equality, Fair Work & Inclusive Growth</h3>
+<p>Fair Work First conditionality and inclusive-growth objectives. AI fair-work compliance tracking and equality analytics.</p>
+</div><div class="card">
+<span class="tag">GOVERNANCE</span>
+<h3>Governance & Scottish Government Accountability</h3>
+<p>Scottish Enterprise accountability to Scottish Ministers, Scottish Parliament Economy Committee, and Audit Scotland. AI governance reporting and evaluation automation.</p>
+</div></div>
+
+<h2>🎯 8 Transformation Priorities</h2>
+<div class="grid"><div class="card priority">
+<span class="tag">Priority 1</span>
+<p style="font-size:13px;color:var(--muted)">AI growth-potential scoring replacing manual account reviews → consistent intervention matching, measurable outcome tracking</p>
+</div><div class="card priority">
+<span class="tag">Priority 2</span>
+<p style="font-size:13px;color:var(--muted)">AI export-market opportunity mapping replacing static market guides → live opportunity feeds, sector-country fit scoring</p>
+</div><div class="card priority">
+<span class="tag">Priority 3</span>
+<p style="font-size:13px;color:var(--muted)">AI FDI pipeline analytics replacing spreadsheet tracking → real-time pipeline dashboards, aftercare risk early-warning</p>
+</div><div class="card priority">
+<span class="tag">Priority 4</span>
+<p style="font-size:13px;color:var(--muted)">AI energy-transition supply-chain gap analytics replacing consultancy studies → continuous gap mapping, project-readiness screening</p>
+</div><div class="card priority">
+<span class="tag">Priority 5</span>
+<p style="font-size:13px;color:var(--muted)">AI subsidy-control compliance screening replacing manual checks → automatic Subsidy Control Act 2022 boundary checking</p>
+</div><div class="card priority">
+<span class="tag">Priority 6</span>
+<p style="font-size:13px;color:var(--muted)">AI economic intelligence dashboards replacing annual evaluation reports → continuous counterfactual analysis, live KPIs</p>
+</div><div class="card priority">
+<span class="tag">Priority 7</span>
+<p style="font-size:13px;color:var(--muted)">AI fair-work compliance tracking replacing periodic audits → continuous Fair Work First conditionality monitoring</p>
+</div><div class="card priority">
+<span class="tag">Priority 8</span>
+<p style="font-size:13px;color:var(--muted)">AI governance reporting replacing quarterly manual returns → automated Scottish Government-ready evidence packs</p>
+</div></div>
+
+<h2>🔧 6 MCP Servers</h2>
+<div class="grid"><div class="card mcp">
+<span class="tag">MCP 1 · Economy</span>
+<h3>defoneos-enterprise-growth-mcp</h3>
+<p>Growth-potential scoring, intervention matching, account analytics, outcome tracking</p>
+</div><div class="card mcp">
+<span class="tag">MCP 2 · Trade</span>
+<h3>defoneos-export-intelligence-mcp</h3>
+<p>Export-market opportunity mapping, trade-barrier intelligence, sector-country fit scoring</p>
+</div><div class="card mcp">
+<span class="tag">MCP 3 · Investment</span>
+<h3>defoneos-fdi-pipeline-mcp</h3>
+<p>FDI opportunity matching, investor intelligence, pipeline dashboards, aftercare monitoring</p>
+</div><div class="card mcp">
+<span class="tag">MCP 4 · Compliance</span>
+<h3>defoneos-subsidy-control-mcp</h3>
+<p>Subsidy Control Act 2022 boundary checking, fund-integrity analytics, transparency-return automation</p>
+</div><div class="card mcp">
+<span class="tag">MCP 5 · Energy</span>
+<h3>defoneos-energy-transition-mcp</h3>
+<p>Offshore-wind and hydrogen supply-chain gap analytics, project-readiness screening, cluster mapping</p>
+</div><div class="card mcp">
+<span class="tag">MCP 6 · Intelligence</span>
+<h3>defoneos-economic-intelligence-mcp</h3>
+<p>Economic forecasting, intervention counterfactual analysis, evaluation analytics, KPI dashboards</p>
+</div></div>
+
+<h2>🚫 6 Non-Negotiable Red Lines</h2>
+<div class="red-lines">
+<h3>Governance Red Lines — Anchored in Statute</h3>
+<ul><li>Subsidy Control Act 2022 — Public subsidy decisions are statutory determinations. AI must never autonomously approve, deny, or vary subsidy awards; it screens and surfaces.</li><li>Enterprise and New Towns (Scotland) Act 1990 — Scottish Enterprise statutory functions. AI must operate within statutory powers and Scottish Government direction.</li><li>UK State-aid / WTO subsidy boundary — Cross-border effects analysis is a legal determination. AI flags risk; legally-qualified officials decide.</li><li>Data Protection Act 2018 — Confidential company financial data, trade secrets, and commercial-in-confidence material. AI must enforce need-to-know access and retention limits.</li><li>Freedom of Information (Scotland) Act 2002 — Public-interest and commercial-harm exemptions. AI must support, not pre-empt, FOI determinations.</li><li>Climate Change (Scotland) Act 2009 + Fair Work conditionality — Net-zero and fair-work duties. AI must not optimise purely for economic return against statutory net-zero and Fair Work First objectives.</li></ul>
+</div>
+
+<h2>⚡ 5-Step Engagement Model</h2>
+<div class="engagement"><div class="step">
+<div class="num">1</div>
+<h4>Discovery</h4>
+<p>Map the agency's statutory duties, data flows, and governance gaps against the 12-entry-point framework.</p>
+</div><div class="step">
+<div class="num">2</div>
+<h4>Governance Design</h4>
+<p>Design AI governance architecture, risk appetite, and red-line enforcement aligned to devolved legislation.</p>
+</div><div class="step">
+<div class="num">3</div>
+<h4>Pilot</h4>
+<p>Deploy 2-3 MCP servers in a sandboxed environment with agency data; measure governance outcomes against baseline.</p>
+</div><div class="step">
+<div class="num">4</div>
+<h4>Scale</h4>
+<p>Expand to the full 6-MCP stack with agency-wide deployment, training, and change management.</p>
+</div><div class="step">
+<div class="num">5</div>
+<h4>Assure</h4>
+<p>Continuous monitoring, 33-agent BFT council verification, and DEFONEOS-SEAL credential issuance.</p>
+</div></div>
+
+<div class="cta">
+<a href="/governance-master.html">📋 Request OWEM RFQ →</a>
+<a href="/article-50.html" class="secondary">⚖️ Article 50 Passport →</a>
+</div>
+
+<p style="font-size:12px;color:var(--muted);margin-top:24px">Legislation backbone: Enterprise and New Towns (Scotland) Act 1990 / Subsidy Control Act 2022 / Scotland Act 1998 / DPA 2018 / FOI (Scotland) Act 2002 / Equality Act 2010 / Climate Change (Scotland) Act 2009 / Economic Crime and Corporate Transparency Act 2023</p>
+<p style="font-size:12px;color:var(--muted);margin-top:8px">SIGIL: defoneos-tick289-defoneos-scottish-enterprise-e-b52dc5437fc25bc9</p>
+</div>
+<footer>
+<p>CSOAI Ltd (UK 16939677) · csoai.org · compliance@csoai.org</p>
+<p>DEFONEOS is a UK-sovereign open-source AI governance framework built on the meok substrate. UK-sovereign. AUKUS-compatible. Audit-grade.</p>
+<p style="margin-top:8px;font-size:11px">© 2026 CSOAI Ltd. All trademarks acknowledged. This document is a governance-design artefact — not a compliance certification.</p>
+</footer>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": "Scottish Enterprise \u2014 Economic Development AI Deep-Dive Pack",
+  "description": "Scottish Enterprise is Scotland's national economic development agency, supporting business growth, innovation, exports, and inward investment. This deep-dive pack maps 12 entry points for AI governance, 8 transformation priorities, 6 MCP servers, and 6 non-negotiable red lines anchored in Scottish economic development legislation and UK subsidy control.",
+  "url": "https://csoai.org/defoneos-scottish-enterprise-economic-development-ai-deep-dive-pack.html",
+  "about": {
+    "@type": "GovernmentService",
+    "name": "Scottish Enterprise",
+    "url": "https://www.scottish-enterprise.com/"
+  },
+  "provider": {
+    "@type": "Organization",
+    "name": "CSOAI Ltd",
+    "legalName": "CSOAI Ltd"
+  },
+  "datePublished": "2026-08-15"
+}
+</script>
+</body>
+</html>
