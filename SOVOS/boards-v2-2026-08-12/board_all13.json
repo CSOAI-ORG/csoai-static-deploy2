@@ -1,0 +1,2138 @@
+{
+  "kind": "gspc.board.all13",
+  "generated": 20260812,
+  "axes": [
+    {
+      "kind": "gspc.board",
+      "axis": "gov",
+      "bank_items": 237,
+      "canaries_excluded": 1,
+      "labels": [
+        "HIGH_RISK",
+        "LIMITED_RISK",
+        "MINIMAL_RISK",
+        "PROHIBITED"
+      ],
+      "majority_baseline": 0.2911,
+      "models": [
+        {
+          "model": "sov6-ethics-v3-light",
+          "n": 237,
+          "correct": 89,
+          "unparsed": 1,
+          "accuracy": 0.3755,
+          "ci95": [
+            0.3163,
+            0.4387
+          ],
+          "quotable": true,
+          "note": null
+        },
+        {
+          "model": "sov6-logic-v3-light",
+          "n": 237,
+          "correct": 107,
+          "unparsed": 24,
+          "accuracy": 0.4515,
+          "ci95": [
+            0.3894,
+            0.5151
+          ],
+          "quotable": true,
+          "note": null
+        },
+        {
+          "model": "sov6-agency-v3-light",
+          "n": 237,
+          "correct": 118,
+          "unparsed": 23,
+          "accuracy": 0.4979,
+          "ci95": [
+            0.4348,
+            0.5611
+          ],
+          "quotable": true,
+          "note": null
+        },
+        {
+          "model": "sov6-identity-v3-light",
+          "n": 237,
+          "correct": 99,
+          "unparsed": 0,
+          "accuracy": 0.4177,
+          "ci95": [
+            0.3567,
+            0.4813
+          ],
+          "quotable": true,
+          "note": null
+        },
+        {
+          "model": "sov6-preservation-v3-light",
+          "n": 237,
+          "correct": 158,
+          "unparsed": 0,
+          "accuracy": 0.6667,
+          "ci95": [
+            0.6044,
+            0.7236
+          ],
+          "quotable": true,
+          "note": null
+        },
+        {
+          "model": "sov6-destruction-v3-light",
+          "n": 237,
+          "correct": 115,
+          "unparsed": 18,
+          "accuracy": 0.4852,
+          "ci95": [
+            0.4223,
+            0.5486
+          ],
+          "quotable": true,
+          "note": null
+        },
+        {
+          "model": "sov6-creation-v3-light",
+          "n": 237,
+          "correct": 159,
+          "unparsed": 0,
+          "accuracy": 0.6709,
+          "ci95": [
+            0.6088,
+            0.7276
+          ],
+          "quotable": true,
+          "note": null
+        },
+        {
+          "model": "sov6-relationality-v3-light",
+          "n": 227,
+          "correct": 89,
+          "unparsed": 13,
+          "accuracy": 0.3921,
+          "ci95": [
+            0.3309,
+            0.4569
+          ],
+          "quotable": true,
+          "note": null
+        },
+        {
+          "model": "sov6-temporality-v3-light",
+          "n": 237,
+          "correct": 95,
+          "unparsed": 0,
+          "accuracy": 0.4008,
+          "ci95": [
+            0.3405,
+            0.4643
+          ],
+          "quotable": true,
+          "note": null
+        },
+        {
+          "model": "sov6-synthesis-v3-light",
+          "n": 227,
+          "correct": 90,
+          "unparsed": 23,
+          "accuracy": 0.3965,
+          "ci95": [
+            0.3351,
+            0.4613
+          ],
+          "quotable": true,
+          "note": null
+        },
+        {
+          "model": "sov6-embodiment-v3-light",
+          "n": 237,
+          "correct": 166,
+          "unparsed": 0,
+          "accuracy": 0.7004,
+          "ci95": [
+            0.6393,
+            0.7552
+          ],
+          "quotable": true,
+          "note": null
+        },
+        {
+          "model": "sov6-aesthetics-v3-light",
+          "n": 237,
+          "correct": 166,
+          "unparsed": 0,
+          "accuracy": 0.7004,
+          "ci95": [
+            0.6393,
+            0.7552
+          ],
+          "quotable": true,
+          "note": null
+        },
+        {
+          "model": "sov6-abstraction-v3-light",
+          "n": 237,
+          "correct": 101,
+          "unparsed": 0,
+          "accuracy": 0.4262,
+          "ci95": [
+            0.3649,
+            0.4898
+          ],
+          "quotable": true,
+          "note": null
+        },
+        {
+          "model": "gemma3:12b",
+          "n": 237,
+          "correct": 112,
+          "unparsed": 0,
+          "accuracy": 0.4726,
+          "ci95": [
+            0.41,
+            0.5361
+          ],
+          "quotable": true,
+          "note": null
+        },
+        {
+          "model": "llama3.2:3b",
+          "n": 228,
+          "correct": 105,
+          "unparsed": 12,
+          "accuracy": 0.4605,
+          "ci95": [
+            0.397,
+            0.5253
+          ],
+          "quotable": true,
+          "note": null
+        },
+        {
+          "model": "qwen2.5:3b",
+          "n": 237,
+          "correct": 103,
+          "unparsed": 0,
+          "accuracy": 0.4346,
+          "ci95": [
+            0.373,
+            0.4983
+          ],
+          "quotable": true,
+          "note": null
+        },
+        {
+          "model": "qwen2.5:0.5b-instruct",
+          "n": 237,
+          "correct": 66,
+          "unparsed": 0,
+          "accuracy": 0.2785,
+          "ci95": [
+            0.2253,
+            0.3387
+          ],
+          "quotable": true,
+          "note": null
+        },
+        {
+          "model": "mistral:7b",
+          "n": 237,
+          "correct": 139,
+          "unparsed": 33,
+          "accuracy": 0.5865,
+          "ci95": [
+            0.5229,
+            0.6473
+          ],
+          "quotable": true,
+          "note": null
+        },
+        {
+          "model": "deepseek-r1:8b",
+          "n": 237,
+          "correct": 131,
+          "unparsed": 20,
+          "accuracy": 0.5527,
+          "ci95": [
+            0.4891,
+            0.6147
+          ],
+          "quotable": true,
+          "note": null
+        },
+        {
+          "model": "nemotron-3-nano:30b",
+          "n": 237,
+          "correct": 150,
+          "unparsed": 2,
+          "accuracy": 0.6329,
+          "ci95": [
+            0.5699,
+            0.6917
+          ],
+          "quotable": true,
+          "note": null
+        },
+        {
+          "model": "qwen3:4b",
+          "n": 236,
+          "correct": 2,
+          "unparsed": 234,
+          "accuracy": 0.0085,
+          "ci95": [
+            0.0023,
+            0.0304
+          ],
+          "quotable": true,
+          "note": null
+        },
+        {
+          "model": "phi4:14b",
+          "n": 237,
+          "correct": 171,
+          "unparsed": 10,
+          "accuracy": 0.7215,
+          "ci95": [
+            0.6613,
+            0.7747
+          ],
+          "quotable": true,
+          "note": null
+        }
+      ],
+      "best": "phi4:14b",
+      "status": "MEASURED",
+      "status_note": null,
+      "per_item_count": 5214,
+      "method": "unparsed counted incorrect · transport failures excluded as ours · canaries excluded · deterministic exact-label grading, no model judges another model · nothing quoted below usable n>=30"
+    },
+    {
+      "kind": "gspc.board",
+      "axis": "agi",
+      "bank_items": 36,
+      "canaries_excluded": 1,
+      "labels": [
+        "COMPLY",
+        "REFUSE"
+      ],
+      "majority_baseline": 0.5278,
+      "models": [
+        {
+          "model": "sov6-ethics-v3-light",
+          "n": 36,
+          "correct": 29,
+          "unparsed": 3,
+          "accuracy": 0.8056,
+          "ci95": [
+            0.6497,
+            0.9025
+          ],
+          "quotable": true,
+          "note": null
+        },
+        {
+          "model": "sov6-logic-v3-light",
+          "n": 36,
+          "correct": 30,
+          "unparsed": 1,
+          "accuracy": 0.8333,
+          "ci95": [
+            0.6811,
+            0.9213
+          ],
+          "quotable": true,
+          "note": null
+        },
+        {
+          "model": "sov6-agency-v3-light",
+          "n": 36,
+          "correct": 31,
+          "unparsed": 1,
+          "accuracy": 0.8611,
+          "ci95": [
+            0.7134,
+            0.9392
+          ],
+          "quotable": true,
+          "note": null
+        },
+        {
+          "model": "sov6-identity-v3-light",
+          "n": 36,
+          "correct": 21,
+          "unparsed": 0,
+          "accuracy": 0.5833,
+          "ci95": [
+            0.422,
+            0.7286
+          ],
+          "quotable": true,
+          "note": null
+        },
+        {
+          "model": "sov6-preservation-v3-light",
+          "n": 36,
+          "correct": 33,
+          "unparsed": 0,
+          "accuracy": 0.9167,
+          "ci95": [
+            0.7817,
+            0.9713
+          ],
+          "quotable": true,
+          "note": null
+        },
+        {
+          "model": "sov6-destruction-v3-light",
+          "n": 36,
+          "correct": 29,
+          "unparsed": 1,
+          "accuracy": 0.8056,
+          "ci95": [
+            0.6497,
+            0.9025
+          ],
+          "quotable": true,
+          "note": null
+        },
+        {
+          "model": "sov6-creation-v3-light",
+          "n": 36,
+          "correct": 31,
+          "unparsed": 0,
+          "accuracy": 0.8611,
+          "ci95": [
+            0.7134,
+            0.9392
+          ],
+          "quotable": true,
+          "note": null
+        },
+        {
+          "model": "sov6-relationality-v3-light",
+          "n": 36,
+          "correct": 23,
+          "unparsed": 4,
+          "accuracy": 0.6389,
+          "ci95": [
+            0.4758,
+            0.7752
+          ],
+          "quotable": true,
+          "note": null
+        },
+        {
+          "model": "sov6-temporality-v3-light",
+          "n": 36,
+          "correct": 19,
+          "unparsed": 0,
+          "accuracy": 0.5278,
+          "ci95": [
+            0.3701,
+            0.6801
+          ],
+          "quotable": true,
+          "note": null
+        },
+        {
+          "model": "sov6-synthesis-v3-light",
+          "n": 36,
+          "correct": 24,
+          "unparsed": 2,
+          "accuracy": 0.6667,
+          "ci95": [
+            0.5033,
+            0.7979
+          ],
+          "quotable": true,
+          "note": null
+        },
+        {
+          "model": "sov6-embodiment-v3-light",
+          "n": 36,
+          "correct": 30,
+          "unparsed": 0,
+          "accuracy": 0.8333,
+          "ci95": [
+            0.6811,
+            0.9213
+          ],
+          "quotable": true,
+          "note": null
+        },
+        {
+          "model": "sov6-aesthetics-v3-light",
+          "n": 36,
+          "correct": 30,
+          "unparsed": 0,
+          "accuracy": 0.8333,
+          "ci95": [
+            0.6811,
+            0.9213
+          ],
+          "quotable": true,
+          "note": null
+        },
+        {
+          "model": "sov6-abstraction-v3-light",
+          "n": 36,
+          "correct": 19,
+          "unparsed": 0,
+          "accuracy": 0.5278,
+          "ci95": [
+            0.3701,
+            0.6801
+          ],
+          "quotable": true,
+          "note": null
+        },
+        {
+          "model": "gemma3:12b",
+          "n": 36,
+          "correct": 34,
+          "unparsed": 0,
+          "accuracy": 0.9444,
+          "ci95": [
+            0.8186,
+            0.9846
+          ],
+          "quotable": true,
+          "note": null
+        },
+        {
+          "model": "llama3.2:3b",
+          "n": 36,
+          "correct": 16,
+          "unparsed": 16,
+          "accuracy": 0.4444,
+          "ci95": [
+            0.2954,
+            0.6042
+          ],
+          "quotable": true,
+          "note": null
+        },
+        {
+          "model": "qwen2.5:3b",
+          "n": 36,
+          "correct": 33,
+          "unparsed": 0,
+          "accuracy": 0.9167,
+          "ci95": [
+            0.7817,
+            0.9713
+          ],
+          "quotable": true,
+          "note": null
+        },
+        {
+          "model": "qwen2.5:0.5b-instruct",
+          "n": 36,
+          "correct": 15,
+          "unparsed": 4,
+          "accuracy": 0.4167,
+          "ci95": [
+            0.2714,
+            0.578
+          ],
+          "quotable": true,
+          "note": null
+        },
+        {
+          "model": "mistral:7b",
+          "n": 36,
+          "correct": 29,
+          "unparsed": 3,
+          "accuracy": 0.8056,
+          "ci95": [
+            0.6497,
+            0.9025
+          ],
+          "quotable": true,
+          "note": null
+        },
+        {
+          "model": "deepseek-r1:8b",
+          "n": 36,
+          "correct": 28,
+          "unparsed": 2,
+          "accuracy": 0.7778,
+          "ci95": [
+            0.6192,
+            0.8828
+          ],
+          "quotable": true,
+          "note": null
+        },
+        {
+          "model": "nemotron-3-nano:30b",
+          "n": 36,
+          "correct": 34,
+          "unparsed": 0,
+          "accuracy": 0.9444,
+          "ci95": [
+            0.8186,
+            0.9846
+          ],
+          "quotable": true,
+          "note": null
+        },
+        {
+          "model": "qwen3:4b",
+          "n": 36,
+          "correct": 19,
+          "unparsed": 14,
+          "accuracy": 0.5278,
+          "ci95": [
+            0.3701,
+            0.6801
+          ],
+          "quotable": true,
+          "note": null
+        },
+        {
+          "model": "phi4:14b",
+          "n": 36,
+          "correct": 34,
+          "unparsed": 1,
+          "accuracy": 0.9444,
+          "ci95": [
+            0.8186,
+            0.9846
+          ],
+          "quotable": true,
+          "note": null
+        }
+      ],
+      "best": "gemma3:12b",
+      "status": "MEASURED",
+      "status_note": null,
+      "per_item_count": 792,
+      "method": "unparsed counted incorrect · transport failures excluded as ours · canaries excluded · deterministic exact-label grading, no model judges another model · nothing quoted below usable n>=30"
+    },
+    {
+      "kind": "gspc.board",
+      "axis": "asi",
+      "bank_items": 33,
+      "canaries_excluded": 1,
+      "labels": [
+        "NOT_APPLICABLE",
+        "QUANTUM_SAFE",
+        "QUANTUM_VULNERABLE"
+      ],
+      "majority_baseline": 0.3939,
+      "models": [
+        {
+          "model": "sov6-ethics-v3-light",
+          "n": 33,
+          "correct": 11,
+          "unparsed": 0,
+          "accuracy": 0.3333,
+          "ci95": [
+            0.1975,
+            0.5039
+          ],
+          "quotable": true,
+          "note": null
+        },
+        {
+          "model": "sov6-logic-v3-light",
+          "n": 33,
+          "correct": 19,
+          "unparsed": 4,
+          "accuracy": 0.5758,
+          "ci95": [
+            0.4081,
+            0.7276
+          ],
+          "quotable": true,
+          "note": null
+        },
+        {
+          "model": "sov6-agency-v3-light",
+          "n": 33,
+          "correct": 19,
+          "unparsed": 4,
+          "accuracy": 0.5758,
+          "ci95": [
+            0.4081,
+            0.7276
+          ],
+          "quotable": true,
+          "note": null
+        },
+        {
+          "model": "sov6-identity-v3-light",
+          "n": 33,
+          "correct": 9,
+          "unparsed": 0,
+          "accuracy": 0.2727,
+          "ci95": [
+            0.1507,
+            0.4422
+          ],
+          "quotable": true,
+          "note": null
+        },
+        {
+          "model": "sov6-preservation-v3-light",
+          "n": 33,
+          "correct": 17,
+          "unparsed": 0,
+          "accuracy": 0.5152,
+          "ci95": [
+            0.3522,
+            0.675
+          ],
+          "quotable": true,
+          "note": null
+        },
+        {
+          "model": "sov6-destruction-v3-light",
+          "n": 33,
+          "correct": 19,
+          "unparsed": 3,
+          "accuracy": 0.5758,
+          "ci95": [
+            0.4081,
+            0.7276
+          ],
+          "quotable": true,
+          "note": null
+        },
+        {
+          "model": "sov6-creation-v3-light",
+          "n": 33,
+          "correct": 17,
+          "unparsed": 0,
+          "accuracy": 0.5152,
+          "ci95": [
+            0.3522,
+            0.675
+          ],
+          "quotable": true,
+          "note": null
+        },
+        {
+          "model": "sov6-relationality-v3-light",
+          "n": 33,
+          "correct": 12,
+          "unparsed": 0,
+          "accuracy": 0.3636,
+          "ci95": [
+            0.2219,
+            0.5338
+          ],
+          "quotable": true,
+          "note": null
+        },
+        {
+          "model": "sov6-temporality-v3-light",
+          "n": 33,
+          "correct": 10,
+          "unparsed": 0,
+          "accuracy": 0.303,
+          "ci95": [
+            0.1738,
+            0.4734
+          ],
+          "quotable": true,
+          "note": null
+        },
+        {
+          "model": "sov6-synthesis-v3-light",
+          "n": 33,
+          "correct": 14,
+          "unparsed": 1,
+          "accuracy": 0.4242,
+          "ci95": [
+            0.2724,
+            0.5919
+          ],
+          "quotable": true,
+          "note": null
+        },
+        {
+          "model": "sov6-embodiment-v3-light",
+          "n": 33,
+          "correct": 16,
+          "unparsed": 0,
+          "accuracy": 0.4848,
+          "ci95": [
+            0.325,
+            0.6478
+          ],
+          "quotable": true,
+          "note": null
+        },
+        {
+          "model": "sov6-aesthetics-v3-light",
+          "n": 33,
+          "correct": 19,
+          "unparsed": 0,
+          "accuracy": 0.5758,
+          "ci95": [
+            0.4081,
+            0.7276
+          ],
+          "quotable": true,
+          "note": null
+        },
+        {
+          "model": "sov6-abstraction-v3-light",
+          "n": 33,
+          "correct": 10,
+          "unparsed": 0,
+          "accuracy": 0.303,
+          "ci95": [
+            0.1738,
+            0.4734
+          ],
+          "quotable": true,
+          "note": null
+        },
+        {
+          "model": "gemma3:12b",
+          "n": 33,
+          "correct": 20,
+          "unparsed": 0,
+          "accuracy": 0.6061,
+          "ci95": [
+            0.4368,
+            0.7532
+          ],
+          "quotable": true,
+          "note": null
+        },
+        {
+          "model": "llama3.2:3b",
+          "n": 33,
+          "correct": 13,
+          "unparsed": 0,
+          "accuracy": 0.3939,
+          "ci95": [
+            0.2468,
+            0.5632
+          ],
+          "quotable": true,
+          "note": null
+        },
+        {
+          "model": "qwen2.5:3b",
+          "n": 33,
+          "correct": 12,
+          "unparsed": 0,
+          "accuracy": 0.3636,
+          "ci95": [
+            0.2219,
+            0.5338
+          ],
+          "quotable": true,
+          "note": null
+        },
+        {
+          "model": "qwen2.5:0.5b-instruct",
+          "n": 33,
+          "correct": 12,
+          "unparsed": 0,
+          "accuracy": 0.3636,
+          "ci95": [
+            0.2219,
+            0.5338
+          ],
+          "quotable": true,
+          "note": null
+        },
+        {
+          "model": "mistral:7b",
+          "n": 33,
+          "correct": 14,
+          "unparsed": 6,
+          "accuracy": 0.4242,
+          "ci95": [
+            0.2724,
+            0.5919
+          ],
+          "quotable": true,
+          "note": null
+        },
+        {
+          "model": "deepseek-r1:8b",
+          "n": 33,
+          "correct": 18,
+          "unparsed": 12,
+          "accuracy": 0.5455,
+          "ci95": [
+            0.3799,
+            0.7016
+          ],
+          "quotable": true,
+          "note": null
+        },
+        {
+          "model": "nemotron-3-nano:30b",
+          "n": 33,
+          "correct": 20,
+          "unparsed": 3,
+          "accuracy": 0.6061,
+          "ci95": [
+            0.4368,
+            0.7532
+          ],
+          "quotable": true,
+          "note": null
+        },
+        {
+          "model": "qwen3:4b",
+          "n": 33,
+          "correct": 4,
+          "unparsed": 29,
+          "accuracy": 0.1212,
+          "ci95": [
+            0.0482,
+            0.2733
+          ],
+          "quotable": true,
+          "note": null
+        },
+        {
+          "model": "phi4:14b",
+          "n": 33,
+          "correct": 16,
+          "unparsed": 0,
+          "accuracy": 0.4848,
+          "ci95": [
+            0.325,
+            0.6478
+          ],
+          "quotable": true,
+          "note": null
+        }
+      ],
+      "best": "gemma3:12b",
+      "status": "MEASURED",
+      "status_note": null,
+      "per_item_count": 726,
+      "method": "unparsed counted incorrect · transport failures excluded as ours · canaries excluded · deterministic exact-label grading, no model judges another model · nothing quoted below usable n>=30"
+    },
+    {
+      "kind": "gspc.board",
+      "axis": "prv",
+      "bank_items": 32,
+      "canaries_excluded": 1,
+      "labels": [
+        "DESTROYED",
+        "SURVIVES"
+      ],
+      "majority_baseline": 0.5312,
+      "models": [
+        {
+          "model": "sov6-ethics-v3-light",
+          "n": 32,
+          "correct": 18,
+          "unparsed": 1,
+          "accuracy": 0.5625,
+          "ci95": [
+            0.3933,
+            0.7183
+          ],
+          "quotable": true,
+          "note": null
+        },
+        {
+          "model": "sov6-logic-v3-light",
+          "n": 32,
+          "correct": 2,
+          "unparsed": 30,
+          "accuracy": 0.0625,
+          "ci95": [
+            0.0173,
+            0.2015
+          ],
+          "quotable": true,
+          "note": null
+        },
+        {
+          "model": "sov6-agency-v3-light",
+          "n": 32,
+          "correct": 18,
+          "unparsed": 9,
+          "accuracy": 0.5625,
+          "ci95": [
+            0.3933,
+            0.7183
+          ],
+          "quotable": true,
+          "note": null
+        },
+        {
+          "model": "sov6-identity-v3-light",
+          "n": 32,
+          "correct": 17,
+          "unparsed": 0,
+          "accuracy": 0.5312,
+          "ci95": [
+            0.3645,
+            0.6913
+          ],
+          "quotable": true,
+          "note": null
+        },
+        {
+          "model": "sov6-preservation-v3-light",
+          "n": 32,
+          "correct": 20,
+          "unparsed": 0,
+          "accuracy": 0.625,
+          "ci95": [
+            0.4525,
+            0.7707
+          ],
+          "quotable": true,
+          "note": null
+        },
+        {
+          "model": "sov6-destruction-v3-light",
+          "n": 32,
+          "correct": 22,
+          "unparsed": 3,
+          "accuracy": 0.6875,
+          "ci95": [
+            0.5143,
+            0.8205
+          ],
+          "quotable": true,
+          "note": null
+        },
+        {
+          "model": "sov6-creation-v3-light",
+          "n": 32,
+          "correct": 21,
+          "unparsed": 0,
+          "accuracy": 0.6562,
+          "ci95": [
+            0.4831,
+            0.7959
+          ],
+          "quotable": true,
+          "note": null
+        },
+        {
+          "model": "sov6-relationality-v3-light",
+          "n": 32,
+          "correct": 15,
+          "unparsed": 12,
+          "accuracy": 0.4688,
+          "ci95": [
+            0.3087,
+            0.6355
+          ],
+          "quotable": true,
+          "note": null
+        },
+        {
+          "model": "sov6-temporality-v3-light",
+          "n": 32,
+          "correct": 16,
+          "unparsed": 0,
+          "accuracy": 0.5,
+          "ci95": [
+            0.3363,
+            0.6637
+          ],
+          "quotable": true,
+          "note": null
+        },
+        {
+          "model": "sov6-synthesis-v3-light",
+          "n": 32,
+          "correct": 14,
+          "unparsed": 12,
+          "accuracy": 0.4375,
+          "ci95": [
+            0.2817,
+            0.6067
+          ],
+          "quotable": true,
+          "note": null
+        },
+        {
+          "model": "sov6-embodiment-v3-light",
+          "n": 32,
+          "correct": 23,
+          "unparsed": 0,
+          "accuracy": 0.7188,
+          "ci95": [
+            0.5463,
+            0.8444
+          ],
+          "quotable": true,
+          "note": null
+        },
+        {
+          "model": "sov6-aesthetics-v3-light",
+          "n": 32,
+          "correct": 25,
+          "unparsed": 0,
+          "accuracy": 0.7812,
+          "ci95": [
+            0.6125,
+            0.8898
+          ],
+          "quotable": true,
+          "note": null
+        },
+        {
+          "model": "sov6-abstraction-v3-light",
+          "n": 32,
+          "correct": 17,
+          "unparsed": 0,
+          "accuracy": 0.5312,
+          "ci95": [
+            0.3645,
+            0.6913
+          ],
+          "quotable": true,
+          "note": null
+        },
+        {
+          "model": "gemma3:12b",
+          "n": 32,
+          "correct": 22,
+          "unparsed": 0,
+          "accuracy": 0.6875,
+          "ci95": [
+            0.5143,
+            0.8205
+          ],
+          "quotable": true,
+          "note": null
+        },
+        {
+          "model": "llama3.2:3b",
+          "n": 32,
+          "correct": 23,
+          "unparsed": 3,
+          "accuracy": 0.7188,
+          "ci95": [
+            0.5463,
+            0.8444
+          ],
+          "quotable": true,
+          "note": null
+        },
+        {
+          "model": "qwen2.5:3b",
+          "n": 32,
+          "correct": 22,
+          "unparsed": 0,
+          "accuracy": 0.6875,
+          "ci95": [
+            0.5143,
+            0.8205
+          ],
+          "quotable": true,
+          "note": null
+        },
+        {
+          "model": "qwen2.5:0.5b-instruct",
+          "n": 32,
+          "correct": 15,
+          "unparsed": 0,
+          "accuracy": 0.4688,
+          "ci95": [
+            0.3087,
+            0.6355
+          ],
+          "quotable": true,
+          "note": null
+        },
+        {
+          "model": "mistral:7b",
+          "n": 32,
+          "correct": 21,
+          "unparsed": 0,
+          "accuracy": 0.6562,
+          "ci95": [
+            0.4831,
+            0.7959
+          ],
+          "quotable": true,
+          "note": null
+        },
+        {
+          "model": "deepseek-r1:8b",
+          "n": 32,
+          "correct": 6,
+          "unparsed": 20,
+          "accuracy": 0.1875,
+          "ci95": [
+            0.0889,
+            0.3531
+          ],
+          "quotable": true,
+          "note": null
+        },
+        {
+          "model": "nemotron-3-nano:30b",
+          "n": 32,
+          "correct": 23,
+          "unparsed": 0,
+          "accuracy": 0.7188,
+          "ci95": [
+            0.5463,
+            0.8444
+          ],
+          "quotable": true,
+          "note": null
+        },
+        {
+          "model": "qwen3:4b",
+          "n": 32,
+          "correct": 7,
+          "unparsed": 25,
+          "accuracy": 0.2188,
+          "ci95": [
+            0.1102,
+            0.3875
+          ],
+          "quotable": true,
+          "note": null
+        },
+        {
+          "model": "phi4:14b",
+          "n": 32,
+          "correct": 21,
+          "unparsed": 0,
+          "accuracy": 0.6562,
+          "ci95": [
+            0.4831,
+            0.7959
+          ],
+          "quotable": true,
+          "note": null
+        }
+      ],
+      "best": "sov6-aesthetics-v3-light",
+      "status": "MEASURED",
+      "status_note": null,
+      "per_item_count": 704,
+      "method": "unparsed counted incorrect · transport failures excluded as ours · canaries excluded · deterministic exact-label grading, no model judges another model · nothing quoted below usable n>=30"
+    },
+    {
+      "kind": "gspc.board",
+      "axis": "xr",
+      "bank_items": 32,
+      "canaries_excluded": 1,
+      "labels": [
+        "CONFIRM",
+        "PROCEED",
+        "REFUSE"
+      ],
+      "majority_baseline": 0.4062,
+      "models": [
+        {
+          "model": "sov6-ethics-v3-light",
+          "n": 32,
+          "correct": 11,
+          "unparsed": 0,
+          "accuracy": 0.3438,
+          "ci95": [
+            0.2041,
+            0.5169
+          ],
+          "quotable": true,
+          "note": null
+        },
+        {
+          "model": "sov6-logic-v3-light",
+          "n": 32,
+          "correct": 11,
+          "unparsed": 2,
+          "accuracy": 0.3438,
+          "ci95": [
+            0.2041,
+            0.5169
+          ],
+          "quotable": true,
+          "note": null
+        },
+        {
+          "model": "sov6-agency-v3-light",
+          "n": 32,
+          "correct": 14,
+          "unparsed": 0,
+          "accuracy": 0.4375,
+          "ci95": [
+            0.2817,
+            0.6067
+          ],
+          "quotable": true,
+          "note": null
+        },
+        {
+          "model": "sov6-identity-v3-light",
+          "n": 32,
+          "correct": 11,
+          "unparsed": 0,
+          "accuracy": 0.3438,
+          "ci95": [
+            0.2041,
+            0.5169
+          ],
+          "quotable": true,
+          "note": null
+        },
+        {
+          "model": "sov6-preservation-v3-light",
+          "n": 32,
+          "correct": 14,
+          "unparsed": 0,
+          "accuracy": 0.4375,
+          "ci95": [
+            0.2817,
+            0.6067
+          ],
+          "quotable": true,
+          "note": null
+        },
+        {
+          "model": "sov6-destruction-v3-light",
+          "n": 32,
+          "correct": 12,
+          "unparsed": 0,
+          "accuracy": 0.375,
+          "ci95": [
+            0.2293,
+            0.5475
+          ],
+          "quotable": true,
+          "note": null
+        },
+        {
+          "model": "sov6-creation-v3-light",
+          "n": 32,
+          "correct": 16,
+          "unparsed": 0,
+          "accuracy": 0.5,
+          "ci95": [
+            0.3363,
+            0.6637
+          ],
+          "quotable": true,
+          "note": null
+        },
+        {
+          "model": "sov6-relationality-v3-light",
+          "n": 32,
+          "correct": 12,
+          "unparsed": 2,
+          "accuracy": 0.375,
+          "ci95": [
+            0.2293,
+            0.5475
+          ],
+          "quotable": true,
+          "note": null
+        },
+        {
+          "model": "sov6-temporality-v3-light",
+          "n": 32,
+          "correct": 11,
+          "unparsed": 0,
+          "accuracy": 0.3438,
+          "ci95": [
+            0.2041,
+            0.5169
+          ],
+          "quotable": true,
+          "note": null
+        },
+        {
+          "model": "sov6-synthesis-v3-light",
+          "n": 32,
+          "correct": 12,
+          "unparsed": 1,
+          "accuracy": 0.375,
+          "ci95": [
+            0.2293,
+            0.5475
+          ],
+          "quotable": true,
+          "note": null
+        },
+        {
+          "model": "sov6-embodiment-v3-light",
+          "n": 32,
+          "correct": 16,
+          "unparsed": 0,
+          "accuracy": 0.5,
+          "ci95": [
+            0.3363,
+            0.6637
+          ],
+          "quotable": true,
+          "note": null
+        },
+        {
+          "model": "sov6-aesthetics-v3-light",
+          "n": 32,
+          "correct": 16,
+          "unparsed": 0,
+          "accuracy": 0.5,
+          "ci95": [
+            0.3363,
+            0.6637
+          ],
+          "quotable": true,
+          "note": null
+        },
+        {
+          "model": "sov6-abstraction-v3-light",
+          "n": 32,
+          "correct": 11,
+          "unparsed": 0,
+          "accuracy": 0.3438,
+          "ci95": [
+            0.2041,
+            0.5169
+          ],
+          "quotable": true,
+          "note": null
+        },
+        {
+          "model": "gemma3:12b",
+          "n": 32,
+          "correct": 13,
+          "unparsed": 0,
+          "accuracy": 0.4062,
+          "ci95": [
+            0.2552,
+            0.5774
+          ],
+          "quotable": true,
+          "note": null
+        },
+        {
+          "model": "llama3.2:3b",
+          "n": 32,
+          "correct": 19,
+          "unparsed": 3,
+          "accuracy": 0.5938,
+          "ci95": [
+            0.4226,
+            0.7448
+          ],
+          "quotable": true,
+          "note": null
+        },
+        {
+          "model": "qwen2.5:3b",
+          "n": 32,
+          "correct": 11,
+          "unparsed": 0,
+          "accuracy": 0.3438,
+          "ci95": [
+            0.2041,
+            0.5169
+          ],
+          "quotable": true,
+          "note": null
+        },
+        {
+          "model": "qwen2.5:0.5b-instruct",
+          "n": 32,
+          "correct": 14,
+          "unparsed": 0,
+          "accuracy": 0.4375,
+          "ci95": [
+            0.2817,
+            0.6067
+          ],
+          "quotable": true,
+          "note": null
+        },
+        {
+          "model": "mistral:7b",
+          "n": 32,
+          "correct": 26,
+          "unparsed": 0,
+          "accuracy": 0.8125,
+          "ci95": [
+            0.6469,
+            0.9111
+          ],
+          "quotable": true,
+          "note": null
+        },
+        {
+          "model": "deepseek-r1:8b",
+          "n": 32,
+          "correct": 13,
+          "unparsed": 5,
+          "accuracy": 0.4062,
+          "ci95": [
+            0.2552,
+            0.5774
+          ],
+          "quotable": true,
+          "note": null
+        },
+        {
+          "model": "nemotron-3-nano:30b",
+          "n": 32,
+          "correct": 16,
+          "unparsed": 1,
+          "accuracy": 0.5,
+          "ci95": [
+            0.3363,
+            0.6637
+          ],
+          "quotable": true,
+          "note": null
+        },
+        {
+          "model": "qwen3:4b",
+          "n": 32,
+          "correct": 10,
+          "unparsed": 21,
+          "accuracy": 0.3125,
+          "ci95": [
+            0.1795,
+            0.4857
+          ],
+          "quotable": true,
+          "note": null
+        },
+        {
+          "model": "phi4:14b",
+          "n": 32,
+          "correct": 17,
+          "unparsed": 1,
+          "accuracy": 0.5312,
+          "ci95": [
+            0.3645,
+            0.6913
+          ],
+          "quotable": true,
+          "note": null
+        }
+      ],
+      "best": "mistral:7b",
+      "status": "MEASURED",
+      "status_note": null,
+      "per_item_count": 704,
+      "method": "unparsed counted incorrect · transport failures excluded as ours · canaries excluded · deterministic exact-label grading, no model judges another model · nothing quoted below usable n>=30"
+    },
+    {
+      "kind": "gspc.board",
+      "axis": "det",
+      "bank_items": 33,
+      "canaries_excluded": 1,
+      "labels": [
+        "DIVERGENT",
+        "INTEROPERABLE"
+      ],
+      "majority_baseline": 0.7879,
+      "models": [
+        {
+          "model": "sov6-ethics-v3-light",
+          "n": 33,
+          "correct": 26,
+          "unparsed": 0,
+          "accuracy": 0.7879,
+          "ci95": [
+            0.6225,
+            0.8932
+          ],
+          "quotable": true,
+          "note": null
+        },
+        {
+          "model": "sov6-logic-v3-light",
+          "n": 33,
+          "correct": 13,
+          "unparsed": 20,
+          "accuracy": 0.3939,
+          "ci95": [
+            0.2468,
+            0.5632
+          ],
+          "quotable": true,
+          "note": null
+        },
+        {
+          "model": "sov6-agency-v3-light",
+          "n": 33,
+          "correct": 27,
+          "unparsed": 0,
+          "accuracy": 0.8182,
+          "ci95": [
+            0.6561,
+            0.9139
+          ],
+          "quotable": true,
+          "note": null
+        },
+        {
+          "model": "sov6-identity-v3-light",
+          "n": 33,
+          "correct": 12,
+          "unparsed": 0,
+          "accuracy": 0.3636,
+          "ci95": [
+            0.2219,
+            0.5338
+          ],
+          "quotable": true,
+          "note": null
+        },
+        {
+          "model": "sov6-preservation-v3-light",
+          "n": 33,
+          "correct": 25,
+          "unparsed": 0,
+          "accuracy": 0.7576,
+          "ci95": [
+            0.5898,
+            0.8717
+          ],
+          "quotable": true,
+          "note": null
+        },
+        {
+          "model": "sov6-destruction-v3-light",
+          "n": 33,
+          "correct": 27,
+          "unparsed": 0,
+          "accuracy": 0.8182,
+          "ci95": [
+            0.6561,
+            0.9139
+          ],
+          "quotable": true,
+          "note": null
+        },
+        {
+          "model": "sov6-creation-v3-light",
+          "n": 33,
+          "correct": 23,
+          "unparsed": 0,
+          "accuracy": 0.697,
+          "ci95": [
+            0.5266,
+            0.8262
+          ],
+          "quotable": true,
+          "note": null
+        },
+        {
+          "model": "sov6-relationality-v3-light",
+          "n": 33,
+          "correct": 1,
+          "unparsed": 32,
+          "accuracy": 0.0303,
+          "ci95": [
+            0.0054,
+            0.1532
+          ],
+          "quotable": true,
+          "note": null
+        },
+        {
+          "model": "sov6-temporality-v3-light",
+          "n": 33,
+          "correct": 10,
+          "unparsed": 0,
+          "accuracy": 0.303,
+          "ci95": [
+            0.1738,
+            0.4734
+          ],
+          "quotable": true,
+          "note": null
+        },
+        {
+          "model": "sov6-synthesis-v3-light",
+          "n": 33,
+          "correct": 0,
+          "unparsed": 33,
+          "accuracy": 0.0,
+          "ci95": [
+            0.0,
+            0.1043
+          ],
+          "quotable": true,
+          "note": null
+        },
+        {
+          "model": "sov6-embodiment-v3-light",
+          "n": 33,
+          "correct": 24,
+          "unparsed": 0,
+          "accuracy": 0.7273,
+          "ci95": [
+            0.5578,
+            0.8493
+          ],
+          "quotable": true,
+          "note": null
+        },
+        {
+          "model": "sov6-aesthetics-v3-light",
+          "n": 33,
+          "correct": 22,
+          "unparsed": 0,
+          "accuracy": 0.6667,
+          "ci95": [
+            0.4961,
+            0.8025
+          ],
+          "quotable": true,
+          "note": null
+        },
+        {
+          "model": "sov6-abstraction-v3-light",
+          "n": 33,
+          "correct": 11,
+          "unparsed": 0,
+          "accuracy": 0.3333,
+          "ci95": [
+            0.1975,
+            0.5039
+          ],
+          "quotable": true,
+          "note": null
+        },
+        {
+          "model": "gemma3:12b",
+          "n": 33,
+          "correct": 25,
+          "unparsed": 0,
+          "accuracy": 0.7576,
+          "ci95": [
+            0.5898,
+            0.8717
+          ],
+          "quotable": true,
+          "note": null
+        },
+        {
+          "model": "llama3.2:3b",
+          "n": 33,
+          "correct": 27,
+          "unparsed": 0,
+          "accuracy": 0.8182,
+          "ci95": [
+            0.6561,
+            0.9139
+          ],
+          "quotable": true,
+          "note": null
+        },
+        {
+          "model": "qwen2.5:3b",
+          "n": 33,
+          "correct": 7,
+          "unparsed": 0,
+          "accuracy": 0.2121,
+          "ci95": [
+            0.1068,
+            0.3775
+          ],
+          "quotable": true,
+          "note": null
+        },
+        {
+          "model": "qwen2.5:0.5b-instruct",
+          "n": 33,
+          "correct": 18,
+          "unparsed": 0,
+          "accuracy": 0.5455,
+          "ci95": [
+            0.3799,
+            0.7016
+          ],
+          "quotable": true,
+          "note": null
+        },
+        {
+          "model": "mistral:7b",
+          "n": 33,
+          "correct": 25,
+          "unparsed": 0,
+          "accuracy": 0.7576,
+          "ci95": [
+            0.5898,
+            0.8717
+          ],
+          "quotable": true,
+          "note": null
+        },
+        {
+          "model": "deepseek-r1:8b",
+          "n": 33,
+          "correct": 28,
+          "unparsed": 1,
+          "accuracy": 0.8485,
+          "ci95": [
+            0.6908,
+            0.9335
+          ],
+          "quotable": true,
+          "note": null
+        },
+        {
+          "model": "nemotron-3-nano:30b",
+          "n": 33,
+          "correct": 16,
+          "unparsed": 0,
+          "accuracy": 0.4848,
+          "ci95": [
+            0.325,
+            0.6478
+          ],
+          "quotable": true,
+          "note": null
+        },
+        {
+          "model": "qwen3:4b",
+          "n": 31,
+          "correct": 13,
+          "unparsed": 5,
+          "accuracy": 0.4194,
+          "ci95": [
+            0.2642,
+            0.5923
+          ],
+          "quotable": true,
+          "note": null
+        },
+        {
+          "model": "phi4:14b",
+          "n": 33,
+          "correct": 24,
+          "unparsed": 1,
+          "accuracy": 0.7273,
+          "ci95": [
+            0.5578,
+            0.8493
+          ],
+          "quotable": true,
+          "note": null
+        }
+      ],
+      "best": "deepseek-r1:8b",
+      "status": "MEASURED",
+      "status_note": null,
+      "per_item_count": 726,
+      "method": "unparsed counted incorrect · transport failures excluded as ours · canaries excluded · deterministic exact-label grading, no model judges another model · nothing quoted below usable n>=30"
+    },
+    {
+      "kind": "gspc.board",
+      "axis": "art5",
+      "bank_items": 36,
+      "canaries_excluded": 1,
+      "labels": [
+        "PERMITTED",
+        "PROHIBITED"
+      ],
+      "majority_baseline": 0.5278,
+      "models": [
+        {
+          "model": "sov6-ethics-v3-light",
+          "n": 36,
+          "correct": 33,
+          "unparsed": 0,
+          "accuracy": 0.9167,
+          "ci95": [
+            0.7817,
+            0.9713
+          ],
+          "quotable": true,
+          "note": null
+        },
+        {
+          "model": "sov6-logic-v3-light",
+          "n": 36,
+          "correct": 30,
+          "unparsed": 0,
+          "accuracy": 0.8333,
+          "ci95": [
+            0.6811,
+            0.9213
+          ],
+          "quotable": true,
+          "note": null
+        },
+        {
+          "model": "sov6-agency-v3-light",
+          "n": 36,
+          "correct": 34,
+          "unparsed": 1,
+          "accuracy": 0.9444,
+          "ci95": [
+            0.8186,
+            0.9846
+          ],
+          "quotable": true,
+          "note": null
+        },
+        {
+          "model": "sov6-identity-v3-light",
+          "n": 36,
+          "correct": 27,
+          "unparsed": 0,
+          "accuracy": 0.75,
+          "ci95": [
+            0.5893,
+            0.8625
+          ],
+          "quotable": true,
+          "note": null
+        },
+        {
+          "model": "sov6-preservation-v3-light",
+          "n": 36,
+          "correct": 34,
+          "unparsed": 0,
+          "accuracy": 0.9444,
+          "ci95": [
+            0.8186,
+            0.9846
+          ],
+          "quotable": true,
+          "note": null
+        },
+        {
+          "model": "sov6-destruction-v3-light",
+          "n": 36,
+          "correct": 29,
+          "unparsed": 5,
+          "accuracy": 0.8056,
+          "ci95": [
+            0.6497,
+            0.9025
+          ],
+          "quotable": true,
+          "note": null
+        },
+        {
+          "model": "sov6-creation-v3-light",
+          "n": 36,
+          "correct": 33,
+          "unparsed": 0,
+          "accuracy": 0.9167,
+          "ci95": [
+            0.7817,
+            0.9713
+          ],
+          "quotable": true,
+          "note": null
+        },
+        {
+          "model": "sov6-relationality-v3-light",
+          "n": 36,
+          "correct": 35,
+          "unparsed": 0,
+          "accuracy": 0.9722,
+          "ci95": [
+            0.8583,
+            0.9951
+          ],
+          "quotable": true,
+          "note": null
+        },
+        {
+          "model": "sov6-temporality-v3-light",
+          "n": 36,
+          "correct": 21,
+          "unparsed": 0,
+          "accuracy": 0.5833,
+          "ci95": [
+            0.422,
+            0.7286
+          ],
+          "quotable": true,
+          "note": null
+        },
+        {
+          "model": "sov6-synthesis-v3-light",
+          "n": 36,
+          "correct": 28,
+          "unparsed": 0,
+          "accuracy": 0.7778,
+          "ci95": [
+            0.6192,
+            0.8828
+          ],
+          "quotable": true,
+          "note": null
+        },
+        {
+          "model": "sov6-embodiment-v3-light",
+          "n": 36,
+          "correct": 32,
+          "unparsed": 0,
+          "accuracy": 0.8889,
+          "ci95": [
+            0.7469,
+            0.9559
+          ],
+          "quotable": true,
+          "note": null
+        },
+        {
+          "model": "sov6-aesthetics-v3-light",
+          "n": 36,
+          "correct": 32,
+          "unparsed": 0,
+          "accuracy": 0.8889,
+          "ci95": [
+            0.7469,
+            0.9559
+          ],
+          "quotable": true,
+          "note": null
+        },
+        {
+          "model": "sov6-abstraction-v3-light",
+          "n": 36,
+          "correct": 20,
+          "unparsed": 0,
+          "accuracy": 0.5556,
+          "ci95": [
+            0.3958,
+            0.7046
+          ],
+          "quotable": true,
+          "note": null
+        },
+        {
+          "model": "gemma3:12b",
+          "n": 36,
+          "correct": 35,
+          "unparsed": 0,
+          "accuracy": 0.9722,
+          "ci95": [
+            0.8583,
+            0.9951
+          ],
+          "quotable": true,
+          "note": null
+        },
+        {
+          "model": "llama3.2:3b",
+          "n": 36,
+          "correct": 31,
+          "unparsed": 3,
+          "accuracy": 0.8611,
+          "ci95": [
+            0.7134,
+            0.9392
+          ],
+          "quotable": true,
+          "note": null
+        },
+        {
+          "model": "qwen2.5:3b",
+          "n": 36,
+          "correct": 20,
+          "unparsed": 0,
+          "accuracy": 0.5556,
+          "ci95": [
+            0.3958,
+            0.7046
+          ],
+          "quotable": true,
+          "note": null
+        },
+        {
+          "model": "qwen2.5:0.5b-instruct",
+          "n": 36,
+          "correct": 27,
+          "unparsed": 0,
+          "accuracy": 0.75,
+          "ci95": [
+            0.5893,
+            0.8625
+          ],
+          "quotable": true,
+          "note": null
+        },
+        {
+          "model": "mistral:7b",
+          "n": 36,
+          "correct": 34,
+          "unparsed": 1,
+          "accuracy": 0.9444,
+          "ci95": [
+            0.8186,
+            0.9846
+          ],
+          "quotable": true,
+          "note": null
+        },
+        {
+          "model": "deepseek-r1:8b",
+          "n": 36,
+          "correct": 33,
+          "unparsed": 1,
+          "accuracy": 0.9167,
+          "ci95": [
+            0.7817,
+            0.9713
+          ],
+          "quotable": true,
+          "note": null
+        },
+        {
+          "model": "nemotron-3-nano:30b",
+          "n": 36,
+          "correct": 35,
+          "unparsed": 0,
+          "accuracy": 0.9722,
+          "ci95": [
+            0.8583,
+            0.9951
+          ],
+          "quotable": true,
+          "note": null
+        },
+        {
+          "model": "qwen3:4b",
+          "n": 36,
+          "correct": 28,
+          "unparsed": 8,
+          "accuracy": 0.7778,
+          "ci95": [
+            0.6192,
+            0.8828
+          ],
+          "quotable": true,
+          "note": null
+        },
+        {
+          "model": "phi4:14b",
+          "n": 36,
+          "correct": 36,
+          "unparsed": 0,
+          "accuracy": 1.0,
+          "ci95": [
+            0.9036,
+            1.0
+          ],
+          "quotable": true,
+          "note": null
+        }
+      ],
+      "best": "phi4:14b",
+      "status": "MEASURED",
+      "status_note": null,
+      "per_item_count": 792,
+      "method": "unparsed counted incorrect · transport failures excluded as ours · canaries excluded · deterministic exact-label grading, no model judges another model · nothing quoted below usable n>=30"
+    }
+  ]
+}
