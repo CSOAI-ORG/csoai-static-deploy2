@@ -474,6 +474,47 @@ def register_mcp_tools(mcp):
         "Config for the WebGPU particle constellation overlay (orbital swarm, sigil, threat pulse)."
     ))(particle_config)
 
+    # ---- End-user visual tools (the 3D / city / arena / colosseum iframe surfaces) ----
+    from meok_sovereign_globe_mcp.end_user_tools import (
+        render_globe as _render_globe,
+        render_world as _render_world,
+        render_city as _render_city,
+        render_arena as _render_arena,
+        render_colosseum as _render_colosseum,
+        render_bft33 as _render_bft33,
+        get_live_state as _get_live_state,
+        list_surfaces as _list_surfaces,
+        install_for_platform as _install_for_platform,
+    )
+    mcp.tool(name="sov_render_globe", description=(
+        "Return iframe-able 3D Cesium globe with sovereign hive markers."
+    ))(_render_globe)
+    mcp.tool(name="sov_render_world", description=(
+        "Return iframe-able photorealistic 3D Earth (world-3d)."
+    ))(_render_world)
+    mcp.tool(name="sov_render_city", description=(
+        "Return iframe-able 3D Council City with 33 clan districts (sov-city-3d)."
+    ))(_render_city)
+    mcp.tool(name="sov_render_arena", description=(
+        "Return iframe-able live arena dashboard (real rounds streaming)."
+    ))(_render_arena)
+    mcp.tool(name="sov_render_colosseum", description=(
+        "Return iframe-able colosseum / SOV33 multi-arena hub."
+    ))(_render_colosseum)
+    mcp.tool(name="sov_render_bft33", description=(
+        "Return iframe-able 33-voter BFT council live view."
+    ))(_render_bft33)
+    mcp.tool(name="sov_get_live_state", description=(
+        "Return JSON of all live substrate state (arena rounds + openttd + health)."
+    ))(_get_live_state)
+    mcp.tool(name="sov_list_surfaces", description=(
+        "List every 3D/visual surface available on the sovereign substrate."
+    ))(_list_surfaces)
+    mcp.tool(name="sov_install_for_platform", description=(
+        "Return the install command/snippet for the given AI platform "
+        "(claude_desktop, chatgpt, cursor, copilot_vscode, gemini_cli)."
+    ))(_install_for_platform)
+
 
 def serve():
     from mcp.server.fastmcp import FastMCP

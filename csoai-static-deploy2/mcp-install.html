@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🜏 Install Sovereign OS into Any AI Platform · CSOAI</title>
+<meta name="description" content="Install the sovereign OS into ChatGPT, Claude, Cursor, Copilot, Gemini. 3D globe + 33-clan city + live arena render inside your chat. No website visit needed.">
+<style>
+:root{--bg:#02060f;--panel:#0e1419;--line:#1f2937;--ink:#e5e5e5;--mut:#9aa7b4;--gold:#fbbf24;--green:#10b981;--red:#ef4444;--blue:#60a5fa;--purple:#a855f7}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,system-ui,monospace;background:var(--bg);color:var(--ink);line-height:1.55;padding-bottom:80px}
+.nav{background:rgba(2,6,15,0.95);padding:.75rem 1.2rem;display:flex;gap:.8rem;flex-wrap:wrap;align-items:center;border-bottom:1px solid rgba(251,191,36,0.3);position:sticky;top:0;z-index:10}
+.nav a{color:var(--gold);text-decoration:none;font-size:.85rem}
+.nav .brand{color:var(--gold);font-weight:bold;font-size:1.1rem}
+.hero{padding:2.5rem 1.5rem 1.5rem;text-align:center;border-bottom:2px solid var(--gold);background:radial-gradient(ellipse at center,rgba(251,191,36,0.12) 0%,#000 100%)}
+.hero h1{font-size:2.3rem;color:var(--gold);margin-bottom:.4rem}
+.hero .sub{color:var(--mut);font-size:1rem;max-width:760px;margin:0 auto}
+.hero .cta{padding:1rem 1.5rem;background:var(--gold);color:#000;border-radius:6px;font-weight:bold;display:inline-block;margin-top:1rem;text-decoration:none}
+.container{max-width:1100px;margin:0 auto;padding:1.5rem}
+.section{margin:1.5rem 0}
+.section h2{color:var(--gold);font-size:1.3rem;margin-bottom:.7rem;border-bottom:1px solid var(--line);padding-bottom:.4rem}
+.section .desc{color:var(--mut);font-size:.88rem;margin-bottom:1rem;max-width:780px}
+.platforms{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:.8rem;margin:1rem 0}
+.platform{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:1.2rem;transition:all .2s}
+.platform:hover{border-color:var(--gold);transform:translateY(-2px)}
+.platform .name{color:var(--gold);font-size:1.05rem;font-weight:bold;margin-bottom:.4rem}
+.platform .desc{color:var(--mut);font-size:.78rem;margin-bottom:.8rem}
+.platform pre{background:#000;border:1px solid var(--line);border-radius:6px;padding:.7rem;font-size:.72rem;color:var(--green);overflow-x:auto;font-family:monospace;line-height:1.5}
+.platform pre .comment{color:var(--mut)}
+.platform pre .key{color:var(--gold)}
+.install-cmd{background:#000;border:1px solid var(--gold);border-radius:8px;padding:1rem 1.2rem;margin:1rem 0;font-family:monospace;color:var(--green);font-size:.95rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.5rem}
+.install-cmd code{flex:1;word-break:break-all}
+.install-cmd .copy{background:var(--gold);color:#000;border:none;padding:.4rem .8rem;border-radius:4px;cursor:pointer;font-weight:bold;font-size:.78rem}
+.flow{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:.6rem;margin:1rem 0}
+.flow .step{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:1rem;text-align:center}
+.flow .step .n{font-size:2rem;color:var(--gold);font-weight:bold;margin-bottom:.3rem}
+.flow .step .l{color:var(--mut);font-size:.78rem}
+.tools{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:.6rem;margin:1rem 0}
+.tool{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:.8rem}
+.tool .name{color:var(--green);font-weight:bold;font-size:.85rem;font-family:monospace}
+.tool .desc{color:var(--mut);font-size:.75rem;margin-top:.3rem}
+.honest{background:rgba(239,68,68,0.05);border:1px solid var(--red);border-radius:8px;padding:1rem;margin:1rem 0;color:var(--red);font-size:.85rem}
+.honest strong{color:#fff}
+.demo{border:1px solid var(--green);border-radius:8px;padding:1rem;margin:1rem 0;background:rgba(16,185,129,0.04)}
+.demo .lbl{color:var(--green);font-size:.7rem;font-weight:bold;text-transform:uppercase;letter-spacing:1px}
+.demo .body{color:var(--ink);margin-top:.4rem;font-size:.88rem}
+footer{text-align:center;color:var(--mut);padding:1rem;margin-top:1.5rem;border-top:1px solid var(--line);font-size:.75rem}
+</style>
+</head>
+<body>
+<nav class="nav">
+<a class="brand">🐉 MEOK OS</a>
+<a href="/">Home</a>
+<a href="/hub.html">Hub</a>
+<a href="/sovereign-os.html">Sovereign OS</a>
+<a href="/arena_public.html">Arena</a>
+<a href="/pulse.html">Pulse</a>
+<a href="/mcp-install.html" style="color:var(--gold)">MCP Install</a>
+<span style="flex:1"></span>
+<a href="/sovereign-journey.html" style="color:var(--purple)">Tour</a>
+</nav>
+
+<section class="hero">
+<h1>🜏 Install Sovereign OS into Any AI Platform</h1>
+<p class="sub">3D globe, 33-clan council city, live arena, colosseum, BFT-33 council — <strong style="color:var(--gold)">rendered inside your chat</strong>. End users don't visit our website; they live where they already are.</p>
+<a href="https://pypi.org/project/meok-sovereign-globe-mcp/" target="_blank" class="cta">⚡ pip install meok-sovereign-globe-mcp</a>
+</section>
+
+<div class="container">
+
+<section class="section">
+<h2>📦 One Package — 9 Tools</h2>
+<p class="desc"><code style="color:var(--gold)">meok-sovereign-globe-mcp</code> is the unified visual MCP. It wraps every sovereign 3D / globe / city / arena / colosseum surface as iframe-able tools that any MCP client (ChatGPT, Claude, Cursor, Copilot, Gemini) can render in chat. End-users install once; the AI platform handles the rendering.</p>
+
+<div class="tools">
+<div class="tool"><div class="name">render_globe</div><div class="desc">Returns iframe-able 3D Cesium globe with 33 sovereign hive markers, open-data layers, hive connection lines.</div></div>
+<div class="tool"><div class="name">render_world</div><div class="desc">Returns iframe-able photorealistic 3D Earth (world-3d). CC0 + MIT layers.</div></div>
+<div class="tool"><div class="name">render_city</div><div class="desc">Returns iframe-able 3D Council City (sov-city-3d) — 33 clan districts, AI swarm skirmishes, human participation meter.</div></div>
+<div class="tool"><div class="name">render_arena</div><div class="desc">Returns iframe-able live arena dashboard. Real rounds from /api/sov-arena/rounds.jsonl streaming.</div></div>
+<div class="tool"><div class="name">render_colosseum</div><div class="desc">Returns iframe-able colosseum / SOV33 multi-arena hub.</div></div>
+<div class="tool"><div class="name">render_bft33</div><div class="desc">Returns iframe-able 33-voter BFT council live view (f_bft=10, quorum 23/33).</div></div>
+<div class="tool"><div class="name">get_live_state</div><div class="desc">Returns JSON: arena rounds count, agreement rate, OpenTTD tick, clan activity, health.</div></div>
+<div class="tool"><div class="name">list_surfaces</div><div class="desc">Lists all 9 visual surfaces with URLs and types.</div></div>
+<div class="tool"><div class="name">install_for_platform</div><div class="desc">Returns the exact install command/snippet for any of 5 AI platforms.</div></div>
+</div>
+</section>
+
+<section class="section">
+<h2>⚡ Install in 30 Seconds</h2>
+<p class="desc">PyPI is the canonical source. The same package ships to npm via the Smithery registry for JS-platform tools.</p>
+
+<div class="install-cmd">
+<code>pip install meok-sovereign-globe-mcp</code>
+<button class="copy" onclick="navigator.clipboard.writeText('pip install meok-sovereign-globe-mcp')">Copy</button>
+</div>
+
+<p class="desc" style="margin-top:1.2rem">Or run it directly without installing:</p>
+<div class="install-cmd">
+<code>uvx meok-sovereign-globe-mcp</code>
+<button class="copy" onclick="navigator.clipboard.writeText('uvx meok-sovereign-globe-mcp')">Copy</button>
+</div>
+</section>
+
+<section class="section">
+<h2>🤖 Install into your AI Platform</h2>
+<p class="desc">Each platform has a config file the MCP server needs to be added to. Pick yours:</p>
+
+<div class="platforms">
+<div class="platform">
+<div class="name">🟣 Claude Desktop</div>
+<div class="desc">macOS path: <code style="color:var(--green);font-size:.72rem">~/Library/Application Support/Claude/claude_desktop_config.json</code></div>
+<pre><span class="comment">// Add to mcpServers</span>
+{
+  <span class="key">"mcpServers"</span>: {
+    <span class="key">"meok-sovereign-globe"</span>: {
+      <span class="key">"command"</span>: <span class="key">"uvx"</span>,
+      <span class="key">"args"</span>: [<span class="key">"meok-sovereign-globe-mcp"</span>]
+    }
+  }
+}</pre>
+</div>
+
+<div class="platform">
+<div class="name">🟢 Cursor</div>
+<div class="desc">Path: <code style="color:var(--green);font-size:.72rem">~/.cursor/mcp.json</code></div>
+<pre>{
+  <span class="key">"mcpServers"</span>: {
+    <span class="key">"meok-sovereign-globe"</span>: {
+      <span class="key">"command"</span>: <span class="key">"npx"</span>,
+      <span class="key">"args"</span>: [<span class="key">"-y"</span>, <span class="key">"meok-sovereign-globe-mcp"</span>]
+    }
+  }
+}</pre>
+</div>
+
+<div class="platform">
+<div class="name">🔵 VS Code (Copilot)</div>
+<div class="desc">Path: <code style="color:var(--green);font-size:.72rem">~/.vscode/mcp.json</code></div>
+<pre>{
+  <span class="key">"servers"</span>: {
+    <span class="key">"meok-sovereign-globe"</span>: {
+      <span class="key">""command"</span>: <span class="key">"npx"</span>,
+      <span class="key">"args"</span>: [<span class="key">"-y"</span>, <span class="key">"meok-sovereign-globe-mcp"</span>]
+    }
+  }
+}</pre>
+</div>
+
+<div class="platform">
+<div class="name">🟡 Gemini CLI</div>
+<div class="desc">Path: <code style="color:var(--green);font-size:.72rem">~/.gemini/settings.json</code> (since v0.5)</div>
+<pre>{
+  <span class="key">"mcpServers"</span>: {
+    <span class="key">"meok-sovereign-globe"</span>: {
+      <span class="key">"command"</span>: <span class="key">"npx"</span>,
+      <span class="key">"args"</span>: [<span class="key">"-y"</span>, <span class="key">"meok-sovereign-globe-mcp"</span>]
+    }
+  }
+}</pre>
+</div>
+
+<div class="platform">
+<div class="name">🔴 ChatGPT</div>
+<div class="desc">Enable Developer Mode: Settings → Connectors → Advanced. Then add a custom GPT action invoking the MCP server via stdio.</div>
+<pre><span class="comment">// ChatGPT connects via connector URL or custom GPT action.
+// Smithery hosts a hosted endpoint:</span>
+https://globe.csoai.org/mcp
+
+<span class="comment">// OR run local + expose via tunnel:</span>
+ngrok tcp 8080  <span class="comment"># expose stdio</span></pre>
+</div>
+
+<div class="platform">
+<div class="name">🟪 Smithery (auto-install)</div>
+<div class="desc">Smithery-hosted registry — install with one command:</div>
+<pre>npx -y @smithery/cli install meok-sovereign-globe-mcp</pre>
+</div>
+</div>
+</section>
+
+<section class="section">
+<h2>🔄 How it Flows — 5 Steps from Install to Visual in Chat</h2>
+<div class="flow">
+<div class="step"><div class="n">1</div><div class="l">User installs <code>meok-sovereign-globe-mcp</code> into their AI platform config</div></div>
+<div class="step"><div class="n">2</div><div class="l">AI platform discovers the 9 tools via MCP handshake</div></div>
+<div class="step"><div class="n">3</div><div class="l">User asks: "show me the sovereign arena"</div></div>
+<div class="step"><div class="n">4</div><div class="l">AI platform calls <code>render_arena</code> tool → MCP returns iframe_html</div></div>
+<div class="step"><div class="n">5</div><div class="l">AI platform renders the iframe inside the chat — user sees live 3D + data, no website visit</div></div>
+</div>
+</section>
+
+<section class="section">
+<div class="demo">
+<div class="lbl">💬 Example conversation</div>
+<div class="body">
+<strong style="color:var(--gold)">User:</strong> "Show me the current state of the sovereign arena with the 6 fleet clans."<br><br>
+<strong style="color:var(--green)">AI:</strong> <em>[calls render_arena() → MCP returns iframe_html pointing at the live arena dashboard]</em><br><br>
+<em>[ChatGPT/Claude renders the iframe inside the chat]</em><br><br>
+<strong style="color:var(--gold)">User:</strong> "Now show me the city with the 33 clan districts."<br><br>
+<strong style="color:var(--green)">AI:</strong> <em>[calls render_city() → renders 3D Council City with live clan states]</em>
+</div>
+</div>
+</section>
+
+<section class="section">
+<div class="honest">
+<strong>⚠ Honest constraints:</strong><br>
+• MCP tool calls are platform-dependent. Some AI platforms render iframes; others show text + URL only. We return BOTH in every tool so both work.<br>
+• The 3D visual surfaces are served from csoai-site.pages.dev (Cloudflare Pages). If that goes down, the tool returns the URL + a graceful fallback.<br>
+• Live arena rounds are honest measurements — the dashboard displays UNMEASURED labels where data is below usable_n=30, never zeros.<br>
+• ChatGPT's MCP support is newer and limited; for full visual embedding, use Claude Desktop, Cursor, or VS Code Copilot.
+</div>
+</section>
+
+<section class="section">
+<h2>📋 Why MCP (and not a website)</h2>
+<p class="desc">The user asked: <em>"end users aren't going to want to go on my website — they're all already in the AI platforms, social media, AI characters."</em> Exactly right. MCP (Model Context Protocol, donated to the Linux Foundation Dec 2025) is the standard that lets AI platforms call our tools. Our job is to be the substrate they call into — not to compete for traffic with the platforms themselves.</p>
+<p class="desc">We ship 9 iframe-able tools. Any AI platform that supports MCP (ChatGPT, Claude, Cursor, Copilot, Gemini, VS Code, Continue.dev, JetBrains, and growing) gets the full sovereign OS as a native tool. The end user sees 3D inside their chat. We don't need them to visit csoai.org — but if they want the full sovereign-os page, it's there too.</p>
+</section>
+
+<section class="section">
+<h2>📦 Distribution</h2>
+<p class="desc">Same package, 4 distribution channels:</p>
+<ul style="color:var(--mut);padding-left:1.5rem;line-height:1.8;font-size:.88rem">
+<li><strong style="color:var(--green)">PyPI</strong> — <code>pip install meok-sovereign-globe-mcp</code> (canonical for Python MCP clients)</li>
+<li><strong style="color:var(--green)">npm</strong> — <code>npx -y meok-sovereign-globe-mcp</code> (via Smithery registry)</li>
+<li><strong style="color:var(--green)">Smithery</strong> — <code>npx -y @smithery/cli install meok-sovereign-globe-mcp</code> (one-command install into any MCP client)</li>
+<li><strong style="color:var(--green)">Hosted</strong> — <code>https://globe.csoai.org/mcp</code> (streamable-HTTP endpoint for browser-based clients)</li>
+</ul>
+</section>
+
+</div>
+
+<footer>🜏 MEOK OS · meok-sovereign-globe-mcp · CSOAI Ltd (UK 16939677) · One install, every AI platform.</footer>
+
+</body>
+</html>
