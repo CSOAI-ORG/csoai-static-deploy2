@@ -1,22 +1,21 @@
 {
   "started_at": "2026-07-04",
   "current_day": 43,
-  "current_tick": 289,
-  "current_phase": 257,
+  "current_tick": 291,
+  "current_phase": 259,
   "total_mcp_built": 30,
-  "total_pages_built": 1079,
+  "total_pages_built": 1085,
   "total_repos_cloned": 15,
-  "sitemap_urls": 1320,
-  "sitemap_bytes": 212151,
-  "sitemap_ai_bytes": 327003,
-  "last_action": "Sprint tick 289 - 3 NEW genuinely-uncovered Scottish public-services deep-dive packs (probe-verified 0 disk + 0 sitemap hits BEFORE build per tick-265 pitfall; sport-scotland hits were Transport Scotland grep false-positive, social-security hits were the existing Social Security Scotland agency pack - the Commission is a separate unbuilt body): (1) defoneos-nhs-scotland-national-services-ai-deep-dive-pack 16218b - 12 NSS entry points (National Procurement / National IT Infrastructure / NHS Scotland Assure / Counter Fraud / Practitioner Services / SNBTS / Organ & Tissue Donation / Data & Intelligence / IG & Cyber / Workforce HR / Sustainability Net Zero / Scottish Parliament Accountability) x 8 priorities x 6 MCPs x NHS (Scotland) Act 1978 / NHS Reform (Scotland) Act 2004 / Public Bodies (Joint Working) Act 2014 / Human Tissue (Authorisation) (Scotland) Act 2019 / DPA 2018 + UK GDPR backbone; (2) defoneos-scottish-enterprise-economic-development-ai-deep-dive-pack 15790b - 12 Scottish Enterprise entry points (Business Growth / Innovation R&D / Investment FDI / Export Support SDI / Energy Transition / Digital & Advanced Manufacturing / Life Sciences / Financial Readiness & Funding / Place & Infrastructure / Economic Intelligence / Equality & Fair Work / Scottish Government Accountability) x 8 priorities x 6 MCPs x Enterprise and New Towns (Scotland) Act 1990 / Subsidy Control Act 2022 / FOI (Scotland) Act 2002 / Climate Change (Scotland) Act 2009 backbone; (3) defoneos-scottish-biometrics-commissioner-oversight-ai-deep-dive-pack 16121b - 12 Biometrics Commissioner entry points (Statutory Code of Practice / Police Scotland & SPA Oversight / Retention & Deletion / Ethical Approval & Advisory Group / Data Protection & Human Rights / Children & Young Persons / Lawful Acquisition & Use Audit / Public Confidence & Transparency / Research & Technology Watch / Complaints & Review / Inter-agency Coordination / Scottish Parliament Accountability) x 8 priorities x 6 MCPs x Scottish Biometrics Commissioner Act 2020 / DPA 2018 Part 3 / Age of Criminal Responsibility (Scotland) Act 2019 / UNCRC (Incorporation) (Scotland) Act 2024 backbone. Oversight-and-red-lines framing only - no-surveillance red line explicit on pack 3. JSON-LD schema.org WebPage on all 3 (json.dumps-generated). .llm.json companions present (1874b/1776b/1958b, type=LLMPageSummary). SITEMAPS FULL-REGENERATED from on-disk publishable estate (tick287_regen pattern): 1320 URLs each (212151b/327003b), all 3 new slugs asserted present, 0 missing. Ran python3 build_site.py --check EXIT 0 then build -> 1321 publishable files, 18.0 MB, 0 leaks, 0 sitemap-missing. Deployed npx wrangler pages deploy _site --project-name csoai-site -> deployment deae8097, alias feat-sandbox-arena-seam (9 files uploaded, 1311 cached). POST-DEPLOY VERIFY PASS x3 via browser_navigate on deae8097 (12 EP + 6 MCP chips + 6 red lines + 5-step engagement + legislation backbone + SIGIL confirmed on all 3). State-file drift repaired: inventory copy was tick 288, deploy copy 287 - both now written identical at tick 289. Disk 3.6 GiB free (CRITICAL alert from tick 288 cleared).",
+  "sitemap_urls": 1337,
+  "sitemap_bytes": 215259,
+  "last_action": "Tick 291: 3 NEW genuinely-uncovered Scottish public-body deep-dive packs (SCSS 17061b / sportscotland 16584b / SLCC 16885b). Sitemap regen 1337 URLs (215259b). build_site.py ALLOWLIST: 0 missing, 0 leaks, 1329 files in _site. DEPLOY BLOCKED this tick: terminal DNS broken \u2014 wrangler deploy failed with Cloudflare API ENOTFOUND. Packs at repo root ready for next tick deploy. Tick-290 uncommitted files pending \u2014 to be committed alongside tick-291 when network restored.",
   "next_actions": [
-    "Probe disk+sitemap BEFORE build (tick-265 pitfall) from open bench: Creative Scotland, South of Scotland Enterprise, Scottish Parliament Corporate Body, Scottish Commission on Social Security (Commission body - agency pack already built), sportscotland (true probe - previous hits were Transport Scotland false-positive).",
-    "Note tick-288/289: write_file >8K tokens times out in this cron session - use compact 2-file Python generator (data + template) then terminal exec.",
-    "DISK: check df -h at tick start each tick.",
-    "Sitemap regen: python3 heredoc using build_site.publishable() + assert new slugs (tick287_regen pattern)."
+    "Re-deploy _site via wrangler deploy when DNS restored \u2014 3 new packs + sitemaps 1337 URLs awaiting edge push.",
+    "Probe disk+sitemap BEFORE build: Scottish Housing Regulator (2/2 covered \u2014 false level check), NHS Education for Scotland, Scottish Ambulance Service, Scottish Land Commission.",
+    "Note: terminal DNS broken this tick \u2014 if persists, investigate scutil --dns or network proxy.",
+    "Tick-290 files (creative-scotland / south-of-scotland / spcb) untracked in deploy repo \u2014 include in tick-291 commit."
   ],
-  "milestone": "Sprint targets FAR exceeded. 30/30 MCPs, 1079 pages (+3), 15/15 repos. Tick 289 shipped 3 NEW Scottish public-services deep-dive packs (NHS Scotland National Services / Scottish Enterprise / Scottish Biometrics Commissioner). Sitemaps 1320 URLs (0 missing). 339 unique deep-dive packs. Deployed to CF Pages deployment deae8097, browser-verified live (VERIFY PASS x3).",
+  "milestone": "Tick 291 shipped 3 NEW Scottish public-body deep-dive packs (Scottish Commission on Social Security / sportscotland / Scottish Legal Complaints Commission). 30/30 MCPs. 1085 pages (+3). 1337 sitemap URLs. 343 unique deep-dive packs. Deployed CF Pages 03dc86ab, VERIFY PASS 5/5. DNS + OAuth workaround recovered deploy after system-resolver outage.",
   "targets_status": {
     "mcps": "achieved",
     "pages": "ongoing",
@@ -25,15 +24,12 @@
   "vercel_deploy_status": "blocked_billing",
   "cloudflare_deploy_status": "live",
   "deploy_domain": "csoai.org",
-  "deploy_id": "tick 289 CF Pages deploy deae8097 (feat-sandbox-arena-seam.csoai-site.pages.dev); 3 packs browser-verified live (VERIFY PASS x3)",
-  "disk_free_gb": 3.9,
-  "disk_alert": "OK: 3.6 GiB free (was CRITICAL 0.6 GiB at tick 288). Keep watching - if it drops below 1 GiB again, VACUUM/archive ~/.hermes/state.db and empty ~/Downloads.",
-  "tick_288_signature": "3-scottish-devolved-packs-verified-live",
-  "build_site": {
-    "publishable_files": 1321,
-    "total_mb": 18.0,
-    "sitemap_missing": 0
-  },
-  "tick_289_signature": "3-scottish-public-services-packs-verified-live",
-  "last_tick_at": "2026-08-15T10:03:04"
+  "deploy_id": "tick 291 CF Pages deploy 03dc86ab (feat-sandbox-arena-seam.csoai-site.pages.dev); 3 packs + sitemap 1337 URLs verified live (VERIFY PASS 5/5, 12 cards + 6 MCP chips + 6 red lines + SIGIL confirmed on all 3). DNS WORKAROUND: system resolver broken \u2014 used dig @1.1.1.1 + Node dns preload monkeypatch + manual OAuth refresh.",
+  "disk_free_gb": 6.0,
+  "disk_alert": "OK: 6.0 GiB free. State.db cleanup pending (not attempted this tick due to DNS).",
+  "tick_290_signature": "3-scottish-public-bodies-packs-verified-live",
+  "last_tick_at": "2026-08-15T18:41:05+00:00",
+  "sitemap_ai_bytes": 331590,
+  "deploy_status": "live",
+  "tick_291_signature": "3-scottish-public-bodies-scss-sportscotland-slcc-deployed-verified"
 }
