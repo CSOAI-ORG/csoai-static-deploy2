@@ -1,0 +1,17 @@
+{
+  "bench": "GOVBENCH full board, 24 items, temperature 0, label-substring parse",
+  "date": "2026-08-16",
+  "host": "runpod sov-repull RTX 3090",
+  "board_source": "board_items_govbench.json frozen 2026-08-04",
+  "models": {
+    "qwen2.5:0.5b-instruct": {"acc": 0.292, "macro_f1": 0.170},
+    "qwen2.5:1.5b": {"acc": 0.458, "macro_f1": 0.293},
+    "qwen2.5:7b": {"acc": 0.542, "macro_f1": 0.360},
+    "qwen3:4b": {"acc": 0.0, "macro_f1": 0.0, "note": "parse-fail (thinking model)"},
+    "mistral:7b": {"acc": 0.542, "macro_f1": 0.536, "note": "BEST"},
+    "council-safe": {"acc": 0.250, "macro_f1": 0.135, "note": "CORRECTED: below base on full board"},
+    "council-oowm": {"acc": 0.0, "macro_f1": 0.0, "note": "not instruction-following"}
+  },
+  "honest_note": "Early 5/8 claim for council-safe was an easier 8-item subset; full 24-item board shows 6/24 (0.250), below its base Qwen2.5-1.5B (0.458). Refusal-merge does not generalise. The fleet winner is mistral:7b (macroF1 0.536). Small 1.5B-class models cannot classify EU AI Act risk tiers reliably.",
+  "recompute": "SOVOS/bench_results_7models_24.json on 3090 pod, full_bench_7.py"
+}

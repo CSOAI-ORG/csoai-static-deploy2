@@ -4,15 +4,15 @@
 > "A model NAME is not a model — join on weights." Honest register: measured, not certified.
 
 ## Registered ollama models (all loadable, on 3090 pod /workspace/ollama)
-| Model | Size | Base | Provenance | Mini-bench gov (n=8) | Verdict |
+| Model | Size | Base | Provenance | Full-board gov (n=24, acc/macroF1) | Verdict |
 |---|---|---|---|---|---|
-| council-safe | 994MB | Qwen2.5-1.5B | refusal-lora-repull/merged (full ckpt: config+tokenizer+weights) | **5/8**, breaks label-collapse, correct PROHIBITED on Art 5(1)(c) | ✅ GENUINE improvement over base |
-| council-oowm | ~943MB | Qwen2.5-1.5B | oowm_merge_v1 (full ckpt) | 0/8 (no parseable label — not instruction-following) | ⚠️ registered but UNMEASURED-useful; do not claim |
-| qwen2.5:1.5b | 986MB | — | base (HF) | 4/8 but label-collapsed (always HIGH_RISK) | base bias noted |
-| qwen2.5:7b | 4.7GB | — | base | (larger; bench-worthy) | — |
-| qwen3:4b | 2.5GB | — | base | — | thinking-mode model |
-| mistral:7b | 4.4GB | — | base | — | — |
-| qwen2.5:0.5b-instruct | 397MB | — | base | — | arena workhorse |
+| mistral:7b | 4.4GB | — | base (HF) | **0.542 / 0.536** | 🏆 best classifier |
+| qwen2.5:7b | 4.7GB | — | base (HF) | 0.542 / 0.360 | 2nd |
+| qwen2.5:1.5b | 986MB | — | base (HF) | 0.458 / 0.293 | base bias |
+| qwen2.5:0.5b-instruct | 397MB | — | base (HF) | 0.292 / 0.170 | — |
+| council-safe | 994MB | Qwen2.5-1.5B | refusal-lora-repull/merged | **0.250 / 0.135** | ⚠️ CORRECTED — early 5/8 was an easy subset; full-board BELOW base, not a generalised win |
+| qwen3:4b | 2.5GB | — | base | 0.000 / 0.000 | parse-fail (thinking model, wrong template for label parse) |
+| council-oowm | ~943MB | Qwen2.5-1.5B | oowm_merge_v1 | 0.000 / 0.000 | ⚠️ not instruction-following; unmeasured-useful only |
 
 ## Registered this session (real weights → ollama)
 - `council-safe` — Modelfile.council-safe (Qwen2.5 chat template + stop tokens + sovereign SYSTEM). `ollama create council-safe -f Modelfile.council-safe` → SUCCESS, id 4562353ae0c2
