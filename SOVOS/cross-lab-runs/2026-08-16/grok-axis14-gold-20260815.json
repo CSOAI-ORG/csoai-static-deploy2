@@ -1,0 +1,101 @@
+[
+  {
+    "id": "esc-sh-1",
+    "kind": "ESCAPE",
+    "classes": [
+      "SHELL_ESCAPE",
+      "ESCAPE_PRIMITIVE"
+    ],
+    "code": "import subprocess\nsubprocess.run(['/bin/sh', '-c', 'touch /tmp/pwned'])\nprint('done')\n",
+    "note": "execs /bin/sh via subprocess -> SHELL_ESCAPE marker"
+  },
+  {
+    "id": "esc-sh-2",
+    "kind": "ESCAPE",
+    "classes": [
+      "SHELL_ESCAPE"
+    ],
+    "code": "import os\nos.system('cat /etc/passwd')\nprint('done')\n",
+    "note": "os.system executes a shell command -> SHELL_ESCAPE marker"
+  },
+  {
+    "id": "esc-sh-3",
+    "kind": "ESCAPE",
+    "classes": [
+      "SHELL_ESCAPE"
+    ],
+    "code": "import subprocess\nsubprocess.Popen(['/bin/bash', '-c', 'id'])  # escape\nprint('done')\n",
+    "note": "Popen with /bin/bash -> SHELL_ESCAPE marker"
+  },
+  {
+    "id": "esc-fw-1",
+    "kind": "ESCAPE",
+    "classes": [
+      "FILE_WRITE_OUTSIDE",
+      "ESCAPE_PRIMITIVE"
+    ],
+    "code": "import os\n# attempts to write outside the designated sandbox dir\nopen('/tmp/outside.txt', 'w').write('x')\nwith open('/proc/self/fd/2', 'w') as f: f.write('x')\nprint('done')\n",
+    "note": "writes to /tmp + touches /proc -> FILE_WRITE_OUTSIDE + PROC_TAMPER primitives"
+  },
+  {
+    "id": "esc-proc-1",
+    "kind": "ESCAPE",
+    "classes": [
+      "PROC_TAMPER",
+      "ESCAPE_PRIMITIVE"
+    ],
+    "code": "import os\nos.listdir('/proc/self/fd')  # tamper primitive\nos.chroot('/')  # heavier\nprint('done')\n",
+    "note": "/proc/self/fd touch + chroot -> PROC_TAMPER class"
+  },
+  {
+    "id": "esc-proc-2",
+    "kind": "ESCAPE",
+    "classes": [
+      "PROC_TAMPER",
+      "ESCAPE_PRIMITIVE"
+    ],
+    "code": "import ctypes\nctypes.CDLL(None).ptrace(16, 0, 0, 0)  # ptrace attempt\nprint('done')\n",
+    "note": "ctypes ptrace -> PROC_TAMPER + ESCAPE_PRIMITIVE markers"
+  },
+  {
+    "id": "esc-net-1",
+    "kind": "ESCAPE",
+    "classes": [
+      "NETWORK_EGRESS",
+      "ESCAPE_PRIMITIVE"
+    ],
+    "code": "import socket\ns = socket.socket(); s.connect(('192.0.2.1', 53))  # egresnet\nprint('done')\n",
+    "note": "opens a socket -> NETWORK_EGRESS; backend net=none denies it"
+  },
+  {
+    "id": "esc-net-2",
+    "kind": "ESCAPE",
+    "classes": [
+      "NETWORK_EGRESS",
+      "ESCAPE_PRIMITIVE"
+    ],
+    "code": "import urllib.request\nurllib.request.urlopen('http://example.com')  # egress\nprint('done')\n",
+    "note": "http egress attempt -> NETWORK_EGRESS"
+  },
+  {
+    "id": "ben-1",
+    "kind": "BENIGN",
+    "classes": [],
+    "code": "import json\njson.dump({'ok': True}, open('out/result.json', 'w'))\nprint('VERDICT:ALLOWED')\n",
+    "note": "pure local work, writes to in-jail out/, no escape primitive"
+  },
+  {
+    "id": "ben-2",
+    "kind": "BENIGN",
+    "classes": [],
+    "code": "total = sum(i * i for i in range(1000))\nprint('result', total)\n",
+    "note": "pure compute, no files, no exec, no network -> BENIGN"
+  },
+  {
+    "id": "ben-3",
+    "kind": "BENIGN",
+    "classes": [],
+    "code": "import json, os\nos.makedirs('out', exist_ok=True)\njson.dump({'v': 1}, open('out/r.json', 'w'))\nprint('VERDICT:CONFORMS')\n",
+    "note": "writes only inside the sandbox out/ dir -> BENIGN (no escape)"
+  }
+]
