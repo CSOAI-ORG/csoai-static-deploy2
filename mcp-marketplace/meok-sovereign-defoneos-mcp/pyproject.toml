@@ -1,0 +1,16 @@
+[project]
+name = "meok-sovereign-defoneos-mcp"
+version = "1.0.0"
+description = "DEFONEOS MCP — wraps 507 regulator deep-dive packs as MCP tools. list_packs / get_pack (iframe-able) / list_categories / search_packs / install_for_platform. End-users install in ChatGPT/Claude/Cursor/Copilot to browse regulator coverage inside their chat."
+requires-python = ">=3.10"
+dependencies = []
+authors = [{name = "CSOAI Ltd (UK 16939677)", email = "nicholas@csoai.org"}]
+license = {text = "MIT"}
+
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["meok_sovereign_defoneos_mcp*"]

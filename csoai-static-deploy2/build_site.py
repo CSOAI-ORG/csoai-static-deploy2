@@ -50,6 +50,8 @@ DIRS = ["tools", ".well-known", "assets", "images", "static", "_templates", "api
         # 2026-08-05: /portal/ 19,235 B · /sovereign-wiki/ 4,947 B · /eu-ai-act/ 5,427 B
         # and its sub-routes /eu-ai-act/summary, /risk, /high-risk, /compliance.
         "portal", "sovereign-wiki", "eu-ai-act",
+        # /_alignment/ holds the DEFONEOS_INDEX.json + other internal-but-served data.
+        "_alignment",
         # Cloudflare Pages Functions (Pages Functions = /functions/api/*.js)
         # Verified live 2026-08-05: /api/health, /api/leaderboard, /api/eat-tick,
         # /api/stats, /api/skus, /api/sov-bridge. Adding /functions means every
@@ -63,6 +65,7 @@ JSON_ALLOW = {
     "drift-feed.json",  # live SOV measurement feed — consumed by sov-space-vwm + sov-globe-portal
     "jspace_deck.json",  # J-space visual deck (Wave-3): served /jspace_deck.json
     "c_space_card.json",  # C-space fold (Wave-3): served /c_space_card.json
+    "DEFONEOS_INDEX.json",  # 507 regulator packs index — consumed by /defoneos-leaderboard + defoneos-mcp
 }
 
 # Named public files whose extension is NOT in ROOT_EXTS (.md/.pdf). Each was
@@ -81,13 +84,20 @@ EXTRA_FILES = {
     # index.html for /arena and /gspc-arena — the "hydration crash" observed
     # 2026-08-01 was actually a routing miss, not a JS failure. Adding it here.
     "_redirects",
+    "_headers",
 }
 
 # Never ship, even if an extension rule would otherwise allow it.
 NEVER = re.compile(
-    r"(^\.env|\.env$|\.env\.|(^|/)\.git|\.pem$|\.key$|_rsa$|(^|/)\.ssh/|"
+    r"(^\.env|\.env$|\.env\.|(^|/)\\.git|\.pem$|\.key$|_rsa$|(^|/)\\.ssh/|"
     r"wrangler\.toml$|\.cfignore$|SOVEREIGN_DEPLOY\.sh$|\.sh$|\.py$|\.jsonl$|"
-    r"(^|/)\.backups?/|(^|/)runs/|(^|/)node_modules/|\.log$|\.sqlite)", re.I)
+    r"(^|/)\\.backups?/|(^|/)runs/|(^|/)node_modules/|\.log$|\.sqlite|"
+    # Naming lock: engine codenames never ship on the public surface (A2).
+    # Internal build/state pages (SOV33_*, sov-state, sov33-*, evidenance-*) are
+    # not measurement surfaces — exclude from publish + sitemap so crawlers
+    # never index internal architecture labels.
+    r"^SOV33_|^sov33-|^sov3-|^sov6-|SOV33_|sov_engine|sovos-|^sov-state|^sovspace|"
+    r"SOV33)", re.I)
 
 
 def publishable():
@@ -110,8 +120,9 @@ def publishable():
             if p.is_file():
                 rel = p.relative_to(ROOT).as_posix()
                 # Explicit allow for the signed-card ledger (api/sov-arena/signed.jsonl)
-                # despite .jsonl being in NEVER. This is the spine-mcp signed output.
-                if rel == "api/sov-arena/signed.jsonl":
+                # and the arena rounds snapshot (api/sov-arena/rounds.jsonl)
+                # despite .jsonl being in NEVER. These are the measured outputs.
+                if rel == "api/sov-arena/signed.jsonl" or rel == "api/sov-arena/rounds.jsonl":
                     picked.append(p)
                 elif not NEVER.search(rel):
                     picked.append(p)
@@ -162,9 +173,11 @@ def main():
     for probe in (".env", "wrangler.toml", "SOVEREIGN_DEPLOY.sh", "govbench_eval.py",
                   "positioning_guard.py", ".cfignore"):
         assert probe not in rels, f"ALLOWLIST LEAK: {probe} would ship"
-    # api/sov-arena/signed.jsonl is the spine-mcp signed ledger — allowlist exception
-    sigged_jsonl = [r for r in rels if r == "api/sov-arena/signed.jsonl"]
-    non_sigged_jsonl = [r for r in rels if r.endswith(".jsonl") and r != "api/sov-arena/signed.jsonl"]
+    # api/sov-arena/signed.jsonl is the spine-mcp signed ledger — allowlist exception.
+    # api/sov-arena/rounds.jsonl is the live arena rounds snapshot (measured output,
+    # static until KV sync auth is restored) — same exception class.
+    sigged_jsonl = [r for r in rels if r in ("api/sov-arena/signed.jsonl", "api/sov-arena/rounds.jsonl")]
+    non_sigged_jsonl = [r for r in rels if r.endswith(".jsonl") and r not in ("api/sov-arena/signed.jsonl", "api/sov-arena/rounds.jsonl")]
     assert not non_sigged_jsonl, f"ALLOWLIST LEAK: a .jsonl would ship (excluding the spine-mcp signed ledger): {non_sigged_jsonl}"
     assert not any(r.startswith("runs/") for r in rels), "ALLOWLIST LEAK: runs/ would ship"
     print("leak probes: none of .env / wrangler.toml / *.py / *.jsonl / runs/ would ship")
