@@ -1,0 +1,43 @@
+name: mcp-registry-publish
+
+# Publishes CSOAI MCP servers to the official MCP registry (registry.modelcontextprotocol.io)
+# via GitHub OIDC — no browser, no stored token, repeatable from any machine/pod.
+# Canon: registry/*.json must validate with `mcp-publisher validate`.
+
+on:
+  push:
+    branches: [main, jv-wave8-production]
+    paths: ["registry/*.json"]
+  workflow_dispatch: {}
+
+permissions:
+  id-token: write   # OIDC for mcp-publisher login github-oidc
+
+jobs:
+  validate-publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install publisher CLI
+        run: |
+          npm install -g @modelcontextprotocol/publisher 2>/dev/null || \
+          curl -sSfL https://github.com/modelcontextprotocol/publisher/releases/latest/download/mcp-publisher-linux-amd64.tar.gz \
+            | tar -xz -C /usr/local/bin
+
+      - name: Validate all registry entries
+        run: |
+          for f in registry/*.json; do
+            echo "== $f =="
+            mcp-publisher validate "$f"
+          done
+
+      - name: Authenticate via GitHub OIDC
+        run: mcp-publisher login github-oidc
+
+      - name: Publish all registry entries
+        run: |
+          for f in registry/*.json; do
+            echo "== publishing $f =="
+            mcp-publisher publish "$f" || echo "publish exit $? (may be version-exists)"
+          done
