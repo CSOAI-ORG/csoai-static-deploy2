@@ -21,7 +21,7 @@ import argparse, hashlib, json, sys, urllib.request
 from datetime import datetime, timezone
 from pathlib import Path
 
-REPO = Path("/workspace/jeeves-exec")
+REPO = Path(__file__).resolve().parent.parent.parent  # repo root from agents/
 
 ARTIFACT_KINDS = {
     "board": ["board_*.json"],
@@ -91,9 +91,23 @@ def route(artifact_path: Path, kind: str, fabric) -> dict:
 class CPOLinkAdapter:
     """Minimal CPOLink-compatible object for the fabric register_link."""
     def __init__(self, path: Path, digest: str):
-        self.id = f"art-{digest[:12]}"
+        self.link_id = f"art-{digest[:12]}"
+        self.id = self.link_id
+        self.source = "overnight-burst"
+        self.target = "sov-space"
+        self.bandwidth_gbps = 1600.0
+        self.is_quantum = False
+        self.power_w = 9.0
+        self.latency_ns = 50.0
         self.url = str(path)
         self.metadata = {"digest": digest, "source": "overnight-burst"}
+
+    def power_savings_vs_pluggable(self):
+        baseline_w = 30.0
+        saved_w = baseline_w - self.power_w
+        return {"cpo_power_w": self.power_w, "pluggable_baseline_w": baseline_w,
+                "power_saved_w": saved_w,
+                "power_reduction_pct": 100.0 * saved_w / baseline_w}
 
 
 def main() -> int:
