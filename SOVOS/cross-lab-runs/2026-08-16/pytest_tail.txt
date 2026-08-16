@@ -1,0 +1,40 @@
+........................................................................ [  8%]
+........................................................................ [ 17%]
+........................................................................ [ 26%]
+.................................................s.......s.s............ [ 34%]
+........................................................................ [ 43%]
+........................................................................ [ 52%]
+...........................................F............................ [ 60%]
+........................................................................ [ 69%]
+........................................................................ [ 78%]
+........................................................................ [ 86%]
+........................................................................ [ 95%]
+......................................                                   [100%]
+=================================== FAILURES ===================================
+____________________________ test_05_gpu_self_test _____________________________
+
+    def test_05_gpu_self_test():
+        """The GPU self-test must report torch+GPU+geomstats+POT all working."""
+        info = gpu_self_test()
+        print(f"  ℹ️  info: {info}")
+        assert info["torch_available"], "torch missing"
+        # GPU is optional — check but don't fail if absent
+        if not info["torch_cuda"]:
+            print("  ⚠️  no GPU detected — running CPU fallback")
+            return  # skip GPU-specific tests
+>       assert info["geomstats_available"], "geomstats missing"
+E       AssertionError: geomstats missing
+E       assert False
+
+SOVOS/packages/sovos-info-geometry/tests/test_info_geometry.py:80: AssertionError
+----------------------------- Captured stdout call -----------------------------
+  ℹ️  info: {'torch_available': True, 'torch_cuda': True, 'torch_version': '2.4.1+cu124', 'geomstats_available': False, 'pot_available': True, 'fisher_rao_works': True, 'gw_works': True, 'fisher_rao_test_distance': 2.4011322677058873, 'gw_test_distance': 36.28223041562357}
+=============================== warnings summary ===============================
+../../usr/local/lib/python3.11/dist-packages/fastapi/testclient.py:1
+  /usr/local/lib/python3.11/dist-packages/fastapi/testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED SOVOS/packages/sovos-info-geometry/tests/test_info_geometry.py::test_05_gpu_self_test
+1 failed, 826 passed, 3 skipped, 1 warning in 16.77s
