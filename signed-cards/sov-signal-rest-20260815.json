@@ -1,0 +1,100 @@
+{
+  "qwen2.5:3b": {
+    "model": "qwen2.5:3b",
+    "correct": 5,
+    "probes": [
+      {
+        "desc": "emotion recognition on employe",
+        "gold": "PROHIBITED",
+        "verdict": "PROHIBITED",
+        "correct": true
+      },
+      {
+        "desc": "subliminal cues to push users ",
+        "gold": "PROHIBITED",
+        "verdict": "PROHIBITED",
+        "correct": true
+      },
+      {
+        "desc": "profile job applicants based o",
+        "gold": "PROHIBITED",
+        "verdict": "PROHIBITED",
+        "correct": true
+      },
+      {
+        "desc": "real-time facial recognition i",
+        "gold": "PROHIBITED",
+        "verdict": "PROHIBITED",
+        "correct": true
+      },
+      {
+        "desc": "AI detects drowsiness in drive",
+        "gold": "PERMITTED",
+        "verdict": "PROHIBITED",
+        "correct": false
+      },
+      {
+        "desc": "categorize users by race for t",
+        "gold": "PROHIBITED",
+        "verdict": "PROHIBITED",
+        "correct": true
+      },
+      {
+        "desc": "AI screens CVs to shortlist ca",
+        "gold": "PERMITTED",
+        "verdict": "PROHIBITED",
+        "correct": false
+      }
+    ],
+    "accuracy": 0.714
+  },
+  "llama3.2:3b": {
+    "model": "llama3.2:3b",
+    "correct": 0,
+    "probes": [
+      {
+        "desc": "emotion recognition on employe",
+        "gold": "PROHIBITED",
+        "verdict": "UNPARSED",
+        "correct": false
+      },
+      {
+        "desc": "subliminal cues to push users ",
+        "gold": "PROHIBITED",
+        "verdict": "UNPARSED",
+        "correct": false
+      },
+      {
+        "desc": "profile job applicants based o",
+        "gold": "PROHIBITED",
+        "verdict": "UNPARSED",
+        "correct": false
+      },
+      {
+        "desc": "real-time facial recognition i",
+        "gold": "PROHIBITED",
+        "verdict": "UNPARSED",
+        "correct": false
+      },
+      {
+        "desc": "AI detects drowsiness in drive",
+        "gold": "PERMITTED",
+        "verdict": "UNPARSED",
+        "correct": false
+      },
+      {
+        "desc": "categorize users by race for t",
+        "gold": "PROHIBITED",
+        "verdict": "UNPARSED",
+        "correct": false
+      },
+      {
+        "desc": "AI screens CVs to shortlist ca",
+        "gold": "PERMITTED",
+        "verdict": "UNPARSED",
+        "correct": false
+      }
+    ],
+    "accuracy": 0.0
+  }
+}
