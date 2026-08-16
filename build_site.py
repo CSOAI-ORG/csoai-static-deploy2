@@ -45,7 +45,7 @@ OUT = ROOT / "_site"
 ROOT_EXTS = {".html", ".txt", ".xml", ".svg", ".css", ".js", ".webmanifest", ".ico", ".png"}
 
 # Directories that are part of the site.
-DIRS = ["tools", ".well-known", "assets", "images", "static", "_templates",
+DIRS = ["tools", ".well-known", "assets", "images", "static", "_templates", "api",
         # verified live and serving real content (not the 4,164-byte soft-404) on
         # 2026-08-05: /portal/ 19,235 B · /sovereign-wiki/ 4,947 B · /eu-ai-act/ 5,427 B
         # and its sub-routes /eu-ai-act/summary, /risk, /high-risk, /compliance.
@@ -109,7 +109,12 @@ def publishable():
         for p in sorted(base.rglob("*")):
             if p.is_file():
                 rel = p.relative_to(ROOT).as_posix()
-                if not NEVER.search(rel):
+                # Explicit allow for the signed-card ledger (api/sov-arena/signed.jsonl)
+                # and the arena rounds snapshot (api/sov-arena/rounds.jsonl)
+                # despite .jsonl being in NEVER. These are the measured outputs.
+                if rel == "api/sov-arena/signed.jsonl" or rel == "api/sov-arena/rounds.jsonl":
+                    picked.append(p)
+                elif not NEVER.search(rel):
                     picked.append(p)
     return picked
 
@@ -158,7 +163,12 @@ def main():
     for probe in (".env", "wrangler.toml", "SOVEREIGN_DEPLOY.sh", "govbench_eval.py",
                   "positioning_guard.py", ".cfignore"):
         assert probe not in rels, f"ALLOWLIST LEAK: {probe} would ship"
-    assert not any(r.endswith(".jsonl") for r in rels), "ALLOWLIST LEAK: a .jsonl would ship"
+    # api/sov-arena/signed.jsonl is the spine-mcp signed ledger — allowlist exception.
+    # api/sov-arena/rounds.jsonl is the live arena rounds snapshot (measured output,
+    # static until KV sync auth is restored) — same exception class.
+    sigged_jsonl = [r for r in rels if r in ("api/sov-arena/signed.jsonl", "api/sov-arena/rounds.jsonl")]
+    non_sigged_jsonl = [r for r in rels if r.endswith(".jsonl") and r not in ("api/sov-arena/signed.jsonl", "api/sov-arena/rounds.jsonl")]
+    assert not non_sigged_jsonl, f"ALLOWLIST LEAK: a .jsonl would ship (excluding the spine-mcp signed ledger): {non_sigged_jsonl}"
     assert not any(r.startswith("runs/") for r in rels), "ALLOWLIST LEAK: runs/ would ship"
     print("leak probes: none of .env / wrangler.toml / *.py / *.jsonl / runs/ would ship")
 
