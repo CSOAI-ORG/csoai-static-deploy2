@@ -10,7 +10,7 @@ fully-built reference (`mcp-governance-crosswalk/`).
 | 02 | ai-bom-mcp | AI Bill of Materials (CycloneDX + SPDX) | Cross-sector |
 | 03 | mcp-injection-scanner | Prompt-injection detection + supply-chain RCE rules | Cross-sector |
 | 04 | csoai-c2pa-signer | C2PA manifest generation + Ed25519 signing | Cross-sector |
-| 05 | mcp-sov-signal | 12-axis SOV SIGNAL governance scoring | Cross-sector |
+| 05 | mcp-sov-signal | 13-axis SOV SIGNAL governance scoring | Cross-sector |
 | 06 | csoai-refusalbench-mcp | RefusalBench 2026 evaluation suite | Cross-sector |
 | 07 | mcp-jspace | J-Space chess board state inspection | Cross-sector |
 | 08 | mcp-3kb | 3KB sigil conversion endpoint | Cross-sector |

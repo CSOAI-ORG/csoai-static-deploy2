@@ -24,9 +24,9 @@ SOVOS/
 5. **For the hive kernel (Rust)**: `SOVOS/packages/sovos-hive/rust-kernel/`.
 6. **For public-facing tools**: `arenas.html`, `cpo-calculator.html`, `injection-scanner.html`, `birth.html`, `bus-portal.html`.
 
-## The 12 GSPC axes (the contract)
+## The 13 GSPC axes (the contract)
 
-`gov, prv, agi, asi, mcp, oss, mach, care, xr, det, art5, swarm` — these
+`gov, prv, agi, asi, mcp, oss, mach, care, xr, det, art5, swarm, affect` — these
 are the substrate-wide measurement axes. Every package that emits a
 score, an attestation, a chain verdict, or a SIGIL uses this set.
 

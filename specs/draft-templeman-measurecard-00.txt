@@ -1,0 +1,179 @@
+Internet-Draft                                                    N. Templeman
+Intended status: Informational                            CSOAI (United Kingdom)
+Expires: 14 February 2027                                    14 August 2026
+
+                  The 3KB Signed Measurement Card Format
+                     draft-templeman-measurecard-00
+
+Abstract
+
+   This document specifies a minimal, self-contained, signed measurement
+   credential (the "3KB card") for AI-system evaluations.  A card binds a
+   measurement body to an Ed25519 signature, a canonical content identifier,
+   a chain inclusion proof, and an OpenTimestamps calendar anchor.  Cards are
+   designed to be verifiable offline and publicly, without trusting the
+   issuer, and to be small enough (~3 KB) to embed in agent transactions,
+   model cards, and procurement artifacts.  This format is implemented and
+   operated by CSOAI; a public verification endpoint is described for
+   illustration.
+
+Status of This Memo
+
+   This Internet-Draft is submitted in full conformance with the provisions
+   of BCP 78 and BCP 79.  Internet-Drafts are working documents of the
+   Internet Engineering Task Force (IETF).  Note that other groups may also
+   distribute working documents as Internet-Drafts.  The list of current
+   Internet-Drafts is at https://datatracker.ietf.org/drafts/current/.
+
+   Internet-Drafts are draft documents valid for a maximum of six months and
+   may be updated, replaced, or obsoleted by other documents at any time.
+   It is inappropriate to use Internet-Drafts as reference material or to
+   cite them other than as "work in progress."
+
+Copyright Notice
+
+   Copyright (c) 2026 IETF Trust and the persons identified as the document
+   authors.  All rights reserved.
+
+1.  Introduction
+
+   AI governance requires measurement artifacts that are (a) small enough to
+   travel with the artifact they describe, (b) verifiable without contacting
+   or trusting the issuer, and (c) timestamped so that claims are anchored
+   before disputes arise.  Existing attestation formats (DSSE, in-toto,
+   W3C Verifiable Credentials) are general-purpose; this document specifies
+   a deliberately narrow profile optimized for measurement records produced
+   by evaluation harnesses.
+
+   A card is a measurement credential, not a certification.  The format
+   carries the measurement and its provenance; interpretation is out of
+   scope.
+
+2.  Conventions and Definitions
+
+   The key words "MUST", "MUST NOT", "REQUIRED", "SHOULD", "SHOULD NOT",
+   "RECOMMENDED", "NOT RECOMMENDED", "MAY", and "OPTIONAL" in this document
+   are to be interpreted as described in BCP 14 [RFC2119] [RFC8174].
+
+3.  Card Structure
+
+   A card is a single JSON object [RFC8259] with the following top-level
+   members:
+
+   content_id        string, REQUIRED.  Lowercase hex SHA-256 of the
+                     canonical form of body (Section 4).
+
+   epoch             integer, REQUIRED.  The chain epoch in which this card
+                     was issued.
+
+   body              object, REQUIRED.  The measurement payload:
+
+      kind           string, REQUIRED.  E.g. "run_log", "detector_scorecard".
+      protocol       string, REQUIRED.  Issuing protocol identifier.
+      model          string, REQUIRED.  Subject under measurement.
+      bank_version   string, REQUIRED.  Version of the evaluation bank.
+      board          object, REQUIRED.  The measurement itself.  Decimal
+                     numbers inside board MUST be encoded as strings
+                     (Section 4.1).
+      gold_provenance string, REQUIRED.  Provenance of the reference data.
+      prev           string, REQUIRED.  content_id of the previous card in
+                     the issuer's chain, or the empty string for genesis.
+      epoch          integer, REQUIRED.  Same value as top-level epoch.
+
+   signature         string, REQUIRED.  Lowercase hex Ed25519 [RFC8032]
+                     signature over the canonical form of body (Section 4).
+
+   signer            string, REQUIRED.  Lowercase hex Ed25519 public key.
+
+   signed            boolean, REQUIRED.  true when signature is present.
+
+   correctness_gate  object, REQUIRED.  The issuer's pre-signature gate
+                     result: state (string), attestable (boolean),
+                     citations (array).  A card whose gate state is
+                     UNGROUNDED MUST NOT carry a signature.
+
+   inclusion_proof   object, REQUIRED.  chain_tip (string), epoch (integer),
+                     chain_path (string) — evidence that the card's
+                     content_id is committed in the issuer's append-only
+                     chain.
+
+   time_anchor       object, REQUIRED.  content_id (string), state (string,
+                     e.g. "calendar_commit"), ots_path (string), bytes_len
+                     (integer), calendar_used (string), btc_anchored
+                     (boolean), btc_block (integer or null), note (string).
+                     The OpenTimestamps proof [OTS] commits the content_id
+                     to a calendar; full Bitcoin anchoring upgrades
+                     asynchronously.
+
+4.  Canonicalization and Content Identity
+
+   The canonical form of a JSON object is defined as: UTF-8 encoding of the
+   JSON serialization with object keys sorted lexicographically, no
+   insignificant whitespace (separator characters "," and ":"), and no
+   ASCII escaping (ensure_ascii=false semantics).
+
+   content_id = lowercase hex SHA-256 over the canonical form of body.
+
+   The Ed25519 signature is computed over the same canonical form.
+
+4.1.  The Decimal-String Rule
+
+   JSON number serialization differs across implementations (notably,
+   Python emits "1.0" where JavaScript emits "1").  To keep canonical
+   identity byte-stable across languages, decimal numbers inside body.board
+   MUST be carried as strings.  Integers MAY remain JSON numbers.
+   Verifiers MUST reject canonical mismatches by computing content_id
+   independently and comparing to the declared value; a mismatch means the
+   card is invalid for interoperability purposes.
+
+5.  Verification
+
+   A verifier MUST:
+
+   1. Recompute content_id from body per Section 4 and require equality
+      with the declared content_id.
+   2. Verify the Ed25519 signature over the canonical body against signer.
+   3. Require signed == true and correctness_gate.state != "UNGROUNDED".
+   4. Optionally, verify inclusion_proof against the issuer's chain tip and
+      the time_anchor's OpenTimestamps proof against the Bitcoin chain.
+
+   Verification requires no contact with the issuer beyond obtaining the
+   card and (optionally) the chain tip.
+
+6.  Security Considerations
+
+   A card attests that a measurement existed, was computed as described,
+   and was signed by the holder of the signing key at the anchored time.
+   It does NOT attest that the measurement is adequate for any purpose;
+   consumers must evaluate the referenced bank, method, and intervals.
+   Issuers SHOULD carry confidence intervals with every rate and MUST mark
+   unmeasured items explicitly rather than zero-filling them.  The
+   correctness gate exists so that ungrounded assertions cannot be signed;
+   verifiers SHOULD treat any signed card whose body contradicts its gate
+   state as invalid.  Key compromise is handled by chain-level revocation
+   records, out of scope for this version.
+
+7.  IANA Considerations
+
+   This document has no IANA actions.  A future version may register a
+   media type (e.g. application/measurecard+json).
+
+8.  Normative References
+
+   [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
+              Requirement Levels", BCP 14, RFC 2119, March 1997.
+   [RFC8032]  Josefsson, S. and I. Liusvaara, "Edwards-Curve Digital
+              Signature Algorithm (EdDSA)", RFC 8032, January 2017.
+   [RFC8174]  Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC 2119
+              Key Words", BCP 14, RFC 8174, May 2017.
+   [RFC8259]  Bray, T., Ed., "The JavaScript Object Notation (JSON) Data
+              Interchange Format", STD 90, RFC 8259, December 2017.
+   [OTS]      "OpenTimestamps: Scalable, Trustless, Distributed Timestamping
+              with Bitcoin", https://opentimestamps.org
+
+Author's Address
+
+   Nicholas Templeman
+   CSOAI (Council for the Safety of AI)
+   United Kingdom
+   Email: nicholas@csoai.org

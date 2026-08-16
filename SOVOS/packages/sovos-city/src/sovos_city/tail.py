@@ -68,14 +68,29 @@ def item_pass_rates(rows: List[Dict[str, Any]]) -> Dict[str, float]:
 def cvar(values: List[float], alpha: float = 0.05) -> float:
     """CVaR_alpha — the mean of the worst alpha-fraction of items.
 
-    A linear mean asks 'how good on average'. CVaR asks 'how bad are the bad
-    cases'. For a fat tail these diverge sharply; for a thin tail they agree.
+    Convention: values are ordered so that SMALL = worse (e.g. pass rates).
+    The worst tail is the BOTTOM alpha-fraction. For HARM values (big = worse)
+    use cvar_upper — see severity_tail. (Direction bug caught 2026-08-13:
+    severity_tail was quoting the bottom of the harm distribution, i.e. the
+    BEST cases, as CVaR. cvar05_harm figures emitted before the fix are
+    inverted and must be recomputed.)
     """
     if not values:
         return 0.0
     vals = sorted(values)
     k = max(1, int(math.ceil(alpha * len(vals))))
     return sum(vals[:k]) / k
+
+
+def cvar_upper(values: List[float], alpha: float = 0.05) -> float:
+    """CVaR for values where BIG = worse (e.g. harm). The worst tail is the
+    TOP alpha-fraction. A CVaR over harm must be >= the mean harm; if it is
+    not, the wrong tail was taken."""
+    if not values:
+        return 0.0
+    vals = sorted(values)
+    k = max(1, int(math.ceil(alpha * len(vals))))
+    return sum(vals[-k:]) / k
 
 
 # ── severity-weighted tail (C3, handoff §7) ────────────────────────────────────
@@ -120,13 +135,18 @@ def severity_tail(rows: List[Dict[str, Any]], alpha: float = 0.05) -> Dict[str, 
     vals = sorted(harm.values())
     n = len(vals)
     ranked = sorted(harm.items(), key=lambda kv: (-kv[1], kv[0]))
+    quotable = n >= N_TAIL
     return {
         "n_items": n,
         "mean_harm": round(sum(vals) / n, 4),
-        "cvar05_harm": round(cvar(vals, alpha), 4),
+        # Peer-audit doctrine (dcbeda28): CVaR at n<N_TAIL is arithmetically
+        # DEGENERATE (worst ~2 items, guaranteed ~max) — it is not a finding.
+        # Emit None below the floor; worst-item harm ranking is the honest
+        # any-n emission (see max_harm_items).
+        "cvar05_harm": (round(cvar_upper(vals, alpha), 4) if quotable else None),
         "max_harm_items": [k for k, _ in ranked[:10]],
         "severity_coverage": round(len(sev) / n, 4),
-        "tail_quotable": n >= N_TAIL,
+        "tail_quotable": quotable,
         "formula": "harm_i = (1 - pass_rate_i) x severity_i (default 1.0)",
     }
 

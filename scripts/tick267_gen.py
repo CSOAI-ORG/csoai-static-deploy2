@@ -1,8 +1,10 @@
 #!/usr/bin/env python3
-"""Tick 267 generator: 3 NEW trial-court deep-dive packs (High Court / Crown Court / Magistrates' Courts).
-Replicates the byte-verified tick-250+ regulator-deep-dive-pack format exactly:
-inline CSS, single-body-line sections, 12 entry points x 8 fixed priority cards x 6 MCP chips.
-ROOT anchored to repo root (parent.parent) per the tick-265 pitfall.
+"""Tick 267 generator (corrected): 3 NEW genuinely-uncovered regulator/agency deep-dive packs
+(Press Recognition Panel / Investigatory Powers Tribunal / Channel 4).
+Replicates byte-verified tick-250+ format exactly: inline CSS, single-body-line sections,
+12 entry points x 8 fixed priority cards x 6 MCP chips. ROOT anchored to repo root.
+Disk + sitemap probed first (tick-265 pitfall): these 3 are open, the stale
+High/Crown/Magistrates targets were already covered.
 """
 import json
 from pathlib import Path
@@ -41,75 +43,75 @@ footer p{color:#666;font-size:.75em;line-height:1.5}
 @media(max-width:768px){.hero h1{font-size:1.4em}.g{grid-template-columns:1fr}}"""
 
 LAWS = {
-    "high-court": "Senior Courts Act 1981",
-    "crown-court": "Senior Courts Act 1981",
-    "magistrates-court": "Magistrates' Courts Act 1980",
+    "press-recognition-panel": "Royal Charter on Self-Regulation of the Press 2013",
+    "investigatory-powers-tribunal": "Investigatory Powers Act 2016",
+    "channel-4": "Communications Act 2003",
 }
 
 FOOTER_LAWS = {
-    "high-court": "Senior Courts Act 1981 / Constitutional Reform Act 2005 / Human Rights Act 1998 / Courts Act 2003",
-    "crown-court": "Senior Courts Act 1981 / Sentencing Act 2020 / Criminal Justice Act 2003 / Courts Act 2003",
-    "magistrates-court": "Magistrates' Courts Act 1980 / Courts Act 2003 / Criminal Justice Act 2003 / Sentencing Act 2020",
+    "press-recognition-panel": "Royal Charter on Self-Regulation of the Press 2013 / Privacy and Electronic Communications Regulations 2003 / Legal Services Act 2007 / Human Rights Act 1998",
+    "investigatory-powers-tribunal": "Investigatory Powers Act 2016 / Regulation of Investigatory Powers Act 2000 / Human Rights Act 1998 / Data Protection Act 2018",
+    "channel-4": "Communications Act 2003 / Broadcasting Act 1990 / Digital Economy Act 2017 / Media Act 2024",
 }
 
 BODIES = {
-    "high-court": {
-        "emoji": "🏛️",
-        "title": "High Court of England and Wales AI Deep-Dive Pack",
-        "sub": "The High Court of Justice of England and Wales",
-        "tag": "12 High Court entry points × 8 AI priorities × 6 MCP integrations — King's Bench, Chancery and Family divisions, judicial review and appellate jurisdiction, civil and administrative justice",
+    "press-recognition-panel": {
+        "emoji": "📰",
+        "title": "Press Recognition Panel AI Deep-Dive Pack",
+        "sub": "The Press Recognition Panel",
+        "tag": "12 Press Recognition Panel entry points × 8 AI priorities × 6 MCP integrations — press self-regulation recognition, media accountability, publisher governance and public interest journalism standards",
         "ep": [
-            "King's Bench Division Civil Claims",
-            "Administrative Court & Judicial Review",
-            "Chancery Division Commercial & Property",
-            "Family Division Jurisdiction",
-            "Case Management & Allocation",
-            "Interim Remedies & Injunctions",
-            "Trial & Judgment Delivery",
-            "Costs Assessment & Enforcement",
-            "Appeals by Case Stated",
-            "Court Records & Registry Governance",
-            "Judicial Independence & Ethical Standards",
+            "Recognition of Press Regulators",
+            "Recognition Criteria Assessment",
+            "Regulator Application & Review Process",
+            "Public Interest Journalism Standards",
+            "Publisher & Editor Accountability",
+            "Media Complaints Handling Oversight",
+            "Editorial Independence Protection",
+            "Press Standards Code Compliance",
+            "Data Protection & Privacy in Journalism",
+            "Leveson Inquiry Recommendations Implementation",
+            "Public Reporting & Transparency",
             "Governance & Parliamentary Accountability",
         ],
     },
-    "crown-court": {
-        "emoji": "⚖️",
-        "title": "Crown Court Criminal Trial AI Deep-Dive Pack",
-        "sub": "The Crown Court of England and Wales",
-        "tag": "12 Crown Court entry points × 8 AI priorities × 6 MCP integrations — indictable criminal trials, sentencing, jury proceedings and appeals from the magistrates' courts",
+    "investigatory-powers-tribunal": {
+        "emoji": "🕵️",
+        "title": "Investigatory Powers Tribunal AI Deep-Dive Pack",
+        "sub": "The Investigatory Powers Tribunal of the United Kingdom",
+        "tag": "12 Investigatory Powers Tribunal entry points × 8 AI priorities × 6 MCP integrations — surveillance complaints, warrants oversight, interception review and the protection of privacy against state powers",
         "ep": [
-            "Indictable Offence Trial Jurisdiction",
-            "Committal & Transfer of Proceedings",
-            "Plea & Trial Preparation Hearings",
-            "Jury Empanelment & Trial Conduct",
-            "Custody & Bail Determinations",
-            "Sentencing & Statutory Powers",
-            "Appeals from Magistrates' Courts",
-            "Case Management & Listing",
-            "Evidence Handling & Disclosure",
-            "Court Records & Registry Governance",
-            "Judicial Independence & Ethical Standards",
+            "Complaints & Claims Jurisdiction",
+            "Warrant & Authorisation Review",
+            "Interception of Communications Oversight",
+            "Data Retention & Acquisition Review",
+            "Equipment Interference Scrutiny",
+            "Bulk Collection Powers Review",
+            "Human Rights Compliance Assessment",
+            "Intelligence Service Conduct Review",
+            "Privacy & Liberty Determinations",
+            "Remedies, Compensation & Reports",
+            "Public Interest Reporting & Transparency",
             "Governance & Parliamentary Accountability",
         ],
     },
-    "magistrates-court": {
-        "emoji": "🏛️",
-        "title": "Magistrates' Courts Summary Justice AI Deep-Dive Pack",
-        "sub": "The Magistrates' Courts of England and Wales",
-        "tag": "12 Magistrates' Courts entry points × 8 AI priorities × 6 MCP integrations — summary offences, first hearings, bail, youth justice and committal for trial or sentence",
+    "channel-4": {
+        "emoji": "📺",
+        "title": "Channel 4 Public Service Broadcasting AI Deep-Dive Pack",
+        "sub": "Channel Four Television Corporation · United Kingdom",
+        "tag": "12 Channel 4 entry points × 8 AI priorities × 6 MCP integrations — public service broadcasting, commissioning, media plurality, independent production quotas and audience representation",
         "ep": [
-            "Summary Offence Jurisdiction",
-            "First Hearings & Case Allocation",
-            "Bail & Remand Determinations",
-            "Youth Court Proceedings",
-            "Committal for Trial & Sentence",
-            "Ancillary Orders & Penalty Points",
-            "Appeals & Case Stated",
-            "Case Management & Listing",
-            "Interpretation & Access to Justice",
-            "Court Records & Registry Governance",
-            "Lay Magistracy & Legal Adviser Oversight",
+            "Public Service Broadcasting Remit",
+            "Commissioning & Independent Production",
+            "Creative Diversity & Inclusion",
+            "Audience Representation & Accessibility",
+            "Ofcom Licence Compliance",
+            "Content Standards & Editorial Oversight",
+            "Advertising & Commercial Operations",
+            "Digital & On-Demand Transformation",
+            "Media Plurality & Competition",
+            "Regional & Nations Content",
+            "Data Protection & Audience Privacy",
             "Governance & Parliamentary Accountability",
         ],
     },
@@ -128,9 +130,9 @@ PRIORITY_TAIL = {
 MCP = ["mcp-bailii", "mcp-govuk-search", "mcp-hansard-search", "mcp-uk-courts", "mcp-uk-legislation", "mcp-uk-regulator-intel"]
 
 SLUGS = {
-    "high-court": "defoneos-high-court-england-wales-ai-deep-dive-pack",
-    "crown-court": "defoneos-crown-court-criminal-trial-ai-deep-dive-pack",
-    "magistrates-court": "defoneos-magistrates-courts-summary-justice-ai-deep-dive-pack",
+    "press-recognition-panel": "defoneos-press-recognition-panel-ai-deep-dive-pack",
+    "investigatory-powers-tribunal": "defoneos-investigatory-powers-tribunal-ai-deep-dive-pack",
+    "channel-4": "defoneos-channel-4-public-service-broadcasting-ai-deep-dive-pack",
 }
 
 
@@ -179,8 +181,8 @@ def build_one(key):
         '<meta content="/llms.txt" name="llms-txt"/>\n'
         '<meta content="human-authored, machine-verifiable, Ed25519-signed" name="ai-content-declaration"/>\n'
         f'<meta content="CSOAI Ltd (2026). {title}. {url}" name="citation-policy"/>\n'
-        '<meta content="2026-08-12T12:00:00+00:00" name="revised"/>\n'
-        '<meta content="2026-08-12T12:00:00+00:00" property="article:modified_time"/>\n'
+        '<meta content="2026-08-12T13:00:00+00:00" name="revised"/>\n'
+        '<meta content="2026-08-12T13:00:00+00:00" property="article:modified_time"/>\n'
         f'<meta content="{desc}" name="description"/>\n'
         f'<link href="{url}" rel="canonical"/>\n'
         f'<meta content="{title}" property="og:title"/>\n'
@@ -202,7 +204,7 @@ def build_one(key):
 
 
 if __name__ == "__main__":
-    for key in ["high-court", "crown-court", "magistrates-court"]:
+    for key in ["press-recognition-panel", "investigatory-powers-tribunal", "channel-4"]:
         slug, html = build_one(key)
         out = ROOT / f"{slug}.html"
         out.write_text(html, encoding="utf-8")

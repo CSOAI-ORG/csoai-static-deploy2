@@ -10,7 +10,7 @@ cd "$REPO"
 # Build a PYTHONPATH that includes ALL package src dirs (so chain
 # can find fisher-rao, arena can find chain, etc.)
 PYTHONPATHS=""
-for pkg in arena signal-index map-elites birth bus-redis article-zero sheaf-gate x402-gate sigma-calibration stigmergy cpo-calculator capability-registry fleet-manifest glass harvest merge-arena persona fleet dream robot-ras league chain fisher-rao; do
+for pkg in arena signal-index map-elites birth bus-redis article-zero sheaf-gate x402-gate sigma-calibration stigmergy cpo-calculator capability-registry fleet-manifest glass harvest merge-arena persona fleet dream robot-ras league chain fisher-rao jspace-hyperbolic; do
   if [ -d "SOVOS/packages/sovos-$pkg/src" ]; then
     PYTHONPATHS="$PYTHONPATHS:SOVOS/packages/sovos-$pkg/src"
   fi

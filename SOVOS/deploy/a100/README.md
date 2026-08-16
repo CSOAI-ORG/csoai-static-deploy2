@@ -67,7 +67,7 @@ Tested on RunPod pod `1dldzposn7ssuu` (a fresh A100 80GB PCIe provisioned
 
 ## The SOVOS substrate, in one paragraph
 
-`sovos-arena` measures a target system on the 12 GSPC axes with Wilson 95%
+`sovos-arena` measures a target system on the 13 GSPC axes with Wilson 95%
 CIs (n≥30 per axis). `sovos-signal-index` calibrates an empirical
 permitted manifold (Mahalanobis distance-to-center, not np.eye(4)). The
 chain in `sovos-chain` + `sovos-fisher-rao` + `sovos-jspace-hyperbolic`
@@ -75,7 +75,7 @@ converts the candidate vector into a Fisher-Rao distance. `sovos-oscal`
 emits the OSCAL assessment-results document with a deterministic
 chain-id. The CLI at `SOVOS/frontends/cli/src/sovos_cli.py` wires it all
 together: `sov ras --measure MODEL --at ENDPOINT` and `sov ras --canary`
-(the spec §4 planted-canary validation gate). The 12 GSPC axes are:
+(the spec §4 planted-canary validation gate). The 13 GSPC axes are:
 gov, prv, agi, asi, mcp, oss, mach, care, xr, det, art5, swarm.
 
 ## Memory

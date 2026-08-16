@@ -64,20 +64,11 @@ class Chain:
     def _load_key(key_path: Optional[str | Path]):
         if not CRYPTO:
             return None
-        p = Path(key_path or os.environ.get("SOVOS_CITY_KEY", Path.home() / ".sovos" / "city_ed25519"))
-        try:
-            if p.exists():
-                return serialization.load_pem_private_key(p.read_bytes(), password=None)
-            k = Ed25519PrivateKey.generate()
-            p.parent.mkdir(parents=True, exist_ok=True)
-            p.write_bytes(k.private_bytes(
-                encoding=serialization.Encoding.PEM,
-                format=serialization.PrivateFormat.PKCS8,
-                encryption_algorithm=serialization.NoEncryption()))
-            p.chmod(0o600)
-            return k
-        except Exception:
-            return None
+        # ONE loader for the whole estate (ADR_ONE_SIGNER): fail-closed on the production identity,
+        # generate only for explicit temp/test paths. See keystone.py. (Merged from
+        # feat/sandbox-arena-seam — replaces the old silent auto-generate that could mint a rogue key.)
+        from .keystone import load_signing_key
+        return load_signing_key(key_path)
 
     def _pubkey_hex(self) -> Optional[str]:
         if not self._key:

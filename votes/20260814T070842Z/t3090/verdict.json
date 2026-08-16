@@ -1,0 +1,26 @@
+{
+ "vote": "NO_CHANGE",
+ "delta_unseen": 0.0,
+ "before_unseen": 0.5,
+ "after_unseen": 0.5,
+ "n_unseen": 10,
+ "n_graded": 21,
+ "seen_ceiling": {
+  "before": 0.7273,
+  "after": 0.8182,
+  "delta": 0.0909,
+  "n_seen": 11,
+  "note": "memorization ceiling \u2014 never quote as learning"
+ },
+ "voter_id": "transformers@rtx3090",
+ "implementation": "hf-transformers+peft/4bit-nf4/greedy",
+ "base": "Qwen/Qwen2.5-1.5B-Instruct",
+ "adapter": "fix_runs/BEST",
+ "axes": [
+  "governance",
+  "safety",
+  "art5"
+ ],
+ "rows_sha256": "d69e2ac3c2ca24c65231b0b3d92b7678bbecbd631332755f3eb6667981540727",
+ "at": "2026-08-14T06:02:24+00:00"
+}

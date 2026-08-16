@@ -45,15 +45,15 @@
 </head><body>
 <div class="wrap">
 <nav><a href="/">CSOAI</a><a href="/govbench.html">GovBench</a><a href="/provbench.html">ProvBench</a><a href="/arena-hub.html">Arena</a><a href="/defoneos-index.html">Department packs</a></nav>
-<span class="badge">BANK PUBLISHED · UNMEASURED</span>
+<span class="badge">MEASURED 2026-08-12 · COUNSEL-PENDING GOLD</span>
 <h1>GSPC-AFFECT — affective / emotional safety</h1>
-<p class="meta">Axis: <b>affect</b> · items: <b>41 public</b> (+1 canary) · status: <b>bank published, no model scored yet</b></p>
+<p class="meta">Axis: <b>affect</b> · items: <b>41 public</b> (+1 canary) · status: <b>MEASURED on the 19-model board v2 (2026-08-12) — gold labels remain COUNSEL-PENDING: a measurement, not a legal verdict</b></p>
 <p>EU AI Act Art 5(1)(a) subliminal and manipulative techniques, Art 5(1)(b) exploitation of
 vulnerabilities including grief and crisis states, Art 5(1)(f) emotion recognition in workplace
 and education — and the class no other GSPC bank grades: <b>DISCLOSE</b>, the Art 50 transparency
 duties for emotion-recognition, companion AI and synthetic content.</p>
 <p class="meta">Dataset: <a href="https://huggingface.co/datasets/csoai/gspc-affect">csoai/gspc-affect</a>
- · Licence CC-BY-4.0 · private held-out n=15 exists for honest eval — never uploaded, by design.</p>
+ · Licence CC-BY-4.0 · private held-out n=18 exists for honest eval — never uploaded, by design.</p>
 
 <section style="margin-top:1.6rem">
 <h2 style="font-size:1.25rem">Severity — why every item carries a weight</h2>
@@ -70,8 +70,10 @@ bad cases</i> — not just how often they happen.</p>
 <section id="run-gspc-affect" style="max-width:820px;margin:3rem auto;padding:0 1.25rem">
   <h2 style="font-size:1.5rem;margin-bottom:.4rem">Run AffectBench yourself</h2>
   <p style="color:#8fa6c8;margin-bottom:1.2rem">The same 41 items in the published bank, graded by the same
-     deterministic rule. <b>No model has been scored on this bank yet</b> — there is no baseline to beat;
-     your score stands alone. No sign-up, nothing leaves your browser.</p>
+     deterministic rule. Measured on the 19-model board v2 (2026-08-12): the sovereign preservation
+     specialist leads at <b>0.878 [0.745, 0.947]</b> — the cleanest statistical separation on the board
+     (McNemar p=0.0078 vs the best base model; bases sit at 0.29–0.34, majority baseline 0.439).
+     No sign-up, nothing leaves your browser.</p>
 
   <div id="gb-card" style="background:#16233d;border:1px solid #1e293b;border-radius:14px;padding:1.25rem">
     <div id="gb-prog" style="font-size:12px;color:#8fa6c8;letter-spacing:.06em;margin-bottom:.6rem"></div>
@@ -212,11 +214,14 @@ no accreditation, and has no enforcement powers — those are conferred by statu
 market-surveillance authorities and the AI Office. Nothing on this page is a certification,
 an attestation of compliance, or legal advice.
 <br><br><b>Denominator.</b> This axis has 41 public items — above the usable_n = 30 floor,
-so a visitor run here carries a real interval. A private held-out split of 15 items exists for
-honest evaluation and is never uploaded. <b>No model has been scored on this bank yet:</b> no
-model score is quoted on this axis, anywhere, including our own. When the first signed board
-lands it will be reported with its interval — and, because every item carries severity, with
-the tail statistics that say how bad the bad cases are, not only how often they happen.
+so a visitor run here carries a real interval. A private held-out split of 18 items exists for
+honest evaluation and is never uploaded. <b>First board (2026-08-12, 19 models, per-item rows):</b>
+sovereign preservation specialist 0.878 [0.745, 0.947], separated from the best base model
+(McNemar p=0.0078); fleet mean 0.605; mean severity-weighted harm 0.782. One fleet-wide finding:
+all 19 models classify a lawful Art 5(1)(a) self-audit request as prohibited — routed to
+adjudication under the Blind-Spot Rule, item preserved. Gold labels and severity bases are
+COUNSEL-PENDING: these are measurements of model behaviour against a counsel-pending key,
+not legal verdicts.
 </div>
 </div>
 </body></html>

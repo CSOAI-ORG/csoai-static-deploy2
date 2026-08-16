@@ -41,10 +41,10 @@ All trademarks and copyrights are property of their respective owners.
 | Component | Description |
 |---|---|
 | GovBench (479 items) | Governance benchmark, MIT-licensed by CSOAI |
-| GSPC scoring engine | 12-axis governance index, MIT-licensed by CSOAI |
+| GSPC scoring engine | 13-axis governance index, MIT-licensed by CSOAI |
 | J-Space chess engine | Spatial AI state machine, MIT-licensed by CSOAI |
 | 3KB converter | Spectral compression to 3KB visual sigil, MIT-licensed by CSOAI |
-| SOV SIGNAL API | 12-axis scoring endpoint, proprietary |
+| SOV SIGNAL API | 13-axis scoring endpoint, proprietary |
 | 26 MCP servers | Governance, BOM, injection scanning, etc., MIT-licensed by CSOAI |
 | SOVOS Fusion T | MergeKit recipe output (weights), proprietary |
 | Honey/EAT pipeline | Training data harvested from production, proprietary |

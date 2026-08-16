@@ -1,0 +1,75 @@
+{
+  "content_id": "ea12533ff9d2a6d34ab8ff76645aa93d9000c9d79f71869c089f23f27d014362",
+  "epoch": 1,
+  "body": {
+    "kind": "gspc-card",
+    "protocol": "agent-economy-index",
+    "model": "openrouter-catalog",
+    "bank_version": "catalog-2026-08-14",
+    "board": {
+      "claim_type": "measurement_credential",
+      "index": "agent-economy-index",
+      "series_day": "2026-08-14",
+      "observation": "Daily signed snapshot of the public agent-economy supply side: every model currently served on OpenRouter, its lab, and its listed price.",
+      "n_models_listed": "411",
+      "n_labs": "59",
+      "models_per_lab_top12": {
+        "openai": "94",
+        "qwen": "50",
+        "google": "41",
+        "anthropic": "28",
+        "mistralai": "18",
+        "deepseek": "13",
+        "nvidia": "13",
+        "z-ai": "13",
+        "minimax": "9",
+        "moonshotai": "8",
+        "meta-llama": "8",
+        "bytedance-seed": "6"
+      },
+      "n_free_models": "18",
+      "input_price_usd_per_mtok": {
+        "n": "388",
+        "min": "0.010",
+        "median": "0.500",
+        "max": "150.000"
+      },
+      "output_price_usd_per_mtok": {
+        "n": "388",
+        "min": "0.030",
+        "median": "2.000",
+        "max": "600.000"
+      },
+      "source": "https://openrouter.ai/api/v1/models",
+      "source_sha256": "7a864642cf7147e47cf9b83f9bd5e4c9f02767db93902a2c2fd7487d71a4a5ce",
+      "raw_snapshot": "/workspace/agent-economy-index/openrouter-catalog-2026-08-14.json",
+      "honest_note": "Day-1 of a daily series \u2014 one observation is a point, not a trend; the value is the accumulating longitudinal record, replayable from source_sha256. Listed prices are a supply-side catalog view, not realized transaction prices. Free-tier models counted separately; dynamic-priced models excluded. Measurement credential, not certification. All numbers strings (CW-2)."
+    },
+    "gold_provenance": "deterministic gate (Article 0 + law) \u2014 no model judged this",
+    "prev": "3eb23c3190ea9e62aa4a8d12220dba339378c1dbebc85c4da2181ebdffa3c681",
+    "epoch": 1
+  },
+  "signature": "3d52aa2180f163a7166e4927db75df599180177706e3d9ac3fcfb10f46b49c7564b16ff6e5dc42270431fd455e9db6dc3a07348592c404ff751fb15af328be02",
+  "signer": "f4b4278ddc216c2f060b273afcfd9ef00856399373b23b097794fe72fb36c342",
+  "signed": true,
+  "correctness_gate": {
+    "state": "UNKNOWN",
+    "attestable": true,
+    "citations": []
+  },
+  "inclusion_proof": {
+    "chain_tip": "3eb23c3190ea9e62aa4a8d12220dba339378c1dbebc85c4da2181ebdffa3c681",
+    "epoch": 1,
+    "chain_path": "/workspace/weekend_chain_2026-08-14.jsonl"
+  },
+  "time_anchor": {
+    "content_id": "ea12533ff9d2a6d34ab8ff76645aa93d9000c9d79f71869c089f23f27d014362",
+    "state": "calendar_commit",
+    "ots_path": "/tmp/ots-anchors/ea12533ff9d2a6d34ab8ff76645aa93d9000c9d79f71869c089f23f27d014362.ots",
+    "bytes_len": 137,
+    "calendar_used": "https://a.pool.opentimestamps.org/digest",
+    "btc_anchored": false,
+    "btc_block": null,
+    "note": "calendar commitment written; BTC-block anchor PENDING verification (never claimed as Bitcoin proof until checked)"
+  }
+}

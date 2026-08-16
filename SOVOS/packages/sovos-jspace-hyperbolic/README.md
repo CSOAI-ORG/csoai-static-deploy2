@@ -5,7 +5,7 @@
 ## What it does
 
 ### Weapon 1: Hyperbolic J-Space (Poincaré ball)
-Replaces the Euclidean J-Space chess board with a Poincaré ball. The 12 GSPC axes are encoded as fixed "anchors" whose radius encodes hierarchical depth:
+Replaces the Euclidean J-Space chess board with a Poincaré ball. The 13 GSPC axes are encoded as fixed "anchors" whose radius encodes hierarchical depth:
 - **Origin:** GOV (most fundamental)
 - **Inner layer:** AGI, PRV, ASI (core safety)
 - **Middle:** MCP, OSS, MACH, CARE (operational)

@@ -182,7 +182,7 @@ def _make_signer(timestamped: bool):
     if not (CHAIN.exists() and LEAF_KEY.exists()):
         raise EnvironmentMissing(f"no signing credential at {KEYS}")
     return Signer.from_info(C2paSignerInfo(
-        alg=b"ed25519", sign_cert=CHAIN.read_bytes(),
+        alg=b"es256", sign_cert=CHAIN.read_bytes(),
         private_key=LEAF_KEY.read_bytes(), ta_url=TSA if timestamped else None))
 
 

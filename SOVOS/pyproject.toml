@@ -51,54 +51,113 @@ all = [
 
 [tool.setuptools]
 packages = [
-    "sovos-a2a-swarm = { include = [\"sovos-a2a-swarm*\"], from = \"src\" }",
-    "sovos-alchemist = { include = [\"sovos-alchemist*\"], from = \"src\" }",
-    "sovos-alphabet = { include = [\"sovos-alphabet*\"], from = \"src\" }",
-    "sovos-arena = { include = [\"sovos-arena*\"], from = \"src\" }",
-    "sovos-article-zero = { include = [\"sovos-article-zero*\"], from = \"src\" }",
-    "sovos-birth = { include = [\"sovos-birth*\"], from = \"src\" }",
-    "sovos-bus-redis = { include = [\"sovos-bus-redis*\"], from = \"src\" }",
-    "sovos-capability-registry = { include = [\"sovos-capability-registry*\"], from = \"src\" }",
-    "sovos-cellar-ingest = { include = [\"sovos-cellar-ingest*\"], from = \"src\" }",
-    "sovos-certification-loop = { include = [\"sovos-certification-loop*\"], from = \"src\" }",
-    "sovos-chain = { include = [\"sovos-chain*\"], from = \"src\" }",
-    "sovos-city = { include = [\"sovos-city*\"], from = \"src\" }",
-    "sovos-core = { include = [\"sovos-core*\"], from = \"src\" }",
-    "sovos-council = { include = [\"sovos-council*\"], from = \"src\" }",
-    "sovos-cpo-calculator = { include = [\"sovos-cpo-calculator*\"], from = \"src\" }",
-    "sovos-crosswalk = { include = [\"sovos-crosswalk*\"], from = \"src\" }",
-    "sovos-dream = { include = [\"sovos-dream*\"], from = \"src\" }",
-    "sovos-families = { include = [\"sovos-families*\"], from = \"src\" }",
-    "sovos-fisher-rao = { include = [\"sovos-fisher-rao*\"], from = \"src\" }",
-    "sovos-fleet = { include = [\"sovos-fleet*\"], from = \"src\" }",
-    "sovos-fleet-manifest = { include = [\"sovos-fleet-manifest*\"], from = \"src\" }",
-    "sovos-glass = { include = [\"sovos-glass*\"], from = \"src\" }",
-    "sovos-harvest = { include = [\"sovos-harvest*\"], from = \"src\" }",
-    "sovos-hive = { include = [\"sovos-hive*\"], from = \"src\" }",
-    "sovos-info-geometry = { include = [\"sovos-info-geometry*\"], from = \"src\" }",
-    "sovos-invariants = { include = [\"sovos-invariants*\"], from = \"src\" }",
-    "sovos-jspace-hyperbolic = { include = [\"sovos-jspace-hyperbolic*\"], from = \"src\" }",
-    "sovos-jspace-move = { include = [\"sovos-jspace-move*\"], from = \"src\" }",
-    "sovos-jspace-pipeline = { include = [\"sovos-jspace-pipeline*\"], from = \"src\" }",
-    "sovos-league = { include = [\"sovos-league*\"], from = \"src\" }",
-    "sovos-map-elites = { include = [\"sovos-map-elites*\"], from = \"src\" }",
-    "sovos-merge-arena = { include = [\"sovos-merge-arena*\"], from = \"src\" }",
-    "sovos-mind = { include = [\"sovos-mind*\"], from = \"src\" }",
-    "sovos-oscal = { include = [\"sovos-oscal*\"], from = \"src\" }",
-    "sovos-persona = { include = [\"sovos-persona*\"], from = \"src\" }",
-    "sovos-provebench = { include = [\"sovos-provebench*\"], from = \"src\" }",
-    "sovos-qtask-converter = { include = [\"sovos-qtask-converter*\"], from = \"src\" }",
-    "sovos-quantum-bridge = { include = [\"sovos-quantum-bridge*\"], from = \"src\" }",
-    "sovos-quantum-router = { include = [\"sovos-quantum-router*\"], from = \"src\" }",
-    "sovos-robot-ras = { include = [\"sovos-robot-ras*\"], from = \"src\" }",
-    "sovos-router = { include = [\"sovos-router*\"], from = \"src\" }",
-    "sovos-sheaf-gate = { include = [\"sovos-sheaf-gate*\"], from = \"src\" }",
-    "sovos-sigma-calibration = { include = [\"sovos-sigma-calibration*\"], from = \"src\" }",
-    "sovos-signal-index = { include = [\"sovos-signal-index*\"], from = \"src\" }",
-    "sovos-stigmergy = { include = [\"sovos-stigmergy*\"], from = \"src\" }",
-    "sovos-world = { include = [\"sovos-world*\"], from = \"src\" }",
-    "sovos-x402-gate = { include = [\"sovos-x402-gate*\"], from = \"src\" }"
+    "sovos_a2a_swarm",
+    "sovos_affective_safety",
+    "sovos_alchemist",
+    "sovos_alphabet",
+    "sovos_arena",
+    "sovos_article_zero",
+    "sovos_birth",
+    "sovos_bolt",
+    "sovos_bus_redis",
+    "sovos_capability_registry",
+    "sovos_cellar_ingest",
+    "sovos_certification_loop",
+    "sovos_chain",
+    "sovos_city",
+    "sovos_core",
+    "sovos_council",
+    "sovos_cpo_calculator",
+    "sovos_crosswalk",
+    "sovos_dream",
+    "sovos_families",
+    "sovos_fisher_rao",
+    "sovos_fleet_manifest",
+    "sovos_fleet",
+    "sovos_glass",
+    "sovos_harvest",
+    "sovos_hive",
+    "sovos_info_geometry",
+    "sovos_invariants",
+    "sovos_jspace_hyperbolic",
+    "sovos_jspace_move",
+    "sovos_jspace_pipeline",
+    "sovos_league",
+    "sovos_map_elites",
+    "sovos_merge_arena",
+    "sovos_mind",
+    "sovos_oscal",
+    "sovos_ouroboros",
+    "sovos_persona",
+    "sovos_provebench",
+    "sovos_qtask_converter",
+    "sovos_quantum_bridge",
+    "sovos_quantum_router",
+    "sovos_robot_ras",
+    "sovos_router",
+    "sovos_sheaf_gate",
+    "sovos_sigma_calibration",
+    "sovos_signal_index",
+    "sovos_stigmergy",
+    "sovos_world",
+    "sovos_x402_gate",
+    "sovos_inspect_bridge",
+    "sovos_brain_chain",
 ]
+
+[tool.setuptools.package-dir]
+"sovos_a2a_swarm" = "packages/sovos-a2a-swarm/src"
+"sovos_affective_safety" = "packages/sovos-affective-safety/src"
+"sovos_alchemist" = "packages/sovos-alchemist/src"
+"sovos_alphabet" = "packages/sovos-alphabet/src"
+"sovos_arena" = "packages/sovos-arena/src"
+"sovos_article_zero" = "packages/sovos-article-zero/src"
+"sovos_birth" = "packages/sovos-birth/src"
+"sovos_bolt" = "packages/sovos-bolt/src"
+"sovos_bus_redis" = "packages/sovos-bus-redis/src"
+"sovos_capability_registry" = "packages/sovos-capability-registry/src"
+"sovos_cellar_ingest" = "packages/sovos-cellar-ingest/src"
+"sovos_certification_loop" = "packages/sovos-certification-loop/src"
+"sovos_chain" = "packages/sovos-chain/src"
+"sovos_city" = "packages/sovos-city/src"
+"sovos_core" = "packages/sovos-core/src"
+"sovos_council" = "packages/sovos-council/src"
+"sovos_cpo_calculator" = "packages/sovos-cpo-calculator/src"
+"sovos_crosswalk" = "packages/sovos-crosswalk/src"
+"sovos_dream" = "packages/sovos-dream/src"
+"sovos_families" = "packages/sovos-families/src"
+"sovos_fisher_rao" = "packages/sovos-fisher-rao/src"
+"sovos_fleet_manifest" = "packages/sovos-fleet-manifest/src"
+"sovos_fleet" = "packages/sovos-fleet/src"
+"sovos_glass" = "packages/sovos-glass/src"
+"sovos_harvest" = "packages/sovos-harvest/src"
+"sovos_hive" = "packages/sovos-hive/src"
+"sovos_info_geometry" = "packages/sovos-info-geometry/src"
+"sovos_invariants" = "packages/sovos-invariants/src"
+"sovos_jspace_hyperbolic" = "packages/sovos-jspace-hyperbolic/src"
+"sovos_jspace_move" = "packages/sovos-jspace-move/src"
+"sovos_jspace_pipeline" = "packages/sovos-jspace-pipeline/src"
+"sovos_league" = "packages/sovos-league/src"
+"sovos_map_elites" = "packages/sovos-map-elites/src"
+"sovos_merge_arena" = "packages/sovos-merge-arena/src"
+"sovos_mind" = "packages/sovos-mind/src"
+"sovos_oscal" = "packages/sovos-oscal/src"
+"sovos_ouroboros" = "packages/sovos-ouroboros/src"
+"sovos_persona" = "packages/sovos-persona/src"
+"sovos_provebench" = "packages/sovos-provebench/src"
+"sovos_qtask_converter" = "packages/sovos-qtask-converter/src"
+"sovos_quantum_bridge" = "packages/sovos-quantum-bridge/src"
+"sovos_quantum_router" = "packages/sovos-quantum-router/src"
+"sovos_robot_ras" = "packages/sovos-robot-ras/src"
+"sovos_router" = "packages/sovos-router/src"
+"sovos_sheaf_gate" = "packages/sovos-sheaf-gate/src"
+"sovos_sigma_calibration" = "packages/sovos-sigma-calibration/src"
+"sovos_signal_index" = "packages/sovos-signal-index/src"
+"sovos_stigmergy" = "packages/sovos-stigmergy/src"
+"sovos_world" = "packages/sovos-world/src"
+"sovos_x402_gate" = "packages/sovos-x402-gate/src"
+"sovos_inspect_bridge" = "packages/sovos-inspect-bridge/src"
+"sovos_brain_chain" = "packages/sovos-brain-chain/src"
 
 [tool.pytest.ini_options]
 testpaths = ["packages"]

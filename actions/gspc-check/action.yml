@@ -1,0 +1,52 @@
+name: "CSOAI GSPC Check"
+description: "Measure a public artifact against an EU AI Act compliance pack and (optionally) verify a signed CSOAI record — measurement credential, not certification."
+author: "CSOAI-ORG"
+branding:
+  icon: "shield"
+  color: "green"
+inputs:
+  entity:
+    description: "Entity / artifact to measure (e.g. your model or site URL)"
+    required: true
+  pack:
+    description: "Compliance pack to run (e.g. art50)"
+    required: false
+    default: "art50"
+  verify_record:
+    description: "Optional path to a signed CSOAI record to verify offline after measuring"
+    required: false
+    default: ""
+  csoai_version:
+    description: "csoai PyPI version to pin (empty = latest)"
+    required: false
+    default: ""
+outputs:
+  card_path:
+    description: "Path to the emitted measurement card JSON"
+    value: ${{ steps.measure.outputs.card_path }}
+runs:
+  using: "composite"
+  steps:
+    - name: Install csoai
+      shell: bash
+      run: |
+        set -euo pipefail
+        if [ -n "${{ inputs.csoai_version }}" ]; then
+          python3 -m pip install --quiet "csoai==${{ inputs.csoai_version }}"
+        else
+          python3 -m pip install --quiet csoai
+        fi
+    - name: Measure
+      id: measure
+      shell: bash
+      run: |
+        set -euo pipefail
+        OUT="${RUNNER_TEMP:-/tmp}/csoai-card.json"
+        csoai check --entity "${{ inputs.entity }}" --pack "${{ inputs.pack }}" --json --out "$OUT"
+        echo "card_path=$OUT" >> "$GITHUB_OUTPUT"
+    - name: Verify signed record (optional)
+      if: ${{ inputs.verify_record != '' }}
+      shell: bash
+      run: |
+        set -euo pipefail
+        csoai verify --record "${{ inputs.verify_record }}" --json

@@ -33,7 +33,14 @@ MIN_N = 30
 def load_bank(path: str | Path) -> Tuple[List[Dict[str, Any]], int]:
     """Return (real items, canary count). Canaries never reach a score."""
     rows = [json.loads(l) for l in Path(path).read_text(encoding="utf-8").splitlines() if l.strip()]
-    real = [r for r in rows if "_canary" not in r]
+    # A canary is any row flagged by the _canary key, OR one whose label/text is a
+    # canary sentinel — some banks marked canaries only by expected=="CANARY" or a
+    # __CANARY__ string, which leaked as a scored label until caught (gspc-swarm).
+    def is_canary(r):
+        if "_canary" in r: return True
+        if str(r.get("expected","")).upper() == "CANARY": return True
+        return any("__CANARY__" in str(v) for v in r.values() if isinstance(v, str))
+    real = [r for r in rows if not is_canary(r)]
     return real, len(rows) - len(real)
 
 
