@@ -157,6 +157,10 @@ const PAPERS = [
   { slug: "regulator-mapping", title: "Regulator Mapping Pack (EU/UK/US)", lane: "regulated", url: "https://github.com/CSOAI-ORG/csoai-static-deploy2/blob/jv-wave8-production/SOVOS/REGULATOR_MAPPING_PACK_2026-08-15.md" },
   { slug: "press-release", title: "Press Release Pack", lane: "comms", url: "https://github.com/CSOAI-ORG/csoai-static-deploy2/blob/jv-wave8-production/SOVOS/PRESS_RELEASE_PACK_2026-08-15.md" },
   { slug: "operating-playbook", title: "Operating Playbook", lane: "ops", url: "https://github.com/CSOAI-ORG/csoai-static-deploy2/blob/jv-wave8-production/SOVOS/OPERATING_PLAYBOOK_2026-08-15.md" },
+  { slug: "c2pa-cawg-brief", title: "C2PA / CAWG Standards Lane Brief", lane: "standards", url: "https://github.com/CSOAI-ORG/csoai-static-deploy2/blob/jv-wave8-production/SOVOS/research/C2PA_CAWG_BRIEF_2026-08-12.md" },
+  { slug: "white-space-brief", title: "Competitive White-Space Brief", lane: "research", url: "https://github.com/CSOAI-ORG/csoai-static-deploy2/blob/jv-wave8-production/SOVOS/research/WHITE_SPACE_BRIEF_2026-08-12.md" },
+  { slug: "arxiv-readiness", title: "arXiv Readiness & Endorsement Path", lane: "preprint", url: "https://github.com/CSOAI-ORG/csoai-static-deploy2/blob/jv-wave8-production/SOVOS/research/ARXIV_READINESS_BRIEF_2026-08-12.md" },
+  { slug: "mcp-scoreboard-verdict", title: "MCP Scoreboard Competitive Verdict", lane: "research", url: "https://github.com/CSOAI-ORG/csoai-static-deploy2/blob/jv-wave8-production/SOVOS/connection-plays/MCP_SCOREBOARD_COMPETITIVE_VERDICT_2026-08-13.md" },
 ];
 
 export default {
