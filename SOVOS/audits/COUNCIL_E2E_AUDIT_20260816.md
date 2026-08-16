@@ -72,3 +72,9 @@ VERDICT: llms.txt/llm-policy advertise endpoints that must be JSON — two of fi
 - 20 council-* new URLs present (with renames) — mixed old/new in sitemap (same shallow-deploy signature)
 - .llm.json pair endpoint pattern visible (/MASTER_TAKEOVER.html.llm.json) — machine companion files served for internal pages too
 VERDICT: sitemap generation must run from the clean _site after full deploy; when old internal pages are redirected (not served), sitemap should only list council-* + public family URLs.
+
+## TWO-INDEX CONFIRMATION 2026-08-16 (browser)
+- apex + www: OLD breached index ("Sovereign AI, audit-graded", Master Takeover, >20 locks)
+- SPA-fallback routes (council-time-canvas.html, agent-card.json): DIFFERENT intermediate index "CSOAI — the measurement body for AI compliance" — near-clean BUT still carries "Sovereign" nav + "Meok — sovereign platform" + "Sovereign" link
+- sov-time-canvas.html (old name): STILL SERVED pre-fix file, title "SOV-Space Spacetime Canvas", empty body, NO redirect to council-* — old names + old content live
+CONCLUSION: 2+ index versions deployed; old URL names still serve old content; renames + redirects NOT live. The branch (f/breach-fix) has all fixes; full CF Pages deploy of clean _site is the single un-free gate.
