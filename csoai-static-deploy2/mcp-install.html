@@ -70,17 +70,17 @@ footer{text-align:center;color:var(--mut);padding:1rem;margin-top:1.5rem;border-
 
 <section class="section">
 <h2>📦 One Package — 9 Tools</h2>
-<p class="desc"><code style="color:var(--gold)">meok-sovereign-globe-mcp</code> is the unified visual MCP. It wraps every sovereign 3D / globe / city / arena / colosseum surface as iframe-able tools that any MCP client (ChatGPT, Claude, Cursor, Copilot, Gemini) can render in chat. End-users install once; the AI platform handles the rendering.</p>
+<p class="desc"><code style="color:var(--gold)">meok-sovereign-globe-mcp</code> is the unified visual MCP. It wraps every council 3D / globe / city / arena surface as iframe-able tools that any MCP client (ChatGPT, Claude, Cursor, Copilot, Gemini) can render in chat. End-users install once; the AI platform handles the rendering.</p>
 
 <div class="tools">
-<div class="tool"><div class="name">render_globe</div><div class="desc">Returns iframe-able 3D Cesium globe with 33 sovereign hive markers, open-data layers, hive connection lines.</div></div>
-<div class="tool"><div class="name">render_world</div><div class="desc">Returns iframe-able photorealistic 3D Earth (world-3d). CC0 + MIT layers.</div></div>
-<div class="tool"><div class="name">render_city</div><div class="desc">Returns iframe-able 3D Council City (sov-city-3d) — 33 clan districts, AI swarm skirmishes, human participation meter.</div></div>
+<div class="tool"><div class="name">render_globe</div><div class="desc">Returns the live 13-axis measurement globe (sov-space) — every axis anchored where its law was made. <strong>LIVE.</strong></div></div>
+<div class="tool"><div class="name">render_world</div><div class="desc">Returns iframe-able photorealistic 3D Earth (world-3d). <strong>Staged</strong> — surface not yet deployed; tool returns an honest placeholder.</div></div>
+<div class="tool"><div class="name">render_city</div><div class="desc">Returns the live Council Town game client — agent clans deliberating in an open world. <strong>Client LIVE</strong> (world backend owner-gated).</div></div>
 <div class="tool"><div class="name">render_arena</div><div class="desc">Returns iframe-able live arena dashboard. Real rounds from /api/sov-arena/rounds.jsonl streaming.</div></div>
-<div class="tool"><div class="name">render_colosseum</div><div class="desc">Returns iframe-able colosseum / SOV33 multi-arena hub.</div></div>
-<div class="tool"><div class="name">render_bft33</div><div class="desc">Returns iframe-able 33-voter BFT council live view (f_bft=10, quorum 23/33).</div></div>
+<div class="tool"><div class="name">render_colosseum</div><div class="desc">Returns iframe-able colosseum / multi-arena hub. <strong>Staged</strong> — surface not yet deployed.</div></div>
+<div class="tool"><div class="name">render_bft33</div><div class="desc">Returns the 33-seat council live view. Honest framing: the panel's measured effective independence is low (correlated judges) — published as measured, never as a certification of fault tolerance.</div></div>
 <div class="tool"><div class="name">get_live_state</div><div class="desc">Returns JSON: arena rounds count, agreement rate, OpenTTD tick, clan activity, health.</div></div>
-<div class="tool"><div class="name">list_surfaces</div><div class="desc">Lists all 9 visual surfaces with URLs and types.</div></div>
+<div class="tool"><div class="name">list_surfaces</div><div class="desc">Lists all visual surfaces with URLs and types, each tagged LIVE / STAGED.</div></div>
 <div class="tool"><div class="name">install_for_platform</div><div class="desc">Returns the exact install command/snippet for any of 5 AI platforms.</div></div>
 </div>
 </section>
@@ -162,9 +162,8 @@ footer{text-align:center;color:var(--mut);padding:1rem;margin-top:1.5rem;border-
 <div class="platform">
 <div class="name">🔴 ChatGPT</div>
 <div class="desc">Enable Developer Mode: Settings → Connectors → Advanced. Then add a custom GPT action invoking the MCP server via stdio.</div>
-<pre><span class="comment">// ChatGPT connects via connector URL or custom GPT action.
-// Smithery hosts a hosted endpoint:</span>
-https://globe.csoai.org/mcp
+<pre><span class="comment">// Hosted endpoint (live Workers URL; globe.csoai.org/mcp staged — DNS pending):</span>
+https://csoai.org/mcp
 
 <span class="comment">// OR run local + expose via tunnel:</span>
 ngrok tcp 8080  <span class="comment"># expose stdio</span></pre>
@@ -220,12 +219,12 @@ ngrok tcp 8080  <span class="comment"># expose stdio</span></pre>
 
 <section class="section">
 <h2>📦 Distribution</h2>
-<p class="desc">Same package, 4 distribution channels:</p>
+<p class="desc">Same package, distribution channels:</p>
 <ul style="color:var(--mut);padding-left:1.5rem;line-height:1.8;font-size:.88rem">
-<li><strong style="color:var(--green)">PyPI</strong> — <code>pip install meok-sovereign-globe-mcp</code> (canonical for Python MCP clients)</li>
-<li><strong style="color:var(--green)">npm</strong> — <code>npx -y meok-sovereign-globe-mcp</code> (via Smithery registry)</li>
-<li><strong style="color:var(--green)">Smithery</strong> — <code>npx -y @smithery/cli install meok-sovereign-globe-mcp</code> (one-command install into any MCP client)</li>
-<li><strong style="color:var(--green)">Hosted</strong> — <code>https://globe.csoai.org/mcp</code> (streamable-HTTP endpoint for browser-based clients)</li>
+<li><strong style="color:var(--warn)">PyPI</strong> — <code>pip install meok-sovereign-globe-mcp</code> — <strong>Staged</strong> (package not yet published; PyPI upload owner-gated)</li>
+<li><strong style="color:var(--warn)">npm</strong> — <code>npx -y meok-sovereign-globe-mcp</code> — <strong>Staged</strong> (npm publish owner-gated)</li>
+<li><strong style="color:var(--warn)">Smithery</strong> — <code>npx -y @smithery/cli install meok-sovereign-globe-mcp</code> — <strong>Staged</strong></li>
+<li><strong style="color:var(--green)">Hosted</strong> — <code>https://csoai.org/mcp</code> (live streamable-HTTP endpoint)</li>
 </ul>
 </section>
 
