@@ -78,3 +78,16 @@ VERDICT: sitemap generation must run from the clean _site after full deploy; whe
 - SPA-fallback routes (council-time-canvas.html, agent-card.json): DIFFERENT intermediate index "CSOAI — the measurement body for AI compliance" — near-clean BUT still carries "Sovereign" nav + "Meok — sovereign platform" + "Sovereign" link
 - sov-time-canvas.html (old name): STILL SERVED pre-fix file, title "SOV-Space Spacetime Canvas", empty body, NO redirect to council-* — old names + old content live
 CONCLUSION: 2+ index versions deployed; old URL names still serve old content; renames + redirects NOT live. The branch (f/breach-fix) has all fixes; full CF Pages deploy of clean _site is the single un-free gate.
+
+## EAT-AUDIT CLOSE 2026-08-16 (final consolidation)
+LIVE-STATE SCORECARD:
+- councilof.ai apex: PASS (0 lock-words; neutral-referee framing; 13 axes real numbers; arena live) — the canonical surface, deploy-clean
+- csoai.org apex: FAIL (old breached index: >20 locks, Master Takeover, SOV3/SOV33/SOV333)
+- .well-known: security.txt ✅ llm-policy.txt ✅ llm-manifest ❌ agent-card ❌ (SPA fallback to old HTML)
+- /api/leaderboard: ✅ real JSON but sov33_* codenames in payload
+- /sitemap.xml: 51 sov-* + internal pages listed (crawl landmine)
+- old sov-* URLs: still serving old content, no live redirects
+- gspc MCP + city-3d MCP: healthy, remotes-schema manifests ready (pushed feat-work)
+- registers: gov=phi4:14b live (0.722); board_gov.json stale; fleet-cards signed chain real
+SINGLE UNFREE GATE: full CF Pages deploy (project csoai-site) of the clean _site branch — everything else is done.
+OWNER 3 CLICKS: arXiv code G6Y9SY (hard 27Aug) · CF ai-bot toggle · gdrive reconnect.
