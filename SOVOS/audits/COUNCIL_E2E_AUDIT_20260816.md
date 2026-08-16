@@ -27,3 +27,11 @@
 - proofof.ai rebuild-or-redirect decision
 - mcp-install channel strip / repoint /api/*
 - flagship GSPC into registry (io.github.CSOAI-ORG/gspc)
+
+## DEPLOY (deploy lane, from pod with CF token):
+git fetch origin
+git checkout f/breach-fix-apex-llms-20260816   # merged head, 0 locks verified
+git rebase origin/jv-wave8-production           # ensure clean against latest
+python3 build_site.py                           # assemble _site
+npx wrangler pages deploy _site --project-name csoai-site
+# then verify live: curl csoai.org | grep -ci sovereign  -> 0
