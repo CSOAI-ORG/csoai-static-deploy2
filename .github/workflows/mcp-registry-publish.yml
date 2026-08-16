@@ -21,20 +21,20 @@ jobs:
 
       - name: Install publisher CLI
         run: |
-          # publisher ships in the modelcontextprotocol/registry repo (brew source).
-          # Fallback chain: go install → tarball build → error with diagnostics.
-          if command -v go >/dev/null 2>&1; then
-            go install github.com/modelcontextprotocol/registry/...@v1.8.1
-            for p in "$(go env GOPATH)/bin/mcp-publisher" /usr/local/bin/mcp-publisher; do
-              [ -x "$p" ] && sudo cp "$p" /usr/local/bin/mcp-publisher && break
-            done
+          # Publisher ships via Homebrew bottle in modelcontextprotocol/registry repo (brew source).
+          # Order: Homebrew bottle (prebuilt linux binary) → go build → fail with diagnostics.
+          BOTTLE="https://ghcr.io/v2/homebrew/core/mcp-publisher/blobs/sha256:ec4115143e7155829f3f8cfea82db317c21b73238c8852234b"
+          if curl -sSfL -H "Authorization: Bearer QQ==" -o /tmp/pub.tar.gz "$BOTTLE" 2>/dev/null && [ -s /tmp/pub.tar.gz ]; then
+            tar -xzf /tmp/pub.tar.gz -C /tmp 2>/dev/null || true
+            find /tmp -type f -name "mcp-publisher" -perm -u+x 2>/dev/null | head -1 | xargs -I{} cp {} /usr/local/bin/mcp-publisher
           fi
           if ! command -v mcp-publisher >/dev/null 2>&1; then
-            curl -sSfL -o /tmp/pub.tar.gz "https://github.com/modelcontextprotocol/registry/archive/refs/tags/v1.8.1.tar.gz"
-            tar -xzf /tmp/pub.tar.gz -C /tmp
-            cd /tmp/registry-*
-            go build -o /usr/local/bin/mcp-publisher ./main/... || \
-            { echo "build failed — check repo layout"; exit 1; }
+            curl -sSfL -o /tmp/pub.go.tar.gz "https://github.com/modelcontextprotocol/registry/archive/refs/tags/v1.8.1.tar.gz"
+            tar -xzf /tmp/pub.go.tar.gz -C /tmp
+            # find the actual cmd dir (brew source: cmd/mcp-publisher)
+            go build -o /usr/local/bin/mcp-publisher /tmp/registry-*/cmd/mcp-publisher 2>/dev/null || \
+            go list -f "{{.ImportPath}}" /tmp/registry-*/... 2>/dev/null | grep -iE "cmd|publisher" | head -3
+            { echo "build failed"; exit 1; }
           fi
           mcp-publisher --help | head -1
 
