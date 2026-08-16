@@ -8,16 +8,10 @@
     "subfolder": "workers/csoai-gspc-mcp"
   },
   "version": "1.0.0",
-  "packages": [
+  "remotes": [
     {
-      "registryType": "worker",
-      "identifier": "csoai-gspc-mcp",
-      "version": "1.0.0",
-      "transport": {
-        "type": "streamable-http",
-        "url": "https://csoai-gspc-mcp.nicholastempleman.workers.dev/mcp"
-      },
-      "environmentVariables": []
+      "type": "streamable-http",
+      "url": "https://csoai-gspc-mcp.nicholastempleman.workers.dev/mcp"
     }
   ]
 }
