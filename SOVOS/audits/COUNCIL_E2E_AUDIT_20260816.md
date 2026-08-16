@@ -44,3 +44,10 @@ npx wrangler pages deploy _site --project-name csoai-site
 - Register: gov= sov6-embodiment 0.7004 (tied aesthetics), care= sov6-ethics 0.535, art5= sov6-relationality 0.9722 (tied gemma3). AUTHENTICITY: board JSON is the measurement record (no per-cell sigil field); Ed25519 signatures live in fleet-cards/ fleet-card-chain-XXXX.jsonl (prev-chain + pubkey) + fleet-art5-*.json (signed:True + content_id) — verified real 2026-08-16, scoreboard ✓signed substantiated. Registry: gspc + city-3d both official-MCP remotes-schema (city normalized), pushed feat-work 6828a0a0.
 - Directive canon committed: SOVOS/business/SOVOS-BUSINESS-DIRECTIVE-2026-08-16.md.
 - Owner queue #1: arXiv code G6Y9SY — HARD 27 AUG. Tonight 3 one-clickers: arXiv, CF AI-bot toggle, gdrive reconnect.
+
+## GSPC RECONCILIATION (directive #9) — 2026-08-16 night
+Live /api/gspc `measure` returns the ISSUANCE CONTRACT only (no leaderboard number) — "API says sov6 leads" was stale.
+LIVE deployed scoreboard gov row: best = phi4:14b @ 0.722 (n=237, ✓signed) — internally consistent (matches its own max cell).
+Pod board_gov.json on disk: best = sov6-embodiment-v3-light @ 0.7004 — STALE vs deployed page (file predates phi4 run).
+VERDICT: live deployed page = register of record (phi4:14b gov). board_gov.json on pod = stale cache; re-sync from signing chain (fleet cards, signed=True, source A100-2.pod). Buyers/regulators verify against the deployed artifact.
+LIVE scoreboard also shows deployed naming-hygiene (columns ethics-v3-light etc., no sov6- prefix) — estate-wide naming fix confirmed live.
