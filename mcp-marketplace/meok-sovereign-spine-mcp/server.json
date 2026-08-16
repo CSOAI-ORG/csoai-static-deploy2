@@ -1,0 +1,20 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/server.schema.json",
+  "name": "io.github.CSOAI-ORG/meok-sovereign-spine-mcp",
+  "description": "Sovereign Spine MCP — RFC 8785 canonical JSON + SHA-256 content addressing + Ed25519 detached signatures for the 5 sovereign card kinds (measurement, arena-round, honey-data, provenance, charter). The signing choke point. Every card has a CID + signature + public key; authority accrues only on external recompute.",
+  "version": "2.0.0",
+  "packages": [
+    {
+      "registryType": "pypi",
+      "identifier": "meok-sovereign-spine-mcp",
+      "version": "2.0.0",
+      "transport": {
+        "type": "stdio"
+      }
+    }
+  ],
+  "repository": {
+    "url": "https://github.com/CSOAI-ORG/meok-sovereign-spine-mcp",
+    "source": "github"
+  }
+}

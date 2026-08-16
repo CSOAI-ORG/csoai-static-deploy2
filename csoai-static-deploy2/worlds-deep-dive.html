@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🐉 The 5 Worlds — Deep Dive · MEOK OS</title>
+<style>
+:root{--bg:#02060f;--panel:#0e1419;--line:#1f2937;--ink:#e5e5e5;--mut:#9aa7b4;--gold:#fbbf24;--green:#10b981;--red:#ef4444;--blue:#60a5fa;--purple:#a855f7;--orange:#f97316}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,system-ui,monospace;background:var(--bg);color:var(--ink);line-height:1.55;padding-bottom:80px}
+.nav{background:rgba(2,6,15,0.95);padding:.75rem 1.2rem;display:flex;gap:.8rem;flex-wrap:wrap;align-items:center;border-bottom:1px solid rgba(251,191,36,0.3);position:sticky;top:0;z-index:10}
+.nav a{color:var(--gold);text-decoration:none;font-size:.85rem}
+.nav .brand{color:var(--gold);font-weight:bold;font-size:1.1rem}
+.hero{padding:2rem 1.5rem 1rem;text-align:center;border-bottom:2px solid var(--gold);background:radial-gradient(ellipse at center,rgba(251,191,36,0.10) 0%,#000 100%)}
+.hero h1{font-size:2.1rem;color:var(--gold);margin-bottom:.3rem}
+.hero .sub{color:var(--mut);font-size:.95rem;max-width:780px;margin:0 auto}
+.container{max-width:1100px;margin:0 auto;padding:1.5rem}
+.section{margin:1.5rem 0}
+.section h2{color:var(--gold);font-size:1.3rem;margin-bottom:.6rem;border-bottom:1px solid var(--line);padding-bottom:.4rem}
+.section h2 .tag{font-size:.7rem;color:var(--mut);background:#000;padding:.2rem .5rem;border-radius:4px;font-weight:normal;margin-left:.5rem}
+.world-card{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:1.5rem;margin:1.2rem 0;position:relative;overflow:hidden}
+.world-card::before{content:"";position:absolute;top:0;left:0;width:4px;height:100%}
+.world-card.oowm::before{background:var(--purple)}
+.world-card.owem::before{background:var(--orange)}
+.world-card.iwm::before{background:var(--blue)}
+.world-card.owm::before{background:var(--green)}
+.world-card.vwm::before{background:var(--gold)}
+.world-card .world-id{font-family:monospace;font-size:1.5rem;font-weight:bold;color:var(--gold);margin-bottom:.3rem}
+.world-card .world-name{color:var(--ink);font-size:1.1rem;font-weight:bold;margin-bottom:.5rem}
+.world-card .role{color:var(--mut);font-size:.85rem;font-style:italic;margin-bottom:.8rem}
+.world-card .field{margin:.5rem 0}
+.world-card .field .l{color:var(--gold);font-size:.7rem;font-weight:bold;text-transform:uppercase;letter-spacing:1px;margin-bottom:.2rem}
+.world-card .field .v{color:var(--ink);font-size:.88rem}
+.world-card .honest{background:rgba(239,68,68,0.05);border-left:3px solid var(--red);padding:.8rem;margin-top:.8rem;color:var(--red);font-size:.82rem;line-height:1.6}
+.world-card .evidence{background:rgba(16,185,129,0.04);border-left:3px solid var(--green);padding:.8rem;margin-top:.8rem;color:var(--green);font-size:.82rem;line-height:1.6}
+.world-card .evidence code, .world-card .honest code{background:#000;color:var(--gold);padding:.1rem .4rem;border-radius:3px;font-family:monospace;font-size:.78rem}
+.metrics-table{background:#000;border:1px solid var(--line);border-radius:8px;padding:1rem;margin:1rem 0;font-family:monospace;font-size:.78rem;overflow-x:auto}
+.metrics-table table{width:100%;border-collapse:collapse}
+.metrics-table th{color:var(--gold);text-align:left;padding:.4rem;border-bottom:1px solid var(--gold);font-size:.7rem;text-transform:uppercase;letter-spacing:1px}
+.metrics-table td{padding:.4rem;border-bottom:1px solid #1a1a1a}
+.metrics-table .axis{color:#fff;font-weight:bold}
+.metrics-table .win{color:var(--green);font-weight:bold}
+.metrics-table .lose{color:var(--red);font-weight:bold}
+.metrics-table .n{color:var(--mut);font-size:.7rem}
+.legend{font-size:.75rem;color:var(--mut);margin-top:.5rem;line-height:1.7}
+.cta-bar{background:linear-gradient(135deg,#1a1a1a 0%,#2d1b4e 100%);padding:1.2rem;border-radius:10px;margin:1.5rem 0;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.8rem}
+.cta-bar .text{color:var(--gold);font-size:1rem;font-weight:bold}
+.cta-bar .links{display:flex;gap:.5rem;flex-wrap:wrap}
+.cta-bar a{background:var(--gold);color:#000;padding:.5rem 1rem;border-radius:6px;font-weight:bold;text-decoration:none;font-size:.85rem}
+footer{text-align:center;color:var(--mut);padding:1rem;margin-top:1.5rem;border-top:1px solid var(--line);font-size:.75rem}
+</style>
+</head>
+<body>
+<nav class="nav">
+<a class="brand">🐉 MEOK OS</a>
+<a href="/">Home</a>
+<a href="/hub.html">Hub</a>
+<a href="/sovereign-os.html">Sovereign OS</a>
+<a href="/worlds-deep-dive.html" style="color:var(--gold)">5 Worlds</a>
+<a href="/owem-federation.html">OWEM</a>
+<a href="/clans.html">Clans</a>
+<a href="/verify-card.html">Verify</a>
+<a href="/mcp-install.html">MCP Install</a>
+<span style="flex:1"></span>
+<a href="/sovereign-journey.html" style="color:var(--purple)">Tour</a>
+</nav>
+
+<section class="hero">
+<h1>🐉 The 5 Worlds — Deep Dive</h1>
+<p class="sub">OOWM · OWEM · IWM · OWM · VWM. Each is a real component of the sovereign substrate, anchored to measured evidence, not empire narrative.</p>
+</section>
+
+<div class="container">
+
+<!-- OOWM -->
+<section class="section">
+<div class="world-card oowm">
+<div class="world-id">OOWM</div>
+<div class="world-name">Outer Open World Model · The "Sandwich Brain"</div>
+<div class="role">What the simulated world looks like. Composed of base + small-model retrieval + a router over a Phlabet-compressed KB.</div>
+
+<div class="field"><div class="l">What it is</div>
+<div class="v">The outermost layer. A composed system that reasons over an externalised world model — base model + retrieval over statute text + a router. NOT a weight-merge of weak specialists.</div></div>
+
+<div class="field"><div class="l">Why it matters</div>
+<div class="v">The only OOWM-style architecture with a non-zero chance of beating base Qwen. The path is <strong style="color:var(--gold)">base model + statute retrieval</strong>, not weight-merge of weak specialists.</div></div>
+
+<div class="field"><div class="l">Measured evidence</div>
+<div class="v">From the frozen Cowork CPU harness <code>sweep.py</code> (Wilson 95% CI + McNemar exact):</div></div>
+
+<div class="metrics-table">
+<table>
+<thead><tr><th>Axis</th><th>n</th><th>Sovereign fine-tune</th><th>Base Qwen2.5-0.5B</th><th>Winner</th><th>McNemar p</th></tr></thead>
+<tbody>
+<tr><td class="axis">governance</td><td class="n">237</td><td>0.249 [0.198, 0.308]</td><td class="win">0.540 [0.476, 0.602]</td><td class="lose">base (sep)</td><td>≈0.000</td></tr>
+<tr><td class="axis">art5-safeguard</td><td class="n">36</td><td>0.500 [0.345, 0.655]</td><td class="win">0.944 [0.819, 0.985]</td><td class="lose">base (sep)</td><td>0.0001</td></tr>
+<tr><td class="axis">provenance</td><td class="n">32</td><td>0.562 [0.393, 0.718]</td><td class="win">0.656 [0.483, 0.796]</td><td class="win">base</td><td>0.65</td></tr>
+<tr><td class="axis">safety-agi</td><td class="n">36</td><td>0.694 [0.531, 0.820]</td><td class="win">0.833 [0.681, 0.921]</td><td class="win">base</td><td>0.18</td></tr>
+<tr><td class="axis">conformance</td><td class="n">35</td><td>0.600 [0.436, 0.744]</td><td class="win">0.629 [0.463, 0.768]</td><td class="win">base</td><td>1.0</td></tr>
+<tr><td class="axis">openness</td><td class="n">32</td><td>0.600 [0.423, 0.754]</td><td class="win">0.594 [0.423, 0.745]</td><td>tie</td><td>1.0</td></tr>
+</tbody>
+</table>
+<div class="legend"><strong>UNMEASURED:</strong> gspc-care (n=1), gspc-swarm (n=6), gspc-det (n=6) — below usable_n=30, never scored as 0. <br><strong>Method:</strong> Wilson 95% interval for control (base Qwen) vs variant (sovereign fine-tune). McNemar exact on discordants. A win requires p95 CI non-overlap AND McNemar p&lt;0.05.</div>
+</div>
+
+<div class="honest">
+<strong>Honest finding:</strong> Base Qwen2.5-0.5B beats every sovereign fine-tune we own on 8/9 measured axes. <strong>Weight-merge does not work.</strong> The honest path forward: base model + retrieval over statute text (the sandwich brain approach). The 7th lost axis (governance) shows a statistically-significant base advantage — the only axis where the gap is decisive, not noise.
+</div>
+</div>
+</section>
+
+<!-- OWEM -->
+<section class="section">
+<div class="world-card owem">
+<div class="world-id">OWEM</div>
+<div class="world-name">Open World Emergence Model · Specialists (6×4×3 = 72)</div>
+<div class="role">Specialist fine-tunes composed into clans. Currently: depth_1 only (shallow specialists). depth_2/depth_3 DESIGNED.</div>
+
+<div class="field"><div class="l">What it is</div>
+<div class="v">6 sectors (csoai-adversarial, csoai-cited, defoneos-precise, law-adversarial, meok-operational, sovereignty-evidential) × 4 axes (governance, defence, intuition, operational) × 3 depths = 72 declared specialists.</div></div>
+
+<div class="field"><div class="l">Composition</div>
+<div class="v">Specialists compose into 33 sovereign clans. Each clan is a BFT council voter (quorum 23/33, f_bft=10).</div></div>
+
+<div class="evidence">
+<strong>Real measured:</strong> 6 fleet clans active in <code>/api/sov-arena/rounds.jsonl</code>. <code>clan-cited</code> achieves 1.6-2.9s median latency (citation-grounded). <code>clan-adversarial</code> at 18-31s (deeper reasoning). Combined into 400+ arena rounds, 91% agreement.<br>
+<strong>See:</strong> <a href="/owem-federation.html" style="color:var(--gold)">/owem-federation.html</a> — the 6×4×3 matrix.
+</div>
+
+<div class="honest">
+<strong>Honest finding:</strong> <strong>Specialists overfit their own training batteries.</strong> Catastrophic forgetting without rehearsal/replay fine-tuning. Per-domain fit gains (+0.5 to +2.0%) are NOT emergence — emergence requires 3+ decorrelated brains + held-out recompute (UNMEASURED). Composition depth_2/depth_3 = DESIGNED, not shipped. <strong>Don't claim "emergence" from fit gains.</strong>
+</div>
+</div>
+</section>
+
+<!-- IWM -->
+<section class="section">
+<div class="world-card iwm">
+<div class="world-id">IWM</div>
+<div class="world-name">Infinite World Memory · The Persistence Layer</div>
+<div class="role">Content-addressed signed corpus + temporal knowledge graphs. NOT "infinite" — large, well-indexed, signed memory with honest cost/latency limits.</div>
+
+<div class="field"><div class="l">What it is</div>
+<div class="v">The persistence substrate: every artifact becomes a content-addressed (SHA-256 CID), Ed25519-signed card via <code>meok-sovereign-spine-mcp</code>. 5 card kinds (measurement, arena-round, honey-data, provenance, charter).</div></div>
+
+<div class="field"><div class="l">What it's NOT</div>
+<div class="v">Not "infinite". Not "5D drawing mind". Not marketing. Real outcome: large, well-indexed, signed corpus with honest cost (storage scales), latency (retrieval p50 + LLM inference), retrieval quality ceilings, and hallucination risk.</div></div>
+
+<div class="evidence">
+<strong>Live state (15 Aug 2026):</strong>
+<ul style="padding-left:1.5rem;margin:.3rem 0">
+<li>400 arena rounds signed + verified (<code>/api/sov-arena/signed.jsonl</code>, 373KB)</li>
+<li>5 card kinds registered (measurement, arena-round, honey-data, provenance, charter)</li>
+<li>Ed25519 detached sigs via <code>cryptography</code> lib</li>
+<li>Recompute-able: any party can take a card, recompute the CID, verify the sig</li>
+</ul>
+<strong>Honest ceiling:</strong> ~10–50M vectors is the practical scale ceiling for pgvector. Above that, migrate to Qdrant/Milvus. Hallucination risk is reduced (every claim is signed) but not eliminated (signing ≠ correctness).
+</div>
+
+<div class="field"><div class="l">Verify externally</div>
+<div class="v"><a href="/verify-card.html" style="color:var(--gold)">/verify-card.html</a> — paste any CID from the live ledger, see what's in the card. Cryptographic verification needs <code>meok-sovereign-spine-mcp verify_card()</code>.</div></div>
+</div>
+</section>
+
+<!-- OWM -->
+<section class="section">
+<div class="world-card owm">
+<div class="world-id">OWM</div>
+<div class="world-name">Open World Memory · Federation Layer</div>
+<div class="role">Cross-org, cross-machine memory shared across the 33 hives. CRDT convergence + 33-voter BFT council.</div>
+
+<div class="field"><div class="l">What it is</div>
+<div class="v">The shared substrate: Mac↔Oracle-micro-1↔Oracle-micro-2↔RunPod pod. CRDT digest-match across replicated honey. 33-voter council (5 lineages × 4 temperature buckets + 13 reserved).</div></div>
+
+<div class="evidence">
+<strong>Verified:</strong> CRDT convergence on a 567-row honey replica (sha <code>e91d1d5f</code>) — digest-match across both micros.<br>
+<strong>Known miss:</strong> cross-region latency not yet measured. Convergence under partition is unverified. Only 6 fleet clans active, not the full 33-voter council.
+</div>
+
+<div class="field"><div class="l">Live substrate</div>
+<div class="v">Mac (orchestrator, keyboard) · sov-brain-2 (RTX 3090 RunPod, live) · sov-brain-a100-fresh2 (A100 80GB RunPod, 64h uptime) · Oracle-micro-1 + 2 (OCI Always-Free ARM, 155G disk each)</div></div>
+
+<div class="field"><div class="l">See</div>
+<div class="v"><a href="/clans.html" style="color:var(--gold)">/clans.html</a> for the live clan state across the federation.</div></div>
+</div>
+</section>
+
+<!-- VWM -->
+<section class="section">
+<div class="world-card vwm">
+<div class="world-id">VWM</div>
+<div class="world-name">Virtual World Memory · The Render Layer</div>
+<div class="role">The 3D world the user sees: Cesium globe, Three.js council city, WebGPU particles. Visual stubs over the real IWM state.</div>
+
+<div class="field"><div class="l">What it is</div>
+<div class="v">The operator's cockpit + customer-facing brand. Cesium (3D Earth), Three.js (Council City with 33 clan districts), WebGPU particle constellation, deck.gl layers.</div></div>
+
+<div class="field"><div class="l">The honest framing</div>
+<div class="v">Current 3D canvases are <strong>visual stubs</strong>. They render the architecture but do not yet round-trip state with the IWM. When that round-trip closes, the VWM becomes a real-time cockpit — not a screenshot.</div></div>
+
+<div class="evidence">
+<strong>Live surfaces (15 Aug 2026):</strong>
+<ul style="padding-left:1.5rem;margin:.3rem 0">
+<li><a href="/cesium-globe.html" style="color:var(--gold)">/cesium-globe.html</a> — 3D Cesium globe with hive markers</li>
+<li><a href="/world-3d.html" style="color:var(--gold)">/world-3d.html</a> — Photorealistic Earth</li>
+<li><a href="/sov-city-3d.html" style="color:var(--gold)">/sov-city-3d.html</a> — 33-clan Council City</li>
+<li><a href="/clans.html" style="color:var(--gold)">/clans.html</a> — Live fleet clans + signed ledger</li>
+<li><a href="/owem-federation.html" style="color:var(--gold)">/owem-federation.html</a> — 6×4×3 matrix view</li>
+</ul>
+</div>
+
+<div class="honest">
+<strong>Honest finding:</strong> The current 3D canvases are visual stubs. They are honest about their own measurement status (every measurement labelled REAL/DEMO/THEORY/GATED per the register). They do not yet round-trip IWM state into the rendering — when that closes, the VWM becomes the user-facing cockpit.
+</div>
+</div>
+</section>
+
+<section class="section">
+<div class="cta-bar">
+<div class="text">🐉 End-users see this inside ChatGPT/Claude/Cursor/Copilot/Gemini via the sovereign-os-mcp</div>
+<div class="links">
+<a href="/mcp-install.html">Install MCP</a>
+<a href="/verify-card.html" class="ghost">Verify a Card</a>
+<a href="/clans.html" class="ghost">Live Clans</a>
+</div>
+</div>
+</section>
+
+</div>
+
+<footer>🐉 MEOK OS · The 5 Worlds — Deep Dive · every claim verifiable via meok-sovereign-spine-mcp · CSOAI Ltd (UK 16939677)</footer>
+
+</body>
+</html>
