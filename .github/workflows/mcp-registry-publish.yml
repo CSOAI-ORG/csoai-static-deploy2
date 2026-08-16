@@ -1,56 +1,66 @@
 name: mcp-registry-publish
 
 # Publishes CSOAI MCP servers to the official MCP registry (registry.modelcontextprotocol.io)
-# via GitHub OIDC — no browser, no stored token, repeatable from any machine/pod.
 # Canon: registry/*.json must validate with `mcp-publisher validate`.
+# Trigger: on push to main touching registry/*.json (plus manual dispatch).
 
 on:
   push:
-    branches: [main, jv-wave8-production]
+    branches: [main]
     paths: ["registry/*.json"]
-  workflow_dispatch: {}
-
-permissions:
-  id-token: write   # OIDC for mcp-publisher login github-oidc
+  workflow_dispatch:
 
 jobs:
   validate-publish:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
     steps:
       - uses: actions/checkout@v4
 
       - name: Install publisher CLI
         run: |
-          # Publisher ships via Homebrew bottle in modelcontextprotocol/registry repo (brew source).
-          # Order: Homebrew bottle (prebuilt linux binary) → go build → fail with diagnostics.
-          BOTTLE="https://ghcr.io/v2/homebrew/core/mcp-publisher/blobs/sha256:ec4115143e7155829f3f8cfea82db317c21b73238c8852234b"
-          if curl -sSfL -H "Authorization: Bearer QQ==" -o /tmp/pub.tar.gz "$BOTTLE" 2>/dev/null && [ -s /tmp/pub.tar.gz ]; then
+          set -e
+          # Strategy (mcp-publisher v1.8.1, per Homebrew formula):
+          #   1. Prebuilt x86_64_linux Homebrew bottle from ghcr.io (no Go build needed)
+          #   2. Fallback: go build from the v1.8.1 source tarball (the formula builds ./cmd/publisher)
+          BOTTLE_SHA256="ec4115143e7155829f3f8cfea82db317c21b73238c8852234b59a14df7b6e3a1"
+          BOTTLE="https://ghcr.io/v2/homebrew/core/mcp-publisher/blobs/sha256:${BOTTLE_SHA256}"
+          echo ":: Trying prebuilt bottle..."
+          if curl -sSfL --retry 2 -o /tmp/pub.tar.gz "$BOTTLE" 2>/dev/null && [ -s /tmp/pub.tar.gz ]; then
+            echo "  bottle downloaded ($(wc -c < /tmp/pub.tar.gz) B)"
             tar -xzf /tmp/pub.tar.gz -C /tmp 2>/dev/null || true
-            find /tmp -type f -name "mcp-publisher" -perm -u+x 2>/dev/null | head -1 | xargs -I{} cp {} /usr/local/bin/mcp-publisher
+            BIN=$(find /tmp -type f -name "mcp-publisher" -perm -u+x 2>/dev/null | head -1)
+            if [ -n "$BIN" ]; then
+              cp "$BIN" /usr/local/bin/mcp-publisher
+              echo "  installed bottle to /usr/local/bin/mcp-publisher"
+            fi
+          else
+            echo "  bottle fetch failed; falling back to go build"
           fi
           if ! command -v mcp-publisher >/dev/null 2>&1; then
-            curl -sSfL -o /tmp/pub.go.tar.gz "https://github.com/modelcontextprotocol/registry/archive/refs/tags/v1.8.1.tar.gz"
+            echo ":: Building from source (go 1.2x)..."
+            go version
+            curl -sSfL --retry 2 -o /tmp/pub.go.tar.gz "https://github.com/modelcontextprotocol/registry/archive/refs/tags/v1.8.1.tar.gz"
             tar -xzf /tmp/pub.go.tar.gz -C /tmp
-            # find the actual cmd dir (brew source: cmd/mcp-publisher)
-            go build -o /usr/local/bin/mcp-publisher /tmp/registry-*/cmd/mcp-publisher 2>/dev/null || \
-            go list -f "{{.ImportPath}}" /tmp/registry-*/... 2>/dev/null | grep -iE "cmd|publisher" | head -3
-            { echo "build failed"; exit 1; }
+            cd /tmp/registry-1.8.1
+            # The Homebrew formula builds ./cmd/publisher -> bin/mcp-publisher (ldflags Version/GitCommit/BuildTime)
+            go build -ldflags "-X main.Version=1.8.1" -o /usr/local/bin/mcp-publisher ./cmd/publisher
+            echo "  go build OK"
           fi
-          mcp-publisher --help | head -1
+          mcp-publisher --help | head -1 || true
 
       - name: Validate all registry entries
         run: |
           for f in registry/*.json; do
             echo "== $f =="
-            mcp-publisher validate "$f"
+            mcp-publisher validate "$f" || { echo "VALIDATION FAILED: $f"; exit 1; }
           done
-
-      - name: Authenticate via GitHub OIDC
-        run: mcp-publisher login github-oidc
 
       - name: Publish all registry entries
         run: |
           for f in registry/*.json; do
-            echo "== publishing $f =="
-            mcp-publisher publish "$f" || echo "publish exit $? (may be version-exists)"
+            echo "== publish $f =="
+            mcp-publisher publish "$f" || { echo "PUBLISH FAILED: $f"; exit 1; }
           done
