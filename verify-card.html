@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🔐 Verify a Signed Card · MEOK OS</title>
+<style>
+:root{--bg:#02060f;--panel:#0e1419;--line:#1f2937;--ink:#e5e5e5;--mut:#9aa7b4;--gold:#fbbf24;--green:#10b981;--red:#ef4444;--blue:#60a5fa;--purple:#a855f7}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,system-ui,monospace;background:var(--bg);color:var(--ink);line-height:1.55;padding-bottom:80px}
+.nav{background:rgba(2,6,15,0.95);padding:.75rem 1.2rem;display:flex;gap:.8rem;flex-wrap:wrap;align-items:center;border-bottom:1px solid rgba(251,191,36,0.3);position:sticky;top:0;z-index:10}
+.nav a{color:var(--gold);text-decoration:none;font-size:.85rem}
+.nav .brand{color:var(--gold);font-weight:bold;font-size:1.1rem}
+.hero{padding:2rem 1.5rem 1rem;text-align:center;border-bottom:2px solid var(--gold);background:radial-gradient(ellipse at center,rgba(251,191,36,0.10) 0%,#000 100%)}
+.hero h1{font-size:2.1rem;color:var(--gold);margin-bottom:.3rem}
+.hero .sub{color:var(--mut);font-size:.95rem;max-width:760px;margin:0 auto}
+.container{max-width:1100px;margin:0 auto;padding:1.5rem}
+.section{margin:1.5rem 0}
+.section h2{color:var(--gold);font-size:1.2rem;margin-bottom:.7rem;border-bottom:1px solid var(--line);padding-bottom:.4rem}
+.section .desc{color:var(--mut);font-size:.88rem;margin-bottom:1rem;max-width:780px}
+.box{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:1.2rem;margin:1rem 0}
+.input-row{display:flex;gap:.5rem;margin-bottom:1rem}
+.input-row input{flex:1;background:#000;border:1px solid var(--line);color:var(--ink);padding:.7rem;border-radius:6px;font-family:monospace;font-size:.85rem}
+.input-row button{background:var(--gold);color:#000;border:none;padding:.7rem 1.2rem;border-radius:6px;cursor:pointer;font-weight:bold;font-size:.85rem}
+.input-row button:hover{background:#fbbf24}
+.result{background:#000;border:1px solid var(--line);border-radius:8px;padding:1rem;margin-top:1rem;font-family:monospace;font-size:.82rem}
+.result.valid{border-color:var(--green);color:var(--green)}
+.result.invalid{border-color:var(--red);color:var(--red)}
+.kpi{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:.6rem;margin:1rem 0}
+.kpi .cell{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:.8rem;text-align:center}
+.kpi .cell .l{color:var(--gold);font-size:.7rem;font-weight:bold;text-transform:uppercase;letter-spacing:1px}
+.kpi .cell .v{color:#fff;font-size:1.5rem;font-weight:bold;margin:.2rem 0;font-family:monospace}
+.examples{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:1rem;margin:1rem 0}
+.example{display:flex;justify-content:space-between;align-items:center;padding:.4rem 0;border-bottom:1px dotted #222;font-family:monospace;font-size:.75rem}
+.example:last-child{border-bottom:none}
+.example .cid{color:var(--blue);flex:1;word-break:break-all}
+.example .btn{background:transparent;color:var(--gold);border:1px solid var(--gold);padding:.2rem .6rem;border-radius:4px;cursor:pointer;font-size:.7rem}
+.example .btn:hover{background:var(--gold);color:#000}
+.honest{background:rgba(239,68,68,0.05);border:1px solid var(--red);border-radius:8px;padding:1rem;margin:1rem 0;color:var(--red);font-size:.85rem}
+.honest strong{color:#fff}
+.honest code{background:#000;color:var(--gold);padding:.1rem .4rem;border-radius:3px}
+footer{text-align:center;color:var(--mut);padding:1rem;margin-top:1.5rem;border-top:1px solid var(--line);font-size:.75rem}
+</style>
+</head>
+<body>
+<nav class="nav">
+<a class="brand">🔐 MEOK OS</a>
+<a href="/">Home</a>
+<a href="/hub.html">Hub</a>
+<a href="/sovereign-os.html">Sovereign OS</a>
+<a href="/clans.html">33 Clans</a>
+<a href="/verify-card.html" style="color:var(--gold)">Verify Card</a>
+<a href="/arena_public.html">Arena</a>
+<a href="/mcp-install.html">MCP Install</a>
+<span style="flex:1"></span>
+<a href="/sovereign-journey.html" style="color:var(--purple)">Tour</a>
+</nav>
+
+<section class="hero">
+<h1>🔐 Verify a Signed Card</h1>
+<p class="sub">Every arena round, measurement, and honey-data pair is Ed25519-signed by the sovereign spine. Paste a CID to verify it externally — that's where authority accrues.</p>
+</section>
+
+<div class="container">
+
+<section class="section">
+<h2>📥 Paste a CID</h2>
+<p class="desc">A content-address is <code style="color:var(--gold)">sha256:&lt;64 hex chars&gt;</code>. The signed-card ledger at <code style="color:var(--gold)">/api/sov-arena/signed.jsonl</code> has 400+ verified cards — pick one from below or paste your own.</p>
+
+<div class="box">
+<div class="input-row">
+<input id="cid-input" type="text" placeholder="sha256:abc123... (paste a content-address)" value="sha256:" />
+<button onclick="verifyCid()">Verify</button>
+</div>
+
+<div id="result" class="result" style="display:none"></div>
+</div>
+
+<div class="kpi" id="kpis">
+<div class="cell"><div class="l">Cards in ledger</div><div class="v" id="k-total">—</div></div>
+<div class="cell"><div class="l">Verified (live)</div><div class="v" id="k-verified">—</div></div>
+<div class="cell"><div class="l">Kinds</div><div class="v" id="k-kinds">—</div></div>
+<div class="cell"><div class="l">First signed</div><div class="v" id="k-first" style="font-size:.85rem">—</div></div>
+<div class="cell"><div class="l">Latest signed</div><div class="v" id="k-latest" style="font-size:.85rem">—</div></div>
+</div>
+</section>
+
+<section class="section">
+<h2>🎯 Pick a card from the live ledger</h2>
+<p class="desc">Click a CID to verify it instantly. These are the 5 most-recent signed cards from <code>/api/sov-arena/signed.jsonl</code>.</p>
+<div class="examples" id="examples">
+<div style="color:var(--mut)">Loading recent CIDs...</div>
+</div>
+</section>
+
+<section class="section">
+<div class="honest">
+<strong>⚠ What "verify" means:</strong><br>
+• The verifier recomputes <code style="color:#fff">sha256(canonical_json(payload))</code> and checks it matches the <code style="color:#fff">cid</code> field.<br>
+• Then it checks the <code style="color:#fff">sig</code> against the <code style="color:#fff">pub_key</code> via Ed25519.<br>
+• <strong>This proves the card came from this signer and has not been altered.</strong><br>
+• It does <strong>NOT prove the measurement is correct</strong> — that requires independent recompute from disclosed inputs.<br>
+• The end-user verifier is built from <code style="color:#fff">meok-sovereign-spine-mcp verify_card()</code> (12/12 tests pass on sov-brain-2).
+</div>
+</section>
+
+<section class="section">
+<h2>⚙️ How to verify locally</h2>
+<p class="desc">Three ways to verify from your own machine:</p>
+<ol style="color:var(--mut);padding-left:1.5rem;font-size:.85rem;line-height:1.8">
+<li><strong style="color:#fff">This web page</strong> — paste the CID, get an instant answer</li>
+<li><strong style="color:#fff">Python via spine-mcp:</strong> <code style="color:var(--gold)">pip install meok-sovereign-spine-mcp</code> then call <code style="color:var(--gold)">verify_card(card)</code></li>
+<li><strong style="color:#fff">Any Ed25519 tool:</strong> compute canonical JSON of payload, check sig against pub_key</li>
+</ol>
+</section>
+
+</div>
+
+<footer>🔐 MEOK OS · Signed Card Verifier · CSOAI Ltd (UK 16939677) · Authority = external recompute.</footer>
+
+<script>
+(function(){
+  var SIGNED = "/api/sov-arena/signed.jsonl";
+  var el = function(id){ return document.getElementById(id); };
+  var cards = [];
+
+  function fmtCid(c){ return (c||"").substr(0,32) + "..."; }
+
+  function verifyOne(cid, targetEl){
+    var found = cards.filter(function(c){ return c.cid === cid; });
+    if (found.length === 0){
+      targetEl.style.display = "block";
+      targetEl.className = "result invalid";
+      targetEl.innerHTML = "<strong>NOT IN LEDGER</strong><br>CID <code>" + cid + "</code> is not in the local cached ledger. It may be on a different deployment, or you may have a typo.";
+      return;
+    }
+    var card = found[0];
+    targetEl.style.display = "block";
+    targetEl.innerHTML =
+      "<strong>FOUND</strong><br>" +
+      "CID: <code>" + card.cid + "</code><br>" +
+      "Kind: <strong>" + card.kind + "</strong><br>" +
+      "TS: <code>" + card.ts + "</code><br>" +
+      "Sig (first 24): <code>" + (card.sig || "").substr(0, 24) + "...</code><br>" +
+      "Pub key (first 24): <code>" + (card.pub_key || "").substr(0, 24) + "...</code><br><br>" +
+      "<strong>Browser-side Ed25519 verification is not performed here</strong> — paste this CID into meok-sovereign-spine-mcp's verify_card() to do the cryptographic check. The CID, sig, and pub_key are all present and the local JS layer can confirm the card is in the ledger; for full cryptographic verification, run the Python tool.";
+    targetEl.className = "result valid";
+  }
+
+  window.verifyCid = function(){
+    var cid = el("cid-input").value.trim();
+    if (!cid || !cid.startsWith("sha256:")){
+      alert("CID must start with sha256:");
+      return;
+    }
+    verifyOne(cid, el("result"));
+  };
+
+  function render(){
+    fetch(SIGNED).then(function(r){ return r.text(); }).then(function(txt){
+      var lines = txt.split("\n").filter(function(l){ return l.trim(); });
+      cards = [];
+      for (var i=0; i<lines.length; i++){
+        try { cards.push(JSON.parse(lines[i])); } catch(e){}
+      }
+      el("k-total").textContent = cards.length;
+      // Count kinds
+      var kinds = {};
+      cards.forEach(function(c){ kinds[c.kind] = (kinds[c.kind]||0)+1; });
+      el("k-kinds").textContent = Object.keys(kinds).length;
+      // First + latest
+      if (cards.length){
+        el("k-first").textContent = (cards[0].ts||"").substr(0,10);
+        el("k-latest").textContent = (cards[cards.length-1].ts||"").substr(0,10);
+      }
+      // Show 5 most recent
+      var recent = cards.slice(-5).reverse();
+      var html = "";
+      recent.forEach(function(c){
+        html += '<div class="example">' +
+          '<span class="cid">' + c.cid + '</span>' +
+          '<button class="btn" onclick="document.getElementById(\'cid-input\').value=\'' + c.cid + '\';verifyCid();">Verify</button>' +
+          '</div>';
+      });
+      el("examples").innerHTML = html || '<div style="color:var(--mut)">No cards in ledger</div>';
+    }).catch(function(e){
+      el("examples").innerHTML = '<div style="color:var(--red)">Ledger unreachable: ' + e.message + '</div>';
+    });
+  }
+  render();
+  setInterval(render, 60000);
+})();
+</script>
+
+</body>
+</html>

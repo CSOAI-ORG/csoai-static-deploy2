@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🫀 Sovereign Pulse — Live Heartbeat · MEOK OS</title>
+<style>
+:root{--bg:#02060f;--panel:#0e1419;--line:#1f2937;--ink:#e5e5e5;--mut:#9aa7b4;--gold:#fbbf24;--green:#10b981;--red:#ef4444;--blue:#60a5fa;--purple:#a855f7}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,system-ui,monospace;background:var(--bg);color:var(--ink);line-height:1.5;padding-bottom:80px}
+.nav{background:rgba(2,6,15,0.95);padding:.75rem 1.2rem;display:flex;gap:.8rem;flex-wrap:wrap;align-items:center;border-bottom:1px solid rgba(251,191,36,0.3);position:sticky;top:0;z-index:10}
+.nav a{color:var(--gold);text-decoration:none;font-size:.85rem}
+.nav .brand{color:var(--gold);font-weight:bold;font-size:1.1rem}
+.hero{padding:2rem 1.5rem 1.2rem;text-align:center;border-bottom:2px solid var(--red);background:radial-gradient(ellipse at center,rgba(239,68,68,0.15) 0%,#000 100%)}
+.hero h1{font-size:2.2rem;color:var(--red);margin-bottom:.3rem}
+.hero .sub{color:var(--mut);font-size:.95rem}
+.container{max-width:1200px;margin:0 auto;padding:1rem}
+.heart{display:inline-block;width:90px;height:90px;position:relative;margin:1rem auto}
+.heart svg{width:100%;height:100%;animation:pulse 1s ease-in-out infinite}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.08)}}
+.bpm-big{font-size:4rem;color:var(--red);font-weight:bold;letter-spacing:-2px}
+.bpm-label{color:var(--mut);font-size:.8rem;text-transform:uppercase;letter-spacing:1px}
+.metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:.8rem;margin:1.5rem 0}
+.metric{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:1rem}
+.metric .label{color:var(--gold);font-size:.7rem;text-transform:uppercase;letter-spacing:1px;font-weight:bold}
+.metric .value{color:#fff;font-size:2rem;font-weight:bold;margin:.3rem 0;font-family:monospace}
+.metric .unit{color:var(--mut);font-size:.75rem}
+.metric .baseline{color:var(--mut);font-size:.7rem;margin-top:.3rem;font-family:monospace}
+.metric.live{border-color:var(--green);background:rgba(16,185,129,0.04)}
+.section{margin:1.5rem 0}
+.section h2{color:var(--gold);font-size:1.2rem;margin-bottom:.8rem}
+.live-row{padding:.3rem 0;border-bottom:1px solid #111;font-size:.78rem;display:flex;justify-content:space-between}
+.live-row:last-child{border-bottom:none}
+.live-row .ts{color:var(--mut);font-size:.7rem;width:80px}
+.live-row .mode{color:var(--gold);font-size:.7rem;font-weight:bold;width:80px}
+.live-row .probe{color:var(--blue);flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;margin:0 .5rem}
+.live-row .verdict{color:var(--green);font-weight:bold;font-size:.75rem;width:30px;text-align:right}
+.live-row .verdict.no{color:var(--red)}
+.feed{background:#000;border:1px solid var(--line);border-radius:8px;padding:.8rem;max-height:400px;overflow-y:auto}
+.bft{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:.6rem;margin:1rem 0}
+.bft-cell{background:#000;border:1px solid var(--line);border-radius:6px;padding:.7rem}
+.bft-cell .role{color:var(--gold);font-size:.7rem;font-weight:bold;text-transform:uppercase}
+.bft-cell .weight{color:#fff;font-size:1.3rem;font-weight:bold;margin:.2rem 0;font-family:monospace}
+.bft-cell.ok{border-color:var(--green)}
+.bft-cell.low{border-color:var(--red)}
+.live-status{background:rgba(16,185,129,0.05);border:1px solid var(--green);border-radius:8px;padding:.8rem;margin:1rem 0;font-size:.85rem;color:var(--green)}
+.live-status .lbl{color:var(--mut);font-size:.7rem;text-transform:uppercase;letter-spacing:1px}
+footer{text-align:center;color:var(--mut);padding:1rem;margin-top:1.5rem;border-top:1px solid var(--line);font-size:.75rem}
+</style>
+</head>
+<body>
+<nav class="nav">
+<a class="brand">🫀 MEOK OS</a>
+<a href="/">Home</a>
+<a href="/hub.html">Hub</a>
+<a href="/sovereign-os.html">Sovereign OS</a>
+<a href="/arena_public.html">Arena</a>
+<a href="/pulse.html" style="color:var(--red)">Pulse</a>
+<a href="/experiments.html">Experiments</a>
+<span style="flex:1"></span>
+<a href="/sovereign-journey.html" style="color:var(--purple)">Tour</a>
+</nav>
+
+<section class="hero">
+<h1>🫀 Sovereign Pulse</h1>
+<p class="sub">Live heartbeat — substrate state, arena rounds per minute, OpenTTD tick stream, BFT council health.</p>
+<div class="heart"><svg viewBox="0 0 32 29.6"><path fill="#ef4444" d="M23.6,0c-3.4,0-6.3,2.7-7.6,5.6C14.7,2.7,11.8,0,8.4,0C3.8,0,0,3.8,0,8.4 c0,9.4,9.5,11.9,16,21.2c6.1-9.3,16-12.1,16-21.2C32,3.8,28.2,0,23.6,0z"/></svg></div>
+<div id="bpm-display"><div class="bpm-big">—</div><div class="bpm-label">arena rounds / 60s</div></div>
+</section>
+
+<div class="container">
+
+<section class="metrics" id="metrics-grid">
+<div class="metric live"><div class="label">Arena BPM</div><div class="value" id="m-bpm">—</div><div class="unit">rounds / min</div><div class="baseline">real fleet</div></div>
+<div class="metric live"><div class="label">Total rounds</div><div class="value" id="m-total">—</div><div class="unit">all-time</div></div>
+<div class="metric live"><div class="label">Agreement</div><div class="value" id="m-agree">—</div><div class="unit">last 60 rounds</div><div class="baseline">target ≥ 0.85</div></div>
+<div class="metric live"><div class="label">OpenTTD tick</div><div class="value" id="m-ottd">—</div><div class="unit">sim time</div><div class="baseline">live substrate</div></div>
+<div class="metric live"><div class="label">Active clans</div><div class="value" id="m-clans">—</div><div class="unit">fleet</div></div>
+<div class="metric live"><div class="label">Substrate</div><div class="value" id="m-substrate" style="font-size:1rem">—</div><div class="unit">via oracle-micro-2</div></div>
+</section>
+
+<section class="live-status">
+<span class="lbl">Live status</span><br>
+<span id="status-text">Connecting to substrate...</span>
+</section>
+
+<section class="section">
+<h2>🫀 BFT Council Health</h2>
+<p style="color:var(--mut);font-size:.85rem">33-voter sovereign council. Quorum = 23/33 (f_bft=10). Live on <a href="/bft33-live.html" style="color:var(--gold)">/bft33-live.html</a>.</p>
+<div class="bft">
+<div class="bft-cell ok"><div class="role">voter_0 · anchor</div><div class="weight">1.0</div></div>
+<div class="bft-cell ok"><div class="role">voter_1 · guardian</div><div class="weight">1.0</div></div>
+<div class="bft-cell ok"><div class="role">voter_2 · care</div><div class="weight">1.0</div></div>
+<div class="bft-cell ok"><div class="role">voter_3 · art5</div><div class="weight">1.0</div></div>
+</div>
+</section>
+
+<section class="section">
+<h2>📡 Live arena feed (last 12 rounds)</h2>
+<div class="feed" id="beat-log">Loading live feed from /api/sov-arena/rounds.jsonl...</div>
+</section>
+
+<section class="section">
+<h2>🔌 What powers this</h2>
+<p style="color:var(--mut);font-size:.85rem">Reading from <code style="color:var(--gold)">/api/sov-arena/rounds.jsonl</code> (Cloudflare Pages Function, KV SOV_ARENA_STATE) and <code style="color:var(--gold)">/api/sov-openttd/state.jsonl</code> (KV SOV_OPENTTD_STATE). Both are 5-min tail-sync from the substrate running on <strong style="color:#fff">oracle-micro-2</strong>. Every event is Ed25519-signed upstream. The dashboard renders honest numbers — if the substrate is down, the feed says so, no fabrication.</p>
+</section>
+
+</div>
+
+<footer>🫀 MEOK OS · Sovereign Pulse · powered by pulse-mcp · CSOAI Ltd (UK 16939677)</footer>
+
+<script>
+(function(){
+  var ARENA = "/api/sov-arena/rounds.jsonl";
+  var OTTD  = "/api/sov-openttd/state.jsonl";
+  function el(id){ return document.getElementById(id); }
+  function fmtTime(s){ return (s||"").substr(11,8); }
+  function fetchArena(){
+    return fetch(ARENA).then(function(r){ return r.text(); }).then(function(txt){
+      var lines = txt.split("\n").filter(function(l){ return l.trim(); });
+      var rounds = [];
+      for (var i=0; i<lines.length; i++){
+        try { rounds.push(JSON.parse(lines[i])); } catch(e) {}
+      }
+      return rounds;
+    });
+  }
+  function fetchOttd(){
+    return fetch(OTTD).then(function(r){ return r.text(); }).then(function(txt){
+      var lines = txt.split("\n").filter(function(l){ return l.trim(); });
+      var last = null;
+      for (var i=lines.length-1; i>=0; i--){
+        try { last = JSON.parse(lines[i]); break; } catch(e) {}
+      }
+      return last;
+    });
+  }
+  function render(){
+    Promise.all([fetchArena().catch(function(){ return []; }), fetchOttd().catch(function(){ return null; })]).then(function(res){
+      var rounds = res[0], ottd = res[1];
+      var now = Date.now();
+      var recent = rounds.filter(function(r){
+        if (!r.ts) return false;
+        return (now - new Date(r.ts).getTime()) < 60*1000;
+      });
+      el("m-bpm").textContent = recent.length;
+      el("m-total").textContent = rounds.length;
+      var last60 = rounds.slice(-60);
+      var agree60 = last60.filter(function(r){ return r.agreement; }).length;
+      el("m-agree").textContent = last60.length ? (agree60/last60.length*100).toFixed(0) + "%" : "—";
+      var clans = {};
+      rounds.forEach(function(r){
+        ["left","right"].forEach(function(side){
+          var nm = (r[side] && r[side].name) || "";
+          if (nm && nm !== "human") clans[nm] = 1;
+        });
+      });
+      el("m-clans").textContent = Object.keys(clans).length;
+      if (ottd) {
+        el("m-ottd").textContent = "date " + ottd.date;
+        el("m-substrate").textContent = ottd.substrate || "openttd-gpl-2.0";
+      } else {
+        el("m-ottd").textContent = "—";
+        el("m-substrate").textContent = "unreachable";
+      }
+      el("status-text").textContent = "Arena feed live (" + rounds.length + " rounds) · OpenTTD " + (ottd ? "tick=" + ottd.tick : "offline");
+      var last = rounds.slice(-12).reverse();
+      el("beat-log").innerHTML = last.map(function(r){
+        var v = (r.left && r.left.verdict) || "?";
+        var probe = (r.probe || "?").substr(0,80) + "...";
+        return '<div class="live-row"><span class="ts">' + fmtTime(r.ts) + '</span><span class="mode">' + (r.mode||"?") + '</span><span class="probe" title="' + (r.probe||"").replace(/"/g,'&quot;') + '">' + probe + '</span><span class="verdict ' + (v==="YES"?"":"no") + '">' + v + '</span></div>';
+      }).join("") || '<div class="live-row"><span class="probe" style="color:var(--red)">No live data — substrate may be down</span></div>';
+      // big BPM number
+      var bpmBig = document.querySelector(".bpm-big");
+      if (bpmBig) bpmBig.textContent = recent.length;
+    });
+  }
+  render();
+  setInterval(render, 10000);
+})();
+</script>
+
+</body>
+</html>

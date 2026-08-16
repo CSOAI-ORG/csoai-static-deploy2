@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🜏 OWEM Federation — 6×4×3 Specialists · 33 Clans · MEOK OS</title>
+<style>
+:root{--bg:#02060f;--panel:#0e1419;--line:#1f2937;--ink:#e5e5e5;--mut:#9aa7b4;--gold:#fbbf24;--green:#10b981;--red:#ef4444;--blue:#60a5fa;--purple:#a855f7;--orange:#f97316}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,system-ui,monospace;background:var(--bg);color:var(--ink);line-height:1.55;padding-bottom:80px}
+.nav{background:rgba(2,6,15,0.95);padding:.75rem 1.2rem;display:flex;gap:.8rem;flex-wrap:wrap;align-items:center;border-bottom:1px solid rgba(251,191,36,0.3);position:sticky;top:0;z-index:10}
+.nav a{color:var(--gold);text-decoration:none;font-size:.85rem}
+.nav .brand{color:var(--gold);font-weight:bold;font-size:1.1rem}
+.hero{padding:2rem 1.5rem 1rem;text-align:center;border-bottom:2px solid var(--orange);background:radial-gradient(ellipse at center,rgba(249,115,22,0.12) 0%,#000 100%)}
+.hero h1{font-size:2.1rem;color:var(--orange);margin-bottom:.3rem}
+.hero .sub{color:var(--mut);font-size:.95rem;max-width:780px;margin:0 auto}
+.container{max-width:1200px;margin:0 auto;padding:1.5rem}
+.section{margin:1.5rem 0}
+.section h2{color:var(--gold);font-size:1.2rem;margin-bottom:.7rem;border-bottom:1px solid var(--line);padding-bottom:.4rem}
+.section .desc{color:var(--mut);font-size:.88rem;margin-bottom:1rem;max-width:780px}
+.kpi{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:.6rem;margin:1rem 0}
+.kpi .cell{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:.8rem;text-align:center}
+.kpi .cell .l{color:var(--gold);font-size:.7rem;font-weight:bold;text-transform:uppercase;letter-spacing:1px}
+.kpi .cell .v{color:#fff;font-size:1.5rem;font-weight:bold;margin:.2rem 0;font-family:monospace}
+.grid6x4x3{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:1.2rem;margin:1rem 0;overflow-x:auto}
+table.matrix{width:100%;border-collapse:collapse;font-size:.78rem;font-family:monospace}
+table.matrix th{color:var(--orange);text-align:left;padding:.4rem;border-bottom:1px solid var(--orange);font-size:.7rem;text-transform:uppercase;letter-spacing:1px}
+table.matrix td{padding:.4rem;border-bottom:1px solid #1a1a1a;color:var(--ink)}
+table.matrix td.sector{color:var(--gold);font-weight:bold;background:rgba(249,115,22,0.05)}
+table.matrix td.cell{text-align:center}
+table.matrix td.measured{color:var(--green)}
+table.matrix td.unmeasured{color:var(--mut);font-style:italic}
+table.matrix td.empty{color:var(--mut);opacity:0.4;text-align:center}
+.clan-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:.5rem;margin:1rem 0}
+.clan-card{background:#000;border:1px solid var(--line);border-radius:6px;padding:.7rem;font-size:.78rem}
+.clan-card .name{color:var(--blue);font-weight:bold;font-family:monospace;font-size:.75rem}
+.clan-card .sector{color:var(--orange);font-size:.7rem;margin-top:.2rem}
+.clan-card .rounds{color:var(--green);font-size:.7rem;margin-top:.2rem;font-weight:bold}
+.honest{background:rgba(239,68,68,0.05);border:1px solid var(--red);border-radius:8px;padding:1rem;margin:1rem 0;color:var(--red);font-size:.85rem}
+.honest strong{color:#fff}
+.honest code{background:#000;color:var(--gold);padding:.1rem .4rem;border-radius:3px}
+.legend{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:.5rem;margin:1rem 0}
+.legend .item{background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:.6rem;font-size:.75rem}
+.legend .item .n{color:var(--orange);font-weight:bold;font-size:.9rem}
+.legend .item .l{color:var(--mut);font-size:.7rem}
+footer{text-align:center;color:var(--mut);padding:1rem;margin-top:1.5rem;border-top:1px solid var(--line);font-size:.75rem}
+</style>
+</head>
+<body>
+<nav class="nav">
+<a class="brand">🜏 MEOK OS</a>
+<a href="/">Home</a>
+<a href="/hub.html">Hub</a>
+<a href="/sovereign-os.html">Sovereign OS</a>
+<a href="/owem-federation.html" style="color:var(--orange)">OWEM</a>
+<a href="/clans.html">Clans</a>
+<a href="/verify-card.html">Verify</a>
+<a href="/mcp-install.html">MCP Install</a>
+<span style="flex:1"></span>
+<a href="/sovereign-journey.html" style="color:var(--purple)">Tour</a>
+</nav>
+
+<section class="hero">
+<h1>🜏 OWEM Federation</h1>
+<p class="sub">Open World Emergence Model — 6 sectors × 4 axes × 3 depths = 72 declared specialists, composed into 33 sovereign clans.</p>
+</section>
+
+<div class="container">
+
+<section class="section">
+<h2>📊 Federation State</h2>
+<div class="kpi" id="kpis">
+<div class="cell"><div class="l">Sectors</div><div class="v">6</div></div>
+<div class="cell"><div class="l">Axes per sector</div><div class="v">4</div></div>
+<div class="cell"><div class="l">Depths per axis</div><div class="v">3</div></div>
+<div class="cell"><div class="l">Declared specialists</div><div class="v" id="k-declared">72</div></div>
+<div class="cell"><div class="l">Active clans</div><div class="v" id="k-active">—</div></div>
+<div class="cell"><div class="l">Rounds (live)</div><div class="v" id="k-rounds">—</div></div>
+</div>
+</section>
+
+<section class="section">
+<h2>🧬 The 6×4×3 Matrix</h2>
+<p class="desc">Each cell is a declared OWEM specialist. <strong style="color:var(--green)">Measured</strong> means the OWEM is in the live arena with measured rounds. <strong style="color:var(--mut)">UNMEASURED</strong> means declared but not yet routed to a live task. Empty cells are reserved for future specialists.</p>
+
+<div class="grid6x4x3">
+<table class="matrix">
+<thead>
+<tr><th>Sector \\ Axis</th><th>governance</th><th>defence</th><th>intuition</th><th>operational</th></tr>
+</thead>
+<tbody id="matrix-body">
+<tr>
+<td class="sector">csoai-adversarial</td>
+<td class="cell measured">✓ (live)</td>
+<td class="cell measured">✓ (live)</td>
+<td class="cell unmeasured">declared</td>
+<td class="cell unmeasured">declared</td>
+</tr>
+<tr>
+<td class="sector">csoai-cited</td>
+<td class="cell measured">✓ (live)</td>
+<td class="cell unmeasured">declared</td>
+<td class="cell unmeasured">declared</td>
+<td class="cell unmeasured">declared</td>
+</tr>
+<tr>
+<td class="sector">defoneos-precise</td>
+<td class="cell measured">✓ (live)</td>
+<td class="cell unmeasured">declared</td>
+<td class="cell empty">—</td>
+<td class="cell empty">—</td>
+</tr>
+<tr>
+<td class="sector">law-adversarial</td>
+<td class="cell measured">✓ (live)</td>
+<td class="cell unmeasured">declared</td>
+<td class="cell empty">—</td>
+<td class="cell empty">—</td>
+</tr>
+<tr>
+<td class="sector">meok-operational</td>
+<td class="cell measured">✓ (live)</td>
+<td class="cell unmeasured">declared</td>
+<td class="cell measured">✓ (live)</td>
+<td class="cell unmeasured">declared</td>
+</tr>
+<tr>
+<td class="sector">sovereignty-evidential</td>
+<td class="cell measured">✓ (live)</td>
+<td class="cell unmeasured">declared</td>
+<td class="cell measured">✓ (live)</td>
+<td class="cell empty">—</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<p style="color:var(--mut);font-size:.78rem;margin-top:.5rem">Depth axis: <code>depth_1 / depth_2 / depth_3</code> = shallow specialist / composed / federated. Currently depth_1 only — the composition layer is DESIGNED, not yet shipped.</p>
+</section>
+
+<section class="section">
+<h2>👥 The 33 Clans (composition layer)</h2>
+<p class="desc">Each clan is composed of multiple OWEM specialists across sectors. The 6 active fleet clans live in the arena; the remaining 27 are reserved/voter-only.</p>
+
+<div class="clan-grid" id="clans">
+<div style="color:var(--mut)">Loading live clan data...</div>
+</div>
+</section>
+
+<section class="section">
+<h2>📐 Federation topology</h2>
+<div class="legend">
+<div class="item"><div class="n">Sector × Axis</div><div class="l">6 sectors × 4 axes = 24 declared OWEM specialists</div></div>
+<div class="item"><div class="n">× Depth</div><div class="l">3 depths per specialist = 72 total</div></div>
+<div class="item"><div class="n">Clans</div><div class="l">Compositions of specialists → 33 sovereign clans</div></div>
+<div class="item"><div class="n">BFT council</div><div class="l">Quorum 23/33, f_bft=10. Each clan is a voter.</div></div>
+<div class="item"><div class="n">Active fleet</div><div class="l">6 clans currently routed through arena</div></div>
+<div class="item"><div class="n">Reserved</div><div class="l">27 clans are voter-only (designs exist, not routed)</div></div>
+</div>
+</section>
+
+<section class="section">
+<div class="honest">
+<strong>⚠ Honest framing:</strong><br>
+• <strong>Composition depth</strong> — only depth_1 (shallow specialist) is live. depth_2 (composed) and depth_3 (federated) are <strong>DESIGNED</strong>, not shipped.<br>
+• <strong>Specialist fit-gain vs emergence</strong> — per OWEM builder logs, specialist fine-tunes show per-domain fit gains (avg +0.5 to +2.0%) but <strong>NOT emergence</strong>. Emergence requires 3+ decorrelated brains + held-out recompute — UNMEASURED.<br>
+• <strong>Catastrophic forgetting</strong> — specialists overfit their own training batteries. Replay/rehearsal fine-tuning is the fix path, not yet implemented.<br>
+• <strong>Authority</strong> — every measurement card is signed by spine-mcp and verifiable via /api/sov-arena/signed.jsonl. The matrix above is honest documentation of what's measured vs what's declared.
+</div>
+</section>
+
+</div>
+
+<footer>🜏 MEOK OS · OWEM Federation · 6 sectors × 4 axes × 3 depths = 72 declared specialists → 33 clans · CSOAI Ltd (UK 16939677)</footer>
+
+<script>
+(function(){
+  var ARENA = "/api/sov-arena/rounds.jsonl";
+  function el(id){ return document.getElementById(id); }
+
+  function render(){
+    fetch(ARENA).then(function(r){ return r.text(); }).then(function(txt){
+      var lines = txt.split("\n").filter(function(l){ return l.trim(); });
+      var rounds = [];
+      for (var i=0; i<lines.length; i++){
+        try { rounds.push(JSON.parse(lines[i])); } catch(e){}
+      }
+      var clans = {};
+      rounds.forEach(function(r){
+        var l = (r.left||{}).name, rt = (r.right||{}).name;
+        if (l && l!=="human") clans[l] = (clans[l]||0)+1;
+        if (rt && rt!=="human") clans[rt] = (clans[rt]||0)+1;
+      });
+      el("k-active").textContent = Object.keys(clans).length;
+      el("k-rounds").textContent = rounds.length;
+
+      var html = "";
+      Object.keys(clans).sort(function(a,b){return clans[b]-clans[a];}).forEach(function(name){
+        var sector = name.replace(/^clan-/, "").replace(/:latest$/, "").split(/-(?=[^-]+$)/)[0];
+        html += '<div class="clan-card">'
+          + '<div class="name">' + name + '</div>'
+          + '<div class="sector">sector: ' + sector + '</div>'
+          + '<div class="rounds">' + clans[name] + ' rounds</div>'
+          + '</div>';
+      });
+      el("clans").innerHTML = html || '<div style="color:var(--mut)">No active clans</div>';
+    }).catch(function(e){
+      el("clans").innerHTML = '<div style="color:var(--red)">Live feed unreachable: ' + e.message + '</div>';
+    });
+  }
+  render();
+  setInterval(render, 30000);
+})();
+</script>
+
+</body>
+</html>
