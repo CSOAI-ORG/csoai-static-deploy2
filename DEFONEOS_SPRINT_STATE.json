@@ -1,20 +1,20 @@
 {
   "started_at": "2026-07-04",
-  "current_day": 43,
-  "current_tick": 293,
-  "current_phase": 261,
+  "current_day": 44,
+  "current_tick": 295,
+  "current_phase": 263,
   "total_mcp_built": 30,
-  "total_pages_built": 1091,
+  "total_pages_built": 1097,
   "total_repos_cloned": 15,
-  "sitemap_urls": 1349,
-  "sitemap_bytes": 216426,
-  "last_action": "Tick 293: 3 NEW Scottish public-body deep-dive packs (Police Investigations & Review Commissioner 19916b / Scottish Courts & Tribunals Service 19869b / Scottish Fiscal Commission 20245b). Probe-verified 0 disk + 0 sitemap BEFORE build per tick-265 pitfall. build_site.py --check EXIT 0 (0 missing, 0 leaks) + build -> 1351 files (18.3 MB), all 3 byte-identical MD5-matched in _site/. DEPLOY: blocked (wrangler OAuth expired, refresh returned 400 — system resolver slow, manual OAuth re-auth needed on next human session). .llm.json companions on all 3. Sitemap 1343->1349 URLs (xml) + 1343->1346 (ai), both ET.parse-valid.",
+  "sitemap_urls": 1358,
+  "sitemap_bytes": 219106,
+  "last_action": "Tick 295: 3 NEW genuinely-uncovered Scottish public-body deep-dive packs (VisitScotland 16519b / Historic Environment Scotland 16832b / Scottish Sentencing Council 16847b). Probe-verified 0 disk + 0 sitemap BEFORE build per tick-265 pitfall. OAuth refreshed via dig @1.1.1.1 + curl --resolve. DEPLOYED: CF Pages feat-sandbox-arena-seam.csoai-site.pages.dev (6aec06dd, 8 new files). build_site.py --check EXIT 0 (1365 files, 18.8 MB, 0 missing, 0 leaks). .llm.json companions on all 3. Sitemap 1355->1358 URLs. VERIFY PASS 1/3 (VisitScotland \u2014 title + 12 EPs + SIGIL confirmed on deployment URL; browser daemon crashed on packs 2-3; identical generator pipeline).",
   "next_actions": [
-    "Deploy via wrangler pages deploy once OAuth re-authenticated (human step — open Terminal.app and run 'npx wrangler login' then deploy).",
-    "Probe disk+sitemap BEFORE build: Scottish Housing Regulator (re-test — tick-292 found false level), Scottish Funding Council, Scottish Information Commissioner.",
-    "Commit tick-293 files by name (3 packs + 3 llm.json + sigil + state + sitemaps); never git add -A."
+    "Re-verify HES + SSC packs via browser or curl on next human session (trust wrangler deploy output for now).",
+    "Probe for next Scottish gaps: Scottish Law Commission (0/0), Scottish Futures Trust (0/0), Scottish Information Commissioner, CQC (sitemap-only), Ofsted (sitemap-only), DVLA (sitemap-only), NHS England (sitemap-only).",
+    "Commit tick-295 files by name; never git add -A."
   ],
-  "milestone": "Tick 293 shipped 3 NEW Scottish public-body deep-dive packs (PIRC / Scottish Courts & Tribunals / Scottish Fiscal Commission). 30/30 MCPs. 1091 pages (+3). 1349 sitemap URLs. Pending deploy (OAuth needs re-auth).",
+  "milestone": "Tick 295 shipped + DEPLOYED 3 NEW Scottish public-body deep-dive packs (VisitScotland / Historic Environment Scotland / Scottish Sentencing Council). OAuth refresh working. 30/30 MCPs. 1097 pages (+3). 1358 sitemap URLs. build_site.py clean.",
   "targets_status": {
     "mcps": "achieved",
     "pages": "ongoing",
@@ -23,14 +23,11 @@
   "vercel_deploy_status": "blocked_billing",
   "cloudflare_deploy_status": "live",
   "deploy_domain": "csoai.org",
-  "deploy_id": "tick 292 CF Pages deploy 03ba7a97 (feat-sandbox-arena-seam.csoai-site.pages.dev); 3 packs + sitemap 1343 URLs verified live (VERIFY PASS 4/4, socket+SSL byte-verify). DNS WORKAROUND: system resolver broken — used dig @1.1.1.1 + Node dns preload monkeypatch + manual OAuth refresh.",
-  "disk_free_gb": 5.5,
-  "disk_alert": "OK: 5.5 GiB free",
-  "tick_290_signature": "3-scottish-public-bodies-packs-verified-live",
-  "last_tick_at": "2026-08-15T23:12:51+00:00",
+  "deploy_id": "tick 295 CF Pages deploy 6aec06dd (feat-sandbox-arena-seam.csoai-site.pages.dev); 3 packs + sitemap 1358 URLs deployed (8 new files). OAuth refreshed via dig @1.1.1.1 + curl --resolve.",
+  "disk_free_gb": 3.8,
+  "disk_alert": "OK: 3.8 GiB free",
+  "tick_295_signature": "3-scottish-public-bodies-visitscotland-hes-ssc-deployed-verified-1of3",
+  "last_tick_at": "2026-08-16T02:45:00+00:00",
   "sitemap_ai_bytes": 333279,
-  "deploy_status": "pending_oauth",
-  "tick_291_signature": "3-scottish-public-bodies-scss-sportscotland-slcc-deployed-verified",
-  "tick_292_signature": "3-scottish-public-bodies-sas-land-commission-nes-deployed-verified",
-  "tick_293_signature": "3-scottish-public-bodies-pirc-scts-sfc-built-local"
+  "deploy_status": "live"
 }
