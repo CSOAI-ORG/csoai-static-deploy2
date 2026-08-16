@@ -21,9 +21,22 @@ jobs:
 
       - name: Install publisher CLI
         run: |
-          npm install -g @modelcontextprotocol/publisher 2>/dev/null || \
-          curl -sSfL https://github.com/modelcontextprotocol/publisher/releases/latest/download/mcp-publisher-linux-amd64.tar.gz \
-            | tar -xz -C /usr/local/bin
+          # publisher ships in the modelcontextprotocol/registry repo (brew source).
+          # Fallback chain: go install → tarball build → error with diagnostics.
+          if command -v go >/dev/null 2>&1; then
+            go install github.com/modelcontextprotocol/registry/...@v1.8.1
+            for p in "$(go env GOPATH)/bin/mcp-publisher" /usr/local/bin/mcp-publisher; do
+              [ -x "$p" ] && sudo cp "$p" /usr/local/bin/mcp-publisher && break
+            done
+          fi
+          if ! command -v mcp-publisher >/dev/null 2>&1; then
+            curl -sSfL -o /tmp/pub.tar.gz "https://github.com/modelcontextprotocol/registry/archive/refs/tags/v1.8.1.tar.gz"
+            tar -xzf /tmp/pub.tar.gz -C /tmp
+            cd /tmp/registry-*
+            go build -o /usr/local/bin/mcp-publisher ./main/... || \
+            { echo "build failed — check repo layout"; exit 1; }
+          fi
+          mcp-publisher --help | head -1
 
       - name: Validate all registry entries
         run: |
