@@ -41,6 +41,6 @@ npx wrangler pages deploy _site --project-name csoai-site
 - Rebuilt _site: 0 engine codenames, 0 sovereign breaches, crawl-priority 0 locks.
 - micro2 disk: 89% -> 86% (caches reclaimed; weights untouched — measurement targets stay).
 - GSPC MCP + city-3d MCP: both HTTP 200 live; tools measure/verify; NOT-certificate language intact.
-- Register: gov= sov6-embodiment 0.7004 (tied aesthetics), care= sov6-ethics 0.535, art5= sov6-relationality 0.9722 (tied gemma3). NOTE: every board cell signed=None — per-cell sigil metadata missing in board JSON (scoreboard renders sigil marks; register gap to reconcile).
+- Register: gov= sov6-embodiment 0.7004 (tied aesthetics), care= sov6-ethics 0.535, art5= sov6-relationality 0.9722 (tied gemma3). AUTHENTICITY: board JSON is the measurement record (no per-cell sigil field); Ed25519 signatures live in fleet-cards/ fleet-card-chain-XXXX.jsonl (prev-chain + pubkey) + fleet-art5-*.json (signed:True + content_id) — verified real 2026-08-16, scoreboard ✓signed substantiated. Registry: gspc + city-3d both official-MCP remotes-schema (city normalized), pushed feat-work 6828a0a0.
 - Directive canon committed: SOVOS/business/SOVOS-BUSINESS-DIRECTIVE-2026-08-16.md.
 - Owner queue #1: arXiv code G6Y9SY — HARD 27 AUG. Tonight 3 one-clickers: arXiv, CF AI-bot toggle, gdrive reconnect.
