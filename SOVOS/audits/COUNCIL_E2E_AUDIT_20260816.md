@@ -65,3 +65,10 @@ LIVE scoreboard also shows deployed naming-hygiene (columns ethics-v3-light etc.
 - .well-known/llm-manifest.json ❌ serves text/html EMPTY BODY (SPA-fallback stub) — not JSON
 - .well-known/agent-card.json ❌ serves OLD BREACHED homepage HTML (SPA-fallback to old index) — advertised as A2A card in llms.txt; agents get SEO-poison + broken discovery
 VERDICT: llms.txt/llm-policy advertise endpoints that must be JSON — two of five .well-known/API endpoints fail the A2A contract. In-scope for next site pass (post include: fix manifest generation + agent-card to serve real JSON).
+
+## SITEMAP TEST 2026-08-16 (browser)
+- /sitemap.xml live: VARIOUS 1316 URLs total
+- 51 sov-* URLs + internal-codename pages (MASTER_TAKEOVER.html, SOV3_OOWM_*.html, DASHBOARD.html, FREE_GPU_FLEET.html) — crawlers pushed toward internal names = breach amplification channel
+- 20 council-* new URLs present (with renames) — mixed old/new in sitemap (same shallow-deploy signature)
+- .llm.json pair endpoint pattern visible (/MASTER_TAKEOVER.html.llm.json) — machine companion files served for internal pages too
+VERDICT: sitemap generation must run from the clean _site after full deploy; when old internal pages are redirected (not served), sitemap should only list council-* + public family URLs.
