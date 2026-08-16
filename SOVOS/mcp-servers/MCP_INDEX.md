@@ -38,6 +38,13 @@ fully-built reference (`mcp-governance-crosswalk/`).
 `mcp-servers/mcp-governance-crosswalk/` is the only server fully implemented
 in the monorepo. All others are deployed from their PyPI source.
 
+## Live MCP Worker endpoints (streamable HTTP)
+
+| # | Worker | What It Does | Endpoint |
+|---|---|---|---|
+| 01 | csoai-gspc-mcp | measure + verify signed governance credentials | `https://csoai-gspc-mcp.nicholastempleman.workers.dev/mcp` |
+| 02 | csoai-city-3d-mcp | Cesium 3D city / colosseum / arena / index / IP Paper District (14 assets) | `https://csoai-city-3d-mcp.nicholastempleman.workers.dev/mcp` |
+
 ## Verification
 
 ```bash
