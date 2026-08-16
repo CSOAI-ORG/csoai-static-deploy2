@@ -1,0 +1,32 @@
+{
+  "name": "meok-sovereign-arena-mcp",
+  "displayName": "SOV Arena Live Measurement",
+  "description": "Real measured arena corpus (527+ rounds, 7 clans, 4 axes, Ed25519-signed). Browse clans, ELO leaderboard, axis breakdowns — installed in Claude/Cursor/Copilot/Gemini.",
+  "version": "1.0.0",
+  "protocol": "sovereign-arena/1.0",
+  "author": {
+    "name": "CSOAI Ltd (UK 16939677)",
+    "url": "https://csoai.org"
+  },
+  "homepage": "https://csoai.org/arena",
+  "repository": "https://github.com/CSOAI-ORG/clawd-workspace/tree/main/mcp-marketplace/meok-sovereign-arena-mcp",
+  "license": "MIT",
+  "categories": ["measurement", "governance", "arena", "elo"],
+  "tags": ["csoai", "arena", "elo", "measurement", "real-data", "ed25519-signed"],
+  "tools": [
+    {"name": "list_clans", "description": "All clans with current ELO + total wins"},
+    {"name": "get_round", "description": "Specific round record by id"},
+    {"name": "leaderboard", "description": "Ranked ELO table, optional axis filter"},
+    {"name": "arena_summary", "description": "Corpus overview: rounds, axes, agreements, top winners"},
+    {"name": "install_for_platform", "description": "Install snippet for AI platforms"}
+  ],
+  "data_provenance": {
+    "register": "REAL",
+    "source": "https://c4e12208.csoai-site.pages.dev/api/sov-arena/rounds.jsonl",
+    "snapshot_mode": "static — re-snapshotted on each deploy until live KV sync (auth-gated) restored",
+    "rounds_measured": 527,
+    "axes": ["provenance", "safety", "continuity", "gov"],
+    "signed": "Ed25519 (see signed.jsonl)",
+    "honest_note": "council-safe (1118) + council-oowm (1081) currently trail base models qwen2.5:7b (1383) + qwen3:4b (1370). This MCP surfaces the truth."
+  }
+}

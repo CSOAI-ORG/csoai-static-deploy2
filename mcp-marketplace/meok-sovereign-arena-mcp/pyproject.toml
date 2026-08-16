@@ -1,0 +1,21 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "meok-sovereign-arena-mcp"
+version = "1.0.0"
+description = "SOV arena live measurement corpus MCP — 527+ real measured rounds, Ed25519-signed. 5 tools for AI platforms."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [{ name = "Nicholas Templeman", email = "nicholas.templeman@csoai.org" }]
+keywords = ["mcp", "sovereign", "arena", "measurement", "elo", "council-of-ai", "csoai"]
+
+[project.urls]
+Homepage = "https://csoai.org/arena"
+Source = "https://github.com/CSOAI-ORG/clawd-workspace/tree/main/mcp-marketplace/meok-sovereign-arena-mcp"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["meok_sovereign_arena_mcp*"]
