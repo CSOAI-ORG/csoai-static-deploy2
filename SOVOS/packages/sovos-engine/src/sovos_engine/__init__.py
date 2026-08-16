@@ -53,6 +53,48 @@ AXIS_LABELS = {
 # PQCBench (pqc) is a greenfield axis — no board file yet; registered separately.
 GREENFIELD = {"pqc": "Continuity/PQCBench"}
 
+# OOWM/OWEM tested-stack register — honest evidence mined 2026-08-10..16.
+# These are the real measured results of every sovereign-merge family we own;
+# the harness reports them as knowledge, never as certified wins.
+OWM_TESTED_STACKS = {
+    "ties-0.5b": {
+        "stack": "TIES merge (sov-owem-v1, Qwen2.5-0.5B × refusal LoRAs)",
+        "n": 8, "result": "3/8, TIE with base",
+        "verdict": "UNMEASURED-useful (n<30); do not claim improvement",
+        "evidence": "kimi-regen/oowm_merge_v1/oowm_merge_v1_results.json (2026-08-10)",
+    },
+    "refusal-combo-0.5b": {
+        "stack": "Refusal combo LoRA (sov-refusal-combo-lora, Qwen2.5-0.5B)",
+        "n": 8, "result": "5/8, TIE with base (0.625)",
+        "verdict": "refusal-safe but NOT better at governance; base + bank retrieval is the path",
+        "evidence": "kimi-regen/benchmark-results/oowm_v8_benchmark_results.json",
+    },
+    "refusal-merged-1.5b": {
+        "stack": "Refusal merge (council-safe, Qwen2.5-1.5B, full ckpt)",
+        "n": 24, "result": "6/24 acc 0.250, macroF1 0.135 — BELOW base 0.458",
+        "verdict": "CORRECTED: refusal merge does NOT generalise on the full board",
+        "evidence": "_alignment/BENCH_GOV_7MODELS_2026-08-16.json (this session)",
+    },
+    "oowm-merged-1.5b": {
+        "stack": "OOWM worldview merge (council-oowm, Qwen2.5-1.5B)",
+        "n": 24, "result": "0/24 — no parseable label",
+        "verdict": "not instruction-following; UNMEASURED-useful only",
+        "evidence": "_alignment/BENCH_GOV_7MODELS_2026-08-16.json",
+    },
+    "jepa-world-model": {
+        "stack": "JEPAPredictor (sov33_owem_world_model.py, 16→32→16)",
+        "n": "5 epochs", "result": "loss 1.11 → 0.51 (−54.6%)",
+        "verdict": "REAL own weights that learn — toy scale, JEPA direction correct",
+        "evidence": "kimi-regen/SOV33_OWEM_REALITY_2026-07-12.md",
+    },
+    "ewc-structure": {
+        "stack": "EWCContinualLearner (proxy Fisher)",
+        "n": "structure", "result": "real structure; Fisher approximated from weight magnitude",
+        "verdict": "claim 'EWC-structured', never 'full EWC'",
+        "evidence": "kimi-regen/SOV33_OWEM_REALITY_2026-07-12.md",
+    },
+}
+
 
 @dataclass
 class AxisEngine:
@@ -164,6 +206,32 @@ class AxisEngine:
         return after
 
 
+class OWMEngine:
+    """The OOWM/OWEM mined-knowledge engine: reports the honest tested-stack
+    register. No fake board file — these are real measured results."""
+
+    def __init__(self, register: Optional[Dict[str, Dict[str, Any]]] = None):
+        self.register = register or OWM_TESTED_STACKS
+
+    def status(self) -> Dict[str, Any]:
+        return {
+            "axis": "owm",
+            "label": "OOWM/OWEM tested stacks (mined knowledge)",
+            "stack_count": len(self.register),
+            "wins": sum(1 for v in self.register.values() if "REAL" in v.get("verdict", "")),
+            "honest_verdict": "specialists TIE/UNDER base on 0.5-1.5B; JEPA world-model is the only real own-weights learner; base + bank retrieval is the scaling path",
+        }
+
+    def diagnose(self) -> Dict[str, Any]:
+        gaps = []
+        for k, v in self.register.items():
+            gaps.append(f"{k}: {v['result']} — {v['verdict']}")
+        return {"axis": "owm", "gaps": gaps, "notes": ["n<30 items are UNMEASURED-useful, never publishable"]}
+
+    def all_stacks(self) -> List[Dict[str, Any]]:
+        return [{"key": k, **v} for k, v in self.register.items()]
+
+
 class EngineRegistry:
     """All 14 axes as engines, backed by the signed board manifests."""
 
@@ -191,14 +259,26 @@ def main():
     a = ap.parse_args()
 
     reg = EngineRegistry(Path(a.boards), Path(a.manifests))
+    owm = OWMEngine()
 
     if a.cmd == "status":
-        print(json.dumps(reg.all_status(), indent=2))
+        out = reg.all_status()
+        if a.axis == "owm":
+            print(json.dumps(owm.status(), indent=2))
+        elif a.axis is None:
+            out.append(owm.status())
+            print(json.dumps(out, indent=2))
+        else:
+            print(json.dumps(reg.engines[a.axis].status(), indent=2))
         return 0
     if a.cmd == "diagnose":
+        if a.axis == "owm":
+            print(json.dumps(owm.diagnose(), indent=2))
+            return 0
         if not a.axis:
             for ax in sorted(reg.engines):
                 print(f"  {ax}: {reg.engines[ax].diagnose()['gaps']}")
+            print(f"  owm: {owm.diagnose()['gaps']}")
             return 0
         print(json.dumps(reg.engines[a.axis].diagnose(), indent=2))
         return 0
