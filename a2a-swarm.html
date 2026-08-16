@@ -3,11 +3,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>SOVOS A2A Swarm Demo — FishKeeper → MuckAway → CouncilOf</title>
+<title>Council OS A2A Swarm Demo — FishKeeper → MuckAway → CouncilOf</title>
 <meta name="description" content="Live demo of three agents (FishKeeper, MuckAway, CouncilOf) talking to each other via signed JSON. The agent-hires-agent pattern.">
 <link rel="canonical" href="https://csoai.org/a2a-swarm">
 <meta name="theme-color" content="#22d3ee">
-<meta property="og:title" content="SOVOS A2A Swarm Demo">
+<meta property="og:title" content="Council OS A2A Swarm Demo">
 <meta property="og:description" content="Watch three agents collaborate in real time. FishKeeper detects a problem, hires MuckAway to dispatch cleanup, CouncilOf audits the decision and issues a certificate.">
 <meta property="og:url" content="https://csoai.org/a2a-swarm">
 <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 64 64%22%3E%3Crect width=%2264%22 height=%2264%22 rx=%2214%22 fill=%22%2322d3ee%22/%3E%3Ctext x=%2232%22 y=%2245%22 font-family=%22Inter,Arial,sans-serif%22 font-size=%2238%22 font-weight=%22800%22 text-anchor=%22middle%22 fill=%22%23070b14%22%3ES%3C/text%3E%3C/svg%3E">
@@ -90,13 +90,13 @@
   a:hover { text-decoration: underline; }
   footer { border-top: 1px solid var(--line); margin-top: 3rem; padding: 2rem 0; font-size: 0.85rem; color: var(--mut); }
 </style>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"SOVOS A2A Swarm Demo","description":"Live visualization of three agents (FishKeeper, MuckAway, CouncilOf) collaborating via signed JSON","url":"https://csoai.org/a2a-swarm","applicationCategory":"BusinessApplication","operatingSystem":"Any (browser)","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"creator":{"@type":"Organization","name":"CSOAI Ltd","url":"https://csoai.org"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Council OS A2A Swarm Demo","description":"Live visualization of three agents (FishKeeper, MuckAway, CouncilOf) collaborating via signed JSON","url":"https://csoai.org/a2a-swarm","applicationCategory":"BusinessApplication","operatingSystem":"Any (browser)","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"creator":{"@type":"Organization","name":"CSOAI Ltd","url":"https://csoai.org"}}</script>
 </head>
 <body>
 <div class="wrap">
 
   <section style="padding-top:3rem;">
-    <span class="eyebrow">SOVOS · A2A swarm · live demo</span>
+    <span class="eyebrow">Council OS · A2A swarm · live demo</span>
     <h1 style="margin-top:1.2rem;">Watch three agents<br><span class="accent">hire each other</span> in real time.</h1>
     <p style="max-width:42rem; font-size:1.05rem; margin-top:1.0rem;">
       A koi farm pond hits a toxic ammonia level. FishKeeper detects the problem and alerts MuckAway. MuckAway plans + dispatches an emergency route. CouncilOf audits the dispatch and issues a compliance certificate. Every step is HMAC-signed.
@@ -178,7 +178,7 @@
         <li><strong>FishKeeper</strong> charges <strong>£0.05</strong> per health check — sells data to MuckAway's operator when trouble is detected.</li>
         <li><strong>MuckAway</strong> charges <strong>£5.00</strong> per emergency dispatch — premium for 2× priority routing.</li>
         <li><strong>CouncilOf</strong> charges <strong>£0.50</strong> per audit + <strong>£50.00</strong> per certificate — the governance tax.</li>
-        <li><strong>Per-emergency-pipeline total: £55.55.</strong> 15-30% goes to the SOVOS marketplace; 70-85% to creator agents (per the Aug 2026 brief).</li>
+        <li><strong>Per-emergency-pipeline total: £55.55.</strong> 15-30% goes to the Council OS marketplace; 70-85% to creator agents (per the Aug 2026 brief).</li>
       </ul>
       <h3>What's honest about this demo</h3>
       <ul>
@@ -188,15 +188,15 @@
         <li><strong>Every response is signed.</strong> HMAC-SHA256 over canonical JSON. Verify in Python via the source code.</li>
       </ul>
       <p style="margin-top:1rem;">
-        <strong>Source:</strong> <a href="https://github.com/CSOAI-ORG/csoai-static-deploy2/tree/main/SOVOS/packages/sovos-a2a-swarm">github.com/CSOAI-ORG/.../sovos-a2a-swarm</a> (16/16 tests pass)
+        <strong>Source:</strong> <a href="https://github.com/CSOAI-ORG/csoai-static-deploy2/tree/main/Council OS/packages/Council OS-a2a-swarm">github.com/CSOAI-ORG/.../Council OS-a2a-swarm</a> (16/16 tests pass)
       </p>
     </div>
   </section>
 
   <section>
-    <h2>Other SOVOS tools</h2>
+    <h2>Other Council OS tools</h2>
     <p>
-      <a href="/cpo-calculator">CPO Power Savings Calculator</a> · <a href="/injection-scanner">MCP Prompt Injection Scanner</a> · <a href="/sovos.html">The signed visual mind</a>.
+      <a href="/cpo-calculator">CPO Power Savings Calculator</a> · <a href="/injection-scanner">MCP Prompt Injection Scanner</a> · <a href="/Council OS.html">The signed visual mind</a>.
     </p>
     <p style="margin-top:0.8rem;">
       Partnership inquiries: <code>governance@csoai.org</code>.
@@ -211,9 +211,9 @@
 </div>
 
 <script>
-// ----- Pure-JS re-implementation of sovos-a2a-swarm (mirrors the Python module) -----
+// ----- Pure-JS re-implementation of Council OS-a2a-swarm (mirrors the Python module) -----
 
-const DEMO_SECRET = 'sovos-a2a-demo-2026-do-not-use-in-prod';
+const DEMO_SECRET = 'Council OS-a2a-demo-2026-do-not-use-in-prod';
 
 function canonicalJson(obj) {
   if (obj === null) return 'null';

@@ -5,17 +5,17 @@
     {
       "id": "voice-tts",
       "owem": "voice",
-      "mcp": "sovereign-voice-mcp",
+      "mcp": "neutral-voice-mcp",
       "tool": "tts_emit",
-      "input_shape": {"text": "string", "voice": "sovereign|mother|care"},
+      "input_shape": {"text": "string", "voice": "neutral|mother|care"},
       "output_shape": {"audio_b64": "string", "duration_ms": "int", "care_score": "float >= 0.95"},
       "care_floor": 0.95,
-      "test_prompt": "tts_emit(text='EU AI Act Article 50 live 2 Aug 2026', voice='sovereign')"
+      "test_prompt": "tts_emit(text='EU AI Act Article 50 live 2 Aug 2026', voice='neutral')"
     },
     {
       "id": "voice-charter-narrate",
       "owem": "voice",
-      "mcp": "sovereign-voice-mcp",
+      "mcp": "neutral-voice-mcp",
       "tool": "charter_narrate",
       "input_shape": {"article": "string"},
       "output_shape": {"narrative": "string", "sigils": "list[string]"},

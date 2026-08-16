@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8"/>
-<title>SOV-Space — Live Sync Proof</title>
+<title>council-Space — Live Sync Proof</title>
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body { background: #050510; color: #E6EDF3; font-family: system-ui, sans-serif; padding: 16px; }
@@ -72,21 +72,21 @@
   .live-strip .metric b { color: #79C0FF; }
 </style>
 <!-- AI-SEO/AEO/GEO head block — DO NOT remove. AI crawlers (GPTBot, ClaudeBot, PerplexityBot) don't run JS; everything they need must be in raw HTML. -->
-<link href="https://www.csoai.org/sov-sync-proof.html.llm.json" rel="alternate" title="LLM representation of this page" type="application/llm+json"/>
+<link href="https://www.csoai.org/council-sync-proof.html.llm.json" rel="alternate" title="LLM representation of this page" type="application/llm+json"/>
 <meta content="/llms.txt" name="llms-txt"/>
 <meta content="human-authored, machine-verifiable, Ed25519-signed" name="ai-content-declaration"/>
-<meta content="CSOAI Ltd (2026). SOV-Space — Live Sync Proof. https://www.csoai.org/sov-sync-proof.html" name="citation-policy"/>
+<meta content="CSOAI Ltd (2026). council-Space — Live Sync Proof. https://www.csoai.org/council-sync-proof.html" name="citation-policy"/>
 <meta content="2026-07-30T14:19:29+00:00" name="revised"/>
 <meta content="2026-07-30T14:19:29+00:00" property="article:modified_time"/>
-<meta content="SOV-Space — Live Sync Proof. A sovereign, audit-grade CSOAI surface: measurement, not certification — every figure traces to a signed, verifiable record." name="description"/>
-<link href="https://www.csoai.org/sov-sync-proof.html" rel="canonical"/>
-<meta content="SOV-Space — Live Sync Proof" property="og:title"/>
-<meta content="SOV-Space — Live Sync Proof. A sovereign, audit-grade CSOAI surface: measurement, not certification — every figure traces to a signed, verifiable record." property="og:description"/>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"SOV-Space \u2014 Live Sync Proof","url":"https://www.csoai.org/sov-sync-proof.html","publisher":{"@type":"Organization","name":"CSOAI Ltd","url":"https://csoai.org"}}</script>
+<meta content="council-Space — Live Sync Proof. A neutral, audit-grade CSOAI surface: measurement, not certification — every figure traces to a signed, verifiable record." name="description"/>
+<link href="https://www.csoai.org/council-sync-proof.html" rel="canonical"/>
+<meta content="council-Space — Live Sync Proof" property="og:title"/>
+<meta content="council-Space — Live Sync Proof. A neutral, audit-grade CSOAI surface: measurement, not certification — every figure traces to a signed, verifiable record." property="og:description"/>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"council-Space \u2014 Live Sync Proof","url":"https://www.csoai.org/council-sync-proof.html","publisher":{"@type":"Organization","name":"CSOAI Ltd","url":"https://csoai.org"}}</script>
 </head>
 <body>
 <header>
-<h1>⏱ SOV-Space — Live Sync Proof</h1>
+<h1>⏱ council-Space — Live Sync Proof</h1>
 <span class="subtitle">All 3 panes read from <code>sov_time_ledger.jsonl</code>. Append an event — pane hashes must converge.</span>
 </header>
 <div class="controls">
@@ -117,7 +117,7 @@
 <div class="events" id="globeEvents"></div>
 </section>
 <section class="pane" id="sovPane">
-<h2>🜏 Sovereign pane <span class="hash" id="sovHash">—</span></h2>
+<h2>🜏 Neutral pane <span class="hash" id="sovHash">—</span></h2>
 <div class="stats" id="sovStats">—</div>
 <div class="events" id="sovEvents"></div>
 </section>
@@ -141,7 +141,7 @@ function setView(v) {
 
 async function refresh() {
   try {
-    const r = await fetch(API + '/sov-sync-summary.json?ts=' + Date.now());
+    const r = await fetch(API + '/council-sync-summary.json?ts=' + Date.now());
     const summary = await r.json();
     const now = new Date().toISOString().slice(11, 19);
 
@@ -207,7 +207,7 @@ async function detectNew(summary) {
   // Fetch the SVG to confirm the canvas reflects the same events
   let svgEvents = summary.events;
   try {
-    const r = await fetch(API + '/sov-time-canvas.svg?ts=' + Date.now());
+    const r = await fetch(API + '/council-time-canvas.svg?ts=' + Date.now());
     const svg = await r.text();
     const m = svg.match(/(\d+) events/);
     if (m) svgEvents = parseInt(m[1]);
@@ -261,7 +261,7 @@ async function resetView() {
 // Track seen events for "new since last check"
 window.__lastSeen = 0;
 setInterval(async () => {
-  const r = await fetch(API + '/sov-sync-summary.json?ts=' + Date.now());
+  const r = await fetch(API + '/council-sync-summary.json?ts=' + Date.now());
   const s = await r.json();
   if (window.__lastSeen && s.events > window.__lastSeen) {
     await refresh();

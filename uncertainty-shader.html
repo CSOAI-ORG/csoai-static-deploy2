@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SOVOS · Uncertainty Pixel Shader · Post-Sigma</title>
+<title>Council OS · Uncertainty Pixel Shader · Post-Sigma</title>
 <meta name="description" content="The uncertainty pixel shader. Renders calibrated uncertainty (sigma) as a GPU WebGL effect. Honest visualisation: only runs on CALIBRATED data (ECE ≤ 0.05), enforced by the sigma calibration gate.">
 <style>
   :root {
@@ -50,7 +50,7 @@
 <canvas id="gl"></canvas>
 
 <div class="hud">
-  <div class="brand">⟁ SOVOS · Uncertainty Shader</div>
+  <div class="brand">⟁ Council OS · Uncertainty Shader</div>
   <div id="gateBadge" class="gate locked">⚠ SIGMA GATE LOCKED</div>
   <div style="margin-left:auto; font-size:11px; color:#7a8595;">ECE ≤ 0.05 required</div>
 </div>
@@ -70,7 +70,7 @@
     until the sigma-calibration gate verifies ECE ≤ 0.05 (≥100 samples). This
     makes the visualisation honest — uncalibrated "90% confidence" is never
     painted. Click "Simulate Calibration" to run the gate (see the Python
-    package <code>sovos-sigma-calibration</code> for the real engine).
+    package <code>Council OS-sigma-calibration</code> for the real engine).
   </div>
 </div>
 
@@ -220,7 +220,7 @@ function updateBadges() {
   if (calibrated) { btn.textContent = '✓ SIGMA GATE VERIFIED — SHADER ACTIVE'; btn.classList.remove('locked'); }
 }
 
-// Simulate the Python sovos_sigma_calibration gate.
+// Simulate the Python Council OS_sigma_calibration gate.
 // Mirrors calibrate() + calibration_gate(): computes ECE, finds T,
 // checks ECE ≤ 0.05 AND n ≥ 100. Only then unlocks the shader.
 function simulateCalibration() {
@@ -241,7 +241,7 @@ function simulateCalibration() {
       `✓ GATE PASSED — ECE ${ece.toFixed(4)} ≤ 0.05, n=${n} (≥100). ` +
       `Temperature T=${temperature.toFixed(3)} applied. ` +
       `The shader now renders the <b>calibrated</b> uncertainty field. ` +
-      `(Engine: <code>sovos-sigma-calibration</code> calibrate()+calibration_gate())`;
+      `(Engine: <code>Council OS-sigma-calibration</code> calibrate()+calibration_gate())`;
   } else {
     calibrated = false;
     document.getElementById('noteBox').textContent =

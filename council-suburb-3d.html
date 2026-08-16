@@ -25,10 +25,10 @@
   .err{position:fixed;top:16px;right:16px;z-index:6;background:rgba(127,29,29,.9);border:1px solid #f87171;color:#fecaca;padding:10px 14px;border-radius:10px;font-size:12px;display:none;max-width:320px}
   .foot{position:fixed;bottom:16px;right:16px;z-index:5;font:10px ui-monospace,Menlo,monospace;letter-spacing:1px;color:rgba(236,253,245,.4);text-align:right;pointer-events:none}
 </style>
-<link href="https://www.csoai.org/sov-suburb-3d.html" rel="canonical"/>
+<link href="https://www.csoai.org/council-suburb-3d.html" rel="canonical"/>
 <meta content="SOV Suburb — OpenTTD substrate viewer (3D) | CSOAI" property="og:title"/>
-<meta content="SOV Suburb — OpenTTD substrate viewer (3D). A sovereign, audit-grade CSOAI surface: measurement, not certification — every figure traces to a signed, verifiable record." property="og:description"/>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"SOV Suburb \u2014 OpenTTD substrate viewer (3D) | CSOAI","url":"https://www.csoai.org/sov-suburb-3d.html","publisher":{"@type":"Organization","name":"CSOAI Ltd","url":"https://csoai.org"}}</script>
+<meta content="SOV Suburb — OpenTTD substrate viewer (3D). A neutral, audit-grade CSOAI surface: measurement, not certification — every figure traces to a signed, verifiable record." property="og:description"/>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"SOV Suburb \u2014 OpenTTD substrate viewer (3D) | CSOAI","url":"https://www.csoai.org/council-suburb-3d.html","publisher":{"@type":"Organization","name":"CSOAI Ltd","url":"https://csoai.org"}}</script>
 </head>
 <body>
 <canvas id="cv"></canvas>
@@ -49,7 +49,7 @@
 </div>
 
 <div class="err" id="err">substrate offline — showing last known state (deterministic local tick)</div>
-<div class="foot">engine: openttd-gpl-2.0 · admin-port bridge · tok: /api/sov-openttd/state.jsonl<br/>CSOAI Ltd · design lab · GPL-2.0 substrate · MIT viewer shell</div>
+<div class="foot">engine: openttd-gpl-2.0 · admin-port bridge · tok: /api/council-openttd/state.jsonl<br/>CSOAI Ltd · design lab · GPL-2.0 substrate · MIT viewer shell</div>
 
 <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.min.js"></script>
 <script>
@@ -64,7 +64,7 @@
 
   async function poll(){
     try{
-      const r = await fetch('/api/sov-openttd/state.jsonl');
+      const r = await fetch('/api/council-openttd/state.jsonl');
       if(!r.ok) throw new Error('http '+r.status);
       const lines = (await r.text()).trim().split('\n').filter(Boolean);
       if(!lines.length) throw new Error('empty');

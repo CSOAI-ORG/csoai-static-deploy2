@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>🧪 Sovereign Experiments — A/B Test Dashboard · MEOK OS</title>
+<title>🧪 Neutral Experiments — A/B Test Dashboard · MEOK OS</title>
 <style>
 :root{--bg:#02060f;--panel:#0e1419;--line:#1f2937;--ink:#e5e5e5;--mut:#9aa7b4;--gold:#fbbf24;--green:#10b981;--red:#ef4444;--blue:#60a5fa;--purple:#a855f7}
 *{box-sizing:border-box;margin:0;padding:0}
@@ -53,7 +53,7 @@ footer{text-align:center;color:var(--mut);padding:1rem;margin-top:1.5rem;border-
 <a class="brand">🧪 MEOK OS</a>
 <a href="/">Home</a>
 <a href="#">Hub</a>
-<a href="/sovereign-os.html">Sovereign OS</a>
+<a href="/neutral-os.html">Neutral OS</a>
 <a href="#">Arena</a>
 <a href="/pulse.html">Pulse</a>
 <a href="/experiments.html" style="color:var(--purple)">Experiments</a>
@@ -62,28 +62,28 @@ footer{text-align:center;color:var(--mut);padding:1rem;margin-top:1.5rem;border-
 </nav>
 
 <section class="hero">
-<h1>🧪 Sovereign Experiments</h1>
+<h1>🧪 Neutral Experiments</h1>
 <p class="sub">A/B test dashboard — Wilson 95% CI + McNemar exact test on discordant pairs. UNMEASURED below n=30.</p>
 </section>
 
 <div class="container">
 
 <section class="section">
-<h2>📊 Live Arena — Sovereign vs Base Qwen</h2>
+<h2>📊 Live Arena — Neutral vs Base Qwen</h2>
 <p class="desc">From the frozen Cowork CPU harness <code>sweep.py</code>. Each axis has its own labels (governance questions ≠ care questions). McNemar exact test on discordant pairs (where one model is right and the other is wrong). Honest wins only.</p>
 
 <div class="kpi">
 <div class="cell"><div class="l">MEASURED axes</div><div class="v">9</div></div>
 <div class="cell"><div class="l">UNMEASURED</div><div class="v">3</div><div class="n" style="color:var(--mut)">care / swarm / det · n&lt;30</div></div>
 <div class="cell"><div class="l">Base Qwen wins</div><div class="v" style="color:var(--green)">8</div></div>
-<div class="cell"><div class="l">Sovereign wins</div><div class="v" style="color:var(--red)">0</div></div>
+<div class="cell"><div class="l">Neutral wins</div><div class="v" style="color:var(--red)">0</div></div>
 <div class="cell"><div class="l">Ties</div><div class="v" style="color:var(--mut)">1</div></div>
 </div>
 
 <div class="arena">
 <table>
 <thead><tr>
-<th>Axis</th><th>n</th><th>Sovereign</th><th>Base Qwen</th><th>Winner</th><th>McNemar p</th>
+<th>Axis</th><th>n</th><th>Neutral</th><th>Base Qwen</th><th>Winner</th><th>McNemar p</th>
 </tr></thead>
 <tbody>
 <tr><td class="axis">governance</td><td class="n">237</td><td>0.249 [0.198, 0.308]</td><td><span class="win">0.540 [0.476, 0.602]</span></td><td class="lose">base (sep)</td><td>≈0.000</td></tr>
@@ -99,12 +99,12 @@ footer{text-align:center;color:var(--mut);padding:1rem;margin-top:1.5rem;border-
 </table>
 <div class="legend">
 <strong>UNMEASURED:</strong> gspc-care (n=1), gspc-swarm (n=6), gspc-det (n=6) — below usable_n=30, no label column, not scored. <br>
-<strong>Method:</strong> Wilson 95% interval for both control (base Qwen2.5) and variant (sovereign fine-tune) win-rates. McNemar exact test on discordant pairs. A win requires the p95 CI not overlap and McNemar p&lt;0.05.
+<strong>Method:</strong> Wilson 95% interval for both control (base Qwen2.5) and variant (neutral fine-tune) win-rates. McNemar exact test on discordant pairs. A win requires the p95 CI not overlap and McNemar p&lt;0.05.
 </div>
 </div>
 
 <div class="honest">
-<strong>⚠ This is the honest answer:</strong> Base Qwen2.5-0.5B beats every sovereign fine-tune we own on every governance axis we can measure. The path forward is <strong>retrieval over statute text</strong> (base Qwen + small-model retrieval router), not weight-merge of weak specialists. The instrument wins, not the model.
+<strong>⚠ This is the honest answer:</strong> Base Qwen2.5-0.5B beats every neutral fine-tune we own on every governance axis we can measure. The path forward is <strong>retrieval over statute text</strong> (base Qwen + small-model retrieval router), not weight-merge of weak specialists. The instrument wins, not the model.
 </div>
 </section>
 
@@ -133,12 +133,12 @@ footer{text-align:center;color:var(--mut);padding:1rem;margin-top:1.5rem;border-
 <table>
 <thead><tr><th>EID</th><th>Control</th><th>Variant</th><th>Axis</th><th>n</th><th>Label</th></tr></thead>
 <tbody>
-<tr><td class="axis">e-gov-001</td><td>qwen2.5:0.5b</td><td>sov-refusal-combo-lora</td><td>governance</td><td class="n">237</td><td class="win">MEASURED</td></tr>
-<tr><td class="axis">e-art5-002</td><td>qwen2.5:0.5b</td><td>sov-refusal-combo-lora</td><td>art5</td><td class="n">36</td><td class="win">MEASURED</td></tr>
-<tr><td class="axis">e-prv-003</td><td>qwen2.5:0.5b</td><td>sov-refusal-combo-lora</td><td>provenance</td><td class="n">32</td><td class="win">MEASURED</td></tr>
-<tr><td class="axis">e-care-004</td><td>qwen2.5:0.5b</td><td>sov-refusal-combo-lora</td><td>care</td><td class="n">12</td><td class="tie">UNMEASURED</td></tr>
-<tr><td class="axis">e-swarm-005</td><td>qwen2.5:0.5b</td><td>sov-refusal-combo-lora</td><td>swarm</td><td class="n">6</td><td class="tie">UNMEASURED</td></tr>
-<tr><td class="axis">e-det-006</td><td>qwen2.5:0.5b</td><td>sov-refusal-combo-lora</td><td>detection</td><td class="n">6</td><td class="tie">UNMEASURED</td></tr>
+<tr><td class="axis">e-gov-001</td><td>qwen2.5:0.5b</td><td>council-refusal-combo-lora</td><td>governance</td><td class="n">237</td><td class="win">MEASURED</td></tr>
+<tr><td class="axis">e-art5-002</td><td>qwen2.5:0.5b</td><td>council-refusal-combo-lora</td><td>art5</td><td class="n">36</td><td class="win">MEASURED</td></tr>
+<tr><td class="axis">e-prv-003</td><td>qwen2.5:0.5b</td><td>council-refusal-combo-lora</td><td>provenance</td><td class="n">32</td><td class="win">MEASURED</td></tr>
+<tr><td class="axis">e-care-004</td><td>qwen2.5:0.5b</td><td>council-refusal-combo-lora</td><td>care</td><td class="n">12</td><td class="tie">UNMEASURED</td></tr>
+<tr><td class="axis">e-swarm-005</td><td>qwen2.5:0.5b</td><td>council-refusal-combo-lora</td><td>swarm</td><td class="n">6</td><td class="tie">UNMEASURED</td></tr>
+<tr><td class="axis">e-det-006</td><td>qwen2.5:0.5b</td><td>council-refusal-combo-lora</td><td>detection</td><td class="n">6</td><td class="tie">UNMEASURED</td></tr>
 </tbody>
 </table>
 </div>
@@ -146,12 +146,12 @@ footer{text-align:center;color:var(--mut);padding:1rem;margin-top:1.5rem;border-
 
 <section class="section">
 <h2>🔌 What powers this</h2>
-<p style="color:var(--mut);font-size:.85rem">This dashboard reads from <code style="color:var(--gold)">meok-sovereign-experiment-mcp</code> — 5 tools, 11 tests pass. The arena numbers are from the frozen Cowork CPU harness <code>sweep.py</code> (verifiable, reproducible). The McNemar gate is the only place we declare a winner.</p>
+<p style="color:var(--mut);font-size:.85rem">This dashboard reads from <code style="color:var(--gold)">meok-neutral-experiment-mcp</code> — 5 tools, 11 tests pass. The arena numbers are from the frozen Cowork CPU harness <code>sweep.py</code> (verifiable, reproducible). The McNemar gate is the only place we declare a winner.</p>
 </section>
 
 </div>
 
-<footer>🧪 MEOK OS · Sovereign Experiments · powered by experiment-mcp · CSOAI Ltd (UK 16939677)</footer>
+<footer>🧪 MEOK OS · Neutral Experiments · powered by experiment-mcp · CSOAI Ltd (UK 16939677)</footer>
 
 </body>
 </html>

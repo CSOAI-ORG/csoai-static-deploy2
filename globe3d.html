@@ -4,7 +4,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width,initial-scale=1" name="viewport"/>
-<title>CSOAI Sovereign 3D — Photorealistic Governance Earth (beta)</title>
+<title>CSOAI Neutral 3D — Photorealistic Governance Earth (beta)</title>
 <script>window.CESIUM_BASE_URL='https://cdn.jsdelivr.net/npm/cesium@1.119/Build/Cesium/';</script>
 <link href="https://cdn.jsdelivr.net/npm/cesium@1.119/Build/Cesium/Widgets/widgets.css" rel="stylesheet"/>
 <script src="https://cdn.jsdelivr.net/npm/cesium@1.119/Build/Cesium/Cesium.js"></script>
@@ -46,20 +46,20 @@
 <link href="https://www.csoai.org/globe3d.html.llm.json" rel="alternate" title="LLM representation of this page" type="application/llm+json"/>
 <meta content="/llms.txt" name="llms-txt"/>
 <meta content="human-authored, machine-verifiable, Ed25519-signed" name="ai-content-declaration"/>
-<meta content="CSOAI Ltd (2026). CSOAI Sovereign 3D — Photorealistic Governance Earth (beta). https://www.csoai.org/globe3d.html" name="citation-policy"/>
+<meta content="CSOAI Ltd (2026). CSOAI Neutral 3D — Photorealistic Governance Earth (beta). https://www.csoai.org/globe3d.html" name="citation-policy"/>
 <meta content="2026-07-30T06:37:54+00:00" name="revised"/>
 <meta content="2026-07-30T06:37:54+00:00" property="article:modified_time"/>
-<meta content="CSOAI Sovereign 3D — Photorealistic Governance Earth (beta). A sovereign, audit-grade CSOAI surface: measurement, not certification — every figure traces to a signed, verifiable record." name="description"/>
+<meta content="CSOAI Neutral 3D — Photorealistic Governance Earth (beta). A neutral, audit-grade CSOAI surface: measurement, not certification — every figure traces to a signed, verifiable record." name="description"/>
 <link href="https://www.csoai.org/globe3d.html" rel="canonical"/>
-<meta content="CSOAI Sovereign 3D — Photorealistic Governance Earth (beta)" property="og:title"/>
-<meta content="CSOAI Sovereign 3D — Photorealistic Governance Earth (beta). A sovereign, audit-grade CSOAI surface: measurement, not certification — every figure traces to a signed, verifiable record." property="og:description"/>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"CSOAI Sovereign 3D \u2014 Photorealistic Governance Earth (beta)","url":"https://www.csoai.org/globe3d.html","publisher":{"@type":"Organization","name":"CSOAI Ltd","url":"https://csoai.org"}}</script>
+<meta content="CSOAI Neutral 3D — Photorealistic Governance Earth (beta)" property="og:title"/>
+<meta content="CSOAI Neutral 3D — Photorealistic Governance Earth (beta). A neutral, audit-grade CSOAI surface: measurement, not certification — every figure traces to a signed, verifiable record." property="og:description"/>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"CSOAI Neutral 3D \u2014 Photorealistic Governance Earth (beta)","url":"https://www.csoai.org/globe3d.html","publisher":{"@type":"Organization","name":"CSOAI Ltd","url":"https://csoai.org"}}</script>
 </head>
 <body>
 <div class="load" id="load">building photorealistic governance earth…</div>
 <div id="c"></div>
 <div id="hud">
-<div class="brand"><span class="dot"></span>CSOAI · Sovereign <small>3D Governance Earth</small> <span class="beta">BETA</span></div>
+<div class="brand"><span class="dot"></span>CSOAI · Neutral <small>3D Governance Earth</small> <span class="beta">BETA</span></div>
 <div class="stats">
 <div class="stat"><b>417</b><span>Frozen provisions</span></div>
 <div class="stat"><b id="s-nodes">…</b><span id="s-nodes-l">Live anchor nodes</span></div>
@@ -70,7 +70,7 @@
 </div>
 <div class="card" id="rail">
 <h3>Data layers</h3>
-<div class="lyr" data-layer="nodes"><span class="sw on"><i></i></span><span class="nm">Sovereign nodes<small>12 civilizations</small></span></div>
+<div class="lyr" data-layer="nodes"><span class="sw on"><i></i></span><span class="nm">Neutral nodes<small>12 civilizations</small></span></div>
 <div class="lyr" data-layer="arcs"><span class="sw on"><i></i></span><span class="nm">Cross-region mesh<small>L0-D handoff arcs</small></span></div>
 <div class="lyr" data-layer="swarm"><span class="sw"><i></i></span><span class="nm">Agent swarm<small>governed agents</small></span></div>
 <div class="lyr" data-layer="clans"><span class="sw on"><i></i></span><span class="nm">AI clans<small>Kimi · Claude · DeepSeek · Grok · Local</small></span></div>
@@ -129,7 +129,7 @@ if(viewer){
   sc.fog.enabled=true;
   viewer.camera.setView({destination:Cesium.Cartesian3.fromDegrees(20,28,26000000)});
 
-  // ----- Sovereign nodes (points + labels) -----
+  // ----- Neutral nodes (points + labels) -----
   NODES.forEach(function(d){
     viewer.entities.add({
       layerTag:'nodes', position:Cesium.Cartesian3.fromDegrees(d.c[0],d.c[1]),
@@ -161,7 +161,7 @@ if(viewer){
       point:{pixelSize:2.4, color:Cesium.Color.fromCssColorString('#a7f3d0').withAlpha(.8)}});
   }
 
-  // ----- AI clans (SOV-SPACE layer: the five model clans per the goal doc).
+  // ----- AI clans (council-SPACE layer: the five model clans per the goal doc).
   // Substrate (:3101) is billing-gated, so energy is honest code-derived:
   // lens_count from drift-feed is the live measurement anchor; beyond that we
   // show the clan's seat + reach — never fabricate a live vector.
@@ -170,7 +170,7 @@ if(viewer){
     {name:'Claude',seat:[-77,38.9],clan:'claude',reach:82,note:'frontier clan · US seat'},
     {name:'DeepSeek',seat:[116.4,39.9],clan:'deepseek',reach:74,note:'open clan · CN seat'},
     {name:'Grok',seat:[-77,38.9],clan:'grok',reach:70,note:'frontier clan · US seat'},
-    {name:'Local / SOV3',seat:[-0.12,51.5],clan:'local',reach:66,note:'sovereign clan · UK seat'}
+    {name:'Local / SOV3',seat:[-0.12,51.5],clan:'local',reach:66,note:'neutral clan · UK seat'}
   ];
   var clanC={kimi:'#f0abfc',claude:'#3b82f6',deepseek:'#38bdf8',grok:'#a3e635',local:'#fbbf24'};
   CLANS.forEach(function(cl){
@@ -253,7 +253,7 @@ if(viewer){
     }).catch(function(){ /* feed unreachable — leave HUD as-is */ });
   })();
 
-  // sovereign town live feed — replaced 2026-08-08: proofof-site.vercel.app is
+  // neutral town live feed — replaced 2026-08-08: proofof-site.vercel.app is
   // dead (402, billing-gated). The live anchors API above is the canonical
   // liveness source; nothing else needs a second cross-origin poll.
   (function(){ /* retired — see anchors fetch */ })();

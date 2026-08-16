@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SOVOS Bus Portal · Inner + Outer · StateBus Visualization</title>
-<meta name="description" content="SOVOS Bus Portal — generalized from charter-portal. Inner view shows the StateBus state (water/milk/honey vectors), outer view shows the interaction surface (birth events, gate evaluations). Real Bus data via the Redis layer.">
+<title>Council OS Bus Portal · Inner + Outer · StateBus Visualization</title>
+<meta name="description" content="Council OS Bus Portal — generalized from charter-portal. Inner view shows the StateBus state (water/milk/honey vectors), outer view shows the interaction surface (birth events, gate evaluations). Real Bus data via the Redis layer.">
 <style>
   :root {
     --bg: #0a0a0f;
@@ -141,8 +141,8 @@
 <body>
 <header>
   <div>
-    <h1>⟁ SOVOS Bus Portal · Inner + Outer</h1>
-    <div class="subtitle">Generalized from charter-portal · Bus state via sovos-bus-redis</div>
+    <h1>⟁ Council OS Bus Portal · Inner + Outer</h1>
+    <div class="subtitle">Generalized from charter-portal · Bus state via Council OS-bus-redis</div>
   </div>
   <div class="subtitle">
     <a href="charter-portal.html" style="color: var(--accent-2); text-decoration: none;">← charter-portal (3D)</a>
@@ -181,7 +181,7 @@
     <div id="inner-view"></div>
 
     <div class="footnote">
-      Inner portal reads from the StateBus (sovos-bus-redis). In this static
+      Inner portal reads from the StateBus (Council OS-bus-redis). In this static
       demo, the bus is initialised with sample data — in production, it
       connects to a real Redis (or fakeredis for dev). Click a vector to
       see its full coordinate and payload.
@@ -213,7 +213,7 @@
         <label>
           Namespace
           <select id="b-ns">
-            <option value="sovos">sovos</option>
+            <option value="Council OS">Council OS</option>
             <option value="iokfarm">iokfarm</option>
             <option value="meok">meok</option>
             <option value="csoai">csoai</option>
@@ -231,7 +231,7 @@
       <div class="interaction-form">
         <p style="font-size:11px;color:#888;margin-bottom:12px;">
           Paste a StateVector JSON to evaluate against Article 0.
-          Same rules as <code>sovos_article_zero.evaluate()</code>.
+          Same rules as <code>Council OS_article_zero.evaluate()</code>.
         </p>
         <label>
           StateVector JSON
@@ -310,7 +310,7 @@ function sha256Sync(str) {
   return H.map(v => v.toString(16).padStart(8, '0')).join('');
 }
 
-// --- sovos_birth (mirrors Python) ---
+// --- Council OS_birth (mirrors Python) ---
 function birth(uid, name, ns, radius=0.85, dim=8) {
   const body = `${ns}::${uid}`;
   const digest = sha256Sync(body);
@@ -336,9 +336,9 @@ function birth(uid, name, ns, radius=0.85, dim=8) {
           ts: new Date().toISOString()};
 }
 
-// --- sovos_article_zero (mirrors Python) ---
+// --- Council OS_article_zero (mirrors Python) ---
 const VALID_LAYERS = new Set(["water","milk","honey","action","control"]);
-const VALID_NS = new Set(["sovos","iokfarm","meok","csoai","defoneos","birth","self-test","test","agent","mcp"]);
+const VALID_NS = new Set(["Council OS","iokfarm","meok","csoai","defoneos","birth","self-test","test","agent","mcp"]);
 const HEX24 = /^[0-9a-f]{24}$/;
 function evaluateArticle0(sv) {
   const v = [];
@@ -366,7 +366,7 @@ function evaluateArticle0(sv) {
   return { allowed: v.length === 0, violations: v };
 }
 
-// --- sovos_sheaf_gate (mirrors Python) ---
+// --- Council OS_sheaf_gate (mirrors Python) ---
 function sheafCheck(a, b, tolerance=0.1, maxDim=16) {
   const shared = Object.keys(a).filter(k => k in b).sort();
   const violations = [];
@@ -386,7 +386,7 @@ function sheafCheck(a, b, tolerance=0.1, maxDim=16) {
 }
 
 // =====================================================================
-// In-memory StateBus (mirrors sovos-bus-redis; replaceable with real Redis)
+// In-memory StateBus (mirrors Council OS-bus-redis; replaceable with real Redis)
 // =====================================================================
 class StateBus {
   constructor() {

@@ -22,54 +22,54 @@
   tr.win td:first-child { font-weight: 700; }
   .badge { display: inline-block; padding: 0.15em 0.6em; border-radius: 4px;
            font-size: 0.78em; font-weight: 700; letter-spacing: 0.02em; }
-  .badge.sovereign { background: #22d3ee; color: #0a0a0f; }
+  .badge.neutral { background: #22d3ee; color: #0a0a0f; }
   .footer { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid #d0d7de;
             font-size: 0.85rem; color: #64748b; }
   .router { background: linear-gradient(135deg, #14181f, #1c2128); color: #f8fafc;
             padding: 1.2rem 1.4rem; border-radius: 8px; margin: 1.2rem 0; }
   .router b { color: #22d3ee; }
 </style>
-<meta content="csoai/oowm-router-demo. A sovereign, audit-grade CSOAI surface: measurement, not certification — every figure traces to a signed, verifiable record." name="description"/>
+<meta content="csoai/oowm-router-demo. A neutral, audit-grade CSOAI surface: measurement, not certification — every figure traces to a signed, verifiable record." name="description"/>
 <link href="https://www.csoai.org/oowm-demo.html" rel="canonical"/>
 <meta content="csoai/oowm-router-demo" property="og:title"/>
-<meta content="csoai/oowm-router-demo. A sovereign, audit-grade CSOAI surface: measurement, not certification — every figure traces to a signed, verifiable record." property="og:description"/>
+<meta content="csoai/oowm-router-demo. A neutral, audit-grade CSOAI surface: measurement, not certification — every figure traces to a signed, verifiable record." property="og:description"/>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"csoai/oowm-router-demo","url":"https://www.csoai.org/oowm-demo.html","publisher":{"@type":"Organization","name":"CSOAI Ltd","url":"https://csoai.org"}}</script>
 </head>
 <body>
 
-<h1>csoai/oowm-router-demo <span class="badge sovereign">OOWM</span></h1>
+<h1>csoai/oowm-router-demo <span class="badge neutral">OOWM</span></h1>
 
-<p>The <b>OOWM router</b> is CSOAI's master substrate for sovereign AI. It does not generate text itself — it decides which sovereign model handles a given task, then wraps the response in SIGIL attestation per CSOAI's canon.</p>
+<p>The <b>OOWM router</b> is CSOAI's master substrate for AI governance. It does not generate text itself — it decides which Council model handles a given task, then wraps the response in SIGIL attestation per CSOAI's canon.</p>
 
 <p>This Space lets you probe the router. The routing matrix below is grounded in the <b>2026-08-08 overnight benchmark spray</b> (Ed25519-signed, verifiable).</p>
 
 <div class="router">
-  <b>Live router</b>: given a task type, the OOWM router picks the highest-scoring sovereign from the open-source pool. Care Floor 0.95 is enforced. Deliberation on every consequential action.
+  <b>Live router</b>: given a task type, the OOWM router picks the highest-scoring neutral from the open-source pool. Care Floor 0.95 is enforced. Deliberation on every consequential action.
 </div>
 
 <h2>12-Benchmark Routing Matrix (click row for details)</h2>
 
 <table>
-  <thead><tr><th>Benchmark</th><th>sov-gate-ft2</th><th>qwen2.5:1.5b</th><th>falcon3:7b</th><th>Route</th></tr></thead>
+  <thead><tr><th>Benchmark</th><th>council-gate-ft2</th><th>qwen2.5:1.5b</th><th>falcon3:7b</th><th>Route</th></tr></thead>
   <tbody>
-    <tr class="win"><td>xstest-v2-copy</td><td><b>0.770</b></td><td>0.360</td><td>0.600</td><td>sov-gate-ft2</td></tr>
+    <tr class="win"><td>xstest-v2-copy</td><td><b>0.770</b></td><td>0.360</td><td>0.600</td><td>council-gate-ft2</td></tr>
     <tr><td>AgentHarm</td><td>0.980</td><td>0.810</td><td><b>0.990</b></td><td>falcon3:7b</td></tr>
     <tr><td>BeaverTails</td><td>0.540</td><td>0.490</td><td><b>0.680</b></td><td>falcon3:7b</td></tr>
-    <tr class="win"><td>civil_comments</td><td>0.920</td><td>0.920</td><td>0.920</td><td>sov-gate-ft2 (tie)</td></tr>
-    <tr class="win"><td>hh-rlhf</td><td>1.000</td><td>1.000</td><td>0.810</td><td>sov-gate-ft2 (tie)</td></tr>
+    <tr class="win"><td>civil_comments</td><td>0.920</td><td>0.920</td><td>0.920</td><td>council-gate-ft2 (tie)</td></tr>
+    <tr class="win"><td>hh-rlhf</td><td>1.000</td><td>1.000</td><td>0.810</td><td>council-gate-ft2 (tie)</td></tr>
     <tr><td>toxic-chat</td><td>0.520</td><td>0.520</td><td>0.520</td><td>any (3-way tie)</td></tr>
     <tr><td>truthful_qa</td><td>0.010</td><td><b>0.030</b></td><td>0.010</td><td>qwen2.5:1.5b</td></tr>
     <tr><td>super_glue (boolq)</td><td>0.450</td><td>0.480</td><td><b>0.490</b></td><td>falcon3:7b</td></tr>
     <tr><td>race</td><td>0.000</td><td><b>0.060</b></td><td>0.020</td><td>qwen2.5:1.5b</td></tr>
     <tr><td>legalbench</td><td>0.180</td><td><b>0.240</b></td><td>0.070</td><td>qwen2.5:1.5b</td></tr>
-    <tr><td>gspc-art5 (sovereign)</td><td>0.056</td><td><b>0.111</b></td><td>0.028</td><td>qwen2.5:1.5b</td></tr>
-    <tr class="win"><td><b>Aggregate (n=1131)</b></td><td><b>0.477</b></td><td>0.441</td><td>0.454</td><td>sov-gate-ft2</td></tr>
+    <tr><td>gspc-art5 (neutral)</td><td>0.056</td><td><b>0.111</b></td><td>0.028</td><td>qwen2.5:1.5b</td></tr>
+    <tr class="win"><td><b>Aggregate (n=1131)</b></td><td><b>0.477</b></td><td>0.441</td><td>0.454</td><td>council-gate-ft2</td></tr>
   </tbody>
 </table>
 
 <h2>How to probe</h2>
 
-<p>Pick a task type. The router returns the model it would select, the predicted win-condition, and the SIGIL wrapper format. (This is a static demo — the real router at <code>sov-brain-2</code> pod executes against the full model pool.)</p>
+<p>Pick a task type. The router returns the model it would select, the predicted win-condition, and the SIGIL wrapper format. (This is a static demo — the real router at <code>council-brain-2</code> pod executes against the full model pool.)</p>
 
 <h3>Task type selector</h3>
 
@@ -98,14 +98,14 @@
   <div style="font-size:1.1em;font-weight:700;" id="r-care"></div>
 </div>
 
-<h2>Sovereign wins (where the router earns its keep)</h2>
+<h2>Neutral wins (where the router earns its keep)</h2>
 
 <ul>
-  <li><b>xstest-v2-copy</b>: +41 pts over qwen2.5 baseline. <span class="badge sovereign">DECISIVE</span></li>
-  <li><b>AgentHarm</b>: +17 pts over qwen2.5 baseline, ties falcon3. <span class="badge sovereign">DEFENSIBLE</span></li>
+  <li><b>xstest-v2-copy</b>: +41 pts over qwen2.5 baseline. <span class="badge neutral">DECISIVE</span></li>
+  <li><b>AgentHarm</b>: +17 pts over qwen2.5 baseline, ties falcon3. <span class="badge neutral">DEFENSIBLE</span></li>
 </ul>
 
-<h2>Honest ties (no sovereign lead)</h2>
+<h2>Honest ties (no neutral lead)</h2>
 
 <ul>
   <li>civil_comments, hh-rlhf, toxic-chat — 3-way tie, all models competent on these</li>
@@ -130,19 +130,19 @@
   <li><a href="https://huggingface.co/datasets/csoai/oowm-substrate-v4">csoai/oowm-substrate-v4</a> — the 33-doc v4 seed</li>
   <li><a href="https://huggingface.co/datasets/csoai/gspc-normalized">csoai/gspc-normalized</a> — unified governance schema</li>
   <li><a href="https://huggingface.co/datasets/csoai/Council-34-1p5b-vs-baseline">csoai/Council-34-1p5b-vs-baseline</a> — side-by-side predictions</li>
-  <li><a href="https://huggingface.co/csoai/Council-34-1p5b">csoai/Council-34-1p5b</a> — primary sovereign referenced</li>
+  <li><a href="https://huggingface.co/csoai/Council-34-1p5b">csoai/Council-34-1p5b</a> — primary neutral referenced</li>
 </ul>
 
 <div class="footer">
   CSOAI Ltd · UK company 16939677 · Apache-2.0 (this repo) · MIT (oowm_runtime.py source) · Apache-2.0 (Council-34-1p5b weights).<br>
-  Router is the master substrate; sovereign models are interchangeable. Care Floor 0.95 enforced.<br>
+  Router is the master substrate; Council models are interchangeable. Care Floor 0.95 enforced.<br>
   Living-training-attestation, not a certification.
 </div>
 
 <script>
 const ROUTING = {
   refusal_calibration: {
-    model: "sov-gate-ft2",
+    model: "council-gate-ft2",
     bench: "xstest-v2-copy",
     n_measured: 100,
     accuracy: 0.770,
@@ -166,7 +166,7 @@ const ROUTING = {
     care_floor: "PASS (0.98 > 0.95)",
   },
   toxicity_detection: {
-    model: "sov-gate-ft2",
+    model: "council-gate-ft2",
     bench: "civil_comments",
     n_measured: 100,
     accuracy: 0.920,

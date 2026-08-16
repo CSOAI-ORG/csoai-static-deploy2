@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Alphabet Framework / Drum Spine — SOVOS</title>
+<title>Alphabet Framework / Drum Spine — Council OS</title>
 <meta name="description" content="Audit any AI system against 26 governance questions (A-Z). The Drum Spine cycles through one letter per tick. Free, runs entirely in your browser.">
 <link rel="canonical" href="https://csoai.org/alphabet">
 <meta name="theme-color" content="#22d3ee">
@@ -87,13 +87,13 @@
   .checkbox-grid label.checked { background: rgba(52, 211, 153, 0.10); border-color: var(--good); color: var(--good); }
   .checkbox-grid input { display: none; }
 </style>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"SOVOS Alphabet Framework / Drum Spine","description":"Free browser tool: audit any AI system against 26 governance questions (A-Z). The Drum Spine cycles through them one letter per tick. Empty record = ALL UNKNOWN (never silent PASS).","url":"https://csoai.org/alphabet","applicationCategory":"UtilitiesApplication","operatingSystem":"Any (browser)","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"creator":{"@type":"Organization","name":"CSOAI Ltd","url":"https://csoai.org"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Council OS Alphabet Framework / Drum Spine","description":"Free browser tool: audit any AI system against 26 governance questions (A-Z). The Drum Spine cycles through them one letter per tick. Empty record = ALL UNKNOWN (never silent PASS).","url":"https://csoai.org/alphabet","applicationCategory":"UtilitiesApplication","operatingSystem":"Any (browser)","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"creator":{"@type":"Organization","name":"CSOAI Ltd","url":"https://csoai.org"}}</script>
 </head>
 <body>
 <div class="wrap">
 
   <section style="padding-top:3rem;">
-    <span class="eyebrow">SOVOS · Alphabet Framework · Drum Spine · 26 letters</span>
+    <span class="eyebrow">Council OS · Alphabet Framework · Drum Spine · 26 letters</span>
     <h1 style="margin-top:1.2rem;">Audit any AI system against<br><span class="accent">26 governance questions</span>.</h1>
     <p style="max-width:42rem; font-size:1.05rem; margin-top:1.0rem;">
       Tick the controls your system has. The Drum Spine reports <strong>UNKNOWN</strong> for anything you didn't tick — never a silent PASS. X-factor is intrinsically UNKNOWN (it requires human reflection).
@@ -109,7 +109,7 @@
         <div class="preset" onclick="loadPreset('empty')">Empty (all UNKNOWN)</div>
         <div class="preset" onclick="loadPreset('startup')">Early startup</div>
         <div class="preset" onclick="loadPreset('enterprise')">Enterprise-ready</div>
-        <div class="preset" onclick="loadPreset('sovereign')">Sovereign-grade</div>
+        <div class="preset" onclick="loadPreset('neutral')">Neutral-grade</div>
       </div>
 
       <div class="checkbox-grid" id="checkbox-grid"></div>
@@ -148,9 +148,9 @@
   </section>
 
   <section>
-    <h2>Other SOVOS tools</h2>
+    <h2>Other Council OS tools</h2>
     <p>
-      <a href="/gspc-score">GSPC Self-Score</a> · <a href="/cpo-calculator">CPO Power Savings Calculator</a> · <a href="/injection-scanner">MCP Prompt Injection Scanner</a> · <a href="/a2a-swarm">A2A Swarm Demo</a> · <a href="/sovos.html">The signed visual mind</a>.
+      <a href="/gspc-score">GSPC Self-Score</a> · <a href="/cpo-calculator">CPO Power Savings Calculator</a> · <a href="/injection-scanner">MCP Prompt Injection Scanner</a> · <a href="/a2a-swarm">A2A Swarm Demo</a> · <a href="/Council OS.html">The signed visual mind</a>.
     </p>
   </section>
 
@@ -291,7 +291,7 @@ function loadPreset(name) {
     ['architecture', 'policy', 'coherence', 'data_source', 'explicit_goals', 'fail_safe', 'governance', 'human_review',
      'interpretability', 'jurisdiction', 'key_management', 'logging', 'model_card', 'seed_control',
      'outcome_metrics', 'provenance', 'red_team', 'sbom', 'tests', 'null_test'].forEach(function(k) { state[k] = true; });
-  } else if (name === 'sovereign') {
+  } else if (name === 'neutral') {
     // All keys set
     LETTERS.forEach(function(L) {
       if (L.keys) L.keys.forEach(function(k) { state[k] = true; });

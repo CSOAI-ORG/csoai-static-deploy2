@@ -3,11 +3,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>CPO Power Savings Calculator — SOVOS</title>
-<meta name="description" content="Compute the annual kWh, dollars, and CO2 saved by switching from pluggable transceivers to co-packaged optics (CPO). Free tool by SOVOS.">
+<title>CPO Power Savings Calculator — Council OS</title>
+<meta name="description" content="Compute the annual kWh, dollars, and CO2 saved by switching from pluggable transceivers to co-packaged optics (CPO). Free tool by Council OS.">
 <link rel="canonical" href="https://csoai.org/cpo-calculator">
 <meta name="theme-color" content="#22d3ee">
-<meta property="og:title" content="CPO Power Savings Calculator — SOVOS">
+<meta property="og:title" content="CPO Power Savings Calculator — Council OS">
 <meta property="og:description" content="How much power, money, and CO2 will co-packaged optics save YOUR data center? Free calculator. Honest numbers from the NVIDIA CPO datasheet.">
 <meta property="og:url" content="https://csoai.org/cpo-calculator">
 <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 64 64%22%3E%3Crect width=%2264%22 height=%2264%22 rx=%2214%22 fill=%22%2322d3ee%22/%3E%3Ctext x=%2232%22 y=%2245%22 font-family=%22Inter,Arial,sans-serif%22 font-size=%2238%22 font-weight=%22800%22 text-anchor=%22middle%22 fill=%22%23070b14%22%3ES%3C/text%3E%3C/svg%3E">
@@ -79,13 +79,13 @@
   footer { border-top: 1px solid var(--line); margin-top: 3rem; padding: 2rem 0; font-size: 0.85rem; color: var(--mut); }
   code { font-family: ui-monospace, 'SF Mono', Menlo, monospace; font-size: 0.85em; background: var(--bg); padding: 0.15rem 0.4rem; border-radius: 0.3rem; border: 1px solid var(--line); }
 </style>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"SOVOS CPO Power Savings Calculator","description":"Free calculator for the power, dollar, and CO2 savings of co-packaged optics over pluggable transceivers","url":"https://csoai.org/cpo-calculator","applicationCategory":"FinanceApplication","operatingSystem":"Any (browser)","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"creator":{"@type":"Organization","name":"CSOAI Ltd","url":"https://csoai.org"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Council OS CPO Power Savings Calculator","description":"Free calculator for the power, dollar, and CO2 savings of co-packaged optics over pluggable transceivers","url":"https://csoai.org/cpo-calculator","applicationCategory":"FinanceApplication","operatingSystem":"Any (browser)","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"creator":{"@type":"Organization","name":"CSOAI Ltd","url":"https://csoai.org"}}</script>
 </head>
 <body>
 <div class="wrap">
 
   <section style="padding-top:3rem;">
-    <span class="eyebrow">SOVOS · free tool · 2026</span>
+    <span class="eyebrow">Council OS · free tool · 2026</span>
     <h1 style="margin-top:1.2rem;">How much will <span class="accent">co-packaged optics</span><br>save YOUR data center?</h1>
     <p style="max-width:42rem; font-size:1.05rem; margin-top:1.0rem;">
       Co-packaged optics (CPO) cuts the power per 1.6&nbsp;T link from 30&nbsp;W to 9&nbsp;W and the latency per hop from 500&nbsp;ns to 50&nbsp;ns. Plug in your numbers below and see what that does to your power bill, your carbon footprint, and your data center's PUE.
@@ -177,12 +177,12 @@
   </section>
 
   <section>
-    <h2>What is SOVOS?</h2>
+    <h2>What is Council OS?</h2>
     <p>
-      SOVOS is a CPO-native operating-system layer. We build the software that treats photonic interconnect as a first-class citizen — every compute node, every API call, every agent communication routed through optical channels by default. The calculator above is one piece of that stack: a public-facing artifact that demonstrates honest, datasheet-grade engineering.
+      Council OS is a CPO-native operating-system layer. We build the software that treats photonic interconnect as a first-class citizen — every compute node, every API call, every agent communication routed through optical channels by default. The calculator above is one piece of that stack: a public-facing artifact that demonstrates honest, datasheet-grade engineering.
     </p>
     <p style="margin-top:0.8rem;">
-      Other public pieces of the stack: <a href="/sovos.html">the signed visual mind</a> · the <a href="#">EU AI Act governance crosswalk</a> · <a href="https://github.com/CSOAI-ORG/csoai-static-deploy2/tree/main/SOVOS/packages/sovos-cpo-calculator">the calculator source code</a>.
+      Other public pieces of the stack: <a href="/Council OS.html">the signed visual mind</a> · the <a href="#">EU AI Act governance crosswalk</a> · <a href="https://github.com/CSOAI-ORG/csoai-static-deploy2/tree/main/Council OS/packages/Council OS-cpo-calculator">the calculator source code</a>.
     </p>
     <p style="margin-top:0.8rem;">
       For partnership, contact <code>governance@csoai.org</code>.
@@ -197,7 +197,7 @@
 </div>
 
 <script>
-  // The published constants — same as sovos_cpo_calculator Python module
+  // The published constants — same as Council OS_cpo_calculator Python module
   const PLUGGABLE_W_PER_LINK = 30.0;   // NVIDIA CPO datasheet (2026)
   const CPO_W_PER_LINK = 9.0;          // NVIDIA CPO datasheet (2026)
   const PLUGGABLE_NS = 500.0;          // typical pluggable stack

@@ -30,10 +30,10 @@
   .ev{position:fixed;left:14px;bottom:88px;z-index:5;max-width:300px;background:rgba(5,20,13,.9);border:1px solid rgba(245,158,11,.3);border-radius:10px;padding:8px 12px;font:11px ui-monospace,Menlo,monospace;color:rgba(236,253,245,.8);display:none}
   .foot{position:fixed;right:14px;bottom:14px;z-index:5;font:9px ui-monospace;letter-spacing:1px;color:rgba(236,253,245,.4);text-align:right;pointer-events:none}
 </style>
-<link href="https://www.csoai.org/sov-city-3d.html" rel="canonical"/>
+<link href="https://www.csoai.org/council-city-3d.html" rel="canonical"/>
 <meta content="SOV City 3D — dual-substrate governance city + AI swarm | CSOAI" property="og:title"/>
 <meta content="SOV City 3D — dual-substrate governance city + AI swarm. A sovereign, audit-grade CSOAI surface: measurement, not certification — every figure traces to a signed, verifiable record." property="og:description"/>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"SOV City 3D \u2014 dual-substrate governance city + AI swarm | CSOAI","url":"https://www.csoai.org/sov-city-3d.html","publisher":{"@type":"Organization","name":"CSOAI Ltd","url":"https://csoai.org"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"SOV City 3D \u2014 dual-substrate governance city + AI swarm | CSOAI","url":"https://www.csoai.org/council-city-3d.html","publisher":{"@type":"Organization","name":"CSOAI Ltd","url":"https://csoai.org"}}</script>
 </head>
 <body>
 <canvas id="cv"></canvas>
@@ -73,7 +73,7 @@
 </div>
 
 <div class="ev" id="ev"></div>
-<div class="foot">POC — DESIGN lab · substrates: micropolis-gpl-3.0 + openttd-gpl-2.0<br/>overnight: sov-fleet deliberations · participation is measured, not a governance claim · CSOAI Ltd</div>
+<div class="foot">POC — DESIGN lab · substrates: micropolis-gpl-3.0 + openttd-gpl-2.0<br/>overnight: council-fleet deliberations · participation is measured, not a governance claim · CSOAI Ltd</div>
 
 <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.min.js"></script>
 <script>
@@ -82,10 +82,10 @@
   let town=null, ottd=null, townOk=false, ottdOk=false;
 
   async function poll(){
-    try{ const r=await fetch('/api/sov-town/state.jsonl'); if(r.ok){
+    try{ const r=await fetch('/api/council-town/state.jsonl'); if(r.ok){
       const ls=(await r.text()).trim().split('\n').filter(Boolean);
       if(ls.length){ town=JSON.parse(ls[ls.length-1]); townOk=true; } } }catch(e){}
-    try{ const r=await fetch('/api/sov-openttd/state.jsonl'); if(r.ok){
+    try{ const r=await fetch('/api/council-openttd/state.jsonl'); if(r.ok){
       const ls=(await r.text()).trim().split('\n').filter(Boolean);
       if(ls.length){ ottd=JSON.parse(ls[ls.length-1]); ottdOk=true; } } }catch(e){}
     hud();
@@ -165,7 +165,7 @@
 
   async function loadArena(){
     try{
-      const r=await fetch('/api/sov-arena/rounds.jsonl');
+      const r=await fetch('/api/council-arena/rounds.jsonl');
       if(!r.ok) throw new Error('http '+r.status);
       const ls=(await r.text()).trim().split('\n').filter(Boolean);
       const parsed=ls.map(l=>{ try{return JSON.parse(l);}catch(e){return null;} }).filter(Boolean);
@@ -261,7 +261,7 @@
   // (c) convergence digest: is the two-node fleet agreeing? REAL CRDT result.
   async function loadCrdt(){
     try{
-      const r=await fetch('/api/sov-crdt/latest.json');
+      const r=await fetch('/api/council-crdt/latest.json');
       if(!r.ok) throw new Error('http '+r.status);
       const d=await r.json();
       const card=document.getElementById('crdt-card');

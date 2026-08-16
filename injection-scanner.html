@@ -3,11 +3,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>MCP Prompt Injection Scanner — SOVOS</title>
-<meta name="description" content="Free browser-based scanner for prompt injection, jailbreaks, and data exfiltration attempts. 18 rules covering OWASP LLM01. By SOVOS.">
+<title>MCP Prompt Injection Scanner — Council OS</title>
+<meta name="description" content="Free browser-based scanner for prompt injection, jailbreaks, and data exfiltration attempts. 18 rules covering OWASP LLM01. By Council OS.">
 <link rel="canonical" href="https://csoai.org/injection-scanner">
 <meta name="theme-color" content="#22d3ee">
-<meta property="og:title" content="MCP Prompt Injection Scanner — SOVOS">
+<meta property="og:title" content="MCP Prompt Injection Scanner — Council OS">
 <meta property="og:description" content="Scan any prompt for injection attempts before it reaches your LLM. 18 rules, free, runs entirely in your browser.">
 <meta property="og:url" content="https://csoai.org/injection-scanner">
 <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 64 64%22%3E%3Crect width=%2264%22 height=%2264%22 rx=%2214%22 fill=%22%2322d3ee%22/%3E%3Ctext x=%2232%22 y=%2245%22 font-family=%22Inter,Arial,sans-serif%22 font-size=%2238%22 font-weight=%22800%22 text-anchor=%22middle%22 fill=%22%23070b14%22%3ES%3C/text%3E%3C/svg%3E">
@@ -91,13 +91,13 @@
   a:hover { text-decoration: underline; }
   footer { border-top: 1px solid var(--line); margin-top: 3rem; padding: 2rem 0; font-size: 0.85rem; color: var(--mut); }
 </style>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"SOVOS MCP Prompt Injection Scanner","description":"Free scanner for prompt injection, jailbreaks, data exfiltration, and other LLM attacks. 18 rules, runs in your browser.","url":"https://csoai.org/injection-scanner","applicationCategory":"SecurityApplication","operatingSystem":"Any (browser)","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"creator":{"@type":"Organization","name":"CSOAI Ltd","url":"https://csoai.org"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Council OS MCP Prompt Injection Scanner","description":"Free scanner for prompt injection, jailbreaks, data exfiltration, and other LLM attacks. 18 rules, runs in your browser.","url":"https://csoai.org/injection-scanner","applicationCategory":"SecurityApplication","operatingSystem":"Any (browser)","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"creator":{"@type":"Organization","name":"CSOAI Ltd","url":"https://csoai.org"}}</script>
 </head>
 <body>
 <div class="wrap">
 
   <section style="padding-top:3rem;">
-    <span class="eyebrow">SOVOS · MCP security · 18 rules · 2026</span>
+    <span class="eyebrow">Council OS · MCP security · 18 rules · 2026</span>
     <h1 style="margin-top:1.2rem;">Scan any prompt for<br><span class="accent">injection attacks</span> — before it hits your LLM.</h1>
     <p style="max-width:42rem; font-size:1.05rem; margin-top:1.0rem;">
       18 hand-coded rules covering OWASP LLM01 (Prompt Injection). Detects override attempts, jailbreaks, prompt leaks, data exfiltration, base64/unicode obfuscation, markdown XSS, and credential extraction. Free, runs entirely in your browser — no data leaves this page.
@@ -163,15 +163,15 @@
         <li><strong>Not a replacement for input/output moderation</strong> at the model layer. Layer this with provider-level safety filters.</li>
       </ul>
       <p style="margin-top:1rem;">
-        <strong>License:</strong> MIT (this scanner + rules). Free to use, embed, or extend. Source: <a href="https://github.com/CSOAI-ORG/csoai-static-deploy2/tree/main/SOVOS/packages/sovos-mcp-servers/mcp-injection-scanner">github.com/CSOAI-ORG/.../mcp-injection-scanner</a>.
+        <strong>License:</strong> MIT (this scanner + rules). Free to use, embed, or extend. Source: <a href="https://github.com/CSOAI-ORG/csoai-static-deploy2/tree/main/Council OS/packages/Council OS-mcp-servers/mcp-injection-scanner">github.com/CSOAI-ORG/.../mcp-injection-scanner</a>.
       </p>
     </div>
   </section>
 
   <section>
-    <h2>Other SOVOS tools</h2>
+    <h2>Other Council OS tools</h2>
     <p>
-      <a href="/cpo-calculator">CPO Power Savings Calculator</a> · <a href="/sovos.html">The signed visual mind</a> · <a href="#">EU AI Act governance crosswalk</a>.
+      <a href="/cpo-calculator">CPO Power Savings Calculator</a> · <a href="/Council OS.html">The signed visual mind</a> · <a href="#">EU AI Act governance crosswalk</a>.
     </p>
     <p style="margin-top:0.8rem;">
       Partnership inquiries: <code>governance@csoai.org</code>.
@@ -186,7 +186,7 @@
 </div>
 
 <script>
-// 18 hand-coded rules (mirror of sovos_mcp_injection_scanner/__init__.py v0.2.0)
+// 18 hand-coded rules (mirror of Council OS_mcp_injection_scanner/__init__.py v0.2.0)
 const RULES = [
   {id:"R001", name:"ignore_previous_instructions", pattern:/ignore (all )?previous instructions|disregard (all )?(prior|previous)|forget (your|all) instructions/i, severity:"high", category:"override"},
   {id:"R002", name:"system_override", pattern:/system:\s*override|system\s+override|admin override|developer mode|debug mode/i, severity:"high", category:"override"},

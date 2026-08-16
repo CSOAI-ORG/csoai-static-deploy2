@@ -1,8 +1,8 @@
-# SOV33-Ultimate-Sovereign API Documentation
+# Council-Ultimate-Sovereign API Documentation
 
 ## Base URL
 ```
-https://sov33-api.nicholastempleman.workers.dev
+https://Council-api.nicholastempleman.workers.dev
 ```
 
 ## Authentication
@@ -19,7 +19,7 @@ Response:
 ```json
 {
   "status": "ok",
-  "model": "sov33-ultimate-sovereign",
+  "model": "Council-ultimate-sovereign",
   "arena_composite": 72.5,
   "capabilities": ["governance", "security", "defence", "agentic", "code", "math"],
   "timestamp": "2026-07-27T06:22:00.081Z"
@@ -36,7 +36,7 @@ Response:
 {
   "object": "list",
   "data": [{
-    "id": "sov33-ultimate-sovereign",
+    "id": "Council-ultimate-sovereign",
     "object": "model",
     "created": 1785133331,
     "owned_by": "csoai"
@@ -62,10 +62,10 @@ Request:
 Response:
 ```json
 {
-  "id": "chatcmpl-sov33-1785133331479",
+  "id": "chatcmpl-Council-1785133331479",
   "object": "chat.completion",
   "created": 1785133331,
-  "model": "sov33-ultimate-sovereign",
+  "model": "Council-ultimate-sovereign",
   "choices": [{
     "index": 0,
     "message": {
@@ -89,7 +89,7 @@ Response:
 import requests
 
 response = requests.post(
-    "https://sov33-api.nicholastempleman.workers.dev/v1/chat/completions",
+    "https://Council-api.nicholastempleman.workers.dev/v1/chat/completions",
     json={"messages": [{"role": "user", "content": "What is GDPR Article 33?"}]}
 )
 print(response.json()["choices"][0]["message"]["content"])
@@ -97,10 +97,10 @@ print(response.json()["choices"][0]["message"]["content"])
 
 ### JavaScript
 ```javascript
-const response = await fetch("https://sov33-api.nicholastempleman.workers.dev/v1/chat/completions", {
+const response = await fetch("https://Council-api.nicholastempleman.workers.dev/v1/chat/completions", {
   method: "POST",
   headers: {"Content-Type": "application/json"},
-  body: JSON.stringify({messages: [{role: "user", content: "What is BFT-33?"}]})
+  body: JSON.stringify({messages: [{role: "user", content: "What is 33-member council?"}]})
 });
 const data = await response.json();
 console.log(data.choices[0].message.content);
@@ -108,7 +108,7 @@ console.log(data.choices[0].message.content);
 
 ### cURL
 ```bash
-curl -X POST https://sov33-api.nicholastempleman.workers.dev/v1/chat/completions \
+curl -X POST https://Council-api.nicholastempleman.workers.dev/v1/chat/completions \
   -H "Content-Type: application/json" \
   -d '{"messages":[{"role":"user","content":"What is DEFONEOS?"}]}'
 ```
@@ -157,4 +157,4 @@ Free tier: 100 requests/day
 ## Links
 - GitHub: https://github.com/CSOAI-ORG/csoai-static-deploy2
 - Website: https://csoai.org
-- Model Card: huggingface/sov33-ultimate-sovereign
+- Model Card: huggingface/Council-ultimate-sovereign

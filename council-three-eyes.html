@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8"/>
-<title>SOV-Space — Three-Eye Substrate (IWM/OWM/VWM)</title>
+<title>council-Space — Three-Eye Substrate (IWM/OWM/VWM)</title>
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body { background: #050510; color: #E0EDF3; font-family: 'Inter', system-ui, sans-serif; overflow: hidden; height: 100vh; }
@@ -107,25 +107,25 @@
   .eye-flow .arrow { stroke: #6E7681; stroke-width: 1.5; fill: none; marker-end: url(#arrow); }
 </style>
 <!-- AI-SEO/AEO/GEO head block — DO NOT remove. AI crawlers (GPTBot, ClaudeBot, PerplexityBot) don't run JS; everything they need must be in raw HTML. -->
-<link href="https://www.csoai.org/sov-three-eyes.html.llm.json" rel="alternate" title="LLM representation of this page" type="application/llm+json"/>
+<link href="https://www.csoai.org/council-three-eyes.html.llm.json" rel="alternate" title="LLM representation of this page" type="application/llm+json"/>
 <meta content="/llms.txt" name="llms-txt"/>
 <meta content="human-authored, machine-verifiable, Ed25519-signed" name="ai-content-declaration"/>
-<meta content="CSOAI Ltd (2026). SOV-Space — Three-Eye Substrate (IWM/OWM/VWM). https://www.csoai.org/sov-three-eyes.html" name="citation-policy"/>
+<meta content="CSOAI Ltd (2026). council-Space — Three-Eye Substrate (IWM/OWM/VWM). https://www.csoai.org/council-three-eyes.html" name="citation-policy"/>
 <meta content="2026-07-30T14:31:14+00:00" name="revised"/>
 <meta content="2026-07-30T14:31:14+00:00" property="article:modified_time"/>
-<meta content="SOV-Space — Three-Eye Substrate (IWM/OWM/VWM). A sovereign, audit-grade CSOAI surface: measurement, not certification — every figure traces to a signed, verifiable record." name="description"/>
-<link href="https://www.csoai.org/sov-three-eyes.html" rel="canonical"/>
-<meta content="SOV-Space — Three-Eye Substrate (IWM/OWM/VWM)" property="og:title"/>
-<meta content="SOV-Space — Three-Eye Substrate (IWM/OWM/VWM). A sovereign, audit-grade CSOAI surface: measurement, not certification — every figure traces to a signed, verifiable record." property="og:description"/>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"SOV-Space \u2014 Three-Eye Substrate (IWM/OWM/VWM)","url":"https://www.csoai.org/sov-three-eyes.html","publisher":{"@type":"Organization","name":"CSOAI Ltd","url":"https://csoai.org"}}</script>
+<meta content="council-Space — Three-Eye Substrate (IWM/OWM/VWM). A neutral, audit-grade CSOAI surface: measurement, not certification — every figure traces to a signed, verifiable record." name="description"/>
+<link href="https://www.csoai.org/council-three-eyes.html" rel="canonical"/>
+<meta content="council-Space — Three-Eye Substrate (IWM/OWM/VWM)" property="og:title"/>
+<meta content="council-Space — Three-Eye Substrate (IWM/OWM/VWM). A neutral, audit-grade CSOAI surface: measurement, not certification — every figure traces to a signed, verifiable record." property="og:description"/>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"council-Space \u2014 Three-Eye Substrate (IWM/OWM/VWM)","url":"https://www.csoai.org/council-three-eyes.html","publisher":{"@type":"Organization","name":"CSOAI Ltd","url":"https://csoai.org"}}</script>
 </head>
 <body>
 <header>
-<h1>SOV-SPACE — three-eye substrate</h1>
+<h1>council-SPACE — three-eye substrate</h1>
 <span class="subtitle">IWM reasons · OWM knows · VWM renders · all on one append-only ledger</span>
 <nav class="links">
-<a href="/sov_space_visual.html">particle field →</a>
-<a href="/sov-sync-proof.html">live sync →</a>
+<a href="/council-space-visual.html">particle field →</a>
+<a href="/council-sync-proof.html">live sync →</a>
 <a href="/globe3d.html">globe →</a>
 <a href="/drift-feed.html">drift →</a>
 </nav>
@@ -155,7 +155,7 @@
 <text fill="#6E7681" font-size="7" text-anchor="middle" x="380" y="34">renders</text>
 <rect fill="rgba(63,185,80,0.15)" height="40" rx="6" stroke="#3FB950" width="160" x="420" y="20"></rect>
 <text class="vwm-text" text-anchor="middle" x="500" y="44">VWM</text>
-<text fill="#6E7681" font-size="7" text-anchor="middle" x="500" y="56">globe · sovereign · canvas</text>
+<text fill="#6E7681" font-size="7" text-anchor="middle" x="500" y="56">globe · neutral · canvas</text>
 
 </div>
 <section class="pane pane-iwm">
@@ -197,7 +197,7 @@
 <script>
 const API = 'https://govbench-api.nicholastempleman.workers.dev';
 const LOCAL = window.location.origin;
-const SOVDASH = 'https://sov-sync-proof.html'; // not used directly
+const SOVDASH = 'https://council-sync-proof.html'; // not used directly
 
 async function loadThreeEyes() {
   // ─── IWM: lens status + decision ledger ──────────────────────────
@@ -278,7 +278,7 @@ async function loadThreeEyes() {
 
   // ─── VWM: spacetime canvas ────────────────────────────────────────
   try {
-    const r = await fetch(LOCAL + '/sov-time-canvas.svg?ts=' + Date.now());
+    const r = await fetch(LOCAL + '/council-time-canvas.svg?ts=' + Date.now());
     const svg = await r.text();
     const m = svg.match(/(\d+) events/);
     const total = m ? m[1] : '?';
@@ -297,7 +297,7 @@ async function loadThreeEyes() {
     for (const [name, window, desc] of zooms) {
       html += `<div class="zoom-row">
         <span class="zoom-label">${name}</span>
-        <object type="image/svg+xml" data="/sov-zoom-${name}.svg?ts=${Date.now()}"></object>
+        <object type="image/svg+xml" data="/council-zoom-${name}.svg?ts=${Date.now()}"></object>
         <span style="color:#6E7681;font-size:0.65rem">${desc}</span>
       </div>`;
     }
@@ -310,7 +310,7 @@ async function loadThreeEyes() {
 
 async function refreshFooter() {
   try {
-    const r = await fetch(LOCAL + '/sov-sync-summary.json?ts=' + Date.now()).catch(() => null);
+    const r = await fetch(LOCAL + '/council-sync-summary.json?ts=' + Date.now()).catch(() => null);
     if (r && r.ok) {
       const s = await r.json();
       document.getElementById('footerEvents').textContent = s.events;

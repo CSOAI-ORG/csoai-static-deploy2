@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8"/>
-<title>SOV-Space 5D — UE5 representation</title>
+<title>council-Space 5D — UE5 representation</title>
 <script>window.CESIUM_BASE_URL='https://cdn.jsdelivr.net/npm/cesium@1.119/Build/Cesium/';</script>
 <link href="https://cdn.jsdelivr.net/npm/cesium@1.119/Build/Cesium/Widgets/widgets.css" rel="stylesheet"/>
 <script src="https://cdn.jsdelivr.net/npm/cesium@1.119/Build/Cesium/Cesium.js"></script>
@@ -91,26 +91,26 @@
   #time-svg-host { background: #050510; padding: 4px; border-radius: 4px; }
 </style>
 <!-- AI-SEO/AEO/GEO head block — DO NOT remove. AI crawlers (GPTBot, ClaudeBot, PerplexityBot) don't run JS; everything they need must be in raw HTML. -->
-<link href="https://www.csoai.org/sov-5d-engine.html.llm.json" rel="alternate" title="LLM representation of this page" type="application/llm+json"/>
+<link href="https://www.csoai.org/council-5d-engine.html.llm.json" rel="alternate" title="LLM representation of this page" type="application/llm+json"/>
 <meta content="/llms.txt" name="llms-txt"/>
 <meta content="human-authored, machine-verifiable, Ed25519-signed" name="ai-content-declaration"/>
-<meta content="CSOAI Ltd (2026). SOV-Space 5D — UE5 representation. https://www.csoai.org/sov-5d-engine.html" name="citation-policy"/>
+<meta content="CSOAI Ltd (2026). council-Space 5D — UE5 representation. https://www.csoai.org/council-5d-engine.html" name="citation-policy"/>
 <meta content="2026-07-30T14:48:31+00:00" name="revised"/>
 <meta content="2026-07-30T14:48:31+00:00" property="article:modified_time"/>
-<meta content="SOV-Space 5D — UE5 representation. A sovereign, audit-grade CSOAI surface: measurement, not certification — every figure traces to a signed, verifiable record." name="description"/>
-<link href="https://www.csoai.org/sov-5d-engine.html" rel="canonical"/>
-<meta content="SOV-Space 5D — UE5 representation" property="og:title"/>
-<meta content="SOV-Space 5D — UE5 representation. A sovereign, audit-grade CSOAI surface: measurement, not certification — every figure traces to a signed, verifiable record." property="og:description"/>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"SOV-Space 5D \u2014 UE5 representation","url":"https://www.csoai.org/sov-5d-engine.html","publisher":{"@type":"Organization","name":"CSOAI Ltd","url":"https://csoai.org"}}</script>
+<meta content="council-Space 5D — UE5 representation. A neutral, audit-grade CSOAI surface: measurement, not certification — every figure traces to a signed, verifiable record." name="description"/>
+<link href="https://www.csoai.org/council-5d-engine.html" rel="canonical"/>
+<meta content="council-Space 5D — UE5 representation" property="og:title"/>
+<meta content="council-Space 5D — UE5 representation. A neutral, audit-grade CSOAI surface: measurement, not certification — every figure traces to a signed, verifiable record." property="og:description"/>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"council-Space 5D \u2014 UE5 representation","url":"https://www.csoai.org/council-5d-engine.html","publisher":{"@type":"Organization","name":"CSOAI Ltd","url":"https://csoai.org"}}</script>
 </head>
 <body>
 <header>
-<h1>SOV-SPACE 5D</h1>
+<h1>council-SPACE 5D</h1>
 <span class="subtitle">UE5 engine · 5 axes (x=lng, y=lat, z=water→milk→honey, t=ledger, C=lens)</span>
 <nav class="links">
-<a href="/sov-three-eyes.html">three-eye view →</a>
-<a href="/sov_space_visual.html">particle field →</a>
-<a href="/sov-sync-proof.html">live sync →</a>
+<a href="/council-three-eyes.html">three-eye view →</a>
+<a href="/council-space-visual.html">particle field →</a>
+<a href="/council-sync-proof.html">live sync →</a>
 </nav>
 </header>
 <main>
@@ -183,7 +183,7 @@
 async function bootCesium() {
   let cesiumReady = false;
   try {
-    const data = await fetch('sov-5d-points.json?ts=' + Date.now()).then(r => r.json());
+    const data = await fetch('council-5d-points.json?ts=' + Date.now()).then(r => r.json());
     document.getElementById('cesiumMeta').textContent = `${data.n_points} 5D points · hash ${data.ledger_hash}`;
 
     const viewer = new Cesium.Viewer('cesium', {
@@ -230,7 +230,7 @@ async function bootCesium() {
       `${data.n_points} 5D points · hash ${data.ledger_hash} · ${data.n_events} events`;
   } catch (e) {
     document.getElementById('cesium').innerHTML =
-      `<div style="padding:20px;color:#D29922;font-family:monospace;font-size:0.75rem">Cesium failed to load: ${e.message}<br/>The 5D points JSON is at <a href="sov-5d-points.json" style="color:#2F81F7">sov-5d-points.json</a></div>`;
+      `<div style="padding:20px;color:#D29922;font-family:monospace;font-size:0.75rem">Cesium failed to load: ${e.message}<br/>The 5D points JSON is at <a href="council-5d-points.json" style="color:#2F81F7">council-5d-points.json</a></div>`;
   }
 }
 bootCesium();
@@ -239,8 +239,8 @@ bootCesium();
 async function loadJCards() {
   try {
     const [data, summary] = await Promise.all([
-      fetch('sov-5d-points.json?ts=' + Date.now()).then(r => r.json()),
-      fetch('sov-sync-summary.json?ts=' + Date.now()).then(r => r.json()).catch(() => ({events: 0})),
+      fetch('council-5d-points.json?ts=' + Date.now()).then(r => r.json()),
+      fetch('council-sync-summary.json?ts=' + Date.now()).then(r => r.json()).catch(() => ({events: 0})),
     ]);
 
     // j-cards = the points that look like events (have event_id)
@@ -282,7 +282,7 @@ async function loadTimeZooms() {
 
   let html = '<div style="display:grid;grid-template-columns:1fr;gap:6px;height:100%;overflow-y:auto">';
   for (let i = 0; i < zooms.length; i++) {
-    const url = `sov-zoom-${zooms[i]}.svg?window=${windows[i]}&ts=${Date.now()}`;
+    const url = `council-zoom-${zooms[i]}.svg?window=${windows[i]}&ts=${Date.now()}`;
     html += `<div style="background:#050510;border-radius:4px;padding:6px">
       <div style="font-size:0.6rem;color:#6E7681;margin-bottom:4px">${labels[i]} · ${windows[i]}s window</div>
       <object type="image/svg+xml" data="${url}" style="width:100%;height:90px;background:#050510"></object>

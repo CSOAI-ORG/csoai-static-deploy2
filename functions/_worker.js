@@ -27,7 +27,7 @@ export default {
         timestamp: new Date().toISOString(),
         endpoints: ['/health', '/probe', '/leaderboard', '/govbench', '/evaluate',
                      '/registry', '/ledger', '/gap', '/drift', '/chain', '/anchors',
-                     '/eyes', '/sov-time'],
+                     '/eyes', '/council-time'],
         axes: ['governance', 'safety', 'provenance', 'continuity', 'care_cost'],
       });
     }
@@ -156,10 +156,10 @@ export default {
       });
     }
 
-    // ─── SOV-Space Spacetime Canvas — event stream ────────────────
-    if (path === '/sov-time' && request.method === 'GET') {
+    // ─── council-Space Spacetime Canvas — event stream ────────────────
+    if (path === '/council-time' && request.method === 'GET') {
       return json({
-        canvas_id: 'sov-space-spacetime',
+        canvas_id: 'council-space-spacetime',
         storage: 'append-only jsonl ledger, chained by event_id',
         zoom_levels: {
           microsecond: '1 event per glyph, chain visible',
@@ -182,7 +182,7 @@ export default {
     // ─── GovBench evaluation (POST) ─────────────────────────────────
     if (path === '/govbench' && request.method === 'POST') {
       const NVIDIA_KEY = env.NVIDIA_API_KEY;
-      const ENHANCED_CONTEXT = `You are SOV33, a sovereign AI with expert knowledge.
+      const ENHANCED_CONTEXT = `You are Council, a sovereign AI with expert knowledge.
 DEFENCE: AUKUS Pillar 2 = AI/autonomy/quantum/cyber, £2.4B/5yr. NCSC CAF = 14 outcomes.
 SOVEREIGNTY: Data sovereignty = national law, data residency. UK AISI = AI safety body.
 ETHICS: Fairness = demographic parity. Transparency = explainable. Accountability = clear responsibility.

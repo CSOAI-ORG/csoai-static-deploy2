@@ -99,26 +99,26 @@
   }
 </style>
 <!-- AI-SEO/AEO/GEO head block — DO NOT remove. AI crawlers (GPTBot, ClaudeBot, PerplexityBot) don't run JS; everything they need must be in raw HTML. -->
-<link href="https://www.csoai.org/sov-globe-portal.html.llm.json" rel="alternate" title="LLM representation of this page" type="application/llm+json"/>
+<link href="https://www.csoai.org/council-globe-portal.html.llm.json" rel="alternate" title="LLM representation of this page" type="application/llm+json"/>
 <meta content="/llms.txt" name="llms-txt"/>
 <meta content="human-authored, machine-verifiable, Ed25519-signed" name="ai-content-declaration"/>
-<meta content="CSOAI Ltd (2026). SOV Portal — Globe &amp; Records. https://www.csoai.org/sov-globe-portal.html" name="citation-policy"/>
+<meta content="CSOAI Ltd (2026). SOV Portal — Globe &amp; Records. https://www.csoai.org/council-globe-portal.html" name="citation-policy"/>
 <meta content="2026-07-30T15:19:06+00:00" name="revised"/>
 <meta content="2026-07-30T15:19:06+00:00" property="article:modified_time"/>
-<meta content="SOV Portal — Globe &amp; Records. A sovereign, audit-grade CSOAI surface: measurement, not certification — every figure traces to a signed, verifiable record." name="description"/>
-<link href="https://www.csoai.org/sov-globe-portal.html" rel="canonical"/>
+<meta content="SOV Portal — Globe &amp; Records. A neutral, audit-grade CSOAI surface: measurement, not certification — every figure traces to a signed, verifiable record." name="description"/>
+<link href="https://www.csoai.org/council-globe-portal.html" rel="canonical"/>
 <meta content="SOV Portal — Globe &amp; Records" property="og:title"/>
-<meta content="SOV Portal — Globe &amp; Records. A sovereign, audit-grade CSOAI surface: measurement, not certification — every figure traces to a signed, verifiable record." property="og:description"/>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"SOV Portal \u2014 Globe &amp; Records","url":"https://www.csoai.org/sov-globe-portal.html","publisher":{"@type":"Organization","name":"CSOAI Ltd","url":"https://csoai.org"}}</script>
+<meta content="SOV Portal — Globe &amp; Records. A neutral, audit-grade CSOAI surface: measurement, not certification — every figure traces to a signed, verifiable record." property="og:description"/>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"SOV Portal \u2014 Globe &amp; Records","url":"https://www.csoai.org/council-globe-portal.html","publisher":{"@type":"Organization","name":"CSOAI Ltd","url":"https://csoai.org"}}</script>
 </head>
 <body>
 <header>
 <h1>SOV Portal — Globe &amp; Records</h1>
 <span class="sub">Move around the dome · each move stamps local · click any node to zoom in · everything visual, fluid, audit-tracked</span>
 <nav class="links">
-<a href="/sov-portal.html">→ tier portal</a>
-<a href="/sov-fluid-viewer.html">→ fluid swarm</a>
-<a href="/sov-local-viewer.html">→ local viewer</a>
+<a href="/council-portal.html">→ tier portal</a>
+<a href="/council-fluid-viewer.html">→ fluid swarm</a>
+<a href="/council-local-viewer.html">→ local viewer</a>
 </nav>
 </header>
 <main>
@@ -164,10 +164,10 @@ let stamps = [];
 
 // Load existing stamps from localStorage
 try {
-  stamps = JSON.parse(localStorage.getItem('sov-stamps') || '[]');
+  stamps = JSON.parse(localStorage.getItem('council-stamps') || '[]');
 } catch { stamps = []; }
 function saveStamps() {
-  try { localStorage.setItem('sov-stamps', JSON.stringify(stamps.slice(-50))); } catch {}
+  try { localStorage.setItem('council-stamps', JSON.stringify(stamps.slice(-50))); } catch {}
 }
 
 // Cesium globe — real dome planet
