@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🜏 33 Sovereign Clans — Live Fleet · MEOK OS</title>
+<style>
+:root{--bg:#02060f;--panel:#0e1419;--line:#1f2937;--ink:#e5e5e5;--mut:#9aa7b4;--gold:#fbbf24;--green:#10b981;--red:#ef4444;--blue:#60a5fa;--purple:#a855f7}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,system-ui,monospace;background:var(--bg);color:var(--ink);line-height:1.5;padding-bottom:80px}
+.nav{background:rgba(2,6,15,0.95);padding:.75rem 1.2rem;display:flex;gap:.8rem;flex-wrap:wrap;align-items:center;border-bottom:1px solid rgba(251,191,36,0.3);position:sticky;top:0;z-index:10}
+.nav a{color:var(--gold);text-decoration:none;font-size:.85rem}
+.nav .brand{color:var(--gold);font-weight:bold;font-size:1.1rem}
+.hero{padding:2rem 1.5rem 1rem;text-align:center;border-bottom:2px solid var(--purple);background:radial-gradient(ellipse at center,rgba(168,85,247,0.12) 0%,#000 100%)}
+.hero h1{font-size:2.1rem;color:var(--purple);margin-bottom:.3rem}
+.hero .sub{color:var(--mut);font-size:.95rem;max-width:780px;margin:0 auto}
+.container{max-width:1200px;margin:0 auto;padding:1.5rem}
+.section{margin:1.5rem 0}
+.section h2{color:var(--gold);font-size:1.2rem;margin-bottom:.6rem;border-bottom:1px solid var(--line);padding-bottom:.4rem}
+.kpi{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:.6rem;margin:1rem 0}
+.kpi .cell{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:.8rem;text-align:center}
+.kpi .cell .l{color:var(--gold);font-size:.7rem;font-weight:bold;text-transform:uppercase;letter-spacing:1px}
+.kpi .cell .v{color:#fff;font-size:1.5rem;font-weight:bold;margin:.2rem 0;font-family:monospace}
+.clans{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:.6rem;margin:1rem 0}
+.clan{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:.8rem;transition:all .2s}
+.clan:hover{border-color:var(--gold);transform:translateY(-2px)}
+.clan .name{color:var(--blue);font-weight:bold;font-family:monospace;font-size:.82rem;word-break:break-all}
+.clan .role{color:var(--gold);font-size:.7rem;margin:.2rem 0;font-weight:bold;text-transform:uppercase;letter-spacing:1px}
+.clan .desc{color:var(--mut);font-size:.72rem;margin-top:.3rem;line-height:1.5}
+.clan .stats{display:flex;gap:.7rem;margin-top:.4rem;font-size:.7rem;color:var(--mut)}
+.clan .stats span{color:var(--green);font-weight:bold}
+.council{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:.4rem;margin:1rem 0}
+.council-cell{background:#000;border:1px solid var(--line);border-radius:5px;padding:.5rem;text-align:center;font-size:.72rem}
+.council-cell .n{color:var(--gold);font-weight:bold;font-size:.85rem}
+.council-cell .l{color:var(--mut);font-size:.65rem}
+.council-cell.quorum{border-color:var(--green);background:rgba(16,185,129,0.06)}
+.council-cell.bft{border-left:2px solid var(--blue)}
+.council-cell.bft-clan-cited{border-left:2px solid var(--green)}
+.council-cell.bft-clan-csoai-adversarial{border-left:2px solid var(--gold)}
+.council-cell.bft-clan-law-adversarial{border-left:2px solid var(--red)}
+.council-cell.bft-meok-operational{border-left:2px solid var(--purple)}
+.council-cell.bft-sovereignty-evidential{border-left:2px solid var(--orange)}
+.honest{background:rgba(239,68,68,0.05);border:1px solid var(--red);border-radius:8px;padding:1rem;margin:1rem 0;color:var(--red);font-size:.85rem}
+.honest strong{color:#fff}
+.live-status{background:rgba(16,185,129,0.04);border:1px solid var(--green);border-radius:8px;padding:.8rem;margin:1rem 0;font-size:.85rem;color:var(--green)}
+footer{text-align:center;color:var(--mut);padding:1rem;margin-top:1.5rem;border-top:1px solid var(--line);font-size:.75rem}
+</style>
+</head>
+<body>
+<nav class="nav">
+<a class="brand">🐉 MEOK OS</a>
+<a href="/">Home</a>
+<a href="/hub.html">Hub</a>
+<a href="/sovereign-os.html">Sovereign OS</a>
+<a href="/clans.html" style="color:var(--purple)">33 Clans</a>
+<a href="/arena_public.html">Arena</a>
+<a href="/pulse.html">Pulse</a>
+<a href="/mcp-install.html">MCP Install</a>
+<span style="flex:1"></span>
+<a href="/sovereign-journey.html" style="color:var(--purple)">Tour</a>
+</nav>
+
+<section class="hero">
+<h1>🜏 33 Sovereign Clans — Live Fleet</h1>
+<p class="sub">5 lineages × 4 temperature buckets = 20 base voters + 13 reserved seats = 33-clan council. Live arena rounds + signed card ledger.</p>
+</section>
+
+<div class="container">
+
+<section class="section">
+<h2>📊 Council State</h2>
+<div class="kpi" id="kpis">
+<div class="cell"><div class="l">Quorum</div><div class="v">23 / 33</div></div>
+<div class="cell"><div class="l">f_bft</div><div class="v">10</div></div>
+<div class="cell"><div class="l">Live clans</div><div class="v" id="k-active">—</div></div>
+<div class="cell"><div class="l">Active rounds</div><div class="v" id="k-rounds">—</div></div>
+<div class="cell"><div class="l">Agreement</div><div class="v" id="k-agree">—</div></div>
+<div class="cell"><div class="l">Signed cards</div><div class="v" id="k-signed">—</div></div>
+</div>
+
+<div class="live-status">
+<span style="color:var(--mut)">Status: </span><span id="status">Connecting to /api/sov-arena/rounds.jsonl...</span>
+</div>
+</section>
+
+<section class="section">
+<h2>⚔️ Live Fleet Clans (active in arena)</h2>
+<p style="color:var(--mut);font-size:.85rem">Rounds played = how often this clan has appeared in <code>/api/sov-arena/rounds.jsonl</code>. Sorted by activity.</p>
+<div class="clans" id="clans">
+<div style="color:var(--mut)">Loading live data...</div>
+</div>
+</section>
+
+<section class="section">
+<h2>⚖️ 33-Voter Council (BFT-33)</h2>
+<p style="color:var(--mut);font-size:.85rem">5 lineages × 4 temperature buckets = 20 voters + 13 reserved seats = 33 total. Quorum = 23/33. <code>f_bft=(33-1)/3=10</code>.</p>
+<div class="council" id="council"></div>
+</section>
+
+<section class="section">
+<h2>✍️ Signed Card Ledger (live)</h2>
+<p style="color:var(--mut);font-size:.85rem">Every arena round emits a signed card via <code>meok-sovereign-spine-mcp</code>. Each card has a content hash (CID) + Ed25519 sig + pub_key. Verify externally with <code>verify_card(cid)</code>.</p>
+<div id="cards">Loading signed cards from <code>/api/sov-arena/signed.jsonl</code>...</div>
+</section>
+
+<section class="section">
+<div class="honest">
+<strong>⚠ Honest framing:</strong><br>
+• Only <strong>6 fleet clans</strong> currently active (csoai-adversarial, csoai-cited, defoneos-precise, law-adversarial, meok-operational, sovereignty-evidential). The full <strong>33 clans are the BFT council voters</strong>, not all active in arena.<br>
+• Fleet converges at <strong>91% agreement rate</strong> on EU AI Act probes. The 9% dissent is dominated by <strong>human-vs-ai rounds</strong> where humans say NO. We surface dissents, not victories.<br>
+• 400 historical rounds signed + 400/400 verified on pod. Every card is recompute-able from the original payload.<br>
+• "Base Qwen2.5-0.5B beats every sovereign fine-tune on 8/9 measured governance axes" — the value is in the instrument, not the model.
+</div>
+</section>
+
+</div>
+
+<footer>🜏 MEOK OS · 33 Sovereign Clans · CSOAI Ltd (UK 16939677)</footer>
+
+<script>
+(function(){
+  var ARENA = "https://c4e12208.csoai-site.pages.dev/api/sov-arena/rounds.jsonl";
+  var SIGNED = "https://c4e12208.csoai-site.pages.dev/api/sov-arena/signed.jsonl";
+  var CLANS = {
+    "clan-csoai-adversarial:latest":   {role: "EU AI Act adversarial probes",     lineage: "Qwen",  desc: "Pushes the council toward stricter legal compliance via adversarial Article 50 prompts."},
+    "clan-csoai-cited:latest":         {role: "Citation-grounded reasoning",      lineage: "Qwen",  desc: "Anchors verdicts to real EU AI Act + GDPR articles; cites source. Low latency (1-2s)."},
+    "clan-defoneos-precise:latest":     {role: "Defence / precise compliance",       lineage: "Qwen",  desc: "DEFONEOS-bred specialist. Conservative yes/no on regulated entries."},
+    "clan-law-adversarial:latest":      {role: "Law-side adversarial",              lineage: "Qwen",  desc: "Tests whether the council's verdicts survive probing from a counsel-trained adversary."},
+    "clan-meok-operational:latest":     {role: "Operational / runtime fit",        lineage: "Qwen",  desc: "Pragmatic operator lens: does the verdict actually survive deployment in a real SOV arm?"},
+    "clan-sovereignty-evidential:latest":{role: "Sovereignty + evidential",          lineage: "Qwen",  desc: "Demands evidence before agreeing. Slow but right; the witness clan."},
+  };
+  var LINEAGES = ["Qwen","Llama","Mistral","DeepSeek","Gemma"];
+  var TEMPS = [0, 0.3, 0.7, 1];
+  function el(id){ return document.getElementById(id); }
+  function fmt(n){ return n.toLocaleString(); }
+
+  function buildCouncil(){
+    var c = el("council");
+    var html = "";
+    for (var i=0; i<33; i++){
+      var lin = LINEAGES[i%5];
+      var temp = TEMPS[i%4];
+      var cls = "council-cell bft bft-" + lin.toLowerCase();
+      // Highlight known clan names
+      var cls2 = "";
+      if (i === 0) cls2 = "quorum";
+      html += '<div class="' + cls + " " + cls2 + '"><div class="n">#' + String(i+1).padStart(2,"0") + '</div><div class="l">' + lin + ' · T=' + temp + '</div></div>';
+    }
+    c.innerHTML = html;
+  }
+
+  function render(){
+    fetch(ARENA).then(function(r){ return r.text(); }).then(function(txt){
+      var lines = txt.split("\n").filter(function(l){ return l.trim(); });
+      var rounds = [];
+      for (var i=0; i<lines.length; i++){
+        try { rounds.push(JSON.parse(lines[i])); } catch(e){}
+      }
+      var agree = 0;
+      var clans = {};
+      for (var i=0; i<rounds.length; i++){
+        if (rounds[i].agreement) agree++;
+        var l = (rounds[i].left || {}).name, rt = (rounds[i].right || {}).name;
+        if (l && l !== "human") clans[l] = (clans[l] || 0) + 1;
+        if (rt && rt !== "human") clans[rt] = (clans[rt] || 0) + 1;
+      }
+      el("k-active").textContent = Object.keys(clans).length;
+      el("k-rounds").textContent = rounds.length;
+      el("k-agree").textContent = rounds.length ? (agree/rounds.length*100).toFixed(1) + "%" : "—";
+      el("status").textContent = "Live: " + rounds.length + " rounds streaming from /api/sov-arena/rounds.jsonl";
+      var sortedClans = Object.keys(clans).sort(function(a,b){ return clans[b]-clans[a]; });
+      var html = "";
+      for (var i=0; i<sortedClans.length; i++){
+        var name = sortedClans[i];
+        var info = CLANS[name] || {role: "fleet specialist", lineage: "?", desc: "Active clan."};
+        html += '<div class="clan">'
+          + '<div class="name">' + name + '</div>'
+          + '<div class="role">' + info.role + '</div>'
+          + '<div class="desc">' + info.desc + '</div>'
+          + '<div class="stats">rounds: <span>' + clans[name] + '</span> · lineage: <span>' + info.lineage + '</span></div>'
+          + '</div>';
+      }
+      el("clans").innerHTML = html || '<div style="color:var(--mut)">No active clans</div>';
+    }).catch(function(e){
+      el("status").textContent = "Live feed unreachable: " + e.message;
+    });
+
+    // Signed cards
+    fetch(SIGNED).then(function(r){ return r.text(); }).then(function(txt){
+      var lines = txt.split("\n").filter(function(l){ return l.trim(); });
+      var cards = [];
+      for (var i=0; i<lines.length; i++){
+        try { cards.push(JSON.parse(lines[i])); } catch(e){}
+      }
+      el("k-signed").textContent = cards.length;
+      var html = "<div style='background:#000;border:1px solid var(--line);border-radius:8px;padding:.8rem;max-height:300px;overflow-y:auto;font-family:monospace;font-size:.72rem'>";
+      for (var i=Math.max(0, cards.length-10); i<cards.length; i++){
+        var c = cards[i];
+        html += '<div style="padding:.2rem 0;border-bottom:1px solid #111"><span style="color:var(--mut)">' + (c.ts||"").substr(11,8) + '</span> · <span style="color:var(--blue)">' + (c.cid||"").substr(0,32) + '…</span> · <span style="color:var(--green)">' + (c.kind||"?") + '</span></div>';
+      }
+      html += "</div>";
+      el("cards").innerHTML = html;
+    }).catch(function(e){
+      el("cards").innerHTML = '<div style="color:var(--red)">Signed ledger unavailable: ' + e.message + '</div>';
+    });
+  }
+  buildCouncil();
+  render();
+  setInterval(render, 30000);
+})();
+</script>
+
+</body>
+</html>

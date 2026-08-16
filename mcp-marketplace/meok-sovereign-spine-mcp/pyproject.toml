@@ -1,0 +1,16 @@
+[project]
+name = "meok-sovereign-spine-mcp"
+version = "2.0.0"
+description = "Sovereign Spine MCP — RFC 8785 canonical JSON + SHA-256 + Ed25519 signing for 5 card kinds (measurement, arena-round, honey-data, provenance, charter). The signing choke point for the sovereign substrate."
+requires-python = ">=3.10"
+dependencies = ["cryptography>=3.4"]
+authors = [{name = "CSOAI Ltd (UK 16939677)", email = "nicholas@csoai.org"}]
+license = {text = "MIT"}
+
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["meok_sovereign_spine_mcp*"]
