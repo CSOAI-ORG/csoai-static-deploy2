@@ -38,8 +38,8 @@
 - Modelfile MUST have FROM → real dir, TEMPLATE (chat template matching base), PARAMETER stop tokens, sovereign SYSTEM
 - Mini-bench: board_items_govbench.json slice, temperature 0, substring label match
 
-## Next scaling
-1. Graft tokenizer onto the 1.1GB merge → register a 3rd named model
-2. Run full-24-item gov bench on council-safe vs base (formal delta)
-3. Wire council-safe into the arena pick-list as a contestant
-4. If HF token restored: push refusal merge to HF models namespace as public checkpoint
+## Master-harness integration (this session)
+- `sovos_engine` (SOVOS/packages/sovos-engine) now has 15 engines: 14 GSPC axes + **owm** (mined OOWM/OWEM knowledge engine).
+  `python3 -m sovos_engine status owm` / `diagnose owm` report the honest tested-stack register.
+- Tested-stack truth lives in `OWM_TESTED_STACKS` in `sovos_engine/__init__.py` — 6 stacks, 1 real win (JEPA).
+- `master_batch.sh --owm` runs it in the batch cycle.
