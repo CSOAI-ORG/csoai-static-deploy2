@@ -57,3 +57,11 @@ LIVE scoreboard also shows deployed naming-hygiene (columns ethics-v3-light etc.
 - BUT gspc-scoreboard page serves NEW naming (ethics-v3-light etc., no sov6-) -> MIXED/SHALLOW DEPLOY: some files newer, index.html still old.
 - .well-known/agent-card.json URL serves the OLD HTML fallback (SPA-fallback: unknown paths return old index.html) — llms.txt advertises it as A2A card; agents get SEO-poison + non-JSON.
 - ROOT CAUSE: deploy lane pushed a partial/mixed _site; index.html not updated to f/breach-fix-apex-llms-20260816 version. Escalate: full CF Pages deploy of the clean _site REQUIRED (project csoai-site) — apex breach is live-public-facing today.
+
+## AGENT-DISCOVERY TEST PASS 2026-08-16 (browser, .well-known chain)
+- security.txt ✅ REAL RFC9116 (Contact/Expires/Canonical, correct)
+- llm-policy.txt ✅ REAL declarative policy (Allow/Disallow, citation format, train-use conditional, rate-limit 10rps)
+- /api/leaderboard ✅ REAL JSON (sov33_small/large + frontier comparisons WITH sources) — but keeps sov33_* codenames live (pre-fix copy)
+- .well-known/llm-manifest.json ❌ serves text/html EMPTY BODY (SPA-fallback stub) — not JSON
+- .well-known/agent-card.json ❌ serves OLD BREACHED homepage HTML (SPA-fallback to old index) — advertised as A2A card in llms.txt; agents get SEO-poison + broken discovery
+VERDICT: llms.txt/llm-policy advertise endpoints that must be JSON — two of five .well-known/API endpoints fail the A2A contract. In-scope for next site pass (post include: fix manifest generation + agent-card to serve real JSON).
