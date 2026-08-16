@@ -1,19 +1,19 @@
 // Vercel serverless — SOV SPACE internal state endpoint
 // GET /api/sov-space-state
 //
-// Returns the current sovereign substrate swarm state — the substrate-side
+// Returns the current Council substrate swarm state — the substrate-side
 // half of the SOV SPACE ↔ J SPACE bridge. Numbers are the canonical
 // substrate counters (33 active agents, 13 model classes, 1Hz SIGIL rate,
 // BFT quorum of 23, 511 OOWM evolution cycles, 251 memory episodes).
 //
 // The 16-dim intuition_state vector is a placeholder for the Mamba-2 SSM
-// hidden state — the actual live vector is produced inside the SOV3
-// substrate (vm 35.242.143.249:3101). When reachable we attempt to fetch
+// hidden state — the actual live vector is produced inside the Council
+// substrate. When reachable we attempt to fetch
 // it; otherwise we emit a deterministic placeholder seeded by the request
 // time so each call still has a unique, honest fingerprint.
 //
 // HMAC sigil: SHA-256 over the canonical JSON of swarm_state, signed with
-// SOV_SPACE_HMAC_SECRET if set, otherwise the sovereign default key.
+// SOV_SPACE_HMAC_SECRET must be set.
 // This sigil is the substrate's signed heartbeat — every consumer can
 // verify it without an Ed25519 roundtrip (free tier) and cross-reference
 // with the SIGIL chain for the Ed25519 receipt (Pro tier).
@@ -24,9 +24,9 @@
 
 const crypto = require('crypto');
 
-const SOV3_URL = process.env.SOV3_URL || 'http://35.242.143.249:3101/mcp';
-const HMAC_SECRET = process.env.SOV_SPACE_HMAC_SECRET
-  || 'csoai-sov-space-default-2026-sovereign-hmac';
+const SUBSTRATE_URL = process.env.SOV_SPACE_URL || 'https://csoai-gspc-mcp.nicholastempleman.workers.dev/mcp';
+const HMAC_SECRET = process.env.SOV_SPACE_HMAC_SECRET;
+if (!HMAC_SECRET) throw new Error('SOV_SPACE_HMAC_SECRET not set — refusing to sign with a default.');
 
 // Deterministic 16-dim placeholder seeded by current minute — gives every
 // call a fresh fingerprint while remaining obviously synthetic if not
@@ -47,7 +47,7 @@ function placeholderIntuitionState(seed = Date.now()) {
 async function fetchLiveIntuition(timeoutMs = 1200) {
   return new Promise((resolve) => {
     try {
-      const url = new URL(SOV3_URL);
+      const url = new URL(SUBSTRATE_URL);
       const req = require('http').request({
         host: url.hostname,
         port: url.port || 80,
@@ -96,7 +96,7 @@ module.exports = async function handler(req, res) {
       const parsed = JSON.parse(live.data);
       if (parsed?.result?.state && Array.isArray(parsed.result.state) && parsed.result.state.length === 16) {
         intuition_state = parsed.result.state.map((v) => Number(Number(v).toFixed(6)));
-        intuition_source = 'sov3-substrate-live';
+        intuition_source = 'substrate-live';
         substrate_reachable = true;
       }
     } catch {/* fall through to placeholder */}
@@ -125,10 +125,10 @@ module.exports = async function handler(req, res) {
     space: 'SOV_SPACE',
     role: 'substrate-internal-state',
     substrate_reachable,
-    substrate_url: substrate_reachable ? SOV3_URL : null,
+    substrate_url: substrate_reachable ? SUBSTRATE_URL : null,
     swarm_state: { ...swarm_state, sigil },
     note: substrate_reachable
-      ? 'Live substrate readout — intuition vector pulled from SOV3 intuition_status().'
-      : 'Substrate not reached from this serverless function. Intuition vector is a deterministic minute-seeded placeholder — the real vector lives on the SOV3 VM (35.242.143.249:3101) and is fetched via /mcp from the Mac-side runtime.',
+      ? 'Live substrate readout — intuition vector pulled from substrate intuition_status().'
+      : 'Substrate not reached from this serverless function. Intuition vector is a deterministic minute-seeded placeholder.',
   });
 };
