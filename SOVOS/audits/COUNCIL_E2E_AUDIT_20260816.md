@@ -51,3 +51,9 @@ LIVE deployed scoreboard gov row: best = phi4:14b @ 0.722 (n=237, ✓signed) —
 Pod board_gov.json on disk: best = sov6-embodiment-v3-light @ 0.7004 — STALE vs deployed page (file predates phi4 run).
 VERDICT: live deployed page = register of record (phi4:14b gov). board_gov.json on pod = stale cache; re-sync from signing chain (fleet cards, signed=True, source A100-2.pod). Buyers/regulators verify against the deployed artifact.
 LIVE scoreboard also shows deployed naming-hygiene (columns ethics-v3-light etc., no sov6- prefix) — estate-wide naming fix confirmed live.
+
+## LIVE-EDGE FINDING 2026-08-16 (browser, fresh edges)
+- apex https://csoai.org/ AND https://www.csoai.org/ serve OLD breached homepage: title "CSOAI · Sovereign AI · Audit-Grade Compliance", "Master Takeover · SOV3 · SOV33 · SOV333", "BFT-33 quorum", "30 sovereign MCPs", "UK-sovereign". >20 lock-words live.
+- BUT gspc-scoreboard page serves NEW naming (ethics-v3-light etc., no sov6-) -> MIXED/SHALLOW DEPLOY: some files newer, index.html still old.
+- .well-known/agent-card.json URL serves the OLD HTML fallback (SPA-fallback: unknown paths return old index.html) — llms.txt advertises it as A2A card; agents get SEO-poison + non-JSON.
+- ROOT CAUSE: deploy lane pushed a partial/mixed _site; index.html not updated to f/breach-fix-apex-llms-20260816 version. Escalate: full CF Pages deploy of the clean _site REQUIRED (project csoai-site) — apex breach is live-public-facing today.
