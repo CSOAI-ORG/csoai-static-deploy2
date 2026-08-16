@@ -37,8 +37,9 @@ run_cards() {
 
 run_owm() {
   echo "--- T2.owm: master harness owm engine status (mined knowledge) ---"
-  cd /workspace/csoai-static-deploy2/SOVOS
-  PYTHONPATH=packages/sovos-engine/src $PY -m sovos_engine status owm 2>&1 | head -6
+  cd /workspace/csoai-static-deploy2/SOVOS 2>/dev/null || cd /workspace/sovos-repo 2>/dev/null || true
+  PYTHONPATH=packages/sovos-engine/src /workspace/sov-governance-venv/bin/python -m sovos_engine status owm 2>/dev/null \
+    || echo "sovos_engine not on pod — owm register is: _alignment/MODEL_ESTATE_CATALOGUE_2026-08-16.md (6 stacks, 1 real win JEPA; merges TIE/under base)"
 }
 
 run_all() { run_bench; run_harvest; run_cards; run_owm; }
