@@ -35,12 +35,19 @@ run_cards() {
   done
 }
 
-run_all() { run_bench; run_harvest; run_cards; }
+run_owm() {
+  echo "--- T2.owm: master harness owm engine status (mined knowledge) ---"
+  cd /workspace/csoai-static-deploy2/SOVOS
+  PYTHONPATH=packages/sovos-engine/src $PY -m sovos_engine status owm 2>&1 | head -6
+}
+
+run_all() { run_bench; run_harvest; run_cards; run_owm; }
 
 case "${1:---all}" in
   --bench) run_bench ;;
   --harvest) run_harvest ;;
   --cards) run_cards ;;
+  --owm) run_owm ;;
   --all|*) run_all ;;
 esac
 echo "=== BATCH COMPLETE $(date -u +%Y-%m-%dT%H:%M:%SZ) ==="
