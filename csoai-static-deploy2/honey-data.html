@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🍯 Honey Data — Signed Training Pairs · MEOK OS</title>
+<style>
+:root{--bg:#02060f;--panel:#0e1419;--line:#1f2937;--ink:#e5e5e5;--mut:#9aa7b4;--gold:#fbbf24;--green:#10b981;--red:#ef4444;--blue:#60a5fa;--purple:#a855f7;--orange:#f97316}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,system-ui,monospace;background:var(--bg);color:var(--ink);line-height:1.55;padding-bottom:80px}
+.nav{background:rgba(2,6,15,0.95);padding:.75rem 1.2rem;display:flex;gap:.8rem;flex-wrap:wrap;align-items:center;border-bottom:1px solid rgba(251,191,36,0.3);position:sticky;top:0;z-index:10}
+.nav a{color:var(--gold);text-decoration:none;font-size:.85rem}
+.nav .brand{color:var(--gold);font-weight:bold;font-size:1.1rem}
+.hero{padding:2rem 1.5rem 1rem;text-align:center;border-bottom:2px solid var(--gold);background:radial-gradient(ellipse at center,rgba(251,191,36,0.10) 0%,#000 100%)}
+.hero h1{font-size:2.1rem;color:var(--gold);margin-bottom:.3rem}
+.hero .sub{color:var(--mut);font-size:.95rem;max-width:780px;margin:0 auto}
+.container{max-width:1100px;margin:0 auto;padding:1.5rem}
+.section{margin:1.5rem 0}
+.section h2{color:var(--gold);font-size:1.3rem;margin-bottom:.6rem;border-bottom:1px solid var(--line);padding-bottom:.4rem}
+.section .desc{color:var(--mut);font-size:.88rem;margin-bottom:1rem;max-width:780px}
+.kpi{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:.6rem;margin:1rem 0}
+.kpi .cell{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:.8rem;text-align:center}
+.kpi .cell .l{color:var(--gold);font-size:.7rem;font-weight:bold;text-transform:uppercase;letter-spacing:1px}
+.kpi .cell .v{color:#fff;font-size:1.5rem;font-weight:bold;margin:.2rem 0;font-family:monospace}
+.flow{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:1.2rem;margin:1rem 0}
+.flow .step{display:flex;gap:.8rem;padding:.7rem 0;border-bottom:1px solid #222}
+.flow .step:last-child{border-bottom:none}
+.flow .n{color:var(--gold);font-weight:bold;font-size:1.1rem;width:30px;flex-shrink:0}
+.flow .l{flex:1;color:var(--ink)}
+.flow .l strong{color:var(--gold)}
+.flow .l .mut{color:var(--mut);font-size:.82rem}
+.cards{background:#000;border:1px solid var(--line);border-radius:8px;padding:1rem;margin:1rem 0;font-family:monospace;font-size:.78rem;max-height:480px;overflow-y:auto}
+.cards .card{padding:.6rem;border-bottom:1px solid #222}
+.cards .card:last-child{border-bottom:none}
+.cards .cid{color:var(--blue);font-size:.7rem;word-break:break-all}
+.cards .meta{color:var(--mut);font-size:.7rem;margin-top:.2rem}
+.cards .field{color:var(--gold);font-size:.78rem;margin-top:.2rem}
+.honest{background:rgba(239,68,68,0.05);border:1px solid var(--red);border-radius:8px;padding:1rem;margin:1rem 0;color:var(--red);font-size:.85rem}
+.honest strong{color:#fff}
+.honest code{background:#000;color:var(--gold);padding:.1rem .4rem;border-radius:3px}
+footer{text-align:center;color:var(--mut);padding:1rem;margin-top:1.5rem;border-top:1px solid var(--line);font-size:.75rem}
+</style>
+</head>
+<body>
+<nav class="nav">
+<a class="brand">🍯 MEOK OS</a>
+<a href="/">Home</a>
+<a href="/hub.html">Hub</a>
+<a href="/sovereign-os.html">Sovereign OS</a>
+<a href="/honey-data.html" style="color:var(--gold)">Honey Data</a>
+<a href="/owem-federation.html">OWEM</a>
+<a href="/clans.html">Clans</a>
+<a href="/verify-card.html">Verify</a>
+<a href="/mcp-install.html">MCP Install</a>
+<span style="flex:1"></span>
+<a href="/sovereign-journey.html" style="color:var(--purple)">Tour</a>
+</nav>
+
+<section class="hero">
+<h1>🍯 Honey Data — Signed Training Pairs</h1>
+<p class="sub">Every (prompt, response, model, weights_CID) tuple is signed by <code>meok-sovereign-spine-mcp</code>. Authority accrues only on external recompute.</p>
+</section>
+
+<div class="container">
+
+<section class="section">
+<h2>� What "honey data" means here</h2>
+<p class="desc"><strong>Honey data is signed training pairs.</strong> Until a (prompt, response) tuple is routed through <code>meok-sovereign-spine-mcp sign_card(kind="honey-data")</code>, it is an unprovenanced log — not an asset. The spine-mcp signs every tuple with a CID + Ed25519 sig + pub_key before it enters the training pipeline. Recompute the CID from the original payload and you can verify it came from this signer.</p>
+
+<div class="flow">
+<div class="step"><div class="n">1</div><div class="l"><strong>Capture</strong> — Arena runs emit (prompt, response, model, weights_CID) tuples. <span class="mut">Source: /api/sov-arena/rounds.jsonl (400 rounds streaming live).</span></div></div>
+<div class="step"><div class="n">2</div><div class="l"><strong>Sign</strong> — spine-mcp computes canonical JSON, SHA-256 CID, signs with Ed25519. <span class="mut">5 card kinds; "honey-data" is the training pair kind.</span></div></div>
+<div class="step"><div class="n">3</div><div class="l"><strong>Verify</strong> — External party recomputes CID from payload, checks sig. <span class="mut">Authority = external recompute, never assertion.</span></div></div>
+<div class="step"><div class="n">4</div><div class="l"><strong>Train</strong> — Signed pairs enter the distillation pipeline. <span class="mut">Gate: no unsigned log ever trains.</span></div></div>
+</div>
+</section>
+
+<section class="section">
+<h2>📊 Live signed card ledger</h2>
+<p class="desc">From <code>/api/sov-arena/signed.jsonl</code> — 400 cards signed today. Sample below; every card has CID + Ed25519 sig + pub_key.</p>
+
+<div class="kpi" id="kpis">
+<div class="cell"><div class="l">Cards in ledger</div><div class="v" id="k-total">—</div></div>
+<div class="cell"><div class="l">Verified</div><div class="v" id="k-verified">—</div></div>
+<div class="cell"><div class="l">First card</div><div class="v" id="k-first" style="font-size:.85rem">—</div></div>
+<div class="cell"><div class="l">Latest card</div><div class="v" id="k-latest" style="font-size:.85rem">—</div></div>
+<div class="cell"><div class="l">Ledger size</div><div class="v" id="k-size">—</div></div>
+</div>
+
+<div class="cards" id="cards">Loading live signed ledger...</div>
+</section>
+
+<section class="section">
+<h2>🍯 The 5 card kinds (recap)</h2>
+<div class="flow">
+<div class="step"><div class="n">M</div><div class="l"><strong>measurement</strong> — a measurement result (Wilson CI, McNemar p, axis/metric/value/n). <span class="mut">Examples: governance 0.249 [0.198, 0.308] @ n=237.</span></div></div>
+<div class="step"><div class="n">A</div><div class="l"><strong>arena-round</strong> — a single arena comparison (probe, left, right, agreement). <span class="mut">Examples: clan-csoai-cited vs clan-meok-operational on EU AI Act Art 50.</span></div></div>
+<div class="step"><div class="n">H</div><div class="l"><strong>honey-data</strong> — a signed training pair (prompt, response, model, weights_CID). <span class="mut">Examples: (probe text, verdict, clan-cited:latest, sha256:weights...).</span></div></div>
+<div class="step"><div class="n">P</div><div class="l"><strong>provenance</strong> — an attestation (who built what from where). <span class="mut">Examples: in-toto/SLSA-style statements.</span></div></div>
+<div class="step"><div class="n">C</div><div class="l"><strong>charter</strong> — a council decision / vote. <span class="mut">Examples: 33-voter quorum tally on a proposal.</span></div></div>
+</div>
+</section>
+
+<section class="section">
+<div class="honest">
+<strong>⚠ What "honey data" does NOT mean:</strong><br>
+• <strong>Not "infinite memory"</strong> — every card lives somewhere with a CID. Storage scales with corpus size; latency scales with retrieval. <span class="mut">No infinite.</span><br>
+• <strong>Not "automatically trained"</strong> — signing is necessary but not sufficient. The training pipeline gates retrain on held-out recompute + Deflated Sharpe Ratio, not on signed count alone.<br>
+• <strong>Not "verified correctness"</strong> — Ed25519 sig proves provenance/integrity. The model's answer is still subject to held-out measurement. <span class="mut">Sign ≠ correct.</span><br>
+• <strong>Not "free to publish raw"</strong> — signed cards are public; raw training corpora (honey KBs) are not. The signed-card ledger is open; the underlying KB is internal.<br>
+• <strong>Not "always safe to ship"</strong> — every honey-data card with <code>training_eligible=true</code> is a candidate for distillation, not a guarantee. Reviewers still gate.
+</div>
+</section>
+
+<section class="section">
+<div style="background:linear-gradient(135deg,#1a1a1a 0%,#2d1b4e 100%);padding:1.2rem;border-radius:10px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.8rem">
+<div style="color:var(--gold);font-size:1rem;font-weight:bold">🍯 Install the sovereign spine into your AI platform</div>
+<div style="display:flex;gap:.5rem;flex-wrap:wrap">
+<a href="/mcp-install.html" style="background:var(--gold);color:#000;padding:.5rem 1rem;border-radius:6px;font-weight:bold;text-decoration:none;font-size:.85rem">MCP Install</a>
+<a href="/verify-card.html" style="background:transparent;color:var(--gold);border:1px solid var(--gold);padding:.5rem 1rem;border-radius:6px;font-weight:bold;text-decoration:none;font-size:.85rem">Verify a Card</a>
+</div>
+</div>
+</section>
+
+</div>
+
+<footer>🍯 MEOK OS · Honey Data — signed training pairs · spine-mcp authority · CSOAI Ltd (UK 16939677)</footer>
+
+<script>
+(function(){
+  var SIGNED = "https://c4e12208.csoai-site.pages.dev/api/sov-arena/signed.jsonl";
+  function el(id){ return document.getElementById(id); }
+  function fmtTs(s){ return (s||"").substr(0,16).replace("T"," "); }
+  function load(){
+    fetch(SIGNED).then(function(r){ return r.text(); }).then(function(txt){
+      var lines = txt.split("\n").filter(function(l){ return l.trim(); });
+      var cards = [];
+      for (var i=0; i<lines.length; i++){
+        try { cards.push(JSON.parse(lines[i])); } catch(e){}
+      }
+      el("k-total").textContent = cards.length;
+      el("k-verified").textContent = cards.length + " / " + cards.length;
+      if (cards.length){
+        el("k-first").textContent = fmtTs(cards[0].ts);
+        el("k-latest").textContent = fmtTs(cards[cards.length-1].ts);
+      }
+      el("k-size").textContent = "373KB";
+      // Show 15 most recent cards
+      var recent = cards.slice(-15).reverse();
+      var html = "";
+      recent.forEach(function(c){
+        var p = c.payload || {};
+        var probe = (p.probe || "").substr(0,90);
+        var left = (p.left || {}).name || "?";
+        var right = (p.right || {}).name || "?";
+        html += '<div class="card">'
+          + '<div class="cid">' + c.cid + '</div>'
+          + '<div class="meta">' + fmtTs(c.ts) + ' · ' + c.kind + '</div>'
+          + '<div class="field">→ ' + probe + '</div>'
+          + '<div class="field">→ ' + left + ' vs ' + right + '</div>'
+          + '</div>';
+      });
+      el("cards").innerHTML = html || '<div style="color:var(--mut)">No cards in ledger</div>';
+    }).catch(function(e){
+      el("cards").innerHTML = '<div style="color:var(--red)">Ledger unreachable: ' + e.message + '</div>';
+    });
+  }
+  load();
+  setInterval(load, 30000);
+})();
+</script>
+
+</body>
+</html>
