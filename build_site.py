@@ -81,6 +81,7 @@ EXTRA_FILES = {
     # index.html for /arena and /gspc-arena — the "hydration crash" observed
     # 2026-08-01 was actually a routing miss, not a JS failure. Adding it here.
     "_redirects",
+    "_headers",
 }
 
 # Never ship, even if an extension rule would otherwise allow it.
