@@ -1,4 +1,4 @@
-// Cloudflare Pages Function — /api/sov-town/state.jsonl
+// Cloudflare Pages Function — /api/council-town/state.jsonl
 // GET — live SOV Town sim state (STAGING, DESIGN-labelled).
 //
 // Source: the MicropolisJ headless engine ticking on oracle-micro-2 every 5 min
@@ -11,7 +11,7 @@
 // live state" rather than rendering a fabricated city. The sim output itself
 // carries "label":"DESIGN".
 //
-// Migrated 2026-08-08 from councilof-ai/functions/api/sov-town/state.jsonl.ts
+// Migrated 2026-08-08 from councilof-ai/functions/api/council-town/state.jsonl.ts
 // to the live apex repo (csoai-static-deploy2). The councilof-ai copy stays
 // as the development source of truth.
 
@@ -41,7 +41,7 @@ export async function onRequestGet({ env }) {
     headers: {
       'content-type': 'application/x-ndjson',
       'cache-control': 'public, max-age=60',
-      'x-sov-town-source': 'oracle-micro-2 micropolisj, 5-min tick, DESIGN LAB',
+      'x-council-town-source': 'oracle-micro-2 micropolisj, 5-min tick, DESIGN LAB',
     },
   });
 }

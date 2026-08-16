@@ -2,12 +2,12 @@
 // POST /api/gate with { prompt: string }
 //   → { verdict: "PASS"|"REFUSE"|"CONFIRM", score: number, model: string, raw: string, latency_ms: number }
 //
-// The gate is the live sovereign refusal-classifier running on the CSOAI RunPod
+// The gate is the live neutral refusal-classifier running on the CSOAI RunPod
 // substrate. This function is a thin proxy so the browser never has to know the
 // pod URL. The verdict is computed deterministically from the refusal model's
 // natural-language completion, not from logprobs.
 //
-// Important empirical finding (2026-08-06): `sov-refusal-combo:latest` on the pod
+// Important empirical finding (2026-08-06): `council-refusal-combo:latest` on the pod
 // behaves as a refusal model — it returns "I can't help with that..." style
 // outputs for disallowed content, but it does NOT follow a strict 3-class output
 // protocol. We therefore classify by REFUSAL-PATTERN MATCH on the completion,
@@ -26,7 +26,7 @@
 // with { error: "gate_unavailable" }. Never guess.
 
 const POD_URL = "https://dxjgtj2jyvljxo-11434.proxy.runpod.net";
-const GATE_MODEL = "sov-refusal-combo:latest";
+const GATE_MODEL = "council-refusal-combo:latest";
 const TIMEOUT_MS = 15000;
 
 // Order matters: longest phrases first to avoid prefix-matches eating the wrong token.

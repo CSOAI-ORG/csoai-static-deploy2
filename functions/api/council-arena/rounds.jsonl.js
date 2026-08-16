@@ -1,9 +1,9 @@
-// Cloudflare Pages Function — /api/sov-arena/rounds.jsonl
+// Cloudflare Pages Function — /api/council-arena/rounds.jsonl
 // GET — live SOV arena evidence (AI-vs-AI / human-vs-AI / team rounds).
 //
 // Source: sov_arena.py on oracle-micro-2 appends every round to
-// /evac-bulk/sov-mac-evac/sov_arena_rounds.jsonl; a Mac-side sync cron tail
-// (sync-sov-arena-kv.sh) pushes the latest window into the SOV_ARENA_STATE KV
+// /evac-bulk/council-mac-evac/sov_arena_rounds.jsonl; a Mac-side sync cron tail
+// (sync-council-arena-kv.sh) pushes the latest window into the SOV_ARENA_STATE KV
 // namespace. This function serves it.
 //
 // Honesty discipline: 503 + plain statement when empty/unbound — a design-lab
@@ -35,7 +35,7 @@ export async function onRequestGet({ env }) {
     headers: {
       'content-type': 'application/x-ndjson',
       'cache-control': 'public, max-age=30',
-      'x-sov-arena-source': 'oracle-micro-2 sov_arena.py, DESIGN LAB',
+      'x-council-arena-source': 'oracle-micro-2 sov_arena.py, DESIGN LAB',
     },
   });
 }

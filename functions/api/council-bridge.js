@@ -1,5 +1,5 @@
 // Cloudflare Pages Function — OpenAI-compatible chat completions bridge
-// POST /api/sov-bridge with OpenAI-format messages
+// POST /api/council-bridge with OpenAI-format messages
 // Routes to Ollama (localhost:11434) or returns a mock response
 
 const OLLAMA_URL = 'http://localhost:11434';
@@ -11,7 +11,7 @@ function mockChatResponse(messages) {
     id: `chatcmpl-mock-${Date.now()}`,
     object: 'chat.completion',
     created: Math.floor(Date.now() / 1000),
-    model: 'sov33-bridge-mock',
+    model: 'Council-bridge-mock',
     choices: [
       {
         index: 0,
@@ -50,7 +50,7 @@ export async function onRequest(context) {
   }
 
   const messages = body.messages || [];
-  const model = body.model || 'sov33-master-v2:latest';
+  const model = body.model || 'Council-master-v2:latest';
   const ollamaUrl = env?.OLLAMA_URL || OLLAMA_URL;
 
   // Try Ollama
@@ -75,7 +75,7 @@ export async function onRequest(context) {
       const reply = data.message?.content || '';
       return new Response(
         JSON.stringify({
-          id: `chatcmpl-sov-${Date.now()}`,
+          id: `chatcmpl-council-${Date.now()}`,
           object: 'chat.completion',
           created: Math.floor(Date.now() / 1000),
           model: data.model || model,

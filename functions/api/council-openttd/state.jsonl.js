@@ -1,12 +1,12 @@
-// Cloudflare Pages Function — /api/sov-openttd/state.jsonl
+// Cloudflare Pages Function — /api/council-openttd/state.jsonl
 // GET — live SOV City / OpenTTD substrate state (STAGING, DESIGN-labelled).
 //
 // Source: the headless OpenTTD 15.3 dedicated server on oracle-micro-2
-// (admin-port 4517), ticked every 60s by ~/sov-openttd/tick_loop.sh.
-// A Mac-side sync cron (sync-sov-openttd-kv.sh) pushes /tmp/sov_openttd_state.jsonl
+// (admin-port 4517), ticked every 60s by ~/council-openttd/tick_loop.sh.
+// A Mac-side sync cron (sync-council-openttd-kv.sh) pushes /tmp/sov_openttd_state.jsonl
 // into the SOV_OPENTTD_STATE KV namespace; this function serves the latest value.
 //
-// Honesty discipline (same as sov-town): if KV is empty or unbound, answer 503
+// Honesty discipline (same as council-town): if KV is empty or unbound, answer 503
 // with a plain statement — a staging lab answers "no live state" rather than
 // rendering a fabricated sim. Output carries "label":"DESIGN".
 
@@ -36,7 +36,7 @@ export async function onRequestGet({ env }) {
     headers: {
       'content-type': 'application/x-ndjson',
       'cache-control': 'public, max-age=60',
-      'x-sov-openttd-source': 'oracle-micro-2 openttd-15.3 admin-port, 60s tick, DESIGN LAB',
+      'x-council-openttd-source': 'oracle-micro-2 openttd-15.3 admin-port, 60s tick, DESIGN LAB',
     },
   });
 }

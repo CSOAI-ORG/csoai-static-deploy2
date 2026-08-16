@@ -1,9 +1,9 @@
-// Cloudflare Pages Function — /api/sov-crdt/latest.json
+// Cloudflare Pages Function — /api/council-crdt/latest.json
 // GET — latest cross-micro convergence digest (CRDT).
 //
 // Source: the Mac-side CRDT heartbeat observer (sov_crdt_heartbeat.py) records
 // per-cycle convergence of the two Oracle micros (independently computed Merkle
-// digests over replicated honey + all three CRDT axioms). sync-sov-crdt-kv.sh
+// digests over replicated honey + all three CRDT axioms). sync-council-crdt-kv.sh
 // pushes the latest record to the SOV_CRDT_STATE KV namespace; this serves it.
 //
 // Honesty discipline: 503 + plain statement on empty/unbound. The digest
@@ -35,7 +35,7 @@ export async function onRequestGet({ env }) {
     headers: {
       'content-type': 'application/json',
       'cache-control': 'public, max-age=30',
-      'x-sov-crdt-source': 'mac observer + oracle-micro/micro-2, DESIGN LAB',
+      'x-council-crdt-source': 'mac observer + oracle-micro/micro-2, DESIGN LAB',
     },
   });
 }

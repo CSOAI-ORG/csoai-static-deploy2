@@ -5,7 +5,7 @@
 let OOWM_SEED = [];  // hydrated from EAT_OWEM KV in onRequest (issue #8: the 14MB literal exceeded the 3MiB worker cap; seed = 75,087 entries at KV key 'owem_seed')
 
 const TASKS = {
-  // v8: OOWM sovereign scoring parity with Python oowm/eat_oowm.py
+  // v8: OOWM neutral scoring parity with Python oowm/eat_oowm.py
   // Receipt shape mirrors the Python eat_score() (score / aligned_source / topic).
   oowm_score: async (env, body) => {
     const topic = (body.topic || '').toString().trim();
@@ -47,7 +47,7 @@ const TASKS = {
   },
   verify: async (env) => {
     // Hit /api/daily-golden on the same deployment
-    const baseUrl = env?.SITE_URL || 'https://csoai-sovereign.pages.dev';
+    const baseUrl = env?.SITE_URL || 'https://csoai-neutral.pages.dev';
     try {
       const r = await fetch(`${baseUrl}/api/daily-golden`, { signal: AbortSignal.timeout(15000) });
       const j = await r.json();
@@ -64,7 +64,7 @@ const TASKS = {
     }
   },
   status: async (env) => {
-    const baseUrl = env?.SITE_URL || 'https://csoai-sovereign.pages.dev';
+    const baseUrl = env?.SITE_URL || 'https://csoai-neutral.pages.dev';
     try {
       const r = await fetch(`${baseUrl}/api/eat-status`, { signal: AbortSignal.timeout(10000) });
       return await r.json();

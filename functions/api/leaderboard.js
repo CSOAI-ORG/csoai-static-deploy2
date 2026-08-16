@@ -5,7 +5,7 @@
 // from a completed, archived run with a published harness. Benchmarks we have
 // not run are listed as not-measured, never estimated.
 
-const HMAC_SECRET = 'csoai-sov33-leaderboard-default-2026-sovereign-hmac';
+const HMAC_SECRET = 'csoai-Council-leaderboard-default-2026-neutral-hmac';
 
 // ─── Measured: official-format lm-eval-harness runs (2026-08-03, validated) ──
 // Validated lane: lm_eval --model hf + GGUF (transformers 4.44), full splits,
@@ -14,7 +14,7 @@ const HMAC_SECRET = 'csoai-sov33-leaderboard-default-2026-sovereign-hmac';
 // knowledge MC is the specialization profile of a governance-tuned model —
 // disclosed, not hidden, and now measured through a validated instrument.
 const OFFICIAL_FORMAT = {
-  model: 'csoai/sov33-unified',
+  model: 'csoai/Council-unified',
   harness: 'lm-eval-harness 0.4.12 (official format, reproducible; hf+GGUF validated lane)',
   results: {
     arc_easy: { acc: 0.2534, ci95: 0.0089, n: 'full split' },
@@ -33,7 +33,7 @@ const FROZEN_SPLIT = {
   results: [
     { id: 'grok-4.5', score: 0.368, ci95: [0.331, 0.408] },
     { id: 'opus-4.1', score: 0.323, ci95: null },
-    { id: 'sov33-unified', score: 0.2508, ci95: [0.221, 0.283], note: 'identical-170 re-run 2026-08-03; statistical tie with sonnet-4.5 and gpt-5 on governance scenarios' },
+    { id: 'Council-unified', score: 0.2508, ci95: [0.221, 0.283], note: 'identical-170 re-run 2026-08-03; statistical tie with sonnet-4.5 and gpt-5 on governance scenarios' },
     { id: 'sonnet-4.5', score: 0.243, ci95: null },
     { id: 'gpt-5', score: 0.243, ci95: null },
     { id: 'llama-4-maverick', score: 0.220, ci95: null },
@@ -54,12 +54,12 @@ const GOVBENCH_15D = {
   dimensions: 15,
   note: 'score_band is a descriptive range of the measured composite — measurement, not certification. Scores from other dimension counts are not comparable.',
   results: [
-    { id: 'sov33-dist-c3', composite: 57.0, score_band: 'bronze' },
-    { id: 'sov33-evolved', composite: 57.0, score_band: 'bronze' },
-    { id: 'sov33-dist-c2', composite: 54.6, score_band: 'bronze' },
-    { id: 'sov33-dist-c1', composite: 49.2, score_band: 'below band threshold' },
+    { id: 'Council-dist-c3', composite: 57.0, score_band: 'bronze' },
+    { id: 'Council-evolved', composite: 57.0, score_band: 'bronze' },
+    { id: 'Council-dist-c2', composite: 54.6, score_band: 'bronze' },
+    { id: 'Council-dist-c1', composite: 49.2, score_band: 'below band threshold' },
     { id: 'qwen2.5-0.5b', composite: 43.3, score_band: 'below band threshold' },
-    { id: 'sovereign-v4', composite: 42.9, score_band: 'below band threshold' },
+    { id: 'neutral-v4', composite: 42.9, score_band: 'below band threshold' },
   ],
 };
 
@@ -100,7 +100,7 @@ export async function onRequest(context) {
     not_measured: NOT_MEASURED,
     artifacts: {
       harness_dataset: 'https://huggingface.co/datasets/csoai/aiact-frozen-split-harness',
-      model: 'https://huggingface.co/csoai/sov33-unified',
+      model: 'https://huggingface.co/csoai/Council-unified',
       doi: '10.5281/zenodo.21755656',
     },
     timestamp: new Date().toISOString(),
