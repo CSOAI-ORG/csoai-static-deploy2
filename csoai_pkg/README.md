@@ -1,5 +1,7 @@
 # csoai
 
+mcp-name: io.github.CSOAI-ORG/gspc
+
 Council of AI — signed, deterministic AI-governance measurement.
 
 The boring CLI is the primary agent rail; the MCP server wraps it; both emit the

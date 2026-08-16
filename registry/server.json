@@ -1,0 +1,23 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "io.github.CSOAI-ORG/gspc",
+  "description": "Council of AI GSPC: measure + verify signed governance credentials.",
+  "repository": {
+    "url": "https://github.com/CSOAI-ORG/csoai-static-deploy2",
+    "source": "github",
+    "subfolder": "workers/csoai-gspc-mcp"
+  },
+  "version": "1.0.0",
+  "packages": [
+    {
+      "registryType": "pypi",
+      "identifier": "csoai",
+      "version": "0.2.0",
+      "transport": {
+        "type": "streamable-http",
+        "url": "https://csoai-gspc-mcp.nicholastempleman.workers.dev/mcp"
+      },
+      "environmentVariables": []
+    }
+  ]
+}
