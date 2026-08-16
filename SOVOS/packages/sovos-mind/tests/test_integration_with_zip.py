@@ -18,12 +18,21 @@ import sys
 from pathlib import Path
 
 # Both packages live alongside. Add both to PYTHONPATH.
-_REPO = Path(__file__).resolve().parent.parent.parent  # SOVOS/
+_REPO = Path(__file__).resolve().parent.parent.parent  # packages/
 sys.path.insert(0, str(_REPO / "src"))  # sync sovos_mind
 sys.path.insert(0, str(_REPO / "vendor" / "sovos-cpo-monorepo"))  # async sovos-cpo
 
+import importlib.util
 import sovos_mind  # sync, our package
-import sovos  # async, the zip package
+
+# async sovos-cpo: load explicitly from the vendored dir — the repo root
+# contains a top-level sovos.py harness that would otherwise shadow the
+# vendored package (namespace collision class). Explicit spec load wins.
+_VENDOR = Path(__file__).resolve().parent.parent / "vendor" / "sovos-cpo-monorepo"
+_spec = importlib.util.spec_from_file_location("sovos", _VENDOR / "sovos" / "__init__.py")
+sovos = importlib.util.module_from_spec(_spec)
+sys.modules['sovos'] = sovos  # register BEFORE exec so sovos.core resolves during __init__
+_spec.loader.exec_module(sovos)
 
 
 # ============================================================================
