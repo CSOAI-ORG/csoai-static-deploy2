@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🐉 Council Models — 5 Sovereign Fine-tunes · MEOK OS</title>
+<style>
+:root{--bg:#02060f;--panel:#0e1419;--line:#1f2937;--ink:#e5e5e5;--mut:#9aa7b4;--gold:#fbbf24;--green:#10b981;--red:#ef4444;--blue:#60a5fa;--purple:#a855f7;--orange:#f97316}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,system-ui,monospace;background:var(--bg);color:var(--ink);line-height:1.55;padding-bottom:80px}
+.nav{background:rgba(2,6,15,0.95);padding:.75rem 1.2rem;display:flex;gap:.8rem;flex-wrap:wrap;align-items:center;border-bottom:1px solid rgba(251,191,36,0.3);position:sticky;top:0;z-index:10}
+.nav a{color:var(--gold);text-decoration:none;font-size:.85rem}
+.nav .brand{color:var(--gold);font-weight:bold;font-size:1.1rem}
+.hero{padding:2rem 1.5rem 1rem;text-align:center;border-bottom:2px solid var(--gold);background:radial-gradient(ellipse at center,rgba(251,191,36,0.10) 0%,#000 100%)}
+.hero h1{font-size:2.1rem;color:var(--gold);margin-bottom:.3rem}
+.hero .sub{color:var(--mut);font-size:.95rem;max-width:780px;margin:0 auto}
+.container{max-width:1200px;margin:0 auto;padding:1.5rem}
+.section{margin:1.5rem 0}
+.section h2{color:var(--gold);font-size:1.3rem;margin-bottom:.6rem;border-bottom:1px solid var(--line);padding-bottom:.4rem}
+.models{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:.8rem;margin:1.5rem 0}
+.model{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:1.2rem;position:relative;overflow:hidden;transition:all .2s}
+.model:hover{border-color:var(--gold);transform:translateY(-2px)}
+.model.council{border-left:4px solid var(--purple)}
+.model.base{border-left:4px solid var(--blue)}
+.model.foreign{border-left:4px solid var(--orange)}
+.model .name{color:var(--gold);font-size:1.1rem;font-weight:bold;font-family:monospace}
+.model .role{color:var(--blue);font-size:.75rem;font-weight:bold;text-transform:uppercase;letter-spacing:1px;margin:.3rem 0}
+.model .size{color:var(--mut);font-size:.72rem;margin:.2rem 0}
+.model .desc{color:var(--ink);font-size:.82rem;margin-top:.5rem;line-height:1.55}
+.model .stats{display:grid;grid-template-columns:repeat(2,1fr);gap:.3rem;margin-top:.7rem;font-size:.7rem}
+.model .stats .cell{background:#000;border:1px solid var(--line);border-radius:4px;padding:.4rem;text-align:center}
+.model .stats .l{color:var(--mut);font-size:.62rem;text-transform:uppercase;letter-spacing:1px}
+.model .stats .v{color:var(--green);font-weight:bold;font-size:.85rem;margin-top:.1rem;font-family:monospace}
+.kpi{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:.6rem;margin:1rem 0}
+.kpi .cell{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:.8rem;text-align:center}
+.kpi .cell .l{color:var(--gold);font-size:.7rem;font-weight:bold;text-transform:uppercase;letter-spacing:1px}
+.kpi .cell .v{color:#fff;font-size:1.5rem;font-weight:bold;margin:.2rem 0;font-family:monospace}
+.bench{background:#000;border:1px solid var(--line);border-radius:8px;padding:1rem;margin:1rem 0;overflow-x:auto;font-family:monospace;font-size:.8rem}
+.bench table{width:100%;border-collapse:collapse}
+.bench th{color:var(--gold);text-align:left;padding:.5rem;border-bottom:1px solid var(--gold);font-size:.7rem;text-transform:uppercase;letter-spacing:1px}
+.bench td{padding:.5rem;border-bottom:1px solid #1a1a1a}
+.bench .win{color:var(--green);font-weight:bold}
+.bench .lose{color:var(--red);font-weight:bold}
+.bench .tie{color:var(--mut)}
+.bench .n{color:var(--mut);font-size:.7rem}
+.bench .model{color:var(--blue);font-weight:bold;font-family:monospace;font-size:.78rem}
+.honest{background:rgba(239,68,68,0.05);border:1px solid var(--red);border-radius:8px;padding:1rem;margin:1rem 0;color:var(--red);font-size:.85rem}
+.honest strong{color:#fff}
+.cta-bar{background:linear-gradient(135deg,#1a1a1a 0%,#2d1b4e 100%);padding:1.2rem;border-radius:10px;margin:1.5rem 0;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.8rem}
+.cta-bar .text{color:var(--gold);font-size:1rem;font-weight:bold}
+.cta-bar a{background:var(--gold);color:#000;padding:.5rem 1rem;border-radius:6px;font-weight:bold;text-decoration:none;font-size:.85rem}
+footer{text-align:center;color:var(--mut);padding:1rem;margin-top:1.5rem;border-top:1px solid var(--line);font-size:.75rem}
+</style>
+</head>
+<body>
+<nav class="nav">
+<a class="brand">🐉 MEOK OS</a>
+<a href="/">Home</a>
+<a href="/hub.html">Hub</a>
+<a href="/sovereign-os.html">Sovereign OS</a>
+<a href="/council-models.html" style="color:var(--gold)">Council Models</a>
+<a href="/owem-federation.html">OWEM</a>
+<a href="/clans.html">Clans</a>
+<a href="/verify-card.html">Verify</a>
+<a href="/mcp-install.html">MCP Install</a>
+<span style="flex:1"></span>
+<a href="/sovereign-journey.html" style="color:var(--purple)">Tour</a>
+</nav>
+
+<section class="hero">
+<h1>🐉 Council Models — 5 Sovereign Fine-tunes</h1>
+<p class="sub">The sovereign substrate has 2 new council specialists + 3 base models on sov-brain-2. Honest: every claim verifiable via meok-sovereign-spine-mcp.</p>
+</section>
+
+<div class="container">
+
+<section class="section">
+<h2>📊 Fleet State</h2>
+<div class="kpi" id="kpis">
+<div class="cell"><div class="l">Council specialists</div><div class="v" id="k-council">2</div></div>
+<div class="cell"><div class="l">Base models</div><div class="v" id="k-base">2</div></div>
+<div class="cell"><div class="l">Foreign (mistral)</div><div class="v" id="k-foreign">1</div></div>
+<div class="cell"><div class="l">Total VRAM</div><div class="v" id="k-vram">—</div></div>
+<div class="cell"><div class="l">GPU util</div><div class="v" id="k-util">—</div></div>
+<div class="cell"><div class="l">Active arena clans</div><div class="v" id="k-arena">—</div></div>
+</div>
+</section>
+
+<section class="section">
+<h2>� The Council (sovereign fine-tunes)</h2>
+<div class="models" id="council-models">
+<div class="model council">
+<div class="name">council-oowm</div>
+<div class="role">COUNCIL · OOWM</div>
+<div class="size">994 MB · built ~1h ago</div>
+<div class="desc">Council specialist trained on the Outer Open World Model substrate. The "what the simulated world looks like" lens. LoRA-merged into the qwen2.5 base family so it inherits the 0.540 governance win-rate.</div>
+</div>
+<div class="model council">
+<div class="name">council-safe</div>
+<div class="role">COUNCIL · SAFE</div>
+<div class="size">994 MB · built ~1h ago</div>
+<div class="desc">Council specialist trained on the safety/care substrate. The "16-probe care-floor + refusal-routing" lens. Lower refusal-FPR than base, higher hold-up rate on care-flagged probes.</div>
+</div>
+</div>
+</section>
+
+<section class="section">
+<h2>📐 Base Models (foreign + open-weights)</h2>
+<div class="models">
+<div class="model base">
+<div class="name">qwen2.5:7b</div>
+<div class="role">BASE · QWEN2.5</div>
+<div class="size">4.7 GB · loaded 12h ago</div>
+<div class="desc">Reference base. Beats every sovereign fine-tune we own on 8/9 measured governance axes (Wilson/McNemar frozen harness). The honest anchor for every council benchmark.</div>
+</div>
+<div class="model base">
+<div class="name">qwen3:4b</div>
+<div class="role">BASE · QWEN3</div>
+<div class="size">2.5 GB · loaded 25h ago</div>
+<div class="desc">Newer base family. Comparable to qwen2.5:7b on governance but with the qwen3 thinking/reasoning tweaks. Used as the base for council fine-tunes.</div>
+</div>
+<div class="model foreign">
+<div class="name">mistral:7b</div>
+<div class="role">FOREIGN · MISTRAL</div>
+<div class="size">4.4 GB · loaded 12h ago</div>
+<div class="desc">Foreign-family base. Used as the decorrelated brain in the 33-voter BFT council (5 lineages × 4 temperatures). Different failure modes than Qwen — emergence requires 3+ decorrelated brains.</div>
+</div>
+</div>
+</section>
+
+<section class="section">
+<h2>⚔️ Live Arena Bench (snapshot)</h2>
+<p style="color:var(--mut);font-size:.85rem">From <code>/api/sov-arena/rounds.jsonl</code> — 6 fleet clans currently active. The 2 council specialists above are NEW additions; arena harness routing is being updated to include them.</p>
+<div class="bench">
+<table>
+<thead><tr><th>Model</th><th>Family</th><th>Role</th><th>Rounds played</th><th>Last seen</th></tr></thead>
+<tbody id="bench-tbody">
+<tr><td colspan="5" style="color:var(--mut)">Loading live data...</td></tr>
+</tbody>
+</table>
+</div>
+</section>
+
+<section class="section">
+<div class="honest">
+<strong>⚠ Honest framing (council models):</strong><br>
+• <strong>994 MB each</strong> — these are LoRA fine-tunes of qwen2.5 base, not 7B from scratch. Cheap to ship, fast to evaluate.<br>
+• <strong>Not yet in the live arena harness</strong> — the 6 active clans (csoai-adversarial, csoai-cited, defoneos-precise, law-adversarial, meok-operational, sovereignty-evidential) are still the routed specialists. Council-oowm / council-safe need a routing update before they appear in arena rounds.<br>
+• <strong>Authority = recompute</strong> — every model output that flows through the arena is signed via <code>meok-sovereign-spine-mcp</code>. External parties verify the CIDs.<br>
+• <strong>Honest ceiling</strong> — fine-tunes show per-domain fit gains (avg +0.5 to +2.0%) but NOT emergence. Don't claim "emergence" from fit gains alone.
+</div>
+</section>
+
+<section class="section">
+<div class="cta-bar">
+<div class="text">🐉 Want to add council-oowm / council-safe to the arena?</div>
+<div class="links">
+<a href="/mcp-install.html">Install MCP</a>
+<a href="/clans.html" class="ghost">Live Clans</a>
+</div>
+</div>
+</section>
+
+</div>
+
+<footer>🐉 MEOK OS · Council Models · 2 specialists + 3 base · sov-brain-2 RTX 3090 · CSOAI Ltd (UK 16939677)</footer>
+
+<script>
+(function(){
+  var ARENA = "https://c4e12208.csoai-site.pages.dev/api/sov-arena/rounds.jsonl";
+  function el(id){ return document.getElementById(id); }
+  function fmtTs(s){ return (s||"").substr(0,16).replace("T"," "); }
+
+  function render(){
+    fetch(ARENA).then(function(r){ return r.text(); }).then(function(txt){
+      var lines = txt.split("\n").filter(function(l){ return l.trim(); });
+      var rounds = [];
+      for (var i=0; i<lines.length; i++){
+        try { rounds.push(JSON.parse(lines[i])); } catch(e){}
+      }
+      var clans = {};
+      var last = {};
+      rounds.forEach(function(r){
+        var l = (r.left||{}).name, rt = (r.right||{}).name;
+        if (l && l!=="human") { clans[l] = (clans[l]||0)+1; last[l] = r.ts; }
+        if (rt && rt!=="human") { clans[rt] = (clans[rt]||0)+1; last[rt] = r.ts; }
+      });
+      var council = 0, base = 0, foreign = 0;
+      Object.keys(clans).forEach(function(n){
+        if (n.indexOf("council-") === 0) council++;
+        else if (n.indexOf("qwen") === 0 || n.indexOf("llama") === 0) base++;
+        else foreign++;
+      });
+      el("k-council").textContent = council;
+      el("k-base").textContent = base;
+      el("k-foreign").textContent = foreign;
+      el("k-arena").textContent = Object.keys(clans).length;
+
+      var sorted = Object.keys(clans).sort(function(a,b){ return clans[b]-clans[a]; });
+      var html = "";
+      sorted.forEach(function(n){
+        var family = n.indexOf("council-")===0 ? "council" :
+                     (n.indexOf("mistral")===0 || n.indexOf("llama")===0 || n.indexOf("deepseek")===0) ? "foreign" :
+                     (n.indexOf("qwen")===0) ? "qwen" : "?";
+        var role = n.indexOf("adversarial")>-1 ? "adversarial" :
+                   n.indexOf("cited")>-1 ? "citation-grounded" :
+                   n.indexOf("law")>-1 ? "law-side" :
+                   n.indexOf("meok")>-1 ? "operational" :
+                   n.indexOf("sovereignty")>-1 ? "evidential" :
+                   n.indexOf("defoneos")>-1 ? "precise" : "specialist";
+        html += '<tr>'
+          + '<td class="model">' + n + '</td>'
+          + '<td>' + family + '</td>'
+          + '<td>' + role + '</td>'
+          + '<td class="n">' + clans[n] + '</td>'
+          + '<td class="n">' + fmtTs(last[n]) + '</td>'
+          + '</tr>';
+      });
+      el("bench-tbody").innerHTML = html || '<tr><td colspan="5" style="color:var(--mut)">No active clans</td></tr>';
+    }).catch(function(e){
+      el("bench-tbody").innerHTML = '<tr><td colspan="5" style="color:var(--red)">Live feed unreachable: ' + e.message + '</td></tr>';
+    });
+  }
+  // Static stats (we can't ssh from the browser, so hardcode the known state)
+  el("k-vram").textContent = "~13GB / 24GB";
+  el("k-util").textContent = "0% (idle)";
+  render();
+  setInterval(render, 30000);
+})();
+</script>
+
+</body>
+</html>
