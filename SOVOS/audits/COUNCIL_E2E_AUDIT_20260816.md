@@ -35,3 +35,12 @@ git rebase origin/jv-wave8-production           # ensure clean against latest
 python3 build_site.py                           # assemble _site
 npx wrangler pages deploy _site --project-name csoai-site
 # then verify live: curl csoai.org | grep -ci sovereign  -> 0
+
+## EAT-ALL CLOSE-OUT 2026-08-16 EVENING
+- Branch f/breach-fix-apex-llms-20260816 now carries FULL estate hygiene: 5 crawl files + scoreboard rename + sov-space worker + tier1+tier2 file renames (36) + api routes (4) + 262-file source sweep. Pushed (23bfe1cd).
+- Rebuilt _site: 0 engine codenames, 0 sovereign breaches, crawl-priority 0 locks.
+- micro2 disk: 89% -> 86% (caches reclaimed; weights untouched — measurement targets stay).
+- GSPC MCP + city-3d MCP: both HTTP 200 live; tools measure/verify; NOT-certificate language intact.
+- Register: gov= sov6-embodiment 0.7004 (tied aesthetics), care= sov6-ethics 0.535, art5= sov6-relationality 0.9722 (tied gemma3). NOTE: every board cell signed=None — per-cell sigil metadata missing in board JSON (scoreboard renders sigil marks; register gap to reconcile).
+- Directive canon committed: SOVOS/business/SOVOS-BUSINESS-DIRECTIVE-2026-08-16.md.
+- Owner queue #1: arXiv code G6Y9SY — HARD 27 AUG. Tonight 3 one-clickers: arXiv, CF AI-bot toggle, gdrive reconnect.
