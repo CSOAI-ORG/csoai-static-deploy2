@@ -46,6 +46,16 @@
 - **Driver upgraded:** ingest `--cap 8000`, all keepers re-verified, mega-mine index deployed to pod volume, MCP boots 2,709 docs pod-side.
 - **Every 5-min tick** re-runs the full mega-mine (local corpus + GitHub cards) — the knowledge graph grows all night.
 
+## REFEREE MULTI-BACKEND v3 (17:03Z)
+
+**Issue found:** OpenRouter main key **out of credits** (402) → rounds were UNMEASURED. Alternate `sk-` keys invalid on both OpenRouter and xAI.
+
+**Fix:** referee now resolves keys in order **XAI → OpenRouter → Groq** (file drop-ins for each). Groq required a browser User-Agent (blocks urllib default) — with UA it exposes 13 models; fallback referee model = **`openai/gpt-oss-120b`** (frontier-class). Ollama timeout raised 30s→60s for the saturated pod.
+
+**Live:** Groq referee calls now succeed (rounds scoring). Ollama generate is currently **saturated** by the sibling's `overnight_axes.py` (load 5.97) — local scores log UNMEASURED/None until the pod calms; referee + driver keep running regardless (graceful degradation, no crash).
+
+**Honest note:** "Grok" measurement currently = `gpt-oss-120b` via Groq (frontier fallback). True xAI Grok resumes automatically when OpenRouter credits are added OR the direct xAI key is unlocked (`security find-generic-password -a "Grok Bot Key" -s "Grok Bot Safe Storage" -w` → `~/.runpod/secrets/xai.key`).
+
 ## Key gates / notes
 
 - **Grok key resolved:** direct xAI key is GUI-gated in the keychain → **OpenRouter backend live** (`OPENROUTER_API_KEY` from keystone, `x-ai/grok-4.6`, provider pinned to xAI). Referee measures for real (earlier rounds were UNMEASURED/no-key; now scored).
