@@ -12,7 +12,7 @@ python3 verify_offline.py --card <card.json>
 Recomputes the content id, checks the Ed25519 signature, walks the chain. VALID or the specific mismatch. Tamper any field → fails.
 
 ## Measure a system (remote MCP)
-Endpoint: `https://csoai-gspc-mcp.nicholas templeman.workers.dev/mcp` (streamable HTTP). Tools: `measure(model, axes)` → signed card; `verify(card)` → verdict. Unmeasured axes return UNMEASURED — never interpolated.
+Endpoint: `https://csoai-gspc-mcp.nicholastempleman.workers.dev/mcp` (streamable HTTP). Tools: `measure(model, axes)` → signed card; `verify(card)` → verdict. Unmeasured axes return UNMEASURED — never interpolated.
 
 ## Rules
 - Cards are measurements, not certifications. Say "measured," never "certified."
