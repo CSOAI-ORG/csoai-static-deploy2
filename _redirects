@@ -39,3 +39,7 @@
 # and /prv natively (same as /master and /provbench). No _redirect rule is
 # needed — and the previous 301-to-.html rule created an infinite loop
 # (301 → .html → 308 back → 301). Removed 2026-08-08.
+
+# 17 Aug 2026 — one public desk. Do not keep a second price table.
+/pricing   https://councilof.ai/pricing   308
+/pricing/  https://councilof.ai/pricing/  308
