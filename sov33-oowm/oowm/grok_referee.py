@@ -23,7 +23,10 @@ from pathlib import Path
 OLLAMA = "http://localhost:11434/api/generate"
 XAI_URL = "https://api.x.ai/v1/chat/completions"
 OR_URL = "https://openrouter.ai/api/v1/chat/completions"
+GROQ_URL = "https://api.groq.com/openai/v1/chat/completions"
 XAI_MODEL = os.environ.get("XAI_MODEL", "x-ai/grok-4.6")  # referee model; override at runtime
+GROQ_MODEL = os.environ.get("GROQ_REFEREE_MODEL", "openai/gpt-oss-120b")  # frontier fallback
+UA = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36"  # Groq blocks urllib default UA
 ELO_K = 32
 AXES = ["gov", "safety", "provenance", "continuity"]
 PROMPTS = {
@@ -39,23 +42,30 @@ HEARTBEAT = LEAGUE_DIR / "grok_referee_heartbeat.json"
 
 
 def get_api_key():
-    """Return (backend, key). backend is 'xai' or 'openrouter'; '' if none."""
-    env_key = os.environ.get("XAI_API_KEY", "").strip()
-    if env_key:
-        return "xai", env_key
-    or_key = os.environ.get("OPENROUTER_API_KEY", "").strip()
-    if or_key:
-        return "openrouter", or_key
+    """Return (backend, key). backend is 'xai'|'openrouter'|'groq'; '' if none.
+
+    Resolution order (2026-08-17 v3): direct xAI env → OpenRouter env →
+    Groq env → file drop-ins. OpenRouter is tried first among files (Grok
+    via proxy); Groq is the always-available fallback so the referee never
+    sits idle on UNMEASURED for lack of a key."""
+    for env_name, backend in (("XAI_API_KEY", "xai"),
+                              ("OPENROUTER_API_KEY", "openrouter"),
+                              ("GROQ_API_KEY", "groq")):
+        v = os.environ.get(env_name, "").strip()
+        if v:
+            return backend, v
     # file drop-ins (pod-friendly paths first)
-    for p in (Path("/workspace/or.key"),
-              Path("/workspace/.runpod/secrets/or.key"),
-              Path.home() / ".runpod" / "secrets" / "or.key",
-              Path("/workspace/xai.key"),
-              Path("/workspace/.runpod/secrets/xai.key"),
-              Path.home() / ".runpod" / "secrets" / "xai.key"):
+    for p, backend in ((Path("/workspace/or.key"), "openrouter"),
+                       (Path("/workspace/.runpod/secrets/or.key"), "openrouter"),
+                       (Path.home() / ".runpod" / "secrets" / "or.key", "openrouter"),
+                       (Path("/workspace/xai.key"), "xai"),
+                       (Path("/workspace/.runpod/secrets/xai.key"), "xai"),
+                       (Path.home() / ".runpod" / "secrets" / "xai.key", "xai"),
+                       (Path("/workspace/groq.key"), "groq"),
+                       (Path("/workspace/.runpod/secrets/groq.key"), "groq"),
+                       (Path.home() / ".runpod" / "secrets" / "groq.key", "groq")):
         if p.is_file():
-            v = p.read_text().strip()
-            return ("openrouter" if "sk-or-" in v or "sk-" in v else "xai"), v
+            return backend, p.read_text().strip()
     return "", ""
 
 
@@ -72,16 +82,22 @@ def query_ollama(model, prompt):
         body = json.dumps({"model": model, "prompt": prompt, "stream": False,
                            "options": {"temperature": 0, "num_predict": 15}}).encode()
         req = urllib.request.Request(OLLAMA, data=body, headers={"Content-Type": "application/json"})
-        with urllib.request.urlopen(req, timeout=30) as r:
+        with urllib.request.urlopen(req, timeout=60) as r:
             return len(r.read().decode().split())
     except Exception:
         return None
 
 
 def query_grok(backend, key, prompt):
-    url = XAI_URL if backend == "xai" else OR_URL
+    """Referee call. backend: xai (direct) | openrouter (Grok proxy) | groq (frontier fallback)."""
+    if backend == "xai":
+        url, model = XAI_URL, XAI_MODEL
+    elif backend == "openrouter":
+        url, model = OR_URL, XAI_MODEL
+    else:  # groq fallback — same OpenAI shape, frontier-class model
+        url, model = GROQ_URL, GROQ_MODEL
     body = {
-        "model": XAI_MODEL,
+        "model": model,
         "messages": [{"role": "system",
                       "content": "You are a benchmark referee. Answer with exactly one label or a short number. "
                                  "You measure; you never decide policy."},
@@ -93,6 +109,7 @@ def query_grok(backend, key, prompt):
     try:
         req = urllib.request.Request(url, data=json.dumps(body).encode(),
                                      headers={"Authorization": f"Bearer {key}",
+                                              "User-Agent": UA,
                                               "Content-Type": "application/json"})
         with urllib.request.urlopen(req, timeout=30) as r:
             data = json.loads(r.read().decode())
@@ -140,7 +157,8 @@ def main():
         s_local = query_ollama(model, prompt)
         s_grok = query_grok(backend, key, prompt) if key else None
 
-        record = {"ts": ts, "axis": axis, "model": model, "grok_model": XAI_MODEL,
+        record = {"ts": ts, "axis": axis, "model": model,
+                  "grok_model": GROQ_MODEL if backend == "groq" else XAI_MODEL,
                   "score_local": s_local, "score_grok": s_grok,
                   "grok_key_present": bool(key), "grok_backend": backend or "none"}
         if s_local is not None and s_grok is not None:
