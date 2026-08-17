@@ -1,12 +1,18 @@
 """SOV3³ OOWM MCP Server — local stdio MCP exposing the knowledge graph + brains + bridges."""
 import sys, json
+from pathlib import Path
 sys.path.insert(0, '.')
 from oowm.knowledge import OOWMIndex
 from oowm.brains import BRAINS, list_brains, get_brain
 from oowm.bridges import BRIDGES, list_bridges, get_bridge
 
-# Bootstrap a tiny in-memory index for the demo
-INDEX = OOWMIndex()
+# Estate-mine index first (persistent, learned from verified estate).
+# Falls back to the 17-doc seed when the mine has not been ingested yet.
+MINE_INDEX = Path(__file__).resolve().parent / "index" / "estate_mine_index.json"
+if MINE_INDEX.is_file():
+    INDEX = OOWMIndex.load(MINE_INDEX)
+else:
+    INDEX = OOWMIndex()
 SEED = [
     ("/crown_jewels/temm1e", "crown_jewels", "TEMM1E autonomous agent Rust 160K lines 2889 tests OOWM sovereign"),
     ("/crown_jewels/agent-village", "crown_jewels", "Agent village civilization simulation 47 agents economy democracy crime art"),

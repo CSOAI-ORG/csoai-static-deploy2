@@ -1,4 +1,11 @@
-"""OOWM knowledge graph — local-only TF-IDF index over all sovereign knowledge."""
+"""OOWM knowledge graph — local-only TF-IDF index over all sovereign knowledge.
+
+Estate-mine extension (2026-08-17, JEEVES): the index is now persistent.
+`save(path)` writes the mined corpus to JSON so the MCP server boots from the
+estate mine, not the 17-doc seed. `load(path)` restores it. Sources use the
+mine's verified surface names (honest_mine, estate_mine, sovos_package,
+llm_json, sovereign_os) so every query result traces to a mined artifact.
+"""
 import os, re, json, hashlib, math
 from pathlib import Path
 from collections import Counter, defaultdict
@@ -71,3 +78,36 @@ class OOWMIndex:
             "total_tokens": sum(len(d["tokens"]) for d in self.docs),
             "built_at": self.built_at
         }
+
+    # ---- estate-mine persistence (added 2026-08-17) ----
+    def to_dict(self):
+        """Serialize the index (text only; tokens/tf rebuilt on load)."""
+        return {
+            "schema": "oowm-knowledge-index/v2",
+            "built_at": self.built_at,
+            "docs": [{"path": d["path"], "source": d["source"], "text": d["text"]} for d in self.docs],
+        }
+
+    def save(self, path):
+        Path(path).write_text(json.dumps(self.to_dict(), indent=2))
+
+    @classmethod
+    def load(cls, path):
+        """Restore an index saved with save(); rebuilds TF-IDF from text."""
+        data = json.loads(Path(path).read_text())
+        ix = cls()
+        for d in data.get("docs", []):
+            ix.add_doc(d["path"], d.get("source", "mine"), d.get("text", ""))
+        ix.build_tfidf()
+        ix.built_at = data.get("built_at", ix.built_at)
+        return ix
+
+    def add_many(self, items, cap=2000):
+        """Bulk-add (path, source, text) triples with a hard cap (memory-safe)."""
+        added = 0
+        for path, source, text in items:
+            if added >= cap:
+                break
+            self.add_doc(path, source, text)
+            added += 1
+        return added
