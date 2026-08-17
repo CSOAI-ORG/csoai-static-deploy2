@@ -3,195 +3,68 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<meta name="description" content="CSOAI · audit-grade AI compliance & governance — EU AI Act Article 50 kits, the Council, and the MCP compliance stack. Sovereigned by design — audit-grade, signed, neutral." />
-<meta name="author" content="CSOAI LTD (16939677)" />
-<meta name="theme-color" content="#0a1f3a" />
-<title>CSOAI · Audit-Grade Compliance</title>
+<meta name="description" content="Council of AI measures AI behaviour, signs the evidence, and lets anyone check. Verified measurement credential. Not a certification." />
+<title>Council of AI — we measure, we sign, we re-attest</title>
 <link rel="canonical" href="https://csoai.org" />
-<link rel="stylesheet" href="sovereign-2026.css" />
-<meta property="og:title" content="CSOAI · Audit-Grade Compliance" />
-<meta property="og:description" content="EU AI Act Article 50 kits, the Council, and the MCP compliance stack. Sovereigned by design." />
-<meta property="og:type" content="website" />
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@graph": [
-    {
-      "@type": "Organization",
-      "@id": "https://csoai.org/#org",
-      "name": "CSOAI LTD",
-      "alternateName": "Council of AI",
-      "url": "https://csoai.org",
-      "description": "Independent measurement body for AI governance: 14 measurement axes run across a fleet of open-weight models, every result published as a cryptographically signed, third-party-verifiable measurement card.",
-      "foundingDate": "2026-01-02",
-      "founder": {
-        "@type": "Person",
-        "name": "Nicholas Templeman"
-      },
-      "address": {
-        "@type": "PostalAddress",
-        "streetAddress": "3rd Floor, 86-90 Paul Street",
-        "addressLocality": "London",
-        "postalCode": "EC2A 4NE",
-        "addressCountry": "GB"
-      },
-      "identifier": {
-        "@type": "PropertyValue",
-        "propertyID": "UK Companies House",
-        "value": "16939677"
-      },
-      "sameAs": [
-        "https://councilof.ai",
-        "https://www.linkedin.com/company/csoai/",
-        "https://github.com/CSOAI-ORG",
-        "https://pypi.org/project/csoai/"
-      ]
-    },
-    {
-      "@type": "WebSite",
-      "url": "https://csoai.org",
-      "name": "CSOAI \u2014 Council of AI",
-      "publisher": {
-        "@id": "https://csoai.org/#org"
-      }
-    }
-  ]
-}
-</script>
+<style>
+  :root{--fg:#1a1814;--mut:#5c574e;--bd:#d9d2c5;--bg:#f6f1e8;--acc:#3d5a3a}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--fg);font:17px/1.55 Georgia,serif}
+  a{color:var(--acc)}
+  nav,header,main,footer{max-width:44rem;margin:0 auto;padding:1.2rem 1.4rem}
+  nav{display:flex;flex-wrap:wrap;gap:.8rem 1.2rem;border-bottom:1px solid var(--bd)}
+  .brand{font-weight:700;text-decoration:none;color:var(--fg)}
+  h1{font-size:1.8rem;line-height:1.25;margin:.4rem 0 1rem}
+  .lede{color:var(--mut)}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(9.5rem,1fr));gap:.5rem;margin:1.2rem 0}
+  .slot{border:1px solid var(--bd);padding:.55rem .7rem;font-size:.85rem}
+  .slot strong{display:block}
+  .empty{color:var(--mut);font-style:italic}
+  .cta{display:inline-block;margin:.4rem .4rem 0 0;padding:.45rem .8rem;border:1px solid var(--bd);text-decoration:none}
+  footer{border-top:1px solid var(--bd);color:var(--mut);font-size:.85rem}
+</style>
 </head>
-<body class="bg-grid">
-
-<nav class="nav-sticky">
-  <a href="index.html" class="brand">🜏 CSOAI</a>
-  <div class="nav-links">
-    <a href="#charter">Charter</a>
-    <a href="#council">Council</a>
-    <a href="#sovereign">Sovereign</a>
-    <a href="#mcp">MCP</a>
-    <a href="tools/index.html">Tools</a>
-    <a href="#">Buyer Evidence</a>
-    <a href="audit.html">Audit</a>
-  </div>
+<body>
+<nav>
+  <a class="brand" href="/">Council of AI</a>
+  <a href="/gspc-scoreboard/">Scoreboard</a>
+  <a href="https://councilof.ai/gspc-verify">Verify</a>
+  <a href="https://councilof.ai/gspc-arena">Arena</a>
+  <a href="/paper-district.html">City</a>
 </nav>
-
-<header class="hero glow">
-  <div class="hero-inner">
-    <span class="kicker">CSOAI · UK AI governance</span>
-    <h1>Audit-grade AI,<br/>signed &amp; neutral.</h1>
-    <p class="lede">
-      EU AI Act Article 50 watermarking kits. The Council. The MCP compliance stack.
-      All Charter-anchored, Ed25519-signed, hash-chained, RFC 8032 §7.1 verifiable.
-    </p>
-    <div class="cta-row">
-      <a href="#charter" class="cta primary">Read the Charter</a>
-      <a href="audit.html" class="cta ghost">View live audit trail</a>
-      <a href="#" class="cta ghost">Buyer Evidence</a>
-    </div>
-    <div class="badges">
-      <span class="badge ok">✓ Care Floor 0.95</span>
-      <span class="badge ok">✓ BFT-33 quorum 23/33</span>
-      <span class="badge ok">✓ Charter-anchored</span>
-      <span class="badge ok">✓ UK-sovereign (zero CLOUD Act)</span>
-    </div>
-  </div>
+<header>
+  <h1>We measure. We sign. We re-attest. Everyone can check.</h1>
+  <p class="lede">Independent measurement body for AI behaviour. Signed receipts. Free verification. Not a certification, not a notified body, no money from anything we rank.</p>
+  <p>
+    <a class="cta" href="/gspc-scoreboard/">Signed scoreboard</a>
+    <a class="cta" href="https://councilof.ai/gspc-verify">Verify a card</a>
+  </p>
 </header>
-
 <main>
-
-<section id="charter" class="panel">
-  <h2>The Sovereign Charter</h2>
-  <p>
-    Sixteen articles. Article 0: <em>Care before cleverness.</em>
-    Article 7: <em>No system may claim the identity of its sovereign.</em>
-    Article 12: <em>The Council of Generals is the only legitimate amendment path.</em>
-    Every sovereign action binds to charter SHA-256
-    <code>df65a6585cf6a686cbfd881f56c04447056e2551e7c04db57a80543521022054</code>.
-  </p>
-  <p>
-    <a href="tools/article50-passport.html" class="cta small">Article 50 Passport →</a>
-    <a href="tools/bft-council.html" class="cta small">Council of Generals →</a>
-    <a href="tools/charter-network.html" class="cta small">Charter Network →</a>
-  </p>
-</section>
-
-<section id="council" class="panel">
-  <h2>The Council of Generals</h2>
-  <p>
-    12 Generals × 3 Councils = <strong>33 voting seats</strong>.
-    Byzantine Fault Tolerant. Quorum 23/33.
-    Every sovereign action votes 28 approve / 5 amend / 0 reject.
-    Dissenters are recorded in the <a href="tools/bft-vote-log.html">public minutes</a>.
-    Transparency is the moat.
-  </p>
-</section>
-
-<section id="sovereign" class="panel">
-  <h2>Sovereign by Design</h2>
-  <p>
-    The substrate rides a real trillion-parameter open base
-    (<a href="https://huggingface.co/deepseek-ai">DeepSeek V4-Pro 1.6T base / 862B deployed</a>, MIT).
-    Apache-2.0 Qwen3 experts souped underneath.
-    Governed by care-gate + BFT-33 + SIGIL seam + signed memory + OSCAL.
-    No parameter stack-summing. No fabricated architecture specifics.
-    Every claim verifiable.
-  </p>
-  <p>
-    <a href="#" class="cta small">Capability Matrix →</a>
-    <a href="tools/compliance-heatmap.html" class="cta small">Compliance Heatmap →</a>
-  </p>
-</section>
-
-<section id="mcp" class="panel">
-  <h2>The MCP Compliance Stack</h2>
-  <p>
-    30 sovereign MCPs across 3 trust rings.
-    Ring 0 — Core Sovereign (7 MCPs): sigil, bft, compliance, seal, redteam, escrow, audit.
-    Ring 1 — Defence Sensors (11 MCPs): freetak, sentinel, ais, gdelt, rtsp, yolo, athena, mava, cesium, mqtt, openaq.
-    Ring 2 — Civil (12 MCPs): x402, lightrag, memory-v2, forecast, gem, and 7 more.
-  </p>
-  <p>
-    <a href="#" class="cta small">Live Dashboard →</a>
-    <a href="audit.html" class="cta small">Sigil Audit →</a>
-  </p>
-</section>
-
-<section class="panel callout">
-  <h2>Live Audit Trail</h2>
-  <p>
-    <strong>2,500+ sovereign receipts</strong> across <strong>26 active sigil chains</strong>.
-    Every receipt is Ed25519-signed, hash-chained, Charter-anchored.
-    The chain never breaks. The audit never sleeps.
-  </p>
-  <p>
-    <a href="audit.html" class="cta primary">Inspect the chain →</a>
-  </p>
-</section>
-
-<section class="panel">
-  <h2>🜏 Master Takeover · Top-Down Realignment</h2>
-  <p>Every lane aligned: MEOK · CSOAI · DEFONEOS · SOV3 · SOV33 · SOV333 · 13 Greenfields · Claude Science.
-  951 sovereign receipts · T248 · 956 pages · 30 MCPs · 15 repos.
-  Care Floor 0.95 enforced. Charter-anchored.</p>
-  <p><a href="MASTER_TAKEOVER.html" class="cta small">Master Takeover →</a> <a href="govbench.html" class="cta small">GovBench →</a></p>
-</section>
-
+  <h2>Public grid — 15 slots</h2>
+  <p>Live API currently emits 13 measured axes. The public grid is 15 slots. Empty cells stay empty. No invented scores.</p>
+  <div class="grid">
+    <div class="slot"><strong>governance</strong> measured</div>
+    <div class="slot"><strong>safety</strong> measured</div>
+    <div class="slot"><strong>provenance</strong> measured</div>
+    <div class="slot"><strong>continuity</strong> measured</div>
+    <div class="slot"><strong>conformance</strong> measured</div>
+    <div class="slot"><strong>openness</strong> measured</div>
+    <div class="slot"><strong>machinery-conformity</strong> measured</div>
+    <div class="slot"><strong>care</strong> measured</div>
+    <div class="slot"><strong>cross-reality</strong> measured</div>
+    <div class="slot"><strong>detector-interop</strong> measured</div>
+    <div class="slot"><strong>art5-safeguard</strong> measured</div>
+    <div class="slot"><strong>swarm</strong> measured</div>
+    <div class="slot"><strong>affect</strong> in API, not on board</div>
+    <div class="slot"><strong>gspc_jail</strong> on board, not in API</div>
+    <div class="slot empty"><strong>slot 15</strong> unmeasured — no score yet</div>
+  </div>
+  <p class="lede">“Measured” here means the axis exists in the live register. It is not a score. Open the scoreboard for signed cells.</p>
 </main>
-
-<footer class="footer">
-  <p>
-    <strong>CSOAI Ltd · UK 16939677</strong> · Charter SHA
-    <code>df65a6585cf6a686cbfd881f56c04447056e2551e7c04db57a80543521022054</code>
-    · Care Floor 0.95 · RFC 8032 §7.1
-  </p>
-  <p class="small">
-    <a href="#">Buyer Evidence</a> ·
-    <a href="audit.html">Audit</a> ·
-    <a href="tools/article50-passport.html">Article 50</a> ·
-    <a href="tools/bft-council.html">Council</a> ·
-    <a href="govbench.html">GovBench</a> ·
-    <a href="MASTER_TAKEOVER.html">Master Takeover</a>
-  </p>
+<footer>
+  <p>CSOAI Ltd · UK 16939677 · councilof.ai · csoai.org</p>
+  <p>Verified measurement credential. Never certification.</p>
 </footer>
-
 </body>
 </html>
