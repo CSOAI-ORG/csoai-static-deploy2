@@ -39,3 +39,17 @@
 # and /prv natively (same as /master and /provbench). No _redirect rule is
 # needed — and the previous 301-to-.html rule created an infinite loop
 # (301 → .html → 308 back → 301). Removed 2026-08-08.
+
+# 17 Aug 2026 — one public desk. Do not keep a second price table.
+/pricing   https://councilof.ai/pricing   308
+/pricing/  https://councilof.ai/pricing/  308
+
+# 17 Aug 2026 — paper-district is a live research library on councilof.ai, not here.
+/paper-district       https://councilof.ai/paper-district.html  308
+/paper-district.html  https://councilof.ai/paper-district.html  308
+/paper-district/      https://councilof.ai/paper-district.html  308
+
+# 17 Aug 2026 — sov-space is an internal codename. Public destination is Council Space.
+/sov-space       https://councilof.ai/gspc-arena/  308
+/sov-space/      https://councilof.ai/gspc-arena/  308
+/sov-space.html  https://councilof.ai/gspc-arena/  308
