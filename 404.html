@@ -6,36 +6,50 @@
 <meta name="robots" content="noindex" />
 <title>Not found — Council of AI</title>
 <style>
-  :root{--fg:#1a1814;--mut:#5c574e;--bd:#d9d2c5;--bg:#f6f1e8;--acc:#3d5a3a}
+  :root{--fg:#1c1915;--mut:#5d574d;--faint:#8a8275;--bd:#ddd5c6;--bg:#f7f2e9;--acc:#33502f}
   *{box-sizing:border-box}
-  body{margin:0;background:var(--bg);color:var(--fg);font:17px/1.55 Georgia,serif}
+  body{margin:0;background:var(--bg);color:var(--fg);font:17px/1.6 Georgia,"Times New Roman",serif}
   a{color:var(--acc)}
-  nav,header,main,footer{max-width:44rem;margin:0 auto;padding:1.2rem 1.4rem}
-  nav{display:flex;flex-wrap:wrap;gap:.8rem 1.2rem;border-bottom:1px solid var(--bd)}
+  .wrap{max-width:48rem;margin:0 auto;padding:0 1.4rem}
+  nav{border-bottom:1px solid var(--bd)}
+  nav .wrap{display:flex;flex-wrap:wrap;align-items:center;gap:.4rem 1.1rem;padding-top:.85rem;padding-bottom:.85rem}
   .brand{font-weight:700;text-decoration:none;color:var(--fg)}
-  h1{font-size:1.8rem;line-height:1.25;margin:.4rem 0 1rem}
-  .lede{color:var(--mut)}
-  .cta{display:inline-block;margin:.4rem .4rem 0 0;padding:.45rem .8rem;border:1px solid var(--bd);text-decoration:none}
-  footer{border-top:1px solid var(--bd);color:var(--mut);font-size:.85rem}
+  nav a:not(.brand){font-size:.92rem;text-decoration:none;color:var(--mut)}
+  nav a:not(.brand):hover{color:var(--acc);text-decoration:underline}
+  header{padding:4rem 0 2.4rem;border-bottom:1px solid var(--bd)}
+  h1{font-size:2rem;line-height:1.25;margin:0 0 .8rem}
+  .lede{color:var(--mut);max-width:36rem;margin:0 0 1.4rem}
+  .cta{display:inline-block;margin:.25rem .5rem .25rem 0;padding:.6rem 1rem;border:1px solid var(--acc);border-radius:2px;text-decoration:none;color:var(--acc);font-size:.95rem}
+  .cta.primary{background:var(--acc);color:#fbf7ee}
+  .cta.primary:hover{background:#2a4327}
+  footer{border-top:1px solid var(--bd);padding:1.6rem 0 2.4rem;color:var(--mut);font-size:.85rem}
+  footer p{margin:.25rem 0}
 </style>
 </head>
 <body>
 <nav>
-  <a class="brand" href="/">Council of AI</a>
-  <a href="/gspc-scoreboard/">Scoreboard</a>
-  <a href="https://councilof.ai/gspc-verify">Verify</a>
-  <a href="https://councilof.ai/gspc-arena">Arena</a>
+  <div class="wrap">
+    <a class="brand" href="/">Council of AI</a>
+    <a href="/gspc-scoreboard/">Scoreboard</a>
+    <a href="https://councilof.ai/gspc-verify">Verify</a>
+    <a href="https://councilof.ai/gspc-arena">Arena</a>
+  </div>
 </nav>
 <header>
-  <h1>This page is not here.</h1>
-  <p class="lede">Unknown paths stay unknown. We do not serve the homepage as a stand-in.</p>
-  <p>
-    <a class="cta" href="/">Home</a>
-    <a class="cta" href="/gspc-scoreboard/">Signed scoreboard</a>
-  </p>
+  <div class="wrap">
+    <h1>This page is not here.</h1>
+    <p class="lede">Unknown paths stay unknown. We do not serve the homepage as a stand-in — a missing page returns a real 404, the same way we report unmeasured cells honestly.</p>
+    <p>
+      <a class="cta primary" href="/">Home</a>
+      <a class="cta" href="/gspc-scoreboard/">Signed scoreboard</a>
+      <a class="cta" href="https://councilof.ai/gspc-verify">Verify a card</a>
+    </p>
+  </div>
 </header>
 <footer>
-  <p>CSOAI Ltd · UK 16939677 · councilof.ai · csoai.org</p>
+  <div class="wrap">
+    <p>CSOAI Ltd · UK 16939677 · <a href="https://councilof.ai">councilof.ai</a> · <a href="/">csoai.org</a></p>
+  </div>
 </footer>
 </body>
 </html>

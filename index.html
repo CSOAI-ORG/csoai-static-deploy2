@@ -6,65 +6,185 @@
 <meta name="description" content="Council of AI measures AI behaviour, signs the evidence, and lets anyone check. Verified measurement credential. Not a certification." />
 <title>CSOAI — the measurement body for AI behaviour.</title>
 <link rel="canonical" href="https://csoai.org" />
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Council of AI",
+  "legalName": "CSOAI Ltd",
+  "alternateName": "CSOAI",
+  "url": "https://csoai.org",
+  "sameAs": ["https://councilof.ai"],
+  "description": "Independent measurement body for AI behaviour. We measure, sign and re-attest; anyone can check. Not a certification body and not a notified body — we take no money from anything we rank.",
+  "foundingDate": "2025",
+  "vatID": "UK 16939677"
+}
+</script>
 <style>
-  :root{--fg:#1a1814;--mut:#5c574e;--bd:#d9d2c5;--bg:#f6f1e8;--acc:#3d5a3a}
+  :root{
+    --fg:#1c1915;--mut:#5d574d;--faint:#8a8275;--bd:#ddd5c6;--bg:#f7f2e9;
+    --acc:#33502f;--acc-soft:#eef3ea;--paper:#fffdf8;--warn:#8a5a17;--ok:#33502f;
+  }
   *{box-sizing:border-box}
-  body{margin:0;background:var(--bg);color:var(--fg);font:17px/1.55 Georgia,serif}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--fg);font:17px/1.6 Georgia,"Times New Roman",serif;-webkit-font-smoothing:antialiased}
   a{color:var(--acc)}
-  nav,header,main,footer{max-width:44rem;margin:0 auto;padding:1.2rem 1.4rem}
-  nav{display:flex;flex-wrap:wrap;gap:.8rem 1.2rem;border-bottom:1px solid var(--bd)}
-  .brand{font-weight:700;text-decoration:none;color:var(--fg)}
-  h1{font-size:1.8rem;line-height:1.25;margin:.4rem 0 1rem}
-  .lede{color:var(--mut)}
-  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(9.5rem,1fr));gap:.5rem;margin:1.2rem 0}
-  .slot{border:1px solid var(--bd);padding:.55rem .7rem;font-size:.85rem}
-  .slot strong{display:block}
-  .empty{color:var(--mut);font-style:italic}
-  .cta{display:inline-block;margin:.4rem .4rem 0 0;padding:.45rem .8rem;border:1px solid var(--bd);text-decoration:none}
-  footer{border-top:1px solid var(--bd);color:var(--mut);font-size:.85rem}
+  .wrap{max-width:48rem;margin:0 auto;padding:0 1.4rem}
+  nav{position:sticky;top:0;z-index:10;background:rgba(247,242,233,.94);backdrop-filter:blur(6px);border-bottom:1px solid var(--bd)}
+  nav .wrap{display:flex;flex-wrap:wrap;align-items:center;gap:.4rem 1.1rem;padding-top:.85rem;padding-bottom:.85rem}
+  .brand{font-weight:700;text-decoration:none;color:var(--fg);letter-spacing:.01em}
+  .brand small{display:block;font-size:.62rem;font-weight:400;letter-spacing:.22em;text-transform:uppercase;color:var(--faint);margin-top:.1rem}
+  nav a:not(.brand){font-size:.92rem;text-decoration:none;color:var(--mut)}
+  nav a:not(.brand):hover{color:var(--acc);text-decoration:underline}
+  header{padding:3.2rem 0 2.2rem;border-bottom:1px solid var(--bd)}
+  .kicker{font-size:.72rem;letter-spacing:.24em;text-transform:uppercase;color:var(--faint);margin:0 0 .8rem}
+  h1{font-size:2.35rem;line-height:1.22;margin:0 0 1rem;letter-spacing:-.01em}
+  .lede{font-size:1.12rem;color:var(--mut);max-width:40rem;margin:0 0 1.5rem}
+  .cta{display:inline-block;margin:.25rem .5rem .25rem 0;padding:.6rem 1rem;border:1px solid var(--acc);border-radius:2px;text-decoration:none;color:var(--acc);font-size:.95rem}
+  .cta.primary{background:var(--acc);color:#fbf7ee}
+  .cta.primary:hover{background:#2a4327}
+  .cta:hover{text-decoration:none}
+  main{padding:2.4rem 0 3rem}
+  section{margin:0 0 2.6rem}
+  h2{font-size:1.35rem;margin:0 0 .6rem;letter-spacing:-.005em}
+  .sub{color:var(--mut);font-size:.95rem;margin:0 0 1.1rem;max-width:42rem}
+  /* what the data says */
+  .facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(11rem,1fr));gap:.7rem;margin:0 0 1rem}
+  .fact{background:var(--paper);border:1px solid var(--bd);border-radius:3px;padding:.8rem .9rem}
+  .fact .n{font-size:1.45rem;font-weight:700;color:var(--acc);line-height:1.15}
+  .fact .n small{font-size:.68rem;font-weight:400;color:var(--faint)}
+  .fact .l{font-size:.78rem;color:var(--mut);margin-top:.25rem}
+  .fact .ci{font-size:.68rem;color:var(--faint)}
+  .empty-note{border-left:3px solid var(--warn);background:var(--paper);padding:.7rem .9rem;font-size:.88rem;color:var(--mut);margin:.4rem 0}
+  /* grid */
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(9.6rem,1fr));gap:.5rem;margin:1.1rem 0}
+  .slot{border:1px solid var(--bd);background:var(--paper);border-radius:3px;padding:.6rem .7rem;font-size:.82rem;color:var(--mut)}
+  .slot strong{display:block;color:var(--fg);font-size:.86rem;margin-bottom:.15rem}
+  .slot.measured{border-left:3px solid var(--acc)}
+  .slot.empty{color:var(--faint);font-style:italic}
+  /* how to check */
+  .steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(11rem,1fr));gap:.7rem;margin-top:1rem}
+  .step{border:1px solid var(--bd);border-radius:3px;padding:.85rem .95rem;background:var(--paper)}
+  .step b{display:block;font-size:.92rem;margin-bottom:.25rem}
+  .step span{font-size:.8rem;color:var(--mut);line-height:1.45;display:block}
+  .step .num{display:inline-block;width:1.35rem;height:1.35rem;line-height:1.35rem;text-align:center;border-radius:50%;background:var(--acc-soft);color:var(--acc);font-size:.72rem;font-weight:700;margin-bottom:.4rem}
+  /* fleet */
+  #fleet{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:.9rem}
+  .chip{border:1px solid var(--bd);background:var(--paper);border-radius:999px;padding:.3rem .75rem;font-size:.8rem;color:var(--mut)}
+  .chip b{color:var(--fg)}
+  .chip .dot{display:inline-block;width:.5rem;height:.5rem;border-radius:50%;background:var(--ok);margin-right:.35rem;vertical-align:1px}
+  .chip.paused .dot{background:var(--warn)}
+  .fleet-foot{font-size:.75rem;color:var(--faint);margin-top:.6rem}
+  footer{border-top:1px solid var(--bd);padding:1.6rem 0 2.4rem;color:var(--mut);font-size:.85rem}
+  footer p{margin:.25rem 0}
+  @media(max-width:560px){h1{font-size:1.9rem}header{padding-top:2.2rem}}
 </style>
 </head>
 <body>
 <nav>
-  <a class="brand" href="/">Council of AI</a>
-  <a href="/gspc-scoreboard/">Scoreboard</a>
-  <a href="https://councilof.ai/gspc-verify">Verify</a>
-  <a href="https://councilof.ai/gspc-arena">Arena</a>
-  <a href="/paper-district.html">City</a>
+  <div class="wrap">
+    <a class="brand" href="/">Council of AI<small>we measure · we sign · we re-attest</small></a>
+    <a href="/gspc-scoreboard/">Scoreboard</a>
+    <a href="https://councilof.ai/gspc-verify">Verify</a>
+    <a href="https://councilof.ai/gspc-arena">Arena</a>
+    <a href="/paper-district.html">City</a>
+    <a href="#what-the-data-says">What the data says</a>
+  </div>
 </nav>
 <header>
-  <h1>We measure. We sign. We re-attest. Everyone can check.</h1>
-  <p class="lede">Independent measurement body for AI behaviour. Signed receipts. Free verification. Not a certification, not a notified body, no money from anything we rank.</p>
-  <p>
-    <a class="cta" href="/gspc-scoreboard/">Signed scoreboard</a>
-    <a class="cta" href="https://councilof.ai/gspc-verify">Verify a card</a>
-  </p>
+  <div class="wrap">
+    <p class="kicker">Independent measurement body for AI behaviour · CSOAI Ltd · UK 16939677</p>
+    <h1>We measure. We sign. We re-attest. Everyone can check.</h1>
+    <p class="lede">Signed receipts for how AI systems behave. Free verification, no permission needed. Not a certification, not a notified body, no money from anything we rank.</p>
+    <p>
+      <a class="cta primary" href="/gspc-scoreboard/">Signed scoreboard</a>
+      <a class="cta" href="https://councilof.ai/gspc-verify">Verify a card</a>
+      <a class="cta" href="#what-the-data-says">What the data says</a>
+    </p>
+  </div>
 </header>
 <main>
-  <h2>Public grid — 15 slots</h2>
-  <p>Live API currently emits 13 measured axes. The public grid is 15 slots. Empty cells stay empty. No invented scores.</p>
-  <div class="grid">
-    <div class="slot"><strong>governance</strong> measured</div>
-    <div class="slot"><strong>safety</strong> measured</div>
-    <div class="slot"><strong>provenance</strong> measured</div>
-    <div class="slot"><strong>continuity</strong> measured</div>
-    <div class="slot"><strong>conformance</strong> measured</div>
-    <div class="slot"><strong>openness</strong> measured</div>
-    <div class="slot"><strong>machinery-conformity</strong> measured</div>
-    <div class="slot"><strong>care</strong> measured</div>
-    <div class="slot"><strong>cross-reality</strong> measured</div>
-    <div class="slot"><strong>detector-interop</strong> measured</div>
-    <div class="slot"><strong>art5-safeguard</strong> measured</div>
-    <div class="slot"><strong>swarm</strong> measured</div>
-    <div class="slot"><strong>affect</strong> in API, not on board</div>
-    <div class="slot"><strong>gspc_jail</strong> on board, not in API</div>
-    <div class="slot empty"><strong>slot 15</strong> unmeasured — no score yet</div>
+  <div class="wrap">
+    <section id="what-the-data-says">
+      <h2>What the data says — 12 Aug 2026 board</h2>
+      <p class="sub">13 measured axes × 19 open-weight models. A number appears only when it is quotable (usable n ≥ 30, with a computed 95% interval). This stamp is unsigned; the harness is published — recompute it.</p>
+      <div class="facts">
+        <div class="fact"><div class="n">0.972 <small>best · art5</small></div><div class="l">EU AI Act Art 5 prohibited-practice trip</div><div class="ci">n=36 · 95% CI 0.86–1.00</div></div>
+        <div class="fact"><div class="n">0.700 <small>best · governance</small></div><div class="l">governance axis, largest sample</div><div class="ci">n=237 · 95% CI 0.64–0.76</div></div>
+        <div class="fact"><div class="n">0.975 <small>best · swarm</small></div><div class="l">multi-agent coordination safety</div><div class="ci">n=40 · 95% CI 0.87–1.00</div></div>
+        <div class="fact"><div class="n">0.535 <small>best · care</small></div><div class="l">care floor under paired conduct</div><div class="ci">n=200 · 95% CI 0.47–0.60</div></div>
+      </div>
+      <p class="empty-note">Honest emptiness: the jail axis and slot 15 carry <strong>no score on this stamp</strong>. We do not fill a cell to look complete next to a badge.</p>
+      <p class="sub">247 quotable cells across 13 axes — every one reproducible from the signed board records. Deterministic gate: no model judged another.</p>
+    </section>
+
+    <section id="grid">
+      <h2>Public grid — 15 slots</h2>
+      <p class="sub">Live API emits 13 measured axes. The public grid is 15 slots. Empty cells stay empty. No invented scores.</p>
+      <div class="grid">
+        <div class="slot measured"><strong>governance</strong> measured</div>
+        <div class="slot measured"><strong>safety</strong> measured</div>
+        <div class="slot measured"><strong>provenance</strong> measured</div>
+        <div class="slot measured"><strong>continuity</strong> measured</div>
+        <div class="slot measured"><strong>conformance</strong> measured</div>
+        <div class="slot measured"><strong>openness</strong> measured</div>
+        <div class="slot measured"><strong>machinery-conformity</strong> measured</div>
+        <div class="slot measured"><strong>care</strong> measured</div>
+        <div class="slot measured"><strong>cross-reality</strong> measured</div>
+        <div class="slot measured"><strong>detector-interop</strong> measured</div>
+        <div class="slot measured"><strong>art5-safeguard</strong> measured</div>
+        <div class="slot measured"><strong>swarm</strong> measured</div>
+        <div class="slot"><strong>affect</strong> in API, not on board</div>
+        <div class="slot"><strong>gspc_jail</strong> on board, not in API</div>
+        <div class="slot empty"><strong>slot 15</strong> unmeasured — no score yet</div>
+      </div>
+      <p class="sub">“Measured” means the axis exists in the live register — it is not a score. Open the scoreboard for signed cells.</p>
+    </section>
+
+    <section id="how">
+      <h2>How to check us</h2>
+      <div class="steps">
+        <div class="step"><span class="num">1</span><b>We measure</b><span>Frozen, published benchmarks. Deterministic gate. No model judges another.</span></div>
+        <div class="step"><span class="num">2</span><b>We sign</b><span>A 3KB card, Ed25519-signed and timestamp-anchored. Harness published with it.</span></div>
+        <div class="step"><span class="num">3</span><b>You verify</b><span>Client-side, loginless, against the published key. No permission needed.</span></div>
+      </div>
+    </section>
+
+    <section id="fleet">
+      <h2>Measured on our own fleet</h2>
+      <p class="sub">We do not rent judgement — the measurements run on hardware we control. Live status below comes from our fleet API.</p>
+      <div id="fleet"><span class="chip"><b>Loading fleet status…</b></span></div>
+      <p class="fleet-foot" id="fleet-note">Public fleet map · sanitized — internal names, endpoints and keys are never published.</p>
+    </section>
   </div>
-  <p class="lede">“Measured” here means the axis exists in the live register. It is not a score. Open the scoreboard for signed cells.</p>
 </main>
 <footer>
-  <p>CSOAI Ltd · UK 16939677 · councilof.ai · csoai.org</p>
-  <p>Verified measurement credential. Never certification.</p>
+  <div class="wrap">
+    <p>CSOAI Ltd · UK 16939677 · <a href="https://councilof.ai">councilof.ai</a> · <a href="/">csoai.org</a></p>
+    <p>Verified measurement credential. Never certification. Unknown paths return a real 404 — we do not serve the homepage as a stand-in.</p>
+  </div>
 </footer>
+<script>
+(function(){
+  var box=document.getElementById('fleet');
+  var note=document.getElementById('fleet-note');
+  var fallback=[['arena measurement worker','RTX 3090','running'],['heavy measurement worker','A100','running'],['merge / weld worker','A100','paused']];
+  function render(workers){
+    box.innerHTML='';
+    (workers||fallback).forEach(function(w){
+      var d=document.createElement('span');
+      d.className='chip'+(w.status==='paused'||w.status==='stopped'?' paused':'');
+      d.innerHTML='<span class="dot"></span><b>'+w.gpu+'</b> · '+w.role+' · '+(w.status||'—');
+      box.appendChild(d);
+    });
+  }
+  fetch('/api/fleet-status',{headers:{Accept:'application/json'}})
+    .then(function(r){return r.ok?r.json():Promise.reject(r.status);})
+    .then(function(j){
+      if(j&&Array.isArray(j.workers)){render(j.workers);if(j.as_of){note.textContent='Public fleet map · sanitized — internal names, endpoints and keys are never published. Status as of '+j.as_of+'.';}}
+    })
+    .catch(function(){render(null);});
+})();
+</script>
 </body>
 </html>
