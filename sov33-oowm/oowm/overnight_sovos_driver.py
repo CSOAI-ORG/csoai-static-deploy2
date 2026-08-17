@@ -30,7 +30,7 @@ TARGET_HOUR = 4   # stop at 04:00 UTC
 TICK_S = 300      # 5 min per tick
 
 PY = "python3"
-INGEST = [PY, "-m", "oowm.estate_mine_ingest", "--cap", "1500"]
+INGEST = [PY, "-m", "oowm.estate_mine_ingest", "--cap", "8000"]
 REFEREE_KEEPER = [PY, "/workspace/sov33-oowm/oowm/grok_referee_keeper.py"]
 ARENA_KEEPER = [PY, "/workspace/arena-24x7/arena_loop_keeper.py"]
 A100_WIRE = ["bash", "/workspace/a100_oowm_wire.sh"]

@@ -68,6 +68,10 @@ GLOBS = [
     (SOVOS / "packages" / "**" / "README.md", "sovos_package"),
     (D2 / "SOVOS" / "assets" / "**" / "*.md", "sovos_asset"),
     (CL / "sov-os" / "**" / "*.md", "sov_os"),
+    (CL / "_alignment" / "**" / "*.md", "alignment"),
+    (CL / "sovereign-charters" / "**" / "*.md", "charter"),
+    (CL / "sovereign-temple-public" / "**" / "*.py", "temple_py"),
+    (CL / "csoai.org" / "**" / "*.html", "csoai_site"),
 ]
 
 # Explicit 5-worlds surface (OOWM/OWEM/IWM/OWM/VWM) anchor
@@ -84,7 +88,46 @@ WORLDS = (
 )
 
 
-def collect(cap):
+def mine_github(items, seen, push, gh_org="CSOAI-ORG", limit=120):
+    """Mine every public repo's README + llm.json + agent-card via gh API.
+    Fail-soft: any repo error skips it; network absence degrades to local-only.
+    Returns count of repos mined."""
+    import subprocess
+    mined = 0
+    try:
+        out = subprocess.run(["gh", "repo", "list", gh_org, "--limit", str(limit),
+                              "--json", "name"], capture_output=True, text=True, timeout=60)
+        repos = json.loads(out.stdout)
+    except Exception:
+        return 0
+    for r in repos:
+        name = r.get("name", "")
+        if not name:
+            continue
+        # README (default branch)
+        try:
+            rd = subprocess.run(["gh", "api", f"repos/{gh_org}/{name}/readme",
+                                 "-H", "Accept: application/vnd.github.raw"],
+                                capture_output=True, text=True, timeout=30)
+            if rd.returncode == 0 and rd.stdout.strip():
+                push(f"github:{gh_org}/{name}/README", "github_repo", rd.stdout[:4000])
+                mined += 1
+        except Exception:
+            pass
+        # llm.json
+        for f in ("llm.json", "agent.json", "mcp.json"):
+            try:
+                rd = subprocess.run(["gh", "api", f"repos/{gh_org}/{name}/contents/{f}",
+                                     "-H", "Accept: application/vnd.github.raw"],
+                                    capture_output=True, text=True, timeout=30)
+                if rd.returncode == 0 and rd.stdout.strip():
+                    push(f"github:{gh_org}/{name}/{f}", "github_" + f.replace(".json", ""), rd.stdout[:4000])
+            except Exception:
+                pass
+    return mined
+
+
+def collect(cap, with_github=True):
     items = []
     seen = set()
 
@@ -104,8 +147,9 @@ def collect(cap):
 
     for pattern, source in GLOBS:
         try:
-            base = Path("/workspace") if POD_STASH.is_dir() else Path(".")
-            for p in sorted(base.glob(str(pattern)))[:400]:
+            root = Path(str(pattern).split("/**")[0])
+            per_pattern = 1200 if source == "llm_json" else 500
+            for p in sorted(root.glob("**/*" + str(pattern).split("/**")[1]))[:per_pattern]:
                 if p.is_file() and p.stat().st_size < 200_000:
                     try:
                         push(p, source, p.read_text(errors="replace"))
@@ -116,13 +160,22 @@ def collect(cap):
 
     # llm.json companions are JSON — flatten to a readable text card
     base = Path("/workspace") if POD_STASH.is_dir() else D2
-    for p in sorted(base.glob("**/*.llm.json"))[:300]:
+    for p in sorted(base.glob("**/*.llm.json"))[:1200]:
         if p in seen:
             continue
         try:
             data = json.loads(p.read_text(errors="replace"))
             text = json.dumps(data, indent=1)[:4000]
             push(p, "llm_json", text)
+        except Exception:
+            pass
+
+    # GitHub estate (readme + llm/agent/mcp cards) — the online mine
+    if with_github:
+        try:
+            n = mine_github(items, seen, push)
+            if n:
+                print(f"  [github] mined {n} repo cards", flush=True)
         except Exception:
             pass
 
@@ -133,10 +186,11 @@ def collect(cap):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--out", default=str(Path(__file__).resolve().parent / "index" / "estate_mine_index.json"))
-    ap.add_argument("--cap", type=int, default=1500)
+    ap.add_argument("--cap", type=int, default=2500)
+    ap.add_argument("--no-github", action="store_true", help="skip GitHub mining (offline mode)")
     args = ap.parse_args()
 
-    items = collect(args.cap)
+    items = collect(args.cap, with_github=not args.no_github)
     ix = OOWMIndex()
     n = ix.add_many(items, cap=args.cap)
     ix.build_tfidf()
@@ -147,9 +201,12 @@ def main():
     stats = ix.stats()
     stats["added"] = n
     stats["output"] = str(out)
+    # source breakdown
+    from collections import Counter
+    stats["by_source"] = dict(Counter(d["source"] for d in ix.docs))
     print(json.dumps(stats, indent=2))
     # smoke: prove the mine answers
-    for q in ("OOWM", "GSPC axes", "care floor", "sovereign hives"):
+    for q in ("OOWM", "GSPC axes", "care floor", "sovereign hives", "Grok referee", "runpod fleet"):
         r = ix.query(q, k=1)
         print(f"  '{q}' -> {r[0]['source']}/{Path(r[0]['path']).name}" if r else f"  '{q}' -> (no hit)")
 
