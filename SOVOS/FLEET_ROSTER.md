@@ -23,6 +23,8 @@ mutation (register V7 / incident doctrine). Verify before scaling or killing a p
 | **24/7 arena loop** (`arena_24x7_loop.py`) | 3090 | 5 models × 13 axes, forever | real Glicko, league.json persists each round |
 | **Nemotron auto-pull** (`stage_nemotron.sh`) | A100 | waits for board ALL13 | pulls nemotron-3-nano:30b post-board |
 | **Cross-lab post-board** (`postboard_unblock.sh`) | A100 | fires after board | full quotable East-vs-West city (n≥30, $3 cap) |
+| **Grok benchmark referee** (`grok_referee_keeper.py`) | 3090 | 24/7, every 5 min | NEW 2026-08-17: measures OOWM-family vs Grok (measure-only, never governance). UNMEASURED until `XAI_API_KEY` / `~/.runpod/secrets/xai.key` set. Logs to `grok_referee_rounds.jsonl` |
+| **A100 OOWM wire** (`a100_oowm_wire.sh`) | 3090 (source) | polls 15s | NEW 2026-08-17: on A100 reconnect, rsyncs estate-mine OOWM + starts referee keeper there. Idempotent, flag `a100_oowm_wired.flag` |
 | **Board monitor** (`board_monitor.sh`) | A100 | polls 5 min | logs axis summary at ALL13 |
 | **Cross-lab governed city** (staging) | 3090 | done | 12 turns, self-gated n<30 |
 
