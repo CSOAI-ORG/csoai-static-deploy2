@@ -24,10 +24,6 @@
 # is the "4-axis GSPC stub hydration crash" observed 2026-08-01.
 # The arena-hub page itself is fully static HTML — no JS to hydrate — so a
 # correct route + the file = no crash.
-/arena       /arena-hub.html  301
-/gspc-arena  /arena-hub.html  301
-/arena/      /arena-hub.html  301
-/gspc-arena/ /arena-hub.html  301
 
 # /gate is the refusal-gate demo page; Cloudflare Pages default clean-trailing-slash
 # handles /gate/ automatically.
@@ -53,3 +49,15 @@
 /sov-space       https://councilof.ai/gspc-arena/  308
 /sov-space/      https://councilof.ai/gspc-arena/  308
 /sov-space.html  https://councilof.ai/gspc-arena/  308
+
+# 17 Aug 2026 — one benches desk. Kill the stale six-axis / 30-model page.
+/benchmarks   https://councilof.ai/benchmarks   308
+/benchmarks/  https://councilof.ai/benchmarks/  308
+
+# 17 Aug 2026 — stale 12-greenfields hub is not the live arena.
+/arena            https://councilof.ai/gspc-arena  308
+/arena/           https://councilof.ai/gspc-arena  308
+/gspc-arena       https://councilof.ai/gspc-arena  308
+/gspc-arena/      https://councilof.ai/gspc-arena  308
+/arena-hub        https://councilof.ai/gspc-arena  308
+/arena-hub.html   https://councilof.ai/gspc-arena  308
