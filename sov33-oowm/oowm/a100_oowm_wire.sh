@@ -22,6 +22,10 @@ for i in $(seq 1 120); do
     rsync -az --exclude __pycache__ --exclude "*.pyc" \
       -e "ssh -i $KEY -o StrictHostKeyChecking=no -p $PORT" \
       /workspace/sov33-oowm/oowm/ $A100:/workspace/sov33-oowm/oowm/ || echo "rsync failed — retry next cycle" >> "$LOG"
+    # 2b. sync referee keys (groq + or) so the A100 referee can measure immediately
+    for kf in groq.key or.key; do
+      [ -f "/workspace/$kf" ] && scp -i "$KEY" -o StrictHostKeyChecking=no -P $PORT "/workspace/$kf" "$A100:/workspace/$kf" 2>/dev/null
+    done
     # 3. verify index boots
     if ssh -i "$KEY" -o StrictHostKeyChecking=no -p $PORT $A100 "cd /workspace/sov33-oowm && python3 -c 'import sys; sys.path.insert(0,\".\"); from oowm.knowledge import OOWMIndex; ix=OOWMIndex.load(\"oowm/index/estate_mine_index.json\"); print(\"MINE_OK\", ix.stats()[\"docs\"])' 2>/dev/null" | grep -q MINE_OK; then
       echo "estate-mine index verified on A100 ($(date -u +%H:%M:%S))" >> "$LOG"
