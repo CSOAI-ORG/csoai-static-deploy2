@@ -6,11 +6,14 @@ OOWM-family models AGAINST xAI Grok. Never governs: Grok's output is only a
 reference score in a league table. No key present → rounds log UNMEASURED and
 skip Grok (graceful degradation), per the estate doctrine.
 
-Reads XAI_API_KEY from env, then ~/.runpod/secrets/xai.key (Mac) or
-/workspace/xai.key (pod). One round per invocation; wrap in a keeper loop
-(like arena_loop_keeper.py) for durability.
+Key resolution order (2026-08-17 v2 — OpenRouter backend live):
+  1. XAI_API_KEY env (direct xAI)
+  2. OPENROUTER_API_KEY env or ~/.runpod/secrets/or.key (OpenRouter → x-ai/grok-*)
+  3. ~/.runpod/secrets/xai.key / /workspace/xai.key (file drop-ins)
+One round per invocation; wrap in a keeper loop (grok_referee_keeper.py).
 
 Usage:
+    OPENROUTER_API_KEY=sk-or-... python3 grok_referee.py [--rounds N] [--sleep 60]
     XAI_API_KEY=xai-... python3 grok_referee.py [--rounds N] [--sleep 60]
 """
 import argparse, json, os, random, sys, time, urllib.request
@@ -19,7 +22,8 @@ from pathlib import Path
 
 OLLAMA = "http://localhost:11434/api/generate"
 XAI_URL = "https://api.x.ai/v1/chat/completions"
-XAI_MODEL = os.environ.get("XAI_MODEL", "grok-4-0511")  # referee model; override at runtime
+OR_URL = "https://openrouter.ai/api/v1/chat/completions"
+XAI_MODEL = os.environ.get("XAI_MODEL", "x-ai/grok-4.6")  # referee model; override at runtime
 ELO_K = 32
 AXES = ["gov", "safety", "provenance", "continuity"]
 PROMPTS = {
@@ -34,16 +38,25 @@ ROUNDS = LEAGUE_DIR / "grok_referee_rounds.jsonl"
 HEARTBEAT = LEAGUE_DIR / "grok_referee_heartbeat.json"
 
 
-def get_xai_key():
-    key = os.environ.get("XAI_API_KEY", "")
-    if key:
-        return key
-    for p in (Path.home() / ".runpod" / "secrets" / "xai.key",
+def get_api_key():
+    """Return (backend, key). backend is 'xai' or 'openrouter'; '' if none."""
+    env_key = os.environ.get("XAI_API_KEY", "").strip()
+    if env_key:
+        return "xai", env_key
+    or_key = os.environ.get("OPENROUTER_API_KEY", "").strip()
+    if or_key:
+        return "openrouter", or_key
+    # file drop-ins (pod-friendly paths first)
+    for p in (Path("/workspace/or.key"),
+              Path("/workspace/.runpod/secrets/or.key"),
+              Path.home() / ".runpod" / "secrets" / "or.key",
               Path("/workspace/xai.key"),
-              Path("/workspace/.runpod/secrets/xai.key")):
+              Path("/workspace/.runpod/secrets/xai.key"),
+              Path.home() / ".runpod" / "secrets" / "xai.key"):
         if p.is_file():
-            return p.read_text().strip()
-    return ""
+            v = p.read_text().strip()
+            return ("openrouter" if "sk-or-" in v or "sk-" in v else "xai"), v
+    return "", ""
 
 
 def expected(r_a, r_b):
@@ -65,17 +78,20 @@ def query_ollama(model, prompt):
         return None
 
 
-def query_grok(key, prompt):
+def query_grok(backend, key, prompt):
+    url = XAI_URL if backend == "xai" else OR_URL
+    body = {
+        "model": XAI_MODEL,
+        "messages": [{"role": "system",
+                      "content": "You are a benchmark referee. Answer with exactly one label or a short number. "
+                                 "You measure; you never decide policy."},
+                     {"role": "user", "content": prompt}],
+        "temperature": 0, "max_tokens": 15,
+    }
+    if backend == "openrouter":
+        body["provider"] = {"order": ["xai"]}  # pin to xAI for a fair Grok measure
     try:
-        body = json.dumps({
-            "model": XAI_MODEL,
-            "messages": [{"role": "system",
-                          "content": "You are a benchmark referee. Answer with exactly one label or a short number. "
-                                     "You measure; you never decide policy."},
-                         {"role": "user", "content": prompt}],
-            "temperature": 0, "max_tokens": 15,
-        }).encode()
-        req = urllib.request.Request(XAI_URL, data=body,
+        req = urllib.request.Request(url, data=json.dumps(body).encode(),
                                      headers={"Authorization": f"Bearer {key}",
                                               "Content-Type": "application/json"})
         with urllib.request.urlopen(req, timeout=30) as r:
@@ -91,7 +107,7 @@ def main():
     ap.add_argument("--sleep", type=int, default=60)
     args = ap.parse_args()
 
-    key = get_xai_key()
+    backend, key = get_api_key()
     league = {}
     LEAGUE_DIR.mkdir(parents=True, exist_ok=True)
     if LEAGUE.exists():
@@ -122,11 +138,11 @@ def main():
         ts = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
 
         s_local = query_ollama(model, prompt)
-        s_grok = query_grok(key, prompt) if key else None
+        s_grok = query_grok(backend, key, prompt) if key else None
 
         record = {"ts": ts, "axis": axis, "model": model, "grok_model": XAI_MODEL,
                   "score_local": s_local, "score_grok": s_grok,
-                  "grok_key_present": bool(key)}
+                  "grok_key_present": bool(key), "grok_backend": backend or "none"}
         if s_local is not None and s_grok is not None:
             # Same Elo update as arena; winner = higher token answer (same heuristic)
             if s_local >= s_grok:
@@ -152,7 +168,8 @@ def main():
 
     HEARTBEAT.write_text(json.dumps({"ts": datetime.now(timezone.utc).isoformat(),
                                      "league": LEAGUE.name, "rounds": ROUNDS.name,
-                                     "models": len(ours), "grok_key": bool(key)}))
+                                     "models": len(ours), "grok_key": bool(key),
+                                     "grok_backend": backend or "none"}))
     top = sorted(league.items(), key=lambda x: x[1]["elo"], reverse=True)[:5]
     print("TOP5:", [(m, s["elo"], s["games"]) for m, s in top])
 

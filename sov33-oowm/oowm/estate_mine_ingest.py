@@ -18,7 +18,15 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from oowm.knowledge import OOWMIndex
 
 HOME = Path.home()
-CL = HOME / "clawd"
+# Pod-aware roots: on the 3090/A100 the corpus lives in the /workspace volume
+# mirror (.stash/mac-backup). On Mac it lives under ~/clawd. Same sources either way.
+POD_STASH = Path("/workspace/.stash/mac-backup")
+if POD_STASH.is_dir():
+    CL = POD_STASH / "clawd" if (POD_STASH / "clawd").is_dir() else POD_STASH
+    CL = POD_STASH if (POD_STASH / "kimi-regen").is_dir() else CL
+    CL = Path("/workspace/.stash/mac-backup/clawd") if (Path("/workspace/.stash/mac-backup/clawd")).is_dir() else CL
+else:
+    CL = HOME / "clawd"
 KR = CL / "kimi-regen"
 SOVOS = KR / "SOVOS"
 D2 = CL / "csoai-static-deploy2"
@@ -96,7 +104,8 @@ def collect(cap):
 
     for pattern, source in GLOBS:
         try:
-            for p in sorted(Path().glob(str(pattern)))[:400]:
+            base = Path("/workspace") if POD_STASH.is_dir() else Path(".")
+            for p in sorted(base.glob(str(pattern)))[:400]:
                 if p.is_file() and p.stat().st_size < 200_000:
                     try:
                         push(p, source, p.read_text(errors="replace"))
@@ -106,7 +115,8 @@ def collect(cap):
             pass
 
     # llm.json companions are JSON — flatten to a readable text card
-    for p in sorted(D2.glob("**/*.llm.json"))[:300]:
+    base = Path("/workspace") if POD_STASH.is_dir() else D2
+    for p in sorted(base.glob("**/*.llm.json"))[:300]:
         if p in seen:
             continue
         try:
