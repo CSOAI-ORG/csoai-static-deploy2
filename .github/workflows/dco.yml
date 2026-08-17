@@ -1,0 +1,7 @@
+name: DCO
+on: [pull_request]
+jobs:
+  dco:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo 'DCO enforced via the DCO GitHub App'
