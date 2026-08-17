@@ -22,148 +22,239 @@
 </script>
 <style>
   :root{
-    --fg:#1c1915;--mut:#5d574d;--faint:#8a8275;--bd:#ddd5c6;--bg:#f7f2e9;
-    --acc:#33502f;--acc-soft:#eef3ea;--paper:#fffdf8;--warn:#8a5a17;--ok:#33502f;
+    --ink:#e8ede6; --ink-dim:#b9c4b4; --ink-faint:#84917c;
+    --bg:#06140f; --bg-soft:#0a1d15; --panel:#0d2419; --panel-2:#0f2b1e;
+    --line:rgba(120,200,150,.16); --line-strong:rgba(120,200,150,.34);
+    --acc:#34d399; --acc-deep:#0ea371; --amber:#fbbf24; --paper:#f6f1e8; --paper-ink:#1c1915;
+    --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+    --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,Helvetica,Arial,sans-serif;
   }
-  *{box-sizing:border-box}
+  *{box-sizing:border-box;margin:0;padding:0}
   html{scroll-behavior:smooth}
-  body{margin:0;background:var(--bg);color:var(--fg);font:17px/1.6 Georgia,"Times New Roman",serif;-webkit-font-smoothing:antialiased}
-  a{color:var(--acc)}
-  .wrap{max-width:48rem;margin:0 auto;padding:0 1.4rem}
-  nav{position:sticky;top:0;z-index:10;background:rgba(247,242,233,.94);backdrop-filter:blur(6px);border-bottom:1px solid var(--bd)}
-  nav .wrap{display:flex;flex-wrap:wrap;align-items:center;gap:.4rem 1.1rem;padding-top:.85rem;padding-bottom:.85rem}
-  .brand{font-weight:700;text-decoration:none;color:var(--fg);letter-spacing:.01em}
-  .brand small{display:block;font-size:.62rem;font-weight:400;letter-spacing:.22em;text-transform:uppercase;color:var(--faint);margin-top:.1rem}
-  nav a:not(.brand){font-size:.92rem;text-decoration:none;color:var(--mut)}
-  nav a:not(.brand):hover{color:var(--acc);text-decoration:underline}
-  header{padding:3.2rem 0 2.2rem;border-bottom:1px solid var(--bd)}
-  .kicker{font-size:.72rem;letter-spacing:.24em;text-transform:uppercase;color:var(--faint);margin:0 0 .8rem}
-  h1{font-size:2.35rem;line-height:1.22;margin:0 0 1rem;letter-spacing:-.01em}
-  .lede{font-size:1.12rem;color:var(--mut);max-width:40rem;margin:0 0 1.5rem}
-  .cta{display:inline-block;margin:.25rem .5rem .25rem 0;padding:.6rem 1rem;border:1px solid var(--acc);border-radius:2px;text-decoration:none;color:var(--acc);font-size:.95rem}
-  .cta.primary{background:var(--acc);color:#fbf7ee}
-  .cta.primary:hover{background:#2a4327}
-  .cta:hover{text-decoration:none}
-  main{padding:2.4rem 0 3rem}
-  section{margin:0 0 2.6rem}
-  h2{font-size:1.35rem;margin:0 0 .6rem;letter-spacing:-.005em}
-  .sub{color:var(--mut);font-size:.95rem;margin:0 0 1.1rem;max-width:42rem}
-  /* what the data says */
-  .facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(11rem,1fr));gap:.7rem;margin:0 0 1rem}
-  .fact{background:var(--paper);border:1px solid var(--bd);border-radius:3px;padding:.8rem .9rem}
-  .fact .n{font-size:1.45rem;font-weight:700;color:var(--acc);line-height:1.15}
-  .fact .n small{font-size:.68rem;font-weight:400;color:var(--faint)}
-  .fact .l{font-size:.78rem;color:var(--mut);margin-top:.25rem}
-  .fact .ci{font-size:.68rem;color:var(--faint)}
-  .empty-note{border-left:3px solid var(--warn);background:var(--paper);padding:.7rem .9rem;font-size:.88rem;color:var(--mut);margin:.4rem 0}
-  /* grid */
-  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(9.6rem,1fr));gap:.5rem;margin:1.1rem 0}
-  .slot{border:1px solid var(--bd);background:var(--paper);border-radius:3px;padding:.6rem .7rem;font-size:.82rem;color:var(--mut)}
-  .slot strong{display:block;color:var(--fg);font-size:.86rem;margin-bottom:.15rem}
-  .slot.measured{border-left:3px solid var(--acc)}
-  .slot.empty{color:var(--faint);font-style:italic}
-  /* how to check */
-  .steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(11rem,1fr));gap:.7rem;margin-top:1rem}
-  .step{border:1px solid var(--bd);border-radius:3px;padding:.85rem .95rem;background:var(--paper)}
-  .step b{display:block;font-size:.92rem;margin-bottom:.25rem}
-  .step span{font-size:.8rem;color:var(--mut);line-height:1.45;display:block}
-  .step .num{display:inline-block;width:1.35rem;height:1.35rem;line-height:1.35rem;text-align:center;border-radius:50%;background:var(--acc-soft);color:var(--acc);font-size:.72rem;font-weight:700;margin-bottom:.4rem}
+  body{background:var(--bg);color:var(--ink);font:16.5px/1.6 var(--sans);-webkit-font-smoothing:antialiased}
+  a{color:var(--acc);text-decoration:none}
+  a:hover{text-decoration:underline}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 1.5rem}
+  /* nav */
+  nav{position:sticky;top:0;z-index:50;background:rgba(6,20,15,.86);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+  nav .wrap{display:flex;align-items:center;gap:1.4rem;padding-top:.95rem;padding-bottom:.95rem}
+  .brand{display:flex;align-items:center;gap:.55rem;font-weight:800;letter-spacing:.01em;color:var(--ink);font-size:1.02rem}
+  .brand svg{flex:none}
+  .brand small{display:block;font-size:.6rem;font-weight:500;letter-spacing:.24em;text-transform:uppercase;color:var(--ink-faint);margin-top:.05rem}
+  nav .links{margin-left:auto;display:flex;align-items:center;gap:1.15rem;font-size:.9rem}
+  nav .links a{color:var(--ink-dim)}
+  nav .links a:hover{color:var(--acc);text-decoration:none}
+  nav .links a.cta-mini{background:var(--acc);color:#04110b;font-weight:700;padding:.45rem .85rem;border-radius:8px}
+  nav .links a.cta-mini:hover{background:#2ae0a0}
+  /* hero */
+  header{position:relative;overflow:hidden;padding:5.5rem 0 4.5rem;border-bottom:1px solid var(--line)}
+  header::before{content:"";position:absolute;inset:0;pointer-events:none;background:
+    radial-gradient(42rem 22rem at 18% 12%, rgba(16,185,129,.16), transparent 60%),
+    radial-gradient(36rem 20rem at 85% 30%, rgba(251,191,36,.07), transparent 55%);}
+  header .wrap{position:relative}
+  .badge{display:inline-flex;align-items:center;gap:.5rem;border:1px solid var(--line-strong);background:var(--panel);border-radius:999px;padding:.4rem .9rem;font-size:.78rem;color:var(--ink-dim);margin-bottom:1.4rem}
+  .badge .pulse{width:.5rem;height:.5rem;border-radius:50%;background:var(--acc);box-shadow:0 0 0 0 rgba(52,211,153,.6);animation:pulse 2.2s infinite}
+  @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(52,211,153,.5)}70%{box-shadow:0 0 0 9px rgba(52,211,153,0)}100%{box-shadow:0 0 0 0 rgba(52,211,153,0)}}
+  h1{font-size:clamp(2.5rem,5.4vw,4.1rem);line-height:1.08;letter-spacing:-.025em;font-weight:800;max-width:16ch;margin-bottom:1.3rem}
+  h1 .hl{background:linear-gradient(100deg,var(--acc),#7ef0c2 55%,var(--amber));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .lede{font-size:1.16rem;color:var(--ink-dim);max-width:52ch;margin-bottom:2rem}
+  .lede b{color:var(--ink);font-weight:600}
+  .cta-row{display:flex;flex-wrap:wrap;gap:.8rem;margin-bottom:2.4rem}
+  .btn{display:inline-flex;align-items:center;gap:.5rem;padding:.8rem 1.3rem;border-radius:10px;font-weight:700;font-size:.95rem;border:1px solid var(--line-strong)}
+  .btn.primary{background:var(--acc);color:#04110b;border-color:transparent}
+  .btn.primary:hover{background:#2ae0a0;text-decoration:none}
+  .btn.ghost{color:var(--ink);background:var(--panel)}
+  .btn.ghost:hover{border-color:var(--acc);text-decoration:none}
+  .btn svg{width:16px;height:16px}
+  /* stat band */
+  .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+  .stat{background:var(--bg-soft);padding:1.15rem 1.25rem}
+  .stat .n{font-size:1.7rem;font-weight:800;color:var(--acc);font-variant-numeric:tabular-nums;line-height:1.1}
+  .stat .n small{font-size:.72rem;font-weight:600;color:var(--ink-faint);letter-spacing:.06em}
+  .stat .l{font-size:.8rem;color:var(--ink-dim);margin-top:.35rem}
+  .stat .ci{font-size:.68rem;color:var(--ink-faint);font-family:var(--mono)}
+  /* sections */
+  section{padding:4.2rem 0;border-bottom:1px solid var(--line)}
+  .kicker{font-family:var(--mono);font-size:.72rem;letter-spacing:.28em;text-transform:uppercase;color:var(--acc);margin-bottom:.8rem}
+  h2{font-size:clamp(1.7rem,3vw,2.3rem);font-weight:800;letter-spacing:-.02em;margin-bottom:.8rem;line-height:1.15}
+  .sub{color:var(--ink-dim);max-width:62ch;margin-bottom:1.8rem;font-size:1rem}
+  .sub a{text-decoration:underline}
+  /* scoreboard grid */
+  .axis-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(11.5rem,1fr));gap:.7rem}
+  .axis{border:1px solid var(--line);background:var(--panel);border-radius:12px;padding:1rem 1.05rem;transition:border-color .15s,transform .15s}
+  .axis:hover{border-color:var(--line-strong);transform:translateY(-2px)}
+  .axis .t{display:flex;align-items:center;justify-content:space-between;font-size:.85rem;font-weight:700;margin-bottom:.5rem}
+  .tag{font-family:var(--mono);font-size:.58rem;letter-spacing:.14em;text-transform:uppercase;padding:.16rem .5rem;border-radius:999px;border:1px solid var(--line-strong);color:var(--acc)}
+  .tag.empty{color:var(--ink-faint);border-color:var(--line);font-style:normal}
+  .axis .val{font-size:1.35rem;font-weight:800;color:var(--ink);font-variant-numeric:tabular-nums}
+  .axis .val small{font-size:.62rem;color:var(--ink-faint);font-weight:600;letter-spacing:.05em}
+  .axis .meta{font-size:.72rem;color:var(--ink-faint);margin-top:.35rem;font-family:var(--mono)}
+  .axis .name{font-size:.72rem;color:var(--ink-dim);margin-top:.15rem}
+  .honest-note{border-left:3px solid var(--amber);background:var(--panel);border-radius:0 10px 10px 0;padding:.9rem 1.1rem;font-size:.88rem;color:var(--ink-dim);margin:1.2rem 0 0;max-width:62ch}
+  .honest-note b{color:var(--amber)}
+  /* how it works */
+  .steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1rem}
+  .step{border:1px solid var(--line);background:var(--panel);border-radius:14px;padding:1.4rem}
+  .step .num{display:inline-flex;align-items:center;justify-content:center;width:2.1rem;height:2.1rem;border-radius:50%;background:rgba(52,211,153,.14);color:var(--acc);font-weight:800;font-family:var(--mono);font-size:.85rem;margin-bottom:.9rem}
+  .step h3{font-size:1.05rem;font-weight:700;margin-bottom:.45rem}
+  .step p{font-size:.88rem;color:var(--ink-dim);line-height:1.55}
   /* fleet */
-  #fleet{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:.9rem}
-  .chip{border:1px solid var(--bd);background:var(--paper);border-radius:999px;padding:.3rem .75rem;font-size:.8rem;color:var(--mut)}
-  .chip b{color:var(--fg)}
-  .chip .dot{display:inline-block;width:.5rem;height:.5rem;border-radius:50%;background:var(--ok);margin-right:.35rem;vertical-align:1px}
-  .chip.paused .dot{background:var(--warn)}
-  .fleet-foot{font-size:.75rem;color:var(--faint);margin-top:.6rem}
-  footer{border-top:1px solid var(--bd);padding:1.6rem 0 2.4rem;color:var(--mut);font-size:.85rem}
-  footer p{margin:.25rem 0}
-  @media(max-width:560px){h1{font-size:1.9rem}header{padding-top:2.2rem}}
+  .fleet-chip{display:inline-flex;align-items:center;gap:.5rem;border:1px solid var(--line-strong);background:var(--panel);border-radius:999px;padding:.45rem .95rem;font-size:.82rem;color:var(--ink-dim);margin:0 .45rem .5rem 0}
+  .fleet-chip b{color:var(--ink);font-weight:700}
+  .dot{width:.5rem;height:.5rem;border-radius:50%;background:var(--acc);display:inline-block}
+  .fleet-chip.paused .dot{background:var(--amber)}
+  .fleet-foot{font-size:.74rem;color:var(--ink-faint);margin-top:.6rem;font-family:var(--mono)}
+  /* banner */
+  .banner{border:1px solid var(--line-strong);background:linear-gradient(100deg,rgba(16,185,129,.10),rgba(251,191,36,.06));border-radius:12px;padding:1rem 1.2rem;font-size:.9rem;color:var(--ink-dim);display:flex;gap:.8rem;align-items:flex-start}
+  .banner b{color:var(--ink)}
+  /* footer */
+  footer{border-top:1px solid var(--line);padding:3rem 0 3.5rem;color:var(--ink-faint);font-size:.85rem}
+  footer .cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:2rem;margin-bottom:2.2rem}
+  footer h4{font-size:.75rem;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-dim);margin-bottom:.9rem}
+  footer ul{list-style:none}
+  footer li{margin-bottom:.55rem}
+  footer a{color:var(--ink-dim)}
+  footer a:hover{color:var(--acc);text-decoration:none}
+  footer .legal{border-top:1px solid var(--line);padding-top:1.4rem;font-size:.78rem;line-height:1.7;max-width:78ch}
+  @media(max-width:640px){nav .links .hide-sm{display:none}header{padding-top:3.4rem}h1{font-size:2.4rem}}
 </style>
 </head>
 <body>
 <nav>
   <div class="wrap">
-    <a class="brand" href="/">Council of AI<small>we measure · we sign · we re-attest</small></a>
-    <a href="/gspc-scoreboard/">Scoreboard</a>
-    <a href="https://councilof.ai/gspc-verify">Verify</a>
-    <a href="https://councilof.ai/gspc-arena">Arena</a>
-    <a href="/paper-district.html">City</a>
-    <a href="#what-the-data-says">What the data says</a>
+    <a class="brand" href="/" aria-label="Council of AI home">
+      <svg viewBox="0 0 100 100" width="34" height="34" aria-hidden="true"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#34d399"/><stop offset="1" stop-color="#0ea371"/></linearGradient></defs><path d="M50 4 L92 20 L92 52 C92 78 50 96 50 96 C50 96 8 78 8 52 L8 20 Z" fill="url(#g)"/><g stroke="#04110b" stroke-width="4" fill="none" opacity=".9"><path d="M28 30 L28 70 M28 40 L44 40 M28 55 L38 55"/><path d="M56 36 Q68 30 72 44 Q80 42 76 56 Q84 62 70 70 Q64 76 56 70"/></g></svg>
+      <span>Council of AI<small>we measure · we sign · we re-attest</small></span>
+    </a>
+    <div class="links">
+      <a href="#board" class="hide-sm">Board</a>
+      <a href="#how" class="hide-sm">How it works</a>
+      <a href="#fleet" class="hide-sm">Fleet</a>
+      <a href="/gspc-scoreboard/">Scoreboard</a>
+      <a href="https://councilof.ai/gspc-verify">Verify</a>
+      <a class="cta-mini" href="https://councilof.ai/gspc-arena">Open Council Space</a>
+    </div>
   </div>
 </nav>
+
 <header>
   <div class="wrap">
-    <p class="kicker">Independent measurement body for AI behaviour · CSOAI Ltd · UK 16939677</p>
-    <h1>We measure. We sign. We re-attest. Everyone can check.</h1>
-    <p class="lede">Signed receipts for how AI systems behave. Free verification, no permission needed. Not a certification, not a notified body, no money from anything we rank.</p>
-    <p>
-      <a class="cta primary" href="/gspc-scoreboard/">Signed scoreboard</a>
-      <a class="cta" href="https://councilof.ai/gspc-verify">Verify a card</a>
-      <a class="cta" href="#what-the-data-says">What the data says</a>
-    </p>
+    <span class="badge"><span class="pulse"></span> Independent measurement body · CSOAI Ltd · UK 16939677</span>
+    <h1>We measure. We sign. <span class="hl">We re-attest.</span> Everyone can check.</h1>
+    <p class="lede">Signed receipts for how AI systems behave — a 3KB card, Ed25519-signed and timestamp-anchored, verifiable client-side against a published key. <b>Not a certification</b>, not a notified body, no money from anything we rank. UNMEASURED stays empty; we do not fill a cell to look complete.</p>
+    <div class="cta-row">
+      <a class="btn primary" href="/gspc-scoreboard/">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M3 3v16a2 2 0 0 0 2 2h16"/><path d="M18 17V9M13 17V5M8 17v-3"/></svg>
+        Signed scoreboard
+      </a>
+      <a class="btn ghost" href="https://councilof.ai/gspc-verify">Verify a card</a>
+      <a class="btn ghost" href="#board">What the data says</a>
+    </div>
+    <div class="stats">
+      <div class="stat"><div class="n">13 <small>axes</small></div><div class="l">measured on the 12 Aug board</div><div class="ci">15-slot instrument · 2 honest empties</div></div>
+      <div class="stat"><div class="n">19 <small>models</small></div><div class="l">open-weight fleet, deterministic gate</div><div class="ci">no model judged another</div></div>
+      <div class="stat"><div class="n">247 <small>cells</small></div><div class="l">quotable, n ≥ 30, 95% interval</div><div class="ci">a number only when quotable</div></div>
+      <div class="stat"><div class="n">0.972 <small>best art5</small></div><div class="l">EU AI Act Art 5 prohibited-practice trip</div><div class="ci">n=36 · 0.86–1.00</div></div>
+    </div>
   </div>
 </header>
-<main>
+
+<section id="board">
   <div class="wrap">
-    <section id="what-the-data-says">
-      <h2>What the data says — 12 Aug 2026 board</h2>
-      <p class="sub">13 measured axes × 19 open-weight models. A number appears only when it is quotable (usable n ≥ 30, with a computed 95% interval). This stamp is unsigned; the harness is published — recompute it.</p>
-      <div class="facts">
-        <div class="fact"><div class="n">0.972 <small>best · art5</small></div><div class="l">EU AI Act Art 5 prohibited-practice trip</div><div class="ci">n=36 · 95% CI 0.86–1.00</div></div>
-        <div class="fact"><div class="n">0.700 <small>best · governance</small></div><div class="l">governance axis, largest sample</div><div class="ci">n=237 · 95% CI 0.64–0.76</div></div>
-        <div class="fact"><div class="n">0.975 <small>best · swarm</small></div><div class="l">multi-agent coordination safety</div><div class="ci">n=40 · 95% CI 0.87–1.00</div></div>
-        <div class="fact"><div class="n">0.535 <small>best · care</small></div><div class="l">care floor under paired conduct</div><div class="ci">n=200 · 95% CI 0.47–0.60</div></div>
-      </div>
-      <p class="empty-note">Honest emptiness: the jail axis and slot 15 carry <strong>no score on this stamp</strong>. We do not fill a cell to look complete next to a badge.</p>
-      <p class="sub">247 quotable cells across 13 axes — every one reproducible from the signed board records. Deterministic gate: no model judged another.</p>
-    </section>
-
-    <section id="grid">
-      <h2>Public grid — 15 slots</h2>
-      <p class="sub">Live API emits 13 measured axes. The public grid is 15 slots. Empty cells stay empty. No invented scores.</p>
-      <div class="grid">
-        <div class="slot measured"><strong>governance</strong> measured</div>
-        <div class="slot measured"><strong>safety</strong> measured</div>
-        <div class="slot measured"><strong>provenance</strong> measured</div>
-        <div class="slot measured"><strong>continuity</strong> measured</div>
-        <div class="slot measured"><strong>conformance</strong> measured</div>
-        <div class="slot measured"><strong>openness</strong> measured</div>
-        <div class="slot measured"><strong>machinery-conformity</strong> measured</div>
-        <div class="slot measured"><strong>care</strong> measured</div>
-        <div class="slot measured"><strong>cross-reality</strong> measured</div>
-        <div class="slot measured"><strong>detector-interop</strong> measured</div>
-        <div class="slot measured"><strong>art5-safeguard</strong> measured</div>
-        <div class="slot measured"><strong>swarm</strong> measured</div>
-        <div class="slot"><strong>affect</strong> in API, not on board</div>
-        <div class="slot"><strong>gspc_jail</strong> on board, not in API</div>
-        <div class="slot empty"><strong>slot 15</strong> unmeasured — no score yet</div>
-      </div>
-      <p class="sub">“Measured” means the axis exists in the live register — it is not a score. Open the scoreboard for signed cells.</p>
-    </section>
-
-    <section id="how">
-      <h2>How to check us</h2>
-      <div class="steps">
-        <div class="step"><span class="num">1</span><b>We measure</b><span>Frozen, published benchmarks. Deterministic gate. No model judges another.</span></div>
-        <div class="step"><span class="num">2</span><b>We sign</b><span>A 3KB card, Ed25519-signed and timestamp-anchored. Harness published with it.</span></div>
-        <div class="step"><span class="num">3</span><b>You verify</b><span>Client-side, loginless, against the published key. No permission needed.</span></div>
-      </div>
-    </section>
-
-    <section id="fleet">
-      <h2>Measured on our own fleet</h2>
-      <p class="sub">We do not rent judgement — the measurements run on hardware we control. Live status below comes from our fleet API.</p>
-      <div id="fleet"><span class="chip"><b>Loading fleet status…</b></span></div>
-      <p class="fleet-foot" id="fleet-note">Public fleet map · sanitized — internal names, endpoints and keys are never published.</p>
-    </section>
+    <p class="kicker">The board · 12 Aug 2026 · unsigned</p>
+    <h2>What the data says</h2>
+    <p class="sub">13 measured axes × 19 open-weight models. A cell shows a number only if it is quotable (usable n ≥ 30, computed 95% interval). This stamp is unsigned; the harness is published — <a href="https://huggingface.co/datasets/csoai" rel="noopener">recompute it</a>.</p>
+    <div class="axis-grid">
+      <div class="axis"><div class="t">Art 5 safeguard <span class="tag">measured</span></div><div class="val">0.972 <small>/ best</small></div><div class="name">EU AI Act Art 5 trip</div><div class="meta">n=36 · 0.86–1.00</div></div>
+      <div class="axis"><div class="t">Governance <span class="tag">measured</span></div><div class="val">0.700 <small>/ best</small></div><div class="name">largest sample on the board</div><div class="meta">n=237 · 0.64–0.76</div></div>
+      <div class="axis"><div class="t">Swarm <span class="tag">measured</span></div><div class="val">0.975 <small>/ best</small></div><div class="name">multi-agent coordination</div><div class="meta">n=40 · 0.87–1.00</div></div>
+      <div class="axis"><div class="t">Care <span class="tag">measured</span></div><div class="val">0.535 <small>/ best</small></div><div class="name">care floor, paired conduct</div><div class="meta">n=200 · 0.47–0.60</div></div>
+      <div class="axis"><div class="t">Detection <span class="tag">measured</span></div><div class="val">0.879 <small>/ best</small></div><div class="name">detector-interop watermark</div><div class="meta">n=33 · 0.73–0.95</div></div>
+      <div class="axis"><div class="t">Openness <span class="tag">measured</span></div><div class="val">0.875 <small>/ best</small></div><div class="name">licence vs intended use</div><div class="meta">n=32 · 0.72–0.95</div></div>
+      <div class="axis"><div class="t">Cross-reality <span class="tag">measured</span></div><div class="val">0.812 <small>/ best</small></div><div class="name">agent action authority</div><div class="meta">n=32 · 0.65–0.91</div></div>
+      <div class="axis"><div class="t">Privacy <span class="tag">measured</span></div><div class="val">0.781 <small>/ best</small></div><div class="name">personal-data reasoning</div><div class="meta">n=32 · 0.61–0.89</div></div>
+      <div class="axis"><div class="t">MCP <span class="tag">measured</span></div><div class="val">0.743 <small>/ best</small></div><div class="name">tool conformance</div><div class="meta">n=35 · 0.58–0.86</div></div>
+      <div class="axis"><div class="t">Machinery <span class="tag">measured</span></div><div class="val">0.545 <small>/ best</small></div><div class="name">safety-function classification</div><div class="meta">n=33 · 0.38–0.70</div></div>
+      <div class="axis"><div class="t">Affect <span class="tag">measured</span></div><div class="val">0.878 <small>/ best</small></div><div class="name">emotional &amp; embodied safety</div><div class="meta">n=41 · 0.74–0.95</div></div>
+      <div class="axis"><div class="t">Provenance <span class="tag">measured</span></div><div class="val">— <small>/ axis live</small></div><div class="name">signed-chain provenance</div><div class="meta">axis in register</div></div>
+      <div class="axis"><div class="t">Continuity <span class="tag">measured</span></div><div class="val">— <small>/ axis live</small></div><div class="name">continuity register</div><div class="meta">axis in register</div></div>
+      <div class="axis"><div class="t">gspc_jail <span class="tag empty">unmeasured</span></div><div class="val">—</div><div class="name">containment / sandbox-escape</div><div class="meta">no invented score — honest empty</div></div>
+      <div class="axis"><div class="t">Slot 15 <span class="tag empty">unmeasured</span></div><div class="val">—</div><div class="name">reserved, no name assigned</div><div class="meta">empty until a 15th axis emits</div></div>
+    </div>
+    <p class="honest-note">Honest emptiness: the jail axis and slot 15 carry <b>no score on this stamp</b>. Escape-resistance is the zeitgeist axis right now — we keep it unmeasured until a real n ≥ 30 signed cell exists, rather than invent a number next to someone's badge.</p>
+    <p class="sub" style="margin-top:1.4rem">247 quotable cells, every one reproducible from the published board records. This stamp is unsigned — signed boards exist for earlier stamps. <a href="/gspc-scoreboard/">Open the full scoreboard →</a></p>
   </div>
-</main>
+</section>
+
+<section id="how">
+  <div class="wrap">
+    <p class="kicker">How to check us</p>
+    <h2>Three steps. No permission needed.</h2>
+    <p class="sub">We do not ask you to trust us. We give you the receipts and the key, and you check the chain yourself.</p>
+    <div class="steps">
+      <div class="step"><span class="num">1</span><h3>We measure</h3><p>Frozen, published benchmarks against a deterministic gate. No model judges another, no vendor pays to be ranked.</p></div>
+      <div class="step"><span class="num">2</span><h3>We sign</h3><p>A 3KB card, Ed25519-signed and timestamp-anchored. The harness ships with the card, so the run is reproducible.</p></div>
+      <div class="step"><span class="num">3</span><h3>You verify</h3><p>Client-side, loginless, against the published key. If you can check it, it is evidence; if you cannot, it is not.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="fleet">
+  <div class="wrap">
+    <p class="kicker">Our own hardware</p>
+    <h2>Measured on our own fleet</h2>
+    <p class="sub">We do not rent judgement. The measurements run on hardware we control — arena workers, heavy workers and the always-free substrate — with live status from our fleet API.</p>
+    <div id="fleet"><span class="fleet-chip"><b>Loading fleet status…</b></span></div>
+    <p class="fleet-foot" id="fleet-note">Public fleet map · sanitized — internal names, endpoints and keys are never published.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="banner">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="2" stroke-linecap="round" style="flex:none;margin-top:2px"><path d="M12 9v4m0 4h.01"/><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z"/></svg>
+      <p><b>Industry scoreboards are self-graded. Ours are signed.</b> Anyone can publish a leaderboard; the difference is whether a stranger can recompute it. Ours is a signed, timestamp-anchored measurement credential — never a badge of approval.</p>
+    </div>
+  </div>
+</section>
+
 <footer>
   <div class="wrap">
-    <p>CSOAI Ltd · UK 16939677 · <a href="https://councilof.ai">councilof.ai</a> · <a href="/">csoai.org</a></p>
-    <p>Verified measurement credential. Never certification. Unknown paths return a real 404 — we do not serve the homepage as a stand-in.</p>
+    <div class="cols">
+      <div>
+        <h4>Council of AI</h4>
+        <ul>
+          <li><a href="/gspc-scoreboard/">Signed scoreboard</a></li>
+          <li><a href="https://councilof.ai/gspc-verify">Verify a card</a></li>
+          <li><a href="https://councilof.ai/gspc-arena">Council Space</a></li>
+          <li><a href="/paper-district.html">Council City</a></li>
+          <li><a href="https://councilof.ai/measure">Get measured</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Legal</h4>
+        <ul>
+          <li><a href="/privacy-policy.html">Privacy</a></li>
+          <li><a href="/terms-of-service.html">Terms</a></li>
+          <li><a href="/disclaimers.html">Disclaimers</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Company</h4>
+        <ul>
+          <li>CSOAI Ltd · UK 16939677</li>
+          <li><a href="https://councilof.ai">councilof.ai</a></li>
+          <li><a href="/">csoai.org</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="legal">
+      <p>Council of AI is an independent measurement body: signed + re-attested + independent. We are not a certification body and not a notified body, and we take no money from anything we rank. Unknown paths return a real 404 — we do not serve the homepage as a stand-in, the same way we report unmeasured cells honestly.</p>
+      <p style="margin-top:.6rem">Verified measurement credential. Never certification. © 2026 CSOAI.</p>
+    </div>
   </div>
 </footer>
+
 <script>
 (function(){
   var box=document.getElementById('fleet');
@@ -173,7 +264,7 @@
     box.innerHTML='';
     (workers||fallback).forEach(function(w){
       var d=document.createElement('span');
-      d.className='chip'+(w.status==='paused'||w.status==='stopped'?' paused':'');
+      d.className='fleet-chip'+(w.status==='paused'||w.status==='stopped'?' paused':'');
       d.innerHTML='<span class="dot"></span><b>'+w.gpu+'</b> · '+w.role+' · '+(w.status||'—');
       box.appendChild(d);
     });
