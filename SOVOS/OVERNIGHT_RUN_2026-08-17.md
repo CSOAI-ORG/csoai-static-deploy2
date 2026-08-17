@@ -24,6 +24,28 @@
  "grok_referee_rounds": 64, "arena_rounds": 1807, "volume": "/workspace"}
 ```
 
+## MEGA-MINE v2 (16:49Z — driver upgraded mid-run, no downtime)
+
+**2,709 docs** (was 304) · **34,051 unique terms** · **924,359 tokens** — the OOWM knowledge graph is now **8.9×** the original size:
+
+| Source | Docs |
+|---|---|
+| llm_json companions | 1,200 |
+| csoai_site HTML cards | 500 |
+| temple_py (3,580-file corpus) | 479 |
+| charters (sovereign-charters) | 218 |
+| alignment canon | 110 |
+| **github_repo (CSOAI-ORG readmes)** | 90 |
+| sovos_package READMEs | 32 |
+| github_agent (agent.json) | 26 |
+| sov_os docs | 13 |
+| github_mcp (mcp.json) | 4 |
+| oowm_mcp + doctrine + registry + mine + fleet | 37 |
+
+- **GitHub mine added:** `gh api` per repo — README + agent.json + mcp.json for all 120 CSOAI-ORG repos (90 mined OK, rest no README). Fail-soft offline.
+- **Driver upgraded:** ingest `--cap 8000`, all keepers re-verified, mega-mine index deployed to pod volume, MCP boots 2,709 docs pod-side.
+- **Every 5-min tick** re-runs the full mega-mine (local corpus + GitHub cards) — the knowledge graph grows all night.
+
 ## Key gates / notes
 
 - **Grok key resolved:** direct xAI key is GUI-gated in the keychain → **OpenRouter backend live** (`OPENROUTER_API_KEY` from keystone, `x-ai/grok-4.6`, provider pinned to xAI). Referee measures for real (earlier rounds were UNMEASURED/no-key; now scored).
