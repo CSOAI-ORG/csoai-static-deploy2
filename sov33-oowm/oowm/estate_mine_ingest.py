@@ -235,6 +235,20 @@ def collect(cap, with_github=True):
         except Exception:
             pass
 
+    # Specialist Ring deltas (Playbook §4) + Zeus/Eunomia walks (§5)
+    ring_dir = Path("/workspace/arena-24x7/ring")
+    for p in sorted(ring_dir.glob("ring_*.json"))[:10]:
+        try:
+            push(p, "ring_delta", p.read_text(errors="replace")[:4000])
+        except Exception:
+            pass
+    walk_dir = Path("/workspace/arena-24x7/zeus_eunomia")
+    for p in sorted(walk_dir.glob("walk_*.json"))[:10]:
+        try:
+            push(p, "dual_walk", p.read_text(errors="replace")[:4000])
+        except Exception:
+            pass
+
     # Honey KB (forest/) — 94K+ training pairs, sampled (estate's biggest data seam)
     honey_bases = [Path("/workspace/forest") if POD_STASH.is_dir() else D2 / "forest"]
     for hb in honey_bases:
