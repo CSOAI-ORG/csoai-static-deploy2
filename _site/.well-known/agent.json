@@ -1,12 +1,12 @@
 {
   "name": "CSOAI Measurement Agent",
-  "description": "Measurement body for AI compliance. Publishes frozen benchmark harnesses, measures models and agent systems under deterministic conditions, and signs results (Ed25519) so evidence is recompute-able by any third party. No certification, accreditation, or enforcement authority — we measure, we publish harnesses, others recompute.",
-  "url": "https://csoai.org",
-  "version": "0.1.0",
+  "description": "Measurement body for AI compliance. Publishes frozen benchmark harnesses, measures models and agent systems under deterministic conditions, and signs results (Ed25519) so evidence is recompute-able by any third party. No certification, accreditation, or enforcement authority \u2014 we measure, we publish harnesses, others recompute.",
   "provider": {
-    "organization": "CSOAI Ltd",
-    "url": "https://csoai.org"
+    "url": "https://csoai.org",
+    "organization": "CSOAI Ltd"
   },
+  "version": "0.1.0",
+  "documentationUrl": "https://csoai.org",
   "capabilities": {
     "streaming": false,
     "pushNotifications": false
@@ -15,32 +15,21 @@
     {
       "id": "measured-leaderboard",
       "name": "Measured results readout",
-      "description": "Returns measured benchmark results only — official lm-eval-harness format runs on frozen splits with confidence intervals. No fabricated baselines.",
-      "endpoint": "https://csoai.org/api/leaderboard",
-      "method": "GET"
+      "description": "Returns measured benchmark results only \u2014 official lm-eval-harness format runs on frozen splits with confidence intervals. No fabricated baselines."
     },
     {
       "id": "health",
       "name": "Liveness probe",
-      "description": "Honest liveness signal. No invented metrics.",
-      "endpoint": "https://csoai.org/api/health",
-      "method": "GET"
+      "description": "Honest liveness signal. No invented metrics."
     }
   ],
-  "evidence": {
-    "harnesses": [
-      "https://huggingface.co/datasets/csoai/provbench",
-      "https://huggingface.co/datasets/csoai/aiact-frozen-split-harness",
-      "https://huggingface.co/datasets/csoai/govbench",
-      "https://huggingface.co/datasets/csoai/compbench",
-      "https://huggingface.co/datasets/csoai/swarmbench",
-      "https://huggingface.co/datasets/csoai/airbench-eu-mandatory-run"
-    ],
-    "models": [
-      "https://huggingface.co/csoai/sov33-unified",
-      "https://huggingface.co/csoai/sov34-1p5b"
-    ],
-    "register": "https://csoai.org/llms.txt"
-  },
-  "pricing": "https://csoai.org/api/skus"
+  "signatures": [
+    {
+      "protected": "eyJhbGciOiJFZERTQSIsInR5cCI6IkpXVCJ9",
+      "signature": "LP7WLeHbTKxY3w4E8iK6fh7Hfb4maZ08Q9S6QjH3FEjTQmrXlKcfCgiJu0VYK5W7FCxMAO6-7XwJo7yhYkbWAQ",
+      "header": {
+        "typ": "JWT"
+      }
+    }
+  ]
 }
