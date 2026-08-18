@@ -1,0 +1,47 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://csoai.org/verification.schema.json",
+  "title": "CSOAI signed-artifact verification surface",
+  "description": "Machine-readable declaration of how to verify any Council of AI signed artifact. Verification is free forever — no account, no key, no payment rail (x402/AP2-style pricing declaration: free tier is the only tier for verification).",
+  "publisher": "Council of AI (CSOAI LTD, UK #16939677)",
+  "identity": "did:web:csoai.org",
+  "canon": {
+    "serialization": "json.dumps(payload, sort_keys=True, separators=(',',':'), ensure_ascii=False)",
+    "contentId": "sha256(canonical utf-8) as lowercase hex",
+    "signatureScheme": "Ed25519 over contentId.encode()"
+  },
+  "keys": {
+    "document": "https://csoai.org/.well-known/did.json",
+    "verificationMethods": [
+      "did:web:csoai.org#site-release-1",
+      "did:web:csoai.org#estate-chain-1"
+    ]
+  },
+  "artifactFamilies": [
+    {
+      "family": "site-artifact",
+      "examples": ["https://csoai.org/agent-card.json", "https://csoai.org/.well-known/agent.json"],
+      "signatureField": "signatures[]",
+      "publicKeyVerifiable": true
+    },
+    {
+      "family": "release-proof",
+      "schema": "csoai-release-proof-v1",
+      "signatureField": "signature",
+      "publicKeyVerifiable": false,
+      "note": "digest recomputes publicly (tamper-evidence); keyed signature verifies against the estate keystone. Public-key authorship verification for this family is roadmap and is labelled as such."
+    }
+  ],
+  "pricing": {
+    "verification": "free",
+    "tiers": ["free"],
+    "paymentRails": []
+  },
+  "endpoints": {
+    "verifyUI": "https://councilof.ai/verify",
+    "mcp": "https://csoai-gspc-mcp.nicholastempleman.workers.dev/mcp",
+    "canonicalDois": "https://csoai.org/CANONICAL-DOIS.md",
+    "badge": "https://csoai.org/badge/axes.json"
+  },
+  "stdlibVerifier": "https://www.kaggle.com/code/nicktempleman/verify-csoai-signed-cards"
+}
