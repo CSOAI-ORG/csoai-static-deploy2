@@ -235,6 +235,40 @@ def collect(cap, with_github=True):
         except Exception:
             pass
 
+    # Honey KB (forest/) — 94K+ training pairs, sampled (estate's biggest data seam)
+    honey_bases = [Path("/workspace/forest") if POD_STASH.is_dir() else D2 / "forest"]
+    for hb in honey_bases:
+        for hf in sorted(hb.glob("honey_*.jsonl"))[:5]:
+            try:
+                with hf.open() as f:
+                    lines = [ln for ln in f if ln.strip()][:5000]  # P1: 5K-row honey window
+                for i, ln in enumerate(lines):
+                    push(f"{hf}:{i}", "honey_kb", ln[:4000])
+            except Exception:
+                pass
+
+    # benchmark-results + forest harness cards (measurement corpus)
+    br_base = Path("/workspace") if POD_STASH.is_dir() else KR / "benchmark-results"
+    for p in sorted(br_base.glob("**/*.json"))[:500]:
+        if p.is_file() and p.stat().st_size < 300_000:
+            try:
+                push(p, "benchmark_result", p.read_text(errors="replace")[:4000])
+            except OSError:
+                pass
+    for p in sorted(D2.glob("forest/*.json"))[:200]:
+        if p.is_file() and p.stat().st_size < 300_000:
+            try:
+                push(p, "forest_card", p.read_text(errors="replace")[:4000])
+            except OSError:
+                pass
+
+    # mcp-marketplace — the 710-package fleet (READMEs)
+    for p in sorted((CL / "mcp-marketplace").glob("*/README.md"))[:600]:
+        try:
+            push(p, "mcp_package", p.read_text(errors="replace")[:4000])
+        except OSError:
+            pass
+
     push(Path("sovereign-os-5-worlds"), "sovereign_os", WORLDS)
     return items[:cap]
 
