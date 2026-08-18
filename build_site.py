@@ -49,7 +49,7 @@ DIRS = ["tools", ".well-known", "assets", "images", "static", "_templates",
         # verified live and serving real content (not the 4,164-byte soft-404) on
         # 2026-08-05: /portal/ 19,235 B · /sovereign-wiki/ 4,947 B · /eu-ai-act/ 5,427 B
         # and its sub-routes /eu-ai-act/summary, /risk, /high-risk, /compliance.
-        "portal", "sovereign-wiki", "eu-ai-act", "badge", "proof-anchors",
+        "portal", "sovereign-wiki", "eu-ai-act", "badge", "proof-anchors", "corrections",
         # Cloudflare Pages Functions (Pages Functions = /functions/api/*.js)
         # Verified live 2026-08-05: /api/health, /api/leaderboard, /api/eat-tick,
         # /api/stats, /api/skus, /api/sov-bridge. Adding /functions means every

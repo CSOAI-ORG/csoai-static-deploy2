@@ -1,0 +1,19 @@
+{
+  "schema": "csoai-correction-schema-v1",
+  "title": "Correction receipt — the supersession primitive",
+  "rules": [
+    "never delete; supersede",
+    "every correction references the receipt it supersedes by contentId",
+    "the verify surface always resolves the HEAD of a supersession chain",
+    "corrections publish in the same record as results, signed"
+  ],
+  "fields": {
+    "schema": "csoai-correction-receipt-v1",
+    "id": "COR-YYYYMMDD-NN",
+    "supersedes": "contentId or artifact identifier of the superseded artifact",
+    "reason_code": "one of: factual-error | identity-error | overclaim | stale-version | security-rotation | process-fix",
+    "evidence": "what changed and how a third party checks it",
+    "issued": "ISO-8601 UTC",
+    "signatures": "Ed25519 per KEY-CONTINUITY canon"
+  }
+}
