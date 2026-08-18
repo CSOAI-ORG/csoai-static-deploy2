@@ -56,6 +56,23 @@
 
 **Honest note:** "Grok" measurement currently = `gpt-oss-120b` via Groq (frontier fallback). True xAI Grok resumes automatically when OpenRouter credits are added OR the direct xAI key is unlocked (`security find-generic-password -a "Grok Bot Key" -s "Grok Bot Safe Storage" -w` → `~/.runpod/secrets/xai.key`).
 
+## MINE v3 — live measurement sources (02:42Z, tick 116)
+
+**2,205 docs/tick on the pod** (was 1,588) — the mine now ingests **the estate's own live measurement data**:
+
+| Source | Docs |
+|---|---|
+| llm_json companions | 1,085 |
+| alignment canon | 499 |
+| **arena_round (real Elo rounds, live)** | 400 |
+| **grok_referee_round (Grok/Groq referee, live)** | 187 |
+| **hf_dataset (csoai/ HF catalog: agisafe-bench, aiact-frozen-split-harness, coai-bench, gspc-care, arena-matrices…)** | 29 |
+| **arena_league (live Elo table)** | 1 |
+| oowm_mcp + taxonomy + sovereign_os | 4 |
+
+- **Arena rounds are the crown seam:** 2,112+ real measured rounds (Elo, 7 models, 4 axes) now queryable through `query_oowm` — the knowledge graph contains the estate's own measurement history, not just documents.
+- **Every 5-min tick re-mines:** fresh arena rounds (growing ~5/min), grok rounds, HF/Kaggle catalogs — the graph grows all night toward the 04:00Z target.
+
 ## Key gates / notes
 
 - **Grok key resolved:** direct xAI key is GUI-gated in the keychain → **OpenRouter backend live** (`OPENROUTER_API_KEY` from keystone, `x-ai/grok-4.6`, provider pinned to xAI). Referee measures for real (earlier rounds were UNMEASURED/no-key; now scored).
