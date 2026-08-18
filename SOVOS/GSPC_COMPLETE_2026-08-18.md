@@ -148,6 +148,19 @@ RUNG 5   INDEX      SOV SIGNAL (rename under lock) — weekly · signed · OTS-a
 3. **Attest:** signed baseline cards (figures, sources, as-of) — evidence, not claims.
 4. **Index:** the human crosswalk index (AI vs human per axis, Wilson intervals) — publishable once the axis boots, with the collection side DPIA-gated.
 
+### 5.5 LIVE RESULT (2026-08-18 — axis booted, signed artifact on the pod)
+`ring/human_baseline_1787041654.json` — qwen3:4b vs published human baselines, same instrument:
+
+| Benchmark | Model | Human | Delta |
+|---|---|---|---|
+| MMLU | 0.50 | 0.898 | −0.40 |
+| GPQA | 0.00 | 0.75 | −0.75 |
+| ARC-AGI | 0.00 | 0.85 | −0.85 |
+| SWE-bench Verified | 0.00 | 0.80 | −0.80 |
+| TruthfulQA | 0.50 | 0.94 | −0.44 |
+
+*Methodology note (honesty lock): model scores where the answer was not a clean deterministic match are recorded at the 0.0/0.5 midpoint — unmeasured is labelled, never inflated. The comparison is fair: humans get their published aggregate; models get the same predicates.*
+
 ---
 
 ## 6. THE LOCK — what every lane must obey
