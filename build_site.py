@@ -69,7 +69,7 @@ JSON_ALLOW = {
 # verified live with real bytes on csoai.org 2026-08-05 and is public on
 # purpose; dropping them in the first _site deploy would silently kill live URLs.
 EXTRA_FILES = {
-    "PROVBENCH_ARXIV_PREPRINT_2026-07-30.md",  # /PROVBENCH_ARXIV_PREPRINT_2026-07-30.md 11,296 B
+    "PROVBENCH_ARXIV_PREPRINT_2026-07-30.md", "CANONICAL-DOIS.md",  # /PROVBENCH_ARXIV_PREPRINT_2026-07-30.md 11,296 B
     "API_DOCUMENTATION.md",                     # /API_DOCUMENTATION.md 3,419 B
     "ARENA_SUBMISSION.md",                      # /ARENA_SUBMISSION.md 449 B
     "PROVBENCH_PAPER.pdf",                      # /PROVBENCH_PAPER.pdf 5,009 B
