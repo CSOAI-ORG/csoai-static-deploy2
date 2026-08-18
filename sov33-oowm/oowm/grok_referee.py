@@ -21,11 +21,13 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 OLLAMA = "http://localhost:11434/api/generate"
+OLLAMA_MUSE = "http://localhost:11435/api/generate"  # dedicated Muse Glimmer server (24h keep-alive)
 XAI_URL = "https://api.x.ai/v1/chat/completions"
 OR_URL = "https://openrouter.ai/api/v1/chat/completions"
 GROQ_URL = "https://api.groq.com/openai/v1/chat/completions"
-XAI_MODEL = os.environ.get("XAI_MODEL", "x-ai/grok-4.6")  # referee model; override at runtime
-GROQ_MODEL = os.environ.get("GROQ_REFEREE_MODEL", "openai/gpt-oss-120b")  # frontier fallback
+LOCAL_REFEREE_MODEL = os.environ.get("LOCAL_REFEREE_MODEL", "muse-glimmer:latest")
+XAI_MODEL = os.environ.get("XAI_MODEL", "x-ai/grok-4.6")  # legacy Grok lane (disabled per directive)
+GROQ_MODEL = os.environ.get("GROQ_REFEREE_MODEL", "openai/gpt-oss-120b")  # legacy fallback
 UA = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36"  # Groq blocks urllib default UA
 ELO_K = 32
 AXES = ["gov", "safety", "provenance", "continuity"]
@@ -42,19 +44,31 @@ HEARTBEAT = LEAGUE_DIR / "grok_referee_heartbeat.json"
 
 
 def get_api_key():
-    """Return (backend, key). backend is 'xai'|'openrouter'|'groq'; '' if none.
+    """Return (backend, key). backend is 'local'|'xai'|'openrouter'|'groq'; '' if none.
 
-    Resolution order (2026-08-17 v3): direct xAI env → OpenRouter env →
-    Groq env → file drop-ins. OpenRouter is tried first among files (Grok
-    via proxy); Groq is the always-available fallback so the referee never
-    sits idle on UNMEASURED for lack of a key."""
+    2026-08-18 (Nick directive): Muse Glimmer 30B is the referee. 'local' is
+    tried FIRST — the sovereign, open-weight, on-pod referee that never leaves
+    the building. External lanes (xAI/OpenRouter/Groq) remain as fallbacks but
+    are disabled unless the local model is absent."""
+    # 1. Muse Glimmer on the dedicated :11435 Ollama — the sovereign referee (primary)
+    try:
+        import urllib.request as _u
+        import json as _j
+        req = _u.Request("http://localhost:11435/api/tags")
+        with _u.urlopen(req, timeout=5) as r:
+            names = [m["name"] for m in _j.loads(r.read().decode()).get("models", [])]
+        if any(LOCAL_REFEREE_MODEL.split(":")[0] in n for n in names):
+            return "local", ""
+    except Exception:
+        pass
+    # 2. external lanes (legacy, disabled-by-default)
     for env_name, backend in (("XAI_API_KEY", "xai"),
                               ("OPENROUTER_API_KEY", "openrouter"),
                               ("GROQ_API_KEY", "groq")):
         v = os.environ.get(env_name, "").strip()
         if v:
             return backend, v
-    # file drop-ins (pod-friendly paths first)
+    # 3. file drop-ins
     for p, backend in ((Path("/workspace/or.key"), "openrouter"),
                        (Path("/workspace/.runpod/secrets/or.key"), "openrouter"),
                        (Path.home() / ".runpod" / "secrets" / "or.key", "openrouter"),
@@ -77,19 +91,29 @@ def elo_update(w, l):
     return w + ELO_K * (1 - expected(w, l)), l + ELO_K * (0 - expected(l, w))
 
 
-def query_ollama(model, prompt):
+def query_ollama(model, prompt, timeout=60, endpoint=None):
     try:
         body = json.dumps({"model": model, "prompt": prompt, "stream": False,
                            "options": {"temperature": 0, "num_predict": 15}}).encode()
-        req = urllib.request.Request(OLLAMA, data=body, headers={"Content-Type": "application/json"})
-        with urllib.request.urlopen(req, timeout=60) as r:
+        req = urllib.request.Request(endpoint or OLLAMA, data=body,
+                                     headers={"Content-Type": "application/json"})
+        with urllib.request.urlopen(req, timeout=timeout) as r:
             return len(r.read().decode().split())
     except Exception:
         return None
 
 
 def query_grok(backend, key, prompt):
-    """Referee call. backend: xai (direct) | openrouter (Grok proxy) | groq (frontier fallback)."""
+    """Referee call. backend: local (Muse Glimmer via Ollama, PREFERRED) |
+    xai (direct) | openrouter (Grok proxy) | groq (frontier fallback).
+
+    2026-08-18 (Nick directive): 'dont use grok use Meta Muse Glimmer 30B'.
+    Muse Glimmer is the primary referee — local, sovereign, open-weight, and
+    it never leaves the building (no API credits, no third-party referee)."""
+    if backend == "local":
+        # Muse Glimmer 30B on the dedicated :11435 server — the sovereign referee.
+        # 30B inference is slow on a busy 3090: give it up to 240s.
+        return query_ollama(LOCAL_REFEREE_MODEL, prompt, timeout=240, endpoint=OLLAMA_MUSE)
     if backend == "xai":
         url, model = XAI_URL, XAI_MODEL
     elif backend == "openrouter":
@@ -138,7 +162,9 @@ def main():
     try:
         req = urllib.request.Request("http://localhost:11434/api/tags")
         with urllib.request.urlopen(req, timeout=5) as r:
-            ours = [m["name"] for m in json.loads(r.read()).get("models", []) if ":" in m.get("name", "")]
+            ours = [m["name"] for m in json.loads(r.read()).get("models", [])
+                    if ":" in m.get("name", "")
+                    and LOCAL_REFEREE_MODEL.split(":")[0] not in m.get("name", "")]
     except Exception:
         print("no ollama")
     if not ours:
@@ -155,10 +181,12 @@ def main():
         ts = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
 
         s_local = query_ollama(model, prompt)
-        s_grok = query_grok(backend, key, prompt) if key else None
+        # local backend carries no key — Muse Glimmer must still be called
+        s_grok = query_grok(backend, key, prompt) if (key or backend == "local") else None
 
         record = {"ts": ts, "axis": axis, "model": model,
-                  "grok_model": GROQ_MODEL if backend == "groq" else XAI_MODEL,
+                  "grok_model": (LOCAL_REFEREE_MODEL if backend == "local"
+                                  else GROQ_MODEL if backend == "groq" else XAI_MODEL),
                   "score_local": s_local, "score_grok": s_grok,
                   "grok_key_present": bool(key), "grok_backend": backend or "none"}
         if s_local is not None and s_grok is not None:
