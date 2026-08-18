@@ -23,7 +23,7 @@
 | 14 | **Sim World h3k cards** | ed25519-signed benchmark cards | 1 (live) | ✅ mined, new cards bankable |
 | 15 | **SOVOS packages + sov-os + doctrine** | SOVOS/ sov-os/ registry | 55 | ✅ mined |
 
-**Totals:** Mac build **4,600 docs** · pod build **2,703 docs** (limited by volume mirror) · every 5-min tick re-mines and grows.
+**Totals:** Mac build **8,999 docs** (v4: honey 5K) · pod build **2,703 docs** (limited by volume mirror) · every 5-min tick re-mines and grows.
 
 ## 2. THE STACK — what's running (all on pod volume `/workspace`)
 
@@ -48,8 +48,8 @@
 ### 🤖 Agent-doable next (no owner needed)
 | # | Phase | What | Est. |
 |---|---|---|---|
-| P1 | **Full honey ingestion** | Raise honey window 600→5,000 rows (94K total available) | 1h |
-| P2 | **Arena axis expansion** | Arena 4 axes → 16 GSPC axes (matches sim world) | 2h |
+| P1 | **Full honey ingestion** | ✅ **DONE — 5,458 honey rows (94K total available, 5K window)** | done |
+| P2 | **Arena axis expansion** | ✅ **DONE — 4 → 16 GSPC axes live (round 2,123+)** | done |
 | P3 | **Referee model pool** | Round-robin all 7 OOWM models vs frontier (currently 1 random) | 1h |
 | P4 | **A100 fleet guardian** | Verify `com.meok.oracle-fleet-guardian` pattern → RunPod equivalent | 1h |
 | P5 | **sovereign-os.html wiring** | Live-read `grok_referee_league.json` + arena rounds on the public surface | 2h |
