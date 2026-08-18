@@ -221,6 +221,20 @@ def collect(cap, with_github=True):
     except Exception:
         pass
 
+    # Sim World signed h3k cards — the living-DB training fuel (ed25519-signed)
+    for p in sorted(Path("/workspace").glob("sim-world-card*.json"))[:5]:
+        try:
+            data = json.loads(p.read_text(errors="replace"))
+            push(p, "h3k_card", json.dumps(data, indent=1)[:4000])
+        except Exception:
+            pass
+    # latest card dir mirror (if synced)
+    for p in sorted(Path("/workspace").glob("h3k-*.json"))[:5]:
+        try:
+            push(p, "h3k_card", p.read_text(errors="replace")[:4000])
+        except Exception:
+            pass
+
     push(Path("sovereign-os-5-worlds"), "sovereign_os", WORLDS)
     return items[:cap]
 
