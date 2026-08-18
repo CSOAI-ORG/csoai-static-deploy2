@@ -179,6 +179,48 @@ def collect(cap, with_github=True):
         except Exception:
             pass
 
+    # Live arena rounds + league — the measurement mine (real Elo, real axes)
+    for apath, src in ((Path("/workspace/arena-24x7/reborn_rounds.jsonl"), "arena_round"),
+                       (Path("/workspace/arena-24x7/grok_referee_rounds.jsonl"), "grok_referee_round"),
+                       (Path("/workspace/arena-24x7/league.json"), "arena_league")):
+        if apath.is_file():
+            try:
+                if apath.suffix == ".jsonl":
+                    with apath.open() as f:
+                        lines = [ln for ln in f if ln.strip()][-400:]  # tail window
+                    for i, ln in enumerate(lines):
+                        push(f"{apath}:{i}", src, ln)
+                else:
+                    push(apath, src, apath.read_text(errors="replace")[:4000])
+            except Exception:
+                pass
+
+    # HF datasets (API) — the bench corpus catalog
+    try:
+        import subprocess as _sp
+        out = _sp.run(["curl", "-s", "-m", "20",
+                       "https://huggingface.co/api/datasets?author=csoai&limit=100"],
+                      capture_output=True, text=True, timeout=30)
+        hf = json.loads(out.stdout)
+        for d in hf:
+            did = d.get("id", "")
+            if did:
+                push(f"hf:{did}", "hf_dataset",
+                     f"HF dataset {did}: {d.get('description','')} downloads={d.get('downloads',0)} likes={d.get('likes',0)} tags={','.join(d.get('tags',[])[:10])}")
+    except Exception:
+        pass
+
+    # Kaggle datasets (CLI) — nicktempleman catalog
+    try:
+        import subprocess as _sp
+        out = _sp.run(["kaggle", "datasets", "list", "--user", "nicktempleman", "--csv"],
+                      capture_output=True, text=True, timeout=60)
+        for ln in out.stdout.splitlines()[1:]:  # skip header
+            if ln.strip():
+                push(f"kaggle:{ln.split(',')[0]}", "kaggle_dataset", ln[:4000])
+    except Exception:
+        pass
+
     push(Path("sovereign-os-5-worlds"), "sovereign_os", WORLDS)
     return items[:cap]
 
