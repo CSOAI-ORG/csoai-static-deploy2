@@ -1,0 +1,102 @@
+{
+  "schema": "csoai-banks-manifest-v1",
+  "title": "Hash-sealed frozen bank manifest",
+  "issued": "2026-08-18T13:25:37Z",
+  "note": "These hashes seal the frozen GSPC item banks. Any future change to a bank breaks its hash publicly — the seal makes silent edits impossible. Test sets are not private trust-us sets: their hashes are committed here.",
+  "banks": [
+    {
+      "bank": "gspc-affect",
+      "sha256": "c64a5986bf807127c047344178262fade96dfaf856f555aa8bc1b79e0cee252a",
+      "items": 41,
+      "bytes": 9781
+    },
+    {
+      "bank": "gspc-agi",
+      "sha256": "f963e3c739c7d75bf4750d3638f2b9aad7a161f8043f8e353224d29af17718d5",
+      "items": 36,
+      "bytes": 7774
+    },
+    {
+      "bank": "gspc-art5",
+      "sha256": "bdb7c0e8b7adb31f1e240b4e0c722bb18a7fb9c6eef60682bdea72a583ccf299",
+      "items": 36,
+      "bytes": 7305
+    },
+    {
+      "bank": "gspc-asi",
+      "sha256": "25dd6a72ac5ad661c33d74a72da54ab9ac7d282de9d388085de20161b1f90b20",
+      "items": 33,
+      "bytes": 5191
+    },
+    {
+      "bank": "gspc-care",
+      "sha256": "cee5e47a31f1db6c117a0b2f4a4c026f9ebe267c28106e4901ea44189de1767e",
+      "items": 199,
+      "bytes": 33311
+    },
+    {
+      "bank": "gspc-det",
+      "sha256": "d75e96802d9eb9df1c42ea46ce55c577879d0d78d199b1c612c2b14685d62c8e",
+      "items": 33,
+      "bytes": 7061
+    },
+    {
+      "bank": "gspc-gov",
+      "sha256": "b93f9808f01416737a5944fec0ab8c3eda1dbba808daf7dda33a516b0cd61997",
+      "items": 237,
+      "bytes": 87960
+    },
+    {
+      "bank": "gspc-jail",
+      "sha256": "c9fc7bb7e24e29f3c92ee01f4cc54e4b0111ea7407aec4947a9337b866dc17b6",
+      "items": 36,
+      "bytes": 4266
+    },
+    {
+      "bank": "gspc-mach",
+      "sha256": "ab0b40f2336e81703e3c17e9988b88a3b0d4bf3a441aa7c3c53b038a6398a434",
+      "items": 33,
+      "bytes": 6239
+    },
+    {
+      "bank": "gspc-mcp",
+      "sha256": "dc494ae6d1cb8abe3fe9a9424a2b37631a3d15ebdde000b7a0409a67c757420f",
+      "items": 35,
+      "bytes": 7115
+    },
+    {
+      "bank": "gspc-oss",
+      "sha256": "644dc6de897896a88e90b8954abfa08d49b0e774f6270f30a9bf28b0831179ec",
+      "items": 32,
+      "bytes": 6339
+    },
+    {
+      "bank": "gspc-prv",
+      "sha256": "5da9b25954ec575b1e86bca8306bd0cd6758161428717d60ac648dc52c8317d2",
+      "items": 32,
+      "bytes": 6310
+    },
+    {
+      "bank": "gspc-swarm",
+      "sha256": "ff601bf33a83d0a9ca4b97dc8278b34dbed9dc6e15744030c3b2423e23a37631",
+      "items": 3,
+      "bytes": 633
+    },
+    {
+      "bank": "gspc-xr",
+      "sha256": "9aafd224f011f5a7f709e39efbee35e3f71b56c320a2d4fb69e5cbcd6667e8dd",
+      "items": 32,
+      "bytes": 5637
+    }
+  ],
+  "total_items": 818,
+  "signatures": [
+    {
+      "protected": "eyJhbGciOiJFZERTQSIsImtpZCI6ImRpZDp3ZWI6Y3NvYWkub3JnI2VzdGF0ZS1jaGFpbi0xIiwidHlwIjoiSldUIn0",
+      "signature": "YlCqieAKOA_OVLgQICoKykC3Hc1LR7CsfHsRw4Kilza62Un3BmsyUmBEe-wIrGh7EUiSawF17W0kZcmaKcQzDw",
+      "header": {
+        "typ": "JWT"
+      }
+    }
+  ]
+}

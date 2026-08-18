@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1.0" name="viewport"/>
+<title>Status — live surface health | Council of AI</title>
+<meta content="Live health of the Council of AI public measurement surfaces, probed in-browser. No status theatre: if this page says down, it measured down." name="description"/>
+<link href="https://csoai.org/status" rel="canonical"/>
+<link href="/favicon.svg" rel="icon" type="image/svg+xml"/>
+<link href="/sovereign-2026.css" rel="stylesheet"/>
+<meta content="2026-08-18T00:00:00+00:00" name="revised"/>
+</head>
+<body>
+<nav><a href="/index.html">Home</a> <a href="/honesty">Honesty</a> <a href="/dispute">Dispute</a></nav>
+<h1>Status</h1>
+<p><em>probed live from your browser · no status theatre — if it says down, it measured down</em></p>
+<table id="t" style="width:100%;border-collapse:collapse;font-size:.95rem">
+<thead><tr><th style="text-align:left;padding:.4rem .6rem .4rem 0">surface</th><th style="text-align:left;padding:.4rem .6rem .4rem 0">state</th><th style="text-align:left;padding:.4rem 0">ms</th></tr></thead>
+<tbody></tbody>
+</table>
+<p id="stamp" style="color:#888;font-size:.85rem"></p>
+<script>
+const SURFACES = [
+  ["agent card (signed)", "/agent-card.json"],
+  ["identity (DID doc)", "/.well-known/did.json"],
+  ["api catalog (RFC 9727)", "/.well-known/api-catalog"],
+  ["security.txt", "/.well-known/security.txt"],
+  ["bank seals (hash-sealed manifest)", "/banks-manifest.json"],
+  ["verification schema", "/verification.schema.json"],
+  ["measurement badge", "/badge/axes.json"],
+  ["MCP manifest", "/.well-known/mcp.json"],
+  ["arena evidence feed", "/api/sov-arena/rounds.jsonl"],
+  ["leaderboard API", "/api/leaderboard"],
+  ["health API", "/api/health"],
+  ["verifier UI", "https://councilof.ai/verify"],
+  ["gspc MCP server", "https://csoai-gspc-mcp.nicholastempleman.workers.dev/mcp"],
+];
+(async () => {
+  const tb = document.querySelector("#t tbody");
+  for (const [name, url] of SURFACES) {
+    const tr = document.createElement("tr");
+    tr.innerHTML = `<td style="padding:.4rem .6rem .4rem 0">${name}</td><td style="padding:.4rem .6rem .4rem 0">…</td><td style="padding:.4rem 0"></td>`;
+    tb.appendChild(tr);
+    const t0 = performance.now();
+    try {
+      const r = await fetch(url, {method: "GET", mode: "cors", cache: "no-store"});
+      const ms = Math.round(performance.now() - t0);
+      tr.children[1].textContent = r.ok ? "up" : `HTTP ${r.status}`;
+      tr.children[1].style.color = r.ok ? "#34d399" : "#fbbf24";
+      tr.children[2].textContent = ms;
+    } catch (e) {
+      tr.children[1].textContent = "unreachable";
+      tr.children[1].style.color = "#ef4444";
+    }
+  }
+  document.getElementById("stamp").textContent = "probed " + new Date().toISOString();
+})();
+</script>
+</body>
+</html>

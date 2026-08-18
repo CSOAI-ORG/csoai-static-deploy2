@@ -59,7 +59,7 @@ DIRS = ["tools", ".well-known", "assets", "images", "static", "_templates",
 # Public JSON, named one by one. Anything not listed does not ship.
 JSON_ALLOW = {
     "agent.json", "mcp.json", "ecosystem.json", "manifest.json", "llm-manifest.json",
-    "agent-card.json", "openapi.json", "verification.schema.json", "ai-plugin.json", "dataset-metadata.json",
+    "agent-card.json", "openapi.json", "verification.schema.json", "banks-manifest.json", "ai-plugin.json", "dataset-metadata.json",
     "drift-feed.json",  # live SOV measurement feed — consumed by sov-space-vwm + sov-globe-portal
     "jspace_deck.json",  # J-space visual deck (Wave-3): served /jspace_deck.json
     "c_space_card.json",  # C-space fold (Wave-3): served /c_space_card.json
