@@ -1,0 +1,13 @@
+{
+  "schema": "csoai-external-anchor-v1",
+  "anchored": "2026-08-18T14:31:36Z",
+  "artifact": "banks-manifest.json (canonical: sorted-keys compact JSON, utf-8)",
+  "sha256": "436310cf2ed7162bcf5d6d3618ea1a91a738379209eb0cf6ac3a780823d4ee2b",
+  "witnesses": {
+    "rfc3161_tsa": {"provider": "FreeTSA", "time": "2026-08-18 14:31:36 GMT", "token": "banks-manifest-2026-08-18.tsr.b64", "verify": "base64 -d banks-manifest-2026-08-18.tsr.b64 > t.tsr && openssl ts -verify -digest 436310cf2ed7162bcf5d6d3618ea1a91a738379209eb0cf6ac3a780823d4ee2b -in t.tsr -CAfile cacert.pem -untrusted tsa.crt"},
+    "opentimestamps": {"calendars": ["a.pool.opentimestamps.org", "b.pool.opentimestamps.org", "a.pool.eternitywall.com"], "receipt": "banks-manifest-2026-08-18.ots", "state": "pending Bitcoin attestation — upgrade after confirmation (ots upgrade)", "verify": "ots verify banks-manifest-2026-08-18.ots banks-manifest.json"}
+  },
+  "rekor_note": "Sigstore Rekor anchoring attempted same-day; Rekor requires Ed25519ph (prehashed, dom2-separated) signatures for ed25519 keys, not pure Ed25519. A ph-compatible signer or a dedicated ECDSA anchor key is the follow-up. Recorded honestly rather than silently omitted.",
+  "signedBy": "did:web:csoai.org#estate-chain-1 (see banks-manifest.json signatures block)",
+  "why": "Third-party witnessed existence of the frozen 818-item bank seals at this timestamp. The log is no longer self-asserted: FreeTSA and (on Bitcoin confirmation) the OTS calendars are witnesses we do not control."
+}
