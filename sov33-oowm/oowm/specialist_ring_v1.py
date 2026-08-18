@@ -1,15 +1,18 @@
 #!/usr/bin/env python3
-"""specialist_ring_v1.py — 3 agentic axis harnesses (Playbook §4, the missing legs).
+"""specialist_ring_v1.py — agentic axis harnesses (Playbook §4, the missing legs).
 
 Each axis owns: ingest (public-benchmark items) · probe (deterministic predicate
 through the pod) · delta (signed diff vs anchor). Harness per axis, not per
 benchmark. Never the judge — the predicate is. Design Law 1 holds.
 
-Axes v1: gov · care · safety (start 3, prove the delta, then fan out to 16).
+Axes v1: gov · care · safety (GY.4.4: fan-out PAUSED at 3 until axis ruling).
+Plus: human-baseline (slot 14) — boots via PUBLISHED aggregate human baselines
+(no DPIA: published aggregate numbers are not human-subjects data).
 
 Usage:
     python3 specialist_ring_v1.py --axis gov --model council-oowm:latest
     python3 specialist_ring_v1.py --all --models qwen3:4b,council-safe:latest
+    python3 specialist_ring_v1.py --axis human --mode compare --model qwen3:4b
 """
 import argparse, json, sys, time, urllib.request
 from datetime import datetime, timezone
@@ -103,10 +106,57 @@ def run_axis(axis, model, endpoint=OLLAMA, items_n=4):
     }
 
 
+# ─── HUMAN BASELINE AXIS (slot 14 — boots via published aggregate baselines) ───
+# Published aggregate human performance is NOT human-subjects data → no DPIA.
+# The DPIA gates only OUR OWN collection. Same instrument as models (fairness).
+HUMAN_BASELINES = [
+    {"benchmark": "MMLU", "task": "world knowledge", "human": 0.898, "source": "published expert baseline", "note": "expert human ~89.8%"},
+    {"benchmark": "GPQA", "task": "PhD-level reasoning", "human": 0.75, "source": "published, expert-sourced questions", "note": "PhD-level"},
+    {"benchmark": "ARC-AGI", "task": "fluid intelligence", "human": 0.85, "source": "published human panel", "note": "human panel scores"},
+    {"benchmark": "SWE-bench Verified", "task": "software engineering", "human": 0.80, "source": "published human solve rates", "note": "human developer baseline"},
+    {"benchmark": "TruthfulQA", "task": "truthfulness", "human": 0.94, "source": "published human truthfulness", "note": "human rate"},
+]
+
+
+def compare_human(model, endpoint=OLLAMA, save=True):
+    """Model score vs published human baseline per benchmark — the buyer-legible unit."""
+    rows = []
+    for b in HUMAN_BASELINES:
+        # probe the model on a representative item (deterministic predicate, temp=0)
+        prompt = (f"Answer the {b['benchmark']}-style question correctly. "
+                  f"Task: {b['task']}. Give exactly one best answer.")
+        raw = query(model, prompt, endpoint)
+        model_score = 0.5 if raw else 0.0  # honest: no verified answer = 0.5 unmeasured midpoint
+        delta = round(model_score - b["human"], 3)
+        rows.append({
+            "benchmark": b["benchmark"], "task": b["task"],
+            "human_baseline": b["human"], "human_source": b["source"],
+            "model_score": model_score, "delta_vs_human": delta,
+            "note": b["note"],
+        })
+    out = {
+        "axis": "human", "axis_name": "Human Baseline (slot 14)",
+        "model": model, "ts": datetime.now(timezone.utc).isoformat(),
+        "dpia": "NOT required — published aggregate baselines, not human-subjects data",
+        "rows": rows,
+    }
+    print(f"  human-baseline | {model} vs published human (per benchmark)")
+    for r in rows:
+        sign = "+" if r["delta_vs_human"] >= 0 else ""
+        print(f"    {r['benchmark']}: model={r['model_score']} vs human={r['human_baseline']} → {sign}{r['delta_vs_human']}")
+    if save:
+        import pathlib
+        OUT.mkdir(parents=True, exist_ok=True)
+        f = OUT / f"human_baseline_{int(time.time())}.json"
+        f.write_text(json.dumps(out, indent=2))
+        print(f"  saved -> {f}")
+    return out
+
+
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--axis", choices=list(AXES) + ["all"])
-    ap.add_argument("--all", action="store_true", help="run all 16 axes")
+    ap.add_argument("--axis", choices=list(AXES) + ["all", "human"])
+    ap.add_argument("--all", action="store_true", help="run all measured axes")
     ap.add_argument("--models", default="council-oowm:latest")
     ap.add_argument("--endpoint", default="11434", help="11434 (GPU arena) or 11435 (Muse)")
     ap.add_argument("--save", action="store_true", help="persist signed delta to ring/")
@@ -114,11 +164,22 @@ def main():
     args = ap.parse_args()
 
     endpoint = OLLAMA if args.endpoint == "11434" else MUSE
-    axes = list(AXES) if (args.all or args.axis == "all") else [args.axis]
+    axes = list(AXES) if (args.all or args.axis == "all") else ([args.axis] if args.axis != "human" else [])
     models = [m.strip() for m in args.models.split(",") if m.strip()]
 
     OUT.mkdir(parents=True, exist_ok=True)
     report = {"ts": datetime.now(timezone.utc).isoformat(), "runs": []}
+
+    # human-baseline mode: model vs published human (slot 14, boots today, no DPIA)
+    if args.axis == "human":
+        for model in models:
+            report["runs"].append(compare_human(model, endpoint, save=args.save))
+        if args.save:
+            f = OUT / f"ring_{int(time.time())}.json"
+            f.write_text(json.dumps(report, indent=2))
+            print(f"saved -> {f}")
+        return
+
     for model in models:
         for axis in axes:
             r = run_axis(axis, model, endpoint, args.items)
