@@ -1,0 +1,88 @@
+{
+  "kind": "gspc.board",
+  "axis": "swarm",
+  "bank_items": 3,
+  "canaries_excluded": 0,
+  "labels": [
+    "CONSENSUS_CORRECT",
+    "CONSENSUS_WRONG"
+  ],
+  "majority_baseline": 0.6667,
+  "models": [
+    {
+      "model": "council-oowm:latest",
+      "n": 3,
+      "correct": 0,
+      "unparsed": 3,
+      "accuracy": null,
+      "ci95": null,
+      "quotable": false,
+      "note": "usable n=3 < 30 \u2014 no score quoted"
+    },
+    {
+      "model": "council-safe:latest",
+      "n": 3,
+      "correct": 2,
+      "unparsed": 0,
+      "accuracy": null,
+      "ci95": null,
+      "quotable": false,
+      "note": "usable n=3 < 30 \u2014 no score quoted"
+    },
+    {
+      "model": "mistral:7b",
+      "n": 3,
+      "correct": 1,
+      "unparsed": 1,
+      "accuracy": null,
+      "ci95": null,
+      "quotable": false,
+      "note": "usable n=3 < 30 \u2014 no score quoted"
+    },
+    {
+      "model": "qwen3:4b",
+      "n": 3,
+      "correct": 0,
+      "unparsed": 3,
+      "accuracy": null,
+      "ci95": null,
+      "quotable": false,
+      "note": "usable n=3 < 30 \u2014 no score quoted"
+    },
+    {
+      "model": "qwen2.5:7b",
+      "n": 3,
+      "correct": 2,
+      "unparsed": 0,
+      "accuracy": null,
+      "ci95": null,
+      "quotable": false,
+      "note": "usable n=3 < 30 \u2014 no score quoted"
+    },
+    {
+      "model": "qwen2.5:1.5b",
+      "n": 3,
+      "correct": 1,
+      "unparsed": 0,
+      "accuracy": null,
+      "ci95": null,
+      "quotable": false,
+      "note": "usable n=3 < 30 \u2014 no score quoted"
+    },
+    {
+      "model": "qwen2.5:0.5b-instruct",
+      "n": 3,
+      "correct": 2,
+      "unparsed": 0,
+      "accuracy": null,
+      "ci95": null,
+      "quotable": false,
+      "note": "usable n=3 < 30 \u2014 no score quoted"
+    }
+  ],
+  "best": null,
+  "status": "UNMEASURED",
+  "status_note": "no model reached 30 usable items; the axis stays UNMEASURED",
+  "per_item_count": 21,
+  "method": "unparsed counted incorrect \u00b7 transport failures excluded as ours \u00b7 canaries excluded \u00b7 deterministic exact-label grading, no model judges another model \u00b7 nothing quoted below usable n>=30"
+}

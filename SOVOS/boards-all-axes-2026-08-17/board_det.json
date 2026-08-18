@@ -1,0 +1,106 @@
+{
+  "kind": "gspc.board",
+  "axis": "det",
+  "bank_items": 33,
+  "canaries_excluded": 0,
+  "labels": [
+    "DIVERGENT",
+    "INTEROPERABLE"
+  ],
+  "majority_baseline": 0.7879,
+  "models": [
+    {
+      "model": "council-oowm:latest",
+      "n": 33,
+      "correct": 0,
+      "unparsed": 33,
+      "accuracy": 0.0,
+      "ci95": [
+        0.0,
+        0.1043
+      ],
+      "quotable": true,
+      "note": null
+    },
+    {
+      "model": "council-safe:latest",
+      "n": 33,
+      "correct": 7,
+      "unparsed": 24,
+      "accuracy": 0.2121,
+      "ci95": [
+        0.1068,
+        0.3775
+      ],
+      "quotable": true,
+      "note": null
+    },
+    {
+      "model": "mistral:7b",
+      "n": 33,
+      "correct": 26,
+      "unparsed": 0,
+      "accuracy": 0.7879,
+      "ci95": [
+        0.6225,
+        0.8932
+      ],
+      "quotable": true,
+      "note": null
+    },
+    {
+      "model": "qwen3:4b",
+      "n": 33,
+      "correct": 0,
+      "unparsed": 33,
+      "accuracy": 0.0,
+      "ci95": [
+        0.0,
+        0.1043
+      ],
+      "quotable": true,
+      "note": null
+    },
+    {
+      "model": "qwen2.5:7b",
+      "n": 26,
+      "correct": 15,
+      "unparsed": 0,
+      "accuracy": null,
+      "ci95": null,
+      "quotable": false,
+      "note": "usable n=26 < 30 \u2014 no score quoted"
+    },
+    {
+      "model": "qwen2.5:1.5b",
+      "n": 33,
+      "correct": 26,
+      "unparsed": 0,
+      "accuracy": 0.7879,
+      "ci95": [
+        0.6225,
+        0.8932
+      ],
+      "quotable": true,
+      "note": null
+    },
+    {
+      "model": "qwen2.5:0.5b-instruct",
+      "n": 33,
+      "correct": 7,
+      "unparsed": 0,
+      "accuracy": 0.2121,
+      "ci95": [
+        0.1068,
+        0.3775
+      ],
+      "quotable": true,
+      "note": null
+    }
+  ],
+  "best": "mistral:7b",
+  "status": "MEASURED",
+  "status_note": null,
+  "per_item_count": 231,
+  "method": "unparsed counted incorrect \u00b7 transport failures excluded as ours \u00b7 canaries excluded \u00b7 deterministic exact-label grading, no model judges another model \u00b7 nothing quoted below usable n>=30"
+}

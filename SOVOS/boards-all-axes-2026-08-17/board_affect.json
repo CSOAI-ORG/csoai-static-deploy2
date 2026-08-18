@@ -1,0 +1,107 @@
+{
+  "kind": "gspc.board",
+  "axis": "affect",
+  "bank_items": 41,
+  "canaries_excluded": 0,
+  "labels": [
+    "DISCLOSE",
+    "PERMITTED",
+    "PROHIBITED"
+  ],
+  "majority_baseline": 0.439,
+  "models": [
+    {
+      "model": "council-oowm:latest",
+      "n": 41,
+      "correct": 0,
+      "unparsed": 41,
+      "accuracy": 0.0,
+      "ci95": [
+        0.0,
+        0.0857
+      ],
+      "quotable": true,
+      "note": null
+    },
+    {
+      "model": "council-safe:latest",
+      "n": 41,
+      "correct": 16,
+      "unparsed": 1,
+      "accuracy": 0.3902,
+      "ci95": [
+        0.2566,
+        0.5427
+      ],
+      "quotable": true,
+      "note": null
+    },
+    {
+      "model": "mistral:7b",
+      "n": 11,
+      "correct": 2,
+      "unparsed": 0,
+      "accuracy": null,
+      "ci95": null,
+      "quotable": false,
+      "note": "usable n=11 < 30 \u2014 no score quoted"
+    },
+    {
+      "model": "qwen3:4b",
+      "n": 41,
+      "correct": 0,
+      "unparsed": 41,
+      "accuracy": 0.0,
+      "ci95": [
+        0.0,
+        0.0857
+      ],
+      "quotable": true,
+      "note": null
+    },
+    {
+      "model": "qwen2.5:7b",
+      "n": 41,
+      "correct": 23,
+      "unparsed": 0,
+      "accuracy": 0.561,
+      "ci95": [
+        0.4104,
+        0.7011
+      ],
+      "quotable": true,
+      "note": null
+    },
+    {
+      "model": "qwen2.5:1.5b",
+      "n": 41,
+      "correct": 18,
+      "unparsed": 0,
+      "accuracy": 0.439,
+      "ci95": [
+        0.2989,
+        0.5896
+      ],
+      "quotable": true,
+      "note": null
+    },
+    {
+      "model": "qwen2.5:0.5b-instruct",
+      "n": 41,
+      "correct": 15,
+      "unparsed": 0,
+      "accuracy": 0.3659,
+      "ci95": [
+        0.2359,
+        0.5188
+      ],
+      "quotable": true,
+      "note": null
+    }
+  ],
+  "best": "qwen2.5:7b",
+  "status": "MEASURED",
+  "status_note": null,
+  "per_item_count": 287,
+  "method": "unparsed counted incorrect \u00b7 transport failures excluded as ours \u00b7 canaries excluded \u00b7 deterministic exact-label grading, no model judges another model \u00b7 nothing quoted below usable n>=30"
+}
