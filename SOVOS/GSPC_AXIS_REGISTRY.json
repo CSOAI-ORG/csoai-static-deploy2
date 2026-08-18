@@ -163,5 +163,43 @@
     ],
     "public_rule": "Say '13 GSPC axes (registry)' or '16-axis arena battery' \u2014 never a bare '16 axes' or '15 axes'. The registry is the measurement instrument; the battery is the runtime prompt set.",
     "signature": "resolved-by-jeeves-2026-08-18"
+  },
+  "human_baseline_boot": {
+    "as_of": "2026-08-18",
+    "ruling": "Slot 14 (human baseline) boots TODAY via published aggregate human baselines. Published aggregate numbers are NOT human-subjects data \u2014 the DPIA gates only our own collection.",
+    "anchors": [
+      {
+        "benchmark": "MMLU",
+        "human_baseline": "~89.8% expert",
+        "status": "published-aggregate"
+      },
+      {
+        "benchmark": "GPQA",
+        "human_baseline": "PhD-level",
+        "status": "published-aggregate"
+      },
+      {
+        "benchmark": "ARC-AGI",
+        "human_baseline": "human panel scores",
+        "status": "published-aggregate"
+      },
+      {
+        "benchmark": "SWE-bench Verified",
+        "human_baseline": "human developer solve rates",
+        "status": "published-aggregate"
+      },
+      {
+        "benchmark": "TruthfulQA",
+        "human_baseline": "human truthfulness rate",
+        "status": "published-aggregate"
+      }
+    ],
+    "dpia_still_gates": [
+      "our own human-panel collection",
+      "human-subjects data we generate",
+      "human crosswalk collection side"
+    ],
+    "instrument": "same 5 deterministic predicates as models \u2014 fair comparison, same probes, same scoring",
+    "signature": "human-baseline-boots-2026-08-18-jeeves"
   }
 }
