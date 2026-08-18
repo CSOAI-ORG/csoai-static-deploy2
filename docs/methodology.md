@@ -15,3 +15,6 @@ Each measurement emits a signed card: `id = sha256(canonical JSON of body)`, `si
 Corrections publish in the same record as results. The corrections feed is the credibility.
 
 Citation: Templeman, N. (2026). Signed Measurement Cards for AI: 15 Verifiable Findings. Zenodo. https://doi.org/10.5281/zenodo.21973003
+
+## DOI
+Zenodo: 10.5281/zenodo.21991105 — GSPC methodology + 417-provision corpus anchor + sample signed board (open, MIT). https://zenodo.org/records/21991105
