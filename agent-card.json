@@ -1,9 +1,10 @@
 {
-  "name": "CSOAI Measurement Agent",
+  "name": "Council of AI Measurement Agent",
   "description": "Independent AI-governance measurement body. Publishes frozen benchmark harnesses, measures models and agent systems under deterministic conditions, and signs results (Ed25519) so evidence is recompute-able by any third party. No certification, accreditation, or enforcement authority — we measure, we publish harnesses, others recompute.",
+  "url": "https://csoai.org",
   "provider": {
-    "url": "https://csoai.org",
-    "organization": "Council of AI (CSOAI LTD, UK #16939677)"
+    "organization": "Council of AI (CSOAI LTD, UK #16939677)",
+    "url": "https://csoai.org"
   },
   "version": "0.1.0",
   "documentationUrl": "https://csoai.org",
@@ -23,15 +24,6 @@
       "description": "Honest liveness signal. No invented metrics."
     }
   ],
-  "signatures": [
-    {
-      "protected": "eyJhbGciOiJFZERTQSIsImtpZCI6ImRpZDp3ZWI6Y3NvYWkub3JnI3NpdGUtcmVsZWFzZS0xIiwidHlwIjoiSldUIn0",
-      "signature": "DHH0G2Nplh-HTT6sRtmou1K09VKCsnCYAgN3jEtE7FIjytthgqp2o_psMWVBc_uzgrMdA11QU0zIhvLmc7voAw",
-      "header": {
-        "typ": "JWT"
-      }
-    }
-  ],
   "identity": {
     "did": "did:web:csoai.org",
     "didDocument": "https://csoai.org/.well-known/did.json",
@@ -42,5 +34,14 @@
     "contentId": "sha256(canonical utf-8) as lowercase hex",
     "signature": "Ed25519 over contentId.encode(); public keys published in the DID document",
     "verifyUrl": "https://councilof.ai/verify"
-  }
+  },
+  "signatures": [
+    {
+      "protected": "eyJhbGciOiJFZERTQSIsImtpZCI6ImRpZDp3ZWI6Y3NvYWkub3JnI3NpdGUtcmVsZWFzZS0xIiwidHlwIjoiSldUIn0",
+      "signature": "hPajCdbgeyHNck1nZYjSJ6_8SOPm4AKF6y-dnhitfXgWiHBp-KpXhs8AinUw_3Bu3tHk_KGtjH2Z0LJIOH-_CA",
+      "header": {
+        "typ": "JWT"
+      }
+    }
+  ]
 }
