@@ -1,0 +1,119 @@
+% GSPC: A Signed, Deterministic Measurement Instrument for AI Governance
+% arXiv submission: submit/7953433 (expires 2026-08-29)
+% Author: Nicholas Templeman (Independent Researcher; CSOAI Ltd, UK)
+% License: CC BY 4.0
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{booktabs}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\title{GSPC: A Signed, Deterministic Measurement Instrument for AI Governance\\
+\large Methodology and a 417-Provision Corpus Anchor}
+\author{Nicholas Templeman\thanks{Independent Researcher; CSOAI Ltd, UK. Methodology DOI: \texttt{10.5281/zenodo.21991104}. Measurement body, not a certification or accreditation body.}\\
+\small CSOAI Ltd, UK}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+We present GSPC (Governance, Safety, Provenance, Continuity), a measurement
+instrument for AI-governance evaluation, and the methodology behind a 14-slot
+benchmark board of which 13 axes are currently measured. The design commits to
+three principles that distinguish measurement from certification: (i)
+deterministic grading against frozen, published gold labels---no model judges
+another model; (ii) statistical honesty---a point-estimate lead is reported as
+a tie unless it survives a McNemar test on discordant items ($p<0.05$), and
+unparsed responses are reported as unmeasured rather than scored as wrong; and
+(iii) cryptographic accountability---every published figure is recomputable
+from signed, versioned rows (Ed25519), and corrections are appended, never
+silently edited. Across a 19-model fleet on frozen splits, only 3 of 13
+canonical axes exhibit a statistically separated leader (governance, care,
+affect); the remaining 10 are statistical ties, including cases where the
+instrument's own fine-tuned models do not lead. We anchor the corpus to a
+frozen 417-provision statutory reference and release the item banks, scoring
+code, and signed boards in full. We argue that an evaluation body's credibility
+rests on publishing results that embarrass it---permanently, without
+retraction---and we release the negative results and ties as first-class
+outputs. Measurement, not certification: GSPC issues no conformity marks and
+makes no regulatory determinations.
+\end{abstract}
+
+\section{Introduction}
+AI governance evaluation currently lacks an instrument that is simultaneously
+\emph{anchored} (every score resolves to a frozen statutory provision),
+\emph{deterministic} (no model judges another model), \emph{signed} (results
+are recomputable evidence, not claims), and \emph{agentic} (harness-aware).
+GSPC is our attempt to build that instrument. This paper describes the
+methodology; the item banks, scoring code, and signed boards are released in
+full at \url{https://huggingface.co/csoai} and \url{https://councilof.ai/api/gspc}.
+
+\section{The instrument}
+\subsection{The board}
+GSPC maintains a 14-slot benchmark board of which 13 axes are currently
+measured: Governance, Privacy, AGI Safety, ASI Preparedness, MCP Integrity,
+OSS Compliance, Mechanized/Embodied, Care, XR/Immersive, Detection/Watermark,
+Article~5, Swarm, and Affective Safety. The 14th slot (Human Baseline) is
+measured against published aggregate human performance (e.g.\ MMLU expert
+$\approx 89.8\%$, GPQA PhD-level), which is not human-subjects data and
+therefore not subject to data-protection impact assessment for reuse.
+
+\subsection{Deterministic grading}
+Each item is graded by an exact-match predicate against a frozen gold label:
+$exact\_match(G)$, $refusal(S)$, $action\_forbidden(S)$, $manifest\_valid(P)$,
+$signature\_alg(C)$. No language model acts as judge. Partial credit and a
+care cost apply to safety items. A response that cannot be parsed is reported
+as \emph{unmeasured}, never scored as wrong.
+
+\subsection{Statistical honesty}
+A point-estimate lead is reported as a tie unless it survives a McNemar test
+on discordant item pairs ($p<0.05$). All small-sample figures carry Wilson
+score intervals; $n<20$ is labelled as a lower bound. This is why 10 of 13
+axes report no separated leader even though point estimates differ.
+
+\subsection{Cryptographic accountability}
+Every published figure is recomputable from signed, versioned rows. Each row
+carries an Ed25519 signature; the ledger is hash-chained; corrections are
+appended as new entries, never silently edited. The card format is a signed
+Q\&A capsule of approximately 3\,KB, recomputable by any third party offline.
+
+\section{Results}
+Across a 19-model fleet on frozen splits, only 3 of 13 canonical axes exhibit
+a statistically separated leader: governance, care, and affect. On the
+remaining 10 axes the field is a statistical tie. Notably, the instrument's own
+fine-tuned models do not lead on any axis: in our 16-axis arena, the sovereign
+fine-tune \texttt{council-oowm} scores below a base 4B model on every axis,
+and our published arena league (2{,}900+ signed rounds) shows base models
+occupying the top of the Elo ladder. We publish this result because an
+evaluation body that hides its own losses cannot credibly measure others.
+
+\section{Discussion}
+The honest ceiling is stated on the tin: this instrument governs
+\emph{provenance}, not \emph{correctness}. An attested answer is attested,
+never verified. The moat is not secrecy but the simultaneous satisfaction of
+four properties---anchored, deterministic, signed, agentic---which together
+make every claim independently recomputable. We argue this is the correct
+posture for a measurement body: verify free, forever, without asking.
+
+\section{Data and code}
+\begin{itemize}
+\item Item banks and scoring code: \url{https://huggingface.co/csoai}
+\item Live board and API: \url{https://councilof.ai/api/gspc}
+\item Methodology record: \texttt{10.5281/zenodo.21991104}
+\item Licence: CC BY 4.0 (documentation), code per repository
+\end{itemize}
+
+\section*{Statement}
+GSPC is a measurement body, not a certification or accreditation body. It
+issues no conformity marks and makes no regulatory determinations.
+
+\bibliographystyle{plain}
+\begin{thebibliography}{9}
+\bibitem{inspect} UK AISI, \emph{Inspect AI evaluation harness} (MIT licence).
+\bibitem{mcnemar} McNemar, Q., \emph{Psychometrika} 12(2), 1947.
+\bibitem{apple} Correlated-error analysis of LLM judging panels, arXiv:2605.29800, 2026.
+\bibitem{endor} Harness-dependence of agent scores, Endor Labs, 2026.
+\end{thebibliography}
+
+\end{document}
