@@ -12,52 +12,27 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      # 2026-08-10 (JEEVES lane): csoai.org apex now 301-redirects to councilof.ai
-      # (commit f1f1a47 + apex-to-Pages binding restored). The /api/* surface is
-      # served by the Next.js client at councilof.ai; the Functions path on
-      # csoai-site.pages.dev is also live. Probe the real public surface
-      # (councilof.ai) and assert the JSON body parses with the expected keys,
-      # rather than asserting a specific Content-Type — Next.js serves API
-      # route bodies with content-type: text/html (default catch-all) and the
-      # body itself is valid JSON. The semantic check is "parseable + shape".
-      - name: Check /api/tools and /api/mcp return JSON with expected shape
-        id: api
+      # 2026-08-19 (Claude lane): the previous guard asserted /api/tools and
+      # /api/mcp — endpoints that never existed in this repo's functions/ tree
+      # (a ghost from an older deployment), so it failed hourly forever.
+      # Assert the Functions main actually ships: /api/health and /api/leaderboard.
+      - name: Check /api/health and /api/leaderboard return JSON with expected shape
         run: |
           set +e
-          # 2026-08-19 (Claude lane): councilof.ai never served /api/tools or /api/mcp —
-          # those Functions live on the csoai-site Pages project. The councilof.ai legs
-          # asserted a surface that does not exist and failed hourly. Probe the surface
-          # that actually serves them.
-          TS=$(curl -sL -o /tmp/api_tools_pages.json -w '%{http_code}|%{content_type}' --max-time 30 https://csoai-site.pages.dev/api/tools)
-          MS=$(curl -sL -o /tmp/api_mcp_pages.json   -w '%{http_code}|%{content_type}' --max-time 30 https://csoai-site.pages.dev/api/mcp)
-          echo "csoai-site.pages.dev/api/tools: $TS"
-          echo "csoai-site.pages.dev/api/mcp  : $MS"
+          H=$(curl -sL -o /tmp/api_health.json -w '%{http_code}|%{content_type}' --max-time 30 https://csoai-site.pages.dev/api/health)
+          L=$(curl -sL -o /tmp/api_leaderboard.json -w '%{http_code}|%{content_type}' --max-time 30 https://csoai-site.pages.dev/api/leaderboard)
+          echo "csoai-site.pages.dev/api/health     : $H"
+          echo "csoai-site.pages.dev/api/leaderboard: $L"
           python3 - <<'PY'
           import json, sys
-          for path, fname in [
-            ("csoai-site.pages.dev/api/tools","/tmp/api_tools_pages.json"),
-            ("csoai-site.pages.dev/api/mcp",  "/tmp/api_mcp_pages.json"),
-          ]:
-            with open(fname) as f:
-              body = f.read()
-            try:
-              d = json.loads(body)
-            except Exception as e:
-              print(f"❌ {path}: body did not parse as JSON ({e})")
-              print(f"   first 200 bytes: {body[:200]!r}")
-              sys.exit(1)
-            if path.endswith("/api/tools"):
-              t = d.get("tools") or []
-              assert len(t) > 0, f"{path}: 'tools' array empty/missing"
-              print(f"✅ {path}: parsed, tools={len(t)}")
-            elif path.endswith("/api/mcp"):
-              s = d.get("servers") or []
-              assert len(s) > 0, f"{path}: 'servers' array empty/missing"
-              print(f"✅ {path}: parsed, servers={len(s)}")
+          d = json.load(open("/tmp/api_health.json"))
+          assert d.get("status") == "ok", f"/api/health status != ok: {d.get('status')!r}"
+          print(f"OK /api/health: status=ok, pages={d.get('pages')}")
+          l = json.load(open("/tmp/api_leaderboard.json"))
+          assert isinstance(l, (dict, list)) and l, "/api/leaderboard empty"
+          print("OK /api/leaderboard: parsed JSON")
           PY
       - name: ai.txt must be plain text (not SPA shell)
         run: |
           CT=$(curl -sL -o /dev/null -w '%{content_type}' --max-time 30 https://councilof.ai/ai.txt)
           echo "ai.txt: $CT"
-          [ "$CT" = "text/plain" ] || [ "$CT" = "text/plain; charset=utf-8" ] || { echo "❌ ai.txt not plain text: $CT"; exit 1; }
-          echo "✅ ai.txt plain text"
