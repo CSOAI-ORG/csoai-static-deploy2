@@ -85,6 +85,7 @@ EXTRA_FILES = {
     "WHITEPAPER.pdf",                           # /WHITEPAPER.pdf 8,258 B
     "AUDIT_PACKAGE.pdf",                        # /AUDIT_PACKAGE.pdf 3,930 B
     "CANONICAL-DOIS.md",                        # /CANONICAL-DOIS.md — machine-path contract (19 Aug restore)
+    "llms-install.md",                          # /llms-install.md — Cline/MCP marketplace install doc (19 Aug)
     # Cloudflare Pages reads /_redirects from the publish dir at request time. The
     # allowlist has no extension rule for the bare "_redirects" filename, so this
     # file was being silently dropped from _site/ and the live site served
