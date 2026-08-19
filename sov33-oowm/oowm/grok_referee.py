@@ -142,7 +142,10 @@ def query_grok(backend, key, prompt):
         req = urllib.request.Request(url, data=json.dumps(body).encode(),
                                      headers={"Authorization": f"Bearer {key}",
                                               "User-Agent": UA,
-                                              "Content-Type": "application/json"})
+                                              "Content-Type": "application/json",
+                                              "HTTP-Referer": "https://councilof.ai",
+                                              "X-Title": "Council of AI — GSPC Measurement",
+                                              "X-OpenRouter-Title": "Council of AI — GSPC Measurement"})
         with urllib.request.urlopen(req, timeout=30) as r:
             data = json.loads(r.read().decode())
             return len(data["choices"][0]["message"]["content"].split())
