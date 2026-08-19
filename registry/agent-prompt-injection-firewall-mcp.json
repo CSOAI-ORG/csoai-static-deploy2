@@ -1,0 +1,28 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "io.github.CSOAI-ORG/agent-prompt-injection-firewall-mcp",
+  "version": "1.0.13",
+  "description": "The WAF for agents. Pattern-based + heuristic firewall scans prompts, RAG documents, tool argume...",
+  "repository": {
+    "url": "https://github.com/CSOAI-ORG/agent-prompt-injection-firewall-mcp",
+    "source": "github",
+    "id": "1237621749"
+  },
+  "packages": [
+    {
+      "registryType": "pypi",
+      "identifier": "agent-prompt-injection-firewall-mcp",
+      "version": "1.0.13",
+      "runtimeHint": "python",
+      "transport": {
+        "type": "stdio"
+      }
+    }
+  ],
+  "remotes": [
+    {
+      "type": "streamable-http",
+      "url": "https://api.meok.ai/v1/a2a/prompt-injection-firewall"
+    }
+  ]
+}

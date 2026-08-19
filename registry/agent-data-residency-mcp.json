@@ -1,0 +1,28 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "io.github.CSOAI-ORG/agent-data-residency-mcp",
+  "version": "1.0.9",
+  "description": "Agent data residency + GDPR Chapter V transfer-basis runtime guard. Programmatically answer 'whe...",
+  "repository": {
+    "url": "https://github.com/CSOAI-ORG/agent-data-residency-mcp",
+    "source": "github",
+    "id": "1238467839"
+  },
+  "packages": [
+    {
+      "registryType": "pypi",
+      "identifier": "agent-data-residency-mcp",
+      "version": "1.0.9",
+      "runtimeHint": "python",
+      "transport": {
+        "type": "stdio"
+      }
+    }
+  ],
+  "remotes": [
+    {
+      "type": "streamable-http",
+      "url": "https://api.meok.ai/v1/a2a/data-residency"
+    }
+  ]
+}

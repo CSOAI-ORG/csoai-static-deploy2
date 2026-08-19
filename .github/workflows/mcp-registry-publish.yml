@@ -58,9 +58,23 @@ jobs:
             mcp-publisher validate "$f" || { echo "VALIDATION FAILED: $f"; exit 1; }
           done
 
-      - name: Publish all registry entries
+      - name: Authenticate with registry (GitHub OIDC)
+        run: mcp-publisher login github-oidc
+
+      - name: Publish all registry entries (duplicate-tolerant)
         run: |
+          failures=0
           for f in registry/*.json; do
             echo "== publish $f =="
-            mcp-publisher publish "$f" || { echo "PUBLISH FAILED: $f"; exit 1; }
+            OUT=$(mcp-publisher publish "$f" 2>&1)
+            if echo "$OUT" | grep -q 'Successfully published'; then
+              echo "  ok: $f"
+            elif echo "$OUT" | grep -q 'duplicate version'; then
+              echo "  skip (already published): $f"
+            else
+              echo "  FAIL: $f"
+              echo "$OUT" | tail -3
+              failures=$((failures+1))
+            fi
           done
+          if [ "$failures" -gt 0 ]; then echo "$failures publish failures"; exit 1; fi

@@ -1,0 +1,83 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "io.github.CSOAI-ORG/soc2-compliance-ai-mcp",
+  "title": "SOC 2 Compliance",
+  "version": "1.0.15",
+  "description": "SOC 2 Type II compliance for trust services criteria (security, availability, processing",
+  "websiteUrl": "https://meok.ai/soc2-compliance-ai-mcp",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/CSOAI-ORG/soc2-compliance-ai-mcp",
+    "source": "https://github.com/CSOAI-ORG/soc2-compliance-ai-mcp"
+  },
+  "icons": [
+    {
+      "src": "https://raw.githubusercontent.com/CSOAI-ORG/soc2-compliance-ai-mcp/main/assets/icon.svg",
+      "mimeType": "image/svg+xml",
+      "sizes": [
+        "256x256"
+      ],
+      "theme": "dark"
+    }
+  ],
+  "packages": [
+    {
+      "registryType": "pypi",
+      "identifier": "soc2-compliance-ai-mcp",
+      "version": "1.0.15",
+      "transport": {
+        "type": "stdio"
+      }
+    }
+  ],
+  "_meta": {
+    "io.modelcontextprotocol.registry/publisher-provided": {
+      "category": "ai-governance",
+      "subcategories": [
+        "compliance",
+        "audit"
+      ],
+      "tier": "flagship",
+      "openSsfScorecard": "7.06/10"
+    }
+  },
+  "metadata": {
+    "publisher": "MEOK AI Labs",
+    "categories": [
+      "compliance",
+      "ai-governance"
+    ]
+  },
+  "examples": [
+    {
+      "name": "Quick scan via soc2-compliance-ai-mcp",
+      "description": "Run a compliance check using the MCP server.",
+      "input": {
+        "tool": "quick_scan",
+        "arguments": {
+          "system": "example"
+        }
+      }
+    }
+  ],
+  "resources": [
+    {
+      "uri": "https://docs.meok.ai/soc2-compliance-ai-mcp/",
+      "name": "soc2-compliance-ai-mcp documentation",
+      "mimeType": "text/html"
+    },
+    {
+      "uri": "https://github.com/CSOAI-ORG/soc2-compliance-ai-mcp",
+      "name": "soc2-compliance-ai-mcp on GitHub",
+      "mimeType": "text/html"
+    }
+  ],
+  "publisher": {
+    "name": "CSOAI Ltd",
+    "url": "https://csoai.org"
+  },
+  "categories": [
+    "compliance",
+    "ai-governance"
+  ]
+}
