@@ -103,17 +103,40 @@ def sps_score(pred, target, lower=None, upper=None, stats=None):
     return 100.0 * weighted
 
 
+def _denorm(x, stats):
+    """Denormalize u,v with per-channel stats (p passes through)."""
+    y = x.copy()
+    y[..., 0] = y[..., 0] * stats["std_u"] + stats["mean_u"]
+    y[..., 1] = y[..., 1] * stats["std_v"] + stats["mean_v"]
+    return y
+
+
 def score_run(preds, targets, step_times, lower=None, upper=None, stats=None):
-    """preds/targets: list of (1,20,32,64,3) arrays. Returns dict of subscores."""
+    """preds/targets: list of (1,20,32,64,3) arrays. Returns dict of subscores.
+
+    Official evaluator flow: predictions + bounds are denormalized to physical
+    space with the official train_real statistics, THEN all errors/scores are
+    computed on the physical u,v fields (relative L2 is scale-invariant per
+    channel, but the u/v mix and SPS intervals require physical space). We
+    replicate with `stats` (mean/std per channel); if stats is None we score
+    in the given (assumed physical) space.
+    """
     preds = np.concatenate(preds, axis=0)
     targets = np.concatenate(targets, axis=0)
+    if stats is not None:
+        preds = _denorm(preds, stats)
+        targets = _denorm(targets, stats)
+        if lower is not None:
+            lower = _denorm(np.concatenate(lower, axis=0), stats)
+        if upper is not None:
+            upper = _denorm(np.concatenate(upper, axis=0), stats)
     rl2 = rel_l2_error(preds, targets)
     tke = tke_error(preds, targets)
     mvpe = mvpe_error(preds, targets)
     t_mean = float(np.mean(step_times))
     r = t_mean / T_NUMERICAL
     time_score = 100.0 / (1.0 + np.sqrt(r))
-    sps = sps_score(preds, targets, lower, upper, stats)
+    sps = sps_score(preds, targets, lower, upper, stats=None)  # already physical
     return {
         "rel_l2_err": rl2, "rel_l2_score": err_to_score(rl2),
         "tke_err": tke, "tke_score": err_to_score(tke),

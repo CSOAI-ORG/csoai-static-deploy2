@@ -139,9 +139,9 @@ class LTTTAController:
     z-multiplier band around the prediction.
     """
 
-    def __init__(self, model, device, max_adapt_steps=3, base_lr=1e-4,
-                 adapt_every=2, drift_threshold=0.25, ema_alpha=0.3,
-                 z_mult=1.2, min_band=0.02, return_bounds=True):
+    def __init__(self, model, device, max_adapt_steps=1, base_lr=1e-4,
+                 adapt_every=3, drift_threshold=0.25, ema_alpha=0.3,
+                 z_mult=1.0, min_band=0.02, return_bounds=True):
         self.model = model
         self.device = device
         self.max_adapt_steps = max_adapt_steps

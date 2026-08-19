@@ -195,7 +195,7 @@ def evaluate(model, loader, device):
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--root", default="/root/realpde/data")
+    ap.add_argument("--root", default="/workspace/realpde/data")
     ap.add_argument("--device", default="cuda")
     ap.add_argument("--sim-steps", type=int, default=3000)
     ap.add_argument("--real-steps", type=int, default=3000)
@@ -203,7 +203,7 @@ def main():
     ap.add_argument("--lr-sim", type=float, default=3e-4)
     ap.add_argument("--lr-real", type=float, default=1e-4)
     ap.add_argument("--init", default="", help="pretrained ckpt to start from")
-    ap.add_argument("--out", default="/root/realpde/trained")
+    ap.add_argument("--out", default="/workspace/realpde/trained")
     ap.add_argument("--real-stats", default="", help="stats npz for real finetune")
     ap.add_argument("--affine", type=float, default=0.15, help="per-channel affine augmentation scale")
     args = ap.parse_args()
