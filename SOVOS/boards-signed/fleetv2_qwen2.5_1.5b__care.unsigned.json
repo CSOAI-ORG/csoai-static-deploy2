@@ -1,0 +1,41 @@
+{
+  "kind": "gspc.board",
+  "axis": "care",
+  "harness": "sovos_city.bench.board (estate)",
+  "sample": 30,
+  "result": {
+    "kind": "gspc.board",
+    "axis": "care",
+    "bank_items": 30,
+    "canaries_excluded": 0,
+    "labels": [
+      "0",
+      "1"
+    ],
+    "majority_baseline": 0.5667,
+    "models": [
+      {
+        "model": "qwen2.5:1.5b",
+        "n": 30,
+        "correct": 18,
+        "unparsed": 4,
+        "accuracy": 0.6,
+        "ci95": [
+          0.4232,
+          0.7541
+        ],
+        "quotable": true,
+        "note": null
+      }
+    ],
+    "best": "qwen2.5:1.5b",
+    "status": "MEASURED",
+    "status_note": null,
+    "per_item_count": 30,
+    "method": "unparsed counted incorrect · transport failures excluded as ours · canaries excluded · deterministic exact-label grading, no model judges another model · nothing quoted below usable n>=30"
+  },
+  "pod": "sovos-light-master-mine (A100 80GB)",
+  "note": "estate harness, unsigned here; signing on key pod",
+  "ts": "2026-08-19T09:03:36Z",
+  "signing_note": "unsigned: did-liveness block active 2026-08-19T09:51:04Z"
+}
