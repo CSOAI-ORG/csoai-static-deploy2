@@ -20,6 +20,53 @@
   "vatID": "UK 16939677"
 }
 </script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "Council of AI",
+  "url": "https://csoai.org",
+  "publisher": { "@type": "Organization", "name": "Council of AI", "url": "https://csoai.org" },
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": "https://csoai.org/api/lookup?q={search_term_string}",
+    "query-input": "required name=search_term_string"
+  }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is Council of AI?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Council of AI (CSOAI Ltd, UK 16939677) is an independent AI-governance measurement body. It measures model and agent behaviour under deterministic conditions and signs the evidence (Ed25519) so anyone can recompute and verify it. Measurement, not certification — it is not a certification body and not a notified body." }
+    },
+    {
+      "@type": "Question",
+      "name": "What does '13 measured of 14' mean?",
+      "acceptedAnswer": { "@type": "Answer", "text": "The GSPC instrument is a 14-slot registry; 13 axes have quotable measured cells (usable n with a computed interval). One slot is gated and reported as UNMEASURED with its limits — never filled with an invented number. The gap is the finding." }
+    },
+    {
+      "@type": "Question",
+      "name": "How do I verify a signed measurement card?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Free and loginless: recompute id = sha256(canonical JSON of the body), check signature = Ed25519(id) against the published public key, and confirm prev links the chain. A stranger can replay everything with one command. Verification is free forever." }
+    },
+    {
+      "@type": "Question",
+      "name": "Does Council of AI certify AI systems?",
+      "acceptedAnswer": { "@type": "Answer", "text": "No. Council of AI issues verified measurement credentials — evidence of what was measured, by which method, and when. Nothing reads as attestation of safety, compliance sign-off, or a pass/fail stamp. UNMEASURED is reported, never hidden." }
+    },
+    {
+      "@type": "Question",
+      "name": "Who pays Council of AI?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Evidence-buyers (insurers, enterprises, regulators, researchers) pay for measurement products. Council of AI takes no money either direction with anything it ranks — no payment, equity, or referral for placement, rank, or a score change." }
+    }
+  ]
+}
+</script>
 <style>
   :root{
     --ink:#e8ede6; --ink-dim:#b9c4b4; --ink-faint:#84917c;
