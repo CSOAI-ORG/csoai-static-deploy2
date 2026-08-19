@@ -1,0 +1,70 @@
+{
+  "kind": "gspc.board",
+  "axis": "swarm",
+  "bank": "gspc-swarm-candidates-v2 (UNSEALED staging)",
+  "bank_items": 27,
+  "models": [
+    {
+      "model": "qwen2.5:0.5b-instruct",
+      "correct": 1,
+      "n": 2,
+      "accuracy": 0.5,
+      "wilson95": [
+        0.0945,
+        0.9055
+      ]
+    },
+    {
+      "model": "qwen2.5:1.5b",
+      "correct": 10,
+      "n": 25,
+      "accuracy": 0.4,
+      "wilson95": [
+        0.234,
+        0.5926
+      ]
+    },
+    {
+      "model": "qwen3:4b",
+      "correct": 10,
+      "n": 27,
+      "accuracy": 0.3704,
+      "wilson95": [
+        0.2153,
+        0.5577
+      ]
+    },
+    {
+      "model": "qwen2.5:7b",
+      "correct": 12,
+      "n": 27,
+      "accuracy": 0.4444,
+      "wilson95": [
+        0.2759,
+        0.6269
+      ]
+    },
+    {
+      "model": "mistral:7b",
+      "correct": 4,
+      "n": 27,
+      "accuracy": 0.1481,
+      "wilson95": [
+        0.0592,
+        0.3248
+      ]
+    }
+  ],
+  "status": "MEASURED-STAGING",
+  "method": "keyword>=60% contract, richer variant sets in wave 2 · temp 0 · timeouts excluded · Wilson 95% · staging, not quotable",
+  "ts": "2026-08-19T07:10:11Z",
+  "signatures": [
+    {
+      "protected": "eyJhbGciOiJFZERTQSIsImtpZCI6ImRpZDp3ZWI6Y3NvYWkub3JnI2VzdGF0ZS1jaGFpbi0xIiwidHlwIjoiSldUIn0",
+      "signature": "PyTdICjZfV_z9WxHqGzl1cAk6VmCH9ilN5x5z9zPNoX6I13RXWrCYeh9G46Lb0_PreCtPJbdkqv9MUzzO6XSBA",
+      "header": {
+        "typ": "JWT"
+      }
+    }
+  ]
+}
