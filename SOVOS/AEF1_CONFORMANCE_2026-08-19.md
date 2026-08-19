@@ -43,3 +43,11 @@ AEF founding members (all verified live): Transluce · METR · RAND · AVERI · 
 
 ## SIGIL
 `aef1-conformance-2026-08-19-jeeves`
+
+---
+
+## ADDENDUM (from full research delivery)
+- **The checklist doubles as reporting** under EU AI Act CoP Safety & Security Measure 7.3(1)(g) and California SB 53 §22757.12(c)(2)(C) — our conformance checklists are dual-use evidence, not just self-attestation.
+- **The Evaluation Transparency Letter** (40+ signatories incl. Bengio, Narayanan, Liang, Brundage, Reich, Hadfield) is **signable** — a cheap credibility win, lane queue.
+- **Membership criterion** (matches us exactly): orgs that "conduct and publish rigorous independent technical evaluations of general-purpose AI systems in the public interest." Join via contact@aievaluatorforum.org.
+- **Honest caveat:** no org has yet published a completed AEF-1 checklist (members "will begin adopting" per the Dec 4 2025 launch). **We could be the FIRST.** That's the first-mover play: publish our completed Appendix A checklist alongside the next signed board.
