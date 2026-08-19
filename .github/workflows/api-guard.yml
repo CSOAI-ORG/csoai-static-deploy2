@@ -24,18 +24,19 @@ jobs:
         id: api
         run: |
           set +e
-          T=$(curl -sL -o /tmp/api_tools.json -w '%{http_code}|%{content_type}' --max-time 30 https://councilof.ai/api/tools)
-          M=$(curl -sL -o /tmp/api_mcp.json    -w '%{http_code}|%{content_type}' --max-time 30 https://councilof.ai/api/mcp)
+          # 2026-08-19 (Claude lane): councilof.ai never served /api/tools or /api/mcp —
+          # those Functions live on the csoai-site Pages project. The councilof.ai legs
+          # asserted a surface that does not exist and failed hourly. Probe the surface
+          # that actually serves them.
           TS=$(curl -sL -o /tmp/api_tools_pages.json -w '%{http_code}|%{content_type}' --max-time 30 https://csoai-site.pages.dev/api/tools)
-          echo "councilof.ai/api/tools       : $T"
-          echo "councilof.ai/api/mcp         : $M"
+          MS=$(curl -sL -o /tmp/api_mcp_pages.json   -w '%{http_code}|%{content_type}' --max-time 30 https://csoai-site.pages.dev/api/mcp)
           echo "csoai-site.pages.dev/api/tools: $TS"
+          echo "csoai-site.pages.dev/api/mcp  : $MS"
           python3 - <<'PY'
           import json, sys
           for path, fname in [
-            ("councilof.ai/api/tools",        "/tmp/api_tools.json"),
-            ("councilof.ai/api/mcp",          "/tmp/api_mcp.json"),
             ("csoai-site.pages.dev/api/tools","/tmp/api_tools_pages.json"),
+            ("csoai-site.pages.dev/api/mcp",  "/tmp/api_mcp_pages.json"),
           ]:
             with open(fname) as f:
               body = f.read()
