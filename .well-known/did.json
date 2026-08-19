@@ -29,24 +29,11 @@
         "kid": "estate-chain-1",
         "use": "sig"
       }
-    },
-    {
-      "id": "did:web:csoai.org#boards-living-1",
-      "type": "JsonWebKey2020",
-      "controller": "did:web:csoai.org",
-      "publicKeyJwk": {
-        "kty": "OKP",
-        "crv": "Ed25519",
-        "x": "j5oAooz8duNgKf6AXz5CGVj019QsTxFIZZGKEAExORI",
-        "kid": "boards-living-1",
-        "use": "sig"
-      }
     }
   ],
   "assertionMethod": [
     "did:web:csoai.org#site-release-1",
-    "did:web:csoai.org#estate-chain-1",
-    "did:web:csoai.org#boards-living-1"
+    "did:web:csoai.org#estate-chain-1"
   ],
   "authentication": [
     "did:web:csoai.org#site-release-1"
@@ -64,7 +51,7 @@
     }
   ],
   "_keyContinuity": {
-    "note": "Three signing identities. #site-release-1 signs site artifacts (keystone). #estate-chain-1 signs fleet chains and measurement cards (pods). #boards-living-1 signs the living-board stamps served in /api/gspc (Mac lane, sig_input: sha256 of canonical board minus signature fields). Public verify surfaces label which key signed each artifact. Ed25519 today; ML-DSA-65 is roadmap, not present.",
+    "note": "Two signing identities per KEY-CONTINUITY.md. #site-release-1 signs site artifacts (keystone-held). #estate-chain-1 signs fleet chains, measurement cards and boards (pod-held). A third stamp key observed in living-board payloads is under review — it is not published here until its signatures verify under the published canon. Ed25519 today; ML-DSA-65 is roadmap, not present.",
     "superseded": [
       {
         "x": "9LQnjdwhbC8GCyc6_P2e8AhWOZNzsjsJd5T-cvs2w0I",
