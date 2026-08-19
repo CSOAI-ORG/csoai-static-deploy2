@@ -52,9 +52,20 @@ export async function onRequestGet({ request, params, waitUntil, next, data }) {
   }
   const { hit, loose } = findModel(q);
   if (!hit) {
+    // "who leads on X" — answer with the leader directly (deterministic, from the signed corpus)
+    const leaderAxis = /(care|gov|swarm|arena|elo)\b/i.exec(q);
+    let leader = null;
+    if (leaderAxis) {
+      const key = leaderAxis[1].toLowerCase();
+      const l = lookupData.leaders?.[key === 'elo' ? 'arena_elo' : key];
+      if (l) leader = { axis: key, model: l.model, value: l.value, n: l.n, source: l.source };
+    }
     return new Response(JSON.stringify({
-      mode: 'covered-query-no-hit',
-      message: 'No signed record for that model on the public rail (models with quotable cells are listed).',
+      mode: leader ? 'covered-query-leader' : 'covered-query-no-hit',
+      message: leader
+        ? `Leader on ${leader.axis}: ${leader.model} @ ${leader.value} (n=${leader.n}) — from the signed corpus.`
+        : 'No signed record for that model on the public rail (models with quotable cells are listed).',
+      leader,
       n_models: lookupData.n_models,
       leaders: lookupData.leaders,
       framing: lookupData.framing,
