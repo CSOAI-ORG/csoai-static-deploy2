@@ -91,16 +91,24 @@ def elo_update(w, l):
     return w + ELO_K * (1 - expected(w, l)), l + ELO_K * (0 - expected(l, w))
 
 
-def query_ollama(model, prompt, timeout=60, endpoint=None):
-    try:
-        body = json.dumps({"model": model, "prompt": prompt, "stream": False,
-                           "options": {"temperature": 0, "num_predict": 15}}).encode()
-        req = urllib.request.Request(endpoint or OLLAMA, data=body,
-                                     headers={"Content-Type": "application/json"})
-        with urllib.request.urlopen(req, timeout=timeout) as r:
-            return len(r.read().decode().split())
-    except Exception:
-        return None
+def query_ollama(model, prompt, timeout=45, endpoint=None, retries=1, retry_wait=15):
+    """Query with limited retry. The arena + sibling lanes share the single GPU
+    slot; under saturation a retry-loop hangs for minutes. Per doctrine
+    (UNMEASURED is reported, never hidden), a single honest attempt is right:
+    None → round logs UNMEASURED, the keeper stays responsive, and the league
+    keeps its pulse instead of freezing on one slow query."""
+    for attempt in range(retries):
+        try:
+            body = json.dumps({"model": model, "prompt": prompt, "stream": False,
+                               "options": {"temperature": 0, "num_predict": 15}}).encode()
+            req = urllib.request.Request(endpoint or OLLAMA, data=body,
+                                         headers={"Content-Type": "application/json"})
+            with urllib.request.urlopen(req, timeout=timeout) as r:
+                return len(r.read().decode().split())
+        except Exception:
+            if attempt + 1 < retries:
+                time.sleep(retry_wait)
+    return None
 
 
 def query_grok(backend, key, prompt):
@@ -170,6 +178,28 @@ def main():
     if not ours:
         print("no models")
         return
+
+    # Skip known-broken models cheaply (registered but never loadable) WITHOUT
+    # queueing behind the arena's live generation. The arena owns the GPU slot;
+    # a pre-check with per-model timeouts just queues for minutes. Instead we
+    # filter by a cheap /api/show metadata check (no inference), and let a
+    # None score degrade gracefully to UNMEASURED (rounds stay honest).
+    # NEVER filter to empty: if the check times out for all models (arena
+    # holds the slot), fall back to the full list — attempt + honest UNMEASURED
+    # beats silently doing nothing.
+    def _loadable(name):
+        try:
+            req = urllib.request.Request("http://localhost:11434/api/show",
+                                         data=json.dumps({"model": name}).encode(),
+                                         headers={"Content-Type": "application/json"})
+            with urllib.request.urlopen(req, timeout=8) as r:
+                d = json.loads(r.read().decode())
+                return bool(d.get("model_info") or d.get("details"))
+        except Exception:
+            return False
+    alive = [m for m in ours if _loadable(m)]
+    ours = alive if alive else ours
+    print(f"models measured: {ours}")
 
     for m in ours + ["grok-referee"]:
         league.setdefault(m, {"elo": 1200, "games": 0, "role": "oowm" if m in ours else "referee"})
