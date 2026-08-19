@@ -18,7 +18,7 @@ export async function onRequestGet() {
     return new Response(JSON.stringify({
       kind: 'csoai-receipt-envelope-v1',
       receipt: doc,
-      source: REPO_RAW + latest.name,
+      source: REPO_RAW + srcName,
       how_to_verify_offline: [
         'curl https://csoai.org/.well-known/did.json  -> take publicKeyJwk.x of the kid named in receipt.signatures[0].protected (base64url)',
         'recompute: sha256(json.dumps(receipt minus signatures, sort_keys, compact, utf-8)) -> hex -> ascii bytes',
