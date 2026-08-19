@@ -1,0 +1,48 @@
+name: Persona Gauntlet — canon guard on live surfaces (EAT 0.8, A4)
+on:
+  schedule:
+    # Nightly — live-surface canon regression guard (brand/axis/cert/pricing).
+    # NOTE: currently expected-RED (known gaps: /pricing /honesty /library /regulators
+    # /start 404 + api/gspc totals 17 vs 14). Becomes the merge gate when green.
+    - cron: '47 3 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  gauntlet:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Run persona gauntlet — councilof.ai (canonical site)
+        run: node scripts/persona-gauntlet.mjs --host https://councilof.ai
+
+      - name: Run persona gauntlet — csoai.org machine half
+        run: node scripts/persona-gauntlet.mjs --host https://csoai.org
+
+      - name: Open issue on failure (dedupe — only if none open)
+        if: failure()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const open = await github.rest.issues.listForRepo({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              state: 'open',
+              labels: ['gauntlet'],
+            });
+            if (open.data.length === 0) {
+              await github.rest.issues.create({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                title: `PERSONA-GAUNTLET FAIL — canon regression on live surface (${new Date().toISOString()})`,
+                body: `The persona gauntlet (EAT 0.8) failed against a live surface. Check the failing run logs; likely axis-count/brand/cert/pricing drift. Fix at source — the probe wins, not the report.`,
+                labels: ['gauntlet'],
+              });
+            }
