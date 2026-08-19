@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Methodology — the GSPC instrument, versioned (Council of AI)</title>
+<meta name="description" content="The versioned methodology changelog of the GSPC measurement instrument: deterministic core, UNMEASURED rules, signed-card format, corrections discipline. Versioned and dated — not an editable wiki. Measurement, not certification.">
+<style>
+:root { --accent:#5a9; --bg:#0d0f12; --card:#15181d; --line:#232830; }
+* { box-sizing:border-box; }
+body { margin:0; font-family:-apple-system,Segoe UI,Roboto,sans-serif; background:var(--bg); color:#e8edf2; }
+.wrap { max-width:950px; margin:0 auto; padding:2rem 1.2rem; }
+h1 { font-size:1.5rem; border-bottom:1px solid var(--line); padding-bottom:.6rem; }
+h2 { font-size:1.1rem; margin-top:1.8rem; color:#cfe6d8; }
+p, li { color:#b6c4d0; line-height:1.6; }
+.disc { color:#9fb0c0; font-size:.9rem; }
+.version { border:1px solid var(--line); border-left:3px solid var(--accent); background:var(--card); border-radius:6px; padding:.8rem 1rem; margin:.7rem 0; }
+.version .tag { font-weight:700; color:var(--accent); }
+code { background:#1a1f26; padding:.1rem .35rem; border-radius:4px; }
+.foot { margin-top:2rem; color:#6a7a8a; font-size:.74rem; line-height:1.6; }
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1>Methodology — the GSPC instrument (versioned)</h1>
+<p class="disc">How Council of AI measurement works, versioned and dated. Every figure links to a
+signed card; every card names its method hash so a reader can tell exactly which method produced a
+number. This changelog is append-only — <strong>versioned, not an editable wiki.</strong> Citation
+spine: <strong>DOI 10.5281/zenodo.21991104</strong> (concept) with the corpus version under it.</p>
+
+<h2>The split that makes it auditable</h2>
+<p><strong>Deterministic core decides; LLM narrates; the harness never trusts the narrator.</strong>
+Verdicts come from ordinary code over frozen item banks. An LLM may narrate a verdict in plain
+English, but narration is presentation, not evidence — an auditor can replay the deterministic layer
+byte-for-byte.</p>
+
+<h2>The instrument</h2>
+<ul class="disc">
+<li><strong>Axes:</strong> 14-slot registry, 13 measured. Public phrasing is only <strong>"13 measured
+of 14"</strong>. One slot is gated/UNMEASURED and reported as such.</li>
+<li><strong>Corpus:</strong> 417 frozen statutory provisions (EU AI Act 126 · GDPR 99 · CRA 71 ·
+DORA 64 · NIS2 46 · CSRD 11), hash-anchored and open.</li>
+<li><strong>Cards:</strong> <code>id = sha256(canonical JSON of body)</code>,
+<code>signature = Ed25519(id)</code>, <code>prev</code> links the chain. Verify offline:
+<code>./reproduce.sh &lt;card.json&gt;</code>.</li>
+<li><strong>UNMEASURED:</strong> an axis not measured is UNMEASURED — never interpolated, never
+averaged over a gap, never hidden.</li>
+<li><strong>Quotability:</strong> a cell shows a number only when usable n with a computed interval
+exists (care: n≥100, per-class ≥30). Overlapping CIs render "statistically indistinguishable",
+never fake ranks.</li>
+</ul>
+
+<h2>Version history</h2>
+<div class="version"><span class="tag">v0.5 · 2026-08-12</span> — 13-of-14 axis count locked to the
+14-slot registry; the 16-axis drift is internal-only and never publishes.</div>
+<div class="version"><span class="tag">v0.4 · 2026-08-16</span> — scoring fixes: empty responses are
+not correct (empty-response guard); CARE/GOV token-union gate (≥50% of gold label tokens);
+thinking-model <code>&lt;think&gt;</code> stripping before scoring. Rebench published with the fixed
+grader.</div>
+<div class="version"><span class="tag">v0.3 · 2026-08-11</span> — human-baseline axis seeded from
+published external cohorts (MMLU 0.898 · GPQA 0.81 · ARC-AGI 0.85; SWE-bench and MATH pinned at
+ingest), labelled as reported baselines, signed cells.</div>
+<div class="version"><span class="tag">v0.2 · 2026-08-09</span> — 417-provision frozen corpus anchored
+(sha256 corpus_root), CELEX-keyed; coverage crosswalk published (0 covered / 16 partial /
+3,320 absent of 3,336 cells).</div>
+<div class="version"><span class="tag">v0.1 · 2026-07-30</span> — signed-card format (id / Ed25519 /
+prev), offline verification, reproduce.sh. The correction feed is the credibility.</div>
+
+<h2>Corrections discipline</h2>
+<p class="disc">Corrections publish in the same record as results — the corrections feed is the
+credibility. Corrections are supersession chains, never deletions; the honesty register is
+append-only. A number we cannot recompute is not a number we publish.</p>
+
+<div class="foot">Council of AI (CSOAI Ltd, UK 16939677) · measurement, not certification · citation
+spine DOI 10.5281/zenodo.21991104 · corpus version DOI under it · verification free forever ·
+methodology changelog append-only, dated entries</div>
+</div>
+</body>
+</html>
