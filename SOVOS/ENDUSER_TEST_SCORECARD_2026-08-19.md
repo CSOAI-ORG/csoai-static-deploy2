@@ -82,3 +82,26 @@ Even after the redirect fix, ensure Cloudflare serves `application/json` (the `_
 3. Add the CI drift-guard for content-types (a machine path that returns text/html fails the build)
 
 **SIGIL:** `enduser-test-100-2026-08-19-jeeves`
+
+---
+
+## APPENDIX — N-SITE PRESENCE VERIFICATION (checked live, never assumed)
+
+| Site | Claimed (spray sheet) | Actual (verified today) | Verdict |
+|---|---|---|---|
+| MCP registry (official) | ✅ DONE ×2 | **ZERO hits** for gspc/csoai/proofof/council on both v0 and v0.1 APIs; namespace 404s | 🔴 **CLAIMED-DONE BUT ABSENT** — the one publish auto-propagates to 5 storefronts, so this is the highest-leverage missing action |
+| Smithery | ✅ Listed | 308 redirect (exists, need follow to confirm) | 🟡 present, verify content |
+| Glama | ✅ Listed | 200, 11 CSOAI mentions | ✅ present |
+| PyPI | ✅ csoai + proofof-ai-mcp | Both 200 | ✅ present |
+| Kaggle | ✅ 37+ kernels | API 401 (auth-gated read), 2 kernels parseable, **0 datasets** | 🟡 kernels exist; **datasets need publishing** (the count-fix + dataset cards work) |
+| Zenodo | ✅ concept + v1 | 21991104→21991105 verified live | ✅ present |
+| HF | 🟡 org csoai | (HF token tap still open) | 🟡 blocked on token |
+| llms.txt fix | — | **"13 of the 14" LIVE** (my master push deployed) | ✅ confirmed |
+
+## THE ONE MISSING ACTION THAT UNLOCKS THE MOST
+**The official MCP registry publish** — claimed done, verified absent. Per the spray sheet: `mcp-publisher` CLI + server.json under `io.github.CSOAI-ORG/*`, README with `mcp-name:` string. One action → auto-propagates to PulseMCP/Smithery/Glama/mcp.so. **This is the #1 gap found by testing.**
+
+## REVISED SCORE (with presence findings)
+**21 estate surfaces: 15 clean · 6 SPA-shell leaks (P0 fix list above) · N-site presence: 5/8 present, 1 absent (registry), 1 partial (Kaggle datasets), 1 token-blocked (HF).**
+
+**SIGIL:** `enduser-test-100-2026-08-19-jeeves`
