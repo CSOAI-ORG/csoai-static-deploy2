@@ -63,6 +63,7 @@ JSON_ALLOW = {
     "drift-feed.json",  # live SOV measurement feed — consumed by sov-space-vwm + sov-globe-portal
     "jspace_deck.json",  # J-space visual deck (Wave-3): served /jspace_deck.json
     "c_space_card.json",  # C-space fold (Wave-3): served /c_space_card.json
+    "lookup-public.json",  # /api/lookup public rail — deterministic covered-query answers (move 27)
 }
 
 # Named public files whose extension is NOT in ROOT_EXTS (.md/.pdf). Each was

@@ -1,0 +1,931 @@
+{
+ "kind": "council-public-lookup",
+ "generated_from": "mine-learn-v6",
+ "learnt_at": "2026-08-19T03:21:04.029953+00:00",
+ "n_models": 67,
+ "framing": "13 measured of 14 quotable (GSPC: Governance·Safety·Provenance·Continuity family; jail measured separately until gold bank complete). 417 provisions anchored.",
+ "leaders": {
+  "care": {
+   "model": "qwen2.5:7b",
+   "value": 0.895,
+   "n": 200,
+   "ci95": [
+    0.845,
+    0.93
+   ],
+   "source": "bench_care_200.json",
+   "publishable": true
+  },
+  "gov": {
+   "model": "qwen2.5:7b",
+   "value": 0.658,
+   "n": 193,
+   "ci95": [
+    0.589,
+    0.721
+   ],
+   "source": "bench_gov_193.json",
+   "publishable": true
+  },
+  "arena_elo": {
+   "model": "qwen2.5:7b",
+   "value": 1350.6,
+   "games": 199,
+   "source": "arena-league/master-mine"
+  }
+ },
+ "models": {
+  "clan-csoai-plain:latest": {
+   "axes": {
+    "care-refusal-protect": {
+     "v": 0.0968,
+     "n": 31
+    }
+   },
+   "quotable": 0.5484,
+   "raw": 0.5484
+  },
+  "clan-csoai-precise:latest": {
+   "axes": {
+    "care-refusal-protect": {
+     "v": 0.129,
+     "n": 31
+    }
+   },
+   "quotable": 0.5645,
+   "raw": 0.5645
+  },
+  "clan-csoai-refusing:latest": {
+   "axes": {
+    "care-refusal-protect": {
+     "v": 0.4839,
+     "n": 31
+    }
+   },
+   "quotable": 0.7419,
+   "raw": 0.7419
+  },
+  "clan-defoneos-plain:latest": {
+   "axes": {
+    "care-refusal-protect": {
+     "v": 0.0968,
+     "n": 31
+    }
+   },
+   "quotable": 0.5484,
+   "raw": 0.5484
+  },
+  "clan-defoneos-refusing:latest": {
+   "axes": {
+    "care-refusal-protect": {
+     "v": 0.4516,
+     "n": 31
+    }
+   },
+   "quotable": 0.7258,
+   "raw": 0.7258
+  },
+  "clan-law-cited:latest": {
+   "axes": {
+    "care-refusal-protect": {
+     "v": 0.2903,
+     "n": 31
+    }
+   },
+   "quotable": 0.6452,
+   "raw": 0.6452
+  },
+  "clan-law-plain:latest": {
+   "axes": {
+    "care-refusal-protect": {
+     "v": 0.129,
+     "n": 31
+    }
+   },
+   "quotable": 0.4736,
+   "raw": 0.4736
+  },
+  "clan-law-refusing:latest": {
+   "axes": {
+    "care-refusal-protect": {
+     "v": 0.4839,
+     "n": 31
+    }
+   },
+   "quotable": 0.497,
+   "raw": 0.497
+  },
+  "clan-meok-plain:latest": {
+   "axes": {
+    "care-refusal-protect": {
+     "v": 0.129,
+     "n": 31
+    }
+   },
+   "quotable": 0.5645,
+   "raw": 0.5645
+  },
+  "clan-meok-refusing:latest": {
+   "axes": {
+    "care-refusal-protect": {
+     "v": 0.4516,
+     "n": 31
+    }
+   },
+   "quotable": 0.6901,
+   "raw": 0.6901
+  },
+  "clan-meok-scoped:latest": {
+   "axes": {
+    "care-refusal-protect": {
+     "v": 0.1613,
+     "n": 31
+    }
+   },
+   "quotable": 0.5806,
+   "raw": 0.5806
+  },
+  "clan-redress-evidential:latest": {
+   "axes": {
+    "care-refusal-protect": {
+     "v": 0.2581,
+     "n": 31
+    }
+   },
+   "quotable": 0.629,
+   "raw": 0.629
+  },
+  "clan-redress-plain:latest": {
+   "axes": {
+    "care-refusal-protect": {
+     "v": 0.2258,
+     "n": 31
+    }
+   },
+   "quotable": 0.6129,
+   "raw": 0.6129
+  },
+  "clan-redress-refusing:latest": {
+   "axes": {
+    "care-refusal-protect": {
+     "v": 0.4194,
+     "n": 31
+    }
+   },
+   "quotable": 0.7097,
+   "raw": 0.7097
+  },
+  "clan-sovereignty-plain:latest": {
+   "axes": {
+    "care-refusal-protect": {
+     "v": 0.0968,
+     "n": 31
+    }
+   },
+   "quotable": 0.5484,
+   "raw": 0.5484
+  },
+  "clan-sovereignty-refusing:latest": {
+   "axes": {
+    "care-refusal-protect": {
+     "v": 0.4839,
+     "n": 31
+    }
+   },
+   "quotable": 0.7419,
+   "raw": 0.7419
+  },
+  "council-oowm:latest": {
+   "axes": {
+    "jail-escape-detection": {
+     "v": 0.4648,
+     "n": 71
+    },
+    "swag-30": {
+     "v": 0.0,
+     "n": 30
+    }
+   },
+   "quotable": 0.1162,
+   "raw": 0.1162
+  },
+  "council-safe": {
+   "axes": {},
+   "quotable": 0.25,
+   "raw": 0.25
+  },
+  "council-safe:latest": {
+   "axes": {
+    "jail-escape-detection": {
+     "v": 0.4789,
+     "n": 71
+    },
+    "swag-30": {
+     "v": 1.0,
+     "n": 30
+    }
+   },
+   "quotable": 0.5586,
+   "raw": 0.5586
+  },
+  "deepseek-r1:8b": {
+   "axes": {},
+   "quotable": 0.714,
+   "raw": 0.1785,
+   "suspect": [
+    "mmlu-30",
+    "gsm8k-30",
+    "swag-30",
+    "arc-30",
+    "care",
+    "gov"
+   ]
+  },
+  "eat-unsloth-050b:2026-08-02": {
+   "axes": {
+    "care-refusal-protect": {
+     "v": 0.7742,
+     "n": 31
+    }
+   },
+   "quotable": 0.8514,
+   "raw": 0.8514
+  },
+  "falcon3:7b": {
+   "axes": {},
+   "quotable": 0.4839,
+   "raw": 0.4839
+  },
+  "gemma3:12b": {
+   "axes": {
+    "mmlu-30": {
+     "v": 0.9667,
+     "n": 30
+    },
+    "gsm8k-30": {
+     "v": 0.9,
+     "n": 30
+    },
+    "arc-30": {
+     "v": 1.0,
+     "n": 30
+    }
+   },
+   "quotable": 0.9667,
+   "raw": 0.6083,
+   "suspect": [
+    "swag-30",
+    "care",
+    "gov"
+   ]
+  },
+  "llama3.2:3b": {
+   "axes": {
+    "mmlu-30": {
+     "v": 0.8667,
+     "n": 30
+    },
+    "gsm8k-30": {
+     "v": 0.5333,
+     "n": 30
+    },
+    "arc-30": {
+     "v": 0.9667,
+     "n": 30
+    },
+    "care-refusal-protect": {
+     "v": 0.3226,
+     "n": 31
+    }
+   },
+   "quotable": 0.6022,
+   "raw": 0.4818,
+   "suspect": [
+    "swag-30",
+    "care",
+    "gov"
+   ]
+  },
+  "mistral:7b": {
+   "axes": {
+    "mmlu-30": {
+     "v": 0.9667,
+     "n": 30
+    },
+    "gsm8k-30": {
+     "v": 0.5333,
+     "n": 30
+    },
+    "swag-30": {
+     "v": 0.5333,
+     "n": 30
+    },
+    "arc-30": {
+     "v": 1.0,
+     "n": 30
+    },
+    "jail-escape-detection": {
+     "v": 0.5211,
+     "n": 71
+    }
+   },
+   "quotable": 0.6532,
+   "raw": 0.5603,
+   "suspect": [
+    "care",
+    "gov"
+   ]
+  },
+  "muse-glimmer:latest": {
+   "axes": {
+    "jail-escape-detection": {
+     "v": 0.4648,
+     "n": 71
+    }
+   },
+   "quotable": 0.4648,
+   "raw": 0.4648
+  },
+  "nemotron-3-nano:30b": {
+   "axes": {},
+   "quotable": 1.0,
+   "raw": 1.0
+  },
+  "phi4:14b": {
+   "axes": {
+    "mmlu-30": {
+     "v": 0.9667,
+     "n": 30
+    },
+    "gsm8k-30": {
+     "v": 0.8,
+     "n": 30
+    },
+    "arc-30": {
+     "v": 0.9667,
+     "n": 30
+    }
+   },
+   "quotable": 0.9334,
+   "raw": 0.5917,
+   "suspect": [
+    "swag-30",
+    "care",
+    "gov"
+   ]
+  },
+  "qwen2.5-0.5b-mined:latest": {
+   "axes": {
+    "care-refusal-protect": {
+     "v": 0.4194,
+     "n": 31
+    }
+   },
+   "quotable": 0.7097,
+   "raw": 0.7097
+  },
+  "qwen2.5:0.5b": {
+   "axes": {
+    "care-refusal-protect": {
+     "v": 0.4516,
+     "n": 31
+    }
+   },
+   "quotable": 0.5378,
+   "raw": 0.5378
+  },
+  "qwen2.5:0.5b-instruct": {
+   "axes": {
+    "mmlu-30": {
+     "v": 0.7333,
+     "n": 30
+    },
+    "gsm8k-30": {
+     "v": 0.2,
+     "n": 30
+    },
+    "swag-30": {
+     "v": 1.0,
+     "n": 30
+    },
+    "arc-30": {
+     "v": 0.7667,
+     "n": 30
+    },
+    "jail-escape-detection": {
+     "v": 0.5352,
+     "n": 71
+    }
+   },
+   "quotable": 0.5188,
+   "raw": 0.401,
+   "suspect": [
+    "care",
+    "gov"
+   ]
+  },
+  "qwen2.5:1.5b": {
+   "axes": {
+    "mmlu-30": {
+     "v": 0.8667,
+     "n": 30
+    },
+    "gsm8k-30": {
+     "v": 0.8,
+     "n": 30
+    },
+    "swag-30": {
+     "v": 0.5333,
+     "n": 30
+    },
+    "arc-30": {
+     "v": 0.9,
+     "n": 30
+    },
+    "jail-escape-detection": {
+     "v": 0.5634,
+     "n": 71
+    }
+   },
+   "quotable": 0.6023,
+   "raw": 0.5178,
+   "suspect": [
+    "care",
+    "gov"
+   ]
+  },
+  "qwen2.5:3b": {
+   "axes": {
+    "mmlu-30": {
+     "v": 0.8667,
+     "n": 30
+    },
+    "gsm8k-30": {
+     "v": 0.7667,
+     "n": 30
+    },
+    "arc-30": {
+     "v": 0.9,
+     "n": 30
+    }
+   },
+   "quotable": 0.8119,
+   "raw": 0.464,
+   "suspect": [
+    "swag-30",
+    "care",
+    "gov"
+   ]
+  },
+  "qwen2.5:7b": {
+   "axes": {
+    "mmlu-30": {
+     "v": 0.9667,
+     "n": 30
+    },
+    "gsm8k-30": {
+     "v": 0.8667,
+     "n": 30
+    },
+    "swag-30": {
+     "v": 0.3,
+     "n": 30
+    },
+    "arc-30": {
+     "v": 1.0,
+     "n": 30
+    },
+    "jail-escape-detection": {
+     "v": 0.5493,
+     "n": 71
+    }
+   },
+   "quotable": 0.7372,
+   "raw": 0.663,
+   "suspect": [
+    "care",
+    "gov"
+   ]
+  },
+  "qwen3.8:27b": {
+   "axes": {},
+   "quotable": 0.7143,
+   "raw": 0.7143
+  },
+  "qwen3:0.6b": {
+   "axes": {
+    "care-refusal-protect": {
+     "v": 0.0,
+     "n": 31
+    }
+   },
+   "quotable": 0.5,
+   "raw": 0.5
+  },
+  "qwen3:4b": {
+   "axes": {
+    "swag-30": {
+     "v": 0.0,
+     "n": 30
+    },
+    "jail-escape-detection": {
+     "v": 0.4648,
+     "n": 71
+    }
+   },
+   "quotable": 0.2441,
+   "raw": 0.2054,
+   "suspect": [
+    "mmlu-30",
+    "gsm8k-30",
+    "arc-30",
+    "care",
+    "gov"
+   ]
+  },
+  "sov-compliance-art5:latest": {
+   "axes": {},
+   "quotable": 0.3831,
+   "raw": 0.3831
+  },
+  "sov-deepseek:latest": {
+   "axes": {},
+   "quotable": 0.4563,
+   "raw": 0.4563
+  },
+  "sov-draw-compliance:latest": {
+   "axes": {
+    "care-refusal-protect": {
+     "v": 0.1935,
+     "n": 31
+    }
+   },
+   "quotable": 0.4669,
+   "raw": 0.4669
+  },
+  "sov-draw-cybersecurity:latest": {
+   "axes": {
+    "care-refusal-protect": {
+     "v": 0.1935,
+     "n": 31
+    }
+   },
+   "quotable": 0.5968,
+   "raw": 0.5968
+  },
+  "sov-draw-sovereignty:latest": {
+   "axes": {
+    "care-refusal-protect": {
+     "v": 0.1935,
+     "n": 31
+    }
+   },
+   "quotable": 0.5968,
+   "raw": 0.5968
+  },
+  "sov-ethics-art5:latest": {
+   "axes": {},
+   "quotable": 0.4029,
+   "raw": 0.4029
+  },
+  "sov-gemma:latest": {
+   "axes": {},
+   "quotable": 0.4504,
+   "raw": 0.4504
+  },
+  "sov-mistral:latest": {
+   "axes": {},
+   "quotable": 0.4435,
+   "raw": 0.4435
+  },
+  "sov-phi:latest": {
+   "axes": {},
+   "quotable": 0.4563,
+   "raw": 0.4563
+  },
+  "sov-refusal-balanced:latest": {
+   "axes": {},
+   "quotable": 0.4415,
+   "raw": 0.4415
+  },
+  "sov-refusal-combo:latest": {
+   "axes": {},
+   "quotable": 0.4578,
+   "raw": 0.4578
+  },
+  "sov-refusal-lora:latest": {
+   "axes": {},
+   "quotable": 0.4356,
+   "raw": 0.4356
+  },
+  "sov-refusal-v2:latest": {
+   "axes": {},
+   "quotable": 0.437,
+   "raw": 0.437
+  },
+  "sov-sovereign-v4:latest": {
+   "axes": {
+    "care-refusal-protect": {
+     "v": 0.4194,
+     "n": 31
+    }
+   },
+   "quotable": 0.4938,
+   "raw": 0.4938
+  },
+  "sov33-unified:latest": {
+   "axes": {
+    "care-refusal-protect": {
+     "v": 0.7419,
+     "n": 31
+    }
+   },
+   "quotable": 0.6587,
+   "raw": 0.6587
+  },
+  "sov33-v7:latest": {
+   "axes": {
+    "care-refusal-protect": {
+     "v": 0.6129,
+     "n": 31
+    }
+   },
+   "quotable": 0.4697,
+   "raw": 0.4697
+  },
+  "sov34:latest": {
+   "axes": {},
+   "quotable": 0.5925,
+   "raw": 0.5925
+  },
+  "sov6-abstraction-v3-light:latest": {
+   "axes": {
+    "mmlu-30": {
+     "v": 0.9,
+     "n": 30
+    },
+    "gsm8k-30": {
+     "v": 0.8333,
+     "n": 30
+    },
+    "arc-30": {
+     "v": 0.9333,
+     "n": 30
+    }
+   },
+   "quotable": 0.8809,
+   "raw": 0.5476,
+   "suspect": [
+    "swag-30",
+    "care",
+    "gov"
+   ]
+  },
+  "sov6-aesthetics-v3-light:latest": {
+   "axes": {
+    "mmlu-30": {
+     "v": 0.9667,
+     "n": 30
+    },
+    "gsm8k-30": {
+     "v": 0.7667,
+     "n": 30
+    },
+    "arc-30": {
+     "v": 1.0,
+     "n": 30
+    }
+   },
+   "quotable": 0.8976,
+   "raw": 0.5559,
+   "suspect": [
+    "swag-30",
+    "care",
+    "gov"
+   ]
+  },
+  "sov6-agency-v3-light:latest": {
+   "axes": {},
+   "quotable": 0.714,
+   "raw": 0.1785,
+   "suspect": [
+    "mmlu-30",
+    "gsm8k-30",
+    "swag-30",
+    "arc-30",
+    "care",
+    "gov"
+   ]
+  },
+  "sov6-creation-v3-light:latest": {
+   "axes": {
+    "mmlu-30": {
+     "v": 0.9667,
+     "n": 30
+    },
+    "gsm8k-30": {
+     "v": 0.7667,
+     "n": 30
+    },
+    "arc-30": {
+     "v": 1.0,
+     "n": 30
+    }
+   },
+   "quotable": 0.8976,
+   "raw": 0.5559,
+   "suspect": [
+    "swag-30",
+    "care",
+    "gov"
+   ]
+  },
+  "sov6-destruction-v3-light:latest": {
+   "axes": {},
+   "quotable": 0.714,
+   "raw": 0.1785,
+   "suspect": [
+    "mmlu-30",
+    "gsm8k-30",
+    "swag-30",
+    "arc-30",
+    "care",
+    "gov"
+   ]
+  },
+  "sov6-embodiment-v3-light:latest": {
+   "axes": {
+    "mmlu-30": {
+     "v": 0.9667,
+     "n": 30
+    },
+    "gsm8k-30": {
+     "v": 0.8,
+     "n": 30
+    },
+    "arc-30": {
+     "v": 1.0,
+     "n": 30
+    }
+   },
+   "quotable": 0.9059,
+   "raw": 0.5601,
+   "suspect": [
+    "swag-30",
+    "care",
+    "gov"
+   ]
+  },
+  "sov6-ethics-v3-light:latest": {
+   "axes": {
+    "mmlu-30": {
+     "v": 0.9667,
+     "n": 30
+    },
+    "gsm8k-30": {
+     "v": 0.6,
+     "n": 30
+    },
+    "arc-30": {
+     "v": 0.9667,
+     "n": 30
+    }
+   },
+   "quotable": 0.8476,
+   "raw": 0.5309,
+   "suspect": [
+    "swag-30",
+    "care",
+    "gov"
+   ]
+  },
+  "sov6-identity-v3-light:latest": {
+   "axes": {
+    "mmlu-30": {
+     "v": 0.8667,
+     "n": 30
+    },
+    "gsm8k-30": {
+     "v": 0.8667,
+     "n": 30
+    },
+    "arc-30": {
+     "v": 0.9,
+     "n": 30
+    }
+   },
+   "quotable": 0.8368,
+   "raw": 0.5077,
+   "suspect": [
+    "swag-30",
+    "care",
+    "gov"
+   ]
+  },
+  "sov6-logic-v3-light:latest": {
+   "axes": {},
+   "quotable": 0.714,
+   "raw": 0.1785,
+   "suspect": [
+    "mmlu-30",
+    "gsm8k-30",
+    "swag-30",
+    "arc-30",
+    "care",
+    "gov"
+   ]
+  },
+  "sov6-preservation-v3-light:latest": {
+   "axes": {
+    "mmlu-30": {
+     "v": 0.9667,
+     "n": 30
+    },
+    "gsm8k-30": {
+     "v": 0.8333,
+     "n": 30
+    },
+    "arc-30": {
+     "v": 1.0,
+     "n": 30
+    }
+   },
+   "quotable": 0.95,
+   "raw": 0.6,
+   "suspect": [
+    "swag-30",
+    "care",
+    "gov"
+   ]
+  },
+  "sov6-relationality-v3-light:latest": {
+   "axes": {
+    "mmlu-30": {
+     "v": 0.7,
+     "n": 30
+    },
+    "gsm8k-30": {
+     "v": 0.5333,
+     "n": 30
+    },
+    "arc-30": {
+     "v": 0.5333,
+     "n": 30
+    }
+   },
+   "quotable": 0.4774,
+   "raw": 0.2566,
+   "suspect": [
+    "swag-30",
+    "care",
+    "gov"
+   ]
+  },
+  "sov6-synthesis-v3-light:latest": {
+   "axes": {
+    "mmlu-30": {
+     "v": 0.4333,
+     "n": 30
+    },
+    "gsm8k-30": {
+     "v": 0.0,
+     "n": 30
+    },
+    "arc-30": {
+     "v": 0.2,
+     "n": 30
+    }
+   },
+   "quotable": 0.1941,
+   "raw": 0.1149,
+   "suspect": [
+    "swag-30",
+    "care",
+    "gov"
+   ]
+  },
+  "sov6-temporality-v3-light:latest": {
+   "axes": {
+    "mmlu-30": {
+     "v": 0.8667,
+     "n": 30
+    },
+    "gsm8k-30": {
+     "v": 0.8333,
+     "n": 30
+    },
+    "arc-30": {
+     "v": 0.9333,
+     "n": 30
+    }
+   },
+   "quotable": 0.9083,
+   "raw": 0.5792,
+   "suspect": [
+    "swag-30",
+    "care",
+    "gov"
+   ]
+  }
+ }
+}
