@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Passes — measured-current state records (Council of AI)</title>
+<meta name="description" content="Measured-current state records: a signed, time-boxed measurement of a system against frozen provisions. Never a certificate — a measured-current state record that expires when the window lapses or the regulation changes. Measurement, not certification.">
+<style>
+:root { --accent:#5a9; --bg:#0d0f12; --card:#15181d; --line:#232830; }
+* { box-sizing:border-box; }
+body { margin:0; font-family:-apple-system,Segoe UI,Roboto,sans-serif; background:var(--bg); color:#e8edf2; }
+.wrap { max-width:900px; margin:0 auto; padding:2rem 1.2rem; }
+h1 { font-size:1.5rem; border-bottom:1px solid var(--line); padding-bottom:.6rem; }
+h2 { font-size:1.05rem; margin-top:1.6rem; color:#cfe6d8; }
+p, li { color:#b6c4d0; line-height:1.6; }
+.disc { color:#9fb0c0; font-size:.9rem; }
+.states { display:flex; gap:.6rem; flex-wrap:wrap; margin-top:1rem; }
+.state { border:1px solid var(--line); border-radius:8px; padding:.6rem .9rem; font-size:.85rem; }
+.state .name { font-weight:700; display:block; }
+.current { border-left:3px solid #8d8; }
+.expired { border-left:3px solid #fc6; }
+.never { border-left:3px solid #f88; }
+.foot { margin-top:2rem; color:#6a7a8a; font-size:.74rem; line-height:1.6; }
+code { background:#1a1f26; padding:.1rem .35rem; border-radius:4px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1>Passes — measured-current state records</h1>
+<p class="disc">A <strong>pass</strong> is a signed, time-boxed measurement of a system against frozen
+provisions — never a certificate. The pass states what was measured, on which instrument version,
+within which window, and when it expires. <strong>validUntil = min(window, provision-change-event)</strong>:
+the pass dies when its time window lapses OR when the regulation it was measured against changes —
+whichever comes first. Re-measurement is free and unpurchasable.</p>
+
+<h2>Pass states</h2>
+<div class="states">
+<div class="state current"><span class="name">CURRENT</span>measured within window; regulation unchanged</div>
+<div class="state expired"><span class="name">EXPIRED-WINDOW-LAPSED</span>time window passed; re-measure to renew</div>
+<div class="state expired"><span class="name">EXPIRED-REGULATION-CHANGED</span>the provision changed; the old measurement no longer speaks to it</div>
+<div class="state never"><span class="name">NEVER-MEASURED</span>no measurement exists — reported as such, never invented</div>
+</div>
+
+<h2>What a pass is not</h2>
+<ul class="disc">
+<li><strong>Not a certificate</strong> — nothing reads as attestation of safety, compliance sign-off, or a pass/fail stamp buyers can rely on.</li>
+<li><strong>Not a legal determination</strong> — a pass maps measured signals to provisions with a confidence, "not a legal determination or legal advice."</li>
+<li><strong>Not permanent</strong> — every pass carries its expiry; a red estate publishes as red.</li>
+<li><strong>Not purchasable</strong> — no money either direction with anything ranked. Whoever pays (evidence-buyers) never buys a state.</li>
+</ul>
+
+<h2>How to read a pass</h2>
+<p class="disc">Each pass links to its signed card: <code>id = sha256(canonical body)</code>,
+<code>signature = Ed25519(id)</code>, <code>prev</code> chains the record. Verify offline with the
+published public key. The states above are rendered from the signed record — a stranger can
+recompute every one. <strong>Measurement, not certification.</strong> Verification is free forever.</p>
+
+<div class="foot">Council of AI (CSOAI Ltd, UK 16939677) · measured-current state records, never
+certification · validUntil = min(window, provision-change-event) · methodology DOI
+10.5281/zenodo.21991104</div>
+</div>
+</body>
+</html>
