@@ -1,19 +1,18 @@
 {
   "kind": "gspc.board",
-  "axis": "affect",
+  "axis": "art5",
   "harness": "sovos_city.bench.board (estate)",
   "sample": 30,
   "result": {
     "kind": "gspc.board",
-    "axis": "affect",
+    "axis": "art5",
     "bank_items": 30,
     "canaries_excluded": 0,
     "labels": [
-      "DISCLOSE",
       "PERMITTED",
       "PROHIBITED"
     ],
-    "majority_baseline": 0.4333,
+    "majority_baseline": 0.5333,
     "models": [
       {
         "model": "qwen2.5:1.5b",
@@ -37,6 +36,15 @@
   },
   "pod": "sovos-light-master-mine (A100 80GB)",
   "note": "estate harness, unsigned here; signing on key pod",
-  "ts": "2026-08-19T08:59:23Z",
-  "signing_note": "unsigned: did-liveness block active 2026-08-19T09:51:04Z"
+  "ts": "2026-08-19T09:01:50Z",
+  "signatures": [
+    {
+      "protected": "eyJhbGciOiJFZERTQSIsImtpZCI6ImRpZDp3ZWI6Y3NvYWkub3JnI2VzdGF0ZS1jaGFpbi0xIiwidHlwIjoiSldUIn0",
+      "signature": "cxbEXm37hx4b_O6r5N35R5eJUN_w72y5xcvZ2e2VkBK1GU3scUEU9dn19m9inWBoBYaN3lPC9v1GaRfPkStNCg",
+      "header": {
+        "typ": "JWT"
+      }
+    }
+  ],
+  "resigned_after": "trust-root repair 2026-08-19 (same bytes, first signature)"
 }

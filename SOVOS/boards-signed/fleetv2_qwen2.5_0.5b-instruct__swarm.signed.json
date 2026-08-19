@@ -15,9 +15,9 @@
     "majority_baseline": 0.6667,
     "models": [
       {
-        "model": "qwen2.5:1.5b",
+        "model": "qwen2.5:0.5b-instruct",
         "n": 3,
-        "correct": 1,
+        "correct": 2,
         "unparsed": 0,
         "accuracy": null,
         "ci95": null,
@@ -33,6 +33,15 @@
   },
   "pod": "sovos-light-master-mine (A100 80GB)",
   "note": "estate harness, unsigned here; signing on key pod",
-  "ts": "2026-08-19T09:06:24Z",
-  "signing_note": "unsigned: did-liveness block active 2026-08-19T09:51:04Z"
+  "ts": "2026-08-19T08:57:11Z",
+  "signatures": [
+    {
+      "protected": "eyJhbGciOiJFZERTQSIsImtpZCI6ImRpZDp3ZWI6Y3NvYWkub3JnI2VzdGF0ZS1jaGFpbi0xIiwidHlwIjoiSldUIn0",
+      "signature": "dA2hlrPalfp8_NQTgaMbBzorPsmWn2qJIGzxIX9h0P0jnHSiNjJ1m-D4KBgj5O6priPmZYzcwgbqhiFohG4XAQ",
+      "header": {
+        "typ": "JWT"
+      }
+    }
+  ],
+  "resigned_after": "trust-root repair 2026-08-19 (same bytes, first signature)"
 }

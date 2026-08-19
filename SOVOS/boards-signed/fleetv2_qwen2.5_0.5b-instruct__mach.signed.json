@@ -1,36 +1,35 @@
 {
   "kind": "gspc.board",
-  "axis": "gov",
+  "axis": "mach",
   "harness": "sovos_city.bench.board (estate)",
   "sample": 30,
   "result": {
     "kind": "gspc.board",
-    "axis": "gov",
+    "axis": "mach",
     "bank_items": 30,
     "canaries_excluded": 0,
     "labels": [
-      "HIGH_RISK",
-      "LIMITED_RISK",
-      "MINIMAL_RISK",
-      "PROHIBITED"
+      "NOT_SAFETY_FUNCTION",
+      "OUT_OF_SCOPE",
+      "PART_A"
     ],
     "majority_baseline": 0.4,
     "models": [
       {
-        "model": "qwen2.5:1.5b",
+        "model": "qwen2.5:0.5b-instruct",
         "n": 30,
-        "correct": 7,
+        "correct": 14,
         "unparsed": 0,
-        "accuracy": 0.2333,
+        "accuracy": 0.4667,
         "ci95": [
-          0.1179,
-          0.4093
+          0.3023,
+          0.6386
         ],
         "quotable": true,
         "note": null
       }
     ],
-    "best": "qwen2.5:1.5b",
+    "best": "qwen2.5:0.5b-instruct",
     "status": "MEASURED",
     "status_note": null,
     "per_item_count": 30,
@@ -38,6 +37,15 @@
   },
   "pod": "sovos-light-master-mine (A100 80GB)",
   "note": "estate harness, unsigned here; signing on key pod",
-  "ts": "2026-08-19T09:04:24Z",
-  "signing_note": "unsigned: did-liveness block active 2026-08-19T09:51:04Z"
+  "ts": "2026-08-19T08:55:48Z",
+  "signatures": [
+    {
+      "protected": "eyJhbGciOiJFZERTQSIsImtpZCI6ImRpZDp3ZWI6Y3NvYWkub3JnI2VzdGF0ZS1jaGFpbi0xIiwidHlwIjoiSldUIn0",
+      "signature": "W6PGrhw_qi1V6KLFlS-9Cx9aiAAbBRyEtZAdmESSZhgu7ujl3hi-2WbRr6ua27xxokkIYTUohrMvrKSD0NGQAg",
+      "header": {
+        "typ": "JWT"
+      }
+    }
+  ],
+  "resigned_after": "trust-root repair 2026-08-19 (same bytes, first signature)"
 }

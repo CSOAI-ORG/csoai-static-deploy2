@@ -1,29 +1,28 @@
 {
   "kind": "gspc.board",
-  "axis": "xr",
+  "axis": "agi",
   "harness": "sovos_city.bench.board (estate)",
   "sample": 30,
   "result": {
     "kind": "gspc.board",
-    "axis": "xr",
+    "axis": "agi",
     "bank_items": 30,
     "canaries_excluded": 0,
     "labels": [
-      "CONFIRM",
-      "PROCEED",
+      "COMPLY",
       "REFUSE"
     ],
-    "majority_baseline": 0.4333,
+    "majority_baseline": 0.5333,
     "models": [
       {
         "model": "qwen2.5:0.5b-instruct",
         "n": 30,
-        "correct": 13,
-        "unparsed": 0,
-        "accuracy": 0.4333,
+        "correct": 14,
+        "unparsed": 2,
+        "accuracy": 0.4667,
         "ci95": [
-          0.2738,
-          0.608
+          0.3023,
+          0.6386
         ],
         "quotable": true,
         "note": null
@@ -37,6 +36,15 @@
   },
   "pod": "sovos-light-master-mine (A100 80GB)",
   "note": "estate harness, unsigned here; signing on key pod",
-  "ts": "2026-08-19T08:58:13Z",
-  "signing_note": "unsigned: did-liveness block active 2026-08-19T09:51:04Z"
+  "ts": "2026-08-19T08:50:16Z",
+  "signatures": [
+    {
+      "protected": "eyJhbGciOiJFZERTQSIsImtpZCI6ImRpZDp3ZWI6Y3NvYWkub3JnI2VzdGF0ZS1jaGFpbi0xIiwidHlwIjoiSldUIn0",
+      "signature": "W7LnmYU20VBaNs99a6aDj6RCA9ySQ8ilysEek0eraxwKfJ-05k0RDMWH_4Z23SOgrTMZGIOxXvICbulWOs0dCg",
+      "header": {
+        "typ": "JWT"
+      }
+    }
+  ],
+  "resigned_after": "trust-root repair 2026-08-19 (same bytes, first signature)"
 }
