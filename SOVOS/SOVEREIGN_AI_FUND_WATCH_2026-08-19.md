@@ -17,8 +17,15 @@
 - Initial-round sizes: **£1M–£9M**; non-commercial track up to **100%** funding, commercial up to 50% (70% exceptional)
 - £160M award ranges: UNVERIFIED
 
+## Eligibility (verified from official Competition Guidance PDF, Apr-Jun 2026)
+- **UK-registered lead** (consortia OK; non-UK partners allowed) · project in the UK
+- **£1M–£9M per project** · **complete by 31 Mar 2030**
+- **High-value dataset definition:** AI-ready data with curation, provenance, documentation, QA, standards, access arrangements; usable for training/validating/testing at scale; **explicitly includes benchmark & evaluation datasets for model performance** — that is our product class
+- **Focus area "AI Trust, Integrity & Assurance":** evaluations, red-teaming, adversarial robustness, monitoring, audit, compliance, governance tooling, privacy-preserving deployment — squarely CSOAI's lane
+- **Separate procurement stream:** "Government as first customer" opens "in the summer" — distinct from the grants programme
+
 ## Named contacts (UNVERIFIED as grants-director; public roles)
-James Wise (Chair) · Suzanne Ashman (Managing Partner) · Joséphine Kant (Head of Ventures) · Will Bushby (Investor) · AI Minister Kanishka Narayan
+James Wise (Chair) · Suzanne Ashman (Managing Partner, joined Jul 2026) · Joséphine Kant (Head of Ventures) · Will Bushby (Investor) · AI Minister Kanishka Narayan · Tech Sec Liz Kendall · sovai.applications@dsit.gov.uk
 
 ## CSOAI recommendation (K3)
 **Do not apply yet.** Prepare an **EOI-ready proposition** positioning our measurement datasets + benchmarks as a **shared, open-access AI Trust/Integrity/Assurance asset** (non-commercial track's 100% framing). Monitor sovereignai.gov.uk, Find-a-Grant, scheme SC11500, and the separate "Government as first customer" procurement stream (opening "in the summer").
