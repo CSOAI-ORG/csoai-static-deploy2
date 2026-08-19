@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Watchdog — 11 checks on the estate (Council of AI)</title>
+<meta name="description" content="The estate watchdog: 11 automated checks on our own surfaces — canon counts, machine paths, signature chain, banned terms. Every check is a fetch; a failure is reported, never hidden. Measurement, not certification.">
+<style>
+:root { --accent:#5a9; --bg:#0d0f12; --card:#15181d; --line:#232830; }
+* { box-sizing:border-box; }
+body { margin:0; font-family:-apple-system,Segoe UI,Roboto,sans-serif; background:var(--bg); color:#e8edf2; }
+.wrap { max-width:900px; margin:0 auto; padding:2rem 1.2rem; }
+h1 { font-size:1.5rem; border-bottom:1px solid var(--line); padding-bottom:.6rem; }
+h2 { font-size:1.05rem; margin-top:1.6rem; color:#cfe6d8; }
+table { width:100%; border-collapse:collapse; margin-top:.8rem; font-size:.85rem; }
+th,td { border:1px solid var(--line); padding:.4rem .5rem; text-align:left; }
+th { background:var(--card); font-weight:600; }
+.pass { color:#8d8; font-weight:600; }
+.fail { color:#f88; font-weight:600; }
+.warn { color:#fc6; font-weight:600; }
+.disc { color:#9fb0c0; font-size:.85rem; line-height:1.5; }
+.foot { margin-top:2rem; color:#6a7a8a; font-size:.74rem; }
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1>The Watchdog — 11 checks on our own estate</h1>
+<p class="disc">The estate is watched by automated checks that run on every deploy and on a
+schedule. A check is a fetch, not a faith — <strong>a failure is reported, never hidden.</strong>
+This page shows the live state of the watchdog. An allegation is rendered as an allegation until
+it is measured (Art 85 intake framing). Measurement, not certification.</p>
+
+<h2>The 11 checks</h2>
+<table>
+<thead><tr><th>#</th><th>Check</th><th>State</th><th>Note</th></tr></thead>
+<tbody>
+<tr><td>1</td><td>Canon count — "13 measured of 14"</td><td class="pass">PASS</td><td>Badge, agent card, scoreboard, honesty all carry the canon count.</td></tr>
+<tr><td>2</td><td>API totals reconcile to canon (14-slot / 819)</td><td class="fail">FLAG</td><td>councilof.ai/api/gspc totals show 17 axes / 966 items (owner: councilof-ai lane). public_count field is correct.</td></tr>
+<tr><td>3</td><td>DID trust root serves JSON</td><td class="pass">PASS</td><td>csoai.org/.well-known/did.json 200, did:web:csoai.org.</td></tr>
+<tr><td>4</td><td>Machine paths 200 (agent-card, banks-manifest, verification.schema, badge)</td><td class="pass">PASS</td><td>All verified cache-busted 19 Aug.</td></tr>
+<tr><td>5</td><td>Signature chain verifies (14/14 cards, prev links)</td><td class="pass">PASS</td><td>Recomputed offline; chain intact.</td></tr>
+<tr><td>6</td><td>Banned terms absent from public copy</td><td class="pass">PASS</td><td>No sovereign/SOV*/BFT/33-agent/cert-as-product in display copy (honest disclaimers allowed).</td></tr>
+<tr><td>7</td><td>No SaaS pricing on public surfaces</td><td class="pass">PASS</td><td>Pricing removed per ruling; verification free forever.</td></tr>
+<tr><td>8</td><td>No stale axis counts (12/15/16/17)</td><td class="warn">WATCH</td><td>Public copy clean; the api/gspc totals field is the one open breach (check #2).</td></tr>
+<tr><td>9</td><td>UNMEASURED shown honestly (jail/swarm/gated slot)</td><td class="pass">PASS</td><td>Gated slot reported with limits; never invented.</td></tr>
+<tr><td>10</td><td>A2A card signature verifies (kid in DID doc)</td><td class="fail">KNOWN</td><td>agent-card.json kid #site-release-1 absent from DID — corrections #27; kernel/identity fix owned (no new A2A publicity until fixed).</td></tr>
+<tr><td>11</td><td>Fleet burn under cap ($100/24h)</td><td class="pass">PASS</td><td>4 RUNNING ≈ $69/day; re-verified weekly.</td></tr>
+</tbody>
+</table>
+
+<h2>Honest states</h2>
+<p class="disc">PASS = verified by a fetch · FLAG = known breach, owner assigned · WATCH = open risk ·
+KNOWN = documented defect with an owner. Nothing here is hidden: a red estate publishes as red.
+The watchdog itself is versioned; failures log as drift events against ourselves.</p>
+
+<div class="foot">Council of AI (CSOAI Ltd, UK 16939677) · watchdog live state as of 19 Aug 2026 ·
+every check is a fetch — recompute, don't trust · methodology DOI 10.5281/zenodo.21991104</div>
+</div>
+</body>
+</html>
