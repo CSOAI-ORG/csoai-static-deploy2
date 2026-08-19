@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dispute a measurement — Council of AI</title>
+<meta name="description" content="Dispute a signed measurement: the appeals path is free, loginless, and every dispute gets a receipt. Measurement, not certification — a number we can't defend is corrected, not hidden.">
+<style>
+:root { --accent:#5a9; --bg:#0d0f12; --card:#15181d; --line:#232830; }
+* { box-sizing:border-box; }
+body { margin:0; font-family:-apple-system,Segoe UI,Roboto,sans-serif; background:var(--bg); color:#e8edf2; }
+.wrap { max-width:900px; margin:0 auto; padding:2rem 1.2rem; }
+h1 { font-size:1.5rem; border-bottom:1px solid var(--line); padding-bottom:.6rem; }
+h2 { font-size:1.05rem; margin-top:1.6rem; color:#cfe6d8; }
+p, li { color:#b6c4d0; line-height:1.6; }
+.disc { color:#9fb0c0; font-size:.9rem; }
+.card { border:1px solid var(--line); background:var(--card); border-radius:8px; padding:1rem 1.2rem; margin-top:1rem; }
+a.btn { display:inline-block; background:var(--accent); color:#062; font-weight:700; padding:.6rem 1.2rem; border-radius:8px; text-decoration:none; margin-top:.8rem; }
+.foot { margin-top:2rem; color:#6a7a8a; font-size:.74rem; }
+code { background:#1a1f26; padding:.1rem .35rem; border-radius:4px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1>Dispute a measurement</h1>
+<p class="disc">Every signed measurement has an appeals path. It is <strong>free, loginless, and
+receipted</strong> — a dispute is itself a signed event, and every dispute gets a response. If a number
+is wrong, the correction is published in the honesty register with its date. Nothing is deleted;
+corrections supersede.</p>
+
+<div class="card">
+<h2>How to dispute</h2>
+<ol>
+<li><strong>Have the card.</strong> The disputed measurement is a signed card (id = sha256 of the
+canonical body; signature = Ed25519; <code>prev</code> links the chain). Verify it offline first with
+the published public key — the card itself is evidence of what was claimed and when.</li>
+<li><strong>Open a dispute.</strong> Use the <code>dispute-measurement</code> template on our public
+issue tracker. Include: the card id, the cell you dispute, and your evidence (a recomputation, a
+method objection, or a source that contradicts the claim).</li>
+<li><strong>Get a response.</strong> Disputes are triaged deterministically: a recomputation we can
+run, a method objection we can test, or a correction we publish. Every outcome is recorded.</li>
+</ol>
+<a class="btn" href="https://github.com/CSOAI-ORG/csoai-static-deploy2/issues/new?template=dispute-measurement.md" target="_blank" rel="noopener">Open a dispute →</a>
+</div>
+
+<h2>What a dispute is not</h2>
+<ul class="disc">
+<li>Not a legal proceeding — a measurement dispute is answered with measurement.</li>
+<li>Not a score change for payment — no money either direction with anything ranked, ever.</li>
+<li>Not a silent fix — a correction is published in the honesty register, superseding not deleting.</li>
+</ul>
+
+<h2>Appeals path</h2>
+<p class="disc">If the first response does not resolve the dispute, the appeal goes to the published
+methodology owners with the full evidence trail. The standing is: <strong>a number we can't defend is
+corrected, not hidden.</strong> Verification is free forever.</p>
+
+<div class="foot">Council of AI (CSOAI Ltd, UK 16939677) · measurement, not certification · dispute
+intake: dispute-measurement template · methodology DOI 10.5281/zenodo.21991104</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Live Status — Council of AI (surfaces, machine paths, fleet)</title>
+<meta name="description" content="Live status of Council of AI surfaces: website, machine paths, API, signature chain, fleet. Only Sigstore has a status page like this in the ecosystem — ours is honest and signed.">
+<style>
+:root { --accent:#5a9; --bg:#0d0f12; --card:#15181d; --line:#232830; }
+* { box-sizing:border-box; }
+body { margin:0; font-family:-apple-system,Segoe UI,Roboto,sans-serif; background:var(--bg); color:#e8edf2; }
+.wrap { max-width:900px; margin:0 auto; padding:2rem 1.2rem; }
+h1 { font-size:1.5rem; border-bottom:1px solid var(--line); padding-bottom:.6rem; }
+h2 { font-size:1.05rem; margin-top:1.6rem; color:#cfe6d8; }
+table { width:100%; border-collapse:collapse; margin-top:.8rem; font-size:.85rem; }
+th,td { border:1px solid var(--line); padding:.4rem .5rem; text-align:left; }
+th { background:var(--card); font-weight:600; }
+.ok { color:#8d8; font-weight:600; }
+.down { color:#f88; font-weight:600; }
+.warn { color:#fc6; font-weight:600; }
+.disc { color:#9fb0c0; font-size:.85rem; line-height:1.5; }
+.foot { margin-top:2rem; color:#6a7a8a; font-size:.74rem; }
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1>Live Status — Council of AI</h1>
+<p class="disc">Live status of the public surfaces and the signature chain. This page is itself
+recomputable: every row is a fetch, not a promise. <strong>Measurement, not certification.</strong>
+Verification is free forever.</p>
+
+<h2>Public surfaces</h2>
+<table>
+<thead><tr><th>Surface</th><th>Live</th><th>Note</th></tr></thead>
+<tbody>
+<tr><td>councilof.ai (flagship)</td><td class="ok">200</td><td>Humans land here (one public desk).</td></tr>
+<tr><td>csoai.org (redirect zone)</td><td class="ok">308 → councilof.ai</td><td>Humans; machine paths exempt and served directly.</td></tr>
+<tr><td>gspc-scoreboard</td><td class="ok">200</td><td>13 measured of 14 · signed fleet board.</td></tr>
+<tr><td>gap-map</td><td class="ok">200</td><td>Signed honest gap: 3,320 of 3,336 cells absent.</td></tr>
+<tr><td>honesty</td><td class="ok">200</td><td>Append-only register; UNMEASURED reported.</td></tr>
+<tr><td>gspc-verify</td><td class="ok">200</td><td>Loginless, free, offline-verifiable.</td></tr>
+</tbody>
+</table>
+
+<h2>Machine paths (signature chain must never break)</h2>
+<table>
+<thead><tr><th>Path</th><th>Live</th><th>Why it matters</th></tr></thead>
+<tbody>
+<tr><td>.well-known/did.json (trust root)</td><td class="ok">200</td><td>did:web:csoai.org — every signature verifies against it.</td></tr>
+<tr><td>.well-known/agent.json</td><td class="ok">200</td><td>A2A agent card (signed).</td></tr>
+<tr><td>agent-card.json</td><td class="ok">200</td><td>Agent card machine surface.</td></tr>
+<tr><td>banks-manifest.json</td><td class="ok">200</td><td>Hash-sealed frozen bank manifest (818 items).</td></tr>
+<tr><td>verification.schema.json</td><td class="ok">200</td><td>Verification schema.</td></tr>
+<tr><td>badge/axes.json</td><td class="ok">200</td><td>Shields.io badge data.</td></tr>
+<tr><td>llms.txt</td><td class="ok">200</td><td>Machine-readable site map.</td></tr>
+<tr><td>api/health</td><td class="ok">200</td><td>Health endpoint (pages, phase, sigil).</td></tr>
+<tr><td>api/lookup</td><td class="ok">200</td><td>Deterministic covered-query answers (enforced escort).</td></tr>
+</tbody>
+</table>
+
+<h2>API</h2>
+<table>
+<thead><tr><th>Endpoint</th><th>Live</th><th>Note</th></tr></thead>
+<tbody>
+<tr><td>councilof.ai/api/gspc</td><td class="warn">200 (canon breach flagged)</td><td>public_count correct ("13 measured of 14"); totals.axes/items/doi fields need reconciliation to canon (owner: councilof-ai lane).</td></tr>
+<tr><td>councilof.ai/api/badge</td><td class="ok">200</td><td>"GSPC measured: 13 of 14 axes".</td></tr>
+<tr><td>csoai.org/api/health</td><td class="ok">200</td><td>752 pages · phase 100 · sigil tick-180.</td></tr>
+</tbody>
+</table>
+
+<h2>Fleet (billing = allocated machines only)</h2>
+<p class="disc">5 pods running ≈ $3.08/hr ≈ $74/day. Mine A100 $1.39/hr + sov-brain A100 $1.19/hr
+dominate. Stop-when-idle discipline; the cap doctrine is $100/24h. Mine pod currently running the
+authoritative estate board harness (v2, label-constrained) — it stays up while measuring, stops when
+idle. <em>(Numbers as of 19 Aug 11:00 UTC — the cost ledger is re-verified weekly.)</em></p>
+
+<h2>Signature chain</h2>
+<p class="disc">Mine corpus signature: <strong>VALID</strong> (Ed25519, canonical key, re-verified
+19 Aug). Signed fleet board: chain intact (14/14 ids + prev). Published agent-card kid
+<code>#site-release-1</code> is a known-broken signature (corrections #27) — the signing-chain fix is
+owned by the kernel/identity work; until fixed, no new A2A publicity. This is reported, not hidden.</p>
+
+<div class="foot">Council of AI (CSOAI Ltd, UK 16939677) · live status as of 19 Aug 2026 · every row is
+a fetch — recompute, don't trust · methodology DOI 10.5281/zenodo.21991104</div>
+</div>
+</body>
+</html>
