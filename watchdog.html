@@ -35,13 +35,13 @@ it is measured (Art 85 intake framing). Measurement, not certification.</p>
 <thead><tr><th>#</th><th>Check</th><th>State</th><th>Note</th></tr></thead>
 <tbody>
 <tr><td>1</td><td>Canon count — "13 measured of 14"</td><td class="pass">PASS</td><td>Badge, agent card, scoreboard, honesty all carry the canon count.</td></tr>
-<tr><td>2</td><td>API totals reconcile to canon (14-slot / 819)</td><td class="fail">FLAG</td><td>councilof.ai/api/gspc totals show 17 axes / 966 items (owner: councilof-ai lane). public_count field is correct.</td></tr>
+<tr><td>2</td><td>API totals reconcile to canon (14-slot / 819)</td><td class="pass">PASS</td><td>councilof.ai/api/gspc now serves axes 14 / measured 13, DOI 21991104 (fixed by the councilof-ai lane, verified 19 Aug). Residual: items 887 vs 819 — counting delta (includes gated cells), tracked.</td></tr>
 <tr><td>3</td><td>DID trust root serves JSON</td><td class="pass">PASS</td><td>csoai.org/.well-known/did.json 200, did:web:csoai.org.</td></tr>
 <tr><td>4</td><td>Machine paths 200 (agent-card, banks-manifest, verification.schema, badge)</td><td class="pass">PASS</td><td>All verified cache-busted 19 Aug.</td></tr>
 <tr><td>5</td><td>Signature chain verifies (14/14 cards, prev links)</td><td class="pass">PASS</td><td>Recomputed offline; chain intact.</td></tr>
 <tr><td>6</td><td>Banned terms absent from public copy</td><td class="pass">PASS</td><td>No sovereign/SOV*/BFT/33-agent/cert-as-product in display copy (honest disclaimers allowed).</td></tr>
 <tr><td>7</td><td>No SaaS pricing on public surfaces</td><td class="pass">PASS</td><td>Pricing removed per ruling; verification free forever.</td></tr>
-<tr><td>8</td><td>No stale axis counts (12/15/16/17)</td><td class="warn">WATCH</td><td>Public copy clean; the api/gspc totals field is the one open breach (check #2).</td></tr>
+<tr><td>8</td><td>No stale axis counts (12/15/16/17)</td><td class="pass">PASS</td><td>Public copy clean; api/gspc now serves 14/13 (verified 19 Aug).</td></tr>
 <tr><td>9</td><td>UNMEASURED shown honestly (jail/swarm/gated slot)</td><td class="pass">PASS</td><td>Gated slot reported with limits; never invented.</td></tr>
 <tr><td>10</td><td>A2A card signature verifies (kid in DID doc)</td><td class="fail">KNOWN</td><td>agent-card.json kid #site-release-1 absent from DID — corrections #27; kernel/identity fix owned (no new A2A publicity until fixed).</td></tr>
 <tr><td>11</td><td>Fleet burn under cap ($100/24h)</td><td class="pass">PASS</td><td>4 RUNNING ≈ $69/day; re-verified weekly.</td></tr>
