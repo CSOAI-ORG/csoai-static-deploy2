@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Honesty — Council of AI (what is measured, what is not, and why)</title>
+<meta name="description" content="The honest register of Council of AI: what we measure, what is UNMEASURED, what was corrected, and the limits of every number. Measurement, not certification. Append-only — corrections supersede, never delete.">
+<style>
+:root { --accent:#5a9; --bg:#0d0f12; --card:#15181d; --line:#232830; }
+* { box-sizing:border-box; }
+body { margin:0; font-family:-apple-system,Segoe UI,Roboto,sans-serif; background:var(--bg); color:#e8edf2; }
+.wrap { max-width:1000px; margin:0 auto; padding:2rem 1.2rem; }
+h1 { font-size:1.5rem; border-bottom:1px solid var(--line); padding-bottom:.6rem; }
+h2 { font-size:1.1rem; margin-top:1.8rem; color:#cfe6d8; }
+p { color:#b6c4d0; line-height:1.6; max-width:85ch; }
+.disc { color:#9fb0c0; font-size:.9rem; }
+table { width:100%; border-collapse:collapse; margin-top:1rem; font-size:.85rem; }
+th,td { border:1px solid var(--line); padding:.45rem .55rem; text-align:left; vertical-align:top; }
+th { background:var(--card); font-weight:600; }
+.gated { color:#fc6; font-weight:600; }
+.measured { color:#8d8; font-weight:600; }
+.unmeasured { color:#f88; font-weight:600; }
+.correction { background:var(--card); border-left:3px solid var(--accent); padding:.7rem .9rem; margin:.6rem 0; font-size:.88rem; }
+.foot { margin-top:2rem; color:#6a7a8a; font-size:.74rem; line-height:1.6; }
+a { color:var(--accent); }
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1>The Honesty Page — what is measured, what is not, and why</h1>
+
+<p class="disc"><strong>Append-only register.</strong> Corrections supersede; nothing is deleted. If a number
+was wrong, the correction is published here with its date and the superseding record. This page is
+permanent and linked from every scoreboard. Measurement, not certification — a claim we cannot
+recompute is not a claim we make.</p>
+
+<h2>The one-line state</h2>
+<p><strong>13 of 14 slots are measured; one is gated, and here's why.</strong> The GSPC instrument is a
+14-slot registry. 13 axes have quotable measured cells (usable n with a computed interval). One slot —
+the gated axis — is reported as UNMEASURED with its limits stated, never filled with an invented
+number. When the gate clears (usable n≥30 signed cells under the published method), the slot becomes
+measured. Until then it stays empty, honestly.</p>
+
+<h2>Axis state (live)</h2>
+<table>
+<thead><tr><th>Slot</th><th>State</th><th>Why / limits</th></tr></thead>
+<tbody>
+<tr><td>governance · safety · provenance · continuity family (13 axes)</td><td class="measured">MEASURED</td><td>Quotable cells on the live board; each cell shows n and 95% CI. Recomputable from the published banks and signed cards.</td></tr>
+<tr><td>jail / containment</td><td class="measured">MEASURED</td><td>Measured floor (13 Aug), reported as a reading of existing axes, not a new axis. n and method published with the cell.</td></tr>
+<tr><td>the gated slot</td><td class="gated">GATED / UNMEASURED</td><td>No quotable cell yet (usable n below the published bar). The gap is the finding — we don't guess.</td></tr>
+<tr><td>slot 15+</td><td class="unmeasured">UNMEASURED</td><td>No axis beyond 14 is claimed. Public count is <strong>13 measured of 14</strong>, nothing more.</td></tr>
+</tbody>
+</table>
+
+<h2>Human baselines</h2>
+<p class="disc">Published external cohorts, signed cells: MMLU expert ~89.8% · GPQA diamond PhD ~81% ·
+ARC-AGI human ~85% (SWE-bench and MATH pinned at ingest). These are <strong>reported baselines from
+published external cohorts</strong>, not our own measurements — labelled as such on every surface. A
+model that beats the published human expert baseline on a governance-knowledge axis is measured
+against a number a buyer can read.</p>
+
+<h2>What we are not</h2>
+<ul class="disc">
+<li><strong>Not a certification body.</strong> No cell is a certificate, approval, or conformity mark. A signed card is a measurement credential — evidence of what was measured and when, never a badge of approval.</li>
+<li><strong>Not a notified body.</strong> No EU/UK regulatory designation is claimed or implied.</li>
+<li><strong>No money either direction with anything ranked.</strong> Whoever pays (evidence-buyers: insurers, enterprises, regulators, researchers) never buys a placement, a rank, or a score change.</li>
+<li><strong>No BFT / 33-agent / council-vote claims.</strong> Measured effective independence is reported, never a voting fiction.</li>
+<li><strong>No vendor numbers echoed as ours.</strong> Every external figure is attributed and re-measured before it appears on our surfaces.</li>
+</ul>
+
+<h2>Corrections (supersession chain — nothing deleted)</h2>
+<div class="correction"><strong>2026-08-18 · Axis-count correction.</strong> An internal signed artifact carried
+"16 axes". Public canon is 13 measured of 14. The 16-axis artifact is internal-only and never
+publishes; public surfaces carry the 14-slot register. Supersedes any earlier count on public copy.</div>
+<div class="correction"><strong>2026-08-18 · Jail/swarm honesty labels.</strong> Jail is measured (n≥ usable);
+swarm is the gated axis (small honest bank). Earlier framing that inverted these labels is corrected
+here and at source.</div>
+<div class="correction"><strong>2026-08-16 · Empty-response scoring bug.</strong> A scoring bug counted empty
+responses as correct on one bench (false 100%). Fixed: empty responses are not correct. Corrections
+ledger entry; rebench with the fixed grader is published.</div>
+<div class="correction"><strong>2026-08-16 · Care-floor correction.</strong> A care cell reported 0.00% as a
+scoring artifact, not a measurement. Re-measured with the fixed grader; the honest value is published.
+UNMEASURED is reported, never hidden.</div>
+
+<h2>The limits of every number</h2>
+<p class="disc">A quotable cell means usable n with a computed interval — it is a measurement of one point
+in time, not a guarantee of behaviour. Overlapping CIs render "statistically indistinguishable",
+never fake ranks. An axis not measured is UNMEASURED: we never interpolate or average over a gap.
+The frozen corpus is 417 provisions, hash-anchored and open (DOI 10.5281/zenodo.21991104).</p>
+
+<div class="foot">Council of AI (CSOAI Ltd, UK 16939677) · measurement, not certification · verification
+is free forever · this page is append-only — corrections supersede, never delete · source:
+benchmark-results + signed boards + corrections ledger · methodology DOI 10.5281/zenodo.21991104</div>
+</div>
+</body>
+</html>
