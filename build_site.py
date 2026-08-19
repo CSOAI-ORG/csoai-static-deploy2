@@ -52,6 +52,10 @@ DIRS = ["tools", ".well-known", "assets", "images", "static", "_templates",
         "portal", "sovereign-wiki", "eu-ai-act",
         # /badge/axes.json — machine-path badge (19 Aug restore, shared project contract)
         "badge",
+        # /evidence — signed measurement evidence (board chains, crosswalks). Public data,
+        # canon-named (the SOVOS brand path stays internal); NEVER excludes .jsonl so these
+        # are allowlisted explicitly in JSON_ALLOW below.
+        "evidence",
         # Cloudflare Pages Functions (Pages Functions = /functions/api/*.js)
         # Verified live 2026-08-05: /api/health, /api/leaderboard, /api/eat-tick,
         # /api/stats, /api/skus, /api/sov-bridge. Adding /functions means every
@@ -133,6 +137,12 @@ def publishable():
         for p in sorted(base.rglob("*")):
             if p.is_file():
                 rel = p.relative_to(ROOT).as_posix()
+                # Carve-out: the signed board chain under evidence/ is public measurement
+                # data (verified 14/14 cards, chain intact) — the scoreboard's JSON-LD points
+                # at it and the verify path needs it. Everything else keeps the NEVER block.
+                if rel == "evidence/all-axes-chain-2026-08-17.jsonl":
+                    picked.append(p)
+                    continue
                 if not NEVER.search(rel):
                     picked.append(p)
     return picked
@@ -182,7 +192,8 @@ def main():
     for probe in (".env", "wrangler.toml", "SOVEREIGN_DEPLOY.sh", "govbench_eval.py",
                   "positioning_guard.py", ".cfignore"):
         assert probe not in rels, f"ALLOWLIST LEAK: {probe} would ship"
-    assert not any(r.endswith(".jsonl") for r in rels), "ALLOWLIST LEAK: a .jsonl would ship"
+    assert not any(r.endswith(".jsonl") and r != "evidence/all-axes-chain-2026-08-17.jsonl"
+                   for r in rels), "ALLOWLIST LEAK: a .jsonl would ship"
     assert not any(r.startswith("runs/") for r in rels), "ALLOWLIST LEAK: runs/ would ship"
     print("leak probes: none of .env / wrangler.toml / *.py / *.jsonl / runs/ would ship")
 
