@@ -14,6 +14,13 @@
 2. **Conflict-free revenue** — demand-side only (buyers/regulators), published funding wall, **no money from either direction** (our EZ firewall). The exact inverse of BSKiller's finding.
 3. **"Private until retired, public forever after"** — anchored publication timestamps. Vals' economics depend on permanent secrecy; it cannot follow.
 
+## The 90-day execution plans (from full teardown — fire these)
+**Opening 1 (signed cards):** ship signed cards for 1 flagship axis (finance or coding) + a public verifier + a "signed-verification wall" listing every Vals score without a signed card.
+**Opening 2 (conflict-free):** publish the funding-wall charter; sign 2–3 buyer-side design partners (procurement/regulator-adjacent); issue the first no-issuer-money evaluation of a frontier model, signed.
+**Opening 3 (auditable transparency):** publish validation set + correlation proof for one axis; publish a "retirement release" of one already-retired benchmark (**CorpFin — Vals retired it May 2026; we can re-measure it openly**); anchor the publication calendar.
+
+**Cross-cutting (optional 4th):** the frontier-risk axes (safety, sovereignty, alignment, human-vs-AI) are where Vals' coverage is newest (RSI Index launched 13 Aug) and where regulators buy — a signer with a neutral-funding wall can own "the safety scorecard with receipts" before Vals' brand hardens there.
+
 ## Doctrine re-confirmed
 - Never partner with Vals, never take their money, never echo their scores without re-measurement.
 - Independence is the moat: issuer-pays = the attack surface. We are the measurer nobody owns.
