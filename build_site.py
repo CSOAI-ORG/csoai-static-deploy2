@@ -206,6 +206,31 @@ def main():
         dst = OUT / f.relative_to(ROOT)
         dst.parent.mkdir(parents=True, exist_ok=True)
         shutil.copy2(f, dst)
+
+    # Living-harness AG-UI hero — inject the sticky hero (CSS + JS) into every
+    # built .html page so the chat/globe rides on all surfaces. The hero is
+    # position:fixed and the rest of the page works around it. Never injected
+    # into non-HTML. (19 Aug — the "stuck hero, everything works around it" build.)
+    hero_css = '<link rel="stylesheet" href="/assets/coa-hero.css">'
+    hero_js = '<script src="/assets/coa-hero.js" defer></script>'
+    injected = 0
+    for p in sorted(OUT.rglob("*.html")):
+        try:
+            html = p.read_text(encoding="utf-8")
+        except Exception:
+            continue
+        if "coa-hero.css" in html:
+            continue
+        if "</head>" in html:
+            html = html.replace("</head>", hero_css + "\n</head>", 1)
+        if "</body>" in html:
+            html = html.replace("</body>", hero_js + "\n</body>", 1)
+        else:
+            html += hero_css + hero_js
+        p.write_text(html, encoding="utf-8")
+        injected += 1
+    print(f"hero injected into {injected} html pages")
+
     print(f"built {OUT} — deploy THIS, not the repo root")
     return 0
 

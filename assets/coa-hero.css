@@ -1,0 +1,126 @@
+/* Council of AI — living harness AG-UI hero (sticky, every page) */
+:root {
+  --hero-bg: rgba(13, 15, 18, 0.92);
+  --hero-card: #15181d;
+  --hero-line: #232830;
+  --hero-accent: #5a9;
+  --hero-text: #e8edf2;
+  --hero-muted: #9fb0c0;
+  --hero-gold: #fc6;
+}
+#coa-hero {
+  position: fixed;
+  bottom: 1rem;
+  right: 1rem;
+  width: min(420px, calc(100vw - 2rem));
+  z-index: 2147483000;
+  font-family: -apple-system, "Segoe UI", Roboto, sans-serif;
+  color: var(--hero-text);
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.55), 0 0 0 1px var(--hero-line);
+  background: var(--hero-bg);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+#coa-hero.coa-collapsed { transform: translateY(calc(100% - 56px)); }
+#coa-hero.coa-hidden { opacity: 0; pointer-events: none; transform: translateY(20px); }
+
+/* header — the grab / toggle */
+#coa-hero-header {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.6rem 0.9rem;
+  border-bottom: 1px solid var(--hero-line);
+  cursor: pointer;
+  background: linear-gradient(135deg, #10141a 0%, #0d0f12 100%);
+}
+#coa-hero-header .coa-pulse {
+  width: 10px; height: 10px; border-radius: 50%;
+  background: var(--hero-accent);
+  box-shadow: 0 0 8px var(--hero-accent);
+  animation: coa-pulse 2.4s ease-in-out infinite;
+}
+@keyframes coa-pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.35; } }
+#coa-hero-header .coa-title { font-weight: 700; font-size: 0.9rem; letter-spacing: 0.02em; flex: 1; }
+#coa-hero-header .coa-sub { font-size: 0.68rem; color: var(--hero-muted); }
+#coa-hero-header .coa-x { border: 0; background: transparent; color: var(--hero-muted); font-size: 1rem; cursor: pointer; padding: 0.2rem 0.4rem; }
+#coa-hero-header .coa-x:hover { color: var(--hero-text); }
+
+/* body — globe + chat */
+#coa-hero-body { display: flex; flex-direction: column; max-height: 60vh; }
+#coa-hero-globe {
+  height: 130px;
+  background: radial-gradient(circle at 50% 55%, #101a24 0%, #0a0e12 70%);
+  position: relative;
+  overflow: hidden;
+}
+#coa-hero-globe canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+#coa-hero-globe .coa-globe-note {
+  position: absolute; bottom: 4px; left: 8px;
+  font-size: 0.6rem; color: var(--hero-muted); letter-spacing: 0.03em;
+}
+/* chat transcript */
+#coa-hero-chat {
+  max-height: 220px; overflow-y: auto;
+  padding: 0.6rem 0.8rem;
+  display: flex; flex-direction: column; gap: 0.45rem;
+  scrollbar-width: thin;
+}
+.coa-msg { max-width: 92%; padding: 0.45rem 0.7rem; border-radius: 10px; font-size: 0.8rem; line-height: 1.45; }
+.coa-msg.coa-user { align-self: flex-end; background: #1c2833; border: 1px solid #2a3a48; }
+.coa-msg.coa-bot { align-self: flex-start; background: var(--hero-card); border: 1px solid var(--hero-line); }
+.coa-msg .coa-msg-label { font-size: 0.62rem; color: var(--hero-muted); margin-bottom: 0.15rem; text-transform: uppercase; letter-spacing: 0.06em; }
+.coa-msg pre { white-space: pre-wrap; margin: 0; font-size: 0.75rem; color: #b6c4d0; }
+.coa-msg code { background: #1a1f26; padding: 0.05rem 0.3rem; border-radius: 4px; font-size: 0.75em; }
+/* tool chips */
+#coa-hero-tools {
+  display: flex; flex-wrap: wrap; gap: 0.35rem;
+  padding: 0.4rem 0.8rem;
+  border-top: 1px solid var(--hero-line);
+}
+.coa-chip {
+  font-size: 0.68rem; color: var(--hero-accent);
+  border: 1px solid var(--hero-line); background: var(--hero-card);
+  padding: 0.22rem 0.6rem; border-radius: 999px; cursor: pointer;
+  transition: all 0.15s ease;
+}
+.coa-chip:hover { border-color: var(--hero-accent); background: #1a232c; }
+/* input */
+#coa-hero-input-row {
+  display: flex; gap: 0.45rem; align-items: center;
+  padding: 0.55rem 0.8rem;
+  border-top: 1px solid var(--hero-line);
+  background: #0e1115;
+}
+#coa-hero-input {
+  flex: 1; background: #11161c; color: var(--hero-text);
+  border: 1px solid var(--hero-line); border-radius: 999px;
+  padding: 0.5rem 0.85rem; font-size: 0.8rem; outline: none;
+}
+#coa-hero-input:focus { border-color: var(--hero-accent); }
+#coa-hero-send {
+  border: 0; background: var(--hero-accent); color: #062;
+  font-weight: 700; font-size: 0.8rem;
+  width: 34px; height: 34px; border-radius: 50%;
+  cursor: pointer; display: grid; place-items: center;
+}
+#coa-hero-send:hover { filter: brightness(1.15); }
+#coa-hero .coa-foot {
+  padding: 0.35rem 0.8rem; font-size: 0.6rem; color: var(--hero-muted);
+  border-top: 1px solid var(--hero-line);
+  display: flex; justify-content: space-between; align-items: center;
+}
+#coa-hero .coa-foot a { color: var(--hero-accent); text-decoration: none; }
+/* scrollbar */
+#coa-hero-chat::-webkit-scrollbar { width: 5px; }
+#coa-hero-chat::-webkit-scrollbar-thumb { background: var(--hero-line); border-radius: 4px; }
+/* mobile: full-width bottom sheet */
+@media (max-width: 560px) {
+  #coa-hero { left: 0.75rem; width: auto; bottom: 0.75rem; }
+}
