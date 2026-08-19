@@ -30,6 +30,8 @@
     '    <button class="coa-chip" data-tool="board">board</button>' +
     '    <button class="coa-chip" data-q="who leads on care">care leader</button>' +
     '    <button class="coa-chip" data-q="who leads on gov">gov leader</button>' +
+    '    <button class="coa-chip" data-mcp="tools">mcp tools</button>' +
+    '    <button class="coa-chip" data-mcp="measure">measure</button>' +
     '  </div>' +
     '  <div id="coa-hero-input-row">' +
     '    <input id="coa-hero-input" placeholder="ask a model, e.g. qwen2.5:7b care score…" autocomplete="off" />' +
@@ -101,11 +103,32 @@
       .catch(function (e) { addMsg('tool error: ' + e, 'bot'); });
   }
 
+  function mcpOp(op) {
+    addMsg('/mcp ' + op, 'user');
+    var url = HERO_API + '?tool=mcp&op=' + encodeURIComponent(op);
+    if (op === 'measure') url += '&model=qwen2.5:7b';
+    fetch(url)
+      .then(function (r) { return r.json(); })
+      .then(function (d) {
+        if (d.mode === 'mcp-tools') {
+          addMsg('MCP tools I can operate:\n' + (d.tools || []).map(function (t) { return '· ' + t.name + ' — ' + t.description; }).join('\n'), 'bot');
+        } else if (d.mode === 'mcp-measure') {
+          addMsg('measure ' + d.model + ' → ' + (d.signed_card || d.error || 'no result'), 'bot');
+        } else if (d.mode === 'mcp-verify') {
+          addMsg('verify → ' + (d.verdict || d.error || 'no result'), 'bot');
+        } else {
+          addMsg(fmtValue(d), 'bot');
+        }
+      })
+      .catch(function (e) { addMsg('mcp error: ' + e, 'bot'); });
+  }
+
   sendBtn.addEventListener('click', function () { ask(input.value.trim()); });
   input.addEventListener('keydown', function (e) { if (e.key === 'Enter') ask(input.value.trim()); });
   document.querySelectorAll('#coa-hero .coa-chip').forEach(function (chip) {
     chip.addEventListener('click', function () {
-      if (chip.dataset.tool) tool(chip.dataset.tool);
+      if (chip.dataset.mcp) mcpOp(chip.dataset.mcp);
+      else if (chip.dataset.tool) tool(chip.dataset.tool);
       else if (chip.dataset.q) ask(chip.dataset.q);
     });
   });

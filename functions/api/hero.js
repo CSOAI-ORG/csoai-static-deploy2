@@ -14,11 +14,33 @@
  *   ?tool=arena&n=5         → latest arena rounds
  *   ?tool=board             → board headline (13 measured of 14)
  *   ?tool=status            → hero status + what it can do
+ *   ?tool=mcp&op=tools      → list MCP tools the chat can operate
+ *   ?tool=mcp&op=measure&model=X  → operate the GSPC MCP measure tool (signed card)
+ *   ?tool=mcp&op=verify&card=…   → operate the GSPC MCP verify tool
  *   (no args)               → hero card (what this is, how to ask)
  *
  * Language lock: measurement, not certification. Public labels only.
  */
 import lookupData from '../../lookup-public.json';
+
+const GSPC_MCP = 'https://csoai-gspc-mcp.nicholastempleman.workers.dev/mcp';
+
+async function mcpCall(method, params, id) {
+  const body = JSON.stringify({ jsonrpc: '2.0', id: id || Date.now(), method, params });
+  const r = await fetch(GSPC_MCP, {
+    method: 'POST',
+    headers: { 'content-type': 'application/json', accept: 'application/json, text/event-stream' },
+    body,
+  });
+  const text = await r.text();
+  const lines = text.split('\n').filter(Boolean);
+  for (let i = lines.length - 1; i >= 0; i--) {
+    try {
+      return JSON.parse(lines[i]);
+    } catch (e) { /* keep scanning */ }
+  }
+  throw new Error('no JSON in MCP response: ' + text.slice(0, 120));
+}
 
 const FLEET_URL = 'https://csoai.org/api/fleet-status';
 const ARENA_URL = 'https://councilof.ai/api/sov-arena/rounds.jsonl';
@@ -129,6 +151,40 @@ export async function onRequestGet({ request }) {
         status: 'alive', lon: (i * 47.3) % 360 - 180, lat: Math.sin(i * 1.7) * 70,
       }));
       return new Response(JSON.stringify({ mode: 'agents', source: 'fallback snapshot', agents }), { status: 200, headers });
+    }
+  }
+  if (tool === 'mcp') {
+    const op = url.searchParams.get('op') || 'tools';
+    try {
+      if (op === 'tools') {
+        const res = await mcpCall('tools/list', {});
+        const tools = (res?.result?.tools || []).map((t) => ({ name: t.name, description: (t.description || '').slice(0, 90) }));
+        return new Response(JSON.stringify({ mode: 'mcp-tools', note: 'operate the measurement surface from the chat — measure, verify, jail-probe, enter-arena', tools }), { status: 200, headers });
+      }
+      if (op === 'measure') {
+        const model = url.searchParams.get('model') || 'qwen2.5:7b';
+        const axes = (url.searchParams.get('axes') || '').split(',').filter(Boolean);
+        const res = await mcpCall('tools/call', {
+          name: 'measure',
+          arguments: { model, axes: axes.length ? axes : undefined },
+        });
+        const content = res?.result?.content || [];
+        const text = content.map((c) => c.text || JSON.stringify(c)).join('\n');
+        return new Response(JSON.stringify({ mode: 'mcp-measure', model, signed_card: text.slice(0, 600), raw: res?.result || res?.error || 'no result' }), { status: 200, headers });
+      }
+      if (op === 'verify') {
+        let card = url.searchParams.get('card');
+        if (!card) return new Response(JSON.stringify({ mode: 'mcp-verify', error: 'pass ?card=<json> (the signed card to verify)' }), { status: 200, headers });
+        let parsed;
+        try { parsed = JSON.parse(card); } catch (e) { return new Response(JSON.stringify({ mode: 'mcp-verify', error: 'card must be JSON' }), { status: 200, headers }); }
+        const res = await mcpCall('tools/call', { name: 'verify', arguments: { card: parsed } });
+        const content = res?.result?.content || [];
+        const text = content.map((c) => c.text || JSON.stringify(c)).join('\n');
+        return new Response(JSON.stringify({ mode: 'mcp-verify', verdict: text.slice(0, 400), raw: res?.result || res?.error || 'no result' }), { status: 200, headers });
+      }
+      return new Response(JSON.stringify({ mode: 'mcp', error: 'unknown op: ' + op, ops: ['tools', 'measure', 'verify'] }), { status: 200, headers });
+    } catch (e) {
+      return new Response(JSON.stringify({ mode: 'mcp', error: String(e).slice(0, 200) }), { status: 200, headers });
     }
   }
 
