@@ -50,6 +50,8 @@ DIRS = ["tools", ".well-known", "assets", "images", "static", "_templates",
         # 2026-08-05: /portal/ 19,235 B · /sovereign-wiki/ 4,947 B · /eu-ai-act/ 5,427 B
         # and its sub-routes /eu-ai-act/summary, /risk, /high-risk, /compliance.
         "portal", "sovereign-wiki", "eu-ai-act",
+        # /badge/axes.json — machine-path badge (19 Aug restore, shared project contract)
+        "badge",
         # Cloudflare Pages Functions (Pages Functions = /functions/api/*.js)
         # Verified live 2026-08-05: /api/health, /api/leaderboard, /api/eat-tick,
         # /api/stats, /api/skus, /api/sov-bridge. Adding /functions means every
@@ -64,6 +66,12 @@ JSON_ALLOW = {
     "jspace_deck.json",  # J-space visual deck (Wave-3): served /jspace_deck.json
     "c_space_card.json",  # C-space fold (Wave-3): served /c_space_card.json
     "lookup-public.json",  # /api/lookup public rail — deterministic covered-query answers (move 27)
+    # Machine-surface signed JSON (19 Aug restore — shared project contract): csoai.org
+    # machine paths (/.well-known/*, /api/*, /badge/*, agent-card.json, banks-manifest.json,
+    # verification.schema.json, CANONICAL-DOIS.md) must stay 200 — the DID trust root and
+    # every signature verify against them. NEVER drop these from the build.
+    "banks-manifest.json",       # signed bank manifest
+    "verification.schema.json",  # verification schema
 }
 
 # Named public files whose extension is NOT in ROOT_EXTS (.md/.pdf). Each was
@@ -76,6 +84,7 @@ EXTRA_FILES = {
     "PROVBENCH_PAPER.pdf",                      # /PROVBENCH_PAPER.pdf 5,009 B
     "WHITEPAPER.pdf",                           # /WHITEPAPER.pdf 8,258 B
     "AUDIT_PACKAGE.pdf",                        # /AUDIT_PACKAGE.pdf 3,930 B
+    "CANONICAL-DOIS.md",                        # /CANONICAL-DOIS.md — machine-path contract (19 Aug restore)
     # Cloudflare Pages reads /_redirects from the publish dir at request time. The
     # allowlist has no extension rule for the bare "_redirects" filename, so this
     # file was being silently dropped from _site/ and the live site served
