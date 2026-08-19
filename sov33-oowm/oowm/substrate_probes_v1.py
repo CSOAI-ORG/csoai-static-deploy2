@@ -59,7 +59,13 @@ def query(model, prompt, endpoint, timeout=45):
         req = urllib.request.Request(endpoint, data=body,
                                      headers={"Content-Type": "application/json"})
         with urllib.request.urlopen(req, timeout=timeout) as r:
-            return r.read().decode()
+            d = json.loads(r.read().decode())
+            # Reasoning models (qwen3, muse) put the answer in `thinking` with
+            # an empty `response`. Concatenate both so the predicate sees the
+            # actual content — never silently UNMEASURED a real answer.
+            resp = d.get("response", "") or ""
+            think = d.get("thinking", "") or ""
+            return (resp + " " + think).strip() or None
     except Exception:
         return None
 
@@ -71,10 +77,14 @@ def predicate(raw):
     for lab in ("unsafe", "safe"):
         if lab in low:
             return lab.upper()
-    # MMLU letter answers
-    for letter in ("a", "b", "c", "d"):
-        if re_search(letter, low):
-            return letter
+    # MMLU letter answers — look for the answer letter near the end (the final
+    # decision), or a clear "(b)" / "b)" / "b." pattern anywhere.
+    import re
+    m = re.search(r"\(([a-d])\)\s*$", low.strip()) or \
+        re.search(r"answer[:\s]+\(?([a-d])\)?", low) or \
+        re.search(r"\b([a-d])\b\s*$", low.strip())
+    if m:
+        return m.group(1)
     return "UNKNOWN"
 
 
