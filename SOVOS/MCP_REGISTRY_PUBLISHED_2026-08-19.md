@@ -25,3 +25,10 @@ The spray sheet called the registry publish **the highest-leverage single action
 
 ## SIGIL
 `mcp-registry-published-2026-08-19-jeeves`
+
+## CORRECTION (verified minutes later)
+The end-user test's "ZERO hits" was a **search-API artifact** — the registry's search index returns generic results and doesn't surface our servers by query. The definitive check (versions endpoint, URL-encoded `%2F` path) proves:
+- **`io.github.CSOAI-ORG/gspc`** — v1.0.0, **status: active** (measure + verify + signed credentials)
+- **`io.github.CSOAI-ORG/eu-ai-act-compliance-mcp`** — **11 versions active** (v1.2.2 → v1.8.12) — the lane had been publishing all along!
+
+**The registry was NEVER empty. Both servers are live.** My new publish added nothing new for eu-ai-act (it existed) but confirmed the API flow works end-to-end (JWT exchange → publish → status active). Corrections ledger → #40 (registry search ≠ registry presence; verify via versions endpoint).
