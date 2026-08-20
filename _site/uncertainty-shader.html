@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Council · Uncertainty Pixel Shader · Post-Sigma</title>
+<title>SOVOS · Uncertainty Pixel Shader · Post-Sigma</title>
 <meta name="description" content="The uncertainty pixel shader. Renders calibrated uncertainty (sigma) as a GPU WebGL effect. Honest visualisation: only runs on CALIBRATED data (ECE ≤ 0.05), enforced by the sigma calibration gate.">
 <style>
   :root {
@@ -45,12 +45,22 @@
   .btn.locked { background: #333; color: #666; cursor: not-allowed; }
   .sigma-badge { font: 700 12px/1 ui-monospace, monospace; color: var(--accent); }
 </style>
+<link rel="canonical" href="https://csoai.org/uncertainty-shader.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Council of AI">
+<meta property="og:title" content="SOVOS · Uncertainty Pixel Shader · Post-Sigma">
+<meta property="og:description" content="The uncertainty pixel shader. Renders calibrated uncertainty (sigma) as a GPU WebGL effect. Honest visualisation: only runs on CALIBRATED data (ECE ≤ 0.05), enforced by the sigma calibration gate.">
+<meta property="og:url" content="https://csoai.org/uncertainty-shader.html">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="SOVOS · Uncertainty Pixel Shader · Post-Sigma">
+<meta name="twitter:description" content="The uncertainty pixel shader. Renders calibrated uncertainty (sigma) as a GPU WebGL effect. Honest visualisation: only runs on CALIBRATED data (ECE ≤ 0.05), enforced by the sigma calibration gate.">
+<link rel="stylesheet" href="/assets/coa-hero.css">
 </head>
 <body>
 <canvas id="gl"></canvas>
 
 <div class="hud">
-  <div class="brand">⟁ Council · Uncertainty Shader</div>
+  <div class="brand">⟁ SOVOS · Uncertainty Shader</div>
   <div id="gateBadge" class="gate locked">⚠ SIGMA GATE LOCKED</div>
   <div style="margin-left:auto; font-size:11px; color:#7a8595;">ECE ≤ 0.05 required</div>
 </div>
@@ -267,5 +277,6 @@ document.getElementById('calibrateBtn').addEventListener('click', simulateCalibr
 updateBadges();
 requestAnimationFrame(render);
 </script>
+<script src="/assets/coa-hero.js" defer></script>
 </body>
 </html>

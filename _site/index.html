@@ -20,6 +20,53 @@
   "vatID": "UK 16939677"
 }
 </script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "Council of AI",
+  "url": "https://csoai.org",
+  "publisher": { "@type": "Organization", "name": "Council of AI", "url": "https://csoai.org" },
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": "https://csoai.org/api/lookup?q={search_term_string}",
+    "query-input": "required name=search_term_string"
+  }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is Council of AI?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Council of AI (CSOAI Ltd, UK 16939677) is an independent AI-governance measurement body. It measures model and agent behaviour under deterministic conditions and signs the evidence (Ed25519) so anyone can recompute and verify it. Measurement, not certification — it is not a certification body and not a notified body." }
+    },
+    {
+      "@type": "Question",
+      "name": "What does '13 measured of 14' mean?",
+      "acceptedAnswer": { "@type": "Answer", "text": "The GSPC instrument is a 14-slot registry; 13 axes have quotable measured cells (usable n with a computed interval). One slot is gated and reported as UNMEASURED with its limits — never filled with an invented number. The gap is the finding." }
+    },
+    {
+      "@type": "Question",
+      "name": "How do I verify a signed measurement card?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Free and loginless: recompute id = sha256(canonical JSON of the body), check signature = Ed25519(id) against the published public key, and confirm prev links the chain. A stranger can replay everything with one command. Verification is free forever." }
+    },
+    {
+      "@type": "Question",
+      "name": "Does Council of AI certify AI systems?",
+      "acceptedAnswer": { "@type": "Answer", "text": "No. Council of AI issues verified measurement credentials — evidence of what was measured, by which method, and when. Nothing reads as attestation of safety, compliance sign-off, or a pass/fail stamp. UNMEASURED is reported, never hidden." }
+    },
+    {
+      "@type": "Question",
+      "name": "Who pays Council of AI?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Evidence-buyers (insurers, enterprises, regulators, researchers) pay for measurement products. Council of AI takes no money either direction with anything it ranks — no payment, equity, or referral for placement, rank, or a score change." }
+    }
+  ]
+}
+</script>
 <style>
   :root{
     --ink:#e8ede6; --ink-dim:#b9c4b4; --ink-faint:#84917c;
@@ -118,6 +165,16 @@
   footer .legal{border-top:1px solid var(--line);padding-top:1.4rem;font-size:.78rem;line-height:1.7;max-width:78ch}
   @media(max-width:640px){nav .links .hide-sm{display:none}header{padding-top:3.4rem}h1{font-size:2.4rem}}
 </style>
+<link rel="canonical" href="https://csoai.org/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Council of AI">
+<meta property="og:title" content="Council of AI — we measure, we sign, we re-attest">
+<meta property="og:description" content="Council of AI measures AI behaviour, signs the evidence, and lets anyone check. Verified measurement credential. Not a certification.">
+<meta property="og:url" content="https://csoai.org/">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Council of AI — we measure, we sign, we re-attest">
+<meta name="twitter:description" content="Council of AI measures AI behaviour, signs the evidence, and lets anyone check. Verified measurement credential. Not a certification.">
+<link rel="stylesheet" href="/assets/coa-hero.css">
 </head>
 <body>
 <nav>
@@ -221,12 +278,22 @@
         <h4>Council of AI</h4>
         <ul>
           <li><a href="/gspc-scoreboard/">Signed scoreboard</a></li>
+          <li><a href="/gap-map.html">The gap map — 3,320 absent cells</a></li>
+          <li><a href="/honesty.html">Honesty — measured, gated, why</a></li>
+          <li><a href="/status.html">Live status</a></li>
+          <li><a href="/methodology.html">Methodology (versioned)</a></li>
+          <li><a href="/watchdog.html">Watchdog — 11 checks</a></li>
+          <li><a href="/passes.html">Passes — measured-current states</a></li>
+          <li><a href="/insurance.html">Insurance evidence</a></li>
+          <li><a href="/enterprise.html">Enterprise evidence</a></li>
+          <li><a href="/aef-1.html">AEF-1 conformance</a></li>
+          <li><a href="/dispute.html">Dispute a measurement</a></li>
           <li><a href="https://councilof.ai/gspc-verify">Verify a card</a></li>
           <li><a href="https://councilof.ai/gspc-arena">Council Space</a></li>
           <li><a href="/paper-district.html">Council City</a></li>
           <li><a href="/this-week-in-ai-behaviour.html">This week in AI behaviour</a></li>
           <li><a href="https://councilof.ai/measure">Get measured</a></li>
-          <li><a href="https://zenodo.org/records/21991105" rel="noopener">Methodology DOI 10.5281/zenodo.21991105</a></li>
+          <li><a href="https://zenodo.org/records/21991104" rel="noopener">Methodology DOI 10.5281/zenodo.21991104</a></li>
         </ul>
       </div>
       <div>
@@ -275,5 +342,6 @@
     .catch(function(){render(null);});
 })();
 </script>
+<script src="/assets/coa-hero.js" defer></script>
 </body>
 </html>

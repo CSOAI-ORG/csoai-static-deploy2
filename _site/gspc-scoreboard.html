@@ -24,15 +24,48 @@ td.miss { color:#556; text-align:center; }
 .legend { margin-top:1rem; color:#8aa; font-size:.8rem; }
 .foot { margin-top:1.6rem; color:#6a7a8a; font-size:.74rem; line-height:1.5; }
 </style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Dataset",
+  "name": "GSPC Signed Fleet Board — 13 measured of 14 axes",
+  "description": "Signed fleet board: 14 axes measured on our own fleet, every board signed into the estate chain (Ed25519). Each cell shows accuracy, n and 95% confidence interval; a cell shows a number only if quotable.",
+  "url": "https://csoai.org/gspc-scoreboard",
+  "creator": { "@type": "Organization", "name": "Council of AI (CSOAI Ltd, UK 16939677)", "url": "https://csoai.org" },
+  "license": "https://opensource.org/licenses/MIT",
+  "distribution": [
+    { "@type": "DataDownload", "contentUrl": "https://csoai.org/evidence/all-axes-chain-2026-08-17.jsonl", "encodingFormat": "application/jsonl" }
+  ],
+  "identifier": "10.5281/zenodo.21991104",
+  "includedInDataCatalog": { "@type": "DataCatalog", "name": "Zenodo" },
+  "datePublished": "2026-08-17",
+  "isAccessibleForFree": true
+}
+</script>
+<link rel="canonical" href="https://csoai.org/gspc-scoreboard.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Council of AI">
+<meta property="og:title" content="Council Scoreboard — 13 axes × 19 models, 12 Aug 2026 board (unsigned)">
+<meta property="og:description" content="Fused 13-axis GSPC scoreboard from measured board data. Every cell shows n, accuracy and 95% confidence interval. A cell shows a number only if quotable (usable n≥30). 12 Aug 2026 stamp is unsigned.">
+<meta property="og:url" content="https://csoai.org/gspc-scoreboard.html">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Council Scoreboard — 13 axes × 19 models, 12 Aug 2026 board (unsigned)">
+<meta name="twitter:description" content="Fused 13-axis GSPC scoreboard from measured board data. Every cell shows n, accuracy and 95% confidence interval. A cell shows a number only if quotable (usable n≥30). 12 Aug 2026 stamp is unsigned.">
+<link rel="stylesheet" href="/assets/coa-hero.css">
 </head>
 <body>
 <div class="wrap">
+<div style="background:#10151c;border:1px solid #2a3542;border-radius:8px;padding:.8rem 1rem;margin:1rem 0;font-size:.95rem">
+<strong>New: authoritative estate board (19-20 Aug)</strong> — 11 models × 15 GSPC banks, deterministic exact-label
+grading, n=30, quotable cells with CIs, swarm gated/UNMEASURED. See the
+<a href="/estate-board.html" style="color:#7cc7a1;text-decoration:underline">estate board</a>.</div>
 <h1>Council Scoreboard — 13 axes × 19 models</h1>
 <p class="disc" style="border:1px solid var(--line);background:var(--card);border-radius:8px;padding:.8rem 1rem;">
 <strong>Signed fleet board · 17 Aug 2026</strong> — 14 axes × 7 models measured on our own fleet,
 every board signed into the estate chain (818 items, chain_intact, Ed25519). The <strong>jail axis is now measured</strong>
 (5 of 7 models at 1.0, n=36 signed cells). Verify the chain offline with the published key; source:
-<code>SOVOS/boards-all-axes-2026-08-17/</code>. The table below is the 12 Aug historical stamp (19 models, unsigned).
+<code>evidence/all-axes-chain-2026-08-17.jsonl</code>. <a href="https://councilof.ai/gspc-verify" style="color:var(--accent)">Verify a card (free, loginless) →</a>
+The table below is the 12 Aug historical stamp (19 models, unsigned).
 </p>
 <p class="disc">Fused from measured board data. Each cell shows the model's
 accuracy and 95% confidence interval at its measured n. A cell shows a number
@@ -51,5 +84,6 @@ Honest: a quotable cell
 means usable n≥30 with a computed interval — it is a measurement of one point
 in time, not a guarantee of behaviour.</div>
 </div>
+<script src="/assets/coa-hero.js" defer></script>
 </body>
 </html>

@@ -70,11 +70,21 @@
 # longer ship (build_site.py NEVER_HTML); their routes go to honest desks.
 /master              https://councilof.ai/           308
 /master.html         https://councilof.ai/           308
+/tools/bft-council    https://councilof.ai/           308
+/tools/bft-council.html https://councilof.ai/         308
+/tools/bft-vote-log   https://councilof.ai/           308
+/tools/bft-vote-log.html https://councilof.ai/       308
 /sov-space           https://councilof.ai/gspc-arena 308
 /sov-space/          https://councilof.ai/gspc-arena 308
 /sov-space-visual    https://councilof.ai/gspc-arena 308
 /sov_space_visual    https://councilof.ai/gspc-arena 308
 /sov_space_visual.html https://councilof.ai/gspc-arena 308
+/sov-5d-engine       https://councilof.ai/gspc-arena  308
+/sov-5d-engine.html  https://councilof.ai/gspc-arena  308
+/sov-local-viewer       https://councilof.ai/gspc-arena  308
+/sov-local-viewer.html  https://councilof.ai/gspc-arena  308
+/sov-fluid-viewer       https://councilof.ai/gspc-arena  308
+/sov-fluid-viewer.html  https://councilof.ai/gspc-arena  308
 /mcp-install         https://councilof.ai/measure     308
 /mcp-install.html    https://councilof.ai/measure     308
 /pulse               https://councilof.ai/           308
@@ -87,6 +97,11 @@
 # 17 Aug 2026 — SOVOS brand retired (TM conflict); estate reader renamed.
 /sovos      /council-estate.html   301
 /sovos.html /council-estate.html   301
+
+# 19 Aug 2026 — legal-page name canonicalisation (end-user link fix: footer used
+# the -policy/-of-service paths; the real pages are privacy.html / terms.html).
+/privacy-policy.html     /privacy.html   301
+/terms-of-service.html   /terms.html     301
 
 # 17 Aug 2026 — one verify desk (loginless, client-side).
 /gspc-verify      https://councilof.ai/gspc-verify   308

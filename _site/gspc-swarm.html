@@ -43,6 +43,7 @@
  "isAccessibleForFree": true,
  "size": "40 items"
 }</script>
+<link rel="stylesheet" href="/assets/coa-hero.css">
 </head><body>
 <div class="wrap">
 <nav><a href="/">CSOAI</a><a href="/govbench.html">GovBench</a><a href="/provbench.html">ProvBench</a><a href="/defoneos-index.html">Department packs</a></nav>
@@ -301,4 +302,5 @@ an attestation of compliance, or legal advice.
 <br><br><b>Sandwich pattern enforced.</b> Each item runs through three stages: (1) <b>gate</b> — the sovereign refusal-classifier (sov_refusal_combo) gets the case first; (2) <b>frontier</b> — only if the gate said PASS, the frontier reasoner runs (Council-34, gpt-oss:20b); (3) <b>re-validation</b> — the offline re-validator confirms the frontier output matches ground truth. Every stage is SIGIL-signed. Each bank item already encodes the ground-truth outcome at each stage (<code>_bft</code>, <code>_clf</code>, <code>_gt</code>, <code>_correct</code>); the widget reports the per-stage agreement rate so you can see where the sandwich caught what and where it missed.
 </div>
 </div>
+<script src="/assets/coa-hero.js" defer></script>
 </body></html>

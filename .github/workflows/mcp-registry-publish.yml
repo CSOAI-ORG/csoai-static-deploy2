@@ -58,6 +58,9 @@ jobs:
             mcp-publisher validate "$f" || { echo "VALIDATION FAILED: $f"; exit 1; }
           done
 
+      - name: Authenticate with registry (GitHub OIDC)
+        run: mcp-publisher login github-oidc
+
       - name: Publish all registry entries
         run: |
           for f in registry/*.json; do

@@ -81,6 +81,7 @@
   .nav a:hover { color: var(--accent); }
   .brand { font-weight: 900; color: var(--accent); letter-spacing: -0.025em; }
 </style>
+<link rel="stylesheet" href="/assets/coa-hero.css">
 </head>
 <body>
 <div class="wrap">
@@ -99,7 +100,7 @@
 
 <div class="card head" style="margin-top:1.5rem;">
   <h3>The setup</h3>
-  <p>This is a <strong>browser-side replay</strong> of the SOVOS Arena shipped in <code>sovos-arena</code> (Python). It does NOT contact any endpoint. You provide the target system's text responses (one per axis); the page cycles each axis's probe bank <strong>n times</strong>, scores each response against the probe's expected semantics, computes a Wilson 95% CI, and assembles a candidate vector for the chain. Every number on this page matches the Python module bit-for-bit (verified by replay on the same fixtures; see <code>sovos-arena/tests/test_arena.py</code>).</p>
+  <p>This is a <strong>browser-side replay</strong> of the CSOAI Arena shipped in <code>sovos-arena</code> (Python). It does NOT contact any endpoint. You provide the target system's text responses (one per axis); the page cycles each axis's probe bank <strong>n times</strong>, scores each response against the probe's expected semantics, computes a Wilson 95% CI, and assembles a candidate vector for the chain. Every number on this page matches the Python module bit-for-bit (verified by replay on the same fixtures; see <code>sovos-arena/tests/test_arena.py</code>).</p>
   <p>For a <strong>live</strong> measurement of a real ollama / OpenAI-compatible endpoint, use <code>sov ras --measure MODEL --at ENDPOINT</code> from a Mac or RunPod where the Council monorepo is installed.</p>
 </div>
 
@@ -176,7 +177,7 @@
 </div>
 
 <footer>
-<span class="brand">SOVOS</span> · the measurement body · powered by <code>sovos-arena</code> + <code>sovos-signal-index</code> · Wilson 95% CI · n≥30 · contamination-gated.
+<span class="brand">CSOAI</span> · the measurement body · powered by <code>sovos-arena</code> + <code>sovos-signal-index</code> · Wilson 95% CI · n≥30 · contamination-gated.
 Source: <a style="color:var(--accent);text-decoration:none" href="https://github.com/CSOAI-ORG/csoai-static-deploy2/tree/main/SOVOS/packages/sovos-arena">sovos-arena/</a>
 </footer>
 
@@ -542,5 +543,6 @@ document.addEventListener("DOMContentLoaded", () => {
   presetEl.dispatchEvent(new Event("change"));
 });
 </script>
+<script src="/assets/coa-hero.js" defer></script>
 </body>
 </html>
