@@ -138,69 +138,129 @@
   // welcome
   addMsg('Hi — I am the living harness. Ask me anything measured (e.g. "what is qwen2.5:7b care score") or tap a tool chip. Measurement, not certification.', 'bot');
 
-  // ---------- globe (canvas, live sim-world agents) ----------
-  function loadGlobe() {
+  // ---------- globe (3D WebGL via Three.js with 2D canvas fallback) ----------
+  var canvasGlobe = function () {
     var ctx = canvas.getContext('2d');
+    if (!ctx) return;
     var W = canvas.clientWidth || 420, H = canvas.clientHeight || 130;
     canvas.width = W * 2; canvas.height = H * 2;
     ctx.scale(2, 2);
-
     var R = Math.min(W, H) / 2 - 12;
     var cx = W / 2, cy = H / 2 + 4;
     var rot = 0;
-
     function project(lon, lat) {
       var a = ((lon + rot) * Math.PI) / 180;
       var b = (lat * Math.PI) / 180;
-      var x = cx + R * Math.cos(b) * Math.sin(a);
-      var y = cy - R * Math.sin(b);
-      var front = Math.cos(b) * Math.cos(a);
-      return { x: x, y: y, z: front };
+      return { x: cx + R * Math.cos(b) * Math.sin(a), y: cy - R * Math.sin(b), z: Math.cos(b) * Math.cos(a) };
     }
-
     function draw() {
       rot += 0.15;
       ctx.clearRect(0, 0, W, H);
-      // globe sphere
       var g = ctx.createRadialGradient(cx - R / 3, cy - R / 3, R / 6, cx, cy, R);
-      g.addColorStop(0, '#16242f');
-      g.addColorStop(0.7, '#0e171f');
-      g.addColorStop(1, '#0a0e12');
+      g.addColorStop(0, '#16242f'); g.addColorStop(0.7, '#0e171f'); g.addColorStop(1, '#0a0e12');
       ctx.beginPath(); ctx.arc(cx, cy, R, 0, Math.PI * 2); ctx.fillStyle = g; ctx.fill();
       ctx.strokeStyle = '#232f3a'; ctx.lineWidth = 0.6;
       for (var i = -60; i <= 60; i += 30) {
         ctx.beginPath();
-        for (var a = 0; a <= 360; a += 6) {
-          var p = project(a, i);
-          if (a === 0) ctx.moveTo(p.x, p.y); else ctx.lineTo(p.x, p.y);
-        }
+        for (var a = 0; a <= 360; a += 6) { var p = project(a, i); if (a === 0) ctx.moveTo(p.x, p.y); else ctx.lineTo(p.x, p.y); }
         ctx.stroke();
       }
       for (var j = 0; j < 360; j += 30) {
         ctx.beginPath();
-        for (var b = -90; b <= 90; b += 5) {
-          var p2 = project(j, b);
-          if (b === -90) ctx.moveTo(p2.x, p2.y); else ctx.lineTo(p2.x, p2.y);
-        }
+        for (var b = -90; b <= 90; b += 5) { var p2 = project(j, b); if (b === -90) ctx.moveTo(p2.x, p2.y); else ctx.lineTo(p2.x, p2.y); }
         ctx.stroke();
       }
-      // agents
       var agents = AGENTS || [];
       for (var k = 0; k < agents.length; k++) {
         var ag = agents[k];
         var p3 = project(ag.lon % 360, Math.max(-85, Math.min(85, ag.lat % 180)));
-        if (p3.z < 0) continue; // back hemisphere
+        if (p3.z < 0) continue;
         var alive = ag.status === 'alive';
-        ctx.beginPath();
-        ctx.arc(p3.x, p3.y, alive ? 2.2 : 1.4, 0, Math.PI * 2);
+        ctx.beginPath(); ctx.arc(p3.x, p3.y, alive ? 2.2 : 1.4, 0, Math.PI * 2);
         ctx.fillStyle = ag.kind === 'ai' ? (alive ? '#5a9' : '#2e4a5e') : (alive ? '#fc6' : '#5a4a2e');
-        ctx.globalAlpha = 0.5 + 0.5 * p3.z;
-        ctx.fill();
-        ctx.globalAlpha = 1;
+        ctx.globalAlpha = 0.5 + 0.5 * p3.z; ctx.fill(); ctx.globalAlpha = 1;
       }
       requestAnimationFrame(draw);
     }
     draw();
+  };
+
+  function loadThreeGlobe() {
+    if (!window.THREE) { canvasGlobe(); return; }
+    var TH = window.THREE;
+    var W = canvas.clientWidth || 420, H = canvas.clientHeight || 130;
+    var renderer;
+    try { renderer = new TH.WebGLRenderer({ canvas: canvas, antialias: true, alpha: true }); }
+    catch (e) { canvasGlobe(); return; }
+    renderer.setSize(W, H, false);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+    var scene = new TH.Scene();
+    var camera = new TH.PerspectiveCamera(45, W / H, 0.1, 100);
+    camera.position.z = 3.1;
+
+    // dark globe sphere
+    var geo = new TH.SphereGeometry(1.25, 48, 32);
+    var mat = new TH.MeshPhongMaterial({ color: 0x0e1a24, emissive: 0x0a1016, specular: 0x1a2a38, shininess: 12 });
+    var globe = new TH.Mesh(geo, mat);
+    scene.add(globe);
+
+    // wireframe graticule
+    var wire = new TH.LineSegments(
+      new TH.WireframeGeometry(new TH.SphereGeometry(1.252, 24, 16)),
+      new TH.LineBasicMaterial({ color: 0x1c2e3c, transparent: true, opacity: 0.35 })
+    );
+    scene.add(wire);
+
+    // agent points (3D)
+    var group = new TH.Group();
+    var agents = AGENTS || [];
+    agents.forEach(function (ag) {
+      var lon = (ag.lon % 360) * Math.PI / 180;
+      var lat = Math.max(-80, Math.min(80, ag.lat % 180)) * Math.PI / 180;
+      var r = 1.26;
+      var x = r * Math.cos(lat) * Math.cos(lon);
+      var y = r * Math.sin(lat);
+      var z = r * Math.cos(lat) * Math.sin(lon);
+      var alive = ag.status === 'alive';
+      var color = ag.kind === 'ai' ? (alive ? 0x55aadd : 0x2e4a5e) : (alive ? 0xffcc66 : 0x5a4a2e);
+      var dot = new TH.Mesh(new TH.SphereGeometry(alive ? 0.018 : 0.012, 8, 8), new TH.MeshBasicMaterial({ color: color }));
+      dot.position.set(x, y, z);
+      group.add(dot);
+    });
+    scene.add(group);
+
+    scene.add(new TH.AmbientLight(0x404860));
+    var light = new TH.DirectionalLight(0xffffff, 0.8); light.position.set(2, 1, 3); scene.add(light);
+
+    var dragging = false, px = 0, py = 0, ry = 0, rx = 0.3;
+    function onDown(e) { dragging = true; px = e.clientX || 0; py = e.clientY || 0; }
+    function onMove(e) {
+      if (!dragging) return;
+      var dx = (e.clientX || 0) - px, dy = (e.clientY || 0) - py;
+      ry += dx * 0.006; rx += dy * 0.004; rx = Math.max(-1.2, Math.min(1.2, rx));
+      px = e.clientX || 0; py = e.clientY || 0;
+    }
+    function onUp() { dragging = false; }
+    canvas.addEventListener('mousedown', onDown); window.addEventListener('mousemove', onMove); window.addEventListener('mouseup', onUp);
+
+    (function animate() {
+      requestAnimationFrame(animate);
+      if (!dragging) ry += 0.0025;
+      group.rotation.y = ry; group.rotation.x = rx;
+      globe.rotation.y = ry * 0.4;
+      renderer.render(scene, camera);
+    })();
+  }
+
+  function loadGlobe() {
+    if (window.__coaHeroThreeLoading) return;
+    if (window.THREE) { loadThreeGlobe(); return; }
+    window.__coaHeroThreeLoading = true;
+    var s = document.createElement('script');
+    s.src = 'https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js';
+    s.onload = function () { loadThreeGlobe(); };
+    s.onerror = function () { canvasGlobe(); };
+    document.head.appendChild(s);
   }
 
   // fetch live sim-world agents (hero endpoint exposes the sanitized snapshot)
