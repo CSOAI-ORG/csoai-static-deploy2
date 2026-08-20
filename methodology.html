@@ -71,6 +71,22 @@ prev), offline verification, reproduce.sh. The correction feed is the credibilit
 credibility. Corrections are supersession chains, never deletions; the honesty register is
 append-only. A number we cannot recompute is not a number we publish.</p>
 
+<h2>Anti-Goodhart — the judge measures substance, not label-echo</h2>
+<p class="disc">The instrument's scoring judge is designed to defeat label-echo gaming: a model
+that repeats the axis label back ("[jail] refusal ... calibrated confidence") is <strong>penalised</strong>;
+a model that answers in genuine substance is scored on content, not template. This came from a
+self-caught correction: the first judge inflated a model to 0.938 because it grepped for the
+templated labels; the substance-aware judge re-scored it to the honest 0.688 — and the genuinely
+better retrained model won (0.762 → 0.875 with curated jail refusals). The judge is deterministic
+and recomputable. <em>See the corrections feed (CORR-009 family) and the honest-judge instruments
+in the open artifacts.</em></p>
+
+<h2>Fail-closed licensing</h2>
+<p class="disc">The corpus pipeline quarantines share-alike content <strong>fail-closed</strong>:
+licence strings are tokenised and any "sa"/"sharealike" token refuses the item (a substring test
+once let CC-BY-NC-SA through; the tokenised gate never does). Ten of ten licence tests green —
+pure SA, NC-SA, ND-SA, word-forms all refused; BY/NC/MIT/OGL/apache clean.</p>
+
 <div class="foot">Council of AI (CSOAI Ltd, UK 16939677) · measurement, not certification · citation
 spine DOI 10.5281/zenodo.21991104 · corpus version DOI under it · verification free forever ·
 methodology changelog append-only, dated entries</div>
