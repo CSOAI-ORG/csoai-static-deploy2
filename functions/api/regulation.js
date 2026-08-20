@@ -35,6 +35,27 @@ export async function onRequestGet({ request }) {
   rows = rows.slice().sort((a, b) => a.date.localeCompare(b.date));
   if (count > 0) rows = rows.slice(-count);
 
+  // Underwriting mode: the reg feed composed as an underwriting input table —
+  // every record carries its statutory penalty tier (the quantified exposure an
+  // MGA/carrier uses for warranty-KPI and covenant design). Data, never insurance.
+  if (url.searchParams.get('underwriting') === '1') {
+    return new Response(JSON.stringify({
+      schema: 'csoai.underwriting-table/0.1',
+      doctrine: 'Underwriting data, never underwriting. The reg-deadline + penalty-exposure table is a reference-data input for MGA/carrier product design. Re-verified quarterly; a date or tier change becomes a published correction. CSOAI sells data/verification/monitoring to insurers — never insurance.',
+      generated: regs.generated,
+      total: rows.length,
+      exposure_table: rows.map((r) => ({
+        id: r.id,
+        title: r.title,
+        date: r.date,
+        status: r.status,
+        penalty_exposure: r.penalty_exposure,
+        underwriting_use: r.underwriting_use,
+        tags: r.tags,
+      })),
+    }), { status: 200, headers });
+  }
+
   return new Response(JSON.stringify({
     schema: regs.schema,
     doctrine: regs.doctrine,

@@ -181,6 +181,7 @@ export async function onRequestGet({ request }) {
       const rows = (d.regulations || []).map((x) => ({
         id: x.id, title: x.title, date: x.date, status: x.status,
         why: (x.why_it_matters || '').slice(0, 110),
+        penalty: x.penalty_exposure || null,
       }));
       return new Response(JSON.stringify({
         mode: 'regulation',
@@ -189,6 +190,7 @@ export async function onRequestGet({ request }) {
         upcoming: rows.filter((x) => x.status === 'upcoming').length,
         next: rows.filter((x) => x.date >= '2026-08-20').slice(0, 3),
         regulations: rows.slice(0, 6),
+        underwriting: url.searchParams.get('underwriting') === '1',
       }), { status: 200, headers });
     } catch (e) {
       return new Response(JSON.stringify({ mode: 'regulation', error: String(e).slice(0, 150) }), { status: 200, headers });

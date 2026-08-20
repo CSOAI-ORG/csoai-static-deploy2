@@ -54,6 +54,28 @@ and axis); recomputable from the signed board chain (<a href="/evidence/all-axes
 pass dies when the regulation changes (see <a href="/passes.html">passes</a>).</li>
 </ul>
 
+<h2>Underwriting Data Feed Licence (the NOW product)</h2>
+<p class="disc"><strong>Underwriting data, never underwriting.</strong> The regulatory calendar
+composed as an <strong>underwriting input table</strong>: every deadline carries its statutory
+penalty tier (€35M/7% prohibited · €15M/3% transparency/high-risk · $1M/$3M Illinois · CRA
+€15M/2.5%) — the quantified exposure an MGA/carrier uses for warranty-KPI and covenant design.
+Re-verified quarterly; a date or tier change becomes a <strong>published correction</strong>, never
+a hidden edit. Buyer: MGA/carrier product &amp; underwriting leads, actuaries. Pricing: annual data
+subscription + API (~$10k floor scaling to low-six-figures).</p>
+<p class="disc"><a href="/api/regulation?underwriting=1" style="color:var(--accent)">The exposure table (JSON) →</a>
+&nbsp;·&nbsp; feed: <a href="/api/regulation">/api/regulation</a> &nbsp;·&nbsp; corrections:
+<a href="/api/corrections">/api/corrections</a></p>
+
+<h2>The rail (post-verification roadmap)</h2>
+<ul class="disc">
+<li><strong>Parametric Trigger Service (NEXT)</strong> — a signed receipt as a deterministic trigger
+for policy conditions (warranty KPIs, re-attestation covenants) — the aiSure/Parametrix pattern.</li>
+<li><strong>Continuous-Monitoring Attestation Rail (LATER)</strong> — scheduled re-attestation cadence
+for in-force policies, solving the "snapshot underwriting" gap.</li>
+<li><strong>Claims-Evidence Verification (NEXT)</strong> — /verify + hash-chained receipts as
+tamper-evident adjudication evidence ("our receipts prove what they won't").</li>
+</ul>
+
 <h2>Sample evidence reports</h2>
 <div class="report">
 <div class="agent">qwen2.5:7b <span style="font-weight:400;font-size:.8rem;color:#9fb0c0">— open-weight model · governance knowledge</span></div>

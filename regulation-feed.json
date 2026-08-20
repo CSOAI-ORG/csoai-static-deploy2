@@ -1,8 +1,8 @@
 {
   "schema": "csoai.regulation-feed/0.1",
-  "generated": "2026-08-20T02:30:00Z",
+  "generated": "2026-08-20T03:40:00Z",
   "doctrine": "Regulation dates are corrected data, never static copy. A wrong date here becomes a published correction (see /api/corrections), never a hidden edit — the feed is defensible precisely because a wrong date destroys a careless competitor faster than it destroys us. Dates are CELEX-keyed where applicable and re-verified quarterly.",
-  "note": "The regulatory calendar as a machine-readable feed: demand-creating deadlines that force companies to need measured evidence. Each entry: what / when / why it matters / status.",
+  "note": "The regulatory calendar as a machine-readable feed: demand-creating deadlines that force companies to need measured evidence. Each entry: what / when / why it matters / status. penalty_exposure field added (underwriting substrate — the NOW product).",
   "regulations": [
     {
       "id": "REG-001",
@@ -14,7 +14,17 @@
       "what": "Interactive disclosure, generative marking, emotion/biometric info, deepfake/public-interest text disclosure.",
       "why_it_matters": "The marking duties are live; measurement of marking survival is the 2 Dec demo's anchor.",
       "status": "in-force",
-      "tags": ["eu-ai-act", "article-50", "marking"]
+      "tags": [
+        "eu-ai-act",
+        "article-50",
+        "marking"
+      ],
+      "penalty_exposure": "transparency/high-risk tier: €15M or 3% (Art 99(4)(g)) · grace to 2 Dec 2026",
+      "underwriting_use": {
+        "composable": true,
+        "basis": "statutory penalty tier = quantified exposure for warranty KPI / covenant design",
+        "re_verify": "quarterly; a date or tier change becomes a published correction (never a hidden edit)"
+      }
     },
     {
       "id": "REG-002",
@@ -26,7 +36,18 @@
       "what": "Grace ends for provider-side marking of GenAI systems already on the market; deployer duties had no deferral.",
       "why_it_matters": "The dated cliff — the 2 Dec retrofit demo and the '0 of 108 markings survive' measurement.",
       "status": "upcoming",
-      "tags": ["eu-ai-act", "article-50", "cliff", "2026-12-02"]
+      "tags": [
+        "eu-ai-act",
+        "article-50",
+        "cliff",
+        "2026-12-02"
+      ],
+      "penalty_exposure": "transparency/high-risk tier: €15M or 3% (Art 99(4)(g)) · grace to 2 Dec 2026",
+      "underwriting_use": {
+        "composable": true,
+        "basis": "statutory penalty tier = quantified exposure for warranty KPI / covenant design",
+        "re_verify": "quarterly; a date or tier change becomes a published correction (never a hidden edit)"
+      }
     },
     {
       "id": "REG-003",
@@ -38,7 +59,18 @@
       "what": "High-risk Annex III obligations deferred to 2 Dec 2027 (not 2 Aug 2026); Annex I to 2 Aug 2028.",
       "why_it_matters": "The corrected date — serving 2 Aug 2026 would be a credibility wound; this entry is itself a published correction (CORR-007).",
       "status": "upcoming",
-      "tags": ["eu-ai-act", "high-risk", "annex-iii", "correction"]
+      "tags": [
+        "eu-ai-act",
+        "high-risk",
+        "annex-iii",
+        "correction"
+      ],
+      "penalty_exposure": "high-risk tier: €15M or 3% — deferred to 2 Dec 2027",
+      "underwriting_use": {
+        "composable": true,
+        "basis": "statutory penalty tier = quantified exposure for warranty KPI / covenant design",
+        "re_verify": "quarterly; a date or tier change becomes a published correction (never a hidden edit)"
+      }
     },
     {
       "id": "REG-004",
@@ -50,7 +82,18 @@
       "what": "First US state mandating annual independent third-party audits of frontier AI; IL+NY+CA ≈ 40% of US market.",
       "why_it_matters": "The LOI target: the law forces companies to need exactly what we sell — a signed, independent, third-party measurement.",
       "status": "upcoming",
-      "tags": ["us", "illinois", "audit", "demand-creating"]
+      "tags": [
+        "us",
+        "illinois",
+        "audit",
+        "demand-creating"
+      ],
+      "penalty_exposure": "violations up to $1M per violation (disclosure) / $3M (audit) — SB 315",
+      "underwriting_use": {
+        "composable": true,
+        "basis": "statutory penalty tier = quantified exposure for warranty KPI / covenant design",
+        "re_verify": "quarterly; a date or tier change becomes a published correction (never a hidden edit)"
+      }
     },
     {
       "id": "REG-005",
@@ -62,7 +105,18 @@
       "what": "Developer technical docs to deployers, 3-yr compliance records, point-of-interaction notice, 30-day explanation after adverse outcomes, human review. AG sole enforcer, 60-day cure.",
       "why_it_matters": "Comment window closed 5 Oct / hearing 26 Oct 2026; the ADMT transparency evidence standard is our framing.",
       "status": "upcoming",
-      "tags": ["us", "colorado", "transparency", "demand-creating"]
+      "tags": [
+        "us",
+        "colorado",
+        "transparency",
+        "demand-creating"
+      ],
+      "penalty_exposure": "AG sole enforcer · 60-day cure period · civil penalties",
+      "underwriting_use": {
+        "composable": true,
+        "basis": "statutory penalty tier = quantified exposure for warranty KPI / covenant design",
+        "re_verify": "quarterly; a date or tier change becomes a published correction (never a hidden edit)"
+      }
     },
     {
       "id": "REG-006",
@@ -74,7 +128,18 @@
       "what": "NY AI accountability requirements (with CO/IL — the ~40% US market block).",
       "why_it_matters": "Third leg of the demand-creating block; audit-evidence products apply.",
       "status": "upcoming",
-      "tags": ["us", "ny", "accountability", "demand-creating"]
+      "tags": [
+        "us",
+        "ny",
+        "accountability",
+        "demand-creating"
+      ],
+      "penalty_exposure": "NY RAISE penalties (civil) — state AG enforcement",
+      "underwriting_use": {
+        "composable": true,
+        "basis": "statutory penalty tier = quantified exposure for warranty KPI / covenant design",
+        "re_verify": "quarterly; a date or tier change becomes a published correction (never a hidden edit)"
+      }
     },
     {
       "id": "REG-007",
@@ -86,7 +151,18 @@
       "what": "CA frontier AI framework; adds to the IL+NY+CA market block.",
       "why_it_matters": "The ramp's LOI target list — laws that force companies to need measured evidence.",
       "status": "upcoming",
-      "tags": ["us", "california", "safety", "demand-creating"]
+      "tags": [
+        "us",
+        "california",
+        "safety",
+        "demand-creating"
+      ],
+      "penalty_exposure": "CA SB 53 civil penalties — state AG enforcement",
+      "underwriting_use": {
+        "composable": true,
+        "basis": "statutory penalty tier = quantified exposure for warranty KPI / covenant design",
+        "re_verify": "quarterly; a date or tier change becomes a published correction (never a hidden edit)"
+      }
     },
     {
       "id": "REG-008",
@@ -98,7 +174,18 @@
       "what": "CRA obligations incl. Art 14 (vulnerability reporting) on the schedule; part of the 417-provision corpus.",
       "why_it_matters": "The ramp's demand-creating deadline list: CRA reporting forces SBOM/vulnerability evidence.",
       "status": "upcoming",
-      "tags": ["eu", "cra", "reporting", "demand-creating"]
+      "tags": [
+        "eu",
+        "cra",
+        "reporting",
+        "demand-creating"
+      ],
+      "penalty_exposure": "up to €15M or 2.5% worldwide turnover (Art 14 reporting) — CRA 2024/2847",
+      "underwriting_use": {
+        "composable": true,
+        "basis": "statutory penalty tier = quantified exposure for warranty KPI / covenant design",
+        "re_verify": "quarterly; a date or tier change becomes a published correction (never a hidden edit)"
+      }
     },
     {
       "id": "REG-009",
@@ -110,7 +197,17 @@
       "what": "Watermark/detector interoperability requirement.",
       "why_it_matters": "The detector-interop deadline — provenance measurement surface.",
       "status": "upcoming",
-      "tags": ["eu-ai-act", "detector", "interoperability"]
+      "tags": [
+        "eu-ai-act",
+        "detector",
+        "interoperability"
+      ],
+      "penalty_exposure": "within EU AI Act tiers (€15M/3%)",
+      "underwriting_use": {
+        "composable": true,
+        "basis": "statutory penalty tier = quantified exposure for warranty KPI / covenant design",
+        "re_verify": "quarterly; a date or tier change becomes a published correction (never a hidden edit)"
+      }
     },
     {
       "id": "REG-010",
@@ -122,7 +219,18 @@
       "what": "UK stablecoin regulatory regime commences; x402 agent-paid data products posture (agents-only, humans never charged).",
       "why_it_matters": "The x402 rail timing — verification stays free forever.",
       "status": "upcoming",
-      "tags": ["uk", "fca", "stablecoin", "x402"]
+      "tags": [
+        "uk",
+        "fca",
+        "stablecoin",
+        "x402"
+      ],
+      "penalty_exposure": "FCA regulatory penalties (unlimited) — UK FSMA regime",
+      "underwriting_use": {
+        "composable": true,
+        "basis": "statutory penalty tier = quantified exposure for warranty KPI / covenant design",
+        "re_verify": "quarterly; a date or tier change becomes a published correction (never a hidden edit)"
+      }
     },
     {
       "id": "REG-011",
@@ -134,7 +242,18 @@
       "what": "No registry exists for external evaluators under Measure 3.5; path = publish AEF-1 conformance + evidence record + contact AI Office/signatories.",
       "why_it_matters": "The empty-chair: the external-evaluator record positioning is ours to shape.",
       "status": "positioning",
-      "tags": ["eu-ai-act", "gpai", "measure-3.5", "evaluator"]
+      "tags": [
+        "eu-ai-act",
+        "gpai",
+        "measure-3.5",
+        "evaluator"
+      ],
+      "penalty_exposure": "n/a (positioning — CoP measure)",
+      "underwriting_use": {
+        "composable": true,
+        "basis": "statutory penalty tier = quantified exposure for warranty KPI / covenant design",
+        "re_verify": "quarterly; a date or tier change becomes a published correction (never a hidden edit)"
+      }
     },
     {
       "id": "REG-012",
@@ -146,7 +265,17 @@
       "what": "Free coordinated access to SRA/ICO/LSB/CLC/MoJ/BIST; advisory only, no funding. Closes 11:59pm 27 Sep.",
       "why_it_matters": "The single first application to file — measurement infrastructure for legal-AI compliance.",
       "status": "upcoming",
-      "tags": ["uk", "growth-lab", "application"]
+      "tags": [
+        "uk",
+        "growth-lab",
+        "application"
+      ],
+      "penalty_exposure": "n/a (advisory application window)",
+      "underwriting_use": {
+        "composable": true,
+        "basis": "statutory penalty tier = quantified exposure for warranty KPI / covenant design",
+        "re_verify": "quarterly; a date or tier change becomes a published correction (never a hidden edit)"
+      }
     }
   ]
 }
