@@ -139,9 +139,10 @@ class LTTTAController:
     z-multiplier band around the prediction.
     """
 
-    def __init__(self, model, device, max_adapt_steps=2, base_lr=1e-4,
-                 adapt_every=3, drift_threshold=0.35, ema_alpha=0.3,
-                 z_mult=1.2, min_band=0.02, return_bounds=True):
+    def __init__(self, model, device, max_adapt_steps=3, base_lr=1e-4,
+                 adapt_every=2, drift_threshold=0.35, ema_alpha=0.3,
+                 z_mult=1.2, min_band=0.02, return_bounds=True,
+                 self_calibrate=False, calib_alpha=0.15):
         self.model = model
         self.device = device
         self.max_adapt_steps = max_adapt_steps
@@ -152,10 +153,14 @@ class LTTTAController:
         self.z_mult = z_mult
         self.min_band = min_band
         self.return_bounds = return_bounds
+        self.self_calibrate = self_calibrate
+        self.calib_alpha = calib_alpha
         self.base_state = {k: v.detach().clone() for k, v in model.state_dict().items()}
         self.step_count = 0
         self.ema_err = None
         self.resid_std = None   # EMA per-channel residual std (normalized space)
+        self.calib_a = None     # per-channel affine scale (ours -> official space)
+        self.calib_b = None     # per-channel affine shift
         self.cached_input = None
 
     def reset_ttt_state(self):
@@ -164,6 +169,8 @@ class LTTTAController:
         self.step_count = 0
         self.ema_err = None
         self.resid_std = None
+        self.calib_a = None
+        self.calib_b = None
         self.cached_input = None
 
     def _relative_l2(self, pred, target, eps=1e-8):
@@ -171,10 +178,48 @@ class LTTTAController:
         tflat = target.reshape(target.shape[0], -1)
         return (torch.norm(flat - tflat, dim=1) / torch.clamp(torch.norm(tflat, dim=1), min=eps)).mean()
 
+    def _fit_affine(self, pred, target):
+        """Robust per-channel affine fit: target ≈ a*pred + b.
+
+        The evaluator reveals prev_target in OFFICIAL normalized space; our
+        prediction is in OUR training normalized space. If the two normalizers
+        differ (which they do — official stats are in the starting kit, ours
+        are computed from the release), there is a per-channel affine map
+        between them. Fit it from the revealed window (least squares per
+        channel over all elements), EMA-smoothed. This is the unlock: it
+        corrects the normalization mismatch online without ever needing the
+        official statistics.
+        """
+        p = pred.reshape(-1, pred.shape[-1])       # (N, C)
+        t = target.reshape(-1, target.shape[-1])
+        pm = p.mean(0, keepdim=True)
+        tm = t.mean(0, keepdim=True)
+        cov = ((p - pm) * (t - tm)).sum(0)
+        var = ((p - pm) ** 2).sum(0)
+        a = cov / torch.clamp(var, min=1e-6)
+        b = tm - a * pm
+        a = torch.nan_to_num(a, nan=1.0, posinf=1.0, neginf=1.0)
+        b = torch.nan_to_num(b, nan=0.0)
+        if self.calib_a is None:
+            self.calib_a = a.detach()
+            self.calib_b = b.detach()
+        else:
+            self.calib_a = (self.calib_alpha * a.detach() +
+                            (1 - self.calib_alpha) * self.calib_a)
+            self.calib_b = (self.calib_alpha * b.detach() +
+                            (1 - self.calib_alpha) * self.calib_b)
+        return self.calib_a, self.calib_b
+
     def adapt(self, input_win, target_win):
         """A few gradient steps on the revealed previous window."""
         inp = input_win.to(self.device)
         tgt = target_win.to(self.device)
+        # Map the revealed target into OUR space before adapting, so the
+        # gradient signal is consistent with the model's training space.
+        if self.calib_a is not None and self.self_calibrate:
+            a = self.calib_a.view(1, 1, 1, 1, -1)
+            b = self.calib_b.view(1, 1, 1, 1, -1)
+            tgt = (tgt - b) / torch.clamp(a, min=1e-3)
         self.model.train()
         params = [p for p in self.model.parameters() if p.requires_grad]
         steps = self.max_adapt_steps
@@ -213,6 +258,9 @@ class LTTTAController:
                 self.ema_err = err
             else:
                 self.ema_err = self.ema_alpha * err + (1 - self.ema_alpha) * self.ema_err
+            # NEW: fit the per-channel affine map (ours -> official space).
+            if self.self_calibrate:
+                self._fit_affine(prev_pred, prev_t)
             self._calibrate(prev_pred, prev_t)
             # The controller decides: adapt on cadence when drift is high.
             if (self.step_count % self.adapt_every == 0) and (
@@ -224,11 +272,14 @@ class LTTTAController:
         with torch.no_grad():
             pred = self.model(input_norm.to(self.device))
 
-        # 3) Build calibrated bounds (all-or-nothing across the run).
-        # Per-channel band in normalized space: z * resid_std(channel).
-        # The evaluator denormalizes bounds, so the physical width is
-        # 2*z*resid_std_physical — sigma_global ≈ u-channel std, so z≈1.2
-        # gives a tight-but-covering band (coverage ~ 80-90%).
+        # 3) Map prediction into the OFFICIAL normalized space (what the
+        #    evaluator scores against) using the fitted affine correction.
+        if self.calib_a is not None and self.self_calibrate:
+            a = self.calib_a.view(1, 1, 1, 1, -1)
+            b = self.calib_b.view(1, 1, 1, 1, -1)
+            pred = pred * a + b
+
+        # 4) Build calibrated bounds (all-or-nothing across the run).
         info = {"adapt_loss": adapt_loss}
         if self.return_bounds:
             if self.resid_std is not None:
@@ -240,7 +291,7 @@ class LTTTAController:
             info["lower"] = (pred - band).cpu()
             info["upper"] = (pred + band).cpu()
 
-        # 4) Cache current input for the next step.
+        # 5) Cache current input for the next step.
         self.cached_input = input_norm.detach().clone()
         self.step_count += 1
         return pred.cpu(), info
