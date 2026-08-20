@@ -2,8 +2,9 @@
  * csoai-gspc-mcp — GSPC measurement MCP over streamable HTTP (Cloudflare Worker).
  *
  * Exposes two tools on the real signed spine:
- *   measure  — run a subject through GSPC axes -> signed measurement credential
- *   verify   — verify a signed card (free, anonymous, no trust)
+ *   measure  — run a subject through GSPC axes -> measurement CONTRACT shape
+ *              (public endpoint does NOT sign; signed issuance is metered on the keystone)
+ *   verify   — verify a card from the recognized card families (free, anonymous, no trust)
  *
  * The Worker speaks the Model Context Protocol (JSON-RPC over HTTP POST,
  * streamable-HTTP transport). It does NOT do inference; it routes measure
@@ -73,7 +74,7 @@ export default {
         tools: [
           {
             name: "measure",
-            description: "Run a subject through GSPC measurement axes and return a signed measurement credential (NOT a certificate). Unmeasured axes stay UNMEASURED.",
+            description: "Run a subject through GSPC measurement axes. This public endpoint returns the measurement CONTRACT shape (measurement, not certification) — it does NOT sign. Signed issuance is metered on the keystone (councilof.ai); the public endpoint returns the contract only. Unmeasured axes stay UNMEASURED.",
             inputSchema: {
               type: "object",
               properties: {
@@ -85,7 +86,7 @@ export default {
           },
           {
             name: "verify",
-            description: "Verify a signed card: recompute content_id, check Ed25519 signature + time-anchor. Free, anonymous, no trust.",
+            description: "Verify a signed card from the specific card families this endpoint recognizes (recompute content_id, check Ed25519 signature + time-anchor); an unrecognized card family returns valid:false. This is NOT a general receipt verifier — verify arbitrary estate receipts with the published did:web:csoai.org verifier / signed_receipts. Free, anonymous, no trust.",
             inputSchema: {
               type: "object",
               properties: { card: { type: "object", description: "the signed card" } },
