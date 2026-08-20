@@ -27,3 +27,10 @@
 
 ## SIGIL
 `sweep-methodology-improvements-2026-08-20-jeeves`
+
+## THE 0.000 DECODED (verified live after rebuild)
+- **council-oowm's 0.000 across 13 axes = OFF-FORMAT artifact, NOT genuine failure.**
+- The rebuilt model responds `??????????` to all classification prompts — a tokenizer/merge artifact from the OOWM worldview merge (the model generates but in a broken token sequence).
+- **This is the audit's prediction confirmed**: exact-label scoring measures format compliance first (IFEval's premise). The "our fine-tune scores zero" story was a measurement artifact, not a capability finding.
+- **The honest report**: "council-oowm 0.000 (n=39, format-failures — UNMEASURED by this instrument)" — the failure-mode taxonomy made it decomposable.
+- **Next**: decide the merge fix (the `?` artifact) or report council-oowm as format-broken, honestly.
