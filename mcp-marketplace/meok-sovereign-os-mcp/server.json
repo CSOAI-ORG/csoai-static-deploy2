@@ -1,20 +1,30 @@
 {
-  "$schema": "https://static.modelcontextprotocol.io/schemas/server.schema.json",
-  "name": "io.github.CSOAI-ORG/meok-sovereign-os-mcp",
-  "description": "Sovereign OS MCP — the 'show me everything' wrapper. 7 tools: render_5_worlds (OOWM/OWEM/IWM/OWM/VWM), render_33_clans, get_signed_state, explain_world, list_clans, arena_summary, install_for_platform. End-users install this in ChatGPT/Claude/Cursor/Copilot/Gemini to get the sovereign substrate inside their chat.",
+  "name": "meok-sovereign-os-mcp",
+  "displayName": "Sovereign AI OS Surface",
+  "description": "Introspect the sovereign AI OS estate from any AI platform. 6 tools: os_status, mcp_count, arena_elo, defoneos_summary, alignment_ledger, install_for_platform. Live data from csoai.org.",
   "version": "1.0.0",
-  "packages": [
-    {
-      "registryType": "pypi",
-      "identifier": "meok-sovereign-os-mcp",
-      "version": "1.0.0",
-      "transport": {
-        "type": "stdio"
-      }
-    }
+  "protocol": "sovereign-os/1.0",
+  "author": {"name": "CSOAI Ltd (UK 16939677)", "url": "https://csoai.org"},
+  "homepage": "https://csoai.org",
+  "repository": "https://github.com/CSOAI-ORG/clawd-workspace/tree/main/mcp-marketplace/meok-sovereign-os-mcp",
+  "license": "MIT",
+  "categories": ["introspection", "governance", "sovereign", "csoai"],
+  "tags": ["csoai", "sovereign-os", "real-data", "register-discipline"],
+  "tools": [
+    {"name": "os_status", "description": "Sovereign AI OS estate status snapshot"},
+    {"name": "mcp_count", "description": "MCP estate count by category"},
+    {"name": "arena_elo", "description": "Live arena ELO leaderboard"},
+    {"name": "defoneos_summary", "description": "DEFONEOS regulator deep-dive pack overview"},
+    {"name": "alignment_ledger", "description": "Recent sovereign alignment documents"},
+    {"name": "install_for_platform", "description": "Install snippet for AI platforms"}
   ],
-  "repository": {
-    "url": "https://github.com/CSOAI-ORG/meok-sovereign-os-mcp",
-    "source": "github"
+  "data_provenance": {
+    "register": "REAL",
+    "sources": [
+      "https://c4e12208.csoai-site.pages.dev/api/sov-arena/rounds.jsonl (live arena)",
+      "https://c4e12208.csoai-site.pages.dev/_alignment/DEFONEOS_INDEX.json (507 packs)",
+      "https://c4e12208.csoai-site.pages.dev/_alignment/ (alignment ledger)"
+    ],
+    "honest_note": "All surfaces carry honest_note fields. Council clans honestly framed as trailing base models."
   }
 }

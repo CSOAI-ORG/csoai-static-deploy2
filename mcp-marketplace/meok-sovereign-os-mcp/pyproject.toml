@@ -1,15 +1,20 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
 [project]
 name = "meok-sovereign-os-mcp"
 version = "1.0.0"
-description = "Sovereign OS MCP — the 'show me everything' wrapper. 7 tools: render_5_worlds, render_33_clans, get_signed_state, explain_world, list_clans, arena_summary, install_for_platform. The single MCP end-users install to get the full sovereign substrate (OOWM/OWEM/IWM/OWM/VWM + 33 clans + live arena) inside their AI platform."
+description = "Sovereign AI OS surface MCP — 6 tools to introspect csoai.org from any AI platform"
+readme = "README.md"
 requires-python = ">=3.10"
-dependencies = []
-authors = [{name = "CSOAI Ltd (UK 16939677)", email = "nicholas@csoai.org"}]
-license = {text = "MIT"}
+license = { text = "MIT" }
+authors = [{ name = "Nicholas Templeman", email = "nicholas.templeman@csoai.org" }]
+keywords = ["mcp", "sovereign", "os", "csoai", "council-of-ai", "introspection"]
 
-[build-system]
-requires = ["setuptools>=61.0"]
-build-backend = "setuptools.build_meta"
+[project.urls]
+Homepage = "https://csoai.org"
+Source = "https://github.com/CSOAI-ORG/clawd-workspace/tree/main/mcp-marketplace/meok-sovereign-os-mcp"
 
 [tool.setuptools.packages.find]
 where = ["."]
