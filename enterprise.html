@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Enterprise — measured-current-state records &amp; audit-support evidence (Council of AI)</title>
+<meta name="description" content="For enterprises, boards and auditors: measured-current-state records, audit-support evidence packs, and the reg-deadline compliance calendar — signed, deterministic, recomputable. Measurement, not certification. Never a certificate; always recomputable.">
+<style>
+:root { --accent:#5a9; --bg:#0d0f12; --card:#15181d; --line:#232830; }
+* { box-sizing:border-box; }
+body { margin:0; font-family:-apple-system,Segoe UI,Roboto,sans-serif; background:var(--bg); color:#e8edf2; }
+.wrap { max-width:960px; margin:0 auto; padding:2rem 1.2rem; }
+h1 { font-size:1.5rem; border-bottom:1px solid var(--line); padding-bottom:.6rem; }
+h2 { font-size:1.1rem; margin-top:1.8rem; color:#cfe6d8; }
+p, li { color:#b6c4d0; line-height:1.6; }
+.disc { color:#9fb0c0; font-size:.9rem; }
+table { width:100%; border-collapse:collapse; margin-top:.8rem; font-size:.85rem; }
+th,td { border:1px solid var(--line); padding:.45rem .55rem; text-align:left; vertical-align:top; }
+th { background:var(--card); font-weight:600; }
+.pack { border:1px solid var(--line); border-left:3px solid var(--accent); background:var(--card); border-radius:8px; padding:.9rem 1.1rem; margin:.7rem 0; }
+.pack .name { font-weight:700; color:#e8edf2; }
+.foot { margin-top:2rem; color:#6a7a8a; font-size:.74rem; line-height:1.6; }
+code { background:#1a1f26; padding:.1rem .35rem; border-radius:4px; }
+a { color:var(--accent); }
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1>Enterprise — measured-current-state records &amp; audit-support evidence</h1>
+<p class="disc">For enterprises, boards and auditors: signed, deterministic, recomputable evidence
+of what an AI system was measured to do — <strong>measured-current-state records, never
+certificates</strong>. A record states what was measured, on which instrument version, within which
+window, and when it expires. It never attests safety or compliance sign-off. Measurement, not
+certification. Verification is free forever.</p>
+
+<h2>Products</h2>
+<div class="pack"><span class="name">Measured-current-state record</span><br>
+<span class="disc">A signed per-agent record for procurement and board packs: cells with value, n,
+95% CI, source; quotable only; UNMEASURED reported never hidden. validUntil = min(window,
+provision-change-event) — the record dies when the regulation changes (see
+<a href="/passes.html">passes</a>).</span></div>
+<div class="pack"><span class="name">Audit-support evidence pack</span><br>
+<span class="disc">Signed records + the corrections ledger, packaged for the Illinois SB 315
+annual third-party audit regime (mandate 1 Jan 2028) and the CRA Art 14 reporting duty
+(11 Sep 2026). The same body that publishes the number publishes when the number was wrong —
+that is what makes the evidence dependable.</span></div>
+<div class="pack"><span class="name">Reg-deadline compliance calendar</span><br>
+<span class="disc">The date-anchored regulatory calendar as a subscription, with statutory penalty
+tiers — <a href="/api/regulation?underwriting=1">the exposure table (JSON)</a>. Re-verified
+quarterly; a wrong date becomes a published correction, never a hidden edit.</span></div>
+
+<h2>The evidence (all live, all recomputable)</h2>
+<table>
+<thead><tr><th>Surface</th><th>What it gives a relying party</th></tr></thead>
+<tbody>
+<tr><td>/api/evidence</td><td>signed per-agent evidence reports (filter by agent/axis)</td></tr>
+<tr><td>/api/corrections</td><td>the honesty gate — 10 real self-caught corrections, appended never edited</td></tr>
+<tr><td>/api/regulation</td><td>12 date-anchored regulations with penalty exposure</td></tr>
+<tr><td>/evidence/all-axes-chain-2026-08-17.jsonl</td><td>the signed board chain (14/14 verified, offline)</td></tr>
+<tr><td>/api/lookup</td><td>deterministic covered-query answers from the signed corpus</td></tr>
+<tr><td>gspc-verify</td><td>free, loginless card verification</td></tr>
+</tbody>
+</table>
+
+<div class="foot">Council of AI (CSOAI Ltd, UK 16939677) · measured-current-state records, never
+certification · verification free forever · methodology DOI 10.5281/zenodo.21991104 · contact
+nicholas@csoai.org</div>
+</div>
+</body>
+</html>
