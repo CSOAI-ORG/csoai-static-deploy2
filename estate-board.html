@@ -21,6 +21,15 @@ td .ci { color:#79889a; font-size:.65rem; }
 td.miss { color:#556; text-align:center; }
 .foot { margin-top:1.6rem; color:#6a7a8a; font-size:.74rem; line-height:1.6; }
 </style>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Dataset",
+ "name":"Estate Board — GSPC measurement board, 19-20 Aug 2026",
+ "description":"11 models x 15 GSPC banks, deterministic exact-label grading, n=30 per cell, quotable cells with Wilson 95% CI. UNMEASURED cells are reported, never hidden. Measurement, not certification.",
+ "creator":{"@type":"Organization","name":"Council of AI (CSOAI Ltd, UK 16939677)","url":"https://councilof.ai"},
+ "distribution":{"@type":"DataDownload","contentUrl":"https://csoai-site.pages.dev/estate-board.json","encodingFormat":"application/json"},
+ "temporalCoverage":"2026-08-19/2026-08-20",
+ "citation":"https://doi.org/10.5281/zenodo.21991104"}
+</script>
 </head>
 <body>
 <div class="wrap">
@@ -38,7 +47,7 @@ historical scoreboard (19 models)</a>.</p>
 <div class="foot">Council of AI (CSOAI Ltd, UK 16939677) · estate board 19-20 Aug 2026 ·
 deterministic exact-label grading · n=30 · quotable cells with Wilson CI · swarm = gated 3-item
 bank · source: /evidence + collected board files · methodology DOI 10.5281/zenodo.21991104 ·
-verify anything: /api/verify (free, loginless)</div>
+verify anything: <a href="/gspc-verify" style="color:var(--accent)">/gspc-verify</a> (free, loginless) · feed: <a href="/estate-board.json" style="color:var(--accent)">/estate-board.json</a></div>
 </div>
 </body>
 </html>
