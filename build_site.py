@@ -115,6 +115,8 @@ NEVER_HTML = {
     "pulse.html",           # MEOK OS internal chrome
     "experiments.html",     # MEOK OS internal chrome
     "oowm-demo.html",       # OOWM demo — weld is UNMEASURED, do not publicize
+    "bft-council.html",     # "33-Agent Council — Sovereign Governance" — kill-listed (BFT/33/Sovereign)
+    "bft-vote-log.html",    # "Designed 33-Agent Council" — kill-listed (BFT/33)
 }
 
 
@@ -137,6 +139,11 @@ def publishable():
         for p in sorted(base.rglob("*")):
             if p.is_file():
                 rel = p.relative_to(ROOT).as_posix()
+                # Never ship the kill-listed BFT/33-agent tool pages (they lived under
+                # tools/ — "33-Agent Council — Sovereign Governance" = BFT/33/Sovereign
+                # on the kill-list; routes now 308 to honest desks in _redirects).
+                if p.name in NEVER_HTML:
+                    continue
                 # Carve-out: the signed board chain under evidence/ is public measurement
                 # data (verified 14/14 cards, chain intact) — the scoreboard's JSON-LD points
                 # at it and the verify path needs it. Everything else keeps the NEVER block.
@@ -213,14 +220,41 @@ def main():
     # into non-HTML. (19 Aug — the "stuck hero, everything works around it" build.)
     hero_css = '<link rel="stylesheet" href="/assets/coa-hero.css">'
     hero_js = '<script src="/assets/coa-hero.js" defer></script>'
+    # Branding/AEO: canonical + Open Graph on every page (share cards + SEO).
+    # Derived from the page's own <title> and <meta name="description"> when present.
     injected = 0
     for p in sorted(OUT.rglob("*.html")):
         try:
             html = p.read_text(encoding="utf-8")
         except Exception:
             continue
-        if "coa-hero.css" in html:
+        if "coa-hero.css" in html and "og:title" in html:
             continue
+        # derive canonical path + meta for OG
+        rel = p.relative_to(OUT).as_posix()
+        if rel == "index.html":
+            url = "https://csoai.org/"
+            page = "home"
+        else:
+            url = "https://csoai.org/" + rel
+            page = rel[:-5] if rel.endswith(".html") else rel
+        t_m = re.search(r"<title>([^<]*)</title>", html, re.I)
+        d_m = re.search(r'<meta\s+name="description"\s+content="([^"]*)"', html, re.I)
+        title = (t_m.group(1) if t_m else "Council of AI").strip()
+        desc = (d_m.group(1) if d_m else "Council of AI — independent AI-governance measurement body. Measurement, not certification.").strip()
+        meta = (
+            f'<link rel="canonical" href="{url}">\n'
+            f'<meta property="og:type" content="website">\n'
+            f'<meta property="og:site_name" content="Council of AI">\n'
+            f'<meta property="og:title" content="{title}">\n'
+            f'<meta property="og:description" content="{desc[:200]}">\n'
+            f'<meta property="og:url" content="{url}">\n'
+            f'<meta name="twitter:card" content="summary">\n'
+            f'<meta name="twitter:title" content="{title}">\n'
+            f'<meta name="twitter:description" content="{desc[:200]}">'
+        )
+        if "og:title" not in html and "</head>" in html:
+            html = html.replace("</head>", meta + "\n</head>", 1)
         if "</head>" in html:
             html = html.replace("</head>", hero_css + "\n</head>", 1)
         if "</body>" in html:
