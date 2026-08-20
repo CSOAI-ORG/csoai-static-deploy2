@@ -1,0 +1,46 @@
+{
+  "kind": "gspc.board",
+  "axis": "swarm-candidates-v2",
+  "harness": "sovos_city.bench.board",
+  "job": "eat-wave2",
+  "result": {
+    "kind": "gspc.board",
+    "axis": "swarm-candidates-v2",
+    "bank_items": 30,
+    "canaries_excluded": 0,
+    "labels": [
+      "KEYWORD_MATCH"
+    ],
+    "majority_baseline": 1.0,
+    "models": [
+      {
+        "model": "qwen3:8b",
+        "n": 30,
+        "correct": 0,
+        "unparsed": 30,
+        "accuracy": 0.0,
+        "ci95": [
+          0.0,
+          0.1135
+        ],
+        "quotable": true,
+        "note": null
+      }
+    ],
+    "best": "qwen3:8b",
+    "status": "MEASURED",
+    "status_note": null,
+    "per_item_count": 30,
+    "method": "unparsed counted incorrect · transport failures excluded as ours · canaries excluded · deterministic exact-label grading, no model judges another model · nothing quoted below usable n>=30"
+  },
+  "ts": "2026-08-19T13:09:07Z",
+  "signatures": [
+    {
+      "protected": "eyJhbGciOiJFZERTQSIsImtpZCI6ImRpZDp3ZWI6Y3NvYWkub3JnI2VzdGF0ZS1jaGFpbi0xIiwidHlwIjoiSldUIn0",
+      "signature": "4SLcuWQ4OuuC_EEqJAM-KSgyLusgmMrhRlLsaFa0_zDIYTV0YkKuQXmv677FocdIxNxh-__tDFc5TUjkk4G3BA",
+      "header": {
+        "typ": "JWT"
+      }
+    }
+  ]
+}

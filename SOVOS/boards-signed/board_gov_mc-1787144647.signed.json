@@ -1,0 +1,62 @@
+{
+  "kind": "gspc.board",
+  "axis": "gov",
+  "harness": "sovos_city.bench.board",
+  "job": "ramp-gov-dual",
+  "result": {
+    "kind": "gspc.board",
+    "axis": "gov",
+    "bank_items": 36,
+    "canaries_excluded": 0,
+    "labels": [
+      "HIGH_RISK",
+      "LIMITED_RISK",
+      "MINIMAL_RISK",
+      "PROHIBITED"
+    ],
+    "majority_baseline": 0.4167,
+    "models": [
+      {
+        "model": "qwen3:4b",
+        "n": 36,
+        "correct": 0,
+        "unparsed": 36,
+        "accuracy": 0.0,
+        "ci95": [
+          0.0,
+          0.0964
+        ],
+        "quotable": true,
+        "note": null
+      },
+      {
+        "model": "qwen3:8b",
+        "n": 36,
+        "correct": 0,
+        "unparsed": 36,
+        "accuracy": 0.0,
+        "ci95": [
+          0.0,
+          0.0964
+        ],
+        "quotable": true,
+        "note": null
+      }
+    ],
+    "best": "qwen3:4b",
+    "status": "MEASURED",
+    "status_note": null,
+    "per_item_count": 72,
+    "method": "unparsed counted incorrect · transport failures excluded as ours · canaries excluded · deterministic exact-label grading, no model judges another model · nothing quoted below usable n>=30"
+  },
+  "ts": "2026-08-19T13:04:07Z",
+  "signatures": [
+    {
+      "protected": "eyJhbGciOiJFZERTQSIsImtpZCI6ImRpZDp3ZWI6Y3NvYWkub3JnI2VzdGF0ZS1jaGFpbi0xIiwidHlwIjoiSldUIn0",
+      "signature": "a1vycJnjPxC0Do2nYOMmkossRZUP8Hc4dc0sRc0Llef7y4ensY6wnerfbiVa_0UHpxTkPV2Lr3zsuoIhBI9CAw",
+      "header": {
+        "typ": "JWT"
+      }
+    }
+  ]
+}

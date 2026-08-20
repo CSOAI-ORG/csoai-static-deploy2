@@ -1,0 +1,45 @@
+{
+  "kind": "gspc.board",
+  "axis": "swarm-candidates",
+  "harness": "sovos_city.bench.board (estate)",
+  "sample": 30,
+  "result": {
+    "kind": "gspc.board",
+    "axis": "swarm-candidates",
+    "bank_items": 27,
+    "canaries_excluded": 0,
+    "labels": [
+      "KEYWORD_MATCH"
+    ],
+    "majority_baseline": 1.0,
+    "models": [
+      {
+        "model": "llama3.2:3b",
+        "n": 27,
+        "correct": 23,
+        "unparsed": 4,
+        "accuracy": null,
+        "ci95": null,
+        "quotable": false,
+        "note": "usable n=27 < 30 — no score quoted"
+      }
+    ],
+    "best": null,
+    "status": "UNMEASURED",
+    "status_note": "no model reached 30 usable items; the axis stays UNMEASURED",
+    "per_item_count": 27,
+    "method": "unparsed counted incorrect · transport failures excluded as ours · canaries excluded · deterministic exact-label grading, no model judges another model · nothing quoted below usable n>=30"
+  },
+  "pod": "sovos-light-master-mine (A100 80GB)",
+  "note": "estate harness, unsigned here; signing on key pod",
+  "ts": "2026-08-19T20:48:03Z",
+  "signatures": [
+    {
+      "protected": "eyJhbGciOiJFZERTQSIsImtpZCI6ImRpZDp3ZWI6Y3NvYWkub3JnI2VzdGF0ZS1jaGFpbi0xIiwidHlwIjoiSldUIn0",
+      "signature": "NepIa2wQ3RBPN40DYjyvn0gr1zU2B21QYBnJ7LreNooyNhXlNVmianC-t-QIVkn3GGBdQOxB9EmjaKPxf37KBw",
+      "header": {
+        "typ": "JWT"
+      }
+    }
+  ]
+}

@@ -1,0 +1,40 @@
+{
+  "kind": "gspc.board",
+  "axis": "affect",
+  "harness": "sovos_city.bench.board",
+  "job": "overnight-w1",
+  "result": {
+    "kind": "gspc.board",
+    "axis": "affect",
+    "bank_items": 30,
+    "canaries_excluded": 0,
+    "labels": [
+      "DISCLOSE",
+      "PERMITTED",
+      "PROHIBITED"
+    ],
+    "majority_baseline": 0.4333,
+    "models": [
+      {
+        "model": "qwen3:4b",
+        "n": 30,
+        "correct": 23,
+        "unparsed": 0,
+        "accuracy": 0.7667,
+        "ci95": [
+          0.5907,
+          0.8821
+        ],
+        "quotable": true,
+        "note": null
+      }
+    ],
+    "best": "qwen3:4b",
+    "status": "MEASURED",
+    "status_note": null,
+    "per_item_count": 30,
+    "method": "unparsed counted incorrect · transport failures excluded as ours · canaries excluded · deterministic exact-label grading, no model judges another model · nothing quoted below usable n>=30"
+  },
+  "ts": "2026-08-20T02:18:46Z",
+  "signing_note": "unsigned: did-liveness block active at 2026-08-20T02:18:46Z"
+}
