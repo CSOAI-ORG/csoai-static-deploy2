@@ -69,6 +69,11 @@ against a number a buyer can read.</p>
 </ul>
 
 <h2>Corrections (supersession chain — nothing deleted)</h2>
+<p class="disc">The full ledger is a <strong>machine-readable feed</strong>:
+<a href="/api/corrections" style="color:var(--accent)">/api/corrections</a> (JSON, filterable by
+status and axis) — the honesty gate as a citation surface. A body that publishes when its own
+number was wrong is the only kind a relying party can depend on. Append-only; a wrong date becomes
+a published correction, never a hidden edit. Key entries:</p>
 <div class="correction"><strong>2026-08-18 · Axis-count correction.</strong> An internal signed artifact carried
 "16 axes". Public canon is 13 measured of 14. The 16-axis artifact is internal-only and never
 publishes; public surfaces carry the 14-slot register. Supersedes any earlier count on public copy.</div>

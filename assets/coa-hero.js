@@ -32,6 +32,7 @@
     '    <button class="coa-chip" data-q="who leads on gov">gov leader</button>' +
     '    <button class="coa-chip" data-mcp="tools">mcp tools</button>' +
     '    <button class="coa-chip" data-mcp="measure">measure</button>' +
+    '    <button class="coa-chip" data-tool="corrections">corrections</button>' +
     '  </div>' +
     '  <div id="coa-hero-input-row">' +
     '    <input id="coa-hero-input" placeholder="ask a model, e.g. qwen2.5:7b care score…" autocomplete="off" />' +
@@ -74,6 +75,12 @@
     if (d.message) parts.push(d.message);
     if (d.axes && d.axes.length) parts.push('axes: ' + d.axes.slice(0, 5).map(function (a) { return a.axis + '=' + a.accuracy; }).join(', '));
     if (d.fleet) parts.push('fleet workers: ' + (d.fleet.workers || []).map(function (w) { return w.role + ' (' + w.status + ')'; }).join(', '));
+    if (d.mode === 'corrections') {
+      parts.push('corrections ledger: ' + d.total + ' entries · ' + d.open + ' open');
+      (d.corrections || []).slice(0, 5).forEach(function (c) {
+        parts.push('· ' + c.id + ' [' + c.status + '] ' + c.title);
+      });
+    }
     if (d.rounds && d.rounds.length) {
       var last = d.rounds[d.rounds.length - 1];
       parts.push('latest arena round: #' + last.round + ' · ' + last.axis + ' · winner ' + (last.winner || '?'));

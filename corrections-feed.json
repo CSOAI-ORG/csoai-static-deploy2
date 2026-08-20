@@ -1,0 +1,107 @@
+{
+  "schema": "csoai.corrections-feed/0.1",
+  "generated": "2026-08-20T02:00:00Z",
+  "doctrine": "Corrections appended, never edited. A body that publishes when its own number was wrong is the only kind a relying party can depend on. Measurement, not certification — a correction is an asset, not an admission.",
+  "note": "Seed feed: nine real self-caught corrections from the 19-20 Aug session + ledger entries. Append-only; entries are signed by their evidence.",
+  "corrections": [
+    {
+      "id": "CORR-001",
+      "title": "Axis-count drift — '16 axes' served publicly",
+      "what_was_wrong": "An internal signed artifact carried '16 axes'; the live API served totals.axes=17 and items=966 while canon is 14-slot / 13 measured / 819 items.",
+      "how_caught": "End-user probe of councilof.ai/api/gspc against the canon register (GR.2 reconciliation); cross-checked badge (13 of 14) vs API totals.",
+      "fix": "Public copy holds 13-of-14 everywhere; the 16-axis artifact is internal-only and never publishes; the councilof-ai lane reconciled the API to axes=14 / measured=13 / DOI 21991104.",
+      "status": "resolved",
+      "date": "2026-08-19",
+      "tags": ["canon", "axis-count", "api"],
+      "evidence": "verified live: /api/gspc totals.axes=14, measured_axes=13, public_count '13 measured of 14'"
+    },
+    {
+      "id": "CORR-002",
+      "title": "Signed-card envelope divergence — kid absent from DID doc",
+      "what_was_wrong": "The published agent-card.json carried kid did:web:csoai.org#site-release-1 which is absent from the DID document; the card did not verify against either published key (corrections #27 / HN.0).",
+      "how_caught": "Offline verification of the served card against the DID doc keys (recomputed id + Ed25519 check).",
+      "fix": "Byte-identical restore of the machine surface while the signing-chain fix is owned by the kernel/identity lane (Rekor v2 + RFC 3161 TSA). No new A2A publicity until it verifies.",
+      "status": "open",
+      "date": "2026-08-19",
+      "tags": ["signing", "a2a", "machine-path"],
+      "evidence": "kid #site-release-1 absent from did.json; signature invalid vs both published keys (recomputed)"
+    },
+    {
+      "id": "CORR-003",
+      "title": "Two-deployer clobber — full _site deploy dropped machine-surface files",
+      "what_was_wrong": "A full _site build deployed to the shared csoai-site project replaced its content, dropping K3's untracked machine-surface files (agent-card.json, banks-manifest.json, verification.schema.json, CANONICAL-DOIS.md, badge/axes.json).",
+      "how_caught": "Post-deploy machine-path probe: 5 of 12 paths 404'd on the new hash (csoai.org still showed 200 via edge cache — the cache masked it).",
+      "fix": "Restored the authoritative files from the prior deployment, added a never-drop allowlist rule to build_site.py, redeployed; all machine paths verified 200 cache-busted.",
+      "status": "resolved",
+      "date": "2026-08-19",
+      "tags": ["deploy", "machine-path", "two-lane"],
+      "evidence": "verified 12/12 machine paths 200 on csoai.org + pages.dev after redeploy"
+    },
+    {
+      "id": "CORR-004",
+      "title": "Ghost API endpoints — arena feed documented path 404",
+      "what_was_wrong": "The documented arena feed path councilof.ai/api/sov-arena/rounds.jsonl returned 404 while the live data served at /sov-arena/rounds.jsonl.",
+      "how_caught": "End-user probe of both paths against the harness map's documented surface.",
+      "fix": "Flagged to the K3 lane; the live feed serves at the working path and the KV-backed feed continues.",
+      "status": "open",
+      "date": "2026-08-19",
+      "tags": ["api", "arena", "docs"],
+      "evidence": "/api/sov-arena/rounds.jsonl 404 vs /sov-arena/rounds.jsonl 200"
+    },
+    {
+      "id": "CORR-005",
+      "title": "CEASAI CamelCase leak — codename case-drift on public copy",
+      "what_was_wrong": "An internal codename appeared with a CamelCase variant on public surfaces, violating the case-locked kill-list (ceasai vs CEASAI).",
+      "how_caught": "Case-sensitive sweep of public HTML for kill-list tokens (the sweep that also caught the BFT pages).",
+      "fix": "Purged the variant from public copy; the kill-list sweep is now part of the acceptance battery.",
+      "status": "resolved",
+      "date": "2026-08-19",
+      "tags": ["kill-list", "codename", "sweep"],
+      "evidence": "case-sensitive grep across shipped _site; 0 hits post-purge"
+    },
+    {
+      "id": "CORR-006",
+      "title": "Pricing leak — SaaS tiers on public surfaces",
+      "what_was_wrong": "Public surfaces carried SaaS pricing tiers (£199/mo re-attestation, £999/£1,999) — the single most dangerous sentence on the estate: it reads as pay-to-stay-measured.",
+      "how_caught": "Canon sweep (HO.2 ruling: all pricing removed; verification free forever).",
+      "fix": "All pricing removed; the free-rail posture line replaces it; any future pricing surface requires an owner ruling.",
+      "status": "resolved",
+      "date": "2026-08-19",
+      "tags": ["pricing", "firewall", "canon"],
+      "evidence": "grep for £N/mo across shipped pages → 0 hits"
+    },
+    {
+      "id": "CORR-007",
+      "title": "Omnibus date drift — high-risk deferral mis-stated",
+      "what_was_wrong": "The Annex III high-risk date needed to be 2 Dec 2027 (Digital Omnibus Reg (EU) 2026/1744 deferral), not 2 Aug 2026 — serving the dead date would be a credibility wound.",
+      "how_caught": "Reg-calendar research + date sweep of shipped pages for wrong pairings of '2 Aug 2026' with Annex III.",
+      "fix": "Verified no wrong pairing shipped (the 2 Aug 2026 refs are Article 50, correct); the reg-feed treats dates as corrected data, not static copy.",
+      "status": "resolved",
+      "date": "2026-08-19",
+      "tags": ["regulation", "date", "canon"],
+      "evidence": "grep for 'Annex III'+'2 Aug 2026' across shipped pages → none"
+    },
+    {
+      "id": "CORR-008",
+      "title": "BFT/33-Agent pages shipping — kill-listed content reachable",
+      "what_was_wrong": "tools/bft-council.html ('CSOAI Designed 33-Agent Council — Sovereign Governance') and tools/bft-vote-log.html shipped to production and sat in the sitemap — BFT/33/Sovereign are kill-listed.",
+      "how_caught": "Kill-list sweep of shipped _site (the ramp's 'last 33-Agent string' valuation-hygiene item).",
+      "fix": "NEVER_HTML exclusion (DIRS loop), _redirects 308 → honest desks, sitemap cleanup. Verified: routes 308, zero bft in sitemap, machine paths + hero intact.",
+      "status": "resolved",
+      "date": "2026-08-20",
+      "tags": ["kill-list", "bft", "hygiene"],
+      "evidence": "deployed 35d1dc21; /tools/bft-council* → 308 councilof.ai; sitemap bft count 0"
+    },
+    {
+      "id": "CORR-009",
+      "title": "CARE divergence — internal harness figure vs public board",
+      "what_was_wrong": "CARE 0.895/F1 0.8976 was claimed as 'key verified' but it is an in-lane harness figure (tuned specialist on an internal bank); the public board number is care leader 0.535 (n=199).",
+      "how_caught": "Probe of the live signed board against the claimed figure (deterministic grader, 15,580 rows).",
+      "fix": "Rule: never cite 0.895/0.8976 as the CARE board figure; public = 0.535 (n=199). Internal harness numbers stay internal-only.",
+      "status": "resolved",
+      "date": "2026-08-19",
+      "tags": ["care", "board", "honesty"],
+      "evidence": "live /api/gspc care leader acc=0.535 n=199 vs claimed 0.895"
+    }
+  ]
+}

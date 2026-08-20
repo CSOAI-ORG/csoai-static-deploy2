@@ -76,6 +76,7 @@ JSON_ALLOW = {
     # every signature verify against them. NEVER drop these from the build.
     "banks-manifest.json",       # signed bank manifest
     "verification.schema.json",  # verification schema
+    "corrections-feed.json",     # the corrections ledger as a machine-readable feed (honesty gate as citation surface)
 }
 
 # Named public files whose extension is NOT in ROOT_EXTS (.md/.pdf). Each was

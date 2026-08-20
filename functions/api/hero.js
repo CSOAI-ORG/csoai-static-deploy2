@@ -153,6 +153,26 @@ export async function onRequestGet({ request }) {
       return new Response(JSON.stringify({ mode: 'agents', source: 'fallback snapshot', agents }), { status: 200, headers });
     }
   }
+  if (tool === 'corrections') {
+    // the corrections ledger as a citation surface — the honesty gate is a product
+    try {
+      const r = await fetch('https://csoai.org/api/corrections');
+      const d = await r.json();
+      const rows = (d.corrections || []).map((c) => ({
+        id: c.id, title: c.title, status: c.status, date: c.date,
+        fix: (c.fix || '').slice(0, 120),
+      }));
+      return new Response(JSON.stringify({
+        mode: 'corrections',
+        doctrine: d.doctrine,
+        total: d.total,
+        open: rows.filter((x) => x.status === 'open').length,
+        corrections: rows,
+      }), { status: 200, headers });
+    } catch (e) {
+      return new Response(JSON.stringify({ mode: 'corrections', error: String(e).slice(0, 150) }), { status: 200, headers });
+    }
+  }
   if (tool === 'mcp') {
     const op = url.searchParams.get('op') || 'tools';
     try {
