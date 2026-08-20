@@ -115,6 +115,9 @@ NEVER = re.compile(
 NEVER_HTML = {
     "master.html",          # SOV33 OWEM Master Hub — internal engine name
     "sov_space_visual.html",# SOV-Space — banned product name (main #26 precedent)
+    "sov-5d-engine.html",    # "SOV-Space 5D — UE5 representation" — banned name (sweep catch 20 Aug, links sov-5d-points.json that never ships)
+    "sov-local-viewer.html", # "SOV-Space — Local Renderer" — banned name (sweep catch 20 Aug)
+    "sov-fluid-viewer.html",  # "SOV-Space — Living Visual Reasoning Memory" — banned name (sweep catch 20 Aug)
     "mcp-install.html",     # "Install Sovereign OS" — SOVOS brand being retired
     "pulse.html",           # MEOK OS internal chrome
     "experiments.html",     # MEOK OS internal chrome
