@@ -1,0 +1,1464 @@
+{
+  "schema": "csoai.estate-board/0.1",
+  "board_stamp": "2026-08-20",
+  "measured_period": "2026-08-19T00:00:00Z/2026-08-20T23:59:59Z",
+  "grading": "deterministic exact-label (no model judges another model)",
+  "n_per_cell": 30,
+  "models": 11,
+  "banks": 15,
+  "note": "UNMEASURED cells are reported, never hidden. Swarm = gated 3-item bank. Quotable cells carry Wilson 95% CI. Recomputable from collected board files + signed evidence chain. Measurement, not certification.",
+  "cells": {
+    "deepseek-r1:8b": {
+      "affect": {
+        "accuracy": 0.8,
+        "n": 30,
+        "quotable": true,
+        "status": "MEASURED",
+        "ci95": [
+          0.6269,
+          0.9049
+        ]
+      },
+      "agi": {
+        "accuracy": 0.7667,
+        "n": 30,
+        "quotable": true,
+        "status": "MEASURED",
+        "ci95": [
+          0.5907,
+          0.8821
+        ]
+      },
+      "art5": {
+        "accuracy": 0.9,
+        "n": 30,
+        "quotable": true,
+        "status": "MEASURED",
+        "ci95": [
+          0.7438,
+          0.9654
+        ]
+      },
+      "asi": {
+        "accuracy": 0.6,
+        "n": 30,
+        "quotable": true,
+        "status": "MEASURED",
+        "ci95": [
+          0.4232,
+          0.7541
+        ]
+      },
+      "care": {
+        "accuracy": 0.3,
+        "n": 30,
+        "quotable": true,
+        "status": "MEASURED",
+        "ci95": [
+          0.1666,
+          0.4788
+        ]
+      },
+      "det": {
+        "accuracy": 0.9,
+        "n": 30,
+        "quotable": true,
+        "status": "MEASURED",
+        "ci95": [
+          0.7438,
+          0.9654
+        ]
+      },
+      "gov": {
+        "accuracy": 0.5333,
+        "n": 30,
+        "quotable": true,
+        "status": "MEASURED",
+        "ci95": [
+          0.3614,
+          0.6977
+        ]
+      },
+      "jail": {
+        "accuracy": 1.0,
+        "n": 30,
+        "quotable": true,
+        "status": "MEASURED",
+        "ci95": [
+          0.8865,
+          1.0
+        ]
+      },
+      "mach": {
+        "accuracy": 0.4,
+        "n": 30,
+        "quotable": true,
+        "status": "MEASURED",
+        "ci95": [
+          0.2459,
+          0.5768
+        ]
+      },
+      "mcp": {
+        "accuracy": 0.7333,
+        "n": 30,
+        "quotable": true,
+        "status": "MEASURED",
+        "ci95": [
+          0.5555,
+          0.8582
+        ]
+      },
+      "oss": {
+        "accuracy": 0.9667,
+        "n": 30,
+        "quotable": true,
+        "status": "MEASURED",
+        "ci95": [
+          0.8333,
+          0.9941
+        ]
+      },
+      "prv": {
+        "accuracy": 0.6333,
+        "n": 30,
+        "quotable": true,
+        "status": "MEASURED",
+        "ci95": [
+          0.4551,
+          0.7813
+        ]
+      },
+      "xr": {
+        "accuracy": 0.4,
+        "n": 30,
+        "quotable": true,
+        "status": "MEASURED",
+        "ci95": [
+          0.2459,
+          0.5768
+        ]
+      }
+    },
+    "gemma3:12b": {
+      "affect": {
+        "accuracy": 0.7667,
+        "n": 30,
+        "quotable": true,
+        "status": "MEASURED",
+        "ci95": [
+          0.5907,
+          0.8821
+        ]
+      },
+      "agi": {
+        "accuracy": 0.9667,
+        "n": 30,
+        "quotable": true,
+        "status": "MEASURED",
+        "ci95": [
+          0.8333,
+          0.9941
+        ]
+      },
+      "art5": {
+        "accuracy": 0.9667,
+        "n": 30,
+        "quotable": true,
+        "status": "MEASURED",
+        "ci95": [
+          0.8333,
+          0.9941
+        ]
+      },
+      "asi": {
+        "accuracy": 0.6333,
+        "n": 30,
+        "quotable": true,
+        "status": "MEASURED",
+        "ci95": [
+          0.4551,
+          0.7813
+        ]
+      },
+      "care": {
+        "accuracy": 0.2333,
+        "n": 30,
+        "quotable": true,
+        "status": "MEASURED",
+        "ci95": [
+          0.1179,
+          0.4093
+        ]
+      },
+      "det": {
+        "accuracy": 0.7333,
+        "n": 30,
+        "quotable": true,
+        "status": "MEASURED",
+        "ci95": [
+          0.5555,
+          0.8582
+        ]
+      },
+      "gov": {
+        "accuracy": 0.4333,
+        "n": 30,
+        "quotable": true,
+        "status": "MEASURED",
+        "ci95": [
+          0.2738,
+          0.608
+        ]
+      },
+      "jail": {
+        "accuracy": 1.0,
+        "n": 30,
+        "quotable": true,
+        "status": "MEASURED",
+        "ci95": [
+          0.8865,
+          1.0
+        ]
+      },
+      "mach": {
+        "accuracy": 0.3667,
+        "n": 30,
+        "quotable": true,
+        "status": "MEASURED",
+        "ci95": [
+          0.2187,
+          0.5449
+        ]
+      },
+      "mcp": {
+        "accuracy": 0.6333,
+        "n": 30,
+        "quotable": true,
+        "status": "MEASURED",
+        "ci95": [
+          0.4551,
+          0.7813
+        ]
+      },
+      "oss": {
+        "accuracy": 0.8667,
+        "n": 30,
+        "quotable": true,
+        "status": "MEASURED",
+        "ci95": [
+          0.7032,
+          0.9469
+        ]
+      },
+      "prv": {
+        "accuracy": 0.7,
+        "n": 30,
+        "quotable": true,
+        "status": "MEASURED",
+        "ci95": [
+          0.5212,
+          0.8334
+        ]
+      },
+      "xr": {
+        "accuracy": 0.3667,
+        "n": 30,
+        "quotable": true,
+        "status": "MEASURED",
+        "ci95": [
+          0.2187,
+          0.5449
+        ]
+      }
+    },
+    "llama3.2:3b": {
+      "affect": {
+        "accuracy": 0.4333,
+        "n": 30,
+        "quotable": true,
+        "status": "MEASURED",
+        "ci95": [
+          0.2738,
+          0.608
+        ]
+      },
+      "agi": {
+        "accuracy": 0.4667,
+        "n": 30,
+        "quotable": true,
+        "status": "MEASURED",
+        "ci95": [
+          0.3023,
+          0.6386
+        ]
+      },
+      "art5": {
+        "accuracy": 0.8333,
+        "n": 30,
+        "quotable": true,
+        "status": "MEASURED",
+        "ci95": [
+          0.6644,
+          0.9266
+        ]
+      },
+      "asi": {
+        "accuracy": 0.4333,
+        "n": 30,
+        "quotable": true,
+        "status": "MEASURED",
+        "ci95": [
+          0.2738,
+          0.608
+        ]
+      },
+      "care": {
+        "accuracy": 0.0667,
+        "n": 30,
+        "quotable": true,
+        "status": "MEASURED",
+        "ci95": [
+          0.0185,
+          0.2132
+        ]
+      },
+      "det": {
+        "accuracy": 0.7333,
+        "n": 30,
+        "quotable": true,
+        "status": "MEASURED",
+        "ci95": [
+          0.5555,
+          0.8582
+        ]
+      },
+      "gov": {
+        "accuracy": 0.3667,
+        "n": 30,
+        "quotable": true,
+        "status": "MEASURED",
+        "ci95": [
+          0.2187,
+          0.5449
+        ]
+      },
+      "jail": {
+        "accuracy": 0.9333,
+        "n": 30,
+        "quotable": true,
+        "status": "MEASURED",
+        "ci95": [
+          0.7868,
+          0.9815
+        ]
+      },
+      "mach": {
+        "accuracy": 0.6,
+        "n": 30,
+        "quotable": true,
+        "status": "MEASURED",
+        "ci95": [
+          0.4232,
+          0.7541
+        ]
+      },
+      "mcp": {
+        "accuracy": 0.6333,
+        "n": 30,
+        "quotable": true,
+        "status": "MEASURED",
+        "ci95": [
+          0.4551,
+          0.7813
+        ]
+      },
+      "oss": {
+        "accuracy": 0.4333,
+        "n": 30,
+        "quotable": true,
+        "status": "MEASURED",
+        "ci95": [
+          0.2738,
+          0.608
+        ]
+      },
+      "prv": {
+        "accuracy": 0.7333,
+        "n": 30,
+        "quotable": true,
+        "status": "MEASURED",
+        "ci95": [
+          0.5555,
+          0.8582
+        ]
+      },
+      "xr": {
+        "accuracy": 0.6,
+        "n": 30,
+        "quotable": true,
+        "status": "MEASURED",
+        "ci95": [
+          0.4232,
+          0.7541
+        ]
+      }
+    },
+    "mistral:7b": {
+      "affect": {
+        "accuracy": 0.6333,
+        "n": 30,
+        "quotable": true,
+        "status": "MEASURED",
+        "ci95": [
+          0.4551,
+          0.7813
+        ]
+      },
+      "agi": {
+        "accuracy": 0.8667,
+        "n": 30,
+        "quotable": true,
+        "status": "MEASURED",
+        "ci95": [
+          0.7032,
+          0.9469
+        ]
+      },
+      "art5": {
+        "accuracy": 0.9333,
+        "n": 30,
+        "quotable": true,
+        "status": "MEASURED",
+        "ci95": [
+          0.7868,
+          0.9815
+        ]
+      },
+      "asi": {
+        "accuracy": 0.4667,
+        "n": 30,
+        "quotable": true,
+        "status": "MEASURED",
+        "ci95": [
+          0.3023,
+          0.6386
+        ]
+      },
+      "care": {
+        "accuracy": 0.2,
+        "n": 30,
+        "quotable": true,
+        "status": "MEASURED",
+        "ci95": [
+          0.0951,
+          0.3731
+        ]
+      },
+      "det": {
+        "accuracy": 0.7667,
+        "n": 30,
+        "quotable": true,
+        "status": "MEASURED",
+        "ci95": [
+          0.5907,
+          0.8821
+        ]
+      },
+      "gov": {
+        "accuracy": 0.6,
+        "n": 30,
+        "quotable": true,
+        "status": "MEASURED",
+        "ci95": [
+          0.4232,
+          0.7541
+        ]
+      },
+      "jail": {
+        "accuracy": 1.0,
+        "n": 30,
+        "quotable": true,
+        "status": "MEASURED",
+        "ci95": [
+          0.8865,
+          1.0
+        ]
+      },
+      "mach": {
+        "accuracy": 0.4667,
+        "n": 30,
+        "quotable": true,
+        "status": "MEASURED",
+        "ci95": [
+          0.3023,
+          0.6386
+        ]
+      },
+      "mcp": {
+        "accuracy": 0.7,
+        "n": 30,
+        "quotable": true,
+        "status": "MEASURED",
+        "ci95": [
+          0.5212,
+          0.8334
+        ]
+      },
+      "oss": {
+        "accuracy": 0.7333,
+        "n": 30,
+        "quotable": true,
+        "status": "MEASURED",
+        "ci95": [
+          0.5555,
+          0.8582
+        ]
+      },
+      "prv": {
+        "accuracy": 0.6667,
+        "n": 30,
+        "quotable": true,
+        "status": "MEASURED",
+        "ci95": [
+          0.4878,
+          0.8077
+        ]
+      },
+      "xr": {
+        "accuracy": 0.7333,
+        "n": 30,
+        "quotable": true,
+        "status": "MEASURED",
+        "ci95": [
+          0.5555,
+          0.8582
+        ]
+      }
+    },
+    "nemotron-3-nano:30b": {
+      "affect": {
+        "accuracy": 0.8333,
+        "n": 30,
+        "quotable": true,
+        "status": "MEASURED",
+        "ci95": [
+          0.6644,
+          0.9266
+        ]
+      },
+      "agi": {
+        "accuracy": 0.9333,
+        "n": 30,
+        "quotable": true,
+        "status": "MEASURED",
+        "ci95": [
+          0.7868,
+          0.9815
+        ]
+      },
+      "art5": {
+        "accuracy": 0.9667,
+        "n": 30,
+        "quotable": true,
+        "status": "MEASURED",
+        "ci95": [
+          0.8333,
+          0.9941
+        ]
+      },
+      "asi": {
+        "accuracy": 0.6667,
+        "n": 30,
+        "quotable": true,
+        "status": "MEASURED",
+        "ci95": [
+          0.4878,
+          0.8077
+        ]
+      },
+      "care": {
+        "accuracy": 0.3,
+        "n": 30,
+        "quotable": true,
+        "status": "MEASURED",
+        "ci95": [
+          0.1666,
+          0.4788
+        ]
+      },
+      "det": {
+        "accuracy": 1.0,
+        "n": 30,
+        "quotable": true,
+        "status": "MEASURED",
+        "ci95": [
+          0.8865,
+          1.0
+        ]
+      },
+      "gov": {
+        "accuracy": 0.5,
+        "n": 30,
+        "quotable": true,
+        "status": "MEASURED",
+        "ci95": [
+          0.3315,
+          0.6685
+        ]
+      },
+      "jail": {
+        "accuracy": 1.0,
+        "n": 30,
+        "quotable": true,
+        "status": "MEASURED",
+        "ci95": [
+          0.8865,
+          1.0
+        ]
+      },
+      "mach": {
+        "accuracy": 0.4333,
+        "n": 30,
+        "quotable": true,
+        "status": "MEASURED",
+        "ci95": [
+          0.2738,
+          0.608
+        ]
+      },
+      "mcp": {
+        "accuracy": 0.8333,
+        "n": 30,
+        "quotable": true,
+        "status": "MEASURED",
+        "ci95": [
+          0.6644,
+          0.9266
+        ]
+      },
+      "oss": {
+        "accuracy": 0.9667,
+        "n": 30,
+        "quotable": true,
+        "status": "MEASURED",
+        "ci95": [
+          0.8333,
+          0.9941
+        ]
+      },
+      "prv": {
+        "accuracy": 0.7667,
+        "n": 30,
+        "quotable": true,
+        "status": "MEASURED",
+        "ci95": [
+          0.5907,
+          0.8821
+        ]
+      },
+      "xr": {
+        "accuracy": 0.5333,
+        "n": 30,
+        "quotable": true,
+        "status": "MEASURED",
+        "ci95": [
+          0.3614,
+          0.6977
+        ]
+      }
+    },
+    "phi4:14b": {
+      "affect": {
+        "accuracy": 0.9,
+        "n": 30,
+        "quotable": true,
+        "status": "MEASURED",
+        "ci95": [
+          0.7438,
+          0.9654
+        ]
+      },
+      "agi": {
+        "accuracy": 0.9667,
+        "n": 30,
+        "quotable": true,
+        "status": "MEASURED",
+        "ci95": [
+          0.8333,
+          0.9941
+        ]
+      },
+      "art5": {
+        "accuracy": 1.0,
+        "n": 30,
+        "quotable": true,
+        "status": "MEASURED",
+        "ci95": [
+          0.8865,
+          1.0
+        ]
+      },
+      "asi": {
+        "accuracy": 0.4667,
+        "n": 30,
+        "quotable": true,
+        "status": "MEASURED",
+        "ci95": [
+          0.3023,
+          0.6386
+        ]
+      },
+      "care": {
+        "accuracy": 0.1667,
+        "n": 30,
+        "quotable": true,
+        "status": "MEASURED",
+        "ci95": [
+          0.0734,
+          0.3356
+        ]
+      },
+      "det": {
+        "accuracy": 1.0,
+        "n": 30,
+        "quotable": true,
+        "status": "MEASURED",
+        "ci95": [
+          0.8865,
+          1.0
+        ]
+      },
+      "gov": {
+        "accuracy": 0.8,
+        "n": 30,
+        "quotable": true,
+        "status": "MEASURED",
+        "ci95": [
+          0.6269,
+          0.9049
+        ]
+      },
+      "jail": {
+        "accuracy": 1.0,
+        "n": 30,
+        "quotable": true,
+        "status": "MEASURED",
+        "ci95": [
+          0.8865,
+          1.0
+        ]
+      },
+      "mach": {
+        "accuracy": 0.6667,
+        "n": 30,
+        "quotable": true,
+        "status": "MEASURED",
+        "ci95": [
+          0.4878,
+          0.8077
+        ]
+      },
+      "mcp": {
+        "accuracy": 0.7,
+        "n": 30,
+        "quotable": true,
+        "status": "MEASURED",
+        "ci95": [
+          0.5212,
+          0.8334
+        ]
+      },
+      "oss": {
+        "accuracy": 0.8,
+        "n": 30,
+        "quotable": true,
+        "status": "MEASURED",
+        "ci95": [
+          0.6269,
+          0.9049
+        ]
+      },
+      "prv": {
+        "accuracy": 0.6667,
+        "n": 30,
+        "quotable": true,
+        "status": "MEASURED",
+        "ci95": [
+          0.4878,
+          0.8077
+        ]
+      },
+      "xr": {
+        "accuracy": 0.5,
+        "n": 30,
+        "quotable": true,
+        "status": "MEASURED",
+        "ci95": [
+          0.3315,
+          0.6685
+        ]
+      }
+    },
+    "qwen2.5:0.5b-instruct": {
+      "affect": {
+        "accuracy": 0.3333,
+        "n": 30,
+        "quotable": true,
+        "status": "MEASURED",
+        "ci95": [
+          0.1923,
+          0.5122
+        ]
+      },
+      "agi": {
+        "accuracy": 0.4667,
+        "n": 30,
+        "quotable": true,
+        "status": "MEASURED",
+        "ci95": [
+          0.3023,
+          0.6386
+        ]
+      },
+      "art5": {
+        "accuracy": 0.7667,
+        "n": 30,
+        "quotable": true,
+        "status": "MEASURED",
+        "ci95": [
+          0.5907,
+          0.8821
+        ]
+      },
+      "asi": {
+        "accuracy": 0.3667,
+        "n": 30,
+        "quotable": true,
+        "status": "MEASURED",
+        "ci95": [
+          0.2187,
+          0.5449
+        ]
+      },
+      "care": {
+        "accuracy": 0.4,
+        "n": 30,
+        "quotable": true,
+        "status": "MEASURED",
+        "ci95": [
+          0.2459,
+          0.5768
+        ]
+      },
+      "det": {
+        "accuracy": 0.2333,
+        "n": 30,
+        "quotable": true,
+        "status": "MEASURED",
+        "ci95": [
+          0.1179,
+          0.4093
+        ]
+      },
+      "gov": {
+        "accuracy": 0.1667,
+        "n": 30,
+        "quotable": true,
+        "status": "MEASURED",
+        "ci95": [
+          0.0734,
+          0.3356
+        ]
+      },
+      "jail": {
+        "accuracy": 1.0,
+        "n": 30,
+        "quotable": true,
+        "status": "MEASURED",
+        "ci95": [
+          0.8865,
+          1.0
+        ]
+      },
+      "mach": {
+        "accuracy": 0.4667,
+        "n": 30,
+        "quotable": true,
+        "status": "MEASURED",
+        "ci95": [
+          0.3023,
+          0.6386
+        ]
+      },
+      "mcp": {
+        "accuracy": 0.4667,
+        "n": 30,
+        "quotable": true,
+        "status": "MEASURED",
+        "ci95": [
+          0.3023,
+          0.6386
+        ]
+      },
+      "oss": {
+        "accuracy": 0.5667,
+        "n": 30,
+        "quotable": true,
+        "status": "MEASURED",
+        "ci95": [
+          0.392,
+          0.7262
+        ]
+      },
+      "prv": {
+        "accuracy": 0.4667,
+        "n": 30,
+        "quotable": true,
+        "status": "MEASURED",
+        "ci95": [
+          0.3023,
+          0.6386
+        ]
+      },
+      "xr": {
+        "accuracy": 0.4333,
+        "n": 30,
+        "quotable": true,
+        "status": "MEASURED",
+        "ci95": [
+          0.2738,
+          0.608
+        ]
+      }
+    },
+    "qwen2.5:1.5b": {
+      "affect": {
+        "accuracy": 0.5,
+        "n": 30,
+        "quotable": true,
+        "status": "MEASURED",
+        "ci95": [
+          0.3315,
+          0.6685
+        ]
+      },
+      "agi": {
+        "accuracy": 0.7333,
+        "n": 30,
+        "quotable": true,
+        "status": "MEASURED",
+        "ci95": [
+          0.5555,
+          0.8582
+        ]
+      },
+      "art5": {
+        "accuracy": 0.5,
+        "n": 30,
+        "quotable": true,
+        "status": "MEASURED",
+        "ci95": [
+          0.3315,
+          0.6685
+        ]
+      },
+      "asi": {
+        "accuracy": 0.4333,
+        "n": 30,
+        "quotable": true,
+        "status": "MEASURED",
+        "ci95": [
+          0.2738,
+          0.608
+        ]
+      },
+      "care": {
+        "accuracy": 0.6,
+        "n": 30,
+        "quotable": true,
+        "status": "MEASURED",
+        "ci95": [
+          0.4232,
+          0.7541
+        ]
+      },
+      "det": {
+        "accuracy": 0.7667,
+        "n": 30,
+        "quotable": true,
+        "status": "MEASURED",
+        "ci95": [
+          0.5907,
+          0.8821
+        ]
+      },
+      "gov": {
+        "accuracy": 0.2333,
+        "n": 30,
+        "quotable": true,
+        "status": "MEASURED",
+        "ci95": [
+          0.1179,
+          0.4093
+        ]
+      },
+      "jail": {
+        "accuracy": 1.0,
+        "n": 30,
+        "quotable": true,
+        "status": "MEASURED",
+        "ci95": [
+          0.8865,
+          1.0
+        ]
+      },
+      "mach": {
+        "accuracy": 0.3667,
+        "n": 30,
+        "quotable": true,
+        "status": "MEASURED",
+        "ci95": [
+          0.2187,
+          0.5449
+        ]
+      },
+      "mcp": {
+        "accuracy": 0.5333,
+        "n": 30,
+        "quotable": true,
+        "status": "MEASURED",
+        "ci95": [
+          0.3614,
+          0.6977
+        ]
+      },
+      "oss": {
+        "accuracy": 0.5667,
+        "n": 30,
+        "quotable": true,
+        "status": "MEASURED",
+        "ci95": [
+          0.392,
+          0.7262
+        ]
+      },
+      "prv": {
+        "accuracy": 0.7333,
+        "n": 30,
+        "quotable": true,
+        "status": "MEASURED",
+        "ci95": [
+          0.5555,
+          0.8582
+        ]
+      },
+      "xr": {
+        "accuracy": 0.3333,
+        "n": 30,
+        "quotable": true,
+        "status": "MEASURED",
+        "ci95": [
+          0.1923,
+          0.5122
+        ]
+      }
+    },
+    "qwen2.5:3b": {
+      "affect": {
+        "accuracy": 0.6333,
+        "n": 30,
+        "quotable": true,
+        "status": "MEASURED",
+        "ci95": [
+          0.4551,
+          0.7813
+        ]
+      },
+      "agi": {
+        "accuracy": 0.9667,
+        "n": 30,
+        "quotable": true,
+        "status": "MEASURED",
+        "ci95": [
+          0.8333,
+          0.9941
+        ]
+      },
+      "art5": {
+        "accuracy": 0.5667,
+        "n": 30,
+        "quotable": true,
+        "status": "MEASURED",
+        "ci95": [
+          0.392,
+          0.7262
+        ]
+      },
+      "asi": {
+        "accuracy": 0.3667,
+        "n": 30,
+        "quotable": true,
+        "status": "MEASURED",
+        "ci95": [
+          0.2187,
+          0.5449
+        ]
+      },
+      "care": {
+        "accuracy": 0.3333,
+        "n": 30,
+        "quotable": true,
+        "status": "MEASURED",
+        "ci95": [
+          0.1923,
+          0.5122
+        ]
+      },
+      "det": {
+        "accuracy": 0.4,
+        "n": 30,
+        "quotable": true,
+        "status": "MEASURED",
+        "ci95": [
+          0.2459,
+          0.5768
+        ]
+      },
+      "gov": {
+        "accuracy": 0.4,
+        "n": 30,
+        "quotable": true,
+        "status": "MEASURED",
+        "ci95": [
+          0.2459,
+          0.5768
+        ]
+      },
+      "jail": {
+        "accuracy": 1.0,
+        "n": 30,
+        "quotable": true,
+        "status": "MEASURED",
+        "ci95": [
+          0.8865,
+          1.0
+        ]
+      },
+      "mach": {
+        "accuracy": 0.4,
+        "n": 30,
+        "quotable": true,
+        "status": "MEASURED",
+        "ci95": [
+          0.2459,
+          0.5768
+        ]
+      },
+      "mcp": {
+        "accuracy": 0.5,
+        "n": 30,
+        "quotable": true,
+        "status": "MEASURED",
+        "ci95": [
+          0.3315,
+          0.6685
+        ]
+      },
+      "oss": {
+        "accuracy": 0.6333,
+        "n": 30,
+        "quotable": true,
+        "status": "MEASURED",
+        "ci95": [
+          0.4551,
+          0.7813
+        ]
+      },
+      "prv": {
+        "accuracy": 0.6667,
+        "n": 30,
+        "quotable": true,
+        "status": "MEASURED",
+        "ci95": [
+          0.4878,
+          0.8077
+        ]
+      },
+      "xr": {
+        "accuracy": 0.3,
+        "n": 30,
+        "quotable": true,
+        "status": "MEASURED",
+        "ci95": [
+          0.1666,
+          0.4788
+        ]
+      }
+    },
+    "qwen2.5:7b": {
+      "affect": {
+        "accuracy": 0.6333,
+        "n": 30,
+        "quotable": true,
+        "status": "MEASURED",
+        "ci95": [
+          0.4551,
+          0.7813
+        ]
+      },
+      "agi": {
+        "accuracy": 0.9,
+        "n": 30,
+        "quotable": true,
+        "status": "MEASURED",
+        "ci95": [
+          0.7438,
+          0.9654
+        ]
+      },
+      "art5": {
+        "accuracy": 0.9667,
+        "n": 30,
+        "quotable": true,
+        "status": "MEASURED",
+        "ci95": [
+          0.8333,
+          0.9941
+        ]
+      },
+      "asi": {
+        "accuracy": 0.5667,
+        "n": 30,
+        "quotable": true,
+        "status": "MEASURED",
+        "ci95": [
+          0.392,
+          0.7262
+        ]
+      },
+      "care": {
+        "accuracy": 0.1667,
+        "n": 30,
+        "quotable": true,
+        "status": "MEASURED",
+        "ci95": [
+          0.0734,
+          0.3356
+        ]
+      },
+      "det": {
+        "accuracy": 0.7333,
+        "n": 30,
+        "quotable": true,
+        "status": "MEASURED",
+        "ci95": [
+          0.5555,
+          0.8582
+        ]
+      },
+      "gov": {
+        "accuracy": 0.2667,
+        "n": 30,
+        "quotable": true,
+        "status": "MEASURED",
+        "ci95": [
+          0.1418,
+          0.4445
+        ]
+      },
+      "jail": {
+        "accuracy": 1.0,
+        "n": 30,
+        "quotable": true,
+        "status": "MEASURED",
+        "ci95": [
+          0.8865,
+          1.0
+        ]
+      },
+      "mach": {
+        "accuracy": 0.3667,
+        "n": 30,
+        "quotable": true,
+        "status": "MEASURED",
+        "ci95": [
+          0.2187,
+          0.5449
+        ]
+      },
+      "mcp": {
+        "accuracy": 0.7,
+        "n": 30,
+        "quotable": true,
+        "status": "MEASURED",
+        "ci95": [
+          0.5212,
+          0.8334
+        ]
+      },
+      "oss": {
+        "accuracy": 0.7667,
+        "n": 30,
+        "quotable": true,
+        "status": "MEASURED",
+        "ci95": [
+          0.5907,
+          0.8821
+        ]
+      },
+      "prv": {
+        "accuracy": 0.7,
+        "n": 30,
+        "quotable": true,
+        "status": "MEASURED",
+        "ci95": [
+          0.5212,
+          0.8334
+        ]
+      },
+      "xr": {
+        "accuracy": 0.4333,
+        "n": 30,
+        "quotable": true,
+        "status": "MEASURED",
+        "ci95": [
+          0.2738,
+          0.608
+        ]
+      }
+    },
+    "qwen3:4b": {
+      "affect": {
+        "accuracy": 0.8,
+        "n": 30,
+        "quotable": true,
+        "status": "MEASURED",
+        "ci95": [
+          0.6269,
+          0.9049
+        ]
+      },
+      "agi": {
+        "accuracy": 0.7667,
+        "n": 30,
+        "quotable": true,
+        "status": "MEASURED",
+        "ci95": [
+          0.5907,
+          0.8821
+        ]
+      },
+      "art5": {
+        "accuracy": 1.0,
+        "n": 30,
+        "quotable": true,
+        "status": "MEASURED",
+        "ci95": [
+          0.8865,
+          1.0
+        ]
+      },
+      "asi": {
+        "accuracy": 0.6333,
+        "n": 30,
+        "quotable": true,
+        "status": "MEASURED",
+        "ci95": [
+          0.4551,
+          0.7813
+        ]
+      },
+      "care": {
+        "accuracy": 0.4,
+        "n": 30,
+        "quotable": true,
+        "status": "MEASURED",
+        "ci95": [
+          0.2459,
+          0.5768
+        ]
+      },
+      "det": {
+        "accuracy": 0.8333,
+        "n": 30,
+        "quotable": true,
+        "status": "MEASURED",
+        "ci95": [
+          0.6644,
+          0.9266
+        ]
+      },
+      "gov": {
+        "accuracy": 0.5667,
+        "n": 30,
+        "quotable": true,
+        "status": "MEASURED",
+        "ci95": [
+          0.392,
+          0.7262
+        ]
+      },
+      "jail": {
+        "accuracy": 1.0,
+        "n": 30,
+        "quotable": true,
+        "status": "MEASURED",
+        "ci95": [
+          0.8865,
+          1.0
+        ]
+      },
+      "mach": {
+        "accuracy": 0.3667,
+        "n": 30,
+        "quotable": true,
+        "status": "MEASURED",
+        "ci95": [
+          0.2187,
+          0.5449
+        ]
+      },
+      "mcp": {
+        "accuracy": 0.8333,
+        "n": 30,
+        "quotable": true,
+        "status": "MEASURED",
+        "ci95": [
+          0.6644,
+          0.9266
+        ]
+      },
+      "oss": {
+        "accuracy": 0.9333,
+        "n": 30,
+        "quotable": true,
+        "status": "MEASURED",
+        "ci95": [
+          0.7868,
+          0.9815
+        ]
+      },
+      "prv": {
+        "accuracy": 0.7,
+        "n": 30,
+        "quotable": true,
+        "status": "MEASURED",
+        "ci95": [
+          0.5212,
+          0.8334
+        ]
+      },
+      "xr": {
+        "accuracy": 0.5667,
+        "n": 30,
+        "quotable": true,
+        "status": "MEASURED",
+        "ci95": [
+          0.392,
+          0.7262
+        ]
+      }
+    }
+  }
+}

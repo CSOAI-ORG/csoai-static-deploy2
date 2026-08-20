@@ -79,6 +79,7 @@ JSON_ALLOW = {
     "corrections-feed.json",     # the corrections ledger as a machine-readable feed (honesty gate as citation surface)
     "regulation-feed.json",      # the regulatory calendar as corrected data (empty-chair #2 product)
     "evidence-reports.json",     # the insurer minimum product — signed per-agent evidence reports
+    "estate-board.json",         # estate board (19-20 Aug) — deterministic exact-label board, quotable cells w/ n + CIs, UNMEASURED reported
 }
 
 # Named public files whose extension is NOT in ROOT_EXTS (.md/.pdf). Each was
