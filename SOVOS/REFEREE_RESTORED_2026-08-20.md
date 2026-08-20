@@ -25,3 +25,9 @@
 
 ## SIGIL
 `referee-restored-2026-08-20-jeeves`
+
+## ADDENDUM 05:50 — watchdog fixed for real
+- The watchdog (watch_ollama.sh) was still using the OLD run_both script (which used stale binary paths) — that's why CPU restarts didn't stick
+- **Fixed**: watchdog now calls launch_gpu_inline.sh + launch_cpu_inline.sh directly (verified 2 refs)
+- CPU instance restored (10 models), Muse preloading
+- **League live**: qwen3:4b 1337 elo · qwen2.5:7b 1325 · mistral 1289 — Muse-refereed, honest
