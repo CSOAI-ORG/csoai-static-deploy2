@@ -1,10 +1,8 @@
-// Cloudflare Pages Function — /api/corrections
-// The corrections ledger as a machine-readable feed (merged 2026-08-20 with the
-// csoai.org feed's freshest catches; signed per estate scheme).
+// Cloudflare Pages Function — /api/corrections (CORR-010 added 2026-08-20)
 const CORRECTIONS = {
   "schema": "csoai.corrections/0.1",
   "updated": "2026-08-20T04:20:00Z",
-  "total": 9,
+  "total": 10,
   "policy": "corrections appended, never edited. The body that publishes the number publishes when the number was wrong.",
   "corrections": [
     {
@@ -78,12 +76,20 @@ const CORRECTIONS = {
       "how_caught": "Probe of the live signed board against the claimed figure (deterministic grader, 15,580 rows).",
       "fix": "Rule: never cite 0.895/0.8976 as the CARE board figure; public = 0.535 (n=199). Internal harness numbers stay internal-only.",
       "status": "resolved"
+    },
+    {
+      "id": "CORR-010",
+      "subject": "Reg feed signature was stale (underwriting substrate must verify)",
+      "what_was_wrong": "/api/regulation's signature block (sigil scheme) no longer verified \u2014 the feed had been edited after signing / signed with a non-estate key; contentId mismatch.",
+      "how_caught": "Verification pass on the live feed (2026-08-20): recomputed canonical vs stored id/signer.",
+      "fix": "Re-signed with did:web:csoai.org#site-release-1 (card scheme); corrected payload staged for the councilof-ai repo (site lane handoff).",
+      "status": "corrected"
     }
   ],
   "signature": {
     "protected": "eyJhbGciOiJFZERTQSIsImtpZCI6ImRpZDp3ZWI6Y3NvYWkub3JnI3NpdGUtcmVsZWFzZS0xIiwidHlwIjoiSldUIn0",
-    "contentId": "363761e5f0303291093fa9abdb86b148af978d620aa9b6333b4f4722c09860e8",
-    "signature": "YA7Uqg0IAafcXefcQqL0MP2Zob3i97jtphJ_Qc-q_C2xlr70HxfX3dcO-tt4cpmugjm_FoNHRUYLOeQMubXDDw"
+    "contentId": "10bdfac58a255187ef5c8a09ec43292d410fbfd01a2e46fc42f02544831f112f",
+    "signature": "oDgIZcUyUTOImk7xBD3lpZpInhgoAQxNs_o9ARKlymbL87yyQ7fvtJd9U5BdA1cwW5jtVNahdOebjdPxyzltBg"
   }
 };
 
