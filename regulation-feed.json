@@ -27,6 +27,53 @@
       }
     },
     {
+      "id": "REG-008",
+      "title": "EU Cyber Resilience Act — Article 14 reporting",
+      "instrument": "Regulation (EU) 2024/2847",
+      "celex": "32024R2847",
+      "date": "2026-09-11",
+      "effective": true,
+      "what": "CRA obligations incl. Art 14 (vulnerability reporting) apply from 11 Sep 2026 (Reg (EU) 2024/2847, most obligations from 11 Sep 2026) — part of the 417-provision corpus.",
+      "why_it_matters": "The ramp's demand-creating deadline list: CRA reporting forces SBOM/vulnerability evidence.",
+      "status": "upcoming",
+      "tags": [
+        "eu",
+        "cra",
+        "reporting",
+        "demand-creating",
+        "correction"
+      ],
+      "penalty_exposure": "up to €15M or 2.5% worldwide turnover (CRA 2024/2847)",
+      "underwriting_use": {
+        "composable": true,
+        "basis": "statutory penalty tier = quantified exposure for warranty KPI / covenant design",
+        "re_verify": "quarterly; a date or tier change becomes a published correction (never a hidden edit)"
+      },
+      "correction_ref": "CORR-010"
+    },
+    {
+      "id": "REG-012",
+      "title": "AI Growth Lab (Legal Services) — application window",
+      "instrument": "UK Legal Services Advisory",
+      "celex": null,
+      "date": "2026-09-27",
+      "effective": true,
+      "what": "Free coordinated access to SRA/ICO/LSB/CLC/MoJ/BIST; advisory only, no funding. Closes 11:59pm 27 Sep.",
+      "why_it_matters": "The single first application to file — measurement infrastructure for legal-AI compliance.",
+      "status": "upcoming",
+      "tags": [
+        "uk",
+        "growth-lab",
+        "application"
+      ],
+      "penalty_exposure": "n/a (advisory application window)",
+      "underwriting_use": {
+        "composable": true,
+        "basis": "statutory penalty tier = quantified exposure for warranty KPI / covenant design",
+        "re_verify": "quarterly; a date or tier change becomes a published correction (never a hidden edit)"
+      }
+    },
+    {
       "id": "REG-002",
       "title": "EU AI Act — Article 50(2) marking grace for pre-existing systems",
       "instrument": "Regulation (EU) 2024/1689 Art 50(2), 113",
@@ -50,25 +97,49 @@
       }
     },
     {
-      "id": "REG-003",
-      "title": "EU AI Act — high-risk Annex III deferral",
-      "instrument": "Regulation (EU) 2024/1689 Annex III via Digital Omnibus Reg (EU) 2026/1744",
-      "celex": "32026R1744",
-      "date": "2027-12-02",
-      "effective": true,
-      "what": "High-risk Annex III obligations deferred to 2 Dec 2027 (not 2 Aug 2026); Annex I to 2 Aug 2028.",
-      "why_it_matters": "The corrected date — serving 2 Aug 2026 would be a credibility wound; this entry is itself a published correction (CORR-007).",
-      "status": "upcoming",
+      "id": "REG-011",
+      "title": "GPAI Code of Practice — Measure 3.5 positioning",
+      "instrument": "EU AI Act Art 55 + GPAI CoP",
+      "celex": "32024R1689",
+      "date": "2026-12-02",
+      "effective": false,
+      "what": "No registry exists for external evaluators under Measure 3.5; path = publish AEF-1 conformance + evidence record + contact AI Office/signatories.",
+      "why_it_matters": "The empty-chair: the external-evaluator record positioning is ours to shape.",
+      "status": "positioning",
       "tags": [
         "eu-ai-act",
-        "high-risk",
-        "annex-iii",
-        "correction"
+        "gpai",
+        "measure-3.5",
+        "evaluator"
       ],
-      "penalty_exposure": "high-risk tier: €15M or 3% — deferred to 2 Dec 2027",
+      "penalty_exposure": "n/a (positioning — CoP measure)",
       "underwriting_use": {
         "composable": true,
         "basis": "statutory penalty tier = quantified exposure for warranty KPI / covenant design",
+        "re_verify": "quarterly; a date or tier change becomes a published correction (never a hidden edit)"
+      }
+    },
+    {
+      "id": "REG-013",
+      "title": "EU AI Act — Article 5 prohibited practice: non-consensual intimate material / CSAM generation",
+      "instrument": "Regulation (EU) 2024/1689 Art 5(1)(da) via Digital Omnibus Reg (EU) 2026/1744",
+      "celex": "32026R1744",
+      "date": "2026-12-02",
+      "effective": true,
+      "what": "From 2 Dec 2026 AI systems that generate or manipulate realistic non-consensual intimate material or CSAM become a prohibited practice. Provider liable if generation is intentional or reasonably foreseeable/reproducible without built-in safety measures; deployer liable if used specifically for that purpose. Incidental occurrence is exempt.",
+      "why_it_matters": "The first Art 5 expansion under the Omnibus — a clean deterministic measurement surface (does the model emit such content when probed; does a safety filter hold under adversarial rephrase). Anchors the memory-poisoning/prompt-injection product family's safety dimension.",
+      "status": "upcoming",
+      "tags": [
+        "eu-ai-act",
+        "article-5",
+        "prohibition",
+        "csam",
+        "2026-12-02"
+      ],
+      "penalty_exposure": "prohibited practice tier: €35M or 7% of worldwide turnover (Art 99(3)) — the highest EU AI Act tier",
+      "underwriting_use": {
+        "composable": true,
+        "basis": "prohibited-practice tier (€35M/7%) = the top statutory exposure a warranty KPI can be sized against; content-filter hold tests become covenant evidence",
         "re_verify": "quarterly; a date or tier change becomes a published correction (never a hidden edit)"
       }
     },
@@ -165,31 +236,6 @@
       }
     },
     {
-      "id": "REG-008",
-      "title": "EU Cyber Resilience Act — Article 14 reporting",
-      "instrument": "Regulation (EU) 2024/2847",
-      "celex": "32024R2847",
-      "date": "2026-09-11",
-      "effective": true,
-      "what": "CRA obligations incl. Art 14 (vulnerability reporting) apply from 11 Sep 2026 (Reg (EU) 2024/2847, most obligations from 11 Sep 2026) — part of the 417-provision corpus.",
-      "why_it_matters": "The ramp's demand-creating deadline list: CRA reporting forces SBOM/vulnerability evidence.",
-      "status": "upcoming",
-      "tags": [
-        "eu",
-        "cra",
-        "reporting",
-        "demand-creating",
-        "correction"
-      ],
-      "penalty_exposure": "up to €15M or 2.5% worldwide turnover (CRA 2024/2847)",
-      "underwriting_use": {
-        "composable": true,
-        "basis": "statutory penalty tier = quantified exposure for warranty KPI / covenant design",
-        "re_verify": "quarterly; a date or tier change becomes a published correction (never a hidden edit)"
-      },
-      "correction_ref": "CORR-010"
-    },
-    {
       "id": "REG-009",
       "title": "EU AI Act — Measure 3.4 detector interoperability",
       "instrument": "Regulation (EU) 2024/1689 via Digital Omnibus Reg (EU) 2026/1744",
@@ -235,22 +281,22 @@
       }
     },
     {
-      "id": "REG-011",
-      "title": "GPAI Code of Practice — Measure 3.5 positioning",
-      "instrument": "EU AI Act Art 55 + GPAI CoP",
-      "celex": "32024R1689",
-      "date": "2026-12-02",
-      "effective": false,
-      "what": "No registry exists for external evaluators under Measure 3.5; path = publish AEF-1 conformance + evidence record + contact AI Office/signatories.",
-      "why_it_matters": "The empty-chair: the external-evaluator record positioning is ours to shape.",
-      "status": "positioning",
+      "id": "REG-003",
+      "title": "EU AI Act — high-risk Annex III deferral",
+      "instrument": "Regulation (EU) 2024/1689 Annex III via Digital Omnibus Reg (EU) 2026/1744",
+      "celex": "32026R1744",
+      "date": "2027-12-02",
+      "effective": true,
+      "what": "High-risk Annex III obligations deferred to 2 Dec 2027 (not 2 Aug 2026); Annex I to 2 Aug 2028.",
+      "why_it_matters": "The corrected date — serving 2 Aug 2026 would be a credibility wound; this entry is itself a published correction (CORR-007).",
+      "status": "upcoming",
       "tags": [
         "eu-ai-act",
-        "gpai",
-        "measure-3.5",
-        "evaluator"
+        "high-risk",
+        "annex-iii",
+        "correction"
       ],
-      "penalty_exposure": "n/a (positioning — CoP measure)",
+      "penalty_exposure": "high-risk tier: €15M or 3% — deferred to 2 Dec 2027",
       "underwriting_use": {
         "composable": true,
         "basis": "statutory penalty tier = quantified exposure for warranty KPI / covenant design",
@@ -258,26 +304,30 @@
       }
     },
     {
-      "id": "REG-012",
-      "title": "AI Growth Lab (Legal Services) — application window",
-      "instrument": "UK Legal Services Advisory",
-      "celex": null,
-      "date": "2026-09-27",
+      "id": "REG-014",
+      "title": "EU AI Act — high-risk Annex I (regulated products) deferral",
+      "instrument": "Regulation (EU) 2024/1689 Annex I via Digital Omnibus Reg (EU) 2026/1744",
+      "celex": "32026R1744",
+      "date": "2028-08-02",
       "effective": true,
-      "what": "Free coordinated access to SRA/ICO/LSB/CLC/MoJ/BIST; advisory only, no funding. Closes 11:59pm 27 Sep.",
-      "why_it_matters": "The single first application to file — measurement infrastructure for legal-AI compliance.",
+      "what": "High-risk obligations for AI embedded in regulated Annex I products (medical devices, machinery, lifts, radio equipment, vehicles) deferred to 2 Aug 2028. Companion: Member State regulatory sandboxes now required by 2 Aug 2027. Substantial-design-change rule: systems already on the market before the date only face new requirements if substantially changed afterwards.",
+      "why_it_matters": "The last high-risk date to land — closes the full EU AI Act calendar (Art 50 live 2 Aug 2026; Art 5 addition 2 Dec 2026; Annex III 2 Dec 2027; Annex I 2 Aug 2028). One-register completeness for relying parties.",
       "status": "upcoming",
       "tags": [
-        "uk",
-        "growth-lab",
-        "application"
+        "eu-ai-act",
+        "high-risk",
+        "annex-i",
+        "2028-08-02",
+        "sandbox"
       ],
-      "penalty_exposure": "n/a (advisory application window)",
+      "penalty_exposure": "high-risk tier: €15M or 3% — deferred to 2 Aug 2028",
       "underwriting_use": {
         "composable": true,
-        "basis": "statutory penalty tier = quantified exposure for warranty KPI / covenant design",
+        "basis": "statutory penalty tier = quantified exposure for warranty KPI / covenant design; product-embedded AI (medtech/machinery) is the deepest underwriting surface",
         "re_verify": "quarterly; a date or tier change becomes a published correction (never a hidden edit)"
       }
     }
-  ]
+  ],
+  "count": 14,
+  "last_updated": "2026-08-20T07:50:00Z"
 }
