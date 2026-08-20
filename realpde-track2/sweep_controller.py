@@ -3,8 +3,8 @@ Sweep controller hyperparameters (z_mult, adapt_every, max_adapt_steps,
 drift_threshold, min_band) to maximize the local Track 2 proxy score.
 
 Usage:
-    python sweep_controller.py --model /root/realpde/trained_v2/model.pth
-                               --stats /root/realpde/trained_v2/stats_real.npz
+    python sweep_controller.py --model /workspace/realpde/trained_v2/model.pth
+                               --stats /workspace/realpde/trained_v2/stats_real.npz
 """
 import sys
 import itertools
@@ -12,19 +12,19 @@ import glob
 import numpy as np
 import torch
 
-sys.path.insert(0, "/root/realpde")
+sys.path.insert(0, "/workspace/realpde")
 from data_pipeline import load_trajectory_normed, make_windows, run_ttt_stream
 from local_eval import score_run
 import submission
 
 
 def main():
-    model_dir = sys.argv[sys.argv.index("--model") + 1] if "--model" in sys.argv else "/root/realpde/trained_v2"
+    model_dir = sys.argv[sys.argv.index("--model") + 1] if "--model" in sys.argv else "/workspace/realpde/trained_v2"
     stats_path = sys.argv[sys.argv.index("--stats") + 1] if "--stats" in sys.argv else f"{model_dir}/stats_real.npz"
     stats = np.load(stats_path)
     stats = {k: float(v) for k, v in stats.items()}
 
-    files = sorted(glob.glob("/root/realpde/data/train_real/*.h5"))
+    files = sorted(glob.glob("/workspace/realpde/data/train_real/*.h5"))
     files = [f for f in files if not f.endswith("7575_0.h5")]
     val_files = files[3:6]  # held-out from training eval
     print("val:", [f.split("/")[-1] for f in val_files], flush=True)
