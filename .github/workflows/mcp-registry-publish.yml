@@ -63,6 +63,7 @@ jobs:
 
       - name: Publish all registry entries (duplicate-tolerant)
         run: |
+          set +e  # GitHub run steps default to bash -e; a non-zero publish must NOT kill the loop
           failures=0
           for f in registry/*.json; do
             echo "== publish $f =="
