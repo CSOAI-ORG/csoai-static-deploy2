@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>MEOK OS BOOT — The Ouroboros & The Simurgh</title>
+<link rel="icon" href="/csoai-os/meok-home/public/icons/icon-192.svg">
+<link rel="manifest" href="/csoai-os/meok-home/public/manifest.webmanifest">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'; font-src 'self' https://fonts.googleapis.com https://fonts.gstatic.com; connect-src 'self' http://127.0.0.1:8000 http://127.0.0.1:3101 https://api.meok.ai https://api.csoai.org;">
+<meta name="theme-color" content="#c9a84c">
+<style>
+:root {
+  --gold: #c9a84c;
+  --gold-bright: #d4a853;
+  --bg: #0a0a1e;
+  --bg-mid: #1a1a2e;
+  --surface: #FAF7F0;
+  --text-cream: #F5F0E6;
+  --text-dim: rgba(245, 240, 230, 0.6);
+  --border: rgba(201, 168, 76, 0.3);
+  --green: #10b981;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: 'JetBrains Mono', 'Space Grotesk', sans-serif;
+  background: radial-gradient(ellipse at center, var(--bg-mid), var(--bg) 70%);
+  color: var(--text-cream);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+}
+
+/* Boot screen container */
+.boot-screen {
+  width: 100vw;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 10;
+}
+
+/* Ouroboros emblem (the boot sigil) */
+.ouroboros {
+  width: 200px;
+  height: 200px;
+  position: relative;
+  filter: drop-shadow(0 0 24px rgba(201, 168, 76, 0.4));
+  animation: ouroborosSpin 12s linear infinite;
+}
+@keyframes ouroborosSpin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* Title */
+.boot-title {
+  margin-top: 32px;
+  font-size: clamp(32px, 4vw, 48px);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  background: linear-gradient(135deg, var(--gold), var(--gold-bright), #f0d68a);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-align: center;
+}
+.boot-subtitle {
+  margin-top: 8px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  color: var(--text-dim);
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+}
+
+/* Boot log */
+.boot-log {
+  margin-top: 32px;
+  width: 600px;
+  max-width: 90vw;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--text-dim);
+  padding: 16px;
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  max-height: 240px;
+  overflow-y: auto;
+}
+.boot-log .line {
+  margin: 2px 0;
+  opacity: 0;
+  animation: lineFade 0.3s ease-in forwards;
+}
+.boot-log .line.ok { color: var(--green); }
+.boot-log .line .ts {
+  color: rgba(201, 168, 76, 0.6);
+  margin-right: 8px;
+}
+
+/* Simurgh (the 30 birds) - revealed after boot */
+.simurgh {
+  width: 120px;
+  height: 120px;
+  margin-top: 24px;
+  opacity: 0;
+  animation: simurghReveal 2s ease-out 8s forwards;
+}
+@keyframes simurghReveal {
+  from { opacity: 0; transform: scale(0.8); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+/* Sovereign enter button */
+.enter {
+  margin-top: 32px;
+  padding: 14px 32px;
+  background: var(--gold);
+  color: white;
+  border: 0;
+  border-radius: 100px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+  opacity: 0;
+  animation: enterFade 1s ease-out 10s forwards;
+  transition: all 0.2s;
+}
+.enter:hover {
+  background: var(--gold-bright);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(201, 168, 76, 0.4);
+}
+@keyframes enterFade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Status badge (the 5 VSM systems lighting up) */
+.vsm-status {
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  background: rgba(0, 0, 0, 0.5);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 12px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  color: var(--text-dim);
+  z-index: 100;
+  backdrop-filter: blur(8px);
+  min-width: 200px;
+}
+.vsm-status h4 {
+  color: var(--gold);
+  margin-bottom: 8px;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+}
+.vsm-status .sys {
+  display: flex; align-items: center; gap: 6px;
+  margin: 2px 0;
+}
+.vsm-status .dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--gold);
+  box-shadow: 0 0 4px var(--gold);
+  animation: pulse 2s ease-in-out infinite;
+}
+@keyframes pulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.5); opacity: 0.5; }
+}
+</style>
+</head>
+<body>
+
+<div class="vsm-status">
+  <h4>🐉 VSM S1-S5</h4>
+  <div class="sys"><span class="dot"></span><span>S5 Policy / SOV3 King</span></div>
+  <div class="sys"><span class="dot"></span><span>S4 Intelligence / Hermes</span></div>
+  <div class="sys"><span class="dot"></span><span>S3 Control / BFT 9/13</span></div>
+  <div class="sys"><span class="dot"></span><span>S2 Coordination / SIGIL</span></div>
+  <div class="sys"><span class="dot"></span><span>S1 Operations / 369 MCPs</span></div>
+</div>
+
+<div class="boot-screen">
+  <!-- OUROBOROS EMBLEM (the boot sigil) -->
+  <svg class="ouroboros" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <radialGradient id="ouro-bg" cx="50%" cy="50%">
+        <stop offset="0%" stop-color="#d4a853" stop-opacity="0.3"/>
+        <stop offset="100%" stop-color="#c9a84c" stop-opacity="0.05"/>
+      </radialGradient>
+      <linearGradient id="ouro-body" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#c9a84c"/>
+        <stop offset="50%" stop-color="#d4a853"/>
+        <stop offset="100%" stop-color="#c9a84c"/>
+      </linearGradient>
+      <filter id="ouro-glow">
+        <feGaussianBlur stdDeviation="2" result="b"/>
+        <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+      </filter>
+    </defs>
+    <circle cx="100" cy="100" r="90" fill="url(#ouro-bg)"/>
+    <!-- Body: a circle that eats itself -->
+    <circle cx="100" cy="100" r="65" fill="none" stroke="url(#ouro-body)" stroke-width="14" filter="url(#ouro-glow)"/>
+    <!-- Head: a serpent head eating the tail -->
+    <g transform="translate(100, 100)">
+      <ellipse cx="0" cy="-65" rx="14" ry="20" fill="url(#ouro-body)" filter="url(#ouro-glow)"/>
+      <!-- Eye -->
+      <circle cx="-4" cy="-72" r="3" fill="#0a0a1e"/>
+      <circle cx="-3" cy="-71" r="1.2" fill="#c9a84c"/>
+      <!-- Tongue -->
+      <path d="M 0 -50 L -3 -42 L 3 -42 Z" fill="#d47a5a" opacity="0.9"/>
+      <!-- Tail being eaten -->
+      <path d="M 65 0 L 56 -3 L 56 3 Z" fill="url(#ouro-body)"/>
+    </g>
+    <!-- Scale markings -->
+    <g fill="#c9a84c" opacity="0.6">
+      <circle cx="100" cy="20" r="2"/>
+      <circle cx="180" cy="100" r="2"/>
+      <circle cx="100" cy="180" r="2"/>
+      <circle cx="20" cy="100" r="2"/>
+    </g>
+    <!-- Inner alchemical text -->
+    <text x="100" y="105" font-family="JetBrains Mono, monospace" font-size="10" fill="#c9a84c" text-anchor="middle" opacity="0.7">ἓν τὸ πᾶν</text>
+  </svg>
+
+  <h1 class="boot-title">MEOK WORLD</h1>
+  <div class="boot-subtitle">🐉 sovereign ai operating system · booting</div>
+
+  <!-- SIMURGH EMBLEM (revealed after 8s) -->
+  <svg class="simurgh" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <linearGradient id="sim-feathers" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#c9a84c"/>
+        <stop offset="100%" stop-color="#5aa89a"/>
+      </linearGradient>
+    </defs>
+    <!-- Body -->
+    <ellipse cx="60" cy="60" rx="20" ry="30" fill="url(#sim-feathers)"/>
+    <!-- Wings (30 birds forming one) -->
+    <g opacity="0.85">
+      <circle cx="40" cy="50" r="4"/><circle cx="80" cy="50" r="4"/>
+      <circle cx="35" cy="60" r="4"/><circle cx="85" cy="60" r="4"/>
+      <circle cx="40" cy="70" r="4"/><circle cx="80" cy="70" r="4"/>
+      <circle cx="45" cy="80" r="3"/><circle cx="75" cy="80" r="3"/>
+      <circle cx="30" cy="55" r="3"/><circle cx="90" cy="55" r="3"/>
+      <circle cx="30" cy="65" r="3"/><circle cx="90" cy="65" r="3"/>
+      <circle cx="35" cy="75" r="3"/><circle cx="85" cy="75" r="3"/>
+      <circle cx="50" cy="50" r="3"/><circle cx="70" cy="50" r="3"/>
+      <circle cx="50" cy="70" r="3"/><circle cx="70" cy="70" r="3"/>
+      <circle cx="45" cy="55" r="2"/><circle cx="75" cy="55" r="2"/>
+      <circle cx="45" cy="65" r="2"/><circle cx="75" cy="65" r="2"/>
+      <circle cx="40" cy="80" r="2"/><circle cx="80" cy="80" r="2"/>
+      <circle cx="50" cy="85" r="2"/><circle cx="70" cy="85" r="2"/>
+      <circle cx="55" cy="50" r="2"/><circle cx="65" cy="50" r="2"/>
+      <circle cx="60" cy="45" r="2"/><circle cx="60" cy="90" r="2"/>
+    </g>
+    <!-- Eye -->
+    <circle cx="60" cy="50" r="3" fill="#0a0a1e"/>
+    <circle cx="61" cy="51" r="1.2" fill="#c9a84c"/>
+    <!-- Beak -->
+    <path d="M 60 36 L 56 30 L 64 30 Z" fill="#d4a55a"/>
+  </svg>
+
+  <!-- BOOT LOG -->
+  <div class="boot-log" id="bootLog"></div>
+
+  <button class="enter" id="enterBtn" onclick="enterSovereign()">→ Enter Sovereign</button>
+</div>
+
+<script>
+const BOOT_SEQUENCE = [
+  {t: 0, msg: 'MEOK v2.0.0 · sovereign boot sequence', cls: 'ok'},
+  {t: 0.3, msg: '· Loading Layer-0 (8-layer stack)', cls: 'ok'},
+  {t: 0.6, msg: '  ├─ L0 Identity (Ed25519, i-char IDs)', cls: ''},
+  {t: 0.9, msg: '  ├─ L1 Execution (SIGIL chain)', cls: ''},
+  {t: 1.2, msg: '  ├─ L2 Compliance (12 frameworks)', cls: ''},
+  {t: 1.5, msg: '  ├─ L3 Council (BFT 9/13)', cls: ''},
+  {t: 1.8, msg: '  ├─ L4 Distribution (218 MCPs)', cls: ''},
+  {t: 2.1, msg: '  ├─ L5 Sovereign Runtime (SOV3)', cls: ''},
+  {t: 2.4, msg: '  ├─ L6 Surface (128 pages)', cls: ''},
+  {t: 2.7, msg: '  └─ L7 Experience (UE5 + 3D world)', cls: ''},
+  {t: 3.2, msg: '· Loading VSM S1-S5', cls: ''},
+  {t: 3.5, msg: '  ├─ S5 Policy / SOV3 King / constitution', cls: ''},
+  {t: 3.8, msg: '  ├─ S4 Intelligence / Hermes / Knowledge Hives', cls: ''},
+  {t: 4.1, msg: '  ├─ S3 Control / BFT council / orchestrator', cls: ''},
+  {t: 4.4, msg: '  ├─ S2 Coordination / SIGIL chain (stigmergic)', cls: ''},
+  {t: 4.7, msg: '  └─ S1 Operations / 369 MCPs / 22 bridges', cls: ''},
+  {t: 5.2, msg: '· Loading 7 archetypes', cls: 'ok'},
+  {t: 5.5, msg: '  ├─ Sovereign · Guardian · Scout · Strategist', cls: ''},
+  {t: 5.8, msg: '  └─ Creator · Companion · Sage', cls: ''},
+  {t: 6.1, msg: '· Loading 13-Queen + King council', cls: 'ok'},
+  {t: 6.4, msg: '  ├─ Sovereign King · Sophia Care (VETO) · Aurelian', cls: ''},
+  {t: 6.7, msg: '  ├─ Justitia · Aleph · Asteria · Dominion', cls: ''},
+  {t: 7.0, msg: '  └─ Brain · Proactive · Bridge · Distribution · Council · Watch (VETO)', cls: ''},
+  {t: 7.4, msg: '· Loading 22 Major Arcana lenses', cls: 'ok'},
+  {t: 7.7, msg: '· Loading 11 regulation temples', cls: 'ok'},
+  {t: 8.0, msg: '· Loading 6 care dimensions (Maternal Covenant)', cls: 'ok'},
+  {t: 8.3, msg: '  └─ Safety · Honesty · Privacy · Fairness · Growth · Consent', cls: ''},
+  {t: 8.6, msg: '· Verifying SIGIL chain · 117 links', cls: 'ok'},
+  {t: 8.9, msg: '· Sovereign DB initialized · 13 tables', cls: 'ok'},
+  {t: 9.2, msg: '· 8 sovereign guarantees verified', cls: 'ok'},
+  {t: 9.5, msg: '· S5 Constitution (Ostrom 8 + 3 clauses) ratified', cls: 'ok'},
+  {t: 9.8, msg: '🐉 MEOK WORLD · READY', cls: 'ok'},
+];
+
+const log = document.getElementById('bootLog');
+BOOT_SEQUENCE.forEach((entry, i) => {
+  setTimeout(() => {
+    const line = document.createElement('div');
+    line.className = 'line ' + entry.cls;
+    const ts = new Date().toLocaleTimeString('en-US', {hour12: false});
+    line.innerHTML = `<span class="ts">${ts}</span>${entry.msg}`;
+    log.appendChild(line);
+    log.scrollTop = log.scrollHeight;
+  }, entry.t * 1000);
+});
+
+function enterSovereign() {
+  // The ouroboros has eaten itself — now we become one
+  // Audit log entry
+  const audit = {ts: Date.now(), action: 'sovereign_enter', ichar_id: localStorage.getItem('meok_ichar_ichar_id') || 'guest'};
+  localStorage.setItem('meok_boot_audit', JSON.stringify(audit));
+
+  // Try the OS binding page (sibling ships the SOVEREIGN_OS_BINDING)
+  window.location.href = '/csoai-os/meok-home/meok-os-binding.html';
+}
+
+// Service worker for PWA
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/csoai-os/meok-home/public/sw.js').catch(() => {});
+  });
+}
+</script>
+
+</body>
+</html>
