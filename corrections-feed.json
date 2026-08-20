@@ -12,7 +12,11 @@
       "fix": "Public copy holds 13-of-14 everywhere; the 16-axis artifact is internal-only and never publishes; the councilof-ai lane reconciled the API to axes=14 / measured=13 / DOI 21991104.",
       "status": "resolved",
       "date": "2026-08-19",
-      "tags": ["canon", "axis-count", "api"],
+      "tags": [
+        "canon",
+        "axis-count",
+        "api"
+      ],
       "evidence": "verified live: /api/gspc totals.axes=14, measured_axes=13, public_count '13 measured of 14'"
     },
     {
@@ -23,7 +27,11 @@
       "fix": "Byte-identical restore of the machine surface while the signing-chain fix is owned by the kernel/identity lane (Rekor v2 + RFC 3161 TSA). No new A2A publicity until it verifies.",
       "status": "open",
       "date": "2026-08-19",
-      "tags": ["signing", "a2a", "machine-path"],
+      "tags": [
+        "signing",
+        "a2a",
+        "machine-path"
+      ],
       "evidence": "kid #site-release-1 absent from did.json; signature invalid vs both published keys (recomputed)"
     },
     {
@@ -34,7 +42,11 @@
       "fix": "Restored the authoritative files from the prior deployment, added a never-drop allowlist rule to build_site.py, redeployed; all machine paths verified 200 cache-busted.",
       "status": "resolved",
       "date": "2026-08-19",
-      "tags": ["deploy", "machine-path", "two-lane"],
+      "tags": [
+        "deploy",
+        "machine-path",
+        "two-lane"
+      ],
       "evidence": "verified 12/12 machine paths 200 on csoai.org + pages.dev after redeploy"
     },
     {
@@ -45,7 +57,11 @@
       "fix": "Flagged to the K3 lane; the live feed serves at the working path and the KV-backed feed continues.",
       "status": "open",
       "date": "2026-08-19",
-      "tags": ["api", "arena", "docs"],
+      "tags": [
+        "api",
+        "arena",
+        "docs"
+      ],
       "evidence": "/api/sov-arena/rounds.jsonl 404 vs /sov-arena/rounds.jsonl 200"
     },
     {
@@ -56,7 +72,11 @@
       "fix": "Purged the variant from public copy; the kill-list sweep is now part of the acceptance battery.",
       "status": "resolved",
       "date": "2026-08-19",
-      "tags": ["kill-list", "codename", "sweep"],
+      "tags": [
+        "kill-list",
+        "codename",
+        "sweep"
+      ],
       "evidence": "case-sensitive grep across shipped _site; 0 hits post-purge"
     },
     {
@@ -67,7 +87,11 @@
       "fix": "All pricing removed; the free-rail posture line replaces it; any future pricing surface requires an owner ruling.",
       "status": "resolved",
       "date": "2026-08-19",
-      "tags": ["pricing", "firewall", "canon"],
+      "tags": [
+        "pricing",
+        "firewall",
+        "canon"
+      ],
       "evidence": "grep for £N/mo across shipped pages → 0 hits"
     },
     {
@@ -78,7 +102,11 @@
       "fix": "Verified no wrong pairing shipped (the 2 Aug 2026 refs are Article 50, correct); the reg-feed treats dates as corrected data, not static copy.",
       "status": "resolved",
       "date": "2026-08-19",
-      "tags": ["regulation", "date", "canon"],
+      "tags": [
+        "regulation",
+        "date",
+        "canon"
+      ],
       "evidence": "grep for 'Annex III'+'2 Aug 2026' across shipped pages → none"
     },
     {
@@ -89,7 +117,11 @@
       "fix": "NEVER_HTML exclusion (DIRS loop), _redirects 308 → honest desks, sitemap cleanup. Verified: routes 308, zero bft in sitemap, machine paths + hero intact.",
       "status": "resolved",
       "date": "2026-08-20",
-      "tags": ["kill-list", "bft", "hygiene"],
+      "tags": [
+        "kill-list",
+        "bft",
+        "hygiene"
+      ],
       "evidence": "deployed 35d1dc21; /tools/bft-council* → 308 councilof.ai; sitemap bft count 0"
     },
     {
@@ -100,8 +132,27 @@
       "fix": "Rule: never cite 0.895/0.8976 as the CARE board figure; public = 0.535 (n=199). Internal harness numbers stay internal-only.",
       "status": "resolved",
       "date": "2026-08-19",
-      "tags": ["care", "board", "honesty"],
+      "tags": [
+        "care",
+        "board",
+        "honesty"
+      ],
       "evidence": "live /api/gspc care leader acc=0.535 n=199 vs claimed 0.895"
+    },
+    {
+      "id": "CORR-010",
+      "title": "CRA Art 14 reporting date — 2027-09-11 corrected to 2026-09-11",
+      "what_was_wrong": "The regulation feed served CRA Art 14 reporting as 11 Sep 2027; the CRA (2024/2847) applies from 11 September 2026.",
+      "how_caught": "Cross-check of the feed against the ecosystem map's verified deadline list during the insurer-suite execution.",
+      "fix": "REG-008 date corrected to 2026-09-11; the feed's doctrine is exactly this — a wrong date becomes a published correction, never a hidden edit.",
+      "status": "resolved",
+      "date": "2026-08-20",
+      "tags": [
+        "regulation",
+        "date",
+        "cra",
+        "correction"
+      ]
     }
   ]
 }
