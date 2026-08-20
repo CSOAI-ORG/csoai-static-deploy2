@@ -77,6 +77,7 @@ JSON_ALLOW = {
     "banks-manifest.json",       # signed bank manifest
     "verification.schema.json",  # verification schema
     "corrections-feed.json",     # the corrections ledger as a machine-readable feed (honesty gate as citation surface)
+    "regulation-feed.json",      # the regulatory calendar as corrected data (empty-chair #2 product)
 }
 
 # Named public files whose extension is NOT in ROOT_EXTS (.md/.pdf). Each was

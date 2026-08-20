@@ -33,6 +33,7 @@
     '    <button class="coa-chip" data-mcp="tools">mcp tools</button>' +
     '    <button class="coa-chip" data-mcp="measure">measure</button>' +
     '    <button class="coa-chip" data-tool="corrections">corrections</button>' +
+    '    <button class="coa-chip" data-tool="regulation">regulation</button>' +
     '  </div>' +
     '  <div id="coa-hero-input-row">' +
     '    <input id="coa-hero-input" placeholder="ask a model, e.g. qwen2.5:7b care score…" autocomplete="off" />' +
@@ -79,6 +80,12 @@
       parts.push('corrections ledger: ' + d.total + ' entries · ' + d.open + ' open');
       (d.corrections || []).slice(0, 5).forEach(function (c) {
         parts.push('· ' + c.id + ' [' + c.status + '] ' + c.title);
+      });
+    }
+    if (d.mode === 'regulation') {
+      parts.push('regulation feed: ' + d.total + ' entries · ' + d.upcoming + ' upcoming');
+      (d.next || []).forEach(function (x) {
+        parts.push('· ' + x.date + ' ' + x.title + ' (' + x.status + ')');
       });
     }
     if (d.rounds && d.rounds.length) {

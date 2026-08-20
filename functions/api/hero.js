@@ -173,6 +173,27 @@ export async function onRequestGet({ request }) {
       return new Response(JSON.stringify({ mode: 'corrections', error: String(e).slice(0, 150) }), { status: 200, headers });
     }
   }
+  if (tool === 'regulation') {
+    // the regulatory calendar as corrected data — dates are corrected, never static copy
+    try {
+      const r = await fetch('https://csoai.org/api/regulation');
+      const d = await r.json();
+      const rows = (d.regulations || []).map((x) => ({
+        id: x.id, title: x.title, date: x.date, status: x.status,
+        why: (x.why_it_matters || '').slice(0, 110),
+      }));
+      return new Response(JSON.stringify({
+        mode: 'regulation',
+        doctrine: d.doctrine,
+        total: d.total,
+        upcoming: rows.filter((x) => x.status === 'upcoming').length,
+        next: rows.filter((x) => x.date >= '2026-08-20').slice(0, 3),
+        regulations: rows.slice(0, 6),
+      }), { status: 200, headers });
+    } catch (e) {
+      return new Response(JSON.stringify({ mode: 'regulation', error: String(e).slice(0, 150) }), { status: 200, headers });
+    }
+  }
   if (tool === 'mcp') {
     const op = url.searchParams.get('op') || 'tools';
     try {

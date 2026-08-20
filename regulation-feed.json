@@ -1,0 +1,152 @@
+{
+  "schema": "csoai.regulation-feed/0.1",
+  "generated": "2026-08-20T02:30:00Z",
+  "doctrine": "Regulation dates are corrected data, never static copy. A wrong date here becomes a published correction (see /api/corrections), never a hidden edit — the feed is defensible precisely because a wrong date destroys a careless competitor faster than it destroys us. Dates are CELEX-keyed where applicable and re-verified quarterly.",
+  "note": "The regulatory calendar as a machine-readable feed: demand-creating deadlines that force companies to need measured evidence. Each entry: what / when / why it matters / status.",
+  "regulations": [
+    {
+      "id": "REG-001",
+      "title": "EU AI Act — Article 50 transparency duties",
+      "instrument": "Regulation (EU) 2024/1689",
+      "celex": "32024R1689",
+      "date": "2026-08-02",
+      "effective": true,
+      "what": "Interactive disclosure, generative marking, emotion/biometric info, deepfake/public-interest text disclosure.",
+      "why_it_matters": "The marking duties are live; measurement of marking survival is the 2 Dec demo's anchor.",
+      "status": "in-force",
+      "tags": ["eu-ai-act", "article-50", "marking"]
+    },
+    {
+      "id": "REG-002",
+      "title": "EU AI Act — Article 50(2) marking grace for pre-existing systems",
+      "instrument": "Regulation (EU) 2024/1689 Art 50(2), 113",
+      "celex": "32024R1689",
+      "date": "2026-12-02",
+      "effective": true,
+      "what": "Grace ends for provider-side marking of GenAI systems already on the market; deployer duties had no deferral.",
+      "why_it_matters": "The dated cliff — the 2 Dec retrofit demo and the '0 of 108 markings survive' measurement.",
+      "status": "upcoming",
+      "tags": ["eu-ai-act", "article-50", "cliff", "2026-12-02"]
+    },
+    {
+      "id": "REG-003",
+      "title": "EU AI Act — high-risk Annex III deferral",
+      "instrument": "Regulation (EU) 2024/1689 Annex III via Digital Omnibus Reg (EU) 2026/1744",
+      "celex": "32026R1744",
+      "date": "2027-12-02",
+      "effective": true,
+      "what": "High-risk Annex III obligations deferred to 2 Dec 2027 (not 2 Aug 2026); Annex I to 2 Aug 2028.",
+      "why_it_matters": "The corrected date — serving 2 Aug 2026 would be a credibility wound; this entry is itself a published correction (CORR-007).",
+      "status": "upcoming",
+      "tags": ["eu-ai-act", "high-risk", "annex-iii", "correction"]
+    },
+    {
+      "id": "REG-004",
+      "title": "Illinois SB 315 — annual independent third-party audits of frontier AI",
+      "instrument": "Illinois SB 315",
+      "celex": null,
+      "date": "2027-01-01",
+      "effective": true,
+      "what": "First US state mandating annual independent third-party audits of frontier AI; IL+NY+CA ≈ 40% of US market.",
+      "why_it_matters": "The LOI target: the law forces companies to need exactly what we sell — a signed, independent, third-party measurement.",
+      "status": "upcoming",
+      "tags": ["us", "illinois", "audit", "demand-creating"]
+    },
+    {
+      "id": "REG-005",
+      "title": "Colorado SB 26-189 — ADMT transparency",
+      "instrument": "Colorado SB 26-189 (repeals/re-enacts SB 24-205)",
+      "celex": null,
+      "date": "2027-01-01",
+      "effective": true,
+      "what": "Developer technical docs to deployers, 3-yr compliance records, point-of-interaction notice, 30-day explanation after adverse outcomes, human review. AG sole enforcer, 60-day cure.",
+      "why_it_matters": "Comment window closed 5 Oct / hearing 26 Oct 2026; the ADMT transparency evidence standard is our framing.",
+      "status": "upcoming",
+      "tags": ["us", "colorado", "transparency", "demand-creating"]
+    },
+    {
+      "id": "REG-006",
+      "title": "New York RAISE — AI accountability",
+      "instrument": "NY RAISE",
+      "celex": null,
+      "date": "2027-01-01",
+      "effective": true,
+      "what": "NY AI accountability requirements (with CO/IL — the ~40% US market block).",
+      "why_it_matters": "Third leg of the demand-creating block; audit-evidence products apply.",
+      "status": "upcoming",
+      "tags": ["us", "ny", "accountability", "demand-creating"]
+    },
+    {
+      "id": "REG-007",
+      "title": "California SB 53 — AI safety frontier model framework",
+      "instrument": "California SB 53",
+      "celex": null,
+      "date": "2027-01-01",
+      "effective": true,
+      "what": "CA frontier AI framework; adds to the IL+NY+CA market block.",
+      "why_it_matters": "The ramp's LOI target list — laws that force companies to need measured evidence.",
+      "status": "upcoming",
+      "tags": ["us", "california", "safety", "demand-creating"]
+    },
+    {
+      "id": "REG-008",
+      "title": "EU Cyber Resilience Act — Article 14 reporting",
+      "instrument": "Regulation (EU) 2024/2847",
+      "celex": "32024R2847",
+      "date": "2027-09-11",
+      "effective": true,
+      "what": "CRA obligations incl. Art 14 (vulnerability reporting) on the schedule; part of the 417-provision corpus.",
+      "why_it_matters": "The ramp's demand-creating deadline list: CRA reporting forces SBOM/vulnerability evidence.",
+      "status": "upcoming",
+      "tags": ["eu", "cra", "reporting", "demand-creating"]
+    },
+    {
+      "id": "REG-009",
+      "title": "EU AI Act — Measure 3.4 detector interoperability",
+      "instrument": "Regulation (EU) 2024/1689 via Digital Omnibus Reg (EU) 2026/1744",
+      "celex": "32026R1744",
+      "date": "2027-02-02",
+      "effective": true,
+      "what": "Watermark/detector interoperability requirement.",
+      "why_it_matters": "The detector-interop deadline — provenance measurement surface.",
+      "status": "upcoming",
+      "tags": ["eu-ai-act", "detector", "interoperability"]
+    },
+    {
+      "id": "REG-010",
+      "title": "FCA stablecoin regime (x402 posture)",
+      "instrument": "FSMA crypto regime",
+      "celex": null,
+      "date": "2027-10-25",
+      "effective": true,
+      "what": "UK stablecoin regulatory regime commences; x402 agent-paid data products posture (agents-only, humans never charged).",
+      "why_it_matters": "The x402 rail timing — verification stays free forever.",
+      "status": "upcoming",
+      "tags": ["uk", "fca", "stablecoin", "x402"]
+    },
+    {
+      "id": "REG-011",
+      "title": "GPAI Code of Practice — Measure 3.5 positioning",
+      "instrument": "EU AI Act Art 55 + GPAI CoP",
+      "celex": "32024R1689",
+      "date": "2026-12-02",
+      "effective": false,
+      "what": "No registry exists for external evaluators under Measure 3.5; path = publish AEF-1 conformance + evidence record + contact AI Office/signatories.",
+      "why_it_matters": "The empty-chair: the external-evaluator record positioning is ours to shape.",
+      "status": "positioning",
+      "tags": ["eu-ai-act", "gpai", "measure-3.5", "evaluator"]
+    },
+    {
+      "id": "REG-012",
+      "title": "AI Growth Lab (Legal Services) — application window",
+      "instrument": "UK Legal Services Advisory",
+      "celex": null,
+      "date": "2026-09-27",
+      "effective": true,
+      "what": "Free coordinated access to SRA/ICO/LSB/CLC/MoJ/BIST; advisory only, no funding. Closes 11:59pm 27 Sep.",
+      "why_it_matters": "The single first application to file — measurement infrastructure for legal-AI compliance.",
+      "status": "upcoming",
+      "tags": ["uk", "growth-lab", "application"]
+    }
+  ]
+}
