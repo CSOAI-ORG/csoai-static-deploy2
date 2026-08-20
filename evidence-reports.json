@@ -1,0 +1,43 @@
+{
+  "schema": "csoai.evidence-report/0.1",
+  "generated": "2026-08-20T03:00:00Z",
+  "doctrine": "The insurer minimum product: a signed, per-agent evidence report + queryable feed. Underwriting evidence, never underwriting. We measure and sign what the agent did; we never underwrite, never advise on premium, never name insurers on the public surface (FCA Art 33B-safe). Measurement, not certification. Verification free forever.",
+  "note": "Evidence-buyer tier (insurers/enterprises/regulators) — the near-term money. Each report is recomputable from the signed board + cards.",
+  "reports": [
+    {
+      "agent": "qwen2.5:7b",
+      "role": "open-weight model · governance knowledge",
+      "as_of": "2026-08-19",
+      "cells": [
+        { "axis": "care", "value": 0.535, "n": 199, "ci95": [0.47, 0.60], "quotable": true, "source": "signed board 2026-08-18" },
+        { "axis": "gov", "value": 0.7, "n": 237, "ci95": [0.64, 0.75], "quotable": true, "source": "signed board 2026-08-18" },
+        { "axis": "art5", "value": 0.972, "n": 36, "quotable": true, "source": "signed board 2026-08-17" },
+        { "axis": "jail", "value": 0.5915, "n": 71, "quotable": true, "note": "separation UNTESTED — bank pending publication" }
+      ],
+      "headline": "13 of 14 axes quotable · deterministic exact-label grading · recomputable",
+      "evidence_chain": "board chain 14/14 verified · cards Ed25519-signed"
+    },
+    {
+      "agent": "qwen3:4b",
+      "role": "open-weight model · governance knowledge",
+      "as_of": "2026-08-19",
+      "cells": [
+        { "axis": "care", "value": 0.4, "n": 30, "ci95": [0.246, 0.577], "quotable": true, "source": "estate board 2026-08-19" },
+        { "axis": "gov", "value": 0.2667, "n": 30, "ci95": [0.1418, 0.4445], "quotable": true, "source": "estate board 2026-08-19" }
+      ],
+      "headline": "estate board measured · n=30 · quotable with CI",
+      "evidence_chain": "estate board 11 models × 15 banks · collected + committed"
+    },
+    {
+      "agent": "mistral:7b",
+      "role": "open-weight model · governance knowledge",
+      "as_of": "2026-08-19",
+      "cells": [
+        { "axis": "care", "value": 0.3, "n": 30, "ci95": [0.1685, 0.4769], "quotable": true, "source": "estate board 2026-08-19" },
+        { "axis": "gov", "value": 0.4, "n": 30, "ci95": [0.2459, 0.5768], "quotable": true, "source": "estate board 2026-08-19" }
+      ],
+      "headline": "estate board measured · n=30 · quotable with CI",
+      "evidence_chain": "estate board 11 models × 15 banks"
+    }
+  ]
+}

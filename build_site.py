@@ -78,6 +78,7 @@ JSON_ALLOW = {
     "verification.schema.json",  # verification schema
     "corrections-feed.json",     # the corrections ledger as a machine-readable feed (honesty gate as citation surface)
     "regulation-feed.json",      # the regulatory calendar as corrected data (empty-chair #2 product)
+    "evidence-reports.json",     # the insurer minimum product — signed per-agent evidence reports
 }
 
 # Named public files whose extension is NOT in ROOT_EXTS (.md/.pdf). Each was

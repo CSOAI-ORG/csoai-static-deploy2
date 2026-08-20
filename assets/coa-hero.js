@@ -34,6 +34,7 @@
     '    <button class="coa-chip" data-mcp="measure">measure</button>' +
     '    <button class="coa-chip" data-tool="corrections">corrections</button>' +
     '    <button class="coa-chip" data-tool="regulation">regulation</button>' +
+    '    <button class="coa-chip" data-tool="evidence">insurance evidence</button>' +
     '  </div>' +
     '  <div id="coa-hero-input-row">' +
     '    <input id="coa-hero-input" placeholder="ask a model, e.g. qwen2.5:7b care score…" autocomplete="off" />' +
@@ -86,6 +87,12 @@
       parts.push('regulation feed: ' + d.total + ' entries · ' + d.upcoming + ' upcoming');
       (d.next || []).forEach(function (x) {
         parts.push('· ' + x.date + ' ' + x.title + ' (' + x.status + ')');
+      });
+    }
+    if (d.mode === 'evidence') {
+      parts.push('insurance evidence: ' + d.total + ' signed reports');
+      (d.reports || []).forEach(function (x) {
+        parts.push('· ' + x.agent + ' (' + x.as_of + ') ' + x.cells);
       });
     }
     if (d.rounds && d.rounds.length) {

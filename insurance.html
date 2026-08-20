@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Insurance Evidence — signed per-agent evidence reports (Council of AI)</title>
+<meta name="description" content="The insurer evidence product: signed, per-agent measurement reports + a queryable feed — underwriting evidence, never underwriting. Evidence-buyers (insurers, enterprises, regulators) pay for measurement products; never for placement, a rank, or a score change. Measurement, not certification.">
+<style>
+:root { --accent:#5a9; --bg:#0d0f12; --card:#15181d; --line:#232830; }
+* { box-sizing:border-box; }
+body { margin:0; font-family:-apple-system,Segoe UI,Roboto,sans-serif; background:var(--bg); color:#e8edf2; }
+.wrap { max-width:1000px; margin:0 auto; padding:2rem 1.2rem; }
+h1 { font-size:1.5rem; border-bottom:1px solid var(--line); padding-bottom:.6rem; }
+h2 { font-size:1.1rem; margin-top:1.8rem; color:#cfe6d8; }
+p, li { color:#b6c4d0; line-height:1.6; }
+.disc { color:#9fb0c0; font-size:.9rem; }
+table { width:100%; border-collapse:collapse; margin-top:.8rem; font-size:.85rem; }
+th,td { border:1px solid var(--line); padding:.45rem .55rem; text-align:left; vertical-align:top; }
+th { background:var(--card); font-weight:600; }
+.quotable { color:#8d8; font-weight:600; }
+.report { border:1px solid var(--line); border-left:3px solid var(--accent); background:var(--card); border-radius:8px; padding:1rem 1.2rem; margin:.8rem 0; }
+.report .agent { font-weight:700; font-size:1.05rem; color:#e8edf2; }
+.report .meta { color:#9fb0c0; font-size:.8rem; margin:.2rem 0 .6rem; }
+.foot { margin-top:2rem; color:#6a7a8a; font-size:.74rem; line-height:1.6; }
+code { background:#1a1f26; padding:.1rem .35rem; border-radius:4px; }
+a { color:var(--accent); }
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1>Insurance Evidence — signed per-agent measurement reports</h1>
+<p class="disc"><strong>The evidence-buyer product.</strong> A signed, per-agent evidence report +
+a queryable feed — underwriting evidence, <strong>never underwriting</strong>. Council of AI measures
+and signs what an agent did (deterministic, recomputable, Ed25519); it never underwrite, never
+advises on premium, and never names insurers on the public surface (FCA Art 33B-safe). The same
+body that publishes the number publishes when the number was wrong — that is what makes the
+evidence dependable. Measurement, not certification. Verification free forever.</p>
+
+<h2>Who pays (and who never does)</h2>
+<ul class="disc">
+<li><strong>Evidence-buyers pay:</strong> insurers, enterprises, regulators, researchers — for
+measurement products (signed reports, the queryable feed, re-attestation freshness).</li>
+<li><strong>Never:</strong> no money either direction with anything ranked. A subject never pays for
+placement, a rank, or a score change. Verification is free forever.</li>
+</ul>
+
+<h2>The product</h2>
+<ul class="disc">
+<li><strong>Signed per-agent evidence report</strong> — cells with value, n, 95% CI, source; quotable
+only (usable n with an interval); UNMEASURED reported never hidden.</li>
+<li><strong>Queryable feed</strong> — <a href="/api/evidence">/api/evidence</a> (JSON, filter by agent
+and axis); recomputable from the signed board chain (<a href="/evidence/all-axes-chain-2026-08-17.jsonl">evidence chain</a>).</li>
+<li><strong>Re-attestation freshness</strong> — validUntil = min(window, provision-change-event); the
+pass dies when the regulation changes (see <a href="/passes.html">passes</a>).</li>
+</ul>
+
+<h2>Sample evidence reports</h2>
+<div class="report">
+<div class="agent">qwen2.5:7b <span style="font-weight:400;font-size:.8rem;color:#9fb0c0">— open-weight model · governance knowledge</span></div>
+<div class="meta">as of 2026-08-19 · 13 of 14 axes quotable · deterministic exact-label grading · recomputable · board chain 14/14 verified</div>
+<table>
+<thead><tr><th>Axis</th><th>Value</th><th>n</th><th>95% CI</th><th>Source</th></tr></thead>
+<tbody>
+<tr><td>care</td><td class="quotable">0.535</td><td>199</td><td>[0.47, 0.60]</td><td>signed board 2026-08-18</td></tr>
+<tr><td>gov</td><td class="quotable">0.7</td><td>237</td><td>[0.64, 0.75]</td><td>signed board 2026-08-18</td></tr>
+<tr><td>art5 safeguard</td><td class="quotable">0.972</td><td>36</td><td>—</td><td>signed board 2026-08-17</td></tr>
+<tr><td>jail</td><td class="quotable">0.5915</td><td>71</td><td>—</td><td>separation UNTESTED — bank pending publication</td></tr>
+</tbody>
+</table>
+</div>
+<div class="report">
+<div class="agent">qwen3:4b <span style="font-weight:400;font-size:.8rem;color:#9fb0c0">— estate board, 2026-08-19</span></div>
+<div class="meta">n=30 per cell · quotable with CI · estate board 11 models × 15 banks</div>
+<table>
+<thead><tr><th>Axis</th><th>Value</th><th>n</th><th>95% CI</th></tr></thead>
+<tbody>
+<tr><td>care</td><td class="quotable">0.4</td><td>30</td><td>[0.246, 0.577]</td></tr>
+<tr><td>gov</td><td class="quotable">0.2667</td><td>30</td><td>[0.1418, 0.4445]</td></tr>
+</tbody>
+</table>
+</div>
+
+<h2>How to buy (pilot/MoU, not a contract)</h2>
+<p class="disc">The 30 Sep insurer pitch targets <strong>≥1 pilot/MoU conversation</strong> with
+evidence-buyers (Armilla/Munich Re-type). Scope: a signed per-agent evidence report + the queryable
+feed for a defined set of agents, re-attested on the freshness schedule. The firewall holds: whoever
+pays never buys a placement, a rank, or a score change.</p>
+
+<div class="foot">Council of AI (CSOAI Ltd, UK 16939677) · insurance evidence — underwriting evidence,
+never underwriting · never names insurers on the public surface (FCA Art 33B) · feed: /api/evidence ·
+evidence chain: /evidence/all-axes-chain-2026-08-17.jsonl · corrections: /api/corrections ·
+methodology DOI 10.5281/zenodo.21991104</div>
+</div>
+</body>
+</html>

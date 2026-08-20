@@ -194,6 +194,26 @@ export async function onRequestGet({ request }) {
       return new Response(JSON.stringify({ mode: 'regulation', error: String(e).slice(0, 150) }), { status: 200, headers });
     }
   }
+  if (tool === 'evidence') {
+    // the insurer minimum product — signed per-agent evidence reports, queryable
+    try {
+      const agent = url.searchParams.get('agent');
+      const r = await fetch('https://csoai.org/api/evidence' + (agent ? '?agent=' + encodeURIComponent(agent) : ''));
+      const d = await r.json();
+      const rows = (d.reports || []).map((x) => ({
+        agent: x.agent, as_of: x.as_of, headline: x.headline,
+        cells: (x.cells || []).map((c) => c.axis + '=' + c.value + ' (n=' + c.n + ')').join(', '),
+      }));
+      return new Response(JSON.stringify({
+        mode: 'evidence',
+        doctrine: d.doctrine,
+        total: d.total,
+        reports: rows,
+      }), { status: 200, headers });
+    } catch (e) {
+      return new Response(JSON.stringify({ mode: 'evidence', error: String(e).slice(0, 150) }), { status: 200, headers });
+    }
+  }
   if (tool === 'mcp') {
     const op = url.searchParams.get('op') || 'tools';
     try {
