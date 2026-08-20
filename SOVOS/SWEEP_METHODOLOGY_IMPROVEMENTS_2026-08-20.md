@@ -34,3 +34,13 @@
 - **This is the audit's prediction confirmed**: exact-label scoring measures format compliance first (IFEval's premise). The "our fine-tune scores zero" story was a measurement artifact, not a capability finding.
 - **The honest report**: "council-oowm 0.000 (n=39, format-failures — UNMEASURED by this instrument)" — the failure-mode taxonomy made it decomposable.
 - **Next**: decide the merge fix (the `?` artifact) or report council-oowm as format-broken, honestly.
+
+## IMPROVEMENT #1 PROVEN (live test on the pod)
+**mistral:7b on the 15-item gov bank: 8/15 = 0.533 (m=15/15 fully measured)**
+- vs the 3-item bank's 2/3 = 0.667 — the bigger bank is MORE honest
+- The 15 items reveal what 3 hid: mistral calls social-scoring (Art 5) "HIGH_RISK" not "PROHIBITED" — a real classification error the 3-item sample missed
+- The GDPR/NIST items (yes/no) are easy (6/7 ✓); the Art 5 risk-tier items (4-choice) are hard (2/7 ✓) — the difficulty gradient is now ITEM-level visible, not just axis-level
+- **This is the moat in action**: more items = more discrimination = the audit's prescription (3 = coin flip, 15 = real signal)
+
+## IMPROVEMENT #2 PROVEN (the failure-mode taxonomy)
+- council-oowm's 0.000 decoded: responds `??????????` (OFF-FORMAT, tokenizer/merge artifact) — the taxonomy made it decomposable
