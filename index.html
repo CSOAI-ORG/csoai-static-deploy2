@@ -252,6 +252,20 @@
   </div>
 </section>
 
+<section id="opensource">
+  <div class="wrap">
+    <p class="kicker">Open-source measurement stack</p>
+    <h2>The receipt format is public. The axes are not.</h2>
+    <p class="sub">Signed measurement should be reproducible anywhere, by anyone — without paying or trusting us. So the signing spine and the deterministic harness skeletons are MIT-licensed and open: three packages, all E2E-verified, all with an honest UNSIGNED path when no key is configured.</p>
+    <div class="step-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:1.2rem">
+      <div class="step"><span class="num">1</span><h3>inspect-signed-receipt</h3><p>Ed25519-signed, hash-chained receipts for Inspect (UK AISI's standard eval framework) — the signing spine. No fork.</p><p><a href="https://github.com/CSOAI-ORG/inspect-signed-receipt" style="color:#7cc7a1">GitHub →</a></p></div>
+      <div class="step"><span class="num">2</span><h3>oversight-measurement</h3><p>Deterministic Art 14-aligned predicates: did the human act on the AI warning? Output-acceptance rate, automation-bias flag, override log quality.</p><p><a href="https://github.com/CSOAI-ORG/oversight-measurement" style="color:#7cc7a1">GitHub →</a></p></div>
+      <div class="step"><span class="num">3</span><h3>memory-poisoning-axis</h3><p>CoSnitch-anchored (CVE-2026-24301): does injected content reach persistent memory, and survive revocation? No LLM judge.</p><p><a href="https://github.com/CSOAI-ORG/memory-poisoning-axis" style="color:#7cc7a1">GitHub →</a></p></div>
+    </div>
+    <p class="fleet-foot" id="opensource-note">Machine feed: <a href="/opensource-stack.json" style="color:#7cc7a1">/opensource-stack.json</a> (csoai.opensource-measurement-stack/0.1) · Measurement, not certification.</p>
+  </div>
+</section>
+
 <section>
   <div class="wrap">
     <div class="banner">

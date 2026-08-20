@@ -80,6 +80,7 @@ JSON_ALLOW = {
     "regulation-feed.json",      # the regulatory calendar as corrected data (empty-chair #2 product)
     "evidence-reports.json",     # the insurer minimum product — signed per-agent evidence reports
     "estate-board.json",         # estate board (19-20 Aug) — deterministic exact-label board, quotable cells w/ n + CIs, UNMEASURED reported
+    "opensource-stack.json",     # the three public signed-measurement packages (spine + Art 14 + CoSnitch axis) — receipt format is public infrastructure
 }
 
 # Named public files whose extension is NOT in ROOT_EXTS (.md/.pdf). Each was

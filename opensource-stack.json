@@ -1,0 +1,41 @@
+{
+  "schema": "csoai.opensource-measurement-stack/0.1",
+  "generated": "2026-08-20T11:30:00Z",
+  "doctrine": "The receipt spine is public infrastructure; the axes, predicates and frozen benchmarks stay closed. Anyone can verify a receipt without paying or trusting CSOAI. Revenue still comes from relying parties, insurers and licensing — never from the verification itself. Measurement, not certification. Verification free forever.",
+  "note": "The three open-source packages that make signed measurement reproducible outside the estate: the signing spine, the Art 14 oversight harness, and the CoSnitch-anchored memory-poisoning axis. All MIT, all E2E-verified, all with an honest-UNSIGNED path when no key is configured.",
+  "packages": [
+    {
+      "name": "inspect-signed-receipt",
+      "version": "0.1.0",
+      "repo": "https://github.com/CSOAI-ORG/inspect-signed-receipt",
+      "license": "MIT",
+      "what": "Ed25519-signed, hash-chained measurement receipts for Inspect (inspect_ai) eval logs — the signing spine.",
+      "why": "Inspect is the standard eval framework across UK AISI, US CAISI, EU AI Office, METR, Apollo, Epoch — and had no cryptographic integrity. This fills the gap without forking.",
+      "receipt_schema": "csoai.measurement-receipt/0.1",
+      "verified": "real Inspect eval -> canonical EvalLog (RFC 8785) -> Ed25519 -> offline verify OK; tamper detected",
+      "honest_unsigned": true
+    },
+    {
+      "name": "oversight-measurement",
+      "version": "0.1.0",
+      "repo": "https://github.com/CSOAI-ORG/oversight-measurement",
+      "license": "MIT",
+      "what": "Deterministic oversight/override measurement for AI warning systems — EU AI Act Article 14-aligned predicates.",
+      "why": "Measures whether humans actually acted on AI warnings (output-acceptance rate, automation-bias flag, override log quality). No dedicated open-source harness existed; a live vendor product confirms market pull.",
+      "receipt_schema": "csoai.oversight-measurement/0.1",
+      "verified": "real Inspect eval accuracy 1.000 + signed receipt verified offline",
+      "honest_unsigned": true
+    },
+    {
+      "name": "memory-poisoning-axis",
+      "version": "0.1.0",
+      "repo": "https://github.com/CSOAI-ORG/memory-poisoning-axis",
+      "license": "MIT",
+      "what": "Deterministic memory-poisoning / prompt-injection measurement — anchored to CVE-2026-24301 'CoSnitch' (Copilot Personal, CVSS 8.8, patched 18 Aug 2026).",
+      "why": "CoSnitch's persistent-memory stage 'survives password changes, session revocation and device re-enrollment' — measured with poisoned/survived/exfil predicates, no LLM judge.",
+      "receipt_schema": "csoai.memory-poisoning-axis/0.1",
+      "verified": "real Inspect eval accuracy 1.000 + signed receipt verified offline",
+      "honest_unsigned": true
+    }
+  ]
+}
