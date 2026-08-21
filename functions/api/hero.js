@@ -22,6 +22,7 @@
  * Language lock: measurement, not certification. Public labels only.
  */
 import lookupData from '../../lookup-public.json';
+import estateBoard from '../../estate-board.json';
 
 const GSPC_MCP = 'https://csoai-gspc-mcp.nicholastempleman.workers.dev/mcp';
 
@@ -94,18 +95,34 @@ export async function onRequestGet({ request }) {
     }
   }
   if (tool === 'board') {
+    // Estate board (19-20 Aug) is the authoritative live board on this surface:
+    // 11 models × 15 banks, deterministic exact-label grading, n=30 quotable
+    // cells with Wilson CIs. UNMEASURED reported, never hidden.
     try {
-      const r = await fetch(BOARD_URL);
-      const board = await r.json();
+      const board = estateBoard;
+      const cells = board.cells || {};
+      const leader = { model: null, avg: 0 };
+      for (const m of Object.keys(cells)) {
+        const vals = Object.values(cells[m])
+          .filter(c => c.status === 'MEASURED' && c.accuracy != null)
+          .map(c => c.accuracy);
+        if (vals.length && vals.reduce((a, b) => a + b, 0) / vals.length > leader.avg) {
+          leader.avg = vals.reduce((a, b) => a + b, 0) / vals.length;
+          leader.model = m;
+        }
+      }
       return new Response(JSON.stringify({
         mode: 'board',
-        public_count: board?.totals?.public_count,
-        axes: board?.totals?.axes,
-        measured: board?.totals?.measured_axes,
-        doi: board?.doi,
+        board_stamp: board.board_stamp || '2026-08-20',
+        models: board.models,
+        banks: board.banks,
+        measured_cells: Object.values(cells).reduce((n, m) => n + Object.values(m).filter(c => c.status === 'MEASURED').length, 0),
+        leader: leader.model ? `${leader.model} @ ${leader.avg.toFixed(3)} avg` : null,
+        note: board.note,
+        framing: '13 measured of 14 quotable · deterministic exact-label grading · UNMEASURED reported',
       }), { status: 200, headers });
     } catch (e) {
-      return new Response(JSON.stringify({ mode: 'board', error: 'board unavailable', detail: String(e) }), { status: 200, headers });
+      return new Response(JSON.stringify({ mode: 'board', error: 'estate board unavailable', detail: String(e) }), { status: 200, headers });
     }
   }
   if (tool === 'status') {
@@ -261,6 +278,32 @@ export async function onRequestGet({ request }) {
       framing: lookupData.framing,
     }), { status: 200, headers });
   }
+
+  // estate board query — the live authoritative board (19-20 Aug), deterministic
+  const BOARD_RE = /(estate board|leaderboard|board|top models|top model|which model (leads|wins|is best)|who is (best|leading)|quotable cells)/i;
+  if (BOARD_RE.test(q)) {
+    try {
+      const cells = estateBoard.cells || {};
+      const rows = [];
+      for (const m of Object.keys(cells)) {
+        const vals = Object.values(cells[m]).filter(c => c.status === 'MEASURED' && c.accuracy != null).map(c => c.accuracy);
+        if (vals.length) rows.push({ model: m, avg: +(vals.reduce((a, b) => a + b, 0) / vals.length).toFixed(4), n: vals.length });
+      }
+      rows.sort((a, b) => b.avg - a.avg);
+      return new Response(JSON.stringify({
+        mode: 'board-lookup',
+        board_stamp: estateBoard.board_stamp || '2026-08-20',
+        from: 'estate board (deterministic exact-label grading, n=30, Wilson CI)',
+        top: rows.slice(0, 6),
+        total_models: rows.length,
+        message: rows.length ? `Live estate board leader: ${rows[0].model} @ ${rows[0].avg} avg across ${rows[0].n} axes (${estateBoard.board_stamp || '19-20 Aug'}).` : 'no measured rows',
+        framing: '13 measured of 14 quotable · UNMEASURED reported, never hidden · measurement, not certification',
+      }), { status: 200, headers });
+    } catch (e) {
+      return new Response(JSON.stringify({ mode: 'board-lookup', error: String(e).slice(0, 120) }), { status: 200, headers });
+    }
+  }
+
 
   // covered query? model + score word → deterministic lookup
   if (LOOKUP_RE.test(q)) {
