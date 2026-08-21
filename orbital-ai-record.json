@@ -1,0 +1,114 @@
+{
+  "schema": "csoai.orbital-ai-measured-current-state/0.1",
+  "generated": "2026-08-21T08:30:00Z",
+  "doctrine": "Coverage-extension of the signed measurement spine to in-orbit AI. The core fact: every in-orbit AI result is self-reported — no independent body measures on-board AI behaviour, no space software-assurance standard covers AI (ECSS/NASA/DO-178C handle deterministic SW only), jurisdiction undefined. We record what was publicly claimed + what is independently verifiable, with deterministic predicates. Never novel accusations. Measurement, not certification.",
+  "note": "deployed vs announced separated throughout. Economics contested (Altman: 'ridiculous'; Gartner: 'bubble'; thermal: 1 rack = 80 m2 radiator).",
+  "gap": {
+    "no_standard": true,
+    "no_measurement_body": true,
+    "insurers_cannot_model": true,
+    "jurisdiction_undefined": true
+  },
+  "records": [
+    {
+      "subject": "Starcloud-1",
+      "class": "orbital-data-centre",
+      "claim": "First data-centre-class NVIDIA H100 in orbit; ran Gemma + trained NanoGPT in orbit (Dec 2025)",
+      "deployed": true,
+      "independent_verification": "launch + orbit independently trackable; in-orbit training results self-reported",
+      "orbit_km": 325,
+      "power_kw": "single-digit (test article)",
+      "predicates": {
+        "deployment_verifiable": true,
+        "behaviour_self_reported": true,
+        "third_party_measurement": false,
+        "public_telemetry": false,
+        "signed_records": false
+      },
+      "content_id": "8686520eb34499c9caa7e5a1d2727a366bc94577eb72a83401d53f347c1cd615",
+      "prev": null,
+      "signature": "iV1zJZWS8jymy4OGjzMINQlsv1YNINxV4kouNA6lrrOMfWkSGaGmasZDWV0UuHXl8iBM9Ad1TQR7HzESyTbADw==",
+      "pubkey": "348f273d8525e9d663dd288c679e58b7e4c914a935be4bf7767d1c3985d63844"
+    },
+    {
+      "subject": "Axiom Space Orbital Data Centers (AxDCU-1 + 2 LEO nodes)",
+      "class": "orbital-data-centre",
+      "claim": "AxDCU-1 on ISS (fall 2025); first 2 ODC nodes to LEO 11 Jan 2026 via Kepler relay",
+      "deployed": true,
+      "independent_verification": "deployment trackable; AI workload results self-reported",
+      "orbit_km": "LEO",
+      "power_kw": "prototype",
+      "predicates": {
+        "deployment_verifiable": true,
+        "behaviour_self_reported": true,
+        "third_party_measurement": false,
+        "public_telemetry": false,
+        "signed_records": false
+      },
+      "content_id": "d43eb7eed01b917d3ebe0e2907ad79aeb9487e53e6e6ee3778457073c314ceeb",
+      "prev": "8686520eb34499c9caa7e5a1d2727a366bc94577eb72a83401d53f347c1cd615",
+      "signature": "u/g5Q9inTmWbH2Fg+QMuhuLwcr6UpquH0RCLlwexAM8/ioNIOgkDoWz+wQLXXm06gyI/lpG3M+vmBssd7ohADg==",
+      "pubkey": "348f273d8525e9d663dd288c679e58b7e4c914a935be4bf7767d1c3985d63844"
+    },
+    {
+      "subject": "Three-Body Computing Constellation (Zhejiang Lab / ADA Space)",
+      "class": "orbital-computing-constellation",
+      "claim": "12 computing satellites (14 May 2025), ~744 TOPS each; 8-day laser link demo (Jul 2026); 2,800-sat / 1,000-POPS plan 2028-2035",
+      "deployed": true,
+      "independent_verification": "satellites tracked; in-orbit model validation self-reported (10 models)",
+      "orbit_km": "LEO",
+      "power_kw": "constellation (5 POPS combined)",
+      "predicates": {
+        "deployment_verifiable": true,
+        "behaviour_self_reported": true,
+        "third_party_measurement": false,
+        "public_telemetry": false,
+        "signed_records": false
+      },
+      "content_id": "95df4931f7da2a9a83e563885f4791ae720aef300afef9ccb361856c60236295",
+      "prev": "d43eb7eed01b917d3ebe0e2907ad79aeb9487e53e6e6ee3778457073c314ceeb",
+      "signature": "Qi9j3HyPJ/PpqJmYBS/GshtC8vhzJwIaDyf4RnF6r13mUz+tUFcfJTJ9XPVpbfhWCpaF0wjIqdnWcRTGUOzuAw==",
+      "pubkey": "348f273d8525e9d663dd288c679e58b7e4c914a935be4bf7767d1c3985d63844"
+    },
+    {
+      "subject": "SpaceX orbital data-centre filing",
+      "class": "announced",
+      "claim": "FCC filing (30 Jan 2026) up to 1M satellites at 500-2000 km; S-1 warns 'may not be viable'; 1,000+ public comments opposed",
+      "deployed": false,
+      "independent_verification": "filing public; deployment not yet real",
+      "orbit_km": "500-2000 (proposed)",
+      "power_kw": "n/a (proposed)",
+      "predicates": {
+        "deployment_verifiable": false,
+        "behaviour_self_reported": false,
+        "third_party_measurement": false,
+        "public_telemetry": false,
+        "signed_records": false
+      },
+      "content_id": "019a56f50d8b8c230097fe575c35602425945b03c18856edd13bb8fc5b7f76c8",
+      "prev": "95df4931f7da2a9a83e563885f4791ae720aef300afef9ccb361856c60236295",
+      "signature": "kG1MRdoEuFfkCRiqlqBjUp3EF3/x9oFlc7kx1wPI18RM4JncLuBhZzo0pQilIQRwl6fYUsE4LHkEj1fD3jEHAQ==",
+      "pubkey": "348f273d8525e9d663dd288c679e58b7e4c914a935be4bf7767d1c3985d63844"
+    },
+    {
+      "subject": "Google Project Suncatcher",
+      "class": "announced",
+      "claim": "2 prototype TPU satellites w/ Planet Labs targeted early 2027; feasibility mid-2030s; Trillium survived 15 krad(Si) lab testing",
+      "deployed": false,
+      "independent_verification": "announcement only",
+      "orbit_km": "n/a (planned)",
+      "power_kw": "n/a",
+      "predicates": {
+        "deployment_verifiable": false,
+        "behaviour_self_reported": false,
+        "third_party_measurement": false,
+        "public_telemetry": false,
+        "signed_records": false
+      },
+      "content_id": "69fab4ab7bfda8a336042f79b0e9186ed173077e89d215c637d91d6230355006",
+      "prev": "019a56f50d8b8c230097fe575c35602425945b03c18856edd13bb8fc5b7f76c8",
+      "signature": "gbD8maY35dC3e8GRmbCCyaw2GLsQELAlHCSpX+zzqE559nvyvClfMG7yXjEAtwEoPLS/d6Z4rGXZGhoivxFMAg==",
+      "pubkey": "348f273d8525e9d663dd288c679e58b7e4c914a935be4bf7767d1c3985d63844"
+    }
+  ]
+}

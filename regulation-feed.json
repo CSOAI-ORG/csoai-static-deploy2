@@ -5,6 +5,117 @@
   "note": "The regulatory calendar as a machine-readable feed: demand-creating deadlines that force companies to need measured evidence. Each entry: what / when / why it matters / status. penalty_exposure field added (underwriting substrate — the NOW product).",
   "regulations": [
     {
+      "id": "REG-019",
+      "title": "FDA QMSR + PCCP — medical device AI total-product-lifecycle",
+      "instrument": "FDA QMSR (in force 2 Feb 2026) + PCCP (final Aug 2025)",
+      "celex": "FDA-QMSR",
+      "date": "2026-02-02",
+      "effective": true,
+      "what": "Quality Management System Regulation in force; Predetermined Change Control Plans for AI/ML devices finalised. Mature accredited TPLC regime.",
+      "why_it_matters": "Medical is accredited and crowded — explicit do-not-build; the buyer wants a notified body, not a signed record.",
+      "status": "in-force",
+      "tags": [
+        "fda",
+        "medical",
+        "pccp"
+      ],
+      "penalty_exposure": "FDA enforcement regime",
+      "underwriting_use": {
+        "composable": true,
+        "basis": "complement only",
+        "re_verify": "quarterly"
+      }
+    },
+    {
+      "id": "REG-018",
+      "title": "FCA AI Live Testing cohort 2 — financial services",
+      "instrument": "FCA AI Live Testing (cohort 2 from April 2026)",
+      "celex": "FCA-AILT",
+      "date": "2026-04-01",
+      "effective": true,
+      "what": "FCA principles-based approach with AI Live Testing sandbox (technical partner Advai). Mills Review (6 Jul 2026) supports the principles-based line.",
+      "why_it_matters": "Principles-based, no bespoke AI rules — the measurement gap is real; coverage-extension of behavioural axes.",
+      "status": "in-force",
+      "tags": [
+        "fca",
+        "finance",
+        "live-testing"
+      ],
+      "penalty_exposure": "FCA principles-based (fines + enforcement)",
+      "underwriting_use": {
+        "composable": true,
+        "basis": "signed measurement complements the principles-based regime for insurers",
+        "re_verify": "quarterly"
+      }
+    },
+    {
+      "id": "REG-015",
+      "title": "UNECE ADS GTR — first global automated-driving regulation",
+      "instrument": "UNECE WP.29 GRVA → GTR (adopted June 2026)",
+      "celex": "UNECE-GTR",
+      "date": "2026-06-01",
+      "effective": true,
+      "what": "First global regulation for automated driving systems adopted by WP.29 (recommended by GRVA Jan 2026, adopted June 2026). Type-approval + audited Safety Management System mandatory for ADS.",
+      "why_it_matters": "The automotive certification regime is now global — CSOAI complements (insurer/in-use measurement) but never certifies.",
+      "status": "in-force",
+      "tags": [
+        "un",
+        "automotive",
+        "ads",
+        "gtr"
+      ],
+      "penalty_exposure": "type-approval regime (non-compliance blocks market access)",
+      "underwriting_use": {
+        "composable": true,
+        "basis": "in-use behaviour measurement complements the type-approval regime for insurers",
+        "re_verify": "quarterly"
+      }
+    },
+    {
+      "id": "REG-017",
+      "title": "EASA AI Concept Paper Issue 3 — aviation learning assurance",
+      "instrument": "EASA AI Concept Paper Issue 3 + RMT.0742 (June 2026)",
+      "celex": "EASA-RMT0742",
+      "date": "2026-06-01",
+      "effective": true,
+      "what": "EASA third iteration of its AI Concept Paper; rulemaking mid-consultation (comments to 12 Aug 2026). DAL-based learning assurance — an accredited certification regime.",
+      "why_it_matters": "Aviation is accredited and crowded — explicit do-not-build for a new instrument.",
+      "status": "in-force",
+      "tags": [
+        "easa",
+        "aviation",
+        "learning-assurance"
+      ],
+      "penalty_exposure": "EASA certification regime",
+      "underwriting_use": {
+        "composable": true,
+        "basis": "complement only — model-behaviour measurement feeds insurers, never certification",
+        "re_verify": "quarterly"
+      }
+    },
+    {
+      "id": "REG-016",
+      "title": "IMO MASS Code — maritime autonomous surface ships",
+      "instrument": "IMO MASS Code (adopted May 2026, in force 1 Jul 2026)",
+      "celex": "IMO-MASS",
+      "date": "2026-07-01",
+      "effective": true,
+      "what": "Maritime Autonomous Surface Ships Code adopted (voluntary now, mandatory target 2030/2032). Flag-state certification.",
+      "why_it_matters": "Voluntary Experience-Building Phase — premature for a measurement instrument, but the deadline corpus records it.",
+      "status": "in-force",
+      "tags": [
+        "imo",
+        "maritime",
+        "mass"
+      ],
+      "penalty_exposure": "flag-state certification",
+      "underwriting_use": {
+        "composable": true,
+        "basis": "during voluntary phase, signed in-use measurement can inform flag-state review",
+        "re_verify": "quarterly"
+      }
+    },
+    {
       "id": "REG-001",
       "title": "EU AI Act — Article 50 transparency duties",
       "instrument": "Regulation (EU) 2024/1689",
@@ -328,6 +439,6 @@
       }
     }
   ],
-  "count": 14,
-  "last_updated": "2026-08-20T07:50:00Z"
+  "count": 19,
+  "last_updated": "2026-08-21T08:40:00Z"
 }

@@ -83,6 +83,7 @@ JSON_ALLOW = {
     "opensource-stack.json",     # the three public signed-measurement packages (spine + Art 14 + CoSnitch axis) — receipt format is public infrastructure
     "benchmark-quality-feed.json", # the signed register rating THIRD-PARTY benchmark quality (deterministic predicates, no LLM judge; own boards never scored)
     "regulatory-deadline-record.json", # regime-level process facts — did the regulator hit the date it set itself (held/stated/deferred), signed, un-scored, un-ranked
+    "orbital-ai-record.json",        # orbital AI measured-current-state — deployed vs announced, deterministic predicates, signed (coverage-extension)
 }
 
 # Named public files whose extension is NOT in ROOT_EXTS (.md/.pdf). Each was

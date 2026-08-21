@@ -37,6 +37,7 @@
     '    <button class="coa-chip" data-tool="evidence">insurance evidence</button>' +
     '    <button class="coa-chip" data-tool="benchmarks">benchmark quality</button>' +
     '    <button class="coa-chip" data-tool="regdeadline">reg deadline</button>' +
+    '    <button class="coa-chip" data-tool="orbital">orbital AI</button>' +
     '    <button class="coa-chip coa-chip-games" data-tool="games">games</button>' +
     '  </div>' +
     '  <div id="coa-games-panel" class="coa-hidden-panel"></div>' +
@@ -130,6 +131,16 @@
             '\nOwn boards never scored (impartiality firewall). Measurement, not certification.';
           addMsg(msg, 'bot');
         }).catch(function (e) { addMsg('benchmark register offline: ' + e, 'bot'); });
+      return;
+    }
+    if (name === 'orbital') {
+      fetch('/api/orbital-ai').then(function (r) { return r.json(); })
+        .then(function (d) {
+          var msg = 'orbital AI measured-current-state (' + d.total + ' records, signed):\n' +
+            (d.records || []).map(function (r) { return '· ' + (r.deployed ? 'DEPLOYED ' : 'announced ') + r.subject; }).join('\n') +
+            '\nGap: no standard covers in-orbit AI · every result self-reported · insurers cannot model the risk. Measurement, not certification.';
+          addMsg(msg, 'bot');
+        }).catch(function (e) { addMsg('orbital record offline: ' + e, 'bot'); });
       return;
     }
     if (name === 'regdeadline') {
