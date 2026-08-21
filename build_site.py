@@ -81,6 +81,8 @@ JSON_ALLOW = {
     "evidence-reports.json",     # the insurer minimum product — signed per-agent evidence reports
     "estate-board.json",         # estate board (19-20 Aug) — deterministic exact-label board, quotable cells w/ n + CIs, UNMEASURED reported
     "opensource-stack.json",     # the three public signed-measurement packages (spine + Art 14 + CoSnitch axis) — receipt format is public infrastructure
+    "benchmark-quality-feed.json", # the signed register rating THIRD-PARTY benchmark quality (deterministic predicates, no LLM judge; own boards never scored)
+    "regulatory-deadline-record.json", # regime-level process facts — did the regulator hit the date it set itself (held/stated/deferred), signed, un-scored, un-ranked
 }
 
 # Named public files whose extension is NOT in ROOT_EXTS (.md/.pdf). Each was

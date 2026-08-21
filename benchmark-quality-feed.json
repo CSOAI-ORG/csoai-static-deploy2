@@ -1,0 +1,1000 @@
+{
+  "schema": "csoai.benchmark-quality/0.1",
+  "generated": "2026-08-21T05:12:00Z",
+  "doctrine": "Deterministic predicates from public artifacts only — never an LLM judge. Rates THIRD-PARTY benchmarks; CSOAI's own boards are never scored here (ISO/IEC 17020/17025 impartiality firewall). Unsolicited, party did not participate, public-artifacts-only access. Measurement, not certification. Verification free forever.",
+  "criteria": {
+    "canary_string": {
+      "max": 2,
+      "desc": "Canary string (BENCHMARK DATA SHOULD NEVER APPEAR…) present in dataset"
+    },
+    "temporal_split": {
+      "max": 2,
+      "desc": "Temporal/held-out split declared and enforced (task dates vs model cutoffs)"
+    },
+    "private_heldout": {
+      "max": 2,
+      "desc": "Private held-out set exists and is described"
+    },
+    "public_harness": {
+      "max": 2,
+      "desc": "Public evaluation harness/code (repo resolves)"
+    },
+    "pinned_deps": {
+      "max": 2,
+      "desc": "Fixed seeds / pinned dependencies (Scorecard Pinned-Dependencies check)"
+    },
+    "recompute_artifact": {
+      "max": 2,
+      "desc": "Third party can recompute (container/manifest/Croissant Tasks)"
+    },
+    "confidence_intervals": {
+      "max": 2,
+      "desc": "Confidence intervals reported in results"
+    },
+    "significance_testing": {
+      "max": 2,
+      "desc": "Significance testing between ranked systems"
+    },
+    "n_disclosed": {
+      "max": 2,
+      "desc": "Effective-n / item count disclosed"
+    },
+    "deterministic_scorer": {
+      "max": 3,
+      "desc": "Deterministic scorer, not LLM-as-judge (first-class axis)"
+    },
+    "public_rubric": {
+      "max": 2,
+      "desc": "Grading rubric public"
+    },
+    "funding_disclosed": {
+      "max": 2,
+      "desc": "Funding source disclosed"
+    },
+    "no_pay_to_rank": {
+      "max": 2,
+      "desc": "Ranked parties do not pay for placement"
+    },
+    "no_private_pretesting": {
+      "max": 2,
+      "desc": "No undisclosed private pre-testing / score retraction"
+    },
+    "symmetric_data": {
+      "max": 2,
+      "desc": "Data access symmetric across submitters"
+    },
+    "deprecation_log": {
+      "max": 1,
+      "desc": "Deprecation/removal transparency (changelog)"
+    },
+    "label_error_audit": {
+      "max": 2,
+      "desc": "Published label-error rate or audit"
+    },
+    "corrections_process": {
+      "max": 2,
+      "desc": "Known-errors/corrections process"
+    },
+    "license_spdx": {
+      "max": 2,
+      "desc": "License present and machine-readable (SPDX)"
+    },
+    "separates_top": {
+      "max": 2,
+      "desc": "Still separates top systems (top-cluster spread > threshold)"
+    },
+    "corrections_ledger": {
+      "max": 2,
+      "desc": "Public corrections ledger / versioning"
+    }
+  },
+  "max_score": 42.0,
+  "records": [
+    {
+      "schema": "csoai.benchmark-quality/0.1",
+      "record_type": "measured-current-state",
+      "not_a_certification": true,
+      "endorsement": "none",
+      "authored_by": "did:web:csoai.org",
+      "benchmark": "MMLU",
+      "owner": "UC Berkeley / 2020",
+      "url": "https://paperswithcode.com/dataset/mmlu",
+      "license": "MIT (dataset)",
+      "as_of": "2026-08-21",
+      "solicited": false,
+      "party_participated": false,
+      "access": "public_artifacts_only",
+      "score": 23.2,
+      "max_score": 42.0,
+      "score_pct": 55.3,
+      "checks": {
+        "canary_string": {
+          "max": 2,
+          "got": 0.0,
+          "desc": "Canary string (BENCHMARK DATA SHOULD NEVER APPEAR…) present in dataset",
+          "how": "string match on published files"
+        },
+        "temporal_split": {
+          "max": 2,
+          "got": 0.0,
+          "desc": "Temporal/held-out split declared and enforced (task dates vs model cutoffs)",
+          "how": "date comparison in dataset card"
+        },
+        "private_heldout": {
+          "max": 2,
+          "got": 0.0,
+          "desc": "Private held-out set exists and is described",
+          "how": "presence check in docs"
+        },
+        "public_harness": {
+          "max": 2,
+          "got": 2.0,
+          "desc": "Public evaluation harness/code (repo resolves)",
+          "how": "repo exists + resolves"
+        },
+        "pinned_deps": {
+          "max": 2,
+          "got": 2.0,
+          "desc": "Fixed seeds / pinned dependencies (Scorecard Pinned-Dependencies check)",
+          "how": "config inspection"
+        },
+        "recompute_artifact": {
+          "max": 2,
+          "got": 2.0,
+          "desc": "Third party can recompute (container/manifest/Croissant Tasks)",
+          "how": "artifact presence"
+        },
+        "confidence_intervals": {
+          "max": 2,
+          "got": 0.0,
+          "desc": "Confidence intervals reported in results",
+          "how": "presence in results file"
+        },
+        "significance_testing": {
+          "max": 2,
+          "got": 0.0,
+          "desc": "Significance testing between ranked systems",
+          "how": "presence"
+        },
+        "n_disclosed": {
+          "max": 2,
+          "got": 2.0,
+          "desc": "Effective-n / item count disclosed",
+          "how": "presence + numeric threshold"
+        },
+        "deterministic_scorer": {
+          "max": 3,
+          "got": 3.0,
+          "desc": "Deterministic scorer, not LLM-as-judge (first-class axis)",
+          "how": "declared/inspectable scorer"
+        },
+        "public_rubric": {
+          "max": 2,
+          "got": 2.0,
+          "desc": "Grading rubric public",
+          "how": "presence"
+        },
+        "funding_disclosed": {
+          "max": 2,
+          "got": 0.0,
+          "desc": "Funding source disclosed",
+          "how": "presence"
+        },
+        "no_pay_to_rank": {
+          "max": 2,
+          "got": 2.0,
+          "desc": "Ranked parties do not pay for placement",
+          "how": "declared policy"
+        },
+        "no_private_pretesting": {
+          "max": 2,
+          "got": 2.0,
+          "desc": "No undisclosed private pre-testing / score retraction",
+          "how": "policy inspection"
+        },
+        "symmetric_data": {
+          "max": 2,
+          "got": 2.0,
+          "desc": "Data access symmetric across submitters",
+          "how": "policy"
+        },
+        "deprecation_log": {
+          "max": 1,
+          "got": 0.0,
+          "desc": "Deprecation/removal transparency (changelog)",
+          "how": "presence"
+        },
+        "label_error_audit": {
+          "max": 2,
+          "got": 0.1298,
+          "desc": "Published label-error rate or audit",
+          "how": "presence + numeric"
+        },
+        "corrections_process": {
+          "max": 2,
+          "got": 2.0,
+          "desc": "Known-errors/corrections process",
+          "how": "presence"
+        },
+        "license_spdx": {
+          "max": 2,
+          "got": 2.0,
+          "desc": "License present and machine-readable (SPDX)",
+          "how": "SPDX check"
+        },
+        "separates_top": {
+          "max": 2,
+          "got": 0.1,
+          "desc": "Still separates top systems (top-cluster spread > threshold)",
+          "how": "numeric on public leaderboard"
+        },
+        "corrections_ledger": {
+          "max": 2,
+          "got": 0.0,
+          "desc": "Public corrections ledger / versioning",
+          "how": "presence"
+        }
+      },
+      "notes": "Widely memorized; MMLU-Redux found 6.49% item errors; useful only as a low-signal baseline. Deterministic scorer is a plus.",
+      "content_id": "db06eb90e89694c68b7c9cb1d120cea5add9ee912f7e45df2766ee92de238f46",
+      "prev": null,
+      "signature": "1GkRMDVPQsZklU8KdMzJtNSbFM+vGCvvRu6hTDqtgbjFm2rXiANGjoec409hjzzWqFg4xnmTW1brbIObX1hqCw==",
+      "pubkey": "348f273d8525e9d663dd288c679e58b7e4c914a935be4bf7767d1c3985d63844"
+    },
+    {
+      "schema": "csoai.benchmark-quality/0.1",
+      "record_type": "measured-current-state",
+      "not_a_certification": true,
+      "endorsement": "none",
+      "authored_by": "did:web:csoai.org",
+      "benchmark": "SWE-bench Verified",
+      "owner": "OpenAI (500 task subset)",
+      "url": "https://openai.com/index/why-swe-bench-verified-no-longer-measures-frontier-coding-capabilities/",
+      "license": "CC-BY-4.0 (dataset)",
+      "as_of": "2026-08-21",
+      "solicited": false,
+      "party_participated": false,
+      "access": "public_artifacts_only",
+      "score": 26.5,
+      "max_score": 42.0,
+      "score_pct": 63.1,
+      "checks": {
+        "canary_string": {
+          "max": 2,
+          "got": 2.0,
+          "desc": "Canary string (BENCHMARK DATA SHOULD NEVER APPEAR…) present in dataset",
+          "how": "string match on published files"
+        },
+        "temporal_split": {
+          "max": 2,
+          "got": 0.0,
+          "desc": "Temporal/held-out split declared and enforced (task dates vs model cutoffs)",
+          "how": "date comparison in dataset card"
+        },
+        "private_heldout": {
+          "max": 2,
+          "got": 0.0,
+          "desc": "Private held-out set exists and is described",
+          "how": "presence check in docs"
+        },
+        "public_harness": {
+          "max": 2,
+          "got": 2.0,
+          "desc": "Public evaluation harness/code (repo resolves)",
+          "how": "repo exists + resolves"
+        },
+        "pinned_deps": {
+          "max": 2,
+          "got": 2.0,
+          "desc": "Fixed seeds / pinned dependencies (Scorecard Pinned-Dependencies check)",
+          "how": "config inspection"
+        },
+        "recompute_artifact": {
+          "max": 2,
+          "got": 2.0,
+          "desc": "Third party can recompute (container/manifest/Croissant Tasks)",
+          "how": "artifact presence"
+        },
+        "confidence_intervals": {
+          "max": 2,
+          "got": 0.0,
+          "desc": "Confidence intervals reported in results",
+          "how": "presence in results file"
+        },
+        "significance_testing": {
+          "max": 2,
+          "got": 0.0,
+          "desc": "Significance testing between ranked systems",
+          "how": "presence"
+        },
+        "n_disclosed": {
+          "max": 2,
+          "got": 2.0,
+          "desc": "Effective-n / item count disclosed",
+          "how": "presence + numeric threshold"
+        },
+        "deterministic_scorer": {
+          "max": 3,
+          "got": 3.0,
+          "desc": "Deterministic scorer, not LLM-as-judge (first-class axis)",
+          "how": "declared/inspectable scorer"
+        },
+        "public_rubric": {
+          "max": 2,
+          "got": 2.0,
+          "desc": "Grading rubric public",
+          "how": "presence"
+        },
+        "funding_disclosed": {
+          "max": 2,
+          "got": 0.0,
+          "desc": "Funding source disclosed",
+          "how": "presence"
+        },
+        "no_pay_to_rank": {
+          "max": 2,
+          "got": 2.0,
+          "desc": "Ranked parties do not pay for placement",
+          "how": "declared policy"
+        },
+        "no_private_pretesting": {
+          "max": 2,
+          "got": 0.0,
+          "desc": "No undisclosed private pre-testing / score retraction",
+          "how": "policy inspection"
+        },
+        "symmetric_data": {
+          "max": 2,
+          "got": 2.0,
+          "desc": "Data access symmetric across submitters",
+          "how": "policy"
+        },
+        "deprecation_log": {
+          "max": 1,
+          "got": 0.0,
+          "desc": "Deprecation/removal transparency (changelog)",
+          "how": "presence"
+        },
+        "label_error_audit": {
+          "max": 2,
+          "got": 1.188,
+          "desc": "Published label-error rate or audit",
+          "how": "presence + numeric"
+        },
+        "corrections_process": {
+          "max": 2,
+          "got": 2.0,
+          "desc": "Known-errors/corrections process",
+          "how": "presence"
+        },
+        "license_spdx": {
+          "max": 2,
+          "got": 2.0,
+          "desc": "License present and machine-readable (SPDX)",
+          "how": "SPDX check"
+        },
+        "separates_top": {
+          "max": 2,
+          "got": 0.3,
+          "desc": "Still separates top systems (top-cluster spread > threshold)",
+          "how": "numeric on public leaderboard"
+        },
+        "corrections_ledger": {
+          "max": 2,
+          "got": 2.0,
+          "desc": "Public corrections ledger / versioning",
+          "how": "presence"
+        }
+      },
+      "notes": "OpenAI itself stopped reporting (Feb 23 2026): 'Improvements… no longer reflect meaningful improvements.' 59.4% of audited problems have flawed test cases. Great cautionary case study.",
+      "content_id": "df3751c64268eaa881c9117853e32ada5c9cbba4511354e1a50f2a989908dcdf",
+      "prev": "db06eb90e89694c68b7c9cb1d120cea5add9ee912f7e45df2766ee92de238f46",
+      "signature": "syo+db1LrGPJwefir4K9LqZ4NVhWAQKBwwVfi1dYK9/wA7Kb6eHpyO8QNCnlOJhdGpUL1F+oTPUrbVk42uq5CA==",
+      "pubkey": "348f273d8525e9d663dd288c679e58b7e4c914a935be4bf7767d1c3985d63844"
+    },
+    {
+      "schema": "csoai.benchmark-quality/0.1",
+      "record_type": "measured-current-state",
+      "not_a_certification": true,
+      "endorsement": "none",
+      "authored_by": "did:web:csoai.org",
+      "benchmark": "Chatbot Arena (LMArena)",
+      "owner": "LMSYS / LMArena",
+      "url": "https://lmarena.ai",
+      "license": "see site (code Apache-2.0)",
+      "as_of": "2026-08-21",
+      "solicited": false,
+      "party_participated": false,
+      "access": "public_artifacts_only",
+      "score": 10.4,
+      "max_score": 42.0,
+      "score_pct": 24.8,
+      "checks": {
+        "canary_string": {
+          "max": 2,
+          "got": 0.0,
+          "desc": "Canary string (BENCHMARK DATA SHOULD NEVER APPEAR…) present in dataset",
+          "how": "string match on published files"
+        },
+        "temporal_split": {
+          "max": 2,
+          "got": 0.0,
+          "desc": "Temporal/held-out split declared and enforced (task dates vs model cutoffs)",
+          "how": "date comparison in dataset card"
+        },
+        "private_heldout": {
+          "max": 2,
+          "got": 0.0,
+          "desc": "Private held-out set exists and is described",
+          "how": "presence check in docs"
+        },
+        "public_harness": {
+          "max": 2,
+          "got": 2.0,
+          "desc": "Public evaluation harness/code (repo resolves)",
+          "how": "repo exists + resolves"
+        },
+        "pinned_deps": {
+          "max": 2,
+          "got": 0.0,
+          "desc": "Fixed seeds / pinned dependencies (Scorecard Pinned-Dependencies check)",
+          "how": "config inspection"
+        },
+        "recompute_artifact": {
+          "max": 2,
+          "got": 2.0,
+          "desc": "Third party can recompute (container/manifest/Croissant Tasks)",
+          "how": "artifact presence"
+        },
+        "confidence_intervals": {
+          "max": 2,
+          "got": 2.0,
+          "desc": "Confidence intervals reported in results",
+          "how": "presence in results file"
+        },
+        "significance_testing": {
+          "max": 2,
+          "got": 2.0,
+          "desc": "Significance testing between ranked systems",
+          "how": "presence"
+        },
+        "n_disclosed": {
+          "max": 2,
+          "got": 2.0,
+          "desc": "Effective-n / item count disclosed",
+          "how": "presence + numeric threshold"
+        },
+        "deterministic_scorer": {
+          "max": 3,
+          "got": 0.0,
+          "desc": "Deterministic scorer, not LLM-as-judge (first-class axis)",
+          "how": "declared/inspectable scorer"
+        },
+        "public_rubric": {
+          "max": 2,
+          "got": 0.0,
+          "desc": "Grading rubric public",
+          "how": "presence"
+        },
+        "funding_disclosed": {
+          "max": 2,
+          "got": 0.0,
+          "desc": "Funding source disclosed",
+          "how": "presence"
+        },
+        "no_pay_to_rank": {
+          "max": 2,
+          "got": 0.0,
+          "desc": "Ranked parties do not pay for placement",
+          "how": "declared policy"
+        },
+        "no_private_pretesting": {
+          "max": 2,
+          "got": 0.0,
+          "desc": "No undisclosed private pre-testing / score retraction",
+          "how": "policy inspection"
+        },
+        "symmetric_data": {
+          "max": 2,
+          "got": 0.0,
+          "desc": "Data access symmetric across submitters",
+          "how": "policy"
+        },
+        "deprecation_log": {
+          "max": 1,
+          "got": 0.0,
+          "desc": "Deprecation/removal transparency (changelog)",
+          "how": "presence"
+        },
+        "label_error_audit": {
+          "max": 2,
+          "got": 0.0,
+          "desc": "Published label-error rate or audit",
+          "how": "presence + numeric"
+        },
+        "corrections_process": {
+          "max": 2,
+          "got": 0.0,
+          "desc": "Known-errors/corrections process",
+          "how": "presence"
+        },
+        "license_spdx": {
+          "max": 2,
+          "got": 0.0,
+          "desc": "License present and machine-readable (SPDX)",
+          "how": "SPDX check"
+        },
+        "separates_top": {
+          "max": 2,
+          "got": 0.4,
+          "desc": "Still separates top systems (top-cluster spread > threshold)",
+          "how": "numeric on public leaderboard"
+        },
+        "corrections_ledger": {
+          "max": 2,
+          "got": 0.0,
+          "desc": "Public corrections ledger / versioning",
+          "how": "presence"
+        }
+      },
+      "notes": "The 'Leaderboard Illusion' (NeurIPS 2025) documented private testing, pay-for-access and data asymmetry. CSOAI must NOT copy this governance; the BT math is fine, the governance is not.",
+      "content_id": "6f79cdb85149e70e866da7f1e3f3ddff10bac93d07cce3f9395ba2a714c8b6c7",
+      "prev": "df3751c64268eaa881c9117853e32ada5c9cbba4511354e1a50f2a989908dcdf",
+      "signature": "py/0ah5br/hg6Q6DUdYL+U3Hd1JKe4h8nGjpWDRmTLWfSMCmf88l9eHj7ebx42dZS6pQJTiFCI8p5KeAn5yzBg==",
+      "pubkey": "348f273d8525e9d663dd288c679e58b7e4c914a935be4bf7767d1c3985d63844"
+    },
+    {
+      "schema": "csoai.benchmark-quality/0.1",
+      "record_type": "measured-current-state",
+      "not_a_certification": true,
+      "endorsement": "none",
+      "authored_by": "did:web:csoai.org",
+      "benchmark": "ARC-AGI-3 (interactive track)",
+      "owner": "ARC Prize Foundation",
+      "url": "https://arcprize.org/arc-agi-3",
+      "license": "see site (benchmarking SDK open)",
+      "as_of": "2026-08-21",
+      "solicited": false,
+      "party_participated": false,
+      "access": "public_artifacts_only",
+      "score": 34.6,
+      "max_score": 42.0,
+      "score_pct": 82.4,
+      "checks": {
+        "canary_string": {
+          "max": 2,
+          "got": 2.0,
+          "desc": "Canary string (BENCHMARK DATA SHOULD NEVER APPEAR…) present in dataset",
+          "how": "string match on published files"
+        },
+        "temporal_split": {
+          "max": 2,
+          "got": 2.0,
+          "desc": "Temporal/held-out split declared and enforced (task dates vs model cutoffs)",
+          "how": "date comparison in dataset card"
+        },
+        "private_heldout": {
+          "max": 2,
+          "got": 2.0,
+          "desc": "Private held-out set exists and is described",
+          "how": "presence check in docs"
+        },
+        "public_harness": {
+          "max": 2,
+          "got": 2.0,
+          "desc": "Public evaluation harness/code (repo resolves)",
+          "how": "repo exists + resolves"
+        },
+        "pinned_deps": {
+          "max": 2,
+          "got": 2.0,
+          "desc": "Fixed seeds / pinned dependencies (Scorecard Pinned-Dependencies check)",
+          "how": "config inspection"
+        },
+        "recompute_artifact": {
+          "max": 2,
+          "got": 2.0,
+          "desc": "Third party can recompute (container/manifest/Croissant Tasks)",
+          "how": "artifact presence"
+        },
+        "confidence_intervals": {
+          "max": 2,
+          "got": 2.0,
+          "desc": "Confidence intervals reported in results",
+          "how": "presence in results file"
+        },
+        "significance_testing": {
+          "max": 2,
+          "got": 2.0,
+          "desc": "Significance testing between ranked systems",
+          "how": "presence"
+        },
+        "n_disclosed": {
+          "max": 2,
+          "got": 2.0,
+          "desc": "Effective-n / item count disclosed",
+          "how": "presence + numeric threshold"
+        },
+        "deterministic_scorer": {
+          "max": 3,
+          "got": 3.0,
+          "desc": "Deterministic scorer, not LLM-as-judge (first-class axis)",
+          "how": "declared/inspectable scorer"
+        },
+        "public_rubric": {
+          "max": 2,
+          "got": 2.0,
+          "desc": "Grading rubric public",
+          "how": "presence"
+        },
+        "funding_disclosed": {
+          "max": 2,
+          "got": 2.0,
+          "desc": "Funding source disclosed",
+          "how": "presence"
+        },
+        "no_pay_to_rank": {
+          "max": 2,
+          "got": 2.0,
+          "desc": "Ranked parties do not pay for placement",
+          "how": "declared policy"
+        },
+        "no_private_pretesting": {
+          "max": 2,
+          "got": 2.0,
+          "desc": "No undisclosed private pre-testing / score retraction",
+          "how": "policy inspection"
+        },
+        "symmetric_data": {
+          "max": 2,
+          "got": 2.0,
+          "desc": "Data access symmetric across submitters",
+          "how": "policy"
+        },
+        "deprecation_log": {
+          "max": 1,
+          "got": 0.0,
+          "desc": "Deprecation/removal transparency (changelog)",
+          "how": "presence"
+        },
+        "label_error_audit": {
+          "max": 2,
+          "got": 0.0,
+          "desc": "Published label-error rate or audit",
+          "how": "presence + numeric"
+        },
+        "corrections_process": {
+          "max": 2,
+          "got": 2.0,
+          "desc": "Known-errors/corrections process",
+          "how": "presence"
+        },
+        "license_spdx": {
+          "max": 2,
+          "got": 0.0,
+          "desc": "License present and machine-readable (SPDX)",
+          "how": "SPDX check"
+        },
+        "separates_top": {
+          "max": 2,
+          "got": 1.6,
+          "desc": "Still separates top systems (top-cluster spread > threshold)",
+          "how": "numeric on public leaderboard"
+        },
+        "corrections_ledger": {
+          "max": 2,
+          "got": 0.0,
+          "desc": "Public corrections ledger / versioning",
+          "how": "presence"
+        }
+      },
+      "notes": "The archetype: interactive, novel-per-eval, deterministic RHAE scoring, human baseline built in (humans 100% vs frontier 0.51%). Closest fit to CSOAI doctrine.",
+      "content_id": "5694eed85ea27893abbcaae89f952eac9f23e3d9a36486cd878f591533f093f2",
+      "prev": "6f79cdb85149e70e866da7f1e3f3ddff10bac93d07cce3f9395ba2a714c8b6c7",
+      "signature": "/pdqmr6uHOfVBPfMSpgZbiIqWfMwlxMwGYSCDrVD0YfRW9Gq1MuA0GoCEDAaL0VLWQoI8ofCd2gFEen0LtliAA==",
+      "pubkey": "348f273d8525e9d663dd288c679e58b7e4c914a935be4bf7767d1c3985d63844"
+    },
+    {
+      "schema": "csoai.benchmark-quality/0.1",
+      "record_type": "measured-current-state",
+      "not_a_certification": true,
+      "endorsement": "none",
+      "authored_by": "did:web:csoai.org",
+      "benchmark": "GPQA (Graduate-Level Google-Proof Q&A)",
+      "owner": "NYU / 2023",
+      "url": "https://paperswithcode.com/dataset/gpqa",
+      "license": "CC-BY-4.0",
+      "as_of": "2026-08-21",
+      "solicited": false,
+      "party_participated": false,
+      "access": "public_artifacts_only",
+      "score": 22.0,
+      "max_score": 42.0,
+      "score_pct": 52.4,
+      "checks": {
+        "canary_string": {
+          "max": 2,
+          "got": 0.0,
+          "desc": "Canary string (BENCHMARK DATA SHOULD NEVER APPEAR…) present in dataset",
+          "how": "string match on published files"
+        },
+        "temporal_split": {
+          "max": 2,
+          "got": 0.0,
+          "desc": "Temporal/held-out split declared and enforced (task dates vs model cutoffs)",
+          "how": "date comparison in dataset card"
+        },
+        "private_heldout": {
+          "max": 2,
+          "got": 0.0,
+          "desc": "Private held-out set exists and is described",
+          "how": "presence check in docs"
+        },
+        "public_harness": {
+          "max": 2,
+          "got": 2.0,
+          "desc": "Public evaluation harness/code (repo resolves)",
+          "how": "repo exists + resolves"
+        },
+        "pinned_deps": {
+          "max": 2,
+          "got": 2.0,
+          "desc": "Fixed seeds / pinned dependencies (Scorecard Pinned-Dependencies check)",
+          "how": "config inspection"
+        },
+        "recompute_artifact": {
+          "max": 2,
+          "got": 2.0,
+          "desc": "Third party can recompute (container/manifest/Croissant Tasks)",
+          "how": "artifact presence"
+        },
+        "confidence_intervals": {
+          "max": 2,
+          "got": 0.0,
+          "desc": "Confidence intervals reported in results",
+          "how": "presence in results file"
+        },
+        "significance_testing": {
+          "max": 2,
+          "got": 0.0,
+          "desc": "Significance testing between ranked systems",
+          "how": "presence"
+        },
+        "n_disclosed": {
+          "max": 2,
+          "got": 2.0,
+          "desc": "Effective-n / item count disclosed",
+          "how": "presence + numeric threshold"
+        },
+        "deterministic_scorer": {
+          "max": 3,
+          "got": 3.0,
+          "desc": "Deterministic scorer, not LLM-as-judge (first-class axis)",
+          "how": "declared/inspectable scorer"
+        },
+        "public_rubric": {
+          "max": 2,
+          "got": 2.0,
+          "desc": "Grading rubric public",
+          "how": "presence"
+        },
+        "funding_disclosed": {
+          "max": 2,
+          "got": 0.0,
+          "desc": "Funding source disclosed",
+          "how": "presence"
+        },
+        "no_pay_to_rank": {
+          "max": 2,
+          "got": 2.0,
+          "desc": "Ranked parties do not pay for placement",
+          "how": "declared policy"
+        },
+        "no_private_pretesting": {
+          "max": 2,
+          "got": 2.0,
+          "desc": "No undisclosed private pre-testing / score retraction",
+          "how": "policy inspection"
+        },
+        "symmetric_data": {
+          "max": 2,
+          "got": 2.0,
+          "desc": "Data access symmetric across submitters",
+          "how": "policy"
+        },
+        "deprecation_log": {
+          "max": 1,
+          "got": 0.0,
+          "desc": "Deprecation/removal transparency (changelog)",
+          "how": "presence"
+        },
+        "label_error_audit": {
+          "max": 2,
+          "got": 0.0,
+          "desc": "Published label-error rate or audit",
+          "how": "presence + numeric"
+        },
+        "corrections_process": {
+          "max": 2,
+          "got": 0.0,
+          "desc": "Known-errors/corrections process",
+          "how": "presence"
+        },
+        "license_spdx": {
+          "max": 2,
+          "got": 2.0,
+          "desc": "License present and machine-readable (SPDX)",
+          "how": "SPDX check"
+        },
+        "separates_top": {
+          "max": 2,
+          "got": 1.0,
+          "desc": "Still separates top systems (top-cluster spread > threshold)",
+          "how": "numeric on public leaderboard"
+        },
+        "corrections_ledger": {
+          "max": 2,
+          "got": 0.0,
+          "desc": "Public corrections ledger / versioning",
+          "how": "presence"
+        }
+      },
+      "notes": "BetterBench's highest-scored benchmark (11.0 weighted) — good item quality, static design.",
+      "content_id": "20237845fe3a9e32802bf8c5d618a2b9bdb4fbd144e262806b2c655ffa4be383",
+      "prev": "5694eed85ea27893abbcaae89f952eac9f23e3d9a36486cd878f591533f093f2",
+      "signature": "nhrdxEinsdfgMdpC8d6rxzgudZxJdN/JLxEeDyB41r8AGXeotKhfVZopzNymqf2YFYajX0Px0Bg42OPYvbZPBQ==",
+      "pubkey": "348f273d8525e9d663dd288c679e58b7e4c914a935be4bf7767d1c3985d63844"
+    },
+    {
+      "schema": "csoai.benchmark-quality/0.1",
+      "record_type": "measured-current-state",
+      "not_a_certification": true,
+      "endorsement": "none",
+      "authored_by": "did:web:csoai.org",
+      "benchmark": "Terminal-Bench 2.x",
+      "owner": "Laude / Stanford",
+      "url": "https://github.com/Laude/terminal-bench",
+      "license": "Apache-2.0 (code)",
+      "as_of": "2026-08-21",
+      "solicited": false,
+      "party_participated": false,
+      "access": "public_artifacts_only",
+      "score": 22.2,
+      "max_score": 42.0,
+      "score_pct": 52.9,
+      "checks": {
+        "canary_string": {
+          "max": 2,
+          "got": 0.0,
+          "desc": "Canary string (BENCHMARK DATA SHOULD NEVER APPEAR…) present in dataset",
+          "how": "string match on published files"
+        },
+        "temporal_split": {
+          "max": 2,
+          "got": 0.0,
+          "desc": "Temporal/held-out split declared and enforced (task dates vs model cutoffs)",
+          "how": "date comparison in dataset card"
+        },
+        "private_heldout": {
+          "max": 2,
+          "got": 0.0,
+          "desc": "Private held-out set exists and is described",
+          "how": "presence check in docs"
+        },
+        "public_harness": {
+          "max": 2,
+          "got": 2.0,
+          "desc": "Public evaluation harness/code (repo resolves)",
+          "how": "repo exists + resolves"
+        },
+        "pinned_deps": {
+          "max": 2,
+          "got": 2.0,
+          "desc": "Fixed seeds / pinned dependencies (Scorecard Pinned-Dependencies check)",
+          "how": "config inspection"
+        },
+        "recompute_artifact": {
+          "max": 2,
+          "got": 2.0,
+          "desc": "Third party can recompute (container/manifest/Croissant Tasks)",
+          "how": "artifact presence"
+        },
+        "confidence_intervals": {
+          "max": 2,
+          "got": 0.0,
+          "desc": "Confidence intervals reported in results",
+          "how": "presence in results file"
+        },
+        "significance_testing": {
+          "max": 2,
+          "got": 0.0,
+          "desc": "Significance testing between ranked systems",
+          "how": "presence"
+        },
+        "n_disclosed": {
+          "max": 2,
+          "got": 2.0,
+          "desc": "Effective-n / item count disclosed",
+          "how": "presence + numeric threshold"
+        },
+        "deterministic_scorer": {
+          "max": 3,
+          "got": 3.0,
+          "desc": "Deterministic scorer, not LLM-as-judge (first-class axis)",
+          "how": "declared/inspectable scorer"
+        },
+        "public_rubric": {
+          "max": 2,
+          "got": 2.0,
+          "desc": "Grading rubric public",
+          "how": "presence"
+        },
+        "funding_disclosed": {
+          "max": 2,
+          "got": 0.0,
+          "desc": "Funding source disclosed",
+          "how": "presence"
+        },
+        "no_pay_to_rank": {
+          "max": 2,
+          "got": 2.0,
+          "desc": "Ranked parties do not pay for placement",
+          "how": "declared policy"
+        },
+        "no_private_pretesting": {
+          "max": 2,
+          "got": 2.0,
+          "desc": "No undisclosed private pre-testing / score retraction",
+          "how": "policy inspection"
+        },
+        "symmetric_data": {
+          "max": 2,
+          "got": 2.0,
+          "desc": "Data access symmetric across submitters",
+          "how": "policy"
+        },
+        "deprecation_log": {
+          "max": 1,
+          "got": 0.0,
+          "desc": "Deprecation/removal transparency (changelog)",
+          "how": "presence"
+        },
+        "label_error_audit": {
+          "max": 2,
+          "got": 0.0,
+          "desc": "Published label-error rate or audit",
+          "how": "presence + numeric"
+        },
+        "corrections_process": {
+          "max": 2,
+          "got": 0.0,
+          "desc": "Known-errors/corrections process",
+          "how": "presence"
+        },
+        "license_spdx": {
+          "max": 2,
+          "got": 2.0,
+          "desc": "License present and machine-readable (SPDX)",
+          "how": "SPDX check"
+        },
+        "separates_top": {
+          "max": 2,
+          "got": 1.2,
+          "desc": "Still separates top systems (top-cluster spread > threshold)",
+          "how": "numeric on public leaderboard"
+        },
+        "corrections_ledger": {
+          "max": 2,
+          "got": 0.0,
+          "desc": "Public corrections ledger / versioning",
+          "how": "presence"
+        }
+      },
+      "notes": "Deterministic end-state verification, Docker-sandboxed — a doctrine-fit capability substrate.",
+      "content_id": "e16b7f659c06cedd33a53058819e111bb1f76f7b10b321710bc612e17eb07123",
+      "prev": "20237845fe3a9e32802bf8c5d618a2b9bdb4fbd144e262806b2c655ffa4be383",
+      "signature": "rnUB3thvwUq49/GfM/qcdmauS8KkmMizfIOYNyhY5ZmJqTkPusA0zKc69V5JNM/eYkKKWjjGhXWUzqAJeWoBAQ==",
+      "pubkey": "348f273d8525e9d663dd288c679e58b7e4c914a935be4bf7767d1c3985d63844"
+    }
+  ]
+}

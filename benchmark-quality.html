@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Benchmark-Quality Register — signed ratings of third-party benchmarks (deterministic, no LLM judge)</title>
+<meta name="description" content="The signed register rating third-party benchmark quality with deterministic predicates from public artifacts — never an LLM judge. Ed25519-signed, chained, offline-verifiable. CSOAI's own boards are never scored here. Measurement, not certification.">
+<style>
+:root { --accent:#5a9; --bg:#0d0f12; --card:#15181d; --line:#232830; --amber:#fc6; }
+* { box-sizing:border-box; }
+body { margin:0; font-family:-apple-system,Segoe UI,Roboto,sans-serif; background:var(--bg); color:#e8edf2; line-height:1.55; }
+.wrap { max-width:1100px; margin:0 auto; padding:2rem 1.2rem; }
+h1 { font-size:1.4rem; border-bottom:1px solid var(--line); padding-bottom:.6rem; }
+h2 { font-size:1.05rem; margin-top:1.6rem; }
+.disc { color:#9fb0c0; font-size:.9rem; }
+.firewall { border-left:3px solid var(--amber); background:#15181d; padding:.8rem 1rem; border-radius:0 10px 10px 0; font-size:.85rem; margin:1rem 0; }
+table { width:100%; border-collapse:collapse; margin-top:1rem; font-size:.82rem; }
+th,td { border:1px solid var(--line); padding:.45rem .6rem; text-align:left; vertical-align:top; }
+th { background:var(--card); font-weight:600; }
+tr:nth-child(even) td { background:#10141a; }
+.bar { display:inline-block; height:8px; border-radius:4px; background:var(--accent); vertical-align:middle; }
+.low { background:var(--amber); }
+.foot { margin-top:1.6rem; color:#6a7a8a; font-size:.74rem; line-height:1.6; }
+a { color:var(--accent); }
+</style>
+</head>
+<body>
+<div class="wrap">
+<div style="margin:.8rem 0"><button class="btn primary" data-agui="benchmark-quality" data-agui-prompt="Show me the benchmark-quality register — which third-party benchmarks score highest on deterministic integrity, and why our own boards are never scored." type="button" style="background:var(--accent);color:#062;border:0;padding:.5rem 1rem;border-radius:999px;cursor:pointer;font-size:.85rem">open in AG-UI</button></div>
+<h1>Benchmark-Quality Register</h1>
+<p class="disc">Signed, deterministic ratings of <b>third-party benchmark quality</b> — scored from public artifacts only, never an LLM judge. BetterBench's criteria × OpenSSF Scorecard's check design. Every record is <b>measured-current-state</b>, Ed25519-signed, hash-chained, and offline-verifiable against the published key.</p>
+<div class="firewall"><b>Impartiality firewall (ISO/IEC 17020/17025):</b> CSOAI's own boards are <b>never scored on this register</b> — a body must not assess its own work. Each record carries <code>solicited:false · party_participated:false · access:public_artifacts_only · not_a_certification:true</code>. A low score means "this benchmark currently lacks public evidence for X", never a condemnation of the authors.</div>
+<h2>Current records</h2>
+<div id="records">loading…</div>
+<p class="foot">Machine feed: <a href="/benchmark-quality-feed.json">/benchmark-quality-feed.json</a> (csoai.benchmark-quality/0.1) · API: <a href="/api/benchmark-quality">/api/benchmark-quality</a> · verify offline against the embedded pubkey · Measurement, not certification. Verification free forever.</p>
+</div>
+<script>
+fetch('/api/benchmark-quality').then(r => r.json()).then(d => {
+  var rows = d.records.map(r => {
+    var pct = Math.max(4, r.score_pct);
+    return '<tr><td><b>' + r.benchmark + '</b><br><span style="color:#79889a">' + r.owner + '</span></td>' +
+      '<td>' + r.score + ' / ' + r.max_score + '</td>' +
+      '<td><span class="bar ' + (r.score_pct < 40 ? 'low' : '') + '" style="width:' + pct + 'px"></span> ' + r.score_pct + '%</td>' +
+      '<td style="font-family:monospace;font-size:.7rem;color:#79889a">' + r.content_id.slice(0, 16) + '…</td></tr>';
+  }).join('');
+  document.getElementById('records').innerHTML =
+    '<table><tr><th>benchmark</th><th>score</th><th>integrity</th><th>signed content_id</th></tr>' + rows + '</table>';
+}).catch(e => { document.getElementById('records').textContent = 'register offline: ' + e; });
+</script>
+</body>
+</html>

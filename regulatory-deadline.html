@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Regulatory Deadline Record — signed regime-level process facts (held / stated / deferred)</title>
+<meta name="description" content="Did the regulator hit the date it set itself? Regime-level deadline-compliance facts, Ed25519-signed, un-scored, un-ranked, self-benchmarked. Never a league table. Measurement, not certification.">
+<style>
+:root { --accent:#5a9; --bg:#0d0f12; --card:#15181d; --line:#232830; --amber:#fc6; --green:#8c6; }
+* { box-sizing:border-box; }
+body { margin:0; font-family:-apple-system,Segoe UI,Roboto,sans-serif; background:var(--bg); color:#e8edf2; line-height:1.55; }
+.wrap { max-width:1000px; margin:0 auto; padding:2rem 1.2rem; }
+h1 { font-size:1.4rem; border-bottom:1px solid var(--line); padding-bottom:.6rem; }
+.disc { color:#9fb0c0; font-size:.9rem; }
+.frame { border-left:3px solid var(--amber); background:#15181d; padding:.8rem 1rem; border-radius:0 10px 10px 0; font-size:.85rem; margin:1rem 0; }
+table { width:100%; border-collapse:collapse; margin-top:1rem; font-size:.8rem; }
+th,td { border:1px solid var(--line); padding:.45rem .6rem; text-align:left; vertical-align:top; }
+th { background:var(--card); }
+.held { color:var(--green); font-weight:700; }
+.deferred { color:var(--amber); font-weight:700; }
+.stated { color:var(--accent); }
+.foot { margin-top:1.6rem; color:#6a7a8a; font-size:.74rem; line-height:1.6; }
+a { color:var(--accent); }
+</style>
+</head>
+<body>
+<div class="wrap">
+<div style="margin:.8rem 0"><button class="btn primary" data-agui="reg-deadline" data-agui-prompt="Show me the regulatory deadline record — which regimes held, stated, or deferred the dates they set themselves." type="button" style="background:var(--accent);color:#062;border:0;padding:.5rem 1rem;border-radius:999px;cursor:pointer;font-size:.85rem">open in AG-UI</button></div>
+<h1>Regulatory Deadline Record</h1>
+<p class="disc">Regime-level process facts: <b>did the regulator hit the date it set itself?</b> Each tracked instrument is benchmarked only against <b>its own stated commitment</b> — the deadline it announced. <b>Held</b> = duty live on the stated date · <b>Stated</b> = not yet due · <b>Deferred</b> = the date moved (e.g. EU AI Act high-risk via Digital Omnibus 2026/1744).</p>
+<div class="frame"><b>Why this exists and what it is not:</b> this is a compliance-planning utility for companies, not a league table. <b>Never</b>: ranked ordering of named bodies, adverse findings on named officials (Derbyshire shield), composite quality scores. Every record is Ed25519-signed, chained, offline-verifiable. Measurement, not certification.</div>
+<div id="records">loading…</div>
+<p class="foot">Machine feed: <a href="/regulatory-deadline-record.json">/regulatory-deadline-record.json</a> (csoai.regulatory-deadline-record/0.1) · API: <a href="/api/regulatory-deadline">/api/regulatory-deadline</a> · status filter: <a href="/api/regulatory-deadline?status=deferred">?status=deferred</a> · verify offline against the embedded pubkey.</p>
+</div>
+<script>
+fetch('/api/regulatory-deadline').then(r => r.json()).then(d => {
+  var rows = d.records.map(r => {
+    var cls = r.deadline_status;
+    return '<tr><td><b>' + r.regime + '</b><br><span style="color:#79889a;font-size:.72rem">' + r.instrument + '</span></td>' +
+      '<td style="font-family:monospace">' + r.stated_deadline + '</td>' +
+      '<td class="' + cls + '">' + r.deadline_status + '</td>' +
+      '<td style="font-family:monospace;font-size:.68rem;color:#79889a">' + r.content_id.slice(0, 14) + '…</td></tr>';
+  }).join('');
+  document.getElementById('records').innerHTML =
+    '<table><tr><th>regime</th><th>stated deadline</th><th>status</th><th>signed</th></tr>' + rows + '</table>';
+}).catch(e => { document.getElementById('records').textContent = 'record offline: ' + e; });
+</script>
+</body>
+</html>

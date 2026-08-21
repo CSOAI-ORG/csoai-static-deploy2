@@ -35,6 +35,8 @@
     '    <button class="coa-chip" data-tool="corrections">corrections</button>' +
     '    <button class="coa-chip" data-tool="regulation">regulation</button>' +
     '    <button class="coa-chip" data-tool="evidence">insurance evidence</button>' +
+    '    <button class="coa-chip" data-tool="benchmarks">benchmark quality</button>' +
+    '    <button class="coa-chip" data-tool="regdeadline">reg deadline</button>' +
     '    <button class="coa-chip coa-chip-games" data-tool="games">games</button>' +
     '  </div>' +
     '  <div id="coa-games-panel" class="coa-hidden-panel"></div>' +
@@ -120,6 +122,27 @@
 
   function tool(name) {
     addMsg('/' + name, 'user');
+    if (name === 'benchmarks') {
+      fetch('/api/benchmark-quality').then(function (r) { return r.json(); })
+        .then(function (d) {
+          var msg = 'benchmark-quality register (' + d.records.length + ' records, signed):\n' +
+            (d.records || []).slice(0, 6).map(function (r) { return '· ' + r.benchmark + ' — ' + r.score + '/' + r.max_score + ' (' + r.score_pct + '%)'; }).join('\n') +
+            '\nOwn boards never scored (impartiality firewall). Measurement, not certification.';
+          addMsg(msg, 'bot');
+        }).catch(function (e) { addMsg('benchmark register offline: ' + e, 'bot'); });
+      return;
+    }
+    if (name === 'regdeadline') {
+      fetch('/api/regulatory-deadline').then(function (r) { return r.json(); })
+        .then(function (d) {
+          var def = (d.records || []).filter(function (r) { return r.deadline_status === 'deferred'; });
+          var msg = 'regulatory deadline record (' + d.total + ' regimes, signed):\n' +
+            (def || []).map(function (r) { return '· DEFERRED ' + r.stated_deadline + ' ' + r.regime; }).join('\n') +
+            '\nUn-scored, un-ranked, self-benchmarked. Measurement, not certification.';
+          addMsg(msg, 'bot');
+        }).catch(function (e) { addMsg('deadline record offline: ' + e, 'bot'); });
+      return;
+    }
     fetch(HERO_API + '?tool=' + encodeURIComponent(name) + '&n=5')
       .then(function (r) { return r.json(); })
       .then(function (d) { addMsg(fmtValue(d), 'bot'); })
