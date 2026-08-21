@@ -20,7 +20,7 @@ export async function onRequestGet({ env }) {
       { status: 503, headers: { 'content-type': 'application/json', 'cache-control': 'no-store' } },
     );
   }
-  const body = await env.SOV_ARENA_STATE.get('rounds.jsonl');
+  const body = await env.SOV_ARENA_STATE.get('rounds.jsonl', { cacheTtl: 0 });
   if (!body) {
     return new Response(
       JSON.stringify({
