@@ -1,0 +1,62 @@
+{
+  "kind": "gspc.board",
+  "axis": "gov",
+  "harness": "sovos_city.bench.board",
+  "job": "OOWM-master baseline — BEFORE reference for the MEOK master-light merge (vs its 1.5b base-class)",
+  "result": {
+    "kind": "gspc.board",
+    "axis": "gov",
+    "bank_items": 36,
+    "canaries_excluded": 0,
+    "labels": [
+      "HIGH_RISK",
+      "LIMITED_RISK",
+      "MINIMAL_RISK",
+      "PROHIBITED"
+    ],
+    "majority_baseline": 0.4167,
+    "models": [
+      {
+        "model": "council-oowm:latest",
+        "n": 36,
+        "correct": 0,
+        "unparsed": 36,
+        "accuracy": 0.0,
+        "ci95": [
+          0.0,
+          0.0964
+        ],
+        "quotable": true,
+        "note": null
+      },
+      {
+        "model": "qwen2.5:1.5b",
+        "n": 36,
+        "correct": 8,
+        "unparsed": 0,
+        "accuracy": 0.2222,
+        "ci95": [
+          0.1172,
+          0.3808
+        ],
+        "quotable": true,
+        "note": null
+      }
+    ],
+    "best": "qwen2.5:1.5b",
+    "status": "MEASURED",
+    "status_note": null,
+    "per_item_count": 72,
+    "method": "unparsed counted incorrect · transport failures excluded as ours · canaries excluded · deterministic exact-label grading, no model judges another model · nothing quoted below usable n>=30"
+  },
+  "ts": "2026-08-21T08:39:06Z",
+  "signatures": [
+    {
+      "protected": "eyJhbGciOiJFZERTQSIsImtpZCI6ImRpZDp3ZWI6Y3NvYWkub3JnI2VzdGF0ZS1jaGFpbi0xIiwidHlwIjoiSldUIn0",
+      "signature": "-nJNwNdRsVVAOgICByp9JS8POXU7U4HZbc7c1j2NeWq82_JQk4ZhXyKYjfoXRPfgbaICL6cf0eFBVA8X-xLQAw",
+      "header": {
+        "typ": "JWT"
+      }
+    }
+  ]
+}

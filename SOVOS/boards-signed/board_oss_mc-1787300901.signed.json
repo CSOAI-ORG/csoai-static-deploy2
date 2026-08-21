@@ -1,0 +1,60 @@
+{
+  "kind": "gspc.board",
+  "axis": "oss",
+  "harness": "sovos_city.bench.board",
+  "job": "eat100-go6",
+  "result": {
+    "kind": "gspc.board",
+    "axis": "oss",
+    "bank_items": 30,
+    "canaries_excluded": 0,
+    "labels": [
+      "PERMITTED",
+      "RESTRICTED"
+    ],
+    "majority_baseline": 0.5,
+    "models": [
+      {
+        "model": "qwen3:4b",
+        "n": 30,
+        "correct": 27,
+        "unparsed": 0,
+        "accuracy": 0.9,
+        "ci95": [
+          0.7438,
+          0.9654
+        ],
+        "quotable": true,
+        "note": null
+      },
+      {
+        "model": "qwen3:8b",
+        "n": 30,
+        "correct": 29,
+        "unparsed": 0,
+        "accuracy": 0.9667,
+        "ci95": [
+          0.8333,
+          0.9941
+        ],
+        "quotable": true,
+        "note": null
+      }
+    ],
+    "best": "qwen3:8b",
+    "status": "MEASURED",
+    "status_note": null,
+    "per_item_count": 60,
+    "method": "unparsed counted incorrect · transport failures excluded as ours · canaries excluded · deterministic exact-label grading, no model judges another model · nothing quoted below usable n>=30"
+  },
+  "ts": "2026-08-21T08:28:21Z",
+  "signatures": [
+    {
+      "protected": "eyJhbGciOiJFZERTQSIsImtpZCI6ImRpZDp3ZWI6Y3NvYWkub3JnI2VzdGF0ZS1jaGFpbi0xIiwidHlwIjoiSldUIn0",
+      "signature": "wMLggu3kFhhR4ebGWU17h0eBxycqKIzu0FB6ji1bUJTy2hJT4HCoYQ9l1tclBTm6dhGHJfERHxMooEwW5LkeCA",
+      "header": {
+        "typ": "JWT"
+      }
+    }
+  ]
+}
