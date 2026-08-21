@@ -6,7 +6,7 @@ export async function onRequestGet({ env }) {
       detail: 'KV binding SOV_ARENA_STATE not visible to this function' }),
       { status: 503, headers: { 'content-type': 'application/json', 'cache-control': 'no-store' } });
   }
-  const body = await env.SOV_ARENA_STATE.get('rounds.jsonl', { cacheTtl: 0 });
+  const body = await env.SOV_ARENA_STATE.get('rounds.jsonl', { cacheTtl: 60 });
   if (!body) {
     return new Response(JSON.stringify({ error: 'no live rounds', label: 'DESIGN',
       detail: 'KV bound but empty — the fleet arena has not synced yet' }),
