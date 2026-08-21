@@ -1,6 +1,6 @@
 {
  "schema": "csoai.agui-knowledge/0.1",
- "generated": "2026-08-21T13:25:18.167750Z",
+ "generated": "2026-08-21T14:11:55.001971Z",
  "note": "Competitor/peer learning distilled from 15 axis research files. Measurement, not certification. Verified claims only.",
  "axes": [
   {
@@ -522,6 +522,72 @@
    "ready": true
   },
   {
+   "id": "accountability",
+   "title": "CSOAI — GSPC ACCOUNTABILITY Axis: Top-10 Competitor/Peer Research",
+   "intro": "**Axis:** ACCOUNTABILITY (EU AI Act Art 14 human oversight + override logging; decision records; audit trails). **Prepared:** 2026-08-21 · **Researcher:** JEEVES lane (CSOAI measurement body). **Honesty rule:** verified claims only. Claims from a vendor's own site/marketing are tagged *(vendor)*; claims verified against a primary/independent source are tagged *(verified)* with a link. Where a suggested \"competitor\" turns out not to exist under that exact name, that is stated rather than invented.",
+   "competitors": [
+    {
+     "name": "Oversight Sentinel *(category — override-rate / trajectory-aware oversight)*",
+     "what": "No single canonical commercial vendor ships under this exact name *(verified via search: no matching product; the name collides with multiple unrelated \"Sentinel\" tools)*. The *category* is real: continuous monitoring of",
+     "adopt": "Trajectory-level override log. Log the full step sequence, so an override points at the *exact mid-trajectory step* that triggered it — not just \"output overridden.\""
+    },
+    {
+     "name": "Langfuse",
+     "what": "Open-source LLM engineering platform: tracing, evals, observability, metrics, prompt management, datasets *(verified — GitHub langfuse/langfuse; YC W23)*. Integrates OpenTelemetry, LangChain, OpenAI SDK, LiteLLM.",
+     "adopt": "Trace-ID + one-click trace export as the decision record scaffold. Every accountability decision gets a span tree (prompt→tool→output) and a \"export this trace\" button — the raw material for an audit."
+    },
+    {
+     "name": "Arize Phoenix",
+     "what": "Open-source AI observability + evaluation: traces, spans, and human annotations on any span, plus evals *(verified — PyPI arize-phoenix, Docker image, docs)*.",
+     "adopt": "Human annotations as first-class override records. Let an overseer stamp a decision \"overridden/approved/flagged + reason\" directly on the trace, stored and queryable like data — not a chat bubble."
+    },
+    {
+     "name": "Credo AI",
+     "what": "AI governance platform for compliance evidence, risk, and accountability; maps controls to EU AI Act / NIST / ISO. Named a Leader in the Forrester Wave: AI Governance Solutions, Q3 2025 *(verified — credo.ai blog)*; Data",
+     "adopt": "Evidence-mapping, not blanket claims. Bind each decision to the *specific* requirement it satisfies (e.g. \"Art 14(4)(d) override logged\") as an evidence record — never a free-text \"compliant ✓.\""
+    },
+    {
+     "name": "Holistic AI",
+     "what": "AI governance platform with risk register, compliance, and audit trail; included in the IDC 2025 report on AI governance platforms *(verified — holisticai.com)*. \"Enforce\" = their continuous/automated compliance-scanning",
+     "adopt": "Continuous automated pass/fail per requirement. A persistent check that flips green/red per Art 14 predicate, visible on every decision — not a one-time assessment."
+    },
+    {
+     "name": "ModelOp",
+     "what": "Model governance / ModelOps: inventory, risk management, and automated governance workflows / controls enforcement across models in production *(vendor — modelop.com \"Automate AI Governance Workflows & Enforce Compliance",
+     "adopt": "Named control gates on the override path. Overrides route through an explicit approval/control step with a named owner before the event is committed to the log."
+    },
+    {
+     "name": "OneTrust AI Governance",
+     "what": "AI inventory, risk, and accountability across the AI stack; Gartner Visionary in the 2025 MQ for AI Governance Platforms *(verified — onetrust.com)*; ships \"Agents Governing Agents\" + EU AI Act operationalization content",
+     "adopt": "Owner + escalation per decision. Every logged decision has an accountable owner and an escalation path (who gets notified when an override is unusual) — accountability with a human name on it."
+    },
+    {
+     "name": "EU AI Act Art 14 + 12 + 19 *(the guidance itself)*",
+     "what": "The statutory human-oversight + record-keeping + log-retention mandate (see §0). Not a product — the requirement every other row claims to meet.",
+     "adopt": "Render the literal predicates. Show Art 14(4)(a)–(e) + Art 12(1) + Art 19 as checkable states in the window, quoting the Act verbatim — the compliance surface *is* the spec."
+    },
+    {
+     "name": "Asqav *(agent-action-receipt tool)*",
+     "what": "Signed, verifiable action receipts for AI agents — turns every agent action into evidence; ships a Dify Marketplace plugin and an IETF draft (draft-marques-asqav-compliance-receipts) mapping receipts to NIST/OWASP Agenti",
+     "adopt": "Signed decision record as the canonical output — exactly CSOAI's h3k card, but add Asqav's standards-conformance mapping (receipt field → \"NIST X / OWASP Y / EU AI Act Art 12\") so the signature also *asserts which clause"
+    },
+    {
+     "name": "Vanta & Drata *(GRC accountability modules)*",
+     "what": "Automated GRC/compliance platforms adding AI governance + trust modules; Vanta launched an \"Agentic Trust Platform\" (Nov 2025) and AI risk-management workflows *(verified — siliconangle, helpnetsecurity)*; partners with ",
+     "adopt": "Capture evidence at decision time, not audit time. Auto-attach the who/why/what (record + context) the instant a decision is made, so an audit never needs retroactive reconstruction."
+    }
+   ],
+   "adoptions": [
+    "Override log (Art 14(4)(d)) — first-class, structured, signed.",
+    "Art 14 predicates rendered literally in the window.",
+    "Signed decision records (Art 12/19) with standards mapping.",
+    "Per-decision trace + one-click audit export (immutable).",
+    "Always-visible stop/override affordance + evidence-at-decision-time."
+   ],
+   "sources": 0,
+   "ready": true
+  },
+  {
    "id": "efficiency",
    "title": "GSPC EFFICIENCY Axis — Competitor & Peer Research",
    "intro": "**Scope:** cost / energy / compute efficiency measurement — the 20%-monitoring-overhead angle and \"cheap deterministic verification.\"",
@@ -908,7 +974,5 @@
    "ready": true
   }
  ],
- "missing": [
-  "accountability"
- ]
+ "missing": []
 }

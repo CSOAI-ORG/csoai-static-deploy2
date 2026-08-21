@@ -348,23 +348,6 @@ export async function onRequestGet({ request }) {
   // estate board query
   // benchmark-quality register query (deterministic, signed)
   // orbital AI record query (coverage-extension)
-  const ORB_RE = /(orbital ai|in.?orbit ai|space data.?centre|space data.?center|space compute|orbital compute|satellite ai|starcloud|axiom space|three.body)/i;
-  if (ORB_RE.test(q)) {
-    try {
-      const orb = (await import('../../orbital-ai-record.json')).default;
-      const dep = (orb.records || []).filter(r => r.deployed);
-      return new Response(JSON.stringify({
-        mode: 'orbital-ai-lookup',
-        message: 'Orbital AI measured-current-state (' + (orb.records || []).length + ' records, signed): ' + dep.length + ' deployed (' + dep.map(r => r.subject).join('; ') + '), rest announced. Every in-orbit AI result is self-reported; no standard covers AI. Measurement, not certification.',
-        deployed: dep.map(r => ({ subject: r.subject, class: r.class })),
-        gap: orb.gap,
-        framing: 'Deployed vs announced separated. Never novel accusations. Measurement, not certification.',
-      }), { status: 200, headers });
-    } catch (e) {
-      return new Response(JSON.stringify({ mode: 'orbital-ai-lookup', error: String(e).slice(0, 120) }), { status: 200, headers });
-    }
-  }
-
   // estate board query — the live authoritative board (19-20 Aug), deterministic
   const BOARD_RE = /(estate board|leaderboard|board|top models|top model|which model (leads|wins|is best)|who is (best|leading)|quotable cells)/i;
   if (BOARD_RE.test(q)) {
