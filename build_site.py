@@ -84,6 +84,7 @@ JSON_ALLOW = {
     "benchmark-quality-feed.json", # the signed register rating THIRD-PARTY benchmark quality (deterministic predicates, no LLM judge; own boards never scored)
     "regulatory-deadline-record.json", # regime-level process facts — did the regulator hit the date it set itself (held/stated/deferred), signed, un-scored, un-ranked
     "orbital-ai-record.json",        # orbital AI measured-current-state — deployed vs announced, deterministic predicates, signed (coverage-extension)
+    "agui-knowledge.json",           # AG UI 15-axis competitor/peer learning bundle (distilled from agui-learning/*.md) — public machine feed for the seamless AG UI
 }
 
 # Named public files whose extension is NOT in ROOT_EXTS (.md/.pdf). Each was
