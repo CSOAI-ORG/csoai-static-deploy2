@@ -68,13 +68,9 @@
       "id": "did:web:csoai.org#verifier",
       "type": "AttestationVerifier",
       "serviceEndpoint": "https://councilof.ai/verify"
-    },
-    {
-      "id": "did:web:csoai.org#mcp",
-      "type": "MCPMeasurementServer",
-      "serviceEndpoint": "https://csoai-gspc-mcp.nicholastempleman.workers.dev/mcp"
     }
   ],
+  "_serviceNote": "The MCP measurement-server endpoint was removed 2026-08-19: GET on the advertised worker returns 404 and a DID document must not advertise a dead service. It returns in the same commit that redeploys a live endpoint. This apex copy now matches that rule.",
   "_keyContinuity": {
     "note": "Three signing identities per KEY-CONTINUITY.md. #site-release-1 signs site artifacts (keystone-held). #estate-chain-1 signs fleet chains, measurement cards and boards (pod-held). #card-attestation-1 (THE BRICK, estate key d4cb0eaa, Mac-held) signs carded measurement receipts, the corrections ledger and MANIFEST cards; published 2026-08-20 after its signatures verified under the published canon (stranger-verifiable against did.json). Ed25519 today; ML-DSA-65 is roadmap, not present.",
     "superseded": [
