@@ -1,19 +1,27 @@
-// /api/arena/rounds.jsonl — the clean alias of the live arena evidence feed.
-// Same KV source as the legacy path; this is the canonical public URL going forward.
+// /api/arena/rounds — the live measured arena feed.
+// KV first; if the binding serves a stale/pinned copy, fall back to the
+// hourly-committed snapshot in the repo (raw.githubusercontent — live file,
+// not the built copy). Honest either way: the header says which source served.
+const RAW = "https://raw.githubusercontent.com/CSOAI-ORG/csoai-static-deploy2/main/public-data/arena-latest.jsonl";
+
 export async function onRequestGet({ env }) {
-  if (!env.SOV_ARENA_STATE) {
-    return new Response(JSON.stringify({ error: 'no live rounds', label: 'DESIGN',
-      detail: 'KV binding SOV_ARENA_STATE not visible to this function' }),
-      { status: 503, headers: { 'content-type': 'application/json', 'cache-control': 'no-store' } });
+  if (env.SOV_ARENA_STATE) {
+    const body = await env.SOV_ARENA_STATE.get("rounds.jsonl", { cacheTtl: 60 });
+    if (body) {
+      return new Response(body, { headers: {
+        "content-type": "application/x-ndjson", "cache-control": "public, max-age=60",
+        "x-arena-source": "kv-live" } });
+    }
   }
-  const body = await env.SOV_ARENA_STATE.get('rounds.jsonl', { cacheTtl: 60 });
-  if (!body) {
-    return new Response(JSON.stringify({ error: 'no live rounds', label: 'DESIGN',
-      detail: 'KV bound but empty — the fleet arena has not synced yet' }),
-      { status: 503, headers: { 'content-type': 'application/json', 'cache-control': 'no-store' } });
-  }
-  return new Response(body, {
-    headers: { 'content-type': 'application/x-ndjson', 'cache-control': 'public, max-age=30',
-               'x-arena-source': 'kv-fresh-v3' },
-  });
+  try {
+    const r = await fetch(RAW, { cf: { cacheTtl: 60 } });
+    if (r.ok) {
+      return new Response(await r.text(), { headers: {
+        "content-type": "application/x-ndjson", "cache-control": "public, max-age=60",
+        "x-arena-source": "git-hourly-snapshot" } });
+    }
+  } catch (_) {}
+  return new Response(JSON.stringify({ error: "no live rounds", label: "DESIGN",
+    detail: "arena feed sources unreachable — KV unbound and git snapshot missing" }),
+    { status: 503, headers: { "content-type": "application/json", "cache-control": "no-store" } });
 }
