@@ -1,0 +1,3 @@
+Thanks for opening this — it's exactly the right ask. We're building the same thing from the governance side (CSOAI — Council of AI): Ed25519-signed eval receipts with did:web identity binding, supersession/correction chains, per-sample evidence, offline verification, and an appeals path. proofbundle's crypto+prereg + our identity+standing covers the full stack.
+
+Proposal: one common receipt envelope instead of two. Schema sketch: {schema, model_digest, harness, items[], score, ci, signature, did, anchor} — signed over RFC 8785-canonical JSON, Rekor+TSA anchored, offline-verifiable. Happy to draft the merged schema as a PR against whichever repo you prefer. The measurement layer is the point — nobody with standing signs eval results yet.
