@@ -144,6 +144,15 @@
   .axis.leader .val{color:var(--acc)}
   .axis.slot .val{color:var(--ink)}
   .axis.reserved{opacity:.65}
+
+  .hva-section{margin-top:1.4rem;border-top:1px solid var(--line);padding-top:1.2rem}
+  .hva-head{display:flex;gap:.5rem;align-items:center;font-size:.9rem;margin-bottom:.7rem}
+  .hva-head b{color:var(--ink)}
+  .hva-grid .axis.hva-ai{border-color:var(--acc)}
+  .hva-grid .axis.hva-ai .val{color:var(--acc)}
+  .hva-grid .axis.hva-human .val{color:var(--amber)}
+  .hva-grid .axis.hva-note{opacity:.85}
+
   .board-actions{display:flex;gap:.7rem;align-items:center;flex-wrap:wrap;margin-top:1.2rem}
   .board-actions .btn{font-size:.8rem;padding:.5rem 1rem;border-radius:999px;cursor:pointer;border:1px solid var(--line-strong);background:var(--panel);color:var(--ink)}
   .board-actions .btn.primary{background:var(--acc);border-color:var(--acc);color:#062}
@@ -253,6 +262,15 @@
       <div class="axis slot"><div class="t">AGI / ASI <span class="tag">measured</span></div><div class="val">0.9667 <small>agi</small></div><div class="name">likelihood axes · gemma3:12b (asi 0.6667)</div><div class="meta">n=30 · estate board</div></div>
       <div class="axis slot"><div class="t">MCP / OSS / XR <span class="tag">measured</span></div><div class="val">0.9667 <small>oss</small></div><div class="name">open-source + interop axes · deepseek-r1:8b (mcp 0.8333 · xr 0.7333)</div><div class="meta">n=30 · estate board</div></div>
       <div class="axis slot reserved"><div class="t">Slot 15 <span class="tag empty">reserved</span></div><div class="val">—</div><div class="name">reserved until a 15th axis emits</div><div class="meta">UNMEASURED reported, never hidden</div></div>
+    </div>
+    <div class="hva-section">
+      <div class="hva-head"><span class="tag" style="color:var(--acc);border-color:var(--acc)">live</span> <b>Humans vs AI</b> — duel leaderboard on the 16-axis GSPC arena</div>
+      <div class="axis-grid hva-grid" id="hva-grid">
+        <div class="axis hva-ai"><div class="t">AI <span class="tag">leading</span></div><div class="val">789.0M <small>avg score</small></div><div class="name">arena duels on the live sim world · 16 axes</div><div class="meta">recent duels: slot15 · creativity · accountability · human-vs-ai · sovereignty — all AI wins</div></div>
+        <div class="axis hva-human"><div class="t">Human <span class="tag">measured</span></div><div class="val">~530M <small>avg score</small></div><div class="name">24 hives dueling in the live sim world</div><div class="meta">humans defeated this round-set · AI alive — measured-current-state, never certified</div></div>
+        <div class="axis hva-note"><div class="t">The measured line <span class="tag empty">honest</span></div><div class="val">never certified</div><div class="name">This is the live arena snapshot, not a signed claim. Human-vs-AI is one of the 16 GSPC axes; a win here means "won the duel", never "humans are worse at governance".</div><div class="meta">deterministic scoring · signed when a quotable n≥30 cell exists</div></div>
+      </div>
+      <button class="btn" data-agui="human-vs-ai" data-agui-prompt="Show me the humans vs AI leaderboard — who is winning the live GSPC arena duels and what does the measured line say?" type="button" style="margin-top:.7rem">open humans-vs-AI in AG-UI</button>
     </div>
     <div class="board-actions">
       <button class="btn" id="board-enlarge" type="button">make larger</button>
