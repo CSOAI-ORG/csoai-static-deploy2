@@ -1,101 +1,111 @@
 {
- "kind": "gspc-axis-17-baselines",
- "axis": "human-baseline",
- "leg": "A",
- "generated_at": "2026-08-18T00:00:00Z",
- "label": "published baselines \u2014 external cohorts; not human-subjects data (no DPIA needed)",
- "n_cells": 5,
- "cells": [
-  {
-   "id": "a58dc87538789b608cb4fbb1a634da39621e8e677b62f528982c7cee1bbae04c",
-   "body": {
-    "axis": "human-baseline",
-    "leg": "A-public-record",
-    "substrate": "MMLU",
-    "metric": "expert human accuracy",
-    "value": 0.898,
-    "approx": true,
-    "cohort_label": "published baselines \u2014 external cohorts",
-    "source": "Hendrycks et al. 2021 (MMLU, arXiv:2009.03300)",
-    "published": "2021",
-    "note": "widely-cited expert-human aggregate",
-    "ingested_at": "2026-08-18T00:00:00Z"
-   },
-   "signature": "3852d350a7794a3ebb063164d3df392652422c598247108d9c84fa4167c06d640b2a4806c7e0effddcde6f3007f09fa27715a95c4252ce3169fe93efbdfab20b",
-   "pubkey": "8f12e32f129b46bd70e6a3af6970ca662ac8580025070705dee56f3520c66736"
-  },
-  {
-   "id": "ffdb51f688d22e0abd9742b7739de48aa37981816ee8cdff93025b41a36569b8",
-   "body": {
-    "axis": "human-baseline",
-    "leg": "A-public-record",
-    "substrate": "GPQA (diamond)",
-    "metric": "PhD-level expert accuracy",
-    "value": 0.81,
-    "approx": true,
-    "cohort_label": "published baselines \u2014 external cohorts",
-    "source": "Rein et al. 2023 (GPQA, arXiv:2311.12022)",
-    "published": "2023",
-    "note": "PhD-in-domain panel aggregate, diamond split",
-    "ingested_at": "2026-08-18T00:00:00Z"
-   },
-   "signature": "1b2417f6b913ac4fa8d5f667785e1145cf8fa4307a7657152070c89759060f4c1f8f5f136cae8cb89bb0e302436ce0b936e87f6f14a2949ee2fc5309641ed207",
-   "pubkey": "8f12e32f129b46bd70e6a3af6970ca662ac8580025070705dee56f3520c66736"
-  },
-  {
-   "id": "0bd6ff4d4d6f95236ec772e5c9ef03a98583746ae1bafd1d96ffeb3b2194ec03",
-   "body": {
-    "axis": "human-baseline",
-    "leg": "A-public-record",
-    "substrate": "ARC-AGI",
-    "metric": "human solve rate",
-    "value": 0.85,
-    "approx": true,
-    "cohort_label": "published baselines \u2014 external cohorts",
-    "source": "Chollet 2019 (ARC, arXiv:1911.01547)",
-    "published": "2019",
-    "note": "published human-panel estimate",
-    "ingested_at": "2026-08-18T00:00:00Z"
-   },
-   "signature": "1a835985d2c36b21f0f11eddb17c5f83718ef5bf4e3fe274341ee9462498dd7dca72f68563f6ee0c7ab6f590b97605ec4f3367a55cd08825af888b2c212a5e02",
-   "pubkey": "8f12e32f129b46bd70e6a3af6970ca662ac8580025070705dee56f3520c66736"
-  },
-  {
-   "id": "7c07c726088bdf3a09e78a5553bfc1726acc3d55f9a37843c242a1261c6d94bd",
-   "body": {
-    "axis": "human-baseline",
-    "leg": "A-public-record",
-    "substrate": "SWE-bench",
-    "metric": "human developer baseline (resolved %)",
-    "value": null,
-    "approx": false,
-    "cohort_label": "published baselines \u2014 external cohorts",
-    "source": "SWE-bench (Jimenez et al. 2023, arXiv:2310.06770) \u2014 dev baseline in source",
-    "published": "2023",
-    "note": "value pinned at ingest from source; not asserted here",
-    "ingested_at": "2026-08-18T00:00:00Z"
-   },
-   "signature": "5c270b40672448863893b1bb555ec1994673d98b75be64f6fb1a95564e9f9cf444b32c22e0429fafe3249b7d68bcff0e15ec900a4d5cbcda65e1bbff67475a00",
-   "pubkey": "8f12e32f129b46bd70e6a3af6970ca662ac8580025070705dee56f3520c66736"
-  },
-  {
-   "id": "995ec5d553f2d1063565f51cc8545643e36f131a57f0f6ca90c935d77d6671f7",
-   "body": {
-    "axis": "human-baseline",
-    "leg": "A-public-record",
-    "substrate": "MATH / AIME",
-    "metric": "human cohort solve rate",
-    "value": null,
-    "approx": false,
-    "cohort_label": "published baselines \u2014 external cohorts",
-    "source": "Hendrycks et al. 2021 (MATH, arXiv:2103.03874) + AIME contest records",
-    "published": "2021",
-    "note": "cohort values pinned at ingest from source; not asserted here",
-    "ingested_at": "2026-08-18T00:00:00Z"
-   },
-   "signature": "095472d2b4c4f28a4647c1a9edf1f02f8c50a2abfed996d38c06dd41094c3e9e8ffc267a7bfe45db5e376fe83997e1d6ffefe5e3489dc94bbbfcfb91c639510e",
-   "pubkey": "8f12e32f129b46bd70e6a3af6970ca662ac8580025070705dee56f3520c66736"
-  }
- ],
- "note": "ingested from public record, pinned source+date, signed per cell. Values flagged approx where aggregate; None = pinned at ingest, not asserted."
+  "kind": "gspc-axis-17-baselines",
+  "axis": "human-baseline",
+  "leg": "A",
+  "generated_at": "2026-08-18T00:00:00Z",
+  "label": "published baselines — external cohorts; not human-subjects data (no DPIA needed)",
+  "n_cells": 5,
+  "cells": [
+    {
+      "id": "a58dc87538789b608cb4fbb1a634da39621e8e677b62f528982c7cee1bbae04c",
+      "body": {
+        "axis": "human-baseline",
+        "leg": "A-public-record",
+        "substrate": "MMLU",
+        "metric": "expert human accuracy",
+        "value": 0.898,
+        "approx": true,
+        "cohort_label": "published baselines — external cohorts",
+        "source": "Hendrycks et al. 2021 (MMLU, arXiv:2009.03300)",
+        "published": "2021",
+        "note": "widely-cited expert-human aggregate",
+        "ingested_at": "2026-08-18T00:00:00Z"
+      },
+      "signature": "3852d350a7794a3ebb063164d3df392652422c598247108d9c84fa4167c06d640b2a4806c7e0effddcde6f3007f09fa27715a95c4252ce3169fe93efbdfab20b",
+      "pubkey": "8f12e32f129b46bd70e6a3af6970ca662ac8580025070705dee56f3520c66736"
+    },
+    {
+      "id": "ffdb51f688d22e0abd9742b7739de48aa37981816ee8cdff93025b41a36569b8",
+      "body": {
+        "axis": "human-baseline",
+        "leg": "A-public-record",
+        "substrate": "GPQA (diamond)",
+        "metric": "PhD-level expert accuracy",
+        "value": 0.81,
+        "approx": true,
+        "cohort_label": "published baselines — external cohorts",
+        "source": "Rein et al. 2023 (GPQA, arXiv:2311.12022)",
+        "published": "2023",
+        "note": "PhD-in-domain panel aggregate, diamond split",
+        "ingested_at": "2026-08-18T00:00:00Z"
+      },
+      "signature": "1b2417f6b913ac4fa8d5f667785e1145cf8fa4307a7657152070c89759060f4c1f8f5f136cae8cb89bb0e302436ce0b936e87f6f14a2949ee2fc5309641ed207",
+      "pubkey": "8f12e32f129b46bd70e6a3af6970ca662ac8580025070705dee56f3520c66736"
+    },
+    {
+      "id": "0bd6ff4d4d6f95236ec772e5c9ef03a98583746ae1bafd1d96ffeb3b2194ec03",
+      "body": {
+        "axis": "human-baseline",
+        "leg": "A-public-record",
+        "substrate": "ARC-AGI",
+        "metric": "human solve rate",
+        "value": 0.85,
+        "approx": true,
+        "cohort_label": "published baselines — external cohorts",
+        "source": "Chollet 2019 (ARC, arXiv:1911.01547)",
+        "published": "2019",
+        "note": "published human-panel estimate",
+        "ingested_at": "2026-08-18T00:00:00Z"
+      },
+      "signature": "1a835985d2c36b21f0f11eddb17c5f83718ef5bf4e3fe274341ee9462498dd7dca72f68563f6ee0c7ab6f590b97605ec4f3367a55cd08825af888b2c212a5e02",
+      "pubkey": "8f12e32f129b46bd70e6a3af6970ca662ac8580025070705dee56f3520c66736"
+    },
+    {
+      "id": "7c07c726088bdf3a09e78a5553bfc1726acc3d55f9a37843c242a1261c6d94bd",
+      "body": {
+        "axis": "human-baseline",
+        "leg": "A-public-record",
+        "substrate": "SWE-bench",
+        "metric": "human developer baseline (resolved %)",
+        "value": null,
+        "approx": false,
+        "cohort_label": "published baselines — external cohorts",
+        "source": "SWE-bench (Jimenez et al. 2023, arXiv:2310.06770) — dev baseline in source",
+        "published": "2023",
+        "note": "value pinned at ingest from source; not asserted here",
+        "ingested_at": "2026-08-18T00:00:00Z"
+      },
+      "signature": "5c270b40672448863893b1bb555ec1994673d98b75be64f6fb1a95564e9f9cf444b32c22e0429fafe3249b7d68bcff0e15ec900a4d5cbcda65e1bbff67475a00",
+      "pubkey": "8f12e32f129b46bd70e6a3af6970ca662ac8580025070705dee56f3520c66736"
+    },
+    {
+      "id": "995ec5d553f2d1063565f51cc8545643e36f131a57f0f6ca90c935d77d6671f7",
+      "body": {
+        "axis": "human-baseline",
+        "leg": "A-public-record",
+        "substrate": "MATH / AIME",
+        "metric": "human cohort solve rate",
+        "value": null,
+        "approx": false,
+        "cohort_label": "published baselines — external cohorts",
+        "source": "Hendrycks et al. 2021 (MATH, arXiv:2103.03874) + AIME contest records",
+        "published": "2021",
+        "note": "cohort values pinned at ingest from source; not asserted here",
+        "ingested_at": "2026-08-18T00:00:00Z"
+      },
+      "signature": "095472d2b4c4f28a4647c1a9edf1f02f8c50a2abfed996d38c06dd41094c3e9e8ffc267a7bfe45db5e376fe83997e1d6ffefe5e3489dc94bbbfcfb91c639510e",
+      "pubkey": "8f12e32f129b46bd70e6a3af6970ca662ac8580025070705dee56f3520c66736"
+    }
+  ],
+  "note": "ingested from public record, pinned source+date, signed per cell. Values flagged approx where aggregate; None = pinned at ingest, not asserted.",
+  "reattestation": "content unchanged from original measurement; signed at rest 2026-08-21 after the TEA backward walk flagged it — the archive audits itself",
+  "signatures": [
+    {
+      "protected": "eyJhbGciOiJFZERTQSIsImtpZCI6ImRpZDp3ZWI6Y3NvYWkub3JnI2VzdGF0ZS1jaGFpbi0xIiwidHlwIjoiSldUIn0",
+      "signature": "rjIyHeTJRvO-wziWyOMgePsT0FSpCeomczY1FexoNr1BVS8cx3A_1FkKF0gWrP_FAHVc_n5F-mfTOc1toiSwAg",
+      "header": {
+        "typ": "JWT"
+      }
+    }
+  ]
 }
