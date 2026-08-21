@@ -279,6 +279,18 @@ export async function onRequestGet({ request }) {
     }), { status: 200, headers });
   }
 
+  // humans-vs-AI query — live arena duel leaderboard (sim world snapshot, honest)
+  const HVA_RE = /(humans? vs ai|human vs ai|who (wins|is winning) (the )?(humans?|people|us)|are (humans|people) losing|ai (beat|wins).*human)/i;
+  if (HVA_RE.test(q)) {
+    return new Response(JSON.stringify({
+      mode: 'hva',
+      live: 'sim-world arena duels (16-axis GSPC) — snapshot, never certified',
+      ai_leading: true,
+      framing: 'A duel win means won the round, never "humans are worse at governance". Deterministic scoring; signed when a quotable n≥30 cell exists. Measurement, not certification.',
+    }), { status: 200, headers });
+  }
+
+  // estate board query
   // estate board query — the live authoritative board (19-20 Aug), deterministic
   const BOARD_RE = /(estate board|leaderboard|board|top models|top model|which model (leads|wins|is best)|who is (best|leading)|quotable cells)/i;
   if (BOARD_RE.test(q)) {
