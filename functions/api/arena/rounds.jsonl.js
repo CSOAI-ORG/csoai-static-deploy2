@@ -14,6 +14,6 @@ export async function onRequestGet({ env }) {
   }
   return new Response(body, {
     headers: { 'content-type': 'application/x-ndjson', 'cache-control': 'public, max-age=30',
-               'x-arena-source': 'fleet arena (oracle) — every round real' },
+               'x-arena-source': 'kv-fresh-v3' },
   });
 }
