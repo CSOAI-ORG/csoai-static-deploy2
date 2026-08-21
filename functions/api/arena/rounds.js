@@ -8,9 +8,16 @@ export async function onRequestGet({ env }) {
   if (env.SOV_ARENA_STATE) {
     const body = await env.SOV_ARENA_STATE.get("rounds.jsonl", { cacheTtl: 60 });
     if (body) {
-      return new Response(body, { headers: {
-        "content-type": "application/x-ndjson", "cache-control": "public, max-age=60",
-        "x-arena-source": "kv-live" } });
+      // freshness guard: KV edge replicas can pin stale copies; if the last
+      // round is older than 6h, fall through to the hourly git snapshot.
+      try {
+        const lastTs = JSON.parse(body.trim().split("\n").pop()).ts;
+        if (Date.now() - new Date(lastTs).getTime() < 6 * 3600 * 1000) {
+          return new Response(body, { headers: {
+            "content-type": "application/x-ndjson", "cache-control": "public, max-age=60",
+            "x-arena-source": "kv-live" } });
+        }
+      } catch (_) { /* fall through */ }
     }
   }
   try {
