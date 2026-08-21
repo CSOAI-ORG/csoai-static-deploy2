@@ -91,3 +91,8 @@
 # 17 Aug 2026 — one verify desk (loginless, client-side).
 /gspc-verify      https://councilof.ai/gspc-verify   308
 /gspc-verify/     https://councilof.ai/gspc-verify/  308
+
+# 21 Aug 2026 — multi-dot function names never routed (rounds.jsonl.js never executed);
+# the feed was a stale static shadow. Internal rewrites map the public URLs to the real functions.
+/api/arena/rounds.jsonl     /api/arena/rounds     200
+/api/sov-arena/rounds.jsonl /api/arena/rounds     200
