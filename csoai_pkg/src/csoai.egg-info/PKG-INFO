@@ -1,0 +1,34 @@
+Metadata-Version: 2.4
+Name: csoai
+Version: 0.2.2
+Summary: Council of AI — signed, deterministic AI-governance measurement: CLI + MCP server + agent-callable verifier
+Author: Council of AI (CSOAI LTD, UK 16939677)
+License: Apache-2.0
+Project-URL: Homepage, https://councilof.ai
+Keywords: ai-governance,eu-ai-act,measurement,signed-evidence,mcp,article-50
+Requires-Python: >=3.9
+Description-Content-Type: text/markdown
+Requires-Dist: cryptography>=41
+Provides-Extra: mcp
+Requires-Dist: fastmcp>=2.0; extra == "mcp"
+
+# csoai
+
+mcp-name: io.github.CSOAI-ORG/gspc
+
+Council of AI — signed, deterministic AI-governance measurement.
+
+The boring CLI is the primary agent rail; the MCP server wraps it; both emit the
+same signed atom. Public artifacts only (hiQ/Van Buren footing); measurement, not
+certification.
+
+```bash
+pip install csoai
+csoai check --entity gpt2 --pack art50 --json     # measure a public artifact -> signed card
+csoai verify --record card.json                   # verify a signed record offline
+pip install "csoai[mcp]" && python -m csoai.mcp_server   # agent-callable MCP tools
+```
+
+CI gate: `csoai check` exits 3 on a missing transparency predicate — fail the build on it.
+
+mcp-name: io.github.CSOAI-ORG/csoai

@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "csoai"
-version = "0.2.1"
+version = "0.2.2"
 description = "Council of AI — signed, deterministic AI-governance measurement: CLI + MCP server + agent-callable verifier"
 readme = "README.md"
 requires-python = ">=3.9"
@@ -21,6 +21,7 @@ Homepage = "https://councilof.ai"
 
 [project.scripts]
 csoai = "csoai.cli:main"
+csoai-harness = "csoai.harness:main"
 csoai-mcp = "csoai.mcp_server:main"
 
 [tool.setuptools.packages.find]

@@ -139,6 +139,20 @@
   .axis .name{font-size:.72rem;color:var(--ink-dim);margin-top:.15rem}
   .honest-note{border-left:3px solid var(--amber);background:var(--panel);border-radius:0 10px 10px 0;padding:.9rem 1.1rem;font-size:.88rem;color:var(--ink-dim);margin:1.2rem 0 0;max-width:62ch}
   .honest-note b{color:var(--amber)}
+
+  .axis.leader{border-color:var(--acc);background:linear-gradient(135deg,var(--panel),#10181d)}
+  .axis.leader .val{color:var(--acc)}
+  .axis.slot .val{color:var(--ink)}
+  .axis.reserved{opacity:.65}
+  .board-actions{display:flex;gap:.7rem;align-items:center;flex-wrap:wrap;margin-top:1.2rem}
+  .board-actions .btn{font-size:.8rem;padding:.5rem 1rem;border-radius:999px;cursor:pointer;border:1px solid var(--line-strong);background:var(--panel);color:var(--ink)}
+  .board-actions .btn.primary{background:var(--acc);border-color:var(--acc);color:#062}
+  .board-actions .btn:hover{filter:brightness(1.12)}
+  .board-freshness{font-size:.7rem;color:var(--ink-faint);font-family:var(--mono);letter-spacing:.03em}
+  #live-board-grid.enlarged{grid-template-columns:repeat(auto-fill,minmax(16rem,1fr))}
+  #live-board-grid .axis{transition:border-color .15s,transform .15s}
+  #live-board-grid .axis:hover{border-color:var(--acc);transform:translateY(-2px)}
+
   /* how it works */
   .steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1rem}
   .step{border:1px solid var(--line);background:var(--panel);border-radius:14px;padding:1.4rem}
@@ -200,12 +214,12 @@
     <h1>We measure. We sign. <span class="hl">We re-attest.</span> Everyone can check.</h1>
     <p class="lede">Signed receipts for how AI systems behave — a 3KB card, Ed25519-signed and timestamp-anchored, verifiable client-side against a published key. <b>Not a certification</b>, not a notified body, no money from anything we rank. UNMEASURED stays empty; we do not fill a cell to look complete.</p>
     <div class="cta-row">
-      <a class="btn primary" href="/gspc-scoreboard/">
+      <a class="btn primary" href="/gspc-scoreboard/" data-agui="scoreboard" data-agui-prompt="Show me the GSPC scoreboard and estate board leaderboard — top models with quotable cells.">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M3 3v16a2 2 0 0 0 2 2h16"/><path d="M18 17V9M13 17V5M8 17v-3"/></svg>
         Signed scoreboard
       </a>
       <a class="btn ghost" href="https://councilof.ai/gspc-verify">Verify a card</a>
-      <a class="btn ghost" href="#board">What the data says</a>
+      <a class="btn ghost" href="#board" data-agui="board" data-agui-prompt="Show me the live GSPC estate board — top models and quotable axis cells.">What the data says</a>
     </div>
     <div class="stats">
       <div class="stat"><div class="n">13 <small>of 14 axes</small></div><div class="l">measured · signed fleet board · 17 Aug</div><div class="ci">14-slot instrument · jail measured on this board</div></div>
@@ -221,20 +235,31 @@
     <p class="kicker">The board · 17 Aug 2026 · signed fleet measurement · 13 measured of 14</p>
     <h2>What the data says</h2>
     <p class="sub">13 measured of 14 axes × 7 open-weight models on our own fleet, every board <b>signed into the estate chain</b> (818 items, chain_intact, Ed25519). The jail axis is measured on this board; GSPC (Governance · Safety · Provenance · Continuity) is one instrument family; the axis count itself is owner-gated (SITTING 1) — until then public copy holds the canon line: 13 measured of 14. A cell shows a number only if it is quotable (usable n ≥ 30, computed 95% interval) — <a href="https://huggingface.co/datasets/csoai" rel="noopener">recompute it</a>.</p>
-    <div class="axis-grid">
-      <div class="axis"><div class="t">Art 5 safeguard <span class="tag">measured</span></div><div class="val">0.972 <small>/ best</small></div><div class="name">EU AI Act Art 5 trip · qwen2.5:7b</div><div class="meta">n=36 · signed board</div></div>
-      <div class="axis"><div class="t">Jail / containment <span class="tag">measured</span></div><div class="val">1.0 <small>/ best</small></div><div class="name">sandbox-escape gate · council-safe family</div><div class="meta">n=36 signed cells · 5 of 7 models</div></div>
-      <div class="axis"><div class="t">Governance <span class="tag">measured</span></div><div class="val">0.578 <small>/ best</small></div><div class="name">largest sample on the board · mistral:7b</div><div class="meta">n=237 · signed board</div></div>
-      <div class="axis"><div class="t">Care <span class="tag">measured</span></div><div class="val">0.412 <small>/ best</small></div><div class="name">care floor, paired conduct · qwen2.5:0.5b</div><div class="meta">n=199 · signed board</div></div>
-      <div class="axis"><div class="t">Detection <span class="tag">measured</span></div><div class="val">0.788 <small>/ best</small></div><div class="name">detector-interop · mistral:7b</div><div class="meta">n=33 · signed board</div></div>
-      <div class="axis"><div class="t">Privacy <span class="tag">measured</span></div><div class="val">0.688 <small>/ best</small></div><div class="name">personal-data reasoning · qwen2.5:7b</div><div class="meta">n=32 · signed board</div></div>
-      <div class="axis"><div class="t">Machinery <span class="tag">measured</span></div><div class="val">0.424 <small>/ best</small></div><div class="name">safety-function classification · mistral:7b</div><div class="meta">n=33 · signed board</div></div>
-      <div class="axis"><div class="t">Affect <span class="tag">measured</span></div><div class="val">— <small>/ axis live</small></div><div class="name">affective safety</div><div class="meta">quotable cells on the signed board</div></div>
-      <div class="axis"><div class="t">AGI / ASI <span class="tag">measured</span></div><div class="val">— <small>/ axis live</small></div><div class="name">likelihood axes</div><div class="meta">quotable cells on the signed board</div></div>
-      <div class="axis"><div class="t">MCP / OSS / XR <span class="tag">measured</span></div><div class="val">— <small>/ axis live</small></div><div class="name">conformance · openness · cross-reality</div><div class="meta">quotable cells on the signed board</div></div>
-      <div class="axis"><div class="t">Slot 15 <span class="tag empty">unmeasured</span></div><div class="val">—</div><div class="name">reserved, no name assigned</div><div class="meta">empty until a 15th axis emits</div></div>
-    </div></div>
-    <p class="honest-note">Jail was <b>unmeasured until a real n ≥ 30 signed cell existed</b> — the 17 Aug fleet board now carries it (5 of 7 models at 1.0, n=36; qwen3:4b 0.11; council-oowm 0.0, all signed). Slot 15 stays reserved and empty. We never invented a jail number next to someone's badge — we waited for the measurement.</p>
+    <div class="axis-grid" id="live-board-grid">
+      <div class="axis leader"><div class="t">1 · nemotron-3-nano:30b <span class="tag">leader</span></div><div class="val">0.749 <small>avg 13 axes</small></div><div class="name">estate board 19-20 Aug · n=30 per cell</div><div class="meta">jail 1.0 · art5 1.0 · det 1.0</div></div>
+      <div class="axis"><div class="t">2 · phi4:14b <span class="tag">measured</span></div><div class="val">0.741 <small>avg 13 axes</small></div><div class="name">estate board 19-20 Aug · n=30 per cell</div><div class="meta">art5 1.0 · jail 1.0 · affect 0.9</div></div>
+      <div class="axis"><div class="t">3 · qwen3:4b <span class="tag">measured</span></div><div class="val">0.723 <small>avg 13 axes</small></div><div class="name">estate board 19-20 Aug · n=30 per cell</div><div class="meta">gov 0.8 · care 0.4 · jail 1.0</div></div>
+      <div class="axis"><div class="t">4 · deepseek-r1:8b <span class="tag">measured</span></div><div class="val">0.687 <small>avg 13 axes</small></div><div class="name">estate board 19-20 Aug · n=30 per cell</div><div class="meta">oss 0.9667 · jail 1.0</div></div>
+      <div class="axis"><div class="t">5 · mistral:7b <span class="tag">measured</span></div><div class="val">0.674 <small>avg 13 axes</small></div><div class="name">estate board 19-20 Aug · n=30 per cell</div><div class="meta">jail 1.0 · xr 0.7333</div></div>
+      <div class="axis"><div class="t">6 · gemma3:12b <span class="tag">measured</span></div><div class="val">0.667 <small>avg 13 axes</small></div><div class="name">estate board 19-20 Aug · n=30 per cell</div><div class="meta">agi 0.9667 · jail 1.0</div></div>
+      <div class="axis slot"><div class="t">Art 5 safeguard <span class="tag">measured</span></div><div class="val">1.0 <small>/ best</small></div><div class="name">EU AI Act Art 5 trip · phi4:14b</div><div class="meta">n=30 · estate board</div></div>
+      <div class="axis slot"><div class="t">Jail / containment <span class="tag">measured</span></div><div class="val">1.0 <small>/ best</small></div><div class="name">sandbox-escape gate · deepseek-r1:8b</div><div class="meta">n=30 · estate board</div></div>
+      <div class="axis slot"><div class="t">Governance <span class="tag">measured</span></div><div class="val">0.8 <small>/ best</small></div><div class="name">largest sample on the board · phi4:14b</div><div class="meta">n=30 · estate board</div></div>
+      <div class="axis slot"><div class="t">Care <span class="tag">measured</span></div><div class="val">0.6 <small>/ best</small></div><div class="name">care floor, paired conduct · qwen2.5:1.5b</div><div class="meta">n=30 · estate board</div></div>
+      <div class="axis slot"><div class="t">Detection <span class="tag">measured</span></div><div class="val">1.0 <small>/ best</small></div><div class="name">detector-interop · nemotron-3-nano:30b</div><div class="meta">n=30 · estate board</div></div>
+      <div class="axis slot"><div class="t">Privacy <span class="tag">measured</span></div><div class="val">0.7667 <small>/ best</small></div><div class="name">personal-data reasoning · nemotron-3-nano:30b</div><div class="meta">n=30 · estate board</div></div>
+      <div class="axis slot"><div class="t">Machinery <span class="tag">measured</span></div><div class="val">0.6667 <small>/ best</small></div><div class="name">safety-function classification · phi4:14b</div><div class="meta">n=30 · estate board</div></div>
+      <div class="axis slot"><div class="t">Affect <span class="tag">measured</span></div><div class="val">0.9 <small>/ best</small></div><div class="name">live affective safety · phi4:14b</div><div class="meta">n=30 · estate board</div></div>
+      <div class="axis slot"><div class="t">AGI / ASI <span class="tag">measured</span></div><div class="val">0.9667 <small>agi</small></div><div class="name">likelihood axes · gemma3:12b (asi 0.6667)</div><div class="meta">n=30 · estate board</div></div>
+      <div class="axis slot"><div class="t">MCP / OSS / XR <span class="tag">measured</span></div><div class="val">0.9667 <small>oss</small></div><div class="name">open-source + interop axes · deepseek-r1:8b (mcp 0.8333 · xr 0.7333)</div><div class="meta">n=30 · estate board</div></div>
+      <div class="axis slot reserved"><div class="t">Slot 15 <span class="tag empty">reserved</span></div><div class="val">—</div><div class="name">reserved until a 15th axis emits</div><div class="meta">UNMEASURED reported, never hidden</div></div>
+    </div>
+    <div class="board-actions">
+      <button class="btn" id="board-enlarge" type="button">make larger</button>
+      <button class="btn primary" data-agui="board" data-agui-prompt="Show me the live GSPC estate board — top models and quotable axis cells from the 19-20 Aug board." type="button">open in AG-UI</button>
+      <span class="board-freshness">live · estate board 19-20 Aug · quotable cells n=30 with Wilson CI</span>
+    </div>
+honest-note">Jail was <b>unmeasured until a real n ≥ 30 signed cell existed</b> — the 17 Aug fleet board now carries it (5 of 7 models at 1.0, n=36; qwen3:4b 0.11; council-oowm 0.0, all signed). Slot 15 stays reserved and empty. We never invented a jail number next to someone's badge — we waited for the measurement.</p>
     <p class="sub" style="margin-top:1.4rem">818 items across 14 signed boards, chain_intact. The 12 Aug board (13 axes × 19 models, unsigned) remains the deeper historical stamp. <a href="/gspc-scoreboard/">Open the full scoreboard →</a></p>
   </div>
 </section>
@@ -259,6 +284,20 @@
     <p class="sub">We do not rent judgement. The measurements run on hardware we control — arena workers, heavy workers and the always-free substrate — with live status from our fleet API.</p>
     <div id="fleet"><span class="fleet-chip"><b>Loading fleet status…</b></span></div>
     <p class="fleet-foot" id="fleet-note">Public fleet map · sanitized — internal names, endpoints and keys are never published.</p>
+  </div>
+</section>
+
+<section id="opensource">
+  <div class="wrap">
+    <p class="kicker">Open-source measurement stack</p>
+    <h2>The receipt format is public. The axes are not.</h2>
+    <p class="sub">Signed measurement should be reproducible anywhere, by anyone — without paying or trusting us. So the signing spine and the deterministic harness skeletons are MIT-licensed and open: three packages, all E2E-verified, all with an honest UNSIGNED path when no key is configured.</p>
+    <div class="step-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:1.2rem">
+      <div class="step"><span class="num">1</span><h3>inspect-signed-receipt</h3><p>Ed25519-signed, hash-chained receipts for Inspect (UK AISI's standard eval framework) — the signing spine. No fork.</p><p><a href="https://github.com/CSOAI-ORG/inspect-signed-receipt" style="color:#7cc7a1">GitHub →</a></p></div>
+      <div class="step"><span class="num">2</span><h3>oversight-measurement</h3><p>Deterministic Art 14-aligned predicates: did the human act on the AI warning? Output-acceptance rate, automation-bias flag, override log quality.</p><p><a href="https://github.com/CSOAI-ORG/oversight-measurement" style="color:#7cc7a1">GitHub →</a></p></div>
+      <div class="step"><span class="num">3</span><h3>memory-poisoning-axis</h3><p>CoSnitch-anchored (CVE-2026-24301): does injected content reach persistent memory, and survive revocation? No LLM judge.</p><p><a href="https://github.com/CSOAI-ORG/memory-poisoning-axis" style="color:#7cc7a1">GitHub →</a></p></div>
+    </div>
+    <p class="fleet-foot" id="opensource-note">Machine feed: <a href="/opensource-stack.json" style="color:#7cc7a1">/opensource-stack.json</a> (csoai.opensource-measurement-stack/0.1) · Measurement, not certification.</p>
   </div>
 </section>
 
