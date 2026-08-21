@@ -23,6 +23,8 @@
  */
 import lookupData from '../../lookup-public.json';
 import estateBoard from '../../estate-board.json';
+import benchmarkQualityFeed from '../../benchmark-quality-feed.json';
+import regulatoryDeadlineFeed from '../../regulatory-deadline-record.json';
 
 const GSPC_MCP = 'https://csoai-gspc-mcp.nicholastempleman.workers.dev/mcp';
 
@@ -290,7 +292,43 @@ export async function onRequestGet({ request }) {
     }), { status: 200, headers });
   }
 
+  // benchmark-quality register query (deterministic, signed)
+  const BQ_RE = /(benchmark.?quality|benchmark register|benchmark integrity|rates benchmarks|best benchmark)/i;
+  if (BQ_RE.test(q)) {
+    try {
+      const bq = benchmarkQualityFeed;
+      const recs = (bq.records || []).map(r => ({ benchmark: r.benchmark, score: r.score, max: r.max_score, pct: r.score_pct }))
+        .sort((a, b) => b.score - a.score);
+      return new Response(JSON.stringify({
+        mode: 'benchmark-quality-lookup',
+        message: recs.length ? 'Benchmark-quality register (signed, deterministic, no LLM judge): ' + recs.slice(0, 3).map(r => r.benchmark + ' ' + r.pct + '%').join(' · ') + '. Own boards never scored (impartiality firewall).' : 'no records',
+        top: recs.slice(0, 6),
+        framing: 'Measurement, not certification. Verification free forever.',
+      }), { status: 200, headers });
+    } catch (e) {
+      return new Response(JSON.stringify({ mode: 'benchmark-quality-lookup', error: String(e).slice(0, 120) }), { status: 200, headers });
+    }
+  }
+
+  // regulatory deadline record query (regime-level, un-ranked)
+  const RD_RE = /(regulatory deadline|deadline record|did the regulator|deadline (held|slipped|deferred)|regulator.*date|compliance calendar)/i;
+  if (RD_RE.test(q)) {
+    try {
+      const rd = regulatoryDeadlineFeed;
+      const def = (rd.records || []).filter(r => r.deadline_status === 'deferred');
+      return new Response(JSON.stringify({
+        mode: 'reg-deadline-lookup',
+        message: 'Regulatory Deadline Record (' + (rd.records || []).length + ' regimes, signed, un-ranked): ' + (def.length ? def.length + ' deferred — ' + def.map(r => r.stated_deadline + ' ' + r.regime.split('—')[0].trim()).join('; ') : 'none deferred') + '.',
+        deferred: def.map(r => ({ date: r.stated_deadline, regime: r.regime })),
+        framing: "Self-benchmarked against each regime's own stated date. Never a league table. Measurement, not certification.",
+      }), { status: 200, headers });
+    } catch (e) {
+      return new Response(JSON.stringify({ mode: 'reg-deadline-lookup', error: String(e).slice(0, 120) }), { status: 200, headers });
+    }
+  }
+
   // estate board query
+  // benchmark-quality register query (deterministic, signed)
   // estate board query — the live authoritative board (19-20 Aug), deterministic
   const BOARD_RE = /(estate board|leaderboard|board|top models|top model|which model (leads|wins|is best)|who is (best|leading)|quotable cells)/i;
   if (BOARD_RE.test(q)) {
