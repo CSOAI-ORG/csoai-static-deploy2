@@ -129,6 +129,9 @@ NEVER_HTML = {
     "oowm-demo.html",       # OOWM demo — weld is UNMEASURED, do not publicize
     "bft-council.html",     # "33-Agent Council — Sovereign Governance" — kill-listed (BFT/33/Sovereign)
     "bft-vote-log.html",    # "Designed 33-Agent Council" — kill-listed (BFT/33)
+    "ceasai.html",          # "CEASAI — CSOAI Engineer" — banned codename (CORR-005), was shipping 200 at clean URL
+    "sov-three-eyes.html",  # "SOV-Space — Three-Eye Substrate" — banned brand, was shipping 200
+    "MASTER_TAKEOVER.html", # "CSOAI · Master Takeover · 100/100" — internal engine name, was shipping 200
 }
 
 
