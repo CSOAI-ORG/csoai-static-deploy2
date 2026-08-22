@@ -46,6 +46,7 @@ ROOT_EXTS = {".html", ".txt", ".xml", ".svg", ".css", ".js", ".webmanifest", ".i
 
 # Directories that are part of the site.
 DIRS = ["tools", ".well-known", "assets", "images", "static", "_templates",
+        "agui-learning",
         # verified live and serving real content (not the 4,164-byte soft-404) on
         # 2026-08-05: /portal/ 19,235 B · /sovereign-wiki/ 4,947 B · /eu-ai-act/ 5,427 B
         # and its sub-routes /eu-ai-act/summary, /risk, /high-risk, /compliance.
