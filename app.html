@@ -120,9 +120,31 @@ var SECTIONS = [
   { id:'benchmark',label:'Benchmark quality', ico:'✓', read: renderBenchmark },
   { id:'deadline', label:'Reg deadline', ico:'⏱', read: renderDeadline },
   { id:'orbital',  label:'Orbital AI', ico:'🛰', read: renderOrbital },
+  { id:'registers', label:'Registers', ico:'📚', read: renderRegisters },
   { id:'verify',   label:'Verify', ico:'🔑', read: renderVerify },
   { id:'chat',     label:'Ask the harness', ico:'💬', read: renderChat },
 ];
+
+function renderRegisters(el){
+  stamp('signed registers + games + scenarios · '+TODAY);
+  fetch('/registers-data.json').then(function(r){ return r.json(); }).then(function(d){
+    if (!d || !d.registers) throw new Error('no registers');
+    renderRegistersData(el, d.registers);
+  }).catch(function(){
+    fetch('http://localhost:4192/registers').then(function(r){ return r.json(); }).then(function(d){
+      var regs = d.registers || {};
+      el.innerHTML = registerCards(regs);
+    }).catch(function(e){ el.innerHTML = '<div class="loading">registers offline: '+esc(e)+'</div>'; });
+  });
+}
+function registerCards(regs){
+  var names = {benchmark:'Benchmark-quality', 'regulator-deadlines':'Regulator deadlines', 'regulator-clarity':'Regulator clarity', 'orbital-ai':'Orbital AI', 'platform-artifacts':'Platform artifacts', documentation:'Documentation', 'embodied-transparency':'Embodied transparency'};
+  var cards = Object.keys(regs).map(function(k){
+    return '<div class="card"><div class="k">'+esc(names[k]||k)+'</div><div class="v">'+regs[k]+'</div><div class="s">signed records</div></div>';
+  }).join('');
+  return '<div class="doctrine">Signed registers · Ed25519 · measured-current-state, never certified.</div><div class="grid">'+cards+'</div>';
+}
+function renderRegistersData(el, regs){ el.innerHTML = registerCards(regs); }
 
 function buildNav(){
   var nav = $('nav'); nav.innerHTML = '';
@@ -154,6 +176,7 @@ var SUBTITLES = {
   benchmark:'Signed register rating third-party benchmark quality.',
   deadline:'Regime-level process facts — did the regulator hit the date it set itself?',
   orbital:'Orbital AI measured-current-state — deployed vs announced.',
+  registers:'All signed registers with live counts, games + scenarios.',
   verify:'Free, loginless, offline-style record verification.',
   chat:'Deterministic enforced-escort brain. No model in the path.',
 };
