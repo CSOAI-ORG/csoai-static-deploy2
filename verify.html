@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Verify — check a signed record (free, loginless, offline-style)</title>
+<meta name="description" content="Paste a signed record or a content_id/signature/pubkey and verify it offline-style: recompute the content_id and check the Ed25519 signature. Verification is free and never an endorsement. Measurement, not certification.">
+<style>
+:root { --accent:#5a9; --bg:#0d0f12; --card:#15181d; --line:#232830; --green:#8c6; --red:#e66; }
+* { box-sizing:border-box; }
+body { margin:0; font-family:-apple-system,Segoe UI,Roboto,sans-serif; background:var(--bg); color:#e8edf2; line-height:1.55; }
+.wrap { max-width:900px; margin:0 auto; padding:2rem 1.2rem; }
+h1 { font-size:1.4rem; border-bottom:1px solid var(--line); padding-bottom:.6rem; }
+.disc { color:#9fb0c0; font-size:.9rem; }
+textarea { width:100%; min-height:220px; background:#10141a; color:#e8edf2; border:1px solid var(--line); border-radius:10px; padding:1rem; font-family:monospace; font-size:.85rem; margin:1rem 0; resize:vertical; }
+button { background:var(--accent); color:#062; font-weight:700; border:0; padding:.6rem 1.4rem; border-radius:999px; cursor:pointer; font-size:.9rem; }
+button:hover { filter:brightness(1.12); }
+#result { margin-top:1.2rem; padding:1rem; border-radius:10px; background:var(--card); border:1px solid var(--line); font-family:monospace; font-size:.85rem; white-space:pre-wrap; display:none; }
+.ok { color:var(--green); } .bad { color:var(--red); }
+.foot { margin-top:1.6rem; color:#6a7a8a; font-size:.74rem; }
+a { color:var(--accent); }
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1>Verify a signed record</h1>
+<p class="disc">Free, loginless, deterministic. Paste either <b>(a)</b> a full signed record JSON (with <code>content_id</code>, <code>signature</code>, <code>pubkey</code>, <code>body</code>) or <b>(b)</b> a raw <code>content_id</code>, <code>signature</code>, <code>pubkey</code>. We recompute <code>content_id = sha256(canonical body)</code> (RFC 8785) and check the Ed25519 signature. A valid signature asserts <b>"this exact record was signed at time T"</b> — never that the subject is endorsed.</p>
+<p class="disc" style="color:var(--green)"><b>Language lock:</b> measurement, not certification. Verification is free forever.</p>
+<textarea id="inp" placeholder='{"body":{...},"content_id":"...","signature":"...","pubkey":"..."}  OR  paste content_id and the signature/pubkey base64+hex' autocomplete="off"></textarea>
+<button id="go">Verify</button>
+<div id="result"></div>
+<p class="foot">Powered by <a href="/api/verify">/api/verify</a> (POST). Verification never an endorsement. · Feed: <a href="/benchmark-quality-feed.json">benchmark-quality</a> · <a href="/regulatory-deadline-record.json">regulatory-deadline</a> · <a href="/orbital-ai-record.json">orbital-ai</a></p>
+</div>
+<script>
+document.getElementById('go').addEventListener('click', function () {
+  var raw = document.getElementById('inp').value.trim();
+  var res = document.getElementById('result');
+  res.style.display = 'block';
+  if (!raw) { res.innerHTML = '<span class="bad">paste a record or content_id/signature/pubkey</span>'; return; }
+  var payload;
+  try { payload = JSON.parse(raw); }
+  catch (e) {
+    // try to parse as three space/comma-separated fields, else error
+    var parts = raw.split(/[\s,]+/);
+    if (parts.length >= 3) payload = { content_id: parts[0], signature: parts[1], pubkey: parts[2] };
+    else { res.innerHTML = '<span class="bad">could not parse input</span>'; return; }
+  }
+  if (payload.content_id && payload.signature && payload.pubkey && !payload.body) {
+    // raw form → GET
+    var q = '?content_id=' + encodeURIComponent(payload.content_id) + '&signature=' + encodeURIComponent(payload.signature) + '&pubkey=' + encodeURIComponent(payload.pubkey);
+    fetch('/api/verify' + q).then(r => r.json()).then(function (d) {
+      res.innerHTML = (d.valid
+        ? '<span class="ok">✓ VALID — signature matches, content_id recomputed.</span>\ncontent_id: ' + d.content_id + '\nnot_a_certification: true · endorsement: none'
+        : '<span class="bad">✗ INVALID — signature or content_id mismatch.</span>\n' + (d.error || ''));
+    }).catch(e => { res.innerHTML = '<span class="bad">verify error: ' + e + '</span>'; });
+  } else {
+    fetch('/api/verify', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(payload) })
+      .then(r => r.json()).then(d => {
+        res.innerHTML = (d.valid
+          ? '<span class="ok">✓ VALID — content_id match: ' + (d.content_id_match === true) + ' · signature_valid: ' + (d.signature_valid === true) + '</span>\nrecomputed: ' + d.recomputed + '\nnot_a_certification: true · endorsement: none'
+          : '<span class="bad">✗ INVALID — ' + (d.content_id_match === false ? 'content_id mismatch' : d.signature_valid === false ? 'signature invalid' : d.error) + '</span>');
+      }).catch(e => { res.innerHTML = '<span class="bad">verify error: ' + e + '</span>'; });
+  }
+});
+</script>
+</body>
+</html>
