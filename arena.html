@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Arena — live Elo leaderboard (measured duels, not vendor self-report)</title>
+<meta name="description" content="Live arena Elo from 3000+ estate-run duels on the GSPC axes. LMArena-style leaderboard, but the duels run on our own fleet under deterministic scoring. Measurement, not certification.">
+<style>
+:root { --accent:#5a9; --bg:#0d0f12; --card:#15181d; --line:#232830; --gold:#fc6; --muted:#9fb0c0; }
+* { box-sizing:border-box; }
+body { margin:0; font-family:-apple-system,Segoe UI,Roboto,sans-serif; background:var(--bg); color:#e8edf2; line-height:1.55; }
+.wrap { max-width:1100px; margin:0 auto; padding:2rem 1.2rem; }
+h1 { font-size:1.4rem; border-bottom:1px solid var(--line); padding-bottom:.6rem; }
+.disc { color:var(--muted); font-size:.9rem; }
+.controls { display:flex; gap:.6rem; flex-wrap:wrap; align-items:center; margin:1.2rem 0; }
+.controls select, .controls button { background:var(--card); color:#e8edf2; border:1px solid var(--line); border-radius:999px; padding:.45rem 1rem; font-size:.8rem; cursor:pointer; }
+.controls button.primary { background:var(--accent); color:#062; font-weight:700; }
+.elo { display:flex; gap:1rem; flex-wrap:wrap; margin:1rem 0; }
+.elo-card { background:var(--card); border:1px solid var(--line); border-radius:12px; padding:1rem; flex:1; min-width:200px; }
+.elo-card .rank { font-size:.62rem; color:var(--muted); letter-spacing:.1em; text-transform:uppercase; }
+.elo-card .model { font-weight:700; font-size:.95rem; }
+.elo-card .rating { font-size:1.5rem; color:var(--accent); font-weight:800; font-variant-numeric:tabular-nums; }
+.elo-card .sub { font-size:.7rem; color:var(--muted); }
+table { width:100%; border-collapse:collapse; font-size:.82rem; }
+th, td { border:1px solid var(--line); padding:.4rem .55rem; text-align:left; }
+th { background:var(--card); font-weight:600; }
+tr:nth-child(even) td { background:#10141a; }
+tr.lead td { background:#18252e; }
+.gold { color:var(--gold); }
+.foot { margin-top:1.6rem; color:#6a7a8a; font-size:.74rem; line-height:1.6; }
+a { color:var(--accent); }
+.meta { font-size:.7rem; color:#79889a; font-family:monospace; }
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1>Arena — live Elo leaderboard</h1>
+<p class="disc"><b>3000+ estate-run duels</b> across the GSPC axes. This is a live Elo from duel outcomes — never vendor self-report, never a certification. Elo reflects <i>pairs of models measured head-to-head</i>, not a badge of approval.</p>
+<div class="controls">
+  <label>Axis</label>
+  <select id="axis">
+    <option value="">Overall</option>
+    <option value="provenance">Provenance</option><option value="governance">Governance</option>
+    <option value="care">Care</option><option value="safety">Safety</option>
+    <option value="continuity">Continuity</option><option value="efficiency">Efficiency</option>
+    <option value="gov">gov</option><option value="jail">jail</option>
+  </select>
+  <button class="primary" id="go">Load leaderboard</button>
+  <button id="open-agui">open in AG-UI</button>
+  <span class="meta">feed: <a href="/api/arena">/api/arena</a> (csoai.arena-leaderboard/0.1)</span>
+</div>
+<div id="arena">loading…</div>
+<p class="foot">Arena rounds recorded on the estate · recomputable from rounds.jsonl · Measurement, not certification. Verification free forever.</p>
+</div>
+<script>
+function load(axis) {
+  var url = '/api/arena' + (axis ? '?axis=' + encodeURIComponent(axis) : '');
+  fetch(url).then(function(r){return r.json();}).then(function(d){
+    if (d.error) { document.getElementById('arena').textContent = d.error; return; }
+    var lb = axis ? d.axis_leaderboard : d.leaderboard;
+    if (!lb || !lb.length) { document.getElementById('arena').textContent = 'no data'; return; }
+    // top-3 cards
+    var cards = lb.slice(0,3).map(function(m,i){
+      return '<div class="elo-card"><div class="rank">#'+(i+1)+'</div><div class="model">'+m.model+'</div><div class="rating">'+m.elo+'</div><div class="sub">'+m.wins+'W / '+m.total+' fights</div></div>';
+    }).join('');
+    var rows = lb.map(function(m,i){
+      var wl = (m.wins!=null) ? (m.wins+'W · '+(m.wins-(m.total-m.losses)+ (m.total-m.losses))+'') : '';
+      var eloCell = m.elo;
+      return '<tr'+(i===0?' class="lead"':'')+'><td>'+(i+1)+'</td><td><b>'+m.model+'</b></td><td class="gold"><b>'+m.elo+'</b></td>'+
+        (m.wins!=null ? '<td>'+m.wins+'W · '+m.losses+'L</td><td class="meta">'+m.total+' duels</td>' : '<td class="meta">—</td><td class="meta">—</td>')+'</tr>';
+    }).join('');
+    document.getElementById('arena').innerHTML =
+      '<div class="elo">'+cards+'</div>'+
+      '<table><tr><th>#</th><th>model</th><th>Elo</th><th>record</th><th>duels</th></tr>'+rows+'</table>'+
+      '<p class="meta">'+d.total_rounds+' rounds · as of '+d.as_of+'</p>';
+  }).catch(function(e){ document.getElementById('arena').textContent = 'arena error: '+e; });
+}
+document.getElementById('go').addEventListener('click', function(){ load(document.getElementById('axis').value); });
+document.getElementById('open-agui').addEventListener('click', function(){ window.__coaAgui && window.__coaAgui('arena','Show me the arena Elo leaderboard — which models lead head-to-head duels, and what does the measured rating say?'); });
+load('');
+</script>
+</body>
+</html>

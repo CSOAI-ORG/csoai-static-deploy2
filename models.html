@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Model Catalog — measured GSPC scores (open-weight, verified, comparable)</title>
+<meta name="description" content="OpenRouter-style model comparison, but with MEASURED data: every model scored on our own fleet under deterministic exact-label grading. Sort by name, score, or a single axis. UNMEASURED reported, never hidden. Measurement, not certification.">
+<style>
+:root { --accent:#5a9; --bg:#0d0f12; --card:#15181d; --line:#232830; --gold:#fc6; --muted:#9fb0c0; }
+* { box-sizing:border-box; }
+body { margin:0; font-family:-apple-system,Segoe UI,Roboto,sans-serif; background:var(--bg); color:#e8edf2; line-height:1.55; }
+.wrap { max-width:1300px; margin:0 auto; padding:2rem 1.2rem; }
+h1 { font-size:1.4rem; border-bottom:1px solid var(--line); padding-bottom:.6rem; }
+.disc { color:var(--muted); font-size:.9rem; }
+.controls { display:flex; gap:.6rem; flex-wrap:wrap; align-items:center; margin:1.2rem 0; }
+.controls select, .controls button { background:var(--card); color:#e8edf2; border:1px solid var(--line); border-radius:999px; padding:.45rem 1rem; font-size:.8rem; cursor:pointer; }
+.controls select:focus { border-color:var(--accent); }
+.controls button.primary { background:var(--accent); color:#062; font-weight:700; }
+table { width:100%; border-collapse:collapse; font-size:.8rem; }
+th, td { border:1px solid var(--line); padding:.4rem .55rem; text-align:left; vertical-align:top; white-space:nowrap; }
+th { background:var(--card); font-weight:600; position:sticky; top:0; }
+tr:nth-child(even) td { background:#10141a; }
+th.axis-col { writing-mode:vertical-rl; font-size:.62rem; }
+.th-avg { color:var(--accent); font-weight:700; }
+.bar { display:inline-block; height:7px; border-radius:4px; background:var(--accent); vertical-align:middle; }
+.score-0 { color:#7d8; } .score-1 { color:#9c6; } .score-2 { color:#ca6; } .score-3 { color:#c66; }
+.unmeasured { color:#556; }
+.meta { font-size:.7rem; color:#79889a; font-family:monospace; }
+.foot { margin-top:1.6rem; color:#6a7a8a; font-size:.74rem; line-height:1.6; }
+a { color:var(--accent); }
+.highlight { background:#1a2830 !important; outline:1px solid var(--accent); }
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1>Model Catalog — measured on our own fleet</h1>
+<p class="disc"><b>Open-weight models, measured under deterministic exact-label grading</b> (n=30, Wilson CI) on hardware we control. Score cells are <b>measured</b> — never vendor self-report, never a certification. UNMEASURED is shown as such, never hidden.</p>
+<div class="controls">
+  <label>Sort by</label>
+  <select id="sort">
+    <option value="score">Avg measured score</option>
+    <option value="name">Name</option>
+    <option value="axis">Single axis</option>
+  </select>
+  <select id="axis" disabled>
+    <option value="">— axis (filter/viz) —</option>
+    <option value="care">Care</option><option value="gov">Governance</option>
+    <option value="art5">Art 5 safeguard</option><option value="jail">Jail containment</option>
+    <option value="det">Detection</option><option value="affect">Affect</option>
+    <option value="agi">AGI/ASI</option><option value="prv">Privacy</option>
+    <option value="oss">OSS</option><option value="mcp">MCP</option><option value="xr">XR</option>
+    <option value="mach">Machinery</option>
+  </select>
+  <button class="primary" id="go">Load catalog</button>
+  <button id="open-agui">open in AG-UI</button>
+  <span class="meta">machine feed: <a href="/api/models">/api/models</a> (csoai.models-catalog/0.1)</span>
+</div>
+<div id="catalog">loading…</div>
+<p class="foot">Estates board 19-20 Aug · deterministic exact-label grading · recomputable from collected board files + signed evidence chain · DOI <span data-doi>10.5281/zenodo.21991104</span> · Measurement, not certification. Verification free forever.</p>
+</div>
+<script>
+var AXIS_LABELS = {care:'Care',gov:'Gov',art5:'Art5',jail:'Jail',det:'Det',affect:'Affect',agi:'AGI/ASI',asi:'ASI',mach:'Mach',mcp:'MCP',oss:'OSS',prv:'Priv',xr:'XR'};
+var MODEL_META = {'nemotron-3-nano:30b':['nvidia','30B'],'phi4:14b':['microsoft','14B'],'qwen3:4b':['alibaba','4B'],'deepseek-r1:8b':['deepseek','8B'],'mistral:7b':['mistral','7B'],'gemma3:12b':['google','12B'],'qwen2.5:7b':['alibaba','7B'],'qwen2.5:3b':['alibaba','3B'],'qwen2.5:1.5b':['alibaba','1.5B'],'qwen2.5:0.5b-instruct':['alibaba','0.5B'],'llama3.2:3b':['meta','3B']};
+function load(sort, axis) {
+  var url = '/api/models?sort=' + encodeURIComponent(sort);
+  if (axis) url += '&axis=' + encodeURIComponent(axis);
+  fetch(url).then(function(r){return r.json();}).then(function(d){
+    var models = d.models; if (!models || !models.length) { document.getElementById('catalog').textContent = 'catalog offline'; return; }
+    var allAxes = ['care','gov','art5','jail','det','affect','agi','asi','mach','mcp','oss','prv','xr'];
+    var use = axis ? [axis] : ['avg'];
+    var head = '<tr><th>model</th>' + (axis ? '<th class="th-avg">'+AXIS_LABELS[axis]+'</th>' : '<th class="th-avg">avg</th>') + (axis ? '' : allAxes.map(function(a){return '<th class="axis-col" title="'+AXIS_LABELS[a]+'">'+AXIS_LABELS[a]+'</th>';}).join('')) + '</tr>';
+    var rows = models.map(function(m){
+      var meta = MODEL_META[m.id] || ['?','?'];
+      var first = '<td><b>'+m.name+'</b><br><span class="meta">'+meta[0]+' · '+meta[1]+' · '+m.measured_axes+' axes</span></td>';
+      var cells;
+      if (axis) {
+        var a = m.axes[axis]; var pct = Math.max(4, (a ? a.accuracy*100 : 0));
+        cells = '<td><span class="bar" style="width:'+pct+'px"></span> '+(a ? (a.accuracy.toFixed(3)+' <span class="meta">n='+a.n+'</span>') : '<span class="unmeasured">—</span>')+'</td>';
+      } else {
+        var pct = Math.max(4, m.avg_measured_score*100);
+        cells = '<td class="th-avg"><span class="bar" style="width:'+pct+'px"></span> '+m.avg_measured_score.toFixed(3)+'</td>';
+        allAxes.forEach(function(a){
+          var av = m.axes[a];
+          if (av) { var ap = Math.max(4, av.accuracy*100); cells += '<td class="score-'+Math.floor(av.accuracy*4)+'"><span class="bar" style="width:'+ap+'px"></span> '+av.accuracy.toFixed(2)+'</td>'; }
+          else cells += '<td class="unmeasured">—</td>';
+        });
+      }
+      return '<tr>'+first+cells+'</tr>';
+    }).join('');
+    document.getElementById('catalog').innerHTML = '<table>'+head+rows+'</table>';
+  }).catch(function(e){ document.getElementById('catalog').textContent = 'catalog error: '+e; });
+}
+document.getElementById('sort').addEventListener('change', function(){ document.getElementById('axis').disabled = this.value !== 'axis'; });
+document.getElementById('go').addEventListener('click', function(){ load(document.getElementById('sort').value, document.getElementById('sort').value==='axis' ? document.getElementById('axis').value : ''); });
+document.getElementById('open-agui').addEventListener('click', function(){ window.__coaAgui && window.__coaAgui('models','Show me the model catalog — sorted by measured GSPC score. Which open-weight model leads, and what are its quotable axis cells?'); });
+load('score','');
+</script>
+</body>
+</html>

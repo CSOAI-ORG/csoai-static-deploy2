@@ -38,6 +38,8 @@
     '    <button class="coa-chip" data-tool="benchmarks">benchmark quality</button>' +
     '    <button class="coa-chip" data-tool="regdeadline">reg deadline</button>' +
     '    <button class="coa-chip" data-tool="orbital">orbital AI</button>' +
+    '    <button class="coa-chip" data-tool="models">models</button>' +
+    '    <button class="coa-chip" data-tool="arena2">arena</button>' +
     '    <button class="coa-chip coa-chip-games" data-tool="games">games</button>' +
     '  </div>' +
     '  <div id="coa-games-panel" class="coa-hidden-panel"></div>' +
@@ -131,6 +133,26 @@
             '\nOwn boards never scored (impartiality firewall). Measurement, not certification.';
           addMsg(msg, 'bot');
         }).catch(function (e) { addMsg('benchmark register offline: ' + e, 'bot'); });
+      return;
+    }
+    if (name === 'arena2') {
+      fetch('/api/arena?n=5').then(function (r) { return r.json(); })
+        .then(function (d) {
+          var msg = 'arena Elo (' + d.total_rounds + ' duels, measured):\n' +
+            (d.leaderboard || []).slice(0, 5).map(function (m, i) { return '· #' + (i+1) + ' ' + m.model + ' — ' + m.elo + ' (' + m.wins + 'W)'; }).join('\n') +
+            '\nLive Elo from estate duel outcomes. Measurement, not certification.';
+          addMsg(msg, 'bot');
+        }).catch(function (e) { addMsg('arena offline: ' + e, 'bot'); });
+      return;
+    }
+    if (name === 'models') {
+      fetch('/api/models?n=5&sort=score').then(function (r) { return r.json(); })
+        .then(function (d) {
+          var msg = 'model catalog (measured, ' + d.total + ' open-weight models):\n' +
+            (d.models || []).map(function (m) { return '· ' + m.name + ' — avg ' + m.avg_measured_score.toFixed(3) + ' (' + m.measured_axes + ' axes)'; }).join('\n') +
+            '\nMeasured, never vendor self-report. Measurement, not certification.';
+          addMsg(msg, 'bot');
+        }).catch(function (e) { addMsg('model catalog offline: ' + e, 'bot'); });
       return;
     }
     if (name === 'orbital') {
