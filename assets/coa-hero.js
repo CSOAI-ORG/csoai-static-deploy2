@@ -365,6 +365,7 @@
       '<button class="coa-chip" data-gact="reset">reset</button>' +
       (state.autoplay ? '<button class="coa-chip" data-gact="auto">autoplay round</button>' : '') +
       '<button class="coa-chip" data-gact="digest">replay digest</button>' +
+      '<button class="coa-chip" data-gact="sign">signed replay</button>' +
       '<button class="coa-chip" data-gact="close">back to games</button>' +
       '</div>';
   }
@@ -651,6 +652,22 @@
       digestOf({ game: GAME_STATE.id, state: s }).then(function (d) {
         logGame(GAME_STATE.id + ' replay digest: ' + d.slice(0, 24) + '… (client-side; estate signing on the receipt spine)');
       });
+      return;
+    }
+    if (act === 'sign') {
+      digestOf({ game: GAME_STATE.id, state: s }).then(function (d) {
+        return fetch('/api/sign-replay', {
+          method: 'POST',
+          headers: { 'content-type': 'application/json' },
+          body: JSON.stringify({ digest: d }),
+        }).then(function (r) { return r.json(); });
+      }).then(function (receipt) {
+        if (receipt && receipt.content_id) {
+          logGame(GAME_STATE.id + ' SIGNED replay receipt: ' + receipt.content_id.slice(0, 24) + '… (witnessed ' + (receipt.witnessed_at || '?') + ') — measurement, not certification');
+        } else {
+          logGame('signed replay failed: ' + (receipt && receipt.error || 'no receipt'));
+        }
+      }).catch(function (e) { logGame('sign error: ' + e); });
       return;
     }
     if (act === 'auto') {
