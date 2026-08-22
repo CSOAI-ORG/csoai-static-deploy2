@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Council of AI — AG-UI (one dashboard, every measured surface)</title>
+<meta name="description" content="One unified AG-UI dashboard: estate board, model catalog, arena Elo, benchmark-quality register, regulatory deadline, orbital AI, corrections, verify. Every surface rendered as a component. Measurement, not certification.">
+<style>
+:root {
+  --bg:#0b0f14; --panel:#10161d; --card:#151d26; --line:#23303d; --line2:#2e3e4f;
+  --text:#e8edf2; --muted:#9fb0c0; --faint:#6a7a8a;
+  --accent:#5a9; --accent2:#7cc7a1; --gold:#fc6; --red:#e66; --green:#8c6;
+  --mono:ui-monospace,SFMono-Regular,Menlo,monospace;
+}
+* { box-sizing:border-box; }
+body { margin:0; font-family:-apple-system,Segoe UI,Roboto,sans-serif; background:var(--bg); color:var(--text); line-height:1.55; font-size:14px; }
+a { color:var(--accent2); text-decoration:none; }
+.app { display:grid; grid-template-columns:220px 1fr; min-height:100vh; }
+@media (max-width:800px){ .app{grid-template-columns:1fr;} .side{border-right:0;border-bottom:1px solid var(--line);} }
+
+/* sidebar */
+.side { background:var(--panel); border-right:1px solid var(--line); padding:1rem .8rem; position:sticky; top:0; height:100vh; overflow-y:auto; }
+.brand { display:flex; align-items:center; gap:.5rem; padding:.4rem .5rem .9rem; border-bottom:1px solid var(--line); margin-bottom:.6rem; }
+.brand .pulse { width:9px;height:9px;border-radius:50%;background:var(--accent);box-shadow:0 0 8px var(--accent);animation:pul 2.4s ease-in-out infinite; }
+@keyframes pul { 0%,100%{opacity:1;} 50%{opacity:.35;} }
+.brand b { font-size:.92rem; } .brand span { font-size:.62rem; color:var(--faint); display:block; }
+.nav { display:flex; flex-direction:column; gap:2px; }
+.navbutton { text-align:left; background:transparent; color:var(--muted); border:0; padding:.55rem .6rem; border-radius:8px; cursor:pointer; font-size:.85rem; display:flex; align-items:center; gap:.5rem; width:100%; }
+.navbutton:hover { background:var(--card); color:var(--text); }
+.navbutton.active { background:#1a2830; color:var(--accent2); }
+.navbutton .ico { width:16px; text-align:center; font-size:.8rem; }
+.side-foot { margin-top:1rem; padding:.6rem .5rem; border-top:1px solid var(--line); font-size:.62rem; color:var(--faint); line-height:1.5; }
+
+/* main */
+.main { padding:1.4rem 1.6rem; overflow-x:hidden; }
+.head { display:flex; justify-content:space-between; align-items:flex-start; gap:1rem; flex-wrap:wrap; margin-bottom:1.2rem; }
+.head h1 { margin:0; font-size:1.3rem; }
+.head .sub { color:var(--muted); font-size:.85rem; margin-top:.3rem; max-width:70ch; }
+.info { font-size:.74rem; color:var(--faint); font-family:var(--mono); }
+
+/* panels */
+.panel { background:var(--card); border:1px solid var(--line); border-radius:12px; padding:1rem 1.1rem; margin-bottom:1rem; }
+.panel h2 { margin:0 0 .6rem; font-size:1rem; }
+.panel .desc { color:var(--muted); font-size:.82rem; margin-bottom:.8rem; }
+.grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(230px,1fr)); gap:.8rem; }
+.card { background:var(--panel); border:1px solid var(--line); border-radius:10px; padding:.8rem .9rem; }
+.card .k { font-size:.62rem; color:var(--faint); text-transform:uppercase; letter-spacing:.08em; }
+.card .v { font-size:1.3rem; font-weight:800; color:var(--accent2); font-variant-numeric:tabular-nums; }
+.card .s { font-size:.7rem; color:var(--muted); font-family:var(--mono); margin-top:.2rem; }
+.card.lead { border-color:var(--accent); background:linear-gradient(135deg,#121a22,#0f151b); }
+.card .rank { font-size:.6rem; color:var(--gold); text-transform:uppercase; letter-spacing:.1em; }
+
+table { width:100%; border-collapse:collapse; font-size:.8rem; }
+th,td { border-bottom:1px solid var(--line); padding:.4rem .5rem; text-align:left; }
+th { color:var(--muted); font-weight:600; font-size:.7rem; text-transform:uppercase; letter-spacing:.05em; }
+tr:hover td { background:#141b23; }
+th.axis-col { writing-mode:vertical-rl; font-size:.58rem; white-space:nowrap; }
+.bar { display:inline-block; height:7px; border-radius:4px; background:var(--accent); vertical-align:middle; }
+.gold { color:var(--gold); } .acc { color:var(--accent2); } .unm { color:var(--faint); }
+code { background:#1a212a; padding:.05rem .3rem; border-radius:4px; font-size:.78em; font-family:var(--mono); }
+
+/* chat */
+.chat { display:flex; flex-direction:column; height:calc(100vh - 180px); min-height:420px; border:1px solid var(--line); border-radius:12px; background:var(--panel); overflow:hidden; }
+.chatlog { flex:1; overflow-y:auto; padding:1rem; display:flex; flex-direction:column; gap:.6rem; }
+.cmsg { max-width:80%; padding:.6rem .8rem; border-radius:10px; font-size:.84rem; white-space:pre-wrap; }
+.cmsg.user { align-self:flex-end; background:#1c2833; border:1px solid var(--line2); }
+.cmsg.bot { align-self:flex-start; background:var(--card); border:1px solid var(--line); }
+.cmsg .lbl { font-size:.6rem; color:var(--faint); text-transform:uppercase; letter-spacing:.07em; margin-bottom:.2rem; }
+.cinput { display:flex; gap:.5rem; padding:.8rem; border-top:1px solid var(--line); background:#0e141a; }
+.cinput input { flex:1; background:#12181f; color:var(--text); border:1px solid var(--line); border-radius:999px; padding:.6rem .9rem; font-size:.85rem; outline:none; }
+.cinput input:focus { border-color:var(--accent); }
+.cinput button { background:var(--accent); color:#062; font-weight:700; border:0; border-radius:999px; padding:.6rem 1.1rem; cursor:pointer; }
+.chips { display:flex; flex-wrap:wrap; gap:.4rem; padding:.6rem .8rem; border-top:1px solid var(--line); background:#0c1116; }
+.chip { font-size:.68rem; color:var(--accent2); border:1px solid var(--line); background:var(--card); padding:.25rem .6rem; border-radius:999px; cursor:pointer; }
+.chip:hover { border-color:var(--accent); }
+
+.tabs { display:flex; gap:.4rem; margin-bottom:1rem; flex-wrap:wrap; }
+.tab { font-size:.78rem; color:var(--muted); border:1px solid var(--line); background:var(--card); padding:.4rem .9rem; border-radius:999px; cursor:pointer; }
+.tab.active { color:var(--accent2); border-color:var(--accent); }
+.loading { color:var(--faint); font-size:.85rem; }
+.tag { font-size:.6rem; color:var(--accent2); border:1px solid var(--line); padding:.1rem .45rem; border-radius:999px; }
+.doctrine { border-left:3px solid var(--accent); background:#121a22; padding:.7rem .9rem; border-radius:0 8px 8px 0; font-size:.8rem; color:var(--muted); margin-bottom:1rem; }
+</style>
+</head>
+<body>
+<div class="app">
+  <!-- SIDEBAR -->
+  <aside class="side">
+    <div class="brand"><span class="pulse"></span><div><b>Council of AI</b><span>AG-UI · one dashboard</span></div></div>
+    <nav class="nav" id="nav"></nav>
+    <div class="side-foot"><b>measurement, not certification</b><br>verification free forever · nobody ranked pays</div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main">
+    <div class="head">
+      <div><h1 id="title">—</h1><div class="sub" id="subtitle">—</div></div>
+      <div class="info" id="stamp">—</div>
+    </div>
+    <div id="content"></div>
+  </main>
+</div>
+
+<script>
+// ---- AG-UI shell: one config-driven dashboard, every measured surface as a component ----
+var TODAY = new Date().toISOString().slice(0,10);
+var MODEL_META = {'nemotron-3-nano:30b':['nvidia','30B'],'phi4:14b':['microsoft','14B'],'qwen3:4b':['alibaba','4B'],'deepseek-r1:8b':['deepseek','8B'],'mistral:7b':['mistral','7B'],'gemma3:12b':['google','12B'],'qwen2.5:7b':['alibaba','7B'],'qwen2.5:3b':['alibaba','3B'],'qwen2.5:1.5b':['alibaba','1.5B'],'qwen2.5:0.5b-instruct':['alibaba','0.5B'],'llama3.2:3b':['meta','3B']};
+var AXES = ['care','gov','art5','jail','det','affect','agi','asi','mach','mcp','oss','prv','xr'];
+var AX = {care:'Care',gov:'Gov',art5:'Art5',jail:'Jail',det:'Det',affect:'Affect',agi:'AGI/ASI',asi:'ASI',mach:'Mach',mcp:'MCP',oss:'OSS',prv:'Priv',xr:'XR'};
+function $(id){ return document.getElementById(id); }
+function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function bar(p){ p=Math.max(3, Math.round(p*100)); return '<span class="bar" style="width:'+p+'px"></span> '; }
+function gjson(url){ return fetch(url).then(function(r){return r.json();}); }
+
+var SECTIONS = [
+  { id:'overview', label:'Overview', ico:'◉', read: renderOverview },
+  { id:'board',    label:'Estate board', ico:'▦', read: renderBoard },
+  { id:'models',   label:'Models', ico:'▤', read: renderModels },
+  { id:'arena',    label:'Arena Elo', ico:'⚔', read: renderArena },
+  { id:'benchmark',label:'Benchmark quality', ico:'✓', read: renderBenchmark },
+  { id:'deadline', label:'Reg deadline', ico:'⏱', read: renderDeadline },
+  { id:'orbital',  label:'Orbital AI', ico:'🛰', read: renderOrbital },
+  { id:'verify',   label:'Verify', ico:'🔑', read: renderVerify },
+  { id:'chat',     label:'Ask the harness', ico:'💬', read: renderChat },
+];
+
+function buildNav(){
+  var nav = $('nav'); nav.innerHTML = '';
+  SECTIONS.forEach(function(sec){
+    var b = document.createElement('button');
+    b.className = 'navbutton'; b.dataset.section = sec.id;
+    b.innerHTML = '<span class="ico">'+sec.ico+'</span>'+sec.label;
+    b.onclick = function(){ show(sec.id); };
+    nav.appendChild(b);
+  });
+}
+function stamp(s){ $('stamp').textContent = s; }
+function show(id){
+  document.querySelectorAll('.navbutton').forEach(function(b){ b.classList.toggle('active', b.dataset.section===id); });
+  var sec = SECTIONS.find(function(s){return s.id===id;});
+  if (!sec) return;
+  $('title').textContent = sec.label;
+  $('subtitle').textContent = SUBTITLES[sec.id] || '';
+  $('content').innerHTML = '<div class="loading">loading ' + sec.label + '…</div>';
+  sec.read($('content'));
+}
+
+// ---------- OVERVIEW ----------
+var SUBTITLES = {
+  overview:'One dashboard. Every measured surface. Deterministic, signed, never certified.',
+  board:'Deterministic exact-label grading · n=30 · UNMEASURED reported, never hidden.',
+  models:'Open-weight models, measured on our own fleet. Never vendor self-report.',
+  arena:'Live Elo from estate-run duels (Bradley-Terry).',
+  benchmark:'Signed register rating third-party benchmark quality.',
+  deadline:'Regime-level process facts — did the regulator hit the date it set itself?',
+  orbital:'Orbital AI measured-current-state — deployed vs announced.',
+  verify:'Free, loginless, offline-style record verification.',
+  chat:'Deterministic enforced-escort brain. No model in the path.',
+};
+function renderOverview(el){
+  stamp('as of ' + TODAY + ' · measurement, not certification');
+  gjson('/api/hero?tool=board').then(function(b){
+    gjson('/api/models').then(function(m){
+      gjson('/api/arena?n=3').then(function(a){
+        gjson('/api/benchmark-quality').then(function(bq){
+          gjson('/api/regulatory-deadline').then(function(rd){
+            el.innerHTML = '<div class="doctrine">'+esc(b.doctrine||'')+'</div>' +
+              '<div class="grid">' +
+              '<div class="card lead"><div class="k">Estate board</div><div class="v">'+b.models+' models</div><div class="s">'+b.banks+' banks · '+b.measured_cells+' quotable cells</div></div>' +
+              '<div class="card lead"><div class="k">Board leader</div><div class="v">'+esc((b.leader||'').split(' @ ')[0])+'</div><div class="s">'+esc((b.leader||'').split(' @ ')[1]||'')+' avg</div></div>' +
+              '<div class="card"><div class="k">Model catalog</div><div class="v">'+m.total+'</div><div class="s">measured open-weight models</div></div>' +
+              '<div class="card"><div class="k">Arena duels</div><div class="v">'+a.total_rounds.toLocaleString()+'</div><div class="s">live Elo rounds</div></div>' +
+              '<div class="card"><div class="k">Arena leader</div><div class="v">'+esc((a.leaderboard&&a.leaderboard[0]&&a.leaderboard[0].model)||'?')+'</div><div class="s">elo '+(a.leaderboard&&a.leaderboard[0]&&a.leaderboard[0].elo)+'</div></div>' +
+              '<div class="card"><div class="k">Benchmark register</div><div class="v">'+bq.records.length+'</div><div class="s">third-party benchmarks rated</div></div>' +
+              '<div class="card"><div class="k">Reg deadline</div><div class="v">'+rd.total+'</div><div class="s">regimes tracked</div></div>' +
+              '</div>';
+          });
+        });
+      });
+    });
+  }).catch(function(e){ el.innerHTML = '<div class="loading">error: '+esc(e)+'</div>'; });
+}
+
+// ---------- ESTATE BOARD ----------
+function renderBoard(el){
+  stamp('estate board · 19-20 Aug · '+TODAY);
+  gjson('/api/gspc').then(function(d){
+    var best = d.best || {};
+    var cards = Object.keys(best).map(function(axis){
+      var b = best[axis];
+      return '<div class="card"><div class="k">'+esc(AX[axis]||axis)+'</div><div class="v">'+b.accuracy.toFixed(3)+'</div><div class="s">'+esc(b.model)+' · n='+b.n+'</div></div>';
+    }).join('');
+    el.innerHTML = '<div class="doctrine">'+esc(d.doctrine||'')+'</div>'+
+      '<div class="tabs">' + Object.keys(best).map(function(axis,a){ return '<button class="tab" data-axis="'+esc(axis)+'">'+esc(AX[axis]||axis)+'</button>'; }).join('') + '</div>' +
+      '<div class="grid">'+cards+'</div>';
+  }).catch(function(e){ el.innerHTML = '<div class="loading">error: '+esc(e)+'</div>'; });
+}
+
+// ---------- MODELS ----------
+function renderModels(el){
+  stamp('model catalog · '+TODAY+' · measured, never vendor self-report');
+  gjson('/api/models').then(function(d){
+    var rows = d.models.map(function(m){
+      var meta = MODEL_META[m.id]||['?','?'];
+      var axes = AXES.map(function(a){
+        var av = m.axes[a];
+        if (av) return '<td class="acc">'+bar(av.accuracy)+av.accuracy.toFixed(2)+'</td>';
+        return '<td class="unm">—</td>';
+      }).join('');
+      return '<tr><td><b>'+esc(m.name)+'</b><br><span style="color:#79889a;font-size:.68rem">'+meta[0]+' · '+meta[1]+' · '+m.measured_axes+' axes</span></td>'+
+        '<td class="acc">'+bar(m.avg_measured_score)+m.avg_measured_score.toFixed(3)+'</td>'+axes+'</tr>';
+    }).join('');
+    el.innerHTML = '<div class="doctrine">'+esc(d.doctrine||'')+'</div>'+
+      '<table><tr><th>model</th><th>avg</th>'+AXES.map(function(a){return '<th class="axis-col" title="'+AX[a]+'">'+AX[a]+'</th>';}).join('')+'</tr>'+rows+'</table>';
+  }).catch(function(e){ el.innerHTML = '<div class="loading">error: '+esc(e)+'</div>'; });
+}
+
+// ---------- ARENA ----------
+function renderArena(el){
+  stamp('arena Elo · live · '+TODAY);
+  gjson('/api/arena?n=12').then(function(d){
+    var lb = d.leaderboard||[];
+    var top3 = lb.slice(0,3).map(function(m,i){
+      return '<div class="card lead"><div class="rank">#'+(i+1)+'</div><div class="v">'+m.elo+'</div><div class="s">'+esc(m.model)+'</div></div>';
+    }).join('');
+    var rows = lb.map(function(m,i){
+      return '<tr'+(i===0?' style="background:#18252e"':'')+'><td>'+(i+1)+'</td><td><b>'+esc(m.model)+'</b></td><td class="gold"><b>'+m.elo+'</b></td><td>'+m.wins+'W · '+m.losses+'L</td><td>'+m.total+'</td></tr>';
+    }).join('');
+    el.innerHTML = '<div class="grid">'+top3+'</div>'+
+      '<div class="panel" style="margin-top:1rem"><table><tr><th>#</th><th>model</th><th>Elo</th><th>record</th><th>duels</th></tr>'+rows+'</table>'+
+      '<div class="info" style="margin-top:.6rem">'+d.total_rounds+' rounds · recomputable from rounds.jsonl</div></div>';
+  }).catch(function(e){ el.innerHTML = '<div class="loading">error: '+esc(e)+'</div>'; });
+}
+
+// ---------- BENCHMARK QUALITY ----------
+function renderBenchmark(el){
+  stamp('benchmark-quality register · '+TODAY+' · own boards never scored');
+  gjson('/api/benchmark-quality').then(function(d){
+    var rows = d.records.map(function(r){
+      return '<tr><td><b>'+esc(r.benchmark)+'</b><br><span style="color:#79889a;font-size:.68rem">'+esc(r.owner)+'</span></td><td>'+r.score+' / '+r.max_score+'</td><td class="acc">'+bar(r.score_pct/100)+r.score_pct+'%</td><td style="font-family:var(--mono);font-size:.66rem;color:#79889a">'+String(r.content_id).slice(0,14)+'…</td></tr>';
+    }).sort(function(a,b){return 0;}).join('');
+    el.innerHTML = '<div class="doctrine">'+esc(d.doctrine||'')+'</div><table><tr><th>benchmark</th><th>score</th><th>integrity</th><th>signed</th></tr>'+rows+'</table>';
+  }).catch(function(e){ el.innerHTML = '<div class="loading">error: '+esc(e)+'</div>'; });
+}
+
+// ---------- REGULATORY DEADLINE ----------
+function renderDeadline(el){
+  stamp('regulatory deadline record · '+TODAY+' · un-scored, un-ranked');
+  gjson('/api/regulatory-deadline').then(function(d){
+    var rows = d.records.map(function(r){
+      var cls = r.deadline_status==='deferred'?'class="gold"':(r.deadline_status==='held'?'class="acc"':'');
+      return '<tr><td><b>'+esc(r.regime)+'</b><br><span style="color:#79889a;font-size:.68rem">'+esc(r.instrument)+'</span></td><td style="font-family:var(--mono)">'+r.stated_deadline+'</td><td '+cls+'>'+r.deadline_status+'</td><td style="font-family:var(--mono);font-size:.66rem;color:#79889a">'+String(r.content_id).slice(0,12)+'…</td></tr>';
+    }).join('');
+    el.innerHTML = '<div class="doctrine">'+esc(d.doctrine||'')+'</div><table><tr><th>regime</th><th>stated deadline</th><th>status</th><th>signed</th></tr>'+rows+'</table>';
+  }).catch(function(e){ el.innerHTML = '<div class="loading">error: '+esc(e)+'</div>'; });
+}
+
+// ---------- ORBITAL AI ----------
+function renderOrbital(el){
+  stamp('orbital AI measured-current-state · '+TODAY+' · deployed vs announced');
+  gjson('/api/orbital-ai').then(function(d){
+    var rows = d.records.map(function(r){
+      var cls = r.deployed?'class="acc"':'class="gold"';
+      return '<tr><td><b>'+esc(r.subject)+'</b><br><span style="color:#79889a;font-size:.68rem">'+esc(r.class)+'</span></td><td '+cls+'>'+(r.deployed?'DEPLOYED':'announced')+'</td><td style="font-size:.72rem">'+esc(r.claim)+'</td><td style="font-family:var(--mono);font-size:.66rem;color:#79889a">'+String(r.content_id).slice(0,12)+'…</td></tr>';
+    }).join('');
+    el.innerHTML = '<div class="doctrine">'+esc(d.doctrine||'')+'<br>Gap: no standard covers in-orbit AI · every result self-reported · insurers cannot model the risk.</div>'+
+      '<table><tr><th>subject</th><th>state</th><th>claim</th><th>signed</th></tr>'+rows+'</table>';
+  }).catch(function(e){ el.innerHTML = '<div class="loading">error: '+esc(e)+'</div>'; });
+}
+
+// ---------- VERIFY ----------
+function renderVerify(el){
+  stamp('verify a signed record · free, loginless');
+  el.innerHTML = '<div class="doctrine">Paste a signed record JSON (with content_id, signature, pubkey, body) OR a raw content_id / signature / pubkey. We recompute content_id (RFC 8785) and check the Ed25519 signature.</div>'+
+    '<div class="panel"><textarea id="vinp" style="width:100%;min-height:160px;background:#10141a;color:#e8edf2;border:1px solid var(--line);border-radius:10px;padding:1rem;font-family:var(--mono);font-size:.82rem;resize:vertical" placeholder=\'{"body":{...},"content_id":"...","signature":"...","pubkey":"..."}\'></textarea>'+
+    '<button class="chip" id="vgo" style="margin-top:.6rem;font-size:.8rem">Verify</button><div id="vres" style="margin-top:.8rem;font-family:var(--mono);font-size:.82rem;white-space:pre-wrap"></div></div>';
+  $('vgo').onclick = function(){
+    var raw = $('vinp').value.trim(); var res = $('vres');
+    if (!raw){ res.innerHTML = '<span class="gold">paste a record</span>'; return; }
+    var payload; try { payload = JSON.parse(raw); } catch(e){ res.innerHTML = '<span class="gold">could not parse JSON</span>'; return; }
+    var body = {};
+    for (var k in payload){ if(!['content_id','signature','pubkey'].includes(k)) body[k]=payload[k]; }
+    fetch('/api/verify',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({content_id:payload.content_id,signature:payload.signature,pubkey:payload.pubkey,...body})})
+      .then(r=>r.json()).then(function(d){
+        res.innerHTML = d.valid ? '<span class="acc">✓ VALID</span> — content_id_match: '+d.content_id_match+' · signature_valid: '+d.signature_valid+'<br>not_a_certification: true · endorsement: none' : '<span class="gold">✗ INVALID — '+esc(d.error||'mismatch')+'</span>';
+      }).catch(function(e){ res.innerHTML = '<span class="gold">error: '+esc(e)+'</span>'; });
+  };
+}
+
+// ---------- CHAT (AG-UI protocol-style) ----------
+function renderChat(el){
+  stamp('deterministic enforced-escort brain · no model in the path');
+  var chips = [
+    ['board','estate board leaderboard'],
+    ['models','model catalog by score'],
+    ['arena','arena Elo leaderboard'],
+    ['benchmark','benchmark quality register'],
+    ['deadline','regulatory deadline record'],
+    ['orbital','orbital AI record'],
+    ['hva','who is winning humans vs AI'],
+    ['care','qwen2.5:7b care score'],
+  ];
+  el.innerHTML = '<div class="chat"><div class="chatlog" id="chlog"></div>'+
+    '<div class="chips">'+chips.map(function(c){return '<button class="chip" data-q="'+c[1]+'">'+c[0]+'</button>';}).join('')+'</div>'+
+    '<div class="cinput"><input id="cinp" placeholder="ask the harness (e.g. estate board leader, model catalog, arena elo, verify…)"><button id="csend">→</button></div></div>';
+  var log = $('chlog');
+  function add(txt,who){ var d=document.createElement('div'); d.className='cmsg '+who; d.innerHTML='<div class="lbl">'+(who==='user'?'you':'harness')+'</div>'+esc(txt); log.appendChild(d); log.scrollTop=log.scrollHeight; }
+  function ask(q){
+    if(!q) return; add(q,'user');
+    fetch('/api/hero?q='+encodeURIComponent(q)).then(r=>r.json()).then(function(d){
+      var txt = d.message||d.framing||JSON.stringify(d).slice(0,200);
+      add(txt,'bot');
+    }).catch(function(e){ add('harness offline: '+e,'bot'); });
+  }
+  $('csend').onclick = function(){ ask($('cinp').value.trim()); $('cinp').value=''; };
+  $('cinp').onkeydown = function(e){ if(e.key==='Enter'){ ask($('cinp').value.trim()); $('cinp').value=''; } };
+  document.querySelectorAll('.chip[data-q]').forEach(function(c){ c.onclick=function(){ ask(c.dataset.q); }; });
+  add('Hi — I am the living harness. Ask me anything measured, or tap a chip. Measurement, not certification.','bot');
+}
+
+buildNav();
+show('overview');
+</script>
+</body>
+</html>
