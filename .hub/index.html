@@ -194,6 +194,33 @@ var SUBTITLES = {
 };
 function renderOverview(el){
   stamp('as of ' + TODAY + ' · measurement, not certification');
+  var emb = sd('board');
+  if (emb && emb.cells) {
+    // derive everything from embedded data (works offline, no flapping API)
+    var best = {}, boards = 0;
+    for (var mm in emb.cells) for (var ax in emb.cells[mm]) {
+      var cv = emb.cells[mm][ax];
+      if (cv.status==='MEASURED' && cv.accuracy!=null && (!best[ax] || cv.accuracy>best[ax].accuracy)) best[ax]={accuracy:cv.accuracy,model:mm,n:cv.n};
+    }
+    var modelsEmb = sd('models') || {};
+    var arenaEmb = sd('arena') || {};
+    var bqEmb = (sd('benchmark')||{}).records||[];
+    var rdEmb = (sd('deadline')||{}).records||[];
+    var lead = null, leadAvg = 0;
+    var modelList = modelsEmb.models || [];
+    if (modelList.length) { lead = modelList[0].name; leadAvg = modelList[0].avg_measured_score; }
+    var arenaLead = (arenaEmb.leaderboard||[])[0];
+    el.innerHTML = '<div class="doctrine">'+esc(emb.doctrine||'')+'</div><div class="grid">' +
+      '<div class="card lead"><div class="k">Estate board</div><div class="v">'+Object.keys(emb.cells).length+' models</div><div class="s">'+Object.keys(best).length+' axes quotable</div></div>' +
+      '<div class="card lead"><div class="k">Board leader</div><div class="v">'+esc(lead||'?')+'</div><div class="s">'+leadAvg.toFixed(3)+' avg</div></div>' +
+      '<div class="card"><div class="k">Model catalog</div><div class="v">'+(modelsEmb.total||modelList.length)+'</div><div class="s">measured open-weight models</div></div>' +
+      '<div class="card"><div class="k">Arena duels</div><div class="v">'+(arenaEmb.total_rounds||0).toLocaleString()+'</div><div class="s">live Elo rounds</div></div>' +
+      '<div class="card"><div class="k">Arena leader</div><div class="v">'+esc((arenaLead&&arenaLead.model)||'?')+'</div><div class="s">elo '+(arenaLead&&arenaLead.elo)+'</div></div>' +
+      '<div class="card"><div class="k">Benchmark register</div><div class="v">'+bqEmb.length+'</div><div class="s">third-party benchmarks rated</div></div>' +
+      '<div class="card"><div class="k">Reg deadline</div><div class="v">'+rdEmb.length+'</div><div class="s">regimes tracked</div></div>' +
+      '</div>';
+    return;
+  }
   gjson('/api/hero?tool=board').then(function(b){
     gjson('/api/models').then(function(m){
       gjson('/api/arena?n=3').then(function(a){
