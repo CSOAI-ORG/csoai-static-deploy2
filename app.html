@@ -151,6 +151,13 @@ function registerCards(regs){
 }
 function renderRegistersData(el, regs){ el.innerHTML = registerCards(regs); }
 
+function renderArenaData(el, d){
+  var lb = d.leaderboard || [];
+  var top3 = lb.slice(0,3).map(function(m,i){ return '<div class="card lead"><div class="rank">#'+(i+1)+'</div><div class="v">'+m.elo+'</div><div class="s">'+esc(m.model)+'</div></div>'; }).join('');
+  var rows = lb.map(function(m,i){ return '<tr'+(i===0?' style="background:#18252e"':'')+'><td>'+(i+1)+'</td><td><b>'+esc(m.model)+'</b></td><td class="gold"><b>'+m.elo+'</b></td><td>'+m.wins+'W · '+m.losses+'L</td><td>'+m.total+'</td></tr>'; }).join('');
+  el.innerHTML = '<div class="grid">'+top3+'</div><div class="panel" style="margin-top:1rem"><table><tr><th>#</th><th>model</th><th>Elo</th><th>record</th><th>duels</th></tr>'+rows+'</table><div class="info" style="margin-top:.6rem">'+d.total_rounds+' rounds</div></div>';
+}
+
 function buildNav(){
   var nav = $('nav'); nav.innerHTML = '';
   SECTIONS.forEach(function(sec){
@@ -238,6 +245,16 @@ function renderBoard(el){
 // ---------- MODELS ----------
 function renderModels(el){
   stamp('model catalog · '+TODAY+' · measured, never vendor self-report');
+  var emb = sd('models');
+  if (emb && emb.models) {
+    var rows = emb.models.map(function(m){
+      var meta = MODEL_META[m.id]||['?','?'];
+      var axes = AXES.map(function(a){ var av=m.axes[a]; if(av) return '<td class="acc">'+bar(av.accuracy)+av.accuracy.toFixed(2)+'</td>'; return '<td class="unm">—</td>'; }).join('');
+      return '<tr><td><b>'+esc(m.name)+'</b><br><span style="color:#79889a;font-size:.68rem">'+meta[0]+' · '+meta[1]+' · '+m.measured_axes+' axes</span></td><td class="acc">'+bar(m.avg_measured_score)+m.avg_measured_score.toFixed(3)+'</td>'+axes+'</tr>';
+    }).join('');
+    el.innerHTML = '<div class="doctrine">Model measurement, never vendor self-report. Deterministic exact-label grading.</div><table><tr><th>model</th><th>avg</th>'+AXES.map(function(a){return '<th class="axis-col">'+AX[a]+'</th>';}).join('')+'</tr>'+rows+'</table>';
+    return;
+  }
   gjson('/api/models').then(function(d){
     var rows = d.models.map(function(m){
       var meta = MODEL_META[m.id]||['?','?'];
@@ -257,6 +274,11 @@ function renderModels(el){
 // ---------- ARENA ----------
 function renderArena(el){
   stamp('arena Elo · live · '+TODAY);
+  var emb = sd('arena');
+  if (emb && emb.leaderboard && emb.leaderboard.length) {
+    renderArenaData(el, { total_rounds: emb.total_rounds, leaderboard: emb.leaderboard });
+    return;
+  }
   gjson('/api/arena?n=12').then(function(d){
     var lb = d.leaderboard||[];
     var top3 = lb.slice(0,3).map(function(m,i){
@@ -265,15 +287,19 @@ function renderArena(el){
     var rows = lb.map(function(m,i){
       return '<tr'+(i===0?' style="background:#18252e"':'')+'><td>'+(i+1)+'</td><td><b>'+esc(m.model)+'</b></td><td class="gold"><b>'+m.elo+'</b></td><td>'+m.wins+'W · '+m.losses+'L</td><td>'+m.total+'</td></tr>';
     }).join('');
-    el.innerHTML = '<div class="grid">'+top3+'</div>'+
-      '<div class="panel" style="margin-top:1rem"><table><tr><th>#</th><th>model</th><th>Elo</th><th>record</th><th>duels</th></tr>'+rows+'</table>'+
-      '<div class="info" style="margin-top:.6rem">'+d.total_rounds+' rounds · recomputable from rounds.jsonl</div></div>';
+    renderArenaData(el, d);
   }).catch(function(e){ el.innerHTML = '<div class="loading">error: '+esc(e)+'</div>'; });
 }
 
 // ---------- BENCHMARK QUALITY ----------
 function renderBenchmark(el){
   stamp('benchmark-quality register · '+TODAY+' · own boards never scored');
+  var emb = sd('benchmark');
+  if (emb && emb.records) {
+    var rows = emb.records.map(function(r){ return '<tr><td><b>'+esc(r.benchmark)+'</b><br><span style="color:#79889a;font-size:.68rem">'+esc(r.owner)+'</span></td><td>'+r.score+' / '+r.max_score+'</td><td class="acc">'+bar(r.score_pct/100)+r.score_pct+'%</td><td style="font-family:var(--mono);font-size:.66rem;color:#79889a">'+String(r.content_id).slice(0,14)+'…</td></tr>'; }).join('');
+    el.innerHTML = '<div class="doctrine">'+esc(emb.doctrine||'Deterministic, no LLM judge. Own boards never scored.')+'</div><table><tr><th>benchmark</th><th>score</th><th>integrity</th><th>signed</th></tr>'+rows+'</table>';
+    return;
+  }
   gjson('/api/benchmark-quality').then(function(d){
     var rows = d.records.map(function(r){
       return '<tr><td><b>'+esc(r.benchmark)+'</b><br><span style="color:#79889a;font-size:.68rem">'+esc(r.owner)+'</span></td><td>'+r.score+' / '+r.max_score+'</td><td class="acc">'+bar(r.score_pct/100)+r.score_pct+'%</td><td style="font-family:var(--mono);font-size:.66rem;color:#79889a">'+String(r.content_id).slice(0,14)+'…</td></tr>';
@@ -285,6 +311,12 @@ function renderBenchmark(el){
 // ---------- REGULATORY DEADLINE ----------
 function renderDeadline(el){
   stamp('regulatory deadline record · '+TODAY+' · un-scored, un-ranked');
+  var emb = sd('deadline');
+  if (emb && emb.records) {
+    var rows = emb.records.map(function(r){ var cls=r.deadline_status==='deferred'?'class="gold"':(r.deadline_status==='held'?'class="acc"':''); return '<tr><td><b>'+esc(r.regime)+'</b><br><span style="color:#79889a;font-size:.68rem">'+esc(r.instrument)+'</span></td><td style="font-family:var(--mono)">'+r.stated_deadline+'</td><td '+cls+'>'+r.deadline_status+'</td><td style="font-family:var(--mono);font-size:.66rem;color:#79889a">'+String(r.content_id).slice(0,12)+'…</td></tr>'; }).join('');
+    el.innerHTML = '<div class="doctrine">'+esc(emb.doctrine||'Regime-level process facts, un-scored, un-ranked.')+'</div><table><tr><th>regime</th><th>stated deadline</th><th>status</th><th>signed</th></tr>'+rows+'</table>';
+    return;
+  }
   gjson('/api/regulatory-deadline').then(function(d){
     var rows = d.records.map(function(r){
       var cls = r.deadline_status==='deferred'?'class="gold"':(r.deadline_status==='held'?'class="acc"':'');
@@ -297,6 +329,12 @@ function renderDeadline(el){
 // ---------- ORBITAL AI ----------
 function renderOrbital(el){
   stamp('orbital AI measured-current-state · '+TODAY+' · deployed vs announced');
+  var emb = sd('orbital');
+  if (emb && emb.records) {
+    var rows = emb.records.map(function(r){ var cls=r.deployed?'class="acc"':'class="gold"'; return '<tr><td><b>'+esc(r.subject)+'</b><br><span style="color:#79889a;font-size:.68rem">'+esc(r.class)+'</span></td><td '+cls+'>'+(r.deployed?'DEPLOYED':'announced')+'</td><td style="font-size:.72rem">'+esc(r.claim)+'</td><td style="font-family:var(--mono);font-size:.66rem;color:#79889a">'+String(r.content_id).slice(0,12)+'…</td></tr>'; }).join('');
+    el.innerHTML = '<div class="doctrine">'+esc(emb.doctrine||'Orbital AI coverage-extension. Deployed vs announced.')+'</div><table><tr><th>subject</th><th>state</th><th>claim</th><th>signed</th></tr>'+rows+'</table>';
+    return;
+  }
   gjson('/api/orbital-ai').then(function(d){
     var rows = d.records.map(function(r){
       var cls = r.deployed?'class="acc"':'class="gold"';
