@@ -1,7 +1,7 @@
 {
   "schema": "csoai.regulatory-deadline-record/0.1",
   "generated": "2026-08-21T08:45:00Z",
-  "doctrine": "Regime-level process facts, never a league table. Benchmarks each regulator only against its own stated commitments. Un-scored, un-ranked, no named officials (Derbyshire shield), self-benchmarked. Measurement, not certification.",
+  "doctrine": "Regime-level process facts, never a league table. Benchmarks each regulator only against its own stated commitments. Un-scored, un-ranked, no named officials (Derbyshire shield), self-benchmarked. Measurement, not certification. Receipt format is RFC 9943 (SCITT)-aligned: COSE-style signed statement on an append-only log, offline-verifiable against a published key.",
   "note": "deadline_status: held = duty live on stated date · stated = not yet due · deferred/slipped = the date moved.",
   "records": [
     {
@@ -24,8 +24,8 @@
       "access": "public_artifacts_only",
       "content_id": "1fde160744342a0cd05b3cb68d51c21f3cda3d605c7bded3fd16f9b0da34f190",
       "prev": null,
-      "signature": "Ftx3sueCcDdeqfcTQiZw2ZwPHSvHuwkY8vjPmY/jJ+vCpz1k8T4FktpNvV7J0WGb9CuCKCXSbCBelnKVLF9GAg==",
-      "pubkey": "348f273d8525e9d663dd288c679e58b7e4c914a935be4bf7767d1c3985d63844"
+      "pubkey": "348f273d8525e9d663dd288c679e58b7e4c914a935be4bf7767d1c3985d63844",
+      "signature": "Ftx3sueCcDdeqfcTQiZw2ZwPHSvHuwkY8vjPmY/jJ+vCpz1k8T4FktpNvV7J0WGb9CuCKCXSbCBelnKVLF9GAg=="
     },
     {
       "schema": "csoai.regulatory-deadline-record/0.1",
@@ -47,8 +47,8 @@
       "access": "public_artifacts_only",
       "content_id": "820f5ebee133cecf4ffe7b60d8e85b59e67515123a8b94d6db08dd5a8657d014",
       "prev": "1fde160744342a0cd05b3cb68d51c21f3cda3d605c7bded3fd16f9b0da34f190",
-      "signature": "0uYvjbAh148ewq6tJpVVRfD4vcNkTDfUf+rhGeQdSTrRddRMBRiUSdp0gdGB5ssZbRIYFTykkBWvG7/TAF0VCw==",
-      "pubkey": "348f273d8525e9d663dd288c679e58b7e4c914a935be4bf7767d1c3985d63844"
+      "pubkey": "348f273d8525e9d663dd288c679e58b7e4c914a935be4bf7767d1c3985d63844",
+      "signature": "0uYvjbAh148ewq6tJpVVRfD4vcNkTDfUf+rhGeQdSTrRddRMBRiUSdp0gdGB5ssZbRIYFTykkBWvG7/TAF0VCw=="
     },
     {
       "schema": "csoai.regulatory-deadline-record/0.1",
@@ -70,8 +70,8 @@
       "access": "public_artifacts_only",
       "content_id": "644964bfe14c4dc725d7306207d6b22015a9f70703cf85dc750417cffac2916f",
       "prev": "820f5ebee133cecf4ffe7b60d8e85b59e67515123a8b94d6db08dd5a8657d014",
-      "signature": "6L1REquLWGY7JqKWRR3qIPVr2QmB1/ZgzSnsA/1B5hizbxFZW/s9l+n4GxSCB+q0Za7kqS8bDrJT8hKRqTG3CA==",
-      "pubkey": "348f273d8525e9d663dd288c679e58b7e4c914a935be4bf7767d1c3985d63844"
+      "pubkey": "348f273d8525e9d663dd288c679e58b7e4c914a935be4bf7767d1c3985d63844",
+      "signature": "6L1REquLWGY7JqKWRR3qIPVr2QmB1/ZgzSnsA/1B5hizbxFZW/s9l+n4GxSCB+q0Za7kqS8bDrJT8hKRqTG3CA=="
     },
     {
       "schema": "csoai.regulatory-deadline-record/0.1",
@@ -93,8 +93,8 @@
       "access": "public_artifacts_only",
       "content_id": "84bb285fcac2dda0b0d14d783dab77f38f67391fe674eee88c0ec6c5a1c3899e",
       "prev": "644964bfe14c4dc725d7306207d6b22015a9f70703cf85dc750417cffac2916f",
-      "signature": "WI6B3anISUccZxKe9URolPG9UDXRWwGk+4Eaa/d2hYj5dRo3LrMc78I88GxU4DJHzC5OvW75fbOtNpgjYzwXBg==",
-      "pubkey": "348f273d8525e9d663dd288c679e58b7e4c914a935be4bf7767d1c3985d63844"
+      "pubkey": "348f273d8525e9d663dd288c679e58b7e4c914a935be4bf7767d1c3985d63844",
+      "signature": "WI6B3anISUccZxKe9URolPG9UDXRWwGk+4Eaa/d2hYj5dRo3LrMc78I88GxU4DJHzC5OvW75fbOtNpgjYzwXBg=="
     },
     {
       "schema": "csoai.regulatory-deadline-record/0.1",
@@ -116,8 +116,8 @@
       "access": "public_artifacts_only",
       "content_id": "7832f0e2558e227becf26669488c2bde9cfaa3a6b8a3cbeb2e0e4bd35562696d",
       "prev": "84bb285fcac2dda0b0d14d783dab77f38f67391fe674eee88c0ec6c5a1c3899e",
-      "signature": "42mgK+PIDDMImR/rN+JNKQhDLCb805Ojs5XdL3ilAbvCV2guQ7MMJryh1XUcsTcmDD21ghH793KJChH28TQiBg==",
-      "pubkey": "348f273d8525e9d663dd288c679e58b7e4c914a935be4bf7767d1c3985d63844"
+      "pubkey": "348f273d8525e9d663dd288c679e58b7e4c914a935be4bf7767d1c3985d63844",
+      "signature": "42mgK+PIDDMImR/rN+JNKQhDLCb805Ojs5XdL3ilAbvCV2guQ7MMJryh1XUcsTcmDD21ghH793KJChH28TQiBg=="
     },
     {
       "schema": "csoai.regulatory-deadline-record/0.1",
@@ -139,8 +139,8 @@
       "access": "public_artifacts_only",
       "content_id": "7f164a2998c792a3f871a4b4b815e60cf8f57583d22dd83e477f96cd88ffee36",
       "prev": "7832f0e2558e227becf26669488c2bde9cfaa3a6b8a3cbeb2e0e4bd35562696d",
-      "signature": "YF+Pk6cqODz8BOLptt52tUFpftVpAqJ5VYOqEPfnvXVY4yiyH9WNp4oQZLWawRTtZDo+xyC9D65Tu9FcPxVaAw==",
-      "pubkey": "348f273d8525e9d663dd288c679e58b7e4c914a935be4bf7767d1c3985d63844"
+      "pubkey": "348f273d8525e9d663dd288c679e58b7e4c914a935be4bf7767d1c3985d63844",
+      "signature": "YF+Pk6cqODz8BOLptt52tUFpftVpAqJ5VYOqEPfnvXVY4yiyH9WNp4oQZLWawRTtZDo+xyC9D65Tu9FcPxVaAw=="
     },
     {
       "schema": "csoai.regulatory-deadline-record/0.1",
@@ -162,8 +162,8 @@
       "access": "public_artifacts_only",
       "content_id": "4035436fc52ff2dd9b61281d710966b992b748508b0db97a1c8bf9fd281e8c22",
       "prev": "7f164a2998c792a3f871a4b4b815e60cf8f57583d22dd83e477f96cd88ffee36",
-      "signature": "S7LtMF5sKjasq2UDCmrPZJem6GhQF66npLX7+ar8bNFdEcuM64fgsZEWYJf3z1wOmZQVRFsXjo8qtqWx1bdCCQ==",
-      "pubkey": "348f273d8525e9d663dd288c679e58b7e4c914a935be4bf7767d1c3985d63844"
+      "pubkey": "348f273d8525e9d663dd288c679e58b7e4c914a935be4bf7767d1c3985d63844",
+      "signature": "S7LtMF5sKjasq2UDCmrPZJem6GhQF66npLX7+ar8bNFdEcuM64fgsZEWYJf3z1wOmZQVRFsXjo8qtqWx1bdCCQ=="
     },
     {
       "schema": "csoai.regulatory-deadline-record/0.1",
@@ -185,8 +185,8 @@
       "access": "public_artifacts_only",
       "content_id": "1b974fc80aa2746ba30133a249981c5dec098107dbe6934173d9449a74687625",
       "prev": "4035436fc52ff2dd9b61281d710966b992b748508b0db97a1c8bf9fd281e8c22",
-      "signature": "4LnB7yfCELLjq24+Ywp/PP5m5WFPp0Hkv8NCzjwQaXt7sNq0I+slVW2I/GuES3uktOI66XwI8sfIKrTP5na7Dg==",
-      "pubkey": "348f273d8525e9d663dd288c679e58b7e4c914a935be4bf7767d1c3985d63844"
+      "pubkey": "348f273d8525e9d663dd288c679e58b7e4c914a935be4bf7767d1c3985d63844",
+      "signature": "4LnB7yfCELLjq24+Ywp/PP5m5WFPp0Hkv8NCzjwQaXt7sNq0I+slVW2I/GuES3uktOI66XwI8sfIKrTP5na7Dg=="
     },
     {
       "schema": "csoai.regulatory-deadline-record/0.1",
@@ -208,8 +208,8 @@
       "access": "public_artifacts_only",
       "content_id": "30d3a32b02f5eae972a052fe1dca9845b583063d3ada5421772a747001507f78",
       "prev": "1b974fc80aa2746ba30133a249981c5dec098107dbe6934173d9449a74687625",
-      "signature": "ubyexTMdpAhfEIcZRi+V3Sw7Y+xTcvNtXK7goqKr0fJkOKeAuXGDEA2mUi7krpTKhELt6gv5otQnZ9MSnCUGAQ==",
-      "pubkey": "348f273d8525e9d663dd288c679e58b7e4c914a935be4bf7767d1c3985d63844"
+      "pubkey": "348f273d8525e9d663dd288c679e58b7e4c914a935be4bf7767d1c3985d63844",
+      "signature": "ubyexTMdpAhfEIcZRi+V3Sw7Y+xTcvNtXK7goqKr0fJkOKeAuXGDEA2mUi7krpTKhELt6gv5otQnZ9MSnCUGAQ=="
     },
     {
       "schema": "csoai.regulatory-deadline-record/0.1",
@@ -231,8 +231,8 @@
       "access": "public_artifacts_only",
       "content_id": "25c5a2d6fb0a0a2f3635041d01b97cc87a8c46665fb7d723f10ce5ac162afd35",
       "prev": "30d3a32b02f5eae972a052fe1dca9845b583063d3ada5421772a747001507f78",
-      "signature": "9/GjceuHZ/2RnURcVmvQMBDKhZF2e5Be6JguQ0peyxvLSHiHiadchymxu4By6p2542h7Klhcy75R3UUe8llvBA==",
-      "pubkey": "348f273d8525e9d663dd288c679e58b7e4c914a935be4bf7767d1c3985d63844"
+      "pubkey": "348f273d8525e9d663dd288c679e58b7e4c914a935be4bf7767d1c3985d63844",
+      "signature": "9/GjceuHZ/2RnURcVmvQMBDKhZF2e5Be6JguQ0peyxvLSHiHiadchymxu4By6p2542h7Klhcy75R3UUe8llvBA=="
     },
     {
       "schema": "csoai.regulatory-deadline-record/0.1",
@@ -254,8 +254,8 @@
       "access": "public_artifacts_only",
       "content_id": "3a7fefba4db84d1f48bc4cfbefdb6530d545cbb22d07b7cbb40a8d589436e847",
       "prev": "25c5a2d6fb0a0a2f3635041d01b97cc87a8c46665fb7d723f10ce5ac162afd35",
-      "signature": "FQ2LVoLwlXp0buwXojVF5f7XCeMGp2st/JfbO3E6xBiW53TSGPCzqsGKgT2kWei5XyDn8diXGeEftyfIIkRzDA==",
-      "pubkey": "348f273d8525e9d663dd288c679e58b7e4c914a935be4bf7767d1c3985d63844"
+      "pubkey": "348f273d8525e9d663dd288c679e58b7e4c914a935be4bf7767d1c3985d63844",
+      "signature": "FQ2LVoLwlXp0buwXojVF5f7XCeMGp2st/JfbO3E6xBiW53TSGPCzqsGKgT2kWei5XyDn8diXGeEftyfIIkRzDA=="
     },
     {
       "schema": "csoai.regulatory-deadline-record/0.1",
@@ -277,8 +277,8 @@
       "access": "public_artifacts_only",
       "content_id": "ec6c3ba88ec837a4d01c34c49ccbaea6592641601d6fc5bfa58ffb80bac10a1d",
       "prev": "3a7fefba4db84d1f48bc4cfbefdb6530d545cbb22d07b7cbb40a8d589436e847",
-      "signature": "fEMCOAPUYdJjC6oWvJYWfVtsuJ6hcjM/T4rrVO646rQ62Bwrj9uW/u/OwIwA/YRvbXyI46FywaqqVMeIdiC9BQ==",
-      "pubkey": "348f273d8525e9d663dd288c679e58b7e4c914a935be4bf7767d1c3985d63844"
+      "pubkey": "348f273d8525e9d663dd288c679e58b7e4c914a935be4bf7767d1c3985d63844",
+      "signature": "fEMCOAPUYdJjC6oWvJYWfVtsuJ6hcjM/T4rrVO646rQ62Bwrj9uW/u/OwIwA/YRvbXyI46FywaqqVMeIdiC9BQ=="
     },
     {
       "schema": "csoai.regulatory-deadline-record/0.1",
@@ -300,8 +300,8 @@
       "access": "public_artifacts_only",
       "content_id": "a8002d61c93e60ccebd1c1aaaa538ad43f355be5b201416c29b766f9615b3a0d",
       "prev": "ec6c3ba88ec837a4d01c34c49ccbaea6592641601d6fc5bfa58ffb80bac10a1d",
-      "signature": "gOU3XpeOAA/GfgOZ6q1L3ZScMSYFzg//gEdvtvxPUbeDT80NKICsgALnsKaObvIuh1ARh/CfDERaPcmA7xt6CQ==",
-      "pubkey": "348f273d8525e9d663dd288c679e58b7e4c914a935be4bf7767d1c3985d63844"
+      "pubkey": "348f273d8525e9d663dd288c679e58b7e4c914a935be4bf7767d1c3985d63844",
+      "signature": "gOU3XpeOAA/GfgOZ6q1L3ZScMSYFzg//gEdvtvxPUbeDT80NKICsgALnsKaObvIuh1ARh/CfDERaPcmA7xt6CQ=="
     },
     {
       "schema": "csoai.regulatory-deadline-record/0.1",
@@ -323,8 +323,8 @@
       "access": "public_artifacts_only",
       "content_id": "efa485b1c83845a36ae1f1e7f5e3ea943d1ed5b98dcf6433a353972c48e23f89",
       "prev": "a8002d61c93e60ccebd1c1aaaa538ad43f355be5b201416c29b766f9615b3a0d",
-      "signature": "R6yqZm7i0wArlrL1na0Q3XxXIr874imB+C5NW3rMWiFzCy5CPZgcayqBDvUkCJV8N0o+dIoZ3o89zIaqemkJCQ==",
-      "pubkey": "348f273d8525e9d663dd288c679e58b7e4c914a935be4bf7767d1c3985d63844"
+      "pubkey": "348f273d8525e9d663dd288c679e58b7e4c914a935be4bf7767d1c3985d63844",
+      "signature": "R6yqZm7i0wArlrL1na0Q3XxXIr874imB+C5NW3rMWiFzCy5CPZgcayqBDvUkCJV8N0o+dIoZ3o89zIaqemkJCQ=="
     },
     {
       "schema": "csoai.regulatory-deadline-record/0.1",
@@ -346,8 +346,8 @@
       "access": "public_artifacts_only",
       "content_id": "9db5fcc6a821be1c3b476c4888873757411b64f4d261e3a8b23953ad0936c814",
       "prev": "efa485b1c83845a36ae1f1e7f5e3ea943d1ed5b98dcf6433a353972c48e23f89",
-      "signature": "0COuqoVr5uECGVxFj5TbDwAYzeE2MYP7FmfNOleB6ChxPrbV4VcplJPo1ZEFew4ds6MTOdKUETMQJbkIxWOqDA==",
-      "pubkey": "348f273d8525e9d663dd288c679e58b7e4c914a935be4bf7767d1c3985d63844"
+      "pubkey": "348f273d8525e9d663dd288c679e58b7e4c914a935be4bf7767d1c3985d63844",
+      "signature": "0COuqoVr5uECGVxFj5TbDwAYzeE2MYP7FmfNOleB6ChxPrbV4VcplJPo1ZEFew4ds6MTOdKUETMQJbkIxWOqDA=="
     },
     {
       "schema": "csoai.regulatory-deadline-record/0.1",
@@ -369,8 +369,8 @@
       "access": "public_artifacts_only",
       "content_id": "4c3e3bf159e0b7a28ad6d55b0893b10fda4533cb2e6b35f613ae8b583c0e9aa3",
       "prev": "9db5fcc6a821be1c3b476c4888873757411b64f4d261e3a8b23953ad0936c814",
-      "signature": "SpY1km2/+mK6+KsbhkJsunvGSngek9KeNOvU+pIq/yk0b+1b+uPkPl/NK+IVWQdWHik3NZqpk1DerV1O+acmAg==",
-      "pubkey": "348f273d8525e9d663dd288c679e58b7e4c914a935be4bf7767d1c3985d63844"
+      "pubkey": "348f273d8525e9d663dd288c679e58b7e4c914a935be4bf7767d1c3985d63844",
+      "signature": "SpY1km2/+mK6+KsbhkJsunvGSngek9KeNOvU+pIq/yk0b+1b+uPkPl/NK+IVWQdWHik3NZqpk1DerV1O+acmAg=="
     },
     {
       "schema": "csoai.regulatory-deadline-record/0.1",
@@ -392,8 +392,8 @@
       "access": "public_artifacts_only",
       "content_id": "423aa255841a9852cf5afe505d891519e7e78c30c5d1c6e96c6ddb883f50a6a7",
       "prev": "4c3e3bf159e0b7a28ad6d55b0893b10fda4533cb2e6b35f613ae8b583c0e9aa3",
-      "signature": "zQlDomRAeTMxqtCRWWxKbbU4oA2NzAXFOOvML/lZqGNk8xm9ArV06bUzz2fHnLCBAuxlfhuOfv2QTfApCyLuAA==",
-      "pubkey": "348f273d8525e9d663dd288c679e58b7e4c914a935be4bf7767d1c3985d63844"
+      "pubkey": "348f273d8525e9d663dd288c679e58b7e4c914a935be4bf7767d1c3985d63844",
+      "signature": "zQlDomRAeTMxqtCRWWxKbbU4oA2NzAXFOOvML/lZqGNk8xm9ArV06bUzz2fHnLCBAuxlfhuOfv2QTfApCyLuAA=="
     },
     {
       "schema": "csoai.regulatory-deadline-record/0.1",
@@ -415,8 +415,8 @@
       "access": "public_artifacts_only",
       "content_id": "87dfcb88ce854fc5cebe4f8ea77cb0ca7ff62647e83d0771f8030652492975fa",
       "prev": "423aa255841a9852cf5afe505d891519e7e78c30c5d1c6e96c6ddb883f50a6a7",
-      "signature": "3wsYDKvj2DM9T+tzobftg41DwFV16BH75PlvY4vKCtpxOd2DteADP4zcQLY46vTlSJaqNGaddrU9C5f6Cy2YAg==",
-      "pubkey": "348f273d8525e9d663dd288c679e58b7e4c914a935be4bf7767d1c3985d63844"
+      "pubkey": "348f273d8525e9d663dd288c679e58b7e4c914a935be4bf7767d1c3985d63844",
+      "signature": "3wsYDKvj2DM9T+tzobftg41DwFV16BH75PlvY4vKCtpxOd2DteADP4zcQLY46vTlSJaqNGaddrU9C5f6Cy2YAg=="
     },
     {
       "schema": "csoai.regulatory-deadline-record/0.1",
@@ -438,8 +438,8 @@
       "access": "public_artifacts_only",
       "content_id": "28084c59e151738e3f86fb742fa3f8eaffe578cc0857bdb7b6888cb9ed434665",
       "prev": "87dfcb88ce854fc5cebe4f8ea77cb0ca7ff62647e83d0771f8030652492975fa",
-      "signature": "4tvjfX690OjENFVzboGRKZGGKOxlptcVCzmrxYEWmIGihDsAORkBE/r5d7D7vf4bsdWQOr/9/9W329E6xYFqBg==",
-      "pubkey": "348f273d8525e9d663dd288c679e58b7e4c914a935be4bf7767d1c3985d63844"
+      "pubkey": "348f273d8525e9d663dd288c679e58b7e4c914a935be4bf7767d1c3985d63844",
+      "signature": "4tvjfX690OjENFVzboGRKZGGKOxlptcVCzmrxYEWmIGihDsAORkBE/r5d7D7vf4bsdWQOr/9/9W329E6xYFqBg=="
     }
   ]
 }

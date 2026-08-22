@@ -1,7 +1,7 @@
 {
   "schema": "csoai.orbital-ai-measured-current-state/0.1",
   "generated": "2026-08-21T08:30:00Z",
-  "doctrine": "Coverage-extension of the signed measurement spine to in-orbit AI. The core fact: every in-orbit AI result is self-reported — no independent body measures on-board AI behaviour, no space software-assurance standard covers AI (ECSS/NASA/DO-178C handle deterministic SW only), jurisdiction undefined. We record what was publicly claimed + what is independently verifiable, with deterministic predicates. Never novel accusations. Measurement, not certification.",
+  "doctrine": "Coverage-extension of the signed measurement spine to in-orbit AI. The core fact: every in-orbit AI result is self-reported — no independent body measures on-board AI behaviour, no space software-assurance standard covers AI (ECSS/NASA/DO-178C handle deterministic SW only), jurisdiction undefined. We record what was publicly claimed + what is independently verifiable, with deterministic predicates. Never novel accusations. Measurement, not certification. Receipt format is RFC 9943 (SCITT)-aligned: COSE-style signed statement on an append-only log, offline-verifiable against a published key.",
   "note": "deployed vs announced separated throughout. Economics contested (Altman: 'ridiculous'; Gartner: 'bubble'; thermal: 1 rack = 80 m2 radiator).",
   "gap": {
     "no_standard": true,
@@ -27,8 +27,8 @@
       },
       "content_id": "8686520eb34499c9caa7e5a1d2727a366bc94577eb72a83401d53f347c1cd615",
       "prev": null,
-      "signature": "iV1zJZWS8jymy4OGjzMINQlsv1YNINxV4kouNA6lrrOMfWkSGaGmasZDWV0UuHXl8iBM9Ad1TQR7HzESyTbADw==",
-      "pubkey": "348f273d8525e9d663dd288c679e58b7e4c914a935be4bf7767d1c3985d63844"
+      "pubkey": "348f273d8525e9d663dd288c679e58b7e4c914a935be4bf7767d1c3985d63844",
+      "signature": "iV1zJZWS8jymy4OGjzMINQlsv1YNINxV4kouNA6lrrOMfWkSGaGmasZDWV0UuHXl8iBM9Ad1TQR7HzESyTbADw=="
     },
     {
       "subject": "Axiom Space Orbital Data Centers (AxDCU-1 + 2 LEO nodes)",
@@ -47,8 +47,8 @@
       },
       "content_id": "d43eb7eed01b917d3ebe0e2907ad79aeb9487e53e6e6ee3778457073c314ceeb",
       "prev": "8686520eb34499c9caa7e5a1d2727a366bc94577eb72a83401d53f347c1cd615",
-      "signature": "u/g5Q9inTmWbH2Fg+QMuhuLwcr6UpquH0RCLlwexAM8/ioNIOgkDoWz+wQLXXm06gyI/lpG3M+vmBssd7ohADg==",
-      "pubkey": "348f273d8525e9d663dd288c679e58b7e4c914a935be4bf7767d1c3985d63844"
+      "pubkey": "348f273d8525e9d663dd288c679e58b7e4c914a935be4bf7767d1c3985d63844",
+      "signature": "u/g5Q9inTmWbH2Fg+QMuhuLwcr6UpquH0RCLlwexAM8/ioNIOgkDoWz+wQLXXm06gyI/lpG3M+vmBssd7ohADg=="
     },
     {
       "subject": "Three-Body Computing Constellation (Zhejiang Lab / ADA Space)",
@@ -67,8 +67,8 @@
       },
       "content_id": "95df4931f7da2a9a83e563885f4791ae720aef300afef9ccb361856c60236295",
       "prev": "d43eb7eed01b917d3ebe0e2907ad79aeb9487e53e6e6ee3778457073c314ceeb",
-      "signature": "Qi9j3HyPJ/PpqJmYBS/GshtC8vhzJwIaDyf4RnF6r13mUz+tUFcfJTJ9XPVpbfhWCpaF0wjIqdnWcRTGUOzuAw==",
-      "pubkey": "348f273d8525e9d663dd288c679e58b7e4c914a935be4bf7767d1c3985d63844"
+      "pubkey": "348f273d8525e9d663dd288c679e58b7e4c914a935be4bf7767d1c3985d63844",
+      "signature": "Qi9j3HyPJ/PpqJmYBS/GshtC8vhzJwIaDyf4RnF6r13mUz+tUFcfJTJ9XPVpbfhWCpaF0wjIqdnWcRTGUOzuAw=="
     },
     {
       "subject": "SpaceX orbital data-centre filing",
@@ -87,8 +87,8 @@
       },
       "content_id": "019a56f50d8b8c230097fe575c35602425945b03c18856edd13bb8fc5b7f76c8",
       "prev": "95df4931f7da2a9a83e563885f4791ae720aef300afef9ccb361856c60236295",
-      "signature": "kG1MRdoEuFfkCRiqlqBjUp3EF3/x9oFlc7kx1wPI18RM4JncLuBhZzo0pQilIQRwl6fYUsE4LHkEj1fD3jEHAQ==",
-      "pubkey": "348f273d8525e9d663dd288c679e58b7e4c914a935be4bf7767d1c3985d63844"
+      "pubkey": "348f273d8525e9d663dd288c679e58b7e4c914a935be4bf7767d1c3985d63844",
+      "signature": "kG1MRdoEuFfkCRiqlqBjUp3EF3/x9oFlc7kx1wPI18RM4JncLuBhZzo0pQilIQRwl6fYUsE4LHkEj1fD3jEHAQ=="
     },
     {
       "subject": "Google Project Suncatcher",
@@ -107,8 +107,8 @@
       },
       "content_id": "69fab4ab7bfda8a336042f79b0e9186ed173077e89d215c637d91d6230355006",
       "prev": "019a56f50d8b8c230097fe575c35602425945b03c18856edd13bb8fc5b7f76c8",
-      "signature": "gbD8maY35dC3e8GRmbCCyaw2GLsQELAlHCSpX+zzqE559nvyvClfMG7yXjEAtwEoPLS/d6Z4rGXZGhoivxFMAg==",
-      "pubkey": "348f273d8525e9d663dd288c679e58b7e4c914a935be4bf7767d1c3985d63844"
+      "pubkey": "348f273d8525e9d663dd288c679e58b7e4c914a935be4bf7767d1c3985d63844",
+      "signature": "gbD8maY35dC3e8GRmbCCyaw2GLsQELAlHCSpX+zzqE559nvyvClfMG7yXjEAtwEoPLS/d6Z4rGXZGhoivxFMAg=="
     }
   ]
 }
