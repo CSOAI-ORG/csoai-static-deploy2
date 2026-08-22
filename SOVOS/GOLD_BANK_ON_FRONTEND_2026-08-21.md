@@ -18,3 +18,10 @@ The lane's CI ships non-prerendered builds (the prerender step fails on the runn
 
 ## SIGIL
 `gold-bank-league-frontend-2026-08-21-jeeves`
+
+## UPDATE — 14/14 live + HF fixed (the batch, partly)
+- **14/14 routes live** (incl. gspc-verify) · fleet-sweep full (rank+jail+league) · gold in bundle
+- **HF datasets FIXED** via huggingface_hub: gspc-swarm + gspc-prv READMEs canonicalized ("13 of 14", slot-15 killed)
+- **HF Space creation blocked** (402 — needs paid plan); the live gspc-verify on councilof.ai is the real verifier
+- **Deploy war root cause**: the lane's deploy.yml HAS `playwright install --with-deps chromium` + prerender, but their builds STILL ship non-prerendered — either `--with-deps` fails on the runner (sudo) or the prerender times out at 900s wait. My reclaim deploy (ed002798) is currently live.
+- **There are TWO CF projects**: csoai-site (old static/DEFONEOS) vs councilof-ai (this site) — a lane may be conflating them.
