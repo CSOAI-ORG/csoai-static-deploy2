@@ -12,8 +12,8 @@
 //   owner-gated start  — paused, only the CEO starts it
 
 const FLEET = {
-  as_of: '2026-08-17T12:10Z',
-  note: 'Public fleet map — sanitized. Internal names, endpoints and keys are never published.',
+  as_of: '2026-08-21T06:20Z',
+  note: 'Public fleet map — sanitized. Internal names, endpoints and keys are never published. Verified 21 Aug via runpodctl: 3 RUNNING pods (~$40/day). Mine-pod A100 is IDLE (GPU 0%) and still billed $1.39/hr — owner-decides stop-when-idle.',
   workers: [
     {
       role: 'arena measurement worker',
@@ -22,16 +22,22 @@ const FLEET = {
       policy: 'keep-flying',
     },
     {
-      role: 'heavy measurement worker',
+      role: 'heavy measurement worker (idle)',
       gpu: 'A100',
-      status: 'running',
-      policy: 'billed, light touch',
+      status: 'idle-gpu-0%',
+      policy: 'owner-decides-stop-when-idle ($1.39/hr)',
     },
     {
-      role: 'merge / weld worker',
-      gpu: 'A100',
-      status: 'paused',
-      policy: 'owner-gated start',
+      role: 'repull worker',
+      gpu: 'RTX 3090',
+      status: 'running',
+      policy: 'keep-flying',
+    },
+    {
+      role: 'cpu sink',
+      gpu: 'cpu',
+      status: 'running',
+      policy: 'keep-flying (cheap)',
     },
   ],
   substrate: ['Cloudflare Pages', 'Oracle always-free micros', 'Kaggle'],
