@@ -12,8 +12,8 @@
 //   owner-gated start  — paused, only the CEO starts it
 
 const FLEET = {
-  as_of: '2026-08-17T12:10Z',
-  note: 'Public fleet map — sanitized. Internal names, endpoints and keys are never published.',
+  as_of: '2026-08-21T05:30Z',
+  note: 'Public fleet map — sanitized. Internal names, endpoints and keys are never published. Verified 21 Aug: RunPod API edge-blocked (403), mine pod SSH timed out — status below is last-known-truth + owner flags, not a live poll.',
   workers: [
     {
       role: 'arena measurement worker',
@@ -32,6 +32,12 @@ const FLEET = {
       gpu: 'A100',
       status: 'paused',
       policy: 'owner-gated start',
+    },
+    {
+      role: 'mine pod (idle)',
+      gpu: 'A100',
+      status: 'idle-gpu-0%',
+      policy: 'owner-decides-stop-when-idle (still $1.39/hr)',
     },
   ],
   substrate: ['Cloudflare Pages', 'Oracle always-free micros', 'Kaggle'],

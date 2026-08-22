@@ -1,9 +1,9 @@
 {
   "name": "CSOAI Measurement Agent",
-  "description": "Independent AI-governance measurement body. Publishes frozen benchmark harnesses, measures models and agent systems under deterministic conditions, and signs results (Ed25519) so evidence is recompute-able by any third party. No certification, accreditation, or enforcement authority \u2014 we measure, we publish harnesses, others recompute.",
+  "description": "Independent AI-governance measurement body. Publishes frozen benchmark harnesses, measures models and agent systems under deterministic conditions, and signs results (Ed25519) so evidence is recompute-able by any third party. No certification, accreditation, or enforcement authority — we measure, we publish harnesses, others recompute.",
   "provider": {
     "url": "https://csoai.org",
-    "organization": "CSOAI Ltd"
+    "organization": "Council of AI (CSOAI LTD, UK #16939677)"
   },
   "version": "0.1.0",
   "documentationUrl": "https://csoai.org",
@@ -15,7 +15,7 @@
     {
       "id": "measured-leaderboard",
       "name": "Measured results readout",
-      "description": "Returns measured benchmark results only \u2014 official lm-eval-harness format runs on frozen splits with confidence intervals. No fabricated baselines."
+      "description": "Returns measured benchmark results only — official lm-eval-harness format runs on frozen splits with confidence intervals. No fabricated baselines."
     },
     {
       "id": "health",
@@ -25,11 +25,22 @@
   ],
   "signatures": [
     {
-      "protected": "eyJhbGciOiJFZERTQSIsInR5cCI6IkpXVCJ9",
-      "signature": "i_cXKaOWIxOSe9x8k8kSXM1LlXqoKxVR5bJ8vvnV5YjBWKG8po-7e641Kr0BcNAEBZDJCOaDhbvuRCYlkh2pAQ",
+      "protected": "eyJhbGciOiJFZERTQSIsImtpZCI6ImRpZDp3ZWI6Y3NvYWkub3JnI3NpdGUtcmVsZWFzZS0xIiwidHlwIjoiSldUIn0",
+      "signature": "DHH0G2Nplh-HTT6sRtmou1K09VKCsnCYAgN3jEtE7FIjytthgqp2o_psMWVBc_uzgrMdA11QU0zIhvLmc7voAw",
       "header": {
         "typ": "JWT"
       }
     }
-  ]
+  ],
+  "identity": {
+    "did": "did:web:csoai.org",
+    "didDocument": "https://csoai.org/.well-known/did.json",
+    "signedWith": "did:web:csoai.org#site-release-1"
+  },
+  "verification": {
+    "canon": "json.dumps(payload without 'signatures', sort_keys=True, separators=(',',':'), ensure_ascii=False)",
+    "contentId": "sha256(canonical utf-8) as lowercase hex",
+    "signature": "Ed25519 over contentId.encode(); public keys published in the DID document",
+    "verifyUrl": "https://councilof.ai/verify"
+  }
 }
