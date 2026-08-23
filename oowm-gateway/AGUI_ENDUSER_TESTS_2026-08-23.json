@@ -1,0 +1,25 @@
+{
+  "schema": "csoai.agui-enduser-tests/0.1",
+  "ts": "2026-08-23T09:21:21Z",
+  "passing": {
+    "researcher": {
+      "leaderboard": "390 rows",
+      "jail": "real measurement bank"
+    },
+    "regulator": {
+      "compliance": "6 tiers",
+      "register": "5 signed records"
+    },
+    "consumer_gamer": {
+      "games": "7 games (connectx,rps,halite,tic_tac_toe,nim21)",
+      "cross": "lookup OK"
+    },
+    "dev": {
+      "oowm_route": "/oowm (domain router -> model) live"
+    }
+  },
+  "gap": {
+    "sim_data_plane_4190": "DELIBERATELY DOWN \u2014 ui-sim-world package renamed .DISABLED-20260823 (sim spawn/step not available; games/arena/register still work on :4192)"
+  },
+  "honest": "AG-UI is end-user functional on researcher/regulator/consumer/dev surfaces via :4191->:4192. The ONLY gap is :4190 sim data-plane (spawn/step), tied to the deliberately-disabled sim-world package \u2014 a separate decision, not a bug."
+}
