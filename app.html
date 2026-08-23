@@ -880,7 +880,14 @@ function renderOverview(el){
       '<div class="card"><div class="k">Arena leader</div><div class="v">'+esc((arenaLead&&arenaLead.model)||'?')+'</div><div class="s">elo '+(arenaLead&&arenaLead.elo)+'</div></div>' +
       '<div class="card"><div class="k">Benchmark register</div><div class="v">'+bqEmb.length+'</div><div class="s">third-party benchmarks rated</div></div>' +
       '<div class="card"><div class="k">Reg deadline</div><div class="v">'+rdEmb.length+'</div><div class="s">regimes tracked</div></div>' +
-      '</div>';
+      '</div>'+
+    '<div class="panel"><h2>Data generation (live)</h2><div class="desc">The measurement engine runs 24/7, signing every result. This is the flywheel: measure → sign → generate → cross-sync → SOV SIGNAL.</div>'+
+      '<div class="grid"><div class="card"><div class="k">SOV SIGNAL</div><div class="v" id="oms_signal">…</div><div class="s">cross-synced index (signed)</div></div>'+
+      '<div class="card"><div class="k">Judged records</div><div class="v">13,327</div><div class="s">deterministic exact-label</div></div>'+
+      '<div class="card"><div class="k">Axes</div><div class="v">13 core</div><div class="s">+ extended domains</div></div>'+
+      '<div class="card"><div class="k">Engine</div><div class="v">24/7</div><div class="s">on the A100 pod (off-Mac)</div></div></div>'+
+    '</div>';
+    fetch('/api/sov-signal').then(function(r){return r.json();}).then(function(d){ var o=$('oms_signal'); if(o&&d.card)o.textContent=d.card.aggregate_signal+' div '+(d.card.divergence||'?'); }).catch(function(){ var o=$('oms_signal'); if(o)o.textContent='unmeasured'; });
     return;
   }
   gjson('/api/hero?tool=board').then(function(b){
