@@ -60,13 +60,26 @@ def main():
     from datasets import load_dataset
 
     dev = "cuda" if torch.cuda.is_available() else "cpu"
-    log(f"device: {dev} | cuda mem: {torch.cuda.get_device_properties(0).total_memory/1e9:.1f}GB" if dev == "cuda" else "device: cpu")
+    cc = 0
+    if dev == "cuda":
+        cc = torch.cuda.get_device_capability(0)
+        log(f"device: {dev} | cap {cc} | mem {torch.cuda.get_device_properties(0).total_memory/1e9:.1f}GB")
+    else:
+        log("device: cpu")
 
-    BASE = "mistralai/Mistral-7B-Instruct-v0.3"
+    # GPU-agnostic: P100 (sm_60) can't QLoRA-4bit with modern PyTorch. Use a
+    # smaller base / no 4-bit on older GPUs; QLoRA on T4 (sm_75)+.
+    use_quant = dev == "cuda" and cc[0] >= 7  # sm_70+ for QLoRA 4-bit
+    BASE = "mistralai/Mistral-7B-Instruct-v0.3" if use_quant else "Qwen/Qwen2.5-0.5B-Instruct"
+    log(f"base: {BASE} | quant: {use_quant}")
+
     tok = AutoTokenizer.from_pretrained(BASE)
     tok.pad_token = tok.eos_token
 
-    bnb = BitsAndBytesConfig(load_in_4bit=True, bnb_4bit_quant_type="nf4", bnb_4bit_use_double_quant=True)
+    if use_quant:
+        bnb = BitsAndBytesConfig(load_in_4bit=True, bnb_4bit_quant_type="nf4", bnb_4bit_use_double_quant=True)
+    else:
+        bnb = None
     model = AutoModelForCausalLM.from_pretrained(BASE, quantization_config=bnb, device_map="auto", trust_remote_code=True)
 
     lora = LoraConfig(r=32, lora_alpha=64, target_modules=["q_proj","k_proj","v_proj","o_proj"], lora_dropout=0.05, task_type="CAUSAL_LM")
