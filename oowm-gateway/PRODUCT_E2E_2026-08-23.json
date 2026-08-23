@@ -1,0 +1,22 @@
+{
+  "schema": "csoai.oowm-product-e2e/0.1",
+  "ts": "2026-08-23T12:56:22Z",
+  "router_reconciled": {
+    "knowledge": "phi4:14b",
+    "governance": "mistral:7b",
+    "safety": "council-oowm",
+    "default": "mistral:7b"
+  },
+  "reconcile_verified": "phi4/mistral/council-oowm ALL LIVE + generating on the A100 (mistral returned OK, done:true). Chosen models reconciled to confirmed-generating fleet.",
+  "tunnel_fix": "Tunnel LaunchAgent kept dying (exit 255) \u2014 the recurring root cause of intermittent empty answers. Reloaded (PID 20714, exit 0), :11434 back to 14 models, resolver on :23166.",
+  "product_phases_done": [
+    "P1 model_registry",
+    "P2 route_planner (multi-objective sovereignty)",
+    "P4 arena_elo (Bradley-Terry)",
+    "P5 /oowm/explain",
+    "P8 EAT-signed routing policy",
+    "P10 reconcile-to-live"
+  ],
+  "product_tab": "oowm.html on Council OS (sidebar+index wired) + live /api/oowm-status + /oowm + /oowm/explain",
+  "honest": "Routing product is e2e: registry->planner->route->explain->sign->reconcile, all committed. The ONLY inflight flakiness is tunnel exit-255 reload (now fixed), NOT logic."
+}
