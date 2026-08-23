@@ -1,0 +1,76 @@
+{
+  "schema": "csoai.oowm-router/0.1",
+  "built_from": "govbench_oowm_* (max per-axis)",
+  "default_model": "qwen3:8b",
+  "router": {
+    "knowledge": "phi4:14b",
+    "governance": "qwen3:8b",
+    "safety": "council-oowm:latest",
+    "default": "qwen3:8b"
+  },
+  "specialists": {
+    "council-oowm:latest": {
+      "avg": 0.73,
+      "best": "safety"
+    },
+    "sov33-unified:latest": {
+      "avg": 0.87,
+      "best": "auditability"
+    },
+    "sov33-ultimate-sovereign:latest": {
+      "avg": 0.72,
+      "best": "resilience"
+    },
+    "qwen3:8b": {
+      "avg": 0.75,
+      "best": "honor"
+    },
+    "deepseek-r1:8b": {
+      "avg": 0.62,
+      "best": "safety"
+    },
+    "phi4:14b": {
+      "knowledge_bench": 1.0,
+      "best": "factual/general knowledge"
+    },
+    "nemotron-3-nano:30b": {
+      "knowledge_bench": 0.429,
+      "note": "empty-response tunnel artifacts deflate; answers correctly when responding"
+    }
+  },
+  "test_result": {
+    "optimal_routed_composite": 0.87,
+    "best_single_model": 0.867,
+    "routing_gain": "+0.003",
+    "honest_finding": "sov33-unified:latest is such a dominant all-rounder (avg 0.87, best-or-tied on 9/12 axes) that specialist routing adds only +0.003. The OOWM '12 around 1' value here is reliability (sov33-unified workhorse) + the dedicated safety specialist (council-oowm, safety 0.99), NOT per-axis composition gain on this pillar set. Composite ceiling on these pillars = 0.87.",
+    "big_model_bench": {
+      "phi4_14b": 1.0,
+      "nemotron_30b": 0.429,
+      "gemma3_12b": "in-progress",
+      "finding": "phi4:14b is the factual-knowledge specialist (1.00) beats 0.5B (0.83); route knowledge->phi4:14b, governance->sov33-unified, safety->council-oowm."
+    }
+  },
+  "reconciled_at": "2026-08-23T05:02:36Z",
+  "reconcile_note": "sov33-unified & sov33-ultimate & deepseek-r1 DROPPED from the A100 pod. Re-routed to qwen3:8b (in store). Reconcile to ACTUAL fleet, not stale config.",
+  "task_router": {
+    "knowledge": "phi4:14b",
+    "governance": "qwen3:8b",
+    "safety": "council-oowm:latest",
+    "default": "qwen3:8b"
+  },
+  "available_fleet": [
+    "phi4:14b",
+    "gemma3:12b",
+    "council-oowm:latest",
+    "qwen3:8b",
+    "mistral:7b",
+    "qwen2.5:7b",
+    "qwen3:4b",
+    "nemotron-3-nano:30b",
+    "qwen2.5:3b",
+    "llama3.2:3b",
+    "qwen2:0.5b",
+    "qwen2.5:0.5b",
+    "qwen2.5:0.5b-instruct"
+  ]
+}
