@@ -1,1 +1,155 @@
-TRUNCATED_TEST
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Council of AI — AG UI (seamless)</title>
+<meta name="description" content="Council of AI AG UI — one seamless interface: 15 side-menu tabs, chat per axis, tools and security checks inside the window. Measurement, not certification."/>
+<style>
+:root{--bg:#0b1020;--panel:#131a30;--panel2:#0f1526;--line:#243056;--accent:#4f8cff;--text:#e8ecf8;--muted:#9aa7cc;--ok:#3ddc84;--gold:#fc6}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:Inter,system-ui,sans-serif;height:100vh;display:flex;flex-direction:column}
+header{display:flex;align-items:center;gap:12px;padding:10px 18px;border-bottom:1px solid var(--line)}
+header img{width:38px;height:38px;border-radius:9px}
+header h1{font-size:16px}
+header .sub{color:var(--muted);font-size:11.5px}
+.body{display:flex;flex:1;min-height:0}
+aside{width:220px;border-right:1px solid var(--line);background:var(--panel2);overflow-y:auto;padding:8px}
+aside .grp{font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);opacity:.7;padding:12px 12px 5px}
+aside .tab{display:block;width:100%;text-align:left;background:none;border:0;color:var(--muted);padding:9px 12px;border-radius:8px;font-size:13px;cursor:pointer;margin-bottom:2px}
+aside .tab:hover{background:#1a2342;color:var(--text)}
+aside .tab.active{background:var(--accent);color:#fff;font-weight:600}
+aside .tab .dot{display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--ok);margin-right:8px;vertical-align:middle}
+main{flex:1;display:flex;flex-direction:column;min-width:0}
+.chat-head{display:flex;align-items:center;gap:10px;padding:10px 18px;border-bottom:1px solid var(--line)}
+.chat-head h2{font-size:15px}
+.chat-head .sub{color:var(--muted);font-size:11px}
+.chat-head .tools{display:flex;gap:6px;margin-left:auto;flex-wrap:wrap}
+.chat-head .tool{font-size:11px;color:var(--muted);border:1px solid var(--line);padding:3px 9px;border-radius:12px;cursor:pointer}
+.chat-head .tool:hover{color:var(--accent);border-color:var(--accent)}
+.msgs{flex:1;overflow-y:auto;padding:16px 18px;display:flex;flex-direction:column;gap:10px}
+.msg{max-width:82%;padding:10px 14px;border-radius:12px;font-size:13px;line-height:1.5}
+.msg.user{align-self:flex-end;background:var(--accent);color:#fff}
+.msg.ag{align-self:flex-start;background:var(--panel);border:1px solid var(--line)}
+.msg .win{display:block;margin-top:8px;background:var(--bg);border:1px solid var(--line);border-radius:8px;overflow:hidden}
+.msg .win iframe{width:100%;height:260px;border:0;display:block}
+.msg .win.noframe iframe{display:none}
+.msg .win.noframe:after{content:"This tool opens in a new tab (it does not allow inline embedding). Use the open ↗ link above.";display:block;padding:12px 14px;font-size:12px;color:var(--muted)}
+.msg .win .winbar{display:flex;justify-content:space-between;align-items:center;padding:6px 10px;font-size:11px;color:var(--muted);border-bottom:1px solid var(--line)}
+.msg .win .winbar a{color:var(--accent);text-decoration:none}
+.kintro{color:var(--muted);font-size:12.5px;margin-bottom:6px}
+.kblock{margin-top:10px}
+.khead{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--gold);margin-bottom:6px}
+.krow{border-left:2px solid var(--line);padding:4px 0 4px 10px;margin-bottom:6px}
+.kname{font-weight:600;font-size:12.5px}
+.kwhat{color:var(--muted);font-size:11.5px;margin-top:2px}
+.kadopt{color:var(--ok);font-size:11px;margin-top:3px}
+.kadoptlist{margin:0 0 0 18px;display:flex;flex-direction:column;gap:5px}
+.kadoptlist li{font-size:12px;line-height:1.45;color:var(--text)}
+.ksources{margin-top:8px}
+.knote{color:var(--muted);font-size:10.5px;text-decoration:none;border-bottom:1px dotted var(--line)}
+.knote:hover{color:var(--accent)}
+.kpin{border:1px solid var(--gold);border-radius:8px;padding:8px 12px;margin-top:10px;font-size:11.5px;color:var(--gold);line-height:1.5}
+.kpin b{color:var(--gold)}
+.input-bar{display:flex;gap:8px;padding:10px 18px;border-top:1px solid var(--line)}
+.input-bar input{flex:1;background:var(--panel);border:1px solid var(--line);color:var(--text);border-radius:10px;padding:10px 14px;font-size:13.5px}
+.input-bar button{background:var(--accent);color:#fff;border:0;border-radius:10px;padding:10px 18px;cursor:pointer;font-weight:600}
+footer{padding:8px 18px;border-top:1px solid var(--line);color:var(--muted);font-size:11px}
+</style>
+</head>
+<body>
+<header>
+  <img src="https://huggingface.co/Nicholastempleman/csoai-logo/resolve/main/csoai-logo-400.png" alt="CSOAI"/>
+  <div><h1>Council of AI — AG UI</h1><div class="sub">Measurement, not certification · 13 measured of 14 · one interface for every task</div></div>
+</header>
+<div class="body">
+  <aside id="tabs"></aside>
+  <main>
+    <div class="chat-head"><div><h2 id="axisTitle">Governance</h2><div class="sub" id="axisSub"></div></div>
+      <div class="tools" id="tools"></div>
+    </div>
+    <div class="msgs" id="msgs"></div>
+    <div class="input-bar">
+      <input id="inp" placeholder="New task = new chat. Ask anything about this axis…"/>
+      <button id="send">Send</button>
+    </div>
+  </main>
+</div>
+<footer>any new task is a new chat · the same AG UI for everything · verified measurement credential</footer>
+<script>
+window.__coaHeroLoaded=true;
+let AXES=[];
+const tabs=document.getElementById('tabs'),msgs=document.getElementById('msgs'),
+      title=document.getElementById('axisTitle'),sub=document.getElementById('axisSub'),
+      tools=document.getElementById('tools'),inp=document.getElementById('inp');
+fetch('agui-knowledge.json').then(r=>r.json()).then(j=>{AXES=(j.axes||[]).map(a=>({id:a.id,title:a.title,sub:a.sub||'',tools:a.tools||[],knowledge:a.knowledge||'',competitors:a.competitors||[]}));boot();}).catch(()=>{AXES=[];boot();});
+function boot(){
+function addMsg(text,role,toolLabel,toolUrl,html){
+  const d=document.createElement('div');d.className='msg '+role;
+  if(html){d.innerHTML='<span>'+text+'</span>'+html;}
+  else{d.textContent=text;}
+  if(toolUrl){
+    d.innerHTML+='<span class="win"><div class="winbar"><span>'+toolLabel+'</span><a href="'+toolUrl+'" target="_blank">open ↗</a></div>'
+      +'<iframe src="'+toolUrl+'" loading="lazy"></iframe></span>';
+    setTimeout(function(){var w=d.querySelector(".win");if(w){var f=w.querySelector("iframe");var got=false;try{got=!!(f.contentDocument||(f.contentWindow&&f.contentWindow.document));}catch(e){got=false;}if(f&&!got){w.classList.add("noframe");}}},1200);
+  }
+  msgs.appendChild(d);msgs.scrollTop=msgs.scrollHeight;
+}
+function switchAxis(ax){
+  title.textContent=ax.title;
+  sub.textContent=ax.sub;
+  tools.innerHTML=ax.tools.map(t=>'<span class="tool" data-u="'+t.u+'">'+t.t+ '</span>').join('');
+  tools.querySelectorAll('.tool').forEach(t=>t.onclick=()=>{addMsg('Opening '+t.textContent+'…','user');addMsg('Tool window — measurement, not certification.','ag',t.textContent,t.dataset.u);});
+  addMsg('AG UI ready for the '+ax.title+' axis. New task = new chat — ask or pick a tool below.','ag',null,null,ax.knowledge);
+  document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('active',x.dataset.ax===ax.id));
+}
+const MEAS=['governance','safety','provenance','continuity','jailbreak','affect','transparency','fairness','accountability','efficiency','creativity','sovereignty','care'];
+const EXTRA=['insurance','training'];
+function mkTab(ax){const b=document.createElement('button');b.className='tab';b.dataset.ax=ax.id;b.innerHTML='<span class="dot"></span>'+ax.title;b.onclick=()=>{msgs.innerHTML='';switchAxis(ax);};return b;}
+function addGroup(label){const g=document.createElement('div');g.className='grp';g.textContent=label;tabs.appendChild(g);}
+addGroup('Measurement axes');
+MEAS.forEach(id=>{const ax=AXES.find(a=>a.id===id);if(ax)tabs.appendChild(mkTab(ax));});
+addGroup('Lanes');
+EXTRA.forEach(id=>{const ax=AXES.find(a=>a.id===id);if(ax)tabs.appendChild(mkTab(ax));});
+switchAxis(AXES.find(a=>a.id==='governance')||AXES[0]);
+}
+function askViaParent(v,cur,comps){
+  return new Promise(function(resolve){
+    if(window.parent===window){resolve(null);return;}
+    var id=Math.random().toString(36).slice(2);
+    var t=setTimeout(function(){window.removeEventListener('message',h);resolve(null);},12000);
+    function h(e){
+      if(!e.data||e.data.type!=='council-chat-reply'||e.data.id!==id)return;
+      clearTimeout(t);window.removeEventListener('message',h);
+      resolve(e.data);
+    }
+    window.addEventListener('message',h);
+    window.parent.postMessage({type:'council-chat-ask',id:id,question:v,axis:cur.id},'*');
+  });
+}
+document.getElementById('send').onclick=async function(){
+  const v=inp.value.trim();if(!v)return;inp.value='';
+  addMsg(v,'user');
+  const cur=AXES.find(a=>a.id===document.querySelector('.tab.active').dataset.ax)||AXES[0];
+  const remote=await askViaParent(v,cur,cur.competitors||[]);
+  if(remote&&remote.answer){
+    addMsg(remote.answer+(remote.signature?'\n\n_'+remote.signature+'_':''),'ag');
+    return;
+  }
+  const q=v.toLowerCase();
+  let reply=null, matched=null;
+  const comps=cur.competitors||[];
+  for(const c of comps){const n=(c.name||'').toLowerCase();if(n&&q.indexOf(n)>=0){matched=c;break;}}
+  if(matched){reply='**'+matched.name+'** — '+(matched.what||'')+(matched.adopt?'\n↳ CSOAI could adopt: '+matched.adopt:'');}
+  else if(/(competitor|peer|who|leader|rival)/.test(q)){reply='Top-10 peers for '+cur.title+': '+comps.slice(0,10).map(c=>c.name).join(' · ')+'. Ask about one by name for the adopt-the-line detail.';}
+  else if(/(adopt|improve|learn|copy|should)/.test(q)){reply='The 5 adoptable improvements for '+cur.title+' are listed in the window above.';}
+  else if(/(measure|run|test|scan|probe|verify|arena)/.test(q)){reply='Use a tool chip above. Every measured result is signed evidence, never a certification.';}
+  else if(/(source|cite|where)/.test(q)){reply='Every claim traces to the source link in the window — verified research, no unstated claims.';}
+  else if(/(doctrine|measurement|certif)/.test(q)){reply='Measurement, not certification. 13 measured of 14.';}
+  else{reply=cur.title+' axis: '+cur.sub+'. Ask for a competitor by name, what to adopt, or a measure/verify action.';}
+  setTimeout(()=>addMsg(reply,'ag'),300);
+};
+inp.onkeydown=e=>{if(e.key==='Enter')document.getElementById('send').click();};
+</script>
+</body>
+</html>
