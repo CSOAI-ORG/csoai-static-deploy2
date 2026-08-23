@@ -1,12 +1,17 @@
 {
   "schema": "csoai.oowm-router/0.1",
   "built_from": "govbench_oowm_* (max per-axis)",
-  "default_model": "qwen3:8b",
+  "default_model": "mistral:7b",
   "router": {
     "knowledge": "phi4:14b",
-    "governance": "qwen3:8b",
+    "governance": "mistral:7b",
     "safety": "council-oowm:latest",
-    "default": "qwen3:8b"
+    "default": "qwen3:8b",
+    "live_providers": [
+      "runpod-a100 (fleet)",
+      "oracle (free)",
+      "kaggle (free-GPU)"
+    ]
   },
   "specialists": {
     "council-oowm:latest": {
@@ -51,7 +56,7 @@
     }
   },
   "reconciled_at": "2026-08-23T05:02:36Z",
-  "reconcile_note": "sov33-unified & sov33-ultimate & deepseek-r1 DROPPED from the A100 pod. Re-routed to qwen3:8b (in store). Reconcile to ACTUAL fleet, not stale config.",
+  "reconcile_note": "Reconciled to CONFIRMED pod models (mistral:7b, phi4:14b generate; qwen3:8b dropped from pod).",
   "task_router": {
     "knowledge": "phi4:14b",
     "governance": "qwen3:8b",
@@ -72,5 +77,10 @@
     "qwen2:0.5b",
     "qwen2.5:0.5b",
     "qwen2.5:0.5b-instruct"
-  ]
+  ],
+  "free_sites": {
+    "oracle": "141.147.73.85:8771 (always-free RAG+inference, cost=0)",
+    "kaggle": "nicktempleman/oowm-free-train (free T4 fine-tune, cost=0)",
+    "hf": "GATED on HF_TOKEN (corpus+adapter mirror)"
+  }
 }
