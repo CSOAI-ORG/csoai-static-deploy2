@@ -1,0 +1,19 @@
+{
+  "schema": "csoai.work-from-runpod/0.1",
+  "ts": "2026-08-23T10:35:07Z",
+  "architecture_goal": "ALL services work FROM the runpod (A100 /workspace, 289T); Mac is a thin client; Oracle micro2 = backup; everything in monorepo + volumes; EAT-verified",
+  "moved_to_runpod": {
+    "gateway_code": "/workspace/csoai-rag/gateway (domain_gateway.py, oowm_router.py, retrieval.py, vector_retrieval.py, oowm-router.json)",
+    "card_bank": "3,311 cards / 81,315 records",
+    "bm25_index": "3.5MB retrieval-index.pkl",
+    "co_located_gateway": ":8770 next to Ollama"
+  },
+  "honest_finding": "The pod gateway WORKS but has a 170s COLD-START (builds the 81K-card index in-memory before binding :8770) \u2014 it binds and serves after ~3 min. The Mac-side gateways (:8766/:8767) are faster (pre-built indexes) but inference round-trips the tunnel. TRUE work-from-runpod needs the pod gateway warm (or the index pre-built/loaded once).",
+  "backup": "Oracle micro2 (31G free) is the backup tier; signed card corpus + register + eat-evidence mirrored there earlier.",
+  "monorepo": "clawd/oowm-gateway + csoai-os (oowm.html product tab, live /api/oowm-status) \u2014 all committed.",
+  "next": [
+    "pre-build the card index on the pod (so gateway starts fast, no 170s cold-start)",
+    "wire Mac AG-UI to call pod gateway :8770 (not Mac :8767) for true work-from-runpod",
+    "ensure ORACLE backup covers gateway work-volume too"
+  ]
+}
