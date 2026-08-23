@@ -1,0 +1,35 @@
+# csoai-gspc-mcp — GSPC measurement MCP server (public initialize, no auth)
+#
+# ROUTES: csoai.org/mcp* and www.csoai.org/mcp* will be served by this worker
+# once deployed. This retargets the route from sov-mcp-gateway (which returns
+# 500 kind=no-token) onto this public-friendly worker.
+#
+# Deploy via GHA or manually:
+#   cd workers/csoai-gspc-mcp && npx wrangler deploy
+#
+# The route claim requires CF_ACCOUNT_ID and CF_API_TOKEN in environment.
+# GHA workflow must run wrangler deploy from this directory.
+
+name = "csoai-gspc-mcp"
+main = "src/index.js"
+compatibility_date = "2024-11-01"
+
+[observability]
+enabled = true
+
+# Routes: retarget csoai.org/mcp* from sov-mcp-gateway to this worker.
+# Worker routes beat Pages Functions for the same path.
+# NOTE: The zone must be in the same CF account as the worker.
+[[routes]]
+pattern = "csoai.org/mcp*"
+zone_name = "csoai.org"
+
+[[routes]]
+pattern = "www.csoai.org/mcp*"
+zone_name = "csoai.org"
+
+# councilof.ai/mcp* is handled by the councilof-ai repo (flagship Pages project).
+# If this repo ever owns that route, add:
+# [[routes]]
+# pattern = "councilof.ai/mcp*"
+# zone_name = "councilof.ai"
