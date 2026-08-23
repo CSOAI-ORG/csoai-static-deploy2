@@ -11,6 +11,14 @@ How to run on Kaggle: create a Notebook, GPU=P100/T4 x1, Internet=ON, paste
 /paste the kernel, run. No paid API. This is the FREE OWEM bootstrap.
 """
 import os, json, sys, time, glob, gc
+# Kaggle bundles an old bitsandbytes; QLoRA 4-bit needs >= 0.46.1
+subprocess = __import__("subprocess")
+try:
+    import bitsandbytes as bnb
+    if int(bnb.__version__.split(".")[0]) < 1 and int(bnb.__version__.split(".")[1]) < 46:
+        raise ValueError
+except Exception:
+    __import__("subprocess").run(["pip", "install", "-q", "-U", "bitsandbytes"], check=False)
 os.environ.setdefault("HF_HUB_DISABLE_TELEMETRY", "1")
 os.environ.setdefault("TRANSFORMERS_VERBOSITY", "warning")
 os.environ.setdefault("TOKENIZERS_PARALLELISM", "false")

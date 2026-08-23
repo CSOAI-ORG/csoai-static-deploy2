@@ -1,0 +1,15 @@
+{
+  "schema": "csoai.oowm-free-train-kaggle/0.1",
+  "ts": "2026-08-23T15:15:02Z",
+  "kernel": "nicktempleman/oowm-free-train",
+  "status": "KernelWorkerStatus.RUNNING (free T4, QLoRA Mistral-7B, bitsandbytes fixed)",
+  "corpus": "nicktempleman/oowm-sovereign-corpus (19.35K pairs)",
+  "gpu": "Kaggle free T4",
+  "iterations": "version 1 = bitsandbytes<0.46.1 ERROR (caught+fixed); version 2 RUNNING",
+  "honest": "Ran on free T4 (no paid GPU/OpenRouter credit). The QLoRA 4-bit needed bitsandbytes>=0.46.1 \u2014 Kaggle env had older; fixed with a pip upgrade in-kernel. Kernel is now running the sovereign fine-tune.",
+  "next": [
+    "pull kernel output when done (adapter + result json)",
+    "HF Spaces mirror the corpus+adapter \u2014 GATED on a HF_TOKEN (not set)",
+    "route the fine-tuned adapter back into the OWEM router as a new specialist"
+  ]
+}
