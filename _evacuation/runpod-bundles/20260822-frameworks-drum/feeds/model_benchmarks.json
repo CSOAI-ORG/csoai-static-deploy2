@@ -1,0 +1,46 @@
+{
+ "kind": {
+  "task": "kind-classification",
+  "baseline": 0.32,
+  "mlp_test": 0.6,
+  "promoted": true,
+  "n_train": 497,
+  "n_test": 125,
+  "note": "smoke scaffold on catalog features; real tasks attach to GovBench/GSPC findings next"
+ },
+ "binding": {
+  "task": "kind-classification",
+  "baseline": 0.896,
+  "mlp_test": 0.928,
+  "promoted": false,
+  "n_train": 497,
+  "n_test": 125,
+  "note": "smoke scaffold on catalog features; real tasks attach to GovBench/GSPC findings next"
+ },
+ "region": {
+  "task": "kind-classification",
+  "baseline": 1.0,
+  "mlp_test": 1.0,
+  "promoted": false,
+  "n_train": 497,
+  "n_test": 125,
+  "note": "smoke scaffold on catalog features; real tasks attach to GovBench/GSPC findings next"
+ },
+ "status": {
+  "task": "kind-classification",
+  "baseline": 0.576,
+  "mlp_test": 0.88,
+  "promoted": true,
+  "n_train": 497,
+  "n_test": 125,
+  "note": "smoke scaffold on catalog features; real tasks attach to GovBench/GSPC findings next"
+ },
+ "gnn": {
+  "task": "kind-classification",
+  "baseline": 0.32,
+  "mlp_reference": 0.592,
+  "gnn_test": 0.696,
+  "promoted_vs_mlp": true,
+  "transductive_note": "full-graph message passing, labels train-only (standard node-classification practice)"
+ }
+}

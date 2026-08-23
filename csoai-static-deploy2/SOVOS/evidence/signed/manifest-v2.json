@@ -1,0 +1,16 @@
+{
+  "id": "manifest-v2",
+  "kind": "machine-truth-manifest",
+  "claim": "measurement",
+  "artifact_path": "SOVOS/canon/MACHINE-TRUTH-MANIFEST-v2-2026-08-22.json",
+  "artifact_sha256": "ca9df4814bade04c1924dafd98f3a799cab9baf0bdb4b39663e2908a9f56d87c",
+  "grammar": "verified measurement credential - measurement, not certification",
+  "note": "signed on signing node; ed25519 key never leaves",
+  "signature": {
+    "kind": "ed25519",
+    "sig": "27cM5Taj76i0OURU7bPc9z+15yZLgwYT0I7rEHu0tTdFv4GWot4bpdbmEmp+6yLoEMwI5n0qluMxO+eGjm88Bg==",
+    "body_sha256": "c48ce8aa51214374b6551d33cea76c4b18b6ba5a8e22b278b8b7b1e246a646bb",
+    "pubkey": "bWbk52E47J6EkY4+pu0Hh/B1l1175AZoZsDEBr0EfWA=",
+    "note": "Ed25519 over the canonical body; verify with sign.py --verify. PQC upgrade: ML-DSA-65 via liboqs \u2014 same body, swap the primitive."
+  }
+}

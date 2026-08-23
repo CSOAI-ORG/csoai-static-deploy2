@@ -41,22 +41,34 @@
     .card:nth-of-type(2),.card:nth-of-type(3){display:none}   /* hide 'issue your own' + 'how to verify' in the PDF */
     h1{font-size:20px}
     .sig{background:#f3f3f3}
-    body::after{content:"Independently verifiable — os.meok.ai/verify.html — DEFONEOS sovereign assurance";display:block;font:10px monospace;color:#666;margin-top:12px}
+    body::after{content:"Independently verifiable — os.meok.ai/verify.html — DEFONEOS keyholder assurance";display:block;font:10px monospace;color:#666;margin-top:12px}
   }
 </style>
+
+<meta property="og:title" content="DEFONEOS — Signed Defence-AI System Card (JSP 936, verify it yourself)"/>
+<meta property="og:description" content="A cryptographically-signed, independently offline-verifiable Defence-AI System Card built 1:1 to the UK Defence AI Centre / Turing template. The JSP 936 assurance primitive — verify it yourself; tampering invalidates the signature."/>
+<meta property="og:type" content="website"/>
+<meta property="og:url" content="https://meok.ai/systemcard"/>
+<meta property="og:image" content="https://meok.ai/icon-512.png"/>
+<meta property="og:site_name" content="MEOK"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<link rel="canonical" href="https://meok.ai/systemcard.html"/>
+<link href="https://meok.ai/systemcard.llm.json" rel="alternate" title="LLM representation of this page" type="application/llm+json"/>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebPage", "name": "MEOK", "url": "https://meok.ai/systemcard", "description": "A cryptographically-signed, independently offline-verifiable Defence-AI System Card built 1:1 to the UK Defence AI Centre / Turing template. The JSP 936 assurance primitive — verify it yourself; tampering invalidates the signature.", "inLanguage": "en", "isPartOf": {"@type": "WebSite", "name": "MEOK", "url": "https://meok.ai"}}</script>
+<link rel="stylesheet" href="/css/meok-system.css"/>
 </head>
 <body><div class="wrap">
   <!-- Signed witness banner — appears in print (Cmd+P → save as PDF) -->
   <div class="witness" style="display:none;margin-top:30px;padding:14px;border:2px dashed #000;font:11px/1.6 monospace;color:#111;page-break-inside:avoid">
-    <strong style="font-size:13px">SIGNED WITNESS · DEFONEOS sovereign assurance</strong><br>
+    <strong style="font-size:13px">SIGNED WITNESS · DEFONEOS keyholder assurance</strong><br>
     Issued by: CSOAI Ltd (UK Co. No. 16939677) · DEFONEOS submission · 1 July 2026<br>
-    Crown Lineage anchored at: 1795 → 2026 (231 years of sovereign continuity)<br>
+    Crown Lineage anchored at: 1795 → 2026 (231 years of keyholder continuity)<br>
     Cryptographic binding: Ed25519 signature over SHA-256(canonical JSON) of this card.<br>
     Independent verification: see header — Verify offline button on screen, or visit <code>os.meok.ai/verify.html</code>.<br>
     No central repository: see <code>os.meok.ai/registry.html</code> for the signed-by-CSOAI-UK-16939677 card index.<br>
     Print this at A4 — the signature is preserved in the rendered card body even after pixel rasterisation.
   </div>
-  <div class="kick">DEFONEOS · Sovereign Assurance</div>
+  <div class="kick">DEFONEOS · Keyholder Assurance</div>
   <h1>A signed Defence-AI System Card you can verify yourself</h1>
   <p class="sub">Built <b>1:1 to the UK Defence AI Centre / Alan Turing Institute System Card template</b> (Overview · Concept of use · System detail · Security · Safety · Iterative requirements). JSP 936 mandates AI assurance — but there is <b>no formal way to independently validate</b> a supplier's claim, and <b>no central store</b> for cards. This closes both: an <b>Ed25519-signed</b>, <b>offline-verifiable</b>, shareable card. Don't trust a dashboard — <b>verify it below.</b></p>
 
@@ -77,7 +89,7 @@
 
   <div class="card">
     <h3>Issue your own signed card</h3>
-    <p style="font-size:13.5px;margin:2px 0 8px;color:var(--dim)">Paste any JSON (your real system-card fields) and sign it with the sovereign key. It stays here — the payload is signed and returned; nothing is stored.</p>
+    <p style="font-size:13.5px;margin:2px 0 8px;color:var(--dim)">Paste any JSON (your real system-card fields) and sign it with the keyholder key. It stays here — the payload is signed and returned; nothing is stored.</p>
     <textarea id="own" spellcheck="false">{"system":"My AI system","version":"1.0","intended_use":"decision support","human_oversight":"human-in-the-loop"}</textarea>
     <div class="row"><button class="primary" onclick="signOwn()">🔏 Sign my card</button><button class="ghost" onclick="verifyOwn()" id="voBtn" disabled>✅ Verify it</button></div>
     <div id="ownResult" class="result"></div>
@@ -86,7 +98,7 @@
 
   <div class="card">
     <h3>How to verify — for anyone, no crypto background needed</h3>
-    <p style="font-size:13.5px;margin:2px 0 6px">A signature proves two things at once: <b>who</b> issued the card (the sovereign key) and that <b>not one character</b> has been changed since. You never have to trust us — you check it yourself, even offline, even years later.</p>
+    <p style="font-size:13.5px;margin:2px 0 6px">A signature proves two things at once: <b>who</b> issued the card (the keyholder key) and that <b>not one character</b> has been changed since. You never have to trust us — you check it yourself, even offline, even years later.</p>
     <ol class="steps">
       <li><b>Easiest:</b> click <b>“Verify this card offline”</b> above. Green = authentic &amp; untampered. Then try the tamper test — one changed byte turns it red.</li>
       <li><b>Independently:</b> send the card's <code>message</code>, <code>signature</code> and <code>publicKey</code> to <code>/api/verify</code> (or any Ed25519 verifier). It answers valid / invalid — no account.</li>
@@ -97,7 +109,7 @@ import crypto from 'crypto';
 const pub = crypto.createPublicKey({ key: Buffer.from(publicKey,'hex'), format:'der', type:'spki' });
 const ok = crypto.verify(null, Buffer.from(message), pub, Buffer.from(signature,'hex'));
 console.log(ok ? 'AUTHENTIC & UNTAMPERED' : 'REJECT');</pre>
-    <p style="font-size:12.5px;color:var(--dim);margin-top:8px">That's the whole point: assurance you can re-check without us, forever. Post-quantum (ML-DSA-65) is added by the SOV33 substrate for long-term archival.</p>
+    <p style="font-size:12.5px;color:var(--dim);margin-top:8px">That's the whole point: assurance you can re-check without us, forever. Post-quantum (ML-DSA-65) is added by the MEOK substrate for long-term archival.</p>
   </div>
 
   <p class="muted">Card data here is <b>SYNTHETIC / demonstration</b>. Signing &amp; verification are <b>real</b> (Ed25519). <code>POST {card}</code> to <code>/api/systemcard</code> to sign your own fields. <a href="/registry.html">Signed card registry</a> · <a href="/verify.html">Verify page</a> · <a href="/">MEOK OS</a></p>
@@ -113,7 +125,7 @@ function renderNode(v){ if(Array.isArray(v)) return '<ul>'+v.map(x=>'<li>'+esc(t
   return esc(v); }
 function rowsFromCard(d){ const c=d.card||{}; let h='<span class="badge">'+esc(c.classification||'')+'</span>';
   Object.keys(c).forEach(k=>{ if(k==='schema'||k==='classification') return; h+=sect(k)+renderNode(c[k]); });
-  const auth=(d.framework==='eu-ai-act')?'CSOAI sovereign key':'DEFONEOS sovereign key';
+  const auth=(d.framework==='eu-ai-act')?'CSOAI keyholder key':'DEFONEOS keyholder key';
   h+=sect('Signature · Ed25519')+'<div class="sig"><b>Signed by '+auth+'</b><br>'+esc(d.fingerprint||'')+'  '+(d.seeded?'· owner-seeded ✓':'· demo key (set SIGIL_SEED to pin)')+'<br>sig: '+esc((d.signature||'').slice(0,64))+'…<br>sha256(card): '+esc(d.sha256||'')+'<br>verify: '+location.origin+'/verify.html?card='+(d.cardType||'system')+(d.framework==='eu-ai-act'?'&framework=eu-ai-act':'')+'</div>';
   document.getElementById('card').innerHTML=h;
   const de=document.getElementById('fwDef'), eu=document.getElementById('fwEu'); if(de&&eu){ de.className='ghost'+(FW==='jsp936'?' primary':''); eu.className='ghost'+(FW==='eu-ai-act'?' primary':''); }
@@ -126,7 +138,7 @@ async function verifyCard(tamper){
   if(!DATA){ el.className='result bad'; el.textContent='No card loaded.'; return; }
   let message=DATA.canonical; if(tamper){ message = message.slice(0,-2)+'ZZ'; }
   try{ const v=await doVerify(message,DATA.signature,DATA.publicKey);
-    if(v.valid){ el.className='result ok'; el.textContent='✅ VALID — authentic & untampered. Signed by the sovereign key, unaltered. Anyone can reproduce this check offline.'; }
+    if(v.valid){ el.className='result ok'; el.textContent='✅ VALID — authentic & untampered. Signed by the keyholder key, unaltered. Anyone can reproduce this check offline.'; }
     else { el.className='result bad'; el.textContent=(tamper?'🧪 As expected — TAMPERED card REJECTED. One flipped byte is enough to catch it.':'❌ REJECTED — signature does not match.'); }
   }catch(e){ el.className='result bad'; el.textContent='Verifier unreachable — try again.'; }
 }
@@ -167,4 +179,6 @@ load();
   });
   </script>
   <script defer src="/meok-reveal.js"></script>
+<script src="/agui-hero.js" defer></script>
+<script src="/meok-panel.js" defer></script>
 </body></html>

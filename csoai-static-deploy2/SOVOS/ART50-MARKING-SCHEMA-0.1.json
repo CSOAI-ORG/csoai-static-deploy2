@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "csoai.art50-marking/0.1",
+  "description": "EU AI Act Art 50 machine-readable synthetic-content marking. Machine-readable, interoperable, signed. Measurement, not certification.",
+  "type": "object",
+  "required": ["schema", "marking_type", "synthetic", "generator", "content_id", "signature"],
+  "properties": {
+    "schema": { "const": "csoai.art50-marking/0.1" },
+    "marking_type": { "enum": ["generative", "deepfake-emotion", "biometric-categorisation", "public-interest-text", "deepfake-public-interest", "modified"] },
+    "synthetic": { "type": "boolean", "description": "Is the content generated or manipulated by an AI system?" },
+    "generated_at": { "type": "string", "format": "date-time" },
+    "generator": {
+      "type": "object",
+      "properties": {
+        "system": { "type": "string", "description": "AI system identifier (provider + model)" },
+        "provider": { "type": "string" },
+        "model": { "type": "string" },
+        "exported_from": { "type": "string", "description": "the app/venue that produced it" }
+      },
+      "required": ["system"]
+    },
+    "disclosure": { "type": "string", "description": "human-readable disclosure text (consumer legible)" },
+    "content_hash": { "type": "string", "description": "sha256 of the marked content (survival-measurable)" },
+    "measured": {
+      "type": "object",
+      "description": "the measurement-body verification of the marking (stranger-verifiable)",
+      "properties": {
+        "not_a_certification": { "const": true },
+        "survived_rephrase": { "type": "boolean", "description": "does the marking survive rephrase / re-render (the 0-of-108 survival measurement)" },
+        "measured_by": { "const": "did:web:csoai.org" }
+      }
+    },
+    "content_id": { "type": "string", "description": "sha256 canonical content_id (RFC 8785)" },
+    "signature": { "type": "string", "description": "Ed25519 signature over content_id (SCITT / RFC 9943-aligned COSE receipt)" },
+    "pubkey": { "type": "string", "description": "verifier public key (hex)" },
+    "prev": { "type": ["string", "null"], "description": "chain-link (append-only honest register)" }
+  }
+}

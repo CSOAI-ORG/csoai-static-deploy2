@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Measurement Board — Council of AI</title>
+<style>
+ body{font-family:system-ui,sans-serif;background:#02020a;color:#e6e6e6;margin:0;line-height:1.5}
+ .wrap{max-width:1000px;margin:0 auto;padding:1.4rem 1.5rem 2rem}
+ .top{display:flex;align-items:center;gap:.6rem;font-size:.8rem;color:#9aa5b1;margin-bottom:1rem}
+ .pill{display:inline-block;border:1px solid #c9a84c;border-radius:100px;padding:1px 10px;font-size:.72rem;color:#c9a84c}
+ .badge{background:#123;color:#4ade80;border:1px solid #4ade80;border-radius:6px;padding:1px 8px;font-size:.68rem}
+ h1{color:#c9a84c;font-size:1.6rem;margin:.2rem 0 .3rem}
+ table{width:100%;border-collapse:collapse;font-size:.82rem;margin-top:1rem}
+ th{color:#8ab4f8;text-align:left;padding:7px;border-bottom:1px solid #1c2a45}
+ td{padding:7px;border-bottom:1px solid #12203a}
+ code{background:#1c2a45;padding:2px 6px;border-radius:4px;font-size:.78em}
+ .lead{color:#4ade80;font-weight:600} .empty{color:#f87171} .tie{color:#c9a84c}
+ .m{display:inline-block;padding:1px 7px;border-radius:6px;font-size:.7rem;border:1px solid}
+ .mg{color:#4ade80;border-color:#4ade80} .mr{color:#c9a84c;border-color:#c9a84c} .mu{color:#f87171;border-color:#f87171}
+ .bar{background:#1c2a45;height:8px;border-radius:4px;overflow:hidden;width:100px;display:inline-block;vertical-align:middle}
+ .bar i{display:block;height:100%;background:linear-gradient(90deg,#c9a84c,#4ade80)}
+ .foot{color:#7f90a0;font-size:.8em;text-align:center;margin-top:1.6rem;padding-top:1rem;border-top:1px solid #1c2a45}
+ a{color:#8ab4f8}
+</style></head><body>
+<div class="wrap">
+<div class="top"><span class="pill">Council OS / Measurement</span><span class="badge">Ed25519-signed</span><span class="badge">stranger-verifiable</span><span style="margin-left:auto">pubkey <code>bWbk52E4…</code></span></div>
+<h1>Measurement Board</h1>
+<p>Live GSPC (measurement) — separated <b>lead / tie / empty</b>, honest registers, signed. The board is
+the measured truth, not a self-reported list.</p>
+
+<table>
+ <tr><th>Model</th><th>RAG</th><th>Verdict</th><th>Register</th><th>Receipt</th><th>rel</th></tr>
+ <tr><td>mistral:7b</td><td>67.3</td><td class="lead">LEAD</td><td><span class="m mg">MEASURED</span></td><td><a href="/signed/measure-mistral_7b.json">signed</a></td><td><span class="bar"><i style="width:100%"></i></span></td></tr>
+ <tr><td>llama3:8b</td><td>66.6</td><td class="tie">TIE</td><td><span class="m mg">MEASURED</span></td><td><a href="/signed/measure-llama3_8b.json">signed</a></td><td><span class="bar"><i style="width:97%"></i></span></td></tr>
+ <tr><td>qwen2.5:7b</td><td>63.3</td><td class="tie">TIE</td><td><span class="m mg">MEASURED</span></td><td><a href="/signed/measure-qwen2.5_7b.json">signed</a></td><td><span class="bar"><i style="width:91%"></i></span></td></tr>
+ <tr><td>qwen2.5:1.5b</td><td>60.5</td><td>—</td><td><span class="m mg">MEASURED</span></td><td><a href="/signed/measure-qwen2.5_1.5b.json">signed</a></td><td><span class="bar"><i style="width:86%"></i></span></td></tr>
+ <tr><td>qwen2.5:0.5b</td><td>32.6</td><td>—</td><td><span class="m mg">MEASURED</span></td><td><a href="/signed/measure-qwen2.5_0.5b.json">signed</a></td><td><span class="bar"><i style="width:48%"></i></span></td></tr>
+ <tr><td>sov33-* (fine-tunes)</td><td>—</td><td class="empty">EMPTY</td><td><span class="m mr">REPORTED</span></td><td>confounded</td><td>—</td></tr>
+ <tr><td>qwen3:8b / deepseek-r1</td><td>—</td><td class="empty">EMPTY</td><td><span class="m mu">UNMEASURED</span></td><td>capacity</td><td>—</td></tr>
+</table>
+
+<h2 style="margin-top:1.6rem;color:#8ab4f8">The 16 axes</h2>
+<p style="font-size:.85rem;color:#9aa5b1">gov · care · swarm · affect · jail · slot15 · human-vs-ai · safety ·
+privacy · transparency · fairness · accountability · continuity · efficiency · creativity · sovereignty.<br>
+<span class="badge">13 measured of 14</span> — until the ungate ruling. Never published as "16 axes."</p>
+
+<h2 style="margin-top:1.4rem;color:#8ab4f8">The finding</h2>
+<p>Retrieved &gt;&gt; trained (<b>+34–38</b>, confound-free). Base &gt; fine-tunes at same size (<b>merge-not-train</b>).
+Every measurement is Ed25519-signed; the key never leaves the node.</p>
+
+<div class="foot">Council of AI (CSOAI Ltd, UK #16939677) · measurement, not certification · buyer-side ·
+signed, verifiable · honest registers (MEASURED / REPORTED / UNMEASURED).</div>
+</div></body></html>

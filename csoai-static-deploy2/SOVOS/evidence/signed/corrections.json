@@ -1,0 +1,16 @@
+{
+  "id": "corrections",
+  "kind": "canon-corrections",
+  "claim": "measurement",
+  "artifact_path": "SOVOS/canon/CORRECTIONS-51-56-2026-08-21.md",
+  "artifact_sha256": "8a0ea2201de7466cc0fe0c1d0214e238137e490bc5e14c33603a9f7cacf39cb7",
+  "grammar": "verified measurement credential - measurement, not certification",
+  "note": "signed on signing node; ed25519 key never leaves",
+  "signature": {
+    "kind": "ed25519",
+    "sig": "w6B6NAd+GB8LlbiTe0nb5VZ/YCAljBFLpePI58o8Yo+ypvDF+U0dnjBjFRgnu33K500crktpSX8X2i9Te6SRBQ==",
+    "body_sha256": "780779190beda37c4f2a9f75d85eef0eb9a3cd131be783d4104e1ac656b34112",
+    "pubkey": "bWbk52E47J6EkY4+pu0Hh/B1l1175AZoZsDEBr0EfWA=",
+    "note": "Ed25519 over the canonical body; verify with sign.py --verify. PQC upgrade: ML-DSA-65 via liboqs \u2014 same body, swap the primitive."
+  }
+}

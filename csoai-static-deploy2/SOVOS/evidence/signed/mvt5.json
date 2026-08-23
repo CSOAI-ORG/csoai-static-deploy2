@@ -1,0 +1,16 @@
+{
+  "id": "mvt5",
+  "kind": "spec",
+  "claim": "measurement",
+  "artifact_path": "SOVOS/play-300/MVT5-fix-loop-security.md",
+  "artifact_sha256": "91747cc7116407ee4f21d6e18f4f33ac600aa83e78ba5950d700496895f7f532",
+  "grammar": "verified measurement credential - measurement, not certification",
+  "note": "signed on signing node; ed25519 key never leaves",
+  "signature": {
+    "kind": "ed25519",
+    "sig": "t4M2ruHf4wrX72XJxRgp0jCnezjHzCdA5pITtBrbPbv3rfJwesDXxuZU8i0MPELFjytzTUI5FUMOuI1LvXdcCg==",
+    "body_sha256": "21b77cbf4d8b26dfa715403f65fbc983b79152fe25f406a80f65a5545b185a1f",
+    "pubkey": "bWbk52E47J6EkY4+pu0Hh/B1l1175AZoZsDEBr0EfWA=",
+    "note": "Ed25519 over the canonical body; verify with sign.py --verify. PQC upgrade: ML-DSA-65 via liboqs \u2014 same body, swap the primitive."
+  }
+}

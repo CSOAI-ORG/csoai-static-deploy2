@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>SOV33 Kaggle-Polished Benchmark Kernel | CSOAI Sovereign OS</title>
-<meta name="description" content="SOV33 Kaggle-polished evaluation kernel: 5 benchmarks covered — MMLU-Pro, GSM8K, AIME, BBH, IFEval. OpenLLM submission template, Berkeley Function-Calling Leaderboard entry, BBH 23-task 6,500-question block, per-benchmark submission code and expected scores for SOV33_small + SOV33_large." />
+<title>Council3 Kaggle-Polished Benchmark Kernel | CSOAI Council OS</title>
+<meta name="description" content="Council3 Kaggle-polished evaluation kernel: 5 benchmarks covered — MMLU-Pro, GSM8K, AIME, BBH, IFEval. OpenLLM submission template, Berkeley Function-Calling Leaderboard entry, BBH 23-task 6,500-question block, per-benchmark submission code and expected scores for Council3_small + Council3_large." />
 <meta name="sovereign-id" content="sov33-kaggle-polished-v1" />
 <meta name="sovereign-substrate" content="csoai-defoneos-meok" />
 <meta name="sovereign-care-score" content="0.94" />
@@ -93,7 +93,7 @@ footer{margin-top:60px;padding:28px;border-top:1px solid var(--line);text-align:
   <div class="l">
     <div class="logo"></div>
     <div>
-      <h1>SOV33 · Kaggle-Polished</h1>
+      <h1>Council3 · Kaggle-Polished</h1>
       <div class="sub">Benchmark Kernel · SIGIL T86 · CSOAI</div>
     </div>
   </div>
@@ -108,7 +108,7 @@ footer{margin-top:60px;padding:28px;border-top:1px solid var(--line);text-align:
 <div class="hero">
   <span class="eyebrow">P7 · Kaggle-Polished Evaluation Kernel</span>
   <h2>5 benchmarks now covered: MMLU-Pro · GSM8K · AIME · BBH · IFEval.</h2>
-  <p class="lede">SOV33's Kaggle notebook now runs the full frontier-eval battery. Copy the submission code, drop your model weights, and reproduce every score with an Ed25519 SIGIL receipt on every row. Two configurations shipped: <strong style="color:var(--txt)">SOV33_small</strong> (edge, 7GB) and <strong style="color:var(--txt)">SOV33_large</strong> (routed BIG BRAIM).</p>
+  <p class="lede">Council3's Kaggle notebook now runs the full frontier-eval battery. Copy the submission code, drop your model weights, and reproduce every score with an Ed25519 SIGIL receipt on every row. Two configurations shipped: <strong style="color:var(--txt)">Council3_small</strong> (edge, 7GB) and <strong style="color:var(--txt)">Council3_large</strong> (routed BIG BRAIM).</p>
   <div class="stats">
     <div class="stat"><div class="n">MMLU-Pro</div><div class="l">12K Qs · 14 domains</div></div>
     <div class="stat"><div class="n">GSM8K</div><div class="l">1.3K grade-school math</div></div>
@@ -148,19 +148,19 @@ footer{margin-top:60px;padding:28px;border-top:1px solid var(--line);text-align:
 
   <div class="callout ok">
     <h5>Submission target</h5>
-    <p>SOV33_large lands in the <strong style="color:var(--txt)">78B open-weight tier</strong>, adjacent to calme-3.2-instruct-78b on the MMLU-Pro axis. Every score is reproducible from the pinned kernel + SIGIL trail — reviewers replay with <code style="font-family:'JetBrains Mono',monospace">sov33 verify --trail</code>.</p>
+    <p>Council3_large lands in the <strong style="color:var(--txt)">78B open-weight tier</strong>, adjacent to calme-3.2-instruct-78b on the MMLU-Pro axis. Every score is reproducible from the pinned kernel + SIGIL trail — reviewers replay with <code style="font-family:'JetBrains Mono',monospace">sov33 verify --trail</code>.</p>
   </div>
 </section>
 
 <section>
   <div class="sec-head"><span class="num">§02</span><h3>Berkeley Function-Calling Leaderboard Entry</h3><span class="tag">BFCL v3</span></div>
-  <p style="color:var(--mut);font-size:14px;max-width:880px;margin-bottom:18px">BFCL evaluates tool-use / function-calling across AST accuracy, executable correctness, and multi-turn/relevance. SOV33's router category maps directly to BFCL's abstract-syntax-tree scoring.</p>
+  <p style="color:var(--mut);font-size:14px;max-width:880px;margin-bottom:18px">BFCL evaluates tool-use / function-calling across AST accuracy, executable correctness, and multi-turn/relevance. Council3's router category maps directly to BFCL's abstract-syntax-tree scoring.</p>
 
   <div class="code-block"><span class="c"># Berkeley Function-Calling Leaderboard — BFCL v3 entry</span>
 <span class="k">from</span> bfcl <span class="k">import</span> Runner
 runner = Runner(
     model_id=<span class="s">"sov33-large"</span>,
-    handler=<span class="s">"sov33.bfcl.SOV33Handler"</span>,   <span class="c"># OpenAI-compatible fn-call</span>
+    handler=<span class="s">"sov33.bfcl.Council3Handler"</span>,   <span class="c"># OpenAI-compatible fn-call</span>
     test_categories=[<span class="s">"simple"</span>, <span class="s">"parallel"</span>, <span class="s">"multiple"</span>, <span class="s">"multi_turn"</span>],
     sigil=<span class="k">True</span>,
 )
@@ -169,7 +169,7 @@ runner.generate().evaluate()
 <span class="c"># overall_acc 88.2 | ast 91.4 | exec 86.7 | multi_turn 79.3 | rel 94.1</span></div>
 
   <table class="spec">
-    <thead><tr><th>metric</th><th>SOV33_small</th><th>SOV33_large</th><th>tier target</th></tr></thead>
+    <thead><tr><th>metric</th><th>Council3_small</th><th>Council3_large</th><th>tier target</th></tr></thead>
     <tbody>
       <tr><td>Overall Accuracy</td><td>74.6%</td><td>88.2%</td><td style="color:var(--grn)">≥ 85% ✅</td></tr>
       <tr><td>AST Accuracy</td><td>79.1%</td><td>91.4%</td><td style="color:var(--grn)">≥ 90% ✅</td></tr>
@@ -182,7 +182,7 @@ runner.generate().evaluate()
 
 <section>
   <div class="sec-head"><span class="num">§03</span><h3>BBH Full Evaluation Block</h3><span class="tag">23 tasks · 6,500 Qs</span></div>
-  <p style="color:var(--mut);font-size:14px;max-width:880px;margin-bottom:18px">BIG-Bench Hard: 23 tasks the original BIG-Bench found hardest for LMs, ~6,500 questions total, 3-shot chain-of-thought. SOV33 runs all 23 with per-task SIGIL receipts.</p>
+  <p style="color:var(--mut);font-size:14px;max-width:880px;margin-bottom:18px">BIG-Bench Hard: 23 tasks the original BIG-Bench found hardest for LMs, ~6,500 questions total, 3-shot chain-of-thought. Council3 runs all 23 with per-task SIGIL receipts.</p>
 
   <div class="code-block"><span class="c"># BBH full 23-task evaluation — lm-eval-harness</span>
 <span class="k">import</span> lm_eval
@@ -206,17 +206,17 @@ results = lm_eval.simple_evaluate(
     <div class="kpi"><div class="v">23</div><div class="l">BBH tasks</div></div>
     <div class="kpi"><div class="v">6,511</div><div class="l">total questions</div></div>
     <div class="kpi"><div class="v">3-shot</div><div class="l">CoT prompting</div></div>
-    <div class="kpi"><div class="v">62.3%</div><div class="l">SOV33_large acc_norm</div></div>
+    <div class="kpi"><div class="v">62.3%</div><div class="l">Council3_large acc_norm</div></div>
     <div class="kpi"><div class="v">100%</div><div class="l">SIGIL receipted</div></div>
   </div>
 </section>
 
 <section>
   <div class="sec-head"><span class="num">§04</span><h3>5-Benchmark Coverage Table</h3><span class="tag">small vs large · submission code</span></div>
-  <p style="color:var(--mut);font-size:14px;max-width:880px;margin-bottom:18px">The complete coverage matrix: submission command + expected scores for both SOV33 configurations. Every row is a copy-paste-runnable Kaggle cell.</p>
+  <p style="color:var(--mut);font-size:14px;max-width:880px;margin-bottom:18px">The complete coverage matrix: submission command + expected scores for both Council3 configurations. Every row is a copy-paste-runnable Kaggle cell.</p>
 
   <table class="spec">
-    <thead><tr><th>benchmark</th><th>dataset / harness task</th><th>SOV33_small</th><th>SOV33_large</th></tr></thead>
+    <thead><tr><th>benchmark</th><th>dataset / harness task</th><th>Council3_small</th><th>Council3_large</th></tr></thead>
     <tbody>
       <tr><td><span class="chip pur">MMLU-Pro</span></td><td><code style="font-family:'JetBrains Mono',monospace">tasks=["mmlu_pro"]</code></td><td>41.2%</td><td style="color:var(--grn)">54.8%</td></tr>
       <tr><td><span class="chip grn">GSM8K</span></td><td><code style="font-family:'JetBrains Mono',monospace">tasks=["gsm8k"] 5-shot</code></td><td>78.4%</td><td style="color:var(--grn)">91.7%</td></tr>
@@ -240,7 +240,7 @@ results = lm_eval.simple_evaluate(
   <div class="sec-head"><span class="num">§05</span><h3>How to Upload the Notebook</h3><span class="tag">Kaggle kernel</span></div>
   <div class="flow">
     <div class="step"><div class="n">STEP 1</div><div class="t">New Notebook</div><div class="d">kaggle.com → Code → New Notebook. GPU T4×2 or P100.</div></div>
-    <div class="step"><div class="n">STEP 2</div><div class="t">Paste Kernel</div><div class="d">Copy the SOV33 benchmark cells. Add lm-eval-harness + bfcl deps.</div></div>
+    <div class="step"><div class="n">STEP 2</div><div class="t">Paste Kernel</div><div class="d">Copy the Council3 benchmark cells. Add lm-eval-harness + bfcl deps.</div></div>
     <div class="step"><div class="n">STEP 3</div><div class="t">Run All</div><div class="d">Saves 5 result JSONs to /kaggle/working with SIGIL receipts.</div></div>
     <div class="step"><div class="n">STEP 4</div><div class="t">Submit</div><div class="d">Save Version → Submit. Attach OpenLLM PR + BFCL handler.</div></div>
   </div>
@@ -258,24 +258,24 @@ results = lm_eval.simple_evaluate(
   <div class="cta-row">
     <div class="cta">
       <h4>OpenLLM Leaderboard</h4>
-      <p>Open the PR against the HF Open LLM v2 space with the SOV33 model card.</p>
-      <a href="https://huggingface.co/spaces/open-llm-leaderboard/open_llm_leaderboard">Submit Model →</a>
+      <p>Open the PR against the HF Open LLM v2 space with the Council3 model card.</p>
+      <a href="#">Submit Model →</a>
     </div>
     <div class="cta">
       <h4>Berkeley BFCL</h4>
-      <p>Register the SOV33 function-calling handler on the Gorilla BFCL board.</p>
-      <a href="https://gorilla.cs.berkeley.edu/leaderboard.html">Enter BFCL →</a>
+      <p>Register the Council3 function-calling handler on the Gorilla BFCL board.</p>
+      <a href="#">Enter BFCL →</a>
     </div>
     <div class="cta">
       <h4>Kaggle Kernel</h4>
       <p>Fork the reproducible notebook and run all 5 benchmarks yourself.</p>
-      <a href="https://www.kaggle.com/code">Open Notebook →</a>
+      <a href="#">Open Notebook →</a>
     </div>
   </div>
 </section>
 
 <footer>
-  <div>SOV33 KAGGLE-POLISHED · 5-BENCHMARK EVALUATION KERNEL · CSOAI · DEFONEOS · MEOK</div>
+  <div>Council3 KAGGLE-POLISHED · 5-BENCHMARK EVALUATION KERNEL · CSOAI · DEFONEOS · MEOK</div>
   <div style="margin-top:6px">SIGIL T86 · care_score 0.94 · sovereign id sov33-kaggle-polished-v1 · MMLU-Pro · GSM8K · AIME · BBH · IFEval</div>
 </footer>
 

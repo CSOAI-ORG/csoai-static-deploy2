@@ -1,7 +1,8 @@
-"""Tests for meok-sovereign-digital-twin-mcp."""
+"""Tests for meok-sovereign-digital-twin-mcp — sovereign globe + 22 arcana + 33 districts."""
 import os, sys, tempfile, importlib
 _TEST = tempfile.mkdtemp(prefix="sov_twin_")
 os.environ["SOV_TWIN_KEY"] = _TEST + "/k.pem"
+
 
 def get_fresh():
     if "meok_sovereign_digital_twin_mcp" in sys.modules:
@@ -10,68 +11,81 @@ def get_fresh():
     importlib.reload(m)
     return m
 
-def test_map_address_found():
-    m = get_fresh()
-    r = m.twin_map_address("Downing")
-    assert r["object"]["type"] == "Government"
 
-def test_map_address_not_found():
+def test_globe_init_default():
     m = get_fresh()
-    r = m.twin_map_address("Mars Colony")
+    r = m.twin_globe_init()
+    assert r["protocol"] == "sovereign-digital-twin/1.0"
+    assert r["districts_count"] == 33
+    assert r["arcana_count"] == 22
+    assert "real" in r["layers"]
+
+
+def test_globe_init_with_rotation():
+    m = get_fresh()
+    r = m.twin_globe_init(rotation=45.5)
+    assert r["globe"]["rotation"] == 45.5
+
+
+def test_visualize_default_layer():
+    m = get_fresh()
+    m.twin_globe_init()
+    r = m.twin_visualize()
+    assert r["view"]["layer"] == "real"
+    assert r["view"]["fps"] == 60
+    assert "view_id" in r["view"]
+
+
+def test_visualize_unknown_layer():
+    m = get_fresh()
+    r = m.twin_visualize(layer="bogus")
+    assert "error" in r
+    assert "unknown layer" in r["error"]
+
+
+def test_visualize_all_layers():
+    m = get_fresh()
+    m.twin_globe_init()
+    for layer in ("real", "urban", "isr", "network", "swarm", "weather", "ontology"):
+        r = m.twin_visualize(layer=layer)
+        assert r["view"]["layer"] == layer
+
+
+def test_layer_set():
+    m = get_fresh()
+    m.twin_globe_init()
+    r = m.twin_layer_set(layer="isr")
+    assert r["active_layer"] == "isr"
+    s = m.twin_status()
+    assert s["active_layer"] == "isr"
+
+
+def test_layer_set_unknown():
+    m = get_fresh()
+    r = m.twin_layer_set(layer="bogus")
     assert "error" in r
 
-def test_map_address_no_input():
-    m = get_fresh()
-    r = m.twin_map_address("")
-    assert "error" in r
 
-def test_map_company():
+def test_ontology_has_22_arcana_33_districts():
     m = get_fresh()
-    r = m.twin_map_company("CSOAI")
-    assert r["object"]["company_number"] == "16939677"
+    r = m.twin_ontology()
+    assert r["arcana_count"] == 22
+    assert r["districts_count"] == 33
+    assert len(r["arcana"]) == 22
+    assert len(r["districts"]) == 33
+    # arcana[0] is "The Sovereign"
+    assert "Sovereign" in r["arcana"][0]["name"]
 
-def test_map_company_not_found():
-    m = get_fresh()
-    r = m.twin_map_company("FakeCompany12345")
-    assert "error" in r
 
-def test_map_company_no_input():
+def test_status_has_engine_and_districts():
     m = get_fresh()
-    r = m.twin_map_company("")
-    assert "error" in r
-
-def test_map_sensor():
-    m = get_fresh()
-    r = m.twin_map_sensor("cam-001")
-    assert r["object"]["type"] == "camera"
-
-def test_map_sensor_not_found():
-    m = get_fresh()
-    r = m.twin_map_sensor("nonexistent")
-    assert "error" in r
-
-def test_map_sensor_no_input():
-    m = get_fresh()
-    r = m.twin_map_sensor("")
-    assert "error" in r
-
-def test_render():
-    m = get_fresh()
-    r = m.twin_render()
-    assert r["total"] > 0
-    assert len(r["objects"]) > 0
-
-def test_render_limit():
-    m = get_fresh()
-    r = m.twin_render(limit=5)
-    assert len(r["objects"]) <= 5
-
-def test_status():
-    m = get_fresh()
+    m.twin_globe_init()
     r = m.twin_status()
-    assert r["addresses"] >= 5
-    assert r["companies"] >= 2
-    assert r["sensors"] >= 4
+    assert r["globe_initialized"] is True
+    assert r["districts"] == 33
+    assert r["arcana"] == 22
+    assert "Cesium" in r["engine"] or "Unreal" in r["engine"]
+
 
 def test_no_external_deps():
     m = get_fresh()
@@ -79,22 +93,27 @@ def test_no_external_deps():
     for blocked in ["ollama", "requests", "urllib.request", "httpx"]:
         assert f"import {blocked}" not in src
 
-def test_signed_outputs():
+
+def test_signed_outputs_have_kid_sig_ts():
     m = get_fresh()
-    for r in [m.twin_map_address("Downing"), m.twin_map_company("CSOAI"),
-              m.twin_map_sensor("cam-001"), m.twin_render(), m.twin_status()]:
+    for r in [m.twin_globe_init(), m.twin_visualize(), m.twin_layer_set("urban"),
+              m.twin_ontology(), m.twin_status()]:
         assert "kid" in r and "sig" in r and "ts" in r
 
+
 def test_full_workflow():
-    """Map address → Map company → Map sensor → Render → Status."""
+    """init → visualize → layer_set → visualize new layer → ontology → status."""
     m = get_fresh()
-    r1 = m.twin_map_address("Tower")
-    assert "Tower" in r1["object"]["address"]
-    r2 = m.twin_map_company("CSOAI")
-    assert r2["object"]["company_number"] == "16939677"
-    r3 = m.twin_map_sensor("temp-001")
-    assert r3["object"]["type"] == "thermal"
-    r4 = m.twin_render(limit=50)
-    assert r4["total"] > 0
-    r5 = m.twin_status()
-    assert r5["total_objects"] >= 11
+    init = m.twin_globe_init(rotation=30.0)
+    assert init["districts_count"] == 33
+    v1 = m.twin_visualize(layer="real")
+    assert v1["view"]["layer"] == "real"
+    ls = m.twin_layer_set(layer="urban")
+    assert ls["active_layer"] == "urban"
+    v2 = m.twin_visualize(layer="urban")
+    assert v2["view"]["layer"] == "urban"
+    ont = m.twin_ontology()
+    assert ont["arcana_count"] == 22
+    st = m.twin_status()
+    assert st["views_rendered"] == 2
+    assert st["active_layer"] == "urban"

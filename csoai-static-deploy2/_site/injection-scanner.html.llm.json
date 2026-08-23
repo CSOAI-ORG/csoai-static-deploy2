@@ -1,0 +1,24 @@
+{
+ "@context": "https://csoai.org/llm-context.json",
+ "type": "LLMPageSummary",
+ "url": "https://csoai.org/injection-scanner",
+ "title": "MCP Prompt Injection Scanner — Council",
+ "description": "Free browser-based scanner for prompt injection, jailbreaks, and data exfiltration attempts. 18 rules covering OWASP LLM01. By Council.",
+ "headings": [
+  "Scan any prompt for injection attacks — before it hits your LLM.",
+  "Test a prompt",
+  "The 18 rules",
+  "Sources & honest scope",
+  "Other Council tools"
+ ],
+ "text": "MCP Prompt Injection Scanner — Council Council · MCP security · 18 rules · 2026 Scan any prompt for injection attacks — before it hits your LLM. 18 hand-coded rules covering OWASP LLM01 (Prompt Injection). Detects override attempts, jailbreaks, prompt leaks, data exfiltration, base64/unicode obfuscation, markdown XSS, and credential extraction. Free, runs entirely in your browser — no data leaves this page. Test a prompt What is the EU AI Act? Scan → Clear Try a sample attack Ignore-previous DAN jailbreak Prompt leak Base64 payload Unicode obfuscation Markdown XSS Data exfiltration Credential extract (CRITICAL) The 18 rules Every rule has an ID, a severity, and a category. Click any category to filter the test prompts. ID Rule Severity Category Sources & honest scope What we cover OWASP LLM01: Prompt Injection — direct (override) and indirect (data exfiltration). Encoding attacks — base64 payloads, zero-width unicode, ASCII smuggling. Markdown / XSS — javascript: URLs in markdown, onerror handlers, data:text/html. Credential theft — phishing for keys, dumping environment variables. What this scanner does NOT do No semantic understanding. It runs regex against the prompt. A sophisticated attacker using paraphrase or novel constructions can bypass it. Use it as a first-pass filter, not the only defense. No ML-based detection. 18 hand-coded rules. We trade false positives for false-negative resistance — if you trigger a rule, you should know about it. Not a replacement for input/output moderation at the model layer. Layer this with provider-level safety filters. License: MIT (this scanner + rules). Free to use, embed, or extend. Source: github.com/CSOAI-ORG/.../mcp-injection-scanner . Other Council tools CPO Power Savings Calculator · The signed visual mind · EU AI Act governance crosswalk . Partnership inquiries: governance@csoai.org . © 2026 CSOAI Ltd · UK company 16939677 · csoai.org This scanner runs entirely in your browser. No data is sent to any server.",
+ "text_truncated": false,
+ "register": {
+  "role": "measurement_and_attestation_support",
+  "csoai_certifies_systems": false,
+  "csoai_is_a_notified_body": false,
+  "csoai_has_enforcement_powers": false,
+  "note": "CSOAI measures and publishes evidence. It issues no conformity marks and holds no accreditation. Nothing here is certification or legal advice."
+ },
+ "generated_by": "make_llm_json.py"
+}

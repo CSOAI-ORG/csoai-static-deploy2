@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Models — measured, not listed — Council of AI</title>
+<style>
+ body{font-family:system-ui,sans-serif;background:#02020a;color:#e6e6e6;margin:0;line-height:1.6}
+ .wrap{max-width:1000px;margin:0 auto;padding:2rem 1.5rem}
+ header{text-align:center;padding:2.2rem 0 .8rem}
+ h1{font-size:2rem;color:#c9a84c;margin:.3rem 0} h2{color:#8ab4f8;margin-top:2rem}
+ .sub{color:#7f90a0;font-size:1.05rem}
+ .pill{display:inline-block;border:1px solid #c9a84c;border-radius:100px;padding:2px 12px;font-size:.78rem;color:#c9a84c;margin:0 4px}
+ .ctl{display:inline-block;border:1px solid #1c2a45;border-radius:8px;padding:8px 14px;color:#e6e6e6;text-decoration:none;margin:0 4px;cursor:pointer}
+ .ctl.on{border-color:#c9a84c;color:#c9a84c}
+ table{width:100%;border-collapse:collapse;font-size:.85rem;margin:1rem 0}
+ th{color:#8ab4f8;text-align:left;padding:8px;border-bottom:1px solid #1c2a45}
+ td{padding:8px;border-bottom:1px solid #12203a}
+ .lead{color:#4ade80;font-weight:600} .tie{color:#c9a84c;font-weight:600} .empty{color:#f87171}
+ .m{display:inline-block;padding:2px 8px;border-radius:6px;font-size:.72rem;border:1px solid}
+ .mg{color:#4ade80;border-color:#4ade80} .mr{color:#c9a84c;border-color:#c9a84c} .mu{color:#f87171;border-color:#f87171}
+ code{background:#1c2a45;padding:2px 6px;border-radius:4px;font-size:.8em}
+ .foot{color:#7f90a0;font-size:.8em;text-align:center;margin-top:2.5rem;padding-top:1rem;border-top:1px solid #1c2a45}
+ a{color:#8ab4f8}
+ .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.2rem;margin:1.5rem 0}
+ .card{background:#0d1220;border:1px solid #1c2a45;border-radius:12px;padding:1.2rem}
+ .card h3{margin:.2rem 0 .4rem;color:#fff}
+</style></head><body>
+<div class="wrap">
+<header>
+ <p class="pill">Council of AI</p><p class="pill">Models — measured, not listed</p><p class="pill">measurement, not certification</p>
+ <h1>The measurement-annotated model catalog</h1>
+ <p class="sub">Not a price list — a <b>measured</b> surface. Every model row carries a separated
+ <b>lead / tie / empty</b> cell from <code>GET /api/gspc</code>, the Eunomia MCP instruments, an honest
+ register (MEASURED / REPORTED / UNMEASURED), and a link to a signed receipt.</p>
+ <p style="margin-top:1rem">
+  <span class="ctl on" onclick="tabs('models')">Models</span>
+  <span class="ctl" onclick="tabs('instruments')">Instruments (Eunomia)</span>
+  <span class="ctl" onclick="tabs('routes')">Routes</span>
+  <a class="ctl" href="/verify">Verify a receipt</a></p>
+</header>
+
+<div id="models">
+<h2>Measured models (RAG context, clean sequential)</h2>
+<table>
+ <tr><th>Model</th><th>RAG</th><th>Verdict</th><th>Register</th><th>Receipt</th></tr>
+ <tr><td>mistral:7b</td><td>67.3</td><td>LEAD</td><td><span class="m mg">MEASURED</span></td><td><a href="/signed/measure-mistral_7b.json">signed</a></td></tr>
+ <tr><td>llama3:8b</td><td>66.6</td><td>TIE</td><td><span class="m mg">MEASURED</span></td><td><a href="/signed/measure-llama3_8b.json">signed</a></td></tr>
+ <tr><td>qwen2.5:7b</td><td>63.3</td><td>TIE</td><td><span class="m mg">MEASURED</span></td><td><a href="/signed/measure-qwen2.5_7b.json">signed</a></td></tr>
+ <tr><td>qwen2.5:1.5b</td><td>60.5</td><td>—</td><td><span class="m mg">MEASURED</span></td><td><a href="/signed/measure-qwen2.5_1.5b.json">signed</a></td></tr>
+ <tr><td>qwen2.5:0.5b</td><td>32.6</td><td>—</td><td><span class="m mg">MEASURED</span></td><td><a href="/signed/measure-qwen2.5_0.5b.json">signed</a></td></tr>
+ <tr><td>sov33-* (fine-tunes)</td><td>—</td><td>EMPTY</td><td><span class="m mr">REPORTED</span></td><td>confounded</td></tr>
+ <tr><td>qwen3:8b / deepseek-r1</td><td>—</td><td>EMPTY</td><td><span class="m mu">UNMEASURED</span></td><td>capacity</td></tr>
+</table>
+<p class="sub">Retrieved &gt;&gt; trained (+34–38). Base &gt; fine-tunes at same size (merge-not-train). "13 measured of 14."</p>
+</div>
+
+<div id="instruments" style="display:none">
+<h2>Eunomia / MCP instruments (the "OpenRouter of governance")</h2>
+<div class="grid">
+ <div class="card"><h3>Council Ledger</h3><p class="small">signed provision-conformance receipts (Dorado)</p></div>
+ <div class="card"><h3>Dorado Bench</h3><p class="small">East↔West regulation-vs-market pair</p></div>
+ <div class="card"><h3>Claimguard</h3><p class="small">signed claim-evidence guard</p></div>
+ <div class="card"><h3>Agent Measurement Card</h3><p class="small">Ed25519 receipt-spec + schema</p></div>
+</div>
+</div>
+
+<div id="routes" style="display:none">
+<h2>Routes — instruments, not just providers</h2>
+<p class="sub">Our routes are Eunomia MCP instruments, not LLM providers. Each completion can optionally
+trigger a downstream eval → <code>proof DB</code> / <code>receipt-spec</code> (GSPC + arena harness). Every
+surface carries the honest register.</p>
+</div>
+
+<div class="foot">Council of AI (CSOAI Ltd, UK #16939677) · measurement, not certification · buyer-side,
+signed, verifiable · AG-UI wire · honest registers (MEASURED / REPORTED / UNMEASURED). Ed25519 private key
+never leaves the pod.</div>
+</div>
+<script>
+ function tabs(id){['models','instruments','routes'].forEach(function(x){document.getElementById(x).style.display=id===x?'':'none'});}
+</script>
+</body></html>

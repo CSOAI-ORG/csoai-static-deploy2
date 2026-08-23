@@ -1,0 +1,55 @@
+{
+  "timestamp": "2026-07-29T05:17:13.549762+00:00",
+  "pre_registered": true,
+  "prediction": "CAD will shift \u0394 from -5.26 toward positive on statute-answerable items",
+  "n": 38,
+  "model": "sov33-dist-c3:latest",
+  "dimensions": [
+    "compliance",
+    "governance",
+    "cross_walk",
+    "regional_law",
+    "privacy",
+    "redress"
+  ],
+  "no_statute_retrieved": 12,
+  "weights_pct": 29.4,
+  "fixed_cad_pct": 26.7,
+  "adaptive_cad_pct": 26.7,
+  "fixed_cad": {
+    "delta": -2.76,
+    "ci": [
+      -8.84,
+      3.31
+    ],
+    "significant": false,
+    "wins": 5,
+    "losses": 8,
+    "avg_agreement": 0.332
+  },
+  "adaptive_cad": {
+    "delta": -2.76,
+    "ci": [
+      -8.84,
+      3.31
+    ],
+    "significant": false,
+    "wins": 5,
+    "losses": 8,
+    "avg_agreement": 0.332
+  },
+  "verdict_distribution": {
+    "divergent_anchor_wins": 6,
+    "divergent": 3,
+    "consistent": 10,
+    "context_preferred": 7
+  },
+  "corpus_anchor": {
+    "corpus_root": "37e2e10d53feaa9e12097f45113e1234510be0ca471e1a0848f5805db3e367c7",
+    "provisions": 417,
+    "normaliser_version": "1.0.0",
+    "anchored_at": "2026-08-17T05:22:18.561658+00:00",
+    "retro": true,
+    "note": "Anchored retrospectively on 2026-07-29. This records the corpus as it stands NOW; it does not prove what the text said when the result was produced. Runs from this point forward anchor at measurement time."
+  }
+}

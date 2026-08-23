@@ -1,0 +1,24 @@
+{
+ "@context": "https://csoai.org/llm-context.json",
+ "type": "LLMPageSummary",
+ "url": "https://csoai.org/gspc-score",
+ "title": "GSPC Self-Score — Council",
+ "description": "Score your AI system",
+ "headings": [
+  "Score your AI system's governance — honest math.",
+  "Mark the controls you have in place",
+  "What this scores",
+  "Sources & honest scope",
+  "Other Council tools"
+ ],
+ "text": "GSPC Self-Score — Council Council · GSPC · 13 ETSI principles · 4 axes Score your AI system's governance — honest math. 13 principles from ETSI EN 304 223, mapped to 4 axes (G, S, P, C). Composite = geometric mean — a zero on any axis drops your score to zero. Free, runs entirely in your browser, no server. Mark the controls you have in place Tick every control your AI system has. The tool scores you against all 13 principles. Use the presets for common starting points. Start from zero Early startup Enterprise-ready Sovereign-grade (1.0) Calculate → Reset Export record as JSON What this scores The 4 GSPC axes G — Governance S — Security P — Privacy C — Commerce Each axis scores the fraction of applicable principles it passes. Principles don't contribute to axes that don't list them. A principle passes only when ALL its required keys are truthy. Sources & honest scope What this is A browser-side port of sovos_core.gspc.score_gspc() — the same scoring logic the sov CLI runs. The 13 principles come from ETSI EN 304 223 (AI cybersecurity, published Jan 2026). The 4 axes (G/S/P/C) are CSOAI's GSPC framework. Composite score = geometric mean of the 4 axes (so any zero = zero). What this is NOT Not a certification. It's an instrument, not a stamp. We surface UNMEASURED, not a \"pass/fail\" judgement. Not exhaustive. Real ETSI EN 304 223 compliance requires documentation review, audit trail inspection, and human-in-the-loop oversight. This tool checks 36 control flags against 13 principles — that's the surface, not the substance. Not a substitute for the GSPC sovereign stack ( csoai-governance-crosswalk-mcp , mcp-sov-signal , csoai-c2pa-signer ). These verify the same principles against real audit evidence at scale. For enterprise use pip install csoai-governance-crosswalk-mcp — MCP server with 10+ frameworks (EU AI Act, NIST RMF, ISO 42001, DORA, GDPR, NIS2) Use the JSON export below as a record for the csoai-governance-crosswalk-mcp.query_crosswalk() API. Other Council tools CPO Power Savings Calculator · MCP Prompt Injection Scanner · A2A Swarm Demo · The signed visual mind . Partnership inquiries: governance@csoai.org . © 2026 CSOAI Ltd · UK company 16939677 · csoai.org This tool runs entirely in your browser. No data is sent to any server.",
+ "text_truncated": false,
+ "register": {
+  "role": "measurement_and_attestation_support",
+  "csoai_certifies_systems": false,
+  "csoai_is_a_notified_body": false,
+  "csoai_has_enforcement_powers": false,
+  "note": "CSOAI measures and publishes evidence. It issues no conformity marks and holds no accreditation. Nothing here is certification or legal advice."
+ },
+ "generated_by": "make_llm_json.py"
+}

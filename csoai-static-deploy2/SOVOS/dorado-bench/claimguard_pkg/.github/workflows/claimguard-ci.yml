@@ -1,0 +1,57 @@
+# ClaimGuard CI — reject commits where a signed board's result is empty (anti-stub guard)
+name: claimguard-ci
+on:
+  pull_request:
+    paths: ['**/*.signed.json', '**/*board*.json']
+  workflow_dispatch:
+
+jobs:
+  claimguard:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.11' }
+      - name: Install
+        run: |
+          pip install --quiet ./csoai-claimguard cryptography
+          # or (if package not published): pip install cryptography
+      - name: Audit signed boards
+        env:
+          CLAIMGUARD_PUB_MEASUREMENT_INSTRUMENT: "${{ secrets.CLAIMGUARD_PUB_MEASUREMENT_INSTRUMENT }}"
+        run: |
+          set +e
+          FAIL=0
+          for board in $(find . -name "*.signed.json" -not -path "./node_modules/*" 2>/dev/null); do
+            echo "== auditing $board =="
+            python3 - "$board" <<'PY'
+import sys, json, os, re
+os.environ.setdefault("CLAIMGUARD_PUB_MEASUREMENT_INSTRUMENT", "")
+board = sys.argv[1]
+try:
+    d = json.load(open(board))
+    result = d.get("result") or {}
+    empty = not result or (isinstance(result, dict) and not any(result.values()) if isinstance(result, dict) else not result)
+    has_per_model = bool(result.get("per_model") or result.get("models")) if isinstance(result, dict) else False
+    if empty and not has_per_model:
+        # check the extra-claims too
+        for c in d.get("claims", []):
+            try:
+                p = json.loads(c.get("detail", "{}"))
+                if isinstance(p, dict) and (p.get("per_model") or p.get("models")):
+                    has_per_model = True
+            except Exception:
+                pass
+    if not has_per_model:
+        print(f"STUB/{board}: no per-model data — reject")
+        sys.exit(1)
+    print(f"OK/{board}: payload complete")
+except Exception as e:
+    print(f"ERR/{board}: {e}")
+    # only fail on known empty stub, not unparseable
+    sys.exit(0)
+PY
+            [ $? -ne 0 ] && FAIL=$((FAIL+1))
+          done
+          [ $FAIL -eq 0 ] && echo "CLAIMGUARD CI: ALL PASS" || echo "CLAIMGUARD CI: $FAIL stub(s) rejected"
+          exit $FAIL

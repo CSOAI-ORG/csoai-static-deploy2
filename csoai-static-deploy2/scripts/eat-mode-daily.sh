@@ -13,7 +13,7 @@
 
 set -e
 
-BASE="https://csoai-static-deploy2.vercel.app"
+BASE="https://csoai-sovereign.pages.dev"
 SEND_KEY="${SEND_KEY:-}"
 HOUR=$(date -u +%H)
 

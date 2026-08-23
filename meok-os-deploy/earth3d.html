@@ -1,6 +1,8 @@
 <!doctype html><html lang="en"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>MEOK Earth — Live 3D C2</title>
+<meta name="description" content="MEOK Earth 3D — explore the sovereign world on your own GPU. Free, no Unreal, your companion flies a real 3D globe."/>
+
 <link href="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.css" rel="stylesheet">
 <style>
   html,body{margin:0;height:100%;background:#04060d;font-family:ui-monospace,Menlo,monospace;overflow:hidden}
@@ -32,7 +34,19 @@
   .ctrls button:hover{background:rgba(60,100,190,.6)}
   .boot{position:absolute;inset:0;z-index:9;display:flex;align-items:center;justify-content:center;background:#04060d;color:#8fb6ff;font-size:13px;letter-spacing:.2em;transition:opacity .8s}
   .boot.off{opacity:0;pointer-events:none}
-</style></head><body>
+</style>
+<meta property="og:title" content="MEOK Earth — Live 3D C2"/>
+<meta property="og:description" content="MEOK — the AI you actually own. One memory layer across every brain, archetypes you choose from, signed receipts for everything. Measurement, not certification."/>
+<meta property="og:type" content="website"/>
+<meta property="og:url" content="https://meok.ai/earth3d"/>
+<meta property="og:image" content="https://meok.ai/icon-512.png"/>
+<meta property="og:site_name" content="MEOK"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<link rel="canonical" href="https://meok.ai/earth3d.html"/>
+<link href="https://meok.ai/earth3d.llm.json" rel="alternate" title="LLM representation of this page" type="application/llm+json"/>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebPage", "name": "MEOK", "url": "https://meok.ai/earth3d", "description": "MEOK — the AI you actually own. One memory layer across every brain, archetypes you choose from, signed receipts for everything. Measurement, not certification.", "inLanguage": "en", "isPartOf": {"@type": "WebSite", "name": "MEOK", "url": "https://meok.ai"}}</script>
+<link rel="stylesheet" href="/css/meok-system.css"/>
+</head><body>
 <div id="map"></div>
 <div class="hud">
   <div class="topbar"><span class="dot"></span><b style="color:#cfe0ff">MEOK EARTH</b> · LIVE 3D C2 <span id="coord">51.5072°N 0.1276°W</span><span class="tag">SOVEREIGN · UNCLASSIFIED</span></div>
@@ -114,4 +128,6 @@ function ready(){ if(_ready)return; _ready=true;
   }).catch(()=>{ document.getElementById('nrows').textContent='network offline'; });
 }
 map.on('load', ready); map.on('idle', ready); setTimeout(ready, 3000);
-</script></body></html>
+</script><script src="/agui-hero.js" defer></script>
+<script src="/meok-panel.js" defer></script>
+</body></html>

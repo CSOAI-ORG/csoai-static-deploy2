@@ -1,0 +1,16 @@
+{
+  "id": "estate-state",
+  "kind": "estate-state",
+  "claim": "measurement",
+  "artifact_path": "SOVOS/ESTATE-STATE-2026-08-22.md",
+  "artifact_sha256": "96a1670c9c6bdd187bee9f4d6a9a44745fd9d8761991a56f005053fe2c2ff2d4",
+  "grammar": "verified measurement credential - measurement, not certification",
+  "note": "signed on signing node; ed25519 key never leaves",
+  "signature": {
+    "kind": "ed25519",
+    "sig": "ng72Vx5CRJ9Ie5YxutLR3SwRYMdCw+6UMv3D+VFsSYQpzZvQTR4lW1nIXfGkpOQzY6cthUEyqXoheButbSh/Dg==",
+    "body_sha256": "0e4655b600a18c36ffa0af2e9e47d6d1d8c5e17616a469d472fe4d5bb7005907",
+    "pubkey": "bWbk52E47J6EkY4+pu0Hh/B1l1175AZoZsDEBr0EfWA=",
+    "note": "Ed25519 over the canonical body; verify with sign.py --verify. PQC upgrade: ML-DSA-65 via liboqs \u2014 same body, swap the primitive."
+  }
+}

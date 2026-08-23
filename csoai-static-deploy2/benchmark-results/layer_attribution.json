@@ -1,0 +1,72 @@
+{
+  "n": 193,
+  "whole_system": {
+    "mean_delta": 6.63,
+    "ci_clustered": [
+      1.05,
+      12.21
+    ],
+    "design_effect": 1.92,
+    "clusters": 26
+  },
+  "by_action": [
+    {
+      "label": "gate blocked",
+      "n": 6,
+      "mean_delta": -20.0,
+      "ci_naive": [
+        -52.01,
+        12.01
+      ],
+      "clusters": 3,
+      "design_effect": 2.0,
+      "ci_clustered": [
+        -65.26,
+        25.26
+      ],
+      "verdict": "no effect shown"
+    },
+    {
+      "label": "KB served",
+      "n": 14,
+      "mean_delta": 19.64,
+      "ci_naive": [
+        6.87,
+        32.41
+      ],
+      "clusters": 4,
+      "design_effect": 0.66,
+      "ci_clustered": [
+        9.24,
+        30.04
+      ],
+      "verdict": "positive"
+    },
+    {
+      "label": "tuned model alone",
+      "n": 173,
+      "mean_delta": 6.5,
+      "ci_naive": [
+        2.34,
+        10.66
+      ],
+      "clusters": 26,
+      "design_effect": 1.71,
+      "ci_clustered": [
+        1.06,
+        11.95
+      ],
+      "verdict": "positive"
+    }
+  ],
+  "partitions": true,
+  "caveat": "Subgroups are defined by layer ACTION, which is decided after seeing the item. These are DESCRIPTIVE, not confirmatory: the gate row in particular excludes every item where the gate should have fired and did not. Do not publish these as effect estimates for the layer.",
+  "corpus_anchor": {
+    "corpus_root": "37e2e10d53feaa9e12097f45113e1234510be0ca471e1a0848f5805db3e367c7",
+    "provisions": 417,
+    "normaliser_version": "1.0.0",
+    "anchored_at": "2026-08-17T05:22:18.731182+00:00",
+    "retro": true,
+    "note": "Anchored retrospectively on 2026-07-29. This records the corpus as it stands NOW; it does not prove what the text said when the result was produced. Runs from this point forward anchor at measurement time."
+  }
+}

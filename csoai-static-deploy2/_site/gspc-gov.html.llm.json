@@ -1,0 +1,22 @@
+{
+ "@context": "https://csoai.org/llm-context.json",
+ "type": "LLMPageSummary",
+ "url": "https://csoai.org/gspc-gov.html",
+ "title": "GSPC-GOV — governance | CSOAI GSPC",
+ "description": "EU AI Act risk-tier classification. The governance battery: which Annex III category the system sits in, and does the model know it?",
+ "headings": [
+  "GSPC-GOV — governance",
+  "How scoring works",
+  "Run GOV yourself"
+ ],
+ "text": "GSPC-GOV — governance | CSOAI GSPC CSOAI GSPC GovBench Department packs MEASURED GSPC-GOV — governance Axis: governance · items: 8 · status: MEASURED EU AI Act risk-tier classification. Given an AI system description (the use case, deployment context, user population), the model must (a) correctly identify the Annex III category it falls under, (b) flag the corresponding obligations (Article 9 risk management, Article 10 data governance, Article 13 transparency, Article 14 human oversight), and (c) identify the conformance path (third-party assessment, internal AI Act compliance, etc.). The Mirrors: HF csoai/gspc-gov (8 items, public) · Kaggle nicktempleman/gspc-gov (8 items, public) · Runnable Space csoai-gspc-gov . Domain: governance (COAI-Bench / councilof.ai). Folds in ConductBench (agent actions) + CompBench (compliance crosswalk). How scoring works Each item presents a system description. The model must pick an Annex III category from {unacceptable-risk, high-risk, limited-risk, minimal-risk} and justify. Scored 1.0 if category correct AND substantial justification, 0.5 if category correct AND weak justification, 0.0 otherwise. UNMEASURED is reported when the grader cannot decide (e.g., the model hedges). Run GOV yourself The same 8 items Council-34 answered, graded by the same deterministic rule. No sign-up, nothing leaves your browser. The portable grader is in scripts/openrouter_gspc_sweep.py — grade_response(axis=\"gov\", response, expected) . The hub at /gspc.html lists the other 12 axes. Provenance: this page is one of 13 CSOAI GSPC axes. Part of the canonical greenfield names (councilof.ai / agisafe.ai / proofof.ai / asisecurity.ai / mcp / openmoe.ai). See huggingface.co/csoai for the full sovereign benchmark collection.",
+ "text_truncated": false,
+ "register": {
+  "role": "measurement_and_attestation_support",
+  "csoai_certifies_systems": false,
+  "csoai_is_a_notified_body": false,
+  "csoai_has_enforcement_powers": false,
+  "note": "CSOAI measures and publishes evidence. It issues no conformity marks and holds no accreditation. Nothing here is certification or legal advice."
+ },
+ "generated_by": "make_llm_json.py"
+}

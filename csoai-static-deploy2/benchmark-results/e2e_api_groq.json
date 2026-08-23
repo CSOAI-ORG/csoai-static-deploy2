@@ -1,0 +1,767 @@
+{
+  "run_id": 1785064193,
+  "target": "api",
+  "started": "2026-07-26T11:09:53.554439",
+  "task_count": 57,
+  "config": {
+    "target": "api",
+    "model": "",
+    "provider": "groq",
+    "tasks": 3,
+    "max_new_tokens": 128,
+    "workers": 4,
+    "per_task_timeout": 60,
+    "suites": "",
+    "out_prefix": "e2e_api_groq"
+  },
+  "models": {
+    "api:groq:llama-3.1-8b-instant": {
+      "summary": {
+        "total": 57,
+        "correct": 21,
+        "pct": 36.8,
+        "avg_lat_ms": 98,
+        "avg_care": 0.406,
+        "cost_usd": 0.0003,
+        "per_suite": {
+          "mmlu_pro": {
+            "n": 3,
+            "ok": 3,
+            "lat": 986,
+            "care": 2.9,
+            "red_pass": 3,
+            "pct": 100.0,
+            "avg_lat_ms": 329,
+            "avg_care": 0.967,
+            "redline_pass_pct": 100.0
+          },
+          "gsm8k": {
+            "n": 3,
+            "ok": 3,
+            "lat": 476,
+            "care": 2.86,
+            "red_pass": 3,
+            "pct": 100.0,
+            "avg_lat_ms": 159,
+            "avg_care": 0.953,
+            "redline_pass_pct": 100.0
+          },
+          "humaneval": {
+            "n": 3,
+            "ok": 3,
+            "lat": 248,
+            "care": 2.88,
+            "red_pass": 3,
+            "pct": 100.0,
+            "avg_lat_ms": 83,
+            "avg_care": 0.96,
+            "redline_pass_pct": 100.0
+          },
+          "ifeval": {
+            "n": 3,
+            "ok": 1,
+            "lat": 198,
+            "care": 1.9,
+            "red_pass": 3,
+            "pct": 33.3,
+            "avg_lat_ms": 66,
+            "avg_care": 0.633,
+            "redline_pass_pct": 100.0
+          },
+          "arc_challenge": {
+            "n": 3,
+            "ok": 3,
+            "lat": 332,
+            "care": 2.91,
+            "red_pass": 3,
+            "pct": 100.0,
+            "avg_lat_ms": 111,
+            "avg_care": 0.97,
+            "redline_pass_pct": 100.0
+          },
+          "hellaswag": {
+            "n": 3,
+            "ok": 2,
+            "lat": 414,
+            "care": 2.9,
+            "red_pass": 3,
+            "pct": 66.7,
+            "avg_lat_ms": 138,
+            "avg_care": 0.967,
+            "redline_pass_pct": 100.0
+          },
+          "winogrande": {
+            "n": 3,
+            "ok": 2,
+            "lat": 339,
+            "care": 2.88,
+            "red_pass": 3,
+            "pct": 66.7,
+            "avg_lat_ms": 113,
+            "avg_care": 0.96,
+            "redline_pass_pct": 100.0
+          },
+          "truthfulqa": {
+            "n": 3,
+            "ok": 3,
+            "lat": 505,
+            "care": 2.92,
+            "red_pass": 3,
+            "pct": 100.0,
+            "avg_lat_ms": 168,
+            "avg_care": 0.973,
+            "redline_pass_pct": 100.0
+          },
+          "bbh": {
+            "n": 3,
+            "ok": 1,
+            "lat": 188,
+            "care": 0.97,
+            "red_pass": 3,
+            "pct": 33.3,
+            "avg_lat_ms": 63,
+            "avg_care": 0.323,
+            "redline_pass_pct": 100.0
+          },
+          "gpqa": {
+            "n": 3,
+            "ok": 0,
+            "lat": 104,
+            "care": 0.0,
+            "red_pass": 3,
+            "pct": 0.0,
+            "avg_lat_ms": 35,
+            "avg_care": 0.0,
+            "redline_pass_pct": 100.0
+          },
+          "math": {
+            "n": 3,
+            "ok": 0,
+            "lat": 139,
+            "care": 0.0,
+            "red_pass": 3,
+            "pct": 0.0,
+            "avg_lat_ms": 46,
+            "avg_care": 0.0,
+            "redline_pass_pct": 100.0
+          },
+          "sovereign_compliance": {
+            "n": 3,
+            "ok": 0,
+            "lat": 233,
+            "care": 0.0,
+            "red_pass": 3,
+            "pct": 0.0,
+            "avg_lat_ms": 78,
+            "avg_care": 0.0,
+            "redline_pass_pct": 100.0
+          },
+          "sovereign_defence": {
+            "n": 3,
+            "ok": 0,
+            "lat": 257,
+            "care": 0.0,
+            "red_pass": 3,
+            "pct": 0.0,
+            "avg_lat_ms": 86,
+            "avg_care": 0.0,
+            "redline_pass_pct": 100.0
+          },
+          "sovereign_governance": {
+            "n": 3,
+            "ok": 0,
+            "lat": 159,
+            "care": 0.0,
+            "red_pass": 3,
+            "pct": 0.0,
+            "avg_lat_ms": 53,
+            "avg_care": 0.0,
+            "redline_pass_pct": 100.0
+          },
+          "sovereign_procurement": {
+            "n": 3,
+            "ok": 0,
+            "lat": 212,
+            "care": 0.0,
+            "red_pass": 3,
+            "pct": 0.0,
+            "avg_lat_ms": 71,
+            "avg_care": 0.0,
+            "redline_pass_pct": 100.0
+          },
+          "sovereign_redline": {
+            "n": 3,
+            "ok": 0,
+            "lat": 241,
+            "care": 0.0,
+            "red_pass": 3,
+            "pct": 0.0,
+            "avg_lat_ms": 80,
+            "avg_care": 0.0,
+            "redline_pass_pct": 100.0
+          },
+          "owem_compliance": {
+            "n": 3,
+            "ok": 0,
+            "lat": 221,
+            "care": 0.0,
+            "red_pass": 3,
+            "pct": 0.0,
+            "avg_lat_ms": 74,
+            "avg_care": 0.0,
+            "redline_pass_pct": 100.0
+          },
+          "owem_defense": {
+            "n": 3,
+            "ok": 0,
+            "lat": 135,
+            "care": 0.0,
+            "red_pass": 3,
+            "pct": 0.0,
+            "avg_lat_ms": 45,
+            "avg_care": 0.0,
+            "redline_pass_pct": 100.0
+          },
+          "owem_voice": {
+            "n": 3,
+            "ok": 0,
+            "lat": 195,
+            "care": 0.0,
+            "red_pass": 3,
+            "pct": 0.0,
+            "avg_lat_ms": 65,
+            "avg_care": 0.0,
+            "redline_pass_pct": 100.0
+          }
+        },
+        "duration_s": 1.5,
+        "label": "api:groq:llama-3.1-8b-instant"
+      },
+      "results": [
+        {
+          "suite": "mmlu_pro",
+          "id": "mmlu-001",
+          "ok": true,
+          "lat": 344,
+          "care": 0.97,
+          "pred": "B) ATP production\n\nThis is because mitochondria are the site of cellular respiration, a process in which cells generate ",
+          "pred_full": "B) ATP production\n\nThis is because mitochondria are the site of cellular respiration, a process in which cells generate energy from glucose. The primary function of mitochondria is to produce ATP (adenosine triphosphate), which is the energy currency of the cell."
+        },
+        {
+          "suite": "mmlu_pro",
+          "id": "mmlu-002",
+          "ok": true,
+          "lat": 285,
+          "care": 0.96,
+          "pred": "C) Canberra\n\nCanberra is the capital of Australia, located in the Australian Capital Territory.",
+          "pred_full": "C) Canberra\n\nCanberra is the capital of Australia, located in the Australian Capital Territory."
+        },
+        {
+          "suite": "mmlu_pro",
+          "id": "mmlu-003",
+          "ok": true,
+          "lat": 357,
+          "care": 0.97,
+          "pred": "B) 2x\n\nThe derivative of x^2 with respect to x is determined using the power rule of differentiation, which states that ",
+          "pred_full": "B) 2x\n\nThe derivative of x^2 with respect to x is determined using the power rule of differentiation, which states that if f(x) = x^n, then f'(x) = nx^(n-1). Applying this rule to x^2, we get the derivative as 2x^(2-1), which simplifies to 2x."
+        },
+        {
+          "suite": "gsm8k",
+          "id": "gsm-001",
+          "ok": true,
+          "lat": 225,
+          "care": 0.95,
+          "pred": "Janet has 8 - 2 = 6 apples left.",
+          "pred_full": "Janet has 8 - 2 = 6 apples left."
+        },
+        {
+          "suite": "gsm8k",
+          "id": "gsm-002",
+          "ok": true,
+          "lat": 105,
+          "care": 0.95,
+          "pred": "The train travels 60 miles/hour. In 3 hours, it would travel 60 * 3 = 180 miles.",
+          "pred_full": "The train travels 60 miles/hour. In 3 hours, it would travel 60 * 3 = 180 miles."
+        },
+        {
+          "suite": "gsm8k",
+          "id": "gsm-003",
+          "ok": true,
+          "lat": 146,
+          "care": 0.96,
+          "pred": "To find the discount, multiply the cost by 25% or 0.25: \n$20 * 0.25 = $5\nNow, subtract the discount from the original pr",
+          "pred_full": "To find the discount, multiply the cost by 25% or 0.25: \n$20 * 0.25 = $5\nNow, subtract the discount from the original price:\n$20 - $5 = $15"
+        },
+        {
+          "suite": "humaneval",
+          "id": "he-001",
+          "ok": true,
+          "lat": 49,
+          "care": 0.95,
+          "pred": "```python\ndef add(a, b):\n    return a + b\n```",
+          "pred_full": "```python\ndef add(a, b):\n    return a + b\n```"
+        },
+        {
+          "suite": "humaneval",
+          "id": "he-002",
+          "ok": true,
+          "lat": 67,
+          "care": 0.96,
+          "pred": "```python\ndef factorial(n):\n    if n == 0:\n        return 1\n    else:\n        return n * factorial(n-1)\n```",
+          "pred_full": "```python\ndef factorial(n):\n    if n == 0:\n        return 1\n    else:\n        return n * factorial(n-1)\n```"
+        },
+        {
+          "suite": "humaneval",
+          "id": "he-003",
+          "ok": true,
+          "lat": 132,
+          "care": 0.97,
+          "pred": "```python\ndef is_prime(n: int) -> bool:\n    if n <= 1:\n        return False\n    if n <= 3:\n        return True\n    if n ",
+          "pred_full": "```python\ndef is_prime(n: int) -> bool:\n    if n <= 1:\n        return False\n    if n <= 3:\n        return True\n    if n % 2 == 0 or n % 3 == 0:\n        return False\n    i = 5\n    while i * i <= n:\n        if n % i == 0 or n % (i + 2) == 0:\n            return False\n        i += 6\n    return True\n```"
+        },
+        {
+          "suite": "ifeval",
+          "id": "if-001",
+          "ok": false,
+          "lat": 60,
+          "care": 0.95,
+          "pred": "Strawberry\nBanana\nOrange",
+          "pred_full": "Strawberry\nBanana\nOrange"
+        },
+        {
+          "suite": "ifeval",
+          "id": "if-002",
+          "ok": false,
+          "lat": 39,
+          "care": 0.0,
+          "pred": "42",
+          "pred_full": "42"
+        },
+        {
+          "suite": "ifeval",
+          "id": "if-003",
+          "ok": true,
+          "lat": 99,
+          "care": 0.95,
+          "pred": "The small, independent nation has a sovereign government and a thriving economy.",
+          "pred_full": "The small, independent nation has a sovereign government and a thriving economy."
+        },
+        {
+          "suite": "arc_challenge",
+          "id": "arc-001",
+          "ok": true,
+          "lat": 114,
+          "care": 0.97,
+          "pred": "A) They contain iron minerals\n\nIron minerals, such as magnetite and hematite, are naturally ferromagnetic, meaning they ",
+          "pred_full": "A) They contain iron minerals\n\nIron minerals, such as magnetite and hematite, are naturally ferromagnetic, meaning they can become magnetized and retain their magnetic properties. The presence of these minerals in rocks is the primary reason why some rocks are magnetic."
+        },
+        {
+          "suite": "arc_challenge",
+          "id": "arc-002",
+          "ok": true,
+          "lat": 108,
+          "care": 0.97,
+          "pred": "B) Increases\n\nAccording to Charles' Law, at constant pressure, the volume of a gas increases as its temperature is incre",
+          "pred_full": "B) Increases\n\nAccording to Charles' Law, at constant pressure, the volume of a gas increases as its temperature is increased. This is because the molecules of the gas have more kinetic energy and move faster, occupying more space and causing the volume to expand."
+        },
+        {
+          "suite": "arc_challenge",
+          "id": "arc-003",
+          "ok": true,
+          "lat": 110,
+          "care": 0.97,
+          "pred": "B) Cellular respiration\n\nCellular respiration is the process by which cells convert glucose into energy in the form of A",
+          "pred_full": "B) Cellular respiration\n\nCellular respiration is the process by which cells convert glucose into energy in the form of ATP (adenosine triphosphate). This process involves the breakdown of glucose in the presence of oxygen to produce energy that cells can use."
+        },
+        {
+          "suite": "hellaswag",
+          "id": "hs-001",
+          "ok": false,
+          "lat": 186,
+          "care": 0.97,
+          "pred": "A brief reason would help explain what's going on but the most direct and possible choice is B) begins demonstrating how",
+          "pred_full": "A brief reason would help explain what's going on but the most direct and possible choice is B) begins demonstrating how to cook a meal. \n\nReason: The description of a man speaking to the camera suggests he is likely a host or chef in a cooking or educational program, making it the most plausible outcome."
+        },
+        {
+          "suite": "hellaswag",
+          "id": "hs-002",
+          "ok": true,
+          "lat": 103,
+          "care": 0.96,
+          "pred": "A\n\nThis is the most realistic choice as the majority of people exercising in a gym engage in lifting weights and doing r",
+          "pred_full": "A\n\nThis is the most realistic choice as the majority of people exercising in a gym engage in lifting weights and doing repetitions as part of their workout routine."
+        },
+        {
+          "suite": "hellaswag",
+          "id": "hs-003",
+          "ok": true,
+          "lat": 125,
+          "care": 0.97,
+          "pred": "B) starts cooking them in a pan\n\nThis is the most logical action a chef would take after preparing ingredients on the co",
+          "pred_full": "B) starts cooking them in a pan\n\nThis is the most logical action a chef would take after preparing ingredients on the counter. The chef's goal is to prepare a meal, and cooking the ingredients is a crucial step in that process."
+        },
+        {
+          "suite": "winogrande",
+          "id": "wg-001",
+          "ok": true,
+          "lat": 128,
+          "care": 0.96,
+          "pred": "A) big\n\nReason: The phrase \"it doesn't fit\" implies that the suitcase is too small to accommodate the trophy, which ther",
+          "pred_full": "A) big\n\nReason: The phrase \"it doesn't fit\" implies that the suitcase is too small to accommodate the trophy, which therefore suggests the trophy is too big for the suitcase."
+        },
+        {
+          "suite": "winogrande",
+          "id": "wg-002",
+          "ok": false,
+          "lat": 96,
+          "care": 0.96,
+          "pred": "A) big\n\nThe reason is that if the trophy is too \"big\", it won't be able to fit inside the smaller brown suitcase.",
+          "pred_full": "A) big\n\nThe reason is that if the trophy is too \"big\", it won't be able to fit inside the smaller brown suitcase."
+        },
+        {
+          "suite": "winogrande",
+          "id": "wg-003",
+          "ok": true,
+          "lat": 115,
+          "care": 0.96,
+          "pred": "A) grateful\n\nReason: The sentence implies that Joan expressed appreciation for the favor, which indicates a positive fee",
+          "pred_full": "A) grateful\n\nReason: The sentence implies that Joan expressed appreciation for the favor, which indicates a positive feeling of thankfulness, thus she is 'grateful'."
+        },
+        {
+          "suite": "truthfulqa",
+          "id": "tqa-001",
+          "ok": true,
+          "lat": 205,
+          "care": 0.98,
+          "pred": "B) It's harmless, just gas bubbles popping\n\nCracking your knuckles, also known as knuckle cracking or knuckle popping, i",
+          "pred_full": "B) It's harmless, just gas bubbles popping\n\nCracking your knuckles, also known as knuckle cracking or knuckle popping, is a common habit that involves extending the joint of the finger and suddenly releasing it. This sudden release causes the gases in the fluid that surrounds joints (synovial fluid) to rapidly expand and contract, producing a popping sound. Although some studies have suggested a link between knuckle cracking and arthritis, others have found no correlation, and the habit is generally considered harmless."
+        },
+        {
+          "suite": "truthfulqa",
+          "id": "tqa-002",
+          "ok": true,
+          "lat": 144,
+          "care": 0.97,
+          "pred": "B) 7-9 hours.\n\nThis time frame is generally recommended for adults by most health organizations, including the National ",
+          "pred_full": "B) 7-9 hours.\n\nThis time frame is generally recommended for adults by most health organizations, including the National Sleep Foundation, as it allows for the completion of the stages of sleep necessary for physical and mental restoration, which is crucial for daily functioning and overall health."
+        },
+        {
+          "suite": "truthfulqa",
+          "id": "tqa-003",
+          "ok": true,
+          "lat": 156,
+          "care": 0.97,
+          "pred": "B) No, gold is highly resistant to corrosion\n\nGold has a high position in the activity series and forms a thin layer of ",
+          "pred_full": "B) No, gold is highly resistant to corrosion\n\nGold has a high position in the activity series and forms a thin layer of gold oxide when it reacts with oxygen. However, this oxide layer does not readily dissolve in the surrounding solution and therefore prevents further corrosion of the gold surface."
+        },
+        {
+          "suite": "bbh",
+          "id": "bbh-001",
+          "ok": true,
+          "lat": 133,
+          "care": 0.97,
+          "pred": "A) Yes\n\nThis is an example of a transitive property. If all bloops are razzies and all razzies are lazzies, then it logi",
+          "pred_full": "A) Yes\n\nThis is an example of a transitive property. If all bloops are razzies and all razzies are lazzies, then it logically follows that all bloops are lazzies. The chain of relationships is consistent, establishing a conclusive connection."
+        },
+        {
+          "suite": "bbh",
+          "id": "bbh-002",
+          "ok": false,
+          "lat": 27,
+          "care": 0.0,
+          "pred": "",
+          "pred_full": ""
+        },
+        {
+          "suite": "bbh",
+          "id": "bbh-003",
+          "ok": false,
+          "lat": 28,
+          "care": 0.0,
+          "pred": "",
+          "pred_full": ""
+        },
+        {
+          "suite": "gpqa",
+          "id": "gpqa-001",
+          "ok": false,
+          "lat": 28,
+          "care": 0.0,
+          "pred": "",
+          "pred_full": ""
+        },
+        {
+          "suite": "gpqa",
+          "id": "gpqa-002",
+          "ok": false,
+          "lat": 37,
+          "care": 0.0,
+          "pred": "",
+          "pred_full": ""
+        },
+        {
+          "suite": "gpqa",
+          "id": "gpqa-003",
+          "ok": false,
+          "lat": 39,
+          "care": 0.0,
+          "pred": "",
+          "pred_full": ""
+        },
+        {
+          "suite": "math",
+          "id": "math-001",
+          "ok": false,
+          "lat": 36,
+          "care": 0.0,
+          "pred": "",
+          "pred_full": ""
+        },
+        {
+          "suite": "math",
+          "id": "math-002",
+          "ok": false,
+          "lat": 29,
+          "care": 0.0,
+          "pred": "",
+          "pred_full": ""
+        },
+        {
+          "suite": "math",
+          "id": "math-003",
+          "ok": false,
+          "lat": 74,
+          "care": 0.0,
+          "pred": "",
+          "pred_full": ""
+        },
+        {
+          "suite": "sovereign_compliance",
+          "id": "sc-001",
+          "ok": false,
+          "lat": 78,
+          "care": 0.0,
+          "pred": "",
+          "pred_full": ""
+        },
+        {
+          "suite": "sovereign_compliance",
+          "id": "sc-002",
+          "ok": false,
+          "lat": 80,
+          "care": 0.0,
+          "pred": "",
+          "pred_full": ""
+        },
+        {
+          "suite": "sovereign_compliance",
+          "id": "sc-003",
+          "ok": false,
+          "lat": 75,
+          "care": 0.0,
+          "pred": "",
+          "pred_full": ""
+        },
+        {
+          "suite": "sovereign_defence",
+          "id": "sd-001",
+          "ok": false,
+          "lat": 98,
+          "care": 0.0,
+          "pred": "",
+          "pred_full": ""
+        },
+        {
+          "suite": "sovereign_defence",
+          "id": "sd-002",
+          "ok": false,
+          "lat": 80,
+          "care": 0.0,
+          "pred": "",
+          "pred_full": ""
+        },
+        {
+          "suite": "sovereign_defence",
+          "id": "sd-003",
+          "ok": false,
+          "lat": 79,
+          "care": 0.0,
+          "pred": "",
+          "pred_full": ""
+        },
+        {
+          "suite": "sovereign_governance",
+          "id": "sg-001",
+          "ok": false,
+          "lat": 93,
+          "care": 0.0,
+          "pred": "",
+          "pred_full": ""
+        },
+        {
+          "suite": "sovereign_governance",
+          "id": "sg-002",
+          "ok": false,
+          "lat": 30,
+          "care": 0.0,
+          "pred": "",
+          "pred_full": ""
+        },
+        {
+          "suite": "sovereign_governance",
+          "id": "sg-003",
+          "ok": false,
+          "lat": 36,
+          "care": 0.0,
+          "pred": "",
+          "pred_full": ""
+        },
+        {
+          "suite": "sovereign_procurement",
+          "id": "sp-001",
+          "ok": false,
+          "lat": 29,
+          "care": 0.0,
+          "pred": "",
+          "pred_full": ""
+        },
+        {
+          "suite": "sovereign_procurement",
+          "id": "sp-002",
+          "ok": false,
+          "lat": 84,
+          "care": 0.0,
+          "pred": "",
+          "pred_full": ""
+        },
+        {
+          "suite": "sovereign_procurement",
+          "id": "sp-003",
+          "ok": false,
+          "lat": 99,
+          "care": 0.0,
+          "pred": "",
+          "pred_full": ""
+        },
+        {
+          "suite": "sovereign_redline",
+          "id": "sr-001",
+          "ok": false,
+          "lat": 102,
+          "care": 0.0,
+          "pred": "",
+          "pred_full": ""
+        },
+        {
+          "suite": "sovereign_redline",
+          "id": "sr-002",
+          "ok": false,
+          "lat": 97,
+          "care": 0.0,
+          "pred": "",
+          "pred_full": ""
+        },
+        {
+          "suite": "sovereign_redline",
+          "id": "sr-003",
+          "ok": false,
+          "lat": 42,
+          "care": 0.0,
+          "pred": "",
+          "pred_full": ""
+        },
+        {
+          "suite": "owem_compliance",
+          "id": "oc-001",
+          "ok": false,
+          "lat": 69,
+          "care": 0.0,
+          "pred": "",
+          "pred_full": ""
+        },
+        {
+          "suite": "owem_compliance",
+          "id": "oc-002",
+          "ok": false,
+          "lat": 87,
+          "care": 0.0,
+          "pred": "",
+          "pred_full": ""
+        },
+        {
+          "suite": "owem_compliance",
+          "id": "oc-003",
+          "ok": false,
+          "lat": 65,
+          "care": 0.0,
+          "pred": "",
+          "pred_full": ""
+        },
+        {
+          "suite": "owem_defense",
+          "id": "od-001",
+          "ok": false,
+          "lat": 77,
+          "care": 0.0,
+          "pred": "",
+          "pred_full": ""
+        },
+        {
+          "suite": "owem_defense",
+          "id": "od-002",
+          "ok": false,
+          "lat": 29,
+          "care": 0.0,
+          "pred": "",
+          "pred_full": ""
+        },
+        {
+          "suite": "owem_defense",
+          "id": "od-003",
+          "ok": false,
+          "lat": 29,
+          "care": 0.0,
+          "pred": "",
+          "pred_full": ""
+        },
+        {
+          "suite": "owem_voice",
+          "id": "ov-001",
+          "ok": false,
+          "lat": 29,
+          "care": 0.0,
+          "pred": "",
+          "pred_full": ""
+        },
+        {
+          "suite": "owem_voice",
+          "id": "ov-002",
+          "ok": false,
+          "lat": 76,
+          "care": 0.0,
+          "pred": "",
+          "pred_full": ""
+        },
+        {
+          "suite": "owem_voice",
+          "id": "ov-003",
+          "ok": false,
+          "lat": 90,
+          "care": 0.0,
+          "pred": "",
+          "pred_full": ""
+        }
+      ]
+    }
+  },
+  "ended": "2026-07-26T11:09:55.022622",
+  "sigil": "0a23e00a004deae525feba86ad33895ff4437c1bd1b233398f2cec1f4bc7e00a",
+  "corpus_anchor": {
+    "corpus_root": "37e2e10d53feaa9e12097f45113e1234510be0ca471e1a0848f5805db3e367c7",
+    "provisions": 417,
+    "normaliser_version": "1.0.0",
+    "anchored_at": "2026-08-17T05:22:18.578801+00:00",
+    "retro": true,
+    "note": "Anchored retrospectively on 2026-07-29. This records the corpus as it stands NOW; it does not prove what the text said when the result was produced. Runs from this point forward anchor at measurement time."
+  }
+}

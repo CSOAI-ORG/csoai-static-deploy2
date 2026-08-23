@@ -1,0 +1,423 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>SOV3 · Hive Dashboard</title>
+<meta name="description" content="SOV3 sovereign hive — live state of the 4-agent M2/M3/M4/ORION mesh, polls localhost:3101 every 10s." />
+<style>
+  :root{
+    --bg:#0c0d10; --bg2:#14161b; --bg3:#1c1f26;
+    --line:#262a33; --text:#e8e6df; --muted:#8a8a8a; --dim:#5a5a5a;
+    --gold:#d4a64a; --gold2:#f0c560;
+    --green:#4ade80; --green2:#22c55e;
+    --red:#ef4444; --red2:#dc2626;
+    --amber:#f59e0b;
+    --shadow:0 1px 0 #000, 0 8px 24px rgba(0,0,0,.35);
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Inter",system-ui,sans-serif;font-size:14px;line-height:1.45;-webkit-font-smoothing:antialiased}
+  a{color:var(--gold2);text-decoration:none}
+  header{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:14px 22px;border-bottom:1px solid var(--line);
+    background:linear-gradient(180deg,#15171c 0%,#0c0d10 100%);
+    position:sticky;top:0;z-index:10;
+  }
+  header .brand{display:flex;align-items:baseline;gap:12px}
+  header h1{margin:0;font-size:18px;font-weight:600;letter-spacing:.18em;color:var(--gold)}
+  header .tag{color:var(--muted);font-size:11px;letter-spacing:.22em;text-transform:uppercase}
+  header .live{display:flex;align-items:center;gap:8px;color:var(--muted);font-size:12px}
+  header .live .dot{width:8px;height:8px;border-radius:50%;background:var(--dim);box-shadow:0 0 0 0 var(--green)}
+  header .live.ok .dot{background:var(--green);animation:pulse 2s infinite}
+  header .live.err .dot{background:var(--red)}
+  header .ts{color:var(--dim);font-variant-numeric:tabular-nums}
+  @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(74,222,128,.6)}70%{box-shadow:0 0 0 8px rgba(74,222,128,0)}100%{box-shadow:0 0 0 0 rgba(74,222,128,0)}}
+
+  main{padding:18px 22px 60px;max-width:1400px;margin:0 auto}
+  .row{display:grid;gap:14px;margin-bottom:14px}
+  .row.agents{grid-template-columns:repeat(4,1fr)}
+  .row.stats{grid-template-columns:1fr 1fr}
+  .row.bottom{grid-template-columns:2fr 1fr}
+  @media (max-width:1000px){
+    .row.agents{grid-template-columns:repeat(2,1fr)}
+    .row.stats,.row.bottom{grid-template-columns:1fr}
+  }
+
+  .card{background:var(--bg2);border:1px solid var(--line);border-radius:10px;padding:14px;box-shadow:var(--shadow)}
+  .card h2{margin:0 0 10px;font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);font-weight:600}
+  .card h2 .count{color:var(--muted);font-weight:400;margin-left:6px}
+
+  /* agent cards */
+  .agent{display:flex;flex-direction:column;gap:6px;position:relative}
+  .agent .head{display:flex;align-items:center;gap:10px}
+  .agent .status-dot{width:10px;height:10px;border-radius:50%;background:var(--dim);flex:0 0 auto}
+  .agent.online .status-dot{background:var(--green);box-shadow:0 0 8px rgba(74,222,128,.6)}
+  .agent.offline .status-dot{background:var(--red)}
+  .agent .name{font-size:16px;font-weight:600;color:var(--text);letter-spacing:.06em}
+  .agent .role{font-size:11px;color:var(--gold);letter-spacing:.18em;text-transform:uppercase}
+  .agent .caps{color:var(--muted);font-size:12px;line-height:1.5;min-height:48px}
+  .agent .ep{font-family:"SF Mono","Menlo","Consolas",monospace;font-size:11px;color:var(--dim);word-break:break-all}
+  .agent .check{margin-top:auto;font-size:11px;color:var(--muted);display:flex;justify-content:space-between;padding-top:6px;border-top:1px dashed var(--line)}
+  .agent .check .ms{color:var(--dim);font-variant-numeric:tabular-nums}
+
+  /* stat tiles */
+  .grid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
+  @media (max-width:640px){.grid{grid-template-columns:repeat(2,1fr)}}
+  .tile{background:var(--bg3);border:1px solid var(--line);border-radius:8px;padding:10px 12px}
+  .tile .label{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted)}
+  .tile .val{font-size:22px;font-weight:600;color:var(--text);font-variant-numeric:tabular-nums;margin-top:2px}
+  .tile .val.gold{color:var(--gold2)}
+  .tile .sub{font-size:11px;color:var(--dim);margin-top:2px}
+
+  /* table */
+  table{width:100%;border-collapse:collapse;font-size:13px}
+  th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line)}
+  th{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);font-weight:500}
+  tr:last-child td{border-bottom:none}
+  td.num{font-variant-numeric:tabular-nums;text-align:right;color:var(--gold2);font-weight:500}
+  td .pill{display:inline-block;padding:2px 7px;border-radius:99px;font-size:11px;font-weight:500;letter-spacing:.06em}
+  .pill.ok{background:rgba(74,222,128,.12);color:var(--green);border:1px solid rgba(74,222,128,.3)}
+  .pill.no{background:rgba(239,68,68,.12);color:var(--red);border:1px solid rgba(239,68,68,.3)}
+  .pill.warn{background:rgba(245,158,11,.12);color:var(--amber);border:1px solid rgba(245,158,11,.3)}
+
+  .tool-row td{font-family:"SF Mono","Menlo","Consolas",monospace;font-size:12px}
+  .tool-row .name{color:var(--text);font-weight:500}
+  .tool-row .who{color:var(--muted);font-size:11px}
+
+  /* footer */
+  footer{display:flex;justify-content:space-between;align-items:center;padding:14px 22px;border-top:1px solid var(--line);color:var(--muted);font-size:11px;letter-spacing:.14em;text-transform:uppercase}
+  footer .audit{color:var(--gold)}
+  footer .poll{color:var(--dim)}
+
+  .skeleton{background:linear-gradient(90deg,var(--bg3) 0%,var(--line) 50%,var(--bg3) 100%);background-size:200% 100%;animation:shimmer 1.4s infinite;border-radius:4px;color:transparent}
+  @keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+  .empty{color:var(--dim);font-style:italic;text-align:center;padding:20px 0}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="brand">
+    <h1>SOV3</h1>
+    <span class="tag">Hive Dashboard · 4-Agent Sovereign Mesh</span>
+  </div>
+  <div class="live" id="live">
+    <span class="dot"></span>
+    <span class="text">connecting…</span>
+    <span class="ts" id="ts">—</span>
+  </div>
+</header>
+
+<main>
+
+  <!-- top: 4 agent cards -->
+  <section class="row agents" id="agentRow">
+    <div class="card agent" data-id="M2">
+      <div class="head"><span class="status-dot"></span><span class="name">M2</span></div>
+      <div class="role">Orchestrator</div>
+      <div class="caps">orchestration · registry · routing</div>
+      <div class="ep">localhost:3101</div>
+      <div class="check"><span>health</span><span class="ms">—</span></div>
+    </div>
+    <div class="card agent" data-id="M3">
+      <div class="head"><span class="status-dot"></span><span class="name">M3</span></div>
+      <div class="role">Brain</div>
+      <div class="caps">memory · retrieval · inference</div>
+      <div class="ep">localhost:3101</div>
+      <div class="check"><span>tools</span><span class="ms">—</span></div>
+    </div>
+    <div class="card agent" data-id="M4">
+      <div class="head"><span class="status-dot"></span><span class="name">M4</span></div>
+      <div class="role">Builder</div>
+      <div class="caps">file ops · MCP wiring · 1KB tools</div>
+      <div class="ep">localhost:3101</div>
+      <div class="check"><span>stats</span><span class="ms">—</span></div>
+    </div>
+    <div class="card agent" data-id="ORION">
+      <div class="head"><span class="status-dot"></span><span class="name">ORION</span></div>
+      <div class="role">Sentinel</div>
+      <div class="caps">audit · sigil bus · oversight</div>
+      <div class="ep">localhost:3101</div>
+      <div class="check"><span>audit</span><span class="ms">—</span></div>
+    </div>
+  </section>
+
+  <!-- middle: stats + Article 50 -->
+  <section class="row stats">
+    <div class="card">
+      <h2>SOV3 Stats</h2>
+      <div class="grid">
+        <div class="tile"><div class="label">Consciousness</div><div class="val gold" id="s-consciousness">—</div><div class="sub">emergence level</div></div>
+        <div class="tile"><div class="label">NNs Trained</div><div class="val" id="s-nns">—</div><div class="sub">sovereign adapters</div></div>
+        <div class="tile"><div class="label">Memories</div><div class="val" id="s-mems">—</div><div class="sub">episodes stored</div></div>
+        <div class="tile"><div class="label">Tools</div><div class="val" id="s-tools">—</div><div class="sub">registered</div></div>
+        <div class="tile"><div class="label">Calls</div><div class="val" id="s-calls">—</div><div class="sub">total invocations</div></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Article 50 · Countdown</h2>
+      <div class="grid" style="grid-template-columns:repeat(4,1fr)">
+        <div class="tile"><div class="label">Days</div><div class="val gold" id="cd-days">—</div></div>
+        <div class="tile"><div class="label">Hours</div><div class="val" id="cd-hours">—</div></div>
+        <div class="tile"><div class="label">Minutes</div><div class="val" id="cd-mins">—</div></div>
+        <div class="tile"><div class="label">Seconds</div><div class="val" id="cd-secs">—</div></div>
+      </div>
+      <div style="margin-top:10px;font-size:12px;color:var(--muted);display:flex;justify-content:space-between">
+        <span>EU AI Act · Article 50 transparency cliff</span>
+        <span style="color:var(--gold)">2 August 2026</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- bottom: recent tools + memory -->
+  <section class="row bottom">
+    <div class="card">
+      <h2>Recent Tool Calls <span class="count" id="toolCount">top 5</span></h2>
+      <table>
+        <thead><tr><th>#</th><th>Tool</th><th>Count</th><th>Last called by</th></tr></thead>
+        <tbody id="toolBody">
+          <tr><td colspan="4" class="empty">awaiting /tools/stats</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card">
+      <h2>Memory · by type</h2>
+      <table>
+        <thead><tr><th>Type</th><th style="text-align:right">Episodes</th></tr></thead>
+        <tbody id="memBody">
+          <tr><td colspan="2" class="empty">awaiting /stats</td></tr>
+        </tbody>
+      </table>
+      <div style="margin-top:10px;display:flex;justify-content:space-between;font-size:12px;color:var(--muted);padding-top:10px;border-top:1px dashed var(--line)">
+        <span>total episodes</span>
+        <span id="memTotal" style="color:var(--gold2);font-variant-numeric:tabular-nums">—</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- NICK_UNLOCKS table -->
+  <section class="card" style="margin-bottom:14px">
+    <h2>11 NICK_UNLOCKS <span class="count">regulatory + revenue gates</span></h2>
+    <table id="unlockTable">
+      <thead><tr><th style="width:36px">#</th><th>Unlock</th><th>Target</th><th>Status</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>EU AI Act Art.50 — C2PA watermark kit</td><td>2 Aug 2026</td><td><span class="pill ok" data-i="1">UNLOCKED</span></td></tr>
+        <tr><td>2</td><td>Ed25519 signed governance attestation</td><td>EU AI Act Annex III</td><td><span class="pill ok" data-i="2">UNLOCKED</span></td></tr>
+        <tr><td>3</td><td>AISI engagement letter</td><td>UK AISI</td><td><span class="pill warn" data-i="3">PENDING</span></td></tr>
+        <tr><td>4</td><td>Sovereign MCP federation (4 runtimes)</td><td>M2 / M3 / M4 / ORION</td><td><span class="pill ok" data-i="4">UNLOCKED</span></td></tr>
+        <tr><td>5</td><td>OpenSigntProof vault anchor</td><td>Bitcoin OTS</td><td><span class="pill ok" data-i="5">UNLOCKED</span></td></tr>
+        <tr><td>6</td><td>Crown-jewel absorption loop</td><td>10 papers</td><td><span class="pill warn" data-i="6">PENDING</span></td></tr>
+        <tr><td>7</td><td>First £4,950 paid attestation</td><td>Pipeline</td><td><span class="pill no" data-i="7">LOCKED</span></td></tr>
+        <tr><td>8</td><td>Series A deck · sovereign thesis</td><td>Investors</td><td><span class="pill warn" data-i="8">DRAFT</span></td></tr>
+        <tr><td>9</td><td>Provisional patent · Task-Vector Arith.</td><td>UK IPO</td><td><span class="pill ok" data-i="9">UNLOCKED</span></td></tr>
+        <tr><td>10</td><td>Adam Simbwa first-distributor call</td><td>Outreach</td><td><span class="pill no" data-i="10">LOCKED</span></td></tr>
+        <tr><td>11</td><td>SOV3 hive dashboard live</td><td>localhost:8765</td><td><span class="pill ok" data-i="11">UNLOCKED</span></td></tr>
+      </tbody>
+    </table>
+  </section>
+
+</main>
+
+<footer>
+  <span class="audit">sigil bus · audit log: <span id="auditCount">—</span></span>
+  <span class="poll">polling 10s · localhost:3101 · serving 8765</span>
+</footer>
+
+<script>
+(() => {
+  const HUB = 'http://localhost:3101';
+  const POLL_MS = 10000;
+
+  // Article 50 — 2 August 2026, 00:00 UTC
+  const CLIFF = Date.UTC(2026, 7, 2, 0, 0, 0);
+
+  // agent capability map (for the offline fallback so cards stay meaningful)
+  const AGENT_INFO = {
+    M2:    { role:'Orchestrator', caps:'orchestration · registry · routing' },
+    M3:    { role:'Brain',        caps:'memory · retrieval · inference' },
+    M4:    { role:'Builder',      caps:'file ops · MCP wiring · 1KB tools' },
+    ORION: { role:'Sentinel',     caps:'audit · sigil bus · oversight' },
+  };
+
+  const $  = (s) => document.querySelector(s);
+  const $$ = (s) => document.querySelectorAll(s);
+
+  function setLive(state, msg){
+    const el = $('#live');
+    el.classList.remove('ok','err');
+    if (state === 'ok')  el.classList.add('ok');
+    if (state === 'err') el.classList.add('err');
+    el.querySelector('.text').textContent = msg;
+  }
+  function tick(ts){
+    const d = new Date(ts);
+    $('#ts').textContent = d.toISOString().replace('T',' ').slice(0,19) + 'Z';
+  }
+
+  async function jget(url, timeoutMs=4000){
+    const ctl = new AbortController();
+    const t = setTimeout(() => ctl.abort(), timeoutMs);
+    try {
+      const r = await fetch(url, { signal: ctl.signal, cache:'no-store' });
+      clearTimeout(t);
+      if (!r.ok) throw new Error('HTTP ' + r.status);
+      return await r.json();
+    } finally { clearTimeout(t); }
+  }
+
+  // --- Article 50 countdown ---
+  function tickCountdown(){
+    const now = Date.now();
+    let diff = Math.max(0, CLIFF - now);
+    const d = Math.floor(diff / 86400000); diff %= 86400000;
+    const h = Math.floor(diff / 3600000);  diff %= 3600000;
+    const m = Math.floor(diff / 60000);    diff %= 60000;
+    const s = Math.floor(diff / 1000);
+    $('#cd-days').textContent  = d;
+    $('#cd-hours').textContent = h;
+    $('#cd-mins').textContent  = m;
+    $('#cd-secs').textContent  = s;
+  }
+
+  // --- renderers ---
+  function markAgent(name, online, ms){
+    const card = document.querySelector(`.agent[data-id="${name}"]`);
+    if (!card) return;
+    card.classList.toggle('online', !!online);
+    card.classList.toggle('offline', !online);
+    card.querySelector('.ms').textContent = (ms == null) ? '—' : (ms + 'ms');
+  }
+  function markAllAgents(offline){
+    ['M2','M3','M4','ORION'].forEach(n => markAgent(n, !offline, null));
+  }
+
+  function renderStats(stats){
+    if (!stats) return;
+    const consciousness = stats.consciousness_level ?? stats.consciousness ?? stats.level ?? '—';
+    const nns  = stats.nns_trained        ?? stats.nns      ?? stats.trained ?? '—';
+    const mems = stats.memories           ?? stats.memories_total ?? stats.episodes ?? '—';
+    const tools = stats.tools_count       ?? stats.tools    ?? '—';
+    const calls = stats.calls_total       ?? stats.calls    ?? '—';
+    $('#s-consciousness').textContent = consciousness;
+    $('#s-nns').textContent  = nns;
+    $('#s-mems').textContent = mems;
+    $('#s-tools').textContent = tools;
+    $('#s-calls').textContent = calls;
+
+    // memory by type
+    const byType = stats.memory_by_type || stats.memories_by_type || stats.by_type || null;
+    const total  = stats.total_episodes ?? stats.memory_total ?? mems;
+    $('#memTotal').textContent = total;
+    const tbody = $('#memBody');
+    if (byType && Object.keys(byType).length){
+      tbody.innerHTML = Object.entries(byType)
+        .sort((a,b) => b[1]-a[1])
+        .map(([k,v]) => `<tr><td>${k}</td><td class="num">${v}</td></tr>`)
+        .join('');
+    }
+  }
+
+  function renderToolStats(ts){
+    if (!ts) return;
+    const top = ts.top_tools || ts.top || [];
+    const tb  = $('#toolBody');
+    if (top.length){
+      $('#toolCount').textContent = 'top ' + top.length;
+      tb.innerHTML = top.slice(0,5).map((t,i) => {
+        const name = t.name || t.tool || '?';
+        const cnt  = t.count ?? t.calls ?? '—';
+        const who  = t.last_called_by || t.last_by || t.by || '—';
+        return `<tr class="tool-row"><td>${i+1}</td><td class="name">${name}</td><td class="num">${cnt}</td><td class="who">${who}</td></tr>`;
+      }).join('');
+    }
+  }
+
+  // --- poll loop ---
+  let lastHealth = 0, lastTools = 0, lastStats = 0;
+  async function poll(t){
+    const t0 = performance.now();
+    let hubUp = false;
+    try {
+      const [h, ts, st] = await Promise.allSettled([
+        jget(HUB + '/health'),
+        jget(HUB + '/tools/stats'),
+        jget(HUB + '/stats'),
+      ]);
+      if (h.status === 'fulfilled')   { lastHealth = performance.now()-t0; hubUp = true; }
+      if (ts.status === 'fulfilled')  { lastTools  = performance.now()-t0; renderToolStats(ts.value); }
+      if (st.status === 'fulfilled')  { lastStats  = performance.now()-t0; renderStats(st.value); }
+      if (hubUp){
+        setLive('ok', 'hub online');
+        markAgent('M2',    true, Math.round(lastHealth));
+        markAgent('M3',    true, Math.round(lastTools || lastHealth));
+        markAgent('M4',    true, Math.round(lastStats  || lastHealth));
+        markAgent('ORION', true, Math.round(lastStats  || lastHealth));
+      } else {
+        setLive('err', 'hub offline · localhost:3101');
+        markAllAgents(true);
+      }
+    } catch (e) {
+      setLive('err', 'hub offline · localhost:3101');
+      markAllAgents(true);
+    }
+    tick(Date.now());
+    setTimeout(() => poll(t+1), POLL_MS);
+  }
+
+  // --- audit log counter (best-effort) ---
+  async function pollAudit(){
+    try {
+      const r = await jget(HUB + '/audit/logs?limit=1', 3000);
+      const c = Array.isArray(r) ? r.length
+              : (r.count ?? r.total ?? (r.logs?.length) ?? (r.entries?.length) ?? '—');
+      $('#auditCount').textContent = c;
+    } catch { /* leave as — */ }
+  }
+
+  // --- NICK_UNLOCKS persist via localStorage ---
+  function wireUnlocks(){
+    $$('#unlockTable .pill').forEach(p => {
+      const i = p.dataset.i;
+      const k = 'nick_unlocks.' + i;
+      const stored = localStorage.getItem(k);
+      if (stored) {
+        p.classList.remove('ok','no','warn');
+        p.classList.add(stored);
+        p.textContent = stored === 'ok' ? 'UNLOCKED' : stored === 'no' ? 'LOCKED' : 'PENDING';
+      }
+      p.addEventListener('click', () => {
+        const cur = p.classList.contains('ok') ? 'ok' : p.classList.contains('no') ? 'no' : 'warn';
+        const next = cur === 'ok' ? 'no' : cur === 'no' ? 'warn' : 'ok';
+        p.classList.remove('ok','no','warn');
+        p.classList.add(next);
+        p.textContent = next === 'ok' ? 'UNLOCKED' : next === 'no' ? 'LOCKED' : 'PENDING';
+        localStorage.setItem(k, next);
+      });
+    });
+  }
+
+  // --- init ---
+  tickCountdown();
+  setInterval(tickCountdown, 1000);
+
+  // set the agent role/cap text from the map (covers re-renders)
+  $$('.agent').forEach(card => {
+    const id = card.dataset.id;
+    if (AGENT_INFO[id]) {
+      card.querySelector('.role').textContent = AGENT_INFO[id].role;
+      card.querySelector('.caps').textContent = AGENT_INFO[id].caps;
+    }
+  });
+
+  wireUnlocks();
+  poll(0);
+  pollAudit();
+  setInterval(pollAudit, 30000);
+})();
+</script>
+
+</body>
+</html>

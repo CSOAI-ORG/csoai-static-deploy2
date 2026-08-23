@@ -1,0 +1,16 @@
+{
+  "id": "attestation-onepager",
+  "kind": "revenue-product",
+  "claim": "measurement",
+  "artifact_path": "SOVOS/ATTESTATION-AS-A-SERVICE-ONEPAGER-2026-08-23.md",
+  "artifact_sha256": "8ab8a679c9232d604962b7ddb3a454b33c13a891fa6f581fa7b1150c4540b822",
+  "grammar": "verified measurement credential - measurement, not certification",
+  "note": "signed on signing node; ed25519 key never leaves",
+  "signature": {
+    "kind": "ed25519",
+    "sig": "CQZcP32MFNsJ0n+DMow/RCTtHphfktoUbVQtWfcgGarnyvSkglHTmreRiODPsnJlRecFqoOouCxdDZIKqo3uCQ==",
+    "body_sha256": "d445ae688f8eb5a8715ff923168a8ffe9d7509c77770fc744f6f2a1c38e3a469",
+    "pubkey": "bWbk52E47J6EkY4+pu0Hh/B1l1175AZoZsDEBr0EfWA=",
+    "note": "Ed25519 over the canonical body; verify with sign.py --verify. PQC upgrade: ML-DSA-65 via liboqs \u2014 same body, swap the primitive."
+  }
+}

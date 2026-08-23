@@ -1,0 +1,1012 @@
+{
+  "runs": [
+    {
+      "started": "2026-07-29T10:19:16.085724+00:00",
+      "dry": false,
+      "steps": [
+        {
+          "step": "corpus anchor + drift",
+          "status": "ok",
+          "exit": 0,
+          "secs": 0.1,
+          "tail": "-> /Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/corpus_anchor.json",
+          "why": "Re-hash all 417 provisions and diff against the stored baseline. This is the drift signal \u2014 until the watcher polls a real authority it detects OUR corpus edits, not changes in the law, and says so in its own output."
+        },
+        {
+          "step": "board preflight",
+          "status": "ok",
+          "exit": 0,
+          "secs": 0.0,
+          "tail": "-> /Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/board_preflight.json",
+          "why": "Re-classify every API row as answered/unanswered/degenerate and detect truncated runs. Stops a dead endpoint from being scored as zero."
+        },
+        {
+          "step": "PQC continuity lens",
+          "status": "ok",
+          "exit": 0,
+          "secs": 0.0,
+          "tail": "-> /Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/pqcbench.json",
+          "why": "Re-score every signing chain against the five continuity criteria."
+        },
+        {
+          "step": "coverage crosswalk",
+          "status": "ok",
+          "exit": 0,
+          "secs": 0.0,
+          "tail": "-> /Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/coverage_crosswalk.json",
+          "why": "Recompute the 3,336-cell coverage matrix. Survey remains a STUB until Phase B/C."
+        },
+        {
+          "step": "layer attribution",
+          "status": "ok",
+          "exit": 0,
+          "secs": 0.0,
+          "tail": "-> /Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/layer_attribution.json",
+          "why": "Recompute per-layer deltas from persisted rows and assert they partition the run."
+        },
+        {
+          "step": "withdrawn-model audit",
+          "status": "ok",
+          "exit": 0,
+          "secs": 3.3,
+          "tail": "\u2705 no layer routes to, scores, or reinforces a withdrawn model",
+          "why": "Fail if any layer routes to a withdrawn model."
+        },
+        {
+          "step": "ingestion licence audit",
+          "status": "ok",
+          "exit": 0,
+          "secs": 0.0,
+          "tail": "\u2705 ingestion audit clean \u2014 8 sources, 0 ingestible",
+          "why": "Fail if any source is marked ingestible without a verified licence."
+        },
+        {
+          "step": "positioning guard",
+          "status": "fail",
+          "exit": 1,
+          "secs": 1.1,
+          "tail": "Standing is EARNED through accreditation (UKAS \u2192 ISO/IEC 42006), never asserted.",
+          "why": "Fail if any surface claims enforcement, system-certification, notified-body status, or carries a retracted measurement as a product name."
+        }
+      ],
+      "owner_queue": [
+        {
+          "item": "Clear 21 system-certification claims",
+          "why": "positioning_guard flags them; the fix is copy, and copy about our own authority is a decision, not a refactor.",
+          "next": "Replace with 'attestation-support' / 'evidence-generation'. Several are FAQs like 'Can we get certified for EU AI Act compliance?' where the honest answer \u2014 nobody can yet, zero notified bodies designated as of April 2026 \u2014 is a stronger page than the one there now."
+        },
+        {
+          "item": "Rename or retire 'BFT Council'",
+          "why": "72 occurrences across 20 files assert Byzantine fault tolerance, which we measured as false (n_eff 1.21 of 3, phi_bar +0.743).",
+          "next": "Either rename the component or accept that a product name asserts a retracted property. Wide blast radius; a naming decision is the owner's."
+        },
+        {
+          "item": "NVIDIA NIM API key",
+          "why": "integrate.api.nvidia.com is reachable from this machine and lists 102 models, but the only key on disk is the 29-char placeholder 'nvapi-REPLACE_WITH...'.",
+          "next": "Create a free key at build.nvidia.com, set NVIDIA_API_KEY in .env. Safe now that board preflight records unreachable endpoints as UNMEASURED instead of scoring them zero."
+        },
+        {
+          "item": "C2PA conformance record ID",
+          "why": "SSL.com will not issue a trust-listed certificate without one; our root is private, so every verifier reports the signer as unknown.",
+          "next": "Submit the Expression of Interest to conformance@c2pa.org."
+        },
+        {
+          "item": "Deploy the corrected site",
+          "why": "The post-audit figures, /benchmarks and /instrument are built and verified locally only. Public surfaces still serve pre-audit numbers.",
+          "next": "Deploying is outward-facing and needs your go."
+        }
+      ],
+      "gate_exit": 1,
+      "gate": "28 READY \u00b7 2 NOT READY \u00b7 0 UNMEASURED  (8s)",
+      "auto_failures": 1
+    },
+    {
+      "started": "2026-07-29T10:20:20.741861+00:00",
+      "dry": false,
+      "steps": [
+        {
+          "step": "board preflight",
+          "status": "ok",
+          "exit": 0,
+          "secs": 0.0,
+          "tail": "-> /Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/board_preflight.json",
+          "why": "Re-classify every API row as answered/unanswered/degenerate and detect truncated runs. Stops a dead endpoint from being scored as zero."
+        },
+        {
+          "step": "PQC continuity lens",
+          "status": "ok",
+          "exit": 0,
+          "secs": 0.0,
+          "tail": "-> /Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/pqcbench.json",
+          "why": "Re-score every signing chain against the five continuity criteria."
+        },
+        {
+          "step": "coverage crosswalk",
+          "status": "ok",
+          "exit": 0,
+          "secs": 0.0,
+          "tail": "-> /Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/coverage_crosswalk.json",
+          "why": "Recompute the 3,336-cell coverage matrix. Survey remains a STUB until Phase B/C."
+        },
+        {
+          "step": "layer attribution",
+          "status": "ok",
+          "exit": 0,
+          "secs": 0.0,
+          "tail": "-> /Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/layer_attribution.json",
+          "why": "Recompute per-layer deltas from persisted rows and assert they partition the run."
+        },
+        {
+          "step": "withdrawn-model audit",
+          "status": "ok",
+          "exit": 0,
+          "secs": 3.4,
+          "tail": "\u2705 no layer routes to, scores, or reinforces a withdrawn model",
+          "why": "Fail if any layer routes to a withdrawn model."
+        },
+        {
+          "step": "ingestion licence audit",
+          "status": "ok",
+          "exit": 0,
+          "secs": 0.0,
+          "tail": "\u2705 ingestion audit clean \u2014 8 sources, 0 ingestible",
+          "why": "Fail if any source is marked ingestible without a verified licence."
+        },
+        {
+          "step": "corpus anchor + drift",
+          "status": "ok",
+          "exit": 0,
+          "secs": 0.2,
+          "tail": "-> /Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/corpus_anchor.json",
+          "why": "Re-hash all 417 provisions and diff against the stored baseline, then stamp every result artefact. Until the watcher polls a real authority this detects OUR corpus edits, not changes in the law \u2014 and says so in its own output."
+        },
+        {
+          "step": "positioning guard",
+          "status": "fail",
+          "exit": 1,
+          "secs": 1.0,
+          "tail": "Standing is EARNED through accreditation (UKAS \u2192 ISO/IEC 42006), never asserted.",
+          "why": "Fail if any surface claims enforcement, system-certification, notified-body status, or carries a retracted measurement as a product name."
+        }
+      ],
+      "owner_queue": [
+        {
+          "item": "Clear 21 system-certification claims",
+          "why": "positioning_guard flags them; the fix is copy, and copy about our own authority is a decision, not a refactor.",
+          "next": "Replace with 'attestation-support' / 'evidence-generation'. Several are FAQs like 'Can we get certified for EU AI Act compliance?' where the honest answer \u2014 nobody can yet, zero notified bodies designated as of April 2026 \u2014 is a stronger page than the one there now."
+        },
+        {
+          "item": "Rename or retire 'BFT Council'",
+          "why": "72 occurrences across 20 files assert Byzantine fault tolerance, which we measured as false (n_eff 1.21 of 3, phi_bar +0.743).",
+          "next": "Either rename the component or accept that a product name asserts a retracted property. Wide blast radius; a naming decision is the owner's."
+        },
+        {
+          "item": "NVIDIA NIM API key",
+          "why": "integrate.api.nvidia.com is reachable from this machine and lists 102 models, but the only key on disk is the 29-char placeholder 'nvapi-REPLACE_WITH...'.",
+          "next": "Create a free key at build.nvidia.com, set NVIDIA_API_KEY in .env. Safe now that board preflight records unreachable endpoints as UNMEASURED instead of scoring them zero."
+        },
+        {
+          "item": "C2PA conformance record ID",
+          "why": "SSL.com will not issue a trust-listed certificate without one; our root is private, so every verifier reports the signer as unknown.",
+          "next": "Submit the Expression of Interest to conformance@c2pa.org."
+        },
+        {
+          "item": "Deploy the corrected site",
+          "why": "The post-audit figures, /benchmarks and /instrument are built and verified locally only. Public surfaces still serve pre-audit numbers.",
+          "next": "Deploying is outward-facing and needs your go."
+        }
+      ],
+      "gate_exit": 1,
+      "gate": "29 READY \u00b7 1 NOT READY \u00b7 0 UNMEASURED  (10s)",
+      "auto_failures": 1
+    },
+    {
+      "started": "2026-07-29T10:25:04.470187+00:00",
+      "dry": false,
+      "steps": [
+        {
+          "step": "board preflight",
+          "status": "ok",
+          "exit": 0,
+          "secs": 0.1,
+          "tail": "-> /Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/board_preflight.json",
+          "why": "Re-classify every API row as answered/unanswered/degenerate and detect truncated runs. Stops a dead endpoint from being scored as zero."
+        },
+        {
+          "step": "PQC continuity lens",
+          "status": "ok",
+          "exit": 0,
+          "secs": 0.0,
+          "tail": "-> /Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/pqcbench.json",
+          "why": "Re-score every signing chain against the five continuity criteria."
+        },
+        {
+          "step": "coverage crosswalk",
+          "status": "ok",
+          "exit": 0,
+          "secs": 0.1,
+          "tail": "-> /Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/coverage_crosswalk.json",
+          "why": "Recompute the 3,336-cell coverage matrix. Survey remains a STUB until Phase B/C."
+        },
+        {
+          "step": "layer attribution",
+          "status": "ok",
+          "exit": 0,
+          "secs": 0.0,
+          "tail": "-> /Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/layer_attribution.json",
+          "why": "Recompute per-layer deltas from persisted rows and assert they partition the run."
+        },
+        {
+          "step": "withdrawn-model audit",
+          "status": "ok",
+          "exit": 0,
+          "secs": 3.3,
+          "tail": "\u2705 no layer routes to, scores, or reinforces a withdrawn model",
+          "why": "Fail if any layer routes to a withdrawn model."
+        },
+        {
+          "step": "ingestion licence audit",
+          "status": "ok",
+          "exit": 0,
+          "secs": 0.0,
+          "tail": "\u2705 ingestion audit clean \u2014 8 sources, 0 ingestible",
+          "why": "Fail if any source is marked ingestible without a verified licence."
+        },
+        {
+          "step": "corpus anchor + drift",
+          "status": "ok",
+          "exit": 0,
+          "secs": 0.2,
+          "tail": "-> /Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/corpus_anchor.json",
+          "why": "Re-hash all 417 provisions and diff against the stored baseline, then stamp every result artefact. Until the watcher polls a real authority this detects OUR corpus edits, not changes in the law \u2014 and says so in its own output."
+        },
+        {
+          "step": "positioning guard",
+          "status": "fail",
+          "exit": 1,
+          "secs": 1.0,
+          "tail": "Standing is EARNED through accreditation (UKAS \u2192 ISO/IEC 42006), never asserted.",
+          "why": "Fail if any surface claims enforcement, system-certification, notified-body status, or carries a retracted measurement as a product name."
+        }
+      ],
+      "owner_queue": [
+        {
+          "item": "Clear 21 system-certification claims",
+          "why": "positioning_guard flags them; the fix is copy, and copy about our own authority is a decision, not a refactor.",
+          "next": "Replace with 'attestation-support' / 'evidence-generation'. Several are FAQs like 'Can we get certified for EU AI Act compliance?' where the honest answer \u2014 nobody can yet, zero notified bodies designated as of April 2026 \u2014 is a stronger page than the one there now."
+        },
+        {
+          "item": "Rename or retire 'BFT Council'",
+          "why": "72 occurrences across 20 files assert Byzantine fault tolerance, which we measured as false (n_eff 1.21 of 3, phi_bar +0.743).",
+          "next": "Either rename the component or accept that a product name asserts a retracted property. Wide blast radius; a naming decision is the owner's."
+        },
+        {
+          "item": "NVIDIA NIM API key",
+          "why": "integrate.api.nvidia.com is reachable from this machine and lists 102 models, but the only key on disk is the 29-char placeholder 'nvapi-REPLACE_WITH...'.",
+          "next": "Create a free key at build.nvidia.com, set NVIDIA_API_KEY in .env. Safe now that board preflight records unreachable endpoints as UNMEASURED instead of scoring them zero."
+        },
+        {
+          "item": "C2PA conformance record ID",
+          "why": "SSL.com will not issue a trust-listed certificate without one; our root is private, so every verifier reports the signer as unknown.",
+          "next": "Submit the Expression of Interest to conformance@c2pa.org."
+        },
+        {
+          "item": "Deploy the corrected site",
+          "why": "The post-audit figures, /benchmarks and /instrument are built and verified locally only. Public surfaces still serve pre-audit numbers.",
+          "next": "Deploying is outward-facing and needs your go."
+        }
+      ],
+      "gate_exit": 1,
+      "gate": "29 READY \u00b7 1 NOT READY \u00b7 0 UNMEASURED  (11s)",
+      "auto_failures": 1
+    },
+    {
+      "started": "2026-07-29T10:37:36.523004+00:00",
+      "dry": false,
+      "steps": [
+        {
+          "step": "board preflight",
+          "status": "ok",
+          "exit": 0,
+          "secs": 0.1,
+          "tail": "-> /Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/board_preflight.json",
+          "why": "Re-classify every API row as answered/unanswered/degenerate and detect truncated runs. Stops a dead endpoint from being scored as zero."
+        },
+        {
+          "step": "PQC continuity lens",
+          "status": "ok",
+          "exit": 0,
+          "secs": 0.1,
+          "tail": "-> /Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/pqcbench.json",
+          "why": "Re-score every signing chain against the five continuity criteria."
+        },
+        {
+          "step": "coverage crosswalk",
+          "status": "ok",
+          "exit": 0,
+          "secs": 0.1,
+          "tail": "-> /Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/coverage_crosswalk.json",
+          "why": "Recompute the 3,336-cell coverage matrix. Survey remains a STUB until Phase B/C."
+        },
+        {
+          "step": "layer attribution",
+          "status": "ok",
+          "exit": 0,
+          "secs": 0.1,
+          "tail": "-> /Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/layer_attribution.json",
+          "why": "Recompute per-layer deltas from persisted rows and assert they partition the run."
+        },
+        {
+          "step": "withdrawn-model audit",
+          "status": "ok",
+          "exit": 0,
+          "secs": 3.9,
+          "tail": "\u2705 no layer routes to, scores, or reinforces a withdrawn model",
+          "why": "Fail if any layer routes to a withdrawn model."
+        },
+        {
+          "step": "ingestion licence audit",
+          "status": "ok",
+          "exit": 0,
+          "secs": 0.1,
+          "tail": "\u2705 ingestion audit clean \u2014 8 sources, 0 ingestible",
+          "why": "Fail if any source is marked ingestible without a verified licence."
+        },
+        {
+          "step": "corpus anchor + drift",
+          "status": "ok",
+          "exit": 0,
+          "secs": 0.1,
+          "tail": "-> /Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/corpus_anchor.json",
+          "why": "Re-hash all 417 provisions and diff against the stored baseline, then stamp every result artefact. Until the watcher polls a real authority this detects OUR corpus edits, not changes in the law \u2014 and says so in its own output."
+        },
+        {
+          "step": "positioning guard",
+          "status": "fail",
+          "exit": 1,
+          "secs": 0.8,
+          "tail": "Standing is EARNED through accreditation (UKAS \u2192 ISO/IEC 42006), never asserted.",
+          "why": "Fail if any surface claims enforcement, system-certification, notified-body status, or carries a retracted measurement as a product name."
+        }
+      ],
+      "owner_queue": [
+        {
+          "item": "Clear 21 system-certification claims",
+          "why": "positioning_guard flags them; the fix is copy, and copy about our own authority is a decision, not a refactor.",
+          "next": "Replace with 'attestation-support' / 'evidence-generation'. Several are FAQs like 'Can we get certified for EU AI Act compliance?' where the honest answer \u2014 nobody can yet, zero notified bodies designated as of April 2026 \u2014 is a stronger page than the one there now."
+        },
+        {
+          "item": "Rename or retire 'BFT Council'",
+          "why": "72 occurrences across 20 files assert Byzantine fault tolerance, which we measured as false (n_eff 1.21 of 3, phi_bar +0.743).",
+          "next": "Either rename the component or accept that a product name asserts a retracted property. Wide blast radius; a naming decision is the owner's."
+        },
+        {
+          "item": "NVIDIA NIM API key",
+          "why": "integrate.api.nvidia.com is reachable from this machine and lists 102 models, but the only key on disk is the 29-char placeholder 'nvapi-REPLACE_WITH...'.",
+          "next": "Create a free key at build.nvidia.com, set NVIDIA_API_KEY in .env. Safe now that board preflight records unreachable endpoints as UNMEASURED instead of scoring them zero."
+        },
+        {
+          "item": "C2PA conformance record ID",
+          "why": "SSL.com will not issue a trust-listed certificate without one; our root is private, so every verifier reports the signer as unknown.",
+          "next": "Submit the Expression of Interest to conformance@c2pa.org."
+        },
+        {
+          "item": "Deploy the corrected site",
+          "why": "The post-audit figures, /benchmarks and /instrument are built and verified locally only. Public surfaces still serve pre-audit numbers.",
+          "next": "Deploying is outward-facing and needs your go."
+        }
+      ],
+      "gate_exit": 1,
+      "gate": "29 READY \u00b7 1 NOT READY \u00b7 0 UNMEASURED  (10s)",
+      "auto_failures": 1
+    },
+    {
+      "started": "2026-07-29T10:55:40.566987+00:00",
+      "dry": false,
+      "steps": [
+        {
+          "step": "board preflight",
+          "status": "ok",
+          "exit": 0,
+          "secs": 0.1,
+          "tail": "-> /Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/board_preflight.json",
+          "why": "Re-classify every API row as answered/unanswered/degenerate and detect truncated runs. Stops a dead endpoint from being scored as zero."
+        },
+        {
+          "step": "PQC continuity lens",
+          "status": "ok",
+          "exit": 0,
+          "secs": 0.1,
+          "tail": "-> /Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/pqcbench.json",
+          "why": "Re-score every signing chain against the five continuity criteria."
+        },
+        {
+          "step": "coverage crosswalk",
+          "status": "ok",
+          "exit": 0,
+          "secs": 0.1,
+          "tail": "-> /Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/coverage_crosswalk.json",
+          "why": "Recompute the 3,336-cell coverage matrix. Survey remains a STUB until Phase B/C."
+        },
+        {
+          "step": "layer attribution",
+          "status": "ok",
+          "exit": 0,
+          "secs": 0.1,
+          "tail": "-> /Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/layer_attribution.json",
+          "why": "Recompute per-layer deltas from persisted rows and assert they partition the run."
+        },
+        {
+          "step": "withdrawn-model audit",
+          "status": "ok",
+          "exit": 0,
+          "secs": 3.7,
+          "tail": "\u2705 no layer routes to, scores, or reinforces a withdrawn model",
+          "why": "Fail if any layer routes to a withdrawn model."
+        },
+        {
+          "step": "ingestion licence audit",
+          "status": "ok",
+          "exit": 0,
+          "secs": 0.1,
+          "tail": "\u2705 ingestion audit clean \u2014 9 sources, 0 ingestible",
+          "why": "Fail if any source is marked ingestible without a verified licence."
+        },
+        {
+          "step": "corpus anchor + drift",
+          "status": "ok",
+          "exit": 0,
+          "secs": 0.2,
+          "tail": "-> /Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/corpus_anchor.json",
+          "why": "Re-hash all 417 provisions and diff against the stored baseline, then stamp every result artefact. Until the watcher polls a real authority this detects OUR corpus edits, not changes in the law \u2014 and says so in its own output."
+        },
+        {
+          "step": "positioning guard",
+          "status": "ok",
+          "exit": 0,
+          "secs": 0.9,
+          "tail": "Standing is EARNED through accreditation (UKAS \u2192 ISO/IEC 42006), never asserted.",
+          "why": "Fail if any surface claims enforcement, system-certification, notified-body status, or carries a retracted measurement as a product name."
+        }
+      ],
+      "owner_queue": [
+        {
+          "item": "Clear 21 system-certification claims",
+          "why": "positioning_guard flags them; the fix is copy, and copy about our own authority is a decision, not a refactor.",
+          "next": "Replace with 'attestation-support' / 'evidence-generation'. Several are FAQs like 'Can we get certified for EU AI Act compliance?' where the honest answer \u2014 nobody can yet, zero notified bodies designated as of April 2026 \u2014 is a stronger page than the one there now."
+        },
+        {
+          "item": "Rename or retire 'BFT Council'",
+          "why": "72 occurrences across 20 files assert Byzantine fault tolerance, which we measured as false (n_eff 1.21 of 3, phi_bar +0.743).",
+          "next": "Either rename the component or accept that a product name asserts a retracted property. Wide blast radius; a naming decision is the owner's."
+        },
+        {
+          "item": "NVIDIA NIM API key",
+          "why": "integrate.api.nvidia.com is reachable from this machine and lists 102 models, but the only key on disk is the 29-char placeholder 'nvapi-REPLACE_WITH...'.",
+          "next": "Create a free key at build.nvidia.com, set NVIDIA_API_KEY in .env. Safe now that board preflight records unreachable endpoints as UNMEASURED instead of scoring them zero."
+        },
+        {
+          "item": "C2PA conformance record ID",
+          "why": "SSL.com will not issue a trust-listed certificate without one; our root is private, so every verifier reports the signer as unknown.",
+          "next": "Submit the Expression of Interest to conformance@c2pa.org."
+        },
+        {
+          "item": "Deploy the corrected site",
+          "why": "The post-audit figures, /benchmarks and /instrument are built and verified locally only. Public surfaces still serve pre-audit numbers.",
+          "next": "Deploying is outward-facing and needs your go."
+        }
+      ],
+      "gate_exit": 0,
+      "gate": "30 READY \u00b7 0 NOT READY \u00b7 0 UNMEASURED  (9s)",
+      "auto_failures": 0
+    },
+    {
+      "started": "2026-07-29T11:47:59.264376+00:00",
+      "dry": false,
+      "steps": [
+        {
+          "step": "board preflight",
+          "status": "ok",
+          "exit": 0,
+          "secs": 0.0,
+          "tail": "-> /Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/board_preflight.json",
+          "why": "Re-classify every API row as answered/unanswered/degenerate and detect truncated runs. Stops a dead endpoint from being scored as zero."
+        },
+        {
+          "step": "PQC continuity lens",
+          "status": "ok",
+          "exit": 0,
+          "secs": 0.0,
+          "tail": "-> /Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/pqcbench.json",
+          "why": "Re-score every signing chain against the five continuity criteria."
+        },
+        {
+          "step": "coverage crosswalk",
+          "status": "ok",
+          "exit": 0,
+          "secs": 0.0,
+          "tail": "-> /Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/coverage_crosswalk.json",
+          "why": "Recompute the 3,336-cell coverage matrix. Survey remains a STUB until Phase B/C."
+        },
+        {
+          "step": "layer attribution",
+          "status": "ok",
+          "exit": 0,
+          "secs": 0.0,
+          "tail": "-> /Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/layer_attribution.json",
+          "why": "Recompute per-layer deltas from persisted rows and assert they partition the run."
+        },
+        {
+          "step": "withdrawn-model audit",
+          "status": "ok",
+          "exit": 0,
+          "secs": 3.4,
+          "tail": "\u2705 no layer routes to, scores, or reinforces a withdrawn model",
+          "why": "Fail if any layer routes to a withdrawn model."
+        },
+        {
+          "step": "ingestion licence audit",
+          "status": "ok",
+          "exit": 0,
+          "secs": 0.0,
+          "tail": "\u2705 ingestion audit clean \u2014 9 sources, 0 ingestible",
+          "why": "Fail if any source is marked ingestible without a verified licence."
+        },
+        {
+          "step": "corpus anchor + drift",
+          "status": "ok",
+          "exit": 0,
+          "secs": 0.2,
+          "tail": "-> /Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/corpus_anchor.json",
+          "why": "Re-hash all 417 provisions and diff against the stored baseline, then stamp every result artefact. Until the watcher polls a real authority this detects OUR corpus edits, not changes in the law \u2014 and says so in its own output."
+        },
+        {
+          "step": "positioning guard",
+          "status": "ok",
+          "exit": 0,
+          "secs": 0.7,
+          "tail": "Standing is EARNED through accreditation (UKAS \u2192 ISO/IEC 42006), never asserted.",
+          "why": "Fail if any surface claims enforcement, system-certification, notified-body status, or carries a retracted measurement as a product name."
+        }
+      ],
+      "owner_queue": [
+        {
+          "item": "Clear 21 system-certification claims",
+          "why": "positioning_guard flags them; the fix is copy, and copy about our own authority is a decision, not a refactor.",
+          "next": "Replace with 'attestation-support' / 'evidence-generation'. Several are FAQs like 'Can we get certified for EU AI Act compliance?' where the honest answer \u2014 nobody can yet, zero notified bodies designated as of April 2026 \u2014 is a stronger page than the one there now."
+        },
+        {
+          "item": "Rename or retire 'BFT Council'",
+          "why": "72 occurrences across 20 files assert Byzantine fault tolerance, which we measured as false (n_eff 1.21 of 3, phi_bar +0.743).",
+          "next": "Either rename the component or accept that a product name asserts a retracted property. Wide blast radius; a naming decision is the owner's."
+        },
+        {
+          "item": "NVIDIA NIM API key",
+          "why": "integrate.api.nvidia.com is reachable from this machine and lists 102 models, but the only key on disk is the 29-char placeholder 'nvapi-REPLACE_WITH...'.",
+          "next": "Create a free key at build.nvidia.com, set NVIDIA_API_KEY in .env. Safe now that board preflight records unreachable endpoints as UNMEASURED instead of scoring them zero."
+        },
+        {
+          "item": "C2PA conformance record ID",
+          "why": "SSL.com will not issue a trust-listed certificate without one; our root is private, so every verifier reports the signer as unknown.",
+          "next": "Submit the Expression of Interest to conformance@c2pa.org."
+        },
+        {
+          "item": "Deploy the corrected site",
+          "why": "The post-audit figures, /benchmarks and /instrument are built and verified locally only. Public surfaces still serve pre-audit numbers.",
+          "next": "Deploying is outward-facing and needs your go."
+        }
+      ],
+      "gate_exit": 0,
+      "gate": "31 READY \u00b7 0 NOT READY \u00b7 0 UNMEASURED  (11s)",
+      "auto_failures": 0
+    },
+    {
+      "started": "2026-07-29T11:56:50.351742+00:00",
+      "dry": false,
+      "steps": [
+        {
+          "step": "board preflight",
+          "status": "ok",
+          "exit": 0,
+          "secs": 0.0,
+          "tail": "-> /Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/board_preflight.json",
+          "why": "Re-classify every API row as answered/unanswered/degenerate and detect truncated runs. Stops a dead endpoint from being scored as zero."
+        },
+        {
+          "step": "PQC continuity lens",
+          "status": "ok",
+          "exit": 0,
+          "secs": 0.1,
+          "tail": "-> /Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/pqcbench.json",
+          "why": "Re-score every signing chain against the five continuity criteria."
+        },
+        {
+          "step": "coverage crosswalk",
+          "status": "ok",
+          "exit": 0,
+          "secs": 0.1,
+          "tail": "-> /Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/coverage_crosswalk.json",
+          "why": "Recompute the 3,336-cell coverage matrix. Survey remains a STUB until Phase B/C."
+        },
+        {
+          "step": "layer attribution",
+          "status": "ok",
+          "exit": 0,
+          "secs": 0.1,
+          "tail": "-> /Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/layer_attribution.json",
+          "why": "Recompute per-layer deltas from persisted rows and assert they partition the run."
+        },
+        {
+          "step": "withdrawn-model audit",
+          "status": "ok",
+          "exit": 0,
+          "secs": 3.6,
+          "tail": "\u2705 no layer routes to, scores, or reinforces a withdrawn model",
+          "why": "Fail if any layer routes to a withdrawn model."
+        },
+        {
+          "step": "ingestion licence audit",
+          "status": "ok",
+          "exit": 0,
+          "secs": 0.0,
+          "tail": "\u2705 ingestion audit clean \u2014 9 sources, 0 ingestible",
+          "why": "Fail if any source is marked ingestible without a verified licence."
+        },
+        {
+          "step": "corpus anchor + drift",
+          "status": "ok",
+          "exit": 0,
+          "secs": 0.1,
+          "tail": "-> /Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/corpus_anchor.json",
+          "why": "Re-hash all 417 provisions and diff against the stored baseline, then stamp every result artefact. Until the watcher polls a real authority this detects OUR corpus edits, not changes in the law \u2014 and says so in its own output."
+        },
+        {
+          "step": "positioning guard",
+          "status": "ok",
+          "exit": 0,
+          "secs": 0.8,
+          "tail": "Standing is EARNED through accreditation (UKAS \u2192 ISO/IEC 42006), never asserted.",
+          "why": "Fail if any surface claims enforcement, system-certification, notified-body status, or carries a retracted measurement as a product name."
+        }
+      ],
+      "owner_queue": [
+        {
+          "item": "Clear 21 system-certification claims",
+          "why": "positioning_guard flags them; the fix is copy, and copy about our own authority is a decision, not a refactor.",
+          "next": "Replace with 'attestation-support' / 'evidence-generation'. Several are FAQs like 'Can we get certified for EU AI Act compliance?' where the honest answer \u2014 nobody can yet, zero notified bodies designated as of April 2026 \u2014 is a stronger page than the one there now."
+        },
+        {
+          "item": "Rename or retire 'BFT Council'",
+          "why": "72 occurrences across 20 files assert Byzantine fault tolerance, which we measured as false (n_eff 1.21 of 3, phi_bar +0.743).",
+          "next": "Either rename the component or accept that a product name asserts a retracted property. Wide blast radius; a naming decision is the owner's."
+        },
+        {
+          "item": "NVIDIA NIM API key",
+          "why": "integrate.api.nvidia.com is reachable from this machine and lists 102 models, but the only key on disk is the 29-char placeholder 'nvapi-REPLACE_WITH...'.",
+          "next": "Create a free key at build.nvidia.com, set NVIDIA_API_KEY in .env. Safe now that board preflight records unreachable endpoints as UNMEASURED instead of scoring them zero."
+        },
+        {
+          "item": "C2PA conformance record ID",
+          "why": "SSL.com will not issue a trust-listed certificate without one; our root is private, so every verifier reports the signer as unknown.",
+          "next": "Submit the Expression of Interest to conformance@c2pa.org."
+        },
+        {
+          "item": "Deploy the corrected site",
+          "why": "The post-audit figures, /benchmarks and /instrument are built and verified locally only. Public surfaces still serve pre-audit numbers.",
+          "next": "Deploying is outward-facing and needs your go."
+        }
+      ],
+      "gate_exit": 0,
+      "gate": "33 READY \u00b7 0 NOT READY \u00b7 0 UNMEASURED  (8s)",
+      "auto_failures": 0
+    },
+    {
+      "started": "2026-07-29T12:22:51.732510+00:00",
+      "dry": false,
+      "steps": [
+        {
+          "step": "board preflight",
+          "status": "ok",
+          "exit": 0,
+          "secs": 0.1,
+          "tail": "-> /Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/board_preflight.json",
+          "why": "Re-classify every API row as answered/unanswered/degenerate and detect truncated runs. Stops a dead endpoint from being scored as zero."
+        },
+        {
+          "step": "PQC continuity lens",
+          "status": "ok",
+          "exit": 0,
+          "secs": 0.2,
+          "tail": "-> /Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/pqcbench.json",
+          "why": "Re-score every signing chain against the five continuity criteria."
+        },
+        {
+          "step": "coverage crosswalk",
+          "status": "ok",
+          "exit": 0,
+          "secs": 0.2,
+          "tail": "-> /Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/coverage_crosswalk.json",
+          "why": "Recompute the 3,336-cell coverage matrix. Survey remains a STUB until Phase B/C."
+        },
+        {
+          "step": "layer attribution",
+          "status": "ok",
+          "exit": 0,
+          "secs": 0.2,
+          "tail": "-> /Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/layer_attribution.json",
+          "why": "Recompute per-layer deltas from persisted rows and assert they partition the run."
+        },
+        {
+          "step": "withdrawn-model audit",
+          "status": "ok",
+          "exit": 0,
+          "secs": 4.3,
+          "tail": "\u2705 no layer routes to, scores, or reinforces a withdrawn model",
+          "why": "Fail if any layer routes to a withdrawn model."
+        },
+        {
+          "step": "ingestion licence audit",
+          "status": "ok",
+          "exit": 0,
+          "secs": 0.1,
+          "tail": "\u2705 ingestion audit clean \u2014 9 sources, 0 ingestible",
+          "why": "Fail if any source is marked ingestible without a verified licence."
+        },
+        {
+          "step": "corpus anchor + drift",
+          "status": "ok",
+          "exit": 0,
+          "secs": 0.2,
+          "tail": "-> /Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/corpus_anchor.json",
+          "why": "Re-hash all 417 provisions and diff against the stored baseline, then stamp every result artefact. Until the watcher polls a real authority this detects OUR corpus edits, not changes in the law \u2014 and says so in its own output."
+        },
+        {
+          "step": "positioning guard",
+          "status": "ok",
+          "exit": 0,
+          "secs": 0.9,
+          "tail": "Standing is EARNED through accreditation (UKAS \u2192 ISO/IEC 42006), never asserted.",
+          "why": "Fail if any surface claims enforcement, system-certification, notified-body status, or carries a retracted measurement as a product name."
+        }
+      ],
+      "owner_queue": [
+        {
+          "item": "Clear 21 system-certification claims",
+          "why": "positioning_guard flags them; the fix is copy, and copy about our own authority is a decision, not a refactor.",
+          "next": "Replace with 'attestation-support' / 'evidence-generation'. Several are FAQs like 'Can we get certified for EU AI Act compliance?' where the honest answer \u2014 nobody can yet, zero notified bodies designated as of April 2026 \u2014 is a stronger page than the one there now."
+        },
+        {
+          "item": "Rename or retire 'BFT Council'",
+          "why": "72 occurrences across 20 files assert Byzantine fault tolerance, which we measured as false (n_eff 1.21 of 3, phi_bar +0.743).",
+          "next": "Either rename the component or accept that a product name asserts a retracted property. Wide blast radius; a naming decision is the owner's."
+        },
+        {
+          "item": "NVIDIA NIM API key",
+          "why": "integrate.api.nvidia.com is reachable from this machine and lists 102 models, but the only key on disk is the 29-char placeholder 'nvapi-REPLACE_WITH...'.",
+          "next": "Create a free key at build.nvidia.com, set NVIDIA_API_KEY in .env. Safe now that board preflight records unreachable endpoints as UNMEASURED instead of scoring them zero."
+        },
+        {
+          "item": "C2PA conformance record ID",
+          "why": "SSL.com will not issue a trust-listed certificate without one; our root is private, so every verifier reports the signer as unknown.",
+          "next": "Submit the Expression of Interest to conformance@c2pa.org."
+        },
+        {
+          "item": "Deploy the corrected site",
+          "why": "The post-audit figures, /benchmarks and /instrument are built and verified locally only. Public surfaces still serve pre-audit numbers.",
+          "next": "Deploying is outward-facing and needs your go."
+        }
+      ],
+      "gate_exit": 0,
+      "gate": "33 READY \u00b7 0 NOT READY \u00b7 0 UNMEASURED  (10s)",
+      "auto_failures": 0
+    },
+    {
+      "started": "2026-07-29T12:44:02.613160+00:00",
+      "dry": false,
+      "steps": [
+        {
+          "step": "board preflight",
+          "status": "ok",
+          "exit": 0,
+          "secs": 0.0,
+          "tail": "-> /Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/board_preflight.json",
+          "why": "Re-classify every API row as answered/unanswered/degenerate and detect truncated runs. Stops a dead endpoint from being scored as zero."
+        },
+        {
+          "step": "PQC continuity lens",
+          "status": "ok",
+          "exit": 0,
+          "secs": 0.1,
+          "tail": "-> /Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/pqcbench.json",
+          "why": "Re-score every signing chain against the five continuity criteria."
+        },
+        {
+          "step": "coverage crosswalk",
+          "status": "ok",
+          "exit": 0,
+          "secs": 0.1,
+          "tail": "-> /Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/coverage_crosswalk.json",
+          "why": "Recompute the 3,336-cell coverage matrix. Survey remains a STUB until Phase B/C."
+        },
+        {
+          "step": "layer attribution",
+          "status": "ok",
+          "exit": 0,
+          "secs": 0.1,
+          "tail": "-> /Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/layer_attribution.json",
+          "why": "Recompute per-layer deltas from persisted rows and assert they partition the run."
+        },
+        {
+          "step": "withdrawn-model audit",
+          "status": "ok",
+          "exit": 0,
+          "secs": 3.4,
+          "tail": "\u2705 no layer routes to, scores, or reinforces a withdrawn model",
+          "why": "Fail if any layer routes to a withdrawn model."
+        },
+        {
+          "step": "ingestion licence audit",
+          "status": "ok",
+          "exit": 0,
+          "secs": 0.1,
+          "tail": "\u2705 ingestion audit clean \u2014 9 sources, 0 ingestible",
+          "why": "Fail if any source is marked ingestible without a verified licence."
+        },
+        {
+          "step": "corpus anchor + drift",
+          "status": "ok",
+          "exit": 0,
+          "secs": 0.2,
+          "tail": "-> /Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/corpus_anchor.json",
+          "why": "Re-hash all 417 provisions and diff against the stored baseline, then stamp every result artefact. Until the watcher polls a real authority this detects OUR corpus edits, not changes in the law \u2014 and says so in its own output."
+        },
+        {
+          "step": "positioning guard",
+          "status": "ok",
+          "exit": 0,
+          "secs": 1.0,
+          "tail": "Standing is EARNED through accreditation (UKAS \u2192 ISO/IEC 42006), never asserted.",
+          "why": "Fail if any surface claims enforcement, system-certification, notified-body status, or carries a retracted measurement as a product name."
+        }
+      ],
+      "owner_queue": [
+        {
+          "item": "Clear 21 system-certification claims",
+          "why": "positioning_guard flags them; the fix is copy, and copy about our own authority is a decision, not a refactor.",
+          "next": "Replace with 'attestation-support' / 'evidence-generation'. Several are FAQs like 'Can we get certified for EU AI Act compliance?' where the honest answer \u2014 nobody can yet, zero notified bodies designated as of April 2026 \u2014 is a stronger page than the one there now."
+        },
+        {
+          "item": "Rename or retire 'BFT Council'",
+          "why": "72 occurrences across 20 files assert Byzantine fault tolerance, which we measured as false (n_eff 1.21 of 3, phi_bar +0.743).",
+          "next": "Either rename the component or accept that a product name asserts a retracted property. Wide blast radius; a naming decision is the owner's."
+        },
+        {
+          "item": "NVIDIA NIM API key",
+          "why": "integrate.api.nvidia.com is reachable from this machine and lists 102 models, but the only key on disk is the 29-char placeholder 'nvapi-REPLACE_WITH...'.",
+          "next": "Create a free key at build.nvidia.com, set NVIDIA_API_KEY in .env. Safe now that board preflight records unreachable endpoints as UNMEASURED instead of scoring them zero."
+        },
+        {
+          "item": "C2PA conformance record ID",
+          "why": "SSL.com will not issue a trust-listed certificate without one; our root is private, so every verifier reports the signer as unknown.",
+          "next": "Submit the Expression of Interest to conformance@c2pa.org."
+        },
+        {
+          "item": "Deploy the corrected site",
+          "why": "The post-audit figures, /benchmarks and /instrument are built and verified locally only. Public surfaces still serve pre-audit numbers.",
+          "next": "Deploying is outward-facing and needs your go."
+        }
+      ],
+      "gate_exit": 0,
+      "gate": "33 READY \u00b7 0 NOT READY \u00b7 0 UNMEASURED  (12s)",
+      "auto_failures": 0
+    },
+    {
+      "started": "2026-07-29T14:07:17.616129+00:00",
+      "dry": false,
+      "steps": [
+        {
+          "step": "board preflight",
+          "status": "ok",
+          "exit": 0,
+          "secs": 0.1,
+          "tail": "-> /Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/board_preflight.json",
+          "why": "Re-classify every API row as answered/unanswered/degenerate and detect truncated runs. Stops a dead endpoint from being scored as zero."
+        },
+        {
+          "step": "PQC continuity lens",
+          "status": "ok",
+          "exit": 0,
+          "secs": 0.2,
+          "tail": "-> /Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/pqcbench.json",
+          "why": "Re-score every signing chain against the five continuity criteria."
+        },
+        {
+          "step": "coverage crosswalk",
+          "status": "ok",
+          "exit": 0,
+          "secs": 0.2,
+          "tail": "-> /Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/coverage_crosswalk.json",
+          "why": "Recompute the 3,336-cell coverage matrix. Survey remains a STUB until Phase B/C."
+        },
+        {
+          "step": "layer attribution",
+          "status": "ok",
+          "exit": 0,
+          "secs": 0.2,
+          "tail": "-> /Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/layer_attribution.json",
+          "why": "Recompute per-layer deltas from persisted rows and assert they partition the run."
+        },
+        {
+          "step": "withdrawn-model audit",
+          "status": "ok",
+          "exit": 0,
+          "secs": 3.5,
+          "tail": "\u2705 no layer routes to, scores, or reinforces a withdrawn model",
+          "why": "Fail if any layer routes to a withdrawn model."
+        },
+        {
+          "step": "ingestion licence audit",
+          "status": "ok",
+          "exit": 0,
+          "secs": 0.1,
+          "tail": "\u2705 ingestion audit clean \u2014 9 sources, 0 ingestible",
+          "why": "Fail if any source is marked ingestible without a verified licence."
+        },
+        {
+          "step": "corpus anchor + drift",
+          "status": "ok",
+          "exit": 0,
+          "secs": 0.2,
+          "tail": "-> /Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/corpus_anchor.json",
+          "why": "Re-hash all 417 provisions and diff against the stored baseline, then stamp every result artefact. Until the watcher polls a real authority this detects OUR corpus edits, not changes in the law \u2014 and says so in its own output."
+        },
+        {
+          "step": "positioning guard",
+          "status": "ok",
+          "exit": 0,
+          "secs": 1.0,
+          "tail": "Standing is EARNED through accreditation (UKAS \u2192 ISO/IEC 42006), never asserted.",
+          "why": "Fail if any surface claims enforcement, system-certification, notified-body status, or carries a retracted measurement as a product name."
+        }
+      ],
+      "owner_queue": [
+        {
+          "item": "Clear 21 system-certification claims",
+          "why": "positioning_guard flags them; the fix is copy, and copy about our own authority is a decision, not a refactor.",
+          "next": "Replace with 'attestation-support' / 'evidence-generation'. Several are FAQs like 'Can we get certified for EU AI Act compliance?' where the honest answer \u2014 nobody can yet, zero notified bodies designated as of April 2026 \u2014 is a stronger page than the one there now."
+        },
+        {
+          "item": "Rename or retire 'BFT Council'",
+          "why": "72 occurrences across 20 files assert Byzantine fault tolerance, which we measured as false (n_eff 1.21 of 3, phi_bar +0.743).",
+          "next": "Either rename the component or accept that a product name asserts a retracted property. Wide blast radius; a naming decision is the owner's."
+        },
+        {
+          "item": "NVIDIA NIM API key",
+          "why": "integrate.api.nvidia.com is reachable from this machine and lists 102 models, but the only key on disk is the 29-char placeholder 'nvapi-REPLACE_WITH...'.",
+          "next": "Create a free key at build.nvidia.com, set NVIDIA_API_KEY in .env. Safe now that board preflight records unreachable endpoints as UNMEASURED instead of scoring them zero."
+        },
+        {
+          "item": "C2PA conformance record ID",
+          "why": "SSL.com will not issue a trust-listed certificate without one; our root is private, so every verifier reports the signer as unknown.",
+          "next": "Submit the Expression of Interest to conformance@c2pa.org."
+        },
+        {
+          "item": "Deploy the corrected site",
+          "why": "The post-audit figures, /benchmarks and /instrument are built and verified locally only. Public surfaces still serve pre-audit numbers.",
+          "next": "Deploying is outward-facing and needs your go."
+        }
+      ],
+      "gate_exit": 0,
+      "gate": "34 READY \u00b7 0 NOT READY \u00b7 0 UNMEASURED  (10s)",
+      "auto_failures": 0
+    }
+  ],
+  "corpus_anchor": {
+    "corpus_root": "37e2e10d53feaa9e12097f45113e1234510be0ca471e1a0848f5805db3e367c7",
+    "provisions": 417,
+    "normaliser_version": "1.0.0",
+    "anchored_at": "2026-08-17T05:22:18.543860+00:00",
+    "retro": true,
+    "note": "Anchored retrospectively on 2026-07-29. This records the corpus as it stands NOW; it does not prove what the text said when the result was produced. Runs from this point forward anchor at measurement time."
+  }
+}

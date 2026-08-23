@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Products — Council of AI · Attestation-as-a-Service</title>
+<style>
+ body{font-family:system-ui,sans-serif;background:#02020a;color:#e6e6e6;margin:0;line-height:1.6}
+ .wrap{max-width:980px;margin:0 auto;padding:2rem 1.5rem}
+ header{text-align:center;padding:2.5rem 0 1rem}
+ h1{font-size:2rem;color:#c9a84c;margin:.4rem 0} h2{color:#8ab4f8;margin-top:2rem}
+ .sub{color:#7f90a0;font-size:1.05rem}
+ .pill{display:inline-block;border:1px solid #c9a84c;border-radius:100px;padding:2px 12px;font-size:.78rem;color:#c9a84c;margin:0 4px}
+ .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.2rem;margin:1.5rem 0}
+ .card{background:#0d1220;border:1px solid #1c2a45;border-radius:12px;padding:1.4rem;text-decoration:none;display:block;color:#e6e6e6;transition:border .2s}
+ .card:hover{border-color:#c9a84c}
+ .card h3{margin:.2rem 0 .5rem;color:#fff} .price{font-size:1.5rem;color:#c9a84c;font-weight:700;margin:.3rem 0}
+ .small{font-size:.85rem;color:#7f90a0}
+ .cta{background:#c9a84c;color:#000;border:none;border-radius:8px;padding:12px 22px;font-weight:600;font-size:1rem;cursor:pointer;text-decoration:none;display:inline-block}
+ table{width:100%;border-collapse:collapse;font-size:.9rem} td,th{padding:8px;border-bottom:1px solid #1c2a45;text-align:left}
+ code{background:#1c2a45;padding:2px 6px;border-radius:4px;font-size:.8em}
+ .foot{color:#7f90a0;font-size:.8em;text-align:center;margin-top:2.5rem;padding-top:1rem;border-top:1px solid #1c2a45}
+ a{color:#8ab4f8} .badge{background:#123;color:#4ade80;border:1px solid #4ade80;border-radius:6px;padding:2px 8px;font-size:.75rem}
+ .pitch{background:#0d1220;border:1px solid #1c2a45;border-radius:12px;padding:1.2rem 1.5rem;margin:.6rem 0}
+</style></head><body>
+<div class="wrap">
+<header>
+ <p class="pill">Council of AI</p><p class="pill">Products</p><p class="pill">measurement, not certification</p>
+ <h1>Attestation-as-a-Service — a signed, verifiable measurement body</h1>
+ <p class="sub">Buyer-side, signed, independently verifiable evidence. We are the <b>Y-axis</b>: the
+ attestation layer that makes AI + A2A finance legal. Never the scored. No issuer-pays trap.</p>
+ <p style="margin-top:1rem"><a class="cta" href="/verify">Verify a live signed receipt</a> <a class="cta" href="/book">Book an evidence pack</a>
+   <a class="cta" style="background:#111;color:#8ab4f8;border:1px solid #8ab4f8" href="#pricing">Pricing</a></p>
+</header>
+
+<h2 id="catalog">The product suite</h2>
+<div class="grid">
+ <a class="card" href="/finance"><h3>Capital Markets (Y-axis)</h3>
+   <p class="small">Signed attestation for regulated capital markets — Art 50 · MiCA · SB 315. Makes A2A finance legal.</p>
+   <div class="price">€8–80k</div></a>
+ <a class="card" href="/insurer"><h3>AI-Liability Insurance</h3>
+   <p class="small">Art 50 receipt for underwriting — the parametric trigger the market says is missing.</p>
+   <div class="price">€8–80k</div></a>
+ <a class="card" href="/verify"><h3>Live Verification</h3>
+   <p class="small">Every receipt Ed25519-signed (key never leaves), verifiable in-browser, zero trust.</p>
+   <div class="price">open</div></a>
+ <a class="card" href="/signed/evidence-index.json"><h3>Evidence Index</h3>
+   <p class="small">The attested estate — 19 signed artifacts, hash-matched, tamper-sensitive.</p>
+   <div class="price">public</div></a>
+</div>
+
+<h2>Why it's trusted (the moat)</h2>
+<div class="pitch"><b>Independence:</b> buyer/insurer/regulator-pays only. Never the scored. No issuer-pays (the Moody's trap).</div>
+<div class="pitch"><b>Verifiability:</b> Ed25519 on a signing node (key never leaves); anyone verifies in-browser with zero trust.</div>
+<div class="pitch"><b>Live, not static:</b> continuous re-measurement, not a static leaderboard. Retrieved>>trained (+34–38, measured).</div>
+
+<h2 id="pricing">Pricing</h2>
+<div class="grid">
+ <div class="card"><h3>Evidence scoring</h3><div class="price">€8–20k</div><p class="small">Art 50 / MiCA / SB 315 evidence-quality</p></div>
+ <div class="card"><h3>Attestation pack</h3><div class="price">€25–80k</div><p class="small">signed receipt + method + ledger</p></div>
+ <div class="card"><h3>Continuous</h3><div class="price">€5–15k/yr</div><p class="small">live re-measurement</p></div>
+ <div class="card"><h3>Receipt / API</h3><div class="price">entry</div><p class="small">per-signed-attestation</p></div>
+<a class="card" href="/ledger"><h3>Council Ledger · Dorado · Claimguard</h3><p class="small">Signed provision-conformance receipts + East↔West market-pair + claim-evidence. The GTM attestation layer.</p><div class="price">€8–80k</div></a>
+</div>
+
+<h2>The proof is live</h2>
+<p><span class="badge">19 signed artifacts</span> <span class="badge">Ed25519</span> <span class="badge">verified</span> —
+ pubkey <code>bWbk52E47J6EkY4+pu0Hh/B1l1175AZoZsDEBr0EfWA=</code>. The estate verifies in-browser.</p>
+<p><a class="cta" href="/verify">Open live verification</a></p>
+
+<div class="foot">Council of AI (CSOAI Ltd, UK #16939677) · measurement, not certification · buyer-side, signed,
+verifiable. Ed25519 private key never leaves the pod. PQC path: ML-DSA-65.</div>
+<a class="card" href="/models"><h3>Models — measured, not listed</h3><p class="small">The measurement-annotated catalog: GSPC leads/ties/empty + Eunomia instruments + honest registers + signed receipts.</p><div class="price">open</div></a>
+</div></body></html>

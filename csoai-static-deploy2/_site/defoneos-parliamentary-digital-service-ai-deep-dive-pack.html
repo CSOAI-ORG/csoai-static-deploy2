@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>DEFONEOS x Parliamentary Digital Service — AI Governance for Hansard, Digital Parliament & Select Committee Evidence</title>
+<meta name="description" content="AI governance deep-dive pack for the Parliamentary Digital Service — the bicameral digital team serving the House of Commons and House of Lords with AI-readiness for Hansard production, select committee evidence management, Members' enquiry handling, parliamentary broadcasting and digital public engagement, operating within the unique constitutional framework of parliamentary privilege and the sovereignty of Parliament">
+<link rel="canonical" href="#">
+<style>
+:root{--bg:#050816;--panel:#0d1330;--gold:#d4af37;--sov:#6dd5ff;--accent:#4ade80;--text:#e2e8f0;--muted:#94a3b8;--red:#ef4444}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:'Inter',-apple-system,sans-serif;line-height:1.6}
+.nav{display:flex;gap:2rem;padding:1rem 2rem;background:var(--panel);border-bottom:1px solid rgba(109,213,255,0.15);font-size:0.9rem;flex-wrap:wrap}
+.nav a{color:var(--sov);text-decoration:none;transition:color 0.2s}
+.nav a:hover{color:var(--gold)}
+.container{max-width:1200px;margin:0 auto;padding:2rem}
+h1{font-size:2.2rem;background:linear-gradient(135deg,var(--sov),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:0.5rem}
+.subtitle{color:var(--muted);font-size:1.1rem;margin-bottom:2rem}
+.eu-banner{background:linear-gradient(135deg,#991b1b,#7f1d1d);padding:0.8rem 1.5rem;border-radius:8px;margin-bottom:2rem;font-size:0.85rem;color:#fca5a5}
+.stats-bar{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:2.5rem}
+.stat-card{background:var(--panel);padding:1.2rem;border-radius:8px;text-align:center;border:1px solid rgba(109,213,255,0.1)}
+.stat-card .stat-num{font-size:1.8rem;font-weight:700;color:var(--gold)}
+.stat-card .stat-label{font-size:0.8rem;color:var(--muted);margin-top:0.3rem}
+h2{color:var(--sov);font-size:1.4rem;margin:2rem 0 1rem;padding-bottom:0.5rem;border-bottom:2px solid rgba(109,213,255,0.15)}
+.ep-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-bottom:2rem}
+.ep-card{background:var(--panel);padding:1.2rem;border-radius:8px;border:1px solid rgba(109,213,255,0.1);transition:border-color 0.2s}
+.ep-card:hover{border-color:var(--accent)}
+.ep-tag{display:inline-block;background:rgba(74,222,128,0.15);color:var(--accent);font-size:0.7rem;padding:0.2rem 0.6rem;border-radius:4px;margin-bottom:0.5rem;text-transform:uppercase;letter-spacing:0.05em}
+.ep-card h3{color:var(--text);font-size:0.95rem;margin-bottom:0.4rem}
+.ep-card p{color:var(--muted);font-size:0.8rem;line-height:1.4}
+.priority-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:2rem}
+.p-card{background:var(--panel);padding:1rem;border-radius:8px;border:1px solid rgba(250,204,21,0.15)}
+.p-tag{display:inline-block;background:rgba(250,204,21,0.15);color:#fbbf24;font-size:0.7rem;padding:0.2rem 0.6rem;border-radius:4px;margin-bottom:0.5rem}
+.p-card h3{color:var(--text);font-size:0.85rem;margin-bottom:0.4rem}
+.mcp-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-bottom:2rem}
+.mcp-card{background:var(--panel);padding:1rem;border-radius:8px;border:1px solid rgba(109,213,255,0.15)}
+.mcp-tag{display:inline-block;background:rgba(109,213,255,0.15);color:var(--sov);font-size:0.7rem;padding:0.2rem 0.6rem;border-radius:4px;margin-bottom:0.5rem}
+.red-line-box{background:rgba(239,68,68,0.05);border:1px solid rgba(239,68,68,0.3);border-radius:8px;padding:1.5rem;margin-bottom:2rem}
+.red-line-box h3{color:var(--red);margin-bottom:0.8rem}
+.red-line-box ul{list-style:none;padding:0}
+.red-line-box li{color:var(--muted);font-size:0.85rem;padding:0.3rem 0;padding-left:1.2rem;position:relative}
+.red-line-box li:before{content:'🚫';position:absolute;left:0;font-size:0.75rem}
+.steps-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:1rem;margin-bottom:2rem}
+.step-card{background:var(--panel);padding:1rem;border-radius:8px;text-align:center;border:1px solid rgba(109,213,255,0.1)}
+.step-num{display:inline-flex;align-items:center;justify-content:center;width:2rem;height:2rem;border-radius:50%;background:var(--accent);color:var(--bg);font-weight:700;font-size:0.9rem;margin-bottom:0.5rem}
+.step-card h4{font-size:0.8rem;color:var(--text);margin-bottom:0.3rem}
+.step-card p{font-size:0.7rem;color:var(--muted);line-height:1.3}
+.cta-strip{display:flex;gap:1rem;justify-content:center;margin:2rem 0}
+.cta-btn{display:inline-block;padding:0.8rem 2rem;border-radius:6px;text-decoration:none;font-weight:600;transition:all 0.2s;font-size:0.9rem}
+.cta-primary{background:linear-gradient(135deg,var(--gold),#b8860b);color:var(--bg)}
+.cta-primary:hover{transform:translateY(-1px);box-shadow:0 4px 20px rgba(212,175,55,0.3)}
+.cta-secondary{background:transparent;color:var(--sov);border:1px solid var(--sov)}
+.cta-secondary:hover{background:rgba(109,213,255,0.1)}
+.footer{background:var(--panel);padding:2rem;text-align:center;border-top:1px solid rgba(109,213,255,0.1);margin-top:3rem;font-size:0.8rem;color:var(--muted)}
+.footer .sigil{font-family:'Courier New',monospace;font-size:0.7rem;color:rgba(109,213,255,0.3);margin-top:0.5rem}
+@media(max-width:768px){.ep-grid,.priority-grid,.mcp-grid{grid-template-columns:repeat(2,1fr)}.stats-bar{grid-template-columns:repeat(2,1fr)}.steps-grid{grid-template-columns:repeat(3,1fr)}}
+</style>
+<script type="application/ld+json">
+{"@context": "https://schema.org", "@type": "Article", "headline": "DEFONEOS x Parliamentary Digital Service \u2014 AI Governance for Hansard, Digital Parliament & Select Committee Evidence", "description": "AI governance deep-dive pack for the Parliamentary Digital Service \u2014 the bicameral digital team serving the House of Commons and House of Lords with AI-readiness for Hansard production, select committee evidence management, Members' enquiry handling, parliamentary broadcasting and digital public engagement, operating within the unique constitutional framework of parliamentary privilege and the sovereignty of Parliament", "datePublished": "2026-08-16", "publisher": {"@type": "Organization", "name": "CSOAI Ltd", "url": "https://csoai.org"}, "about": {"@type": "GovernmentService", "name": "Parliamentary Digital Service", "provider": {"@type": "GovernmentOrganization", "name": "Parliamentary Digital Service (PDS)", "url": "https://www.parliament.uk/business/commons/parliamentary-digital-service/"}}}
+</script>
+</head>
+<body>
+<div class="eu-banner">⚠️ EU AI Act Article 50 + Annex III High-Risk AI Systems — Parliamentary Digital Service is Joint department of both Houses of Parliament (House of Commons and House of Lords), governed by the bicameral Administration Committee and Services Committee; bound by parliamentary privilege, not subject to FOIA for parliamentary records, and exempt from certain UK GDPR provisions where processing is for parliamentary functions under the DPA 2018 Schedule 2 exemption; this AI pack complies with the CSOAI GSPC governance framework for high-risk public-sector AI deployment. All MCP tools are audit-grade, Ed25519-signed, and DEFONEOS-SEAL compatible.</div>
+<nav class="nav"><a href="#">Home</a><a href="#">Sitemap</a><a href="#">GovBench</a><a href="#">Index</a></nav>
+<div class="container">
+<h1>DEFONEOS x Parliamentary Digital Service — AI Governance for Hansard, Digital Parliament & Select Committee Evidence</h1>
+<p class="subtitle">AI governance deep-dive pack for the Parliamentary Digital Service — the bicameral digital team serving the House of Commons and House of Lords with AI-readiness for Hansard production, select committee evidence management, Members' enquiry handling, parliamentary broadcasting and digital public engagement, operating within the unique constitutional framework of parliamentary privilege and the sovereignty of Parliament</p>
+<div class="stats-bar">
+<div class="stat-card"><div class="stat-num">12</div><div class="stat-label">Entry Points</div></div>
+<div class="stat-card"><div class="stat-num">8</div><div class="stat-label">Transformation Priorities</div></div>
+<div class="stat-card"><div class="stat-num">6</div><div class="stat-label">MCP Servers</div></div>
+<div class="stat-card"><div class="stat-num">6</div><div class="stat-label">Red Lines</div></div>
+</div>
+
+<h2>🏛️ 12 Entry Points — Parliamentary Digital Service</h2>
+<div class="ep-grid"><div class="ep-card"><span class="ep-tag">Parliament/Digital</span><h3>Hansard Production & Reporting</h3><p>Official report of parliamentary proceedings — near-verbatim transcription, web publication and archiving of 150,000+ pages of proceedings per year across Commons, Lords and Westminster Hall</p></div>
+<div class="ep-card"><span class="ep-tag">Parliament/Digital</span><h3>Select Committee Evidence Management</h3><p>Digital submission, processing, redaction and publication of written and oral evidence to select committees — 50+ committees, 10,000+ evidence submissions per year</p></div>
+<div class="ep-card"><span class="ep-tag">Parliament/Digital</span><h3>Members' Enquiry & Casework Systems</h3><p>Digital systems for Members of Parliament and Peers to manage constituency casework, correspondence and Parliamentary Questions</p></div>
+<div class="ep-card"><span class="ep-tag">Parliament/Digital</span><h3>Parliamentary Broadcasting</h3><p>Live broadcasting and archive of parliamentary proceedings — Parliamentlive.tv, archive digitisation and multimedia content delivery</p></div>
+<div class="ep-card"><span class="ep-tag">Parliament/Digital</span><h3>Digital Public Engagement</h3><p>Digital platforms for public engagement with Parliament — petitions website, committees digital engagement, outreach and education tools</p></div>
+<div class="ep-card"><span class="ep-tag">Parliament/Digital</span><h3>Parliamentary Archives Digitisation</h3><p>Digitisation and digital preservation of the Parliamentary Archives — 8 million+ documents spanning 1497 to the present within the Parliamentary Archives' digital strategy</p></div>
+<div class="ep-card"><span class="ep-tag">Parliament/Digital</span><h3>Cybersecurity of Parliament</h3><p>Cyber defence of the Parliamentary network, Members' devices and the parliamentary digital estate against state-sponsored and criminal cyber threats</p></div>
+<div class="ep-card"><span class="ep-tag">Parliament/Digital</span><h3>Members' Digital Services</h3><p>Digital support for 650 MPs and 800+ Peers — devices, connectivity, email, remote participation and secure communications infrastructure</p></div>
+<div class="ep-card"><span class="ep-tag">Parliament/Digital</span><h3>Parliamentary Data & Search</h3><p>Maintain APIs, metadata standards and semantic enrichment for parliamentary data. Operate the parliament.uk search engine and the parliamentary ontology of terms, indexing 30+ million pages of proceedings and committee publications</p></div>
+<div class="ep-card"><span class="ep-tag">Parliament/Digital</span><h3>Constitutional AI & Privilege</h3><p>AI deployed in a parliamentary context where parliamentary privilege precludes external judicial oversight of internal proceedings — Article 9 Bill of Rights 1689 and exclusive cognisance</p></div>
+<div class="ep-card"><span class="ep-tag">Parliament/Digital</span><h3>Election & Ceremonial Digital</h3><p>Digital services for general elections (650 new MPs onboarded in 6 weeks), State Opening of Parliament, address-in-reply debates and other constitutional ceremonies</p></div>
+<div class="ep-card"><span class="ep-tag">Parliament/Digital</span><h3>Inter-Parliamentary Digital Cooperation</h3><p>Engagement with the Inter-Parliamentary Union, the ECPRD (European Centre for Parliamentary Research and Documentation) and other parliamentary digital services on shared AI standards for legislatures</p></div></div>
+
+<h2>🚀 8 AI Transformation Priorities</h2>
+<div class="priority-grid"><div class="p-card"><span class="p-tag">Priority 1</span><h3>Hansard AI Transcription</h3><p>AI-assisted transcription and semantic enrichment of parliamentary proceedings with human Hansard reporter verification; before: fully manual transcription; after: AI draft with reporter sign-off maintaining near-verbatim standard</p></div>
+<div class="p-card"><span class="p-tag">Priority 2</span><h3>Select Committee Evidence Triage</h3><p>AI-assisted categorisation, sensitive-content detection and routing of committee evidence submissions; before: manual triage of 10K+ submissions; after: AI pre-categorisation with committee clerk verification</p></div>
+<div class="p-card"><span class="p-tag">Priority 3</span><h3>Parliamentary Search Modernisation</h3><p>AI semantic search across 30M+ parliamentary pages — Hansard, committee reports, research briefings, deposited papers; before: keyword-only search; after: AI natural-language search with citation-grounded results</p></div>
+<div class="p-card"><span class="p-tag">Priority 4</span><h3>Members' Casework Assistant</h3><p>AI-assisted drafting, information retrieval and routing for constituency casework enquiries; before: manual caseworker research; after: AI research assistant with MP staff sign-off</p></div>
+<div class="p-card"><span class="p-tag">Priority 5</span><h3>Cybersecurity Threat Intelligence</h3><p>AI threat detection and intelligence fusion for the parliamentary digital estate against state-sponsored cyber threats; before: signature-based detection; after: AI behavioural threat detection with NCSC coordination</p></div>
+<div class="p-card"><span class="p-tag">Priority 6</span><h3>Parliamentary Archives AI</h3><p>AI-assisted metadata extraction, OCR enhancement and entity recognition for the 8M-document Parliamentary Archives digitisation programme; before: manual metadata creation; after: AI metadata enrichment with archivist verification</p></div>
+<div class="p-card"><span class="p-tag">Priority 7</span><h3>Petition & Public Engagement Analytics</h3><p>AI analysis of e-petition themes, public engagement patterns and committee inquiry suggestions from public input; before: manual petition analysis; after: AI thematic analysis with committee consideration</p></div>
+<div class="p-card"><span class="p-tag">Priority 8</span><h3>Privilege-Aware AI Framework</h3><p>Development of the parliamentary AI governance framework that respects Article 9 privilege and exclusive cognisance while providing safe, effective AI services; before: no AI governance framework for parliamentary context; after: privilege-aware AI governance with bicameral approval</p></div></div>
+
+<h2>🤖 6 MCP Servers</h2>
+<div class="mcp-grid"><div class="mcp-card"><span class="mcp-tag">MCP 1</span><h3>Hansard Transcription MCP</h3><p>transcribe_proceedings, enrich_semantics, assign_speaker, generate_hansard_draft</p></div>
+<div class="mcp-card"><span class="mcp-tag">MCP 2</span><h3>Evidence Triage MCP</h3><p>categorise_submission, detect_sensitive_content, route_to_committee, generate_evidence_bundle</p></div>
+<div class="mcp-card"><span class="mcp-tag">MCP 3</span><h3>Parliamentary Search MCP</h3><p>semantic_search, cite_authority, retrieve_proceeding, generate_search_briefing</p></div>
+<div class="mcp-card"><span class="mcp-tag">MCP 4</span><h3>Casework Assistant MCP</h3><p>research_enquiry, draft_response, retrieve_guidance, generate_casework_brief</p></div>
+<div class="mcp-card"><span class="mcp-tag">MCP 5</span><h3>Cyber Threat MCP</h3><p>detect_threat, fuse_intelligence, monitor_estate, generate_threat_report</p></div>
+<div class="mcp-card"><span class="mcp-tag">MCP 6</span><h3>Archives Digitisation MCP</h3><p>extract_metadata, enhance_ocr, recognise_entity, generate_archival_record</p></div></div>
+
+<h2>🚫 6 Red Lines — Legislation Backbone</h2>
+<div class="red-line-box"><h3>Statutory Framework: Parliamentary Papers Act 1840 / Parliamentary Privilege (pre-1689 common law + Article 9 Bill of Rights 1689) / Freedom of Information Act 2000 / Data Protection Act 2018 + UK GDPR / Constitutional Reform and Governance Act 2010</h3><ul><li>NO AI processing that could breach Article 9 Bill of Rights 1689 or the principle of exclusive cognisance (parliamentary proceedings cannot be impeached or questioned in any court; AI must respect the unique constitutional boundary of Parliament's internal jurisdiction)</li>
+<li>NO AI summarisation or alteration of Hansard near-verbatim content without human reporter sign-off (the official record is constitutionally significant and must be human-verified for accuracy and context; AI drafts only, never publishes autonomously)</li>
+<li>NO AI processing of constituent personal data in Members' casework beyond the parliamentary processing exemption (DPA 2018 Schedule 2 — constituent data processed for Members' parliamentary functions is exempt from certain GDPR provisions but must still meet the DPA 2018 data protection principles)</li>
+<li>NO AI-sole decisions on evidence redaction, publication or non-publication (decisions on evidence handling are matters for committee chairs and clerks exercising parliamentary judgement)</li>
+<li>NO external AI models processing unredacted parliamentary proceedings without bicameral governance approval (parliamentary data sovereignty — external model access requires explicit bicameral governance, not operational IT decisions)</li>
+<li>NO AI that could undermine the Clerk of the House's or Clerk of the Parliaments' constitutional independence as principal constitutional advisers (AI supports but never substitutes for the Clerks' constitutional functions)</li></ul></div>
+
+<h2>🎯 5-Step Engagement Model</h2>
+<div class="steps-grid"><div class="step-card"><span class="step-num">1</span><h4>Discovery</h4><p>Stakeholder mapping, data audit, and AI readiness assessment for Parliamentary Digital Service</p></div>
+<div class="step-card"><span class="step-num">2</span><h4>Governance Design</h4><p>Red-line codification, human-review gate design, and AI impact assessment per UK GDPR</p></div>
+<div class="step-card"><span class="step-num">3</span><h4>Pilot</h4><p>6-8 week AI-assisted pilot on one high-volume workflow with parallel manual oversight</p></div>
+<div class="step-card"><span class="step-num">4</span><h4>Scale</h4><p>Roll-out to full jurisdiction with continuous monitoring, recommender-agent feedback, and compliance dashboards</p></div>
+<div class="step-card"><span class="step-num">5</span><h4>Assure</h4><p>Annual audit by DEFONEOS-SEAL credential, CSOAI BFT Council governance review, and parliamentary reporting</p></div></div>
+
+<div class="cta-strip">
+<a href="#" class="cta-btn cta-primary">Request OWEM RFQ for PDS</a>
+<a href="#" class="cta-btn cta-secondary">Article 50 AI Passport</a>
+</div>
+</div>
+<footer class="footer"><p>CSOAI Ltd — UK Company No. 16939677 | <a href="#">csoai.org</a> | compliance@csoai.org</p><p>DEFONEOS &copy; 2026 Nicholas Templeman. Open source. UK sovereign. AUKUS-compatible.</p><p class="sigil">SIGIL: DEFONEOS|TICK-299|c2c4166d3affb720|sovereign|british|forever</p></footer>
+</body>
+</html>

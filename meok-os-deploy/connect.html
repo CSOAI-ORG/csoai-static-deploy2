@@ -1,6 +1,6 @@
 <!doctype html><html lang="en"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Connect your Sovereign to any AI — MEOK</title>
+<title>Connect your companion to any AI — MEOK</title>
 <meta name="description" content="Take your hatched MEOK character — its persona, its signed memory, its governance — into Claude, ChatGPT, or any MCP host. Your AI, everywhere, bonded to you.">
 <style>
 :root{--bg:#f4f1ea;--card:#fffdf8;--ink:#1a1712;--dim:#6b6355;--gold:#b8912f;--line:#e6dfd0;--ink2:#2a2620}
@@ -26,10 +26,22 @@ button.copy:active{transform:translateY(1px)}
 a{color:var(--gold)}
 .foot{color:var(--dim);font-size:13px;margin-top:24px;border-top:1px solid var(--line);padding-top:16px}
 .ok{color:#2e7d32;font-weight:600}
-</style></head><body><div class="wrap">
-<div class="brand"><span class="m">M</span> MEOK · sovereign</div>
+</style>
+<meta property="og:title" content="Connect your companion to any AI — MEOK"/>
+<meta property="og:description" content="Take your hatched MEOK character — its persona, its signed memory, its governance — into Claude, ChatGPT, or any MCP host. Your AI, everywhere, bonded to you."/>
+<meta property="og:type" content="website"/>
+<meta property="og:url" content="https://meok.ai/connect"/>
+<meta property="og:image" content="https://meok.ai/icon-512.png"/>
+<meta property="og:site_name" content="MEOK"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<link rel="canonical" href="https://meok.ai/connect.html"/>
+<link href="https://meok.ai/connect.llm.json" rel="alternate" title="LLM representation of this page" type="application/llm+json"/>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebPage", "name": "MEOK", "url": "https://meok.ai/connect", "description": "Take your hatched MEOK character — its persona, its signed memory, its governance — into Claude, ChatGPT, or any MCP host. Your AI, everywhere, bonded to you.", "inLanguage": "en", "isPartOf": {"@type": "WebSite", "name": "MEOK", "url": "https://meok.ai"}}</script>
+<link rel="stylesheet" href="/css/meok-system.css"/>
+</head><body><div class="wrap">
+<div class="brand"><span class="m">M</span> MEOK · keyholder</div>
 
-<h1>Take <span class="g" id="cname">your Sovereign</span> into <span class="g">any AI</span>.</h1>
+<h1>Take <span class="g" id="cname">your companion</span> into <span class="g">any AI</span>.</h1>
 <p class="sub">Your hatched character — its persona, its <b>signed memory</b>, its governance — travels with you into Claude, Claude Code, and any MCP-compatible host. One character, everywhere, <b>bonded to you</b>. Your data stays yours; every action is signed on-device and refusable.</p>
 <div class="who" id="who"></div>
 
@@ -53,23 +65,23 @@ a{color:var(--gold)}
 </div>
 
 <div class="card">
-  <div class="step">3 · make the memory persistent (optional, max-sovereign)</div>
+  <div class="step">3 · make the memory persistent (optional, max-keyholder)</div>
   <h3>Add the on-device memory graph</h3>
-  <p><b>meok_remember</b> already mints signed, portable memories. For a persistent, on-device memory graph that never leaves your machine, add the local sovereign-memory MCP:</p>
+  <p><b>meok_remember</b> already mints signed, portable memories. For a persistent, on-device memory graph that never leaves your machine, add the local keyholder-memory MCP:</p>
   <pre id="mem"></pre>
   <div class="row"><button class="copy" data-copy="mem">Copy install</button></div>
 </div>
 
 <div class="foot">
-  <p><span class="ok">✓ verify, don't trust</span> — your character's identity is a <a id="cardlink" href="#" target="_blank">signed A2A agent card</a>; check any signature offline at <a href="/verify.html">/verify.html</a>. Governed under the Sovereign Charter + CSOAI AI Governance. Works today in Claude &amp; Claude Code; other hosts as they adopt MCP.</p>
+  <p><span class="ok">✓ verify, don't trust</span> — your character's identity is a <a id="cardlink" href="#" target="_blank">signed A2A agent card</a>; check any signature offline at <a href="/verify.html">/verify.html</a>. Governed under the Keyholder charter + CSOAI AI Governance. Works today in Claude &amp; Claude Code; other hosts as they adopt MCP.</p>
   <p><b>Same character, everywhere:</b> any website / SaaS → <a href="/embed.html">embed</a> · iPhone (Siri) → <a href="/siri.html">Siri</a> · Amazon Echo (Alexa) → <a href="/alexa.html">Alexa</a> · run <b>every AI at once</b> → <a id="councillink" href="/council.html">the Council</a> · watch it work → <a href="/workspace.html">Workspace</a>.</p>
 </div>
 </div>
 <script>
 const p=new URLSearchParams(location.search);
-const name=(p.get('name')||'MEOK Sovereign').slice(0,60);
-const arc=(p.get('archetype')||'sovereign companion').slice(0,60);
-const slug=(name.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'').replace(/^meok-?/,'')||'sovereign');
+const name=(p.get('name')||'MEOK').slice(0,60);
+const arc=(p.get('archetype')||'companion').slice(0,60);
+const slug=(name.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'').replace(/^meok-?/,'')||'keyholder');
 const q='?name='+encodeURIComponent(name)+'&archetype='+encodeURIComponent(arc);
 const url='https://os.meok.ai/api/mcp'+q;
 document.getElementById('cname').textContent=name;
@@ -77,10 +89,12 @@ document.getElementById('who').innerHTML='Connecting: <b>'+name+'</b> — <span>
 document.getElementById('url').textContent=url;
 document.getElementById('cli').textContent='claude mcp add --transport http meok-'+slug+' "'+url+'"';
 document.getElementById('json').textContent=JSON.stringify({mcpServers:{['meok-'+slug]:{type:'http',url:url}}},null,2);
-document.getElementById('mem').textContent='pip install meok-sovereign-memory-mcp   # persistent, on-device, signed';
+document.getElementById('mem').textContent='pip install meok-keyholder-memory-mcp   # persistent, on-device, signed';
 document.getElementById('cardlink').href='/api/agentcard'+q;
 document.querySelectorAll('button.copy').forEach(b=>b.onclick=async()=>{
   const t=document.getElementById(b.dataset.copy).textContent;
   try{await navigator.clipboard.writeText(t);const o=b.textContent;b.textContent='Copied ✓';setTimeout(()=>b.textContent=o,1400);}catch(e){}
 });
-</script></body></html>
+</script><script src="/agui-hero.js" defer></script>
+<script src="/meok-panel.js" defer></script>
+</body></html>

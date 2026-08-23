@@ -1,0 +1,16 @@
+{
+  "id": "improve-models",
+  "kind": "spec",
+  "claim": "measurement",
+  "artifact_path": "SOVOS/play-300/IMPROVE-OUR-MODELS.md",
+  "artifact_sha256": "3f8e9904bc0d40a4617afe5b6cc3d767f79be6dc7022135e9eabcef57ce47452",
+  "grammar": "verified measurement credential - measurement, not certification",
+  "note": "signed on signing node; ed25519 key never leaves",
+  "signature": {
+    "kind": "ed25519",
+    "sig": "bNTUZQEvnAByE3DNniETzHKO3F9CXR4EAEsknNurZEguS+Q/tWo5muHYvgJnXmutHB+4e+DiM8Yssr+Sjg7aDA==",
+    "body_sha256": "f922432eeab3f5b9d6c31a5b4348463a41974517b335c8a9b6880e9186b2230b",
+    "pubkey": "bWbk52E47J6EkY4+pu0Hh/B1l1175AZoZsDEBr0EfWA=",
+    "note": "Ed25519 over the canonical body; verify with sign.py --verify. PQC upgrade: ML-DSA-65 via liboqs \u2014 same body, swap the primitive."
+  }
+}

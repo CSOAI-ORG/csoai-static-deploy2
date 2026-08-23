@@ -30,7 +30,19 @@
   .kv{font-size:13px;margin:1px 0}.kv b{color:#463c2c}
   .sig{font:11.5px ui-monospace;word-break:break-all;background:#f4efe4;border:1px solid var(--line);border-radius:10px;padding:9px 11px;color:#4a4234;margin-top:8px}
   .row{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
-</style></head>
+</style>
+<meta property="og:title" content="DEFONEOS — Signed Card Registry (the shareable store JSP 936 lacks)"/>
+<meta property="og:description" content="A signed, searchable, shareable registry of Defence-AI System &amp; Model Cards. The registry manifest is itself Ed25519-signed; every card is independently verifiable offline. Closes the MOD 'no central store' gap."/>
+<meta property="og:type" content="website"/>
+<meta property="og:url" content="https://meok.ai/registry"/>
+<meta property="og:image" content="https://meok.ai/icon-512.png"/>
+<meta property="og:site_name" content="MEOK"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<link rel="canonical" href="https://meok.ai/registry.html"/>
+<link href="https://meok.ai/registry.llm.json" rel="alternate" title="LLM representation of this page" type="application/llm+json"/>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebPage", "name": "MEOK", "url": "https://meok.ai/registry", "description": "A signed, searchable, shareable registry of Defence-AI System & Model Cards. The registry manifest is itself Ed25519-signed; every card is independently verifiable offline. Closes the MOD 'no central store' gap.", "inLanguage": "en", "isPartOf": {"@type": "WebSite", "name": "MEOK", "url": "https://meok.ai"}}</script>
+<link rel="stylesheet" href="/css/meok-system.css"/>
+</head>
 <body><div class="wrap">
   <div class="kick">DEFONEOS · Sovereign Assurance</div>
   <h1>Signed Card Registry</h1>
@@ -95,4 +107,6 @@ async function verifyViewed(tamper){ const el=document.getElementById('vResult')
 function closeView(){ document.getElementById('view').style.display='none'; VIEW=null; }
 load();
 </script>  <script defer src="/meok-reveal.js"></script>
+<script src="/agui-hero.js" defer></script>
+<script src="/meok-panel.js" defer></script>
 </body></html>

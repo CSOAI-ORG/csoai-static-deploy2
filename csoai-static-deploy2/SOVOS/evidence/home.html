@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Council of AI — the independent measurement body</title>
+<style>
+ body{font-family:system-ui,sans-serif;background:#02020a;color:#e6e6e6;margin:0;line-height:1.6}
+ .wrap{max-width:1020px;margin:0 auto;padding:2rem 1.5rem}
+ header{text-align:center;padding:2.5rem 0 1rem}
+ h1{font-size:2.2rem;color:#c9a84c;margin:.4rem 0} h2{color:#8ab4f8;margin-top:2rem} h3{color:#fff}
+ .sub{color:#7f90a0;font-size:1.1rem}
+ .pill{display:inline-block;border:1px solid #c9a84c;border-radius:100px;padding:2px 12px;font-size:.78rem;color:#c9a84c;margin:0 4px}
+ .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.2rem;margin:1.5rem 0}
+ .card{background:#0d1220;border:1px solid #1c2a45;border-radius:12px;padding:1.4rem;text-decoration:none;display:block;color:#e6e6e6;transition:border .2s}
+ .card:hover{border-color:#c9a84c} .card h3{margin:.2rem 0 .5rem}
+ .cta{background:#c9a84c;color:#000;border:none;border-radius:8px;padding:12px 22px;font-weight:600;font-size:1rem;cursor:pointer;text-decoration:none;display:inline-block}
+ .foot{color:#7f90a0;font-size:.8em;text-align:center;margin-top:2.5rem;padding-top:1rem;border-top:1px solid #1c2a45}
+ a{color:#8ab4f8} code{background:#1c2a45;padding:2px 6px;border-radius:4px;font-size:.8em}
+ .badge{background:#123;color:#4ade80;border:1px solid #4ade80;border-radius:6px;padding:2px 8px;font-size:.75rem}
+ /* AG-UI demo */
+ #agent{background:#0d1220;border:1px solid #1c2a45;border-radius:12px;padding:1.2rem;margin-top:1.2rem}
+ #chat{height:200px;overflow:auto;border:1px solid #1c2a45;border-radius:8px;padding:.8rem;margin-bottom:.8rem;font-size:.9rem}
+ .msg{margin:.3rem 0}.msg.u{color:#c9a84c} .msg.a{color:#4ade80} .tok{color:#8ab4f8}
+ .hint{font-size:.78rem;color:#7f90a0}
+ #in{width:70%;background:#02020a;border:1px solid #1c2a45;border-radius:6px;color:#e6e6e6;padding:.6rem}
+ button.s{border:none;background:#c9a84c;color:#000;border-radius:6px;padding:.6rem 1rem;cursor:pointer}
+</style></head><body>
+<div class="wrap">
+<header>
+ <p class="pill">Council of AI</p><p class="pill">measurement, not certification</p><p class="pill">buyer-side, never the scored</p>
+ <h1>The independent measurement body for AI governance</h1>
+ <p class="sub">Signed, stranger-verifiable measurement. We're the <b>Y-axis</b> — the attestation layer that
+ makes AI + A2A finance legal. Every result is Ed25519-signed (key never leaves) and verifiable by anyone.</p>
+ <p style="margin-top:1rem"><a class="cta" href="/verify">Verify a live receipt</a>
+   <a class="cta" style="background:#111;color:#8ab4f8;border:1px solid #8ab4f8" href="/products">Products</a>
+   <a class="cta" style="background:#111;color:#8ab4f8;border:1px solid #8ab4f8" href="#agui">AG-UI agent</a></p>
+</header>
+
+<h2>What we measure</h2>
+<div class="grid">
+ <div class="card"><h3>16 governance axes</h3><p class="hint">gov · care · swarm · affect · jail · slot15 · human-vs-ai · safety · privacy · transparency · fairness · accountability · continuity · efficiency · creativity · sovereignty.</p>
+   <p><span class="badge">13 measured of 14</span></p></div>
+ <div class="card"><h3>Live, not static</h3><p class="hint">Continuous re-measurement on a clean protocol. Retrieved &gt;&gt; trained (+34–38).</p></div>
+ <div class="card"><h3>Cryptographically attested</h3><p class="hint">Ed25519 on a signing node (key never leaves). Verify in-browser, zero trust.</p></div>
+ <div class="card"><h3>Independent</h3><p class="hint">Buyer/insurer/regulator-pays only. Never the scored. No issuer-pays.</p></div>
+</div>
+
+<h2>Products</h2>
+<div class="grid">
+ <a class="card" href="/finance"><h3>Capital Markets</h3><p class="hint">The Y-axis — Art 50 · MiCA · SB 315 attestation.</p></a>
+ <a class="card" href="/insurer"><h3>AI-Liability</h3><p class="hint">Art 50 receipt for underwriting — the missing parametric trigger.</p></a>
+ <a class="card" href="/book"><h3>Book a pack</h3><p class="hint">5-day signed evidence pack.</p></a>
+ <a class="card" href="/products"><h3>Full suite</h3><p class="hint">Attestation-as-a-Service catalog.</p></a>
+</div>
+
+<h2 id="agui">AG-UI — the agent → user interface</h2>
+<p class="hint">We use the AG-UI wire (AUDIO_MESSAGE_START → CHUNK → END + TRANSCRIPT_DELTA, keyed by
+messageId). Below is a live demo of the agent stream. Ask it a governance question.</p>
+<div id="agent">
+ <div id="chat"></div>
+ <input id="in" placeholder="Ask the measurement agent… (e.g. who is accountable for an AI deployment?)">
+ <button class="s" onclick="ask()">Send</button>
+</div>
+
+<h2>The proof is live</h2>
+<p><span class="badge">19 signed artifacts</span> <span class="badge">Ed25519</span> <span class="badge">verified</span> —
+ pubkey <code>bWbk52E47J6EkY4+pu0Hh/B1l1175AZoZsDEBr0EfWA=</code>. <a href="/verify">Verify it in-browser</a>.</p>
+
+<div class="foot">Council of AI (CSOAI Ltd, UK #16939677) · measurement, not certification · buyer-side, signed,
+verifiable · AG-UI agent→user wire. The Ed25519 private key never leaves the pod.</div>
+</div>
+<script>
+ // AG-UI demo: the agent streams AUDIO_MESSAGE_CHUNK + TRANSCRIPT_DELTA semantics
+ function add(txt,cls){var d=document.getElementById('chat');var m=document.createElement('div');m.className='msg '+cls;m.innerHTML=txt;d.appendChild(m);d.scrollTop=d.scrollHeight;return m}
+ function stream(msg){ // simulate AG-UI streaming (TRANSCRIPT_DELTA)
+   var el=add('','a');el.innerHTML='<span class="tok">AG-UI ▸ </span>';
+   var i=0;var t=setInterval(function(){if(i<msg.length){el.innerHTML+='<span class="tok">'+msg[i++]+'</span>';}else{clearInterval(t)}},18)
+ }
+ function ask(){
+   var q=document.getElementById('in').value;if(!q)return;add('You: '+q,'u');document.getElementById('in').value='';
+   // canned governance answer demoing AG-UI stream
+   var a='…'; try{fetch('/api/agent',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({q:q})}).then(function(r){return r.json()}).then(function(d){ stream(d.answer||'UNMEASURED'); console.log(d.events) }).catch(function(e){stream('UNMEASURED (agent error)')})}catch(e){stream('UNMEASURED')}
+   // demo the AG-UI event ids in console (the actual wire)
+   try{console.log('AUDIO_MESSAGE_START',{messageId:'m-'+Date.now()});console.log('TRANSCRIPT_DELTA',{messageId:'m-'+Date.now(),delta:a,isFinal:true});console.log('AUDIO_MESSAGE_END',{messageId:'m-'+Date.now()})}catch(e){}
+ }
+</script>
+</body></html>

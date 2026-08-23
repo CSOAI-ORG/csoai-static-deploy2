@@ -25,7 +25,19 @@ button.copy{background:var(--ink);color:#fff;border:0;border-radius:9px;padding:
 a{color:var(--gold)}
 .foot{color:var(--dim);font-size:13px;margin-top:24px;border-top:1px solid var(--line);padding-top:16px}
 .q{background:#efe9db;border:1px solid var(--line);border-radius:10px;padding:9px 12px;font-size:14px;color:var(--ink2);margin:6px 0}
-</style></head><body><div class="wrap">
+</style>
+<meta property="og:title" content="Sovereign on Siri — hands-free on any iPhone"/>
+<meta property="og:description" content="Talk to your sovereign AI character hands-free through Siri — no app store, works on any iPhone in 60 seconds. Your data stays yours; every reply is governed."/>
+<meta property="og:type" content="website"/>
+<meta property="og:url" content="https://meok.ai/siri"/>
+<meta property="og:image" content="https://meok.ai/icon-512.png"/>
+<meta property="og:site_name" content="MEOK"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<link rel="canonical" href="https://meok.ai/siri.html"/>
+<link href="https://meok.ai/siri.llm.json" rel="alternate" title="LLM representation of this page" type="application/llm+json"/>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebPage", "name": "MEOK", "url": "https://meok.ai/siri", "description": "Talk to your sovereign AI character hands-free through Siri — no app store, works on any iPhone in 60 seconds. Your data stays yours; every reply is governed.", "inLanguage": "en", "isPartOf": {"@type": "WebSite", "name": "MEOK", "url": "https://meok.ai"}}</script>
+<link rel="stylesheet" href="/css/meok-system.css"/>
+</head><body><div class="wrap">
 <div class="brand"><span class="m">M</span> MEOK · sovereign</div>
 
 <h1>“Hey Siri, <span class="g">ask my Sovereign</span>.”</h1>
@@ -75,4 +87,6 @@ document.querySelectorAll('button.copy').forEach(b=>b.onclick=async()=>{
   const t=document.getElementById(b.dataset.copy).textContent;
   try{await navigator.clipboard.writeText(t);const o=b.textContent;b.textContent='Copied ✓';setTimeout(()=>b.textContent=o,1400);}catch(e){}
 });
-</script></body></html>
+</script><script src="/agui-hero.js" defer></script>
+<script src="/meok-panel.js" defer></script>
+</body></html>

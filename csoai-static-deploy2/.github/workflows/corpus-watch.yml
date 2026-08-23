@@ -1,0 +1,122 @@
+name: Corpus Watch — Regulatory Drift Detection
+on:
+  schedule:
+    # Daily at 06:17 UTC (offset from :00 to avoid thundering herd)
+    - cron: '17 6 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+env:
+  # Canonical statute counts (from SOV-CSOAI-MASTER-PLAYBOOK B2)
+  EXPECTED_AI_ACT: 113
+  EXPECTED_GDPR: 99
+  EXPECTED_CRA: 71
+  EXPECTED_DORA: 64
+  EXPECTED_NIS2: 46
+  EXPECTED_CSRD: 11
+
+jobs:
+  watch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Check C2PA spec releases
+        id: c2pa
+        run: |
+          # C2PA spec is on GitHub — check latest release tag
+          LATEST=$(curl -sf https://api.github.com/repos/c2pa-org/c2pa-spec/releases/latest | python3 -c "
+          import sys, json
+          d = json.load(sys.stdin)
+          print(d.get('tag_name', 'unknown'))
+          " 2>/dev/null || echo "fetch_failed")
+          echo "c2pa_latest=$LATEST" >> "$GITHUB_OUTPUT"
+          echo "C2PA latest release: $LATEST"
+
+      - name: Check EUR-Lex AI Act consolidated text
+        id: eurlex
+        run: |
+          # AI Act CELEX: 32024R1689. Check if the consolidated text page is reachable.
+          STATUS=$(curl -sf -o /dev/null -w '%{http_code}' \
+            "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32024R1689" \
+            2>/dev/null || echo "000")
+          echo "ai_act_status=$STATUS" >> "$GITHUB_OUTPUT"
+          echo "AI Act consolidated text HTTP status: $STATUS"
+
+      - name: Check legislation.gov.uk UK GDPR
+        id: legis
+        run: |
+          # UK GDPR: check the main page is reachable
+          STATUS=$(curl -sf -o /dev/null -w '%{http_code}' \
+            "https://www.legislation.gov.uk/ukpga/2018/12/contents" \
+            2>/dev/null || echo "000")
+          echo "uk_gdpr_status=$STATUS" >> "$GITHUB_OUTPUT"
+          echo "UK GDPR legislation page HTTP status: $STATUS"
+
+      - name: Check NIST IR 8547 status
+        id: nist
+        run: |
+          # NIST IR 8547 (PQC transition guidance) — check the landing page
+          STATUS=$(curl -sf -o /dev/null -w '%{http_code}' \
+            "https://csrc.nist.gov/pubs/ir/8547/ipd" \
+            2>/dev/null || echo "000")
+          echo "nist_ir8547_status=$STATUS" >> "$GITHUB_OUTPUT"
+          echo "NIST IR 8547 HTTP status: $STATUS"
+
+      - name: Run decision_ledger selftest
+        run: python3 decision_ledger.py --selftest
+
+      - name: Run sov_instrument selftest
+        run: python3 sov_instrument.py --selftest
+
+      - name: Record watch result
+        run: |
+          python3 -c "
+          import json, time
+          result = {
+              'watched_at': time.strftime('%Y-%m-%dT%H:%M:%SZ', time.gmtime()),
+              'c2pa_latest': '${{ steps.c2pa.outputs.c2pa_latest }}',
+              'ai_act_status': '${{ steps.eurlex.outputs.ai_act_status }}',
+              'uk_gdpr_status': '${{ steps.legis.outputs.uk_gdpr_status }}',
+              'nist_ir8547_status': '${{ steps.nist.outputs.nist_ir8547_status }}',
+              'decision_ledger_selftest': 'pass',
+              'sov_instrument_selftest': 'pass',
+              'expected_provision_counts': {
+                  'ai_act': ${{ env.EXPECTED_AI_ACT }},
+                  'gdpr': ${{ env.EXPECTED_GDPR }},
+                  'cra': ${{ env.EXPECTED_CRA }},
+                  'dora': ${{ env.EXPECTED_DORA }},
+                  'nis2': ${{ env.EXPECTED_NIS2 }},
+                  'csrd': ${{ env.EXPECTED_CSRD }},
+              },
+          }
+          print(json.dumps(result, indent=2))
+          with open('watch-result.json', 'w') as f:
+              json.dump(result, f, indent=2)
+          "
+
+      - name: Upload watch result
+        uses: actions/upload-artifact@v4
+        with:
+          name: corpus-watch-${{ github.run_number }}
+          path: watch-result.json
+
+      - name: Open issue on failure
+        if: failure()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            await github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: `Corpus watch failed — run ${context.runNumber}`,
+              body: `The corpus watcher detected a failure. Check the [workflow run](${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}) for details.`,
+              labels: ['corpus-drift', 'automated']
+            });

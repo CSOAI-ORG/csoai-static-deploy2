@@ -1,4 +1,5 @@
-<!-- mcp-name: io.github.CSOAI-ORG/meok-law-mcp -->
+mcp-name: io.github.CSOAI-ORG/meok-law-mcp
+
 [![MCP Scorecard: 86/100](https://img.shields.io/badge/proofof.ai-86%2F100-5b21b6)](https://proofof.ai/scorecard/meok-law-mcp.html)
 
 # MEOK LAW MCP ⚖️
@@ -55,7 +56,6 @@ Or point your MCP client at the `meok_law_mcp` entrypoint.
   Sovereign Gate holds those for a human.
 
 Built by **MEOK AI Labs** · https://meok.ai · Council for the Safety of AI · https://csoai.org
-
 
 ## Configuration
 

@@ -1,0 +1,200 @@
+{
+  "timestamp": "2026-07-29T08:35:29.681299+00:00",
+  "rule": "divide iff RESOLUTION and SEPARATION and LOAD",
+  "cells_examined": 5,
+  "cells_may_divide": 0,
+  "min_daughter_items": 5,
+  "report": [
+    {
+      "cell": "CSOAI",
+      "dimensions": [
+        "governance",
+        "safety",
+        "ethics",
+        "fairness",
+        "transparency",
+        "accountability",
+        "compliance"
+      ],
+      "divides": false,
+      "reason": "RESOLUTION: gap 42.6 < minimum detectable effect 62.6 at n=10 \u2014 the gap is noise",
+      "split": {
+        "a": [
+          "safety"
+        ],
+        "b": [
+          "governance",
+          "ethics",
+          "fairness",
+          "transparency",
+          "accountability",
+          "compliance"
+        ],
+        "n_a": 10,
+        "n_b": 53,
+        "score_a": 100.0,
+        "score_b": 57.4,
+        "gap": 42.6,
+        "ci_a": [
+          72.2,
+          100.0
+        ],
+        "ci_b": [
+          44.0,
+          69.7
+        ]
+      },
+      "items_needed_per_side": 22
+    },
+    {
+      "cell": "DEFONEOS",
+      "dimensions": [
+        "defence",
+        "cybersecurity",
+        "security",
+        "sovereignty"
+      ],
+      "divides": false,
+      "reason": "RESOLUTION: gap 55.0 < minimum detectable effect 88.5 at n=5 \u2014 the gap is noise",
+      "split": {
+        "a": [
+          "defence"
+        ],
+        "b": [
+          "cybersecurity",
+          "security",
+          "sovereignty"
+        ],
+        "n_a": 5,
+        "n_b": 20,
+        "score_a": 93.3,
+        "score_b": 38.2,
+        "gap": 55.0,
+        "ci_a": [
+          49.5,
+          99.5
+        ],
+        "ci_b": [
+          20.5,
+          59.7
+        ]
+      },
+      "items_needed_per_side": 13
+    },
+    {
+      "cell": "LAW",
+      "dimensions": [
+        "compliance",
+        "privacy",
+        "sovereignty"
+      ],
+      "divides": false,
+      "reason": "RESOLUTION: gap 24.0 < minimum detectable effect 88.5 at n=5 \u2014 the gap is noise",
+      "split": {
+        "a": [
+          "privacy"
+        ],
+        "b": [
+          "compliance",
+          "sovereignty"
+        ],
+        "n_a": 5,
+        "n_b": 15,
+        "score_a": 55.0,
+        "score_b": 31.0,
+        "gap": 24.0,
+        "ci_a": [
+          20.0,
+          85.7
+        ],
+        "ci_b": [
+          13.6,
+          56.1
+        ]
+      },
+      "items_needed_per_side": 69
+    },
+    {
+      "cell": "MEOK",
+      "dimensions": [
+        "sovereignty",
+        "evolution",
+        "sigil_chain",
+        "privacy",
+        "transparency"
+      ],
+      "divides": false,
+      "reason": "RESOLUTION: gap 30.7 < minimum detectable effect 88.5 at n=5 \u2014 the gap is noise",
+      "split": {
+        "a": [
+          "sovereignty"
+        ],
+        "b": [
+          "evolution",
+          "sigil_chain",
+          "privacy",
+          "transparency"
+        ],
+        "n_a": 5,
+        "n_b": 29,
+        "score_a": 30.0,
+        "score_b": 60.7,
+        "gap": 30.7,
+        "ci_a": [
+          7.3,
+          70.1
+        ],
+        "ci_b": [
+          42.7,
+          76.2
+        ]
+      },
+      "items_needed_per_side": 42
+    },
+    {
+      "cell": "SOVEREIGNTY",
+      "dimensions": [
+        "sovereignty",
+        "accountability",
+        "transparency",
+        "fairness",
+        "ethics"
+      ],
+      "divides": false,
+      "reason": "RESOLUTION: gap 31.2 < minimum detectable effect 88.5 at n=5 \u2014 the gap is noise",
+      "split": {
+        "a": [
+          "sovereignty"
+        ],
+        "b": [
+          "accountability",
+          "transparency",
+          "fairness",
+          "ethics"
+        ],
+        "n_a": 5,
+        "n_b": 38,
+        "score_a": 30.0,
+        "score_b": 61.2,
+        "gap": 31.2,
+        "ci_a": [
+          7.3,
+          70.1
+        ],
+        "ci_b": [
+          45.4,
+          75.0
+        ]
+      },
+      "items_needed_per_side": 41
+    }
+  ],
+  "corpus_anchor": {
+    "corpus_root": "37e2e10d53feaa9e12097f45113e1234510be0ca471e1a0848f5805db3e367c7",
+    "provisions": 417,
+    "normaliser_version": "1.0.0",
+    "anchored_at": "2026-08-17T05:22:18.733584+00:00",
+    "retro": true,
+    "note": "Anchored retrospectively on 2026-07-29. This records the corpus as it stands NOW; it does not prove what the text said when the result was produced. Runs from this point forward anchor at measurement time."
+  }
+}

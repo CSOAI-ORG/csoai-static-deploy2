@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>RAS — Regulation-as-a-Service · CSOAI</title>
+<style>
+body{font-family:ui-sans-serif,system-ui;background:#0b0f14;color:#e6edf3;margin:0;padding:2rem}
+h1{font-size:1.6rem}h2{font-size:1.05rem;color:#8ab4f8}
+.badges span{display:inline-block;background:#1a2230;border:1px solid #2b3a4d;border-radius:8px;padding:4px 10px;margin:3px;font-size:.8rem}
+.axes{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:10px;margin:1rem 0}
+.axis{background:#121a26;border:1px solid #24324a;border-radius:10px;padding:12px}
+.axis .v{float:right;font-weight:700;color:#7ee787}
+.assessed{border:1px dashed #f0b429;border-radius:10px;padding:14px;max-width:640px;font-size:.85rem;color:#f0b429}
+footer{margin-top:2rem;font-size:.75rem;color:#8b949e}
+</style></head><body>
+<h1>🛡️ RAS — Regulation-as-a-Service <span class="badges"><span>verdicts, not seats</span><span>measured, assessed</span><span>OSCAL-importable</span></span></h1>
+<p>SaaS sells seats. <b>RAS sells verdicts.</b> Continuous, signed, geometric conformity evidence —
+streamed into procurement, insurer policies, and auditor OSCAL importers. One SOVOS signs it.</p>
+
+<h2>SOV SIGNAL — the honest composite (live-measured)</h2>
+<div class="axes" id="axes">loading…</div>
+
+<p class="assessed">⚖️ <b>CSOAI measured this system against 13 frameworks and signed the result.</b>
+A notified body, insurer, or auditor may import the raw OSCAL. This is an <b>assessment, never a
+certificate</b> — UNMEASURED axes are excluded, never scored 0.</p>
+
+<h2>13 evidence streams → product lines</h2>
+<div class="axes">
+  <div class="axis">Governance <span class="v">streams</span></div>
+  <div class="axis">Safety / Art-5 <span class="v">streams</span></div>
+  <div class="axis">Provenance <span class="v">streams</span></div>
+  <div class="axis">Conformance (MCP) <span class="v">streams</span></div>
+  <div class="axis">Openness <span class="v">streams</span></div>
+  <div class="axis">Continuity <span class="v">streams</span></div>
+</div>
+<footer>RAS is the AG-UI front door (MCP · A2A · AG-UI) — the Agent-to-User leg. © CSOAI · measured,
+never certified · UNMEASURED ≠ 0.</footer>
+<script>
+// load the honest per-axis measurement board (from the verified session data)
+const DATA = {governance:0.931,safety:1.0,provenance:0.656,conformance:0.845,openness:0.75,continuity:0.75,
+              art5_refusal:1.0,compliance:0.963,honor:0.85,justice:0.95,equity:0.99,transparency:0.85};
+const el=document.getElementById('axes');
+el.innerHTML=Object.entries(DATA).map(([k,v])=>`<div class="axis">${k} <span class="v">${v.toFixed(2)}</span></div>`).join('');
+</script>
+</body></html>

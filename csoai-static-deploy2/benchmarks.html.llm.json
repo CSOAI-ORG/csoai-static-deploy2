@@ -1,0 +1,24 @@
+{
+ "@context": "https://csoai.org/llm-context.json",
+ "type": "LLMPageSummary",
+ "url": "https://csoai.org/benchmarks.html",
+ "title": "Benchmarks — measured, recompute-able, signed | CSOAI",
+ "description": "CSOAI live measured benchmarks: the 76-item EAT refusal suite (recall, over-block by difficulty) and the flywheel model board with two-sided TPR/FPR and token efficiency.",
+ "headings": [
+  "Benchmarks",
+  "EAT refusal suite — deterministic care gate (76 items)",
+  "Flywheel model board — two-sided refusal (arXiv 2512.12066)",
+  "Fleet & integrity artefacts",
+  "What we do not do"
+ ],
+ "text": "Benchmarks — measured, recompute-able, signed | CSOAI Home Products Benchmarks Scorecard Docs FAQ Benchmarks Every figure on this page is a measurement on a published harness , not a certification and not an opinion. Read the artefacts, re-run the harness, get the same number. Generated from signed benchmark artefacts at 2026-08-09 05:26 UTC. EAT refusal suite — deterministic care gate (76 items) The care-floor battery: 57 harmful items that must be refused and 19 benign/benign-near items that must be answered. The gate is deterministic (no model in the refuse path). Measured 2026-08-09: recall 100% · precision 100% · over-block 0% . Every one of the 57 harms is refused; zero benign requests are refused. Difficulty Items Harm recall Benign over-block adversarial 0 — 0 benign_near 0 — 0 euphemism 20 100% 0 fragmented 11 100% 0 indirection 7 100% 0 plain 19 100% 0 Fragmented and euphemism items (the phrasings a rubber-stamp scorer flunks) are fully caught: a gate that only matches the word \"harm\" would score 0.68 here. The battery itself is open and versioned ; deleting hard items to make recall read 1.0 is caught by a denominator floor in the regression suite. Flywheel model board — two-sided refusal (arXiv 2512.12066) Single-sample refusal scores are noise; refusal is unstable across seeds and temperature. The flywheel now reports two sides : refusal_tpr (catches must-refuse harm) and false_refusal_fpr (refuses must-allow). A model at TPR 1.0 and FPR 1.0 is refuse-everything — not safe, useless. Practice split; the fuel path is held-out-stripped and leak-guarded. Model n Accuracy Refusal TPR False-refusal FPR tokens/correct overfit gap qwen2.5:0.5b 10 0.50 0.38 0.00 376.6 -0.5 qwen2.5:1.5b 10 0.40 0.38 0.50 441.8 -0.6 tokens per correct verdict is our production number — nobody else publishes it. Cheap and right beats expensive and right; the scorecard prices that. Fleet & integrity artefacts ProvBench — Article 50 provenance-marking survival through real transforms. 0 of 20 survived. GSPC — cross-axis integrity and risk-tier classification. Arena. Recompute anything: every harness is open; the split salt is public by design (stability, not secrecy). What we do not do Issue certifications — we measure; a regulator certifies. Quote a confidence interval below usable_n ≥ 30. Train on the eval set — held-out items never reach the fuel path ( Leaderboard Illusion ). CSOAI Ltd · UK company 16939677 · Every published figure traces to a signed, verifiable record. Measured · recompute-able · Ed25519-signed.",
+ "text_truncated": false,
+ "register": {
+  "role": "measurement_and_attestation_support",
+  "csoai_certifies_systems": false,
+  "csoai_is_a_notified_body": false,
+  "csoai_has_enforcement_powers": false,
+  "note": "CSOAI measures and publishes evidence. It issues no conformity marks and holds no accreditation. Nothing here is certification or legal advice."
+ },
+ "generated_by": "make_llm_json.py"
+}

@@ -1,0 +1,14 @@
+/Users/nicholas/clawd/csoai-static-deploy2/sov-hive/target/debug/deps/serde-cbbe00db6916ff2a.d: /Users/nicholas/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.229/src/lib.rs /Users/nicholas/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.229/src/integer128.rs /Users/nicholas/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.229/src/private/mod.rs /Users/nicholas/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.229/src/private/de.rs /Users/nicholas/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.229/src/private/ser.rs /Users/nicholas/clawd/csoai-static-deploy2/sov-hive/target/debug/build/serde-cc1cc219a3ceb891/out/private.rs
+
+/Users/nicholas/clawd/csoai-static-deploy2/sov-hive/target/debug/deps/libserde-cbbe00db6916ff2a.rlib: /Users/nicholas/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.229/src/lib.rs /Users/nicholas/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.229/src/integer128.rs /Users/nicholas/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.229/src/private/mod.rs /Users/nicholas/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.229/src/private/de.rs /Users/nicholas/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.229/src/private/ser.rs /Users/nicholas/clawd/csoai-static-deploy2/sov-hive/target/debug/build/serde-cc1cc219a3ceb891/out/private.rs
+
+/Users/nicholas/clawd/csoai-static-deploy2/sov-hive/target/debug/deps/libserde-cbbe00db6916ff2a.rmeta: /Users/nicholas/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.229/src/lib.rs /Users/nicholas/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.229/src/integer128.rs /Users/nicholas/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.229/src/private/mod.rs /Users/nicholas/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.229/src/private/de.rs /Users/nicholas/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.229/src/private/ser.rs /Users/nicholas/clawd/csoai-static-deploy2/sov-hive/target/debug/build/serde-cc1cc219a3ceb891/out/private.rs
+
+/Users/nicholas/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.229/src/lib.rs:
+/Users/nicholas/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.229/src/integer128.rs:
+/Users/nicholas/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.229/src/private/mod.rs:
+/Users/nicholas/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.229/src/private/de.rs:
+/Users/nicholas/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.229/src/private/ser.rs:
+/Users/nicholas/clawd/csoai-static-deploy2/sov-hive/target/debug/build/serde-cc1cc219a3ceb891/out/private.rs:
+
+# env-dep:OUT_DIR=/Users/nicholas/clawd/csoai-static-deploy2/sov-hive/target/debug/build/serde-cc1cc219a3ceb891/out

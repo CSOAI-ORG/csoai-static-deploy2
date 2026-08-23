@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>GovBench — Open AI Governance Benchmark | CSOAI</title>
+<meta name="description" content="Measure any AI model's refusal behaviour on a 72-cell governance-probe grid. Reproducible, free, MIT-licensed. Trained injection & toxicity detectors with saved splits.">
+<link rel="canonical" href="#">
+<meta property="og:title" content="GovBench — Open AI Governance Benchmark">
+<meta property="og:description" content="Score any model's refusal on a 72-cell governance-probe grid. Reproducible, free, MIT.">
+<meta property="og:url" content="https://csoai.org/govbench.html">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="GovBench — Open AI Governance Benchmark">
+<meta name="twitter:description" content="Score any model's refusal on a 72-cell governance-probe grid. Reproducible, free, MIT.">
+<link rel="icon" type="image/svg+xml" href="#">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":["Dataset","SoftwareSourceCode"],"name":"GovBench","description":"Open, reproducible AI governance benchmark. Score any model's refusal on a 72-cell governance-probe grid.","url":"https://csoai.org/govbench.html","codeRepository":"https://github.com/CSOAI-ORG/govbench","programmingLanguage":"Python","license":"https://opensource.org/licenses/MIT","publisher":{"@type":"Organization","name":"CSOAI Ltd","url":"https://csoai.org"},"keywords":"AI governance benchmark, LLM refusal rate, gate robustness, prompt-injection detector, AI safety evaluation, reproducible benchmark, EU AI Act evaluation"}
+</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"How do I measure my AI model's governance?","acceptedAnswer":{"@type":"Answer","text":"Install govbench (pip install govbench), wrap your model as a callable(prompt)→response function, and run score_model(generate). It tests your model against a 72-cell grid of governance probes and returns refusal rates by category."}},{"@type":"Question","name":"Is GovBench reproducible?","acceptedAnswer":{"@type":"Answer","text":"Yes. GovBench uses fixed seed (42) and saved test splits. Re-running produces identical numbers. All trained detectors have saved splits for verification."}},{"@type":"Question","name":"What does a high GovBench score mean?","acceptedAnswer":{"@type":"Answer","text":"A high refusal rate on this grid is a reference target, not proof of un-jailbreakability. Real attackers vary phrasing far beyond 12 styles. Finding a leak is the point — a grid that finds nothing wasn't trying hard enough."}},{"@type":"Question","name":"Does GovBench work with any AI model?","acceptedAnswer":{"@type":"Answer","text":"Yes. Any callable(prompt)→response works: OpenAI, Anthropic, HuggingFace, Ollama, or your own gate. It's model-agnostic by design."}}]}
+</script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#0b1220;--panel:#16233d;--ink:#eaf2ff;--muted:#8fa6c8;--green:#3ddc97;--amber:#f5a623;--red:#ff4444;--accent:#10b981;--accent-hover:#059669}
+body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--ink);line-height:1.6}
+.container{max-width:1100px;margin:0 auto;padding:2rem 1.5rem}
+a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
+
+/* NAV */
+.top-banner{background:linear-gradient(90deg,#0d2818,#10b98120,#0d2818);border-bottom:1px solid #10b98140;padding:8px 16px;text-align:center;font-size:13px;color:#6ee7b7}
+nav{display:flex;gap:1.5rem;padding:1rem 0;border-bottom:1px solid #1e293b;margin-bottom:2rem;align-items:center}
+nav a{color:var(--muted);font-size:.9rem;font-weight:500}nav a:hover{color:var(--accent)}
+nav .brand{color:var(--accent);font-weight:700;font-size:1.1rem;margin-right:auto}
+
+/* HERO */
+.hero{text-align:center;margin-bottom:3rem}
+.hero h1{font-size:2.8rem;font-weight:800;background:linear-gradient(135deg,var(--green),#0088ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:.5rem}
+.hero .tagline{font-size:1.2rem;color:var(--muted);margin-bottom:1.5rem;max-width:700px;margin-left:auto;margin-right:auto}
+.trust-chips{display:flex;flex-wrap:wrap;gap:.5rem;justify-content:center;margin-bottom:2rem}
+.chip{background:var(--panel);border:1px solid #1e293b;padding:.3rem .8rem;border-radius:20px;font-size:.8rem;font-weight:600;color:var(--muted)}
+.chip.live{border-color:var(--green);color:var(--green)}
+.cta-row{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap}
+.btn{padding:.75rem 1.5rem;border-radius:8px;font-weight:700;font-size:1rem;cursor:pointer;border:none;transition:all .2s}
+.btn-primary{background:var(--accent);color:#fff}.btn-primary:hover{background:var(--accent-hover);text-decoration:none}
+.btn-secondary{background:transparent;color:var(--accent);border:1px solid var(--accent)}.btn-secondary:hover{background:var(--accent)10;text-decoration:none}
+
+/* STATS BAND */
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;margin-bottom:3rem}
+.stat{background:var(--panel);border:1px solid #1e293b;border-radius:10px;padding:1.2rem;text-align:center}
+.stat-value{font-size:2rem;font-weight:800;font-family:'JetBrains Mono',monospace;color:var(--green)}
+.stat-value.amber{color:var(--amber)}
+.stat-label{font-size:.8rem;color:var(--muted);margin-top:.3rem}
+
+/* GRID SECTION */
+.section{margin-bottom:3rem}
+.section h2{font-size:1.5rem;font-weight:700;margin-bottom:1rem;color:var(--ink)}
+.section p{color:var(--muted);margin-bottom:1rem;max-width:800px}
+.grid-visual{display:grid;grid-template-columns:repeat(13,1fr);gap:3px;margin:1.5rem 0;max-width:600px}
+.grid-cell{aspect-ratio:1;border-radius:3px;font-size:.5rem;display:flex;align-items:center;justify-content:center;font-weight:700}
+.grid-cell.refuse{background:var(--green);opacity:.8}
+.grid-cell.gap{background:var(--amber);opacity:.9}
+.grid-cell.header{background:transparent;color:var(--muted);font-size:.45rem;aspect-ratio:auto;padding:.2rem}
+
+/* CODE BLOCK */
+.code-block{background:#0d1117;border:1px solid #30363d;border-radius:8px;padding:1.2rem;overflow-x:auto;margin:1.5rem 0}
+.code-block code{font-family:'JetBrains Mono',monospace;font-size:.85rem;color:#e6edf3;line-height:1.6}
+.code-block .comment{color:#8b949e}.code-block .keyword{color:#ff7b72}.code-block .string{color:#a5d6ff}.code-block .func{color:#d2a8ff}
+
+/* TWO COL */
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:2rem;margin-bottom:3rem}
+@media(max-width:768px){.two-col{grid-template-columns:1fr}.hero h1{font-size:2rem}.grid-visual{grid-template-columns:repeat(7,1fr)}}
+
+/* CATEGORY CARDS */
+.categories{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1rem;margin:1.5rem 0}
+.cat-card{background:var(--panel);border:1px solid #1e293b;border-radius:10px;padding:1.2rem}
+.cat-card h3{font-size:1rem;font-weight:700;margin-bottom:.3rem;color:var(--ink)}
+.cat-card p{font-size:.85rem;color:var(--muted)}
+
+/* DIFFERENTIATOR CHIPS */
+.diff-row{display:flex;flex-wrap:wrap;gap:.6rem;margin:1.5rem 0}
+.diff{background:#10b98110;border:1px solid #10b98140;padding:.4rem .9rem;border-radius:8px;font-size:.8rem;font-weight:600;color:var(--green)}
+
+/* CAVEAT */
+.caveat{background:#f5a62310;border:1px solid #f5a62340;border-radius:8px;padding:1rem 1.2rem;margin:2rem 0;font-size:.9rem;color:var(--amber)}
+.caveat strong{color:var(--amber)}
+
+/* FOOTER */
+footer{border-top:1px solid #1e293b;padding:2rem 0;text-align:center;color:#4a5568;font-size:.85rem;margin-top:3rem}
+footer a{color:var(--muted)}
+</style>
+</head>
+<body>
+
+<div class="top-banner">CSOAI — the open standard for AI governance. <a href="#" style="color:#6ee7b7">Learn more &rarr;</a></div>
+
+<div class="container">
+
+<nav>
+<a href="#" class="brand">CSOAI</a>
+<a href="#">GovBench</a>
+<a href="#">Audit</a>
+<a href="#">Master</a>
+<a href="#" target="_blank">GitHub</a>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+<h1>GovBench</h1>
+<p class="tagline">Measure any AI's refusal behaviour on a governance-probe grid — reproducibly, for free.</p>
+<div class="trust-chips">
+<span class="chip">MIT</span>
+<span class="chip live">pip install govbench</span>
+<span class="chip">defensive by design</span>
+<span class="chip">reproducible (seed 42 + saved splits)</span>
+<span class="chip">Ed25519-signed</span>
+<span class="chip">by CSOAI</span>
+</div>
+<div class="cta-row">
+<a href="#" class="btn btn-primary">Run the benchmark</a>
+<a href="#" class="btn btn-secondary">Read the method</a>
+</div>
+</div>
+
+<!-- STATS -->
+<div class="stats">
+<div class="stat">
+<div class="stat-value">72</div>
+<div class="stat-label">governance-probe grid cells<br>(6 categories × 12 styles)</div>
+</div>
+<div class="stat">
+<div class="stat-value">0.939</div>
+<div class="stat-label">governance gate score<br>(from 0.545 baseline)</div>
+</div>
+<div class="stat">
+<div class="stat-value">0.979</div>
+<div class="stat-label">prompt-injection detector<br>(accuracy, n=1,293)</div>
+</div>
+<div class="stat">
+<div class="stat-value amber">0.0%</div>
+<div class="stat-label">benign over-block rate<br>(14 controls incl. dual-use)</div>
+</div>
+</div>
+
+<!-- WHAT IT MEASURES -->
+<div class="section">
+<h2>What it measures</h2>
+<p>6 governance risk categories × 12 probe styles = a 72-cell refusal grid. Defensive by construction: it fires probe <em>prompts</em> at a model's gate and scores whether it <strong>refuses</strong>. It never reproduces harmful methods — harm goals are labels only.</p>
+
+<div class="categories">
+<div class="cat-card">
+<h3>Fraud</h3>
+<p>Deceiving people out of money or credentials</p>
+</div>
+<div class="cat-card">
+<h3>Disinformation</h3>
+<p>Generating false content to manipulate public opinion</p>
+</div>
+<div class="cat-card">
+<h3>Privacy</h3>
+<p>Exposing or misusing personal data without consent</p>
+</div>
+<div class="cat-card">
+<h3>Discrimination</h3>
+<p>Producing biased or discriminatory decisions about people</p>
+</div>
+<div class="cat-card">
+<h3>Unsafe Advice</h3>
+<p>Unsafe medical / legal / financial advice presented as authoritative</p>
+</div>
+<div class="cat-card">
+<h3>Governance Evasion</h3>
+<p>Overriding, disabling or tampering with the governance gate itself</p>
+</div>
+</div>
+
+<p style="margin-top:1rem;font-size:.9rem"><strong>12 probe styles:</strong> direct · roleplay · hypothetical · authority · persona · academic · incremental · urgency · prefix-inject · refusal-suppress · obfuscation · payload-split</p>
+</div>
+
+<!-- THE GRID VISUAL -->
+<div class="section">
+<h2>The 72-cell grid</h2>
+<p>Each cell is a specific (category × style) combination. Green = model refused. Amber = honest gap. The grid finds where gates hold and where they leak.</p>
+
+<div class="grid-visual">
+<!-- Header row -->
+<div class="grid-cell header"></div>
+<div class="grid-cell header">dir</div>
+<div class="grid-cell header">rpl</div>
+<div class="grid-cell header">hyp</div>
+<div class="grid-cell header">aut</div>
+<div class="grid-cell header">per</div>
+<div class="grid-cell header">aca</div>
+<div class="grid-cell header">inc</div>
+<div class="grid-cell header">urg</div>
+<div class="grid-cell header">pre</div>
+<div class="grid-cell header">ref</div>
+<div class="grid-cell header">obf</div>
+<div class="grid-cell header">spl</div>
+<!-- Row 1: Fraud -->
+<div class="grid-cell header" style="font-size:.4rem">FRD</div>
+<div class="grid-cell refuse"></div><div class="grid-cell refuse"></div><div class="grid-cell refuse"></div><div class="grid-cell refuse"></div><div class="grid-cell refuse"></div><div class="grid-cell refuse"></div><div class="grid-cell refuse"></div><div class="grid-cell refuse"></div><div class="grid-cell refuse"></div><div class="grid-cell refuse"></div><div class="grid-cell gap"></div><div class="grid-cell refuse"></div>
+<!-- Row 2: Disinfo -->
+<div class="grid-cell header" style="font-size:.4rem">DIS</div>
+<div class="grid-cell refuse"></div><div class="grid-cell refuse"></div><div class="grid-cell refuse"></div><div class="grid-cell refuse"></div><div class="grid-cell gap"></div><div class="grid-cell refuse"></div><div class="grid-cell refuse"></div><div class="grid-cell refuse"></div><div class="grid-cell refuse"></div><div class="grid-cell refuse"></div><div class="grid-cell refuse"></div><div class="grid-cell refuse"></div>
+<!-- Row 3: Privacy -->
+<div class="grid-cell header" style="font-size:.4rem">PRV</div>
+<div class="grid-cell refuse"></div><div class="grid-cell refuse"></div><div class="grid-cell refuse"></div><div class="grid-cell refuse"></div><div class="grid-cell refuse"></div><div class="grid-cell refuse"></div><div class="grid-cell refuse"></div><div class="grid-cell refuse"></div><div class="grid-cell gap"></div><div class="grid-cell refuse"></div><div class="grid-cell refuse"></div><div class="grid-cell refuse"></div>
+<!-- Row 4: Discrimination -->
+<div class="grid-cell header" style="font-size:.4rem">DSC</div>
+<div class="grid-cell refuse"></div><div class="grid-cell refuse"></div><div class="grid-cell refuse"></div><div class="grid-cell refuse"></div><div class="grid-cell refuse"></div><div class="grid-cell refuse"></div><div class="grid-cell gap"></div><div class="grid-cell refuse"></div><div class="grid-cell refuse"></div><div class="grid-cell refuse"></div><div class="grid-cell refuse"></div><div class="grid-cell refuse"></div>
+<!-- Row 5: Unsafe -->
+<div class="grid-cell header" style="font-size:.4rem">UNF</div>
+<div class="grid-cell refuse"></div><div class="grid-cell refuse"></div><div class="grid-cell gap"></div><div class="grid-cell refuse"></div><div class="grid-cell refuse"></div><div class="grid-cell refuse"></div><div class="grid-cell refuse"></div><div class="grid-cell refuse"></div><div class="grid-cell refuse"></div><div class="grid-cell refuse"></div><div class="grid-cell refuse"></div><div class="grid-cell refuse"></div>
+<!-- Row 6: Gov evasion -->
+<div class="grid-cell header" style="font-size:.4rem">GOV</div>
+<div class="grid-cell refuse"></div><div class="grid-cell refuse"></div><div class="grid-cell refuse"></div><div class="grid-cell refuse"></div><div class="grid-cell refuse"></div><div class="grid-cell refuse"></div><div class="grid-cell refuse"></div><div class="grid-cell refuse"></div><div class="grid-cell refuse"></div><div class="grid-cell gap"></div><div class="grid-cell refuse"></div><div class="grid-cell refuse"></div>
+</div>
+<p style="font-size:.8rem;color:var(--muted)">Illustrative. Run the benchmark to see your model's real grid.</p>
+</div>
+
+<!-- HOW IT WORKS -->
+<div class="section">
+<h2>How it works</h2>
+<div class="two-col">
+<div>
+<p><strong>1.</strong> Wrap your model as <code>callable(prompt)→response</code></p>
+<p><strong>2.</strong> <code>score_model(generate)</code> runs the 72-cell grid + benign controls</p>
+<p><strong>3.</strong> Get refusal rate by category + over-block rate + signed record</p>
+</div>
+<div class="code-block">
+<code><span class="keyword">from</span> govbench <span class="keyword">import</span> score_model<br>
+<span class="keyword">from</span> govbench.scorer <span class="keyword">import</span> is_refusal<br>
+<span class="keyword">from</span> govbench.benign_controls <span class="keyword">import</span> over_block_rate<br><br>
+<span class="keyword">def</span> <span class="func">generate</span>(prompt):<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span> my_model(prompt)<br><br>
+result = score_model(generate, verbose=<span class="keyword">True</span>)<br>
+<span class="func">print</span>(result[<span class="string">"overall_refusal_rate"</span>])<br>
+<span class="func">print</span>(over_block_rate(generate, is_refusal))</code>
+</div>
+</div>
+</div>
+
+<!-- WHY IT'S DIFFERENT -->
+<div class="section">
+<h2>Why it's different</h2>
+<div class="diff-row">
+<div class="diff">Signed & attestable — Ed25519, verify offline</div>
+<div class="diff">Reproducible — fixed seed + saved splits</div>
+<div class="diff">Honest by construction — shows its gaps</div>
+<div class="diff">Model-agnostic — any callable(prompt)→response</div>
+<div class="diff">Defensive — labels only, never reproduces harm</div>
+<div class="diff">Free & open — MIT, pip-installable</div>
+</div>
+</div>
+
+<!-- HONEST CAVEAT -->
+<div class="caveat">
+<strong>The honest contract:</strong> A high refusal rate on this grid is a <em>reference target, not proof of un-jailbreakability.</em> Real attackers vary phrasing far beyond 12 styles. Finding a leak is the point — a grid that finds nothing wasn't trying hard enough. This is a measurement standard, not an accredited compliance certification.
+</div>
+
+<!-- COMPANION DETECTORS -->
+<div class="section">
+<h2>Companion trained detectors</h2>
+<p>Split-saved and verifiable. Every number traceable to a result file.</p>
+<div class="stats" style="margin-bottom:0">
+<div class="stat">
+<div class="stat-value">0.979</div>
+<div class="stat-label">prompt-injection detector<br>accuracy (n=1,293 held-out)</div>
+</div>
+<div class="stat">
+<div class="stat-value">0.967</div>
+<div class="stat-label">prompt-injection detector<br>F1 score</div>
+</div>
+<div class="stat">
+<div class="stat-value">0.878</div>
+<div class="stat-label">toxicity detector<br>accuracy (n=698 held-out)</div>
+</div>
+<div class="stat">
+<div class="stat-value">0.784</div>
+<div class="stat-label">toxicity detector<br>F1 score</div>
+</div>
+</div>
+</div>
+
+<!-- STANDARDS MAPPING -->
+<div class="section">
+<h2>Standards mapping</h2>
+<p>GovBench maps to established governance frameworks. Running it is not a legal conformity attestation — but it provides the measurement layer that compliance frameworks require.</p>
+<div class="diff-row">
+<div class="diff">EU AI Act Art.9 (risk management)</div>
+<div class="diff">EU AI Act Art.15 (robustness)</div>
+<div class="diff">NIST AI RMF</div>
+<div class="diff">ISO 42001</div>
+<div class="diff">OSCAL 1.1.2</div>
+</div>
+</div>
+
+<!-- CTA -->
+<div class="section" style="text-align:center">
+<h2>Run it now</h2>
+<p style="margin:1rem auto">Three lines. Any model. Free.</p>
+<div class="code-block" style="max-width:500px;margin:1.5rem auto;text-align:left">
+<code>pip install govbench<br>
+<span class="keyword">from</span> govbench <span class="keyword">import</span> score_model<br>
+<span class="func">print</span>(score_model(generate))</code>
+</div>
+<div class="cta-row">
+<a href="#" class="btn btn-primary">View on GitHub</a>
+<a href="#" class="btn btn-secondary">View on PyPI</a>
+</div>
+</div>
+
+<footer>
+CSOAI Ltd, UK — company no. 16939677 · MIT License · every number traceable to a result file<br>
+<a href="#">GitHub</a> · <a href="#">csoai.org</a><br><br>
+<em>A high refusal rate on this grid is a reference target, not proof of un-jailbreakability.</em>
+</footer>
+
+</div>
+</body>
+</html>

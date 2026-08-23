@@ -1,0 +1,26 @@
+{
+ "@context": "https://csoai.org/llm-context.json",
+ "type": "LLMPageSummary",
+ "url": "https://csoai.org/research.html",
+ "title": "Research — papers, instruments, and open evidence | CSOAI",
+ "description": "CSOAI research: the GSPC psychometric instrument for AI-governance evaluation, ProvBench, twelve measurement axes with honest states, and open datasets on Hugging Face and Kaggle. Every result signed and recomputable.",
+ "headings": [
+  "Research",
+  "Papers",
+  "The instrument: twelve axes, honest states",
+  "Method commitments",
+  "Open contributions",
+  "Practice guides",
+  "Corrections and retractions"
+ ],
+ "text": "Research — papers, instruments, and open evidence | CSOAI Home Products Governance Docs FAQ Research Everything here is open: the item banks, the graders, the raw runs, and the signed attestation chains. Where a number is not yet defensible, we say so on the page rather than rounding it up. Papers GSPC: A Psychometric Instrument for AI Governance Evaluation — measured results, honest limits (working paper, 2026-08-05). Archived at doi.org/10.5281/zenodo.21806092 . What Twelve AI-Governance Benchmarks Do Not Report — the methods paper. We surveyed twelve colliding benchmarks from ACL 2025, ICLR 2026, AAAI and industry: zero report item difficulty, item discrimination, dead-item analysis, confidence intervals, or a minimum-sample publication threshold. We report all five — and decline to quote a point estimate on any axis below our own usable-n threshold. doi.org/10.5281/zenodo.21808103 (working paper, CC-BY-4.0); arXiv submission pending endorsement. ProvBench: Measuring Content Credential Survival Across Real-World Transforms — preprint and live harness on /provbench ; preprint source . The instrument: twelve axes, honest states GSPC measures AI-system conduct against named statutory provisions. Each axis is an item bank with a deterministic grader. Axes that have not earned a score show their state , not a number: Measured: governance (237 public items) · safety (GSPC-AGI v2) · provenance · conformance · openness · continuity Draft: machinery · care — item banks in preparation Spec: cross-reality · detector-interop · Art-5 safeguard — methodology written, no item bank yet Planned: swarm Datasets and item banks: huggingface.co/csoai · Kaggle mirrors on the GSPC datasets · leaderboard harness: GovBench · results and evidence: /benchmarks . Method commitments Deterministic grading. A regex reads the model's committed answer; an equality assertion decides. No model judges another model. 98.9% agreement against 92 hand-labelled responses, zero false serves. Dead-item analysis, certified. At a fleet of 8 models, 35 of 90 items appeared dead; at a certified fleet of 22 (false-dead rate 0.028 at p=0.85), 8. Apparent consensus at small N is a sampling artefact. We publish the count. Refusal to quote. Five of six axes sit below the usable-n ≥ 30 threshold, so we publish no point estimate for them. The harness is structurally unable to emit one. Signed evidence. Every result is bound into an Ed25519 / ML-DSA-65 signed attestation chain (in-toto/DSSE) that a third party can recompute. Verify a signature at proofof.ai/verify . Open contributions NVIDIA NeMo — labs-OO-Agents: a provision-anchored evaluator demonstrating the deterministic-core / LLM-narrated split in NOOA style. PR #75, under review . inspect_evals register: GSPC governance as an inspect_ai task — registration follows the arXiv posting (the register form requires the /abs/ URL). Practice guides Ten sector white papers (EU AI Act Article 50, DORA, healthcare, defence, IoT, SOC 2, UK AI Bill, Canada AIDA) live at proofof.ai/whitepapers . Corrections and retractions Where the estate has been wrong, the correction is published with the same prominence as the claim. Five retractions (2026-08-05) cover: a fine-tune leaderboard climb with 0.00 delta, a composition result with n_eff 1.21, a decorrelation router that was an artefact, a behavioural win that was 63% train-on-test, and a refusal effect later found in the stock base model. Each retraction names the artefact that disproved it. CSOAI Ltd · UK company 16939677 · measurement, not certification · About · Contact",
+ "text_truncated": false,
+ "register": {
+  "role": "measurement_and_attestation_support",
+  "csoai_certifies_systems": false,
+  "csoai_is_a_notified_body": false,
+  "csoai_has_enforcement_powers": false,
+  "note": "CSOAI measures and publishes evidence. It issues no conformity marks and holds no accreditation. Nothing here is certification or legal advice."
+ },
+ "generated_by": "make_llm_json.py"
+}

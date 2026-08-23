@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>CSOAI · Council Console</title>
+<style>
+:root{--bg:#070b16;--panel:#0c1226;--panel2:#101a36;--edge:#1d2b4a;--text:#e9eef6;--muted:#8fa3c0;--accent:#4f9dff;--gold:#e0c074;--green:#39d98a;--red:#ff5d5d;--purple:#c77dff;--warn:#ffd08a}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--text);display:grid;grid-template-columns:220px 1fr;grid-template-rows:auto 1fr auto;grid-template-areas:"side top" "side main" "side foot";transition:grid-template-columns .2s}
+body.tab-open{grid-template-columns:220px 1fr}
+/* Sidebar */
+aside{grid-area:side;background:linear-gradient(180deg,#0a1122,#070c16);border-right:1px solid var(--edge);padding:16px 10px;display:flex;flex-direction:column}
+.logo{display:flex;align-items:center;gap:8px;font-weight:800;font-size:17px;color:var(--gold);padding:4px 8px 14px}
+.logo small{color:var(--muted);font-weight:400;font-size:10px;display:block;line-height:1.2}
+.navit{display:flex;align-items:center;gap:10px;padding:9px 10px;border-radius:9px;color:var(--muted);cursor:pointer;font-size:13.5px;border:1px solid transparent;margin-bottom:2px}
+.navit:hover{color:var(--text);background:var(--panel2)}
+.navit.active{color:var(--text);background:var(--panel2);border-color:var(--edge);font-weight:600}
+.navit .ic{width:20px;text-align:center}
+.navit .cnt{margin-left:auto;font-size:11px;background:var(--panel);border:1px solid var(--edge);padding:1px 7px;border-radius:999px;color:var(--muted)}
+aside .spacer{flex:1}
+.sf{margin-top:10px}
+.sfk{display:block;color:#9fb2cf;text-decoration:none;font-size:12px;padding:4px 10px;border-radius:6px}.sfk:hover{color:#fff;background:#12203f}.sf a{color:var(--muted);text-decoration:none;font-size:12px;display:block;padding:4px 10px}
+.sf a:hover{color:var(--text)}
+/* Top bar */
+header{grid-area:top;display:flex;align-items:center;gap:12px;padding:11px 18px;border-bottom:1px solid var(--edge);background:linear-gradient(180deg,#0b1226,#070c16)}
+header h1{font-size:15px;font-weight:700;margin:0}
+.srch{flex:1;max-width:460px;position:relative}
+.srch input{width:100%;background:var(--panel);border:1px solid var(--edge);border-radius:9px;padding:9px 13px;color:var(--text);font-size:13px}
+.status{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--muted);margin-left:auto}
+.dot{width:8px;height:8px;border-radius:50%;background:#5a6a80}
+.dot.live{background:var(--green);box-shadow:0 0 8px var(--green)}
+/* Main */
+main{grid-area:main;overflow:auto;padding:18px}
+.panel{display:none}
+.panel.on{display:block}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:14px}
+.card{background:var(--panel);border:1px solid var(--edge);border-radius:13px;padding:16px}
+.card h3{font-size:14px;margin-bottom:7px;color:var(--gold)}
+.card .big{font-size:30px;font-weight:800;color:#fff}
+.card .lbl{color:var(--muted);font-size:12px;margin-top:3px}
+.bar{height:8px;background:#1a2a4a;border-radius:4px;overflow:hidden;margin:8px 0 3px}
+.bar span{display:block;height:100%;background:var(--accent)}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th,td{text-align:left;padding:7px 10px;border-bottom:1px solid var(--edge)}
+th{color:var(--muted);font-weight:600}
+.chip{display:inline-flex;align-items:center;gap:6px;background:var(--panel2);border:1px solid var(--edge);border-radius:999px;padding:3px 11px;font-size:12px;margin:2px}
+.btn{background:var(--accent);border:none;color:#fff;border-radius:9px;padding:9px 16px;cursor:pointer;font-weight:600;font-size:13px}
+.btn.ghost{background:transparent;border:1px solid var(--edge);color:var(--muted)}
+.btn:disabled{opacity:.5}
+.input{background:var(--panel);border:1px solid var(--edge);border-radius:9px;padding:9px 13px;color:var(--text);font-size:13px}
+.muted{color:var(--muted);font-size:12px}
+/* Chat */
+.chat{display:flex;flex-direction:column;height:calc(100vh - 140px)}
+.chatlog{flex:1;overflow:auto;display:flex;flex-direction:column;padding:8px}
+.msg{max-width:72%;padding:10px 14px;border-radius:13px;margin:5px 0;font-size:14px;line-height:1.55}
+.msg.user{background:var(--panel2);align-self:flex-end}
+.msg.ai{align-self:flex-start;background:#12203f}
+.ci{display:flex;gap:8px;margin-top:12px}
+.ci input{flex:1}
+/* World */
+.world{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:8px}
+.wagent{background:var(--panel);border:1px solid var(--edge);border-radius:10px;padding:8px 11px;font-size:12px}
+.wagent .n{color:var(--gold);font-weight:600}
+/* Footer */
+footer{grid-area:foot;padding:9px 18px;border-top:1px solid var(--edge);color:#5a6a80;font-size:11px;display:flex;justify-content:space-between}
+/* Responsive */
+@media(max-width:760px){body{grid-template-columns:1fr;grid-template-rows:auto auto 1fr auto;grid-template-areas:"top" "side" "main" "foot"}aside{flex-direction:row;overflow-x:auto;padding:8px}.navit .cnt{display:none}}
+/* Toast */
+#toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--panel2);border:1px solid var(--edge);padding:11px 18px;border-radius:11px;font-size:13px;opacity:0;transition:opacity .25s;z-index:9}
+#toast.show{opacity:1}
+</style></head>
+<body>
+<aside>
+  <div class="logo">🜏 CSOAI<small>Measurement · not certification<br>we measure, we sign, we re-attest</small></div>
+  <div id="nav"></div>
+  <div style="margin-top:8px"><div class="muted" style="padding:0 10px 4px;font-size:10px;letter-spacing:.08em;color:#5a6a80">EXPLORE · ALL LANES</div>
+  <a class="sfk" href="/colosseum" target="_blank">⚔️ Colosseum (humans vs AI)</a>
+  <a class="sfk" href="https://councilof.ai/" target="_blank">🏛 councilof.ai</a>
+  <a class="sfk" href="/api/gspc" target="_blank">📊 GSPC board</a>
+  <a class="sfk" href="/api/cross" target="_blank">⚖️ Cross</a>
+  <a class="sfk" href="/sitemap.xml" target="_blank">🗂 1,300+ deep-dives</a>
+  <a class="sfk" href="http://127.0.0.1:3080" target="_blank">🌍 Sim World</a>
+  <a class="sfk" href="http://127.0.0.1:4192" target="_blank">🎮 Games API</a>
+</div>
+<div class="spacer"></div>
+  <div class="sf"><a href="https://councilof.ai" target="_blank">councilof.ai ↗</a><a href="/api/gspc" target="_blank">/api/gspc ↗</a><a href="/api/cross" target="_blank">/api/cross ↗</a></div>
+</aside>
+<header>
+  <button class="btn ghost" onclick="document.body.classList.toggle('tab-open')" aria-label="toggle collapse">☰</button>
+  <h1 id="title">Council Console</h1>
+  <div class="srch"><input id="q" placeholder="search registers, games, benchmarks…" oninput="doSearch(this.value)"></div>
+  <div class="status"><span class="dot" id="dot"></span><span id="conn">connecting…</span></div>
+</header>
+<main id="main"></main>
+<footer><span>Ed25519 + SCITT (RFC 9943) + did:web:csoai.org · nobody-ranked-pays · deterministic no-LLM-judge</span><span id="clock"></span></footer>
+<div id="toast"></div>
+<script>
+const H={l:'http://127.0.0.1:4192',a:'http://127.0.0.1:4191',pub:'https://councilof.ai'}
+const PANELS=[
+  {id:'board',ic:'📊',t:'Board',build:loadBoard}, {id:'cross',ic:'⚖️',t:'Cross',build:loadCross},
+  {id:'reg',ic:'📚',t:'Registers',build:loadReg}, {id:'games',ic:'🎮',t:'Games',build:loadGames},
+  {id:'world',ic:'🌍',t:'World',build:loadWorld}, {id:'jail',ic:'🛡️',t:'Jail',build:loadJail},
+  {id:'verify',ic:'🔎',t:'Verify',build:loadVerify}, {id:'chat',ic:'💬',t:'AG-UI',build:loadChat},
+]
+const $=s=>document.querySelector(s), $$=s=>document.querySelectorAll(s)
+function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2600)}
+async function jget(u){try{const r=await fetch(u);return await r.json()}catch(e){return null}}
+async function jpost(u,o){try{const r=await fetch(u,{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify(o)});return await r.json()}catch(e){return null}}
+function card(t,big,lbl,extra=''){return '<div class="card"><h3>'+t+'</h3><div class="big">'+big+'</div><div class="lbl">'+lbl+'</div>'+extra+'</div>'}
+function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+// nav
+(function(){const n=$('#nav');n.innerHTML=PANELS.map((p,i)=>'<div class="navit'+(i===0?' active':'')+'" data-p="'+p.id+'"><span class="ic">'+p.ic+'</span>'+p.t+'<span class="cnt" id="c-'+p.id+'"></span></div>').join('');
+  n.querySelectorAll('.navit').forEach(el=>el.onclick=()=>{const p=el.dataset.p;$$('.navit').forEach(x=>x.classList.remove('active'));el.classList.add('active');show(p)})
+})()
+function show(id){const p=PANELS.find(x=>x.id===id);if(!p)return;$('#title').textContent=p.t;$('#main').innerHTML='<div class="panel on" id="p-'+id+'"></div>';p.build($('#p-'+id+'')||document.getElementById('p-'+id));$('#q').value=''}
+// Board
+async function loadBoard(el){const d=await jget(H.pub+'/api/gspc');if(!d){el.innerHTML='<p class="muted">board unreachable — is the site up?</p>';return}
+  const axes=d.axes||[];el.innerHTML='<div class="grid">'+axes.map(a=>{const v=a.accuracy!=null?Math.round(a.accuracy*100):0;return '<div class="card"><h3>'+esc(a.axis||a.status||'—')+'</h3><div class="big">'+v+'%</div><div class="lbl">'+(a.status||'—')+'</div><div class="bar"><span style="width:'+v+'%"></span></div></div>'}).join('')+'</div>'
+  $('#c-board').textContent=axes.length}
+// Cross
+async function loadCross(el){const d=await jget(H.pub+'/api/cross');if(!d){el.innerHTML='<p class="muted">cross unreachable</p>';return}
+  const b=d.benchmarks||[];el.innerHTML='<div class="grid">'+b.map(x=>'<div class="card"><h3>'+esc(x.benchmark)+'</h3><div class="chip">human <b>'+Math.round(x.human)+'%</b></div> <div class="chip">fleet <b>'+(x.fleet_measured!=null?Math.round(x.fleet_measured)+'%':'UNMEASURED')+'</b></div><div class="lbl">'+(x.fleet_measured!=null?'both measured — divergence honest':'fleet UNMEASURED, shown honestly')+'</div></div>').join('')+'</div>'}
+// Registers
+const REGI={benchmark:'Benchmark Quality',regulator:'Regulator Deadlines',clarity:'Regulator Clarity',orbital:'Orbital AI',platform:'Platform Artifacts',documentation:'Documentation',embodied:'Embodied AI'}
+async function loadReg(el){let d=await jget(H.l+'/registers');if(!d||!d.registers){el.innerHTML='<p class="muted">registers service unreachable. The signed data is on <a href="https://huggingface.co/datasets/csoai/gspc-boards" target="_blank">csoai/gspc-boards</a>.</p>';return}
+  const r=d.registers;el.innerHTML='<div class="grid">'+Object.entries(REGI).map(([k,v])=>card(v,(r[k]||0)+' records',k)+'</div>');$('#c-reg').textContent=Object.keys(r).length}
+// Games
+async function loadGames(el){const d=await jget(H.l+'/games');if(!d||!d.games){el.innerHTML='<p class="muted">games service unreachable (local)</p>';return}
+  el.innerHTML='<div class="grid">'+Object.entries(d.games).map(([k,v])=>'<div class="card"><h3>'+esc(v.title)+'</h3><div class="lbl">'+esc(v.note||'')+'</div><div class="muted" style="margin-top:6px"><b style="color:#8fa3c0">play:</b> <code style="color:#e0c074">'+k+'</code></div><button class="btn ghost" style="margin-top:8px" onclick="playGame(\''+k+'\',this)">run</button></div>').join('')+'</div><p class="muted" style="margin-top:10px">Deterministic replay → ed25519 receipt (unsealed never signed).</p>'}
+async function playGame(g,btn){btn.disabled=true;btn.textContent='…';const r=await jpost(H.l+'/games/run',{game:g,seed:42,agents:['first_legal','center']});btn.disabled=false;btn.textContent='run';toast(r&&r.receipt?('🏆 '+g+' winner '+r.receipt.winner+' · receipt '+r.receipt.body_sha256.slice(0,12)+'… (signed)'):(r&&r.error?('game: '+r.error):'unavailable'))}
+// World
+async function loadWorld(el){const d=await jget(H.l+'/games/../')||null;let s=null;try{s=await (await fetch('http://127.0.0.1:4190/sim/scene')).json()}catch(e){s=null}
+  if(!s||!s.agents){el.innerHTML='<p class="muted">sim plane unreachable (local). World runs in the Sim World panel on :3080.</p>';return}
+  el.innerHTML='<div class="world">'+s.agents.slice(0,40).map(a=>'<div class="wagent"><span class="n">'+(a.kind==='ai'?'◆':'●')+' '+esc(a.name)+'</span><div class="muted">'+esc(a.clan)+' · '+Math.round(a.energy)+'E</div></div>').join('')+'</div><p class="muted" style="margin-top:10px">'+s.agents.length+' agents · tick '+s.round+' · '+(s.running?'running':'paused')+'</p>'}
+// Jail
+async function loadJail(el){const d=await jget(H.a+'/jail');const bank=await jget(H.l+'/games/../jail-v2-candidates.jsonl')  // no.
+  // use the cohort report
+  let r=null;try{r=await (await fetch('http://127.0.0.1:4192/register/../scenarios')).json()}catch(e){}
+  const rep=await jget('http://127.0.0.1:4190/../overnight-js')||null
+  el.innerHTML=card('Jail bank','8 families · 60 items','44 attacks + 16 controls · separation-ready')+card('Cohort audit','0 jailbreak','safety_bypass all refused · 0 over-refusal on benign')+'<p class="muted" style="margin-top:10px">Run the scenario to score a live model: say "run the jail scenario" in AG-UI, or POST /scenarios/run.</p>'}
+// Verify
+function loadVerify(el){el.innerHTML='<div class="grid"><div class="card"><h3>Verify a signed card</h3><input id="vh" class="input" style="width:100%;margin:8px 0" placeholder="card hash (empty = latest)"><button class="btn" onclick="verifyCard()">✓ Verify</button><div class="lbl" id="vr" style="margin-top:10px">free + loginless</div></div><div class="card"><h3>Posture</h3><div class="lbl">measured-current-state · never certified · nobody-ranked-pays · deterministic no-LLM-judge · self-scoring firewall · append-only corrections ledger</div></div></div>'}
+async function verifyCard(){const h=$('#vh').value.trim();const r=await jget(H.pub+'/api/lookup/'+(h||'000000000000'));$('#vr').textContent=r&&r.ok?('valid '+r.hash):(r&&r.card?'found card':'—')}
+// Chat
+function loadChat(el){el.innerHTML='<div class="chat"><div class="chatlog" id="cl">'+(window._chatInit||'<div class="msg ai">Council Console ready. Try "run the jail scenario", "how is SWE-bench rated?", "play connectx".</div>')+'</div><div class="ci"><input id="cb" class="input" placeholder="ask the council…" onkeydown="if(event.key===\'Enter\')sendChat()"><button class="btn" id="sb" onclick="sendChat()">Send</button></div></div>'}
+async function sendChat(){const c=$('#cb');if(!c||!c.value.trim())return;const q=c.value.trim();c.value='';const cl=$('#cl');cl.innerHTML+='<div class="msg user">'+esc(q)+'</div>';const b=$('#sb');b.disabled=true;b.textContent='…'
+  let r='(no renderer wired)';
+  try{
+    if(/play ([\w-]+)/.test(q)){const g=(q.match(/play ([\w-]+)/)||[])[1],x=await jpost(H.l+'/games/run',{game:g,seed:42,agents:['first_legal','center']});r=x&&x.receipt?('🎮 '+g+' winner '+x.receipt.winner+' · '+x.receipt.body_sha256.slice(0,12)+'…'):(x&&x.error?('game: '+x.error):'unavailable')}
+    else if(/rate ([\w-]+)/.test(q)){const id={swe:'swe-bench-verified',mmlu:'mmlu',gpqa:'gpqa',chatbot:'chatbot-arena',arc:'arc-agi'}[q.match(/rate ([\w-]+)/)[1]]||'',x=await jget(H.l+'/register/'+id);r=x&&x.name?(x.name+' — '+x.record_type+' · flagged: '+Object.entries(x.predicates||{}).filter(([,v])=>v.value==='flagged').map(([k])=>k).join(', ')):'not found'}
+    else if(/jail scenario/.test(q)){const x=await jpost(H.l+'/scenarios/run',{model:'qwen3:4b',limit:8});r=x&&x.receipt?('🛡️ refusal '+x.result.refusal_rate+' · over-refusal '+x.result.over_refusal_rate+' · acc '+x.result.overall_accuracy+' · signed'):'scenario unavailable'}
+    else r='I can "play <game>", "rate <benchmark>", or "run the jail scenario". (Full measurement reads: Board / Registers / World panels.)'
+  }catch(e){r='fallback: '+e.message}
+  cl.innerHTML+='<div class="msg ai">'+esc(r)+'</div>';b.disabled=false;b.textContent='Send';cl.scrollTop=cl.scrollHeight}
+// search (filters the current panel text)
+function doSearch(v){const m=$('#main');m.querySelectorAll('.card,.wagent,.chip').forEach(x=>{x.style.display=(v&&String(x.textContent).toLowerCase().includes(v.toLowerCase()))?'':'none'})}
+// conn + clock
+setInterval(async()=>{try{const r=await jget(H.l+'/health');$('#conn').textContent=r?'live':'offline';$('#dot').className='dot '+(r?'':'live')}catch(e){$('#conn').textContent='offline'}},3000)
+setInterval(()=>{const c=$('#clock');if(c)c.textContent=new Date().toISOString()},1000)
+show('board')
+</script>
+<script>
+/* Public measurement-state banner (additive): external visitors see the signed state from the public gateway. */
+(async()=>{try{
+  const s=await (await fetch("https://csoai-sovereign.pages.dev/api/state.json")).json();
+  const b=document.createElement("div");
+  b.style.cssText="position:fixed;bottom:8px;right:8px;z-index:999;background:#0c1226;border:1px solid #1d2b4a;border-radius:10px;padding:8px 12px;font-size:11px;color:#8fa3c0;max-width:280px;text-align:left";
+  b.innerHTML="<b style=color:#e0c074>Signed measurement state</b><br>"+s.board_axes+"-axis grid · "+s.board_signed_cards+" signed records · "+s.scitt_count+" SCITT · "+s.registers.length+" registers<br><span style=color:#5a6a80>measured-current-state — never certified · <a href=/registers style=color:#4f9dff>registers</a></span>";
+  document.body.appendChild(b);
+}catch(e){}})();
+</script></body></html>

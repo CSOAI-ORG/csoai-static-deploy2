@@ -1,0 +1,45 @@
+{
+  "timestamp": "2026-07-28T13:19:11.477434+00:00",
+  "n": 136,
+  "seed": 20260728,
+  "fixed_model": "sov33-dist-c3:latest",
+  "pool": [
+    "sov-draw-compliance",
+    "sov-draw-sovereignty",
+    "sov33-dist-c1:latest",
+    "sov33-dist-c2:latest",
+    "sov33-dist-c3:latest",
+    "sov33-v6:latest"
+  ],
+  "dropped": 0,
+  "routed_pct": 43.7,
+  "fixed_pct": 42.8,
+  "random_pct": 34.5,
+  "comparisons": {
+    "ROUTED vs FIXED": {
+      "delta": 0.9,
+      "ci": [
+        -1.99,
+        3.79
+      ],
+      "significant": false
+    },
+    "ROUTED vs RANDOM": {
+      "delta": 9.18,
+      "ci": [
+        4.21,
+        14.14
+      ],
+      "significant": true
+    }
+  },
+  "prediction_before_running": "ROUTED ~= FIXED; the wrapper earns the gain, not the router",
+  "corpus_anchor": {
+    "corpus_root": "37e2e10d53feaa9e12097f45113e1234510be0ca471e1a0848f5805db3e367c7",
+    "provisions": 417,
+    "normaliser_version": "1.0.0",
+    "anchored_at": "2026-08-17T05:22:18.761853+00:00",
+    "retro": true,
+    "note": "Anchored retrospectively on 2026-07-29. This records the corpus as it stands NOW; it does not prove what the text said when the result was produced. Runs from this point forward anchor at measurement time."
+  }
+}

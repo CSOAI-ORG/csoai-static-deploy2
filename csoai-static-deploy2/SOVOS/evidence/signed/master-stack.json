@@ -1,0 +1,16 @@
+{
+  "id": "master-stack",
+  "kind": "master-stack",
+  "claim": "measurement",
+  "artifact_path": "SOVOS/MASTER-STACK-OOWM-SOVOS-2026-08-22.md",
+  "artifact_sha256": "0468672bac9212b23acff8965470c57e5df8e4b4204d1311576b95c29ad63250",
+  "grammar": "verified measurement credential - measurement, not certification",
+  "note": "signed on signing node; ed25519 key never leaves",
+  "signature": {
+    "kind": "ed25519",
+    "sig": "MeShHFPu/DM4Hw0lDtmOyBBn8ruH6o25+oqa60xxaI989p+fh2RogIqEW92IgZezwTD5tnLB7rtj8bFRAOsTAA==",
+    "body_sha256": "7b6081394e0991dfeb685822bdac7d31930af9f35629fb1831e00ce260d6e410",
+    "pubkey": "bWbk52E47J6EkY4+pu0Hh/B1l1175AZoZsDEBr0EfWA=",
+    "note": "Ed25519 over the canonical body; verify with sign.py --verify. PQC upgrade: ML-DSA-65 via liboqs \u2014 same body, swap the primitive."
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "ts_iso": "2026-08-16T02:33:46.531909+00:00",
+  "name": "SOV33 Identity Fix Retrain (Kaggle T4)",
+  "lane": "kaggle-t4",
+  "base_model": "Qwen3-0.6B",
+  "lora_rank": 32,
+  "trainable_params": 9175040,
+  "total_params": 605224960,
+  "identity_samples": 104,
+  "domain_samples": 200,
+  "total_samples": 304,
+  "steps": 50,
+  "initial_loss": 8.23922348022461,
+  "final_loss": 0.9270908832550049,
+  "reduction_pct": 88.74783666834425,
+  "duration_s": 12.84312629699707,
+  "saved_to": "/kaggle/working/.sovereign/models/qwen3-sov-brain-v2-identity-fixed",
+  "sigil": "4db363f88c79b844",
+  "fix_description": "Model was hedging and confusing identities. Fixed by adding 300 identity-correct samples (who is SOV33, who is Nicholas, anti-sycophancy) + 200 domain samples. 60/40 identity/domain mix."
+}

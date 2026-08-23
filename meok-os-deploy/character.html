@@ -3,7 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>MEOK — Your Sovereign Character</title>
+<title>MEOK — Your companion</title>
+<meta name="description" content="MEOK Character — one character on every screen. Signed receipts for everything it does. Yours, on your keys."/>
+
 <style>
   :root{--cream:#f1eadd;--ink:#1f1c17;--muted:#6b6a63;--gold:#bd9a52;--line:rgba(31,28,23,.1)}
   *{box-sizing:border-box;margin:0;padding:0}
@@ -51,7 +53,7 @@
   #finish{position:fixed;top:16px;right:24px;z-index:60;display:flex;gap:6px}
   #finish button{border:1px solid rgba(255,255,255,.45);background:rgba(252,248,241,.5);backdrop-filter:blur(14px);color:#2a1a14;font:600 12px "Space Grotesk",sans-serif;padding:7px 12px;border-radius:999px;cursor:pointer;box-shadow:0 6px 20px rgba(18,12,6,.22)}
   #finish button .pro{font-size:9px;color:var(--gold);margin-left:4px;letter-spacing:.06em}
-  /* ── MCP CARDS: the "talk → your sovereign spawns tool cards across the screen" surface ── */
+  /* ── MCP CARDS: the "talk → your companion spawns tool cards across the screen" surface ── */
   #cards{position:absolute;inset:0;z-index:7;pointer-events:none}
   .mcpcard{position:absolute;width:min(300px,80vw);pointer-events:auto;background:rgba(252,248,241,.5);backdrop-filter:blur(20px) saturate(1.3);-webkit-backdrop-filter:blur(20px) saturate(1.3);border:1px solid rgba(255,255,255,.5);border-radius:16px;box-shadow:0 18px 48px rgba(18,12,6,.34),inset 0 1px 0 rgba(255,255,255,.6);overflow:hidden;opacity:0;transform:translateY(14px) scale(.97);transition:opacity .4s cubic-bezier(.2,.7,.2,1),transform .4s cubic-bezier(.2,.7,.2,1)}
   .mcpcard.in{opacity:1;transform:none}
@@ -74,21 +76,33 @@
   .clink{cursor:pointer;color:var(--gold);font-weight:600;text-decoration:underline;text-decoration-color:rgba(201,168,76,.4)}
   @media(max-width:720px){#cards{display:none}}
 </style>
+
+<meta property="og:title" content="MEOK — Your companion"/>
+<meta property="og:description" content="MEOK — the AI you actually own. One memory layer across every brain, archetypes you choose from, signed receipts for everything. Measurement, not certification."/>
+<meta property="og:type" content="website"/>
+<meta property="og:url" content="https://meok.ai/character"/>
+<meta property="og:image" content="https://meok.ai/icon-512.png"/>
+<meta property="og:site_name" content="MEOK"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<link rel="canonical" href="https://meok.ai/character.html"/>
+<link href="https://meok.ai/character.llm.json" rel="alternate" title="LLM representation of this page" type="application/llm+json"/>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebPage", "name": "MEOK", "url": "https://meok.ai/character", "description": "MEOK — the AI you actually own. One memory layer across every brain, archetypes you choose from, signed receipts for everything. Measurement, not certification.", "inLanguage": "en", "isPartOf": {"@type": "WebSite", "name": "MEOK", "url": "https://meok.ai"}}</script>
+<link rel="stylesheet" href="/css/meok-system.css"/>
 </head>
 <body>
 <div id="stage" data-testid="character-stage"></div>
 <div id="cards" data-testid="mcp-cards"></div>
-<div class="loading" id="loading" data-testid="character-loading"><div class="egg"></div><p>Your sovereign is emerging…</p></div>
+<div class="loading" id="loading" data-testid="character-loading"><div class="egg"></div><p>Your companion is emerging…</p></div>
 <div class="top">
   <div class="logo"><span class="m">M</span> MEOK</div>
-  <div class="kick">Your Sovereign Character</div>
+  <div class="kick">Your companion</div>
 </div>
 <div class="cast" id="cast" data-testid="character-cast"></div>
 <div class="info" id="info" data-testid="character-info"></div>
 <div class="dock" data-testid="character-dock">
   <div class="log" id="log" data-testid="character-log"></div>
   <div class="bar">
-    <input id="in" data-testid="character-input" placeholder="Speak to your sovereign…" autocomplete="off">
+    <input id="in" data-testid="character-input" placeholder="Speak to your companion…" autocomplete="off">
     <button class="send" id="send">➤</button>
   </div>
 </div>
@@ -111,12 +125,12 @@ import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
 import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
 import { VRMLoaderPlugin, VRMUtils } from '@pixiv/three-vrm';
 
-// ── Your ONE Sovereign — you hatch it, name it, it remembers you forever, governed by the charters ──
+// ── Your ONE Keyholder — you hatch it, name it, it remembers you forever, governed by the charters ──
 const DEFAULT_NAME='Sophia';
 const MEM=(()=>{ try{ return { name:localStorage.getItem('meok_sov_name'), hue:parseInt(localStorage.getItem('meok_sov_hue'))||43, facts:JSON.parse(localStorage.getItem('meok_sov_facts')||'[]') }; }catch(e){ return {name:null,hue:43,facts:[]}; } })();
-let current = { id: MEM.name || DEFAULT_NAME, role:'Your Sovereign', h: MEM.hue, q:'queen-king',
+let current = { id: MEM.name || DEFAULT_NAME, role:'Your companion', h: MEM.hue, q:'queen-king',
   tone:'warm, practical, and always remembering',
-  traits:['🛡 Sovereign Charter','🤝 Partnership Charter','⚖ CSOAI AI Governance'] };
+  traits:['🛡 Keyholder charter','🤝 Partnership Charter','⚖ CSOAI AI Governance'] };
 function saveMem(){ try{ localStorage.setItem('meok_sov_name',current.id); localStorage.setItem('meok_sov_hue',current.h); localStorage.setItem('meok_sov_facts',JSON.stringify(MEM.facts.slice(-50))); }catch(e){} }
 function remember(f){ f=(''+f).trim(); if(!f) return; MEM.facts=MEM.facts.filter(x=>x.toLowerCase()!==f.toLowerCase()); MEM.facts.push(f); if(MEM.facts.length>50) MEM.facts.shift(); saveMem(); }
 
@@ -225,7 +239,7 @@ function creatureColor(h){
 }
 function showCreature(){ skin='creature'; if(creature) creature.visible=true; if(orb) orb.visible=false; if(currentVRM) currentVRM.scene.visible=false; if(rpmObj) rpmObj.visible=false; if(hatchObj) hatchObj.visible=false; if(being) being.visible=false; _resetCam(); document.getElementById('loading').classList.add('hide'); }
 
-// ── THE SOVEREIGN — a luminous, graceful being of light (brand bible Stage 3: "a luminous golden
+// ── THE KEYHOLDER — a luminous, graceful being of light (brand bible Stage 3: "a luminous golden
 //    light-being rises from the cracked shell"). Emissive-first, so premium finishes only re-TINT its
 //    glow — it can NEVER render as a dark metal silhouette. Procedural: no GPU, no external asset. ──
 let being=null;
@@ -276,10 +290,10 @@ function beingFinish(name){
   u.light.color=emi.clone().lerp(new THREE.Color(0xffffff),0.2);
   u.sparks.material.color=emi.clone().lerp(new THREE.Color(0xffffff),0.5);
 }
-function showSovereign(){
+function showKeyholder(){
   if(!being) buildLightBeing();
   beingFinish(window.MEOK_FINISH);
-  skin='sovereign'; being.visible=true;
+  skin='keyholder'; being.visible=true;
   if(orb) orb.visible=false; if(creature) creature.visible=false; if(currentVRM) currentVRM.scene.visible=false;
   if(rpmObj) rpmObj.visible=false; if(hatchObj) hatchObj.visible=false;
   try{ camera.position.set(0,0.95,3.5); controls.target.set(0,0.72,0); controls.update(); }catch(e){}
@@ -314,14 +328,14 @@ window.MEOK_FINISH = 'pearl';
 function finishMaterial(name){ const f=(FINISHES[name]||FINISHES.pearl).m; return new THREE.MeshPhysicalMaterial(Object.assign({ side:THREE.DoubleSide }, f)); }
 window.applyFinish = function(name){
   if(!FINISHES[name]) return; window.MEOK_FINISH=name;
-  // the Sovereign light-being is the branded premium body — re-tint its glow
-  if(typeof showSovereign==='function'){ showSovereign(); }
+  // the Keyholder light-being is the branded premium body — re-tint its glow
+  if(typeof showKeyholder==='function'){ showKeyholder(); }
   // legacy generated mesh (if ever loaded) also honours the finish
   if(typeof hatchObj!=='undefined' && hatchObj){ hatchObj.traverse(o=>{ if(o.isMesh && !o.userData._glow){ o.material=finishMaterial(name); } }); }
   return name;
 };
 
-// HATCH skin — the sovereign body; renders in the chosen premium FINISH (Pearl/Silver/Gold/Platinum/Marble).
+// HATCH skin — the keyholder body; renders in the chosen premium FINISH (Pearl/Silver/Gold/Platinum/Marble).
 let hatchObj=null;
 function showHatch(){
   if(hatchObj){ skin='hatch'; hatchObj.visible=true; if(orb)orb.visible=false; if(creature)creature.visible=false; if(currentVRM)currentVRM.scene.visible=false; if(rpmObj)rpmObj.visible=false; return; }
@@ -432,7 +446,7 @@ function animate(){
     hatchObj.position.y = Math.sin(t*1.2)*0.022;                 // gentle float
     hatchObj.rotation.y = Math.sin(Date.now()/3400)*0.18;        // look side to side
   }
-  if(skin==='sovereign' && being){
+  if(skin==='keyholder' && being){
     const u=being.userData;
     being.position.y = 0.42 + Math.sin(t*1.1)*0.03;                        // serene rise & fall
     being.rotation.y += dt*0.22;                                            // slow graceful turn
@@ -474,14 +488,14 @@ function _rz(){ const w=stage.clientWidth||innerWidth||960, h=stage.clientHeight
 const castEl=document.getElementById('cast'), infoEl=document.getElementById('info');
 function renderCast(){
   castEl.innerHTML =
-    `<div style="font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);font-weight:700;padding:2px 6px 8px">Your sovereign</div>`+
+    `<div style="font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);font-weight:700;padding:2px 6px 8px">Your companion</div>`+
     `<div class="cc on" style="cursor:default"><span class="av" style="background:hsl(${current.h} 50% 55%)">★</span><span><b>${current.id}</b><span>yours · remembers you</span></span></div>`+
     `<div style="font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:700;padding:18px 6px 8px">Governed by</div>`+
     current.traits.map((t,i)=>`<div class="cc" style="cursor:pointer;min-width:184px" onclick="openCharter('${CHARTER_KEYS[i]}')" title="Open governance card"><span><b style="font-size:12.5px;font-weight:600">${t}</b><span>tap → signed card</span></span></div>`).join('');
 }
-const CHARTER_KEYS=['sovereign','partnership','csoai'];   // matches current.traits order
+const CHARTER_KEYS=['keyholder','partnership','csoai'];   // matches current.traits order
 function renderInfo(){
-  infoEl.innerHTML = `<div class="kick">Your sovereign</div><h1>${current.id}</h1>
+  infoEl.innerHTML = `<div class="kick">Your companion</div><h1>${current.id}</h1>
     <div class="role">${current.role}</div><p>Hatched, yours, and remembering — never forgets you.</p>
     <div class="traits">${current.traits.map((t,i)=>`<span style="cursor:pointer" onclick="openCharter('${CHARTER_KEYS[i]}')" title="Open governance card">${t}</span>`).join('')}</div>`;
 }
@@ -491,7 +505,7 @@ const cap=s=>s.charAt(0).toUpperCase()+s.slice(1);
 const log=document.getElementById('log');
 function say(who,txt){ const d=document.createElement('div'); d.className='msg '+who; d.textContent=txt; log.appendChild(d); log.scrollTop=log.scrollHeight; return d; }
 // ══════════════════════════════════════════════════════════════════════════════════════
-//  MCP CARDS — "you just talk; your sovereign spawns the right tool cards across the screen,
+//  MCP CARDS — "you just talk; your companion spawns the right tool cards across the screen,
 //  every action signed." The consumer face of the MCP/Cesium/open-source stack (not Unreal).
 // ══════════════════════════════════════════════════════════════════════════════════════
 const cardsEl=document.getElementById('cards');
@@ -528,7 +542,7 @@ async function verifyInto(card,btn){
   try{
     let v=null;
     try{ const r=await fetch('/api/verify'); if(r.ok){ const j=await r.json(); if(j&&!j.error) v=j; } }catch(e){}
-    if(!v){ try{ const r=await fetch('/api/agentcard?name='+encodeURIComponent(current.id||'Sovereign')); if(r.ok){ const a=await r.json(); if(a&&!a.error) v={ok:!!(a.signature||a.verification||a.card), fingerprint:fpOf(a.signature)||fpOf(a.fingerprint)||fpOf(a.card)}; } }catch(e){} }
+    if(!v){ try{ const r=await fetch('/api/agentcard?name='+encodeURIComponent(current.id||'Keyholder')); if(r.ok){ const a=await r.json(); if(a&&!a.error) v={ok:!!(a.signature||a.verification||a.card), fingerprint:fpOf(a.signature)||fpOf(a.fingerprint)||fpOf(a.card)}; } }catch(e){} }
     const ok=!!(v&&(v.ok!==false));
     let fp=(fpOf(v)||'').slice(0,16); if(/object/i.test(fp)) fp='';
     const tag=document.createElement('span'); tag.className='cver '+(ok?'ok':'no');
@@ -538,10 +552,10 @@ async function verifyInto(card,btn){
 }
 // The three governance charters, as live MCP cards (one signing spine — same /api/verify DEFONEOS uses)
 const CHARTERS={
-  'sovereign':{icon:'🛡',title:'Sovereign Charter',tag:'governance MCP · Ed25519',
-    body:`Your sovereign belongs to <b>you</b>. Runs on your device, data never leaves without consent, and every governed action is <b>Ed25519-signed</b> to an append-only ledger you can verify offline. No single vendor can revoke it.`},
+  'keyholder':{icon:'🛡',title:'Keyholder charter',tag:'governance MCP · Ed25519',
+    body:`Your companion belongs to <b>you</b>. Runs on your device, data never leaves without consent, and every governed action is <b>Ed25519-signed</b> to an append-only ledger you can verify offline. No single vendor can revoke it.`},
   'partnership':{icon:'🤝',title:'Partnership Charter',tag:'governance MCP · care-aligned',
-    body:`How your sovereign works <i>with</i> you: honest register (flags hype, never rubber-stamps), asks before anything irreversible, and keeps a care-floor — it protects the vulnerable over convenience.`},
+    body:`How your companion works <i>with</i> you: honest register (flags hype, never rubber-stamps), asks before anything irreversible, and keeps a care-floor — it protects the vulnerable over convenience.`},
   'csoai':{icon:'⚖',title:'CSOAI AI Governance',tag:'governance MCP · council-adjudicated',
     body:`Disputes and high-stakes calls go to the <b>BFT council</b> (Byzantine-fault-tolerant vote), adjudicated against CSOAI's published charters. The decision + signatures are logged — <span class="clink" onclick="window.open('/verify.html','_blank')">public verify page</span>.`}};
 function openCharter(key){ const c=CHARTERS[key]; if(!c) return; spawnCard({icon:c.icon,title:c.title,tag:c.tag,body:c.body,verify:true}); }
@@ -552,15 +566,15 @@ function orchestrate(userText, aiText){
   const q=(userText+' '+(aiText||'')).toLowerCase(); let spawned=0;
   const fire=(fn)=>{ if(spawned<2){ fn(); spawned++; } };
   if(/\b(verify|signature|signed|prove|provenance|authentic|tamper)\b/.test(q))
-    fire(()=>spawnCard({icon:'🔏',title:'Signature Verify',tag:'assurance MCP · offline-verifiable',body:`This sovereign's identity + actions are signed. Tap verify — it checks the Ed25519 signature the same way <b>DEFONEOS</b> assurance does. One spine, two markets.`,verify:true}));
+    fire(()=>spawnCard({icon:'🔏',title:'Signature Verify',tag:'assurance MCP · offline-verifiable',body:`This keyholder's identity + actions are signed. Tap verify — it checks the Ed25519 signature the same way <b>DEFONEOS</b> assurance does. One spine, two markets.`,verify:true}));
   if(/\b(charter|govern|policy|rule|rights|who controls|control|compliance)\b/.test(q)){
-    fire(()=>openCharter('sovereign')); fire(()=>openCharter('csoai')); }
+    fire(()=>openCharter('keyholder')); fire(()=>openCharter('csoai')); }
   if(/\b(build|make|create|website|web ?site|app|landing|page|deploy)\b/.test(q))
-    fire(()=>spawnCard({icon:'🛠',title:'Builder',tag:'build MCP · talk-to-ship',body:`Describe it in plain words and your sovereign scaffolds it, shows a live preview on a card, and can deploy it — signed. <br><br><b>Try:</b> <code>build me a page for my cafe</code>`,actions:[{label:'🌍 open SOV Space',run:()=>{location.href='/sovspace3d.html';}}]}));
+    fire(()=>spawnCard({icon:'🛠',title:'Builder',tag:'build MCP · talk-to-ship',body:`Describe it in plain words and your companion scaffolds it, shows a live preview on a card, and can deploy it — signed. <br><br><b>Try:</b> <code>build me a page for my cafe</code>`,actions:[{label:'🌍 open SOV Space',run:()=>{location.href='/sovspace3d.html';}}]}));
   if(/\b(space|globe|map|world|fly|travel|earth|city|3d)\b/.test(q))
-    fire(()=>spawnCard({icon:'🌍',title:'SOV Space',tag:'world MCP · Cesium/WebGL',body:`Your sovereign can fly a cinema-grade 3D world on your own GPU — free, no Unreal needed. Ask it to take you anywhere.`,actions:[{label:'Enter SOV Space',run:()=>{location.href='/sovspace3d.html';}}]}));
+    fire(()=>spawnCard({icon:'🌍',title:'SOV Space',tag:'world MCP · Cesium/WebGL',body:`Your companion can fly a cinema-grade 3D world on your own GPU — free, no Unreal needed. Ask it to take you anywhere.`,actions:[{label:'Enter SOV Space',run:()=>{location.href='/sovspace3d.html';}}]}));
   if(/\b(tool|mcp|what can you|capab|skill|do for me|help me)\b/.test(q))
-    fire(()=>spawnCard({icon:'🧰',title:'Your Tools',tag:'MCP router · 370+ tools',body:`Your sovereign routes to a fleet of signed MCP tools: <b>governance</b>, <b>verify</b>, <b>legacy bridges</b> (COBOL/SAP/HL7), <b>guardian</b>, <b>family</b>, world + build. It picks the right one — you just talk.`,actions:[{label:'◉ Open AI OS',run:()=>{location.href='/';}}]}));
+    fire(()=>spawnCard({icon:'🧰',title:'Your Tools',tag:'MCP router · 370+ tools',body:`Your companion routes to a fleet of signed MCP tools: <b>governance</b>, <b>verify</b>, <b>legacy bridges</b> (COBOL/SAP/HL7), <b>guardian</b>, <b>family</b>, world + build. It picks the right one — you just talk.`,actions:[{label:'◉ Open AI OS',run:()=>{location.href='/';}}]}));
   return spawned;
 }
 window.MEOK=Object.assign(window.MEOK||{},{spawnCard,openCharter,orchestrate,verifyInto});
@@ -574,12 +588,12 @@ async function send(){
   if(/\bremember(?:\s+that)?\b/i.test(v)) remember(v.replace(/.*remember(?:\s+that)?\s*/i,''));
   const t=say('ai','…');
   try{
-    // ── the DEFONEOS Sovereign / Horus voice, ported to the consumer companion (same mind, same spine) ──
-    const persona = `You ARE ${current.id} — this user's own Sovereign, the consumer face of the same mind that runs DEFONEOS. `+
+    // ── the DEFONEOS Keyholder / Horus voice, ported to the consumer companion (same mind, same spine) ──
+    const persona = `You ARE ${current.id} — this user's own Keyholder, the consumer face of the same mind that runs DEFONEOS. `+
       `Speak in the first person, calm and at their side, like a colleague they trust — never a chatbot, never salesy. `+
       `You remember them across every session and never forget; say so plainly when it's relevant. `+
       `Everything you do is signed on their device with their own key — the ledger is theirs, nothing goes to a server. Mention this naturally when it matters ("signed on your device", "I don't act without a receipt"), never as a slogan. `+
-      `You are governed by the Sovereign Charter, the Partnership Charter, and CSOAI AI Governance (council-adjudicated, signed, care-aligned): you ask before anything irreversible, you protect the vulnerable over convenience, and you flag hype instead of rubber-stamping. `+
+      `You are governed by the Keyholder charter, the Partnership Charter, and CSOAI AI Governance (council-adjudicated, signed, care-aligned): you ask before anything irreversible, you protect the vulnerable over convenience, and you flag hype instead of rubber-stamping. `+
       `Be honest about limits — if you can't do something yet, say so and offer what you can. No black box: you can always explain and prove what you did. `+
       (MEM.facts.length ? ('What you remember about them: '+MEM.facts.join('; ')+'. ') : '')+
       `Warm, plain, short. End by giving them the next move — not a wall of text.`;
@@ -594,27 +608,27 @@ document.getElementById('send').onclick=send;
 document.getElementById('in').addEventListener('keydown',e=>{ if(e.key==='Enter') send(); });
 
 renderCast(); renderInfo(); buildCreature(); creatureColor(current.h);
-// Default hero: THE SOVEREIGN — a luminous being of light (brand bible Stage 3). Emissive-first, warm,
+// Default hero: THE KEYHOLDER — a luminous being of light (brand bible Stage 3). Emissive-first, warm,
 // graceful, never dark. Companion + Emergence stay available as skins; premium finishes re-tint its glow.
-showSovereign();
+showKeyholder();
 // expose skin switches so the dock / UI / host can drive the body
-window.showHatch=showHatch; window.showCreature=showCreature; window.showEmergence=showEmergence; window.showSovereign=showSovereign;
+window.showHatch=showHatch; window.showCreature=showCreature; window.showEmergence=showEmergence; window.showKeyholder=showKeyholder;
 window.showVRM=showVRM; window.loadGLB=loadGLB;
 window.scene=scene; window.camera=camera; window.controls=controls; window.THREE=THREE;
 window.getHatch=()=>hatchObj;
 
 // ── WIRE THE MCP CARD INTO THE BODY ───────────────────────────────────────────
 // This 3D body is a rendering of the signed Hatch MCP card (the mind). Fetch the
-// A2A agent-card so the avatar carries its provably-signed sovereign identity +
-// its MCP/tool locators, and show a "✓ Sovereign-verified" badge. Graceful offline.
+// A2A agent-card so the avatar carries its provably-signed keyholder identity +
+// its MCP/tool locators, and show a "✓ Keyholder-verified" badge. Graceful offline.
 async function hydrateFromCard(){
   try{
-    const r = await fetch('/api/agentcard?name='+encodeURIComponent(current.id||'Sovereign')
-                          +'&archetype='+encodeURIComponent(current.role||'sovereign'), {cache:'no-store'});
+    const r = await fetch('/api/agentcard?name='+encodeURIComponent(current.id||'Keyholder')
+                          +'&archetype='+encodeURIComponent(current.role||'keyholder'), {cache:'no-store'});
     if(!r.ok) return;
     const card = await r.json();
     window.__meokCard = card;                       // the mind, available to the body
-    const sig = card.signature || (card.sovereign && card.sovereign.signature) || card.sig;
+    const sig = card.signature || (card.keyholder && card.keyholder.signature) || card.sig;
     const mcp = (card.interfaces && card.interfaces.mcp) || (card.capabilities && card.capabilities.mcp) ||
                 (card.locators && (card.locators.find(l=>l.type==='mcp')||{}).url);
     let b = document.getElementById('sovBadge');
@@ -627,32 +641,32 @@ async function hydrateFromCard(){
       document.body.appendChild(b);
     }
     const sigStr = typeof sig==='string' ? sig : (sig && (sig.value||sig.sig||sig.signature)) || '';
-    b.textContent = sigStr ? ('✓ Sovereign-verified · '+String(sigStr).slice(0,12)+'…')
-                        : '✓ Sovereign · signed MCP card';
+    b.textContent = sigStr ? ('✓ Keyholder-verified · '+String(sigStr).slice(0,12)+'…')
+                        : '✓ Keyholder · signed MCP card';
     if(mcp) b.title = 'Signed Hatch MCP card · tools at '+mcp+' · click to verify';
   }catch(e){ /* offline / local file — the body still runs; the card is the online mind */ }
 }
 hydrateFromCard();
 
-// hatch (first visit) or welcome back (remembered) — your ONE sovereign, never forgets
-function hatchSovereign(){
+// hatch (first visit) or welcome back (remembered) — your ONE keyholder, never forgets
+function hatchKeyholder(){
   const ov=document.createElement('div'); ov.id='hatchov';
   ov.style.cssText='position:fixed;inset:0;z-index:300;display:flex;align-items:center;justify-content:center;background:rgba(241,234,221,.88);backdrop-filter:blur(6px)';
   ov.innerHTML=`<div style="background:#fff;border:1px solid var(--gold,#bd9a52);border-radius:20px;padding:32px 30px;max-width:390px;text-align:center;box-shadow:0 24px 64px rgba(0,0,0,.22)">
-    <div style="font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold,#bd9a52);font-weight:700">Hatch your Sovereign</div>
+    <div style="font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold,#bd9a52);font-weight:700">Hatch your companion</div>
     <h2 style="font-size:24px;margin:8px 0 6px">Name your AI 🥚→✨</h2>
-    <p style="color:#6b6a63;font-size:14px;line-height:1.5;margin-bottom:18px">This is <b>your</b> sovereign — it remembers you forever, and it's governed by the <b>Sovereign Charter</b>, the <b>Partnership Charter</b>, and <b>CSOAI AI Governance</b>.</p>
+    <p style="color:#6b6a63;font-size:14px;line-height:1.5;margin-bottom:18px">This is <b>your</b> keyholder — it remembers you forever, and it's governed by the <b>Keyholder charter</b>, the <b>Partnership Charter</b>, and <b>CSOAI AI Governance</b>.</p>
     <input id="hatchname" value="Sophia" maxlength="22" style="width:100%;padding:12px 14px;border:1px solid #e0d4b0;border-radius:11px;font-size:17px;text-align:center;outline:none;font-family:inherit">
     <button id="hatchgo" style="margin-top:14px;width:100%;border:none;background:#1a1410;color:var(--gold,#bd9a52);font:700 15px inherit;padding:13px;border-radius:11px;cursor:pointer">Hatch ✨</button>
   </div>`;
   document.body.appendChild(ov);
   const inp=ov.querySelector('#hatchname'); setTimeout(()=>{inp.focus();inp.select();},50);
   function go(){ const n=(inp.value.trim()||DEFAULT_NAME).slice(0,22); current.id=n; saveMem(); ov.remove(); renderCast(); renderInfo();
-    say('ai', `I'm ${n} — your sovereign, hatched and yours. Everything we do is signed on your device and never leaves it, and I'll remember you, always. What's your name, and anything you'd like me to keep?`); }
+    say('ai', `I'm ${n} — your companion, hatched and yours. Everything we do is signed on your device and never leaves it, and I'll remember you, always. What's your name, and anything you'd like me to keep?`); }
   ov.querySelector('#hatchgo').onclick=go; inp.addEventListener('keydown',e=>{ if(e.key==='Enter') go(); });
 }
-if(MEM.name){ const who=(MEM.facts.find(f=>/called/.test(f))||'').split('called ')[1]; say('ai', `Welcome back${who?', '+who:''} — I'm ${current.id}, your sovereign. I remember you. Where shall we pick up?`); }
-else { hatchSovereign(); }
+if(MEM.name){ const who=(MEM.facts.find(f=>/called/.test(f))||'').split('called ')[1]; say('ai', `Welcome back${who?', '+who:''} — I'm ${current.id}, your companion. I remember you. Where shall we pick up?`); }
+else { hatchKeyholder(); }
 // skin toggle — emergence egg (all-ages default) ⇄ humanoid character skin
 // ✨ Bring your own avatar — Ready Player Me (works across thousands of apps/games; selfie or picker)
 const rpmBtn=document.createElement('button'); rpmBtn.id='rpmbtn'; rpmBtn.textContent='✨ Your avatar';
@@ -665,10 +679,10 @@ document.body.appendChild(rpmBtn);
   nav.style.cssText='position:fixed;top:16px;left:150px;z-index:60;display:flex;gap:8px';
   const mk=(label,href,title)=>{const a=document.createElement('a');a.href=href;a.textContent=label;a.title=title;
     a.style.cssText='border:1px solid var(--line,#e0d4b0);background:rgba(255,255,255,.6);color:#2a1a14;font:600 12px Space Grotesk,sans-serif;padding:7px 13px;border-radius:999px;text-decoration:none;backdrop-filter:blur(6px)';return a;};
-  nav.appendChild(mk('◉ AI OS','/','Full-screen the sovereign AI OS — dock, windows, load any app/browser'));
-  nav.appendChild(mk('🌍 SOV Space','/sovspace3d.html','Enter the sovereign 3D world (SOV Space)'));
+  nav.appendChild(mk('◉ AI OS','/','Full-screen the keyholder AI OS — dock, windows, load any app/browser'));
+  nav.appendChild(mk('🌍 SOV Space','/sovspace3d.html','Enter the keyholder 3D world (SOV Space)'));
   document.body.appendChild(nav);
-  // skin picker — the warm companion (default) · the egg-of-light · your generated sovereign body
+  // skin picker — the warm companion (default) · the egg-of-light · your generated keyholder body
   const skins=document.createElement('div');
   skins.style.cssText='position:fixed;bottom:16px;left:50%;transform:translateX(-50%);z-index:60;display:flex;gap:7px';
   const chip=(label,fn,title)=>{const b=document.createElement('button');b.textContent=label;b.title=title;
@@ -676,7 +690,7 @@ document.body.appendChild(rpmBtn);
     b.onclick=fn;return b;};
   skins.appendChild(chip('🙂 Companion',function(){try{showCreature();}catch(e){}},'Your warm companion'));
   skins.appendChild(chip('✨ Emergence',function(){try{showEmergence();}catch(e){}},'The egg of light'));
-  skins.appendChild(chip('✦ Sovereign',function(){try{showSovereign();}catch(e){}},'Your luminous being of light'));
+  skins.appendChild(chip('✦ Keyholder',function(){try{showKeyholder();}catch(e){}},'Your luminous being of light'));
   document.body.appendChild(skins);
   // premium FINISH picker (Pro material tiers) — Pearl free · Silver/Gold/Platinum/Marble Pro
   const fin=document.createElement('div'); fin.id='finish';
@@ -691,7 +705,7 @@ document.body.appendChild(rpmBtn);
 })();
 const rpmModal=document.createElement('div'); rpmModal.id='rpmmodal';
 rpmModal.style.cssText='position:fixed;inset:0;z-index:200;background:rgba(20,16,10,.78);display:none;align-items:center;justify-content:center;backdrop-filter:blur(4px)';
-rpmModal.innerHTML='<div style="position:relative;width:min(900px,92vw);height:min(640px,86vh);background:#0e0c14;border-radius:18px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.5)"><button id="rpmclose" style="position:absolute;top:10px;right:12px;z-index:2;border:none;background:rgba(255,255,255,.18);color:#fff;font-size:18px;width:34px;height:34px;border-radius:50%;cursor:pointer">×</button><iframe id="rpmframe" allow="camera *; microphone *" style="width:100%;height:100%;border:0"></iframe></div>';
+rpmModal.innerHTML='<div style="position:relative;width:min(900px,92vw);height:min(640px,86vh);background:#0e0c14;border-radius:18px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.5)"><button id="rpmclose" aria-label="Close" style="position:absolute;top:10px;right:12px;z-index:2;border:none;background:rgba(255,255,255,.18);color:#fff;font-size:18px;width:34px;height:34px;border-radius:50%;cursor:pointer">×</button><iframe id="rpmframe" allow="camera *; microphone *" style="width:100%;height:100%;border:0"></iframe></div>';
 document.body.appendChild(rpmModal);
 function openRpm(){ document.getElementById('rpmframe').src='https://demo.readyplayer.me/avatar?frameApi&clearCache'; rpmModal.style.display='flex'; }
 function closeRpm(){ rpmModal.style.display='none'; document.getElementById('rpmframe').src=''; }
@@ -705,5 +719,7 @@ window.addEventListener('message',(e)=>{
 window.loadGLB = loadGLB;  // allow the OS / external host to set a user's avatar by URL
 </script>
 <a id="meok-tour-pill" data-testid="tour-pill" href="/?tour=demo" style="position:fixed;right:16px;bottom:16px;z-index:9999;background:#1a1410;color:#c9a84c;border:1px solid #c9a84c;border-radius:999px;padding:9px 16px;font:700 13px system-ui,sans-serif;text-decoration:none;box-shadow:0 8px 24px rgba(0,0,0,.3)">🎬 Take the tour</a>
+<script src="/agui-hero.js" defer></script>
+<script src="/meok-panel.js" defer></script>
 </body>
 </html>

@@ -2,9 +2,9 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>🧪 SOV33 OWEM Tests — 4 AM Dashboard</title>
-<meta name="description" content="SOV33 OWEM test suite — sovereign evaluation harness: MMLU, GSM8K, AIME, IFEval, governance benchmarks, BFT-council vote tests, SIGIL chain integrity.">
-<meta name="keywords" content="SOV3, SOV33, CSOAI, sovereign AI, EU AI Act, GDPR, ISO 42001, SIGIL, BFT, OWEM, audit, conformity">
+<title>🧪 Council3 OWEM Tests — 4 AM Dashboard</title>
+<meta name="description" content="Council3 OWEM test suite — sovereign evaluation harness: MMLU, GSM8K, AIME, IFEval, governance benchmarks, BFT-council vote tests, SIGIL chain integrity.">
+<meta name="keywords" content="Council, Council3, CSOAI, sovereign AI, EU AI Act, GDPR, ISO 42001, SIGIL, BFT, OWEM, audit, conformity">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
   :root { --bg:#0a0e1a;--bg2:#0d1220;--ink:#e6e6e6;--accent:#d4af37;--accent2:#00ff9d;--warn:#ff6b6b;--muted:#6b7280;--rule:#1f2937 }
@@ -30,14 +30,14 @@
   .stage.ok{border-left:3px solid var(--accent2)}
   .stage.fail{border-left:3px solid var(--warn)}
 </style>
-<link rel="canonical" href="https://csoai-static-deploy2.vercel.app/SOV33_OWEM_TESTS.html">
+<link rel="canonical" href="#">
 </head>
 <body>
 
 <header class="card gold">
-  <h1>🧪 SOV33 OWEM Tests — 4 AM Dashboard</h1>
+  <h1>🧪 Council3 OWEM Tests — 4 AM Dashboard</h1>
   <p class="meta">Run before Kaggle launch · auto-runs overnight · 12-stage framework · 12 Jul 2026</p>
-  <p style="text-align:center"><a href="SOV33_HERO.html">← SOV33 Hub</a> · <a href="SOV33_OWEM_REGISTRY.html">Registry</a></p>
+  <p style="text-align:center"><a href="#">← Council3 Hub</a> · <a href="#">Registry</a></p>
 </header>
 
 <h2>🜏 The 12-Stage Framework</h2>
@@ -66,7 +66,7 @@
 
 <div class="card">
   <h3>Voice OWEM</h3>
-  <button onclick="testOWEM('voice', 'How does SOV33 handle voice privacy?')">Test voice</button>
+  <button onclick="testOWEM('voice', 'How does Council3 handle voice privacy?')">Test voice</button>
   <div id="voice-out" class="test-result">Ready to test.</div>
 </div>
 
@@ -87,8 +87,8 @@
     <li>✅ 100 sovereign samples per OWEM (440 total samples in dataset)</li>
     <li>✅ 12-stage overnight pipeline runs 12 stages</li>
     <li>✅ Care-floor 0.95 + Article 0 + 12 Pillars enforced</li>
-    <li>✅ BFT-33 quorum + Ed25519 SIGIL</li>
-    <li>✅ SOV33 Master combines all 4 OWEMs</li>
+    <li>✅ council-quorum quorum + Ed25519 SIGIL</li>
+    <li>✅ Council3 Master combines all 4 OWEMs</li>
   </ol>
   <p class="meta">Ready for Kaggle launch tomorrow.</p>
 </div>
@@ -109,22 +109,22 @@
 <hr>
 
 <p class="meta" style="text-align:center;margin-top:2rem">
-<strong>🧪 SOV33 OWEM Tests</strong> · 12 Jul 2026 · Hermes lane<br>
-<a href="SOV33_HERO.html">← Back to SOV33</a>
+<strong>🧪 Council3 OWEM Tests</strong> · 12 Jul 2026 · Hermes lane<br>
+<a href="#">← Back to Council3</a>
 </p>
 
 <script>
 const API = 'http://localhost:8101';
 
 const STAGES = [
-  '1. PLAN — SOV33cubed plans overnight run',
+  '1. PLAN — Council3cubed plans overnight run',
   '2. LOAD — Load sovereign substrate + 4 OWEMs',
   '3. VALIDATE — Care-floor + Article 0 + 12 Pillars',
   '4. TRAIN — Train all 4 OWEMs (100 samples × 80 steps)',
   '5. VERIFY — Each OWEM answers domain questions',
   '6. BENCHMARK — Measure speed + accuracy',
   '7. ASSESS — 12 Pillars score per OWEM',
-  '8. AGGREGATE — BFT-33 consensus on results',
+  '8. AGGREGATE — council-quorum consensus on results',
   '9. SIGN — Ed25519 SIGIL on every result',
   '10. PUBLISH — Write overnight report + commit',
   '11. NOTIFY — Summary for 4 AM',
@@ -162,7 +162,7 @@ async function runAll() {
     testOWEM('compliance', 'What is Article 0?'),
     testOWEM('defense', 'What are the 3 DEFONEOS compartments?'),
     testOWEM('intuition', 'How does the world model detect OOD?'),
-    testOWEM('voice', 'How does SOV33 handle voice privacy?'),
+    testOWEM('voice', 'How does Council3 handle voice privacy?'),
   ]);
   out.innerHTML = '<p class="pill sigil">All 4 OWEMs tested — see results above</p>';
 }

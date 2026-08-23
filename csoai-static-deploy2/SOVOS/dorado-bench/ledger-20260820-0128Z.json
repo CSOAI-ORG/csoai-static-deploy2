@@ -1,0 +1,268 @@
+{
+ "schema": "csoai.ledger/0.1",
+ "conformance": {
+  "provision": {
+   "id": "EU-AI-Act-2024-1689-Art6",
+   "jurisdiction": "EU",
+   "instrument": "AI Act",
+   "provision": "Art 6 risk-tier classification (prohibited/high/limited/minimal)",
+   "frozen_at": "2024-08-01",
+   "task": "gov-risk-tier",
+   "benchmark": "govbench",
+   "predicate": "exact_match(label)",
+   "bank_n": 237
+  },
+  "results": {
+   "sov6-ethics-v3-light": {
+    "n": 237,
+    "correct": 88,
+    "conformance": 0.3713,
+    "ci95": [
+     0.312,
+     0.434
+    ],
+    "register": "MEASURED (deterministic predicate)"
+   }
+  },
+  "measured_at": "2026-08-20T01:28:25Z"
+ },
+ "market": {
+  "market_snapshot": {
+   "schema": "csoai.dorado/0.1",
+   "measured_at": "2026-08-20T01:28:26Z",
+   "quotes": {
+    "^GSPC": {
+     "name": "S&P 500",
+     "price": 7707.98,
+     "prev": 7748.5,
+     "log_return": -0.005243,
+     "region": "WEST",
+     "tz": "America/New_York"
+    },
+    "^FTSE": {
+     "name": "FTSE 100",
+     "price": 10743.35,
+     "prev": 10833.2,
+     "log_return": -0.008329,
+     "region": "WEST",
+     "tz": "Europe/London"
+    },
+    "^GDAXI": {
+     "name": "DAX                           P",
+     "price": 26091.33,
+     "prev": 26331.07,
+     "log_return": -0.009147,
+     "region": "WEST",
+     "tz": "Europe/Berlin"
+    },
+    "^HSI": {
+     "name": "HANG SENG INDEX",
+     "price": 25495.07,
+     "prev": 25440.17,
+     "log_return": 0.002156,
+     "region": "EAST",
+     "tz": "Asia/Hong_Kong"
+    },
+    "^N225": {
+     "name": "Nikkei 225",
+     "price": 66186.45,
+     "prev": 68713.8,
+     "log_return": -0.037474,
+     "region": "EAST",
+     "tz": "Asia/Tokyo"
+    },
+    "000001.SS": {
+     "name": "SSE Composite Index",
+     "price": 3894.422,
+     "prev": 3926.965,
+     "log_return": -0.008322,
+     "region": "EAST",
+     "tz": "Asia/Shanghai"
+    }
+   },
+   "pair_gaps": {
+    "^HSI|^GSPC": {
+     "east": {
+      "symbol": "^HSI",
+      "name": "HANG SENG INDEX",
+      "price": 25495.07,
+      "log_return": 0.002156
+     },
+     "west": {
+      "symbol": "^GSPC",
+      "name": "S&P 500",
+      "price": 7707.98,
+      "log_return": -0.005243
+     },
+     "gap": 0.007399,
+     "gap_pct": 230.762,
+     "interpretation": "EAST_OVERPERFORMS",
+     "measured_at": "2026-08-20T01:28:26Z"
+    },
+    "^HSI|^FTSE": {
+     "east": {
+      "symbol": "^HSI",
+      "name": "HANG SENG INDEX",
+      "price": 25495.07,
+      "log_return": 0.002156
+     },
+     "west": {
+      "symbol": "^FTSE",
+      "name": "FTSE 100",
+      "price": 10743.35,
+      "log_return": -0.008329
+     },
+     "gap": 0.010484,
+     "gap_pct": 137.3102,
+     "interpretation": "EAST_OVERPERFORMS",
+     "measured_at": "2026-08-20T01:28:26Z"
+    },
+    "^HSI|^GDAXI": {
+     "east": {
+      "symbol": "^HSI",
+      "name": "HANG SENG INDEX",
+      "price": 25495.07,
+      "log_return": 0.002156
+     },
+     "west": {
+      "symbol": "^GDAXI",
+      "name": "DAX                           P",
+      "price": 26091.33,
+      "log_return": -0.009147
+     },
+     "gap": 0.011302,
+     "gap_pct": -2.2853,
+     "interpretation": "EAST_OVERPERFORMS",
+     "measured_at": "2026-08-20T01:28:26Z"
+    },
+    "^N225|^GSPC": {
+     "east": {
+      "symbol": "^N225",
+      "name": "Nikkei 225",
+      "price": 66186.45,
+      "log_return": -0.037474
+     },
+     "west": {
+      "symbol": "^GSPC",
+      "name": "S&P 500",
+      "price": 7707.98,
+      "log_return": -0.005243
+     },
+     "gap": -0.032231,
+     "gap_pct": 758.6744,
+     "interpretation": "WEST_OVERPERFORMS",
+     "measured_at": "2026-08-20T01:28:26Z"
+    },
+    "^N225|^FTSE": {
+     "east": {
+      "symbol": "^N225",
+      "name": "Nikkei 225",
+      "price": 66186.45,
+      "log_return": -0.037474
+     },
+     "west": {
+      "symbol": "^FTSE",
+      "name": "FTSE 100",
+      "price": 10743.35,
+      "log_return": -0.008329
+     },
+     "gap": -0.029146,
+     "gap_pct": 516.069,
+     "interpretation": "WEST_OVERPERFORMS",
+     "measured_at": "2026-08-20T01:28:26Z"
+    },
+    "^N225|^GDAXI": {
+     "east": {
+      "symbol": "^N225",
+      "name": "Nikkei 225",
+      "price": 66186.45,
+      "log_return": -0.037474
+     },
+     "west": {
+      "symbol": "^GDAXI",
+      "name": "DAX                           P",
+      "price": 26091.33,
+      "log_return": -0.009147
+     },
+     "gap": -0.028328,
+     "gap_pct": 153.6722,
+     "interpretation": "WEST_OVERPERFORMS",
+     "measured_at": "2026-08-20T01:28:26Z"
+    },
+    "000001.SS|^GSPC": {
+     "east": {
+      "symbol": "000001.SS",
+      "name": "SSE Composite Index",
+      "price": 3894.422,
+      "log_return": -0.008322
+     },
+     "west": {
+      "symbol": "^GSPC",
+      "name": "S&P 500",
+      "price": 7707.98,
+      "log_return": -0.005243
+     },
+     "gap": -0.003078,
+     "gap_pct": -49.4755,
+     "interpretation": "WEST_OVERPERFORMS",
+     "measured_at": "2026-08-20T01:28:26Z"
+    },
+    "000001.SS|^FTSE": {
+     "east": {
+      "symbol": "000001.SS",
+      "name": "SSE Composite Index",
+      "price": 3894.422,
+      "log_return": -0.008322
+     },
+     "west": {
+      "symbol": "^FTSE",
+      "name": "FTSE 100",
+      "price": 10743.35,
+      "log_return": -0.008329
+     },
+     "gap": 7e-06,
+     "gap_pct": -63.7504,
+     "interpretation": "EAST_OVERPERFORMS",
+     "measured_at": "2026-08-20T01:28:26Z"
+    },
+    "000001.SS|^GDAXI": {
+     "east": {
+      "symbol": "000001.SS",
+      "name": "SSE Composite Index",
+      "price": 3894.422,
+      "log_return": -0.008322
+     },
+     "west": {
+      "symbol": "^GDAXI",
+      "name": "DAX                           P",
+      "price": 26091.33,
+      "log_return": -0.009147
+     },
+     "gap": 0.000825,
+     "gap_pct": -85.0739,
+     "interpretation": "EAST_OVERPERFORMS",
+     "measured_at": "2026-08-20T01:28:26Z"
+    }
+   },
+   "register": "MEASURED \u2014 deterministic live-data predicates (Design Law 1)"
+  },
+  "register": "MEASURED (live quotes) \u2014 context, not conformance"
+ },
+ "human_ai": {
+  "provision": "EU-AI-Act-2024-1689-Art6",
+  "human": {
+   "n": 60,
+   "correct": 40,
+   "score": 0.6667,
+   "register": "REPORTED"
+  },
+  "ai": {
+   "n": 60,
+   "correct": 55,
+   "score": 0.9167,
+   "register": "REPORTED"
+  },
+  "note": "REPORTED context \u2014 humans and AI never ranked against each other for money (firewall)",
+  "measured_at": "2026-08-20T01:28:26Z"
+ }
+}

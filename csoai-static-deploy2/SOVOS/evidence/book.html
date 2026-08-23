@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Book an Evidence Pack — Council of AI</title>
+<style>
+ body{font-family:system-ui,sans-serif;background:#02020a;color:#e6e6e6;margin:0;line-height:1.6}
+ .wrap{max-width:720px;margin:0 auto;padding:2rem 1.5rem}
+ h1{color:#c9a84c;font-size:1.8rem} h2{color:#8ab4f8}
+ .sub{color:#7f90a0}
+ .pill{display:inline-block;border:1px solid #c9a84c;border-radius:100px;padding:2px 12px;font-size:.78rem;color:#c9a84c;margin:0 4px}
+ label{display:block;margin-top:1rem;font-size:.9rem;color:#9aa5b1}
+ input,select,textarea{width:100%;background:#0d1220;border:1px solid #1c2a45;border-radius:8px;color:#e6e6e6;padding:10px;font-size:1rem;margin-top:.3rem}
+ button{background:#c9a84c;color:#000;border:none;border-radius:8px;padding:12px 22px;font-weight:600;font-size:1rem;cursor:pointer;margin-top:1.2rem;width:100%}
+ .foot{color:#7f90a0;font-size:.8em;text-align:center;margin-top:2rem;padding-top:1rem;border-top:1px solid #1c2a45}
+ a{color:#8ab4f8}
+ note{display:block;background:#0d1220;border:1px solid #1c2a45;border-radius:8px;padding:.9rem 1rem;margin-top:1.4rem;font-size:.9rem}
+</style></head><body>
+<div class="wrap">
+<p class="pill">Council of AI</p><p class="pill">Book an Evidence Pack</p>
+<h1>Book a 5-day Evidence Pack</h1>
+<p class="sub">A signed, independently verifiable attestation for one of your use-cases — with the
+verify URL + methodology — so you see the <b>Y-axis</b> run clean before you scale. Buyer-side,
+never the scored. <b>Measurement, not certification.</b></p>
+
+<note><b>What you get:</b> an Ed25519-signed receipt (key never leaves the signing node) + live in-browser
+verification + the clean methodology + the independence register. Priced on the bands (€8–20k / €25–80k /
+€5–15k/yr).</note>
+
+<form id="bk" onsubmit="return send()">
+ <label>Name</label><input id="n" required>
+ <label>Organisation</label><input id="o" required>
+ <label>Email</label><input id="e" type="email" required>
+ <label>Regime of interest</label>
+ <select id="r"><option>EU AI Act Article 50</option><option>MiCA / FCA</option><option>Illinois SB 315</option><option>AI-Liability insurance</option><option>Other</option></select>
+ <label>Brief use-case</label><textarea id="u" rows="3" placeholder="e.g. Art 50 marking for a fintech AI assistant"></textarea>
+ <button id="b">Submit</button>
+ <span id="s"></span>
+</form><div style="background:#0d1220;border:1px solid #1c2a45;border-radius:8px;padding:1rem;margin-top:1.4rem">
+<h3 style="color:#8ab4f8;margin:.2rem 0 .5rem">Payment — A2A (x402 / USDC on Base L2)</h3>
+<p style="font-size:.85rem;color:#9aa5b1">No Stripe account needed. Pay with <b>USDC on Base L2</b> via <b>x402</b>
+(agent-to-agent). {SIGNED_RECEIPT} + a live verify URL (Ed25519, key never leaves).</p>
+<a href="#" style="background:#c9a84c;color:#000;padding:12px 22px;border-radius:8px;text-decoration:none;font-weight:600;display:inline-block;margin-top:.5rem">Pay with USDC (x402) → <code>0x212686404A7D1E1fD88F35eD6200c3aF7A78ae31</code></a>
+<span style="font-size:.8rem;color:#7f90a0">· A2A · USDC / Base L2 · receiver <code>0x212686404A7D1E1fD88F35eD6200c3aF7A78ae31</code> · signed 3KB card</span>
+</div>
+
+<div class="foot">Council of AI (CSOAI Ltd, UK #16939677) · measurement, not certification · buyer-side, signed,
+verifiable. Ed25519 private key never leaves the pod.</div>
+</div>
+<script>
+ function send(){
+   var n=document.getElementById('n').value,o=document.getElementById('o').value,e=document.getElementById('e').value,r=document.getElementById('r').value,u=document.getElementById('u').value;
+   document.getElementById('s').textContent='Submitted — we will email you to book the pack. Please also verify our proof at /verify.';
+   if(window.fetch){fetch('/submit-lead',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name:n,org:o,email:e,regime:r,use_case:u})}).catch(function(){})}
+   return false;
+ }
+</script>
+</body></html>

@@ -1,0 +1,16 @@
+{
+  "id": "publication-kit",
+  "kind": "state-doc",
+  "claim": "measurement",
+  "artifact_path": "SOVOS/PUBLICATION-KIT-2026-08-22.md",
+  "artifact_sha256": "16c02fd20311cd4bb5896a8560024375a5980263c3965eb77ba9f2642e4fc942",
+  "grammar": "verified measurement credential - measurement, not certification",
+  "note": "signed on signing node; ed25519 key never leaves",
+  "signature": {
+    "kind": "ed25519",
+    "sig": "nNPyULqhLkqRWSNEQvGUZhDsVS1d/P4SM6KAxNxihfmzC8KKLVDb7or3XzsERM/mlcwpZ+x/AukdtrSsSKZrBQ==",
+    "body_sha256": "d3b3bb1dc411a3fc1df2a18fd775ae48302925152ae15268a405c60b4f69a81e",
+    "pubkey": "bWbk52E47J6EkY4+pu0Hh/B1l1175AZoZsDEBr0EfWA=",
+    "note": "Ed25519 over the canonical body; verify with sign.py --verify. PQC upgrade: ML-DSA-65 via liboqs \u2014 same body, swap the primitive."
+  }
+}

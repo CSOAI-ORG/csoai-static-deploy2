@@ -1,7 +1,7 @@
 <!doctype html><html lang="en"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>MEOK Workspace — watch your Sovereign work</title>
-<meta name="description" content="A glass-box agentic AI-OS: your Sovereign works in the desktop — bringing up MCP cards, the 3D world, tools — while its two J-Space brains (logic + intuition) show live on the right. You watch it think and act.">
+<title>MEOK Workspace — watch your companion work</title>
+<meta name="description" content="A glass-box agentic AI-OS: your companion works in the desktop — bringing up MCP cards, the 3D world, tools — while its two J-Space brains (logic + intuition) show live on the right. You watch it think and act.">
 <style>
 :root{--bg:#0d0f14;--panel:#151922;--panel2:#1b2029;--ink:#eef1f6;--dim:#93a0b4;--gold:#e8c877;--line:#252c38;--left:#6ea8ff;--right:#e59bd8;--ok:#57c98a}
 *{box-sizing:border-box}
@@ -69,9 +69,21 @@ body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.5 -apple-system,
 .jspacebtns{display:flex;gap:6px;padding:8px 13px;border-top:1px solid var(--line)}
 .jspacebtns button{flex:1;background:var(--panel2);border:1px solid var(--line);color:var(--dim);font:600 11px inherit;padding:6px;border-radius:8px;cursor:pointer}
 .jspacebtns button:hover{color:var(--ink);border-color:var(--gold)}
-</style></head><body>
+</style>
+<meta property="og:title" content="MEOK Workspace — watch your companion work"/>
+<meta property="og:description" content="A glass-box agentic AI-OS: your companion works in the desktop — bringing up MCP cards, the 3D world, tools — while its two J-Space brains (logic + intuition) show live on the right. You watch it think and act."/>
+<meta property="og:type" content="website"/>
+<meta property="og:url" content="https://meok.ai/workspace"/>
+<meta property="og:image" content="https://meok.ai/icon-512.png"/>
+<meta property="og:site_name" content="MEOK"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<link rel="canonical" href="https://meok.ai/workspace.html"/>
+<link href="https://meok.ai/workspace.llm.json" rel="alternate" title="LLM representation of this page" type="application/llm+json"/>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebPage", "name": "MEOK", "url": "https://meok.ai/workspace", "description": "A glass-box agentic AI-OS: your companion works in the desktop — bringing up MCP cards, the 3D world, tools — while its two J-Space brains (logic + intuition) show live on the right. You watch it think and act.", "inLanguage": "en", "isPartOf": {"@type": "WebSite", "name": "MEOK", "url": "https://meok.ai"}}</script>
+<link rel="stylesheet" href="/css/meok-system.css"/>
+</head><body>
 <div class="top">
-  <span class="m">M</span><b>MEOK Workspace</b><span class="dim" id="who">· your Sovereign</span>
+  <span class="m">M</span><b>MEOK Workspace</b><span class="dim" id="who">· your companion</span>
   <span class="sp"></span>
   <span class="dim" id="membadge" title="what I remember about you — signed, bonded to you" style="margin-right:6px">🧠 0</span>
   <a href="/council.html">🏛 Council</a><a href="/connect.html">🔗 Any AI</a><a href="/">☰ MEOK OS</a>
@@ -94,10 +106,10 @@ body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.5 -apple-system,
     <h4>Full OS</h4>
     <a href="/">☰ Open MEOK OS</a>
   </nav>
-  <!-- CENTER: desktop where the Sovereign works -->
+  <!-- CENTER: desktop where the Keyholder works -->
   <div class="desk">
     <div class="deskwins" id="desk"></div>
-    <div class="empty" id="empty"><div class="orb">🐉</div><div><b>Tell your Sovereign what to do.</b><br>It'll think out loud on the right — and bring up the tools it needs, here.</div></div>
+    <div class="empty" id="empty"><div class="orb">🐉</div><div><b>Tell your companion what to do.</b><br>It'll think out loud on the right — and bring up the tools it needs, here.</div></div>
     <div class="pbar">
       <input id="q" placeholder="e.g. 'show me the world and fly to London' · 'what governs a bank' · 'sign this'">
       <button id="go">Work ⚡</button>
@@ -122,8 +134,8 @@ body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.5 -apple-system,
 </div>
 <script>
 const p=new URLSearchParams(location.search);
-const NAME=(p.get('name')||localStorage.getItem('meok_sov_name')||'your Sovereign').slice(0,60);
-const ARC=(p.get('archetype')||localStorage.getItem('meok_archetype')||'sovereign companion').slice(0,60);
+const NAME=(p.get('name')||localStorage.getItem('meok_sov_name')||'your companion').slice(0,60);
+const ARC=(p.get('archetype')||localStorage.getItem('meok_archetype')||'companion').slice(0,60);
 document.getElementById('who').textContent='· '+NAME;
 setTimeout(()=>{ try{ updateMemBadge(); }catch(e){} },0);
 const desk=document.getElementById('desk'), empty=document.getElementById('empty');
@@ -154,10 +166,10 @@ const SPAWN={
   sign:async()=>{ const w=win('🔏 Sign & verify',dots+' minting a signed proof…'); try{const d=await (await fetch('/api/sign',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({payload:{workspace_demo:NAME,ts:Date.now()}})})).json(); w.querySelector('.wb').textContent='Signed ✓ (Ed25519)\nfingerprint: '+d.fingerprint+'\npublicKey: '+(d.publicKey||'').slice(0,40)+'…\nVerify offline at /verify.html';}catch(e){w.querySelector('.wb').textContent='(signing seam unreachable)';} return w; },
   memory:()=>win('🧠 Remember','Tell me a fact in the prompt bar (e.g. "remember my daughter is allergic to peanuts") — I mint a signed, portable memory bonded to you.'),
   tools:()=>{
-    const w=win('🧰 MCP Tools · 378 sovereign cards','<input id="tsearch" placeholder="search 378 tools… (compliance, cobol, family, sign)" style="width:100%;padding:8px 10px;border-radius:8px;border:1px solid var(--line);background:var(--panel2);color:var(--ink);outline:none;font:13px inherit;box-sizing:border-box"><div id="tresults" style="margin-top:10px;display:flex;flex-direction:column;gap:6px"></div>');
+    const w=win('🧰 MCP Tools · 378 keyholder cards','<input id="tsearch" placeholder="search 378 tools… (compliance, cobol, family, sign)" style="width:100%;padding:8px 10px;border-radius:8px;border:1px solid var(--line);background:var(--panel2);color:var(--ink);outline:none;font:13px inherit;box-sizing:border-box"><div id="tresults" style="margin-top:10px;display:flex;flex-direction:column;gap:6px"></div>');
     w.style.width='360px'; w.style.height='60vh';
     const inp=w.querySelector('#tsearch'), out=w.querySelector('#tresults');
-    const spawnTool=m=>win('🧩 '+m.name, m.name+'\ncluster: '+(m.clusterLabel||m.cluster||'—')+'\ntools: '+(m.tools||'?')+'\n\n'+(m.connect||'A governed MCP in the sovereign marketplace — signed, verifiable.')+'\n\n→ Add it to Claude / any host: /connect.html');
+    const spawnTool=m=>win('🧩 '+m.name, m.name+'\ncluster: '+(m.clusterLabel||m.cluster||'—')+'\ntools: '+(m.tools||'?')+'\n\n'+(m.connect||'A governed MCP in the keyholder marketplace — signed, verifiable.')+'\n\n→ Add it to Claude / any host: /connect.html');
     async function search(q){ out.textContent='searching…'; try{ const d=await (await fetch('/api/tools'+(q?('?q='+encodeURIComponent(q)):''))).json(); const ms=d.matches||[]; out.innerHTML=''; if(!ms.length){out.textContent='no matches';return;} const hdr=document.createElement('div'); hdr.style.cssText='font-size:11px;color:var(--dim);margin-bottom:2px'; hdr.textContent=(q?'top matches':'featured')+' · '+ (d.total||378)+' total in the catalog'; out.appendChild(hdr); ms.forEach(m=>{ const c=document.createElement('div'); c.style.cssText='padding:8px 10px;background:var(--panel2);border:1px solid var(--line);border-radius:9px;cursor:pointer;font-size:12.5px'; c.innerHTML='<b>'+m.name+'</b><br><span style="color:var(--dim);font-size:11px">'+(m.clusterLabel||m.cluster||'')+' · '+(m.tools||'?')+' tools</span>'; c.onclick=()=>spawnTool(m); out.appendChild(c); }); }catch(e){ out.textContent='catalog unreachable'; } }
     let deb; inp.oninput=()=>{ clearTimeout(deb); deb=setTimeout(()=>search(inp.value.trim()),300); };
     search(''); setTimeout(()=>inp.focus(),50); return w;
@@ -218,4 +230,6 @@ document.getElementById('go').onclick=async function(){
   this.disabled=false; document.getElementById('q').value='';
 };
 document.getElementById('q').addEventListener('keydown',e=>{ if(e.key==='Enter') document.getElementById('go').click(); });
-</script></body></html>
+</script><script src="/agui-hero.js" defer></script>
+<script src="/meok-panel.js" defer></script>
+</body></html>

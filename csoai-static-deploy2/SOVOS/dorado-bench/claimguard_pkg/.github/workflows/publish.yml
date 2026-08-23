@@ -1,0 +1,22 @@
+# csoai-claimguard — trusted-publishing PyPI release (no token, OIDC)
+name: publish-pypi
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  pypi:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.11' }
+      - run: pip install --quiet build
+      - run: python -m build
+      - uses: pypa/gh-action-pypi-publish@release/v1
+        # Trusted Publishing — owner must add this repo/workflow as a trusted publisher in PyPI

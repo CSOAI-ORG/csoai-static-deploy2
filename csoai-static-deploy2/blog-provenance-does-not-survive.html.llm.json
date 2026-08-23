@@ -1,0 +1,24 @@
+{
+ "@context": "https://csoai.org/llm-context.json",
+ "type": "LLMPageSummary",
+ "url": "https://csoai.org/blog-provenance-does-not-survive.html",
+ "title": "Article 50 provenance in the real world — a measurement, not a claim | CSOAI Journal",
+ "description": "ProvBench measured what happens to EU AI Act Article 50 provenance marks when an asset actually moves: embedded manifests do not survive. The signed record, the method, and what it means.",
+ "headings": [
+  "Article 50 provenance does not survive the real world — we measured it",
+  "The experiment",
+  "The signed result",
+  "What it means",
+  "Boundary"
+ ],
+ "text": "Article 50 provenance in the real world — a measurement, not a claim | CSOAI Journal Home Journal ProvBench Article 50 provenance does not survive the real world — we measured it 2026-08-08 · CSOAI — measurement, not claim The EU AI Act Article 50 transparency rules require AI-generated content to be machine-readable and marked. The natural reading of that obligation includes provenance marking. The question no one had answered was the boring one: does a provenance mark survive the set of real-world transforms an asset actually goes through? The experiment ProvBench is a pre-registered harness. We embed a provenance manifest in an asset, then apply a sequence of ordinary transforms — a re-encode, a resize, an edit, a re-upload. We inspect the asset after each transform for whether any recognisable provenance survived. The signed result We embedded 20 manifests . Across every measured transform chain, 0 of 20 survived . That is not a claim about our skill at embedding; it is a statement about how fragile the current article-50-homologous marking surface is once content is really free to move. This is the kind of finding that has to be a number before it can be a policy. The full set, with fingerprints, is published as part of the ProvBench instrumentation and the signed result record. What it means Provenance that only lives in the file header is not protection against the copies that matter. If the rule is \"AI content must be machine-readable as AI content,\" then a marking that does not survive a resize is not meeting the rule in the real world. Measurement is the only honest way to know which marking scheme is worth relying on. Boundary This is a measurement of our test assets under our transform set, not a legal opinion and not a finding about any deployed system. It is, though, the sort of evidence the Article 50 obligation will eventually be argued against. CSOAI Ltd · UK company 16939677 · Every published figure traces to a signed, verifiable record.",
+ "text_truncated": false,
+ "register": {
+  "role": "measurement_and_attestation_support",
+  "csoai_certifies_systems": false,
+  "csoai_is_a_notified_body": false,
+  "csoai_has_enforcement_powers": false,
+  "note": "CSOAI measures and publishes evidence. It issues no conformity marks and holds no accreditation. Nothing here is certification or legal advice."
+ },
+ "generated_by": "make_llm_json.py"
+}

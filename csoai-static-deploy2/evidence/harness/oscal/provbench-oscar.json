@@ -1,0 +1,123 @@
+{
+  "oscal-version": "1.1.0",
+  "system-security-plan": {
+    "uuid": "07d77827-22cc-4668-b2b6-a0fd4558a49a",
+    "chain-id": "372de11c8752ac1aca0ebdef",
+    "metadata": {
+      "title": "CSOAI ProvBench \u2014 Article 50 provenance-marking durability assessment",
+      "version": "1.1.0",
+      "last-modified": "2026-08-13T06:50:24.748606+00:00",
+      "oscal-version": "1.1.0",
+      "implemented-by": [
+        {
+          "uuid": "11111111-2222-3333-4444-555555555555"
+        }
+      ]
+    }
+  },
+  "results": [
+    {
+      "uuid": "provbench-15asset-2026-07-30",
+      "title": "CSOAI ProvBench \u2014 Article 50 provenance-marking durability assessment",
+      "start": "2026-08-13T06:50:24.748606+00:00",
+      "end": "2026-08-13T06:50:24.748606+00:00",
+      "props": [
+        {
+          "name": "assessed-entities",
+          "value": "1"
+        },
+        {
+          "name": "passed",
+          "value": "0"
+        },
+        {
+          "name": "article-zero",
+          "value": "false"
+        }
+      ],
+      "local-definitions": {
+        "subjects": [
+          {
+            "uuid": "66ced31f-0ad4-52bb-a94c-3f9c3c43d4a3",
+            "type": "system",
+            "title": "CSOAI ProvBench 15-asset survival matrix",
+            "props": [
+              {
+                "name": "layer",
+                "value": "Article 50 provenance-marking durability"
+              }
+            ]
+          }
+        ]
+      },
+      "findings": [
+        {
+          "uuid": "b163b72a-1130-43b5-b21c-73f862e77d33",
+          "title": "chain verdict: EU-AI-ACT-ART50 \u2014 not satisfied",
+          "description": "Continuous assessment of 'EU-AI-ACT-ART50' from CSOAI ProvBench 15-asset survival matrix (layer Article 50 provenance-marking durability): geometric distance to permitted manifold = 0.1714 (threshold 0.3). Signed chain anchor: provbench-15asset-2026-07-30.",
+          "target": {
+            "type": "assessment-plan",
+            "title": "chain plan for EU-AI-ACT-ART50",
+            "target-id": "provbench-15asset-2026-07-30",
+            "location-uuids": [],
+            "props": [
+              {
+                "name": "sovos-chain-id",
+                "ns": "https://csoai.org/ns/sovos",
+                "value": "provbench-15asset-2026-07-30"
+              },
+              {
+                "name": "fisher-rao-distance",
+                "ns": "https://csoai.org/ns/sovos",
+                "value": "0.1714"
+              },
+              {
+                "name": "permitted-radius",
+                "ns": "https://csoai.org/ns/sovos",
+                "value": "0.3"
+              }
+            ]
+          },
+          "related-observations": [
+            ""
+          ],
+          "status": {
+            "state": "not-satisfied",
+            "related-information": [
+              {
+                "text": "permitted-manifold distance exceeded",
+                "source": "chain-result"
+              }
+            ]
+          }
+        }
+      ],
+      "observations": [
+        {
+          "uuid": "0f80075b-577c-4e65-94e1-9bb7a6316f5c",
+          "collected": "2026-08-13T06:50:24.748581+00:00",
+          "type": "control-objective-assessment",
+          "relevance": "CSOAI ProvBench 15-asset survival matrix [Article 50 provenance-marking durability] distance 0.1714 vs threshold 0.3 (sigma 1.0)",
+          "origins": [
+            {
+              "type": "tool",
+              "implementer-uuid": "11111111-2222-3333-4444-555555555555"
+            }
+          ],
+          "subjects": [
+            {
+              "type": "set-parameters",
+              "subject-uuid": "82798937-3ff4-595a-a9c4-4fdf1d677db9"
+            }
+          ],
+          "assessed-controls": [
+            {
+              "control-id": "EU-AI-ACT-ART50"
+            }
+          ],
+          "collecting-method": "tool-integrated"
+        }
+      ]
+    }
+  ]
+}

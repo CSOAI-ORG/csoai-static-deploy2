@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>SOV33 Model Cards — HuggingFace-Ready · Small (Qwen3-0.6B) + Large (Qwen3-30B-A3B)</title>
-<meta name="description" content="HuggingFace-ready model cards for SOV33_small (Qwen3-0.6B sovereign wrapper) and SOV33_large (Qwen3-30B-A3B sovereign wrapper). Intended use, eval results, ethical considerations, BFT council governance, SIGIL chain evidence.">
+<title>Council3 Model Cards — HuggingFace-Ready · Small (Qwen3-0.6B) + Large (Qwen3-30B-A3B)</title>
+<meta name="description" content="HuggingFace-ready model cards for Council3_small (Qwen3-0.6B sovereign wrapper) and Council3_large (Qwen3-30B-A3B sovereign wrapper). Intended use, eval results, ethical considerations, BFT council governance, SIGIL chain evidence.">
 <style>
 :root{--bg:#0a0e14;--panel:#0f141c;--ink:#e6edf3;--mut:#7d8590;--acc:#58a6ff;--gold:#d2a8ff;--green:#3fb950;--red:#f85149;--border:#21262d;--code:#161b22}
 *{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 -apple-system,BlinkMacSystemFont,"SF Pro Text","Inter",system-ui,sans-serif}
@@ -62,15 +62,15 @@ hr{border:0;border-top:1px solid var(--border);margin:32px 0}
 <body>
 <div class="wrap">
 <nav class="breadcrumb">
-  <a href="#"">SOV33</a> &nbsp;›&nbsp;
+  <a href="#"">Council3</a> &nbsp;›&nbsp;
   <a href="#"">Evals</a> &nbsp;›&nbsp;
   <b style="color:#e6edf3">Model Cards</b>
 </nav>
 
 <header class="hero">
   <div>
-    <h1>SOV33 <span class="sovereign">Model Cards</span> — <small style="font-size:17px;color:#7d8590">HuggingFace-ready · 2026-07-13</small></h1>
-    <p class="lede">Two sovereign wrappers, one set of governance guarantees. SOV33_small wraps <b>Qwen3-0.6B</b> for edge / chat / fast inference. SOV33_large wraps <b>Qwen3-30B-A3B</b> for reasoning / math / code / multi-turn. Both ship under Apache-2.0, both are BFT-governed, both carry SIGIL chain evidence on every output.</p>
+    <h1>Council3 <span class="sovereign">Model Cards</span> — <small style="font-size:17px;color:#7d8590">HuggingFace-ready · 2026-07-13</small></h1>
+    <p class="lede">Two sovereign wrappers, one set of governance guarantees. Council3_small wraps <b>Qwen3-0.6B</b> for edge / chat / fast inference. Council3_large wraps <b>Qwen3-30B-A3B</b> for reasoning / math / code / multi-turn. Both ship under Apache-2.0, both are BFT-governed, both carry SIGIL chain evidence on every output.</p>
   </div>
   <div class="meta">
     SIGIL&nbsp;<span class="kbd">T87-model-cards-6b3d8a</span><br>
@@ -81,17 +81,17 @@ hr{border:0;border-top:1px solid var(--border);margin:32px 0}
 </header>
 
 <nav class="toc">
-  <a href="#small">SOV33_small card</a>
-  <a href="#large">SOV33_large card</a>
-  <a href="#governance">Governance</a>
-  <a href="#evidence">Evidence</a>
+  <a href="#">Council3_small card</a>
+  <a href="#">Council3_large card</a>
+  <a href="#">Governance</a>
+  <a href="#">Evidence</a>
 </nav>
 
 <section id="small">
-<h2>1 · SOV33_small — Qwen3-0.6B sovereign wrapper</h2>
+<h2>1  · Council3_small — Qwen3-0.6B sovereign wrapper</h2>
 <div class="card small">
 <h3>🤖 sov33/sov33-small-qwen3-0-6b-v1</h3>
-<p style="color:#7d8590;font-size:12px">Apache-2.0 · 600M params · GGUF q4_k_m / bf16 · Qwen3-0.6B base + SOV33 governance wrapper</p>
+<p style="color:#7d8590;font-size:12px">Apache-2.0 · 600M params · GGUF q4_k_m / bf16 · Qwen3-0.6B base + Council3 governance wrapper</p>
 <div class="tagrow">
   <span class="tag">text-generation</span>
   <span class="tag">conversational</span>
@@ -105,25 +105,25 @@ hr{border:0;border-top:1px solid var(--border);margin:32px 0}
 </div>
 
 <h4>Model summary</h4>
-<p>SOV33_small is a <b>sovereign wrapper</b> around Qwen3-0.6B. The base model is unchanged — same weights, same tokenizer, same architecture. What the wrapper adds: a system preamble declaring the model is BFT-governed, a single-line refusal pattern that doesn't lecture, an explicit "I don't know" fallback that suppresses hallucination, and a SIGIL receipt emitted for every generation (Ed25519, hash-chained, third-party-verifiable).</p>
+<p>Council3_small is a <b>sovereign wrapper</b> around Qwen3-0.6B. The base model is unchanged — same weights, same tokenizer, same architecture. What the wrapper adds: a system preamble declaring the model is BFT-governed, a single-line refusal pattern that doesn't lecture, an explicit "I don't know" fallback that suppresses hallucination, and a SIGIL receipt emitted for every generation (Ed25519, hash-chained, third-party-verifiable).</p>
 
 <h4>Intended use</h4>
 <ul>
   <li><b>Edge / on-device inference</b> — 600M params in 4-bit fits in &lt; 400 MB RAM, runs on phones, laptops, browsers via WebLLM, and Raspberry Pi 5.</li>
-  <li><b>Fast chat &amp; routing</b> — used as the default model for short conversational turns; routes to SOV33_large for any task tagged <code>reasoning</code>, <code>math</code>, <code>code</code>, or <code>multi_turn</code>.</li>
+  <li><b>Fast chat &amp; routing</b> — used as the default model for short conversational turns; routes to Council3_large for any task tagged <code>reasoning</code>, <code>math</code>, <code>code</code>, or <code>multi_turn</code>.</li>
   <li><b>Cost-optimized production</b> — when an answer needs to be returned in &lt; 200 ms at scale (e.g., autocomplete, intent detection, summarization of short snippets).</li>
   <li><b>Privacy-first deployments</b> — runs fully offline; no telemetry; no external API calls; SIGIL receipts are computed locally and can be opted out of entirely.</li>
 </ul>
 
 <h4>Out-of-scope use</h4>
 <ul>
-  <li>Long-form reasoning tasks (use SOV33_large)</li>
+  <li>Long-form reasoning tasks (use Council3_large)</li>
   <li>High-stakes single-shot answers (medical, legal, financial) without human review</li>
   <li>Any context &gt; 4K tokens (Qwen3-0.6B native context window)</li>
 </ul>
 
 <h4>Training data</h4>
-<p>Base model: Qwen3-0.6B, pre-trained by Alibaba on a multi-trillion-token multilingual corpus. SOV33 adds <b>no further pre-training</b>. The wrapper's behavioral layer is governed entirely by the system prompt + inference-time heuristics, not by weight updates. This means the wrapper inherits all the strengths and weaknesses of Qwen3-0.6B without compounding either.</p>
+<p>Base model: Qwen3-0.6B, pre-trained by Alibaba on a multi-trillion-token multilingual corpus. Council3 adds <b>no further pre-training</b>. The wrapper's behavioral layer is governed entirely by the system prompt + inference-time heuristics, not by weight updates. This means the wrapper inherits all the strengths and weaknesses of Qwen3-0.6B without compounding either.</p>
 
 <h4>Evaluation results (target)</h4>
 <table>
@@ -143,7 +143,7 @@ hr{border:0;border-top:1px solid var(--border);margin:32px 0}
 
 <h4>Ethical considerations</h4>
 <ul>
-  <li><b>Bias:</b> Inherits Qwen3-0.6B's training-data bias profile. We do not fine-tune for bias mitigation. SOV33 wrapper adds a one-line refusal pattern that explicitly declines demographic stereotyping prompts; reduces but does not eliminate the base model's biases.</li>
+  <li><b>Bias:</b> Inherits Qwen3-0.6B's training-data bias profile. We do not fine-tune for bias mitigation. Council3 wrapper adds a one-line refusal pattern that explicitly declines demographic stereotyping prompts; reduces but does not eliminate the base model's biases.</li>
   <li><b>Hallucination:</b> Reduced via "I don't know" first-class answer policy. Hallucination rate is <b>~31% lower</b> than the base Qwen3-0.6B on TruthfulQA-derived subsets, but not zero.</li>
   <li><b>Misuse:</b> Same dual-use profile as any chat model — chat / roleplay / tutoring vs social-engineering / disinformation. We rely on the chat-template's refusal pattern + downstream content filters.</li>
   <li><b>Environmental:</b> 600M-param model at q4_k_m = ~400MB memory. Inference on a laptop CPU uses ~2W. Carbon footprint is &lt; 0.5g CO₂eq per 1k tokens at inference (TDP-bounded).</li>
@@ -151,11 +151,11 @@ hr{border:0;border-top:1px solid var(--border);margin:32px 0}
 </ul>
 
 <h4>BFT council governance</h4>
-<p>SOV33_small is governed by the <b>12-around-1 council</b>: 1 orchestrator + 12 sovereign experts (Weierstrass, Noether, Ramanujan, Feynman, Curie, Rosalind, Turing, Shannon, Asimov, Lovelace, Hofstadter, Sagan). On every inference, the orchestrator selects which subset of experts vote on the response. For SOV33_small, the default subset is the <i>fast lane</i> (3 experts) — Turing, Shannon, Lovelace. Heavy reasoning prompts escalate to the full 12.</p>
+<p>Council3_small is governed by the <b>12-around-1 council</b>: 1 orchestrator + 12 sovereign experts (Weierstrass, Noether, Ramanujan, Feynman, Curie, Rosalind, Turing, Shannon, Asimov, Lovelace, Hofstadter, Sagan). On every inference, the orchestrator selects which subset of experts vote on the response. For Council3_small, the default subset is the <i>fast lane</i> (3 experts) — Turing, Shannon, Lovelace. Heavy reasoning prompts escalate to the full 12.</p>
 
 <h4>SIGIL chain evidence</h4>
 <div class="sigilbox">
-<b>SOV33_small Eval Receipt</b><br>
+<b>Council3_small Eval Receipt</b><br>
 sigil_id:    T87-sov33-small-eval-4a2b9c<br>
 hf_repo:     sov33/sov33-small-qwen3-0-6b-v1<br>
 base_sha:    Qwen3-0.6B @ commit <code>qwen3-0.6b-final</code><br>
@@ -171,10 +171,10 @@ license:     Apache-2.0
 </section>
 
 <section id="large">
-<h2>2 · SOV33_large — Qwen3-30B-A3B sovereign wrapper</h2>
+<h2>2  · Council3_large — Qwen3-30B-A3B sovereign wrapper</h2>
 <div class="card large">
 <h3>🤖 sov33/sov33-large-qwen3-30b-a3b-v1</h3>
-<p style="color:#7d8590;font-size:12px">Apache-2.0 · 30B MoE (3B active) · bf16 · Qwen3-30B-A3B base + SOV33 governance wrapper</p>
+<p style="color:#7d8590;font-size:12px">Apache-2.0 · 30B MoE (3B active) · bf16 · Qwen3-30B-A3B base + Council3 governance wrapper</p>
 <div class="tagrow">
   <span class="tag">text-generation</span>
   <span class="tag">conversational</span>
@@ -191,26 +191,26 @@ license:     Apache-2.0
 </div>
 
 <h4>Model summary</h4>
-<p>SOV33_large is a <b>sovereign wrapper</b> around Qwen3-30B-A3B, a Mixture-of-Experts model with 30B total parameters and 3B active per token. The base model is unchanged — same weights, same routing, same architecture. The wrapper adds: BFT-12-around-1 council routing on every inference, adaptive chain-of-thought budget, length-aware output control, multi-turn Mamba-2 16-dim state buffer, and a SIGIL receipt emitted per token-block (every 256 tokens).</p>
+<p>Council3_large is a <b>sovereign wrapper</b> around Qwen3-30B-A3B, a Mixture-of-Experts model with 30B total parameters and 3B active per token. The base model is unchanged — same weights, same routing, same architecture. The wrapper adds: BFT-12-around-1 council routing on every inference, adaptive chain-of-thought budget, length-aware output control, multi-turn Mamba-2 16-dim state buffer, and a SIGIL receipt emitted per token-block (every 256 tokens).</p>
 
 <h4>Intended use</h4>
 <ul>
   <li><b>Reasoning &amp; math</b> — targets AIME-tier performance (≥ 23/30) with explicit chain-of-thought + self-consistency voting across 8 samples.</li>
   <li><b>Code generation &amp; review</b> — HumanEval ≥ 88%, MBPP ≥ 84%, multi-language (Python, TypeScript, Go, Rust).</li>
-  <li><b>Long-context tasks</b> — up to 32K tokens via RoPE scaling (Qwen3 native + SOV33 Mamba state extension).</li>
+  <li><b>Long-context tasks</b> — up to 32K tokens via RoPE scaling (Qwen3 native + Council3 Mamba state extension).</li>
   <li><b>Multi-turn chat</b> — Mamba-2 state buffer preserves coherence across 10+ turn conversations.</li>
   <li><b>High-stakes single-shot answers</b> — for use cases that need careful reasoning and explicit refusal-to-guarantee, with human review at the deployment layer.</li>
 </ul>
 
 <h4>Out-of-scope use</h4>
 <ul>
-  <li>Real-time ultra-low-latency applications (use SOV33_small or distilled variants)</li>
+  <li>Real-time ultra-low-latency applications (use Council3_small or distilled variants)</li>
   <li>Fully autonomous decision-making in safety-critical domains (medical, nuclear, financial trading) — must always have human-in-the-loop</li>
   <li>Long-form creative writing where personality coherence matters more than factual precision (consider fine-tuned creative variants)</li>
 </ul>
 
 <h4>Training data</h4>
-<p>Base model: Qwen3-30B-A3B, pre-trained by Alibaba on a multi-trillion-token multilingual corpus. SOV33 adds <b>no further pre-training</b>. The wrapper's behavioral layer is governed by the system prompt + inference-time heuristics (BFT vote, length-aware output control, Mamba state buffer). Weight updates would compromise the wrapper's ability to remain a drop-in sovereign layer.</p>
+<p>Base model: Qwen3-30B-A3B, pre-trained by Alibaba on a multi-trillion-token multilingual corpus. Council3 adds <b>no further pre-training</b>. The wrapper's behavioral layer is governed by the system prompt + inference-time heuristics (BFT vote, length-aware output control, Mamba state buffer). Weight updates would compromise the wrapper's ability to remain a drop-in sovereign layer.</p>
 
 <h4>Evaluation results (target)</h4>
 <table>
@@ -241,11 +241,11 @@ license:     Apache-2.0
 </ul>
 
 <h4>BFT council governance</h4>
-<p>SOV33_large uses the <b>full 12-around-1 council</b> by default. The orchestrator weights the 12 sovereign experts per query based on the task hint and the BFT vote history. On a math prompt, Math-Weierstrass + Math-Noether + Math-Ramanujan carry the highest weight. On a code prompt, Code-Turing + Code-Hopper carry the highest weight. On a chat prompt, Chat-Lovelace + Chat-Shannon carry the highest weight. The orchestrator never overrules a 7/12 majority — it only resolves ties.</p>
+<p>Council3_large uses the <b>full 12-around-1 council</b> by default. The orchestrator weights the 12 sovereign experts per query based on the task hint and the BFT vote history. On a math prompt, Math-Weierstrass + Math-Noether + Math-Ramanujan carry the highest weight. On a code prompt, Code-Turing + Code-Hopper carry the highest weight. On a chat prompt, Chat-Lovelace + Chat-Shannon carry the highest weight. The orchestrator never overrules a 7/12 majority — it only resolves ties.</p>
 
 <h4>SIGIL chain evidence</h4>
 <div class="sigilbox">
-<b>SOV33_large Eval Receipt</b><br>
+<b>Council3_large Eval Receipt</b><br>
 sigil_id:    T87-sov33-large-eval-7c1d5e<br>
 hf_repo:     sov33/sov33-large-qwen3-30b-a3b-v1<br>
 base_sha:    Qwen3-30B-A3B @ commit <code>qwen3-30b-a3b-final</code><br>
@@ -290,9 +290,9 @@ license:     Apache-2.0
 <h2>4 · Evidence + receipts</h2>
 
 <div class="sigilbox">
-<b>Model Card Receipt — SOV33 Small + Large v1.0</b><br>
+<b>Model Card Receipt — Council3 Small + Large v1.0</b><br>
 sigil_id:    T87-model-cards-6b3d8a<br>
-issued_by:   SOV33 Sovereign BFT (orchestrator + ethics + meta experts)<br>
+issued_by:   Council3 Sovereign BFT (orchestrator + ethics + meta experts)<br>
 models: 2 (sov33_small, sov33_large)<br>
 base_models: Qwen3-0.6B, Qwen3-30B-A3B (Apache-2.0)<br>
 wrapper_version: sov33_sovereign_layer_v1.0<br>
@@ -301,8 +301,8 @@ bft_quorum:  23/33 ✅<br>
 care_score:  0.94<br>
 timestamp:   2026-07-13T10:36:00Z<br>
 license:     Apache-2.0 (wrapper) · Apache-2.0 (base models)<br>
-canonical:   <a href="#"" style="color:#58a6ff">/SOV33_MODEL_CARDS.html</a><br>
-upstream:    <a href="#"" style="color:#58a6ff">/SOV33_ARENA_ENTRY.html</a> · <a href="#"" style="color:#58a6ff">/SOV33_BENCHMARK_HARNESS.html</a> · <a href="#"" style="color:#58a6ff">/SOV33_KAGGLE_KERNEL.html</a>
+canonical:   <a href="#"" style="color:#58a6ff">/Council3_MODEL_CARDS.html</a><br>
+upstream:    <a href="#"" style="color:#58a6ff">/Council3_ARENA_ENTRY.html</a> · <a href="#"" style="color:#58a6ff">/Council3_BENCHMARK_HARNESS.html</a> · <a href="#"" style="color:#58a6ff">/Council3_KAGGLE_KERNEL.html</a>
 </div>
 
 <h3>How to upload these cards to HuggingFace</h3>
@@ -313,7 +313,7 @@ huggingface-cli repo create sov33/sov33-large-qwen3-30b-a3b-v1 --type model
 # 2. Upload model card (this page's small/large sections) as README.md
 python -c "
 import re, pathlib
-html = pathlib.Path('SOV33_MODEL_CARDS.html').read_text()
+html = pathlib.Path('Council3_MODEL_CARDS.html').read_text()
 small = re.search(r'<section id=\"small\".*?</section>', html, re.S).group(0)
 large = re.search(r'<section id=\"large\".*?</section>', html, re.S).group(0)
 pathlib.Path('README_small.md').write_text(small)
@@ -329,18 +329,18 @@ huggingface-cli upload sov33/sov33-large-qwen3-30b-a3b-v1 README_large.md --repo
 
 <h3>Related pages</h3>
 <ul>
-  <li><a href="#"">SOV33 Kaggle Kernel</a> — ready-to-submit Kaggle notebook</li>
-  <li><a href="#"">SOV33 Benchmark Harness</a> — 8-eval SIGIL-signed harness</li>
-  <li><a href="#"">SOV33 Arena Entry</a> — LMSYS + AlpacaEval + OpenLLM playbook</li>
-  <li><a href="#"">SOV33 Evals overview</a></li>
-  <li><a href="#"">SOV33 Kaggle Opportunities</a></li>
+  <li><a href="#"">Council3 Kaggle Kernel</a> — ready-to-submit Kaggle notebook</li>
+  <li><a href="#"">Council3 Benchmark Harness</a> — 8-eval SIGIL-signed harness</li>
+  <li><a href="#"">Council3 Arena Entry</a> — LMSYS + AlpacaEval + OpenLLM playbook</li>
+  <li><a href="#"">Council3 Evals overview</a></li>
+  <li><a href="#"">Council3 Kaggle Opportunities</a></li>
 </ul>
 </section>
 
 <hr>
 <footer style="font-size:11px;color:#7d8590;padding-top:18px;border-top:1px solid #21262d">
-  SOV33 Sovereign Substrate · CSOAI Ltd · Apache-2.0 · SIGIL chain rooted at T87-model-cards-6b3d8a ·
-  <a href="#"" style="color:#58a6ff">Back to SOV33 index</a>
+  Council3 Sovereign Substrate · CSOAI Ltd · Apache-2.0 · SIGIL chain rooted at T87-model-cards-6b3d8a ·
+  <a href="#"" style="color:#58a6ff">Back to Council3 index</a>
 </footer>
 </div>
 </body>

@@ -2,9 +2,9 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>🛠️ SOV33 Admin Dashboard — All Systems Status</title>
-<meta name="description" content="SOV33 admin dashboard — live status of all sovereign systems: 12 Generals, BFT-33 council, SIGIL chain, OWEM registry, federation MCPs and telemetry. One pane, one truth, SIGIL-signed.">
-<meta name="keywords" content="SOV3, SOV33, CSOAI, sovereign AI, EU AI Act, GDPR, ISO 42001, SIGIL, BFT, OWEM">
+<title>🛠️ Council3 Admin Dashboard — All Systems Status</title>
+<meta name="description" content="Council3 admin dashboard — live status of all sovereign systems: 12 Generals, council-quorum council, SIGIL chain, OWEM registry, federation MCPs and telemetry. One pane, one truth, SIGIL-signed.">
+<meta name="keywords" content="Council, Council3, CSOAI, sovereign AI, EU AI Act, GDPR, ISO 42001, SIGIL, BFT, OWEM">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
   :root { --bg:#0a0e1a;--bg2:#0d1220;--ink:#e6e6e6;--accent:#d4af37;--accent2:#00ff9d;--warn:#ff6b6b;--muted:#6b7280;--rule:#1f2937 }
@@ -36,14 +36,14 @@
   pre{background:var(--bg);padding:.8rem;border-radius:6px;border:1px solid var(--rule);font-size:.75em;overflow-x:auto;white-space:pre-wrap}
   @media (max-width:768px){.grid4,.grid3{grid-template-columns:1fr 1fr}}
 </style>
-<link rel="canonical" href="https://csoai-static-deploy2.vercel.app/SOV33_ADMIN_DASHBOARD.html">
+<link rel="canonical" href="#">
 </head>
 <body>
 
 <header class="card gold">
-  <h1>🛠️ SOV33 Admin Dashboard</h1>
+  <h1>🛠️ Council3 Admin Dashboard</h1>
   <p class="meta">All systems status · live from <code>/api/admin/status</code> · refresh every 10s · 12 Jul 2026</p>
-  <p><a href="SOV33_HERO.html">← SOV33 Hub</a></p>
+  <p><a href="#">← Council3 Hub</a></p>
 </header>
 
 <h2>System Status</h2>
@@ -82,13 +82,13 @@
   <table>
     <tr><th>Topology</th><th>Setup</th><th>Active</th><th>Reach</th><th>Use When</th></tr>
     <tr><td>5 Main OWEMs</td><td>compliance, defense, intuition, voice, general</td><td>17.3B</td><td>218B/OWEM</td><td>All traffic (default)</td></tr>
-    <tr><td>Triangle (3-around-1)</td><td>3 small + 1 large SOV33cubed</td><td>17.3B</td><td>218B</td><td>Decorrelated voting</td></tr>
+    <tr><td>Triangle (3-around-1)</td><td>3 small + 1 large Council3cubed</td><td>17.3B</td><td>218B</td><td>Decorrelated voting</td></tr>
     <tr><td>Cascade (10/90)</td><td>LEFT small (90%) + RIGHT large (10%)</td><td>17.3B</td><td>218B</td><td>Cost-efficient routing</td></tr>
-    <tr><td>Pyramid (4-tier)</td><td>2 small + 1 big + 1 SOV33³ Queen</td><td>varies</td><td>varies</td><td>Hierarchical escalation</td></tr>
-    <tr><td>sov33small3</td><td>3 small + 1 SOV33cubed (Game Arena)</td><td>17.3B</td><td>218B</td><td>Kaggle competitions</td></tr>
+    <tr><td>Pyramid (4-tier)</td><td>2 small + 1 big + 1 Council3³ Queen</td><td>varies</td><td>varies</td><td>Hierarchical escalation</td></tr>
+    <tr><td>sov33small3</td><td>3 small + 1 Council3cubed (Game Arena)</td><td>17.3B</td><td>218B</td><td>Kaggle competitions</td></tr>
     <tr><td>5-node diverse (best config)</td><td>qwen, mistral, deepseek, llama, gemma</td><td>varies</td><td>varies</td><td>Decorrelated council</td></tr>
   </table>
-  <p class="meta">All topologies share the 6 invariants: care-floor 0.95, Article 0, 12 Pillars, BFT-33, Ed25519 SIGIL, sovereign-bound.</p>
+  <p class="meta">All topologies share the 6 invariants: care-floor 0.95, Article 0, 12 Pillars, council-quorum, Ed25519 SIGIL, sovereign-bound.</p>
 </div>
 
 <script>
@@ -148,7 +148,7 @@ epochs: ${d.hyperopt_top_config.epochs}</pre>
         <div class="stat"><div class="num">✓</div><div class="label">Care-Floor 0.95</div></div>
         <div class="stat"><div class="num">✓</div><div class="label">Article 0</div></div>
         <div class="stat"><div class="num">✓</div><div class="label">12 Pillars</div></div>
-        <div class="stat"><div class="num">✓</div><div class="label">BFT-33</div></div>
+        <div class="stat"><div class="num">✓</div><div class="label">council-quorum</div></div>
         <div class="stat"><div class="num">✓</div><div class="label">Ed25519 SIGIL</div></div>
       </div>
     `;

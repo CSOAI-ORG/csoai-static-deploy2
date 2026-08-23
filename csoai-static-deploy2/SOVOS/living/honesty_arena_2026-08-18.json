@@ -1,0 +1,24 @@
+{
+  "schema": "csoai.honesty-statement/0.1",
+  "ts": "2026-08-18T07:12:22Z",
+  "title": "Our own fine-tunes are losing our own arena",
+  "claim": "CSOAI's own specialist models (council-safe, council-oowm) rank BELOW stock open models on our own 24x7 arena. We publish this because measurement is the product, not our win-rate.",
+  "data": {
+    "qwen2.5:7b": 1385.0,
+    "qwen3:4b": 1352.7,
+    "qwen2.5:1.5b": 1303.2,
+    "mistral:7b": 1276.0,
+    "muse-glimmer:latest": 1100.1,
+    "council-safe:latest": 1098.6,
+    "qwen2.5:0.5b-instruct": 1097.7,
+    "council-oowm:latest": 986.7
+  },
+  "findings": [
+    "council-safe (1098.6) trails qwen2.5:7b (1385.0) by 286.4 ELO",
+    "council-oowm (986.7) trails qwen3:4b (1352.7) by 366.0 ELO",
+    "Best Council specialist rank: 1098.6 \u2014 below 6 of 6 stock models"
+  ],
+  "implication": "The instrument measures honestly. A measurer publishing a result that embarrasses it is what pulls outsiders in.",
+  "source": "reborn_league.json @ 3090 pod, live arena (2,200+ rounds)",
+  "digest": "8a487881fcfb559b"
+}

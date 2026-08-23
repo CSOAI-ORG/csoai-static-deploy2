@@ -24,7 +24,19 @@ button.copy{background:var(--ink);color:#fff;border:0;border-radius:9px;padding:
 a{color:var(--gold)}
 .foot{color:var(--dim);font-size:13px;margin-top:24px;border-top:1px solid var(--line);padding-top:16px}
 .ok{color:var(--ok);font-weight:600}
-</style></head><body><div class="wrap">
+</style>
+<meta property="og:title" content="Sovereign on Alexa — “Alexa, ask my Sovereign”"/>
+<meta property="og:description" content="Add your sovereign AI character to any Amazon Echo. A real Alexa Skills Kit endpoint is already live — point a custom skill at it and talk to your Sovereign by voice."/>
+<meta property="og:type" content="website"/>
+<meta property="og:url" content="https://meok.ai/alexa"/>
+<meta property="og:image" content="https://meok.ai/icon-512.png"/>
+<meta property="og:site_name" content="MEOK"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<link rel="canonical" href="https://meok.ai/alexa.html"/>
+<link href="https://meok.ai/alexa.llm.json" rel="alternate" title="LLM representation of this page" type="application/llm+json"/>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebPage", "name": "MEOK", "url": "https://meok.ai/alexa", "description": "Add your sovereign AI character to any Amazon Echo. A real Alexa Skills Kit endpoint is already live — point a custom skill at it and talk to your Sovereign by voice.", "inLanguage": "en", "isPartOf": {"@type": "WebSite", "name": "MEOK", "url": "https://meok.ai"}}</script>
+<link rel="stylesheet" href="/css/meok-system.css"/>
+</head><body><div class="wrap">
 <div class="brand"><span class="m">M</span> MEOK · sovereign</div>
 <h1>“Alexa, ask <span class="g">my Sovereign</span>.”</h1>
 <p class="sub">Your sovereign AI character on any Amazon Echo. A real <b>Alexa Skills Kit endpoint is already live</b> at <code>/api/alexa</code> — it speaks Alexa's protocol and routes to your governed Sovereign. Point a custom skill at it and talk by voice. <span class="ok">✓ endpoint live</span></p>
@@ -56,4 +68,6 @@ a{color:var(--gold)}
 </div>
 <script>
 document.querySelectorAll('button.copy').forEach(b=>b.onclick=async()=>{const t=document.getElementById(b.dataset.copy).textContent;try{await navigator.clipboard.writeText(t);const o=b.textContent;b.textContent='Copied ✓';setTimeout(()=>b.textContent=o,1400);}catch(e){}});
-</script></body></html>
+</script><script src="/agui-hero.js" defer></script>
+<script src="/meok-panel.js" defer></script>
+</body></html>

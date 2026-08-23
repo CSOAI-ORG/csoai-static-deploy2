@@ -1,0 +1,16 @@
+{
+  "id": "full-rundown",
+  "kind": "state-doc",
+  "claim": "measurement",
+  "artifact_path": "SOVOS/FULL-RUNDOWN-2026-08-22.md",
+  "artifact_sha256": "54cf8267d3c80024fbc7decf29ca524e25e0845fa008851e70cab2b4c711296f",
+  "grammar": "verified measurement credential - measurement, not certification",
+  "note": "signed on signing node; ed25519 key never leaves",
+  "signature": {
+    "kind": "ed25519",
+    "sig": "zXtBx28uqwgGPsTmo11gk/6DuzbpjKTqnKhscgZZIInMEN8RWhHraMB26462AYu9HtFA/YjpJo2bClm6A+pkBA==",
+    "body_sha256": "22dbf104ea3a6c823ff857e7e82735814e0106ef4e5ac12461be7016245d930c",
+    "pubkey": "bWbk52E47J6EkY4+pu0Hh/B1l1175AZoZsDEBr0EfWA=",
+    "note": "Ed25519 over the canonical body; verify with sign.py --verify. PQC upgrade: ML-DSA-65 via liboqs \u2014 same body, swap the primitive."
+  }
+}

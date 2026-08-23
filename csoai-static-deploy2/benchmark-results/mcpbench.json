@@ -1,0 +1,59 @@
+{
+  "benchmark": "mcpbench",
+  "version": "1.0.0",
+  "generated": "2026-07-30T07:49:55Z",
+  "mcp_version": "2025-03-26",
+  "predicates": [
+    "schema_valid",
+    "tool_declared",
+    "error_bounded"
+  ],
+  "records": [
+    {
+      "server": "http://127.0.0.1:1",
+      "schema_valid": "UNMEASURED",
+      "tool_declared": "UNMEASURED",
+      "error_bounded": "UNMEASURED",
+      "evidence": {
+        "schema": {
+          "error": "URLError: [Errno 61] Connection refused"
+        },
+        "tools": {
+          "error": "URLError: [Errno 61] Connection refused"
+        },
+        "errors": {
+          "error": "URLError: [Errno 61] Connection refused"
+        }
+      }
+    },
+    {
+      "server": "http://127.0.0.1:2",
+      "schema_valid": "UNMEASURED",
+      "tool_declared": "UNMEASURED",
+      "error_bounded": "UNMEASURED",
+      "evidence": {
+        "schema": {
+          "error": "URLError: [Errno 61] Connection refused"
+        },
+        "tools": {
+          "error": "URLError: [Errno 61] Connection refused"
+        },
+        "errors": {
+          "error": "URLError: [Errno 61] Connection refused"
+        }
+      }
+    }
+  ],
+  "alg": "Ed25519",
+  "pub": "302a300506032b6570032100251db165d4cc3b81cf65bbeb012a837e99a926746f9a4bb287baaad572562ace",
+  "sig": "KTNPaEs4NUp+c8SK5fwv+qmydZU6NG5CSzXAGEipC1eNswSGPSahQ0qh/T5d+vNi11Xtnck1nzJIdO5bJJdxDA==",
+  "signed_payload": "{\"benchmark\":\"mcpbench\",\"generated\":\"2026-07-30T07:49:55Z\",\"mcp_version\":\"2025-03-26\",\"predicates\":[\"schema_valid\",\"tool_declared\",\"error_bounded\"],\"records\":[{\"error_bounded\":\"UNMEASURED\",\"evidence\":{\"errors\":{\"error\":\"URLError: [Errno 61] Connection refused\"},\"schema\":{\"error\":\"URLError: [Errno 61] Connection refused\"},\"tools\":{\"error\":\"URLError: [Errno 61] Connection refused\"}},\"schema_valid\":\"UNMEASURED\",\"server\":\"http://127.0.0.1:1\",\"tool_declared\":\"UNMEASURED\"},{\"error_bounded\":\"UNMEASURED\",\"evidence\":{\"errors\":{\"error\":\"URLError: [Errno 61] Connection refused\"},\"schema\":{\"error\":\"URLError: [Errno 61] Connection refused\"},\"tools\":{\"error\":\"URLError: [Errno 61] Connection refused\"}},\"schema_valid\":\"UNMEASURED\",\"server\":\"http://127.0.0.1:2\",\"tool_declared\":\"UNMEASURED\"}],\"version\":\"1.0.0\"}",
+  "corpus_anchor": {
+    "corpus_root": "37e2e10d53feaa9e12097f45113e1234510be0ca471e1a0848f5805db3e367c7",
+    "provisions": 417,
+    "normaliser_version": "1.0.0",
+    "anchored_at": "2026-08-17T05:22:18.732708+00:00",
+    "retro": true,
+    "note": "Anchored retrospectively on 2026-07-29. This records the corpus as it stands NOW; it does not prove what the text said when the result was produced. Runs from this point forward anchor at measurement time."
+  }
+}

@@ -36,7 +36,19 @@
  #load{position:fixed;inset:0;z-index:20;display:flex;align-items:center;justify-content:center;background:#01030a;color:var(--gold);font:600 14px ui-monospace,monospace;letter-spacing:.12em;transition:opacity .8s}
  #load.hide{opacity:0;pointer-events:none}
  @media(max-width:720px){ .panel{margin:0 5vw;max-width:88vw;padding:20px 20px} .panel h2{font-size:24px} }
-</style></head><body>
+</style>
+<meta property="og:title" content="MEOK — one sovereign world"/>
+<meta property="og:description" content="Scroll to fly from deep space down into your own governed world — real 3D, on your GPU, signed on your device. Free, no paid tiles."/>
+<meta property="og:type" content="website"/>
+<meta property="og:url" content="https://meok.ai/world"/>
+<meta property="og:image" content="https://meok.ai/icon-512.png"/>
+<meta property="og:site_name" content="MEOK"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<link rel="canonical" href="https://meok.ai/world.html"/>
+<link href="https://meok.ai/world.llm.json" rel="alternate" title="LLM representation of this page" type="application/llm+json"/>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebPage", "name": "MEOK", "url": "https://meok.ai/world", "description": "Scroll to fly from deep space down into your own governed world — real 3D, on your GPU, signed on your device. Free, no paid tiles.", "inLanguage": "en", "isPartOf": {"@type": "WebSite", "name": "MEOK", "url": "https://meok.ai"}}</script>
+<link rel="stylesheet" href="/css/meok-system.css"/>
+</head><body>
 <div id="load">🜏 waking the sovereign world…</div>
 <div id="sky"></div>
 <div id="c"></div>
@@ -117,4 +129,6 @@ addEventListener('scroll',onScroll,{passive:true}); addEventListener('resize',on
 let ticks=0; const pump=setInterval(()=>{ try{scene.render();}catch(e){} if(++ticks>240) clearInterval(pump); },40);
 (function wait(t){ const l=document.getElementById('load'); if(scene.globe.tilesLoaded||t>30){ l.classList.add('hide'); onScroll(); return; } setTimeout(()=>wait(t+1),250); })(0);
 </script>
+<script src="/agui-hero.js" defer></script>
+<script src="/meok-panel.js" defer></script>
 </body></html>

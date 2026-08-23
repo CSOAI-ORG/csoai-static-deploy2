@@ -1,0 +1,40 @@
+{
+  "registered": "2026-07-29",
+  "experiment": "retrieval_bench, third run",
+  "change_under_test": [
+    "13 EU AI Act annexes ingested (corpus 404 -> 417 rows)",
+    "expand_crossrefs(): retrieved articles pull in the annexes they cite, max 2",
+    "annex labels fixed (were rendering as 'Article -3')",
+    "text_truncated now reported per hit"
+  ],
+  "prior_results": {
+    "ungated": {
+      "delta": -9.16,
+      "ci": [
+        -17.64,
+        -0.69
+      ],
+      "verdict": "significant harm"
+    },
+    "gated": {
+      "delta": -5.26,
+      "ci": [
+        -12.66,
+        2.13
+      ],
+      "verdict": "no effect shown"
+    }
+  },
+  "prediction_written_before_running": "The annexes remove one confound but I do NOT expect this to clear zero. The measured problem was that a 0.5B model cannot USE statute even when the right statute is in front of it; giving it MORE statute (article + annex) makes the context longer, not easier. Best case is the delta moves toward zero rather than past it. If it does clear zero I will be surprised and will say so.",
+  "success_criterion": "delta > 0 AND 95% CI excludes zero. Anything else means retrieval stays OFF.",
+  "verdict_rule": "Must test SIGN as well as significance. A significant negative is HARM, not a win.",
+  "n_expected": 38,
+  "corpus_anchor": {
+    "corpus_root": "37e2e10d53feaa9e12097f45113e1234510be0ca471e1a0848f5805db3e367c7",
+    "provisions": 417,
+    "normaliser_version": "1.0.0",
+    "anchored_at": "2026-08-17T05:22:18.750665+00:00",
+    "retro": true,
+    "note": "Anchored retrospectively on 2026-07-29. This records the corpus as it stands NOW; it does not prove what the text said when the result was produced. Runs from this point forward anchor at measurement time."
+  }
+}

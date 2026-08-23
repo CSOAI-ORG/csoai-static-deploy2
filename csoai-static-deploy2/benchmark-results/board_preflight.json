@@ -1,0 +1,40 @@
+{
+  "entries": [
+    {
+      "file": "e2e_api_groq.json",
+      "model": "api:groq:llama-3.1-8b-instant",
+      "status": "UNMEASURED",
+      "reason": "run TRUNCATED \u2014 32 contiguous unanswered rows at the end of 57. The run died; it did not fail those items.",
+      "answered_prefix": 24,
+      "mean_latency_ms": 98,
+      "why_prefix_is_not_a_sample": "items execute in fixed suite order, so the surviving prefix is the early suites and the tail is what never ran \u2014 scoring it would report an easy subset as if it were the whole",
+      "previously_reported_pct": 36.8
+    },
+    {
+      "file": "e2e_api_nvidia.json",
+      "model": "api:nvidia:meta/llama-3.1-8b-instruct",
+      "status": "MEASURED",
+      "correct": 31,
+      "scored_n": 39,
+      "pct": 79.5,
+      "excluded_unmeasured": 18,
+      "of_total": 57,
+      "mean_latency_ms": 482,
+      "previously_reported_pct": 56.1,
+      "coverage_caveat": "18 of 57 items were not answered and are EXCLUDED from the denominator, not scored 0. This score describes 39 items, not 57."
+    },
+    {
+      "file": "e2e_api_openrouter.json",
+      "model": "api:openrouter:meta-llama/llama-3.1-8b-instruct",
+      "status": "UNMEASURED",
+      "reason": "run TRUNCATED \u2014 57 contiguous unanswered rows at the end of 57. The run died; it did not fail those items.",
+      "answered_prefix": 0,
+      "mean_latency_ms": 107,
+      "why_prefix_is_not_a_sample": "items execute in fixed suite order, so the surviving prefix is the early suites and the tail is what never ran \u2014 scoring it would report an easy subset as if it were the whole",
+      "previously_reported_pct": 0.0
+    }
+  ],
+  "corrections": 3,
+  "rule": "Three outcomes per row: answered / unanswered / degenerate. Unanswered and degenerate rows leave the denominator entirely \u2014 they are never scored 0.",
+  "caveat": "Entries here come from different providers serving overlapping model families. Cross-entry differences confound provider and model and are not a model ranking."
+}

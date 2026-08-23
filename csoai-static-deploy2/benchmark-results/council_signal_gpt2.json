@@ -1,0 +1,33 @@
+{
+  "kind": "council_signal.state",
+  "version": "0.1.0",
+  "entity": "gpt2",
+  "source": "huggingface public model-info (no auth)",
+  "fetched_at": "2026-08-13T06:09:30.277699+00:00",
+  "predicates": {
+    "license_declared": true,
+    "task_declared": true,
+    "model_card_present": true,
+    "gated": false,
+    "generative_marking_declared": false
+  },
+  "observed": {
+    "license_value": "mit",
+    "pipeline_tag": "text-generation",
+    "downloads": 12614582,
+    "lastModified": "2024-02-19T10:57:45.000Z"
+  },
+  "state_hash": "d3a7391d90ab500a3617774901b218f6ee4614de9805bc9460884784d6486494",
+  "frame": "Deterministic transparency predicates over PUBLIC artifacts only. Measurement, not certification. Drift = a transparency predicate changed.",
+  "signature": null,
+  "signed": false,
+  "_unsigned_note": "no signing key on this node \u2014 sign on the signing node: python3 sign.py --sign benchmark-results/council_signal_gpt2.json",
+  "corpus_anchor": {
+    "corpus_root": "37e2e10d53feaa9e12097f45113e1234510be0ca471e1a0848f5805db3e367c7",
+    "provisions": 417,
+    "normaliser_version": "1.0.0",
+    "anchored_at": "2026-08-14T05:22:18.762551+00:00",
+    "retro": true,
+    "note": "Anchored retrospectively on 2026-07-29. This records the corpus as it stands NOW; it does not prove what the text said when the result was produced. Runs from this point forward anchor at measurement time."
+  }
+}

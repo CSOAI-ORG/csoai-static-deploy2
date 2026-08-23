@@ -2,9 +2,9 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>🧠 SOV33 Brain Stack — 4-Brain Split · Mamba-2 · 90/10 · 2+2 per OWEM</title>
+<title>🧠 Council3 Brain Stack — 4-Brain Split · Mamba-2 · 90/10 · 2+2 per OWEM</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="SOV33's 4-brain split architecture: 2 small + 2 large per OWEM, 90/10 cascade routing, Mamba-2 SSD state. Per OWEM × 4 brains = 20 brain slots. Sov33_4brain.py.">
+<meta name="description" content="Council3's 4-brain split architecture: 2 small + 2 large per OWEM, 90/10 cascade routing, Mamba-2 SSD state. Per OWEM × 4 brains = 20 brain slots. Sov33_4brain.py.">
 <style>
   :root { --bg:#0a0e1a;--bg2:#0d1220;--ink:#e6e6e6;--accent:#d4af37;--accent2:#00ff9d;--warn:#ff6b6b;--muted:#6b7280;--rule:#1f2937;--small:#9d4edd;--large:#4a9eff }
   *{box-sizing:border-box;margin:0;padding:0}
@@ -51,14 +51,14 @@
     h1{font-size:1.7rem}
   }
 </style>
-<link rel="canonical" href="https://csoai-static-deploy2.vercel.app/SOV33_BRAIN_STACK.html">
+<link rel="canonical" href="#">
 </head>
 <body>
 
 <header class="card gold">
-  <h1>🧠 SOV33 Brain Stack Architecture</h1>
+  <h1>🧠 Council3 Brain Stack Architecture</h1>
   <p class="meta">4-brain split · Mamba-2 SSD state · 90/10 cascade · 2 small + 2 large per OWEM. Per <a href="#"">FULLSTACK_MASTER</a>. 12 Jul 2026.</p>
-  <p><a href="SOV33_HERO.html">← SOV33 Hub</a> · <a href="SOV33_INDEX.html">Index</a></p>
+  <p><a href="#">← Council3 Hub</a> · <a href="#">Index</a></p>
 </header>
 
 <h2>The 4-Brain Split (per sov33_4brain.py)</h2>
@@ -116,7 +116,7 @@
     <div class="step"><strong style="color:var(--accent2)">Step 3a</strong> <span class="arrow">→</span> <span>EASY (90%): LEFT bottom-90% (qwen2.5:3b small, fast) answers. Done.</span></div>
     <div class="step"><strong style="color:var(--accent2)">Step 3b</strong> <span class="arrow">→</span> <span>HARD (10%): RIGHT top-10% (qwen3:8b → llama-70b) for deep dive</span></div>
     <div class="step"><strong style="color:var(--accent2)">Step 4</strong> <span class="arrow">→</span> <span>RIGHT bottom-90% (always): validates final answer</span></div>
-    <div class="step"><strong style="color:var(--accent2)">Step 5</strong> <span class="arrow">→</span> <span>BFT-33 council votes on every hop (5 layers: 33, 12, 5, 3, 1 voters)</span></div>
+    <div class="step"><strong style="color:var(--accent2)">Step 5</strong> <span class="arrow">→</span> <span>council-quorum council votes on every hop (5 layers: 33, 12, 5, 3, 1 voters)</span></div>
   </div>
 </div>
 
@@ -171,7 +171,7 @@ state_hash = hashlib.sha256(str(task).encode()).hexdigest()[:self.mamba2_state_d
   <li><strong>Care-Floor 0.95</strong> — never changes. Sub-floor content vetoed BEFORE any brain call.</li>
   <li><strong>Article 0</strong> — ISO fee-for-service only. Never take equity.</li>
   <li><strong>12 Sovereign Pillars</strong> — every output charter-compliant</li>
-  <li><strong>BFT-33 quorum</strong> — 23/33 minimum for binding decisions across all 4 brains</li>
+  <li><strong>council-quorum quorum</strong> — 23/33 minimum for binding decisions across all 4 brains</li>
   <li><strong>Ed25519 SIGIL chain</strong> — every state transition hash-chained + signed</li>
   <li><strong>Sovereign-bound</strong> — DID <code>did:csoai:nicholas-001</code> (CSOAI Ltd UK 16939677)</li>
 </ol>
@@ -188,8 +188,8 @@ state_hash = hashlib.sha256(str(task).encode()).hexdigest()[:self.mamba2_state_d
 <hr>
 
 <p class="meta" style="text-align:center;margin-top:2rem">
-  <strong>🧠 SOV33 Brain Stack</strong> · 12 Jul 2026 · Per <code>sov33_4brain.py</code> + <code>sov33_cascade_router.py</code> + <code>sov33_owem_v3.py</code><br>
-  <a href="SOV33_HERO.html">← Back to SOV33</a>
+  <strong>🧠 Council3 Brain Stack</strong> · 12 Jul 2026 · Per <code>sov33_4brain.py</code> + <code>sov33_cascade_router.py</code> + <code>sov33_owem_v3.py</code><br>
+  <a href="#">← Back to Council3</a>
 </p>
 
 <script>
@@ -210,7 +210,7 @@ async function loadBrainStatus() {
         <p>Care floor: <span class="pill sigil">${status.care_floor}</span></p>
         <p>Article 0 bound: <span class="pill sigil">${status.article_0_bound}</span></p>
         <p>12 Pillars: <span class="pill sigil">${status['12_pillars_active']}</span></p>
-        <p>BFT-33 quorum: <span class="pill sigil">${status.bft_33_quorum}</span></p>
+        <p>council-quorum quorum: <span class="pill sigil">${status.bft_33_quorum}</span></p>
       </div>
       <div class="card">
         <h3>Brain Stack Capacity</h3>

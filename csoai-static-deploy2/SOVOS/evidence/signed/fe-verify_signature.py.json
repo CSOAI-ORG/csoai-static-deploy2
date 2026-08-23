@@ -1,0 +1,16 @@
+{
+  "id": "fe-verify_signature.py",
+  "kind": "tool",
+  "claim": "measurement",
+  "artifact_path": "SOVOS/evidence/verify_signature.py",
+  "artifact_sha256": "199c8fe66461c1817e8e4f4df72277d73f92a7ea86c2f80322815607046d1f33",
+  "grammar": "verified measurement credential - measurement, not certification",
+  "note": "signed on signing node; ed25519 key never leaves",
+  "signature": {
+    "kind": "ed25519",
+    "sig": "BxD9QxXzyudApiR6G4Q0Bkxny0k1Wf4nTD15XAjWmD0ApeH8PVvhtI2B5MpM01Swm5jyEajtVkloduORe9z7Bg==",
+    "body_sha256": "c4eb6815e3f0ee94d1fa6268c75861967329bac55c609dd110d890a6258a1f53",
+    "pubkey": "bWbk52E47J6EkY4+pu0Hh/B1l1175AZoZsDEBr0EfWA=",
+    "note": "Ed25519 over the canonical body; verify with sign.py --verify. PQC upgrade: ML-DSA-65 via liboqs \u2014 same body, swap the primitive."
+  }
+}

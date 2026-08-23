@@ -1,0 +1,16 @@
+{
+  "id": "registry",
+  "kind": "instrument-registry",
+  "claim": "measurement",
+  "artifact_path": "SOVOS/registry/instruments-2026-08-22.json",
+  "artifact_sha256": "9cee0ba66a97e7fc2528b425ea5e59d775a9f7132aa1b87faf53d975d36978b7",
+  "grammar": "verified measurement credential - measurement, not certification",
+  "note": "signed on signing node; ed25519 key never leaves",
+  "signature": {
+    "kind": "ed25519",
+    "sig": "9qT7wpBpIqomd1cm4yyN5W87ZEgmJOrgURT0n1QzuqlBbShaNwvnK5+eEbkADbBMif3gvvTfKNsxjfuxQVrgBA==",
+    "body_sha256": "93bb6c60e0345bafce32d801acb75d946b71b98e1aae28aa66942a343e78694e",
+    "pubkey": "bWbk52E47J6EkY4+pu0Hh/B1l1175AZoZsDEBr0EfWA=",
+    "note": "Ed25519 over the canonical body; verify with sign.py --verify. PQC upgrade: ML-DSA-65 via liboqs \u2014 same body, swap the primitive."
+  }
+}

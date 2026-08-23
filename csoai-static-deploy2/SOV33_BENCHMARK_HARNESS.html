@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>SOV33 Sovereign Benchmark Harness — 8 evals, SIGIL-signed per run</title>
-<meta name="description" content="Sovereign benchmark harness for SOV33: MMLU-Pro, GSM8K, AIME 2024, IFEval, BBH, MT-Bench, AlpacaEval, LMSYS Chatbot Arena. Each eval run emits an Ed25519 SIGIL receipt hash-chained to the previous.">
+<title>Council3 Sovereign Benchmark Harness — 8 evals, SIGIL-signed per run</title>
+<meta name="description" content="Sovereign benchmark harness for Council3: MMLU-Pro, GSM8K, AIME 2024, IFEval, BBH, MT-Bench, AlpacaEval, LMSYS Chatbot Arena. Each eval run emits an Ed25519 SIGIL receipt hash-chained to the previous.">
 <style>
 :root{--bg:#0a0e14;--panel:#0f141c;--ink:#e6edf3;--mut:#7d8590;--acc:#58a6ff;--gold:#d2a8ff;--green:#3fb950;--red:#f85149;--border:#21262d;--code:#161b22}
 *{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 -apple-system,BlinkMacSystemFont,"SF Pro Text","Inter",system-ui,sans-serif}
@@ -59,15 +59,15 @@ hr{border:0;border-top:1px solid var(--border);margin:32px 0}
 <body>
 <div class="wrap">
 <nav class="breadcrumb">
-  <a href="#"">SOV33</a> &nbsp;›&nbsp;
+  <a href="#"">Council3</a> &nbsp;›&nbsp;
   <a href="#"">Evals</a> &nbsp;›&nbsp;
   <b style="color:#e6edf3">Benchmark Harness</b>
 </nav>
 
 <header class="hero">
   <div>
-    <h1>SOV33 <span class="sovereign">Sovereign Benchmark Harness</span> — <small style="font-size:17px;color:#7d8590">v1.0 · 2026-07-13</small></h1>
-    <p class="lede">Eight benchmarks, one harness, every run <b>SIGIL-signed</b>. The harness wraps the SOV33 sovereign runtime and emits an Ed25519-signed hash-chained receipt for each completed eval pass. Re-running the eval against the same model + dataset + seed produces the same root hash, byte-for-byte, byte-verifiable by any third-party with the public verify key.</p>
+    <h1>Council3 <span class="sovereign">Sovereign Benchmark Harness</span> — <small style="font-size:17px;color:#7d8590">v1.0 · 2026-07-13</small></h1>
+    <p class="lede">Eight benchmarks, one harness, every run <b>SIGIL-signed</b>. The harness wraps the Council3 sovereign runtime and emits an Ed25519-signed hash-chained receipt for each completed eval pass. Re-running the eval against the same model + dataset + seed produces the same root hash, byte-for-byte, byte-verifiable by any third-party with the public verify key.</p>
   </div>
   <div class="meta">
     SIGIL&nbsp;<span class="kbd">T87-bench-harness-9e1b4d</span><br>
@@ -78,12 +78,12 @@ hr{border:0;border-top:1px solid var(--border);margin:32px 0}
 </header>
 
 <nav class="toc">
-  <a href="#matrix">Eval matrix</a>
-  <a href="#harness">Harness</a>
-  <a href="#sigil">SIGIL</a>
-  <a href="#scoring">Scoring</a>
-  <a href="#runs">Run protocol</a>
-  <a href="#evidence">Evidence</a>
+  <a href="#">Eval matrix</a>
+  <a href="#">Harness</a>
+  <a href="#">SIGIL</a>
+  <a href="#">Scoring</a>
+  <a href="#">Run protocol</a>
+  <a href="#">Evidence</a>
 </nav>
 
 <section id="matrix">
@@ -114,7 +114,7 @@ hr{border:0;border-top:1px solid var(--border);margin:32px 0}
 <h2>2 · Harness architecture</h2>
 
 <div class="diagram">
-<b>SOV33 Sovereign Benchmark Harness — Data flow</b>
+<b>Council3 Sovereign Benchmark Harness — Data flow</b>
 
 ┌────────────────────────────────────────────────────────────────────────┐
 │  LAYER 0 — INPUT                                                        │
@@ -128,7 +128,7 @@ hr{border:0;border-top:1px solid var(--border);margin:32px 0}
 │  LAYER 1 — LOADER                                                       │
 │   For each (model, benchmark):                                         │
 │   ├─ download/cache dataset  (HF Datasets, versioned snapshot)         │
-│   ├─ load model into SovereignWrapper  (SOV33 governance wrapper)      │
+│   ├─ load model into SovereignWrapper  (Council3 governance wrapper)      │
 │   └─ emit LOADED sigil  ───┐                                          │
 └────────────────────────────┼──────────────────────────────────────────┘
                              ▼
@@ -158,7 +158,7 @@ hr{border:0;border-top:1px solid var(--border);margin:32px 0}
 <section id="sigil">
 <h2>3 · The SIGIL receipt (why this matters)</h2>
 
-<p>Every run emits a <b>receipt triple</b>: (a) row-level sigil, (b) chain-hash, (c) root receipt. Together they let a third-party re-run the same eval and verify — without trusting SOV33 — that the published numbers correspond to the published model and dataset, in the published order.</p>
+<p>Every run emits a <b>receipt triple</b>: (a) row-level sigil, (b) chain-hash, (c) root receipt. Together they let a third-party re-run the same eval and verify — without trusting Council3 — that the published numbers correspond to the published model and dataset, in the published order.</p>
 
 <h3>3.1 The receipt schema</h3>
 <pre><code>{
@@ -264,7 +264,7 @@ print("✓ SIGIL chain verified")
 <div class="card">
 <h3>Chatbot Arena LMSYS</h3>
 <p><b>Loader:</b> live human preference votes · LMSYS collects blind A/B pairs from real users.</p>
-<p><b>Protocol:</b> route SOV33_small / SOV33_large into the Arena pool under a de-anonymized alias only after ≥ 5,000 votes are cast; category breakdown after 10K votes.</p>
+<p><b>Protocol:</b> route Council3_small  / Council3_large into the Arena pool under a de-anonymized alias only after ≥ 5,000 votes are cast; category breakdown after 10K votes.</p>
 <p><b>Score:</b> Elo + per-category Elo + 95% CI. Public leaderboard published at <code>lmarena.ai</code>.</p>
 </div>
 </div>
@@ -289,7 +289,7 @@ print("✓ SIGIL chain verified")
   └─ reproduce.sh            # one-command replay
 </code></pre>
 
-<h3>5.3 Pass criteria (SOV33_large)</h3>
+<h3>5.3 Pass criteria (Council3_large)</h3>
 <table>
 <thead><tr><th>Benchmark</th><th>Pass threshold</th><th>Reason</th></tr></thead>
 <tbody>
@@ -309,9 +309,9 @@ print("✓ SIGIL chain verified")
 <h2>6 · Evidence + receipts</h2>
 
 <div class="sigilbox">
-<b>Harness Receipt — SOV33 Sovereign Benchmark Harness v1.0</b><br>
+<b>Harness Receipt — Council3 Sovereign Benchmark Harness v1.0</b><br>
 sigil_id:    T87-bench-harness-9e1b4d<br>
-issued_by:   SOV33 Sovereign BFT (orchestrator + math + bio experts)<br>
+issued_by:   Council3 Sovereign BFT (orchestrator + math + bio experts)<br>
 bench_count: 8 (MMLU-Pro + GSM8K + AIME + IFEval + BBH + MT-Bench + AlpacaEval + Arena)<br>
 question_count: 27,956 graded Qs + rolling Arena votes<br>
 verify_key:  rotated quarterly per DORADO PQC schedule (ML-DSA-65 prod, Ed25519 demo)<br>
@@ -319,24 +319,24 @@ bft_quorum:  23/33 ✅<br>
 care_score:  0.94<br>
 timestamp:   2026-07-13T09:42:18Z<br>
 license:     Apache-2.0 (harness code) · CC-BY-4.0 (eval results)<br>
-canonical:   <a href="#"" style="color:#58a6ff">/SOV33_BENCHMARK_HARNESS.html</a><br>
-downstream:  <a href="#"" style="color:#58a6ff">/SOV33_ARENA_ENTRY.html</a> · <a href="#"" style="color:#58a6ff">/SOV33_MODEL_CARDS.html</a>
+canonical:   <a href="#"" style="color:#58a6ff">/Council3_BENCHMARK_HARNESS.html</a><br>
+downstream:  <a href="#"" style="color:#58a6ff">/Council3_ARENA_ENTRY.html</a> · <a href="#"" style="color:#58a6ff">/Council3_MODEL_CARDS.html</a>
 </div>
 
 <h3>Related pages</h3>
 <ul>
-  <li><a href="#"">SOV33 Kaggle Kernel</a> — Kaggle-ready single-cell eval for MMLU-Pro + GSM8K + AIME</li>
-  <li><a href="#"">SOV33 Arena Entry</a> — LMSYS + AlpacaEval 2.0 + HF OpenLLM entry plan</li>
-  <li><a href="#"">SOV33 Model Cards</a> — HF-ready model cards</li>
-  <li><a href="#"">SOV33 Evals overview</a></li>
-  <li><a href="#"">SOV33 Kaggle Opportunities</a></li>
+  <li><a href="#"">Council3 Kaggle Kernel</a> — Kaggle-ready single-cell eval for MMLU-Pro + GSM8K + AIME</li>
+  <li><a href="#"">Council3 Arena Entry</a> — LMSYS + AlpacaEval 2.0 + HF OpenLLM entry plan</li>
+  <li><a href="#"">Council3 Model Cards</a> — HF-ready model cards</li>
+  <li><a href="#"">Council3 Evals overview</a></li>
+  <li><a href="#"">Council3 Kaggle Opportunities</a></li>
 </ul>
 </section>
 
 <hr>
 <footer style="font-size:11px;color:#7d8590;padding-top:18px;border-top:1px solid #21262d">
-  SOV33 Sovereign Substrate · CSOAI Ltd · Apache-2.0 / CC-BY-4.0 · SIGIL chain rooted at T87-bench-harness-9e1b4d ·
-  <a href="#"" style="color:#58a6ff">Back to SOV33 index</a>
+  Council3 Sovereign Substrate · CSOAI Ltd · Apache-2.0 / CC-BY-4.0 · SIGIL chain rooted at T87-bench-harness-9e1b4d ·
+  <a href="#"" style="color:#58a6ff">Back to Council3 index</a>
 </footer>
 </div>
 </body>

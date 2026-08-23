@@ -1,0 +1,434 @@
+{
+  "benchmark": "gspc.board",
+  "version": "board.flywheel.v1",
+  "day": "2026-08-14",
+  "law": "agi",
+  "axis": "agi",
+  "bank_items": 36,
+  "canaries_excluded": 1,
+  "labels": [
+    "COMPLY",
+    "REFUSE"
+  ],
+  "majority_baseline": 0.5278,
+  "summary": {
+    "models": {
+      "sov6-ethics-v3-light": {
+        "practice": {
+          "n_measured": 36,
+          "n_unmeasured": 0,
+          "correct": 29,
+          "accuracy": 0.8056,
+          "ci95": [
+            0.6497,
+            0.9025
+          ],
+          "quotable": true,
+          "note": ""
+        },
+        "held_out": {
+          "n_measured": 0,
+          "n_unmeasured": 0,
+          "correct": 0,
+          "accuracy": null,
+          "overfit_gap": null
+        }
+      },
+      "sov6-logic-v3-light": {
+        "practice": {
+          "n_measured": 36,
+          "n_unmeasured": 0,
+          "correct": 29,
+          "accuracy": 0.8056,
+          "ci95": [
+            0.6497,
+            0.9025
+          ],
+          "quotable": true,
+          "note": ""
+        },
+        "held_out": {
+          "n_measured": 0,
+          "n_unmeasured": 0,
+          "correct": 0,
+          "accuracy": null,
+          "overfit_gap": null
+        }
+      },
+      "sov6-agency-v3-light": {
+        "practice": {
+          "n_measured": 36,
+          "n_unmeasured": 0,
+          "correct": 30,
+          "accuracy": 0.8333,
+          "ci95": [
+            0.6811,
+            0.9213
+          ],
+          "quotable": true,
+          "note": ""
+        },
+        "held_out": {
+          "n_measured": 0,
+          "n_unmeasured": 0,
+          "correct": 0,
+          "accuracy": null,
+          "overfit_gap": null
+        }
+      },
+      "sov6-identity-v3-light": {
+        "practice": {
+          "n_measured": 36,
+          "n_unmeasured": 0,
+          "correct": 21,
+          "accuracy": 0.5833,
+          "ci95": [
+            0.422,
+            0.7286
+          ],
+          "quotable": true,
+          "note": ""
+        },
+        "held_out": {
+          "n_measured": 0,
+          "n_unmeasured": 0,
+          "correct": 0,
+          "accuracy": null,
+          "overfit_gap": null
+        }
+      },
+      "sov6-preservation-v3-light": {
+        "practice": {
+          "n_measured": 36,
+          "n_unmeasured": 0,
+          "correct": 33,
+          "accuracy": 0.9167,
+          "ci95": [
+            0.7817,
+            0.9713
+          ],
+          "quotable": true,
+          "note": ""
+        },
+        "held_out": {
+          "n_measured": 0,
+          "n_unmeasured": 0,
+          "correct": 0,
+          "accuracy": null,
+          "overfit_gap": null
+        }
+      },
+      "sov6-destruction-v3-light": {
+        "practice": {
+          "n_measured": 36,
+          "n_unmeasured": 0,
+          "correct": 30,
+          "accuracy": 0.8333,
+          "ci95": [
+            0.6811,
+            0.9213
+          ],
+          "quotable": true,
+          "note": ""
+        },
+        "held_out": {
+          "n_measured": 0,
+          "n_unmeasured": 0,
+          "correct": 0,
+          "accuracy": null,
+          "overfit_gap": null
+        }
+      },
+      "sov6-creation-v3-light": {
+        "practice": {
+          "n_measured": 36,
+          "n_unmeasured": 0,
+          "correct": 31,
+          "accuracy": 0.8611,
+          "ci95": [
+            0.7134,
+            0.9392
+          ],
+          "quotable": true,
+          "note": ""
+        },
+        "held_out": {
+          "n_measured": 0,
+          "n_unmeasured": 0,
+          "correct": 0,
+          "accuracy": null,
+          "overfit_gap": null
+        }
+      },
+      "sov6-relationality-v3-light": {
+        "practice": {
+          "n_measured": 36,
+          "n_unmeasured": 0,
+          "correct": 23,
+          "accuracy": 0.6389,
+          "ci95": [
+            0.4758,
+            0.7752
+          ],
+          "quotable": true,
+          "note": ""
+        },
+        "held_out": {
+          "n_measured": 0,
+          "n_unmeasured": 0,
+          "correct": 0,
+          "accuracy": null,
+          "overfit_gap": null
+        }
+      },
+      "sov6-temporality-v3-light": {
+        "practice": {
+          "n_measured": 36,
+          "n_unmeasured": 0,
+          "correct": 18,
+          "accuracy": 0.5,
+          "ci95": [
+            0.3447,
+            0.6553
+          ],
+          "quotable": true,
+          "note": ""
+        },
+        "held_out": {
+          "n_measured": 0,
+          "n_unmeasured": 0,
+          "correct": 0,
+          "accuracy": null,
+          "overfit_gap": null
+        }
+      },
+      "sov6-synthesis-v3-light": {
+        "practice": {
+          "n_measured": 36,
+          "n_unmeasured": 0,
+          "correct": 24,
+          "accuracy": 0.6667,
+          "ci95": [
+            0.5033,
+            0.7979
+          ],
+          "quotable": true,
+          "note": ""
+        },
+        "held_out": {
+          "n_measured": 0,
+          "n_unmeasured": 0,
+          "correct": 0,
+          "accuracy": null,
+          "overfit_gap": null
+        }
+      },
+      "sov6-embodiment-v3-light": {
+        "practice": {
+          "n_measured": 36,
+          "n_unmeasured": 0,
+          "correct": 30,
+          "accuracy": 0.8333,
+          "ci95": [
+            0.6811,
+            0.9213
+          ],
+          "quotable": true,
+          "note": ""
+        },
+        "held_out": {
+          "n_measured": 0,
+          "n_unmeasured": 0,
+          "correct": 0,
+          "accuracy": null,
+          "overfit_gap": null
+        }
+      },
+      "sov6-aesthetics-v3-light": {
+        "practice": {
+          "n_measured": 36,
+          "n_unmeasured": 0,
+          "correct": 30,
+          "accuracy": 0.8333,
+          "ci95": [
+            0.6811,
+            0.9213
+          ],
+          "quotable": true,
+          "note": ""
+        },
+        "held_out": {
+          "n_measured": 0,
+          "n_unmeasured": 0,
+          "correct": 0,
+          "accuracy": null,
+          "overfit_gap": null
+        }
+      },
+      "sov6-abstraction-v3-light": {
+        "practice": {
+          "n_measured": 36,
+          "n_unmeasured": 0,
+          "correct": 19,
+          "accuracy": 0.5278,
+          "ci95": [
+            0.3701,
+            0.6801
+          ],
+          "quotable": true,
+          "note": ""
+        },
+        "held_out": {
+          "n_measured": 0,
+          "n_unmeasured": 0,
+          "correct": 0,
+          "accuracy": null,
+          "overfit_gap": null
+        }
+      },
+      "gemma3:12b": {
+        "practice": {
+          "n_measured": 36,
+          "n_unmeasured": 0,
+          "correct": 34,
+          "accuracy": 0.9444,
+          "ci95": [
+            0.8186,
+            0.9846
+          ],
+          "quotable": true,
+          "note": ""
+        },
+        "held_out": {
+          "n_measured": 0,
+          "n_unmeasured": 0,
+          "correct": 0,
+          "accuracy": null,
+          "overfit_gap": null
+        }
+      },
+      "llama3.2:3b": {
+        "practice": {
+          "n_measured": 36,
+          "n_unmeasured": 0,
+          "correct": 16,
+          "accuracy": 0.4444,
+          "ci95": [
+            0.2954,
+            0.6042
+          ],
+          "quotable": true,
+          "note": ""
+        },
+        "held_out": {
+          "n_measured": 0,
+          "n_unmeasured": 0,
+          "correct": 0,
+          "accuracy": null,
+          "overfit_gap": null
+        }
+      },
+      "qwen2.5:3b": {
+        "practice": {
+          "n_measured": 36,
+          "n_unmeasured": 0,
+          "correct": 32,
+          "accuracy": 0.8889,
+          "ci95": [
+            0.7469,
+            0.9559
+          ],
+          "quotable": true,
+          "note": ""
+        },
+        "held_out": {
+          "n_measured": 0,
+          "n_unmeasured": 0,
+          "correct": 0,
+          "accuracy": null,
+          "overfit_gap": null
+        }
+      },
+      "qwen2.5:0.5b-instruct": {
+        "practice": {
+          "n_measured": 36,
+          "n_unmeasured": 0,
+          "correct": 15,
+          "accuracy": 0.4167,
+          "ci95": [
+            0.2714,
+            0.578
+          ],
+          "quotable": true,
+          "note": ""
+        },
+        "held_out": {
+          "n_measured": 0,
+          "n_unmeasured": 0,
+          "correct": 0,
+          "accuracy": null,
+          "overfit_gap": null
+        }
+      },
+      "mistral:7b": {
+        "practice": {
+          "n_measured": 36,
+          "n_unmeasured": 0,
+          "correct": 29,
+          "accuracy": 0.8056,
+          "ci95": [
+            0.6497,
+            0.9025
+          ],
+          "quotable": true,
+          "note": ""
+        },
+        "held_out": {
+          "n_measured": 0,
+          "n_unmeasured": 0,
+          "correct": 0,
+          "accuracy": null,
+          "overfit_gap": null
+        }
+      },
+      "deepseek-r1:8b": {
+        "practice": {
+          "n_measured": 36,
+          "n_unmeasured": 0,
+          "correct": 28,
+          "accuracy": 0.7778,
+          "ci95": [
+            0.6192,
+            0.8828
+          ],
+          "quotable": true,
+          "note": ""
+        },
+        "held_out": {
+          "n_measured": 0,
+          "n_unmeasured": 0,
+          "correct": 0,
+          "accuracy": null,
+          "overfit_gap": null
+        }
+      }
+    },
+    "best": "gemma3:12b"
+  },
+  "fuel": {
+    "pairs": [],
+    "kb": [],
+    "pairs_file": null
+  },
+  "cells": [],
+  "corpus_anchor": {
+    "corpus_root": "37e2e10d53feaa9e12097f45113e1234510be0ca471e1a0848f5805db3e367c7",
+    "provisions": 417,
+    "normaliser_version": "1.0.0",
+    "anchored_at": "2026-08-14T11:33:34.129628+00:00",
+    "retro": false,
+    "note": "Anchored at write time by anchored_write.write_result()."
+  },
+  "status": "MEASURED",
+  "note": "board2fly conversion: measured summary only, no fabricated fuel/refusal transcripts"
+}

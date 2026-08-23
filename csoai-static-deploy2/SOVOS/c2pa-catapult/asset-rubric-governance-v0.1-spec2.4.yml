@@ -1,0 +1,132 @@
+# C2PA Governance & Accountability Rubric — CSOAI contribution (PR draft)
+# Proposal for c2pa-org/conformance-public asset-rubrics/
+# Author: CSOAI (measurement body) — neutral, technical. No certification claims.
+# Status: PR DRAFT 0.1 — expressions mirror proven patterns from
+#         asset-rubric-conformance0.2-spec2.4.yml (validation:*, $args[N], error vocabulary).
+rubric_metadata:
+  name: C2PA Governance & Accountability Rubric
+  issuer: CSOAI (measurement body) — proposed for C2PA Conformance Task Force review
+  date: '2026-08-18T00:00:00Z'
+  version: '0.1.0'
+  language: en
+
+variables:
+  # Spec-2.4 governance-relevant error codes (reused from the 0.2 rubric vocabulary).
+  $governance_error_codes:
+    - claim.missing
+    - claim.malformed
+    - claim.multiple
+    - claim.hardBindings.missing
+    - manifest.multipleParents
+    - manifest.update.invalid
+    - manifest.update.wrongParents
+    - manifest.inaccessible
+    - manifest.html.multipleManifests
+  $accountability_signals:
+    - cred.active
+    - cred.self-signed
+    - ts.trusted
+    - ts.valid
+  $inception_actions:
+    - c2pa.created
+    - c2pa.opened
+  $editorial_actions:
+    - c2pa.converted
+    - c2pa.published
+    - c2pa.repackaged
+    - c2pa.transcoded
+    - c2pa.resized.proportional
+    - c2pa.enhanced
+    - c2pa.edited.metadata
+    - c2pa.watermarked
+    - c2pa.watermarked.bound
+    - c2pa.watermarked.unbound
+    - c2pa.redacted
+
+expressions:
+  _activeManifest: "manifests[0]"
+  _manifest_validationResults: |-
+    ($args[0].validationResults || { failure: [{code: "MISSING_VALIDATION_RESULTS"}] })
+  _validationResults: _manifest_validationResults(_activeManifest())
+  _allClaims: |-
+    ($args[0].activeManifest.claim || {})
+  _hasSignerCredential: |-
+    ($args[0].activeManifest.signature?.certificates.length > 0)
+  _hasTimestamp: |-
+    ($args[0].activeManifest.timestamp || false)
+
+statements:
+  # ── Governance: a manifest must exist, be well-formed, and declare its spec version.
+  - id: governance:manifest_present
+    condition: _activeManifest() is not null
+    on_false:
+      errors:
+        - code: claim.missing
+          severity: error
+          detail: "No active manifest — provenance not attested."
+
+  - id: governance:no_governance_error_codes
+    condition: |-
+      not _validationResults().failure.some(($x) => $governance_error_codes.includes($x.code))
+    on_false:
+      errors:
+        - code: claim.malformed
+          severity: error
+          detail: "Governance-blocking validation failure present."
+
+  - id: governance:spec_version_declared
+    condition: |-
+      _allClaims().claim_generator_info?.version is not null
+    on_false:
+      warnings:
+        - code: manifest.inaccessible
+          severity: warn
+          detail: "Claim generator version not declared — reproducibility limited."
+
+  # ── Accountability: the signer must be identifiable and (preferably) time-anchored.
+  - id: accountability:signer_credential_present
+    condition: _hasSignerCredential(_activeManifest())
+    on_false:
+      errors:
+        - code: cred.active
+          severity: error
+          detail: "No signer credential — accountability absent."
+
+  - id: accountability:timestamp_present
+    condition: _hasTimestamp(_activeManifest())
+    on_false:
+      warnings:
+        - code: ts.valid
+          severity: warn
+          detail: "No timestamp — provenance not time-anchored."
+
+  # ── Transparency: validation results must exist (nothing hidden).
+  - id: transparency:validation_results_present
+    condition: _validationResults() is not null
+    on_false:
+      errors:
+        - code: MISSING_VALIDATION_RESULTS
+          severity: error
+          detail: "Validation results absent — unmeasurable."
+
+  # ── Sovereignty: self-signed credentials are acceptable (neutral, AUKUS-compatible).
+  #    No requirement for a commercial CA; trust anchors remain the verifier's choice.
+  - id: sovereignty:self_signed_allowed
+    condition: |-
+      (_hasSignerCredential(_activeManifest()) and _activeManifest().signature.certificates[0].issuer != null) or
+      (_hasSignerCredential(_activeManifest()) and _activeManifest().signature.certificates[0].self_signed == true)
+    on_false:
+      warnings:
+        - code: cred.active
+          severity: warn
+          detail: "Credential issuer unverifiable — verifier decides trust."
+
+  # ── Continuity: an edit chain must not claim single-parent when history exists.
+  - id: continuity:actions_chain_consistent
+    condition: |-
+      not (_allClaims().assertions?.some(($a) => $a.label == "c2pa.actions" and $a.data.actions.length > 1 and _activeManifest().parent == null))
+    on_false:
+      warnings:
+        - code: manifest.multipleParents
+          severity: warn
+          detail: "Multiple actions with no declared parent — chain continuity unclear."

@@ -20,7 +20,7 @@ set -euo pipefail
 # Resolve deploy root (parent of tools/) regardless of invocation cwd
 DEPLOY_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 BACKUPS="${DEPLOY_ROOT}/.backups"
-KEEP=7
+KEEP=3   # was 7 — 7 full mirrors is what filled the disk
 FORCE=0
 
 while [[ $# -gt 0 ]]; do
@@ -52,6 +52,8 @@ mkdir -p "${DEST}"
 # .git/ (the git dir is its own history), and tmp scratch files.
 cd "${DEPLOY_ROOT}"
 COUNT=0
+SKIPPED=0
+SKIPPED_BYTES=0
 TOTAL_BYTES=0
 {
   echo "# snapshot manifest — ${TS} UTC"
@@ -66,7 +68,28 @@ TOTAL_BYTES=0
     esac
     SIZE=$(wc -c < "$f" | tr -d ' ')
     SHA=$(shasum -a 256 "$f" | awk '{print $1}')
+    # Manifest EVERY file (hash + size) — the integrity record stays complete.
     printf '%s  %s  %s\n' "$SHA" "$SIZE" "$rel" >> "$MANIFEST"
+
+    # 2026-07-28 — DO NOT COPY MODEL WEIGHTS.
+    # This snapshot ran every 6h keeping KEEP=7 full mirrors, each carrying two 988MB
+    # LoRA safetensors. That is ~14GB of the SAME weights duplicated on a timer, and it
+    # filled the Mac's disk to 0 bytes free — which took down the shell entirely.
+    # Weights are large, immutable, and already exist at asi_results/adapters/ (and belong
+    # on HuggingFace, not in a local backup). A backup's job here is to preserve CODE and
+    # CONFIG; a GB-scale binary copied verbatim 7 times is not a backup, it is a leak.
+    # The manifest above still records each weight's sha256 + size, so the snapshot can
+    # still PROVE what the weights were — it just doesn't hoard another copy of them.
+    case "$rel" in
+      *.safetensors|*.gguf|*.bin|*.pt|*.pth|*.ckpt|*.onnx|*.tar.gz|*.zip)
+        if [ "$SIZE" -gt 52428800 ]; then          # >50MB only; small .bin/.zip still copied
+          SKIPPED=$((SKIPPED + 1))
+          SKIPPED_BYTES=$((SKIPPED_BYTES + SIZE))
+          continue
+        fi
+        ;;
+    esac
+
     mkdir -p "${DEST}/$(dirname "$rel")"
     cp -p "$f" "${DEST}/${rel}"
     COUNT=$((COUNT + 1))
@@ -107,8 +130,16 @@ if [[ -d "${BACKUPS}" ]]; then
   done
 fi
 
+# Report skipped weights explicitly. Silent omission from a backup is how you discover, at
+# restore time, that the thing you needed was never in it. Manifested-but-not-copied is a
+# deliberate, stated choice — so say it out loud on every run.
 printf 'snapshot ok: ts=%s files=%d bytes=%d manifest=%s\n' \
   "$TS" "$COUNT" "$TOTAL_BYTES" "$MANIFEST"
+if (( SKIPPED > 0 )); then
+  printf 'snapshot: SKIPPED %d large model/archive file(s), %d bytes NOT copied (>50MB).\n' \
+    "$SKIPPED" "$SKIPPED_BYTES"
+  printf 'snapshot: their sha256+size ARE in the manifest. Source of truth: asi_results/adapters/ + HuggingFace.\n'
+fi
 
 # Self-restoration is impossible if this script is itself inside the deployment directory tree
 # and the deployment got blown away. The companion plist restores from the most recent backup

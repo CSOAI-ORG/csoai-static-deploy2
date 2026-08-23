@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>SOV-Space — Local Renderer (GeoLibre-style)</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #03060c; color: #E6EDF3; font-family: 'Inter', system-ui, sans-serif; overflow: hidden; height: 100vh; }
+  header {
+    height: 48px; padding: 0 16px; display: flex; align-items: center; gap: 12px;
+    background: rgba(3,6,12,0.95); border-bottom: 1px solid #2D333B;
+  }
+  header h1 { font-size: 1rem; color: #79C0FF; font-weight: 700; }
+  header .badge {
+    background: #3FB950; color: #03110b; font-size: 0.55rem;
+    padding: 2px 6px; border-radius: 3px; font-weight: 700; letter-spacing: 0.04em;
+  }
+  header .subtitle { color: #6E7681; font-size: 0.75rem; }
+  header .links { margin-left: auto; display: flex; gap: 12px; }
+  header .links a { color: #2F81F7; text-decoration: none; font-size: 0.7rem; }
+
+  main { position: absolute; top: 48px; left: 0; right: 0; bottom: 0;
+         display: grid; grid-template-columns: 1.5fr 1fr; grid-template-rows: 1fr 1fr; gap: 1px;
+         background: #2D333B; }
+
+  .pane { background: #0E1116; position: relative; overflow: hidden; display: flex; flex-direction: column; }
+  .pane-header {
+    padding: 8px 12px; background: rgba(5,5,16,0.85);
+    border-bottom: 1px solid #2D333B; font-size: 0.7rem;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .pane-header .label { font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: #79C0FF; }
+  .pane-header .role { font-size: 0.6rem; padding: 2px 6px; border-radius: 3px; }
+  .pane-owm .role { background: #A371F733; color: #A371F7; }
+  .pane-iwm .role { background: #2F81F733; color: #2F81F7; }
+  .pane-vwm .role { background: #3FB95033; color: #3FB950; }
+  .pane-time .role { background: #D2992233; color: #D29922; }
+  .pane-header .meta { color: #6E7681; margin-left: auto; font-size: 0.65rem; }
+  .pane-body { flex: 1; overflow: auto; padding: 8px; }
+
+  /* OWM canvas — MapLibre-style with WebGL particles */
+  #owm-canvas { background: #03060c; width: 100%; height: 100%; display: block; }
+  .table { width: 100%; font-family: monospace; font-size: 0.65rem; border-collapse: collapse; }
+  .table th { color: #6E7681; padding: 4px 6px; text-align: left; border-bottom: 1px solid #2D333B; }
+  .table td { padding: 4px 6px; border-bottom: 1px solid #2D333B33; color: #E6EDF3; }
+  .table tr:hover td { background: rgba(255,255,255,0.03); }
+  .sql-form { display: flex; gap: 6px; margin-bottom: 8px; }
+  .sql-form input { flex: 1; padding: 6px 8px; background: #050510; border: 1px solid #2D333B;
+                   border-radius: 4px; color: #E6EDF3; font-family: monospace; font-size: 0.7rem; }
+  .sql-form button { padding: 6px 12px; background: #1F6FEB; border: 0; color: white;
+                     border-radius: 4px; font-size: 0.7rem; cursor: pointer; }
+
+  /* IWM reasoning pane */
+  .iwm-row { padding: 6px 10px; border-bottom: 1px solid #2D333B; font-size: 0.7rem; }
+  .iwm-row pre { color: #79C0FF; font-family: monospace; font-size: 0.65rem; margin: 4px 0; }
+
+  /* VWM canvas — particle sphere with deck.gl-style layers */
+  #vwm-canvas { background: #03060c; width: 100%; height: 100%; display: block; }
+  .layer-list { padding: 8px; }
+  .layer-card {
+    padding: 6px 10px; margin-bottom: 6px; border-radius: 4px;
+    background: rgba(0,0,0,0.3); border-left: 3px solid #3FB950;
+  }
+  .layer-card h4 { font-size: 0.75rem; color: #79C0FF; margin-bottom: 4px; }
+  .layer-card .spec { font-size: 0.65rem; color: #6E7681; font-family: monospace; }
+  .layer-card .n { color: #3FB950; font-weight: 700; }
+
+  /* Time pane */
+  #time-host { width: 100%; height: 100%; }
+  #time-host object { width: 100%; height: 100%; }
+</style>
+</head>
+<body>
+<header>
+  <h1>SOV-SPACE — Local Renderer</h1>
+  <span class="badge">LOCAL ONLY · no cloud · no API key</span>
+  <span class="subtitle">GeoLibre-style: sqlite + HTML5 canvas + deck.gl-equivalent layers + time-zoom canvas</span>
+  <nav class="links">
+    <a href="#">vwm →</a>
+    <a href="#">three-eye →</a>
+    <a href="#">5d →</a>
+  </nav>
+</header>
+
+<main>
+  <!-- OWM: local DB facts via SQLite -->
+  <section class="pane pane-owm" id="owmPane">
+    <div class="pane-header">
+      <span class="label">OWM</span>
+      <span class="role">KNOWS · local SQLite</span>
+      <span class="meta" id="owmMeta">— events · — lenses · — clauses</span>
+    </div>
+    <div class="pane-body">
+      <div class="sql-form">
+        <input id="sqlInput" placeholder="SELECT * FROM events ORDER BY timestamp DESC LIMIT 10" value="SELECT kind, COUNT(*) AS n FROM events GROUP BY kind">
+        <button onclick="runSQL()">Run SQL</button>
+      </div>
+      <div id="owmResults"></div>
+      <canvas id="owm-canvas"></canvas>
+    </div>
+  </section>
+
+  <!-- IWM: reasoning over the local DB -->
+  <section class="pane pane-iwm" id="iwmPane">
+    <div class="pane-header">
+      <span class="label">IWM</span>
+      <span class="role">DECIDES</span>
+      <span class="meta">4 lenses · sql-routed</span>
+    </div>
+    <div class="pane-body">
+      <div class="sql-form">
+        <input id="iwmInput" placeholder="what does the continuity lens measure?" value="how many care-gate actions in the ledger?">
+        <button onclick="askIWM()">Ask</button>
+      </div>
+      <div id="iwmResults"></div>
+    </div>
+  </section>
+
+  <!-- VWM: deck.gl-equivalent layers + sphere -->
+  <section class="pane pane-vwm" id="vwmPane">
+    <div class="pane-header">
+      <span class="label">VWM</span>
+      <span class="role">RENDERS · local canvas</span>
+      <span class="meta" id="vwmMeta">6 layers available</span>
+    </div>
+    <div class="pane-body layer-list" id="layerList"></div>
+  </section>
+
+  <!-- Time: append-only ledger canvas -->
+  <section class="pane pane-time" id="timePane">
+    <div class="pane-header">
+      <span class="label">⏳ Time</span>
+      <span class="role">APPEND-ONLY</span>
+      <span class="meta" id="timeMeta">live ledger</span>
+    </div>
+    <div class="pane-body" id="timeHost" style="padding:0">
+      <div style="display:grid;grid-template-rows:1fr 1fr;height:100%;gap:6px;padding:6px">
+        <object type="image/svg+xml" data="/sov-time-canvas.svg" style="width:100%;background:#050510;border-radius:4px"></object>
+        <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:4px;background:#050510;border-radius:4px;padding:4px">
+          <object type="image/svg+xml" data="/sov-zoom-microsecond.svg?window=86400" style="width:100%;height:100%;background:#050510"></object>
+          <object type="image/svg+xml" data="/sov-zoom-second.svg?window=86400" style="width:100%;height:100%;background:#050510"></object>
+          <object type="image/svg+xml" data="/sov-zoom-hour.svg?window=86400" style="width:100%;height:100%;background:#050510"></object>
+          <object type="image/svg+xml" data="/sov-zoom-day.svg?window=2592000" style="width:100%;height:100%;background:#050510"></object>
+          <object type="image/svg+xml" data="/sov-zoom-year.svg?window=31536000" style="width:100%;height:100%;background:#050510"></object>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<script>
+const API = window.location.origin;
+const LAYER_COLORS = {
+  'events:all': '#79C0FF', 'events:by_kind': '#A371F7', 'events:recent': '#2F81F7',
+  'lenses:by_evidence': '#3FB950', 'clauses:all': '#D29922', 'events:timeline': '#FF7B72',
+};
+
+// ── Particle spheres in OWM and VWM ───────────────────────────────
+function renderSphere(canvasId, n, color, opacity=0.6) {
+  const canvas = document.getElementById(canvasId);
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const r = canvas.getBoundingClientRect();
+  canvas.width = r.width;
+  canvas.height = r.height;
+  const W = r.width, H = r.height;
+  const cx = W / 2, cy = H / 2;
+  const particles = [];
+  for (let i = 0; i < n; i++) {
+    particles.push({
+      x: cx + (Math.random() - 0.5) * W * 0.9,
+      y: cy + (Math.random() - 0.5) * H * 0.9,
+      vx: (Math.random() - 0.5) * 0.3,
+      vy: (Math.random() - 0.5) * 0.3,
+      r: 1 + Math.random() * 2.5,
+    });
+  }
+  function frame() {
+    ctx.clearRect(0, 0, W, H);
+    for (const p of particles) {
+      p.x += p.vx; p.y += p.vy;
+      const dx = p.x - cx, dy = p.y - cy;
+      const d = Math.sqrt(dx*dx + dy*dy);
+      p.vx += -dx * 0.00005;
+      p.vy += -dy * 0.00005;
+      if (d > Math.min(W, H) * 0.45) {
+        p.x = cx + (Math.random() - 0.5) * W * 0.9;
+        p.y = cy + (Math.random() - 0.5) * H * 0.9;
+      }
+      ctx.fillStyle = color;
+      ctx.globalAlpha = opacity;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, 6.28);
+      ctx.fill();
+    }
+    ctx.globalAlpha = 1;
+    requestAnimationFrame(frame);
+  }
+  frame();
+}
+
+// ── OWM: run SQL queries against local DB ─────────────────────────
+async function runSQL() {
+  const sql = document.getElementById('sqlInput').value;
+  if (!sql) return;
+  try {
+    const r = await fetch(API + '/api/query?sql=' + encodeURIComponent(sql));
+    const d = await r.json();
+    if (d.error) {
+      document.getElementById('owmResults').innerHTML =
+        `<div style="color:#F85149;padding:8px">SQL error: ${d.error}</div>`;
+      return;
+    }
+    if (d.rows.length === 0) {
+      document.getElementById('owmResults').innerHTML =
+        `<div style="color:#6E7681;padding:8px">No rows</div>`;
+      return;
+    }
+    const cols = Object.keys(d.rows[0]);
+    let html = '<table class="table"><tr>';
+    for (const c of cols) html += `<th>${c}</th>`;
+    html += '</tr>';
+    for (const row of d.rows.slice(0, 50)) {
+      html += '<tr>';
+      for (const c of cols) {
+        const v = row[c];
+        html += `<td>${typeof v === 'number' ? v.toFixed(2) : (v || '').toString().substring(0, 80)}</td>`;
+      }
+      html += '</tr>';
+    }
+    html += '</table>';
+    document.getElementById('owmResults').innerHTML = html;
+  } catch (e) {
+    document.getElementById('owmResults').innerHTML =
+      `<div style="color:#F85149">fetch error: ${e.message}</div>`;
+  }
+}
+
+// ── IWM: route natural-language to SQL ────────────────────────────
+async function askIWM() {
+  const q = document.getElementById('iwmInput').value;
+  if (!q) return;
+  try {
+    const r = await fetch(API + '/api/iwm?q=' + encodeURIComponent(q));
+    const d = await r.json();
+    let html = `<div class="iwm-row"><b style="color:#79C0FF">Question:</b> ${d.question}<br/>
+                  <b style="color:#79C0FF">SQL routed:</b> <pre>${d.sql}</pre>
+                  <b style="color:#79C0FF">${d.n_rows} rows</b></div>`;
+    if (d.rows.length > 0) {
+      html += '<table class="table"><tr>';
+      for (const c of Object.keys(d.rows[0])) html += `<th>${c}</th>`;
+      html += '</tr>';
+      for (const row of d.rows.slice(0, 10)) {
+        html += '<tr>';
+        for (const c of Object.keys(d.rows[0])) {
+          const v = row[c];
+          html += `<td>${typeof v === 'number' ? v.toFixed(2) : (v || '').toString().substring(0, 60)}</td>`;
+        }
+        html += '</tr>';
+      }
+      html += '</table>';
+    }
+    document.getElementById('iwmResults').innerHTML = html;
+  } catch (e) {
+    document.getElementById('iwmResults').innerHTML =
+      `<div style="color:#F85149">${e.message}</div>`;
+  }
+}
+
+// ── VWM: load layer list + render particle sphere ────────────────
+async function loadLayers() {
+  try {
+    const r = await fetch(API + '/api/layers');
+    const d = await r.json();
+    const list = document.getElementById('layerList');
+    list.innerHTML = d.layers.map(L => {
+      const color = LAYER_COLORS[L.id] || '#79C0FF';
+      return `<div class="layer-card" style="border-left-color:${color}">
+        <h4>${L.title} <span class="n" style="color:${color}">${L.id}</span></h4>
+        <div class="spec">renderer: ${L.renderer}</div>
+        <div class="spec">query: <code>${L.query.substring(0, 80)}…</code></div>
+        <button onclick="loadLayer('${L.id}')" style="margin-top:4px;padding:4px 8px;background:${color};color:#03060c;border:0;border-radius:3px;cursor:pointer;font-size:0.65rem">render</button>
+        <div id="row-${L.id.replace(/[:]/g,'-')}"></div>
+      </div>`;
+    }).join('');
+    document.getElementById('vwmMeta').textContent = `${d.layers.length} layers available · click render`;
+  } catch (e) {
+    document.getElementById('layerList').innerHTML = `<div style="color:#F85149">${e.message}</div>`;
+  }
+}
+
+async function loadLayer(lid) {
+  try {
+    const r = await fetch(API + '/api/layer/' + lid);
+    const d = await r.json();
+    if (d.error) return;
+    const target = document.getElementById('row-' + lid.replace(/[:]/g, '-'));
+    if (!target) return;
+    target.innerHTML = `<div class="spec" style="margin-top:4px">
+      <b>${d.n_rows} rows</b>: first row ${JSON.stringify(d.rows[0] || {}).substring(0, 120)}
+    </div>`;
+  } catch (e) {}
+}
+
+// ── Initial load ───────────────────────────────────────────────
+async function boot() {
+  // Substrate + meta
+  try {
+    const r = await fetch(API + '/api/substrate');
+    const s = await r.json();
+    document.getElementById('owmMeta').textContent =
+      `${s.ledger.events} events · ${s.ledger.kinds ? Object.keys(s.ledger.kinds).length : 0} kinds`;
+    document.getElementById('timeMeta').textContent = `hash ${s.ledger.hash}`;
+  } catch (e) {}
+
+  await runSQL();
+  await askIWM();
+  await loadLayers();
+  renderSphere('owm-canvas', 80, '#A371F7', 0.4);
+}
+
+boot();
+</script>
+</body>
+</html>

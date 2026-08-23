@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Measured vs Human — the divergence map | Council of AI</title>
+<meta name="description" content="Where measured model behaviour and published human baselines split on the same benchmarks. Displayed, never blended.">
+<style>body{font-family:system-ui;background:#06140f;color:#e8f5ee;margin:0;padding:2rem 1rem}main{max-width:760px;margin:0 auto}
+h1{font-size:1.35rem}.sub{color:#9fe8c8;line-height:1.5;border-left:3px solid #c9a84c;padding-left:1rem;margin:1rem 0 2rem}
+table{width:100%;border-collapse:collapse;font-size:.9rem}th,td{padding:.5rem .6rem;text-align:left;border-bottom:1px solid #1f3d31}
+th{color:#7fd1a8;font-size:.72rem;text-transform:uppercase;letter-spacing:.05em}
+.ahead{color:#9fe8c8;font-weight:700}.behind{color:#c96a4c;font-weight:700}
+.note{color:#7fd1a8;font-size:.8rem;line-height:1.6;margin-top:1.5rem}</style></head><body><main>
+<h1>Measured vs Human — the divergence map</h1>
+<p class="sub">"Beats the published human baseline on X, measured by us" — the only number a buyer can read. MEASURED (our signed runs) and REPORTED (published human aggregates) are displayed side by side, never blended.</p>
+<h2>Capability substrate (n=30 measured, published human baselines)</h2>
+<table><tr><th>Benchmark</th><th>Model (measured)</th><th>Human (reported)</th><th>Δ</th></tr>
+<tr><td>MMLU</td><td>qwen2.5:7b / phi4:14b / gemma3:12b</td><td class="ahead">0.898 (expert)</td><td class="ahead">+6.9pp ▲</td></tr>
+<tr><td>GSM8K</td><td>gemma3:12b 0.900</td><td>0.950 (human)</td><td class="behind">−5.0pp ▼</td></tr>
+<tr><td>GSM8K</td><td>qwen2.5:7b 0.867</td><td>0.950 (human)</td><td class="behind">−8.3pp ▼</td></tr>
+<tr><td>ARC</td><td>gemma3:12b / qwen2.5:7b 1.000</td><td>0.850 (human)</td><td class="ahead">+15.0pp ▲</td></tr>
+<tr><td>ARC</td><td>phi4:14b 0.967</td><td>0.850 (human)</td><td class="ahead">+11.7pp ▲</td></tr></table>
+<div class="note">
+<b>Register.</b> MEASURED = our signed runs (n=30, deterministic predicates). REPORTED = published human aggregates, cited, never measured here. The divergence is DISPLAYED — the two states never blend into a score. We publish where we lose (GSM8K behind human) as well as where we lead. Human baselines: MMLU expert cohort 89.8%, GSM8K human ~95%, ARC human cohort 85% (published).<br><br>
+<b>Verify.</b> Every MEASURED cell traces to a signed board + receipt. Free, loginless, offline. Measurement, not certification.
+</div></main></body></html>

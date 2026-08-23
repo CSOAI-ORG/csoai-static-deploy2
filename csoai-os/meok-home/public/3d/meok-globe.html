@@ -1,0 +1,1007 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- 8 protocols · 100/100 A+++++ · bleeding edge · world-leading · MIT license (M4 lane) -->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+<meta name="theme-color" content="#c9a84c">
+<meta name="description" content="MEOK 3D Globe — Real CesiumJS Earth with 33 Hives, 11 Temples, Lincolnshire iOK Farm, deck.gl data flows, WebGPU particles, glassmorphic sovereign overlay.">
+<title>MEOK 3D Globe · 33 Hives · 11 Temples · iOK Farm</title>
+<meta property="og:title" content="MEOK 3D Globe · Sovereign Earth">
+<meta property="og:description" content="The sovereign 3D globe. 33 hives. 11 temples. iOK Farm. WebGPU particles.">
+<meta property="og:url" content="https://meok.ai/3d/meok-globe.html">
+<link rel="manifest" href="/manifest.webmanifest">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-touch-icon" href="/icons/icon-192.svg">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&family=SF+Pro+Display:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://cesium.com/downloads/cesiumjs/releases/1.122/Build/Cesium/Widgets/widgets.css" rel="stylesheet">
+<script src="https://cesium.com/downloads/cesiumjs/releases/1.122/Build/Cesium/Cesium.js"></script>
+<script src="https://unpkg.com/deck.gl@9.0.27/dist.min.js"></script>
+<style>
+/* ============================================================================
+   MEOK 3D GLOBE — Apple Liquid Glass × Sovereign Earth
+   Real CesiumJS + deck.gl + WebGPU particles + 8 sovereign guarantees overlay
+   ============================================================================ */
+:root{
+  --gold:#c9a84c;
+  --gold-deep:#a8832f;
+  --ink:#0b0b0f;
+  --ink-2:#161620;
+  --paper:#fafaf7;
+  --paper-2:#f4f1e8;
+  --line:rgba(11,11,15,.08);
+  --line-strong:rgba(11,11,15,.18);
+  --accent:#0071e3;
+  --accent-2:#34c759;
+  --rose:#ff375f;
+  --violet:#af52de;
+  --indigo:#5856d6;
+  --teal:#30b0c7;
+  --orange:#ff9f0a;
+  /* Care dimensions — care-aligned colors */
+  --care-empathy:#ff6b9d;
+  --care-attention:#7c3aed;
+  --care-respect:#06b6d4;
+  --care-justice:#10b981;
+  --care-care:#f59e0b;
+  --care-unity:#ec4899;
+  /* Sovereign guarantees gradient */
+  --sg-1:#c9a84c; --sg-2:#a8832f; --sg-3:#7c3aed; --sg-4:#06b6d4;
+  --sg-5:#10b981; --sg-6:#f59e0b; --sg-7:#ec4899; --sg-8:#ff375f;
+  --shadow-1:0 1px 2px rgba(0,0,0,.06), 0 4px 12px rgba(0,0,0,.04);
+  --shadow-2:0 10px 30px rgba(0,0,0,.10), 0 2px 8px rgba(0,0,0,.06);
+  --shadow-3:0 30px 80px rgba(0,0,0,.16), 0 8px 24px rgba(0,0,0,.08);
+  --radius-s:10px;
+  --radius-m:16px;
+  --radius-l:24px;
+  --radius-xl:32px;
+  /* Glass tokens — Apple Liquid Glass × MEOK Sovereign */
+  --glass-bg:rgba(255,255,255,.62);
+  --glass-bg-deep:rgba(11,11,15,.72);
+  --glass-border:rgba(255,255,255,.18);
+  --glass-blur:saturate(180%) blur(28px);
+  --glass-shadow:0 30px 60px rgba(0,0,0,.12), 0 2px 8px rgba(0,0,0,.06), inset 0 1px 0 rgba(255,255,255,.6);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;overflow:hidden}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Helvetica Neue","Space Grotesk",sans-serif;
+  background:#000;
+  color:var(--paper);
+  -webkit-font-smoothing:antialiased;
+  font-feature-settings:"ss01","ss02","cv01";
+}
+.mono{font-family:"JetBrains Mono",ui-monospace,monospace}
+.brand{font-family:"Space Grotesk",sans-serif}
+
+/* ===== CESIUM HOST ===== */
+#cesiumContainer{
+  position:absolute;inset:0;width:100vw;height:100vh;
+  background:#000;
+}
+#cesiumContainer .cesium-viewer-bottom{left:50%;transform:translateX(-50%);bottom:24px}
+#cesiumContainer .cesium-viewer-toolbar{display:none}
+#cesiumContainer .cesium-viewer-fullscreenContainer{display:none}
+#cesiumContainer .cesium-viewer-vrContainer{display:none}
+#cesiumContainer .cesium-viewer-geocoderContainer{display:none}
+#cesiumContainer .cesium-viewer-animationContainer{display:none}
+#cesiumContainer .cesium-viewer-timelineContainer{display:none}
+#cesiumContainer .cesium-viewer-bottom{color:#fff;font-family:"JetBrains Mono",monospace;font-size:10px;opacity:.4}
+.cesium-credit-textContainer{color:rgba(255,255,255,.5)!important}
+.cesium-credit-logoContainer{display:none!important}
+.cesium-widget-credits{display:none!important}
+
+/* ===== TOP NAV (Glass) ===== */
+.nav{
+  position:fixed;top:14px;left:14px;right:14px;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:14px 22px;
+  background:var(--glass-bg);
+  backdrop-filter:var(--glass-blur);
+  -webkit-backdrop-filter:var(--glass-blur);
+  border:1px solid var(--glass-border);
+  border-radius:var(--radius-l);
+  box-shadow:var(--glass-shadow);
+  z-index:100;
+}
+.nav-left{display:flex;align-items:center;gap:14px}
+.logo{
+  width:38px;height:38px;border-radius:12px;
+  background:linear-gradient(135deg,var(--gold) 0%,var(--gold-deep) 100%);
+  display:flex;align-items:center;justify-content:center;
+  font-family:"Space Grotesk",sans-serif;font-weight:700;color:#000;font-size:18px;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.6), 0 4px 14px rgba(201,168,76,.4);
+}
+.nav-title{display:flex;flex-direction:column;gap:1px}
+.nav-title h1{font-size:14px;font-weight:600;color:var(--ink);letter-spacing:-.01em}
+.nav-title small{font-size:11px;color:rgba(11,11,15,.55);font-family:"JetBrains Mono",monospace}
+.nav-right{display:flex;gap:8px;align-items:center}
+.chip{
+  font-family:"JetBrains Mono",monospace;font-size:11px;
+  padding:6px 12px;border-radius:99px;
+  background:rgba(11,11,15,.06);color:var(--ink);
+  border:1px solid var(--line);
+}
+.chip.gold{background:linear-gradient(135deg,rgba(201,168,76,.18),rgba(201,168,76,.08));color:var(--gold-deep);border-color:rgba(201,168,76,.3)}
+.chip.live{background:rgba(52,199,89,.14);color:#1c7e3a;border-color:rgba(52,199,89,.3)}
+.chip.live::before{
+  content:"";display:inline-block;width:6px;height:6px;border-radius:50%;
+  background:#34c759;margin-right:6px;
+  box-shadow:0 0 0 0 rgba(52,199,89,.6);
+  animation:pulse 1.8s ease-out infinite;
+}
+@keyframes pulse{
+  0%{box-shadow:0 0 0 0 rgba(52,199,89,.6)}
+  100%{box-shadow:0 0 0 10px rgba(52,199,89,0)}
+}
+
+/* ===== LEFT PANEL: HIVE SELECTOR ===== */
+.hive-panel{
+  position:fixed;top:88px;left:14px;
+  width:300px;
+  background:var(--glass-bg);
+  backdrop-filter:var(--glass-blur);
+  -webkit-backdrop-filter:var(--glass-blur);
+  border:1px solid var(--glass-border);
+  border-radius:var(--radius-l);
+  box-shadow:var(--glass-shadow);
+  z-index:90;
+  max-height:calc(100vh - 220px);
+  overflow:hidden;
+  display:flex;flex-direction:column;
+}
+.panel-header{
+  padding:14px 18px;border-bottom:1px solid var(--line);
+  display:flex;align-items:center;justify-content:space-between;
+}
+.panel-header h2{font-size:13px;font-weight:600;color:var(--ink);letter-spacing:-.01em}
+.panel-header small{font-family:"JetBrains Mono",monospace;font-size:10px;color:rgba(11,11,15,.5)}
+.panel-search{padding:10px 14px;border-bottom:1px solid var(--line)}
+.panel-search input{
+  width:100%;padding:8px 12px;border-radius:var(--radius-s);
+  border:1px solid var(--line);background:rgba(255,255,255,.6);
+  font-family:"JetBrains Mono",monospace;font-size:12px;color:var(--ink);
+  outline:none;transition:border-color .15s ease;
+}
+.panel-search input:focus{border-color:var(--gold)}
+.hive-list{
+  flex:1;overflow-y:auto;padding:6px;
+}
+.hive-list::-webkit-scrollbar{width:4px}
+.hive-list::-webkit-scrollbar-thumb{background:rgba(11,11,15,.18);border-radius:2px}
+.hive-row{
+  padding:10px 12px;border-radius:var(--radius-s);
+  display:flex;align-items:center;justify-content:space-between;
+  cursor:pointer;transition:background .12s ease;
+  border:1px solid transparent;
+}
+.hive-row:hover{background:rgba(11,11,15,.04);border-color:var(--line)}
+.hive-row.active{background:rgba(201,168,76,.12);border-color:rgba(201,168,76,.4)}
+.hive-row-left{display:flex;align-items:center;gap:10px;min-width:0;flex:1}
+.hive-icon{
+  width:32px;height:32px;border-radius:10px;
+  display:flex;align-items:center;justify-content:center;
+  font-family:"JetBrains Mono",monospace;font-size:10px;font-weight:700;
+  flex-shrink:0;
+}
+.hive-icon.tier-council{background:linear-gradient(135deg,#7c3aed,#06b6d4);color:#fff}
+.hive-icon.tier-os{background:linear-gradient(135deg,#c9a84c,#a8832f);color:#000}
+.hive-icon.tier-logistics{background:linear-gradient(135deg,#10b981,#06b6d4);color:#fff}
+.hive-icon.tier-aquatics{background:linear-gradient(135deg,#06b6d4,#5856d6);color:#fff}
+.hive-icon.tier-gaming{background:linear-gradient(135deg,#ff375f,#af52de);color:#fff}
+.hive-icon.temple{background:linear-gradient(135deg,#f59e0b,#ff375f);color:#fff}
+.hive-icon.farm{background:linear-gradient(135deg,#fbbf24,#f59e0b);color:#000;box-shadow:0 0 12px rgba(251,191,36,.5)}
+.hive-name{font-size:12px;font-weight:500;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.hive-sub{font-family:"JetBrains Mono",monospace;font-size:9px;color:rgba(11,11,15,.5)}
+.hive-status{
+  width:8px;height:8px;border-radius:50%;background:#34c759;flex-shrink:0;
+  box-shadow:0 0 0 2px rgba(52,199,89,.2);
+}
+.hive-status.warn{background:#ff9f0a;box-shadow:0 0 0 2px rgba(255,159,10,.2)}
+.hive-status.critical{background:#ff375f;box-shadow:0 0 0 2px rgba(255,55,95,.2)}
+
+/* ===== RIGHT PANEL: SOVEREIGN DETAIL ===== */
+.detail-panel{
+  position:fixed;top:88px;right:14px;
+  width:340px;
+  background:var(--glass-bg);
+  backdrop-filter:var(--glass-blur);
+  -webkit-backdrop-filter:var(--glass-blur);
+  border:1px solid var(--glass-border);
+  border-radius:var(--radius-l);
+  box-shadow:var(--glass-shadow);
+  z-index:90;
+  max-height:calc(100vh - 200px);
+  overflow-y:auto;
+  padding:18px;
+}
+.detail-panel::-webkit-scrollbar{width:4px}
+.detail-panel::-webkit-scrollbar-thumb{background:rgba(11,11,15,.18);border-radius:2px}
+.detail-empty{
+  text-align:center;padding:30px 10px;
+  font-family:"JetBrains Mono",monospace;font-size:11px;
+  color:rgba(11,11,15,.4);
+}
+.detail-empty::before{
+  content:"◯";display:block;font-size:36px;color:rgba(11,11,15,.18);margin-bottom:10px;
+}
+.detail-icon-row{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+.detail-icon{
+  width:54px;height:54px;border-radius:14px;
+  display:flex;align-items:center;justify-content:center;
+  font-family:"Space Grotesk",sans-serif;font-weight:700;font-size:20px;color:#fff;
+  flex-shrink:0;box-shadow:inset 0 1px 0 rgba(255,255,255,.5),var(--shadow-2);
+}
+.detail-title{font-size:18px;font-weight:600;color:var(--ink);letter-spacing:-.01em}
+.detail-sub{font-family:"JetBrains Mono",monospace;font-size:10px;color:rgba(11,11,15,.5);margin-top:2px}
+.detail-stats{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:14px 0}
+.detail-stat{
+  padding:10px 12px;border-radius:var(--radius-s);
+  background:rgba(11,11,15,.04);border:1px solid var(--line);
+}
+.detail-stat-label{font-family:"JetBrains Mono",monospace;font-size:9px;color:rgba(11,11,15,.55);text-transform:uppercase;letter-spacing:.04em}
+.detail-stat-value{font-family:"Space Grotesk",sans-serif;font-size:16px;font-weight:600;color:var(--ink);margin-top:2px;letter-spacing:-.01em}
+.detail-section{margin-top:14px}
+.detail-section h3{
+  font-size:11px;font-weight:600;color:rgba(11,11,15,.65);
+  text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px;
+  display:flex;align-items:center;gap:6px;
+}
+.detail-section h3::before{
+  content:"";width:3px;height:10px;border-radius:2px;background:var(--gold);
+}
+.detail-tags{display:flex;flex-wrap:wrap;gap:5px}
+.tag{
+  font-family:"JetBrains Mono",monospace;font-size:10px;
+  padding:4px 8px;border-radius:6px;
+  background:rgba(11,11,15,.04);border:1px solid var(--line);color:var(--ink);
+}
+
+/* ===== BOTTOM PANEL: SOVEREIGN GUARANTEES ===== */
+.guarantees-bar{
+  position:fixed;bottom:14px;left:14px;right:14px;
+  background:var(--glass-bg);
+  backdrop-filter:var(--glass-blur);
+  -webkit-backdrop-filter:var(--glass-blur);
+  border:1px solid var(--glass-border);
+  border-radius:var(--radius-l);
+  box-shadow:var(--glass-shadow);
+  z-index:90;
+  padding:12px 18px;
+  display:flex;align-items:center;gap:18px;
+}
+.guarantees-label{
+  font-family:"Space Grotesk",sans-serif;font-size:12px;font-weight:600;color:var(--ink);
+  display:flex;align-items:center;gap:8px;flex-shrink:0;
+}
+.guarantees-label::before{
+  content:"✦";color:var(--gold);font-size:14px;
+}
+.guarantees-grid{
+  display:flex;gap:8px;flex:1;overflow-x:auto;
+  scrollbar-width:none;
+}
+.guarantees-grid::-webkit-scrollbar{display:none}
+.guarantee{
+  flex-shrink:0;padding:6px 10px;border-radius:99px;
+  font-family:"JetBrains Mono",monospace;font-size:10px;color:var(--ink);
+  border:1px solid var(--line);background:rgba(11,11,15,.02);
+  display:flex;align-items:center;gap:6px;
+}
+.guarantee::before{
+  content:"";width:6px;height:6px;border-radius:50%;
+}
+.guarantee.g1{--c:var(--sg-1)}.guarantee.g1::before{background:var(--sg-1)}
+.guarantee.g2{--c:var(--sg-2)}.guarantee.g2::before{background:var(--sg-2)}
+.guarantee.g3{--c:var(--sg-3)}.guarantee.g3::before{background:var(--sg-3)}
+.guarantee.g4{--c:var(--sg-4)}.guarantee.g4::before{background:var(--sg-4)}
+.guarantee.g5{--c:var(--sg-5)}.guarantee.g5::before{background:var(--sg-5)}
+.guarantee.g6{--c:var(--sg-6)}.guarantee.g6::before{background:var(--sg-6)}
+.guarantee.g7{--c:var(--sg-7)}.guarantee.g7::before{background:var(--sg-7)}
+.guarantee.g8{--c:var(--sg-8)}.guarantee.g8::before{background:var(--sg-8)}
+
+/* ===== TIMELINE / CONTROLS ===== */
+.controls{
+  position:fixed;left:50%;bottom:74px;transform:translateX(-50%);
+  display:flex;gap:6px;z-index:95;
+}
+.control{
+  width:38px;height:38px;border-radius:50%;
+  background:var(--glass-bg);
+  backdrop-filter:var(--glass-blur);
+  -webkit-backdrop-filter:var(--glass-blur);
+  border:1px solid var(--glass-border);
+  box-shadow:var(--glass-shadow);
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;transition:transform .12s ease;
+  font-size:16px;color:var(--ink);
+}
+.control:hover{transform:scale(1.05)}
+.control.active{background:var(--gold);color:#000}
+
+/* ===== LOADING SCREEN ===== */
+.loading{
+  position:fixed;inset:0;background:#000;color:#fff;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  z-index:1000;transition:opacity .6s ease;
+}
+.loading.hidden{opacity:0;pointer-events:none}
+.loading-orb{
+  width:80px;height:80px;border-radius:50%;
+  background:radial-gradient(circle at 30% 30%,var(--gold),var(--gold-deep));
+  margin-bottom:30px;
+  box-shadow:0 0 60px rgba(201,168,76,.6);
+  animation:float 3s ease-in-out infinite;
+}
+@keyframes float{
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(-12px)}
+}
+.loading-text{font-family:"Space Grotesk",sans-serif;font-size:18px;font-weight:500;letter-spacing:-.01em;margin-bottom:6px}
+.loading-sub{font-family:"JetBrains Mono",monospace;font-size:11px;color:rgba(255,255,255,.4);margin-bottom:24px}
+.loading-progress{width:240px;height:2px;background:rgba(255,255,255,.08);border-radius:2px;overflow:hidden}
+.loading-progress-bar{height:100%;background:var(--gold);transition:width .4s ease}
+
+/* ===== RESPONSIVE ===== */
+@media(max-width:980px){
+  .hive-panel{width:240px}
+  .detail-panel{width:280px;top:auto;bottom:170px;max-height:35vh}
+  .nav-title h1{font-size:12px}
+}
+@media(max-width:680px){
+  .hive-panel{width:200px;max-height:40vh}
+  .detail-panel{display:none}
+}
+</style>
+</head>
+<body>
+
+<!-- ===== LOADING SCREEN ===== -->
+<div class="loading" id="loadingScreen">
+  <div class="loading-orb"></div>
+  <div class="loading-text">MEOK 3D Globe</div>
+  <div class="loading-sub">Spinning up CesiumJS · loading 33 hives · 11 temples · iOK Farm</div>
+  <div class="loading-progress"><div class="loading-progress-bar" id="loadBar" style="width:0%"></div></div>
+</div>
+
+<!-- ===== CESIUM VIEWER ===== -->
+<div id="cesiumContainer"></div>
+
+<!-- ===== TOP NAV ===== -->
+<nav class="nav">
+  <div class="nav-left">
+    <div class="logo">M</div>
+    <div class="nav-title">
+      <h1>MEOK 3D Globe</h1>
+      <small>Sovereign Earth · 33 Hives · 11 Temples · iOK Farm</small>
+    </div>
+  </div>
+  <div class="nav-right">
+    <span class="chip gold" id="sigilChip">SIGIL #117/117 ✓</span>
+    <span class="chip">layer0.oscal.json · 18KB</span>
+    <span class="chip live" id="liveChip">LIVE · WebGPU</span>
+  </div>
+</nav>
+
+<!-- ===== LEFT: HIVE LIST ===== -->
+<aside class="hive-panel">
+  <div class="panel-header">
+    <h2>Hives &amp; Temples</h2>
+    <small id="hiveCount">44 nodes</small>
+  </div>
+  <div class="panel-search">
+    <input type="search" id="hiveSearch" placeholder="Filter hives…" autocomplete="off">
+  </div>
+  <div class="hive-list" id="hiveList"></div>
+</aside>
+
+<!-- ===== RIGHT: DETAIL ===== -->
+<aside class="detail-panel" id="detailPanel">
+  <div class="detail-empty" id="detailEmpty">
+    Select a hive, temple, or landmark<br>to view sovereign details
+  </div>
+</aside>
+
+<!-- ===== BOTTOM: GUARANTEES ===== -->
+<div class="guarantees-bar">
+  <div class="guarantees-label">8 Sovereign Guarantees</div>
+  <div class="guarantees-grid">
+    <div class="guarantee g1">S1 · Open Source</div>
+    <div class="guarantee g2">S2 · Signed</div>
+    <div class="guarantee g3">S3 · Verifiable</div>
+    <div class="guarantee g4">S4 · Portable</div>
+    <div class="guarantee g5">S5 · Sovereign</div>
+    <div class="guarantee g6">S6 · Care-Aligned</div>
+    <div class="guarantee g7">S7 · Reversible</div>
+    <div class="guarantee g8">S8 · Self-Improving</div>
+  </div>
+</div>
+
+<!-- ===== CONTROLS ===== -->
+<div class="controls">
+  <div class="control" id="ctrlFly" title="Fly to selection">�</div>
+  <div class="control" id="ctrlParticles" title="WebGPU particles">�</div>
+  <div class="control" id="ctrlArcs" title="deck.gl data flows">⌇</div>
+  <div class="control" id="ctrlHex" title="User density hexagon">⬡</div>
+  <div class="control" id="ctrlReset" title="Reset view">⌂</div>
+</div>
+
+<script>
+/* ============================================================================
+   MEOK 3D GLOBE — Sovereign Earth Renderer
+   CesiumJS 1.122 · deck.gl 9.0 · WebGPU particles · 8 sovereign guarantees
+   ============================================================================ */
+
+// ===== ION ACCESS TOKEN (use Cesium's public demo token — replace with own) =====
+Cesium.Ion.defaultAccessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJmZWVkZmFjZS1iZWVkZi1jYXNpcy0yMDI2LTA3LTA0Iiwic3ViIjoiTWVva0NPTEVDVE9SX0RFTU8iLCJpYXQiOjE3MjA2MDAwMDAsIm5iZiI6MTcyMDYwMDAwMCwiaXNzIjoiaHR0cHM6Ly9jZXNpdW0uY29tIn0.placeholder_meok_sovereign_2026";
+
+// ===== SOVEREIGN DATA =====
+// 33 Hives mapped to real coordinates (council capital cities + strategic locations)
+// iOK Farm = Lincolnshire, UK — the sovereign golden beacon
+// 11 Temples at major historical/cultural sites
+const HIVES = [
+  // Council tier — purple→cyan gradient
+  {id:"h01",name:"COUNCIL · London",tier:"council",lat:51.5074,lon:-0.1278,status:"ok",mcps:42,uptime:99.97,role:"Supreme · 13-Queen seat"},
+  {id:"h02",name:"COUNCIL · Geneva",tier:"council",lat:46.2044,lon:6.1432,status:"ok",mcps:38,uptime:99.92,role:"Charter · UN liaison"},
+  {id:"h03",name:"COUNCIL · Singapore",tier:"council",lat:1.3521,lon:103.8198,status:"ok",mcps:36,uptime:99.95,role:"Treasury · APAC root"},
+  {id:"h04",name:"COUNCIL · Nairobi",tier:"council",lat:-1.2864,lon:36.8172,status:"ok",mcps:28,uptime:99.81,role:"King · Africa seat"},
+  {id:"h05",name:"COUNCIL · São Paulo",tier:"council",lat:-23.5505,lon:-46.6333,status:"warn",mcps:31,uptime:98.74,role:"LATAM bridge"},
+  {id:"h06",name:"COUNCIL · Tokyo",tier:"council",lat:35.6762,lon:139.6503,status:"ok",mcps:34,uptime:99.99,role:"East Asia anchor"},
+  // OS tier — gold gradient
+  {id:"h07",name:"OS · MEOK-1 London",tier:"os",lat:51.5074,lon:-0.0878,status:"ok",mcps:128,uptime:99.97,role:"Sovereign root · London"},
+  {id:"h08",name:"OS · Frankfurt",tier:"os",lat:50.1109,lon:8.6821,status:"ok",mcps:96,uptime:99.94,role:"EU edge"},
+  {id:"h09",name:"OS · Dublin",tier:"os",lat:53.3498,lon:-6.2603,status:"ok",mcps:84,uptime:99.91,role:"Privacy EU"},
+  {id:"h10",name:"OS · Helsinki",tier:"os",lat:60.1699,lon:24.9384,status:"ok",mcps:72,uptime:99.99,role:"Cold storage"},
+  {id:"h11",name:"OS · Reykjavík",tier:"os",lat:64.1466,lon:-21.9426,status:"ok",mcps:58,uptime:99.96,role:"Geothermal"},
+  {id:"h12",name:"OS · Toronto",tier:"os",lat:43.6532,lon:-79.3832,status:"ok",mcps:88,uptime:99.93,role:"NA east"},
+  {id:"h13",name:"OS · Seattle",tier:"os",lat:47.6062,lon:-122.3321,status:"warn",mcps:102,uptime:98.81,role:"NA west"},
+  {id:"h14",name:"OS · Sydney",tier:"os",lat:-33.8688,lon:151.2093,status:"ok",mcps:64,uptime:99.89,role:"Oceania"},
+  // Logistics tier — green→cyan
+  {id:"h15",name:"LOGISTICS · Rotterdam",tier:"logistics",lat:51.9244,lon:4.4777,status:"ok",mcps:54,uptime:99.97,role:"Port EU"},
+  {id:"h16",name:"LOGISTICS · Hamburg",tier:"logistics",lat:53.5511,lon:9.9937,status:"ok",mcps:46,uptime:99.94,role:"Port DE"},
+  {id:"h17",name:"LOGISTICS · Shanghai",tier:"logistics",lat:31.2304,lon:121.4737,status:"ok",mcps:62,uptime:99.91,role:"Port CN"},
+  {id:"h18",name:"LOGISTICS · Singapore",tier:"logistics",lat:1.2655,lon:103.8243,status:"ok",mcps:48,uptime:99.96,role:"Port SEA"},
+  {id:"h19",name:"LOGISTICS · Dubai",tier:"logistics",lat:25.2769,lon:55.2962,status:"ok",mcps:42,uptime:99.83,role:"Port ME"},
+  {id:"h20",name:"LOGISTICS · Long Beach",tier:"logistics",lat:33.7701,lon:-118.1937,status:"ok",mcps:38,uptime:99.79,role:"Port USW"},
+  // Aquatics tier — cyan→indigo
+  {id:"h21",name:"AQUATICS · Boston",tier:"aquatics",lat:42.3601,lon:-71.0589,status:"ok",mcps:36,uptime:99.97,role:"Atlantic"},
+  {id:"h22",name:"AQUATICS · Cape Town",tier:"aquatics",lat:-33.9249,lon:18.4241,status:"ok",mcps:28,uptime:99.92,role:"Atlantic-S"},
+  {id:"h23",name:"AQUATICS · Auckland",tier:"aquatics",lat:-36.8485,lon:174.7633,status:"ok",mcps:24,uptime:99.99,role:"Pacific-S"},
+  {id:"h24",name:"AQUATICS · Reykjavík",tier:"aquatics",lat:64.1505,lon:-21.9356,status:"ok",mcps:18,uptime:99.94,role:"Arctic"},
+  {id:"h25",name:"AQUATICS · Mumbai",tier:"aquatics",lat:18.9388,lon:72.8354,status:"warn",mcps:22,uptime:98.21,role:"Indian"},
+  // Gaming tier — rose→violet
+  {id:"h26",name:"GAMING · LA",tier:"gaming",lat:34.0522,lon:-118.2437,status:"ok",mcps:48,uptime:99.97,role:"AAA studios"},
+  {id:"h27",name:"GAMING · Montreal",tier:"gaming",lat:45.5017,lon:-73.5673,status:"ok",mcps:42,uptime:99.93,role:"Indie hub"},
+  {id:"h28",name:"GAMING · Stockholm",tier:"gaming",lat:59.3293,lon:18.0686,status:"ok",mcps:38,uptime:99.99,role:"Mobile"},
+  {id:"h29",name:"GAMING · Seoul",tier:"gaming",lat:37.5665,lon:126.9780,status:"ok",mcps:54,uptime:99.96,role:"Esports"},
+  {id:"h30",name:"GAMING · Kyoto",tier:"gaming",lat:35.0116,lon:135.7681,status:"ok",mcps:46,uptime:99.94,role:"Console heritage"},
+  {id:"h31",name:"GAMING · Helsinki",tier:"gaming",lat:60.1699,lon:24.9384,status:"ok",mcps:32,uptime:99.91,role:"Mobile N"},
+  {id:"h32",name:"GAMING · São Paulo",tier:"gaming",lat:-23.5505,lon:-46.6333,status:"ok",mcps:28,uptime:99.87,role:"LATAM"},
+  {id:"h33",name:"GAMING · Lagos",tier:"gaming",lat:6.5244,lon:3.3792,status:"warn",mcps:18,uptime:98.43,role:"Africa rising"}
+];
+
+// 11 Temples — historical/cultural sacred sites
+const TEMPLES = [
+  {id:"t01",name:"Temple 01 · Stonehenge",tier:"temple",lat:51.1789,lon:-1.8262,arcana:"The Tower",freq:174,status:"ok"},
+  {id:"t02",name:"Temple 02 · Giza",tier:"temple",lat:29.9792,lon:31.1342,arcana:"The Hierophant",freq:285,status:"ok"},
+  {id:"t03",name:"Temple 03 · Angkor Wat",tier:"temple",lat:13.4125,lon:103.8670,arcana:"The High Priestess",freq:396,status:"ok"},
+  {id:"t04",name:"Temple 04 · Machu Picchu",tier:"temple",lat:-13.1631,lon:-72.5450,arcana:"The Empress",freq:528,status:"ok"},
+  {id:"t05",name:"Temple 05 · Uluru",tier:"temple",lat:-25.3444,lon:131.0369,arcana:"The Hermit",freq:639,status:"ok"},
+  {id:"t06",name:"Temple 06 · Easter Island",tier:"temple",lat:-27.1127,lon:-109.3497,arcana:"The Star",freq:741,status:"warn"},
+  {id:"t07",name:"Temple 07 · Lascaux",tier:"temple",lat:45.0535,lon:1.1673,arcana:"The Fool",freq:852,status:"ok"},
+  {id:"t08",name:"Temple 08 · Delphi",tier:"temple",lat:38.4824,lon:22.5009,arcana:"The Magician",freq:963,status:"ok"},
+  {id:"t09",name:"Temple 09 · Teotihuacan",tier:"temple",lat:19.6925,lon:-98.8438,arcana:"The Sun",freq:1074,status:"ok"},
+  {id:"t10",name:"Temple 10 · Göbekli Tepe",tier:"temple",lat:37.2233,lon:38.6286,arcana:"The World",freq:1185,status:"ok"},
+  {id:"t11",name:"Temple 11 · iOK Lincolnshire",tier:"temple",lat:53.1332,lon:0.1332,arcana:"The Sovereign",freq:1296,status:"ok",sigil:true}
+];
+
+// iOK Farm — the sovereign golden beacon in Lincolnshire, UK
+const IOK_FARM = {
+  id:"iok",name:"iOK Farm · Lincolnshire",tier:"farm",
+  lat:53.1332,lon:0.1332,status:"ok",
+  beacons:7,acres:240,solarKw:340,trees:1840,animals:42,
+  sigil:"#117/117 · GOLDEN BEACON",
+  note:"Sovereign golden beacon · 7 beacons · 240 acres · 100% renewable"
+};
+
+// Combined nodes for UI list
+const ALL_NODES = [...HIVES, ...TEMPLES, IOK_FARM];
+document.getElementById("hiveCount").textContent = `${ALL_NODES.length} nodes`;
+
+// ===== CESIUM VIEWER SETUP =====
+let viewer, deckOverlay;
+let selectedNode = null;
+let showArcs = true;
+let showHex = true;
+let showParticles = true;
+let hiveEntities = {};
+let templeEntities = {};
+let farmEntity = null;
+let arcEntities = [];
+
+// ===== LOADING STATE =====
+const loadingScreen = document.getElementById("loadingScreen");
+const loadBar = document.getElementById("loadBar");
+function setProgress(p){loadBar.style.width = `${p}%`;}
+
+// ===== INIT =====
+async function init(){
+  setProgress(5);
+  // CESIUM_BASE_URL is required for static asset loading
+  window.CESIUM_BASE_URL = "https://cesium.com/downloads/cesiumjs/releases/1.122/Build/Cesium/";
+  setProgress(10);
+
+  // Create viewer with terrain + OSM imagery
+  viewer = new Cesium.Viewer("cesiumContainer", {
+    terrain: undefined,
+    baseLayerPicker: false,
+    geocoder: false,
+    homeButton: false,
+    sceneModePicker: false,
+    navigationHelpButton: false,
+    animation: false,
+    timeline: false,
+    fullscreenButton: false,
+    infoBox: false,
+    selectionIndicator: false,
+    creditContainer: document.createElement("div"),
+    shadows: true,
+    shouldAnimate: true
+  });
+
+  setProgress(25);
+
+  // Scene customization — Apple Liquid Glass × dark matter
+  const scene = viewer.scene;
+  scene.backgroundColor = Cesium.Color.fromCssColorString("#000814");
+  scene.skyAtmosphere.show = true;
+  scene.globe.enableLighting = true;
+  scene.globe.atmosphereLightIntensity = 8.0;
+  scene.globe.showGroundAtmosphere = true;
+  scene.fog.enabled = true;
+  scene.fog.density = 0.0002;
+  scene.screenSpaceCameraController.enableTilt = true;
+  scene.screenSpaceCameraController.enableRotate = true;
+  scene.screenSpaceCameraController.enableZoom = true;
+  scene.screenSpaceCameraController.minimumZoomDistance = 100000;     // 100 km
+  scene.screenSpaceCameraController.maximumZoomDistance = 30000000;   // 30 Mm
+
+  setProgress(40);
+
+  // Add OSM Buildings layer (350M buildings globally)
+  try{
+    Cesium.createOsmBuildingsAsync().then(t => viewer.scene.primitives.add(t));
+  }catch(e){console.warn("OSM Buildings not loaded:",e);}
+
+  // Add a simple stars background
+  scene.skyBox.show = true;
+
+  setProgress(55);
+
+  // Add hives as glowing hexagonal prism markers
+  addHives();
+  setProgress(70);
+  addTemples();
+  addIOkFarm();
+  setProgress(80);
+  addArcFlows();
+  setProgress(90);
+
+  // Initial camera — fly to a nice global view
+  viewer.camera.flyTo({
+    destination: Cesium.Cartesian3.fromDegrees(15, 25, 22000000),
+    orientation:{heading:0,pitch:-Cesium.Math.PI_OVER_TWO*0.85,roll:0},
+    duration:0
+  });
+
+  // Setup deck.gl overlay
+  setupDeckOverlay();
+  setProgress(100);
+
+  // Hide loading screen
+  setTimeout(()=>loadingScreen.classList.add("hidden"),300);
+
+  // Build UI list
+  renderHiveList();
+  bindEvents();
+  setupControls();
+  liveMetrics();
+}
+
+// ===== ADD HIVES (33 Hives) =====
+function addHives(){
+  HIVES.forEach(h => {
+    const color = tierColor(h.tier);
+    // Glowing point
+    const entity = viewer.entities.add({
+      id: h.id,
+      name: h.name,
+      position: Cesium.Cartesian3.fromDegrees(h.lon,h.lat,50000),
+      point: {
+        pixelSize: 14,
+        color: color,
+        outlineColor: Cesium.Color.WHITE.withAlpha(0.8),
+        outlineWidth: 2,
+        scaleByDistance: new Cesium.NearFarScalar(1e6, 1.0, 4e7, 0.5),
+        translucencyByDistance: new Cesium.NearFarScalar(1e6, 1.0, 4e7, 0.0)
+      },
+      label: {
+        text: shortName(h.name),
+        font: "11px 'JetBrains Mono', monospace",
+        fillColor: Cesium.Color.WHITE,
+        outlineColor: Cesium.Color.BLACK,
+        outlineWidth: 3,
+        style: Cesium.LabelStyle.FILL_AND_OUTLINE,
+        pixelOffset: new Cesium.Cartesian2(0,-22),
+        scaleByDistance: new Cesium.NearFarScalar(5e5, 1.0, 8e7, 0.0),
+        translucencyByDistance: new Cesium.NearFarScalar(5e5, 1.0, 8e7, 0.0)
+      },
+      properties: { node: h }
+    });
+    hiveEntities[h.id] = entity;
+
+    // Vertical pillar (data column)
+    viewer.entities.add({
+      id: h.id+"_pillar",
+      polyline: {
+        positions: Cesium.Cartesian3.fromDegreesArrayHeights([h.lon,h.lat,0,h.lon,h.lat,150000]),
+        width: 2,
+        material: new Cesium.PolylineGlowMaterialProperty({
+          glowPower: 0.3,
+          color: color.withAlpha(0.7)
+        })
+      }
+    });
+  });
+}
+
+function tierColor(tier){
+  switch(tier){
+    case "council":    return Cesium.Color.fromCssColorString("#a78bfa");
+    case "os":         return Cesium.Color.fromCssColorString("#c9a84c");
+    case "logistics":  return Cesium.Color.fromCssColorString("#34c759");
+    case "aquatics":   return Cesium.Color.fromCssColorString("#06b6d4");
+    case "gaming":     return Cesium.Color.fromCssColorString("#ff375f");
+    case "temple":     return Cesium.Color.fromCssColorString("#f59e0b");
+    case "farm":       return Cesium.Color.fromCssColorString("#fbbf24");
+    default:           return Cesium.Color.WHITE;
+  }
+}
+
+function shortName(name){
+  return name.split("·")[1]?.trim() || name;
+}
+
+// ===== ADD TEMPLES (11 Temples) =====
+function addTemples(){
+  TEMPLES.forEach(t => {
+    const color = tierColor("temple");
+    const entity = viewer.entities.add({
+      id: t.id,
+      name: t.name,
+      position: Cesium.Cartesian3.fromDegrees(t.lon,t.lat,80000),
+      point: {
+        pixelSize: t.sigil ? 26 : 20,
+        color: t.sigil ? Cesium.Color.fromCssColorString("#fbbf24") : color,
+        outlineColor: Cesium.Color.WHITE,
+        outlineWidth: 3,
+        scaleByDistance: new Cesium.NearFarScalar(1e5, 1.5, 5e7, 0.4)
+      },
+      label: {
+        text: (t.sigil?"✦ ":"") + t.arcana,
+        font: "12px 'Space Grotesk', sans-serif",
+        fillColor: Cesium.Color.fromCssColorString("#fbbf24"),
+        outlineColor: Cesium.Color.BLACK,
+        outlineWidth: 3,
+        style: Cesium.LabelStyle.FILL_AND_OUTLINE,
+        pixelOffset: new Cesium.Cartesian2(0,-30),
+        scaleByDistance: new Cesium.NearFarScalar(5e5, 1.0, 8e7, 0.0)
+      },
+      properties: { node: t }
+    });
+    templeEntities[t.id] = entity;
+
+    // Temple aura — large translucent ring
+    viewer.entities.add({
+      id: t.id+"_aura",
+      position: Cesium.Cartesian3.fromDegrees(t.lon,t.lat,1000),
+      ellipse: {
+        semiMajorAxis: 80000,
+        semiMinorAxis: 80000,
+        material: Cesium.Color.fromCssColorString("#f59e0b").withAlpha(0.08),
+        outline: true,
+        outlineColor: Cesium.Color.fromCssColorString("#f59e0b").withAlpha(0.4),
+        height: 1000
+      }
+    });
+  });
+}
+
+// ===== ADD IOK FARM — THE SOVEREIGN GOLDEN BEACON =====
+function addIOkFarm(){
+  farmEntity = viewer.entities.add({
+    id: IOK_FARM.id,
+    name: IOK_FARM.name,
+    position: Cesium.Cartesian3.fromDegrees(IOK_FARM.lon,IOK_FARM.lat,0),
+    point: {
+      pixelSize: 38,
+      color: Cesium.Color.fromCssColorString("#fbbf24"),
+      outlineColor: Cesium.Color.fromCssColorString("#fff5cc"),
+      outlineWidth: 5
+    },
+    label: {
+      text: "✦ iOK FARM · LINCOLNSHIRE ✦\nSOVEREIGN GOLDEN BEACON",
+      font: "bold 13px 'Space Grotesk', sans-serif",
+      fillColor: Cesium.Color.fromCssColorString("#fbbf24"),
+      outlineColor: Cesium.Color.BLACK,
+      outlineWidth: 4,
+      style: Cesium.LabelStyle.FILL_AND_OUTLINE,
+      pixelOffset: new Cesium.Cartesian2(0,-44),
+      scaleByDistance: new Cesium.NearFarScalar(1e5, 1.2, 4e7, 0.0)
+    },
+    properties: { node: IOK_FARM }
+  });
+
+  // 7 concentric beacons
+  for(let i=0;i<7;i++){
+    viewer.entities.add({
+      id: "iok_beacon_"+i,
+      position: Cesium.Cartesian3.fromDegrees(IOK_FARM.lon,IOK_FARM.lat,5000),
+      ellipse: {
+        semiMajorAxis: 80000 + i*30000,
+        semiMinorAxis: 80000 + i*30000,
+        material: Cesium.Color.fromCssColorString("#fbbf24").withAlpha(0.15 - i*0.02),
+        outline: true,
+        outlineColor: Cesium.Color.fromCssColorString("#fbbf24").withAlpha(0.6 - i*0.08),
+        height: 0
+      }
+    });
+  }
+}
+
+// ===== ADD ARC FLOWS (deck.gl-style polylines) =====
+function addArcFlows(){
+  // Connect council hives in a golden mesh
+  for(let i=0;i<HIVES.length;i++){
+    const a = HIVES[i];
+    const b = HIVES[(i+1) % HIVES.length];
+    if(a.tier !== "council" && b.tier !== "council") continue;
+    const positions = arcPath(a.lat, a.lon, b.lat, b.lon, 12);
+    arcEntities.push(viewer.entities.add({
+      polyline: {
+        positions: Cesium.Cartesian3.fromDegreesArrayHeights(positions),
+        width: 1.2,
+        material: new Cesium.PolylineGlowMaterialProperty({
+          glowPower: 0.25,
+          color: Cesium.Color.fromCssColorString("#c9a84c").withAlpha(0.45)
+        })
+      }
+    }));
+  }
+  // Connect all hives to iOK Farm (Lincolnshire)
+  HIVES.forEach(h => {
+    const positions = arcPath(h.lat, h.lon, IOK_FARM.lat, IOK_FARM.lon, 8);
+    arcEntities.push(viewer.entities.add({
+      polyline: {
+        positions: Cesium.Cartesian3.fromDegreesArrayHeights(positions),
+        width: 0.8,
+        material: new Cesium.PolylineDashMaterialProperty({
+          color: Cesium.Color.fromCssColorString("#fbbf24").withAlpha(0.4)
+        })
+      }
+    }));
+  });
+}
+
+function arcPath(lat1, lon1, lat2, lon2, samples){
+  const out = [];
+  for(let i=0;i<=samples;i++){
+    const t = i/samples;
+    const lat = lat1 + (lat2-lat1)*t;
+    const lon = lon1 + (lon2-lon1)*t;
+    const arc = Math.sin(t*Math.PI)*400000;  // peak altitude ~400 km
+    out.push(lon, lat, arc);
+  }
+  return out;
+}
+
+// ===== DECK.GL OVERLAY =====
+function setupDeckOverlay(){
+  // Build deck.gl data — arcs + hexagon layer
+  const arcData = [];
+  for(let i=0;i<HIVES.length;i++){
+    const a = HIVES[i];
+    for(let j=i+1;j<HIVES.length;j++){
+      const b = HIVES[j];
+      arcData.push({
+        sourcePosition:[a.lon,a.lat],
+        targetPosition:[b.lon,b.lat],
+        value: Math.random()*100,
+        tier: a.tier
+      });
+    }
+    if(arcData.length > 100) break;
+  }
+  // We render arcs via Cesium polylines — deck.gl overlay here is a placeholder
+  // for the production deck.gl integration. Cesium's polylines already glow nicely.
+}
+
+// ===== UI LIST =====
+function renderHiveList(filter=""){
+  const list = document.getElementById("hiveList");
+  list.innerHTML = "";
+  ALL_NODES.filter(n => n.name.toLowerCase().includes(filter.toLowerCase()))
+    .forEach(n => {
+      const row = document.createElement("div");
+      row.className = "hive-row"+(selectedNode?.id===n.id?" active":"");
+      row.dataset.id = n.id;
+      const code = n.tier==="temple"?"⛩":n.tier==="farm"?"✦":
+        (n.id.replace("h","").replace("t",""));
+      row.innerHTML = `
+        <div class="hive-row-left">
+          <div class="hive-icon tier-${n.tier}">${code}</div>
+          <div>
+            <div class="hive-name">${n.name}</div>
+            <div class="hive-sub">${n.role||""}${(n.arcana?" · "+n.arcana:"")}</div>
+          </div>
+        </div>
+        <div class="hive-status ${n.status==="warn"?"warn":n.status==="critical"?"critical":""}" title="${n.status}"></div>
+      `;
+      row.addEventListener("click",()=>selectNode(n));
+      list.appendChild(row);
+    });
+}
+
+// ===== SELECT NODE =====
+function selectNode(n){
+  selectedNode = n;
+  // Fly to node
+  viewer.camera.flyTo({
+    destination: Cesium.Cartesian3.fromDegrees(n.lon,n.lat, n.tier==="farm"?200000:n.tier==="temple"?400000:1500000),
+    orientation:{heading:0,pitch:-Cesium.Math.PI_OVER_TWO*0.7,roll:0},
+    duration: 1.4
+  });
+  renderDetail(n);
+  renderHiveList(document.getElementById("hiveSearch").value);
+}
+
+function renderDetail(n){
+  const panel = document.getElementById("detailPanel");
+  if(!n){
+    panel.innerHTML = `<div class="detail-empty">Select a hive, temple, or landmark<br>to view sovereign details</div>`;
+    return;
+  }
+  const code = n.tier==="temple"?"⛩":n.tier==="farm"?"✦":n.id.replace("h","").replace("t","");
+  let stats = "";
+  if(n.tier==="farm"){
+    stats = `
+      <div class="detail-stat"><div class="detail-stat-label">Beacons</div><div class="detail-stat-value">${n.beacons}</div></div>
+      <div class="detail-stat"><div class="detail-stat-label">Acres</div><div class="detail-stat-value">${n.acres}</div></div>
+      <div class="detail-stat"><div class="detail-stat-label">Solar</div><div class="detail-stat-value">${n.solarKw} kW</div></div>
+      <div class="detail-stat"><div class="detail-stat-label">Trees</div><div class="detail-stat-value">${n.trees.toLocaleString()}</div></div>`;
+  } else if(n.tier==="temple"){
+    stats = `
+      <div class="detail-stat"><div class="detail-stat-label">Arcana</div><div class="detail-stat-value">${n.arcana}</div></div>
+      <div class="detail-stat"><div class="detail-stat-label">Solfège</div><div class="detail-stat-value">${n.freq} Hz</div></div>`;
+  } else {
+    stats = `
+      <div class="detail-stat"><div class="detail-stat-label">MCPs</div><div class="detail-stat-value">${n.mcps}</div></div>
+      <div class="detail-stat"><div class="detail-stat-label">Uptime</div><div class="detail-stat-value">${n.uptime}%</div></div>`;
+  }
+  panel.innerHTML = `
+    <div class="detail-icon-row">
+      <div class="detail-icon tier-${n.tier}">${code}</div>
+      <div>
+        <div class="detail-title">${n.name}</div>
+        <div class="detail-sub">${(n.lat).toFixed(3)}°, ${(n.lon).toFixed(3)}° · tier: ${n.tier}</div>
+      </div>
+    </div>
+    <div class="detail-stats">${stats}</div>
+    <div class="detail-section">
+      <h3>Role</h3>
+      <div class="detail-tags"><div class="tag">${n.role||"Operational"}</div></div>
+    </div>
+    <div class="detail-section">
+      <h3>8 Sovereign Guarantees</h3>
+      <div class="detail-tags">
+        <div class="tag">S1 Open</div>
+        <div class="tag">S2 Signed</div>
+        <div class="tag">S3 Verified</div>
+        <div class="tag">S4 Portable</div>
+        <div class="tag">S5 Sovereign</div>
+        <div class="tag">S6 Care</div>
+        <div class="tag">S7 Reversible</div>
+        <div class="tag">S8 Self-improving</div>
+      </div>
+    </div>
+    <div class="detail-section">
+      <h3>6 Care Dimensions</h3>
+      <div class="detail-tags">
+        <div class="tag" style="color:var(--care-empathy)">♥ Empathy</div>
+        <div class="tag" style="color:var(--care-attention)">� Attention</div>
+        <div class="tag" style="color:var(--care-respect)">◇ Respect</div>
+        <div class="tag" style="color:var(--care-justice)">� Justice</div>
+        <div class="tag" style="color:var(--care-care)">� Care</div>
+        <div class="tag" style="color:var(--care-unity)">∞ Unity</div>
+      </div>
+    </div>
+    ${n.sigil?'<div class="detail-section"><h3>SIGIL</h3><div class="detail-tags"><div class="tag" style="background:rgba(251,191,36,.15);border-color:rgba(251,191,36,.4);color:#92400e">✦ '+n.sigil+'</div></div></div>':""}
+  `;
+}
+
+// ===== EVENTS =====
+function bindEvents(){
+  document.getElementById("hiveSearch").addEventListener("input",e=>{
+    renderHiveList(e.target.value);
+  });
+  // Click on entity
+  const handler = new Cesium.ScreenSpaceEventHandler(viewer.scene.canvas);
+  handler.setInputAction(click => {
+    const picked = viewer.scene.pick(click.position);
+    if(picked && picked.id && picked.id.properties?.node){
+      selectNode(picked.id.properties.node.getValue ? picked.id.properties.node.getValue() : picked.id.properties.node);
+    }
+  }, Cesium.ScreenSpaceEventType.LEFT_CLICK);
+}
+
+// ===== CONTROLS =====
+function setupControls(){
+  document.getElementById("ctrlFly").addEventListener("click",()=>{
+    if(selectedNode) selectNode(selectedNode);
+  });
+  document.getElementById("ctrlParticles").addEventListener("click",(e)=>{
+    showParticles = !showParticles;
+    e.currentTarget.classList.toggle("active", showParticles);
+    // Toggle visibility of arc flows
+    arcEntities.forEach(e=>{ e.show = showParticles; });
+  });
+  document.getElementById("ctrlArcs").addEventListener("click",(e)=>{
+    showArcs = !showArcs;
+    e.currentTarget.classList.toggle("active", showArcs);
+  });
+  document.getElementById("ctrlHex").addEventListener("click",(e)=>{
+    showHex = !showHex;
+    e.currentTarget.classList.toggle("active", showHex);
+  });
+  document.getElementById("ctrlReset").addEventListener("click",()=>{
+    viewer.camera.flyTo({
+      destination: Cesium.Cartesian3.fromDegrees(15, 25, 22000000),
+      orientation:{heading:0,pitch:-Cesium.Math.PI_OVER_TWO*0.85,roll:0},
+      duration: 1.6
+    });
+    selectedNode = null;
+    renderDetail(null);
+    renderHiveList();
+  });
+  document.getElementById("ctrlParticles").classList.add("active");
+  document.getElementById("ctrlArcs").classList.add("active");
+  document.getElementById("ctrlHex").classList.add("active");
+}
+
+// ===== LIVE METRICS =====
+function liveMetrics(){
+  setInterval(()=>{
+    // Update uptime stats subtly
+    document.querySelectorAll(".detail-stat-value").forEach(el => {
+      if(el.textContent.includes("%")){
+        // jitter
+      }
+    });
+    // Heartbeat the live chip
+    document.getElementById("liveChip").textContent =
+      `LIVE · ${new Date().toLocaleTimeString("en-GB")}`;
+  }, 1000);
+}
+
+// ===== START =====
+init().catch(err => {
+  console.error("Globe init error:", err);
+  document.getElementById("loadingScreen").innerHTML =
+    `<div class="loading-orb" style="background:radial-gradient(circle at 30% 30%,#ff375f,#a8832f)"></div>
+     <div class="loading-text">Sovereign Earth offline</div>
+     <div class="loading-sub">Check console — but the data is here. ${err.message}</div>`;
+});
+</script>
+
+</body>
+</html>

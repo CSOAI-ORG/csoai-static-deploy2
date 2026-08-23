@@ -25,6 +25,9 @@ LICENSE = "MIT + CC0 1.0"
 _VCS = {}
 _PRESENTATIONS = {}
 
+# Test-only alias for legacy test reference (case-only fix)
+_VCs = _VCS
+
 
 def _sign(p):
     b = json.dumps(p, sort_keys=True, default=str)

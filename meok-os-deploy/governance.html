@@ -1,7 +1,7 @@
 <!doctype html><html lang="en"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Sovereign Governance Battery — reproducible methodology</title>
-<meta name="description" content="A reproducible, held-out governance benchmark for SOV33: 33 matched harm/adjacent prompts, scored by the real care-divergence + DORADO gate. Full methodology, honest caveats, re-runnable.">
+<meta name="description" content="A reproducible, held-out governance benchmark for MEOK: 33 matched harm/adjacent prompts, scored by the real care-divergence + DORADO gate. Full methodology, honest caveats, re-runnable.">
 <style>
 :root{--bg:#f4f1ea;--card:#fffdf8;--ink:#1a1712;--dim:#6b6355;--gold:#b8912f;--line:#e6dfd0;--ink2:#2a2620;--ok:#2e7d32;--warn:#9a6a12;--red:#b23b3b}
 *{box-sizing:border-box}
@@ -30,8 +30,20 @@ pre{background:#1c1a16;color:#f0ead9;border-radius:10px;padding:13px 15px;overfl
 code{background:#efe9db;border:1px solid var(--line);border-radius:5px;padding:1px 6px;font:12.5px ui-monospace,Menlo,monospace}
 a{color:var(--gold)}
 .foot{color:var(--dim);font-size:13px;margin-top:24px;border-top:1px solid var(--line);padding-top:16px}
-</style></head><body><div class="wrap">
-<div class="brand"><span class="m">M</span> SOV33 · governance battery</div>
+</style>
+<meta property="og:title" content="Sovereign Governance Battery — reproducible methodology"/>
+<meta property="og:description" content="A reproducible, held-out governance benchmark for MEOK: 33 matched harm/adjacent prompts, scored by the real care-divergence + DORADO gate. Full methodology, honest caveats, re-runnable."/>
+<meta property="og:type" content="website"/>
+<meta property="og:url" content="https://meok.ai/governance"/>
+<meta property="og:image" content="https://meok.ai/icon-512.png"/>
+<meta property="og:site_name" content="MEOK"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<link rel="canonical" href="https://meok.ai/governance.html"/>
+<link href="https://meok.ai/governance.llm.json" rel="alternate" title="LLM representation of this page" type="application/llm+json"/>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebPage", "name": "MEOK", "url": "https://meok.ai/governance", "description": "A reproducible, held-out governance benchmark for MEOK: 33 matched harm/adjacent prompts, scored by the real care-divergence + DORADO gate. Full methodology, honest caveats, re-runnable.", "inLanguage": "en", "isPartOf": {"@type": "WebSite", "name": "MEOK", "url": "https://meok.ai"}}</script>
+<link rel="stylesheet" href="/css/meok-system.css"/>
+</head><body><div class="wrap">
+<div class="brand"><span class="m">M</span> MEOK · governance battery</div>
 <h1>A <span class="g">reproducible</span> governance benchmark — with its caveats stated.</h1>
 <p class="sub">33 held-out, matched prompts (a harmful <b>DO</b> vs its benign <b>ABOUT</b> twin) scored by the real sovereign gate — <code>care-divergence</code> + <code>DORADO</code>, not a keyword matcher. This is the arena the frontier leaderboards don't publish: a governance number you can re-run and check.</p>
 
@@ -65,13 +77,15 @@ a{color:var(--gold)}
 <h2>Re-run it yourself</h2>
 <div class="card">
   <p style="margin:0 0 4px;color:var(--dim)">The eval is deterministic and self-contained. Every run reproduces the confusion matrix.</p>
-  <pre>python _alignment/sovereign_merge_kit/sov33_governance_eval.py
+  <pre>python _alignment/sovereign_merge_kit/meok3_governance_eval.py
 # → confusion matrix: TP=15 FP=0 TN=18 FN=0
 # → recall=1.00 precision=1.00 accuracy=1.00 (n=33)</pre>
-  <p style="margin:0;font-size:13px;color:var(--dim)">Gate: <code>sov33_dorado.dorado_check</code> + <code>sov33_care_divergence.care_divergence</code> — the same care-floor (0.95) that gates every live emit. No proxy, no self-grading with the same model family reading the label off the input.</p>
+  <p style="margin:0;font-size:13px;color:var(--dim)">Gate: <code>meok3_dorado.dorado_check</code> + <code>meok3_care_divergence.care_divergence</code> — the same care-floor (0.95) that gates every live emit. No proxy, no self-grading with the same model family reading the label off the input.</p>
 </div>
 
 <div class="foot">
-  <p><b>Why this exists:</b> frontier capability boards don't publish a reproducible <i>governance</i> number. This is a small, honest one — a starting anchor, not a trophy. The credible path is to hand these 33 (and more) to an <b>external</b> red-team and publish their confusion matrix next to ours. Verify a signed emit at <a href="/verify.html">/verify.html</a> · the OWEM model at <a href="/api/owem">/api/owem</a> · governed everywhere via <a href="/integrations.html">/integrations.html</a>.</p>
+  <p><b>Why this exists:</b> frontier capability boards don't publish a reproducible <i>governance</i> number. This is a small, honest one — a starting anchor, not a trophy. The credible path is to hand these 33 (and more) to an <b>external</b> red-team and publish their confusion matrix next to ours. Verify a signed emit at <a href="/verify.html">/verify.html</a> · governed everywhere via <a href="/integrations.html">/integrations.html</a>.</p>
 </div>
-</div></body></html>
+</div><script src="/agui-hero.js" defer></script>
+<script src="/meok-panel.js" defer></script>
+</body></html>

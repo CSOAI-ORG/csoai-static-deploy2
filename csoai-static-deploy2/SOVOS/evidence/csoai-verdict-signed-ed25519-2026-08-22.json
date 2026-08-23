@@ -1,0 +1,44 @@
+{
+  "subject": "csoai-harness-e2e",
+  "claim": "measurement",
+  "method": "eat_govbench-sequential-3090",
+  "backends": {
+    "inference": "runpod-3090-11439",
+    "signing_node": "oracle-micro1-145.241.232.16"
+  },
+  "measurement": {
+    "models": {
+      "mistral:7b": {
+        "baseline": 31.8,
+        "context": 67.3,
+        "rag_lift": 35.5
+      },
+      "llama3:8b": {
+        "baseline": 30.8,
+        "context": 66.6,
+        "rag_lift": 35.8
+      },
+      "qwen2.5:7b": {
+        "baseline": 28.0,
+        "context": 63.3,
+        "rag_lift": 35.3
+      },
+      "qwen2.5:1.5b": {
+        "baseline": 26.0,
+        "context": 60.5,
+        "rag_lift": 34.5
+      }
+    },
+    "fair_05b": "base qwen2.5:0.5b 32.6 > sov33-v7 19.8 > sov33-evolved 11.4 (same size; design, not size artifact)",
+    "finding": "retrieved_knowledge_gt_trained (RAG +34-38 pts, confound-free); base beats 0.5B fine-tunes"
+  },
+  "grammar": "verified measurement credential - measurement, not certification",
+  "note": "signed on the signing node; ed25519 private key never leaves this host",
+  "signature": {
+    "kind": "ed25519",
+    "sig": "12F/bgnimuwF60QC0WdQTc6lCN095WcqWpXLo8Nsug2i1j6Cri6OtZDWze8/hLw8HlLNL0AKzbzfj0ZorxSVCw==",
+    "body_sha256": "964266a22283e96fbbd2c5f15778a053eac8ed33cc4ad54bb1c1c92db03f7757",
+    "pubkey": "bWbk52E47J6EkY4+pu0Hh/B1l1175AZoZsDEBr0EfWA=",
+    "note": "Ed25519 over the canonical body; verify with sign.py --verify. PQC upgrade: ML-DSA-65 via liboqs \u2014 same body, swap the primitive."
+  }
+}

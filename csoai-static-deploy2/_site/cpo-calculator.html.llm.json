@@ -1,0 +1,22 @@
+{
+ "@context": "https://csoai.org/llm-context.json",
+ "type": "LLMPageSummary",
+ "url": "https://csoai.org/cpo-calculator",
+ "title": "CPO Power Savings Calculator — Council",
+ "description": "Compute the annual kWh, dollars, and CO2 saved by switching from pluggable transceivers to co-packaged optics (CPO). Free tool by Council.",
+ "headings": [
+  "How much will co-packaged optics save YOUR data center?",
+  "Your data center",
+  "What is Council?"
+ ],
+ "text": "CPO Power Savings Calculator — Council Council · free tool · 2026 How much will co-packaged optics save YOUR data center? Co-packaged optics (CPO) cuts the power per 1.6 T link from 30 W to 9 W and the latency per hop from 500 ns to 50 ns. Plug in your numbers below and see what that does to your power bill, your carbon footprint, and your data center's PUE. Your data center Inputs Number of servers Total physical hosts in your data center Optical links per server Typical: 4–16 (depends on NIC count and topology) Average utilization (%) Fraction of links that are active on average (industry rule of thumb: 70%) Power Usage Effectiveness (PUE) Total facility power / IT equipment power. 1.0 = no cooling overhead. Industry avg: 1.5. Electricity cost ($/kWh) US industrial avg ≈ $0.12; UK ≈ £0.20 (~$0.25); Iceland ≈ $0.05 Calculate savings → Quick presets Edge (10×4) Enterprise (1k×8) Large DC (10k×16) Hyperscale (100k×16) Annual savings — Power saved (auto-scaled) — kWh saved per year — Dollars saved per year — Tonnes CO₂ avoided Pluggable total power — CPO total power — Power reduction — Latency per hop — Latency saved per hop — Trees equivalent — US homes powered for a year — Sources & honest scope 30 W → 9 W per 1.6 T link : NVIDIA CPO datasheet (2026). 70% power reduction : NVIDIA CPO public positioning; cross-validated by Broadcom Tomahawk 5-Bailly (~65% claim). 500 ns → 50 ns per hop : typical pluggable stack (DSP/retimer) vs CPO direct. 0.4 kg CO₂ / kWh : IEA global average grid intensity. 21 kg CO₂ / tree / year : US Forest Service. 10,500 kWh / US household / year : US EIA residential average. What this calculator does NOT know. Real data centers have mixed link speeds (100G, 400G, 800G — not all 1.6T), dynamic workloads, non-uniform PUE, and varying electricity tariffs by region. We have no deployed CPO hardware. The 9 W/link is from the datasheet, not measured. Treat this as a proposal-credibility tool, not a deployment validation tool. For a real audit, contact us. What is Council? Council is a CPO-native operating-system layer. We build the software that treats photonic interconnect as a first-class citizen — every compute node, every API call, every agent communication routed through optical channels by default. The calculator above is one piece of that stack: a public-facing artifact that demonstrates honest, datasheet-grade engineering. Other public pieces of the stack: the signed visual mind · the EU AI Act governance crosswalk · the calculator source code . For partnership, contact governance@csoai.org . © 2026 CSOAI Ltd · UK company 16939677 · csoai.org This calculator runs entirely in your browser. No data is sent to any server.",
+ "text_truncated": false,
+ "register": {
+  "role": "measurement_and_attestation_support",
+  "csoai_certifies_systems": false,
+  "csoai_is_a_notified_body": false,
+  "csoai_has_enforcement_powers": false,
+  "note": "CSOAI measures and publishes evidence. It issues no conformity marks and holds no accreditation. Nothing here is certification or legal advice."
+ },
+ "generated_by": "make_llm_json.py"
+}

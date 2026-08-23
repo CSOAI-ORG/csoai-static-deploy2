@@ -1,0 +1,16 @@
+{
+  "id": "insurer-page",
+  "kind": "revenue-product",
+  "claim": "measurement",
+  "artifact_path": "SOVOS/evidence/insurer.html",
+  "artifact_sha256": "3f0a3036861b77f885cdb6d8a18df9369146ab9b5de72d9ad90d986741738474",
+  "grammar": "verified measurement credential - measurement, not certification",
+  "note": "signed on signing node; ed25519 key never leaves",
+  "signature": {
+    "kind": "ed25519",
+    "sig": "2b2xBMM/fgmlj48Mwio7YjNzAZrNhIG+ebhy0A4bGDhnwQLyP814mUbFHPBZa8XytJjWKetmMY3xhO/oh55MDQ==",
+    "body_sha256": "c0d465f114fa7edb2afd20718e74635e60327f6eb34e46281b53d9471d558893",
+    "pubkey": "bWbk52E47J6EkY4+pu0Hh/B1l1175AZoZsDEBr0EfWA=",
+    "note": "Ed25519 over the canonical body; verify with sign.py --verify. PQC upgrade: ML-DSA-65 via liboqs \u2014 same body, swap the primitive."
+  }
+}

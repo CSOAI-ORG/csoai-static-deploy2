@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>🜏 SOV33 Guarantees — Crown Jewels 1+2 Implemented</title>
+<title>🜏 Council3 Guarantees — Crown Jewels 1+2 Implemented</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
   :root { --bg:#0a0e1a;--bg2:#0d1220;--ink:#e6e6e6;--accent:#d4af37;--accent2:#00ff9d;--warn:#ff6b6b;--muted:#6b7280;--rule:#1f2937 }
@@ -28,9 +28,9 @@
 <body>
 
 <header class="card gold">
-  <h1>🜏 SOV33 Guarantees — Crown Jewels 1+2 Live</h1>
-  <p class="meta">Per SOV33-pass3-4 Crown Jewels · 13 Jul 2026 · distribution-free guarantees wired</p>
-  <p style="text-align:center"><a href="SOV33_HERO.html">← SOV33 Hub</a></p>
+  <h1>🜏 Council3 Guarantees — Crown Jewels 1+2 Live</h1>
+  <p class="meta">Per Council3-pass3-4 Crown Jewels · 13 Jul 2026 · distribution-free guarantees wired</p>
+  <p style="text-align:center"><a href="#">← Council3 Hub</a></p>
 </header>
 
 <h2>💎 Crown Jewel #1: L4 Three-Lineage Diversity Panel</h2>
@@ -40,9 +40,9 @@
 <p>LLM voting panels have <strong>highly correlated errors</strong> (60%+ agreement on wrong answers). Naive majority voting dilutes the best judge's signal.</p>
 <p><strong>Verbatim from arXiv 2605.29800:</strong> <em>"when judges are highly correlated, majority voting dilutes the best judge's signal with redundant weaker votes."</em></p>
 
-<h3>SOV33's fix (deployed)</h3>
+<h3>Council3's fix (deployed)</h3>
 <ol>
-<li><strong>Three-lineage panel</strong>: Qwen3-0.6B (Alibaba) + LoRA rank=16 (compliance) + SOV33 master</li>
+<li><strong>Three-lineage panel</strong>: Qwen3-0.6B (Alibaba) + LoRA rank=16 (compliance) + Council3 master</li>
 <li><strong>ρ measured</strong>: pairwise agreement rate between lineages</li>
 <li><strong>Escalate on high ρ</strong> (correlated = dangerous) instead of average</li>
 <li><strong>Low ρ = uncorrelated errors</strong> = real signal of consensus</li>
@@ -53,7 +53,7 @@
 Question                   | L1 (sov_brain_v2) | L2 (owem) | L3 (master) | ρ avg | Decision
 What is Article 0?         | Article 0 binds    | (varied)  | (varied)    | 0.000 | CONSENSUS_OK (diverse)
 What is SIGIL?             | Sovereign Identity | (varied)  | (varied)    | 0.000 | CONSENSUS_OK
-What is BFT-33?            | 33-33 quorum       | (varied)  | (varied)    | 0.000 | CONSENSUS_OK
+What is council-quorum?            | 33-33 quorum       | (varied)  | (varied)    | 0.000 | CONSENSUS_OK
 What are 12 Pillars?       | 12 sovereign       | (varied)  | (varied)    | 0.000 | CONSENSUS_OK
 What is sovereign subst.?  | Foundation for AI   | (varied)  | (varied)    | 0.000 | CONSENSUS_OK
 
@@ -70,7 +70,7 @@ A council with ρ ≈ 0.0 is real fault tolerance (vs ρ ≈ 0.9 which is theatr
 <p>Raw LLM confidence scores are <strong>NOT calibrated</strong> (SCOPE, arXiv 2602.13110). "Felt unsure" is not a guarantee.</p>
 <p><strong>Split-conformal abstention gives</strong>: <em>Pr[no-abstain AND error] ≤ α</em> — a DISTRIBUTION-FREE statistical guarantee.</p>
 
-<h3>SOV33's implementation (deployed)</h3>
+<h3>Council3's implementation (deployed)</h3>
 <ol>
 <li>Build calibration set (~500 sovereign-domain prompts with human labels)</li>
 <li>Compute nonconformity score (1 - care_score, fused with L4 divergence)</li>
@@ -92,9 +92,9 @@ A council with ρ ≈ 0.0 is real fault tolerance (vs ρ ≈ 0.9 which is theatr
 <tr><td>Guarantee holds</td><td><span class="pill sigil">TRUE</span></td></tr>
 </table>
 
-<h4>THE BOLD CLAIM SOV33 CAN NOW MAKE</h4>
+<h4>THE BOLD CLAIM Council3 CAN NOW MAKE</h4>
 <blockquote>
-"SOV33 care-floor is split-conformal calibrated to ≤ 5% false-allow rate at 90% coverage. The guarantee is distribution-free (no assumptions on input distribution)."
+"Council3 care-floor is split-conformal calibrated to ≤ 5% false-allow rate at 90% coverage. The guarantee is distribution-free (no assumptions on input distribution)."
 </blockquote>
 
 <p><strong>Endpoint:</strong> <code>GET /api/conformal-veto</code> — returns calibration + evaluation results</p>
@@ -103,9 +103,9 @@ A council with ρ ≈ 0.0 is real fault tolerance (vs ρ ≈ 0.9 which is theatr
 <h2>What "3 Sentences Nobody Else Can Say" Looks Like</h2>
 
 <div class="card gold">
-<h3>Per the synthesis in SOV33-pass3-4:</h3>
+<h3>Per the synthesis in Council3-pass3-4:</h3>
 <blockquote>
-"SOV33 stops being 'a governance wrapper' and becomes <strong>a governed system with measured diversity, a calibrated risk bound, and provable hard constraints</strong> — three sentences no other solo-built agent stack can currently say."
+"Council3 stops being 'a governance wrapper' and becomes <strong>a governed system with measured diversity, a calibrated risk bound, and provable hard constraints</strong> — three sentences no other solo-built agent stack can currently say."
 </blockquote>
 <ol>
 <li>"Our L4 panel has measured ρ = 0.0 across 5 sovereign questions — uncorrelated errors → real fault tolerance."</li>
@@ -130,8 +130,8 @@ A council with ρ ≈ 0.0 is real fault tolerance (vs ρ ≈ 0.9 which is theatr
 <hr>
 
 <p class="meta" style="text-align:center;margin-top:2rem">
-<strong>🜏 SOV33 Guarantees</strong> · 13 Jul 2026 · Hermes lane<br>
-<a href="SOV33_HERO.html">← Back to SOV33</a>
+<strong>🜏 Council3 Guarantees</strong> · 13 Jul 2026 · Hermes lane<br>
+<a href="#">← Back to Council3</a>
 </p>
 
 </body>

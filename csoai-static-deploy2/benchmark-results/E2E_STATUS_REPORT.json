@@ -1,0 +1,55 @@
+{
+  "schema": "sov.e2e-status/v1",
+  "timestamp": "2026-07-26T13:08:26.367303+00:00",
+  "mac_state": {
+    "repo_size_mb": 35,
+    "free_space_gb": 4.5,
+    "status": "thin client - code only"
+  },
+  "runpod_state": {
+    "pods_running": 0,
+    "persistent_volume": "b0h5gma2fy (100GB)",
+    "data_on_volume": "7.6GB (adapters, training, state)"
+  },
+  "oracle_state": {
+    "status": "auto-retrying for capacity",
+    "script": "oracle_retry.sh"
+  },
+  "free_gpu": {
+    "kaggle": "30hr/week T4",
+    "modal": "50hr/month T4",
+    "oracle": "4 ARM CPU, 24GB RAM",
+    "total_weekly_hours": 80.8
+  },
+  "staged_training": {
+    "current_stage": "v5",
+    "frontier_model": "Gemma-4-26B (free)",
+    "distillation_pairs": 32,
+    "frontier_accuracy": "91.7%",
+    "cost": "$0.000136"
+  },
+  "components_built": {
+    "bft_council": "active (6 models, real voting)",
+    "signed_memory_delta": "active (7+ deltas)",
+    "oracle_daemon": "ready",
+    "oracle_sync": "ready",
+    "kaggle_notebook": "ready",
+    "arena_tester": "working (5 free models)",
+    "staged_training": "working (distill, compare, register)"
+  },
+  "next_actions": [
+    "1. Wait for Oracle Cloud capacity (auto-retrying)",
+    "2. Upload kaggle_rwkv7_train.py to Kaggle notebook with GPU",
+    "3. Run RWKV-7 training on free T4 GPU",
+    "4. Run distillation training on free frontier data",
+    "5. Resume RunPod when credits available"
+  ],
+  "corpus_anchor": {
+    "corpus_root": "37e2e10d53feaa9e12097f45113e1234510be0ca471e1a0848f5805db3e367c7",
+    "provisions": 417,
+    "normaliser_version": "1.0.0",
+    "anchored_at": "2026-08-17T05:22:18.534632+00:00",
+    "retro": true,
+    "note": "Anchored retrospectively on 2026-07-29. This records the corpus as it stands NOW; it does not prove what the text said when the result was produced. Runs from this point forward anchor at measurement time."
+  }
+}

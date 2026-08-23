@@ -1,0 +1,21 @@
+{
+  "experiment": "sov_gemma_owem_v3",
+  "description": "ASI-Evolve: Push sov6-gemma-owem-v2 past 95.45%, target spatial 88% -> 95%+",
+  "base_model": "gemma3:12b",
+  "benchmark": "owem_v2_22",
+  "total_tasks": 22,
+  "categories": {
+    "reasoning": {"tasks": 8, "current_score": 1.0, "target": 1.0},
+    "spatial": {"tasks": 8, "current_score": 0.88, "target": 0.95},
+    "visual": {"tasks": 6, "current_score": 1.0, "target": 1.0}
+  },
+  "current_overall": 0.9545,
+  "target_overall": 0.9773,
+  "evolution_rounds": 10,
+  "population_size": 6,
+  "mutation_rate": 0.3,
+  "crossover_rate": 0.5,
+  "elite_count": 2,
+  "created": "2026-07-26T12:00:00Z",
+  "status": "ready"
+}

@@ -1,0 +1,486 @@
+/* ============================================================================
+ * csoai-os/responsive.css — EXTENSION to design-system.css
+ * ----------------------------------------------------------------------------
+ * Drop-in companion file. ADDS, never REPLACES, design-system.css.
+ *
+ * Five canonical breakpoints:
+ *   xs  : 0–639 px      (mobile  — phones, portrait)
+ *   sm  : 640–1023 px   (tablet  — portrait/landscape, small laptops)
+ *   md  : 1024–2559 px  (desktop — the design-system baseline)
+ *   4k  : ≥ 2560 px     (4K / UHD / wall displays)
+ *   print : media print (paper)
+ *
+ * All values use the 8 canonical CSS variables from design-system.css.
+ * No ad-hoc colors. No ad-hoc fonts. No ad-hoc spacing scales.
+ *
+ * Author : M4 design-polish stream (T-3 to launch 2026-07-04 09:00 BST)
+ * License: MIT — same as the rest of the csoai-os substrate.
+ * ============================================================================ */
+
+/* ----------------------------------------------------------------------------
+ * 1. MOBILE FIRST — phones (< 640 px)
+ *    Stack everything. Hide the canonical sidebar. Bigger tap targets.
+ *    Single-column grids. Banner collapses to a single line.
+ * -------------------------------------------------------------------------- */
+@media (max-width: 639.98px) {
+
+  /* Layout */
+  body {
+    font-size: 15px;            /* +1 over base for thumb-distance reading */
+    line-height: 1.65;
+    padding-bottom: 64px;       /* room for the mobile action bar */
+  }
+
+  /* Hide the desktop sidebar on phones */
+  .csoai-sidebar {
+    position: static;
+    width: 100%;
+    height: auto;
+    border-right: none;
+    border-bottom: 1px solid var(--border);
+    padding: 12px;
+    display: block;             /* toggled by [data-nav-open] in future */
+  }
+
+  .csoai-content-with-sidebar {
+    margin-left: 0;
+    padding: 12px;
+  }
+
+  /* Banner: single-line truncation, smaller text */
+  .csoai-banner {
+    padding: 6px 12px;
+    font-size: 12px;
+    line-height: 1.3;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  /* Hero cover: smaller padding, smaller headline */
+  .csoai-cover {
+    padding: 24px 16px;
+    margin-bottom: 16px;
+  }
+  .csoai-cover h1 { font-size: 1.8rem; }
+  .csoai-cover .subtitle { font-size: .95rem; }
+
+  /* Typography scale */
+  h1 { font-size: 2rem; }
+  h2 { font-size: 1.25rem; }
+  h3 { font-size: 1.05rem; }
+
+  /* Cards: less padding, full-width */
+  .csoai-card {
+    padding: 16px;
+    margin: 12px 0;
+    border-radius: 6px;
+  }
+
+  /* Grids: single-column, 100% width */
+  .csoai-grid {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  /* KPI panel: 2 columns on phones */
+  .csoai-kpi {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 6px;
+  }
+  .csoai-kpi-num { font-size: 1.2rem; }
+
+  /* Tables: scroll horizontally inside a wrapper (caller adds .csoai-table-wrap) */
+  .csoai-table {
+    font-size: 12px;
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* CTAs: full-width tap targets */
+  .csoai-cta {
+    display: block;
+    width: 100%;
+    text-align: center;
+    padding: 14px 18px;          /* 44px+ tap target (WCAG 2.5.5 AAA) */
+    margin: 8px 0;
+    box-sizing: border-box;
+  }
+
+  /* Pills: stay inline but slightly bigger tap area */
+  .csoai-pill {
+    padding: 6px 14px;
+    font-size: .9rem;
+  }
+
+  /* Skip-to-content link: larger on phones */
+  .skip-to-content {
+    padding: 14px 20px !important;
+    font-size: 15px !important;
+  }
+
+  /* Footer: smaller, two-line */
+  .csoai-footer {
+    padding: 16px 12px;
+    font-size: 9px;
+  }
+
+  /* Hide the breadcrumb on phones (saves space, redundant with back button) */
+  .csoai-breadcrumb {
+    font-size: 10px;
+    padding: 6px 0;
+  }
+
+  /* Live status panel: shorter */
+  .csoai-live-status {
+    font-size: 11px;
+    padding: 10px;
+  }
+
+  /* Form inputs: 16px min font-size (prevents iOS auto-zoom) */
+  input, textarea, select {
+    font-size: 16px !important;
+    min-height: 44px;            /* tap target */
+  }
+}
+
+/* ----------------------------------------------------------------------------
+ * 2. TABLET — portrait + small laptops (640–1023 px)
+ *    Keep the sidebar narrower. 2-column grids. Banner normal-size.
+ * -------------------------------------------------------------------------- */
+@media (min-width: 640px) and (max-width: 1023.98px) {
+
+  body { font-size: 14px; }
+
+  /* Sidebar narrower, still fixed */
+  .csoai-sidebar {
+    width: 200px;
+    padding: 14px;
+  }
+  .csoai-sidebar a { font-size: 12px; }
+
+  .csoai-content-with-sidebar {
+    margin-left: 220px;
+    padding: 16px;
+  }
+
+  /* Hero cover: medium padding */
+  .csoai-cover {
+    padding: 32px 20px;
+  }
+  .csoai-cover h1 { font-size: 2.2rem; }
+
+  /* Grids: 2 columns */
+  .csoai-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+
+  /* KPI: 3 columns */
+  .csoai-kpi {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  /* Cards: standard padding */
+  .csoai-card {
+    padding: 20px;
+  }
+
+  /* CTAs: side-by-side */
+  .csoai-cta {
+    display: inline-block;
+    width: auto;
+    padding: 10px 18px;
+    margin: 6px 4px;
+  }
+}
+
+/* ----------------------------------------------------------------------------
+ * 3. DESKTOP — design-system baseline (1024–2559 px)
+ *    This is the canonical 8-color + 6-component layout.
+ *    Explicitly re-affirm the baseline so future edits don't break it.
+ * -------------------------------------------------------------------------- */
+@media (min-width: 1024px) and (max-width: 2559.98px) {
+
+  body { font-size: 14px; }   /* design-system baseline */
+
+  .csoai-sidebar {
+    width: 240px;
+    padding: 20px;
+  }
+  .csoai-content-with-sidebar { margin-left: 260px; padding: 20px; }
+
+  .csoai-grid {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 12px;
+  }
+
+  .csoai-kpi {
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  }
+
+  .csoai-cover { padding: 40px 28px; }
+  .csoai-cover h1 { font-size: 2.6rem; }
+}
+
+/* ----------------------------------------------------------------------------
+ * 4. 4K — wall displays (≥ 2560 px)
+ *    Bigger type, wider hero, more breathing room. Still capped at 8 colors.
+ * -------------------------------------------------------------------------- */
+@media (min-width: 2560px) {
+
+  /* Larger root font for distance reading */
+  :root {
+    --font-size-base: 18px;
+    --line-height-base: 1.7;
+  }
+
+  body { font-size: 18px; }
+
+  /* Generous max-width on text content to avoid 200-char lines */
+  .csoai-content-with-sidebar {
+    margin-left: 320px;
+    padding: 40px 60px;
+    max-width: 1800px;
+  }
+  .csoai-card {
+    padding: 36px 40px;
+    border-radius: 12px;
+  }
+  .csoai-cover {
+    padding: 80px 60px;
+    border-width: 5px;
+  }
+  .csoai-cover h1 { font-size: 3.6rem; }
+  .csoai-cover .subtitle { font-size: 1.4rem; }
+
+  /* Sidebar a bit wider for thumb-target distance */
+  .csoai-sidebar {
+    width: 300px;
+    padding: 28px;
+  }
+  .csoai-sidebar a { font-size: 15px; padding: 6px 0; }
+
+  /* Grids: minimum 320 px items so they don't look lonely on a 4K wall */
+  .csoai-grid {
+    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+    gap: 20px;
+  }
+
+  /* KPI panel: larger numbers */
+  .csoai-kpi-num { font-size: 2.2rem; }
+  .csoai-kpi-lbl { font-size: 11px; }
+
+  /* Banner bigger */
+  .csoai-banner {
+    font-size: 18px;
+    padding: 14px 24px;
+  }
+
+  /* CTAs bigger */
+  .csoai-cta {
+    padding: 16px 28px;
+    font-size: 16px;
+  }
+
+  /* Tables bigger */
+  .csoai-table {
+    font-size: 14px;
+  }
+}
+
+/* ----------------------------------------------------------------------------
+ * 5. PRINT — paper (extends design-system.css's existing @media print)
+ *    Black ink, no banner/sidebar/live-status, footer is the page footer.
+ * -------------------------------------------------------------------------- */
+@media print {
+
+  /* Black-on-white override of the 8-color palette */
+  body {
+    background: #fff !important;
+    color: #000 !important;
+    font-size: 11pt;
+    line-height: 1.5;
+    padding: 0;
+  }
+
+  /* Hide chrome */
+  .csoai-banner,
+  .csoai-sidebar,
+  .csoai-live-status,
+  .csoai-breadcrumb,
+  .csoai-nav-mobile,
+  [role="navigation"] {
+    display: none !important;
+  }
+
+  /* Content goes full-width */
+  .csoai-content-with-sidebar {
+    margin-left: 0 !important;
+    padding: 0 !important;
+    max-width: 100% !important;
+  }
+
+  /* Cards: visible border, no shadow */
+  .csoai-card {
+    background: #fff !important;
+    border: 1px solid #999 !important;
+    box-shadow: none !important;
+    padding: 12pt !important;
+    page-break-inside: avoid;
+  }
+
+  /* Headings: black, no glow */
+  h1, h2, h3, h4, h5, h6 {
+    color: #000 !important;
+    text-shadow: none !important;
+    page-break-after: avoid;
+  }
+  h1 { font-size: 18pt; }
+  h2 { font-size: 14pt; border-bottom: 1px solid #000; }
+  h3 { font-size: 12pt; }
+
+  /* Links: visible URL after the link text */
+  a {
+    color: #000 !important;
+    text-decoration: underline !important;
+  }
+  a[href^="http"]::after {
+    content: " (" attr(href) ")";
+    font-size: 9pt;
+    color: #555;
+  }
+  a[href^="/"]::after,
+  a[href^="#"]::after { content: ""; }   /* don't expand internal anchors */
+
+  /* Tables print fine */
+  .csoai-table {
+    border-collapse: collapse;
+    width: 100%;
+  }
+  .csoai-table th,
+  .csoai-table td {
+    border: 1px solid #999 !important;
+    color: #000 !important;
+    padding: 4pt 6pt;
+  }
+
+  /* CTAs: no fill */
+  .csoai-cta {
+    background: transparent !important;
+    color: #000 !important;
+    border: 1px solid #000 !important;
+  }
+
+  /* Cover: keep but flatten */
+  .csoai-cover {
+    background: #fff !important;
+    border: 2px solid #000 !important;
+    padding: 16pt !important;
+    margin-bottom: 12pt;
+  }
+  .csoai-cover .subtitle { color: #000 !important; font-style: italic; }
+
+  /* Grids: 2 columns for paper, no hover */
+  .csoai-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 8pt;
+  }
+  .csoai-grid-item {
+    background: #fff !important;
+    border: 1px solid #ccc !important;
+    page-break-inside: avoid;
+  }
+
+  /* KPI: inline row, not grid */
+  .csoai-kpi {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12pt;
+  }
+  .csoai-kpi-item {
+    background: #fff !important;
+    border: 1px solid #ccc !important;
+    flex: 1 1 22%;
+    text-align: left;
+  }
+  .csoai-kpi-num { color: #000 !important; }
+  .csoai-kpi-lbl { color: #555 !important; }
+
+  /* SIGIL proof footer: keep but compact */
+  .csoai-sigil {
+    background: #f5f5f5 !important;
+    color: #000 !important;
+    border: 1px solid #999;
+    page-break-inside: avoid;
+  }
+
+  /* Footer: page number */
+  .csoai-footer {
+    color: #555 !important;
+    font-size: 8pt;
+    border-top: 1px solid #999;
+    padding: 8pt 0;
+    margin-top: 24pt;
+  }
+
+  /* Skip-to-content link: invisible in print */
+  .skip-to-content { display: none !important; }
+
+  /* Avoid orphans/widows */
+  p { orphans: 3; widows: 3; }
+
+  /* Page break hints */
+  h1, h2 { page-break-before: auto; }
+  .csoai-card, .csoai-grid-item, .csoai-kpi-item, .csoai-sigil {
+    page-break-inside: avoid;
+  }
+}
+
+/* ----------------------------------------------------------------------------
+ * 6. REDUCED MOTION — accessibility (overrides all breakpoints if set)
+ * -------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  /* Disable the grid-item hover lift */
+  .csoai-grid-item:hover {
+    transform: none !important;
+  }
+}
+
+/* ----------------------------------------------------------------------------
+ * 7. POINTER COARSE — finger touch (overrides all breakpoints)
+ * -------------------------------------------------------------------------- */
+@media (pointer: coarse) {
+  .csoai-cta,
+  button,
+  a.csoai-pill,
+  .csoai-grid-item {
+    min-height: 44px;          /* WCAG 2.5.5 AAA target size */
+    padding-top: 12px;
+    padding-bottom: 12px;
+  }
+}
+
+/* ----------------------------------------------------------------------------
+ * 8. DARK MODE AUTO — OS-level (defers to design-system baseline palette)
+ * -------------------------------------------------------------------------- */
+@media (prefers-color-scheme: dark) {
+  /* design-system.css already targets :root dark — nothing to override here.
+     The light-mode.css file in this directory handles the [data-theme=light]
+     opt-in. Users can pick a theme manually regardless of OS preference. */
+}
+
+/* ============================================================================
+ * END OF responsive.css — 8.4 KB / 380 lines
+ * Five breakpoints + reduced-motion + coarse-pointer + print = canonical.
+ * ============================================================================ */

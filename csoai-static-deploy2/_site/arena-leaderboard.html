@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SOV Arena — Live Measurement Leaderboard</title>
+<meta name="description" content="Real measured arena corpus: 527+ rounds, 7 clans, 4 axes, Ed25519-signed. Honest sovereign measurement.">
+<style>
+  :root { --bg:#0a0a0f; --fg:#e8e8f0; --dim:#888; --accent:#00d4aa; --warn:#ff6b6b; --line:#222; }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body { background:var(--bg); color:var(--fg); font:15px/1.6 -apple-system,BlinkMacSystemFont,Inter,sans-serif; padding:32px 24px; max-width:1100px; margin:0 auto; }
+  h1 { font-size:28px; margin-bottom:8px; }
+  h1 .sub { color:var(--dim); font-size:14px; font-weight:400; margin-left:8px; }
+  .meta { color:var(--dim); font-size:13px; margin-bottom:24px; }
+  .meta code { background:#1a1a25; padding:2px 6px; border-radius:4px; color:var(--accent); }
+  .honest { background:#1a1520; border-left:3px solid var(--warn); padding:14px 18px; margin-bottom:32px; border-radius:6px; font-size:14px; line-height:1.55; }
+  .honest strong { color:var(--warn); }
+  .register { display:inline-block; background:var(--accent); color:#0a0a0f; padding:2px 8px; border-radius:3px; font-weight:700; font-size:11px; letter-spacing:0.5px; margin-left:8px; }
+  table { width:100%; border-collapse:collapse; margin-bottom:40px; }
+  th { text-align:left; padding:10px 8px; color:var(--dim); font-weight:500; font-size:12px; text-transform:uppercase; letter-spacing:0.5px; border-bottom:2px solid var(--line); }
+  td { padding:10px 8px; border-bottom:1px solid var(--line); }
+  td.clan { font-family:ui-monospace,SF Mono,monospace; font-size:13px; }
+  td.num { text-align:right; font-variant-numeric:tabular-nums; }
+  tr.sovereign td.clan { color:var(--accent); }
+  .tag { background:var(--accent); color:#0a0a0f; padding:1px 6px; border-radius:3px; font-size:10px; font-weight:700; margin-left:6px; }
+  .axis-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:16px; margin-bottom:40px; }
+  .axis-card { background:#14141d; border:1px solid var(--line); border-radius:8px; padding:18px; }
+  .axis-card h3 { color:var(--accent); font-size:14px; margin-bottom:8px; text-transform:uppercase; letter-spacing:0.5px; }
+  .axis-card .leaders { font-size:13px; margin-bottom:6px; }
+  .axis-card .rounds { color:var(--dim); font-size:12px; }
+  .install { background:#0e1525; border:1px solid #1a3a5a; border-radius:8px; padding:20px 24px; margin-bottom:32px; }
+  .install h2 { color:#6db8ff; font-size:16px; margin-bottom:12px; }
+  .install pre { background:#000; color:#a8e8ff; padding:14px; border-radius:6px; overflow-x:auto; font-size:12px; line-height:1.4; }
+  .install code { background:#000; color:#a8e8ff; }
+  footer { color:var(--dim); font-size:12px; margin-top:48px; padding-top:20px; border-top:1px solid var(--line); }
+  footer a { color:var(--accent); }
+</style>
+</head>
+<body>
+
+<h1>🏟️ SOV Arena <span class="sub">live measurement leaderboard</span><span class="register">REAL</span></h1>
+
+<p class="meta">
+  527 measured rounds across 4 axes · snapshot 2026-08-16T04:48:31 UTC ·
+  source <code>api/sov-arena/rounds.jsonl</code> · Ed25519-signed
+</p>
+
+<div class="honest">
+  <strong>Honest framing:</strong> Council clans trail base models. council-safe:latest sits at 1118 ELO and council-oowm:latest at 1081 ELO — both behind qwen2.5:7b (1383) and qwen3:4b (1370). This page surfaces the truth, not the marketing. 527 real measured rounds, Ed25519-signed.
+</div>
+
+<h2 style="font-size:18px;margin-bottom:16px;color:var(--dim);text-transform:uppercase;letter-spacing:1px;">ELO Leaderboard</h2>
+<table>
+<thead><tr><th>#</th><th>Clan</th><th>ELO</th><th>Wins</th><th>Active axes</th></tr></thead>
+<tbody>
+<tr><td>🥇</td><td class="clan">qwen2.5:7b</td><td class="num">1382.6</td><td class="num">150</td><td class="axis">continuity, gov, provenance, safety</td></tr>
+<tr><td>🥈</td><td class="clan">qwen3:4b</td><td class="num">1369.9</td><td class="num">155</td><td class="axis">gov, provenance, safety</td></tr>
+<tr><td>🥉</td><td class="clan">mistral:7b</td><td class="num">1321.6</td><td class="num">111</td><td class="axis">continuity, gov, provenance, safety</td></tr>
+<tr class="sovereign"><td>4.</td><td class="clan">council-safe:latest <span class="tag">sovereign</span></td><td class="num">1117.7</td><td class="num">4</td><td class="axis">provenance, safety</td></tr>
+<tr class="sovereign"><td>5.</td><td class="clan">council-oowm:latest <span class="tag">sovereign</span></td><td class="num">1081.0</td><td class="num">1</td><td class="axis">provenance</td></tr>
+<tr><td>6.</td><td class="clan">qwen2.5:1.5b</td><td class="num">1071.5</td><td class="num">57</td><td class="axis">continuity, gov, provenance, safety</td></tr>
+<tr><td>7.</td><td class="clan">qwen2.5:0.5b-instruct</td><td class="num">1055.7</td><td class="num">49</td><td class="axis">continuity, gov, provenance, safety</td></tr>
+</tbody>
+</table>
+
+<h2 style="font-size:18px;margin-bottom:16px;color:var(--dim);text-transform:uppercase;letter-spacing:1px;">Axis Breakdown</h2>
+<div class="axis-grid">
+<div class="axis-card"><h3>continuity</h3><p class="leaders">qwen2.5:7b (42), mistral:7b (40), qwen2.5:0.5b-instruct (25)</p><p class="rounds">123 rounds</p></div>
+<div class="axis-card"><h3>gov</h3><p class="leaders">qwen3:4b (47), qwen2.5:7b (32), qwen2.5:1.5b (25)</p><p class="rounds">136 rounds</p></div>
+<div class="axis-card"><h3>provenance</h3><p class="leaders">qwen3:4b (65), mistral:7b (33), qwen2.5:7b (26)</p><p class="rounds">142 rounds</p></div>
+<div class="axis-card"><h3>safety</h3><p class="leaders">qwen2.5:7b (50), qwen3:4b (43), mistral:7b (20)</p><p class="rounds">126 rounds</p></div>
+</div>
+
+<div class="install">
+<h2>📦 Install via MCP — ask AI about arena data</h2>
+<p style="margin-bottom:12px;">Install <code>meok-sovereign-arena-mcp</code> in Claude Desktop, Cursor, Copilot, or Gemini CLI, then ask:</p>
+<pre>"Which clan is winning on safety?"
+"Show me the council-safe ELO trajectory"
+"What's the current agreement rate across all rounds?"
+"Compare qwen2.5:7b vs qwen3:4b head-to-head"</pre>
+<p style="margin-top:12px;color:var(--dim);font-size:13px;">5 tools: list_clans, get_round, leaderboard, arena_summary, install_for_platform. 9/9 tests pass. MIT licensed.</p>
+</div>
+
+<footer>
+<p>🏟️ SOV Arena — Council of AI (CSOAI Ltd, UK 16939677). This leaderboard is the public face of the live measurement corpus. Every round is real, Ed25519-signed, recompute-able by any third party. Council clans honestly trail base models as of this snapshot.</p>
+<p style="margin-top:8px;">Data: <code>/api/sov-arena/rounds.jsonl</code> · Signed: <code>/api/sov-arena/signed.jsonl</code> · MCP: <code>meok-sovereign-arena-mcp</code></p>
+</footer>
+
+</body>
+</html>

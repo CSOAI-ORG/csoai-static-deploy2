@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Council OS — the measurement surface</title>
+<style>
+ body{font-family:system-ui,sans-serif;background:#02020a;color:#e6e6e6;margin:0;height:100vh;overflow:hidden;display:flex}
+ /* dock */
+ #dock{width:220px;background:#070b16;border-right:1px solid #1c2a45;padding:1rem .6rem;display:flex;flex-direction:column;gap:.3rem}
+ #dock .brand{color:#c9a84c;font-weight:700;font-size:1.1rem;margin-bottom:.8rem;padding-left:.5rem}
+ .grp{color:#6b7a94;font-size:.68rem;text-transform:uppercase;letter-spacing:.05em;margin:.7rem .5rem .3rem}
+ .item{color:#c7d1e0;padding:.5rem .6rem;border-radius:7px;cursor:pointer;font-size:.86rem;display:flex;gap:.5rem;align-items:center;text-decoration:none}
+ .item:hover{background:#101a2e;color:#fff}
+ .item.on{background:#16233c;color:#c9a84c}
+ .item .ic{color:#5b6b85;width:16px;text-align:center}
+ /* main */
+ #main{flex:1;display:flex;flex-direction:column}
+ #top{height:44px;border-bottom:1px solid #1c2a45;display:flex;align-items:center;padding:0 1rem;gap:.6rem;font-size:.82rem;color:#9aa5b1}
+ #top b{color:#e6e6e6} .pill{display:inline-block;border:1px solid #c9a84c;border-radius:100px;padding:1px 10px;font-size:.72rem;color:#c9a84c}
+ iframe{flex:1;width:100%;border:0;background:#02020a}
+ .badge{background:#123;color:#4ade80;border:1px solid #4ade80;border-radius:6px;padding:1px 8px;font-size:.68rem}
+</style></head><body>
+<div id="dock">
+ <div class="brand">◆ Council OS</div>
+ <div class="grp">Workspace</div>
+ <a class="item on" data-u="/home"><span class="ic">◆</span> Home / Measurement</a>
+ <a class="item" data-u="/products"><span class="ic">▣</span> Products</a>
+ <a class="item" data-u="/models"><span class="ic">▤</span> Models (measured)</a>
+ <div class="grp">Measurement</div>
+ <a class="item" data-u="/finance"><span class="ic">◈</span> Capital Markets</a>
+ <a class="item" data-u="/insurer"><span class="ic">◈</span> AI-Liability</a>
+ <a class="item" data-u="/ledger"><span class="ic">◈</span> Council Ledger</a>
+ <a class="item" data-u="/board"><span class="ic">▤</span> Board (measured)</a>
+ <a class="item" data-u="/axes"><span class="ic">⌗</span> Axes (merged)</a>
+ <div class="grp">Tooling / Surfaces</div>
+ <a class="item" data-u="/verify"><span class="ic">✓</span> Verify a receipt</a>
+ <a class="item" data-u="/schemas/agent-measurement-card.schema.json"><span class="ic">⌗</span> Measurement Card</a>
+ <a class="item" data-u="/book"><span class="ic">✎</span> Book a pack</a>
+ <div class="grp">Local</div>
+ <a class="item" href="/home#agui"><span class="ic">⌘</span> AG-UI agent</a>
+</div>
+<div id="main">
+ <div id="top"><b>Council OS</b> <span class="pill">measurement, not certification</span>
+   <span class="badge">Ed25519-signed</span><span class="badge">stranger-verifiable</span>
+   <span style="margin-left:auto">pubkey <code style="background:#1c2a45;padding:1px 5px;border-radius:4px;font-size:.7em">bWbk52E4…</code></span></div>
+ <iframe id="frame" src="/home"></iframe>
+</div>
+<script>
+ var items=document.querySelectorAll('.item[data-u]');
+ items.forEach(function(i){i.addEventListener('click',function(e){e.preventDefault();document.getElementById('frame').src=i.getAttribute('data-u');items.forEach(function(x){x.classList.remove('on')});i.classList.add('on')})});
+</script>
+</body></html>

@@ -1,0 +1,39 @@
+{
+ "generated": "2026-08-23",
+ "loop": "RUN \u2192 TEST \u2192 AUDIT \u2192 CHECK",
+ "total_seconds": 6.845,
+ "verdict": "automated loop completes in 6.8s \u2014 minutes-not-days (the mine/improve judgment is the human+AI leg, unbounded here)",
+ "stages": [
+  {
+   "stage": "build (check+lint)",
+   "seconds": 0.313,
+   "pass": true
+  },
+  {
+   "stage": "unit tests",
+   "seconds": 0.033,
+   "pass": true
+  },
+  {
+   "stage": "e2e",
+   "seconds": 0.632,
+   "pass": true
+  },
+  {
+   "stage": "property tests",
+   "seconds": 5.532,
+   "pass": true
+  },
+  {
+   "stage": "mcp selftest",
+   "seconds": 0.219,
+   "pass": true
+  },
+  {
+   "stage": "align audit",
+   "seconds": 0.116,
+   "pass": true
+  }
+ ],
+ "note": "the property suite (10k purity trials + fuzz + concurrency) is the dominant stage; all stages stdlib, no GPU/fleet dependency"
+}

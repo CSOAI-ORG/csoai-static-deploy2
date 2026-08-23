@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SOV7 Visual Synthesis</title>
+<link rel="icon" href="#" type="image/svg+xml">
+<link rel="canonical" href="#">
+<meta property="og:title" content="SOV7 Visual Synthesis">
+<meta property="og:description" content="CSOAI SOV7 visual synthesis — fluid intelligence from 12 OWEM specialists.">
+<meta name="description" content="CSOAI: SOV7 Visual Synthesis — fluid intelligence, J-space, V-space, C-space pipeline.">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"SOV7 Visual Synthesis","url":"https://csoai.org/sov7_visual_synthesis.html","publisher":{"@type":"Organization","name":"CSOAI Ltd","url":"https://csoai.org"}}</script>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { background:#050510; color:#fff; font-family:system-ui; overflow:hidden; height:100vh; }
+  canvas { display:block; position:fixed; top:0; left:0; z-index:0; }
+  .overlay { position:fixed; top:0; left:0; width:100%; height:100%; z-index:1;
+             pointer-events:none; background:radial-gradient(ellipse at center, transparent 40%, rgba(5,5,16,0.8) 100%); }
+  .ui { position:fixed; z-index:2; padding:2rem; }
+  .ui.top-left { top:0; left:0; }
+  .ui.top-right { top:0; right:0; text-align:right; }
+  .ui.bottom-left { bottom:0; left:0; }
+  .ui.bottom-right { bottom:0; right:0; text-align:right; }
+  h1 { font-size:2rem; font-weight:900; background:linear-gradient(135deg,#00d4ff,#7b2ff7,#ff6bcb);
+       -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+  .status { font-size:0.85rem; color:#666; }
+  .stream { display:flex; align-items:center; gap:0.5rem; margin:0.25rem 0; font-size:0.8rem; color:#888; }
+  .dot { width:8px; height:8px; border-radius:50%; display:inline-block; }
+  .stat { font-size:0.75rem; color:#555; line-height:1.6; }
+</style>
+</head>
+<body>
+<div class="article50-banner" style="background:linear-gradient(90deg,#3a0f1a,#7a1f33,#3a0f1a);border-bottom:1px solid #ff5470;padding:10px 16px;text-align:center;font-size:13px;color:#ffd5dd;font-weight:500">EU AI Act Article 50 live 2 Aug 2026 — C2PA passport ready | <a href="#" style="color:#fff;text-decoration:underline;font-weight:700">Get yours →</a></div>
+<canvas id="c"></canvas>
+<div class="overlay"></div>
+<div class="ui top-left">
+  <h1>✦ SOV7</h1>
+  <div class="status">visual synthesis · live</div>
+</div>
+<div class="ui top-right" id="streams">
+  <div class="stream"><span class="dot" style="background:#00d4ff"></span> TUI1 SOV33 Registry</div>
+  <div class="stream"><span class="dot" style="background:#7b2ff7"></span> TUI2 ASI Evolve</div>
+  <div class="stream"><span class="dot" style="background:#ff6bcb"></span> TUI3 Visual Ops</div>
+  <div class="stream"><span class="dot" style="background:#00ff88"></span> TUI4 Fluid Data</div>
+  <div class="stream"><span class="dot" style="background:#ffaa00"></span> TUI5 Training</div>
+  <div class="stream"><span class="dot" style="background:#ff4444"></span> TUI6 Mamba SSM</div>
+  <div class="stream"><span class="dot" style="background:#aa66ff"></span> TUI7 Pod Mgmt</div>
+  <div class="stream"><span class="dot" style="background:#44ccff"></span> TUI8 Benchmark</div>
+</div>
+<div class="ui bottom-left" id="stats">
+  <div class="stat">world model 89% · target 95%+</div>
+  <div class="stat">5-clan ensemble · ρ=−0.725</div>
+  <div class="stat">2026-07-27 03:52 UTC</div>
+</div>
+<div class="ui bottom-right">
+  <div class="stat">SOV7 v0.1.0 · synthesis</div>
+</div>
+
+<script>
+const c = document.getElementById('c');
+const ctx = c.getContext('2d');
+let W, H;
+
+function resize() { W=c.width=window.innerWidth; H=c.height=window.innerHeight; }
+window.addEventListener('resize', resize);
+resize();
+
+const colors = {"tui1": "#00d4ff", "tui2": "#7b2ff7", "tui3": "#ff6bcb", "tui4": "#00ff88", "tui5": "#ffaa00", "tui6": "#ff4444", "tui7": "#aa66ff", "tui8": "#44ccff"};
+const tuiNames = Object.keys(colors);
+const particles = [];
+const N = 150;
+
+class Particle {
+  constructor() {
+    this.reset();
+    this.x = Math.random() * W;
+    this.y = Math.random() * H;
+  }
+  reset() {
+    this.tui = tuiNames[Math.floor(Math.random() * tuiNames.length)];
+    this.color = colors[this.tui];
+    this.x = Math.random() * W;
+    this.y = Math.random() * H;
+    this.vx = (Math.random() - 0.5) * 1.5;
+    this.vy = (Math.random() - 0.5) * 1.5;
+    this.size = 2 + Math.random() * 3;
+    this.life = 0;
+    this.maxLife = 200 + Math.random() * 300;
+    this.connections = [];
+  }
+  update() {
+    this.x += this.vx;
+    this.y += this.vy;
+    this.life++;
+    if (this.x < 0 || this.x > W || this.y < 0 || this.y > H || this.life > this.maxLife) {
+      this.reset();
+    }
+    // gentle pull toward center
+    this.vx += (W/2 - this.x) * 0.0001;
+    this.vy += (H/2 - this.y) * 0.0001;
+    // clamp speed
+    const spd = Math.sqrt(this.vx*this.vx + this.vy*this.vy);
+    if (spd > 2) { this.vx *= 0.98; this.vy *= 0.98; }
+  }
+  draw() {
+    const alpha = 0.4 + 0.6 * (1 - this.life/this.maxLife);
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, this.size, 0, Math.PI*2);
+    ctx.fillStyle = this.color;
+    ctx.globalAlpha = alpha;
+    ctx.fill();
+    ctx.globalAlpha = 1;
+  }
+}
+
+for (let i = 0; i < N; i++) particles.push(new Particle());
+
+function drawConnections() {
+  for (let i = 0; i < particles.length; i++) {
+    for (let j = i+1; j < particles.length; j++) {
+      const dx = particles[i].x - particles[j].x;
+      const dy = particles[i].y - particles[j].y;
+      const dist = Math.sqrt(dx*dx + dy*dy);
+      if (dist < 150) {
+        const alpha = 0.15 * (1 - dist/150);
+        ctx.beginPath();
+        ctx.moveTo(particles[i].x, particles[i].y);
+        ctx.lineTo(particles[j].x, particles[j].y);
+        ctx.strokeStyle = particles[i].color;
+        ctx.globalAlpha = alpha;
+        ctx.lineWidth = 0.5;
+        ctx.stroke();
+        ctx.globalAlpha = 1;
+      }
+    }
+  }
+}
+
+function drawCenter() {
+  const cx = W/2, cy = H/2;
+  const grd = ctx.createRadialGradient(cx, cy, 0, cx, cy, 100);
+  grd.addColorStop(0, 'rgba(123,47,247,0.15)');
+  grd.addColorStop(0.5, 'rgba(0,212,255,0.05)');
+  grd.addColorStop(1, 'transparent');
+  ctx.fillStyle = grd;
+  ctx.beginPath();
+  ctx.arc(cx, cy, 100, 0, Math.PI*2);
+  ctx.fill();
+
+  // SOV7 text in center
+  ctx.fillStyle = 'rgba(255,255,255,0.08)';
+  ctx.font = 'bold 48px system-ui';
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.fillText('SOV7', cx, cy);
+}
+
+function drawOrbit() {
+  const cx = W/2, cy = H/2;
+  const now = Date.now() / 3000;
+  for (let i = 0; i < 8; i++) {
+    const angle = now + (i / 8) * Math.PI * 2;
+    const radius = 120 + Math.sin(now * 0.5 + i) * 20;
+    const x = cx + Math.cos(angle) * radius;
+    const y = cy + Math.sin(angle) * radius;
+    const tui = tuiNames[i];
+    ctx.beginPath();
+    ctx.arc(x, y, 4, 0, Math.PI*2);
+    ctx.fillStyle = colors[tui];
+    ctx.globalAlpha = 0.6 + 0.4 * Math.sin(now * 2 + i);
+    ctx.fill();
+    ctx.globalAlpha = 1;
+  }
+}
+
+function animate() {
+  ctx.fillStyle = 'rgba(5,5,16,0.1)';
+  ctx.fillRect(0, 0, W, H);
+
+  drawCenter();
+  drawOrbit();
+  particles.forEach(p => p.update());
+  particles.forEach(p => p.draw());
+  drawConnections();
+
+  requestAnimationFrame(animate);
+}
+
+animate();
+</script>
+<div class="sovereign-cta-strip" style="position:fixed;bottom:0;left:0;right:0;z-index:3;padding:0.5rem 1rem;background:rgba(0,0,0,0.8);text-align:center;font-size:0.8rem;">
+  <a href="#" style="color:#00d4ff;text-decoration:none;">SOV33_OWEM_HUB</a> &middot;
+  <a href="#" style="color:#7b2ff7;text-decoration:none;">EU AI Act Article 50</a> &middot;
+  <a href="#" style="color:#ff6bcb;text-decoration:none;">DEFONEOS OWEM RFQ</a>
+</div>
+<footer style="position:fixed;bottom:2rem;left:0;right:0;z-index:3;text-align:center;font-size:0.7rem;color:#444;">
+  <a href="#" style="color:#444;">SOV33_OWEM_HUB</a> &mdash; SIGIL audit trail.
+</footer>
+</body>
+</html>

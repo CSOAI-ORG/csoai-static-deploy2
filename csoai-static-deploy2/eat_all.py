@@ -1,0 +1,1 @@
+/Users/nicholas/clawd/kimi-regen/eat_all.py

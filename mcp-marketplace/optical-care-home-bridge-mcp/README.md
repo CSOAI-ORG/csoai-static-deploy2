@@ -1,4 +1,5 @@
-<!-- mcp-name: io.github.CSOAI-ORG/optical-care-home-bridge-mcp -->
+mcp-name: io.github.CSOAI-ORG/optical-care-home-bridge-mcp
+
 [![MCP Scorecard: 84/100](https://img.shields.io/badge/proofof.ai-84%2F100-5b21b6)](https://proofof.ai/scorecard/optical-care-home-bridge-mcp.html)
 
 # Optical Care-Home Bridge
@@ -53,8 +54,6 @@ MIT © MEOK AI Labs
 > Verify any signed report at <https://meok.ai/verify>.
 
 <!-- BUY-LADDER:END -->
-
-
 
 ## Configuration
 

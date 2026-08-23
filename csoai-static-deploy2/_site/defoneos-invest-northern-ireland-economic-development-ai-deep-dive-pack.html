@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>DEFONEOS × Invest Northern Ireland — AI Governance for Regional Economic Development, FDI & Trade</title>
+<meta name="description" content="AI governance deep-dive pack for Invest Northern Ireland — the regional economic development agency established under the Industrial Development Act (Northern Ireland) 2002, responsible for attracting foreign direct investment, supporting local business growth, promoting innovation, R&D and export across Northern Ireland, operating under the Department for the Economy with unique dual market access under the Windsor Framework">
+<link rel="canonical" href="#">
+<style>
+:root{--bg:#050816;--panel:#0d1330;--gold:#d4af37;--sov:#6dd5ff;--accent:#4ade80;--text:#e2e8f0;--muted:#94a3b8;--red:#ef4444}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:'Inter',-apple-system,sans-serif;line-height:1.6}
+.nav{display:flex;gap:2rem;padding:1rem 2rem;background:var(--panel);border-bottom:1px solid rgba(109,213,255,0.15);font-size:0.9rem;flex-wrap:wrap}
+.nav a{color:var(--sov);text-decoration:none;transition:color 0.2s}
+.nav a:hover{color:var(--gold)}
+.container{max-width:1200px;margin:0 auto;padding:2rem}
+h1{font-size:2.2rem;background:linear-gradient(135deg,var(--sov),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:0.5rem}
+.subtitle{color:var(--muted);font-size:1.1rem;margin-bottom:2rem}
+.eu-banner{background:linear-gradient(135deg,#991b1b,#7f1d1d);padding:0.8rem 1.5rem;border-radius:8px;margin-bottom:2rem;font-size:0.85rem;color:#fca5a5}
+.stats-bar{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:2.5rem}
+.stat-card{background:var(--panel);padding:1.2rem;border-radius:8px;text-align:center;border:1px solid rgba(109,213,255,0.1)}
+.stat-card .stat-num{font-size:1.8rem;font-weight:700;color:var(--gold)}
+.stat-card .stat-label{font-size:0.8rem;color:var(--muted);margin-top:0.3rem}
+h2{color:var(--sov);font-size:1.4rem;margin:2rem 0 1rem;padding-bottom:0.5rem;border-bottom:2px solid rgba(109,213,255,0.15)}
+.ep-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-bottom:2rem}
+.ep-card{background:var(--panel);padding:1.2rem;border-radius:8px;border:1px solid rgba(109,213,255,0.1);transition:border-color 0.2s}
+.ep-card:hover{border-color:var(--accent)}
+.ep-tag{display:inline-block;background:rgba(74,222,128,0.15);color:var(--accent);font-size:0.7rem;padding:0.2rem 0.6rem;border-radius:4px;margin-bottom:0.5rem;text-transform:uppercase;letter-spacing:0.05em}
+.ep-card h3{color:var(--text);font-size:0.95rem;margin-bottom:0.4rem}
+.ep-card p{color:var(--muted);font-size:0.8rem;line-height:1.4}
+.priority-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:2rem}
+.p-card{background:var(--panel);padding:1rem;border-radius:8px;border:1px solid rgba(250,204,21,0.15)}
+.p-tag{display:inline-block;background:rgba(250,204,21,0.15);color:#fbbf24;font-size:0.7rem;padding:0.2rem 0.6rem;border-radius:4px;margin-bottom:0.5rem}
+.p-card h3{color:var(--text);font-size:0.85rem;margin-bottom:0.4rem}
+.mcp-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-bottom:2rem}
+.mcp-card{background:var(--panel);padding:1rem;border-radius:8px;border:1px solid rgba(109,213,255,0.15)}
+.mcp-tag{display:inline-block;background:rgba(109,213,255,0.15);color:var(--sov);font-size:0.7rem;padding:0.2rem 0.6rem;border-radius:4px;margin-bottom:0.5rem}
+.red-line-box{background:rgba(239,68,68,0.05);border:1px solid rgba(239,68,68,0.3);border-radius:8px;padding:1.5rem;margin-bottom:2rem}
+.red-line-box h3{color:var(--red);margin-bottom:0.8rem}
+.red-line-box ul{list-style:none;padding:0}
+.red-line-box li{color:var(--muted);font-size:0.85rem;padding:0.3rem 0;padding-left:1.2rem;position:relative}
+.red-line-box li:before{content:'🚫';position:absolute;left:0;font-size:0.75rem}
+.steps-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:1rem;margin-bottom:2rem}
+.step-card{background:var(--panel);padding:1rem;border-radius:8px;text-align:center;border:1px solid rgba(109,213,255,0.1)}
+.step-num{display:inline-flex;align-items:center;justify-content:center;width:2rem;height:2rem;border-radius:50%;background:var(--accent);color:var(--bg);font-weight:700;font-size:0.9rem;margin-bottom:0.5rem}
+.step-card h4{font-size:0.8rem;color:var(--text);margin-bottom:0.3rem}
+.step-card p{font-size:0.7rem;color:var(--muted);line-height:1.3}
+.cta-strip{display:flex;gap:1rem;justify-content:center;margin:2rem 0}
+.cta-btn{display:inline-block;padding:0.8rem 2rem;border-radius:6px;text-decoration:none;font-weight:600;transition:all 0.2s;font-size:0.9rem}
+.cta-primary{background:linear-gradient(135deg,var(--gold),#b8860b);color:var(--bg)}
+.cta-primary:hover{transform:translateY(-1px);box-shadow:0 4px 20px rgba(212,175,55,0.3)}
+.cta-secondary{background:transparent;color:var(--sov);border:1px solid var(--sov)}
+.cta-secondary:hover{background:rgba(109,213,255,0.1)}
+.footer{background:var(--panel);padding:2rem;text-align:center;border-top:1px solid rgba(109,213,255,0.1);margin-top:3rem;font-size:0.8rem;color:var(--muted)}
+.footer .sigil{font-family:'Courier New',monospace;font-size:0.7rem;color:rgba(109,213,255,0.3);margin-top:0.5rem}
+@media(max-width:768px){.ep-grid,.priority-grid,.mcp-grid{grid-template-columns:repeat(2,1fr)}.stats-bar{grid-template-columns:repeat(2,1fr)}.steps-grid{grid-template-columns:repeat(3,1fr)}}
+</style>
+<script type="application/ld+json">
+{"@context": "https://schema.org", "@type": "Article", "headline": "DEFONEOS \u00d7 Invest Northern Ireland \u2014 AI Governance for Regional Economic Development, FDI & Trade", "description": "AI governance deep-dive pack for Invest Northern Ireland \u2014 the regional economic development agency established under the Industrial Development Act (Northern Ireland) 2002, responsible for attracting foreign direct investment, supporting local business growth, promoting innovation, R&D and export across Northern Ireland, operating under the Department for the Economy with unique dual market access under the Windsor Framework", "datePublished": "2026-08-16", "publisher": {"@type": "Organization", "name": "CSOAI Ltd", "url": "https://csoai.org"}, "about": {"@type": "GovernmentService", "name": "Invest Northern Ireland", "provider": {"@type": "GovernmentOrganization", "name": "Invest Northern Ireland (Invest NI)", "url": "https://www.investni.com/"}}}
+</script>
+</head>
+<body>
+<div class="eu-banner">⚠️ EU AI Act Article 50 + Annex III High-Risk AI Systems — Invest Northern Ireland is Non-departmental public body of the Department for the Economy (Northern Ireland Executive). Accountable to the Northern Ireland Assembly. Operates under the Industrial Development Act (Northern Ireland) 2002 and the Subsidy Control Act 2022 for public funding decisions.; this AI pack complies with the CSOAI GSPC governance framework for high-risk public-sector AI deployment. All MCP tools are audit-grade, Ed25519-signed, and DEFONEOS-SEAL compatible.</div>
+<nav class="nav"><a href="#">Home</a><a href="#">Sitemap</a><a href="#">GovBench</a><a href="#">Index</a></nav>
+<div class="container">
+<h1>DEFONEOS × Invest Northern Ireland — AI Governance for Regional Economic Development, FDI & Trade</h1>
+<p class="subtitle">AI governance deep-dive pack for Invest Northern Ireland — the regional economic development agency established under the Industrial Development Act (Northern Ireland) 2002, responsible for attracting foreign direct investment, supporting local business growth, promoting innovation, R&D and export across Northern Ireland, operating under the Department for the Economy with unique dual market access under the Windsor Framework</p>
+<div class="stats-bar">
+<div class="stat-card"><div class="stat-num">12</div><div class="stat-label">Entry Points</div></div>
+<div class="stat-card"><div class="stat-num">8</div><div class="stat-label">Transformation Priorities</div></div>
+<div class="stat-card"><div class="stat-num">6</div><div class="stat-label">MCP Servers</div></div>
+<div class="stat-card"><div class="stat-num">6</div><div class="stat-label">Red Lines</div></div>
+</div>
+
+<h2>🏛️ 12 Entry Points — Invest Northern Ireland</h2>
+<div class="ep-grid"><div class="ep-card"><span class="ep-tag">Economic Dev</span><h3>Foreign Direct Investment Attraction</h3><p>Targeted FDI marketing and lead generation across priority sectors — fintech, cybersecurity, advanced manufacturing, life & health sciences, screen production, agri-food — including site selection support and investor aftercare</p></div>
+<div class="ep-card"><span class="ep-tag">Economic Dev</span><h3>Local Business Growth & Export</h3><p>Growth accelerator programmes, trade advisory, export documentation support and market-entry assistance for NI small and medium enterprises exporting to GB, EU and beyond</p></div>
+<div class="ep-card"><span class="ep-tag">Economic Dev</span><h3>Innovation & R&D Support</h3><p>Innovation vouchers, R&D grants, competence centres (NI Advanced Composites & Engineering Centre, NI Connected Health Innovation Centre) and Knowledge Transfer Partnerships</p></div>
+<div class="ep-card"><span class="ep-tag">Economic Dev</span><h3>Trade Missions & Global Outreach</h3><p>NI regional offices in GB, Europe, North America, Middle East and Asia-Pacific — trade mission organisation, trade-show presence and in-market representation</p></div>
+<div class="ep-card"><span class="ep-tag">Economic Dev</span><h3>Sector Development Teams</h3><p>Dedicated sector teams for Advanced Manufacturing & Engineering, Fintech & Financial Services, Cybersecurity, Life & Health Sciences, Screen & Creative Industries, Agri-Food, and Low Carbon & Net Zero</p></div>
+<div class="ep-card"><span class="ep-tag">Economic Dev</span><h3>City & Growth Deals</h3><p>Belfast Region City Deal, Derry-Londonderry & Strabane City Deal, Mid South West Growth Deal — Invest NI as delivery partner for innovation, digital and infrastructure investment programmes</p></div>
+<div class="ep-card"><span class="ep-tag">Economic Dev</span><h3>Land & Property Portfolio</h3><p>Development and management of Invest NI's investment property portfolio across NI — business parks, innovation centres and incubator space for inward investors</p></div>
+<div class="ep-card"><span class="ep-tag">Economic Dev</span><h3>Skills & Talent Attraction</h3><p>Assured Skills programme — employer-led pre-employment training for FDI expansion projects; coordination with the Department for the Economy's Skills Strategy</p></div>
+<div class="ep-card"><span class="ep-tag">Economic Dev</span><h3>Start-up & Entrepreneurship</h3><p>Co-Founders accelerator, Propel pre-accelerator, Techstart NI grants and seed equity funds — high-growth start-up pipeline development</p></div>
+<div class="ep-card"><span class="ep-tag">Economic Dev</span><h3>Access to Finance</h3><p>Growth Loan Fund, Growth Finance Fund, Co-Fund NI equity investment alongside private investors, and referral to British Business Bank programmes</p></div>
+<div class="ep-card"><span class="ep-tag">Economic Dev</span><h3>Windsor Framework Trade Operations</h3><p>Advisory support on dual market access (UK internal market + EU single market) under the Windsor Framework — customs facilitations, trusted trader schemes, UK Internal Market Scheme</p></div>
+<div class="ep-card"><span class="ep-tag">Economic Dev</span><h3>Net Zero & Business Resilience</h3><p>Resource-efficiency consultancy, green loans, energy audits and supply-chain resilience support for NI businesses transitioning to net zero</p></div></div>
+
+<h2>🚀 8 AI Transformation Priorities</h2>
+<div class="priority-grid"><div class="p-card"><span class="p-tag">Priority 1</span><h3>FDI Lead Generation AI</h3><p>AI-enabled lead scoring across FDI targets, predictive models for sector-trend alignment, and automated matchmaking of investor requirements to NI sites, skills base and incentives; Target: reduce FDI conversion cycle from 18 months to 12 months</p></div>
+<div class="p-card"><span class="p-tag">Priority 2</span><h3>Export Intelligence Platform</h3><p>AI analysis of global trade data, tariff schedules, and market-access conditions — identifying high-potential export markets for NI products by sector; Target: 200+ NI SMEs supported with AI export-intelligence reports annually</p></div>
+<div class="p-card"><span class="p-tag">Priority 3</span><h3>R&D Tax Credit Advisory Automation</h3><p>AI-assisted R&D tax credit and grant eligibility screening for NI businesses — HMRC-compliant evidence packs; Target: increase R&D claims by 15% through automated eligibility flags</p></div>
+<div class="p-card"><span class="p-tag">Priority 4</span><h3>Skills-Matching Engine</h3><p>AI matching of FDI workforce requirements to NI labour-market supply, training pipeline and Assured Skills capacity — real-time skills gap analysis; Target: reduce FDI skills-shortage risk by 25%</p></div>
+<div class="p-card"><span class="p-tag">Priority 5</span><h3>Subsidy Control Compliance</h3><p>AI compliance checks on grant and loan programmes against Subsidy Control Act 2022 thresholds — automated red-flag detection on market-distortion risk, cumulative aid caps and mandatory referral triggers; Target: 100% compliance audit trail</p></div>
+<div class="p-card"><span class="p-tag">Priority 6</span><h3>Sector Cluster Analytics</h3><p>AI analysis of NI's priority-sector clusters — supply-chain density, skills overlap, innovation spillover — to target FDI and growth interventions; Target: 5 cluster deep-dives refreshed quarterly</p></div>
+<div class="p-card"><span class="p-tag">Priority 7</span><h3>Windsor Framework Trade Compliance</h3><p>AI-assisted customs classification, dual-use goods screening, and Windsor Framework movement verification for NI-exporting businesses; Target: reduce trade-administration burden by 30%</p></div>
+<div class="p-card"><span class="p-tag">Priority 8</span><h3>Economic Impact Evaluation</h3><p>AI counterfactual evaluation of Invest NI's portfolio — jobs created, GVA uplift, ROI per programme and per sector; Target: continuous programme-effectiveness measurement replacing biennial evaluation cycles</p></div></div>
+
+<h2>🤖 6 MCP Servers</h2>
+<div class="mcp-grid"><div class="mcp-card"><span class="mcp-tag">MCP 1</span><h3>Invest NI FDI Intel MCP</h3><p>score_lead, match_site, predict_sector_trend, generate_fdi_report</p></div>
+<div class="mcp-card"><span class="mcp-tag">MCP 2</span><h3>Invest NI Export Match MCP</h3><p>identify_market, analyse_tariff, rank_opportunity, generate_export_report</p></div>
+<div class="mcp-card"><span class="mcp-tag">MCP 3</span><h3>Invest NI Subsidy Control MCP</h3><p>check_threshold, flag_cumulative_aid, detect_market_distortion, generate_audit_trail</p></div>
+<div class="mcp-card"><span class="mcp-tag">MCP 4</span><h3>Invest NI Skills Match MCP</h3><p>match_workforce, analyse_skills_gap, forecast_training_demand, generate_skills_report</p></div>
+<div class="mcp-card"><span class="mcp-tag">MCP 5</span><h3>Invest NI Cluster Analytics MCP</h3><p>map_supply_chain, measure_spillover, detect_cluster_gap, generate_cluster_dashboard</p></div>
+<div class="mcp-card"><span class="mcp-tag">MCP 6</span><h3>Invest NI Windsor Trade MCP</h3><p>classify_customs_code, screen_dual_use, verify_framework_movement, generate_compliance_pack</p></div></div>
+
+<h2>🚫 6 Red Lines — Legislation Backbone</h2>
+<div class="red-line-box"><h3>Statutory Framework: Industrial Development Act (Northern Ireland) 2002 / Northern Ireland Act 1998 / Subsidy Control Act 2022 / DPA 2018 + UK GDPR / FOIA 2000</h3><ul><li>NO automated grant or funding decisions — all public-money allocation requires NAO-auditable human sign-off (Subsidy Control Act 2022 s.12 mandatory referral to the CMA Subsidy Advice Unit for subsidies of particular interest)</li>
+<li>NO sharing of commercially-sensitive company financial data beyond statutory information-sharing gateways (Industrial Development Act (NI) 2002 s.7 information powers constrained by DPA 2018 and the common-law duty of confidence)</li>
+<li>NO automated Windsor Framework dual-market access claims without UK-qualified legal verification (dual-market claims trigger EU single-market obligations — erroneous AI advice could constitute a breach of the UK-EU Withdrawal Agreement)</li>
+<li>NO automated subsidy control determination substituting for Subsidy Advice Unit assessment (market-distortion analysis requires economic judgement beyond algorithmic capability)</li>
+<li>NO profiling of individual entrepreneurs or business owners beyond DPA 2018 Schedule 1 conditions (including no automated credit-scoring or personal-capacity assessment without explicit consent)</li>
+<li>NO cross-border data flows outside UK GDPR/EU adequacy arrangements — NI economic development data includes GB-to-NI trade flows under the Windsor Framework which attract specific data-protection obligations</li></ul></div>
+
+<h2>🎯 5-Step Engagement Model</h2>
+<div class="steps-grid"><div class="step-card"><span class="step-num">1</span><h4>Discovery</h4><p>Stakeholder mapping, data audit, and AI readiness assessment for Invest Northern Ireland</p></div>
+<div class="step-card"><span class="step-num">2</span><h4>Governance Design</h4><p>Red-line codification, human-review gate design, and AI impact assessment per UK GDPR</p></div>
+<div class="step-card"><span class="step-num">3</span><h4>Pilot</h4><p>6-8 week AI-assisted pilot on one high-volume workflow with parallel manual oversight</p></div>
+<div class="step-card"><span class="step-num">4</span><h4>Scale</h4><p>Roll-out to full jurisdiction with continuous monitoring, recommender-agent feedback, and compliance dashboards</p></div>
+<div class="step-card"><span class="step-num">5</span><h4>Assure</h4><p>Annual audit by DEFONEOS-SEAL credential, CSOAI BFT Council governance review, and parliamentary reporting</p></div></div>
+
+<div class="cta-strip">
+<a href="#" class="cta-btn cta-primary">Request OWEM RFQ for Invest NI</a>
+<a href="#" class="cta-btn cta-secondary">Article 50 AI Passport</a>
+</div>
+</div>
+<footer class="footer"><p>CSOAI Ltd — UK Company No. 16939677 | <a href="#">csoai.org</a> | compliance@csoai.org</p><p>DEFONEOS &copy; 2026 Nicholas Templeman. Open source. UK sovereign. AUKUS-compatible.</p><p class="sigil">SIGIL: DEFONEOS|TICK-300|925b99708d37e75a|sovereign|british|forever</p></footer>
+</body>
+</html>

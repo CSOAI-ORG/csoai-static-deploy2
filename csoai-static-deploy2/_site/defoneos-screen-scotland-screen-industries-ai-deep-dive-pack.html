@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>DEFONEOS x Screen Scotland — AI Governance for Film, Television, Games & Creative Screen Industries</title>
+<meta name="description" content="AI governance deep-dive pack for Screen Scotland — the national screen agency driving Scotland's film, television, animation, games and screen sector growth through production funding, crew skills, studio infrastructure and international partnerships">
+<link rel="canonical" href="#">
+<style>
+:root{--bg:#050816;--panel:#0d1330;--gold:#d4af37;--sov:#6dd5ff;--accent:#4ade80;--text:#e2e8f0;--muted:#94a3b8;--red:#ef4444}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:'Inter',-apple-system,sans-serif;line-height:1.6}
+.nav{display:flex;gap:2rem;padding:1rem 2rem;background:var(--panel);border-bottom:1px solid rgba(109,213,255,0.15);font-size:0.9rem;flex-wrap:wrap}
+.nav a{color:var(--sov);text-decoration:none;transition:color 0.2s}
+.nav a:hover{color:var(--gold)}
+.container{max-width:1200px;margin:0 auto;padding:2rem}
+h1{font-size:2.2rem;background:linear-gradient(135deg,var(--sov),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:0.5rem}
+.subtitle{color:var(--muted);font-size:1.1rem;margin-bottom:2rem}
+.eu-banner{background:linear-gradient(135deg,#991b1b,#7f1d1d);padding:0.8rem 1.5rem;border-radius:8px;margin-bottom:2rem;font-size:0.85rem;color:#fca5a5}
+.stats-bar{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:2.5rem}
+.stat-card{background:var(--panel);padding:1.2rem;border-radius:8px;text-align:center;border:1px solid rgba(109,213,255,0.1)}
+.stat-card .stat-num{font-size:1.8rem;font-weight:700;color:var(--gold)}
+.stat-card .stat-label{font-size:0.8rem;color:var(--muted);margin-top:0.3rem}
+h2{color:var(--sov);font-size:1.4rem;margin:2rem 0 1rem;padding-bottom:0.5rem;border-bottom:2px solid rgba(109,213,255,0.15)}
+.ep-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-bottom:2rem}
+.ep-card{background:var(--panel);padding:1.2rem;border-radius:8px;border:1px solid rgba(109,213,255,0.1);transition:border-color 0.2s}
+.ep-card:hover{border-color:var(--accent)}
+.ep-tag{display:inline-block;background:rgba(74,222,128,0.15);color:var(--accent);font-size:0.7rem;padding:0.2rem 0.6rem;border-radius:4px;margin-bottom:0.5rem;text-transform:uppercase;letter-spacing:0.05em}
+.ep-card h3{color:var(--text);font-size:0.95rem;margin-bottom:0.4rem}
+.ep-card p{color:var(--muted);font-size:0.8rem;line-height:1.4}
+.priority-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:2rem}
+.p-card{background:var(--panel);padding:1rem;border-radius:8px;border:1px solid rgba(250,204,21,0.15)}
+.p-tag{display:inline-block;background:rgba(250,204,21,0.15);color:#fbbf24;font-size:0.7rem;padding:0.2rem 0.6rem;border-radius:4px;margin-bottom:0.5rem}
+.p-card h3{color:var(--text);font-size:0.85rem;margin-bottom:0.4rem}
+.mcp-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-bottom:2rem}
+.mcp-card{background:var(--panel);padding:1rem;border-radius:8px;border:1px solid rgba(109,213,255,0.15)}
+.mcp-tag{display:inline-block;background:rgba(109,213,255,0.15);color:var(--sov);font-size:0.7rem;padding:0.2rem 0.6rem;border-radius:4px;margin-bottom:0.5rem}
+.red-line-box{background:rgba(239,68,68,0.05);border:1px solid rgba(239,68,68,0.3);border-radius:8px;padding:1.5rem;margin-bottom:2rem}
+.red-line-box h3{color:var(--red);margin-bottom:0.8rem}
+.red-line-box ul{list-style:none;padding:0}
+.red-line-box li{color:var(--muted);font-size:0.85rem;padding:0.3rem 0;padding-left:1.2rem;position:relative}
+.red-line-box li:before{content:'🚫';position:absolute;left:0;font-size:0.75rem}
+.steps-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:1rem;margin-bottom:2rem}
+.step-card{background:var(--panel);padding:1rem;border-radius:8px;text-align:center;border:1px solid rgba(109,213,255,0.1)}
+.step-num{display:inline-flex;align-items:center;justify-content:center;width:2rem;height:2rem;border-radius:50%;background:var(--accent);color:var(--bg);font-weight:700;font-size:0.9rem;margin-bottom:0.5rem}
+.step-card h4{font-size:0.8rem;color:var(--text);margin-bottom:0.3rem}
+.step-card p{font-size:0.7rem;color:var(--muted);line-height:1.3}
+.cta-strip{display:flex;gap:1rem;justify-content:center;margin:2rem 0}
+.cta-btn{display:inline-block;padding:0.8rem 2rem;border-radius:6px;text-decoration:none;font-weight:600;transition:all 0.2s;font-size:0.9rem}
+.cta-primary{background:linear-gradient(135deg,var(--gold),#b8860b);color:var(--bg)}
+.cta-primary:hover{transform:translateY(-1px);box-shadow:0 4px 20px rgba(212,175,55,0.3)}
+.cta-secondary{background:transparent;color:var(--sov);border:1px solid var(--sov)}
+.cta-secondary:hover{background:rgba(109,213,255,0.1)}
+.footer{background:var(--panel);padding:2rem;text-align:center;border-top:1px solid rgba(109,213,255,0.1);margin-top:3rem;font-size:0.8rem;color:var(--muted)}
+.footer .sigil{font-family:'Courier New',monospace;font-size:0.7rem;color:rgba(109,213,255,0.3);margin-top:0.5rem}
+@media(max-width:768px){.ep-grid,.priority-grid,.mcp-grid{grid-template-columns:repeat(2,1fr)}.stats-bar{grid-template-columns:repeat(2,1fr)}.steps-grid{grid-template-columns:repeat(3,1fr)}}
+</style>
+<script type="application/ld+json">
+{"@context": "https://schema.org", "@type": "Article", "headline": "DEFONEOS x Screen Scotland \u2014 AI Governance for Film, Television, Games & Creative Screen Industries", "description": "AI governance deep-dive pack for Screen Scotland \u2014 the national screen agency driving Scotland's film, television, animation, games and screen sector growth through production funding, crew skills, studio infrastructure and international partnerships", "datePublished": "2026-08-16", "publisher": {"@type": "Organization", "name": "CSOAI Ltd", "url": "https://csoai.org"}, "about": {"@type": "GovernmentService", "name": "Screen Scotland", "provider": {"@type": "GovernmentOrganization", "name": "Screen Scotland (SCRN)", "url": "https://www.screen.scot"}}}
+</script>
+</head>
+<body>
+<div class="eu-banner">⚠️ EU AI Act Article 50 + Annex III High-Risk AI Systems — Screen Scotland is Scotland's national screen agency (a Creative Scotland screen unit, devolved culture under the Scotland Act 1998); this AI pack complies with the CSOAI GSPC governance framework for high-risk public-sector AI deployment. All MCP tools are audit-grade, Ed25519-signed, and DEFONEOS-SEAL compatible.</div>
+<nav class="nav"><a href="#">Home</a><a href="#">Sitemap</a><a href="#">GovBench</a><a href="#">Index</a></nav>
+<div class="container">
+<h1>DEFONEOS x Screen Scotland — AI Governance for Film, Television, Games & Creative Screen Industries</h1>
+<p class="subtitle">AI governance deep-dive pack for Screen Scotland — the national screen agency driving Scotland's film, television, animation, games and screen sector growth through production funding, crew skills, studio infrastructure and international partnerships</p>
+<div class="stats-bar">
+<div class="stat-card"><div class="stat-num">12</div><div class="stat-label">Entry Points</div></div>
+<div class="stat-card"><div class="stat-num">8</div><div class="stat-label">Transformation Priorities</div></div>
+<div class="stat-card"><div class="stat-num">6</div><div class="stat-label">MCP Servers</div></div>
+<div class="stat-card"><div class="stat-num">6</div><div class="stat-label">Red Lines</div></div>
+</div>
+
+<h2>🏛️ 12 Entry Points — Screen Scotland</h2>
+<div class="ep-grid"><div class="ep-card"><span class="ep-tag">Culture/Screen</span><h3>Production Growth Funding</h3><p>Screen production funds and incentives supporting Scottish film, high-end TV, documentary and animation production; co-investment with UK-wide schemes</p></div>
+<div class="ep-card"><span class="ep-tag">Culture/Screen</span><h3>Broadcast & Scripted TV</h3><p>Development and production support for drama, comedy and entertainment series commissioned by UK and international broadcasters and streamers</p></div>
+<div class="ep-card"><span class="ep-tag">Culture/Screen</span><h3>Film Development & Production</h3><p>Development slate funding, production awards and completion funding for feature films with Scottish creative and production teams</p></div>
+<div class="ep-card"><span class="ep-tag">Culture/Screen</span><h3>Documentary & Factual</h3><p>Support for feature documentaries, factual series and specialist factual programming produced by Scottish companies</p></div>
+<div class="ep-card"><span class="ep-tag">Culture/Screen</span><h3>Animation & Visual Effects</h3><p>Funding and talent pathways for animation studios, VFX facilities and games-adjacent creative technology companies</p></div>
+<div class="ep-card"><span class="ep-tag">Culture/Screen</span><h3>Games & Interactive</h3><p>Screen sector definition now includes games and interactive content; support for Scottish studios, prototypes and cross-media IP</p></div>
+<div class="ep-card"><span class="ep-tag">Culture/Screen</span><h3>Crew & Skills Development</h3><p>ScreenSkills-funded crew training, trainee placements, apprenticeships and continuous professional development for below-the-line roles</p></div>
+<div class="ep-card"><span class="ep-tag">Culture/Screen</span><h3>Talent Development</h3><p>New writers, directors and producers programmes; development labs; diverse-talent initiatives; returning-talent support</p></div>
+<div class="ep-card"><span class="ep-tag">Culture/Screen</span><h3>Production Infrastructure</h3><p>Studio strategy: capital investment in sound stages, post-production facilities and regional production hubs (e.g. Kelvin Hall, First Stage Studios)</p></div>
+<div class="ep-card"><span class="ep-tag">Culture/Screen</span><h3>Locations & Production Services</h3><p>Scottish locations database, regional film offices, and production services support to attract inward investment productions</p></div>
+<div class="ep-card"><span class="ep-tag">Culture/Screen</span><h3>International Co-Production</h3><p>Bilateral co-production treaty support, market access at Cannes/Berlin/Toronto, and international sales and distribution assistance</p></div>
+<div class="ep-card"><span class="ep-tag">Culture/Screen</span><h3>Public Accountability</h3><p>Corporate reporting to Creative Scotland and Scottish Government; Culture Committee scrutiny; National Lottery distribution transparency</p></div></div>
+
+<h2>🚀 8 AI Transformation Priorities</h2>
+<div class="priority-grid"><div class="p-card"><span class="p-tag">Priority 1</span><h3>AI-Assisted Script Coverage & Reading</h3><p>NLP script coverage for development slates — draft reports flagging structure, market comparables and budget risk; before: manual reader coverage (weeks); after: AI first-pass with script-editor sign-off</p></div>
+<div class="p-card"><span class="p-tag">Priority 2</span><h3>Production Finance Modelling</h3><p>AI scenario modelling for co-finance structures, recoupment waterfalls and cash-flow projections; before: spreadsheet-dependent estimates; after: AI financial-modelling with producer validation</p></div>
+<div class="p-card"><span class="p-tag">Priority 3</span><h3>Location & Permit Intelligence</h3><p>AI-mapped location database with filming-permit risk flags, access constraints and visual references; before: fragmented council processes; after: AI-indexed national location engine</p></div>
+<div class="p-card"><span class="p-tag">Priority 4</span><h3>Audience & Market Intelligence</h3><p>AI aggregation of box-office, SVOD commissioning and audience data to inform development decisions; before: static market reports; after: AI live market dashboards</p></div>
+<div class="p-card"><span class="p-tag">Priority 5</span><h3>Crew Skills Gap Forecasting</h3><p>ML forecasting of crew-grade shortages across departments by production volume; before: periodic surveys; after: AI workforce planning for ScreenSkills training investment</p></div>
+<div class="p-card"><span class="p-tag">Priority 6</span><h3>Archive & Rights Management</h3><p>AI metadata tagging and rights-tracking for funded productions, music clearances and archive material; before: manual rights logs; after: AI-assisted chain-of-title verification</p></div>
+<div class="p-card"><span class="p-tag">Priority 7</span><h3>Inclusive Casting & Representation Monitoring</h3><p>AI monitoring of funded productions against diversity and representation commitments (with human judgement on creative merit); before: post-hoc reporting; after: AI dashboards with commissioning oversight</p></div>
+<div class="p-card"><span class="p-tag">Priority 8</span><h3>Carbon Footprint of Production</h3><p>AI estimation of production carbon footprints (albert-style calculators) with reduction planning; before: manual calculators; after: AI green-production planning</p></div></div>
+
+<h2>🤖 6 MCP Servers</h2>
+<div class="mcp-grid"><div class="mcp-card"><span class="mcp-tag">MCP 1</span><h3>Screen Funding MCP</h3><p>assess_application, model_cofinance, track_recoupment, generate_award_letter</p></div>
+<div class="mcp-card"><span class="mcp-tag">MCP 2</span><h3>Crew Skills MCP</h3><p>forecast_skill_gap, match_trainee_placement, log_cpd_credits, generate_skills_report</p></div>
+<div class="mcp-card"><span class="mcp-tag">MCP 3</span><h3>Location Intelligence MCP</h3><p>search_location, flag_permit_risk, generate_recce_brief, match_production_service</p></div>
+<div class="mcp-card"><span class="mcp-tag">MCP 4</span><h3>Audience Analytics MCP</h3><p>aggregate_box_office, track_streamer_commission, segment_audience, generate_market_briefing</p></div>
+<div class="mcp-card"><span class="mcp-tag">MCP 5</span><h3>Rights Management MCP</h3><p>verify_chain_of_title, log_music_clearance, track_distribution_window, generate_rights_schedule</p></div>
+<div class="mcp-card"><span class="mcp-tag">MCP 6</span><h3>Green Production MCP</h3><p>estimate_carbon_footprint, plan_reduction, verify_albert_certificate, generate_sustainability_report</p></div></div>
+
+<h2>🚫 6 Red Lines — Legislation Backbone</h2>
+<div class="red-line-box"><h3>Statutory Framework: Public Services Reform (Scotland) Act 2010 / Scotland Act 1998 / National Lottery etc. Act 1993 / DPA 2018 + UK GDPR / Equality Act 2010</h3><ul><li>NO AI-sole funding decision (all Screen Scotland award decisions require human assessment of creative merit and due process — AI assists, never determines)</li>
+<li>NO AI training on copyright-protected creative works without rightsholder consent (UK CDPA 1988 + EU AI Act Article 53 transparency obligations for general-purpose AI models)</li>
+<li>NO processing of children's data in screen-sector programmes without UK GDPR Article 8 consent mechanisms and age-appropriate design (Children and Young People (Scotland) Act 2014)</li>
+<li>NO AI-generated content presented as Scottish cultural output without clear human authorship and labelling (protects screen-sector provenance and Creative Scotland's cultural mission)</li>
+<li>NO automated discrimination in talent or crew selection (Equality Act 2010 protected characteristics — algorithmic fairness audits mandatory)</li>
+<li>NO cross-border data transfer of production finance or creative IP outside UK/EEA adequacy arrangements (DPA 2018 Part 3 + UK GDPR Chapter V)</li></ul></div>
+
+<h2>🎯 5-Step Engagement Model</h2>
+<div class="steps-grid"><div class="step-card"><span class="step-num">1</span><h4>Discovery</h4><p>Stakeholder mapping, data audit, and AI readiness assessment for Screen Scotland</p></div>
+<div class="step-card"><span class="step-num">2</span><h4>Governance Design</h4><p>Red-line codification, human-review gate design, and AI impact assessment per UK GDPR</p></div>
+<div class="step-card"><span class="step-num">3</span><h4>Pilot</h4><p>6-8 week AI-assisted pilot on one high-volume workflow with parallel manual oversight</p></div>
+<div class="step-card"><span class="step-num">4</span><h4>Scale</h4><p>Roll-out to full jurisdiction with continuous monitoring, recommender-agent feedback, and compliance dashboards</p></div>
+<div class="step-card"><span class="step-num">5</span><h4>Assure</h4><p>Annual audit by DEFONEOS-SEAL credential, CSOAI BFT Council governance review, and parliamentary reporting</p></div></div>
+
+<div class="cta-strip">
+<a href="#" class="cta-btn cta-primary">Request OWEM RFQ for SCRN</a>
+<a href="#" class="cta-btn cta-secondary">Article 50 AI Passport</a>
+</div>
+</div>
+<footer class="footer"><p>CSOAI Ltd — UK Company No. 16939677 | <a href="#">csoai.org</a> | compliance@csoai.org</p><p>DEFONEOS &copy; 2026 Nicholas Templeman. Open source. UK sovereign. AUKUS-compatible.</p><p class="sigil">SIGIL: DEFONEOS|TICK-297|2e5cacaa7ac162e7|sovereign|british|forever</p></footer>
+</body>
+</html>

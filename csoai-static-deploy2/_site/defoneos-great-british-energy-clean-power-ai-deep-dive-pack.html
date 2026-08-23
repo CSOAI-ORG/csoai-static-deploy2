@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>DEFONEOS x Great British Energy — AI Governance for Publicly-Owned Clean Power, Offshore Wind & Community Energy</title>
+<meta name="description" content="AI governance deep-dive pack for Great British Energy — the publicly-owned clean energy company established by the Great British Energy Act 2025 with £8.3bn capitalisation, headquartered in Aberdeen, partnering with the Crown Estate on offshore wind and driving local power plans, community energy and clean-energy supply chains">
+<link rel="canonical" href="#">
+<style>
+:root{--bg:#050816;--panel:#0d1330;--gold:#d4af37;--sov:#6dd5ff;--accent:#4ade80;--text:#e2e8f0;--muted:#94a3b8;--red:#ef4444}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:'Inter',-apple-system,sans-serif;line-height:1.6}
+.nav{display:flex;gap:2rem;padding:1rem 2rem;background:var(--panel);border-bottom:1px solid rgba(109,213,255,0.15);font-size:0.9rem;flex-wrap:wrap}
+.nav a{color:var(--sov);text-decoration:none;transition:color 0.2s}
+.nav a:hover{color:var(--gold)}
+.container{max-width:1200px;margin:0 auto;padding:2rem}
+h1{font-size:2.2rem;background:linear-gradient(135deg,var(--sov),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:0.5rem}
+.subtitle{color:var(--muted);font-size:1.1rem;margin-bottom:2rem}
+.eu-banner{background:linear-gradient(135deg,#991b1b,#7f1d1d);padding:0.8rem 1.5rem;border-radius:8px;margin-bottom:2rem;font-size:0.85rem;color:#fca5a5}
+.stats-bar{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:2.5rem}
+.stat-card{background:var(--panel);padding:1.2rem;border-radius:8px;text-align:center;border:1px solid rgba(109,213,255,0.1)}
+.stat-card .stat-num{font-size:1.8rem;font-weight:700;color:var(--gold)}
+.stat-card .stat-label{font-size:0.8rem;color:var(--muted);margin-top:0.3rem}
+h2{color:var(--sov);font-size:1.4rem;margin:2rem 0 1rem;padding-bottom:0.5rem;border-bottom:2px solid rgba(109,213,255,0.15)}
+.ep-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-bottom:2rem}
+.ep-card{background:var(--panel);padding:1.2rem;border-radius:8px;border:1px solid rgba(109,213,255,0.1);transition:border-color 0.2s}
+.ep-card:hover{border-color:var(--accent)}
+.ep-tag{display:inline-block;background:rgba(74,222,128,0.15);color:var(--accent);font-size:0.7rem;padding:0.2rem 0.6rem;border-radius:4px;margin-bottom:0.5rem;text-transform:uppercase;letter-spacing:0.05em}
+.ep-card h3{color:var(--text);font-size:0.95rem;margin-bottom:0.4rem}
+.ep-card p{color:var(--muted);font-size:0.8rem;line-height:1.4}
+.priority-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:2rem}
+.p-card{background:var(--panel);padding:1rem;border-radius:8px;border:1px solid rgba(250,204,21,0.15)}
+.p-tag{display:inline-block;background:rgba(250,204,21,0.15);color:#fbbf24;font-size:0.7rem;padding:0.2rem 0.6rem;border-radius:4px;margin-bottom:0.5rem}
+.p-card h3{color:var(--text);font-size:0.85rem;margin-bottom:0.4rem}
+.mcp-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-bottom:2rem}
+.mcp-card{background:var(--panel);padding:1rem;border-radius:8px;border:1px solid rgba(109,213,255,0.15)}
+.mcp-tag{display:inline-block;background:rgba(109,213,255,0.15);color:var(--sov);font-size:0.7rem;padding:0.2rem 0.6rem;border-radius:4px;margin-bottom:0.5rem}
+.red-line-box{background:rgba(239,68,68,0.05);border:1px solid rgba(239,68,68,0.3);border-radius:8px;padding:1.5rem;margin-bottom:2rem}
+.red-line-box h3{color:var(--red);margin-bottom:0.8rem}
+.red-line-box ul{list-style:none;padding:0}
+.red-line-box li{color:var(--muted);font-size:0.85rem;padding:0.3rem 0;padding-left:1.2rem;position:relative}
+.red-line-box li:before{content:'🚫';position:absolute;left:0;font-size:0.75rem}
+.steps-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:1rem;margin-bottom:2rem}
+.step-card{background:var(--panel);padding:1rem;border-radius:8px;text-align:center;border:1px solid rgba(109,213,255,0.1)}
+.step-num{display:inline-flex;align-items:center;justify-content:center;width:2rem;height:2rem;border-radius:50%;background:var(--accent);color:var(--bg);font-weight:700;font-size:0.9rem;margin-bottom:0.5rem}
+.step-card h4{font-size:0.8rem;color:var(--text);margin-bottom:0.3rem}
+.step-card p{font-size:0.7rem;color:var(--muted);line-height:1.3}
+.cta-strip{display:flex;gap:1rem;justify-content:center;margin:2rem 0}
+.cta-btn{display:inline-block;padding:0.8rem 2rem;border-radius:6px;text-decoration:none;font-weight:600;transition:all 0.2s;font-size:0.9rem}
+.cta-primary{background:linear-gradient(135deg,var(--gold),#b8860b);color:var(--bg)}
+.cta-primary:hover{transform:translateY(-1px);box-shadow:0 4px 20px rgba(212,175,55,0.3)}
+.cta-secondary{background:transparent;color:var(--sov);border:1px solid var(--sov)}
+.cta-secondary:hover{background:rgba(109,213,255,0.1)}
+.footer{background:var(--panel);padding:2rem;text-align:center;border-top:1px solid rgba(109,213,255,0.1);margin-top:3rem;font-size:0.8rem;color:var(--muted)}
+.footer .sigil{font-family:'Courier New',monospace;font-size:0.7rem;color:rgba(109,213,255,0.3);margin-top:0.5rem}
+@media(max-width:768px){.ep-grid,.priority-grid,.mcp-grid{grid-template-columns:repeat(2,1fr)}.stats-bar{grid-template-columns:repeat(2,1fr)}.steps-grid{grid-template-columns:repeat(3,1fr)}}
+</style>
+<script type="application/ld+json">
+{"@context": "https://schema.org", "@type": "Article", "headline": "DEFONEOS x Great British Energy \u2014 AI Governance for Publicly-Owned Clean Power, Offshore Wind & Community Energy", "description": "AI governance deep-dive pack for Great British Energy \u2014 the publicly-owned clean energy company established by the Great British Energy Act 2025 with \u00a38.3bn capitalisation, headquartered in Aberdeen, partnering with the Crown Estate on offshore wind and driving local power plans, community energy and clean-energy supply chains", "datePublished": "2026-08-16", "publisher": {"@type": "Organization", "name": "CSOAI Ltd", "url": "https://csoai.org"}, "about": {"@type": "GovernmentService", "name": "Great British Energy", "provider": {"@type": "GovernmentOrganization", "name": "Great British Energy (GBE)", "url": "https://www.gov.uk/government/organisations/great-british-energy"}}}
+</script>
+</head>
+<body>
+<div class="eu-banner">⚠️ EU AI Act Article 50 + Annex III High-Risk AI Systems — Great British Energy is publicly-owned company created by statute, accountable to the Secretary of State for Energy Security and Net Zero and to Parliament; this AI pack complies with the CSOAI GSPC governance framework for high-risk public-sector AI deployment. All MCP tools are audit-grade, Ed25519-signed, and DEFONEOS-SEAL compatible.</div>
+<nav class="nav"><a href="#">Home</a><a href="#">Sitemap</a><a href="#">GovBench</a><a href="#">Index</a></nav>
+<div class="container">
+<h1>DEFONEOS x Great British Energy — AI Governance for Publicly-Owned Clean Power, Offshore Wind & Community Energy</h1>
+<p class="subtitle">AI governance deep-dive pack for Great British Energy — the publicly-owned clean energy company established by the Great British Energy Act 2025 with £8.3bn capitalisation, headquartered in Aberdeen, partnering with the Crown Estate on offshore wind and driving local power plans, community energy and clean-energy supply chains</p>
+<div class="stats-bar">
+<div class="stat-card"><div class="stat-num">12</div><div class="stat-label">Entry Points</div></div>
+<div class="stat-card"><div class="stat-num">8</div><div class="stat-label">Transformation Priorities</div></div>
+<div class="stat-card"><div class="stat-num">6</div><div class="stat-label">MCP Servers</div></div>
+<div class="stat-card"><div class="stat-num">6</div><div class="stat-label">Red Lines</div></div>
+</div>
+
+<h2>🏛️ 12 Entry Points — Great British Energy</h2>
+<div class="ep-grid"><div class="ep-card"><span class="ep-tag">Energy/PublicOwnership</span><h3>Offshore Wind Development</h3><p>Partnership with the Crown Estate to de-risk and accelerate offshore wind projects, seabed leasing and early-stage development investment</p></div>
+<div class="ep-card"><span class="ep-tag">Energy/PublicOwnership</span><h3>Local Power Plan</h3><p>Support for local authorities to develop community-scale clean energy projects — 8 GW target through the Local Power Plan, including rooftop solar, onshore wind and community heating</p></div>
+<div class="ep-card"><span class="ep-tag">Energy/PublicOwnership</span><h3>Community Energy Fund</h3><p>Funding and co-investment for community energy groups, cooperative ownership models and local renewable generation</p></div>
+<div class="ep-card"><span class="ep-tag">Energy/PublicOwnership</span><h3>Nuclear & SMR Support</h3><p>Engagement with Great British Nuclear on small modular reactor deployment, siting feasibility and public investment in nuclear pathways</p></div>
+<div class="ep-card"><span class="ep-tag">Energy/PublicOwnership</span><h3>Supply Chains & Ports</h3><p>Investment in ports, manufacturing and fabrication capacity to anchor the offshore wind and clean-energy supply chain in the UK</p></div>
+<div class="ep-card"><span class="ep-tag">Energy/PublicOwnership</span><h3>Grid & Storage</h3><p>Coordination with the National Energy System Operator on grid connections, queue management and battery/storage co-location</p></div>
+<div class="ep-card"><span class="ep-tag">Energy/PublicOwnership</span><h3>Jobs & Skills</h3><p>Office for Clean Energy Jobs partnership — skills pipelines, apprenticeships and regional employment planning for the clean-energy transition</p></div>
+<div class="ep-card"><span class="ep-tag">Energy/PublicOwnership</span><h3>Investment & Co-financing</h3><p>Co-investment with private capital, UK Infrastructure Bank pathways and project finance structuring for first-of-a-kind projects</p></div>
+<div class="ep-card"><span class="ep-tag">Energy/PublicOwnership</span><h3>R&D & Innovation</h3><p>Support for floating wind, green hydrogen production, tidal and emerging clean-energy technology demonstration</p></div>
+<div class="ep-card"><span class="ep-tag">Energy/PublicOwnership</span><h3>Energy Bill Affordability</h3><p>Programmes linking clean-power roll-out to bill reduction for households, prioritising areas of fuel poverty</p></div>
+<div class="ep-card"><span class="ep-tag">Energy/PublicOwnership</span><h3>Climate & Net Zero Delivery</h3><p>Contribution to the 2030 clean power by 2030 mission, carbon budgets under the Climate Change Act 2008 and sectoral decarbonisation pathways</p></div>
+<div class="ep-card"><span class="ep-tag">Energy/PublicOwnership</span><h3>Public Accountability</h3><p>Parliamentary scrutiny, NAO value-for-money audit and annual reporting on £8.3bn public capital deployment</p></div></div>
+
+<h2>🚀 8 AI Transformation Priorities</h2>
+<div class="priority-grid"><div class="p-card"><span class="p-tag">Priority 1</span><h3>Offshore Wind Portfolio Modelling</h3><p>AI scenario modelling across the offshore wind pipeline — cost curves, wind yield, seabed constraints and auction outcomes; before: spreadsheet-driven estimates; after: AI portfolio optimisation with analyst validation</p></div>
+<div class="p-card"><span class="p-tag">Priority 2</span><h3>Local Power Siting Intelligence</h3><p>AI screening of local-authority sites for rooftop solar, wind and heat — planning constraints, grid proximity, irradiance/wind data; before: manual site surveys; after: AI pre-screened shortlists with planner sign-off</p></div>
+<div class="p-card"><span class="p-tag">Priority 3</span><h3>Community Fund Application Triage</h3><p>AI-assisted completeness and eligibility checks for community energy funding applications; before: slow manual review; after: AI first-pass with human award decisions</p></div>
+<div class="p-card"><span class="p-tag">Priority 4</span><h3>Grid Connection Queue Analytics</h3><p>AI analysis of connection queue data, curtailment risk and reinforcement requirements; before: opaque queue processes; after: AI queue dashboards shared with NESO</p></div>
+<div class="p-card"><span class="p-tag">Priority 5</span><h3>Supply Chain Risk Monitoring</h3><p>AI monitoring of supplier solvency, delivery risk and single-point-of-failure exposure across ports and fabrication; before: periodic audits; after: AI continuous risk radar</p></div>
+<div class="p-card"><span class="p-tag">Priority 6</span><h3>Clean Energy Skills Forecasting</h3><p>ML forecasting of regional skills demand across offshore wind, nuclear and retrofit trades; before: periodic labour surveys; after: AI workforce planning feeding the Office for Clean Energy Jobs</p></div>
+<div class="p-card"><span class="p-tag">Priority 7</span><h3>Affordability Impact Analysis</h3><p>AI estimation of bill impacts from new generation by region and tenure type; before: static distributional analyses; after: AI live affordability dashboards</p></div>
+<div class="p-card"><span class="p-tag">Priority 8</span><h3>Public Accountability Reporting</h3><p>AI drafting and consistency-checking of NAO-grade project reporting, cost-to-completion and milestone tracking; before: manual returns; after: AI-assisted reporting with finance sign-off</p></div></div>
+
+<h2>🤖 6 MCP Servers</h2>
+<div class="mcp-grid"><div class="mcp-card"><span class="mcp-tag">MCP 1</span><h3>Offshore Wind MCP</h3><p>model_pipeline, assess_seabed_constraints, forecast_auction_outcome, generate_investment_case</p></div>
+<div class="mcp-card"><span class="mcp-tag">MCP 2</span><h3>Local Power MCP</h3><p>screen_site, estimate_yield, flag_planning_constraint, generate_council_briefing</p></div>
+<div class="mcp-card"><span class="mcp-tag">MCP 3</span><h3>Community Energy MCP</h3><p>triage_application, check_eligibility, model_ownership, generate_award_pack</p></div>
+<div class="mcp-card"><span class="mcp-tag">MCP 4</span><h3>Grid Analytics MCP</h3><p>analyse_connection_queue, flag_curtailment_risk, model_storage_colocation, generate_neso_briefing</p></div>
+<div class="mcp-card"><span class="mcp-tag">MCP 5</span><h3>Supply Chain MCP</h3><p>monitor_supplier_risk, flag_single_point_failure, track_delivery_milestone, generate_risk_report</p></div>
+<div class="mcp-card"><span class="mcp-tag">MCP 6</span><h3>Green Skills MCP</h3><p>forecast_skill_demand, match_apprenticeship, plan_regional_training, generate_workforce_report</p></div></div>
+
+<h2>🚫 6 Red Lines — Legislation Backbone</h2>
+<div class="red-line-box"><h3>Statutory Framework: Great British Energy Act 2025 / Energy Act 2023 / Climate Change Act 2008 / Electricity Act 1989 / Nuclear Installations Act 1965 / DPA 2018 + UK GDPR</h3><ul><li>NO autonomous grid dispatch or operational control decisions by AI (safety-critical electricity system operations remain with licensed human operators under the Electricity Act 1989 regime)</li>
+<li>NO processing of nuclear safety-case or safeguarded nuclear data outside ONR-compliant handling arrangements (Nuclear Installations Act 1965 + ONR security requirements)</li>
+<li>NO exposure of critical national infrastructure data beyond NCSC CAF-aligned protections (energy CNI designation under the NIS Regulations 2018)</li>
+<li>NO AI-sole decisions on deployment of public money (all investment decisions require human sign-off audit-ready for the NAO and the Public Accounts Committee)</li>
+<li>NO algorithmic discrimination in community fund allocation or siting decisions (Equality Act 2010 public sector equality duty — fairness audits mandatory)</li>
+<li>NO cross-border transfer of energy market or infrastructure data outside UK/EEA adequacy arrangements (DPA 2018 + UK GDPR Chapter V)</li></ul></div>
+
+<h2>🎯 5-Step Engagement Model</h2>
+<div class="steps-grid"><div class="step-card"><span class="step-num">1</span><h4>Discovery</h4><p>Stakeholder mapping, data audit, and AI readiness assessment for Great British Energy</p></div>
+<div class="step-card"><span class="step-num">2</span><h4>Governance Design</h4><p>Red-line codification, human-review gate design, and AI impact assessment per UK GDPR</p></div>
+<div class="step-card"><span class="step-num">3</span><h4>Pilot</h4><p>6-8 week AI-assisted pilot on one high-volume workflow with parallel manual oversight</p></div>
+<div class="step-card"><span class="step-num">4</span><h4>Scale</h4><p>Roll-out to full jurisdiction with continuous monitoring, recommender-agent feedback, and compliance dashboards</p></div>
+<div class="step-card"><span class="step-num">5</span><h4>Assure</h4><p>Annual audit by DEFONEOS-SEAL credential, CSOAI BFT Council governance review, and parliamentary reporting</p></div></div>
+
+<div class="cta-strip">
+<a href="#" class="cta-btn cta-primary">Request OWEM RFQ for GBE</a>
+<a href="#" class="cta-btn cta-secondary">Article 50 AI Passport</a>
+</div>
+</div>
+<footer class="footer"><p>CSOAI Ltd — UK Company No. 16939677 | <a href="#">csoai.org</a> | compliance@csoai.org</p><p>DEFONEOS &copy; 2026 Nicholas Templeman. Open source. UK sovereign. AUKUS-compatible.</p><p class="sigil">SIGIL: DEFONEOS|TICK-298|c6aabf579e9da742|sovereign|british|forever</p></footer>
+</body>
+</html>

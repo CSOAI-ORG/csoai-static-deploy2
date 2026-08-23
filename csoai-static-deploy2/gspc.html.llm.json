@@ -1,0 +1,27 @@
+{
+ "@context": "https://csoai.org/llm-context.json",
+ "type": "LLMPageSummary",
+ "url": "https://csoai.org/gspc.html",
+ "title": "CSOAI GSPC — 13-axis governance, safety, provenance, continuity benchmark suite",
+ "description": "CSOAI",
+ "headings": [
+  "CSOAI GSPC — 13-axis benchmark suite",
+  "13 axes",
+  "Six canonical domains (the greenfield brand names)",
+  "What the suite is NOT",
+  "How to run an axis",
+  "Cross-references",
+  "OpenRouter sweep — straight, not gamed",
+  "Honest caveats"
+ ],
+ "text": "CSOAI GSPC — 13-axis governance, safety, provenance, continuity benchmark suite CSOAI GovBench ProvBench Department packs MEASURED, NOT CERTIFIED CSOAI GSPC — 13-axis benchmark suite 13 axes · 6 canonical domains · published for measurement, not certification · UNMEASURED is reported, never hidden The GSPC suite is CSOAI's open benchmark library for AI governance measurement. Each axis is a distinct measurement of a specific risk domain that buyers, auditors and regulators have raised but open tools have not measured. The same 13 axes are mirrored on Hugging Face as csoai/gspc-* datasets and on Kaggle as nicktempleman/gspc-* datasets with the same axes. The canonical greenfield names are tuned to unforgeable domains (one per axis), so a citation in any paper, deployment, or audit can be checked against a single source of truth. 13 axes # Slug Title Domain Status Backbone 1 gspc-mach Machinery Regulation safety classification EU AI Act / Machinery Reg MEASURED GSPC / published 2 gspc-asi Post-quantum signing classification continuity MEASURED GSPC / gspc-asi 3 gspc-art5 Article 5 prohibited practices EU AI Act Art 5 MEASURED GSPC / gspc-art5 4 gspc-det Detector interoperability conformance SPEC GSPC / gspc-det 5 gspc-agi Agentic safety refusal battery safety MEASURED GSPC / gspc-agi 6 gspc-prv Article 50 provenance survival EU AI Act Art 50 MEASURED GSPC / gspc-prv 7 gspc-oss Open-source license scope battery openness MEASURED GSPC / gspc-oss 8 gspc-mcp MCP tool conformance battery conformance / MCP §5 MEASURED GSPC / gspc-mcp 9 gspc-swarm Multi-agent coordination safety swarm MEASURED GSPC / gspc-swarm 10 gspc-arena-results Per-model results across all 13 axes composite MEASURED GSPC / gspc-arena-results 11 gspc-gov EU AI Act risk-tier battery governance MEASURED GSPC / gspc-gov 12 gspc-care Care-cost over-refusal battery care MEASURED GSPC / gspc-care 13 gspc-xr Cross-reality checks cross-reality SPEC GSPC / gspc-xr 11 axes are MEASURED with published batteries, 2 are SPEC stage (gspc-det, gspc-xr). Every axis has a corresponding page on this site and a corresponding dataset on Hugging Face + Kaggle. Six canonical domains (the greenfield brand names) The 13 axes fold into 6 canonical governance domains. Each domain has a unique domain name (so a citation in any paper is unforgeable) and a greenfield brand site. governance → COAI-Bench councilof.ai EU AI Act risk-tier classification. Folds in ConductBench (agent actions) + CompBench (compliance crosswalk). safety → AGISafe-Bench agisafe.ai Calibrated refusal + robustness. Folds in CareBench (protection + over-refusal). provenance → POAI-Bench proofof.ai C2PA / Article 50 marking survival through transforms. Folds in AIRBench (mandatory disclosure). continuity → ASISec-Bench asisecurity.ai Post-quantum signing agility — chain survives a PQ migration. conformance → MCP-Scoreboard mcp MCP protocol conformance (Ed25519-signed). openness → OMAI-Bench openmoe.ai Presence of openness artefacts the OSS exemption does not waive. The 6 domain names are stored in GSPC_NAMES.json (single source of truth). 7 axes map directly to one domain; the other 6 axes are specialised batteries within a domain. What the suite is NOT It is not a certification . CSOAI does not certify safe. The site states this in plain prose on every axis page. It is not a leaderboard . Per-model results are published as a table, not ranked — there is no single \"winner\" across governance, safety, provenance, continuity, conformance, openness. It is not a complete detector . UNMEASURED is reported in every result, never hidden. It is not a 100% coverage claim . Each axis has a finite battery size; the delta is in the published items. How to run an axis Every axis page on this site offers the same battery as a runnable grader that runs in the browser — no backend, no API key, no cost. The same items the canonical sovereign model (Council-34) answered are scored by the same deterministic rule, so the two numbers sit on on",
+ "text_truncated": true,
+ "register": {
+  "role": "measurement_and_attestation_support",
+  "csoai_certifies_systems": false,
+  "csoai_is_a_notified_body": false,
+  "csoai_has_enforcement_powers": false,
+  "note": "CSOAI measures and publishes evidence. It issues no conformity marks and holds no accreditation. Nothing here is certification or legal advice."
+ },
+ "generated_by": "make_llm_json.py"
+}

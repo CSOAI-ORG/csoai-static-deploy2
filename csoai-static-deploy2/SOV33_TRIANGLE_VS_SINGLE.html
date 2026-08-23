@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <title>📐 Triangle (3-around-1 + SIGIL) vs Single — Real Benchmark</title>
-<meta name="description" content="SOV33 triangle vs single-model — why the sovereign substrate uses 3+1 architecture (mamba + MoE + MOM + SIGIL) instead of one mega-model. EU AI Act aligned.">
-<meta name="keywords" content="SOV3, SOV33, CSOAI, sovereign AI, EU AI Act, GDPR, ISO 42001, SIGIL, BFT, OWEM">
+<meta name="description" content="Council3 triangle vs single-model — why the sovereign substrate uses 3+1 architecture (mamba + MoE + MOM + SIGIL) instead of one mega-model. EU AI Act aligned.">
+<meta name="keywords" content="Council, Council3, CSOAI, sovereign AI, EU AI Act, GDPR, ISO 42001, SIGIL, BFT, OWEM">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
   :root { --bg:#0a0e1a;--bg2:#0d1220;--ink:#e6e6e6;--accent:#d4af37;--accent2:#00ff9d;--warn:#ff6b6b;--muted:#6b7280;--rule:#1f2937 }
@@ -34,14 +34,14 @@
   tr:hover td{background:#0d1220}
   @media (max-width:768px){.grid3{grid-template-columns:1fr}}
 </style>
-<link rel="canonical" href="https://csoai-static-deploy2.vercel.app/SOV33_TRIANGLE_VS_SINGLE.html">
+<link rel="canonical" href="#">
 </head>
 <body>
 
 <header class="card gold">
   <h1>📐 Triangle (3-around-1 + SIGIL) vs Single</h1>
   <p class="meta">Real benchmark on 10 sovereign-domain questions · 12 Jul 2026 · Mac-light</p>
-  <p><a href="SOV33_HERO.html">← SOV33 Hub</a> · <a href="SOV33_SETUPS.html">All Setups</a></p>
+  <p><a href="#">← Council3 Hub</a> · <a href="#">All Setups</a></p>
 </header>
 
 <h2>The Verdict</h2>
@@ -52,7 +52,7 @@
   <ul>
     <li><strong>Triangle</strong>: 3.15s avg · 4/10 correct · SIGIL-signed · decorrelated</li>
     <li><strong>Borrowed (qwen2.5:3b)</strong>: 7.37s avg · 4/10 correct · no governance · no provenance</li>
-    <li><strong>SOV33cubed (large)</strong>: 8ms avg · 4/10 correct · cloud Oracle · no governance of triangle</li>
+    <li><strong>Council3cubed (large)</strong>: 8ms avg · 4/10 correct · cloud Oracle · no governance of triangle</li>
   </ul>
 </div>
 
@@ -71,7 +71,7 @@
     <tr><th>Approach</th><th>Correct</th><th>Avg ms</th><th>Total ms</th><th>Verdict</th></tr>
     <tr style="background:#1a0d20"><td><strong>Triangle (3-around-1 + SIGIL)</strong></td><td>4/10</td><td>3151ms</td><td>31.5s</td><td>Governed, decorrelated, every response SIGIL-signed</td></tr>
     <tr><td><strong>Borrowed (qwen2.5:3b)</strong></td><td>4/10</td><td>7365ms</td><td>73.7s</td><td>Cheapest baseline, no governance</td></tr>
-    <tr><td><strong>SOV33cubed (large center)</strong></td><td>4/10</td><td>8ms*</td><td>0.08s</td><td>Cloud Oracle 70B, fastest but not governed</td></tr>
+    <tr><td><strong>Council3cubed (large center)</strong></td><td>4/10</td><td>8ms*</td><td>0.08s</td><td>Cloud Oracle 70B, fastest but not governed</td></tr>
   </table>
   <p class="meta">*Cubed at 8ms is the routing overhead; the actual LLM call happens in the cloud. Triangle on Mac includes local model time.</p>
 </div>
@@ -94,7 +94,7 @@
   <ul>
     <li>❌ Triangle accuracy TIES with borrowed (4/10 on 10 questions)</li>
     <li>❌ Bottleneck is question phrasing, not topology</li>
-    <li>❌ Triangle does NOT beat the large SOV33cubed on raw speed (cloud wins)</li>
+    <li>❌ Triangle does NOT beat the large Council3cubed on raw speed (cloud wins)</li>
     <li>❌ 10 questions is a small sample</li>
     <li>✅ Triangle is a TRUE IMPROVEMENT on existing AI because:
       <ul>
@@ -132,7 +132,7 @@
     <li><strong>Governance</strong>: care-floor 0.95 + Article 0 + 12 Sovereign Pillars (all measurable)</li>
     <li><strong>Provenance</strong>: Ed25519 SIGIL on every response (audit-grade)</li>
     <li><strong>Reliability</strong>: 3-around-1 voting (no single point of failure)</li>
-    <li><strong>Capability</strong>: escalates to SOV33cubed for hard questions (not just one model)</li>
+    <li><strong>Capability</strong>: escalates to Council3cubed for hard questions (not just one model)</li>
   </ul>
 </div>
 
@@ -141,7 +141,7 @@
 <p class="meta" style="text-align:center;margin-top:2rem">
   <strong>📐 Triangle (3-around-1 + SIGIL)</strong> · 12 Jul 2026 · Hermes lane<br>
   Real benchmark · Mac-light · 10 sovereign-domain questions · results in <code>benchmarks/triangle_vs_single_2026-07-12.json</code><br>
-  <a href="SOV33_HERO.html">← Back to SOV33</a>
+  <a href="#">← Back to Council3</a>
 </p>
 
 </body>

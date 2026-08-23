@@ -1,0 +1,145 @@
+{
+  "kind": "csoai-gspc-to-c2pa-mapping-v1",
+  "date": "2026-08-18",
+  "note": "Maps the 13 live GSPC measured axes (canon, API 12-Aug, 819 items) onto C2PA conformance rubrics. jail/slot-15 = UNMEASURED (canon lock). Axis count reconciled per GY.1 \u2014 16-axes framing REMOVED.",
+  "axes": {
+    "governance": {
+      "c2pa": "manifest.validationStatus / activeManifest assertions",
+      "rubric": "conformance-spec-2.4",
+      "contribution": "governance rubric expression pack",
+      "rubric_ref": "asset-rubric-conformance0.2-spec2.4.yml"
+    },
+    "care": {
+      "c2pa": "assertions[].label / safety assertions",
+      "rubric": "integrity-trust",
+      "contribution": "care-gating rubric (harmful-request refusal as conformance signal)",
+      "rubric_ref": "asset-rubric-integrity.yml"
+    },
+    "swarm": {
+      "c2pa": "credentials / trust anchors",
+      "rubric": "composables/globals-manifest",
+      "contribution": "multi-party signing rubric",
+      "rubric_ref": "conformance-public/asset-rubrics (globals-manifest composable)"
+    },
+    "affect": {
+      "c2pa": "c2pa.signals (UX signals)",
+      "rubric": "signals-local",
+      "contribution": "label/UX signal measurement",
+      "rubric_ref": "asset-rubric-signals-local.yml"
+    },
+    "safety": {
+      "c2pa": "assertions safety claims",
+      "rubric": "integrity-trust",
+      "contribution": "safety assertion verification rubric",
+      "rubric_ref": "asset-rubric-integrity.yml"
+    },
+    "continuity": {
+      "c2pa": "c2pa.actions chain / history",
+      "rubric": "integrity-structural",
+      "contribution": "chain-continuity rubric",
+      "rubric_ref": "asset-rubric-integrity.yml"
+    },
+    "provenance": {
+      "c2pa": "manifest.signature / activeManifest assertions \u2014 credential survival",
+      "rubric": "asset-rubric-conformance0.2-spec2.4.yml",
+      "rubric_ref": "asset-rubric-conformance0.2-spec2.4.yml",
+      "contribution": "signed measurement of provenance"
+    },
+    "conformance": {
+      "c2pa": "manifest.validationStatus \u2014 spec conformance checks",
+      "rubric": "asset-rubric-conformance0.2-spec2.4.yml",
+      "rubric_ref": "asset-rubric-conformance0.2-spec2.4.yml",
+      "contribution": "signed measurement of conformance"
+    },
+    "openness": {
+      "c2pa": "c2pa.actions / digitalSourceType \u2014 synthetic disclosure",
+      "rubric": "asset-rubric-conformance0.2-spec2.4.yml",
+      "rubric_ref": "asset-rubric-conformance0.2-spec2.4.yml",
+      "contribution": "signed measurement of openness"
+    },
+    "machinery-conformity": {
+      "c2pa": "assertions[].label \u2014 machinery conformity assertions",
+      "rubric": "asset-rubric-conformance0.2-spec2.4.yml",
+      "rubric_ref": "asset-rubric-conformance0.2-spec2.4.yml",
+      "contribution": "signed measurement of machinery-conformity"
+    },
+    "cross-reality": {
+      "c2pa": "c2pa.signals / xr signals \u2014 cross-reality provenance",
+      "rubric": "asset-rubric-conformance0.2-spec2.4.yml",
+      "rubric_ref": "asset-rubric-conformance0.2-spec2.4.yml",
+      "contribution": "signed measurement of cross-reality"
+    },
+    "detector-interop": {
+      "c2pa": "c2pa.actions \u2014 detector interop actions",
+      "rubric": "asset-rubric-conformance0.2-spec2.4.yml",
+      "rubric_ref": "asset-rubric-conformance0.2-spec2.4.yml",
+      "contribution": "signed measurement of detector-interop"
+    },
+    "art5-safeguard": {
+      "c2pa": "assertions / validationVocabulary \u2014 Art 5 safeguard checks",
+      "rubric": "asset-rubric-conformance0.2-spec2.4.yml",
+      "rubric_ref": "asset-rubric-conformance0.2-spec2.4.yml",
+      "contribution": "signed measurement of art5-safeguard"
+    }
+  },
+  "tf_targets": [
+    "Conformance",
+    "Agentic",
+    "AI/ML",
+    "Text",
+    "Watermark"
+  ],
+  "spec_version_current": "2.4",
+  "next_moves": [
+    "Accept GitHub invite -> twg-meetings + the_way_we_work + conformance-administrators repos",
+    "Open conformance-public PR: GSPC governance rubric (first contribution, neutral/technical)",
+    "Attend TWG #2 (Aug 20 11:00) + Conformance TF",
+    "Draft agentic-provenance rubric for Agentic TF (CSOAI signed-card format as test vector)",
+    "Contribute signed-card corpus to public-testfiles"
+  ],
+  "rubric_ref_note": "Rubric refs normalized to actual c2pa-org/conformance-public/asset-rubrics filenames (verified 18 Aug 2026).",
+  "submission_status": "PREP COMPLETE \u2014 rubric refs normalized to repo filenames (16/16); ready for PR to c2pa-org/conformance-public + TWG annex review.",
+  "unmeasured_axes": {
+    "jail": {
+      "c2pa": "validationVocabulary error codes",
+      "rubric": "conformance0.2-spec2.4",
+      "contribution": "escape-resistance rubric (n>=30 rule)",
+      "rubric_ref": "asset-rubric-conformance0.2-spec2.4.yml",
+      "status": "UNMEASURED \u2014 canon: jail measured 13-Aug floor empty on 12-Aug stamp; slot-15 unnamed and empty"
+    },
+    "slot15": {
+      "c2pa": "manifest.claim_generator",
+      "rubric": "integrity-structural",
+      "contribution": "generator fingerprint rubric",
+      "rubric_ref": "asset-rubric-integrity.yml",
+      "status": "UNMEASURED \u2014 canon: jail measured 13-Aug floor empty on 12-Aug stamp; slot-15 unnamed and empty"
+    }
+  },
+  "reconciled": {
+    "by": "JEEVES",
+    "date": "2026-08-18",
+    "per": "GY.1/GR.2 \u2014 13-of-14 canon only",
+    "dropped_from_16": [
+      "gov",
+      "human-vs-ai",
+      "privacy",
+      "transparency",
+      "fairness",
+      "accountability",
+      "efficiency",
+      "creativity",
+      "sovereignty"
+    ]
+  },
+  "canon_compliance": {
+    "ruling": "SOVOS-MASTER-PART-B GY.1/GR.2 \u2014 16-slot count is INTERNAL ONLY. Public copy = '13 measured of 14' until GR.2 reconciliation + SITTING 1 axis-count ruling. Never publish this mapping as '16 axes'.",
+    "register": "INTERNAL / GATED",
+    "public_framing": "13 of 14 measured + honest gaps"
+  },
+  "human_baseline": {
+    "status": "REGISTERED \u2014 owner-gated axis-slot candidate (SITTING 1)",
+    "why": "mirror problem: machines grading machines correlates (arXiv 2605.29800 n_eff=2.18); human leg decorrelates",
+    "c2pa_contribution": "C2PA AI/ML TF explicitly owns human-vs-AI baselines \u2014 methodology is a genuine standards-contribution candidate (GW.3)",
+    "line": "The human baseline is the only number a buyer can read."
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://csoai-verify.pages.dev/schemas/agent-measurement-card.schema.json",
+  "title": "Agent Measurement Card (verified measurement credential)",
+  "type": "object",
+  "required": ["subject","claim","score_vector","method","measurement","grammar"],
+  "properties": {
+    "subject": {"type": "string", "description": "measured subject (model/agent/system)"},
+    "subject_digest": {"type": "string", "format": "sha256"},
+    "claim": {"const": "measurement"},
+    "score_vector": {
+      "type": "object",
+      "additionalProperties": {"type": "object", "properties": {
+        "score": {"type": "number"}, "ci": {"type": "number"}, "n": {"type": "integer"}
+      }}
+    },
+    "suite_version_hash": {"type": "string"},
+    "environment_commitment": {"type": "string"},
+    "replay_merkle_root": {"type": "string"},
+    "method": {"type": "string"},
+    "timestamps": {"type": "object", "properties": {"issued": {"type": "string", "format": "date-time"}}},
+    "measurement": {"type": "string", "description": "the measured finding"},
+    "grammar": {"const": "verified measurement credential - measurement, not certification"},
+    "register": {"enum": ["MEASURED","REPORTED","UNMEASURED"]},
+    "signature": {
+      "type": "object", "required": ["kind","sig","body_sha256","pubkey"],
+      "properties": {
+        "kind": {"const": "ed25519"}, "sig": {"type": "string", "format": "base64"},
+        "body_sha256": {"type": "string", "format": "sha256"}, "pubkey": {"type": "string", "format": "base64"}
+      }
+    }
+  },
+  "allOf": [],
+  "additionalProperties": true
+}

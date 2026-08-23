@@ -1,0 +1,85 @@
+{
+  "stages": [
+    {
+      "version": "v4",
+      "description": "Distilled from Gemma-4-26B (free OpenRouter)",
+      "models": [
+        "google/gemma-4-26b-a4b-it:free"
+      ],
+      "metrics": {},
+      "timestamp": "2026-07-26T12:45:38.211195+00:00",
+      "hash": "2037d0eb30b33ddf"
+    },
+    {
+      "version": "v4",
+      "description": "Distilled from Gemma-4-26B, 12 pairs, 91.7% frontier accuracy",
+      "models": [
+        "google/gemma-4-26b-a4b-it:free"
+      ],
+      "metrics": {},
+      "timestamp": "2026-07-26T12:54:07.340882+00:00",
+      "hash": "91656c4bb36c23fe"
+    },
+    {
+      "version": "v4.1",
+      "description": "Full comparison against Gemma-4-26B, 55 tasks",
+      "models": [
+        "google/gemma-4-26b-a4b-it:free"
+      ],
+      "metrics": {},
+      "timestamp": "2026-07-26T12:54:07.447130+00:00",
+      "hash": "3158ee4d8ae016ef"
+    },
+    {
+      "version": "v5",
+      "description": "Full 5-clan with router - pending RunPod GPU",
+      "models": [
+        "RWKV-7-G1-2.9B,Qwen2.5-0.5B,Mistral-7B,DeepSeek-Coder-1.3B"
+      ],
+      "metrics": {},
+      "timestamp": "2026-07-26T13:08:12.089497+00:00",
+      "hash": "9c8af48fe5a4b4af"
+    },
+    {
+      "version": "v4.2",
+      "description": "Consolidated distillation: 17 pairs, 16/17 frontier accuracy",
+      "models": [
+        "google/gemma-4-26b-a4b-it:free"
+      ],
+      "metrics": {
+        "pairs": 17,
+        "correct": 16,
+        "accuracy": 0.941
+      },
+      "timestamp": "2026-07-26T15:26:06.769000+00:00",
+      "hash": "52922dcff97c0bbd"
+    },
+    {
+      "version": "v5.1",
+      "description": "500-task registry + Kaggle notebook + distillation pipeline + unified architecture",
+      "models": [
+        "google/gemma-4-26b-a4b-it:free",
+        "Qwen/Qwen2.5-0.5B-Instruct",
+        "RWKV/rwkv7-g1-2_9b-world-8k"
+      ],
+      "metrics": {
+        "task_registry": 500,
+        "suites": 63,
+        "distillation_pairs": 17,
+        "frontier_accuracy": 0.941,
+        "stages_registered": 6
+      },
+      "timestamp": "2026-07-26T15:27:07.179286+00:00",
+      "hash": "f33c57dd583c7aee"
+    }
+  ],
+  "current_stage": "v5.1",
+  "corpus_anchor": {
+    "corpus_root": "37e2e10d53feaa9e12097f45113e1234510be0ca471e1a0848f5805db3e367c7",
+    "provisions": 417,
+    "normaliser_version": "1.0.0",
+    "anchored_at": "2026-08-17T05:22:18.782334+00:00",
+    "retro": true,
+    "note": "Anchored retrospectively on 2026-07-29. This records the corpus as it stands NOW; it does not prove what the text said when the result was produced. Runs from this point forward anchor at measurement time."
+  }
+}

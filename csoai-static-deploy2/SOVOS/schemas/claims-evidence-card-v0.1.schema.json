@@ -1,0 +1,133 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://csoai.org/schemas/claims-evidence-card-v0.1.schema.json",
+  "title": "ClaimsEvidenceCard",
+  "description": "CSOAI claims-evidence card v0.1 — the signed measurement-history artifact a parametric AI-insurance claim consumes. Designed for aiSure/Mosaic-style parametric triggers (settle 'based on measurable performance data') and Lloyd's warrant-and-warranty workflows. Every field below the signature layer is recompute-able from published per-item rows.",
+  "type": "object",
+  "required": [
+    "card_type", "card_version", "content_id", "issuer", "subject",
+    "trigger_contract_ref", "period", "measurement_summary", "drift",
+    "violations", "aggregators", "signature", "anchors"
+  ],
+  "properties": {
+    "card_type": { "const": "sovos-claims-evidence-v0.1" },
+    "card_version": { "const": "0.1.0" },
+    "content_id": { "type": "string", "description": "sha256 of canonical payload (RFC 8785 JCS of all measurement fields)" },
+    "issuer": {
+      "type": "object",
+      "properties": {
+        "legal_entity": { "const": "CSOAI LTD (UK #16939677)" },
+        "signing_node": { "type": "string", "description": "pod-side signing node label; public key only here" },
+        "public_key": { "type": "string", "description": "Ed25519 public key (did:web:csoai.org resolve)" },
+        "method_spec": { "type": "string", "description": "versioned GSPC measurement method; hash-pinned" }
+      },
+      "required": ["legal_entity", "public_key", "method_spec"]
+    },
+    "subject": {
+      "type": "object",
+      "properties": {
+        "kind": { "enum": ["model", "agent", "system", "deployment"] },
+        "model_id": { "type": "string" },
+        "agent_id": { "type": "string", "description": "did:web / Visa TAP directory id / ERC-8004 handle when present" },
+        "deployment": { "type": "string" },
+        "version": { "type": "string" }
+      },
+      "required": ["kind"]
+    },
+    "trigger_trigger_ref": {
+      "type": "object",
+      "description": "Which parametric trigger definition this card can settle.",
+      "properties": {
+        "product": { "type": "string", "description": "e.g. aiSure performance guarantee / Mosaic AI cover" },
+        "trigger_id": { "type": "string" },
+        "trigger_version": { "type": "string" },
+        "reference_formula": { "type": "string", "description": "computable trigger rule reference (not opaque)" }
+      }
+    },
+    "period": {
+      "type": "object",
+      "properties": {
+        "start_utc": { "type": "string", "format": "date-time" },
+        "end_utc": { "type": "string", "format": "date-time" },
+        "repute_interval_minutes": { "type": "integer" }
+      },
+      "required": ["start_utc", "end_utc"]
+    },
+    "measurements": {
+      "type": "object",
+      "description": "Per (axis, model) summary over the period — counts, usable/quotable n, Wilson interval.",
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "axis": { "type": "string" },
+          "usable_n": { "type": "integer", "minimum": 30 },
+          "quotable": { "type": "boolean" },
+          "score": { "type": "number" },
+          "ci_lb": { "type": "number" },
+          "ci_ub": { "type": "number" },
+          "unit": { "type": "string", "const": "wilson-95" }
+        },
+        "required": ["axis", "usable_n", "quotable"]
+      }
+    },
+    "drift": {
+      "type": "object",
+      "description": "Distributional drift vs the anchor measurement — the trigger input.",
+      "properties": {
+        "distance_metric": { "type": "string", "const": "mahalanobis" },
+        "distance_sigma": { "type": "number" },
+        "alert_threshold_sigma": { "type": "number" },
+        "breached_at": { "type": ["string", "null"], "format": "date-time" }
+      }
+    },
+    "violations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "law_article": { "type": "string", "description": "e.g. EU AI Act Art 5(1)(a)" },
+          "class": { "enum": ["PROHIBITED", "DISCLOSE", "PERMITTED"] },
+          "count": { "type": "integer" },
+          "severity_max": { "type": "integer", "minimum": 1, "maximum": 5 },
+          "first_detected_utc": { "type": "string", "format": "date-time" }
+        },
+        "required": ["item_article", "class", "count"]
+      }
+    },
+    "aggregators": {
+      "type": "object",
+      "description": "Named aggregation functions + versions — the card signs gold, rows, and aggregator together.",
+      "properties": {
+        "primary_mean": { "type": "string" },
+        "worst_case_over_items": { "type": "string" },
+        "tail_cvar": { "type": ["number", "null"], "description": "null below n=100 — BT/BV doctrine" },
+        "tail_n_floor_hit": { "type": "boolean" }
+      },
+      "required": ["primary_mean", "worst_case_over_items"]
+    },
+    "signature": {
+      "type": "object",
+      "properties": {
+        "algorithm": { "const": "Ed25519" },
+        "alg_id": { "type": "string", "const": "ed25519" },
+        "public_key": { "type": "string" },
+        "signature_value": { "type": "string" },
+        "signed_payload_hash": { "type": "string" }
+      },
+      "required": ["public_key", "signature_value"]
+    },
+    "anchors": {
+      "type": "object",
+      "description": "Time + transparency anchors.",
+      "properties": {
+        "ots_anchor": { "type": ["string", "null"] },
+        "scitt_receipt_ref": { "type": ["string", "null"] },
+        "rekor_uuid": { "type": ["string", "null"] }
+      }
+    }
+  },
+  "required": [
+    "card_type", "card_version", "content_id", "issuer", "subject", "period",
+    "measurements", "drift", "violations", "aggregators", "signature", "anchors"
+  ]
+}

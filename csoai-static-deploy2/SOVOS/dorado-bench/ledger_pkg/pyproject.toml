@@ -1,0 +1,19 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "csoai-council-ledger"
+version = "0.1.0"
+description = "Council Ledger — signed provision-conformance receipts (EU AI Act Art 50). Deterministic, offline-verifiable."
+readme = "README.md"
+requires-python = ">=3.9"
+license = {text = "CC-BY-4.0"}
+authors = [{name = "CSOAI Ltd", email = "info@csoai.org"}]
+dependencies = ["cryptography>=42"]
+
+[project.scripts]
+council = "csoai_council_ledger.cli:main"
+
+[tool.setuptools]
+packages = ["csoai_council_ledger"]

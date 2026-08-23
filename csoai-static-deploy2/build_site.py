@@ -50,8 +50,6 @@ DIRS = ["tools", ".well-known", "assets", "images", "static", "_templates", "api
         # 2026-08-05: /portal/ 19,235 B · /sovereign-wiki/ 4,947 B · /eu-ai-act/ 5,427 B
         # and its sub-routes /eu-ai-act/summary, /risk, /high-risk, /compliance.
         "portal", "sovereign-wiki", "eu-ai-act",
-        # /_alignment/ holds the DEFONEOS_INDEX.json + other internal-but-served data.
-        "_alignment",
         # Cloudflare Pages Functions (Pages Functions = /functions/api/*.js)
         # Verified live 2026-08-05: /api/health, /api/leaderboard, /api/eat-tick,
         # /api/stats, /api/skus, /api/sov-bridge. Adding /functions means every
@@ -65,7 +63,6 @@ JSON_ALLOW = {
     "drift-feed.json",  # live SOV measurement feed — consumed by sov-space-vwm + sov-globe-portal
     "jspace_deck.json",  # J-space visual deck (Wave-3): served /jspace_deck.json
     "c_space_card.json",  # C-space fold (Wave-3): served /c_space_card.json
-    "DEFONEOS_INDEX.json",  # 507 regulator packs index — consumed by /defoneos-leaderboard + defoneos-mcp
 }
 
 # Named public files whose extension is NOT in ROOT_EXTS (.md/.pdf). Each was

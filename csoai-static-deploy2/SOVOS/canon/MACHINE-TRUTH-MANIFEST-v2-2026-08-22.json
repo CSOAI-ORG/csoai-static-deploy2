@@ -1,0 +1,26 @@
+{
+  "manifest": "csoai-machine-truth-manifest",
+  "version": 2,
+  "generated": "2026-08-22T05:20:00Z",
+  "issuer": "csoai-harness-e2e (DSH/JEEVES lane)",
+  "signing_key": "UNSET — honest-unsigned; trust root did:web:csoai.org (never broken)",
+  "supersedes": "MACHINE-TRUTH-MANIFEST-2026-08-21.json (v1 — session-1 artifacts remain valid)",
+  "session_1": {
+    "note": "v1 artifacts (h3k card, game receipt, corrections, sweep) still hash-anchored in v1",
+    "ref": "canon/MACHINE-TRUTH-MANIFEST-2026-08-21.json"
+  },
+  "session_2_artifacts": [
+    {"id": "eat-govbench-qwen2.5-7b", "path": "benchmark-results/eat_govbench/eat_local_qwen2.5_7b.json", "avg": "28.6->66.7"},
+    {"id": "eat-govbench-mistral-7b", "path": "benchmark-results/eat_govbench/eat_local_mistral_7b.json", "avg": "32.6->66.1"},
+    {"id": "eat-govbench-llama3-8b", "path": "benchmark-results/eat_govbench/eat_local_llama3_8b.json", "avg": "28.3->63.2"},
+    {"id": "registry-instruments-2026-08-22", "path": "SOVOS/registry/instruments-2026-08-22.json", "sha256_16": "9cee0ba66a97e7fc", "rows": 10},
+    {"id": "next-100-steps", "path": "SOVOS/play-300/NEXT-100-STEPS.md", "sha256_16": "cbcbd3e909b3bac4"},
+    {"id": "mvt5-fix-loop-security", "path": "SOVOS/play-300/MVT5-fix-loop-security.md", "sha256_16": "91747cc7116407ee"},
+    {"id": "mvt6-meok-consumer", "path": "SOVOS/play-300/MVT6-meok-consumer.md", "sha256_16": "90f495af68a813e0"},
+    {"id": "eat-govbench-results-note", "path": "SOVOS/play-300/EAT-GOVBENCH-RESULTS-2026-08-22.md", "sha256_16": "6876dfff7a613444"},
+    {"id": "inference-repoint-handoff", "path": "SOVOS/play-300/INFERENCE-REPOINT-HANDOFF.md", "sha256_16": "1e118ff5a3ab7151"}
+  ],
+  "measurement": "EAT GovBench real (3090 11439): qwen2.5:7b 66.7 / mistral:7b 66.1 / llama3:8b 63.2 (RAG context). Retrieved > trained (+34-38).",
+  "grammar": "13 measured of 14 (until ungate ruling); verified measurement credential — never certification/accreditation",
+  "status": "UNSIGNED-honest (POD key not in harness; owner-gated injection)"
+}

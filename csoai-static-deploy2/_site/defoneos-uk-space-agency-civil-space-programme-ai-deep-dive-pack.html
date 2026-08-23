@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>DEFONEOS × UK Space Agency — AI Governance for Civil Space, Satellite Launch, Earth Observation & Space Safety</title>
+<meta name="description" content="AI governance deep-dive pack for the UK Space Agency — the executive agency of the Department for Science, Innovation and Technology responsible for the UK's civil space programme, including satellite launch from SaxaVord and Sutherland spaceports, earth observation for climate science, satellite navigation and PNT resilience, ESA membership, space surveillance and tracking, and the National Space Innovation Programme">
+<link rel="canonical" href="#">
+<style>
+:root{--bg:#050816;--panel:#0d1330;--gold:#d4af37;--sov:#6dd5ff;--accent:#4ade80;--text:#e2e8f0;--muted:#94a3b8;--red:#ef4444}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:'Inter',-apple-system,sans-serif;line-height:1.6}
+.nav{display:flex;gap:2rem;padding:1rem 2rem;background:var(--panel);border-bottom:1px solid rgba(109,213,255,0.15);font-size:0.9rem;flex-wrap:wrap}
+.nav a{color:var(--sov);text-decoration:none;transition:color 0.2s}
+.nav a:hover{color:var(--gold)}
+.container{max-width:1200px;margin:0 auto;padding:2rem}
+h1{font-size:2.2rem;background:linear-gradient(135deg,var(--sov),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:0.5rem}
+.subtitle{color:var(--muted);font-size:1.1rem;margin-bottom:2rem}
+.eu-banner{background:linear-gradient(135deg,#991b1b,#7f1d1d);padding:0.8rem 1.5rem;border-radius:8px;margin-bottom:2rem;font-size:0.85rem;color:#fca5a5}
+.stats-bar{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:2.5rem}
+.stat-card{background:var(--panel);padding:1.2rem;border-radius:8px;text-align:center;border:1px solid rgba(109,213,255,0.1)}
+.stat-card .stat-num{font-size:1.8rem;font-weight:700;color:var(--gold)}
+.stat-card .stat-label{font-size:0.8rem;color:var(--muted);margin-top:0.3rem}
+h2{color:var(--sov);font-size:1.4rem;margin:2rem 0 1rem;padding-bottom:0.5rem;border-bottom:2px solid rgba(109,213,255,0.15)}
+.ep-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-bottom:2rem}
+.ep-card{background:var(--panel);padding:1.2rem;border-radius:8px;border:1px solid rgba(109,213,255,0.1);transition:border-color 0.2s}
+.ep-card:hover{border-color:var(--accent)}
+.ep-tag{display:inline-block;background:rgba(74,222,128,0.15);color:var(--accent);font-size:0.7rem;padding:0.2rem 0.6rem;border-radius:4px;margin-bottom:0.5rem;text-transform:uppercase;letter-spacing:0.05em}
+.ep-card h3{color:var(--text);font-size:0.95rem;margin-bottom:0.4rem}
+.ep-card p{color:var(--muted);font-size:0.8rem;line-height:1.4}
+.priority-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:2rem}
+.p-card{background:var(--panel);padding:1rem;border-radius:8px;border:1px solid rgba(250,204,21,0.15)}
+.p-tag{display:inline-block;background:rgba(250,204,21,0.15);color:#fbbf24;font-size:0.7rem;padding:0.2rem 0.6rem;border-radius:4px;margin-bottom:0.5rem}
+.p-card h3{color:var(--text);font-size:0.85rem;margin-bottom:0.4rem}
+.mcp-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-bottom:2rem}
+.mcp-card{background:var(--panel);padding:1rem;border-radius:8px;border:1px solid rgba(109,213,255,0.15)}
+.mcp-tag{display:inline-block;background:rgba(109,213,255,0.15);color:var(--sov);font-size:0.7rem;padding:0.2rem 0.6rem;border-radius:4px;margin-bottom:0.5rem}
+.red-line-box{background:rgba(239,68,68,0.05);border:1px solid rgba(239,68,68,0.3);border-radius:8px;padding:1.5rem;margin-bottom:2rem}
+.red-line-box h3{color:var(--red);margin-bottom:0.8rem}
+.red-line-box ul{list-style:none;padding:0}
+.red-line-box li{color:var(--muted);font-size:0.85rem;padding:0.3rem 0;padding-left:1.2rem;position:relative}
+.red-line-box li:before{content:'🚫';position:absolute;left:0;font-size:0.75rem}
+.steps-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:1rem;margin-bottom:2rem}
+.step-card{background:var(--panel);padding:1rem;border-radius:8px;text-align:center;border:1px solid rgba(109,213,255,0.1)}
+.step-num{display:inline-flex;align-items:center;justify-content:center;width:2rem;height:2rem;border-radius:50%;background:var(--accent);color:var(--bg);font-weight:700;font-size:0.9rem;margin-bottom:0.5rem}
+.step-card h4{font-size:0.8rem;color:var(--text);margin-bottom:0.3rem}
+.step-card p{font-size:0.7rem;color:var(--muted);line-height:1.3}
+.cta-strip{display:flex;gap:1rem;justify-content:center;margin:2rem 0}
+.cta-btn{display:inline-block;padding:0.8rem 2rem;border-radius:6px;text-decoration:none;font-weight:600;transition:all 0.2s;font-size:0.9rem}
+.cta-primary{background:linear-gradient(135deg,var(--gold),#b8860b);color:var(--bg)}
+.cta-primary:hover{transform:translateY(-1px);box-shadow:0 4px 20px rgba(212,175,55,0.3)}
+.cta-secondary{background:transparent;color:var(--sov);border:1px solid var(--sov)}
+.cta-secondary:hover{background:rgba(109,213,255,0.1)}
+.footer{background:var(--panel);padding:2rem;text-align:center;border-top:1px solid rgba(109,213,255,0.1);margin-top:3rem;font-size:0.8rem;color:var(--muted)}
+.footer .sigil{font-family:'Courier New',monospace;font-size:0.7rem;color:rgba(109,213,255,0.3);margin-top:0.5rem}
+@media(max-width:768px){.ep-grid,.priority-grid,.mcp-grid{grid-template-columns:repeat(2,1fr)}.stats-bar{grid-template-columns:repeat(2,1fr)}.steps-grid{grid-template-columns:repeat(3,1fr)}}
+</style>
+<script type="application/ld+json">
+{"@context": "https://schema.org", "@type": "Article", "headline": "DEFONEOS \u00d7 UK Space Agency \u2014 AI Governance for Civil Space, Satellite Launch, Earth Observation & Space Safety", "description": "AI governance deep-dive pack for the UK Space Agency \u2014 the executive agency of the Department for Science, Innovation and Technology responsible for the UK's civil space programme, including satellite launch from SaxaVord and Sutherland spaceports, earth observation for climate science, satellite navigation and PNT resilience, ESA membership, space surveillance and tracking, and the National Space Innovation Programme", "datePublished": "2026-08-16", "publisher": {"@type": "Organization", "name": "CSOAI Ltd", "url": "https://csoai.org"}, "about": {"@type": "GovernmentService", "name": "UK Space Agency", "provider": {"@type": "GovernmentOrganization", "name": "UK Space Agency (UKSA)", "url": "https://www.gov.uk/government/organisations/uk-space-agency"}}}
+</script>
+</head>
+<body>
+<div class="eu-banner">⚠️ EU AI Act Article 50 + Annex III High-Risk AI Systems — UK Space Agency is Executive agency of the Department for Science, Innovation and Technology. Exercises powers under the Space Industry Act 2018 (with the Civil Aviation Authority as spaceflight regulator). Represents the UK at the European Space Agency (ESA) and the UN Committee on the Peaceful Uses of Outer Space (COPUOS).; this AI pack complies with the CSOAI GSPC governance framework for high-risk public-sector AI deployment. All MCP tools are audit-grade, Ed25519-signed, and DEFONEOS-SEAL compatible.</div>
+<nav class="nav"><a href="#">Home</a><a href="#">Sitemap</a><a href="#">GovBench</a><a href="#">Index</a></nav>
+<div class="container">
+<h1>DEFONEOS × UK Space Agency — AI Governance for Civil Space, Satellite Launch, Earth Observation & Space Safety</h1>
+<p class="subtitle">AI governance deep-dive pack for the UK Space Agency — the executive agency of the Department for Science, Innovation and Technology responsible for the UK's civil space programme, including satellite launch from SaxaVord and Sutherland spaceports, earth observation for climate science, satellite navigation and PNT resilience, ESA membership, space surveillance and tracking, and the National Space Innovation Programme</p>
+<div class="stats-bar">
+<div class="stat-card"><div class="stat-num">12</div><div class="stat-label">Entry Points</div></div>
+<div class="stat-card"><div class="stat-num">8</div><div class="stat-label">Transformation Priorities</div></div>
+<div class="stat-card"><div class="stat-num">6</div><div class="stat-label">MCP Servers</div></div>
+<div class="stat-card"><div class="stat-num">6</div><div class="stat-label">Red Lines</div></div>
+</div>
+
+<h2>🏛️ 12 Entry Points — UK Space Agency</h2>
+<div class="ep-grid"><div class="ep-card"><span class="ep-tag">Space/CNI</span><h3>National Space Strategy Delivery</h3><p>Delivery of the UK's National Space Strategy and civil space programme — £1.6bn total UK space investment over five years covering earth observation, satellite communications, navigation, space science and launch</p></div>
+<div class="ep-card"><span class="ep-tag">Space/CNI</span><h3>Satellite Launch Capability</h3><p>UK sovereign launch capability from SaxaVord (Shetland) and Sutherland (Highlands) vertical spaceports, plus horizontal launch from Spaceport Cornwall — regulatory support for launch-operator licence applications under the Space Industry Act 2018</p></div>
+<div class="ep-card"><span class="ep-tag">Space/CNI</span><h3>Earth Observation & Climate</h3><p>EO programme including the TRUTHS climate-calibration mission, participation in ESA Copernicus and the UK EO Climate Information Service — satellite-derived climate data for net zero policy and environmental monitoring</p></div>
+<div class="ep-card"><span class="ep-tag">Space/CNI</span><h3>Satellite Navigation & PNT Resilience</h3><p>UK alternative to the EU Galileo programme post-Brexit — Navigation Innovation Support Programme (NISP) for resilient Position, Navigation and Timing, including quantum navigation and LEO-PNT constellations</p></div>
+<div class="ep-card"><span class="ep-tag">Space/CNI</span><h3>Space Science & Exploration</h3><p>UK participation in ESA science missions (ExoMars Rosalind Franklin rover, James Webb Space Telescope MIRI instrument, PLATO exoplanet mission), the Artemis Accords for lunar exploration and the UK Space Exploration Programme</p></div>
+<div class="ep-card"><span class="ep-tag">Space/CNI</span><h3>Space Surveillance & Tracking</h3><p>UK Space Operations Centre at RAF High Wycombe with UKSA civil SST sensors — collision-avoidance analysis, re-entry prediction, debris-catalogue maintenance and space-domain awareness for UK-licensed satellites</p></div>
+<div class="ep-card"><span class="ep-tag">Space/CNI</span><h3>Regulatory Interface with CAA</h3><p>UKSA as space-policy body working alongside the Civil Aviation Authority (spaceflight regulator under the Space Industry Act 2018) and the Health and Safety Executive (ground-safety regulator) — licence application readiness, safety-case guidance and environmental-assessment coordination</p></div>
+<div class="ep-card"><span class="ep-tag">Space/CNI</span><h3>International Partnerships</h3><p>ESA participation (UK is fourth-largest contributor), NASA bilateral cooperation (Artemis, ISS de-orbit vehicle), ISRO cooperation, AUKUS space working group, UK-Australia Space Bridge, and the International Charter on Space and Major Disasters</p></div>
+<div class="ep-card"><span class="ep-tag">Space/CNI</span><h3>National Space Innovation Programme</h3><p>NSIP grant funding for UK space SMEs and research organisations — technology development, in-orbit demonstration missions, and commercialisation pathways for UK space IP</p></div>
+<div class="ep-card"><span class="ep-tag">Space/CNI</span><h3>Space Clusters & Regional Growth</h3><p>Harwell Space Cluster (Oxfordshire — largest space cluster in Europe), Space Park Leicester, Westcott Venture Park propulsion test centre, Space Hub Sutherland, Goonhilly Earth Station — regional space-ecosystem development</p></div>
+<div class="ep-card"><span class="ep-tag">Space/CNI</span><h3>Skills & Workforce Pipeline</h3><p>Space apprenticeships, Space Placements in Industry (SPIN) scheme, ESA graduate trainee programme and UK Space Sector Skills Survey — building the 47,000-strong UK space workforce</p></div>
+<div class="ep-card"><span class="ep-tag">Space/CNI</span><h3>Debris Mitigation & Orbital Sustainability</h3><p>UK lead on UN COPUOS guidelines for long-term sustainability of outer space, UK Space Sustainability Mark (kitemark for debris-compliant missions), Space Sustainability £102m programme and active debris removal (Astroscale partnership)</p></div></div>
+
+<h2>🚀 8 AI Transformation Priorities</h2>
+<div class="priority-grid"><div class="p-card"><span class="p-tag">Priority 1</span><h3>Satellite Data Analytics AI</h3><p>AI analysis of EO satellite data for climate monitoring, flood prediction, crop-yield forecasting and maritime domain awareness — multi-sensor fusion across optical, SAR and hyperspectral; before: manual satellite-image interpretation; after: AI automated change detection at continental scale; Target: 50-fold increase in EO data throughput</p></div>
+<div class="p-card"><span class="p-tag">Priority 2</span><h3>Launch Safety-Case Modelling</h3><p>AI-assisted debris-casualty-risk modelling, flight-termination analysis and range-safety computation for UK spaceport licence applications; before: deterministic modelling with conservative margins; after: AI probabilistic safety-case optimisation; Target: 30% reduction in licence-application preparation time</p></div>
+<div class="p-card"><span class="p-tag">Priority 3</span><h3>Orbital Debris Risk Prediction</h3><p>AI conjunction-assessment and collision-avoidance analysis for the 2,000+ UK-licensed objects on orbit — debris-path prediction, manoeuvre-optimisation and re-entry-risk assessment; Target: 50% reduction in false-positive conjunction alerts</p></div>
+<div class="p-card"><span class="p-tag">Priority 4</span><h3>PNT Resilience Monitoring</h3><p>AI monitoring of GNSS signal integrity, jamming/spoofing detection across UK territory and maritime exclusive economic zone — integration with the National Timing Centre; Target: real-time PNT interference mapping for CNI operators</p></div>
+<div class="p-card"><span class="p-tag">Priority 5</span><h3>Space Weather Forecasting Integration</h3><p>AI integration of Met Office Space Weather Operations Centre data with satellite-operator risk management — geomagnetic-storm prediction, single-event-upset risk, and ionospheric-scintillation forecasting; Target: automated 72-hour space-weather risk advisories</p></div>
+<div class="p-card"><span class="p-tag">Priority 6</span><h3>EO Data Fusion for Climate Policy</h3><p>AI fusion of multiple EO datasets (atmospheric composition, land-surface temperature, sea-level, ice-sheet mass) for UK climate-policy evidence — automated IPCC AR7 contribution analysis; Target: continuous climate-indicator reporting replacing periodic manual assessments</p></div>
+<div class="p-card"><span class="p-tag">Priority 7</span><h3>Spaceport Licensing Decision Support</h3><p>AI risk-screening for UK spaceport licence applicants — environmental-impact compliance, safety-case completeness checking and public-consultation analysis; Target: pre-screen 100% of licence applications for completeness before CAA formal review</p></div>
+<div class="p-card"><span class="p-tag">Priority 8</span><h3>Space Supply Chain Analytics</h3><p>AI mapping of the UK space supply chain — 1,200+ space-sector organisations — including ITAR/EAR exposure, single-source dependency detection, and NSIA 2021 mandatory-notification trigger analysis; Target: automated fortnightly supply-chain risk reports</p></div></div>
+
+<h2>🤖 6 MCP Servers</h2>
+<div class="mcp-grid"><div class="mcp-card"><span class="mcp-tag">MCP 1</span><h3>UKSA Launch Licence MCP</h3><p>screen_safety_case, model_casualty_risk, check_environmental_compliance, generate_licence_assessment</p></div>
+<div class="mcp-card"><span class="mcp-tag">MCP 2</span><h3>UKSA Satellite Data MCP</h3><p>fuse_multisensor, detect_change, classify_landcover, generate_eo_report</p></div>
+<div class="mcp-card"><span class="mcp-tag">MCP 3</span><h3>UKSA Debris Tracking MCP</h3><p>assess_conjunction, predict_reentry, optimise_manoeuvre, generate_collision_report</p></div>
+<div class="mcp-card"><span class="mcp-tag">MCP 4</span><h3>UKSA Space Weather MCP</h3><p>model_geomagnetic_storm, predict_single_event_upset, forecast_scintillation, generate_weather_advisory</p></div>
+<div class="mcp-card"><span class="mcp-tag">MCP 5</span><h3>UKSA PNT Monitor MCP</h3><p>detect_jamming, map_interference, assess_resilience, generate_pnt_report</p></div>
+<div class="mcp-card"><span class="mcp-tag">MCP 6</span><h3>UKSA Supply Chain MCP</h3><p>map_space_supply_chain, detect_itar_exposure, flag_single_source, generate_supply_chain_report</p></div></div>
+
+<h2>🚫 6 Red Lines — Legislation Backbone</h2>
+<div class="red-line-box"><h3>Statutory Framework: Space Industry Act 2018 / Outer Space Act 1986 / Science and Technology Act 1965 / DPA 2018 + UK GDPR / UN Outer Space Treaty 1967 / UK Spaceflight Regulations 2021 / National Security and Investment Act 2021</h3><ul><li>NO AI-sole launch licence determination — CAA spaceflight licensing under the Space Industry Act 2018 requires human safety-case assessment, environmental-determination sign-off, and public-consultation evaluation (automated licence decisions would not satisfy the Act's regulator duty of care)</li>
+<li>NO satellite imagery processing that constitutes personal surveillance — UKSA civil EO data must not be used for individual identification, tracking of persons, or any purpose engaging Article 8 ECHR (Right to Private Life) without specific statutory authority</li>
+<li>NO PNT interference detection data sharing outside UK security gateways — GNSS jamming/spoofing data collected by UKSA PNT sensors constitutes sensitive CNI intelligence; disclosure requires National Security Vetting clearance and the data owner's explicit authorisation</li>
+<li>NO export-controlled space technology data stored or processed outside UK export-control jurisdiction — ITAR, EAR, UK Strategic Export Control Lists and the Export Control Order 2008 apply to UKSA's international programme data; extraterritorial data storage could constitute an export-control breach</li>
+<li>NO autonomous collision-avoidance manoeuvre commands for UK-licensed satellites — conjunction assessment outputs must be human-reviewed before any manoeuvre recommendation is communicated to the satellite operator (the Outer Space Act 1986 s.3 license condition requires operator control of the spacecraft at all times)</li>
+<li>NO UK international space-treaty commitments generated or communicated by AI without Foreign, Commonwealth and Development Office clearance — UN COPUOS submissions, ESA Council positions and bilateral space agreements involve diplomatic undertakings which cannot be delegated to automated systems</li></ul></div>
+
+<h2>🎯 5-Step Engagement Model</h2>
+<div class="steps-grid"><div class="step-card"><span class="step-num">1</span><h4>Discovery</h4><p>Stakeholder mapping, data audit, and AI readiness assessment for UK Space Agency</p></div>
+<div class="step-card"><span class="step-num">2</span><h4>Governance Design</h4><p>Red-line codification, human-review gate design, and AI impact assessment per UK GDPR</p></div>
+<div class="step-card"><span class="step-num">3</span><h4>Pilot</h4><p>6-8 week AI-assisted pilot on one high-volume workflow with parallel manual oversight</p></div>
+<div class="step-card"><span class="step-num">4</span><h4>Scale</h4><p>Roll-out to full jurisdiction with continuous monitoring, recommender-agent feedback, and compliance dashboards</p></div>
+<div class="step-card"><span class="step-num">5</span><h4>Assure</h4><p>Annual audit by DEFONEOS-SEAL credential, CSOAI BFT Council governance review, and parliamentary reporting</p></div></div>
+
+<div class="cta-strip">
+<a href="#" class="cta-btn cta-primary">Request OWEM RFQ for UKSA</a>
+<a href="#" class="cta-btn cta-secondary">Article 50 AI Passport</a>
+</div>
+</div>
+<footer class="footer"><p>CSOAI Ltd — UK Company No. 16939677 | <a href="#">csoai.org</a> | compliance@csoai.org</p><p>DEFONEOS &copy; 2026 Nicholas Templeman. Open source. UK sovereign. AUKUS-compatible.</p><p class="sigil">SIGIL: DEFONEOS|TICK-300|36befb4dc8e56193|sovereign|british|forever</p></footer>
+</body>
+</html>

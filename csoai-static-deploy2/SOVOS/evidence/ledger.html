@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Council Ledger · Dorado · Claimguard — Council of AI</title>
+<style>
+ body{font-family:system-ui,sans-serif;background:#02020a;color:#e6e6e6;margin:0;line-height:1.6}
+ .wrap{max-width:960px;margin:0 auto;padding:2rem 1.5rem}
+ header{text-align:center;padding:2.5rem 0 1rem}
+ h1{font-size:2rem;color:#c9a84c;margin:.4rem 0} h2{color:#8ab4f8;margin-top:2rem}
+ .sub{color:#7f90a0;font-size:1.05rem}
+ .pill{display:inline-block;border:1px solid #c9a84c;border-radius:100px;padding:2px 12px;font-size:.78rem;color:#c9a84c;margin:0 4px}
+ .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.2rem;margin:1.5rem 0}
+ .card{background:#0d1220;border:1px solid #1c2a45;border-radius:12px;padding:1.4rem}
+ .card h3{margin:.2rem 0 .5rem;color:#fff} .small{font-size:.85rem;color:#7f90a0}
+ .cta{background:#c9a84c;color:#000;border:none;border-radius:8px;padding:12px 22px;font-weight:600;font-size:1rem;cursor:pointer;text-decoration:none;display:inline-block}
+ table{width:100%;border-collapse:collapse;font-size:.9rem} td,th{padding:8px;border-bottom:1px solid #1c2a45;text-align:left}
+ code{background:#1c2a45;padding:2px 6px;border-radius:4px;font-size:.8em}
+ .foot{color:#7f90a0;font-size:.8em;text-align:center;margin-top:2.5rem;padding-top:1rem;border-top:1px solid #1c2a45}
+ a{color:#8ab4f8} .badge{background:#123;color:#4ade80;border:1px solid #4ade80;border-radius:6px;padding:2px 8px;font-size:.75rem}
+</style></head><body>
+<div class="wrap">
+<header>
+ <p class="pill">Council of AI</p><p class="pill">Council Ledger · Dorado · Claimguard</p><p class="pill">measurement, not certification</p>
+ <h1>The GTM attestation layer — signed provision-conformance receipts</h1>
+ <p class="sub">The market-verified measurement products: <b>Council Ledger</b> (signed provision-conformance
+ receipts), <b>Dorado Bench</b> (East↔West regulation-vs-market pair), <b>Claimguard</b> (signed claim-evidence).
+ Registers: MEASURED / REPORTED / UNMEASURED.</p>
+ <p style="margin-top:1rem"><a class="cta" href="/verify">Verify a live signed receipt</a>
+   <a class="cta" style="background:#111;color:#8ab4f8;border:1px solid #8ab4f8" href="/book">Book a pack</a></p>
+</header>
+
+<h2>The three products</h2>
+<div class="grid">
+ <div class="card"><h3>Council Ledger (codename Dorado)</h3>
+  <p class="small">Signed provision-conformance receipts — conformance to the in-force frozen provision
+  (deterministic) + live market state + human/AI context, each on its own register. For AI-liability
+  insurers + relying parties. <b>MCP server live.</b></p></div>
+ <div class="card"><h3>Dorado Bench</h3>
+  <p class="small">East↔West live regulation vs live index markets — the <b>pair-gap nobody else measures</b>,
+  deterministic, signed-ready. <b>MCP server live.</b></p></div>
+ <div class="card"><h3>Claimguard</h3>
+  <p class="small">Signed claim-evidence guard — a signed, independently verifiable evidence object for a
+  claim. <b>MCP server live.</b></p></div>
+</div>
+
+<h2>What it measures (the pair-gap moat)</h2>
+<p>Regulation and market are two adjacent measured axes, <b>never fused into one number</b> — regulation
+states what is permitted; market states what is priced. The pair-gap (East↔West market reaction) is real,
+deterministic, and signed. Not one gap number (category error, killed at Stage 0).</p>
+
+<h2>Insurer pilot</h2>
+<p>Mosaic × Munich Re aiSure — the <b>Art 50 receipt</b> (the objective threshold test inside their
+parametric-like settlement). Reframed as <b>measurement, not prediction</b> (the Testudo rebuttal). Eticas×Armilla
+precedent: independent 3rd-party audit → up to 20% premium reduction.</p>
+
+<h2>Proof</h2>
+<p><span class="badge">Ed25519</span> <span class="badge">signed</span> <span class="badge">verified</span> — pubkey
+<code>bWbk52E47J6EkY4+pu0Hh/B1l1175AZoZsDEBr0EfWA=</code>. <a href="/verify">Verify in-browser</a>.</p>
+
+<div class="foot">Council of AI (CSOAI Ltd, UK #16939677) · measurement, not certification · buyer-side, signed,
+verifiable. The Ed25519 private key never leaves the pod.</div>
+</div></body></html>

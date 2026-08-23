@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SOV33 Chrome Extension</title>
+<link rel="icon" href="#" type="image/svg+xml">
+<link rel="canonical" href="#">
+<meta property="og:title" content="SOV33 Chrome Extension">
+<meta property="og:description" content="CSOAI SOV33 Chrome extension — sovereign AI governance.">
+<meta name="description" content="CSOAI: SOV33 Chrome Extension — EU AI Act Article 50 compliant sovereign AI.">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"SOV33 Chrome Extension","url":"https://csoai.org/chrome-extension/popup.html","publisher":{"@type":"Organization","name":"CSOAI Ltd","url":"https://csoai.org"}}</script>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { width:400px; background:#050510; color:#e0e0e0; font-family:'Inter',system-ui,sans-serif; }
+  .header { padding:1rem; background:linear-gradient(135deg,#0a0a1a,#14142a); border-bottom:1px solid #2a2a5a; }
+  .header h1 { font-size:1.2rem; background:linear-gradient(135deg,#00d4ff,#7b2ff7,#ff6bcb); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+  .header .stats { display:flex; gap:1rem; font-size:0.7rem; color:#888; margin-top:0.5rem; }
+  .stat { display:flex; align-items:center; gap:0.3rem; }
+  .dot { width:6px; height:6px; border-radius:50%; }
+  .dot.green { background:#00ff88; }
+  .dot.yellow { background:#ffaa00; }
+  .content { padding:1rem; }
+  .panel { background:#14142a; border:1px solid #2a2a5a; border-radius:8px; padding:0.75rem; margin-bottom:0.75rem; }
+  .panel h3 { font-size:0.8rem; color:#8888ff; margin-bottom:0.5rem; text-transform:uppercase; letter-spacing:0.05em; }
+  .model-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:0.5rem; }
+  .model-item { background:#1a1a3a; padding:0.4rem; border-radius:4px; font-size:0.7rem; display:flex; justify-content:space-between; align-items:center; }
+  .model-name { color:#e0e0e0; }
+  .model-score { color:#00ff88; font-weight:bold; }
+  .action-row { display:flex; gap:0.5rem; margin-top:0.75rem; }
+  .btn { flex:1; padding:0.5rem; border:1px solid #3a3a6a; background:#2a2a5a; color:#e0e0e0; border-radius:4px; cursor:pointer; font-size:0.75rem; text-align:center; transition:all 0.2s; }
+  .btn:hover { background:#3a3a6a; border-color:#4a4a8a; }
+  .btn.primary { background:#7b2ff7; border-color:#9b4fff; }
+  .btn.primary:hover { background:#9b4fff; }
+  .chat { margin-top:0.75rem; }
+  .chat-input { width:100%; padding:0.5rem; background:#1a1a3a; border:1px solid #2a2a5a; color:#e0e0e0; border-radius:4px; font-size:0.8rem; resize:none; }
+  .chat-output { margin-top:0.5rem; padding:0.5rem; background:#0a0a1a; border-radius:4px; font-size:0.75rem; color:#888; min-height:60px; max-height:120px; overflow-y:auto; }
+  .family-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:0.3rem; }
+  .family { text-align:center; padding:0.3rem; background:#1a1a3a; border-radius:4px; font-size:1rem; }
+  .family .name { font-size:0.55rem; color:#888; margin-top:0.1rem; }
+</style>
+</head>
+<body>
+<div class="article50-banner" style="background:linear-gradient(90deg,#3a0f1a,#7a1f33,#3a0f1a);border-bottom:1px solid #ff5470;padding:10px 16px;text-align:center;font-size:13px;color:#ffd5dd;font-weight:500">EU AI Act Article 50 live 2 Aug 2026 — C2PA passport ready | <a href="#" style="color:#fff;text-decoration:underline;font-weight:700">Get yours →</a></div>
+<div class="header">
+  <h1>SOV-SPACE PORTAL</h1>
+  <div class="stats">
+    <div class="stat"><div class="dot green"></div> 53 Models</div>
+    <div class="stat"><div class="dot green"></div> 33 MCPs</div>
+    <div class="stat"><div class="dot green"></div> 7,983 Honey</div>
+    <div class="stat"><div class="dot yellow"></div> 95.8% WM</div>
+  </div>
+</div>
+
+<div class="content">
+  <!-- 12 OWEM Families -->
+  <div class="panel">
+    <h3>12 OWEM Families</h3>
+    <div class="family-grid">
+      <div class="family" style="color:#00d4ff">∞<div class="name">abstract</div></div>
+      <div class="family" style="color:#ff6bcb">✦<div class="name">aesthetic</div></div>
+      <div class="family" style="color:#00ff88">⚡<div class="name">agency</div></div>
+      <div class="family" style="color:#ffaa00">♡<div class="name">care</div></div>
+      <div class="family" style="color:#7b2ff7">✧<div class="name">creation</div></div>
+      <div class="family" style="color:#ff4444">⊗<div class="name">destruct</div></div>
+      <div class="family" style="color:#44ccff">◎<div class="name">embody</div></div>
+      <div class="family" style="color:#aa66ff">⚖<div class="name">ethics</div></div>
+      <div class="family" style="color:#00d4ff">◉<div class="name">identity</div></div>
+      <div class="family" style="color:#88aacc">⊢<div class="name">logic</div></div>
+      <div class="family" style="color:#44cc88">⛨<div class="name">preserve</div></div>
+      <div class="family" style="color:#ff88cc">⇔<div class="name">relate</div></div>
+    </div>
+  </div>
+
+  <!-- Top Models -->
+  <div class="panel">
+    <h3>Top Models</h3>
+    <div class="model-grid">
+      <div class="model-item"><span class="model-name">sov-sovereign-v2</span><span class="model-score">70%</span></div>
+      <div class="model-item"><span class="model-name">sov-math</span><span class="model-score">57%</span></div>
+      <div class="model-item"><span class="model-name">sov-general</span><span class="model-score">90%basic</span></div>
+      <div class="model-item"><span class="model-name">sov-code</span><span class="model-score">100%code</span></div>
+    </div>
+  </div>
+
+  <!-- Chat -->
+  <div class="panel">
+    <h3>Ask SOV</h3>
+    <div class="chat">
+      <textarea class="chat-input" id="chatInput" rows="2" placeholder="Ask SOV-space anything..."></textarea>
+      <div class="chat-output" id="chatOutput">SOV-space ready. Ask a question.</div>
+    </div>
+  </div>
+
+  <!-- Actions -->
+  <div class="action-row">
+    <button class="btn primary" onclick="askSOV()">Ask SOV</button>
+    <button class="btn" onclick="openPortal()">Open Portal</button>
+  </div>
+</div>
+
+<script>
+function askSOV() {
+  const input = document.getElementById('chatInput').value;
+  const output = document.getElementById('chatOutput');
+  if (!input) return;
+  output.textContent = 'Thinking...';
+  // Send to background service worker
+  chrome.runtime.sendMessage({action: 'ask', question: input}, response => {
+    output.textContent = response?.answer || 'No response from SOV-space.';
+  });
+}
+
+function openPortal() {
+  chrome.tabs.create({url: 'http://localhost:3001'});
+}
+
+// Listen for responses from background
+chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
+  if (msg.action === 'answer') {
+    document.getElementById('chatOutput').textContent = msg.answer;
+  }
+});
+</script>
+<div class="sovereign-cta-strip" style="padding:0.3rem 0.5rem;background:#0a0a1a;text-align:center;font-size:0.6rem;border-top:1px solid #2a2a5a;">
+  <a href="#" style="color:#00d4ff;text-decoration:none;">SOV33_OWEM_HUB</a> &middot;
+  <a href="#" style="color:#7b2ff7;text-decoration:none;">Article 50</a>
+</div>
+</body>
+</html>

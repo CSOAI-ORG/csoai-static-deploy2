@@ -1,0 +1,24 @@
+{
+ "@context": "https://csoai.org/llm-context.json",
+ "type": "LLMPageSummary",
+ "url": "https://csoai.org/series-a-data-room.html",
+ "title": "Series A data room — live evidence | CSOAI | CSOAI",
+ "description": "The Series A data room: live benchmark and scorecard, the signed attestation chain, the refutation ledger, and the measured evidence behind every claim.",
+ "headings": [
+  "Series A data room — live evidence | CSOAI",
+  "Live product surfaces",
+  "Measured evidence (today)",
+  "Attestation chain",
+  "Substrate (the economics)"
+ ],
+ "text": "Series A data room — live evidence | CSOAI | CSOAI Home Benchmarks Scorecard Data room Deck Series A data room — live evidence | CSOAI 2026-08-09 · CSOAI — measurement, not claim · generated from signed artefacts Every claim in this data room is a live measurement on a published harness . Nothing is a slide-deck estimate; every number re-derives from the signed artefacts at the link beside it. Live product surfaces Surface What it is Status /benchmarks measured benchmark board — 76-item EAT suite + flywheel two-sided live · 200 /scorecard the Moody's-of-AI storefront — free / Pro / Enterprise / Certification live · 200 /enterprise-financial financial-services pilot audit pack (30-item battery) live · 200 /enterprise-healthcare healthcare pilot audit pack (30-item battery) live · 200 /enterprise-public public-sector pilot audit pack (30-item battery) live · 200 /blog-two-sided-refusal the two-sided refusal measurement write-up live · 200 Measured evidence (today) Claim Measured value Artefact Care-gate harm recall 100% (57/57) care_gate_eval.json (signed bundle) Care-gate over-block 0% (0/19) care_gate_eval.json Leader model two-sided qwen2.5:0.5b · refusal TPR 0.38 · FPR 0.00 flywheel day artefact (freshest) ProvBench survival 0 / 20 markings survived any transform provbench (published) Refutation ledger 137 signed records , all BFT-approved, append-only decision_ledger.jsonl Attestation chain sovereign_attest.py emits a living-training-attestation over each day's measurement artefacts (SHA-256 integrity + Ed25519 where the signing node signs). Honest signer state: on the Mac the bundle is unsigned_on_this_host — the private key lives on the signing node, and an unsigned bundle is always labelled unsigned. Ledger: /refutation-ledger — the history of being wrong, immutable and verifiable. \"We kill our own bad ideas\" is not a slogan; it is a file. Split integrity: practice/held-out salted split + denominator floor + held-out-stripped fuel writer — a benchmark that trains on its own eval is structurally impossible here. Substrate (the economics) Measurement runs on free tier: HF · Kaggle T4 · Groq · Ollama. No paid GPU in the measurement path — the moat cannot be undercut on cost. RunPod spot only for bounded training, $0.22–$1.39/hr, ~$5 caps, owner-gated. CSOAI Ltd · UK company 16939677 · Every published figure traces to a signed, verifiable record.",
+ "text_truncated": false,
+ "register": {
+  "role": "measurement_and_attestation_support",
+  "csoai_certifies_systems": false,
+  "csoai_is_a_notified_body": false,
+  "csoai_has_enforcement_powers": false,
+  "note": "CSOAI measures and publishes evidence. It issues no conformity marks and holds no accreditation. Nothing here is certification or legal advice."
+ },
+ "generated_by": "make_llm_json.py"
+}

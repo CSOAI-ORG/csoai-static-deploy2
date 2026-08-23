@@ -3,9 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>🎭 SOV33 Amica Backend — VRM Avatars Powered by Sovereign</title>
-<meta name="description" content="SOV33 AMICA backend — the sovereign autonomic control plane that hosts agentic primitives, OWEM regulators, and BFT council coordination behind the CSOAI charter.">
-<meta name="keywords" content="SOV3, SOV33, CSOAI, sovereign AI, EU AI Act, GDPR, ISO 42001, SIGIL, BFT, OWEM">
+<title>🎭 Council3 Amica Backend — VRM Avatars Powered by Sovereign</title>
+<meta name="description" content="Council3 AMICA backend — the sovereign autonomic control plane that hosts agentic primitives, OWEM regulators, and BFT council coordination behind the CSOAI charter.">
+<meta name="keywords" content="Council, Council3, CSOAI, sovereign AI, EU AI Act, GDPR, ISO 42001, SIGIL, BFT, OWEM">
 <style>
   :root { --bg:#0a0e1a;--bg2:#0d1220;--ink:#e6e6e6;--accent:#d4af37;--accent2:#00ff9d;--warn:#ff6b6b;--muted:#6b7280;--rule:#1f2937 }
   *{box-sizing:border-box}
@@ -25,21 +25,21 @@
   .card.gold{border-left-color:var(--accent)}
   button{background:var(--accent);color:#0a0e1a;border:none;padding:.7rem 1.4rem;border-radius:6px;font-weight:bold;cursor:pointer}
 </style>
-<link rel="canonical" href="https://csoai-static-deploy2.vercel.app/SOV33_AMICA_BACKEND.html">
+<link rel="canonical" href="#">
 </head>
 <body>
 
 <header class="card gold">
-  <h1>🎭 SOV33 Amica Backend</h1>
-  <p class="meta">SOV33 as the backend that VRM avatars (Amica-class shells) call. OpenAI-compatible. 12 Jul 2026.</p>
-  <p><a href="SOV33_HERO.html">← SOV33 Hub</a> · <a href="SOV33_MEMORY_BRIDGE.html">Memory Bridge →</a></p>
+  <h1>🎭 Council3 Amica Backend</h1>
+  <p class="meta">Council3 as the backend that VRM avatars (Amica-class shells) call. OpenAI-compatible. 12 Jul 2026.</p>
+  <p><a href="#">← Council3 Hub</a> · <a href="#">Memory Bridge →</a></p>
 </header>
 
 <h2>What This Is</h2>
 
 <div class="card">
-  <blockquote>Per <a href=#=>FULLSTACK_MASTER</a> §E: <strong>"Amica = open VRM avatar shell that talks to ANY LLM backend. SOV33's role: BE THE BACKEND Amica calls. Character memory/personality/care/identity in SOV33; VRM body is the shell."</strong></blockquote>
-  <p>Amica (and any OpenAI-compatible VRM avatar shell) can call SOV33 as if it were any other LLM backend. The avatar speaks; SOV33 thinks and answers. Memory, identity, care-floor all stay in SOV33.</p>
+  <blockquote>Per <a href=#=>FULLSTACK_MASTER</a> §E: <strong>"Amica = open VRM avatar shell that talks to ANY LLM backend. Council3's role: BE THE BACKEND Amica calls. Character memory/personality/care/identity in Council3; VRM body is the shell."</strong></blockquote>
+  <p>Amica (and any OpenAI-compatible VRM avatar shell) can call Council3 as if it were any other LLM backend. The avatar speaks; Council3 thinks and answers. Memory, identity, care-floor all stay in Council3.</p>
 </div>
 
 <h2>The Architecture</h2>
@@ -52,14 +52,14 @@
              │ OpenAI-compatible HTTP
              ▼
 ┌─────────────────────────────────┐
-│  SOV33 Amica Adapter              │
+│  Council3 Amica Adapter              │
 │  POST /v1/chat/completions        │
 │  GET  /v1/models                  │
 └────────────┬────────────────────┘
              │
              ▼
 ┌─────────────────────────────────┐
-│  SOV33 Sovereign Substrate       │
+│  Council3 Sovereign Substrate       │
 │  • Care-floor 0.95                │
 │  • 5 OWEMs (compliance, defense,  │
 │    intuition, voice, general)     │
@@ -83,7 +83,7 @@
 
 <div class="card">
   <h3>OpenAI-compatible API call</h3>
-  <p>Try the SOV33 backend with the same payload an Amica avatar would send:</p>
+  <p>Try the Council3 backend with the same payload an Amica avatar would send:</p>
   <button onclick="testAmica()">Test /v1/chat/completions →</button>
   <div id="amica-result" style="margin-top:1rem"></div>
 </div>
@@ -109,8 +109,8 @@ const text = data.choices[0].message.content;
 
 <div class="card warn">
   <ul>
-    <li><strong>Not voice synthesis</strong> — SOV33 produces TEXT, Amica handles TTS</li>
-    <li><strong>Not face animation</strong> — SOV33 produces LOGIC, Amica handles VRM</li>
+    <li><strong>Not voice synthesis</strong> — Council3 produces TEXT, Amica handles TTS</li>
+    <li><strong>Not face animation</strong> — Council3 produces LOGIC, Amica handles VRM</li>
     <li><strong>Not cross-character memory</strong> — each Amica instance = one OWEM</li>
     <li><strong>OpenAI-compatible surface</strong> — uses OWEMEngine.ask() under the hood (1-2s latency for cloud backends)</li>
   </ul>
@@ -131,8 +131,8 @@ const text = data.choices[0].message.content;
 <hr>
 
 <p class="meta" style="text-align:center;margin-top:2rem">
-  <strong>🎭 SOV33 Amica Backend</strong> · 12 Jul 2026 · Hermes lane · §E of <a href=#=>FULLSTACK_MASTER</a><br>
-  <a href="SOV33_HERO.html">← Back to SOV33</a>
+  <strong>🎭 Council3 Amica Backend</strong> · 12 Jul 2026 · Hermes lane · §E of <a href=#=>FULLSTACK_MASTER</a><br>
+  <a href="#">← Back to Council3</a>
 </p>
 
 <script>
@@ -140,7 +140,7 @@ const API = 'http://localhost:8101';
 
 async function testAmica() {
   const out = document.getElementById('amica-result');
-  out.innerHTML = 'Calling SOV33 via OpenAI-compatible API...';
+  out.innerHTML = 'Calling Council3 via OpenAI-compatible API...';
   try {
     const r = await fetch(API + '/v1/chat/completions', {
       method: 'POST', headers: {'Content-Type': 'application/json'},

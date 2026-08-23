@@ -1,0 +1,16 @@
+{
+  "id": "topdown",
+  "kind": "alignment",
+  "claim": "measurement",
+  "artifact_path": "SOVOS/TOP_DOWN_ALIGNMENT-2026-08-21.md",
+  "artifact_sha256": "a2a0941dc3d72dd1fe1cd229d2073494583490b822f80d897a291e64b19bbb49",
+  "grammar": "verified measurement credential - measurement, not certification",
+  "note": "signed on signing node; ed25519 key never leaves",
+  "signature": {
+    "kind": "ed25519",
+    "sig": "oN4uczcAuqEUsPVl6GYR6m07XM575w9vzl0VmLhpugxqJCoNs41nLxM/2OpiyxqqpwnTdPVcK5Z3hBhAA5QRAQ==",
+    "body_sha256": "efdfb97b1aea916b2e254a96ec3037831a772ea2fcb72c59bc95604313489070",
+    "pubkey": "bWbk52E47J6EkY4+pu0Hh/B1l1175AZoZsDEBr0EfWA=",
+    "note": "Ed25519 over the canonical body; verify with sign.py --verify. PQC upgrade: ML-DSA-65 via liboqs \u2014 same body, swap the primitive."
+  }
+}

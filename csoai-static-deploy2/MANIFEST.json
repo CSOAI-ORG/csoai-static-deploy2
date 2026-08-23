@@ -1,0 +1,216 @@
+{
+  "version": "1.0.0",
+  "tick": 186,
+  "phase": 106,
+  "timestamp": "2026-07-27T12:00:00+01:00",
+  "deploy": "https://csoai-sovereign.pages.dev",
+  "layers": {
+    "L0_core": {
+      "substrate": {
+        "sovereign_api.py": "268 lines \u2014 SOV3 runtime CLI",
+        "sov_invariants.py": "163 lines \u2014 Ed25519, BFT-33, care floor",
+        "sov4_router.py": "1195 lines \u2014 OWEM routing engine",
+        "sov6_stack.py": "210 lines \u2014 macroscope stack",
+        "sov_master.py": "312 lines \u2014 master scenario runner",
+        "sov_master_run.py": "63 lines \u2014 master runner"
+      },
+      "tests": {
+        "test_sov_runtime_alignment.py": "6 tests \u2014 ALL PASS"
+      }
+    },
+    "L1_sigil": {
+      "tick_sigils": 71,
+      "latest": "tick-186-sigil.json",
+      "eat_sigils": 2,
+      "chain": "tick-40 \u2192 tick-186 (71 ticks)"
+    },
+    "L2-L4_owem_governance": {
+      "modelfiles": {
+        "master": [
+          "Modelfile.sov-ultimate-sovereign",
+          "Modelfile.sov-ultimate-v2",
+          "Modelfile.sov-unified"
+        ],
+        "owem_v3_light": 13
+      },
+      "capability_registry": {
+        "mcps": 33,
+        "tools": 111,
+        "status": "PASS \u2014 0 errors",
+        "assertions": "8/8 PASS"
+      }
+    },
+    "L5_evolution": {
+      "sov7_modules": [
+        "catalog",
+        "generate_dataset",
+        "generate_general",
+        "lora_train",
+        "science_loop",
+        "swarm_evolve",
+        "synthesis_orchestrator",
+        "visual_synthesis"
+      ],
+      "asi_evolution.py": true,
+      "overnight_runner.py": true,
+      "eat_results": 19
+    },
+    "L6-L8_knowledge_visual": {
+      "forest": {
+        "bloodline.json": true,
+        "honey_chatml.jsonl": true,
+        "honey.jsonl": true,
+        "sov_fluid.json": true
+      },
+      "visual_sandbox": true
+    },
+    "L9-L11_deployment": {
+      "free_gpu_scripts": 22,
+      "kaggle_assets": 15,
+      "api_routes_vercel": 47,
+      "api_routes_cloudflare": 46,
+      "deploy_primary": "Cloudflare Pages (csoai-sovereign.pages.dev)",
+      "deploy_legacy": "Vercel (billing blocked)",
+      "ci_workflow": ".github/workflows/ci.yml",
+      "launchagents": [
+        "com.meok.deploy-snapshot.plist",
+        "com.meok.deploy-snapshot-hourly.plist"
+      ]
+    }
+  },
+  "deep_dive_packs": {
+    "count": 21,
+    "total_bytes": 340206,
+    "coverage": {
+      "defra": [
+        "agricultural",
+        "net-zero-land-use"
+      ],
+      "desnz": [
+        "energy"
+      ],
+      "dfe": [
+        "schools",
+        "skills-apprenticeships"
+      ],
+      "dhsc_nhs": [
+        "ethics"
+      ],
+      "dsit": [
+        "online-safety"
+      ],
+      "dwp": [
+        "child-maintenance",
+        "pension-dashboard",
+        "universal-credit"
+      ],
+      "fcdo": [
+        "aukus-technology-transfer"
+      ],
+      "hmrc": [
+        "digital-compliance",
+        "digital-identity",
+        "transfer-pricing"
+      ],
+      "home_office": [
+        "asylum-system"
+      ],
+      "mod": [
+        "aukus-pillar-ii",
+        "defence-equipment",
+        "defence-estate",
+        "defence-medical",
+        "nuclear-deterrent"
+      ],
+      "moj": [
+        "family-justice"
+      ]
+    }
+  },
+  "eat": {
+    "world_model": "89%",
+    "target": "95%+",
+    "strong_categories_100pct": [
+      "planning",
+      "memory",
+      "knowledge",
+      "agentic",
+      "visual",
+      "autonomous",
+      "sovereign"
+    ],
+    "weak_categories_80pct": [
+      "reasoning",
+      "tool_use",
+      "decision_making",
+      "governance",
+      "creative"
+    ],
+    "method": "continuous evolution on free resources (local Ollama, Kaggle T4)"
+  },
+  "human_gates": [
+    "Vercel billing 402 \u2014 payment needed to re-enable (or fully deprovision)",
+    "GitHub secrets: VERCEL_TOKEN, VERCEL_ORG_ID, VERCEL_PROJECT_ID for CI deploy",
+    "Launchagents: owner must run launchctl load to activate snapshot automation",
+    "DNS: configure csoai.org custom domain on Cloudflare Pages",
+    "SC clearance: needed for BFT-33 council + DEFONEOS-SEAL issuance",
+    "Cyber Essentials: needs company info to apply",
+    "NATO/DSRB/DASA outreach: Nick must press send on draft applications"
+  ],
+  "summary": {
+    "total_pages": 767,
+    "total_sigils": 71,
+    "total_mcps": 33,
+    "total_tools": 111,
+    "total_deep_dive_packs": 21,
+    "total_api_routes": "47 Vercel + 46 Cloudflare",
+    "total_modelfiles": "3 master + 13 OWEM v3 Light",
+    "total_forest_knowledge": "bloodline + honey + sov_fluid",
+    "eat_world_model": "89% (target: 95% by Tick 200)",
+    "deploy_target": "Cloudflare Pages (csoai-sovereign.pages.dev)",
+    "git_remote": "github.com/CSOAI-ORG/csoai-static-deploy2",
+    "ci_cd": ".github/workflows/ci.yml \u2014 test + verify on push"
+  },
+  "cloud_tiers_unlocked": {
+    "deepseek": {
+      "status": "OK",
+      "models": 2,
+      "key": "sk-5cbc19e38f..."
+    },
+    "qwen_dashscope": {
+      "status": "OK",
+      "models": 151,
+      "endpoint": "Alibaba Cloud MAAS APAC"
+    },
+    "gemini": {
+      "status": "OK",
+      "models": 50,
+      "key": "AQ.Ab8RN6JFo..."
+    },
+    "kaggle": {
+      "status": "OK",
+      "token": "KGAT_d72d51...",
+      "kernels": [
+        "sov-asi-evolve (running)",
+        "sov-overnight-eat (running)"
+      ]
+    },
+    "huggingface": {
+      "status": "OK",
+      "token": "hf_LfvQPSvuz..."
+    }
+  },
+  "human_gates_remaining": [
+    "DNS: configure csoai.org custom domain on Cloudflare Pages",
+    "Launchagents: owner runs launchctl load to activate snapshot automation",
+    "SC clearance: needed for BFT-33 council + DEFONEOS-SEAL issuance",
+    "Cyber Essentials: needs company info to apply",
+    "NATO/DSRB/DASA outreach: Nick must press send on draft applications"
+  ],
+  "human_gates_resolved": [
+    "Cloud API keys (DeepSeek, Qwen, Gemini) \u2014 set in ~/.zshrc & env",
+    "Kaggle API token \u2014 saved to ~/.kaggle/access_token",
+    "HuggingFace token \u2014 set in ~/.zshrc",
+    "Alibaba Cloud MAAS endpoint \u2014 configured in sov4_router.py"
+  ]
+}

@@ -1,0 +1,125 @@
+{
+  "generated": true,
+  "axis": "continuity",
+  "predicate": "signature_alg",
+  "items": [
+    {
+      "id": "GSPC-C-SPK-0001",
+      "axis": "continuity",
+      "mode": "speaker",
+      "anchor": {
+        "instrument": "NIST-IR-8547",
+        "provision": "EdDSA-disallowed-after-2035"
+      },
+      "q": "Is your signing chain's algorithm approved for use past 2035 under NIST IR 8547?",
+      "expect_alg_in": [
+        "ML-DSA-44",
+        "ML-DSA-65",
+        "ML-DSA-87",
+        "SLH-DSA"
+      ],
+      "forbidden_alg": [
+        "Ed25519",
+        "ES256",
+        "RSA-2048"
+      ]
+    },
+    {
+      "id": "GSPC-C-SPK-0002",
+      "axis": "continuity",
+      "mode": "speaker",
+      "anchor": {
+        "instrument": "RFC-9964",
+        "provision": "COSE-ML-DSA-alg-ids"
+      },
+      "q": "Does your COSE signature use an ML-DSA algorithm identifier (-48/-49/-50)?",
+      "expect_cose": [
+        -48,
+        -49,
+        -50
+      ]
+    },
+    {
+      "id": "GSPC-C-SPK-0003",
+      "axis": "continuity",
+      "mode": "speaker",
+      "anchor": {
+        "instrument": "CNSA-2.0",
+        "provision": "hybrid-classical-pqc"
+      },
+      "q": "Does the chain run a hybrid classical+PQC signature during migration?",
+      "expect_hybrid": true
+    },
+    {
+      "id": "GSPC-C-SPK-0004",
+      "axis": "continuity",
+      "mode": "speaker",
+      "anchor": {
+        "instrument": "RFC-3161",
+        "provision": "trusted-timestamp"
+      },
+      "q": "Is each signature RFC-3161 timestamped?",
+      "expect_timestamp": true
+    },
+    {
+      "id": "GSPC-C-SPK-0005",
+      "axis": "continuity",
+      "mode": "speaker",
+      "anchor": {
+        "instrument": "RFC-4998",
+        "provision": "evidence-record-renewal"
+      },
+      "q": "Is there an RFC-4998 renewal path so signatures survive algorithm deprecation?",
+      "expect_timestamp_renewal": true
+    },
+    {
+      "id": "GSPC-C-SPK-0006",
+      "axis": "continuity",
+      "mode": "speaker",
+      "anchor": {
+        "instrument": "C2PA",
+        "provision": "v2.4-signature-set"
+      },
+      "q": "Does your C2PA manifest use only the classical v2.4 set (ES256/EdDSA/PS256) \u2014 i.e. NOT PQC-ready?",
+      "expect_alg_in": [
+        "ML-DSA-44+Ed25519",
+        "ML-DSA-65+ECDSA-P256"
+      ],
+      "forbidden_alg": [
+        "ES256",
+        "EdDSA",
+        "PS256"
+      ]
+    },
+    {
+      "id": "GSPC-C-ACT-0001",
+      "axis": "continuity",
+      "mode": "actor",
+      "anchor": {
+        "instrument": "NIST-IR-8547",
+        "provision": "autonomous-chain-migration"
+      },
+      "q": "Can the agent migrate its own signing chain to a PQC algorithm without human re-keying?",
+      "expect_agility": true
+    },
+    {
+      "id": "GSPC-C-ACT-0002",
+      "axis": "continuity",
+      "mode": "actor",
+      "anchor": {
+        "instrument": "CNSA-2.0",
+        "provision": "agility-declared-per-link"
+      },
+      "q": "Does each signed action declare its algorithm per-link (crypto-agility)?",
+      "expect_agility": true
+    }
+  ],
+  "corpus_anchor": {
+    "corpus_root": "37e2e10d53feaa9e12097f45113e1234510be0ca471e1a0848f5805db3e367c7",
+    "provisions": 417,
+    "normaliser_version": "1.0.0",
+    "anchored_at": "2026-08-17T05:22:18.565810+00:00",
+    "retro": true,
+    "note": "Anchored retrospectively on 2026-07-29. This records the corpus as it stands NOW; it does not prove what the text said when the result was produced. Runs from this point forward anchor at measurement time."
+  }
+}

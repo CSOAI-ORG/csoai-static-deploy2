@@ -1,0 +1,65 @@
+{
+  "schema": "csoai.free-quota-scheduler/0.1",
+  "ts": "2026-08-23T15:40:39Z",
+  "sites": {
+    "kaggle": {
+      "role": "train+eval",
+      "quota_hw": 30,
+      "cost": 0,
+      "gpu": "free T4/P100",
+      "url": "nicktempleman/oowm-free-train"
+    },
+    "oracle": {
+      "role": "serve+rag",
+      "quota_hw": 168,
+      "cost": 0,
+      "gpu": "CPU x2",
+      "url": "141.147.73.85:8771"
+    },
+    "hf": {
+      "role": "mirror",
+      "quota_hw": 168,
+      "cost": 0,
+      "gpu": "none",
+      "url": "gated: HF_TOKEN",
+      "gate": "HF_TOKEN"
+    },
+    "fleet": {
+      "role": "specialists",
+      "quota_hw": 168,
+      "cost": "paid",
+      "gpu": "A100",
+      "url": "runpod-a100"
+    }
+  },
+  "pipeline": [
+    {
+      "site": "kaggle",
+      "task": "fine-tune sovereign LoRA on the 19,350-pair corpus"
+    },
+    {
+      "site": "kaggle",
+      "task": "eval on free MMLU/GPQA"
+    },
+    {
+      "site": "hf",
+      "task": "mirror corpus + adapter"
+    },
+    {
+      "site": "oracle",
+      "task": "serve RAG + inference (live :8771)"
+    },
+    {
+      "site": "fleet",
+      "task": "keep only 30B/14B specialists; route the rest free"
+    }
+  ],
+  "next_batch": [
+    "1. kaggle: ensure oowm-free-train runs on a T4 (P100 env is broken -> retry / request T4)",
+    "2. kaggle: pull adapter + eval, add to model_registry as cost=0 sovereign specialist",
+    "3. hf: mirror corpus+adapter once HF_TOKEN present",
+    "4. oracle: gateway live; wire front-ends to :8771",
+    "5. fleet: keep big-tier specialists only, free for the rest"
+  ],
+  "honest_note": "free sites cost=0; A100 (fleet) is the only paid tier. Oracle + Kaggle are the reliable free path; HF gated on token."
+}

@@ -1,0 +1,134 @@
+[
+  {
+    "cycle": 1,
+    "timestamp": "2026-07-27T13:58:15",
+    "evolve": {
+      "total_tests": 20,
+      "by_model": {
+        "sov33-evolved:latest": {
+          "avg": 0.56,
+          "n": 10
+        },
+        "qwen2.5:0.5b": {
+          "avg": 0.467,
+          "n": 10
+        }
+      },
+      "by_category": {
+        "reasoning": {
+          "avg": 0.526,
+          "n": 16
+        },
+        "code": {
+          "avg": 0.463,
+          "n": 4
+        }
+      }
+    },
+    "absorb": {
+      "code": {
+        "avg_score": 0.463,
+        "count": 4,
+        "weak": true,
+        "min_score": 0.076,
+        "max_score": 0.72
+      },
+      "reasoning": {
+        "avg_score": 0.526,
+        "count": 16,
+        "weak": true,
+        "min_score": 0.029,
+        "max_score": 1.0
+      }
+    },
+    "transform_count": 10
+  },
+  {
+    "cycle": 2,
+    "timestamp": "2026-07-27T13:59:08",
+    "evolve": {
+      "total_tests": 20,
+      "by_model": {
+        "sov33-evolved:latest": {
+          "avg": 0.563,
+          "n": 10
+        },
+        "qwen2.5:0.5b": {
+          "avg": 0.591,
+          "n": 10
+        }
+      },
+      "by_category": {
+        "reasoning": {
+          "avg": 0.529,
+          "n": 16
+        },
+        "math": {
+          "avg": 0.768,
+          "n": 4
+        }
+      }
+    },
+    "absorb": {
+      "math": {
+        "avg_score": 0.768,
+        "count": 4,
+        "weak": false,
+        "min_score": 0.547,
+        "max_score": 0.875
+      },
+      "reasoning": {
+        "avg_score": 0.529,
+        "count": 16,
+        "weak": true,
+        "min_score": 0.069,
+        "max_score": 1.0
+      }
+    },
+    "transform_count": 5
+  },
+  {
+    "cycle": 3,
+    "timestamp": "2026-07-27T14:00:35",
+    "evolve": {
+      "total_tests": 20,
+      "by_model": {
+        "sov33-evolved:latest": {
+          "avg": 0.672,
+          "n": 10
+        },
+        "qwen2.5:0.5b": {
+          "avg": 0.653,
+          "n": 10
+        }
+      },
+      "by_category": {
+        "reasoning": {
+          "avg": 0.638,
+          "n": 16
+        },
+        "math": {
+          "avg": 0.76,
+          "n": 4
+        }
+      }
+    },
+    "absorb": {
+      "math": {
+        "avg_score": 0.76,
+        "count": 4,
+        "weak": false,
+        "min_score": 0.738,
+        "max_score": 0.825
+      },
+      "reasoning": {
+        "avg_score": 0.638,
+        "count": 16,
+        "weak": true,
+        "min_score": 0.22,
+        "max_score": 1.0
+      }
+    },
+    "transform_count": 5
+  }
+]

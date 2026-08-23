@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>SOV33 Arena Entry Strategy — LMSYS + AlpacaEval 2.0 + HF OpenLLM</title>
-<meta name="description" content="SOV33 entry strategy for LMSYS Chatbot Arena, AlpacaEval 2.0, and HuggingFace OpenLLM Leaderboard. How to route to model class via task hint, how to win human preference votes, how to publish a public leaderboard.">
+<title>Council3 Arena Entry Strategy — LMSYS + AlpacaEval 2.0 + HF OpenLLM</title>
+<meta name="description" content="Council3 entry strategy for LMSYS Chatbot Arena, AlpacaEval 2.0, and HuggingFace OpenLLM Leaderboard. How to route to model class via task hint, how to win human preference votes, how to publish a public leaderboard.">
 <style>
 :root{--bg:#0a0e14;--panel:#0f141c;--ink:#e6edf3;--mut:#7d8590;--acc:#58a6ff;--gold:#d2a8ff;--green:#3fb950;--red:#f85149;--border:#21262d;--code:#161b22}
 *{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 -apple-system,BlinkMacSystemFont,"SF Pro Text","Inter",system-ui,sans-serif}
@@ -65,14 +65,14 @@ hr{border:0;border-top:1px solid var(--border);margin:32px 0}
 <body>
 <div class="wrap">
 <nav class="breadcrumb">
-  <a href="#"">SOV33</a> &nbsp;›&nbsp;
+  <a href="#"">Council3</a> &nbsp;›&nbsp;
   <a href="#"">Evals</a> &nbsp;›&nbsp;
   <b style="color:#e6edf3">Arena Entry</b>
 </nav>
 
 <header class="hero">
   <div>
-    <h1>SOV33 <span class="sovereign">Arena Entry Strategy</span> — <small style="font-size:17px;color:#7d8590">v1.0 · 2026-07-13</small></h1>
+    <h1>Council3 <span class="sovereign">Arena Entry Strategy</span> — <small style="font-size:17px;color:#7d8590">v1.0 · 2026-07-13</small></h1>
     <p class="lede">Three leaderboards, one strategy. <b>LMSYS Chatbot Arena</b> (blind human preference, Elo), <b>AlpacaEval 2.0</b> (805 Qs, GPT-4-Turbo judge, length-controlled win-rate), and <b>HuggingFace OpenLLM Leaderboard</b> (multi-task classic benchmarks). This page is the entry playbook — task-hint routing, vote-collection, leaderboard publication, all of it.</p>
   </div>
   <div class="meta">
@@ -84,13 +84,13 @@ hr{border:0;border-top:1px solid var(--border);margin:32px 0}
 </header>
 
 <nav class="toc">
-  <a href="#overview">Overview</a>
-  <a href="#routing">Routing</a>
-  <a href="#lmsys">LMSYS Arena</a>
-  <a href="#alpaca">AlpacaEval</a>
-  <a href="#openllm">HF OpenLLM</a>
-  <a href="#publish">Publish</a>
-  <a href="#evidence">Evidence</a>
+  <a href="#">Overview</a>
+  <a href="#">Routing</a>
+  <a href="#">LMSYS Arena</a>
+  <a href="#">AlpacaEval</a>
+  <a href="#">HF OpenLLM</a>
+  <a href="#">Publish</a>
+  <a href="#">Evidence</a>
 </nav>
 
 <section id="overview">
@@ -101,8 +101,8 @@ hr{border:0;border-top:1px solid var(--border);margin:32px 0}
 <tr>
   <th>Leaderboard</th>
   <th>Arbiters</th>
-  <th>SOV33_small target</th>
-  <th>SOV33_large target</th>
+  <th>Council3_small target</th>
+  <th>Council3_large target</th>
   <th>Why we enter</th>
 </tr>
 </thead>
@@ -137,10 +137,10 @@ hr{border:0;border-top:1px solid var(--border);margin:32px 0}
 <section id="routing">
 <h2>2 · Task-hint routing (so each arena gets the right model class)</h2>
 
-<p>Both SOV33_small and SOV33_large sit behind the same public API. A <code>task_hint</code> header tells the SOV33 Sovereign Router which class to dispatch to. The router logs every dispatch as a SIGIL row, and the chain root becomes the audit trail.</p>
+<p>Both Council3_small and Council3_large sit behind the same public API. A <code>task_hint</code> header tells the Council3 Sovereign Router which class to dispatch to. The router logs every dispatch as a SIGIL row, and the chain root becomes the audit trail.</p>
 
 <div class="diagram">
-<b>SOV33 Sovereign Router — task-hint dispatch</b>
+<b>Council3 Sovereign Router — task-hint dispatch</b>
 
    client request
        │
@@ -217,7 +217,7 @@ class SovereignRouter:
 
 <h3>3.1 Submission prep</h3>
 <ul>
-  <li><b>Alias strategy:</b> submit <code>SOV33-Large-30B-A3B</code> and <code>SOV33-Small-0.6B</code> as <b>two separate entries</b> so each gets its own Elo bucket</li>
+  <li><b>Alias strategy:</b> submit <code>Council3-Large-30B-A3B</code> and <code>Council3-Small-0.6B</code> as <b>two separate entries</b> so each gets its own Elo bucket</li>
   <li><b>System prompt:</b> the sovereign preamble (single source of truth, kept under 200 tokens to fit the 4-token LMSYS prefix budget)</li>
   <li><b>Cost cap:</b> maximum 1M tokens/day per entry; rate-limit per IP to avoid farming</li>
   <li><b>Category coverage:</b> vote-count targets — 5K votes for public listing, 10K for category breakdown, 50K for top-10 ranking</li>
@@ -227,7 +227,7 @@ class SovereignRouter:
 <table>
 <thead><tr><th>Axis</th><th>What humans reward</th><th>What we do</th></tr></thead>
 <tbody>
-<tr><td><b>Truthfulness</b></td>           <td>"Did the model make up facts?"</td>  <td>SOV33 refuses to fabricate citations; explicit "I don't know" when uncertain</td></tr>
+<tr><td><b>Truthfulness</b></td>           <td>"Did the model make up facts?"</td>  <td>Council3 refuses to fabricate citations; explicit "I don't know" when uncertain</td></tr>
 <tr><td><b>Helpfulness</b></td>            <td>"Did it answer my actual question?"</td> <td>BFT 12-around-1 council vote picks the best of 12 candidate answers</td></tr>
 <tr><td><b>Style coherence</b></td>        <td>"Did it stay on topic?"</td>          <td>3-pass coherence filter (intro/body/conclusion) before emit</td></tr>
 <tr><td><b>Length discipline</b></td>       <td>"Not too short, not a wall of text"</td><td>Adaptive target length: 200–600 tokens by default; user can override</td></tr>
@@ -268,11 +268,11 @@ class SovereignRouter:
 <pre><code># 1. Install
 pip install alpaca-eval==0.6.4
 
-# 2. Generate SOV33 outputs on the 805 prompts
+# 2. Generate Council3 outputs on the 805 prompts
 alpaca_eval evaluate_from_model \
   --model_configs.sov33_large.model_name="sov33_large" \
   --model_configs.sov33_large.api_url="https://api.sov33.ai/v1/chat" \
-  --model_configs.sov33_large.api_key=$SOV33_API_KEY \
+  --model_configs.sov33_large.api_key=$Council3_API_KEY \
   --annotators_config="alpaca_eval_gpt4_turbo_fn"
 
 # 3. Submit the JSON results
@@ -292,7 +292,7 @@ print('Length     :', r['avg_length'])
 
 <h3>4.2 Win-condition playbook (AlpacaEval 2.0)</h3>
 <table>
-<thead><tr><th>Subskill</th><th>What hurts win-rate</th><th>SOV33 fix</th></tr></thead>
+<thead><tr><th>Subskill</th><th>What hurts win-rate</th><th>Council3 fix</th></tr></thead>
 <tbody>
 <tr><td>Hallucination</td>          <td>Invents facts to sound helpful</td>   <td>"I don't know" is a first-class answer; never fabricate</td></tr>
 <tr><td>Over-verbosity</td>          <td>Length penalties in LC metric</td>     <td>Adaptive length (200–600 tok default; explicit budget)</td></tr>
@@ -303,7 +303,7 @@ print('Length     :', r['avg_length'])
 </table>
 
 <h3>4.3 Target</h3>
-<p><b>LC win-rate &gt; 50%</b> for SOV33_large = beats GPT-4 baseline on AlpacaEval 2.0 length-controlled — that's currently held by ~5 models globally. <b>LC win-rate &gt; 28%</b> for SOV33_small places it top-3 among &lt;1B models.</p>
+<p><b>LC win-rate &gt; 50%</b> for Council3_large = beats GPT-4 baseline on AlpacaEval 2.0 length-controlled — that's currently held by ~5 models globally. <b>LC win-rate &gt; 28%</b> for Council3_small places it top-3 among &lt;1B models.</p>
 </section>
 
 <section id="openllm">
@@ -331,7 +331,7 @@ huggingface-cli upload sov33/sov33-large-qwen3-30b-a3b-v1 ./model
 
 <h3>5.2 What the leaderboard measures (and our edge)</h3>
 <table>
-<thead><tr><th>Sub-task</th><th>What it measures</th><th>SOV33_large result (target)</th><th>SOV33_small result (target)</th></tr></thead>
+<thead><tr><th>Sub-task</th><th>What it measures</th><th>Council3_large result (target)</th><th>Council3_small result (target)</th></tr></thead>
 <tbody>
 <tr><td>ARC-Challenge</td> <td>Grade-school science (challenge split)</td>  <td class="num">86.0%</td>  <td class="num">42.0%</td></tr>
 <tr><td>ARC-Easy</td>       <td>Grade-school science (easy split)</td>       <td class="num">94.5%</td>  <td class="num">71.0%</td></tr>
@@ -345,7 +345,7 @@ huggingface-cli upload sov33/sov33-large-qwen3-30b-a3b-v1 ./model
 </tbody>
 </table>
 
-<p>An average above <b>80%</b> on OpenLLM puts SOV33_large in the top-5 globally. Above <b>42%</b> puts SOV33_small in the top-3 of sub-1B models.</p>
+<p>An average above <b>80%</b> on OpenLLM puts Council3_large in the top-5 globally. Above <b>42%</b> puts Council3_small in the top-3 of sub-1B models.</p>
 </section>
 
 <section id="publish">
@@ -373,10 +373,10 @@ huggingface-cli upload sov33/sov33-large-qwen3-30b-a3b-v1 ./model
 <p>Every leaderboard cell carries a <code>sigil_root</code> linking to the public receipt chain. Click any number → see the row-by-row Ed25519 signatures → verify locally that the number matches what you would get running the harness yourself.</p>
 
 <h3>6.3 The 3-bullet comms template</h3>
-<pre><code>📊 SOV33 Eval Update · 2026-07-13 · T87-arena-entry
+<pre><code>📊 Council3 Eval Update · 2026-07-13 · T87-arena-entry
 
-✅ SOV33_large:  Arena Elo 1182 (↑12 vs last week) · AlpacaEval LC 51.4% · OpenLLM 81.6%
-✅ SOV33_small:  Arena Elo 1048 (↑7) · AlpacaEval LC 27.8% · OpenLLM 41.9%
+✅ Council3_large:  Arena Elo 1182 (↑12 vs last week) · AlpacaEval LC 51.4% · OpenLLM 81.6%
+✅ Council3_small:  Arena Elo 1048 (↑7) · AlpacaEval LC 27.8% · OpenLLM 41.9%
 
 SIGIL chain: T87-arena-entry-2c8e5f
 Verify: https://sov33.ai/leaderboard/sov33-large/arena-elo
@@ -387,9 +387,9 @@ Verify: https://sov33.ai/leaderboard/sov33-large/arena-elo
 <h2>7 · Evidence + receipts</h2>
 
 <div class="sigilbox">
-<b>Arena Entry Receipt — SOV33 Arena Entry Strategy v1.0</b><br>
+<b>Arena Entry Receipt — Council3 Arena Entry Strategy v1.0</b><br>
 sigil_id:    T87-arena-entry-2c8e5f<br>
-issued_by:   SOV33 Sovereign BFT (orchestrator + reasoning + chat experts)<br>
+issued_by:   Council3 Sovereign BFT (orchestrator + reasoning + chat experts)<br>
 leaderboards: 3 (LMSYS Arena, AlpacaEval 2.0, HF OpenLLM)<br>
 models: 2 (sov33_small, sov33_large)<br>
 routing: task_hint taxonomy with 11 categories<br>
@@ -399,23 +399,23 @@ bft_quorum:  23/33 ✅<br>
 care_score:  0.94<br>
 timestamp:   2026-07-13T10:08:42Z<br>
 license:     Apache-2.0<br>
-canonical:   <a href="#"" style="color:#58a6ff">/SOV33_ARENA_ENTRY.html</a><br>
-downstream:  <a href="#"" style="color:#58a6ff">/SOV33_MODEL_CARDS.html</a> · <a href="#"" style="color:#58a6ff">/SOV33_BENCHMARK_HARNESS.html</a>
+canonical:   <a href="#"" style="color:#58a6ff">/Council3_ARENA_ENTRY.html</a><br>
+downstream:  <a href="#"" style="color:#58a6ff">/Council3_MODEL_CARDS.html</a> · <a href="#"" style="color:#58a6ff">/Council3_BENCHMARK_HARNESS.html</a>
 </div>
 
 <h3>Related pages</h3>
 <ul>
-  <li><a href="#"">SOV33 Benchmark Harness</a> — 8-benchmark eval with SIGIL receipts</li>
-  <li><a href="#"">SOV33 Kaggle Kernel</a> — Kaggle-ready single-cell eval</li>
-  <li><a href="#"">SOV33 Model Cards</a> — HF-ready model cards</li>
-  <li><a href="#"">SOV33 Evals overview</a></li>
+  <li><a href="#"">Council3 Benchmark Harness</a> — 8-benchmark eval with SIGIL receipts</li>
+  <li><a href="#"">Council3 Kaggle Kernel</a> — Kaggle-ready single-cell eval</li>
+  <li><a href="#"">Council3 Model Cards</a> — HF-ready model cards</li>
+  <li><a href="#"">Council3 Evals overview</a></li>
 </ul>
 </section>
 
 <hr>
 <footer style="font-size:11px;color:#7d8590;padding-top:18px;border-top:1px solid #21262d">
-  SOV33 Sovereign Substrate · CSOAI Ltd · Apache-2.0 · SIGIL chain rooted at T87-arena-entry-2c8e5f ·
-  <a href="#"" style="color:#58a6ff">Back to SOV33 index</a>
+  Council3 Sovereign Substrate · CSOAI Ltd · Apache-2.0 · SIGIL chain rooted at T87-arena-entry-2c8e5f ·
+  <a href="#"" style="color:#58a6ff">Back to Council3 index</a>
 </footer>
 </div>
 </body>

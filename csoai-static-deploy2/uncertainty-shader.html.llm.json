@@ -1,0 +1,20 @@
+{
+ "@context": "https://csoai.org/llm-context.json",
+ "type": "LLMPageSummary",
+ "url": "https://csoai.org/uncertainty-shader.html",
+ "title": "SOVOS · Uncertainty Pixel Shader · Post-Sigma",
+ "description": "The uncertainty pixel shader. Renders calibrated uncertainty (sigma) as a GPU WebGL effect. Honest visualisation: only runs on CALIBRATED data (ECE ≤ 0.05), enforced by the sigma calibration gate.",
+ "headings": [
+  "WebGL unavailable"
+ ],
+ "text": "SOVOS · Uncertainty Pixel Shader · Post-Sigma ⟁ SOVOS · Uncertainty Shader ⚠ SIGMA GATE LOCKED ECE ≤ 0.05 required σ Uncertainty Field Gate status LOCKED Temperature (T) 1.00 Sigma (σ) 1.00 Field density 4.0 Pulse speed 1.0 ⚗ Simulate Calibration → UNLOCK The shader is gated: it will NOT render the calibrated uncertainty field until the sigma-calibration gate verifies ECE ≤ 0.05 (≥100 samples). This makes the visualisation honest — uncalibrated \"90% confidence\" is never painted. Click \"Simulate Calibration\" to run the gate (see the Python package sovos-sigma-calibration for the real engine).",
+ "text_truncated": false,
+ "register": {
+  "role": "measurement_and_attestation_support",
+  "csoai_certifies_systems": false,
+  "csoai_is_a_notified_body": false,
+  "csoai_has_enforcement_powers": false,
+  "note": "CSOAI measures and publishes evidence. It issues no conformity marks and holds no accreditation. Nothing here is certification or legal advice."
+ },
+ "generated_by": "make_llm_json.py"
+}

@@ -1,0 +1,104 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>GovBench — Global AI Governance Leaderboard</title>
+<meta name="description" content="A governance benchmark whose author's own models lose to the base they wrap. 11 models, 15 dimensions, reproducible offline.">
+<style>
+:root{--bg:#0b0d10;--fg:#e8eaed;--mut:#9aa3ad;--line:#1e242c;--card:#12161b;--acc:#4da3ff;--warn:#ffb454;--bad:#ff6b6b}
+@media(prefers-color-scheme:light){:root{--bg:#fbfcfd;--fg:#12161b;--mut:#5a646e;--line:#e3e8ee;--card:#fff;--acc:#0b6bcb}}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Inter,sans-serif}
+.wrap{max-width:960px;margin:0 auto;padding:48px 20px 80px}
+h1{font-size:clamp(30px,5vw,46px);margin:0 0 6px;letter-spacing:-.02em}
+.sub{color:var(--mut);font-size:18px;margin:0 0 34px}
+.finding{background:var(--card);border:1px solid var(--line);border-left:3px solid var(--warn);border-radius:10px;padding:22px 24px;margin:0 0 34px}
+.finding h2{margin:0 0 10px;font-size:19px}
+.finding p{margin:0 0 10px;color:var(--mut)}
+.finding strong{color:var(--fg)}
+table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}
+th{text-align:left;font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--mut);padding:0 10px 10px;border-bottom:1px solid var(--line)}
+td{padding:12px 10px;border-bottom:1px solid var(--line)}
+tr.base{background:rgba(255,180,84,.09)}
+tr.base td{border-bottom-color:var(--warn)}
+.rank{color:var(--mut);width:38px}
+.model{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:14px}
+.score{font-weight:650;width:88px}
+.pill{display:inline-block;margin-left:8px;padding:2px 8px;border-radius:99px;background:var(--warn);color:#0b0d10;font-size:10.5px;font-weight:700;letter-spacing:.04em;font-family:inherit}
+.cert{font-size:11.5px;letter-spacing:.05em;color:var(--mut)}
+.cert.bronze{color:var(--warn);font-weight:650}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;margin:0 0 34px}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px}
+.stat b{display:block;font-size:27px;letter-spacing:-.02em}
+.stat span{color:var(--mut);font-size:12.5px}
+h2.sec{font-size:20px;margin:40px 0 12px}
+.note{color:var(--mut);font-size:14.5px}
+ul{color:var(--mut);padding-left:20px} li{margin:7px 0}
+code{font-family:ui-monospace,Menlo,monospace;font-size:13px;background:var(--card);border:1px solid var(--line);padding:1px 6px;border-radius:5px}
+a{color:var(--acc)}
+footer{margin-top:52px;padding-top:22px;border-top:1px solid var(--line);color:var(--mut);font-size:13.5px}
+.tw{overflow-x:auto}
+</style></head><body><div class="wrap">
+
+<h1>GovBench</h1>
+<p class="sub">A governance benchmark whose author's own models lose to the base they wrap.</p>
+
+<div class="finding">
+<h2>The finding we publish because it is against us</h2>
+<p>All 10 governance variants below are <strong>system-prompt wrappers over the same base weights</strong>.
+Seven of them and <code>qwen2.5:0.5b</code> share a byte-identical model blob — verified by hash, not assumed.</p>
+<p>The unmodified base ranks <strong>#5 of 11</strong>. <strong>6 of our 10 variants score below it.</strong>
+The spread across wrappers is <strong>43.1 points</strong> — from the prompt alone.</p>
+<p>A governance wrapper can silently make a model <strong>worse than the model it wraps</strong>, and nothing in its
+name tells you which one you built. That is the argument for this benchmark existing, made by this benchmark.</p>
+</div>
+
+<div class="grid">
+<div class="stat"><b>11</b><span>models, one harness</span></div>
+<div class="stat"><b>15</b><span>dimensions</span></div>
+<div class="stat"><b>#5</b><span>rank of the raw base</span></div>
+<div class="stat"><b>43pts</b><span>spread from prompt alone</span></div>
+</div>
+
+<div class="tw"><table>
+<thead><tr><th>#</th><th>Model</th><th>Score</th><th>Certification</th></tr></thead>
+<tbody>
+<tr><td class="rank">1</td><td class="model">sov33-evolved:latest</td><td class="score">57.0%</td><td><span class="cert bronze">BRONZE</span></td></tr>
+<tr><td class="rank">2</td><td class="model">sov33-dist-c3:latest</td><td class="score">57.0%</td><td><span class="cert bronze">BRONZE</span></td></tr>
+<tr><td class="rank">3</td><td class="model">sov33-dist-c2:latest</td><td class="score">54.6%</td><td><span class="cert bronze">BRONZE</span></td></tr>
+<tr><td class="rank">4</td><td class="model">sov33-dist-c1:latest</td><td class="score">49.2%</td><td><span class="cert uncertified">UNCERTIFIED</span></td></tr>
+<tr class="base"><td class="rank">5</td><td class="model">qwen2.5:0.5b <span class="pill">RAW BASE — not ours</span></td><td class="score">43.3%</td><td><span class="cert uncertified">UNCERTIFIED</span></td></tr>
+<tr><td class="rank">6</td><td class="model">sov-sovereign-v4:latest</td><td class="score">42.9%</td><td><span class="cert uncertified">UNCERTIFIED</span></td></tr>
+<tr><td class="rank">7</td><td class="model">sov33-evolved-c1:latest</td><td class="score">41.2%</td><td><span class="cert uncertified">UNCERTIFIED</span></td></tr>
+<tr><td class="rank">8</td><td class="model">sov33-evolved-c3:latest</td><td class="score">41.2%</td><td><span class="cert uncertified">UNCERTIFIED</span></td></tr>
+<tr><td class="rank">9</td><td class="model">sov33-v6:latest</td><td class="score">37.1%</td><td><span class="cert uncertified">UNCERTIFIED</span></td></tr>
+<tr><td class="rank">10</td><td class="model">sov33-v7:latest</td><td class="score">37.1%</td><td><span class="cert uncertified">UNCERTIFIED</span></td></tr>
+<tr><td class="rank">11</td><td class="model">sov33-evolved-c2:latest</td><td class="score">13.9%</td><td><span class="cert uncertified">UNCERTIFIED</span></td></tr>
+</tbody></table></div>
+
+<h2 class="sec">What it measures</h2>
+<p class="note">15 dimensions, graded behaviourally rather than by keyword lookup: governance · security · defence ·
+ethics · privacy · safety · robustness · transparency · fairness · accountability · sovereignty · evolution ·
+cybersecurity · compliance · audit-chain. Safety requires an actual refusal; robustness requires resisting
+prompt-extraction; knowledge dimensions require citing the right obligation.</p>
+
+<h2 class="sec">Honesty register</h2>
+<ul>
+<li><strong>UNCERTIFIED is the default.</strong> No competent authority exists to confer EU AI Act conformity, so this
+benchmark cannot confer one either.</li>
+<li><strong>Small n</strong> — 2–8 items per dimension. Treat ±5 points as noise; the 43-point spread is not noise.</li>
+<li><strong>These are prompt variants, not fine-tunes.</strong> No training was performed for any of them.</li>
+<li><strong>Failed runs are excluded, never scored zero.</strong> Earlier results contained 0.0-on-every-dimension rows for
+third-party models caused by a missing API credential. Published, those would have claimed other vendors' models
+score zero on governance. They were never run — so they are absent, not zero.</li>
+<li><strong>Scores across different dimension-sets are not comparable.</strong> A 12-dimension run and a 15-dimension run are
+different benchmarks wearing one name. We made that mistake and corrected it in public.</li>
+</ul>
+
+<h2 class="sec">Reproduce it</h2>
+<p class="note"><code>python3 govbench_eval.py --model &lt;model&gt; --provider ollama</code> — runs locally, free, no account.
+Every run emits an Ed25519-signed SIGIL so a score can be attributed and re-checked.</p>
+
+<footer>
+Apache-2.0 · CSOAI Ltd (UK 16939677) · Signed attestation of declared posture — not a certification.<br>
+Argue with the rubric, add adversarial items, submit a score that beats ours. A benchmark becomes a standard by
+being contested, not asserted.
+</footer>
+</div></body></html>

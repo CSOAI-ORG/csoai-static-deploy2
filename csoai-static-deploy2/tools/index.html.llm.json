@@ -1,0 +1,24 @@
+{
+ "@context": "https://csoai.org/llm-context.json",
+ "type": "LLMPageSummary",
+ "url": "https://csoai.org/tools/",
+ "title": "Council Tools — every shippable surface in one place",
+ "description": "Index of every public Council tool: CPO calculator, MCP injection scanner, A2A swarm demo, GSPC self-score, Alphabet governance audit, 3D charter portal, and more. Built and verified on this monorepo.",
+ "headings": [
+  "13+ interactive public tools, all verified in a browser.",
+  "New this session (Aug 2026)",
+  "Shipped earlier (foundational POCs)",
+  "Honest scope",
+  "Behind the tools"
+ ],
+ "text": "Council Tools — every shippable surface in one place Council · tools · every shippable surface 13+ interactive public tools, all verified in a browser. Built from the Council monorepo. Each one is a real working artifact — not a mockup, not a screenshot. Open them, click around, watch the math run. 6 new this session 7 shipped earlier 164+ tests passing 13 Council packages 3D WebGL portals £0 cost (all CDN-loaded) New this session (Aug 2026) CPO Power Calculator NEW Compute the annual kWh, $, and CO₂ saved by switching from pluggable transceivers to co-packaged optics at any data center scale. Datasheet-backed (NVIDIA CPO 30W→9W). tech: vanilla JS, 4 presets, 36 LOC tests: 10/10 pass Open → MCP Injection Scanner NEW Scan any prompt against 18 OWASP-style injection rules. Critical-severity FAIL surfaces on credential extraction. Browser-side, no server. tech: vanilla JS, 18-rule engine tests: 21/21 pass Open → A2A Swarm Demo NEW Run the FishKeeper → MuckAway → CouncilOf pipeline. Every step is HMAC-SHA256 signed via WebCrypto. Cost = £55.55 per emergency pipeline. tech: WebCrypto HMAC, 5 inputs + 3 presets tests: 16/16 pass Open → GSPC Self-Score NEW Score your AI system against 13 ETSI EN 304 223 principles. Geometric mean of 4 axes (G/S/P/C). Empty record = UNKNOWN, never silent PASS. tech: vanilla JS, 36 control flags tests: 12/12 pass Open → Alphabet Framework NEW Audit any AI system against 26 governance questions (A-Z). The Drum Spine cycles one letter per tick. X is intrinsically UNKNOWN — it requires human reflection. tech: vanilla JS, drum_spine() scheduler tests: 12/12 pass Open → 3D Charter Portal WEBGL 41 ratified sovereign charters orbiting a BFT Council of 33 agents. Real ratification data (Ed25519-signed, OTS Bitcoin-anchored). Three.js + WebGL 2.0. tech: Three.js 0.128, 41 charters from disk data: avg quorum 93.2% Open → Shipped earlier (foundational POCs) Council City 3D POC POC: humans-out-of-the-loop arena. Two live substrates (Sov Town + Sov Suburb) rendered as one city. Arena rounds, human-participation vetoes, convergence meter. tech: Three.js Open → Sov Suburb 3D POC Three.js suburb of Council City. Companion to sov-city-3d.html. tech: Three.js Open → Sov Globe 3D WEBGL Photorealistic 3D governance earth. Beta. Cesium 1.119, ~21 KB. Sovereign governance stats over a real globe. tech: Cesium 1.119 Open → Sov 5D Engine LIVE 5D substrate engine view. Integrated with the broader Sov Space tool surface. Open → Sov Globe Portal LIVE Portal entry point into the Sov Globe / Sov Space experience. Open → Sov Portal LIVE Older portal surface. Linked to Sov Space and the broader empire. Open → Sov Space VWM LIVE Sov Space Visual World Model surface. Companion .llm.json ships with the page for downstream tools. Open → Honest scope What this is : a consolidated index of every shippable public tool in the Council monorepo. Each link goes to a real, working artifact with real tests behind it. What this is NOT : a UE Fire integration, holographic pixel shader, or Zeus/Eunomia mythological topology. Those require C++ engine work + hardware we don't have. They are documented as aspirational in the briefs but not shipped. Honest count : 6 new tools shipped in this session, 7 foundational tools existed already. 13 total interactive surfaces, all browser-verified. Total cost: £0 (everything CDN-loaded, no server). Behind the tools All 13 tools are backed by a Python monorepo at SOVOS/packages/ with 13 packages and 164+ unit tests. The Python modules and the HTML pages share the same math (verified by browser browser_console checks). Source code: github.com/CSOAI-ORG/csoai-static-deploy2/SOVOS . © 2026 CSOAI Ltd · UK company 16939677 · csoai.org Every tool listed above runs entirely in your browser. No data is sent to any server.",
+ "text_truncated": false,
+ "register": {
+  "role": "measurement_and_attestation_support",
+  "csoai_certifies_systems": false,
+  "csoai_is_a_notified_body": false,
+  "csoai_has_enforcement_powers": false,
+  "note": "CSOAI measures and publishes evidence. It issues no conformity marks and holds no accreditation. Nothing here is certification or legal advice."
+ },
+ "generated_by": "make_llm_json.py"
+}

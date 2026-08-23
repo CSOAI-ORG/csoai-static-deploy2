@@ -1,0 +1,25 @@
+{
+ "@context": "https://csoai.org/llm-context.json",
+ "type": "LLMPageSummary",
+ "url": "https://csoai.org/defoneos-seal.html",
+ "title": "DEFONEOS-SEAL — sovereign AI governance seal | CSOAI",
+ "description": "DEFONEOS-SEAL: Ed25519-signed sovereign AI governance seal. designed 33-agent council review, Ed25519 signature, public verifier. EU AI Act Article 50, NATO AUKUS aligned.",
+ "headings": [
+  "DEFONEOS-SEAL",
+  "What the seal is",
+  "What the seal is not",
+  "How to verify a seal",
+  "Hard stops (never crossed)",
+  "Related pages"
+ ],
+ "text": "DEFONEOS-SEAL — sovereign AI governance seal | CSOAI Home DEFONEOS Master Audit DEFONEOS-SEAL The DEFONEOS-SEAL is a sovereign AI governance credential. It is an Ed25519-signed record produced by a designed 33-agent council review, anchored in a hash chain a third party can verify without trusting us. What the seal is Cryptographic — Ed25519 signature over a stable representation of the system, the harness, and the run. Council-ratified — issued only after a 23-of-33 quorum of the designed 33-agent council ratifies the run. Hash-chained — every seal references the previous seal in the chain. Back-dating is impossible without breaking the chain. Public-verifiable — the public key is published in /.well-known/agent.json . Anyone can verify. What the seal is not Not a regulatory certification. It is a measurement record. Not a claim that a system is \"compliant.\" Only a regulator can say that. Not a guarantee of future behaviour. It is a snapshot of a measured run. How to verify a seal Fetch the seal record (a signed JSON containing the run, the harness, and the council vote). Verify the Ed25519 signature against the public key in /.well-known/agent.json . Walk the hash chain backwards to the genesis seal. Optionally, recompute the run from the published harness and compare the result. Hard stops (never crossed) No SEAL is issued without a 23/33 threshold vote. No kinetic-targeting or personal-surveillance pattern is ever SEALed. No \"AUKUS partnership\" or \"DAIC certified\" claim is added without a signed letter. No SEAL is back-dated or re-anchored. Related pages DEFONEOS doctrine — the broader sovereign AI doctrine. Audit — the hash chain and SIGIL receipt verifier. Article 50 Passport — the EU AI Act Article 50 transparency record. CSOAI Ltd · UK company 16939677 · Every published figure traces to a signed, verifiable record.",
+ "text_truncated": false,
+ "register": {
+  "role": "measurement_and_attestation_support",
+  "csoai_certifies_systems": false,
+  "csoai_is_a_notified_body": false,
+  "csoai_has_enforcement_powers": false,
+  "note": "CSOAI measures and publishes evidence. It issues no conformity marks and holds no accreditation. Nothing here is certification or legal advice."
+ },
+ "generated_by": "make_llm_json.py"
+}

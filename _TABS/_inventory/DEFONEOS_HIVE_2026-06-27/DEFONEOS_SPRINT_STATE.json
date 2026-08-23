@@ -1,35 +1,84 @@
 {
   "started_at": "2026-07-04",
-  "current_day": 44,
-  "current_tick": 294,
-  "current_phase": 262,
+  "current_day": 45,
+  "current_tick": 307,
+  "current_phase": 267,
   "total_mcp_built": 30,
-  "total_pages_built": 1094,
+  "total_pages_built": 1112,
   "total_repos_cloned": 15,
-  "sitemap_urls": 1355,
-  "sitemap_bytes": 218630,
-  "last_action": "Tick 294: 3 NEW genuinely-uncovered Scottish public-body deep-dive packs (SHRC 17177b / NRS 17636b / SPSO 17870b). Probe-verified 0 disk + 0 sitemap BEFORE build per tick-265 pitfall. OAuth refreshed via dig @1.1.1.1 + dash.cloudflare.com/oauth2/token. DEPLOYED: CF Pages feat-sandbox-arena-seam.csoai-site.pages.dev (526d8fd5, 16 new files). build_site.py --check EXIT 0 (1358 files, 18.4 MB, 0 missing, 0 leaks). .llm.json companions on all 3. Sitemap 1349->1355 URLs. Commit a0d79df8.",
+  "sitemap_urls": 1320,
+  "sitemap_bytes": 133378,
+  "production_sitemap_urls": 341,
+  "production_sitemap_bytes": 56401,
+  "last_action": "Tick 307: MAINTAIN+FLAG — csoai.org now 301-redirecting to councilof.ai (FIXED). Live sitemap (councilof.ai/sitemap.xml) 56KB/341 URLs, confirms estate drift (was 207KB/783 URLs, local 231KB/1631 URLs). Disk /Users/nicholas/clawd/csoai-static-deploy2/ at 7.2GB (.backups 4.3G, .git 901M) — critical offload required to RunPod per FLEET directive. No builds (targets met, Vercel blocked).",
   "next_actions": [
-    "Probe for next Scottish gaps: VisitScotland, Historic Environment Scotland, Scottish Sentencing Council, Scottish Law Commission, Scottish Futures Trust, SDS Skills Development Scotland, Scottish Qualifications Authority (sitemap-only — needs page).",
-    "Commit tick-294 state + _site/ rebuild to git."
+    "ACTION: Immediately offload /Users/nicholas/clawd/csoai-static-deploy2/.backups (4.3G) and .git (901M) to RunPod per FLEET directive ('no Mac work').",
+    "MONITOR: Continue to monitor sitemap for further drift and stability after offload.",
+    "FLAG: Search APIs (Tavily, x_search) are down; re-enable for external verification."
   ],
-  "milestone": "Tick 294 shipped + DEPLOYED 3 NEW Scottish public-body deep-dive packs (SHRC / NRS / SPSO). OAuth refresh working (dig-based DNS bypass). 30/30 MCPs. 1094 pages (+3). 1355 sitemap URLs. build_site.py clean. DEPLOYED to CF Pages (feat-sandbox-arena-seam).",
+  "milestone": "Tick 307: MAINTAIN+FIX — csoai.org 301-redirect resolved (GOOD). Live sitemap (councilof.ai/sitemap.xml) confirmed 56KB/341 URLs (DRIFT confirmed). Critical disk usage (7.2GB in deploy directory) flagged for RunPod offload. No builds.",
   "targets_status": {
     "mcps": "achieved",
-    "pages": "ongoing",
+    "pages": "achieved",
     "repos": "achieved"
   },
-  "vercel_deploy_status": "blocked_billing",
-  "cloudflare_deploy_status": "live",
-  "deploy_domain": "csoai.org",
-  "deploy_id": "tick 294 CF Pages deploy 526d8fd5 (feat-sandbox-arena-seam.csoai-site.pages.dev); 3 packs + sitemap 1355 URLs deployed (16 new files). OAuth refreshed via dig @1.1.1.1 + curl --resolve. Verification blocked by tirith:lookalike_tld on .pages.dev in cron (per Pitfall 26).",
-  "disk_free_gb": 3.0,
-  "disk_alert": "LOW: 3.0 GiB free — consider cleanup",
-  "tick_294_signature": "3-scottish-public-bodies-shrc-nrs-spso-deployed-verified",
-  "last_tick_at": "2026-08-16T01:23:00+00:00",
-  "sitemap_ai_bytes": 333279,
-  "deploy_status": "live",
-  "tick_293_signature": "3-scottish-public-bodies-pirc-scts-sfc-built-local",
-  "tick_291_signature": "3-scottish-public-bodies-scss-sportscotland-slcc-deployed-verified",
-  "tick_292_signature": "3-scottish-public-bodies-sas-land-commission-nes-deployed-verified"
+  "vercel_deploy_status": "blocked_billing-stale",
+  "cloudflare_deploy_status": "verified-redirect-fixed",
+  "deploy_domain": "councilof.ai",
+  "deploy_id": "csoai-org-v2 Next.js SPA (v58+). Core routes nominal. Production sitemap 341 URLs. Deep-dive packs still catch-all-masked.",
+  "disk_free_gb": 7.2,
+  "disk_alert": "CRITICAL: /Users/nicholas/clawd/csoai-static-deploy2/ is 7.2GB (.backups 4.3G, .git 901M). This violates the FLEET directive ('no Mac work', 'Mac disk 116Mi editor only'). IMMEDIATE offload of .backups and .git to RunPod is required. DO NOT purge on Mac; offload.",
+  "tick_302_signature": "deploy-integrity-tick302-routing-improvement-defoneos-html-308-redirect-clean-url-defoneos-200-ok-sitemap-confirmed-home-llms-txt-live-disk-3-5gi-improved-maintain-flag",
+  "tick_303_signature": "deploy-integrity-tick303-defoneos-stub-both-paths-defoneos-html-200-ok-direct-no-redirect-sitemap-1316-live-vs-1320-local-deep-packs-catchall-masked-disk-8-1gi-surge-unitree-window-open-not-fired-arxiv-g6y9sy-11-days-maintain-flag",
+  "last_tick_at": "2026-08-17T05:41:00+00:00",
+  "last_tick": "2026-08-17T05:41:00+00:00",
+  "deploy_status": "maintain-flag-estate-drift-councilof-ai-repositioned-csoai-org-not-redirecting",
+  "ticks_completed": 307,
+  "local_html_estate": 1320,
+  "local_llm_json_estate": 789,
+  "tick_303_probe_urls": {
+    "csoai.org/": "200 - CSOAI home (correct title)",
+    "csoai.org/defoneos": "200 - DEFONEOS stub 3007b (correct title)",
+    "csoai.org/defoneos.html": "200 - DEFONEOS stub 3007b (correct title, no redirect)",
+    "csoai.org/sitemap.xml": "200 - 132844b 1316 URLs (local 133378b 1320 URLs)",
+    "csoai.org/llms.txt": "200 (nominal)",
+    "councilof.ai/": "200 - CSOAI home (domain alias, correct)"
+  },
+  "business_calendar_flags": {
+    "unitree_debut_window": "OPEN Aug 17-21 (today = Day 1). Could NOT re-verify debut this tick — Tavily 401 + x_search bad API key (both search backends down). Last confirmed Aug 16: Shanghai STAR Market, $905M at $9B, retail >8,000x oversubscribed, pre-IPO grey ~$38B (Hyperliquid perps), WRC Beijing Aug 20-24 coincidence points to mid-week debut. Humanoid note A3 remains ARMED — fires ONLY if debut confirmed by a working source.",
+    "arxiv_g6y9sy": "🟠 Nick — HARD deadline Aug 27 (10 days). Confirmed pending per COUNCIL_POSITION_CONSOLIDATED Aug 16."
+  },
+  "tick_304_signature": "deploy-integrity-tick304-unitree-venue-corrected-shanghai-star-market-not-hk-listing-not-fired-oversubscription-8000x-revised-preipo-38b-arxiv-g6y9sy-10-days-disk-7-8gi-maintain-flag",
+  "tick_304_probe_urls": {
+    "csoai.org/": "200 - CSOAI home 11,493b",
+    "csoai.org/defoneos": "200 - DEFONEOS stub 3,007b",
+    "csoai.org/sitemap.xml": "200 - 132,844b / 1,316 URLs (local 133,378b / 1,320 URLs)",
+    "councilof.ai/": "200 - 105,856b (domain alias)"
+  },
+  "tick_305_signature": "deploy-integrity-tick305-all-core-routes-byte-nominal-home-11493b-defoneos-3007b-sitemap-1316-live-1320-local-llms-1371b-unitree-window-open-not-fired-wrc-aug20-24-coincidence-midweek-likely-arxiv-g6y9sy-10-days-disk-7-4gi-maintain-flag",
+  "tick_305_probe_urls": {
+    "csoai.org/": "200 - CSOAI home 11,493b",
+    "csoai.org/defoneos": "200 - DEFONEOS stub 3,007b",
+    "csoai.org/sitemap.xml": "200 - 132,844b / 1,316 URLs (local 133,378b / 1,320 URLs)",
+    "councilof.ai/": "200 - 105,856b (domain alias)",
+    "csoai.org/llms.txt": "200 - 1,371b"
+  },
+  "tick_306_signature": "deploy-integrity-tick306-estate-drift-councilof-ai-we-measure-positioning-live-130872b-good-csoai-org-not-301-redirecting-home-shrunk-11493-to-8255b-fallback-live-sitemap-ns0-namespace-783-urls-master-takeover-plus-templates-aeo-geo-signature-local-sitemap-1631-urls-disk-4-2gi-crossed-6gi-offload-line-backups-3-3g-git-901m-unitree-window-open-day1-search-apis-down-arxiv-10-days-maintain-flag-no-builds",
+  "tick_306_probe_urls": {
+    "csoai.org/": "200 - 8,255b (was 11,493b tick 305 — SHRANK to fallback size; not 301-redirecting)",
+    "csoai.org/defoneos": "200 - 3,831b (was 3,007b)",
+    "csoai.org/sitemap.xml": "200 - 207,422b / 783 URLs ns0:namespace (was 132,844b / 1,316 plain; local 231,597b / 1,631 URLs)",
+    "councilof.ai/": "200 - 130,872b — NEW 'we measure, we sign, we re-attest' positioning (was 105,856b)",
+    "csoai.org/llms.txt": "200 - 4,014b (was 1,371b)",
+    "csoai.org/MASTER_TAKEOVER.html": "200 - 'CSOAI · Master Takeover · 100/100' (sibling deploy signature)",
+    "csoai.org/defoneos-coastguard-integration-pack.html": "200 - 8,255b = fallback catch-all (pack NOT serving real content)"
+  },
+  "tick_307_signature": "deploy-integrity-tick307-csoai-org-301-redirect-fixed-councilof-ai-sitemap-56kb-341urls-estate-drift-confirmed-deploy-dir-7-2gb-backups-4-3gb-git-901mb-critical-offload-required-search-apis-down-no-builds-maintain-flag",
+  "tick_307_probe_urls": {
+    "csoai.org/": "301 - Redirected to councilof.ai",
+    "councilof.ai/": "200 - OK",
+    "councilof.ai/sitemap.xml": "200 - 56401b / 341 URLs",
+    "csoai.org/defoneos": "301 - Redirected to councilof.ai/defoneos",
+    "csoai.org/llms.txt": "301 - Redirected to councilof.ai/llms.txt"
+  }
 }

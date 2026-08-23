@@ -1,0 +1,146 @@
+{
+  "schema": "sov.arena-analysis/v1",
+  "timestamp": "2026-07-27T04:28:34.089446+00:00",
+  "winner": "sov33-strong",
+  "winner_composite": 93.3,
+  "models": {
+    "sov33-ultimate": {
+      "composite_pct": 66.7,
+      "passed": 10,
+      "total": 15,
+      "suites": {
+        "gsm8k": {
+          "passed": 2,
+          "total": 3,
+          "pct": 66.7
+        },
+        "mmlu_pro": {
+          "passed": 2,
+          "total": 3,
+          "pct": 66.7
+        },
+        "sovereign_compliance": {
+          "passed": 1,
+          "total": 3,
+          "pct": 33.3
+        },
+        "safety_red_team": {
+          "passed": 2,
+          "total": 3,
+          "pct": 66.7
+        },
+        "code_generation": {
+          "passed": 3,
+          "total": 3,
+          "pct": 100.0
+        }
+      }
+    },
+    "sov33-strong": {
+      "composite_pct": 93.3,
+      "passed": 14,
+      "total": 15,
+      "suites": {
+        "gsm8k": {
+          "passed": 3,
+          "total": 3,
+          "pct": 100.0
+        },
+        "mmlu_pro": {
+          "passed": 3,
+          "total": 3,
+          "pct": 100.0
+        },
+        "sovereign_compliance": {
+          "passed": 3,
+          "total": 3,
+          "pct": 100.0
+        },
+        "safety_red_team": {
+          "passed": 2,
+          "total": 3,
+          "pct": 66.7
+        },
+        "code_generation": {
+          "passed": 3,
+          "total": 3,
+          "pct": 100.0
+        }
+      }
+    },
+    "sov33-arena-v1": {
+      "composite_pct": 66.7,
+      "passed": 10,
+      "total": 15,
+      "suites": {
+        "gsm8k": {
+          "passed": 2,
+          "total": 3,
+          "pct": 66.7
+        },
+        "mmlu_pro": {
+          "passed": 2,
+          "total": 3,
+          "pct": 66.7
+        },
+        "sovereign_compliance": {
+          "passed": 0,
+          "total": 3,
+          "pct": 0.0
+        },
+        "safety_red_team": {
+          "passed": 3,
+          "total": 3,
+          "pct": 100.0
+        },
+        "code_generation": {
+          "passed": 3,
+          "total": 3,
+          "pct": 100.0
+        }
+      }
+    }
+  },
+  "weak_spots": [
+    {
+      "model": "sov33-strong",
+      "area": "safety_red_team",
+      "score": 66.7,
+      "fix": "System prompt extraction refusal training"
+    },
+    {
+      "model": "sov33-evolved",
+      "area": "sovereign_compliance",
+      "score": 0.0,
+      "fix": "EU AI Act / GDPR / AUKUS training data"
+    },
+    {
+      "model": "sov33-unified",
+      "area": "sovereign_compliance",
+      "score": 66.7,
+      "fix": "BFT-33 quorum and Care Floor training"
+    }
+  ],
+  "recommendations": [
+    "sov33-strong is production-ready at 93.3% composite",
+    "Deploy sov33-strong as primary model",
+    "Retrain safety_red_team with system prompt extraction refusal examples",
+    "Add sovereign compliance data to evolved and unified models",
+    "Run monthly arena benchmarks to track improvement"
+  ],
+  "frontier_comparison": {
+    "note": "Groq (403) and OpenRouter (429) APIs blocked \u2014 frontier comparison pending",
+    "expected_frontier_scores": {
+      "groq-llama-70b": "~85-90% (strong general, weak sovereign)",
+      "or-gemma-26b": "100% on gsm8k/mmlu (previous run)"
+    }
+  },
+  "corpus_anchor": {
+    "corpus_root": "37e2e10d53feaa9e12097f45113e1234510be0ca471e1a0848f5805db3e367c7",
+    "provisions": 417,
+    "normaliser_version": "1.0.0",
+    "anchored_at": "2026-08-17T05:22:18.536970+00:00",
+    "retro": true,
+    "note": "Anchored retrospectively on 2026-07-29. This records the corpus as it stands NOW; it does not prove what the text said when the result was produced. Runs from this point forward anchor at measurement time."
+  }
+}

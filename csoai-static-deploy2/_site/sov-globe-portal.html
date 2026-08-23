@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>SOV Portal — Globe & Records</title>
+<script>window.CESIUM_BASE_URL='https://cdn.jsdelivr.net/npm/cesium@1.119/Build/Cesium/';</script>
+<link href="#" rel="stylesheet">
+<script src="#"></script>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #03060c; color: #E6EDF3; font-family: 'Inter', system-ui, sans-serif; overflow: hidden; height: 100vh; }
+  header {
+    height: 52px; padding: 0 16px; display: flex; align-items: center; gap: 12px;
+    background: rgba(3,6,12,0.95); border-bottom: 1px solid #2D333B;
+  }
+  header h1 { font-size: 1rem; color: #79C0FF; font-weight: 700; }
+  header .sub { color: #6E7681; font-size: 0.7rem; }
+  header .links { margin-left: auto; display: flex; gap: 12px; }
+  header .links a { color: #2F81F7; text-decoration: none; font-size: 0.7rem; }
+
+  main { position: absolute; top: 52px; left: 0; right: 0; bottom: 0;
+         display: grid; grid-template-columns: 1.5fr 1fr; }
+
+  #globe-pane { position: relative; background: #03060c; }
+  #globe { position: absolute; inset: 0; background: #03060c; }
+  .cesium-widget-credits, .cesium-viewer-bottom { display: none !important; }
+
+  /* HUD overlay */
+  .hud {
+    position: absolute; top: 12px; left: 12px;
+    background: rgba(5,5,16,0.85); border: 1px solid #2D333B;
+    border-radius: 6px; padding: 10px 14px;
+    font-family: monospace; font-size: 0.7rem; max-width: 280px;
+    pointer-events: auto;
+  }
+  .hud h3 { font-size: 0.75rem; color: #79C0FF; margin-bottom: 6px; }
+  .hud .row { color: #8B949E; padding: 2px 0; }
+  .hud .row b { color: #79C0FF; }
+  .hud input { background: #050510; border: 1px solid #2D333B; color: #E6EDF3;
+              padding: 4px 8px; border-radius: 3px; font-size: 0.75rem;
+              font-family: monospace; width: 240px; margin-bottom: 6px; }
+  .hud button { background: #2F81F7; border: 0; color: white; padding: 4px 10px;
+                border-radius: 3px; cursor: pointer; font-size: 0.7rem; margin-right: 4px; }
+  .hud button.spawn { background: #3FB950; }
+
+  /* Move-to controls (live stamps) */
+  .stamps {
+    position: absolute; top: 12px; right: 12px;
+    background: rgba(5,5,16,0.85); border: 1px solid #2D333B;
+    border-radius: 6px; padding: 10px 14px;
+    font-size: 0.7rem; max-width: 280px; max-height: 80vh; overflow-y: auto;
+  }
+  .stamps h3 { font-size: 0.75rem; color: #79C0FF; margin-bottom: 6px; }
+  .stamp-row {
+    padding: 6px 10px; border-radius: 4px; margin-bottom: 4px;
+    background: rgba(255,123,114,0.05); border-left: 3px solid #FF7B72;
+    font-family: monospace; font-size: 0.65rem;
+    cursor: pointer;
+  }
+  .stamp-row.jump { border-left-color: #3FB950; }
+  .stamp-row:hover { background: rgba(63,185,80,0.1); }
+
+  /* Right panel — zoomed-in records */
+  #records-pane {
+    background: #050510; border-left: 1px solid #2D333B;
+    display: flex; flex-direction: column;
+  }
+  .records-header {
+    padding: 10px 14px; background: rgba(5,5,16,0.95);
+    border-bottom: 1px solid #2D333B;
+  }
+  .records-header h3 { font-size: 0.85rem; color: #79C0FF; }
+  .records-header .meta { font-size: 0.65rem; color: #6E7681; margin-top: 2px; }
+  .records-body { flex: 1; overflow-y: auto; padding: 12px 14px; font-size: 0.75rem; }
+
+  .record-card { padding: 10px 12px; margin-bottom: 8px; border-radius: 6px;
+                  border-left: 4px solid #2F81F7; background: rgba(0,0,0,0.3); }
+  .record-card h4 { font-size: 0.85rem; color: #79C0FF; margin-bottom: 4px; }
+  .record-card .pills { margin-top: 6px; }
+  .record-card .pill { font-size: 0.55rem; padding: 2px 6px; border-radius: 3px;
+                         background: #2F81F733; color: #2F81F7; margin-right: 4px;
+                         display: inline-block; margin-bottom: 2px; }
+  .record-card pre { background: #03060c; padding: 8px; border-radius: 4px;
+                       color: #79C0FF; font-size: 0.65rem; white-space: pre-wrap;
+                       max-height: 200px; overflow-y: auto; margin-top: 8px; }
+
+  .filters { padding: 8px 14px; display: flex; gap: 8px; flex-wrap: wrap;
+              border-bottom: 1px solid #2D333B; background: #050510; }
+  .filters button { background: #1F6FEB; border: 0; color: white; padding: 5px 10px;
+                    border-radius: 3px; cursor: pointer; font-size: 0.65rem; }
+  .filters button.active { background: #3FB950; }
+  .filters button:hover { opacity: 0.85; }
+
+  .hint {
+    position: absolute; bottom: 12px; left: 50%; transform: translateX(-50%);
+    background: rgba(5,5,16,0.8); color: #6E7681; font-size: 0.7rem;
+    padding: 6px 12px; border-radius: 4px; pointer-events: none;
+  }
+</style>
+</head>
+<body>
+<header>
+  <h1>SOV Portal — Globe & Records</h1>
+  <span class="sub">Move around the dome · each move stamps local · click any node to zoom in · everything visual, fluid, audit-tracked</span>
+  <nav class="links">
+    <a href="#">→ tier portal</a>
+    <a href="#">→ fluid swarm</a>
+    <a href="#">→ local viewer</a>
+  </nav>
+</header>
+
+<main>
+  <div id="globe-pane">
+    <div id="globe"></div>
+    <div class="hud">
+      <h3>↻ your soul in sov space</h3>
+      <input id="userInput" placeholder="alice@example.com" value="alice">
+      <div style="margin-bottom:6px">
+        <button class="spawn" onclick="respawn()">spawn / refresh</button>
+      </div>
+      <div class="row">user: <b id="hudUser">alice</b></div>
+      <div class="row">tier: <b id="hudTier">0</b> <span id="hudTierLabel" style="color:#6E7681">tiny</span></div>
+      <div class="row">model: <b id="hudModel" style="font-size:0.65rem">qwen2.5:0.5b</b></div>
+      <div class="row">gpu: <b id="hudGpu">local_cpu_m4</b></div>
+      <div class="row">owlms: <span id="hudOwm" class="pill owem" style="display:none">owem</span>
+        <span id="hudIwm" class="pill iwm" style="display:none">iwm</span>
+        <span id="hudVwm" class="pill vwm" style="display:none">vwm</span></div>
+      <div style="margin-top:8px">
+        <button onclick="flyHome()">fly home</button>
+        <button onclick="flyUK()">UK</button>
+        <button onclick="flyEU()">EU</button>
+        <button onclick="flyRandom()">random</button>
+      </div>
+    </div>
+
+    <div class="stamps">
+      <h3>🔖 your local stamps</h3>
+      <div style="color:#6E7681;font-size:0.65rem;margin-bottom:6px">Each move stamps your path through sov space.</div>
+      <div id="stampsList"></div>
+    </div>
+
+    <div class="hint">click a globe node → records panel · click background → free move · mouse drag → pan</div>
+  </div>
+
+  <aside id="records-pane">
+    <div class="records-header">
+      <h3 id="recordsTitle">📇 Records — zoom into any node to see its data</h3>
+      <div class="meta" id="recordsMeta">click a globe node to load its records</div>
+    </div>
+    <div class="filters" id="filters">
+      <button class="active" data-filter="all">all</button>
+      <button data-filter="anchor">anchors</button>
+      <button data-filter="subject">subjects</button>
+      <button data-filter="artifact">artifacts</button>
+      <button data-filter="evidence">evidence</button>
+    </div>
+    <div class="records-body" id="recordsBody">
+      <div style="color:#6E7681">No records loaded yet. Click a node on the globe.</div>
+    </div>
+  </aside>
+</main>
+
+<script>
+const API = window.location.origin;
+let user = 'alice';
+let viewer = null;
+let stamps = [];
+let activeFilter = 'all';
+
+// Load existing stamps from localStorage
+try {
+  stamps = JSON.parse(localStorage.getItem('sov-stamps') || '[]');
+} catch { stamps = []; }
+function saveStamps() {
+  try { localStorage.setItem('sov-stamps', JSON.stringify(stamps.slice(-50))); } catch {}
+}
+
+// Cesium globe — real dome planet
+async function bootGlobe() {
+  try {
+    viewer = new Cesium.Viewer('globe', {
+      animation: false, timeline: false, geocoder: false,
+      homeButton: false, sceneModePicker: false, baseLayerPicker: false,
+      navigationHelpButton: false, infoBox: false,
+      selectionIndicator: false, fullscreenButton: false,
+      imageryProvider: false,
+    });
+    viewer.scene.globe.enableLighting = false;
+    viewer.scene.skyAtmosphere.show = false;
+    viewer.camera.setView({destination: Cesium_dest(20, 28, 20000000)});
+
+    // Stamp pattern: use the viewer time as the local stamp clock
+    stampHere('Globe initialised at ' + new Date().toISOString());
+  } catch (e) {
+    document.getElementById('globe').innerHTML =
+      `<div style="color:#D29922;padding:20px;font-family:monospace;font-size:0.75rem">Cesium failed to load: ${e.message}<br/>Api endpoint still works: <a href="#" target="_blank">${API}/api/portal/${user}</a></div>`;
+  }
+}
+
+function cesium_dest(lng, lat, h) { return Cesium.Cartesian3.fromDegrees(lng, lat, h); }
+
+async function flyTo(lng, lat, h = 5000000) {
+  if (!viewer) return;
+  stampHere(`fly to ${lat.toFixed(2)}, ${lng.toFixed(2)} at ${h/1000}km`);
+  viewer.camera.flyTo({destination: cesium_dest(lng, lat, h)});
+}
+
+function flyHome() { flyTo(20, 28, 30000000); }
+function flyUK() { flyTo(-3.4, 55.4, 1000000); }
+function flyEU() { flyTo(4.4, 50.8, 1000000); }
+function flyRandom() { flyTo(Math.random()*360 - 180, Math.random()*120 - 60, 1000000); }
+
+// ── Local stamps — user's path through sov space ──────────────────
+function stampHere(note) {
+  const ts = Date.now() / 1000;
+  stamps.push({ts, note});
+  stamps = stamps.slice(-50);
+  saveStamps();
+  renderStamps();
+}
+
+function renderStamps() {
+  const el = document.getElementById('stampsList');
+  el.innerHTML = stamps.slice().reverse().map((s, i) => `
+    <div class="stamp-row ${i === 0 ? 'jump' : ''}" onclick="alert('Stamp: ' + ${JSON.stringify(s.note)} + '\\nAt: ' + new Date(${s.ts * 1000}).toISOString())">
+      [${stamps.length - 1 - i}] ${s.note}
+    </div>
+  `).join('');
+}
+
+// ── Soul HUD ──
+async function refreshSoul() {
+  try {
+    const r = await fetch(API + '/api/portal/' + encodeURIComponent(user));
+    if (!r.ok) throw new Error('api ' + r.status);
+    const d = await r.json();
+    const s = d.soul;
+    document.getElementById('hudUser').textContent = s.user_id;
+    document.getElementById('hudTier').textContent = s.tier;
+    document.getElementById('hudTierLabel').textContent = s.label;
+    document.getElementById('hudModel').textContent = s.model;
+    document.getElementById('hudGpu').textContent = s.gpu_class;
+    document.getElementById('hudOwm').style.display = s.owem ? 'inline-block' : 'none';
+    document.getElementById('hudIwm').style.display = s.iwm ? 'inline-block' : 'none';
+    document.getElementById('hudVwm').style.display = s.vwm ? 'inline-block' : 'none';
+
+    // Drop a 3D pin at the user's "current jurisdiction" on the globe (UK by default)
+    if (viewer) {
+      viewer.entities.removeAll();
+      const pins = [
+        {name: 'UK', lng: -3.4, lat: 55.4},
+        {name: 'EU', lng: 4.4, lat: 50.8},
+        {name: 'US', lng: -77, lat: 38.9},
+        {name: 'CN', lng: 116.4, lat: 39.9},
+      ];
+      pins.forEach(p => {
+        viewer.entities.add({
+          position: cesium_dest(p.lng, p.lat, 0),
+          point: {
+            pixelSize: 10, color: Cesium.Color.fromCssColorString('#79C0FF'),
+            outlineColor: Cesium.Color.WHITE, outlineWidth: 2,
+          },
+          label: {text: p.name, font: '500 12px Inter',
+                  fillColor: Cesium.Color.fromCssColorString('#79C0FF'),
+                  pixelOffset: new Cesium.Cartesian2(0, -16)},
+        });
+      });
+    }
+  } catch (e) {
+    console.error('portal api unreachable:', e.message);
+  }
+}
+
+function respawn() {
+  user = document.getElementById('userInput').value || 'alice';
+  document.getElementById('hudUser').textContent = user;
+  stampHere(`Respawn at ${user}`);
+  refreshSoul();
+}
+
+// ── Records panel — loads on click ─────────────────────────
+async function loadRecord(nodeId, kind) {
+  document.getElementById('recordsTitle').textContent = `📇 Records — ${nodeId}`;
+  document.getElementById('recordsMeta').textContent = `loading...`;
+  document.getElementById('recordsBody').innerHTML =
+    `<div style="color:#79C0FF">Loading records for ${nodeId}...</div>`;
+
+  stampHere(`Inspected node: ${nodeId} (${kind})`);
+
+  try {
+    const r = await fetch(API + '/api/fluid/zoom?id=' + encodeURIComponent(nodeId));
+    const d = await r.json();
+    renderRecord(d, kind);
+  } catch (e) {
+    document.getElementById('recordsBody').innerHTML =
+      `<div style="color:#F85149">Load failed: ${e.message}</div>`;
+  }
+}
+
+function renderRecord(d, kind) {
+  const meta = d.inner || {};
+  let html = `
+    <div class="record-card" style="border-left-color:${kindColor(kind)}">
+      <h4>${escape(d.title || d.id)}</h4>
+      <div style="font-size:0.65rem;color:#6E7681;margin-bottom:6px">
+        kind: <span class="pill">${d.kind || kind}</span> · mass: <b>${d.mass || '—'}</b>
+      </div>`;
+
+  if (meta.type) html += `<div style="color:#8B949E"><b style="color:#79C0FF">inner type:</b> ${meta.type}</div>`;
+  if (meta.cite) html += `<div style="color:#8B949E"><b style="color:#79C0FF">cite:</b> ${escape(meta.cite)}</div>`;
+  if (meta.jurisdiction) html += `<div style="color:#8B949E"><b style="color:#79C0FF">jurisdiction:</b> ${escape(meta.jurisdiction)}</div>`;
+  if (meta.claim) html += `<div style="color:#8B949E"><b style="color:#79C0FF">claim:</b> ${escape(meta.claim)}</div>`;
+  if (meta.path) html += `<div style="color:#8B949E"><b style="color:#79C0FF">path:</b> ${escape(meta.path)}</div>`;
+  if (meta.signature) html += `<div style="color:#3FB950;font-size:0.6rem"><b>signature:</b><br/><code style="word-break:break-all;font-size:0.55rem">${escape(meta.signature.substring(0, 80))}…</code></div>`;
+
+  if (meta.preview) {
+    html += `<pre>${escape(meta.preview.substring(0, 2000))}</pre>`;
+  }
+  html += '</div>';
+
+  document.getElementById('recordsMeta').textContent = `${d.kind || kind} · ${d.id}`;
+  document.getElementById('recordsBody').innerHTML = html;
+}
+
+function kindColor(kind) {
+  return ({anchor: '#79C0FF', subject: '#A371F7', artifact: '#3FB950', evidence: '#D29922'})[kind] || '#79C0FF';
+}
+
+function escape(s) { return (s || '').toString().replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+
+// Filter buttons
+document.getElementById('filters').addEventListener('click', (e) => {
+  if (e.target.dataset.filter) {
+    document.querySelectorAll('#filters button').forEach(b => b.classList.remove('active'));
+    e.target.classList.add('active');
+    activeFilter = e.target.dataset.filter;
+    document.getElementById('recordsTitle').textContent = activeFilter === 'all'
+      ? '📇 Records — all'
+      : `📇 Records — ${activeFilter}`;
+    filterRecords();
+  }
+});
+
+function filterRecords() {
+  // Just visual cue — actual records are loaded per node click
+  stampHere(`filter → ${activeFilter}`);
+}
+
+// Init
+bootGlobe();
+refreshSoul();
+renderStamps();
+window.user = () => user;
+</script>
+</body>
+</html>

@@ -3,15 +3,15 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>SOV33 Inference Quality Dashboard — p50/p95/p99 · Throughput · Sigil Rate · Care Floor</title>
-<meta name="description" content="Live SOV33 inference quality dashboard: p50 / p95 / p99 token latency, throughput, SIGIL emit rate, care-score floor, throughput-vs-load, and per-tier benchmark deltas. Crown-grade measurement surface.">
+<title>Council3 Inference Quality Dashboard — p50/p95/p99 · Throughput · Sigil Rate · Care Floor</title>
+<meta name="description" content="Live Council3 inference quality dashboard: p50 / p95 / p99 token latency, throughput, SIGIL emit rate, care-score floor, throughput-vs-load, and per-tier benchmark deltas. Crown-grade measurement surface.">
 <meta name="theme-color" content="#0a0e1a">
-<meta name="sov-sigil" content="DEFONEOS-SOV33-inference-quality-2026-07-13-init">
+<meta name="sov-sigil" content="DEFONEOS-Council3-inference-quality-2026-07-13-init">
 <meta name="sov-version" content="1.0">
 <meta name="sov-kind" content="Inference Quality Dashboard">
 <meta name="sov-publisher" content="CSOAI Ltd (UK Co. 16939677)">
 <meta name="sov-deploy" content="Vercel prod / csoai-static-deploy2">
-<link rel="canonical" href="https://csoai-static-deploy2.vercel.app/SOV33_INFERENCE_QUALITY.html">
+<link rel="canonical" href="#">
 <style>
 :root{
   --bg:#0a0e1a;--ink:#e7ecf3;--mute:#9aa6b8;
@@ -79,10 +79,10 @@ hr{border:0;border-top:1px solid var(--line);margin:24px 0}
 {
   "@context":"https://schema.org",
   "@type":"WebPage",
-  "name":"SOV33 Inference Quality Dashboard",
+  "name":"Council3 Inference Quality Dashboard",
   "publisher":{"@type":"Organization","name":"CSOAI Ltd","identifier":"UK 16939677"},
   "dateModified":"2026-07-13",
-  "about":"p50/p95/p99 inference latency, throughput, SIGIL emit rate, care-score floor, throughput-vs-load, and per-tier benchmark deltas for the SOV33 sovereign fleet.",
+  "about":"p50/p95/p99 inference latency, throughput, SIGIL emit rate, care-score floor, throughput-vs-load, and per-tier benchmark deltas for the Council3 sovereign fleet.",
   "inLanguage":"en-GB"
 }
 </script>
@@ -91,21 +91,21 @@ hr{border:0;border-top:1px solid var(--line);margin:24px 0}
 <div class="wrap">
 <header>
   <div>
-    <div class="brand"><span class="dot"></span>SOV33 · Sovereign Inference Substrate</div>
-    <h1>SOV33 Inference Quality Dashboard</h1>
+    <div class="brand"><span class="dot"></span>Council3 · Sovereign Inference Substrate</div>
+    <h1>Council3 Inference Quality Dashboard</h1>
     <div class="muted" style="font-size:13px">Latency · Throughput · Sigil Rate · Care Floor. Measured at the M2 + M4 substrate, 2026-07-13 11:55 BST, cycle 90.</div>
   </div>
   <div class="meta">
     <span class="badge acc">v1.0</span>
     <span class="badge gold">Crown grade</span>
-    <span class="badge">BFT-33</span><br>
+    <span class="badge">council-quorum</span><br>
     Window: last 25 ticks (~37.5 h)<br>
     Re-poll: every 30 min cron
   </div>
 </header>
 
 <blockquote>
-<strong>Purpose.</strong> Sovereign AI without measurement is just a pitch. This dashboard is the single source of truth for every quantitative performance claim about SOV33 / SOV3 / DEFONEOS inference. Every number below is reproducible from <code>meok-evals/inference_bench.jsonl</code> and the SIGIL receipt chain. Where a number is a <em>target</em> rather than an observation, it is explicitly marked with a <span class="swatch amber"></span> amber swatch. Where a number is a <em>model projection</em> (e.g. MLX vs Ollama) it carries a <span class="swatch gold"></span> gold swatch.
+<strong>Purpose.</strong> Sovereign AI without measurement is just a pitch. This dashboard is the single source of truth for every quantitative performance claim about Council3  / Council / DEFONEOS inference. Every number below is reproducible from <code>meok-evals/inference_bench.jsonl</code> and the SIGIL receipt chain. Where a number is a <em>target</em> rather than an observation, it is explicitly marked with a <span class="swatch amber"></span> amber swatch. Where a number is a <em>model projection</em> (e.g. MLX vs Ollama) it carries a <span class="swatch gold"></span> gold swatch.
 </blockquote>
 
 <h2 id="headline">Headline KPIs (last 25 ticks · 37.5 h window)</h2>
@@ -155,7 +155,7 @@ hr{border:0;border-top:1px solid var(--line);margin:24px 0}
 </table>
 
 <h2 id="sigil">§3 SIGIL emit rate — 1 Hz / cursor target</h2>
-<div class="muted" style="margin-bottom:10px">Each sovereign brain emits one Ed25519-signed SIGIL per second. The "1 SIGIL = 1 cursor" cadence is the audit-trail flywheel that backs the BFT-33 quorum and OTS anchoring.</div>
+<div class="muted" style="margin-bottom:10px">Each sovereign brain emits one Ed25519-signed SIGIL per second. The "1 SIGIL = 1 cursor" cadence is the audit-trail flywheel that backs the council-quorum quorum and OTS anchoring.</div>
 <table>
 <thead><tr><th>Brain</th><th>Target Hz</th><th>Measured Hz (last 25 ticks)</th><th>Care</th><th>Status</th></tr></thead>
 <tbody>
@@ -206,7 +206,7 @@ hr{border:0;border-top:1px solid var(--line);margin:24px 0}
 </tbody>
 </table>
 
-<h2 id="deltas">§6 Per-tier benchmark deltas — SOV3 / SOV33 / DEFONEOS / MEOK</h2>
+<h2 id="deltas">§6 Per-tier benchmark deltas — Council  / Council3 / DEFONEOS / MEOK</h2>
 <div class="muted" style="margin-bottom:10px">How each sovereign surface trades latency for capability. All measurements on M2 + sovereign-small unless flagged.</div>
 <table>
 <thead><tr><th>Tier</th><th>Use case</th><th>p99 (ms)</th><th>tok/s</th><th>Care floor</th><th>SLA</th></tr></thead>
@@ -223,14 +223,14 @@ hr{border:0;border-top:1px solid var(--line);margin:24px 0}
 <blockquote>
 <p><strong>Reproduce locally.</strong> <code>git clone https://github.com/csoai/meok-evals &amp;&amp; cd meok-evals &amp;&amp; python inference_bench.py --model sovereign-small --quant 4-bit --window 25 --output inference_bench.jsonl</code>. The output JSONL is the audit-trail primitive that backs this dashboard.</p>
 <p><strong>Verify a sigil.</strong> Each SIGIL receipt is Ed25519-signed. The public key is at <code>sovereign-charters/keys/ed25519.pub</code>. Verify with <code>openssl pkeyutl -verify -in &lt;msg&gt; -sigfile &lt;sig&gt; -pubin -inkey sovereign-charters/keys/ed25519.pub</code>. Anchored to Bitcoin via OTS every 10 min.</p>
-<p><strong>Cross-reference.</strong> Every claim on this dashboard also appears on the <a href="https://csoai-static-deploy2.vercel.app/defoneos-anti-fabrication.html">Anti-Fabrication Register</a> with a Tier-A proof link. A claim that is not on the register cannot be cited from a customer deck.</p>
+<p><strong>Cross-reference.</strong> Every claim on this dashboard also appears on the <a href="#">Anti-Fabrication Register</a> with a Tier-A proof link. A claim that is not on the register cannot be cited from a customer deck.</p>
 </blockquote>
 
 <h2 id="changelog">§8 Changelog</h2>
 <table>
 <thead><tr><th>Date (BST)</th><th>Event</th><th>Receipt</th></tr></thead>
 <tbody>
-<tr><td>2026-07-13 11:55</td><td>Dashboard initial seal · v1.0</td><td>DEFONEOS-SOV33-inference-quality-2026-07-13-init</td></tr>
+<tr><td>2026-07-13 11:55</td><td>Dashboard initial seal · v1.0</td><td>DEFONEOS-Council3-inference-quality-2026-07-13-init</td></tr>
 <tr><td>2026-07-13 06:00</td><td>M4 MLX projection added (gold swatch) · 14.6 → 45 tok/s</td><td>tick-89-mlx-projection</td></tr>
 <tr><td>2026-07-12 22:10</td><td>Tick-86 expansion: §5 back-pressure + §6 per-tier added</td><td>tick-86-sigil</td></tr>
 <tr><td>2026-07-12 04:18</td><td>Tick-71 self-stop recorded (care 0.91) — pre-recovery</td><td>tick-71-sigil</td></tr>
@@ -239,11 +239,11 @@ hr{border:0;border-top:1px solid var(--line);margin:24px 0}
 
 <hr>
 <footer>
-<strong>SOV33 · Inference Quality Dashboard · v1.0</strong><br>
-CSOAI Ltd · UK 16939677 · Ed25519-signed · BFT-33 council ratified · OTS-anchored<br>
-Public mirror at <a href="https://csoai-static-deploy2.vercel.app/SOV33_INFERENCE_QUALITY.html">csoai-static-deploy2.vercel.app/SOV33_INFERENCE_QUALITY.html</a> · canon at <code>SOV33_INFERENCE_QUALITY.html</code><br>
+<strong>Council3 · Inference Quality Dashboard · v1.0</strong><br>
+CSOAI Ltd · UK 16939677 · Ed25519-signed · council-quorum council ratified · OTS-anchored<br>
+Public mirror at <a href="#">csoai-static-deploy2.vercel.app/Council3_INFERENCE_QUALITY.html</a> · canon at <code>Council3_INFERENCE_QUALITY.html</code><br>
 Maintenance: 30-min re-poll cron. Public complaints: <code>support@csoai.ai</code> (24h reply SLA on Crown-tier).<br>
-<span class="muted">Cross-reference: every claim on this dashboard also appears on the <a href="https://csoai-static-deploy2.vercel.app/defoneos-anti-fabrication.html">Anti-Fabrication Register</a>. A number that is not on the register is not on this dashboard either.</span>
+<span class="muted">Cross-reference: every claim on this dashboard also appears on the <a href="#">Anti-Fabrication Register</a>. A number that is not on the register is not on this dashboard either.</span>
 </footer>
 </div>
 

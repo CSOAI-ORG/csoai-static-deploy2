@@ -1,0 +1,48 @@
+{
+  "manifest": "csoai-machine-truth-manifest",
+  "version": 1,
+  "generated": "2026-08-21T07:52:00Z",
+  "issuer": "csoai-harness-e2e (DSH/JEEVES lane)",
+  "signing_key": "UNSET — honest-unsigned; trust root did:web:csoai.org (never broken)",
+  "artifacts": [
+    {
+      "id": "h3k-card-2026-08-21T0746",
+      "kind": "signed-h3k-measurement-capsule",
+      "path": "sim-world-data/cards/h3k-2026-08-21T0746.json",
+      "sha256": "9b28ce229a5501b7025317939bba18c3efd5363aaa0420c1aea1ae39468c2846",
+      "bytes": 4921,
+      "records": 16,
+      "signature": "ed25519 (sim-harness internal)",
+      "subject": "csoai-harness-e2e",
+      "claim": "measurement (not certification)"
+    },
+    {
+      "id": "game-receipt-connectx-seed42",
+      "kind": "csoai.game-receipt/0.1 (deterministic signed replay)",
+      "receipt_sha256": "42141e61a66eff1d10ea61426f26776a07730c12edefdca873ab3ac1d7744f6c",
+      "game": "connectx",
+      "seed": 42,
+      "agents": ["seeded-random", "center"],
+      "winner": 1,
+      "signed": true
+    },
+    {
+      "id": "corrections-51-56-2026-08-21",
+      "kind": "canon-supersession-record",
+      "path": "clawd/csoai-static-deploy2/SOVOS/canon/CORRECTIONS-51-56-2026-08-21.md",
+      "sha256": "8a0ea2201de7466cc0fe0c1d0214e238137e490bc5e14c33603a9f7cacf39cb7",
+      "bytes": 4531,
+      "rule": "new record + Bitstring revocation, never in-place edit"
+    },
+    {
+      "id": "banned-string-sweep-2026-08-21",
+      "kind": "occurrence-inventory (step 008 handoff to LANE)",
+      "path": "clawd/csoai-static-deploy2/SOVOS/canon/BANNED-STRING-SWEEP-2026-08-21.md",
+      "sha256": "7ff83eea16a8262f419d6f3a60b9485a098951ac3fe8dc8773e1685e71131b04",
+      "bytes": 3026,
+      "findings": "correction triggers clean (0); CA3O-accreditation quote ~10 pages = kill-list violation; 33-agent/BFT-as-fact ~22 pages"
+    }
+  ],
+  "grammar": "13 measured of 14 (until ungate ruling); verified measurement credential — never certification/accreditation",
+  "status": "UNSIGNED-honest (POD key not in harness; owner-gated injection)"
+}

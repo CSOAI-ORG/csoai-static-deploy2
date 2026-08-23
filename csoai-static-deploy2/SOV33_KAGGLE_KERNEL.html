@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>SOV33 Kaggle Kernel — MMLU-Pro + GSM8K + AIME</title>
-<meta name="description" content="Ready-to-submit Kaggle kernel for SOV33_small (Qwen3-0.6B) + SOV33_large (Qwen3-30B-A3B) on MMLU-Pro, GSM8K, and AIME 2024. Sovereign wrapper, SIGIL-signed, BFT-governed.">
+<title>Council3 Kaggle Kernel — MMLU-Pro + GSM8K + AIME</title>
+<meta name="description" content="Ready-to-submit Kaggle kernel for Council3_small (Qwen3-0.6B) + Council3_large (Qwen3-30B-A3B) on MMLU-Pro, GSM8K, and AIME 2024. Sovereign wrapper, SIGIL-signed, BFT-governed.">
 <style>
 :root{--bg:#0a0e14;--panel:#0f141c;--ink:#e6edf3;--mut:#7d8590;--acc:#58a6ff;--gold:#d2a8ff;--green:#3fb950;--red:#f85149;--border:#21262d;--code:#161b22}
 *{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 -apple-system,BlinkMacSystemFont,"SF Pro Text","Inter",system-ui,sans-serif}
@@ -57,7 +57,7 @@ pre{position:relative}
 <body>
 <div class="wrap">
 <nav class="breadcrumb">
-  <a href="#"">SOV33</a> &nbsp;›&nbsp;
+  <a href="#"">Council3</a> &nbsp;›&nbsp;
   <a href="#"">Evals</a> &nbsp;›&nbsp;
   <a href="#"">Kaggle</a> &nbsp;›&nbsp;
   <b style="color:#e6edf3">Kaggle Kernel</b>
@@ -65,8 +65,8 @@ pre{position:relative}
 
 <header class="hero">
   <div>
-    <h1>SOV33 <span class="sovereign">Kaggle Kernel</span> — <small style="font-size:18px;color:#7d8590">v1.0 · 2026-07-13</small></h1>
-    <p class="lede">A ready-to-submit, end-to-end reproducible Kaggle Notebook that evaluates <b>SOV33_small</b> (Qwen3-0.6B sovereign wrapper, 600M params, GGUF q4_k_m) and <b>SOV33_large</b> (Qwen3-30B-A3B sovereign wrapper, 30B MoE with 3B active, bf16) on three reference benchmarks: <b>MMLU-Pro</b> (12,032 Qs, 14 categories, multi-choice), <b>GSM8K</b> (8.5K grade-school word problems, exact-match answer extraction), and <b>AIME 2024</b> (30 integer-answer math olympiad problems, chain-of-thought + self-consistency).</p>
+    <h1>Council3 <span class="sovereign">Kaggle Kernel</span> — <small style="font-size:18px;color:#7d8590">v1.0 · 2026-07-13</small></h1>
+    <p class="lede">A ready-to-submit, end-to-end reproducible Kaggle Notebook that evaluates <b>Council3_small</b> (Qwen3-0.6B sovereign wrapper, 600M params, GGUF q4_k_m) and <b>Council3_large</b> (Qwen3-30B-A3B sovereign wrapper, 30B MoE with 3B active, bf16) on three reference benchmarks: <b>MMLU-Pro</b> (12,032 Qs, 14 categories, multi-choice), <b>GSM8K</b> (8.5K grade-school word problems, exact-match answer extraction), and <b>AIME 2024</b> (30 integer-answer math olympiad problems, chain-of-thought + self-consistency).</p>
   </div>
   <div class="meta">
     SIGIL&nbsp;<span class="kbd">T87-kaggle-kernel-7f3a2c</span><br>
@@ -77,17 +77,17 @@ pre{position:relative}
 </header>
 
 <nav class="toc">
-  <a href="#summary">Summary</a>
-  <a href="#targets">Targets</a>
-  <a href="#kernel">Kernel</a>
-  <a href="#sovereign">Sovereign</a>
-  <a href="#reproduce">Reproduce</a>
-  <a href="#evidence">Evidence</a>
+  <a href="#">Summary</a>
+  <a href="#">Targets</a>
+  <a href="#">Kernel</a>
+  <a href="#">Sovereign</a>
+  <a href="#">Reproduce</a>
+  <a href="#">Evidence</a>
 </nav>
 
 <section id="summary">
 <h2>1 · Why this kernel</h2>
-<p>Sovereign AI evaluation should be auditable, reproducible, and honest. This kernel ships the <i>exact</i> Python you'd run on Kaggle to score SOV33_small and SOV33_large against three of the most-cited public benchmarks, with no cherry-picked few-shot prompts, no temperature hacks, and no hidden system prompts — just an open template that anyone can fork, run, and compare against our published leaderboard.</p>
+<p>Sovereign AI evaluation should be auditable, reproducible, and honest. This kernel ships the <i>exact</i> Python you'd run on Kaggle to score Council3_small and Council3_large against three of the most-cited public benchmarks, with no cherry-picked few-shot prompts, no temperature hacks, and no hidden system prompts — just an open template that anyone can fork, run, and compare against our published leaderboard.</p>
 
 <div class="grid2">
   <div class="card">
@@ -115,7 +115,7 @@ pre{position:relative}
 <h2>2 · Score targets (vs published baselines)</h2>
 <table>
 <thead>
-<tr><th>Benchmark</th><th>Subset</th><th>Qwen3-0.6B baseline</th><th>SOV33_small target</th><th>Qwen3-30B-A3B baseline</th><th>SOV33_large target</th></tr>
+<tr><th>Benchmark</th><th>Subset</th><th>Qwen3-0.6B baseline</th><th>Council3_small target</th><th>Qwen3-30B-A3B baseline</th><th>Council3_large target</th></tr>
 </thead>
 <tbody>
 <tr><td>MMLU-Pro</td>            <td class="num">12,032 Qs · 14 cats</td><td class="num">21.4%</td><td class="num"><b>23.5%</b> (+2.1)</td><td class="num">68.2%</td><td class="num"><b>71.0%</b> (+2.8)</td></tr>
@@ -127,7 +127,7 @@ pre{position:relative}
 
 <div class="target">
   <h3>🥇 Win condition</h3>
-  <p>SOV33_large breaks <b>80% composite</b> on (MMLU-Pro + GSM8K + AIME 2024). If we hit it, this is the first sovereign-wrapped model in the >80B-active tier to do so under a fully-reproducible, BFT-signed evaluation protocol. SOV33_small targets the <b>small-model ceiling</b> — anything above 25% composite is in the top-3 of &lt;1B-class models on the public open-eval leaderboard.</p>
+  <p>Council3_large breaks <b>80% composite</b> on (MMLU-Pro + GSM8K + AIME 2024). If we hit it, this is the first sovereign-wrapped model in the >80B-active tier to do so under a fully-reproducible, BFT-signed evaluation protocol. Council3_small targets the <b>small-model ceiling</b> — anything above 25% composite is in the top-3 of &lt;1B-class models on the public open-eval leaderboard.</p>
 </div>
 </section>
 
@@ -137,8 +137,8 @@ pre{position:relative}
 
 <h4>Cell 1 · Install + GPU probe</h4>
 <pre><button class="copybtn" onclick="navigator.clipboard.writeText(this.parentElement.querySelector('code').innerText)">Copy</button><code># %% [markdown]
-# # SOV33 Sovereign Eval Kernel — MMLU-Pro · GSM8K · AIME 2024
-# SOV33_small = Qwen3-0.6B sovereign wrapper · SOV33_large = Qwen3-30B-A3B sovereign wrapper
+# # Council3 Sovereign Eval Kernel — MMLU-Pro · GSM8K · AIME 2024
+# Council3_small = Qwen3-0.6B sovereign wrapper  · Council3_large = Qwen3-30B-A3B sovereign wrapper
 # Run on Kaggle: GPU T4 x2, Internet ON, accelerator: t4x2 or a100-80gb
 
 # %% [code]
@@ -155,9 +155,9 @@ print("torch:", torch.__version__, "  cuda:", torch.cuda.is_available(),
 import os
 os.environ["HF_HOME"]          = "/kaggle/working/hf_cache"
 os.environ["TRANSFORMERS_OFFLINE"] = "0"
-os.environ["SOV33_RUN_ID"]     = f"kaggle-{int(time.time())}"
-os.environ["SOV33_SIGIL_SALT"] = "kaggle-kernel-v1.0-sov33"
-RUN_ID = os.environ["SOV33_RUN_ID"]
+os.environ["Council3_RUN_ID"]     = f"kaggle-{int(time.time())}"
+os.environ["Council3_SIGIL_SALT"] = "kaggle-kernel-v1.0-sov33"
+RUN_ID = os.environ["Council3_RUN_ID"]
 print("RUN_ID =", RUN_ID)
 
 # %% [code]
@@ -177,12 +177,12 @@ REGISTRY = {
     },
 }</code></pre>
 
-<h4>Cell 2 · Sovereign wrapper — apply SOV33 to a base Qwen3 model</h4>
+<h4>Cell 2 · Sovereign wrapper — apply Council3 to a base Qwen3 model</h4>
 <pre><button class="copybtn" onclick="navigator.clipboard.writeText(this.parentElement.querySelector('code').innerText)">Copy</button><code># %% [code]
 from transformers import AutoModelForCausalLM, AutoTokenizer
 
 class SovereignWrapper:
-    """Wrap any base LM with SOV33 governance: SIGIL preamble + BFT hint + care-guard."""
+    """Wrap any base LM with Council3 governance: SIGIL preamble + BFT hint + care-guard."""
     def __init__(self, base_id, wrapper_name, kv, ctx):
         self.base_id  = base_id
         self.name     = wrapper_name
@@ -196,7 +196,7 @@ class SovereignWrapper:
         )
         self.model.eval()
         self.system_preamble = (
-            "You are SOV33, a sovereign AI system governed by a 12-around-1 BFT council. "
+            "You are Council3, a sovereign AI system governed by a 12-around-1 BFT council. "
             "Every response is signed on a public SIGIL hash-chain. You answer truthfully, "
             "care-ethically, and source-grounded. You never fabricate citations."
         )
@@ -223,7 +223,7 @@ class SovereignWrapper:
                 "ts": time.time()}
 
 # %% [code]
-# Load both wrappers — happens once, ~3 min for SOV33_small, ~12 min for SOV33_large
+# Load both wrappers — happens once, ~3 min for Council3_small, ~12 min for Council3_large
 WRAPPERS = {}
 for label, cfg in REGISTRY.items():
     print(f"⚙️  loading {label}  ←  {cfg['hf_id']}")
@@ -436,7 +436,7 @@ print("✓ leaderboard.json written")</code></pre>
 <pre><code>task_hint ∈ {
   "math":     "The 12-around-1 council routes to: Math-Weierstrass, Math-Noether, Math-Ramanujan",
   "stem":     "Routes to: Physics-Feynman, Chem-Curie, Bio-Rosalind",
-  "general":  "Routes to: Default orchestrator (SOV33)",
+  "general":  "Routes to: Default orchestrator (Council3)",
 }
 </code></pre>
 
@@ -469,10 +469,10 @@ print('PASS' if True else 'FAIL')
 <h2>6 · Evidence trail</h2>
 
 <div class="sigilbox">
-<b>Kernel Receipt — SOV33 Kaggle Kernel v1.0</b><br>
+<b>Kernel Receipt — Council3 Kaggle Kernel v1.0</b><br>
 sigil_id:    T87-kaggle-kernel-7f3a2c<br>
 kernel_id:   sov33-mmlupro-gsm8k-aime<br>
-issued_by:   SOV33 Sovereign BFT (orchestrator node)<br>
+issued_by:   Council3 Sovereign BFT (orchestrator node)<br>
 bench_count: 3 (MMLU-Pro + GSM8K + AIME 2024)<br>
 model_count: 2 (small + large)<br>
 question_count: 12,032 + 1,319 + 30 = <b>13,381 unique Qs</b><br>
@@ -481,23 +481,23 @@ chain_root:  0x7f3a2c91e4b85d…<br>
 timestamp:   2026-07-13T09:14:00Z<br>
 bft_council: 23/33 quorum met · care_score: 0.94<br>
 license:     Apache-2.0 (code) · CC-BY-4.0 (results)<br>
-canonical:   <a href="#"" style="color:#58a6ff">/SOV33_BENCHMARK_HARNESS.html</a>
+canonical:   <a href="#"" style="color:#58a6ff">/Council3_BENCHMARK_HARNESS.html</a>
 </div>
 
 <h3>Related pages</h3>
 <ul>
-  <li><a href="#"">SOV33 Benchmark Harness</a> — full 8-benchmark harness, SIGIL-signed per run</li>
-  <li><a href="#"">SOV33 Arena Entry</a> — LMSYS Chatbot Arena + AlpacaEval 2.0 + HF OpenLLM entry plan</li>
-  <li><a href="#"">SOV33 Model Cards</a> — HF-ready model cards (small + large)</li>
-  <li><a href="#"">SOV33 Evals overview</a></li>
-  <li><a href="#"">SOV33 Kaggle Opportunities</a> — which competitions to target &amp; why</li>
+  <li><a href="#"">Council3 Benchmark Harness</a> — full 8-benchmark harness, SIGIL-signed per run</li>
+  <li><a href="#"">Council3 Arena Entry</a> — LMSYS Chatbot Arena + AlpacaEval 2.0 + HF OpenLLM entry plan</li>
+  <li><a href="#"">Council3 Model Cards</a> — HF-ready model cards (small + large)</li>
+  <li><a href="#"">Council3 Evals overview</a></li>
+  <li><a href="#"">Council3 Kaggle Opportunities</a> — which competitions to target &amp; why</li>
 </ul>
 </section>
 
 <hr>
 <footer style="font-size:11px;color:#7d8590;padding-top:18px;border-top:1px solid #21262d">
-  SOV33 Sovereign Substrate · CSOAI Ltd · Apache-2.0 / CC-BY-4.0 · SIGIL chain rooted at T87-kaggle-kernel-7f3a2c ·
-  <a href="#"" style="color:#58a6ff">Back to SOV33 index</a>
+  Council3 Sovereign Substrate · CSOAI Ltd · Apache-2.0 / CC-BY-4.0 · SIGIL chain rooted at T87-kaggle-kernel-7f3a2c ·
+  <a href="#"" style="color:#58a6ff">Back to Council3 index</a>
 </footer>
 </div>
 </body>

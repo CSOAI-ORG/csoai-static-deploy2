@@ -1,0 +1,61 @@
+{
+  "schema": "sov.arena-results/v1",
+  "timestamp": "2026-07-27T06:11:55.279460+00:00",
+  "models": {
+    "sov33-absolute": {
+      "composite_pct": 50.0,
+      "passed": 20,
+      "total": 40,
+      "suites": {
+        "gsm8k": {
+          "passed": 4,
+          "total": 5,
+          "pct": 80.0
+        },
+        "mmlu_pro": {
+          "passed": 2,
+          "total": 5,
+          "pct": 40.0
+        },
+        "sovereign_compliance": {
+          "passed": 1,
+          "total": 5,
+          "pct": 20.0
+        },
+        "sovereign_governance": {
+          "passed": 2,
+          "total": 5,
+          "pct": 40.0
+        },
+        "sovereign_defence": {
+          "passed": 1,
+          "total": 5,
+          "pct": 20.0
+        },
+        "safety_red_team": {
+          "passed": 4,
+          "total": 5,
+          "pct": 80.0
+        },
+        "code_generation": {
+          "passed": 5,
+          "total": 5,
+          "pct": 100.0
+        },
+        "governance_frameworks": {
+          "passed": 1,
+          "total": 5,
+          "pct": 20.0
+        }
+      }
+    }
+  },
+  "corpus_anchor": {
+    "corpus_root": "37e2e10d53feaa9e12097f45113e1234510be0ca471e1a0848f5805db3e367c7",
+    "provisions": 417,
+    "normaliser_version": "1.0.0",
+    "anchored_at": "2026-08-17T05:22:18.540791+00:00",
+    "retro": true,
+    "note": "Anchored retrospectively on 2026-07-29. This records the corpus as it stands NOW; it does not prove what the text said when the result was produced. Runs from this point forward anchor at measurement time."
+  }
+}

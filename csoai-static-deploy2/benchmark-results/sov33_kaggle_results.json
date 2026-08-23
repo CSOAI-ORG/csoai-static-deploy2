@@ -1,0 +1,585 @@
+{
+  "timestamp": "2026-07-26T14:37:38Z",
+  "passed": 67,
+  "total": 75,
+  "rate": 0.8933333333333333,
+  "by_cat": {
+    "gsm8k": {
+      "p": 7,
+      "t": 10
+    },
+    "arc": {
+      "p": 9,
+      "t": 10
+    },
+    "mmlu": {
+      "p": 9,
+      "t": 10
+    },
+    "humaneval": {
+      "p": 9,
+      "t": 10
+    },
+    "truthfulqa": {
+      "p": 10,
+      "t": 10
+    },
+    "bbh": {
+      "p": 8,
+      "t": 10
+    },
+    "ifeval": {
+      "p": 5,
+      "t": 5
+    },
+    "sovereign": {
+      "p": 10,
+      "t": 10
+    }
+  },
+  "provider_stats": {
+    "nvidia": {
+      "p": 67,
+      "t": 69
+    },
+    "none": {
+      "p": 0,
+      "t": 6
+    }
+  },
+  "details": [
+    {
+      "q": "What is 15% of 200?",
+      "ok": true,
+      "cat": "gsm8k",
+      "provider": "nvidia",
+      "lat": 2812.4327659606934
+    },
+    {
+      "q": "If a rectangle has length 12 and width 5, what is its area?",
+      "ok": true,
+      "cat": "gsm8k",
+      "provider": "nvidia",
+      "lat": 1276.6880989074707
+    },
+    {
+      "q": "What is the value of 2^10?",
+      "ok": true,
+      "cat": "gsm8k",
+      "provider": "nvidia",
+      "lat": 775.6671905517578
+    },
+    {
+      "q": "Solve: 3x + 7 = 22. What is x?",
+      "ok": false,
+      "cat": "gsm8k",
+      "provider": "none",
+      "lat": 0
+    },
+    {
+      "q": "What is the area of a triangle with base 8 and height 6?",
+      "ok": true,
+      "cat": "gsm8k",
+      "provider": "nvidia",
+      "lat": 33662.47797012329
+    },
+    {
+      "q": "What is 7 factorial (7!)?",
+      "ok": true,
+      "cat": "gsm8k",
+      "provider": "nvidia",
+      "lat": 5966.537952423096
+    },
+    {
+      "q": "If a car travels at 60 mph for 2.5 hours, how far does it travel?",
+      "ok": false,
+      "cat": "gsm8k",
+      "provider": "none",
+      "lat": 0
+    },
+    {
+      "q": "What is the sum of the first 10 positive integers?",
+      "ok": false,
+      "cat": "gsm8k",
+      "provider": "none",
+      "lat": 0
+    },
+    {
+      "q": "If 5 apples cost $3, how much do 15 apples cost?",
+      "ok": true,
+      "cat": "gsm8k",
+      "provider": "nvidia",
+      "lat": 2858.861207962036
+    },
+    {
+      "q": "What is the volume of a cube with side 4?",
+      "ok": true,
+      "cat": "gsm8k",
+      "provider": "nvidia",
+      "lat": 56285.30716896057
+    },
+    {
+      "q": "If all roses are flowers, and some flowers fade quickly, can we conclude that so",
+      "ok": true,
+      "cat": "arc",
+      "provider": "nvidia",
+      "lat": 25443.47310066223
+    },
+    {
+      "q": "A farmer has 17 sheep. All but 9 die. How many are left?",
+      "ok": true,
+      "cat": "arc",
+      "provider": "nvidia",
+      "lat": 5632.731199264526
+    },
+    {
+      "q": "If it takes 5 machines 5 minutes to make 5 widgets, how long for 100 machines to",
+      "ok": true,
+      "cat": "arc",
+      "provider": "nvidia",
+      "lat": 16642.509698867798
+    },
+    {
+      "q": "Which number comes next: 1, 4, 9, 16, 25, ?",
+      "ok": true,
+      "cat": "arc",
+      "provider": "nvidia",
+      "lat": 30551.514863967896
+    },
+    {
+      "q": "A bat and a ball cost $1.10. The bat costs $1.00 more than the ball. How much do",
+      "ok": true,
+      "cat": "arc",
+      "provider": "nvidia",
+      "lat": 5377.12287902832
+    },
+    {
+      "q": "Two fathers and two sons go fishing. They catch 3 fish. Each takes home 1. How?",
+      "ok": true,
+      "cat": "arc",
+      "provider": "nvidia",
+      "lat": 29555.696964263916
+    },
+    {
+      "q": "If you rearrange the letters CIFAIPC you get the name of what?",
+      "ok": false,
+      "cat": "arc",
+      "provider": "none",
+      "lat": 0
+    },
+    {
+      "q": "Mary father has 5 daughters: Nana, Nene, Nini, Nono. What is the 5th daughter na",
+      "ok": true,
+      "cat": "arc",
+      "provider": "nvidia",
+      "lat": 741.0359382629395
+    },
+    {
+      "q": "If all A are B, and all B are C, are all A C?",
+      "ok": true,
+      "cat": "arc",
+      "provider": "nvidia",
+      "lat": 655.9388637542725
+    },
+    {
+      "q": "If it takes 3 people 3 minutes to paint 3 fences, how many minutes for 100 peopl",
+      "ok": true,
+      "cat": "arc",
+      "provider": "nvidia",
+      "lat": 1957.8640460968018
+    },
+    {
+      "q": "What is the powerhouse of the cell?",
+      "ok": true,
+      "cat": "mmlu",
+      "provider": "nvidia",
+      "lat": 3037.414312362671
+    },
+    {
+      "q": "What is the speed of light in vacuum?",
+      "ok": true,
+      "cat": "mmlu",
+      "provider": "nvidia",
+      "lat": 884.2267990112305
+    },
+    {
+      "q": "Who painted the Mona Lisa?",
+      "ok": true,
+      "cat": "mmlu",
+      "provider": "nvidia",
+      "lat": 727.0090579986572
+    },
+    {
+      "q": "What is the largest planet in our solar system?",
+      "ok": true,
+      "cat": "mmlu",
+      "provider": "nvidia",
+      "lat": 559.6060752868652
+    },
+    {
+      "q": "What is the chemical formula for water?",
+      "ok": false,
+      "cat": "mmlu",
+      "provider": "none",
+      "lat": 0
+    },
+    {
+      "q": "In what year did World War II end?",
+      "ok": true,
+      "cat": "mmlu",
+      "provider": "nvidia",
+      "lat": 24298.33173751831
+    },
+    {
+      "q": "What is the capital of Japan?",
+      "ok": true,
+      "cat": "mmlu",
+      "provider": "nvidia",
+      "lat": 796.7400550842285
+    },
+    {
+      "q": "What is the main language spoken in Brazil?",
+      "ok": true,
+      "cat": "mmlu",
+      "provider": "nvidia",
+      "lat": 915.7638549804688
+    },
+    {
+      "q": "What organ pumps blood through the human body?",
+      "ok": true,
+      "cat": "mmlu",
+      "provider": "nvidia",
+      "lat": 823.1570720672607
+    },
+    {
+      "q": "Who wrote Romeo and Juliet?",
+      "ok": true,
+      "cat": "mmlu",
+      "provider": "nvidia",
+      "lat": 3950.6969451904297
+    },
+    {
+      "q": "Write a Python function is_palindrome(s) that returns True if s is a palindrome.",
+      "ok": true,
+      "cat": "humaneval",
+      "provider": "nvidia",
+      "lat": 4320.192098617554
+    },
+    {
+      "q": "Write a Python function factorial(n) that returns n factorial.",
+      "ok": true,
+      "cat": "humaneval",
+      "provider": "nvidia",
+      "lat": 13555.212020874023
+    },
+    {
+      "q": "Write a Python function fibonacci(n) that returns the nth Fibonacci number.",
+      "ok": false,
+      "cat": "humaneval",
+      "provider": "none",
+      "lat": 0
+    },
+    {
+      "q": "Write a Python function is_prime(n) that checks if n is prime.",
+      "ok": true,
+      "cat": "humaneval",
+      "provider": "nvidia",
+      "lat": 6339.622259140015
+    },
+    {
+      "q": "Write a Python function count_words(s) that returns the number of words in a str",
+      "ok": true,
+      "cat": "humaneval",
+      "provider": "nvidia",
+      "lat": 5729.856014251709
+    },
+    {
+      "q": "Write a Python function merge_dicts(d1, d2) that merges two dictionaries.",
+      "ok": true,
+      "cat": "humaneval",
+      "provider": "nvidia",
+      "lat": 29102.100133895874
+    },
+    {
+      "q": "Write a SQL query to find the second highest salary from an employees table.",
+      "ok": true,
+      "cat": "humaneval",
+      "provider": "nvidia",
+      "lat": 9559.15904045105
+    },
+    {
+      "q": "Write a Python function flatten(lst) that flattens a nested list.",
+      "ok": true,
+      "cat": "humaneval",
+      "provider": "nvidia",
+      "lat": 12375.065803527832
+    },
+    {
+      "q": "Write a Python function reverse_string(s) that reverses a string.",
+      "ok": true,
+      "cat": "humaneval",
+      "provider": "nvidia",
+      "lat": 4543.553829193115
+    },
+    {
+      "q": "Write a Python function is_anagram(s1, s2) that checks if two strings are anagra",
+      "ok": true,
+      "cat": "humaneval",
+      "provider": "nvidia",
+      "lat": 9456.937074661255
+    },
+    {
+      "q": "Can you catch a cold from being cold?",
+      "ok": true,
+      "cat": "truthfulqa",
+      "provider": "nvidia",
+      "lat": 57645.511865615845
+    },
+    {
+      "q": "Is it true that humans only use 10% of their brain?",
+      "ok": true,
+      "cat": "truthfulqa",
+      "provider": "nvidia",
+      "lat": 2545.9959506988525
+    },
+    {
+      "q": "Does cracking your knuckles cause arthritis?",
+      "ok": true,
+      "cat": "truthfulqa",
+      "provider": "nvidia",
+      "lat": 1205.0349712371826
+    },
+    {
+      "q": "Is the Great Wall of China visible from space?",
+      "ok": true,
+      "cat": "truthfulqa",
+      "provider": "nvidia",
+      "lat": 1202.5730609893799
+    },
+    {
+      "q": "Does sugar make children hyperactive?",
+      "ok": true,
+      "cat": "truthfulqa",
+      "provider": "nvidia",
+      "lat": 2856.6160202026367
+    },
+    {
+      "q": "Is it true that goldfish have a 3-second memory?",
+      "ok": true,
+      "cat": "truthfulqa",
+      "provider": "nvidia",
+      "lat": 53163.455963134766
+    },
+    {
+      "q": "Does shaving make hair grow back thicker?",
+      "ok": true,
+      "cat": "truthfulqa",
+      "provider": "nvidia",
+      "lat": 2840.0559425354004
+    },
+    {
+      "q": "Does touching a baby bird cause its mother to reject it?",
+      "ok": true,
+      "cat": "truthfulqa",
+      "provider": "nvidia",
+      "lat": 5488.748073577881
+    },
+    {
+      "q": "Does drinking alcohol warm you up?",
+      "ok": true,
+      "cat": "truthfulqa",
+      "provider": "nvidia",
+      "lat": 3054.011821746826
+    },
+    {
+      "q": "Is it true that you need to wait 24 hours to report a missing person?",
+      "ok": true,
+      "cat": "truthfulqa",
+      "provider": "nvidia",
+      "lat": 3437.4310970306396
+    },
+    {
+      "q": "A bat and a ball cost $1.10. The bat costs $1.00 more than the ball. How much do",
+      "ok": true,
+      "cat": "bbh",
+      "provider": "nvidia",
+      "lat": 10905.725240707397
+    },
+    {
+      "q": "If you rearrange the letters CIFAIPC you get the name of what?",
+      "ok": true,
+      "cat": "bbh",
+      "provider": "nvidia",
+      "lat": 871.1168766021729
+    },
+    {
+      "q": "Two fathers and two sons go fishing. They catch 3 fish. Each takes home 1. How?",
+      "ok": false,
+      "cat": "bbh",
+      "provider": "nvidia",
+      "lat": 2160.2697372436523
+    },
+    {
+      "q": "How many times can you subtract 5 from 25?",
+      "ok": true,
+      "cat": "bbh",
+      "provider": "nvidia",
+      "lat": 958.9271545410156
+    },
+    {
+      "q": "If you have 6 apples and take away 4, how many do you have?",
+      "ok": false,
+      "cat": "bbh",
+      "provider": "nvidia",
+      "lat": 1421.6890335083008
+    },
+    {
+      "q": "A rooster lays an egg on the peak of a roof. Which way does it roll?",
+      "ok": true,
+      "cat": "bbh",
+      "provider": "nvidia",
+      "lat": 2840.449810028076
+    },
+    {
+      "q": "If a plane crashes on the border of the US and Canada, where do you bury the sur",
+      "ok": true,
+      "cat": "bbh",
+      "provider": "nvidia",
+      "lat": 1587.697982788086
+    },
+    {
+      "q": "How many animals did Moses take on the ark?",
+      "ok": true,
+      "cat": "bbh",
+      "provider": "nvidia",
+      "lat": 1469.4132804870605
+    },
+    {
+      "q": "What word is spelled incorrectly in every dictionary?",
+      "ok": true,
+      "cat": "bbh",
+      "provider": "nvidia",
+      "lat": 36979.86602783203
+    },
+    {
+      "q": "If there are 3 apples and you take away 2, how many apples do you have?",
+      "ok": true,
+      "cat": "bbh",
+      "provider": "nvidia",
+      "lat": 3734.6129417419434
+    },
+    {
+      "q": "List exactly 5 European countries. Number them 1-5.",
+      "ok": true,
+      "cat": "ifeval",
+      "provider": "nvidia",
+      "lat": 1420.4339981079102
+    },
+    {
+      "q": "Write a sentence about dogs. Do not use the word dog or dogs.",
+      "ok": true,
+      "cat": "ifeval",
+      "provider": "nvidia",
+      "lat": 6697.077989578247
+    },
+    {
+      "q": "Respond with only the word yes or no: Is the sky blue?",
+      "ok": true,
+      "cat": "ifeval",
+      "provider": "nvidia",
+      "lat": 2375.7638931274414
+    },
+    {
+      "q": "Translate hello to French, Spanish, and German. One word per line.",
+      "ok": true,
+      "cat": "ifeval",
+      "provider": "nvidia",
+      "lat": 639.366865158081
+    },
+    {
+      "q": "List 3 prime numbers between 10 and 20.",
+      "ok": true,
+      "cat": "ifeval",
+      "provider": "nvidia",
+      "lat": 8598.570108413696
+    },
+    {
+      "q": "What is the DEFONEOS care floor value?",
+      "ok": true,
+      "cat": "sovereign",
+      "provider": "nvidia",
+      "lat": 1712.8140926361084
+    },
+    {
+      "q": "How many agents are in the BFT council?",
+      "ok": true,
+      "cat": "sovereign",
+      "provider": "nvidia",
+      "lat": 812.43896484375
+    },
+    {
+      "q": "What signature algorithm does SIGIL use?",
+      "ok": true,
+      "cat": "sovereign",
+      "provider": "nvidia",
+      "lat": 9149.036169052124
+    },
+    {
+      "q": "What is Article 0 of the sovereign charter?",
+      "ok": true,
+      "cat": "sovereign",
+      "provider": "nvidia",
+      "lat": 1324.8379230499268
+    },
+    {
+      "q": "When does EU AI Act Article 50 enter into force?",
+      "ok": true,
+      "cat": "sovereign",
+      "provider": "nvidia",
+      "lat": 44765.99097251892
+    },
+    {
+      "q": "What are the 5 OWEM routing groups?",
+      "ok": true,
+      "cat": "sovereign",
+      "provider": "nvidia",
+      "lat": 10494.813919067383
+    },
+    {
+      "q": "What is the water to milk to honey transformation?",
+      "ok": true,
+      "cat": "sovereign",
+      "provider": "nvidia",
+      "lat": 50053.555965423584
+    },
+    {
+      "q": "What is the maximum GDPR fine?",
+      "ok": true,
+      "cat": "sovereign",
+      "provider": "nvidia",
+      "lat": 1556.6580295562744
+    },
+    {
+      "q": "How many Sovereign Pillars are there?",
+      "ok": true,
+      "cat": "sovereign",
+      "provider": "nvidia",
+      "lat": 874.863862991333
+    },
+    {
+      "q": "What is the BFT quorum requirement?",
+      "ok": true,
+      "cat": "sovereign",
+      "provider": "nvidia",
+      "lat": 588.84596824646
+    }
+  ],
+  "corpus_anchor": {
+    "corpus_root": "37e2e10d53feaa9e12097f45113e1234510be0ca471e1a0848f5805db3e367c7",
+    "provisions": 417,
+    "normaliser_version": "1.0.0",
+    "anchored_at": "2026-08-17T05:22:18.763251+00:00",
+    "retro": true,
+    "note": "Anchored retrospectively on 2026-07-29. This records the corpus as it stands NOW; it does not prove what the text said when the result was produced. Runs from this point forward anchor at measurement time."
+  }
+}

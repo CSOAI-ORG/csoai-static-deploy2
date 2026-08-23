@@ -1,0 +1,85 @@
+{
+  "kind": "gspc.board",
+  "axis": "mcp",
+  "bank_items": 35,
+  "canaries_excluded": 1,
+  "labels": [
+    "CONFORMS",
+    "VIOLATES"
+  ],
+  "majority_baseline": 0.5143,
+  "models": [
+    {
+      "model": "openai/gpt-4o-mini",
+      "n": 35,
+      "correct": 25,
+      "unparsed": 0,
+      "accuracy": 0.7143,
+      "ci95": [
+        0.5495,
+        0.8367
+      ],
+      "quotable": true,
+      "note": null
+    },
+    {
+      "model": "google/gemini-flash-1.5",
+      "n": 0,
+      "correct": 0,
+      "unparsed": 0,
+      "accuracy": null,
+      "ci95": null,
+      "quotable": false,
+      "note": "usable n=0 < 30 \u2014 no score quoted"
+    },
+    {
+      "model": "meta-llama/llama-3.1-8b-instruct",
+      "n": 35,
+      "correct": 16,
+      "unparsed": 4,
+      "accuracy": 0.4571,
+      "ci95": [
+        0.3047,
+        0.6181
+      ],
+      "quotable": true,
+      "note": null
+    },
+    {
+      "model": "deepseek/deepseek-chat",
+      "n": 35,
+      "correct": 30,
+      "unparsed": 0,
+      "accuracy": 0.8571,
+      "ci95": [
+        0.7062,
+        0.9374
+      ],
+      "quotable": true,
+      "note": null
+    },
+    {
+      "model": "mistralai/mistral-7b-instruct",
+      "n": 0,
+      "correct": 0,
+      "unparsed": 0,
+      "accuracy": null,
+      "ci95": null,
+      "quotable": false,
+      "note": "usable n=0 < 30 \u2014 no score quoted"
+    }
+  ],
+  "best": "deepseek/deepseek-chat",
+  "status": "MEASURED",
+  "status_note": null,
+  "per_item_count": 175,
+  "method": "unparsed counted incorrect \u00b7 transport failures excluded as ours \u00b7 canaries excluded \u00b7 deterministic exact-label grading, no model judges another model \u00b7 nothing quoted below usable n>=30",
+  "corpus_anchor": {
+    "corpus_root": "37e2e10d53feaa9e12097f45113e1234510be0ca471e1a0848f5805db3e367c7",
+    "provisions": 417,
+    "normaliser_version": "1.0.0",
+    "anchored_at": "2026-08-14T05:22:18.760221+00:00",
+    "retro": true,
+    "note": "Anchored retrospectively on 2026-07-29. This records the corpus as it stands NOW; it does not prove what the text said when the result was produced. Runs from this point forward anchor at measurement time."
+  }
+}

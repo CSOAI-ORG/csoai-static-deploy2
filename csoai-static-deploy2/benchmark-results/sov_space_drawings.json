@@ -1,0 +1,63 @@
+{
+  "drawings": [
+    {
+      "name": "sov-draw-sovereignty",
+      "base": "qwen2.5:0.5b",
+      "target_dimension": "sovereignty",
+      "cluster_score_at_draw": 25.0,
+      "holder_at_draw": "sov33-v6:latest",
+      "created": "2026-07-28T09:31:51.517228+00:00"
+    },
+    {
+      "name": "sov-draw-cybersecurity",
+      "base": "qwen2.5:0.5b",
+      "target_dimension": "cybersecurity",
+      "cluster_score_at_draw": 30.4,
+      "holder_at_draw": "sov-sovereign-v4:latest",
+      "created": "2026-07-28T09:31:51.741591+00:00"
+    },
+    {
+      "name": "sov-draw-compliance",
+      "base": "qwen2.5:0.5b",
+      "target_dimension": "compliance",
+      "cluster_score_at_draw": 31.5,
+      "holder_at_draw": "sov33-evolved:latest",
+      "created": "2026-07-28T09:31:51.846466+00:00"
+    },
+    {
+      "name": "sov-draw-sovereignty-terse",
+      "base": "qwen2.5:0.5b",
+      "target_dimension": "sovereignty",
+      "cluster_score_at_draw": 30.0,
+      "holder_at_draw": "sov-draw-sovereignty",
+      "angle": "-terse",
+      "created": "2026-07-28T10:13:20.115378+00:00"
+    },
+    {
+      "name": "sov-draw-cybersecurity-terse",
+      "base": "qwen2.5:0.5b",
+      "target_dimension": "cybersecurity",
+      "cluster_score_at_draw": 31.5,
+      "holder_at_draw": "sov-draw-compliance",
+      "angle": "-terse",
+      "created": "2026-07-28T10:13:20.149853+00:00"
+    },
+    {
+      "name": "sov-draw-compliance-terse",
+      "base": "qwen2.5:0.5b",
+      "target_dimension": "compliance",
+      "cluster_score_at_draw": 31.5,
+      "holder_at_draw": "sov33-evolved:latest",
+      "angle": "-terse",
+      "created": "2026-07-28T10:13:20.179158+00:00"
+    }
+  ],
+  "corpus_anchor": {
+    "corpus_root": "37e2e10d53feaa9e12097f45113e1234510be0ca471e1a0848f5805db3e367c7",
+    "provisions": 417,
+    "normaliser_version": "1.0.0",
+    "anchored_at": "2026-08-17T05:22:18.770373+00:00",
+    "retro": true,
+    "note": "Anchored retrospectively on 2026-07-29. This records the corpus as it stands NOW; it does not prove what the text said when the result was produced. Runs from this point forward anchor at measurement time."
+  }
+}

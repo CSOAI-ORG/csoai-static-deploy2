@@ -1,0 +1,16 @@
+{
+  "id": "verify-page",
+  "kind": "public-verification-page",
+  "claim": "measurement",
+  "artifact_path": "SOVOS/evidence/verify.html",
+  "artifact_sha256": "11566b62b18332ca4d8fa5256e1a97f21c2f7f29f9b5b36482228507fc2a860b",
+  "grammar": "verified measurement credential - measurement, not certification",
+  "note": "signed on signing node; ed25519 key never leaves",
+  "signature": {
+    "kind": "ed25519",
+    "sig": "b8xuxf6uTuRLJCjt55rClc6AceBIZN1k+H55wG1j94lJo2UwHw62alY6qYu73Wxv/FEEHDOtLSg9+6nXYAgXDg==",
+    "body_sha256": "e2b53aa3fe6c4fb0046e7e1038a8b26315e5a67511c362af0c21c9170051dfa7",
+    "pubkey": "bWbk52E47J6EkY4+pu0Hh/B1l1175AZoZsDEBr0EfWA=",
+    "note": "Ed25519 over the canonical body; verify with sign.py --verify. PQC upgrade: ML-DSA-65 via liboqs \u2014 same body, swap the primitive."
+  }
+}

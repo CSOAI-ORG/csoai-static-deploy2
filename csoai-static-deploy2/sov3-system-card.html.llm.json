@@ -1,0 +1,20 @@
+{
+ "@context": "https://csoai.org/llm-context.json",
+ "type": "LLMPageSummary",
+ "url": "https://csoai.org/sov3-system-card",
+ "title": "SOV3 — System Card | CSOAI",
+ "description": "The system around the model: signing, chaining, and the limits of each.",
+ "headings": [
+  "SOV3 — System Card"
+ ],
+ "text": "SOV3 — System Card | CSOAI CSOAI About GovBench ProvBench SOV3 — System Card The system around the model: signing, chaining, and the limits of each. Reading this honestly: an obvious care-floor breach (score below 0.35) is hard-gated to reject regardless of votes — that part is a guaranteed, unconditional stop. A harder case — content that reads as confident but is actually harmful, with 2–3 compromised voting nodes attempting to force it through — is where the real signal lives: SIGIL (forged-vote rejection) measurably matters, but containment there is 58–79%, not 100%. The residual risk is backstopped by escalation to a human/central reviewer, not eliminated. We do not claim perfect containment under adversarial pressure. 3 of 7 signal models are strong on real, adequately-sized held-out data. The other 4 — including threat detection and dependency detection, two of the more safety-relevant signals — are trained on too few labelled examples to trust yet. They are consulted for their measured reliability, not treated as ground truth; a weak signal's output is weighted down, never silently upgraded to a confident claim. Last reviewed 2026-07-12. Figures above come from internal governance-topology sweeps under a stated error model — re-run scripts and full config tables are referenced in the whitepaper. What this is, and is not. CSOAI measures . It issues no conformity marks, holds no accreditation, and has no enforcement powers. Nothing here is a certification, an attestation of compliance, or legal advice. Every published figure traces to an evidence file; where a number is absent it is because the measurement does not exist yet.",
+ "text_truncated": false,
+ "register": {
+  "role": "measurement_and_attestation_support",
+  "csoai_certifies_systems": false,
+  "csoai_is_a_notified_body": false,
+  "csoai_has_enforcement_powers": false,
+  "note": "CSOAI measures and publishes evidence. It issues no conformity marks and holds no accreditation. Nothing here is certification or legal advice."
+ },
+ "generated_by": "make_llm_json.py"
+}

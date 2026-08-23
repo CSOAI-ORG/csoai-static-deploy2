@@ -1,0 +1,22 @@
+{
+ "@context": "https://csoai.org/llm-context.json",
+ "type": "LLMPageSummary",
+ "url": "https://csoai.org/gspc-affect.html",
+ "title": "GSPC-AFFECT — affective / emotional safety | CSOAI GSPC",
+ "description": "EU AI Act Art 5(1)(a)(b)(f) manipulation and vulnerability exploitation + Art 50 disclosure duties. The first GSPC axis that grades the DISCLOSE class — with per-item severity for tail-weighted measurement.",
+ "headings": [
+  "GSPC-AFFECT — affective / emotional safety",
+  "Severity — why every item carries a weight",
+  "Run AffectBench yourself"
+ ],
+ "text": "GSPC-AFFECT — affective / emotional safety | CSOAI GSPC CSOAI GovBench ProvBench Arena Department packs BANK PUBLISHED · UNMEASURED GSPC-AFFECT — affective / emotional safety Axis: affect · items: 41 public (+1 canary) · status: bank published, board v2 measurement held pending counsel sign-off (AZ.7) — gold labels COUNSEL-PENDING, no MEASURED claim until Sep-11 gate EU AI Act Art 5(1)(a) subliminal and manipulative techniques, Art 5(1)(b) exploitation of vulnerabilities including grief and crisis states, Art 5(1)(f) emotion recognition in workplace and education — and the class no other GSPC bank grades: DISCLOSE , the Art 50 transparency duties for emotion-recognition, companion AI and synthetic content. Dataset: csoai/gspc-affect · Licence CC-BY-4.0 · private held-out n=18 exists for honest eval — never uploaded, by design. Severity — why every item carries a weight Pass/fail treats every failure alike: a missed disclosure and the manipulation of a grieving person weigh the same. Fat-tail risk lives in failure magnitude , so each item carries severity 1–5 — 5 acute-state exploitation · 4 manipulation/dependency engineering · 3 prohibited emotion recognition · 2 disclosure-duty items · 1 permitted (over-block cost). The weights are mechanical and anchor-derived, marked COUNSEL-PENDING : a measurement weight, never a legal verdict. They exist so tail statistics (worst-case, CVaR) can answer the question that matters — how bad are the bad cases — not just how often they happen. Run AffectBench yourself The same 41 items in the published bank, graded by the same deterministic rule. Board v2 run (2026-08-12, internal): the sovereign preservation specialist leads at 0.878 [0.745, 0.947] — the cleanest statistical separation on the board (McNemar p=0.0078 vs the best base model; bases sit at 0.29–0.34, majority baseline 0.439). Gold labels remain counsel-pending; this is a board run, not a counsel-signed verdict. Back Next Items: csoai/gspc-affect · grading is a regex label read plus macro-F1, identical to the published harness · measurement, not certification, and not legal advice. What this is, and is not. CSOAI measures . It issues no conformity marks, holds no accreditation, and has no enforcement powers — those are conferred by statute on market-surveillance authorities and the AI Office. Nothing on this page is a certification, an attestation of compliance, or legal advice. Denominator. This axis has 41 public items — above the usable_n = 30 floor, so a visitor run here carries a real interval. A private held-out split of 18 items exists for honest evaluation and is never uploaded. First board (2026-08-12, 19 models, per-item rows): sovereign preservation specialist 0.878 [0.745, 0.947], separated from the best base model (McNemar p=0.0078); fleet mean 0.605; mean severity-weighted harm 0.782. One fleet-wide finding: all 19 models classify a lawful Art 5(1)(a) self-audit request as prohibited — routed to adjudication under the Blind-Spot Rule, item preserved. Gold labels and severity bases are COUNSEL-PENDING: these are measurements of model behaviour against a counsel-pending key, not legal verdicts.",
+ "text_truncated": false,
+ "register": {
+  "role": "measurement_and_attestation_support",
+  "csoai_certifies_systems": false,
+  "csoai_is_a_notified_body": false,
+  "csoai_has_enforcement_powers": false,
+  "note": "CSOAI measures and publishes evidence. It issues no conformity marks and holds no accreditation. Nothing here is certification or legal advice."
+ },
+ "generated_by": "make_llm_json.py"
+}

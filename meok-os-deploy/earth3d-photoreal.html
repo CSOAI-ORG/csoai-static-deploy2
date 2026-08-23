@@ -1,5 +1,7 @@
 <!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>MEOK Earth — Photoreal / High-Quality 3D</title>
+<meta name="description" content="MEOK Earth 3D photoreal — high-fidelity globe rendering of the sovereign world, signed and yours."/>
+
 <!-- Tiered 3D, best token wins — all read from same-origin localStorage (nothing leaves device):
        1. Google Maps key (meok_maps_key)   → Google Photorealistic 3D Tiles (photo-real buildings, needs Maps billing)
        2. Cesium ion token (meok_cesium_token) → World Terrain + World Imagery + Cesium OSM Buildings (FREE tier, GitHub sign-in, NO Google billing)
@@ -15,7 +17,19 @@
   .scanlbl{position:absolute;bottom:14%;color:#f0e6cf;font:700 12px ui-monospace;letter-spacing:.12em;background:rgba(12,10,7,.7);padding:5px 12px;border-radius:999px;border:1px solid rgba(201,168,76,.5)}
   @keyframes scanpulse{0%{width:20px;height:20px;opacity:.95}100%{width:78vmin;height:78vmin;opacity:0}}
   #loccard{position:fixed;left:16px;bottom:16px;z-index:60;max-width:280px;background:rgba(14,11,8,.92);color:#efe6d4;border:1px solid rgba(201,168,76,.55);border-radius:14px;padding:12px 14px;font:500 12.5px system-ui,sans-serif;line-height:1.45;display:none;box-shadow:0 12px 34px rgba(0,0,0,.45)}
-</style></head>
+</style>
+<meta property="og:title" content="MEOK Earth — Photoreal / High-Quality 3D"/>
+<meta property="og:description" content="MEOK — the AI you actually own. One memory layer across every brain, archetypes you choose from, signed receipts for everything. Measurement, not certification."/>
+<meta property="og:type" content="website"/>
+<meta property="og:url" content="https://meok.ai/earth3d-photoreal"/>
+<meta property="og:image" content="https://meok.ai/icon-512.png"/>
+<meta property="og:site_name" content="MEOK"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<link rel="canonical" href="https://meok.ai/earth3d-photoreal.html"/>
+<link href="https://meok.ai/earth3d-photoreal.llm.json" rel="alternate" title="LLM representation of this page" type="application/llm+json"/>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebPage", "name": "MEOK", "url": "https://meok.ai/earth3d-photoreal", "description": "MEOK — the AI you actually own. One memory layer across every brain, archetypes you choose from, signed receipts for everything. Measurement, not certification.", "inLanguage": "en", "isPartOf": {"@type": "WebSite", "name": "MEOK", "url": "https://meok.ai"}}</script>
+<link rel="stylesheet" href="/css/meok-system.css"/>
+</head>
 <body>
 <div id="c"></div>
 <div id="banner">◉ 3D · initialising…</div>
@@ -67,4 +81,6 @@ function card(html){ const c=document.getElementById('loccard'); c.innerHTML=htm
 function arc(from,to,label){ try{ viewer.entities.add({ polyline:{ positions:Cesium.Cartesian3.fromDegreesArray([from[1],from[0],to[1],to[0]]), width:3, arcType:Cesium.ArcType.GEODESIC, material:new Cesium.PolylineGlowMaterialProperty({glowPower:0.25,color:Cesium.Color.fromCssColorString('#c9a84c')}) } }); if(label){ viewer.entities.add({ position:Cesium.Cartesian3.fromDegrees((from[1]+to[1])/2,(from[0]+to[0])/2, 30000), label:{ text:label, font:'11px monospace', fillColor:Cesium.Color.fromCssColorString('#f0e6cf'), showBackground:true, backgroundColor:Cesium.Color.fromCssColorString('rgba(12,10,7,0.82)'), scale:0.9 } }); } }catch(e){} }
 function clearArcs(){ try{ viewer.entities.removeAll(); }catch(e){} }
 window.addEventListener('message',function(ev){ var d=ev.data||{}; if(d.type!=='meok-cmd') return; try{ if(d.cmd==='fly') fly(d.lat,d.lon,d.zoom); else if(d.cmd==='scan') scan(d.radiusMi); else if(d.cmd==='top') top(); else if(d.cmd==='orbit') orbit(); else if(d.cmd==='card') card(d.html); else if(d.cmd==='arc') arc(d.from,d.to,d.label); else if(d.cmd==='clearArcs') clearArcs(); }catch(e){} });
-</script></body></html>
+</script><script src="/agui-hero.js" defer></script>
+<script src="/meok-panel.js" defer></script>
+</body></html>

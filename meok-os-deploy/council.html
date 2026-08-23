@@ -1,7 +1,7 @@
 <!doctype html><html lang="en"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>The Council — your Sovereign runs every AI at once</title>
-<meta name="description" content="One prompt, every AI. Your Sovereign fans your question to Claude, GPT and SOV3 in parallel, side by side, then synthesizes the best answer. Your keys stay on your device.">
+<title>The Council — your companion runs every AI at once</title>
+<meta name="description" content="One prompt, every AI. Your companion fans your question to Claude, GPT and MEOK in parallel, side by side, then synthesizes the best answer. Your keys stay on your device.">
 <style>
 :root{--bg:#f4f1ea;--card:#fffdf8;--ink:#1a1712;--dim:#6b6355;--gold:#b8912f;--line:#e6dfd0;--ink2:#2a2620;--ok:#2e7d32}
 *{box-sizing:border-box}
@@ -34,10 +34,22 @@ h1 .g{color:var(--gold)}
 .synth h3{margin:0 0 8px;font-size:17px}.synth .a{font-size:15px;line-height:1.6;white-space:pre-wrap}
 .foot{color:var(--dim);font-size:12.5px;margin-top:22px;border-top:1px solid var(--line);padding-top:14px}
 a{color:var(--gold)}
-</style></head><body><div class="wrap">
+</style>
+<meta property="og:title" content="The Council — your companion runs every AI at once"/>
+<meta property="og:description" content="One prompt, every AI. Your companion fans your question to Claude, GPT and MEOK in parallel, side by side, then synthesizes the best answer. Your keys stay on your device."/>
+<meta property="og:type" content="website"/>
+<meta property="og:url" content="https://meok.ai/council"/>
+<meta property="og:image" content="https://meok.ai/icon-512.png"/>
+<meta property="og:site_name" content="MEOK"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<link rel="canonical" href="https://meok.ai/council.html"/>
+<link href="https://meok.ai/council.llm.json" rel="alternate" title="LLM representation of this page" type="application/llm+json"/>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebPage", "name": "MEOK", "url": "https://meok.ai/council", "description": "One prompt, every AI. Your companion fans your question to Claude, GPT and MEOK in parallel, side by side, then synthesizes the best answer. Your keys stay on your device.", "inLanguage": "en", "isPartOf": {"@type": "WebSite", "name": "MEOK", "url": "https://meok.ai"}}</script>
+<link rel="stylesheet" href="/css/meok-system.css"/>
+</head><body><div class="wrap">
 <div class="brand"><span class="m">M</span> MEOK · the council</div>
-<h1>Your <span class="g">Sovereign</span> runs the room — <span class="g">every AI at once</span>.</h1>
-<p class="sub">One prompt fans out to <b>SOV3</b> (your sovereign, free), <b>Claude</b>, and <b>GPT</b> in parallel — side by side — then your Sovereign <b>synthesizes</b> the best combined answer. Add more voices any time. <b>Your keys never leave this device</b>; SOV3 needs no key.</p>
+<h1>Your <span class="g">Keyholder</span> runs the room — <span class="g">every AI at once</span>.</h1>
+<p class="sub">One prompt fans out to <b>MEOK</b> (your companion, free), <b>Claude</b>, and <b>GPT</b> in parallel — side by side — then your companion <b>synthesizes</b> the best combined answer. Add more voices any time. <b>Your keys never leave this device</b>; MEOK needs no key.</p>
 
 <details class="keys"><summary>🔑 Your keys (stored only in this browser — never sent to MEOK)</summary>
   <div class="krow"><span>Anthropic (Claude):</span><input id="k_anthropic" type="password" placeholder="sk-ant-… (optional)"></div>
@@ -48,24 +60,24 @@ a{color:var(--gold)}
 </details>
 
 <div class="bar">
-  <input class="q" id="q" placeholder="Ask the whole council one question…" value="In one sentence: what makes an AI 'sovereign'?">
+  <input class="q" id="q" placeholder="Ask the whole council one question…" value="In one sentence: what makes an AI 'keyholder'?">
   <button id="go">Ask all →</button>
 </div>
 
 <div class="grid" id="grid"></div>
 
 <div class="synth" id="synthBox" style="display:none">
-  <h3>🐉 Your Sovereign's synthesis</h3>
+  <h3>🐉 Your companion's synthesis</h3>
   <div class="a" id="synth"></div>
 </div>
 
 <div class="foot">
-  <p><b>Honest &amp; sovereign:</b> the actual Claude/ChatGPT web apps can't be embedded (they block it, and their terms forbid automation), so the council calls each provider's <b>API directly from your browser</b> with your own key — nothing routes through MEOK, keys stay yours. SOV3 is free and always on. This is the OWEM council pattern applied to outside AIs: many voices, one synthesized answer, governed. Take your Sovereign elsewhere: <a href="/connect.html">Claude/MCP</a> · <a href="/embed.html">any website</a> · <a href="/siri.html">Siri</a>.</p>
+  <p><b>Honest &amp; keyholder:</b> the actual Claude/ChatGPT web apps can't be embedded (they block it, and their terms forbid automation), so the council calls each provider's <b>API directly from your browser</b> with your own key — nothing routes through MEOK, keys stay yours. MEOK is free and always on. This is the OWEM council pattern applied to outside AIs: many voices, one synthesized answer, governed. Take your companion elsewhere: <a href="/connect.html">Claude/MCP</a> · <a href="/embed.html">any website</a> · <a href="/siri.html">Siri</a>.</p>
 </div>
 </div>
 <script>
 const PROVIDERS = [
-  { id:'sov3', label:'SOV3 · your Sovereign', model:'gpt-oss-120b', free:true },
+  { id:'meok', label:'MEOK · your companion', model:'gpt-oss-120b', free:true },
   { id:'anthropic', label:'Claude', model:'claude-sonnet-4-5', keyId:'k_anthropic' },
   { id:'openai', label:'GPT', model:'gpt-4o-mini', keyId:'k_openai' },
   { id:'gemini', label:'Gemini', model:'gemini-1.5-flash', keyId:'k_gemini' },
@@ -84,8 +96,8 @@ PROVIDERS.forEach(p=>{
 const setDot=(id,cls)=>{document.getElementById('dot_'+id).className='dot '+cls;};
 const setAns=(id,t)=>{document.getElementById('ans_'+id).textContent=t;};
 
-async function askSov3(prompt){
-  const r=await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:prompt,persona:'You are the user’s Sovereign — warm, brief, honest.',register:'plain'})});
+async function askBrain(prompt){
+  const r=await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:prompt,persona:'You are the user’s Keyholder — warm, brief, honest.',register:'plain'})});
   const d=await r.json(); return d.response||d.say||'(no reply)';
 }
 async function askAnthropic(prompt,key,model){
@@ -120,24 +132,26 @@ document.getElementById('go').onclick=async function(){
     setDot(p.id,'run'); setAns(p.id,'thinking…'); const t0=Date.now();
     try{
       let ans;
-      if(p.id==='sov3') ans=await askSov3(prompt);
+      if(p.id==='meok') ans=await askBrain(prompt);
       else if(p.id==='anthropic') ans=await askAnthropic(prompt,key,p.model);
       else if(p.id==='openai') ans=await askOpenAI(prompt,key,p.model);
       else if(p.id==='gemini') ans=await askGemini(prompt,key,p.model);
       else if(p.id==='grok') ans=await askGrok(prompt,key,p.model);
       else if(p.id==='ollama') ans=await askOllama(prompt,p.model);
       setAns(p.id,ans); setDot(p.id,'on'); document.getElementById('meta_'+p.id).textContent=p.model+' · '+((Date.now()-t0)/1000).toFixed(1)+'s'; answers[p.label]=ans;
-    }catch(e){ setDot(p.id,'err'); setAns(p.id,'⚠ '+e.message+(p.id==='ollama'?' (start Ollama locally)':(p.id!=='sov3'?' (check key / provider CORS)':''))); }
+    }catch(e){ setDot(p.id,'err'); setAns(p.id,'⚠ '+e.message+(p.id==='ollama'?' (start Ollama locally)':(p.id!=='meok'?' (check key / provider CORS)':''))); }
   });
   await Promise.all(jobs);
-  // synthesis by the Sovereign
+  // synthesis by the Keyholder
   const voices=Object.entries(answers).map(([k,v])=>k+': '+v).join('\n\n');
   if(Object.keys(answers).length>=2){
     document.getElementById('synth').textContent='synthesizing…'; synthBox.style.display='block';
-    try{ const s=await askSov3('You are chairing a council of AIs. Here are their answers to "'+prompt+'":\n\n'+voices+'\n\nGive the user ONE clear synthesized answer: where they agree, any key difference, and your honest best take. Be concise.');
+    try{ const s=await askBrain('You are chairing a council of AIs. Here are their answers to "'+prompt+'":\n\n'+voices+'\n\nGive the user ONE clear synthesized answer: where they agree, any key difference, and your honest best take. Be concise.');
       document.getElementById('synth').textContent=s;
     }catch(e){ document.getElementById('synth').textContent='(synthesis unavailable: '+e.message+')'; }
   }
   this.disabled=false;
 };
-</script></body></html>
+</script><script src="/agui-hero.js" defer></script>
+<script src="/meok-panel.js" defer></script>
+</body></html>

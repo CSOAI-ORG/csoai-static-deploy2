@@ -37,12 +37,12 @@ RE_ARTICLE_SCHEMA = re.compile(r'"@type"\s*:\s*"Article"', re.IGNORECASE)
 # Article 50 banner — looks for Article 50 + EU AI Act references
 RE_ART50 = re.compile(r'(Article\s*50|EU\s+AI\s+Act)', re.IGNORECASE)
 # Link to /master
-RE_MASTER = re.compile(r'href=["\'][^"\']*/master["\']', re.IGNORECASE)
+RE_MASTER = re.compile(r'href=["\'][^"\']*master', re.IGNORECASE)
 # SIGIL footer or receipt reference
 RE_SIGIL = re.compile(r'(SIGIL[\s\|:]|receipt[\s\-:]|sigil[\-:]anchor|sigil-chain|sigil_digest)', re.IGNORECASE)
 # CTA
-RE_CTA_50 = re.compile(r'href=["\'][^"\']*/defoneos-article-50["\']', re.IGNORECASE)
-RE_CTA_RFQ = re.compile(r'href=["\'][^"\']*/defoneos-owem-rfq["\']', re.IGNORECASE)
+RE_CTA_50 = re.compile(r'href=["\'][^"\']*(article50-passport|defoneos-article-50)', re.IGNORECASE)
+RE_CTA_RFQ = re.compile(r'href=["\'][^"\']*defoneos-owem-rfq', re.IGNORECASE)
 
 
 def audit_file(path: Path):

@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>DEFONEOS x Scottish Biometrics Commissioner — AI Governance for Biometric Data Oversight, Police Scotland & Criminal Justice</title>
+<meta name="description" content="AI governance deep-dive pack for the Scottish Biometrics Commissioner — the independent oversight body established by the Scottish Biometrics Commissioner Act 2020 to oversee the acquisition, retention, use and destruction of biometric data for criminal justice and policing purposes in Scotland, including live facial recognition, custody imaging, fingerprint and DNA databases">
+<link rel="canonical" href="#">
+<style>
+:root{--bg:#050816;--panel:#0d1330;--gold:#d4af37;--sov:#6dd5ff;--accent:#4ade80;--text:#e2e8f0;--muted:#94a3b8;--red:#ef4444}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:'Inter',-apple-system,sans-serif;line-height:1.6}
+.nav{display:flex;gap:2rem;padding:1rem 2rem;background:var(--panel);border-bottom:1px solid rgba(109,213,255,0.15);font-size:0.9rem;flex-wrap:wrap}
+.nav a{color:var(--sov);text-decoration:none;transition:color 0.2s}
+.nav a:hover{color:var(--gold)}
+.container{max-width:1200px;margin:0 auto;padding:2rem}
+h1{font-size:2.2rem;background:linear-gradient(135deg,var(--sov),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:0.5rem}
+.subtitle{color:var(--muted);font-size:1.1rem;margin-bottom:2rem}
+.eu-banner{background:linear-gradient(135deg,#991b1b,#7f1d1d);padding:0.8rem 1.5rem;border-radius:8px;margin-bottom:2rem;font-size:0.85rem;color:#fca5a5}
+.stats-bar{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:2.5rem}
+.stat-card{background:var(--panel);padding:1.2rem;border-radius:8px;text-align:center;border:1px solid rgba(109,213,255,0.1)}
+.stat-card .stat-num{font-size:1.8rem;font-weight:700;color:var(--gold)}
+.stat-card .stat-label{font-size:0.8rem;color:var(--muted);margin-top:0.3rem}
+h2{color:var(--sov);font-size:1.4rem;margin:2rem 0 1rem;padding-bottom:0.5rem;border-bottom:2px solid rgba(109,213,255,0.15)}
+.ep-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-bottom:2rem}
+.ep-card{background:var(--panel);padding:1.2rem;border-radius:8px;border:1px solid rgba(109,213,255,0.1);transition:border-color 0.2s}
+.ep-card:hover{border-color:var(--accent)}
+.ep-tag{display:inline-block;background:rgba(74,222,128,0.15);color:var(--accent);font-size:0.7rem;padding:0.2rem 0.6rem;border-radius:4px;margin-bottom:0.5rem;text-transform:uppercase;letter-spacing:0.05em}
+.ep-card h3{color:var(--text);font-size:0.95rem;margin-bottom:0.4rem}
+.ep-card p{color:var(--muted);font-size:0.8rem;line-height:1.4}
+.priority-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:2rem}
+.p-card{background:var(--panel);padding:1rem;border-radius:8px;border:1px solid rgba(250,204,21,0.15)}
+.p-tag{display:inline-block;background:rgba(250,204,21,0.15);color:#fbbf24;font-size:0.7rem;padding:0.2rem 0.6rem;border-radius:4px;margin-bottom:0.5rem}
+.p-card h3{color:var(--text);font-size:0.85rem;margin-bottom:0.4rem}
+.mcp-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-bottom:2rem}
+.mcp-card{background:var(--panel);padding:1rem;border-radius:8px;border:1px solid rgba(109,213,255,0.15)}
+.mcp-tag{display:inline-block;background:rgba(109,213,255,0.15);color:var(--sov);font-size:0.7rem;padding:0.2rem 0.6rem;border-radius:4px;margin-bottom:0.5rem}
+.red-line-box{background:rgba(239,68,68,0.05);border:1px solid rgba(239,68,68,0.3);border-radius:8px;padding:1.5rem;margin-bottom:2rem}
+.red-line-box h3{color:var(--red);margin-bottom:0.8rem}
+.red-line-box ul{list-style:none;padding:0}
+.red-line-box li{color:var(--muted);font-size:0.85rem;padding:0.3rem 0;padding-left:1.2rem;position:relative}
+.red-line-box li:before{content:'🚫';position:absolute;left:0;font-size:0.75rem}
+.steps-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:1rem;margin-bottom:2rem}
+.step-card{background:var(--panel);padding:1rem;border-radius:8px;text-align:center;border:1px solid rgba(109,213,255,0.1)}
+.step-num{display:inline-flex;align-items:center;justify-content:center;width:2rem;height:2rem;border-radius:50%;background:var(--accent);color:var(--bg);font-weight:700;font-size:0.9rem;margin-bottom:0.5rem}
+.step-card h4{font-size:0.8rem;color:var(--text);margin-bottom:0.3rem}
+.step-card p{font-size:0.7rem;color:var(--muted);line-height:1.3}
+.cta-strip{display:flex;gap:1rem;justify-content:center;margin:2rem 0}
+.cta-btn{display:inline-block;padding:0.8rem 2rem;border-radius:6px;text-decoration:none;font-weight:600;transition:all 0.2s;font-size:0.9rem}
+.cta-primary{background:linear-gradient(135deg,var(--gold),#b8860b);color:var(--bg)}
+.cta-primary:hover{transform:translateY(-1px);box-shadow:0 4px 20px rgba(212,175,55,0.3)}
+.cta-secondary{background:transparent;color:var(--sov);border:1px solid var(--sov)}
+.cta-secondary:hover{background:rgba(109,213,255,0.1)}
+.footer{background:var(--panel);padding:2rem;text-align:center;border-top:1px solid rgba(109,213,255,0.1);margin-top:3rem;font-size:0.8rem;color:var(--muted)}
+.footer .sigil{font-family:'Courier New',monospace;font-size:0.7rem;color:rgba(109,213,255,0.3);margin-top:0.5rem}
+@media(max-width:768px){.ep-grid,.priority-grid,.mcp-grid{grid-template-columns:repeat(2,1fr)}.stats-bar{grid-template-columns:repeat(2,1fr)}.steps-grid{grid-template-columns:repeat(3,1fr)}}
+</style>
+<script type="application/ld+json">
+{"@context": "https://schema.org", "@type": "Article", "headline": "DEFONEOS x Scottish Biometrics Commissioner \u2014 AI Governance for Biometric Data Oversight, Police Scotland & Criminal Justice", "description": "AI governance deep-dive pack for the Scottish Biometrics Commissioner \u2014 the independent oversight body established by the Scottish Biometrics Commissioner Act 2020 to oversee the acquisition, retention, use and destruction of biometric data for criminal justice and policing purposes in Scotland, including live facial recognition, custody imaging, fingerprint and DNA databases", "datePublished": "2026-08-16", "publisher": {"@type": "Organization", "name": "CSOAI Ltd", "url": "https://csoai.org"}, "about": {"@type": "GovernmentService", "name": "Scottish Biometrics Commissioner", "provider": {"@type": "GovernmentOrganization", "name": "Scottish Biometrics Commissioner (SBC)", "url": "https://www.biometricscommissioner.scot/"}}}
+</script>
+</head>
+<body>
+<div class="eu-banner">⚠️ EU AI Act Article 50 + Annex III High-Risk AI Systems — Scottish Biometrics Commissioner is Independent office-holder established by the Scottish Biometrics Commissioner Act 2020, accountable to the Scottish Parliament; jurisdiction covers Police Scotland, the Scottish Police Authority and Scottish criminal justice bodies; this AI pack complies with the CSOAI GSPC governance framework for high-risk public-sector AI deployment. All MCP tools are audit-grade, Ed25519-signed, and DEFONEOS-SEAL compatible.</div>
+<nav class="nav"><a href="#">Home</a><a href="#">Sitemap</a><a href="#">GovBench</a><a href="#">Index</a></nav>
+<div class="container">
+<h1>DEFONEOS x Scottish Biometrics Commissioner — AI Governance for Biometric Data Oversight, Police Scotland & Criminal Justice</h1>
+<p class="subtitle">AI governance deep-dive pack for the Scottish Biometrics Commissioner — the independent oversight body established by the Scottish Biometrics Commissioner Act 2020 to oversee the acquisition, retention, use and destruction of biometric data for criminal justice and policing purposes in Scotland, including live facial recognition, custody imaging, fingerprint and DNA databases</p>
+<div class="stats-bar">
+<div class="stat-card"><div class="stat-num">12</div><div class="stat-label">Entry Points</div></div>
+<div class="stat-card"><div class="stat-num">8</div><div class="stat-label">Transformation Priorities</div></div>
+<div class="stat-card"><div class="stat-num">6</div><div class="stat-label">MCP Servers</div></div>
+<div class="stat-card"><div class="stat-num">6</div><div class="stat-label">Red Lines</div></div>
+</div>
+
+<h2>🏛️ 12 Entry Points — Scottish Biometrics Commissioner</h2>
+<div class="ep-grid"><div class="ep-card"><span class="ep-tag">Justice/Biometrics</span><h3>Code of Practice Oversight</h3><p>Statutory Code of Practice on the acquisition, retention, use and destruction of biometric data for criminal justice and policing purposes — compliance monitoring, complaints and improvement recommendations</p></div>
+<div class="ep-card"><span class="ep-tag">Justice/Biometrics</span><h3>Live Facial Recognition Review</h3><p>Oversight of Police Scotland's use of live facial recognition and retrospective facial recognition technologies in public places — necessity, proportionality and human rights compliance</p></div>
+<div class="ep-card"><span class="ep-tag">Justice/Biometrics</span><h3>Custody Imaging Oversight</h3><p>Monitoring of custody imaging (photographing persons in police custody) — data quality, retention schedules, deletion compliance and rights of data subjects</p></div>
+<div class="ep-card"><span class="ep-tag">Justice/Biometrics</span><h3>DNA & Fingerprint Retention</h3><p>Oversight of the Scottish DNA Database and fingerprint database — retention periods, deletion of innocent persons' profiles and compliance with ECHR Article 8</p></div>
+<div class="ep-card"><span class="ep-tag">Justice/Biometrics</span><h3>Biometric Data Ethics Advisory</h3><p>Advisory function to Police Scotland, the Scottish Police Authority and Scottish Ministers on ethical, legal and human rights dimensions of biometric technologies</p></div>
+<div class="ep-card"><span class="ep-tag">Justice/Biometrics</span><h3>Children's Biometric Data</h3><p>Specific oversight and enhanced protections for biometric data of children in the criminal justice system — age-appropriate safeguards, parental consent and best-interests assessment</p></div>
+<div class="ep-card"><span class="ep-tag">Justice/Biometrics</span><h3>Emerging Biometric Technologies</h3><p>Horizon-scanning and advisory on emerging biometrics — voice recognition, gait analysis, iris recognition, keystroke dynamics, AI behavioural analytics</p></div>
+<div class="ep-card"><span class="ep-tag">Justice/Biometrics</span><h3>Equality & Human Rights Impact</h3><p>Assessment of biometric data use for its differential impact on protected groups — ethnicity, age, disability, and the risk of algorithmic bias in biometric matching</p></div>
+<div class="ep-card"><span class="ep-tag">Justice/Biometrics</span><h3>Transparency & Public Reporting</h3><p>Annual reporting to the Scottish Parliament, public consultation on biometrics policy and transparency about biometric data holdings and usage</p></div>
+<div class="ep-card"><span class="ep-tag">Justice/Biometrics</span><h3>Police Scotland Compliance Audits</h3><p>Compliance audit programme for Police Scotland custody suites, forensic services and digital evidence units — biometric data handling against the statutory Code of Practice</p></div>
+<div class="ep-card"><span class="ep-tag">Justice/Biometrics</span><h3>International Standards Alignment</h3><p>Engagement with UK Biometrics and Surveillance Camera Commissioner, ICO and international biometrics oversight bodies on interoperability standards and human rights frameworks</p></div>
+<div class="ep-card"><span class="ep-tag">Justice/Biometrics</span><h3>Data Breach & Complaint Investigation</h3><p>Investigation of biometric data breaches, complaints about biometric data handling, and recommendations for remedial action to Police Scotland</p></div></div>
+
+<h2>🚀 8 AI Transformation Priorities</h2>
+<div class="priority-grid"><div class="p-card"><span class="p-tag">Priority 1</span><h3>LFR Necessity & Proportionality Assessment</h3><p>AI-assisted structured assessment of Police Scotland's LFR deployment proposals against ECHR Article 8 necessity and proportionality tests; before: manual legal review; after: AI structured necessity framework with Commissioner review</p></div>
+<div class="p-card"><span class="p-tag">Priority 2</span><h3>Custody Image Retention Compliance</h3><p>AI monitoring of custody image retention schedules and automated flagging of images held beyond statutory retention periods; before: manual sampling; after: AI continuous retention compliance monitoring</p></div>
+<div class="p-card"><span class="p-tag">Priority 3</span><h3>Algorithmic Bias Audit Pipeline</h3><p>AI fairness-audit pipeline for biometric matching algorithms used by Police Scotland — ethnicity, age and gender bias testing across fingerprint, facial and DNA matching; before: ad-hoc bias testing; after: AI continuous algorithmic fairness auditing</p></div>
+<div class="p-card"><span class="p-tag">Priority 4</span><h3>Emerging Tech Horizon Scanning</h3><p>AI horizon-scanning and technology assessment briefings on emerging biometric modalities — gait, voice, iris, keystroke; before: periodic horizon scans; after: AI continuous technology watch with ethical risk assessment</p></div>
+<div class="p-card"><span class="p-tag">Priority 5</span><h3>DNA Database Deletion Compliance</h3><p>AI monitoring of the Scottish DNA Database for profiles that should have been deleted under statutory retention rules — innocent persons, children, non-convicted; before: periodic manual audit; after: AI continuous deletion compliance monitoring</p></div>
+<div class="p-card"><span class="p-tag">Priority 6</span><h3>Complaint Triage & Pattern Detection</h3><p>AI-assisted triage of biometrics complaints to identify systemic issues across custody suites and police divisions; before: reactive complaint handling; after: AI pattern-detection for systemic improvement</p></div>
+<div class="p-card"><span class="p-tag">Priority 7</span><h3>Transparency Dashboard</h3><p>AI-powered public transparency dashboard showing biometric data holdings, deletion rates, compliance metrics and complaints statistics; before: annual reports only; after: AI live transparency dashboards</p></div>
+<div class="p-card"><span class="p-tag">Priority 8</span><h3>Audit Programme Risk-Targeting</h3><p>AI risk-weighting of custody suites and forensic units for compliance audit scheduling; before: calendar-driven audits; after: AI risk-targeted audit programme</p></div></div>
+
+<h2>🤖 6 MCP Servers</h2>
+<div class="mcp-grid"><div class="mcp-card"><span class="mcp-tag">MCP 1</span><h3>LFR Assessment MCP</h3><p>assess_necessity, test_proportionality, evaluate_legal_basis, generate_rights_impact_assessment</p></div>
+<div class="mcp-card"><span class="mcp-tag">MCP 2</span><h3>Retention Compliance MCP</h3><p>monitor_retention_schedule, flag_overheld_image, audit_deletion_compliance, generate_retention_report</p></div>
+<div class="mcp-card"><span class="mcp-tag">MCP 3</span><h3>Algorithmic Bias MCP</h3><p>audit_fairness, test_differential_performance, flag_disparate_impact, generate_bias_report</p></div>
+<div class="mcp-card"><span class="mcp-tag">MCP 4</span><h3>Horizon Scanning MCP</h3><p>scan_emerging_tech, assess_risk, map_ethical_framework, generate_technology_briefing</p></div>
+<div class="mcp-card"><span class="mcp-tag">MCP 5</span><h3>DNA Deletion MCP</h3><p>audit_profile_retention, flag_deletion_required, verify_deletion, generate_database_compliance_report</p></div>
+<div class="mcp-card"><span class="mcp-tag">MCP 6</span><h3>Complaints Intelligence MCP</h3><p>triage_complaint, detect_systemic_pattern, recommend_improvement, generate_complaints_report</p></div></div>
+
+<h2>🚫 6 Red Lines — Legislation Backbone</h2>
+<div class="red-line-box"><h3>Statutory Framework: Scottish Biometrics Commissioner Act 2020 / Data Protection Act 2018 + UK GDPR / Police and Fire Reform (Scotland) Act 2012 / Criminal Justice (Scotland) Act 2016 / Human Rights Act 1998</h3><ul><li>NO AI-sole determination of ECHR necessity or proportionality (Article 8 assessments are matters of legal judgement requiring the Commissioner's independent human evaluation)</li>
+<li>NO automated deletion of biometric data without human verification (the statutory duty of deletion rests with the data controller; AI flags non-compliance but never executes deletion autonomously)</li>
+<li>NO algorithmic profiling that could identify specific individuals from biometric data without statutory gateway (the Commissioner's oversight function does not extend to operational biometric matching)</li>
+<li>NO data-sharing outside the statutory framework of the Scottish Biometrics Commissioner Act 2020 (the Commissioner's access to Police Scotland data is governed by the Act and must be purpose-limited)</li>
+<li>NO use of AI that could undermine the Commissioner's independence from Police Scotland and the Scottish Government (the Commissioner is an independent office-holder accountable to Parliament, not to the executive)</li>
+<li>NO processing of children's biometric data without enhanced safeguards beyond standard DPA 2018 requirements (the Commissioner's statutory duty on children's biometric data requires the highest standard of protection)</li></ul></div>
+
+<h2>🎯 5-Step Engagement Model</h2>
+<div class="steps-grid"><div class="step-card"><span class="step-num">1</span><h4>Discovery</h4><p>Stakeholder mapping, data audit, and AI readiness assessment for Scottish Biometrics Commissioner</p></div>
+<div class="step-card"><span class="step-num">2</span><h4>Governance Design</h4><p>Red-line codification, human-review gate design, and AI impact assessment per UK GDPR</p></div>
+<div class="step-card"><span class="step-num">3</span><h4>Pilot</h4><p>6-8 week AI-assisted pilot on one high-volume workflow with parallel manual oversight</p></div>
+<div class="step-card"><span class="step-num">4</span><h4>Scale</h4><p>Roll-out to full jurisdiction with continuous monitoring, recommender-agent feedback, and compliance dashboards</p></div>
+<div class="step-card"><span class="step-num">5</span><h4>Assure</h4><p>Annual audit by DEFONEOS-SEAL credential, CSOAI BFT Council governance review, and parliamentary reporting</p></div></div>
+
+<div class="cta-strip">
+<a href="#" class="cta-btn cta-primary">Request OWEM RFQ for SBC</a>
+<a href="#" class="cta-btn cta-secondary">Article 50 AI Passport</a>
+</div>
+</div>
+<footer class="footer"><p>CSOAI Ltd — UK Company No. 16939677 | <a href="#">csoai.org</a> | compliance@csoai.org</p><p>DEFONEOS &copy; 2026 Nicholas Templeman. Open source. UK sovereign. AUKUS-compatible.</p><p class="sigil">SIGIL: DEFONEOS|TICK-299|7f12bd896a19bc85|sovereign|british|forever</p></footer>
+</body>
+</html>
