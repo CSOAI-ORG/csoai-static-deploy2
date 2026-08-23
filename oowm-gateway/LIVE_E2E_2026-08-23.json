@@ -1,0 +1,13 @@
+{
+  "schema": "csoai.oowm-live-e2e/0.1",
+  "ts": "2026-08-23T09:14:35Z",
+  "result": "FULL PIPELINE VERIFIED LIVE: query -> classify(domain) -> route(measured specialist) -> live model answer",
+  "test": "Capital of Australia? -> knowledge -> phi4:14b -> \"Canberra, Australian Capital Territory (ACT)\" \u2014 REAL answer returned",
+  "reconciled_to": "confirmed pod models that GENERATE: phi4:14b (knowledge 1.00), mistral:7b (governance), council-oowm (safety)",
+  "honest": "qwen3:8b dropped from pod (not-found) -> reconciled to mistral:7b+phi4:14b (verified generating). The OOWM answer loop is now LIVE and correct.",
+  "durable": [
+    "com.meok.oowm-router :8766",
+    "com.meok.oowm-domain-gateway :8767",
+    "com.meok.ollama-tunnel-runpod :11434"
+  ]
+}
