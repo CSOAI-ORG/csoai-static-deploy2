@@ -39,20 +39,21 @@ const PRICES = {
 
 function callProvider(provider, body, model, timeoutMs = 300000) {
   return new Promise((resolve) => {
-    let u;
-    if (provider.startsWith('runpod:')) u = `https://api.runpod.ai/v2/${provider.slice(7)}/openai/v1/chat/completions`;
-    else if (provider.startsWith('local:')) u = `${LOCAL}/v1/chat/completions`;
+    let u, protocol;
+    if (provider.startsWith('runpod:')) { u = `https://api.runpod.ai/v2/${provider.slice(7)}/openai/v1/chat/completions`; protocol = https; }
+    else if (provider.startsWith('local:')) { u = `${LOCAL}/v1/chat/completions`; protocol = http; }
     else return resolve({ status: 502, body: JSON.stringify({ error: `unknown provider ${provider}` }) });
     const headers = provider.startsWith('runpod:')
       ? { 'Authorization': `Bearer ${RUNPOD_KEY}`, 'Content-Type': 'application/json' }
       : { 'Content-Type': 'application/json' };
-    const preq = https.request(new URL(u), { method: 'POST', headers, timeout: timeoutMs }, (pres) => {
+    const payload = provider.startsWith('local:') ? { ...body, model: provider.slice(6) } : body;
+    const preq = protocol.request(new URL(u), { method: 'POST', headers, timeout: timeoutMs }, (pres) => {
       let out = ''; pres.on('data', c => out += c);
       pres.on('end', () => resolve({ status: pres.statusCode, body: out || '{"error":"empty"}' }));
     });
     preq.on('error', (e) => resolve({ status: 502, body: JSON.stringify({ error: 'upstream', message: String(e) }) }));
     preq.setTimeout(timeoutMs, () => { preq.destroy(); resolve({ status: 504, body: JSON.stringify({ error: 'timeout' }) }); });
-    preq.end(JSON.stringify(body));
+    preq.end(JSON.stringify(payload));
   });
 }
 
