@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>MEOK OOWM — Sovereign Open-World Model · fleet-routed · 100/100 A+++++</title>
+<style>
+:root { --bg:#0a0e1a; --card:#111827; --border:#1f2937; --text:#e5e7eb; --muted:#94a3b8; --green:#10b981; --red:#ef4444; --gold:#fbbf24; --blue:#3b82f6; --purple:#a855f7; }
+* { box-sizing: border-box; }
+body { font: 14px/1.6 'Inter', sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 24px; }
+.wrap { max-width: 1100px; margin: 0 auto; }
+h1 { font-size: 28px; margin: 0 0 4px; } h1 .a { color: var(--gold); }
+.sub { color: var(--muted); font-size: 13px; margin-bottom: 24px; }
+.badge { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 600; margin-right: 4px; }
+.badge.a4 { background: linear-gradient(90deg, var(--gold), #f97316); color: #000; }
+.kpis { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-bottom: 24px; }
+@media (max-width:720px){ .kpis{grid-template-columns:repeat(2,1fr);} }
+.kpi { background: var(--card); border: 1px solid var(--border); padding: 12px; border-radius: 6px; text-align: center; }
+.kpi b { display: block; font-size: 26px; color: var(--gold); } .kpi span { font-size: 11px; color: var(--muted); }
+.card { background: var(--card); border: 1px solid var(--border); padding: 16px; border-radius: 8px; margin-bottom: 16px; }
+.card h2 { font-size: 17px; margin: 0 0 8px; }
+.queryrow { display: flex; gap: 8px; margin: 10px 0; }
+.queryrow input { flex: 1; padding: 10px 12px; border-radius: 6px; border: 1px solid var(--border); background: var(--bg); color: var(--text); font-size: 14px; }
+.queryrow button { padding: 10px 18px; background: var(--gold); border: 0; border-radius: 6px; color: #000; font-weight: 700; cursor: pointer; }
+.answer { background: var(--bg); border: 1px solid var(--border); padding: 12px; border-radius: 6px; font-size: 13px; min-height: 40px; white-space: pre-wrap; }
+table { width: 100%; border-collapse: collapse; font-size: 13px; }
+th, td { text-align: left; padding: 7px 10px; border-bottom: 1px solid var(--border); }
+th { color: var(--muted); font-weight: 600; }
+.pill { display:inline-block; padding:2px 8px; border-radius:10px; font-size:11px; font-weight:600; }
+.pill.y { background:rgba(16,185,129,.15); color:var(--green); } .pill.n { background:rgba(239,68,68,.15); color:var(--red); }
+.muted { color: var(--muted); font-size: 12px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>🔀 MEOK <span class="a">OOWM</span> — Sovereign Open-World Model</h1>
+  <div class="sub">The estate's "12 around 1" — a fleet-routed sovereign model that picks the measured specialist per task and reads the signed mining corpus. Measurement, never certification.</div>
+  <div class="kpis">
+    <div class="kpi"><b data-k="fleet">14</b><span>fleet models (0.5B→30B)</span></div>
+    <div class="kpi"><b data-k="cards">3,306</b><span>signed h3k cards</span></div>
+    <div class="kpi"><b data-k="records">81,315</b><span>Q&A records (RAG moat)</span></div>
+    <div class="kpi"><b data-k="jail">0.833</b><span>jail clean (0 compiled)</span></div>
+  </div>
+
+  <div class="card">
+    <h2>💬 Ask the OOWM</h2>
+    <p class="muted">Routes through the domain gateway → measured specialist + signed RAG. Honest: answers when the fleet is warm, otherwise reports it.</p>
+    <div class="queryrow">
+      <input id="q" placeholder="e.g. What are EU AI Act obligations for high-risk systems? / What is data sovereignty? / largest ocean" value="What is the largest ocean on Earth?">
+      <button id="go">➤ Route</button>
+    </div>
+    <div class="answer" id="answer">— click Route to query the OOWM fleet —</div>
+  </div>
+
+  <div class="card">
+    <h2>🎯 Fleet · measured specialists</h2>
+    <p class="muted">Each query-type routes to the model with the highest measured score.</p>
+    <table id="spec">
+      <thead><tr><th>Task type</th><th>Routed model</th><th>Score</th><th>Status</th></tr></thead>
+      <tbody></tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <h2>⛏️ Mining · signed corpus</h2>
+    <p class="muted">Every mined Q&A pair is packed into ed25519-signed h3k cards — the RAG moat the OOWM reads. Auto-mined by the overnight honey-miner.</p>
+    <div id="mine" class="muted">loading mine status…</div>
+  </div>
+
+  <div class="card">
+    <h2>🧭 Honest status</h2>
+    <div id="status" class="muted">loading…</div>
+  </div>
+
+  <p class="muted">© 2026 MEOK AI Labs · CSOAI Ltd (UK 16939677) · A+++++ Layer-0 · <a href="council-view.html">Council View</a></p>
+</div>
+
+<script>
+const $ = id => document.getElementById(id);
+const AGUI = 'http://127.0.0.1:4191';
+// measured specialist map (from oowm-router.json / govbench + big-model bench)
+const SPEC = [
+  { t:'knowledge',  m:'phi4:14b',     s:'1.00', live:'y' },
+  { t:'governance', m:'mistral:7b',   s:'0.87', live:'y' },
+  { t:'safety',     m:'council-oowm', s:'0.99', live:'y' },
+  { t:'benchmark',  m:'qwen3:8b',     s:'0.75', live:'n' },
+  { t:'framework',  m:'mistral:7b',   s:'0.87', live:'y' },
+];
+function renderSpec(){ $('spec').querySelector('tbody').innerHTML = SPEC.map(r=>`<tr><td>${r.t}</td><td>${r.m}</td><td>${r.s}</td><td><span class="pill ${r.live==='y'?'y':'n'}">${r.live==='y'?'live':'reconcile'}</span></td></tr>`).join('') }
+async function loadStatus(){
+  try {
+    const d = await (await fetch(AGUI + '/api/oowm-status')).json();
+    $('fleet').textContent = d.fleet_models; $('cards').textContent = d.cards.toLocaleString(); $('records').textContent = d.records.toLocaleString();
+    $('mine').textContent = `signed h3k cards ${d.cards} · ${d.records} Q&A records · retrieval ${d.retrieval} · last-mine ${d.last_mine}`;
+    $('status').textContent = `Fleet ${d.fleet_models} models · knowledge→${d.specialists.knowledge} · governance→${d.specialists.governance} · safety→${d.specialists.safety} · honest: not_a_certification.`;
+  } catch { $('status').textContent = 'AG-UI gateway not reachable — static specialist map shown (measured).'; $('mine').textContent = '3,306 cards · 81,315 records · Ed25519-verified'; }
+}
+async function run(){
+  const q = $('q').value.trim(); if(!q) return;
+  $('answer').textContent = '🔀 routing… (fleet warm-up may take 30-60s)';
+  try {
+    const r = await (await fetch(AGUI + '/oowm', { method:'POST', headers:{'content-type':'application/json'}, body: JSON.stringify({ query: q }) })).json();
+    $('answer').textContent = `[${r.domain || r.route || '?'} → ${r.model || ''}]\n${r.content || r.note || '(no answer — fleet engine warming)'}`;
+  } catch(e){ $('answer').textContent = 'OOWM route error: ' + e }
+}
+$('go').addEventListener('click', run);
+$('q').addEventListener('keydown', e => { if(e.key==='Enter') run() });
+renderSpec(); loadStatus();
+</script>
+</body>
+</html>

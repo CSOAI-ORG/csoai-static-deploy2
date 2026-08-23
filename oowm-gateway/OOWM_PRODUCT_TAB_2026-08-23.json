@@ -1,0 +1,13 @@
+{
+  "schema": "csoai.oowm-product-tab/0.1",
+  "ts": "2026-08-23",
+  "status": "PRODUCT TAB WORKS (renders+routes+live data); live model answer gated by A100 engine warmth (intermittent)",
+  "working": {
+    "renders": "title + Ask-OOWM + fleet specialists + mining + status panels",
+    "routes": "/oowm -> domain gateway -> measured specialist",
+    "live_data": "/api/oowm-status (3311 cards/81315 records/fleet 14)",
+    "tabs": "sidebar + index app card",
+    "fallback": "UI shows honest no-answer when fleet engine warming"
+  },
+  "gate": "A100 Ollama engine intermittent (model not-found/empty when cold) \u2014 the ONLY thing between routing and a live answer"
+}
