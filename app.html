@@ -308,7 +308,7 @@ function regulationHtml(d){
 
 // ---------- REGULATOR HUB (centre: all regulators → per-regime specialist workspace) ----------
 function getRegs(){ var emb = sd('regulation'); return (emb && emb.regulations) || []; }
-var REG_KEYWORDS = ['eu ai act','article 5','article 50','medical','financial','aviation','maritime','automotive','cyber','audit','transparency','data','high-risk','us ','uk ','canada','state','frontier','prohibited','marking','reporting','standards'];
+var REG_KEYWORDS = ['eu ai act','article 5','article 50','medical','device','fda','qmsr','pccp','financial','fca','aviation','easa','maritime','imo','automotive','unece','vehicle','cyber','audit','transparency','data','high-risk','us ','uk ','canada','state','frontier','prohibited','marking','reporting','standards','ai','act','regulation','transparency']; 
 function sharesTag(g,x){
   var gt=(g.tags||[]).map(String), xt=(x.tags||[]).map(String);
   if(gt.some(function(t){ return xt.indexOf(t)>=0; })) return true;
@@ -1086,6 +1086,9 @@ function renderChat(el){
     if(d.message) return d.message;
     if(d.summary) return d.summary;
     if(d.error) return '→ '+d.error;
+    if(d.mode==='mcp-measure') return 'signed measurement card · not_a_certification: '+(d.signed_card?String(d.signed_card).slice(0,90):'no card');
+    if(d.mode==='mcp-tools') return 'GSPC MCP tools: '+((d.tools||[]).map(function(t){return t.name;}).join(', ')||'none');
+    if(d.mode==='mcp-verify') return 'verified: '+(d.verdict||d.error||'check /api/verify');
     if(d.mode==='status') return (d.line||'')+(d.can_do?('\n'+d.can_do.map(function(x){return '• '+x;}).join('\n')):'')+(d.framing?('\n'+d.framing):'');
     if(d.mode==='board') return 'Estate board: '+d.measured_cells+' measured cells · leader '+(d.leader||'?');
     if(d.mode==='arena') return 'Arena: '+d.count+' rounds';
