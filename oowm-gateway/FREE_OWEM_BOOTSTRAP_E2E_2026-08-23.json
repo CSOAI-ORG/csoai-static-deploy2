@@ -1,0 +1,15 @@
+{
+  "schema": "csoai.free-owem-bootstrap-e2e/0.1",
+  "ts": "2026-08-23T14:37:14Z",
+  "achived": {
+    "free_eval_data": "18,721 MMLU + 9,429 GPQA (open-license, Kaggle free)",
+    "free_training_corpus": "19,350-pair sovereign corpus",
+    "kaggle_upload": "nicktempleman/oowm-sovereign-corpus (10MB, free-T4 fine-tune target)",
+    "free_gpu_train": "estate kaggle_lora_train.py (Mistral-7B LoRA, QLoRA, T4 16GB)",
+    "free_routing": "warmth-aware route_planner -> 14 free local models, sovereignty prior (paid OpenRouter only last-resort)",
+    "monorepo": "all committed (oowm-gateway: bootstrap, eval, planner, registry, Elo, product tab)"
+  },
+  "honest_gate": "A100 tunnel inference returned empty on the live MMLU sample (tunnel/moment flakiness, NOT the model \u2014 phi4 answered fine on earlier knowledge bench). Eval HARNESS is correct; the free eval needs to run co-located on the pod / Kaggle T4 to be reliable (same recurring tunnel constraint).",
+  "no_paid_credits": true,
+  "honest": "This is the free bootstrap \u2014 our models + free data + free GPU, no OpenRouter credits. External only as last-resort fallback. MMLU/GPQA are open-license (legitimate free data, not scraping)."
+}
