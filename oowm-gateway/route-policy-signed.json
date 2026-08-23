@@ -1,0 +1,20 @@
+{
+  "format": "eat-jwt",
+  "alg": "EdDSA",
+  "body_sha256": "9fb54d80b2b090c2539cdef14c3b8a3a7c037b6a59bfef04d37e3b2b24bce29d",
+  "sig_b64": "iwxPciDI5rsinAr2yI2rEvJaB2b4Px37cbFoVTutW30iU7l656rJgcPck30JAfeWadfaWhTT6eWwn0e0PdxgAw",
+  "pubkey_b64": "KDuvkRTI1Q9SDiPK6VKgmLRlzbOsgE64GphuyPZdN4c",
+  "body": {
+    "task_router": {
+      "knowledge": "phi4:14b",
+      "governance": "mistral:7b",
+      "safety": "council-oowm",
+      "default": "mistral:7b"
+    },
+    "registry_sha256": "e5409246081ee6045cece2af392d9b3ad2bdb7cddf92f63f4878680cc3f0d11b",
+    "sovereignty_prior": "local runpod-a100 wins; external only as fallback",
+    "iat": 1787489350
+  },
+  "kind": "routing-policy",
+  "honest": "sovereign routing on our measured GSPC quality; external attributed fallback"
+}
