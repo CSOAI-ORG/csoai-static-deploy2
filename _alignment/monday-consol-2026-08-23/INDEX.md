@@ -7,5 +7,8 @@
 | 02-github.md | PR 398 lag + open queue |
 | 03-pods-volumes.md | 3 pods + 5 volumes + 23 serverless + $3.17/hr |
 | 04-monday-exec.md | Week-start exec order |
+| **05-revenue-product-wire.md** | **Revenue product matrix + gaps + Mon–Fri ship + owner gates** |
 
 P0: badge 13-of-14 · promote 398 · HF 16-axes/slot15/parallel banks · RunPod burn (mine do_not_start + serverless warm)
+
+Revenue P0: ras-front must NOT ship hardcoded scores · Paddle env · /catalog.json + /ras · Dorado 396 nulls

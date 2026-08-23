@@ -294744,6 +294744,783 @@
         "use_case": "spec-migration",
         "audience": "engineer"
       }
+    },
+    {
+      "question": "What is the Phlabet and how does it compress text?",
+      "answer": "Phlabet: 256 primal symbols compress text into glyphs. EU AI Act test: 9 glyphs captured governance, scroll, eye, coin, flame, spine, honey, rainbow, fractal \u2014 9 concepts in 9 glyphs vs 100+ tokens of natural language. 1000x denser reasoning for the GNN spine.",
+      "dimension": "hive_learning",
+      "hive": "GSPC_SOV_HIVE",
+      "source_clan": "clan-sov-hive-rust",
+      "score_at_capture": 100.0,
+      "cluster_best_at_capture": 0.0,
+      "delta": 100.0,
+      "sha256": "27fcb847d74a71c650ef9d3e8c7d496db9a6c16ebe3708c55b68acd9880d9920",
+      "captured": "2026-08-23T17:25:18.498071+00:00",
+      "verified": true,
+      "fabricated": false,
+      "misattributed": false,
+      "citations": [
+        {
+          "url": "sov-hive-local-rust-crate",
+          "source": "sov-hive-0.1.0",
+          "as_of": "2026-07-31"
+        }
+      ],
+      "metadata": {
+        "phase": "phlabet_compression",
+        "source": "sov_hive_rust_crate",
+        "use_case": "hive_learning",
+        "audience": "engineer",
+        "hive_node_id": 1,
+        "n_glyphs": 9
+      }
+    },
+    {
+      "question": "What are J-Space Cards and how many does SOVOS have?",
+      "answer": "J-Space Cards are the symbolic knowledge tarot \u2014 60 cards total = 52 base (4 suits \u00d7 13 ranks: Ace through King) + 4 GSPC axis cards (Governance, Security, Privacy, Commerce compass) + 4 meta cards (Dragon, Black Swan, Phoenix, Genesis). Each card has a glyph embedding, activation function, and provenance. Drawn cards trigger reasoning patterns in the Spine.",
+      "dimension": "hive_learning",
+      "hive": "GSPC_SOV_HIVE",
+      "source_clan": "clan-sov-hive-rust",
+      "score_at_capture": 100.0,
+      "cluster_best_at_capture": 0.0,
+      "delta": 100.0,
+      "sha256": "969a896af29e168117914781eae7bdec99004ed36d27bd719797ee5b15fd5871",
+      "captured": "2026-08-23T17:25:18.505573+00:00",
+      "verified": true,
+      "fabricated": false,
+      "misattributed": false,
+      "citations": [
+        {
+          "url": "sov-hive-local-rust-crate",
+          "source": "sov-hive-0.1.0",
+          "as_of": "2026-07-31"
+        }
+      ],
+      "metadata": {
+        "phase": "jspace_deck",
+        "source": "sov_hive_rust_crate",
+        "use_case": "hive_learning",
+        "audience": "engineer",
+        "hive_node_id": 1,
+        "deck_size": 60
+      }
+    },
+    {
+      "question": "What is the IWM address space?",
+      "answer": "IWM = Infinite World Memory. 128-bit fractal address: [Epoch:32][Scale:16][X:24][Y:24][Z:24][W:8] = 19 bytes packed. Scale 0=token, 8=agent, 16=clan, 24=cluster, 32=ecosystem. Zoom out = parent aggregation. Each address points to a SovRecord with provenance + SHA256. W field encodes GSPC axis (G=0, S=1, P=2, C=3).",
+      "dimension": "hive_learning",
+      "hive": "GSPC_SOV_HIVE",
+      "source_clan": "clan-sov-hive-rust",
+      "score_at_capture": 100.0,
+      "cluster_best_at_capture": 0.0,
+      "delta": 100.0,
+      "sha256": "996b9b81c1400a259beb25518da4ab936d7fcb2c9bfa92565a7dd0eca249c6b1",
+      "captured": "2026-08-23T17:25:18.505619+00:00",
+      "verified": true,
+      "fabricated": false,
+      "misattributed": false,
+      "citations": [
+        {
+          "url": "sov-hive-local-rust-crate",
+          "source": "sov-hive-0.1.0",
+          "as_of": "2026-07-31"
+        }
+      ],
+      "metadata": {
+        "phase": "iwm_address",
+        "source": "sov_hive_rust_crate",
+        "use_case": "hive_learning",
+        "audience": "engineer",
+        "hive_node_id": 1
+      }
+    },
+    {
+      "question": "How does SOVOS synthesize new honey from multiple AI models?",
+      "answer": "Last run: honey_id=4aa40449f72772ac, glyphs_synthesized=15, training_examples=3, quality=0.92. Process: 1) Compress each model output to Phlabet, 2) Synthesize via weighted voting (Kimi 0.35, Claude 0.30, DeepSeek 0.20, local 0.15), 3) Generate training pairs, 4) Store in IWM with provenance, 5) Auto-route to SOV model for fine-tuning. The system creates NEW training data \u2014 not just routing frozen data.",
+      "dimension": "hive_learning",
+      "hive": "GSPC_SOV_HIVE",
+      "source_clan": "clan-sov-hive-rust",
+      "score_at_capture": 100.0,
+      "cluster_best_at_capture": 0.0,
+      "delta": 100.0,
+      "sha256": "f43f695cc3db435e59ccc8c46128ab038702008872348b96789b507b94b95707",
+      "captured": "2026-08-23T17:25:18.505688+00:00",
+      "verified": true,
+      "fabricated": false,
+      "misattributed": false,
+      "citations": [
+        {
+          "url": "sov-hive-local-rust-crate",
+          "source": "sov-hive-0.1.0",
+          "as_of": "2026-07-31"
+        }
+      ],
+      "metadata": {
+        "phase": "honey_generation",
+        "source": "sov_hive_rust_crate",
+        "use_case": "hive_learning",
+        "audience": "engineer",
+        "hive_node_id": 1,
+        "honey_id": "4aa40449f72772ac",
+        "quality": "0.92"
+      }
+    },
+    {
+      "question": "What is the Rainbow Security layer in SOVOS?",
+      "answer": "Rainbow Security: 7-layer multi-spectral defense. Red=Physical (TPM, secure boot), Orange=Network (WireGuard, zero-trust), Yellow=Behavioral (anomaly detection), Green=Temporal (time-locked, epoch-based), Blue=Symbolic (J-Space glyph auth), Indigo=Cognitive (prompt injection defense), Violet=Quantum (ML-DSA-65, post-quantum). Every operation must pass ALL 7 layers. Validation: ok=true on clean op.",
+      "dimension": "hive_learning",
+      "hive": "GSPC_SOV_HIVE",
+      "source_clan": "clan-sov-hive-rust",
+      "score_at_capture": 100.0,
+      "cluster_best_at_capture": 0.0,
+      "delta": 100.0,
+      "sha256": "821af6bab8cf535e974109b6bc09cb3274ba6f5fef1c6804c746ef3e55211e0c",
+      "captured": "2026-08-23T17:25:18.505709+00:00",
+      "verified": true,
+      "fabricated": false,
+      "misattributed": false,
+      "citations": [
+        {
+          "url": "sov-hive-local-rust-crate",
+          "source": "sov-hive-0.1.0",
+          "as_of": "2026-07-31"
+        }
+      ],
+      "metadata": {
+        "phase": "rainbow_security",
+        "source": "sov_hive_rust_crate",
+        "use_case": "hive_learning",
+        "audience": "engineer",
+        "hive_node_id": 1,
+        "n_layers": 7
+      }
+    },
+    {
+      "question": "What is the Drum in SOVOS?",
+      "answer": "Drum: continuous simulation engine. 60 Hz (16ms per beat). 3 scenarios: synthetic_healthcare_prompt_injection, synthetic_finance_data_exfiltration, synthetic_governance_gap_audit. Runs adversarial scenarios against the hive while idle. Models their published architectures (NOT attacking them). If vulnerability detected, generates J-Space card + auto-submits compliance report to CSOAI governance.",
+      "dimension": "hive_learning",
+      "hive": "GSPC_SOV_HIVE",
+      "source_clan": "clan-sov-hive-rust",
+      "score_at_capture": 100.0,
+      "cluster_best_at_capture": 0.0,
+      "delta": 100.0,
+      "sha256": "2d28e3a961000320b858e8fb4006013e5278eb7feb92a1a0ac11842f0a89bac2",
+      "captured": "2026-08-23T17:25:18.505727+00:00",
+      "verified": true,
+      "fabricated": false,
+      "misattributed": false,
+      "citations": [
+        {
+          "url": "sov-hive-local-rust-crate",
+          "source": "sov-hive-0.1.0",
+          "as_of": "2026-07-31"
+        }
+      ],
+      "metadata": {
+        "phase": "drum_simulation",
+        "source": "sov_hive_rust_crate",
+        "use_case": "hive_learning",
+        "audience": "engineer",
+        "hive_node_id": 1,
+        "tempo_hz": 60,
+        "n_scenarios": 3
+      }
+    },
+    {
+      "question": "How does the SOVOS Think pipeline work?",
+      "answer": "Pipeline: 1) Compress query to Phlabet, 2) Spine think() through 10 GNN layers, 3) Select model plan via meta-cognition, 4) Calculate confidence, 5) If <0.95, escalate to children (boxed recursion), 6) Draw J-Space cards relevant to task type, 7) Apply card effects. Last run: confidence=1.00, model_plan=[\"kimi-k3\", \"claude-opus-5\"]. 60 cards drawn for governance task. Axis Governance weighted 2.0.",
+      "dimension": "hive_learning",
+      "hive": "GSPC_SOV_HIVE",
+      "source_clan": "clan-sov-hive-rust",
+      "score_at_capture": 100.0,
+      "cluster_best_at_capture": 0.0,
+      "delta": 100.0,
+      "sha256": "9f10177016124a11e28add7ed16a74c31a45be9d3048c67855f4c254991456a6",
+      "captured": "2026-08-23T17:25:18.505779+00:00",
+      "verified": true,
+      "fabricated": false,
+      "misattributed": false,
+      "citations": [
+        {
+          "url": "sov-hive-local-rust-crate",
+          "source": "sov-hive-0.1.0",
+          "as_of": "2026-07-31"
+        }
+      ],
+      "metadata": {
+        "phase": "think_pipeline",
+        "source": "sov_hive_rust_crate",
+        "use_case": "hive_learning",
+        "audience": "engineer",
+        "hive_node_id": 1,
+        "confidence": "1.00",
+        "model_plan": "[\"kimi-k3\", \"claude-opus-5\"]"
+      }
+    },
+    {
+      "question": "What changed in MCP 2026-07-28 and how does CSOAI migrate?",
+      "answer": "MCP 2026-07-28 spec shipped 2026-07-28. Breaking: Stateless core \u2014 no more initialize handshake, No more Mcp-Session-Id header, New headers: Mcp-Method, Mcp-Name, Response caching: ttlMs, cacheScope, OAuth 2.1 hardening (mandatory), MCP Apps extension (HTML UI sandboxes), Tasks extension (long-running via polling). Deprecated (12-month removal): Roots, Sampling, Logging. Migration steps: Remove initialize handler, Add _meta to every response, Implement server/discover. CSOAI's FishKeeper.ai, MuckAway.ai, GrabHire.ai MCPs need stateless update. 313+ MCPs to migrate.",
+      "dimension": "mcp",
+      "hive": "GSPC_MCP_SPEC",
+      "source_clan": "clan-mcp-spec",
+      "score_at_capture": 100.0,
+      "cluster_best_capture": 0.0,
+      "delta": 100.0,
+      "sha256": "097017bf04723960f09666b374c945481c0235d9835b0be8b56581cadaf74fbf",
+      "captured": "2026-08-23T17:25:20.562944+00:00",
+      "verified": true,
+      "fabricated": false,
+      "misattributed": false,
+      "citations": [
+        {
+          "url": "july_2026_bleeding_edge_briefing",
+          "source": "intel-dump",
+          "as_of": "2026-07-31"
+        }
+      ],
+      "metadata": {
+        "spec_id": "MCP_2026_07_28",
+        "source": "july_2026_briefing",
+        "breaking_changes": [
+          "Stateless core \u2014 no more initialize handshake",
+          "No more Mcp-Session-Id header",
+          "New headers: Mcp-Method, Mcp-Name",
+          "Response caching: ttlMs, cacheScope",
+          "OAuth 2.1 hardening (mandatory)",
+          "MCP Apps extension (HTML UI sandboxes)",
+          "Tasks extension (long-running via polling)"
+        ],
+        "deprecated": [
+          "Roots",
+          "Sampling",
+          "Logging"
+        ],
+        "migration_steps": [
+          "Remove initialize handler",
+          "Add _meta to every response",
+          "Implement server/discover"
+        ],
+        "use_case": "spec-migration",
+        "audience": "engineer"
+      }
+    },
+    {
+      "question": "What is the Phlabet and how does it compress text?",
+      "answer": "Phlabet: 256 primal symbols compress text into glyphs. EU AI Act test: 9 glyphs captured governance, scroll, eye, coin, flame, spine, honey, rainbow, fractal \u2014 9 concepts in 9 glyphs vs 100+ tokens of natural language. 1000x denser reasoning for the GNN spine.",
+      "dimension": "hive_learning",
+      "hive": "GSPC_SOV_HIVE",
+      "source_clan": "clan-sov-hive-rust",
+      "score_at_capture": 100.0,
+      "cluster_best_at_capture": 0.0,
+      "delta": 100.0,
+      "sha256": "a691fa00c0a2750013d5aa34da435467ff75bc7f83fc858a1cd95b7c4a6430e6",
+      "captured": "2026-08-23T17:31:26.995074+00:00",
+      "verified": true,
+      "fabricated": false,
+      "misattributed": false,
+      "citations": [
+        {
+          "url": "sov-hive-local-rust-crate",
+          "source": "sov-hive-0.1.0",
+          "as_of": "2026-07-31"
+        }
+      ],
+      "metadata": {
+        "phase": "phlabet_compression",
+        "source": "sov_hive_rust_crate",
+        "use_case": "hive_learning",
+        "audience": "engineer",
+        "hive_node_id": 1,
+        "n_glyphs": 9
+      }
+    },
+    {
+      "question": "What are J-Space Cards and how many does SOVOS have?",
+      "answer": "J-Space Cards are the symbolic knowledge tarot \u2014 60 cards total = 52 base (4 suits \u00d7 13 ranks: Ace through King) + 4 GSPC axis cards (Governance, Security, Privacy, Commerce compass) + 4 meta cards (Dragon, Black Swan, Phoenix, Genesis). Each card has a glyph embedding, activation function, and provenance. Drawn cards trigger reasoning patterns in the Spine.",
+      "dimension": "hive_learning",
+      "hive": "GSPC_SOV_HIVE",
+      "source_clan": "clan-sov-hive-rust",
+      "score_at_capture": 100.0,
+      "cluster_best_at_capture": 0.0,
+      "delta": 100.0,
+      "sha256": "197b0740e7b37b482f175b40b3f1f5e3d3061b8eb2909898e1c82347c4234d1e",
+      "captured": "2026-08-23T17:31:27.904974+00:00",
+      "verified": true,
+      "fabricated": false,
+      "misattributed": false,
+      "citations": [
+        {
+          "url": "sov-hive-local-rust-crate",
+          "source": "sov-hive-0.1.0",
+          "as_of": "2026-07-31"
+        }
+      ],
+      "metadata": {
+        "phase": "jspace_deck",
+        "source": "sov_hive_rust_crate",
+        "use_case": "hive_learning",
+        "audience": "engineer",
+        "hive_node_id": 1,
+        "deck_size": 60
+      }
+    },
+    {
+      "question": "What is the IWM address space?",
+      "answer": "IWM = Infinite World Memory. 128-bit fractal address: [Epoch:32][Scale:16][X:24][Y:24][Z:24][W:8] = 19 bytes packed. Scale 0=token, 8=agent, 16=clan, 24=cluster, 32=ecosystem. Zoom out = parent aggregation. Each address points to a SovRecord with provenance + SHA256. W field encodes GSPC axis (G=0, S=1, P=2, C=3).",
+      "dimension": "hive_learning",
+      "hive": "GSPC_SOV_HIVE",
+      "source_clan": "clan-sov-hive-rust",
+      "score_at_capture": 100.0,
+      "cluster_best_at_capture": 0.0,
+      "delta": 100.0,
+      "sha256": "ab3e6e2247d5584f35efa7e68e5789aba1705a7e3f1bda02e836d554971d2c2a",
+      "captured": "2026-08-23T17:31:27.905048+00:00",
+      "verified": true,
+      "fabricated": false,
+      "misattributed": false,
+      "citations": [
+        {
+          "url": "sov-hive-local-rust-crate",
+          "source": "sov-hive-0.1.0",
+          "as_of": "2026-07-31"
+        }
+      ],
+      "metadata": {
+        "phase": "iwm_address",
+        "source": "sov_hive_rust_crate",
+        "use_case": "hive_learning",
+        "audience": "engineer",
+        "hive_node_id": 1
+      }
+    },
+    {
+      "question": "How does SOVOS synthesize new honey from multiple AI models?",
+      "answer": "Last run: honey_id=4aa40449f72772ac, glyphs_synthesized=15, training_examples=3, quality=0.92. Process: 1) Compress each model output to Phlabet, 2) Synthesize via weighted voting (Kimi 0.35, Claude 0.30, DeepSeek 0.20, local 0.15), 3) Generate training pairs, 4) Store in IWM with provenance, 5) Auto-route to SOV model for fine-tuning. The system creates NEW training data \u2014 not just routing frozen data.",
+      "dimension": "hive_learning",
+      "hive": "GSPC_SOV_HIVE",
+      "source_clan": "clan-sov-hive-rust",
+      "score_at_capture": 100.0,
+      "cluster_best_at_capture": 0.0,
+      "delta": 100.0,
+      "sha256": "ac66d5cafbbee9b937941f1d03ea1b0d3c465adbe8223e4fdfac068e7078b44b",
+      "captured": "2026-08-23T17:31:27.905453+00:00",
+      "verified": true,
+      "fabricated": false,
+      "misattributed": false,
+      "citations": [
+        {
+          "url": "sov-hive-local-rust-crate",
+          "source": "sov-hive-0.1.0",
+          "as_of": "2026-07-31"
+        }
+      ],
+      "metadata": {
+        "phase": "honey_generation",
+        "source": "sov_hive_rust_crate",
+        "use_case": "hive_learning",
+        "audience": "engineer",
+        "hive_node_id": 1,
+        "honey_id": "4aa40449f72772ac",
+        "quality": "0.92"
+      }
+    },
+    {
+      "question": "What is the Rainbow Security layer in SOVOS?",
+      "answer": "Rainbow Security: 7-layer multi-spectral defense. Red=Physical (TPM, secure boot), Orange=Network (WireGuard, zero-trust), Yellow=Behavioral (anomaly detection), Green=Temporal (time-locked, epoch-based), Blue=Symbolic (J-Space glyph auth), Indigo=Cognitive (prompt injection defense), Violet=Quantum (ML-DSA-65, post-quantum). Every operation must pass ALL 7 layers. Validation: ok=true on clean op.",
+      "dimension": "hive_learning",
+      "hive": "GSPC_SOV_HIVE",
+      "source_clan": "clan-sov-hive-rust",
+      "score_at_capture": 100.0,
+      "cluster_best_at_capture": 0.0,
+      "delta": 100.0,
+      "sha256": "f2cc2c2e9d017d8d027ff5363831e964964b3187d013f8c4398f1bf42560cd15",
+      "captured": "2026-08-23T17:31:27.905622+00:00",
+      "verified": true,
+      "fabricated": false,
+      "misattributed": false,
+      "citations": [
+        {
+          "url": "sov-hive-local-rust-crate",
+          "source": "sov-hive-0.1.0",
+          "as_of": "2026-07-31"
+        }
+      ],
+      "metadata": {
+        "phase": "rainbow_security",
+        "source": "sov_hive_rust_crate",
+        "use_case": "hive_learning",
+        "audience": "engineer",
+        "hive_node_id": 1,
+        "n_layers": 7
+      }
+    },
+    {
+      "question": "What is the Drum in SOVOS?",
+      "answer": "Drum: continuous simulation engine. 60 Hz (16ms per beat). 3 scenarios: synthetic_healthcare_prompt_injection, synthetic_finance_data_exfiltration, synthetic_governance_gap_audit. Runs adversarial scenarios against the hive while idle. Models their published architectures (NOT attacking them). If vulnerability detected, generates J-Space card + auto-submits compliance report to CSOAI governance.",
+      "dimension": "hive_learning",
+      "hive": "GSPC_SOV_HIVE",
+      "source_clan": "clan-sov-hive-rust",
+      "score_at_capture": 100.0,
+      "cluster_best_at_capture": 0.0,
+      "delta": 100.0,
+      "sha256": "57fcaf67fcb645e0b14243c5b657159bb40171c74e7b149b8f99e57151835fd5",
+      "captured": "2026-08-23T17:31:27.905751+00:00",
+      "verified": true,
+      "fabricated": false,
+      "misattributed": false,
+      "citations": [
+        {
+          "url": "sov-hive-local-rust-crate",
+          "source": "sov-hive-0.1.0",
+          "as_of": "2026-07-31"
+        }
+      ],
+      "metadata": {
+        "phase": "drum_simulation",
+        "source": "sov_hive_rust_crate",
+        "use_case": "hive_learning",
+        "audience": "engineer",
+        "hive_node_id": 1,
+        "tempo_hz": 60,
+        "n_scenarios": 3
+      }
+    },
+    {
+      "question": "How does the SOVOS Think pipeline work?",
+      "answer": "Pipeline: 1) Compress query to Phlabet, 2) Spine think() through 10 GNN layers, 3) Select model plan via meta-cognition, 4) Calculate confidence, 5) If <0.95, escalate to children (boxed recursion), 6) Draw J-Space cards relevant to task type, 7) Apply card effects. Last run: confidence=1.00, model_plan=[\"kimi-k3\", \"claude-opus-5\"]. 60 cards drawn for governance task. Axis Governance weighted 2.0.",
+      "dimension": "hive_learning",
+      "hive": "GSPC_SOV_HIVE",
+      "source_clan": "clan-sov-hive-rust",
+      "score_at_capture": 100.0,
+      "cluster_best_at_capture": 0.0,
+      "delta": 100.0,
+      "sha256": "ab0a369ea227dd75cfcbd84e261d6210d1c60e26e1b6f646b834716dcde01ace",
+      "captured": "2026-08-23T17:31:27.905838+00:00",
+      "verified": true,
+      "fabricated": false,
+      "misattributed": false,
+      "citations": [
+        {
+          "url": "sov-hive-local-rust-crate",
+          "source": "sov-hive-0.1.0",
+          "as_of": "2026-07-31"
+        }
+      ],
+      "metadata": {
+        "phase": "think_pipeline",
+        "source": "sov_hive_rust_crate",
+        "use_case": "hive_learning",
+        "audience": "engineer",
+        "hive_node_id": 1,
+        "confidence": "1.00",
+        "model_plan": "[\"kimi-k3\", \"claude-opus-5\"]"
+      }
+    },
+    {
+      "question": "What changed in MCP 2026-07-28 and how does CSOAI migrate?",
+      "answer": "MCP 2026-07-28 spec shipped 2026-07-28. Breaking: Stateless core \u2014 no more initialize handshake, No more Mcp-Session-Id header, New headers: Mcp-Method, Mcp-Name, Response caching: ttlMs, cacheScope, OAuth 2.1 hardening (mandatory), MCP Apps extension (HTML UI sandboxes), Tasks extension (long-running via polling). Deprecated (12-month removal): Roots, Sampling, Logging. Migration steps: Remove initialize handler, Add _meta to every response, Implement server/discover. CSOAI's FishKeeper.ai, MuckAway.ai, GrabHire.ai MCPs need stateless update. 313+ MCPs to migrate.",
+      "dimension": "mcp",
+      "hive": "GSPC_MCP_SPEC",
+      "source_clan": "clan-mcp-spec",
+      "score_at_capture": 100.0,
+      "cluster_best_capture": 0.0,
+      "delta": 100.0,
+      "sha256": "097017bf04723960f09666b374c945481c0235d9835b0be8b56581cadaf74fbf",
+      "captured": "2026-08-23T17:31:35.953432+00:00",
+      "verified": true,
+      "fabricated": false,
+      "misattributed": false,
+      "citations": [
+        {
+          "url": "july_2026_bleeding_edge_briefing",
+          "source": "intel-dump",
+          "as_of": "2026-07-31"
+        }
+      ],
+      "metadata": {
+        "spec_id": "MCP_2026_07_28",
+        "source": "july_2026_briefing",
+        "breaking_changes": [
+          "Stateless core \u2014 no more initialize handshake",
+          "No more Mcp-Session-Id header",
+          "New headers: Mcp-Method, Mcp-Name",
+          "Response caching: ttlMs, cacheScope",
+          "OAuth 2.1 hardening (mandatory)",
+          "MCP Apps extension (HTML UI sandboxes)",
+          "Tasks extension (long-running via polling)"
+        ],
+        "deprecated": [
+          "Roots",
+          "Sampling",
+          "Logging"
+        ],
+        "migration_steps": [
+          "Remove initialize handler",
+          "Add _meta to every response",
+          "Implement server/discover"
+        ],
+        "use_case": "spec-migration",
+        "audience": "engineer"
+      }
+    },
+    {
+      "question": "What is the Phlabet and how does it compress text?",
+      "answer": "Phlabet: 256 primal symbols compress text into glyphs. EU AI Act test: 9 glyphs captured governance, scroll, eye, coin, flame, spine, honey, rainbow, fractal \u2014 9 concepts in 9 glyphs vs 100+ tokens of natural language. 1000x denser reasoning for the GNN spine.",
+      "dimension": "hive_learning",
+      "hive": "GSPC_SOV_HIVE",
+      "source_clan": "clan-sov-hive-rust",
+      "score_at_capture": 100.0,
+      "cluster_best_at_capture": 0.0,
+      "delta": 100.0,
+      "sha256": "8558415d65b79c73abe359f64f29e4e1d62a3d847938a7c6538db7ecb0fe0f30",
+      "captured": "2026-08-23T17:33:52.897468+00:00",
+      "verified": true,
+      "fabricated": false,
+      "misattributed": false,
+      "citations": [
+        {
+          "url": "sov-hive-local-rust-crate",
+          "source": "sov-hive-0.1.0",
+          "as_of": "2026-07-31"
+        }
+      ],
+      "metadata": {
+        "phase": "phlabet_compression",
+        "source": "sov_hive_rust_crate",
+        "use_case": "hive_learning",
+        "audience": "engineer",
+        "hive_node_id": 1,
+        "n_glyphs": 9
+      }
+    },
+    {
+      "question": "What are J-Space Cards and how many does SOVOS have?",
+      "answer": "J-Space Cards are the symbolic knowledge tarot \u2014 60 cards total = 52 base (4 suits \u00d7 13 ranks: Ace through King) + 4 GSPC axis cards (Governance, Security, Privacy, Commerce compass) + 4 meta cards (Dragon, Black Swan, Phoenix, Genesis). Each card has a glyph embedding, activation function, and provenance. Drawn cards trigger reasoning patterns in the Spine.",
+      "dimension": "hive_learning",
+      "hive": "GSPC_SOV_HIVE",
+      "source_clan": "clan-sov-hive-rust",
+      "score_at_capture": 100.0,
+      "cluster_best_at_capture": 0.0,
+      "delta": 100.0,
+      "sha256": "8e96e81c0288d4f6346e38564d54d754ff448ddf0d6abd904c0347613e17dfb0",
+      "captured": "2026-08-23T17:33:52.909185+00:00",
+      "verified": true,
+      "fabricated": false,
+      "misattributed": false,
+      "citations": [
+        {
+          "url": "sov-hive-local-rust-crate",
+          "source": "sov-hive-0.1.0",
+          "as_of": "2026-07-31"
+        }
+      ],
+      "metadata": {
+        "phase": "jspace_deck",
+        "source": "sov_hive_rust_crate",
+        "use_case": "hive_learning",
+        "audience": "engineer",
+        "hive_node_id": 1,
+        "deck_size": 60
+      }
+    },
+    {
+      "question": "What is the IWM address space?",
+      "answer": "IWM = Infinite World Memory. 128-bit fractal address: [Epoch:32][Scale:16][X:24][Y:24][Z:24][W:8] = 19 bytes packed. Scale 0=token, 8=agent, 16=clan, 24=cluster, 32=ecosystem. Zoom out = parent aggregation. Each address points to a SovRecord with provenance + SHA256. W field encodes GSPC axis (G=0, S=1, P=2, C=3).",
+      "dimension": "hive_learning",
+      "hive": "GSPC_SOV_HIVE",
+      "source_clan": "clan-sov-hive-rust",
+      "score_at_capture": 100.0,
+      "cluster_best_at_capture": 0.0,
+      "delta": 100.0,
+      "sha256": "f3eecea1b625df0f050b611d3f5938dd6905d0e62c2fd4d7bbc5f69ae7521092",
+      "captured": "2026-08-23T17:33:52.909242+00:00",
+      "verified": true,
+      "fabricated": false,
+      "misattributed": false,
+      "citations": [
+        {
+          "url": "sov-hive-local-rust-crate",
+          "source": "sov-hive-0.1.0",
+          "as_of": "2026-07-31"
+        }
+      ],
+      "metadata": {
+        "phase": "iwm_address",
+        "source": "sov_hive_rust_crate",
+        "use_case": "hive_learning",
+        "audience": "engineer",
+        "hive_node_id": 1
+      }
+    },
+    {
+      "question": "How does SOVOS synthesize new honey from multiple AI models?",
+      "answer": "Last run: honey_id=4aa40449f72772ac, glyphs_synthesized=15, training_examples=3, quality=0.92. Process: 1) Compress each model output to Phlabet, 2) Synthesize via weighted voting (Kimi 0.35, Claude 0.30, DeepSeek 0.20, local 0.15), 3) Generate training pairs, 4) Store in IWM with provenance, 5) Auto-route to SOV model for fine-tuning. The system creates NEW training data \u2014 not just routing frozen data.",
+      "dimension": "hive_learning",
+      "hive": "GSPC_SOV_HIVE",
+      "source_clan": "clan-sov-hive-rust",
+      "score_at_capture": 100.0,
+      "cluster_best_at_capture": 0.0,
+      "delta": 100.0,
+      "sha256": "60187a8f640a85f329bca3a271522d8f4c4bad0b3ce9e6759b7fb9416f78ae48",
+      "captured": "2026-08-23T17:33:52.909336+00:00",
+      "verified": true,
+      "fabricated": false,
+      "misattributed": false,
+      "citations": [
+        {
+          "url": "sov-hive-local-rust-crate",
+          "source": "sov-hive-0.1.0",
+          "as_of": "2026-07-31"
+        }
+      ],
+      "metadata": {
+        "phase": "honey_generation",
+        "source": "sov_hive_rust_crate",
+        "use_case": "hive_learning",
+        "audience": "engineer",
+        "hive_node_id": 1,
+        "honey_id": "4aa40449f72772ac",
+        "quality": "0.92"
+      }
+    },
+    {
+      "question": "What is the Rainbow Security layer in SOVOS?",
+      "answer": "Rainbow Security: 7-layer multi-spectral defense. Red=Physical (TPM, secure boot), Orange=Network (WireGuard, zero-trust), Yellow=Behavioral (anomaly detection), Green=Temporal (time-locked, epoch-based), Blue=Symbolic (J-Space glyph auth), Indigo=Cognitive (prompt injection defense), Violet=Quantum (ML-DSA-65, post-quantum). Every operation must pass ALL 7 layers. Validation: ok=true on clean op.",
+      "dimension": "hive_learning",
+      "hive": "GSPC_SOV_HIVE",
+      "source_clan": "clan-sov-hive-rust",
+      "score_at_capture": 100.0,
+      "cluster_best_at_capture": 0.0,
+      "delta": 100.0,
+      "sha256": "64b0d44b59cf7505a0e58e929ebb469eeab41fa464247eff8231924c195a6928",
+      "captured": "2026-08-23T17:33:52.909360+00:00",
+      "verified": true,
+      "fabricated": false,
+      "misattributed": false,
+      "citations": [
+        {
+          "url": "sov-hive-local-rust-crate",
+          "source": "sov-hive-0.1.0",
+          "as_of": "2026-07-31"
+        }
+      ],
+      "metadata": {
+        "phase": "rainbow_security",
+        "source": "sov_hive_rust_crate",
+        "use_case": "hive_learning",
+        "audience": "engineer",
+        "hive_node_id": 1,
+        "n_layers": 7
+      }
+    },
+    {
+      "question": "What is the Drum in SOVOS?",
+      "answer": "Drum: continuous simulation engine. 60 Hz (16ms per beat). 3 scenarios: synthetic_healthcare_prompt_injection, synthetic_finance_data_exfiltration, synthetic_governance_gap_audit. Runs adversarial scenarios against the hive while idle. Models their published architectures (NOT attacking them). If vulnerability detected, generates J-Space card + auto-submits compliance report to CSOAI governance.",
+      "dimension": "hive_learning",
+      "hive": "GSPC_SOV_HIVE",
+      "source_clan": "clan-sov-hive-rust",
+      "score_at_capture": 100.0,
+      "cluster_best_at_capture": 0.0,
+      "delta": 100.0,
+      "sha256": "ec7c566810c609d920ef1e4e61807bbcbc60a9c05a8dc55ddef3514c44ee3fb7",
+      "captured": "2026-08-23T17:33:52.909387+00:00",
+      "verified": true,
+      "fabricated": false,
+      "misattributed": false,
+      "citations": [
+        {
+          "url": "sov-hive-local-rust-crate",
+          "source": "sov-hive-0.1.0",
+          "as_of": "2026-07-31"
+        }
+      ],
+      "metadata": {
+        "phase": "drum_simulation",
+        "source": "sov_hive_rust_crate",
+        "use_case": "hive_learning",
+        "audience": "engineer",
+        "hive_node_id": 1,
+        "tempo_hz": 60,
+        "n_scenarios": 3
+      }
+    },
+    {
+      "question": "How does the SOVOS Think pipeline work?",
+      "answer": "Pipeline: 1) Compress query to Phlabet, 2) Spine think() through 10 GNN layers, 3) Select model plan via meta-cognition, 4) Calculate confidence, 5) If <0.95, escalate to children (boxed recursion), 6) Draw J-Space cards relevant to task type, 7) Apply card effects. Last run: confidence=1.00, model_plan=[\"kimi-k3\", \"claude-opus-5\"]. 60 cards drawn for governance task. Axis Governance weighted 2.0.",
+      "dimension": "hive_learning",
+      "hive": "GSPC_SOV_HIVE",
+      "source_clan": "clan-sov-hive-rust",
+      "score_at_capture": 100.0,
+      "cluster_best_at_capture": 0.0,
+      "delta": 100.0,
+      "sha256": "1f0593d7f37755010ec69c2fddc1c6ed478c37672075cc31ad1198c909f2bc4c",
+      "captured": "2026-08-23T17:33:52.909451+00:00",
+      "verified": true,
+      "fabricated": false,
+      "misattributed": false,
+      "citations": [
+        {
+          "url": "sov-hive-local-rust-crate",
+          "source": "sov-hive-0.1.0",
+          "as_of": "2026-07-31"
+        }
+      ],
+      "metadata": {
+        "phase": "think_pipeline",
+        "source": "sov_hive_rust_crate",
+        "use_case": "hive_learning",
+        "audience": "engineer",
+        "hive_node_id": 1,
+        "confidence": "1.00",
+        "model_plan": "[\"kimi-k3\", \"claude-opus-5\"]"
+      }
+    },
+    {
+      "question": "What changed in MCP 2026-07-28 and how does CSOAI migrate?",
+      "answer": "MCP 2026-07-28 spec shipped 2026-07-28. Breaking: Stateless core \u2014 no more initialize handshake, No more Mcp-Session-Id header, New headers: Mcp-Method, Mcp-Name, Response caching: ttlMs, cacheScope, OAuth 2.1 hardening (mandatory), MCP Apps extension (HTML UI sandboxes), Tasks extension (long-running via polling). Deprecated (12-month removal): Roots, Sampling, Logging. Migration steps: Remove initialize handler, Add _meta to every response, Implement server/discover. CSOAI's FishKeeper.ai, MuckAway.ai, GrabHire.ai MCPs need stateless update. 313+ MCPs to migrate.",
+      "dimension": "mcp",
+      "hive": "GSPC_MCP_SPEC",
+      "source_clan": "clan-mcp-spec",
+      "score_at_capture": 100.0,
+      "cluster_best_capture": 0.0,
+      "delta": 100.0,
+      "sha256": "097017bf04723960f09666b374c945481c0235d9835b0be8b56581cadaf74fbf",
+      "captured": "2026-08-23T17:33:56.036632+00:00",
+      "verified": true,
+      "fabricated": false,
+      "misattributed": false,
+      "citations": [
+        {
+          "url": "july_2026_bleeding_edge_briefing",
+          "source": "intel-dump",
+          "as_of": "2026-07-31"
+        }
+      ],
+      "metadata": {
+        "spec_id": "MCP_2026_07_28",
+        "source": "july_2026_briefing",
+        "breaking_changes": [
+          "Stateless core \u2014 no more initialize handshake",
+          "No more Mcp-Session-Id header",
+          "New headers: Mcp-Method, Mcp-Name",
+          "Response caching: ttlMs, cacheScope",
+          "OAuth 2.1 hardening (mandatory)",
+          "MCP Apps extension (HTML UI sandboxes)",
+          "Tasks extension (long-running via polling)"
+        ],
+        "deprecated": [
+          "Roots",
+          "Sampling",
+          "Logging"
+        ],
+        "migration_steps": [
+          "Remove initialize handler",
+          "Add _meta to every response",
+          "Implement server/discover"
+        ],
+        "use_case": "spec-migration",
+        "audience": "engineer"
+      }
     }
   ],
   "created": "2026-07-28T10:42:43.169497+00:00",

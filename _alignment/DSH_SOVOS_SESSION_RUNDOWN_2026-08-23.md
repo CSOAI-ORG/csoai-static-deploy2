@@ -118,3 +118,20 @@ The only gate is a warm RunPod worker (console).
   sovereign-temple/meok/mcp-marketplace/csoai-org-v2/sim-world-data + weights/backups/honey) -> the mfs
   git add was pathologically slow on 35G/30K files; lean set should add in minutes. Runner re-armed.
 - Pod training confirmed hostile (SIGKILL CPU-heavy) -> training = Mac, weights -> volume (canonical).
+
+## 2026-08-23 ~20:50 — GOAL ROUND 3 (achieved: monorepo LIVE)
+- CURATED MONOREPO PUSHED: github.com/CSOAI-ORG/sovos-harness main = 04d8aa48 (163.5MB, 9,482 files,
+  curated .gitignore; weights/honey/backups/big-sibling-repos excluded -> volume mirror 35G = full archive).
+  Pod-side rebuild runner STOPPED (rm rebuild-needed) — GitHub now owns source control; volume owns data.
+- v3 TRAIN single process at 92.5% CPU (13 min elapsed, 150 steps, corpus 95); eval chained.
+- Teacher table v2: deepseek .965 correct-ratio (83/86 judged), corpus 95; rotation gate re-flagged.
+- Pod cron healthy (2 sovos lines); tonight 03:00 EAT = durable proof cycle.
+
+## 2026-08-23 ~21:00 — GOAL ROUND 4
+- ARENA ENGINE v1: ~/clawd/meok_arena_elo.py (Wilson 95% CI; stdlib; UNMEASURED excluded) — ran on 1,080
+  live verdict rows; ladder artifact _alignment/ARENA_WILSON_LADDER_2026-08-23.json. Pairwise Elo
+  (Bradley-Terry) defers to arena v2 battle records (0 pair-aware rows exist — honest).
+- EAT PROOF wired tonight: cron "21 21 * * * /workspace/sovos-eat.sh" (cron context survives; log
+  proof-eat-20260821xx.log; plus durable 03:00 daily).
+- v3 train: single chain, 99% CPU, ~20 min elapsed; output dir not yet written (saves at end).
+- Local teacher table consolidated: deepseek .965 / mistral:7b .800 / qwen2.5:7b 1.000 (n tiny, CI wide).

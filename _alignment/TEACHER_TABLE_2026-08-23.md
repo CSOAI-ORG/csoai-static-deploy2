@@ -34,3 +34,9 @@ Source: distill_multi.py live runs ($ ENV keys), DORADO-gate judged, 12-task MEO
 - Teacher-selection rule (honest): RAG/fusion >= best parent; distill from WINNERS only; adaptive teacher
   per axis (safe->deepseek style; legal->retrieval + citation; code->tests-first).
 - Corpus currently 26 entries; expand via deepseek (working key) until key-rotation gate.
+
+## TEACHER TABLE v2 (20:40 UTC, live evidence)
+Corpus: 95 judge-verified entries. Sources: provider:deepseek 83 | local-policy (mistral:7b+qwen2.5:7b) 7 | deepseek-teacher-distill 5.
+Live verdicts (all passes): deepseek-chat correct=83 incorrect=3 unmeasured=46 | mistral:7b 4/1/1 | qwen2.5:7b 3/0/3.
+OpenAI/Groq/Together/Mistral/Perplexity: 0 correct (key stale), Google+Anthropic 401. ROTATE GATE.
+Verdict ratio (correct/total judged): deepseek .965 — tier-1 confirmed; teacher-selection rule: deepseek primary.

@@ -92084,6 +92084,2526 @@
           }
         ]
       }
+    },
+    "overnight-1787506217": {
+      "user_id": "overnight-1787506217",
+      "tier": 4,
+      "label": "sovereign",
+      "model": "council-mix:latest",
+      "size_mb": 12000,
+      "tokens_per_call": 65536,
+      "owem": true,
+      "iwm": true,
+      "vwm": true,
+      "gpu_class": "paid_gpu",
+      "spawned_at": 1787506221.712041,
+      "last_growth": 1787506223.732963,
+      "growth_history": [
+        {
+          "from": 0,
+          "to": 1,
+          "ts": 1787506222.654019
+        },
+        {
+          "from": 1,
+          "to": 2,
+          "ts": 1787506223.082625
+        },
+        {
+          "from": 2,
+          "to": 3,
+          "ts": 1787506223.384467
+        },
+        {
+          "from": 3,
+          "to": 4,
+          "ts": 1787506223.732964
+        }
+      ],
+      "checks": 0,
+      "tokens_used": 0,
+      "inherited_routes": {
+        "n_producers": 45,
+        "total_kb": 102375,
+        "by_kind": {},
+        "producers": [
+          {
+            "source": "bloodline.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/forest/bloodline.json",
+            "size_kb": 91,
+            "entries": 6,
+            "kind": "lineage"
+          },
+          {
+            "source": "honey_chatml.jsonl",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/forest/honey_chatml.jsonl",
+            "size_kb": 71,
+            "entries": 108,
+            "kind": "training_triplets"
+          },
+          {
+            "source": "honey_hf_models.jsonl",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/forest/honey_hf_models.jsonl",
+            "size_kb": 1,
+            "entries": 7,
+            "kind": "registry"
+          },
+          {
+            "source": "honey.jsonl (legacy)",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/forest/honey.jsonl",
+            "size_kb": 57,
+            "entries": 105,
+            "kind": "legacy_honey"
+          },
+          {
+            "source": "sov_space/fractal_architecture.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/sov_space/fractal_architecture.json",
+            "size_kb": 787,
+            "entries": "state",
+            "kind": "sov_space_state"
+          },
+          {
+            "source": "sov_space/rag_state.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/sov_space/rag_state.json",
+            "size_kb": 0,
+            "entries": "rag",
+            "kind": "sov_space_rag"
+          },
+          {
+            "source": "training_data/flywheel_pairs_2026-07-30.jsonl",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/training_data/flywheel_pairs_2026-07-30.jsonl",
+            "size_kb": 7,
+            "entries": 36,
+            "kind": "training_data"
+          },
+          {
+            "source": "training_data/flywheel_pairs_2026-08-13.jsonl",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/training_data/flywheel_pairs_2026-08-13.jsonl",
+            "size_kb": 143,
+            "entries": 680,
+            "kind": "training_data"
+          },
+          {
+            "source": "training_data/flywheel_pairs_2026-08-14.jsonl",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/training_data/flywheel_pairs_2026-08-14.jsonl",
+            "size_kb": 122,
+            "entries": 580,
+            "kind": "training_data"
+          },
+          {
+            "source": "training_data/flywheel_pairs_2026-08-15.jsonl",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/training_data/flywheel_pairs_2026-08-15.jsonl",
+            "size_kb": 21,
+            "entries": 100,
+            "kind": "training_data"
+          },
+          {
+            "source": "training_data/flywheel_pairs_kaggle_v3_2026-08-02.jsonl",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/training_data/flywheel_pairs_kaggle_v3_2026-08-02.jsonl",
+            "size_kb": 567,
+            "entries": 2610,
+            "kind": "training_data"
+          },
+          {
+            "source": "training_data/flywheel_pairs_local_spread_2026-08-02.jsonl",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/training_data/flywheel_pairs_local_spread_2026-08-02.jsonl",
+            "size_kb": 2530,
+            "entries": 11349,
+            "kind": "training_data"
+          },
+          {
+            "source": "training_data/flywheel_pairs_micro1_2026-08-01.jsonl",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/training_data/flywheel_pairs_micro1_2026-08-01.jsonl",
+            "size_kb": 5,
+            "entries": 24,
+            "kind": "training_data"
+          },
+          {
+            "source": "training_data/flywheel_pairs_micro2_2026-08-01.jsonl",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/training_data/flywheel_pairs_micro2_2026-08-01.jsonl",
+            "size_kb": 2,
+            "entries": 9,
+            "kind": "training_data"
+          },
+          {
+            "source": "training_data/honey_mistral.jsonl",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/training_data/honey_mistral.jsonl",
+            "size_kb": 14836,
+            "entries": 10906,
+            "kind": "training_data"
+          },
+          {
+            "source": "training_data/honey_qa.jsonl",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/training_data/honey_qa.jsonl",
+            "size_kb": 14986,
+            "entries": 10906,
+            "kind": "training_data"
+          },
+          {
+            "source": "training_data/honey_sharegpt.jsonl",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/training_data/honey_sharegpt.jsonl",
+            "size_kb": 15806,
+            "entries": 10906,
+            "kind": "training_data"
+          },
+          {
+            "source": "training_data/honey_training_data.jsonl",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/training_data/honey_training_data.jsonl",
+            "size_kb": 15424,
+            "entries": 21570,
+            "kind": "training_data"
+          },
+          {
+            "source": "training_data/master_alpaca.jsonl",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/training_data/master_alpaca.jsonl",
+            "size_kb": 6757,
+            "entries": 12193,
+            "kind": "training_data"
+          },
+          {
+            "source": "training_data/master_sharegpt.jsonl",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/training_data/master_sharegpt.jsonl",
+            "size_kb": 7174,
+            "entries": 12193,
+            "kind": "training_data"
+          },
+          {
+            "source": "flywheel/2026-07-30.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/flywheel/2026-07-30.json",
+            "size_kb": 10,
+            "entries": "benchmark",
+            "kind": "flywheel_output"
+          },
+          {
+            "source": "flywheel/2026-08-01_micro1-nsite.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/flywheel/2026-08-01_micro1-nsite.json",
+            "size_kb": 12,
+            "entries": "benchmark",
+            "kind": "flywheel_output"
+          },
+          {
+            "source": "flywheel/2026-08-01_micro2-nsite.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/flywheel/2026-08-01_micro2-nsite.json",
+            "size_kb": 8,
+            "entries": "benchmark",
+            "kind": "flywheel_output"
+          },
+          {
+            "source": "flywheel/2026-08-02_clan-full-spread-v3-kaggle.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/flywheel/2026-08-02_clan-full-spread-v3-kaggle.json",
+            "size_kb": 1425,
+            "entries": "benchmark",
+            "kind": "flywheel_output"
+          },
+          {
+            "source": "flywheel/2026-08-02_cross-substrate-check.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/flywheel/2026-08-02_cross-substrate-check.json",
+            "size_kb": 1,
+            "entries": "benchmark",
+            "kind": "flywheel_output"
+          },
+          {
+            "source": "flywheel/2026-08-02_full-local-spread-103models.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/flywheel/2026-08-02_full-local-spread-103models.json",
+            "size_kb": 2235,
+            "entries": "benchmark",
+            "kind": "flywheel_output"
+          },
+          {
+            "source": "flywheel/2026-08-02_full-local-spread-47models.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/flywheel/2026-08-02_full-local-spread-47models.json",
+            "size_kb": 1175,
+            "entries": "benchmark",
+            "kind": "flywheel_output"
+          },
+          {
+            "source": "flywheel/2026-08-02_full-local-spread-51models.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/flywheel/2026-08-02_full-local-spread-51models.json",
+            "size_kb": 1269,
+            "entries": "benchmark",
+            "kind": "flywheel_output"
+          },
+          {
+            "source": "flywheel/2026-08-02_full-local-spread-98models.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/flywheel/2026-08-02_full-local-spread-98models.json",
+            "size_kb": 2162,
+            "entries": "benchmark",
+            "kind": "flywheel_output"
+          },
+          {
+            "source": "flywheel/2026-08-02_kaggle-suite.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/flywheel/2026-08-02_kaggle-suite.json",
+            "size_kb": 84,
+            "entries": "benchmark",
+            "kind": "flywheel_output"
+          },
+          {
+            "source": "flywheel/2026-08-02_kaggle-v3-vs-m4-crosscheck.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/flywheel/2026-08-02_kaggle-v3-vs-m4-crosscheck.json",
+            "size_kb": 7,
+            "entries": "benchmark",
+            "kind": "flywheel_output"
+          },
+          {
+            "source": "flywheel/2026-08-02_runpod-a4500-burst-v5.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/flywheel/2026-08-02_runpod-a4500-burst-v5.json",
+            "size_kb": 9,
+            "entries": "benchmark",
+            "kind": "flywheel_output"
+          },
+          {
+            "source": "flywheel/2026-08-13.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/flywheel/2026-08-13.json",
+            "size_kb": 13,
+            "entries": "benchmark",
+            "kind": "flywheel_output"
+          },
+          {
+            "source": "flywheel/2026-08-14.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/flywheel/2026-08-14.json",
+            "size_kb": 13,
+            "entries": "benchmark",
+            "kind": "flywheel_output"
+          },
+          {
+            "source": "flywheel/2026-08-15.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/flywheel/2026-08-15.json",
+            "size_kb": 13,
+            "entries": "benchmark",
+            "kind": "flywheel_output"
+          },
+          {
+            "source": "flywheel/2026-08-16.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/flywheel/2026-08-16.json",
+            "size_kb": 8,
+            "entries": "benchmark",
+            "kind": "flywheel_output"
+          },
+          {
+            "source": "flywheel/2026-08-17.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/flywheel/2026-08-17.json",
+            "size_kb": 8,
+            "entries": "benchmark",
+            "kind": "flywheel_output"
+          },
+          {
+            "source": "flywheel/2026-08-18.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/flywheel/2026-08-18.json",
+            "size_kb": 8,
+            "entries": "benchmark",
+            "kind": "flywheel_output"
+          },
+          {
+            "source": "flywheel/2026-08-19.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/flywheel/2026-08-19.json",
+            "size_kb": 8,
+            "entries": "benchmark",
+            "kind": "flywheel_output"
+          },
+          {
+            "source": "flywheel/2026-08-20.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/flywheel/2026-08-20.json",
+            "size_kb": 8,
+            "entries": "benchmark",
+            "kind": "flywheel_output"
+          },
+          {
+            "source": "flywheel/2026-08-21.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/flywheel/2026-08-21.json",
+            "size_kb": 8,
+            "entries": "benchmark",
+            "kind": "flywheel_output"
+          },
+          {
+            "source": "flywheel/2026-08-22.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/flywheel/2026-08-22.json",
+            "size_kb": 8,
+            "entries": "benchmark",
+            "kind": "flywheel_output"
+          },
+          {
+            "source": "flywheel/2026-08-23.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/flywheel/2026-08-23.json",
+            "size_kb": 8,
+            "entries": "benchmark",
+            "kind": "flywheel_output"
+          },
+          {
+            "source": "sov_time_ledger.jsonl",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/sov_time_ledger.jsonl",
+            "size_kb": 14486,
+            "entries": 29665,
+            "kind": "ledger_events"
+          },
+          {
+            "source": "out//batch_bench_report.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/out/batch_bench_report.json",
+            "size_kb": 2,
+            "entries": "artifact",
+            "kind": "site_artifact"
+          }
+        ]
+      }
+    },
+    "eat-all-1787506453": {
+      "user_id": "eat-all-1787506453",
+      "tier": 4,
+      "label": "sovereign",
+      "model": "council-mix:latest",
+      "size_mb": 12000,
+      "tokens_per_call": 65536,
+      "owem": true,
+      "iwm": true,
+      "vwm": true,
+      "gpu_class": "paid_gpu",
+      "spawned_at": 1787506453.937042,
+      "last_growth": 1787506456.400021,
+      "growth_history": [
+        {
+          "from": 0,
+          "to": 1,
+          "ts": 1787506454.9547799
+        },
+        {
+          "from": 1,
+          "to": 2,
+          "ts": 1787506455.3925278
+        },
+        {
+          "from": 2,
+          "to": 3,
+          "ts": 1787506455.9471319
+        },
+        {
+          "from": 3,
+          "to": 4,
+          "ts": 1787506456.400026
+        }
+      ],
+      "checks": 0,
+      "tokens_used": 0,
+      "inherited_routes": {
+        "n_producers": 45,
+        "total_kb": 102469,
+        "by_kind": {},
+        "producers": [
+          {
+            "source": "bloodline.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/forest/bloodline.json",
+            "size_kb": 91,
+            "entries": 6,
+            "kind": "lineage"
+          },
+          {
+            "source": "honey_chatml.jsonl",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/forest/honey_chatml.jsonl",
+            "size_kb": 71,
+            "entries": 108,
+            "kind": "training_triplets"
+          },
+          {
+            "source": "honey_hf_models.jsonl",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/forest/honey_hf_models.jsonl",
+            "size_kb": 1,
+            "entries": 7,
+            "kind": "registry"
+          },
+          {
+            "source": "honey.jsonl (legacy)",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/forest/honey.jsonl",
+            "size_kb": 57,
+            "entries": 105,
+            "kind": "legacy_honey"
+          },
+          {
+            "source": "sov_space/fractal_architecture.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/sov_space/fractal_architecture.json",
+            "size_kb": 787,
+            "entries": "state",
+            "kind": "sov_space_state"
+          },
+          {
+            "source": "sov_space/rag_state.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/sov_space/rag_state.json",
+            "size_kb": 0,
+            "entries": "rag",
+            "kind": "sov_space_rag"
+          },
+          {
+            "source": "training_data/flywheel_pairs_2026-07-30.jsonl",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/training_data/flywheel_pairs_2026-07-30.jsonl",
+            "size_kb": 7,
+            "entries": 36,
+            "kind": "training_data"
+          },
+          {
+            "source": "training_data/flywheel_pairs_2026-08-13.jsonl",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/training_data/flywheel_pairs_2026-08-13.jsonl",
+            "size_kb": 143,
+            "entries": 680,
+            "kind": "training_data"
+          },
+          {
+            "source": "training_data/flywheel_pairs_2026-08-14.jsonl",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/training_data/flywheel_pairs_2026-08-14.jsonl",
+            "size_kb": 122,
+            "entries": 580,
+            "kind": "training_data"
+          },
+          {
+            "source": "training_data/flywheel_pairs_2026-08-15.jsonl",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/training_data/flywheel_pairs_2026-08-15.jsonl",
+            "size_kb": 21,
+            "entries": 100,
+            "kind": "training_data"
+          },
+          {
+            "source": "training_data/flywheel_pairs_kaggle_v3_2026-08-02.jsonl",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/training_data/flywheel_pairs_kaggle_v3_2026-08-02.jsonl",
+            "size_kb": 567,
+            "entries": 2610,
+            "kind": "training_data"
+          },
+          {
+            "source": "training_data/flywheel_pairs_local_spread_2026-08-02.jsonl",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/training_data/flywheel_pairs_local_spread_2026-08-02.jsonl",
+            "size_kb": 2530,
+            "entries": 11349,
+            "kind": "training_data"
+          },
+          {
+            "source": "training_data/flywheel_pairs_micro1_2026-08-01.jsonl",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/training_data/flywheel_pairs_micro1_2026-08-01.jsonl",
+            "size_kb": 5,
+            "entries": 24,
+            "kind": "training_data"
+          },
+          {
+            "source": "training_data/flywheel_pairs_micro2_2026-08-01.jsonl",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/training_data/flywheel_pairs_micro2_2026-08-01.jsonl",
+            "size_kb": 2,
+            "entries": 9,
+            "kind": "training_data"
+          },
+          {
+            "source": "training_data/honey_mistral.jsonl",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/training_data/honey_mistral.jsonl",
+            "size_kb": 14836,
+            "entries": 10906,
+            "kind": "training_data"
+          },
+          {
+            "source": "training_data/honey_qa.jsonl",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/training_data/honey_qa.jsonl",
+            "size_kb": 14986,
+            "entries": 10906,
+            "kind": "training_data"
+          },
+          {
+            "source": "training_data/honey_sharegpt.jsonl",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/training_data/honey_sharegpt.jsonl",
+            "size_kb": 15806,
+            "entries": 10906,
+            "kind": "training_data"
+          },
+          {
+            "source": "training_data/honey_training_data.jsonl",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/training_data/honey_training_data.jsonl",
+            "size_kb": 15424,
+            "entries": 21570,
+            "kind": "training_data"
+          },
+          {
+            "source": "training_data/master_alpaca.jsonl",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/training_data/master_alpaca.jsonl",
+            "size_kb": 6757,
+            "entries": 12193,
+            "kind": "training_data"
+          },
+          {
+            "source": "training_data/master_sharegpt.jsonl",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/training_data/master_sharegpt.jsonl",
+            "size_kb": 7174,
+            "entries": 12193,
+            "kind": "training_data"
+          },
+          {
+            "source": "flywheel/2026-07-30.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/flywheel/2026-07-30.json",
+            "size_kb": 10,
+            "entries": "benchmark",
+            "kind": "flywheel_output"
+          },
+          {
+            "source": "flywheel/2026-08-01_micro1-nsite.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/flywheel/2026-08-01_micro1-nsite.json",
+            "size_kb": 12,
+            "entries": "benchmark",
+            "kind": "flywheel_output"
+          },
+          {
+            "source": "flywheel/2026-08-01_micro2-nsite.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/flywheel/2026-08-01_micro2-nsite.json",
+            "size_kb": 8,
+            "entries": "benchmark",
+            "kind": "flywheel_output"
+          },
+          {
+            "source": "flywheel/2026-08-02_clan-full-spread-v3-kaggle.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/flywheel/2026-08-02_clan-full-spread-v3-kaggle.json",
+            "size_kb": 1425,
+            "entries": "benchmark",
+            "kind": "flywheel_output"
+          },
+          {
+            "source": "flywheel/2026-08-02_cross-substrate-check.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/flywheel/2026-08-02_cross-substrate-check.json",
+            "size_kb": 1,
+            "entries": "benchmark",
+            "kind": "flywheel_output"
+          },
+          {
+            "source": "flywheel/2026-08-02_full-local-spread-103models.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/flywheel/2026-08-02_full-local-spread-103models.json",
+            "size_kb": 2235,
+            "entries": "benchmark",
+            "kind": "flywheel_output"
+          },
+          {
+            "source": "flywheel/2026-08-02_full-local-spread-47models.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/flywheel/2026-08-02_full-local-spread-47models.json",
+            "size_kb": 1175,
+            "entries": "benchmark",
+            "kind": "flywheel_output"
+          },
+          {
+            "source": "flywheel/2026-08-02_full-local-spread-51models.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/flywheel/2026-08-02_full-local-spread-51models.json",
+            "size_kb": 1269,
+            "entries": "benchmark",
+            "kind": "flywheel_output"
+          },
+          {
+            "source": "flywheel/2026-08-02_full-local-spread-98models.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/flywheel/2026-08-02_full-local-spread-98models.json",
+            "size_kb": 2162,
+            "entries": "benchmark",
+            "kind": "flywheel_output"
+          },
+          {
+            "source": "flywheel/2026-08-02_kaggle-suite.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/flywheel/2026-08-02_kaggle-suite.json",
+            "size_kb": 84,
+            "entries": "benchmark",
+            "kind": "flywheel_output"
+          },
+          {
+            "source": "flywheel/2026-08-02_kaggle-v3-vs-m4-crosscheck.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/flywheel/2026-08-02_kaggle-v3-vs-m4-crosscheck.json",
+            "size_kb": 7,
+            "entries": "benchmark",
+            "kind": "flywheel_output"
+          },
+          {
+            "source": "flywheel/2026-08-02_runpod-a4500-burst-v5.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/flywheel/2026-08-02_runpod-a4500-burst-v5.json",
+            "size_kb": 9,
+            "entries": "benchmark",
+            "kind": "flywheel_output"
+          },
+          {
+            "source": "flywheel/2026-08-13.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/flywheel/2026-08-13.json",
+            "size_kb": 13,
+            "entries": "benchmark",
+            "kind": "flywheel_output"
+          },
+          {
+            "source": "flywheel/2026-08-14.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/flywheel/2026-08-14.json",
+            "size_kb": 13,
+            "entries": "benchmark",
+            "kind": "flywheel_output"
+          },
+          {
+            "source": "flywheel/2026-08-15.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/flywheel/2026-08-15.json",
+            "size_kb": 13,
+            "entries": "benchmark",
+            "kind": "flywheel_output"
+          },
+          {
+            "source": "flywheel/2026-08-16.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/flywheel/2026-08-16.json",
+            "size_kb": 8,
+            "entries": "benchmark",
+            "kind": "flywheel_output"
+          },
+          {
+            "source": "flywheel/2026-08-17.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/flywheel/2026-08-17.json",
+            "size_kb": 8,
+            "entries": "benchmark",
+            "kind": "flywheel_output"
+          },
+          {
+            "source": "flywheel/2026-08-18.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/flywheel/2026-08-18.json",
+            "size_kb": 8,
+            "entries": "benchmark",
+            "kind": "flywheel_output"
+          },
+          {
+            "source": "flywheel/2026-08-19.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/flywheel/2026-08-19.json",
+            "size_kb": 8,
+            "entries": "benchmark",
+            "kind": "flywheel_output"
+          },
+          {
+            "source": "flywheel/2026-08-20.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/flywheel/2026-08-20.json",
+            "size_kb": 8,
+            "entries": "benchmark",
+            "kind": "flywheel_output"
+          },
+          {
+            "source": "flywheel/2026-08-21.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/flywheel/2026-08-21.json",
+            "size_kb": 8,
+            "entries": "benchmark",
+            "kind": "flywheel_output"
+          },
+          {
+            "source": "flywheel/2026-08-22.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/flywheel/2026-08-22.json",
+            "size_kb": 8,
+            "entries": "benchmark",
+            "kind": "flywheel_output"
+          },
+          {
+            "source": "flywheel/2026-08-23.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/flywheel/2026-08-23.json",
+            "size_kb": 8,
+            "entries": "benchmark",
+            "kind": "flywheel_output"
+          },
+          {
+            "source": "sov_time_ledger.jsonl",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/sov_time_ledger.jsonl",
+            "size_kb": 14580,
+            "entries": 29857,
+            "kind": "ledger_events"
+          },
+          {
+            "source": "out//batch_bench_report.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/out/batch_bench_report.json",
+            "size_kb": 2,
+            "entries": "artifact",
+            "kind": "site_artifact"
+          }
+        ]
+      }
+    },
+    "selftest-1787506473": {
+      "user_id": "selftest-1787506473",
+      "tier": 4,
+      "label": "sovereign",
+      "model": "council-mix:latest",
+      "size_mb": 12000,
+      "tokens_per_call": 65536,
+      "owem": true,
+      "iwm": true,
+      "vwm": true,
+      "gpu_class": "paid_gpu",
+      "spawned_at": 1787506474.111255,
+      "last_growth": 1787506476.742996,
+      "growth_history": [
+        {
+          "from": 0,
+          "to": 1,
+          "ts": 1787506475.045276
+        },
+        {
+          "from": 1,
+          "to": 2,
+          "ts": 1787506475.703624
+        },
+        {
+          "from": 2,
+          "to": 3,
+          "ts": 1787506476.209561
+        },
+        {
+          "from": 3,
+          "to": 4,
+          "ts": 1787506476.742997
+        }
+      ],
+      "checks": 0,
+      "tokens_used": 0,
+      "inherited_routes": {
+        "n_producers": 45,
+        "total_kb": 102487,
+        "by_kind": {},
+        "producers": [
+          {
+            "source": "bloodline.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/forest/bloodline.json",
+            "size_kb": 91,
+            "entries": 6,
+            "kind": "lineage"
+          },
+          {
+            "source": "honey_chatml.jsonl",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/forest/honey_chatml.jsonl",
+            "size_kb": 71,
+            "entries": 108,
+            "kind": "training_triplets"
+          },
+          {
+            "source": "honey_hf_models.jsonl",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/forest/honey_hf_models.jsonl",
+            "size_kb": 1,
+            "entries": 7,
+            "kind": "registry"
+          },
+          {
+            "source": "honey.jsonl (legacy)",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/forest/honey.jsonl",
+            "size_kb": 57,
+            "entries": 105,
+            "kind": "legacy_honey"
+          },
+          {
+            "source": "sov_space/fractal_architecture.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/sov_space/fractal_architecture.json",
+            "size_kb": 787,
+            "entries": "state",
+            "kind": "sov_space_state"
+          },
+          {
+            "source": "sov_space/rag_state.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/sov_space/rag_state.json",
+            "size_kb": 0,
+            "entries": "rag",
+            "kind": "sov_space_rag"
+          },
+          {
+            "source": "training_data/flywheel_pairs_2026-07-30.jsonl",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/training_data/flywheel_pairs_2026-07-30.jsonl",
+            "size_kb": 7,
+            "entries": 36,
+            "kind": "training_data"
+          },
+          {
+            "source": "training_data/flywheel_pairs_2026-08-13.jsonl",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/training_data/flywheel_pairs_2026-08-13.jsonl",
+            "size_kb": 143,
+            "entries": 680,
+            "kind": "training_data"
+          },
+          {
+            "source": "training_data/flywheel_pairs_2026-08-14.jsonl",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/training_data/flywheel_pairs_2026-08-14.jsonl",
+            "size_kb": 122,
+            "entries": 580,
+            "kind": "training_data"
+          },
+          {
+            "source": "training_data/flywheel_pairs_2026-08-15.jsonl",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/training_data/flywheel_pairs_2026-08-15.jsonl",
+            "size_kb": 21,
+            "entries": 100,
+            "kind": "training_data"
+          },
+          {
+            "source": "training_data/flywheel_pairs_kaggle_v3_2026-08-02.jsonl",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/training_data/flywheel_pairs_kaggle_v3_2026-08-02.jsonl",
+            "size_kb": 567,
+            "entries": 2610,
+            "kind": "training_data"
+          },
+          {
+            "source": "training_data/flywheel_pairs_local_spread_2026-08-02.jsonl",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/training_data/flywheel_pairs_local_spread_2026-08-02.jsonl",
+            "size_kb": 2530,
+            "entries": 11349,
+            "kind": "training_data"
+          },
+          {
+            "source": "training_data/flywheel_pairs_micro1_2026-08-01.jsonl",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/training_data/flywheel_pairs_micro1_2026-08-01.jsonl",
+            "size_kb": 5,
+            "entries": 24,
+            "kind": "training_data"
+          },
+          {
+            "source": "training_data/flywheel_pairs_micro2_2026-08-01.jsonl",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/training_data/flywheel_pairs_micro2_2026-08-01.jsonl",
+            "size_kb": 2,
+            "entries": 9,
+            "kind": "training_data"
+          },
+          {
+            "source": "training_data/honey_mistral.jsonl",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/training_data/honey_mistral.jsonl",
+            "size_kb": 14836,
+            "entries": 10906,
+            "kind": "training_data"
+          },
+          {
+            "source": "training_data/honey_qa.jsonl",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/training_data/honey_qa.jsonl",
+            "size_kb": 14986,
+            "entries": 10906,
+            "kind": "training_data"
+          },
+          {
+            "source": "training_data/honey_sharegpt.jsonl",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/training_data/honey_sharegpt.jsonl",
+            "size_kb": 15806,
+            "entries": 10906,
+            "kind": "training_data"
+          },
+          {
+            "source": "training_data/honey_training_data.jsonl",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/training_data/honey_training_data.jsonl",
+            "size_kb": 15424,
+            "entries": 21570,
+            "kind": "training_data"
+          },
+          {
+            "source": "training_data/master_alpaca.jsonl",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/training_data/master_alpaca.jsonl",
+            "size_kb": 6757,
+            "entries": 12193,
+            "kind": "training_data"
+          },
+          {
+            "source": "training_data/master_sharegpt.jsonl",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/training_data/master_sharegpt.jsonl",
+            "size_kb": 7174,
+            "entries": 12193,
+            "kind": "training_data"
+          },
+          {
+            "source": "flywheel/2026-07-30.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/flywheel/2026-07-30.json",
+            "size_kb": 10,
+            "entries": "benchmark",
+            "kind": "flywheel_output"
+          },
+          {
+            "source": "flywheel/2026-08-01_micro1-nsite.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/flywheel/2026-08-01_micro1-nsite.json",
+            "size_kb": 12,
+            "entries": "benchmark",
+            "kind": "flywheel_output"
+          },
+          {
+            "source": "flywheel/2026-08-01_micro2-nsite.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/flywheel/2026-08-01_micro2-nsite.json",
+            "size_kb": 8,
+            "entries": "benchmark",
+            "kind": "flywheel_output"
+          },
+          {
+            "source": "flywheel/2026-08-02_clan-full-spread-v3-kaggle.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/flywheel/2026-08-02_clan-full-spread-v3-kaggle.json",
+            "size_kb": 1425,
+            "entries": "benchmark",
+            "kind": "flywheel_output"
+          },
+          {
+            "source": "flywheel/2026-08-02_cross-substrate-check.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/flywheel/2026-08-02_cross-substrate-check.json",
+            "size_kb": 1,
+            "entries": "benchmark",
+            "kind": "flywheel_output"
+          },
+          {
+            "source": "flywheel/2026-08-02_full-local-spread-103models.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/flywheel/2026-08-02_full-local-spread-103models.json",
+            "size_kb": 2235,
+            "entries": "benchmark",
+            "kind": "flywheel_output"
+          },
+          {
+            "source": "flywheel/2026-08-02_full-local-spread-47models.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/flywheel/2026-08-02_full-local-spread-47models.json",
+            "size_kb": 1175,
+            "entries": "benchmark",
+            "kind": "flywheel_output"
+          },
+          {
+            "source": "flywheel/2026-08-02_full-local-spread-51models.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/flywheel/2026-08-02_full-local-spread-51models.json",
+            "size_kb": 1269,
+            "entries": "benchmark",
+            "kind": "flywheel_output"
+          },
+          {
+            "source": "flywheel/2026-08-02_full-local-spread-98models.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/flywheel/2026-08-02_full-local-spread-98models.json",
+            "size_kb": 2162,
+            "entries": "benchmark",
+            "kind": "flywheel_output"
+          },
+          {
+            "source": "flywheel/2026-08-02_kaggle-suite.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/flywheel/2026-08-02_kaggle-suite.json",
+            "size_kb": 84,
+            "entries": "benchmark",
+            "kind": "flywheel_output"
+          },
+          {
+            "source": "flywheel/2026-08-02_kaggle-v3-vs-m4-crosscheck.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/flywheel/2026-08-02_kaggle-v3-vs-m4-crosscheck.json",
+            "size_kb": 7,
+            "entries": "benchmark",
+            "kind": "flywheel_output"
+          },
+          {
+            "source": "flywheel/2026-08-02_runpod-a4500-burst-v5.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/flywheel/2026-08-02_runpod-a4500-burst-v5.json",
+            "size_kb": 9,
+            "entries": "benchmark",
+            "kind": "flywheel_output"
+          },
+          {
+            "source": "flywheel/2026-08-13.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/flywheel/2026-08-13.json",
+            "size_kb": 13,
+            "entries": "benchmark",
+            "kind": "flywheel_output"
+          },
+          {
+            "source": "flywheel/2026-08-14.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/flywheel/2026-08-14.json",
+            "size_kb": 13,
+            "entries": "benchmark",
+            "kind": "flywheel_output"
+          },
+          {
+            "source": "flywheel/2026-08-15.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/flywheel/2026-08-15.json",
+            "size_kb": 13,
+            "entries": "benchmark",
+            "kind": "flywheel_output"
+          },
+          {
+            "source": "flywheel/2026-08-16.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/flywheel/2026-08-16.json",
+            "size_kb": 8,
+            "entries": "benchmark",
+            "kind": "flywheel_output"
+          },
+          {
+            "source": "flywheel/2026-08-17.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/flywheel/2026-08-17.json",
+            "size_kb": 8,
+            "entries": "benchmark",
+            "kind": "flywheel_output"
+          },
+          {
+            "source": "flywheel/2026-08-18.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/flywheel/2026-08-18.json",
+            "size_kb": 8,
+            "entries": "benchmark",
+            "kind": "flywheel_output"
+          },
+          {
+            "source": "flywheel/2026-08-19.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/flywheel/2026-08-19.json",
+            "size_kb": 8,
+            "entries": "benchmark",
+            "kind": "flywheel_output"
+          },
+          {
+            "source": "flywheel/2026-08-20.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/flywheel/2026-08-20.json",
+            "size_kb": 8,
+            "entries": "benchmark",
+            "kind": "flywheel_output"
+          },
+          {
+            "source": "flywheel/2026-08-21.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/flywheel/2026-08-21.json",
+            "size_kb": 8,
+            "entries": "benchmark",
+            "kind": "flywheel_output"
+          },
+          {
+            "source": "flywheel/2026-08-22.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/flywheel/2026-08-22.json",
+            "size_kb": 8,
+            "entries": "benchmark",
+            "kind": "flywheel_output"
+          },
+          {
+            "source": "flywheel/2026-08-23.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/flywheel/2026-08-23.json",
+            "size_kb": 8,
+            "entries": "benchmark",
+            "kind": "flywheel_output"
+          },
+          {
+            "source": "sov_time_ledger.jsonl",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/sov_time_ledger.jsonl",
+            "size_kb": 14598,
+            "entries": 29894,
+            "kind": "ledger_events"
+          },
+          {
+            "source": "out//batch_bench_report.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/out/batch_bench_report.json",
+            "size_kb": 2,
+            "entries": "artifact",
+            "kind": "site_artifact"
+          }
+        ]
+      }
+    },
+    "overnight-1787506548": {
+      "user_id": "overnight-1787506548",
+      "tier": 4,
+      "label": "sovereign",
+      "model": "council-mix:latest",
+      "size_mb": 12000,
+      "tokens_per_call": 65536,
+      "owem": true,
+      "iwm": true,
+      "vwm": true,
+      "gpu_class": "paid_gpu",
+      "spawned_at": 1787506548.89573,
+      "last_growth": 1787506550.424052,
+      "growth_history": [
+        {
+          "from": 0,
+          "to": 1,
+          "ts": 1787506549.590492
+        },
+        {
+          "from": 1,
+          "to": 2,
+          "ts": 1787506549.844531
+        },
+        {
+          "from": 2,
+          "to": 3,
+          "ts": 1787506550.088594
+        },
+        {
+          "from": 3,
+          "to": 4,
+          "ts": 1787506550.424052
+        }
+      ],
+      "checks": 0,
+      "tokens_used": 0,
+      "inherited_routes": {
+        "n_producers": 45,
+        "total_kb": 102536,
+        "by_kind": {},
+        "producers": [
+          {
+            "source": "bloodline.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/forest/bloodline.json",
+            "size_kb": 91,
+            "entries": 6,
+            "kind": "lineage"
+          },
+          {
+            "source": "honey_chatml.jsonl",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/forest/honey_chatml.jsonl",
+            "size_kb": 71,
+            "entries": 108,
+            "kind": "training_triplets"
+          },
+          {
+            "source": "honey_hf_models.jsonl",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/forest/honey_hf_models.jsonl",
+            "size_kb": 1,
+            "entries": 7,
+            "kind": "registry"
+          },
+          {
+            "source": "honey.jsonl (legacy)",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/forest/honey.jsonl",
+            "size_kb": 57,
+            "entries": 105,
+            "kind": "legacy_honey"
+          },
+          {
+            "source": "sov_space/fractal_architecture.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/sov_space/fractal_architecture.json",
+            "size_kb": 787,
+            "entries": "state",
+            "kind": "sov_space_state"
+          },
+          {
+            "source": "sov_space/rag_state.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/sov_space/rag_state.json",
+            "size_kb": 0,
+            "entries": "rag",
+            "kind": "sov_space_rag"
+          },
+          {
+            "source": "training_data/flywheel_pairs_2026-07-30.jsonl",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/training_data/flywheel_pairs_2026-07-30.jsonl",
+            "size_kb": 7,
+            "entries": 36,
+            "kind": "training_data"
+          },
+          {
+            "source": "training_data/flywheel_pairs_2026-08-13.jsonl",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/training_data/flywheel_pairs_2026-08-13.jsonl",
+            "size_kb": 143,
+            "entries": 680,
+            "kind": "training_data"
+          },
+          {
+            "source": "training_data/flywheel_pairs_2026-08-14.jsonl",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/training_data/flywheel_pairs_2026-08-14.jsonl",
+            "size_kb": 122,
+            "entries": 580,
+            "kind": "training_data"
+          },
+          {
+            "source": "training_data/flywheel_pairs_2026-08-15.jsonl",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/training_data/flywheel_pairs_2026-08-15.jsonl",
+            "size_kb": 21,
+            "entries": 100,
+            "kind": "training_data"
+          },
+          {
+            "source": "training_data/flywheel_pairs_kaggle_v3_2026-08-02.jsonl",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/training_data/flywheel_pairs_kaggle_v3_2026-08-02.jsonl",
+            "size_kb": 567,
+            "entries": 2610,
+            "kind": "training_data"
+          },
+          {
+            "source": "training_data/flywheel_pairs_local_spread_2026-08-02.jsonl",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/training_data/flywheel_pairs_local_spread_2026-08-02.jsonl",
+            "size_kb": 2530,
+            "entries": 11349,
+            "kind": "training_data"
+          },
+          {
+            "source": "training_data/flywheel_pairs_micro1_2026-08-01.jsonl",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/training_data/flywheel_pairs_micro1_2026-08-01.jsonl",
+            "size_kb": 5,
+            "entries": 24,
+            "kind": "training_data"
+          },
+          {
+            "source": "training_data/flywheel_pairs_micro2_2026-08-01.jsonl",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/training_data/flywheel_pairs_micro2_2026-08-01.jsonl",
+            "size_kb": 2,
+            "entries": 9,
+            "kind": "training_data"
+          },
+          {
+            "source": "training_data/honey_mistral.jsonl",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/training_data/honey_mistral.jsonl",
+            "size_kb": 14836,
+            "entries": 10906,
+            "kind": "training_data"
+          },
+          {
+            "source": "training_data/honey_qa.jsonl",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/training_data/honey_qa.jsonl",
+            "size_kb": 14986,
+            "entries": 10906,
+            "kind": "training_data"
+          },
+          {
+            "source": "training_data/honey_sharegpt.jsonl",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/training_data/honey_sharegpt.jsonl",
+            "size_kb": 15806,
+            "entries": 10906,
+            "kind": "training_data"
+          },
+          {
+            "source": "training_data/honey_training_data.jsonl",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/training_data/honey_training_data.jsonl",
+            "size_kb": 15424,
+            "entries": 21570,
+            "kind": "training_data"
+          },
+          {
+            "source": "training_data/master_alpaca.jsonl",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/training_data/master_alpaca.jsonl",
+            "size_kb": 6757,
+            "entries": 12193,
+            "kind": "training_data"
+          },
+          {
+            "source": "training_data/master_sharegpt.jsonl",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/training_data/master_sharegpt.jsonl",
+            "size_kb": 7174,
+            "entries": 12193,
+            "kind": "training_data"
+          },
+          {
+            "source": "flywheel/2026-07-30.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/flywheel/2026-07-30.json",
+            "size_kb": 10,
+            "entries": "benchmark",
+            "kind": "flywheel_output"
+          },
+          {
+            "source": "flywheel/2026-08-01_micro1-nsite.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/flywheel/2026-08-01_micro1-nsite.json",
+            "size_kb": 12,
+            "entries": "benchmark",
+            "kind": "flywheel_output"
+          },
+          {
+            "source": "flywheel/2026-08-01_micro2-nsite.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/flywheel/2026-08-01_micro2-nsite.json",
+            "size_kb": 8,
+            "entries": "benchmark",
+            "kind": "flywheel_output"
+          },
+          {
+            "source": "flywheel/2026-08-02_clan-full-spread-v3-kaggle.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/flywheel/2026-08-02_clan-full-spread-v3-kaggle.json",
+            "size_kb": 1425,
+            "entries": "benchmark",
+            "kind": "flywheel_output"
+          },
+          {
+            "source": "flywheel/2026-08-02_cross-substrate-check.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/flywheel/2026-08-02_cross-substrate-check.json",
+            "size_kb": 1,
+            "entries": "benchmark",
+            "kind": "flywheel_output"
+          },
+          {
+            "source": "flywheel/2026-08-02_full-local-spread-103models.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/flywheel/2026-08-02_full-local-spread-103models.json",
+            "size_kb": 2235,
+            "entries": "benchmark",
+            "kind": "flywheel_output"
+          },
+          {
+            "source": "flywheel/2026-08-02_full-local-spread-47models.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/flywheel/2026-08-02_full-local-spread-47models.json",
+            "size_kb": 1175,
+            "entries": "benchmark",
+            "kind": "flywheel_output"
+          },
+          {
+            "source": "flywheel/2026-08-02_full-local-spread-51models.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/flywheel/2026-08-02_full-local-spread-51models.json",
+            "size_kb": 1269,
+            "entries": "benchmark",
+            "kind": "flywheel_output"
+          },
+          {
+            "source": "flywheel/2026-08-02_full-local-spread-98models.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/flywheel/2026-08-02_full-local-spread-98models.json",
+            "size_kb": 2162,
+            "entries": "benchmark",
+            "kind": "flywheel_output"
+          },
+          {
+            "source": "flywheel/2026-08-02_kaggle-suite.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/flywheel/2026-08-02_kaggle-suite.json",
+            "size_kb": 84,
+            "entries": "benchmark",
+            "kind": "flywheel_output"
+          },
+          {
+            "source": "flywheel/2026-08-02_kaggle-v3-vs-m4-crosscheck.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/flywheel/2026-08-02_kaggle-v3-vs-m4-crosscheck.json",
+            "size_kb": 7,
+            "entries": "benchmark",
+            "kind": "flywheel_output"
+          },
+          {
+            "source": "flywheel/2026-08-02_runpod-a4500-burst-v5.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/flywheel/2026-08-02_runpod-a4500-burst-v5.json",
+            "size_kb": 9,
+            "entries": "benchmark",
+            "kind": "flywheel_output"
+          },
+          {
+            "source": "flywheel/2026-08-13.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/flywheel/2026-08-13.json",
+            "size_kb": 13,
+            "entries": "benchmark",
+            "kind": "flywheel_output"
+          },
+          {
+            "source": "flywheel/2026-08-14.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/flywheel/2026-08-14.json",
+            "size_kb": 13,
+            "entries": "benchmark",
+            "kind": "flywheel_output"
+          },
+          {
+            "source": "flywheel/2026-08-15.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/flywheel/2026-08-15.json",
+            "size_kb": 13,
+            "entries": "benchmark",
+            "kind": "flywheel_output"
+          },
+          {
+            "source": "flywheel/2026-08-16.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/flywheel/2026-08-16.json",
+            "size_kb": 8,
+            "entries": "benchmark",
+            "kind": "flywheel_output"
+          },
+          {
+            "source": "flywheel/2026-08-17.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/flywheel/2026-08-17.json",
+            "size_kb": 8,
+            "entries": "benchmark",
+            "kind": "flywheel_output"
+          },
+          {
+            "source": "flywheel/2026-08-18.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/flywheel/2026-08-18.json",
+            "size_kb": 8,
+            "entries": "benchmark",
+            "kind": "flywheel_output"
+          },
+          {
+            "source": "flywheel/2026-08-19.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/flywheel/2026-08-19.json",
+            "size_kb": 8,
+            "entries": "benchmark",
+            "kind": "flywheel_output"
+          },
+          {
+            "source": "flywheel/2026-08-20.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/flywheel/2026-08-20.json",
+            "size_kb": 8,
+            "entries": "benchmark",
+            "kind": "flywheel_output"
+          },
+          {
+            "source": "flywheel/2026-08-21.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/flywheel/2026-08-21.json",
+            "size_kb": 8,
+            "entries": "benchmark",
+            "kind": "flywheel_output"
+          },
+          {
+            "source": "flywheel/2026-08-22.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/flywheel/2026-08-22.json",
+            "size_kb": 8,
+            "entries": "benchmark",
+            "kind": "flywheel_output"
+          },
+          {
+            "source": "flywheel/2026-08-23.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/flywheel/2026-08-23.json",
+            "size_kb": 8,
+            "entries": "benchmark",
+            "kind": "flywheel_output"
+          },
+          {
+            "source": "sov_time_ledger.jsonl",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/sov_time_ledger.jsonl",
+            "size_kb": 14647,
+            "entries": 29995,
+            "kind": "ledger_events"
+          },
+          {
+            "source": "out//batch_bench_report.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/out/batch_bench_report.json",
+            "size_kb": 2,
+            "entries": "artifact",
+            "kind": "site_artifact"
+          }
+        ]
+      }
+    },
+    "overnight-1787506606": {
+      "user_id": "overnight-1787506606",
+      "tier": 4,
+      "label": "sovereign",
+      "model": "council-mix:latest",
+      "size_mb": 12000,
+      "tokens_per_call": 65536,
+      "owem": true,
+      "iwm": true,
+      "vwm": true,
+      "gpu_class": "paid_gpu",
+      "spawned_at": 1787506606.163328,
+      "last_growth": 1787506607.316107,
+      "growth_history": [
+        {
+          "from": 0,
+          "to": 1,
+          "ts": 1787506606.6480708
+        },
+        {
+          "from": 1,
+          "to": 2,
+          "ts": 1787506606.8702028
+        },
+        {
+          "from": 2,
+          "to": 3,
+          "ts": 1787506607.0845408
+        },
+        {
+          "from": 3,
+          "to": 4,
+          "ts": 1787506607.316108
+        }
+      ],
+      "checks": 0,
+      "tokens_used": 0,
+      "inherited_routes": {
+        "n_producers": 45,
+        "total_kb": 102585,
+        "by_kind": {},
+        "producers": [
+          {
+            "source": "bloodline.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/forest/bloodline.json",
+            "size_kb": 91,
+            "entries": 6,
+            "kind": "lineage"
+          },
+          {
+            "source": "honey_chatml.jsonl",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/forest/honey_chatml.jsonl",
+            "size_kb": 71,
+            "entries": 108,
+            "kind": "training_triplets"
+          },
+          {
+            "source": "honey_hf_models.jsonl",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/forest/honey_hf_models.jsonl",
+            "size_kb": 1,
+            "entries": 7,
+            "kind": "registry"
+          },
+          {
+            "source": "honey.jsonl (legacy)",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/forest/honey.jsonl",
+            "size_kb": 57,
+            "entries": 105,
+            "kind": "legacy_honey"
+          },
+          {
+            "source": "sov_space/fractal_architecture.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/sov_space/fractal_architecture.json",
+            "size_kb": 787,
+            "entries": "state",
+            "kind": "sov_space_state"
+          },
+          {
+            "source": "sov_space/rag_state.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/sov_space/rag_state.json",
+            "size_kb": 0,
+            "entries": "rag",
+            "kind": "sov_space_rag"
+          },
+          {
+            "source": "training_data/flywheel_pairs_2026-07-30.jsonl",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/training_data/flywheel_pairs_2026-07-30.jsonl",
+            "size_kb": 7,
+            "entries": 36,
+            "kind": "training_data"
+          },
+          {
+            "source": "training_data/flywheel_pairs_2026-08-13.jsonl",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/training_data/flywheel_pairs_2026-08-13.jsonl",
+            "size_kb": 143,
+            "entries": 680,
+            "kind": "training_data"
+          },
+          {
+            "source": "training_data/flywheel_pairs_2026-08-14.jsonl",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/training_data/flywheel_pairs_2026-08-14.jsonl",
+            "size_kb": 122,
+            "entries": 580,
+            "kind": "training_data"
+          },
+          {
+            "source": "training_data/flywheel_pairs_2026-08-15.jsonl",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/training_data/flywheel_pairs_2026-08-15.jsonl",
+            "size_kb": 21,
+            "entries": 100,
+            "kind": "training_data"
+          },
+          {
+            "source": "training_data/flywheel_pairs_kaggle_v3_2026-08-02.jsonl",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/training_data/flywheel_pairs_kaggle_v3_2026-08-02.jsonl",
+            "size_kb": 567,
+            "entries": 2610,
+            "kind": "training_data"
+          },
+          {
+            "source": "training_data/flywheel_pairs_local_spread_2026-08-02.jsonl",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/training_data/flywheel_pairs_local_spread_2026-08-02.jsonl",
+            "size_kb": 2530,
+            "entries": 11349,
+            "kind": "training_data"
+          },
+          {
+            "source": "training_data/flywheel_pairs_micro1_2026-08-01.jsonl",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/training_data/flywheel_pairs_micro1_2026-08-01.jsonl",
+            "size_kb": 5,
+            "entries": 24,
+            "kind": "training_data"
+          },
+          {
+            "source": "training_data/flywheel_pairs_micro2_2026-08-01.jsonl",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/training_data/flywheel_pairs_micro2_2026-08-01.jsonl",
+            "size_kb": 2,
+            "entries": 9,
+            "kind": "training_data"
+          },
+          {
+            "source": "training_data/honey_mistral.jsonl",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/training_data/honey_mistral.jsonl",
+            "size_kb": 14836,
+            "entries": 10906,
+            "kind": "training_data"
+          },
+          {
+            "source": "training_data/honey_qa.jsonl",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/training_data/honey_qa.jsonl",
+            "size_kb": 14986,
+            "entries": 10906,
+            "kind": "training_data"
+          },
+          {
+            "source": "training_data/honey_sharegpt.jsonl",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/training_data/honey_sharegpt.jsonl",
+            "size_kb": 15806,
+            "entries": 10906,
+            "kind": "training_data"
+          },
+          {
+            "source": "training_data/honey_training_data.jsonl",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/training_data/honey_training_data.jsonl",
+            "size_kb": 15424,
+            "entries": 21570,
+            "kind": "training_data"
+          },
+          {
+            "source": "training_data/master_alpaca.jsonl",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/training_data/master_alpaca.jsonl",
+            "size_kb": 6757,
+            "entries": 12193,
+            "kind": "training_data"
+          },
+          {
+            "source": "training_data/master_sharegpt.jsonl",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/training_data/master_sharegpt.jsonl",
+            "size_kb": 7174,
+            "entries": 12193,
+            "kind": "training_data"
+          },
+          {
+            "source": "flywheel/2026-07-30.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/flywheel/2026-07-30.json",
+            "size_kb": 10,
+            "entries": "benchmark",
+            "kind": "flywheel_output"
+          },
+          {
+            "source": "flywheel/2026-08-01_micro1-nsite.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/flywheel/2026-08-01_micro1-nsite.json",
+            "size_kb": 12,
+            "entries": "benchmark",
+            "kind": "flywheel_output"
+          },
+          {
+            "source": "flywheel/2026-08-01_micro2-nsite.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/flywheel/2026-08-01_micro2-nsite.json",
+            "size_kb": 8,
+            "entries": "benchmark",
+            "kind": "flywheel_output"
+          },
+          {
+            "source": "flywheel/2026-08-02_clan-full-spread-v3-kaggle.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/flywheel/2026-08-02_clan-full-spread-v3-kaggle.json",
+            "size_kb": 1425,
+            "entries": "benchmark",
+            "kind": "flywheel_output"
+          },
+          {
+            "source": "flywheel/2026-08-02_cross-substrate-check.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/flywheel/2026-08-02_cross-substrate-check.json",
+            "size_kb": 1,
+            "entries": "benchmark",
+            "kind": "flywheel_output"
+          },
+          {
+            "source": "flywheel/2026-08-02_full-local-spread-103models.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/flywheel/2026-08-02_full-local-spread-103models.json",
+            "size_kb": 2235,
+            "entries": "benchmark",
+            "kind": "flywheel_output"
+          },
+          {
+            "source": "flywheel/2026-08-02_full-local-spread-47models.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/flywheel/2026-08-02_full-local-spread-47models.json",
+            "size_kb": 1175,
+            "entries": "benchmark",
+            "kind": "flywheel_output"
+          },
+          {
+            "source": "flywheel/2026-08-02_full-local-spread-51models.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/flywheel/2026-08-02_full-local-spread-51models.json",
+            "size_kb": 1269,
+            "entries": "benchmark",
+            "kind": "flywheel_output"
+          },
+          {
+            "source": "flywheel/2026-08-02_full-local-spread-98models.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/flywheel/2026-08-02_full-local-spread-98models.json",
+            "size_kb": 2162,
+            "entries": "benchmark",
+            "kind": "flywheel_output"
+          },
+          {
+            "source": "flywheel/2026-08-02_kaggle-suite.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/flywheel/2026-08-02_kaggle-suite.json",
+            "size_kb": 84,
+            "entries": "benchmark",
+            "kind": "flywheel_output"
+          },
+          {
+            "source": "flywheel/2026-08-02_kaggle-v3-vs-m4-crosscheck.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/flywheel/2026-08-02_kaggle-v3-vs-m4-crosscheck.json",
+            "size_kb": 7,
+            "entries": "benchmark",
+            "kind": "flywheel_output"
+          },
+          {
+            "source": "flywheel/2026-08-02_runpod-a4500-burst-v5.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/flywheel/2026-08-02_runpod-a4500-burst-v5.json",
+            "size_kb": 9,
+            "entries": "benchmark",
+            "kind": "flywheel_output"
+          },
+          {
+            "source": "flywheel/2026-08-13.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/flywheel/2026-08-13.json",
+            "size_kb": 13,
+            "entries": "benchmark",
+            "kind": "flywheel_output"
+          },
+          {
+            "source": "flywheel/2026-08-14.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/flywheel/2026-08-14.json",
+            "size_kb": 13,
+            "entries": "benchmark",
+            "kind": "flywheel_output"
+          },
+          {
+            "source": "flywheel/2026-08-15.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/flywheel/2026-08-15.json",
+            "size_kb": 13,
+            "entries": "benchmark",
+            "kind": "flywheel_output"
+          },
+          {
+            "source": "flywheel/2026-08-16.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/flywheel/2026-08-16.json",
+            "size_kb": 8,
+            "entries": "benchmark",
+            "kind": "flywheel_output"
+          },
+          {
+            "source": "flywheel/2026-08-17.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/flywheel/2026-08-17.json",
+            "size_kb": 8,
+            "entries": "benchmark",
+            "kind": "flywheel_output"
+          },
+          {
+            "source": "flywheel/2026-08-18.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/flywheel/2026-08-18.json",
+            "size_kb": 8,
+            "entries": "benchmark",
+            "kind": "flywheel_output"
+          },
+          {
+            "source": "flywheel/2026-08-19.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/flywheel/2026-08-19.json",
+            "size_kb": 8,
+            "entries": "benchmark",
+            "kind": "flywheel_output"
+          },
+          {
+            "source": "flywheel/2026-08-20.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/flywheel/2026-08-20.json",
+            "size_kb": 8,
+            "entries": "benchmark",
+            "kind": "flywheel_output"
+          },
+          {
+            "source": "flywheel/2026-08-21.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/flywheel/2026-08-21.json",
+            "size_kb": 8,
+            "entries": "benchmark",
+            "kind": "flywheel_output"
+          },
+          {
+            "source": "flywheel/2026-08-22.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/flywheel/2026-08-22.json",
+            "size_kb": 8,
+            "entries": "benchmark",
+            "kind": "flywheel_output"
+          },
+          {
+            "source": "flywheel/2026-08-23.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/flywheel/2026-08-23.json",
+            "size_kb": 8,
+            "entries": "benchmark",
+            "kind": "flywheel_output"
+          },
+          {
+            "source": "sov_time_ledger.jsonl",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/sov_time_ledger.jsonl",
+            "size_kb": 14696,
+            "entries": 30096,
+            "kind": "ledger_events"
+          },
+          {
+            "source": "out//batch_bench_report.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/out/batch_bench_report.json",
+            "size_kb": 2,
+            "entries": "artifact",
+            "kind": "site_artifact"
+          }
+        ]
+      }
+    },
+    "overnight-1787506653": {
+      "user_id": "overnight-1787506653",
+      "tier": 4,
+      "label": "sovereign",
+      "model": "council-mix:latest",
+      "size_mb": 12000,
+      "tokens_per_call": 65536,
+      "owem": true,
+      "iwm": true,
+      "vwm": true,
+      "gpu_class": "paid_gpu",
+      "spawned_at": 1787506653.924559,
+      "last_growth": 1787506655.149726,
+      "growth_history": [
+        {
+          "from": 0,
+          "to": 1,
+          "ts": 1787506654.395849
+        },
+        {
+          "from": 1,
+          "to": 2,
+          "ts": 1787506654.6275089
+        },
+        {
+          "from": 2,
+          "to": 3,
+          "ts": 1787506654.8715541
+        },
+        {
+          "from": 3,
+          "to": 4,
+          "ts": 1787506655.1497269
+        }
+      ],
+      "checks": 0,
+      "tokens_used": 0,
+      "inherited_routes": {
+        "n_producers": 45,
+        "total_kb": 102634,
+        "by_kind": {},
+        "producers": [
+          {
+            "source": "bloodline.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/forest/bloodline.json",
+            "size_kb": 91,
+            "entries": 6,
+            "kind": "lineage"
+          },
+          {
+            "source": "honey_chatml.jsonl",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/forest/honey_chatml.jsonl",
+            "size_kb": 71,
+            "entries": 108,
+            "kind": "training_triplets"
+          },
+          {
+            "source": "honey_hf_models.jsonl",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/forest/honey_hf_models.jsonl",
+            "size_kb": 1,
+            "entries": 7,
+            "kind": "registry"
+          },
+          {
+            "source": "honey.jsonl (legacy)",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/forest/honey.jsonl",
+            "size_kb": 57,
+            "entries": 105,
+            "kind": "legacy_honey"
+          },
+          {
+            "source": "sov_space/fractal_architecture.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/sov_space/fractal_architecture.json",
+            "size_kb": 787,
+            "entries": "state",
+            "kind": "sov_space_state"
+          },
+          {
+            "source": "sov_space/rag_state.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/sov_space/rag_state.json",
+            "size_kb": 0,
+            "entries": "rag",
+            "kind": "sov_space_rag"
+          },
+          {
+            "source": "training_data/flywheel_pairs_2026-07-30.jsonl",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/training_data/flywheel_pairs_2026-07-30.jsonl",
+            "size_kb": 7,
+            "entries": 36,
+            "kind": "training_data"
+          },
+          {
+            "source": "training_data/flywheel_pairs_2026-08-13.jsonl",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/training_data/flywheel_pairs_2026-08-13.jsonl",
+            "size_kb": 143,
+            "entries": 680,
+            "kind": "training_data"
+          },
+          {
+            "source": "training_data/flywheel_pairs_2026-08-14.jsonl",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/training_data/flywheel_pairs_2026-08-14.jsonl",
+            "size_kb": 122,
+            "entries": 580,
+            "kind": "training_data"
+          },
+          {
+            "source": "training_data/flywheel_pairs_2026-08-15.jsonl",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/training_data/flywheel_pairs_2026-08-15.jsonl",
+            "size_kb": 21,
+            "entries": 100,
+            "kind": "training_data"
+          },
+          {
+            "source": "training_data/flywheel_pairs_kaggle_v3_2026-08-02.jsonl",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/training_data/flywheel_pairs_kaggle_v3_2026-08-02.jsonl",
+            "size_kb": 567,
+            "entries": 2610,
+            "kind": "training_data"
+          },
+          {
+            "source": "training_data/flywheel_pairs_local_spread_2026-08-02.jsonl",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/training_data/flywheel_pairs_local_spread_2026-08-02.jsonl",
+            "size_kb": 2530,
+            "entries": 11349,
+            "kind": "training_data"
+          },
+          {
+            "source": "training_data/flywheel_pairs_micro1_2026-08-01.jsonl",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/training_data/flywheel_pairs_micro1_2026-08-01.jsonl",
+            "size_kb": 5,
+            "entries": 24,
+            "kind": "training_data"
+          },
+          {
+            "source": "training_data/flywheel_pairs_micro2_2026-08-01.jsonl",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/training_data/flywheel_pairs_micro2_2026-08-01.jsonl",
+            "size_kb": 2,
+            "entries": 9,
+            "kind": "training_data"
+          },
+          {
+            "source": "training_data/honey_mistral.jsonl",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/training_data/honey_mistral.jsonl",
+            "size_kb": 14836,
+            "entries": 10906,
+            "kind": "training_data"
+          },
+          {
+            "source": "training_data/honey_qa.jsonl",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/training_data/honey_qa.jsonl",
+            "size_kb": 14986,
+            "entries": 10906,
+            "kind": "training_data"
+          },
+          {
+            "source": "training_data/honey_sharegpt.jsonl",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/training_data/honey_sharegpt.jsonl",
+            "size_kb": 15806,
+            "entries": 10906,
+            "kind": "training_data"
+          },
+          {
+            "source": "training_data/honey_training_data.jsonl",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/training_data/honey_training_data.jsonl",
+            "size_kb": 15424,
+            "entries": 21570,
+            "kind": "training_data"
+          },
+          {
+            "source": "training_data/master_alpaca.jsonl",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/training_data/master_alpaca.jsonl",
+            "size_kb": 6757,
+            "entries": 12193,
+            "kind": "training_data"
+          },
+          {
+            "source": "training_data/master_sharegpt.jsonl",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/training_data/master_sharegpt.jsonl",
+            "size_kb": 7174,
+            "entries": 12193,
+            "kind": "training_data"
+          },
+          {
+            "source": "flywheel/2026-07-30.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/flywheel/2026-07-30.json",
+            "size_kb": 10,
+            "entries": "benchmark",
+            "kind": "flywheel_output"
+          },
+          {
+            "source": "flywheel/2026-08-01_micro1-nsite.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/flywheel/2026-08-01_micro1-nsite.json",
+            "size_kb": 12,
+            "entries": "benchmark",
+            "kind": "flywheel_output"
+          },
+          {
+            "source": "flywheel/2026-08-01_micro2-nsite.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/flywheel/2026-08-01_micro2-nsite.json",
+            "size_kb": 8,
+            "entries": "benchmark",
+            "kind": "flywheel_output"
+          },
+          {
+            "source": "flywheel/2026-08-02_clan-full-spread-v3-kaggle.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/flywheel/2026-08-02_clan-full-spread-v3-kaggle.json",
+            "size_kb": 1425,
+            "entries": "benchmark",
+            "kind": "flywheel_output"
+          },
+          {
+            "source": "flywheel/2026-08-02_cross-substrate-check.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/flywheel/2026-08-02_cross-substrate-check.json",
+            "size_kb": 1,
+            "entries": "benchmark",
+            "kind": "flywheel_output"
+          },
+          {
+            "source": "flywheel/2026-08-02_full-local-spread-103models.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/flywheel/2026-08-02_full-local-spread-103models.json",
+            "size_kb": 2235,
+            "entries": "benchmark",
+            "kind": "flywheel_output"
+          },
+          {
+            "source": "flywheel/2026-08-02_full-local-spread-47models.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/flywheel/2026-08-02_full-local-spread-47models.json",
+            "size_kb": 1175,
+            "entries": "benchmark",
+            "kind": "flywheel_output"
+          },
+          {
+            "source": "flywheel/2026-08-02_full-local-spread-51models.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/flywheel/2026-08-02_full-local-spread-51models.json",
+            "size_kb": 1269,
+            "entries": "benchmark",
+            "kind": "flywheel_output"
+          },
+          {
+            "source": "flywheel/2026-08-02_full-local-spread-98models.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/flywheel/2026-08-02_full-local-spread-98models.json",
+            "size_kb": 2162,
+            "entries": "benchmark",
+            "kind": "flywheel_output"
+          },
+          {
+            "source": "flywheel/2026-08-02_kaggle-suite.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/flywheel/2026-08-02_kaggle-suite.json",
+            "size_kb": 84,
+            "entries": "benchmark",
+            "kind": "flywheel_output"
+          },
+          {
+            "source": "flywheel/2026-08-02_kaggle-v3-vs-m4-crosscheck.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/flywheel/2026-08-02_kaggle-v3-vs-m4-crosscheck.json",
+            "size_kb": 7,
+            "entries": "benchmark",
+            "kind": "flywheel_output"
+          },
+          {
+            "source": "flywheel/2026-08-02_runpod-a4500-burst-v5.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/flywheel/2026-08-02_runpod-a4500-burst-v5.json",
+            "size_kb": 9,
+            "entries": "benchmark",
+            "kind": "flywheel_output"
+          },
+          {
+            "source": "flywheel/2026-08-13.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/flywheel/2026-08-13.json",
+            "size_kb": 13,
+            "entries": "benchmark",
+            "kind": "flywheel_output"
+          },
+          {
+            "source": "flywheel/2026-08-14.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/flywheel/2026-08-14.json",
+            "size_kb": 13,
+            "entries": "benchmark",
+            "kind": "flywheel_output"
+          },
+          {
+            "source": "flywheel/2026-08-15.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/flywheel/2026-08-15.json",
+            "size_kb": 13,
+            "entries": "benchmark",
+            "kind": "flywheel_output"
+          },
+          {
+            "source": "flywheel/2026-08-16.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/flywheel/2026-08-16.json",
+            "size_kb": 8,
+            "entries": "benchmark",
+            "kind": "flywheel_output"
+          },
+          {
+            "source": "flywheel/2026-08-17.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/flywheel/2026-08-17.json",
+            "size_kb": 8,
+            "entries": "benchmark",
+            "kind": "flywheel_output"
+          },
+          {
+            "source": "flywheel/2026-08-18.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/flywheel/2026-08-18.json",
+            "size_kb": 8,
+            "entries": "benchmark",
+            "kind": "flywheel_output"
+          },
+          {
+            "source": "flywheel/2026-08-19.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/flywheel/2026-08-19.json",
+            "size_kb": 8,
+            "entries": "benchmark",
+            "kind": "flywheel_output"
+          },
+          {
+            "source": "flywheel/2026-08-20.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/flywheel/2026-08-20.json",
+            "size_kb": 8,
+            "entries": "benchmark",
+            "kind": "flywheel_output"
+          },
+          {
+            "source": "flywheel/2026-08-21.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/flywheel/2026-08-21.json",
+            "size_kb": 8,
+            "entries": "benchmark",
+            "kind": "flywheel_output"
+          },
+          {
+            "source": "flywheel/2026-08-22.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/flywheel/2026-08-22.json",
+            "size_kb": 8,
+            "entries": "benchmark",
+            "kind": "flywheel_output"
+          },
+          {
+            "source": "flywheel/2026-08-23.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/flywheel/2026-08-23.json",
+            "size_kb": 8,
+            "entries": "benchmark",
+            "kind": "flywheel_output"
+          },
+          {
+            "source": "sov_time_ledger.jsonl",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/sov_time_ledger.jsonl",
+            "size_kb": 14745,
+            "entries": 30197,
+            "kind": "ledger_events"
+          },
+          {
+            "source": "out//batch_bench_report.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/out/batch_bench_report.json",
+            "size_kb": 2,
+            "entries": "artifact",
+            "kind": "site_artifact"
+          }
+        ]
+      }
+    },
+    "overnight-1787506714": {
+      "user_id": "overnight-1787506714",
+      "tier": 4,
+      "label": "sovereign",
+      "model": "council-mix:latest",
+      "size_mb": 12000,
+      "tokens_per_call": 65536,
+      "owem": true,
+      "iwm": true,
+      "vwm": true,
+      "gpu_class": "paid_gpu",
+      "spawned_at": 1787506714.752256,
+      "last_growth": 1787506716.309792,
+      "growth_history": [
+        {
+          "from": 0,
+          "to": 1,
+          "ts": 1787506715.338381
+        },
+        {
+          "from": 1,
+          "to": 2,
+          "ts": 1787506715.667192
+        },
+        {
+          "from": 2,
+          "to": 3,
+          "ts": 1787506715.9981802
+        },
+        {
+          "from": 3,
+          "to": 4,
+          "ts": 1787506716.309793
+        }
+      ],
+      "checks": 0,
+      "tokens_used": 0,
+      "inherited_routes": {
+        "n_producers": 45,
+        "total_kb": 102683,
+        "by_kind": {},
+        "producers": [
+          {
+            "source": "bloodline.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/forest/bloodline.json",
+            "size_kb": 91,
+            "entries": 6,
+            "kind": "lineage"
+          },
+          {
+            "source": "honey_chatml.jsonl",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/forest/honey_chatml.jsonl",
+            "size_kb": 71,
+            "entries": 108,
+            "kind": "training_triplets"
+          },
+          {
+            "source": "honey_hf_models.jsonl",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/forest/honey_hf_models.jsonl",
+            "size_kb": 1,
+            "entries": 7,
+            "kind": "registry"
+          },
+          {
+            "source": "honey.jsonl (legacy)",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/forest/honey.jsonl",
+            "size_kb": 57,
+            "entries": 105,
+            "kind": "legacy_honey"
+          },
+          {
+            "source": "sov_space/fractal_architecture.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/sov_space/fractal_architecture.json",
+            "size_kb": 787,
+            "entries": "state",
+            "kind": "sov_space_state"
+          },
+          {
+            "source": "sov_space/rag_state.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/sov_space/rag_state.json",
+            "size_kb": 0,
+            "entries": "rag",
+            "kind": "sov_space_rag"
+          },
+          {
+            "source": "training_data/flywheel_pairs_2026-07-30.jsonl",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/training_data/flywheel_pairs_2026-07-30.jsonl",
+            "size_kb": 7,
+            "entries": 36,
+            "kind": "training_data"
+          },
+          {
+            "source": "training_data/flywheel_pairs_2026-08-13.jsonl",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/training_data/flywheel_pairs_2026-08-13.jsonl",
+            "size_kb": 143,
+            "entries": 680,
+            "kind": "training_data"
+          },
+          {
+            "source": "training_data/flywheel_pairs_2026-08-14.jsonl",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/training_data/flywheel_pairs_2026-08-14.jsonl",
+            "size_kb": 122,
+            "entries": 580,
+            "kind": "training_data"
+          },
+          {
+            "source": "training_data/flywheel_pairs_2026-08-15.jsonl",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/training_data/flywheel_pairs_2026-08-15.jsonl",
+            "size_kb": 21,
+            "entries": 100,
+            "kind": "training_data"
+          },
+          {
+            "source": "training_data/flywheel_pairs_kaggle_v3_2026-08-02.jsonl",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/training_data/flywheel_pairs_kaggle_v3_2026-08-02.jsonl",
+            "size_kb": 567,
+            "entries": 2610,
+            "kind": "training_data"
+          },
+          {
+            "source": "training_data/flywheel_pairs_local_spread_2026-08-02.jsonl",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/training_data/flywheel_pairs_local_spread_2026-08-02.jsonl",
+            "size_kb": 2530,
+            "entries": 11349,
+            "kind": "training_data"
+          },
+          {
+            "source": "training_data/flywheel_pairs_micro1_2026-08-01.jsonl",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/training_data/flywheel_pairs_micro1_2026-08-01.jsonl",
+            "size_kb": 5,
+            "entries": 24,
+            "kind": "training_data"
+          },
+          {
+            "source": "training_data/flywheel_pairs_micro2_2026-08-01.jsonl",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/training_data/flywheel_pairs_micro2_2026-08-01.jsonl",
+            "size_kb": 2,
+            "entries": 9,
+            "kind": "training_data"
+          },
+          {
+            "source": "training_data/honey_mistral.jsonl",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/training_data/honey_mistral.jsonl",
+            "size_kb": 14836,
+            "entries": 10906,
+            "kind": "training_data"
+          },
+          {
+            "source": "training_data/honey_qa.jsonl",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/training_data/honey_qa.jsonl",
+            "size_kb": 14986,
+            "entries": 10906,
+            "kind": "training_data"
+          },
+          {
+            "source": "training_data/honey_sharegpt.jsonl",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/training_data/honey_sharegpt.jsonl",
+            "size_kb": 15806,
+            "entries": 10906,
+            "kind": "training_data"
+          },
+          {
+            "source": "training_data/honey_training_data.jsonl",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/training_data/honey_training_data.jsonl",
+            "size_kb": 15424,
+            "entries": 21570,
+            "kind": "training_data"
+          },
+          {
+            "source": "training_data/master_alpaca.jsonl",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/training_data/master_alpaca.jsonl",
+            "size_kb": 6757,
+            "entries": 12193,
+            "kind": "training_data"
+          },
+          {
+            "source": "training_data/master_sharegpt.jsonl",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/training_data/master_sharegpt.jsonl",
+            "size_kb": 7174,
+            "entries": 12193,
+            "kind": "training_data"
+          },
+          {
+            "source": "flywheel/2026-07-30.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/flywheel/2026-07-30.json",
+            "size_kb": 10,
+            "entries": "benchmark",
+            "kind": "flywheel_output"
+          },
+          {
+            "source": "flywheel/2026-08-01_micro1-nsite.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/flywheel/2026-08-01_micro1-nsite.json",
+            "size_kb": 12,
+            "entries": "benchmark",
+            "kind": "flywheel_output"
+          },
+          {
+            "source": "flywheel/2026-08-01_micro2-nsite.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/flywheel/2026-08-01_micro2-nsite.json",
+            "size_kb": 8,
+            "entries": "benchmark",
+            "kind": "flywheel_output"
+          },
+          {
+            "source": "flywheel/2026-08-02_clan-full-spread-v3-kaggle.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/flywheel/2026-08-02_clan-full-spread-v3-kaggle.json",
+            "size_kb": 1425,
+            "entries": "benchmark",
+            "kind": "flywheel_output"
+          },
+          {
+            "source": "flywheel/2026-08-02_cross-substrate-check.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/flywheel/2026-08-02_cross-substrate-check.json",
+            "size_kb": 1,
+            "entries": "benchmark",
+            "kind": "flywheel_output"
+          },
+          {
+            "source": "flywheel/2026-08-02_full-local-spread-103models.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/flywheel/2026-08-02_full-local-spread-103models.json",
+            "size_kb": 2235,
+            "entries": "benchmark",
+            "kind": "flywheel_output"
+          },
+          {
+            "source": "flywheel/2026-08-02_full-local-spread-47models.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/flywheel/2026-08-02_full-local-spread-47models.json",
+            "size_kb": 1175,
+            "entries": "benchmark",
+            "kind": "flywheel_output"
+          },
+          {
+            "source": "flywheel/2026-08-02_full-local-spread-51models.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/flywheel/2026-08-02_full-local-spread-51models.json",
+            "size_kb": 1269,
+            "entries": "benchmark",
+            "kind": "flywheel_output"
+          },
+          {
+            "source": "flywheel/2026-08-02_full-local-spread-98models.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/flywheel/2026-08-02_full-local-spread-98models.json",
+            "size_kb": 2162,
+            "entries": "benchmark",
+            "kind": "flywheel_output"
+          },
+          {
+            "source": "flywheel/2026-08-02_kaggle-suite.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/flywheel/2026-08-02_kaggle-suite.json",
+            "size_kb": 84,
+            "entries": "benchmark",
+            "kind": "flywheel_output"
+          },
+          {
+            "source": "flywheel/2026-08-02_kaggle-v3-vs-m4-crosscheck.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/flywheel/2026-08-02_kaggle-v3-vs-m4-crosscheck.json",
+            "size_kb": 7,
+            "entries": "benchmark",
+            "kind": "flywheel_output"
+          },
+          {
+            "source": "flywheel/2026-08-02_runpod-a4500-burst-v5.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/flywheel/2026-08-02_runpod-a4500-burst-v5.json",
+            "size_kb": 9,
+            "entries": "benchmark",
+            "kind": "flywheel_output"
+          },
+          {
+            "source": "flywheel/2026-08-13.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/flywheel/2026-08-13.json",
+            "size_kb": 13,
+            "entries": "benchmark",
+            "kind": "flywheel_output"
+          },
+          {
+            "source": "flywheel/2026-08-14.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/flywheel/2026-08-14.json",
+            "size_kb": 13,
+            "entries": "benchmark",
+            "kind": "flywheel_output"
+          },
+          {
+            "source": "flywheel/2026-08-15.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/flywheel/2026-08-15.json",
+            "size_kb": 13,
+            "entries": "benchmark",
+            "kind": "flywheel_output"
+          },
+          {
+            "source": "flywheel/2026-08-16.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/flywheel/2026-08-16.json",
+            "size_kb": 8,
+            "entries": "benchmark",
+            "kind": "flywheel_output"
+          },
+          {
+            "source": "flywheel/2026-08-17.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/flywheel/2026-08-17.json",
+            "size_kb": 8,
+            "entries": "benchmark",
+            "kind": "flywheel_output"
+          },
+          {
+            "source": "flywheel/2026-08-18.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/flywheel/2026-08-18.json",
+            "size_kb": 8,
+            "entries": "benchmark",
+            "kind": "flywheel_output"
+          },
+          {
+            "source": "flywheel/2026-08-19.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/flywheel/2026-08-19.json",
+            "size_kb": 8,
+            "entries": "benchmark",
+            "kind": "flywheel_output"
+          },
+          {
+            "source": "flywheel/2026-08-20.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/flywheel/2026-08-20.json",
+            "size_kb": 8,
+            "entries": "benchmark",
+            "kind": "flywheel_output"
+          },
+          {
+            "source": "flywheel/2026-08-21.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/flywheel/2026-08-21.json",
+            "size_kb": 8,
+            "entries": "benchmark",
+            "kind": "flywheel_output"
+          },
+          {
+            "source": "flywheel/2026-08-22.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/flywheel/2026-08-22.json",
+            "size_kb": 8,
+            "entries": "benchmark",
+            "kind": "flywheel_output"
+          },
+          {
+            "source": "flywheel/2026-08-23.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/flywheel/2026-08-23.json",
+            "size_kb": 8,
+            "entries": "benchmark",
+            "kind": "flywheel_output"
+          },
+          {
+            "source": "sov_time_ledger.jsonl",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/benchmark-results/sov_time_ledger.jsonl",
+            "size_kb": 14794,
+            "entries": 30298,
+            "kind": "ledger_events"
+          },
+          {
+            "source": "out//batch_bench_report.json",
+            "path": "/Users/nicholas/clawd/csoai-static-deploy2/out/batch_bench_report.json",
+            "size_kb": 2,
+            "entries": "artifact",
+            "kind": "site_artifact"
+          }
+        ]
+      }
     }
   },
   "events": [
@@ -101315,6 +103835,258 @@
       "ts": 1787506104.882234,
       "kind": "soul_grow",
       "user_id": "overnight-1787506100",
+      "from": 3,
+      "to": 4
+    },
+    {
+      "ts": 1787506222.237639,
+      "kind": "soul_spawn",
+      "user_id": "overnight-1787506217",
+      "tier": 0,
+      "model": "qwen2.5:0.5b",
+      "size_mb": 379
+    },
+    {
+      "ts": 1787506222.65402,
+      "kind": "soul_grow",
+      "user_id": "overnight-1787506217",
+      "from": 0,
+      "to": 1
+    },
+    {
+      "ts": 1787506223.082626,
+      "kind": "soul_grow",
+      "user_id": "overnight-1787506217",
+      "from": 1,
+      "to": 2
+    },
+    {
+      "ts": 1787506223.384469,
+      "kind": "soul_grow",
+      "user_id": "overnight-1787506217",
+      "from": 2,
+      "to": 3
+    },
+    {
+      "ts": 1787506223.7329652,
+      "kind": "soul_grow",
+      "user_id": "overnight-1787506217",
+      "from": 3,
+      "to": 4
+    },
+    {
+      "ts": 1787506454.543137,
+      "kind": "soul_spawn",
+      "user_id": "eat-all-1787506453",
+      "tier": 0,
+      "model": "qwen2.5:0.5b",
+      "size_mb": 379
+    },
+    {
+      "ts": 1787506454.954782,
+      "kind": "soul_grow",
+      "user_id": "eat-all-1787506453",
+      "from": 0,
+      "to": 1
+    },
+    {
+      "ts": 1787506455.392531,
+      "kind": "soul_grow",
+      "user_id": "eat-all-1787506453",
+      "from": 1,
+      "to": 2
+    },
+    {
+      "ts": 1787506455.947134,
+      "kind": "soul_grow",
+      "user_id": "eat-all-1787506453",
+      "from": 2,
+      "to": 3
+    },
+    {
+      "ts": 1787506456.400028,
+      "kind": "soul_grow",
+      "user_id": "eat-all-1787506453",
+      "from": 3,
+      "to": 4
+    },
+    {
+      "ts": 1787506474.578154,
+      "kind": "soul_spawn",
+      "user_id": "selftest-1787506473",
+      "tier": 0,
+      "model": "qwen2.5:0.5b",
+      "size_mb": 379
+    },
+    {
+      "ts": 1787506475.045279,
+      "kind": "soul_grow",
+      "user_id": "selftest-1787506473",
+      "from": 0,
+      "to": 1
+    },
+    {
+      "ts": 1787506475.703626,
+      "kind": "soul_grow",
+      "user_id": "selftest-1787506473",
+      "from": 1,
+      "to": 2
+    },
+    {
+      "ts": 1787506476.2095628,
+      "kind": "soul_grow",
+      "user_id": "selftest-1787506473",
+      "from": 2,
+      "to": 3
+    },
+    {
+      "ts": 1787506476.7429981,
+      "kind": "soul_grow",
+      "user_id": "selftest-1787506473",
+      "from": 3,
+      "to": 4
+    },
+    {
+      "ts": 1787506549.181493,
+      "kind": "soul_spawn",
+      "user_id": "overnight-1787506548",
+      "tier": 0,
+      "model": "qwen2.5:0.5b",
+      "size_mb": 379
+    },
+    {
+      "ts": 1787506549.590494,
+      "kind": "soul_grow",
+      "user_id": "overnight-1787506548",
+      "from": 0,
+      "to": 1
+    },
+    {
+      "ts": 1787506549.844532,
+      "kind": "soul_grow",
+      "user_id": "overnight-1787506548",
+      "from": 1,
+      "to": 2
+    },
+    {
+      "ts": 1787506550.088595,
+      "kind": "soul_grow",
+      "user_id": "overnight-1787506548",
+      "from": 2,
+      "to": 3
+    },
+    {
+      "ts": 1787506550.424053,
+      "kind": "soul_grow",
+      "user_id": "overnight-1787506548",
+      "from": 3,
+      "to": 4
+    },
+    {
+      "ts": 1787506606.394408,
+      "kind": "soul_spawn",
+      "user_id": "overnight-1787506606",
+      "tier": 0,
+      "model": "qwen2.5:0.5b",
+      "size_mb": 379
+    },
+    {
+      "ts": 1787506606.648072,
+      "kind": "soul_grow",
+      "user_id": "overnight-1787506606",
+      "from": 0,
+      "to": 1
+    },
+    {
+      "ts": 1787506606.870204,
+      "kind": "soul_grow",
+      "user_id": "overnight-1787506606",
+      "from": 1,
+      "to": 2
+    },
+    {
+      "ts": 1787506607.084542,
+      "kind": "soul_grow",
+      "user_id": "overnight-1787506606",
+      "from": 2,
+      "to": 3
+    },
+    {
+      "ts": 1787506607.316109,
+      "kind": "soul_grow",
+      "user_id": "overnight-1787506606",
+      "from": 3,
+      "to": 4
+    },
+    {
+      "ts": 1787506654.1608949,
+      "kind": "soul_spawn",
+      "user_id": "overnight-1787506653",
+      "tier": 0,
+      "model": "qwen2.5:0.5b",
+      "size_mb": 379
+    },
+    {
+      "ts": 1787506654.39585,
+      "kind": "soul_grow",
+      "user_id": "overnight-1787506653",
+      "from": 0,
+      "to": 1
+    },
+    {
+      "ts": 1787506654.627511,
+      "kind": "soul_grow",
+      "user_id": "overnight-1787506653",
+      "from": 1,
+      "to": 2
+    },
+    {
+      "ts": 1787506654.871555,
+      "kind": "soul_grow",
+      "user_id": "overnight-1787506653",
+      "from": 2,
+      "to": 3
+    },
+    {
+      "ts": 1787506655.149729,
+      "kind": "soul_grow",
+      "user_id": "overnight-1787506653",
+      "from": 3,
+      "to": 4
+    },
+    {
+      "ts": 1787506715.0451531,
+      "kind": "soul_spawn",
+      "user_id": "overnight-1787506714",
+      "tier": 0,
+      "model": "qwen2.5:0.5b",
+      "size_mb": 379
+    },
+    {
+      "ts": 1787506715.338382,
+      "kind": "soul_grow",
+      "user_id": "overnight-1787506714",
+      "from": 0,
+      "to": 1
+    },
+    {
+      "ts": 1787506715.6671932,
+      "kind": "soul_grow",
+      "user_id": "overnight-1787506714",
+      "from": 1,
+      "to": 2
+    },
+    {
+      "ts": 1787506715.998181,
+      "kind": "soul_grow",
+      "user_id": "overnight-1787506714",
+      "from": 2,
+      "to": 3
+    },
+    {
+      "ts": 1787506716.3097951,
+      "kind": "soul_grow",
+      "user_id": "overnight-1787506714",
       "from": 3,
       "to": 4
     }
