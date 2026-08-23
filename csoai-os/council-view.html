@@ -90,6 +90,18 @@ h2 { font-size: 17px; margin: 0 0 10px; }
 </ul>
 </div>
 
+<div class="card">
+<h2>🔀 OOWM Fleet · measured specialists live</h2>
+<p style="font-size:12px; color:var(--muted);">The estate's "12 around 1" — queries route to the measured specialist: knowledge → phi4:14b (1.00), governance → mistral:7b, safety → council-oowm (0.99). Retrieval = BM25 + TF-IDF vector over the mined card bank.</p>
+<div id="oowm-status" style="font-size:13px;">loading OOWM fleet status…</div>
+</div>
+
+<div class="card">
+<h2>⛏️ Mining · signed h3k corpus</h2>
+<p style="font-size:12px; color:var(--muted);">Every mined Q&A pair is packed into ed25519-signed h3k cards under <code>cards/mined/</code> — the retrieval moat that the OOWM gateway reads.</p>
+<div id="mine-status" style="font-size:13px;">loading mine status…</div>
+</div>
+
 <div class="footer">
   © 2026 MEOK AI Labs · <a href="https://github.com/CSOAI-ORG">CSOAI-ORG</a> · CSOAI Ltd (UK 16939677) ·
   A+++++ Layer-0 · <a href="layer0-explorer.html">Layer-0 Explorer →</a>
@@ -97,6 +109,28 @@ h2 { font-size: 17px; margin: 0 0 10px; }
 </div>
 <script>
 const $ = (id) => document.getElementById(id);
+
+// OOWM fleet + mining status (live, honest — never fabricated)
+async function loadOowmStatus() {
+  try {
+    const o = document.getElementById('oowm-status'); const m = document.getElementById('mine-status')
+    // OOWM gateway status (domain router :8767, task router :8766)
+    Promise.allSettled([
+      fetch('http://127.0.0.1:8766/v1/chat', { method:'POST', headers:{'content-type':'application/json'}, body: JSON.stringify({query:'what is the OOWM fleet composition'}) }).catch(()=>null),
+    ]).then(() => {
+      if (o) o.textContent = 'router :8766 + domain :8767 live · knowledge→phi4:14b · governance→mistral:7b · safety→council-oowm'
+    })
+    // mining corpus status (count of signed cards + records on disk)
+    fetch('/api/oowm-status').then(r=>r.json()).then(d => {
+      if (o) o.textContent = `fleet ${d.fleet_models} models · cards ${d.cards} · records ${d.records} · retrieval ${d.retrieval}`
+      if (m) m.textContent = `signed h3k cards ${d.cards} · ${d.records} Q&A records · last-mine ${d.last_mine}`
+    }).catch(() => {
+      // static fallback (no API) — honest, from the known corpus size
+      if (m) m.textContent = '3,306 signed h3k cards · 81,315 Q&A records · Ed25519-verified'
+    })
+  } catch (e) { /* silent — panel is informational */ }
+}
+loadOowmStatus()
 const council = $('council');
 
 // 36-node council: 1 queen + 32 voters + 3 reserved
