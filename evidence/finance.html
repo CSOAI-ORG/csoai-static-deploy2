@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Finance-Compliance Attestation — Council of AI</title>
+<style>
+ body{font-family:system-ui,sans-serif;background:#02020a;color:#e6e6e6;margin:0;line-height:1.6}
+ .wrap{max-width:980px;margin:0 auto;padding:2rem 1.5rem}
+ header{text-align:center;padding:2.5rem 0 1rem}
+ h1{font-size:2rem;color:#c9a84c;margin:.4rem 0} h2{color:#8ab4f8;margin-top:2rem}
+ .sub{color:#7f90a0;font-size:1.05rem}
+ .pill{display:inline-block;border:1px solid #c9a84c;border-radius:100px;padding:2px 12px;font-size:.78rem;color:#c9a84c;margin:0 4px}
+ .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1rem;margin:1.5rem 0}
+ .card{background:#0d1220;border:1px solid #1c2a45;border-radius:12px;padding:1.3rem}
+ .card h3{margin:.2rem 0 .6rem;color:#fff} .price{font-size:1.6rem;color:#c9a84c;font-weight:700}
+ .small{font-size:.85rem;color:#7f90a0}
+ .cta{background:#c9a84c;color:#000;border:none;border-radius:8px;padding:12px 22px;font-weight:600;font-size:1rem;cursor:pointer;text-decoration:none;display:inline-block}
+ table{width:100%;border-collapse:collapse;font-size:.9rem} td,th{padding:8px;border-bottom:1px solid #1c2a45;text-align:left}
+ code{background:#1c2a45;padding:2px 6px;border-radius:4px;font-size:.8em}
+ .foot{color:#7f90a0;font-size:.8em;text-align:center;margin-top:2.5rem;padding-top:1rem;border-top:1px solid #1c2a45}
+ a{color:#8ab4f8} .badge{background:#123;color:#4ade80;border:1px solid #4ade80;border-radius:6px;padding:2px 8px;font-size:.75rem}
+</style></head><body>
+<div class="wrap">
+<header>
+ <p class="pill">Council of AI</p><p class="pill">Finance-Compliance Attestation</p><p class="pill">measurement, not certification</p>
+ <h1>Signed, Verifiable Attestation for Regulated Capital Markets</h1>
+ <p class="sub">Every instrument that moves from human to agent must first climb <b>verification</b>. We are the
+ <b>Y-axis</b> — the attestation layer that makes <b>A2A finance legal</b>, buyer-side only, never the scored.</p>
+ <p style="margin-top:1rem"><a class="cta" href="/verify">Verify a live signed receipt</a> <a class="cta" style="background:#111;color:#8ab4f8;border:1px solid #8ab4f8" href="/book">Book a pack</a>
+   <a class="cta" style="background:#111;color:#8ab4f8;border:1px solid #8ab4f8" href="#pricing">Pricing</a></p>
+</header>
+
+<h2>The Y-axis of finance</h2>
+<p>Automation moves along the X-axis (human → agent, T+2 → T+0). But a regulated instrument <b>cannot
+move without climbing the Y-axis</b> — verification, compliance, attestation. Without it, A2A bond trade is
+<em>illegal</em> (no compliance). With it, <em>inevitable</em>. We supply the Y-axis.</p>
+
+<h2>Regulatory hooks (the buy-side window)</h2>
+<table>
+ <tr><th>Regime</th><th>Date</th><th>Attestation needed</th></tr>
+ <tr><td>EU AI Act <b>Art 50</b></td><td>live 2 Aug 2026</td><td>binary disclosure/marking evidence (fintech AI)</td></tr>
+ <tr><td><b>MiCA</b> / FCA</td><td>live</td><td>crypto-asset + AI-in-finance evidence</td></tr>
+ <tr><td><b>Illinois SB 315</b></td><td>audits Jan 2028</td><td>independent third-party audit evidence</td></tr>
+ <tr><td>Basel / systemic</td><td>continuous</td><td>live risk + provenance measurement</td></tr>
+</table>
+
+<h2>What we attest</h2>
+<div class="grid">
+ <div class="card"><h3>Signed receipt</h3><p>Ed25519-signed on a signing node (key never leaves),<br>embeds <code>{sig, body_sha256, pubkey}</code>.</p></div>
+ <div class="card"><h3>Live verification</h3><p>Verify in-browser, zero trust: <code>csoai-verify.pages.dev/verify</code></p></div>
+ <div class="card"><h3>Independence</h3><p>Buyer/insurer/regulator-pays only. Never the scored.<br>No issuer-pays (the Moody's trap you refuse).</p></div>
+ <div class="card"><h3>Agent identity</h3><p>Signed agent credentials → the trust layer A2A finance requires.</p></div>
+</div>
+
+<h2 id="pricing">Pricing</h2>
+<div class="grid">
+ <div class="card"><h3>Evidence scoring</h3><div class="price">€8–20k</div><p class="small">Art 50 / MiCA / SB 315 evidence-quality</p></div>
+ <div class="card"><h3>Attestation pack</h3><div class="price">€25–80k</div><p class="small">signed receipt + method + ledger</p></div>
+ <div class="card"><h3>Continuous</h3><div class="price">€5–15k/yr</div><p class="small">live re-measurement, surveillance</p></div>
+ <div class="card"><h3>Receipt / API</h3><div class="price">entry</div><p class="small">per-signed-attestation</p></div>
+</div>
+
+<h2>The proof is live</h2>
+<p><span class="badge">19 signed artifacts</span> <span class="badge">Ed25519</span> <span class="badge">verified</span> —
+ pubkey <code>bWbk52E47J6EkY4+pu0Hh/B1l1175AZoZsDEBr0EfWA=</code>. The attestation estate verifies in-browser.</p>
+<p><a class="cta" href="/verify">Open the live verification</a></p>
+
+<div class="foot">Council of AI (CSOAI Ltd, UK #16939677) · measurement, not certification · buyer-side, signed,
+verifiable. Signed on the signing node; the Ed25519 private key never leaves the pod. PQC path: ML-DSA-65.</div>
+</div></body></html>
