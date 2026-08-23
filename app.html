@@ -25,6 +25,7 @@ a { color:var(--accent2); text-decoration:none; }
 .tb-ctrl { display:flex; gap:.3rem; flex-wrap:wrap; }
 .pane-btn { background:transparent; color:var(--muted); border:1px solid var(--line); padding:.32rem .6rem; border-radius:8px; cursor:pointer; font-size:.68rem; }
 .pane-btn:hover { border-color:var(--accent); color:var(--text); }
+.pill { padding:.2rem .5rem; border-radius:999px; border:1px solid var(--line); white-space:nowrap; }
 .shell.rail-off .side { display:none; } .shell.rail-off { grid-template-columns:1fr; }
 .shell.min { display:none; }
 .tb-tab { background:transparent; color:var(--muted); border:0; padding:.45rem .85rem; border-radius:8px; cursor:pointer; font-size:.85rem; }
@@ -173,9 +174,8 @@ code { background:#1a212a; padding:.05rem .3rem; border-radius:4px; font-size:.7
   <div class="topbar">
     <div class="brand"><span class="pulse"></span><b>Council OS</b><small>measure · sign · check — not certification · Transparency · 82%</small></div>
     <div class="tb-tabs" id="pagetabs"></div>
-    <div class="tb-ctrl">
-      <button class="pane-btn" id="pb-hide">Hide panes</button>
-      <button class="pane-btn" id="pb-rail">Show rail</button>
+    <div class="tb-right"><span class="pill" id="livepill" style="font-size:.6rem;color:var(--faint);font-family:var(--mono)">…</span><div class="tb-ctrl">
+      <button class="pane-btn" id="pb-hide">Hide panes</button>      <button class="pane-btn" id="pb-rail">Show rail</button>
       <button class="pane-btn" id="pb-restore">Restore</button>
       <button class="pane-btn" id="pb-min">Minimise</button>
       <button class="pane-btn" id="pb-close">Close</button>
@@ -230,6 +230,7 @@ var SECTIONS = [
   { id:'manifesto', label:'Manifesto', ico:'⚔', read: renderManifesto },
   { id:'how', label:'How we eat', ico:'🍽', read: renderHowWeEat },
   { id:'ecosystem', label:'Ecosystem', ico:'🧭', read: renderEcosystem },
+  { id:'axes', label:'Axes', ico:'⚙', read: renderAxes },
   { id:'board',    label:'Estate board', ico:'▦', read: renderBoard },
   { id:'models',   label:'Models', ico:'▤', read: renderModels },
   { id:'arena',    label:'Arena Elo', ico:'⚔', read: renderArena },
@@ -451,6 +452,10 @@ function renderEcosystem(el){
       '<div id="eunout" style="margin-top:.6rem;font-family:var(--mono);font-size:.72rem;white-space:pre-wrap;color:var(--muted)"></div>'+
     '</div>'+
     '<div class="panel"><h2>Human vs AI (live)</h2><div class="desc">Deterministic duel scoreline from the sim — a duel win means won the round, never "humans are worse at governance". Live.</div><div id="hvaout" style="font-family:var(--mono);font-size:.72rem;color:var(--muted)">loading…</div></div>'+
+    '<div class="panel"><h2>Route an axis → a measured model</h2><div class="desc">OpenRouter routes to models; EUNOMIA routes to the <b>best measured</b> model for an axis (deterministic, from the signed board).</div>'+
+      '<div style="display:flex;gap:.4rem;flex-wrap:wrap">'+['care','gov','art5','jail','prv','mcp'].map(function(a){return '<button class="chip" data-axis="'+a+'">'+AX[a]+'</button>';}).join('')+'</div>'+
+      '<div id="routeout" style="margin-top:.6rem;font-family:var(--mono);font-size:.72rem;color:var(--muted)"></div>'+
+    '</div>'+
     '<div class="panel"><h2>Route a governance axis</h2><div class="desc">Every axis → every framework, regulation, benchmark and model that measures it. The connective tissue of the ecosystem.</div>'+
       '<table><tr><th>axis</th><th>models</th><th>regimes</th></tr>'+route.map(function(r){
         return '<tr><td><b>'+AX[r.ax]+'</b></td><td>'+(r.models.length?esc(r.models.slice(0,3).join(', '))+(r.models.length>3?(' +'+(r.models.length-3)):''):'<span class="unm">—</span>')+'</td><td>'+(r.regs.length?esc(r.regs.slice(0,3).join(', '))+(r.regs.length>3?(' +'+(r.regs.length-3)):''):'<span class="unm">—</span>')+'</td></tr>';
@@ -475,6 +480,13 @@ function renderEcosystem(el){
   if(eunq) eunq.onkeydown=function(e){ if(e.key==='Enter'){ routeResolve(eunq.value.trim()); } };
   el.querySelectorAll('[data-u]').forEach(function(b){ b.onclick=function(){ eunq.value=b.dataset.u; routeResolve(b.dataset.u); }; });
   fetch('/api/hero?q=humans%20vs%20ai').then(function(r){return r.json();}).then(function(d){ var o=$('hvaout'); if(o) o.textContent=String(d.message||d.framing||d.mode||'no data').slice(0,260); }).catch(function(){ var o=$('hvaout'); if(o) o.textContent='hva offline'; });
+  // Route an axis -> best measured model (deterministic, from the signed board)
+  function axisBestModel(ax){
+    var cells=(sd('board')||{}).cells||{}; var names=Object.keys(cells); var best=null,ba=-1;
+    names.forEach(function(n){ var c=cells[n]&&cells[n][ax]; if(c&&c.status==='MEASURED'&&c.accuracy!=null&&c.accuracy>ba){ba=c.accuracy;best=n;} });
+    return best?{model:best,acc:ba,n:cells[best][ax].n}:null;
+  }
+  el.querySelectorAll('[data-axis]').forEach(function(b){ b.onclick=function(){ var ax=b.dataset.axis; var r=axisBestModel(ax); var o=$('routeout'); if(o) o.textContent=(r?('route → '+r.model+' ('+AX[ax]+' '+r.acc.toFixed(2)+', n='+r.n+')'):'no MEASURED model for '+AX[ax]+' — reported UNMEASURED, never hidden'); }; });
   var CUR_SEC = 'bond';
   el.querySelectorAll('.sec[data-sec]').forEach(function(b){ b.onclick=function(){ CUR_SEC=b.dataset.sec; el.querySelectorAll('.sec').forEach(function(x){x.classList.toggle('active',x===b);}); }; });
   function mintSettle(){
@@ -692,6 +704,19 @@ function renderKeys(el){
   var g=$('kg'); if(g) g.onclick=function(){ try{ navigator.clipboard.writeText('csoai_ek_demo_verified_execution_trust_priced'); g.textContent='copied'; setTimeout(function(){g.textContent='copy demo';},1200);}catch(e){} };
 }
 
+// ---------- AXES GLOSSARY (all axes clean + explained) ----------
+var AX_DESC = {care:'relational care ethics — dignity, welfare, vulnerability', gov:'governance — accountability, mechanism, deployer, enforcement', art5:'EU AI Act Art 5 prohibited practices', jail:'jailbreak / safety-membrane refusal (does it hold under adversarial probe)', det:'determinism — reproducible under gold labels', affect:'affect / sentiment — emotional misattribution to a system', agi:'AGI/ASI capability-adjacent (measured, never predicted)', asi:'superintelligence-adjacent (honest gate)', mach:'machinery / MCP-tool correctness', mcp:'MCP protocol governance — interoperable, not a monolith', oss:'open-source license + provenance hygiene', prv:'privacy — data minimalisation, consent, GDPR', xr:'extended-reality / embodied governance'};
+var AX_DOMAINS = [{a:'bond', t:'bond router — COBOL→A2A, atomic DvP'},{a:'insurance', t:'insurance engine — care-membrane underwriting risk probe'},{a:'equity', t:'stock market axis — market integrity, fair execution'},{a:'cross-border', t:'east-west bridge — TC260↔NIST↔EU AI Act'},{a:'sme', t:'SME fractional — micro-issuance, retail access'},{a:'agent-economy', t:'agent economy — NPC wallets, staking, slash-on-exploit'},{a:'data-dao', t:'data DAO — trace licensing, EUN marketplace'}];
+function renderAxes(el){
+  stamp('GSPC axes · 13 core + extended domains · deterministic, signed · '+TODAY);
+  var rows = AXES.map(function(a){ return '<div class="xwrow"><span><b>'+AX[a]+'</b><br><span style="color:var(--faint);font-size:.66rem">'+esc(AX_DESC[a]||'')+'</span></span><span class="badge">'+a+'</span></div>'; }).join('');
+  var doms = AX_DOMAINS.map(function(d){ return '<div class="xwrow"><span><b>'+d.t+'</b><br><span style="color:var(--faint);font-size:.66rem">domain: '+d.a+'</span></span><span class="badge" style="color:var(--gold)">extended</span></div>'; }).join('');
+  el.innerHTML='<div class="doctrine">The axes are the measurable surfaces. 13 core governance axes on the signed board + extended financial/ecosystem domains. Deterministic exact-label grading, never a model jury. UNMEASURED reported, never hidden. Measurement, not certification.</div>'+
+    '<div class="panel"><h2>13 core axes</h2>'+rows+'</div>'+
+    '<div class="panel"><h2>Extended domains (the "OpenRouter of many things")</h2>'+doms+'</div>'+
+    '<div class="panel"><div class="desc">Every axis → a routable <code>eunomia://axis/&lt;id&gt;</code> node. The same measured number carries different obligations per jurisdiction (East↔West).</div></div>';
+}
+
 function renderRegisters(el){
   stamp('signed registers + games + scenarios · '+TODAY);
   var emb = sd('registers');
@@ -800,8 +825,10 @@ function show(id){
   if (!sec) return;
   $('title').textContent = sec.label;
   $('subtitle').textContent = SUBTITLES[sec.id] || '';
-  $('content').innerHTML = '<div class="loading">loading ' + sec.label + '…</div>';
-  sec.read($('content'));
+  var c = $('content');
+  c.innerHTML = '<div class="loading">loading ' + sec.label + '…</div>';
+  try { sec.read(c); }
+  catch(e){ c.innerHTML = '<div class="panel"><h2>We could not render "'+esc(sec.label)+'"</h2><div class="desc">'+esc(String(e).slice(0,160))+'</div><button class="chip" onclick="show(\''+id+'\')">retry</button></div>'; }
 }
 
 // ---------- OVERVIEW ----------
@@ -817,6 +844,7 @@ var SUBTITLES = {
   verify:'Free, loginless, offline-style record verification.',
   chat:'Deterministic enforced-escort brain. No model in the path.',
   ecosystem:'One router for the governance ecosystem — frameworks, regulations, law, benchmarks, models.',
+  axes:'13 core GSPC axes + extended domains — all measurable, signed, explained.',
   reghub:'Every regulator, one centre. Pick a regime → its specialist workspace.',
   runbook:'Discover the routing table in seconds. Agent-first, no auth wall.',
   insurers:'Insurer pack — signed per-agent evidence, never underwriting.',
@@ -1028,6 +1056,8 @@ var WORKSPACE_TOOLS = [
   ['agents','tool=agents','🤖 agents'],
   ['fleet','tool=fleet','🛰 fleet'],
   ['status','tool=status','⛑ system status'],
+  ['sovsign','/api/signal?axis=gov&jurisdiction=EU','📈 SOV signal'],
+  ['sovidx','/api/sov-signal','📊 SOV index'],
   ['measure','tool=mcp&op=measure&model=nemotron-3-nano:30b','⚗ measure a model'],
   ['mcptools','tool=mcp&op=tools','⚙ mcp tools'],
   ['verify','nav:verify','🔑 verify'],
@@ -1051,6 +1081,8 @@ function renderChat(el){
   }
   function fmt(d,url){
     if(d.message) return d.message;
+    if(d.summary) return d.summary;
+    if(d.error) return '→ '+d.error;
     if(d.mode==='status') return (d.line||'')+(d.can_do?('\n'+d.can_do.map(function(x){return '• '+x;}).join('\n')):'')+(d.framing?('\n'+d.framing):'');
     if(d.mode==='board') return 'Estate board: '+d.measured_cells+' measured cells · leader '+(d.leader||'?');
     if(d.mode==='arena') return 'Arena: '+d.count+' rounds';
@@ -1068,8 +1100,9 @@ function renderChat(el){
       .catch(function(e){ busy=false; d.innerHTML='<div class="lbl">harness</div><span>harness offline</span>'; });
   }
   function run(url){
-    if(busy) return; busy=true; var d=add('running '+url.split('&')[0].split('=')[1]+'…','bot');
-    fetch('/api/hero?'+url).then(function(r){return r.json();}).then(function(dd){ busy=false; reveal(d,fmt(dd)); })
+    if(busy) return; busy=true; var d=add('running '+(url.split('&')[0].split('=').pop())+'…','bot');
+    var target = (url.indexOf('/')===0) ? url : '/api/hero?'+url;   // absolute endpoints pass through
+    fetch(target).then(function(r){return r.json();}).then(function(dd){ busy=false; reveal(d,fmt(dd)); })
       .catch(function(e){ busy=false; d.innerHTML='<div class="lbl">harness</div><span>tool error</span>'; });
   }
   $('csend').onclick=function(){ var q=$('cinp').value.trim(); if(q){ ask(q); $('cinp').value=''; } };
@@ -1087,6 +1120,7 @@ var PAGES = [
   { id:'manifesto', label:'Manifesto' },
   { id:'how', label:'How we eat' },
   { id:'ecosystem', label:'Ecosystem' },
+  { id:'axes', label:'Axes' },
   { id:'models',   label:'Models' },
   { id:'insurers', label:'Insurers' },
   { id:'compare', label:'Compare' },
@@ -1141,6 +1175,8 @@ show('chat');   // Council OS lands the centre on the AG-UI workspace (agent pan
 renderWsDock(); // persistent agent panel docked under every page (Cursor-style)
 renderMlLib();  // OpenRouter-style model library in the rail
 wsAsk_init();
+function checkHealth(){ fetch('/api/health').then(function(r){return r.json();}).then(function(){ var p=$('livepill'); if(p){ p.textContent='live'; p.style.color='var(--green)'; } }).catch(function(){ var p=$('livepill'); if(p){ p.textContent='offline · embedded data'; p.style.color='var(--gold)'; } }); }
+checkHealth();
 // pane controls (Cursor-style: rail + agent panel)
 (function(){
   var shell = document.querySelector('.shell');
