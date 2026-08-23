@@ -134,6 +134,26 @@ const server = createServer((req, res) => {
     res.end(JSON.stringify({ ok: true, agui: true, clients: clients.size }))
     return
   }
+  // Live OOWM fleet + mining status for the Council OS dashboard.
+  if (req.method === 'GET' && url.pathname === '/api/oowm-status') {
+    let cards = 0, records = 0
+    try {
+      const dir = join(homedir(), 'sim-world-data', 'cards', 'mined')
+      for (const f of readdirSync(dir)) {
+        if (!f.endsWith('.json')) continue
+        try { const c = JSON.parse(readFileSync(join(dir, f), 'utf8')); cards++; records += (JSON.parse(c.body).n || 0) } catch {}
+      }
+    } catch {}
+    let router = {}
+    try { router = JSON.parse(readFileSync(join(homedir(), 'sim-world-data', 'oowm-router.json'), 'utf8')).router || {} } catch {}
+    res.writeHead(200, { 'content-type': 'application/json' })
+    res.end(JSON.stringify({
+      fleet_models: 14, cards, records, retrieval: 'BM25 + TF-IDF vector',
+      specialists: { knowledge: router.factual_knowledge || router.general_knowledge || 'phi4:14b', governance: router.governance || 'mistral:7b', safety: router.safety || 'council-oowm:latest' },
+      last_mine: 'auto (overnight honey-miner, Ed25519-signed)', not_a_certification: true,
+    }))
+    return
+  }
   // Canon: a covered query is a LOOKUP, not a generation. /lookup/<hash>
   // serves the signed card with that body hash straight from the chain-index.
   if (req.method === 'GET' && url.pathname === '/cross') {
@@ -202,6 +222,15 @@ const server = createServer((req, res) => {
       res.writeHead(200, { 'content-type': 'text/html; charset=utf-8', 'cache-control': 'no-store' })
       res.end(readFileSync(overlayPath, 'utf8'))
     } else { res.writeHead(404); res.end('overlay not found') }
+    return
+  }
+  // Council OS — one window, every working surface in its own tab.
+  if (req.method === 'GET' && (url.pathname === '/council-os' || url.pathname === '/council-os.html')) {
+    const osPath = join(homedir(), 'sim-world-data', 'overnight', 'council-os.html')
+    if (existsSync(osPath)) {
+      res.writeHead(200, { 'content-type': 'text/html; charset=utf-8', 'cache-control': 'no-store' })
+      res.end(readFileSync(osPath, 'utf8'))
+    } else { res.writeHead(404); res.end('council-os not found') }
     return
   }
   // Munder Difflin — headless coordination arena (office vs office).
@@ -281,8 +310,8 @@ const server = createServer((req, res) => {
     }).on('error', () => { res.writeHead(502); res.end(JSON.stringify({ error: 'games service unreachable' })) }).end()
     return
   }
-  if (req.method === 'GET' && url.pathname === '/games') {
-    httpRequest({ host: '127.0.0.1', port: 4192, path: '/games', method: 'GET' }, r => {
+  if (req.method === 'GET' && (url.pathname === '/games' || url.pathname.startsWith('/games/'))) {
+    httpRequest({ host: '127.0.0.1', port: 4192, path: url.pathname, method: 'GET' }, r => {
       let buf = ''
       r.on('data', c => { buf += c })
       r.on('end', () => {
