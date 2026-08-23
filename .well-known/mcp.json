@@ -1,4 +1,13 @@
 {
-  "mcpServers": {},
-  "_note": "csoai.org/mcp is not a live measurement server. The worker previously advertised on did:web:csoai.org was removed from the DID. GET on that worker returns 404. This file lists a server again in the same commit that redeploys a live first-party endpoint."
+  "mcpServers": {
+    "csoai-gspc-mcp": {
+      "url": "https://csoai.org/mcp",
+      "description": "GSPC measurement MCP server — measure AI systems, verify signed cards. Public initialize, no Authorization required. Free verify stays loginless.",
+      "transport": "streamable-http",
+      "tools": ["measure", "verify", "jail-probe"],
+      "authentication": "none"
+    }
+  },
+  "fallback": "https://csoai-gspc-mcp.nicholastempleman.workers.dev/mcp",
+  "_note": "Primary endpoint is csoai.org/mcp once routes are deployed. Fallback is the always-live workers.dev URL."
 }
