@@ -742,9 +742,20 @@ function renderRegistersData(el, regs){ el.innerHTML = registerCards(regs); }
 
 function renderArenaData(el, d){
   var lb = d.leaderboard || [];
+  var models = lb.map(function(m){return m.model;}).filter(Boolean);
   var top3 = lb.slice(0,3).map(function(m,i){ return '<div class="card lead"><div class="rank">#'+(i+1)+'</div><div class="v">'+m.elo+'</div><div class="s">'+esc(m.model)+'</div></div>'; }).join('');
   var rows = lb.map(function(m,i){ return '<tr'+(i===0?' style="background:#18252e"':'')+'><td>'+(i+1)+'</td><td><b>'+esc(m.model)+'</b></td><td class="gold"><b>'+m.elo+'</b></td><td>'+m.wins+'W · '+m.losses+'L</td><td>'+m.total+'</td></tr>'; }).join('');
-  el.innerHTML = '<div class="grid">'+top3+'</div><div class="panel" style="margin-top:1rem"><table><tr><th>#</th><th>model</th><th>Elo</th><th>record</th><th>duels</th></tr>'+rows+'</table><div class="info" style="margin-top:.6rem">'+d.total_rounds+' rounds</div></div>';
+  var ab = (models.length>=2)
+    ? '<div class="panel" style="margin-top:1rem"><h2>Blind A/B vote (LM-Arena style)</h2><div class="desc">Two models, unlabeled. Vote which is better — then we reveal the measured score. Humans vote; the deterministic grader scores; never a model jury.</div><div style="display:flex;gap:.6rem;flex-wrap:wrap"><button class="chip" id="abA">Model A</button><button class="chip" id="abB">Model B</button><span id="abreveal" style="font-size:.7rem;color:var(--muted)"></span></div></div>'
+    : '';
+  el.innerHTML = '<div class="grid">'+top3+'</div>'+ab+'<div class="panel" style="margin-top:1rem"><table><tr><th>#</th><th>model</th><th>Elo</th><th>record</th><th>duels</th></tr>'+rows+'</table><div class="info" style="margin-top:.6rem">'+d.total_rounds+' rounds</div></div>';
+  if (models.length>=2){
+    $('abA').onclick=function(){ reveal('A'); }; $('abB').onclick=function(){ reveal('B'); };
+  }
+  function reveal(which){
+    var m = which==='A'?models[0]:models[1];
+    var r = $('abreveal'); if(r) r.textContent = 'You voted '+which+' · measured reveal: '+m+' (human vote is recorded; the deterministic grader stays the judge, not the crowd)';
+  }
 }
 
 function renderEvidence(el){
